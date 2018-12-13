@@ -35,22 +35,38 @@ public abstract class BaseRemoteGitRepository
 		RemoteGitRepository remoteGitRepository = (RemoteGitRepository)o;
 
 		String hostname = getHostname();
-		JSONObject jsonObject = getJSONObject();
-		String name = getName();
-		String remoteURL = getRemoteURL();
-		String username = getUsername();
 
-		if (hostname.equals(remoteGitRepository.getHostname()) &&
-			JenkinsResultsParserUtil.isJSONObjectEqual(
-				jsonObject, remoteGitRepository.getJSONObject()) &&
-			name.equals(remoteGitRepository.getName()) &&
-			remoteURL.equals(remoteGitRepository.getRemoteURL()) &&
-			username.equals(remoteGitRepository.getUsername())) {
-
-			return true;
+		if (!hostname.equals(remoteGitRepository.getHostname())) {
+			return false;
 		}
 
-		return false;
+		JSONObject jsonObject = getJSONObject();
+
+		if (!JenkinsResultsParserUtil.isJSONObjectEqual(
+				jsonObject, remoteGitRepository.getJSONObject())) {
+
+			return false;
+		}
+
+		String name = getName();
+
+		if (!name.equals(remoteGitRepository.getName())) {
+			return false;
+		}
+
+		String remoteURL = getRemoteURL();
+
+		if (!remoteURL.equals(remoteGitRepository.getRemoteURL())) {
+			return false;
+		}
+
+		String username = getUsername();
+
+		if (!username.equals(remoteGitRepository.getUsername())) {
+			return false;
+		}
+
+		return true;
 	}
 
 	@Override

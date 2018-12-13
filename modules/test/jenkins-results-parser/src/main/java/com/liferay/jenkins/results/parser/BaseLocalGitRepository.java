@@ -42,24 +42,42 @@ public abstract class BaseLocalGitRepository
 		LocalGitRepository localGitRepository = (LocalGitRepository)o;
 
 		File directory = getDirectory();
-		GitWorkingDirectory gitWorkingDirectory = getGitWorkingDirectory();
-		JSONObject jsonObject = getJSONObject();
-		String name = getName();
-		String upstreamBranchName = getUpstreamBranchName();
 
-		if (directory.equals(localGitRepository.getDirectory()) &&
-			gitWorkingDirectory.equals(
-				localGitRepository.getGitWorkingDirectory()) &&
-			JenkinsResultsParserUtil.isJSONObjectEqual(
-				jsonObject, localGitRepository.getJSONObject()) &&
-			name.equals(localGitRepository.getName()) &&
-			upstreamBranchName.equals(
-				localGitRepository.getUpstreamBranchName())) {
-
-			return true;
+		if (!directory.equals(localGitRepository.getDirectory())) {
+			return false;
 		}
 
-		return false;
+		GitWorkingDirectory gitWorkingDirectory = getGitWorkingDirectory();
+
+		if (!gitWorkingDirectory.equals(
+				localGitRepository.getGitWorkingDirectory())) {
+
+			return false;
+		}
+
+		JSONObject jsonObject = getJSONObject();
+
+		if (!JenkinsResultsParserUtil.isJSONObjectEqual(
+				jsonObject, localGitRepository.getJSONObject())) {
+
+			return false;
+		}
+
+		String name = getName();
+
+		if (!name.equals(localGitRepository.getName())) {
+			return false;
+		}
+
+		String upstreamBranchName = getUpstreamBranchName();
+
+		if (!upstreamBranchName.equals(
+				localGitRepository.getUpstreamBranchName())) {
+
+			return false;
+		}
+
+		return true;
 	}
 
 	@Override

@@ -758,6 +758,82 @@ definition {
 		WebContentDisplayPortlet.viewImageFieldViaWCD();
 	}
 
+	@description = "This is a test for LPS-86223. A user can create web content without having a template, and web content without templates will display using an automatically defined template."
+	@priority = "4"
+	test AddWebContentWithoutTemplate {
+		property testray.component.names = "Web Content Administration";
+
+		task ("Add a structure with a text field without adding a template") {
+			WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			NavItem.gotoStructures();
+
+			WebContentStructures.addCP(
+				structureDescription = "WC Structure Description",
+				structureName = "WC Structure Name"
+			);
+
+			DynamicDataMapping.addField(
+				field = "Text",
+				fieldFieldLabel = "Text",
+				fieldName = "Text"
+			);
+
+			WebContentStructures.saveCP(structureName = "WC Structure Name");
+		}
+
+		task ("Add a web content article using the structure") {
+			WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
+
+			WebContent.addWithStructureCP(
+				webContentText = "WC WebContent Text",
+				webContentTitle = "WC WebContent Title"
+			);
+
+			PortletEntry.publish();
+		}
+
+		task ("Assert the web content article was added properly") {
+			WebContent.viewTitle(webContentTitle = "WC WebContent Title");
+
+			WebContentNavigator.gotoEditCP(webContentTitle = "WC WebContent Title");
+
+			WebContent.viewCP(
+				webContentText = "WC WebContent Text",
+				webContentTitle = "WC WebContent Title"
+			);
+		}
+
+		task ("Assert an automatic template is used when the web content article is displayed in a web content display widget") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page"
+			);
+
+			Navigator.gotoSitePage(pageName = "Test Page", siteName = "Test Site Name");
+
+			Portlet.addPG(portletName = "Web Content Display");
+
+			WebContentDisplayPortlet.selectWebContent(
+				webContentTitle = "WC WebContent Title"
+			);
+
+			Navigator.gotoSitePage(pageName = "Test Page", siteName = "Test Site Name");
+
+			AssertTextEquals(
+				locator1 = "//div[@data-analytics-asset-title='WC WebContent Title']//dt",
+				value1 = "Text:"
+			);
+
+			AssertTextEquals(
+				locator1 = "//div[@data-analytics-asset-title='WC WebContent Title']//dd",
+				value1 = "WC WebContent Text"
+			);
+		}
+	}
+
 	@priority = "4"
 	test AddWebContentWithStructure {
 		property testray.component.names = "Web Content Administration";

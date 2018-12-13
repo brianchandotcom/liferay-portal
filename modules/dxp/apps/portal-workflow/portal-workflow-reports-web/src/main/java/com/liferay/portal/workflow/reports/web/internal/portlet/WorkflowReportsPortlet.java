@@ -14,8 +14,11 @@
 
 package com.liferay.portal.workflow.reports.web.internal.portlet;
 
+import com.liferay.frontend.js.loader.modules.extender.npm.JSPackage;
+import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.workflow.reports.web.internal.constants.WorkflowReportsPortletKeys;
+import com.liferay.portal.workflow.reports.web.internal.constants.WorkflowReportsWebKeys;
 
 import java.io.IOException;
 
@@ -25,6 +28,7 @@ import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Rafael Praxedes
@@ -34,7 +38,7 @@ import org.osgi.service.component.annotations.Component;
 	property = {
 		"com.liferay.portlet.css-class-wrapper=portlet-workflow-reports-web",
 		"com.liferay.portlet.display-category=category.hidden",
-		"com.liferay.portlet.footer-portlet-javascript=/js/main.js",
+		"com.liferay.portlet.footer-portlet-javascript=/js/index.js",
 		"com.liferay.portlet.friendly-url-mapping=workflow_reports_web",
 		"com.liferay.portlet.header-portlet-css=/css/main.css",
 		"com.liferay.portlet.icon=/icons/workflow.png",
@@ -57,11 +61,20 @@ import org.osgi.service.component.annotations.Component;
 public class WorkflowReportsPortlet extends MVCPortlet {
 
 	@Override
-	public void render(
+	public void doView(
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws IOException, PortletException {
 
-		super.render(renderRequest, renderResponse);
+		JSPackage jsPackage = _npmResolver.getJSPackage();
+
+		renderRequest.setAttribute(
+			WorkflowReportsWebKeys.WORKFLOW_REPORTS_BOOTSTRAP_REQUIRE,
+			jsPackage.getResolvedId() + " as bootstrapRequire");
+
+		super.doView(renderRequest, renderResponse);
 	}
+
+	@Reference
+	private NPMResolver _npmResolver;
 
 }

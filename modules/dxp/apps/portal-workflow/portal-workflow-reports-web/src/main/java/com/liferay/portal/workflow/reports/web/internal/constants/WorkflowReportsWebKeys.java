@@ -1,4 +1,3 @@
-<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -12,19 +11,17 @@
  *
  *
  */
---%>
 
-<%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet" %>
+package com.liferay.portal.workflow.reports.web.internal.constants;
 
-<%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %><%@
-taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
+/**
+ * Provides the Workflow Reports request attribute keys.
+ *
+ * @author Alexandre Araujo
+ */
+public class WorkflowReportsWebKeys {
 
-<%@ page import="com.liferay.portal.workflow.reports.web.internal.constants.WorkflowReportsWebKeys" %>
+	public static final String WORKFLOW_REPORTS_BOOTSTRAP_REQUIRE =
+		"WORKFLOW_REPORTS_BOOTSTRAP_REQUIRE";
 
-<liferay-theme:defineObjects />
-
-<portlet:defineObjects />
-
-<%
-String bootstrapRequire = (String)renderRequest.getAttribute(WorkflowReportsWebKeys.WORKFLOW_REPORTS_BOOTSTRAP_REQUIRE);
-%>
+}

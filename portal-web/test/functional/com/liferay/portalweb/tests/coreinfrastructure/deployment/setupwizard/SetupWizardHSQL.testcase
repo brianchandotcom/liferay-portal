@@ -52,29 +52,6 @@ definition {
 		Smoke.runSmoke();
 	}
 
-	@priority = "5"
-	test HSQLtoHSQLSampleDataDisabled {
-		property database.types = "hypersonic";
-		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "SetupWizardHSQL#HSQLtoHSQLSampleDataDisabled";
-
-		SetupWizard.configurePG(
-			addSampleData = "false",
-			administratorEmail = "test@liferay.com",
-			administratorFirstName = "Test",
-			administratorLastName = "Test",
-			databasePassword = PropsUtil.get("database.hypersonic.password"),
-			databaseType = "Hypersonic",
-			databaseUserName = PropsUtil.get("database.hypersonic.username"),
-			jdbcDriverClassName = PropsUtil.get("database.hypersonic.driver"),
-			jdbcURL = PropsUtil.get("database.hypersonic.url")
-		);
-
-		Smoke.viewWelcomePage();
-
-		Smoke.runSmoke();
-	}
-
 	@priority = "4"
 	test HSQLtoMariaDB {
 		property database.types = "mariadb";

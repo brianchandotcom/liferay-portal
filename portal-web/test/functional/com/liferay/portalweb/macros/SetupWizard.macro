@@ -45,8 +45,6 @@ definition {
 	macro configureDefaultPG {
 		SetupWizard.viewDefaultPortalNamePG();
 
-		SetupWizard.configureSampleDataPG(addSampleData = "${addSampleData}");
-
 		SetupWizard.viewDefaultAdministratorUserPG();
 
 		SetupWizard.viewDefaultDatabasePG();

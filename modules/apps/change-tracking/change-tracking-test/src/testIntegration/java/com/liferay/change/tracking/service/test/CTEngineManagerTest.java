@@ -55,7 +55,7 @@ import org.junit.runner.RunWith;
  * @author Daniel Kocsis
  */
 @RunWith(Arquillian.class)
-public class ChangeTrackingManagerTest {
+public class CTEngineManagerTest {
 
 	@ClassRule
 	@Rule
@@ -200,6 +200,7 @@ public class ChangeTrackingManagerTest {
 			"Change tracking collection must be null", ctCollection);
 	}
 
+	@Ignore
 	@Test
 	public void testDeleteCTCollectionWhenInvalidCollectionId() {
 		_ctEngineManager.deleteCTCollection(RandomTestUtil.randomInt());

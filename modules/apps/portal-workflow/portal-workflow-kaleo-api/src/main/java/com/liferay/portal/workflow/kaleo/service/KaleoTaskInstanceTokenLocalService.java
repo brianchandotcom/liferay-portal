@@ -355,6 +355,17 @@ public interface KaleoTaskInstanceTokenLocalService extends BaseLocalService,
 		ServiceContext serviceContext);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int searchCount(long kaleoInstanceId, Boolean completed,
+		Boolean searchByUserRoles, ServiceContext serviceContext);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int searchCount(Long kaleoInstanceId, String assetTitle,
+		String taskName, String[] assetTypes, Long[] assetPrimaryKeys,
+		Date dueDateGT, Date dueDateLT, Boolean completed,
+		Boolean searchByUserRoles, boolean andOperator,
+		ServiceContext serviceContext);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int searchCount(String keywords, Boolean completed,
 		Boolean searchByUserRoles, ServiceContext serviceContext);
 
@@ -363,12 +374,6 @@ public interface KaleoTaskInstanceTokenLocalService extends BaseLocalService,
 		Long[] assetPrimaryKeys, Date dueDateGT, Date dueDateLT,
 		Boolean completed, Boolean searchByUserRoles, boolean andOperator,
 		ServiceContext serviceContext);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int searchCount(String assetTitle, String taskName,
-		String[] assetTypes, Long[] assetPrimaryKeys, Date dueDateGT,
-		Date dueDateLT, Boolean completed, Boolean searchByUserRoles,
-		boolean andOperator, ServiceContext serviceContext);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int searchCount(String keywords, String[] assetTypes,

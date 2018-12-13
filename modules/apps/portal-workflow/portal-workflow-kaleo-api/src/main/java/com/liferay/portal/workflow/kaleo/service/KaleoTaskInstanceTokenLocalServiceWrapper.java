@@ -465,6 +465,25 @@ public class KaleoTaskInstanceTokenLocalServiceWrapper
 	}
 
 	@Override
+	public int searchCount(long kaleoInstanceId, Boolean completed,
+		Boolean searchByUserRoles,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext) {
+		return _kaleoTaskInstanceTokenLocalService.searchCount(kaleoInstanceId,
+			completed, searchByUserRoles, serviceContext);
+	}
+
+	@Override
+	public int searchCount(Long kaleoInstanceId, String assetTitle,
+		String taskName, String[] assetTypes, Long[] assetPrimaryKeys,
+		java.util.Date dueDateGT, java.util.Date dueDateLT, Boolean completed,
+		Boolean searchByUserRoles, boolean andOperator,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext) {
+		return _kaleoTaskInstanceTokenLocalService.searchCount(kaleoInstanceId,
+			assetTitle, taskName, assetTypes, assetPrimaryKeys, dueDateGT,
+			dueDateLT, completed, searchByUserRoles, andOperator, serviceContext);
+	}
+
+	@Override
 	public int searchCount(String keywords, Boolean completed,
 		Boolean searchByUserRoles,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext) {
@@ -481,17 +500,6 @@ public class KaleoTaskInstanceTokenLocalServiceWrapper
 		return _kaleoTaskInstanceTokenLocalService.searchCount(taskName,
 			assetType, assetPrimaryKeys, dueDateGT, dueDateLT, completed,
 			searchByUserRoles, andOperator, serviceContext);
-	}
-
-	@Override
-	public int searchCount(String assetTitle, String taskName,
-		String[] assetTypes, Long[] assetPrimaryKeys, java.util.Date dueDateGT,
-		java.util.Date dueDateLT, Boolean completed, Boolean searchByUserRoles,
-		boolean andOperator,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext) {
-		return _kaleoTaskInstanceTokenLocalService.searchCount(assetTitle,
-			taskName, assetTypes, assetPrimaryKeys, dueDateGT, dueDateLT,
-			completed, searchByUserRoles, andOperator, serviceContext);
 	}
 
 	@Override

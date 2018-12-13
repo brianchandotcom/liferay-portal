@@ -273,6 +273,15 @@ public class Test {
 		return new File(testSample.getSampleDir(), "expected-message.html");
 	}
 
+	protected String getMismatchMessage(
+		String expectedValue, String actualValue, String valueName) {
+
+		return JenkinsResultsParserUtil.combine(
+			"The expected ", valueName, " value ", expectedValue,
+			", Did not match the actual ", valueName, " value ", actualValue,
+			".");
+	}
+
 	protected List<String> getSimpleClassNames() {
 		if (_simpleClassNames == null) {
 			_simpleClassNames = new ArrayList<>();

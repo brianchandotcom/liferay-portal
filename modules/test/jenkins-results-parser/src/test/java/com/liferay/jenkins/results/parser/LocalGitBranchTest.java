@@ -30,8 +30,13 @@ public class LocalGitBranchTest extends GitRefTest {
 		File directory = new File(REPOSITORY_DIR);
 
 		if (!directory.equals(localGitBranch.getDirectory())) {
+			File localGitBranchDirectory = localGitBranch.getDirectory();
+
 			errorCollector.addError(
-				new Throwable("The directory should be " + REPOSITORY_DIR));
+				new Throwable(
+					getMismatchMessage(
+						directory.getPath(), localGitBranchDirectory.getPath(),
+						"directory")));
 		}
 	}
 
@@ -72,7 +77,9 @@ public class LocalGitBranchTest extends GitRefTest {
 
 		if (!REF_NAME.equals(localGitBranch.getName())) {
 			errorCollector.addError(
-				new Throwable("The branch name should be " + REF_NAME));
+				new Throwable(
+					getMismatchMessage(
+						REF_NAME, localGitBranch.getName(), "branch name")));
 		}
 	}
 
@@ -82,7 +89,9 @@ public class LocalGitBranchTest extends GitRefTest {
 
 		if (!REF_SHA.equals(localGitBranch.getSHA())) {
 			errorCollector.addError(
-				new Throwable("The branch sha should be " + REF_SHA));
+				new Throwable(
+					getMismatchMessage(
+						REF_SHA, localGitBranch.getSHA(), "branch SHA")));
 		}
 	}
 
@@ -95,9 +104,10 @@ public class LocalGitBranchTest extends GitRefTest {
 
 			errorCollector.addError(
 				new Throwable(
-					JenkinsResultsParserUtil.combine(
-						"The upstream branch name should be ",
-						REPOSITORY_UPSTREAM_BRANCH_NAME)));
+					getMismatchMessage(
+						REPOSITORY_UPSTREAM_BRANCH_NAME,
+						localGitBranch.getUpstreamBranchName(),
+						"upstream branch name")));
 		}
 	}
 

@@ -27,7 +27,9 @@ public class RemoteGitBranchTest extends GitRefTest {
 
 		if (!REF_NAME.equals(remoteGitBranch.getName())) {
 			errorCollector.addError(
-				new Throwable("The branch name should be " + REF_NAME));
+				new Throwable(
+					getMismatchMessage(
+						REF_NAME, remoteGitBranch.getName(), "branch name")));
 		}
 	}
 
@@ -56,8 +58,9 @@ public class RemoteGitBranchTest extends GitRefTest {
 		if (!remoteURL.equals(remoteGitBranch.getRemoteURL())) {
 			errorCollector.addError(
 				new Throwable(
-					JenkinsResultsParserUtil.combine(
-						"The remote url should be ", remoteURL)));
+					getMismatchMessage(
+						remoteURL, remoteGitBranch.getRemoteURL(),
+						"remote URL")));
 		}
 	}
 
@@ -68,8 +71,9 @@ public class RemoteGitBranchTest extends GitRefTest {
 		if (!REPOSITORY_NAME.equals(remoteGitBranch.getRepositoryName())) {
 			errorCollector.addError(
 				new Throwable(
-					JenkinsResultsParserUtil.combine(
-						"The repository name should be ", REPOSITORY_NAME)));
+					getMismatchMessage(
+						REPOSITORY_NAME, remoteGitBranch.getRepositoryName(),
+						"repository name")));
 		}
 	}
 
@@ -79,7 +83,9 @@ public class RemoteGitBranchTest extends GitRefTest {
 
 		if (!REF_SHA.equals(remoteGitBranch.getSHA())) {
 			errorCollector.addError(
-				new Throwable("The branch sha should be " + REF_SHA));
+				new Throwable(
+					getMismatchMessage(
+						REF_SHA, remoteGitBranch.getSHA(), "branch SHA")));
 		}
 	}
 
@@ -90,8 +96,9 @@ public class RemoteGitBranchTest extends GitRefTest {
 		if (!REPOSITORY_USERNAME.equals(remoteGitBranch.getUsername())) {
 			errorCollector.addError(
 				new Throwable(
-					JenkinsResultsParserUtil.combine(
-						"The username should be ", REPOSITORY_USERNAME)));
+					getMismatchMessage(
+						REPOSITORY_USERNAME, remoteGitBranch.getUsername(),
+						"username")));
 		}
 	}
 

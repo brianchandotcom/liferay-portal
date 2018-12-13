@@ -76,10 +76,9 @@ public class ServiceMonitoringControlImpl implements ServiceMonitoringControl {
 		_monitorServiceRequest = monitorServiceRequest;
 	}
 
-	private static boolean _inclusiveMode = true;
-	private static boolean _monitorServiceRequest;
-	private static final Set<String> _serviceClasses = new HashSet<>();
-	private static final Set<MethodSignature> _serviceClassMethods =
-		new HashSet<>();
+	private boolean _inclusiveMode = true;
+	private boolean _monitorServiceRequest;
+	private final Set<String> _serviceClasses = new HashSet<>();
+	private final Set<MethodSignature> _serviceClassMethods = new HashSet<>();
 
 }

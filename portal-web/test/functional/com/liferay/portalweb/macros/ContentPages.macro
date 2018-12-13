@@ -1,5 +1,12 @@
 definition {
 	macro addPage {
+		var key_breadcrumbName="Pages";
+
+		AssertClick(
+			locator1 = "Breadcrumb#BREADCRUMB_ENTRY_LINK",
+			value1="Pages"
+		);
+
 		LexiconEntry.gotoAddMenuItem(menuItem = "Public Page");
 
 		if (!(isSet(collectionName))) {

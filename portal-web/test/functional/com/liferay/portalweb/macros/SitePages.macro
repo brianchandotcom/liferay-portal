@@ -136,6 +136,13 @@ definition {
 			LexiconEntry.gotoAdd();
 		}
 		else {
+			var key_breadcrumbName="Pages";
+
+			AssertClick(
+				locator1 = "Breadcrumb#BREADCRUMB_ENTRY_LINK",
+				value1="Pages"
+			);
+
 			LexiconEntry.gotoAddMenuItem(menuItem = "Private Page");
 		}
 
@@ -162,6 +169,13 @@ definition {
 	}
 
 	macro addPublicPage {
+		var key_breadcrumbName="Pages";
+
+		AssertClick(
+			locator1 = "Breadcrumb#BREADCRUMB_ENTRY_LINK",
+			value1="Pages"
+		);
+
 		LexiconEntry.gotoAddMenuItem(menuItem = "Public Page");
 
 		SitePages._addPage(

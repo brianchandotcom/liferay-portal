@@ -7101,6 +7101,8 @@ public class JournalArticleLocalServiceImpl
 		actionableDynamicQuery.setTransactionConfig(
 			DefaultActionableDynamicQuery.REQUIRES_NEW_TRANSACTION_CONFIG);
 
+		actionableDynamicQuery.setInterval(1000);
+
 		actionableDynamicQuery.performActions();
 
 		if (_previousCheckDate == null) {

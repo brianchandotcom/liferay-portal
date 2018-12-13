@@ -1,0 +1,33 @@
+{
+	"author": "",
+	"dependencies": {
+		"clay-charts-react": "^2.4.1",
+		"moment": "^2.22.2",
+		"react": "^16.6.3",
+		"react-dom": "^16.6.3"
+	},
+	"description": "",
+	"devDependencies": {
+		"babel-cli": "^6.26.0",
+		"babel-preset-env": "^1.7.0",
+		"babel-preset-react": "^6.24.1",
+		"check-source-formatting": "^2.0.13",
+		"copyfiles": "^2.1.0",
+		"eslint": "^5.10.0",
+		"eslint-config-liferay": "^2.0.18",
+		"eslint-plugin-react": "^7.11.1",
+		"liferay-npm-bundler": "^2.5.1",
+		"liferay-npm-bundler-preset-react": "^1.8.0",
+		"prettier-eslint-cli": "^4.7.1"
+	},
+	"license": "ISC",
+	"main": "js/index.js",
+	"name": "portal-workflow-reports-portlet",
+	"scripts": {
+		"build": "babel --source-maps -d classes/META-INF/resources src/main/resources/META-INF/resources && liferay-npm-bundler",
+		"csf": "csf src/main/resources/META-INF/resources/css/**/*.scss",
+		"format": "prettier-eslint --write 'src/main/resources/META-INF/resources/js/**/*.js'",
+		"lint": "eslint src/main/resources/META-INF/resources/js/"
+	},
+	"version": "1.0.0"
+}

@@ -1,0 +1,4 @@
+{
+    "presets": ["env", "react"],
+    "ignore": ["**/rollup.config.js"]
+}

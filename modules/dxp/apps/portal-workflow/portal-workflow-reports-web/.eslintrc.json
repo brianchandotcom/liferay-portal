@@ -1,0 +1,116 @@
+{
+	"env": {
+		"browser": true,
+		"es6": true,
+		"jest": true,
+		"node": true
+	},
+	"extends": [
+		"liferay"
+	],
+	"globals": {
+		"AUI": true,
+		"Liferay": true,
+		"NODE_ENV": true
+	},
+	"parser": "babel-eslint",
+	"parserOptions": {
+		"ecmaFeatures": {
+			"allowImportExportEverywhere": true,
+			"experimentalObjectRestSpread": true,
+			"jsx": true
+		},
+		"ecmaVersion": 2017,
+		"sourceType": "module"
+	},
+	"plugins": [
+		"react"
+	],
+	"rules": {
+		"comma-dangle": 0,
+		"eol-last": [
+			2,
+			"never"
+		],
+		"indent": [
+			2,
+			"tab",
+			{
+				"SwitchCase": 1
+			}
+		],
+		"max-len": 0,
+		"new-cap": [
+			2,
+			{
+				"capIsNew": false
+			}
+		],
+		"no-console": 0,
+		"no-undef": 2,
+		"no-underscore-dangle": [
+			2,
+			{
+				"allowAfterThis": true,
+				"enforceInMethodNames": true
+			}
+		],
+		"no-unused-vars": [
+			2,
+			{
+				"args": "after-used",
+				"ignoreRestSiblings": false,
+				"vars": "all"
+			}
+		],
+		"object-shorthand": 2,
+		"prefer-const": 2,
+		"prefer-template": 2,
+		"quote-props": [
+			2,
+			"as-needed"
+		],
+		"quotes": [
+			2,
+			"single",
+			"avoid-escape"
+		],
+		"react/jsx-boolean-value": 2,
+		"react/jsx-handler-names": 0,
+		"react/jsx-key": 2,
+		"react/jsx-no-bind": 2,
+		"react/jsx-no-literals": 2,
+		"react/jsx-sort-props": 2,
+		"react/jsx-uses-vars": 2,
+		"react/sort-comp": [
+			2,
+			{
+				"groups": {
+					"lifecycle": [
+						"created",
+						"attached",
+						"detached",
+						"rendered",
+						"shouldUpdate"
+					]
+				},
+				"order": [
+					"static-methods",
+					"lifecycle",
+					"everything-else",
+					"render"
+				]
+			}
+		],
+		"require-jsdoc": 0,
+		"sort-keys": [
+			2,
+			"asc",
+			{
+				"caseSensitive": false
+			}
+		],
+		"sort-vars": 2,
+		"valid-jsdoc": 0
+	}
+}

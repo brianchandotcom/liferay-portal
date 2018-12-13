@@ -53,12 +53,21 @@ public class AsahFaroBackendClientImpl implements AsahFaroBackendClient {
 		String individualSegmentId, int cur, int delta,
 		List<OrderByField> orderByFields) {
 
+		FilterBuilder filterBuilder = new FilterBuilder();
+
+		filterBuilder.addFilter(
+			"dataSourceIndividualPKs/" +
+				System.getProperty("asah.faro.backend.dxp.dataSourceId"),
+			FilterConstants.COMPARISON_OPERATOR_NOT_EQUALS, StringPool.NULL);
+		filterBuilder.addFilter(
+			"individualSegmentIds", FilterConstants.COMPARISON_OPERATOR_EQUALS,
+			individualSegmentId);
+
 		try {
 			String response = _jsonWebServiceClient.doGet(
 				Rels.INDIVIDUALS,
 				_getParameters(
-					_getIndividualsFilterBuilder(
-						_getDataSourceId(), individualSegmentId),
+					filterBuilder,
 					FilterConstants.FIELD_NAME_CONTEXT_INDIVIDUAL, cur, delta,
 					orderByFields),
 				_getHeaders());
@@ -75,12 +84,20 @@ public class AsahFaroBackendClientImpl implements AsahFaroBackendClient {
 	public Results<IndividualSegment> getIndividualSegments(
 		int cur, int delta, List<OrderByField> orderByFields) {
 
+		FilterBuilder filterBuilder = new FilterBuilder();
+
+		filterBuilder.addFilter(
+			"individualCount",
+			FilterConstants.COMPARISON_OPERATOR_GREATER_THAN_OR_EQUAL, 1);
+		filterBuilder.addFilter(
+			"status", FilterConstants.COMPARISON_OPERATOR_EQUALS,
+			IndividualSegment.Status.ACTIVE.name());
+
 		try {
 			String response = _jsonWebServiceClient.doGet(
 				Rels.INDIVIDUAL_SEGMENTS,
 				_getParameters(
-					_getIndividualSegmentFilterBuilder(
-						IndividualSegment.Status.ACTIVE.name(), 1),
+					filterBuilder,
 					FilterConstants.FIELD_NAME_CONTEXT_INDIVIDUAL_SEGMENT, cur,
 					delta, orderByFields),
 				_getHeaders());
@@ -99,10 +116,6 @@ public class AsahFaroBackendClientImpl implements AsahFaroBackendClient {
 			System.getProperty("asah.faro.backend.url"));
 	}
 
-	private String _getDataSourceId() {
-		return System.getProperty("asah.faro.backend.dxp.dataSourceId");
-	}
-
 	private Map<String, String> _getHeaders() {
 		Map<String, String> headers = new HashMap<>();
 
@@ -111,39 +124,6 @@ public class AsahFaroBackendClientImpl implements AsahFaroBackendClient {
 			System.getProperty("asah.faro.backend.security.signature"));
 
 		return headers;
-	}
-
-	private FilterBuilder _getIndividualSegmentFilterBuilder(
-		String individualSegmentStatus,
-		long individualSegmentMinIndividualCount) {
-
-		FilterBuilder filterBuilder = new FilterBuilder();
-
-		filterBuilder.addFilter(
-			"individualCount",
-			FilterConstants.COMPARISON_OPERATOR_GREATER_THAN_OR_EQUAL,
-			individualSegmentMinIndividualCount);
-		filterBuilder.addFilter(
-			"status", FilterConstants.COMPARISON_OPERATOR_EQUALS,
-			individualSegmentStatus);
-
-		return filterBuilder;
-	}
-
-	private FilterBuilder _getIndividualsFilterBuilder(
-		String dataSourceId, String individualSegmentId) {
-
-		FilterBuilder filterBuilder = new FilterBuilder();
-
-		filterBuilder.addFilter(
-			"individualSegmentIds", FilterConstants.COMPARISON_OPERATOR_EQUALS,
-			individualSegmentId);
-
-		filterBuilder.addFilter(
-			"dataSourceIndividualPKs/" + dataSourceId,
-			FilterConstants.COMPARISON_OPERATOR_NOT_EQUALS, StringPool.NULL);
-
-		return filterBuilder;
 	}
 
 	private MultivaluedMap<String, Object> _getParameters(

@@ -156,6 +156,18 @@ public class WebSiteCollectionResourceTest {
 	}
 
 	@Test
+	public void testGetPrivateUrlWithNoPrivateLayouts() throws Throwable {
+		Group group = GroupTestUtil.addGroup();
+
+		try {
+			Assert.assertNull(_getPrivateURL(group));
+		}
+		finally {
+			_groupLocalService.deleteGroup(group);
+		}
+	}
+
+	@Test
 	public void testGetPublicUrl() throws Throwable {
 		Group group = GroupTestUtil.addGroup();
 
@@ -181,6 +193,18 @@ public class WebSiteCollectionResourceTest {
 				publicUrl.endsWith(
 					PropsValues.LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING +
 						group.getFriendlyURL()));
+		}
+		finally {
+			_groupLocalService.deleteGroup(group);
+		}
+	}
+
+	@Test
+	public void testGetPublicUrlWithNoPuplicLayouts() throws Throwable {
+		Group group = GroupTestUtil.addGroup();
+
+		try {
+			Assert.assertNull(_getPublicURL(group));
 		}
 		finally {
 			_groupLocalService.deleteGroup(group);

@@ -668,9 +668,9 @@ definition {
 				locator1 = "AssetCategorization#TAGS_FIELD",
 				value1 = "${tagName}"
 			);
-		}
 
-		Click(locator1 = "Button#ADD_TAGS");
+			AssertClick(locator1 = "Button#ADD_TAGS", value1 = "Add");
+		}
 
 		PortletEntry.publish();
 	}

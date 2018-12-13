@@ -54,7 +54,7 @@ if (ListUtil.isEmpty(folders) && ListUtil.isEmpty(articles)) {
 					<liferay-util:include page="/subscribe.jsp" servletContext="<%= application %>" />
 				</li>
 				<li>
-					<liferay-util:include page="/folder_action.jsp" servletContext="<%= application %>" />
+					<liferay-util:include page="/info_panel_folder_action.jsp" servletContext="<%= application %>" />
 				</li>
 			</ul>
 
@@ -115,7 +115,7 @@ if (ListUtil.isEmpty(folders) && ListUtil.isEmpty(articles)) {
 					<liferay-util:include page="/subscribe.jsp" servletContext="<%= application %>" />
 				</li>
 				<li>
-					<liferay-util:include page="/article_action.jsp" servletContext="<%= application %>" />
+					<liferay-util:include page="/info_panel_article_action.jsp" servletContext="<%= application %>" />
 				</li>
 			</ul>
 

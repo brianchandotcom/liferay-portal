@@ -106,6 +106,32 @@ public class JspAnalyzerPluginTest {
 	}
 
 	@Test
+	public void testPageImportJspJstlCore() throws Exception {
+		JspAnalyzerPlugin jspAnalyzerPlugin = new JspAnalyzerPlugin();
+
+		URL url = getResource("dependencies/import_jsp_jstl_core.jsp");
+
+		InputStream inputStream = url.openStream();
+
+		String content = IO.collect(inputStream);
+
+		Builder builder = new Builder();
+
+		builder.build();
+
+		Set<String> taglibURIs = new HashSet<>();
+
+		jspAnalyzerPlugin.addTaglibRequirements(builder, content, taglibURIs);
+
+		String requireCapability = builder.getProperty(
+			Constants.REQUIRE_CAPABILITY);
+
+		Assert.assertTrue(
+			requireCapability.contains(
+				"(uri=http://java.sun.com/jsp/jstl/core)"));
+	}
+
+	@Test
 	public void testPageImportsWithComments() throws Exception {
 		JspAnalyzerPlugin jspAnalyzerPlugin = new JspAnalyzerPlugin();
 

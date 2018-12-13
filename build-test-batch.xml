@@ -1634,6 +1634,10 @@ log.sanitizer.enabled=false</echo>
 								<param name="database.type" value="@{database.type}" />
 							</antcall>
 
+							<echo append="true" file="portal-impl/src/portal-ext.properties">
+
+module.framework.properties.lpkg.index.validator.enabled=true</echo>
+
 							<antcall inheritAll="false" target="prepare-system-ext-properties" />
 
 							<ant dir="modules" inheritAll="false" target="build-app-lpkg-base" />

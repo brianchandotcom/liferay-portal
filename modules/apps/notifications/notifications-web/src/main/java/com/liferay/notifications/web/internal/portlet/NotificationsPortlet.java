@@ -66,7 +66,7 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class NotificationsPortlet extends MVCPortlet {
 
-	public void deleteAllNotifications(
+	public void deleteNotifications(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
@@ -86,7 +86,7 @@ public class NotificationsPortlet extends MVCPortlet {
 		SessionMessages.add(
 			actionRequest, "requestProcessed",
 			LanguageUtil.get(
-				resourceBundle, "all-notifications-were-deleted-successfully"));
+				resourceBundle, "notifications-were-deleted-successfully"));
 
 		_sendRedirect(actionRequest, actionResponse);
 	}
@@ -256,8 +256,8 @@ public class NotificationsPortlet extends MVCPortlet {
 			String actionName = ParamUtil.getString(
 				actionRequest, ActionRequest.ACTION_NAME);
 
-			if (actionName.equals("deleteAllNotifications")) {
-				deleteAllNotifications(actionRequest, actionResponse);
+			if (actionName.equals("deleteNotifications")) {
+				deleteNotifications(actionRequest, actionResponse);
 			}
 			else if (actionName.equals("deleteUserNotificationEvent")) {
 				deleteUserNotificationEvent(actionRequest, actionResponse);

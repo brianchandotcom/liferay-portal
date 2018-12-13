@@ -83,7 +83,7 @@ public class NotificationsManagementToolbarDisplayContext {
 					SafeConsumer.ignore(
 						dropdownItem -> {
 							dropdownItem.putData(
-								"action", "deleteAllNotifications");
+								"action", "deleteNotifications");
 							dropdownItem.setIcon("times");
 							dropdownItem.setLabel(
 								LanguageUtil.get(_request, "delete"));

@@ -119,12 +119,12 @@ navigationURL.setParameter(SearchContainer.DEFAULT_CUR_PARAM, "0");
 </div>
 
 <aui:script sandbox="<%= true %>">
-	var deleteAllNotifications = function() {
+	var deleteNotifications = function() {
 		var form = document.getElementById('<portlet:namespace />fm');
 
 		form.setAttribute('method', 'post');
 
-		submitForm(form, '<portlet:actionURL name="deleteAllNotifications"><portlet:param name="redirect" value="<%= currentURL %>" /></portlet:actionURL>');
+		submitForm(form, '<portlet:actionURL name="deleteNotifications"><portlet:param name="redirect" value="<%= currentURL %>" /></portlet:actionURL>');
 	};
 
 	var markNotificationsAsRead = function() {
@@ -144,7 +144,7 @@ navigationURL.setParameter(SearchContainer.DEFAULT_CUR_PARAM, "0");
 	};
 
 	var ACTIONS = {
-		'deleteAllNotifications': deleteAllNotifications,
+		'deleteNotifications': deleteNotifications,
 		'markNotificationsAsRead': markNotificationsAsRead,
 		'markNotificationsAsUnread': markNotificationsAsUnread
 	};

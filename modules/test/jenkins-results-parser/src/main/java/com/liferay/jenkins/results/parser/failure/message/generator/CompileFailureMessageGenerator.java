@@ -37,8 +37,7 @@ public class CompileFailureMessageGenerator
 		if (start != -1) {
 			start = consoleText.lastIndexOf("\n", start);
 
-			return getConsoleTextSnippetElementByStart(
-				consoleText, start);
+			return getConsoleTextSnippetElementByStart(consoleText, start);
 		}
 
 		return null;

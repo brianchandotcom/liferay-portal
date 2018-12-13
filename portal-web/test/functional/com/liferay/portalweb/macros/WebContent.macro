@@ -661,6 +661,12 @@ definition {
 
 		Panel.expandPanel(panel = "Metadata");
 
+		if ("${selectTag}" == "true") {
+			AssetCategorization.selectTag(
+			tagNameList = "${tagNameList}"
+			);
+		}
+		else {
 		for (var tagName : list "${tagNameList}") {
 			Click(locator1 = "Button#ADD_TAGS");
 
@@ -670,6 +676,7 @@ definition {
 			);
 
 			AssertClick(locator1 = "Button#ADD_TAGS", value1 = "Add");
+			}
 		}
 
 		PortletEntry.publish();

@@ -36,8 +36,9 @@ public class ContactImpl extends ContactBaseImpl {
 	/**
 	 * Always returns true, since this information is no longer stored in the database
 	 *
-	 * @deprecated As of Judson (7.1.x)
+	 * @deprecated As of Mueller (7.2.x), with no direct replacement
 	 */
+	@Deprecated
 	public boolean getMale() {
 		return true;
 	}
@@ -45,7 +46,7 @@ public class ContactImpl extends ContactBaseImpl {
 	/**
 	 * Always returns true, since this information is no longer stored in the database
 	 *
-	 * @deprecated As of Judson (7.1.x)
+	 * @deprecated As of Mueller (7.2.x), with no direct replacement
 	 */
 	@Deprecated
 	public boolean isMale() {
@@ -64,7 +65,7 @@ public class ContactImpl extends ContactBaseImpl {
 	/**
 	 * Does nothing, since this information is no longer stored in the database
 	 *
-	 * @deprecated As of Judson (7.1.x)
+	 * @deprecated As of Mueller (7.2.x), with no direct replacement
 	 */
 	@Deprecated
 	public void setMale(boolean male) {

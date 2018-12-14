@@ -16,6 +16,8 @@
 
 <%@ include file="/layout/edit_layout/init.jsp" %>
 
+<liferay-ui:success key="layoutAdded" message="the-page-was-created-succesfully" />
+
 <div class="layout-content" id="main-content" role="main">
 	<liferay-portlet:runtime
 		portletName="<%= ContentLayoutPortletKeys.CONTENT_PAGE_EDITOR_PORTLET %>"

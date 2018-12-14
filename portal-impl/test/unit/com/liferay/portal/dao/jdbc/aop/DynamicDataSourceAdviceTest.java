@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.spring.aop.ChainableMethodAdvice;
 import com.liferay.portal.spring.aop.ServiceBeanAopCacheManager;
+import com.liferay.portal.spring.aop.ServiceBeanAopInvocationHandler;
 import com.liferay.portal.spring.aop.ServiceBeanMethodInvocation;
 
 import java.lang.reflect.InvocationHandler;
@@ -79,42 +80,41 @@ public class DynamicDataSourceAdviceTest {
 		dynamicDataSourceAdvice.setDynamicDataSourceTargetSource(
 			_dynamicDataSourceTargetSource);
 
-		_serviceBeanAopCacheManager = ServiceBeanAopCacheManager.create(
-			new ChainableMethodAdvice[] {dynamicDataSourceAdvice});
+		_serviceBeanAopInvocationHandler = ServiceBeanAopCacheManager.create(
+			_testClass, new ChainableMethodAdvice[] {dynamicDataSourceAdvice});
 	}
 
 	@After
 	public void tearDown() {
-		ServiceBeanAopCacheManager.destroy(_serviceBeanAopCacheManager);
+		ServiceBeanAopCacheManager.destroy(_serviceBeanAopInvocationHandler);
 	}
 
 	@Test
 	public void testDynamicDataSourceAdvice() throws Throwable {
-		TestClass testClass = new TestClass();
-
 		for (int i = 1; i <= 6; i++) {
 			ServiceBeanMethodInvocation serviceBeanMethodInvocation =
-				createMethodInvocation(testClass, "method" + i);
+				createMethodInvocation("method" + i);
 
 			serviceBeanMethodInvocation.proceed();
 		}
 
-		testClass.assertExecutions();
+		_testClass.assertExecutions();
 	}
 
 	protected ServiceBeanMethodInvocation createMethodInvocation(
-			TestClass testClass, String methodName)
+			String methodName)
 		throws Exception {
 
 		return new ServiceBeanMethodInvocation(
-			_serviceBeanAopCacheManager.getAopMethod(
-				testClass, TestClass.class.getMethod(methodName)),
+			_serviceBeanAopInvocationHandler.getAopMethod(
+				TestClass.class.getMethod(methodName)),
 			new Object[0]);
 	}
 
 	private DynamicDataSourceTargetSource _dynamicDataSourceTargetSource;
 	private DataSource _readDataSource;
-	private ServiceBeanAopCacheManager _serviceBeanAopCacheManager;
+	private ServiceBeanAopInvocationHandler _serviceBeanAopInvocationHandler;
+	private final TestClass _testClass = new TestClass();
 	private DataSource _writeDataSource;
 
 	private class TestClass {
@@ -197,7 +197,7 @@ public class DynamicDataSourceAdviceTest {
 		@Transactional(readOnly = true)
 		public void method6() throws Throwable {
 			ServiceBeanMethodInvocation serviceBeanMethodInvocation =
-				createMethodInvocation(this, "method3");
+				createMethodInvocation("method3");
 
 			serviceBeanMethodInvocation.proceed();
 
@@ -206,8 +206,7 @@ public class DynamicDataSourceAdviceTest {
 			Assert.assertSame(
 				_readDataSource, _dynamicDataSourceTargetSource.getTarget());
 
-			serviceBeanMethodInvocation = createMethodInvocation(
-				this, "method1");
+			serviceBeanMethodInvocation = createMethodInvocation("method1");
 
 			_callerOperation.set(Operation.READ);
 
@@ -220,8 +219,7 @@ public class DynamicDataSourceAdviceTest {
 			Assert.assertSame(
 				_readDataSource, _dynamicDataSourceTargetSource.getTarget());
 
-			serviceBeanMethodInvocation = createMethodInvocation(
-				this, "method2");
+			serviceBeanMethodInvocation = createMethodInvocation("method2");
 
 			serviceBeanMethodInvocation.proceed();
 
@@ -230,8 +228,7 @@ public class DynamicDataSourceAdviceTest {
 			Assert.assertSame(
 				_readDataSource, _dynamicDataSourceTargetSource.getTarget());
 
-			serviceBeanMethodInvocation = createMethodInvocation(
-				this, "method4");
+			serviceBeanMethodInvocation = createMethodInvocation("method4");
 
 			serviceBeanMethodInvocation.proceed();
 

@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
 import com.liferay.portal.spring.aop.AopMethod;
 import com.liferay.portal.spring.aop.ChainableMethodAdvice;
 import com.liferay.portal.spring.aop.ServiceBeanAopCacheManager;
+import com.liferay.portal.spring.aop.ServiceBeanAopInvocationHandler;
 import com.liferay.portal.spring.aop.ServiceBeanMethodInvocation;
 
 import java.lang.reflect.Method;
@@ -44,13 +45,14 @@ public class ServiceContextAdviceTest {
 
 	@Before
 	public void setUp() {
-		_serviceBeanAopCacheManager = ServiceBeanAopCacheManager.create(
+		_serviceBeanAopInvocationHandler = ServiceBeanAopCacheManager.create(
+			_testInterceptedClass,
 			new ChainableMethodAdvice[] {new ServiceContextAdvice()});
 	}
 
 	@After
 	public void tearDown() {
-		ServiceBeanAopCacheManager.destroy(_serviceBeanAopCacheManager);
+		ServiceBeanAopCacheManager.destroy(_serviceBeanAopInvocationHandler);
 	}
 
 	@Test
@@ -78,8 +80,8 @@ public class ServiceContextAdviceTest {
 		Method method = ReflectionTestUtil.getMethod(
 			TestInterceptedClass.class, "method");
 
-		AopMethod aopMethod = _serviceBeanAopCacheManager.getAopMethod(
-			new TestInterceptedClass(), method);
+		AopMethod aopMethod = _serviceBeanAopInvocationHandler.getAopMethod(
+			method);
 
 		ChainableMethodAdvice[] chainableMethodAdvices =
 			ReflectionTestUtil.getFieldValue(
@@ -115,8 +117,8 @@ public class ServiceContextAdviceTest {
 		Method method = ReflectionTestUtil.getMethod(
 			TestInterceptedClass.class, "method", Object.class);
 
-		AopMethod aopMethod = _serviceBeanAopCacheManager.getAopMethod(
-			new TestInterceptedClass(), method);
+		AopMethod aopMethod = _serviceBeanAopInvocationHandler.getAopMethod(
+			method);
 
 		ChainableMethodAdvice[] chainableMethodAdvices =
 			ReflectionTestUtil.getFieldValue(
@@ -154,12 +156,12 @@ public class ServiceContextAdviceTest {
 		Method method, Object... arguments) {
 
 		return new ServiceBeanMethodInvocation(
-			_serviceBeanAopCacheManager.getAopMethod(
-				new TestInterceptedClass(), method),
-			arguments);
+			_serviceBeanAopInvocationHandler.getAopMethod(method), arguments);
 	}
 
-	private ServiceBeanAopCacheManager _serviceBeanAopCacheManager;
+	private ServiceBeanAopInvocationHandler _serviceBeanAopInvocationHandler;
+	private final TestInterceptedClass _testInterceptedClass =
+		new TestInterceptedClass();
 
 	private static class TestInterceptedClass {
 

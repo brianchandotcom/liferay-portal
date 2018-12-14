@@ -14,154 +14,47 @@
 
 package com.liferay.portal.spring.aop;
 
-import com.liferay.petra.lang.HashUtil;
-import com.liferay.petra.reflect.AnnotationLocator;
-import com.liferay.portal.transaction.TransactionsUtil;
-
-import java.lang.annotation.Annotation;
-import java.lang.reflect.Method;
-
-import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author Shuyang Zhou
+ * @author Preston Crary
  */
 public class ServiceBeanAopCacheManager {
 
-	public static ServiceBeanAopCacheManager create(
-		ChainableMethodAdvice[] chainableMethodAdvices) {
+	public static ServiceBeanAopInvocationHandler create(
+		Object target, ChainableMethodAdvice[] chainableMethodAdvices) {
 
-		ServiceBeanAopCacheManager serviceBeanAopCacheManager =
-			new ServiceBeanAopCacheManager(chainableMethodAdvices);
+		ServiceBeanAopInvocationHandler serviceBeanAopCacheManager =
+			new ServiceBeanAopInvocationHandler(target, chainableMethodAdvices);
 
-		_serviceBeanAopCacheManagers.add(serviceBeanAopCacheManager);
+		_serviceBeanAopInvocationHandler.add(serviceBeanAopCacheManager);
 
 		return serviceBeanAopCacheManager;
 	}
 
 	public static void destroy(
-		ServiceBeanAopCacheManager serviceBeanAopCacheManager) {
+		ServiceBeanAopInvocationHandler serviceBeanAopInvocationHandler) {
 
-		_serviceBeanAopCacheManagers.remove(serviceBeanAopCacheManager);
+		_serviceBeanAopInvocationHandler.remove(
+			serviceBeanAopInvocationHandler);
 	}
 
 	public static void reset() {
-		for (ServiceBeanAopCacheManager serviceBeanAopCacheManager :
-				_serviceBeanAopCacheManagers) {
+		for (ServiceBeanAopInvocationHandler serviceBeanAopInvocationHandler :
+				_serviceBeanAopInvocationHandler) {
 
-			Map<CacheKey, AopMethod> aopMethods =
-				serviceBeanAopCacheManager._aopMethods;
-
-			aopMethods.clear();
+			serviceBeanAopInvocationHandler.reset();
 		}
 	}
 
-	public AopMethod getAopMethod(Object target, Method method) {
-		if (!TransactionsUtil.isEnabled()) {
-			return new AopMethod(
-				target, method, _emptyChainableMethodAdvices, null);
-		}
-
-		return _aopMethods.computeIfAbsent(
-			new CacheKey(target, method), this::_createAopMethod);
+	private ServiceBeanAopCacheManager() {
 	}
 
-	private ServiceBeanAopCacheManager(
-		ChainableMethodAdvice[] chainableMethodAdvices) {
-
-		_fullChainableMethodAdvices = chainableMethodAdvices;
-	}
-
-	private AopMethod _createAopMethod(CacheKey cacheKey) {
-		Object target = cacheKey._target;
-
-		Class<?> targetClass = target.getClass();
-
-		Method method = cacheKey._method;
-
-		List<ChainableMethodAdvice> filteredChainableMethodAdvices =
-			new ArrayList<>();
-		List<Object> filteredAdviceMethodContexts = new ArrayList<>();
-
-		Map<Class<? extends Annotation>, Annotation> annotations =
-			AnnotationLocator.index(method, targetClass);
-
-		for (ChainableMethodAdvice chainableMethodAdvice :
-				_fullChainableMethodAdvices) {
-
-			Object methodContext = chainableMethodAdvice.createMethodContext(
-				targetClass, method, annotations);
-
-			if (methodContext != null) {
-				filteredChainableMethodAdvices.add(chainableMethodAdvice);
-
-				filteredAdviceMethodContexts.add(methodContext);
-			}
-		}
-
-		ChainableMethodAdvice[] chainableMethodAdvices =
-			_emptyChainableMethodAdvices;
-		Object[] adviceMethodContexts = null;
-
-		if (!filteredChainableMethodAdvices.isEmpty()) {
-			chainableMethodAdvices = filteredChainableMethodAdvices.toArray(
-				new ChainableMethodAdvice
-					[filteredChainableMethodAdvices.size()]);
-
-			adviceMethodContexts = filteredAdviceMethodContexts.toArray(
-				new Object[filteredAdviceMethodContexts.size()]);
-		}
-
-		return new AopMethod(
-			target, method, chainableMethodAdvices, adviceMethodContexts);
-	}
-
-	private static final ChainableMethodAdvice[] _emptyChainableMethodAdvices =
-		new ChainableMethodAdvice[0];
-	private static final Set<ServiceBeanAopCacheManager>
-		_serviceBeanAopCacheManagers = Collections.newSetFromMap(
+	private static final Set<ServiceBeanAopInvocationHandler>
+		_serviceBeanAopInvocationHandler = Collections.newSetFromMap(
 			new ConcurrentHashMap<>());
-
-	private final Map<CacheKey, AopMethod> _aopMethods =
-		new ConcurrentHashMap<>();
-	private final ChainableMethodAdvice[] _fullChainableMethodAdvices;
-
-	private static class CacheKey {
-
-		@Override
-		public boolean equals(Object obj) {
-			CacheKey cacheKey = (CacheKey)obj;
-
-			if (Objects.equals(_target, cacheKey._target) &&
-				Objects.equals(_method, cacheKey._method)) {
-
-				return true;
-			}
-
-			return false;
-		}
-
-		@Override
-		public int hashCode() {
-			int hash = HashUtil.hash(0, _target);
-
-			return HashUtil.hash(hash, _method);
-		}
-
-		private CacheKey(Object target, Method method) {
-			_target = target;
-			_method = method;
-		}
-
-		private final Method _method;
-		private final Object _target;
-
-	}
 
 }

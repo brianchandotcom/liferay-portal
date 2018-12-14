@@ -48,10 +48,10 @@ public class ServiceBeanAutoProxyCreator
 	}
 
 	public void destroy() {
-		for (ServiceBeanAopCacheManager serviceBeanAopCacheManager :
-				_serviceBeanAopCacheManagers) {
+		for (ServiceBeanAopInvocationHandler serviceBeanAopInvocationHandler :
+				_serviceBeanAopInvocationHandlers) {
 
-			ServiceBeanAopCacheManager.destroy(serviceBeanAopCacheManager);
+			ServiceBeanAopCacheManager.destroy(serviceBeanAopInvocationHandler);
 		}
 	}
 
@@ -72,15 +72,14 @@ public class ServiceBeanAutoProxyCreator
 
 		_earlyProxyReferences.add(new CacheKey(beanClass, beanName));
 
-		ServiceBeanAopCacheManager serviceBeanAopCacheManager =
-			ServiceBeanAopCacheManager.create(_chainableMethodAdvices);
+		ServiceBeanAopInvocationHandler serviceBeanAopInvocationHandler =
+			ServiceBeanAopCacheManager.create(bean, _chainableMethodAdvices);
 
-		_serviceBeanAopCacheManagers.add(serviceBeanAopCacheManager);
+		_serviceBeanAopInvocationHandlers.add(serviceBeanAopInvocationHandler);
 
 		return ProxyUtil.newProxyInstance(
 			_classLoader, ReflectionUtil.getInterfaces(bean),
-			new ServiceBeanAopInvocationHandler(
-				bean, serviceBeanAopCacheManager));
+			serviceBeanAopInvocationHandler);
 	}
 
 	@Override
@@ -93,15 +92,14 @@ public class ServiceBeanAutoProxyCreator
 			return bean;
 		}
 
-		ServiceBeanAopCacheManager serviceBeanAopCacheManager =
-			ServiceBeanAopCacheManager.create(_chainableMethodAdvices);
+		ServiceBeanAopInvocationHandler serviceBeanAopInvocationHandler =
+			ServiceBeanAopCacheManager.create(bean, _chainableMethodAdvices);
 
-		_serviceBeanAopCacheManagers.add(serviceBeanAopCacheManager);
+		_serviceBeanAopInvocationHandlers.add(serviceBeanAopInvocationHandler);
 
 		return ProxyUtil.newProxyInstance(
 			_classLoader, ReflectionUtil.getInterfaces(bean),
-			new ServiceBeanAopInvocationHandler(
-				bean, serviceBeanAopCacheManager));
+			serviceBeanAopInvocationHandler);
 	}
 
 	@Override
@@ -141,8 +139,8 @@ public class ServiceBeanAutoProxyCreator
 	private final ClassLoader _classLoader;
 	private final Set<CacheKey> _earlyProxyReferences =
 		Collections.newSetFromMap(new ConcurrentHashMap<>());
-	private final List<ServiceBeanAopCacheManager>
-		_serviceBeanAopCacheManagers = new ArrayList<>();
+	private final List<ServiceBeanAopInvocationHandler>
+		_serviceBeanAopInvocationHandlers = new ArrayList<>();
 
 	private static class CacheKey {
 

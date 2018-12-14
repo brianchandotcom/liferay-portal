@@ -14,19 +14,31 @@
 
 package com.liferay.portal.spring.aop;
 
+import com.liferay.petra.reflect.AnnotationLocator;
+import com.liferay.portal.transaction.TransactionsUtil;
+
+import java.lang.annotation.Annotation;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+
 /**
  * @author Shuyang Zhou
+ * @author Preston Crary
  */
 public class ServiceBeanAopInvocationHandler implements InvocationHandler {
 
-	public ServiceBeanAopInvocationHandler(
-		Object bean, ServiceBeanAopCacheManager serviceBeanAopCacheManager) {
+	public AopMethod getAopMethod(Method method) {
+		if (TransactionsUtil.isEnabled()) {
+			return _aopMethods.computeIfAbsent(method, this::_createAopMethod);
+		}
 
-		_target = bean;
-		_serviceBeanAopCacheManager = serviceBeanAopCacheManager;
+		return new AopMethod(
+			_target, method, _emptyChainableMethodAdvices, null);
 	}
 
 	public Object getTarget() {
@@ -38,9 +50,7 @@ public class ServiceBeanAopInvocationHandler implements InvocationHandler {
 		throws Throwable {
 
 		ServiceBeanMethodInvocation serviceBeanMethodInvocation =
-			new ServiceBeanMethodInvocation(
-				_serviceBeanAopCacheManager.getAopMethod(_target, method),
-				arguments);
+			new ServiceBeanMethodInvocation(getAopMethod(method), arguments);
 
 		return serviceBeanMethodInvocation.proceed();
 	}
@@ -48,10 +58,68 @@ public class ServiceBeanAopInvocationHandler implements InvocationHandler {
 	public void setTarget(Object target) {
 		_target = target;
 
-		_serviceBeanAopCacheManager.reset();
+		_aopMethods.clear();
 	}
 
-	private final ServiceBeanAopCacheManager _serviceBeanAopCacheManager;
+	protected ServiceBeanAopInvocationHandler(
+		Object target, ChainableMethodAdvice[] chainableMethodAdvices) {
+
+		_target = target;
+		_chainableMethodAdvices = chainableMethodAdvices;
+	}
+
+	protected void reset() {
+		_aopMethods.clear();
+	}
+
+	private AopMethod _createAopMethod(Method method) {
+		Object target = _target;
+
+		Class<?> targetClass = target.getClass();
+
+		List<ChainableMethodAdvice> filteredChainableMethodAdvices =
+			new ArrayList<>();
+		List<Object> filteredAdviceMethodContexts = new ArrayList<>();
+
+		Map<Class<? extends Annotation>, Annotation> annotations =
+			AnnotationLocator.index(method, targetClass);
+
+		for (ChainableMethodAdvice chainableMethodAdvice :
+				_chainableMethodAdvices) {
+
+			Object methodContext = chainableMethodAdvice.createMethodContext(
+				targetClass, method, annotations);
+
+			if (methodContext != null) {
+				filteredChainableMethodAdvices.add(chainableMethodAdvice);
+
+				filteredAdviceMethodContexts.add(methodContext);
+			}
+		}
+
+		ChainableMethodAdvice[] chainableMethodAdvices =
+			_emptyChainableMethodAdvices;
+		Object[] adviceMethodContexts = null;
+
+		if (!filteredChainableMethodAdvices.isEmpty()) {
+			chainableMethodAdvices = filteredChainableMethodAdvices.toArray(
+				new ChainableMethodAdvice
+					[filteredChainableMethodAdvices.size()]);
+
+			adviceMethodContexts = filteredAdviceMethodContexts.toArray(
+				new Object[filteredAdviceMethodContexts.size()]);
+		}
+
+		return new AopMethod(
+			target, method, chainableMethodAdvices, adviceMethodContexts);
+	}
+
+	private static final ChainableMethodAdvice[] _emptyChainableMethodAdvices =
+		new ChainableMethodAdvice[0];
+
+	private final Map<Method, AopMethod> _aopMethods =
+		new ConcurrentHashMap<>();
+	private final ChainableMethodAdvice[] _chainableMethodAdvices;
 	private volatile Object _target;
 
 }

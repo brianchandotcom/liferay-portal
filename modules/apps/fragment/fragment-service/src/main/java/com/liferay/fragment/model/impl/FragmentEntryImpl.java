@@ -21,10 +21,12 @@ import com.liferay.fragment.constants.FragmentExportImportConstants;
 import com.liferay.fragment.service.FragmentEntryLinkLocalServiceUtil;
 import com.liferay.fragment.util.FragmentEntryRenderUtil;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Validator;
@@ -85,6 +87,15 @@ public class FragmentEntryImpl extends FragmentEntryBaseImpl {
 		jsonObject.put("cssPath", "src/index.css");
 		jsonObject.put("htmlPath", "src/index.html");
 		jsonObject.put("jsPath", "src/index.js");
+
+		FileEntry previewFileEntry = _getPreviewFileEntry();
+
+		if (previewFileEntry != null) {
+			jsonObject.put(
+				"thumbnailPath",
+				"src/thumbnail." + previewFileEntry.getExtension());
+		}
+
 		jsonObject.put("name", getName());
 
 		String typeLabel = getTypeLabel();
@@ -101,6 +112,30 @@ public class FragmentEntryImpl extends FragmentEntryBaseImpl {
 		zipWriter.addEntry(path + "/src/index.css", getCss());
 		zipWriter.addEntry(path + "/src/index.js", getJs());
 		zipWriter.addEntry(path + "/src/index.html", getHtml());
+
+		if (previewFileEntry != null) {
+			zipWriter.addEntry(
+				path + "/src/thumbnail." + previewFileEntry.getExtension(),
+				previewFileEntry.getContentStream());
+		}
+	}
+
+	private FileEntry _getPreviewFileEntry() {
+		if (getPreviewFileEntryId() <= 0) {
+			return null;
+		}
+
+		try {
+			return PortletFileRepositoryUtil.getPortletFileEntry(
+				getPreviewFileEntryId());
+		}
+		catch (PortalException pe) {
+			if (_log.isDebugEnabled()) {
+				_log.debug("Unable to get preview entry image ", pe);
+			}
+		}
+
+		return null;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

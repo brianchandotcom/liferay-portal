@@ -80,8 +80,9 @@ public class ServiceContextAdviceTest {
 		Method method = ReflectionTestUtil.getMethod(
 			TestInterceptedClass.class, "method");
 
-		AopMethod aopMethod = _serviceBeanAopInvocationHandler.getAopMethod(
-			method);
+		AopMethod aopMethod = ReflectionTestUtil.invoke(
+			_serviceBeanAopInvocationHandler, "_getAopMethod",
+			new Class<?>[] {Method.class}, method);
 
 		ChainableMethodAdvice[] chainableMethodAdvices =
 			ReflectionTestUtil.getFieldValue(
@@ -117,8 +118,9 @@ public class ServiceContextAdviceTest {
 		Method method = ReflectionTestUtil.getMethod(
 			TestInterceptedClass.class, "method", Object.class);
 
-		AopMethod aopMethod = _serviceBeanAopInvocationHandler.getAopMethod(
-			method);
+		AopMethod aopMethod = ReflectionTestUtil.invoke(
+			_serviceBeanAopInvocationHandler, "_getAopMethod",
+			new Class<?>[] {Method.class}, method);
 
 		ChainableMethodAdvice[] chainableMethodAdvices =
 			ReflectionTestUtil.getFieldValue(
@@ -156,7 +158,10 @@ public class ServiceContextAdviceTest {
 		Method method, Object... arguments) {
 
 		return new ServiceBeanMethodInvocation(
-			_serviceBeanAopInvocationHandler.getAopMethod(method), arguments);
+			ReflectionTestUtil.invoke(
+				_serviceBeanAopInvocationHandler, "_getAopMethod",
+				new Class<?>[] {Method.class}, method),
+			arguments);
 	}
 
 	private ServiceBeanAopInvocationHandler _serviceBeanAopInvocationHandler;

@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.spring.aop.AopMethod;
-import com.liferay.portal.spring.aop.ServiceBeanAopCacheManager;
 import com.liferay.portal.spring.aop.ServiceBeanAopInvocationHandler;
 import com.liferay.portal.spring.transaction.DefaultTransactionExecutor;
 import com.liferay.portal.spring.transaction.TransactionAttributeAdapter;
@@ -83,13 +82,9 @@ public class PortalPreferencesImplTest {
 				_originalPortalPreferencesLocalService,
 				ServiceBeanAopInvocationHandler.class);
 
-		ServiceBeanAopCacheManager serviceBeanAopCacheManager =
-			ReflectionTestUtil.getFieldValue(
-				serviceBeanAopInvocationHandler, "_serviceBeanAopCacheManager");
-
-		AopMethod aopMethod = serviceBeanAopCacheManager.getAopMethod(
-			serviceBeanAopInvocationHandler.getTarget(),
-			_updatePreferencesMethod);
+		AopMethod aopMethod = ReflectionTestUtil.invoke(
+			serviceBeanAopInvocationHandler, "_getAopMethod",
+			new Class<?>[] {Method.class}, _updatePreferencesMethod);
 
 		_transactionInterceptor =
 			(TransactionInterceptor)aopMethod.getChainableMethodAdvice(1);

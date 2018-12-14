@@ -32,15 +32,6 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class ServiceBeanAopInvocationHandler implements InvocationHandler {
 
-	public AopMethod getAopMethod(Method method) {
-		if (TransactionsUtil.isEnabled()) {
-			return _aopMethods.computeIfAbsent(method, this::_createAopMethod);
-		}
-
-		return new AopMethod(
-			_target, method, _emptyChainableMethodAdvices, null);
-	}
-
 	public Object getTarget() {
 		return _target;
 	}
@@ -50,7 +41,7 @@ public class ServiceBeanAopInvocationHandler implements InvocationHandler {
 		throws Throwable {
 
 		ServiceBeanMethodInvocation serviceBeanMethodInvocation =
-			new ServiceBeanMethodInvocation(getAopMethod(method), arguments);
+			new ServiceBeanMethodInvocation(_getAopMethod(method), arguments);
 
 		return serviceBeanMethodInvocation.proceed();
 	}
@@ -112,6 +103,15 @@ public class ServiceBeanAopInvocationHandler implements InvocationHandler {
 
 		return new AopMethod(
 			target, method, chainableMethodAdvices, adviceMethodContexts);
+	}
+
+	private AopMethod _getAopMethod(Method method) {
+		if (TransactionsUtil.isEnabled()) {
+			return _aopMethods.computeIfAbsent(method, this::_createAopMethod);
+		}
+
+		return new AopMethod(
+			_target, method, _emptyChainableMethodAdvices, null);
 	}
 
 	private static final ChainableMethodAdvice[] _emptyChainableMethodAdvices =

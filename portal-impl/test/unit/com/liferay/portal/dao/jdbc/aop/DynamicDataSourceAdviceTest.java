@@ -17,6 +17,7 @@ package com.liferay.portal.dao.jdbc.aop;
 import com.liferay.portal.kernel.dao.jdbc.aop.DynamicDataSourceTargetSource;
 import com.liferay.portal.kernel.dao.jdbc.aop.MasterDataSource;
 import com.liferay.portal.kernel.dao.jdbc.aop.Operation;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.ProxyUtil;
@@ -106,7 +107,9 @@ public class DynamicDataSourceAdviceTest {
 		throws Exception {
 
 		return new ServiceBeanMethodInvocation(
-			_serviceBeanAopInvocationHandler.getAopMethod(
+			ReflectionTestUtil.invoke(
+				_serviceBeanAopInvocationHandler, "_getAopMethod",
+				new Class<?>[] {Method.class},
 				TestClass.class.getMethod(methodName)),
 			new Object[0]);
 	}

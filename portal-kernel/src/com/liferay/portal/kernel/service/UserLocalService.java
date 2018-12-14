@@ -234,16 +234,11 @@ public interface UserLocalService extends BaseLocalService,
 	attribute), asset category IDs, asset tag names, and expando
 	bridge attributes for the user.
 	* @return the new user
-	* @deprecated As of Judson (7.1.x), replaced by {@link
-	#addUser(long , long , boolean ,
-	String , String , boolean ,
-	String , String , long ,
-	String , Locale , String , String ,
-	String , long , long ,
-	int , int , int ,
-	String , long[] , long[] ,
-	long[] , long[] , boolean ,
-	ServiceContext )
+	* @deprecated As of Mueller (7.2.x), replaced by {@link
+	#addUser(long, long, boolean, String, String, boolean,
+	String, String, long, String, Locale, String, String, String,
+	long, long, int, int, int, String, long[], long[], long[],
+	long[], boolean, ServiceContext)
 	*/
 	@Deprecated
 	public User addUser(long creatorUserId, long companyId,
@@ -381,7 +376,7 @@ public interface UserLocalService extends BaseLocalService,
 	attribute), asset category IDs, asset tag names, and expando
 	bridge attributes for the user.
 	* @return the new user
-	* @deprecated As of Judson (7.1.x), replaced by {@link
+	* @deprecated As of Mueller (7.2.x), replaced by {@link
 	#addUserWithWorkflow(
 	  long , long, boolean,
 	   String , String, boolean,
@@ -2354,16 +2349,11 @@ public interface UserLocalService extends BaseLocalService,
 	<code>null</code>). Can set expando bridge attributes for the
 	user.
 	* @return the user
-	* @deprecated As of Judson (7.1.x), replaced by {@link
-	#updateIncompleteUser(
-	   long , long, boolean,
-	   String , String, boolean,
-	   String, String, long,
-	   String, Locale, String, String,
-	   String, long, long,
-	   int, int, int,
-	   String, boolean, boolean,
-	   ServiceContext)
+	* @deprecated As of Mueller (7.2.x), replaced by {@link
+	#updateIncompleteUser(long , long, boolean, String , String,
+	boolean, String, String, long, String, Locale, String,
+	String, String, long, long, int, int, int, String, boolean,
+	boolean, ServiceContext)
 	*/
 	@Deprecated
 	public User updateIncompleteUser(long creatorUserId, long companyId,
@@ -2676,22 +2666,13 @@ public interface UserLocalService extends BaseLocalService,
 	attribute), asset category IDs, asset tag names, and expando
 	bridge attributes for the user.
 	* @return the user
-	* @deprecated As of Judson (7.1.x), replaced by {@link
-	#updateUser(
-	   long, String, String,
-	   String, boolean,
-	   String, String,
-	   String, String, long,
-	   String, boolean, byte[],
-	   String, String, String,
-	   String, String, String,
-	   String, long, long,
-	   int, int, int, String,
-	   String, String, String,
-	   String, String, long[],
-	   long[], long[],
-	   List<UserGroupRole>, long[],
-	   ServiceContext)
+	* @deprecated As of Mueller (7.2.x), replaced by {@link
+	#updateUser(long, String, String, String, boolean, String,
+	String, String, String, long, String, boolean, byte[],
+	String, String, String, String, String, String, String, long,
+	long, int, int, int, String, String, String, String, String,
+	String, long[], long[], long[], List, long[],
+	ServiceContext)
 	*/
 	@Deprecated
 	public User updateUser(long userId, String oldPassword,

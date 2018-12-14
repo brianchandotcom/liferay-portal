@@ -138,7 +138,7 @@ public class UserServiceWrapper implements UserService,
 	attribute), asset category IDs, asset tag names, and expando
 	bridge attributes for the user.
 	* @return the new user
-	* @deprecated As of Judson (7.1.x), replaced by {@link
+	* @deprecated As of Mueller (7.2.x), replaced by {@link
 	#addUser(long, boolean, String, String, boolean, String,
 	String, long, String, Locale, String, String, String, long,
 	long, int, int, int, String, long[], long[], long[], long[],
@@ -213,13 +213,11 @@ public class UserServiceWrapper implements UserService,
 	attribute), asset category IDs, asset tag names, and expando
 	bridge attributes for the user.
 	* @return the new user
-	* @deprecated As of Judson (7.1.x), replaced by {@link
+	* @deprecated As of Mueller (7.2.x), replaced by {@link
 	#addUser(long, boolean, String, String, boolean, String,
 	String, long, String, Locale, String, String, String, long,
 	long, int, int, int, String, long[], long[], long[], long[],
-	List<Address>, List<EmailAddress>,
-	List<Phone>, List<Website>, List<AnnouncementsDelivery>,
-	boolean, ServiceContext)
+	List, List, List, List, List, boolean, ServiceContext)
 	*/
 	@Deprecated
 	@Override
@@ -440,7 +438,7 @@ public class UserServiceWrapper implements UserService,
 	attribute), asset category IDs, asset tag names, and expando
 	bridge attributes for the user.
 	* @return the new user
-	* @deprecated As of Judson (7.1.x), replaced by {@link
+	* @deprecated As of Mueller (7.2.x), replaced by {@link
 	#addUserWithWorkflow(long, boolean, String, String, boolean,
 	String, String, long, String, Locale, String, String, String,
 	long, long, int, int, int, String, long[], long[], long[],
@@ -515,13 +513,12 @@ public class UserServiceWrapper implements UserService,
 	attribute), asset category IDs, asset tag names, and expando
 	bridge attributes for the user.
 	* @return the new user
-	* @deprecated As of Judson (7.1.x), replaced by {@link
+	* @deprecated As of Mueller (7.2.x), replaced by {@link
 	#addUserWithWorkflow(long, boolean, String, String, boolean,
 	String, String, long, String, Locale, String, String, String,
 	long, long, int, int, int, String, long[], long[], long[],
-	long[], List<Address>, List<EmailAddress>, List<Phone>,
-	List<Website>, List<AnnouncementsDelivery>, boolean,
-	ServiceContext
+	long[], List, List, List, List, List, boolean,
+	ServiceContext)
 	*/
 	@Deprecated
 	@Override
@@ -1329,7 +1326,7 @@ public class UserServiceWrapper implements UserService,
 	<code>null</code>). Can set the expando bridge attributes for the
 	user.
 	* @return the user
-	* @deprecated As of Judson (7.1.x), replaced by {@link
+	* @deprecated As of Mueller (7.2.x), replaced by {@link
 	#updateIncompleteUser(long, boolean, String, String, boolean,
 	String, String, long, String, Locale, String, String, String,
 	long, long, int, int, int, String, boolean, boolean,
@@ -1599,24 +1596,13 @@ public class UserServiceWrapper implements UserService,
 	attribute), asset category IDs, asset tag names, and expando
 	bridge attributes for the user.
 	* @return the user
-	* @deprecated As of Judson (7.1.x), replaced by {@link
-	#updateUser(long, String, String,
-	String, boolean,
-	String, String,
-	String, String, long,
-	String, boolean, byte[],
-	String, String, String,
-	String, String, String,
-	String, long, long,
-	int, int, int, String,
-	String, String, String,
-	String, String, long[],
-	long[], long[],
-	List<UserGroupRole>, long[],
-	List<Address>, List<EmailAddress>,
-	List<Phone>, List<Website>,
-	List<AnnouncementsDelivery>,
-	ServiceContext)
+	* @deprecated As of Mueller (7.2.x), replaced by {@link
+	#updateUser(long, String, String, String, boolean, String,
+	String, String, String, long, String, boolean, byte[],
+	String, String, String, String, String, String, String, long,
+	long, int, int, int, String, String, String, String, String,
+	String, long[], long[], long[], List, long[], List, List,
+	List, List, List, ServiceContext)}
 	*/
 	@Deprecated
 	@Override
@@ -1877,6 +1863,13 @@ public class UserServiceWrapper implements UserService,
 	attribute), asset category IDs, asset tag names, and expando
 	bridge attributes for the user.
 	* @return the user
+	* @deprecated As of Mueller (7.2.x), replaced by {@link
+	#updateUser(long, String, String, String, boolean, String,
+	String, String, String, long, String, boolean, byte[],
+	String, String, String, String, String, String, String, long,
+	long, int, int, int, String, String, String, String, String,
+	String, long[], long[], long[], List, long[], List, List,
+	List, List, List, ServiceContext)}
 	*/
 	@Deprecated
 	@Override

@@ -246,9 +246,15 @@ public class UserServiceHttp {
 		String password1, String password2, boolean autoScreenName,
 		String screenName, String emailAddress, long facebookId, String openId,
 		java.util.Locale locale, String firstName, String middleName,
-		String lastName, long prefixId, long suffixId, int birthdayMonth,
-		int birthdayDay, int birthdayYear, String jobTitle, long[] groupIds,
-		long[] organizationIds, long[] roleIds, long[] userGroupIds,
+		String lastName, long prefixId, long suffixId, boolean male,
+		int birthdayMonth, int birthdayDay, int birthdayYear, String jobTitle,
+		long[] groupIds, long[] organizationIds, long[] roleIds,
+		long[] userGroupIds,
+		java.util.List<com.liferay.portal.kernel.model.Address> addresses,
+		java.util.List<com.liferay.portal.kernel.model.EmailAddress> emailAddresses,
+		java.util.List<com.liferay.portal.kernel.model.Phone> phones,
+		java.util.List<com.liferay.portal.kernel.model.Website> websites,
+		java.util.List<com.liferay.announcements.kernel.model.AnnouncementsDelivery> announcementsDelivers,
 		boolean sendEmail,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -260,9 +266,10 @@ public class UserServiceHttp {
 					companyId, autoPassword, password1, password2,
 					autoScreenName, screenName, emailAddress, facebookId,
 					openId, locale, firstName, middleName, lastName, prefixId,
-					suffixId, birthdayMonth, birthdayDay, birthdayYear,
+					suffixId, male, birthdayMonth, birthdayDay, birthdayYear,
 					jobTitle, groupIds, organizationIds, roleIds, userGroupIds,
-					sendEmail, serviceContext);
+					addresses, emailAddresses, phones, websites,
+					announcementsDelivers, sendEmail, serviceContext);
 
 			Object returnObj = null;
 
@@ -291,15 +298,9 @@ public class UserServiceHttp {
 		String password1, String password2, boolean autoScreenName,
 		String screenName, String emailAddress, long facebookId, String openId,
 		java.util.Locale locale, String firstName, String middleName,
-		String lastName, long prefixId, long suffixId, boolean male,
-		int birthdayMonth, int birthdayDay, int birthdayYear, String jobTitle,
-		long[] groupIds, long[] organizationIds, long[] roleIds,
-		long[] userGroupIds,
-		java.util.List<com.liferay.portal.kernel.model.Address> addresses,
-		java.util.List<com.liferay.portal.kernel.model.EmailAddress> emailAddresses,
-		java.util.List<com.liferay.portal.kernel.model.Phone> phones,
-		java.util.List<com.liferay.portal.kernel.model.Website> websites,
-		java.util.List<com.liferay.announcements.kernel.model.AnnouncementsDelivery> announcementsDelivers,
+		String lastName, long prefixId, long suffixId, int birthdayMonth,
+		int birthdayDay, int birthdayYear, String jobTitle, long[] groupIds,
+		long[] organizationIds, long[] roleIds, long[] userGroupIds,
 		boolean sendEmail,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -311,10 +312,9 @@ public class UserServiceHttp {
 					companyId, autoPassword, password1, password2,
 					autoScreenName, screenName, emailAddress, facebookId,
 					openId, locale, firstName, middleName, lastName, prefixId,
-					suffixId, male, birthdayMonth, birthdayDay, birthdayYear,
+					suffixId, birthdayMonth, birthdayDay, birthdayYear,
 					jobTitle, groupIds, organizationIds, roleIds, userGroupIds,
-					addresses, emailAddresses, phones, websites,
-					announcementsDelivers, sendEmail, serviceContext);
+					sendEmail, serviceContext);
 
 			Object returnObj = null;
 
@@ -467,9 +467,15 @@ public class UserServiceHttp {
 		String password1, String password2, boolean autoScreenName,
 		String screenName, String emailAddress, long facebookId, String openId,
 		java.util.Locale locale, String firstName, String middleName,
-		String lastName, long prefixId, long suffixId, int birthdayMonth,
-		int birthdayDay, int birthdayYear, String jobTitle, long[] groupIds,
-		long[] organizationIds, long[] roleIds, long[] userGroupIds,
+		String lastName, long prefixId, long suffixId, boolean male,
+		int birthdayMonth, int birthdayDay, int birthdayYear, String jobTitle,
+		long[] groupIds, long[] organizationIds, long[] roleIds,
+		long[] userGroupIds,
+		java.util.List<com.liferay.portal.kernel.model.Address> addresses,
+		java.util.List<com.liferay.portal.kernel.model.EmailAddress> emailAddresses,
+		java.util.List<com.liferay.portal.kernel.model.Phone> phones,
+		java.util.List<com.liferay.portal.kernel.model.Website> websites,
+		java.util.List<com.liferay.announcements.kernel.model.AnnouncementsDelivery> announcementsDelivers,
 		boolean sendEmail,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -481,9 +487,10 @@ public class UserServiceHttp {
 					companyId, autoPassword, password1, password2,
 					autoScreenName, screenName, emailAddress, facebookId,
 					openId, locale, firstName, middleName, lastName, prefixId,
-					suffixId, birthdayMonth, birthdayDay, birthdayYear,
+					suffixId, male, birthdayMonth, birthdayDay, birthdayYear,
 					jobTitle, groupIds, organizationIds, roleIds, userGroupIds,
-					sendEmail, serviceContext);
+					addresses, emailAddresses, phones, websites,
+					announcementsDelivers, sendEmail, serviceContext);
 
 			Object returnObj = null;
 
@@ -512,15 +519,9 @@ public class UserServiceHttp {
 		String password1, String password2, boolean autoScreenName,
 		String screenName, String emailAddress, long facebookId, String openId,
 		java.util.Locale locale, String firstName, String middleName,
-		String lastName, long prefixId, long suffixId, boolean male,
-		int birthdayMonth, int birthdayDay, int birthdayYear, String jobTitle,
-		long[] groupIds, long[] organizationIds, long[] roleIds,
-		long[] userGroupIds,
-		java.util.List<com.liferay.portal.kernel.model.Address> addresses,
-		java.util.List<com.liferay.portal.kernel.model.EmailAddress> emailAddresses,
-		java.util.List<com.liferay.portal.kernel.model.Phone> phones,
-		java.util.List<com.liferay.portal.kernel.model.Website> websites,
-		java.util.List<com.liferay.announcements.kernel.model.AnnouncementsDelivery> announcementsDelivers,
+		String lastName, long prefixId, long suffixId, int birthdayMonth,
+		int birthdayDay, int birthdayYear, String jobTitle, long[] groupIds,
+		long[] organizationIds, long[] roleIds, long[] userGroupIds,
 		boolean sendEmail,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -532,10 +533,9 @@ public class UserServiceHttp {
 					companyId, autoPassword, password1, password2,
 					autoScreenName, screenName, emailAddress, facebookId,
 					openId, locale, firstName, middleName, lastName, prefixId,
-					suffixId, male, birthdayMonth, birthdayDay, birthdayYear,
+					suffixId, birthdayMonth, birthdayDay, birthdayYear,
 					jobTitle, groupIds, organizationIds, roleIds, userGroupIds,
-					addresses, emailAddresses, phones, websites,
-					announcementsDelivers, sendEmail, serviceContext);
+					sendEmail, serviceContext);
 
 			Object returnObj = null;
 
@@ -2645,8 +2645,10 @@ public class UserServiceHttp {
 			long.class, boolean.class, String.class, String.class, boolean.class,
 			String.class, String.class, long.class, String.class,
 			java.util.Locale.class, String.class, String.class, String.class,
-			long.class, long.class, int.class, int.class, int.class,
-			String.class, long[].class, long[].class, long[].class, long[].class,
+			long.class, long.class, boolean.class, int.class, int.class,
+			int.class, String.class, long[].class, long[].class, long[].class,
+			long[].class, java.util.List.class, java.util.List.class,
+			java.util.List.class, java.util.List.class, java.util.List.class,
 			boolean.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
@@ -2654,10 +2656,8 @@ public class UserServiceHttp {
 			long.class, boolean.class, String.class, String.class, boolean.class,
 			String.class, String.class, long.class, String.class,
 			java.util.Locale.class, String.class, String.class, String.class,
-			long.class, long.class, boolean.class, int.class, int.class,
-			int.class, String.class, long[].class, long[].class, long[].class,
-			long[].class, java.util.List.class, java.util.List.class,
-			java.util.List.class, java.util.List.class, java.util.List.class,
+			long.class, long.class, int.class, int.class, int.class,
+			String.class, long[].class, long[].class, long[].class, long[].class,
 			boolean.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
@@ -2687,8 +2687,10 @@ public class UserServiceHttp {
 			long.class, boolean.class, String.class, String.class, boolean.class,
 			String.class, String.class, long.class, String.class,
 			java.util.Locale.class, String.class, String.class, String.class,
-			long.class, long.class, int.class, int.class, int.class,
-			String.class, long[].class, long[].class, long[].class, long[].class,
+			long.class, long.class, boolean.class, int.class, int.class,
+			int.class, String.class, long[].class, long[].class, long[].class,
+			long[].class, java.util.List.class, java.util.List.class,
+			java.util.List.class, java.util.List.class, java.util.List.class,
 			boolean.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
@@ -2696,10 +2698,8 @@ public class UserServiceHttp {
 			long.class, boolean.class, String.class, String.class, boolean.class,
 			String.class, String.class, long.class, String.class,
 			java.util.Locale.class, String.class, String.class, String.class,
-			long.class, long.class, boolean.class, int.class, int.class,
-			int.class, String.class, long[].class, long[].class, long[].class,
-			long[].class, java.util.List.class, java.util.List.class,
-			java.util.List.class, java.util.List.class, java.util.List.class,
+			long.class, long.class, int.class, int.class, int.class,
+			String.class, long[].class, long[].class, long[].class, long[].class,
 			boolean.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};

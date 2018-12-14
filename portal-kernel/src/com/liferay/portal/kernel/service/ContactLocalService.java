@@ -67,6 +67,13 @@ public interface ContactLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.REINDEX)
 	public Contact addContact(Contact contact);
 
+	/**
+	* @deprecated As of Mueller (7.2.x), replaced by {@link
+	#addContact(long, String, long, String, String, String,
+	String, long, long, int, int, int, String, String, String,
+	String, String, String jobTitle)}
+	*/
+	@Deprecated
 	@Indexable(type = IndexableType.REINDEX)
 	public Contact addContact(long userId, String className, long classPK,
 		String emailAddress, String firstName, String middleName,
@@ -74,6 +81,14 @@ public interface ContactLocalService extends BaseLocalService,
 		int birthdayMonth, int birthdayDay, int birthdayYear, String smsSn,
 		String facebookSn, String jabberSn, String skypeSn, String twitterSn,
 		String jobTitle) throws PortalException;
+
+	@Indexable(type = IndexableType.REINDEX)
+	public Contact addContact(long userId, String className, long classPK,
+		String emailAddress, String firstName, String middleName,
+		String lastName, long prefixId, long suffixId, int birthdayMonth,
+		int birthdayDay, int birthdayYear, String smsSn, String facebookSn,
+		String jabberSn, String skypeSn, String twitterSn, String jobTitle)
+		throws PortalException;
 
 	/**
 	* Creates a new contact with the primary key. Does not add the contact to the database.
@@ -250,6 +265,13 @@ public interface ContactLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.REINDEX)
 	public Contact updateContact(Contact contact);
 
+	/**
+	* @deprecated As of Mueller (7.2.x), replaced by {@link
+	#updateContact(long, String, String, String, String, long,
+	long, int, int, int, String, String, String, String, String,
+	String)}
+	*/
+	@Deprecated
 	@Indexable(type = IndexableType.REINDEX)
 	public Contact updateContact(long contactId, String emailAddress,
 		String firstName, String middleName, String lastName, long prefixId,
@@ -257,4 +279,11 @@ public interface ContactLocalService extends BaseLocalService,
 		int birthdayYear, String smsSn, String facebookSn, String jabberSn,
 		String skypeSn, String twitterSn, String jobTitle)
 		throws PortalException;
+
+	@Indexable(type = IndexableType.REINDEX)
+	public Contact updateContact(long contactId, String emailAddress,
+		String firstName, String middleName, String lastName, long prefixId,
+		long suffixId, int birthdayMonth, int birthdayDay, int birthdayYear,
+		String smsSn, String facebookSn, String jabberSn, String skypeSn,
+		String twitterSn, String jobTitle) throws PortalException;
 }

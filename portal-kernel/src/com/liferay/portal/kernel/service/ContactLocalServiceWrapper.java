@@ -42,6 +42,13 @@ public class ContactLocalServiceWrapper implements ContactLocalService,
 		return _contactLocalService.addContact(contact);
 	}
 
+	/**
+	* @deprecated As of Mueller (7.2.x), replaced by {@link
+	#addContact(long, String, long, String, String, String,
+	String, long, long, int, int, int, String, String, String,
+	String, String, String jobTitle)}
+	*/
+	@Deprecated
 	@Override
 	public com.liferay.portal.kernel.model.Contact addContact(long userId,
 		String className, long classPK, String emailAddress, String firstName,
@@ -53,6 +60,20 @@ public class ContactLocalServiceWrapper implements ContactLocalService,
 		return _contactLocalService.addContact(userId, className, classPK,
 			emailAddress, firstName, middleName, lastName, prefixId, suffixId,
 			male, birthdayMonth, birthdayDay, birthdayYear, smsSn, facebookSn,
+			jabberSn, skypeSn, twitterSn, jobTitle);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.Contact addContact(long userId,
+		String className, long classPK, String emailAddress, String firstName,
+		String middleName, String lastName, long prefixId, long suffixId,
+		int birthdayMonth, int birthdayDay, int birthdayYear, String smsSn,
+		String facebookSn, String jabberSn, String skypeSn, String twitterSn,
+		String jobTitle)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _contactLocalService.addContact(userId, className, classPK,
+			emailAddress, firstName, middleName, lastName, prefixId, suffixId,
+			birthdayMonth, birthdayDay, birthdayYear, smsSn, facebookSn,
 			jabberSn, skypeSn, twitterSn, jobTitle);
 	}
 
@@ -294,6 +315,13 @@ public class ContactLocalServiceWrapper implements ContactLocalService,
 		return _contactLocalService.updateContact(contact);
 	}
 
+	/**
+	* @deprecated As of Mueller (7.2.x), replaced by {@link
+	#updateContact(long, String, String, String, String, long,
+	long, int, int, int, String, String, String, String, String,
+	String)}
+	*/
+	@Deprecated
 	@Override
 	public com.liferay.portal.kernel.model.Contact updateContact(
 		long contactId, String emailAddress, String firstName,
@@ -306,6 +334,20 @@ public class ContactLocalServiceWrapper implements ContactLocalService,
 			firstName, middleName, lastName, prefixId, suffixId, male,
 			birthdayMonth, birthdayDay, birthdayYear, smsSn, facebookSn,
 			jabberSn, skypeSn, twitterSn, jobTitle);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.Contact updateContact(
+		long contactId, String emailAddress, String firstName,
+		String middleName, String lastName, long prefixId, long suffixId,
+		int birthdayMonth, int birthdayDay, int birthdayYear, String smsSn,
+		String facebookSn, String jabberSn, String skypeSn, String twitterSn,
+		String jobTitle)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _contactLocalService.updateContact(contactId, emailAddress,
+			firstName, middleName, lastName, prefixId, suffixId, birthdayMonth,
+			birthdayDay, birthdayYear, smsSn, facebookSn, jabberSn, skypeSn,
+			twitterSn, jobTitle);
 	}
 
 	@Override

@@ -148,42 +148,47 @@ class Builder extends Component {
 		const {settingsContext} = fieldProperties;
 		const visitor = new PagesVisitor(settingsContext.pages);
 
+		const focusedField = {
+			...fieldProperties,
+			columnIndex,
+			pageIndex,
+			rowIndex,
+			settingsContext: {
+				...settingsContext,
+				pages: visitor.mapFields(
+					field => {
+						const {fieldName} = field;
+
+						if (fieldName === 'name') {
+							field.visible = true;
+						}
+						else if (fieldName === 'label') {
+							field.type = 'text';
+						}
+						else if (fieldName === 'validation') {
+							field = {
+								...field,
+								validation: {
+									...field.validation,
+									fieldName: fieldProperties.fieldName
+								}
+							};
+						}
+
+						return field;
+					}
+				)
+			},
+			spritemap
+		};
+
 		this.openSidebar();
 
 		this.emit(
 			'fieldClicked',
 			{
-				...fieldProperties,
-				columnIndex,
-				pageIndex,
-				rowIndex,
-				settingsContext: {
-					...settingsContext,
-					pages: visitor.mapFields(
-						field => {
-							const {fieldName} = field;
-
-							if (fieldName === 'name') {
-								field.visible = true;
-							}
-							else if (fieldName === 'label') {
-								field.type = 'text';
-							}
-							else if (fieldName === 'validation') {
-								field = {
-									...field,
-									validation: {
-										...field.validation,
-										fieldName: fieldProperties.fieldName
-									}
-								};
-							}
-
-							return field;
-						}
-					)
-				},
-				spritemap
+				...focusedField,
+				originalContext: focusedField
 			}
 		);
 	}
@@ -194,7 +199,7 @@ class Builder extends Component {
 				indexes
 			}
 		);
-		this._handleModal();
+		this._handleDeleteModal();
 	}
 
 	/**
@@ -202,10 +207,23 @@ class Builder extends Component {
 	 * @private
 	 */
 
-	_handleModal() {
-		const {modal} = this.refs;
+	_handleDeleteModal() {
+		const {deleteModal} = this.refs;
 
-		modal.show();
+		deleteModal.show();
+	}
+
+	/**
+	 * Handle the cancel field changes modal
+	 * for checking if the user is sure about reseting his focused field
+	 * @param {!Event} event
+	 * @private
+	 */
+
+	_handleCancelFieldChangesModal() {
+		const {cancelChangesModal} = this.refs;
+
+		cancelChangesModal.show();
 	}
 
 	_handlePageAdded() {
@@ -439,13 +457,26 @@ class Builder extends Component {
 	}
 
 	@autobind
-	_handleModalButtonClicked(event) {
+	_handleCancelChangesModalButtonClicked(event) {
 		event.stopPropagation();
 
-		const {modal} = this.refs;
+		const {cancelChangesModal} = this.refs;
+
+		cancelChangesModal.emit('hide');
+
+		if (!event.target.classList.contains('close-modal')) {
+			this.emit('fieldChangesCanceled', {});
+		}
+	}
+
+	@autobind
+	_handleDeleteModalButtonClicked(event) {
+		event.stopPropagation();
+
+		const {deleteModal} = this.refs;
 		const {indexes} = this.state;
 
-		modal.emit('hide');
+		deleteModal.emit('hide');
 
 		if (!event.target.classList.contains('close-modal')) {
 			this.emit(
@@ -526,7 +557,8 @@ class Builder extends Component {
 
 	render() {
 		const {
-			_handleModalButtonClicked,
+			_handleCancelChangesModalButtonClicked,
+			_handleDeleteModalButtonClicked,
 			props
 		} = this;
 		const {
@@ -557,6 +589,7 @@ class Builder extends Component {
 		const sidebarEvents = {
 			fieldAdded: this._handleFieldAdded.bind(this),
 			fieldBlurred: this._handleFieldBlurred.bind(this),
+			fieldChangesCanceled: this._handleCancelFieldChangesModal.bind(this),
 			fieldDeleted: this._handleDeleteFieldClicked.bind(this),
 			fieldDuplicated: this._handleFieldDuplicated,
 			fieldEdited: this._handleFieldEdited.bind(this),
@@ -580,7 +613,7 @@ class Builder extends Component {
 						<ClayModal
 							body={Liferay.Language.get('are-you-sure-you-want-to-delete-this-field')}
 							events={{
-								clickButton: _handleModalButtonClicked
+								clickButton: _handleDeleteModalButtonClicked
 							}}
 							footerButtons={[
 								{
@@ -596,10 +629,34 @@ class Builder extends Component {
 									type: 'button'
 								}
 							]}
-							ref="modal"
+							ref="deleteModal"
 							size="sm"
 							spritemap={spritemap}
 							title={Liferay.Language.get('delete-field-dialog-title')}
+						/>
+						<ClayModal
+							body={Liferay.Language.get('are-you-sure-you-want-to-cancel')}
+							events={{
+								clickButton: _handleCancelChangesModalButtonClicked
+							}}
+							footerButtons={[
+								{
+									alignment: 'right',
+									label: Liferay.Language.get('dismiss'),
+									style: 'primary',
+									type: 'close'
+								},
+								{
+									alignment: 'right',
+									label: Liferay.Language.get('yes-cancel'),
+									style: 'primary',
+									type: 'button'
+								}
+							]}
+							ref="cancelChangesModal"
+							size="sm"
+							spritemap={spritemap}
+							title={Liferay.Language.get('cancel-field-changes-question')}
 						/>
 					</div>
 				</div>

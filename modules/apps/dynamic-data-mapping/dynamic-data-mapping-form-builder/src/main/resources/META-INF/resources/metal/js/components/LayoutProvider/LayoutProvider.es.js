@@ -158,6 +158,12 @@ class LayoutProvider extends Component {
 		);
 	}
 
+	_handleFieldChangesCanceled() {
+		const {focusedField: {originalContext}} = this.state;
+
+		this._handleFieldEdited(originalContext);
+	}
+
 	/**
 	 * @param {!Object} payload
 	 * @private
@@ -532,6 +538,7 @@ class LayoutProvider extends Component {
 				activePageUpdated: this._handleActivePageUpdated.bind(this),
 				fieldAdded: this._handleFieldAdded.bind(this),
 				fieldBlurred: this._handleFieldBlurred.bind(this),
+				fieldChangesCanceled: this._handleFieldChangesCanceled.bind(this),
 				fieldClicked: this._handleFieldClicked.bind(this),
 				fieldDeleted: this._handleFieldDeleted.bind(this),
 				fieldDuplicated: this._handleFieldDuplicated.bind(this),

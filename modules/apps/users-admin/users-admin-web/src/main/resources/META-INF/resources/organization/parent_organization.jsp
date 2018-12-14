@@ -66,22 +66,22 @@ if (parentOrganization != null) {
 }
 %>
 
-<h3 class="sheet-subtitle">
-	<span class="autofit-padded-no-gutters autofit-row">
-		<span class="autofit-col autofit-col-expand">
-			<span class="heading-text"><liferay-ui:message key="parent-organization" /></span>
+<h3 class="autofit-row sheet-subtitle">
+	<span class="autofit-col autofit-col-expand">
+		<span class="heading-text">
+			<liferay-ui:message key="parent-organization" />
 		</span>
-		<span class="autofit-col">
-			<liferay-ui:icon
-				cssClass="modify-link"
-				id="selectOrganizationLink"
-				label="<%= true %>"
-				linkCssClass="btn btn-secondary btn-sm"
-				message='<%= (parentOrganizations.size() > 0) ? "change" : "select" %>'
-				method="get"
-				url="javascript:;"
-			/>
-		</span>
+	</span>
+
+	<span class="autofit-col">
+		<liferay-ui:icon
+			cssClass="modify-link"
+			id="selectOrganizationLink"
+			label="<%= true %>"
+			linkCssClass="btn btn-secondary btn-sm"
+			message='<%= (parentOrganizations.size() > 0) ? "change" : "select" %>'
+			url="javascript:;"
+		/>
 	</span>
 </h3>
 

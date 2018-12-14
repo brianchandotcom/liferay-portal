@@ -35,29 +35,28 @@ List<Phone> phones = PhoneServiceUtil.getPhones(className, classPK);
 <liferay-ui:error exception="<%= PhoneNumberException.class %>" message="please-enter-a-valid-phone-number" />
 <liferay-ui:error exception="<%= PhoneNumberExtensionException.class %>" message="please-enter-a-valid-phone-number-extension" />
 
-<h3 class="sheet-subtitle">
-	<span class="autofit-padded-no-gutters autofit-row">
-		<span class="autofit-col autofit-col-expand">
-			<span class="heading-text">
-				<liferay-ui:message key="phone-numbers" />
-			</span>
+<h3 class="autofit-row sheet-subtitle">
+	<span class="autofit-col autofit-col-expand">
+		<span class="heading-text">
+			<liferay-ui:message key="phone-numbers" />
 		</span>
-		<span class="autofit-col">
-			<liferay-ui:icon
-				cssClass="modify-phone-number-link"
-				data="<%=
-					new HashMap<String, Object>() {
-						{
-							put("title", LanguageUtil.get(request, "add-phone-number"));
-						}
+	</span>
+
+	<span class="autofit-col">
+		<liferay-ui:icon
+			cssClass="modify-phone-number-link"
+			data="<%=
+				new HashMap<String, Object>() {
+					{
+						put("title", LanguageUtil.get(request, "add-phone-number"));
 					}
-				%>"
-				label="<%= true %>"
-				linkCssClass="btn btn-secondary btn-sm"
-				message="add"
-				url="javascript:;"
-			/>
-		</span>
+				}
+			%>"
+			label="<%= true %>"
+			linkCssClass="btn btn-secondary btn-sm"
+			message="add"
+			url="javascript:;"
+		/>
 	</span>
 </h3>
 

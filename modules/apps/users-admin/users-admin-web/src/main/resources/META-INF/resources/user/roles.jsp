@@ -59,28 +59,26 @@ String organizationRoleSyncEntitiesEventName = liferayPortletResponse.getNamespa
 <aui:input name="deleteRoleIds" type="hidden" />
 
 <div class="sheet-section">
-	<h3 class="sheet-subtitle">
-		<span class="autofit-padded-no-gutters autofit-row">
-			<span class="autofit-col autofit-col-expand">
-				<span class="heading-text">
-					<liferay-ui:message key="regular-roles" />
-				</span>
+	<h3 class="autofit-row sheet-subtitle">
+		<span class="autofit-col autofit-col-expand">
+			<span class="heading-text">
+				<liferay-ui:message key="regular-roles" />
 			</span>
-
-			<c:if test="<%= !portletName.equals(myAccountPortletId) %>">
-				<span class="autofit-col">
-					<liferay-ui:icon
-						cssClass="modify-link"
-						id="selectRegularRoleLink"
-						label="<%= true %>"
-						linkCssClass="btn btn-secondary btn-sm"
-						message="select"
-						method="get"
-						url="javascript:;"
-					/>
-				</span>
-			</c:if>
 		</span>
+
+		<c:if test="<%= !portletName.equals(myAccountPortletId) %>">
+			<span class="autofit-col">
+				<liferay-ui:icon
+					cssClass="modify-link"
+					id="selectRegularRoleLink"
+					label="<%= true %>"
+					linkCssClass="btn btn-secondary btn-sm"
+					message="select"
+					method="get"
+					url="javascript:;"
+				/>
+			</span>
+		</c:if>
 	</h3>
 
 	<liferay-ui:search-container
@@ -229,28 +227,26 @@ String organizationRoleSyncEntitiesEventName = liferayPortletResponse.getNamespa
 </div>
 
 <div class="sheet-section">
-	<h3 class="sheet-subtitle">
-		<span class="autofit-padded-no-gutters autofit-row">
-			<span class="autofit-col autofit-col-expand">
-				<span class="heading-text">
-					<liferay-ui:message key="organization-roles" />
-				</span>
+	<h3 class="autofit-row sheet-subtitle">
+		<span class="autofit-col autofit-col-expand">
+			<span class="heading-text">
+				<liferay-ui:message key="organization-roles" />
 			</span>
-
-			<c:if test="<%= !organizations.isEmpty() && !portletName.equals(myAccountPortletId) %>">
-				<span class="autofit-col">
-					<liferay-ui:icon
-						cssClass="modify-link"
-						id="selectOrganizationRoleLink"
-						label="<%= true %>"
-						linkCssClass="btn btn-secondary btn-sm"
-						message="select"
-						method="get"
-						url="javascript:;"
-					/>
-				</span>
-			</c:if>
 		</span>
+
+		<c:if test="<%= !organizations.isEmpty() && !portletName.equals(myAccountPortletId) %>">
+			<span class="autofit-col">
+				<liferay-ui:icon
+					cssClass="modify-link"
+					id="selectOrganizationRoleLink"
+					label="<%= true %>"
+					linkCssClass="btn btn-secondary btn-sm"
+					message="select"
+					method="get"
+					url="javascript:;"
+				/>
+			</span>
+		</c:if>
 	</h3>
 
 	<c:if test="<%= organizations.isEmpty() && organizationRoles.isEmpty() %>">
@@ -429,28 +425,26 @@ String organizationRoleSyncEntitiesEventName = liferayPortletResponse.getNamespa
 </div>
 
 <div class="sheet-section">
-	<h3 class="sheet-subtitle">
-		<span class="autofit-padded-no-gutters autofit-row">
-			<span class="autofit-col autofit-col-expand">
-				<span class="heading-text">
-					<liferay-ui:message key="site-roles" />
-				</span>
+	<h3 class="autofit-row sheet-subtitle">
+		<span class="autofit-col autofit-col-expand">
+			<span class="heading-text">
+				<liferay-ui:message key="site-roles" />
 			</span>
-
-			<c:if test="<%= !groups.isEmpty() && !portletName.equals(myAccountPortletId) %>">
-				<span class="autofit-col">
-					<liferay-ui:icon
-						cssClass="modify-link"
-						id="selectSiteRoleLink"
-						label="<%= true %>"
-						linkCssClass="btn btn-secondary btn-sm"
-						message="select"
-						method="get"
-						url="javascript:;"
-					/>
-				</span>
-			</c:if>
 		</span>
+
+		<c:if test="<%= !groups.isEmpty() && !portletName.equals(myAccountPortletId) %>">
+			<span class="autofit-col">
+				<liferay-ui:icon
+					cssClass="modify-link"
+					id="selectSiteRoleLink"
+					label="<%= true %>"
+					linkCssClass="btn btn-secondary btn-sm"
+					message="select"
+					method="get"
+					url="javascript:;"
+				/>
+			</span>
+		</c:if>
 	</h3>
 
 	<c:if test="<%= organizations.isEmpty() && organizationRoles.isEmpty() %>">

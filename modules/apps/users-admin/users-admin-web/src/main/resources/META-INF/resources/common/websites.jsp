@@ -34,29 +34,28 @@ List<Website> websites = WebsiteServiceUtil.getWebsites(className, classPK);
 <liferay-ui:error key="<%= NoSuchListTypeException.class.getName() + className + ListTypeConstants.WEBSITE %>" message="please-select-a-type" />
 <liferay-ui:error exception="<%= WebsiteURLException.class %>" message="please-enter-a-valid-url" />
 
-<h3 class="sheet-subtitle">
-	<span class="autofit-padded-no-gutters autofit-row">
-		<span class="autofit-col autofit-col-expand">
-			<span class="heading-text">
-				<liferay-ui:message key="websites" />
-			</span>
+<h3 class="autofit-row sheet-subtitle">
+	<span class="autofit-col autofit-col-expand">
+		<span class="heading-text">
+			<liferay-ui:message key="websites" />
 		</span>
-		<span class="autofit-col">
-			<liferay-ui:icon
-				cssClass="modify-website-link"
-				data="<%=
-					new HashMap<String, Object>() {
-						{
-							put("title", LanguageUtil.get(request, "add-website"));
-						}
+	</span>
+
+	<span class="autofit-col">
+		<liferay-ui:icon
+			cssClass="modify-website-link"
+			data="<%=
+				new HashMap<String, Object>() {
+					{
+						put("title", LanguageUtil.get(request, "add-website"));
 					}
-				%>"
-				label="<%= true %>"
-				linkCssClass="btn btn-secondary btn-sm"
-				message="add"
-				url="javascript:;"
-			/>
-		</span>
+				}
+			%>"
+			label="<%= true %>"
+			linkCssClass="btn btn-secondary btn-sm"
+			message="add"
+			url="javascript:;"
+		/>
 	</span>
 </h3>
 

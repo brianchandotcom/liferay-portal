@@ -34,29 +34,28 @@ List<EmailAddress> emailAddresses = EmailAddressServiceUtil.getEmailAddresses(cl
 <liferay-ui:error exception="<%= EmailAddressException.class %>" message="please-enter-a-valid-email-address" />
 <liferay-ui:error key="<%= NoSuchListTypeException.class.getName() + className + ListTypeConstants.EMAIL_ADDRESS %>" message="please-select-a-type" />
 
-<h3 class="sheet-subtitle">
-	<span class="autofit-padded-no-gutters autofit-row">
-		<span class="autofit-col autofit-col-expand">
-			<span class="heading-text">
-				<liferay-ui:message key="additional-email-addresses" />
-			</span>
+<h3 class="autofit-row sheet-subtitle">
+	<span class="autofit-col autofit-col-expand">
+		<span class="heading-text">
+			<liferay-ui:message key="additional-email-addresses" />
 		</span>
-		<span class="autofit-col">
-			<liferay-ui:icon
-				cssClass="modify-email-address-link"
-				data="<%=
-					new HashMap<String, Object>() {
-						{
-							put("title", LanguageUtil.get(request, "add-email-address"));
-						}
+	</span>
+
+	<span class="autofit-col">
+		<liferay-ui:icon
+			cssClass="modify-email-address-link"
+			data="<%=
+				new HashMap<String, Object>() {
+					{
+						put("title", LanguageUtil.get(request, "add-email-address"));
 					}
-				%>"
-				label="<%= true %>"
-				linkCssClass="btn btn-secondary btn-sm"
-				message="add"
-				url="javascript:;"
-			/>
-		</span>
+				}
+			%>"
+			label="<%= true %>"
+			linkCssClass="btn btn-secondary btn-sm"
+			message="add"
+			url="javascript:;"
+		/>
 	</span>
 </h3>
 

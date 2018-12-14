@@ -82,11 +82,11 @@ class DropZone extends Component {
 		before: PropTypes.bool,
 		canDrop: PropTypes.bool,
 		connectDropTarget: PropTypes.func,
-		dropIndex: PropTypes.number,
-		groupId: PropTypes.string,
+		dropIndex: PropTypes.number.isRequired,
+		groupId: PropTypes.string.isRequired,
 		hover: PropTypes.bool,
-		onCriterionAdd: PropTypes.func,
-		onMove: PropTypes.func
+		onCriterionAdd: PropTypes.func.isRequired,
+		onMove: PropTypes.func.isRequired
 	};
 
 	render() {

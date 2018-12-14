@@ -1,0 +1,62 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CriteriaSidebar should render 1`] = `
+<DocumentFragment>
+  <div
+    class="criteria-sidebar-root"
+  >
+    <div
+      class="sidebar-header"
+    >
+      properties
+    </div>
+    <div
+      class="sidebar-search"
+    >
+      <div
+        class="input-group"
+      >
+        <div
+          class="input-group-item"
+        >
+          <input
+            class="form-control input-group-inset input-group-inset-after"
+            data-testid="search-input"
+            placeholder="search"
+            type="text"
+            value=""
+          />
+          <div
+            class="input-group-inset-item input-group-inset-item-after"
+          >
+            <button
+              class="btn btn-unstyled"
+              data-testid="search-button"
+              type="button"
+            >
+              <svg
+                aria-hidden="true"
+                class="lexicon-icon lexicon-icon-search icon"
+                viewBox="0 0 512 512"
+              >
+                <use
+                  xlink:href="#search"
+                />
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <ul
+      class="properties-list"
+    >
+      <li
+        class="empty-message"
+      >
+        no-results-were-found
+      </li>
+    </ul>
+  </div>
+</DocumentFragment>
+`;

@@ -5,7 +5,14 @@ import getCN from 'classnames';
 class ClaySelect extends Component {
 	static propTypes = {
 		onChange: PropTypes.func.isRequired,
-		options: PropTypes.array.isRequired,
+		options: PropTypes.arrayOf(
+			PropTypes.shape(
+				{
+					label: PropTypes.string,
+					value: PropTypes.string.isRequired
+				}
+			)
+		).isRequired,
 		selected: PropTypes.string
 	};
 
@@ -24,9 +31,9 @@ class ClaySelect extends Component {
 				value={selected}
 			>
 				{options.map(
-					(option, index) => (
-						<option key={index} value={option.value}>
-							{option.label}
+					({label, value}, index) => (
+						<option key={index} value={value}>
+							{label ? label : value}
 						</option>
 					)
 				)}

@@ -279,7 +279,6 @@ class CriteriaGroup extends Component {
 						onDelete={this._handleCriterionDelete}
 						onMove={onMove}
 						root={root}
-						supportedConjunctions={supportedConjunctions}
 						supportedOperators={supportedOperators}
 						supportedProperties={supportedProperties}
 						supportedPropertyTypes={supportedPropertyTypes}

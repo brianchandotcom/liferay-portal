@@ -103,22 +103,25 @@ class CriteriaRow extends Component {
 		criterion: PropTypes.object,
 		dragging: PropTypes.bool,
 		editing: PropTypes.bool,
-		groupId: PropTypes.string,
+		groupId: PropTypes.string.isRequired,
 		hover: PropTypes.bool,
-		index: PropTypes.number,
+		index: PropTypes.number.isRequired,
 		modelLabel: PropTypes.string,
-		onAdd: PropTypes.func,
-		onChange: PropTypes.func,
-		onDelete: PropTypes.func,
-		onMove: PropTypes.func,
-		supportedConjunctions: PropTypes.array,
+		onAdd: PropTypes.func.isRequired,
+		onChange: PropTypes.func.isRequired,
+		onDelete: PropTypes.func.isRequired,
+		onMove: PropTypes.func.isRequired,
 		supportedOperators: PropTypes.array,
 		supportedProperties: PropTypes.array,
 		supportedPropertyTypes: PropTypes.object
 	};
 
 	static defaultProps = {
-		editing: true
+		criterion: {},
+		editing: true,
+		supportedOperators: [],
+		supportedProperties: [],
+		supportedPropertyTypes: {}
 	};
 
 	_getReadableCriteriaString = (
@@ -146,8 +149,24 @@ class CriteriaRow extends Component {
 			false
 		);
 
-	_getSelectedItem = (list, idSelected) =>
-		list.find(item => item.name === idSelected);
+	/**
+	 * Gets the selected item object with a `name` and `label` property for a
+	 * selection input. If one isn't found, a new object is returned using the
+	 * idSelected for name and label.
+	 * @param {Array} list The list of objects to search through.
+	 * @param {string} idSelected The name to match in each object in the list.
+	 * @return {object} An object with a `name` and `label` property.
+	 */
+	_getSelectedItem = (list, idSelected) => {
+		const selectedItem = list.find(item => item.name === idSelected);
+
+		return selectedItem ?
+			selectedItem :
+			{
+				label: idSelected,
+				name: idSelected
+			};
+	}
 
 	_handleDelete = event => {
 		event.preventDefault();
@@ -209,8 +228,11 @@ class CriteriaRow extends Component {
 		const propertyType = selectedProperty ? selectedProperty.type : '';
 
 		const filteredSupportedOperators = supportedOperators.filter(
-			operator =>
-				supportedPropertyTypes[propertyType].includes(operator.name)
+			operator => {
+				const validOperators = supportedPropertyTypes[propertyType];
+
+				return validOperators && validOperators.includes(operator.name);
+			}
 		);
 
 		const classes = getCN(

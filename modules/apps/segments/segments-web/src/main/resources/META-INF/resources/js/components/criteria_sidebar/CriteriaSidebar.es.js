@@ -9,6 +9,11 @@ class CriteriaSidebar extends Component {
 		title: PropTypes.string
 	};
 
+	static defaultProps = {
+		supportedProperties: [],
+		title: Liferay.Language.get('properties')
+	}
+
 	state = {
 		searchValue: ''
 	};

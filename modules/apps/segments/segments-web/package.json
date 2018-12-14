@@ -46,7 +46,8 @@
 		"liferay-npm-bundler": "^2.0.0",
 		"liferay-npm-bundler-preset-liferay-dev": "^1.1.0",
 		"odata-v4-parser": "^0.1.29",
-		"react-test-renderer": "^16.6.3",
+		"react-testing-library": "^5.3.2",
+		"snapshot-diff": "^0.4.1",
 		"webpack": "^4.27.0",
 		"webpack-cli": "^3.1.2"
 	},

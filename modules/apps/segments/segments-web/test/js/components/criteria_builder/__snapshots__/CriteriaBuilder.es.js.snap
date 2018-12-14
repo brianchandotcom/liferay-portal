@@ -1,0 +1,164 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CriteriaBuilder should render 1`] = `
+<DocumentFragment>
+  <div
+    class="criteria-builder-root read-only"
+  >
+    <div
+      class="criteria-builder-section-main"
+    >
+      <div
+        class="criteria-builder-toolbar"
+      >
+        <label
+          class="toggle-switch"
+        >
+          <input
+            class="toggle-switch-check"
+            type="checkbox"
+          />
+          <span
+            aria-hidden="true"
+            class="toggle-switch-bar"
+          >
+            <span
+              class="toggle-switch-handle"
+              data-label-off=""
+              data-label-on=""
+            >
+              <span
+                class="button-icon button-icon-off toggle-switch-icon"
+              >
+                <svg
+                  aria-hidden="true"
+                  class="lexicon-icon lexicon-icon-pencil"
+                  viewBox="0 0 512 512"
+                >
+                  <use
+                    xlink:href="#pencil"
+                  />
+                </svg>
+              </span>
+              <span
+                class="button-icon button-icon-on toggle-switch-icon"
+              >
+                <svg
+                  aria-hidden="true"
+                  class="lexicon-icon lexicon-icon-pencil"
+                  viewBox="0 0 512 512"
+                >
+                  <use
+                    xlink:href="#pencil"
+                  />
+                </svg>
+              </span>
+            </span>
+          </span>
+        </label>
+      </div>
+      <div
+        class="criteria-group-root criteria-group-item-root"
+      >
+        <div
+          class="empty-drop-zone-root"
+        >
+          <div
+            class="empty-drop-zone-target"
+          >
+            <div
+              class="empty-drop-zone-indicator"
+            />
+            <div
+              class="empty-drop-zone-help-message"
+            >
+              <div
+                class="message-item"
+              >
+                <img
+                  class="message-icon"
+                  src="/drag-and-drop.svg"
+                />
+                <span>
+                  drag-and-drop-criterion-from-the-right-to-add-rules
+                </span>
+              </div>
+              <div
+                class="message-item"
+              >
+                <img
+                  class="message-icon"
+                  src="/drag-over.svg"
+                />
+                <span>
+                  drag-and-drop-over-an-existing-criteria-to-form-groups
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="criteria-builder-section-sidebar"
+    >
+      <div
+        class="criteria-sidebar-root"
+      >
+        <div
+          class="sidebar-header"
+        >
+          x-properties
+        </div>
+        <div
+          class="sidebar-search"
+        >
+          <div
+            class="input-group"
+          >
+            <div
+              class="input-group-item"
+            >
+              <input
+                class="form-control input-group-inset input-group-inset-after"
+                data-testid="search-input"
+                placeholder="search"
+                type="text"
+                value=""
+              />
+              <div
+                class="input-group-inset-item input-group-inset-item-after"
+              >
+                <button
+                  class="btn btn-unstyled"
+                  data-testid="search-button"
+                  type="button"
+                >
+                  <svg
+                    aria-hidden="true"
+                    class="lexicon-icon lexicon-icon-search icon"
+                    viewBox="0 0 512 512"
+                  >
+                    <use
+                      xlink:href="#search"
+                    />
+                  </svg>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <ul
+          class="properties-list"
+        >
+          <li
+            class="empty-message"
+          >
+            no-results-were-found
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

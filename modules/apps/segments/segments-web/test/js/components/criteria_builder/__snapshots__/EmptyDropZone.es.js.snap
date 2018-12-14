@@ -1,0 +1,43 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`EmptyDropZone should render 1`] = `
+<DocumentFragment>
+  <div
+    class="empty-drop-zone-root"
+  >
+    <div
+      class="empty-drop-zone-target"
+    >
+      <div
+        class="empty-drop-zone-indicator"
+      />
+      <div
+        class="empty-drop-zone-help-message"
+      >
+        <div
+          class="message-item"
+        >
+          <img
+            class="message-icon"
+            src="/drag-and-drop.svg"
+          />
+          <span>
+            drag-and-drop-criterion-from-the-right-to-add-rules
+          </span>
+        </div>
+        <div
+          class="message-item"
+        >
+          <img
+            class="message-icon"
+            src="/drag-over.svg"
+          />
+          <span>
+            drag-and-drop-over-an-existing-criteria-to-form-groups
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

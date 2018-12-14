@@ -15,7 +15,7 @@ class ODataQueryBuilder extends Component {
 		inputId: PropTypes.string,
 		modelLabel: PropTypes.string,
 		operators: PropTypes.array,
-		properties: PropTypes.array
+		properties: PropTypes.array.isRequired
 	};
 
 	constructor(props) {
@@ -62,6 +62,7 @@ class ODataQueryBuilder extends Component {
 				<div className="form-group">
 					<textarea
 						className="field form-control"
+						data-testid="query-input"
 						id={inputId}
 						name={inputId}
 						readOnly

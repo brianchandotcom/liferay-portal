@@ -8,7 +8,7 @@ class ClayIcon extends Component {
 
 	static propTypes = {
 		className: PropTypes.string,
-		iconName: PropTypes.string
+		iconName: PropTypes.string.isRequired
 	};
 
 	render() {

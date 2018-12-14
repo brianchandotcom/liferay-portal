@@ -1,0 +1,68 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CriteriaRow should render 1`] = `
+<DocumentFragment>
+  <div
+    class="criterion-row-root"
+  >
+    <div
+      class="edit-container"
+    >
+      <div
+        class="drag-icon"
+      >
+        <svg
+          aria-hidden="true"
+          class="lexicon-icon lexicon-icon-drag"
+          viewBox="0 0 512 512"
+        >
+          <use
+            xlink:href="#drag"
+          />
+        </svg>
+      </div>
+      <span
+        class="criterion-string"
+      >
+        x-with-property-x
+      </span>
+      <select
+        class="form-control criterion-input operator-input form-control"
+      />
+      <input
+        class="criterion-input form-control"
+        type="text"
+        value=""
+      />
+      <button
+        class="btn btn-outline-secondary btn-monospaced btn-outline-borderless duplicate-button"
+        type="button"
+      >
+        <svg
+          aria-hidden="true"
+          class="lexicon-icon lexicon-icon-paste icon"
+          viewBox="0 0 512 512"
+        >
+          <use
+            xlink:href="#paste"
+          />
+        </svg>
+      </button>
+      <button
+        class="btn btn-outline-secondary btn-monospaced btn-outline-borderless"
+        type="button"
+      >
+        <svg
+          aria-hidden="true"
+          class="lexicon-icon lexicon-icon-trash icon"
+          viewBox="0 0 512 512"
+        >
+          <use
+            xlink:href="#trash"
+          />
+        </svg>
+      </button>
+    </div>
+  </div>
+</DocumentFragment>
+`;

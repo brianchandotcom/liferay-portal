@@ -1,73 +1,40 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`CriteriaSidebarSearchBar should render 1`] = `
-<div
-  className="input-group"
->
-  <div
-    className="input-group-item"
+exports[`CriteriaSidebarItem should render 1`] = `
+<DocumentFragment>
+  <li
+    class="criteria-sidebar-item-root"
   >
-    <input
-      className="form-control input-group-inset input-group-inset-after"
-      onChange={[Function]}
-      placeholder="search"
-      type="text"
-    />
-    <div
-      className="input-group-inset-item input-group-inset-item-after"
+    <span
+      class="inline-item"
     >
-      <button
-        className="btn btn-unstyled"
-        type="button"
+      <svg
+        aria-hidden="true"
+        class="lexicon-icon lexicon-icon-drag"
+        viewBox="0 0 512 512"
+      >
+        <use
+          xlink:href="#drag"
+        />
+      </svg>
+    </span>
+    <span
+      class="criteria-sidebar-item-type sticker sticker-light"
+    >
+      <span
+        class="inline-item"
       >
         <svg
           aria-hidden="true"
-          className="lexicon-icon lexicon-icon-search icon"
+          class="lexicon-icon lexicon-icon-text"
           viewBox="0 0 512 512"
         >
           <use
-            xlinkHref="#search"
+            xlink:href="#text"
           />
         </svg>
-      </button>
-    </div>
-  </div>
-</div>
-`;
-
-exports[`CriteriaSidebarSearchBar should render with a close icon with an input 1`] = `
-<div
-  className="input-group"
->
-  <div
-    className="input-group-item"
-  >
-    <input
-      className="form-control input-group-inset input-group-inset-after"
-      onChange={[Function]}
-      placeholder="search"
-      type="text"
-      value="test"
-    />
-    <div
-      className="input-group-inset-item input-group-inset-item-after"
-    >
-      <button
-        className="btn btn-unstyled"
-        onClick={[Function]}
-        type="button"
-      >
-        <svg
-          aria-hidden="true"
-          className="lexicon-icon lexicon-icon-times icon"
-          viewBox="0 0 512 512"
-        >
-          <use
-            xlinkHref="#times"
-          />
-        </svg>
-      </button>
-    </div>
-  </div>
-</div>
+      </span>
+    </span>
+  </li>
+</DocumentFragment>
 `;

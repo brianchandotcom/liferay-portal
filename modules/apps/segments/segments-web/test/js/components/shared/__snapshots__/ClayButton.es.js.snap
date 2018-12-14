@@ -1,0 +1,10 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ClayButton should render 1`] = `
+<DocumentFragment>
+  <button
+    class="btn btn-secondary"
+    type="button"
+  />
+</DocumentFragment>
+`;

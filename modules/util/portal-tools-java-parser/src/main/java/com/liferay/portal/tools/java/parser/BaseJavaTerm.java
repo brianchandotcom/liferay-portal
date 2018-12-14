@@ -181,7 +181,7 @@ public abstract class BaseJavaTerm implements JavaTerm {
 					sb, javaTerm, indent, prefix, suffix, maxLineLength);
 			}
 
-			return "\t" + _trimTrailingSpaces(getIndent(getLastLine(sb)));
+			return "\t" + trimTrailingSpaces(getIndent(getLastLine(sb)));
 		}
 
 		return appendWithLineBreak(
@@ -542,7 +542,7 @@ public abstract class BaseJavaTerm implements JavaTerm {
 		indent = "\t" + getIndent(getLastLine(sb));
 
 		if (javaTerm instanceof JavaType) {
-			return _trimTrailingSpaces(indent);
+			return trimTrailingSpaces(indent);
 		}
 
 		return indent;
@@ -700,7 +700,7 @@ public abstract class BaseJavaTerm implements JavaTerm {
 		}
 	}
 
-	private String _trimTrailingSpaces(String s) {
+	protected String trimTrailingSpaces(String s) {
 		if (s.length() == 0) {
 			return s;
 		}

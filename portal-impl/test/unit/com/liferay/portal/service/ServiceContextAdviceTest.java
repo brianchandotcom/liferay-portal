@@ -18,15 +18,12 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
-import com.liferay.portal.spring.aop.AopMethod;
 import com.liferay.portal.spring.aop.ChainableMethodAdvice;
 import com.liferay.portal.spring.aop.ServiceBeanAopCacheManager;
 import com.liferay.portal.spring.aop.ServiceBeanAopInvocationHandler;
 import com.liferay.portal.spring.aop.ServiceBeanMethodInvocation;
 
 import java.lang.reflect.Method;
-
-import java.util.Arrays;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -80,17 +77,16 @@ public class ServiceContextAdviceTest {
 		Method method = ReflectionTestUtil.getMethod(
 			TestInterceptedClass.class, "method");
 
-		AopMethod aopMethod = ReflectionTestUtil.invoke(
-			_serviceBeanAopInvocationHandler, "_getAopMethod",
-			new Class<?>[] {Method.class}, method);
+		ServiceBeanMethodInvocation serviceBeanMethodInvocation =
+			ReflectionTestUtil.invoke(
+				_serviceBeanAopInvocationHandler,
+				"_getServiceBeanMethodInvocation",
+				new Class<?>[] {Method.class}, method);
 
-		ChainableMethodAdvice[] chainableMethodAdvices =
+		Assert.assertNull(
 			ReflectionTestUtil.getFieldValue(
-				aopMethod, "_chainableMethodAdvices");
-
-		Assert.assertEquals(
-			Arrays.toString(chainableMethodAdvices), 0,
-			chainableMethodAdvices.length);
+				serviceBeanMethodInvocation,
+				"_nextServiceBeanMethodInvocation"));
 	}
 
 	@Test
@@ -118,17 +114,16 @@ public class ServiceContextAdviceTest {
 		Method method = ReflectionTestUtil.getMethod(
 			TestInterceptedClass.class, "method", Object.class);
 
-		AopMethod aopMethod = ReflectionTestUtil.invoke(
-			_serviceBeanAopInvocationHandler, "_getAopMethod",
-			new Class<?>[] {Method.class}, method);
+		ServiceBeanMethodInvocation serviceBeanMethodInvocation =
+			ReflectionTestUtil.invoke(
+				_serviceBeanAopInvocationHandler,
+				"_getServiceBeanMethodInvocation",
+				new Class<?>[] {Method.class}, method);
 
-		ChainableMethodAdvice[] chainableMethodAdvices =
+		Assert.assertNull(
 			ReflectionTestUtil.getFieldValue(
-				aopMethod, "_chainableMethodAdvices");
-
-		Assert.assertEquals(
-			Arrays.toString(chainableMethodAdvices), 0,
-			chainableMethodAdvices.length);
+				serviceBeanMethodInvocation,
+				"_nextServiceBeanMethodInvocation"));
 	}
 
 	@Test
@@ -157,10 +152,9 @@ public class ServiceContextAdviceTest {
 	private ServiceBeanMethodInvocation _createTestMethodInvocation(
 		Method method) {
 
-		return new ServiceBeanMethodInvocation(
-			ReflectionTestUtil.invoke(
-				_serviceBeanAopInvocationHandler, "_getAopMethod",
-				new Class<?>[] {Method.class}, method));
+		return ReflectionTestUtil.invoke(
+			_serviceBeanAopInvocationHandler, "_getServiceBeanMethodInvocation",
+			new Class<?>[] {Method.class}, method);
 	}
 
 	private ServiceBeanAopInvocationHandler _serviceBeanAopInvocationHandler;

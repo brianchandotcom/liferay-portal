@@ -23,10 +23,6 @@ import java.util.Objects;
  */
 public class ServiceBeanMethodInvocation {
 
-	public ServiceBeanMethodInvocation(AopMethod aopMethod) {
-		this(aopMethod, -1);
-	}
-
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
@@ -51,7 +47,7 @@ public class ServiceBeanMethodInvocation {
 
 	@SuppressWarnings("unchecked")
 	public <T> T getAdviceMethodContext() {
-		return (T)_aopMethod.getAdviceMethodContext(_index);
+		return (T)_adviceMethodContext;
 	}
 
 	public Method getMethod() {
@@ -68,17 +64,12 @@ public class ServiceBeanMethodInvocation {
 	}
 
 	public Object proceed(Object[] arguments) throws Throwable {
-		int nextIndex = _index + 1;
-
-		ChainableMethodAdvice chainableMethodAdvice =
-			_aopMethod.getChainableMethodAdvice(nextIndex);
-
-		if (chainableMethodAdvice == null) {
+		if (_nextChainableMethodAdvice == null) {
 			return _aopMethod.invoke(arguments);
 		}
 
-		return chainableMethodAdvice.invoke(
-			new ServiceBeanMethodInvocation(_aopMethod, nextIndex), arguments);
+		return _nextChainableMethodAdvice.invoke(
+			_nextServiceBeanMethodInvocation, arguments);
 	}
 
 	@Override
@@ -86,12 +77,20 @@ public class ServiceBeanMethodInvocation {
 		return _aopMethod.toString();
 	}
 
-	private ServiceBeanMethodInvocation(AopMethod aopMethod, int index) {
+	protected ServiceBeanMethodInvocation(
+		AopMethod aopMethod, Object adviceMethodContext,
+		ChainableMethodAdvice nextChainableMethodAdvice,
+		ServiceBeanMethodInvocation nextServiceBeanMethodInvocation) {
+
 		_aopMethod = aopMethod;
-		_index = index;
+		_adviceMethodContext = adviceMethodContext;
+		_nextChainableMethodAdvice = nextChainableMethodAdvice;
+		_nextServiceBeanMethodInvocation = nextServiceBeanMethodInvocation;
 	}
 
+	private final Object _adviceMethodContext;
 	private final AopMethod _aopMethod;
-	private final int _index;
+	private final ChainableMethodAdvice _nextChainableMethodAdvice;
+	private final ServiceBeanMethodInvocation _nextServiceBeanMethodInvocation;
 
 }

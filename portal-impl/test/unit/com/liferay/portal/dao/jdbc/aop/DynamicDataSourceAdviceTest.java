@@ -106,11 +106,10 @@ public class DynamicDataSourceAdviceTest {
 			String methodName)
 		throws Exception {
 
-		return new ServiceBeanMethodInvocation(
-			ReflectionTestUtil.invoke(
-				_serviceBeanAopInvocationHandler, "_getAopMethod",
-				new Class<?>[] {Method.class},
-				TestClass.class.getMethod(methodName)));
+		return ReflectionTestUtil.invoke(
+			_serviceBeanAopInvocationHandler, "_getServiceBeanMethodInvocation",
+			new Class<?>[] {Method.class},
+			TestClass.class.getMethod(methodName));
 	}
 
 	private DynamicDataSourceTargetSource _dynamicDataSourceTargetSource;

@@ -21,8 +21,6 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -41,7 +39,7 @@ public class ServiceBeanAopInvocationHandler implements InvocationHandler {
 		throws Throwable {
 
 		ServiceBeanMethodInvocation serviceBeanMethodInvocation =
-			new ServiceBeanMethodInvocation(_getAopMethod(method));
+			_getServiceBeanMethodInvocation(method);
 
 		return serviceBeanMethodInvocation.proceed(arguments);
 	}
@@ -49,7 +47,7 @@ public class ServiceBeanAopInvocationHandler implements InvocationHandler {
 	public void setTarget(Object target) {
 		_target = target;
 
-		_aopMethods.clear();
+		_serviceBeanMethodInvocations.clear();
 	}
 
 	protected ServiceBeanAopInvocationHandler(
@@ -60,66 +58,63 @@ public class ServiceBeanAopInvocationHandler implements InvocationHandler {
 	}
 
 	protected void reset() {
-		_aopMethods.clear();
+		_serviceBeanMethodInvocations.clear();
 	}
 
-	private AopMethod _createAopMethod(Method method) {
+	private ServiceBeanMethodInvocation _createServiceBeanMethodInvocation(
+		Method method) {
+
+		ServiceBeanMethodInvocation serviceBeanMethodInvocation = null;
+
+		ChainableMethodAdvice nextChainableMethodAdvice = null;
+
 		Object target = _target;
 
 		Class<?> targetClass = target.getClass();
 
-		List<ChainableMethodAdvice> filteredChainableMethodAdvices =
-			new ArrayList<>();
-		List<Object> filteredAdviceMethodContexts = new ArrayList<>();
+		AopMethod aopMethod = new AopMethod(target, method);
 
 		Map<Class<? extends Annotation>, Annotation> annotations =
 			AnnotationLocator.index(method, targetClass);
 
-		for (ChainableMethodAdvice chainableMethodAdvice :
-				_chainableMethodAdvices) {
+		for (int i = _chainableMethodAdvices.length - 1; i >= 0; i--) {
+			ChainableMethodAdvice chainableMethodAdvice =
+				_chainableMethodAdvices[i];
 
 			Object methodContext = chainableMethodAdvice.createMethodContext(
 				targetClass, method, annotations);
 
 			if (methodContext != null) {
-				filteredChainableMethodAdvices.add(chainableMethodAdvice);
+				serviceBeanMethodInvocation = new ServiceBeanMethodInvocation(
+					aopMethod, methodContext, nextChainableMethodAdvice,
+					serviceBeanMethodInvocation);
 
-				filteredAdviceMethodContexts.add(methodContext);
+				nextChainableMethodAdvice = chainableMethodAdvice;
 			}
 		}
 
-		ChainableMethodAdvice[] chainableMethodAdvices =
-			_emptyChainableMethodAdvices;
-		Object[] adviceMethodContexts = null;
+		serviceBeanMethodInvocation = new ServiceBeanMethodInvocation(
+			aopMethod, null, nextChainableMethodAdvice,
+			serviceBeanMethodInvocation);
 
-		if (!filteredChainableMethodAdvices.isEmpty()) {
-			chainableMethodAdvices = filteredChainableMethodAdvices.toArray(
-				new ChainableMethodAdvice
-					[filteredChainableMethodAdvices.size()]);
-
-			adviceMethodContexts = filteredAdviceMethodContexts.toArray(
-				new Object[filteredAdviceMethodContexts.size()]);
-		}
-
-		return new AopMethod(
-			target, method, chainableMethodAdvices, adviceMethodContexts);
+		return serviceBeanMethodInvocation;
 	}
 
-	private AopMethod _getAopMethod(Method method) {
+	private ServiceBeanMethodInvocation _getServiceBeanMethodInvocation(
+		Method method) {
+
 		if (TransactionsUtil.isEnabled()) {
-			return _aopMethods.computeIfAbsent(method, this::_createAopMethod);
+			return _serviceBeanMethodInvocations.computeIfAbsent(
+				method, this::_createServiceBeanMethodInvocation);
 		}
 
-		return new AopMethod(
-			_target, method, _emptyChainableMethodAdvices, null);
+		return new ServiceBeanMethodInvocation(
+			new AopMethod(_target, method), null, null, null);
 	}
 
-	private static final ChainableMethodAdvice[] _emptyChainableMethodAdvices =
-		new ChainableMethodAdvice[0];
-
-	private final Map<Method, AopMethod> _aopMethods =
-		new ConcurrentHashMap<>();
 	private final ChainableMethodAdvice[] _chainableMethodAdvices;
+	private final Map<Method, ServiceBeanMethodInvocation>
+		_serviceBeanMethodInvocations = new ConcurrentHashMap<>();
 	private volatile Object _target;
 
 }

@@ -28,19 +28,6 @@ import java.util.Objects;
  */
 public class AopMethod {
 
-	public AopMethod(
-		Object target, Method method,
-		ChainableMethodAdvice[] chainableMethodAdvices,
-		Object[] adviceMethodContexts) {
-
-		_target = target;
-		_method = method;
-		_chainableMethodAdvices = chainableMethodAdvices;
-		_adviceMethodContexts = adviceMethodContexts;
-
-		_method.setAccessible(true);
-	}
-
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
@@ -60,14 +47,6 @@ public class AopMethod {
 		}
 
 		return false;
-	}
-
-	public ChainableMethodAdvice getChainableMethodAdvice(int index) {
-		if (index < _chainableMethodAdvices.length) {
-			return _chainableMethodAdvices[index];
-		}
-
-		return null;
 	}
 
 	public Method getMethod() {
@@ -139,16 +118,13 @@ public class AopMethod {
 		return _toString;
 	}
 
-	protected Object getAdviceMethodContext(int index) {
-		if ((index >= 0) && (index < _adviceMethodContexts.length)) {
-			return _adviceMethodContexts[index];
-		}
+	protected AopMethod(Object target, Method method) {
+		_target = target;
+		_method = method;
 
-		return null;
+		_method.setAccessible(true);
 	}
 
-	private final Object[] _adviceMethodContexts;
-	private final ChainableMethodAdvice[] _chainableMethodAdvices;
 	private int _hashCode;
 	private final Method _method;
 	private final Object _target;

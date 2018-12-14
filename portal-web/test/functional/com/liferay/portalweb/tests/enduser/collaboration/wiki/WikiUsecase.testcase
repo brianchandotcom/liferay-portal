@@ -112,8 +112,9 @@ definition {
 
 		WikiNavigator.gotoPG(wikiPageTitle = "Wiki Page Title");
 
-		WikiPage.viewAttachmentPGViaEdit(
+		WikiPage.viewPageWithAttachment(
 			attachmentFileName = "Document_1.jpg",
+			wikiPageContent = "Wiki Page Content",
 			wikiPageTitle = "Wiki Page Title"
 		);
 

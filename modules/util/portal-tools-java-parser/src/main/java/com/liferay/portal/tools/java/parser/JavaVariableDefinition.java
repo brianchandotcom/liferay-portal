@@ -95,48 +95,9 @@ public class JavaVariableDefinition extends BaseJavaTerm {
 		if (_assignValueJavaExpression != null) {
 			indent = append(sb, _name, indent, prefix, " = ", maxLineLength);
 
-			if (_assignValueJavaExpression instanceof JavaOperatorExpression) {
-				JavaOperatorExpression javaOperatorExpression =
-					(JavaOperatorExpression)_assignValueJavaExpression;
-
-				JavaOperator javaOperator =
-					javaOperatorExpression.getJavaOperator();
-
-				if (javaOperator.equals(
-						JavaOperator.LOGICAL_COMPLEMENT_OPERATOR)) {
-
-					append(
-						sb, _assignValueJavaExpression, indent, "", suffix,
-						maxLineLength, false);
-				}
-				else {
-					append(
-						sb, _assignValueJavaExpression, indent, "", suffix,
-						maxLineLength);
-				}
-			}
-			else if (_assignValueJavaExpression instanceof JavaTypeCast) {
-				JavaTypeCast javaTypeCast =
-					(JavaTypeCast)_assignValueJavaExpression;
-
-				if (javaTypeCast.getValueJavaExpression() instanceof
-						JavaOperatorExpression) {
-
-					append(
-						sb, _assignValueJavaExpression, indent, "", suffix,
-						maxLineLength);
-				}
-				else {
-					append(
-						sb, _assignValueJavaExpression, indent, "", suffix,
-						maxLineLength, false);
-				}
-			}
-			else {
-				append(
-					sb, _assignValueJavaExpression, indent, "", suffix,
-					maxLineLength, false);
-			}
+			appendAssignValue(
+				sb, _assignValueJavaExpression, indent, suffix, maxLineLength,
+				false);
 		}
 		else {
 			append(sb, _name, indent, "", suffix, maxLineLength);

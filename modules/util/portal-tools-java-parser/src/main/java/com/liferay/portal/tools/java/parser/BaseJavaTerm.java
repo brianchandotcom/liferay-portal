@@ -232,6 +232,45 @@ public abstract class BaseJavaTerm implements JavaTerm {
 		return "\t" + getIndent(getLastLine(sb));
 	}
 
+	protected void appendAssignValue(
+		StringBundler sb, JavaExpression javaExpression, String indent,
+		String suffix, int maxLineLength, boolean forceLineBreak) {
+
+		boolean newLine = false;
+
+		if (javaExpression instanceof JavaOperatorExpression) {
+			JavaOperatorExpression javaOperatorExpression =
+				(JavaOperatorExpression)javaExpression;
+
+			JavaOperator javaOperator =
+				javaOperatorExpression.getJavaOperator();
+
+			if (!javaOperator.equals(
+					JavaOperator.LOGICAL_COMPLEMENT_OPERATOR)) {
+
+				newLine = true;
+			}
+		}
+		else if (javaExpression instanceof JavaTypeCast) {
+			JavaTypeCast javaTypeCast = (JavaTypeCast)javaExpression;
+
+			if (javaTypeCast.getValueJavaExpression() instanceof
+					JavaOperatorExpression) {
+
+				newLine = true;
+			}
+		}
+
+		if (!newLine && forceLineBreak) {
+			appendWithLineBreak(
+				sb, javaExpression, indent, "", suffix, maxLineLength);
+		}
+		else {
+			append(
+				sb, javaExpression, indent, "", suffix, maxLineLength, newLine);
+		}
+	}
+
 	protected void appendNewLine(
 		StringBundler sb, JavaTerm javaTerm, String indent, int maxLineLength) {
 

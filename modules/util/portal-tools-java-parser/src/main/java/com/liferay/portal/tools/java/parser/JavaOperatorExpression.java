@@ -127,9 +127,16 @@ public class JavaOperatorExpression extends JavaExpression {
 						newLine = true;
 					}
 
-					append(
-						sb, _rightHandJavaExpression, indent, "", suffix,
-						maxLineLength, newLine);
+					if (newLine) {
+						append(
+							sb, _rightHandJavaExpression, indent, "", suffix,
+							maxLineLength);
+					}
+					else {
+						appendAssignValue(
+							sb, _rightHandJavaExpression, indent, suffix,
+							maxLineLength, forceLineBreak);
+					}
 				}
 			}
 			else {

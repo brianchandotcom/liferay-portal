@@ -21,6 +21,7 @@ import com.liferay.site.apio.client.test.activator.WebSiteApioTestBundleActivato
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import org.hamcrest.Matchers;
 import org.hamcrest.core.IsNull;
 
 import org.jboss.arquillian.container.test.api.Deployment;
@@ -52,14 +53,89 @@ public class WebSiteApioTest {
 	}
 
 	@Test
+	public void testChildWebSite() {
+		ApioClientBuilder.given(
+		).basicAuth(
+			"test@liferay.com", "test"
+		).header(
+			"Accept", "application/hal+json"
+		).when(
+		).get(
+			_rootEndpointURL.toExternalForm()
+		).follow(
+			"_links.web-site.href"
+		).follow(
+			"_embedded.WebSite.find {it.name == '" +
+				WebSiteApioTestBundleActivator.WEB_SITE_NAME +
+					"'}._links.webSites.href"
+		).then(
+		).statusCode(
+			200
+		).body(
+			"_embedded.WebSite.find {it.name == '" +
+				WebSiteApioTestBundleActivator.CHILD_WEB_SITE_NAME +
+					"'}.availableLanguages",
+			Matchers.hasItems("en-US")
+		).body(
+			"_embedded.WebSite.find {it.name == '" +
+				WebSiteApioTestBundleActivator.CHILD_WEB_SITE_NAME +
+					"'}.description",
+			IsNull.notNullValue()
+		).body(
+			"_embedded.WebSite.find {it.name == '" +
+				WebSiteApioTestBundleActivator.CHILD_WEB_SITE_NAME +
+					"'}.membershipType",
+			Matchers.equalTo("open")
+		).body(
+			"_embedded.WebSite.find {it.name == '" +
+				WebSiteApioTestBundleActivator.CHILD_WEB_SITE_NAME +
+					"'}.name",
+			Matchers.equalTo(WebSiteApioTestBundleActivator.CHILD_WEB_SITE_NAME)
+		).body(
+			"_embedded.WebSite.find {it.name == '" +
+				WebSiteApioTestBundleActivator.CHILD_WEB_SITE_NAME +
+					"'}.privateUrl",
+			IsNull.nullValue()
+		).body(
+			"_embedded.WebSite.find {it.name == '" +
+				WebSiteApioTestBundleActivator.CHILD_WEB_SITE_NAME +
+					"'}.publicUrl",
+			IsNull.nullValue()
+		).body(
+			"_embedded.WebSite.find {it.name == '" +
+				WebSiteApioTestBundleActivator.CHILD_WEB_SITE_NAME +
+					"'}._links.contentSpace.href",
+			IsNull.notNullValue()
+		).body(
+			"_embedded.WebSite.find {it.name == '" +
+				WebSiteApioTestBundleActivator.CHILD_WEB_SITE_NAME +
+					"'}._links.creator.href",
+			IsNull.notNullValue()
+		).body(
+			"_embedded.WebSite.find {it.name == '" +
+				WebSiteApioTestBundleActivator.CHILD_WEB_SITE_NAME +
+					"'}._links.embeddedWebPages.href",
+			IsNull.notNullValue()
+		).body(
+			"_embedded.WebSite.find {it.name == '" +
+				WebSiteApioTestBundleActivator.CHILD_WEB_SITE_NAME +
+					"'}._links.self.href",
+			IsNull.notNullValue()
+		).body(
+			"_embedded.WebSite.find {it.name == '" +
+				WebSiteApioTestBundleActivator.CHILD_WEB_SITE_NAME +
+					"'}._links.webSites.href",
+			IsNull.notNullValue()
+		);
+	}
+
+	@Test
 	public void testWebSite() {
 		ApioClientBuilder.given(
 		).basicAuth(
 			"test@liferay.com", "test"
 		).header(
 			"Accept", "application/hal+json"
-		).header(
-			"Accept-Language", "es-ES"
 		).when(
 		).get(
 			_rootEndpointURL.toExternalForm()
@@ -79,7 +155,8 @@ public class WebSiteApioTest {
 		).body(
 			"membershipType", IsNull.notNullValue()
 		).body(
-			"name", IsNull.notNullValue()
+			"name",
+			Matchers.equalTo(WebSiteApioTestBundleActivator.WEB_SITE_NAME)
 		).body(
 			"privateUrl", IsNull.notNullValue()
 		).body(
@@ -126,7 +203,7 @@ public class WebSiteApioTest {
 			"_embedded.WebSite.find {it.name == '" +
 				WebSiteApioTestBundleActivator.WEB_SITE_NAME +
 					"'}.membershipType",
-			IsNull.notNullValue()
+			Matchers.equalTo("open")
 		).body(
 			"_embedded.WebSite.find {it.name == '" +
 				WebSiteApioTestBundleActivator.WEB_SITE_NAME +
@@ -171,6 +248,27 @@ public class WebSiteApioTest {
 	}
 
 	@Test
+	public void testWebSiteLinkExistsInMyUserAccount() {
+		ApioClientBuilder.given(
+		).basicAuth(
+			"test@liferay.com", "test"
+		).header(
+			"Accept", "application/hal+json"
+		).when(
+		).get(
+			_rootEndpointURL.toExternalForm()
+		).follow(
+			"_links.my-user-account.href"
+		).then(
+		).statusCode(
+			200
+		).body(
+			"_embedded.'Liferay:UserAccount'[0]._links.myWebSites.href",
+			IsNull.notNullValue()
+		);
+	}
+
+	@Test
 	public void testWebSiteLinkExistsInRootEndpoint() {
 		ApioClientBuilder.given(
 		).basicAuth(
@@ -185,6 +283,27 @@ public class WebSiteApioTest {
 			200
 		).body(
 			"_links.web-site.href", IsNull.notNullValue()
+		);
+	}
+
+	@Test
+	public void testWebSiteLinkExistsInUserAccount() {
+		ApioClientBuilder.given(
+		).basicAuth(
+			"test@liferay.com", "test"
+		).header(
+			"Accept", "application/hal+json"
+		).when(
+		).get(
+			_rootEndpointURL.toExternalForm()
+		).follow(
+			"_links.user-account.href"
+		).then(
+		).statusCode(
+			200
+		).body(
+			"_embedded.'Liferay:UserAccount'[0]._links.webSites.href",
+			IsNull.notNullValue()
 		);
 	}
 

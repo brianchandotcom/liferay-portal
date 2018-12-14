@@ -38,6 +38,10 @@ import org.osgi.framework.BundleContext;
  */
 public class WebSiteApioTestBundleActivator implements BundleActivator {
 
+	public static final String CHILD_WEB_SITE_NAME =
+		WebSiteApioTestBundleActivator.class.getSimpleName() +
+			"ChildWebSiteName";
+
 	public static final String WEB_SITE_NAME =
 		WebSiteApioTestBundleActivator.class.getSimpleName() + "WebSiteName";
 
@@ -53,7 +57,8 @@ public class WebSiteApioTestBundleActivator implements BundleActivator {
 
 	private void _cleanUp() {
 		try {
-			GroupTestUtil.deleteGroup(_group);
+			GroupTestUtil.deleteGroup(_childGroup);
+			GroupTestUtil.deleteGroup(_parentGroup);
 
 			_permissionCheckerTestCallback.afterMethod(null, null, null);
 		}
@@ -68,12 +73,12 @@ public class WebSiteApioTestBundleActivator implements BundleActivator {
 
 			_permissionCheckerTestCallback.beforeMethod(null, null);
 
-			_group = GroupTestUtil.addGroup(
+			_parentGroup = GroupTestUtil.addGroup(
 				GroupConstants.DEFAULT_PARENT_GROUP_ID, WEB_SITE_NAME,
 				new ServiceContext());
 
 			LayoutTestUtil.addLayout(
-				_group.getGroupId(), true,
+				_parentGroup.getGroupId(), true,
 				new HashMap<Locale, String>() {
 					{
 						put(LocaleUtil.SPAIN, RandomTestUtil.randomString());
@@ -92,7 +97,7 @@ public class WebSiteApioTestBundleActivator implements BundleActivator {
 				});
 
 			LayoutTestUtil.addLayout(
-				_group.getGroupId(), false,
+				_parentGroup.getGroupId(), false,
 				new HashMap<Locale, String>() {
 					{
 						put(LocaleUtil.SPAIN, RandomTestUtil.randomString());
@@ -109,6 +114,10 @@ public class WebSiteApioTestBundleActivator implements BundleActivator {
 							StringPool.SLASH + RandomTestUtil.randomString());
 					}
 				});
+
+			_childGroup = GroupTestUtil.addGroup(
+				_parentGroup.getGroupId(), CHILD_WEB_SITE_NAME,
+				new ServiceContext());
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
@@ -121,6 +130,7 @@ public class WebSiteApioTestBundleActivator implements BundleActivator {
 	private static final PermissionCheckerTestCallback
 		_permissionCheckerTestCallback = PermissionCheckerTestCallback.INSTANCE;
 
-	private Group _group;
+	private Group _childGroup;
+	private Group _parentGroup;
 
 }

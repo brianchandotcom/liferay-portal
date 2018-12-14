@@ -36,7 +36,7 @@ const addFieldToColumn = (pages, pageIndex, rowIndex, columnIndex, field) => {
 
 		col.fields = [
 			...col.fields,
-			field
+			{...field}
 		];
 	}
 
@@ -160,6 +160,30 @@ const getIndexes = node => {
 	};
 };
 
+const getFieldProperties = ({pages}, locale) => {
+	const properties = {};
+	const visitor = new PagesVisitor(pages);
+
+	visitor.mapFields(
+		({fieldName, localizable, localizedValue, type, value}) => {
+			if (localizable && localizedValue[locale].JSONArray) {
+				properties[fieldName] = localizedValue[locale].JSONArray;
+			}
+			else if (localizable) {
+				properties[fieldName] = localizedValue[locale];
+			}
+			else if (type == 'options') {
+				properties[fieldName] = value[locale];
+			}
+			else {
+				properties[fieldName] = value;
+			}
+		}
+	);
+
+	return properties;
+};
+
 const updateField = (
 	pages,
 	fieldName,
@@ -189,6 +213,7 @@ export default {
 	generateFieldName,
 	getColumn,
 	getField,
+	getFieldProperties,
 	getIndexes,
 	getRow,
 	implAddRow,

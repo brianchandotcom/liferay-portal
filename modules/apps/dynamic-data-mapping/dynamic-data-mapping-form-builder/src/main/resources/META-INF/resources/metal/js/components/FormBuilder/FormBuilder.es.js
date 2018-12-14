@@ -288,24 +288,25 @@ class Builder extends Component {
 	_handleFieldAdded(event) {
 		const {fieldType} = event;
 		const {namespace} = this.props;
-
-		const newFieldName = FormSupport.generateFieldName(fieldType.name);
-		const settingsContext = fieldType.settingsContext;
+		const {settingsContext} = fieldType;
 		const {pages} = settingsContext;
+		const newFieldName = FormSupport.generateFieldName(fieldType.name);
+
+		const focusedField = {
+			...fieldType,
+			fieldName: newFieldName,
+			settingsContext: {
+				...settingsContext,
+				pages: this._normalizeSettingsContextPages(pages, namespace, fieldType, newFieldName),
+				type: fieldType.name
+			}
+		};
 
 		this.emit(
 			'fieldAdded',
 			{
 				...event,
-				fieldType: {
-					...fieldType,
-					fieldName: newFieldName,
-					settingsContext: {
-						...settingsContext,
-						pages: this._normalizeSettingsContextPages(pages, namespace, fieldType, newFieldName)
-					},
-					type: fieldType.name
-				}
+				focusedField
 			}
 		);
 

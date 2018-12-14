@@ -163,18 +163,20 @@ class LayoutProvider extends Component {
 	 * @private
 	 */
 
-	_handleFieldAdded({fieldType, target}) {
+	_handleFieldAdded({focusedField: {name, settingsContext, fieldName}, target}) {
 		const {pageIndex, rowIndex} = target;
-		const {spritemap} = this.props;
-		let {columnIndex} = target;
+		const {editingLanguageId, spritemap} = this.props;
 		let {pages} = this.state;
+		let {columnIndex} = target;
 
 		const fieldProperties = {
-			...fieldType,
+			...FormSupport.getFieldProperties(settingsContext, editingLanguageId),
+			fieldName,
 			instanceId: generateInstanceId(8),
-			name: fieldType.name,
+			name,
+			settingsContext,
 			spritemap,
-			type: fieldType.name
+			type: name
 		};
 
 		if (FormSupport.rowHasFields(pages, pageIndex, rowIndex)) {
@@ -187,6 +189,7 @@ class LayoutProvider extends Component {
 				focusedField: {
 					...fieldProperties,
 					columnIndex,
+					originalContext: fieldProperties,
 					pageIndex,
 					rowIndex
 				},

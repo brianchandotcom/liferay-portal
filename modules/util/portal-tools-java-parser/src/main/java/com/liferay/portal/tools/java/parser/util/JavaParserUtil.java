@@ -848,19 +848,9 @@ public class JavaParserUtil {
 		JavaAnnotationMemberValuePair javaAnnotationMemberValuePair =
 			new JavaAnnotationMemberValuePair(identDetailAST.getText());
 
-		DetailAST lastChildDetailAST =
-			annotationMemberValuePairDetailAST.getLastChild();
-
-		JavaExpression valueExpression = null;
-
-		if (lastChildDetailAST.getType() == TokenTypes.ANNOTATION_ARRAY_INIT) {
-			valueExpression = _parseJavaArray(lastChildDetailAST);
-		}
-		else if (lastChildDetailAST.getType() == TokenTypes.EXPR) {
-			valueExpression = parseJavaExpression(lastChildDetailAST);
-		}
-
-		javaAnnotationMemberValuePair.setValueJavaExpression(valueExpression);
+		javaAnnotationMemberValuePair.setValueJavaExpression(
+			parseJavaExpression(
+				annotationMemberValuePairDetailAST.getLastChild()));
 
 		return javaAnnotationMemberValuePair;
 	}

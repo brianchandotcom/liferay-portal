@@ -21,6 +21,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.SafeConsumer;
+import com.liferay.layout.admin.web.internal.constants.LayoutAdminWebKeys;
 import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
 import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionLocalServiceUtil;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryServiceUtil;
@@ -112,6 +113,8 @@ public class LayoutsAdminDisplayContext {
 
 		_liferayPortletRequest.setAttribute(
 			WebKeys.LAYOUT_DESCRIPTIONS, getLayoutDescriptions());
+		_moduleName = (String)_request.getAttribute(
+			LayoutAdminWebKeys.RESOLVED_MODULE_NAME);
 	}
 
 	public List<DropdownItem> getAddLayoutDropdownItems() {
@@ -675,6 +678,10 @@ public class LayoutsAdminDisplayContext {
 			"selPlid", String.valueOf(layout.getPlid()));
 
 		return markAsHomePageLayoutURL.toString();
+	}
+
+	public String getModuleName() {
+		return _moduleName;
 	}
 
 	public String getMoveLayoutColumnItemURL() {
@@ -1660,6 +1667,7 @@ public class LayoutsAdminDisplayContext {
 	private SearchContainer _layoutsSearchContainer;
 	private final LiferayPortletRequest _liferayPortletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;
+	private final String _moduleName;
 	private String _orderByCol;
 	private String _orderByType;
 	private Long _parentLayoutId;

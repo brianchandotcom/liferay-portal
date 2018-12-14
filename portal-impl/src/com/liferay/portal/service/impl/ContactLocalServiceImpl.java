@@ -48,6 +48,13 @@ public class ContactLocalServiceImpl extends ContactLocalServiceBaseImpl {
 		return super.addContact(contact);
 	}
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 *             #addContact(long, String, long, String, String, String,
+	 *             String, long, long, int, int, int, String, String, String,
+	 *             String, String, String jobTitle)}
+	 */
+	@Deprecated
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public Contact addContact(
@@ -56,6 +63,23 @@ public class ContactLocalServiceImpl extends ContactLocalServiceBaseImpl {
 			long suffixId, boolean male, int birthdayMonth, int birthdayDay,
 			int birthdayYear, String smsSn, String facebookSn, String jabberSn,
 			String skypeSn, String twitterSn, String jobTitle)
+		throws PortalException {
+
+		return addContact(
+			userId, className, classPK, emailAddress, firstName, middleName,
+			lastName, prefixId, suffixId, birthdayMonth, birthdayDay,
+			birthdayYear, smsSn, facebookSn, jabberSn, skypeSn, twitterSn,
+			jobTitle);
+	}
+
+	@Indexable(type = IndexableType.REINDEX)
+	@Override
+	public Contact addContact(
+			long userId, String className, long classPK, String emailAddress,
+			String firstName, String middleName, String lastName, long prefixId,
+			long suffixId, int birthdayMonth, int birthdayDay, int birthdayYear,
+			String smsSn, String facebookSn, String jabberSn, String skypeSn,
+			String twitterSn, String jobTitle)
 		throws PortalException {
 
 		User user = userPersistence.findByPrimaryKey(userId);
@@ -82,7 +106,6 @@ public class ContactLocalServiceImpl extends ContactLocalServiceBaseImpl {
 		contact.setLastName(lastName);
 		contact.setPrefixId(prefixId);
 		contact.setSuffixId(suffixId);
-		contact.setMale(male);
 		contact.setBirthday(birthday);
 		contact.setSmsSn(smsSn);
 		contact.setFacebookSn(facebookSn);
@@ -180,6 +203,13 @@ public class ContactLocalServiceImpl extends ContactLocalServiceBaseImpl {
 		return super.updateContact(contact);
 	}
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 *             #updateContact(long, String, String, String, String, long,
+	 *             long, int, int, int, String, String, String, String, String,
+	 *             String)}
+	 */
+	@Deprecated
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public Contact updateContact(
@@ -187,6 +217,22 @@ public class ContactLocalServiceImpl extends ContactLocalServiceBaseImpl {
 			String middleName, String lastName, long prefixId, long suffixId,
 			boolean male, int birthdayMonth, int birthdayDay, int birthdayYear,
 			String smsSn, String facebookSn, String jabberSn, String skypeSn,
+			String twitterSn, String jobTitle)
+		throws PortalException {
+
+		return updateContact(
+			contactId, emailAddress, firstName, middleName, lastName, prefixId,
+			suffixId, birthdayMonth, birthdayDay, birthdayYear, smsSn,
+			facebookSn, jabberSn, skypeSn, twitterSn, jobTitle);
+	}
+
+	@Indexable(type = IndexableType.REINDEX)
+	@Override
+	public Contact updateContact(
+			long contactId, String emailAddress, String firstName,
+			String middleName, String lastName, long prefixId, long suffixId,
+			int birthdayMonth, int birthdayDay, int birthdayYear, String smsSn,
+			String facebookSn, String jabberSn, String skypeSn,
 			String twitterSn, String jobTitle)
 		throws PortalException {
 
@@ -204,7 +250,6 @@ public class ContactLocalServiceImpl extends ContactLocalServiceBaseImpl {
 		contact.setLastName(lastName);
 		contact.setPrefixId(prefixId);
 		contact.setSuffixId(suffixId);
-		contact.setMale(male);
 		contact.setBirthday(birthday);
 		contact.setSmsSn(smsSn);
 		contact.setFacebookSn(facebookSn);

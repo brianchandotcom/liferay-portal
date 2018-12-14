@@ -69,8 +69,72 @@ public class ContentSpaceApioTest {
 		).statusCode(
 			200
 		).body(
-			"_embedded.ContentSpace.find { it.name == '" +
-				ContentSpaceTestActivator.CONTENT_SPACE_NAME + "' }",
+			"_embedded.ContentSpace.find {it.name == '" +
+				ContentSpaceTestActivator.CONTENT_SPACE_NAME + "'}",
+			IsNull.notNullValue()
+		).body(
+			"_embedded.ContentSpace.find {it.name == '" +
+				ContentSpaceTestActivator.CONTENT_SPACE_NAME +
+					"'}.availableLanguages",
+			Matchers.hasItems("en-US")
+		).body(
+			"_embedded.ContentSpace.find {it.name == '" +
+				ContentSpaceTestActivator.CONTENT_SPACE_NAME + "'}.name",
+			Matchers.equalTo(ContentSpaceTestActivator.CONTENT_SPACE_NAME)
+		).body(
+			"_embedded.ContentSpace.find {it.name == '" +
+				ContentSpaceTestActivator.CONTENT_SPACE_NAME +
+					"'}._links.blogPosts",
+			IsNull.notNullValue()
+		).body(
+			"_embedded.ContentSpace.find {it.name == '" +
+				ContentSpaceTestActivator.CONTENT_SPACE_NAME +
+					"'}._links.contentStructures",
+			IsNull.notNullValue()
+		).body(
+			"_embedded.ContentSpace.find {it.name == '" +
+				ContentSpaceTestActivator.CONTENT_SPACE_NAME +
+					"'}._links.creator",
+			IsNull.notNullValue()
+		).body(
+			"_embedded.ContentSpace.find {it.name == '" +
+				ContentSpaceTestActivator.CONTENT_SPACE_NAME +
+					"'}._links.documentsRepository",
+			IsNull.notNullValue()
+		).body(
+			"_embedded.ContentSpace.find {it.name == '" +
+				ContentSpaceTestActivator.CONTENT_SPACE_NAME +
+					"'}._links.forms",
+			IsNull.notNullValue()
+		).body(
+			"_embedded.ContentSpace.find {it.name == '" +
+				ContentSpaceTestActivator.CONTENT_SPACE_NAME +
+					"'}._links.formStructures",
+			IsNull.notNullValue()
+		).body(
+			"_embedded.ContentSpace.find {it.name == '" +
+				ContentSpaceTestActivator.CONTENT_SPACE_NAME +
+					"'}._links.keywords",
+			IsNull.notNullValue()
+		).body(
+			"_embedded.ContentSpace.find {it.name == '" +
+				ContentSpaceTestActivator.CONTENT_SPACE_NAME + "' " +
+					"}._links.self",
+			IsNull.notNullValue()
+		).body(
+			"_embedded.ContentSpace.find {it.name == '" +
+				ContentSpaceTestActivator.CONTENT_SPACE_NAME +
+					"'}._links.structuredContents",
+			IsNull.notNullValue()
+		).body(
+			"_embedded.ContentSpace.find {it.name == '" +
+				ContentSpaceTestActivator.CONTENT_SPACE_NAME +
+					"'}._links.vocabularies",
+			IsNull.notNullValue()
+		).body(
+			"_embedded.ContentSpace.find {it.name == '" +
+				ContentSpaceTestActivator.CONTENT_SPACE_NAME +
+					"'}._links.webSite",
 			IsNull.notNullValue()
 		);
 	}

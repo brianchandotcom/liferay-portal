@@ -3,6 +3,7 @@
         "env"
     ],
     "ignore": [
-        "**/config.js"
+        "**/config.js",
+        "**/layouts_tree/**/*.js"
     ]
 }

@@ -54,7 +54,7 @@ List<FragmentCollection> fragmentCollections = (List<FragmentCollection>)request
 											</li>
 											<li>
 												<clay:dropdown-actions
-													componentId="actionsComponent"
+													componentId='<%= renderResponse.getNamespace() + "actionsComponent" %>'
 													dropdownItems="<%= fragmentDisplayContext.getCollectionsDropdownItems() %>"
 												/>
 											</li>
@@ -96,7 +96,7 @@ List<FragmentCollection> fragmentCollections = (List<FragmentCollection>)request
 								<liferay-frontend:empty-result-message
 									actionDropdownItems="<%= FragmentPermission.contains(permissionChecker, scopeGroupId, FragmentActionKeys.MANAGE_FRAGMENT_ENTRIES) ? fragmentDisplayContext.getActionDropdownItems() : null %>"
 									animationType="<%= EmptyResultMessageKeys.AnimationType.NONE %>"
-									componentId="emptyResultMessageComponent"
+									componentId='<%= renderResponse.getNamespace() + "emptyResultMessageComponent" %>'
 									description='<%= LanguageUtil.get(request, "collections-are-needed-to-create-fragments") %>'
 									elementType='<%= LanguageUtil.get(request, "collections") %>'
 								/>
@@ -245,11 +245,11 @@ List<FragmentCollection> fragmentCollections = (List<FragmentCollection>)request
 		);
 	};
 
-	Liferay.componentReady('actionsComponent').then(
+	Liferay.componentReady('<portlet:namespace />actionsComponent').then(
 		handleComponentReady
 	);
 
-	Liferay.componentReady('emptyResultMessageComponent').then(
+	Liferay.componentReady('<portlet:namespace />emptyResultMessageComponent').then(
 		handleComponentReady
 	);
 </aui:script>

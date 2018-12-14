@@ -286,7 +286,7 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 	 *         attribute), asset category IDs, asset tag names, and expando
 	 *         bridge attributes for the user.
 	 * @return the new user
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
 	 *             #addUser(long, boolean, String, String, boolean, String,
 	 *             String, long, String, Locale, String, String, String, long,
 	 *             long, int, int, int, String, long[], long[], long[], long[],
@@ -306,14 +306,91 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 		throws PortalException {
 
 		return addUser(
-		 companyId,  autoPassword,  password1,
-					 password2,  autoScreenName,  screenName,
-					 emailAddress,  facebookId,  openId,  locale,
-					 firstName, middleName,  lastName,  prefixId,
-					 suffixId,  birthdayMonth,  birthdayDay,
-					 birthdayYear,  jobTitle,  groupIds,
-					organizationIds, roleIds, userGroupIds,
-					 sendEmail,  serviceContext);
+			companyId, autoPassword, password1, password2, autoScreenName,
+			screenName, emailAddress, facebookId, openId, locale, firstName,
+			middleName, lastName, prefixId, suffixId, birthdayMonth,
+			birthdayDay, birthdayYear, jobTitle, groupIds, organizationIds,
+			roleIds, userGroupIds, sendEmail, serviceContext);
+	}
+
+	/**
+	 * Adds a user with additional parameters.
+	 *
+	 * <p>
+	 * This method handles the creation and bookkeeping of the user including
+	 * its resources, metadata, and internal data structures. It is not
+	 * necessary to make subsequent calls to any methods to setup default
+	 * groups, resources, etc.
+	 * </p>
+	 *
+	 * @param  companyId the primary key of the user's company
+	 * @param  autoPassword whether a password should be automatically generated
+	 *         for the user
+	 * @param  password1 the user's password
+	 * @param  password2 the user's password confirmation
+	 * @param  autoScreenName whether a screen name should be automatically
+	 *         generated for the user
+	 * @param  screenName the user's screen name
+	 * @param  emailAddress the user's email address
+	 * @param  facebookId the user's facebook ID
+	 * @param  openId the user's OpenID
+	 * @param  locale the user's locale
+	 * @param  firstName the user's first name
+	 * @param  middleName the user's middle name
+	 * @param  lastName the user's last name
+	 * @param  prefixId the user's name prefix ID
+	 * @param  suffixId the user's name suffix ID
+	 * @param  male whether the user is male (ignored)
+	 * @param  birthdayMonth the user's birthday month (0-based, meaning 0 for
+	 *         January)
+	 * @param  birthdayDay the user's birthday day
+	 * @param  birthdayYear the user's birthday year
+	 * @param  jobTitle the user's job title
+	 * @param  groupIds the primary keys of the user's groups
+	 * @param  organizationIds the primary keys of the user's organizations
+	 * @param  roleIds the primary keys of the roles this user possesses
+	 * @param  userGroupIds the primary keys of the user's user groups
+	 * @param  addresses the user's addresses
+	 * @param  emailAddresses the user's email addresses
+	 * @param  phones the user's phone numbers
+	 * @param  websites the user's websites
+	 * @param  announcementsDelivers the announcements deliveries
+	 * @param  sendEmail whether to send the user an email notification about
+	 *         their new account
+	 * @param  serviceContext the service context to be applied (optionally
+	 *         <code>null</code>). Can set the UUID (with the <code>uuid</code>
+	 *         attribute), asset category IDs, asset tag names, and expando
+	 *         bridge attributes for the user.
+	 * @return the new user
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 *             #addUser(long, boolean, String, String, boolean, String,
+	 *             String, long, String, Locale, String, String, String, long,
+	 *             long, int, int, int, String, long[], long[], long[], long[],
+	 *             List, List, List, List, List, boolean, ServiceContext)
+	 */
+	@Deprecated
+	@Override
+	public User addUser(
+			long companyId, boolean autoPassword, String password1,
+			String password2, boolean autoScreenName, String screenName,
+			String emailAddress, long facebookId, String openId, Locale locale,
+			String firstName, String middleName, String lastName, long prefixId,
+			long suffixId, boolean male, int birthdayMonth, int birthdayDay,
+			int birthdayYear, String jobTitle, long[] groupIds,
+			long[] organizationIds, long[] roleIds, long[] userGroupIds,
+			List<Address> addresses, List<EmailAddress> emailAddresses,
+			List<Phone> phones, List<Website> websites,
+			List<AnnouncementsDelivery> announcementsDelivers,
+			boolean sendEmail, ServiceContext serviceContext)
+		throws PortalException {
+
+		return addUser(
+			companyId, autoPassword, password1, password2, autoScreenName,
+			screenName, emailAddress, facebookId, openId, locale, firstName,
+			middleName, lastName, prefixId, suffixId, birthdayMonth,
+			birthdayDay, birthdayYear, jobTitle, groupIds, organizationIds,
+			roleIds, userGroupIds, addresses, emailAddresses, phones, websites,
+			announcementsDelivers, sendEmail, serviceContext);
 	}
 
 	/**
@@ -366,10 +443,10 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 			String password2, boolean autoScreenName, String screenName,
 			String emailAddress, long facebookId, String openId, Locale locale,
 			String firstName, String middleName, String lastName, long prefixId,
-			long suffixId, int birthdayMonth, int birthdayDay,
-			int birthdayYear, String jobTitle, long[] groupIds,
-			long[] organizationIds, long[] roleIds, long[] userGroupIds,
-			boolean sendEmail, ServiceContext serviceContext)
+			long suffixId, int birthdayMonth, int birthdayDay, int birthdayYear,
+			String jobTitle, long[] groupIds, long[] organizationIds,
+			long[] roleIds, long[] userGroupIds, boolean sendEmail,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		boolean workflowEnabled = WorkflowThreadLocal.isEnabled();
@@ -416,86 +493,6 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 	 * @param  lastName the user's last name
 	 * @param  prefixId the user's name prefix ID
 	 * @param  suffixId the user's name suffix ID
-	 * @param  male whether the user is male (ignored)
-	 * @param  birthdayMonth the user's birthday month (0-based, meaning 0 for
-	 *         January)
-	 * @param  birthdayDay the user's birthday day
-	 * @param  birthdayYear the user's birthday year
-	 * @param  jobTitle the user's job title
-	 * @param  groupIds the primary keys of the user's groups
-	 * @param  organizationIds the primary keys of the user's organizations
-	 * @param  roleIds the primary keys of the roles this user possesses
-	 * @param  userGroupIds the primary keys of the user's user groups
-	 * @param  addresses the user's addresses
-	 * @param  emailAddresses the user's email addresses
-	 * @param  phones the user's phone numbers
-	 * @param  websites the user's websites
-	 * @param  announcementsDelivers the announcements deliveries
-	 * @param  sendEmail whether to send the user an email notification about
-	 *         their new account
-	 * @param  serviceContext the service context to be applied (optionally
-	 *         <code>null</code>). Can set the UUID (with the <code>uuid</code>
-	 *         attribute), asset category IDs, asset tag names, and expando
-	 *         bridge attributes for the user.
-	 * @return the new user
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             #addUser(long, boolean, String, String, boolean, String,
-	 *             String, long, String, Locale, String, String, String, long,
-	 *             long, int, int, int, String, long[], long[], long[], long[],
-	 *             List, List, List, List, List, boolean, ServiceContext)
-	 */
-	@Deprecated
-	@Override
-	public User addUser(
-			long companyId, boolean autoPassword, String password1,
-			String password2, boolean autoScreenName, String screenName,
-			String emailAddress, long facebookId, String openId, Locale locale,
-			String firstName, String middleName, String lastName, long prefixId,
-			long suffixId, boolean male, int birthdayMonth, int birthdayDay,
-			int birthdayYear, String jobTitle, long[] groupIds,
-			long[] organizationIds, long[] roleIds, long[] userGroupIds,
-			List<Address> addresses, List<EmailAddress> emailAddresses,
-			List<Phone> phones, List<Website> websites,
-			List<AnnouncementsDelivery> announcementsDelivers,
-			boolean sendEmail, ServiceContext serviceContext)
-		throws PortalException {
-
-		return addUser(
-			companyId, autoPassword, password1, password2, autoScreenName,
-			screenName, emailAddress, facebookId, openId, locale, firstName,
-			middleName, lastName, prefixId, suffixId, birthdayMonth, birthdayDay,
-			birthdayYear, jobTitle, groupIds, organizationIds, roleIds,
-			userGroupIds, addresses, emailAddresses, phones, websites,
-			announcementsDelivers, sendEmail, serviceContext);
-
-	}
-	/**
-	 * Adds a user with additional parameters.
-	 *
-	 * <p>
-	 * This method handles the creation and bookkeeping of the user including
-	 * its resources, metadata, and internal data structures. It is not
-	 * necessary to make subsequent calls to any methods to setup default
-	 * groups, resources, etc.
-	 * </p>
-	 *
-	 * @param  companyId the primary key of the user's company
-	 * @param  autoPassword whether a password should be automatically generated
-	 *         for the user
-	 * @param  password1 the user's password
-	 * @param  password2 the user's password confirmation
-	 * @param  autoScreenName whether a screen name should be automatically
-	 *         generated for the user
-	 * @param  screenName the user's screen name
-	 * @param  emailAddress the user's email address
-	 * @param  facebookId the user's facebook ID
-	 * @param  openId the user's OpenID
-	 * @param  locale the user's locale
-	 * @param  firstName the user's first name
-	 * @param  middleName the user's middle name
-	 * @param  lastName the user's last name
-	 * @param  prefixId the user's name prefix ID
-	 * @param  suffixId the user's name suffix ID
 	 * @param  birthdayMonth the user's birthday month (0-based, meaning 0 for
 	 *         January)
 	 * @param  birthdayDay the user's birthday day
@@ -524,11 +521,11 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 			String password2, boolean autoScreenName, String screenName,
 			String emailAddress, long facebookId, String openId, Locale locale,
 			String firstName, String middleName, String lastName, long prefixId,
-			long suffixId, int birthdayMonth, int birthdayDay,
-			int birthdayYear, String jobTitle, long[] groupIds,
-			long[] organizationIds, long[] roleIds, long[] userGroupIds,
-			List<Address> addresses, List<EmailAddress> emailAddresses,
-			List<Phone> phones, List<Website> websites,
+			long suffixId, int birthdayMonth, int birthdayDay, int birthdayYear,
+			String jobTitle, long[] groupIds, long[] organizationIds,
+			long[] roleIds, long[] userGroupIds, List<Address> addresses,
+			List<EmailAddress> emailAddresses, List<Phone> phones,
+			List<Website> websites,
 			List<AnnouncementsDelivery> announcementsDelivers,
 			boolean sendEmail, ServiceContext serviceContext)
 		throws PortalException {
@@ -621,7 +618,7 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 	 *         attribute), asset category IDs, asset tag names, and expando
 	 *         bridge attributes for the user.
 	 * @return the new user
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
 	 *             #addUserWithWorkflow(long, boolean, String, String, boolean,
 	 *             String, String, long, String, Locale, String, String, String,
 	 *             long, long, int, int, int, String, long[], long[], long[],
@@ -643,9 +640,90 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 		return addUserWithWorkflow(
 			companyId, autoPassword, password1, password2, autoScreenName,
 			screenName, emailAddress, facebookId, openId, locale, firstName,
-			middleName, lastName, prefixId, suffixId, birthdayMonth, birthdayDay,
-			birthdayYear, jobTitle, groupIds, organizationIds, roleIds,
-			userGroupIds, sendEmail, serviceContext);
+			middleName, lastName, prefixId, suffixId, birthdayMonth,
+			birthdayDay, birthdayYear, jobTitle, groupIds, organizationIds,
+			roleIds, userGroupIds, sendEmail, serviceContext);
+	}
+
+	/**
+	 * Adds a user with workflow and additional parameters.
+	 *
+	 * <p>
+	 * This method handles the creation and bookkeeping of the user including
+	 * its resources, metadata, and internal data structures. It is not
+	 * necessary to make subsequent calls to any methods to setup default
+	 * groups, resources, etc.
+	 * </p>
+	 *
+	 * @param  companyId the primary key of the user's company
+	 * @param  autoPassword whether a password should be automatically generated
+	 *         for the user
+	 * @param  password1 the user's password
+	 * @param  password2 the user's password confirmation
+	 * @param  autoScreenName whether a screen name should be automatically
+	 *         generated for the user
+	 * @param  screenName the user's screen name
+	 * @param  emailAddress the user's email address
+	 * @param  facebookId the user's facebook ID
+	 * @param  openId the user's OpenID
+	 * @param  locale the user's locale
+	 * @param  firstName the user's first name
+	 * @param  middleName the user's middle name
+	 * @param  lastName the user's last name
+	 * @param  prefixId the user's name prefix ID
+	 * @param  suffixId the user's name suffix ID
+	 * @param  male whether the user is male (ignored)
+	 * @param  birthdayMonth the user's birthday month (0-based, meaning 0 for
+	 *         January)
+	 * @param  birthdayDay the user's birthday day
+	 * @param  birthdayYear the user's birthday year
+	 * @param  jobTitle the user's job title
+	 * @param  groupIds the primary keys of the user's groups
+	 * @param  organizationIds the primary keys of the user's organizations
+	 * @param  roleIds the primary keys of the roles this user possesses
+	 * @param  userGroupIds the primary keys of the user's user groups
+	 * @param  addresses the user's addresses
+	 * @param  emailAddresses the user's email addresses
+	 * @param  phones the user's phone numbers
+	 * @param  websites the user's websites
+	 * @param  announcementsDelivers the announcements deliveries
+	 * @param  sendEmail whether to send the user an email notification about
+	 *         their new account
+	 * @param  serviceContext the service context to be applied (optionally
+	 *         <code>null</code>). Can set the UUID (with the <code>uuid</code>
+	 *         attribute), asset category IDs, asset tag names, and expando
+	 *         bridge attributes for the user.
+	 * @return the new user
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 *             #addUserWithWorkflow(long, boolean, String, String, boolean,
+	 *             String, String, long, String, Locale, String, String, String,
+	 *             long, long, int, int, int, String, long[], long[], long[],
+	 *             long[], List, List, List, List, List, boolean,
+	 *             ServiceContext)
+	 */
+	@Deprecated
+	@Override
+	public User addUserWithWorkflow(
+			long companyId, boolean autoPassword, String password1,
+			String password2, boolean autoScreenName, String screenName,
+			String emailAddress, long facebookId, String openId, Locale locale,
+			String firstName, String middleName, String lastName, long prefixId,
+			long suffixId, boolean male, int birthdayMonth, int birthdayDay,
+			int birthdayYear, String jobTitle, long[] groupIds,
+			long[] organizationIds, long[] roleIds, long[] userGroupIds,
+			List<Address> addresses, List<EmailAddress> emailAddresses,
+			List<Phone> phones, List<Website> websites,
+			List<AnnouncementsDelivery> announcementsDelivers,
+			boolean sendEmail, ServiceContext serviceContext)
+		throws PortalException {
+
+		return addUserWithWorkflow(
+			companyId, autoPassword, password1, password2, autoScreenName,
+			screenName, emailAddress, facebookId, openId, locale, firstName,
+			middleName, lastName, prefixId, suffixId, birthdayMonth,
+			birthdayDay, birthdayYear, jobTitle, groupIds, organizationIds,
+			roleIds, userGroupIds, addresses, emailAddresses, phones, websites,
+			announcementsDelivers, sendEmail, serviceContext);
 	}
 
 	/**
@@ -698,10 +776,10 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 			String password2, boolean autoScreenName, String screenName,
 			String emailAddress, long facebookId, String openId, Locale locale,
 			String firstName, String middleName, String lastName, long prefixId,
-			long suffixId, int birthdayMonth, int birthdayDay,
-			int birthdayYear, String jobTitle, long[] groupIds,
-			long[] organizationIds, long[] roleIds, long[] userGroupIds,
-			boolean sendEmail, ServiceContext serviceContext)
+			long suffixId, int birthdayMonth, int birthdayDay, int birthdayYear,
+			String jobTitle, long[] groupIds, long[] organizationIds,
+			long[] roleIds, long[] userGroupIds, boolean sendEmail,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		long creatorUserId = 0;
@@ -764,87 +842,6 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 	 * @param  lastName the user's last name
 	 * @param  prefixId the user's name prefix ID
 	 * @param  suffixId the user's name suffix ID
-	 * @param  male whether the user is male (ignored)
-	 * @param  birthdayMonth the user's birthday month (0-based, meaning 0 for
-	 *         January)
-	 * @param  birthdayDay the user's birthday day
-	 * @param  birthdayYear the user's birthday year
-	 * @param  jobTitle the user's job title
-	 * @param  groupIds the primary keys of the user's groups
-	 * @param  organizationIds the primary keys of the user's organizations
-	 * @param  roleIds the primary keys of the roles this user possesses
-	 * @param  userGroupIds the primary keys of the user's user groups
-	 * @param  addresses the user's addresses
-	 * @param  emailAddresses the user's email addresses
-	 * @param  phones the user's phone numbers
-	 * @param  websites the user's websites
-	 * @param  announcementsDelivers the announcements deliveries
-	 * @param  sendEmail whether to send the user an email notification about
-	 *         their new account
-	 * @param  serviceContext the service context to be applied (optionally
-	 *         <code>null</code>). Can set the UUID (with the <code>uuid</code>
-	 *         attribute), asset category IDs, asset tag names, and expando
-	 *         bridge attributes for the user.
-	 * @return the new user
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             #addUserWithWorkflow(long, boolean, String, String, boolean,
-	 *             String, String, long, String, Locale, String, String, String,
-	 *             long, long, int, int, int, String, long[], long[], long[],
-	 *             long[], List, List, List, List, List, boolean,
-	 *             ServiceContext)
-	 */
-	@Deprecated
-	@Override
-	public User addUserWithWorkflow(
-			long companyId, boolean autoPassword, String password1,
-			String password2, boolean autoScreenName, String screenName,
-			String emailAddress, long facebookId, String openId, Locale locale,
-			String firstName, String middleName, String lastName, long prefixId,
-			long suffixId, boolean male, int birthdayMonth, int birthdayDay,
-			int birthdayYear, String jobTitle, long[] groupIds,
-			long[] organizationIds, long[] roleIds, long[] userGroupIds,
-			List<Address> addresses, List<EmailAddress> emailAddresses,
-			List<Phone> phones, List<Website> websites,
-			List<AnnouncementsDelivery> announcementsDelivers,
-			boolean sendEmail, ServiceContext serviceContext)
-		throws PortalException {
-
-		return addUserWithWorkflow(
-			companyId, autoPassword, password1, password2, autoScreenName,
-			screenName, emailAddress, facebookId, openId, locale, firstName,
-			middleName, lastName, prefixId, suffixId, birthdayMonth,
-			birthdayDay, birthdayYear, jobTitle, groupIds, organizationIds,
-			roleIds, userGroupIds, addresses, emailAddresses, phones,websites,
-			announcementsDelivers, sendEmail,  serviceContext);
-	}
-
-	/**
-	 * Adds a user with workflow and additional parameters.
-	 *
-	 * <p>
-	 * This method handles the creation and bookkeeping of the user including
-	 * its resources, metadata, and internal data structures. It is not
-	 * necessary to make subsequent calls to any methods to setup default
-	 * groups, resources, etc.
-	 * </p>
-	 *
-	 * @param  companyId the primary key of the user's company
-	 * @param  autoPassword whether a password should be automatically generated
-	 *         for the user
-	 * @param  password1 the user's password
-	 * @param  password2 the user's password confirmation
-	 * @param  autoScreenName whether a screen name should be automatically
-	 *         generated for the user
-	 * @param  screenName the user's screen name
-	 * @param  emailAddress the user's email address
-	 * @param  facebookId the user's facebook ID
-	 * @param  openId the user's OpenID
-	 * @param  locale the user's locale
-	 * @param  firstName the user's first name
-	 * @param  middleName the user's middle name
-	 * @param  lastName the user's last name
-	 * @param  prefixId the user's name prefix ID
-	 * @param  suffixId the user's name suffix ID
 	 * @param  birthdayMonth the user's birthday month (0-based, meaning 0 for
 	 *         January)
 	 * @param  birthdayDay the user's birthday day
@@ -873,11 +870,11 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 			String password2, boolean autoScreenName, String screenName,
 			String emailAddress, long facebookId, String openId, Locale locale,
 			String firstName, String middleName, String lastName, long prefixId,
-			long suffixId, int birthdayMonth, int birthdayDay,
-			int birthdayYear, String jobTitle, long[] groupIds,
-			long[] organizationIds, long[] roleIds, long[] userGroupIds,
-			List<Address> addresses, List<EmailAddress> emailAddresses,
-			List<Phone> phones, List<Website> websites,
+			long suffixId, int birthdayMonth, int birthdayDay, int birthdayYear,
+			String jobTitle, long[] groupIds, long[] organizationIds,
+			long[] roleIds, long[] userGroupIds, List<Address> addresses,
+			List<EmailAddress> emailAddresses, List<Phone> phones,
+			List<Website> websites,
 			List<AnnouncementsDelivery> announcementsDelivers,
 			boolean sendEmail, ServiceContext serviceContext)
 		throws PortalException {
@@ -1904,7 +1901,7 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 	 *         <code>null</code>). Can set the expando bridge attributes for the
 	 *         user.
 	 * @return the user
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
 	 *             #updateIncompleteUser(long, boolean, String, String, boolean,
 	 *             String, String, long, String, Locale, String, String, String,
 	 *             long, long, int, int, int, String, boolean, boolean,
@@ -1922,11 +1919,12 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 			boolean sendEmail, ServiceContext serviceContext)
 		throws PortalException {
 
-		return updateIncompleteUser(companyId, autoPassword, password1,
-			password2, autoScreenName, screenName, emailAddress, facebookId,
-			openId, locale, firstName, middleName, lastName, prefixId,
-			suffixId, male, birthdayMonth, birthdayDay, birthdayYear, jobTitle,
-			updateUserInformation, sendEmail, serviceContext);
+		return updateIncompleteUser(
+			companyId, autoPassword, password1, password2, autoScreenName,
+			screenName, emailAddress, facebookId, openId, locale, firstName,
+			middleName, lastName, prefixId, suffixId, birthdayMonth,
+			birthdayDay, birthdayYear, jobTitle, updateUserInformation,
+			sendEmail, serviceContext);
 	}
 
 	/**
@@ -1970,9 +1968,9 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 			String password2, boolean autoScreenName, String screenName,
 			String emailAddress, long facebookId, String openId, Locale locale,
 			String firstName, String middleName, String lastName, long prefixId,
-			long suffixId, int birthdayMonth, int birthdayDay,
-			int birthdayYear, String jobTitle, boolean updateUserInformation,
-			boolean sendEmail, ServiceContext serviceContext)
+			long suffixId, int birthdayMonth, int birthdayDay, int birthdayYear,
+			String jobTitle, boolean updateUserInformation, boolean sendEmail,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		long creatorUserId = 0;
@@ -2226,13 +2224,13 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 	 *         attribute), asset category IDs, asset tag names, and expando
 	 *         bridge attributes for the user.
 	 * @return the user
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
 	 *             #updateUser(long, String, String, String, boolean, String,
 	 *             String, String, String, long, String, boolean, byte[],
 	 *             String, String, String, String, String, String, String, long,
 	 *             long, int, int, int, String, String, String, String, String,
 	 *             String, long[], long[], long[], List, long[], List, List,
-	 *             List, List, List, ServiceContext)
+	 *             List, List, List, ServiceContext)}
 	 */
 	@Deprecated
 	@Override
@@ -2331,11 +2329,10 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 			String openId, boolean portrait, byte[] portraitBytes,
 			String languageId, String timeZoneId, String greeting,
 			String comments, String firstName, String middleName,
-			String lastName, long prefixId, long suffixId,
-			int birthdayMonth, int birthdayDay, int birthdayYear, String smsSn,
-			String facebookSn, String jabberSn, String skypeSn,
-			String twitterSn, String jobTitle, long[] groupIds,
-			long[] organizationIds, long[] roleIds,
+			String lastName, long prefixId, long suffixId, int birthdayMonth,
+			int birthdayDay, int birthdayYear, String smsSn, String facebookSn,
+			String jabberSn, String skypeSn, String twitterSn, String jobTitle,
+			long[] groupIds, long[] organizationIds, long[] roleIds,
 			List<UserGroupRole> userGroupRoles, long[] userGroupIds,
 			List<Address> addresses, List<EmailAddress> emailAddresses,
 			List<Phone> phones, List<Website> websites,
@@ -2715,8 +2712,8 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 			reminderQueryQuestion, reminderQueryAnswer, screenName,
 			emailAddress, facebookId, openId, true, null, languageId,
 			timeZoneId, greeting, comments, firstName, middleName, lastName,
-			prefixId, suffixId, male, birthdayMonth, birthdayDay, birthdayYear,
-			smsSn, facebookSn, jabberSn, skypeSn, twitterSn, jobTitle, groupIds,
+			prefixId, suffixId, birthdayMonth, birthdayDay, birthdayYear, smsSn,
+			facebookSn, jabberSn, skypeSn, twitterSn, jobTitle, groupIds,
 			organizationIds, roleIds, userGroupRoles, userGroupIds, addresses,
 			emailAddresses, phones, websites, announcementsDelivers,
 			serviceContext);
@@ -2769,6 +2766,13 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 	 *         attribute), asset category IDs, asset tag names, and expando
 	 *         bridge attributes for the user.
 	 * @return the user
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 *             #updateUser(long, String, String, String, boolean, String,
+	 *             String, String, String, long, String, boolean, byte[],
+	 *             String, String, String, String, String, String, String, long,
+	 *             long, int, int, int, String, String, String, String, String,
+	 *             String, long[], long[], long[], List, long[], List, List,
+	 *             List, List, List, ServiceContext)}
 	 */
 	@Deprecated
 	@Override
@@ -2793,8 +2797,8 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 			reminderQueryQuestion, reminderQueryAnswer, screenName,
 			emailAddress, facebookId, openId, true, null, languageId,
 			timeZoneId, greeting, comments, firstName, middleName, lastName,
-			prefixId, suffixId, male, birthdayMonth, birthdayDay, birthdayYear,
-			smsSn, facebookSn, jabberSn, skypeSn, twitterSn, jobTitle, groupIds,
+			prefixId, suffixId, birthdayMonth, birthdayDay, birthdayYear, smsSn,
+			facebookSn, jabberSn, skypeSn, twitterSn, jobTitle, groupIds,
 			organizationIds, roleIds, userGroupRoles, userGroupIds, null, null,
 			null, null, null, serviceContext);
 	}
@@ -3264,6 +3268,11 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 		}
 	}
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 *             #validateUpdatePermission(User, String, String, String,
+	 *             String, String, long, long, int, int, int, String)}
+	 */
 	@Deprecated
 	protected void validateUpdatePermission(
 			User user, String screenName, String emailAddress, String firstName,

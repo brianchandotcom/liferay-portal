@@ -695,6 +695,21 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	}
 
 	/**
+	 * Adds the users to the team.
+	 *
+	 * @param teamId the primary key of the team
+	 * @param userIds the primary keys of the users
+	 */
+	@Override
+	public void addTeamUsers(long teamId, long[] userIds)
+		throws PortalException {
+
+		teamPersistence.addUsers(teamId, userIds);
+
+		reindex(userIds);
+	}
+
+	/**
 	 * Adds a user.
 	 *
 	 * <p>
@@ -725,7 +740,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 * @param  male whether the user is male (ignored)
 	 * @param  birthdayMonth the user's birthday month (0-based, meaning 0 for
 	 *         January)
-	 * @param  birthdayDay th@deprecated As of Jordan (7.1.x),e user's birthday day
+	 * @param  birthdayDay the user's birthday day
 	 * @param  birthdayYear the user's birthday year
 	 * @param  jobTitle the user's job title
 	 * @param  groupIds the primary keys of the user's groups
@@ -739,24 +754,24 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 *         attribute), asset category IDs, asset tag names, and expando
 	 *         bridge attributes for the user.
 	 * @return the new user
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
 	 *             #addUser(long, long, boolean, String, String, boolean,
-	 *            String, String, long, String, Locale, String, String, String,
-	 *            long, long, int, int, int, String, long[], long[], long[],
-	 *            long[], boolean, ServiceContext)
+	 *             String, String, long, String, Locale, String, String, String,
+	 *             long, long, int, int, int, String, long[], long[], long[],
+	 *             long[], boolean, ServiceContext)
 	 */
 	@Deprecated
 	@Override
 	public User addUser(
-		long creatorUserId, long companyId, boolean autoPassword,
-		String password1, String password2, boolean autoScreenName,
-		String screenName, String emailAddress, long facebookId,
-		String openId, Locale locale, String firstName, String middleName,
-		String lastName, long prefixId, long suffixId, boolean male,
-		int birthdayMonth, int birthdayDay, int birthdayYear,
-		String jobTitle, long[] groupIds, long[] organizationIds,
-		long[] roleIds, long[] userGroupIds, boolean sendEmail,
-		ServiceContext serviceContext)
+			long creatorUserId, long companyId, boolean autoPassword,
+			String password1, String password2, boolean autoScreenName,
+			String screenName, String emailAddress, long facebookId,
+			String openId, Locale locale, String firstName, String middleName,
+			String lastName, long prefixId, long suffixId, boolean male,
+			int birthdayMonth, int birthdayDay, int birthdayYear,
+			String jobTitle, long[] groupIds, long[] organizationIds,
+			long[] roleIds, long[] userGroupIds, boolean sendEmail,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		return userLocalService.addUser(
@@ -764,22 +779,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			autoScreenName, screenName, emailAddress, facebookId, openId,
 			locale, firstName, middleName, lastName, prefixId, suffixId,
 			birthdayMonth, birthdayDay, birthdayYear, jobTitle, groupIds,
-			organizationIds, roleIds, userGroupIds,  sendEmail, serviceContext);
-	}
-
-	/**
-	 * Adds the users to the team.
-	 *
-	 * @param teamId the primary key of the team
-	 * @param userIds the primary keys of the users
-	 */
-	@Override
-	public void addTeamUsers(long teamId, long[] userIds)
-		throws PortalException {
-
-		teamPersistence.addUsers(teamId, userIds);
-
-		reindex(userIds);
+			organizationIds, roleIds, userGroupIds, sendEmail, serviceContext);
 	}
 
 	/**
@@ -991,7 +991,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 *         attribute), asset category IDs, asset tag names, and expando
 	 *         bridge attributes for the user.
 	 * @return the new user
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
 	 *             #addUserWithWorkflow(
 	 *                   long , long, boolean,
 	 *                    String , String, boolean,
@@ -1025,8 +1025,8 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			birthdayMonth, birthdayDay, birthdayYear, jobTitle, groupIds,
 			organizationIds, roleIds, userGroupIds, sendEmail, serviceContext);
 	}
+
 	/**
-	 *
 	 * Adds a user with workflow.
 	 *
 	 * <p>
@@ -4738,7 +4738,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 *         <code>null</code>). Can set expando bridge attributes for the
 	 *         user.
 	 * @return the user
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
 	 *             #updateIncompleteUser(long , long, boolean, String , String,
 	 *             boolean, String, String, long, String, Locale, String,
 	 *             String, String, long, long, int, int, int, String, boolean,
@@ -4760,7 +4760,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		return userLocalService.updateIncompleteUser(
 			creatorUserId, companyId, autoPassword, password1, password2,
 			autoScreenName, screenName, emailAddress, facebookId, openId,
-			locale,  firstName, middleName, lastName, prefixId, suffixId,
+			locale, firstName, middleName, lastName, prefixId, suffixId,
 			birthdayMonth, birthdayDay, birthdayYear, jobTitle,
 			updateUserInformation, sendEmail, serviceContext);
 	}
@@ -4803,15 +4803,15 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 */
 	@Override
 	public User updateIncompleteUser(
-		long creatorUserId, long companyId, boolean autoPassword,
-				String password1, String password2, boolean autoScreenName,
-				String screenName, String emailAddress, long facebookId,
-				String openId, Locale locale, String firstName, String middleName,
-				String lastName, long prefixId, long suffixId,
-				int birthdayMonth, int birthdayDay, int birthdayYear,
-				String jobTitle, boolean updateUserInformation, boolean sendEmail,
-				ServiceContext serviceContext)
-			throws PortalException {
+			long creatorUserId, long companyId, boolean autoPassword,
+			String password1, String password2, boolean autoScreenName,
+			String screenName, String emailAddress, long facebookId,
+			String openId, Locale locale, String firstName, String middleName,
+			String lastName, long prefixId, long suffixId, int birthdayMonth,
+			int birthdayDay, int birthdayYear, String jobTitle,
+			boolean updateUserInformation, boolean sendEmail,
+			ServiceContext serviceContext)
+		throws PortalException {
 
 		User user = getUserByEmailAddress(companyId, emailAddress);
 
@@ -5542,7 +5542,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 *         attribute), asset category IDs, asset tag names, and expando
 	 *         bridge attributes for the user.
 	 * @return the user
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
 	 *             #updateUser(long, String, String, String, boolean, String,
 	 *             String, String, String, long, String, boolean, byte[],
 	 *             String, String, String, String, String, String, String, long,
@@ -5571,12 +5571,12 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		throws PortalException {
 
 		return userLocalService.updateUser(
-			userId, oldPassword,  newPassword1,	newPassword2,  passwordReset,
+			userId, oldPassword, newPassword1, newPassword2, passwordReset,
 			reminderQueryQuestion, reminderQueryAnswer, screenName,
-			emailAddress, facebookId, openId,  portrait, portraitBytes,
+			emailAddress, facebookId, openId, portrait, portraitBytes,
 			languageId, timeZoneId, greeting, comments, firstName, middleName,
-			lastName,  prefixId,  suffixId, birthdayMonth, birthdayDay,
-			birthdayYear, smsSn, facebookSn,  jabberSn, skypeSn, twitterSn,
+			lastName, prefixId, suffixId, birthdayMonth, birthdayDay,
+			birthdayYear, smsSn, facebookSn, jabberSn, skypeSn, twitterSn,
 			jobTitle, groupIds, organizationIds, roleIds, userGroupRoles,
 			userGroupIds, serviceContext);
 	}
@@ -5640,11 +5640,10 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			String openId, boolean portrait, byte[] portraitBytes,
 			String languageId, String timeZoneId, String greeting,
 			String comments, String firstName, String middleName,
-			String lastName, long prefixId, long suffixId,
-			int birthdayMonth, int birthdayDay, int birthdayYear, String smsSn,
-			String facebookSn, String jabberSn, String skypeSn,
-			String twitterSn, String jobTitle, long[] groupIds,
-			long[] organizationIds, long[] roleIds,
+			String lastName, long prefixId, long suffixId, int birthdayMonth,
+			int birthdayDay, int birthdayYear, String smsSn, String facebookSn,
+			String jabberSn, String skypeSn, String twitterSn, String jobTitle,
+			long[] groupIds, long[] organizationIds, long[] roleIds,
 			List<UserGroupRole> userGroupRoles, long[] userGroupIds,
 			ServiceContext serviceContext)
 		throws PortalException {
@@ -5959,8 +5958,8 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			reminderQueryQuestion, reminderQueryAnswer, screenName,
 			emailAddress, facebookId, openId, true, null, languageId,
 			timeZoneId, greeting, comments, firstName, middleName, lastName,
-			prefixId, suffixId, male, birthdayMonth, birthdayDay, birthdayYear,
-			smsSn, facebookSn, jabberSn, skypeSn, twitterSn, jobTitle, groupIds,
+			prefixId, suffixId, birthdayMonth, birthdayDay, birthdayYear, smsSn,
+			facebookSn, jabberSn, skypeSn, twitterSn, jobTitle, groupIds,
 			organizationIds, roleIds, userGroupRoles, userGroupIds,
 			serviceContext);
 	}

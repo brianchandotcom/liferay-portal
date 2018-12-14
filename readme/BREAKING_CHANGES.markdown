@@ -132,3 +132,31 @@ This change was made to avoid bundling and serving additional library code on
 every page that was mostly unused and redundant.
 
 ---------------------------------------
+
+### Remove Link Application URLs to Page functionality
+- **Date:** 2018-Dec-14
+- **JIRA Ticket:** [LPS-85948](https://issues.liferay.com/browse/LPS-85948)
+
+#### What changed?
+
+Link to page option was marked as deprecated in 7.1, allowing the user to show
+and hide the option through a configuration property. In 7.2 this configuration
+property has been removed and the user cannot select the option in the look and
+feel portlet
+
+#### Who is affected?
+
+This affects the administrator since the option no longer exists, and also the
+developers who used the option in the portlet
+
+#### How should I update my code?
+
+Updated the portlets accordingly, since any preconfigured reference to the
+property is ignored in the portal
+
+#### Why was this change made?
+
+Only some portlets use this property and there are better and more optimal ways
+to achieve the same results
+
+---------------------------------------

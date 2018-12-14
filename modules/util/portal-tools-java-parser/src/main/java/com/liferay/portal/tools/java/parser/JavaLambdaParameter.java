@@ -14,6 +14,8 @@
 
 package com.liferay.portal.tools.java.parser;
 
+import com.liferay.portal.kernel.util.StringBundler;
+
 /**
  * @author Hugo Huijser
  */
@@ -21,6 +23,14 @@ public class JavaLambdaParameter extends BaseJavaTerm {
 
 	public JavaLambdaParameter(String name) {
 		_name = new JavaSimpleValue(name);
+	}
+
+	public boolean hasJavaType() {
+		if (_javaType == null) {
+			return false;
+		}
+
+		return true;
 	}
 
 	public void setJavaType(JavaType javaType) {

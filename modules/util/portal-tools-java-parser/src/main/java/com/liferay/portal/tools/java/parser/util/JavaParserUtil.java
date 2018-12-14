@@ -51,7 +51,6 @@ import com.liferay.portal.tools.java.parser.JavaPackageDefinition;
 import com.liferay.portal.tools.java.parser.JavaParameter;
 import com.liferay.portal.tools.java.parser.JavaReturnStatement;
 import com.liferay.portal.tools.java.parser.JavaSignature;
-import com.liferay.portal.tools.java.parser.JavaSimpleLambdaExpression;
 import com.liferay.portal.tools.java.parser.JavaSimpleValue;
 import com.liferay.portal.tools.java.parser.JavaSynchronizedStatement;
 import com.liferay.portal.tools.java.parser.JavaTerm;
@@ -1122,16 +1121,28 @@ public class JavaParserUtil {
 	private static JavaExpression _parseJavaLambdaExpression(
 		DetailAST lambdaDetailAST) {
 
+		JavaLambdaExpression javaLambdaExpression = null;
+
 		DetailAST firstChildDetailAST = lambdaDetailAST.getFirstChild();
 
 		if (firstChildDetailAST.getType() == TokenTypes.IDENT) {
-			return new JavaSimpleLambdaExpression(
+			javaLambdaExpression = new JavaLambdaExpression(
 				firstChildDetailAST.getText());
 		}
+		else {
+			javaLambdaExpression = new JavaLambdaExpression(
+				_parseJavaLambdaParameters(
+					lambdaDetailAST.findFirstToken(TokenTypes.PARAMETERS)));
+		}
 
-		return new JavaLambdaExpression(
-			_parseJavaLambdaParameters(
-				lambdaDetailAST.findFirstToken(TokenTypes.PARAMETERS)));
+		DetailAST lastChildDetailAST = lambdaDetailAST.getLastChild();
+
+		if (lastChildDetailAST.getType() != TokenTypes.SLIST) {
+			javaLambdaExpression.setLambdaActionJavaExpression(
+				parseJavaExpression(lastChildDetailAST));
+		}
+
+		return javaLambdaExpression;
 	}
 
 	private static List<JavaLambdaParameter> _parseJavaLambdaParameters(

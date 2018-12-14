@@ -14,6 +14,9 @@
 
 package com.liferay.portal.tools.java.parser;
 
+import com.liferay.portal.kernel.util.StringBundler;
+
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -27,6 +30,16 @@ public class JavaLambdaExpression extends JavaExpression {
 		_javaLambdaParameters = javaLambdaParameters;
 	}
 
+	public JavaLambdaExpression(String parameterName) {
+		_javaLambdaParameters.add(new JavaLambdaParameter(parameterName));
+	}
+
+	public void setLambdaActionJavaExpression(
+		JavaExpression lambdaActionJavaExpression) {
+
+		_lambdaActionJavaExpression = lambdaActionJavaExpression;
+	}
+
 	@Override
 	protected String getString(
 		String indent, String prefix, String suffix, int maxLineLength,
@@ -35,6 +48,7 @@ public class JavaLambdaExpression extends JavaExpression {
 		return "TODO";
 	}
 
-	private final List<JavaLambdaParameter> _javaLambdaParameters;
+	private List<JavaLambdaParameter> _javaLambdaParameters = new ArrayList<>();
+	private JavaExpression _lambdaActionJavaExpression;
 
 }

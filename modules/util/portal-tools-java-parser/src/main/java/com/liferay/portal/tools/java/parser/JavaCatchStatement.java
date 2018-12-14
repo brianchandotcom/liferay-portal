@@ -14,6 +14,8 @@
 
 package com.liferay.portal.tools.java.parser;
 
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 
 import java.util.List;
@@ -22,6 +24,10 @@ import java.util.List;
  * @author Hugo Huijser
  */
 public class JavaCatchStatement extends BaseJavaTerm {
+
+	public void setModifiers(List<JavaSimpleValue> modifiers) {
+		_modifiers = modifiers;
+	}
 
 	public void setParameterName(String parameterName) {
 		_parameterName = new JavaSimpleValue(parameterName);
@@ -43,14 +49,23 @@ public class JavaCatchStatement extends BaseJavaTerm {
 
 		indent = "\t" + indent;
 
+		prefix = prefix + "catch (";
+
+		if (ListUtil.isNotEmpty(_modifiers)) {
+			appendSingleLine(sb, _modifiers, " ", prefix, " ", maxLineLength);
+
+			prefix = StringPool.BLANK;
+		}
+
 		append(
-			sb, _parameterTypeNames, " | ", indent, prefix + "catch (",
+			sb, _parameterTypeNames, " | ", indent, prefix,
 			" " + _parameterName.toString("", "", ")" + suffix, -1),
 			maxLineLength);
 
 		return sb.toString();
 	}
 
+	private List<JavaSimpleValue> _modifiers;
 	private JavaSimpleValue _parameterName;
 	private List<JavaSimpleValue> _parameterTypeNames;
 

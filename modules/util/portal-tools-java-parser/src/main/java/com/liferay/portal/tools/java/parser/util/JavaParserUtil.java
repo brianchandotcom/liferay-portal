@@ -97,6 +97,11 @@ public class JavaParserUtil {
 		DetailAST parameterDefinitionDetailAST =
 			literalCatchDetailAST.findFirstToken(TokenTypes.PARAMETER_DEF);
 
+		javaCatchStatement.setModifiers(
+			_parseModifiers(
+				parameterDefinitionDetailAST.findFirstToken(
+					TokenTypes.MODIFIERS)));
+
 		DetailAST identDetailAST = parameterDefinitionDetailAST.findFirstToken(
 			TokenTypes.IDENT);
 

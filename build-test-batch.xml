@@ -5277,11 +5277,19 @@ ${output.content}</echo>
 				<test-set-up>
 					<if>
 						<and>
-							<available file="liferay-portal-bundle-${app.server.type}.tar.gz" />
-							<available file="liferay-portal-source.tar.gz" />
+							<or>
+								<matches pattern="(file|https?)://" string="${test.portal.bundle.war.url}" />
+								<matches pattern="(file|https?)://" string="${test.portal.bundle.zip.url}" />
+							</or>
+							<matches pattern="(file|https?)://" string="${test.sql.zip.url}" />
 						</and>
 						<then>
 							<sequential>
+								<prepare-release-test-environment
+									test.build.bundle.zip.url="${test.portal.bundle.zip.url}"
+									test.sql.zip.url="${test.sql.zip.url}"
+								/>
+
 								<propertyfile file="app.server.${env.HOSTNAME}.properties">
 									<entry key="app.server.parent.dir" value="${project.dir}/bun dles" />
 								</propertyfile>
@@ -5290,14 +5298,36 @@ ${output.content}</echo>
 									<entry key="liferay.home" value="${project.dir}/bun dles" />
 								</propertyfile>
 
-								<prepare-test-environment />
-
 								<move
 									file="bundles"
 									tofile="bun dles"
 								/>
 							</sequential>
 						</then>
+						<elseif>
+							<and>
+								<available file="liferay-portal-bundle-${app.server.type}.tar.gz" />
+								<available file="liferay-portal-source.tar.gz" />
+							</and>
+							<then>
+								<sequential>
+									<propertyfile file="app.server.${env.HOSTNAME}.properties">
+										<entry key="app.server.parent.dir" value="${project.dir}/bun dles" />
+									</propertyfile>
+
+									<propertyfile file="build.${env.HOSTNAME}.properties">
+										<entry key="liferay.home" value="${project.dir}/bun dles" />
+									</propertyfile>
+
+									<prepare-test-environment />
+
+									<move
+										file="bundles"
+										tofile="bun dles"
+									/>
+								</sequential>
+							</then>
+						</elseif>
 						<else>
 							<prepare-test-build />
 						</else>

@@ -40,16 +40,17 @@ public class ServletContextListenerExceptionAdapter
 			ServletContext servletContext =
 				servletContextEvent.getServletContext();
 
-			Thread thread = new Thread(
-				"Context destroyed thread for ".concat(
-					servletContext.getServletContextName())) {
+			Thread thread =
+				new Thread(
+					"Context destroyed thread for ".concat(
+						servletContext.getServletContextName())) {
 
-				@Override
-				public void run() {
-					_destroyContext();
-				}
+					@Override
+					public void run() {
+						_destroyContext();
+					}
 
-			};
+				};
 
 			thread.setDaemon(true);
 
@@ -74,16 +75,17 @@ public class ServletContextListenerExceptionAdapter
 			ServletContext servletContext =
 				servletContextEvent.getServletContext();
 
-			Thread thread = new Thread(
-				"Context initialized thread for ".concat(
-					servletContext.getServletContextName())) {
+			Thread thread =
+				new Thread(
+					"Context initialized thread for ".concat(
+						servletContext.getServletContextName())) {
 
-				@Override
-				public void run() {
-					_initializeContext();
-				}
+					@Override
+					public void run() {
+						_initializeContext();
+					}
 
-			};
+				};
 
 			thread.setDaemon(true);
 

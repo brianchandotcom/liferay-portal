@@ -31,32 +31,33 @@ public class ClassLoaderTracker implements BundleActivator {
 
 	@Override
 	public void start(BundleContext bundleContext) {
-		_bundleTracker = new BundleTracker<ClassLoader>(
-			bundleContext, Bundle.ACTIVE, null) {
+		_bundleTracker =
+			new BundleTracker<ClassLoader>(bundleContext, Bundle.ACTIVE, null) {
 
-			@Override
-			public ClassLoader addingBundle(
-				Bundle bundle, BundleEvent bundleEvent) {
+				@Override
+				public ClassLoader addingBundle(
+					Bundle bundle, BundleEvent bundleEvent) {
 
-				BundleWiring bundleWiring = bundle.adapt(BundleWiring.class);
+					BundleWiring bundleWiring = bundle.adapt(
+						BundleWiring.class);
 
-				ClassLoader classLoader = bundleWiring.getClassLoader();
+					ClassLoader classLoader = bundleWiring.getClassLoader();
 
-				ClassLoaderPool.register(
-					_toClassLoaderName(bundle), classLoader);
+					ClassLoaderPool.register(
+						_toClassLoaderName(bundle), classLoader);
 
-				return classLoader;
-			}
+					return classLoader;
+				}
 
-			@Override
-			public void removedBundle(
-				Bundle bundle, BundleEvent bundleEvent,
-				ClassLoader classLoader) {
+				@Override
+				public void removedBundle(
+					Bundle bundle, BundleEvent bundleEvent,
+					ClassLoader classLoader) {
 
-				ClassLoaderPool.unregister(classLoader);
-			}
+					ClassLoaderPool.unregister(classLoader);
+				}
 
-		};
+			};
 
 		_bundleTracker.open();
 	}

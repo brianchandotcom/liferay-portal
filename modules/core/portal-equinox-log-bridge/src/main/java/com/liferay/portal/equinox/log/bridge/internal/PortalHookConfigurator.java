@@ -68,28 +68,29 @@ public class PortalHookConfigurator
 
 		bundleContext.addBundleListener(_bundleStartStopLogger);
 
-		_serviceTracker = new ServiceTracker<Object, Void>(
-			bundleContext,
-			bundleContext.createFilter(
-				StringBundler.concat(
-					"(&(objectClass=",
-					"com.liferay.portal.kernel.module.framework.",
-					"ModuleServiceLifecycle)",
-					"(module.service.lifecycle=portal.initialized))")),
-			null) {
+		_serviceTracker =
+			new ServiceTracker<Object, Void>(
+				bundleContext,
+				bundleContext.createFilter(
+					StringBundler.concat(
+						"(&(objectClass=",
+						"com.liferay.portal.kernel.module.framework.",
+						"ModuleServiceLifecycle)",
+						"(module.service.lifecycle=portal.initialized))")),
+				null) {
 
-			@Override
-			public Void addingService(
-				ServiceReference<Object> serviceReference) {
+				@Override
+				public Void addingService(
+					ServiceReference<Object> serviceReference) {
 
-				_portalStarted.set(true);
+					_portalStarted.set(true);
 
-				close();
+					close();
 
-				return null;
-			}
+					return null;
+				}
 
-		};
+			};
 
 		_serviceTracker.open();
 	}

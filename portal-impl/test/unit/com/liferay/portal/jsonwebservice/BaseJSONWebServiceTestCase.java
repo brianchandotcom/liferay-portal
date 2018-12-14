@@ -177,21 +177,22 @@ public abstract class BaseJSONWebServiceTestCase extends PowerMockito {
 				invokerResult.getJSONWebServiceInvokerAction();
 
 			JSONWebServiceInvokerAction.InvokerResult newInvokerResult =
-				jsonWebServiceInvokerAction.new InvokerResult(
-					invokerResult.getResult()) {
+				jsonWebServiceInvokerAction.
+					new InvokerResult(invokerResult.getResult()) {
 
-					@Override
-					protected JSONSerializer createJSONSerializer() {
-						JSONSerializer jsonSerializer =
-							JSONFactoryUtil.createJSONSerializer();
+						@Override
+						protected JSONSerializer createJSONSerializer() {
+							JSONSerializer jsonSerializer =
+								JSONFactoryUtil.createJSONSerializer();
 
-						jsonSerializer.transform(
-							new SortedHashMapJSONTransformer(), HashMap.class);
+							jsonSerializer.transform(
+								new SortedHashMapJSONTransformer(),
+								HashMap.class);
 
-						return jsonSerializer;
-					}
+							return jsonSerializer;
+						}
 
-				};
+					};
 
 			object = newInvokerResult;
 		}

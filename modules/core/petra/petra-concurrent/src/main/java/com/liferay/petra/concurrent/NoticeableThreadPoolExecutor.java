@@ -57,69 +57,71 @@ public class NoticeableThreadPoolExecutor
 		_terminationDefaultNoticeableFuture.addFutureListener(
 			future -> threadPoolHandler.terminated());
 
-		_workerThreadPoolExecutor = new ThreadPoolExecutor(
-			corePoolSize, maximumPoolSize, keepAliveTime, timeUnit,
-			new SynchronousQueue<>(), threadFactory,
-			(runnable, threadPoolExecutor) -> {
-				if (threadPoolExecutor.isShutdown()) {
-					rejectedExecutionHandler.rejectedExecution(
-						runnable, threadPoolExecutor);
+		_workerThreadPoolExecutor =
+			new ThreadPoolExecutor(
+				corePoolSize, maximumPoolSize, keepAliveTime, timeUnit,
+				new SynchronousQueue<>(), threadFactory,
+				(runnable, threadPoolExecutor) -> {
+					if (threadPoolExecutor.isShutdown()) {
+						rejectedExecutionHandler.rejectedExecution(
+							runnable, threadPoolExecutor);
 
-					return;
+						return;
+					}
+
+					BlockingQueue<Runnable> taskQueue =
+						threadPoolExecutor.getQueue();
+
+					try {
+						taskQueue.put(runnable);
+					}
+					catch (InterruptedException ie) {
+						rejectedExecutionHandler.rejectedExecution(
+							runnable, threadPoolExecutor);
+					}
+				}) {
+
+				@Override
+				protected void afterExecute(
+					Runnable runnable, Throwable throwable) {
+
+					threadPoolHandler.afterExecute(runnable, throwable);
 				}
 
-				BlockingQueue<Runnable> taskQueue =
-					threadPoolExecutor.getQueue();
-
-				try {
-					taskQueue.put(runnable);
+				@Override
+				protected void beforeExecute(Thread thread, Runnable runnable) {
+					threadPoolHandler.beforeExecute(thread, runnable);
 				}
-				catch (InterruptedException ie) {
-					rejectedExecutionHandler.rejectedExecution(
-						runnable, threadPoolExecutor);
+
+				@Override
+				protected void terminated() {
+					if (terminationCounter.decrementAndGet() == 0) {
+						_terminationDefaultNoticeableFuture.run();
+					}
 				}
-			}) {
 
-			@Override
-			protected void afterExecute(
-				Runnable runnable, Throwable throwable) {
+			};
 
-				threadPoolHandler.afterExecute(runnable, throwable);
-			}
+		_dispatcherThreadPoolExecutor =
+			new ThreadPoolExecutor(
+				1, 1, keepAliveTime, timeUnit, blockingQueue,
+				runnable -> {
+					Thread thread = threadFactory.newThread(runnable);
 
-			@Override
-			protected void beforeExecute(Thread thread, Runnable runnable) {
-				threadPoolHandler.beforeExecute(thread, runnable);
-			}
+					thread.setName(thread.getName() + "-dispatcher");
 
-			@Override
-			protected void terminated() {
-				if (terminationCounter.decrementAndGet() == 0) {
-					_terminationDefaultNoticeableFuture.run();
+					return thread;
+				},
+				rejectedExecutionHandler) {
+
+				@Override
+				protected void terminated() {
+					if (terminationCounter.decrementAndGet() == 0) {
+						_terminationDefaultNoticeableFuture.run();
+					}
 				}
-			}
 
-		};
-
-		_dispatcherThreadPoolExecutor = new ThreadPoolExecutor(
-			1, 1, keepAliveTime, timeUnit, blockingQueue,
-			runnable -> {
-				Thread thread = threadFactory.newThread(runnable);
-
-				thread.setName(thread.getName() + "-dispatcher");
-
-				return thread;
-			},
-			rejectedExecutionHandler) {
-
-			@Override
-			protected void terminated() {
-				if (terminationCounter.decrementAndGet() == 0) {
-					_terminationDefaultNoticeableFuture.run();
-				}
-			}
-
-		};
+			};
 
 		_dispatcherThreadPoolExecutor.allowCoreThreadTimeOut(true);
 	}

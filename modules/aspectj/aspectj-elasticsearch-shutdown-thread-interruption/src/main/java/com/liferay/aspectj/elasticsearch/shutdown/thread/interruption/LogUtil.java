@@ -25,21 +25,21 @@ public class LogUtil {
 	public static void log(String message) {
 		try (QuietByteArrayOutputStream quietByteArrayOutputStream =
 				new QuietByteArrayOutputStream();
-			PrintStream printStream = new PrintStream(
-				quietByteArrayOutputStream) {
+			PrintStream printStream =
+				new PrintStream(quietByteArrayOutputStream) {
 
-				@Override
-				public void println(Object x) {
-					if (_counter++ == 0) {
-						return;
+					@Override
+					public void println(Object x) {
+						if (_counter++ == 0) {
+							return;
+						}
+
+						super.println(x);
 					}
 
-					super.println(x);
-				}
+					private int _counter;
 
-				private int _counter;
-
-			}) {
+				}) {
 
 			Thread currentThread = Thread.currentThread();
 

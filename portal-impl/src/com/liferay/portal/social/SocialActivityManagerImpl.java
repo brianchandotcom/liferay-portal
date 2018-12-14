@@ -113,8 +113,8 @@ public class SocialActivityManagerImpl<T extends ClassedModel & GroupedModel>
 
 	private final ServiceTrackerMap<String, SocialActivityManager<T>>
 		_serviceTrackerMap = ServiceTrackerCollections.openSingleValueMap(
-			(Class<SocialActivityManager<T>>)(Class<?>)
-				SocialActivityManager.class,
+			(Class<SocialActivityManager<T>>)
+				(Class<?>)SocialActivityManager.class,
 			"(model.class.name=*)",
 			new ServiceReferenceMapper<String, SocialActivityManager<T>>() {
 

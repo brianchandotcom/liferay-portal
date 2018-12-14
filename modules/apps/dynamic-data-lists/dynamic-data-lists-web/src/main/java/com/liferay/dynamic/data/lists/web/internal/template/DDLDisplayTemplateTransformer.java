@@ -118,18 +118,20 @@ public class DDLDisplayTemplateTransformer {
 			return _transformer;
 		}
 
-		private static final Transformer _transformer = new Transformer(
-			DDLWebConfigurationKeys.DYNAMIC_DATA_LISTS_ERROR_TEMPLATE, true) {
+		private static final Transformer _transformer =
+			new Transformer(
+				DDLWebConfigurationKeys.DYNAMIC_DATA_LISTS_ERROR_TEMPLATE,
+				true) {
 
-			@Override
-			protected String getErrorTemplateId(
-				String errorTemplatePropertyKey, String langType) {
+				@Override
+				protected String getErrorTemplateId(
+					String errorTemplatePropertyKey, String langType) {
 
-				return DDLWebConfigurationUtil.get(
-					errorTemplatePropertyKey, new Filter(langType));
-			}
+					return DDLWebConfigurationUtil.get(
+						errorTemplatePropertyKey, new Filter(langType));
+				}
 
-		};
+			};
 
 	}
 

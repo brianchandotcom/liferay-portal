@@ -37,44 +37,50 @@ public class AuditStorageServiceBundleActivator implements BundleActivator {
 				"(&(objectClass=", ModuleServiceLifecycle.class.getName() + ")",
 				ModuleServiceLifecycle.DATABASE_INITIALIZED + ")"));
 
-		_serviceTracker = new ServiceTracker<Object, Object>(
-			bundleContext, filter, null) {
+		_serviceTracker =
+			new ServiceTracker<Object, Object>(bundleContext, filter, null) {
 
-			@Override
-			public Object addingService(ServiceReference<Object> reference) {
-				try {
-					BaseUpgradeServiceModuleRelease
-						upgradeServiceModuleRelease =
-							new BaseUpgradeServiceModuleRelease() {
+				@Override
+				public Object addingService(
+					ServiceReference<Object> reference) {
 
-								@Override
-								protected String getNamespace() {
-									return "Audit";
-								}
+					try {
+						BaseUpgradeServiceModuleRelease
+							upgradeServiceModuleRelease =
+								new BaseUpgradeServiceModuleRelease() {
 
-								@Override
-								protected String getNewBundleSymbolicName() {
-									return "com.liferay.portal.security." +
-										"audit.storage.service";
-								}
+									@Override
+									protected String getNamespace() {
+										return "Audit";
+									}
 
-								@Override
-								protected String getOldBundleSymbolicName() {
-									return "audit-portlet";
-								}
+									@Override
+									protected String
+										getNewBundleSymbolicName() {
 
-							};
+										return "com.liferay.portal.security." +
+											"audit.storage.service";
+									}
 
-					upgradeServiceModuleRelease.upgrade();
+									@Override
+									protected String
+										getOldBundleSymbolicName() {
 
-					return null;
+										return "audit-portlet";
+									}
+
+								};
+
+						upgradeServiceModuleRelease.upgrade();
+
+						return null;
+					}
+					catch (UpgradeException ue) {
+						throw new RuntimeException(ue);
+					}
 				}
-				catch (UpgradeException ue) {
-					throw new RuntimeException(ue);
-				}
-			}
 
-		};
+			};
 
 		_serviceTracker.open();
 	}

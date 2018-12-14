@@ -145,14 +145,12 @@ public class GZipResponse extends HttpServletResponseWrapper {
 		EmptyGZipBufferedOutputStream emptyGZipBufferedOutputStream =
 			new EmptyGZipBufferedOutputStream(servletOutputStream);
 
-		GZIPOutputStream gzipOutputStream = new GZIPOutputStream(
-			emptyGZipBufferedOutputStream) {
-
-			{
-				def.setLevel(PropsValues.GZIP_COMPRESSION_LEVEL);
-			}
-
-		};
+		GZIPOutputStream gzipOutputStream =
+			new GZIPOutputStream(emptyGZipBufferedOutputStream) {
+				{
+					def.setLevel(PropsValues.GZIP_COMPRESSION_LEVEL);
+				}
+			};
 
 		return new ServletOutputStreamAdapter(gzipOutputStream) {
 

@@ -37,45 +37,50 @@ public class KnowledgeBaseServiceBundleActivator implements BundleActivator {
 				"(&(objectClass=", ModuleServiceLifecycle.class.getName(), ")",
 				ModuleServiceLifecycle.DATABASE_INITIALIZED, ")"));
 
-		_serviceTracker = new ServiceTracker<Object, Object>(
-			bundleContext, filter, null) {
+		_serviceTracker =
+			new ServiceTracker<Object, Object>(bundleContext, filter, null) {
 
-			@Override
-			public Object addingService(
-				ServiceReference<Object> serviceReference) {
+				@Override
+				public Object addingService(
+					ServiceReference<Object> serviceReference) {
 
-				try {
-					BaseUpgradeServiceModuleRelease
-						upgradeServiceModuleRelease =
-							new BaseUpgradeServiceModuleRelease() {
+					try {
+						BaseUpgradeServiceModuleRelease
+							upgradeServiceModuleRelease =
+								new BaseUpgradeServiceModuleRelease() {
 
-								@Override
-								protected String getNamespace() {
-									return "KB";
-								}
+									@Override
+									protected String getNamespace() {
+										return "KB";
+									}
 
-								@Override
-								protected String getNewBundleSymbolicName() {
-									return "com.liferay.knowledge.base.service";
-								}
+									@Override
+									protected String
+										getNewBundleSymbolicName() {
 
-								@Override
-								protected String getOldBundleSymbolicName() {
-									return "knowledge-base-portlet";
-								}
+										return "com.liferay.knowledge.base." +
+											"service";
+									}
 
-							};
+									@Override
+									protected String
+										getOldBundleSymbolicName() {
 
-					upgradeServiceModuleRelease.upgrade();
+										return "knowledge-base-portlet";
+									}
 
-					return null;
+								};
+
+						upgradeServiceModuleRelease.upgrade();
+
+						return null;
+					}
+					catch (UpgradeException ue) {
+						throw new RuntimeException(ue);
+					}
 				}
-				catch (UpgradeException ue) {
-					throw new RuntimeException(ue);
-				}
-			}
 
-		};
+			};
 
 		_serviceTracker.open();
 	}

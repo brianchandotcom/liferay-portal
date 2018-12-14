@@ -207,45 +207,46 @@ public class CustomSQLImpl implements CustomSQL {
 			DataAccess.cleanUp(con);
 		}
 
-		_bundleTracker = new BundleTracker<ClassLoader>(
-			bundleContext, Bundle.ACTIVE, null) {
+		_bundleTracker =
+			new BundleTracker<ClassLoader>(bundleContext, Bundle.ACTIVE, null) {
 
-			@Override
-			public ClassLoader addingBundle(
-				Bundle bundle, BundleEvent bundleEvent) {
+				@Override
+				public ClassLoader addingBundle(
+					Bundle bundle, BundleEvent bundleEvent) {
 
-				BundleWiring bundleWiring = bundle.adapt(BundleWiring.class);
+					BundleWiring bundleWiring = bundle.adapt(
+						BundleWiring.class);
 
-				ClassLoader classLoader = bundleWiring.getClassLoader();
+					ClassLoader classLoader = bundleWiring.getClassLoader();
 
-				URL sourceURL = classLoader.getResource(
-					"custom-sql/default.xml");
+					URL sourceURL = classLoader.getResource(
+						"custom-sql/default.xml");
 
-				if (sourceURL == null) {
-					sourceURL = classLoader.getResource(
-						"META-INF/custom-sql/default.xml");
+					if (sourceURL == null) {
+						sourceURL = classLoader.getResource(
+							"META-INF/custom-sql/default.xml");
+					}
+
+					if (sourceURL == null) {
+						return null;
+					}
+
+					_customSQLContainerPool.put(
+						classLoader,
+						new CustomSQLContainer(classLoader, sourceURL));
+
+					return classLoader;
 				}
 
-				if (sourceURL == null) {
-					return null;
+				@Override
+				public void removedBundle(
+					Bundle bundle, BundleEvent bundleEvent,
+					ClassLoader classLoader) {
+
+					_customSQLContainerPool.remove(classLoader);
 				}
 
-				_customSQLContainerPool.put(
-					classLoader,
-					new CustomSQLContainer(classLoader, sourceURL));
-
-				return classLoader;
-			}
-
-			@Override
-			public void removedBundle(
-				Bundle bundle, BundleEvent bundleEvent,
-				ClassLoader classLoader) {
-
-				_customSQLContainerPool.remove(classLoader);
-			}
-
-		};
+			};
 
 		_bundleTracker.open();
 	}

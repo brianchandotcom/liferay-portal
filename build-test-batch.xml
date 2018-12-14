@@ -620,6 +620,73 @@ mariadb.executable=${mariadb.executable}]]></echo>
 		</sequential>
 	</macrodef>
 
+	<macrodef name="prepare-release-test-environment">
+		<attribute default="tomcat" name="app.server.type" />
+		<attribute name="test.build.bundle.zip.url" />
+		<attribute name="test.sql.zip.url" />
+
+		<sequential>
+			<antcall inheritAll="false" target="compile" />
+
+			<mkdir dir="${app.server.parent.dir}" />
+
+			<local name="bundle.file.name" />
+
+			<basename file="@{test.build.bundle.zip.url}" property="bundle.file.name" />
+
+			<mirrors-get
+				dest="${java.io.tmpdir}/${bundle.file.name}"
+				src="@{test.build.bundle.zip.url}"
+			/>
+
+			<decompress
+				dest="${java.io.tmpdir}/bundle"
+				src="${java.io.tmpdir}/${bundle.file.name}"
+			/>
+
+			<move
+				todir="${app.server.parent.dir}"
+			>
+				<fileset
+					dir="${java.io.tmpdir}/bundle"
+					includes="liferay-*/**"
+				/>
+				<mapper
+					from="[^/]+/(.*)"
+					to="\1"
+					type="regexp"
+				/>
+			</move>
+
+			<delete dir="${java.io.tmpdir}/bundle" />
+
+			<delete file="${java.io.tmpdir}/${bundle.file.name}" />
+
+			<chmod
+				perm="a+x"
+			>
+				<fileset
+					dir="${app.server.parent.dir}"
+				>
+					<include name="**/*.sh" />
+				</fileset>
+			</chmod>
+
+			<setup-libs />
+
+			<antcall inheritAll="false" target="deploy-sql-zip">
+				<param name="test.sql.zip.url" value="@{test.sql.zip.url}" />
+			</antcall>
+
+			<antcall inheritAll="false" target="install-portal-snapshots" />
+
+			<echo if:set="env.JENKINS_HOME">ANT_OPTS=${env.ANT_OPTS}</echo>
+
+			<antcall if:set="env.JENKINS_HOME" inheritAll="false" target="clean-up-db2-processes" />
+			<antcall if:set="env.JENKINS_HOME" inheritAll="false" target="clean-up-java-processes" />
+		</sequential>
+	</macrodef>
+
 	<macrodef name="prepare-test-build">
 		<sequential>
 			<trycatch property="exception.message">

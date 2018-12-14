@@ -593,6 +593,20 @@ public abstract class BaseJavaTerm implements JavaTerm {
 		return lineLength;
 	}
 
+	protected String trimTrailingSpaces(String s) {
+		if (s.length() == 0) {
+			return s;
+		}
+
+		while (true) {
+			if (s.charAt(s.length() - 1) != CharPool.SPACE) {
+				return s;
+			}
+
+			s = s.substring(0, s.length() - 1);
+		}
+	}
+
 	private boolean _appendSingleLine(
 		StringBundler sb, String s, String prefix, String suffix,
 		int maxLineLength) {
@@ -697,20 +711,6 @@ public abstract class BaseJavaTerm implements JavaTerm {
 			}
 
 			sb.setIndex(sb.index() - 1);
-		}
-	}
-
-	protected String trimTrailingSpaces(String s) {
-		if (s.length() == 0) {
-			return s;
-		}
-
-		while (true) {
-			if (s.charAt(s.length() - 1) != CharPool.SPACE) {
-				return s;
-			}
-
-			s = s.substring(0, s.length() - 1);
 		}
 	}
 

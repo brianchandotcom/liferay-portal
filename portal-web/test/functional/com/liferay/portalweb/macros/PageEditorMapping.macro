@@ -6,8 +6,6 @@ definition {
 	}
 
 	macro mapEditableTextToAsset {
-		PageEditor.gotoTab(tabName = "Mapping");
-
 		MouseOver.mouseOverNotVisible(
 			locator1 = "Fragment#EDITABLE_FIELD",
 			key_fragmentName = "${fragmentName}",

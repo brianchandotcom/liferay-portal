@@ -9,7 +9,7 @@ Array [
           Object {
             "fields": Array [
               Object {
-                "fieldName": "radio",
+                "fieldName": "liferay",
                 "label": "Radio Field",
                 "options": Array [
                   Object {
@@ -179,7 +179,7 @@ Array [
           Object {
             "fields": Array [
               Object {
-                "fieldName": "radio",
+                "fieldName": "liferay",
                 "label": "New label 0",
                 "options": Array [
                   Object {
@@ -349,7 +349,7 @@ Array [
           Object {
             "fields": Array [
               Object {
-                "fieldName": "radio",
+                "fieldName": "liferay",
                 "label": "Radio Field",
                 "options": Array [
                   Object {

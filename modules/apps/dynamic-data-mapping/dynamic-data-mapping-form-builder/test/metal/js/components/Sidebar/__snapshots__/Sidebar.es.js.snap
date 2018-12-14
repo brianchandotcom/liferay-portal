@@ -10,11 +10,13 @@ exports[`Sidebar should close the sidebar in edition mode 1`] = `
                 <title>angle-left</title>
                 <use xlink:href="icons.svg#angle-left"></use>
               </svg></button></li>
-          <li class="tbar-item tbar-item-expand text-left">
-            <div><button class="btn btn-sm btn-secondary" disabled="disabled" type="button"><span class="inline-item inline-item-before"><svg aria-hidden="true" class="lexicon-icon lexicon-icon-text" focusable="false">
+          <li class="tbar-item ddm-fieldtypes-dropdown tbar-item-expand text-left">
+            <div>
+              <div class="dropdown"><button aria-expanded="false" aria-haspopup="true" aria-label="toggle" class="dropdown-toggle btn nav-link btn-sm btn-secondary" ref="triggerButton" type="button"><svg aria-hidden="true" class="lexicon-icon lexicon-icon-text inline-item inline-item-before" focusable="false">
                     <title>text</title>
                     <use xlink:href="icons.svg#text"></use>
-                  </svg></span>Text Field</button></div>
+                  </svg>Text Field</button></div>
+            </div>
           </li>
           <li class="tbar-item">
             <div class="dropdown dropdown-action"><button aria-expanded="false" aria-haspopup="true" aria-label="toggle" class="dropdown-toggle btn component-action btn-unstyled" ref="triggerButton" title="actions" type="button"><svg aria-hidden="true" class="lexicon-icon lexicon-icon-ellipsis-v" focusable="false">
@@ -58,10 +60,39 @@ exports[`Sidebar should close the sidebar in edition mode 1`] = `
     </div>
   </div>
 </div>
+<div class="dropdown-menu dropdown-menu-indicator-start" ref="menu">
+  <ul class="list-unstyled">
+    <li><button class="btn dropdown-item btn-sm btn-link" aria-label="Date" type="button"><span class="dropdown-item-indicator"><svg aria-hidden="true" class="lexicon-icon lexicon-icon-calendar" focusable="false">
+            <title>calendar</title>
+            <use xlink:href="icons.svg#calendar"></use>
+          </svg></span>Date</button></li>
+    <li><button class="btn dropdown-item btn-sm btn-link" aria-label="Text Field" type="button"><span class="dropdown-item-indicator"><svg aria-hidden="true" class="lexicon-icon lexicon-icon-text" focusable="false">
+            <title>text</title>
+            <use xlink:href="icons.svg#text"></use>
+          </svg></span>Text Field</button></li>
+    <li><button class="btn dropdown-item btn-sm btn-link" aria-label="Single Selection" type="button"><span class="dropdown-item-indicator"><svg aria-hidden="true" class="lexicon-icon lexicon-icon-radio-button" focusable="false">
+            <title>radio-button</title>
+            <use xlink:href="icons.svg#radio-button"></use>
+          </svg></span>Single Selection</button></li>
+    <li><button class="btn dropdown-item btn-sm btn-link" aria-label="Select from list" type="button"><span class="dropdown-item-indicator"><svg aria-hidden="true" class="lexicon-icon lexicon-icon-list" focusable="false">
+            <title>list</title>
+            <use xlink:href="icons.svg#list"></use>
+          </svg></span>Select from list</button></li>
+    <li><button class="btn dropdown-item btn-sm btn-link" aria-label="Grid" type="button"><span class="dropdown-item-indicator"><svg aria-hidden="true" class="lexicon-icon lexicon-icon-grid" focusable="false">
+            <title>grid</title>
+            <use xlink:href="icons.svg#grid"></use>
+          </svg></span>Grid</button></li>
+    <li><button class="btn dropdown-item btn-sm btn-link" aria-label="Multiple Selection" type="button"><span class="dropdown-item-indicator"><svg aria-hidden="true" class="lexicon-icon lexicon-icon-select-from-list" focusable="false">
+            <title>select-from-list</title>
+            <use xlink:href="icons.svg#select-from-list"></use>
+          </svg></span>Multiple Selection</button></li>
+  </ul>
+</div>
 <div class="dropdown-menu" ref="menu">
   <ul class="list-unstyled">
     <li><button class="btn dropdown-item btn-sm btn-link" aria-label="duplicate-field" type="button">duplicate-field</button></li>
     <li><button class="btn dropdown-item btn-sm btn-link" aria-label="remove-field" type="button">remove-field</button></li>
+    <li><button class="btn dropdown-item btn-sm btn-link" aria-label="cancel-field-changes" type="button">cancel-field-changes</button></li>
   </ul>
 </div>
 `;
@@ -76,11 +107,13 @@ exports[`Sidebar should close the sidebar in edition mode 2`] = `
                 <title>angle-left</title>
                 <use xlink:href="icons.svg#angle-left"></use>
               </svg></button></li>
-          <li class="tbar-item tbar-item-expand text-left">
-            <div><button class="btn btn-sm btn-secondary" disabled="disabled" type="button"><span class="inline-item inline-item-before"><svg aria-hidden="true" class="lexicon-icon lexicon-icon-text" focusable="false">
+          <li class="tbar-item ddm-fieldtypes-dropdown tbar-item-expand text-left">
+            <div>
+              <div class="dropdown"><button aria-expanded="false" aria-haspopup="true" aria-label="toggle" class="dropdown-toggle btn nav-link btn-sm btn-secondary" ref="triggerButton" type="button"><svg aria-hidden="true" class="lexicon-icon lexicon-icon-text inline-item inline-item-before" focusable="false">
                     <title>text</title>
                     <use xlink:href="icons.svg#text"></use>
-                  </svg></span>Text Field</button></div>
+                  </svg>Text Field</button></div>
+            </div>
           </li>
           <li class="tbar-item">
             <div class="dropdown dropdown-action"><button aria-expanded="false" aria-haspopup="true" aria-label="toggle" class="dropdown-toggle btn component-action btn-unstyled" ref="triggerButton" title="actions" type="button"><svg aria-hidden="true" class="lexicon-icon lexicon-icon-ellipsis-v" focusable="false">
@@ -124,10 +157,39 @@ exports[`Sidebar should close the sidebar in edition mode 2`] = `
     </div>
   </div>
 </div>
+<div class="dropdown-menu dropdown-menu-indicator-start" ref="menu">
+  <ul class="list-unstyled">
+    <li><button class="btn dropdown-item btn-sm btn-link" aria-label="Date" type="button"><span class="dropdown-item-indicator"><svg aria-hidden="true" class="lexicon-icon lexicon-icon-calendar" focusable="false">
+            <title>calendar</title>
+            <use xlink:href="icons.svg#calendar"></use>
+          </svg></span>Date</button></li>
+    <li><button class="btn dropdown-item btn-sm btn-link" aria-label="Text Field" type="button"><span class="dropdown-item-indicator"><svg aria-hidden="true" class="lexicon-icon lexicon-icon-text" focusable="false">
+            <title>text</title>
+            <use xlink:href="icons.svg#text"></use>
+          </svg></span>Text Field</button></li>
+    <li><button class="btn dropdown-item btn-sm btn-link" aria-label="Single Selection" type="button"><span class="dropdown-item-indicator"><svg aria-hidden="true" class="lexicon-icon lexicon-icon-radio-button" focusable="false">
+            <title>radio-button</title>
+            <use xlink:href="icons.svg#radio-button"></use>
+          </svg></span>Single Selection</button></li>
+    <li><button class="btn dropdown-item btn-sm btn-link" aria-label="Select from list" type="button"><span class="dropdown-item-indicator"><svg aria-hidden="true" class="lexicon-icon lexicon-icon-list" focusable="false">
+            <title>list</title>
+            <use xlink:href="icons.svg#list"></use>
+          </svg></span>Select from list</button></li>
+    <li><button class="btn dropdown-item btn-sm btn-link" aria-label="Grid" type="button"><span class="dropdown-item-indicator"><svg aria-hidden="true" class="lexicon-icon lexicon-icon-grid" focusable="false">
+            <title>grid</title>
+            <use xlink:href="icons.svg#grid"></use>
+          </svg></span>Grid</button></li>
+    <li><button class="btn dropdown-item btn-sm btn-link" aria-label="Multiple Selection" type="button"><span class="dropdown-item-indicator"><svg aria-hidden="true" class="lexicon-icon lexicon-icon-select-from-list" focusable="false">
+            <title>select-from-list</title>
+            <use xlink:href="icons.svg#select-from-list"></use>
+          </svg></span>Multiple Selection</button></li>
+  </ul>
+</div>
 <div class="dropdown-menu" ref="menu">
   <ul class="list-unstyled">
     <li><button class="btn dropdown-item btn-sm btn-link" aria-label="duplicate-field" type="button">duplicate-field</button></li>
     <li><button class="btn dropdown-item btn-sm btn-link" aria-label="remove-field" type="button">remove-field</button></li>
+    <li><button class="btn dropdown-item btn-sm btn-link" aria-label="cancel-field-changes" type="button">cancel-field-changes</button></li>
   </ul>
 </div>
 `;

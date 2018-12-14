@@ -43,13 +43,9 @@ import java.io.Serializable;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Set;
 
 /**
  * The persistence implementation for the sharepoint o auth2 token entry service.
@@ -344,6 +340,7 @@ public class SharepointOAuth2TokenEntryPersistenceImpl
 		setModelClass(SharepointOAuth2TokenEntry.class);
 
 		setModelImplClass(SharepointOAuth2TokenEntryImpl.class);
+		setModelPKClass(long.class);
 		setEntityCacheEnabled(SharepointOAuth2TokenEntryModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
@@ -699,101 +696,6 @@ public class SharepointOAuth2TokenEntryPersistenceImpl
 		return fetchByPrimaryKey((Serializable)sharepointOAuth2TokenEntryId);
 	}
 
-	@Override
-	public Map<Serializable, SharepointOAuth2TokenEntry> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, SharepointOAuth2TokenEntry> map = new HashMap<Serializable, SharepointOAuth2TokenEntry>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			SharepointOAuth2TokenEntry sharepointOAuth2TokenEntry = fetchByPrimaryKey(primaryKey);
-
-			if (sharepointOAuth2TokenEntry != null) {
-				map.put(primaryKey, sharepointOAuth2TokenEntry);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			Serializable serializable = entityCache.getResult(SharepointOAuth2TokenEntryModelImpl.ENTITY_CACHE_ENABLED,
-					SharepointOAuth2TokenEntryImpl.class, primaryKey);
-
-			if (serializable != nullModel) {
-				if (serializable == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<Serializable>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, (SharepointOAuth2TokenEntry)serializable);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		StringBundler query = new StringBundler((uncachedPrimaryKeys.size() * 2) +
-				1);
-
-		query.append(_SQL_SELECT_SHAREPOINTOAUTH2TOKENENTRY_WHERE_PKS_IN);
-
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append((long)primaryKey);
-
-			query.append(",");
-		}
-
-		query.setIndex(query.index() - 1);
-
-		query.append(")");
-
-		String sql = query.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query q = session.createQuery(sql);
-
-			for (SharepointOAuth2TokenEntry sharepointOAuth2TokenEntry : (List<SharepointOAuth2TokenEntry>)q.list()) {
-				map.put(sharepointOAuth2TokenEntry.getPrimaryKeyObj(),
-					sharepointOAuth2TokenEntry);
-
-				cacheResult(sharepointOAuth2TokenEntry);
-
-				uncachedPrimaryKeys.remove(sharepointOAuth2TokenEntry.getPrimaryKeyObj());
-			}
-
-			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				entityCache.putResult(SharepointOAuth2TokenEntryModelImpl.ENTITY_CACHE_ENABLED,
-					SharepointOAuth2TokenEntryImpl.class, primaryKey, nullModel);
-			}
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
-	}
-
 	/**
 	 * Returns all the sharepoint o auth2 token entries.
 	 *
@@ -991,6 +893,16 @@ public class SharepointOAuth2TokenEntryPersistenceImpl
 	}
 
 	@Override
+	protected String getPKDBName() {
+		return "sharepointOAuth2TokenEntryId";
+	}
+
+	@Override
+	protected String getSelectSQL() {
+		return _SQL_SELECT_SHAREPOINTOAUTH2TOKENENTRY;
+	}
+
+	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return SharepointOAuth2TokenEntryModelImpl.TABLE_COLUMNS_MAP;
 	}
@@ -1013,8 +925,6 @@ public class SharepointOAuth2TokenEntryPersistenceImpl
 	@ServiceReference(type = FinderCache.class)
 	protected FinderCache finderCache;
 	private static final String _SQL_SELECT_SHAREPOINTOAUTH2TOKENENTRY = "SELECT sharepointOAuth2TokenEntry FROM SharepointOAuth2TokenEntry sharepointOAuth2TokenEntry";
-	private static final String _SQL_SELECT_SHAREPOINTOAUTH2TOKENENTRY_WHERE_PKS_IN =
-		"SELECT sharepointOAuth2TokenEntry FROM SharepointOAuth2TokenEntry sharepointOAuth2TokenEntry WHERE sharepointOAuth2TokenEntryId IN (";
 	private static final String _SQL_SELECT_SHAREPOINTOAUTH2TOKENENTRY_WHERE = "SELECT sharepointOAuth2TokenEntry FROM SharepointOAuth2TokenEntry sharepointOAuth2TokenEntry WHERE ";
 	private static final String _SQL_COUNT_SHAREPOINTOAUTH2TOKENENTRY = "SELECT COUNT(sharepointOAuth2TokenEntry) FROM SharepointOAuth2TokenEntry sharepointOAuth2TokenEntry";
 	private static final String _SQL_COUNT_SHAREPOINTOAUTH2TOKENENTRY_WHERE = "SELECT COUNT(sharepointOAuth2TokenEntry) FROM SharepointOAuth2TokenEntry sharepointOAuth2TokenEntry WHERE ";

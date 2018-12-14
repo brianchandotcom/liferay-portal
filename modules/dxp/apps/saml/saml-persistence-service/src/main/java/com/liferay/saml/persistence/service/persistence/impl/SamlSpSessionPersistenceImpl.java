@@ -50,9 +50,6 @@ import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -1350,6 +1347,7 @@ public class SamlSpSessionPersistenceImpl extends BasePersistenceImpl<SamlSpSess
 		setModelClass(SamlSpSession.class);
 
 		setModelImplClass(SamlSpSessionImpl.class);
+		setModelPKClass(long.class);
 		setEntityCacheEnabled(SamlSpSessionModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
@@ -1790,100 +1788,6 @@ public class SamlSpSessionPersistenceImpl extends BasePersistenceImpl<SamlSpSess
 		return fetchByPrimaryKey((Serializable)samlSpSessionId);
 	}
 
-	@Override
-	public Map<Serializable, SamlSpSession> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, SamlSpSession> map = new HashMap<Serializable, SamlSpSession>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			SamlSpSession samlSpSession = fetchByPrimaryKey(primaryKey);
-
-			if (samlSpSession != null) {
-				map.put(primaryKey, samlSpSession);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			Serializable serializable = entityCache.getResult(SamlSpSessionModelImpl.ENTITY_CACHE_ENABLED,
-					SamlSpSessionImpl.class, primaryKey);
-
-			if (serializable != nullModel) {
-				if (serializable == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<Serializable>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, (SamlSpSession)serializable);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		StringBundler query = new StringBundler((uncachedPrimaryKeys.size() * 2) +
-				1);
-
-		query.append(_SQL_SELECT_SAMLSPSESSION_WHERE_PKS_IN);
-
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append((long)primaryKey);
-
-			query.append(",");
-		}
-
-		query.setIndex(query.index() - 1);
-
-		query.append(")");
-
-		String sql = query.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query q = session.createQuery(sql);
-
-			for (SamlSpSession samlSpSession : (List<SamlSpSession>)q.list()) {
-				map.put(samlSpSession.getPrimaryKeyObj(), samlSpSession);
-
-				cacheResult(samlSpSession);
-
-				uncachedPrimaryKeys.remove(samlSpSession.getPrimaryKeyObj());
-			}
-
-			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				entityCache.putResult(SamlSpSessionModelImpl.ENTITY_CACHE_ENABLED,
-					SamlSpSessionImpl.class, primaryKey, nullModel);
-			}
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
-	}
-
 	/**
 	 * Returns all the saml sp sessions.
 	 *
@@ -2086,6 +1990,16 @@ public class SamlSpSessionPersistenceImpl extends BasePersistenceImpl<SamlSpSess
 	}
 
 	@Override
+	protected String getPKDBName() {
+		return "samlSpSessionId";
+	}
+
+	@Override
+	protected String getSelectSQL() {
+		return _SQL_SELECT_SAMLSPSESSION;
+	}
+
+	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return SamlSpSessionModelImpl.TABLE_COLUMNS_MAP;
 	}
@@ -2110,7 +2024,6 @@ public class SamlSpSessionPersistenceImpl extends BasePersistenceImpl<SamlSpSess
 	@ServiceReference(type = FinderCache.class)
 	protected FinderCache finderCache;
 	private static final String _SQL_SELECT_SAMLSPSESSION = "SELECT samlSpSession FROM SamlSpSession samlSpSession";
-	private static final String _SQL_SELECT_SAMLSPSESSION_WHERE_PKS_IN = "SELECT samlSpSession FROM SamlSpSession samlSpSession WHERE samlSpSessionId IN (";
 	private static final String _SQL_SELECT_SAMLSPSESSION_WHERE = "SELECT samlSpSession FROM SamlSpSession samlSpSession WHERE ";
 	private static final String _SQL_COUNT_SAMLSPSESSION = "SELECT COUNT(samlSpSession) FROM SamlSpSession samlSpSession";
 	private static final String _SQL_COUNT_SAMLSPSESSION_WHERE = "SELECT COUNT(samlSpSession) FROM SamlSpSession samlSpSession WHERE ";

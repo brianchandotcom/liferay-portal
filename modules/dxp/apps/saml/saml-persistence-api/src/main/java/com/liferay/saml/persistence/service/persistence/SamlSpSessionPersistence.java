@@ -21,6 +21,11 @@ import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.saml.persistence.exception.NoSuchSpSessionException;
 import com.liferay.saml.persistence.model.SamlSpSession;
 
+import java.io.Serializable;
+
+import java.util.Map;
+import java.util.Set;
+
 /**
  * The persistence interface for the saml sp session service.
  *
@@ -40,6 +45,9 @@ public interface SamlSpSessionPersistence extends BasePersistence<SamlSpSession>
 	 *
 	 * Never modify or reference this interface directly. Always use {@link SamlSpSessionUtil} to access the saml sp session persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	@Override
+	public Map<Serializable, SamlSpSession> fetchByPrimaryKeys(
+		Set<Serializable> primaryKeys);
 
 	/**
 	* Returns the saml sp session where samlSpSessionKey = &#63; or throws a {@link NoSuchSpSessionException} if it could not be found.
@@ -360,10 +368,6 @@ public interface SamlSpSessionPersistence extends BasePersistence<SamlSpSession>
 	*/
 	public SamlSpSession fetchByPrimaryKey(long samlSpSessionId);
 
-	@Override
-	public java.util.Map<java.io.Serializable, SamlSpSession> fetchByPrimaryKeys(
-		java.util.Set<java.io.Serializable> primaryKeys);
-
 	/**
 	* Returns all the saml sp sessions.
 	*
@@ -429,5 +433,5 @@ public interface SamlSpSessionPersistence extends BasePersistence<SamlSpSession>
 	public int countAll();
 
 	@Override
-	public java.util.Set<String> getBadColumnNames();
+	public Set<String> getBadColumnNames();
 }

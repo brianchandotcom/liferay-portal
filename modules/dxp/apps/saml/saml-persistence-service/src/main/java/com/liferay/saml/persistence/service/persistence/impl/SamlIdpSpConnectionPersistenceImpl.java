@@ -49,13 +49,9 @@ import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Set;
 
 /**
  * The persistence implementation for the saml idp sp connection service.
@@ -868,6 +864,7 @@ public class SamlIdpSpConnectionPersistenceImpl extends BasePersistenceImpl<Saml
 		setModelClass(SamlIdpSpConnection.class);
 
 		setModelImplClass(SamlIdpSpConnectionImpl.class);
+		setModelPKClass(long.class);
 		setEntityCacheEnabled(SamlIdpSpConnectionModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
@@ -1268,101 +1265,6 @@ public class SamlIdpSpConnectionPersistenceImpl extends BasePersistenceImpl<Saml
 		return fetchByPrimaryKey((Serializable)samlIdpSpConnectionId);
 	}
 
-	@Override
-	public Map<Serializable, SamlIdpSpConnection> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, SamlIdpSpConnection> map = new HashMap<Serializable, SamlIdpSpConnection>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			SamlIdpSpConnection samlIdpSpConnection = fetchByPrimaryKey(primaryKey);
-
-			if (samlIdpSpConnection != null) {
-				map.put(primaryKey, samlIdpSpConnection);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			Serializable serializable = entityCache.getResult(SamlIdpSpConnectionModelImpl.ENTITY_CACHE_ENABLED,
-					SamlIdpSpConnectionImpl.class, primaryKey);
-
-			if (serializable != nullModel) {
-				if (serializable == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<Serializable>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, (SamlIdpSpConnection)serializable);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		StringBundler query = new StringBundler((uncachedPrimaryKeys.size() * 2) +
-				1);
-
-		query.append(_SQL_SELECT_SAMLIDPSPCONNECTION_WHERE_PKS_IN);
-
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append((long)primaryKey);
-
-			query.append(",");
-		}
-
-		query.setIndex(query.index() - 1);
-
-		query.append(")");
-
-		String sql = query.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query q = session.createQuery(sql);
-
-			for (SamlIdpSpConnection samlIdpSpConnection : (List<SamlIdpSpConnection>)q.list()) {
-				map.put(samlIdpSpConnection.getPrimaryKeyObj(),
-					samlIdpSpConnection);
-
-				cacheResult(samlIdpSpConnection);
-
-				uncachedPrimaryKeys.remove(samlIdpSpConnection.getPrimaryKeyObj());
-			}
-
-			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				entityCache.putResult(SamlIdpSpConnectionModelImpl.ENTITY_CACHE_ENABLED,
-					SamlIdpSpConnectionImpl.class, primaryKey, nullModel);
-			}
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
-	}
-
 	/**
 	 * Returns all the saml idp sp connections.
 	 *
@@ -1560,6 +1462,16 @@ public class SamlIdpSpConnectionPersistenceImpl extends BasePersistenceImpl<Saml
 	}
 
 	@Override
+	protected String getPKDBName() {
+		return "samlIdpSpConnectionId";
+	}
+
+	@Override
+	protected String getSelectSQL() {
+		return _SQL_SELECT_SAMLIDPSPCONNECTION;
+	}
+
+	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return SamlIdpSpConnectionModelImpl.TABLE_COLUMNS_MAP;
 	}
@@ -1584,7 +1496,6 @@ public class SamlIdpSpConnectionPersistenceImpl extends BasePersistenceImpl<Saml
 	@ServiceReference(type = FinderCache.class)
 	protected FinderCache finderCache;
 	private static final String _SQL_SELECT_SAMLIDPSPCONNECTION = "SELECT samlIdpSpConnection FROM SamlIdpSpConnection samlIdpSpConnection";
-	private static final String _SQL_SELECT_SAMLIDPSPCONNECTION_WHERE_PKS_IN = "SELECT samlIdpSpConnection FROM SamlIdpSpConnection samlIdpSpConnection WHERE samlIdpSpConnectionId IN (";
 	private static final String _SQL_SELECT_SAMLIDPSPCONNECTION_WHERE = "SELECT samlIdpSpConnection FROM SamlIdpSpConnection samlIdpSpConnection WHERE ";
 	private static final String _SQL_COUNT_SAMLIDPSPCONNECTION = "SELECT COUNT(samlIdpSpConnection) FROM SamlIdpSpConnection samlIdpSpConnection";
 	private static final String _SQL_COUNT_SAMLIDPSPCONNECTION_WHERE = "SELECT COUNT(samlIdpSpConnection) FROM SamlIdpSpConnection samlIdpSpConnection WHERE ";

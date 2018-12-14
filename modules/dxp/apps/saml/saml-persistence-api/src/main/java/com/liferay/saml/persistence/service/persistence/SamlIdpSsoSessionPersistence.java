@@ -21,7 +21,11 @@ import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.saml.persistence.exception.NoSuchIdpSsoSessionException;
 import com.liferay.saml.persistence.model.SamlIdpSsoSession;
 
+import java.io.Serializable;
+
 import java.util.Date;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * The persistence interface for the saml idp sso session service.
@@ -42,6 +46,9 @@ public interface SamlIdpSsoSessionPersistence extends BasePersistence<SamlIdpSso
 	 *
 	 * Never modify or reference this interface directly. Always use {@link SamlIdpSsoSessionUtil} to access the saml idp sso session persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	@Override
+	public Map<Serializable, SamlIdpSsoSession> fetchByPrimaryKeys(
+		Set<Serializable> primaryKeys);
 
 	/**
 	* Returns all the saml idp sso sessions where createDate &lt; &#63;.
@@ -273,10 +280,6 @@ public interface SamlIdpSsoSessionPersistence extends BasePersistence<SamlIdpSso
 	* @return the saml idp sso session, or <code>null</code> if a saml idp sso session with the primary key could not be found
 	*/
 	public SamlIdpSsoSession fetchByPrimaryKey(long samlIdpSsoSessionId);
-
-	@Override
-	public java.util.Map<java.io.Serializable, SamlIdpSsoSession> fetchByPrimaryKeys(
-		java.util.Set<java.io.Serializable> primaryKeys);
 
 	/**
 	* Returns all the saml idp sso sessions.

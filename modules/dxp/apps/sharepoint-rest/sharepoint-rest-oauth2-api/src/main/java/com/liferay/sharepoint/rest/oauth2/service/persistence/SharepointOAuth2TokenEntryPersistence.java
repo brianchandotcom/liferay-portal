@@ -21,6 +21,11 @@ import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.sharepoint.rest.oauth2.exception.NoSuch2TokenEntryException;
 import com.liferay.sharepoint.rest.oauth2.model.SharepointOAuth2TokenEntry;
 
+import java.io.Serializable;
+
+import java.util.Map;
+import java.util.Set;
+
 /**
  * The persistence interface for the sharepoint o auth2 token entry service.
  *
@@ -40,6 +45,9 @@ public interface SharepointOAuth2TokenEntryPersistence extends BasePersistence<S
 	 *
 	 * Never modify or reference this interface directly. Always use {@link SharepointOAuth2TokenEntryUtil} to access the sharepoint o auth2 token entry persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	@Override
+	public Map<Serializable, SharepointOAuth2TokenEntry> fetchByPrimaryKeys(
+		Set<Serializable> primaryKeys);
 
 	/**
 	* Returns the sharepoint o auth2 token entry where userId = &#63; and configurationPid = &#63; or throws a {@link NoSuch2TokenEntryException} if it could not be found.
@@ -147,10 +155,6 @@ public interface SharepointOAuth2TokenEntryPersistence extends BasePersistence<S
 	*/
 	public SharepointOAuth2TokenEntry fetchByPrimaryKey(
 		long sharepointOAuth2TokenEntryId);
-
-	@Override
-	public java.util.Map<java.io.Serializable, SharepointOAuth2TokenEntry> fetchByPrimaryKeys(
-		java.util.Set<java.io.Serializable> primaryKeys);
 
 	/**
 	* Returns all the sharepoint o auth2 token entries.

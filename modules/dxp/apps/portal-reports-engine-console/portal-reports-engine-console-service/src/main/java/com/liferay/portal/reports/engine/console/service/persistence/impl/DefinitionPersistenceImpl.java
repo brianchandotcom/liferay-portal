@@ -52,9 +52,6 @@ import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -2830,6 +2827,7 @@ public class DefinitionPersistenceImpl extends BasePersistenceImpl<Definition>
 		setModelClass(Definition.class);
 
 		setModelImplClass(DefinitionImpl.class);
+		setModelPKClass(long.class);
 		setEntityCacheEnabled(DefinitionModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
@@ -3300,100 +3298,6 @@ public class DefinitionPersistenceImpl extends BasePersistenceImpl<Definition>
 		return fetchByPrimaryKey((Serializable)definitionId);
 	}
 
-	@Override
-	public Map<Serializable, Definition> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, Definition> map = new HashMap<Serializable, Definition>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			Definition definition = fetchByPrimaryKey(primaryKey);
-
-			if (definition != null) {
-				map.put(primaryKey, definition);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			Serializable serializable = entityCache.getResult(DefinitionModelImpl.ENTITY_CACHE_ENABLED,
-					DefinitionImpl.class, primaryKey);
-
-			if (serializable != nullModel) {
-				if (serializable == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<Serializable>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, (Definition)serializable);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		StringBundler query = new StringBundler((uncachedPrimaryKeys.size() * 2) +
-				1);
-
-		query.append(_SQL_SELECT_DEFINITION_WHERE_PKS_IN);
-
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append((long)primaryKey);
-
-			query.append(",");
-		}
-
-		query.setIndex(query.index() - 1);
-
-		query.append(")");
-
-		String sql = query.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query q = session.createQuery(sql);
-
-			for (Definition definition : (List<Definition>)q.list()) {
-				map.put(definition.getPrimaryKeyObj(), definition);
-
-				cacheResult(definition);
-
-				uncachedPrimaryKeys.remove(definition.getPrimaryKeyObj());
-			}
-
-			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				entityCache.putResult(DefinitionModelImpl.ENTITY_CACHE_ENABLED,
-					DefinitionImpl.class, primaryKey, nullModel);
-			}
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
-	}
-
 	/**
 	 * Returns all the definitions.
 	 *
@@ -3596,6 +3500,16 @@ public class DefinitionPersistenceImpl extends BasePersistenceImpl<Definition>
 	}
 
 	@Override
+	protected String getPKDBName() {
+		return "definitionId";
+	}
+
+	@Override
+	protected String getSelectSQL() {
+		return _SQL_SELECT_DEFINITION;
+	}
+
+	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return DefinitionModelImpl.TABLE_COLUMNS_MAP;
 	}
@@ -3620,7 +3534,6 @@ public class DefinitionPersistenceImpl extends BasePersistenceImpl<Definition>
 	@ServiceReference(type = FinderCache.class)
 	protected FinderCache finderCache;
 	private static final String _SQL_SELECT_DEFINITION = "SELECT definition FROM Definition definition";
-	private static final String _SQL_SELECT_DEFINITION_WHERE_PKS_IN = "SELECT definition FROM Definition definition WHERE definitionId IN (";
 	private static final String _SQL_SELECT_DEFINITION_WHERE = "SELECT definition FROM Definition definition WHERE ";
 	private static final String _SQL_COUNT_DEFINITION = "SELECT COUNT(definition) FROM Definition definition";
 	private static final String _SQL_COUNT_DEFINITION_WHERE = "SELECT COUNT(definition) FROM Definition definition WHERE ";

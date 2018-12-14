@@ -53,9 +53,6 @@ import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -2536,6 +2533,7 @@ public class KaleoProcessPersistenceImpl extends BasePersistenceImpl<KaleoProces
 		setModelClass(KaleoProcess.class);
 
 		setModelImplClass(KaleoProcessImpl.class);
+		setModelPKClass(long.class);
 		setEntityCacheEnabled(KaleoProcessModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
@@ -3014,100 +3012,6 @@ public class KaleoProcessPersistenceImpl extends BasePersistenceImpl<KaleoProces
 		return fetchByPrimaryKey((Serializable)kaleoProcessId);
 	}
 
-	@Override
-	public Map<Serializable, KaleoProcess> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, KaleoProcess> map = new HashMap<Serializable, KaleoProcess>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			KaleoProcess kaleoProcess = fetchByPrimaryKey(primaryKey);
-
-			if (kaleoProcess != null) {
-				map.put(primaryKey, kaleoProcess);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			Serializable serializable = entityCache.getResult(KaleoProcessModelImpl.ENTITY_CACHE_ENABLED,
-					KaleoProcessImpl.class, primaryKey);
-
-			if (serializable != nullModel) {
-				if (serializable == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<Serializable>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, (KaleoProcess)serializable);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		StringBundler query = new StringBundler((uncachedPrimaryKeys.size() * 2) +
-				1);
-
-		query.append(_SQL_SELECT_KALEOPROCESS_WHERE_PKS_IN);
-
-		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append((long)primaryKey);
-
-			query.append(",");
-		}
-
-		query.setIndex(query.index() - 1);
-
-		query.append(")");
-
-		String sql = query.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query q = session.createQuery(sql);
-
-			for (KaleoProcess kaleoProcess : (List<KaleoProcess>)q.list()) {
-				map.put(kaleoProcess.getPrimaryKeyObj(), kaleoProcess);
-
-				cacheResult(kaleoProcess);
-
-				uncachedPrimaryKeys.remove(kaleoProcess.getPrimaryKeyObj());
-			}
-
-			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				entityCache.putResult(KaleoProcessModelImpl.ENTITY_CACHE_ENABLED,
-					KaleoProcessImpl.class, primaryKey, nullModel);
-			}
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
-	}
-
 	/**
 	 * Returns all the kaleo processes.
 	 *
@@ -3310,6 +3214,16 @@ public class KaleoProcessPersistenceImpl extends BasePersistenceImpl<KaleoProces
 	}
 
 	@Override
+	protected String getPKDBName() {
+		return "kaleoProcessId";
+	}
+
+	@Override
+	protected String getSelectSQL() {
+		return _SQL_SELECT_KALEOPROCESS;
+	}
+
+	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return KaleoProcessModelImpl.TABLE_COLUMNS_MAP;
 	}
@@ -3334,7 +3248,6 @@ public class KaleoProcessPersistenceImpl extends BasePersistenceImpl<KaleoProces
 	@ServiceReference(type = FinderCache.class)
 	protected FinderCache finderCache;
 	private static final String _SQL_SELECT_KALEOPROCESS = "SELECT kaleoProcess FROM KaleoProcess kaleoProcess";
-	private static final String _SQL_SELECT_KALEOPROCESS_WHERE_PKS_IN = "SELECT kaleoProcess FROM KaleoProcess kaleoProcess WHERE kaleoProcessId IN (";
 	private static final String _SQL_SELECT_KALEOPROCESS_WHERE = "SELECT kaleoProcess FROM KaleoProcess kaleoProcess WHERE ";
 	private static final String _SQL_COUNT_KALEOPROCESS = "SELECT COUNT(kaleoProcess) FROM KaleoProcess kaleoProcess";
 	private static final String _SQL_COUNT_KALEOPROCESS_WHERE = "SELECT COUNT(kaleoProcess) FROM KaleoProcess kaleoProcess WHERE ";

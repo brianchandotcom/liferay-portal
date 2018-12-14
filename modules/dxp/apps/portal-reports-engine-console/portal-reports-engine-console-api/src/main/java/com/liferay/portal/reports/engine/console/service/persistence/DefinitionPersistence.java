@@ -20,6 +20,11 @@ import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.reports.engine.console.exception.NoSuchDefinitionException;
 import com.liferay.portal.reports.engine.console.model.Definition;
 
+import java.io.Serializable;
+
+import java.util.Map;
+import java.util.Set;
+
 /**
  * The persistence interface for the definition service.
  *
@@ -39,6 +44,9 @@ public interface DefinitionPersistence extends BasePersistence<Definition> {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link DefinitionUtil} to access the definition persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	@Override
+	public Map<Serializable, Definition> fetchByPrimaryKeys(
+		Set<Serializable> primaryKeys);
 
 	/**
 	* Returns all the definitions where uuid = &#63;.
@@ -741,10 +749,6 @@ public interface DefinitionPersistence extends BasePersistence<Definition> {
 	*/
 	public Definition fetchByPrimaryKey(long definitionId);
 
-	@Override
-	public java.util.Map<java.io.Serializable, Definition> fetchByPrimaryKeys(
-		java.util.Set<java.io.Serializable> primaryKeys);
-
 	/**
 	* Returns all the definitions.
 	*
@@ -810,5 +814,5 @@ public interface DefinitionPersistence extends BasePersistence<Definition> {
 	public int countAll();
 
 	@Override
-	public java.util.Set<String> getBadColumnNames();
+	public Set<String> getBadColumnNames();
 }

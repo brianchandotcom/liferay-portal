@@ -27,7 +27,11 @@ import org.osgi.framework.FrameworkUtil;
 
 import org.osgi.util.tracker.ServiceTracker;
 
+import java.io.Serializable;
+
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * The persistence utility for the saml idp sp connection service. This utility wraps {@link com.liferay.saml.persistence.service.persistence.impl.SamlIdpSpConnectionPersistenceImpl} and provides direct access to the database for CRUD operations. This utility should only be used by the service layer, as it must operate within a transaction. Never access this utility in a JSP, controller, model, or other front-end class.
@@ -68,6 +72,14 @@ public class SamlIdpSpConnectionUtil {
 	 */
 	public static long countWithDynamicQuery(DynamicQuery dynamicQuery) {
 		return getPersistence().countWithDynamicQuery(dynamicQuery);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#fetchByPrimaryKeys(Set)
+	 */
+	public static Map<Serializable, SamlIdpSpConnection> fetchByPrimaryKeys(
+		Set<Serializable> primaryKeys) {
+		return getPersistence().fetchByPrimaryKeys(primaryKeys);
 	}
 
 	/**
@@ -408,11 +420,6 @@ public class SamlIdpSpConnectionUtil {
 	public static SamlIdpSpConnection fetchByPrimaryKey(
 		long samlIdpSpConnectionId) {
 		return getPersistence().fetchByPrimaryKey(samlIdpSpConnectionId);
-	}
-
-	public static java.util.Map<java.io.Serializable, SamlIdpSpConnection> fetchByPrimaryKeys(
-		java.util.Set<java.io.Serializable> primaryKeys) {
-		return getPersistence().fetchByPrimaryKeys(primaryKeys);
 	}
 
 	/**

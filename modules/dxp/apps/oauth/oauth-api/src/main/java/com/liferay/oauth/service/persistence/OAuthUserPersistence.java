@@ -21,6 +21,11 @@ import com.liferay.oauth.model.OAuthUser;
 
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
+import java.io.Serializable;
+
+import java.util.Map;
+import java.util.Set;
+
 /**
  * The persistence interface for the o auth user service.
  *
@@ -40,6 +45,9 @@ public interface OAuthUserPersistence extends BasePersistence<OAuthUser> {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link OAuthUserUtil} to access the o auth user persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	@Override
+	public Map<Serializable, OAuthUser> fetchByPrimaryKeys(
+		Set<Serializable> primaryKeys);
 
 	/**
 	* Returns all the o auth users where userId = &#63;.
@@ -450,10 +458,6 @@ public interface OAuthUserPersistence extends BasePersistence<OAuthUser> {
 	* @return the o auth user, or <code>null</code> if a o auth user with the primary key could not be found
 	*/
 	public OAuthUser fetchByPrimaryKey(long oAuthUserId);
-
-	@Override
-	public java.util.Map<java.io.Serializable, OAuthUser> fetchByPrimaryKeys(
-		java.util.Set<java.io.Serializable> primaryKeys);
 
 	/**
 	* Returns all the o auth users.

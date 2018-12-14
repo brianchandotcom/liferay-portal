@@ -21,7 +21,11 @@ import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.saml.persistence.exception.NoSuchSpAuthRequestException;
 import com.liferay.saml.persistence.model.SamlSpAuthRequest;
 
+import java.io.Serializable;
+
 import java.util.Date;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * The persistence interface for the saml sp auth request service.
@@ -42,6 +46,9 @@ public interface SamlSpAuthRequestPersistence extends BasePersistence<SamlSpAuth
 	 *
 	 * Never modify or reference this interface directly. Always use {@link SamlSpAuthRequestUtil} to access the saml sp auth request persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	@Override
+	public Map<Serializable, SamlSpAuthRequest> fetchByPrimaryKeys(
+		Set<Serializable> primaryKeys);
 
 	/**
 	* Returns all the saml sp auth requests where createDate &lt; &#63;.
@@ -279,10 +286,6 @@ public interface SamlSpAuthRequestPersistence extends BasePersistence<SamlSpAuth
 	* @return the saml sp auth request, or <code>null</code> if a saml sp auth request with the primary key could not be found
 	*/
 	public SamlSpAuthRequest fetchByPrimaryKey(long samlSpAuthnRequestId);
-
-	@Override
-	public java.util.Map<java.io.Serializable, SamlSpAuthRequest> fetchByPrimaryKeys(
-		java.util.Set<java.io.Serializable> primaryKeys);
 
 	/**
 	* Returns all the saml sp auth requests.

@@ -20,6 +20,11 @@ import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.reports.engine.console.exception.NoSuchEntryException;
 import com.liferay.portal.reports.engine.console.model.Entry;
 
+import java.io.Serializable;
+
+import java.util.Map;
+import java.util.Set;
+
 /**
  * The persistence interface for the entry service.
  *
@@ -39,6 +44,9 @@ public interface EntryPersistence extends BasePersistence<Entry> {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link EntryUtil} to access the entry persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
+	@Override
+	public Map<Serializable, Entry> fetchByPrimaryKeys(
+		Set<Serializable> primaryKeys);
 
 	/**
 	* Caches the entry in the entity cache if it is enabled.
@@ -89,10 +97,6 @@ public interface EntryPersistence extends BasePersistence<Entry> {
 	* @return the entry, or <code>null</code> if a entry with the primary key could not be found
 	*/
 	public Entry fetchByPrimaryKey(long entryId);
-
-	@Override
-	public java.util.Map<java.io.Serializable, Entry> fetchByPrimaryKeys(
-		java.util.Set<java.io.Serializable> primaryKeys);
 
 	/**
 	* Returns all the entries.

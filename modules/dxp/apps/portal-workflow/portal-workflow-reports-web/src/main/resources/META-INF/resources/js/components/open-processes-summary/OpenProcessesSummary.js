@@ -21,6 +21,7 @@ export default class OpenProcessesSummary extends React.Component {
 						<div className="card-header bg-transparent border-secondary card-header-default text-secondary semi-bold">
 							{'Open Processes Summary'}
 						</div>
+
 						<div className="card-body">
 							<div
 								className="row d-flex justify-content-start"
@@ -30,6 +31,7 @@ export default class OpenProcessesSummary extends React.Component {
 								<SummaryCard description="On time" total="82" />
 								<SummaryCard description="Overdue" total="33" />
 							</div>
+
 							<div className="col-12" style={{paddingTop: '30px'}}>
 								<ClayCharts data={CHART_DATA} />
 							</div>

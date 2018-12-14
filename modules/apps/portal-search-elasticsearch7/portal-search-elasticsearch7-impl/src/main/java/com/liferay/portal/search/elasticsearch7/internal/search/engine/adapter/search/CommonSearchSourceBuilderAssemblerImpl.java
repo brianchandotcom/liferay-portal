@@ -57,9 +57,9 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Michael C. Han
  */
-@Component(service = CommonSearchRequestBuilderAssembler.class)
-public class CommonSearchRequestBuilderAssemblerImpl
-	implements CommonSearchRequestBuilderAssembler {
+@Component(service = CommonSearchSourceBuilderAssembler.class)
+public class CommonSearchSourceBuilderAssemblerImpl
+	implements CommonSearchSourceBuilderAssembler {
 
 	@Override
 	public void assemble(

@@ -58,7 +58,7 @@ public class SearchSearchRequestAssemblerImpl
 		SearchSourceBuilder searchSourceBuilder,
 		SearchSearchRequest searchSearchRequest, SearchRequest searchRequest) {
 
-		_commonSearchRequestBuilderAssembler.assemble(
+		_commonSearchSourceBuilderAssembler.assemble(
 			searchSourceBuilder, searchSearchRequest, searchRequest);
 
 		setFetchSource(searchSourceBuilder, searchSearchRequest);
@@ -77,12 +77,11 @@ public class SearchSearchRequestAssemblerImpl
 	}
 
 	@Reference(unbind = "-")
-	protected void setCommonSearchRequestBuilderAssembler(
-		CommonSearchRequestBuilderAssembler
-			commonSearchRequestBuilderAssembler) {
+	protected void setCommonSearchSourceBuilderAssembler(
+		CommonSearchSourceBuilderAssembler commonSearchSourceBuilderAssembler) {
 
-		_commonSearchRequestBuilderAssembler =
-			commonSearchRequestBuilderAssembler;
+		_commonSearchSourceBuilderAssembler =
+			commonSearchSourceBuilderAssembler;
 	}
 
 	protected void setFetchSource(
@@ -299,8 +298,8 @@ public class SearchSearchRequestAssemblerImpl
 		return statsRequestBuilder.build();
 	}
 
-	private CommonSearchRequestBuilderAssembler
-		_commonSearchRequestBuilderAssembler;
+	private CommonSearchSourceBuilderAssembler
+		_commonSearchSourceBuilderAssembler;
 	private GroupByRequestFactory _groupByRequestFactory;
 	private GroupByTranslator _groupByTranslator;
 	private HighlighterTranslator _highlighterTranslator;

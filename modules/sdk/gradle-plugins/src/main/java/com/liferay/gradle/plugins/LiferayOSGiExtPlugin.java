@@ -223,12 +223,9 @@ public class LiferayOSGiExtPlugin implements Plugin<Project> {
 		}
 	}
 
-	private void _configureTaskDeploy(Project project, Jar jar) {
+	private void _configureTaskDeploy(final Project project, Jar jar) {
 		Copy copy = (Copy)GradleUtil.getTask(
 			project, LiferayBasePlugin.DEPLOY_TASK_NAME);
-
-		final LiferayExtension liferayExtension = GradleUtil.getExtension(
-			project, LiferayExtension.class);
 
 		copy.from(
 			jar,
@@ -240,6 +237,10 @@ public class LiferayOSGiExtPlugin implements Plugin<Project> {
 						new Closure<String>(project) {
 
 							public String doCall(String fileName) {
+								LiferayExtension liferayExtension =
+									GradleUtil.getExtension(
+										project, LiferayExtension.class);
+
 								Closure<String> closure =
 									liferayExtension.
 										getDeployedFileNameClosure();

@@ -1,0 +1,10 @@
+{
+    "config": {
+        "imports": {
+            "hello-soy-web": {
+                "/": "^3.0.0"
+            }
+        }
+    },
+    "preset": "liferay-npm-bundler-preset-liferay-dev",
+}

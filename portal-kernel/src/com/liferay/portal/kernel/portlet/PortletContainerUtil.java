@@ -130,7 +130,7 @@ public class PortletContainerUtil {
 			}
 		}
 
-		if (Validator.isNull(location)) {
+		if (Validator.isNull(location) || response.isCommitted()) {
 			return;
 		}
 

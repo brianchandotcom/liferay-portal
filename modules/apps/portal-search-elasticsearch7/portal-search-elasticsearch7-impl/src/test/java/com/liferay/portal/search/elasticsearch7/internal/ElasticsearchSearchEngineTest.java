@@ -28,15 +28,17 @@ import com.liferay.portal.search.elasticsearch7.internal.search.engine.adapter.E
 import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
 import com.liferay.portal.search.index.IndexNameBuilder;
 
+import java.io.IOException;
+
 import java.util.List;
 
-import org.elasticsearch.action.admin.cluster.snapshots.create.CreateSnapshotAction;
-import org.elasticsearch.action.admin.cluster.snapshots.create.CreateSnapshotRequestBuilder;
-import org.elasticsearch.action.admin.cluster.snapshots.delete.DeleteSnapshotAction;
-import org.elasticsearch.action.admin.cluster.snapshots.delete.DeleteSnapshotRequestBuilder;
-import org.elasticsearch.action.admin.cluster.snapshots.get.GetSnapshotsAction;
-import org.elasticsearch.action.admin.cluster.snapshots.get.GetSnapshotsRequestBuilder;
+import org.elasticsearch.action.admin.cluster.snapshots.create.CreateSnapshotRequest;
+import org.elasticsearch.action.admin.cluster.snapshots.delete.DeleteSnapshotRequest;
+import org.elasticsearch.action.admin.cluster.snapshots.get.GetSnapshotsRequest;
 import org.elasticsearch.action.admin.cluster.snapshots.get.GetSnapshotsResponse;
+import org.elasticsearch.client.RequestOptions;
+import org.elasticsearch.client.RestHighLevelClient;
+import org.elasticsearch.client.SnapshotClient;
 import org.elasticsearch.snapshots.SnapshotInfo;
 
 import org.junit.After;
@@ -91,30 +93,14 @@ public class ElasticsearchSearchEngineTest {
 
 		elasticsearchSearchEngine.backup(companyId, "backup_test");
 
-		GetSnapshotsRequestBuilder getSnapshotsRequestBuilder =
-			new GetSnapshotsRequestBuilder(
-				_elasticsearchFixture.getClient(), GetSnapshotsAction.INSTANCE);
-
-		getSnapshotsRequestBuilder.setIgnoreUnavailable(true);
-		getSnapshotsRequestBuilder.setRepository("liferay_backup");
-		getSnapshotsRequestBuilder.setSnapshots("backup_test");
-
-		GetSnapshotsResponse getSnapshotsResponse =
-			getSnapshotsRequestBuilder.get();
+		GetSnapshotsResponse getSnapshotsResponse = getGetSnapshotsResponse(
+			"liferay_backup", new String[] {"backup_test"}, true);
 
 		List<SnapshotInfo> snapshotInfos = getSnapshotsResponse.getSnapshots();
 
 		Assert.assertTrue(snapshotInfos.size() == 1);
 
-		DeleteSnapshotRequestBuilder deleteSnapshotRequestBuilder =
-			new DeleteSnapshotRequestBuilder(
-				_elasticsearchFixture.getClient(),
-				DeleteSnapshotAction.INSTANCE);
-
-		deleteSnapshotRequestBuilder.setRepository("liferay_backup");
-		deleteSnapshotRequestBuilder.setSnapshot("backup_test");
-
-		deleteSnapshotRequestBuilder.get();
+		deleteSnapshot("liferay_backup", "backup_test");
 	}
 
 	@Test
@@ -144,29 +130,12 @@ public class ElasticsearchSearchEngineTest {
 
 		elasticsearchSearchEngine.createBackupRepository();
 
-		CreateSnapshotRequestBuilder createSnapshotRequestBuilder =
-			new CreateSnapshotRequestBuilder(
-				_elasticsearchFixture.getClient(),
-				CreateSnapshotAction.INSTANCE);
-
-		createSnapshotRequestBuilder.setIndices(String.valueOf(companyId));
-		createSnapshotRequestBuilder.setRepository("liferay_backup");
-		createSnapshotRequestBuilder.setSnapshot("restore_test");
-		createSnapshotRequestBuilder.setWaitForCompletion(true);
-
-		createSnapshotRequestBuilder.get();
+		createSnapshot(
+			"liferay_backup", "restore_test", true, String.valueOf(companyId));
 
 		elasticsearchSearchEngine.restore(companyId, "restore_test");
 
-		DeleteSnapshotRequestBuilder deleteSnapshotRequestBuilder =
-			new DeleteSnapshotRequestBuilder(
-				_elasticsearchFixture.getClient(),
-				DeleteSnapshotAction.INSTANCE);
-
-		deleteSnapshotRequestBuilder.setRepository("liferay_backup");
-		deleteSnapshotRequestBuilder.setSnapshot("restore_test");
-
-		deleteSnapshotRequestBuilder.get();
+		deleteSnapshot("liferay_backup", "restore_test");
 	}
 
 	protected static CompanyIndexFactory createCompanyIndexFactory() {
@@ -212,6 +181,71 @@ public class ElasticsearchSearchEngineTest {
 				setSearchEngineAdapter(searchEngineAdapter);
 			}
 		};
+	}
+
+	protected void createSnapshot(
+		String repositoryName, String snapshotName, boolean waitForCompletion,
+		String... indexNames) {
+
+		CreateSnapshotRequest createSnapshotRequest = new CreateSnapshotRequest(
+			repositoryName, snapshotName);
+
+		createSnapshotRequest.indices(indexNames);
+		createSnapshotRequest.waitForCompletion(waitForCompletion);
+
+		RestHighLevelClient restHighLevelClient =
+			_elasticsearchConnectionManager.getRestHighLevelClient();
+
+		SnapshotClient snapshotClient = restHighLevelClient.snapshot();
+
+		try {
+			snapshotClient.create(
+				createSnapshotRequest, RequestOptions.DEFAULT);
+		}
+		catch (IOException ioe) {
+			throw new RuntimeException(ioe);
+		}
+	}
+
+	protected void deleteSnapshot(String repository, String snapshot) {
+		DeleteSnapshotRequest deleteSnapshotRequest = new DeleteSnapshotRequest(
+			repository, snapshot);
+
+		RestHighLevelClient restHighLevelClient =
+			_elasticsearchConnectionManager.getRestHighLevelClient();
+
+		SnapshotClient snapshotClient = restHighLevelClient.snapshot();
+
+		try {
+			snapshotClient.delete(
+				deleteSnapshotRequest, RequestOptions.DEFAULT);
+		}
+		catch (IOException ioe) {
+			throw new RuntimeException(ioe);
+		}
+	}
+
+	protected GetSnapshotsResponse getGetSnapshotsResponse(
+		String repository, String[] snapshots, boolean ignoreUnavailable) {
+
+		GetSnapshotsRequest getSnapshotsRequest = new GetSnapshotsRequest();
+
+		getSnapshotsRequest.ignoreUnavailable(ignoreUnavailable);
+		getSnapshotsRequest.repository(repository);
+		getSnapshotsRequest.snapshots(snapshots);
+
+		RestHighLevelClient restHighLevelClient =
+			_elasticsearchConnectionManager.getRestHighLevelClient();
+
+		SnapshotClient snapshotClient = restHighLevelClient.snapshot();
+
+		try {
+			return snapshotClient.get(
+				getSnapshotsRequest, RequestOptions.DEFAULT);
+		}
+		catch (IOException ioe) {
+			throw new RuntimeException(ioe);
+		}
 	}
 
 	protected void reconnect(

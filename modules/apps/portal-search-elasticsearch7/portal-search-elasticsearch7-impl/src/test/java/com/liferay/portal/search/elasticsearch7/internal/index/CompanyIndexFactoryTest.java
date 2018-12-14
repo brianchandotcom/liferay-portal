@@ -31,7 +31,8 @@ import java.util.Iterator;
 import java.util.Map;
 
 import org.elasticsearch.action.admin.indices.get.GetIndexResponse;
-import org.elasticsearch.client.AdminClient;
+import org.elasticsearch.client.IndicesClient;
+import org.elasticsearch.client.RestHighLevelClient;
 import org.elasticsearch.cluster.metadata.MappingMetaData;
 import org.elasticsearch.common.collect.ImmutableOpenMap;
 import org.elasticsearch.common.settings.Settings;
@@ -62,7 +63,7 @@ public class CompanyIndexFactoryTest {
 			_companyIndexFactoryFixture.getCompanyIndexFactory();
 
 		_singleFieldFixture = new SingleFieldFixture(
-			_elasticsearchFixture.getClient(),
+			_elasticsearchFixture.getRestHighLevelClient(),
 			new IndexName(_companyIndexFactoryFixture.getIndexName()),
 			LiferayTypeMappingsConstants.LIFERAY_DOCUMENT_TYPE);
 	}
@@ -326,10 +327,13 @@ public class CompanyIndexFactoryTest {
 	protected void assertAnalyzer(String field, String analyzer)
 		throws Exception {
 
+		RestHighLevelClient restHighLevelClient =
+			_elasticsearchFixture.getRestHighLevelClient();
+
 		FieldMappingAssert.assertAnalyzer(
 			analyzer, field, LiferayTypeMappingsConstants.LIFERAY_DOCUMENT_TYPE,
 			_companyIndexFactoryFixture.getIndexName(),
-			_elasticsearchFixture.getIndicesAdminClient());
+			restHighLevelClient.indices());
 	}
 
 	protected void assertIndicesExist(String... indexNames) {
@@ -337,7 +341,7 @@ public class CompanyIndexFactoryTest {
 			_companyIndexFactoryFixture.getIndexName());
 
 		ImmutableOpenMap<String, ImmutableOpenMap<String, MappingMetaData>>
-			mappings = getIndexResponse.mappings();
+			mappings = getIndexResponse.getMappings();
 
 		Iterator<ImmutableOpenMap<String, MappingMetaData>> iterator =
 			mappings.valuesIt();
@@ -354,17 +358,23 @@ public class CompanyIndexFactoryTest {
 	}
 
 	protected void assertType(String field, String type) throws Exception {
+		RestHighLevelClient restHighLevelClient =
+			_elasticsearchFixture.getRestHighLevelClient();
+
 		FieldMappingAssert.assertType(
 			type, field, LiferayTypeMappingsConstants.LIFERAY_DOCUMENT_TYPE,
 			_companyIndexFactoryFixture.getIndexName(),
-			_elasticsearchFixture.getIndicesAdminClient());
+			restHighLevelClient.indices());
 	}
 
 	protected void createIndices() throws Exception {
-		AdminClient adminClient = _elasticsearchFixture.getAdminClient();
+		RestHighLevelClient restHighLevelClient =
+			_elasticsearchFixture.getRestHighLevelClient();
+
+		IndicesClient indicesClient = restHighLevelClient.indices();
 
 		_companyIndexFactory.createIndices(
-			adminClient, RandomTestUtil.randomLong());
+			indicesClient, RandomTestUtil.randomLong());
 	}
 
 	protected Settings getIndexSettings() {

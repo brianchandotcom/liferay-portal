@@ -282,8 +282,11 @@ describe.only(
 
 								const {child, provider} = component.refs;
 								const mockEvent = {
-									fieldType: {
-										name: 'text'
+									focusedField: {
+										name: 'text',
+										settingsContext: {
+											pages: mockPages
+										}
 									},
 									target: {
 										columnIndex: 1,
@@ -307,8 +310,11 @@ describe.only(
 
 								const {child, provider} = component.refs;
 								const mockEvent = {
-									fieldType: {
-										name: 'text'
+									focusedField: {
+										name: 'text',
+										settingsContext: {
+											pages: mockPages
+										}
 									},
 									target: {
 										columnIndex: 0,
@@ -332,8 +338,11 @@ describe.only(
 
 								const {child, provider} = component.refs;
 								const mockEvent = {
-									fieldType: {
-										name: 'text'
+									focusedField: {
+										name: 'text',
+										settingsContext: {
+											pages: mockPages
+										}
 									},
 									target: {
 										columnIndex: 2,
@@ -495,6 +504,52 @@ describe.only(
 									}
 								);
 								expect(provider.state.focusedField).toEqual(mockEvent);
+								expect(provider.state.pages).toMatchSnapshot();
+							}
+						);
+					}
+				);
+
+				describe(
+					'fieldChangesCanceled',
+					() => {
+						it(
+							'should listen the fieldChangesCanceled event and change the state of the focusedField and pages for the data wich was received',
+							() => {
+								component = new Parent(
+									{
+										initialPages: pages
+									}
+								);
+
+								const {child, provider} = component.refs;
+								const mockedData = {
+									fieldName: 'text1',
+									name: 'text1',
+									settingsContext: [],
+									type: 'text'
+								};
+
+								provider.setState(
+									{
+										focusedField: {
+											icon: 'text',
+											name: 'text1',
+											originalContext: mockedData
+										}
+									}
+								);
+
+								child.emit('fieldChangesCanceled');
+
+								jest.runAllTimers();
+
+								expect(provider.state.focusedField).toEqual(
+									{
+										...provider.state.focusedField,
+										...mockedData
+									}
+								);
 								expect(provider.state.pages).toMatchSnapshot();
 							}
 						);

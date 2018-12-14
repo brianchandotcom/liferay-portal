@@ -296,6 +296,35 @@ describe(
 		);
 
 		it(
+			'should emit the fieldChangesCanceled event when the cancel field chages option is clicked on the sidebar settings',
+			() => {
+				component = new Sidebar(
+					{
+						fieldTypes,
+						focusedField,
+						spritemap
+					}
+				);
+
+				const spy = jest.spyOn(component, 'emit');
+
+				const data = {
+					item: {
+						settingsItem: 'cancel-field-changes'
+					}
+				};
+
+				jest.runAllTimers();
+
+				component.open();
+
+				component._handleFieldSettingsClicked({data});
+
+				expect(spy).toHaveBeenCalled();
+			}
+		);
+
+		it(
 			'should render a Sidebar with spritemap',
 			() => {
 				component = new Sidebar(

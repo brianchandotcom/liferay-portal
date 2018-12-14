@@ -409,6 +409,41 @@ describe(
 		);
 
 		it(
+			'should show modal when fieldChangesCanceled event is trigered from sidebar',
+			() => {
+				const {cancelChangesModal, sidebar} = component.refs;
+
+				sidebar.emit('fieldChangesCanceled');
+
+				jest.runAllTimers();
+
+				const modal = cancelChangesModal.element;
+
+				expect(modal.classList.contains('show')).toEqual(true);
+
+				expect(component).toMatchSnapshot();
+			}
+		);
+
+		it(
+			'should emit fieldChangesCanceled event when yes is clicked in the modal',
+			() => {
+				const spy = jest.spyOn(component, 'emit');
+				const {cancelChangesModal, sidebar} = component.refs;
+				const mockEvent = jest.fn();
+
+				sidebar.emit('fieldChangesCanceled', mockEvent);
+
+				cancelChangesModal.element.querySelectorAll('.modal-content .btn-group .btn-group-item button')[1].click();
+
+				jest.runAllTimers();
+
+				expect(spy).toHaveBeenCalled();
+				expect(spy).toHaveBeenCalledWith('fieldChangesCanceled', {});
+			}
+		);
+
+		it(
 			'should show modal when trash button gets clicked',
 			() => {
 				const {FormRenderer} = component.refs;

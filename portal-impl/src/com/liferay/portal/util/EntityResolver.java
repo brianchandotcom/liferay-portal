@@ -496,12 +496,6 @@ public class EntityResolver implements org.xml.sax.EntityResolver {
 			"mule-configuration.dtd"),
 		new KeyValuePair("-//SPRING//DTD BEAN//EN", "spring-beans.dtd"),
 		new KeyValuePair(
-			"-//Apache Software Foundation//DTD Struts Configuration 1.2//EN",
-			"struts-config_1_2.dtd"),
-		new KeyValuePair(
-			"-//Apache Software Foundation//DTD Tiles Configuration 1.1//EN",
-			"tiles-config_1_1.dtd"),
-		new KeyValuePair(
 			"-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN",
 			"web-app_2_3.dtd"),
 		new KeyValuePair(

@@ -195,9 +195,15 @@ class Analytics {
 		};
 
 		const storedIdentityHash = storage.get(STORAGE_KEY_IDENTITY_HASH);
-		const newIdentityHash = hash(bodyData);
+		let newIdentityHash = hash(bodyData);
 
 		if (newIdentityHash !== storedIdentityHash) {
+			const newUserId = this._generateUserId();
+
+			bodyData.userId = newUserId;
+			newIdentityHash = hash(bodyData);
+
+			instance._persist(STORAGE_KEY_USER_ID, newUserId);
 			instance._persist(STORAGE_KEY_IDENTITY_HASH, newIdentityHash);
 
 			const body = JSON.stringify(bodyData);

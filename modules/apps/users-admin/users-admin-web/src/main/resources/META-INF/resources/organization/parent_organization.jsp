@@ -184,24 +184,25 @@ if (parentOrganization != null) {
 	}
 
 	var searchContainer = Liferay.SearchContainer.get('<portlet:namespace />parentOrganizationSearchContainer');
+
 	var selectOrganizationLink = A.one('#<portlet:namespace />selectOrganizationLink');
 
 	var selectOrganizationLinkText = selectOrganizationLink.one('.taglib-text');
 
-	searchContainer.get('contentBox').delegate(
-		'click',
-		function(event) {
-			var link = event.currentTarget;
-			var tr = link.ancestor('tr');
-
-			searchContainer.deleteRow(tr, link.getAttribute('data-rowId'));
-
-			selectOrganizationLinkText.text('<%= LanguageUtil.get(request, "select") %>');
-		},
-		'.modify-link'
-	);
-
 	if (selectOrganizationLink) {
+		searchContainer.get('contentBox').delegate(
+			'click',
+			function(event) {
+				var link = event.currentTarget;
+				var tr = link.ancestor('tr');
+
+				searchContainer.deleteRow(tr, link.getAttribute('data-rowId'));
+
+				selectOrganizationLinkText.text('<%= LanguageUtil.get(request, "select") %>');
+			},
+			'.modify-link'
+		);
+
 		selectOrganizationLink.on(
 			'click',
 			function(event) {

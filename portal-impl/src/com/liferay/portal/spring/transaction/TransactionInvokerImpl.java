@@ -16,9 +16,6 @@ package com.liferay.portal.spring.transaction;
 
 import com.liferay.portal.kernel.transaction.TransactionConfig;
 import com.liferay.portal.kernel.transaction.TransactionInvoker;
-import com.liferay.portal.spring.aop.ServiceBeanMethodInvocation;
-
-import java.lang.reflect.Method;
 
 import java.util.concurrent.Callable;
 
@@ -39,7 +36,7 @@ public class TransactionInvokerImpl implements TransactionInvoker {
 			transactionExecutor = _transactionExecutor;
 		}
 
-		return (T)transactionExecutor.execute(
+		return transactionExecutor.execute(
 			new TransactionAttributeAdapter(
 				TransactionAttributeBuilder.build(
 					true, transactionConfig.getIsolation(),
@@ -50,7 +47,7 @@ public class TransactionInvokerImpl implements TransactionInvoker {
 					transactionConfig.getRollbackForClassNames(),
 					transactionConfig.getNoRollbackForClasses(),
 					transactionConfig.getNoRollbackForClassNames())),
-			new CallableMethodInvocation(callable));
+			callable::call);
 	}
 
 	public void setTransactionExecutor(
@@ -60,38 +57,5 @@ public class TransactionInvokerImpl implements TransactionInvoker {
 	}
 
 	private static TransactionExecutor _transactionExecutor;
-
-	private static class CallableMethodInvocation
-		extends ServiceBeanMethodInvocation {
-
-		@Override
-		public Object[] getArguments() {
-			throw new UnsupportedOperationException();
-		}
-
-		@Override
-		public Method getMethod() {
-			throw new UnsupportedOperationException();
-		}
-
-		@Override
-		public Object getThis() {
-			throw new UnsupportedOperationException();
-		}
-
-		@Override
-		public Object proceed() throws Throwable {
-			return _callable.call();
-		}
-
-		private CallableMethodInvocation(Callable<?> callable) {
-			super(null, null);
-
-			_callable = callable;
-		}
-
-		private final Callable<?> _callable;
-
-	}
 
 }

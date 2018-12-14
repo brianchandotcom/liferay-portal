@@ -14,8 +14,8 @@
 
 package com.liferay.portal.spring.transaction;
 
+import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.portal.kernel.transaction.TransactionLifecycleManager;
-import com.liferay.portal.spring.aop.ServiceBeanMethodInvocation;
 
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.TransactionStatus;
@@ -36,14 +36,14 @@ public class CallbackPreferringTransactionExecutor
 	}
 
 	@Override
-	public Object execute(
+	public <T> T execute(
 			TransactionAttributeAdapter transactionAttributeAdapter,
-			ServiceBeanMethodInvocation serviceBeanMethodInvocation)
+			UnsafeSupplier<T, Throwable> unsafeSupplier)
 		throws Throwable {
 
 		return _execute(
 			_platformTransactionManager, transactionAttributeAdapter,
-			serviceBeanMethodInvocation);
+			unsafeSupplier);
 	}
 
 	@Override
@@ -52,13 +52,11 @@ public class CallbackPreferringTransactionExecutor
 	}
 
 	protected TransactionCallback<Object> createTransactionCallback(
-		CallbackPreferringPlatformTransactionManager
-			callbackPreferringPlatformTransactionManager,
 		TransactionAttributeAdapter transactionAttributeAdapter,
-		ServiceBeanMethodInvocation serviceBeanMethodInvocation) {
+		UnsafeSupplier<Object, Throwable> unsafeSupplier) {
 
 		return new CallbackPreferringTransactionCallback(
-			transactionAttributeAdapter, serviceBeanMethodInvocation);
+			transactionAttributeAdapter, unsafeSupplier);
 	}
 
 	protected static class ThrowableHolder {
@@ -83,10 +81,10 @@ public class CallbackPreferringTransactionExecutor
 
 	}
 
-	private Object _execute(
+	private <T> T _execute(
 			PlatformTransactionManager platformTransactionManager,
 			TransactionAttributeAdapter transactionAttributeAdapter,
-			ServiceBeanMethodInvocation serviceBeanMethodInvocation)
+			UnsafeSupplier<T, Throwable> unsafeSupplier)
 		throws Throwable {
 
 		CallbackPreferringPlatformTransactionManager
@@ -99,9 +97,8 @@ public class CallbackPreferringTransactionExecutor
 				callbackPreferringPlatformTransactionManager.execute(
 					transactionAttributeAdapter,
 					createTransactionCallback(
-						callbackPreferringPlatformTransactionManager,
 						transactionAttributeAdapter,
-						serviceBeanMethodInvocation));
+						(UnsafeSupplier<Object, Throwable>)unsafeSupplier));
 
 			if (result instanceof ThrowableHolder) {
 				ThrowableHolder throwableHolder = (ThrowableHolder)result;
@@ -109,7 +106,7 @@ public class CallbackPreferringTransactionExecutor
 				throw throwableHolder.getThrowable();
 			}
 
-			return result;
+			return (T)result;
 		}
 		catch (ThrowableHolderException the) {
 			throw the.getCause();
@@ -135,7 +132,7 @@ public class CallbackPreferringTransactionExecutor
 			boolean rollback = false;
 
 			try {
-				return _serviceBeanMethodInvocation.proceed();
+				return _unsafeSupplier.get();
 			}
 			catch (Throwable throwable) {
 				if (_transactionAttributeAdapter.rollbackOn(throwable)) {
@@ -170,14 +167,14 @@ public class CallbackPreferringTransactionExecutor
 
 		private CallbackPreferringTransactionCallback(
 			TransactionAttributeAdapter transactionAttributeAdapter,
-			ServiceBeanMethodInvocation serviceBeanMethodInvocation) {
+			UnsafeSupplier<Object, Throwable> unsafeSupplier) {
 
 			_transactionAttributeAdapter = transactionAttributeAdapter;
-			_serviceBeanMethodInvocation = serviceBeanMethodInvocation;
+			_unsafeSupplier = unsafeSupplier;
 		}
 
-		private final ServiceBeanMethodInvocation _serviceBeanMethodInvocation;
 		private final TransactionAttributeAdapter _transactionAttributeAdapter;
+		private final UnsafeSupplier<Object, Throwable> _unsafeSupplier;
 
 	}
 

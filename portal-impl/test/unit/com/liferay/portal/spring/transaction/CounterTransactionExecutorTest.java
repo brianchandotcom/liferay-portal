@@ -17,13 +17,11 @@ package com.liferay.portal.spring.transaction;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
 import com.liferay.portal.kernel.util.ProxyUtil;
-import com.liferay.portal.spring.aop.ServiceBeanMethodInvocation;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 
 import java.util.Arrays;
-import java.util.concurrent.Callable;
 import java.util.function.Predicate;
 
 import org.junit.Assert;
@@ -55,9 +53,7 @@ public class CounterTransactionExecutorTest {
 		TransactionAttributeAdapter transactionAttributeAdapter =
 			_newTransactionAttributeAdapter(t -> false);
 
-		transactionExecutor.execute(
-			transactionAttributeAdapter,
-			_newServiceBeanMethodInvocation(() -> null));
+		transactionExecutor.execute(transactionAttributeAdapter, () -> null);
 
 		recordPlatformTransactionManager.verify(
 			transactionAttributeAdapter, _transactionStatus, null);
@@ -77,10 +73,9 @@ public class CounterTransactionExecutorTest {
 		try {
 			transactionExecutor.execute(
 				transactionAttributeAdapter,
-				_newServiceBeanMethodInvocation(
-					() -> {
-						throw appException;
-					}));
+				() -> {
+					throw appException;
+				});
 
 			Assert.fail();
 		}
@@ -115,10 +110,9 @@ public class CounterTransactionExecutorTest {
 		try {
 			transactionExecutor.execute(
 				transactionAttributeAdapter,
-				_newServiceBeanMethodInvocation(
-					() -> {
-						throw appException;
-					}));
+				() -> {
+					throw appException;
+				});
 
 			Assert.fail();
 		}
@@ -156,8 +150,7 @@ public class CounterTransactionExecutorTest {
 
 		try {
 			transactionExecutor.execute(
-				transactionAttributeAdapter,
-				_newServiceBeanMethodInvocation(() -> null));
+				transactionAttributeAdapter, () -> null);
 
 			Assert.fail();
 		}
@@ -196,10 +189,9 @@ public class CounterTransactionExecutorTest {
 		try {
 			transactionExecutor.execute(
 				transactionAttributeAdapter,
-				_newServiceBeanMethodInvocation(
-					() -> {
-						throw appException;
-					}));
+				() -> {
+					throw appException;
+				});
 
 			Assert.fail();
 		}
@@ -234,10 +226,9 @@ public class CounterTransactionExecutorTest {
 		try {
 			transactionExecutor.execute(
 				transactionAttributeAdapter,
-				_newServiceBeanMethodInvocation(
-					() -> {
-						throw appException;
-					}));
+				() -> {
+					throw appException;
+				});
 
 			Assert.fail();
 		}
@@ -327,19 +318,6 @@ public class CounterTransactionExecutorTest {
 	protected final Exception appException = new Exception();
 	protected final Exception commitException = new Exception();
 	protected final Exception rollbackException = new Exception();
-
-	private static ServiceBeanMethodInvocation _newServiceBeanMethodInvocation(
-		Callable<?> callable) {
-
-		return new ServiceBeanMethodInvocation(null, null) {
-
-			@Override
-			public Object proceed() throws Exception {
-				return callable.call();
-			}
-
-		};
-	}
 
 	private static TransactionAttributeAdapter _newTransactionAttributeAdapter(
 		Predicate<Throwable> predicate) {

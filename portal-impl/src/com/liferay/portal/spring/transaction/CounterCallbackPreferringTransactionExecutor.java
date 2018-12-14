@@ -14,11 +14,10 @@
 
 package com.liferay.portal.spring.transaction;
 
-import com.liferay.portal.spring.aop.ServiceBeanMethodInvocation;
+import com.liferay.petra.function.UnsafeSupplier;
 
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.TransactionStatus;
-import org.springframework.transaction.support.CallbackPreferringPlatformTransactionManager;
 import org.springframework.transaction.support.TransactionCallback;
 
 /**
@@ -35,13 +34,11 @@ public class CounterCallbackPreferringTransactionExecutor
 
 	@Override
 	protected TransactionCallback<Object> createTransactionCallback(
-		CallbackPreferringPlatformTransactionManager
-			callbackPreferringPlatformTransactionManager,
 		TransactionAttributeAdapter transactionAttributeAdapter,
-		ServiceBeanMethodInvocation serviceBeanMethodInvocation) {
+		UnsafeSupplier<Object, Throwable> unsafeSupplier) {
 
 		return new CounterCallbackPreferringTransactionCallback(
-			transactionAttributeAdapter, serviceBeanMethodInvocation);
+			transactionAttributeAdapter, unsafeSupplier);
 	}
 
 	private static class CounterCallbackPreferringTransactionCallback
@@ -50,7 +47,7 @@ public class CounterCallbackPreferringTransactionExecutor
 		@Override
 		public Object doInTransaction(TransactionStatus transactionStatus) {
 			try {
-				return _serviceBeanMethodInvocation.proceed();
+				return _unsafeSupplier.get();
 			}
 			catch (Throwable throwable) {
 				if (_transactionAttributeAdapter.rollbackOn(throwable)) {
@@ -69,14 +66,14 @@ public class CounterCallbackPreferringTransactionExecutor
 
 		private CounterCallbackPreferringTransactionCallback(
 			TransactionAttributeAdapter transactionAttributeAdapter,
-			ServiceBeanMethodInvocation serviceBeanMethodInvocation) {
+			UnsafeSupplier<Object, Throwable> unsafeSupplier) {
 
 			_transactionAttributeAdapter = transactionAttributeAdapter;
-			_serviceBeanMethodInvocation = serviceBeanMethodInvocation;
+			_unsafeSupplier = unsafeSupplier;
 		}
 
-		private final ServiceBeanMethodInvocation _serviceBeanMethodInvocation;
 		private final TransactionAttributeAdapter _transactionAttributeAdapter;
+		private final UnsafeSupplier<Object, Throwable> _unsafeSupplier;
 
 	}
 

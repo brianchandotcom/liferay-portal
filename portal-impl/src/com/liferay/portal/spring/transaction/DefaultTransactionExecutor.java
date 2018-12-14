@@ -14,8 +14,8 @@
 
 package com.liferay.portal.spring.transaction;
 
+import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.portal.kernel.transaction.TransactionLifecycleManager;
-import com.liferay.portal.spring.aop.ServiceBeanMethodInvocation;
 
 import org.springframework.transaction.PlatformTransactionManager;
 
@@ -43,14 +43,14 @@ public class DefaultTransactionExecutor
 	}
 
 	@Override
-	public Object execute(
+	public <T> T execute(
 			TransactionAttributeAdapter transactionAttributeAdapter,
-			ServiceBeanMethodInvocation serviceBeanMethodInvocation)
+			UnsafeSupplier<T, Throwable> unsafeSupplier)
 		throws Throwable {
 
 		return _execute(
 			_platformTransactionManager, transactionAttributeAdapter,
-			serviceBeanMethodInvocation);
+			unsafeSupplier);
 	}
 
 	@Override
@@ -113,19 +113,19 @@ public class DefaultTransactionExecutor
 		}
 	}
 
-	private Object _execute(
+	private <T> T _execute(
 			PlatformTransactionManager platformTransactionManager,
 			TransactionAttributeAdapter transactionAttributeAdapter,
-			ServiceBeanMethodInvocation serviceBeanMethodInvocation)
+			UnsafeSupplier<T, Throwable> unsafeSupplier)
 		throws Throwable {
 
 		TransactionStatusAdapter transactionStatusAdapter = _start(
 			platformTransactionManager, transactionAttributeAdapter);
 
-		Object returnValue = null;
+		T returnValue = null;
 
 		try {
-			returnValue = serviceBeanMethodInvocation.proceed();
+			returnValue = unsafeSupplier.get();
 		}
 		catch (Throwable throwable) {
 			throw _rollback(

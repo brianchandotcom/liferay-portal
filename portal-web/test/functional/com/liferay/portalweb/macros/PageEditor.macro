@@ -112,6 +112,11 @@ definition {
 			locator1 = "Fragment#FRAGMENT_HEADER_DELETE_BUTTON",
 			key_fragmentName = "${fragmentName}"
 		);
+
+		AssertElementNotPresent(
+			locator1 = "Fragment#FRAGMENT_HEADER",
+			key_fragmentName = "${fragmentName}"
+		);
 	}
 
 	macro removeSection {

@@ -176,33 +176,17 @@ public class ImageToolImpl implements ImageTool {
 
 		try {
 			InputStream is = classLoader.getResourceAsStream(
-				PropsUtil.get(PropsKeys.IMAGE_DEFAULT_USER_FEMALE_PORTRAIT));
+				PropsUtil.get(PropsKeys.IMAGE_DEFAULT_USER_PORTRAIT));
 
 			if (is == null) {
-				_log.error("Default user female portrait is not available");
+				_log.error("Default user portrait is not available");
 			}
 
-			_defaultUserFemalePortrait = getImage(is);
+			_defaultUserPortrait = getImage(is);
 		}
 		catch (Exception e) {
 			_log.error(
-				"Unable to configure the default user female portrait: " +
-					e.getMessage());
-		}
-
-		try {
-			InputStream is = classLoader.getResourceAsStream(
-				PropsUtil.get(PropsKeys.IMAGE_DEFAULT_USER_MALE_PORTRAIT));
-
-			if (is == null) {
-				_log.error("Default user male portrait is not available");
-			}
-
-			_defaultUserMalePortrait = getImage(is);
-		}
-		catch (Exception e) {
-			_log.error(
-				"Unable to configure the default user male portrait: " +
+				"Unable to configure the default user portrait: " +
 					e.getMessage());
 		}
 	}
@@ -461,14 +445,29 @@ public class ImageToolImpl implements ImageTool {
 		return _defaultSpacer;
 	}
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 *             #getDefaultUserPortrait}
+	 */
+	@Deprecated
 	@Override
 	public Image getDefaultUserFemalePortrait() {
-		return _defaultUserFemalePortrait;
+		return getDefaultUserPortrait();
+	}
+
+	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 *             #getDefaultUserPortrait}
+	 */
+	@Deprecated
+	@Override
+	public Image getDefaultUserMalePortrait() {
+		return getDefaultUserPortrait();
 	}
 
 	@Override
-	public Image getDefaultUserMalePortrait() {
-		return _defaultUserMalePortrait;
+	public Image getDefaultUserPortrait() {
+		return _defaultUserPortrait;
 	}
 
 	@Override
@@ -939,7 +938,6 @@ public class ImageToolImpl implements ImageTool {
 	private Image _defaultCompanyLogo;
 	private Image _defaultOrganizationLogo;
 	private Image _defaultSpacer;
-	private Image _defaultUserFemalePortrait;
-	private Image _defaultUserMalePortrait;
+	private Image _defaultUserPortrait;
 
 }

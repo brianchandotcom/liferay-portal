@@ -170,9 +170,9 @@ public class ContentSpaceApioTest {
 		).follow(
 			"_links.content-space.href"
 		).follow(
-			"_embedded.ContentSpace.find { it.name == '" +
+			"_embedded.ContentSpace.find {it.name == '" +
 				ContentSpaceTestActivator.CONTENT_SPACE_NAME +
-					"' }._links.self.href"
+					"'}._links.self.href"
 		).then(
 		).statusCode(
 			200

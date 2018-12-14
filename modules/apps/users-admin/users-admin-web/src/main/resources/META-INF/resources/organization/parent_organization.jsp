@@ -198,7 +198,7 @@ if (parentOrganization != null) {
 
 				searchContainer.deleteRow(tr, link.getAttribute('data-rowId'));
 
-				selectOrganizationLinkText.text('<%= LanguageUtil.get(request, "select") %>');
+				selectOrganizationLinkText.text('<liferay-ui:message key="select" />');
 			},
 			'.modify-link'
 		);
@@ -232,7 +232,7 @@ if (parentOrganization != null) {
 						searchContainer.addRow(rowColumns, event.entityid);
 						searchContainer.updateDataStore(event.entityid);
 
-						selectOrganizationLinkText.text('<%= LanguageUtil.get(request, "change") %>');
+						selectOrganizationLinkText.text('<liferay-ui:message key="change" />');
 					}
 				);
 			}

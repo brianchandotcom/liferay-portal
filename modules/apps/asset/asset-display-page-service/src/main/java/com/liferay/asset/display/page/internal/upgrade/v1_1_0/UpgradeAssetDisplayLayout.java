@@ -66,14 +66,6 @@ public class UpgradeAssetDisplayLayout extends UpgradeProcess {
 				long classNameId = resultSet.getLong("classNameId");
 				long classPK = resultSet.getLong("classPK");
 
-				UnicodeProperties typeSettingsProperties =
-					new UnicodeProperties();
-
-				typeSettingsProperties.put("visible", Boolean.FALSE.toString());
-
-				serviceContext.setAttribute(
-					"layout.instanceable.allowed", Boolean.TRUE);
-
 				AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
 					classNameId, classPK);
 
@@ -83,9 +75,16 @@ public class UpgradeAssetDisplayLayout extends UpgradeProcess {
 
 				long assetDisplayPageEntryId = resultSet.getLong(
 					"assetDisplayPageEntryId");
-
 				long userId = resultSet.getLong("userId");
 				long groupId = resultSet.getLong("groupId");
+
+				UnicodeProperties typeSettingsProperties =
+					new UnicodeProperties();
+
+				typeSettingsProperties.put("visible", Boolean.FALSE.toString());
+
+				serviceContext.setAttribute(
+					"layout.instanceable.allowed", Boolean.TRUE);
 
 				Layout layout = _layoutLocalService.addLayout(
 					userId, groupId, false, 0, assetEntry.getTitleMap(),

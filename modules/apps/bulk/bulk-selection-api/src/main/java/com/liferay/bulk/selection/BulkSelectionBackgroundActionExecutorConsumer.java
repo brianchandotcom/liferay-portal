@@ -14,28 +14,15 @@
 
 package com.liferay.bulk.selection;
 
-import com.liferay.portal.kernel.exception.PortalException;
-
 import java.io.Serializable;
 
-import java.util.Locale;
-import java.util.stream.Stream;
+import java.util.function.Consumer;
 
 /**
  * @author Adolfo Pérez
  */
-public interface BulkSelection
-	<T, S extends BulkSelectionBackgroundActionExecutor> {
-
-	public String describe(Locale locale) throws PortalException;
-
-	public boolean isMultiple();
-
-	public <U extends BulkSelectionBackgroundActionExecutorConsumer<S>>
-		void runBackgroundAction(U consumer);
-
-	public Serializable serialize();
-
-	public Stream<T> stream() throws PortalException;
-
+@FunctionalInterface
+public interface BulkSelectionBackgroundActionExecutorConsumer
+	<T extends BulkSelectionBackgroundActionExecutor>
+		extends Consumer<T>, Serializable {
 }

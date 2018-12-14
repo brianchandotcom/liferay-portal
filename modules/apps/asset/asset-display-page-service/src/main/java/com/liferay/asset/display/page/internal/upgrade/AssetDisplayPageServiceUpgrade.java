@@ -33,13 +33,13 @@ public class AssetDisplayPageServiceUpgrade implements UpgradeStepRegistrator {
 	@Override
 	public void register(Registry registry) {
 		registry.register(
-			"1.0.0", "1.1.0",
-			new UpgradeAssetDisplayLayout(
-				_assetEntryLocalService, _layoutLocalService));
-		registry.register(
-			"1.1.0", "2.0.0",
+			"1.0.0", "2.0.0",
 			new BaseUpgradeSQLServerDatetime(
 				new Class<?>[] {AssetDisplayPageEntryTable.class}));
+		registry.register(
+			"2.0.0", "2.1.0",
+			new UpgradeAssetDisplayLayout(
+				_assetEntryLocalService, _layoutLocalService));
 	}
 
 	@Reference

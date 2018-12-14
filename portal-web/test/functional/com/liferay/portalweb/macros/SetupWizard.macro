@@ -83,8 +83,6 @@ definition {
 
 	@summary = "Configure JDBC to ${databaseType} for Liferay with the Setup Wizard"
 	macro configurePG {
-		SetupWizard.configureSampleDataPG(addSampleData = "${addSampleData}");
-
 		if (isSet(portalName)) {
 			SetupWizard.configurePortalNamePG(portalName = "${portalName}");
 		}
@@ -106,6 +104,8 @@ definition {
 			jdbcDriverClassName = "${jdbcDriverClassName}",
 			jdbcURL = "${jdbcURL}"
 		);
+
+		SetupWizard.configureSampleDataPG(addSampleData = "${addSampleData}");
 
 		SetupWizard.finishConfigurationPG();
 

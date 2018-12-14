@@ -164,9 +164,6 @@ public class GroupPagesPortlet extends MVCPortlet {
 			}
 
 			renderRequest.setAttribute(
-				LayoutAdminWebKeys.RESOLVED_MODULE_NAME,
-				_npmResolver.resolveModuleName("layout-admin-web"));
-			renderRequest.setAttribute(
 				LayoutAdminWebConfiguration.class.getName(),
 				_layoutAdminWebConfiguration);
 			renderRequest.setAttribute(
@@ -176,6 +173,9 @@ public class GroupPagesPortlet extends MVCPortlet {
 				ApplicationListWebKeys.GROUP_PROVIDER, _groupProvider);
 			renderRequest.setAttribute(
 				LayoutAdminWebKeys.ITEM_SELECTOR, _itemSelector);
+			renderRequest.setAttribute(
+				LayoutAdminWebKeys.RESOLVED_MODULE_NAME,
+				_npmResolver.resolveModuleName("layout-admin-web"));
 
 			super.doDispatch(renderRequest, renderResponse);
 		}

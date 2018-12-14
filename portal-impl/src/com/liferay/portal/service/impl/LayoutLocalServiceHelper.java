@@ -481,15 +481,15 @@ public class LayoutLocalServiceHelper implements IdentifiableOSGiService {
 	}
 
 	public void validateName(String name) throws PortalException {
+		if (Validator.isNull(name)) {
+			throw new LayoutNameException();
+		}
+
 		int maxLength = ModelHintsUtil.getMaxLength(
 			Layout.class.getName(), "friendlyURL");
 
 		if (name.length() > maxLength) {
 			throw new LayoutNameException(LayoutNameException.TOO_LONG);
-		}
-
-		if (Validator.isNull(name)) {
-			throw new LayoutNameException();
 		}
 	}
 

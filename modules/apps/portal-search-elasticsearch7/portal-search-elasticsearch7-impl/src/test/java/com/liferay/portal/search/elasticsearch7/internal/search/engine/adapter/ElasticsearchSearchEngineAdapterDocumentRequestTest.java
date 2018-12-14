@@ -42,17 +42,19 @@ import com.liferay.portal.search.engine.adapter.document.UpdateDocumentRequest;
 import com.liferay.portal.search.engine.adapter.document.UpdateDocumentResponse;
 import com.liferay.portal.search.test.util.indexing.DocumentFixture;
 
+import java.io.IOException;
+
 import java.util.List;
 import java.util.Map;
 
-import org.elasticsearch.action.admin.indices.create.CreateIndexRequestBuilder;
-import org.elasticsearch.action.admin.indices.delete.DeleteIndexRequestBuilder;
-import org.elasticsearch.action.get.GetRequestBuilder;
+import org.elasticsearch.action.admin.indices.create.CreateIndexRequest;
+import org.elasticsearch.action.admin.indices.delete.DeleteIndexRequest;
+import org.elasticsearch.action.get.GetRequest;
 import org.elasticsearch.action.get.GetResponse;
-import org.elasticsearch.action.index.IndexRequestBuilder;
-import org.elasticsearch.client.AdminClient;
-import org.elasticsearch.client.Client;
-import org.elasticsearch.client.IndicesAdminClient;
+import org.elasticsearch.action.index.IndexRequest;
+import org.elasticsearch.client.IndicesClient;
+import org.elasticsearch.client.RequestOptions;
+import org.elasticsearch.client.RestHighLevelClient;
 import org.elasticsearch.common.xcontent.XContentType;
 import org.elasticsearch.rest.RestStatus;
 
@@ -75,18 +77,20 @@ public class ElasticsearchSearchEngineAdapterDocumentRequestTest {
 
 		_elasticsearchFixture.setUp();
 
-		_client = _elasticsearchFixture.getClient();
-
 		_searchEngineAdapter = createSearchEngineAdapter(_elasticsearchFixture);
+
+		_restHighLevelClient = _elasticsearchFixture.getRestHighLevelClient();
+
+		_indicesClient = _restHighLevelClient.indices();
 
 		_documentFixture.setUp();
 
-		createIndex();
+		_createIndex();
 	}
 
 	@After
 	public void tearDown() throws Exception {
-		deleteIndex();
+		_deleteIndex();
 
 		_documentFixture.tearDown();
 
@@ -567,49 +571,60 @@ public class ElasticsearchSearchEngineAdapterDocumentRequestTest {
 		};
 	}
 
-	protected void createIndex() {
-		AdminClient adminClient = _client.admin();
+	private void _createIndex() {
+		CreateIndexRequest createIndexRequest = new CreateIndexRequest(
+			_INDEX_NAME);
 
-		IndicesAdminClient indicesAdminClient = adminClient.indices();
-
-		CreateIndexRequestBuilder createIndexRequestBuilder =
-			indicesAdminClient.prepareCreate(_INDEX_NAME);
-
-		createIndexRequestBuilder.addMapping(
+		createIndexRequest.mapping(
 			_MAPPING_NAME, _MAPPING_SOURCE, XContentType.JSON);
 
-		createIndexRequestBuilder.get();
+		try {
+			_indicesClient.create(createIndexRequest, RequestOptions.DEFAULT);
+		}
+		catch (IOException ioe) {
+			throw new RuntimeException(ioe);
+		}
 	}
 
-	protected void deleteIndex() {
-		AdminClient adminClient = _client.admin();
+	private void _deleteIndex() {
+		DeleteIndexRequest deleteIndexRequest = new DeleteIndexRequest(
+			_INDEX_NAME);
 
-		IndicesAdminClient indicesAdminClient = adminClient.indices();
-
-		DeleteIndexRequestBuilder deleteIndexRequestBuilder =
-			indicesAdminClient.prepareDelete(_INDEX_NAME);
-
-		deleteIndexRequestBuilder.get();
+		try {
+			_indicesClient.delete(deleteIndexRequest, RequestOptions.DEFAULT);
+		}
+		catch (IOException ioe) {
+			throw new RuntimeException(ioe);
+		}
 	}
 
 	private GetResponse _getDocument(String id) {
-		GetRequestBuilder getRequestBuilder = _client.prepareGet();
+		GetRequest getRequest = new GetRequest();
 
-		getRequestBuilder.setId(id);
-		getRequestBuilder.setIndex(_INDEX_NAME);
+		getRequest.id(id);
+		getRequest.index(_INDEX_NAME);
 
-		return getRequestBuilder.get();
+		try {
+			return _restHighLevelClient.get(getRequest, RequestOptions.DEFAULT);
+		}
+		catch (IOException ioe) {
+			throw new RuntimeException(ioe);
+		}
 	}
 
 	private void _indexDocument(String documentSource, String id) {
-		IndexRequestBuilder indexRequestBuilder = _client.prepareIndex(
+		IndexRequest indexRequest = new IndexRequest(
 			_INDEX_NAME, _MAPPING_NAME);
 
-		indexRequestBuilder.setId(id);
-		indexRequestBuilder.setIndex(_INDEX_NAME);
-		indexRequestBuilder.setSource(documentSource, XContentType.JSON);
+		indexRequest.id(id);
+		indexRequest.source(documentSource, XContentType.JSON);
 
-		indexRequestBuilder.get();
+		try {
+			_restHighLevelClient.index(indexRequest, RequestOptions.DEFAULT);
+		}
+		catch (IOException ioe) {
+			throw new RuntimeException(ioe);
+		}
 	}
 
 	private IndexDocumentResponse _indexDocumentWithAdapter(
@@ -643,9 +658,10 @@ public class ElasticsearchSearchEngineAdapterDocumentRequestTest {
 	private static final String _MAPPING_SOURCE =
 		"{\"properties\":{\"matchDocument\":{\"type\":\"boolean\"}}}";
 
-	private Client _client;
 	private final DocumentFixture _documentFixture = new DocumentFixture();
 	private ElasticsearchFixture _elasticsearchFixture;
+	private IndicesClient _indicesClient;
+	private RestHighLevelClient _restHighLevelClient;
 	private SearchEngineAdapter _searchEngineAdapter;
 
 }

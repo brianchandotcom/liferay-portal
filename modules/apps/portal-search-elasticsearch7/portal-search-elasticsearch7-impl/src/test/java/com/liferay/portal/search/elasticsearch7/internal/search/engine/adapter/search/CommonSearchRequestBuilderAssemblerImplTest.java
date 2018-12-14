@@ -34,8 +34,8 @@ import com.liferay.portal.search.query.Query;
 import java.util.Arrays;
 import java.util.HashMap;
 
-import org.elasticsearch.action.search.SearchRequestBuilder;
-import org.elasticsearch.client.Client;
+import org.elasticsearch.action.search.SearchRequest;
+import org.elasticsearch.search.builder.SearchSourceBuilder;
 
 import org.junit.After;
 import org.junit.Before;
@@ -196,14 +196,16 @@ public class CommonSearchRequestBuilderAssemblerImplTest {
 			SearchSearchRequest searchSearchRequest, String... expected)
 		throws Exception {
 
-		Client client = _liferayIndexFixture.getClient();
+		SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
 
-		SearchRequestBuilder searchRequestBuilder = client.prepareSearch();
+		SearchRequest searchRequest = new SearchRequest();
 
 		_commonSearchRequestBuilderAssembler.assemble(
-			searchRequestBuilder, searchSearchRequest);
+			searchSourceBuilder, searchSearchRequest, searchRequest);
 
-		SearchAssert.assertSearch(searchRequestBuilder, "title", expected);
+		SearchAssert.assertSearch(
+			_liferayIndexFixture.getRestHighLevelClient(), searchSourceBuilder,
+			searchRequest, "title", expected);
 	}
 
 	protected SearchSearchRequest createSearchSearchRequest() {

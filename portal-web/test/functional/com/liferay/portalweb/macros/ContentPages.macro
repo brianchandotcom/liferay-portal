@@ -1,9 +1,18 @@
 definition {
 	macro addPage {
-		LexiconEntry.gotoAddMenuItem(menuItem = "Public Page");
+		var key_breadcrumbName="Pages";
 
-		if (!(isSet(collectionName))) {
-			var collectionName = "Basic Pages";
+		if (IsElementPresent(locator1 = "Message#EMPTY_INFO_TAGLIB")) {
+			SitePages.gotoAddFirstPage(
+				pageType = "Public Page"
+			);
+		} else {
+			AssertClick(
+				locator1 = "Breadcrumb#BREADCRUMB_ENTRY",
+				value1="Pages"
+			);
+
+			LexiconEntry.gotoAddMenuItem(menuItem = "Public Page");
 		}
 
 		Navigator.gotoNavNested(navNested = "${collectionName}");

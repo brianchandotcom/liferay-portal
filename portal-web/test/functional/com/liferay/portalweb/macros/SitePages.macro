@@ -132,10 +132,21 @@ definition {
 	}
 
 	macro addPrivatePage {
+		var key_breadcrumbName="Pages";
+
 		if ("${siteTemplate}" == "true") {
 			LexiconEntry.gotoAdd();
 		}
-		else {
+		else if (IsElementPresent(locator1 = "Message#EMPTY_INFO_TAGLIB")) {
+			SitePages.gotoAddFirstPage(
+				pageType = "Private Page"
+			);
+		} else {
+			AssertClick(
+				locator1 = "Breadcrumb#BREADCRUMB_ENTRY",
+				value1="Pages"
+			);
+
 			LexiconEntry.gotoAddMenuItem(menuItem = "Private Page");
 		}
 
@@ -162,7 +173,20 @@ definition {
 	}
 
 	macro addPublicPage {
-		LexiconEntry.gotoAddMenuItem(menuItem = "Public Page");
+		var key_breadcrumbName="Pages";
+
+		if (IsElementPresent(locator1 = "Message#EMPTY_INFO_TAGLIB")) {
+			SitePages.gotoAddFirstPage(
+				pageType = "Public Page"
+			);
+		} else {
+			AssertClick(
+				locator1 = "Breadcrumb#BREADCRUMB_ENTRY",
+				value1="Pages"
+			);
+
+			LexiconEntry.gotoAddMenuItem(menuItem = "Public Page");
+		}
 
 		SitePages._addPage(
 			assertCheckboxMissing = "${assertCheckboxMissing}",
@@ -254,6 +278,19 @@ definition {
 
 			var count = MathUtil.sum("${count}", "1");
 		}
+	}
+
+	@summary = "Go to the page creation form through the empty-result-message taglib"
+	macro gotoAddFirstPage {
+		var key_menuItem = "${pageType}";
+
+		Click(
+			locator1 = "Dropdown#EMPTY_MESSAGE_DROPDOWN"
+		);
+
+		Click(
+			locator1 = "MenuItem#DROPDOWN_MENU_ITEM"
+		);
 	}
 
 	@summary = "Go to the pageMenuItem of a Site Page. Parent pages hierarchy is required to navigate to child pages."

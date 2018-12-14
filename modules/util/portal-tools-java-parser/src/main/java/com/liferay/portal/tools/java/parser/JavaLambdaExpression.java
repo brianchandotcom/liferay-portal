@@ -84,8 +84,8 @@ public class JavaLambdaExpression extends JavaExpression {
 		}
 		else {
 			appendAssignValue(
-				sb, _lambdaActionJavaExpression, indent, suffix, maxLineLength,
-				forceLineBreak);
+				sb, _lambdaActionJavaExpression, trimTrailingSpaces(indent),
+				suffix, maxLineLength, forceLineBreak);
 		}
 
 		return sb.toString();

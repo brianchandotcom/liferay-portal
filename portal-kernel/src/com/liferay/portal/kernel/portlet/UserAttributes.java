@@ -63,6 +63,10 @@ public class UserAttributes {
 
 	public static final String USER_BDATE_YEAR = "user.bdate.ymd.year";
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), with no direct replacement
+	 */
+	@Deprecated
 	public static final String USER_GENDER = "user.gender";
 
 	public static final String USER_EMPLOYER = "user.employer";
@@ -432,13 +436,6 @@ public class UserAttributes {
 			}
 
 			return null;
-		}
-		else if (name.equals(USER_GENDER)) {
-			if (_user.isMale()) {
-				return "male";
-			}
-
-			return "female";
 		}
 		else if (name.equals(USER_EMPLOYER)) {
 			return StringPool.BLANK;

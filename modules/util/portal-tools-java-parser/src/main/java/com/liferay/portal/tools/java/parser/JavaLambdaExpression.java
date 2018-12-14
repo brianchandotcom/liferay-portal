@@ -45,7 +45,50 @@ public class JavaLambdaExpression extends JavaExpression {
 		String indent, String prefix, String suffix, int maxLineLength,
 		boolean forceLineBreak) {
 
-		return "TODO";
+		String originalIndent = indent;
+
+		StringBundler sb = new StringBundler();
+
+		sb.append(indent);
+
+		indent = "\t" + indent;
+
+		if (_javaLambdaParameters.size() == 1) {
+			JavaLambdaParameter javaLambdaParameter = _javaLambdaParameters.get(
+				0);
+
+			if (javaLambdaParameter.hasJavaType()) {
+				indent = append(
+					sb, javaLambdaParameter, indent, prefix + "(", ") -> ",
+					maxLineLength);
+			}
+			else {
+				indent = append(
+					sb, javaLambdaParameter, indent, prefix, " -> ",
+					maxLineLength);
+			}
+		}
+		else {
+			indent = append(
+				sb, _javaLambdaParameters, indent, prefix + "(", ") -> ",
+				maxLineLength);
+		}
+
+		if (_lambdaActionJavaExpression == null) {
+			sb.append("{\n");
+			sb.append(CODE_BLOCK);
+			sb.append("\n");
+			sb.append(originalIndent);
+			sb.append("}");
+			sb.append(suffix);
+		}
+		else {
+			appendAssignValue(
+				sb, _lambdaActionJavaExpression, indent, suffix, maxLineLength,
+				forceLineBreak);
+		}
+
+		return sb.toString();
 	}
 
 	private List<JavaLambdaParameter> _javaLambdaParameters = new ArrayList<>();

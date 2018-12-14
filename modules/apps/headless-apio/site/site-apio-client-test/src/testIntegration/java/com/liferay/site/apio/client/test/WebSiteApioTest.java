@@ -66,9 +66,9 @@ public class WebSiteApioTest {
 		).follow(
 			"_links.web-site.href"
 		).follow(
-			"_embedded.WebSite.find { it.name == '" +
+			"_embedded.WebSite.find {it.name == '" +
 				WebSiteApioTestBundleActivator.WEB_SITE_NAME +
-					"' }._links.self.href"
+					"'}._links.self.href"
 		).then(
 		).statusCode(
 			200

@@ -7132,47 +7132,31 @@ public class JournalArticleLocalServiceImpl
 
 				dynamicQuery.add(reviewDateProperty.le(reviewDate));
 
-				dynamicQuery.add(reviewDateProperty.ge(_previousCheckDate));
+				if (_previousCheckDate != null) {
+					dynamicQuery.add(reviewDateProperty.ge(_previousCheckDate));
+				}
+
+				Property statusProperty = PropertyFactoryUtil.forName("status");
+
+				dynamicQuery.add(
+					statusProperty.ne(WorkflowConstants.STATUS_IN_TRASH));
 			});
 
 		actionableDynamicQuery.setPerformActionMethod(
 			(JournalArticle article) -> {
-				if (!article.isInTrash()) {
-					long groupId = article.getGroupId();
-					String articleId = article.getArticleId();
-					double version = article.getVersion();
+				long groupId = article.getGroupId();
+				String articleId = article.getArticleId();
+				double version = article.getVersion();
 
-					if (!journalArticleLocalService.isLatestVersion(
-							groupId, articleId, version)) {
+				if (!journalArticleLocalService.isLatestVersion(
+						groupId, articleId, version)) {
 
-						article = journalArticleLocalService.getLatestArticle(
-							groupId, articleId);
-					}
+					article = journalArticleLocalService.getLatestArticle(
+						groupId, articleId);
+				}
 
-					if (!latestArticles.contains(article)) {
-						if (_log.isDebugEnabled()) {
-							_log.debug(
-								"Sending review notification for article " +
-									article.getId());
-						}
-
-						latestArticles.add(article);
-
-						String portletId = PortletProviderUtil.getPortletId(
-							JournalArticle.class.getName(),
-							PortletProvider.Action.EDIT);
-
-						String articleURL = PortalUtil.getControlPanelFullURL(
-							article.getGroupId(), portletId, null);
-
-						articleURL = buildArticleURL(
-							articleURL, article.getGroupId(),
-							article.getFolderId(), article.getArticleId());
-
-						sendEmail(
-							article, articleURL, "review",
-							new ServiceContext());
-					}
+				if (!latestArticles.contains(article)) {
+					latestArticles.add(article);
 				}
 			});
 
@@ -7180,6 +7164,27 @@ public class JournalArticleLocalServiceImpl
 			DefaultActionableDynamicQuery.REQUIRES_NEW_TRANSACTION_CONFIG);
 
 		actionableDynamicQuery.performActions();
+
+		for (JournalArticle journalArticle : latestArticles) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Sending review notification for article " +
+						journalArticle.getId());
+			}
+
+			String portletId = PortletProviderUtil.getPortletId(
+				JournalArticle.class.getName(), PortletProvider.Action.EDIT);
+
+			String articleURL = PortalUtil.getControlPanelFullURL(
+				journalArticle.getGroupId(), portletId, null);
+
+			articleURL = buildArticleURL(
+				articleURL, journalArticle.getGroupId(),
+				journalArticle.getFolderId(), journalArticle.getArticleId());
+
+			sendEmail(
+				journalArticle, articleURL, "review", new ServiceContext());
+		}
 	}
 
 	protected void checkStructure(Document contentDocument, DDMForm ddmForm)

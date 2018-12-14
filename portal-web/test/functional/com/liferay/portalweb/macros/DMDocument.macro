@@ -1201,7 +1201,7 @@ definition {
 		else {
 			FormFields.viewRadioValue(
 				fieldName = "sharingEntryPermission",
-				fieldValue = "VIEW"
+				fieldValue = "View"
 			);
 		}
 

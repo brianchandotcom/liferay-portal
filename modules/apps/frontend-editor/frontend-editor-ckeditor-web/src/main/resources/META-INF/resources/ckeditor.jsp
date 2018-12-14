@@ -90,7 +90,7 @@ if (editorOptions != null) {
 <%
 String textareaName = HtmlUtil.escapeAttribute(name);
 
-String modules = "aui-node-base";
+String modules = "aui-node-base,liferay-notification";
 
 if (inlineEdit && Validator.isNotNull(inlineEditSaveURL)) {
 	textareaName = textareaName + "_original";
@@ -129,6 +129,34 @@ name = HtmlUtil.escapeJS(name);
 
 	var instanceDataReady = false;
 	var instancePendingData;
+
+	window.addEventListener('dragover', function(event) {
+		event.preventDefault();
+		event.stopPropagation();
+	}, false);
+
+	window.addEventListener('drop', function(event) {
+		event.preventDefault();
+		event.stopImmediatePropagation();
+		showError();
+	}, false);
+
+	var showError = function() {
+		new Liferay.Notification(
+			{
+				closeable: true,
+				delay: {
+					hide: 5000,
+					show: 0
+				},
+				duration: 250,
+				message: '<%= UnicodeLanguageUtil.get(resourceBundle, "your-request-failed-to-complete") %>',
+				render: true,
+				title: '<%= UnicodeLanguageUtil.get(resourceBundle, "error") %>',
+				type: 'danger'
+			}
+		);
+	};
 
 	var getInitialContent = function() {
 		var data;

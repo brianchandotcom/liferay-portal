@@ -120,7 +120,7 @@ if (editorOptions != null) {
 </div>
 
 <%
-String modules = "liferay-alloy-editor";
+String modules = "liferay-alloy-editor,liferay-notification";
 
 String uploadURL = StringPool.BLANK;
 
@@ -146,6 +146,36 @@ name = HtmlUtil.escapeJS(name);
 
 	contentsLanguageId = LocaleUtil.toLanguageId(contentsLocale);
 	%>
+
+	window.addEventListener('dragover', function(event) {
+		event.preventDefault();
+		event.stopPropagation();
+	}, false);
+
+	window.addEventListener('drop', function(event) {
+		if (!event.target.isContentEditable) {
+			event.preventDefault();
+			event.stopImmediatePropagation();
+			showError();
+		}
+	}, false);
+
+	var showError = function() {
+		new Liferay.Notification(
+			{
+				closeable: true,
+				delay: {
+					hide: 5000,
+					show: 0
+				},
+				duration: 250,
+				message: '<%= UnicodeLanguageUtil.get(resourceBundle, "your-request-failed-to-complete") %>',
+				render: true,
+				title: '<%= UnicodeLanguageUtil.get(resourceBundle, "error") %>',
+				type: 'danger'
+			}
+		);
+	};
 
 	var alloyEditor;
 

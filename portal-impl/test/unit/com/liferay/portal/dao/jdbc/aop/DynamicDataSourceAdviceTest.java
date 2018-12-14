@@ -30,6 +30,7 @@ import java.util.Collections;
 
 import javax.sql.DataSource;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -79,8 +80,13 @@ public class DynamicDataSourceAdviceTest {
 		dynamicDataSourceAdvice.setDynamicDataSourceTargetSource(
 			_dynamicDataSourceTargetSource);
 
-		_serviceBeanAopCacheManager = new ServiceBeanAopCacheManager(
+		_serviceBeanAopCacheManager = ServiceBeanAopCacheManager.create(
 			Collections.singletonList(dynamicDataSourceAdvice));
+	}
+
+	@After
+	public void tearDown() {
+		ServiceBeanAopCacheManager.destroy(_serviceBeanAopCacheManager);
 	}
 
 	@Test

@@ -112,7 +112,7 @@ public class AopConfigurableApplicationContextConfigurator
 
 			if (PortalClassLoaderUtil.isPortalClassLoader(_classLoader)) {
 				ServiceBeanAopCacheManager serviceBeanAopCacheManager =
-					new ServiceBeanAopCacheManager(
+					ServiceBeanAopCacheManager.create(
 						Collections.singletonList(
 							configurableListableBeanFactory.getBean(
 								"counterTransactionAdvice",
@@ -120,7 +120,7 @@ public class AopConfigurableApplicationContextConfigurator
 
 				defaultSingletonBeanRegistry.registerDisposableBean(
 					"counterServiceBeanAopCacheManagerDestroyer",
-					ServiceBeanAopCacheManager.register(
+					() -> ServiceBeanAopCacheManager.destroy(
 						serviceBeanAopCacheManager));
 
 				configurableListableBeanFactory.addBeanPostProcessor(
@@ -142,14 +142,14 @@ public class AopConfigurableApplicationContextConfigurator
 			// Service AOP
 
 			ServiceBeanAopCacheManager serviceBeanAopCacheManager =
-				new ServiceBeanAopCacheManager(
+				ServiceBeanAopCacheManager.create(
 					_createChainableMethodAdvices(
 						configurableListableBeanFactory,
 						serviceMonitoringControl));
 
 			defaultSingletonBeanRegistry.registerDisposableBean(
 				"serviceBeanAopCacheManagerDestroyer",
-				ServiceBeanAopCacheManager.register(
+				() -> ServiceBeanAopCacheManager.destroy(
 					serviceBeanAopCacheManager));
 
 			configurableListableBeanFactory.addBeanPostProcessor(

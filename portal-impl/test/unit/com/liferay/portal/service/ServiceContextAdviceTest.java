@@ -28,6 +28,7 @@ import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.Collections;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -44,8 +45,13 @@ public class ServiceContextAdviceTest {
 
 	@Before
 	public void setUp() {
-		_serviceBeanAopCacheManager = new ServiceBeanAopCacheManager(
+		_serviceBeanAopCacheManager = ServiceBeanAopCacheManager.create(
 			Collections.singletonList(new ServiceContextAdvice()));
+	}
+
+	@After
+	public void tearDown() {
+		ServiceBeanAopCacheManager.destroy(_serviceBeanAopCacheManager);
 	}
 
 	@Test

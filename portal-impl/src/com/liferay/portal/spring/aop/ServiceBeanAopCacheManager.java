@@ -29,21 +29,26 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
-import org.springframework.beans.factory.DisposableBean;
-
 /**
  * @author Shuyang Zhou
  */
 public class ServiceBeanAopCacheManager {
 
-	public static DisposableBean register(
-		ServiceBeanAopCacheManager serviceBeanAopCacheManager) {
+	public static ServiceBeanAopCacheManager create(
+		List<ChainableMethodAdvice> chainableMethodAdvices) {
+
+		ServiceBeanAopCacheManager serviceBeanAopCacheManager =
+			new ServiceBeanAopCacheManager(chainableMethodAdvices);
 
 		_serviceBeanAopCacheManagers.add(serviceBeanAopCacheManager);
 
-		return () -> {
-			_serviceBeanAopCacheManagers.remove(serviceBeanAopCacheManager);
-		};
+		return serviceBeanAopCacheManager;
+	}
+
+	public static void destroy(
+		ServiceBeanAopCacheManager serviceBeanAopCacheManager) {
+
+		_serviceBeanAopCacheManagers.remove(serviceBeanAopCacheManager);
 	}
 
 	public static void reset() {
@@ -57,13 +62,6 @@ public class ServiceBeanAopCacheManager {
 		}
 	}
 
-	public ServiceBeanAopCacheManager(
-		List<ChainableMethodAdvice> chainableMethodAdvices) {
-
-		_fullChainableMethodAdvices = chainableMethodAdvices.toArray(
-			new ChainableMethodAdvice[chainableMethodAdvices.size()]);
-	}
-
 	public AopMethod getAopMethod(Object target, Method method) {
 		if (!TransactionsUtil.isEnabled()) {
 			return new AopMethod(
@@ -72,6 +70,13 @@ public class ServiceBeanAopCacheManager {
 
 		return _aopMethods.computeIfAbsent(
 			new CacheKey(target, method), this::_createAopMethod);
+	}
+
+	private ServiceBeanAopCacheManager(
+		List<ChainableMethodAdvice> chainableMethodAdvices) {
+
+		_fullChainableMethodAdvices = chainableMethodAdvices.toArray(
+			new ChainableMethodAdvice[chainableMethodAdvices.size()]);
 	}
 
 	private AopMethod _createAopMethod(CacheKey cacheKey) {

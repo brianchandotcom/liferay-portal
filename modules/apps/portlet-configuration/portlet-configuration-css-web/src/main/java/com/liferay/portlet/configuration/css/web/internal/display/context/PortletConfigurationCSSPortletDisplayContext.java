@@ -34,8 +34,6 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portlet.configuration.css.web.internal.configuration.PortletConfigurationCSSPortletConfiguration;
-import com.liferay.portlet.configuration.css.web.internal.constants.PortletConfigurationCSSWebKeys;
 
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
@@ -80,12 +78,6 @@ public class PortletConfigurationCSSPortletDisplayContext {
 		_portletResource = portletResource;
 		_portletSetup = portletSetup;
 		_portletSetupJSONObject = portletSetupJSONObject;
-
-		_portletConfigurationCSSPortletConfiguration =
-			(PortletConfigurationCSSPortletConfiguration)
-				_renderRequest.getAttribute(
-					PortletConfigurationCSSWebKeys.
-						PORTLET_CONFIGURATION_CSS_PORTLET_CONFIGURATION);
 	}
 
 	public String getBackgroundColor() {
@@ -349,8 +341,6 @@ public class PortletConfigurationCSSPortletDisplayContext {
 	}
 
 	private DecimalFormat _decimalFormat;
-	private final PortletConfigurationCSSPortletConfiguration
-		_portletConfigurationCSSPortletConfiguration;
 	private String _portletDecoratorId;
 	private final String _portletResource;
 	private final PortletPreferences _portletSetup;

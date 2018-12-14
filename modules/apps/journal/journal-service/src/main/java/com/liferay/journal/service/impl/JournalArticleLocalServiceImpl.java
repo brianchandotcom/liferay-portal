@@ -7115,49 +7115,71 @@ public class JournalArticleLocalServiceImpl
 
 		List<JournalArticle> latestArticles = new ArrayList<>();
 
-		List<JournalArticle> articles = journalArticleFinder.findByReviewDate(
-			JournalArticleConstants.CLASSNAME_ID_DEFAULT, reviewDate,
-			_previousCheckDate);
+		final ActionableDynamicQuery actionableDynamicQuery =
+			getActionableDynamicQuery();
 
-		for (JournalArticle article : articles) {
-			if (article.isInTrash()) {
-				continue;
-			}
+		actionableDynamicQuery.setAddCriteriaMethod(
+			dynamicQuery -> {
+				Property classNameIdProperty = PropertyFactoryUtil.forName(
+					"classNameId");
 
-			long groupId = article.getGroupId();
-			String articleId = article.getArticleId();
-			double version = article.getVersion();
+				dynamicQuery.add(
+					classNameIdProperty.eq(
+						JournalArticleConstants.CLASSNAME_ID_DEFAULT));
 
-			if (!journalArticleLocalService.isLatestVersion(
-					groupId, articleId, version)) {
+				Property reviewDateProperty = PropertyFactoryUtil.forName(
+					"reviewDate");
 
-				article = journalArticleLocalService.getLatestArticle(
-					groupId, articleId);
-			}
+				dynamicQuery.add(reviewDateProperty.le(reviewDate));
 
-			if (!latestArticles.contains(article)) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(
-						"Sending review notification for article " +
-							article.getId());
+				dynamicQuery.add(reviewDateProperty.ge(_previousCheckDate));
+			});
+
+		actionableDynamicQuery.setPerformActionMethod(
+			(JournalArticle article) -> {
+				if (!article.isInTrash()) {
+					long groupId = article.getGroupId();
+					String articleId = article.getArticleId();
+					double version = article.getVersion();
+
+					if (!journalArticleLocalService.isLatestVersion(
+							groupId, articleId, version)) {
+
+						article = journalArticleLocalService.getLatestArticle(
+							groupId, articleId);
+					}
+
+					if (!latestArticles.contains(article)) {
+						if (_log.isDebugEnabled()) {
+							_log.debug(
+								"Sending review notification for article " +
+									article.getId());
+						}
+
+						latestArticles.add(article);
+
+						String portletId = PortletProviderUtil.getPortletId(
+							JournalArticle.class.getName(),
+							PortletProvider.Action.EDIT);
+
+						String articleURL = PortalUtil.getControlPanelFullURL(
+							article.getGroupId(), portletId, null);
+
+						articleURL = buildArticleURL(
+							articleURL, article.getGroupId(),
+							article.getFolderId(), article.getArticleId());
+
+						sendEmail(
+							article, articleURL, "review",
+							new ServiceContext());
+					}
 				}
+			});
 
-				latestArticles.add(article);
+		actionableDynamicQuery.setTransactionConfig(
+			DefaultActionableDynamicQuery.REQUIRES_NEW_TRANSACTION_CONFIG);
 
-				String portletId = PortletProviderUtil.getPortletId(
-					JournalArticle.class.getName(),
-					PortletProvider.Action.EDIT);
-
-				String articleURL = PortalUtil.getControlPanelFullURL(
-					article.getGroupId(), portletId, null);
-
-				articleURL = buildArticleURL(
-					articleURL, article.getGroupId(), article.getFolderId(),
-					article.getArticleId());
-
-				sendEmail(article, articleURL, "review", new ServiceContext());
-			}
-		}
+		actionableDynamicQuery.performActions();
 	}
 
 	protected void checkStructure(Document contentDocument, DDMForm ddmForm)

@@ -95,9 +95,8 @@ definition {
 	}
 
 	macro gotoTab {
-		AssertClick(
-			locator1 = "PageEditor#FRAGMENT_SIDEBAR_TAB",
-			value1 = "${tabName}",
+		Click(
+			locator1 = "PageEditor#FRAGMENT_SIDEBAR_TAB_BUTTON",
 			key_tabName = "${tabName}"
 		);
 	}

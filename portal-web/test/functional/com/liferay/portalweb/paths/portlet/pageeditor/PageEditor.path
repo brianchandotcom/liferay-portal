@@ -50,8 +50,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>FRAGMENT_SIDEBAR_TAB</td>
-	<td>//ul[contains(@class,'nav')]//li[contains(@class,'nav-item')]//a[contains(.,'${key_tabName}')]</td>
+	<td>FRAGMENT_SIDEBAR_TAB_BUTTON</td>
+	<td>//button[@title='${key_tabName}']</td>
 	<td></td>
 </tr>
 <tr>

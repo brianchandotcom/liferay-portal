@@ -76,9 +76,7 @@ definition {
 		if (isSet(uncheckContent)) {
 			var key_contentName = "${uncheckContent}";
 
-			Uncheck.uncheckHiddenToggleSwitch(
-				locator1 = "SiteSettingsStaging#CONTENT_CHECKBOX"
-			);
+			Click(locator1 = "SiteSettingsStaging#CONTENT_CHECKBOX");
 		}
 
 		if (isSet(isNotEditable)) {

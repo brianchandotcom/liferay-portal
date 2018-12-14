@@ -105,7 +105,7 @@
 </tr>
 <tr>
 	<td>ENABLE_AUTO_TAGGING</td>
-	<td>//label[contains(.,'Enable auto tagging')]/input[@type='checkbox']</td>
+	<td>//label[contains(.,'Enable Auto Tagging')]/input[@type='checkbox']</td>
 	<td></td>
 </tr>
 <tr>

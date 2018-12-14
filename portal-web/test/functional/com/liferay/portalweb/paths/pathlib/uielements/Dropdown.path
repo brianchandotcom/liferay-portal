@@ -9,6 +9,11 @@
 </thead>
 <tbody>
 <tr>
+	<td>EMPTY_MESSAGE_DROPDOWN</td>
+	<td>//div[contains(@class,'empty-result-message')]//button[contains(@class,'dropdown-toggle')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ENTRIES</td>
 	<td>//a[contains(@class,'dropdown') and contains(.,'Entries')]</td>
 	<td></td>

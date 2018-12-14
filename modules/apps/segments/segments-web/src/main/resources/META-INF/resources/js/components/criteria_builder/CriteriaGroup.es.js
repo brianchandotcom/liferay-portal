@@ -322,7 +322,6 @@ class CriteriaGroup extends Component {
 			>
 				{this._isCriteriaEmpty() ?
 					<EmptyDropZone
-						dropIndex={0}
 						onCriterionAdd={this._handleCriterionAdd}
 					/> :
 					<Fragment>

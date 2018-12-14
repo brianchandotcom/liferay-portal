@@ -15,7 +15,7 @@ import getCN from 'classnames';
 function drop(props, monitor) {
 	const {criterion} = monitor.getItem();
 
-	props.onCriterionAdd(props.dropIndex, criterion);
+	props.onCriterionAdd(0, criterion);
 }
 
 class EmptyDropZone extends Component {
@@ -23,9 +23,8 @@ class EmptyDropZone extends Component {
 
 	static propTypes = {
 		connectDropTarget: PropTypes.func,
-		dropIndex: PropTypes.number,
 		hover: PropTypes.bool,
-		onCriterionAdd: PropTypes.func
+		onCriterionAdd: PropTypes.func.isRequired
 	};
 
 	render() {

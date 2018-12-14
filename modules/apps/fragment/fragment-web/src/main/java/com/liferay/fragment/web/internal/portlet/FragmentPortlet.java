@@ -23,25 +23,13 @@ import com.liferay.fragment.web.internal.constants.FragmentWebKeys;
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
-import com.liferay.portal.kernel.service.LayoutLocalService;
-import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
-import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.IOException;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 
 import javax.portlet.Portlet;
@@ -97,15 +85,6 @@ public class FragmentPortlet extends MVCPortlet {
 		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		try {
-			_createAssetDisplayLayout(themeDisplay);
-		}
-		catch (PortalException pe) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(pe, pe);
-			}
-		}
-
 		List<FragmentCollection> fragmentCollections =
 			_fragmentCollectionService.getFragmentCollections(
 				themeDisplay.getScopeGroupId());
@@ -128,43 +107,6 @@ public class FragmentPortlet extends MVCPortlet {
 		super.doDispatch(renderRequest, renderResponse);
 	}
 
-	private void _createAssetDisplayLayout(ThemeDisplay themeDisplay)
-		throws PortalException {
-
-		Group group = themeDisplay.getScopeGroup();
-
-		if (_layoutLocalService.hasLayouts(group)) {
-			return;
-		}
-
-		long defaultUserId = _userLocalService.getDefaultUserId(
-			group.getCompanyId());
-
-		Locale locale = LocaleUtil.getSiteDefault();
-
-		Map<Locale, String> nameMap = new HashMap<>();
-
-		nameMap.put(locale, "Asset Display Page");
-
-		UnicodeProperties typeSettingsProperties = new UnicodeProperties();
-
-		typeSettingsProperties.put("visible", Boolean.FALSE.toString());
-
-		ServiceContext serviceContext =
-			ServiceContextThreadLocal.getServiceContext();
-
-		serviceContext.setAttribute(
-			"layout.instanceable.allowed", Boolean.TRUE);
-
-		_layoutLocalService.addLayout(
-			defaultUserId, group.getGroupId(), false, 0, nameMap, null, null,
-			null, null, "asset_display", typeSettingsProperties.toString(),
-			true, new HashMap<>(), serviceContext);
-	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		FragmentPortlet.class);
-
 	@Reference
 	private FragmentCollectionService _fragmentCollectionService;
 
@@ -177,12 +119,6 @@ public class FragmentPortlet extends MVCPortlet {
 	private ItemSelector _itemSelector;
 
 	@Reference
-	private LayoutLocalService _layoutLocalService;
-
-	@Reference
 	private NPMResolver _npmResolver;
-
-	@Reference
-	private UserLocalService _userLocalService;
 
 }

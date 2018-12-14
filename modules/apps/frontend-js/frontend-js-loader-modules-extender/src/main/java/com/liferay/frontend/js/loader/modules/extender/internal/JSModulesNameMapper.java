@@ -1,10 +1,12 @@
 package com.liferay.frontend.js.loader.modules.extender.internal;
 
+import com.liferay.frontend.js.loader.modules.extender.npm.JSModuleAlias;
 import com.liferay.frontend.js.loader.modules.extender.npm.JSPackage;
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMRegistry;
 import com.liferay.petra.string.StringPool;
 
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -57,12 +59,28 @@ public class JSModulesNameMapper {
 
 	private Map<String, String> _getExactMatchContextMap() {
 
-		Collection<JSPackage> npmRegistryModules = _npmRegistry.getResolvedJSPackages();
+		Collection<JSPackage> npmRegistryModules =
+			_npmRegistry.getResolvedJSPackages();
 
-		Function<JSPackage, String> valueMapper = m -> m.getResolvedId() + StringPool.SLASH + m.getMainModuleName();
+		Function<JSPackage, String> valueMapper =
+			m -> m.getResolvedId() + StringPool.SLASH + m.getMainModuleName();
 
-		return npmRegistryModules.stream()
-			.collect(Collectors.toMap(JSPackage::getResolvedId, valueMapper));
+		Map<String, String> registryModules = new HashMap<>();
+
+		for (JSPackage jsPackage: npmRegistryModules) {
+
+			String jsPackageValue = valueMapper.apply(jsPackage);
+
+			registryModules.put(jsPackage.getResolvedId(), jsPackageValue);
+
+			for (JSModuleAlias jsModuleAlias : jsPackage.getJSModuleAliases()) {
+				String key = jsPackage.getResolvedId() + StringPool.SLASH + jsModuleAlias.getAlias();
+				String value = jsPackage.getResolvedId() + StringPool.SLASH + jsModuleAlias.getModuleName();
+				registryModules.put(key, value);
+			}
+		}
+
+		return registryModules;
 	}
 
 	private Map<String, String> _getPartialMatchContextMap() {

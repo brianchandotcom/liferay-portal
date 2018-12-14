@@ -6980,28 +6980,47 @@ public class JournalArticleLocalServiceImpl
 		String portletId = PortletProviderUtil.getPortletId(
 			JournalArticle.class.getName(), PortletProvider.Action.EDIT);
 
-		List<JournalArticle> articles = journalArticlePersistence.findByLtD_S(
-			displayDate, WorkflowConstants.STATUS_SCHEDULED);
+		final ActionableDynamicQuery actionableDynamicQuery =
+			getActionableDynamicQuery();
 
-		for (JournalArticle article : articles) {
-			long userId = PortalUtil.getValidUserId(
-				article.getCompanyId(), article.getUserId());
+		actionableDynamicQuery.setAddCriteriaMethod(
+			dynamicQuery -> {
+				Property statusProperty = PropertyFactoryUtil.forName("status");
 
-			ServiceContext serviceContext = new ServiceContext();
+				dynamicQuery.add(
+					statusProperty.eq(WorkflowConstants.STATUS_SCHEDULED));
 
-			serviceContext.setCommand(Constants.UPDATE);
+				Property displayDateProperty = PropertyFactoryUtil.forName(
+					"displayDate");
 
-			String layoutFullURL = PortalUtil.getLayoutFullURL(
-				article.getGroupId(), portletId);
+				dynamicQuery.add(displayDateProperty.lt(displayDate));
+			});
 
-			serviceContext.setLayoutFullURL(layoutFullURL);
+		actionableDynamicQuery.setPerformActionMethod(
+			(JournalArticle article) -> {
+				long userId = PortalUtil.getValidUserId(
+					article.getCompanyId(), article.getUserId());
 
-			serviceContext.setScopeGroupId(article.getGroupId());
+				ServiceContext serviceContext = new ServiceContext();
 
-			journalArticleLocalService.updateStatus(
-				userId, article, WorkflowConstants.STATUS_APPROVED, null,
-				serviceContext, new HashMap<String, Serializable>());
-		}
+				serviceContext.setCommand(Constants.UPDATE);
+
+				String layoutFullURL = PortalUtil.getLayoutFullURL(
+					article.getGroupId(), portletId);
+
+				serviceContext.setLayoutFullURL(layoutFullURL);
+
+				serviceContext.setScopeGroupId(article.getGroupId());
+
+				journalArticleLocalService.updateStatus(
+					userId, article, WorkflowConstants.STATUS_APPROVED, null,
+					serviceContext, new HashMap<String, Serializable>());
+			});
+
+		actionableDynamicQuery.setTransactionConfig(
+			DefaultActionableDynamicQuery.REQUIRES_NEW_TRANSACTION_CONFIG);
+
+		actionableDynamicQuery.performActions();
 	}
 
 	protected void checkArticlesByExpirationDate(Date expirationDate)

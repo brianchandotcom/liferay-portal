@@ -34,7 +34,6 @@ import com.liferay.journal.exception.NoSuchArticleException;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleConstants;
 import com.liferay.journal.service.JournalArticleLocalService;
-import com.liferay.layout.page.template.service.LayoutPageTemplateEntryService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -47,9 +46,7 @@ import com.liferay.portal.kernel.portlet.FriendlyURLResolver;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.security.auth.AuthTokenUtil;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
-import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
-import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.InheritableMap;
@@ -224,17 +221,15 @@ public class DisplayPageFriendlyURLResolver implements FriendlyURLResolver {
 			long groupId, AssetEntry assetEntry)
 		throws PortalException {
 
-		if (AssetDisplayPageHelper.hasAssetDisplayPage(groupId, assetEntry)) {
-			AssetDisplayPageEntry assetDisplayPageEntry =
-				_assetDisplayPageEntryLocalService.fetchAssetDisplayPageEntry(
-					groupId, assetEntry.getClassNameId(),
-					assetEntry.getClassPK());
-
-			return _layoutLocalService.getLayout(
-				assetDisplayPageEntry.getPlid());
+		if (!AssetDisplayPageHelper.hasAssetDisplayPage(groupId, assetEntry)) {
+			return null;
 		}
 
-		return null;
+		AssetDisplayPageEntry assetDisplayPageEntry =
+			_assetDisplayPageEntryLocalService.fetchAssetDisplayPageEntry(
+				groupId, assetEntry.getClassNameId(), assetEntry.getClassPK());
+
+		return _layoutLocalService.getLayout(assetDisplayPageEntry.getPlid());
 	}
 
 	private String _getBasicLayoutURL(
@@ -418,21 +413,12 @@ public class DisplayPageFriendlyURLResolver implements FriendlyURLResolver {
 	private FriendlyURLEntryLocalService _friendlyURLEntryLocalService;
 
 	@Reference
-	private GroupLocalService _groupLocalService;
-
-	@Reference
 	private Http _http;
 
 	private JournalArticleLocalService _journalArticleLocalService;
 	private LayoutLocalService _layoutLocalService;
 
 	@Reference
-	private LayoutPageTemplateEntryService _layoutPageTemplateEntryService;
-
-	@Reference
 	private Portal _portal;
-
-	@Reference
-	private UserLocalService _userLocalService;
 
 }

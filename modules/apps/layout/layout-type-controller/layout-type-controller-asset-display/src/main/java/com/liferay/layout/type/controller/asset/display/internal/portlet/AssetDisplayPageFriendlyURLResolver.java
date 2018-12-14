@@ -27,9 +27,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutFriendlyURLComposite;
 import com.liferay.portal.kernel.portlet.FriendlyURLResolver;
-import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
-import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -122,7 +120,7 @@ public class AssetDisplayPageFriendlyURLResolver
 	private AssetEntry _getAssetEntry(String friendlyURL)
 		throws PortalException {
 
-		long assetEntryId = 0L;
+		long assetEntryId = 0;
 
 		String urlSeparator = getURLSeparator();
 
@@ -147,12 +145,11 @@ public class AssetDisplayPageFriendlyURLResolver
 				assetEntry.getGroupId(), assetEntry.getClassNameId(),
 				assetEntry.getClassPK());
 
-		if (assetDisplayPageEntry != null) {
-			return _layoutLocalService.getLayout(
-				assetDisplayPageEntry.getPlid());
+		if (assetDisplayPageEntry == null) {
+			return null;
 		}
 
-		return null;
+		return _layoutLocalService.getLayout(assetDisplayPageEntry.getPlid());
 	}
 
 	@Reference
@@ -169,15 +166,9 @@ public class AssetDisplayPageFriendlyURLResolver
 	private AssetHelper _assetHelper;
 
 	@Reference
-	private GroupLocalService _groupLocalService;
-
-	@Reference
 	private LayoutLocalService _layoutLocalService;
 
 	@Reference
 	private Portal _portal;
-
-	@Reference
-	private UserLocalService _userLocalService;
 
 }

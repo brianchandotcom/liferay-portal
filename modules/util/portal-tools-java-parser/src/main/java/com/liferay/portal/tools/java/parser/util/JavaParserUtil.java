@@ -973,18 +973,21 @@ public class JavaParserUtil {
 		return javaArrayElement;
 	}
 
-	private static JavaClassCall _parseJavaClassCall(DetailAST detailAST) {
-		JavaClassCall javaClassCall = new JavaClassCall(_getName(detailAST));
+	private static JavaClassCall _parseJavaClassCall(
+		DetailAST literalNewDetailAST) {
+
+		JavaClassCall javaClassCall = new JavaClassCall(
+			_getName(literalNewDetailAST));
 
 		javaClassCall.setParameterValueJavaExpressions(
 			_parseParameterValueJavaExpressions(
-				detailAST.findFirstToken(TokenTypes.ELIST)));
+				literalNewDetailAST.findFirstToken(TokenTypes.ELIST)));
 
-		DetailAST typeArgumentDetailAST = detailAST.findFirstToken(
+		DetailAST typeArgumentDetailAST = literalNewDetailAST.findFirstToken(
 			TokenTypes.TYPE_ARGUMENTS);
 
 		if (typeArgumentDetailAST == null) {
-			DetailAST firstChildDetailAST = detailAST.getFirstChild();
+			DetailAST firstChildDetailAST = literalNewDetailAST.getFirstChild();
 
 			if (firstChildDetailAST.getType() == TokenTypes.DOT) {
 				typeArgumentDetailAST = firstChildDetailAST.findFirstToken(
@@ -995,6 +998,17 @@ public class JavaParserUtil {
 		javaClassCall.setGenericJavaTypes(
 			_parseGenericJavaTypes(
 				typeArgumentDetailAST, TokenTypes.TYPE_ARGUMENT));
+
+		DetailAST objBlockDetailAST = literalNewDetailAST.findFirstToken(
+			TokenTypes.OBJBLOCK);
+
+		if (objBlockDetailAST != null) {
+			javaClassCall.setHasBody(true);
+
+			if (objBlockDetailAST.getChildCount() == 2) {
+				javaClassCall.setEmptyBody(true);
+			}
+		}
 
 		return javaClassCall;
 	}

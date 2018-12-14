@@ -30,6 +30,8 @@ import java.util.Objects;
  */
 public abstract class BaseJavaTerm implements JavaTerm {
 
+	public static final String CODE_BLOCK = "${CODE_BLOCK}";
+
 	@Override
 	public Position getEndPosition() {
 		return _endPosition;
@@ -505,13 +507,32 @@ public abstract class BaseJavaTerm implements JavaTerm {
 
 			lastLine = StringUtil.trim(lastLine);
 
-			if ((getLineLength(s) > maxLineLength) ||
-				((lastLine.endsWith("=") || lastLine.endsWith(")")) &&
-				 (firstLineJavaTermContent.endsWith(".") ||
-				  firstLineJavaTermContent.matches("\\s*\\([^\\)]+\\)?")))) {
+			if (getLineLength(s) > maxLineLength) {
+				appendNewLine(
+					sb, javaTerm, "\t" + indent, prefix, suffix, maxLineLength);
+			}
+			else if ((lastLine.endsWith("=") || lastLine.endsWith(")") ||
+					  lastLine.endsWith("->")) &&
+					 (firstLineJavaTermContent.endsWith(".") ||
+					  firstLineJavaTermContent.matches("\\s*\\([^\\)]+\\)?"))) {
 
 				appendNewLine(
 					sb, javaTerm, "\t" + indent, prefix, suffix, maxLineLength);
+			}
+			else if (javaTerm instanceof JavaNewClassInstantiation) {
+				JavaNewClassInstantiation javaNewClassInstantiation =
+					(JavaNewClassInstantiation)javaTerm;
+
+				if (javaNewClassInstantiation.hasBody() &&
+					!firstLineJavaTermContent.endsWith("{")) {
+
+					appendNewLine(
+						sb, javaTerm, "\t" + indent, prefix, suffix,
+						maxLineLength);
+				}
+				else {
+					sb.append(javaTermContent);
+				}
 			}
 			else {
 				sb.append(javaTermContent);

@@ -21,6 +21,10 @@ import com.liferay.portal.kernel.util.StringBundler;
  */
 public class JavaNewClassInstantiation extends JavaExpression {
 
+	public boolean hasBody() {
+		return _javaClassCall.hasBody();
+	}
+
 	public void setJavaClassCall(JavaClassCall javaClassCall) {
 		_javaClassCall = javaClassCall;
 	}

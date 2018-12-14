@@ -308,6 +308,13 @@ public abstract class BaseJavaTerm implements JavaTerm {
 
 		sb.append(indent);
 
+		if (list.isEmpty()) {
+			sb.append(prefix);
+			sb.append(suffix);
+
+			return;
+		}
+
 		for (int i = 0;; i++) {
 			JavaTerm javaTerm = list.get(i);
 
@@ -530,6 +537,10 @@ public abstract class BaseJavaTerm implements JavaTerm {
 		StringBundler sb, String s, String prefix, String suffix,
 		int maxLineLength) {
 
+		if (s.contains("\n")) {
+			return false;
+		}
+
 		int index = sb.index();
 
 		sb.append(prefix);
@@ -630,6 +641,10 @@ public abstract class BaseJavaTerm implements JavaTerm {
 	}
 
 	private String _trimTrailingSpaces(String s) {
+		if (s.length() == 0) {
+			return s;
+		}
+
 		while (true) {
 			if (s.charAt(s.length() - 1) != CharPool.SPACE) {
 				return s;

@@ -932,7 +932,10 @@ app.server.type=@{app.server.type}]]></echo>
 
 				<test-set-up>
 					<if>
-						<isset property="env.DIST_PATH" />
+						<and>
+							<available file="liferay-portal-bundle-${app.server.type}.tar.gz" />
+							<available file="liferay-portal-source.tar.gz" />
+						</and>
 						<then>
 							<prepare-test-environment />
 						</then>
@@ -999,7 +1002,10 @@ app.server.type=@{app.server.type}]]></echo>
 
 				<test-set-up>
 					<if>
-						<isset property="env.DIST_PATH" />
+						<and>
+							<available file="liferay-portal-bundle-${app.server.type}.tar.gz" />
+							<available file="liferay-portal-source.tar.gz" />
+						</and>
 						<then>
 							<prepare-test-environment />
 						</then>
@@ -1053,7 +1059,10 @@ app.server.type=@{app.server.type}]]></echo>
 
 				<test-set-up>
 					<if>
-						<isset property="env.DIST_PATH" />
+						<and>
+							<available file="liferay-portal-bundle-${app.server.type}.tar.gz" />
+							<available file="liferay-portal-source.tar.gz" />
+						</and>
 						<then>
 							<prepare-test-environment />
 						</then>
@@ -1368,7 +1377,10 @@ app.server.type=@{app.server.type}]]></echo>
 
 				<test-set-up>
 					<if>
-						<isset property="env.DIST_PATH" />
+						<and>
+							<available file="liferay-portal-bundle-${app.server.type}.tar.gz" />
+							<available file="liferay-portal-source.tar.gz" />
+						</and>
 						<then>
 							<prepare-test-environment />
 
@@ -1380,6 +1392,7 @@ app.server.type=@{app.server.type}]]></echo>
 							<prepare-test-build />
 						</else>
 					</if>
+
 
 					<if>
 						<isset property="env.CI_TEST_SUITE" />
@@ -1491,7 +1504,10 @@ app.server.type=@{app.server.type}]]></echo>
 
 				<test-set-up>
 					<if>
-						<isset property="env.DIST_PATH" />
+						<and>
+							<available file="liferay-portal-bundle-${app.server.type}.tar.gz" />
+							<available file="liferay-portal-source.tar.gz" />
+						</and>
 						<then>
 							<prepare-test-environment />
 						</then>
@@ -1556,7 +1572,10 @@ log.sanitizer.enabled=false</echo>
 
 				<test-set-up>
 					<if>
-						<isset property="env.DIST_PATH" />
+						<and>
+							<available file="liferay-portal-bundle-${app.server.type}.tar.gz" />
+							<available file="liferay-portal-source.tar.gz" />
+						</and>
 						<then>
 							<prepare-test-environment />
 						</then>
@@ -1607,7 +1626,10 @@ log.sanitizer.enabled=false</echo>
 
 				<test-set-up>
 					<if>
-						<isset property="env.DIST_PATH" />
+						<and>
+							<available file="liferay-portal-bundle-${app.server.type}.tar.gz" />
+							<available file="liferay-portal-source.tar.gz" />
+						</and>
 						<then>
 							<prepare-test-environment />
 						</then>
@@ -1633,10 +1655,6 @@ log.sanitizer.enabled=false</echo>
 							<antcall inheritAll="false" target="prepare-portal-ext-properties">
 								<param name="database.type" value="@{database.type}" />
 							</antcall>
-
-							<echo append="true" file="portal-impl/src/portal-ext.properties">
-
-module.framework.properties.lpkg.index.validator.enabled=true</echo>
 
 							<antcall inheritAll="false" target="prepare-system-ext-properties" />
 
@@ -1739,7 +1757,10 @@ module.framework.properties.lpkg.index.validator.enabled=true</echo>
 
 				<test-set-up>
 					<if>
-						<isset property="env.DIST_PATH" />
+						<and>
+							<available file="liferay-portal-bundle-${app.server.type}.tar.gz" />
+							<available file="liferay-portal-source.tar.gz" />
+						</and>
 						<then>
 							<prepare-test-environment />
 						</then>
@@ -1857,7 +1878,10 @@ module.framework.properties.lpkg.index.validator.enabled=true</echo>
 
 				<test-set-up>
 					<if>
-						<isset property="env.DIST_PATH" />
+						<and>
+							<available file="liferay-portal-bundle-${app.server.type}.tar.gz" />
+							<available file="liferay-portal-source.tar.gz" />
+						</and>
 						<then>
 							<prepare-test-environment />
 						</then>
@@ -1929,7 +1953,10 @@ module.framework.properties.lpkg.index.validator.enabled=true</echo>
 
 				<test-set-up>
 					<if>
-						<isset property="env.DIST_PATH" />
+						<and>
+							<available file="liferay-portal-bundle-${app.server.type}.tar.gz" />
+							<available file="liferay-portal-source.tar.gz" />
+						</and>
 						<then>
 							<prepare-test-environment />
 						</then>
@@ -2012,7 +2039,10 @@ module.framework.properties.lpkg.index.validator.enabled=true</echo>
 
 				<test-set-up>
 					<if>
-						<isset property="env.DIST_PATH" />
+						<and>
+							<available file="liferay-portal-bundle-${app.server.type}.tar.gz" />
+							<available file="liferay-portal-source.tar.gz" />
+						</and>
 						<then>
 							<prepare-test-environment />
 						</then>
@@ -2153,7 +2183,10 @@ module.framework.properties.lpkg.index.validator.enabled=true</echo>
 
 				<test-set-up>
 					<if>
-						<isset property="env.DIST_PATH" />
+						<and>
+							<available file="liferay-portal-bundle-${app.server.type}.tar.gz" />
+							<available file="liferay-portal-source.tar.gz" />
+						</and>
 						<then>
 							<prepare-test-environment />
 						</then>
@@ -2412,7 +2445,10 @@ module.framework.properties.lpkg.index.validator.enabled=true</echo>
 							<deploy-release-dependency-modules />
 						</then>
 						<elseif>
-							<isset property="env.DIST_PATH" />
+							<and>
+								<available file="liferay-portal-bundle-${app.server.type}.tar.gz" />
+								<available file="liferay-portal-source.tar.gz" />
+							</and>
 							<then>
 								<prepare-test-environment />
 							</then>
@@ -2505,7 +2541,10 @@ log.sanitizer.enabled=false</echo>
 
 				<test-set-up>
 					<if>
-						<isset property="env.DIST_PATH" />
+						<and>
+							<available file="liferay-portal-bundle-${app.server.type}.tar.gz" />
+							<available file="liferay-portal-source.tar.gz" />
+						</and>
 						<then>
 							<prepare-test-environment />
 						</then>
@@ -2562,7 +2601,10 @@ log.sanitizer.enabled=false</echo>
 
 				<test-set-up>
 					<if>
-						<isset property="env.DIST_PATH" />
+						<and>
+							<available file="liferay-portal-bundle-${app.server.type}.tar.gz" />
+							<available file="liferay-portal-source.tar.gz" />
+						</and>
 						<then>
 							<prepare-test-environment />
 						</then>
@@ -2910,7 +2952,10 @@ log.sanitizer.enabled=false</echo>
 						</then>
 					</elseif>
 					<elseif>
-						<isset property="env.DIST_PATH" />
+						<and>
+							<available file="liferay-portal-bundle-${app.server.type}.tar.gz" />
+							<available file="liferay-portal-source.tar.gz" />
+						</and>
 						<then>
 							<prepare-test-environment />
 						</then>
@@ -3002,7 +3047,10 @@ log.sanitizer.enabled=false</echo>
 
 			<test-set-up>
 				<if>
-					<isset property="env.DIST_PATH" />
+					<and>
+						<available file="liferay-portal-bundle-${app.server.type}.tar.gz" />
+						<available file="liferay-portal-source.tar.gz" />
+					</and>
 					<then>
 						<prepare-test-environment />
 					</then>
@@ -3028,7 +3076,10 @@ log.sanitizer.enabled=false</echo>
 
 			<test-set-up>
 				<if>
-					<isset property="env.DIST_PATH" />
+					<and>
+						<available file="liferay-portal-bundle-${app.server.type}.tar.gz" />
+						<available file="liferay-portal-source.tar.gz" />
+					</and>
 					<then>
 						<prepare-test-environment />
 					</then>
@@ -3947,7 +3998,10 @@ log.sanitizer.enabled=false</echo>
 
 			<test-set-up>
 				<if>
-					<isset property="env.DIST_PATH" />
+					<and>
+						<available file="liferay-portal-bundle-${app.server.type}.tar.gz" />
+						<available file="liferay-portal-source.tar.gz" />
+					</and>
 					<then>
 						<prepare-test-environment />
 					</then>
@@ -4270,7 +4324,10 @@ log.sanitizer.enabled=false</echo>
 
 			<test-set-up>
 				<if>
-					<isset property="env.DIST_PATH" />
+					<and>
+						<available file="liferay-portal-bundle-${app.server.type}.tar.gz" />
+						<available file="liferay-portal-source.tar.gz" />
+					</and>
 					<then>
 						<prepare-test-environment />
 					</then>
@@ -4389,7 +4446,10 @@ log.sanitizer.enabled=false</echo>
 
 			<test-set-up>
 				<if>
-					<isset property="env.DIST_PATH" />
+					<and>
+						<available file="liferay-portal-bundle-${app.server.type}.tar.gz" />
+						<available file="liferay-portal-source.tar.gz" />
+					</and>
 					<then>
 						<prepare-test-environment />
 					</then>
@@ -4719,7 +4779,10 @@ log.sanitizer.enabled=false</echo>
 				<fail message="Please set the property ${modules.test.class.group}" unless="modules.test.class.group" />
 
 				<if>
-					<isset property="env.DIST_PATH" />
+					<and>
+						<available file="liferay-portal-bundle-${app.server.type}.tar.gz" />
+						<available file="liferay-portal-source.tar.gz" />
+					</and>
 					<then>
 						<antcall inheritAll="false" target="compile" />
 
@@ -4769,7 +4832,10 @@ log.sanitizer.enabled=false</echo>
 
 			<test-set-up>
 				<if>
-					<isset property="env.DIST_PATH" />
+					<and>
+						<available file="liferay-portal-bundle-${app.server.type}.tar.gz" />
+						<available file="liferay-portal-source.tar.gz" />
+					</and>
 					<then>
 						<prepare-test-environment />
 
@@ -4872,7 +4938,10 @@ ${output.content}</echo>
 
 			<test-set-up>
 				<if>
-					<isset property="env.DIST_PATH" />
+					<and>
+						<available file="liferay-portal-bundle-${app.server.type}.tar.gz" />
+						<available file="liferay-portal-source.tar.gz" />
+					</and>
 					<then>
 						<prepare-test-environment />
 
@@ -5021,7 +5090,10 @@ ${output.content}</echo>
 
 			<test-set-up>
 				<if>
-					<isset property="env.DIST_PATH" />
+					<and>
+						<available file="liferay-portal-bundle-${app.server.type}.tar.gz" />
+						<available file="liferay-portal-source.tar.gz" />
+					</and>
 					<then>
 						<prepare-test-environment />
 					</then>
@@ -5109,7 +5181,10 @@ ${output.content}</echo>
 
 				<test-set-up>
 					<if>
-						<isset property="env.DIST_PATH" />
+						<and>
+							<available file="liferay-portal-bundle-${app.server.type}.tar.gz" />
+							<available file="liferay-portal-source.tar.gz" />
+						</and>
 						<then>
 							<sequential>
 								<propertyfile file="app.server.${env.HOSTNAME}.properties">
@@ -5151,7 +5226,10 @@ ${output.content}</echo>
 
 			<test-set-up>
 				<if>
-					<isset property="env.DIST_PATH" />
+					<and>
+						<available file="liferay-portal-bundle-${app.server.type}.tar.gz" />
+						<available file="liferay-portal-source.tar.gz" />
+					</and>
 					<then>
 						<prepare-test-environment />
 					</then>
@@ -5260,7 +5338,10 @@ ${output.content}</echo>
 		<antcall if:set="env.JENKINS_HOME" inheritAll="false" target="clean-up-java-processes" />
 
 		<if>
-			<isset property="env.DIST_PATH" />
+			<and>
+				<available file="liferay-portal-bundle-${app.server.type}.tar.gz" />
+				<available file="liferay-portal-source.tar.gz" />
+			</and>
 			<then>
 				<prepare-test-environment />
 			</then>
@@ -5487,7 +5568,10 @@ information. Make sure to commit in all build services results.
 
 			<test-set-up>
 				<if>
-					<isset property="env.DIST_PATH" />
+					<and>
+						<available file="liferay-portal-bundle-${app.server.type}.tar.gz" />
+						<available file="liferay-portal-source.tar.gz" />
+					</and>
 					<then>
 						<prepare-test-environment />
 					</then>
@@ -5587,7 +5671,10 @@ information. Make sure to commit in all build services results.
 
 			<test-set-up>
 				<if>
-					<isset property="env.DIST_PATH" />
+					<and>
+						<available file="liferay-portal-bundle-${app.server.type}.tar.gz" />
+						<available file="liferay-portal-source.tar.gz" />
+					</and>
 					<then>
 						<prepare-test-environment />
 					</then>
@@ -5620,7 +5707,10 @@ information. Make sure to commit in all build services results.
 
 			<test-set-up>
 				<if>
-					<isset property="env.DIST_PATH" />
+					<and>
+						<available file="liferay-portal-bundle-${app.server.type}.tar.gz" />
+						<available file="liferay-portal-source.tar.gz" />
+					</and>
 					<then>
 						<prepare-test-environment />
 					</then>
@@ -5946,7 +6036,10 @@ ${output.content}</echo>
 
 			<test-set-up>
 				<if>
-					<isset property="env.DIST_PATH" />
+					<and>
+						<available file="liferay-portal-bundle-${app.server.type}.tar.gz" />
+						<available file="liferay-portal-source.tar.gz" />
+					</and>
 					<then>
 						<prepare-test-environment />
 					</then>
@@ -5986,7 +6079,10 @@ ${output.content}</echo>
 
 			<test-set-up>
 				<if>
-					<isset property="env.DIST_PATH" />
+					<and>
+						<available file="liferay-portal-bundle-${app.server.type}.tar.gz" />
+						<available file="liferay-portal-source.tar.gz" />
+					</and>
 					<then>
 						<prepare-test-environment />
 
@@ -6013,7 +6109,10 @@ ${output.content}</echo>
 
 			<test-set-up>
 				<if>
-					<isset property="env.DIST_PATH" />
+					<and>
+						<available file="liferay-portal-bundle-${app.server.type}.tar.gz" />
+						<available file="liferay-portal-source.tar.gz" />
+					</and>
 					<then>
 						<prepare-test-environment />
 					</then>

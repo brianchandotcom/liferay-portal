@@ -202,20 +202,16 @@ public class Dom4JUtil {
 		Element element, boolean cascade, String replacementText,
 		String targetText) {
 
-		Iterator<?> attributeIterator = element.attributeIterator();
-
-		while (attributeIterator.hasNext()) {
-			Attribute attribute = (Attribute)attributeIterator.next();
-
+		for (Attribute attribute : element.attributes()) {
 			String text = attribute.getValue();
 
 			attribute.setValue(text.replace(targetText, replacementText));
 		}
 
-		Iterator<?> nodeIterator = element.nodeIterator();
+		Iterator<? extends Node> nodeIterator = element.nodeIterator();
 
 		while (nodeIterator.hasNext()) {
-			Node node = (Node)nodeIterator.next();
+			Node node = nodeIterator.next();
 
 			if (node instanceof Text) {
 				Text textNode = (Text)node;
@@ -227,14 +223,9 @@ public class Dom4JUtil {
 
 					textNode.setText(text);
 				}
-
-				continue;
 			}
-
-			if (node instanceof Element && cascade) {
+			else if (node instanceof Element && cascade) {
 				replace((Element)node, cascade, replacementText, targetText);
-
-				continue;
 			}
 		}
 	}

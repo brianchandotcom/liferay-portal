@@ -622,63 +622,56 @@ mariadb.executable=${mariadb.executable}]]></echo>
 
 	<macrodef name="prepare-release-test-environment">
 		<attribute default="tomcat" name="app.server.type" />
-		<attribute name="test.build.bundle.zip.url" />
+		<attribute default="" name="test.build.fix.pack.zip.url" />
+		<attribute default="" name="test.fix.pack.base.url" />
+		<attribute default="" name="test.license.xml.url" />
+		<attribute default="" name="test.portal.bundle.dependencies.zip.url" />
+		<attribute default="" name="test.portal.bundle.osgi.zip.url" />
+		<attribute default="" name="test.portal.bundle.tools.zip.url" />
+		<attribute default="" name="test.portal.bundle.war.url" />
+		<attribute name="test.portal.bundle.zip.url" />
 		<attribute name="test.sql.zip.url" />
 
 		<sequential>
-			<antcall inheritAll="false" target="compile" />
+			<propertycopy from="app.server.@{app.server.type}.bin.dir" name="test.app.server.bin.dir" />
 
-			<mkdir dir="${app.server.parent.dir}" />
+			<antcall inheritAll="false" target="prepare-test-bundle">
+				<param name="app.server.type" value="${app.server.type}" />
+				<param name="test.app.server.bin.dir" value="${test.app.server.bin.dir}" />
+				<param name="test.build.bundle.zip.url" value="@{test.portal.bundle.zip.url}" />
+				<param name="test.build.fix.pack.zip.url" value="@{test.build.fix.pack.zip.url}" />
+				<param name="test.build.portal.dependencies.zip.url" value="@{test.portal.bundle.dependencies.zip.url}" />
+				<param name="test.build.portal.osgi.zip.url" value="@{test.portal.bundle.osgi.zip.url}" />
+				<param name="test.build.portal.tools.zip.url" value="@{test.portal.bundle.tools.zip.url}" />
+				<param name="test.build.portal.war.url" value="@{test.portal.bundle.war.url}" />
+				<param name="test.fix.pack.base.url" value="@{test.fix.pack.base.url}" />
+			</antcall>
 
-			<local name="bundle.file.name" />
+			<if>
+				<matches pattern="https?://" string="@{test.license.xml.url}" />
+				<then>
+					<var name="test.build.license.xml.zip.url" unset="true" />
 
-			<basename file="@{test.build.bundle.zip.url}" property="bundle.file.name" />
+					<property name="test.build.license.xml.zip.url" value="@{test.license.xml.url}" />
 
-			<mirrors-get
-				dest="${java.io.tmpdir}/${bundle.file.name}"
-				src="@{test.build.bundle.zip.url}"
-			/>
+					<echo append="true" file="test.${env.HOSTNAME}.properties"><![CDATA[${line.separator}test.build.license.xml.zip.url=@{test.license.xml.url}]]></echo>
+				</then>
+			</if>
 
-			<decompress
-				dest="${java.io.tmpdir}/bundle"
-				src="${java.io.tmpdir}/${bundle.file.name}"
-			/>
+			<if>
+				<not>
+					<equals arg1="${test.deploy.license}" arg2="false" />
+				</not>
+				<then>
+					<antcall target="deploy-license-xml" />
+				</then>
+			</if>
 
-			<move
-				todir="${app.server.parent.dir}"
-			>
-				<fileset
-					dir="${java.io.tmpdir}/bundle"
-					includes="liferay-*/**"
-				/>
-				<mapper
-					from="[^/]+/(.*)"
-					to="\1"
-					type="regexp"
-				/>
-			</move>
-
-			<delete dir="${java.io.tmpdir}/bundle" />
-
-			<delete file="${java.io.tmpdir}/${bundle.file.name}" />
-
-			<chmod
-				perm="a+x"
-			>
-				<fileset
-					dir="${app.server.parent.dir}"
-				>
-					<include name="**/*.sh" />
-				</fileset>
-			</chmod>
-
-			<setup-libs />
-
-			<antcall inheritAll="false" target="deploy-sql-zip">
+			<antcall target="deploy-sql-zip">
 				<param name="test.sql.zip.url" value="@{test.sql.zip.url}" />
 			</antcall>
 
-			<antcall inheritAll="false" target="install-portal-snapshots" />
+			<antcall inheritAll="false" target="setup-sdk" />
 
 			<echo if:set="env.JENKINS_HOME">ANT_OPTS=${env.ANT_OPTS}</echo>
 
@@ -5286,7 +5279,14 @@ ${output.content}</echo>
 						<then>
 							<sequential>
 								<prepare-release-test-environment
-									test.build.bundle.zip.url="${test.portal.bundle.zip.url}"
+									test.build.fix.pack.zip.url="${test.build.fix.pack.zip.url}"
+									test.fix.pack.base.url="${test.fix.pack.base.url}"
+									test.license.xml.url="${test.license.xml.url}"
+									test.portal.bundle.dependencies.zip.url="${test.portal.bundle.dependencies.zip.url}"
+									test.portal.bundle.osgi.zip.url="${test.portal.bundle.osgi.zip.url}"
+									test.portal.bundle.tools.zip.url="${test.portal.bundle.tools.zip.url}"
+									test.portal.bundle.war.url="${test.portal.bundle.war.url}"
+									test.portal.bundle.zip.url="${test.portal.bundle.zip.url}"
 									test.sql.zip.url="${test.sql.zip.url}"
 								/>
 

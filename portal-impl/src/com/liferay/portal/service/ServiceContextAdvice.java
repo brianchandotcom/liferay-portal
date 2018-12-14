@@ -30,12 +30,11 @@ public class ServiceContextAdvice extends ChainableMethodAdvice {
 
 	@Override
 	public Object invoke(
-			ServiceBeanMethodInvocation serviceBeanMethodInvocation)
+			ServiceBeanMethodInvocation serviceBeanMethodInvocation,
+			Object[] arguments)
 		throws Throwable {
 
 		int index = serviceBeanMethodInvocation.getAdviceMethodContext();
-
-		Object[] arguments = serviceBeanMethodInvocation.getArguments();
 
 		ServiceContext serviceContext = (ServiceContext)arguments[index];
 
@@ -44,7 +43,7 @@ public class ServiceContextAdvice extends ChainableMethodAdvice {
 		}
 
 		try {
-			return serviceBeanMethodInvocation.proceed();
+			return serviceBeanMethodInvocation.proceed(arguments);
 		}
 		finally {
 			if (serviceContext != null) {

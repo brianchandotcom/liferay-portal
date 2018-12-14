@@ -53,11 +53,12 @@ public class ServiceMonitorAdvice extends ChainableMethodAdvice {
 
 	@Override
 	public Object invoke(
-			ServiceBeanMethodInvocation serviceBeanMethodInvocation)
+			ServiceBeanMethodInvocation serviceBeanMethodInvocation,
+			Object[] arguments)
 		throws Throwable {
 
 		if (!_serviceMonitoringControl.isMonitorServiceRequest()) {
-			return serviceBeanMethodInvocation.proceed();
+			return serviceBeanMethodInvocation.proceed(arguments);
 		}
 
 		boolean included = false;
@@ -80,7 +81,7 @@ public class ServiceMonitorAdvice extends ChainableMethodAdvice {
 		}
 
 		if (_serviceMonitoringControl.isInclusiveMode() != included) {
-			return serviceBeanMethodInvocation.proceed();
+			return serviceBeanMethodInvocation.proceed(arguments);
 		}
 
 		DataSample dataSample =
@@ -92,7 +93,7 @@ public class ServiceMonitorAdvice extends ChainableMethodAdvice {
 		DataSampleThreadLocal.initialize();
 
 		try {
-			Object returnValue = serviceBeanMethodInvocation.proceed();
+			Object returnValue = serviceBeanMethodInvocation.proceed(arguments);
 
 			dataSample.capture(RequestStatus.SUCCESS);
 

@@ -47,7 +47,7 @@ public class SystemEventAdvice extends ChainableMethodAdvice {
 	@Override
 	public void afterReturning(
 			ServiceBeanMethodInvocation serviceBeanMethodInvocation,
-			Object result)
+			Object[] arguments, Object result)
 		throws Throwable {
 
 		SystemEvent systemEvent =
@@ -57,11 +57,12 @@ public class SystemEventAdvice extends ChainableMethodAdvice {
 			return;
 		}
 
-		if (!isValid(serviceBeanMethodInvocation, _PHASE_AFTER_RETURNING)) {
+		if (!isValid(
+				serviceBeanMethodInvocation, arguments,
+				_PHASE_AFTER_RETURNING)) {
+
 			return;
 		}
-
-		Object[] arguments = serviceBeanMethodInvocation.getArguments();
 
 		ClassedModel classedModel = (ClassedModel)arguments[0];
 
@@ -116,18 +117,19 @@ public class SystemEventAdvice extends ChainableMethodAdvice {
 
 	@Override
 	public Object before(
-			ServiceBeanMethodInvocation serviceBeanMethodInvocation)
+			ServiceBeanMethodInvocation serviceBeanMethodInvocation,
+			Object[] arguments)
 		throws Throwable {
 
 		SystemEvent systemEvent =
 			serviceBeanMethodInvocation.getAdviceMethodContext();
 
 		if (systemEvent.action() != SystemEventConstants.ACTION_NONE) {
-			if (!isValid(serviceBeanMethodInvocation, _PHASE_BEFORE)) {
+			if (!isValid(
+					serviceBeanMethodInvocation, arguments, _PHASE_BEFORE)) {
+
 				return null;
 			}
-
-			Object[] arguments = serviceBeanMethodInvocation.getArguments();
 
 			ClassedModel classedModel = (ClassedModel)arguments[0];
 
@@ -154,20 +156,22 @@ public class SystemEventAdvice extends ChainableMethodAdvice {
 
 	@Override
 	public void duringFinally(
-		ServiceBeanMethodInvocation serviceBeanMethodInvocation) {
+		ServiceBeanMethodInvocation serviceBeanMethodInvocation,
+		Object[] arguments) {
 
 		SystemEvent systemEvent =
 			serviceBeanMethodInvocation.getAdviceMethodContext();
 
-		if (!isValid(serviceBeanMethodInvocation, _PHASE_DURING_FINALLY)) {
+		if (!isValid(
+				serviceBeanMethodInvocation, arguments,
+				_PHASE_DURING_FINALLY)) {
+
 			return;
 		}
 
 		if (systemEvent.action() == SystemEventConstants.ACTION_NONE) {
 			return;
 		}
-
-		Object[] arguments = serviceBeanMethodInvocation.getArguments();
 
 		ClassedModel classedModel = (ClassedModel)arguments[0];
 
@@ -259,7 +263,8 @@ public class SystemEventAdvice extends ChainableMethodAdvice {
 	}
 
 	protected boolean isValid(
-		ServiceBeanMethodInvocation serviceBeanMethodInvocation, int phase) {
+		ServiceBeanMethodInvocation serviceBeanMethodInvocation,
+		Object[] arguments, int phase) {
 
 		Method method = serviceBeanMethodInvocation.getMethod();
 
@@ -286,8 +291,6 @@ public class SystemEventAdvice extends ChainableMethodAdvice {
 
 			return false;
 		}
-
-		Object[] arguments = serviceBeanMethodInvocation.getArguments();
 
 		ClassedModel classedModel = (ClassedModel)arguments[0];
 

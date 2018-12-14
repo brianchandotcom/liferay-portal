@@ -45,7 +45,8 @@ public class BufferedIncrementAdvice extends ChainableMethodAdvice {
 	@Override
 	@SuppressWarnings("rawtypes")
 	public Object before(
-		ServiceBeanMethodInvocation serviceBeanMethodInvocation) {
+		ServiceBeanMethodInvocation serviceBeanMethodInvocation,
+		Object[] arguments) {
 
 		BufferedIncrementContext bufferedIncrementContext =
 			serviceBeanMethodInvocation.getAdviceMethodContext();
@@ -54,8 +55,6 @@ public class BufferedIncrementAdvice extends ChainableMethodAdvice {
 			bufferedIncrementContext._bufferedIncrementProcessor;
 		Class<? extends Increment<?>> incrementClass =
 			bufferedIncrementContext._incrementClass;
-
-		Object[] arguments = serviceBeanMethodInvocation.getArguments();
 
 		Object value = arguments[arguments.length - 1];
 
@@ -75,7 +74,8 @@ public class BufferedIncrementAdvice extends ChainableMethodAdvice {
 
 			BufferedIncreasableEntry bufferedIncreasableEntry =
 				new BufferedIncreasableEntry(
-					serviceBeanMethodInvocation, batchKey, increment);
+					serviceBeanMethodInvocation, arguments, batchKey,
+					increment);
 
 			TransactionCommitCallbackUtil.registerCallback(
 				() -> {

@@ -34,7 +34,7 @@ public class ClusterableAdvice extends ChainableMethodAdvice {
 	@Override
 	public void afterReturning(
 			ServiceBeanMethodInvocation serviceBeanMethodInvocation,
-			Object result)
+			Object[] arguments, Object result)
 		throws Throwable {
 
 		if (!ClusterInvokeThreadLocal.isEnabled()) {
@@ -46,13 +46,13 @@ public class ClusterableAdvice extends ChainableMethodAdvice {
 
 		ClusterableInvokerUtil.invokeOnCluster(
 			clusterable.acceptor(), serviceBeanMethodInvocation.getThis(),
-			serviceBeanMethodInvocation.getMethod(),
-			serviceBeanMethodInvocation.getArguments());
+			serviceBeanMethodInvocation.getMethod(), arguments);
 	}
 
 	@Override
 	public Object before(
-			ServiceBeanMethodInvocation serviceBeanMethodInvocation)
+			ServiceBeanMethodInvocation serviceBeanMethodInvocation,
+			Object[] arguments)
 		throws Throwable {
 
 		if (!ClusterInvokeThreadLocal.isEnabled()) {
@@ -69,13 +69,12 @@ public class ClusterableAdvice extends ChainableMethodAdvice {
 		Object result = null;
 
 		if (ClusterMasterExecutorUtil.isMaster()) {
-			result = serviceBeanMethodInvocation.proceed();
+			result = serviceBeanMethodInvocation.proceed(arguments);
 		}
 		else {
 			result = ClusterableInvokerUtil.invokeOnMaster(
 				clusterable.acceptor(), serviceBeanMethodInvocation.getThis(),
-				serviceBeanMethodInvocation.getMethod(),
-				serviceBeanMethodInvocation.getArguments());
+				serviceBeanMethodInvocation.getMethod(), arguments);
 		}
 
 		Method method = serviceBeanMethodInvocation.getMethod();

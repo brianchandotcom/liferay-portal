@@ -32,20 +32,22 @@ public class AsyncProcessCallable
 	implements Externalizable, ProcessCallable<Serializable> {
 
 	public AsyncProcessCallable() {
-		this(null);
+		this(null, null);
 	}
 
 	public AsyncProcessCallable(
-		ServiceBeanMethodInvocation serviceBeanMethodInvocation) {
+		ServiceBeanMethodInvocation serviceBeanMethodInvocation,
+		Object[] arguments) {
 
 		_serviceBeanMethodInvocation = serviceBeanMethodInvocation;
+		_arguments = arguments;
 	}
 
 	@Override
 	public Serializable call() {
 		try {
 			if (_serviceBeanMethodInvocation != null) {
-				_serviceBeanMethodInvocation.proceed();
+				_serviceBeanMethodInvocation.proceed(_arguments);
 			}
 			else {
 				AsyncInvokeThreadLocal.setEnabled(true);
@@ -80,13 +82,13 @@ public class AsyncProcessCallable
 			methodHandler =
 				IdentifiableOSGiServiceInvokerUtil.createMethodHandler(
 					_serviceBeanMethodInvocation.getThis(),
-					_serviceBeanMethodInvocation.getMethod(),
-					_serviceBeanMethodInvocation.getArguments());
+					_serviceBeanMethodInvocation.getMethod(), _arguments);
 		}
 
 		objectOutput.writeObject(methodHandler);
 	}
 
+	private final Object[] _arguments;
 	private MethodHandler _methodHandler;
 	private final ServiceBeanMethodInvocation _serviceBeanMethodInvocation;
 

@@ -41,7 +41,8 @@ public class PortalResiliencyAdvice extends ChainableMethodAdvice {
 
 	@Override
 	public Object before(
-			ServiceBeanMethodInvocation serviceBeanMethodInvocation)
+			ServiceBeanMethodInvocation serviceBeanMethodInvocation,
+			Object[] arguments)
 		throws Throwable {
 
 		boolean remoteAccess = AccessControlThreadLocal.isRemoteAccess();
@@ -56,8 +57,7 @@ public class PortalResiliencyAdvice extends ChainableMethodAdvice {
 			new ServiceMethodProcessCallable(
 				IdentifiableOSGiServiceInvokerUtil.createMethodHandler(
 					serviceBeanMethodInvocation.getThis(),
-					serviceBeanMethodInvocation.getMethod(),
-					serviceBeanMethodInvocation.getArguments()));
+					serviceBeanMethodInvocation.getMethod(), arguments));
 
 		Future<Serializable> future = IntrabandRPCUtil.execute(
 			spi.getRegistrationReference(), serviceMethodProcessCallable);

@@ -38,7 +38,7 @@ public class SPIClusterableAdvice extends ChainableMethodAdvice {
 	@Override
 	public void afterReturning(
 			ServiceBeanMethodInvocation serviceBeanMethodInvocation,
-			Object result)
+			Object[] arguments, Object result)
 		throws Throwable {
 
 		Clusterable clusterable =
@@ -52,13 +52,13 @@ public class SPIClusterableAdvice extends ChainableMethodAdvice {
 				ClusterableInvokerUtil.createMethodHandler(
 					clusterable.acceptor(),
 					serviceBeanMethodInvocation.getThis(),
-					serviceBeanMethodInvocation.getMethod(),
-					serviceBeanMethodInvocation.getArguments())));
+					serviceBeanMethodInvocation.getMethod(), arguments)));
 	}
 
 	@Override
 	public Object before(
-			ServiceBeanMethodInvocation serviceBeanMethodInvocation)
+			ServiceBeanMethodInvocation serviceBeanMethodInvocation,
+			Object[] arguments)
 		throws Throwable {
 
 		Clusterable clusterable =
@@ -76,8 +76,7 @@ public class SPIClusterableAdvice extends ChainableMethodAdvice {
 				ClusterableInvokerUtil.createMethodHandler(
 					clusterable.acceptor(),
 					serviceBeanMethodInvocation.getThis(),
-					serviceBeanMethodInvocation.getMethod(),
-					serviceBeanMethodInvocation.getArguments())));
+					serviceBeanMethodInvocation.getMethod(), arguments)));
 
 		Object result = futureResult.get();
 

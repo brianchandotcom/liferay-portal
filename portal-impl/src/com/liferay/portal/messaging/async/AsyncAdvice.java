@@ -37,8 +37,8 @@ public class AsyncAdvice extends ChainableMethodAdvice {
 
 	@Override
 	public Object before(
-			ServiceBeanMethodInvocation serviceBeanMethodInvocation)
-		throws Throwable {
+		ServiceBeanMethodInvocation serviceBeanMethodInvocation,
+		Object[] arguments) {
 
 		if (AsyncInvokeThreadLocal.isEnabled()) {
 			return null;
@@ -51,7 +51,8 @@ public class AsyncAdvice extends ChainableMethodAdvice {
 			() -> {
 				MessageBusUtil.sendMessage(
 					callbackDestinationName,
-					new AsyncProcessCallable(serviceBeanMethodInvocation));
+					new AsyncProcessCallable(
+						serviceBeanMethodInvocation, arguments));
 
 				return null;
 			});

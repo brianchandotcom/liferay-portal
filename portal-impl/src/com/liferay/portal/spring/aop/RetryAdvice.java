@@ -72,7 +72,8 @@ public class RetryAdvice extends ChainableMethodAdvice {
 
 	@Override
 	public Object invoke(
-			ServiceBeanMethodInvocation serviceBeanMethodInvocation)
+			ServiceBeanMethodInvocation serviceBeanMethodInvocation,
+			Object[] arguments)
 		throws Throwable {
 
 		RetryContext retryContext =
@@ -94,7 +95,7 @@ public class RetryAdvice extends ChainableMethodAdvice {
 
 		while ((retries < 0) || (retries-- > 0)) {
 			try {
-				returnValue = serviceBeanMethodInvocation.proceed();
+				returnValue = serviceBeanMethodInvocation.proceed(arguments);
 
 				if (!retryAcceptor.acceptResult(returnValue, properties)) {
 					return returnValue;

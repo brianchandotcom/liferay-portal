@@ -40,7 +40,7 @@ public class IndexableAdvice extends ChainableMethodAdvice {
 	@Override
 	public void afterReturning(
 			ServiceBeanMethodInvocation serviceBeanMethodInvocation,
-			Object result)
+			Object[] arguments, Object result)
 		throws Throwable {
 
 		if (result == null) {
@@ -87,8 +87,6 @@ public class IndexableAdvice extends ChainableMethodAdvice {
 		int serviceContextIndex = indexableContext._serviceContextIndex;
 
 		if (serviceContextIndex >= 0) {
-			Object[] arguments = serviceBeanMethodInvocation.getArguments();
-
 			ServiceContext serviceContext =
 				(ServiceContext)arguments[serviceContextIndex];
 

@@ -67,9 +67,9 @@ public class ServiceContextAdviceTest {
 		ServiceContext serviceContext2 = new ServiceContext();
 
 		ServiceBeanMethodInvocation serviceBeanMethodInvocation =
-			_createTestMethodInvocation(method, serviceContext2);
+			_createTestMethodInvocation(method);
 
-		serviceBeanMethodInvocation.proceed();
+		serviceBeanMethodInvocation.proceed(new Object[] {serviceContext2});
 
 		Assert.assertSame(
 			serviceContext1, ServiceContextThreadLocal.popServiceContext());
@@ -103,9 +103,9 @@ public class ServiceContextAdviceTest {
 			TestInterceptedClass.class, "method", ServiceContext.class);
 
 		ServiceBeanMethodInvocation serviceBeanMethodInvocation =
-			_createTestMethodInvocation(method, new Object[] {null});
+			_createTestMethodInvocation(method);
 
-		serviceBeanMethodInvocation.proceed();
+		serviceBeanMethodInvocation.proceed(new Object[] {null});
 
 		Assert.assertSame(
 			serviceContext, ServiceContextThreadLocal.popServiceContext());
@@ -145,23 +145,22 @@ public class ServiceContextAdviceTest {
 			new TestServiceContextWrapper();
 
 		ServiceBeanMethodInvocation serviceBeanMethodInvocation =
-			_createTestMethodInvocation(
-				method, testServiceContextWrapper, null);
+			_createTestMethodInvocation(method);
 
-		serviceBeanMethodInvocation.proceed();
+		serviceBeanMethodInvocation.proceed(
+			new Object[] {testServiceContextWrapper, null});
 
 		Assert.assertSame(
 			serviceContext, ServiceContextThreadLocal.popServiceContext());
 	}
 
 	private ServiceBeanMethodInvocation _createTestMethodInvocation(
-		Method method, Object... arguments) {
+		Method method) {
 
 		return new ServiceBeanMethodInvocation(
 			ReflectionTestUtil.invoke(
 				_serviceBeanAopInvocationHandler, "_getAopMethod",
-				new Class<?>[] {Method.class}, method),
-			arguments);
+				new Class<?>[] {Method.class}, method));
 	}
 
 	private ServiceBeanAopInvocationHandler _serviceBeanAopInvocationHandler;

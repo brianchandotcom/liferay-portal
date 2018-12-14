@@ -37,8 +37,8 @@ public class DynamicDataSourceAdvice extends ChainableMethodAdvice {
 
 	@Override
 	public Object before(
-			ServiceBeanMethodInvocation serviceBeanMethodInvocation)
-		throws Throwable {
+		ServiceBeanMethodInvocation serviceBeanMethodInvocation,
+		Object[] arguments) {
 
 		Operation operation =
 			serviceBeanMethodInvocation.getAdviceMethodContext();
@@ -77,7 +77,8 @@ public class DynamicDataSourceAdvice extends ChainableMethodAdvice {
 
 	@Override
 	public void duringFinally(
-		ServiceBeanMethodInvocation serviceBeanMethodInvocation) {
+		ServiceBeanMethodInvocation serviceBeanMethodInvocation,
+		Object[] arguments) {
 
 		_dynamicDataSourceTargetSource.popOperation();
 	}

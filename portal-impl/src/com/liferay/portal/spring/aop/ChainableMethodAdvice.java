@@ -27,18 +27,19 @@ public abstract class ChainableMethodAdvice {
 
 	public void afterReturning(
 			ServiceBeanMethodInvocation serviceBeanMethodInvocation,
-			Object result)
+			Object[] arguments, Object result)
 		throws Throwable {
 	}
 
 	public void afterThrowing(
 			ServiceBeanMethodInvocation serviceBeanMethodInvocation,
-			Throwable throwable)
+			Object[] arguments, Throwable throwable)
 		throws Throwable {
 	}
 
 	public Object before(
-			ServiceBeanMethodInvocation serviceBeanMethodInvocation)
+			ServiceBeanMethodInvocation serviceBeanMethodInvocation,
+			Object[] arguments)
 		throws Throwable {
 
 		return null;
@@ -52,14 +53,16 @@ public abstract class ChainableMethodAdvice {
 	}
 
 	public void duringFinally(
-		ServiceBeanMethodInvocation serviceBeanMethodInvocation) {
+		ServiceBeanMethodInvocation serviceBeanMethodInvocation,
+		Object[] arguments) {
 	}
 
 	public Object invoke(
-			ServiceBeanMethodInvocation serviceBeanMethodInvocation)
+			ServiceBeanMethodInvocation serviceBeanMethodInvocation,
+			Object[] arguments)
 		throws Throwable {
 
-		Object returnValue = before(serviceBeanMethodInvocation);
+		Object returnValue = before(serviceBeanMethodInvocation, arguments);
 
 		if (returnValue != null) {
 			if (returnValue == nullResult) {
@@ -70,17 +73,17 @@ public abstract class ChainableMethodAdvice {
 		}
 
 		try {
-			returnValue = serviceBeanMethodInvocation.proceed();
+			returnValue = serviceBeanMethodInvocation.proceed(arguments);
 
-			afterReturning(serviceBeanMethodInvocation, returnValue);
+			afterReturning(serviceBeanMethodInvocation, arguments, returnValue);
 		}
 		catch (Throwable throwable) {
-			afterThrowing(serviceBeanMethodInvocation, throwable);
+			afterThrowing(serviceBeanMethodInvocation, arguments, throwable);
 
 			throw throwable;
 		}
 		finally {
-			duringFinally(serviceBeanMethodInvocation);
+			duringFinally(serviceBeanMethodInvocation, arguments);
 		}
 
 		return returnValue;

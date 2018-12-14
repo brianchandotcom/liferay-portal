@@ -41,9 +41,9 @@ public class ServiceBeanAopInvocationHandler implements InvocationHandler {
 		throws Throwable {
 
 		ServiceBeanMethodInvocation serviceBeanMethodInvocation =
-			new ServiceBeanMethodInvocation(_getAopMethod(method), arguments);
+			new ServiceBeanMethodInvocation(_getAopMethod(method));
 
-		return serviceBeanMethodInvocation.proceed();
+		return serviceBeanMethodInvocation.proceed(arguments);
 	}
 
 	public void setTarget(Object target) {

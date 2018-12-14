@@ -50,14 +50,16 @@ public class TransactionInterceptor extends ChainableMethodAdvice {
 
 	@Override
 	public Object invoke(
-			ServiceBeanMethodInvocation serviceBeanMethodInvocation)
+			ServiceBeanMethodInvocation serviceBeanMethodInvocation,
+			Object[] arguments)
 		throws Throwable {
 
 		TransactionAttributeAdapter transactionAttributeAdapter =
 			serviceBeanMethodInvocation.getAdviceMethodContext();
 
 		return transactionExecutor.execute(
-			transactionAttributeAdapter, serviceBeanMethodInvocation::proceed);
+			transactionAttributeAdapter,
+			() -> serviceBeanMethodInvocation.proceed(arguments));
 	}
 
 	public void setTransactionExecutor(

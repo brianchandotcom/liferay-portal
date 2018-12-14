@@ -28,27 +28,26 @@ public class BufferedIncreasableEntry<K, T>
 	extends IncreasableEntry<K, Increment<T>> {
 
 	public BufferedIncreasableEntry(
-		ServiceBeanMethodInvocation serviceBeanMethodInvocation, K key,
-		Increment<T> value) {
+		ServiceBeanMethodInvocation serviceBeanMethodInvocation,
+		Object[] arguments, K key, Increment<T> value) {
 
 		super(key, value);
 
 		_serviceBeanMethodInvocation = serviceBeanMethodInvocation;
+		_arguments = arguments;
 	}
 
 	@Override
 	public BufferedIncreasableEntry<K, T> increase(Increment<T> deltaValue) {
 		return new BufferedIncreasableEntry<>(
-			_serviceBeanMethodInvocation, key,
+			_serviceBeanMethodInvocation, _arguments, key,
 			value.increaseForNew(deltaValue.getValue()));
 	}
 
 	public void proceed() throws Throwable {
-		Object[] arguments = _serviceBeanMethodInvocation.getArguments();
+		_arguments[_arguments.length - 1] = getValue().getValue();
 
-		arguments[arguments.length - 1] = getValue().getValue();
-
-		_serviceBeanMethodInvocation.proceed();
+		_serviceBeanMethodInvocation.proceed(_arguments);
 	}
 
 	@Override
@@ -57,12 +56,13 @@ public class BufferedIncreasableEntry<K, T>
 
 		sb.append(_serviceBeanMethodInvocation.toString());
 		sb.append(StringPool.OPEN_PARENTHESIS);
-		sb.append(Arrays.toString(_serviceBeanMethodInvocation.getArguments()));
+		sb.append(Arrays.toString(_arguments));
 		sb.append(StringPool.CLOSE_PARENTHESIS);
 
 		return sb.toString();
 	}
 
+	private final Object[] _arguments;
 	private final ServiceBeanMethodInvocation _serviceBeanMethodInvocation;
 
 }

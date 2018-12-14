@@ -23,10 +23,8 @@ import java.util.Objects;
  */
 public class ServiceBeanMethodInvocation {
 
-	public ServiceBeanMethodInvocation(
-		AopMethod aopMethod, Object[] arguments) {
-
-		this(aopMethod, arguments, -1);
+	public ServiceBeanMethodInvocation(AopMethod aopMethod) {
+		this(aopMethod, -1);
 	}
 
 	@Override
@@ -56,10 +54,6 @@ public class ServiceBeanMethodInvocation {
 		return (T)_aopMethod.getAdviceMethodContext(_index);
 	}
 
-	public Object[] getArguments() {
-		return _arguments;
-	}
-
 	public Method getMethod() {
 		return _aopMethod.getMethod();
 	}
@@ -73,18 +67,18 @@ public class ServiceBeanMethodInvocation {
 		return _aopMethod.hashCode();
 	}
 
-	public Object proceed() throws Throwable {
+	public Object proceed(Object[] arguments) throws Throwable {
 		int nextIndex = _index + 1;
 
 		ChainableMethodAdvice chainableMethodAdvice =
 			_aopMethod.getChainableMethodAdvice(nextIndex);
 
 		if (chainableMethodAdvice == null) {
-			return _aopMethod.invoke(_arguments);
+			return _aopMethod.invoke(arguments);
 		}
 
 		return chainableMethodAdvice.invoke(
-			new ServiceBeanMethodInvocation(_aopMethod, _arguments, nextIndex));
+			new ServiceBeanMethodInvocation(_aopMethod, nextIndex), arguments);
 	}
 
 	@Override
@@ -92,16 +86,12 @@ public class ServiceBeanMethodInvocation {
 		return _aopMethod.toString();
 	}
 
-	private ServiceBeanMethodInvocation(
-		AopMethod aopMethod, Object[] arguments, int index) {
-
+	private ServiceBeanMethodInvocation(AopMethod aopMethod, int index) {
 		_aopMethod = aopMethod;
-		_arguments = arguments;
 		_index = index;
 	}
 
 	private final AopMethod _aopMethod;
-	private final Object[] _arguments;
 	private final int _index;
 
 }

@@ -36,8 +36,8 @@ public class AccessControlAdvice extends ChainableMethodAdvice {
 
 	@Override
 	public Object before(
-			ServiceBeanMethodInvocation serviceBeanMethodInvocation)
-		throws Throwable {
+		ServiceBeanMethodInvocation serviceBeanMethodInvocation,
+		Object[] arguments) {
 
 		incrementServiceDepth();
 
@@ -45,8 +45,8 @@ public class AccessControlAdvice extends ChainableMethodAdvice {
 			serviceBeanMethodInvocation.getAdviceMethodContext();
 
 		_accessControlAdvisor.accept(
-			serviceBeanMethodInvocation.getMethod(),
-			serviceBeanMethodInvocation.getArguments(), accessControlled);
+			serviceBeanMethodInvocation.getMethod(), arguments,
+			accessControlled);
 
 		return null;
 	}
@@ -61,7 +61,8 @@ public class AccessControlAdvice extends ChainableMethodAdvice {
 
 	@Override
 	public void duringFinally(
-		ServiceBeanMethodInvocation serviceBeanMethodInvocation) {
+		ServiceBeanMethodInvocation serviceBeanMethodInvocation,
+		Object[] arguments) {
 
 		decrementServiceDepth();
 	}

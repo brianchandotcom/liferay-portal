@@ -44,7 +44,8 @@ public class ThreadLocalCacheAdvice extends ChainableMethodAdvice {
 
 	@Override
 	public Object invoke(
-			ServiceBeanMethodInvocation serviceBeanMethodInvocation)
+			ServiceBeanMethodInvocation serviceBeanMethodInvocation,
+			Object[] arguments)
 		throws Throwable {
 
 		ThreadLocalCachable threadLocalCachable =
@@ -55,8 +56,7 @@ public class ThreadLocalCacheAdvice extends ChainableMethodAdvice {
 				threadLocalCachable.scope(),
 				serviceBeanMethodInvocation.getMethod());
 
-		String cacheKey = _getCacheKey(
-			serviceBeanMethodInvocation.getArguments());
+		String cacheKey = _getCacheKey(arguments);
 
 		Object value = threadLocalCache.get(cacheKey);
 
@@ -68,7 +68,7 @@ public class ThreadLocalCacheAdvice extends ChainableMethodAdvice {
 			return value;
 		}
 
-		Object result = serviceBeanMethodInvocation.proceed();
+		Object result = serviceBeanMethodInvocation.proceed(arguments);
 
 		if (result == null) {
 			threadLocalCache.put(cacheKey, nullResult);

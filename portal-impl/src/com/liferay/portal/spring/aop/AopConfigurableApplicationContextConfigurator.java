@@ -51,7 +51,6 @@ import com.liferay.portal.systemevent.SystemEventAdvice;
 import com.liferay.portal.util.PropsValues;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -113,10 +112,11 @@ public class AopConfigurableApplicationContextConfigurator
 			if (PortalClassLoaderUtil.isPortalClassLoader(_classLoader)) {
 				ServiceBeanAopCacheManager serviceBeanAopCacheManager =
 					ServiceBeanAopCacheManager.create(
-						Collections.singletonList(
+						new ChainableMethodAdvice[] {
 							configurableListableBeanFactory.getBean(
 								"counterTransactionAdvice",
-								ChainableMethodAdvice.class)));
+								ChainableMethodAdvice.class)
+						});
 
 				defaultSingletonBeanRegistry.registerDisposableBean(
 					"counterServiceBeanAopCacheManagerDestroyer",
@@ -162,7 +162,7 @@ public class AopConfigurableApplicationContextConfigurator
 			_classLoader = classLoader;
 		}
 
-		private List<ChainableMethodAdvice> _createChainableMethodAdvices(
+		private ChainableMethodAdvice[] _createChainableMethodAdvices(
 			ConfigurableListableBeanFactory configurableListableBeanFactory,
 			ServiceMonitoringControl serviceMonitoringControl) {
 
@@ -246,7 +246,8 @@ public class AopConfigurableApplicationContextConfigurator
 
 			chainableMethodAdvices.add(transactionInterceptor);
 
-			return chainableMethodAdvices;
+			return chainableMethodAdvices.toArray(
+				new ChainableMethodAdvice[chainableMethodAdvices.size()]);
 		}
 
 		private PlatformTransactionManager _getPlatformTransactionManager(

@@ -20,13 +20,12 @@ import com.liferay.portal.kernel.dao.jdbc.aop.Operation;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.ProxyUtil;
+import com.liferay.portal.spring.aop.ChainableMethodAdvice;
 import com.liferay.portal.spring.aop.ServiceBeanAopCacheManager;
 import com.liferay.portal.spring.aop.ServiceBeanMethodInvocation;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
-
-import java.util.Collections;
 
 import javax.sql.DataSource;
 
@@ -81,7 +80,7 @@ public class DynamicDataSourceAdviceTest {
 			_dynamicDataSourceTargetSource);
 
 		_serviceBeanAopCacheManager = ServiceBeanAopCacheManager.create(
-			Collections.singletonList(dynamicDataSourceAdvice));
+			new ChainableMethodAdvice[] {dynamicDataSourceAdvice});
 	}
 
 	@After

@@ -35,7 +35,7 @@ import java.util.concurrent.ConcurrentHashMap;
 public class ServiceBeanAopCacheManager {
 
 	public static ServiceBeanAopCacheManager create(
-		List<ChainableMethodAdvice> chainableMethodAdvices) {
+		ChainableMethodAdvice[] chainableMethodAdvices) {
 
 		ServiceBeanAopCacheManager serviceBeanAopCacheManager =
 			new ServiceBeanAopCacheManager(chainableMethodAdvices);
@@ -73,10 +73,9 @@ public class ServiceBeanAopCacheManager {
 	}
 
 	private ServiceBeanAopCacheManager(
-		List<ChainableMethodAdvice> chainableMethodAdvices) {
+		ChainableMethodAdvice[] chainableMethodAdvices) {
 
-		_fullChainableMethodAdvices = chainableMethodAdvices.toArray(
-			new ChainableMethodAdvice[chainableMethodAdvices.size()]);
+		_fullChainableMethodAdvices = chainableMethodAdvices;
 	}
 
 	private AopMethod _createAopMethod(CacheKey cacheKey) {

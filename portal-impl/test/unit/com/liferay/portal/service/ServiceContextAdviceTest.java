@@ -26,7 +26,6 @@ import com.liferay.portal.spring.aop.ServiceBeanMethodInvocation;
 import java.lang.reflect.Method;
 
 import java.util.Arrays;
-import java.util.Collections;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -46,7 +45,7 @@ public class ServiceContextAdviceTest {
 	@Before
 	public void setUp() {
 		_serviceBeanAopCacheManager = ServiceBeanAopCacheManager.create(
-			Collections.singletonList(new ServiceContextAdvice()));
+			new ChainableMethodAdvice[] {new ServiceContextAdvice()});
 	}
 
 	@After

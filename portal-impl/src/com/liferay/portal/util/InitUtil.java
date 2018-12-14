@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.security.xml.SecureXMLFactoryProviderUtil;
 import com.liferay.portal.kernel.util.BasePortalLifecycle;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.JavaDetector;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -130,6 +131,12 @@ public class InitUtil {
 		// Properties
 
 		com.liferay.portal.kernel.util.PropsUtil.setProps(new PropsImpl());
+
+		// Html
+
+		HtmlUtil htmlUtil = new HtmlUtil();
+
+		htmlUtil.setHtml(new HtmlImpl());
 
 		// Log4J
 

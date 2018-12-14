@@ -17,6 +17,7 @@ package com.liferay.asset.publisher.web.portlet;
 import com.liferay.asset.display.contributor.AssetDisplayContributor;
 import com.liferay.asset.display.contributor.AssetDisplayContributorTracker;
 import com.liferay.asset.display.contributor.constants.AssetDisplayWebKeys;
+import com.liferay.asset.display.page.model.AssetDisplayPageEntry;
 import com.liferay.asset.display.page.service.AssetDisplayPageEntryLocalService;
 import com.liferay.asset.display.page.util.AssetDisplayPageHelper;
 import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
@@ -39,7 +40,6 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutFriendlyURLComposite;
 import com.liferay.portal.kernel.model.LayoutTypePortletConstants;
@@ -49,8 +49,6 @@ import com.liferay.portal.kernel.security.auth.AuthTokenUtil;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
-import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.Http;
@@ -63,7 +61,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -223,53 +220,18 @@ public class DisplayPageFriendlyURLResolver implements FriendlyURLResolver {
 		_layoutLocalService = layoutLocalService;
 	}
 
-	private Layout _createAssetDisplayLayout(long groupId)
-		throws PortalException {
-
-		Group group = _groupLocalService.fetchGroup(groupId);
-
-		long defaultUserId = _userLocalService.getDefaultUserId(
-			group.getCompanyId());
-
-		Locale locale = LocaleUtil.getSiteDefault();
-
-		Map<Locale, String> nameMap = new HashMap<>();
-
-		nameMap.put(locale, "Asset Display Page");
-
-		UnicodeProperties typeSettingsProperties = new UnicodeProperties();
-
-		typeSettingsProperties.put("visible", Boolean.FALSE.toString());
-
-		ServiceContext serviceContext =
-			ServiceContextThreadLocal.getServiceContext();
-
-		serviceContext.setAttribute(
-			"layout.instanceable.allowed", Boolean.TRUE);
-
-		return _layoutLocalService.addLayout(
-			defaultUserId, groupId, false, 0, nameMap, null, null, null, null,
-			"asset_display", typeSettingsProperties.toString(), true,
-			new HashMap<>(), serviceContext);
-	}
-
-	private Layout _getAssetDisplayLayout(long groupId) throws PortalException {
-		List<Layout> layouts = _layoutLocalService.getLayouts(
-			groupId, false, "asset_display");
-
-		if (!ListUtil.isEmpty(layouts)) {
-			return layouts.get(0);
-		}
-
-		return _createAssetDisplayLayout(groupId);
-	}
-
 	private Layout _getAssetDisplayPageEntryLayout(
 			long groupId, AssetEntry assetEntry)
 		throws PortalException {
 
 		if (AssetDisplayPageHelper.hasAssetDisplayPage(groupId, assetEntry)) {
-			return _getAssetDisplayLayout(assetEntry.getGroupId());
+			AssetDisplayPageEntry assetDisplayPageEntry =
+				_assetDisplayPageEntryLocalService.fetchAssetDisplayPageEntry(
+					groupId, assetEntry.getClassNameId(),
+					assetEntry.getClassPK());
+
+			return _layoutLocalService.getLayout(
+				assetDisplayPageEntry.getPlid());
 		}
 
 		return null;

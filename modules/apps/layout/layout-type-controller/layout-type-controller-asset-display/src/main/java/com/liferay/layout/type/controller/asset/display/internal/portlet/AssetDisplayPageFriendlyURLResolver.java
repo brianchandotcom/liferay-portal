@@ -17,30 +17,23 @@ package com.liferay.layout.type.controller.asset.display.internal.portlet;
 import com.liferay.asset.display.contributor.AssetDisplayContributor;
 import com.liferay.asset.display.contributor.AssetDisplayContributorTracker;
 import com.liferay.asset.display.contributor.constants.AssetDisplayWebKeys;
+import com.liferay.asset.display.page.model.AssetDisplayPageEntry;
+import com.liferay.asset.display.page.service.AssetDisplayPageEntryLocalService;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryService;
 import com.liferay.asset.util.AssetHelper;
-import com.liferay.layout.type.controller.asset.display.internal.constants.AssetDisplayLayoutTypeControllerConstants;
 import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutFriendlyURLComposite;
 import com.liferay.portal.kernel.portlet.FriendlyURLResolver;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
-import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.WebKeys;
 
-import java.util.HashMap;
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -63,7 +56,6 @@ public class AssetDisplayPageFriendlyURLResolver
 			Map<String, Object> requestContext)
 		throws PortalException {
 
-		long assetEntryId = 0L;
 		long versionClassPK = 0L;
 
 		String urlSeparator = getURLSeparator();
@@ -71,17 +63,11 @@ public class AssetDisplayPageFriendlyURLResolver
 		String path = friendlyURL.substring(urlSeparator.length());
 
 		if (path.indexOf(CharPool.SLASH) != -1) {
-			assetEntryId = GetterUtil.getLong(
-				path.substring(0, path.indexOf(CharPool.SLASH)));
-
 			versionClassPK = GetterUtil.getLong(
 				path.substring(path.indexOf(CharPool.SLASH) + 1));
 		}
-		else {
-			assetEntryId = GetterUtil.getLong(path);
-		}
 
-		AssetEntry assetEntry = _assetEntryService.getEntry(assetEntryId);
+		AssetEntry assetEntry = _getAssetEntry(friendlyURL);
 
 		AssetDisplayContributor assetDisplayContributor =
 			_assetDisplayContributorTracker.getAssetDisplayContributor(
@@ -111,7 +97,7 @@ public class AssetDisplayPageFriendlyURLResolver
 				assetEntry.getClassName(), assetEntry.getClassPK()),
 			request);
 
-		Layout layout = getAssetDisplayLayout(groupId);
+		Layout layout = _getAssetEntryLayout(assetEntry);
 
 		return _portal.getLayoutActualURL(layout, mainPath);
 	}
@@ -123,7 +109,7 @@ public class AssetDisplayPageFriendlyURLResolver
 			Map<String, Object> requestContext)
 		throws PortalException {
 
-		Layout layout = getAssetDisplayLayout(groupId);
+		Layout layout = _getAssetEntryLayout(_getAssetEntry(friendlyURL));
 
 		return new LayoutFriendlyURLComposite(layout, friendlyURL);
 	}
@@ -133,53 +119,48 @@ public class AssetDisplayPageFriendlyURLResolver
 		return "/a/";
 	}
 
-	protected Layout getAssetDisplayLayout(long groupId)
+	private AssetEntry _getAssetEntry(String friendlyURL)
 		throws PortalException {
 
-		List<Layout> layouts = _layoutLocalService.getLayouts(
-			groupId, false,
-			AssetDisplayLayoutTypeControllerConstants.
-				LAYOUT_TYPE_ASSET_DISPLAY);
+		long assetEntryId = 0L;
 
-		if (!ListUtil.isEmpty(layouts)) {
-			return layouts.get(0);
+		String urlSeparator = getURLSeparator();
+
+		String path = friendlyURL.substring(urlSeparator.length());
+
+		if (path.indexOf(CharPool.SLASH) != -1) {
+			assetEntryId = GetterUtil.getLong(
+				path.substring(0, path.indexOf(CharPool.SLASH)));
+		}
+		else {
+			assetEntryId = GetterUtil.getLong(path);
 		}
 
-		return _createAssetDisplayLayout(groupId);
+		return _assetEntryService.getEntry(assetEntryId);
 	}
 
-	private Layout _createAssetDisplayLayout(long groupId)
+	private Layout _getAssetEntryLayout(AssetEntry assetEntry)
 		throws PortalException {
 
-		Group group = _groupLocalService.fetchGroup(groupId);
+		AssetDisplayPageEntry assetDisplayPageEntry =
+			_assetDisplayPageEntryLocalService.fetchAssetDisplayPageEntry(
+				assetEntry.getGroupId(), assetEntry.getClassNameId(),
+				assetEntry.getClassPK());
 
-		long defaultUserId = _userLocalService.getDefaultUserId(
-			group.getCompanyId());
+		if (assetDisplayPageEntry != null) {
+			return _layoutLocalService.getLayout(
+				assetDisplayPageEntry.getPlid());
+		}
 
-		Map<Locale, String> nameMap = new HashMap<>();
-
-		Locale locale = LocaleUtil.getSiteDefault();
-
-		nameMap.put(locale, "Asset Display Page");
-
-		UnicodeProperties typeSettingsProperties = new UnicodeProperties();
-
-		typeSettingsProperties.put("visible", Boolean.FALSE.toString());
-
-		ServiceContext serviceContext =
-			ServiceContextThreadLocal.getServiceContext();
-
-		serviceContext.setAttribute(
-			"layout.instanceable.allowed", Boolean.TRUE);
-
-		return _layoutLocalService.addLayout(
-			defaultUserId, groupId, false, 0, nameMap, null, null, null, null,
-			"asset_display", typeSettingsProperties.toString(), true,
-			new HashMap<>(), serviceContext);
+		return null;
 	}
 
 	@Reference
 	private AssetDisplayContributorTracker _assetDisplayContributorTracker;
+
+	@Reference
+	private AssetDisplayPageEntryLocalService
+		_assetDisplayPageEntryLocalService;
 
 	@Reference
 	private AssetEntryService _assetEntryService;

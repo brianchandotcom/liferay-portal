@@ -15,6 +15,10 @@ definition {
 			LexiconEntry.gotoAddMenuItem(menuItem = "Public Page");
 		}
 
+		if (!(isSet(collectionName))) {
+			var collectionName = "Basic Pages";
+		}
+
 		Navigator.gotoNavNested(navNested = "${collectionName}");
 
 		if (isSet(pageTemplateName)) {

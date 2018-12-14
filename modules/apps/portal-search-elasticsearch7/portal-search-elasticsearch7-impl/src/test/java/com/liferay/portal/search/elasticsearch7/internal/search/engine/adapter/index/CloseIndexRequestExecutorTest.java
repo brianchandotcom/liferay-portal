@@ -18,7 +18,6 @@ import com.liferay.portal.search.elasticsearch7.internal.connection.Elasticsearc
 import com.liferay.portal.search.engine.adapter.index.CloseIndexRequest;
 import com.liferay.portal.search.engine.adapter.index.IndicesOptions;
 
-import org.elasticsearch.action.admin.indices.close.CloseIndexRequestBuilder;
 import org.elasticsearch.common.unit.TimeValue;
 
 import org.junit.After;
@@ -66,17 +65,14 @@ public class CloseIndexRequestExecutorTest {
 				}
 			};
 
-		CloseIndexRequestBuilder closeIndexRequestBuilder =
-			closeIndexRequestExecutorImpl.createCloseIndexRequestBuilder(
-				closeIndexRequest);
-
 		org.elasticsearch.action.admin.indices.close.CloseIndexRequest
-			elastichsearchCloseIndexRequest =
-				closeIndexRequestBuilder.request();
+			elasticsearchCloseIndexRequest =
+				closeIndexRequestExecutorImpl.createCloseIndexRequest(
+					closeIndexRequest);
 
 		Assert.assertArrayEquals(
 			closeIndexRequest.getIndexNames(),
-			elastichsearchCloseIndexRequest.indices());
+			elasticsearchCloseIndexRequest.indices());
 
 		IndicesOptionsTranslator indicesOptionsTranslator =
 			new IndicesOptionsTranslatorImpl();
@@ -84,15 +80,15 @@ public class CloseIndexRequestExecutorTest {
 		Assert.assertEquals(
 			indicesOptionsTranslator.translate(
 				closeIndexRequest.getIndicesOptions()),
-			elastichsearchCloseIndexRequest.indicesOptions());
+			elasticsearchCloseIndexRequest.indicesOptions());
 
 		Assert.assertEquals(
 			TimeValue.timeValueMillis(closeIndexRequest.getTimeout()),
-			elastichsearchCloseIndexRequest.masterNodeTimeout());
+			elasticsearchCloseIndexRequest.masterNodeTimeout());
 
 		Assert.assertEquals(
 			TimeValue.timeValueMillis(closeIndexRequest.getTimeout()),
-			elastichsearchCloseIndexRequest.timeout());
+			elasticsearchCloseIndexRequest.timeout());
 	}
 
 	private static final String _INDEX_NAME = "test_request_index";

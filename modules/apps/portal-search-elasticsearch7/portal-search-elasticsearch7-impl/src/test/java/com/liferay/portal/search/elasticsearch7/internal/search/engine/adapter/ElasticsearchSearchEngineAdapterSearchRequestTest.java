@@ -41,18 +41,16 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import org.elasticsearch.action.admin.indices.create.CreateIndexRequestBuilder;
-import org.elasticsearch.action.admin.indices.delete.DeleteIndexRequestBuilder;
-import org.elasticsearch.action.admin.indices.mapping.put.PutMappingRequestBuilder;
-import org.elasticsearch.action.get.GetAction;
-import org.elasticsearch.action.get.GetRequestBuilder;
+import org.elasticsearch.action.admin.indices.create.CreateIndexRequest;
+import org.elasticsearch.action.admin.indices.delete.DeleteIndexRequest;
+import org.elasticsearch.action.admin.indices.mapping.put.PutMappingRequest;
+import org.elasticsearch.action.get.GetRequest;
 import org.elasticsearch.action.get.GetResponse;
-import org.elasticsearch.action.index.IndexAction;
-import org.elasticsearch.action.index.IndexRequestBuilder;
+import org.elasticsearch.action.index.IndexRequest;
 import org.elasticsearch.action.support.WriteRequest;
-import org.elasticsearch.client.AdminClient;
-import org.elasticsearch.client.Client;
-import org.elasticsearch.client.IndicesAdminClient;
+import org.elasticsearch.client.IndicesClient;
+import org.elasticsearch.client.RequestOptions;
+import org.elasticsearch.client.RestHighLevelClient;
 import org.elasticsearch.common.xcontent.XContentType;
 
 import org.junit.After;
@@ -75,15 +73,13 @@ public class ElasticsearchSearchEngineAdapterSearchRequestTest {
 
 		_elasticsearchFixture.setUp();
 
-		Client client = _elasticsearchFixture.getClient();
-
-		AdminClient adminClient = client.admin();
-
-		_indicesAdminClient = adminClient.indices();
-
 		_searchEngineAdapter = createSearchEngineAdapter(_elasticsearchFixture);
 
-		createIndex();
+		_restHighLevelClient = _elasticsearchFixture.getRestHighLevelClient();
+
+		_indicesClient = _restHighLevelClient.indices();
+
+		_createIndex();
 
 		StringBundler sb = new StringBundler(14);
 
@@ -102,12 +98,12 @@ public class ElasticsearchSearchEngineAdapterSearchRequestTest {
 		sb.append("\"keywordSuggestion\" : {\n\"type\" : \"completion\"\n");
 		sb.append("}\n\n}\n}");
 
-		putMapping(_MAPPING_NAME, sb.toString());
+		_putMapping(_MAPPING_NAME, sb.toString());
 	}
 
 	@After
 	public void tearDown() throws Exception {
-		deleteIndex();
+		_deleteIndex();
 
 		_documentFixture.tearDown();
 
@@ -292,13 +288,6 @@ public class ElasticsearchSearchEngineAdapterSearchRequestTest {
 		assertSuggestion(suggestSearchResultsMap, 1, expectedSuggestionsString);
 	}
 
-	protected void createIndex() {
-		CreateIndexRequestBuilder createIndexRequestBuilder =
-			_indicesAdminClient.prepareCreate(_INDEX_NAME);
-
-		createIndexRequestBuilder.get();
-	}
-
 	protected SearchEngineAdapter createSearchEngineAdapter(
 		ElasticsearchClientResolver elasticsearchClientResolver) {
 
@@ -325,23 +314,6 @@ public class ElasticsearchSearchEngineAdapterSearchRequestTest {
 		return searchRequestExecutorFixture.getSearchRequestExecutor();
 	}
 
-	protected void deleteIndex() {
-		DeleteIndexRequestBuilder deleteIndexRequestBuilder =
-			_indicesAdminClient.prepareDelete(_INDEX_NAME);
-
-		deleteIndexRequestBuilder.get();
-	}
-
-	protected GetResponse getDocument(String value) {
-		GetRequestBuilder getRequestBuilder = new GetRequestBuilder(
-			_elasticsearchFixture.getClient(), GetAction.INSTANCE);
-
-		getRequestBuilder.setId(getUID(value));
-		getRequestBuilder.setIndex(_INDEX_NAME);
-
-		return getRequestBuilder.get();
-	}
-
 	protected String getUID(String value) {
 		StringBundler sb = new StringBundler(5);
 
@@ -365,41 +337,12 @@ public class ElasticsearchSearchEngineAdapterSearchRequestTest {
 		document.addKeyword(Field.TYPE, "spellCheckKeyword");
 		document.addKeyword(Field.UID, getUID(value));
 
-		IndexRequestBuilder indexRequestBuilder = new IndexRequestBuilder(
-			_elasticsearchFixture.getClient(), IndexAction.INSTANCE);
+		_indexDocument(document);
 
-		indexRequestBuilder.setRefreshPolicy(
-			WriteRequest.RefreshPolicy.IMMEDIATE);
-
-		indexRequestBuilder.setId(document.getUID());
-
-		indexRequestBuilder.setIndex(_INDEX_NAME);
-		indexRequestBuilder.setType(_MAPPING_NAME);
-
-		ElasticsearchDocumentFactory elasticsearchDocumentFactory =
-			new DefaultElasticsearchDocumentFactory();
-
-		String elasticsearchDocument =
-			elasticsearchDocumentFactory.getElasticsearchDocument(document);
-
-		indexRequestBuilder.setSource(elasticsearchDocument, XContentType.JSON);
-
-		indexRequestBuilder.get();
-
-		GetResponse getResponse = getDocument(value);
+		GetResponse getResponse = _getDocument(getUID(value));
 
 		Assert.assertTrue(
 			"Expected document added: " + value, getResponse.isExists());
-	}
-
-	protected void putMapping(String mappingName, String mappingSource) {
-		PutMappingRequestBuilder putMappingRequestBuilder =
-			_indicesAdminClient.preparePutMapping(_INDEX_NAME);
-
-		putMappingRequestBuilder.setSource(mappingSource, XContentType.JSON);
-		putMappingRequestBuilder.setType(mappingName);
-
-		putMappingRequestBuilder.get();
 	}
 
 	protected List<String> toList(
@@ -417,6 +360,83 @@ public class ElasticsearchSearchEngineAdapterSearchRequestTest {
 		return options;
 	}
 
+	private void _createIndex() {
+		CreateIndexRequest createIndexRequest = new CreateIndexRequest(
+			_INDEX_NAME);
+
+		try {
+			_indicesClient.create(createIndexRequest, RequestOptions.DEFAULT);
+		}
+		catch (IOException ioe) {
+			throw new RuntimeException(ioe);
+		}
+	}
+
+	private void _deleteIndex() {
+		DeleteIndexRequest deleteIndexRequest = new DeleteIndexRequest(
+			_INDEX_NAME);
+
+		try {
+			_indicesClient.delete(deleteIndexRequest, RequestOptions.DEFAULT);
+		}
+		catch (IOException ioe) {
+			throw new RuntimeException(ioe);
+		}
+	}
+
+	private GetResponse _getDocument(String id) {
+		GetRequest getRequest = new GetRequest();
+
+		getRequest.id(id);
+		getRequest.index(_INDEX_NAME);
+
+		try {
+			return _restHighLevelClient.get(getRequest, RequestOptions.DEFAULT);
+		}
+		catch (IOException ioe) {
+			throw new RuntimeException(ioe);
+		}
+	}
+
+	private void _indexDocument(Document document) {
+		IndexRequest indexRequest = new IndexRequest(_INDEX_NAME);
+
+		indexRequest.id(document.getUID());
+		indexRequest.setRefreshPolicy(WriteRequest.RefreshPolicy.IMMEDIATE);
+		indexRequest.type(_MAPPING_NAME);
+
+		ElasticsearchDocumentFactory elasticsearchDocumentFactory =
+			new DefaultElasticsearchDocumentFactory();
+
+		String elasticsearchDocument =
+			elasticsearchDocumentFactory.getElasticsearchDocument(document);
+
+		indexRequest.source(elasticsearchDocument, XContentType.JSON);
+
+		try {
+			_restHighLevelClient.index(indexRequest, RequestOptions.DEFAULT);
+		}
+		catch (IOException ioe) {
+			throw new RuntimeException(ioe);
+		}
+	}
+
+	private void _putMapping(String mappingName, String mappingSource) {
+		PutMappingRequest putMappingRequest = new PutMappingRequest(
+			_INDEX_NAME);
+
+		putMappingRequest.source(mappingSource, XContentType.JSON);
+		putMappingRequest.type(mappingName);
+
+		try {
+			_indicesClient.putMapping(
+				putMappingRequest, RequestOptions.DEFAULT);
+		}
+		catch (IOException ioe) {
+			throw new RuntimeException(ioe);
+		}
+	}
+
 	private static final long _DEFAULT_COMPANY_ID = 12345;
 
 	private static final String _EN_US_LANGUAGE_ID = "en_US";
@@ -430,7 +450,8 @@ public class ElasticsearchSearchEngineAdapterSearchRequestTest {
 
 	private final DocumentFixture _documentFixture = new DocumentFixture();
 	private ElasticsearchFixture _elasticsearchFixture;
-	private IndicesAdminClient _indicesAdminClient;
+	private IndicesClient _indicesClient;
+	private RestHighLevelClient _restHighLevelClient;
 	private SearchEngineAdapter _searchEngineAdapter;
 
 }

@@ -34,29 +34,23 @@ import com.liferay.portal.search.engine.adapter.snapshot.SnapshotRequestExecutor
 import com.liferay.portal.search.engine.adapter.snapshot.SnapshotState;
 import com.liferay.portal.search.test.util.IdempotentRetryAssert;
 
+import java.io.IOException;
+
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-import org.elasticsearch.action.admin.cluster.repositories.delete.DeleteRepositoryAction;
-import org.elasticsearch.action.admin.cluster.repositories.delete.DeleteRepositoryRequestBuilder;
-import org.elasticsearch.action.admin.cluster.repositories.get.GetRepositoriesAction;
-import org.elasticsearch.action.admin.cluster.repositories.get.GetRepositoriesRequestBuilder;
+import org.elasticsearch.action.admin.cluster.repositories.delete.DeleteRepositoryRequest;
+import org.elasticsearch.action.admin.cluster.repositories.get.GetRepositoriesRequest;
 import org.elasticsearch.action.admin.cluster.repositories.get.GetRepositoriesResponse;
-import org.elasticsearch.action.admin.cluster.repositories.put.PutRepositoryAction;
-import org.elasticsearch.action.admin.cluster.repositories.put.PutRepositoryRequestBuilder;
-import org.elasticsearch.action.admin.cluster.snapshots.create.CreateSnapshotAction;
-import org.elasticsearch.action.admin.cluster.snapshots.create.CreateSnapshotRequestBuilder;
-import org.elasticsearch.action.admin.cluster.snapshots.delete.DeleteSnapshotAction;
-import org.elasticsearch.action.admin.cluster.snapshots.delete.DeleteSnapshotRequestBuilder;
-import org.elasticsearch.action.admin.cluster.snapshots.get.GetSnapshotsAction;
-import org.elasticsearch.action.admin.cluster.snapshots.get.GetSnapshotsRequestBuilder;
+import org.elasticsearch.action.admin.cluster.repositories.put.PutRepositoryRequest;
 import org.elasticsearch.action.admin.cluster.snapshots.get.GetSnapshotsResponse;
-import org.elasticsearch.action.admin.indices.create.CreateIndexRequestBuilder;
-import org.elasticsearch.action.admin.indices.delete.DeleteIndexRequestBuilder;
-import org.elasticsearch.action.admin.indices.exists.indices.IndicesExistsAction;
-import org.elasticsearch.action.admin.indices.exists.indices.IndicesExistsRequestBuilder;
-import org.elasticsearch.action.admin.indices.exists.indices.IndicesExistsResponse;
-import org.elasticsearch.client.IndicesAdminClient;
+import org.elasticsearch.action.admin.indices.create.CreateIndexRequest;
+import org.elasticsearch.action.admin.indices.delete.DeleteIndexRequest;
+import org.elasticsearch.action.admin.indices.get.GetIndexRequest;
+import org.elasticsearch.client.IndicesClient;
+import org.elasticsearch.client.RequestOptions;
+import org.elasticsearch.client.RestHighLevelClient;
+import org.elasticsearch.client.SnapshotClient;
 import org.elasticsearch.cluster.metadata.RepositoryMetaData;
 import org.elasticsearch.common.settings.Settings;
 import org.elasticsearch.repositories.fs.FsRepository;
@@ -82,16 +76,21 @@ public class ElasticsearchSearchEngineAdapterSnapshotRequestTest {
 
 		_searchEngineAdapter = createSearchEngineAdapter(_elasticsearchFixture);
 
-		_indicesAdminClient = _elasticsearchFixture.getIndicesAdminClient();
+		RestHighLevelClient restHighLevelClient =
+			_elasticsearchFixture.getRestHighLevelClient();
 
-		createIndex();
-		createRepository(_TEST_REPOSITORY_NAME, _TEST_REPOSITORY_NAME);
+		_indicesClient = restHighLevelClient.indices();
+
+		_snapshotClient = restHighLevelClient.snapshot();
+
+		_createIndex();
+		_createRepository(_TEST_REPOSITORY_NAME, _TEST_REPOSITORY_NAME);
 	}
 
 	@After
 	public void tearDown() throws Exception {
-		deleteIndex();
-		deleteRepository(_TEST_REPOSITORY_NAME);
+		_deleteIndex();
+		_deleteRepository(_TEST_REPOSITORY_NAME);
 
 		_elasticsearchFixture.tearDown();
 	}
@@ -118,7 +117,7 @@ public class ElasticsearchSearchEngineAdapterSnapshotRequestTest {
 
 		Assert.assertTrue(snapshotDetails.getSuccessfulShards() > 0);
 
-		List<SnapshotInfo> snapshotInfos = getSnapshotInfo(
+		List<SnapshotInfo> snapshotInfos = _getSnapshotInfo(
 			"test_create_snapshot");
 
 		Assert.assertEquals("Expected 1 SnapshotInfo", 1, snapshotInfos.size());
@@ -135,15 +134,7 @@ public class ElasticsearchSearchEngineAdapterSnapshotRequestTest {
 		Assert.assertEquals(
 			createSnapshotRequest.getRepositoryName(), _TEST_REPOSITORY_NAME);
 
-		DeleteSnapshotRequestBuilder deleteSnapshotRequestBuilder =
-			new DeleteSnapshotRequestBuilder(
-				_elasticsearchFixture.getClient(),
-				DeleteSnapshotAction.INSTANCE);
-
-		deleteSnapshotRequestBuilder.setRepository(_TEST_REPOSITORY_NAME);
-		deleteSnapshotRequestBuilder.setSnapshot("test_create_snapshot");
-
-		deleteSnapshotRequestBuilder.get();
+		_deleteSnapshot(_TEST_REPOSITORY_NAME, "test_create_snapshot");
 	}
 
 	@Test
@@ -157,16 +148,9 @@ public class ElasticsearchSearchEngineAdapterSnapshotRequestTest {
 
 		Assert.assertTrue(createSnapshotRepositoryResponse.isAcknowledged());
 
-		GetRepositoriesRequestBuilder getRepositoriesRequestBuilder =
-			new GetRepositoriesRequestBuilder(
-				_elasticsearchFixture.getClient(),
-				GetRepositoriesAction.INSTANCE);
-
-		getRepositoriesRequestBuilder.addRepositories(
-			"testCreateSnapshotRepository");
-
 		GetRepositoriesResponse getRepositoriesResponse =
-			getRepositoriesRequestBuilder.get();
+			_getGetRepositoriesResponse(
+				new String[] {"testCreateSnapshotRepository"});
 
 		List<RepositoryMetaData> repositoryMetaDatas =
 			getRepositoriesResponse.repositories();
@@ -182,27 +166,18 @@ public class ElasticsearchSearchEngineAdapterSnapshotRequestTest {
 			SnapshotRepositoryDetails.FS_REPOSITORY_TYPE,
 			repositoryMetaData.type());
 
-		deleteRepository("testCreateSnapshotRepository");
+		_deleteRepository("testCreateSnapshotRepository");
 	}
 
 	@Test
 	public void testDeleteSnapshot() throws Exception {
-		CreateSnapshotRequestBuilder createSnapshotRequestBuilder =
-			new CreateSnapshotRequestBuilder(
-				_elasticsearchFixture.getClient(),
-				CreateSnapshotAction.INSTANCE);
-
-		createSnapshotRequestBuilder.setIndices(_INDEX_NAME);
-		createSnapshotRequestBuilder.setRepository(_TEST_REPOSITORY_NAME);
-		createSnapshotRequestBuilder.setSnapshot("test_delete_snapshot");
-		createSnapshotRequestBuilder.setWaitForCompletion(true);
-
-		createSnapshotRequestBuilder.get();
+		_createSnapshot(
+			_TEST_REPOSITORY_NAME, "test_delete_snapshot", true, _INDEX_NAME);
 
 		IdempotentRetryAssert.retryAssert(
 			10, TimeUnit.SECONDS,
 			() -> {
-				List<SnapshotInfo> snapshotInfos = getSnapshotInfo(
+				List<SnapshotInfo> snapshotInfos = _getSnapshotInfo(
 					"test_delete_snapshot");
 
 				Assert.assertEquals(
@@ -217,7 +192,7 @@ public class ElasticsearchSearchEngineAdapterSnapshotRequestTest {
 
 				Assert.assertTrue(deleteSnapshotResponse.isAcknowledged());
 
-				snapshotInfos = getSnapshotInfo("test_delete_snapshot");
+				snapshotInfos = _getSnapshotInfo("test_delete_snapshot");
 
 				Assert.assertTrue(snapshotInfos.isEmpty());
 
@@ -252,17 +227,8 @@ public class ElasticsearchSearchEngineAdapterSnapshotRequestTest {
 
 	@Test
 	public void testGetSnapshots() {
-		CreateSnapshotRequestBuilder createSnapshotRequestBuilder =
-			new CreateSnapshotRequestBuilder(
-				_elasticsearchFixture.getClient(),
-				CreateSnapshotAction.INSTANCE);
-
-		createSnapshotRequestBuilder.setIndices(_INDEX_NAME);
-		createSnapshotRequestBuilder.setRepository(_TEST_REPOSITORY_NAME);
-		createSnapshotRequestBuilder.setSnapshot("test_get_snapshots");
-		createSnapshotRequestBuilder.setWaitForCompletion(true);
-
-		createSnapshotRequestBuilder.get();
+		_createSnapshot(
+			_TEST_REPOSITORY_NAME, "test_get_snapshots", true, _INDEX_NAME);
 
 		GetSnapshotsRequest getSnapshotsRequest = new GetSnapshotsRequest(
 			_TEST_REPOSITORY_NAME);
@@ -286,32 +252,15 @@ public class ElasticsearchSearchEngineAdapterSnapshotRequestTest {
 		Assert.assertEquals(
 			SnapshotState.SUCCESS, snapshotDetails.getSnapshotState());
 
-		DeleteSnapshotRequestBuilder deleteSnapshotRequestBuilder =
-			new DeleteSnapshotRequestBuilder(
-				_elasticsearchFixture.getClient(),
-				DeleteSnapshotAction.INSTANCE);
-
-		deleteSnapshotRequestBuilder.setRepository(_TEST_REPOSITORY_NAME);
-		deleteSnapshotRequestBuilder.setSnapshot("test_get_snapshots");
-
-		deleteSnapshotRequestBuilder.get();
+		_deleteSnapshot(_TEST_REPOSITORY_NAME, "test_get_snapshots");
 	}
 
 	@Test
 	public void testRestoreSnapshot() {
-		CreateSnapshotRequestBuilder createSnapshotRequestBuilder =
-			new CreateSnapshotRequestBuilder(
-				_elasticsearchFixture.getClient(),
-				CreateSnapshotAction.INSTANCE);
+		_createSnapshot(
+			_TEST_REPOSITORY_NAME, "test_restore_snapshot", true, _INDEX_NAME);
 
-		createSnapshotRequestBuilder.setIndices(_INDEX_NAME);
-		createSnapshotRequestBuilder.setRepository(_TEST_REPOSITORY_NAME);
-		createSnapshotRequestBuilder.setSnapshot("test_restore_snapshot");
-		createSnapshotRequestBuilder.setWaitForCompletion(true);
-
-		createSnapshotRequestBuilder.get();
-
-		deleteIndex();
+		_deleteIndex();
 
 		RestoreSnapshotRequest restoreSnapshotRequest =
 			new RestoreSnapshotRequest(
@@ -321,28 +270,9 @@ public class ElasticsearchSearchEngineAdapterSnapshotRequestTest {
 
 		_searchEngineAdapter.execute(restoreSnapshotRequest);
 
-		IndicesExistsRequestBuilder indicesExistsRequestBuilder =
-			new IndicesExistsRequestBuilder(
-				_elasticsearchFixture.getClient(),
-				IndicesExistsAction.INSTANCE);
+		Assert.assertTrue("Indices not restored", _indicesExists(_INDEX_NAME));
 
-		indicesExistsRequestBuilder.setIndices(_INDEX_NAME);
-
-		IndicesExistsResponse indicesExistsResponse =
-			indicesExistsRequestBuilder.get();
-
-		Assert.assertTrue(
-			"Indices not restored", indicesExistsResponse.isExists());
-
-		DeleteSnapshotRequestBuilder deleteSnapshotRequestBuilder =
-			new DeleteSnapshotRequestBuilder(
-				_elasticsearchFixture.getClient(),
-				DeleteSnapshotAction.INSTANCE);
-
-		deleteSnapshotRequestBuilder.setRepository(_TEST_REPOSITORY_NAME);
-		deleteSnapshotRequestBuilder.setSnapshot("test_restore_snapshot");
-
-		deleteSnapshotRequestBuilder.get();
+		_deleteSnapshot(_TEST_REPOSITORY_NAME, "test_restore_snapshot");
 	}
 
 	protected static SearchEngineAdapter createSearchEngineAdapter(
@@ -371,64 +301,150 @@ public class ElasticsearchSearchEngineAdapterSnapshotRequestTest {
 		return snapshotRequestExecutorFixture.getSnapshotRequestExecutor();
 	}
 
-	protected void createIndex() {
-		CreateIndexRequestBuilder createIndexRequestBuilder =
-			_indicesAdminClient.prepareCreate(_INDEX_NAME);
+	private void _createIndex() {
+		CreateIndexRequest createIndexRequest = new CreateIndexRequest(
+			_INDEX_NAME);
 
-		createIndexRequestBuilder.get();
+		try {
+			_indicesClient.create(createIndexRequest, RequestOptions.DEFAULT);
+		}
+		catch (IOException ioe) {
+			throw new RuntimeException(ioe);
+		}
 	}
 
-	protected void createRepository(String name, String location) {
-		PutRepositoryRequestBuilder putRepositoryRequestBuilder =
-			new PutRepositoryRequestBuilder(
-				_elasticsearchFixture.getClient(),
-				PutRepositoryAction.INSTANCE);
+	private void _createRepository(String name, String location) {
+		PutRepositoryRequest putRepositoryRequest = new PutRepositoryRequest();
 
-		putRepositoryRequestBuilder.setName(name);
+		putRepositoryRequest.name(name);
 
 		Settings.Builder builder = Settings.builder();
 
 		builder.put(FsRepository.LOCATION_SETTING.getKey(), location);
 
-		putRepositoryRequestBuilder.setSettings(builder);
+		putRepositoryRequest.settings(builder);
 
-		putRepositoryRequestBuilder.setType(
-			SnapshotRepositoryDetails.FS_REPOSITORY_TYPE);
+		putRepositoryRequest.type(SnapshotRepositoryDetails.FS_REPOSITORY_TYPE);
 
-		putRepositoryRequestBuilder.get();
+		try {
+			_snapshotClient.createRepository(
+				putRepositoryRequest, RequestOptions.DEFAULT);
+		}
+		catch (IOException ioe) {
+			throw new RuntimeException(ioe);
+		}
 	}
 
-	protected void deleteIndex() {
-		DeleteIndexRequestBuilder deleteIndexRequestBuilder =
-			_indicesAdminClient.prepareDelete(_INDEX_NAME);
+	private void _createSnapshot(
+		String repositoryName, String snapshotName, boolean waitForCompletion,
+		String... indexNames) {
 
-		deleteIndexRequestBuilder.get();
+		org.elasticsearch.action.admin.cluster.snapshots.create.
+			CreateSnapshotRequest createSnapshotRequest =
+				new org.elasticsearch.action.admin.cluster.snapshots.create.
+					CreateSnapshotRequest(repositoryName, snapshotName);
+
+		createSnapshotRequest.indices(indexNames);
+		createSnapshotRequest.waitForCompletion(waitForCompletion);
+
+		try {
+			_snapshotClient.create(
+				createSnapshotRequest, RequestOptions.DEFAULT);
+		}
+		catch (IOException ioe) {
+			throw new RuntimeException(ioe);
+		}
 	}
 
-	protected void deleteRepository(String name) {
-		DeleteRepositoryRequestBuilder deleteRepositoryRequestBuilder =
-			new DeleteRepositoryRequestBuilder(
-				_elasticsearchFixture.getClient(),
-				DeleteRepositoryAction.INSTANCE);
+	private void _deleteIndex() {
+		DeleteIndexRequest deleteIndexRequest = new DeleteIndexRequest(
+			_INDEX_NAME);
 
-		deleteRepositoryRequestBuilder.setName(name);
-
-		deleteRepositoryRequestBuilder.get();
+		try {
+			_indicesClient.delete(deleteIndexRequest, RequestOptions.DEFAULT);
+		}
+		catch (IOException ioe) {
+			throw new RuntimeException(ioe);
+		}
 	}
 
-	protected List<SnapshotInfo> getSnapshotInfo(String snapshotName) {
-		GetSnapshotsRequestBuilder getSnapshotsRequestBuilder =
-			new GetSnapshotsRequestBuilder(
-				_elasticsearchFixture.getClient(), GetSnapshotsAction.INSTANCE);
+	private void _deleteRepository(String name) {
+		DeleteRepositoryRequest deleteRepositoryRequest =
+			new DeleteRepositoryRequest(name);
 
-		getSnapshotsRequestBuilder.setIgnoreUnavailable(true);
-		getSnapshotsRequestBuilder.setRepository(_TEST_REPOSITORY_NAME);
-		getSnapshotsRequestBuilder.setSnapshots(snapshotName);
+		try {
+			_snapshotClient.deleteRepository(
+				deleteRepositoryRequest, RequestOptions.DEFAULT);
+		}
+		catch (IOException ioe) {
+			throw new RuntimeException(ioe);
+		}
+	}
 
-		GetSnapshotsResponse getSnapshotsResponse =
-			getSnapshotsRequestBuilder.get();
+	private void _deleteSnapshot(String repository, String snapshot) {
+		org.elasticsearch.action.admin.cluster.snapshots.delete.
+			DeleteSnapshotRequest deleteSnapshotRequest =
+				new org.elasticsearch.action.admin.cluster.snapshots.delete.
+					DeleteSnapshotRequest(repository, snapshot);
+
+		try {
+			_snapshotClient.delete(
+				deleteSnapshotRequest, RequestOptions.DEFAULT);
+		}
+		catch (IOException ioe) {
+			throw new RuntimeException(ioe);
+		}
+	}
+
+	private GetRepositoriesResponse _getGetRepositoriesResponse(
+		String[] repositories) {
+
+		GetRepositoriesRequest getRepositoriesRequest =
+			new GetRepositoriesRequest(repositories);
+
+		try {
+			return _snapshotClient.getRepository(
+				getRepositoriesRequest, RequestOptions.DEFAULT);
+		}
+		catch (IOException ioe) {
+			throw new RuntimeException(ioe);
+		}
+	}
+
+	private List<SnapshotInfo> _getSnapshotInfo(String snapshotName) {
+		org.elasticsearch.action.admin.cluster.snapshots.get.GetSnapshotsRequest
+			getSnapshotsRequest =
+				new org.elasticsearch.action.admin.cluster.snapshots.get.
+					GetSnapshotsRequest(_TEST_REPOSITORY_NAME);
+
+		getSnapshotsRequest.ignoreUnavailable(true);
+		getSnapshotsRequest.snapshots(new String[] {snapshotName});
+
+		GetSnapshotsResponse getSnapshotsResponse;
+
+		try {
+			getSnapshotsResponse = _snapshotClient.get(
+				getSnapshotsRequest, RequestOptions.DEFAULT);
+		}
+		catch (IOException ioe) {
+			throw new RuntimeException(ioe);
+		}
 
 		return getSnapshotsResponse.getSnapshots();
+	}
+
+	private boolean _indicesExists(String indexName) {
+		GetIndexRequest getIndexRequest = new GetIndexRequest();
+
+		getIndexRequest.indices(indexName);
+
+		try {
+			return _indicesClient.exists(
+				getIndexRequest, RequestOptions.DEFAULT);
+		}
+		catch (IOException ioe) {
+			throw new RuntimeException(ioe);
+		}
 	}
 
 	private static final String _INDEX_NAME = "test_request_index";
@@ -437,7 +453,8 @@ public class ElasticsearchSearchEngineAdapterSnapshotRequestTest {
 		"testRepositoryOperations";
 
 	private ElasticsearchFixture _elasticsearchFixture;
-	private IndicesAdminClient _indicesAdminClient;
+	private IndicesClient _indicesClient;
 	private SearchEngineAdapter _searchEngineAdapter;
+	private SnapshotClient _snapshotClient;
 
 }

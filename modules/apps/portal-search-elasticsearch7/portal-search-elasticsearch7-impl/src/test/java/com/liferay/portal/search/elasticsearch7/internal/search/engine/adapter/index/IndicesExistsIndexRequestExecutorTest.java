@@ -19,8 +19,7 @@ import com.liferay.portal.search.engine.adapter.index.IndicesExistsIndexRequest;
 
 import java.util.Arrays;
 
-import org.elasticsearch.action.admin.indices.exists.indices.IndicesExistsRequest;
-import org.elasticsearch.action.admin.indices.exists.indices.IndicesExistsRequestBuilder;
+import org.elasticsearch.action.admin.indices.get.GetIndexRequest;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -58,14 +57,11 @@ public class IndicesExistsIndexRequestExecutorTest {
 					}
 				};
 
-		IndicesExistsRequestBuilder indicesExistsRequestBuilder =
-			indicesExistsIndexRequestExecutorImpl.
-				createIndicesExistsRequestBuilder(indicesExistsIndexRequest);
+		GetIndexRequest getIndexRequest =
+			indicesExistsIndexRequestExecutorImpl.createGetIndexRequest(
+				indicesExistsIndexRequest);
 
-		IndicesExistsRequest indicesExistsRequest =
-			indicesExistsRequestBuilder.request();
-
-		String[] indices = indicesExistsRequest.indices();
+		String[] indices = getIndexRequest.indices();
 
 		Assert.assertEquals(Arrays.toString(indices), 2, indices.length);
 		Assert.assertEquals(_INDEX_NAME_1, indices[0]);

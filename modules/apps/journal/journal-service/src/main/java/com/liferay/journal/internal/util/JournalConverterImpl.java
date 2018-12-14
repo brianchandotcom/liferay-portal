@@ -551,7 +551,7 @@ public class JournalConverterImpl implements JournalConverter {
 
 		Serializable serializable = null;
 
-		if (DDMFormFieldType.DOCUMENT_LIBRARY.equals(type)) {
+		if (Objects.equals(DDMFormFieldType.DOCUMENT_LIBRARY, type)) {
 			try {
 				JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
 					dynamicContentElement.getText());
@@ -568,7 +568,7 @@ public class JournalConverterImpl implements JournalConverter {
 				return StringPool.BLANK;
 			}
 		}
-		else if (DDMFormFieldType.JOURNAL_ARTICLE.equals(type)) {
+		else if (Objects.equals(DDMFormFieldType.JOURNAL_ARTICLE, type)) {
 			try {
 				JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
 					dynamicContentElement.getText());
@@ -592,7 +592,7 @@ public class JournalConverterImpl implements JournalConverter {
 					dataType, dynamicContentElement.getText());
 			}
 		}
-		else if (DDMFormFieldType.LINK_TO_PAGE.equals(type)) {
+		else if (Objects.equals(DDMFormFieldType.LINK_TO_PAGE, type)) {
 			String[] values = StringUtil.split(
 				dynamicContentElement.getText(), CharPool.AT);
 
@@ -623,7 +623,7 @@ public class JournalConverterImpl implements JournalConverter {
 
 			serializable = jsonObject.toString();
 		}
-		else if (DDMFormFieldType.SELECT.equals(type)) {
+		else if (Objects.equals(DDMFormFieldType.SELECT, type)) {
 			JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
 			List<Element> optionElements = dynamicContentElement.elements(

@@ -1,0 +1,18 @@
+Bundle-Name: Liferay Portal OSGi Web Servlet EL API Fragment
+Bundle-SymbolicName: com.liferay.portal.osgi.web.servlet.el.api.fragment
+Bundle-Version: 1.0.0
+Fragment-Host: com.sun.el.javax.el
+Provide-Capability:\
+	osgi.contract;\
+		osgi.contract="JavaEL";\
+		uses:="javax.el";\
+		version:Version=2.1.0,\
+	osgi.contract;\
+		osgi.contract="JavaEL";\
+		uses:="javax.el";\
+		version:Version=2.2.0,\
+	osgi.contract;\
+		osgi.contract="JavaEL";\
+		uses:="javax.el";\
+		version:Version=3.0.0
+-fixupmessages: The JAR is empty:...;is:=ignore

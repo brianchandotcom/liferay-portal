@@ -304,15 +304,6 @@ Import-Package: !*
 Liferay-Service: true
 Provide-Capability:\
 	osgi.contract;\
-		osgi.contract=JavaEL;\
-		version:Version=2.1.0,\
-	osgi.contract;\
-		osgi.contract=JavaEL;\
-		version:Version=2.2.0,\
-	osgi.contract;\
-		osgi.contract=JavaEL;\
-		version:Version=3.0.0,\
-	osgi.contract;\
 		osgi.contract=JavaPortlet;\
 		uses:="javax.portlet";\
 		version:Version=1,\

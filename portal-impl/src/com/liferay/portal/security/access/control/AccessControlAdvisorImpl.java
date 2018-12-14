@@ -17,12 +17,13 @@ package com.liferay.portal.security.access.control;
 import com.liferay.portal.kernel.security.access.control.AccessControlPolicy;
 import com.liferay.portal.kernel.security.access.control.AccessControlThreadLocal;
 import com.liferay.portal.kernel.security.access.control.AccessControlled;
-import com.liferay.portal.spring.aop.ServiceBeanMethodInvocation;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceReference;
 import com.liferay.registry.ServiceTracker;
 import com.liferay.registry.ServiceTrackerCustomizer;
+
+import java.lang.reflect.Method;
 
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -37,7 +38,7 @@ public class AccessControlAdvisorImpl implements AccessControlAdvisor {
 
 	@Override
 	public void accept(
-			ServiceBeanMethodInvocation serviceBeanMethodInvocation,
+			Method method, Object[] arguments,
 			AccessControlled accessControlled)
 		throws SecurityException {
 
@@ -46,9 +47,7 @@ public class AccessControlAdvisorImpl implements AccessControlAdvisor {
 					_accessControlPolicies) {
 
 				accessControlPolicy.onServiceRemoteAccess(
-					serviceBeanMethodInvocation.getMethod(),
-					serviceBeanMethodInvocation.getArguments(),
-					accessControlled);
+					method, arguments, accessControlled);
 			}
 		}
 		else {
@@ -56,9 +55,7 @@ public class AccessControlAdvisorImpl implements AccessControlAdvisor {
 					_accessControlPolicies) {
 
 				accessControlPolicy.onServiceAccess(
-					serviceBeanMethodInvocation.getMethod(),
-					serviceBeanMethodInvocation.getArguments(),
-					accessControlled);
+					method, arguments, accessControlled);
 			}
 		}
 	}

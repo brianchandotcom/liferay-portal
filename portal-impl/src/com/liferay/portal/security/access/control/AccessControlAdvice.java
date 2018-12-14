@@ -45,7 +45,8 @@ public class AccessControlAdvice extends ChainableMethodAdvice {
 			serviceBeanMethodInvocation.getAdviceMethodContext();
 
 		_accessControlAdvisor.accept(
-			serviceBeanMethodInvocation, accessControlled);
+			serviceBeanMethodInvocation.getMethod(),
+			serviceBeanMethodInvocation.getArguments(), accessControlled);
 
 		return null;
 	}

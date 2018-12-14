@@ -15,7 +15,8 @@
 package com.liferay.portal.security.access.control;
 
 import com.liferay.portal.kernel.security.access.control.AccessControlled;
-import com.liferay.portal.spring.aop.ServiceBeanMethodInvocation;
+
+import java.lang.reflect.Method;
 
 /**
  * @author Michael C. Han
@@ -24,7 +25,7 @@ import com.liferay.portal.spring.aop.ServiceBeanMethodInvocation;
 public interface AccessControlAdvisor {
 
 	public void accept(
-			ServiceBeanMethodInvocation serviceBeanMethodInvocation,
+			Method method, Object[] arguments,
 			AccessControlled accessControlled)
 		throws SecurityException;
 

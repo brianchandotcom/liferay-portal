@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CookieKeys;
+import com.liferay.portal.kernel.util.FastDateFormatConstants;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
@@ -1831,7 +1832,9 @@ public class LanguageImpl implements Language, Serializable {
 			}
 			else if (argument instanceof Date) {
 				if (dateFormat == null) {
-					dateFormat = FastDateFormatFactoryUtil.getDateTime(locale);
+					dateFormat = FastDateFormatFactoryUtil.getDateTime(
+						FastDateFormatConstants.SHORT,
+						FastDateFormatConstants.LONG, locale, null);
 				}
 
 				sb.append(dateFormat.format(argument));

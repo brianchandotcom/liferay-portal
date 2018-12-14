@@ -22,7 +22,7 @@ import org.elasticsearch.search.builder.SearchSourceBuilder;
 /**
  * @author Michael C. Han
  */
-public interface CommonSearchRequestBuilderAssembler {
+public interface CommonSearchSourceBuilderAssembler {
 
 	public void assemble(
 		SearchSourceBuilder searchSourceBuilder,

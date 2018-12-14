@@ -87,8 +87,8 @@ public class SearchRequestExecutorFixture {
 			new StatsRequestBuilderFactoryImpl());
 	}
 
-	protected static CommonSearchRequestBuilderAssembler
-		createCommonSearchRequestBuilderAssembler(
+	protected static CommonSearchSourceBuilderAssembler
+		createCommonSearchSourceBuilderAssembler(
 			ElasticsearchQueryTranslator elasticsearchQueryTranslator,
 			FacetProcessor facetProcessor, StatsTranslator statsTranslator) {
 
@@ -115,7 +115,7 @@ public class SearchRequestExecutorFixture {
 				legacyElasticsearchQueryTranslatorFixture.
 					getElasticsearchQueryTranslator();
 
-		return new CommonSearchRequestBuilderAssemblerImpl() {
+		return new CommonSearchSourceBuilderAssemblerImpl() {
 			{
 				setAggregationTranslator(
 					elasticsearchAggregationVisitorFixture.
@@ -144,20 +144,20 @@ public class SearchRequestExecutorFixture {
 	protected static CountSearchRequestExecutor
 		createCountSearchRequestExecutor(
 			ElasticsearchClientResolver elasticsearchClientResolver,
-			CommonSearchRequestBuilderAssembler
-				commonSearchRequestBuilderAssembler,
+			CommonSearchSourceBuilderAssembler
+				commonSearchSourceBuilderAssembler,
 			StatsTranslator statsTranslator) {
 
 		return new CountSearchRequestExecutorImpl() {
 			{
-				setCommonSearchRequestBuilderAssembler(
-					commonSearchRequestBuilderAssembler);
 				setCommonSearchResponseAssembler(
 					new CommonSearchResponseAssemblerImpl() {
 						{
 							setStatsTranslator(statsTranslator);
 						}
 					});
+				setCommonSearchSourceBuilderAssembler(
+					commonSearchSourceBuilderAssembler);
 				setElasticsearchClientResolver(elasticsearchClientResolver);
 			}
 		};
@@ -203,16 +203,14 @@ public class SearchRequestExecutorFixture {
 		FacetProcessor facetProcessor, StatsTranslator statsTranslator,
 		StatsRequestBuilderFactory statsRequestBuilderFactory) {
 
-		CommonSearchRequestBuilderAssembler
-			commonSearchRequestBuilderAssembler =
-				createCommonSearchRequestBuilderAssembler(
-					elasticsearchQueryTranslator, facetProcessor,
-					statsTranslator);
+		CommonSearchSourceBuilderAssembler commonSearchSourceBuilderAssembler =
+			createCommonSearchSourceBuilderAssembler(
+				elasticsearchQueryTranslator, facetProcessor, statsTranslator);
 
 		SearchSearchRequestAssembler searchSearchRequestAssembler =
 			createSearchSearchRequestAssembler(
 				elasticsearchQueryTranslator, elasticsearchSortFieldTranslator,
-				commonSearchRequestBuilderAssembler, statsRequestBuilderFactory,
+				commonSearchSourceBuilderAssembler, statsRequestBuilderFactory,
 				statsTranslator);
 
 		SearchSearchResponseAssembler searchSearchResponseAssembler =
@@ -224,7 +222,7 @@ public class SearchRequestExecutorFixture {
 				setCountSearchRequestExecutor(
 					createCountSearchRequestExecutor(
 						elasticsearchClientResolver,
-						commonSearchRequestBuilderAssembler, statsTranslator));
+						commonSearchSourceBuilderAssembler, statsTranslator));
 				setMultisearchSearchRequestExecutor(
 					createMultisearchSearchRequestExecutor(
 						elasticsearchClientResolver,
@@ -246,15 +244,15 @@ public class SearchRequestExecutorFixture {
 		createSearchSearchRequestAssembler(
 			ElasticsearchQueryTranslator elasticsearchQueryTranslator,
 			ElasticsearchSortFieldTranslator elasticsearchSortFieldTranslator,
-			CommonSearchRequestBuilderAssembler
-				commonSearchRequestBuilderAssembler,
+			CommonSearchSourceBuilderAssembler
+				commonSearchSourceBuilderAssembler,
 			StatsRequestBuilderFactory statsRequestBuilderFactory,
 			StatsTranslator statsTranslator) {
 
 		return new SearchSearchRequestAssemblerImpl() {
 			{
-				setCommonSearchRequestBuilderAssembler(
-					commonSearchRequestBuilderAssembler);
+				setCommonSearchSourceBuilderAssembler(
+					commonSearchSourceBuilderAssembler);
 				setGroupByRequestFactory(new GroupByRequestFactoryImpl());
 				setGroupByTranslator(new DefaultGroupByTranslator());
 				setHighlighterTranslator(new DefaultHighlighterTranslator());

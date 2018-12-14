@@ -25,6 +25,8 @@ import com.liferay.portal.search.index.IndexNameBuilder;
 
 import java.util.Collections;
 
+import org.elasticsearch.client.RestHighLevelClient;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Ignore;
@@ -86,8 +88,11 @@ public class ReplicasManagerImplTest {
 
 		ClusterAssert.assert2PrimaryShardsAnd2Nodes(elasticsearchFixture1);
 
+		RestHighLevelClient restHighLevelClient =
+			elasticsearchFixture0.getRestHighLevelClient();
+
 		ReplicasManager replicasManager = new ReplicasManagerImpl(
-			elasticsearchFixture0.getIndicesAdminClient());
+			restHighLevelClient.indices());
 
 		replicasManager.updateNumberOfReplicas(
 			1, _replicasClusterContext.getTargetIndexNames());

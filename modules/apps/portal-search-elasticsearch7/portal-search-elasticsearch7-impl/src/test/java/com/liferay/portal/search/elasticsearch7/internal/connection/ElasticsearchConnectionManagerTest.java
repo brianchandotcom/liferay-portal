@@ -66,28 +66,28 @@ public class ElasticsearchConnectionManagerTest {
 	}
 
 	@Test
-	public void testGetClient() {
+	public void testGetRestHighLevelClient() {
 		modify(OperationMode.EMBEDDED);
 
-		_elasticsearchConnectionManager.getClient();
+		_elasticsearchConnectionManager.getRestHighLevelClient();
 
 		Mockito.verify(
 			_embeddedElasticsearchConnection
-		).getClient();
+		).getRestHighLevelClient();
 
 		modify(OperationMode.REMOTE);
 
-		_elasticsearchConnectionManager.getClient();
+		_elasticsearchConnectionManager.getRestHighLevelClient();
 
 		Mockito.verify(
 			_remoteElasticsearchConnection
-		).getClient();
+		).getRestHighLevelClient();
 	}
 
 	@Test
-	public void testGetClientWhenOperationModeNotSet() {
+	public void testGetRestHighLevelClientWhenOperationModeNotSet() {
 		try {
-			_elasticsearchConnectionManager.getClient();
+			_elasticsearchConnectionManager.getRestHighLevelClient();
 
 			Assert.fail();
 		}

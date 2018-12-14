@@ -21,13 +21,14 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.search.elasticsearch7.configuration.OperationMode;
 
-import java.net.InetSocketAddress;
-
 import java.util.HashMap;
 import java.util.List;
 
-import org.elasticsearch.client.transport.TransportClient;
-import org.elasticsearch.common.transport.TransportAddress;
+import org.apache.http.HttpHost;
+
+import org.elasticsearch.client.Node;
+import org.elasticsearch.client.RestClient;
+import org.elasticsearch.client.RestHighLevelClient;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -69,15 +70,15 @@ public class RemoteElasticsearchConnectionTest {
 
 		Assert.assertTrue(_remoteElasticsearchConnection.isConnected());
 
-		assertTransportAddress("localhost", 9300);
+		assertNetworkHostAddress("localhost", 9200);
 
-		properties.put("transportAddresses", "127.0.0.1:9999");
+		properties.put("networkHostAddresses", "127.0.0.1:9999");
 
 		_remoteElasticsearchConnection.modified(properties);
 
 		Assert.assertTrue(_remoteElasticsearchConnection.isConnected());
 
-		assertTransportAddress("127.0.0.1", 9999);
+		assertNetworkHostAddress("127.0.0.1", 9999);
 	}
 
 	@Test
@@ -126,22 +127,23 @@ public class RemoteElasticsearchConnectionTest {
 		Assert.assertTrue(_remoteElasticsearchConnection.isConnected());
 	}
 
-	protected void assertTransportAddress(String hostString, int port) {
-		TransportClient transportClient =
-			(TransportClient)_remoteElasticsearchConnection.getClient();
+	protected void assertNetworkHostAddress(String hostString, int port) {
+		RestHighLevelClient restHighLevelClient =
+			(RestHighLevelClient)
+				_remoteElasticsearchConnection.getRestHighLevelClient();
 
-		List<TransportAddress> transportAddresses =
-			transportClient.transportAddresses();
+		RestClient restClient = restHighLevelClient.getLowLevelClient();
 
-		Assert.assertEquals(
-			transportAddresses.toString(), 1, transportAddresses.size());
+		List<Node> nodes = restClient.getNodes();
 
-		TransportAddress transportAddress = transportAddresses.get(0);
+		Assert.assertEquals(nodes.toString(), 1, nodes.size());
 
-		InetSocketAddress inetSocketAddress = transportAddress.address();
+		Node node = nodes.get(0);
 
-		Assert.assertEquals(hostString, inetSocketAddress.getHostString());
-		Assert.assertEquals(port, inetSocketAddress.getPort());
+		HttpHost httpHost = node.getHost();
+
+		Assert.assertEquals(hostString, httpHost.getHostName());
+		Assert.assertEquals(port, httpHost.getPort());
 	}
 
 	private RemoteElasticsearchConnection _remoteElasticsearchConnection;

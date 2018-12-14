@@ -99,8 +99,7 @@ public class MainServletTestCallback extends BaseTestCallback<Void, Void> {
 				mockServletContext, "Main Servlet");
 
 			mockServletConfig.addInitParameter(
-				"config",
-				"/WEB-INF/struts-config.xml,/WEB-INF/struts-config-ext.xml");
+				"config", "/WEB-INF/struts-config.xml");
 
 			_mainServlet = new MainServlet();
 

@@ -41,7 +41,21 @@ public class JavaLambdaParameter extends BaseJavaTerm {
 	public String toString(
 		String indent, String prefix, String suffix, int maxLineLength) {
 
-		return "TODO";
+		if (_javaType == null) {
+			return _name.toString(indent, prefix, suffix, maxLineLength);
+		}
+
+		StringBundler sb = new StringBundler();
+
+		sb.append(indent);
+
+		indent = "\t" + indent;
+
+		indent = append(sb, _javaType, indent, prefix, " ", maxLineLength);
+
+		append(sb, _name, indent, "", suffix, maxLineLength);
+
+		return sb.toString();
 	}
 
 	private JavaType _javaType;

@@ -40,7 +40,6 @@ import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
-import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletRequestModel;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
@@ -65,7 +64,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 
-import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
@@ -376,21 +374,9 @@ public class JournalArticleAssetRenderer
 			layout = themeDisplay.getLayout();
 		}
 
-		String portletId = (String)liferayPortletRequest.getAttribute(
-			WebKeys.PORTLET_ID);
-
-		PortletPreferences portletSetup =
-			PortletPreferencesFactoryUtil.getStrictLayoutPortletSetup(
-				layout, portletId);
-
-		String linkToLayoutUuid = GetterUtil.getString(
-			portletSetup.getValue("portletSetupLinkToLayoutUuid", null));
-
 		Group group = themeDisplay.getScopeGroup();
 
-		if (_isShowDisplayPage(group.getGroupId(), _article) &&
-			Validator.isNull(linkToLayoutUuid)) {
-
+		if (_isShowDisplayPage(group.getGroupId(), _article)) {
 			if (group.getGroupId() != _article.getGroupId()) {
 				group = GroupLocalServiceUtil.getGroup(_article.getGroupId());
 			}

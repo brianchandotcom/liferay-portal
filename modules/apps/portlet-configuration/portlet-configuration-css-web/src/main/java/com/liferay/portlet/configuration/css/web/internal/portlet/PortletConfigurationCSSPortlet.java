@@ -104,8 +104,6 @@ public class PortletConfigurationCSSPortlet extends MVCPortlet {
 			_log.debug("Updating css " + css);
 		}
 
-		String linkToLayoutUuid = ParamUtil.getString(
-			actionRequest, "linkToLayoutUuid");
 		String portletDecoratorId = ParamUtil.getString(
 			actionRequest, "portletDecoratorId");
 		Map<Locale, String> customTitleMap =
@@ -142,14 +140,6 @@ public class PortletConfigurationCSSPortlet extends MVCPortlet {
 
 		portletSetup.setValue(
 			"portletSetupUseCustomTitle", String.valueOf(useCustomTitle));
-
-		if (Validator.isNotNull(linkToLayoutUuid)) {
-			portletSetup.setValue(
-				"portletSetupLinkToLayoutUuid", linkToLayoutUuid);
-		}
-		else {
-			portletSetup.reset("portletSetupLinkToLayoutUuid");
-		}
 
 		if (Validator.isNotNull(portletDecoratorId)) {
 			portletSetup.setValue(

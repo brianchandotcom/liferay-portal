@@ -110,11 +110,6 @@ public class PortletSetupUtil {
 
 		portletDataJSONObject.put("portletDecoratorId", portletDecoratorId);
 
-		String linkToLayoutUuid = GetterUtil.getString(
-			portletSetup.getValue("portletSetupLinkToLayoutUuid", null));
-
-		portletDataJSONObject.put("portletLinksTarget", linkToLayoutUuid);
-
 		boolean useCustomTitle = GetterUtil.getBoolean(
 			portletSetup.getValue("portletSetupUseCustomTitle", null));
 

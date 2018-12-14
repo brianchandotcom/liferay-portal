@@ -752,23 +752,6 @@ app.server.type=@{app.server.type}]]></echo>
 		</sequential>
 	</macrodef>
 
-	<macrodef name="prepare-test-build-unit">
-		<sequential>
-			<trycatch property="exception.message">
-				<try>
-					<antcall target="prepare-test-build-unit">
-						<param name="test.class.groups.size" value="${test.batch.size}" />
-					</antcall>
-				</try>
-				<catch>
-					<echo message="${exception.message}" />
-
-					<fail message="Unable to prepare test build." />
-				</catch>
-			</trycatch>
-		</sequential>
-	</macrodef>
-
 	<macrodef name="prepare-test-environment">
 		<attribute default="tomcat" name="app.server.type" />
 
@@ -6094,7 +6077,7 @@ ${output.content}</echo>
 						<delete file="${app.server.lib.portal.dir}/util-taglib.jar" />
 					</then>
 					<else>
-						<prepare-test-build-unit />
+						<prepare-test-build />
 					</else>
 				</if>
 			</test-set-up>

@@ -101,7 +101,8 @@ public class LayoutsAdminManagementToolbarDisplayContext
 
 				if (_layoutsAdminDisplayContext.isShowPublicPages() &&
 					(!_layoutsAdminDisplayContext.isPrivateLayout() ||
-					 _layoutsAdminDisplayContext.isFirstColumn())) {
+					 _layoutsAdminDisplayContext.isFirstColumn() ||
+					 !_layoutsAdminDisplayContext.hasLayouts())) {
 
 					addPrimaryDropdownItem(
 						SafeConsumer.ignore(
@@ -116,7 +117,8 @@ public class LayoutsAdminManagementToolbarDisplayContext
 				}
 
 				if (_layoutsAdminDisplayContext.isPrivateLayout() ||
-					_layoutsAdminDisplayContext.isFirstColumn()) {
+					_layoutsAdminDisplayContext.isFirstColumn() ||
+					!_layoutsAdminDisplayContext.hasLayouts()) {
 
 					addPrimaryDropdownItem(
 						SafeConsumer.ignore(

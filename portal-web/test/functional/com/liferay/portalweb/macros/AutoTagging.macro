@@ -16,10 +16,10 @@ definition {
 	}
 
 	macro enableAutoTagging {
-		Check(locator1 = "Checkbox#ENABLE_AUTO_TAGGING");
-
-		PortletEntry.save();
-
+		FormFields.enableCheckbox(fieldName = "enabled");
+			
+		Click(locator1 = "Button#SAVE");
+		
 		Alert.viewSuccessMessage();
 	}
 }

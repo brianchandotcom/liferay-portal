@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.asset.display.page.internal.upgrade.v1_1_0;
+package com.liferay.asset.display.page.internal.upgrade.v2_1_0;
 
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;

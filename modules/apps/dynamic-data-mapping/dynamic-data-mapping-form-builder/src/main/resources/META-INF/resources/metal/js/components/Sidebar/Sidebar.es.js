@@ -4,6 +4,7 @@ import {EventHandler} from 'metal-events';
 import {focusedFieldStructure} from '../../util/config.es';
 import {selectText} from '../../util/dom.es';
 import classnames from 'classnames';
+import {ClayActionsDropdown, ClayDropdown} from 'clay-dropdown';
 import ClayButton from 'clay-button';
 import Component, {Fragment} from 'metal-jsx';
 import dom from 'metal-dom';
@@ -11,7 +12,6 @@ import FieldTypeBox from '../FieldTypeBox/FieldTypeBox.es.js';
 import autobind from 'autobind-decorator';
 import FormRenderer, {FormSupport} from '../Form/index.es.js';
 import WithEvaluator from '../Form/Evaluator.es';
-import {ClayActionsDropdown} from 'clay-dropdown';
 
 const EVALUATOR_URL = '/o/dynamic-data-mapping-form-context-provider/';
 const FormWithEvaluator = WithEvaluator(FormRenderer);
@@ -707,15 +707,16 @@ class Sidebar extends Component {
 								style="secondary"
 							/>
 						</li>
-						<li class="tbar-item tbar-item-expand text-left">
+						<li class="tbar-item ddm-fieldtypes-dropdown tbar-item-expand text-left">
 							<div>
-								<ClayButton
-									disabled={true}
+								<ClayDropdown
 									icon={focusedFieldType.icon}
+									items={fieldTypes.filter(({system}) => !system)}
+									itemsIconAlignment={'left'}
 									label={focusedFieldType.label}
-									size="sm"
 									spritemap={spritemap}
-									style="secondary"
+									style={'secondary'}
+									triggerClasses={'nav-link btn-sm'}
 								/>
 							</div>
 						</li>

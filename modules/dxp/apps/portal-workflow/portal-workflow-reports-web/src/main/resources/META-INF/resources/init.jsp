@@ -24,7 +24,3 @@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
 <liferay-theme:defineObjects />
 
 <portlet:defineObjects />
-
-<%
-String bootstrapRequire = (String)renderRequest.getAttribute(WorkflowReportsWebKeys.WORKFLOW_REPORTS_BOOTSTRAP_REQUIRE);
-%>

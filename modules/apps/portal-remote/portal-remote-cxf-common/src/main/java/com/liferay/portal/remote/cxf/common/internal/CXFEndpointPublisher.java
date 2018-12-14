@@ -161,7 +161,8 @@ public class CXFEndpointPublisher {
 			_servletContextHelperServiceRegistration =
 				_bundleContext.registerService(
 					ServletContextHelper.class,
-					new ServletContextHelper(_bundleContext.getBundle()) {},
+					new ServletContextHelper(_bundleContext.getBundle()) {
+					},
 					properties);
 
 			CXFNonSpringServlet cxfNonSpringServlet = new CXFNonSpringServlet();

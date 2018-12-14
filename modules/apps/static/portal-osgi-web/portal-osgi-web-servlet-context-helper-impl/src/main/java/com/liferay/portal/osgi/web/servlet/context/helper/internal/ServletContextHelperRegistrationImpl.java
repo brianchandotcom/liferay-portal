@@ -246,7 +246,10 @@ public class ServletContextHelperRegistrationImpl
 			"/portlet-servlet/*");
 
 		return _bundleContext.registerService(
-			Servlet.class, new PortletServlet() {}, properties);
+			Servlet.class,
+			new PortletServlet() {
+			},
+			properties);
 	}
 
 	protected ServiceRegistration<ServletContextHelper>

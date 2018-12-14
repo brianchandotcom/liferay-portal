@@ -112,13 +112,16 @@ public class ObjectGraphUtilTest {
 				LinkedType3[][].class));
 		Assert.assertTrue(
 			_recordAnnotatedFieldMappingVisitor.isFieldTypeClass(
-				new LinkedType1() {}.getClass()));
+				new LinkedType1() {
+				}.getClass()));
 		Assert.assertFalse(
 			_recordAnnotatedFieldMappingVisitor.isFieldTypeClass(
-				new LinkedType2() {}.getClass()));
+				new LinkedType2() {
+				}.getClass()));
 		Assert.assertTrue(
 			_recordAnnotatedFieldMappingVisitor.isFieldTypeClass(
-				new LinkedType3() {}.getClass()));
+				new LinkedType3() {
+				}.getClass()));
 	}
 
 	@Test
@@ -134,13 +137,16 @@ public class ObjectGraphUtilTest {
 				LinkedType3.class));
 		Assert.assertTrue(
 			_recordAnnotatedFieldMappingVisitor.isLinkedClass(
-				new LinkedType1() {}.getClass()));
+				new LinkedType1() {
+				}.getClass()));
 		Assert.assertTrue(
 			_recordAnnotatedFieldMappingVisitor.isLinkedClass(
-				new LinkedType2() {}.getClass()));
+				new LinkedType2() {
+				}.getClass()));
 		Assert.assertFalse(
 			_recordAnnotatedFieldMappingVisitor.isLinkedClass(
-				new LinkedType3() {}.getClass()));
+				new LinkedType3() {
+				}.getClass()));
 	}
 
 	@Test

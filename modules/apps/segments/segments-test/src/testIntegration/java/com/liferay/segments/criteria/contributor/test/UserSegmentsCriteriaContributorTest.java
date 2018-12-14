@@ -118,8 +118,8 @@ public class UserSegmentsCriteriaContributorTest {
 		Map<String, EntityField> entityFieldsMap =
 			_entityModel.getEntityFieldsMap();
 
-		ComplexEntityField customFields = (ComplexEntityField)
-			entityFieldsMap.remove("customField");
+		ComplexEntityField customFields =
+			(ComplexEntityField)entityFieldsMap.remove("customField");
 
 		Map<String, EntityField> customFieldsMap =
 			customFields.getEntityFieldsMap();

@@ -614,7 +614,8 @@ public class ServiceTrackerCollectionsTest {
 	}
 
 	protected InterfaceOne getInstance() {
-		return new InterfaceOne() {};
+		return new InterfaceOne() {
+		};
 	}
 
 	@ArquillianResource

@@ -47,8 +47,9 @@ public class GradlePluginsDefaultsUtil {
 		"npm-shrinkwrap.json", "package-lock.json", "package.json"
 	};
 
-	public static final String[] PARENT_THEME_PROJECT_NAMES =
-		{"frontend-theme-styled", "frontend-theme-unstyled"};
+	public static final String[] PARENT_THEME_PROJECT_NAMES = {
+		"frontend-theme-styled", "frontend-theme-unstyled"
+	};
 
 	public static final String SNAPSHOT_PROPERTY_NAME = "snapshot";
 

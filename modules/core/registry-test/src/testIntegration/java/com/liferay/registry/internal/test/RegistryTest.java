@@ -532,7 +532,8 @@ public class RegistryTest {
 
 	@Test
 	public void testRegisterServiceByClassNames() {
-		InterfaceBoth interfaceOne = new InterfaceBoth() {};
+		InterfaceBoth interfaceOne = new InterfaceBoth() {
+		};
 
 		ServiceRegistration<?> serviceRegistration = _registry.registerService(
 			new String[] {
@@ -571,7 +572,9 @@ public class RegistryTest {
 			new String[] {
 				InterfaceOne.class.getName(), InterfaceTwo.class.getName()
 			},
-			new InterfaceBoth() {}, properties);
+			new InterfaceBoth() {
+			},
+			properties);
 
 		Assert.assertNotNull(serviceRegistration);
 
@@ -767,7 +770,8 @@ public class RegistryTest {
 	}
 
 	protected InterfaceOne getInstance() {
-		return new InterfaceOne() {};
+		return new InterfaceOne() {
+		};
 	}
 
 	@ArquillianResource

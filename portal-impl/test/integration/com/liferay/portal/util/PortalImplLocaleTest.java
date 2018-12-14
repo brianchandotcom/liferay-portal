@@ -167,7 +167,8 @@ public class PortalImplLocaleTest {
 			String i18nLanguageId, String pathInfo, Locale expectedLocale)
 		throws IOException, ServletException {
 
-		MockServletContext mockServletContext = new MockServletContext() {};
+		MockServletContext mockServletContext = new MockServletContext() {
+		};
 
 		mockServletContext.setContextPath(StringPool.BLANK);
 		mockServletContext.setServletContextName(StringPool.BLANK);

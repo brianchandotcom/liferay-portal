@@ -352,7 +352,8 @@ public class LiferayObjectWrapperTest {
 
 		// 2. Wrap TemplateModel
 
-		TemplateModel dummyTemplateModel = new TemplateModel() {};
+		TemplateModel dummyTemplateModel = new TemplateModel() {
+		};
 
 		Assert.assertSame(
 			dummyTemplateModel, liferayObjectWrapper.wrap(dummyTemplateModel));

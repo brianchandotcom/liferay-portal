@@ -198,7 +198,8 @@ public class ServletContextClassLoaderPoolTest {
 		ClassLoaderPool.unregister(_TEST_SERVLET_CONTEXT_NAME);
 	}
 
-	private static final ClassLoader _TEST_CLASS_LOADER = new ClassLoader() {};
+	private static final ClassLoader _TEST_CLASS_LOADER = new ClassLoader() {
+	};
 
 	private static final String _TEST_SERVLET_CONTEXT_NAME =
 		"TEST_SERVLET_CONTEXT_NAME";

@@ -234,7 +234,8 @@ public abstract class BaseJSONWebServiceTestCase extends PowerMockito {
 	private class MockHttpServletRequest30 extends MockHttpServletRequest {
 
 		public MockHttpServletRequest30() {
-			_mockServletContext = new MockServletContext() {};
+			_mockServletContext = new MockServletContext() {
+			};
 
 			_mockServletContext.setContextPath(StringPool.BLANK);
 			_mockServletContext.setServletContextName(StringPool.BLANK);

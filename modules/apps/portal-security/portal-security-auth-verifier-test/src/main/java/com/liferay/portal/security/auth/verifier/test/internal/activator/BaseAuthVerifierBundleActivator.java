@@ -98,7 +98,8 @@ public abstract class BaseAuthVerifierBundleActivator
 		serviceRegistrations.add(
 			_bundleContext.registerService(
 				ServletContextHelper.class,
-				new ServletContextHelper(_bundleContext.getBundle()) {},
+				new ServletContextHelper(_bundleContext.getBundle()) {
+				},
 				properties));
 	}
 

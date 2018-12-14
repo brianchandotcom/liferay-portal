@@ -511,10 +511,12 @@ public class SubscriptionSender implements Serializable {
 		public interface Event<S> {
 
 			public static final Event<MailMessage> MAIL_MESSAGE_CREATED =
-				new Event<MailMessage>() {};
+				new Event<MailMessage>() {
+				};
 
 			public static final Event<Subscription> PERSISTED_SUBSCRIBER_FOUND =
-				new Event<Subscription>() {};
+				new Event<Subscription>() {
+				};
 
 		}
 

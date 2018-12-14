@@ -444,7 +444,9 @@ public class DBUpgrader {
 		properties.put("service.version", ReleaseInfo.getVersion());
 
 		registry.registerService(
-			ModuleServiceLifecycle.class, new ModuleServiceLifecycle() {},
+			ModuleServiceLifecycle.class,
+			new ModuleServiceLifecycle() {
+			},
 			properties);
 	}
 

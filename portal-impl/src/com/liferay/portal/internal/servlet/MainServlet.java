@@ -1256,7 +1256,9 @@ public class MainServlet extends HttpServlet {
 
 		_portalInitializedModuleServiceLifecycleServiceRegistration =
 			registry.registerService(
-				ModuleServiceLifecycle.class, new ModuleServiceLifecycle() {},
+				ModuleServiceLifecycle.class,
+				new ModuleServiceLifecycle() {
+				},
 				properties);
 
 		properties = new HashMap<>();
@@ -1267,7 +1269,9 @@ public class MainServlet extends HttpServlet {
 
 		_portalPortletsInitializedModuleServiceLifecycleServiceRegistration =
 			registry.registerService(
-				ModuleServiceLifecycle.class, new ModuleServiceLifecycle() {},
+				ModuleServiceLifecycle.class,
+				new ModuleServiceLifecycle() {
+				},
 				properties);
 
 		properties = new HashMap<>();
@@ -1287,7 +1291,9 @@ public class MainServlet extends HttpServlet {
 
 		_systemCheckModuleServiceLifecycleServiceRegistration =
 			registry.registerService(
-				ModuleServiceLifecycle.class, new ModuleServiceLifecycle() {},
+				ModuleServiceLifecycle.class,
+				new ModuleServiceLifecycle() {
+				},
 				properties);
 	}
 

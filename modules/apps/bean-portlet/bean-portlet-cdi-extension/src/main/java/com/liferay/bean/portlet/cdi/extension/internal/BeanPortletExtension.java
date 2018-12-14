@@ -410,7 +410,10 @@ public class BeanPortletExtension implements Extension {
 
 		_serviceRegistrations.add(
 			bundleContext.registerService(
-				Servlet.class, new PortletServlet() {}, properties));
+				Servlet.class,
+				new PortletServlet() {
+				},
+				properties));
 
 		Set<String> portletNames = descriptorDisplayCategories.keySet();
 

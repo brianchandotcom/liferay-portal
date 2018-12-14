@@ -174,7 +174,9 @@ public class StartupAction extends SimpleAction {
 			moduleServiceLifecycleServiceRegistration =
 				registry.registerService(
 					ModuleServiceLifecycle.class,
-					new ModuleServiceLifecycle() {}, properties);
+					new ModuleServiceLifecycle() {
+					},
+					properties);
 
 		PortalLifecycleUtil.register(
 			new BasePortalLifecycle() {

@@ -20,7 +20,9 @@ import org.dom4j.Document;
 
 /**
  * @author Jorge Ferrer
+ * @deprecated As of Judson (7.1.x), with no direct replacement
  */
+@Deprecated
 public class TilesDefsDescriptor extends SimpleXMLDescriptor {
 
 	@Override

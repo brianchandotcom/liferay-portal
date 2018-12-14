@@ -57,7 +57,7 @@ public class DetailASTUtil {
 			TokenTypes.OBJBLOCK);
 
 		if (objBlockDetailAST != null) {
-			return objBlockDetailAST;
+			return objBlockDetailAST.getFirstChild();
 		}
 
 		DetailAST semiDetailAST = detailAST.findFirstToken(TokenTypes.SEMI);
@@ -90,8 +90,11 @@ public class DetailASTUtil {
 		DetailAST closingDetailAST = getClosingDetailAST(detailAST);
 
 		if (closingDetailAST != null) {
+			String s = closingDetailAST.getText();
+
 			return new Position(
-				closingDetailAST.getLineNo(), closingDetailAST.getColumnNo());
+				closingDetailAST.getLineNo(),
+				closingDetailAST.getColumnNo() + s.length());
 		}
 
 		String s = detailAST.getText();

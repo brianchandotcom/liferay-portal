@@ -41,7 +41,6 @@ List<Phone> phones = PhoneServiceUtil.getPhones(className, classPK);
 			<liferay-ui:message key="phone-numbers" />
 		</span>
 	</span>
-
 	<span class="autofit-col">
 		<liferay-ui:icon
 			cssClass="modify-phone-number-link"

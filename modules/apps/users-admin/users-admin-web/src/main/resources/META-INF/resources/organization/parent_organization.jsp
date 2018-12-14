@@ -72,7 +72,6 @@ if (parentOrganization != null) {
 			<liferay-ui:message key="parent-organization" />
 		</span>
 	</span>
-
 	<span class="autofit-col">
 		<liferay-ui:icon
 			cssClass="modify-link"

@@ -365,8 +365,8 @@ String organizationRoleSyncEntitiesEventName = liferayPortletResponse.getNamespa
 									}
 								}
 
-								for (var i = 0; i < <portlet:namespace />deleteGroupRolesGroupIds.length; i++) {
-									if ((<portlet:namespace />deleteGroupRolesGroupIds[i] == groupId) && (<portlet:namespace />deleteGroupRolesRoleIds[i] == roleId)) {
+								for (var j = 0; j < <portlet:namespace />deleteGroupRolesGroupIds.length; j++) {
+									if ((<portlet:namespace />deleteGroupRolesGroupIds[j] == groupId) && (<portlet:namespace />deleteGroupRolesRoleIds[j] == roleId)) {
 										Util.toggleDisabled(item, false);
 
 										break;
@@ -558,16 +558,16 @@ String organizationRoleSyncEntitiesEventName = liferayPortletResponse.getNamespa
 								var groupId = item.attr('data-groupid');
 								var roleId = item.attr('data-entityid');
 
-								for (var i = 0; i < <portlet:namespace />addGroupRolesGroupIds.length; i++) {
-									if ((<portlet:namespace />addGroupRolesGroupIds[i] == groupId) && (<portlet:namespace />addGroupRolesRoleIds[i] == roleId)) {
+								for (var k = 0; k < <portlet:namespace />addGroupRolesGroupIds.length; k++) {
+									if ((<portlet:namespace />addGroupRolesGroupIds[k] == groupId) && (<portlet:namespace />addGroupRolesRoleIds[k] == roleId)) {
 										Util.toggleDisabled(item, true);
 
 										break;
 									}
 								}
 
-								for (var i = 0; i < <portlet:namespace />deleteGroupRolesGroupIds.length; i++) {
-									if ((<portlet:namespace />deleteGroupRolesGroupIds[i] == groupId) && (<portlet:namespace />deleteGroupRolesRoleIds[i] == roleId)) {
+								for (var n = 0; n < <portlet:namespace />deleteGroupRolesGroupIds.length; n++) {
+									if ((<portlet:namespace />deleteGroupRolesGroupIds[n] == groupId) && (<portlet:namespace />deleteGroupRolesRoleIds[n] == roleId)) {
 										Util.toggleDisabled(item, false);
 
 										break;

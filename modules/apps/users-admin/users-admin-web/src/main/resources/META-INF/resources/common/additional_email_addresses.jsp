@@ -40,7 +40,6 @@ List<EmailAddress> emailAddresses = EmailAddressServiceUtil.getEmailAddresses(cl
 			<liferay-ui:message key="additional-email-addresses" />
 		</span>
 	</span>
-
 	<span class="autofit-col">
 		<liferay-ui:icon
 			cssClass="modify-email-address-link"

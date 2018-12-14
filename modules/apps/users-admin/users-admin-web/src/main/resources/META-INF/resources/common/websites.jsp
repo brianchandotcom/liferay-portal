@@ -40,7 +40,6 @@ List<Website> websites = WebsiteServiceUtil.getWebsites(className, classPK);
 			<liferay-ui:message key="websites" />
 		</span>
 	</span>
-
 	<span class="autofit-col">
 		<liferay-ui:icon
 			cssClass="modify-website-link"

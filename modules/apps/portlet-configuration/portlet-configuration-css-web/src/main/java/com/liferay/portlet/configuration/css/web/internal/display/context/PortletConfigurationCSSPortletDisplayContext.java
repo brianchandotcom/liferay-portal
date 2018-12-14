@@ -18,14 +18,11 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.PortletDecorator;
 import com.liferay.portal.kernel.model.Theme;
 import com.liferay.portal.kernel.portlet.PortletSetupUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
 import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -35,11 +32,8 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.PredicateFilter;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.util.LayoutDescription;
-import com.liferay.portal.util.LayoutListUtil;
 import com.liferay.portlet.configuration.css.web.internal.configuration.PortletConfigurationCSSPortletConfiguration;
 import com.liferay.portlet.configuration.css.web.internal.constants.PortletConfigurationCSSWebKeys;
 
@@ -208,53 +202,6 @@ public class PortletConfigurationCSSPortletDisplayContext {
 		return _decimalFormat;
 	}
 
-	public List<LayoutDescription> getLayoutDescriptions()
-		throws PortalException {
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)_renderRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		Layout layout = themeDisplay.getLayout();
-
-		Group group = layout.getGroup();
-
-		List<LayoutDescription> layoutDescriptions =
-			LayoutListUtil.getLayoutDescriptions(
-				group.getGroupId(), layout.isPrivateLayout(),
-				group.getGroupKey(), themeDisplay.getLocale());
-
-		PredicateFilter<LayoutDescription> predicateFilter =
-			new PredicateFilter<LayoutDescription>() {
-
-				@Override
-				public boolean filter(LayoutDescription layoutDescription) {
-					Layout layoutDescriptionLayout =
-						LayoutLocalServiceUtil.fetchLayout(
-							layoutDescription.getPlid());
-
-					if (layoutDescriptionLayout == null) {
-						return false;
-					}
-
-					return true;
-				}
-
-			};
-
-		return ListUtil.filter(layoutDescriptions, predicateFilter);
-	}
-
-	public String getLinkToLayoutUuid() {
-		if (_linkToLayoutUuid != null) {
-			return _linkToLayoutUuid;
-		}
-
-		_linkToLayoutUuid = _portletSetup.getValue(
-			"portletSetupLinkToLayoutUuid", StringPool.BLANK);
-
-		return _linkToLayoutUuid;
-	}
-
 	public String getMarginProperty(String position, String property) {
 		JSONObject spacingDataJSONObject =
 			_portletSetupJSONObject.getJSONObject("spacingData");
@@ -347,10 +294,6 @@ public class PortletConfigurationCSSPortletDisplayContext {
 		return borderPropertyJSONObject.getBoolean("sameForAll");
 	}
 
-	public boolean isShowLinkToPage() {
-		return _portletConfigurationCSSPortletConfiguration.showLinkToPage();
-	}
-
 	public boolean isSpacingSameForAll(String property) {
 		JSONObject spacingDataJSONObject =
 			_portletSetupJSONObject.getJSONObject("spacingData");
@@ -406,7 +349,6 @@ public class PortletConfigurationCSSPortletDisplayContext {
 	}
 
 	private DecimalFormat _decimalFormat;
-	private String _linkToLayoutUuid;
 	private final PortletConfigurationCSSPortletConfiguration
 		_portletConfigurationCSSPortletConfiguration;
 	private String _portletDecoratorId;

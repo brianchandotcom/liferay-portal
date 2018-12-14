@@ -19,6 +19,8 @@ import com.liferay.portal.search.elasticsearch7.internal.connection.Index;
 import com.liferay.portal.search.elasticsearch7.internal.connection.IndexCreator;
 import com.liferay.portal.search.elasticsearch7.internal.connection.IndexName;
 
+import org.elasticsearch.client.RestHighLevelClient;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Ignore;
@@ -99,8 +101,11 @@ public class ClusterUnicastTest {
 		int numberOfReplicas, Index index,
 		ElasticsearchFixture elasticsearchFixture) {
 
+		RestHighLevelClient restHighLevelClient =
+			elasticsearchFixture.getRestHighLevelClient();
+
 		ReplicasManager replicasManager = new ReplicasManagerImpl(
-			elasticsearchFixture.getIndicesAdminClient());
+			restHighLevelClient.indices());
 
 		replicasManager.updateNumberOfReplicas(
 			numberOfReplicas, index.getName());

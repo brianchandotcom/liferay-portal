@@ -98,7 +98,7 @@ public class WebSiteApioTest {
 	}
 
 	@Test
-	public void testWebSiteExists() {
+	public void testWebSiteIsInWebSiteCollections() {
 		ApioClientBuilder.given(
 		).basicAuth(
 			"test@liferay.com", "test"
@@ -115,7 +115,57 @@ public class WebSiteApioTest {
 		).body(
 			"_embedded.WebSite.find {it.name == '" +
 				WebSiteApioTestBundleActivator.WEB_SITE_NAME +
+					"'}.availableLanguages",
+			IsNull.notNullValue()
+		).body(
+			"_embedded.WebSite.find {it.name == '" +
+				WebSiteApioTestBundleActivator.WEB_SITE_NAME +
+					"'}.description",
+			IsNull.notNullValue()
+		).body(
+			"_embedded.WebSite.find {it.name == '" +
+				WebSiteApioTestBundleActivator.WEB_SITE_NAME +
+					"'}.membershipType",
+			IsNull.notNullValue()
+		).body(
+			"_embedded.WebSite.find {it.name == '" +
+				WebSiteApioTestBundleActivator.WEB_SITE_NAME +
+					"'}.name",
+			IsNull.notNullValue()
+		).body(
+			"_embedded.WebSite.find {it.name == '" +
+				WebSiteApioTestBundleActivator.WEB_SITE_NAME +
+					"'}.privateUrl",
+			IsNull.notNullValue()
+		).body(
+			"_embedded.WebSite.find {it.name == '" +
+				WebSiteApioTestBundleActivator.WEB_SITE_NAME +
+					"'}.publicUrl",
+			IsNull.notNullValue()
+		).body(
+			"_embedded.WebSite.find {it.name == '" +
+				WebSiteApioTestBundleActivator.WEB_SITE_NAME +
+					"'}._links.contentSpace.href",
+			IsNull.notNullValue()
+		).body(
+			"_embedded.WebSite.find {it.name == '" +
+				WebSiteApioTestBundleActivator.WEB_SITE_NAME +
+					"'}._links.creator.href",
+			IsNull.notNullValue()
+		).body(
+			"_embedded.WebSite.find {it.name == '" +
+				WebSiteApioTestBundleActivator.WEB_SITE_NAME +
+					"'}._links.embeddedWebPages.href",
+			IsNull.notNullValue()
+		).body(
+			"_embedded.WebSite.find {it.name == '" +
+				WebSiteApioTestBundleActivator.WEB_SITE_NAME +
 					"'}._links.self.href",
+			IsNull.notNullValue()
+		).body(
+			"_embedded.WebSite.find {it.name == '" +
+				WebSiteApioTestBundleActivator.WEB_SITE_NAME +
+					"'}._links.webSites.href",
 			IsNull.notNullValue()
 		);
 	}

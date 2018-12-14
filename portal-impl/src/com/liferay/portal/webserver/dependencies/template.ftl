@@ -36,7 +36,7 @@
 			${entry.size}
 		</td>
 		<td>
-			${entry.description}
+			${htmlUtil.escape(entry.description)}
 		</td>
 	</tr>
 </#list>

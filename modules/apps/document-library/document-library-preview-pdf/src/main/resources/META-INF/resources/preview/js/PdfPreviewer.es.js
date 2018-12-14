@@ -201,7 +201,7 @@ class PdfPreviewer extends Component {
 	_setCurrentPage(page) {
 		const pageNumber = Number.parseInt(page, 10);
 
-		return (pageNumber) ?
+		return pageNumber ?
 			Math.min(
 				Math.max(1, pageNumber),
 				this.totalPages

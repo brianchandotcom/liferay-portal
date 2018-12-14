@@ -177,6 +177,7 @@ public class LayoutPrototypeStagedModelDataHandler
 		long groupId = portletDataContext.getGroupId();
 		boolean privateLayout = portletDataContext.isPrivateLayout();
 		long scopeGroupId = portletDataContext.getScopeGroupId();
+		String portletId = portletDataContext.getPortletId();
 
 		List<Layout> layouts = _layoutLocalService.getLayouts(
 			layoutPrototype.getGroupId(), true,
@@ -197,6 +198,7 @@ public class LayoutPrototypeStagedModelDataHandler
 			portletDataContext.setGroupId(groupId);
 			portletDataContext.setPrivateLayout(privateLayout);
 			portletDataContext.setScopeGroupId(scopeGroupId);
+			portletDataContext.setPortletId(portletId);
 		}
 	}
 

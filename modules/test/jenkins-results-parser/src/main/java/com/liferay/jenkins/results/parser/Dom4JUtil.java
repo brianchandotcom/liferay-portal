@@ -51,7 +51,7 @@ public class Dom4JUtil {
 		for (Element childElement : rootElement.elements()) {
 			rootElement.remove(childElement);
 
-			element.add(childElement);
+			elements.add(childElement);
 		}
 
 		addToElement(element, elements.toArray());

@@ -110,23 +110,22 @@ public class AopConfigurableApplicationContextConfigurator
 			ServiceMonitoringControl serviceMonitoringControl = null;
 
 			if (PortalClassLoaderUtil.isPortalClassLoader(_classLoader)) {
-				ServiceBeanAopCacheManager serviceBeanAopCacheManager =
-					ServiceBeanAopCacheManager.create(
-						new ChainableMethodAdvice[] {
-							configurableListableBeanFactory.getBean(
-								"counterTransactionAdvice",
-								ChainableMethodAdvice.class)
-						});
+				ChainableMethodAdvice[] chainableMethodAdvices = {
+					configurableListableBeanFactory.getBean(
+						"counterTransactionAdvice", ChainableMethodAdvice.class)
+				};
+
+				ServiceBeanAutoProxyCreator serviceBeanAutoProxyCreator =
+					new ServiceBeanAutoProxyCreator(
+						new ServiceBeanMatcher(true), _classLoader,
+						chainableMethodAdvices);
 
 				defaultSingletonBeanRegistry.registerDisposableBean(
 					"counterServiceBeanAopCacheManagerDestroyer",
-					() -> ServiceBeanAopCacheManager.destroy(
-						serviceBeanAopCacheManager));
+					serviceBeanAutoProxyCreator::destroy);
 
 				configurableListableBeanFactory.addBeanPostProcessor(
-					new ServiceBeanAutoProxyCreator(
-						new ServiceBeanMatcher(true), _classLoader,
-						serviceBeanAopCacheManager));
+					serviceBeanAutoProxyCreator);
 
 				serviceMonitoringControl = new ServiceMonitoringControlImpl();
 
@@ -141,21 +140,19 @@ public class AopConfigurableApplicationContextConfigurator
 
 			// Service AOP
 
-			ServiceBeanAopCacheManager serviceBeanAopCacheManager =
-				ServiceBeanAopCacheManager.create(
+			ServiceBeanAutoProxyCreator serviceBeanAutoProxyCreator =
+				new ServiceBeanAutoProxyCreator(
+					new ServiceBeanMatcher(), _classLoader,
 					_createChainableMethodAdvices(
 						configurableListableBeanFactory,
 						serviceMonitoringControl));
 
 			defaultSingletonBeanRegistry.registerDisposableBean(
 				"serviceBeanAopCacheManagerDestroyer",
-				() -> ServiceBeanAopCacheManager.destroy(
-					serviceBeanAopCacheManager));
+				serviceBeanAutoProxyCreator::destroy);
 
 			configurableListableBeanFactory.addBeanPostProcessor(
-				new ServiceBeanAutoProxyCreator(
-					new ServiceBeanMatcher(), _classLoader,
-					serviceBeanAopCacheManager));
+				serviceBeanAutoProxyCreator);
 		}
 
 		private AopBeanFactoryPostProcessor(ClassLoader classLoader) {

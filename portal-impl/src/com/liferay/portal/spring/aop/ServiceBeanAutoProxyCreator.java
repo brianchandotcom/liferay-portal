@@ -22,7 +22,9 @@ import java.beans.PropertyDescriptor;
 
 import java.lang.reflect.Constructor;
 
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
@@ -38,11 +40,19 @@ public class ServiceBeanAutoProxyCreator
 
 	public ServiceBeanAutoProxyCreator(
 		BeanMatcher beanMatcher, ClassLoader classLoader,
-		ServiceBeanAopCacheManager serviceBeanAopCacheManager) {
+		ChainableMethodAdvice[] chainableMethodAdvices) {
 
 		_beanMatcher = beanMatcher;
 		_classLoader = classLoader;
-		_serviceBeanAopCacheManager = serviceBeanAopCacheManager;
+		_chainableMethodAdvices = chainableMethodAdvices;
+	}
+
+	public void destroy() {
+		for (ServiceBeanAopCacheManager serviceBeanAopCacheManager :
+				_serviceBeanAopCacheManagers) {
+
+			ServiceBeanAopCacheManager.destroy(serviceBeanAopCacheManager);
+		}
 	}
 
 	@Override
@@ -62,10 +72,15 @@ public class ServiceBeanAutoProxyCreator
 
 		_earlyProxyReferences.add(new CacheKey(beanClass, beanName));
 
+		ServiceBeanAopCacheManager serviceBeanAopCacheManager =
+			ServiceBeanAopCacheManager.create(_chainableMethodAdvices);
+
+		_serviceBeanAopCacheManagers.add(serviceBeanAopCacheManager);
+
 		return ProxyUtil.newProxyInstance(
 			_classLoader, ReflectionUtil.getInterfaces(bean),
 			new ServiceBeanAopInvocationHandler(
-				bean, _serviceBeanAopCacheManager));
+				bean, serviceBeanAopCacheManager));
 	}
 
 	@Override
@@ -78,10 +93,15 @@ public class ServiceBeanAutoProxyCreator
 			return bean;
 		}
 
+		ServiceBeanAopCacheManager serviceBeanAopCacheManager =
+			ServiceBeanAopCacheManager.create(_chainableMethodAdvices);
+
+		_serviceBeanAopCacheManagers.add(serviceBeanAopCacheManager);
+
 		return ProxyUtil.newProxyInstance(
 			_classLoader, ReflectionUtil.getInterfaces(bean),
 			new ServiceBeanAopInvocationHandler(
-				bean, _serviceBeanAopCacheManager));
+				bean, serviceBeanAopCacheManager));
 	}
 
 	@Override
@@ -117,10 +137,12 @@ public class ServiceBeanAutoProxyCreator
 	}
 
 	private final BeanMatcher _beanMatcher;
+	private final ChainableMethodAdvice[] _chainableMethodAdvices;
 	private final ClassLoader _classLoader;
 	private final Set<CacheKey> _earlyProxyReferences =
 		Collections.newSetFromMap(new ConcurrentHashMap<>());
-	private final ServiceBeanAopCacheManager _serviceBeanAopCacheManager;
+	private final List<ServiceBeanAopCacheManager>
+		_serviceBeanAopCacheManagers = new ArrayList<>();
 
 	private static class CacheKey {
 

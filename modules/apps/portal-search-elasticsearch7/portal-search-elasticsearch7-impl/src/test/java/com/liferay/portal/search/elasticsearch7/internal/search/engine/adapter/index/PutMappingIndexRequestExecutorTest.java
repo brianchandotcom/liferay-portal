@@ -18,7 +18,6 @@ import com.liferay.portal.search.elasticsearch7.internal.connection.Elasticsearc
 import com.liferay.portal.search.engine.adapter.index.PutMappingIndexRequest;
 
 import org.elasticsearch.action.admin.indices.mapping.put.PutMappingRequest;
-import org.elasticsearch.action.admin.indices.mapping.put.PutMappingRequestBuilder;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -56,12 +55,9 @@ public class PutMappingIndexRequestExecutorTest {
 				}
 			};
 
-		PutMappingRequestBuilder putMappingRequestBuilder =
-			putMappingIndexRequestExecutorImpl.createPutMappingRequestBuilder(
-				putMappingIndexRequest);
-
 		PutMappingRequest putMappingRequest =
-			putMappingRequestBuilder.request();
+			putMappingIndexRequestExecutorImpl.createPutMappingRequest(
+				putMappingIndexRequest);
 
 		Assert.assertArrayEquals(
 			new String[] {_INDEX_NAME}, putMappingRequest.indices());

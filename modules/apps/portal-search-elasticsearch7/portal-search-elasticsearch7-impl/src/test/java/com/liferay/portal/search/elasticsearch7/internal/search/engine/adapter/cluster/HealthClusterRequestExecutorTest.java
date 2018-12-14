@@ -19,7 +19,6 @@ import com.liferay.portal.search.engine.adapter.cluster.ClusterHealthStatus;
 import com.liferay.portal.search.engine.adapter.cluster.HealthClusterRequest;
 
 import org.elasticsearch.action.admin.cluster.health.ClusterHealthRequest;
-import org.elasticsearch.action.admin.cluster.health.ClusterHealthRequestBuilder;
 import org.elasticsearch.common.unit.TimeValue;
 
 import org.junit.After;
@@ -63,12 +62,9 @@ public class HealthClusterRequestExecutorTest {
 				}
 			};
 
-		ClusterHealthRequestBuilder clusterHealthRequestBuilder =
-			healthClusterRequestExecutorImpl.createClusterHealthRequestBuilder(
-				healthClusterRequest);
-
 		ClusterHealthRequest clusterHealthRequest =
-			clusterHealthRequestBuilder.request();
+			healthClusterRequestExecutorImpl.createClusterHealthRequest(
+				healthClusterRequest);
 
 		String[] indices = clusterHealthRequest.indices();
 

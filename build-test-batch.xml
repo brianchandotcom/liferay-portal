@@ -1376,7 +1376,6 @@ app.server.type=@{app.server.type}]]></echo>
 						</else>
 					</if>
 
-
 					<if>
 						<isset property="env.CI_TEST_SUITE" />
 						<then>

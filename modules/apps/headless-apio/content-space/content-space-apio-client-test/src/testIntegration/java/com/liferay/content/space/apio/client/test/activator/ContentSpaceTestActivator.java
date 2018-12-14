@@ -41,7 +41,18 @@ public class ContentSpaceTestActivator implements BundleActivator {
 
 	@Override
 	public void stop(BundleContext bundleContext) {
-		_deleteDemoData();
+		_cleanUp();
+	}
+
+	private void _cleanUp() {
+		try {
+			GroupTestUtil.deleteGroup(_group);
+
+			_permissionCheckerTestCallback.afterMethod(null, null, null);
+		}
+		catch (Throwable t) {
+			_log.error(t, t);
+		}
 	}
 
 	private void _createDemoData(BundleContext bundleContext) {
@@ -56,17 +67,6 @@ public class ContentSpaceTestActivator implements BundleActivator {
 		}
 		catch (Exception e) {
 			_log.error(e, e);
-		}
-	}
-
-	private void _deleteDemoData() {
-		try {
-			GroupTestUtil.deleteGroup(_group);
-
-			_permissionCheckerTestCallback.afterMethod(null, null, null);
-		}
-		catch (Throwable t) {
-			_log.error(t, t);
 		}
 	}
 

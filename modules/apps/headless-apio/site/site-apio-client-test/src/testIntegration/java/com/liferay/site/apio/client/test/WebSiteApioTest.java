@@ -113,9 +113,9 @@ public class WebSiteApioTest {
 		).statusCode(
 			200
 		).body(
-			"_embedded.WebSite.find { it.name == '" +
+			"_embedded.WebSite.find {it.name == '" +
 				WebSiteApioTestBundleActivator.WEB_SITE_NAME +
-					"' }._links.self.href",
+					"'}._links.self.href",
 			IsNull.notNullValue()
 		);
 	}

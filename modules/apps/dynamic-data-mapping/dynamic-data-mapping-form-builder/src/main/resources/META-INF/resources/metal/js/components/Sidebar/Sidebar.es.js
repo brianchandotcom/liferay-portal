@@ -181,6 +181,13 @@ class Sidebar extends Component {
 		return dropdownPortal;
 	}
 
+	_cancelFieldChanges(indexes) {
+		this.emit(
+			'fieldChangesCanceled',
+			indexes
+		);
+	}
+
 	_deleteField(indexes) {
 		this.emit(
 			'fieldDeleted',
@@ -213,9 +220,11 @@ class Sidebar extends Component {
 		const {open} = state;
 		const AUIEditorToolbar = dom.closest(target, '.ae-ui');
 		const fieldColumnNode = dom.closest(target, '.col-ddm');
+		const fieldTypesDropdown = dom.closest(target, '.dropdown-menu');
 		const modalNode = dom.closest(target, '.modal-dialog');
 
-		if (!open || AUIEditorToolbar || element.contains(target) || fieldColumnNode || this._checkSettingsActionsVisibility(target)) {
+		if (!open || AUIEditorToolbar || element.contains(target) || fieldTypesDropdown ||
+			fieldColumnNode || this._checkSettingsActionsVisibility(target)) {
 			return;
 		}
 
@@ -326,6 +335,9 @@ class Sidebar extends Component {
 		}
 		else if (settingsItem === 'delete-field') {
 			this._deleteField(indexes);
+		}
+		else if (settingsItem === 'cancel-field-changes') {
+			this._cancelFieldChanges(indexes);
 		}
 	}
 
@@ -676,6 +688,10 @@ class Sidebar extends Component {
 			{
 				label: Liferay.Language.get('remove-field'),
 				settingsItem: 'delete-field'
+			},
+			{
+				label: Liferay.Language.get('cancel-field-changes'),
+				settingsItem: 'cancel-field-changes'
 			}
 		];
 		const focusedFieldType = fieldTypes.find(({name}) => name === focusedField.type);

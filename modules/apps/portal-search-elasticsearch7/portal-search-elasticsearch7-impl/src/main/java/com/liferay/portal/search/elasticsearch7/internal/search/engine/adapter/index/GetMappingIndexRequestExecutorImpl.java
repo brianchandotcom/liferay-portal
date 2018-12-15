@@ -18,14 +18,16 @@ import com.liferay.portal.search.elasticsearch7.internal.connection.Elasticsearc
 import com.liferay.portal.search.engine.adapter.index.GetMappingIndexRequest;
 import com.liferay.portal.search.engine.adapter.index.GetMappingIndexResponse;
 
+import java.io.IOException;
+
 import java.util.HashMap;
 import java.util.Map;
 
-import org.elasticsearch.action.admin.indices.mapping.get.GetMappingsRequestBuilder;
+import org.elasticsearch.action.admin.indices.mapping.get.GetMappingsRequest;
 import org.elasticsearch.action.admin.indices.mapping.get.GetMappingsResponse;
-import org.elasticsearch.client.AdminClient;
-import org.elasticsearch.client.Client;
-import org.elasticsearch.client.IndicesAdminClient;
+import org.elasticsearch.client.IndicesClient;
+import org.elasticsearch.client.RequestOptions;
+import org.elasticsearch.client.RestHighLevelClient;
 import org.elasticsearch.cluster.metadata.MappingMetaData;
 import org.elasticsearch.common.collect.ImmutableOpenMap;
 import org.elasticsearch.common.compress.CompressedXContent;
@@ -44,11 +46,11 @@ public class GetMappingIndexRequestExecutorImpl
 	public GetMappingIndexResponse execute(
 		GetMappingIndexRequest getMappingIndexRequest) {
 
-		GetMappingsRequestBuilder getMappingsRequestBuilder =
-			createGetMappingsRequestBuilder(getMappingIndexRequest);
+		GetMappingsRequest getMappingsRequest = createGetMappingsRequest(
+			getMappingIndexRequest);
 
-		GetMappingsResponse getMappingsResponse =
-			getMappingsRequestBuilder.get();
+		GetMappingsResponse getMappingsResponse = getGetMappingsResponse(
+			getMappingsRequest);
 
 		ImmutableOpenMap<String, ImmutableOpenMap<String, MappingMetaData>>
 			mappings = getMappingsResponse.mappings();
@@ -70,23 +72,32 @@ public class GetMappingIndexRequestExecutorImpl
 		return new GetMappingIndexResponse(indexMappings);
 	}
 
-	protected GetMappingsRequestBuilder createGetMappingsRequestBuilder(
+	protected GetMappingsRequest createGetMappingsRequest(
 		GetMappingIndexRequest getMappingIndexRequest) {
 
-		Client client = _elasticsearchClientResolver.getClient();
+		GetMappingsRequest getMappingsRequest = new GetMappingsRequest();
 
-		AdminClient adminClient = client.admin();
+		getMappingsRequest.indices(getMappingIndexRequest.getIndexNames());
+		getMappingsRequest.types(getMappingIndexRequest.getMappingName());
 
-		IndicesAdminClient indicesAdminClient = adminClient.indices();
+		return getMappingsRequest;
+	}
 
-		GetMappingsRequestBuilder getMappingsRequestBuilder =
-			indicesAdminClient.prepareGetMappings(
-				getMappingIndexRequest.getIndexNames());
+	protected GetMappingsResponse getGetMappingsResponse(
+		GetMappingsRequest getMappingsRequest) {
 
-		getMappingsRequestBuilder.setTypes(
-			getMappingIndexRequest.getMappingName());
+		RestHighLevelClient restHighLevelClient =
+			_elasticsearchClientResolver.getRestHighLevelClient();
 
-		return getMappingsRequestBuilder;
+		IndicesClient indicesClient = restHighLevelClient.indices();
+
+		try {
+			return indicesClient.getMapping(
+				getMappingsRequest, RequestOptions.DEFAULT);
+		}
+		catch (IOException ioe) {
+			throw new RuntimeException(ioe);
+		}
 	}
 
 	@Reference(unbind = "-")

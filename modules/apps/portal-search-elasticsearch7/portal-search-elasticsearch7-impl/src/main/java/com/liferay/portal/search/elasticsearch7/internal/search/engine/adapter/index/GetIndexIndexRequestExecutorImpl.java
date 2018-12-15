@@ -20,13 +20,17 @@ import com.liferay.portal.search.elasticsearch7.internal.connection.Elasticsearc
 import com.liferay.portal.search.engine.adapter.index.GetIndexIndexRequest;
 import com.liferay.portal.search.engine.adapter.index.GetIndexIndexResponse;
 
+import java.io.IOException;
+
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
-import org.elasticsearch.action.admin.indices.get.GetIndexAction;
-import org.elasticsearch.action.admin.indices.get.GetIndexRequestBuilder;
+import org.elasticsearch.action.admin.indices.get.GetIndexRequest;
 import org.elasticsearch.action.admin.indices.get.GetIndexResponse;
+import org.elasticsearch.client.IndicesClient;
+import org.elasticsearch.client.RequestOptions;
+import org.elasticsearch.client.RestHighLevelClient;
 import org.elasticsearch.cluster.metadata.MappingMetaData;
 import org.elasticsearch.common.collect.ImmutableOpenMap;
 import org.elasticsearch.common.compress.CompressedXContent;
@@ -46,10 +50,11 @@ public class GetIndexIndexRequestExecutorImpl
 	public GetIndexIndexResponse execute(
 		GetIndexIndexRequest getIndexIndexRequest) {
 
-		GetIndexRequestBuilder getIndexRequestBuilder =
-			createGetIndexRequestBuilder(getIndexIndexRequest);
+		GetIndexRequest getIndexRequest = createGetIndexRequest(
+			getIndexIndexRequest);
 
-		GetIndexResponse getIndexResponse = getIndexRequestBuilder.get();
+		GetIndexResponse getIndexResponse = getGetIndexResponse(
+			getIndexRequest);
 
 		GetIndexIndexResponse getIndexIndexResponse =
 			new GetIndexIndexResponse();
@@ -134,17 +139,30 @@ public class GetIndexIndexRequestExecutorImpl
 		return indicesSettingsMap;
 	}
 
-	protected GetIndexRequestBuilder createGetIndexRequestBuilder(
+	protected GetIndexRequest createGetIndexRequest(
 		GetIndexIndexRequest getIndexIndexRequest) {
 
-		GetIndexRequestBuilder getIndexRequestBuilder =
-			new GetIndexRequestBuilder(
-				_elasticsearchClientResolver.getClient(),
-				GetIndexAction.INSTANCE);
+		GetIndexRequest getIndexRequest = new GetIndexRequest();
 
-		getIndexRequestBuilder.setIndices(getIndexIndexRequest.getIndexNames());
+		getIndexRequest.indices(getIndexIndexRequest.getIndexNames());
 
-		return getIndexRequestBuilder;
+		return getIndexRequest;
+	}
+
+	protected GetIndexResponse getGetIndexResponse(
+		GetIndexRequest getIndexRequest) {
+
+		RestHighLevelClient restHighLevelClient =
+			_elasticsearchClientResolver.getRestHighLevelClient();
+
+		IndicesClient indicesClient = restHighLevelClient.indices();
+
+		try {
+			return indicesClient.get(getIndexRequest, RequestOptions.DEFAULT);
+		}
+		catch (IOException ioe) {
+			throw new RuntimeException(ioe);
+		}
 	}
 
 	@Reference(unbind = "-")

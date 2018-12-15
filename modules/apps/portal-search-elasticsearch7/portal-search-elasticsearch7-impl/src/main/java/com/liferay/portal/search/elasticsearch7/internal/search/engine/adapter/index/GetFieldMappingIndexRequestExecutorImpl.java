@@ -14,18 +14,23 @@
 
 package com.liferay.portal.search.elasticsearch7.internal.search.engine.adapter.index;
 
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.search.elasticsearch7.internal.connection.ElasticsearchClientResolver;
 import com.liferay.portal.search.engine.adapter.index.GetFieldMappingIndexRequest;
 import com.liferay.portal.search.engine.adapter.index.GetFieldMappingIndexResponse;
 
+import java.io.IOException;
+
 import java.util.HashMap;
 import java.util.Map;
 
-import org.elasticsearch.action.admin.indices.mapping.get.GetFieldMappingsRequestBuilder;
+import org.elasticsearch.action.admin.indices.mapping.get.GetFieldMappingsRequest;
 import org.elasticsearch.action.admin.indices.mapping.get.GetFieldMappingsResponse;
-import org.elasticsearch.client.AdminClient;
-import org.elasticsearch.client.Client;
-import org.elasticsearch.client.IndicesAdminClient;
+import org.elasticsearch.client.IndicesClient;
+import org.elasticsearch.client.RequestOptions;
+import org.elasticsearch.client.RestHighLevelClient;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -43,11 +48,11 @@ public class GetFieldMappingIndexRequestExecutorImpl
 	public GetFieldMappingIndexResponse execute(
 		GetFieldMappingIndexRequest getFieldMappingIndexRequest) {
 
-		GetFieldMappingsRequestBuilder getFieldMappingsRequestBuilder =
-			createGetFieldMappingsRequestBuilder(getFieldMappingIndexRequest);
+		GetFieldMappingsRequest getFieldMappingsRequest =
+			createGetFieldMappingsRequest(getFieldMappingIndexRequest);
 
 		GetFieldMappingsResponse getFieldMappingsResponse =
-			getFieldMappingsRequestBuilder.get();
+			getGetFieldMappingsResponse(getFieldMappingsRequest);
 
 		Map
 			<String,
@@ -67,32 +72,53 @@ public class GetFieldMappingIndexRequestExecutorImpl
 			Map<String, GetFieldMappingsResponse.FieldMappingMetaData> map2 =
 				map1.get(getFieldMappingIndexRequest.getMappingName());
 
-			fieldMappings.put(indexName, map2.toString());
+			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+			for (String fieldName : getFieldMappingIndexRequest.getFields()) {
+				GetFieldMappingsResponse.FieldMappingMetaData
+					fieldMappingMetaData = map2.get(fieldName);
+
+				Map<String, Object> source = fieldMappingMetaData.sourceAsMap();
+
+				jsonObject.put(fieldName, JSONUtil.put(source.get(fieldName)));
+			}
+
+			fieldMappings.put(indexName, jsonObject.toString());
 		}
 
 		return new GetFieldMappingIndexResponse(fieldMappings);
 	}
 
-	protected GetFieldMappingsRequestBuilder
-		createGetFieldMappingsRequestBuilder(
-			GetFieldMappingIndexRequest getFieldMappingIndexRequest) {
+	protected GetFieldMappingsRequest createGetFieldMappingsRequest(
+		GetFieldMappingIndexRequest getFieldMappingIndexRequest) {
 
-		Client client = _elasticsearchClientResolver.getClient();
+		GetFieldMappingsRequest getFieldMappingsRequest =
+			new GetFieldMappingsRequest();
 
-		AdminClient adminClient = client.admin();
-
-		IndicesAdminClient indicesAdminClient = adminClient.indices();
-
-		GetFieldMappingsRequestBuilder getFieldMappingsRequestBuilder =
-			indicesAdminClient.prepareGetFieldMappings(
-				getFieldMappingIndexRequest.getIndexNames());
-
-		getFieldMappingsRequestBuilder.setFields(
-			getFieldMappingIndexRequest.getFields());
-		getFieldMappingsRequestBuilder.setTypes(
+		getFieldMappingsRequest.fields(getFieldMappingIndexRequest.getFields());
+		getFieldMappingsRequest.indices(
+			getFieldMappingIndexRequest.getIndexNames());
+		getFieldMappingsRequest.types(
 			getFieldMappingIndexRequest.getMappingName());
 
-		return getFieldMappingsRequestBuilder;
+		return getFieldMappingsRequest;
+	}
+
+	protected GetFieldMappingsResponse getGetFieldMappingsResponse(
+		GetFieldMappingsRequest getFieldMappingsRequest) {
+
+		RestHighLevelClient restHighLevelClient =
+			_elasticsearchClientResolver.getRestHighLevelClient();
+
+		IndicesClient indicesClient = restHighLevelClient.indices();
+
+		try {
+			return indicesClient.getFieldMapping(
+				getFieldMappingsRequest, RequestOptions.DEFAULT);
+		}
+		catch (IOException ioe) {
+			throw new RuntimeException(ioe);
+		}
 	}
 
 	@Reference(unbind = "-")

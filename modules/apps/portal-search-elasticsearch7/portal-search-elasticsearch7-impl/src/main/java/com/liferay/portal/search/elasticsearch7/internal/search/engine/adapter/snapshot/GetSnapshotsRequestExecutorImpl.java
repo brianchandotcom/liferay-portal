@@ -15,14 +15,17 @@
 package com.liferay.portal.search.elasticsearch7.internal.search.engine.adapter.snapshot;
 
 import com.liferay.portal.search.elasticsearch7.internal.connection.ElasticsearchClientResolver;
-import com.liferay.portal.search.engine.adapter.snapshot.GetSnapshotsRequest;
-import com.liferay.portal.search.engine.adapter.snapshot.GetSnapshotsResponse;
 import com.liferay.portal.search.engine.adapter.snapshot.SnapshotDetails;
+
+import java.io.IOException;
 
 import java.util.List;
 
-import org.elasticsearch.action.admin.cluster.snapshots.get.GetSnapshotsAction;
-import org.elasticsearch.action.admin.cluster.snapshots.get.GetSnapshotsRequestBuilder;
+import org.elasticsearch.action.admin.cluster.snapshots.get.GetSnapshotsRequest;
+import org.elasticsearch.action.admin.cluster.snapshots.get.GetSnapshotsResponse;
+import org.elasticsearch.client.RequestOptions;
+import org.elasticsearch.client.RestHighLevelClient;
+import org.elasticsearch.client.SnapshotClient;
 import org.elasticsearch.snapshots.SnapshotInfo;
 
 import org.osgi.service.component.annotations.Component;
@@ -36,17 +39,22 @@ public class GetSnapshotsRequestExecutorImpl
 	implements GetSnapshotsRequestExecutor {
 
 	@Override
-	public GetSnapshotsResponse execute(
-		GetSnapshotsRequest getSnapshotsRequest) {
+	public
+		com.liferay.portal.search.engine.adapter.snapshot.GetSnapshotsResponse
+			execute(
+				com.liferay.portal.search.engine.adapter.snapshot.
+					GetSnapshotsRequest getSnapshotsRequest) {
 
-		GetSnapshotsRequestBuilder getSnapshotsRequestBuilder =
+		GetSnapshotsRequest elasticsearchGetSnapshotsRequest =
 			createGetSnapshotsRequest(getSnapshotsRequest);
 
-		org.elasticsearch.action.admin.cluster.snapshots.get.
-			GetSnapshotsResponse elasticsearchGetSnapshotsResponse =
-				getSnapshotsRequestBuilder.get();
+		GetSnapshotsResponse elasticsearchGetSnapshotsResponse =
+			getGetSnapshotsResponse(elasticsearchGetSnapshotsRequest);
 
-		GetSnapshotsResponse getSnapshotsResponse = new GetSnapshotsResponse();
+		com.liferay.portal.search.engine.adapter.snapshot.GetSnapshotsResponse
+			getSnapshotsResponse =
+				new com.liferay.portal.search.engine.adapter.snapshot.
+					GetSnapshotsResponse();
 
 		List<SnapshotInfo> snapshotInfos =
 			elasticsearchGetSnapshotsResponse.getSnapshots();
@@ -62,23 +70,40 @@ public class GetSnapshotsRequestExecutorImpl
 		return getSnapshotsResponse;
 	}
 
-	protected GetSnapshotsRequestBuilder createGetSnapshotsRequest(
-		GetSnapshotsRequest getSnapshotsRequest) {
+	protected GetSnapshotsRequest createGetSnapshotsRequest(
+		com.liferay.portal.search.engine.adapter.snapshot.GetSnapshotsRequest
+			getSnapshotsRequest) {
 
-		GetSnapshotsRequestBuilder getSnapshotsRequestBuilder =
-			new GetSnapshotsRequestBuilder(
-				_elasticsearchClientResolver.getClient(),
-				GetSnapshotsAction.INSTANCE);
+		GetSnapshotsRequest elasticsearchGetSnapshotsRequest =
+			new GetSnapshotsRequest();
 
-		getSnapshotsRequestBuilder.setIgnoreUnavailable(
+		elasticsearchGetSnapshotsRequest.ignoreUnavailable(
 			getSnapshotsRequest.isIgnoreUnavailable());
-		getSnapshotsRequestBuilder.setRepository(
+		elasticsearchGetSnapshotsRequest.repository(
 			getSnapshotsRequest.getRepositoryName());
-		getSnapshotsRequestBuilder.setSnapshots(
+		elasticsearchGetSnapshotsRequest.snapshots(
 			getSnapshotsRequest.getSnapshotNames());
-		getSnapshotsRequestBuilder.setVerbose(getSnapshotsRequest.isVerbose());
+		elasticsearchGetSnapshotsRequest.verbose(
+			getSnapshotsRequest.isVerbose());
 
-		return getSnapshotsRequestBuilder;
+		return elasticsearchGetSnapshotsRequest;
+	}
+
+	protected GetSnapshotsResponse getGetSnapshotsResponse(
+		GetSnapshotsRequest elasticsearchGetSnapshotsRequest) {
+
+		RestHighLevelClient restHighLevelClient =
+			_elasticsearchClientResolver.getRestHighLevelClient();
+
+		SnapshotClient snapshotClient = restHighLevelClient.snapshot();
+
+		try {
+			return snapshotClient.get(
+				elasticsearchGetSnapshotsRequest, RequestOptions.DEFAULT);
+		}
+		catch (IOException ioe) {
+			throw new RuntimeException(ioe);
+		}
 	}
 
 	@Reference(unbind = "-")

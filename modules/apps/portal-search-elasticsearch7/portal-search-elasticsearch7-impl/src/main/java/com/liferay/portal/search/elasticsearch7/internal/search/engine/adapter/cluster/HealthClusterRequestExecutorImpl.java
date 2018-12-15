@@ -18,9 +18,11 @@ import com.liferay.portal.search.elasticsearch7.internal.connection.Elasticsearc
 import com.liferay.portal.search.engine.adapter.cluster.HealthClusterRequest;
 import com.liferay.portal.search.engine.adapter.cluster.HealthClusterResponse;
 
-import org.elasticsearch.action.admin.cluster.health.ClusterHealthAction;
-import org.elasticsearch.action.admin.cluster.health.ClusterHealthRequestBuilder;
+import org.elasticsearch.action.admin.cluster.health.ClusterHealthRequest;
 import org.elasticsearch.action.admin.cluster.health.ClusterHealthResponse;
+import org.elasticsearch.client.ClusterClient;
+import org.elasticsearch.client.RequestOptions;
+import org.elasticsearch.client.RestHighLevelClient;
 import org.elasticsearch.cluster.health.ClusterHealthStatus;
 import org.elasticsearch.common.unit.TimeValue;
 
@@ -38,11 +40,11 @@ public class HealthClusterRequestExecutorImpl
 	public HealthClusterResponse execute(
 		HealthClusterRequest healthClusterRequest) {
 
-		ClusterHealthRequestBuilder clusterHealthRequestBuilder =
-			createClusterHealthRequestBuilder(healthClusterRequest);
+		ClusterHealthRequest clusterHealthRequest = createClusterHealthRequest(
+			healthClusterRequest);
 
-		ClusterHealthResponse clusterHealthResponse =
-			clusterHealthRequestBuilder.get();
+		ClusterHealthResponse clusterHealthResponse = getClusterHealthResponse(
+			clusterHealthRequest);
 
 		ClusterHealthStatus clusterHealthStatus =
 			clusterHealthResponse.getStatus();
@@ -52,33 +54,44 @@ public class HealthClusterRequestExecutorImpl
 			clusterHealthResponse.toString());
 	}
 
-	protected ClusterHealthRequestBuilder createClusterHealthRequestBuilder(
+	protected ClusterHealthRequest createClusterHealthRequest(
 		HealthClusterRequest healthClusterRequest) {
 
-		ClusterHealthRequestBuilder clusterHealthRequestBuilder =
-			new ClusterHealthRequestBuilder(
-				_elasticsearchClientResolver.getClient(),
-				ClusterHealthAction.INSTANCE);
-
-		clusterHealthRequestBuilder.setIndices(
+		ClusterHealthRequest clusterHealthRequest = new ClusterHealthRequest(
 			healthClusterRequest.getIndexNames());
 
 		long timeout = healthClusterRequest.getTimeout();
 
 		if (timeout > 0) {
-			clusterHealthRequestBuilder.setMasterNodeTimeout(
+			clusterHealthRequest.masterNodeTimeout(
 				TimeValue.timeValueMillis(timeout));
-			clusterHealthRequestBuilder.setTimeout(
-				TimeValue.timeValueMillis(timeout));
+			clusterHealthRequest.timeout(TimeValue.timeValueMillis(timeout));
 		}
 
 		if (healthClusterRequest.getWaitForClusterHealthStatus() != null) {
-			clusterHealthRequestBuilder.setWaitForStatus(
+			clusterHealthRequest.waitForStatus(
 				_clusterHealthStatusTranslator.translate(
 					healthClusterRequest.getWaitForClusterHealthStatus()));
 		}
 
-		return clusterHealthRequestBuilder;
+		return clusterHealthRequest;
+	}
+
+	protected ClusterHealthResponse getClusterHealthResponse(
+		ClusterHealthRequest clusterHealthRequest) {
+
+		RestHighLevelClient restHighLevelClient =
+			_elasticsearchClientResolver.getRestHighLevelClient();
+
+		ClusterClient clusterClient = restHighLevelClient.cluster();
+
+		try {
+			return clusterClient.health(
+				clusterHealthRequest, RequestOptions.DEFAULT);
+		}
+		catch (Exception ioe) {
+			throw new RuntimeException(ioe);
+		}
 	}
 
 	@Reference(unbind = "-")

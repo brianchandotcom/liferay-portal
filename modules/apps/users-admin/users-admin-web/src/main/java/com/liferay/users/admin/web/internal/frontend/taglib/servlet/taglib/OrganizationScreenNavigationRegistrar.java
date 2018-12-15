@@ -86,7 +86,8 @@ public class OrganizationScreenNavigationRegistrar {
 			_createUpdateOnlyScreenNavigationEntry(
 				"organization-site", _CATEGORY_GENERAL,
 				"/organization/organization_site.jsp",
-				"/users_admin/update_organization_organization_site"),
+				"/users_admin/update_organization_organization_site", false,
+				true),
 			20);
 
 		_registerScreenNavigationEntry(

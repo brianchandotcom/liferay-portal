@@ -81,8 +81,10 @@ if (organization != null) {
 		<aui:fieldset cssClass="hide-data-labels">
 			<c:choose>
 				<c:when test="<%= (organization == null) || ((publicLayoutSetPrototype == null) && (privateLayoutSetPrototype == null)) %>">
-					<p class="sheet-text"><liferay-ui:message key="by-clicking-this-toggle-you-could-create-a-public-and-or-private-site-for-your-organization" /></p>
-					<aui:input label="create-site" name="site" type="toggle-switch" value="<%= site %>" />
+					<div class="sheet-section">
+						<p class="sheet-text"><liferay-ui:message key="by-clicking-this-toggle-you-could-create-a-public-and-or-private-site-for-your-organization" /></p>
+						<aui:input label="create-site" name="site" type="toggle-switch" value="<%= site %>" />
+					</div>
 				</c:when>
 				<c:otherwise>
 					<aui:input label="create-site" name="site" type="hidden" value="<%= site %>" />
@@ -97,16 +99,18 @@ if (organization != null) {
 				editOrganizationSiteURL.setParameter("viewOrganizationsRedirect", currentURL);
 				%>
 
-				<aui:input inlineField="<%= true %>" name="siteId" type="resource" value="<%= String.valueOf(organizationGroup.getGroupId()) %>" />
+				<div class="sheet-section">
+					<aui:input inlineField="<%= true %>" name="siteId" type="resource" value="<%= String.valueOf(organizationGroup.getGroupId()) %>" />
 
-				<aui:field-wrapper>
-					<liferay-ui:icon
-						iconCssClass="icon-cog"
-						label="<%= true %>"
-						message="manage-site"
-						url="<%= editOrganizationSiteURL.toString() %>"
-					/>
-				</aui:field-wrapper>
+					<aui:field-wrapper>
+						<liferay-ui:icon
+							iconCssClass="icon-cog"
+							label="<%= true %>"
+							message="manage-site"
+							url="<%= editOrganizationSiteURL.toString() %>"
+						/>
+					</aui:field-wrapper>
+				</div>
 			</c:if>
 
 			<%
@@ -114,36 +118,44 @@ if (organization != null) {
 			%>
 
 			<div id="<portlet:namespace />siteTemplates">
-				<c:choose>
-					<c:when test="<%= ((organization == null) || ((publicLayoutSetPrototype == null) && (organization.getPublicLayoutsPageCount() == 0))) && !layoutSetPrototypes.isEmpty() %>">
-						<aui:select label="public-pages" name="publicLayoutSetPrototypeId">
-							<aui:option label="none" selected="<%= true %>" value="" />
+				<div class="sheet-section">
+					<h3 class="sheet-subtitle"><liferay-ui:message key="public-pages" /></h3>
 
-							<%
-							for (LayoutSetPrototype layoutSetPrototype : layoutSetPrototypes) {
-							%>
+					<c:choose>
+						<c:when test="<%= ((organization == null) || ((publicLayoutSetPrototype == null) && (organization.getPublicLayoutsPageCount() == 0))) && !layoutSetPrototypes.isEmpty() %>">
+							<clay:alert
+								message='<%= LanguageUtil.get(request, "this-action-cannot-be-undone") %>'
+								style="warning"
+								title='<%= LanguageUtil.get(request, "warning") + ":" %>'
+							/>
 
-								<aui:option label="<%= HtmlUtil.escape(layoutSetPrototype.getName(locale)) %>" value="<%= layoutSetPrototype.getLayoutSetPrototypeId() %>" />
+							<aui:select label="" name="publicLayoutSetPrototypeId">
+								<aui:option label="none" selected="<%= true %>" value="" />
 
-							<%
-							}
-							%>
+								<%
+								for (LayoutSetPrototype layoutSetPrototype : layoutSetPrototypes) {
+								%>
 
-						</aui:select>
+									<aui:option label="<%= HtmlUtil.escape(layoutSetPrototype.getName(locale)) %>" value="<%= layoutSetPrototype.getLayoutSetPrototypeId() %>" />
 
-						<c:choose>
-							<c:when test="<%= hasUnlinkLayoutSetPrototypePermission %>">
-								<div class="hide" id="<portlet:namespace />publicLayoutSetPrototypeIdOptions">
-									<aui:input helpMessage="enable-propagation-of-changes-from-the-site-template-help" label="enable-propagation-of-changes-from-the-site-template" name="publicLayoutSetPrototypeLinkEnabled" type="checkbox" value="<%= true %>" />
-								</div>
-							</c:when>
-							<c:otherwise>
-								<aui:input name="publicLayoutSetPrototypeLinkEnabled" type="hidden" value="<%= true %>" />
-							</c:otherwise>
-						</c:choose>
-					</c:when>
-					<c:otherwise>
-						<aui:field-wrapper label="public-pages">
+								<%
+								}
+								%>
+
+							</aui:select>
+
+							<c:choose>
+								<c:when test="<%= hasUnlinkLayoutSetPrototypePermission %>">
+									<div class="hide" id="<portlet:namespace />publicLayoutSetPrototypeIdOptions">
+										<aui:input helpMessage="enable-propagation-of-changes-from-the-site-template-help" label="enable-propagation-of-changes-from-the-site-template" name="publicLayoutSetPrototypeLinkEnabled" type="checkbox" value="<%= true %>" />
+									</div>
+								</c:when>
+								<c:otherwise>
+									<aui:input name="publicLayoutSetPrototypeLinkEnabled" type="hidden" value="<%= true %>" />
+								</c:otherwise>
+							</c:choose>
+						</c:when>
+						<c:otherwise>
 							<c:choose>
 								<c:when test="<%= organization != null %>">
 									<aui:field-wrapper>
@@ -178,40 +190,48 @@ if (organization != null) {
 									</aui:field-wrapper>
 								</c:when>
 							</c:choose>
-						</aui:field-wrapper>
-					</c:otherwise>
-				</c:choose>
+						</c:otherwise>
+					</c:choose>
+				</div>
 
-				<c:choose>
-					<c:when test="<%= ((organization == null) || ((privateLayoutSetPrototype == null) && (organization.getPrivateLayoutsPageCount() == 0))) && !layoutSetPrototypes.isEmpty() %>">
-						<aui:select label="private-pages" name="privateLayoutSetPrototypeId">
-							<aui:option label="none" selected="<%= true %>" value="" />
+				<div class="sheet-section">
+					<h3 class="sheet-subtitle"><liferay-ui:message key="private-pages" /></h3>
 
-							<%
-							for (LayoutSetPrototype layoutSetPrototype : layoutSetPrototypes) {
-							%>
+					<c:choose>
+						<c:when test="<%= ((organization == null) || ((privateLayoutSetPrototype == null) && (organization.getPrivateLayoutsPageCount() == 0))) && !layoutSetPrototypes.isEmpty() %>">
+							<clay:alert
+								message='<%= LanguageUtil.get(request, "this-action-cannot-be-undone") %>'
+								style="warning"
+								title='<%= LanguageUtil.get(request, "warning") + ":" %>'
+							/>
 
-								<aui:option label="<%= HtmlUtil.escape(layoutSetPrototype.getName(locale)) %>" value="<%= layoutSetPrototype.getLayoutSetPrototypeId() %>" />
+							<aui:select label="" name="privateLayoutSetPrototypeId">
+								<aui:option label="none" selected="<%= true %>" value="" />
 
-							<%
-							}
-							%>
+								<%
+								for (LayoutSetPrototype layoutSetPrototype : layoutSetPrototypes) {
+								%>
 
-						</aui:select>
+									<aui:option label="<%= HtmlUtil.escape(layoutSetPrototype.getName(locale)) %>" value="<%= layoutSetPrototype.getLayoutSetPrototypeId() %>" />
 
-						<c:choose>
-							<c:when test="<%= hasUnlinkLayoutSetPrototypePermission %>">
-								<div class="hide" id="<portlet:namespace />privateLayoutSetPrototypeIdOptions">
-									<aui:input helpMessage="enable-propagation-of-changes-from-the-site-template-help" label="enable-propagation-of-changes-from-the-site-template" name="privateLayoutSetPrototypeLinkEnabled" type="checkbox" value="<%= true %>" />
-								</div>
-							</c:when>
-							<c:otherwise>
-								<aui:input name="privateLayoutSetPrototypeLinkEnabled" type="hidden" value="<%= true %>" />
-							</c:otherwise>
-						</c:choose>
-					</c:when>
-					<c:otherwise>
-						<aui:field-wrapper label="private-pages">
+								<%
+								}
+								%>
+
+							</aui:select>
+
+							<c:choose>
+								<c:when test="<%= hasUnlinkLayoutSetPrototypePermission %>">
+									<div class="hide" id="<portlet:namespace />privateLayoutSetPrototypeIdOptions">
+										<aui:input helpMessage="enable-propagation-of-changes-from-the-site-template-help" label="enable-propagation-of-changes-from-the-site-template" name="privateLayoutSetPrototypeLinkEnabled" type="checkbox" value="<%= true %>" />
+									</div>
+								</c:when>
+								<c:otherwise>
+									<aui:input name="privateLayoutSetPrototypeLinkEnabled" type="hidden" value="<%= true %>" />
+								</c:otherwise>
+							</c:choose>
+						</c:when>
+						<c:otherwise>
 							<c:choose>
 								<c:when test="<%= organization != null %>">
 									<aui:field-wrapper>
@@ -246,9 +266,19 @@ if (organization != null) {
 									</aui:field-wrapper>
 								</c:when>
 							</c:choose>
-						</aui:field-wrapper>
-					</c:otherwise>
-				</c:choose>
+						</c:otherwise>
+					</c:choose>
+				</div>
+
+				<div class="sheet-footer">
+					<aui:button primary="<%= true %>" type="submit" />
+
+					<%
+					OrganizationScreenNavigationDisplayContext organizationScreenNavigationDisplayContext = (OrganizationScreenNavigationDisplayContext)request.getAttribute(UsersAdminWebKeys.ORGANIZATION_SCREEN_NAVIGATION_DISPLAY_CONTEXT);
+					%>
+
+					<aui:button href="<%= organizationScreenNavigationDisplayContext.getBackURL() %>" type="cancel" />
+				</div>
 			</div>
 		</aui:fieldset>
 

@@ -1,0 +1,104 @@
+{namespace com.liferay.journal.web.ChangeDefaultLanguage}
+
+/**
+ * This renders the main element.
+ */
+{template .render}
+	{@param defaultLanguage: string}
+	{@param languages: list<[icon: string, label: string, message: string]>}
+	{@param spritemap: string}
+	{@param strings: map<string, string>}
+
+	{@param? _itemClicked: any}
+
+	<div class="default-language mb-3 text-info">
+		{call ClayIcon.render}
+			{param spritemap: $spritemap /}
+			{param symbol: 'info-circle' /}
+		{/call}
+
+		{sp}{$strings[$defaultLanguage]}{sp}
+
+		{let $label kind="html"}
+			<strong>{$strings['change']}</strong>
+		{/let}
+
+		{call ClayDropdown.render}
+			{param contentRenderer: 'defaultLanguage' /}
+			{param elementClasses: 'd-md-inline' /}
+			{param events: [
+				'itemClicked': $_itemClicked
+			] /}
+			{param items: $languages /}
+			{param label: $label /}
+			{param spritemap: $spritemap /}
+			{param triggerClasses: 'text-primary' /}
+		{/call}
+	</div>
+{/template}
+
+/**
+ *
+ */
+{deltemplate ClayDropdownItem.Item variant="'item'"}
+	{@param label: string}
+	{@param? _handleItemClick: any}
+	{@param? active: bool}
+	{@param? checked: bool}
+	{@param? disabled: bool}
+	{@param? href: string}
+	{@param? icon: string}
+	{@param? inputName: string}
+	{@param? inputValue: string}
+	{@param? items: list<?>}
+	{@param? itemsIconAlignment: string}
+	{@param? maxItems: int}
+	{@param? separator: bool}
+	{@param? spritemap: string}
+	{@param? title: string}
+
+	{let $itemContent kind="html"}
+		{let $labelContent kind="html"}
+			<span class="autofit-col autofit-col-expand">
+				<span class="autofit-section">
+					<span class="inline-item inline-item-before">
+						{call ClayIcon.render}
+							{param spritemap: $spritemap ?: '' /}
+							{param symbol: $icon ?: '' /}
+						{/call}
+					</span>
+					{$label}
+				</span>
+			</span>
+
+			{if $checked}
+				<span class="autofit-col">
+					{call ClayLabel.render}
+						{param label: 'default' /}
+						{param style: 'info' /}
+					{/call}
+				</span>
+			{/if}
+		{/let}
+
+		{call ClayButton.render}
+			{param ariaLabel: $label /}
+			{param disabled: $disabled /}
+			{param elementClasses: 'autofit-row dropdown-item' /}
+			{param label: $labelContent /}
+			{param size: 'sm' /}
+			{param spritemap: $spritemap /}
+			{param style: 'link' /}
+		{/call}
+	{/let}
+
+	{let $itemAttributes kind="attributes"}
+		data-onclick="{$_handleItemClick}"
+		data-value="{$label}"
+		tabindex="-1"
+	{/let}
+
+	<li {$itemAttributes}>
+		{$itemContent}
+	</li>
+{/deltemplate}

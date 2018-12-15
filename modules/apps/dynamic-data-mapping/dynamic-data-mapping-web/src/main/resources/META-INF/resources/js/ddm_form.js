@@ -3094,7 +3094,7 @@ AUI.add(
 
 						var definition = instance.get('definition');
 
-						definition.defaultLanguageId = event.languageId;
+						definition.defaultLanguageId = event.item.getAttribute('data-value');
 
 						instance.set('definition', definition);
 					},

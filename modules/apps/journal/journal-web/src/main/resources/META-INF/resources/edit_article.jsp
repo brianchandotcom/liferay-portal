@@ -290,16 +290,58 @@ if (classNameId > JournalArticleConstants.CLASSNAME_ID_DEFAULT) {
 		</c:if>
 
 		<c:if test="<%= journalWebConfiguration.changeableDefaultLanguage() %>">
-			<div class="default-language mb-3 text-primary">
-				<liferay-ui:icon
-					icon="info-circle"
-					markupView="lexicon"
-				/>
+			<%
+			Map<String, Object> strings = new HashMap<>();
 
-				<liferay-ui:message arguments="<%= defaultLocale.getDisplayName(locale) %>" key="default-language-x" />
+			strings.put("change", LanguageUtil.format(request, "change", "content"));
+			strings.put("default", LanguageUtil.format(request, "default", "content"));
 
-				<%@ include file="/change_default_language.jspf" %>
-			</div>
+			LinkedHashSet<String> uniqueLanguageIds = new LinkedHashSet<String>();
+
+			uniqueLanguageIds.add(journalDisplayContext.getDefaultLanguageId());
+
+			for (Locale availableLocale : LanguageUtil.getAvailableLocales(scopeGroupId)) {
+				String curLanguageId = LocaleUtil.toLanguageId(availableLocale);
+
+				uniqueLanguageIds.add(curLanguageId);
+
+				strings.put(
+					curLanguageId,
+					LanguageUtil.format(
+						request,
+						"default-language-x",
+						availableLocale.getDisplayName(defaultLocale),
+						false
+					)
+				);
+			}
+
+			List languages = new ArrayList();
+
+			for (String curLanguageId : uniqueLanguageIds) {
+				Map<String, Object> language = new HashMap<>();
+
+				languages.add(language);
+
+				language.put("checked", defaultLanguageId.equals(curLanguageId));
+				language.put("icon", StringUtil.toLowerCase(StringUtil.replace(curLanguageId, '_', '-')));
+				language.put("label", curLanguageId);
+			}
+
+			Map<String, Object> context = new HashMap<>();
+
+			context.put("defaultLanguage", journalDisplayContext.getDefaultLanguageId());
+			context.put("languages", languages);
+			context.put("namespace", liferayPortletResponse.getNamespace());
+			context.put("spritemap", themeDisplay.getPathThemeImages() + "/lexicon/icons.svg");
+			context.put("strings", strings);
+			%>
+
+			<soy:component-renderer
+				context="<%= context %>"
+				module="journal-web/js/ChangeDefaultLanguage.es"
+				templateNamespace="com.liferay.journal.web.ChangeDefaultLanguage.render"
+			/>
 		</c:if>
 
 		<liferay-frontend:form-navigator

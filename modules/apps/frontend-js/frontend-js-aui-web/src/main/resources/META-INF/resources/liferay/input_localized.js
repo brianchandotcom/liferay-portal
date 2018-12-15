@@ -375,11 +375,27 @@ AUI.add(
 						var instance = this;
 
 						var prevDefaultLanguageId = instance.get('defaultLanguageId');
+						var prevDefaultValue = instance.getValue(prevDefaultLanguageId);
 
-						instance.set('defaultLanguageId', event.languageId);
+						if (!prevDefaultValue) {
+							instance.removeInputLanguage(prevDefaultLanguageId);
+							instance.updateInputLanguage(prevDefaultValue, prevDefaultLanguageId);
+						}
 
+						var defaultLanguageId = event.item.getAttribute('data-value');
+
+						instance.set('defaultLanguageId', defaultLanguageId);
+
+						instance._updateTranslationStatus(defaultLanguageId);
 						instance._updateTranslationStatus(prevDefaultLanguageId);
-						instance._updateTranslationStatus(event.languageId);
+
+						Liferay.fire(
+							'inputLocalized:localeChanged',
+							{
+								item: event.item,
+								source: instance
+							}
+						);
 					},
 
 					_onInputValueChange: function(event, input) {

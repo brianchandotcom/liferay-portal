@@ -26,7 +26,9 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.elasticsearch7.configuration.ElasticsearchConfiguration;
 import com.liferay.portal.search.elasticsearch7.internal.cluster.ClusterSettingsContext;
-import com.liferay.portal.search.elasticsearch7.internal.index.IndexFactory;
+import com.liferay.portal.search.elasticsearch7.internal.settings.SettingsBuilder;
+import com.liferay.portal.search.elasticsearch7.internal.util.ResourceUtil;
+import com.liferay.portal.search.elasticsearch7.settings.ClientSettingsHelper;
 import com.liferay.portal.search.elasticsearch7.settings.SettingsContributor;
 
 import io.netty.buffer.ByteBufUtil;
@@ -36,15 +38,19 @@ import java.io.IOException;
 import java.net.InetAddress;
 
 import java.util.Map;
+import java.util.Set;
+import java.util.concurrent.ConcurrentSkipListSet;
 import java.util.concurrent.RejectedExecutionHandler;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.lang.time.StopWatch;
+import org.apache.http.HttpHost;
 import org.apache.logging.log4j.LogManager;
 
-import org.elasticsearch.client.Client;
+import org.elasticsearch.client.RestClient;
+import org.elasticsearch.client.RestHighLevelClient;
 import org.elasticsearch.common.inject.Injector;
 import org.elasticsearch.common.settings.Settings;
 import org.elasticsearch.node.Node;
@@ -143,12 +149,6 @@ public class EmbeddedElasticsearchConnection
 		return OperationMode.EMBEDDED;
 	}
 
-	@Override
-	@Reference(unbind = "-")
-	public void setIndexFactory(IndexFactory indexFactory) {
-		super.setIndexFactory(indexFactory);
-	}
-
 	@Activate
 	@Modified
 	protected void activate(
@@ -162,7 +162,6 @@ public class EmbeddedElasticsearchConnection
 		_jnaTmpDirName = tempDir.getAbsolutePath();
 	}
 
-	@Override
 	@Reference(
 		cardinality = ReferenceCardinality.MULTIPLE,
 		policy = ReferencePolicy.DYNAMIC,
@@ -172,7 +171,7 @@ public class EmbeddedElasticsearchConnection
 	protected void addSettingsContributor(
 		SettingsContributor settingsContributor) {
 
-		super.addSettingsContributor(settingsContributor);
+		_settingsContributors.add(settingsContributor);
 	}
 
 	protected void configureClustering() {
@@ -184,6 +183,10 @@ public class EmbeddedElasticsearchConnection
 	}
 
 	protected void configureHttp() {
+		settingsBuilder.put(
+			"http.port",
+			String.valueOf(elasticsearchConfiguration.embeddedHttpPort()));
+
 		settingsBuilder.put(
 			"http.cors.enabled", elasticsearchConfiguration.httpCORSEnabled());
 
@@ -228,7 +231,7 @@ public class EmbeddedElasticsearchConnection
 			elasticsearchConfiguration.networkPublishHost();
 
 		if (Validator.isNotNull(networkPublishHost)) {
-			settingsBuilder.put("network.publish.host", networkPublishHost);
+			settingsBuilder.put("network.publish_host", networkPublishHost);
 		}
 
 		String transportTcpPort = elasticsearchConfiguration.transportTcpPort();
@@ -258,58 +261,6 @@ public class EmbeddedElasticsearchConnection
 		}
 
 		settingsBuilder.put("monitor.jvm.gc.enabled", StringPool.FALSE);
-	}
-
-	@Override
-	protected Client createClient() {
-		StopWatch stopWatch = new StopWatch();
-
-		stopWatch.start();
-
-		if (_log.isWarnEnabled()) {
-			StringBundler sb = new StringBundler(8);
-
-			sb.append("Liferay is configured to use embedded Elasticsearch ");
-			sb.append("as its search engine. Do NOT use embedded ");
-			sb.append("Elasticsearch in production. Embedded Elasticsearch ");
-			sb.append("is useful for development and demonstration purposes. ");
-			sb.append("Refer to the documentation for details on the ");
-			sb.append("limitations of embedded Elasticsearch. Remote ");
-			sb.append("Elasticsearch connections can be configured in the ");
-			sb.append("Control Panel.");
-
-			_log.warn(sb.toString());
-		}
-
-		Settings settings = settingsBuilder.build();
-
-		if (_log.isDebugEnabled()) {
-			_log.debug(
-				"Starting embedded Elasticsearch cluster " +
-					elasticsearchConfiguration.clusterName());
-		}
-
-		_node = createNode(settings);
-
-		try {
-			_node.start();
-		}
-		catch (NodeValidationException nve) {
-			throw new RuntimeException(nve);
-		}
-
-		Client client = _node.client();
-
-		if (_log.isDebugEnabled()) {
-			stopWatch.stop();
-
-			_log.debug(
-				StringBundler.concat(
-					"Started ", elasticsearchConfiguration.clusterName(),
-					" in ", stopWatch.getTime(), " ms"));
-		}
-
-		return client;
 	}
 
 	protected EmbeddedElasticsearchPluginManager
@@ -352,6 +303,17 @@ public class EmbeddedElasticsearchConnection
 		}
 	}
 
+	@Override
+	protected RestHighLevelClient createRestHighLevelClient() {
+		startNode();
+
+		return new RestHighLevelClient(
+			RestClient.builder(
+				new HttpHost(
+					"localhost", elasticsearchConfiguration.embeddedHttpPort(),
+					"http")));
+	}
+
 	@Deactivate
 	protected void deactivate(Map<String, Object> properties) {
 		close();
@@ -387,8 +349,17 @@ public class EmbeddedElasticsearchConnection
 		LogManager.shutdown();
 	}
 
-	@Override
-	protected void loadRequiredDefaultConfigurations() {
+	protected void loadAdditionalConfigurations() {
+		settingsBuilder.loadFromSource(
+			elasticsearchConfiguration.additionalConfigurations());
+	}
+
+	protected void loadDefaultConfigurations() {
+		String defaultConfigurations = ResourceUtil.getResourceAsString(
+			getClass(), "/META-INF/elasticsearch-optional-defaults.yml");
+
+		settingsBuilder.loadFromSource(defaultConfigurations);
+
 		settingsBuilder.put("action.auto_create_index", false);
 		settingsBuilder.put(
 			"bootstrap.memory_lock",
@@ -403,10 +374,31 @@ public class EmbeddedElasticsearchConnection
 		settingsBuilder.put("node.data", true);
 		settingsBuilder.put("node.ingest", true);
 		settingsBuilder.put("node.master", true);
+		settingsBuilder.put("node.name", "liferay");
 
 		configurePaths();
 
 		configureTestMode();
+	}
+
+	protected void loadSettingsContributors() {
+		ClientSettingsHelper clientSettingsHelper = new ClientSettingsHelper() {
+
+			@Override
+			public void put(String setting, String value) {
+				settingsBuilder.put(setting, value);
+			}
+
+			@Override
+			public void putArray(String setting, String... values) {
+				settingsBuilder.putList(setting, values);
+			}
+
+		};
+
+		for (SettingsContributor settingsContributor : _settingsContributors) {
+			settingsContributor.populate(clientSettingsHelper);
+		}
 	}
 
 	protected void removeObsoletePlugin(String name, Settings settings) {
@@ -422,11 +414,63 @@ public class EmbeddedElasticsearchConnection
 		}
 	}
 
-	@Override
 	protected void removeSettingsContributor(
 		SettingsContributor settingsContributor) {
 
-		super.removeSettingsContributor(settingsContributor);
+		_settingsContributors.remove(settingsContributor);
+	}
+
+	protected void startNode() {
+		loadDefaultConfigurations();
+
+		loadAdditionalConfigurations();
+
+		loadSettingsContributors();
+
+		StopWatch stopWatch = new StopWatch();
+
+		stopWatch.start();
+
+		if (_log.isWarnEnabled()) {
+			StringBundler sb = new StringBundler(8);
+
+			sb.append("Liferay is configured to use embedded Elasticsearch ");
+			sb.append("as its search engine. Do NOT use embedded ");
+			sb.append("Elasticsearch in production. Embedded Elasticsearch ");
+			sb.append("is useful for development and demonstration purposes. ");
+			sb.append("Refer to the documentation for details on the ");
+			sb.append("limitations of embedded Elasticsearch. Remote ");
+			sb.append("Elasticsearch connections can be configured in the ");
+			sb.append("Control Panel.");
+
+			_log.warn(sb.toString());
+		}
+
+		Settings settings = settingsBuilder.build();
+
+		if (_log.isDebugEnabled()) {
+			_log.debug(
+				"Starting embedded Elasticsearch cluster " +
+					elasticsearchConfiguration.clusterName());
+		}
+
+		_node = createNode(settings);
+
+		try {
+			_node.start();
+		}
+		catch (NodeValidationException nve) {
+			throw new RuntimeException(nve);
+		}
+
+		if (_log.isDebugEnabled()) {
+			stopWatch.stop();
+
+			_log.debug(
+				StringBundler.concat(
+					"Started ", elasticsearchConfiguration.clusterName(),
+					" in ", stopWatch.getTime(), " ms"));
+		}
 	}
 
 	protected static final String JNA_TMP_DIR = "elasticSearch-tmpDir";
@@ -436,6 +480,9 @@ public class EmbeddedElasticsearchConnection
 
 	@Reference
 	protected Props props;
+
+	protected SettingsBuilder settingsBuilder = new SettingsBuilder(
+		Settings.builder());
 
 	/**
 	 * Keep this as a static field to avoid the class loading failure during
@@ -467,5 +514,7 @@ public class EmbeddedElasticsearchConnection
 	private File _file;
 
 	private Node _node;
+	private final Set<SettingsContributor> _settingsContributors =
+		new ConcurrentSkipListSet<>();
 
 }

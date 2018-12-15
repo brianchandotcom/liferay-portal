@@ -27,8 +27,7 @@ import com.liferay.portal.search.index.IndexNameBuilder;
 
 import java.util.List;
 
-import org.elasticsearch.client.AdminClient;
-import org.elasticsearch.client.Client;
+import org.elasticsearch.client.RestHighLevelClient;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -83,11 +82,10 @@ public class ElasticsearchCluster {
 			ElasticsearchConnection elasticsearchConnection =
 				getActiveElasticsearchConnection();
 
-			Client client = elasticsearchConnection.getClient();
+			RestHighLevelClient restHighLevelClient =
+				elasticsearchConnection.getRestHighLevelClient();
 
-			AdminClient adminClient = client.admin();
-
-			return new ReplicasManagerImpl(adminClient.indices());
+			return new ReplicasManagerImpl(restHighLevelClient.indices());
 		}
 
 		@Override

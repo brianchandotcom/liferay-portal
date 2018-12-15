@@ -1,0 +1,15 @@
+{
+	"layout-admin-web": {
+		"dest-mod-name-mapper": {
+			"from": "(.*)\\.js$",
+			"to": "bridge/layout-admin-web/$1"
+		},
+		"file-globs": "**/*.es.js,**/*.soy.js",
+		"input": "classes/META-INF/resources",
+		"output": "classes/META-INF/resources/bridge/layout-admin-web",
+		"src-mod-name-mapper": {
+			"from": "(.*)\\.js$",
+			"to": "layout-admin-web/$1"
+		}
+	}
+}

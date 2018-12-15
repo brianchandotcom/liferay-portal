@@ -32,6 +32,7 @@
 		"babel-preset-env": "^1.7.0",
 		"check-source-formatting": "^2.0.12",
 		"cross-env": "^5.2.0",
+		"liferay-npm-bridge-generator": "^2.6.1",
 		"liferay-npm-bundler": "^2.5.1",
 		"liferay-npm-bundler-preset-liferay-dev": "^1.1.0",
 		"metal-tools-soy": "^4.0.0",
@@ -39,7 +40,7 @@
 	},
 	"name": "layout-admin-web",
 	"scripts": {
-		"build": "npm run build:soy && npm run compile && liferay-npm-bundler && npm run cleanSoy",
+		"build": "npm run build:soy && npm run compile && liferay-npm-bundler && liferay-npm-bridge-generator && npm run cleanSoy",
 		"build:soy": "metalsoy --soyDeps \"node_modules/+(com.liferay.frontend.js.web|com.liferay.frontend.taglib)/**/*.soy\"",
 		"checkFormat": "npm run csf",
 		"cleanSoy": "rimraf src/**/*.soy.js",

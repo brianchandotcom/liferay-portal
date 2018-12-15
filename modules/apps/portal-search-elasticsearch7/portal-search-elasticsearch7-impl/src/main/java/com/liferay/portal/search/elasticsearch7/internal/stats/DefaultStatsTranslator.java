@@ -21,7 +21,6 @@ import com.liferay.portal.search.stats.StatsResponseBuilderFactory;
 
 import java.util.Map;
 
-import org.elasticsearch.action.search.SearchRequestBuilder;
 import org.elasticsearch.search.aggregations.Aggregation;
 import org.elasticsearch.search.aggregations.AggregationBuilders;
 import org.elasticsearch.search.aggregations.bucket.missing.Missing;
@@ -40,6 +39,7 @@ import org.elasticsearch.search.aggregations.metrics.Sum;
 import org.elasticsearch.search.aggregations.metrics.SumAggregationBuilder;
 import org.elasticsearch.search.aggregations.metrics.ValueCount;
 import org.elasticsearch.search.aggregations.metrics.ValueCountAggregationBuilder;
+import org.elasticsearch.search.builder.SearchSourceBuilder;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -52,7 +52,7 @@ public class DefaultStatsTranslator implements StatsTranslator {
 
 	@Override
 	public void populateRequest(
-		SearchRequestBuilder searchRequestBuilder, StatsRequest statsRequest) {
+		SearchSourceBuilder searchSourceBuilder, StatsRequest statsRequest) {
 
 		String field = statsRequest.getField();
 
@@ -62,7 +62,7 @@ public class DefaultStatsTranslator implements StatsTranslator {
 
 			cardinalityAggregationBuilder.field(field);
 
-			searchRequestBuilder.addAggregation(cardinalityAggregationBuilder);
+			searchSourceBuilder.aggregation(cardinalityAggregationBuilder);
 		}
 
 		if (statsRequest.isCount()) {
@@ -71,7 +71,7 @@ public class DefaultStatsTranslator implements StatsTranslator {
 
 			valueCountAggregationBuilder.field(field);
 
-			searchRequestBuilder.addAggregation(valueCountAggregationBuilder);
+			searchSourceBuilder.aggregation(valueCountAggregationBuilder);
 		}
 
 		if (statsRequest.isMax()) {
@@ -80,7 +80,7 @@ public class DefaultStatsTranslator implements StatsTranslator {
 
 			maxAggregationBuilder.field(field);
 
-			searchRequestBuilder.addAggregation(maxAggregationBuilder);
+			searchSourceBuilder.aggregation(maxAggregationBuilder);
 		}
 
 		if (statsRequest.isMean()) {
@@ -89,7 +89,7 @@ public class DefaultStatsTranslator implements StatsTranslator {
 
 			statsAggregationBuilder.field(field);
 
-			searchRequestBuilder.addAggregation(statsAggregationBuilder);
+			searchSourceBuilder.aggregation(statsAggregationBuilder);
 		}
 
 		if (statsRequest.isMin()) {
@@ -98,7 +98,7 @@ public class DefaultStatsTranslator implements StatsTranslator {
 
 			minAggregationBuilder.field(field);
 
-			searchRequestBuilder.addAggregation(minAggregationBuilder);
+			searchSourceBuilder.aggregation(minAggregationBuilder);
 		}
 
 		if (statsRequest.isMissing()) {
@@ -107,7 +107,7 @@ public class DefaultStatsTranslator implements StatsTranslator {
 
 			missingAggregationBuilder.field(field);
 
-			searchRequestBuilder.addAggregation(missingAggregationBuilder);
+			searchSourceBuilder.aggregation(missingAggregationBuilder);
 		}
 
 		if (statsRequest.isStandardDeviation() ||
@@ -118,8 +118,7 @@ public class DefaultStatsTranslator implements StatsTranslator {
 
 			extendedStatsAggregationBuilder.field(field);
 
-			searchRequestBuilder.addAggregation(
-				extendedStatsAggregationBuilder);
+			searchSourceBuilder.aggregation(extendedStatsAggregationBuilder);
 		}
 
 		if (statsRequest.isSum()) {
@@ -128,7 +127,7 @@ public class DefaultStatsTranslator implements StatsTranslator {
 
 			sumAggregationBuilder.field(field);
 
-			searchRequestBuilder.addAggregation(sumAggregationBuilder);
+			searchSourceBuilder.aggregation(sumAggregationBuilder);
 		}
 	}
 

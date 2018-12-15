@@ -26,15 +26,18 @@ import com.liferay.portal.search.elasticsearch7.internal.util.LogUtil;
 import com.liferay.portal.search.elasticsearch7.internal.util.ResourceUtil;
 import com.liferay.portal.search.elasticsearch7.settings.TypeMappingsHelper;
 
+import java.io.IOException;
+
 import java.util.LinkedHashMap;
 import java.util.Map;
 
 import org.elasticsearch.action.ActionResponse;
-import org.elasticsearch.action.admin.indices.create.CreateIndexRequestBuilder;
-import org.elasticsearch.action.admin.indices.mapping.get.GetMappingsRequestBuilder;
+import org.elasticsearch.action.admin.indices.mapping.get.GetMappingsRequest;
 import org.elasticsearch.action.admin.indices.mapping.get.GetMappingsResponse;
-import org.elasticsearch.action.admin.indices.mapping.put.PutMappingRequestBuilder;
-import org.elasticsearch.client.IndicesAdminClient;
+import org.elasticsearch.client.IndicesClient;
+import org.elasticsearch.client.RequestOptions;
+import org.elasticsearch.client.indices.CreateIndexRequest;
+import org.elasticsearch.client.indices.PutMappingRequest;
 import org.elasticsearch.cluster.metadata.MappingMetaData;
 import org.elasticsearch.common.collect.ImmutableOpenMap;
 import org.elasticsearch.common.compress.CompressedXContent;
@@ -47,36 +50,37 @@ import org.elasticsearch.common.xcontent.XContentType;
 public class LiferayDocumentTypeFactory implements TypeMappingsHelper {
 
 	public LiferayDocumentTypeFactory(
-		IndicesAdminClient indicesAdminClient, JSONFactory jsonFactory) {
+		IndicesClient indicesClient, JSONFactory jsonFactory) {
 
-		_indicesAdminClient = indicesAdminClient;
+		_indicesClient = indicesClient;
 		_jsonFactory = jsonFactory;
 	}
 
 	@Override
 	public void addTypeMappings(String indexName, String source) {
-		PutMappingRequestBuilder putMappingRequestBuilder =
-			_indicesAdminClient.preparePutMapping(indexName);
+		PutMappingRequest putMappingRequest = new PutMappingRequest(indexName);
 
-		putMappingRequestBuilder.setSource(
+		putMappingRequest.source(
 			mergeDynamicTemplates(
 				source, indexName,
 				LiferayTypeMappingsConstants.LIFERAY_DOCUMENT_TYPE),
 			XContentType.JSON);
-		putMappingRequestBuilder.setType(
-			LiferayTypeMappingsConstants.LIFERAY_DOCUMENT_TYPE);
 
-		ActionResponse actionResponse = putMappingRequestBuilder.get();
+		try {
+			ActionResponse actionResponse = _indicesClient.putMapping(
+				putMappingRequest, RequestOptions.DEFAULT);
 
-		LogUtil.logActionResponse(_log, actionResponse);
+			LogUtil.logActionResponse(_log, actionResponse);
+		}
+		catch (IOException ioe) {
+			throw new RuntimeException(ioe);
+		}
 	}
 
 	public void createLiferayDocumentTypeMappings(
-		CreateIndexRequestBuilder createIndexRequestBuilder, String mappings) {
+		CreateIndexRequest createIndexRequest, String mappings) {
 
-		createIndexRequestBuilder.addMapping(
-			LiferayTypeMappingsConstants.LIFERAY_DOCUMENT_TYPE, mappings,
-			XContentType.JSON);
+		createIndexRequest.mapping(mappings, XContentType.JSON);
 	}
 
 	public void createOptionalDefaultTypeMappings(String indexName) {
@@ -101,7 +105,7 @@ public class LiferayDocumentTypeFactory implements TypeMappingsHelper {
 	}
 
 	public void createRequiredDefaultTypeMappings(
-		CreateIndexRequestBuilder createIndexRequestBuilder) {
+		CreateIndexRequest createIndexRequest) {
 
 		String requiredDefaultMappings = ResourceUtil.getResourceAsString(
 			getClass(),
@@ -109,7 +113,7 @@ public class LiferayDocumentTypeFactory implements TypeMappingsHelper {
 				LIFERAY_DOCUMENT_TYPE_MAPPING_FILE_NAME);
 
 		createLiferayDocumentTypeMappings(
-			createIndexRequestBuilder, requiredDefaultMappings);
+			createIndexRequest, requiredDefaultMappings);
 	}
 
 	protected JSONObject createJSONObject(String mappings) {
@@ -122,13 +126,20 @@ public class LiferayDocumentTypeFactory implements TypeMappingsHelper {
 	}
 
 	protected String getMappings(String indexName, String typeName) {
-		GetMappingsRequestBuilder getMappingsRequestBuilder =
-			_indicesAdminClient.prepareGetMappings(indexName);
+		GetMappingsRequest getMappingsRequest = new GetMappingsRequest();
 
-		getMappingsRequestBuilder.setTypes(typeName);
+		getMappingsRequest.indices(indexName);
+		getMappingsRequest.types(typeName);
 
-		GetMappingsResponse getMappingsResponse =
-			getMappingsRequestBuilder.get();
+		GetMappingsResponse getMappingsResponse = null;
+
+		try {
+			getMappingsResponse = _indicesClient.getMapping(
+				getMappingsRequest, RequestOptions.DEFAULT);
+		}
+		catch (IOException ioe) {
+			throw new RuntimeException(ioe);
+		}
 
 		ImmutableOpenMap<String, ImmutableOpenMap<String, MappingMetaData>>
 			map = getMappingsResponse.mappings();
@@ -205,7 +216,7 @@ public class LiferayDocumentTypeFactory implements TypeMappingsHelper {
 	private static final Log _log = LogFactoryUtil.getLog(
 		LiferayDocumentTypeFactory.class);
 
-	private final IndicesAdminClient _indicesAdminClient;
+	private final IndicesClient _indicesClient;
 	private final JSONFactory _jsonFactory;
 
 }

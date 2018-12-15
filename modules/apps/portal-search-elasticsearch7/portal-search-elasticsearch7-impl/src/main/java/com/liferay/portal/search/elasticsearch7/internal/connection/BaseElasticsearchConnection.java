@@ -17,19 +17,19 @@ package com.liferay.portal.search.elasticsearch7.internal.connection;
 import com.liferay.portal.search.elasticsearch7.configuration.ElasticsearchConfiguration;
 import com.liferay.portal.search.elasticsearch7.internal.index.IndexFactory;
 import com.liferay.portal.search.elasticsearch7.internal.settings.SettingsBuilder;
-import com.liferay.portal.search.elasticsearch7.internal.util.ResourceUtil;
 import com.liferay.portal.search.elasticsearch7.settings.ClientSettingsHelper;
 import com.liferay.portal.search.elasticsearch7.settings.SettingsContributor;
 
+import java.io.IOException;
+
 import java.util.Set;
 import java.util.concurrent.ConcurrentSkipListSet;
-import java.util.concurrent.Future;
 
-import org.elasticsearch.action.admin.cluster.health.ClusterHealthRequestBuilder;
+import org.elasticsearch.action.admin.cluster.health.ClusterHealthRequest;
 import org.elasticsearch.action.admin.cluster.health.ClusterHealthResponse;
-import org.elasticsearch.client.AdminClient;
-import org.elasticsearch.client.Client;
-import org.elasticsearch.client.ClusterAdminClient;
+import org.elasticsearch.client.ClusterClient;
+import org.elasticsearch.client.RequestOptions;
+import org.elasticsearch.client.RestHighLevelClient;
 import org.elasticsearch.common.settings.Settings;
 import org.elasticsearch.common.unit.TimeValue;
 
@@ -41,64 +41,55 @@ public abstract class BaseElasticsearchConnection
 
 	@Override
 	public void close() {
-		if (_client == null) {
+		if (_restHighLevelClient == null) {
 			return;
 		}
 
-		_client.close();
+		try {
+			_restHighLevelClient.close();
+		}
+		catch (IOException ioe) {
+			throw new RuntimeException(ioe);
+		}
 
-		_client = null;
+		_restHighLevelClient = null;
 	}
 
 	@Override
 	public void connect() {
 		settingsBuilder = new SettingsBuilder(Settings.builder());
 
-		loadOptionalDefaultConfigurations();
-
-		loadAdditionalConfigurations();
-
-		loadRequiredDefaultConfigurations();
-
 		loadSettingsContributors();
 
-		_client = createClient();
-	}
-
-	@Override
-	public Client getClient() {
-		return _client;
+		_restHighLevelClient = createRestHighLevelClient();
 	}
 
 	@Override
 	public ClusterHealthResponse getClusterHealthResponse(long timeout) {
-		Client client = getClient();
+		ClusterClient clusterClient = _restHighLevelClient.cluster();
 
-		AdminClient adminClient = client.admin();
+		ClusterHealthRequest clusterHealthRequest = new ClusterHealthRequest();
 
-		ClusterAdminClient clusterAdminClient = adminClient.cluster();
+		clusterHealthRequest.timeout(TimeValue.timeValueMillis(timeout));
 
-		ClusterHealthRequestBuilder clusterHealthRequestBuilder =
-			clusterAdminClient.prepareHealth();
-
-		clusterHealthRequestBuilder.setTimeout(
-			TimeValue.timeValueMillis(timeout));
-
-		clusterHealthRequestBuilder.setWaitForYellowStatus();
-
-		Future<ClusterHealthResponse> future =
-			clusterHealthRequestBuilder.execute();
+		clusterHealthRequest.waitForYellowStatus();
 
 		try {
-			return future.get();
+			return clusterClient.health(
+				clusterHealthRequest, RequestOptions.DEFAULT);
 		}
-		catch (Exception e) {
-			throw new IllegalStateException(e);
+		catch (IOException ioe) {
+			throw new IllegalStateException(ioe);
 		}
 	}
 
+	@Override
+	public RestHighLevelClient getRestHighLevelClient() {
+		return _restHighLevelClient;
+	}
+
 	public boolean isConnected() {
-		if (_client != null) {
+		if (_restHighLevelClient != null) {
 			return true;
 		}
 
@@ -115,25 +106,11 @@ public abstract class BaseElasticsearchConnection
 		_settingsContributors.add(settingsContributor);
 	}
 
-	protected abstract Client createClient();
+	protected abstract RestHighLevelClient createRestHighLevelClient();
 
 	protected IndexFactory getIndexFactory() {
 		return _indexFactory;
 	}
-
-	protected void loadAdditionalConfigurations() {
-		settingsBuilder.loadFromSource(
-			elasticsearchConfiguration.additionalConfigurations());
-	}
-
-	protected void loadOptionalDefaultConfigurations() {
-		String defaultConfigurations = ResourceUtil.getResourceAsString(
-			getClass(), "/META-INF/elasticsearch-optional-defaults.yml");
-
-		settingsBuilder.loadFromSource(defaultConfigurations);
-	}
-
-	protected abstract void loadRequiredDefaultConfigurations();
 
 	protected void loadSettingsContributors() {
 		ClientSettingsHelper clientSettingsHelper = new ClientSettingsHelper() {
@@ -165,8 +142,8 @@ public abstract class BaseElasticsearchConnection
 	protected SettingsBuilder settingsBuilder = new SettingsBuilder(
 		Settings.builder());
 
-	private Client _client;
 	private IndexFactory _indexFactory;
+	private RestHighLevelClient _restHighLevelClient;
 	private final Set<SettingsContributor> _settingsContributors =
 		new ConcurrentSkipListSet<>();
 

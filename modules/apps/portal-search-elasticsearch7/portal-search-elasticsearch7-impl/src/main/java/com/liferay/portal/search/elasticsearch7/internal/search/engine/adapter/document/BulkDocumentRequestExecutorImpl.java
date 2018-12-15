@@ -27,14 +27,17 @@ import com.liferay.portal.search.engine.adapter.document.DeleteDocumentRequest;
 import com.liferay.portal.search.engine.adapter.document.IndexDocumentRequest;
 import com.liferay.portal.search.engine.adapter.document.UpdateDocumentRequest;
 
-import org.elasticsearch.action.bulk.BulkAction;
+import java.io.IOException;
+
 import org.elasticsearch.action.bulk.BulkItemResponse;
-import org.elasticsearch.action.bulk.BulkRequestBuilder;
+import org.elasticsearch.action.bulk.BulkRequest;
 import org.elasticsearch.action.bulk.BulkResponse;
-import org.elasticsearch.action.delete.DeleteRequestBuilder;
-import org.elasticsearch.action.index.IndexRequestBuilder;
+import org.elasticsearch.action.delete.DeleteRequest;
+import org.elasticsearch.action.index.IndexRequest;
 import org.elasticsearch.action.support.WriteRequest;
-import org.elasticsearch.action.update.UpdateRequestBuilder;
+import org.elasticsearch.action.update.UpdateRequest;
+import org.elasticsearch.client.RequestOptions;
+import org.elasticsearch.client.RestHighLevelClient;
 import org.elasticsearch.common.unit.TimeValue;
 import org.elasticsearch.rest.RestStatus;
 
@@ -52,10 +55,9 @@ public class BulkDocumentRequestExecutorImpl
 	public BulkDocumentResponse execute(
 		BulkDocumentRequest bulkDocumentRequest) {
 
-		BulkRequestBuilder bulkRequestBuilder = createBulkRequestBuilder(
-			bulkDocumentRequest);
+		BulkRequest bulkRequest = createBulkRequest(bulkDocumentRequest);
 
-		BulkResponse bulkResponse = bulkRequestBuilder.get();
+		BulkResponse bulkResponse = getBulkResponse(bulkRequest);
 
 		LogUtil.logActionResponse(_log, bulkResponse);
 
@@ -99,15 +101,13 @@ public class BulkDocumentRequestExecutorImpl
 		return bulkDocumentResponse;
 	}
 
-	protected BulkRequestBuilder createBulkRequestBuilder(
+	protected BulkRequest createBulkRequest(
 		BulkDocumentRequest bulkDocumentRequest) {
 
-		BulkRequestBuilder bulkRequestBuilder = new BulkRequestBuilder(
-			_elasticsearchClientResolver.getClient(), BulkAction.INSTANCE);
+		BulkRequest bulkRequest = new BulkRequest();
 
 		if (bulkDocumentRequest.isRefresh()) {
-			bulkRequestBuilder.setRefreshPolicy(
-				WriteRequest.RefreshPolicy.IMMEDIATE);
+			bulkRequest.setRefreshPolicy(WriteRequest.RefreshPolicy.IMMEDIATE);
 		}
 
 		for (BulkableDocumentRequest<?> bulkableDocumentRequest :
@@ -116,25 +116,25 @@ public class BulkDocumentRequestExecutorImpl
 			bulkableDocumentRequest.accept(
 				request -> {
 					if (request instanceof DeleteDocumentRequest) {
-						DeleteRequestBuilder deleteRequestBuilder =
+						DeleteRequest deleteRequest =
 							_bulkableDocumentRequestTranslator.translate(
 								(DeleteDocumentRequest)request);
 
-						bulkRequestBuilder.add(deleteRequestBuilder);
+						bulkRequest.add(deleteRequest);
 					}
 					else if (request instanceof IndexDocumentRequest) {
-						IndexRequestBuilder indexRequestBuilder =
+						IndexRequest indexRequest =
 							_bulkableDocumentRequestTranslator.translate(
 								(IndexDocumentRequest)request);
 
-						bulkRequestBuilder.add(indexRequestBuilder);
+						bulkRequest.add(indexRequest);
 					}
 					else if (request instanceof UpdateDocumentRequest) {
-						UpdateRequestBuilder updateRequestBuilder =
+						UpdateRequest updateRequest =
 							_bulkableDocumentRequestTranslator.translate(
 								(UpdateDocumentRequest)request);
 
-						bulkRequestBuilder.add(updateRequestBuilder);
+						bulkRequest.add(updateRequest);
 					}
 					else {
 						throw new IllegalArgumentException(
@@ -143,7 +143,20 @@ public class BulkDocumentRequestExecutorImpl
 				});
 		}
 
-		return bulkRequestBuilder;
+		return bulkRequest;
+	}
+
+	protected BulkResponse getBulkResponse(BulkRequest bulkRequest) {
+		RestHighLevelClient restHighLevelClient =
+			_elasticsearchClientResolver.getRestHighLevelClient();
+
+		try {
+			return restHighLevelClient.bulk(
+				bulkRequest, RequestOptions.DEFAULT);
+		}
+		catch (IOException ioe) {
+			throw new RuntimeException(ioe);
+		}
 	}
 
 	@Reference(target = "(search.engine.impl=Elasticsearch)", unbind = "-")

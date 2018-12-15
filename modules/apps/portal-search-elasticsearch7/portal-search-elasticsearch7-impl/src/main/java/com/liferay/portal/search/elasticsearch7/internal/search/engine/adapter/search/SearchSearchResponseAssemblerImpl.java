@@ -42,9 +42,9 @@ import java.util.stream.Stream;
 
 import org.apache.lucene.search.TotalHits;
 
-import org.elasticsearch.action.search.SearchRequestBuilder;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.search.aggregations.Aggregations;
+import org.elasticsearch.search.builder.SearchSourceBuilder;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -60,8 +60,8 @@ public class SearchSearchResponseAssemblerImpl
 
 	@Override
 	public void assemble(
-		SearchRequestBuilder searchRequestBuilder,
-		SearchResponse searchResponse, SearchSearchRequest searchSearchRequest,
+		SearchSourceBuilder searchRequestBuilder, SearchResponse searchResponse,
+		SearchSearchRequest searchSearchRequest,
 		SearchSearchResponse searchSearchResponse) {
 
 		_commonSearchResponseAssembler.assemble(

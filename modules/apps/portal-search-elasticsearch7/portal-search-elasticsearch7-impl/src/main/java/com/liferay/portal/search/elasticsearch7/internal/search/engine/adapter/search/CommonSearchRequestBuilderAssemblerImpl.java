@@ -40,13 +40,14 @@ import java.util.Map;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
-import org.elasticsearch.action.search.SearchRequestBuilder;
+import org.elasticsearch.action.search.SearchRequest;
 import org.elasticsearch.common.unit.TimeValue;
 import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.aggregations.AggregationBuilder;
 import org.elasticsearch.search.aggregations.PipelineAggregationBuilder;
+import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.elasticsearch.search.rescore.QueryRescorerBuilder;
 
 import org.osgi.service.component.annotations.Component;
@@ -61,24 +62,26 @@ public class CommonSearchRequestBuilderAssemblerImpl
 
 	@Override
 	public void assemble(
-		SearchRequestBuilder searchRequestBuilder,
-		BaseSearchRequest baseSearchRequest) {
+		SearchSourceBuilder searchSourceBuilder,
+		BaseSearchRequest baseSearchRequest, SearchRequest searchRequest) {
 
-		setAggregations(searchRequestBuilder, baseSearchRequest);
-		setExplain(searchRequestBuilder, baseSearchRequest);
-		setFacets(searchRequestBuilder, baseSearchRequest);
-		setIndexBoosts(searchRequestBuilder, baseSearchRequest);
-		setIndices(searchRequestBuilder, baseSearchRequest);
-		setMinScore(searchRequestBuilder, baseSearchRequest);
-		setPipelineAggregations(searchRequestBuilder, baseSearchRequest);
-		setPostFilter(searchRequestBuilder, baseSearchRequest);
-		setQuery(searchRequestBuilder, baseSearchRequest);
-		setRequestCache(searchRequestBuilder, baseSearchRequest);
-		setRescorer(searchRequestBuilder, baseSearchRequest);
-		setStatsRequests(searchRequestBuilder, baseSearchRequest);
-		setTimeout(searchRequestBuilder, baseSearchRequest);
-		setTrackTotalHits(searchRequestBuilder, baseSearchRequest);
-		setTypes(searchRequestBuilder, baseSearchRequest);
+		setAggregations(searchSourceBuilder, baseSearchRequest);
+		setExplain(searchSourceBuilder, baseSearchRequest);
+		setFacets(searchSourceBuilder, baseSearchRequest);
+		setIndexBoosts(searchSourceBuilder, baseSearchRequest);
+		setIndices(searchRequest, baseSearchRequest);
+		setMinScore(searchSourceBuilder, baseSearchRequest);
+		setPipelineAggregations(searchSourceBuilder, baseSearchRequest);
+		setPostFilter(searchSourceBuilder, baseSearchRequest);
+		setQuery(searchSourceBuilder, baseSearchRequest);
+		setRequestCache(searchRequest, baseSearchRequest);
+		setRescorer(searchSourceBuilder, baseSearchRequest);
+		setStatsRequests(searchSourceBuilder, baseSearchRequest);
+		setTimeout(searchSourceBuilder, baseSearchRequest);
+		setTrackTotalHits(searchSourceBuilder, baseSearchRequest);
+		setTypes(searchRequest, baseSearchRequest);
+
+		searchRequest.source(searchSourceBuilder);
 	}
 
 	protected BooleanQuery buildComplexQuery(
@@ -175,7 +178,7 @@ public class CommonSearchRequestBuilderAssemblerImpl
 	}
 
 	protected void setAggregations(
-		SearchRequestBuilder searchRequestBuilder,
+		SearchSourceBuilder searchSourceBuilder,
 		BaseSearchRequest baseSearchRequest) {
 
 		Map<String, Aggregation> aggregationsMap =
@@ -189,7 +192,7 @@ public class CommonSearchRequestBuilderAssemblerImpl
 					AggregationBuilder aggregationBuilder =
 						_aggregationTranslator.translate(aggregation);
 
-					searchRequestBuilder.addAggregation(aggregationBuilder);
+					searchSourceBuilder.aggregation(aggregationBuilder);
 				});
 		}
 	}
@@ -209,20 +212,20 @@ public class CommonSearchRequestBuilderAssemblerImpl
 	}
 
 	protected void setExplain(
-		SearchRequestBuilder searchRequestBuilder,
+		SearchSourceBuilder searchSourceBuilder,
 		BaseSearchRequest baseSearchRequest) {
 
 		if (baseSearchRequest.getExplain() != null) {
-			searchRequestBuilder.setExplain(baseSearchRequest.getExplain());
+			searchSourceBuilder.explain(baseSearchRequest.getExplain());
 		}
 	}
 
 	protected void setFacets(
-		SearchRequestBuilder searchRequestBuilder,
+		SearchSourceBuilder searchSourceBuilder,
 		BaseSearchRequest baseSearchRequest) {
 
 		_facetTranslator.translate(
-			searchRequestBuilder, baseSearchRequest.getQuery71(),
+			searchSourceBuilder, baseSearchRequest.getQuery71(),
 			baseSearchRequest.getFacets(),
 			baseSearchRequest.isBasicFacetSelection());
 	}
@@ -240,21 +243,20 @@ public class CommonSearchRequestBuilderAssemblerImpl
 	}
 
 	protected void setIndexBoosts(
-		SearchRequestBuilder searchRequestBuilder,
+		SearchSourceBuilder searchSourceBuilder,
 		BaseSearchRequest baseSearchRequest) {
 
 		Map<String, Float> indexBoosts = baseSearchRequest.getIndexBoosts();
 
 		if (MapUtil.isNotEmpty(indexBoosts)) {
-			indexBoosts.forEach(searchRequestBuilder::addIndexBoost);
+			indexBoosts.forEach(searchSourceBuilder::indexBoost);
 		}
 	}
 
 	protected void setIndices(
-		SearchRequestBuilder searchRequestBuilder,
-		BaseSearchRequest baseSearchRequest) {
+		SearchRequest searchRequest, BaseSearchRequest baseSearchRequest) {
 
-		searchRequestBuilder.setIndices(baseSearchRequest.getIndexNames());
+		searchRequest.indices(baseSearchRequest.getIndexNames());
 	}
 
 	@Reference(unbind = "-")
@@ -266,17 +268,16 @@ public class CommonSearchRequestBuilderAssemblerImpl
 	}
 
 	protected void setMinScore(
-		SearchRequestBuilder searchRequestBuilder,
+		SearchSourceBuilder searchSourceBuilder,
 		BaseSearchRequest baseSearchRequest) {
 
 		if (baseSearchRequest.getMinimumScore() != null) {
-			searchRequestBuilder.setMinScore(
-				baseSearchRequest.getMinimumScore());
+			searchSourceBuilder.minScore(baseSearchRequest.getMinimumScore());
 		}
 	}
 
 	protected void setPipelineAggregations(
-		SearchRequestBuilder searchRequestBuilder,
+		SearchSourceBuilder searchSourceBuilder,
 		BaseSearchRequest baseSearchRequest) {
 
 		Map<String, PipelineAggregation> pipelineAggregationsMap =
@@ -292,8 +293,7 @@ public class CommonSearchRequestBuilderAssemblerImpl
 						_pipelineAggregationTranslator.translate(
 							pipelineAggregation);
 
-					searchRequestBuilder.addAggregation(
-						pipelineAggregationBuilder);
+					searchSourceBuilder.aggregation(pipelineAggregationBuilder);
 				});
 		}
 	}
@@ -307,26 +307,26 @@ public class CommonSearchRequestBuilderAssemblerImpl
 	}
 
 	protected void setPostFilter(
-		SearchRequestBuilder searchRequestBuilder,
+		SearchSourceBuilder searchSourceBuilder,
 		BaseSearchRequest baseSearchRequest) {
 
 		if (baseSearchRequest.getPostFilterQuery() != null) {
-			searchRequestBuilder.setPostFilter(
+			searchSourceBuilder.postFilter(
 				_queryToQueryBuilderTranslator.translate(
 					baseSearchRequest.getPostFilterQuery()));
 		}
 		else if (baseSearchRequest.getPostFilter() != null) {
-			searchRequestBuilder.setPostFilter(
+			searchSourceBuilder.postFilter(
 				_filterToQueryBuilderTranslator.translate(
 					baseSearchRequest.getPostFilter(), null));
 		}
 	}
 
 	protected void setQuery(
-		SearchRequestBuilder searchRequestBuilder,
+		SearchSourceBuilder searchSourceBuilder,
 		BaseSearchRequest baseSearchRequest) {
 
-		searchRequestBuilder.setQuery(getQueryBuilder(baseSearchRequest));
+		searchSourceBuilder.query(getQueryBuilder(baseSearchRequest));
 	}
 
 	@Reference(unbind = "-")
@@ -337,17 +337,15 @@ public class CommonSearchRequestBuilderAssemblerImpl
 	}
 
 	protected void setRequestCache(
-		SearchRequestBuilder searchRequestBuilder,
-		BaseSearchRequest baseSearchRequest) {
+		SearchRequest searchRequest, BaseSearchRequest baseSearchRequest) {
 
 		if (baseSearchRequest.getRequestCache() != null) {
-			searchRequestBuilder.setRequestCache(
-				baseSearchRequest.getRequestCache());
+			searchRequest.requestCache(baseSearchRequest.getRequestCache());
 		}
 	}
 
 	protected void setRescorer(
-		SearchRequestBuilder searchRequestBuilder,
+		SearchSourceBuilder searchSourceBuilder,
 		BaseSearchRequest baseSearchRequest) {
 
 		Query query = baseSearchRequest.getRescoreQuery();
@@ -356,13 +354,13 @@ public class CommonSearchRequestBuilderAssemblerImpl
 			return;
 		}
 
-		searchRequestBuilder.setRescorer(
+		searchSourceBuilder.addRescorer(
 			new QueryRescorerBuilder(
 				_queryToQueryBuilderTranslator.translate(query)));
 	}
 
 	protected void setStatsRequests(
-		SearchRequestBuilder searchRequestBuilder,
+		SearchSourceBuilder searchSourceBuilder,
 		BaseSearchRequest baseSearchRequest) {
 
 		List<StatsRequest> statsRequests = baseSearchRequest.getStatsRequests();
@@ -370,7 +368,7 @@ public class CommonSearchRequestBuilderAssemblerImpl
 		if (!ListUtil.isEmpty(statsRequests)) {
 			statsRequests.forEach(
 				statsRequest -> _statsTranslator.populateRequest(
-					searchRequestBuilder, statsRequest));
+					searchSourceBuilder, statsRequest));
 		}
 	}
 
@@ -380,32 +378,31 @@ public class CommonSearchRequestBuilderAssemblerImpl
 	}
 
 	protected void setTimeout(
-		SearchRequestBuilder searchRequestBuilder,
+		SearchSourceBuilder searchSourceBuilder,
 		BaseSearchRequest baseSearchRequest) {
 
 		if (baseSearchRequest.getTimeoutInMilliseconds() != null) {
-			searchRequestBuilder.setTimeout(
+			searchSourceBuilder.timeout(
 				TimeValue.timeValueMillis(
 					baseSearchRequest.getTimeoutInMilliseconds()));
 		}
 	}
 
 	protected void setTrackTotalHits(
-		SearchRequestBuilder searchRequestBuilder,
+		SearchSourceBuilder searchSourceBuilder,
 		BaseSearchRequest baseSearchRequest) {
 
 		if (baseSearchRequest.getTrackTotalHits() != null) {
-			searchRequestBuilder.setTrackTotalHits(
+			searchSourceBuilder.trackTotalHits(
 				baseSearchRequest.getTrackTotalHits());
 		}
 	}
 
 	protected void setTypes(
-		SearchRequestBuilder searchRequestBuilder,
-		BaseSearchRequest baseSearchRequest) {
+		SearchRequest searchRequest, BaseSearchRequest baseSearchRequest) {
 
 		if (baseSearchRequest.getTypes() != null) {
-			searchRequestBuilder.setTypes(baseSearchRequest.getTypes());
+			searchRequest.types(baseSearchRequest.getTypes());
 		}
 	}
 

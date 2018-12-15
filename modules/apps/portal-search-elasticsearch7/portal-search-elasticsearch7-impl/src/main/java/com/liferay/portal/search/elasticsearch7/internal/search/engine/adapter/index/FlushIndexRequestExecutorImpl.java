@@ -20,10 +20,14 @@ import com.liferay.portal.search.engine.adapter.index.FlushIndexRequest;
 import com.liferay.portal.search.engine.adapter.index.FlushIndexResponse;
 import com.liferay.portal.search.engine.adapter.index.IndexRequestShardFailure;
 
+import java.io.IOException;
+
 import org.elasticsearch.action.ShardOperationFailedException;
-import org.elasticsearch.action.admin.indices.flush.FlushAction;
-import org.elasticsearch.action.admin.indices.flush.FlushRequestBuilder;
+import org.elasticsearch.action.admin.indices.flush.FlushRequest;
 import org.elasticsearch.action.admin.indices.flush.FlushResponse;
+import org.elasticsearch.client.IndicesClient;
+import org.elasticsearch.client.RequestOptions;
+import org.elasticsearch.client.RestHighLevelClient;
 import org.elasticsearch.rest.RestStatus;
 
 import org.osgi.service.component.annotations.Component;
@@ -38,10 +42,9 @@ public class FlushIndexRequestExecutorImpl
 
 	@Override
 	public FlushIndexResponse execute(FlushIndexRequest flushIndexRequest) {
-		FlushRequestBuilder flushRequestBuilder = createFlushRequestBuilder(
-			flushIndexRequest);
+		FlushRequest flushRequest = createFlushRequest(flushIndexRequest);
 
-		FlushResponse flushResponse = flushRequestBuilder.get();
+		FlushResponse flushResponse = getFlushResponse(flushRequest);
 
 		FlushIndexResponse flushIndexResponse = new FlushIndexResponse();
 
@@ -73,18 +76,30 @@ public class FlushIndexRequestExecutorImpl
 		return flushIndexResponse;
 	}
 
-	protected FlushRequestBuilder createFlushRequestBuilder(
+	protected FlushRequest createFlushRequest(
 		FlushIndexRequest flushIndexRequest) {
 
-		FlushRequestBuilder flushRequestBuilder = new FlushRequestBuilder(
-			_elasticsearchClientResolver.getClient(), FlushAction.INSTANCE);
+		FlushRequest flushRequest = new FlushRequest();
 
-		flushRequestBuilder.setIndices(flushIndexRequest.getIndexNames());
-		flushRequestBuilder.setForce(flushIndexRequest.isForce());
-		flushRequestBuilder.setWaitIfOngoing(
-			flushIndexRequest.isWaitIfOngoing());
+		flushRequest.force(flushIndexRequest.isForce());
+		flushRequest.indices(flushIndexRequest.getIndexNames());
+		flushRequest.waitIfOngoing(flushIndexRequest.isWaitIfOngoing());
 
-		return flushRequestBuilder;
+		return flushRequest;
+	}
+
+	protected FlushResponse getFlushResponse(FlushRequest flushRequest) {
+		RestHighLevelClient restHighLevelClient =
+			_elasticsearchClientResolver.getRestHighLevelClient();
+
+		IndicesClient indicesClient = restHighLevelClient.indices();
+
+		try {
+			return indicesClient.flush(flushRequest, RequestOptions.DEFAULT);
+		}
+		catch (IOException ioe) {
+			throw new RuntimeException(ioe);
+		}
 	}
 
 	@Reference(unbind = "-")

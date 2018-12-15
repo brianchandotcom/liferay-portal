@@ -22,13 +22,17 @@ import com.liferay.portal.search.engine.adapter.search.SuggestSearchRequest;
 import com.liferay.portal.search.engine.adapter.search.SuggestSearchResponse;
 import com.liferay.portal.search.engine.adapter.search.SuggestSearchResult;
 
+import java.io.IOException;
+
 import java.util.List;
 import java.util.Map;
 
-import org.elasticsearch.action.search.SearchAction;
-import org.elasticsearch.action.search.SearchRequestBuilder;
+import org.elasticsearch.action.search.SearchRequest;
 import org.elasticsearch.action.search.SearchResponse;
+import org.elasticsearch.client.RequestOptions;
+import org.elasticsearch.client.RestHighLevelClient;
 import org.elasticsearch.common.text.Text;
+import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.elasticsearch.search.suggest.Suggest;
 import org.elasticsearch.search.suggest.SuggestBuilder;
 import org.elasticsearch.search.suggest.SuggestionBuilder;
@@ -48,10 +52,9 @@ public class SuggestSearchRequestExecutorImpl
 	public SuggestSearchResponse execute(
 		SuggestSearchRequest suggestSearchRequest) {
 
-		SearchRequestBuilder searchRequestBuilder = createSearchRequestBuilder(
-			suggestSearchRequest);
+		SearchRequest searchRequest = createSearchRequest(suggestSearchRequest);
 
-		SearchResponse searchResponse = searchRequestBuilder.get();
+		SearchResponse searchResponse = getSearchResponse(searchRequest);
 
 		Suggest suggest = searchResponse.getSuggest();
 
@@ -75,13 +78,13 @@ public class SuggestSearchRequestExecutorImpl
 		return suggestSearchResponse;
 	}
 
-	protected SearchRequestBuilder createSearchRequestBuilder(
+	protected SearchRequest createSearchRequest(
 		SuggestSearchRequest suggestSearchRequest) {
 
-		SearchRequestBuilder searchRequestBuilder = new SearchRequestBuilder(
-			_elasticsearchClientResolver.getClient(), SearchAction.INSTANCE);
+		SearchRequest searchRequest = new SearchRequest(
+			suggestSearchRequest.getIndexNames());
 
-		searchRequestBuilder.setIndices(suggestSearchRequest.getIndexNames());
+		SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
 
 		Map<String, Suggester> suggesterMap =
 			suggestSearchRequest.getSuggesterMap();
@@ -102,9 +105,24 @@ public class SuggestSearchRequestExecutorImpl
 			suggestBuilder.addSuggestion(suggesterName, suggestionBuilder);
 		}
 
-		searchRequestBuilder.suggest(suggestBuilder);
+		searchSourceBuilder.suggest(suggestBuilder);
 
-		return searchRequestBuilder;
+		searchRequest.source(searchSourceBuilder);
+
+		return searchRequest;
+	}
+
+	protected SearchResponse getSearchResponse(SearchRequest searchRequest) {
+		RestHighLevelClient restHighLevelClient =
+			_elasticsearchClientResolver.getRestHighLevelClient();
+
+		try {
+			return restHighLevelClient.search(
+				searchRequest, RequestOptions.DEFAULT);
+		}
+		catch (IOException ioe) {
+			throw new RuntimeException(ioe);
+		}
 	}
 
 	@Reference(unbind = "-")

@@ -14,21 +14,22 @@
 
 package com.liferay.portal.search.elasticsearch7.internal.search.engine.adapter.cluster;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.search.elasticsearch7.internal.connection.ElasticsearchClientResolver;
 import com.liferay.portal.search.engine.adapter.cluster.StateClusterRequest;
 import com.liferay.portal.search.engine.adapter.cluster.StateClusterResponse;
 
 import java.io.IOException;
 
-import org.elasticsearch.action.admin.cluster.state.ClusterStateAction;
-import org.elasticsearch.action.admin.cluster.state.ClusterStateRequestBuilder;
-import org.elasticsearch.action.admin.cluster.state.ClusterStateResponse;
-import org.elasticsearch.cluster.ClusterState;
-import org.elasticsearch.common.Strings;
-import org.elasticsearch.common.xcontent.ToXContent;
-import org.elasticsearch.common.xcontent.XContentBuilder;
-import org.elasticsearch.common.xcontent.XContentFactory;
+import org.apache.http.util.EntityUtils;
+
+import org.elasticsearch.client.Request;
+import org.elasticsearch.client.Response;
+import org.elasticsearch.client.RestClient;
+import org.elasticsearch.client.RestHighLevelClient;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -44,43 +45,33 @@ public class StateClusterRequestExecutorImpl
 	public StateClusterResponse execute(
 		StateClusterRequest stateClusterRequest) {
 
-		ClusterStateRequestBuilder clusterStateRequestBuilder =
-			createClusterStateRequestBuilder(stateClusterRequest);
+		RestHighLevelClient restHighLevelClient =
+			_elasticsearchClientResolver.getRestHighLevelClient();
 
-		ClusterStateResponse clusterStateResponse =
-			clusterStateRequestBuilder.get();
+		RestClient restClient = restHighLevelClient.getLowLevelClient();
+
+		String indicies = StringPool.BLANK;
+
+		if (ArrayUtil.isNotEmpty(stateClusterRequest.getIndexNames())) {
+			indicies =
+				"?indices=" +
+					StringUtil.merge(stateClusterRequest.getIndexNames());
+		}
+
+		String endpoint = "/_cluster/state" + indicies;
+
+		Request request = new Request("GET", endpoint);
 
 		try {
-			ClusterState clusterState = clusterStateResponse.getState();
+			Response response = restClient.performRequest(request);
 
-			XContentBuilder xContentBuilder = XContentFactory.jsonBuilder();
+			String responseBody = EntityUtils.toString(response.getEntity());
 
-			xContentBuilder.startObject();
-
-			xContentBuilder = clusterState.toXContent(
-				xContentBuilder, ToXContent.EMPTY_PARAMS);
-
-			xContentBuilder.endObject();
-
-			return new StateClusterResponse(Strings.toString(xContentBuilder));
+			return new StateClusterResponse(responseBody);
 		}
 		catch (IOException ioe) {
 			throw new SystemException(ioe);
 		}
-	}
-
-	protected ClusterStateRequestBuilder createClusterStateRequestBuilder(
-		StateClusterRequest stateClusterRequest) {
-
-		ClusterStateRequestBuilder clusterStateRequestBuilder =
-			new ClusterStateRequestBuilder(
-				_elasticsearchClientResolver.getClient(),
-				ClusterStateAction.INSTANCE);
-
-		clusterStateRequestBuilder.setIndices(
-			stateClusterRequest.getIndexNames());
-
-		return clusterStateRequestBuilder;
 	}
 
 	@Reference(unbind = "-")

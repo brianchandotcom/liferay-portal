@@ -61,7 +61,7 @@ public class UpgradeJournalArticleLocalizedValues extends UpgradeProcess {
 
 	protected void dropDescriptionColumn() throws Exception {
 		try {
-			runSQL(_DROP_COLUMN_DESCRIPTION_FROM_JOURNALARTICLE);
+			runSQL("alter table JournalArticle drop column description");
 		}
 		catch (SQLException sqle) {
 			if (_log.isDebugEnabled()) {
@@ -72,7 +72,7 @@ public class UpgradeJournalArticleLocalizedValues extends UpgradeProcess {
 
 	protected void dropTitleColumn() throws Exception {
 		try {
-			runSQL(_DROP_COLUMN_TITLE_FROM_JOURNALARTICLE);
+			runSQL("alter table JournalArticle drop column title");
 		}
 		catch (SQLException sqle) {
 			if (_log.isDebugEnabled()) {
@@ -83,7 +83,9 @@ public class UpgradeJournalArticleLocalizedValues extends UpgradeProcess {
 
 	protected void updateJournalArticleDefaultLanguageId() throws Exception {
 		if (!hasColumn("JournalArticle", "defaultLanguageId")) {
-			runSQL(_ADD_COLUMN_DEFAULTLANGUAID_TO_JOURNALARTICLE);
+			runSQL(
+				"alter table JournalArticle add defaultLanguageId " +
+					"VARCHAR(75) nul");
 		}
 
 		try (LoggingTimer loggingTimer = new LoggingTimer();
@@ -192,7 +194,7 @@ public class UpgradeJournalArticleLocalizedValues extends UpgradeProcess {
 
 	protected void upgradeSchema() throws Exception {
 		if (hasTable("JournalArticleLocalization")) {
-			runSQL(_DROP_JOURNALARTICLELOCALIZATION);
+			runSQL("drop table JournalArticleLocalization");
 		}
 
 		String template = StringUtil.read(
@@ -218,18 +220,6 @@ public class UpgradeJournalArticleLocalizedValues extends UpgradeProcess {
 				"Truncated the ", columnName, " value for article ", articleId,
 				" because it is too long"));
 	}
-
-	private static final String _ADD_COLUMN_DEFAULTLANGUAID_TO_JOURNALARTICLE =
-		"alter table JournalArticle add defaultLanguageId VARCHAR(75) null";
-
-	private static final String _DROP_COLUMN_DESCRIPTION_FROM_JOURNALARTICLE =
-		"alter table JournalArticle drop column description";
-
-	private static final String _DROP_COLUMN_TITLE_FROM_JOURNALARTICLE =
-		"alter table JournalArticle drop column title";
-
-	private static final String _DROP_JOURNALARTICLELOCALIZATION =
-		"drop table JournalArticleLocalization";
 
 	private static final int _MAX_LENGTH_DESCRIPTION = 4000;
 

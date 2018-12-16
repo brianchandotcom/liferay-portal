@@ -15,6 +15,7 @@
 package com.liferay.journal.internal.upgrade.v1_1_0;
 
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
@@ -82,15 +83,21 @@ public class UpgradeJournalArticleLocalizedValues extends UpgradeProcess {
 	}
 
 	protected void updateJournalArticleDefaultLanguageId() throws Exception {
+		String whereClause = StringPool.BLANK;
+
 		if (!hasColumn("JournalArticle", "defaultLanguageId")) {
 			runSQL(
 				"alter table JournalArticle add defaultLanguageId " +
 					"VARCHAR(75) nul");
 		}
+		else {
+			whereClause =
+				" where defaultLanguageId is null or defaultLanguageId = ''";
+		}
 
 		try (LoggingTimer loggingTimer = new LoggingTimer();
 			PreparedStatement ps1 = connection.prepareStatement(
-				"select id_, title from JournalArticle");
+				"select id_, title from JournalArticle" + whereClause);
 			PreparedStatement ps2 =
 				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
 					connection,

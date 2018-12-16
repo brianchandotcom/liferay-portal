@@ -59,9 +59,7 @@ public class UpgradeJournalArticleLocalizedValues extends UpgradeProcess {
 
 	protected void dropDescriptionColumn() throws Exception {
 		try {
-			if (hasColumn("JournalArticle", "description")) {
-				runSQL(_DROP_COLUMN_DESCRIPTION_FROM_JOURNALARTICLE);
-			}
+			runSQL(_DROP_COLUMN_DESCRIPTION_FROM_JOURNALARTICLE);
 		}
 		catch (SQLException sqle) {
 			if (_log.isDebugEnabled()) {
@@ -72,9 +70,7 @@ public class UpgradeJournalArticleLocalizedValues extends UpgradeProcess {
 
 	protected void dropTitleColumn() throws Exception {
 		try {
-			if (hasColumn("JournalArticle", "title")) {
-				runSQL(_DROP_COLUMN_TITLE_FROM_JOURNALARTICLE);
-			}
+			runSQL(_DROP_COLUMN_TITLE_FROM_JOURNALARTICLE);
 		}
 		catch (SQLException sqle) {
 			if (_log.isDebugEnabled()) {

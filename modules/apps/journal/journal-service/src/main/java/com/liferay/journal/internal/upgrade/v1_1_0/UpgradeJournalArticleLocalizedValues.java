@@ -88,7 +88,7 @@ public class UpgradeJournalArticleLocalizedValues extends UpgradeProcess {
 		if (!hasColumn("JournalArticle", "defaultLanguageId")) {
 			runSQL(
 				"alter table JournalArticle add defaultLanguageId " +
-					"VARCHAR(75) nul");
+					"VARCHAR(75) null");
 		}
 		else {
 			whereClause =

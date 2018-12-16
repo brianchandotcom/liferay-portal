@@ -49,6 +49,8 @@ public class UpgradeJournalArticleLocalizedValues extends UpgradeProcess {
 				"JournalArticle must have title and description columns");
 		}
 
+		upgradeSchema();
+
 		updateJournalArticleDefaultLanguageId();
 
 		updateJournalArticleLocalizedFields();
@@ -113,8 +115,6 @@ public class UpgradeJournalArticleLocalizedValues extends UpgradeProcess {
 	}
 
 	protected void updateJournalArticleLocalizedFields() throws Exception {
-		_upgradeSchema();
-
 		StringBundler sb = new StringBundler(3);
 
 		sb.append("insert into JournalArticleLocalization(");
@@ -190,6 +190,18 @@ public class UpgradeJournalArticleLocalizedValues extends UpgradeProcess {
 		}
 	}
 
+	protected void upgradeSchema() throws Exception {
+		if (hasTable("JournalArticleLocalization")) {
+			runSQL(_DROP_JOURNALARTICLELOCALIZATION);
+		}
+
+		String template = StringUtil.read(
+			UpgradeJournalArticleLocalizedValues.class.getResourceAsStream(
+				"dependencies/update.sql"));
+
+		runSQLTemplateString(template, false, false);
+	}
+
 	private static long _increment() {
 		DB db = DBManagerUtil.getDB();
 
@@ -205,18 +217,6 @@ public class UpgradeJournalArticleLocalizedValues extends UpgradeProcess {
 			StringBundler.concat(
 				"Truncated the ", columnName, " value for article ", articleId,
 				" because it is too long"));
-	}
-
-	private void _upgradeSchema() throws Exception {
-		if (hasTable("JournalArticleLocalization")) {
-			runSQL(_DROP_JOURNALARTICLELOCALIZATION);
-		}
-
-		String template = StringUtil.read(
-			UpgradeJournalArticleLocalizedValues.class.getResourceAsStream(
-				"dependencies/update.sql"));
-
-		runSQLTemplateString(template, false, false);
 	}
 
 	private static final String _ADD_COLUMN_DEFAULTLANGUAID_TO_JOURNALARTICLE =

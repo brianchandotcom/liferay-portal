@@ -15,6 +15,7 @@
 package com.liferay.segments.internal.odata.entity;
 
 import com.liferay.expando.kernel.model.ExpandoColumn;
+import com.liferay.expando.kernel.model.ExpandoColumnConstants;
 import com.liferay.expando.kernel.service.ExpandoColumnLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -147,10 +148,42 @@ public class EntityModelFieldMapper {
 				complexFields.add(
 					new Field(
 						"customField/" + entityFieldName, label, type,
-						Collections.emptyList()));
+						_getExpandoColumnFieldOptions(expandoColumn)));
 			});
 
 		return complexFields;
+	}
+
+	private List<Field.Option> _getExpandoColumnFieldOptions(
+		ExpandoColumn expandoColumn) {
+
+		List<Field.Option> fieldOptions = new ArrayList();
+
+		if (expandoColumn.getType() == ExpandoColumnConstants.DOUBLE_ARRAY) {
+			for (double value : (double[])expandoColumn.getDefaultValue()) {
+				fieldOptions.add(
+					new Field.Option(
+						String.valueOf(value), String.valueOf(value)));
+			}
+		}
+		else if (expandoColumn.getType() ==
+					ExpandoColumnConstants.INTEGER_ARRAY) {
+
+			for (int value : (int[])expandoColumn.getDefaultValue()) {
+				fieldOptions.add(
+					new Field.Option(
+						String.valueOf(value), String.valueOf(value)));
+			}
+		}
+		else if (expandoColumn.getType() ==
+					ExpandoColumnConstants.STRING_ARRAY) {
+
+			for (String value : (String[])expandoColumn.getDefaultValue()) {
+				fieldOptions.add(new Field.Option(value, value));
+			}
+		}
+
+		return fieldOptions;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

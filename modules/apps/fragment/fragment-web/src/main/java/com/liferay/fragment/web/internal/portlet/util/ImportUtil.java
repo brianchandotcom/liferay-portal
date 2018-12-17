@@ -395,11 +395,15 @@ public class ImportUtil {
 			String fileName, String contentPath)
 		throws Exception {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		InputStream inputStream = _getFragmentEntryInputStream(
 			zipFile, fileName, contentPath);
+
+		if (inputStream == null) {
+			return 0;
+		}
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
 
 		Repository repository =
 			PortletFileRepositoryUtil.fetchPortletRepository(

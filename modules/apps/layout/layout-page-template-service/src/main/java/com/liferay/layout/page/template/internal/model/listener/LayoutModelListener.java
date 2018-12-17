@@ -14,7 +14,7 @@
 
 package com.liferay.layout.page.template.internal.model.listener;
 
-import com.liferay.layout.admin.constants.LayoutAdminConstants;
+import com.liferay.layout.constants.LayoutConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
 import com.liferay.portal.kernel.exception.ModelListenerException;
@@ -37,7 +37,7 @@ public class LayoutModelListener extends BaseModelListener<Layout> {
 	@Override
 	public void onBeforeRemove(Layout layout) throws ModelListenerException {
 		if (!Objects.equals(
-				layout.getType(), LayoutAdminConstants.LAYOUT_TYPE_CONTENT)) {
+				layout.getType(), LayoutConstants.LAYOUT_TYPE_CONTENT)) {
 
 			return;
 		}

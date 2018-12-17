@@ -21,7 +21,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.SafeConsumer;
-import com.liferay.layout.admin.constants.LayoutAdminConstants;
+import com.liferay.layout.constants.LayoutConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
 import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionLocalServiceUtil;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryServiceUtil;
@@ -40,7 +40,6 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutRevision;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.LayoutSetBranch;
@@ -340,7 +339,7 @@ public class LayoutsAdminDisplayContext {
 
 	public String getEditLayoutURL(Layout layout) throws PortalException {
 		if (!Objects.equals(
-				layout.getType(), LayoutAdminConstants.LAYOUT_TYPE_CONTENT)) {
+				layout.getType(), LayoutConstants.LAYOUT_TYPE_CONTENT)) {
 
 			return StringPool.BLANK;
 		}
@@ -630,14 +629,14 @@ public class LayoutsAdminDisplayContext {
 			layoutsCount = LayoutLocalServiceUtil.getLayoutsCount(
 				getSelGroup(), isPrivateLayout(), getKeywords(),
 				new String[] {
-					LayoutAdminConstants.LAYOUT_TYPE_CONTENT,
+					LayoutConstants.LAYOUT_TYPE_CONTENT,
 					LayoutConstants.TYPE_PORTLET
 				});
 
 			layouts = LayoutLocalServiceUtil.getLayouts(
 				getSelGroupId(), isPrivateLayout(), getKeywords(),
 				new String[] {
-					LayoutAdminConstants.LAYOUT_TYPE_CONTENT,
+					LayoutConstants.LAYOUT_TYPE_CONTENT,
 					LayoutConstants.TYPE_PORTLET
 				},
 				layoutsSearchContainer.getStart(),

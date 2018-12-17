@@ -14,7 +14,7 @@
 
 package com.liferay.layout.type.controller.asset.display.internal.model;
 
-import com.liferay.layout.admin.constants.LayoutAdminConstants;
+import com.liferay.layout.constants.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutTypeAccessPolicy;
 import com.liferay.portal.kernel.model.impl.DefaultLayoutTypeAccessPolicyImpl;
 
@@ -25,7 +25,7 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	immediate = true,
-	property = "layout.type=" + LayoutAdminConstants.LAYOUT_TYPE_ASSET_DISPLAY,
+	property = "layout.type=" + LayoutConstants.LAYOUT_TYPE_ASSET_DISPLAY,
 	service = LayoutTypeAccessPolicy.class
 )
 public class AssetDisplayLayoutTypeAccessPolicy

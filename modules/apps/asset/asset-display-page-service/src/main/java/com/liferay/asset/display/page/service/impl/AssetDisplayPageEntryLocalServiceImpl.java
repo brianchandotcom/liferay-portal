@@ -20,7 +20,7 @@ import com.liferay.asset.display.page.service.base.AssetDisplayPageEntryLocalSer
 import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
-import com.liferay.layout.admin.constants.LayoutAdminConstants;
+import com.liferay.layout.constants.LayoutConstants;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.SystemEventConstants;
@@ -168,7 +168,7 @@ public class AssetDisplayPageEntryLocalServiceImpl
 		return layoutLocalService.addLayout(
 			userId, groupId, false, 0, assetEntry.getTitleMap(),
 			assetEntry.getTitleMap(), assetEntry.getDescriptionMap(), null,
-			null, LayoutAdminConstants.LAYOUT_TYPE_ASSET_DISPLAY,
+			null, LayoutConstants.LAYOUT_TYPE_ASSET_DISPLAY,
 			typeSettingsProperties.toString(), true, new HashMap<>(),
 			serviceContext);
 	}

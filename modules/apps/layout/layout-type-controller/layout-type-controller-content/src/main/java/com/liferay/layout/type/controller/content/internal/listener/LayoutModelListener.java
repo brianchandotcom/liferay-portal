@@ -17,7 +17,7 @@ package com.liferay.layout.type.controller.content.internal.listener;
 import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
-import com.liferay.layout.admin.constants.LayoutAdminConstants;
+import com.liferay.layout.constants.LayoutConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
@@ -214,7 +214,7 @@ public class LayoutModelListener extends BaseModelListener<Layout> {
 
 	private boolean _isContentLayout(Layout layout) {
 		if (Objects.equals(
-				layout.getType(), LayoutAdminConstants.LAYOUT_TYPE_CONTENT)) {
+				layout.getType(), LayoutConstants.LAYOUT_TYPE_CONTENT)) {
 
 			return true;
 		}

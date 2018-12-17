@@ -66,6 +66,21 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CONTENT_PAGE_DISABLED_HEADER</td>
+	<td>//header[@class='lfr-edit-mode__disabled-area']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONTENT_PAGE_DISABLED_FOOTER</td>
+	<td>//footer[@class='lfr-edit-mode__disabled-area']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONTENT_PAGE_DISABLED_POPOVER</td>
+	<td>//div[contains(@class,'disabled-area-popover--visible')]//div[@class='popover-body']</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

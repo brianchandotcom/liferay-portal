@@ -244,4 +244,94 @@ definition {
 			key_position = "3"
 		);
 	}
+
+	@description = "This is a test for LPS-81870. In edit mode the page should still show the elements of the page that are not from the page itself, like the header, footer, or elements defined by the theme."
+	@priority = "5"
+	test ViewEditModeHeaderFooterTheme {
+		task ("Add a content page") {
+			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+			ContentPages.addPage(pageName = "Test Content Page Name");
+		}
+
+		task ("Assert the header and footer are disabled") {
+			AssertVisible(
+				locator1 = "PageEditor#CONTENT_PAGE_DISABLED_HEADER"
+			);
+
+			AssertVisible(
+				locator1 = "PageEditor#CONTENT_PAGE_DISABLED_FOOTER"
+			);
+		}
+
+		task ("Assert the header and footer contain the elements that are part of the header and footer") {
+			AssertVisible(
+				locator1 = "Home#DEFAULT_LOGO"
+			);
+
+			AssertTextEquals(
+				locator1 = "Home#SITE_NAME"
+				value1 = "Test Site Name"
+			);
+
+			AssertTextEquals(
+				locator1 = "Message#INFO",
+				value1 = "This search bar is not visible to users yet. Set up its destination to make it visible."
+			);
+
+			AssertVisible(
+				locator1 = "UserBar#USER_AVATAR_IMAGE"
+			);
+
+			AssertVisible(
+				locator1 = "Home#PAGE",
+				key_pageName = "Test Content Page Name"
+			);
+
+			AssertTextEquals(
+				locator1 = "PageEditor#CONTENT_PAGE_DISABLED_FOOTER",
+				value1 = "Powered By Liferay"
+			);
+		}
+
+		task ("Assert clicking on the disabled header will cause a popover message explaining that the header is disabled") {
+			Click(
+				locator1 = "PageEditor#CONTENT_PAGE_DISABLED_HEADER"
+			);
+
+			AssertVisible(
+				locator1 = "PageEditor#CONTENT_PAGE_DISABLED_POPOVER"
+			);
+
+			AssertTextEquals(
+				locator1 = "PageEditor#CONTENT_PAGE_DISABLED_POPOVER",
+				value1 = "This area is defined by the theme. To change theme settings go to page configuration."
+			);
+		}
+
+		task ("Click away from the header so the popover will disappear") {
+			Click(
+				locator1 = "PageEditor#EMPTY_MESSAGE"
+			);
+
+			AssertElementNotPresent(
+				locator1 = "PageEditor#CONTENT_PAGE_DISABLED_POPOVER"
+			);
+		}
+
+		task ("Assert clicking on the disabled footer will cause a popover message explaining that the footer is disabled") {
+			Click(
+				locator1 = "PageEditor#CONTENT_PAGE_DISABLED_FOOTER"
+			);
+
+			AssertVisible(
+				locator1 = "PageEditor#CONTENT_PAGE_DISABLED_POPOVER"
+			);
+
+			AssertTextEquals(
+				locator1 = "PageEditor#CONTENT_PAGE_DISABLED_POPOVER",
+				value1 = "This area is defined by the theme. To change theme settings go to page configuration."
+			);
+		}
+	}
 }

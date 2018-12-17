@@ -13,9 +13,10 @@ import {
  * @review
  */
 function openAssetTypeDialogReducer(state, actionType) {
-	const nextState = Object.assign({}, state);
+	let nextState = state;
 
 	if (actionType === OPEN_ASSET_TYPE_DIALOG) {
+		nextState = Object.assign({}, nextState);
 		nextState.selectMappingTypeDialogVisible = true;
 	}
 
@@ -33,9 +34,10 @@ function openAssetTypeDialogReducer(state, actionType) {
  * @review
  */
 function openMappingFieldsDialogReducer(state, actionType, payload) {
-	const nextState = Object.assign({}, state);
+	let nextState = state;
 
 	if (actionType === OPEN_MAPPING_FIELDS_DIALOG) {
+		nextState = Object.assign({}, nextState);
 		nextState.selectMappingDialogEditableId = payload.editableId;
 		nextState.selectMappingDialogEditableType = payload.editableType;
 		nextState.selectMappingDialogFragmentEntryLinkId = payload.fragmentEntryLinkId;
@@ -64,9 +66,11 @@ function openMappingFieldsDialogReducer(state, actionType, payload) {
 function selectMappeableTypeReducer(state, actionType, payload) {
 	return new Promise(
 		resolve => {
-			const nextState = Object.assign({}, state);
+			let nextState = state;
 
 			if (actionType === SELECT_MAPPEABLE_TYPE) {
+				nextState = Object.assign({}, nextState);
+
 				_selectMappingType(
 					state.classPK,
 					state.portletNamespace,
@@ -102,9 +106,10 @@ function selectMappeableTypeReducer(state, actionType, payload) {
  * @review
  */
 function hideMappingDialogReducer(state, actionType) {
-	const nextState = Object.assign({}, state);
+	let nextState = state;
 
 	if (actionType === HIDE_MAPPING_DIALOG) {
+		nextState = Object.assign({}, nextState);
 		nextState.selectMappingDialogVisible = false;
 	}
 
@@ -118,9 +123,10 @@ function hideMappingDialogReducer(state, actionType) {
  * @review
  */
 function hideMappingTypeDialogReducer(state, actionType) {
-	const nextState = Object.assign({}, state);
+	let nextState = state;
 
 	if (actionType === HIDE_MAPPING_TYPE_DIALOG) {
+		nextState = Object.assign({}, nextState);
 		nextState.selectMappingTypeDialogVisible = false;
 	}
 

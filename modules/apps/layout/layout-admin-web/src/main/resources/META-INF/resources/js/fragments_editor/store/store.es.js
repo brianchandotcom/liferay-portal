@@ -166,14 +166,17 @@ class Store extends State {
 	 * @review
 	 */
 	_getFrozenState(state) {
-		const frozenState = Object.assign(
-			{},
-			state
+		const differentState = Object.entries(state).some(
+			([key, value]) => value !== this._state[key]
 		);
 
-		Object.freeze(frozenState);
+		if (differentState) {
+			this._state = state;
 
-		return frozenState;
+			Object.freeze(this._state);
+		}
+
+		return this._state;
 	}
 
 	/**

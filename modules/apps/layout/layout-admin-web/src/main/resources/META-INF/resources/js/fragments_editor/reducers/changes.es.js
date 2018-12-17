@@ -13,14 +13,16 @@ import {
  * @review
  */
 function saveChangesReducer(state, actionType, payload) {
-	const nextState = Object.assign({}, state);
+	let nextState = state;
 
 	if (actionType === UPDATE_LAST_SAVE_DATE) {
+		nextState = Object.assign({}, nextState);
 		nextState.lastSaveDate = payload.lastSaveDate.toLocaleTimeString(
 			Liferay.ThemeDisplay.getBCP47LanguageId()
 		);
 	}
 	else if (actionType === UPDATE_SAVING_CHANGES_STATUS) {
+		nextState = Object.assign({}, nextState);
 		nextState.savingChanges = Boolean(payload.savingChanges);
 	}
 

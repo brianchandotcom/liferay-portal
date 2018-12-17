@@ -41,13 +41,15 @@ const DROP_TARGET_ITEM_TYPES = {
  * @review
  */
 function updateActiveItemReducer(state, actionType, payload) {
-	const nextState = Object.assign({}, state);
+	let nextState = state;
 
 	if (actionType === CLEAR_ACTIVE_ITEM) {
+		nextState = Object.assign({}, nextState);
 		nextState.activeItemId = null;
 		nextState.activeItemType = null;
 	}
 	else if (actionType === UPDATE_ACTIVE_ITEM) {
+		nextState = Object.assign({}, nextState);
 		nextState.activeItemId = payload.activeItemId;
 		nextState.activeItemType = payload.activeItemType;
 	}
@@ -67,14 +69,16 @@ function updateActiveItemReducer(state, actionType, payload) {
  * @review
  */
 function updateDropTargetReducer(state, actionType, payload) {
-	const nextState = Object.assign({}, state);
+	let nextState = state;
 
 	if (actionType === CLEAR_DROP_TARGET) {
+		nextState = Object.assign({}, nextState);
 		nextState.dropTargetBorder = null;
 		nextState.dropTargetItemId = null;
 		nextState.dropTargetItemType = null;
 	}
 	else if (actionType === UPDATE_DROP_TARGET) {
+		nextState = Object.assign({}, nextState);
 		nextState.dropTargetBorder = payload.dropTargetBorder;
 		nextState.dropTargetItemId = payload.dropTargetItemId;
 		nextState.dropTargetItemType = payload.dropTargetItemType;
@@ -118,13 +122,15 @@ function updateHighlightMappingReducer(state, actionType, payload) {
  * @review
  */
 function updateHoveredItemReducer(state, actionType, payload) {
-	const nextState = Object.assign({}, state);
+	let nextState = state;
 
 	if (actionType === CLEAR_HOVERED_ITEM) {
+		nextState = Object.assign({}, nextState);
 		nextState.hoveredItemId = null;
 		nextState.hoveredItemType = null;
 	}
 	else if (actionType === UPDATE_HOVERED_ITEM) {
+		nextState = Object.assign({}, nextState);
 		nextState.hoveredItemId = payload.hoveredItemId;
 		nextState.hoveredItemType = payload.hoveredItemType;
 	}

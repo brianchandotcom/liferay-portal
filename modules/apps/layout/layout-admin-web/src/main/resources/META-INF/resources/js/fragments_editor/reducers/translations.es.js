@@ -39,13 +39,14 @@ function languageIdReducer(state, actionType, payload) {
  * @review
  */
 function translationStatusReducer(state, actionType) {
-	const nextState = Object.assign({}, state);
+	let nextState = state;
 
 	if (
 		actionType === ADD_FRAGMENT_ENTRY_LINK ||
 		actionType === UPDATE_TRANSLATION_STATUS ||
 		actionType === REMOVE_FRAGMENT_ENTRY_LINK
 	) {
+		nextState = Object.assign({}, nextState);
 		nextState.translationStatus = _getTranslationStatus(
 			_getLanguageKeys(state.availableLanguages),
 			_getEditableValues(state.fragmentEntryLinks)

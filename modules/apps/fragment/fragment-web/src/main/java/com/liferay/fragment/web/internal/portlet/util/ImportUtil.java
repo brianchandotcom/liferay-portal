@@ -194,7 +194,7 @@ public class ImportUtil {
 		return fragmentCollection;
 	}
 
-	private void _addFragmentEntry(
+	private FragmentEntry _addFragmentEntry(
 			ActionRequest actionRequest, long fragmentCollectionId,
 			String fragmentEntryKey, String name, String css, String html,
 			String js, String typeLabel, boolean overwrite)
@@ -233,16 +233,14 @@ public class ImportUtil {
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(
 				actionRequest);
 
-			_fragmentEntryService.addFragmentEntry(
+			return _fragmentEntryService.addFragmentEntry(
 				themeDisplay.getScopeGroupId(), fragmentCollectionId,
 				fragmentEntryKey, name, css, html, js, type, status,
 				serviceContext);
 		}
-		else {
-			_fragmentEntryService.updateFragmentEntry(
-				fragmentEntry.getFragmentEntryId(), name, css, html, js,
-				status);
-		}
+
+		return _fragmentEntryService.updateFragmentEntry(
+			fragmentEntry.getFragmentEntryId(), name, css, html, js, status);
 	}
 
 	private String _getContent(ZipFile zipFile, String fileName)

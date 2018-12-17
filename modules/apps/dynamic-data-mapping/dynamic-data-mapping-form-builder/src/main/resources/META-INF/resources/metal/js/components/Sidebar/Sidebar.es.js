@@ -33,6 +33,15 @@ class Sidebar extends Component {
 		activeTab: Config.number().value(0).internal(),
 
 		/**
+		 * @default _dropdownFieldTypesValueFn
+		 * @instance
+		 * @memberof Sidebar
+		 * @type {?array}
+		 */
+
+		dropdownFieldTypes: Config.array().valueFn('_dropdownFieldTypesValueFn'),
+
+		/**
 		 * @instance
 		 * @memberof Sidebar
 		 * @type {array}
@@ -619,6 +628,23 @@ class Sidebar extends Component {
 		);
 	}
 
+	_dropdownFieldTypesValueFn() {
+		const {fieldTypes} = this.props;
+
+		return fieldTypes.filter(
+			({system}) => {
+				return !system;
+			}
+		).map(
+			fieldType => {
+				return {
+					...fieldType,
+					type: 'item'
+				}
+			}
+		);
+	}
+
 	_groupFieldTypes() {
 		const {spritemap} = this.props;
 		const {fieldTypesGroup} = this.state;
@@ -727,7 +753,7 @@ class Sidebar extends Component {
 							<div>
 								<ClayDropdown
 									icon={focusedFieldType.icon}
-									items={fieldTypes.filter(({system}) => !system)}
+									items={this.state.dropdownFieldTypes}
 									itemsIconAlignment={'left'}
 									label={focusedFieldType.label}
 									spritemap={spritemap}

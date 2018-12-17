@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Validator;
@@ -44,13 +43,8 @@ public class FragmentEntryImpl extends FragmentEntryBaseImpl {
 
 	@Override
 	public String getImagePreviewURL(ThemeDisplay themeDisplay) {
-		if (getPreviewFileEntryId() <= 0) {
-			return StringPool.BLANK;
-		}
-
 		try {
-			FileEntry fileEntry = DLAppLocalServiceUtil.getFileEntry(
-				getPreviewFileEntryId());
+			FileEntry fileEntry = _getPreviewFileEntry();
 
 			if (fileEntry == null) {
 				return StringPool.BLANK;
@@ -126,12 +120,11 @@ public class FragmentEntryImpl extends FragmentEntryBaseImpl {
 		}
 
 		try {
-			return PortletFileRepositoryUtil.getPortletFileEntry(
-				getPreviewFileEntryId());
+			return DLAppLocalServiceUtil.getFileEntry(getPreviewFileEntryId());
 		}
 		catch (PortalException pe) {
 			if (_log.isDebugEnabled()) {
-				_log.debug("Unable to get preview entry image ", pe);
+				_log.debug("Unable to get file entry preview ", pe);
 			}
 		}
 

@@ -619,6 +619,7 @@ mariadb.executable=${mariadb.executable}]]></echo>
 			<propertycopy from="app.server.@{app.server.type}.bin.dir" name="test.app.server.bin.dir" />
 
 			<antcall inheritAll="false" target="prepare-test-bundle">
+				<param if:set="test.class" name="test.class" value="${test.class}" />
 				<param name="app.server.type" value="@{app.server.type}" />
 				<param name="test.app.server.bin.dir" value="${test.app.server.bin.dir}" />
 				<param name="test.build.bundle.zip.url" value="@{test.portal.bundle.zip.url}" />
@@ -654,12 +655,33 @@ mariadb.executable=${mariadb.executable}]]></echo>
 				<param name="test.sql.zip.url" value="@{test.sql.zip.url}" />
 			</antcall>
 
+			<antcall inheritAll="false" target="setup-libs" />
+
 			<antcall inheritAll="false" target="setup-sdk" />
 
-			<echo if:set="env.JENKINS_HOME">ANT_OPTS=${env.ANT_OPTS}</echo>
+			<if>
+				<and>
+					<equals arg1="@{app.server.type}" arg2="jboss" />
+					<equals arg1="@{setup.testable.jboss}" arg2="true" />
+				</and>
+				<then>
+					<setup-testable-jboss />
+				</then>
+				<elseif>
+					<and>
+						<equals arg1="@{app.server.type}" arg2="tomcat" />
+						<equals arg1="@{setup.testable.tomcat}" arg2="true" />
+					</and>
+					<then>
+						<setup-testable-tomcat />
 
-			<antcall if:set="env.JENKINS_HOME" inheritAll="false" target="clean-up-db2-processes" />
-			<antcall if:set="env.JENKINS_HOME" inheritAll="false" target="clean-up-java-processes" />
+						<setup-test-batch-testable-tomcat
+							setup.proxy="@{setup.proxy}"
+							test.portal.bundle.version="${test.portal.bundle.version}"
+						/>
+					</then>
+				</elseif>
+			</if>
 		</sequential>
 	</macrodef>
 
@@ -1215,94 +1237,18 @@ app.server.type=@{app.server.type}]]></echo>
 							<matches pattern="(file|https?)://" string="@{test.sql.zip.url}" />
 						</and>
 						<then>
-							<propertycopy from="app.server.${app.server.type}.bin.dir" name="test.app.server.bin.dir" />
-
-							<antcall inheritAll="false" target="prepare-test-bundle">
-								<param name="app.server.type" value="${app.server.type}" />
-								<param name="test.app.server.bin.dir" value="${test.app.server.bin.dir}" />
-								<param name="test.build.bundle.zip.url" value="@{test.portal.bundle.zip.url}" />
-								<param name="test.build.fix.pack.zip.url" value="@{test.build.fix.pack.zip.url}" />
-								<param name="test.build.portal.dependencies.zip.url" value="@{test.portal.bundle.dependencies.zip.url}" />
-								<param name="test.build.portal.osgi.zip.url" value="@{test.portal.bundle.osgi.zip.url}" />
-								<param name="test.build.portal.tools.zip.url" value="@{test.portal.bundle.tools.zip.url}" />
-								<param name="test.build.portal.war.url" value="@{test.portal.bundle.war.url}" />
-								<param name="test.class" value="${test.class}" />
-								<param name="test.fix.pack.base.url" value="@{test.fix.pack.base.url}" />
-							</antcall>
-
-							<if>
-								<matches pattern="https?://" string="@{test.license.xml.url}" />
-								<then>
-									<var name="test.build.license.xml.zip.url" unset="true" />
-
-									<property name="test.build.license.xml.zip.url" value="@{test.license.xml.url}" />
-
-									<echo append="true" file="test.${env.HOSTNAME}.properties"><![CDATA[${line.separator}test.build.license.xml.zip.url=@{test.license.xml.url}]]></echo>
-								</then>
-							</if>
-
-							<if>
-								<not>
-									<equals arg1="${test.deploy.license}" arg2="false" />
-								</not>
-								<then>
-									<antcall target="deploy-license-xml" />
-								</then>
-							</if>
-
-							<if>
-								<matches pattern="https?://" string="@{test.plugins.war.zip.url}" />
-								<then>
-									<mirrors-get
-										dest="plugins.war.zip"
-										src="@{test.plugins.war.zip.url}"
-									/>
-
-									<unzip
-										dest="."
-										src="plugins.war.zip"
-									>
-										<mapper>
-											<globmapper
-												from="plugins/*"
-												to="plugins/marketplace/*"
-											/>
-										</mapper>
-									</unzip>
-
-									<delete file="plugins.war.zip" />
-								</then>
-							</if>
-
-							<antcall target="deploy-sql-zip">
-								<param name="test.sql.zip.url" value="@{test.sql.zip.url}" />
-							</antcall>
-
-							<antcall inheritAll="false" target="setup-sdk" />
-
-							<if>
-								<and>
-									<equals arg1="@{app.server.type}" arg2="jboss" />
-									<equals arg1="@{setup.testable.jboss}" arg2="true" />
-								</and>
-								<then>
-									<setup-testable-jboss />
-								</then>
-								<elseif>
-									<and>
-										<equals arg1="@{app.server.type}" arg2="tomcat" />
-										<equals arg1="@{setup.testable.tomcat}" arg2="true" />
-									</and>
-									<then>
-										<setup-testable-tomcat />
-
-										<setup-test-batch-testable-tomcat
-											setup.proxy="@{setup.proxy}"
-											test.portal.bundle.version="${test.portal.bundle.version}"
-										/>
-									</then>
-								</elseif>
-							</if>
+							<prepare-release-test-environment
+								app.server.type="${app.server.type}"
+								test.build.fix.pack.zip.url="${test.build.fix.pack.zip.url}"
+								test.fix.pack.base.url="${test.fix.pack.base.url}"
+								test.license.xml.url="${test.license.xml.url}"
+								test.portal.bundle.dependencies.zip.url="${test.portal.bundle.dependencies.zip.url}"
+								test.portal.bundle.osgi.zip.url="${test.portal.bundle.osgi.zip.url}"
+								test.portal.bundle.tools.zip.url="${test.portal.bundle.tools.zip.url}"
+								test.portal.bundle.war.url="${test.portal.bundle.war.url}"
+								test.portal.bundle.zip.url="${test.portal.bundle.zip.url}"
+								test.sql.zip.url="${test.sql.zip.url}"
+							/>
 						</then>
 						<elseif>
 							<and>
@@ -2348,71 +2294,18 @@ log.sanitizer.enabled=false</echo>
 							<matches pattern="(file|https?)://" string="@{test.sql.zip.url}" />
 						</and>
 						<then>
-							<propertycopy from="app.server.${app.server.type}.bin.dir" name="test.app.server.bin.dir" />
-
-							<antcall inheritAll="false" target="prepare-test-bundle">
-								<param name="app.server.type" value="${app.server.type}" />
-								<param name="test.app.server.bin.dir" value="${test.app.server.bin.dir}" />
-								<param name="test.build.bundle.zip.url" value="@{test.portal.bundle.zip.url}" />
-								<param name="test.build.fix.pack.zip.url" value="@{test.build.fix.pack.zip.url}" />
-								<param name="test.build.portal.dependencies.zip.url" value="@{test.portal.bundle.dependencies.zip.url}" />
-								<param name="test.build.portal.osgi.zip.url" value="@{test.portal.bundle.osgi.zip.url}" />
-								<param name="test.build.portal.tools.zip.url" value="@{test.portal.bundle.tools.zip.url}" />
-								<param name="test.build.portal.war.url" value="@{test.portal.bundle.war.url}" />
-								<param name="test.fix.pack.base.url" value="@{test.fix.pack.base.url}" />
-							</antcall>
-
-							<if>
-								<matches pattern="https?://" string="@{test.license.xml.url}" />
-								<then>
-									<var name="test.build.license.xml.zip.url" unset="true" />
-
-									<property name="test.build.license.xml.zip.url" value="@{test.license.xml.url}" />
-
-									<echo append="true" file="test.${env.HOSTNAME}.properties"><![CDATA[${line.separator}test.build.license.xml.zip.url=@{test.license.xml.url}]]></echo>
-								</then>
-							</if>
-
-							<if>
-								<not>
-									<equals arg1="${test.deploy.license}" arg2="false" />
-								</not>
-								<then>
-									<antcall target="deploy-license-xml" />
-								</then>
-							</if>
-
-							<antcall target="deploy-sql-zip">
-								<param name="test.sql.zip.url" value="@{test.sql.zip.url}" />
-							</antcall>
-
-							<antcall inheritAll="false" target="setup-libs" />
-
-							<antcall inheritAll="false" target="setup-sdk" />
-
-							<if>
-								<and>
-									<equals arg1="@{app.server.type}" arg2="jboss" />
-									<equals arg1="@{setup.testable.jboss}" arg2="true" />
-								</and>
-								<then>
-									<setup-testable-jboss />
-								</then>
-								<elseif>
-									<and>
-										<equals arg1="@{app.server.type}" arg2="tomcat" />
-										<equals arg1="@{setup.testable.tomcat}" arg2="true" />
-									</and>
-									<then>
-										<setup-testable-tomcat />
-
-										<setup-test-batch-testable-tomcat
-											setup.proxy="@{setup.proxy}"
-											test.portal.bundle.version="${test.portal.bundle.version}"
-										/>
-									</then>
-								</elseif>
-							</if>
+							<prepare-release-test-environment
+								app.server.type="${app.server.type}"
+								test.build.fix.pack.zip.url="${test.build.fix.pack.zip.url}"
+								test.fix.pack.base.url="${test.fix.pack.base.url}"
+								test.license.xml.url="${test.license.xml.url}"
+								test.portal.bundle.dependencies.zip.url="${test.portal.bundle.dependencies.zip.url}"
+								test.portal.bundle.osgi.zip.url="${test.portal.bundle.osgi.zip.url}"
+								test.portal.bundle.tools.zip.url="${test.portal.bundle.tools.zip.url}"
+								test.portal.bundle.war.url="${test.portal.bundle.war.url}"
+								test.portal.bundle.zip.url="${test.portal.bundle.zip.url}"
+								test.sql.zip.url="${test.sql.zip.url}"
+							/>
 
 							<gradle-execute dir="modules/core" task="deploy">
 								<arg value="--parallel" />

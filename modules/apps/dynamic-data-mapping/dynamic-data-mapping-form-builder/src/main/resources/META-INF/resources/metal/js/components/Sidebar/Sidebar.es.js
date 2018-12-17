@@ -168,7 +168,6 @@ class Sidebar extends Component {
 		for (const name in transitionEndEvents) {
 			if (el.style[name] !== undefined) {
 				eventName = transitionEndEvents[name];
-
 				break;
 			}
 		}
@@ -233,7 +232,7 @@ class Sidebar extends Component {
 		const modalNode = dom.closest(target, '.modal-dialog');
 
 		if (!open || AUIEditorToolbar || element.contains(target) || fieldTypesDropdown ||
-			fieldColumnNode || this._checkSettingsActionsVisibility(target)) {
+			fieldColumnNode || this._checkSettingsActionsVisibility(target) || modalNode) {
 			return;
 		}
 

@@ -460,7 +460,12 @@ class Builder extends Component {
 	_handleCancelChangesModalButtonClicked(event) {
 		event.stopPropagation();
 
-		const {cancelChangesModal} = this.refs;
+		const {target} = event;
+		const {cancelChangesModal, sidebar} = this.refs;
+
+		if (!dom.closest(target, '.close-modal')) {
+			sidebar.close();
+		}
 
 		cancelChangesModal.emit('hide');
 
@@ -473,8 +478,13 @@ class Builder extends Component {
 	_handleDeleteModalButtonClicked(event) {
 		event.stopPropagation();
 
-		const {deleteModal} = this.refs;
+		const {target} = event;
+		const {deleteModal, sidebar} = this.refs;
 		const {indexes} = this.state;
+
+		if (!dom.closest(target, '.close-modal')) {
+			sidebar.close();
+		}
 
 		deleteModal.emit('hide');
 

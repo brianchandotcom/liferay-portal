@@ -166,7 +166,7 @@ const getFieldProperties = ({pages}, locale) => {
 
 	visitor.mapFields(
 		({fieldName, localizable, localizedValue, type, value}) => {
-			if (localizable && localizedValue[locale].JSONArray) {
+			if (localizable && localizedValue[locale] && localizedValue[locale].JSONArray) {
 				properties[fieldName] = localizedValue[locale].JSONArray;
 			}
 			else if (localizable) {

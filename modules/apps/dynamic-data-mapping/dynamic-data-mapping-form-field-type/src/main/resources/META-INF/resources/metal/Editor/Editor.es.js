@@ -154,25 +154,6 @@ class Editor extends Component {
 		}
 	}
 
-	/**
-	 * Remove twitter button
-	 * @return {array} selections
-	 */
-
-	getSelections() {
-		return AlloyEditor.Selections.map(
-			selection => {
-				const newSelection = {...selection};
-
-				if (newSelection.name == 'text') {
-					newSelection.buttons = newSelection.buttons.filter(button => button !== 'twitter');
-				}
-
-				return newSelection;
-			}
-		);
-	}
-
 	_createEditor() {
 		const {A, name, readOnly, value} = this;
 		const editorNode = this.element.querySelector('.alloy-editor');
@@ -197,7 +178,7 @@ class Editor extends Component {
 							buttons: ['hline', 'table']
 						},
 						styles: {
-							selections: this.getSelections(),
+							selections: AlloyEditor.Selections,
 							tabIndex: 1
 						}
 					}

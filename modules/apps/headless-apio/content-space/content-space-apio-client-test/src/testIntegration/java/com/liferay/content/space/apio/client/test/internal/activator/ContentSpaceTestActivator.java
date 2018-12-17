@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.content.space.apio.client.test.activator;
+package com.liferay.content.space.apio.client.test.internal.activator;
 
 import com.liferay.portal.apio.test.util.AuthConfigurationTestUtil;
 import com.liferay.portal.kernel.log.Log;

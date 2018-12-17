@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.structured.content.apio.client.test.activator;
+package com.liferay.structured.content.apio.client.test.internal.activator;
 
 import com.liferay.dynamic.data.mapping.io.DDMFormDeserializer;
 import com.liferay.dynamic.data.mapping.io.DDMFormDeserializerDeserializeRequest;

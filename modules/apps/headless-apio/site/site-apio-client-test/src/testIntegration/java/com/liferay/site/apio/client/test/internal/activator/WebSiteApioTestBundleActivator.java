@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.site.apio.client.test.activator;
+package com.liferay.site.apio.client.test.internal.activator;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.apio.test.util.AuthConfigurationTestUtil;

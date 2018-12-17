@@ -19,7 +19,7 @@ definition {
 		property database.types = "mariadb,mysql,postgresql";
 		property portal.upgrades = "true";
 		property portal.version = "6.1.2";
-		property test.assert.warning.exceptions = "false";
+		property test.assert.warning.exceptions = "true";
 
 		Upgrade.viewUpgrade();
 
@@ -31,7 +31,7 @@ definition {
 		property data.archive.type = "data-archive-portal";
 		property portal.upgrades = "true";
 		property portal.version = "6.1.30";
-		property test.assert.warning.exceptions = "false";
+		property test.assert.warning.exceptions = "true";
 
 		Upgrade.viewUpgrade();
 
@@ -43,7 +43,7 @@ definition {
 		property data.archive.type = "data-archive-portal";
 		property portal.upgrades = "true";
 		property portal.version = "6.2.10.15";
-		property test.assert.warning.exceptions = "false";
+		property test.assert.warning.exceptions = "true";
 
 		Upgrade.viewUpgrade();
 
@@ -55,7 +55,7 @@ definition {
 		property data.archive.type = "data-archive-portal";
 		property portal.upgrades = "true";
 		property portal.version = "6.2.10.21";
-		property test.assert.warning.exceptions = "false";
+		property test.assert.warning.exceptions = "true";
 
 		Upgrade.viewUpgrade();
 
@@ -68,7 +68,7 @@ definition {
 		property database.types = "mariadb,mysql,postgresql";
 		property portal.upgrades = "true";
 		property portal.version = "6.2.5";
-		property test.assert.warning.exceptions = "false";
+		property test.assert.warning.exceptions = "true";
 
 		Upgrade.viewUpgrade();
 
@@ -80,7 +80,7 @@ definition {
 		property data.archive.type = "data-archive-portal";
 		property portal.upgrades = "true";
 		property portal.version = "7.0.10.6";
-		property test.assert.warning.exceptions = "false";
+		property test.assert.warning.exceptions = "true";
 
 		Upgrade.viewUpgrade();
 
@@ -93,7 +93,7 @@ definition {
 		property database.types = "mariadb,mysql,postgresql";
 		property portal.upgrades = "true";
 		property portal.version = "7.0.4";
-		property test.assert.warning.exceptions = "false";
+		property test.assert.warning.exceptions = "true";
 
 		Upgrade.viewUpgrade();
 

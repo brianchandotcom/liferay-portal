@@ -9,20 +9,6 @@ if (System.properties["http.proxyHost"] == "squid.lax.liferay.com") {
 	System.setProperty "repository.url", "http://repository-cdn.liferay.com/nexus/content/groups/public"
 }
 
-if (System.getenv("JENKINS_HOME")) {
-	logger.lifecycle "SSL cipher {}", ClassLoader.getSystemResource("javax/crypto/Cipher.class")
-
-	String path = System.getProperty("java.home") + File.separator + "lib" + File.separator + "security" + File.separator
-
-	File jar = new File(path, "US_export_policy.jar")
-
-	logger.lifecycle "SSL export policy {}:{}", jar, jar.exists()
-
-	jar = new File(path, "local_policy.jar")
-
-	logger.lifecycle "SSL local policy {}:{}", jar, jar.exists()
-}
-
 gradle.buildFinished {
 	if (System.getenv("JENKINS_HOME")) {
 		Date now = new Date()

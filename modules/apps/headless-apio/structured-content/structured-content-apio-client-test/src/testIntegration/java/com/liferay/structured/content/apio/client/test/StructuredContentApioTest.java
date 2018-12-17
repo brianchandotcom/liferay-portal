@@ -87,8 +87,7 @@ public class StructuredContentApioTest {
 		).get(
 			StringBundler.concat(
 				href, "?filter=title eq '",
-				StructuredContentApioTestBundleActivator.TITLE_2_LOCALE_DEFAULT,
-				"'")
+				StructuredContentApioTestBundleActivator.TITLE_2_LOCALE_US, "'")
 		).then(
 		).log(
 		).ifError(
@@ -136,8 +135,7 @@ public class StructuredContentApioTest {
 		).get(
 			StringBundler.concat(
 				href, "?filter=title eq '",
-				StructuredContentApioTestBundleActivator.TITLE_2_LOCALE_DEFAULT,
-				"'")
+				StructuredContentApioTestBundleActivator.TITLE_2_LOCALE_US, "'")
 		).then(
 		).log(
 		).ifError(
@@ -185,8 +183,7 @@ public class StructuredContentApioTest {
 		).get(
 			StringBundler.concat(
 				href, "?filter=title eq '",
-				StructuredContentApioTestBundleActivator.TITLE_2_LOCALE_DEFAULT,
-				"'")
+				StructuredContentApioTestBundleActivator.TITLE_2_LOCALE_US, "'")
 		).then(
 		).log(
 		).ifError(
@@ -300,8 +297,7 @@ public class StructuredContentApioTest {
 		).get(
 			StringBundler.concat(
 				href, "?filter=title eq '",
-				StructuredContentApioTestBundleActivator.TITLE_2_LOCALE_DEFAULT,
-				"'")
+				StructuredContentApioTestBundleActivator.TITLE_2_LOCALE_US, "'")
 		).then(
 		).log(
 		).ifError(
@@ -347,8 +343,7 @@ public class StructuredContentApioTest {
 		).get(
 			StringBundler.concat(
 				href, "?filter=title eq '",
-				StructuredContentApioTestBundleActivator.TITLE_2_LOCALE_DEFAULT,
-				"'")
+				StructuredContentApioTestBundleActivator.TITLE_2_LOCALE_US, "'")
 		).then(
 		).log(
 		).ifError(
@@ -382,7 +377,7 @@ public class StructuredContentApioTest {
 		).body(
 			"_embedded.StructuredContent.title",
 			Matchers.hasItem(
-				StructuredContentApioTestBundleActivator.TITLE_2_LOCALE_DEFAULT)
+				StructuredContentApioTestBundleActivator.TITLE_2_LOCALE_US)
 		);
 	}
 
@@ -408,7 +403,7 @@ public class StructuredContentApioTest {
 		).body(
 			"_embedded.StructuredContent.title",
 			Matchers.hasItem(
-				StructuredContentApioTestBundleActivator.TITLE_2_LOCALE_DEFAULT)
+				StructuredContentApioTestBundleActivator.TITLE_2_LOCALE_US)
 		);
 	}
 

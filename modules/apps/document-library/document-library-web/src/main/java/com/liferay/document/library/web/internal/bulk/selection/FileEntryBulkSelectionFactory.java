@@ -16,6 +16,7 @@ package com.liferay.document.library.web.internal.bulk.selection;
 
 import com.liferay.bulk.selection.BulkSelection;
 import com.liferay.bulk.selection.BulkSelectionFactory;
+import com.liferay.document.library.bulk.selection.FileEntryBulkSelectionBackgroundActionExecutor;
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.repository.RepositoryProvider;
@@ -38,9 +39,13 @@ import org.osgi.service.component.annotations.Reference;
 	service = BulkSelectionFactory.class
 )
 public class FileEntryBulkSelectionFactory
-	implements BulkSelectionFactory<FileEntry> {
+	implements BulkSelectionFactory
+		<FileEntry, FileEntryBulkSelectionBackgroundActionExecutor> {
 
-	public BulkSelection<FileEntry> create(Map<String, String[]> parameterMap) {
+	public BulkSelection
+		<FileEntry, FileEntryBulkSelectionBackgroundActionExecutor> create(
+			Map<String, String[]> parameterMap) {
+
 		if (!parameterMap.containsKey("rowIdsFileEntry")) {
 			throw new IllegalArgumentException();
 		}
@@ -76,7 +81,10 @@ public class FileEntryBulkSelectionFactory
 			_repositoryProvider, _dlAppService);
 	}
 
-	private BulkSelection<FileEntry> _getFileEntrySelection(String[] values) {
+	private BulkSelection
+		<FileEntry, FileEntryBulkSelectionBackgroundActionExecutor>
+			_getFileEntrySelection(String[] values) {
+
 		if (values.length == 1) {
 			values = StringUtil.split(values[0]);
 		}

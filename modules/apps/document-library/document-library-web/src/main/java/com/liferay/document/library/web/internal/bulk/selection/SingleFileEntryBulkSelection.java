@@ -15,6 +15,8 @@
 package com.liferay.document.library.web.internal.bulk.selection;
 
 import com.liferay.bulk.selection.BulkSelection;
+import com.liferay.bulk.selection.BulkSelectionBackgroundActionExecutorConsumer;
+import com.liferay.document.library.bulk.selection.FileEntryBulkSelectionBackgroundActionExecutor;
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
@@ -32,7 +34,9 @@ import java.util.stream.Stream;
 /**
  * @author Adolfo Pérez
  */
-public class SingleFileEntryBulkSelection implements BulkSelection<FileEntry> {
+public class SingleFileEntryBulkSelection
+	implements BulkSelection
+		<FileEntry, FileEntryBulkSelectionBackgroundActionExecutor> {
 
 	public SingleFileEntryBulkSelection(
 		long fileEntryId, ResourceBundleLoader resourceBundleLoader,
@@ -59,6 +63,15 @@ public class SingleFileEntryBulkSelection implements BulkSelection<FileEntry> {
 	@Override
 	public boolean isMultiple() {
 		return false;
+	}
+
+	@Override
+	public
+		<U extends BulkSelectionBackgroundActionExecutorConsumer
+			<FileEntryBulkSelectionBackgroundActionExecutor>>
+				void runBackgroundAction(U consumer) {
+
+		throw new UnsupportedOperationException();
 	}
 
 	@Override

@@ -35,21 +35,15 @@ import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.apio.test.util.PaginationRequest;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.security.auth.PrincipalException;
-import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.template.TemplateConstants;
-import com.liferay.portal.kernel.test.context.ContextUserReplace;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
-import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -67,8 +61,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
-
-import org.assertj.core.api.Assertions;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -669,50 +661,6 @@ public class StructuredContentNestedCollectionResourceTest
 	}
 
 	@Test
-	public void testGetJournalArticleWrapperFilterByPermission()
-		throws Exception {
-
-		Map<Locale, String> stringMap = new HashMap<>();
-
-		String title = RandomTestUtil.randomString();
-
-		stringMap.put(LocaleUtil.getDefault(), title);
-
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
-
-		serviceContext.setAddGuestPermissions(false);
-		serviceContext.setAddGroupPermissions(false);
-
-		JournalArticle journalArticle = JournalTestUtil.addArticle(
-			_group.getGroupId(),
-			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			JournalArticleConstants.CLASSNAME_ID_DEFAULT, title, false,
-			stringMap, stringMap, stringMap, null, LocaleUtil.getDefault(),
-			null, true, true, serviceContext);
-
-		User user = UserTestUtil.addUser();
-
-		PermissionChecker permissionChecker =
-			PermissionCheckerFactoryUtil.create(user);
-
-		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
-				user, permissionChecker)) {
-
-			Assertions.assertThatThrownBy(
-				() -> getJournalArticleWrapper(
-					journalArticle.getId(),
-					getThemeDisplay(_group, LocaleUtil.getDefault()))
-			).isInstanceOf(
-				PrincipalException.MustHavePermission.class
-			);
-		}
-		finally {
-			_userLocalService.deleteUser(user);
-		}
-	}
-
-	@Test
 	public void testGetPageItems() throws Exception {
 		Map<Locale, String> stringMap = new HashMap<>();
 
@@ -744,47 +692,6 @@ public class StructuredContentNestedCollectionResourceTest
 		Assert.assertTrue(
 			"Journal articles: " + journalArticles,
 			journalArticles.contains(journalArticle));
-	}
-
-	@Test
-	public void testGetPageItemsFilterByPermission() throws Exception {
-		Map<Locale, String> stringMap = new HashMap<>();
-
-		stringMap.put(LocaleUtil.getDefault(), RandomTestUtil.randomString());
-
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
-
-		serviceContext.setAddGuestPermissions(false);
-		serviceContext.setAddGroupPermissions(false);
-
-		JournalTestUtil.addArticle(
-			_group.getGroupId(),
-			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			JournalArticleConstants.CLASSNAME_ID_DEFAULT,
-			RandomTestUtil.randomString(), false, stringMap, stringMap,
-			stringMap, null, LocaleUtil.getDefault(), null, true, true,
-			serviceContext);
-
-		User user = UserTestUtil.addUser();
-
-		PermissionChecker permissionChecker =
-			PermissionCheckerFactoryUtil.create(user);
-
-		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
-				user, permissionChecker)) {
-
-			PageItems<JournalArticle> pageItems = getPageItems(
-				PaginationRequest.of(10, 1), _group.getGroupId(),
-				_acceptLanguage,
-				getThemeDisplay(_group, LocaleUtil.getDefault()),
-				Filter.emptyFilter(), Sort.emptySort());
-
-			Assert.assertEquals(0, pageItems.getTotalCount());
-		}
-		finally {
-			_userLocalService.deleteUser(user);
-		}
 	}
 
 	@Test

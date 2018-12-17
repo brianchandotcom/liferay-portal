@@ -10,8 +10,8 @@ import (
 const (
 	SUPPORTED_TOS_VERSION = "7.1.1"
 
-	componentArtifactsPath     = "component-artifacts"
-	componentDefinitionPath    = "component-definition"
+	componentArtifactsPath = "component-artifacts"
+	componentDefinitionPath = "component-definition"
 	thirdPartyDependenciesPath = "3rd-party-dependencies"
 )
 
@@ -25,9 +25,9 @@ var (
 	ThirdPartyDependenciesDir = filepath.Join(
 		GetBinaryLocation(), thirdPartyDependenciesPath)
 
-	TosHomeDir   = getTosHomeDirectory()
+	TosHomeDir = getTosHomeDirectory()
 	TosM2HomeDir = filepath.Join(TosHomeDir, tosMavenM2PathSegments[0])
-	TosM2Dir     = filepath.Join(
+	TosM2Dir = filepath.Join(
 		TosHomeDir, tosMavenM2PathSegments[0], tosMavenM2PathSegments[1])
 )
 

@@ -18,6 +18,8 @@
 
 <%
 JournalArticle article = journalDisplayContext.getArticle();
+
+JournalEditArticleDisplayContext journalEditArticleDisplayContext = new JournalEditArticleDisplayContext(request, liferayPortletResponse, article);
 %>
 
 <div class="form-group">
@@ -25,7 +27,7 @@ JournalArticle article = journalDisplayContext.getArticle();
 
 	<liferay-ui:input-localized
 		defaultLanguageId="<%= LocaleUtil.toLanguageId(themeDisplay.getSiteDefaultLocale()) %>"
-		inputAddon="<%= journalDisplayContext.getFriendlyURLBase() %>"
+		inputAddon="<%= journalEditArticleDisplayContext.getFriendlyURLBase() %>"
 		maxLength='<%= String.valueOf(ModelHintsUtil.getMaxLength(JournalArticle.class.getName(), "urlTitle")) %>'
 		name="friendlyURL"
 		xml="<%= (article != null) ? HttpUtil.decodeURL(article.getFriendlyURLsXML()) : StringPool.BLANK %>"

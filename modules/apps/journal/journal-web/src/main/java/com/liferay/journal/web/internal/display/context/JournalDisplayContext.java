@@ -22,15 +22,12 @@ import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil;
-import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
-import com.liferay.dynamic.data.mapping.storage.Fields;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerRegistryUtil;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemList;
 import com.liferay.journal.configuration.JournalServiceConfiguration;
 import com.liferay.journal.constants.JournalPortletKeys;
-import com.liferay.journal.constants.JournalWebKeys;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleConstants;
 import com.liferay.journal.model.JournalArticleDisplay;
@@ -40,7 +37,6 @@ import com.liferay.journal.service.JournalArticleLocalServiceUtil;
 import com.liferay.journal.service.JournalArticleServiceUtil;
 import com.liferay.journal.service.JournalFolderLocalServiceUtil;
 import com.liferay.journal.service.JournalFolderServiceUtil;
-import com.liferay.journal.util.JournalConverter;
 import com.liferay.journal.util.comparator.FolderArticleArticleIdComparator;
 import com.liferay.journal.util.comparator.FolderArticleDisplayDateComparator;
 import com.liferay.journal.util.comparator.FolderArticleModifiedDateComparator;
@@ -288,39 +284,6 @@ public class JournalDisplayContext {
 		return commentsSearchContainer.getTotal();
 	}
 
-	public DDMFormValues getDDMFormValues(DDMStructure ddmStructure)
-		throws PortalException {
-
-		if (_ddmFormValues != null) {
-			return _ddmFormValues;
-		}
-
-		JournalArticle article = getArticle();
-
-		if (article == null) {
-			return _ddmFormValues;
-		}
-
-		String content = article.getContent();
-
-		if (Validator.isNull(content)) {
-			return _ddmFormValues;
-		}
-
-		JournalConverter journalConverter = getJournalConverter();
-
-		Fields fields = journalConverter.getDDMFields(ddmStructure, content);
-
-		if (fields == null) {
-			return _ddmFormValues;
-		}
-
-		_ddmFormValues = journalConverter.getDDMFormValues(
-			ddmStructure, fields);
-
-		return _ddmFormValues;
-	}
-
 	public String getDDMStructureKey() {
 		if (_ddmStructureKey != null) {
 			return _ddmStructureKey;
@@ -519,21 +482,6 @@ public class JournalDisplayContext {
 		return StringPool.BLANK;
 	}
 
-	public String getFriendlyURLBase() {
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_themeDisplay.getPortalURL());
-
-		Group group = _themeDisplay.getScopeGroup();
-
-		sb.append(group.getPathFriendlyURL(false, _themeDisplay));
-		sb.append(group.getFriendlyURL());
-
-		sb.append(JournalArticleConstants.CANONICAL_URL_SEPARATOR);
-
-		return sb.toString();
-	}
-
 	public List<NavigationItem> getInfoPanelNavigationItems() {
 		return new NavigationItemList() {
 			{
@@ -546,11 +494,6 @@ public class JournalDisplayContext {
 					});
 			}
 		};
-	}
-
-	public JournalConverter getJournalConverter() {
-		return (JournalConverter)_request.getAttribute(
-			JournalWebKeys.JOURNAL_CONVERTER);
 	}
 
 	public String getKeywords() {
@@ -1498,7 +1441,6 @@ public class JournalDisplayContext {
 	private String[] _addMenuFavItems;
 	private JournalArticle _article;
 	private JournalArticleDisplay _articleDisplay;
-	private DDMFormValues _ddmFormValues;
 	private String _ddmStructureKey;
 	private String _ddmStructureName;
 	private List<DDMStructure> _ddmStructures;

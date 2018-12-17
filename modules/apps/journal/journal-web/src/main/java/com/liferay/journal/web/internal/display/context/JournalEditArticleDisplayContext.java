@@ -19,18 +19,24 @@ import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateServiceUtil;
+import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
+import com.liferay.dynamic.data.mapping.storage.Fields;
 import com.liferay.journal.constants.JournalPortletKeys;
+import com.liferay.journal.constants.JournalWebKeys;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleConstants;
 import com.liferay.journal.model.JournalFolder;
 import com.liferay.journal.model.JournalFolderConstants;
 import com.liferay.journal.service.JournalFolderLocalServiceUtil;
+import com.liferay.journal.util.JournalConverter;
 import com.liferay.journal.web.internal.security.permission.resource.JournalArticlePermission;
 import com.liferay.journal.web.internal.security.permission.resource.JournalFolderPermission;
 import com.liferay.journal.web.util.JournalUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.bean.BeanParamUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalServiceUtil;
@@ -169,6 +175,37 @@ public class JournalEditArticleDisplayContext {
 		return _classPK;
 	}
 
+	public DDMFormValues getDDMFormValues(DDMStructure ddmStructure)
+		throws PortalException {
+
+		if (_ddmFormValues != null) {
+			return _ddmFormValues;
+		}
+
+		if (_article == null) {
+			return _ddmFormValues;
+		}
+
+		String content = _article.getContent();
+
+		if (Validator.isNull(content)) {
+			return _ddmFormValues;
+		}
+
+		JournalConverter journalConverter = _getJournalConverter();
+
+		Fields fields = journalConverter.getDDMFields(ddmStructure, content);
+
+		if (fields == null) {
+			return _ddmFormValues;
+		}
+
+		_ddmFormValues = journalConverter.getDDMFormValues(
+			ddmStructure, fields);
+
+		return _ddmFormValues;
+	}
+
 	public DDMStructure getDDMStructure() {
 		if (_ddmStructure != null) {
 			return _ddmStructure;
@@ -295,6 +332,21 @@ public class JournalEditArticleDisplayContext {
 			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 
 		return _folderId;
+	}
+
+	public String getFriendlyURLBase() {
+		StringBundler sb = new StringBundler(4);
+
+		sb.append(_themeDisplay.getPortalURL());
+
+		Group group = _themeDisplay.getScopeGroup();
+
+		sb.append(group.getPathFriendlyURL(false, _themeDisplay));
+		sb.append(group.getFriendlyURL());
+
+		sb.append(JournalArticleConstants.CANONICAL_URL_SEPARATOR);
+
+		return sb.toString();
 	}
 
 	public long getGroupId() {
@@ -506,6 +558,11 @@ public class JournalEditArticleDisplayContext {
 		return _inheritedWorkflowDDMStructuresFolderId;
 	}
 
+	private JournalConverter _getJournalConverter() {
+		return (JournalConverter)_request.getAttribute(
+			JournalWebKeys.JOURNAL_CONVERTER);
+	}
+
 	private String _getTitle() {
 		if (getClassNameId() > JournalArticleConstants.CLASSNAME_ID_DEFAULT) {
 			return LanguageUtil.get(_request, "structure-default-values");
@@ -625,6 +682,7 @@ public class JournalEditArticleDisplayContext {
 	private Boolean _changeStructure;
 	private Long _classNameId;
 	private Long _classPK;
+	private DDMFormValues _ddmFormValues;
 	private DDMStructure _ddmStructure;
 	private String _ddmStructureKey;
 	private DDMTemplate _ddmTemplate;

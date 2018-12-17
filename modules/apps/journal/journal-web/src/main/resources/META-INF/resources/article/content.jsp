@@ -134,7 +134,7 @@ String newArticleId = ParamUtil.getString(request, "newArticleId");
 			checkRequired="<%= classNameId == JournalArticleConstants.CLASSNAME_ID_DEFAULT %>"
 			classNameId="<%= PortalUtil.getClassNameId(DDMStructure.class) %>"
 			classPK="<%= ddmStructure.getStructureId() %>"
-			ddmFormValues="<%= journalDisplayContext.getDDMFormValues(ddmStructure) %>"
+			ddmFormValues="<%= journalEditArticleDisplayContext.getDDMFormValues(ddmStructure) %>"
 			defaultEditLocale="<%= LocaleUtil.fromLanguageId(journalEditArticleDisplayContext.getDefaultLanguageId()) %>"
 			documentLibrarySelectorURL="<%= String.valueOf(journalItemSelectorHelper.getDocumentLibrarySelectorURL()) %>"
 			ignoreRequestValue="<%= journalEditArticleDisplayContext.isChangeStructure() %>"

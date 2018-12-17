@@ -14,6 +14,7 @@
 
 package com.liferay.layout.admin.web.internal.servlet.taglib.ui;
 
+import com.liferay.layout.admin.constants.LayoutAdminConstants;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -57,7 +58,9 @@ public class LayoutCustomizationSettingsFormNavigatorEntry
 			_log.error("Unable to display form for customization settings");
 		}
 
-		if (Objects.equals(layout.getType(), "content")) {
+		if (Objects.equals(
+				layout.getType(), LayoutAdminConstants.LAYOUT_TYPE_CONTENT)) {
+
 			return false;
 		}
 

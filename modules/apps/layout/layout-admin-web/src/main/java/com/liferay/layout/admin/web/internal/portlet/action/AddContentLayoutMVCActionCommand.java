@@ -14,6 +14,7 @@
 
 package com.liferay.layout.admin.web.internal.portlet.action;
 
+import com.liferay.layout.admin.constants.LayoutAdminConstants;
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.layout.admin.web.internal.handler.LayoutExceptionRequestHandler;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
@@ -132,7 +133,7 @@ public class AddContentLayoutMVCActionCommand
 				layout = _layoutService.addLayout(
 					groupId, privateLayout, parentLayoutId, nameMap,
 					new HashMap<>(), new HashMap<>(), new HashMap<>(),
-					new HashMap<>(), "content",
+					new HashMap<>(), LayoutAdminConstants.LAYOUT_TYPE_CONTENT,
 					typeSettingsProperties.toString(), false, new HashMap<>(),
 					serviceContext);
 			}
@@ -140,7 +141,10 @@ public class AddContentLayoutMVCActionCommand
 			String redirectURL = getRedirectURL(
 				actionRequest, actionResponse, layout);
 
-			if (Objects.equals(layout.getType(), "content")) {
+			if (Objects.equals(
+					layout.getType(),
+					LayoutAdminConstants.LAYOUT_TYPE_CONTENT)) {
+
 				redirectURL = getContentRedirectURL(themeDisplay, layout);
 			}
 

@@ -15,6 +15,7 @@
 package com.liferay.layout.internal.search;
 
 import com.liferay.fragment.constants.FragmentEntryLinkConstants;
+import com.liferay.layout.admin.constants.LayoutAdminConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
 import com.liferay.layout.page.template.util.LayoutPageTemplateStructureRenderUtil;
@@ -108,7 +109,8 @@ public class LayoutIndexer extends BaseIndexer<Layout> {
 		throws Exception {
 
 		String[] types = GetterUtil.getStringValues(
-			searchContext.getAttribute(Field.TYPE), new String[] {"content"});
+			searchContext.getAttribute(Field.TYPE),
+			new String[] {LayoutAdminConstants.LAYOUT_TYPE_CONTENT});
 
 		if (ArrayUtil.isNotEmpty(types)) {
 			TermsFilter typeTermsFilter = new TermsFilter(Field.TYPE);

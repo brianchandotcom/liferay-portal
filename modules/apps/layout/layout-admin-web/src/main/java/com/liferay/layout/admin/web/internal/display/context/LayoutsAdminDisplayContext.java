@@ -21,6 +21,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.SafeConsumer;
+import com.liferay.layout.admin.constants.LayoutAdminConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
 import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionLocalServiceUtil;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryServiceUtil;
@@ -338,7 +339,9 @@ public class LayoutsAdminDisplayContext {
 	}
 
 	public String getEditLayoutURL(Layout layout) throws PortalException {
-		if (!Objects.equals(layout.getType(), "content")) {
+		if (!Objects.equals(
+				layout.getType(), LayoutAdminConstants.LAYOUT_TYPE_CONTENT)) {
+
 			return StringPool.BLANK;
 		}
 
@@ -626,11 +629,17 @@ public class LayoutsAdminDisplayContext {
 		if (isSearch() || (layout == null)) {
 			layoutsCount = LayoutLocalServiceUtil.getLayoutsCount(
 				getSelGroup(), isPrivateLayout(), getKeywords(),
-				new String[] {"content", "portlet"});
+				new String[] {
+					LayoutAdminConstants.LAYOUT_TYPE_CONTENT,
+					LayoutConstants.TYPE_PORTLET
+				});
 
 			layouts = LayoutLocalServiceUtil.getLayouts(
 				getSelGroupId(), isPrivateLayout(), getKeywords(),
-				new String[] {"content", "portlet"},
+				new String[] {
+					LayoutAdminConstants.LAYOUT_TYPE_CONTENT,
+					LayoutConstants.TYPE_PORTLET
+				},
 				layoutsSearchContainer.getStart(),
 				layoutsSearchContainer.getEnd(),
 				layoutsSearchContainer.getOrderByComparator());

@@ -14,6 +14,7 @@
 
 package com.liferay.layout.admin.web.internal.portlet.action;
 
+import com.liferay.layout.admin.constants.LayoutAdminConstants;
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.layout.admin.web.internal.handler.LayoutExceptionRequestHandler;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -123,7 +124,9 @@ public class AddSimpleLayoutMVCActionCommand
 			String redirectURL = getRedirectURL(
 				actionRequest, actionResponse, layout);
 
-			if (Objects.equals(type, "content")) {
+			if (Objects.equals(
+					type, LayoutAdminConstants.LAYOUT_TYPE_CONTENT)) {
+
 				redirectURL = getContentRedirectURL(themeDisplay, layout);
 			}
 

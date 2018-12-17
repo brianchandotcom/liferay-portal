@@ -26,10 +26,8 @@ import com.liferay.dynamic.data.mapping.storage.StorageType;
 import com.liferay.dynamic.data.mapping.test.util.DDMStructureTestHelper;
 import com.liferay.dynamic.data.mapping.test.util.DDMTemplateTestUtil;
 import com.liferay.journal.model.JournalArticle;
-import com.liferay.journal.model.JournalArticleConstants;
 import com.liferay.journal.model.JournalFolderConstants;
 import com.liferay.journal.service.JournalArticleLocalServiceUtil;
-import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.apio.test.util.AuthConfigurationTestUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -147,15 +145,10 @@ public class StructuredContentApioTestBundleActivator
 				null, content, ddmStructure.getStructureKey(),
 				ddmTemplate.getTemplateKey(), serviceContext);
 
-		_autoCloseables.add(
-			() -> JournalArticleLocalServiceUtil.deleteArticle(journalArticle));
-
 		return journalArticle;
 	}
 
 	private void _cleanUp() {
-		Collections.reverse(_autoCloseables);
-
 		for (AutoCloseable autoCloseable : _autoCloseables) {
 			try {
 				autoCloseable.close();

@@ -180,11 +180,11 @@
 			<contains>There are no actions associated with the resource com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion</contains>
 			<matches></matches>
 		</ignore-error>
-		<ignore-error description="LPS-88391, LPS-88412, LPS-88417">
+		<ignore-error description="LPS-88391, LPS-88417">
 			<contains></contains>
 			<matches>Attempting to upgrade table .* by recreating the table [\s\S]*</matches>
 		</ignore-error>
-		<ignore-error description="LPS-88391, LPS-88412, LPS-88417">
+		<ignore-error description="LPS-88391, LPS-88417">
 			<contains></contains>
 			<matches>Successfully recreated and upgraded table .*</matches>
 		</ignore-error>

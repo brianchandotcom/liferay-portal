@@ -460,6 +460,11 @@ public class ImportUtil {
 				html, js, typeLabel, overwrite);
 
 			if (Validator.isNotNull(fragmentJSON)) {
+				if (fragmentEntry.getPreviewFileEntryId() > 0) {
+					PortletFileRepositoryUtil.deletePortletFileEntry(
+						fragmentEntry.getPreviewFileEntryId());
+				}
+
 				JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
 					fragmentJSON);
 

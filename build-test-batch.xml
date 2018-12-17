@@ -603,23 +603,6 @@ mariadb.executable=${mariadb.executable}]]></echo>
 		</sequential>
 	</macrodef>
 
-	<macrodef name="prepare-suite-search-engine">
-		<attribute name="suite.name" />
-
-		<sequential>
-			<propertycopy from="search.engine[@{suite.name}]" name="suite.search.engine" silent="true" />
-
-			<if>
-				<equals arg1="${suite.search.engine}" arg2="solr" />
-				<then>
-					<property name="com.liferay.portal.search.solr7.test.unit.started" value="true" />
-
-					<ant antfile="build-test-solr.xml" target="prepare-solr-suite" />
-				</then>
-			</if>
-		</sequential>
-	</macrodef>
-
 	<macrodef name="prepare-release-test-environment">
 		<attribute default="tomcat" name="app.server.type" />
 		<attribute default="" name="test.build.fix.pack.zip.url" />
@@ -677,6 +660,23 @@ mariadb.executable=${mariadb.executable}]]></echo>
 
 			<antcall if:set="env.JENKINS_HOME" inheritAll="false" target="clean-up-db2-processes" />
 			<antcall if:set="env.JENKINS_HOME" inheritAll="false" target="clean-up-java-processes" />
+		</sequential>
+	</macrodef>
+
+	<macrodef name="prepare-suite-search-engine">
+		<attribute name="suite.name" />
+
+		<sequential>
+			<propertycopy from="search.engine[@{suite.name}]" name="suite.search.engine" silent="true" />
+
+			<if>
+				<equals arg1="${suite.search.engine}" arg2="solr" />
+				<then>
+					<property name="com.liferay.portal.search.solr7.test.unit.started" value="true" />
+
+					<ant antfile="build-test-solr.xml" target="prepare-solr-suite" />
+				</then>
+			</if>
 		</sequential>
 	</macrodef>
 

@@ -39,13 +39,38 @@ public class ApioClientBuilder {
 		public RequestSpecification(
 			Authentication authentication, Map<String, String> headers) {
 
+			this(authentication, headers, Body.EMPTY);
+		}
+
+		public RequestSpecification(
+			Authentication authentication, Map<String, String> headers,
+			Body body) {
+
 			_authentication = authentication;
-			_headers = headers;
+
+			if (headers == null) {
+				_headers = Collections.emptyMap();
+			}
+			else {
+				_headers = Collections.unmodifiableMap(headers);
+			}
+
+			if (body == null) {
+				_body = Body.EMPTY;
+			}
+			else {
+				_body = body;
+			}
 		}
 
 		public RequestSpecification basicAuth(String user, String password) {
 			return new RequestSpecification(
-				new BasicAuthentication(user, password), _headers);
+				new BasicAuthentication(user, password), _headers, _body);
+		}
+
+		public RequestSpecification body(String body) {
+			return new RequestSpecification(
+				_authentication, _headers, new BodyImpl(body));
 		}
 
 		public RequestSpecification header(String name, String value) {
@@ -53,7 +78,7 @@ public class ApioClientBuilder {
 
 			headers.put(name, value);
 
-			return new RequestSpecification(_authentication, headers);
+			return new RequestSpecification(_authentication, headers, _body);
 		}
 
 		public Response when() {
@@ -64,13 +89,14 @@ public class ApioClientBuilder {
 			getRestAssuredRequestSpecification() {
 
 			io.restassured.specification.RequestSpecification
-				requestSpecification = _authentication.auth(
-					RestAssured.given());
+				requestSpecification = _body.body(
+					_authentication.auth(RestAssured.given()));
 
 			return requestSpecification.headers(_headers);
 		}
 
 		private final Authentication _authentication;
+		private final Body _body;
 		private final Map<String, String> _headers;
 
 	}
@@ -103,6 +129,17 @@ public class ApioClientBuilder {
 			return new Response(response.then(), _requestSpecification);
 		}
 
+		public Response post(String url) {
+			io.restassured.specification.RequestSpecification
+				requestSpecification =
+					_requestSpecification.getRestAssuredRequestSpecification();
+
+			io.restassured.response.Response response =
+				requestSpecification.post(url);
+
+			return new Response(response.then(), _requestSpecification);
+		}
+
 		public ValidatableResponse then() {
 			return _validatableResponse;
 		}
@@ -118,6 +155,16 @@ public class ApioClientBuilder {
 			requestSpecification -> requestSpecification;
 
 		public io.restassured.specification.RequestSpecification auth(
+			io.restassured.specification.RequestSpecification
+				requestSpecification);
+
+	}
+
+	public interface Body {
+
+		public static Body EMPTY = requestSpecification -> requestSpecification;
+
+		public io.restassured.specification.RequestSpecification body(
 			io.restassured.specification.RequestSpecification
 				requestSpecification);
 
@@ -146,6 +193,24 @@ public class ApioClientBuilder {
 
 		private final String _password;
 		private final String _user;
+
+	}
+
+	protected static class BodyImpl implements Body {
+
+		@Override
+		public io.restassured.specification.RequestSpecification body(
+			io.restassured.specification.RequestSpecification
+				requestSpecification) {
+
+			return requestSpecification.body(_body);
+		}
+
+		protected BodyImpl(String body) {
+			_body = body;
+		}
+
+		private String _body;
 
 	}
 

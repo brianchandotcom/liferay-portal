@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.structure.apio.client.test.activator;
+package com.liferay.structure.apio.client.test.internal.activator;
 
 import com.liferay.dynamic.data.mapping.io.DDMFormDeserializer;
 import com.liferay.dynamic.data.mapping.io.DDMFormDeserializerDeserializeRequest;
@@ -157,7 +157,8 @@ public class ContentStructureApioTestBundleActivator
 		ClassLoader classLoader = clazz.getClassLoader();
 
 		InputStream inputStream = classLoader.getResourceAsStream(
-			"/com/liferay/structure/apio/client/test/activator/" + fileName);
+			"/com/liferay/structure/apio/client/test/internal/activator/" +
+				fileName);
 
 		return StringUtil.read(inputStream);
 	}

@@ -31,7 +31,7 @@ public class ApioClientBuilder {
 
 	public static RequestSpecification given() {
 		return new RequestSpecification(
-			_withoutAuthentication, Collections.emptyMap());
+			Authentication.EMPTY, Collections.emptyMap());
 	}
 
 	public static class RequestSpecification {
@@ -114,6 +114,9 @@ public class ApioClientBuilder {
 
 	public interface Authentication {
 
+		public static Authentication EMPTY =
+			requestSpecification -> requestSpecification;
+
 		public io.restassured.specification.RequestSpecification auth(
 			io.restassured.specification.RequestSpecification
 				requestSpecification);
@@ -145,20 +148,5 @@ public class ApioClientBuilder {
 		private final String _user;
 
 	}
-
-	protected static class WithoutAuthentication implements Authentication {
-
-		@Override
-		public io.restassured.specification.RequestSpecification auth(
-			io.restassured.specification.RequestSpecification
-				requestSpecification) {
-
-			return requestSpecification;
-		}
-
-	}
-
-	private static final WithoutAuthentication _withoutAuthentication =
-		new WithoutAuthentication();
 
 }

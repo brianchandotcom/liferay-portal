@@ -3,29 +3,38 @@
 .fragments-editor__topper {
 	background-color: $topperBackgroundColor;
 	border-radius: $topperBorderRadius $topperBorderRadius 0 0;
-	bottom: 100%;
+	bottom: calc(100% + #{$topperBorderWidth});
 	box-shadow: 0 0 0 $topperBorderWidth $topperBorderColor;
 	color: $topperColor;
-	left: 1px;
+	font-size: 12px;
+	height: 24px;
+	left: $topperBorderWidth;
+	line-height: 24px;
+	max-width: calc(100% - #{$topperBorderWidth * 2});
 	opacity: 0;
-	padding: 0.5em 1em;
+	padding: 0 8px;
 	pointer-events: none;
 	position: absolute;
 	transform: translateY(100%);
 	transition: box-shadow ease $topperShowDuration, transform ease ($topperShowDuration * 2), opacity ease ($topperShowDuration * 0.667);
-	width: calc(100% - 2px);
 	z-index: $topperZIndex;
-
-	&__title {
-		text-align: left;
-	}
 
 	&__icon {
 		fill: $topperColor;
+		padding: 0;
 	}
 
 	&__item {
-		margin: 0 0.5em;
+		margin: 0;
+		min-width: 0;
+	}
+
+	&__title {
+		margin-right: 16px;
+		overflow: hidden;
+		text-align: left;
+		text-overflow: ellipsis;
+		white-space: nowrap;
 	}
 
 	&-wrapper {

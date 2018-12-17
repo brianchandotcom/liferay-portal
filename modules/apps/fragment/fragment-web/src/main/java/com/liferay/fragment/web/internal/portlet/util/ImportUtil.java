@@ -48,6 +48,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.io.File;
+import java.io.InputStream;
 
 import java.util.ArrayList;
 import java.util.Enumeration;
@@ -336,8 +337,22 @@ public class ImportUtil {
 			ZipFile zipFile, String fileName, String contentPath)
 		throws Exception {
 
+		InputStream inputStream = _getFragmentEntryInputStream(
+			zipFile, fileName, contentPath);
+
+		if (inputStream == null) {
+			return StringPool.BLANK;
+		}
+
+		return StringUtil.read(inputStream);
+	}
+
+	private InputStream _getFragmentEntryInputStream(
+			ZipFile zipFile, String fileName, String contentPath)
+		throws Exception {
+
 		if (contentPath.startsWith(StringPool.SLASH)) {
-			return _getContent(zipFile, contentPath.substring(1));
+			return _getInputStream(zipFile, contentPath.substring(1));
 		}
 
 		if (contentPath.startsWith("./")) {
@@ -347,7 +362,19 @@ public class ImportUtil {
 		String path = fileName.substring(
 			0, fileName.lastIndexOf(StringPool.SLASH));
 
-		return _getContent(zipFile, path + StringPool.SLASH + contentPath);
+		return _getInputStream(zipFile, path + StringPool.SLASH + contentPath);
+	}
+
+	private InputStream _getInputStream(ZipFile zipFile, String fileName)
+		throws Exception {
+
+		ZipEntry zipEntry = zipFile.getEntry(fileName);
+
+		if (zipEntry == null) {
+			return null;
+		}
+
+		return zipFile.getInputStream(zipEntry);
 	}
 
 	private String _getKey(String fileName) {

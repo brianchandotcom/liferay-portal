@@ -52,7 +52,7 @@ if (portletTitleBasedNavigation) {
 				<aui:fieldset>
 
 					<%
-					BulkSelection<FileEntry> bulkSelection = (BulkSelection<FileEntry>)request.getAttribute(DLWebKeys.DOCUMENT_LIBRARY_BULK_SELECTION);
+					BulkSelection<FileEntry, ?> bulkSelection = (BulkSelection<FileEntry, ?>)request.getAttribute(DLWebKeys.DOCUMENT_LIBRARY_BULK_SELECTION);
 					%>
 
 					<aui:input name="rowIdsFileEntry" type="hidden" value="<%= String.valueOf(bulkSelection.serialize()) %>" />

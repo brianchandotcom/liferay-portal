@@ -12,30 +12,21 @@
  * details.
  */
 
-package com.liferay.bulk.selection;
+package com.liferay.document.library.internal.background.task;
 
-import com.liferay.portal.kernel.exception.PortalException;
-
-import java.io.Serializable;
-
-import java.util.Locale;
-import java.util.stream.Stream;
+import com.liferay.portal.kernel.backgroundtask.BackgroundTaskStatus;
+import com.liferay.portal.kernel.backgroundtask.BackgroundTaskStatusMessageTranslator;
+import com.liferay.portal.kernel.messaging.Message;
 
 /**
  * @author Adolfo Pérez
  */
-public interface BulkSelection
-	<T, S extends BulkSelectionBackgroundActionExecutor> {
+public class UpdateFileEntryTagsBackgroundTaskStatusMessageTranslator
+	implements BackgroundTaskStatusMessageTranslator {
 
-	public String describe(Locale locale) throws PortalException;
-
-	public boolean isMultiple();
-
-	public <U extends BulkSelectionBackgroundActionExecutorConsumer<S>>
-		void runBackgroundAction(U consumer) throws PortalException;
-
-	public Serializable serialize();
-
-	public Stream<T> stream() throws PortalException;
+	@Override
+	public void translate(
+		BackgroundTaskStatus backgroundTaskStatus, Message message) {
+	}
 
 }

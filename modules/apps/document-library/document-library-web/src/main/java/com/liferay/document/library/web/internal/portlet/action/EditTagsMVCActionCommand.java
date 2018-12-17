@@ -14,38 +14,24 @@
 
 package com.liferay.document.library.web.internal.portlet.action;
 
-import com.liferay.asset.kernel.model.AssetEntry;
-import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.bulk.selection.BulkSelection;
 import com.liferay.bulk.selection.BulkSelectionFactory;
+import com.liferay.document.library.bulk.selection.FileEntryBulkSelectionBackgroundActionExecutor;
 import com.liferay.document.library.constants.DLPortletKeys;
-import com.liferay.document.library.kernel.model.DLFileEntry;
-import com.liferay.document.library.kernel.model.DLFileEntryConstants;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.repository.model.FileEntry;
-import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.SessionMessages;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.transaction.Propagation;
-import com.liferay.portal.kernel.transaction.TransactionConfig;
-import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.SetUtil;
-import com.liferay.portal.kernel.util.WebKeys;
 
-import java.util.HashSet;
+import java.util.Arrays;
 import java.util.Set;
-import java.util.stream.Stream;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -73,13 +59,30 @@ public class EditTagsMVCActionCommand extends BaseMVCActionCommand {
 		throws PortalException {
 
 		try {
-			TransactionInvokerUtil.invoke(
-				_transactionConfig,
-				() -> {
-					_editTags(actionRequest);
+			Set<String> commonTagNamesSet = SetUtil.fromArray(
+				ParamUtil.getStringValues(actionRequest, "commonTagNames"));
 
-					return null;
-				});
+			ServiceContext serviceContext = ServiceContextFactory.getInstance(
+				actionRequest);
+
+			String[] toAddTagNames = serviceContext.getAssetTagNames();
+
+			boolean append = ParamUtil.getBoolean(actionRequest, "append");
+
+			commonTagNamesSet.removeAll(Arrays.asList(toAddTagNames));
+
+			String[] toRemoveTagNames = commonTagNamesSet.toArray(
+				new String[commonTagNamesSet.size()]);
+
+			BulkSelection
+				<FileEntry, FileEntryBulkSelectionBackgroundActionExecutor>
+					bulkSelection = _bulkSelectionFactory.create(
+						actionRequest.getParameterMap());
+
+			bulkSelection.runBackgroundAction(
+				(FileEntryBulkSelectionBackgroundActionExecutor executor) ->
+					executor.updateFileEntryTags(
+						toAddTagNames, toRemoveTagNames, append));
 
 			String successMessage = LanguageUtil.get(
 				_portal.getHttpServletRequest(actionRequest), "changes-saved");
@@ -95,96 +98,12 @@ public class EditTagsMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
-	private void _editTags(ActionRequest actionRequest) throws PortalException {
-		BulkSelection<FileEntry> bulkSelection = _bulkSelectionFactory.create(
-			actionRequest.getParameterMap());
-
-		Stream<FileEntry> fileEntryStream = bulkSelection.stream();
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		PermissionChecker permissionChecker =
-			themeDisplay.getPermissionChecker();
-
-		boolean append = ParamUtil.getBoolean(actionRequest, "append");
-
-		Set<String> commonTagNamesSet = SetUtil.fromArray(
-			ParamUtil.getStringValues(actionRequest, "commonTagNames"));
-
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			DLFileEntry.class.getName(), actionRequest);
-
-		Set<String> newTagNamesSet = SetUtil.fromArray(
-			serviceContext.getAssetTagNames());
-
-		Set<String> toAddTagNamesSet = new HashSet<>(newTagNamesSet);
-
-		toAddTagNamesSet.removeAll(commonTagNamesSet);
-
-		Set<String> toRemoveTagNamesSet = commonTagNamesSet;
-
-		commonTagNamesSet.removeAll(newTagNamesSet);
-
-		fileEntryStream.forEach(
-			fileEntry -> {
-				try {
-					if (!_fileEntryModelResourcePermission.contains(
-							permissionChecker, fileEntry, ActionKeys.UPDATE)) {
-
-						return;
-					}
-
-					AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
-						DLFileEntryConstants.getClassName(),
-						fileEntry.getFileEntryId());
-
-					String[] newTagNames = serviceContext.getAssetTagNames();
-
-					if (append) {
-						Set<String> currentTagNamesSet = SetUtil.fromArray(
-							assetEntry.getTagNames());
-
-						currentTagNamesSet.removeAll(toRemoveTagNamesSet);
-						currentTagNamesSet.addAll(toAddTagNamesSet);
-
-						newTagNames = currentTagNamesSet.toArray(
-							new String[currentTagNamesSet.size()]);
-					}
-
-					_assetEntryLocalService.updateEntry(
-						assetEntry.getUserId(), assetEntry.getGroupId(),
-						assetEntry.getClassName(), assetEntry.getClassPK(),
-						assetEntry.getCategoryIds(), newTagNames);
-				}
-				catch (PortalException pe) {
-					if (_log.isWarnEnabled()) {
-						_log.warn(pe, pe);
-					}
-				}
-			});
-	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		EditTagsMVCActionCommand.class);
-
-	private static final TransactionConfig _transactionConfig =
-		TransactionConfig.Factory.create(
-			Propagation.REQUIRED, new Class<?>[] {Exception.class});
-
-	@Reference
-	private AssetEntryLocalService _assetEntryLocalService;
-
 	@Reference(
 		target = "(model.class.name=com.liferay.portal.kernel.repository.model.FileEntry)"
 	)
-	private BulkSelectionFactory<FileEntry> _bulkSelectionFactory;
-
-	@Reference(
-		target = "(model.class.name=com.liferay.portal.kernel.repository.model.FileEntry)"
-	)
-	private ModelResourcePermission<FileEntry>
-		_fileEntryModelResourcePermission;
+	private BulkSelectionFactory
+		<FileEntry, FileEntryBulkSelectionBackgroundActionExecutor>
+			_bulkSelectionFactory;
 
 	@Reference
 	private Portal _portal;

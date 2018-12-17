@@ -12,30 +12,20 @@
  * details.
  */
 
-package com.liferay.bulk.selection;
-
-import com.liferay.portal.kernel.exception.PortalException;
-
-import java.io.Serializable;
-
-import java.util.Locale;
-import java.util.stream.Stream;
+package com.liferay.document.library.internal.constants;
 
 /**
  * @author Adolfo Pérez
  */
-public interface BulkSelection
-	<T, S extends BulkSelectionBackgroundActionExecutor> {
+public class BulkSelectionBackgroundTaskConstants {
 
-	public String describe(Locale locale) throws PortalException;
+	public static final String
+		BULK_SELECTION_BACKGROUND_ACTION_EXECUTOR_CONSUMER =
+			"bulkSelectionBackgroundActionExecutorConsumer";
 
-	public boolean isMultiple();
+	public static final String BULK_SELECTION_PARAMETER_MAP =
+		"bulkSelectionParameterMap";
 
-	public <U extends BulkSelectionBackgroundActionExecutorConsumer<S>>
-		void runBackgroundAction(U consumer) throws PortalException;
-
-	public Serializable serialize();
-
-	public Stream<T> stream() throws PortalException;
+	public static final String USER_ID = "userId";
 
 }

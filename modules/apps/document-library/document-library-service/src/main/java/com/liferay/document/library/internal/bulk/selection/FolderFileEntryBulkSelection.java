@@ -14,11 +14,11 @@
 
 package com.liferay.document.library.internal.bulk.selection;
 
-import com.liferay.bulk.selection.BulkSelection;
-import com.liferay.bulk.selection.BulkSelectionBackgroundActionExecutorConsumer;
-import com.liferay.document.library.bulk.selection.FileEntryBulkSelectionBackgroundActionExecutor;
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.petra.reflect.ReflectionUtil;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.backgroundtask.BackgroundTaskManager;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.repository.DocumentRepository;
@@ -26,11 +26,13 @@ import com.liferay.portal.kernel.repository.RepositoryProvider;
 import com.liferay.portal.kernel.repository.capabilities.BulkOperationCapability;
 import com.liferay.portal.kernel.repository.model.BaseRepositoryModelOperation;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
 
 import java.io.Serializable;
 
 import java.util.Locale;
+import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.Spliterator;
 import java.util.function.Consumer;
@@ -40,14 +42,15 @@ import java.util.stream.StreamSupport;
 /**
  * @author Adolfo Pérez
  */
-public class FolderFileEntryBulkSelection
-	implements BulkSelection
-		<FileEntry, FileEntryBulkSelectionBackgroundActionExecutor> {
+public class FolderFileEntryBulkSelection extends BaseBulkSelection {
 
 	public FolderFileEntryBulkSelection(
-		long repositoryId, long folderId,
+		long repositoryId, long folderId, Map<String, String[]> parameterMap,
 		ResourceBundleLoader resourceBundleLoader, Language language,
-		RepositoryProvider repositoryProvider, DLAppService dlAppService) {
+		RepositoryProvider repositoryProvider, DLAppService dlAppService,
+		BackgroundTaskManager backgroundTaskManager) {
+
+		super(parameterMap, backgroundTaskManager);
 
 		_repositoryId = repositoryId;
 		_folderId = folderId;
@@ -70,15 +73,6 @@ public class FolderFileEntryBulkSelection
 	@Override
 	public boolean isMultiple() {
 		return true;
-	}
-
-	@Override
-	public
-		<U extends BulkSelectionBackgroundActionExecutorConsumer
-			<FileEntryBulkSelectionBackgroundActionExecutor>>
-				void runBackgroundAction(U consumer) {
-
-		throw new UnsupportedOperationException();
 	}
 
 	@Override
@@ -163,6 +157,13 @@ public class FolderFileEntryBulkSelection
 
 			},
 			false);
+	}
+
+	@Override
+	protected String getBackgroundJobName() {
+		return StringBundler.concat(
+			"folderFileEntryBulkSelection-", PrincipalThreadLocal.getUserId(),
+			StringPool.DASH, _folderId);
 	}
 
 	private final DLAppService _dlAppService;

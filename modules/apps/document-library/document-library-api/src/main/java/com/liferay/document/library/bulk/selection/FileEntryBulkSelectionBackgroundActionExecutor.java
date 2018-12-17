@@ -21,4 +21,8 @@ import com.liferay.bulk.selection.BulkSelectionBackgroundActionExecutor;
  */
 public interface FileEntryBulkSelectionBackgroundActionExecutor
 	extends BulkSelectionBackgroundActionExecutor {
+
+	public void updateFileEntryTags(
+		String[] toAddTagNames, String[] toRemoveTagNames, boolean append);
+
 }

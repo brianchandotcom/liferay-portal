@@ -18,6 +18,7 @@ import com.liferay.bulk.selection.BulkSelection;
 import com.liferay.bulk.selection.BulkSelectionFactory;
 import com.liferay.document.library.bulk.selection.FileEntryBulkSelectionBackgroundActionExecutor;
 import com.liferay.document.library.kernel.service.DLAppService;
+import com.liferay.portal.kernel.backgroundtask.BackgroundTaskManager;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.repository.RepositoryProvider;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -53,13 +54,13 @@ public class FileEntryBulkSelectionFactory
 		String[] values = parameterMap.get("rowIdsFileEntry");
 
 		if (values.length > 1) {
-			return _getFileEntrySelection(values);
+			return _getFileEntrySelection(values, parameterMap);
 		}
 
 		String value = values[0];
 
 		if (!value.startsWith("all:")) {
-			return _getFileEntrySelection(values);
+			return _getFileEntrySelection(values, parameterMap);
 		}
 
 		if (!parameterMap.containsKey("repositoryId")) {
@@ -77,13 +78,15 @@ public class FileEntryBulkSelectionFactory
 		long folderId = GetterUtil.getLong(value.substring(4));
 
 		return new FolderFileEntryBulkSelection(
-			repositoryId, folderId, _resourceBundleLoader, _language,
-			_repositoryProvider, _dlAppService);
+			repositoryId, folderId, parameterMap, _resourceBundleLoader,
+			_language, _repositoryProvider, _dlAppService,
+			_backgroundTaskManager);
 	}
 
 	private BulkSelection
 		<FileEntry, FileEntryBulkSelectionBackgroundActionExecutor>
-			_getFileEntrySelection(String[] values) {
+			_getFileEntrySelection(
+				String[] values, Map<String, String[]> parameterMap) {
 
 		if (values.length == 1) {
 			values = StringUtil.split(values[0]);
@@ -93,13 +96,17 @@ public class FileEntryBulkSelectionFactory
 
 		if (fileEntryIds.length == 1) {
 			return new SingleFileEntryBulkSelection(
-				fileEntryIds[0], _resourceBundleLoader, _language,
-				_dlAppService);
+				fileEntryIds[0], parameterMap, _resourceBundleLoader, _language,
+				_dlAppService, _backgroundTaskManager);
 		}
 
 		return new MultipleFileEntryBulkSelection(
-			fileEntryIds, _resourceBundleLoader, _language, _dlAppService);
+			fileEntryIds, parameterMap, _resourceBundleLoader, _language,
+			_dlAppService, _backgroundTaskManager);
 	}
+
+	@Reference
+	private BackgroundTaskManager _backgroundTaskManager;
 
 	@Reference
 	private DLAppService _dlAppService;

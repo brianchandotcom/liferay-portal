@@ -69,7 +69,7 @@ public class EditTagsMVCRenderCommand implements MVCRenderCommand {
 		throws PortletException {
 
 		try {
-			BulkSelection<FileEntry> bulkSelection =
+			BulkSelection<FileEntry, ?> bulkSelection =
 				_bulkSelectionFactory.create(renderRequest.getParameterMap());
 
 			ThemeDisplay themeDisplay =
@@ -146,7 +146,7 @@ public class EditTagsMVCRenderCommand implements MVCRenderCommand {
 	@Reference(
 		target = "(model.class.name=com.liferay.portal.kernel.repository.model.FileEntry)"
 	)
-	private BulkSelectionFactory<FileEntry> _bulkSelectionFactory;
+	private BulkSelectionFactory<FileEntry, ?> _bulkSelectionFactory;
 
 	@Reference(
 		target = "(model.class.name=com.liferay.portal.kernel.repository.model.FileEntry)"

@@ -14,25 +14,25 @@
 
 package com.liferay.document.library.internal.bulk.selection;
 
-import com.liferay.bulk.selection.BulkSelection;
-import com.liferay.bulk.selection.BulkSelectionBackgroundActionExecutorConsumer;
-import com.liferay.document.library.bulk.selection.FileEntryBulkSelectionBackgroundActionExecutor;
 import com.liferay.document.library.kernel.exception.NoSuchFileEntryException;
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.petra.string.StringUtil;
+import com.liferay.portal.kernel.backgroundtask.BackgroundTaskManager;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
 
 import java.io.Serializable;
 
 import java.util.Arrays;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Objects;
 import java.util.ResourceBundle;
 import java.util.stream.LongStream;
@@ -41,13 +41,15 @@ import java.util.stream.Stream;
 /**
  * @author Adolfo Pérez
  */
-public class MultipleFileEntryBulkSelection
-	implements BulkSelection
-		<FileEntry, FileEntryBulkSelectionBackgroundActionExecutor> {
+public class MultipleFileEntryBulkSelection extends BaseBulkSelection {
 
 	public MultipleFileEntryBulkSelection(
-		long[] fileEntryIds, ResourceBundleLoader resourceBundleLoader,
-		Language language, DLAppService dlAppService) {
+		long[] fileEntryIds, Map<String, String[]> parameterMap,
+		ResourceBundleLoader resourceBundleLoader, Language language,
+		DLAppService dlAppService,
+		BackgroundTaskManager backgroundTaskManager) {
+
+		super(parameterMap, backgroundTaskManager);
 
 		_fileEntryIds = fileEntryIds;
 		_resourceBundleLoader = resourceBundleLoader;
@@ -71,15 +73,6 @@ public class MultipleFileEntryBulkSelection
 	}
 
 	@Override
-	public
-		<U extends BulkSelectionBackgroundActionExecutorConsumer
-			<FileEntryBulkSelectionBackgroundActionExecutor>>
-				void runBackgroundAction(U consumer) {
-
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
 	public Serializable serialize() {
 		return StringUtil.merge(_fileEntryIds, StringPool.COMMA);
 	}
@@ -93,6 +86,12 @@ public class MultipleFileEntryBulkSelection
 		).filter(
 			Objects::nonNull
 		);
+	}
+
+	@Override
+	protected String getBackgroundJobName() {
+		return "multipleFileEntryBulkSelection-" +
+			PrincipalThreadLocal.getUserId();
 	}
 
 	private FileEntry _fetchFileEntry(long fileEntryId) {

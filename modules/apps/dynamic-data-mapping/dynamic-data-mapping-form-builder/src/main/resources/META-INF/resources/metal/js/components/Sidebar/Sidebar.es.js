@@ -640,7 +640,7 @@ class Sidebar extends Component {
 				return {
 					...fieldType,
 					type: 'item'
-				}
+				};
 			}
 		);
 	}

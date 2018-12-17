@@ -72,7 +72,7 @@ public class BlogPostingNestedCollectionResourceTest
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
 
-		BlogsEntry blogsEntry = _getBlogEntry(new Date(), serviceContext);
+		BlogsEntry blogsEntry = _addBlogEntry(new Date(), serviceContext);
 
 		PageItems<BlogsEntry> pageItems = getPageItems(
 			PaginationRequest.of(10, 1), _group.getGroupId());
@@ -91,7 +91,7 @@ public class BlogPostingNestedCollectionResourceTest
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
 
-		BlogsEntry blogsEntry = _getBlogEntry(new Date(), serviceContext);
+		BlogsEntry blogsEntry = _addBlogEntry(new Date(), serviceContext);
 
 		_blogsEntryLocalService.updateStatus(
 			serviceContext.getUserId(), blogsEntry.getEntryId(),
@@ -112,7 +112,7 @@ public class BlogPostingNestedCollectionResourceTest
 		Date displayDate = new Date(
 			System.currentTimeMillis() + 24 * 60 * 60 * 1000);
 
-		_getBlogEntry(displayDate, serviceContext);
+		_addBlogEntry(displayDate, serviceContext);
 
 		PageItems<BlogsEntry> pageItems = getPageItems(
 			PaginationRequest.of(10, 1), _group.getGroupId());
@@ -128,7 +128,7 @@ public class BlogPostingNestedCollectionResourceTest
 		serviceContext.setAddGuestPermissions(false);
 		serviceContext.setAddGroupPermissions(false);
 
-		_getBlogEntry(new Date(), serviceContext);
+		_addBlogEntry(new Date(), serviceContext);
 
 		User user = UserTestUtil.addUser();
 
@@ -148,7 +148,7 @@ public class BlogPostingNestedCollectionResourceTest
 		}
 	}
 
-	private BlogsEntry _getBlogEntry(
+	private BlogsEntry _addBlogEntry(
 			Date displayDate, ServiceContext serviceContext)
 		throws PortalException {
 

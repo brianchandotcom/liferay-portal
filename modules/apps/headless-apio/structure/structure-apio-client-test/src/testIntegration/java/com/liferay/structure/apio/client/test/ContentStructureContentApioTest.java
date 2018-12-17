@@ -19,7 +19,7 @@ import com.jayway.jsonpath.JsonPath;
 import com.liferay.oauth2.provider.test.util.OAuth2ProviderTestUtil;
 import com.liferay.petra.json.web.service.client.JSONWebServiceClient;
 import com.liferay.petra.json.web.service.client.internal.JSONWebServiceClientImpl;
-import com.liferay.structure.apio.client.test.activator.ContentStructureApioTestBundleActivator;
+import com.liferay.structure.apio.client.test.internal.activator.ContentStructureApioTestBundleActivator;
 
 import java.net.MalformedURLException;
 import java.net.URL;

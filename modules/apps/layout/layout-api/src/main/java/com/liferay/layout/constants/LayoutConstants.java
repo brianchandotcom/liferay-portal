@@ -12,15 +12,13 @@
  * details.
  */
 
-package com.liferay.layout.admin.constants;
+package com.liferay.layout.constants;
 
 /**
  * @author Pavel Savinov
- * @deprecated As of Judson (7.1.x), replaced by {@link
- *             com.liferay.layout.constants.LayoutConstants}
  */
-@Deprecated
-public class LayoutAdminConstants {
+public class LayoutConstants
+	extends com.liferay.portal.kernel.model.LayoutConstants {
 
 	public static final String LAYOUT_TYPE_ASSET_DISPLAY = "asset_display";
 

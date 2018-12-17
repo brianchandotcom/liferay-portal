@@ -16,16 +16,12 @@
 
 <%@ include file="/init.jsp" %>
 
-<%
-JournalArticle article = journalDisplayContext.getArticle();
-%>
-
 <liferay-ui:error-marker
 	key="<%= WebKeys.ERROR_SECTION %>"
 	value="permissions"
 />
 
-<aui:model-context bean="<%= article %>" model="<%= JournalArticle.class %>" />
+<aui:model-context bean="<%= journalDisplayContext.getArticle() %>" model="<%= JournalArticle.class %>" />
 
 <liferay-ui:input-permissions
 	modelName="<%= JournalArticle.class.getName() %>"

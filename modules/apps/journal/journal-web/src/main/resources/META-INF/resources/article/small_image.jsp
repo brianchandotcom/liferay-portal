@@ -19,9 +19,9 @@
 <%
 JournalArticle article = journalDisplayContext.getArticle();
 
-boolean smallImage = BeanParamUtil.getBoolean(article, request, "smallImage");
+JournalEditArticleDisplayContext journalEditArticleDisplayContext = new JournalEditArticleDisplayContext(request, liferayPortletResponse, article);
 
-boolean changeStructure = GetterUtil.getBoolean(request.getAttribute("edit_article.jsp-changeStructure"));
+boolean smallImage = BeanParamUtil.getBoolean(article, request, "smallImage");
 %>
 
 <liferay-ui:error-marker
@@ -36,21 +36,11 @@ JournalFileUploadsConfiguration journalFileUploadsConfiguration = (JournalFileUp
 %>
 
 <liferay-ui:error exception="<%= ArticleSmallImageNameException.class %>">
-
-	<%
-	String[] imageExtensions = journalFileUploadsConfiguration.imageExtensions();
-	%>
-
-	<liferay-ui:message key="image-names-must-end-with-one-of-the-following-extensions" /> <%= HtmlUtil.escape(StringUtil.merge(imageExtensions, ", ")) %>.
+	<liferay-ui:message key="image-names-must-end-with-one-of-the-following-extensions" /> <%= HtmlUtil.escape(StringUtil.merge(journalFileUploadsConfiguration.imageExtensions(), ", ")) %>.
 </liferay-ui:error>
 
 <liferay-ui:error exception="<%= ArticleSmallImageSizeException.class %>">
-
-	<%
-	long imageMaxSize = journalFileUploadsConfiguration.smallImageMaxSize();
-	%>
-
-	<liferay-ui:message arguments="<%= TextFormatter.formatStorageSize(imageMaxSize, locale) %>" key="please-enter-a-small-image-with-a-valid-file-size-no-larger-than-x" translateArguments="<%= false %>" />
+	<liferay-ui:message arguments="<%= TextFormatter.formatStorageSize(journalFileUploadsConfiguration.smallImageMaxSize(), locale) %>" key="please-enter-a-small-image-with-a-valid-file-size-no-larger-than-x" translateArguments="<%= false %>" />
 </liferay-ui:error>
 
 <div id="<portlet:namespace />smallImageContainer">
@@ -68,15 +58,15 @@ JournalFileUploadsConfiguration journalFileUploadsConfiguration = (JournalFileUp
 
 			<aui:col width="<%= (smallImage && (article != null)) ? 50 : 100 %>">
 				<liferay-frontend:fieldset>
-					<aui:input cssClass="lfr-journal-small-image-type" ignoreRequestValue="<%= changeStructure %>" inlineField="<%= true %>" label="small-image-url" name="smallImageType" type="radio" />
+					<aui:input cssClass="lfr-journal-small-image-type" ignoreRequestValue="<%= journalEditArticleDisplayContext.isChangeStructure() %>" inlineField="<%= true %>" label="small-image-url" name="smallImageType" type="radio" />
 
-					<aui:input cssClass="lfr-journal-small-image-value" ignoreRequestValue="<%= changeStructure %>" inlineField="<%= true %>" label="" name="smallImageURL" title="small-image-url" />
+					<aui:input cssClass="lfr-journal-small-image-value" ignoreRequestValue="<%= journalEditArticleDisplayContext.isChangeStructure() %>" inlineField="<%= true %>" label="" name="smallImageURL" title="small-image-url" />
 				</liferay-frontend:fieldset>
 
 				<liferay-frontend:fieldset>
-					<aui:input cssClass="lfr-journal-small-image-type" ignoreRequestValue="<%= changeStructure %>" inlineField="<%= true %>" label="small-image" name="smallImageType" type="radio" />
+					<aui:input cssClass="lfr-journal-small-image-type" ignoreRequestValue="<%= journalEditArticleDisplayContext.isChangeStructure() %>" inlineField="<%= true %>" label="small-image" name="smallImageType" type="radio" />
 
-					<aui:input cssClass="lfr-journal-small-image-value" ignoreRequestValue="<%= changeStructure %>" inlineField="<%= true %>" label="" name="smallFile" type="file" />
+					<aui:input cssClass="lfr-journal-small-image-value" ignoreRequestValue="<%= journalEditArticleDisplayContext.isChangeStructure() %>" inlineField="<%= true %>" label="" name="smallFile" type="file" />
 				</liferay-frontend:fieldset>
 			</aui:col>
 		</aui:row>

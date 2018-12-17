@@ -17,23 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-JournalArticle article = journalDisplayContext.getArticle();
-
-boolean neverExpire = ParamUtil.getBoolean(request, "neverExpire", true);
-
-if (article != null) {
-	if (article.getExpirationDate() != null) {
-		neverExpire = false;
-	}
-}
-
-boolean neverReview = ParamUtil.getBoolean(request, "neverReview", true);
-
-if (article != null) {
-	if (article.getReviewDate() != null) {
-		neverReview = false;
-	}
-}
+JournalEditArticleDisplayContext journalEditArticleDisplayContext = new JournalEditArticleDisplayContext(request, liferayPortletResponse, journalDisplayContext.getArticle());
 %>
 
 <liferay-ui:error-marker
@@ -41,13 +25,13 @@ if (article != null) {
 	value="schedule"
 />
 
-<aui:model-context bean="<%= article %>" model="<%= JournalArticle.class %>" />
+<aui:model-context bean="<%= journalDisplayContext.getArticle() %>" model="<%= JournalArticle.class %>" />
 
 <liferay-ui:error exception="<%= ArticleDisplayDateException.class %>" message="please-enter-a-valid-display-date" />
 <liferay-ui:error exception="<%= ArticleExpirationDateException.class %>" message="please-enter-a-valid-expiration-date" />
 
 <aui:input formName="fm1" name="displayDate" />
 
-<aui:input dateTogglerCheckboxLabel="never-expire" disabled="<%= neverExpire %>" formName="fm1" name="expirationDate" />
+<aui:input dateTogglerCheckboxLabel="never-expire" disabled="<%= journalEditArticleDisplayContext.isNeverExpire() %>" formName="fm1" name="expirationDate" />
 
-<aui:input dateTogglerCheckboxLabel="never-review" disabled="<%= neverReview %>" formName="fm1" name="reviewDate" />
+<aui:input dateTogglerCheckboxLabel="never-review" disabled="<%= journalEditArticleDisplayContext.isNeverReview() %>" formName="fm1" name="reviewDate" />

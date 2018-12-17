@@ -19,14 +19,15 @@
 <%
 JournalArticle article = journalDisplayContext.getArticle();
 
-long groupId = BeanParamUtil.getLong(article, request, "groupId", scopeGroupId);
+JournalEditArticleDisplayContext journalEditArticleDisplayContext = new JournalEditArticleDisplayContext(request, liferayPortletResponse, article);
+
 long classNameId = ParamUtil.getLong(request, "classNameId");
 
-DDMStructure ddmStructure = (DDMStructure)request.getAttribute("edit_article.jsp-structure");
-DDMTemplate ddmTemplate = (DDMTemplate)request.getAttribute("edit_article.jsp-template");
+DDMStructure ddmStructure = journalEditArticleDisplayContext.getDDMStructure();
+DDMTemplate ddmTemplate = journalEditArticleDisplayContext.getDDMTemplate();
 %>
 
-<aui:input name="groupId" type="hidden" value="<%= groupId %>" />
+<aui:input name="groupId" type="hidden" value="<%= journalEditArticleDisplayContext.getGroupId() %>" />
 <aui:input name="ddmStructureKey" type="hidden" value="<%= ddmStructure.getStructureKey() %>" />
 <aui:input name="ddmTemplateKey" type="hidden" value="<%= (ddmTemplate != null) ? ddmTemplate.getTemplateKey() : StringPool.BLANK %>" />
 

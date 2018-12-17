@@ -215,6 +215,10 @@ public class AssetUtil {
 			PermissionChecker permissionChecker, long[] categoryIds)
 		throws PortalException {
 
+		if (permissionChecker == null) {
+			return categoryIds;
+		}
+
 		List<Long> viewableCategoryIds = new ArrayList<>();
 
 		for (long categoryId : categoryIds) {

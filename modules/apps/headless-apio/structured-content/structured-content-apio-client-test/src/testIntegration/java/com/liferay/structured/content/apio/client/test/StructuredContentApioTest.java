@@ -233,6 +233,72 @@ public class StructuredContentApioTest {
 	}
 
 	@Test
+	public void testCreateStructuredContent() {
+		String contentStructureId = ApioClientBuilder.given(
+		).basicAuth(
+			"test@liferay.com", "test"
+		).header(
+			"Accept", "application/hal+json"
+		).when(
+		).get(
+			_rootEndpointURL.toExternalForm()
+		).follow(
+			"_links.content-space.href"
+		).follow(
+			"_embedded.ContentSpace.find {it.name == '" +
+				StructuredContentApioTestBundleActivator.SITE_NAME +
+					"'}._links.contentStructures.href"
+		).then(
+		).extract(
+		).path(
+			"_embedded.Structure.find {it.name == '" +
+				StructuredContentApioTestBundleActivator.SITE_NAME +
+					"'}._links.self.href"
+		);
+
+		String href = ApioClientBuilder.given(
+		).basicAuth(
+			"test@liferay.com", "test"
+		).header(
+			"Accept", "application/hal+json"
+		).when(
+		).get(
+			_rootEndpointURL.toExternalForm()
+		).follow(
+			"_links.content-space.href"
+		).then(
+		).extract(
+		).path(
+			"_embedded.ContentSpace.find {it.name == '" +
+				StructuredContentApioTestBundleActivator.SITE_NAME +
+					"'}._links.structuredContents.href"
+		);
+
+		ApioClientBuilder.given(
+		).basicAuth(
+			"test@liferay.com", "test"
+		).header(
+			"Accept", "application/hal+json"
+		).header(
+			"Content-Type", "application/json"
+		).body(
+			"{\"title\": \"Example Structured Content\"," +
+				"\"contentStructure\": \"" + contentStructureId + "\"," +
+					"\"values\": [{\"value\": \"1.0\",\"name\": " +
+						"\"MyDecimal\"}]}"
+		).when(
+		).post(
+			href
+		).then(
+		).body(
+			"title", Matchers.equalTo("Example Structured Content")
+		).body(
+			"_embedded.values._embedded.find {it.name == 'MyDecimal'}.value",
+			Matchers.equalTo("1.0")
+		);
+	}
+
+	@Test
 	public void testDefaultStructuredFieldLabelIsDisplayedWhenAcceptLanguageIsSpecifiedAndDoesNotMatch() {
 		String href = ApioClientBuilder.given(
 		).basicAuth(

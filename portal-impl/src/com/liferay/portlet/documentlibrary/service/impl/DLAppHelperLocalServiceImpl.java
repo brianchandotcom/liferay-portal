@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
@@ -41,9 +42,11 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.WildcardMode;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.interval.IntervalActionProcessor;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.lock.Lock;
+import com.liferay.portal.kernel.messaging.async.Async;
 import com.liferay.portal.kernel.model.UserConstants;
 import com.liferay.portal.kernel.repository.LocalRepository;
 import com.liferay.portal.kernel.repository.Repository;
@@ -57,6 +60,7 @@ import com.liferay.portal.kernel.repository.model.FileShortcut;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.repository.model.RepositoryModel;
+import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -585,6 +589,50 @@ public class DLAppHelperLocalServiceImpl
 					folder.getFolderId(), lock.getUuid());
 			}
 		}
+	}
+
+	@Async
+	@Override
+	public void reindex(List<Long> dlFileEntryIds) throws PortalException {
+		IntervalActionProcessor<Void> intervalActionProcessor =
+			new IntervalActionProcessor<>(dlFileEntryIds.size());
+
+		intervalActionProcessor.setPerformIntervalActionMethod(
+			(start, end) -> {
+				List<Long> sublist = dlFileEntryIds.subList(start, end);
+
+				Indexer<DLFileEntry> indexer =
+					IndexerRegistryUtil.nullSafeGetIndexer(DLFileEntry.class);
+
+				IndexableActionableDynamicQuery
+					indexableActionableDynamicQuery =
+						dlFileEntryLocalService.
+							getIndexableActionableDynamicQuery();
+
+				indexableActionableDynamicQuery.setAddCriteriaMethod(
+					dynamicQuery -> {
+						Property dlFileEntryId = PropertyFactoryUtil.forName(
+							"fileEntryId");
+
+						dynamicQuery.add(dlFileEntryId.in(sublist));
+					});
+				indexableActionableDynamicQuery.setPerformActionMethod(
+					(DLFileEntry dlFileEntry) -> {
+						Document document = indexer.getDocument(dlFileEntry);
+
+						indexableActionableDynamicQuery.addDocuments(document);
+					});
+				indexableActionableDynamicQuery.setSearchEngineId(
+					indexer.getSearchEngineId());
+
+				indexableActionableDynamicQuery.performActions();
+
+				intervalActionProcessor.incrementStart(sublist.size());
+
+				return null;
+			});
+
+		intervalActionProcessor.performIntervalActions();
 	}
 
 	@Override
@@ -1728,6 +1776,8 @@ public class DLAppHelperLocalServiceImpl
 			dlFileEntryLocalService.getFileEntries(
 				childDLFolder.getGroupId(), childDLFolder.getFolderId());
 
+		List<Long> dlFileEntryIds = new ArrayList<>();
+
 		for (DLFileEntry dlFileEntry : dlFileEntries) {
 			if (moveToTrash) {
 				if (dlFileEntry.isInTrashExplicitly()) {
@@ -1819,12 +1869,11 @@ public class DLAppHelperLocalServiceImpl
 				}
 			}
 
-			// Indexer
+			dlFileEntryIds.add(dlFileEntry.getFileEntryId());
+		}
 
-			Indexer<DLFileEntry> indexer =
-				IndexerRegistryUtil.nullSafeGetIndexer(DLFileEntry.class);
-
-			indexer.reindex(dlFileEntry);
+		if (!dlFileEntryIds.isEmpty()) {
+			dlAppHelperLocalService.reindex(dlFileEntryIds);
 		}
 
 		List<DLFileShortcut> dlFileShortcuts =

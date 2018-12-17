@@ -19,6 +19,8 @@ package com.liferay.layout.admin.constants;
  */
 public class LayoutAdminConstants {
 
+	public static final String LAYOUT_TYPE_ASSET_DISPLAY = "asset_display";
+
 	public static final String LAYOUT_TYPE_CONTENT = "content";
 
 }

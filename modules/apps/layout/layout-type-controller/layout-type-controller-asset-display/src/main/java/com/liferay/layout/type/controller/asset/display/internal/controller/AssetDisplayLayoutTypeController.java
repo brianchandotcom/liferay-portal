@@ -14,7 +14,7 @@
 
 package com.liferay.layout.type.controller.asset.display.internal.controller;
 
-import com.liferay.layout.type.controller.asset.display.internal.constants.AssetDisplayLayoutTypeControllerConstants;
+import com.liferay.layout.admin.constants.LayoutAdminConstants;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutTypeController;
@@ -33,7 +33,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = "layout.type=" + AssetDisplayLayoutTypeControllerConstants.LAYOUT_TYPE_ASSET_DISPLAY,
+	property = "layout.type=" + LayoutAdminConstants.LAYOUT_TYPE_ASSET_DISPLAY,
 	service = LayoutTypeController.class
 )
 public class AssetDisplayLayoutTypeController

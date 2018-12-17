@@ -8,7 +8,7 @@ dependencies {
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	compileOnly project(":apps:asset:asset-display-page-api")
 	compileOnly project(":apps:export-import:export-import-api")
-	compileOnly project(":apps:layout:layout-admin-api")
+	compileOnly project(":apps:layout:layout-api")
 	compileOnly project(":apps:portal:portal-spring-extender-api")
 	compileOnly project(":apps:portal:portal-upgrade-api")
 	compileOnly project(":apps:xstream:xstream-configurator-api")

@@ -14,13 +14,13 @@ if (System.getenv("JENKINS_HOME")) {
 
 	String path = System.getProperty("java.home") + File.separator + "lib" + File.separator + "security" + File.separator
 
-	File jarFile = new File(path, "US_export_policy.jar")
+	File jar = new File(path, "US_export_policy.jar")
 
-	logger.lifecycle "SSL export policy {}:{}", jarFile, jarFile.exists()
+	logger.lifecycle "SSL export policy {}:{}", jar, jar.exists()
 
-	jarFile = new File(path, "local_policy.jar")
+	jar = new File(path, "local_policy.jar")
 
-	logger.lifecycle "SSL local policy {}:{}", jarFile, jarFile.exists()
+	logger.lifecycle "SSL local policy {}:{}", jar, jar.exists()
 }
 
 gradle.buildFinished {

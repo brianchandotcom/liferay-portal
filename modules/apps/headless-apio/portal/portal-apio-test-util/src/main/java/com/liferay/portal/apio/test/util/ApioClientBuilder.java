@@ -23,6 +23,7 @@ import io.restassured.specification.PreemptiveAuthSpec;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 /**
  * @author Cristina González
@@ -31,21 +32,29 @@ public class ApioClientBuilder {
 
 	public static RequestSpecification given() {
 		return new RequestSpecification(
-			_withoutAuthentication, Collections.emptyMap());
+			_withoutAuthentication, Collections.emptyMap(), Optional.empty());
 	}
 
 	public static class RequestSpecification {
 
 		public RequestSpecification(
-			Authentication authentication, Map<String, String> headers) {
+			Authentication authentication, Map<String, String> headers,
+			Optional<String> bodyOptional) {
 
 			_authentication = authentication;
 			_headers = headers;
+			_bodyOptional = bodyOptional;
 		}
 
 		public RequestSpecification basicAuth(String user, String password) {
 			return new RequestSpecification(
-				new BasicAuthentication(user, password), _headers);
+				new BasicAuthentication(user, password), _headers,
+				_bodyOptional);
+		}
+
+		public RequestSpecification body(String body) {
+			return new RequestSpecification(
+				_authentication, _headers, Optional.of(body));
 		}
 
 		public RequestSpecification header(String name, String value) {
@@ -53,7 +62,8 @@ public class ApioClientBuilder {
 
 			headers.put(name, value);
 
-			return new RequestSpecification(_authentication, headers);
+			return new RequestSpecification(
+				_authentication, headers, _bodyOptional);
 		}
 
 		public Response when() {
@@ -64,13 +74,25 @@ public class ApioClientBuilder {
 			getRestAssuredRequestSpecification() {
 
 			io.restassured.specification.RequestSpecification
-				requestSpecification = _authentication.auth(
-					RestAssured.given());
+				requestSpecification = _setBody(
+					_authentication.auth(RestAssured.given()));
 
 			return requestSpecification.headers(_headers);
 		}
 
+		private io.restassured.specification.RequestSpecification _setBody(
+			io.restassured.specification.RequestSpecification
+				requestSpecification) {
+
+			return _bodyOptional.map(
+				body -> requestSpecification.body(body)
+			).orElse(
+				requestSpecification
+			);
+		}
+
 		private final Authentication _authentication;
+		private final Optional<String> _bodyOptional;
 		private final Map<String, String> _headers;
 
 	}
@@ -99,6 +121,17 @@ public class ApioClientBuilder {
 
 			io.restassured.response.Response response =
 				requestSpecification.get(url);
+
+			return new Response(response.then(), _requestSpecification);
+		}
+
+		public Response post(String url) {
+			io.restassured.specification.RequestSpecification
+				requestSpecification =
+					_requestSpecification.getRestAssuredRequestSpecification();
+
+			io.restassured.response.Response response =
+				requestSpecification.post(url);
 
 			return new Response(response.then(), _requestSpecification);
 		}

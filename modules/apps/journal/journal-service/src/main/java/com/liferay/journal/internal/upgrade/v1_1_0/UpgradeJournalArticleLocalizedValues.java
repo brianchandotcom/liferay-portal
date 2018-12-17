@@ -192,11 +192,6 @@ public class UpgradeJournalArticleLocalizedValues extends UpgradeProcess {
 
 			ps2.executeBatch();
 		}
-		catch (Exception e) {
-			runSQL("drop table JournalArticleLocalization");
-
-			throw e;
-		}
 	}
 
 	protected void upgradeSchema() throws Exception {

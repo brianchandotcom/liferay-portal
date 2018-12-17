@@ -92,6 +92,12 @@ public interface ElasticsearchConfiguration {
 	public String networkHost();
 
 	@Meta.AD(
+		deflt = "9200", description = "embedded-http-port-help",
+		name = "embedded-http-port", required = false
+	)
+	public int embeddedHttpPort();
+
+	@Meta.AD(
 		deflt = "", description = "network-bind-host-help",
 		name = "network-bind-host", required = false
 	)
@@ -108,6 +114,13 @@ public interface ElasticsearchConfiguration {
 		name = "transport-tcp-port", required = false
 	)
 	public String transportTcpPort();
+
+	@Meta.AD(
+		deflt = "http://localhost:9201",
+		description = "network-host-addresses-help",
+		name = "network-host-addresses", required = false
+	)
+	public String[] networkHostAddresses();
 
 	@Meta.AD(
 		deflt = "localhost:9300", description = "transport-addresses-help",

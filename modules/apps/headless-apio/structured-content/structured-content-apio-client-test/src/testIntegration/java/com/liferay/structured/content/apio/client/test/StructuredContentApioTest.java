@@ -55,150 +55,6 @@ public class StructuredContentApioTest {
 	}
 
 	@Test
-	public void testBooleanFieldDataTypeIsDisplayed() {
-		String href = ApioClientBuilder.given(
-		).basicAuth(
-			"test@liferay.com", "test"
-		).header(
-			"Accept", "application/hal+json"
-		).header(
-			"Accept-Language", "en-US"
-		).when(
-		).get(
-			_rootEndpointURL.toExternalForm()
-		).follow(
-			"_links.content-space.href"
-		).then(
-		).extract(
-		).path(
-			"_embedded.ContentSpace.find {it.name == '" +
-				StructuredContentApioTestBundleActivator.SITE_NAME +
-					"'}._links.structuredContents.href"
-		);
-
-		ApioClientBuilder.given(
-		).basicAuth(
-			"test@liferay.com", "test"
-		).header(
-			"Accept", "application/hal+json"
-		).header(
-			"Accept-Language", "en-US"
-		).when(
-		).get(
-			StringBundler.concat(
-				href, "?filter=title eq '",
-				StructuredContentApioTestBundleActivator.TITLE_2_LOCALE_US, "'")
-		).then(
-		).log(
-		).ifError(
-		).statusCode(
-			200
-		).body(
-			"_embedded.StructuredContent", Matchers.hasSize(1)
-		).body(
-			"_embedded.StructuredContent[0]._embedded.values._embedded.find " +
-				"{it.name == 'MyBoolean'}.dataType",
-			IsEqual.equalTo("boolean")
-		);
-	}
-
-	@Test
-	public void testBooleanFieldInputControlIsDisplayed() {
-		String href = ApioClientBuilder.given(
-		).basicAuth(
-			"test@liferay.com", "test"
-		).header(
-			"Accept", "application/hal+json"
-		).header(
-			"Accept-Language", "en-US"
-		).when(
-		).get(
-			_rootEndpointURL.toExternalForm()
-		).follow(
-			"_links.content-space.href"
-		).then(
-		).extract(
-		).path(
-			"_embedded.ContentSpace.find {it.name == '" +
-				StructuredContentApioTestBundleActivator.SITE_NAME +
-					"'}._links.structuredContents.href"
-		);
-
-		ApioClientBuilder.given(
-		).basicAuth(
-			"test@liferay.com", "test"
-		).header(
-			"Accept", "application/hal+json"
-		).header(
-			"Accept-Language", "en-US"
-		).when(
-		).get(
-			StringBundler.concat(
-				href, "?filter=title eq '",
-				StructuredContentApioTestBundleActivator.TITLE_2_LOCALE_US, "'")
-		).then(
-		).log(
-		).ifError(
-		).statusCode(
-			200
-		).body(
-			"_embedded.StructuredContent", Matchers.hasSize(1)
-		).body(
-			"_embedded.StructuredContent[0]._embedded.values._embedded.find " +
-				"{it.name == 'MyBoolean'}.inputControl",
-			IsEqual.equalTo("checkbox")
-		);
-	}
-
-	@Test
-	public void testColorFieldInputControlIsNotDisplayed() throws Exception {
-		String href = ApioClientBuilder.given(
-		).basicAuth(
-			"test@liferay.com", "test"
-		).header(
-			"Accept", "application/hal+json"
-		).header(
-			"Accept-Language", "en-US"
-		).when(
-		).get(
-			_rootEndpointURL.toExternalForm()
-		).follow(
-			"_links.content-space.href"
-		).then(
-		).extract(
-		).path(
-			"_embedded.ContentSpace.find {it.name == '" +
-				StructuredContentApioTestBundleActivator.SITE_NAME +
-					"'}._links.structuredContents.href"
-		);
-
-		ApioClientBuilder.given(
-		).basicAuth(
-			"test@liferay.com", "test"
-		).header(
-			"Accept", "application/hal+json"
-		).header(
-			"Accept-Language", "en-US"
-		).when(
-		).get(
-			StringBundler.concat(
-				href, "?filter=title eq '",
-				StructuredContentApioTestBundleActivator.TITLE_2_LOCALE_US, "'")
-		).then(
-		).log(
-		).ifError(
-		).statusCode(
-			200
-		).body(
-			"_embedded.StructuredContent", Matchers.hasSize(1)
-		).body(
-			"_embedded.StructuredContent[0]._embedded.values._embedded.find " +
-				"{it.name == 'MyColor'}.inputControl",
-			IsNull.nullValue()
-		);
-	}
-
-	@Test
 	public void testCreateStructuredContent() {
 		String contentStructureId = ApioClientBuilder.given(
 		).basicAuth(
@@ -265,7 +121,7 @@ public class StructuredContentApioTest {
 	}
 
 	@Test
-	public void testDefaultStructuredFieldLabelIsDisplayedWhenAcceptLanguageIsSpecifiedAndDoesNotMatch() {
+	public void testGetStructuredContentWithAcceptedLanguageEqualsDefaultLocale() {
 		String href = ApioClientBuilder.given(
 		).basicAuth(
 			"test@liferay.com", "test"
@@ -304,14 +160,42 @@ public class StructuredContentApioTest {
 		).statusCode(
 			200
 		).body(
-			"_embedded.StructuredContent[0]._embedded.values._embedded.label",
-			Matchers.hasItems(
-				"NestedTextFieldNameLabel_us", "TextFieldNameLabel_us")
+			"_embedded.StructuredContent", Matchers.hasSize(1)
+		).body(
+			"_embedded.StructuredContent[0].title",
+			IsEqual.equalTo(
+				StructuredContentApioTestBundleActivator.TITLE_2_LOCALE_US)
+		).body(
+			"_embedded.StructuredContent[0]._embedded.values._embedded.find " +
+				"{it.name == 'MyBoolean'}.dataType",
+			IsEqual.equalTo("boolean")
+		).body(
+			"_embedded.StructuredContent[0]._embedded.values._embedded.find " +
+				"{it.name == 'MyBoolean'}.dataType",
+			IsEqual.equalTo("boolean")
+		).body(
+			"_embedded.StructuredContent[0]._embedded.values._embedded.find " +
+				"{it.name == 'MyBoolean'}.inputControl",
+			IsEqual.equalTo("checkbox")
+		).body(
+			"_embedded.StructuredContent[0]._embedded.values._embedded.find " +
+				"{it.name == 'MyColor'}.inputControl",
+			IsNull.nullValue()
+		).body(
+			"_embedded.StructuredContent[0]._embedded.values._embedded.find " +
+				"{it.name == 'TextFieldName'}.label",
+			IsEqual.equalTo("TextFieldNameLabel_us")
+		).body(
+			"_embedded.StructuredContent[0]._embedded.values._embedded.find " +
+				"{it.name == 'NestedTextFieldName'}.label",
+			IsEqual.equalTo("NestedTextFieldNameLabel_us")
+		).body(
+			"_links.self.href", IsNull.notNullValue()
 		);
 	}
 
 	@Test
-	public void testDefaultStructuredFieldValueIsDisplayedWhenAcceptLanguageIsSpecifiedAndDoesNotMatch() {
+	public void testGetStructuredContentWithAcceptedLanguageEqualsLanguageAvailableInStructureContent() {
 		String href = ApioClientBuilder.given(
 		).basicAuth(
 			"test@liferay.com", "test"
@@ -338,103 +222,6 @@ public class StructuredContentApioTest {
 		).header(
 			"Accept", "application/hal+json"
 		).header(
-			"Accept-Language", "de-DE"
-		).when(
-		).get(
-			StringBundler.concat(
-				href, "?filter=title eq '",
-				StructuredContentApioTestBundleActivator.TITLE_2_LOCALE_US, "'")
-		).then(
-		).log(
-		).ifError(
-		).statusCode(
-			200
-		).body(
-			"_embedded.StructuredContent", Matchers.hasSize(1)
-		).body(
-			"_embedded.StructuredContent[0]._embedded.values._embedded.value",
-			Matchers.hasItems("NestedTextFieldValue_us", "TextFieldValue_us")
-		);
-	}
-
-	@Test
-	public void testDefaultTitleIsDisplayedWhenAcceptLanguageIsNotSpecified() {
-		ApioClientBuilder.given(
-		).basicAuth(
-			"test@liferay.com", "test"
-		).header(
-			"Accept", "application/hal+json"
-		).when(
-		).get(
-			_rootEndpointURL.toExternalForm()
-		).follow(
-			"_links.content-space.href"
-		).follow(
-			"_embedded.ContentSpace.find {it.name == '" +
-				StructuredContentApioTestBundleActivator.SITE_NAME +
-					"'}._links.structuredContents.href"
-		).then(
-		).body(
-			"_embedded.StructuredContent.title",
-			Matchers.hasItem(
-				StructuredContentApioTestBundleActivator.TITLE_2_LOCALE_US)
-		);
-	}
-
-	@Test
-	public void testDefaultTitleIsDisplayedWhenAcceptLanguageIsSpecifiedAndDoesNotMatch() {
-		ApioClientBuilder.given(
-		).basicAuth(
-			"test@liferay.com", "test"
-		).header(
-			"Accept", "application/hal+json"
-		).header(
-			"Accept-Language", "de-DE"
-		).when(
-		).get(
-			_rootEndpointURL.toExternalForm()
-		).follow(
-			"_links.content-space.href"
-		).follow(
-			"_embedded.ContentSpace.find {it.name == '" +
-				StructuredContentApioTestBundleActivator.SITE_NAME +
-					"'}._links.structuredContents.href"
-		).then(
-		).body(
-			"_embedded.StructuredContent.title",
-			Matchers.hasItem(
-				StructuredContentApioTestBundleActivator.TITLE_2_LOCALE_US)
-		);
-	}
-
-	@Test
-	public void testLocalizedStructuredFieldLabelIsDisplayedWhenAcceptLanguageIsSpecifiedAndMatches() {
-		String href = ApioClientBuilder.given(
-		).basicAuth(
-			"test@liferay.com", "test"
-		).header(
-			"Accept", "application/hal+json"
-		).header(
-			"Accept-Language", "es-ES"
-		).when(
-		).get(
-			_rootEndpointURL.toExternalForm()
-		).follow(
-			"_links.content-space.href"
-		).then(
-		).extract(
-		).path(
-			"_embedded.ContentSpace.find {it.name == '" +
-				StructuredContentApioTestBundleActivator.SITE_NAME +
-					"'}._links.structuredContents.href"
-		);
-
-		ApioClientBuilder.given(
-		).basicAuth(
-			"test@liferay.com", "test"
-		).header(
-			"Accept", "application/hal+json"
-		).header(
 			"Accept-Language", "es-ES"
 		).when(
 		).get(
@@ -449,126 +236,179 @@ public class StructuredContentApioTest {
 		).body(
 			"_embedded.StructuredContent", Matchers.hasSize(1)
 		).body(
-			"_embedded.StructuredContent[0]._embedded.values._embedded.label",
-			Matchers.hasItems(
-				"NestedTextFieldNameLabel_es", "TextFieldNameLabel_es")
-		);
-	}
-
-	@Test
-	public void testLocalizedStructuredFieldValueIsDisplayedWhenAcceptLanguageIsSpecifiedAndMatches() {
-		String href = ApioClientBuilder.given(
-		).basicAuth(
-			"test@liferay.com", "test"
-		).header(
-			"Accept", "application/hal+json"
-		).header(
-			"Accept-Language", "es-ES"
-		).when(
-		).get(
-			_rootEndpointURL.toExternalForm()
-		).follow(
-			"_links.content-space.href"
-		).then(
-		).extract(
-		).path(
-			"_embedded.ContentSpace.find {it.name == '" +
-				StructuredContentApioTestBundleActivator.SITE_NAME +
-					"'}._links.structuredContents.href"
-		);
-
-		ApioClientBuilder.given(
-		).header(
-			"Accept", "application/hal+json"
-		).header(
-			"Accept-Language", "es-ES"
-		).when(
-		).get(
-			StringBundler.concat(
-				href, "?filter=title eq '",
-				StructuredContentApioTestBundleActivator.TITLE_2_LOCALE_ES, "'")
-		).then(
-		).log(
-		).ifError(
-		).statusCode(
-			200
-		).body(
-			"_embedded.StructuredContent", Matchers.hasSize(1)
-		).body(
-			"_embedded.StructuredContent[0]._embedded.values._embedded.value",
-			Matchers.hasItems("NestedTextFieldValue_es", "TextFieldValue_es")
-		);
-	}
-
-	@Test
-	public void testLocalizedTitleIsDisplayedWhenAcceptLanguageIsSpecifiedAndMatches() {
-		ApioClientBuilder.given(
-		).basicAuth(
-			"test@liferay.com", "test"
-		).header(
-			"Accept", "application/hal+json"
-		).header(
-			"Accept-Language", "es-ES"
-		).when(
-		).get(
-			_rootEndpointURL.toExternalForm()
-		).follow(
-			"_links.content-space.href"
-		).follow(
-			"_embedded.ContentSpace.find {it.name == '" +
-				StructuredContentApioTestBundleActivator.SITE_NAME +
-					"'}._links.structuredContents.href"
-		).then(
-		).body(
-			"_embedded.StructuredContent.title",
-			Matchers.hasItem(
+			"_embedded.StructuredContent[0].title",
+			IsEqual.equalTo(
 				StructuredContentApioTestBundleActivator.TITLE_2_LOCALE_ES)
-		);
-	}
-
-	@Test
-	public void testSetDefaultTitleIsDisplayedWhenAcceptLanguageIsNotSpecified() {
-		ApioClientBuilder.given(
-		).basicAuth(
-			"test@liferay.com", "test"
-		).header(
-			"Accept", "application/hal+json"
-		).when(
-		).get(
-			_rootEndpointURL.toExternalForm()
-		).follow(
-			"_links.content-space.href"
-		).follow(
-			"_embedded.ContentSpace.find {it.name == '" +
-				StructuredContentApioTestBundleActivator.SITE_NAME +
-					"'}._links.structuredContents.href"
-		).then(
 		).body(
-			"_embedded.StructuredContent.title",
-			Matchers.hasItem(
-				StructuredContentApioTestBundleActivator.TITLE_1_LOCALE_ES)
+			"_embedded.StructuredContent[0]._embedded.values._embedded.find " +
+				"{it.name == 'MyBoolean'}.dataType",
+			IsEqual.equalTo("boolean")
+		).body(
+			"_embedded.StructuredContent[0]._embedded.values._embedded.find " +
+				"{it.name == 'MyBoolean'}.dataType",
+			IsEqual.equalTo("boolean")
+		).body(
+			"_embedded.StructuredContent[0]._embedded.values._embedded.find " +
+				"{it.name == 'MyBoolean'}.inputControl",
+			IsEqual.equalTo("checkbox")
+		).body(
+			"_embedded.StructuredContent[0]._embedded.values._embedded.find " +
+				"{it.name == 'MyColor'}.inputControl",
+			IsNull.nullValue()
+		).body(
+			"_embedded.StructuredContent[0]._embedded.values._embedded.find " +
+				"{it.name == 'TextFieldName'}.label",
+			IsEqual.equalTo("TextFieldNameLabel_es")
+		).body(
+			"_embedded.StructuredContent[0]._embedded.values._embedded.find " +
+				"{it.name == 'NestedTextFieldName'}.label",
+			IsEqual.equalTo("NestedTextFieldNameLabel_es")
+		).body(
+			"_links.self.href", IsNull.notNullValue()
 		);
 	}
 
 	@Test
-	public void testStructuredContentsExistsInContentSpaceEndpoint() {
-		ApioClientBuilder.given(
+	public void testGetStructuredContentWithAcceptedLanguageEqualsLanguageNotAvailableInStructureContent() {
+		String href = ApioClientBuilder.given(
 		).basicAuth(
 			"test@liferay.com", "test"
 		).header(
 			"Accept", "application/hal+json"
+		).header(
+			"Accept-Language", "en-US"
 		).when(
 		).get(
 			_rootEndpointURL.toExternalForm()
 		).follow(
 			"_links.content-space.href"
-		).follow(
+		).then(
+		).extract(
+		).path(
 			"_embedded.ContentSpace.find {it.name == '" +
 				StructuredContentApioTestBundleActivator.SITE_NAME +
 					"'}._links.structuredContents.href"
+		);
+
+		ApioClientBuilder.given(
+		).basicAuth(
+			"test@liferay.com", "test"
+		).header(
+			"Accept", "application/hal+json"
+		).header(
+			"Accept-Language", "de-DE"
+		).when(
+		).get(
+			StringBundler.concat(
+				href, "?filter=title eq '",
+				StructuredContentApioTestBundleActivator.TITLE_2_LOCALE_US, "'")
 		).then(
+		).log(
+		).ifError(
 		).statusCode(
 			200
+		).body(
+			"_embedded.StructuredContent", Matchers.hasSize(1)
+		).body(
+			"_embedded.StructuredContent[0].title",
+			IsEqual.equalTo(
+				StructuredContentApioTestBundleActivator.TITLE_2_LOCALE_US)
+		).body(
+			"_embedded.StructuredContent[0]._embedded.values._embedded.find " +
+				"{it.name == 'MyBoolean'}.dataType",
+			IsEqual.equalTo("boolean")
+		).body(
+			"_embedded.StructuredContent[0]._embedded.values._embedded.find " +
+				"{it.name == 'MyBoolean'}.dataType",
+			IsEqual.equalTo("boolean")
+		).body(
+			"_embedded.StructuredContent[0]._embedded.values._embedded.find " +
+				"{it.name == 'MyBoolean'}.inputControl",
+			IsEqual.equalTo("checkbox")
+		).body(
+			"_embedded.StructuredContent[0]._embedded.values._embedded.find " +
+				"{it.name == 'MyColor'}.inputControl",
+			IsNull.nullValue()
+		).body(
+			"_embedded.StructuredContent[0]._embedded.values._embedded.find " +
+				"{it.name == 'TextFieldName'}.label",
+			IsEqual.equalTo("TextFieldNameLabel_us")
+		).body(
+			"_embedded.StructuredContent[0]._embedded.values._embedded.find " +
+				"{it.name == 'NestedTextFieldName'}.label",
+			IsEqual.equalTo("NestedTextFieldNameLabel_us")
+		).body(
+			"_links.self.href", IsNull.notNullValue()
+		);
+	}
+
+	@Test
+	public void testGetStructuredContentWithoutAcceptedLanguageAndDefaultLanguageDifferentThanUserLanguage() {
+		String href = ApioClientBuilder.given(
+		).basicAuth(
+			"test@liferay.com", "test"
+		).header(
+			"Accept", "application/hal+json"
+		).header(
+			"Accept-Language", "en-US"
+		).when(
+		).get(
+			_rootEndpointURL.toExternalForm()
+		).follow(
+			"_links.content-space.href"
+		).then(
+		).extract(
+		).path(
+			"_embedded.ContentSpace.find {it.name == '" +
+				StructuredContentApioTestBundleActivator.SITE_NAME +
+					"'}._links.structuredContents.href"
+		);
+
+		ApioClientBuilder.given(
+		).basicAuth(
+			"test@liferay.com", "test"
+		).header(
+			"Accept", "application/hal+json"
+		).when(
+		).get(
+			StringBundler.concat(
+				href, "?filter=title eq '",
+				StructuredContentApioTestBundleActivator.TITLE_1_LOCALE_ES, "'")
+		).then(
+		).log(
+		).ifError(
+		).statusCode(
+			200
+		).body(
+			"_embedded.StructuredContent", Matchers.hasSize(1)
+		).body(
+			"_embedded.StructuredContent[0].title",
+			IsEqual.equalTo(
+				StructuredContentApioTestBundleActivator.TITLE_1_LOCALE_ES)
+		).body(
+			"_embedded.StructuredContent[0]._embedded.values._embedded.find " +
+				"{it.name == 'MyBoolean'}.dataType",
+			IsEqual.equalTo("boolean")
+		).body(
+			"_embedded.StructuredContent[0]._embedded.values._embedded.find " +
+				"{it.name == 'MyBoolean'}.dataType",
+			IsEqual.equalTo("boolean")
+		).body(
+			"_embedded.StructuredContent[0]._embedded.values._embedded.find " +
+				"{it.name == 'MyBoolean'}.inputControl",
+			IsEqual.equalTo("checkbox")
+		).body(
+			"_embedded.StructuredContent[0]._embedded.values._embedded.find " +
+				"{it.name == 'MyColor'}.inputControl",
+			IsNull.nullValue()
+		).body(
+			"_embedded.StructuredContent[0]._embedded.values._embedded.find " +
+				"{it.name == 'TextFieldName'}.label",
+			IsEqual.equalTo("TextFieldNameLabel_us")
+		).body(
+			"_embedded.StructuredContent[0]._embedded.values._embedded.find " +
+				"{it.name == 'NestedTextFieldName'}.label",
+			IsEqual.equalTo("NestedTextFieldNameLabel_us")
 		).body(
 			"_links.self.href", IsNull.notNullValue()
 		);

@@ -31,6 +31,7 @@ export default class ProcessListCard extends React.Component {
 											</th>
 										</tr>
 									</thead>
+
 									<tbody>
 										<tr>
 											<td>{'Sales Quoting'}</td>

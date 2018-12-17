@@ -9,10 +9,12 @@ export default class SummaryCard extends React.Component {
 				<span className="regular-text semi-bold text-secondary">
 					{description}
 				</span>
+
 				<div className="">
 					<span className="font-weight-normal" style={{fontSize: '2.5rem'}}>
 						{total}
 					</span>
+
 					<span className="regular-text text-secondary"> {'items'}</span>
 				</div>
 			</div>

@@ -8,6 +8,7 @@ export default class AppComponent extends React.Component {
 			<div className="portal-workflow-reports-app container-fluid">
 				<div className="col-12">
 					<OpenProcessesSummary />
+
 					<ProcessList />
 				</div>
 			</div>

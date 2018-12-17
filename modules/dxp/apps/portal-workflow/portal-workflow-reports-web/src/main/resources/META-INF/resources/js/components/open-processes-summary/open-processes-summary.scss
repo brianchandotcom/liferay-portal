@@ -1,17 +1,20 @@
 .card {
-> .card-header.card-header-default{
-	border-bottom: 1px solid #E7E7ED !important;
-	font-size: 14px;
-	padding-bottom: 18px !important;
-	padding-top: 18px !important;
-}
-.regular-text{
-	font-size: 12px !important;
-}
-.semi-bold{
-	font-weight: 600 !important;
-}
-.summary-card{
-	padding-top: 6px;
-}
+	> .card-header.card-header-default {
+		border-bottom: 1px solid #E7E7ED !important;
+		font-size: 14px;
+		padding-bottom: 18px !important;
+		padding-top: 18px !important;
+	}
+
+	.regular-text {
+		font-size: 12px !important;
+	}
+
+	.semi-bold {
+		font-weight: 600 !important;
+	}
+
+	.summary-card {
+		padding-top: 6px;
+	}
 }

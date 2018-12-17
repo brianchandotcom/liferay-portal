@@ -1,4 +1,3 @@
-// import './open-processes-summary.scss';
 import React from 'react';
 import SummaryCard from './SummaryCard';
 import ClayCharts from 'clay-charts-react';

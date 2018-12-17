@@ -159,6 +159,7 @@
 		drag-section
 		{sp}fragment-entry-link-list__row-section
 		{sp}fragment-entry-link-drop-target
+		{sp}fragments-editor__topper-wrapper
 		{sp}layouts-drop-target
 		{sp}{$styleModifier}
 
@@ -167,6 +168,7 @@
 		{/if}
 		{if $hoveredItemId == $rowId and $hoveredItemType == $dropTargetItemTypes.section}
 			{sp}fragment-entry-link-list__row-section--hovered
+			{sp}fragments-editor__topper-wrapper--hovered
 		{/if}
 	{/let}
 
@@ -180,15 +182,15 @@
 		data-onmouseover="{$_handleSectionHoverStart}"
 		tabindex="0"
 	>
-		<nav class="section-control tbar">
+		<nav class="fragments-editor__topper tbar">
 			<ul class="tbar-nav">
-				<li class="drag-handler tbar-item tbar-item-expand"></li>
-				<li class="tbar-item">
+				<li class="drag-handler fragments-editor__topper__item tbar-item tbar-item-expand"></li>
+				<li class="fragments-editor__topper__item tbar-item">
 					<button
 						class="btn btn-small btn-unstyled"
 						data-onclick="{$_handleSectionRemoveButtonClick}"
 					>
-						<svg class="lexicon-icon">
+						<svg class="fragments-editor__topper__icon lexicon-icon">
 							<use xlink:href="{$spritemap}#times-circle"></use>
 						</svg>
 					</button>
@@ -332,6 +334,7 @@
 			{$dropTargetBorder}
 		{/if}
 		{if $hoveredItemId == $fragmentEntryLinkId and $hoveredItemType == $dropTargetItemTypes.fragment}
+			{sp}fragments-editor__topper-wrapper--hovered
 			{sp}fragment-entry-link-wrapper--hovered
 		{/if}
 	{/let}

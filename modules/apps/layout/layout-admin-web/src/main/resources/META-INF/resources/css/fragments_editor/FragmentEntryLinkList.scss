@@ -16,44 +16,12 @@
 			min-height: $sectionMinimumHeight;
 		}
 
-		&--hovered {
-			border: $fragmentEntryLinkSectionHoverBorder;
-
-			.section-control.tbar {
-				opacity: 1;
-				pointer-events: all;
-				transform: translateY(1px);
-				transition: box-shadow ease 0.3s, transform ease 0.2s, opacity ease 0.3s;
-				z-index: $sectionControlHoverZIndex;
-			}
-		}
-
 		&.drag-bottom {
 			border-bottom: 5px solid #80ACFF;
 		}
 
 		&.drag-top {
 			border-top: 5px solid #80ACFF;
-		}
-
-		.section-control {
-			background-color: $sectionControlBackgroundColor;
-			border-radius: $sectionBorderRadius $sectionBorderRadius 0 0;
-			bottom: 100%;
-			box-shadow: 0 0 0 $sectionBorderWidth $sectionBorderColor;
-			color: $sectionControlColor;
-			opacity: 0;
-			padding: 0.5em 1em;
-			pointer-events: none;
-			position: absolute;
-			transform: translateY(100%);
-			transition: box-shadow ease 0.3s, transform ease 0.6s, opacity ease 0.2s;
-			width: 100%;
-			z-index: $sectionZIndex;
-
-			.lexicon-icon {
-				fill: $sectionControlColor;
-			}
 		}
 	}
 

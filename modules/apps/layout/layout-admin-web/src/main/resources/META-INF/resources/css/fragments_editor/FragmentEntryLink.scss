@@ -15,18 +15,6 @@
 }
 
 .fragment-entry-link-wrapper {
-	position: relative;
-
-	&--hovered {
-		.fragment-entry-link-control.tbar {
-			opacity: 1;
-			pointer-events: all;
-			transform: translateY(1px);
-			transition: box-shadow ease 0.3s, transform ease 0.2s, opacity ease 0.3s;
-			z-index: $fragmentEntryLinkControlHoverZIndex;
-		}
-	}
-
 	&.drag-bottom {
 		border-bottom: 5px solid #80ACFF;
 		margin-bottom: 5px;
@@ -37,19 +25,6 @@
 		border-top: 5px solid #80ACFF;
 		margin-top: 5px;
 		padding-top: 5px;
-	}
-
-	&:after {
-		box-shadow: inset 0 0 0 $fragmentEntryLinkBorderWidth fade_out($fragmentEntryLinkBorderColor, 1);
-		content: '';
-		display: block;
-		height: 100%;
-		left: 0;
-		pointer-events: none;
-		position: absolute;
-		top: 0;
-		transition: box-shadow ease 0.3s;
-		width: 100%;
 	}
 
 	.portlet {
@@ -83,35 +58,6 @@
 		}
 	}
 
-	.fragment-entry-link-control {
-		background-color: $fragmentEntryLinkControlBackgroundColor;
-		border-radius: $fragmentEntryLinkBorderRadius $fragmentEntryLinkBorderRadius 0 0;
-		bottom: 100%;
-		box-shadow: 0 0 0 $fragmentEntryLinkBorderWidth $fragmentEntryLinkBorderColor;
-		color: $fragmentEntryLinkControlColor;
-		left: 1px;
-		opacity: 0;
-		padding: 0.5em 1em;
-		pointer-events: none;
-		position: absolute;
-		transform: translateY(100%);
-		transition: box-shadow ease 0.3s, transform ease 0.6s, opacity ease 0.2s;
-		width: calc(100% - 2px);
-		z-index: $fragmentEntryLinkControlZIndex;
-
-		&__fragment-name {
-			text-align: left;
-		}
-
-		.lexicon-icon {
-			fill: $fragmentEntryLinkControlColor;
-		}
-
-		.tbar-item {
-			margin: 0 0.5em;
-		}
-	}
-
 	.fragment-entry-link-content {
 		overflow: hidden;
 		position: relative;
@@ -120,13 +66,5 @@
 
 	&:hover > .fragment-entry-link-content {
 		z-index: $fragmentEntryLinkContentHoverZIndex;
-	}
-}
-
-.fragment-entry-link-wrapper:hover {
-	z-index: $fragmentEntryLinkControlHoverZIndex;
-
-	&:after {
-		box-shadow: inset 0 0 0 $fragmentEntryLinkBorderWidth $fragmentEntryLinkBorderColor;
 	}
 }

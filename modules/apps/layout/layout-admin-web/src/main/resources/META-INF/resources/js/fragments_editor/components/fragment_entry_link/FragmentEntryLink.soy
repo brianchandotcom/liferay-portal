@@ -28,8 +28,9 @@
 
 	{let $wrapperClasses kind="text"}
 		drag-fragment
-		fragment-entry-link-drop-target
-		fragment-entry-link-wrapper
+		{sp}fragment-entry-link-drop-target
+		{sp}fragment-entry-link-wrapper
+		{sp}fragments-editor__topper-wrapper
 
 		{if $styleModifier}
 			{sp}{$styleModifier}
@@ -48,14 +49,14 @@
 		tabindex="0"
 	>
 		{if $showControlBar}
-			<nav class="fragment-entry-link-control tbar">
+			<nav class="fragments-editor__topper tbar">
 				<ul class="tbar-nav">
-					<li class="drag-handler fragment-entry-link-control__fragment-name tbar-item tbar-item-expand">
+					<li class="drag-handler fragments-editor__topper__item fragments-editor__topper__title tbar-item tbar-item-expand">
 						{$name ?: ''}
 					</li>
-					<li class="tbar-item">
+					<li class="fragments-editor__topper__item tbar-item">
 						<button class="btn btn-small btn-unstyled" data-onclick="{$_handleFragmentRemoveButtonClick}">
-							<svg class="lexicon-icon">
+							<svg class="fragments-editor__topper__icon lexicon-icon">
 								<use xlink:href="{$spritemap}#times-circle"></use>
 							</svg>
 						</button>

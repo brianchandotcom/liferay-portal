@@ -75,11 +75,7 @@ public class JournalContentPortletLayoutListener
 		try {
 			Layout layout = _layoutLocalService.getLayout(plid);
 
-			PortletPreferences portletPreferences =
-				PortletPreferencesFactoryUtil.getPortletSetup(
-					layout, portletId, StringPool.BLANK);
-
-			String articleId = portletPreferences.getValue("articleId", null);
+			String articleId = _getArticleId(layout, portletId);
 
 			if (Validator.isNull(articleId)) {
 				return;
@@ -117,11 +113,7 @@ public class JournalContentPortletLayoutListener
 		try {
 			Layout layout = _layoutLocalService.getLayout(plid);
 
-			PortletPreferences portletPreferences =
-				PortletPreferencesFactoryUtil.getPortletSetup(
-					layout, portletId, StringPool.BLANK);
-
-			String articleId = portletPreferences.getValue("articleId", null);
+			String articleId = _getArticleId(layout, portletId);
 
 			if (Validator.isNull(articleId)) {
 				return;
@@ -157,11 +149,7 @@ public class JournalContentPortletLayoutListener
 		try {
 			Layout layout = _layoutLocalService.getLayout(plid);
 
-			PortletPreferences portletPreferences =
-				PortletPreferencesFactoryUtil.getPortletSetup(
-					layout, portletId, StringPool.BLANK);
-
-			String articleId = portletPreferences.getValue("articleId", null);
+			String articleId = _getArticleId(layout, portletId);
 
 			if (Validator.isNull(articleId)) {
 				_journalContentSearchLocalService.deleteArticleContentSearch(
@@ -270,6 +258,14 @@ public class JournalContentPortletLayoutListener
 		}
 
 		return portletIds;
+	}
+
+	private String _getArticleId(Layout layout, String portletId) {
+		PortletPreferences portletPreferences =
+			PortletPreferencesFactoryUtil.getPortletSetup(
+				layout, portletId, StringPool.BLANK);
+
+		return portletPreferences.getValue("articleId", null);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

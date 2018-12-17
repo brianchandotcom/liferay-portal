@@ -44,7 +44,7 @@ func VerifyTOSLocation() {
 		log.Println(
 			"TOS Maven local repository's directory does not exist. Please " +
 				"make sure that the Talend Open Studio has been already " +
-					"started at least once before running the installer.")
+				"started at least once before running the installer.")
 		log.Fatal("Installation failed")
 	}
 

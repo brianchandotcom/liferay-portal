@@ -13,6 +13,22 @@ import (
 	"installer/verifier"
 )
 
+func displayInitializationMessages() {
+	const decorLine = "\t\t#################################################" +
+		"######################"
+
+	fmt.Println("\n" + decorLine)
+	fmt.Println(
+		"\t\t### Liferay component family installer for Talend Open Studio " +
+			constants.SUPPORTED_TOS_VERSION + " ###")
+	fmt.Println(decorLine + "\n")
+
+	fmt.Printf("Installer's location: \t\t\t%s\n",
+		constants.GetBinaryLocation())
+	fmt.Printf("Talend Open Studio's Home directory: \t%s\n",
+		constants.TosHomeDir)
+}
+
 func main() {
 	displayInitializationMessages()
 
@@ -54,20 +70,4 @@ func main() {
 	}
 
 	fmt.Println("\nInstallation of the Liferay component was successful!")
-}
-
-func displayInitializationMessages() {
-	const decorLine = "\t\t#################################################" +
-		"######################"
-
-	fmt.Println("\n" + decorLine)
-	fmt.Println(
-		"\t\t### Liferay component family installer for Talend Open Studio " +
-			constants.SUPPORTED_TOS_VERSION + " ###")
-	fmt.Println(decorLine + "\n")
-
-	fmt.Printf("Installer's location: \t\t\t%s\n",
-		constants.GetBinaryLocation())
-	fmt.Printf("Talend Open Studio's Home directory: \t%s\n",
-		constants.TosHomeDir)
 }

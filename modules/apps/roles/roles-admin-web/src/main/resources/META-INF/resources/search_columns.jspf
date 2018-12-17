@@ -16,8 +16,25 @@
 
 <c:choose>
 	<c:when test='<%= displayStyle.equals("descriptive") %>'>
+
+		<%
+		int roleType = role.getType();
+
+		String icon;
+
+		if (roleType == RoleConstants.TYPE_SITE) {
+			icon = "sites";
+		}
+		else if (roleType == RoleConstants.TYPE_ORGANIZATION) {
+			icon = "organizations";
+		}
+		else {
+			icon = "user";
+		}
+		%>
+
 		<liferay-ui:search-container-column-icon
-			icon="users"
+			icon="<%= icon %>"
 		/>
 
 		<liferay-ui:search-container-column-text

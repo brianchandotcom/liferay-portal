@@ -387,7 +387,7 @@ definition {
 
 	@priority = "5"
 	test RestoreDeleteWikiFrontpage {
-		property portal.acceptance = "true";
+		property portal.acceptance = "false";
 
 		Navigator.openURL();
 

@@ -25,7 +25,7 @@ definition {
 
 	@priority = "5"
 	test AddWikiFrontPage {
-		property portal.acceptance = "true";
+		property portal.acceptance = "false";
 
 		Navigator.openURL();
 

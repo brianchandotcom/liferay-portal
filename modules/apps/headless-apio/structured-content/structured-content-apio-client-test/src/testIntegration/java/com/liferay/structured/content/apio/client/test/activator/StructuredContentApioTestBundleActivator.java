@@ -37,15 +37,12 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.model.UserConstants;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
-import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -70,14 +67,6 @@ import org.osgi.framework.ServiceReference;
 public class StructuredContentApioTestBundleActivator
 	implements BundleActivator {
 
-	public static final String NOT_A_SITE_MEMBER_EMAIL_ADDRESS =
-		StructuredContentApioTestBundleActivator.class.getSimpleName() +
-			"NotASiteMemberUser@liferay.com";
-
-	public static final String SITE_MEMBER_EMAIL_ADDRESS =
-		StructuredContentApioTestBundleActivator.class.getSimpleName() +
-			"SiteMemberUser@liferay.com";
-
 	public static final String SITE_NAME =
 		StructuredContentApioTestBundleActivator.class.getSimpleName() + "Site";
 
@@ -92,18 +81,6 @@ public class StructuredContentApioTestBundleActivator
 	public static final String TITLE_2_LOCALE_ES =
 		StructuredContentApioTestBundleActivator.class.getSimpleName() +
 			"Title2_es";
-
-	public static final String TITLE_NO_GUEST_NO_GROUP =
-		StructuredContentApioTestBundleActivator.class.getSimpleName() +
-			"NoGuestNoGroupTitle";
-
-	public static final String TITLE_NO_GUEST_YES_GROUP =
-		StructuredContentApioTestBundleActivator.class.getSimpleName() +
-			"NoGuestYesGroupTitle";
-
-	public static final String TITLE_YES_GUEST_YES_GROUP =
-		StructuredContentApioTestBundleActivator.class.getSimpleName() +
-			"YesGuestYesGroupTitle";
 
 	@Override
 	public void start(BundleContext bundleContext) {
@@ -202,46 +179,6 @@ public class StructuredContentApioTestBundleActivator
 		return journalArticle;
 	}
 
-	private JournalArticle _addJournalArticle(
-			String title, long userId, long groupId,
-			boolean addGuestPermissions, boolean addGroupPermissions)
-		throws Exception {
-
-		Map<Locale, String> stringMap = new HashMap<Locale, String>() {
-			{
-				put(LocaleUtil.getDefault(), title);
-			}
-		};
-
-		return _addJournalArticle(
-			stringMap, userId, groupId, LocaleUtil.getDefault(),
-			addGuestPermissions, addGroupPermissions);
-	}
-
-	private User _addUser(String emailAddress, long companyId, long groupId)
-		throws Exception {
-
-		User existingUser = UserLocalServiceUtil.fetchUserByEmailAddress(
-			companyId, emailAddress);
-
-		if (existingUser != null) {
-			UserLocalServiceUtil.deleteUser(existingUser.getUserId());
-		}
-
-		User user = UserLocalServiceUtil.addUser(
-			UserConstants.USER_ID_DEFAULT, companyId, false, Constants.TEST,
-			Constants.TEST, true, StringUtil.randomString(20), emailAddress, 0,
-			null, PortalUtil.getSiteDefaultLocale(groupId),
-			StringUtil.randomString(20), null, StringUtil.randomString(10), 0,
-			0, true, 1, 1, 2000, null, new long[] {groupId}, new long[0],
-			new long[0], new long[0], false, new ServiceContext());
-
-		_autoCloseables.add(
-			() -> UserLocalServiceUtil.deleteUser(user.getUserId()));
-
-		return user;
-	}
-
 	private void _cleanUp() {
 		Collections.reverse(_autoCloseables);
 
@@ -269,8 +206,20 @@ public class StructuredContentApioTestBundleActivator
 			DDMStructureConstants.TYPE_DEFAULT);
 	}
 
-	private void _prepareDataForLocalizationTests(User user, Group group)
-		throws Exception {
+	private void _prepareTest() throws Exception {
+		User user = UserTestUtil.getAdminUser(TestPropsValues.getCompanyId());
+		Map<Locale, String> nameMap = Collections.singletonMap(
+			LocaleUtil.getDefault(), SITE_NAME);
+
+		Group group = GroupLocalServiceUtil.addGroup(
+			user.getUserId(), GroupConstants.DEFAULT_PARENT_GROUP_ID, null, 0,
+			GroupConstants.DEFAULT_LIVE_GROUP_ID, nameMap, nameMap,
+			GroupConstants.TYPE_SITE_OPEN, true,
+			GroupConstants.DEFAULT_MEMBERSHIP_RESTRICTION,
+			StringPool.SLASH + FriendlyURLNormalizerUtil.normalize(SITE_NAME),
+			true, true, ServiceContextTestUtil.getServiceContext());
+
+		_autoCloseables.add(() -> GroupLocalServiceUtil.deleteGroup(group));
 
 		Map<Locale, String> titleMap1 = new HashMap<Locale, String>() {
 			{
@@ -302,44 +251,6 @@ public class StructuredContentApioTestBundleActivator
 			titleMap2, user.getUserId(), group.getGroupId(),
 			_read("test-journal-all-fields-content.xml"), ddmStructure,
 			ddmTemplate);
-	}
-
-	private void _prepareTest() throws Exception {
-		User user = UserTestUtil.getAdminUser(TestPropsValues.getCompanyId());
-		Map<Locale, String> nameMap = Collections.singletonMap(
-			LocaleUtil.getDefault(), SITE_NAME);
-
-		Group group = GroupLocalServiceUtil.addGroup(
-			user.getUserId(), GroupConstants.DEFAULT_PARENT_GROUP_ID, null, 0,
-			GroupConstants.DEFAULT_LIVE_GROUP_ID, nameMap, nameMap,
-			GroupConstants.TYPE_SITE_OPEN, true,
-			GroupConstants.DEFAULT_MEMBERSHIP_RESTRICTION,
-			StringPool.SLASH + FriendlyURLNormalizerUtil.normalize(SITE_NAME),
-			true, true, ServiceContextTestUtil.getServiceContext());
-
-		_autoCloseables.add(() -> GroupLocalServiceUtil.deleteGroup(group));
-
-		_addUser(
-			SITE_MEMBER_EMAIL_ADDRESS, TestPropsValues.getCompanyId(),
-			group.getGroupId());
-
-		_addUser(
-			NOT_A_SITE_MEMBER_EMAIL_ADDRESS, TestPropsValues.getCompanyId(),
-			GroupConstants.DEFAULT_LIVE_GROUP_ID);
-
-		_addJournalArticle(
-			TITLE_NO_GUEST_NO_GROUP, user.getUserId(), group.getGroupId(),
-			false, false);
-
-		_addJournalArticle(
-			TITLE_NO_GUEST_YES_GROUP, user.getUserId(), group.getGroupId(),
-			false, true);
-
-		_addJournalArticle(
-			TITLE_YES_GUEST_YES_GROUP, user.getUserId(), group.getGroupId(),
-			true, true);
-
-		_prepareDataForLocalizationTests(user, group);
 	}
 
 	private String _read(String fileName) throws Exception {

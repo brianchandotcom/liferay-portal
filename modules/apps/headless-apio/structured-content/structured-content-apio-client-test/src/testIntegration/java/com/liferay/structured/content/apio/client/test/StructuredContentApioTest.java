@@ -55,37 +55,6 @@ public class StructuredContentApioTest {
 	}
 
 	@Test
-	public void testAdminUserSeesAllStructuredContents() {
-		ApioClientBuilder.given(
-		).basicAuth(
-			"test@liferay.com", "test"
-		).header(
-			"Accept", "application/hal+json"
-		).when(
-		).get(
-			_rootEndpointURL.toExternalForm()
-		).follow(
-			"_links.content-space.href"
-		).follow(
-			"_embedded.ContentSpace.find {it.name == '" +
-				StructuredContentApioTestBundleActivator.SITE_NAME +
-					"'}._links.structuredContents.href"
-		).then(
-		).statusCode(
-			200
-		).body(
-			"_embedded.StructuredContent.title",
-			Matchers.hasItems(
-				StructuredContentApioTestBundleActivator.
-					TITLE_NO_GUEST_NO_GROUP,
-				StructuredContentApioTestBundleActivator.
-					TITLE_NO_GUEST_YES_GROUP,
-				StructuredContentApioTestBundleActivator.
-					TITLE_YES_GUEST_YES_GROUP)
-		);
-	}
-
-	@Test
 	public void testBooleanFieldDataTypeIsDisplayed() {
 		String href = ApioClientBuilder.given(
 		).basicAuth(
@@ -444,49 +413,6 @@ public class StructuredContentApioTest {
 	}
 
 	@Test
-	public void testGuestUserSeesRightStructuredContents() {
-		ApioClientBuilder.given(
-		).header(
-			"Accept", "application/hal+json"
-		).when(
-		).get(
-			_rootEndpointURL.toExternalForm()
-		).follow(
-			"_links.content-space.href"
-		).follow(
-			"_embedded.ContentSpace.find {it.name == '" +
-				StructuredContentApioTestBundleActivator.SITE_NAME +
-					"'}._links.structuredContents.href"
-		).then(
-		).statusCode(
-			200
-		).body(
-			"_embedded.StructuredContent.title",
-			Matchers.not(
-				Matchers.hasItem(
-					StructuredContentApioTestBundleActivator.
-						TITLE_NO_GUEST_NO_GROUP))
-		).body(
-			"_embedded.StructuredContent.title",
-			Matchers.not(
-				Matchers.hasItem(
-					StructuredContentApioTestBundleActivator.
-						TITLE_NO_GUEST_NO_GROUP))
-		).body(
-			"_embedded.StructuredContent.title",
-			Matchers.not(
-				Matchers.hasItem(
-					StructuredContentApioTestBundleActivator.
-						TITLE_NO_GUEST_YES_GROUP))
-		).body(
-			"_embedded.StructuredContent.title",
-			Matchers.hasItem(
-				StructuredContentApioTestBundleActivator.
-					TITLE_YES_GUEST_YES_GROUP)
-		);
-	}
-
-	@Test
 	public void testLocalizedStructuredFieldLabelIsDisplayedWhenAcceptLanguageIsSpecifiedAndMatches() {
 		String href = ApioClientBuilder.given(
 		).basicAuth(
@@ -606,47 +532,6 @@ public class StructuredContentApioTest {
 	}
 
 	@Test
-	public void testNotSiteMemberUserSeesRightStructuredContents() {
-		ApioClientBuilder.given(
-		).basicAuth(
-			StructuredContentApioTestBundleActivator.
-				NOT_A_SITE_MEMBER_EMAIL_ADDRESS,
-			"test"
-		).header(
-			"Accept", "application/hal+json"
-		).when(
-		).get(
-			_rootEndpointURL.toExternalForm()
-		).follow(
-			"_links.content-space.href"
-		).follow(
-			"_embedded.ContentSpace.find {it.name == '" +
-				StructuredContentApioTestBundleActivator.SITE_NAME +
-					"'}._links.structuredContents.href"
-		).then(
-		).statusCode(
-			200
-		).body(
-			"_embedded.StructuredContent.title",
-			Matchers.not(
-				Matchers.hasItem(
-					StructuredContentApioTestBundleActivator.
-						TITLE_NO_GUEST_NO_GROUP))
-		).body(
-			"_embedded.StructuredContent.title",
-			Matchers.not(
-				Matchers.hasItem(
-					StructuredContentApioTestBundleActivator.
-						TITLE_NO_GUEST_YES_GROUP))
-		).body(
-			"_embedded.StructuredContent.title",
-			Matchers.hasItem(
-				StructuredContentApioTestBundleActivator.
-					TITLE_YES_GUEST_YES_GROUP)
-		);
-	}
-
-	@Test
 	public void testSetDefaultTitleIsDisplayedWhenAcceptLanguageIsNotSpecified() {
 		ApioClientBuilder.given(
 		).basicAuth(
@@ -667,45 +552,6 @@ public class StructuredContentApioTest {
 			"_embedded.StructuredContent.title",
 			Matchers.hasItem(
 				StructuredContentApioTestBundleActivator.TITLE_1_LOCALE_ES)
-		);
-	}
-
-	@Test
-	public void testSiteMemberUserSeesRightStructuredContents() {
-		ApioClientBuilder.given(
-		).basicAuth(
-			StructuredContentApioTestBundleActivator.SITE_MEMBER_EMAIL_ADDRESS,
-			"test"
-		).header(
-			"Accept", "application/hal+json"
-		).when(
-		).get(
-			_rootEndpointURL.toExternalForm()
-		).follow(
-			"_links.content-space.href"
-		).follow(
-			"_embedded.ContentSpace.find {it.name == '" +
-				StructuredContentApioTestBundleActivator.SITE_NAME +
-					"'}._links.structuredContents.href"
-		).then(
-		).statusCode(
-			200
-		).body(
-			"_embedded.StructuredContent.title",
-			Matchers.not(
-				Matchers.hasItems(
-					StructuredContentApioTestBundleActivator.
-						TITLE_NO_GUEST_NO_GROUP))
-		).body(
-			"_embedded.StructuredContent.title",
-			Matchers.hasItems(
-				StructuredContentApioTestBundleActivator.
-					TITLE_NO_GUEST_YES_GROUP)
-		).body(
-			"_embedded.StructuredContent.title",
-			Matchers.hasItems(
-				StructuredContentApioTestBundleActivator.
-					TITLE_YES_GUEST_YES_GROUP)
 		);
 	}
 

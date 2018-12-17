@@ -20,7 +20,6 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleConstants;
 import com.liferay.journal.model.JournalFolderConstants;
-import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.portal.apio.test.util.PaginationRequest;
 import com.liferay.portal.kernel.model.Group;
@@ -36,6 +35,7 @@ import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.odata.filter.Filter;
@@ -121,7 +121,519 @@ public class StructuredContentNestedCollectionResourcePermissionTest
 	}
 
 	@Test
-	public void testGetPageItemsFilterByPermission() throws Exception {
+	public void testGetPageItemsWithGuestPermissionAndGroupPermissionAndAdminUser()
+		throws Exception {
+
+		Map<Locale, String> stringMap = new HashMap<>();
+
+		stringMap.put(LocaleUtil.getDefault(), RandomTestUtil.randomString());
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
+
+		serviceContext.setAddGuestPermissions(true);
+		serviceContext.setAddGroupPermissions(true);
+
+		JournalTestUtil.addArticle(
+			_group.getGroupId(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			JournalArticleConstants.CLASSNAME_ID_DEFAULT,
+			RandomTestUtil.randomString(), false, stringMap, stringMap,
+			stringMap, null, LocaleUtil.getDefault(), null, true, true,
+			serviceContext);
+
+		User user = UserTestUtil.addGroupAdminUser(_group);
+
+		PermissionChecker permissionChecker =
+			PermissionCheckerFactoryUtil.create(user);
+
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
+				user, permissionChecker)) {
+
+			PageItems<JournalArticle> pageItems = getPageItems(
+				PaginationRequest.of(10, 1), _group.getGroupId(),
+				_acceptLanguage,
+				getThemeDisplay(_group, LocaleUtil.getDefault()),
+				Filter.emptyFilter(), Sort.emptySort());
+
+			Assert.assertEquals(1, pageItems.getTotalCount());
+		}
+		finally {
+			_userLocalService.deleteUser(user);
+		}
+	}
+
+	@Test
+	public void testGetPageItemsWithGuestPermissionAndGroupPermissionAndGuestUser()
+		throws Exception {
+
+		Map<Locale, String> stringMap = new HashMap<>();
+
+		stringMap.put(LocaleUtil.getDefault(), RandomTestUtil.randomString());
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
+
+		serviceContext.setAddGuestPermissions(true);
+		serviceContext.setAddGroupPermissions(true);
+
+		JournalTestUtil.addArticle(
+			_group.getGroupId(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			JournalArticleConstants.CLASSNAME_ID_DEFAULT,
+			RandomTestUtil.randomString(), false, stringMap, stringMap,
+			stringMap, null, LocaleUtil.getDefault(), null, true, true,
+			serviceContext);
+
+		User user = _userLocalService.getDefaultUser(
+			TestPropsValues.getCompanyId());
+
+		PermissionChecker permissionChecker =
+			PermissionCheckerFactoryUtil.create(user);
+
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
+				user, permissionChecker)) {
+
+			PageItems<JournalArticle> pageItems = getPageItems(
+				PaginationRequest.of(10, 1), _group.getGroupId(),
+				_acceptLanguage,
+				getThemeDisplay(_group, LocaleUtil.getDefault()),
+				Filter.emptyFilter(), Sort.emptySort());
+
+			Assert.assertEquals(1, pageItems.getTotalCount());
+		}
+	}
+
+	@Test
+	public void testGetPageItemsWithGuestPermissionAndGroupPermissionAndNoSiteUser()
+		throws Exception {
+
+		Map<Locale, String> stringMap = new HashMap<>();
+
+		stringMap.put(LocaleUtil.getDefault(), RandomTestUtil.randomString());
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
+
+		serviceContext.setAddGuestPermissions(true);
+		serviceContext.setAddGroupPermissions(true);
+
+		JournalTestUtil.addArticle(
+			_group.getGroupId(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			JournalArticleConstants.CLASSNAME_ID_DEFAULT,
+			RandomTestUtil.randomString(), false, stringMap, stringMap,
+			stringMap, null, LocaleUtil.getDefault(), null, true, true,
+			serviceContext);
+
+		User user = UserTestUtil.addUser();
+
+		PermissionChecker permissionChecker =
+			PermissionCheckerFactoryUtil.create(user);
+
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
+				user, permissionChecker)) {
+
+			PageItems<JournalArticle> pageItems = getPageItems(
+				PaginationRequest.of(10, 1), _group.getGroupId(),
+				_acceptLanguage,
+				getThemeDisplay(_group, LocaleUtil.getDefault()),
+				Filter.emptyFilter(), Sort.emptySort());
+
+			Assert.assertEquals(1, pageItems.getTotalCount());
+		}
+		finally {
+			_userLocalService.deleteUser(user);
+		}
+	}
+
+	@Test
+	public void testGetPageItemsWithGuestPermissionAndGroupPermissionAndSiteUser()
+		throws Exception {
+
+		Map<Locale, String> stringMap = new HashMap<>();
+
+		stringMap.put(LocaleUtil.getDefault(), RandomTestUtil.randomString());
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
+
+		serviceContext.setAddGuestPermissions(true);
+		serviceContext.setAddGroupPermissions(true);
+
+		JournalTestUtil.addArticle(
+			_group.getGroupId(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			JournalArticleConstants.CLASSNAME_ID_DEFAULT,
+			RandomTestUtil.randomString(), false, stringMap, stringMap,
+			stringMap, null, LocaleUtil.getDefault(), null, true, true,
+			serviceContext);
+
+		User user = UserTestUtil.addUser(_group.getGroupId());
+
+		PermissionChecker permissionChecker =
+			PermissionCheckerFactoryUtil.create(user);
+
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
+				user, permissionChecker)) {
+
+			PageItems<JournalArticle> pageItems = getPageItems(
+				PaginationRequest.of(10, 1), _group.getGroupId(),
+				_acceptLanguage,
+				getThemeDisplay(_group, LocaleUtil.getDefault()),
+				Filter.emptyFilter(), Sort.emptySort());
+
+			Assert.assertEquals(1, pageItems.getTotalCount());
+		}
+		finally {
+			_userLocalService.deleteUser(user);
+		}
+	}
+
+	@Test
+	public void testGetPageItemsWithGuestPermissionAndNoGroupPermissionAndAdminUser()
+		throws Exception {
+
+		Map<Locale, String> stringMap = new HashMap<>();
+
+		stringMap.put(LocaleUtil.getDefault(), RandomTestUtil.randomString());
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
+
+		serviceContext.setAddGuestPermissions(true);
+		serviceContext.setAddGroupPermissions(false);
+
+		JournalTestUtil.addArticle(
+			_group.getGroupId(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			JournalArticleConstants.CLASSNAME_ID_DEFAULT,
+			RandomTestUtil.randomString(), false, stringMap, stringMap,
+			stringMap, null, LocaleUtil.getDefault(), null, true, true,
+			serviceContext);
+
+		User user = UserTestUtil.addGroupAdminUser(_group);
+
+		PermissionChecker permissionChecker =
+			PermissionCheckerFactoryUtil.create(user);
+
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
+				user, permissionChecker)) {
+
+			PageItems<JournalArticle> pageItems = getPageItems(
+				PaginationRequest.of(10, 1), _group.getGroupId(),
+				_acceptLanguage,
+				getThemeDisplay(_group, LocaleUtil.getDefault()),
+				Filter.emptyFilter(), Sort.emptySort());
+
+			Assert.assertEquals(1, pageItems.getTotalCount());
+		}
+		finally {
+			_userLocalService.deleteUser(user);
+		}
+	}
+
+	@Test
+	public void testGetPageItemsWithGuestPermissionAndNoGroupPermissionAndGuestUser()
+		throws Exception {
+
+		Map<Locale, String> stringMap = new HashMap<>();
+
+		stringMap.put(LocaleUtil.getDefault(), RandomTestUtil.randomString());
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
+
+		serviceContext.setAddGuestPermissions(true);
+		serviceContext.setAddGroupPermissions(false);
+
+		JournalTestUtil.addArticle(
+			_group.getGroupId(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			JournalArticleConstants.CLASSNAME_ID_DEFAULT,
+			RandomTestUtil.randomString(), false, stringMap, stringMap,
+			stringMap, null, LocaleUtil.getDefault(), null, true, true,
+			serviceContext);
+
+		User user = _userLocalService.getDefaultUser(
+			TestPropsValues.getCompanyId());
+
+		PermissionChecker permissionChecker =
+			PermissionCheckerFactoryUtil.create(user);
+
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
+				user, permissionChecker)) {
+
+			PageItems<JournalArticle> pageItems = getPageItems(
+				PaginationRequest.of(10, 1), _group.getGroupId(),
+				_acceptLanguage,
+				getThemeDisplay(_group, LocaleUtil.getDefault()),
+				Filter.emptyFilter(), Sort.emptySort());
+
+			Assert.assertEquals(1, pageItems.getTotalCount());
+		}
+	}
+
+	@Test
+	public void testGetPageItemsWithGuestPermissionAndNoGroupPermissionAndNoSiteUser()
+		throws Exception {
+
+		Map<Locale, String> stringMap = new HashMap<>();
+
+		stringMap.put(LocaleUtil.getDefault(), RandomTestUtil.randomString());
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
+
+		serviceContext.setAddGuestPermissions(true);
+		serviceContext.setAddGroupPermissions(false);
+
+		JournalTestUtil.addArticle(
+			_group.getGroupId(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			JournalArticleConstants.CLASSNAME_ID_DEFAULT,
+			RandomTestUtil.randomString(), false, stringMap, stringMap,
+			stringMap, null, LocaleUtil.getDefault(), null, true, true,
+			serviceContext);
+
+		User user = UserTestUtil.addUser();
+
+		PermissionChecker permissionChecker =
+			PermissionCheckerFactoryUtil.create(user);
+
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
+				user, permissionChecker)) {
+
+			PageItems<JournalArticle> pageItems = getPageItems(
+				PaginationRequest.of(10, 1), _group.getGroupId(),
+				_acceptLanguage,
+				getThemeDisplay(_group, LocaleUtil.getDefault()),
+				Filter.emptyFilter(), Sort.emptySort());
+
+			Assert.assertEquals(1, pageItems.getTotalCount());
+		}
+		finally {
+			_userLocalService.deleteUser(user);
+		}
+	}
+
+	@Test
+	public void testGetPageItemsWithGuestPermissionAndNoGroupPermissionAndSiteUser()
+		throws Exception {
+
+		Map<Locale, String> stringMap = new HashMap<>();
+
+		stringMap.put(LocaleUtil.getDefault(), RandomTestUtil.randomString());
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
+
+		serviceContext.setAddGuestPermissions(true);
+		serviceContext.setAddGroupPermissions(false);
+
+		JournalTestUtil.addArticle(
+			_group.getGroupId(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			JournalArticleConstants.CLASSNAME_ID_DEFAULT,
+			RandomTestUtil.randomString(), false, stringMap, stringMap,
+			stringMap, null, LocaleUtil.getDefault(), null, true, true,
+			serviceContext);
+
+		User user = UserTestUtil.addUser(_group.getGroupId());
+
+		PermissionChecker permissionChecker =
+			PermissionCheckerFactoryUtil.create(user);
+
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
+				user, permissionChecker)) {
+
+			PageItems<JournalArticle> pageItems = getPageItems(
+				PaginationRequest.of(10, 1), _group.getGroupId(),
+				_acceptLanguage,
+				getThemeDisplay(_group, LocaleUtil.getDefault()),
+				Filter.emptyFilter(), Sort.emptySort());
+
+			Assert.assertEquals(1, pageItems.getTotalCount());
+		}
+		finally {
+			_userLocalService.deleteUser(user);
+		}
+	}
+
+	@Test
+	public void testGetPageItemsWithNoGuestPermissionAndGroupPermissionAndAdminUser()
+		throws Exception {
+
+		Map<Locale, String> stringMap = new HashMap<>();
+
+		stringMap.put(LocaleUtil.getDefault(), RandomTestUtil.randomString());
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
+
+		serviceContext.setAddGuestPermissions(false);
+		serviceContext.setAddGroupPermissions(true);
+
+		JournalTestUtil.addArticle(
+			_group.getGroupId(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			JournalArticleConstants.CLASSNAME_ID_DEFAULT,
+			RandomTestUtil.randomString(), false, stringMap, stringMap,
+			stringMap, null, LocaleUtil.getDefault(), null, true, true,
+			serviceContext);
+
+		User user = UserTestUtil.addGroupAdminUser(_group);
+
+		PermissionChecker permissionChecker =
+			PermissionCheckerFactoryUtil.create(user);
+
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
+				user, permissionChecker)) {
+
+			PageItems<JournalArticle> pageItems = getPageItems(
+				PaginationRequest.of(10, 1), _group.getGroupId(),
+				_acceptLanguage,
+				getThemeDisplay(_group, LocaleUtil.getDefault()),
+				Filter.emptyFilter(), Sort.emptySort());
+
+			Assert.assertEquals(1, pageItems.getTotalCount());
+		}
+		finally {
+			_userLocalService.deleteUser(user);
+		}
+	}
+
+	@Test
+	public void testGetPageItemsWithNoGuestPermissionAndGroupPermissionAndGuestUser()
+		throws Exception {
+
+		Map<Locale, String> stringMap = new HashMap<>();
+
+		stringMap.put(LocaleUtil.getDefault(), RandomTestUtil.randomString());
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
+
+		serviceContext.setAddGuestPermissions(false);
+		serviceContext.setAddGroupPermissions(true);
+
+		JournalTestUtil.addArticle(
+			_group.getGroupId(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			JournalArticleConstants.CLASSNAME_ID_DEFAULT,
+			RandomTestUtil.randomString(), false, stringMap, stringMap,
+			stringMap, null, LocaleUtil.getDefault(), null, true, true,
+			serviceContext);
+
+		User user = _userLocalService.getDefaultUser(
+			TestPropsValues.getCompanyId());
+
+		PermissionChecker permissionChecker =
+			PermissionCheckerFactoryUtil.create(user);
+
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
+				user, permissionChecker)) {
+
+			PageItems<JournalArticle> pageItems = getPageItems(
+				PaginationRequest.of(10, 1), _group.getGroupId(),
+				_acceptLanguage,
+				getThemeDisplay(_group, LocaleUtil.getDefault()),
+				Filter.emptyFilter(), Sort.emptySort());
+
+			Assert.assertEquals(0, pageItems.getTotalCount());
+		}
+	}
+
+	@Test
+	public void testGetPageItemsWithNoGuestPermissionAndGroupPermissionAndNoSiteUser()
+		throws Exception {
+
+		Map<Locale, String> stringMap = new HashMap<>();
+
+		stringMap.put(LocaleUtil.getDefault(), RandomTestUtil.randomString());
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
+
+		serviceContext.setAddGuestPermissions(false);
+		serviceContext.setAddGroupPermissions(true);
+
+		JournalTestUtil.addArticle(
+			_group.getGroupId(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			JournalArticleConstants.CLASSNAME_ID_DEFAULT,
+			RandomTestUtil.randomString(), false, stringMap, stringMap,
+			stringMap, null, LocaleUtil.getDefault(), null, true, true,
+			serviceContext);
+
+		User user = UserTestUtil.addUser();
+
+		PermissionChecker permissionChecker =
+			PermissionCheckerFactoryUtil.create(user);
+
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
+				user, permissionChecker)) {
+
+			PageItems<JournalArticle> pageItems = getPageItems(
+				PaginationRequest.of(10, 1), _group.getGroupId(),
+				_acceptLanguage,
+				getThemeDisplay(_group, LocaleUtil.getDefault()),
+				Filter.emptyFilter(), Sort.emptySort());
+
+			Assert.assertEquals(0, pageItems.getTotalCount());
+		}
+		finally {
+			_userLocalService.deleteUser(user);
+		}
+	}
+
+	@Test
+	public void testGetPageItemsWithNoGuestPermissionAndGroupPermissionAndSiteUser()
+		throws Exception {
+
+		Map<Locale, String> stringMap = new HashMap<>();
+
+		stringMap.put(LocaleUtil.getDefault(), RandomTestUtil.randomString());
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
+
+		serviceContext.setAddGuestPermissions(false);
+		serviceContext.setAddGroupPermissions(true);
+
+		JournalTestUtil.addArticle(
+			_group.getGroupId(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			JournalArticleConstants.CLASSNAME_ID_DEFAULT,
+			RandomTestUtil.randomString(), false, stringMap, stringMap,
+			stringMap, null, LocaleUtil.getDefault(), null, true, true,
+			serviceContext);
+
+		User user = UserTestUtil.addUser(_group.getGroupId());
+
+		PermissionChecker permissionChecker =
+			PermissionCheckerFactoryUtil.create(user);
+
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
+				user, permissionChecker)) {
+
+			PageItems<JournalArticle> pageItems = getPageItems(
+				PaginationRequest.of(10, 1), _group.getGroupId(),
+				_acceptLanguage,
+				getThemeDisplay(_group, LocaleUtil.getDefault()),
+				Filter.emptyFilter(), Sort.emptySort());
+
+			Assert.assertEquals(1, pageItems.getTotalCount());
+		}
+		finally {
+			_userLocalService.deleteUser(user);
+		}
+	}
+
+	@Test
+	public void testGetPageItemsWithNoGuestPermissionAndNoGroupPermissionAndAdminUser()
+		throws Exception {
+
 		Map<Locale, String> stringMap = new HashMap<>();
 
 		stringMap.put(LocaleUtil.getDefault(), RandomTestUtil.randomString());
@@ -161,14 +673,138 @@ public class StructuredContentNestedCollectionResourcePermissionTest
 		}
 	}
 
+	@Test
+	public void testGetPageItemsWithNoGuestPermissionAndNoGroupPermissionAndGuestUser()
+		throws Exception {
+
+		Map<Locale, String> stringMap = new HashMap<>();
+
+		stringMap.put(LocaleUtil.getDefault(), RandomTestUtil.randomString());
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
+
+		serviceContext.setAddGuestPermissions(false);
+		serviceContext.setAddGroupPermissions(false);
+
+		JournalTestUtil.addArticle(
+			_group.getGroupId(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			JournalArticleConstants.CLASSNAME_ID_DEFAULT,
+			RandomTestUtil.randomString(), false, stringMap, stringMap,
+			stringMap, null, LocaleUtil.getDefault(), null, true, true,
+			serviceContext);
+
+		User user = _userLocalService.getDefaultUser(
+			TestPropsValues.getCompanyId());
+
+		PermissionChecker permissionChecker =
+			PermissionCheckerFactoryUtil.create(user);
+
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
+				user, permissionChecker)) {
+
+			PageItems<JournalArticle> pageItems = getPageItems(
+				PaginationRequest.of(10, 1), _group.getGroupId(),
+				_acceptLanguage,
+				getThemeDisplay(_group, LocaleUtil.getDefault()),
+				Filter.emptyFilter(), Sort.emptySort());
+
+			Assert.assertEquals(0, pageItems.getTotalCount());
+		}
+	}
+
+	@Test
+	public void testGetPageItemsWithNoGuestPermissionAndNoGroupPermissionAndNoSiteUser()
+		throws Exception {
+
+		Map<Locale, String> stringMap = new HashMap<>();
+
+		stringMap.put(LocaleUtil.getDefault(), RandomTestUtil.randomString());
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
+
+		serviceContext.setAddGuestPermissions(false);
+		serviceContext.setAddGroupPermissions(false);
+
+		JournalTestUtil.addArticle(
+			_group.getGroupId(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			JournalArticleConstants.CLASSNAME_ID_DEFAULT,
+			RandomTestUtil.randomString(), false, stringMap, stringMap,
+			stringMap, null, LocaleUtil.getDefault(), null, true, true,
+			serviceContext);
+
+		User user = UserTestUtil.addUser();
+
+		PermissionChecker permissionChecker =
+			PermissionCheckerFactoryUtil.create(user);
+
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
+				user, permissionChecker)) {
+
+			PageItems<JournalArticle> pageItems = getPageItems(
+				PaginationRequest.of(10, 1), _group.getGroupId(),
+				_acceptLanguage,
+				getThemeDisplay(_group, LocaleUtil.getDefault()),
+				Filter.emptyFilter(), Sort.emptySort());
+
+			Assert.assertEquals(0, pageItems.getTotalCount());
+		}
+		finally {
+			_userLocalService.deleteUser(user);
+		}
+	}
+
+	@Test
+	public void testGetPageItemsWithNoGuestPermissionAndNoGroupPermissionAndSiteUser()
+		throws Exception {
+
+		Map<Locale, String> stringMap = new HashMap<>();
+
+		stringMap.put(LocaleUtil.getDefault(), RandomTestUtil.randomString());
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
+
+		serviceContext.setAddGuestPermissions(false);
+		serviceContext.setAddGroupPermissions(false);
+
+		JournalTestUtil.addArticle(
+			_group.getGroupId(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			JournalArticleConstants.CLASSNAME_ID_DEFAULT,
+			RandomTestUtil.randomString(), false, stringMap, stringMap,
+			stringMap, null, LocaleUtil.getDefault(), null, true, true,
+			serviceContext);
+
+		User user = UserTestUtil.addUser(_group.getGroupId());
+
+		PermissionChecker permissionChecker =
+			PermissionCheckerFactoryUtil.create(user);
+
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
+				user, permissionChecker)) {
+
+			PageItems<JournalArticle> pageItems = getPageItems(
+				PaginationRequest.of(10, 1), _group.getGroupId(),
+				_acceptLanguage,
+				getThemeDisplay(_group, LocaleUtil.getDefault()),
+				Filter.emptyFilter(), Sort.emptySort());
+
+			Assert.assertEquals(0, pageItems.getTotalCount());
+		}
+		finally {
+			_userLocalService.deleteUser(user);
+		}
+	}
+
 	private static final AcceptLanguage _acceptLanguage =
 		() -> LocaleUtil.getDefault();
 
 	@DeleteAfterTestRun
 	private Group _group;
-
-	@Inject
-	private JournalArticleLocalService _journalArticleLocalService;
 
 	@Inject
 	private UserLocalService _userLocalService;

@@ -40,6 +40,8 @@ class PdfPreviewer extends Component {
 			}
 		};
 
+		this._loadPages(this.currentPage);
+
 		this._goToPageDebounced = debounce(
 			this._goToPage.bind(this),
 			WAIT_BETWEEN_GO_TO_PAGE

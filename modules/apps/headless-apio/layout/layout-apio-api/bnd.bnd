@@ -1,4 +1,0 @@
-Bundle-Name: Liferay Layout Apio API
-Bundle-SymbolicName: com.liferay.layout.apio.api
-Bundle-Version: 2.0.0
-Export-Package: com.liferay.layout.apio.architect.identifier

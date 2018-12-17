@@ -2,5 +2,6 @@ Bundle-Name: Liferay Layout API
 Bundle-SymbolicName: com.liferay.layout.api
 Bundle-Version: 2.0.0
 Export-Package:\
+	com.liferay.layout.constants,\
 	com.liferay.layout.set.model.adapter,\
 	com.liferay.layout.util.comparator

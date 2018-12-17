@@ -349,7 +349,7 @@ public class AssetPublisherUtil {
 			}
 		}
 
-		return assetCategoryIds;
+		return _filterAssetCategoryIds(assetCategoryIds);
 	}
 
 	public static BaseModelSearchResult<AssetEntry> getAssetEntries(

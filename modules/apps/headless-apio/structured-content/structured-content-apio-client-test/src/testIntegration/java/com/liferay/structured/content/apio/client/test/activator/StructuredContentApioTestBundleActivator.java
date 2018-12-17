@@ -72,13 +72,13 @@ public class StructuredContentApioTestBundleActivator
 		StructuredContentApioTestBundleActivator.class.getSimpleName() +
 			"Title1_es";
 
-	public static final String TITLE_2_LOCALE_DEFAULT =
-		StructuredContentApioTestBundleActivator.class.getSimpleName() +
-			"Title2_DefaultLocale";
-
 	public static final String TITLE_2_LOCALE_ES =
 		StructuredContentApioTestBundleActivator.class.getSimpleName() +
 			"Title2_es";
+
+	public static final String TITLE_2_LOCALE_US =
+		StructuredContentApioTestBundleActivator.class.getSimpleName() +
+			"Title2_us";
 
 	@Override
 	public void start(BundleContext bundleContext) {
@@ -210,7 +210,7 @@ public class StructuredContentApioTestBundleActivator
 
 		Map<Locale, String> titleMap2 = new HashMap<Locale, String>() {
 			{
-				put(LocaleUtil.getDefault(), TITLE_2_LOCALE_DEFAULT);
+				put(LocaleUtil.getDefault(), TITLE_2_LOCALE_US);
 				put(LocaleUtil.SPAIN, TITLE_2_LOCALE_ES);
 			}
 		};

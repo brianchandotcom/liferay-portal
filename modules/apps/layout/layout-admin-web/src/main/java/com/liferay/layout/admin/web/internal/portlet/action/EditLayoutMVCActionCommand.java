@@ -15,6 +15,7 @@
 package com.liferay.layout.admin.web.internal.portlet.action;
 
 import com.liferay.document.library.kernel.service.DLAppLocalService;
+import com.liferay.layout.admin.constants.LayoutAdminConstants;
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.portal.events.EventsProcessorUtil;
 import com.liferay.portal.kernel.model.Layout;
@@ -39,6 +40,7 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.PropertiesParamUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -121,6 +123,13 @@ public class EditLayoutMVCActionCommand extends BaseMVCActionCommand {
 			groupId, privateLayout, layoutId);
 
 		String currentType = layout.getType();
+
+		if (StringUtil.equals(
+				currentType, LayoutAdminConstants.LAYOUT_TYPE_ASSET_DISPLAY)) {
+
+			serviceContext.setAttribute(
+				"layout.instanceable.allowed", Boolean.TRUE);
+		}
 
 		layout = _layoutService.updateLayout(
 			groupId, privateLayout, layoutId, layout.getParentLayoutId(),

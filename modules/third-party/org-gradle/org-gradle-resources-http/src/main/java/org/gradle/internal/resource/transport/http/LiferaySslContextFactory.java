@@ -14,9 +14,10 @@
 
 package org.gradle.internal.resource.transport.http;
 
-import javax.net.ssl.SSLContext;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
-import org.apache.http.ssl.SSLContexts;
+import javax.net.ssl.SSLContext;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,12 +33,40 @@ public class LiferaySslContextFactory extends DefaultSslContextFactory {
 			return super.createSslContext();
 		}
 
-		if (_logger.isInfoEnabled()) {
-			_logger.info("Creating default SSL context from system properties");
+		int count = 0;
+
+		while (count < _MAX_RETRY_COUNT) {
+
+			// https://github.com/gradle/gradle/issues/7842
+
+			synchronized (System.getProperties()) {
+				String javaHome = System.getProperty("java.home");
+
+				if (Files.exists(Paths.get(javaHome, "lib", "security"))) {
+					return super.createSslContext();
+				}
+			}
+
+			if (_logger.isWarnEnabled()) {
+				_logger.warn("Mutated java.home system property");
+			}
+
+			try {
+				Thread.sleep(1000);
+			}
+			catch (InterruptedException ie) {
+				if (_logger.isWarnEnabled()) {
+					_logger.warn("Interrupted while sleeping", ie);
+				}
+			}
+
+			count = count + 1;
 		}
 
-		return SSLContexts.createSystemDefault();
+		throw new SecurityException("Cannot locate security policy files");
 	}
+
+	private static final int _MAX_RETRY_COUNT = 5;
 
 	private static final Logger _logger = LoggerFactory.getLogger(
 		LiferaySslContextFactory.class);

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.document.library.web.internal.bulk.selection;
+package com.liferay.document.library.internal.bulk.selection;
 
 import com.liferay.bulk.selection.BulkSelection;
 import com.liferay.bulk.selection.BulkSelectionBackgroundActionExecutorConsumer;

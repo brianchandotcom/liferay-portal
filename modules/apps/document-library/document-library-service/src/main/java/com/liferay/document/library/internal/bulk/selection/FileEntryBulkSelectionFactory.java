@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.document.library.web.internal.bulk.selection;
+package com.liferay.document.library.internal.bulk.selection;
 
 import com.liferay.bulk.selection.BulkSelection;
 import com.liferay.bulk.selection.BulkSelectionFactory;
@@ -111,7 +111,7 @@ public class FileEntryBulkSelectionFactory
 	private RepositoryProvider _repositoryProvider;
 
 	@Reference(
-		target = "(bundle.symbolic.name=com.liferay.document.library.web)"
+		target = "(bundle.symbolic.name=com.liferay.document.library.service)"
 	)
 	private ResourceBundleLoader _resourceBundleLoader;
 

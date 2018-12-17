@@ -12,62 +12,57 @@
  * details.
  */
 
-package com.liferay.document.library.web.internal.bulk.selection;
+package com.liferay.document.library.internal.bulk.selection;
 
 import com.liferay.bulk.selection.BulkSelection;
 import com.liferay.bulk.selection.BulkSelectionBackgroundActionExecutorConsumer;
 import com.liferay.document.library.bulk.selection.FileEntryBulkSelectionBackgroundActionExecutor;
-import com.liferay.document.library.kernel.exception.NoSuchFileEntryException;
 import com.liferay.document.library.kernel.service.DLAppService;
-import com.liferay.petra.reflect.ReflectionUtil;
-import com.liferay.petra.string.StringPool;
-import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
 
 import java.io.Serializable;
 
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.Locale;
-import java.util.Objects;
 import java.util.ResourceBundle;
-import java.util.stream.LongStream;
+import java.util.Set;
 import java.util.stream.Stream;
 
 /**
  * @author Adolfo Pérez
  */
-public class MultipleFileEntryBulkSelection
+public class SingleFileEntryBulkSelection
 	implements BulkSelection
 		<FileEntry, FileEntryBulkSelectionBackgroundActionExecutor> {
 
-	public MultipleFileEntryBulkSelection(
-		long[] fileEntryIds, ResourceBundleLoader resourceBundleLoader,
+	public SingleFileEntryBulkSelection(
+		long fileEntryId, ResourceBundleLoader resourceBundleLoader,
 		Language language, DLAppService dlAppService) {
 
-		_fileEntryIds = fileEntryIds;
+		_fileEntryId = fileEntryId;
 		_resourceBundleLoader = resourceBundleLoader;
 		_language = language;
 		_dlAppService = dlAppService;
 	}
 
 	@Override
-	public String describe(Locale locale) {
+	public String describe(Locale locale) throws PortalException {
 		ResourceBundle resourceBundle =
 			_resourceBundleLoader.loadResourceBundle(locale);
 
+		FileEntry fileEntry = _dlAppService.getFileEntry(_fileEntryId);
+
 		return _language.format(
-			resourceBundle, "these-changes-will-be-applied-to-x-items",
-			_fileEntryIds.length);
+			resourceBundle, "these-changes-will-be-applied-to-x",
+			fileEntry.getTitle());
 	}
 
 	@Override
 	public boolean isMultiple() {
-		return true;
+		return false;
 	}
 
 	@Override
@@ -81,41 +76,19 @@ public class MultipleFileEntryBulkSelection
 
 	@Override
 	public Serializable serialize() {
-		return StringUtil.merge(_fileEntryIds, StringPool.COMMA);
+		return String.valueOf(_fileEntryId);
 	}
 
 	@Override
-	public Stream<FileEntry> stream() {
-		LongStream longStream = Arrays.stream(_fileEntryIds);
+	public Stream<FileEntry> stream() throws PortalException {
+		Set<FileEntry> set = Collections.singleton(
+			_dlAppService.getFileEntry(_fileEntryId));
 
-		return longStream.mapToObj(
-			this::_fetchFileEntry
-		).filter(
-			Objects::nonNull
-		);
+		return set.stream();
 	}
-
-	private FileEntry _fetchFileEntry(long fileEntryId) {
-		try {
-			return _dlAppService.getFileEntry(fileEntryId);
-		}
-		catch (NoSuchFileEntryException nsfee) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(nsfee, nsfee);
-			}
-
-			return null;
-		}
-		catch (PortalException pe) {
-			return ReflectionUtil.throwException(pe);
-		}
-	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		MultipleFileEntryBulkSelection.class);
 
 	private final DLAppService _dlAppService;
-	private final long[] _fileEntryIds;
+	private final long _fileEntryId;
 	private final Language _language;
 	private final ResourceBundleLoader _resourceBundleLoader;
 

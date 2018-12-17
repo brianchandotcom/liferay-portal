@@ -674,22 +674,21 @@ class Form extends Component {
 	}
 
 	_handleFormNavClicked(event) {
-		const {delegateTarget, target} = event;
-		const {navItemIndex} = delegateTarget.dataset;
+		const {delegateTarget} = event;
+		const navItem = dom.closest(delegateTarget, '.nav-item');
+		const navItemIndex = parseInt(navItem.dataset.navItemIndex, 10);
+		const navLink = navItem.querySelector('.nav-link');
 
 		if (navItemIndex !== this.state.activeFormMode) {
-			const newActiveFormMode = parseInt(navItemIndex, 10);
-
 			this.setState(
 				{
-					activeFormMode: newActiveFormMode
+					activeFormMode: navItemIndex
 				}
 			);
 
 			document.querySelector('.forms-management-bar li > a.active').classList.remove('active');
-			target.classList.add('active');
-
-			this.syncActiveFormMode(newActiveFormMode);
+			navLink.classList.add('active');
+			this.syncActiveFormMode(navItemIndex);
 		}
 	}
 

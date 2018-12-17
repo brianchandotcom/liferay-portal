@@ -370,7 +370,7 @@ class Sidebar extends Component {
 
 	_handleTabItemClicked(event) {
 		const {target} = event;
-		const {index} = target.parentElement.dataset;
+		const {dataset: {index}} = dom.closest(target, '.nav-item');
 
 		event.preventDefault();
 

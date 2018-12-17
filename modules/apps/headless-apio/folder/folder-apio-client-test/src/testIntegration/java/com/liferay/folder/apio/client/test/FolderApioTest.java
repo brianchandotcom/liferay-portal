@@ -21,6 +21,7 @@ import com.liferay.portal.apio.test.util.ApioClientBuilder;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import org.hamcrest.Matchers;
 import org.hamcrest.core.IsNull;
 
 import org.jboss.arquillian.container.test.api.Deployment;
@@ -48,6 +49,56 @@ public class FolderApioTest {
 	@Before
 	public void setUp() throws MalformedURLException {
 		_rootEndpointURL = new URL(_url, "/o/api");
+	}
+
+	@Test
+	public void testCreateFolder() {
+		String path = ApioClientBuilder.given(
+		).basicAuth(
+			"test@liferay.com", "test"
+		).header(
+			"Accept", "application/hal+json"
+		).when(
+		).get(
+			_rootEndpointURL.toExternalForm()
+		).follow(
+			"_links.content-space.href"
+		).follow(
+			"_embedded.ContentSpace.find {it.name == '" +
+				FolderTestActivator.CONTENT_SPACE_NAME +
+					"'}._links.documentsRepository.href"
+		).then(
+		).extract(
+		).path(
+			"_links.folders.href"
+		);
+
+		ApioClientBuilder.given(
+		).basicAuth(
+			"test@liferay.com", "test"
+		).header(
+			"Accept", "application/hal+json"
+		).header(
+			"Content-Type", "application/json"
+		).body(
+			"{\"description\":\"My description\",\"name\":\"My folder\"}"
+		).when(
+		).post(
+			path
+		).then(
+		).statusCode(
+			200
+		).body(
+			"dateCreated", IsNull.notNullValue()
+		).body(
+			"dateModified", IsNull.notNullValue()
+		).body(
+			"description", Matchers.equalTo("My description")
+		).body(
+			"name", Matchers.equalTo("My folder")
+		).body(
+			"_links.self.href", IsNull.notNullValue()
+		);
 	}
 
 	@Test

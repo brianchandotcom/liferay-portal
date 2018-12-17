@@ -6239,6 +6239,11 @@ to version 2.3.297.
 - [LPS-84119]: Update the [Liferay Source Formatter] dependency to version
 1.0.768.
 
+## 3.13.40 - 2018-12-14
+
+### Fixed
+- [LPS-87488]: Fix the `deploy` task for the `com.liferay.ext.plugin` plugin.
+
 [Gradle Bundle Plugin]: https://github.com/TomDmitriev/gradle-bundle-plugin
 [Liferay Alloy Taglib]: https://github.com/liferay/alloy-taglibs
 [Liferay Ant BND]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/ant-bnd
@@ -6713,6 +6718,7 @@ to version 2.3.297.
 [LPS-87465]: https://issues.liferay.com/browse/LPS-87465
 [LPS-87466]: https://issues.liferay.com/browse/LPS-87466
 [LPS-87471]: https://issues.liferay.com/browse/LPS-87471
+[LPS-87488]: https://issues.liferay.com/browse/LPS-87488
 [LPS-87503]: https://issues.liferay.com/browse/LPS-87503
 [LPS-87776]: https://issues.liferay.com/browse/LPS-87776
 [LPS-87839]: https://issues.liferay.com/browse/LPS-87839

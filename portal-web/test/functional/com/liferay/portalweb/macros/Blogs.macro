@@ -414,6 +414,15 @@ definition {
 			entryTitleEdit = "${entryTitleEdit}"
 		);
 
+		if ("${sendEmailEntryUpdated}" == "true") {
+			Panel.expandPanel(panel = "Configuration");
+
+			Check.checkToggleSwitch(
+				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH",
+				key_toggleSwitchLabel = "Send Email Entry Updated"
+			);
+		}
+
 		PortletEntry.publish();
 	}
 

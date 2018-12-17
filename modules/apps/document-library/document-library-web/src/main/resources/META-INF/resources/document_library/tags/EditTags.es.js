@@ -6,6 +6,11 @@ import 'frontend-js-web/liferay/compat/modal/Modal.es';
 import templates from './EditTags.soy';
 
 class EditTags extends Component {
+	close() {
+		this.refs.modal.visible = false;
+		this.commonTags = null;
+	}
+
 	open() {
 		this.refs.modal.visible = true;
 	}

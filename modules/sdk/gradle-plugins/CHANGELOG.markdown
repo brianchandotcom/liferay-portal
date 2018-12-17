@@ -6244,6 +6244,14 @@ to version 2.3.297.
 ### Fixed
 - [LPS-87488]: Fix the `deploy` task for the `com.liferay.ext.plugin` plugin.
 
+## 3.13.41 - 2018-12-14
+
+### Changed
+- [LPS-88181]: Update the [Liferay Gradle Plugins Service Builder] dependency to
+version 2.2.4.
+- [LPS-88181]: Update the [Liferay Portal Tools Service Builder] dependency to
+version 1.0.253.
+
 [Gradle Bundle Plugin]: https://github.com/TomDmitriev/gradle-bundle-plugin
 [Liferay Alloy Taglib]: https://github.com/liferay/alloy-taglibs
 [Liferay Ant BND]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/ant-bnd
@@ -6725,6 +6733,7 @@ to version 2.3.297.
 [LPS-87936]: https://issues.liferay.com/browse/LPS-87936
 [LPS-87978]: https://issues.liferay.com/browse/LPS-87978
 [LPS-88171]: https://issues.liferay.com/browse/LPS-88171
+[LPS-88181]: https://issues.liferay.com/browse/LPS-88181
 [LPS-88183]: https://issues.liferay.com/browse/LPS-88183
 [LPS-88186]: https://issues.liferay.com/browse/LPS-88186
 [LPS-88223]: https://issues.liferay.com/browse/LPS-88223

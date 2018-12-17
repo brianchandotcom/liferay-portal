@@ -728,6 +728,12 @@ version 1.0.250.
 - [LPS-81706]: Update the [Liferay Portal Tools Service Builder] dependency to
 version 1.0.251.
 
+## 2.2.4 - 2018-12-14
+
+### Changed
+- [LPS-88181]: Update the [Liferay Portal Tools Service Builder] dependency to
+version 1.0.253.
+
 [Liferay Gradle Util]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-util
 [Liferay Portal Tools Service Builder]: https://github.com/liferay/liferay-portal/tree/master/modules/util/portal-tools-service-builder
 [LPS-53392]: https://issues.liferay.com/browse/LPS-53392
@@ -822,3 +828,4 @@ version 1.0.251.
 [LPS-86835]: https://issues.liferay.com/browse/LPS-86835
 [LPS-86916]: https://issues.liferay.com/browse/LPS-86916
 [LPS-87466]: https://issues.liferay.com/browse/LPS-87466
+[LPS-88181]: https://issues.liferay.com/browse/LPS-88181

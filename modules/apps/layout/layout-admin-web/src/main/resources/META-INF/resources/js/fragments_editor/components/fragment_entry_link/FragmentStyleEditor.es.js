@@ -42,23 +42,25 @@ class FragmentStyleEditor extends State {
 	 * @private
 	 */
 	_handleNodeClick(event) {
-		event.preventDefault();
-		event.stopPropagation();
+		if (event.target === this.node) {
+			event.preventDefault();
+			event.stopPropagation();
 
-		if (this._tooltip) {
-			this.disposeStyleTooltip();
-		}
-		else if (this._styleEditor) {
-			this.emit('openTooltip');
+			if (this._tooltip) {
+				this.disposeStyleTooltip();
+			}
+			else if (this._styleEditor) {
+				this.emit('openTooltip');
 
-			this._tooltip = new FragmentEditableFieldTooltip(
-				{
-					alignElement: this.node,
-					buttons: this._styleEditor.getButtons(this.showMapping)
-				}
-			);
+				this._tooltip = new FragmentEditableFieldTooltip(
+					{
+						alignElement: this.node,
+						buttons: this._styleEditor.getButtons(this.showMapping)
+					}
+				);
 
-			this._tooltip.on('buttonClick', this._handleButtonClick);
+				this._tooltip.on('buttonClick', this._handleButtonClick);
+			}
 		}
 	}
 

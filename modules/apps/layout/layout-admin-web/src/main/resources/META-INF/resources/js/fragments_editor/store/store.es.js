@@ -12,8 +12,13 @@ const connect = function(component, store) {
 	store.on(
 		'change',
 		nextState => Object.entries(nextState).forEach(
-			([key, value]) => {
-				component[key] = value;
+			entry => {
+				const [key, newVal] = entry;
+				const oldVal = component[key];
+
+				if (newVal !== oldVal) {
+					component[key] = newVal;
+				}
 			}
 		)
 	);
@@ -25,8 +30,11 @@ const connect = function(component, store) {
 
 			Object.values(data.changes).forEach(
 				change => {
-					if (change.key in nextState) {
-						nextState[change.key] = change.newVal;
+					const {key, newVal} = change;
+					const oldVal = nextState[key];
+
+					if ((key in nextState) && (oldVal !== newVal)) {
+						nextState[key] = newVal;
 					}
 				}
 			);

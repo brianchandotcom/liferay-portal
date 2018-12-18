@@ -134,6 +134,49 @@ public class DDMFormInstanceRecordSearchTest {
 	}
 
 	@Test
+	public void testNonindexableField() throws Exception {
+		Locale[] locales = {LocaleUtil.US};
+
+		DDMForm ddmForm = DDMFormTestUtil.createDDMForm(
+			DDMFormTestUtil.createAvailableLocales(locales), locales[0]);
+
+		DDMFormField nameDDMFormField = DDMFormTestUtil.createTextDDMFormField(
+			"name", true, false, false);
+
+		nameDDMFormField.setIndexType("keyword");
+
+		ddmForm.addDDMFormField(nameDDMFormField);
+
+		DDMFormField notIndexableDDMFormField =
+			DDMFormTestUtil.createTextDDMFormField(
+				"notIndexable", true, false, false);
+
+		notIndexableDDMFormField.setIndexType("");
+
+		DDMFormInstanceTestHelper ddmFormInstanceTestHelper =
+			new DDMFormInstanceTestHelper(_group);
+
+		DDMStructureTestHelper ddmStructureTestHelper =
+			new DDMStructureTestHelper(
+				PortalUtil.getClassNameId(DDMFormInstance.class), _group);
+
+		DDMStructure ddmStructure = ddmStructureTestHelper.addStructure(
+			ddmForm, StorageType.JSON.toString());
+
+		DDMFormInstance ddmFormInstance =
+			ddmFormInstanceTestHelper.addDDMFormInstance(ddmStructure);
+
+		_ddmFormInstanceRecordTestHelper = new DDMFormInstanceRecordTestHelper(
+			_group, ddmFormInstance);
+		_searchContext = getSearchContext(_group, _user, ddmFormInstance);
+
+		addDDMFormInstanceRecord("Liferay", "Not indexable name");
+
+		assertSearch("Liferay", 1);
+		assertSearch("Not indexable name", 0);
+	}
+
+	@Test
 	public void testStopwords() throws Exception {
 		addDDMFormInstanceRecord(RandomTestUtil.randomString(), "Simple text");
 		addDDMFormInstanceRecord(

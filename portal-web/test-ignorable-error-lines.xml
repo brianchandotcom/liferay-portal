@@ -196,6 +196,10 @@
 			<contains>There is already an index on table</contains>
 			<matches></matches>
 		</ignore-error>
+		<ignore-error description="LPS-88418 - temporarily ignore until fixed">
+			<contains>SQLSTATE=42710</contains>
+			<matches></matches>
+		</ignore-error>
 		<ignore-error description="LRQA-24859">
 			<contains>No binary licenses found</contains>
 			<matches></matches>

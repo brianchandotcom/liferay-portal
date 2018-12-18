@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.security.access.control.AccessControlled;
 import com.liferay.portal.kernel.servlet.ServletContextClassLoaderPool;
 import com.liferay.portal.spring.aop.ChainableMethodAdvice;
 import com.liferay.portal.spring.aop.ServiceBeanMethodInvocation;
-import com.liferay.portal.util.PropsValues;
 
 import java.io.Serializable;
 
@@ -79,10 +78,6 @@ public class PortalResiliencyAdvice extends ChainableMethodAdvice {
 	public Object createMethodContext(
 		Class<?> targetClass, Method method,
 		Map<Class<? extends Annotation>, Annotation> annotations) {
-
-		if (!PropsValues.PORTAL_RESILIENCY_ENABLED) {
-			return null;
-		}
 
 		Annotation annotation = annotations.get(AccessControlled.class);
 

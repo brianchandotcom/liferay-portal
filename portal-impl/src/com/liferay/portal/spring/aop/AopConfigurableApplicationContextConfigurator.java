@@ -176,7 +176,9 @@ public class AopConfigurableApplicationContextConfigurator
 
 			chainableMethodAdvices.add(new AccessControlAdvice());
 
-			chainableMethodAdvices.add(new PortalResiliencyAdvice());
+			if (PropsValues.PORTAL_RESILIENCY_ENABLED) {
+				chainableMethodAdvices.add(new PortalResiliencyAdvice());
+			}
 
 			chainableMethodAdvices.add(
 				new ServiceMonitorAdvice(serviceMonitoringControl));

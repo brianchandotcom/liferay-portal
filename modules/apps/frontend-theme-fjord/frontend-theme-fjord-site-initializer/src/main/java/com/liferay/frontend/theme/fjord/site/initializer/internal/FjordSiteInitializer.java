@@ -14,14 +14,13 @@
 
 package com.liferay.frontend.theme.fjord.site.initializer.internal;
 
-import com.liferay.document.library.kernel.model.DLFolderConstants;
-import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.fragment.constants.FragmentPortletKeys;
 import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.model.FragmentEntryModel;
 import com.liferay.fragment.service.FragmentCollectionLocalService;
 import com.liferay.fragment.service.FragmentEntryLocalService;
+import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
@@ -247,9 +246,17 @@ public class FjordSiteInitializer implements SiteInitializer {
 					StringUtil.upperCaseFirstLetter(
 						FileUtil.stripExtension(shortFileName)),
 					StringPool.BLANK, StringUtil.read(url.openStream()),
-					StringPool.BLANK,
-					_getPreviewFileEntryId(path, shortFileName, serviceContext),
-					WorkflowConstants.STATUS_APPROVED, serviceContext);
+					StringPool.BLANK, WorkflowConstants.STATUS_APPROVED,
+					serviceContext);
+
+			long fragmentEntryPreviewFileEntryId = _getPreviewFileEntryId(
+				FragmentPortletKeys.FRAGMENT, FragmentEntry.class.getName(),
+				fragmentEntry.getFragmentEntryId(), path, shortFileName,
+				serviceContext);
+
+			fragmentEntry = _fragmentEntryLocalService.updateFragmentEntry(
+				fragmentEntry.getFragmentEntryId(),
+				fragmentEntryPreviewFileEntryId);
 
 			fragmentEntries.add(fragmentEntry);
 		}
@@ -308,16 +315,23 @@ public class FjordSiteInitializer implements SiteInitializer {
 			ServiceContext serviceContext)
 		throws Exception {
 
-		long previewFileEntryId = _getPreviewFileEntryId(
-			path, StringUtil.toLowerCase(name) + "_thumbnail.jpg",
-			serviceContext);
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
+				serviceContext.getUserId(), serviceContext.getScopeGroupId(),
+				layoutPageTemplateCollectionId, name,
+				LayoutPageTemplateEntryTypeConstants.TYPE_BASIC, 0,
+				WorkflowConstants.STATUS_APPROVED, serviceContext);
 
-		return _layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
-			serviceContext.getUserId(), serviceContext.getScopeGroupId(),
-			layoutPageTemplateCollectionId, name,
-			LayoutPageTemplateEntryTypeConstants.TYPE_BASIC, 0,
-			previewFileEntryId, WorkflowConstants.STATUS_APPROVED,
-			serviceContext);
+		long previewFileEntryId = _getPreviewFileEntryId(
+			LayoutAdminPortletKeys.GROUP_PAGES,
+			LayoutPageTemplateEntry.class.getName(),
+			layoutPageTemplateEntry.getLayoutPageTemplateEntryId(), path,
+			StringUtil.toLowerCase(name) + "_thumbnail.jpg", serviceContext);
+
+		return
+			_layoutPageTemplateEntryLocalService.updateLayoutPageTemplateEntry(
+				layoutPageTemplateEntry.getLayoutPageTemplateEntryId(),
+				previewFileEntryId);
 	}
 
 	private ServiceContext _createServiceContext(long groupId)
@@ -342,7 +356,8 @@ public class FjordSiteInitializer implements SiteInitializer {
 	}
 
 	private long _getPreviewFileEntryId(
-			String path, String fileName, ServiceContext serviceContext)
+			String portletId, String className, long classPK, String path,
+			String fileName, ServiceContext serviceContext)
 		throws Exception {
 
 		StringBundler sb = new StringBundler(4);
@@ -358,10 +373,17 @@ public class FjordSiteInitializer implements SiteInitializer {
 			return 0;
 		}
 
-		Folder folder = _dlAppLocalService.getFolder(
-			serviceContext.getScopeGroupId(),
-			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, _THEME_NAME);
-		String imageFileName = FileUtil.getShortFileName(url.getPath());
+		Repository repository =
+			PortletFileRepositoryUtil.fetchPortletRepository(
+				serviceContext.getScopeGroupId(), portletId);
+
+		if (repository == null) {
+			repository = PortletFileRepositoryUtil.addPortletRepository(
+				serviceContext.getScopeGroupId(), portletId, serviceContext);
+		}
+
+		String imageFileName =
+			classPK + "_preview." + FileUtil.getExtension(url.getPath());
 
 		byte[] bytes = null;
 
@@ -369,10 +391,10 @@ public class FjordSiteInitializer implements SiteInitializer {
 			bytes = FileUtil.getBytes(is);
 		}
 
-		FileEntry fileEntry = _dlAppLocalService.addFileEntry(
-			serviceContext.getUserId(), serviceContext.getScopeGroupId(),
-			folder.getFolderId(), imageFileName, null, imageFileName,
-			StringPool.BLANK, StringPool.BLANK, bytes, serviceContext);
+		FileEntry fileEntry = PortletFileRepositoryUtil.addPortletFileEntry(
+			serviceContext.getScopeGroupId(), serviceContext.getUserId(),
+			className, classPK, portletId, repository.getDlFolderId(), bytes,
+			imageFileName, MimeTypesUtil.getContentType(imageFileName), false);
 
 		return fileEntry.getFileEntryId();
 	}
@@ -421,9 +443,6 @@ public class FjordSiteInitializer implements SiteInitializer {
 		FjordSiteInitializer.class);
 
 	private Bundle _bundle;
-
-	@Reference
-	private DLAppLocalService _dlAppLocalService;
 
 	@Reference
 	private FragmentCollectionLocalService _fragmentCollectionLocalService;

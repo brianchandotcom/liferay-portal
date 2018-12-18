@@ -56,6 +56,12 @@ public interface FragmentCollection extends FragmentCollectionModel,
 			}
 		};
 
+	public long getResourcesFolderId()
+		throws com.liferay.portal.kernel.exception.PortalException;
+
+	public boolean hasResources()
+		throws com.liferay.portal.kernel.exception.PortalException;
+
 	public void populateZipWriter(
 		com.liferay.portal.kernel.zip.ZipWriter zipWriter)
 		throws Exception;

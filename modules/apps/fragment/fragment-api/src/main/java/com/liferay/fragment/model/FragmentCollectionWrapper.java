@@ -272,6 +272,12 @@ public class FragmentCollectionWrapper implements FragmentCollection,
 		return _fragmentCollection.getPrimaryKeyObj();
 	}
 
+	@Override
+	public long getResourcesFolderId()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _fragmentCollection.getResourcesFolderId();
+	}
+
 	/**
 	* Returns the user ID of this fragment collection.
 	*
@@ -315,6 +321,12 @@ public class FragmentCollectionWrapper implements FragmentCollection,
 	@Override
 	public int hashCode() {
 		return _fragmentCollection.hashCode();
+	}
+
+	@Override
+	public boolean hasResources()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _fragmentCollection.hasResources();
 	}
 
 	@Override

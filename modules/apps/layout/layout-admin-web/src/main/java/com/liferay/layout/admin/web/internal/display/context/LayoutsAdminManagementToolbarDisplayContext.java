@@ -233,9 +233,9 @@ public class LayoutsAdminManagementToolbarDisplayContext
 			(ThemeDisplay)liferayPortletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		if (_layoutsAdminDisplayContext.getSelPlid() > 0) {
-			Layout layout = _layoutsAdminDisplayContext.getSelLayout();
+		Layout layout = _layoutsAdminDisplayContext.getSelLayout();
 
+		if (layout != null) {
 			return LanguageUtil.format(
 				request, "add-child-page-of-x",
 				layout.getName(themeDisplay.getLocale()));

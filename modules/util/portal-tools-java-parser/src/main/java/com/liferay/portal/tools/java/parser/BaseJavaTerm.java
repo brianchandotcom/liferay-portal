@@ -624,7 +624,7 @@ public abstract class BaseJavaTerm implements JavaTerm {
 		StringBundler sb, String s, String prefix, String suffix,
 		int maxLineLength) {
 
-		if (s.contains("\n")) {
+		if (s.contains("\n") && (maxLineLength != -1)) {
 			return false;
 		}
 

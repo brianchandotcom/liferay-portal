@@ -1,3 +1,5 @@
+@import "./mixins/lfr_drag_indicator";
+
 @import "./variables";
 
 .contextual-sidebar-content > .fragment-entry-link-list {
@@ -17,18 +19,18 @@
 		}
 
 		&.drag-bottom {
-			border-bottom: 5px solid #80ACFF;
+			@include lfr-drag-indicator("bottom");
 		}
 
 		&.drag-top {
-			border-top: 5px solid #80ACFF;
+			@include lfr-drag-indicator("top");
 		}
 	}
 
 	&__col {
 		position: relative;
 
-		&:after {
+		&:before {
 			border: 1px dashed #CDCED9;
 			content: '';
 			display: block;
@@ -38,6 +40,13 @@
 			position: absolute;
 			top: -1px;
 			width: calc(100% - #{$fragmentEntryLinkSpacing * 2} + 2px);
+		}
+
+		&.targetOver:after {
+			@include lfr-drag-indicator("bottom");
+			content: '';
+			display: block;
+			width: 100%;
 		}
 	}
 }

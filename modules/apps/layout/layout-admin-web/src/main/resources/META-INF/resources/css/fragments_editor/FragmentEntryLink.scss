@@ -2,6 +2,8 @@
 
 @import "mixins";
 
+@import "./mixins/lfr_drag_indicator";
+
 @import "variables";
 
 .drag-handler {
@@ -10,15 +12,11 @@
 
 .fragment-entry-link-wrapper {
 	&.drag-bottom {
-		border-bottom: 5px solid #80ACFF;
-		margin-bottom: 5px;
-		padding-bottom: 5px;
+		@include lfr-drag-indicator("bottom");
 	}
 
 	&.drag-top {
-		border-top: 5px solid #80ACFF;
-		margin-top: 5px;
-		padding-top: 5px;
+		@include lfr-drag-indicator("top");
 	}
 
 	.portlet {

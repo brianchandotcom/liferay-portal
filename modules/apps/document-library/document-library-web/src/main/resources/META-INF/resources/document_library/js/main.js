@@ -311,7 +311,8 @@ AUI.add(
 									var responseData = response.bulkAssetEntryCommonTagsModel;
 
 									if (responseData && editTagsComponent) {
-										editTagsComponent.commonTags = responseData.tagNames.toString();
+										editTagsComponent.emptyState = false;
+										editTagsComponent.commonTags = responseData.tagNames;
 										editTagsComponent.description = responseData.description;
 									}
 								}

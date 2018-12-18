@@ -1,22 +1,26 @@
 {namespace EditTags}
 
 {template .render}
+	{@param commonTags: list<?>}
+	{@param dataSource: string|[]|list<?>}
+	{@param emptyState: bool}
 	{@param spritemap: string}
-	{@param? commonTags: string}
 	{@param? description: string}
 	{@param? multiple: bool}
 
 	{call liferay.frontend.Modal.render}
 		{param body kind="html"}
 
-			{if $commonTags}
+			{if $emptyState}
+				{call .loading /}
+			{else}
 				{call .tags}
 					{param commonTags: $commonTags /}
 					{param description: $description /}
+					{param dataSource: $dataSource /}
 					{param multiple: $multiple /}
+					{param spritemap: $spritemap /}
 				{/call}
-			{else}
-				{call .loading /}
 			{/if}
 		{/param}
 
@@ -46,7 +50,9 @@
 {/template}
 
 {template .tags}
-	{@param? commonTags: string}
+	{@param commonTags: list<?>}
+	{@param dataSource: string|[]|list<?>}
+	{@param spritemap: string}
 	{@param? description: string}
 	{@param? multiple: bool}
 
@@ -65,6 +71,13 @@
 		{/call}
 	{/if}
 
-	<strong>{msg desc=""}Tags{/msg}</strong>
+	{call ClayMultiSelect.render}
+		{param dataSource: $dataSource /}
+		{param helpText: '' /}
+		{param label kind="text"} {msg desc=""}tags{/msg} {/param}
+		{param selectedItems: $commonTags /}
+		{param spritemap: $spritemap /}
+	{/call}
+
 	<p>Common Tags: {$commonTags}</p>
 {/template}

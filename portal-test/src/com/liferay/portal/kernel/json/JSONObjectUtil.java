@@ -35,40 +35,37 @@ public class JSONObjectUtil {
 
 	public static String toOrderedJSONString(String jsonString) {
 		try {
-			org.json.JSONObject jsonObject =
-				new org.json.JSONObject(jsonString) {
+			org.json.JSONObject jsonObject = new org.json.JSONObject(
+				jsonString) {
 
-					@Override
-					@SuppressWarnings("rawtypes")
-					public Iterator keys() {
-						Iterator<?> iterator = super.keys();
+				@Override
+				@SuppressWarnings("rawtypes")
+				public Iterator keys() {
+					Iterator<?> iterator = super.keys();
 
-						List<Object> list = new ArrayList<>(length());
+					List<Object> list = new ArrayList<>(length());
 
-						while (iterator.hasNext()) {
-							list.add(iterator.next());
-						}
-
-						Collections.sort(
-							list,
-							new Comparator<Object>() {
-
-								@Override
-								public int compare(
-									Object object1, Object object2) {
-
-									String string1 = object1.toString();
-
-									return string1.compareTo(
-										object2.toString());
-								}
-
-							});
-
-						return list.iterator();
+					while (iterator.hasNext()) {
+						list.add(iterator.next());
 					}
 
-				};
+					Collections.sort(
+						list,
+						new Comparator<Object>() {
+
+							@Override
+							public int compare(Object object1, Object object2) {
+								String string1 = object1.toString();
+
+								return string1.compareTo(object2.toString());
+							}
+
+						});
+
+					return list.iterator();
+				}
+
+			};
 
 			return jsonObject.toString();
 		}

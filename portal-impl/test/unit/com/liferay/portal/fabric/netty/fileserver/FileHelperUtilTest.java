@@ -574,17 +574,17 @@ public class FileHelperUtilTest {
 	public void testUnzipImpossibleScenario() throws IOException {
 		FileSystem fileSystem = FileSystems.getDefault();
 
-		FileSystemProvider fileSystemProvider =
-			new FileSystemProviderWrapper(fileSystem.provider()) {
+		FileSystemProvider fileSystemProvider = new FileSystemProviderWrapper(
+			fileSystem.provider()) {
 
-				@Override
-				public InputStream newInputStream(
-					Path path, OpenOption... options) {
+			@Override
+			public InputStream newInputStream(
+				Path path, OpenOption... options) {
 
-					return null;
-				}
+				return null;
+			}
 
-			};
+		};
 
 		Path impossiableSourceFilePath = Paths.get("ImpossibleSourceFilePath");
 
@@ -739,17 +739,17 @@ public class FileHelperUtilTest {
 	public void testZipImpossibleScenario() throws IOException {
 		FileSystem fileSystem = FileSystems.getDefault();
 
-		FileSystemProvider fileSystemProvider =
-			new FileSystemProviderWrapper(fileSystem.provider()) {
+		FileSystemProvider fileSystemProvider = new FileSystemProviderWrapper(
+			fileSystem.provider()) {
 
-				@Override
-				public OutputStream newOutputStream(
-					Path path, OpenOption... options) {
+			@Override
+			public OutputStream newOutputStream(
+				Path path, OpenOption... options) {
 
-					return null;
-				}
+				return null;
+			}
 
-			};
+		};
 
 		Path impossiableDestDirPath = new PathWrapper(
 			FileHelperUtil.TEMP_DIR_PATH,

@@ -230,66 +230,66 @@ public class URLCodecTest {
 		"1f408", "1f431", "1f415", "1f436"
 	};
 
-	private static final Charset _testCharset =
-		new Charset("test-charset", null) {
+	private static final Charset _testCharset = new Charset(
+		"test-charset", null) {
 
-			@Override
-			public boolean contains(Charset charset) {
-				return true;
-			}
+		@Override
+		public boolean contains(Charset charset) {
+			return true;
+		}
 
-			@Override
-			public CharsetDecoder newDecoder() {
-				return new CharsetDecoder(this, 1, 1) {
+		@Override
+		public CharsetDecoder newDecoder() {
+			return new CharsetDecoder(this, 1, 1) {
 
-					@Override
-					protected CoderResult decodeLoop(
-						ByteBuffer byteBuffer, CharBuffer charBuffer) {
+				@Override
+				protected CoderResult decodeLoop(
+					ByteBuffer byteBuffer, CharBuffer charBuffer) {
 
-						return CoderResult.unmappableForLength(1);
-					}
+					return CoderResult.unmappableForLength(1);
+				}
 
-					@Override
-					protected void implOnUnmappableCharacter(
-						CodingErrorAction codingErrorAction) {
+				@Override
+				protected void implOnUnmappableCharacter(
+					CodingErrorAction codingErrorAction) {
 
-						ReflectionTestUtil.setFieldValue(
-							this, "unmappableCharacterAction",
-							CodingErrorAction.REPORT);
-					}
+					ReflectionTestUtil.setFieldValue(
+						this, "unmappableCharacterAction",
+						CodingErrorAction.REPORT);
+				}
 
-				};
-			}
+			};
+		}
 
-			@Override
-			public CharsetEncoder newEncoder() {
-				return new CharsetEncoder(this, 1, 1) {
+		@Override
+		public CharsetEncoder newEncoder() {
+			return new CharsetEncoder(this, 1, 1) {
 
-					@Override
-					public boolean isLegalReplacement(byte[] replacement) {
-						return true;
-					}
+				@Override
+				public boolean isLegalReplacement(byte[] replacement) {
+					return true;
+				}
 
-					@Override
-					protected CoderResult encodeLoop(
-						CharBuffer charBuffer, ByteBuffer byteBuffer) {
+				@Override
+				protected CoderResult encodeLoop(
+					CharBuffer charBuffer, ByteBuffer byteBuffer) {
 
-						return CoderResult.unmappableForLength(1);
-					}
+					return CoderResult.unmappableForLength(1);
+				}
 
-					@Override
-					protected void implOnUnmappableCharacter(
-						CodingErrorAction codingErrorAction) {
+				@Override
+				protected void implOnUnmappableCharacter(
+					CodingErrorAction codingErrorAction) {
 
-						ReflectionTestUtil.setFieldValue(
-							this, "unmappableCharacterAction",
-							CodingErrorAction.REPORT);
-					}
+					ReflectionTestUtil.setFieldValue(
+						this, "unmappableCharacterAction",
+						CodingErrorAction.REPORT);
+				}
 
-				};
-			}
+			};
+		}
 
-		};
+	};
 
 	static {
 		_ENCODED_URLS = new String[_RAW_URLS.length];

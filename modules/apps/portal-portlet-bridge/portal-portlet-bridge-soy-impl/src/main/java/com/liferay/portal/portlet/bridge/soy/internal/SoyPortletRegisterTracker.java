@@ -41,53 +41,57 @@ public class SoyPortletRegisterTracker {
 
 	@Activate
 	public void activate(BundleContext bundleContext) {
-		_serviceTracker = new ServiceTracker
-			<SoyPortletRegister, ServiceRegistration<Portlet>>(
-				bundleContext, SoyPortletRegister.class,
-				new ServiceTrackerCustomizer
-					<SoyPortletRegister, ServiceRegistration<Portlet>>() {
+		_serviceTracker =
+			new ServiceTracker
+				<SoyPortletRegister, ServiceRegistration<Portlet>>(
+					bundleContext, SoyPortletRegister.class,
+					new ServiceTrackerCustomizer
+						<SoyPortletRegister, ServiceRegistration<Portlet>>() {
 
-					@Override
-					public ServiceRegistration<Portlet> addingService(
-						ServiceReference<SoyPortletRegister> serviceReference) {
+						@Override
+						public ServiceRegistration<Portlet> addingService(
+							ServiceReference<SoyPortletRegister>
+								serviceReference) {
 
-						Bundle bundle = serviceReference.getBundle();
+							Bundle bundle = serviceReference.getBundle();
 
-						BundleContext originBundleContext =
-							bundle.getBundleContext();
+							BundleContext originBundleContext =
+								bundle.getBundleContext();
 
-						return originBundleContext.registerService(
-							Portlet.class,
-							new SoyPortlet(
-								bundleContext.getService(serviceReference)),
-							_getProperties(serviceReference));
-					}
+							return originBundleContext.registerService(
+								Portlet.class,
+								new SoyPortlet(
+									bundleContext.getService(serviceReference)),
+								_getProperties(serviceReference));
+						}
 
-					@Override
-					public void modifiedService(
-						ServiceReference<SoyPortletRegister> serviceReference,
-						ServiceRegistration<Portlet> serviceRegistration) {
+						@Override
+						public void modifiedService(
+							ServiceReference<SoyPortletRegister>
+								serviceReference,
+							ServiceRegistration<Portlet> serviceRegistration) {
 
-						serviceRegistration.setProperties(
-							_getProperties(serviceReference));
-					}
+							serviceRegistration.setProperties(
+								_getProperties(serviceReference));
+						}
 
-					@Override
-					public void removedService(
-						ServiceReference<SoyPortletRegister> serviceReference,
-						ServiceRegistration<Portlet> serviceRegistration) {
+						@Override
+						public void removedService(
+							ServiceReference<SoyPortletRegister>
+								serviceReference,
+							ServiceRegistration<Portlet> serviceRegistration) {
 
-						serviceRegistration.unregister();
+							serviceRegistration.unregister();
 
-						Bundle bundle = serviceReference.getBundle();
+							Bundle bundle = serviceReference.getBundle();
 
-						BundleContext originBundleContext =
-							bundle.getBundleContext();
+							BundleContext originBundleContext =
+								bundle.getBundleContext();
 
-						originBundleContext.ungetService(serviceReference);
-					}
+							originBundleContext.ungetService(serviceReference);
+						}
 
-				});
+					});
 
 		_serviceTracker.open();
 	}

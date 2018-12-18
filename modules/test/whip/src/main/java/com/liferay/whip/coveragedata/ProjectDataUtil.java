@@ -87,14 +87,14 @@ public class ProjectDataUtil {
 		ByteArrayOutputStream byteArrayOutputStream =
 			new ByteArrayOutputStream();
 
-		try (ObjectOutputStream objectOutputStream =
-				new ObjectOutputStream(byteArrayOutputStream) {
+		try (ObjectOutputStream objectOutputStream = new ObjectOutputStream(
+				byteArrayOutputStream) {
 
-					@Override
-					protected void writeStreamHeader() {
-					}
+				@Override
+				protected void writeStreamHeader() {
+				}
 
-				}) {
+			}) {
 
 			objectOutputStream.reset();
 			objectOutputStream.writeUnshared(new ProjectDataPiper(projectData));

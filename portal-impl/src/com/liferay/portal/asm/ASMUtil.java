@@ -264,9 +264,9 @@ public class ASMUtil {
 		return removedMethodNodes;
 	}
 
-	private static final MethodVisitor _emptyMethodVisitor =
-		new MethodVisitor(Opcodes.ASM5) {
-		};
+	private static final MethodVisitor _emptyMethodVisitor = new MethodVisitor(
+		Opcodes.ASM5) {
+	};
 
 	private static class RenameClassRemapper extends Remapper {
 

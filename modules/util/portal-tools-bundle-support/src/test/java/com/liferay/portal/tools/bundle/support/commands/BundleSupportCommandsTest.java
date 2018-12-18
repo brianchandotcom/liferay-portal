@@ -558,23 +558,21 @@ public class BundleSupportCommandsTest {
 		HttpServer httpServer = HttpServer.create(
 			new InetSocketAddress(_HTTP_SERVER_PORT), 0);
 
-		Authenticator authenticator =
-			new BasicAuthenticator(_HTTP_SERVER_REALM) {
+		Authenticator authenticator = new BasicAuthenticator(
+			_HTTP_SERVER_REALM) {
 
-				@Override
-				public boolean checkCredentials(
-					String username, String password) {
+			@Override
+			public boolean checkCredentials(String username, String password) {
+				if (username.equals(_HTTP_SERVER_USER_NAME) &&
+					password.equals(_HTTP_SERVER_PASSWORD)) {
 
-					if (username.equals(_HTTP_SERVER_USER_NAME) &&
-						password.equals(_HTTP_SERVER_PASSWORD)) {
-
-						return true;
-					}
-
-					return false;
+					return true;
 				}
 
-			};
+				return false;
+			}
+
+		};
 
 		_createHttpContext(
 			httpServer, _CONTEXT_PATH_TAR, "application/tar+gzip", null);

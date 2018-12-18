@@ -48,17 +48,17 @@ public class NettyRPCChannelHandlerTest {
 		final AtomicReference<Channel> channelReference =
 			new AtomicReference<>();
 
-		RPCSerializable rpcSerializable =
-			new RPCSerializable(System.currentTimeMillis()) {
+		RPCSerializable rpcSerializable = new RPCSerializable(
+			System.currentTimeMillis()) {
 
-				@Override
-				public void execute(Channel channel) {
-					channelReference.set(channel);
-				}
+			@Override
+			public void execute(Channel channel) {
+				channelReference.set(channel);
+			}
 
-				private static final long serialVersionUID = 1L;
+			private static final long serialVersionUID = 1L;
 
-			};
+		};
 
 		embeddedChannel.writeInbound(rpcSerializable);
 

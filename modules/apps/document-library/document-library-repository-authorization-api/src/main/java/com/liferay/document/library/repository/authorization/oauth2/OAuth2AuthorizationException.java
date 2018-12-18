@@ -151,8 +151,8 @@ public class OAuth2AuthorizationException extends AuthorizationException {
 
 	private static final Map
 		<String, Function<String, OAuth2AuthorizationException>> _functions =
-			new HashMap
-				<String, Function<String, OAuth2AuthorizationException>>(7) {
+			new HashMap<String, Function<String, OAuth2AuthorizationException>>(
+				7) {
 
 				{
 					put(

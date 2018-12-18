@@ -172,20 +172,20 @@ public class JspPrecompileTest {
 
 			ClassWriter classWriter = new ClassWriter(classReader, 0);
 
-			ClassVisitor classVisitor =
-				new ClassVisitor(Opcodes.ASM5, classWriter) {
+			ClassVisitor classVisitor = new ClassVisitor(
+				Opcodes.ASM5, classWriter) {
 
-					@Override
-					public void visit(
-						int version, int access, String name, String signature,
-						String superName, String[] interfaces) {
+				@Override
+				public void visit(
+					int version, int access, String name, String signature,
+					String superName, String[] interfaces) {
 
-						super.visit(
-							version, access, className, signature, superName,
-							interfaces);
-					}
+					super.visit(
+						version, access, className, signature, superName,
+						interfaces);
+				}
 
-				};
+			};
 
 			classReader.accept(classVisitor, 0);
 

@@ -614,8 +614,7 @@ public class DLReferencesExportImportContentProcessor
 						if (substring.startsWith(hostName)) {
 							if (content.regionMatches(
 									true, curBeginPos - _OFFSET_HREF_ATTRIBUTE,
-									"href=", 0,
-									5) ||
+									"href=", 0, 5) ||
 								content.regionMatches(
 									true, curBeginPos - _OFFSET_SRC_ATTRIBUTE,
 									"src=", 0, 4)) {

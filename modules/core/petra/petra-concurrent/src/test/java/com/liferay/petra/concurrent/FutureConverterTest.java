@@ -105,15 +105,15 @@ public class FutureConverterTest {
 
 		final Exception exception = new Exception();
 
-		Future<Object> future =
-			new FutureConverter<Object, Object>(_futureTask) {
+		Future<Object> future = new FutureConverter<Object, Object>(
+			_futureTask) {
 
-				@Override
-				protected Object convert(Object v) throws Exception {
-					throw exception;
-				}
+			@Override
+			protected Object convert(Object v) throws Exception {
+				throw exception;
+			}
 
-			};
+		};
 
 		try {
 			future.get();

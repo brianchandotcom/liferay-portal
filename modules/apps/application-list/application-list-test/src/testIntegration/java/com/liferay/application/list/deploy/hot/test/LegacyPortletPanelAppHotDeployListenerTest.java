@@ -173,15 +173,15 @@ public class LegacyPortletPanelAppHotDeployListenerTest {
 			return super.getResource(_location);
 		}
 
-		private static final Resource _invalidResource =
-			new ClassPathResource("/") {
+		private static final Resource _invalidResource = new ClassPathResource(
+			"/") {
 
-				@Override
-				public boolean exists() {
-					return false;
-				}
+			@Override
+			public boolean exists() {
+				return false;
+			}
 
-			};
+		};
 
 		private final String _location;
 

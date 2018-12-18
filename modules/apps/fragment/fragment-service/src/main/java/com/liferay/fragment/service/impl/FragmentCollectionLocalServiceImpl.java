@@ -14,6 +14,7 @@
 
 package com.liferay.fragment.service.impl;
 
+import com.liferay.fragment.constants.FragmentPortletKeys;
 import com.liferay.fragment.exception.DuplicateFragmentCollectionKeyException;
 import com.liferay.fragment.exception.FragmentCollectionNameException;
 import com.liferay.fragment.model.FragmentCollection;
@@ -22,9 +23,12 @@ import com.liferay.fragment.service.base.FragmentCollectionLocalServiceBaseImpl;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Repository;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
+import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -119,6 +123,27 @@ public class FragmentCollectionLocalServiceImpl
 			FragmentCollection.class.getName(),
 			ResourceConstants.SCOPE_INDIVIDUAL,
 			fragmentCollection.getFragmentCollectionId());
+
+		// Images
+
+		try {
+			Repository repository =
+				PortletFileRepositoryUtil.fetchPortletRepository(
+					fragmentCollection.getGroupId(),
+					FragmentPortletKeys.FRAGMENT);
+
+			if (repository != null) {
+				Folder folder = PortletFileRepositoryUtil.getPortletFolder(
+					repository.getRepositoryId(), repository.getDlFolderId(),
+					String.valueOf(
+						fragmentCollection.getFragmentCollectionId()));
+
+				PortletFileRepositoryUtil.deletePortletFolder(
+					folder.getFolderId());
+			}
+		}
+		catch (Exception e) {
+		}
 
 		// Fragment entries
 

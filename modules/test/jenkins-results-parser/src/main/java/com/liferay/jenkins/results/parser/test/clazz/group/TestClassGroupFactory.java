@@ -63,11 +63,6 @@ public class TestClassGroupFactory {
 					batchName, portalTestClassJob);
 			}
 
-			if (batchName.startsWith("pmd-")) {
-				return new PMDBatchTestClassGroup(
-					batchName, portalTestClassJob);
-			}
-
 			if (batchName.startsWith("js-test-") ||
 				batchName.startsWith("portal-frontend-js-")) {
 

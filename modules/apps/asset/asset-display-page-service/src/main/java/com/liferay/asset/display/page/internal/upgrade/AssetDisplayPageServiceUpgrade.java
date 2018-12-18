@@ -17,6 +17,8 @@ package com.liferay.asset.display.page.internal.upgrade;
 import com.liferay.asset.display.page.internal.upgrade.v2_0_0.util.AssetDisplayPageEntryTable;
 import com.liferay.asset.display.page.internal.upgrade.v2_1_0.UpgradeAssetDisplayLayout;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
+import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
+import com.liferay.layout.page.template.service.LayoutPageTemplateEntryService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.upgrade.BaseUpgradeSQLServerDatetime;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
@@ -40,7 +42,9 @@ public class AssetDisplayPageServiceUpgrade implements UpgradeStepRegistrator {
 		registry.register(
 			"2.0.0", "2.1.0",
 			new UpgradeAssetDisplayLayout(
-				_assetEntryLocalService, _layoutLocalService));
+				_assetEntryLocalService, _layoutLocalService,
+				_layoutPageTemplateEntryLocalService,
+				_layoutPageTemplateEntryService));
 	}
 
 	@Reference
@@ -48,5 +52,12 @@ public class AssetDisplayPageServiceUpgrade implements UpgradeStepRegistrator {
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;
+
+	@Reference
+	private LayoutPageTemplateEntryLocalService
+		_layoutPageTemplateEntryLocalService;
+
+	@Reference
+	private LayoutPageTemplateEntryService _layoutPageTemplateEntryService;
 
 }

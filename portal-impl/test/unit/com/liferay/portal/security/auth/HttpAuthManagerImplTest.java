@@ -45,6 +45,24 @@ public class HttpAuthManagerImplTest {
 	}
 
 	@Test
+	public void testLPS88011() {
+		MockHttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest();
+
+		mockHttpServletRequest.addHeader(
+			HttpHeaders.AUTHORIZATION,
+			"Basic " + Base64.encode("test@liferay.com:te:st".getBytes()));
+
+		HttpAuthorizationHeader httpAuthorizationHeader =
+			_httpAuthManagerImpl.parse(mockHttpServletRequest);
+
+		Assert.assertEquals(
+			"te:st",
+			httpAuthorizationHeader.getAuthParameter(
+				HttpAuthorizationHeader.AUTH_PARAMETER_NAME_PASSWORD));
+	}
+
+	@Test
 	public void testParseBasic() {
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest();

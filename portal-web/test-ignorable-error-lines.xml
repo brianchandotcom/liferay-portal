@@ -192,6 +192,10 @@
 			<contains>IX_CED31606</contains>
 			<matches></matches>
 		</ignore-error>
+		<ignore-error description="LPS-88412 - temporarily ignore until fixed">
+			<contains>drop table if exists Kaleo</contains>
+			<matches></matches>
+		</ignore-error>
 		<ignore-error description="LPS-88418 - temporarily ignore until fixed">
 			<contains>There is already an index on table</contains>
 			<matches></matches>

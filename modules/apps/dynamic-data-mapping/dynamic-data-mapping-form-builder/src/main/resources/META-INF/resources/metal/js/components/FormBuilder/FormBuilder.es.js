@@ -463,7 +463,7 @@ class Builder extends Component {
 		const {target} = event;
 		const {cancelChangesModal, sidebar} = this.refs;
 
-		if (!dom.closest(target, '.close-modal')) {
+		if (this._isOutsideModal(target)) {
 			sidebar.close();
 		}
 
@@ -482,7 +482,7 @@ class Builder extends Component {
 		const {deleteModal, sidebar} = this.refs;
 		const {indexes} = this.state;
 
-		if (!dom.closest(target, '.close-modal')) {
+		if (this._isOutsideModal(target)) {
 			sidebar.close();
 		}
 
@@ -513,6 +513,10 @@ class Builder extends Component {
 
 	_handlePagesUpdated(pages) {
 		this.emit('pagesUpdated', pages);
+	}
+
+	_isOutsideModal(node) {
+		return !dom.closest(node, '.close-modal');
 	}
 
 	/**

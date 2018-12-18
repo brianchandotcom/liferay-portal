@@ -226,13 +226,14 @@ class Sidebar extends Component {
 	_handleDocumentMouseDown({target}) {
 		const {element, state, transitionEnd} = this;
 		const {open} = state;
-		const AUIEditorToolbar = dom.closest(target, '.ae-ui');
+		const alloyEditorToolbarNode = dom.closest(target, '.ae-ui');
 		const fieldColumnNode = dom.closest(target, '.col-ddm');
-		const fieldTypesDropdown = dom.closest(target, '.dropdown-menu');
+		const fieldTypesDropdownNode = dom.closest(target, '.dropdown-menu');
 		const modalNode = dom.closest(target, '.modal');
 
-		if (!open || AUIEditorToolbar || element.contains(target) || fieldTypesDropdown ||
-			fieldColumnNode || this._checkSettingsActionsVisibility(target) || modalNode) {
+		if (!open || alloyEditorToolbarNode || fieldTypesDropdownNode || fieldColumnNode ||
+			modalNode || this._checkSettingsActionsVisibility(target) || element.contains(target)) {
+
 			return;
 		}
 

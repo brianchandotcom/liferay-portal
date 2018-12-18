@@ -320,7 +320,16 @@ public class LayoutsAdminDisplayContext {
 
 		deleteLayoutURL.setParameter(
 			ActionRequest.ACTION_NAME, "/layout/delete_layout");
-		deleteLayoutURL.setParameter("redirect", _themeDisplay.getURLCurrent());
+
+		PortletURL redirectURL = _liferayPortletResponse.createRenderURL();
+
+		redirectURL.setParameter(
+			"selPlid", String.valueOf(layout.getParentPlid()));
+		redirectURL.setParameter(
+			"layoutSetBranchId", String.valueOf(_getActiveLayoutSetBranchId()));
+
+		deleteLayoutURL.setParameter("redirect", redirectURL.toString());
+
 		deleteLayoutURL.setParameter(
 			"selPlid", String.valueOf(layout.getPlid()));
 		deleteLayoutURL.setParameter(

@@ -30,8 +30,7 @@ import org.osgi.service.component.annotations.ServiceScope;
  * @author Gergely Mathe
  */
 @Component(
-	immediate = true, scope = ServiceScope.PROTOTYPE,
-	service = CTConfigurationBuilder.class
+	scope = ServiceScope.PROTOTYPE, service = CTConfigurationBuilder.class
 )
 public class CTConfigurationBuilderImpl<T, U>
 	implements CTConfigurationBuilder<T, U> {

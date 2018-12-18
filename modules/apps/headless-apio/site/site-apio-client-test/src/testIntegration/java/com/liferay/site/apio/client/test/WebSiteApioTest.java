@@ -114,11 +114,6 @@ public class WebSiteApioTest {
 		).body(
 			"_embedded.WebSite.find {it.name == '" +
 				WebSiteApioTestBundleActivator.CHILD_WEB_SITE_NAME +
-					"'}._links.embeddedWebPages.href",
-			IsNull.notNullValue()
-		).body(
-			"_embedded.WebSite.find {it.name == '" +
-				WebSiteApioTestBundleActivator.CHILD_WEB_SITE_NAME +
 					"'}._links.self.href",
 			IsNull.notNullValue()
 		).body(
@@ -165,8 +160,6 @@ public class WebSiteApioTest {
 			"_links.contentSpace.href", IsNull.notNullValue()
 		).body(
 			"_links.creator.href", IsNull.notNullValue()
-		).body(
-			"_links.embeddedWebPages.href", IsNull.notNullValue()
 		).body(
 			"_links.self.href", IsNull.notNullValue()
 		).body(
@@ -228,11 +221,6 @@ public class WebSiteApioTest {
 			"_embedded.WebSite.find {it.name == '" +
 				WebSiteApioTestBundleActivator.WEB_SITE_NAME +
 					"'}._links.creator.href",
-			IsNull.notNullValue()
-		).body(
-			"_embedded.WebSite.find {it.name == '" +
-				WebSiteApioTestBundleActivator.WEB_SITE_NAME +
-					"'}._links.embeddedWebPages.href",
 			IsNull.notNullValue()
 		).body(
 			"_embedded.WebSite.find {it.name == '" +

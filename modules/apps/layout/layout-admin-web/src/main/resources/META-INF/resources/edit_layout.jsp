@@ -33,6 +33,8 @@ Group group = layoutsAdminDisplayContext.getGroup();
 
 Layout selLayout = layoutsAdminDisplayContext.getSelLayout();
 
+boolean assetDisplayLayout = StringUtil.equals(selLayout.getType(), com.liferay.layout.constants.LayoutConstants.LAYOUT_TYPE_ASSET_DISPLAY);
+
 PortletURL redirectURL = layoutsAdminDisplayContext.getRedirectURL();
 
 long refererPlid = ParamUtil.getLong(request, "refererPlid", LayoutConstants.DEFAULT_PLID);
@@ -152,6 +154,20 @@ renderResponse.setTitle(selLayout.getName(locale));
 			<aui:input name="layoutId" type="hidden" value="<%= layoutsAdminDisplayContext.getLayoutId() %>" />
 			<aui:input name="type" type="hidden" value="<%= selLayout.getType() %>" />
 			<aui:input name="<%= PortletDataHandlerKeys.SELECTED_LAYOUTS %>" type="hidden" />
+
+			<c:if test="<%= assetDisplayLayout %>">
+
+				<%
+				for (String languageId : group.getAvailableLanguageIds()) {
+				%>
+
+					<aui:input name='<%= "name_" + languageId %>' type="hidden" value="<%= selLayout.getName(LocaleUtil.fromLanguageId(languageId)) %>" />
+
+				<%
+				}
+				%>
+
+			</c:if>
 
 			<liferay-frontend:edit-form-body>
 				<liferay-ui:success key="layoutAdded" message="the-page-was-created-succesfully" />

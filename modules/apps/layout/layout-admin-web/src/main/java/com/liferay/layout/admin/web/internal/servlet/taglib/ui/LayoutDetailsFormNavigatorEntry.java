@@ -14,8 +14,12 @@
 
 package com.liferay.layout.admin.web.internal.servlet.taglib.ui;
 
+import com.liferay.layout.constants.LayoutConstants;
+import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorConstants;
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorEntry;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import javax.servlet.ServletContext;
 
@@ -40,6 +44,17 @@ public class LayoutDetailsFormNavigatorEntry
 	@Override
 	public String getKey() {
 		return "details";
+	}
+
+	@Override
+	public boolean isVisible(User user, Layout layout) {
+		if (StringUtil.equals(
+				layout.getType(), LayoutConstants.LAYOUT_TYPE_ASSET_DISPLAY)) {
+
+			return false;
+		}
+
+		return super.isVisible(user, layout);
 	}
 
 	@Override

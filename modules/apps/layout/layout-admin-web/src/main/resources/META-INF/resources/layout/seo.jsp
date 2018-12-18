@@ -19,6 +19,8 @@
 <%
 Layout selLayout = layoutsAdminDisplayContext.getSelLayout();
 
+boolean assetDisplayLayout = StringUtil.equals(selLayout.getType(), com.liferay.layout.constants.LayoutConstants.LAYOUT_TYPE_ASSET_DISPLAY);
+
 UnicodeProperties layoutTypeSettings = null;
 
 if (selLayout != null) {
@@ -33,13 +35,15 @@ if (selLayout != null) {
 
 <aui:model-context bean="<%= selLayout %>" model="<%= Layout.class %>" />
 
-<aui:input label="html-title" name="title" placeholder="title" />
+<c:if test="<%= !assetDisplayLayout %>">
+	<aui:input label="html-title" name="title" placeholder="title" />
 
-<h4><liferay-ui:message key="meta-tags" /></h4>
+	<h4><liferay-ui:message key="meta-tags" /></h4>
 
-<aui:input id="descriptionSEO" name="description" placeholder="description" />
+	<aui:input id="descriptionSEO" name="description" placeholder="description" />
 
-<aui:input name="keywords" placeholder="keywords" />
+	<aui:input name="keywords" placeholder="keywords" />
+</c:if>
 
 <aui:input name="robots" placeholder="robots" />
 

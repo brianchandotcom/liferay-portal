@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.model.ModelHintsUtil;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -357,6 +358,13 @@ public class FragmentEntryLocalServiceImpl
 			fragmentEntry.getCompanyId(), FragmentEntry.class.getName(),
 			ResourceConstants.SCOPE_INDIVIDUAL,
 			fragmentEntry.getFragmentEntryId());
+
+		// Preview Image
+
+		if (fragmentEntry.getPreviewFileEntryId() > 0) {
+			PortletFileRepositoryUtil.deletePortletFileEntry(
+				fragmentEntry.getPreviewFileEntryId());
+		}
 
 		fragmentEntryPersistence.remove(fragmentEntry);
 

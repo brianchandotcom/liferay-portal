@@ -478,9 +478,37 @@ public abstract class BaseJavaTerm implements JavaTerm {
 		StringBundler sb, JavaTerm javaTerm, String indent, String prefix,
 		String suffix, int maxLineLength) {
 
-		indent = StringUtil.replaceFirst(adjustIndent(sb, indent), "\t", "");
-
 		String lastLine = getLastLine(sb);
+
+		if (javaTerm instanceof JavaNewClassInstantiation) {
+			indent = getIndent(lastLine);
+
+			String javaTermContent = javaTerm.toString(
+				indent, StringUtil.replaceFirst(lastLine, indent, "") + prefix,
+				suffix, maxLineLength, true);
+
+			String firstLine = _getFirstLine(javaTermContent);
+
+			if (firstLine.endsWith(StringPool.PERIOD) ||
+				(getLineLength(firstLine) > maxLineLength) ||
+				javaTermContent.matches(".*\n\\s*<[\\s\\S]+")) {
+
+				appendNewLine(
+					sb, javaTerm, "\t" + indent, prefix, suffix, maxLineLength);
+			}
+			else {
+				String s = StringUtil.replaceLast(
+					sb.toString(), lastLine, javaTermContent);
+
+				sb.setIndex(0);
+
+				sb.append(s);
+			}
+
+			return "\t" + getIndent(getLastLine(sb));
+		}
+
+		indent = StringUtil.replaceFirst(adjustIndent(sb, indent), "\t", "");
 
 		if (Validator.isNull(StringUtil.trim(lastLine))) {
 			sb = _stripTrailingWhitespace(sb);
@@ -518,21 +546,6 @@ public abstract class BaseJavaTerm implements JavaTerm {
 
 				appendNewLine(
 					sb, javaTerm, "\t" + indent, prefix, suffix, maxLineLength);
-			}
-			else if (javaTerm instanceof JavaNewClassInstantiation) {
-				JavaNewClassInstantiation javaNewClassInstantiation =
-					(JavaNewClassInstantiation)javaTerm;
-
-				if (javaNewClassInstantiation.hasBody() &&
-					!firstLineJavaTermContent.endsWith("{")) {
-
-					appendNewLine(
-						sb, javaTerm, "\t" + indent, prefix, suffix,
-						maxLineLength);
-				}
-				else {
-					sb.append(javaTermContent);
-				}
 			}
 			else {
 				sb.append(javaTermContent);

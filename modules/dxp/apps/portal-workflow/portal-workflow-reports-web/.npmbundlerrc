@@ -8,7 +8,6 @@
 			}
 		}
     },
-	"ignore":["**/rollup.config.js"],
     "exclude": {
         "clay-charts": [
         	"src/jsx/**/*",

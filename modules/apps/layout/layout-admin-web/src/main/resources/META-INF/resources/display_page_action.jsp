@@ -44,6 +44,20 @@ LayoutPageTemplateEntry layoutPageTemplateEntry = (LayoutPageTemplateEntry)row.g
 	</c:if>
 
 	<c:if test="<%= LayoutPageTemplateEntryPermission.contains(permissionChecker, layoutPageTemplateEntry, ActionKeys.UPDATE) %>">
+		<portlet:renderURL var="configureDisplayPageURL">
+			<portlet:param name="mvcRenderCommandName" value="/layout/edit_layout" />
+			<portlet:param name="redirect" value="<%= currentURL %>" />
+			<portlet:param name="backURL" value="<%= currentURL %>" />
+			<portlet:param name="selPlid" value="<%= String.valueOf(layoutPageTemplateEntry.getPlid()) %>" />
+		</portlet:renderURL>
+
+		<liferay-ui:icon
+			message="configure"
+			url="<%= configureDisplayPageURL %>"
+		/>
+	</c:if>
+
+	<c:if test="<%= LayoutPageTemplateEntryPermission.contains(permissionChecker, layoutPageTemplateEntry, ActionKeys.UPDATE) %>">
 		<portlet:actionURL name="/layout/update_layout_page_template_entry" var="updateDisplayPageURL">
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="layoutPageTemplateCollectionId" value="<%= String.valueOf(layoutPageTemplateEntry.getLayoutPageTemplateCollectionId()) %>" />

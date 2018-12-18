@@ -26,7 +26,7 @@ JournalEditArticleDisplayContext journalEditArticleDisplayContext = new JournalE
 	<label for="<portlet:namespace />friendlyURL"><liferay-ui:message key="friendly-url" /><liferay-ui:icon-help message='<%= LanguageUtil.format(request, "for-example-x", "<em>news</em>", false) %>' /></label>
 
 	<liferay-ui:input-localized
-		defaultLanguageId="<%= LocaleUtil.toLanguageId(themeDisplay.getSiteDefaultLocale()) %>"
+		defaultLanguageId="<%= journalEditArticleDisplayContext.getDefaultLanguageId() %>"
 		inputAddon="<%= journalEditArticleDisplayContext.getFriendlyURLBase() %>"
 		maxLength='<%= String.valueOf(ModelHintsUtil.getMaxLength(JournalArticle.class.getName(), "urlTitle")) %>'
 		name="friendlyURL"

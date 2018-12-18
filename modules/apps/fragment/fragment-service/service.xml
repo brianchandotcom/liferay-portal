@@ -51,6 +51,7 @@
 		<!-- References -->
 
 		<reference entity="FragmentEntry" package-path="com.liferay.fragment" />
+		<reference entity="Resource" package-path="com.liferay.portal" />
 		<reference entity="User" package-path="com.liferay.portal" />
 	</entity>
 	<entity local-service="true" name="FragmentEntry" remote-service="true" uuid="true">
@@ -140,6 +141,7 @@
 		<!-- References -->
 
 		<reference entity="FragmentEntryLink" package-path="com.liferay.fragment" />
+		<reference entity="Resource" package-path="com.liferay.portal" />
 		<reference entity="User" package-path="com.liferay.portal" />
 	</entity>
 	<entity local-service="true" name="FragmentEntryLink" remote-service="false" uuid="true">

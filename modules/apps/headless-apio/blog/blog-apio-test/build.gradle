@@ -9,6 +9,8 @@ dependencies {
 	testIntegrationCompile project(":apps:apio-architect:apio-architect-api")
 	testIntegrationCompile project(":apps:blogs:blogs-api")
 	testIntegrationCompile project(":apps:blogs:blogs-test-util")
+	testIntegrationCompile project(":apps:headless-apio:blog:blog-apio-api")
+	testIntegrationCompile project(":apps:headless-apio:portal:portal-apio-api")
 	testIntegrationCompile project(":apps:headless-apio:portal:portal-apio-test-util")
 	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
 }

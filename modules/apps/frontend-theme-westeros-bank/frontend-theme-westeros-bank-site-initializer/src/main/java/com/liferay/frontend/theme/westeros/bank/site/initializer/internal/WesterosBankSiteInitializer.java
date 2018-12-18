@@ -16,8 +16,8 @@ package com.liferay.frontend.theme.westeros.bank.site.initializer.internal;
 
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
-import com.liferay.document.library.kernel.util.DLUtil;
 import com.liferay.dynamic.data.mapping.util.DefaultDDMStructureHelper;
+import com.liferay.fragment.constants.FragmentPortletKeys;
 import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.model.FragmentEntryLink;
@@ -43,10 +43,12 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
+import com.liferay.portal.kernel.model.Repository;
 import com.liferay.portal.kernel.model.Theme;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
+import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
@@ -61,6 +63,7 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -133,10 +136,8 @@ public class WesterosBankSiteInitializer implements SiteInitializer {
 			_updateLogo(serviceContext);
 			_updateLookAndFeel(serviceContext);
 
-			List<FileEntry> fileEntries = _addFileEntries(serviceContext);
-
 			List<FragmentEntry> fragmentEntries = _addFragmentEntries(
-				fileEntries, serviceContext);
+				serviceContext);
 
 			Map<String, FragmentEntry> fragmentEntriesMap =
 				_getFragmentEntriesMap(fragmentEntries);
@@ -167,7 +168,7 @@ public class WesterosBankSiteInitializer implements SiteInitializer {
 				"carousel");
 
 			JournalArticle carouselJournalArticle = _addCarouselJournalArticle(
-				fileEntries, serviceContext);
+				serviceContext);
 
 			_configureFragmentEntryLink(
 				serviceContext.getCompanyId(), serviceContext.getScopeGroupId(),
@@ -232,43 +233,11 @@ public class WesterosBankSiteInitializer implements SiteInitializer {
 		_bundle = bundleContext.getBundle();
 	}
 
-	private JournalArticle _addCarouselJournalArticle(
-			List<FileEntry> fileEntries, ServiceContext serviceContext)
+	private Map<String, String> _addCarouselFileEntriesMap(
+			ServiceContext serviceContext)
 		throws Exception {
-
-		Class<?> clazz = getClass();
-
-		_defaultDDMStructureHelper.addDDMStructures(
-			serviceContext.getUserId(), serviceContext.getScopeGroupId(),
-			_portal.getClassNameId(JournalArticle.class),
-			clazz.getClassLoader(), _PATH + "/ddm/carousel.xml",
-			serviceContext);
-
-		URL carouselContentURL = _bundle.getEntry(
-			_PATH + "/ddm/content/carousel.xml");
 
 		Map<String, String> fileEntriesMap = new HashMap<>();
-
-		for (FileEntry fileEntry : fileEntries) {
-			fileEntriesMap.put(
-				fileEntry.getFileName(),
-				JSONFactoryUtil.looseSerialize(fileEntry));
-		}
-
-		String content = StringUtil.replace(
-			StringUtil.read(carouselContentURL.openStream()), StringPool.DOLLAR,
-			StringPool.DOLLAR, fileEntriesMap);
-
-		return _journalArticleLocalService.addArticle(
-			serviceContext.getUserId(), serviceContext.getScopeGroupId(), 0,
-			Collections.singletonMap(LocaleUtil.US, "Carousel"), null, content,
-			"CAROUSEL", "CAROUSEL", serviceContext);
-	}
-
-	private List<FileEntry> _addFileEntries(ServiceContext serviceContext)
-		throws Exception {
-
-		List<FileEntry> fileEntries = new ArrayList<>();
 
 		Folder folder = _dlAppLocalService.addFolder(
 			serviceContext.getUserId(), serviceContext.getScopeGroupId(),
@@ -276,7 +245,7 @@ public class WesterosBankSiteInitializer implements SiteInitializer {
 			StringPool.BLANK, serviceContext);
 
 		Enumeration<URL> urls = _bundle.findEntries(
-			_PATH + "/images", StringPool.STAR, false);
+			_PATH + "/carousel", StringPool.STAR, false);
 
 		while (urls.hasMoreElements()) {
 			URL url = urls.nextElement();
@@ -294,14 +263,85 @@ public class WesterosBankSiteInitializer implements SiteInitializer {
 				folder.getFolderId(), fileName, null, fileName,
 				StringPool.BLANK, StringPool.BLANK, bytes, serviceContext);
 
-			fileEntries.add(fileEntry);
+			fileEntriesMap.put(
+				fileEntry.getFileName(),
+				JSONFactoryUtil.looseSerialize(fileEntry));
 		}
 
-		return fileEntries;
+		return fileEntriesMap;
+	}
+
+	private JournalArticle _addCarouselJournalArticle(
+			ServiceContext serviceContext)
+		throws Exception {
+
+		Class<?> clazz = getClass();
+
+		_defaultDDMStructureHelper.addDDMStructures(
+			serviceContext.getUserId(), serviceContext.getScopeGroupId(),
+			_portal.getClassNameId(JournalArticle.class),
+			clazz.getClassLoader(), _PATH + "/ddm/carousel.xml",
+			serviceContext);
+
+		URL carouselContentURL = _bundle.getEntry(
+			_PATH + "/ddm/content/carousel.xml");
+
+		Map<String, String> fileEntriesMap = _addCarouselFileEntriesMap(
+			serviceContext);
+
+		String content = StringUtil.replace(
+			StringUtil.read(carouselContentURL.openStream()), StringPool.DOLLAR,
+			StringPool.DOLLAR, fileEntriesMap);
+
+		return _journalArticleLocalService.addArticle(
+			serviceContext.getUserId(), serviceContext.getScopeGroupId(), 0,
+			Collections.singletonMap(LocaleUtil.US, "Carousel"), null, content,
+			"CAROUSEL", "CAROUSEL", serviceContext);
+	}
+
+	private void _addFileEntries(
+			long fragmentCollectionId, ServiceContext serviceContext)
+		throws Exception {
+
+		Repository repository =
+			PortletFileRepositoryUtil.fetchPortletRepository(
+				serviceContext.getScopeGroupId(), FragmentPortletKeys.FRAGMENT);
+
+		if (repository == null) {
+			repository = PortletFileRepositoryUtil.addPortletRepository(
+				serviceContext.getScopeGroupId(), FragmentPortletKeys.FRAGMENT,
+				serviceContext);
+		}
+
+		Folder folder = PortletFileRepositoryUtil.addPortletFolder(
+			serviceContext.getUserId(), repository.getRepositoryId(),
+			repository.getDlFolderId(), String.valueOf(fragmentCollectionId),
+			serviceContext);
+
+		Enumeration<URL> urls = _bundle.findEntries(
+			_PATH + "/images", StringPool.STAR, false);
+
+		while (urls.hasMoreElements()) {
+			URL url = urls.nextElement();
+
+			byte[] bytes = null;
+
+			try (InputStream is = url.openStream()) {
+				bytes = FileUtil.getBytes(is);
+			}
+
+			String fileName = FileUtil.getShortFileName(url.getPath());
+
+			PortletFileRepositoryUtil.addPortletFileEntry(
+				serviceContext.getScopeGroupId(), serviceContext.getUserId(),
+				FragmentCollection.class.getName(), fragmentCollectionId,
+				FragmentPortletKeys.FRAGMENT, folder.getFolderId(), bytes,
+				fileName, MimeTypesUtil.getContentType(fileName), false);
+		}
 	}
 
 	private List<FragmentEntry> _addFragmentEntries(
-			List<FileEntry> fileEntries, ServiceContext serviceContext)
+			ServiceContext serviceContext)
 		throws Exception {
 
 		List<FragmentEntry> fragmentEntries = new ArrayList<>();
@@ -311,7 +351,8 @@ public class WesterosBankSiteInitializer implements SiteInitializer {
 				serviceContext.getUserId(), serviceContext.getScopeGroupId(),
 				_THEME_NAME, null, serviceContext);
 
-		Map<String, String> fileEntriesMap = _getFileEntriesMap(fileEntries);
+		_addFileEntries(
+			fragmentCollection.getFragmentCollectionId(), serviceContext);
 
 		Enumeration<URL> urls = _bundle.findEntries(
 			_PATH + "/fragments", "*.html", false);
@@ -323,10 +364,6 @@ public class WesterosBankSiteInitializer implements SiteInitializer {
 			String filePath = FileUtil.getPath(url.getPath());
 
 			url = _bundle.getEntry(filePath + "/" + fileName);
-
-			String html = StringUtil.replace(
-				StringUtil.read(url.openStream()), StringPool.DOLLAR,
-				StringPool.DOLLAR, fileEntriesMap);
 
 			String shortFileName = FileUtil.getShortFileName(url.getPath());
 
@@ -340,7 +377,8 @@ public class WesterosBankSiteInitializer implements SiteInitializer {
 					serviceContext.getUserId(),
 					serviceContext.getScopeGroupId(),
 					fragmentCollection.getFragmentCollectionId(),
-					fragmentEntryName, StringPool.BLANK, html, StringPool.BLANK,
+					fragmentEntryName, StringPool.BLANK,
+					StringUtil.read(url.openStream()), StringPool.BLANK,
 					_getPreviewFileEntryId(
 						filePath, fragmentEntryId + ".jpg", serviceContext),
 					WorkflowConstants.STATUS_APPROVED, serviceContext);
@@ -508,22 +546,6 @@ public class WesterosBankSiteInitializer implements SiteInitializer {
 		serviceContext.setTimeZone(user.getTimeZone());
 
 		return serviceContext;
-	}
-
-	private Map<String, String> _getFileEntriesMap(List<FileEntry> fileEntries)
-		throws PortalException {
-
-		Map<String, String> fileEntriesPathMap = new HashMap<>();
-
-		for (FileEntry fileEntry : fileEntries) {
-			String fileEntryURL = DLUtil.getPreviewURL(
-				fileEntry, fileEntry.getFileVersion(), null, StringPool.BLANK,
-				false, false);
-
-			fileEntriesPathMap.put(fileEntry.getFileName(), fileEntryURL);
-		}
-
-		return fileEntriesPathMap;
 	}
 
 	private Map<String, FragmentEntry> _getFragmentEntriesMap(

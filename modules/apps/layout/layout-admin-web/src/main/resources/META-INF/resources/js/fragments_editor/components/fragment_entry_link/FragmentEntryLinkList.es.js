@@ -306,6 +306,16 @@ class FragmentEntryLinkList extends Component {
 	}
 
 	/**
+	 * Callback executed when the fragment list ends being hovered.
+	 * @private
+	 */
+	_handleFragmentEntryLinkListHoverEnd() {
+		if (this.store) {
+			this.store.dispatchAction(CLEAR_HOVERED_ITEM);
+		}
+	}
+
+	/**
 	 * @param {object} event
 	 * @private
 	 * @review
@@ -383,16 +393,6 @@ class FragmentEntryLinkList extends Component {
 					hoveredItemType: DROP_TARGET_ITEM_TYPES.section
 				}
 			);
-		}
-	}
-
-	/**
-	 * Callback executed when a section ends being hovered.
-	 * @private
-	 */
-	_handleSectionHoverEnd() {
-		if (this.store) {
-			this.store.dispatchAction(CLEAR_HOVERED_ITEM);
 		}
 	}
 

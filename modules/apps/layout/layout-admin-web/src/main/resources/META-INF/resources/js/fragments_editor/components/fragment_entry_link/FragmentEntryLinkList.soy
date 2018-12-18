@@ -24,11 +24,11 @@
 	]}
 	{@param portletNamespace: string}
 	{@param spritemap: string}
+	{@param? _handleFragmentEntryLinkListHoverEnd: any}
 	{@param? _handleFragmentMove: any}
 	{@param? _handleSectionBlur: any}
 	{@param? _handleSectionClick: any}
 	{@param? _handleSectionHoverStart: any}
-	{@param? _handleSectionHoverEnd: any}
 	{@param? _handleSectionKeyUp: any}
 	{@param? _handleSectionRemoveButtonClick: any}
 	{@param? dropTargetItemTypes: ?}
@@ -67,14 +67,17 @@
 	{/let}
 
 	{if $layoutData.structure and (length($layoutData.structure) > 0)}
-		<div class="{$entryLinksClasses}" ref="fragmentEntryLinks">
+		<div
+			class="{$entryLinksClasses}"
+			data-onmouseleave="{$_handleFragmentEntryLinkListHoverEnd}"
+			ref="fragmentEntryLinks"
+		>
 			{foreach $row in $layoutData.structure}
 				{call .row}
 					{param _handleFragmentMove: $_handleFragmentMove /}
 					{param _handleSectionBlur: $_handleSectionBlur /}
 					{param _handleSectionClick: $_handleSectionClick /}
 					{param _handleSectionHoverStart: $_handleSectionHoverStart /}
-					{param _handleSectionHoverEnd: $_handleSectionHoverEnd /}
 					{param _handleSectionKeyUp: $_handleSectionKeyUp /}
 					{param _handleSectionRemoveButtonClick: $_handleSectionRemoveButtonClick /}
 					{param columns: $row.columns /}
@@ -126,7 +129,6 @@
 	{@param? _handleSectionBlur: any}
 	{@param? _handleSectionClick: any}
 	{@param? _handleSectionHoverStart: any}
-	{@param? _handleSectionHoverEnd: any}
 	{@param? _handleSectionKeyUp: any}
 	{@param? _handleSectionRemoveButtonClick: any}
 	{@param? dropTargetItemTypes: ?}
@@ -180,8 +182,7 @@
 		data-onblur="{$_handleSectionBlur}"
 		data-onclick="{$_handleSectionClick}"
 		data-onkeyup="{$_handleSectionKeyUp}"
-		data-onmouseleave="{$_handleSectionHoverEnd}"
-		data-onmouseenter="{$_handleSectionHoverStart}"
+		data-onmouseover="{$_handleSectionHoverStart}"
 		tabindex="0"
 	>
 		<nav class="fragments-editor__topper tbar">

@@ -6,7 +6,6 @@ import './FragmentEntryLinkContent.es';
 import Store from '../../store/store.es';
 import {
 	CLEAR_ACTIVE_ITEM,
-	CLEAR_HOVERED_ITEM,
 	REMOVE_FRAGMENT_ENTRY_LINK,
 	UPDATE_ACTIVE_ITEM,
 	UPDATE_HOVERED_ITEM,
@@ -76,16 +75,6 @@ class FragmentEntryLink extends Component {
 			);
 
 			this._editables = [];
-		}
-	}
-
-	/**
-	 * Callback executed when a fragment ends being hovered.
-	 * @private
-	 */
-	_handleFragmentHoverEnd() {
-		if (this.store) {
-			this.store.dispatchAction(CLEAR_HOVERED_ITEM);
 		}
 	}
 

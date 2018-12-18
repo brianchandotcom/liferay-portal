@@ -545,6 +545,16 @@ public class ImportUtil {
 			InputStream inputStream = _getInputStream(
 				zipFile, zipEntry.getName());
 
+			FileEntry fileEntry =
+				PortletFileRepositoryUtil.fetchPortletFileEntry(
+					themeDisplay.getScopeGroupId(), folder.getFolderId(),
+					fileName);
+
+			if (fileEntry != null) {
+				PortletFileRepositoryUtil.deletePortletFileEntry(
+					fileEntry.getFileEntryId());
+			}
+
 			PortletFileRepositoryUtil.addPortletFileEntry(
 				themeDisplay.getScopeGroupId(), themeDisplay.getUserId(),
 				FragmentCollection.class.getName(), fragmentCollectionId,

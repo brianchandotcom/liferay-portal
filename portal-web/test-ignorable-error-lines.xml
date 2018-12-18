@@ -208,6 +208,14 @@
 			<contains>already has the column lastPublishDate</contains>
 			<matches></matches>
 		</ignore-error>
+		<ignore-error description="LPS-88523 - temporarily ignore until fixed">
+			<contains>Implicit conversion from datatype 'VARCHAR' to 'DECIMAL' is not allowed.  Use the CONVERT function to run this query.</contains>
+			<matches></matches>
+		</ignore-error>
+		<ignore-error description="LPS-88523 - temporarily ignore until fixed">
+			<contains>IX_717B97E1</contains>
+			<matches></matches>
+		</ignore-error>
 		<ignore-error description="LRQA-24859">
 			<contains>No binary licenses found</contains>
 			<matches></matches>

@@ -48,7 +48,7 @@ public class CTConfigurationBuilderImpl<T, U>
 		_ctConfiguration.setResourceEntityClass(resourceEntityClass);
 		_ctConfiguration.setVersionEntityClass(versionEntityClass);
 
-		return new ResourceEntityByResourceEntityIdStepImpl<>();
+		return new ResourceEntityByResourceEntityIdStepImpl();
 	}
 
 	public class BuildStepImpl implements BuildStep {
@@ -95,7 +95,7 @@ public class CTConfigurationBuilderImpl<T, U>
 
 	}
 
-	public class EntityIdsFromResourceEntityStepImpl<T, U>
+	public class EntityIdsFromResourceEntityStepImpl
 		implements EntityIdsFromResourceEntityStep<T, U> {
 
 		@Override
@@ -111,12 +111,12 @@ public class CTConfigurationBuilderImpl<T, U>
 			_ctConfiguration.setVersionEntityIdFromResourceEntityFunction(
 				versionEntityIdFromResourceEntityFunction);
 
-			return new VersionEntityByVersionEntityIdStepImpl<>();
+			return new VersionEntityByVersionEntityIdStepImpl();
 		}
 
 	}
 
-	public class EntityIdsFromVersionEntityStepImpl<U>
+	public class EntityIdsFromVersionEntityStepImpl
 		implements EntityIdsFromVersionEntityStep<U> {
 
 		@Override
@@ -132,12 +132,12 @@ public class CTConfigurationBuilderImpl<T, U>
 			_ctConfiguration.setVersionEntityIdFromVersionEntityFunction(
 				versionEntityIdFromVersionEntityFunction);
 
-			return new VersionEntityStatusInfoStepImpl<>();
+			return new VersionEntityStatusInfoStepImpl();
 		}
 
 	}
 
-	public class ResourceEntityByResourceEntityIdStepImpl<T, U>
+	public class ResourceEntityByResourceEntityIdStepImpl
 		implements ResourceEntityByResourceEntityIdStep<T, U> {
 
 		@Override
@@ -148,12 +148,12 @@ public class CTConfigurationBuilderImpl<T, U>
 			_ctConfiguration.setResourceEntityByResourceEntityIdFunction(
 				resourceEntityByResourceEntityIdFunction);
 
-			return new EntityIdsFromResourceEntityStepImpl<>();
+			return new EntityIdsFromResourceEntityStepImpl();
 		}
 
 	}
 
-	public class VersionEntityByVersionEntityIdStepImpl<U>
+	public class VersionEntityByVersionEntityIdStepImpl
 		implements VersionEntityByVersionEntityIdStep<U> {
 
 		@Override
@@ -164,12 +164,12 @@ public class CTConfigurationBuilderImpl<T, U>
 			_ctConfiguration.setVersionEntityByVersionEntityIdFunction(
 				versionEntityByVersionEntityIdFunction);
 
-			return new EntityIdsFromVersionEntityStepImpl<>();
+			return new EntityIdsFromVersionEntityStepImpl();
 		}
 
 	}
 
-	public class VersionEntityStatusInfoStepImpl<U>
+	public class VersionEntityStatusInfoStepImpl
 		implements VersionEntityStatusInfoStep<U> {
 
 		@Override
@@ -187,6 +187,6 @@ public class CTConfigurationBuilderImpl<T, U>
 
 	}
 
-	private CTConfigurationImpl _ctConfiguration;
+	private CTConfigurationImpl<T, U> _ctConfiguration;
 
 }

@@ -151,12 +151,6 @@
 	]}
 	{@param? store: ?}
 
-	{let $styleModifier kind="text"}
-		{if $dropTargetItemId == $rowId and $dropTargetItemType == $dropTargetItemTypes.section}
-			{$dropTargetBorder}
-		{/if}
-	{/let}
-
 	{let $sectionClasses kind="text"}
 		drag-section
 		{sp}fragments-editor__draggable-item
@@ -164,11 +158,15 @@
 		{sp}fragment-entry-link-drop-target
 		{sp}fragments-editor__topper-wrapper
 		{sp}layouts-drop-target
-		{sp}{$styleModifier}
 
 		{if $empty}
 			{sp}fragment-entry-link-list__row-section--empty
 		{/if}
+
+		{if $dropTargetItemId == $rowId and $dropTargetItemType == $dropTargetItemTypes.section}
+			{sp}{$dropTargetBorder}
+		{/if}
+
 		{if $hoveredItemId == $rowId and $hoveredItemType == $dropTargetItemTypes.section}
 			{sp}fragment-entry-link-list__row-section--hovered
 			{sp}fragments-editor__topper-wrapper--hovered

@@ -47,7 +47,7 @@ class SidebarLayoutsPanel extends Component {
 			{
 				dropTargetBorder: hoveredSectionBorder,
 				dropTargetItemId: hoveredSectionId,
-				dropTargetItemType: DROP_TARGET_ITEM_TYPES.Panel
+				dropTargetItemType: DROP_TARGET_ITEM_TYPES.section
 			}
 		);
 	}

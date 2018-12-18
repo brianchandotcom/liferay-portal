@@ -20,7 +20,7 @@ Here are some of the types of changes documented in this file:
   replaces an old API, in spite of the old API being kept in Liferay Portal for
   backwards compatibility.
 
-*This document has been reviewed through commit `583d38eadf1f`.*
+*This document has been reviewed through commit `67429b52ebbd`.*
 
 ## Breaking Changes Contribution Guidelines
 
@@ -133,30 +133,30 @@ every page that was mostly unused and redundant.
 
 ---------------------------------------
 
-### Remove Link Application URLs to Page functionality
+### Remove Link Application URLs to Page Functionality
 - **Date:** 2018-Dec-14
 - **JIRA Ticket:** [LPS-85948](https://issues.liferay.com/browse/LPS-85948)
 
 #### What changed?
 
-Link to page option was marked as deprecated in 7.1, allowing the user to show
-and hide the option through a configuration property. In 7.2 this configuration
-property has been removed and the user cannot select the option in the look and
-feel portlet
+The *Link Portlet URLs to Page* option in the Look and Feel portlet was marked
+as deprecated in Liferay Portal 7.1, allowing the user to show and hide the
+option through a configuration property. In Liferay Portal 7.2, this has been
+removed and can no longer be configured.
 
 #### Who is affected?
 
-This affects the administrator since the option no longer exists, and also the
-developers who used the option in the portlet
+This affects administrators who used the option in the UI and developers who
+leveraged the option in the portlet.
 
 #### How should I update my code?
 
-Updated the portlets accordingly, since any preconfigured reference to the
-property is ignored in the portal
+You should update any portlets leveraging this feature, since any preconfigured
+reference to the property is ignored in the portal.
 
 #### Why was this change made?
 
-Only some portlets use this property and there are better and more optimal ways
-to achieve the same results
+A limited number of portlets use this property; there are better ways to achieve
+the same results.
 
 ---------------------------------------

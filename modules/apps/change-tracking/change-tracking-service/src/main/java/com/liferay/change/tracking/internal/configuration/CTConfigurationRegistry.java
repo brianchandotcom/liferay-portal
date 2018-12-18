@@ -32,26 +32,26 @@ import org.osgi.service.component.annotations.ReferencePolicy;
 public class CTConfigurationRegistry {
 
 	public Optional<CTConfiguration<?, ?>>
-		getCTConfigurationByResourceClass(Class<?> clazz) {
+		getCTConfigurationOptionalByResourceClass(Class<?> clazz) {
 
-		return getCTConfigurationByResourceClassName(clazz.getName());
+		return getCTConfigurationOptionalByResourceClassName(clazz.getName());
 	}
 
 	public Optional<CTConfiguration<?, ?>>
-		getCTConfigurationByResourceClassName(String className) {
+		getCTConfigurationOptionalByResourceClassName(String className) {
 
 		return Optional.ofNullable(
 			_configurationsByResourceClassName.get(className));
 	}
 
 	public Optional<CTConfiguration<?, ?>>
-		getCTConfigurationByVersionClass(Class<?> clazz) {
+		getCTConfigurationOptionalByVersionClass(Class<?> clazz) {
 
-		return getCTConfigurationByVersionClassName(clazz.getName());
+		return getCTConfigurationOptionalByVersionClassName(clazz.getName());
 	}
 
 	public Optional<CTConfiguration<?, ?>>
-		getCTConfigurationByVersionClassName(String className) {
+		getCTConfigurationOptionalByVersionClassName(String className) {
 
 		return Optional.ofNullable(
 			_configurationsByVersionClassName.get(className));

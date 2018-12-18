@@ -78,27 +78,34 @@ public class BlogPostingNestedCollectionResourceTest
 	@Test
 	public void testAddBlogsEntry() throws Exception {
 		Date dateNow = new Date();
+
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
 
 		User user = UserLocalServiceUtil.getUser(serviceContext.getUserId());
 
 		BlogPosting blogPosting = new BlogPostingImpl(
-			"alternativeHeadline", "articleBody", "caption", Collections.emptyList(),
-			-1L, dateNow, dateNow, dateNow, "description", "friendlyurlpath",
-			"headline", -1L, Collections.emptyList());
+			"alternativeHeadline", "articleBody", "caption",
+			Collections.emptyList(), 0L, dateNow, dateNow, dateNow,
+			"description", "friendlyurlpath", "headline", 0L,
+			Collections.emptyList());
 
 		BlogsEntry blogsEntry = addBlogsEntry(
 			_group.getGroupId(), blogPosting, user);
 
-		Assert.assertEquals(blogPosting.getAlternativeHeadline(), blogsEntry.getSubtitle());
-		Assert.assertEquals(blogPosting.getArticleBody(), blogsEntry.getContent());
-		Assert.assertEquals(blogPosting.getCaption(), blogsEntry.getCoverImageCaption());
+		Assert.assertEquals(
+			blogPosting.getAlternativeHeadline(), blogsEntry.getSubtitle());
+		Assert.assertEquals(
+			blogPosting.getArticleBody(), blogsEntry.getContent());
+		Assert.assertEquals(
+			blogPosting.getCaption(), blogsEntry.getCoverImageCaption());
 		Assert.assertEquals(dateNow, blogsEntry.getCreateDate());
 		Assert.assertEquals(dateNow, blogsEntry.getDisplayDate());
 		Assert.assertEquals(dateNow, blogsEntry.getModifiedDate());
-		Assert.assertEquals(blogPosting.getDescription(), blogsEntry.getDescription());
-		Assert.assertEquals(blogPosting.getFriendlyURLPath(), blogsEntry.getUrlTitle());
+		Assert.assertEquals(
+			blogPosting.getDescription(), blogsEntry.getDescription());
+		Assert.assertEquals(
+			blogPosting.getFriendlyURLPath(), blogsEntry.getUrlTitle());
 		Assert.assertEquals(blogPosting.getHeadline(), blogsEntry.getTitle());
 	}
 
@@ -134,6 +141,32 @@ public class BlogPostingNestedCollectionResourceTest
 		);
 
 		exception.hasMessage("Duplicate friendly URL");
+	}
+
+	@Test
+	public void testAddBlogsEntryWithSpecificUser() throws Exception {
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
+
+		User currentUser = _userLocalService.getUser(
+			serviceContext.getUserId());
+
+		User user = UserTestUtil.addUser();
+
+		String friendlyURLPath = "friendlyurlpath";
+
+		BlogPosting blogPosting = new BlogPostingImpl(
+			RandomTestUtil.randomString(10), RandomTestUtil.randomString(10),
+			RandomTestUtil.randomString(10), Collections.emptyList(),
+			user.getUserId(), new Date(), new Date(), new Date(),
+			RandomTestUtil.randomString(10), friendlyURLPath,
+			RandomTestUtil.randomString(10), 0L, Collections.emptyList());
+
+		BlogsEntry blogsEntry = addBlogsEntry(
+			_group.getGroupId(), blogPosting, user);
+
+		Assert.assertEquals(user.getUserId(), blogsEntry.getUserId());
+		Assert.assertNotEquals(currentUser.getUserId(), blogsEntry.getUserId());
 	}
 
 	@Test
@@ -219,23 +252,18 @@ public class BlogPostingNestedCollectionResourceTest
 
 	@Test
 	public void testUpdateBlogsEntry() throws Exception {
+		Date dateNow = new Date();
+
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
 
 		User user = UserLocalServiceUtil.getUser(serviceContext.getUserId());
 
-		String alternativeHeadline = "alternativeHeadline";
-		String articleBody = "articleBody";
-		String caption = "caption";
-		Date dateNow = new Date();
-		String description = "description";
-		String friendlyURLPath = "friendlyurlpath";
-		String headline = "headline";
-
 		BlogPosting blogPosting = new BlogPostingImpl(
-			alternativeHeadline, articleBody, caption, Collections.emptyList(),
-			-1L, dateNow, dateNow, dateNow, description, friendlyURLPath,
-			headline, -1L, Collections.emptyList());
+			"alternativeHeadline", "articleBody", "caption",
+			Collections.emptyList(), 0L, dateNow, dateNow, dateNow,
+			"description", "friendlyurlpath", "headline", 0L,
+			Collections.emptyList());
 
 		BlogsEntry blogsEntry = addBlogsEntry(
 			_group.getGroupId(), blogPosting, user);
@@ -243,22 +271,31 @@ public class BlogPostingNestedCollectionResourceTest
 		String updatedHeadline = "updatedHeadline";
 
 		BlogPosting updatedBlogPosting = new BlogPostingImpl(
-			alternativeHeadline, articleBody, caption, Collections.emptyList(),
-			-1L, dateNow, dateNow, dateNow, description, friendlyURLPath,
-			updatedHeadline, -1L, Collections.emptyList());
+			blogPosting.getAlternativeHeadline(), blogPosting.getArticleBody(),
+			blogPosting.getCaption(), Collections.emptyList(), 0L, dateNow,
+			dateNow, dateNow, blogPosting.getDescription(),
+			blogPosting.getFriendlyURLPath(), updatedHeadline, 0L,
+			Collections.emptyList());
 
 		blogsEntry = updateBlogsEntry(
 			blogsEntry.getEntryId(), updatedBlogPosting, user);
 
-		Assert.assertEquals(alternativeHeadline, blogsEntry.getSubtitle());
-		Assert.assertEquals(articleBody, blogsEntry.getContent());
-		Assert.assertEquals(caption, blogsEntry.getCoverImageCaption());
+		Assert.assertEquals(
+			updatedBlogPosting.getAlternativeHeadline(),
+			blogsEntry.getSubtitle());
+		Assert.assertEquals(
+			updatedBlogPosting.getArticleBody(), blogsEntry.getContent());
+		Assert.assertEquals(
+			updatedBlogPosting.getCaption(), blogsEntry.getCoverImageCaption());
 		Assert.assertEquals(dateNow, blogsEntry.getCreateDate());
 		Assert.assertEquals(dateNow, blogsEntry.getDisplayDate());
 		Assert.assertEquals(dateNow, blogsEntry.getModifiedDate());
-		Assert.assertEquals(description, blogsEntry.getDescription());
-		Assert.assertEquals(friendlyURLPath, blogsEntry.getUrlTitle());
-		Assert.assertEquals(updatedHeadline, blogsEntry.getTitle());
+		Assert.assertEquals(
+			updatedBlogPosting.getDescription(), blogsEntry.getDescription());
+		Assert.assertEquals(
+			updatedBlogPosting.getFriendlyURLPath(), blogsEntry.getUrlTitle());
+		Assert.assertEquals(
+			updatedBlogPosting.getHeadline(), blogsEntry.getTitle());
 	}
 
 	private BlogsEntry _addBlogEntry(

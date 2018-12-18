@@ -295,24 +295,27 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 		Delete delete = (Delete)GradleUtil.getTask(
 			project, BasePlugin.CLEAN_TASK_NAME);
 
-		if (GradleUtil.getProperty(
-				delete, CLEAN_DEPLOYED_PROPERTY_NAME, true)) {
+		delete.delete(
+			new Callable<File>() {
 
-			delete.delete(
-				new Callable<File>() {
+				@Override
+				public File call() throws Exception {
+					boolean cleanDeployed = GradleUtil.getProperty(
+						delete, CLEAN_DEPLOYED_PROPERTY_NAME, true);
 
-					@Override
-					public File call() throws Exception {
-						Closure<String> deployedFileNameClosure =
-							liferayExtension.getDeployedFileNameClosure();
-
-						return new File(
-							copy.getDestinationDir(),
-							deployedFileNameClosure.call(abstractArchiveTask));
+					if (!cleanDeployed) {
+						return null;
 					}
 
-				});
-		}
+					Closure<String> deployedFileNameClosure =
+						liferayExtension.getDeployedFileNameClosure();
+
+					return new File(
+						copy.getDestinationDir(),
+						deployedFileNameClosure.call(abstractArchiveTask));
+				}
+
+			});
 	}
 
 	private void _addDeployedFile(

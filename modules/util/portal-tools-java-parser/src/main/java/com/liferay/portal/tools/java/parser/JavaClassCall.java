@@ -93,7 +93,6 @@ public class JavaClassCall extends JavaExpression {
 		}
 
 		if (!_parameterValueJavaExpressions.isEmpty()) {
-			//if (forceLineBreak) {
 			if (forceLineBreak && !_hasBody) {
 				appendNewLine(
 					sb, _parameterValueJavaExpressions, indent, "",

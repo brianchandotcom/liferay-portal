@@ -340,18 +340,22 @@ public class HttpAuthManagerImpl implements HttpAuthManager {
 
 		String credentials = new String(Base64.decode(authorizationParts[1]));
 
-		int index = credentials.indexOf(CharPool.COLON);
-
-		String login = credentials.substring(0, index);
-
-		login = HttpUtil.decodeURL(login.trim());
-
+		String login = null;
 		String password = null;
 
-		if (credentials.length() > (index + 1)) {
+		int index = credentials.indexOf(CharPool.COLON);
+
+		if (index > -1) {
+			login = credentials.substring(0, index);
+
+			login = HttpUtil.decodeURL(login.trim());
+
 			password = credentials.substring(index + 1);
 
 			password = password.trim();
+		}
+		else {
+			login = credentials.trim();
 		}
 
 		HttpAuthorizationHeader httpAuthorizationHeader =

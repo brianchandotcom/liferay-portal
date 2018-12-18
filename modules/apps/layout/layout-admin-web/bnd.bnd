@@ -6,6 +6,7 @@ Liferay-JS-Submodules-Bridge:\
 	layout-admin-web/js/fragments_editor/components/edit_mode/DisabledAreaMask.es,\
 	layout-admin-web/js/fragments_editor/components/fragment_entry_link/FragmentEntryLinkList.es,\
 	layout-admin-web/js/fragments_editor/components/sidebar/FragmentsEditorSidebarContent.es,\
+	layout-admin-web/js/fragments_editor/components/toolbar/FragmentsEditorToolbar.es,\
 	layout-admin-web/js/fragments_editor/reducers/changes.es,\
 	layout-admin-web/js/fragments_editor/reducers/dialogs.es,\
 	layout-admin-web/js/fragments_editor/reducers/fragments.es,\

@@ -10,6 +10,7 @@ $productMenuWidth: 320px;
 $sidebarCardWidth: 272px;
 $sidebarWidth: 320px;
 
+$draggableItemZIndex: 991;
 $fragmentEditableFieldTooltipZIndex: 4;
 $fragmentEntryLinkContentHoverZIndex: auto;
 $fragmentEntryLinkContentZIndex: 0;
@@ -33,6 +34,9 @@ $sectionMinimumHeight: 160px;
 
 $fragmentEntryLinkSectionBorder: 1px solid #CDCED9;
 $fragmentEntryLinkSpacing: 12px;
+
+$draggableItemBackgroundColor: #E1EBFF;
+$draggableItemColor: #0B5FFF;
 
 $topperBorderColor: #0B5FFF;
 $topperBorderRadius: 2px;

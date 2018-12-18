@@ -19,17 +19,6 @@ $layoutPreviewSpacing: 4px;
 		margin: $layoutPreviewSpacing 0;
 		padding: 0;
 
-		&.layouts-drag-section {
-			&.btn {
-				cursor: move;
-			}
-
-			&.dragging {
-				height: $layoutDraggingHeight;
-				width: $layoutDraggingWidth;
-			}
-		}
-
 		&__row {
 			border: solid $layoutPreviewBorderColor thin;
 			border-radius: $layoutPreviewSpacing;

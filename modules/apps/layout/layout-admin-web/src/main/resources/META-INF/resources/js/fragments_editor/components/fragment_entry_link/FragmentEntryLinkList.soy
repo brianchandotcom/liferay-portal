@@ -157,6 +157,7 @@
 
 	{let $sectionClasses kind="text"}
 		drag-section
+		{sp}fragments-editor__draggable-item
 		{sp}fragment-entry-link-list__row-section
 		{sp}fragment-entry-link-drop-target
 		{sp}fragments-editor__topper-wrapper
@@ -174,6 +175,7 @@
 
 	<section
 		class="{$sectionClasses}"
+		data-draggable-item-label="{msg desc=""}section{/msg}"
 		data-layout-section-id="{$rowId}"
 		data-onblur="{$_handleSectionBlur}"
 		data-onclick="{$_handleSectionClick}"

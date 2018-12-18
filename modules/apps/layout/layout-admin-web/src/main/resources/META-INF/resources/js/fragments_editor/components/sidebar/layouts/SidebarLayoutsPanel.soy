@@ -31,6 +31,7 @@
 		btn
 		{sp}btn-unstyled
 		{sp}container
+		{sp}fragments-editor__draggable-item
 		{sp}layouts-drag-section
 		{sp}sidebar-layouts-section__layout-preview
 	{/let}
@@ -40,7 +41,11 @@
 		{sp}sidebar-layouts-section__layout-preview__row
 	{/let}
 
-	<button class="{$layoutsSectionClasses}" data-layout-index="{$layoutIndex}">
+	<button
+		class="{$layoutsSectionClasses}"
+		data-draggable-item-label="{msg desc=""}layout{/msg}"
+		data-layout-index="{$layoutIndex}"
+	>
 		<div class="{$layoutsSectionRowClasses}" role="image">
 			{foreach $column in $columns}
 				{let $sectionColumnClasses kind="text"}

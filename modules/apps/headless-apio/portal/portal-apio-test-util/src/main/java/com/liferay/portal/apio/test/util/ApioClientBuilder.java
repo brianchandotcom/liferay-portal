@@ -111,6 +111,17 @@ public class ApioClientBuilder {
 			_requestSpecification = requestSpecification;
 		}
 
+		public Response delete(String url) {
+			io.restassured.specification.RequestSpecification
+				requestSpecification =
+					_requestSpecification.getRestAssuredRequestSpecification();
+
+			io.restassured.response.Response response =
+				requestSpecification.delete(url);
+
+			return new Response(response.then(), _requestSpecification);
+		}
+
 		public Response follow(String jsonPath) {
 			ExtractableResponse extractableResponse =
 				_validatableResponse.extract();
@@ -136,6 +147,17 @@ public class ApioClientBuilder {
 
 			io.restassured.response.Response response =
 				requestSpecification.post(url);
+
+			return new Response(response.then(), _requestSpecification);
+		}
+
+		public Response put(String url) {
+			io.restassured.specification.RequestSpecification
+				requestSpecification =
+					_requestSpecification.getRestAssuredRequestSpecification();
+
+			io.restassured.response.Response response =
+				requestSpecification.put(url);
 
 			return new Response(response.then(), _requestSpecification);
 		}

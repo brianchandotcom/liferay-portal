@@ -40,7 +40,6 @@ import com.liferay.dynamic.data.mapping.validator.DDMFormValidationException.Mus
 import com.liferay.dynamic.data.mapping.validator.DDMFormValidationException.MustSetValidValidationExpression;
 import com.liferay.dynamic.data.mapping.validator.DDMFormValidationException.MustSetValidVisibilityExpression;
 import com.liferay.dynamic.data.mapping.validator.DDMFormValidator;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -123,6 +122,12 @@ public class DDMFormValidatorImpl implements DDMFormValidator {
 
 	protected void validateDDMFormFieldIndexType(DDMFormField ddmFormField)
 		throws DDMFormValidationException {
+
+		String fieldIndexType = ddmFormField.getIndexType();
+
+		if ((fieldIndexType == null) || fieldIndexType.isEmpty()) {
+			ddmFormField.setIndexType(_INDEX_TYPE_DEFAULT_VALUE);
+		}
 
 		if (!ArrayUtil.contains(
 				_DDM_FORM_FIELD_INDEX_TYPES, ddmFormField.getIndexType())) {
@@ -363,8 +368,10 @@ public class DDMFormValidatorImpl implements DDMFormValidator {
 	}
 
 	private static final String[] _DDM_FORM_FIELD_INDEX_TYPES = {
-		StringPool.BLANK, "keyword", "text"
+		"none", "keyword", "text"
 	};
+
+	private static final String _INDEX_TYPE_DEFAULT_VALUE = "keyword";
 
 	private static final Pattern _ddmFormFieldNamePattern = Pattern.compile(
 		"([^\\p{Punct}|\\p{Space}$]|_)+");

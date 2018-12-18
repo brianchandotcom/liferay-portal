@@ -123,7 +123,15 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 							</c:if>
 
 							<h6 class="text-default">
-								<aui:workflow-status markupView="lexicon" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= curArticle.getStatus() %>" />
+								<c:if test="<%= !curArticle.isApproved() && curArticle.hasApprovedVersion() %>">
+									<span class="label label-success text-uppercase">
+										<liferay-ui:message key="approved" />
+									</span>
+								</c:if>
+
+								<span class="label label-<%= journalDisplayContext.getStatusLabelClass(curArticle.getStatus()) %> text-uppercase">
+									<liferay-ui:message key="<%= WorkflowConstants.getStatusLabel(curArticle.getStatus()) %>" />
+								</span>
 							</h6>
 						</liferay-ui:search-container-column-text>
 
@@ -208,9 +216,20 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 							value="<%= HtmlUtil.escape(PortalUtil.getUserName(curArticle)) %>"
 						/>
 
-						<liferay-ui:search-container-column-status
+						<liferay-ui:search-container-column-text
+							cssClass="text-nowrap"
 							name="status"
-						/>
+						>
+							<c:if test="<%= !curArticle.isApproved() && curArticle.hasApprovedVersion() %>">
+								<span class="label label-success text-uppercase">
+									<liferay-ui:message key="approved" />
+								</span>
+							</c:if>
+
+							<span class="label label-<%= journalDisplayContext.getStatusLabelClass(curArticle.getStatus()) %> text-uppercase">
+								<liferay-ui:message key="<%= WorkflowConstants.getStatusLabel(curArticle.getStatus()) %>" />
+							</span>
+						</liferay-ui:search-container-column-text>
 
 						<liferay-ui:search-container-column-date
 							cssClass="table-cell-expand-smallest table-cell-ws-nowrap"

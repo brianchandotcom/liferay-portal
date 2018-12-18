@@ -15,6 +15,7 @@
 package com.liferay.layout.admin.web.internal.control.menu;
 
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
+import com.liferay.layout.constants.LayoutConstants;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
@@ -80,10 +81,18 @@ public class ManageLayoutProductNavigationControlMenuEntry
 			HttpServletRequest request, HttpServletResponse response)
 		throws IOException {
 
-		Map<String, String> values = new HashMap<>();
-
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
+
+		Layout layout = themeDisplay.getLayout();
+
+		if (StringUtil.equals(
+				layout.getType(), LayoutConstants.LAYOUT_TYPE_ASSET_DISPLAY)) {
+
+			return false;
+		}
+
+		Map<String, String> values = new HashMap<>();
 
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", themeDisplay.getLocale(), getClass());
@@ -95,8 +104,6 @@ public class ManageLayoutProductNavigationControlMenuEntry
 		PortletURL editPageURL = _portal.getControlPanelPortletURL(
 			request, LayoutAdminPortletKeys.GROUP_PAGES,
 			PortletRequest.RENDER_PHASE);
-
-		Layout layout = themeDisplay.getLayout();
 
 		editPageURL.setParameter("mvcRenderCommandName", "/layout/edit_layout");
 

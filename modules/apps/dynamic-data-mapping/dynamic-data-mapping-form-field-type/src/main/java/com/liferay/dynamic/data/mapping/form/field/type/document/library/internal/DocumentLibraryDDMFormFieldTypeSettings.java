@@ -29,6 +29,7 @@ import com.liferay.dynamic.data.mapping.form.field.type.DefaultDDMFormFieldTypeS
 	rules = {
 		@DDMFormRule(
 			actions = {
+				"setVisible('indexType', false)",
 				"setVisible('predefinedValue', false)",
 				"setVisible('validation', false)"
 			},

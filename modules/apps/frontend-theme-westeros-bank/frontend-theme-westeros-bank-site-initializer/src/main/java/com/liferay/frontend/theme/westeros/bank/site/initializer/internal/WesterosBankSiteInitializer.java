@@ -28,6 +28,7 @@ import com.liferay.fragment.service.FragmentEntryLocalService;
 import com.liferay.journal.constants.JournalContentPortletKeys;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleLocalService;
+import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
@@ -379,9 +380,16 @@ public class WesterosBankSiteInitializer implements SiteInitializer {
 					fragmentCollection.getFragmentCollectionId(),
 					fragmentEntryName, StringPool.BLANK,
 					StringUtil.read(url.openStream()), StringPool.BLANK,
-					_getPreviewFileEntryId(
-						filePath, fragmentEntryId + ".jpg", serviceContext),
 					WorkflowConstants.STATUS_APPROVED, serviceContext);
+
+			long fragmentEntryPreviewFileEntryId = _getPreviewFileEntryId(
+				FragmentPortletKeys.FRAGMENT, FragmentEntry.class.getName(),
+				fragmentEntry.getFragmentEntryId(), filePath,
+				fragmentEntryId + ".jpg", serviceContext);
+
+			fragmentEntry = _fragmentEntryLocalService.updateFragmentEntry(
+				fragmentEntry.getFragmentEntryId(),
+				fragmentEntryPreviewFileEntryId);
 
 			fragmentEntries.add(fragmentEntry);
 		}
@@ -408,16 +416,24 @@ public class WesterosBankSiteInitializer implements SiteInitializer {
 
 		long layoutPageTemplateCollectionId =
 			layoutPageTemplateCollection.getLayoutPageTemplateCollectionId();
-		long previewFileEntryId = _getPreviewFileEntryId(
-			thumbnailPath, thumbnailFileName, serviceContext);
 
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
 			_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
 				serviceContext.getUserId(), serviceContext.getScopeGroupId(),
 				layoutPageTemplateCollectionId, name,
 				LayoutPageTemplateEntryTypeConstants.TYPE_BASIC, 0,
-				previewFileEntryId, WorkflowConstants.STATUS_APPROVED,
-				serviceContext);
+				WorkflowConstants.STATUS_APPROVED, serviceContext);
+
+		long previewFileEntryId = _getPreviewFileEntryId(
+			LayoutAdminPortletKeys.GROUP_PAGES,
+			LayoutPageTemplateEntry.class.getName(),
+			layoutPageTemplateEntry.getLayoutPageTemplateEntryId(),
+			thumbnailPath, thumbnailFileName, serviceContext);
+
+		layoutPageTemplateEntry =
+			_layoutPageTemplateEntryLocalService.updateLayoutPageTemplateEntry(
+				layoutPageTemplateEntry.getLayoutPageTemplateEntryId(),
+				previewFileEntryId);
 
 		long[] fragmentEntryIds = ListUtil.toLongArray(
 			fragmentEntries, FragmentEntryModel::getFragmentEntryId);
@@ -562,7 +578,8 @@ public class WesterosBankSiteInitializer implements SiteInitializer {
 	}
 
 	private long _getPreviewFileEntryId(
-			String path, String fileName, ServiceContext serviceContext)
+			String portletId, String className, long classPK, String path,
+			String fileName, ServiceContext serviceContext)
 		throws Exception {
 
 		StringBundler sb = new StringBundler(3);
@@ -577,10 +594,17 @@ public class WesterosBankSiteInitializer implements SiteInitializer {
 			return 0;
 		}
 
-		Folder folder = _dlAppLocalService.getFolder(
-			serviceContext.getScopeGroupId(),
-			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, _THEME_NAME);
-		String imageFileName = FileUtil.getShortFileName(url.getPath());
+		Repository repository =
+			PortletFileRepositoryUtil.fetchPortletRepository(
+				serviceContext.getScopeGroupId(), portletId);
+
+		if (repository == null) {
+			repository = PortletFileRepositoryUtil.addPortletRepository(
+				serviceContext.getScopeGroupId(), portletId, serviceContext);
+		}
+
+		String imageFileName =
+			classPK + "_preview." + FileUtil.getExtension(url.getPath());
 
 		byte[] bytes = null;
 
@@ -588,10 +612,10 @@ public class WesterosBankSiteInitializer implements SiteInitializer {
 			bytes = FileUtil.getBytes(is);
 		}
 
-		FileEntry fileEntry = _dlAppLocalService.addFileEntry(
-			serviceContext.getUserId(), serviceContext.getScopeGroupId(),
-			folder.getFolderId(), imageFileName, null, imageFileName,
-			StringPool.BLANK, StringPool.BLANK, bytes, serviceContext);
+		FileEntry fileEntry = PortletFileRepositoryUtil.addPortletFileEntry(
+			serviceContext.getScopeGroupId(), serviceContext.getUserId(),
+			className, classPK, portletId, repository.getDlFolderId(), bytes,
+			imageFileName, MimeTypesUtil.getContentType(imageFileName), false);
 
 		return fileEntry.getFileEntryId();
 	}

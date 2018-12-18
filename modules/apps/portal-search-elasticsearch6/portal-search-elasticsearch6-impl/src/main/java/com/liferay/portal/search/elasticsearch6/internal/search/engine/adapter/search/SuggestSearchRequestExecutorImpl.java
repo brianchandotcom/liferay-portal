@@ -22,6 +22,7 @@ import com.liferay.portal.search.engine.adapter.search.SuggestSearchResponse;
 import com.liferay.portal.search.engine.adapter.search.SuggestSearchResult;
 
 import java.util.List;
+import java.util.Map;
 
 import org.elasticsearch.action.search.SearchAction;
 import org.elasticsearch.action.search.SearchRequestBuilder;
@@ -30,6 +31,7 @@ import org.elasticsearch.client.Client;
 import org.elasticsearch.common.text.Text;
 import org.elasticsearch.search.suggest.Suggest;
 import org.elasticsearch.search.suggest.SuggestBuilder;
+import org.elasticsearch.search.suggest.SuggestionBuilder;
 import org.elasticsearch.search.suggest.term.TermSuggestion;
 
 import org.osgi.service.component.annotations.Component;
@@ -78,18 +80,28 @@ public class SuggestSearchRequestExecutorImpl
 
 		Client client = _elasticsearchClientResolver.getClient();
 
-		String[] indexNames = suggestSearchRequest.getIndexNames();
-		Suggester suggester = suggestSearchRequest.getSuggester();
-
 		SearchRequestBuilder searchRequestBuilder =
 			SearchAction.INSTANCE.newRequestBuilder(client);
 
-		searchRequestBuilder.setIndices(indexNames);
+		searchRequestBuilder.setIndices(suggestSearchRequest.getIndexNames());
+
+		Suggester suggester = suggestSearchRequest.getSuggester();
 
 		SuggestBuilder suggestBuilder = _suggesterTranslator.translate(
 			suggester, null);
 
-		searchRequestBuilder.suggest(suggestBuilder);
+		Map<String, SuggestionBuilder<?>> suggestionBuilders =
+			suggestBuilder.getSuggestions();
+
+		for (Map.Entry<String, SuggestionBuilder<?>> entry :
+			suggestionBuilders.entrySet()) {
+
+			SuggestBuilder suggestBuilder2 = new SuggestBuilder();
+
+			searchRequestBuilder.suggest(
+				suggestBuilder2.addSuggestion(
+					entry.getKey(), entry.getValue()));
+		}
 
 		return searchRequestBuilder;
 	}

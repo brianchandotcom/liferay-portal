@@ -342,7 +342,7 @@ public class HttpAuthManagerImpl implements HttpAuthManager {
 
 		int index = credentials.indexOf(CharPool.COLON);
 
-		String login = HttpUtil.decodeURL(credentials.substring(0, index));
+		String login = credentials.substring(0, index);
 
 		login = HttpUtil.decodeURL(login.trim());
 

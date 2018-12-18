@@ -17,6 +17,7 @@ package com.liferay.dynamic.data.mapping.form.field.type.text.internal;
 import com.liferay.dynamic.data.mapping.form.field.type.BaseDDMFormFieldTypeSettingsTestCase;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
+import com.liferay.dynamic.data.mapping.model.DDMFormFieldOptions;
 import com.liferay.dynamic.data.mapping.model.DDMFormRule;
 import com.liferay.dynamic.data.mapping.util.DDMFormFactory;
 import com.liferay.petra.string.StringBundler;
@@ -31,6 +32,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.ResourceBundle;
+import java.util.Set;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -100,6 +102,19 @@ public class TextDDMFormFieldTypeSettingsTest
 		Assert.assertEquals(
 			"true", displayStyleDDMFormField.getProperty("inline"));
 		Assert.assertEquals("radio", displayStyleDDMFormField.getType());
+
+		DDMFormField indexTypeDDMFormField = ddmFormFieldsMap.get("indexType");
+
+		DDMFormFieldOptions indexTypeDDMFormFieldOptions =
+			indexTypeDDMFormField.getDDMFormFieldOptions();
+
+		Set<String> indexTypeDDMFormFieldOptionsValue =
+			indexTypeDDMFormFieldOptions.getOptionsValues();
+
+		Assert.assertNotNull(indexTypeDDMFormField);
+		Assert.assertNotNull(indexTypeDDMFormField.getLabel());
+		Assert.assertEquals("radio", indexTypeDDMFormField.getType());
+		Assert.assertTrue(indexTypeDDMFormFieldOptionsValue.contains("text"));
 
 		DDMFormField optionsDDMFormField = ddmFormFieldsMap.get("options");
 

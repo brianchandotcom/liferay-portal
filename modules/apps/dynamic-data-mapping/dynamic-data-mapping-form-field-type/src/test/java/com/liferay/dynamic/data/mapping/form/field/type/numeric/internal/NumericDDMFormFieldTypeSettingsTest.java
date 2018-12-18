@@ -97,6 +97,12 @@ public class NumericDDMFormFieldTypeSettingsTest
 		Assert.assertNotNull(validationDDMFormField);
 		Assert.assertEquals("numeric", validationDDMFormField.getDataType());
 
+		DDMFormField indexTypeDDMFormField = ddmFormFieldsMap.get("indexType");
+
+		Assert.assertNotNull(indexTypeDDMFormField);
+		Assert.assertNotNull(indexTypeDDMFormField.getLabel());
+		Assert.assertEquals("radio", indexTypeDDMFormField.getType());
+
 		List<DDMFormRule> ddmFormRules = ddmForm.getDDMFormRules();
 
 		Assert.assertEquals(ddmFormRules.toString(), 1, ddmFormRules.size());

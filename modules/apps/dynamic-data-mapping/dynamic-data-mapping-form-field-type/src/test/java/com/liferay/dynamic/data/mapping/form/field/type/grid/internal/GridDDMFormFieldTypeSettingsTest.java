@@ -17,6 +17,7 @@ package com.liferay.dynamic.data.mapping.form.field.type.grid.internal;
 import com.liferay.dynamic.data.mapping.form.field.type.BaseDDMFormFieldTypeSettingsTestCase;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
+import com.liferay.dynamic.data.mapping.model.DDMFormRule;
 import com.liferay.dynamic.data.mapping.util.DDMFormFactory;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -25,6 +26,7 @@ import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.ResourceBundle;
@@ -94,6 +96,16 @@ public class GridDDMFormFieldTypeSettingsTest
 			"repeatable");
 
 		Assert.assertNotNull(repeatableDDMFormField);
+
+		List<DDMFormRule> ddmFormRules = ddmForm.getDDMFormRules();
+
+		DDMFormRule ddmFormRule = ddmFormRules.get(0);
+
+		List<String> actions = ddmFormRule.getActions();
+
+		Assert.assertTrue(
+			actions.toString(),
+			actions.contains("setVisible('indexType', false)"));
 	}
 
 	@Override

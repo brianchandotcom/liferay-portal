@@ -107,6 +107,12 @@ public class SelectDDMFormFieldTypeSettingsTest
 			"false", optionsDDMFormField.getProperty("showLabel"));
 		Assert.assertEquals("options", optionsDDMFormField.getType());
 
+		DDMFormField indexTypeDDMFormField = ddmFormFieldsMap.get("indexType");
+
+		Assert.assertNotNull(indexTypeDDMFormField);
+		Assert.assertNotNull(indexTypeDDMFormField.getLabel());
+		Assert.assertEquals("radio", indexTypeDDMFormField.getType());
+
 		List<DDMFormRule> ddmFormRules = ddmForm.getDDMFormRules();
 
 		Assert.assertEquals(ddmFormRules.toString(), 2, ddmFormRules.size());

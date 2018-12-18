@@ -229,7 +229,7 @@ class Sidebar extends Component {
 		const AUIEditorToolbar = dom.closest(target, '.ae-ui');
 		const fieldColumnNode = dom.closest(target, '.col-ddm');
 		const fieldTypesDropdown = dom.closest(target, '.dropdown-menu');
-		const modalNode = dom.closest(target, '.modal-dialog');
+		const modalNode = dom.closest(target, '.modal');
 
 		if (!open || AUIEditorToolbar || element.contains(target) || fieldTypesDropdown ||
 			fieldColumnNode || this._checkSettingsActionsVisibility(target) || modalNode) {

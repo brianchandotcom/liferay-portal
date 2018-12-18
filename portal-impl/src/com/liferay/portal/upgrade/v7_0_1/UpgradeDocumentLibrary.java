@@ -125,8 +125,8 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 			sb.append("select fileVersionId, DDMStructureId from ");
 			sb.append("DLFileEntryMetadata where fileVersionId in (select ");
 			sb.append("fileVersionId from DLFileEntryMetadata group by ");
-			sb.append("fileVersionId having count(*) = 2) and DDMStructureId ");
-			sb.append("= ?");
+			sb.append("fileVersionId having count(*) >= 2) and ");
+			sb.append("DDMStructureId = ?");
 
 			try (PreparedStatement ps1 = connection.prepareStatement(
 					sb.toString());

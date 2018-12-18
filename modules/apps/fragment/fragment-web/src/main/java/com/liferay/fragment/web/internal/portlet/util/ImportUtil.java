@@ -39,10 +39,12 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Repository;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
@@ -118,6 +120,10 @@ public class ImportUtil {
 
 			FragmentCollection fragmentCollection = _addFragmentCollection(
 				actionRequest, entry.getKey(), name, description, overwrite);
+
+			_importResources(
+				actionRequest, fragmentCollection.getFragmentCollectionId(),
+				zipFile);
 
 			_importFragmentEntries(
 				actionRequest, zipFile,
@@ -484,6 +490,66 @@ public class ImportUtil {
 						fragmentEntry.getFragmentEntryId(), previewFileEntryId);
 				}
 			}
+		}
+	}
+
+	private void _importResources(
+			ActionRequest actionRequest, long fragmentCollectionId,
+			ZipFile zipFile)
+		throws Exception {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			actionRequest);
+
+		Repository repository =
+			PortletFileRepositoryUtil.fetchPortletRepository(
+				themeDisplay.getScopeGroupId(), FragmentPortletKeys.FRAGMENT);
+
+		if (repository == null) {
+			repository = PortletFileRepositoryUtil.addPortletRepository(
+				themeDisplay.getScopeGroupId(), FragmentPortletKeys.FRAGMENT,
+				serviceContext);
+		}
+
+		Folder folder = null;
+
+		try {
+			folder = PortletFileRepositoryUtil.getPortletFolder(
+				repository.getRepositoryId(), repository.getDlFolderId(),
+				String.valueOf(fragmentCollectionId));
+		}
+		catch (Exception e) {
+			folder = PortletFileRepositoryUtil.addPortletFolder(
+				themeDisplay.getUserId(), repository.getRepositoryId(),
+				repository.getDlFolderId(),
+				String.valueOf(fragmentCollectionId), serviceContext);
+		}
+
+		Enumeration<? extends ZipEntry> enumeration = zipFile.entries();
+
+		while (enumeration.hasMoreElements()) {
+			ZipEntry zipEntry = enumeration.nextElement();
+
+			String[] paths = StringUtil.split(
+				zipEntry.getName(), StringPool.FORWARD_SLASH);
+
+			if (!ArrayUtil.contains(paths, "resources")) {
+				continue;
+			}
+
+			String fileName = _getFileName(zipEntry.getName());
+
+			InputStream inputStream = _getInputStream(
+				zipFile, zipEntry.getName());
+
+			PortletFileRepositoryUtil.addPortletFileEntry(
+				themeDisplay.getScopeGroupId(), themeDisplay.getUserId(),
+				FragmentCollection.class.getName(), fragmentCollectionId,
+				FragmentPortletKeys.FRAGMENT, folder.getFolderId(), inputStream,
+				fileName, MimeTypesUtil.getContentType(fileName), false);
 		}
 	}
 

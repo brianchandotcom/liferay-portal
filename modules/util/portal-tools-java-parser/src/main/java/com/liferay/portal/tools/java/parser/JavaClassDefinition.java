@@ -28,8 +28,10 @@ public class JavaClassDefinition extends BaseJavaTerm {
 		_classJavaType = classJavaType;
 	}
 
-	public void setExtendedClassJavaType(JavaType extendedClassJavaType) {
-		_extendedClassJavaType = extendedClassJavaType;
+	public void setExtendedClassJavaTypes(
+		List<JavaType> extendedClassJavaTypes) {
+
+		_extendedClassJavaTypes = extendedClassJavaTypes;
 	}
 
 	public void setImplementedClassJavaTypes(
@@ -44,6 +46,10 @@ public class JavaClassDefinition extends BaseJavaTerm {
 
 	public void setModifiers(List<JavaSimpleValue> modifiers) {
 		_modifiers = modifiers;
+	}
+
+	public void setType(String type) {
+		_type = type;
 	}
 
 	@Override
@@ -82,10 +88,12 @@ public class JavaClassDefinition extends BaseJavaTerm {
 			prefix = StringPool.BLANK;
 		}
 
-		appendSingleLine(sb, _classJavaType, prefix + "class ", "", -1);
+		appendSingleLine(
+			sb, _classJavaType, StringBundler.concat(prefix, _type, " "), "",
+			-1);
 
-		if (_extendedClassJavaType != null) {
-			appendSingleLine(sb, _extendedClassJavaType, " extends ", "", -1);
+		if (_extendedClassJavaTypes != null) {
+			appendSingleLine(sb, _extendedClassJavaTypes, " extends ", "", -1);
 		}
 
 		if (_implementedClassJavaTypes != null) {
@@ -110,14 +118,15 @@ public class JavaClassDefinition extends BaseJavaTerm {
 		}
 
 		sb.append(prefix);
-		sb.append("class ");
+		sb.append(_type);
+		sb.append(" ");
 
-		if (_extendedClassJavaType != null) {
+		if (_extendedClassJavaTypes != null) {
 			indent = append(sb, _classJavaType, indent, maxLineLength, false);
 
 			if (_implementedClassJavaTypes != null) {
 				appendNewLine(
-					sb, _extendedClassJavaType, indent, "extends ", " ",
+					sb, _extendedClassJavaTypes, indent, "extends ", " ",
 					maxLineLength);
 				append(
 					sb, _implementedClassJavaTypes, indent, "implements ",
@@ -125,7 +134,7 @@ public class JavaClassDefinition extends BaseJavaTerm {
 			}
 			else {
 				appendNewLine(
-					sb, _extendedClassJavaType, indent, "extends ", suffix,
+					sb, _extendedClassJavaTypes, indent, "extends ", suffix,
 					maxLineLength);
 			}
 
@@ -148,9 +157,10 @@ public class JavaClassDefinition extends BaseJavaTerm {
 	}
 
 	private JavaType _classJavaType;
-	private JavaType _extendedClassJavaType;
+	private List<JavaType> _extendedClassJavaTypes;
 	private List<JavaType> _implementedClassJavaTypes;
 	private List<JavaAnnotation> _javaAnnotations;
 	private List<JavaSimpleValue> _modifiers;
+	private String _type;
 
 }

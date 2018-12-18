@@ -147,22 +147,28 @@ public class JavaParserUtil {
 	}
 
 	public static JavaClassDefinition parseJavaClassDefinition(
-		DetailAST classDefinitionDetailAST) {
+		DetailAST definitionDetailAST) {
 
 		JavaClassDefinition javaClassDefinition = new JavaClassDefinition();
 
-		DetailAST modifiersDetailAST = classDefinitionDetailAST.findFirstToken(
+		if (definitionDetailAST.getType() == TokenTypes.CLASS_DEF) {
+			javaClassDefinition.setType("class");
+		}
+		else if (definitionDetailAST.getType() == TokenTypes.INTERFACE_DEF) {
+			javaClassDefinition.setType("interface");
+		}
+
+		DetailAST modifiersDetailAST = definitionDetailAST.findFirstToken(
 			TokenTypes.MODIFIERS);
 
 		javaClassDefinition.setJavaAnnotations(
 			_parseJavaAnnotations(modifiersDetailAST));
 		javaClassDefinition.setModifiers(_parseModifiers(modifiersDetailAST));
 
-		JavaType classJavaType = new JavaType(
-			_getName(classDefinitionDetailAST), 0);
+		JavaType classJavaType = new JavaType(_getName(definitionDetailAST), 0);
 
-		DetailAST typeParametersDetailAST =
-			classDefinitionDetailAST.findFirstToken(TokenTypes.TYPE_PARAMETERS);
+		DetailAST typeParametersDetailAST = definitionDetailAST.findFirstToken(
+			TokenTypes.TYPE_PARAMETERS);
 
 		if (typeParametersDetailAST != null) {
 			classJavaType.setGenericJavaTypes(
@@ -172,70 +178,25 @@ public class JavaParserUtil {
 
 		javaClassDefinition.setClassJavaType(classJavaType);
 
-		DetailAST extendsClauseDetailAST =
-			classDefinitionDetailAST.findFirstToken(TokenTypes.EXTENDS_CLAUSE);
+		DetailAST extendsClauseDetailAST = definitionDetailAST.findFirstToken(
+			TokenTypes.EXTENDS_CLAUSE);
 
 		if (extendsClauseDetailAST != null) {
-			javaClassDefinition.setExtendedClassJavaType(
-				_parseJavaType(extendsClauseDetailAST));
+			javaClassDefinition.setExtendedClassJavaTypes(
+				_parseExtendedOrImplementedClassJavaTypes(
+					extendsClauseDetailAST));
 		}
 
 		DetailAST implementsClauseDetailAST =
-			classDefinitionDetailAST.findFirstToken(
-				TokenTypes.IMPLEMENTS_CLAUSE);
+			definitionDetailAST.findFirstToken(TokenTypes.IMPLEMENTS_CLAUSE);
 
-		if (implementsClauseDetailAST == null) {
-			return javaClassDefinition;
+		if (implementsClauseDetailAST != null) {
+			javaClassDefinition.setImplementedClassJavaTypes(
+				_parseExtendedOrImplementedClassJavaTypes(
+					implementsClauseDetailAST));
 		}
 
-		List<JavaType> implementedClassJavaTypes = new ArrayList<>();
-
-		DetailAST childDetailAST = implementsClauseDetailAST.getFirstChild();
-
-		while (true) {
-			if (childDetailAST == null) {
-				javaClassDefinition.setImplementedClassJavaTypes(
-					implementedClassJavaTypes);
-
-				return javaClassDefinition;
-			}
-
-			if (childDetailAST.getType() == TokenTypes.IDENT) {
-				JavaType javaType = new JavaType(childDetailAST.getText(), 0);
-
-				DetailAST nextSiblingDetailAST =
-					childDetailAST.getNextSibling();
-
-				if ((nextSiblingDetailAST != null) &&
-					(nextSiblingDetailAST.getType() ==
-						TokenTypes.TYPE_ARGUMENTS)) {
-
-					javaType.setGenericJavaTypes(
-						_parseGenericJavaTypes(
-							nextSiblingDetailAST, TokenTypes.TYPE_ARGUMENT));
-				}
-
-				implementedClassJavaTypes.add(javaType);
-			}
-			else if (childDetailAST.getType() == TokenTypes.DOT) {
-				FullIdent fullIdent = FullIdent.createFullIdent(childDetailAST);
-
-				JavaType javaType = new JavaType(fullIdent.getText(), 0);
-
-				DetailAST typeArgumentsDetailAST =
-					childDetailAST.findFirstToken(TokenTypes.TYPE_ARGUMENTS);
-
-				if (typeArgumentsDetailAST != null) {
-					javaType.setGenericJavaTypes(
-						_parseGenericJavaTypes(
-							typeArgumentsDetailAST, TokenTypes.TYPE_ARGUMENT));
-				}
-
-				implementedClassJavaTypes.add(javaType);
-			}
-
-			childDetailAST = childDetailAST.getNextSibling();
-		}
+		return javaClassDefinition;
 	}
 
 	public static JavaConstructorCall parseJavaConstructorCall(
@@ -730,6 +691,56 @@ public class JavaParserUtil {
 			if (childDetailAST.getType() != TokenTypes.COMMA) {
 				exceptionJavaExpressions.add(
 					parseJavaExpression(childDetailAST));
+			}
+
+			childDetailAST = childDetailAST.getNextSibling();
+		}
+	}
+
+	private static List<JavaType> _parseExtendedOrImplementedClassJavaTypes(
+		DetailAST clauseDetailAST) {
+
+		List<JavaType> classJavaTypes = new ArrayList<>();
+
+		DetailAST childDetailAST = clauseDetailAST.getFirstChild();
+
+		while (true) {
+			if (childDetailAST == null) {
+				return classJavaTypes;
+			}
+
+			if (childDetailAST.getType() == TokenTypes.IDENT) {
+				JavaType javaType = new JavaType(childDetailAST.getText(), 0);
+
+				DetailAST nextSiblingDetailAST =
+					childDetailAST.getNextSibling();
+
+				if ((nextSiblingDetailAST != null) &&
+					(nextSiblingDetailAST.getType() ==
+						TokenTypes.TYPE_ARGUMENTS)) {
+
+					javaType.setGenericJavaTypes(
+						_parseGenericJavaTypes(
+							nextSiblingDetailAST, TokenTypes.TYPE_ARGUMENT));
+				}
+
+				classJavaTypes.add(javaType);
+			}
+			else if (childDetailAST.getType() == TokenTypes.DOT) {
+				FullIdent fullIdent = FullIdent.createFullIdent(childDetailAST);
+
+				JavaType javaType = new JavaType(fullIdent.getText(), 0);
+
+				DetailAST typeArgumentsDetailAST =
+					childDetailAST.findFirstToken(TokenTypes.TYPE_ARGUMENTS);
+
+				if (typeArgumentsDetailAST != null) {
+					javaType.setGenericJavaTypes(
+						_parseGenericJavaTypes(
+							typeArgumentsDetailAST, TokenTypes.TYPE_ARGUMENT));
+				}
+
+				classJavaTypes.add(javaType);
 			}
 
 			childDetailAST = childDetailAST.getNextSibling();

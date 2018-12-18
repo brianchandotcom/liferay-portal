@@ -57,7 +57,7 @@ public class BlogPostingForm {
 		).constructor(
 			BlogPostingForm::new
 		).addOptionalDate(
-			"dateDisplayed", BlogPostingForm::setDisplayDate
+			"datePublished", BlogPostingForm::setDatePublished
 		).addOptionalDate(
 			"dateCreated", BlogPostingForm::setCreateDate
 		).addOptionalDate(
@@ -143,9 +143,10 @@ public class BlogPostingForm {
 	 *
 	 * @return the display date, if present; today's date otherwise
 	 */
-	public Date getDisplayDate() {
+	@Override
+	public Date getDatePublished() {
 		return Optional.ofNullable(
-			_displayDate
+			_datePublished
 		).orElseGet(
 			Date::new
 		);
@@ -274,8 +275,8 @@ public class BlogPostingForm {
 		_description = description;
 	}
 
-	public void setDisplayDate(Date displayDate) {
-		_displayDate = displayDate;
+	public void setDatePublished(Date datePublished) {
+		_datePublished = datePublished;
 	}
 
 	public void setFriendlyURLPath(String friendlyURLPath) {
@@ -308,7 +309,7 @@ public class BlogPostingForm {
 	private Date _createDate;
 	private Long _creatorId;
 	private String _description;
-	private Date _displayDate;
+	private Date _datePublished;
 	private String _friendlyURLPath;
 	private String _headline;
 	private String _imageCaption;

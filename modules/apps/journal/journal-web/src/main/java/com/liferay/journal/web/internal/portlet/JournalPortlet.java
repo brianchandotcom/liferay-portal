@@ -1498,9 +1498,13 @@ public class JournalPortlet extends MVCPortlet {
 
 	private void _updateAssetDisplayPage(
 			long userId, long groupId, JournalArticle article,
-			long assetDisplayPageId, int displayPageType,
+			long layoutPageTemplateEntryId, int displayPageType,
 			ServiceContext serviceContext)
 		throws PortalException {
+
+		if (layoutPageTemplateEntryId == 0) {
+			return;
+		}
 
 		long classNameId = _portal.getClassNameId(JournalArticle.class);
 		long classPK = article.getResourcePrimKey();
@@ -1517,26 +1521,24 @@ public class JournalPortlet extends MVCPortlet {
 		}
 		else if (assetDisplayPageEntry == null) {
 			_assetDisplayPageEntryLocalService.addAssetDisplayPageEntry(
-				userId, groupId, classNameId, classPK, assetDisplayPageId,
-				displayPageType, serviceContext);
+				userId, groupId, classNameId, classPK,
+				layoutPageTemplateEntryId, displayPageType, serviceContext);
 		}
 		else {
 			_assetDisplayPageEntryLocalService.updateAssetDisplayPageEntry(
 				assetDisplayPageEntry.getAssetDisplayPageEntryId(),
-				assetDisplayPageId, displayPageType);
+				layoutPageTemplateEntryId, displayPageType);
 		}
 
-		if (assetDisplayPageId > 0) {
-			LayoutPageTemplateEntry layoutPageTemplateEntry =
-				_layoutPageTemplateEntryLocalService.getLayoutPageTemplateEntry(
-					assetDisplayPageId);
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			_layoutPageTemplateEntryLocalService.getLayoutPageTemplateEntry(
+				layoutPageTemplateEntryId);
 
-			if (layoutPageTemplateEntry != null) {
-				layoutPageTemplateEntry.setModifiedDate(new Date());
+		if (layoutPageTemplateEntry != null) {
+			layoutPageTemplateEntry.setModifiedDate(new Date());
 
-				_layoutPageTemplateEntryLocalService.
-					updateLayoutPageTemplateEntry(layoutPageTemplateEntry);
-			}
+			_layoutPageTemplateEntryLocalService.updateLayoutPageTemplateEntry(
+				layoutPageTemplateEntry);
 		}
 	}
 

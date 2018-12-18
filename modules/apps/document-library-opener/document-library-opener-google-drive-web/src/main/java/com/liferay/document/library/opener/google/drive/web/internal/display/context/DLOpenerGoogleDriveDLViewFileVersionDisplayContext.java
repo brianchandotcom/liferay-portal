@@ -151,14 +151,20 @@ public class DLOpenerGoogleDriveDLViewFileVersionDisplayContext
 	}
 
 	private String _getLabelKey() {
-		if (DLOpenerGoogleDriveMimeTypes.APPLICATION_VND_PPTX.equals(
-				fileVersion.getMimeType())) {
+		String googleDocsMimeType =
+			DLOpenerGoogleDriveMimeTypes.getGoogleDocsMimeType(
+				fileVersion.getMimeType());
+
+		if (DLOpenerGoogleDriveMimeTypes.
+				APPLICATION_VND_GOOGLE_APPS_PRESENTATION.equals(
+					googleDocsMimeType)) {
 
 			return "edit-in-google-slides";
 		}
 
-		if (DLOpenerGoogleDriveMimeTypes.APPLICATION_VND_XSLX.equals(
-				fileVersion.getMimeType())) {
+		if (DLOpenerGoogleDriveMimeTypes.
+				APPLICATION_VND_GOOGLE_APPS_SPREADSHEET.equals(
+					googleDocsMimeType)) {
 
 			return "edit-in-google-sheets";
 		}

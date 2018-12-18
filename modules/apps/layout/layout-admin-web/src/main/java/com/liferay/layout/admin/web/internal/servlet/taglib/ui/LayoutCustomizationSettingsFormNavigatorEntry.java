@@ -59,7 +59,9 @@ public class LayoutCustomizationSettingsFormNavigatorEntry
 		}
 
 		if (Objects.equals(
-				layout.getType(), LayoutConstants.LAYOUT_TYPE_CONTENT)) {
+				layout.getType(), LayoutConstants.LAYOUT_TYPE_CONTENT) ||
+			Objects.equals(
+				layout.getType(), LayoutConstants.LAYOUT_TYPE_ASSET_DISPLAY)) {
 
 			return false;
 		}

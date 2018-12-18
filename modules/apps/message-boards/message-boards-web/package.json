@@ -1,7 +1,7 @@
 {
 	"dependencies": {
-		"metal": "^2.6.0",
-		"metal-events": "^2.6.0"
+		"metal": "^2.16.7",
+		"metal-events": "^2.16.7"
 	},
 	"devDependencies": {
 		"babel-cli": "^6.26.0",

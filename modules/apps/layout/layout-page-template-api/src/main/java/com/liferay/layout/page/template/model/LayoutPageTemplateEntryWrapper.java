@@ -84,6 +84,7 @@ public class LayoutPageTemplateEntryWrapper implements LayoutPageTemplateEntry,
 		attributes.put("statusByUserId", getStatusByUserId());
 		attributes.put("statusByUserName", getStatusByUserName());
 		attributes.put("statusDate", getStatusDate());
+		attributes.put("plid", getPlid());
 
 		return attributes;
 	}
@@ -216,6 +217,12 @@ public class LayoutPageTemplateEntryWrapper implements LayoutPageTemplateEntry,
 
 		if (statusDate != null) {
 			setStatusDate(statusDate);
+		}
+
+		Long plid = (Long)attributes.get("plid");
+
+		if (plid != null) {
+			setPlid(plid);
 		}
 	}
 
@@ -374,6 +381,16 @@ public class LayoutPageTemplateEntryWrapper implements LayoutPageTemplateEntry,
 	@Override
 	public String getName() {
 		return _layoutPageTemplateEntry.getName();
+	}
+
+	/**
+	* Returns the plid of this layout page template entry.
+	*
+	* @return the plid of this layout page template entry
+	*/
+	@Override
+	public long getPlid() {
+		return _layoutPageTemplateEntry.getPlid();
 	}
 
 	/**
@@ -766,6 +783,16 @@ public class LayoutPageTemplateEntryWrapper implements LayoutPageTemplateEntry,
 	@Override
 	public void setNew(boolean n) {
 		_layoutPageTemplateEntry.setNew(n);
+	}
+
+	/**
+	* Sets the plid of this layout page template entry.
+	*
+	* @param plid the plid of this layout page template entry
+	*/
+	@Override
+	public void setPlid(long plid) {
+		_layoutPageTemplateEntry.setPlid(plid);
 	}
 
 	/**

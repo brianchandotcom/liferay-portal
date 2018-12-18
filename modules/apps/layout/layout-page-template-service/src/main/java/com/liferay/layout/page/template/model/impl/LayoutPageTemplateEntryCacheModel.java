@@ -66,7 +66,7 @@ public class LayoutPageTemplateEntryCacheModel implements CacheModel<LayoutPageT
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(43);
+		StringBundler sb = new StringBundler(45);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -110,6 +110,8 @@ public class LayoutPageTemplateEntryCacheModel implements CacheModel<LayoutPageT
 		sb.append(statusByUserName);
 		sb.append(", statusDate=");
 		sb.append(statusDate);
+		sb.append(", plid=");
+		sb.append(plid);
 		sb.append("}");
 
 		return sb.toString();
@@ -193,6 +195,8 @@ public class LayoutPageTemplateEntryCacheModel implements CacheModel<LayoutPageT
 			layoutPageTemplateEntryImpl.setStatusDate(new Date(statusDate));
 		}
 
+		layoutPageTemplateEntryImpl.setPlid(plid);
+
 		layoutPageTemplateEntryImpl.resetOriginalValues();
 
 		return layoutPageTemplateEntryImpl;
@@ -234,6 +238,8 @@ public class LayoutPageTemplateEntryCacheModel implements CacheModel<LayoutPageT
 		statusByUserId = objectInput.readLong();
 		statusByUserName = objectInput.readUTF();
 		statusDate = objectInput.readLong();
+
+		plid = objectInput.readLong();
 	}
 
 	@Override
@@ -298,6 +304,8 @@ public class LayoutPageTemplateEntryCacheModel implements CacheModel<LayoutPageT
 		}
 
 		objectOutput.writeLong(statusDate);
+
+		objectOutput.writeLong(plid);
 	}
 
 	public String uuid;
@@ -321,4 +329,5 @@ public class LayoutPageTemplateEntryCacheModel implements CacheModel<LayoutPageT
 	public long statusByUserId;
 	public String statusByUserName;
 	public long statusDate;
+	public long plid;
 }

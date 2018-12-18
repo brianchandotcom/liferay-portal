@@ -33,7 +33,8 @@ create table LayoutPageTemplateEntry (
 	status INTEGER,
 	statusByUserId LONG,
 	statusByUserName VARCHAR(75) null,
-	statusDate DATE null
+	statusDate DATE null,
+	plid LONG
 );
 
 create table LayoutPageTemplateStructure (

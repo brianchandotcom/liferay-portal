@@ -161,7 +161,8 @@ public interface DLAppHelperLocalService extends BaseLocalService {
 
 	@Async
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public void reindex(List<Long> dlFileEntryIds) throws PortalException;
+	public void reindexFolderFileEntries(long groupId, long folderId)
+		throws PortalException;
 
 	public void restoreDependentsFromTrash(DLFolder dlFolder)
 		throws PortalException;

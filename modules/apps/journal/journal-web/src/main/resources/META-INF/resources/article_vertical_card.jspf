@@ -33,5 +33,13 @@
 </liferay-frontend:vertical-card-header>
 
 <liferay-frontend:vertical-card-footer>
-	<aui:workflow-status markupView="lexicon" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= curArticle.getStatus() %>" />
+	<c:if test="<%= !curArticle.isApproved() && curArticle.hasApprovedVersion() %>">
+		<span class="label label-success text-uppercase">
+			<liferay-ui:message key="approved" />
+		</span>
+	</c:if>
+
+	<span class="label label-<%= journalDisplayContext.getStatusLabelClass(curArticle.getStatus()) %> text-uppercase">
+		<liferay-ui:message key="<%= WorkflowConstants.getStatusLabel(curArticle.getStatus()) %>" />
+	</span>
 </liferay-frontend:vertical-card-footer>

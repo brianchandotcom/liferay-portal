@@ -1084,6 +1084,38 @@ public class JournalDisplayContext {
 		return _status;
 	}
 
+	public String getStatusLabelClass(int status) {
+		if (status == WorkflowConstants.STATUS_APPROVED) {
+			return "success";
+		}
+		else if (status == WorkflowConstants.STATUS_DENIED) {
+			return "danger";
+		}
+		else if (status == WorkflowConstants.STATUS_DRAFT) {
+			return "secondary";
+		}
+		else if (status == WorkflowConstants.STATUS_EXPIRED) {
+			return "danger";
+		}
+		else if (status == WorkflowConstants.STATUS_IN_TRASH) {
+			return "primary";
+		}
+		else if (status == WorkflowConstants.STATUS_INACTIVE) {
+			return "secondary";
+		}
+		else if (status == WorkflowConstants.STATUS_INCOMPLETE) {
+			return "warning";
+		}
+		else if (status == WorkflowConstants.STATUS_PENDING) {
+			return "primary";
+		}
+		else if (status == WorkflowConstants.STATUS_SCHEDULED) {
+			return "primary";
+		}
+
+		return "secondary";
+	}
+
 	public String getTabs1() {
 		if (_tabs1 != null) {
 			return _tabs1;

@@ -164,6 +164,8 @@ public class LayoutPageTemplateEntryPersistenceTest {
 
 		newLayoutPageTemplateEntry.setStatusDate(RandomTestUtil.nextDate());
 
+		newLayoutPageTemplateEntry.setPlid(RandomTestUtil.nextLong());
+
 		_layoutPageTemplateEntries.add(_persistence.update(
 				newLayoutPageTemplateEntry));
 
@@ -216,6 +218,8 @@ public class LayoutPageTemplateEntryPersistenceTest {
 		Assert.assertEquals(Time.getShortTimestamp(
 				existingLayoutPageTemplateEntry.getStatusDate()),
 			Time.getShortTimestamp(newLayoutPageTemplateEntry.getStatusDate()));
+		Assert.assertEquals(existingLayoutPageTemplateEntry.getPlid(),
+			newLayoutPageTemplateEntry.getPlid());
 	}
 
 	@Test
@@ -453,7 +457,8 @@ public class LayoutPageTemplateEntryPersistenceTest {
 			"classNameId", true, "classTypeId", true, "name", true, "type",
 			true, "previewFileEntryId", true, "defaultTemplate", true,
 			"layoutPrototypeId", true, "lastPublishDate", true, "status", true,
-			"statusByUserId", true, "statusByUserName", true, "statusDate", true);
+			"statusByUserId", true, "statusByUserName", true, "statusDate",
+			true, "plid", true);
 	}
 
 	@Test
@@ -733,6 +738,8 @@ public class LayoutPageTemplateEntryPersistenceTest {
 		layoutPageTemplateEntry.setStatusByUserName(RandomTestUtil.randomString());
 
 		layoutPageTemplateEntry.setStatusDate(RandomTestUtil.nextDate());
+
+		layoutPageTemplateEntry.setPlid(RandomTestUtil.nextLong());
 
 		_layoutPageTemplateEntries.add(_persistence.update(
 				layoutPageTemplateEntry));

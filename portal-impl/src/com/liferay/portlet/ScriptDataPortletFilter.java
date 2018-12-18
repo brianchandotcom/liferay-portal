@@ -74,7 +74,9 @@ public class ScriptDataPortletFilter implements RenderFilter, ResourceFilter {
 			return;
 		}
 
-		_flushScriptData(scriptData, _getMimeResponseImpl(renderResponse));
+		_flushScriptData(
+			scriptData, _getMimeResponseImpl(renderResponse),
+			PortalUtil.getPortletId(renderRequest));
 	}
 
 	@Override
@@ -95,7 +97,9 @@ public class ScriptDataPortletFilter implements RenderFilter, ResourceFilter {
 			return;
 		}
 
-		_flushScriptData(scriptData, _getMimeResponseImpl(resourceResponse));
+		_flushScriptData(
+			scriptData, _getMimeResponseImpl(resourceResponse),
+			PortalUtil.getPortletId(resourceRequest));
 	}
 
 	@Override
@@ -103,7 +107,8 @@ public class ScriptDataPortletFilter implements RenderFilter, ResourceFilter {
 	}
 
 	private void _flushScriptData(
-			ScriptData scriptData, MimeResponseImpl mimeResponseImpl)
+			ScriptData scriptData, MimeResponseImpl mimeResponseImpl,
+			String portletId)
 		throws IOException {
 
 		if (mimeResponseImpl.isCalledGetPortletOutputStream()) {
@@ -113,12 +118,12 @@ public class ScriptDataPortletFilter implements RenderFilter, ResourceFilter {
 			OutputStreamWriter outputStreamWriter = new OutputStreamWriter(
 				outputStream);
 
-			scriptData.writeTo(outputStreamWriter);
+			scriptData.writeTo(outputStreamWriter, portletId);
 
 			outputStreamWriter.flush();
 		}
 		else {
-			scriptData.writeTo(mimeResponseImpl.getWriter());
+			scriptData.writeTo(mimeResponseImpl.getWriter(), portletId);
 		}
 	}
 

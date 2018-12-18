@@ -26,6 +26,8 @@ import java.io.Serializable;
 import java.io.Writer;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -90,9 +92,39 @@ public class ScriptData implements Mergeable<ScriptData>, Serializable {
 			portletData._rawSB.writeTo(writer);
 		}
 
-		_writeEs6ModulesTo(writer);
+		Collection<PortletData> portletDataCollection =
+			_portletDataMap.values();
 
-		_writeAuiModulesTo(writer);
+		_writeEs6ModulesTo(writer, portletDataCollection);
+
+		_writeAuiModulesTo(writer, portletDataCollection);
+
+		writer.write("\n// ]]>\n</script>");
+	}
+
+	public void writeTo(Writer writer, String portletId) throws IOException {
+		PortletData portletData = _portletDataMap.remove(portletId);
+
+		if (portletData == null) {
+			return;
+		}
+
+		writer.write("<script type=\"text/javascript\">\n// <![CDATA[\n");
+
+		portletData._rawSB.writeTo(writer);
+
+		Collection<PortletData> portletDataCollection = Collections.singleton(
+			portletData);
+
+		if (!portletData._es6ModulesSet.isEmpty()) {
+			_writeEs6ModulesTo(writer, portletDataCollection);
+		}
+
+		if (!portletData._auiModulesSet.isEmpty()) {
+			_writeAuiModulesTo(writer, portletDataCollection);
+		}
+
+		writer.write("\n// ]]>\n</script>");
 	}
 
 	public static enum ModulesType {
@@ -219,11 +251,15 @@ public class ScriptData implements Mergeable<ScriptData>, Serializable {
 		return new String[] {name, StringPool.BLANK};
 	}
 
-	private void _writeAuiModulesTo(Writer writer) throws IOException {
-		StringBundler auiModulesSB = new StringBundler(_portletDataMap.size());
+	private void _writeAuiModulesTo(
+			Writer writer, Collection<PortletData> portletDataCollection)
+		throws IOException {
+
+		StringBundler auiModulesSB = new StringBundler(
+			portletDataCollection.size());
 		Set<String> auiModulesSet = new HashSet<>();
 
-		for (PortletData portletData : _portletDataMap.values()) {
+		for (PortletData portletData : portletDataCollection) {
 			if (!portletData._auiModulesSet.isEmpty()) {
 				auiModulesSB.append(portletData._auiCallbackSB);
 				auiModulesSet.addAll(portletData._auiModulesSet);
@@ -246,18 +282,19 @@ public class ScriptData implements Mergeable<ScriptData>, Serializable {
 
 			writer.write("});");
 		}
-
-		writer.write("\n// ]]>\n</script>");
 	}
 
-	private void _writeEs6ModulesTo(Writer writer) throws IOException {
+	private void _writeEs6ModulesTo(
+			Writer writer, Collection<PortletData> portletDataCollection)
+		throws IOException {
+
 		StringBundler es6CallbacksSB = new StringBundler(
-			_portletDataMap.size());
+			portletDataCollection.size());
 		List<String> es6Modules = new ArrayList<>();
 		List<String> es6Variables = new ArrayList<>();
 		Set<String> variableNames = new HashSet<>();
 
-		for (PortletData portletData : _portletDataMap.values()) {
+		for (PortletData portletData : portletDataCollection) {
 			if (!portletData._es6ModulesSet.isEmpty()) {
 				es6CallbacksSB.append("(function(){\n");
 

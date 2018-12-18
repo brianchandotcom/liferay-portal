@@ -257,6 +257,25 @@ AUI.add(
 						A.one('#field-type-menu-content').html(instance._getFieldTypeMenuLayout(fieldType));
 					},
 
+					_checkOptionsValue: function(previousSettingsFormFieldContext, settingsFormFieldContext) {
+						var result = false;
+
+						if (Object.keys(settingsFormFieldContext.options).length === 0) {
+							result = true;
+						}
+						else {
+							var previousValue = previousSettingsFormFieldContext.value;
+
+							var previousValueFilter = settingsFormFieldContext.options.filter(option => option.value === previousValue);
+
+							if (!(Object.keys(previousValueFilter).length === 0)) {
+								result = true;
+							}
+						}
+
+						return result;
+					},
+
 					_configureEditMode: function() {
 						var instance = this;
 
@@ -548,7 +567,7 @@ AUI.add(
 												settingsFormFieldContext.localizedValue = previousSettingsFormFieldContext.localizedValue;
 											}
 											if (instance._isSameType(previousSettingsFormFieldContext, settingsFormFieldContext)) {
-												if (!instance._isValueEmpty(previousSettingsFormFieldContext.value)) {
+												if ((!instance._isValueEmpty(previousSettingsFormFieldContext.value)) && (instance._checkOptionsValue(previousSettingsFormFieldContext, settingsFormFieldContext))) {
 													settingsFormFieldContext.value = previousSettingsFormFieldContext.value;
 													settingsFormFieldContext.dataType = previousSettingsFormFieldContext.dataType;
 												}

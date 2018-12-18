@@ -341,6 +341,12 @@ public class FragmentEntryPersistenceTest {
 			getOrderByComparator());
 	}
 
+	@Test
+	public void testFilterFindByGroupId() throws Exception {
+		_persistence.filterFindByGroupId(0, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, getOrderByComparator());
+	}
+
 	protected OrderByComparator<FragmentEntry> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("FragmentEntry", "uuid",
 			true, "fragmentEntryId", true, "groupId", true, "companyId", true,

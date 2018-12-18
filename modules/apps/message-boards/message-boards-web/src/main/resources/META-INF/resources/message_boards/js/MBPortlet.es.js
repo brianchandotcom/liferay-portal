@@ -68,8 +68,7 @@ class MBPortlet extends PortletBase {
 
 		Liferay.componentReady(searchContainerId).then(
 			(searchContainer) => {
-				this.eventHandler_.add(searchContainer.get('contentBox').delegate(
-					'click', this.removeAttachment_.bind(this), '.delete-attachment'));
+				this.eventHandler_.add(searchContainer.get('contentBox').delegate('click', this.removeAttachment_.bind(this), '.delete-attachment'));
 
 				this.searchContainer_ = searchContainer;
 			}

@@ -153,8 +153,8 @@ public class OAuth2Manager {
 				companyId, DLOpenerGoogleDriveConstants.SERVICE_NAME));
 	}
 
-	private GoogleAuthorizationCodeFlow _getGoogleAuthorizationCodeFlow(
-			long companyId)
+	private synchronized GoogleAuthorizationCodeFlow
+			_getGoogleAuthorizationCodeFlow(long companyId)
 		throws PortalException {
 
 		if (_googleAuthorizationCodeFlows.containsKey(companyId)) {

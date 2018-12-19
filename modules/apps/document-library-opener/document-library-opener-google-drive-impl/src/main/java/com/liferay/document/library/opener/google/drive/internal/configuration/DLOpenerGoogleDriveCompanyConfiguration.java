@@ -26,11 +26,11 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 	scope = ExtendedObjectClassDefinition.Scope.COMPANY
 )
 @Meta.OCD(
-	id = "com.liferay.document.library.opener.google.drive.internal.configuration.DLOpenerGoogleDriveConfiguration",
+	id = "com.liferay.document.library.opener.google.drive.internal.configuration.DLOpenerGoogleDriveCompanyConfiguration",
 	localization = "content/Language",
 	name = "google-drive-opener-configuration-name"
 )
-public interface DLOpenerGoogleDriveConfiguration {
+public interface DLOpenerGoogleDriveCompanyConfiguration {
 
 	/**
 	 * Returns the client ID of the Google application to use when operating on

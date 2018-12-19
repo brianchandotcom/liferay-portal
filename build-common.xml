@@ -1580,6 +1580,7 @@ artifact.url=${remote.repository.url}/com/liferay/portal/com.liferay.${processed
 				<pathelement path="test-classes/@{test.type}" />
 				<pathelement path="${junit.classpath}" />
 				<pathelement path="${test.additional.classpath}" />
+				<pathelement location="${project.dir}/${junit.whip.jar}" />
 				<path refid="lib.pre.classpath" />
 				<fileset
 					dir="${project.dir}/lib/development"

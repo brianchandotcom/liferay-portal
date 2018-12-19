@@ -853,7 +853,7 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 				metadataManager.getSigningCredential(),
 				securityParametersContext);
 
-			OpenSamlUtil.signObject(authnRequest, credential);
+			OpenSamlUtil.signObject(authnRequest, credential, idpSSODescriptor);
 		}
 
 		SAMLEndpointContext samlPeerEndpointContext =
@@ -1380,7 +1380,7 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 			(SPSSODescriptor)samlPeerMetadataContext.getRoleDescriptor();
 
 		if (spSSODescriptor.getWantAssertionsSigned()) {
-			OpenSamlUtil.signObject(assertion, credential);
+			OpenSamlUtil.signObject(assertion, credential, spSSODescriptor);
 		}
 
 		Response samlResponse = getSuccessResponse(

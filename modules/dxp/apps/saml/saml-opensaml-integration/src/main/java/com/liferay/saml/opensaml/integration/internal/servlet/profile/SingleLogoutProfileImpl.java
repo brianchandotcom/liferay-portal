@@ -961,7 +961,11 @@ public class SingleLogoutProfileImpl
 
 		samlProtocolContext.setProtocol(SAMLConstants.SAML20P_NS);
 
-		OpenSamlUtil.signObject(logoutRequest, credential);
+		SAMLMetadataContext samlMetadataContext =
+			samlPeerEntityContext.getSubcontext(SAMLMetadataContext.class);
+
+		OpenSamlUtil.signObject(
+			logoutRequest, credential, samlMetadataContext.getRoleDescriptor());
 
 		SamlBinding samlBinding = getSamlBinding(
 			singleLogoutService.getBinding());
@@ -1301,7 +1305,12 @@ public class SingleLogoutProfileImpl
 
 		samlProtocolContext.setProtocol(SAMLConstants.SAML20P_NS);
 
-		OpenSamlUtil.signObject(logoutRequest, credential);
+		SAMLMetadataContext samlPeerMetadataContext =
+			samlPeerEntityContext.getSubcontext(SAMLMetadataContext.class);
+
+		OpenSamlUtil.signObject(
+			logoutRequest, credential,
+			samlPeerMetadataContext.getRoleDescriptor());
 
 		SamlBinding samlBinding = getSamlBinding(
 			SAMLConstants.SAML2_SOAP11_BINDING_URI);

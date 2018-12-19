@@ -90,7 +90,7 @@ public class MetadataGeneratorUtil {
 		roleDescriptors.add(roleDescriptor);
 
 		if (signMetadata) {
-			OpenSamlUtil.signObject(entityDescriptor, credential);
+			OpenSamlUtil.signObject(entityDescriptor, credential, null);
 		}
 
 		return entityDescriptor;
@@ -185,7 +185,7 @@ public class MetadataGeneratorUtil {
 		roleDescriptors.add(roleDescriptor);
 
 		if (signMetadata) {
-			OpenSamlUtil.signObject(entityDescriptor, credential);
+			OpenSamlUtil.signObject(entityDescriptor, credential, null);
 		}
 
 		return entityDescriptor;

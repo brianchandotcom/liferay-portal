@@ -22,11 +22,9 @@ long organizationId = ParamUtil.getLong(request, "organizationId");
 Organization organization = OrganizationServiceUtil.fetchOrganization(organizationId);
 %>
 
-<aui:fieldset>
-	<liferay-expando:custom-attribute-list
-		className="<%= Organization.class.getName() %>"
-		classPK="<%= (organization != null) ? organization.getOrganizationId() : 0 %>"
-		editable="<%= true %>"
-		label="<%= true %>"
-	/>
-</aui:fieldset>
+<liferay-expando:custom-attribute-list
+	className="<%= Organization.class.getName() %>"
+	classPK="<%= (organization != null) ? organization.getOrganizationId() : 0 %>"
+	editable="<%= true %>"
+	label="<%= true %>"
+/>

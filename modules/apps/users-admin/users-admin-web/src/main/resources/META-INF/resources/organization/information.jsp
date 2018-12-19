@@ -24,7 +24,7 @@ Organization organization = organizationScreenNavigationDisplayContext.getOrgani
 
 <aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= (organization == null) ? Constants.ADD : Constants.UPDATE %>" />
 
-<div class="sheet-section">
+<div class="form-group">
 	<h3 class="sheet-subtitle"><liferay-ui:message key="organization-information" /></h3>
 
 	<liferay-util:include page="/organization/details.jsp" servletContext="<%= application %>" />

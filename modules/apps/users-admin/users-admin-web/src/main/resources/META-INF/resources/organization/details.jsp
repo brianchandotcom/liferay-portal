@@ -38,7 +38,7 @@ if (organization != null) {
 <aui:model-context bean="<%= organization %>" model="<%= Organization.class %>" />
 
 <div class="row">
-	<aui:fieldset cssClass="col-md-7">
+	<div class="col-md-7">
 		<liferay-ui:error exception="<%= DuplicateOrganizationException.class %>" message="the-organization-name-is-already-taken" />
 
 		<liferay-ui:error exception="<%= OrganizationNameException.class %>">
@@ -91,9 +91,9 @@ if (organization != null) {
 
 			<aui:select label="region" name="regionId" />
 		</div>
-	</aui:fieldset>
+	</div>
 
-	<aui:fieldset cssClass="col-md-5">
+	<div class="col-md-5">
 		<div align="middle">
 			<c:if test="<%= organization != null %>">
 
@@ -115,7 +115,7 @@ if (organization != null) {
 				/>
 			</c:if>
 		</div>
-	</aui:fieldset>
+	</div>
 </div>
 
 <aui:script use="liferay-address,liferay-dynamic-select">

@@ -22,15 +22,19 @@ Liferay.Loader.require.apply(
 				}
 
 				if (context.defaultEventHandler) {
-					Liferay.componentReady(context.defaultEventHandler).then(defaultEventHandler => {
-						context.defaultEventHandler = defaultEventHandler;
+					Liferay.componentReady(
+						context.defaultEventHandler
+					).then(
+						function(defaultEventHandler) {
+							context.defaultEventHandler = defaultEventHandler;
 
-						Liferay.component(
-							'$ID',
-							new Component.default(...componentArgs),
-							componentConfig
-						);
-					});
+							Liferay.component(
+								'$ID',
+								new Component.default(...componentArgs),
+								componentConfig
+							);
+						}
+					);
 				}
 				else {
 					Liferay.component(

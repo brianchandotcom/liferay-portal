@@ -46,15 +46,9 @@ public class FilterMapping {
 		String filterName, Filter filter, FilterConfig filterConfig,
 		List<String> urlPatterns, List<String> dispatchers) {
 
-		this(filterName, filter, filterConfig, urlPatterns, new HashSet<>());
-
-		if (!dispatchers.isEmpty()) {
-			_dispatchers.clear();
-		}
-
-		for (String dispatcher : dispatchers) {
-			_dispatchers.add(Dispatcher.valueOf(dispatcher));
-		}
+		this(
+			filterName, filter, filterConfig, urlPatterns,
+			_toDispatchers(dispatchers));
 	}
 
 	public FilterMapping(
@@ -204,6 +198,16 @@ public class FilterMapping {
 		}
 
 		return false;
+	}
+
+	private static Set<Dispatcher> _toDispatchers(List<String> dispatchers) {
+		Set<Dispatcher> dispatcherSet = new HashSet<>();
+
+		for (String dispatcher : dispatchers) {
+			dispatcherSet.add(Dispatcher.valueOf(dispatcher));
+		}
+
+		return dispatcherSet;
 	}
 
 	private FilterMapping(

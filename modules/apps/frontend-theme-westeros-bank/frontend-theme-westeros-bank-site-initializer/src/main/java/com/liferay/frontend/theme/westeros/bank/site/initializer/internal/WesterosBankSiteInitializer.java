@@ -301,23 +301,9 @@ public class WesterosBankSiteInitializer implements SiteInitializer {
 	}
 
 	private void _addFileEntries(
-			long fragmentCollectionId, ServiceContext serviceContext)
+			long fragmentCollectionId, long folderId,
+			ServiceContext serviceContext)
 		throws Exception {
-
-		Repository repository =
-			PortletFileRepositoryUtil.fetchPortletRepository(
-				serviceContext.getScopeGroupId(), FragmentPortletKeys.FRAGMENT);
-
-		if (repository == null) {
-			repository = PortletFileRepositoryUtil.addPortletRepository(
-				serviceContext.getScopeGroupId(), FragmentPortletKeys.FRAGMENT,
-				serviceContext);
-		}
-
-		Folder folder = PortletFileRepositoryUtil.addPortletFolder(
-			serviceContext.getUserId(), repository.getRepositoryId(),
-			repository.getDlFolderId(), String.valueOf(fragmentCollectionId),
-			serviceContext);
 
 		Enumeration<URL> urls = _bundle.findEntries(
 			_PATH + "/images", StringPool.STAR, false);
@@ -336,8 +322,8 @@ public class WesterosBankSiteInitializer implements SiteInitializer {
 			PortletFileRepositoryUtil.addPortletFileEntry(
 				serviceContext.getScopeGroupId(), serviceContext.getUserId(),
 				FragmentCollection.class.getName(), fragmentCollectionId,
-				FragmentPortletKeys.FRAGMENT, folder.getFolderId(), bytes,
-				fileName, MimeTypesUtil.getContentType(fileName), false);
+				FragmentPortletKeys.FRAGMENT, folderId, bytes, fileName,
+				MimeTypesUtil.getContentType(fileName), false);
 		}
 	}
 
@@ -353,7 +339,8 @@ public class WesterosBankSiteInitializer implements SiteInitializer {
 				_THEME_NAME, null, serviceContext);
 
 		_addFileEntries(
-			fragmentCollection.getFragmentCollectionId(), serviceContext);
+			fragmentCollection.getFragmentCollectionId(),
+			fragmentCollection.getResourcesFolderId(), serviceContext);
 
 		Enumeration<URL> urls = _bundle.findEntries(
 			_PATH + "/fragments", "*.html", false);

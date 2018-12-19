@@ -38,7 +38,6 @@ import com.liferay.portal.kernel.model.Theme;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
-import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutSetLocalService;
@@ -118,7 +117,8 @@ public class FjordSiteInitializer implements SiteInitializer {
 				serviceContext);
 
 			_addFileEntries(
-				fragmentCollection.getFragmentCollectionId(), serviceContext);
+				fragmentCollection.getFragmentCollectionId(),
+				fragmentCollection.getResourcesFolderId(), serviceContext);
 
 			LayoutPageTemplateCollection layoutPageTemplateCollection =
 				_addLayoutPageTemplateCollection(serviceContext);
@@ -175,23 +175,9 @@ public class FjordSiteInitializer implements SiteInitializer {
 	}
 
 	private void _addFileEntries(
-			long fragmentCollectionId, ServiceContext serviceContext)
+			long fragmentCollectionId, long folderId,
+			ServiceContext serviceContext)
 		throws Exception {
-
-		Repository repository =
-			PortletFileRepositoryUtil.fetchPortletRepository(
-				serviceContext.getScopeGroupId(), FragmentPortletKeys.FRAGMENT);
-
-		if (repository == null) {
-			repository = PortletFileRepositoryUtil.addPortletRepository(
-				serviceContext.getScopeGroupId(), FragmentPortletKeys.FRAGMENT,
-				serviceContext);
-		}
-
-		Folder folder = PortletFileRepositoryUtil.addPortletFolder(
-			serviceContext.getUserId(), repository.getRepositoryId(),
-			repository.getDlFolderId(), String.valueOf(fragmentCollectionId),
-			serviceContext);
 
 		Enumeration<URL> urls = _bundle.findEntries(
 			_PATH + "/images", StringPool.STAR, false);
@@ -210,8 +196,8 @@ public class FjordSiteInitializer implements SiteInitializer {
 			PortletFileRepositoryUtil.addPortletFileEntry(
 				serviceContext.getScopeGroupId(), serviceContext.getUserId(),
 				FragmentCollection.class.getName(), fragmentCollectionId,
-				FragmentPortletKeys.FRAGMENT, folder.getFolderId(), bytes,
-				fileName, MimeTypesUtil.getContentType(fileName), false);
+				FragmentPortletKeys.FRAGMENT, folderId, bytes, fileName,
+				MimeTypesUtil.getContentType(fileName), false);
 		}
 	}
 

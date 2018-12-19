@@ -15,19 +15,16 @@
 package com.liferay.fragment.entry.processor.resources;
 
 import com.liferay.document.library.kernel.util.DLUtil;
-import com.liferay.fragment.constants.FragmentPortletKeys;
+import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.processor.FragmentEntryProcessor;
+import com.liferay.fragment.service.FragmentCollectionService;
 import com.liferay.fragment.service.FragmentEntryService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.Repository;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
-import com.liferay.portal.kernel.repository.model.Folder;
 
 import java.util.Locale;
 import java.util.Objects;
@@ -57,31 +54,9 @@ public class ResourcesFragmentEntryProcessor implements FragmentEntryProcessor {
 			return html;
 		}
 
-		Repository repository =
-			PortletFileRepositoryUtil.fetchPortletRepository(
-				fragmentEntry.getGroupId(), FragmentPortletKeys.FRAGMENT);
-
-		if (repository == null) {
-			return html;
-		}
-
-		Folder folder = null;
-
-		try {
-			folder = PortletFileRepositoryUtil.getPortletFolder(
-				repository.getRepositoryId(), repository.getDlFolderId(),
-				String.valueOf(fragmentEntry.getFragmentCollectionId()));
-		}
-		catch (PortalException pe) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(
-					"Unable to get fragment collection repository folder for " +
-						fragmentEntry.getFragmentCollectionId(),
-					pe);
-			}
-
-			return html;
-		}
+		FragmentCollection fragmentCollection =
+			_fragmentCollectionService.fetchFragmentCollection(
+				fragmentEntry.getFragmentCollectionId());
 
 		while (html.contains(_RESOURCES_PATH)) {
 			int index = html.indexOf(_RESOURCES_PATH);
@@ -103,7 +78,8 @@ public class ResourcesFragmentEntryProcessor implements FragmentEntryProcessor {
 
 			FileEntry fileEntry =
 				PortletFileRepositoryUtil.fetchPortletFileEntry(
-					fragmentEntry.getGroupId(), folder.getFolderId(), fileName);
+					fragmentEntry.getGroupId(),
+					fragmentCollection.getResourcesFolderId(), fileName);
 
 			String fileEntryURL = StringPool.BLANK;
 
@@ -125,8 +101,8 @@ public class ResourcesFragmentEntryProcessor implements FragmentEntryProcessor {
 
 	private static final String _RESOURCES_PATH = "../../resources/";
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		ResourcesFragmentEntryProcessor.class);
+	@Reference
+	private FragmentCollectionService _fragmentCollectionService;
 
 	@Reference
 	private FragmentEntryService _fragmentEntryService;

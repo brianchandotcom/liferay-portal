@@ -56,6 +56,4 @@ public interface SegmentsEntry extends SegmentsEntryModel, PersistedModel {
 		};
 
 	public com.liferay.segments.criteria.Criteria getCriteriaObj();
-
-	public String getFilterString();
 }

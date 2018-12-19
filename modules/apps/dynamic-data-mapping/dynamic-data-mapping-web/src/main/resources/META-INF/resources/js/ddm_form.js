@@ -1336,7 +1336,9 @@ AUI.add(
 
 						var titleNode = A.one('#' + instance.getInputName() + 'Title');
 
-						titleNode.val(parsedValue.title || '');
+						if (parsedValue.title != null) {
+							titleNode.val(parsedValue.title);
+						}
 
 						var clearButtonNode = A.one('#' + instance.getInputName() + 'ClearButton');
 

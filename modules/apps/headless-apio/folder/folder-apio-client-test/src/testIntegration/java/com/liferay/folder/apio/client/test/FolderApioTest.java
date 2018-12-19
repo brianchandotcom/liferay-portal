@@ -103,6 +103,100 @@ public class FolderApioTest {
 	}
 
 	@Test
+	public void testCreateSubfolder() {
+		String href = ApioClientBuilder.given(
+		).basicAuth(
+			"test@liferay.com", "test"
+		).header(
+			"Accept", "application/hal+json"
+		).when(
+		).get(
+			_rootEndpointURL.toExternalForm()
+		).follow(
+			"_links.content-space.href"
+		).follow(
+			"_embedded.ContentSpace.find {it.name == '" +
+				FolderTestActivator.CONTENT_SPACE_NAME +
+					"'}._links.documentsRepository.href"
+		).then(
+		).extract(
+		).path(
+			"_links.folders.href"
+		);
+
+		ApioClientBuilder.given(
+		).basicAuth(
+			"test@liferay.com", "test"
+		).header(
+			"Accept", "application/hal+json"
+		).header(
+			"Content-Type", "application/json"
+		).body(
+			"{\"description\":\"My folder description\",\"name\":\"My folder " +
+				"testCreateSubfolder\"}"
+		).when(
+		).post(
+			href
+		).then(
+		).statusCode(
+			200
+		);
+
+		String subfoldersPath = ApioClientBuilder.given(
+		).basicAuth(
+			"test@liferay.com", "test"
+		).header(
+			"Accept", "application/hal+json"
+		).when(
+		).get(
+			_rootEndpointURL.toExternalForm()
+		).follow(
+			"_links.content-space.href"
+		).follow(
+			"_embedded.ContentSpace.find {it.name == '" +
+				FolderTestActivator.CONTENT_SPACE_NAME +
+					"'}._links.documentsRepository.href"
+		).follow(
+			"_links.folders.href"
+		).then(
+		).statusCode(
+			200
+		).extract(
+		).path(
+			"_embedded.Folder.find {it.name == 'My folder " +
+				"testCreateSubfolder'}._links.subFolders.href"
+		);
+
+		ApioClientBuilder.given(
+		).basicAuth(
+			"test@liferay.com", "test"
+		).header(
+			"Accept", "application/hal+json"
+		).header(
+			"Content-Type", "application/json"
+		).body(
+			"{\"description\":\"My subfolder description\",\"name\":\"My " +
+				"subfolder\"}"
+		).when(
+		).post(
+			subfoldersPath
+		).then(
+		).statusCode(
+			200
+		).body(
+			"dateCreated", IsNull.notNullValue()
+		).body(
+			"dateModified", IsNull.notNullValue()
+		).body(
+			"description", Matchers.equalTo("My subfolder description")
+		).body(
+			"name", Matchers.equalTo("My subfolder")
+		).body(
+			"_links.self.href", IsNull.notNullValue()
+		);
+	}
+
+	@Test
 	public void testDeleteFolder() {
 		String foldersHref = ApioClientBuilder.given(
 		).basicAuth(

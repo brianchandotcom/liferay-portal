@@ -1,0 +1,66 @@
+<html>
+<head>
+<title>AssetLists</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">AssetLists</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>ASSET_LIST_ENTRY_TITLE</td>
+	<td>//li[contains(@class,'list-group-item')]//a[contains(.,'${key_title}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ASSET_LIST_ENTRY_TYPE</td>
+	<td>//li[contains(@class,'list-group-item')]//h6[contains(.,'${key_type}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ASSET_LIST_SELECT_BUTTON</td>
+	<td>//div[contains(@class,'btn-group')]//a[contains(@title,'Select')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ASSET_TYPE_DROPDOWN_ITEM</td>
+	<td>//ul[contains(@class,'dropdown-menu')]//li[contains(@class,'asset-selector')]//a[contains(.,'${key_assetType}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--VIEW_CONTENT-->
+<tr>
+	<td>ASSET_TITLE_ROW</td>
+	<td>//tr[contains(@data-qa-id,'row')]//td[contains(@class,'lfr-title-column')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ASSET_TYPE_ROW</td>
+	<td>//tr[contains(@data-qa-id,'row')]//td[contains(@class,'lfr-type-column')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--VIEW_USAGES-->
+<tr>
+	<td>ASSET_LIST_USAGES</td>
+	<td>//li[contains(@class,'nav-item')][contains(.,'${usageType} (${usageAmount})')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

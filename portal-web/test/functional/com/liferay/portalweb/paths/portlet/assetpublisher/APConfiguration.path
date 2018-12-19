@@ -8,7 +8,23 @@
 <tr><td rowspan="1" colspan="3">APConfiguration</td></tr>
 </thead>
 <tbody>
+<!--ASSET_LIST-->
+<tr>
+	<td>ASSET_LIST_CHOOSE_BUTTON</td>
+	<td>//li[contains(@class,'list-group-item')][contains(.,'${assetListName}')]//button[contains(.,'Choose')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--ASSET_SELECTION-->
+<tr>
+	<td>ASSET_SELECTION_ASSET_LIST</td>
+	<td>//input[contains(@id,'selectionStyleAssetList')]</td>
+	<td></td>
+</tr>
 <tr>
 	<td>ASSET_SELECTION_DYNAMIC</td>
 	<td>//input[contains(@id,'selectionStyleDynamic')]</td>

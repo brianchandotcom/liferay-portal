@@ -20,13 +20,21 @@ import com.liferay.saml.opensaml.integration.internal.util.OpenSamlUtil;
 import com.liferay.saml.runtime.exception.CredentialException;
 import com.liferay.saml.runtime.exception.EntityIdException;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.opensaml.core.config.ConfigurationService;
+import org.opensaml.core.xml.XMLObject;
+import org.opensaml.core.xml.util.XMLObjectSupport;
 import org.opensaml.saml.common.xml.SAMLConstants;
+import org.opensaml.saml.ext.saml2alg.DigestMethod;
+import org.opensaml.saml.ext.saml2alg.SigningMethod;
 import org.opensaml.saml.saml2.metadata.AssertionConsumerService;
 import org.opensaml.saml.saml2.metadata.EntityDescriptor;
+import org.opensaml.saml.saml2.metadata.Extensions;
 import org.opensaml.saml.saml2.metadata.IDPSSODescriptor;
 import org.opensaml.saml.saml2.metadata.KeyDescriptor;
 import org.opensaml.saml.saml2.metadata.RoleDescriptor;
@@ -35,6 +43,10 @@ import org.opensaml.saml.saml2.metadata.SingleLogoutService;
 import org.opensaml.saml.saml2.metadata.SingleSignOnService;
 import org.opensaml.security.credential.Credential;
 import org.opensaml.security.credential.UsageType;
+import org.opensaml.xmlsec.SignatureSigningConfiguration;
+import org.opensaml.xmlsec.algorithm.AlgorithmDescriptor;
+import org.opensaml.xmlsec.algorithm.AlgorithmRegistry;
+import org.opensaml.xmlsec.algorithm.AlgorithmSupport;
 
 /**
  * @author Mika Koivisto
@@ -65,6 +77,15 @@ public class MetadataGeneratorUtil {
 
 		RoleDescriptor roleDescriptor = buildIdpSsoDescriptor(
 			request, entityId, wantAuthnRequestSigned, requireSSL, credential);
+
+		Extensions extensions = (Extensions)XMLObjectSupport.buildXMLObject(
+			Extensions.DEFAULT_ELEMENT_NAME);
+
+		List<XMLObject> unknownXMLObjects = extensions.getUnknownXMLObjects();
+
+		unknownXMLObjects.addAll(_getExtensionXmlObjects(credential));
+
+		roleDescriptor.setExtensions(extensions);
 
 		roleDescriptors.add(roleDescriptor);
 
@@ -152,6 +173,15 @@ public class MetadataGeneratorUtil {
 			request, entityId, signAuthnRequests, requireSSL,
 			wantAssertionsSigned, credential);
 
+		Extensions extensions = (Extensions)XMLObjectSupport.buildXMLObject(
+			Extensions.DEFAULT_ELEMENT_NAME);
+
+		List<XMLObject> unknownXMLObjects = extensions.getUnknownXMLObjects();
+
+		unknownXMLObjects.addAll(_getExtensionXmlObjects(credential));
+
+		roleDescriptor.setExtensions(extensions);
+
 		roleDescriptors.add(roleDescriptor);
 
 		if (signMetadata) {
@@ -220,6 +250,72 @@ public class MetadataGeneratorUtil {
 		singleLogoutServices.add(soapSingleLogoutService);
 
 		return spSSODescriptor;
+	}
+
+	private static List<XMLObject> _getExtensionXmlObjects(
+		Credential credential) {
+
+		SignatureSigningConfiguration signatureSigningConfiguration =
+			ConfigurationService.get(SignatureSigningConfiguration.class);
+
+		AlgorithmRegistry algorithmRegistry =
+			AlgorithmSupport.getGlobalAlgorithmRegistry();
+
+		Collection<String> blacklistedAlgorithms =
+			signatureSigningConfiguration.getBlacklistedAlgorithms();
+
+		ArrayList<XMLObject> xmlObjects = new ArrayList<>();
+
+		for (String digestMethodString :
+				signatureSigningConfiguration.
+					getSignatureReferenceDigestMethods()) {
+
+			if (!algorithmRegistry.isRuntimeSupported(digestMethodString) ||
+				blacklistedAlgorithms.contains(digestMethodString)) {
+
+				continue;
+			}
+
+			AlgorithmDescriptor algorithmDescriptor = algorithmRegistry.get(
+				digestMethodString);
+
+			DigestMethod digestMethod =
+				(DigestMethod)XMLObjectSupport.buildXMLObject(
+					DigestMethod.DEFAULT_ELEMENT_NAME);
+
+			digestMethod.setAlgorithm(algorithmDescriptor.getURI());
+
+			xmlObjects.add(digestMethod);
+		}
+
+		for (String signatureAlgorithms :
+				signatureSigningConfiguration.getSignatureAlgorithms()) {
+
+			if (!algorithmRegistry.isRuntimeSupported(signatureAlgorithms) ||
+				blacklistedAlgorithms.contains(signatureAlgorithms)) {
+
+				continue;
+			}
+
+			AlgorithmDescriptor algorithmDescriptor = algorithmRegistry.get(
+				signatureAlgorithms);
+
+			if (!AlgorithmSupport.credentialSupportsAlgorithmForSigning(
+					credential, algorithmDescriptor)) {
+
+				continue;
+			}
+
+			SigningMethod signingMethod =
+				(SigningMethod)XMLObjectSupport.buildXMLObject(
+					SigningMethod.DEFAULT_ELEMENT_NAME);
+
+			signingMethod.setAlgorithm(algorithmDescriptor.getURI());
+
+			xmlObjects.add(signingMethod);
+		}
+
+		return xmlObjects;
 	}
 
 }

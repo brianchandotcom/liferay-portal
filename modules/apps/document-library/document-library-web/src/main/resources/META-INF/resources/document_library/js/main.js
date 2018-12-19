@@ -104,7 +104,7 @@ AUI.add(
 						return instance._folderId;
 					},
 
-					onActionItemClicked: function(event) {
+					handleActionItemClicked: function(event) {
 						var instance = this;
 
 						var action = event.data.item.data.action;

@@ -1762,11 +1762,11 @@ public class DLAppHelperLocalServiceImpl
 			TrashEntry trashEntry)
 		throws PortalException {
 
-		int fileEntryCount = 0;
-
 		List<DLFileEntry> dlFileEntries =
 			dlFileEntryLocalService.getFileEntries(
 				childDLFolder.getGroupId(), childDLFolder.getFolderId());
+
+		int fileEntryCount = 0;
 
 		for (DLFileEntry dlFileEntry : dlFileEntries) {
 			if (moveToTrash) {

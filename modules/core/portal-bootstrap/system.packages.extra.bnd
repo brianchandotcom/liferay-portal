@@ -46,11 +46,9 @@ Export-Package:\
 	!com.liferay.portal.security.jaas.ext.*,\
 	!com.liferay.portal.service,\
 	!com.liferay.portal.sharepoint.*,\
-	!com.liferay.portal.spring.aop,\
 	!com.liferay.portal.spring.bean,\
 	!com.liferay.portal.spring.context,\
 	!com.liferay.portal.spring.hibernate,\
-	!com.liferay.portal.spring.transaction,\
 	!com.liferay.portal.systemevent,\
 	!com.liferay.portal.tools.comparator,\
 	!com.liferay.portal.tools.javadocformatter,\

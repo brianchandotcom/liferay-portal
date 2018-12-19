@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.tools.java.parser.JavaAnnotation;
+import com.liferay.portal.tools.java.parser.JavaAnnotationFieldDefinition;
 import com.liferay.portal.tools.java.parser.JavaAnnotationMemberValuePair;
 import com.liferay.portal.tools.java.parser.JavaArray;
 import com.liferay.portal.tools.java.parser.JavaArrayDeclarator;
@@ -74,6 +75,32 @@ import java.util.List;
  * @author Hugo Huijser
  */
 public class JavaParserUtil {
+
+	public static JavaAnnotationFieldDefinition
+		parseJavaAnnotationFieldDefinition(
+			DetailAST annotationFieldDefinitionDetailAST) {
+
+		JavaAnnotationFieldDefinition javaAnnotationFieldDefinition =
+			new JavaAnnotationFieldDefinition();
+
+		javaAnnotationFieldDefinition.setJavaAnnotations(
+			_parseJavaAnnotations(
+				annotationFieldDefinitionDetailAST.findFirstToken(
+					TokenTypes.MODIFIERS)));
+		javaAnnotationFieldDefinition.setJavaSignature(
+			_parseJavaSignature(annotationFieldDefinitionDetailAST));
+
+		DetailAST literalDefaultDetailAST =
+			annotationFieldDefinitionDetailAST.findFirstToken(
+				TokenTypes.LITERAL_DEFAULT);
+
+		if (literalDefaultDetailAST != null) {
+			javaAnnotationFieldDefinition.setDefaultJavaExpression(
+				parseJavaExpression(literalDefaultDetailAST.getFirstChild()));
+		}
+
+		return javaAnnotationFieldDefinition;
+	}
 
 	public static JavaBreakStatement parseJavaBreakStatement(
 		DetailAST literalBreakDetailAST) {
@@ -1358,6 +1385,10 @@ public class JavaParserUtil {
 		DetailAST detailAST) {
 
 		List<JavaParameter> javaParameters = new ArrayList<>();
+
+		if (detailAST == null) {
+			return javaParameters;
+		}
 
 		List<DetailAST> parameterDefinitionDetailASTList =
 			DetailASTUtil.getAllChildTokens(

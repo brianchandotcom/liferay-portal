@@ -20,11 +20,9 @@
 User selUser = (User)request.getAttribute(UsersAdminWebKeys.SELECTED_USER);
 %>
 
-<aui:fieldset>
-	<liferay-expando:custom-attribute-list
-		className="com.liferay.portal.kernel.model.User"
-		classPK="<%= (selUser != null) ? selUser.getUserId() : 0 %>"
-		editable="<%= true %>"
-		label="<%= true %>"
-	/>
-</aui:fieldset>
+<liferay-expando:custom-attribute-list
+	className="com.liferay.portal.kernel.model.User"
+	classPK="<%= (selUser != null) ? selUser.getUserId() : 0 %>"
+	editable="<%= true %>"
+	label="<%= true %>"
+/>

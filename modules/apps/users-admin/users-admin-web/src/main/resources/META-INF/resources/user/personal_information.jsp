@@ -38,14 +38,14 @@ String organizationIdsString = ParamUtil.getString(request, "organizationsSearch
 <aui:model-context bean="<%= selUser %>" model="<%= User.class %>" />
 
 <div class="row">
-	<aui:fieldset cssClass="col-md-6">
+	<div class="col-md-6">
 		<liferay-ui:user-name-fields
 			contact="<%= selContact %>"
 			user="<%= selUser %>"
 		/>
-	</aui:fieldset>
+	</div>
 
-	<aui:fieldset cssClass="col-md-5">
+	<div class="col-md-5">
 		<aui:input disabled='<%= !UsersAdminUtil.hasUpdateFieldPermission(permissionChecker, user, selUser, "jobTitle") %>' name="jobTitle" />
 
 		<c:choose>
@@ -100,7 +100,7 @@ String organizationIdsString = ParamUtil.getString(request, "organizationsSearch
 				<aui:button onClick="<%= taglibOnClick %>" value="unlock" />
 			</aui:button-row>
 		</c:if>
-	</aui:fieldset>
+	</div>
 </div>
 
 <aui:script>

@@ -23,7 +23,7 @@ User selUser = (User)request.getAttribute(UsersAdminWebKeys.SELECTED_USER);
 <aui:model-context bean="<%= selUser %>" model="<%= User.class %>" />
 
 <div class="row">
-	<aui:fieldset cssClass="col-md-6">
+	<div class="col-md-6">
 		<liferay-ui:success key="verificationEmailSent" message="your-email-verification-code-has-been-sent-and-the-new-email-address-will-be-applied-to-your-account-once-it-has-been-verified" />
 
 		<liferay-ui:error exception="<%= CompanyMaxUsersException.class %>" message="unable-to-create-user-account-because-the-maximum-number-of-users-has-been-reached" />
@@ -138,9 +138,9 @@ User selUser = (User)request.getAttribute(UsersAdminWebKeys.SELECTED_USER);
 
 			<aui:input name="userId" type="resource" value="<%= String.valueOf(selUser.getUserId()) %>" />
 		</c:if>
-	</aui:fieldset>
+	</div>
 
-	<aui:fieldset cssClass="col-md-5">
+	<div class="col-md-5">
 		<div align="middle">
 			<c:if test="<%= selUser != null %>">
 				<c:choose>
@@ -149,6 +149,8 @@ User selUser = (User)request.getAttribute(UsersAdminWebKeys.SELECTED_USER);
 						<%
 						UserFileUploadsConfiguration userFileUploadsConfiguration = ConfigurationProviderUtil.getSystemConfiguration(UserFileUploadsConfiguration.class);
 						%>
+
+						<label class="control-label"></label>
 
 						<liferay-ui:logo-selector
 							aspectRatio="<%= 1 %>"
@@ -167,5 +169,5 @@ User selUser = (User)request.getAttribute(UsersAdminWebKeys.SELECTED_USER);
 				</c:choose>
 			</c:if>
 		</div>
-	</aui:fieldset>
+	</div>
 </div>

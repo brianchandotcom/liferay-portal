@@ -131,31 +131,28 @@ else {
 <div class="sheet-section">
 	<h3 class="sheet-subtitle"><liferay-ui:message key="password" /></h3>
 
-	<aui:fieldset>
+	<!-- Begin LPS-38289 and LPS-55993 and LPS-61876 -->
 
-		<!-- Begin LPS-38289 and LPS-55993 and LPS-61876 -->
+	<input class="hide" type="password" />
+	<input class="hide" type="password" />
 
-		<input class="hide" type="password" />
-		<input class="hide" type="password" />
+	<!-- End LPS-38289 and LPS-55993 and LPS-61876 -->
 
-		<!-- End LPS-38289 and LPS-55993 and LPS-61876 -->
+	<c:if test="<%= portletName.equals(myAccountPortletId) %>">
+		<aui:input autocomplete="off" label="current-password" name="password0" required="<%= true %>" size="30" type="password" />
+	</c:if>
 
-		<c:if test="<%= portletName.equals(myAccountPortletId) %>">
-			<aui:input autocomplete="off" label="current-password" name="password0" required="<%= true %>" size="30" type="password" />
-		</c:if>
+	<aui:input autocomplete="off" label="new-password" name="password1" required="<%= true %>" size="30" type="password" />
 
-		<aui:input autocomplete="off" label="new-password" name="password1" required="<%= true %>" size="30" type="password" />
+	<aui:input autocomplete="off" label="enter-again" name="password2" required="<%= true %>" size="30" type="password">
+		<aui:validator name="equalTo">
+			'#<portlet:namespace />password1'
+		</aui:validator>
+	</aui:input>
 
-		<aui:input autocomplete="off" label="enter-again" name="password2" required="<%= true %>" size="30" type="password">
-			<aui:validator name="equalTo">
-				'#<portlet:namespace />password1'
-			</aui:validator>
-		</aui:input>
-
-		<c:if test="<%= (selUser == null) || (user.getUserId() != selUser.getUserId()) %>">
-			<aui:input disabled="<%= passwordResetDisabled %>" label="require-password-reset" name="passwordReset" type="checkbox" value="<%= passwordReset %>" />
-		</c:if>
-	</aui:fieldset>
+	<c:if test="<%= (selUser == null) || (user.getUserId() != selUser.getUserId()) %>">
+		<aui:input disabled="<%= passwordResetDisabled %>" label="require-password-reset" name="passwordReset" type="checkbox" value="<%= passwordReset %>" />
+	</c:if>
 </div>
 
 <c:if test="<%= PropsValues.USERS_REMINDER_QUERIES_ENABLED && portletName.equals(myAccountPortletId) %>">
@@ -166,17 +163,15 @@ else {
 		boolean hasCustomQuestion = true;
 		%>
 
-		<aui:fieldset>
-			<%@ include file="/user/password_reminder_query_questions.jspf" %>
+		<%@ include file="/user/password_reminder_query_questions.jspf" %>
 
-			<c:if test="<%= PropsValues.USERS_REMINDER_QUERIES_CUSTOM_QUESTION_ENABLED %>">
-				<div class="<%= hasCustomQuestion ? "" : "hide" %>" id="<portlet:namespace />customQuestionDiv">
-					<aui:input autocomplete='<%= PropsValues.COMPANY_SECURITY_PASSWORD_REMINDER_QUERY_FORM_AUTOCOMPLETE ? "on" : "off" %>' fieldParam="reminderQueryCustomQuestion" label="custom-question" name="reminderQueryQuestion" />
-				</div>
-			</c:if>
+		<c:if test="<%= PropsValues.USERS_REMINDER_QUERIES_CUSTOM_QUESTION_ENABLED %>">
+			<div class="<%= hasCustomQuestion ? "" : "hide" %>" id="<portlet:namespace />customQuestionDiv">
+				<aui:input autocomplete='<%= PropsValues.COMPANY_SECURITY_PASSWORD_REMINDER_QUERY_FORM_AUTOCOMPLETE ? "on" : "off" %>' fieldParam="reminderQueryCustomQuestion" label="custom-question" name="reminderQueryQuestion" />
+			</div>
+		</c:if>
 
-			<aui:input autocomplete='<%= PropsValues.COMPANY_SECURITY_PASSWORD_REMINDER_QUERY_FORM_AUTOCOMPLETE ? "on" : "off" %>' label="answer" maxlength="<%= ModelHintsConstants.TEXT_MAX_LENGTH %>" name="reminderQueryAnswer" size="50" value="<%= selUser.getReminderQueryAnswer() %>" />
-		</aui:fieldset>
+		<aui:input autocomplete='<%= PropsValues.COMPANY_SECURITY_PASSWORD_REMINDER_QUERY_FORM_AUTOCOMPLETE ? "on" : "off" %>' label="answer" maxlength="<%= ModelHintsConstants.TEXT_MAX_LENGTH %>" name="reminderQueryAnswer" size="50" value="<%= selUser.getReminderQueryAnswer() %>" />
 	</div>
 
 	<aui:script sandbox="<%= true %>">

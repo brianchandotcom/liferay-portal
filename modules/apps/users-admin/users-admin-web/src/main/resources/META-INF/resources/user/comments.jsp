@@ -22,6 +22,4 @@ User selUser = (User)request.getAttribute(UsersAdminWebKeys.SELECTED_USER);
 
 <aui:model-context bean="<%= selUser %>" model="<%= User.class %>" />
 
-<aui:fieldset>
-	<aui:input label="comments" name="comments" />
-</aui:fieldset>
+<aui:input label="comments" name="comments" />

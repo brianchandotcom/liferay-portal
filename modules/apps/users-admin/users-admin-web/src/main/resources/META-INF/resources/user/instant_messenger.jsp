@@ -24,19 +24,17 @@ Contact selContact = (Contact)request.getAttribute("user.selContact");
 	<c:when test="<%= selContact != null %>">
 		<aui:model-context bean="<%= selContact %>" model="<%= Contact.class %>" />
 
-		<aui:fieldset>
-			<div class="instant-messenger">
-				<aui:input label="jabber" name="jabberSn" />
-			</div>
+		<div class="instant-messenger">
+			<aui:input label="jabber" name="jabberSn" />
+		</div>
 
-			<div class="instant-messenger">
-				<aui:input label="skype" name="skypeSn" />
+		<div class="instant-messenger">
+			<aui:input label="skype" name="skypeSn" />
 
-				<c:if test="<%= Validator.isNotNull(selContact.getSkypeSn()) %>">
-					<a href="callto://<%= HtmlUtil.escapeAttribute(selContact.getSkypeSn()) %>"><img alt="<liferay-ui:message escapeAttribute="<%= true %>" key="call-this-user" />" src="http://mystatus.skype.com/smallicon/<%= HtmlUtil.escapeAttribute(selContact.getSkypeSn()) %>" /></a>
-				</c:if>
-			</div>
-		</aui:fieldset>
+			<c:if test="<%= Validator.isNotNull(selContact.getSkypeSn()) %>">
+				<a href="callto://<%= HtmlUtil.escapeAttribute(selContact.getSkypeSn()) %>"><img alt="<liferay-ui:message escapeAttribute="<%= true %>" key="call-this-user" />" src="http://mystatus.skype.com/smallicon/<%= HtmlUtil.escapeAttribute(selContact.getSkypeSn()) %>" /></a>
+			</c:if>
+		</div>
 	</c:when>
 	<c:otherwise>
 		<clay:alert

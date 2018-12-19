@@ -54,10 +54,40 @@ public class StructuredContentApioTest {
 	public void setUp() throws MalformedURLException {
 		URL rootEndpointURL = new URL(_url, "/o/api");
 
-		_contentSpaceEndpointURL = new URL(
+		URL contentSpaceEndpointURL = new URL(
 			ContentSpaceApioTestUtil.getContentSpaceHref(
 				rootEndpointURL.toExternalForm(),
 				StructuredContentApioTestBundleActivator.SITE_NAME));
+
+		_contentStructuresEndpointURL = new URL(
+			ApioClientBuilder.given(
+			).basicAuth(
+				"test@liferay.com", "test"
+			).header(
+				"Accept", "application/hal+json"
+			).when(
+			).get(
+				contentSpaceEndpointURL.toExternalForm()
+			).then(
+			).extract(
+			).path(
+				"_links.contentStructures.href"
+			));
+
+		_structuredContentEndpointURL = new URL(
+			ApioClientBuilder.given(
+			).basicAuth(
+				"test@liferay.com", "test"
+			).header(
+				"Accept", "application/hal+json"
+			).when(
+			).get(
+				contentSpaceEndpointURL.toExternalForm()
+			).then(
+			).extract(
+			).path(
+				"_links.structuredContents.href"
+			));
 	}
 
 	@Test
@@ -69,29 +99,13 @@ public class StructuredContentApioTest {
 			"Accept", "application/hal+json"
 		).when(
 		).get(
-			_contentSpaceEndpointURL.toExternalForm()
-		).follow(
-			"_links.contentStructures.href"
+			_contentStructuresEndpointURL.toExternalForm()
 		).then(
 		).extract(
 		).path(
 			"_embedded.Structure.find {it.name == '" +
 				StructuredContentApioTestBundleActivator.SITE_NAME +
 					"'}._links.self.href"
-		);
-
-		String href = ApioClientBuilder.given(
-		).basicAuth(
-			"test@liferay.com", "test"
-		).header(
-			"Accept", "application/hal+json"
-		).when(
-		).get(
-			_contentSpaceEndpointURL.toExternalForm()
-		).then(
-		).extract(
-		).path(
-			"_links.structuredContents.href"
 		);
 
 		ApioClientBuilder.given(
@@ -107,7 +121,7 @@ public class StructuredContentApioTest {
 					"[{\"name\": \"MyDecimal\", \"value\": \"1.0\"}]}"
 		).when(
 		).post(
-			href
+			_structuredContentEndpointURL.toExternalForm()
 		).then(
 		).statusCode(
 			200
@@ -128,29 +142,13 @@ public class StructuredContentApioTest {
 			"Accept", "application/hal+json"
 		).when(
 		).get(
-			_contentSpaceEndpointURL.toExternalForm()
-		).follow(
-			"_links.contentStructures.href"
+			_contentStructuresEndpointURL.toExternalForm()
 		).then(
 		).extract(
 		).path(
 			"_embedded.Structure.find {it.name == '" +
 				StructuredContentApioTestBundleActivator.SITE_NAME +
 					"'}._links.self.href"
-		);
-
-		String href = ApioClientBuilder.given(
-		).basicAuth(
-			"test@liferay.com", "test"
-		).header(
-			"Accept", "application/hal+json"
-		).when(
-		).get(
-			_contentSpaceEndpointURL.toExternalForm()
-		).then(
-		).extract(
-		).path(
-			"_links.structuredContents.href"
 		);
 
 		String structuredContentHref = ApioClientBuilder.given(
@@ -166,7 +164,7 @@ public class StructuredContentApioTest {
 					"[{\"name\": \"MyDecimal\", \"value\": \"1.0\"}]}"
 		).when(
 		).post(
-			href
+			_structuredContentEndpointURL.toExternalForm()
 		).then(
 		).extract(
 		).path(
@@ -191,22 +189,6 @@ public class StructuredContentApioTest {
 
 	@Test
 	public void testGetStructuredContentWithAcceptedLanguageEqualsDefaultLocale() {
-		String href = ApioClientBuilder.given(
-		).basicAuth(
-			"test@liferay.com", "test"
-		).header(
-			"Accept", "application/hal+json"
-		).header(
-			"Accept-Language", "en-US"
-		).when(
-		).get(
-			_contentSpaceEndpointURL.toExternalForm()
-		).then(
-		).extract(
-		).path(
-			"_links.structuredContents.href"
-		);
-
 		ApioClientBuilder.given(
 		).basicAuth(
 			"test@liferay.com", "test"
@@ -217,7 +199,8 @@ public class StructuredContentApioTest {
 		).when(
 		).get(
 			StringBundler.concat(
-				href, "?filter=title eq '",
+				_structuredContentEndpointURL.toExternalForm(),
+				"?filter=title eq '",
 				StructuredContentApioTestBundleActivator.TITLE_2_LOCALE_US, "'")
 		).then(
 		).log(
@@ -261,22 +244,6 @@ public class StructuredContentApioTest {
 
 	@Test
 	public void testGetStructuredContentWithAcceptedLanguageEqualsLanguageAvailableInStructureContent() {
-		String href = ApioClientBuilder.given(
-		).basicAuth(
-			"test@liferay.com", "test"
-		).header(
-			"Accept", "application/hal+json"
-		).header(
-			"Accept-Language", "en-US"
-		).when(
-		).get(
-			_contentSpaceEndpointURL.toExternalForm()
-		).then(
-		).extract(
-		).path(
-			"_links.structuredContents.href"
-		);
-
 		ApioClientBuilder.given(
 		).basicAuth(
 			"test@liferay.com", "test"
@@ -287,7 +254,8 @@ public class StructuredContentApioTest {
 		).when(
 		).get(
 			StringBundler.concat(
-				href, "?filter=title eq '",
+				_structuredContentEndpointURL.toExternalForm(),
+				"?filter=title eq '",
 				StructuredContentApioTestBundleActivator.TITLE_2_LOCALE_ES, "'")
 		).then(
 		).log(
@@ -331,22 +299,6 @@ public class StructuredContentApioTest {
 
 	@Test
 	public void testGetStructuredContentWithAcceptedLanguageEqualsLanguageNotAvailableInStructureContent() {
-		String href = ApioClientBuilder.given(
-		).basicAuth(
-			"test@liferay.com", "test"
-		).header(
-			"Accept", "application/hal+json"
-		).header(
-			"Accept-Language", "en-US"
-		).when(
-		).get(
-			_contentSpaceEndpointURL.toExternalForm()
-		).then(
-		).extract(
-		).path(
-			"_links.structuredContents.href"
-		);
-
 		ApioClientBuilder.given(
 		).basicAuth(
 			"test@liferay.com", "test"
@@ -357,7 +309,8 @@ public class StructuredContentApioTest {
 		).when(
 		).get(
 			StringBundler.concat(
-				href, "?filter=title eq '",
+				_structuredContentEndpointURL.toExternalForm(),
+				"?filter=title eq '",
 				StructuredContentApioTestBundleActivator.TITLE_2_LOCALE_US, "'")
 		).then(
 		).log(
@@ -401,22 +354,6 @@ public class StructuredContentApioTest {
 
 	@Test
 	public void testGetStructuredContentWithoutAcceptedLanguageAndDefaultLanguageDifferentThanUserLanguage() {
-		String href = ApioClientBuilder.given(
-		).basicAuth(
-			"test@liferay.com", "test"
-		).header(
-			"Accept", "application/hal+json"
-		).header(
-			"Accept-Language", "en-US"
-		).when(
-		).get(
-			_contentSpaceEndpointURL.toExternalForm()
-		).then(
-		).extract(
-		).path(
-			"_links.structuredContents.href"
-		);
-
 		ApioClientBuilder.given(
 		).basicAuth(
 			"test@liferay.com", "test"
@@ -425,7 +362,8 @@ public class StructuredContentApioTest {
 		).when(
 		).get(
 			StringBundler.concat(
-				href, "?filter=title eq '",
+				_structuredContentEndpointURL.toExternalForm(),
+				"?filter=title eq '",
 				StructuredContentApioTestBundleActivator.TITLE_1_LOCALE_ES, "'")
 		).then(
 		).log(
@@ -469,20 +407,6 @@ public class StructuredContentApioTest {
 
 	@Test
 	public void testStructuredContentsMatchesSelfLink() {
-		String href = ApioClientBuilder.given(
-		).basicAuth(
-			"test@liferay.com", "test"
-		).header(
-			"Accept", "application/hal+json"
-		).when(
-		).get(
-			_contentSpaceEndpointURL.toExternalForm()
-		).then(
-		).extract(
-		).path(
-			"_links.structuredContents.href"
-		);
-
 		ApioClientBuilder.given(
 		).basicAuth(
 			"test@liferay.com", "test"
@@ -490,12 +414,13 @@ public class StructuredContentApioTest {
 			"Accept", "application/hal+json"
 		).when(
 		).get(
-			href
+			_structuredContentEndpointURL.toExternalForm()
 		).then(
 		).statusCode(
 			200
 		).body(
-			"_links.self.href", Matchers.startsWith(href)
+			"_links.self.href",
+			Matchers.startsWith(_structuredContentEndpointURL.toExternalForm())
 		);
 	}
 
@@ -508,29 +433,13 @@ public class StructuredContentApioTest {
 			"Accept", "application/hal+json"
 		).when(
 		).get(
-			_contentSpaceEndpointURL.toExternalForm()
-		).follow(
-			"_links.contentStructures.href"
+			_contentStructuresEndpointURL.toExternalForm()
 		).then(
 		).extract(
 		).path(
 			"_embedded.Structure.find {it.name == '" +
 				StructuredContentApioTestBundleActivator.SITE_NAME +
 					"'}._links.self.href"
-		);
-
-		String href = ApioClientBuilder.given(
-		).basicAuth(
-			"test@liferay.com", "test"
-		).header(
-			"Accept", "application/hal+json"
-		).when(
-		).get(
-			_contentSpaceEndpointURL.toExternalForm()
-		).then(
-		).extract(
-		).path(
-			"_links.structuredContents.href"
 		);
 
 		String structuredContentHref = ApioClientBuilder.given(
@@ -546,7 +455,7 @@ public class StructuredContentApioTest {
 					"[{\"name\": \"MyDecimal\", \"value\": \"1.0\"}]}"
 		).when(
 		).post(
-			href
+			_structuredContentEndpointURL.toExternalForm()
 		).then(
 		).extract(
 		).path(
@@ -577,7 +486,8 @@ public class StructuredContentApioTest {
 		);
 	}
 
-	private URL _contentSpaceEndpointURL;
+	private URL _contentStructuresEndpointURL;
+	private URL _structuredContentEndpointURL;
 
 	@ArquillianResource
 	private URL _url;

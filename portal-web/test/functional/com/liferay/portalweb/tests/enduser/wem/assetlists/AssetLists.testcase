@@ -1,0 +1,215 @@
+@component-name = "portal-wcm"
+definition {
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Asset Lists";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		JSONGroup.addGroup(groupName = "Test Site Name");
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
+		}
+	}
+
+	@priority = "5"
+	test AddAssetList {
+		AssetListsAdmin.openAssetListsAdmin(
+			siteURLKey = "test-site-name"
+		);
+
+		AssetListsAdmin.addManual(
+			title = "Manual Asset List Test"
+		);
+
+		AssetListsAdmin.openAssetListsAdmin(
+			siteURLKey = "test-site-name"
+		);
+
+		AssetListsAdmin.addDynamic(
+			title = "Dynamic Asset List Test"
+		);
+
+		AssetListsAdmin.openAssetListsAdmin(
+			siteURLKey = "test-site-name"
+		);
+
+		AssetListsAdmin.viewAssetListEntry(
+			title = "Manual Asset List Test",
+			type = "Manual"
+		);
+
+		AssetListsAdmin.viewAssetListEntry(
+			title = "Dynamic Asset List Test",
+			type = "Dynamic"
+		);
+	}
+
+	@priority = "3"
+	test AddDuplicateAssetList {
+		AssetListsAdmin.openAssetListsAdmin(
+			siteURLKey = "test-site-name"
+		);
+
+		AssetListsAdmin.addManual(
+			title = "Asset List Test"
+		);
+
+		AssetListsAdmin.openAssetListsAdmin(
+			siteURLKey = "test-site-name"
+		);
+
+		AssetListsAdmin.addManual(
+			errorMessage = "An asset list with that title already exists.",
+			expectFail = "true",
+			title = "Asset List Test"
+		);
+	}
+
+	@priority = "5"
+	test DeleteAssetList {
+		AssetListsAdmin.openAssetListsAdmin(
+			siteURLKey = "test-site-name"
+		);
+
+		AssetListsAdmin.addManual(
+			title = "Manual Asset List Test"
+		);
+
+		AssetListsAdmin.openAssetListsAdmin(
+			siteURLKey = "test-site-name"
+		);
+
+		AssetListsAdmin.addDynamic(
+			title = "Dynamic Asset List Test"
+		);
+
+		LexiconEntry.delete(
+			rowEntry = "Manual Asset List Test"
+		);
+
+		LexiconEntry.delete(
+			rowEntry = "Dynamic Asset List Test"
+		);
+
+		AssertElementPresent(
+			locator1 = "Message#EMPTY_INFO_TAGLIB"
+		);
+	}
+
+	@priority = "5"
+	test RenameAssetList {
+		AssetListsAdmin.openAssetListsAdmin(
+			siteURLKey = "test-site-name"
+		);
+
+		AssetListsAdmin.addManual(
+			title = "Manual Asset List Test"
+		);
+
+		AssetListsAdmin.openAssetListsAdmin(
+			siteURLKey = "test-site-name"
+		);
+
+		AssetListsAdmin.rename(
+			assetListName = "Manual Asset List Test",
+			title = "Manual Asset List Edit"
+		);
+
+		AssetListsAdmin.viewAssetListEntry(
+			title = "Manual Asset List Edit",
+			type = "Manual"
+		);
+
+	}
+
+	@priority = "4"
+	test ViewAssetListContent {
+		JSONWebcontent.addWebContent(
+			content = "WC WebContent Content",
+			groupName = "Test Site Name",
+			title = "WC WebContent Title"
+		);
+
+		AssetListsAdmin.openAssetListsAdmin(
+			siteURLKey = "test-site-name"
+		);
+
+		AssetListsAdmin.addManual(
+			title = "Manual Asset List Test"
+		);
+
+		AssetListsAdmin.openAssetListsAdmin(
+			siteURLKey = "test-site-name"
+		);
+
+		AssetListsAdmin.selectAsset(
+			assetListName = "Manual Asset List Test",
+			assetName = "WC WebContent Title",
+			assetType = "Basic Web Content"
+		);
+
+		AssetListsAdmin.openAssetListsAdmin(
+			siteURLKey = "test-site-name"
+		);
+
+		AssetListsAdmin.viewContent(
+			assetListName = "Manual Asset List Test",
+			assetTitle = "WC WebContent Title",
+			assetType = "Web Content Article"
+		);
+	}
+
+	@priority = "4"
+	test ViewAssetListUsages {
+		JSONLayout.addPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Test Page Name"
+		);
+
+		AssetListsAdmin.openAssetListsAdmin(
+			siteURLKey = "test-site-name"
+		);
+
+		AssetListsAdmin.addManual(
+			title = "Manual Asset List Test"
+		);
+
+		Navigator.gotoSitePage(
+			pageName = "Test Page Name",
+			siteName = "Test Site Name"
+		);
+
+		Portlet.addPG(portletName = "Asset Publisher");
+
+		Navigator.gotoSitePage(
+			pageName = "Test Page Name",
+			siteName = "Test Site Name"
+		);
+
+		AssetPublisherPortlet.selectAssetList(
+			assetListName = "Manual Asset List Test"
+		);
+
+		AssetListsAdmin.openAssetListsAdmin(
+			siteURLKey = "test-site-name"
+		);
+
+		AssetListsAdmin.viewUsages(
+			assetListName = "Manual Asset List Test",
+			usageAmount = "1",
+			usageType = "All"
+		);
+	}
+}

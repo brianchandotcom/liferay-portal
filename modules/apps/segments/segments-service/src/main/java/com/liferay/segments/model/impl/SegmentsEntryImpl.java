@@ -38,17 +38,6 @@ public class SegmentsEntryImpl extends SegmentsEntryBaseImpl {
 		return _criteria;
 	}
 
-	@Override
-	public String getFilterString() {
-		Criteria criteriaObj = getCriteriaObj();
-
-		if (criteriaObj != null) {
-			return criteriaObj.getFilterString();
-		}
-
-		return null;
-	}
-
 	private Criteria _criteria;
 
 }

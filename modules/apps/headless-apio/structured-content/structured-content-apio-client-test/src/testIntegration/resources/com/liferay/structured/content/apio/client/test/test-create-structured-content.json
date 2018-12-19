@@ -1,0 +1,10 @@
+{
+	"contentStructure": "%s",
+	"title": "Example Structured Content",
+	"values": [
+		{
+			"name": "MyDecimal",
+			"value": "1.0"
+		}
+	]
+}

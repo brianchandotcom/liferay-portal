@@ -214,9 +214,9 @@ public class DLAppHelperLocalServiceUtil {
 		return getService().moveFolderToTrash(userId, folder);
 	}
 
-	public static void reindexFolderFileEntries(long groupId, long folderId)
+	public static void reindex(java.util.List<Long> dlFileEntryIds)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().reindexFolderFileEntries(groupId, folderId);
+		getService().reindex(dlFileEntryIds);
 	}
 
 	public static void restoreDependentsFromTrash(

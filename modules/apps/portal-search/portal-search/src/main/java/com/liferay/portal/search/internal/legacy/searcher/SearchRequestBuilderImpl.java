@@ -14,6 +14,7 @@
 
 package com.liferay.portal.search.internal.legacy.searcher;
 
+import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -62,7 +63,19 @@ public class SearchRequestBuilderImpl implements SearchRequestBuilder {
 		return this;
 	}
 
+	@Override
+	public SearchRequestBuilder rescoreQuery(Query rescoreQuery) {
+		_searchContext.setAttribute(_RESCORE_QUERY, rescoreQuery);
+
+		return this;
+	}
+
 	public class SearchRequestImpl implements SearchRequest {
+
+		@Override
+		public Query getRescoreQuery() {
+			return (Query)_searchContext.getAttribute(_RESCORE_QUERY);
+		}
 
 		public SearchContext getSearchContext() {
 			return _searchContext;
@@ -85,6 +98,8 @@ public class SearchRequestBuilderImpl implements SearchRequestBuilder {
 
 	private static final String _INCLUDE_RESPONSE_STRING =
 		"include.response.string";
+
+	private static final String _RESCORE_QUERY = "rescore.query";
 
 	private final SearchContext _searchContext;
 

@@ -595,10 +595,10 @@ public class DLAppHelperLocalServiceImpl
 	public void reindexFolderFileEntries(long groupId, long folderId)
 		throws PortalException {
 
-		Indexer<DLFileEntry> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
-			DLFileEntry.class);
+		final Indexer<DLFileEntry> indexer =
+			IndexerRegistryUtil.nullSafeGetIndexer(DLFileEntry.class);
 
-		IndexableActionableDynamicQuery indexableActionableDynamicQuery =
+		final IndexableActionableDynamicQuery indexableActionableDynamicQuery =
 			dlFileEntryLocalService.getIndexableActionableDynamicQuery();
 
 		indexableActionableDynamicQuery.setAddCriteriaMethod(

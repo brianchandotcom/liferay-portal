@@ -39,7 +39,11 @@ public class XSLSecureURIResolver implements XSLURIResolver {
 
 	@Override
 	public String getLanguageId() {
-		return _xsluriResolver.getLanguageId();
+		if (_xsluriResolver != null) {
+			return _xsluriResolver.getLanguageId();
+		}
+
+		return null;
 	}
 
 	@Override
@@ -57,11 +61,12 @@ public class XSLSecureURIResolver implements XSLURIResolver {
 						"Denied access to resource: ", href,
 						". Access to local network is disabled by the secure ",
 						"processing feature."));
-
-				return null;
+			}
+			else if (_xsluriResolver != null) {
+				return _xsluriResolver.resolve(href, base);
 			}
 
-			return _xsluriResolver.resolve(href, base);
+			return null;
 		}
 		catch (MalformedURLException | UnknownHostException e) {
 			throw new TransformerException("Error resolving URL reference", e);

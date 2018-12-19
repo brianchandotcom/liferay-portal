@@ -29,6 +29,12 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 public interface XSLEngineConfiguration {
 
 	@Meta.AD(
+		deflt = "true", name = "prevent-local-connections-enabled",
+		required = false
+	)
+	public boolean preventLocalConnections();
+
+	@Meta.AD(
 		deflt = "true", name = "secure-processing-enabled", required = false
 	)
 	public boolean secureProcessingEnabled();

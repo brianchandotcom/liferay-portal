@@ -65,7 +65,8 @@ public class DLOpenerGoogleDriveDLAppServiceWrapper
 
 		FileEntry fileEntry = getFileEntry(fileEntryId);
 
-		if (_dlOpenerGoogleDriveManager.isConfigured() &&
+		if (_dlOpenerGoogleDriveManager.isConfigured(
+				fileEntry.getCompanyId()) &&
 			_dlOpenerGoogleDriveManager.isGoogleDriveFile(fileEntry)) {
 
 			DLOpenerFileEntryReference dlOpenerFileEntryReference =
@@ -92,7 +93,8 @@ public class DLOpenerGoogleDriveDLAppServiceWrapper
 
 		FileEntry fileEntry = getFileEntry(fileEntryId);
 
-		if (!_dlOpenerGoogleDriveManager.isConfigured() ||
+		if (!_dlOpenerGoogleDriveManager.isConfigured(
+				fileEntry.getCompanyId()) ||
 			!_dlOpenerGoogleDriveManager.isGoogleDriveFile(fileEntry)) {
 
 			super.checkInFileEntry(
@@ -128,7 +130,8 @@ public class DLOpenerGoogleDriveDLAppServiceWrapper
 
 		FileEntry fileEntry = getFileEntry(fileEntryId);
 
-		if (!_dlOpenerGoogleDriveManager.isConfigured() ||
+		if (!_dlOpenerGoogleDriveManager.isConfigured(
+				fileEntry.getCompanyId()) ||
 			!_dlOpenerGoogleDriveManager.isGoogleDriveFile(fileEntry)) {
 
 			super.checkInFileEntry(fileEntryId, lockUuid, serviceContext);

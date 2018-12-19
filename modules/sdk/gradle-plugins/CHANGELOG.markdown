@@ -6252,6 +6252,13 @@ version 2.2.4.
 - [LPS-88181]: Update the [Liferay Portal Tools Service Builder] dependency to
 version 1.0.253.
 
+## 3.13.42 - 2018-12-17
+
+### Changed
+- [LPS-87590]: Update the [Liferay Gradle Plugins Lang Builder] dependency to
+version 3.0.5.
+- [LPS-87590]: Update the [Liferay Lang Builder] dependency to version 1.0.28.
+
 [Gradle Bundle Plugin]: https://github.com/TomDmitriev/gradle-bundle-plugin
 [Liferay Alloy Taglib]: https://github.com/liferay/alloy-taglibs
 [Liferay Ant BND]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/ant-bnd
@@ -6728,6 +6735,7 @@ version 1.0.253.
 [LPS-87471]: https://issues.liferay.com/browse/LPS-87471
 [LPS-87488]: https://issues.liferay.com/browse/LPS-87488
 [LPS-87503]: https://issues.liferay.com/browse/LPS-87503
+[LPS-87590]: https://issues.liferay.com/browse/LPS-87590
 [LPS-87776]: https://issues.liferay.com/browse/LPS-87776
 [LPS-87839]: https://issues.liferay.com/browse/LPS-87839
 [LPS-87936]: https://issues.liferay.com/browse/LPS-87936

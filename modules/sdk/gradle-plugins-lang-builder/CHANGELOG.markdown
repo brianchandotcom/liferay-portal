@@ -107,6 +107,11 @@ http://titlecapitalization.com.
 ### Changed
 - [LPS-87466]: Update the [Liferay Gradle Util] dependency to version 1.0.33.
 
+## 3.0.5 - 2018-12-17
+
+### Changed
+- [LPS-87590]: Update the [Liferay Lang Builder] dependency to version 1.0.28.
+
 [Liferay Gradle Util]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-util
 [Liferay Lang Builder]: https://github.com/liferay/liferay-portal/tree/master/modules/util/lang-builder
 [LPS-67573]: https://issues.liferay.com/browse/LPS-67573
@@ -120,3 +125,4 @@ http://titlecapitalization.com.
 [LPS-82343]: https://issues.liferay.com/browse/LPS-82343
 [LPS-85092]: https://issues.liferay.com/browse/LPS-85092
 [LPS-87466]: https://issues.liferay.com/browse/LPS-87466
+[LPS-87590]: https://issues.liferay.com/browse/LPS-87590

@@ -18,9 +18,9 @@
 	<c:when test='<%= displayStyle.equals("descriptive") %>'>
 
 		<%
-		int roleType = role.getType();
-
 		String icon;
+
+		int roleType = role.getType();
 
 		if (roleType == RoleConstants.TYPE_SITE) {
 			icon = "sites";

@@ -38,29 +38,33 @@ import java.util.List;
 public class FragmentCollectionImpl extends FragmentCollectionBaseImpl {
 
 	@Override
-	public boolean hasResources() throws PortalException {
+	public long getResourcesFolderId() {
 		Repository repository =
 			PortletFileRepositoryUtil.fetchPortletRepository(
 				getGroupId(), FragmentPortletKeys.FRAGMENT);
 
 		if (repository == null) {
-			return false;
+			return 0;
 		}
-
-		Folder folder = null;
 
 		try {
-			folder = PortletFileRepositoryUtil.getPortletFolder(
+			Folder folder = PortletFileRepositoryUtil.getPortletFolder(
 				repository.getRepositoryId(), repository.getDlFolderId(),
 				String.valueOf(getFragmentCollectionId()));
+
+			return folder.getFolderId();
 		}
 		catch (Exception e) {
-			return false;
 		}
 
+		return 0;
+	}
+
+	@Override
+	public boolean hasResources() throws PortalException {
 		int fileEntriesCount =
 			PortletFileRepositoryUtil.getPortletFileEntriesCount(
-				getGroupId(), folder.getFolderId());
+				getGroupId(), getResourcesFolderId());
 
 		if (fileEntriesCount <= 0) {
 			return false;
@@ -96,17 +100,9 @@ public class FragmentCollectionImpl extends FragmentCollectionBaseImpl {
 			return;
 		}
 
-		Repository repository =
-			PortletFileRepositoryUtil.fetchPortletRepository(
-				getGroupId(), FragmentPortletKeys.FRAGMENT);
-
-		Folder folder = PortletFileRepositoryUtil.getPortletFolder(
-			repository.getRepositoryId(), repository.getDlFolderId(),
-			String.valueOf(getFragmentCollectionId()));
-
 		List<FileEntry> fileEntries =
 			PortletFileRepositoryUtil.getPortletFileEntries(
-				getGroupId(), folder.getFolderId());
+				getGroupId(), getResourcesFolderId());
 
 		for (FileEntry fileEntry : fileEntries) {
 			StringBundler sb = new StringBundler(4);

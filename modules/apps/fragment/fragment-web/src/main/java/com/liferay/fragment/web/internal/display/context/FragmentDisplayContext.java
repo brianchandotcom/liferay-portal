@@ -527,6 +527,16 @@ public class FragmentDisplayContext {
 		return false;
 	}
 
+	public boolean isViewResources() {
+		if (_viewResources != null) {
+			return _viewResources;
+		}
+
+		_viewResources = ParamUtil.getBoolean(_request, "viewResources");
+
+		return _viewResources;
+	}
+
 	private String _getFragmentEntryRenderURL(
 			FragmentEntry fragmentEntry, String mvcRenderCommandName,
 			WindowState windowState)
@@ -616,5 +626,6 @@ public class FragmentDisplayContext {
 	private final HttpServletRequest _request;
 	private final String _resolvedModuleName;
 	private final ThemeDisplay _themeDisplay;
+	private Boolean _viewResources;
 
 }

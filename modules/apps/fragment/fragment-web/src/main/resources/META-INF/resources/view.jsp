@@ -128,7 +128,14 @@ List<FragmentCollection> fragmentCollections = (List<FragmentCollection>)request
 					</h3>
 
 					<div class="sheet-section">
-						<liferay-util:include page="/view_fragment_entries.jsp" servletContext="<%= application %>" />
+						<c:choose>
+							<c:when test="<%= fragmentDisplayContext.isViewResources() %>">
+								<liferay-util:include page="/view_resources.jsp" servletContext="<%= application %>" />
+							</c:when>
+							<c:otherwise>
+								<liferay-util:include page="/view_fragment_entries.jsp" servletContext="<%= application %>" />
+							</c:otherwise>
+						</c:choose>
 					</div>
 				</div>
 			</c:if>

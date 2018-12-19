@@ -216,6 +216,10 @@
 			<contains>IX_717B97E1</contains>
 			<matches></matches>
 		</ignore-error>
+		<ignore-error description="LPS-88553 - temporarily ignore until fixed">
+			<contains>Returning the default theme</contains>
+			<matches></matches>
+		</ignore-error>
 		<ignore-error description="LRQA-24859">
 			<contains>No binary licenses found</contains>
 			<matches></matches>

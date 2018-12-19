@@ -53,7 +53,7 @@ public class FolderApioTest {
 
 	@Test
 	public void testCreateFolder() {
-		String path = ApioClientBuilder.given(
+		String href = ApioClientBuilder.given(
 		).basicAuth(
 			"test@liferay.com", "test"
 		).header(
@@ -81,10 +81,11 @@ public class FolderApioTest {
 		).header(
 			"Content-Type", "application/json"
 		).body(
-			"{\"description\":\"My description\",\"name\":\"My folder\"}"
+			"{\"description\":\"My folder description\",\"name\":\"My folder " +
+				"testCreateFolder\"}"
 		).when(
 		).post(
-			path
+			href
 		).then(
 		).statusCode(
 			200
@@ -93,9 +94,9 @@ public class FolderApioTest {
 		).body(
 			"dateModified", IsNull.notNullValue()
 		).body(
-			"description", Matchers.equalTo("My description")
+			"description", Matchers.equalTo("My folder description")
 		).body(
-			"name", Matchers.equalTo("My folder")
+			"name", Matchers.equalTo("My folder testCreateFolder")
 		).body(
 			"_links.self.href", IsNull.notNullValue()
 		);

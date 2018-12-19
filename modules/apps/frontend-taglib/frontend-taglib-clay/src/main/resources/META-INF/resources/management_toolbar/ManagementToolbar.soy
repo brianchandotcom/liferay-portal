@@ -49,6 +49,7 @@
 		]>,
 		viewMoreURL: string
 	]}
+	{@param? defaultEventHandler: ?}
 	{@param? disabled: bool}
 	{@param? elementClasses: string}
 	{@param? filterItems: list<[
@@ -101,6 +102,7 @@
 	]>}
 
 	{call ClayManagementToolbar.render}
+		{param defaultEventHandler: $defaultEventHandler /}
 		{param actionItems: $actionItems /}
 		{param clearResultsURL: $clearResultsURL /}
 		{param contentRenderer: $contentRenderer /}

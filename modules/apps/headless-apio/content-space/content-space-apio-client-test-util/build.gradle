@@ -1,0 +1,3 @@
+dependencies {
+	compileOnly project(":apps:headless-apio:portal:portal-apio-test-util")
+}

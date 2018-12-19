@@ -92,6 +92,10 @@ public class FragmentCollectionImpl extends FragmentCollectionBaseImpl {
 			fragmentEntry.populateZipWriter(zipWriter, path);
 		}
 
+		if (!hasResources()) {
+			return;
+		}
+
 		Repository repository =
 			PortletFileRepositoryUtil.fetchPortletRepository(
 				getGroupId(), FragmentPortletKeys.FRAGMENT);

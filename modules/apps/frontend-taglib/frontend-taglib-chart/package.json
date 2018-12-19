@@ -1,6 +1,6 @@
 {
 	"dependencies": {
-		"clay-charts": "2.5.0"
+		"clay-charts": "2.5.1"
 	},
 	"devDependencies": {
 		"liferay-npm-bundler": "^2.1.0"

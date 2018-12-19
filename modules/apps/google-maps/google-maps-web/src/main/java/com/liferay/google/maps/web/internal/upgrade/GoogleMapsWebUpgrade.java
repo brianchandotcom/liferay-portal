@@ -37,12 +37,12 @@ public class GoogleMapsWebUpgrade implements UpgradeStepRegistrator {
 
 				@Override
 				protected String getBundleSymbolicName() {
-					return "com.liferay.youtube.web";
+					return "com.liferay.google.maps.web";
 				}
 
 				@Override
 				protected String[] getPortletIds() {
-					return new String[] {"1_WAR_youtubeportlet"};
+					return new String[] {"1_WAR_googlemapsportlet"};
 				}
 
 			};

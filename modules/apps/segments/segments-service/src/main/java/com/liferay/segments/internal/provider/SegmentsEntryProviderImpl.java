@@ -22,6 +22,9 @@ import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.segments.criteria.Criteria;
+import com.liferay.segments.criteria.contributor.SegmentsCriteriaContributor;
+import com.liferay.segments.criteria.contributor.SegmentsCriteriaContributorRegistry;
 import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.model.SegmentsEntryRel;
 import com.liferay.segments.odata.retriever.ODataRetriever;
@@ -69,7 +72,9 @@ public class SegmentsEntryProviderImpl implements SegmentsEntryProvider {
 			return new long[0];
 		}
 
-		if (Validator.isNull(segmentsEntry.getFilterString())) {
+		String filterString = _getFilterString(segmentsEntry);
+
+		if (Validator.isNull(filterString)) {
 			List<SegmentsEntryRel> segmentsEntryRels =
 				_segmentsEntryRelLocalService.getSegmentsEntryRels(
 					segmentsEntryId, start, end, null);
@@ -89,8 +94,8 @@ public class SegmentsEntryProviderImpl implements SegmentsEntryProvider {
 		}
 
 		List<BaseModel<?>> results = oDataRetriever.getResults(
-			segmentsEntry.getCompanyId(), segmentsEntry.getFilterString(),
-			Locale.getDefault(), start, end);
+			segmentsEntry.getCompanyId(), filterString, Locale.getDefault(),
+			start, end);
 
 		Stream<BaseModel<?>> stream = results.stream();
 
@@ -110,7 +115,9 @@ public class SegmentsEntryProviderImpl implements SegmentsEntryProvider {
 			return 0;
 		}
 
-		if (Validator.isNull(segmentsEntry.getFilterString())) {
+		String filterString = _getFilterString(segmentsEntry);
+
+		if (Validator.isNull(filterString)) {
 			return _segmentsEntryRelLocalService.getSegmentsEntryRelsCount(
 				segmentsEntryId);
 		}
@@ -123,8 +130,7 @@ public class SegmentsEntryProviderImpl implements SegmentsEntryProvider {
 		}
 
 		return oDataRetriever.getResultsCount(
-			segmentsEntry.getCompanyId(), segmentsEntry.getFilterString(),
-			Locale.getDefault());
+			segmentsEntry.getCompanyId(), filterString, Locale.getDefault());
 	}
 
 	@Override
@@ -145,13 +151,13 @@ public class SegmentsEntryProviderImpl implements SegmentsEntryProvider {
 		List<SegmentsEntry> allSegmentsEntries = new ArrayList();
 
 		for (SegmentsEntry segmentsEntry : segmentsEntries) {
-			if (Validator.isNotNull(segmentsEntry.getFilterString()) &&
-				(oDataRetriever != null)) {
+			String filterString = _getFilterString(segmentsEntry);
 
+			if (Validator.isNotNull(filterString) && (oDataRetriever != null)) {
 				StringBundler sb = new StringBundler(5);
 
 				sb.append("(");
-				sb.append(segmentsEntry.getFilterString());
+				sb.append(filterString);
 				sb.append(") and (classPK eq '");
 				sb.append(classPK);
 				sb.append("')");
@@ -180,8 +186,43 @@ public class SegmentsEntryProviderImpl implements SegmentsEntryProvider {
 		).toArray();
 	}
 
+	private String _getFilterString(SegmentsEntry segmentsEntry) {
+		Criteria existingCriteria = segmentsEntry.getCriteriaObj();
+
+		if (existingCriteria == null) {
+			return null;
+		}
+
+		Criteria criteria = new Criteria();
+
+		List<SegmentsCriteriaContributor> segmentsCriteriaContributors =
+			_segmentsCriteriaContributorRegistry.
+				getSegmentsCriteriaContributors(segmentsEntry.getType());
+
+		for (SegmentsCriteriaContributor segmentsCriteriaContributor :
+				segmentsCriteriaContributors) {
+
+			Criteria.Criterion criterion =
+				segmentsCriteriaContributor.getCriterion(existingCriteria);
+
+			if (criterion == null) {
+				continue;
+			}
+
+			segmentsCriteriaContributor.contribute(
+				criteria, criterion.getFilterString(),
+				Criteria.Conjunction.parse(criterion.getConjunction()));
+		}
+
+		return criteria.getFilterString();
+	}
+
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private SegmentsCriteriaContributorRegistry
+		_segmentsCriteriaContributorRegistry;
 
 	@Reference
 	private SegmentsEntryLocalService _segmentsEntryLocalService;

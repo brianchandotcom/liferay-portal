@@ -14,6 +14,7 @@
 
 package com.liferay.structured.content.apio.client.test;
 
+import com.liferay.content.space.apio.client.test.util.ContentSpaceApioTestUtil;
 import com.liferay.oauth2.provider.test.util.OAuth2ProviderTestUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.apio.test.util.ApioClientBuilder;
@@ -51,7 +52,12 @@ public class StructuredContentApioTest {
 
 	@Before
 	public void setUp() throws MalformedURLException {
-		_rootEndpointURL = new URL(_url, "/o/api");
+		URL rootEndpointURL = new URL(_url, "/o/api");
+
+		_contentSpaceEndpointURL = new URL(
+			ContentSpaceApioTestUtil.getContentSpaceHref(
+				rootEndpointURL.toExternalForm(),
+				StructuredContentApioTestBundleActivator.SITE_NAME));
 	}
 
 	@Test
@@ -63,13 +69,9 @@ public class StructuredContentApioTest {
 			"Accept", "application/hal+json"
 		).when(
 		).get(
-			_rootEndpointURL.toExternalForm()
+			_contentSpaceEndpointURL.toExternalForm()
 		).follow(
-			"_links.content-space.href"
-		).follow(
-			"_embedded.ContentSpace.find {it.name == '" +
-				StructuredContentApioTestBundleActivator.SITE_NAME +
-					"'}._links.contentStructures.href"
+			"_links.contentStructures.href"
 		).then(
 		).extract(
 		).path(
@@ -85,15 +87,11 @@ public class StructuredContentApioTest {
 			"Accept", "application/hal+json"
 		).when(
 		).get(
-			_rootEndpointURL.toExternalForm()
-		).follow(
-			"_links.content-space.href"
+			_contentSpaceEndpointURL.toExternalForm()
 		).then(
 		).extract(
 		).path(
-			"_embedded.ContentSpace.find {it.name == '" +
-				StructuredContentApioTestBundleActivator.SITE_NAME +
-					"'}._links.structuredContents.href"
+			"_links.structuredContents.href"
 		);
 
 		ApioClientBuilder.given(
@@ -111,6 +109,8 @@ public class StructuredContentApioTest {
 		).post(
 			href
 		).then(
+		).statusCode(
+			200
 		).body(
 			"title", Matchers.equalTo("Example Structured Content")
 		).body(
@@ -128,13 +128,9 @@ public class StructuredContentApioTest {
 			"Accept", "application/hal+json"
 		).when(
 		).get(
-			_rootEndpointURL.toExternalForm()
+			_contentSpaceEndpointURL.toExternalForm()
 		).follow(
-			"_links.content-space.href"
-		).follow(
-			"_embedded.ContentSpace.find {it.name == '" +
-				StructuredContentApioTestBundleActivator.SITE_NAME +
-					"'}._links.contentStructures.href"
+			"_links.contentStructures.href"
 		).then(
 		).extract(
 		).path(
@@ -150,15 +146,11 @@ public class StructuredContentApioTest {
 			"Accept", "application/hal+json"
 		).when(
 		).get(
-			_rootEndpointURL.toExternalForm()
-		).follow(
-			"_links.content-space.href"
+			_contentSpaceEndpointURL.toExternalForm()
 		).then(
 		).extract(
 		).path(
-			"_embedded.ContentSpace.find {it.name == '" +
-				StructuredContentApioTestBundleActivator.SITE_NAME +
-					"'}._links.structuredContents.href"
+			"_links.structuredContents.href"
 		);
 
 		String structuredContentHref = ApioClientBuilder.given(
@@ -208,15 +200,11 @@ public class StructuredContentApioTest {
 			"Accept-Language", "en-US"
 		).when(
 		).get(
-			_rootEndpointURL.toExternalForm()
-		).follow(
-			"_links.content-space.href"
+			_contentSpaceEndpointURL.toExternalForm()
 		).then(
 		).extract(
 		).path(
-			"_embedded.ContentSpace.find {it.name == '" +
-				StructuredContentApioTestBundleActivator.SITE_NAME +
-					"'}._links.structuredContents.href"
+			"_links.structuredContents.href"
 		);
 
 		ApioClientBuilder.given(
@@ -282,15 +270,11 @@ public class StructuredContentApioTest {
 			"Accept-Language", "en-US"
 		).when(
 		).get(
-			_rootEndpointURL.toExternalForm()
-		).follow(
-			"_links.content-space.href"
+			_contentSpaceEndpointURL.toExternalForm()
 		).then(
 		).extract(
 		).path(
-			"_embedded.ContentSpace.find {it.name == '" +
-				StructuredContentApioTestBundleActivator.SITE_NAME +
-					"'}._links.structuredContents.href"
+			"_links.structuredContents.href"
 		);
 
 		ApioClientBuilder.given(
@@ -356,15 +340,11 @@ public class StructuredContentApioTest {
 			"Accept-Language", "en-US"
 		).when(
 		).get(
-			_rootEndpointURL.toExternalForm()
-		).follow(
-			"_links.content-space.href"
+			_contentSpaceEndpointURL.toExternalForm()
 		).then(
 		).extract(
 		).path(
-			"_embedded.ContentSpace.find {it.name == '" +
-				StructuredContentApioTestBundleActivator.SITE_NAME +
-					"'}._links.structuredContents.href"
+			"_links.structuredContents.href"
 		);
 
 		ApioClientBuilder.given(
@@ -430,15 +410,11 @@ public class StructuredContentApioTest {
 			"Accept-Language", "en-US"
 		).when(
 		).get(
-			_rootEndpointURL.toExternalForm()
-		).follow(
-			"_links.content-space.href"
+			_contentSpaceEndpointURL.toExternalForm()
 		).then(
 		).extract(
 		).path(
-			"_embedded.ContentSpace.find {it.name == '" +
-				StructuredContentApioTestBundleActivator.SITE_NAME +
-					"'}._links.structuredContents.href"
+			"_links.structuredContents.href"
 		);
 
 		ApioClientBuilder.given(
@@ -500,15 +476,11 @@ public class StructuredContentApioTest {
 			"Accept", "application/hal+json"
 		).when(
 		).get(
-			_rootEndpointURL.toExternalForm()
-		).follow(
-			"_links.content-space.href"
+			_contentSpaceEndpointURL.toExternalForm()
 		).then(
 		).extract(
 		).path(
-			"_embedded.ContentSpace.find {it.name == '" +
-				StructuredContentApioTestBundleActivator.SITE_NAME +
-					"'}._links.structuredContents.href"
+			"_links.structuredContents.href"
 		);
 
 		ApioClientBuilder.given(
@@ -536,13 +508,9 @@ public class StructuredContentApioTest {
 			"Accept", "application/hal+json"
 		).when(
 		).get(
-			_rootEndpointURL.toExternalForm()
+			_contentSpaceEndpointURL.toExternalForm()
 		).follow(
-			"_links.content-space.href"
-		).follow(
-			"_embedded.ContentSpace.find {it.name == '" +
-				StructuredContentApioTestBundleActivator.SITE_NAME +
-					"'}._links.contentStructures.href"
+			"_links.contentStructures.href"
 		).then(
 		).extract(
 		).path(
@@ -558,15 +526,11 @@ public class StructuredContentApioTest {
 			"Accept", "application/hal+json"
 		).when(
 		).get(
-			_rootEndpointURL.toExternalForm()
-		).follow(
-			"_links.content-space.href"
+			_contentSpaceEndpointURL.toExternalForm()
 		).then(
 		).extract(
 		).path(
-			"_embedded.ContentSpace.find {it.name == '" +
-				StructuredContentApioTestBundleActivator.SITE_NAME +
-					"'}._links.structuredContents.href"
+			"_links.structuredContents.href"
 		);
 
 		String structuredContentHref = ApioClientBuilder.given(
@@ -613,7 +577,7 @@ public class StructuredContentApioTest {
 		);
 	}
 
-	private URL _rootEndpointURL;
+	private URL _contentSpaceEndpointURL;
 
 	@ArquillianResource
 	private URL _url;

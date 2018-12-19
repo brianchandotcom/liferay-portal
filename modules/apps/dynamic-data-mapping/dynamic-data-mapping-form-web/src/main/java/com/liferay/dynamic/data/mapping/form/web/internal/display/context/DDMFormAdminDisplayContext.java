@@ -304,6 +304,7 @@ public class DDMFormAdminDisplayContext {
 				LocaleUtil.fromLanguageId(getDefaultLanguageId()));
 			ddmFormRenderingContext.setPortletNamespace(
 				_renderResponse.getNamespace());
+			ddmFormRenderingContext.setViewMode(true);
 
 			try {
 				Map<String, Object> settingsContext =

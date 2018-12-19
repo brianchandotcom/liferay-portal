@@ -2057,28 +2057,11 @@ org.apache.level=WARNING]]>
 			</replacevalue>
 		</replace>
 
-		<if>
-			<available file="${jdk.windows.home}/jre/bin/java.exe" />
-			<then>
-				<copy
-					todir="${app.server.tomcat.dir}/jre${jdk.windows.version}/win"
-				>
-					<fileset
-						dir="${jdk.windows.home}/jre"
-					/>
-				</copy>
-			</then>
-		</if>
-
 		<copy
 			file="tools/servers/tomcat/bin/setenv.bat"
 			overwrite="true"
 			tofile="${app.server.tomcat.bin.dir}/setenv.bat"
-		>
-			<filterset>
-				<filter token="java.version" value="${jdk.windows.version}" />
-			</filterset>
-		</copy>
+		/>
 
 		<copy
 			file="tools/servers/tomcat/bin/setenv.sh"

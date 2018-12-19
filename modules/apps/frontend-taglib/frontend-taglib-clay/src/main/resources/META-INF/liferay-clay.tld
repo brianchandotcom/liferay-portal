@@ -166,13 +166,13 @@
 		</attribute>
 		<attribute>
 			<description></description>
-			<name>defaultEventHandler</name>
+			<name>data</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
 			<description></description>
-			<name>data</name>
+			<name>defaultEventHandler</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>

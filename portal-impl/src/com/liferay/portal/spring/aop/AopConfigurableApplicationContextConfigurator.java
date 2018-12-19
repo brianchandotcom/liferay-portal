@@ -15,43 +15,24 @@
 package com.liferay.portal.spring.aop;
 
 import com.liferay.petra.reflect.ReflectionUtil;
-import com.liferay.portal.cache.thread.local.ThreadLocalCacheAdvice;
-import com.liferay.portal.dao.jdbc.aop.DynamicDataSourceAdvice;
 import com.liferay.portal.dao.orm.hibernate.SessionFactoryImpl;
 import com.liferay.portal.dao.orm.hibernate.VerifySessionFactoryWrapper;
-import com.liferay.portal.increment.BufferedIncrementAdvice;
-import com.liferay.portal.internal.cluster.ClusterableAdvice;
-import com.liferay.portal.internal.cluster.SPIClusterableAdvice;
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
-import com.liferay.portal.kernel.dao.jdbc.aop.DynamicDataSourceTargetSource;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.monitoring.ServiceMonitoringControl;
-import com.liferay.portal.kernel.resiliency.spi.SPIUtil;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.util.InfrastructureUtil;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
-import com.liferay.portal.messaging.async.AsyncAdvice;
-import com.liferay.portal.monitoring.statistics.service.ServiceMonitorAdvice;
 import com.liferay.portal.monitoring.statistics.service.ServiceMonitoringControlImpl;
-import com.liferay.portal.resiliency.service.PortalResiliencyAdvice;
-import com.liferay.portal.search.IndexableAdvice;
-import com.liferay.portal.security.access.control.AccessControlAdvice;
-import com.liferay.portal.service.ServiceContextAdvice;
 import com.liferay.portal.spring.bean.BeanReferenceAnnotationBeanPostProcessor;
 import com.liferay.portal.spring.configurator.ConfigurableApplicationContextConfigurator;
 import com.liferay.portal.spring.hibernate.PortletHibernateConfiguration;
 import com.liferay.portal.spring.hibernate.PortletTransactionManager;
 import com.liferay.portal.spring.transaction.TransactionExecutor;
 import com.liferay.portal.spring.transaction.TransactionExecutorFactory;
-import com.liferay.portal.spring.transaction.TransactionInterceptor;
 import com.liferay.portal.spring.transaction.TransactionInvokerImpl;
 import com.liferay.portal.spring.transaction.TransactionManagerFactory;
-import com.liferay.portal.systemevent.SystemEventAdvice;
-import com.liferay.portal.util.PropsValues;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.sql.DataSource;
 
@@ -164,7 +145,7 @@ public class AopConfigurableApplicationContextConfigurator
 			ServiceBeanAutoProxyCreator serviceBeanAutoProxyCreator =
 				new ServiceBeanAutoProxyCreator(
 					new ServiceBeanMatcher(), _classLoader,
-					_createChainableMethodAdvices(
+					AopCacheManager.createChainableMethodAdvices(
 						transactionExecutor, serviceMonitoringControl));
 
 			defaultSingletonBeanRegistry.registerDisposableBean(
@@ -177,72 +158,6 @@ public class AopConfigurableApplicationContextConfigurator
 
 		private AopBeanFactoryPostProcessor(ClassLoader classLoader) {
 			_classLoader = classLoader;
-		}
-
-		private ChainableMethodAdvice[] _createChainableMethodAdvices(
-			TransactionExecutor transactionExecutor,
-			ServiceMonitoringControl serviceMonitoringControl) {
-
-			List<ChainableMethodAdvice> chainableMethodAdvices =
-				new ArrayList<>(14);
-
-			if (SPIUtil.isSPI()) {
-				chainableMethodAdvices.add(new SPIClusterableAdvice());
-			}
-
-			if (PropsValues.CLUSTER_LINK_ENABLED) {
-				chainableMethodAdvices.add(new ClusterableAdvice());
-			}
-
-			chainableMethodAdvices.add(new AccessControlAdvice());
-
-			if (PropsValues.PORTAL_RESILIENCY_ENABLED) {
-				chainableMethodAdvices.add(new PortalResiliencyAdvice());
-			}
-
-			chainableMethodAdvices.add(
-				new ServiceMonitorAdvice(serviceMonitoringControl));
-
-			AsyncAdvice asyncAdvice = new AsyncAdvice();
-
-			asyncAdvice.setDefaultDestinationName("liferay/async_service");
-
-			chainableMethodAdvices.add(asyncAdvice);
-
-			chainableMethodAdvices.add(new ThreadLocalCacheAdvice());
-
-			chainableMethodAdvices.add(new BufferedIncrementAdvice());
-
-			chainableMethodAdvices.add(new IndexableAdvice());
-
-			chainableMethodAdvices.add(new SystemEventAdvice());
-
-			chainableMethodAdvices.add(new ServiceContextAdvice());
-
-			chainableMethodAdvices.add(new RetryAdvice());
-
-			TransactionInterceptor transactionInterceptor =
-				new TransactionInterceptor();
-
-			transactionInterceptor.setTransactionExecutor(transactionExecutor);
-
-			DynamicDataSourceTargetSource dynamicDataSourceTargetSource =
-				InfrastructureUtil.getDynamicDataSourceTargetSource();
-
-			if (dynamicDataSourceTargetSource != null) {
-				DynamicDataSourceAdvice dynamicDataSourceAdvice =
-					new DynamicDataSourceAdvice();
-
-				dynamicDataSourceAdvice.setDynamicDataSourceTargetSource(
-					dynamicDataSourceTargetSource);
-
-				chainableMethodAdvices.add(dynamicDataSourceAdvice);
-			}
-
-			chainableMethodAdvices.add(transactionInterceptor);
-
-			return chainableMethodAdvices.toArray(
-				new ChainableMethodAdvice[chainableMethodAdvices.size()]);
 		}
 
 		private PlatformTransactionManager _getPlatformTransactionManager(

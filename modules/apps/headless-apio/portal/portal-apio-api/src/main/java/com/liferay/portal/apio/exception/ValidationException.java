@@ -32,7 +32,7 @@ public class ValidationException extends ClientErrorException {
 	/**
 	 * Creates a {@code 422} exception with the given message.
 	 *
-	 * @param message exception message.
+	 * @param  message exception message.
 	 * @review
 	 */
 	public ValidationException(String message) {
@@ -46,8 +46,8 @@ public class ValidationException extends ClientErrorException {
 	/**
 	 * Creates a {@code 422} exception with the given message and cause.
 	 *
-	 * @param message exception message.
-	 * @param cause
+	 * @param  message exception message.
+	 * @param  cause
 	 * @review
 	 */
 	public ValidationException(String message, Throwable cause) {

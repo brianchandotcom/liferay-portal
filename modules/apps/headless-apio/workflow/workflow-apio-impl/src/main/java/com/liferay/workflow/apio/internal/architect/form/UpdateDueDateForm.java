@@ -24,8 +24,8 @@ import java.util.Date;
 public class UpdateDueDateForm {
 
 	/**
-	 * Builds a {@code Form} that generates {@code UpdateDueDateForm}
-	 * depending on the HTTP body.
+	 * Builds a {@code Form} that generates {@code UpdateDueDateForm} depending
+	 * on the HTTP body.
 	 *
 	 * @param  formBuilder the {@code Form} builder
 	 * @return a context form instance

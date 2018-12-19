@@ -155,6 +155,86 @@ public class FolderApioTest {
 
 	@Test
 	public void testGetFolders() {
+		String href = ApioClientBuilder.given(
+		).basicAuth(
+			"test@liferay.com", "test"
+		).header(
+			"Accept", "application/hal+json"
+		).when(
+		).get(
+			_rootEndpointURL.toExternalForm()
+		).follow(
+			"_links.content-space.href"
+		).follow(
+			"_embedded.ContentSpace.find {it.name == '" +
+				FolderTestActivator.CONTENT_SPACE_NAME +
+					"'}._links.documentsRepository.href"
+		).then(
+		).extract(
+		).path(
+			"_links.folders.href"
+		);
+
+		ApioClientBuilder.given(
+		).basicAuth(
+			"test@liferay.com", "test"
+		).header(
+			"Accept", "application/hal+json"
+		).header(
+			"Content-Type", "application/json"
+		).body(
+			"{\"description\":\"My folder description\",\"name\":\"My folder " +
+				"testGetFolders\"}"
+		).when(
+		).post(
+			href
+		).then(
+		).statusCode(
+			200
+		);
+
+		ApioClientBuilder.given(
+		).basicAuth(
+			"test@liferay.com", "test"
+		).header(
+			"Accept", "application/hal+json"
+		).when(
+		).get(
+			_rootEndpointURL.toExternalForm()
+		).follow(
+			"_links.content-space.href"
+		).follow(
+			"_embedded.ContentSpace.find {it.name == '" +
+				FolderTestActivator.CONTENT_SPACE_NAME +
+					"'}._links.documentsRepository.href"
+		).follow(
+			"_links.folders.href"
+		).then(
+		).statusCode(
+			200
+		).body(
+			"_embedded.Folder.find {it.name == 'My folder testGetFolders'}." +
+				"dateCreated",
+			IsNull.notNullValue()
+		).body(
+			"_embedded.Folder.find {it.name == 'My folder testGetFolders'}." +
+				"dateModified",
+			IsNull.notNullValue()
+		).body(
+			"_embedded.Folder.find {it.name == 'My folder testGetFolders'}." +
+				"_links.documents",
+			IsNull.notNullValue()
+		).body(
+			"_embedded.Folder.find {it.name == 'My folder testGetFolders'}." +
+				"_links.self.href",
+			IsNull.notNullValue()
+		).body(
+			"_embedded.Folder.find {it.name == 'My folder testGetFolders'}." +
+				"_links.subFolders",
+			IsNull.notNullValue()
+		);
+	}
+
 		ApioClientBuilder.given(
 		).basicAuth(
 			"test@liferay.com", "test"

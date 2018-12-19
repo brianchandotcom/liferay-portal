@@ -282,6 +282,68 @@ public class FolderApioTest {
 		);
 	}
 
+	@Test
+	public void testUpdateFolder() {
+		String foldersHref = ApioClientBuilder.given(
+		).basicAuth(
+			"test@liferay.com", "test"
+		).header(
+			"Accept", "application/hal+json"
+		).when(
+		).get(
+			_rootEndpointURL.toExternalForm()
+		).follow(
+			"_links.content-space.href"
+		).follow(
+			"_embedded.ContentSpace.find {it.name == '" +
+				FolderTestActivator.CONTENT_SPACE_NAME +
+					"'}._links.documentsRepository.href"
+		).then(
+		).extract(
+		).path(
+			"_links.folders.href"
+		);
+
+		String folderHref = ApioClientBuilder.given(
+		).basicAuth(
+			"test@liferay.com", "test"
+		).header(
+			"Accept", "application/hal+json"
+		).header(
+			"Content-Type", "application/json"
+		).body(
+			"{\"description\":\"My folder description\",\"name\":\"My folder " +
+				"testUpdateFolder\"}"
+		).when(
+		).post(
+			foldersHref
+		).then(
+		).extract(
+		).path(
+			"_links.self.href"
+		);
+
+		ApioClientBuilder.given(
+		).basicAuth(
+			"test@liferay.com", "test"
+		).header(
+			"Accept", "application/hal+json"
+		).header(
+			"Content-Type", "application/json"
+		).body(
+			"{\"description\":\"My folder description modified\",\"name\":\"" +
+				"My folder testUpdateFolder modified\"}"
+		).when(
+		).put(
+			folderHref
+		).then(
+		).body(
+			"description", Matchers.equalTo("My folder description modified")
+		).body(
+			"name", Matchers.equalTo("My folder testUpdateFolder modified")
+		);
+	}
+
 	private URL _rootEndpointURL;
 
 	@ArquillianResource

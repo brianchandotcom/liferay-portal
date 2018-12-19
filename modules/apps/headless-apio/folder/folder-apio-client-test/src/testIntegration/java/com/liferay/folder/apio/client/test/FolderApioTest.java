@@ -103,6 +103,63 @@ public class FolderApioTest {
 	}
 
 	@Test
+	public void testDeleteFolder() {
+		String foldersHref = ApioClientBuilder.given(
+		).basicAuth(
+			"test@liferay.com", "test"
+		).header(
+			"Accept", "application/hal+json"
+		).when(
+		).get(
+			_rootEndpointURL.toExternalForm()
+		).follow(
+			"_links.content-space.href"
+		).follow(
+			"_embedded.ContentSpace.find {it.name == '" +
+				FolderTestActivator.CONTENT_SPACE_NAME +
+					"'}._links.documentsRepository.href"
+		).then(
+		).extract(
+		).path(
+			"_links.folders.href"
+		);
+
+		String folderHref = ApioClientBuilder.given(
+		).basicAuth(
+			"test@liferay.com", "test"
+		).header(
+			"Accept", "application/hal+json"
+		).header(
+			"Content-Type", "application/json"
+		).body(
+			"{\"description\":\"My folder description\",\"name\":\"My folder " +
+				"testDeleteFolder\"}"
+		).when(
+		).post(
+			foldersHref
+		).then(
+		).extract(
+		).path(
+			"_links.self.href"
+		);
+
+		ApioClientBuilder.given(
+		).basicAuth(
+			"test@liferay.com", "test"
+		).header(
+			"Accept", "application/hal+json"
+		).header(
+			"Content-Type", "application/json"
+		).when(
+		).delete(
+			folderHref
+		).then(
+		).statusCode(
+			200
+		);
+	}
+
+	@Test
 	public void testDocumentsRepositoryContainsLinksToFoldersAndDocuments() {
 		ApioClientBuilder.given(
 		).basicAuth(

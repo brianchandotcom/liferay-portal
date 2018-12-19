@@ -592,9 +592,7 @@ public class DLAppHelperLocalServiceImpl
 
 	@Async
 	@Override
-	public void reindexFolderFileEntries(long groupId, long folderId)
-		throws PortalException {
-
+	public void reindex(List<Long> dlFileEntryIds) throws PortalException {
 		final Indexer<DLFileEntry> indexer =
 			IndexerRegistryUtil.nullSafeGetIndexer(DLFileEntry.class);
 
@@ -603,15 +601,10 @@ public class DLAppHelperLocalServiceImpl
 
 		indexableActionableDynamicQuery.setAddCriteriaMethod(
 			dynamicQuery -> {
-				Property folderIdProperty = PropertyFactoryUtil.forName(
-					"folderId");
+				Property dlFileEntryId = PropertyFactoryUtil.forName(
+					"fileEntryId");
 
-				dynamicQuery.add(folderIdProperty.eq(folderId));
-
-				Property groupIdProperty = PropertyFactoryUtil.forName(
-					"groupId");
-
-				dynamicQuery.add(groupIdProperty.eq(groupId));
+				dynamicQuery.add(dlFileEntryId.in(dlFileEntryIds));
 			});
 		indexableActionableDynamicQuery.setPerformActionMethod(
 			(DLFileEntry dlFileEntry) -> {
@@ -1766,7 +1759,7 @@ public class DLAppHelperLocalServiceImpl
 			dlFileEntryLocalService.getFileEntries(
 				childDLFolder.getGroupId(), childDLFolder.getFolderId());
 
-		int fileEntryCount = 0;
+		List<Long> dlFileEntryIds = new ArrayList<>();
 
 		for (DLFileEntry dlFileEntry : dlFileEntries) {
 			if (moveToTrash) {
@@ -1859,12 +1852,11 @@ public class DLAppHelperLocalServiceImpl
 				}
 			}
 
-			fileEntryCount++;
+			dlFileEntryIds.add(dlFileEntry.getFileEntryId());
 		}
 
-		if (fileEntryCount > 0) {
-			dlAppHelperLocalService.reindexFolderFileEntries(
-				childDLFolder.getGroupId(), childDLFolder.getFolderId());
+		if (!dlFileEntryIds.isEmpty()) {
+			dlAppHelperLocalService.reindex(dlFileEntryIds);
 		}
 
 		List<DLFileShortcut> dlFileShortcuts =

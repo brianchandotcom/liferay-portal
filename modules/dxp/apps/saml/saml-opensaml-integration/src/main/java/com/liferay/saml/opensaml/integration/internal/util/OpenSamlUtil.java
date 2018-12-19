@@ -58,6 +58,7 @@ import org.opensaml.core.xml.util.XMLObjectSupport;
 import org.opensaml.saml.common.SAMLObjectBuilder;
 import org.opensaml.saml.common.SAMLVersion;
 import org.opensaml.saml.common.SignableSAMLObject;
+import org.opensaml.saml.criterion.RoleDescriptorCriterion;
 import org.opensaml.saml.saml2.core.Assertion;
 import org.opensaml.saml.saml2.core.Attribute;
 import org.opensaml.saml.saml2.core.AttributeStatement;
@@ -85,6 +86,7 @@ import org.opensaml.saml.saml2.metadata.AssertionConsumerService;
 import org.opensaml.saml.saml2.metadata.EntityDescriptor;
 import org.opensaml.saml.saml2.metadata.IDPSSODescriptor;
 import org.opensaml.saml.saml2.metadata.KeyDescriptor;
+import org.opensaml.saml.saml2.metadata.RoleDescriptor;
 import org.opensaml.saml.saml2.metadata.SPSSODescriptor;
 import org.opensaml.saml.saml2.metadata.SingleLogoutService;
 import org.opensaml.saml.saml2.metadata.SingleSignOnService;
@@ -874,7 +876,8 @@ public class OpenSamlUtil {
 	}
 
 	public static void signObject(
-			SignableSAMLObject signableObject, Credential credential)
+			SignableSAMLObject signableObject, Credential credential,
+			RoleDescriptor peerRoleDescriptor)
 		throws MarshallingException, SecurityException, SignatureException {
 
 		Signature signature = buildSignature(credential);
@@ -905,9 +908,17 @@ public class OpenSamlUtil {
 					new SignatureSigningConfigurationCriterion(
 						globalSignatureSigningConfiguration);
 
+			CriteriaSet criteriaSet = new CriteriaSet(
+				signatureSigningConfigurationCriterion);
+
+			if (peerRoleDescriptor != null) {
+				criteriaSet.add(
+					new RoleDescriptorCriterion(peerRoleDescriptor));
+			}
+
 			SignatureSigningParameters signatureSigningParameters =
 				samlMetadataSignatureSigningParametersResolver.resolveSingle(
-					new CriteriaSet(signatureSigningConfigurationCriterion));
+					criteriaSet);
 
 			SignatureSupport.prepareSignatureParams(
 				signature, signatureSigningParameters);

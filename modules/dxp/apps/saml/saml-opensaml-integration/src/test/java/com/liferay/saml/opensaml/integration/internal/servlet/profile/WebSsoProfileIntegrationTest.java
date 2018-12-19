@@ -466,7 +466,6 @@ public class WebSsoProfileIntegrationTest extends BaseSamlTestCase {
 				SamlSpIdpConnectionLocalService.class);
 
 		SamlSpIdpConnection samlSpIdpConnection = new SamlSpIdpConnectionImpl();
-
 		metadataManagerImpl = new MetadataManagerImpl();
 
 		metadataManagerImpl.setCredentialResolver(credentialResolver);
@@ -1139,7 +1138,7 @@ public class WebSsoProfileIntegrationTest extends BaseSamlTestCase {
 
 		Credential credential = getCredential(entityId);
 
-		OpenSamlUtil.signObject(assertion, credential);
+		OpenSamlUtil.signObject(assertion, credential, null);
 
 		MockHttpServletRequest mockHttpServletRequest =
 			getMockHttpServletRequest(ACS_URL);

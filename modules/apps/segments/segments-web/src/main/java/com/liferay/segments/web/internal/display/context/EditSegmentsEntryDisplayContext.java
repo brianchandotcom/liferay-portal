@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.service.OrganizationLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.segments.criteria.Criteria;
@@ -79,9 +80,7 @@ public class EditSegmentsEntryDisplayContext {
 	public List<DropdownItem> getActionDropdownItems() throws PortalException {
 		SegmentsEntry segmentsEntry = getSegmentsEntry();
 
-		if ((segmentsEntry == null) ||
-			Validator.isNotNull(segmentsEntry.getFilterString())) {
-
+		if ((segmentsEntry == null) || isCriteriaConfigured()) {
 			return new DropdownItemList();
 		}
 
@@ -192,7 +191,7 @@ public class EditSegmentsEntryDisplayContext {
 			return organizationSearchContainer;
 		}
 
-		if (Validator.isNull(segmentsEntry.getFilterString())) {
+		if (!isCriteriaConfigured()) {
 			organizationSearchContainer.setRowChecker(
 				new EmptyOnClickRowChecker(_renderResponse));
 		}
@@ -353,7 +352,7 @@ public class EditSegmentsEntryDisplayContext {
 			return userSearchContainer;
 		}
 
-		if (Validator.isNull(segmentsEntry.getFilterString())) {
+		if (!isCriteriaConfigured()) {
 			userSearchContainer.setRowChecker(
 				new EmptyOnClickRowChecker(_renderResponse));
 		}
@@ -400,28 +399,18 @@ public class EditSegmentsEntryDisplayContext {
 		return userSearchContainer.getTotal();
 	}
 
+	public boolean isCriteriaConfigured() throws PortalException {
+		Criteria criteria = getCriteria();
+
+		return MapUtil.isNotEmpty(criteria.getCriterionMap());
+	}
+
 	public boolean isSelectable() throws PortalException {
-		SegmentsEntry segmentsEntry = getSegmentsEntry();
-
-		if ((segmentsEntry != null) &&
-			Validator.isNotNull(segmentsEntry.getFilterString())) {
-
-			return false;
-		}
-
-		return true;
+		return !isCriteriaConfigured();
 	}
 
 	public boolean showCreationMenu() throws PortalException {
-		SegmentsEntry segmentsEntry = getSegmentsEntry();
-
-		if ((segmentsEntry != null) &&
-			Validator.isNotNull(segmentsEntry.getFilterString())) {
-
-			return false;
-		}
-
-		return true;
+		return !isCriteriaConfigured();
 	}
 
 	protected PortletURL getPortletURL(String tabs1) {

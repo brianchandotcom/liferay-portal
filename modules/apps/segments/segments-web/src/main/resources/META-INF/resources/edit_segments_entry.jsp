@@ -63,7 +63,7 @@ renderResponse.setTitle(editSegmentsEntryDisplayContext.getTitle(locale));
 
 				<aui:input checked="<%= (segmentsEntry == null) ? false : segmentsEntry.isActive() %>" name="active" type="toggle-switch" />
 
-				<aui:input checked="<%= (segmentsEntry != null) && Validator.isNotNull(segmentsEntry.getFilterString()) %>" disabled="<%= segmentsEntry != null %>" name="dynamic" type="toggle-switch" />
+				<aui:input checked="<%= editSegmentsEntryDisplayContext.isCriteriaConfigured() %>" disabled="<%= segmentsEntry != null %>" name="dynamic" type="toggle-switch" />
 
 				<div id="<portlet:namespace />criteriaWrapper">
 

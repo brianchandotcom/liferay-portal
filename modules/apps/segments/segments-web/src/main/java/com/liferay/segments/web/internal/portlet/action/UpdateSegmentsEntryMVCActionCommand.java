@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.LocalizationUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
@@ -200,7 +201,7 @@ public class UpdateSegmentsEntryMVCActionCommand extends BaseMVCActionCommand {
 	protected void validateCriteria(Criteria criteria, boolean dynamic)
 		throws SegmentsEntryCriteriaException {
 
-		if (dynamic && Validator.isNull(criteria.getFilterString())) {
+		if (dynamic && MapUtil.isEmpty(criteria.getCriterionMap())) {
 			throw new SegmentsEntryCriteriaException();
 		}
 	}

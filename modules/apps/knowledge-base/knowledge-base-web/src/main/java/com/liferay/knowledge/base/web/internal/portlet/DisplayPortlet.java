@@ -412,7 +412,7 @@ public class DisplayPortlet extends BaseKBPortlet {
 	}
 
 	@Reference(
-		target = "(&(release.bundle.symbolic.name=com.liferay.knowledge.base.web)(release.schema.version=1.2.0))",
+		target = "(&(release.bundle.symbolic.name=com.liferay.knowledge.base.web)(&(release.schema.version>=1.2.0)(!(release.schema.version>=1.3.0))))",
 		unbind = "-"
 	)
 	protected void setRelease(Release release) {

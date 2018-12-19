@@ -17,6 +17,7 @@ package com.liferay.asset.browser.web.internal.portlet;
 import com.liferay.asset.browser.web.internal.constants.AssetBrowserPortletKeys;
 import com.liferay.asset.constants.AssetWebKeys;
 import com.liferay.asset.util.AssetHelper;
+import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
@@ -83,6 +84,13 @@ public class AssetBrowserPortlet extends MVCPortlet {
 		renderRequest.setAttribute(AssetWebKeys.ASSET_HELPER, _assetHelper);
 
 		super.doDispatch(renderRequest, renderResponse);
+	}
+
+	@Reference(
+		target = "(&(release.bundle.symbolic.name=com.liferay.asset.browser.web)(&(release.schema.version>=1.0.0)(!(release.schema.version>=1.1.0))))",
+		unbind = "-"
+	)
+	protected void setRelease(Release release) {
 	}
 
 	@Reference

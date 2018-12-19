@@ -21,6 +21,7 @@ import com.liferay.mail.reader.service.AttachmentLocalService;
 import com.liferay.mail.reader.web.util.MailManager;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.portlet.PortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
@@ -118,6 +119,13 @@ public class MailPortlet extends MVCPortlet {
 		AttachmentLocalService attachmentLocalService) {
 
 		_attachmentLocalService = attachmentLocalService;
+	}
+
+	@Reference(
+		target = "(&(release.bundle.symbolic.name=com.liferay.mail.reader.web)(&(release.schema.version>=1.0.0)(!(release.schema.version>=1.1.0))))",
+		unbind = "-"
+	)
+	protected void setRelease(Release release) {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(MailPortlet.class);

@@ -26,14 +26,6 @@ String emptyResultsMessage = ParamUtil.getString(request, "emptyResultsMessage")
 List<EmailAddress> emailAddresses = EmailAddressServiceUtil.getEmailAddresses(className, classPK);
 %>
 
-<liferay-ui:error-marker
-	key="<%= WebKeys.ERROR_SECTION %>"
-	value="additionalEmailAddresses"
-/>
-
-<liferay-ui:error exception="<%= EmailAddressException.class %>" message="please-enter-a-valid-email-address" />
-<liferay-ui:error key="<%= NoSuchListTypeException.class.getName() + className + ListTypeConstants.EMAIL_ADDRESS %>" message="please-select-a-type" />
-
 <h3 class="autofit-row sheet-subtitle">
 	<span class="autofit-col autofit-col-expand">
 		<span class="heading-text"><liferay-ui:message key="additional-email-addresses" /></span>

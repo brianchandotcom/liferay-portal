@@ -52,18 +52,6 @@ List<Address> addresses = AddressServiceUtil.getAddresses(className, classPK);
 	</h2>
 </div>
 
-<liferay-ui:error-marker
-	key="<%= WebKeys.ERROR_SECTION %>"
-	value="services"
-/>
-
-<liferay-ui:error exception="<%= AddressCityException.class %>" message="please-enter-a-valid-city" />
-<liferay-ui:error exception="<%= AddressStreetException.class %>" message="please-enter-a-valid-street" />
-<liferay-ui:error exception="<%= AddressZipException.class %>" message="please-enter-a-valid-postal-code" />
-<liferay-ui:error exception="<%= NoSuchCountryException.class %>" message="please-select-a-country" />
-<liferay-ui:error key="<%= NoSuchListTypeException.class.getName() + className + ListTypeConstants.ADDRESS %>" message="please-select-a-type" />
-<liferay-ui:error exception="<%= NoSuchRegionException.class %>" message="please-select-a-region" />
-
 <c:if test="<%= addresses.isEmpty() %>">
 	<div class="contact-information-empty-results-message-wrapper">
 		<liferay-ui:empty-result-message

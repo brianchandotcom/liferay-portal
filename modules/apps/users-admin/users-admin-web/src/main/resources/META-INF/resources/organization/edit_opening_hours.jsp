@@ -33,6 +33,8 @@ if (orgLaborId > 0L) {
 	<aui:input name="primaryKey" type="hidden" value="<%= orgLaborId %>" />
 	<aui:input name="listType" type="hidden" value="<%= ListTypeConstants.ORGANIZATION_SERVICE %>" />
 
+	<liferay-ui:error key="<%= NoSuchListTypeException.class.getName() + Organization.class.getName() + ListTypeConstants.ORGANIZATION_SERVICE %>" message="please-select-a-type" />
+
 	<aui:select label="type-of-service" listType="<%= ListTypeConstants.ORGANIZATION_SERVICE %>" name='<%= "orgLaborTypeId" %>' />
 
 	<table border="0">

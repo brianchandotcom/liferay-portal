@@ -18,7 +18,9 @@ import com.liferay.contacts.web.internal.constants.ContactsPortletKeys;
 
 import javax.portlet.Portlet;
 
+import com.liferay.portal.kernel.model.Release;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Drew Brokke
@@ -46,4 +48,12 @@ import org.osgi.service.component.annotations.Component;
 	service = Portlet.class
 )
 public class ProfilePortlet extends ContactsCenterPortlet {
+
+	@Reference(
+		target = "(&(release.bundle.symbolic.name=com.liferay.contacts.web)(&(release.schema.version>=1.0.1)(!(release.schema.version>=1.1.0))))",
+		unbind = "-"
+	)
+	protected void setRelease(Release release) {
+	}
+
 }

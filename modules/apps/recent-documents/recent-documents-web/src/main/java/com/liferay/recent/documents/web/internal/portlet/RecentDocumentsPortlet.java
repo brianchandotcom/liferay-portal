@@ -50,7 +50,7 @@ import org.osgi.service.component.annotations.Reference;
 public class RecentDocumentsPortlet extends MVCPortlet {
 
 	@Reference(
-		target = "(&(release.bundle.symbolic.name=com.liferay.recent.documents.web)(release.schema.version=1.0.1))",
+		target = "(&(release.bundle.symbolic.name=com.liferay.recent.documents.web)(&(release.schema.version>=1.0.1)(!(release.schema.version>=1.1.0))))",
 		unbind = "-"
 	)
 	protected void setRelease(Release release) {

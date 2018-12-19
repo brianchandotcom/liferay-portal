@@ -56,6 +56,7 @@ import com.liferay.portal.kernel.model.EmailAddress;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.Phone;
+import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.RoleConstants;
 import com.liferay.portal.kernel.model.User;
@@ -1122,6 +1123,13 @@ public class ContactsCenterPortlet extends MVCPortlet {
 				UserNotificationDeliveryConstants.TYPE_WEBSITE, true,
 				notificationEventJSONObject);
 		}
+	}
+
+	@Reference(
+		target = "(&(release.bundle.symbolic.name=com.liferay.contacts.web)(&(release.schema.version>=1.0.1)(!(release.schema.version>=1.1.0))))",
+		unbind = "-"
+	)
+	protected void setRelease(Release release) {
 	}
 
 	protected void updateAdditionalEmailAddresses(ActionRequest actionRequest)

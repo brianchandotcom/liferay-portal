@@ -32,13 +32,63 @@ class EditTags extends Component {
 		];
 	}
 
+	attached() {
+		this._fetchTagsData();
+	}
+
 	close() {
 		this.refs.modal.visible = false;
-		this.emptyState = true;
 	}
 
 	open() {
 		this.refs.modal.visible = true;
+		this._fetchTagsData();
+	}
+
+	_fetchTagsData() {
+		this.loading = true;
+
+		let bodyData = {
+			"bulkAssetEntryCommonTagsActionModel": {
+				repositoryId: this.repositoryId,
+				selection: this.fileEntries
+			}
+		};
+
+		let body = JSON.stringify(bodyData);
+
+		let headers = new Headers();
+		headers.append('Content-Type', 'application/json');
+
+		const request = {
+			body,
+			credentials: 'include',
+			headers,
+			method: 'POST'
+		};
+
+		fetch(this.urlTags, request)
+			.then(
+				response => response.json()
+			)
+			.then(
+				response => {
+					var responseData = response.bulkAssetEntryCommonTagsModel;
+
+					if (responseData) {
+						this.loading = false;
+						this.commonTags = responseData.tagNames;
+						this.description = responseData.description;
+					}
+				}
+			)
+			.catch(
+				(xhr) => {
+					this.close();
+					//TODO open toast error
+				}
+			);
+
 	}
 
 }
@@ -47,7 +97,7 @@ EditTags.STATE = {
 	/**
 	 * Tags that want to be edited.
 	 *
-	 * @type {String}
+	 * @type {List<String>}
 	 */
 	commonTags: Config.array().value([]),
 
@@ -57,7 +107,18 @@ EditTags.STATE = {
 	 */
 	description: Config.string(),
 
-	emptyState: Config.bool().value(true).internal(),
+	/**
+	 * List of selected file entries.
+	 *
+	 * @type {List<String>}
+	 */
+	fileEntries: Config.array().required(),
+
+	/**
+	 * TODO
+	 * @type {Boolean}
+	 */
+	loading: Config.bool().value(false).internal(),
 
 	/**
 	 * Flag that indicate if multiple
@@ -68,12 +129,26 @@ EditTags.STATE = {
 	multiple: Config.bool().value(false),
 
 	/**
+	 * RepositoryId
+	 * @type {Number}
+	 */
+	repositoryId: Config.number().required(),
+
+	/**
 	 * Path to images.
 	 * @instance
 	 * @memberof ManageCollaborators
 	 * @type {String}
 	 */
-	spritemap: Config.string().required()
+	spritemap: Config.string().required(),
+
+	/**
+	 * Url to backend service that provides
+	 * the common tags info.
+	 *
+	 * @type {String}
+	 */
+	urlTags: Config.string().required()
 }
 
 // Register component

@@ -101,6 +101,10 @@ public abstract class BaseClayTag extends TemplateRendererTag {
 		putValue("data", data);
 	}
 
+	public void setDefaultEventHandler(String defaultEventHandler) {
+		putValue("defaultEventHandler", defaultEventHandler);
+	}
+
 	public void setElementClasses(String elementClasses) {
 		putValue("elementClasses", elementClasses);
 	}

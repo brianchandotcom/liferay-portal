@@ -69,6 +69,7 @@ import com.liferay.trash.test.util.WhenIsUpdatableBaseModel;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -243,6 +244,12 @@ public class DLFileEntryTrashHandlerTest
 		catch (com.liferay.trash.kernel.exception.RestoreEntryException ree) {
 			throw new RestoreEntryException();
 		}
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testTrashParentIndexable() throws Exception {
 	}
 
 	@Override

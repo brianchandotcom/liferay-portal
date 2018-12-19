@@ -188,6 +188,18 @@ public class DLFileEntrySearchTest extends BaseSearchTestCase {
 	public void testSearchAttachments() throws Exception {
 	}
 
+	@Ignore
+	@Override
+	@Test
+	public void testSearchMyEntries() throws Exception {
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testSearchRecentEntries() throws Exception {
+	}
+
 	@Test
 	public void testSearchTikaRawMetadata() throws Exception {
 		ServiceContext serviceContext =

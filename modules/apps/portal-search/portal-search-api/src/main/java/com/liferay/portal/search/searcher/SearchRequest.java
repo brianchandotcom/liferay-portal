@@ -16,6 +16,8 @@ package com.liferay.portal.search.searcher;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.search.Query;
+
 /**
  * Holds parameters to be used when performing a search.
  *
@@ -25,6 +27,15 @@ import aQute.bnd.annotation.ProviderType;
  */
 @ProviderType
 public interface SearchRequest {
+
+	/**
+	 * Provides a secondary query to reorder the top documents returned.
+	 *
+	 * @return the rescore query
+	 *
+	 * @review
+	 */
+	public Query getRescoreQuery();
 
 	/**
 	 * Enables explanation for each hit on how its score was computed.

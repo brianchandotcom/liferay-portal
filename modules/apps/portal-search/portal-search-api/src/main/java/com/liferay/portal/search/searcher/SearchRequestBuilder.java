@@ -16,6 +16,8 @@ package com.liferay.portal.search.searcher;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.search.Query;
+
 /**
  * Builds a search request to be used when performing a search.
  *
@@ -66,5 +68,15 @@ public interface SearchRequestBuilder {
 	 */
 	public SearchRequestBuilder includeResponseString(
 		boolean includeResponseString);
+
+	/**
+	 * Provides a secondary query to reorder the top documents returned.
+	 *
+	 * @param rescoreQuery the rescore query
+	 * @return the same builder
+	 *
+	 * @review
+	 */
+	public SearchRequestBuilder rescoreQuery(Query rescoreQuery);
 
 }

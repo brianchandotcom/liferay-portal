@@ -302,11 +302,6 @@ public class SegmentsEntryWrapper implements SegmentsEntry,
 		return _segmentsEntry.getExpandoBridge();
 	}
 
-	@Override
-	public String getFilterString() {
-		return _segmentsEntry.getFilterString();
-	}
-
 	/**
 	* Returns the group ID of this segments entry.
 	*

@@ -21,6 +21,7 @@ import com.liferay.fragment.service.FragmentEntryLocalServiceUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Repository;
@@ -35,6 +36,38 @@ import java.util.List;
  * @author Eudaldo Alonso
  */
 public class FragmentCollectionImpl extends FragmentCollectionBaseImpl {
+
+	@Override
+	public boolean hasResources() throws PortalException {
+		Repository repository =
+			PortletFileRepositoryUtil.fetchPortletRepository(
+				getGroupId(), FragmentPortletKeys.FRAGMENT);
+
+		if (repository == null) {
+			return false;
+		}
+
+		Folder folder = null;
+
+		try {
+			folder = PortletFileRepositoryUtil.getPortletFolder(
+				repository.getRepositoryId(), repository.getDlFolderId(),
+				String.valueOf(getFragmentCollectionId()));
+		}
+		catch (Exception e) {
+			return false;
+		}
+
+		int fileEntriesCount =
+			PortletFileRepositoryUtil.getPortletFileEntriesCount(
+				getGroupId(), folder.getFolderId());
+
+		if (fileEntriesCount <= 0) {
+			return false;
+		}
+
+		return true;
+	}
 
 	@Override
 	public void populateZipWriter(ZipWriter zipWriter) throws Exception {

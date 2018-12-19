@@ -15,6 +15,7 @@
 package com.liferay.content.space.apio.client.test;
 
 import com.liferay.content.space.apio.client.test.activator.ContentSpaceTestActivator;
+import com.liferay.content.space.apio.client.test.util.ContentSpaceApioTestUtil;
 import com.liferay.oauth2.provider.test.util.OAuth2ProviderTestUtil;
 import com.liferay.portal.apio.test.util.ApioClientBuilder;
 
@@ -159,6 +160,10 @@ public class ContentSpaceApioTest {
 
 	@Test
 	public void testGetContentSpace() {
+		String contentSpaceHref = ContentSpaceApioTestUtil.getContentSpaceHref(
+			_rootEndpointURL.toExternalForm(),
+			ContentSpaceTestActivator.CONTENT_SPACE_NAME);
+
 		ApioClientBuilder.given(
 		).basicAuth(
 			"test@liferay.com", "test"
@@ -166,13 +171,7 @@ public class ContentSpaceApioTest {
 			"Accept", "application/hal+json"
 		).when(
 		).get(
-			_rootEndpointURL.toExternalForm()
-		).follow(
-			"_links.content-space.href"
-		).follow(
-			"_embedded.ContentSpace.find {it.name == '" +
-				ContentSpaceTestActivator.CONTENT_SPACE_NAME +
-					"'}._links.self.href"
+			contentSpaceHref
 		).then(
 		).statusCode(
 			200

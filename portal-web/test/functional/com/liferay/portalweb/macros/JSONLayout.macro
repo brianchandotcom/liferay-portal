@@ -24,7 +24,7 @@ definition {
 				-d name=${layoutName} \
 				-d title= \
 				-d description= \
-				-d type=portlet \
+				-d type=${type} \
 				-d hidden=false \
 				-d friendlyURL=
 		''';
@@ -86,13 +86,18 @@ definition {
 			fail("Please set 'layoutName'.");
 		}
 
+		if (!(isSet(type))) {
+			var type = "portlet";
+		}
+
 		var groupId = JSONGroup._getSiteIdByGroupName(groupName = "${groupName}");
 
 		JSONLayout._addLayout(
 			groupId = "${groupId}",
 			layoutName = "${layoutName}",
 			parentLayoutName = "${parentLayoutName}",
-			privateLayout = "true"
+			privateLayout = "true",
+			type = "${type}"
 		);
 	}
 
@@ -106,13 +111,18 @@ definition {
 			fail("Please set 'layoutName'.");
 		}
 
+		if (!(isSet(type))) {
+			var type = "portlet";
+		}
+
 		var groupId = JSONGroup._getGroupIdByName(groupName = "${groupName}");
 
 		JSONLayout._addLayout(
 			groupId = "${groupId}",
 			layoutName = "${layoutName}",
 			parentLayoutName = "${parentLayoutName}",
-			privateLayout = "true"
+			privateLayout = "true",
+			type = "${type}"
 		);
 	}
 
@@ -126,13 +136,18 @@ definition {
 			fail("Please set 'layoutName'.");
 		}
 
+		if (!(isSet(type))) {
+			var type = "portlet";
+		}
+
 		var groupId = JSONGroup._getSiteIdByGroupName(groupName = "${groupName}");
 
 		JSONLayout._addLayout(
 			groupId = "${groupId}",
 			layoutName = "${layoutName}",
 			parentLayoutName = "${parentLayoutName}",
-			privateLayout = "false"
+			privateLayout = "false",
+			type = "${type}"
 		);
 	}
 
@@ -146,13 +161,18 @@ definition {
 			fail("Please set 'layoutName'.");
 		}
 
+		if (!(isSet(type))) {
+			var type = "portlet";
+		}
+
 		var groupId = JSONGroup._getGroupIdByName(groupName = "${groupName}");
 
 		JSONLayout._addLayout(
 			groupId = "${groupId}",
 			layoutName = "${layoutName}",
 			parentLayoutName = "${parentLayoutName}",
-			privateLayout = "false"
+			privateLayout = "false",
+			type = "${type}"
 		);
 	}
 }

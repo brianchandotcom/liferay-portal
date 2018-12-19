@@ -88,7 +88,32 @@ class EditTags extends Component {
 					//TODO open toast error
 				}
 			);
+	}
 
+	/**
+	 * Transforms the tags list in the object needed
+	 * for the ClayMultiSelect component.
+	 *
+	 * @param {List<String>} commonTags
+	 * @return {List<{label, value}>} new commonTags object list
+	 */
+	_setCommonTags(commonTags) {
+		let commonTagsObjList = [];
+
+		if (commonTags.length > 0) {
+			commonTags.forEach(
+				tag => {
+					let tagObj = {
+						"label": tag,
+						"value": tag
+					};
+
+					commonTagsObjList.push(tagObj);
+				}
+			);
+		}
+
+		return commonTagsObjList;
 	}
 
 }
@@ -99,7 +124,7 @@ EditTags.STATE = {
 	 *
 	 * @type {List<String>}
 	 */
-	commonTags: Config.array().value([]),
+	commonTags: Config.array().setter('_setCommonTags').value([]),
 
 	/**
 	 * Description

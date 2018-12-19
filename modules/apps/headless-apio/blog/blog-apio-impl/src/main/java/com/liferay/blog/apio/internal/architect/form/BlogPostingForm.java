@@ -52,7 +52,7 @@ public class BlogPostingForm implements BlogPosting {
 		).addOptionalDate(
 			"dateModified", BlogPostingForm::setModifiedDate
 		).addOptionalDate(
-			"datePublished", BlogPostingForm::setDatePublished
+			"datePublished", BlogPostingForm::setPublishedDate
 		).addOptionalLinkedModel(
 			"creator", PersonIdentifier.class, BlogPostingForm::setCreatorId
 		).addOptionalLinkedModel(
@@ -153,9 +153,9 @@ public class BlogPostingForm implements BlogPosting {
 	 * @return the display date, if present; today's date otherwise
 	 */
 	@Override
-	public Date getDatePublished() {
+	public Date getPublishedDate() {
 		return Optional.ofNullable(
-			_datePublished
+			_publishedDate
 		).orElseGet(
 			Date::new
 		);
@@ -228,8 +228,8 @@ public class BlogPostingForm implements BlogPosting {
 		_creatorId = creatorId;
 	}
 
-	public void setDatePublished(Date datePublished) {
-		_datePublished = datePublished;
+	public void setPublishedDate(Date publishedDate) {
+		_publishedDate = publishedDate;
 	}
 
 	public void setDescription(String description) {
@@ -265,7 +265,7 @@ public class BlogPostingForm implements BlogPosting {
 	private List<Long> _categories;
 	private Date _createDate;
 	private Long _creatorId;
-	private Date _datePublished;
+	private Date _publishedDate;
 	private String _description;
 	private String _friendlyURLPath;
 	private String _headline;

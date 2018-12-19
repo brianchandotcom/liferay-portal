@@ -386,7 +386,47 @@ public class FolderApioTest {
 		);
 	}
 
+	@Test
+	public void testGetSubfolders() {
+		String href = ApioClientBuilder.given(
+		).basicAuth(
+			"test@liferay.com", "test"
+		).header(
+			"Accept", "application/hal+json"
+		).when(
+		).get(
+			_rootEndpointURL.toExternalForm()
+		).follow(
+			"_links.content-space.href"
+		).follow(
+			"_embedded.ContentSpace.find {it.name == '" +
+				FolderTestActivator.CONTENT_SPACE_NAME +
+					"'}._links.documentsRepository.href"
+		).then(
+		).extract(
+		).path(
+			"_links.folders.href"
+		);
+
 		ApioClientBuilder.given(
+		).basicAuth(
+			"test@liferay.com", "test"
+		).header(
+			"Accept", "application/hal+json"
+		).header(
+			"Content-Type", "application/json"
+		).body(
+			"{\"description\":\"My folder description\",\"name\":\"My folder " +
+				"testGetSubfolders\"}"
+		).when(
+		).post(
+			href
+		).then(
+		).statusCode(
+			200
+		);
+
+		String subfoldersPath = ApioClientBuilder.given(
 		).basicAuth(
 			"test@liferay.com", "test"
 		).header(
@@ -405,30 +445,72 @@ public class FolderApioTest {
 		).then(
 		).statusCode(
 			200
+		).extract(
+		).path(
+			"_embedded.Folder.find {it.name == 'My folder " +
+				"testGetSubfolders'}._links.subFolders.href"
+		);
+
+		ApioClientBuilder.given(
+		).basicAuth(
+			"test@liferay.com", "test"
+		).header(
+			"Accept", "application/hal+json"
+		).header(
+			"Content-Type", "application/json"
 		).body(
-			"_embedded.Folder.find {it.name == '" +
-				FolderTestActivator.FOLDER_NAME +
-					"'}.dateCreated",
+			"{\"description\":\"My subfolder description\",\"name\":\"My " +
+				"subfolder\"}"
+		).when(
+		).post(
+			subfoldersPath
+		).then(
+		).statusCode(
+			200
+		);
+
+		ApioClientBuilder.given(
+		).basicAuth(
+			"test@liferay.com", "test"
+		).header(
+			"Accept", "application/hal+json"
+		).when(
+		).get(
+			_rootEndpointURL.toExternalForm()
+		).follow(
+			"_links.content-space.href"
+		).follow(
+			"_embedded.ContentSpace.find {it.name == '" +
+				FolderTestActivator.CONTENT_SPACE_NAME +
+					"'}._links.documentsRepository.href"
+		).follow(
+			"_links.folders.href"
+		).follow(
+			"_embedded.Folder.find {it.name == 'My folder " +
+				"testGetSubfolders'}._links.subFolders.href"
+		).then(
+		).statusCode(
+			200
+		).body(
+			"_embedded.Folder.find {it.name == 'My subfolder'}.dateCreated",
 			IsNull.notNullValue()
 		).body(
-			"_embedded.Folder.find {it.name == '" +
-				FolderTestActivator.FOLDER_NAME +
-					"'}.dateModified",
+			"_embedded.Folder.find {it.name == 'My subfolder'}.dateModified",
 			IsNull.notNullValue()
 		).body(
-			"_embedded.Folder.find {it.name == '" +
-				FolderTestActivator.FOLDER_NAME +
-					"'}._links.documents",
+			"_embedded.Folder.find {it.name == 'My subfolder'}.description",
+			Matchers.equalTo("My subfolder description")
+		).body(
+			"_embedded.Folder.find {it.name == 'My subfolder'}._links." +
+				"documents",
 			IsNull.notNullValue()
 		).body(
-			"_embedded.Folder.find {it.name == '" +
-				FolderTestActivator.FOLDER_NAME +
-					"'}._links.self.href",
+			"_embedded.Folder.find {it.name == 'My subfolder'}._links.self." +
+				"href",
 			IsNull.notNullValue()
 		).body(
-			"_embedded.Folder.find {it.name == '" +
-				FolderTestActivator.FOLDER_NAME +
-					"'}._links.subFolders",
+			"_embedded.Folder.find {it.name == 'My subfolder'}._links." +
+				"subFolders",
 			IsNull.notNullValue()
 		);
 	}

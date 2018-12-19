@@ -133,7 +133,23 @@ renderResponse.setTitle((structure == null) ? LanguageUtil.get(request, "new-ele
 			showPagination="<%= false %>"
 		/>
 
-		<aui:script>
+		<liferay-util:html-top
+			outputKey="loadDDMFieldTypes"
+		>
+			<aui:script use="liferay-ddm-form-renderer-types,liferay-ddm-soy-template-util">
+				Liferay.DDM.SoyTemplateUtil.loadModules(
+					function() {
+						Liferay.DDM.Renderer.FieldTypes.register(<%= ddmFormAdminDisplayContext.getDDMFormFieldTypesJSONArray() %>);
+
+						Liferay.DMMFieldTypesReady = true;
+
+						Liferay.fire('DMMFieldTypesReady');
+					}
+				);
+			</aui:script>
+		</liferay-util:html-top>
+
+		<aui:script use="liferay-ddm-form-portlet">
 			Liferay.namespace('DDM').FormSettings = {
 				portletNamespace: '<portlet:namespace />'
 			};
@@ -144,34 +160,17 @@ renderResponse.setTitle((structure == null) ? LanguageUtil.get(request, "new-ele
 					if (event.formName === '<portlet:namespace />editForm') {
 						initHandler.detach();
 
-						var fieldTypes = <%= ddmFormAdminDisplayContext.getDDMFormFieldTypesJSONArray() %>;
-
-						var systemFieldModules = fieldTypes.filter(
-							function(item) {
-								return item.system;
-							}
-						).map(
-							function(item) {
-								return item.javaScriptModule;
-							}
-						);
-
-						Liferay.provide(
-							window,
-							'<portlet:namespace />init',
-							function() {
-								Liferay.DDM.SoyTemplateUtil.loadModules(
-									function() {
-										Liferay.DDM.Renderer.FieldTypes.register(fieldTypes);
-
-										<portlet:namespace />registerFormPortlet(event.form);
-									}
-								);
-							},
-							['liferay-ddm-form-portlet', 'liferay-ddm-soy-template-util'].concat(systemFieldModules)
-						);
-
-						<portlet:namespace />init();
+						if (Liferay.DMMFieldTypesReady) {
+							<portlet:namespace />registerFormPortlet(event.form);
+						}
+						else {
+							Liferay.onceAfter(
+								'DMMFieldTypesReady',
+								function() {
+									<portlet:namespace />registerFormPortlet(event.form);
+								}
+							);
+						}
 					}
 				}
 			);

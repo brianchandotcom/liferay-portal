@@ -256,6 +256,22 @@ long formInstanceId = ddmFormDisplayContext.getFormInstanceId();
 						</c:otherwise>
 					</c:choose>
 				</aui:script>
+
+				<liferay-util:html-top
+					outputKey="loadDDMFieldTypes"
+				>
+					<aui:script use="liferay-ddm-form-renderer-types,liferay-ddm-soy-template-util">
+						Liferay.DDM.SoyTemplateUtil.loadModules(
+							function() {
+								Liferay.DDM.Renderer.FieldTypes.register(<%= ddmFormDisplayContext.getDDMFormFieldTypesJSONArray() %>);
+
+								Liferay.DMMFieldTypesReady = true;
+
+								Liferay.fire('DMMFieldTypesReady');
+							}
+						);
+					</aui:script>
+				</liferay-util:html-top>
 			</c:when>
 			<c:otherwise>
 				<div class="alert alert-warning">

@@ -121,5 +121,21 @@ if (ddmFormInstance != null) {
 				/>
 			</c:otherwise>
 		</c:choose>
+
+		<liferay-util:html-top
+			outputKey="loadDDMFieldTypes"
+		>
+			<aui:script use="liferay-ddm-form-renderer-types,liferay-ddm-soy-template-util">
+				Liferay.DDM.SoyTemplateUtil.loadModules(
+					function() {
+						Liferay.DDM.Renderer.FieldTypes.register(<%= DDMFormTaglibUtil.getDDMFormFieldTypesJSONArray() %>);
+
+						Liferay.DMMFieldTypesReady = true;
+
+						Liferay.fire('DMMFieldTypesReady');
+					}
+				);
+			</aui:script>
+		</liferay-util:html-top>
 	</c:otherwise>
 </c:choose>

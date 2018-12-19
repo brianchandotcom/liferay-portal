@@ -15,10 +15,10 @@
 package com.liferay.microblogs.web.internal.portlet;
 
 import com.liferay.microblogs.constants.MicroblogsPortletKeys;
+import com.liferay.portal.kernel.model.Release;
 
 import javax.portlet.Portlet;
 
-import com.liferay.portal.kernel.model.Release;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 

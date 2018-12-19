@@ -580,10 +580,8 @@ that may or may not be enforced with a unique index at the database level. Case
 			<@finderQPos />
 
 			if (orderByComparator != null) {
-				Object[] objs = orderByComparator.getOrderByConditionValues(${entity.varName});
-
-				for (Object obj : objs) {
-					qPos.add(obj);
+				for (Object curValue : orderByComparator.getOrderByConditionValues(${entity.varName})) {
+					qPos.add(curValue);
 				}
 			}
 
@@ -912,10 +910,8 @@ that may or may not be enforced with a unique index at the database level. Case
 					<@finderQPos />
 
 					if (orderByComparator != null) {
-						Object[] objs = orderByComparator.getOrderByConditionValues(${entity.varName});
-
-						for (Object obj : objs) {
-							qPos.add(obj);
+						for (Object curValue : orderByComparator.getOrderByConditionValues(${entity.varName})) {
+							qPos.add(curValue);
 						}
 					}
 
@@ -1049,10 +1045,8 @@ that may or may not be enforced with a unique index at the database level. Case
 					<@finderQPos />
 
 					if (orderByComparator != null) {
-						Object[] objs = orderByComparator.getOrderByConditionValues(${entity.varName});
-
-						for (Object obj : objs) {
-							qPos.add(obj);
+						for (Object curValue : orderByComparator.getOrderByConditionValues(${entity.varName})) {
+							qPos.add(curValue);
 						}
 					}
 

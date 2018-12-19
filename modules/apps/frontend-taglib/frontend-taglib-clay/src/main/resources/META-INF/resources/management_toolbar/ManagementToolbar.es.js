@@ -11,21 +11,6 @@ import {EventEmitterProxy} from 'metal-events';
 
 import templates from './ManagementToolbar.soy';
 
-const UI_ACTIONS = [
-	'actionItemClicked',
-	'clearButtonClicked',
-	'creationButtonClicked',
-	'creationMenuItemClicked',
-	'creationMenuMoreButtonClicked',
-	'filterDoneClicked',
-	'filterItemClicked',
-	'infoButtonClicked',
-	'search',
-	'selectPageCheckboxChanged',
-	'sortingButtonClicked',
-	'viewTypeItemClicked'
-];
-
 /**
  * Metal ManagementToolbar component.
  * @review
@@ -43,11 +28,6 @@ class ManagementToolbar extends ClayComponent {
 
 		new EventEmitterProxy(this.refs.managementToolbar, this);
 
-		this.on(
-			UI_ACTIONS,
-			this._handleUIAction.bind(this)
-		);
-
 		Liferay.componentReady(this.searchContainerId).then(
 			searchContainer => {
 				this._eventHandler = [
@@ -57,6 +37,14 @@ class ManagementToolbar extends ClayComponent {
 				this._searchContainer = searchContainer;
 			}
 		);
+
+		if (this.actionHandler) {
+			Liferay.componentReady(this.actionHandler).then(
+				actionHandler => {
+					this.defaultEventHandler = actionHandler;
+				}
+			);
+		}
 
 		if (this.infoPanelId) {
 			let sidenavToggle = AUI.$(this.refs.managementToolbar.refs.infoButton);
@@ -178,25 +166,6 @@ class ManagementToolbar extends ClayComponent {
 			);
 		}
 	}
-
-	/**
-	 * Handles a UI action and transfers control if an actionHandler is set and
-	 * it implements the proper action handler
-	 * @param {object} event The event from the component
-	 * @private
-	 * @review
-	 */
-
-	_handleUIAction(event) {
-		const eventName = event.type;
-		const handlerName = 'on' + eventName.charAt(0).toUpperCase() + eventName.slice(1);
-
-		if (this.actionHandler) {
-			Liferay.componentReady(this.actionHandler).then(
-				actionHandler => actionHandler[handlerName] && actionHandler[handlerName](event)
-			);
-		}
-	}
 }
 
 /**
@@ -211,25 +180,12 @@ ManagementToolbar.STATE = {
 	 * Component wired to handle the different available user actions in the
 	 * ManagementToolbar component.
 	 *
-	 * The actionHandler can be either a string or an object. If it's a string,
-	 * it should represent a component ID that the toolbar can resolve through a
-	 * `Liferay.componentReady(actionHandler)` call.
-	 *
-	 * An actionHandler object can implement the following methods:
-	 *  - onActionItemClicked
-	 *  - onClearButtonClicked
-	 *  - onCreationButtonClicked
-	 *  - onCreationMenuItemClicked
-	 *  - onCreationMenuMoreButtonClicked
-	 *  - onFilterDoneClicked
-	 *  - onFilterItemClicked
-	 *  - onInfoButtonClicked
-	 *  - onSearch
-	 *  - onSelectPageCheckboxChanged
-	 *  - onSortingButtonClicked
-	 *  - onViewTypeItemClicked
+	 * The actionHandler should be a string that represent a component ID that
+	 * the toolbar can resolve through a `Liferay.componentReady(actionHandler)`
+	 * call.
 	 *
 	 * @default undefined
+	 * @deprecated use defaultEventHandler instead
 	 * @instance
 	 * @memberof ManagementToolbar
 	 * @review
@@ -291,6 +247,19 @@ ManagementToolbar.STATE = {
 			viewMoreURL: Config.string()
 		}
 	),
+
+	/**
+	 * Component wired to handle the different available user actions in the
+	 * ManagementToolbar component.
+	 *
+	 * @default undefined
+	 * @instance
+	 * @memberof ManagementToolbar
+	 * @review
+	 * @type {?(string|object|undefined)}
+	 */
+
+	defaultEventHandler: Config.object(),
 
 	/**
 	 * Flag to indicate if the managment toolbar is disabled or not.

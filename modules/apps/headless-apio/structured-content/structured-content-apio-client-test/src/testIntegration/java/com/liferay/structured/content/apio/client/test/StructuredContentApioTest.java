@@ -18,10 +18,14 @@ import com.liferay.content.space.apio.client.test.util.ContentSpaceApioTestUtil;
 import com.liferay.oauth2.provider.test.util.OAuth2ProviderTestUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.apio.test.util.ApioClientBuilder;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.structured.content.apio.client.test.activator.StructuredContentApioTestBundleActivator;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+
+import java.util.Collections;
+import java.util.List;
 
 import org.hamcrest.Matchers;
 import org.hamcrest.core.IsEqual;
@@ -91,7 +95,7 @@ public class StructuredContentApioTest {
 	}
 
 	@Test
-	public void testCreateStructuredContent() {
+	public void testCreateStructuredContent() throws Exception {
 		String contentStructureId = ApioClientBuilder.given(
 		).basicAuth(
 			"test@liferay.com", "test"
@@ -116,9 +120,9 @@ public class StructuredContentApioTest {
 		).header(
 			"Content-Type", "application/json"
 		).body(
-			"{\"contentStructure\": \"" + contentStructureId +
-				"\", \"title\": \"Example Structured Content\", \"values\": " +
-					"[{\"name\": \"MyDecimal\", \"value\": \"1.0\"}]}"
+			_read(
+				"test-create-structured-content.json",
+				Collections.singletonList(contentStructureId))
 		).when(
 		).post(
 			_structuredContentEndpointURL.toExternalForm()
@@ -134,7 +138,7 @@ public class StructuredContentApioTest {
 	}
 
 	@Test
-	public void testDeleteStructuredContent() {
+	public void testDeleteStructuredContent() throws Exception {
 		String contentStructureId = ApioClientBuilder.given(
 		).basicAuth(
 			"test@liferay.com", "test"
@@ -159,9 +163,9 @@ public class StructuredContentApioTest {
 		).header(
 			"Content-Type", "application/json"
 		).body(
-			"{\"contentStructure\": \"" + contentStructureId +
-				"\", \"title\": \"Example Structured Content\", \"values\": " +
-					"[{\"name\": \"MyDecimal\", \"value\": \"1.0\"}]}"
+			_read(
+				"test-create-structured-content.json",
+				Collections.singletonList(contentStructureId))
 		).when(
 		).post(
 			_structuredContentEndpointURL.toExternalForm()
@@ -425,7 +429,7 @@ public class StructuredContentApioTest {
 	}
 
 	@Test
-	public void testUpdateStructuredContent() {
+	public void testUpdateStructuredContent() throws Exception {
 		String contentStructureId = ApioClientBuilder.given(
 		).basicAuth(
 			"test@liferay.com", "test"
@@ -450,9 +454,9 @@ public class StructuredContentApioTest {
 		).header(
 			"Content-Type", "application/json"
 		).body(
-			"{\"contentStructure\": \"" + contentStructureId +
-				"\", \"title\": \"Example Structured Content\", \"values\": " +
-					"[{\"name\": \"MyDecimal\", \"value\": \"1.0\"}]}"
+			_read(
+				"test-create-structured-content.json",
+				Collections.singletonList(contentStructureId))
 		).when(
 		).post(
 			_structuredContentEndpointURL.toExternalForm()
@@ -470,10 +474,9 @@ public class StructuredContentApioTest {
 		).header(
 			"Content-Type", "application/json"
 		).body(
-			"{\"contentStructure\": \"" + contentStructureId +
-				"\", \"title\": \"Example Structured Content Modified\", " +
-					"\"values\": [{\"name\": \"MyDecimal\", \"value\": " +
-						"\"2.0\"}]}"
+			_read(
+				"test-update-structured-content.json",
+				Collections.singletonList(contentStructureId))
 		).when(
 		).put(
 			structuredContentHref
@@ -484,6 +487,12 @@ public class StructuredContentApioTest {
 			"_embedded.values._embedded.find {it.name == 'MyDecimal'}.value",
 			Matchers.equalTo("2.0")
 		);
+	}
+
+	private String _read(String fileName, List<String> vars) throws Exception {
+		URL url = getClass().getResource(fileName);
+
+		return String.format(StringUtil.read(url.openStream()), vars.toArray());
 	}
 
 	private URL _contentStructuresEndpointURL;

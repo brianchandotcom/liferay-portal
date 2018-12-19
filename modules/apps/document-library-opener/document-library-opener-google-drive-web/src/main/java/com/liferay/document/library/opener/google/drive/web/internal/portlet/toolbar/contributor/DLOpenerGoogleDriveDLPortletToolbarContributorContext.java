@@ -72,7 +72,8 @@ public class DLOpenerGoogleDriveDLPortletToolbarContributorContext
 				folderId = folder.getFolderId();
 			}
 
-			if (!_dlOpenerGoogleDriveManager.isConfigured() ||
+			if (!_dlOpenerGoogleDriveManager.isConfigured(
+					themeDisplay.getCompanyId()) ||
 				!ModelResourcePermissionHelper.contains(
 					_folderEntryModelResourcePermission,
 					themeDisplay.getPermissionChecker(),

@@ -93,7 +93,8 @@ public class DLOpenerGoogleDriveDLViewFileVersionDisplayContext
 		if (!isActionsVisible() ||
 			!DLOpenerGoogleDriveMimeTypes.isMimeTypeSupported(
 				fileVersion.getMimeType()) ||
-			!_dlOpenerGoogleDriveManager.isConfigured() ||
+			!_dlOpenerGoogleDriveManager.isConfigured(
+				fileVersion.getCompanyId()) ||
 			!_fileEntryModelResourcePermission.contains(
 				_permissionChecker, fileVersion.getFileEntry(),
 				ActionKeys.UPDATE)) {

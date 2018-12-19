@@ -77,7 +77,7 @@ public class EditInGoogleDriveMVCActionCommand extends BaseMVCActionCommand {
 
 		try {
 			if (_dlOpenerGoogleDriveManager.hasValidCredential(
-					themeDisplay.getUserId())) {
+					themeDisplay.getCompanyId(), themeDisplay.getUserId())) {
 
 				long fileEntryId = ParamUtil.getLong(
 					actionRequest, "fileEntryId");
@@ -254,7 +254,8 @@ public class EditInGoogleDriveMVCActionCommand extends BaseMVCActionCommand {
 
 		actionResponse.sendRedirect(
 			_dlOpenerGoogleDriveManager.getAuthorizationURL(
-				state, _oAuth2Helper.getRedirectURI(actionRequest)));
+				themeDisplay.getCompanyId(), state,
+				_oAuth2Helper.getRedirectURI(actionRequest)));
 	}
 
 	private void _saveDLOpenerGoogleDriveFileReference(

@@ -102,14 +102,14 @@ if (organization != null) {
 				<div class="sheet-section">
 					<aui:input inlineField="<%= true %>" name="siteId" type="resource" value="<%= String.valueOf(organizationGroup.getGroupId()) %>" />
 
-					<aui:field-wrapper>
+					<div class="form-group">
 						<liferay-ui:icon
 							iconCssClass="icon-cog"
 							label="<%= true %>"
 							message="manage-site"
 							url="<%= editOrganizationSiteURL.toString() %>"
 						/>
-					</aui:field-wrapper>
+					</div>
 				</div>
 			</c:if>
 
@@ -158,7 +158,7 @@ if (organization != null) {
 						<c:otherwise>
 							<c:choose>
 								<c:when test="<%= organization != null %>">
-									<aui:field-wrapper>
+									<div class="form-group">
 										<c:choose>
 											<c:when test="<%= organization.getPublicLayoutsPageCount() > 0 %>">
 												<liferay-ui:icon
@@ -174,9 +174,9 @@ if (organization != null) {
 												<liferay-ui:message key="this-organization-does-not-have-any-public-pages" />
 											</c:otherwise>
 										</c:choose>
-									</aui:field-wrapper>
+									</div>
 
-									<aui:field-wrapper>
+									<div class="form-group">
 										<c:choose>
 											<c:when test="<%= (publicLayoutSetPrototype != null) && !organizationGroup.isStaged() && hasUnlinkLayoutSetPrototypePermission %>">
 												<aui:input label='<%= LanguageUtil.format(request, "enable-propagation-of-changes-from-the-site-template-x", HtmlUtil.escape(publicLayoutSetPrototype.getName(locale)), false) %>' name="publicLayoutSetPrototypeLinkEnabled" type="checkbox" value="<%= publicLayoutSetPrototypeLinkEnabled %>" />
@@ -187,7 +187,7 @@ if (organization != null) {
 												<aui:input name="publicLayoutSetPrototypeLinkEnabled" type="hidden" value="<%= publicLayoutSetPrototypeLinkEnabled %>" />
 											</c:when>
 										</c:choose>
-									</aui:field-wrapper>
+									</div>
 								</c:when>
 							</c:choose>
 						</c:otherwise>
@@ -234,7 +234,7 @@ if (organization != null) {
 						<c:otherwise>
 							<c:choose>
 								<c:when test="<%= organization != null %>">
-									<aui:field-wrapper>
+									<div class="form-group">
 										<c:choose>
 											<c:when test="<%= organization.getPrivateLayoutsPageCount() > 0 %>">
 												<liferay-ui:icon
@@ -250,9 +250,9 @@ if (organization != null) {
 												<liferay-ui:message key="this-organization-does-not-have-any-private-pages" />
 											</c:otherwise>
 										</c:choose>
-									</aui:field-wrapper>
+									</div>
 
-									<aui:field-wrapper>
+									<div class="form-group">
 										<c:choose>
 											<c:when test="<%= (privateLayoutSetPrototype != null) && !organizationGroup.isStaged() && hasUnlinkLayoutSetPrototypePermission %>">
 												<aui:input label='<%= LanguageUtil.format(request, "enable-propagation-of-changes-from-the-site-template-x", HtmlUtil.escape(privateLayoutSetPrototype.getName(locale)), false) %>' name="privateLayoutSetPrototypeLinkEnabled" type="checkbox" value="<%= privateLayoutSetPrototypeLinkEnabled %>" />
@@ -263,7 +263,7 @@ if (organization != null) {
 												<aui:input name="privateLayoutSetPrototypeLinkEnabled" type="hidden" value="<%= privateLayoutSetPrototypeLinkEnabled %>" />
 											</c:when>
 										</c:choose>
-									</aui:field-wrapper>
+									</div>
 								</c:when>
 							</c:choose>
 						</c:otherwise>

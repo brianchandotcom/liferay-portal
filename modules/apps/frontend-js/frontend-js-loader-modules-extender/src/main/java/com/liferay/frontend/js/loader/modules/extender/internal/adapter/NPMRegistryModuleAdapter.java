@@ -5,10 +5,9 @@ import com.liferay.frontend.js.loader.modules.extender.npm.JSPackage;
 import com.liferay.frontend.js.loader.modules.extender.npm.JSPackageDependency;
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMRegistry;
 
+import java.util.Collection;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * @author Rodolfo Roza Miranda
@@ -26,8 +25,8 @@ public class NPMRegistryModuleAdapter implements JSModuleAdapter {
 	}
 
 	@Override
-	public Set<String> getDependencies() {
-		return new HashSet<>(_module.getDependencies());
+	public Collection<String> getDependencies() {
+		return _module.getDependencies();
 	}
 
 	@Override

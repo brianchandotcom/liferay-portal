@@ -4,22 +4,24 @@ import com.liferay.frontend.js.loader.modules.extender.npm.JSModuleAlias;
 import com.liferay.frontend.js.loader.modules.extender.npm.JSPackage;
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMRegistry;
 import com.liferay.petra.string.StringPool;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
 /**
  * @author Rodolfo Roza Miranda
  */
+@Component(
+	immediate = true,
+	service = JSModulesNameMapper.class
+)
 public class JSModulesNameMapper {
-
-	public JSModulesNameMapper(JSLoaderModulesTracker jsLoaderModulesTracker, NPMRegistry npmRegistry) {
-		_jsLoaderModulesTracker = jsLoaderModulesTracker;
-		_npmRegistry = npmRegistry;
-	}
 
 	public String mapModule(String module) {
 		return mapModule(module, null);
@@ -27,34 +29,31 @@ public class JSModulesNameMapper {
 
 	public String mapModule(String module, Map<String, String> contextMap) {
 
+		if (_cache.containsKey(module)) {
+			return _cache.get(module);
+		}
+
 		String matchModule = module;
 
 		if (contextMap != null) {
 			matchModule = _map(matchModule, contextMap);
 		}
 
-		return _mapWithConfig(matchModule);
+		String resolved = _map(matchModule, null);
+
+		_cache.put(module, resolved);
+
+		return resolved;
 	}
 
-	private String _mapWithConfig(String module) {
+	@Reference(unbind = "-")
+	protected void setJSLoaderModulesTracker(JSLoaderModulesTracker jsLoaderModulesTracker) {
+		_jsLoaderModulesTracker = jsLoaderModulesTracker;
+	}
 
-		Map<String, String> map = this._getExactMatchContextMap();
-
-		String match = _mapExactMatch(module, map);
-
-		if (match != null) {
-			return match;
-		}
-
-		Map<String, String> partialMatchContextMap = this._getPartialMatchContextMap();
-
-		String partialMatch = _mapPartialMatch(module, partialMatchContextMap);
-
-		if (partialMatch != null) {
-			return partialMatch;
-		}
-
-		return module;
+	@Reference(unbind = "-")
+	protected void setNPMRegistry(NPMRegistry npmRegistry) {
+		_npmRegistry = npmRegistry;
 	}
 
 	private Map<String, String> _getExactMatchContextMap() {
@@ -62,20 +61,20 @@ public class JSModulesNameMapper {
 		Collection<JSPackage> npmRegistryModules =
 			_npmRegistry.getResolvedJSPackages();
 
-		Function<JSPackage, String> valueMapper =
-			m -> m.getResolvedId() + StringPool.SLASH + m.getMainModuleName();
-
 		Map<String, String> registryModules = new HashMap<>();
 
-		for (JSPackage jsPackage: npmRegistryModules) {
+		for (JSPackage jsPackage : npmRegistryModules) {
 
-			String jsPackageValue = valueMapper.apply(jsPackage);
+			String resolvedId = jsPackage.getResolvedId();
 
-			registryModules.put(jsPackage.getResolvedId(), jsPackageValue);
+			String jsPackageValue = resolvedId + StringPool.SLASH + jsPackage.getMainModuleName();
+
+			registryModules.put(resolvedId, jsPackageValue);
 
 			for (JSModuleAlias jsModuleAlias : jsPackage.getJSModuleAliases()) {
-				String key = jsPackage.getResolvedId() + StringPool.SLASH + jsModuleAlias.getAlias();
-				String value = jsPackage.getResolvedId() + StringPool.SLASH + jsModuleAlias.getModuleName();
+				String key = resolvedId + StringPool.SLASH + jsModuleAlias.getAlias();
+				String value = resolvedId + StringPool.SLASH + jsModuleAlias.getModuleName();
+
 				registryModules.put(key, value);
 			}
 		}
@@ -84,65 +83,63 @@ public class JSModulesNameMapper {
 	}
 
 	private Map<String, String> _getPartialMatchContextMap() {
-		Collection<JSLoaderModule> loaderModules = _jsLoaderModulesTracker.getJSLoaderModules();
+		if (_jsLoaderModulesTracker.getLastModified() > _jsLoaderModulesTrackerLastModified) {
+			_partialMatchContextMap.clear();
+			_cache.clear();
 
-		Function<JSLoaderModule, String> valueMapper = m -> m.getName() + StringPool.AT + m.getVersion();
+			Collection<JSLoaderModule> loaderModules = _jsLoaderModulesTracker.getJSLoaderModules();
 
-		Map<String, String> map = loaderModules.stream()
-			.collect(Collectors.toMap(JSLoaderModule::getName, valueMapper));
+			Function<JSLoaderModule, String> valueMapper = m -> m.getName() + StringPool.AT + m.getVersion();
 
-		map.putAll(_npmRegistry.getGlobalAliases());
+			Map<String, String> map = loaderModules.stream()
+				.collect(Collectors.toMap(JSLoaderModule::getName, valueMapper));
 
-		return map;
+			_partialMatchContextMap.putAll(map);
+			_partialMatchContextMap.putAll(_npmRegistry.getGlobalAliases());
+
+			_jsLoaderModulesTrackerLastModified = _jsLoaderModulesTracker.getLastModified();
+		}
+
+		return _partialMatchContextMap;
 	}
 
 	private String _map(String module, Map<String, String> map) {
-		String match = _mapExactMatch(module, map);
+		Map<String, String> exactMap = this._getExactMatchContextMap();
+		Map<String, String> partialMap = this._getPartialMatchContextMap();
 
-		if (match != null) {
-			return match;
+		if (map != null) {
+			exactMap = map;
+			partialMap = map;
 		}
 
-		match = _mapPartialMatch(module, map);
+		for (Map.Entry<String, String> entry : exactMap.entrySet()) {
+			String alias = entry.getKey();
+			String aliasValue = entry.getValue();
 
-		if (match != null) {
-			return match;
+			if (alias.equals(module)) {
+				return aliasValue;
+			}
+		}
+
+		for (Map.Entry<String, String> entry : partialMap.entrySet()) {
+			String alias = entry.getKey();
+			String aliasValue = entry.getValue();
+
+			if (alias.equals(module) || module.startsWith(alias + StringPool.SLASH)) {
+				return aliasValue + module.substring(alias.length());
+			}
 		}
 
 		return module;
 	}
 
-	private String _mapExactMatch(String module, Map<String, String> map) {
-		if (map != null) {
-			for (Map.Entry<String, String> entry : map.entrySet()) {
-				String alias = entry.getKey();
-				String aliasValue = entry.getValue();
+	private final Map<String, String> _cache = new ConcurrentHashMap<>();
 
-				if (alias.equals(module)) {
-					return aliasValue;
-				}
-			}
-		}
+	private final Map<String, String> _partialMatchContextMap = new ConcurrentHashMap<>();
 
-		return null;
-	}
+	private JSLoaderModulesTracker _jsLoaderModulesTracker;
 
-	private String _mapPartialMatch(String module, Map<String, String> map) {
-		if (map != null) {
-			for (Map.Entry<String, String> entry : map.entrySet()) {
-				String alias = entry.getKey();
-				String aliasValue = entry.getValue();
+	private long _jsLoaderModulesTrackerLastModified = 0L;
 
-				if (alias.equals(module) || module.startsWith(alias + StringPool.SLASH)) {
-					return aliasValue + module.substring(alias.length());
-				}
-			}
-		}
-
-		return null;
-	}
-
-	private final JSLoaderModulesTracker _jsLoaderModulesTracker;
-
-	private final NPMRegistry _npmRegistry;
+	private NPMRegistry _npmRegistry;
 }

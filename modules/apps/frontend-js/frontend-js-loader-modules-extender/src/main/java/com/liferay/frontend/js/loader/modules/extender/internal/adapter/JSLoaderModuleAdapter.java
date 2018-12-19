@@ -9,6 +9,7 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.Validator;
 
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
@@ -31,7 +32,7 @@ public class JSLoaderModuleAdapter implements JSModuleAdapter {
 	}
 
 	@Override
-	public Set<String> getDependencies() {
+	public Collection<String> getDependencies() {
 		return _dependencies;
 	}
 

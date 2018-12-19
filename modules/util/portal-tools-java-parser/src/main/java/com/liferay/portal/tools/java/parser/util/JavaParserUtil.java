@@ -151,15 +151,20 @@ public class JavaParserUtil {
 
 		JavaClassDefinition javaClassDefinition = new JavaClassDefinition();
 
-		if (definitionDetailAST.getType() == TokenTypes.CLASS_DEF) {
-			javaClassDefinition.setType("class");
-		}
-		else if (definitionDetailAST.getType() == TokenTypes.INTERFACE_DEF) {
-			javaClassDefinition.setType("interface");
-		}
-
 		DetailAST modifiersDetailAST = definitionDetailAST.findFirstToken(
 			TokenTypes.MODIFIERS);
+
+		String type = StringPool.BLANK;
+
+		DetailAST nextSiblingDetailAST = modifiersDetailAST.getNextSibling();
+
+		while (nextSiblingDetailAST.getType() != TokenTypes.IDENT) {
+			type += nextSiblingDetailAST.getText();
+
+			nextSiblingDetailAST = nextSiblingDetailAST.getNextSibling();
+		}
+
+		javaClassDefinition.setType(type);
 
 		javaClassDefinition.setJavaAnnotations(
 			_parseJavaAnnotations(modifiersDetailAST));

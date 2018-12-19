@@ -652,7 +652,7 @@ public class StructuredContentNestedCollectionResourcePermissionTest
 			stringMap, null, LocaleUtil.getDefault(), null, true, true,
 			serviceContext);
 
-		User user = UserTestUtil.addUser();
+		User user = UserTestUtil.addGroupAdminUser(_group);
 
 		PermissionChecker permissionChecker =
 			PermissionCheckerFactoryUtil.create(user);
@@ -666,7 +666,7 @@ public class StructuredContentNestedCollectionResourcePermissionTest
 				getThemeDisplay(_group, LocaleUtil.getDefault()),
 				Filter.emptyFilter(), Sort.emptySort());
 
-			Assert.assertEquals(0, pageItems.getTotalCount());
+			Assert.assertEquals(1, pageItems.getTotalCount());
 		}
 		finally {
 			_userLocalService.deleteUser(user);

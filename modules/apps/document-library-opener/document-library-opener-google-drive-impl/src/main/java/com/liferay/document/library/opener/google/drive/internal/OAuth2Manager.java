@@ -25,10 +25,12 @@ import com.google.api.client.util.store.MemoryDataStoreFactory;
 import com.google.api.services.drive.DriveScopes;
 
 import com.liferay.document.library.opener.google.drive.internal.configuration.DLOpenerGoogleDriveConfiguration;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -51,7 +53,7 @@ public class OAuth2Manager {
 
 	public String getAuthorizationURL(
 			long companyId, String state, String redirectUri)
-		throws Exception {
+		throws PortalException {
 
 		GoogleAuthorizationCodeFlow googleAuthorizationCodeFlow =
 			_getGoogleAuthorizationCodeFlow(companyId);
@@ -73,13 +75,18 @@ public class OAuth2Manager {
 	}
 
 	public Credential getCredential(long companyId, long userId)
-		throws Exception {
+		throws PortalException {
 
-		GoogleAuthorizationCodeFlow googleAuthorizationCodeFlow =
-			_getGoogleAuthorizationCodeFlow(companyId);
+		try {
+			GoogleAuthorizationCodeFlow googleAuthorizationCodeFlow =
+				_getGoogleAuthorizationCodeFlow(companyId);
 
-		return googleAuthorizationCodeFlow.loadCredential(
-			String.valueOf(userId));
+			return googleAuthorizationCodeFlow.loadCredential(
+				String.valueOf(userId));
+		}
+		catch (IOException ioe) {
+			throw new PortalException(ioe);
+		}
 	}
 
 	public boolean isConfigured(long companyId) {
@@ -108,7 +115,7 @@ public class OAuth2Manager {
 
 	public void requestAuthorizationToken(
 			long companyId, long userId, String code, String redirectUri)
-		throws Exception {
+		throws IOException, PortalException {
 
 		GoogleAuthorizationCodeFlow googleAuthorizationCodeFlow =
 			_getGoogleAuthorizationCodeFlow(companyId);
@@ -137,36 +144,45 @@ public class OAuth2Manager {
 
 	private GoogleAuthorizationCodeFlow _getGoogleAuthorizationCodeFlow(
 			long companyId)
-		throws ConfigurationException, GeneralSecurityException, IOException {
+		throws PortalException {
 
 		if (_googleAuthorizationCodeFlows.containsKey(companyId)) {
 			return _googleAuthorizationCodeFlows.get(companyId);
 		}
 
-		DLOpenerGoogleDriveConfiguration dlOpenerGoogleDriveConfiguration =
-			_getDlOpenerGoogleDriveConfiguration(companyId);
+		try {
+			DLOpenerGoogleDriveConfiguration dlOpenerGoogleDriveConfiguration =
+				_getDlOpenerGoogleDriveConfiguration(companyId);
 
-		GoogleAuthorizationCodeFlow.Builder googleAuthorizationCodeFlowBuilder =
-			new GoogleAuthorizationCodeFlow.Builder(
-				GoogleNetHttpTransport.newTrustedTransport(),
-				JacksonFactory.getDefaultInstance(),
-				GetterUtil.getString(
-					dlOpenerGoogleDriveConfiguration.clientId()),
-				GetterUtil.getString(
-					dlOpenerGoogleDriveConfiguration.clientSecret()),
-				Collections.singleton(DriveScopes.DRIVE_FILE));
+			GoogleAuthorizationCodeFlow.Builder
+				googleAuthorizationCodeFlowBuilder =
+					new GoogleAuthorizationCodeFlow.Builder(
+						GoogleNetHttpTransport.newTrustedTransport(),
+						JacksonFactory.getDefaultInstance(),
+						GetterUtil.getString(
+							dlOpenerGoogleDriveConfiguration.clientId()),
+						GetterUtil.getString(
+							dlOpenerGoogleDriveConfiguration.clientSecret()),
+						Collections.singleton(DriveScopes.DRIVE_FILE));
 
-		googleAuthorizationCodeFlowBuilder =
-			googleAuthorizationCodeFlowBuilder.setDataStoreFactory(
-				MemoryDataStoreFactory.getDefaultInstance());
+			googleAuthorizationCodeFlowBuilder =
+				googleAuthorizationCodeFlowBuilder.setDataStoreFactory(
+					MemoryDataStoreFactory.getDefaultInstance());
 
-		GoogleAuthorizationCodeFlow googleAuthorizationCodeFlow =
-			googleAuthorizationCodeFlowBuilder.build();
+			GoogleAuthorizationCodeFlow googleAuthorizationCodeFlow =
+				googleAuthorizationCodeFlowBuilder.build();
 
-		_googleAuthorizationCodeFlows.put(
-			companyId, googleAuthorizationCodeFlow);
+			_googleAuthorizationCodeFlows.put(
+				companyId, googleAuthorizationCodeFlow);
 
-		return googleAuthorizationCodeFlow;
+			return googleAuthorizationCodeFlow;
+		}
+		catch (GeneralSecurityException gse) {
+			throw new PrincipalException(gse);
+		}
+		catch (IOException ioe) {
+			throw new PortalException(ioe);
+		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(OAuth2Manager.class);

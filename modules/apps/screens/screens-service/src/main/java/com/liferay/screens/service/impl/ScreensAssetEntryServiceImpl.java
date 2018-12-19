@@ -88,7 +88,7 @@ public class ScreensAssetEntryServiceImpl
 		throws PortalException {
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			PortletItem.class);
+			PortletItem.class, getClassLoader());
 
 		Property property = PropertyFactoryUtil.forName("name");
 

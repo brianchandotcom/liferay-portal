@@ -63,12 +63,13 @@ public class DLSyncEventLocalServiceImpl
 	@Override
 	public List<DLSyncEvent> getLatestDLSyncEvents() {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			DLSyncEvent.class);
+			DLSyncEvent.class, getClassLoader());
 
 		Property property = PropertyFactoryUtil.forName("modifiedTime");
 
 		DynamicQuery modifiedTimeDynamicQuery =
-			DynamicQueryFactoryUtil.forClass(DLSyncEvent.class);
+			DynamicQueryFactoryUtil.forClass(
+				DLSyncEvent.class, getClassLoader());
 
 		Projection projection = ProjectionFactoryUtil.max("modifiedTime");
 

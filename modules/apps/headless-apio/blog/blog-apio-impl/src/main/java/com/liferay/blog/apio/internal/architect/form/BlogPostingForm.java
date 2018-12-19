@@ -48,11 +48,11 @@ public class BlogPostingForm implements BlogPosting {
 		).constructor(
 			BlogPostingForm::new
 		).addOptionalDate(
-			"datePublished", BlogPostingForm::setDatePublished
-		).addOptionalDate(
 			"dateCreated", BlogPostingForm::setCreateDate
 		).addOptionalDate(
 			"dateModified", BlogPostingForm::setModifiedDate
+		).addOptionalDate(
+			"datePublished", BlogPostingForm::setDatePublished
 		).addOptionalLinkedModel(
 			"creator", PersonIdentifier.class, BlogPostingForm::setCreatorId
 		).addOptionalLinkedModel(

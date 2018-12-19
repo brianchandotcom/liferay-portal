@@ -180,6 +180,8 @@ page import="javax.portlet.WindowState" %>
 <%
 LayoutsAdminDisplayContext layoutsAdminDisplayContext = new LayoutsAdminDisplayContext(liferayPortletRequest, liferayPortletResponse);
 LayoutPrototypeDisplayContext layoutPrototypeDisplayContext = new LayoutPrototypeDisplayContext(renderRequest, renderResponse, request);
+
+portletDisplay.setShowExportImportIcon(false);
 %>
 
 <%@ include file="/init-ext.jsp" %>

@@ -1335,8 +1335,8 @@ definition {
 		);
 	}
 
-	@priority = "3"
-	test UserSubscribeToBlogsAndViewEntryEmail {
+	@priority = "5"
+	test UserSubscribeToBlogsAndViewEntryEmails {
 		property test.smtp.server.enabled = "true";
 
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
@@ -1392,6 +1392,24 @@ definition {
 			recipient = "userfn userln",
 			sender = "Joe Bloggs",
 			subject = "Blogs Entry Title"
+		);
+
+		Navigator.gotoPage(pageName = "Blogs Page");
+
+		Blogs.editEntryPG(
+			entryContent = "Blogs Entry Content",
+			entryContentEdit = "Blogs Entry Content Edit",
+			entryTitle = "Blogs Entry Title",
+			entryTitleEdit = "Blogs Entry Title Edit",
+			sendEmailEntryUpdated = "true"
+		);
+
+		MockMock.viewMail(
+			asset = "Blogs Entry",
+			content = "Blogs Entry Title Edit",
+			recipient = "userfn userln",
+			sender = "Joe Bloggs",
+			subject = "Blogs Entry Title Edit"
 		);
 	}
 

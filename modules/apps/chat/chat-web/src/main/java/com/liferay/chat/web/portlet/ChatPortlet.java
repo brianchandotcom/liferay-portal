@@ -15,6 +15,7 @@
 package com.liferay.chat.web.portlet;
 
 import com.liferay.chat.constants.ChatPortletKeys;
+import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -30,6 +31,7 @@ import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Modified;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Peter Fellwock
@@ -106,6 +108,13 @@ public class ChatPortlet extends MVCPortlet {
 			StringUtil.merge(layoutStaticPortletsAll));
 
 		PropsValues.LAYOUT_STATIC_PORTLETS_ALL = layoutStaticPortletsAll;
+	}
+
+	@Reference(
+		target = "(&(release.bundle.symbolic.name=com.liferay.chat.web)(&(release.schema.version>=1.0.0)(!(release.schema.version>=1.1.0))))",
+		unbind = "-"
+	)
+	protected void setRelease(Release release) {
 	}
 
 }

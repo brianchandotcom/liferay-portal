@@ -15,6 +15,7 @@
 package com.liferay.my.subscriptions.web.internal.portlet;
 
 import com.liferay.my.subscriptions.web.internal.constants.MySubscriptionsPortletKeys;
+import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -90,6 +91,13 @@ public class MySubscriptionsPortlet extends MVCPortlet {
 
 			_subscriptionLocalService.deleteSubscription(subscription);
 		}
+	}
+
+	@Reference(
+		target = "(&(release.bundle.symbolic.name=com.liferay.my.subscriptions.web)(&(release.schema.version>=1.0.0)(!(release.schema.version>=1.1.0))))",
+		unbind = "-"
+	)
+	protected void setRelease(Release release) {
 	}
 
 	@Reference

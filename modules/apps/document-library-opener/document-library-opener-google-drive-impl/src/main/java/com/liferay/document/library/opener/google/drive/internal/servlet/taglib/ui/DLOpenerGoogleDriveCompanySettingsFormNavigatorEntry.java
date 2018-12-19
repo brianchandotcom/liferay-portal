@@ -15,6 +15,7 @@
 package com.liferay.document.library.opener.google.drive.internal.servlet.taglib.ui;
 
 import com.liferay.document.library.opener.google.drive.internal.configuration.DLOpenerGoogleDriveCompanyConfiguration;
+import com.liferay.document.library.opener.google.drive.internal.constants.DLOpenerGoogleDriveConstants;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
@@ -22,6 +23,7 @@ import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.servlet.taglib.ui.BaseJSPFormNavigatorEntry;
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorConstants;
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorEntry;
+import com.liferay.portal.kernel.settings.CompanyServiceSettingsLocator;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -81,9 +83,11 @@ public class DLOpenerGoogleDriveCompanySettingsFormNavigatorEntry
 		try {
 			request.setAttribute(
 				DLOpenerGoogleDriveCompanyConfiguration.class.getName(),
-				_configurationProvider.getCompanyConfiguration(
+				_configurationProvider.getConfiguration(
 					DLOpenerGoogleDriveCompanyConfiguration.class,
-					themeDisplay.getCompanyId()));
+					new CompanyServiceSettingsLocator(
+						themeDisplay.getCompanyId(),
+						DLOpenerGoogleDriveConstants.SERVICE_NAME)));
 
 			super.include(request, response);
 		}

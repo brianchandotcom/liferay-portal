@@ -34,8 +34,9 @@ import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderParameterSe
 					{
 						@DDMFormLayoutColumn(
 							size = 12,
-							value =
-								{"url", "inputParameters", "outputParameters"}
+							value = {
+								"url", "inputParameters", "outputParameters"
+							}
 						)
 					}
 				)

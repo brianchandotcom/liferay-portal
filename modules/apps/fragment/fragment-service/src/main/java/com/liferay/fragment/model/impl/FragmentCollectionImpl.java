@@ -40,6 +40,10 @@ public class FragmentCollectionImpl extends FragmentCollectionBaseImpl {
 
 	@Override
 	public long getResourcesFolderId() throws PortalException {
+		if (_resourcesFolderId != 0) {
+			return _resourcesFolderId;
+		}
+
 		Repository repository =
 			PortletFileRepositoryUtil.fetchPortletRepository(
 				getGroupId(), FragmentPortletKeys.FRAGMENT);
@@ -73,7 +77,9 @@ public class FragmentCollectionImpl extends FragmentCollectionBaseImpl {
 				String.valueOf(getFragmentCollectionId()), serviceContext);
 		}
 
-		return folder.getFolderId();
+		_resourcesFolderId = folder.getFolderId();
+
+		return _resourcesFolderId;
 	}
 
 	@Override
@@ -131,5 +137,7 @@ public class FragmentCollectionImpl extends FragmentCollectionBaseImpl {
 			zipWriter.addEntry(sb.toString(), fileEntry.getContentStream());
 		}
 	}
+
+	private long _resourcesFolderId;
 
 }

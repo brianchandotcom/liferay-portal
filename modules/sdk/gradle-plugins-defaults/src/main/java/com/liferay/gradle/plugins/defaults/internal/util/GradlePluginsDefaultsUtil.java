@@ -58,7 +58,7 @@ public class GradlePluginsDefaultsUtil {
 	public static final String TMP_MAVEN_REPOSITORY_DIR_NAME = ".m2-tmp";
 
 	public static final Pattern jsonVersionPattern = Pattern.compile(
-		"\\n\\t\"version\": \"(.+)\"");
+		"\\n(\\t|  )\"version\": \"(.+)\"");
 
 	public static void configureRepositories(
 		Project project, File portalRootDir) {

@@ -834,6 +834,41 @@ definition {
 		SelectFrameTop();
 	}
 
+	macro selectAssetList {
+		Portlet.gotoPortletOptions(
+			portletName = "Asset Publisher",
+			portletOption = "Configuration"
+		);
+
+		var assetListName = "${assetListName}";
+
+		SelectFrame(locator1 = "IFrame#DIALOG");
+
+		Navigator.gotoNavTab(navTab = "Asset Selection");
+
+		Panel.expandPanel(panel = "Asset Selection");
+
+		Click(locator1 = "APConfiguration#ASSET_SELECTION_ASSET_LIST");
+
+		Panel.expandPanel(panel = "Select Asset List");
+
+		Button.clickSelect();
+
+		SelectFrameTop();
+
+		SelectFrame(locator1 = "IFrame#DIALOG");
+
+		Click(locator1 = "APConfiguration#ASSET_LIST_CHOOSE_BUTTON");
+
+		SelectFrameTop();
+
+		SelectFrame(locator1 = "IFrame#DIALOG");
+
+		Button.clickSave();
+
+		SelectFrameTop();
+	}
+
 	macro viewAssetDetailsPG {
 		var key_assetTitle = "${assetTitle}";
 

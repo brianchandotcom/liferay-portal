@@ -21,6 +21,7 @@ Liferay-JS-Submodules-Bridge:\
 	clay-link,\
 	clay-management-toolbar,\
 	clay-modal,\
+	clay-multi-select,\
 	clay-navigation-bar,\
 	clay-pagination,\
 	clay-pagination-bar,\

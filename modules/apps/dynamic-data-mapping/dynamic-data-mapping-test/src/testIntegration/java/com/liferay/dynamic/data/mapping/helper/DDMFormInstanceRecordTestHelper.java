@@ -24,6 +24,7 @@ import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormValuesTestUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
@@ -36,9 +37,17 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 public class DDMFormInstanceRecordTestHelper {
 
 	public DDMFormInstanceRecordTestHelper(
-		Group group, DDMFormInstance ddmFormInstance) {
+			Group group, DDMFormInstance ddmFormInstance)
+		throws PortalException {
+
+		this(group, TestPropsValues.getUser(), ddmFormInstance);
+	}
+
+	public DDMFormInstanceRecordTestHelper(
+		Group group, User user, DDMFormInstance ddmFormInstance) {
 
 		_group = group;
+		_user = user;
 		_ddmFormInstance = ddmFormInstance;
 	}
 
@@ -72,10 +81,10 @@ public class DDMFormInstanceRecordTestHelper {
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), TestPropsValues.getUserId());
+				_group.getGroupId(), _user.getUserId());
 
 		return DDMFormInstanceRecordLocalServiceUtil.addFormInstanceRecord(
-			TestPropsValues.getUserId(), _group.getGroupId(),
+			_user.getUserId(), _group.getGroupId(),
 			_ddmFormInstance.getFormInstanceId(), ddmFormValues,
 			serviceContext);
 	}
@@ -96,5 +105,6 @@ public class DDMFormInstanceRecordTestHelper {
 
 	private final DDMFormInstance _ddmFormInstance;
 	private final Group _group;
+	private final User _user;
 
 }

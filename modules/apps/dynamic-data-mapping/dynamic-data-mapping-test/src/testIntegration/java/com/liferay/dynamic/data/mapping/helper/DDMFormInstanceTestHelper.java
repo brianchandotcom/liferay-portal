@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -100,8 +101,13 @@ public class DDMFormInstanceTestHelper {
 		return formInstanceSettingsDDMFormValues;
 	}
 
-	public DDMFormInstanceTestHelper(Group group) {
+	public DDMFormInstanceTestHelper(Group group) throws PortalException {
+		this(group, TestPropsValues.getUser());
+	}
+
+	public DDMFormInstanceTestHelper(Group group, User user) {
 		_group = group;
+		_user = user;
 	}
 
 	public DDMFormInstance addDDMFormInstance(DDMForm ddmForm)
@@ -137,7 +143,7 @@ public class DDMFormInstanceTestHelper {
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
 
 		return DDMFormInstanceLocalServiceUtil.addFormInstance(
-			TestPropsValues.getUserId(), _group.getGroupId(),
+			_user.getUserId(), _group.getGroupId(),
 			ddmStructure.getStructureId(), nameMap, descriptionMap,
 			settingsDDMFormValues, serviceContext);
 	}
@@ -195,9 +201,8 @@ public class DDMFormInstanceTestHelper {
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
 
 		return DDMFormInstanceLocalServiceUtil.addFormInstance(
-			TestPropsValues.getUserId(), _group.getGroupId(), nameMap,
-			descriptionMap, fileEntryDDMForm, ddmFormLayout, ddmFormValues,
-			serviceContext);
+			_user.getUserId(), _group.getGroupId(), nameMap, descriptionMap,
+			fileEntryDDMForm, ddmFormLayout, ddmFormValues, serviceContext);
 	}
 
 	public DDMFormInstance updateFormInstance(
@@ -228,5 +233,6 @@ public class DDMFormInstanceTestHelper {
 	}
 
 	private final Group _group;
+	private final User _user;
 
 }

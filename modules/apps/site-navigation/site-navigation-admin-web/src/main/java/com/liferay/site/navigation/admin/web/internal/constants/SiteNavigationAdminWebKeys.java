@@ -22,7 +22,7 @@ public class SiteNavigationAdminWebKeys {
 	public static final String SITE_NAVIGATION_MENU_ADMIN_DISPLAY_CONTEXT =
 		"SITE_NAVIGATION_MENU_ADMIN_DISPLAY_CONTEXT";
 
-	public static final String SITE_NAVIGATION_MENU_ADMIN_MODULE_NAME =
-		"SITE_NAVIGATION_MENU_ADMIN_MODULE_NAME";
+	public static final String RESOLVED_MODULE_NAME =
+		"RESOLVED_MODULE_NAME";
 
 }

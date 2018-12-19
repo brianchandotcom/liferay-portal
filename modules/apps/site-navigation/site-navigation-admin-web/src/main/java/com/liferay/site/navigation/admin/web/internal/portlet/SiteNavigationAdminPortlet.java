@@ -92,7 +92,7 @@ public class SiteNavigationAdminPortlet extends MVCPortlet {
 
 		renderRequest.setAttribute(
 			SiteNavigationAdminWebKeys.
-				SITE_NAVIGATION_MENU_ADMIN_MODULE_NAME,
+				RESOLVED_MODULE_NAME,
 				_npmResolver.resolveModuleName("site-navigation-admin-web")
 		);
 

@@ -32,23 +32,28 @@ definition {
 		}
 	}
 
+	@description = "Assert that Asset Lists administration is only accessible on the staging site."
 	@priority = "5"
 	test AssertAssetListsAreOnlyEditableInStagingView {
-		ProductMenuHelper.expandPanel(panel = "Site Administration");
+		task("Navigate to asset list administration in the staging site.") {
+			ProductMenuHelper.expandPanel(panel = "Site Administration");
 
-		ProductMenuHelper.expandCategory(category = "Content");
+			ProductMenuHelper.expandCategory(category = "Content");
 
-		AssertVisible(locator1 = "ProductMenu#PORTLET", key_portlet = "Asset Lists");
+			AssertVisible(locator1 = "ProductMenu#PORTLET", key_portlet = "Asset Lists");
+		}
 
-		ProductMenu.gotoLiveSite(site = "Site Name");
+		task("Assert we cannot navigate to asset list administration in the live site.") {
+			ProductMenu.gotoLiveSite(site = "Site Name");
 
-		ProductMenuHelper.expandPanel(panel = "Site Administration");
+			ProductMenuHelper.expandPanel(panel = "Site Administration");
 
-		ProductMenuHelper.expandCategory(category = "Content");
+			ProductMenuHelper.expandCategory(category = "Content");
 
-		AssertElementNotPresent(
-			locator1 = "ProductMenu#PORTLET",
-			key_portlet = "Asset Lists"
-		);
+			AssertElementNotPresent(
+				locator1 = "ProductMenu#PORTLET",
+				key_portlet = "Asset Lists"
+			);
+		}
 	}
 }

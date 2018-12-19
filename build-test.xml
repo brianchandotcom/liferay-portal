@@ -1872,13 +1872,29 @@ passthrough=&quot;true&quot;</echo>
 		<attribute default="${app.server.parent.dir}/patching-tool" name="patching.tool.dir" />
 
 		<sequential>
-			<local name="patching.tool.name" />
-			<local name="patching.tool.version" />
+			<local name="patching.tool.version.url" />
+
+			<property name="patching.tool.version.url" value="${test.fix.pack.base.url}/patching-tool/${patching.tool.latest.txt}" />
+
+			<if>
+				<contains string="${patching.tool.version.url}" substring="mirrors.lax.liferay.com" />
+				<then>
+					<propertyregex
+						input="${patching.tool.version.url}"
+						override="true"
+						property="patching.tool.version.url"
+						regexp="mirrors.lax.liferay.com"
+						replace="mirrors-no-cache.lax.liferay.com"
+					/>
+				</then>
+			</if>
 
 			<get
 				dest="${basedir}"
-				src="${test.fix.pack.base.url}/patching-tool/${patching.tool.latest.txt}"
+				src="${patching.tool.version.url}"
 			/>
+
+			<local name="patching.tool.version" />
 
 			<loadfile
 				property="patching.tool.version"
@@ -1889,6 +1905,8 @@ passthrough=&quot;true&quot;</echo>
 					<trim />
 				</filterchain>
 			</loadfile>
+
+			<local name="patching.tool.name" />
 
 			<property name="patching.tool.name" value="patching-tool-${patching.tool.version}.zip" />
 

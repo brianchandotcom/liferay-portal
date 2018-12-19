@@ -153,6 +153,10 @@ public class ManagementToolbarTag extends BaseClayTag {
 		putValue("actionItems", actionDropdownItems);
 	}
 
+	/**
+	 * @deprecated As of Judson (7.1.x), replaced by {@link #setDefaultEventHandler(String)}
+	 */
+	@Deprecated
 	public void setActionHandler(String actionHandler) {
 		putValue("actionHandler", actionHandler);
 	}

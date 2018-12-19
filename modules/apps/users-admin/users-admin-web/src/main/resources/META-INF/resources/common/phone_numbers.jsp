@@ -26,15 +26,6 @@ String emptyResultsMessage = ParamUtil.getString(request, "emptyResultsMessage")
 List<Phone> phones = PhoneServiceUtil.getPhones(className, classPK);
 %>
 
-<liferay-ui:error-marker
-	key="<%= WebKeys.ERROR_SECTION %>"
-	value="phoneNumbers"
-/>
-
-<liferay-ui:error key="<%= NoSuchListTypeException.class.getName() + className + ListTypeConstants.PHONE %>" message="please-select-a-type" />
-<liferay-ui:error exception="<%= PhoneNumberException.class %>" message="please-enter-a-valid-phone-number" />
-<liferay-ui:error exception="<%= PhoneNumberExtensionException.class %>" message="please-enter-a-valid-phone-number-extension" />
-
 <h3 class="autofit-row sheet-subtitle">
 	<span class="autofit-col autofit-col-expand">
 		<span class="heading-text"><liferay-ui:message key="phone-numbers" /></span>

@@ -26,14 +26,6 @@ String emptyResultsMessage = ParamUtil.getString(request, "emptyResultsMessage")
 List<Website> websites = WebsiteServiceUtil.getWebsites(className, classPK);
 %>
 
-<liferay-ui:error-marker
-	key="<%= WebKeys.ERROR_SECTION %>"
-	value="websites"
-/>
-
-<liferay-ui:error key="<%= NoSuchListTypeException.class.getName() + className + ListTypeConstants.WEBSITE %>" message="please-select-a-type" />
-<liferay-ui:error exception="<%= WebsiteURLException.class %>" message="please-enter-a-valid-url" />
-
 <h3 class="autofit-row sheet-subtitle">
 	<span class="autofit-col autofit-col-expand">
 		<span class="heading-text"><liferay-ui:message key="websites" /></span>

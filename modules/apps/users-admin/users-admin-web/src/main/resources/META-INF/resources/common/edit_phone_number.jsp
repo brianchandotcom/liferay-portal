@@ -43,9 +43,15 @@ if (phoneId > 0L) {
 
 	<aui:input checked="<%= (phone != null)? phone.isPrimary() : false %>" id="phonePrimary" label="make-primary" name="phonePrimary" type="checkbox" />
 
+	<liferay-ui:error key="<%= NoSuchListTypeException.class.getName() + className + ListTypeConstants.PHONE %>" message="please-select-a-type" />
+
 	<aui:select inlineField="<%= true %>" label="type" listType="<%= className + ListTypeConstants.PHONE %>" name="phoneTypeId" />
 
+	<liferay-ui:error exception="<%= PhoneNumberException.class %>" message="please-enter-a-valid-phone-number" />
+
 	<aui:input fieldParam="phoneNumber" id="phoneNumber" name="number" required="<%= true %>" />
+
+	<liferay-ui:error exception="<%= PhoneNumberExtensionException.class %>" message="please-enter-a-valid-phone-number-extension" />
 
 	<aui:input fieldParam="phoneExtension" id="phoneExtension" name="extension">
 		<aui:validator name="digits" />

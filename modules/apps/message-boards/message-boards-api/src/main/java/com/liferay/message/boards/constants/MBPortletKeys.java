@@ -26,4 +26,5 @@ public class MBPortletKeys {
 		"com_liferay_message_boards_web_portlet_MBAdminPortlet";
 
 	public static final String RESOLVED_MODULE_NAME = "RESOLVED_MODULE_NAME";
+
 }

@@ -73,7 +73,8 @@ public class MBAdminPortlet extends MVCPortlet {
 
 		renderRequest.setAttribute(AssetWebKeys.ASSET_HELPER, _assetHelper);
 
-		renderRequest.setAttribute(MBPortletKeys.RESOLVED_MODULE_NAME,
+		renderRequest.setAttribute(
+			MBPortletKeys.RESOLVED_MODULE_NAME,
 			_npmResolver.resolveModuleName("message-boards-web"));
 
 		renderRequest.setAttribute(TrashWebKeys.TRASH_HELPER, _trashHelper);

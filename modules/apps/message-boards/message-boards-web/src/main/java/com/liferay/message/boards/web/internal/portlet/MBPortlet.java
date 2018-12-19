@@ -94,9 +94,9 @@ public class MBPortlet extends MVCPortlet {
 	private AssetHelper _assetHelper;
 
 	@Reference
-	private TrashHelper _trashHelper;
+	private NPMResolver _npmResolver;
 
 	@Reference
- 	private NPMResolver _npmResolver;
+	private TrashHelper _trashHelper;
 
 }

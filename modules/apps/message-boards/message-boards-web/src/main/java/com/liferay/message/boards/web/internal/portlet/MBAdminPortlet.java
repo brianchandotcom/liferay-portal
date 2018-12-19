@@ -92,7 +92,7 @@ public class MBAdminPortlet extends MVCPortlet {
 	private AssetHelper _assetHelper;
 
 	@Reference
- 	private NPMResolver _npmResolver;
+	private NPMResolver _npmResolver;
 
 	@Reference
 	private TrashHelper _trashHelper;

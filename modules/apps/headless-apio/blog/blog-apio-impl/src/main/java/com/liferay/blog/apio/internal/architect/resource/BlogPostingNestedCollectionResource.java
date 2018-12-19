@@ -181,7 +181,7 @@ public class BlogPostingNestedCollectionResource
 
 		return ListUtil.toList(assetTags, AssetTag::getName);
 	}
-	
+
 	private ImageSelector _getImageSelector(BlogPosting blogPosting) {
 		Long imageId = blogPosting.getImageId();
 

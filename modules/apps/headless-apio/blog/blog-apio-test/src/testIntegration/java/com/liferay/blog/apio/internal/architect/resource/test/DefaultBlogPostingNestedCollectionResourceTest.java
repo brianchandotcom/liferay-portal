@@ -184,8 +184,7 @@ public class DefaultBlogPostingNestedCollectionResourceTest
 		Collection<BlogsEntry> blogEntries = pageItems.getItems();
 
 		Assert.assertTrue(
-			"Journal articles: " + blogEntries,
-			blogEntries.contains(blogsEntry));
+			"Blog entries: " + blogEntries, blogEntries.contains(blogsEntry));
 	}
 
 	@Test

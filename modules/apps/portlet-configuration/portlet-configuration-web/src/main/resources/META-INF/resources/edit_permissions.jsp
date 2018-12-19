@@ -54,28 +54,32 @@ if (Validator.isNotNull(portletConfigurationPermissionsDisplayContext.getModelRe
 
 					<%
 					String name = role.getName();
-					int roleType = role.getType();
-
-					String icon;
-					String message;
-
-					if (roleType == RoleConstants.TYPE_SITE) {
-						icon = "sites";
-						message = "site-role";
-					}
-					else if (roleType == RoleConstants.TYPE_ORGANIZATION) {
-						icon = "organizations";
-						message = "organization-role";
-					}
-					else {
-						icon = "user";
-						message = "regular-role";
-					}
 					%>
 
 					<liferay-ui:search-container-column-text
 						name="role"
 					>
+
+						<%
+						String icon;
+						String message;
+
+						int roleType = role.getType();
+
+						if (roleType == RoleConstants.TYPE_SITE) {
+							icon = "sites";
+							message = "site-role";
+						}
+						else if (roleType == RoleConstants.TYPE_ORGANIZATION) {
+							icon = "organizations";
+							message = "organization-role";
+						}
+						else {
+							icon = "user";
+							message = "regular-role";
+						}
+						%>
+
 						<liferay-ui:icon
 							icon="<%= icon %>"
 							label="<%= false %>"

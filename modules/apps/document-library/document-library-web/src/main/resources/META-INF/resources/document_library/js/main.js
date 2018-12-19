@@ -116,8 +116,6 @@ AUI.add(
 						var url = instance.get('editEntryUrl');
 
 						if (action === 'editTags') {
-							url = instance.get('editTagsUrl');
-
 							instance._openModalTags();
 
 							return;
@@ -186,10 +184,10 @@ AUI.add(
 						var selectedElements = event.elements.allSelectedElements;
 
 						if (selectedElements.size() > 0) {
-							instance._selectedFileEntries = selectedElements.attr('value').join(',');
+							instance._selectedFileEntries = selectedElements.attr('value');
 						}
 						else {
-							instance._selectedFileEntries = '';
+							instance._selectedFileEntries = [];
 						}
 					},
 
@@ -253,12 +251,19 @@ AUI.add(
 						var editTagsComponent = instance._editTagsComponent;
 
 						if (!editTagsComponent) {
+							var form = instance.get('form').node;
+							var namespace = instance.NS;
+							var urlTags = themeDisplay.getPortalURL() + '/o/bulk/asset/tags/' + instance.get('classNameId') + '/common';
+
 							Liferay.Loader.require(
 								'document-library-web/document_library/tags/EditTags.es',
 								function(EditTags) {
 									instance._editTagsComponent = new EditTags.default(
 										{
-											spritemap: themeDisplay.getPathThemeImages() + "/lexicon/icons.svg"
+											fileEntries: instance._selectedFileEntries,
+											repositoryId: parseFloat(form.get(namespace + 'repositoryId').val()),
+											spritemap: themeDisplay.getPathThemeImages() + "/lexicon/icons.svg",
+											urlTags: urlTags
 										},
 										'#' + instance.NS + 'documentLibraryModal'
 									);
@@ -266,63 +271,9 @@ AUI.add(
 							);
 						}
 						else {
+							editTagsComponent.fileEntries = instance._selectedFileEntries;
 							editTagsComponent.open();
 						}
-
-						instance._getTagsInfo();
-					},
-
-					_getTagsInfo: function() {
-						var instance = this;
-
-						//TODO
-
-						var form = instance.get('form').node;
-						var namespace = instance.NS;
-
-						var bodyData = {
-							"bulkAssetEntryCommonTagsActionModel": {
-								repositoryId: parseFloat(form.get(namespace + 'repositoryId').val()),
-								selection: instance._selectedFileEntries.split(",")
-							}
-						};
-
-						var body = JSON.stringify(bodyData);
-
-						var headers = new Headers();
-						headers.append('Content-Type', 'application/json');
-
-						const request = {
-							body,
-							credentials: 'include',
-							headers,
-							method: 'POST'
-						};
-
-						var urlTags = themeDisplay.getPortalURL() + '/o/bulk/asset/tags/' + instance.get('classNameId') + '/common';
-
-						fetch(urlTags, request)
-							.then(
-								response => response.json()
-							)
-							.then(
-								response => {
-									var editTagsComponent = instance._editTagsComponent;
-									var responseData = response.bulkAssetEntryCommonTagsModel;
-
-									if (responseData && editTagsComponent) {
-										editTagsComponent.emptyState = false;
-										editTagsComponent.commonTags = responseData.tagNames;
-										editTagsComponent.description = responseData.description;
-									}
-								}
-							)
-							.catch(
-								(xhr) => {
-									//editTagsComponent.close();
-									//TODO open toast error
-								}
-							);
 					},
 
 					_plugUpload: function(event, config) {

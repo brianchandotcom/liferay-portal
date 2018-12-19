@@ -3,7 +3,7 @@
 {template .render}
 	{@param commonTags: list<?>}
 	{@param dataSource: string|[]|list<?>}
-	{@param emptyState: bool}
+	{@param loading: bool}
 	{@param spritemap: string}
 	{@param? description: string}
 	{@param? multiple: bool}
@@ -11,7 +11,7 @@
 	{call liferay.frontend.Modal.render}
 		{param body kind="html"}
 
-			{if $emptyState}
+			{if $loading}
 				{call .loading /}
 			{else}
 				{call .tags}

@@ -2035,9 +2035,13 @@ definition {
 
 		SitePages.addPrivatePage(pageName = "Private Blogs Page");
 
-		Navigator.gotoSpecificURLPage(
-			baseURL = "http://www.baker.com:8080/group/guest",
-			pageName = "Private Blogs Page"
+		Navigator.openSpecificURL(
+			url = "http://www.baker.com:8080/group/guest");
+
+		User.loginPG(
+			password = "test",
+			specificURL = "http://www.baker.com:8080/group/guest",
+			userEmailAddress = "test@liferay.com"
 		);
 
 		Portlet.addPG(portletName = "Blogs");

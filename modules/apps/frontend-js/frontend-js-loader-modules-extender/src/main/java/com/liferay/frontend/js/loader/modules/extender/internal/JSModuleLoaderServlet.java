@@ -45,17 +45,17 @@ public class JSModuleLoaderServlet extends HttpServlet {
 
 		PrintWriter printWriter = new PrintWriter(stringWriter);
 
-		List<String> commaModules = parsedModules.stream().map(m -> "\"" + m + "\"").collect(Collectors.toList());
+		String collect = parsedModules.stream().map(m -> "\"" + m + "\"").collect(Collectors.joining(","));
 
 		printWriter.write("[");
-		printWriter.write(String.join(",", commaModules));
+		printWriter.write(collect);
 		printWriter.write("]");
 
 		printWriter.close();
 
 		String content = stringWriter.toString();
 
-		System.out.println(content);
+		System.out.println("Resolved modules for " + String.join(",", reqModules) + " : " + parsedModules.size());
 
 		_writeResponse(resp, content);
 	}

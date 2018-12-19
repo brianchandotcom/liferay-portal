@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.servlet.HttpMethods;
 import com.liferay.portal.kernel.util.ProxyFactory;
 
 import java.util.ArrayList;
-import java.util.HashSet;
+import java.util.EnumSet;
 
 import javax.servlet.FilterConfig;
 
@@ -43,13 +43,7 @@ public class FilterMappingTest {
 					add("/c/portal/login");
 				}
 			},
-			new HashSet<Dispatcher>() {
-				{
-					for (Dispatcher dispatcher : Dispatcher.values()) {
-						add(dispatcher);
-					}
-				}
-			});
+			EnumSet.allOf(Dispatcher.class));
 
 		String uri = "/c/portal/login";
 

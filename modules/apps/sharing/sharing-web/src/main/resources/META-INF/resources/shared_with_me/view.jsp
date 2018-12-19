@@ -21,7 +21,7 @@ SharedWithMeViewDisplayContext sharedWithMeViewDisplayContext = (SharedWithMeVie
 %>
 
 <clay:management-toolbar
-	actionHandler='<%= renderResponse.getNamespace() + "SharedWithMe" %>'
+	defaultEventHandler='<%= renderResponse.getNamespace() + "SharedWithMe" %>'
 	filterDropdownItems="<%= sharedWithMeViewDisplayContext.getFilterDropdownItems() %>"
 	selectable="<%= false %>"
 	showSearch="<%= false %>"

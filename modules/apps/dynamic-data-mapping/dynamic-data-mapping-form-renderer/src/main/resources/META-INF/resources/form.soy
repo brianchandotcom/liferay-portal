@@ -29,7 +29,6 @@
 	{@param context: ?}
 	{@param defaultLanguageId: string}
 	{@param evaluatorURL: string}
-	{@param fieldTypes: string}
 	{@param portletNamespace: string}
 	{@param readOnly: bool}
 	{@param viewMode: bool}
@@ -37,18 +36,18 @@
 	<script type="text/javascript">
 		AUI().use(
 			'liferay-ddm-form-renderer',
-			'liferay-ddm-form-renderer-field',
-			'liferay-ddm-soy-template-util',
 			function(A) {lb}
-				var SoyTemplateUtil = Liferay.DDM.SoyTemplateUtil;
-
-				SoyTemplateUtil.loadModules(
-					function() {lb}
-						Liferay.DDM.Renderer.FieldTypes.register({$fieldTypes});
-
-						{call .render_form data="all" /}
-					{rb}
-				);
+				if (Liferay.DMMFieldTypesReady) {lb}
+					{call .render_form data="all" /}
+				{rb}
+				else {lb}
+					Liferay.onceAfter(
+						'DMMFieldTypesReady',
+						function ()  {lb}
+							{call .render_form data="all" /}
+						{rb}
+					);
+				{rb}
 
 				var destroyFormHandle = function(event) {lb}
 					var form = Liferay.component('{$containerId}DDMForm');

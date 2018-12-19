@@ -8,7 +8,7 @@ class SharedWithMe extends PortletBase {
 		this._viewAssetTypeURL = config.viewAssetTypeURL;
 	}
 
-	onFilterItemClicked(event) {
+	handleFilterItemClicked(event) {
 		let namespace = this.namespace;
 		let viewAssetTypeURL = this._viewAssetTypeURL;
 

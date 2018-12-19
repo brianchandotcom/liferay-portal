@@ -24,8 +24,15 @@ import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.client.util.store.MemoryDataStoreFactory;
 import com.google.api.services.drive.DriveScopes;
 
-import com.liferay.document.library.opener.google.drive.internal.configuration.DLOpenerGoogleDriveConfiguration;
-import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
+import com.liferay.document.library.opener.google.drive.internal.configuration.DLOpenerGoogleDriveCompanyConfiguration;
+import com.liferay.document.library.opener.google.drive.internal.constants.DLOpenerGoogleDriveConstants;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.module.configuration.ConfigurationException;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.settings.CompanyServiceSettingsLocator;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -35,25 +42,27 @@ import java.security.GeneralSecurityException;
 
 import java.util.Collections;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.ConfigurationPolicy;
-import org.osgi.service.component.annotations.Modified;
+import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Adolfo Pérez
  */
-@Component(
-	configurationPid = "com.liferay.document.library.opener.google.drive.internal.configuration.DLOpenerGoogleDriveConfiguration",
-	configurationPolicy = ConfigurationPolicy.OPTIONAL, immediate = true,
-	service = OAuth2Manager.class
-)
+@Component(immediate = true, service = OAuth2Manager.class)
 public class OAuth2Manager {
 
-	public String getAuthorizationURL(String state, String redirectUri) {
+	public String getAuthorizationURL(
+			long companyId, String state, String redirectUri)
+		throws PortalException {
+
+		GoogleAuthorizationCodeFlow googleAuthorizationCodeFlow =
+			_getGoogleAuthorizationCodeFlow(companyId);
+
 		GoogleAuthorizationCodeRequestUrl googleAuthorizationCodeRequestUrl =
-			_googleAuthorizationCodeFlow.newAuthorizationUrl();
+			googleAuthorizationCodeFlow.newAuthorizationUrl();
 
 		googleAuthorizationCodeRequestUrl =
 			googleAuthorizationCodeRequestUrl.setState(state);
@@ -68,22 +77,56 @@ public class OAuth2Manager {
 		return googleAuthorizationCodeRequestUrl.build();
 	}
 
-	public Credential getCredential(long userId) throws IOException {
-		return _googleAuthorizationCodeFlow.loadCredential(
-			String.valueOf(userId));
+	public Credential getCredential(long companyId, long userId)
+		throws PortalException {
+
+		try {
+			GoogleAuthorizationCodeFlow googleAuthorizationCodeFlow =
+				_getGoogleAuthorizationCodeFlow(companyId);
+
+			return googleAuthorizationCodeFlow.loadCredential(
+				String.valueOf(userId));
+		}
+		catch (IOException ioe) {
+			throw new PortalException(ioe);
+		}
 	}
 
-	public boolean isConfigured() {
-		return _configured;
+	public boolean isConfigured(long companyId) {
+		try {
+			DLOpenerGoogleDriveCompanyConfiguration
+				dlOpenerGoogleDriveCompanyConfiguration =
+					_getDlOpenerGoogleDriveConfiguration(companyId);
+
+			if (Validator.isNotNull(
+					dlOpenerGoogleDriveCompanyConfiguration.clientId()) &&
+				Validator.isNotNull(
+					dlOpenerGoogleDriveCompanyConfiguration.clientSecret())) {
+
+				return true;
+			}
+
+			return false;
+		}
+		catch (ConfigurationException ce) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(ce, ce);
+			}
+
+			return false;
+		}
 	}
 
 	public void requestAuthorizationToken(
-			long userId, String code, String redirectUri)
-		throws IOException {
+			long companyId, long userId, String code, String redirectUri)
+		throws IOException, PortalException {
+
+		GoogleAuthorizationCodeFlow googleAuthorizationCodeFlow =
+			_getGoogleAuthorizationCodeFlow(companyId);
 
 		GoogleAuthorizationCodeTokenRequest
 			googleAuthorizationCodeTokenRequest =
-				_googleAuthorizationCodeFlow.newTokenRequest(code);
+				googleAuthorizationCodeFlow.newTokenRequest(code);
 
 		googleAuthorizationCodeTokenRequest =
 			googleAuthorizationCodeTokenRequest.setRedirectUri(redirectUri);
@@ -91,48 +134,71 @@ public class OAuth2Manager {
 		GoogleTokenResponse googleTokenResponse =
 			googleAuthorizationCodeTokenRequest.execute();
 
-		_googleAuthorizationCodeFlow.createAndStoreCredential(
+		googleAuthorizationCodeFlow.createAndStoreCredential(
 			googleTokenResponse, String.valueOf(userId));
 	}
 
-	@Activate
-	@Modified
-	protected void activate(Map<String, Object> properties)
-		throws GeneralSecurityException, IOException {
-
-		DLOpenerGoogleDriveConfiguration dlOpenerGoogleDriveConfiguration =
-			ConfigurableUtil.createConfigurable(
-				DLOpenerGoogleDriveConfiguration.class, properties);
-
-		if (Validator.isNotNull(dlOpenerGoogleDriveConfiguration.clientId()) &&
-			Validator.isNotNull(
-				dlOpenerGoogleDriveConfiguration.clientSecret())) {
-
-			_configured = true;
-		}
-		else {
-			_configured = false;
-		}
-
-		GoogleAuthorizationCodeFlow.Builder googleAuthorizationCodeFlowBuilder =
-			new GoogleAuthorizationCodeFlow.Builder(
-				GoogleNetHttpTransport.newTrustedTransport(),
-				JacksonFactory.getDefaultInstance(),
-				GetterUtil.getString(
-					dlOpenerGoogleDriveConfiguration.clientId()),
-				GetterUtil.getString(
-					dlOpenerGoogleDriveConfiguration.clientSecret()),
-				Collections.singleton(DriveScopes.DRIVE_FILE));
-
-		googleAuthorizationCodeFlowBuilder =
-			googleAuthorizationCodeFlowBuilder.setDataStoreFactory(
-				MemoryDataStoreFactory.getDefaultInstance());
-
-		_googleAuthorizationCodeFlow =
-			googleAuthorizationCodeFlowBuilder.build();
+	@Deactivate
+	protected void deactivate() {
+		_googleAuthorizationCodeFlows.clear();
 	}
 
-	private boolean _configured;
-	private GoogleAuthorizationCodeFlow _googleAuthorizationCodeFlow;
+	private DLOpenerGoogleDriveCompanyConfiguration
+			_getDlOpenerGoogleDriveConfiguration(long companyId)
+		throws ConfigurationException {
+
+		return _configurationProvider.getConfiguration(
+			DLOpenerGoogleDriveCompanyConfiguration.class,
+			new CompanyServiceSettingsLocator(
+				companyId, DLOpenerGoogleDriveConstants.SERVICE_NAME));
+	}
+
+	private synchronized GoogleAuthorizationCodeFlow
+			_getGoogleAuthorizationCodeFlow(long companyId)
+		throws PortalException {
+
+		if (_googleAuthorizationCodeFlows.containsKey(companyId)) {
+			return _googleAuthorizationCodeFlows.get(companyId);
+		}
+
+		try {
+			DLOpenerGoogleDriveCompanyConfiguration
+				dlOpenerGoogleDriveCompanyConfiguration =
+					_getDlOpenerGoogleDriveConfiguration(companyId);
+
+			GoogleAuthorizationCodeFlow.Builder
+				googleAuthorizationCodeFlowBuilder =
+					new GoogleAuthorizationCodeFlow.Builder(
+						GoogleNetHttpTransport.newTrustedTransport(),
+						JacksonFactory.getDefaultInstance(),
+						GetterUtil.getString(
+							dlOpenerGoogleDriveCompanyConfiguration.clientId()),
+						GetterUtil.getString(
+							dlOpenerGoogleDriveCompanyConfiguration.
+								clientSecret()),
+						Collections.singleton(DriveScopes.DRIVE_FILE));
+
+			googleAuthorizationCodeFlowBuilder =
+				googleAuthorizationCodeFlowBuilder.setDataStoreFactory(
+					MemoryDataStoreFactory.getDefaultInstance());
+
+			return _googleAuthorizationCodeFlows.put(
+				companyId, googleAuthorizationCodeFlowBuilder.build());
+		}
+		catch (GeneralSecurityException gse) {
+			throw new PrincipalException(gse);
+		}
+		catch (IOException ioe) {
+			throw new PortalException(ioe);
+		}
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(OAuth2Manager.class);
+
+	@Reference
+	private ConfigurationProvider _configurationProvider;
+
+	private final Map<Long, GoogleAuthorizationCodeFlow>
+		_googleAuthorizationCodeFlows = new ConcurrentHashMap<>();
 
 }

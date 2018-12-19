@@ -152,7 +152,8 @@ public class DLOpenerGoogleDriveManagerImpl
 
 		try {
 			Drive drive = new Drive.Builder(
-				_netHttpTransport, _jsonFactory, _getCredential(userId)
+				_netHttpTransport, _jsonFactory,
+				_getCredential(fileEntry.getCompanyId(), userId)
 			).build();
 
 			Drive.Files driveFiles = drive.files();
@@ -171,13 +172,19 @@ public class DLOpenerGoogleDriveManagerImpl
 	}
 
 	@Override
-	public String getAuthorizationURL(String state, String redirectUri) {
-		return _oAuth2Manager.getAuthorizationURL(state, redirectUri);
+	public String getAuthorizationURL(
+			long companyId, String state, String redirectUri)
+		throws PortalException {
+
+		return _oAuth2Manager.getAuthorizationURL(
+			companyId, state, redirectUri);
 	}
 
 	@Override
-	public boolean hasValidCredential(long userId) throws IOException {
-		Credential credential = _oAuth2Manager.getCredential(userId);
+	public boolean hasValidCredential(long companyId, long userId)
+		throws IOException, PortalException {
+
+		Credential credential = _oAuth2Manager.getCredential(companyId, userId);
 
 		if (credential == null) {
 			return false;
@@ -193,8 +200,8 @@ public class DLOpenerGoogleDriveManagerImpl
 	}
 
 	@Override
-	public boolean isConfigured() {
-		return _oAuth2Manager.isConfigured();
+	public boolean isConfigured(long companyId) {
+		return _oAuth2Manager.isConfigured(companyId);
 	}
 
 	@Override
@@ -212,10 +219,11 @@ public class DLOpenerGoogleDriveManagerImpl
 
 	@Override
 	public void requestAuthorizationToken(
-			long userId, String code, String redirectUri)
-		throws IOException {
+			long companyId, long userId, String code, String redirectUri)
+		throws IOException, PortalException {
 
-		_oAuth2Manager.requestAuthorizationToken(userId, code, redirectUri);
+		_oAuth2Manager.requestAuthorizationToken(
+			companyId, userId, code, redirectUri);
 	}
 
 	@Override
@@ -223,27 +231,22 @@ public class DLOpenerGoogleDriveManagerImpl
 			long userId, FileEntry fileEntry)
 		throws PortalException {
 
-		try {
-			String googleDriveFileId = _getGoogleDriveFileId(fileEntry);
+		String googleDriveFileId = _getGoogleDriveFileId(fileEntry);
 
-			if (Validator.isNull(googleDriveFileId)) {
-				throw new IllegalArgumentException(
-					StringBundler.concat(
-						"File entry ", fileEntry.getFileEntryId(),
-						" is not a Google Drive file"));
-			}
-
-			_checkCredential(userId);
-
-			return new DLOpenerGoogleDriveFileReference(
-				fileEntry.getFileEntryId(),
-				new CachingSupplier<>(
-					() -> _getGoogleDriveFileTitle(userId, fileEntry)),
-				() -> _getContentFile(userId, fileEntry), 0);
+		if (Validator.isNull(googleDriveFileId)) {
+			throw new IllegalArgumentException(
+				StringBundler.concat(
+					"File entry ", fileEntry.getFileEntryId(),
+					" is not a Google Drive file"));
 		}
-		catch (IOException ioe) {
-			throw new PortalException(ioe);
-		}
+
+		_checkCredential(fileEntry.getCompanyId(), userId);
+
+		return new DLOpenerGoogleDriveFileReference(
+			fileEntry.getFileEntryId(),
+			new CachingSupplier<>(
+				() -> _getGoogleDriveFileTitle(userId, fileEntry)),
+			() -> _getContentFile(userId, fileEntry), 0);
 	}
 
 	@Activate
@@ -252,16 +255,17 @@ public class DLOpenerGoogleDriveManagerImpl
 		_netHttpTransport = GoogleNetHttpTransport.newTrustedTransport();
 	}
 
-	private void _checkCredential(long userId)
-		throws IOException, PrincipalException {
+	private void _checkCredential(long companyId, long userId)
+		throws PortalException {
 
-		_getCredential(userId);
+		_getCredential(companyId, userId);
 	}
 
 	private File _getContentFile(long userId, FileEntry fileEntry) {
 		try {
 			Drive drive = new Drive.Builder(
-				_netHttpTransport, _jsonFactory, _getCredential(userId)
+				_netHttpTransport, _jsonFactory,
+				_getCredential(fileEntry.getCompanyId(), userId)
 			).build();
 
 			Drive.Files driveFiles = drive.files();
@@ -280,10 +284,10 @@ public class DLOpenerGoogleDriveManagerImpl
 		}
 	}
 
-	private Credential _getCredential(long userId)
-		throws IOException, PrincipalException {
+	private Credential _getCredential(long companyId, long userId)
+		throws PortalException {
 
-		Credential credential = _oAuth2Manager.getCredential(userId);
+		Credential credential = _oAuth2Manager.getCredential(companyId, userId);
 
 		if (credential == null) {
 			throw new PrincipalException(
@@ -308,7 +312,8 @@ public class DLOpenerGoogleDriveManagerImpl
 	private String _getGoogleDriveFileTitle(long userId, FileEntry fileEntry) {
 		try {
 			Drive drive = new Drive.Builder(
-				_netHttpTransport, _jsonFactory, _getCredential(userId)
+				_netHttpTransport, _jsonFactory,
+				_getCredential(fileEntry.getCompanyId(), userId)
 			).build();
 
 			Drive.Files driveFiles = drive.files();

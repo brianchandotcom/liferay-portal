@@ -102,10 +102,12 @@ public class UploadGoogleDriveDocumentBackgroundTaskExecutor
 			taskContextMap.get(GoogleDriveBackgroundTaskConstants.USER_ID));
 
 		if (cmd.equals(GoogleDriveBackgroundTaskConstants.CHECKOUT)) {
-			uploadGoogleDriveDocument(fileEntryId, userId, true);
+			uploadGoogleDriveDocument(
+				backgroundTask.getCompanyId(), fileEntryId, userId, true);
 		}
 		else {
-			uploadGoogleDriveDocument(fileEntryId, userId, false);
+			uploadGoogleDriveDocument(
+				backgroundTask.getCompanyId(), fileEntryId, userId, false);
 		}
 
 		_sendStatusMessage(
@@ -145,7 +147,7 @@ public class UploadGoogleDriveDocumentBackgroundTaskExecutor
 	}
 
 	protected void uploadGoogleDriveDocument(
-			long fileEntryId, long userId, boolean add)
+			long companyId, long fileEntryId, long userId, boolean add)
 		throws Exception {
 
 		FileEntry fileEntry = _dlAppLocalService.getFileEntry(fileEntryId);
@@ -163,7 +165,8 @@ public class UploadGoogleDriveDocumentBackgroundTaskExecutor
 
 		Drive drive = new Drive.Builder(
 			GoogleNetHttpTransport.newTrustedTransport(),
-			JacksonFactory.getDefaultInstance(), _getCredential(userId)
+			JacksonFactory.getDefaultInstance(),
+			_getCredential(companyId, userId)
 		).build();
 
 		Drive.Files driveFiles = drive.files();
@@ -210,10 +213,10 @@ public class UploadGoogleDriveDocumentBackgroundTaskExecutor
 			updateDLOpenerFileEntryReference(uploadedFile.getId(), fileEntry);
 	}
 
-	private Credential _getCredential(long userId)
-		throws IOException, PrincipalException {
+	private Credential _getCredential(long companyId, long userId)
+		throws Exception {
 
-		Credential credential = _oAuth2Manager.getCredential(userId);
+		Credential credential = _oAuth2Manager.getCredential(companyId, userId);
 
 		if (credential == null) {
 			throw new PrincipalException(

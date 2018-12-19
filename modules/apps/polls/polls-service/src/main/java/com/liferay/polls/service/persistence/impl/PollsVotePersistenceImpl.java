@@ -533,10 +533,9 @@ public class PollsVotePersistenceImpl extends BasePersistenceImpl<PollsVote>
 		}
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(pollsVote);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					pollsVote)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -1351,10 +1350,9 @@ public class PollsVotePersistenceImpl extends BasePersistenceImpl<PollsVote>
 		qPos.add(companyId);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(pollsVote);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					pollsVote)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -1877,10 +1875,9 @@ public class PollsVotePersistenceImpl extends BasePersistenceImpl<PollsVote>
 		qPos.add(questionId);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(pollsVote);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					pollsVote)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -2378,10 +2375,9 @@ public class PollsVotePersistenceImpl extends BasePersistenceImpl<PollsVote>
 		qPos.add(choiceId);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(pollsVote);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					pollsVote)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -2911,10 +2907,9 @@ public class PollsVotePersistenceImpl extends BasePersistenceImpl<PollsVote>
 		qPos.add(userId);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(pollsVote);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					pollsVote)) {
+				qPos.add(curValue);
 			}
 		}
 

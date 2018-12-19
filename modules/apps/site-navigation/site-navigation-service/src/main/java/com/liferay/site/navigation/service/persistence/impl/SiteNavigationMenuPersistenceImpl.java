@@ -544,10 +544,9 @@ public class SiteNavigationMenuPersistenceImpl extends BasePersistenceImpl<SiteN
 		}
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(siteNavigationMenu);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					siteNavigationMenu)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -1369,10 +1368,9 @@ public class SiteNavigationMenuPersistenceImpl extends BasePersistenceImpl<SiteN
 		qPos.add(companyId);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(siteNavigationMenu);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					siteNavigationMenu)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -1898,10 +1896,9 @@ public class SiteNavigationMenuPersistenceImpl extends BasePersistenceImpl<SiteN
 		qPos.add(groupId);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(siteNavigationMenu);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					siteNavigationMenu)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -2212,10 +2209,9 @@ public class SiteNavigationMenuPersistenceImpl extends BasePersistenceImpl<SiteN
 		qPos.add(groupId);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(siteNavigationMenu);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					siteNavigationMenu)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -3053,10 +3049,9 @@ public class SiteNavigationMenuPersistenceImpl extends BasePersistenceImpl<SiteN
 		}
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(siteNavigationMenu);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					siteNavigationMenu)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -3406,10 +3401,9 @@ public class SiteNavigationMenuPersistenceImpl extends BasePersistenceImpl<SiteN
 		}
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(siteNavigationMenu);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					siteNavigationMenu)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -4032,10 +4026,9 @@ public class SiteNavigationMenuPersistenceImpl extends BasePersistenceImpl<SiteN
 		qPos.add(type);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(siteNavigationMenu);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					siteNavigationMenu)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -4358,10 +4351,9 @@ public class SiteNavigationMenuPersistenceImpl extends BasePersistenceImpl<SiteN
 		qPos.add(type);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(siteNavigationMenu);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					siteNavigationMenu)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -4958,10 +4950,9 @@ public class SiteNavigationMenuPersistenceImpl extends BasePersistenceImpl<SiteN
 		qPos.add(auto);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(siteNavigationMenu);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					siteNavigationMenu)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -5284,10 +5275,9 @@ public class SiteNavigationMenuPersistenceImpl extends BasePersistenceImpl<SiteN
 		qPos.add(auto);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(siteNavigationMenu);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					siteNavigationMenu)) {
+				qPos.add(curValue);
 			}
 		}
 

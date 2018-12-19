@@ -526,10 +526,9 @@ public class ListTypePersistenceImpl extends BasePersistenceImpl<ListType>
 		}
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(listType);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					listType)) {
+				qPos.add(curValue);
 			}
 		}
 

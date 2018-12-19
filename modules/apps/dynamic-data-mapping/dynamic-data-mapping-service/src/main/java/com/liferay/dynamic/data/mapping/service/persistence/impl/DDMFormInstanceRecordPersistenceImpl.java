@@ -543,10 +543,9 @@ public class DDMFormInstanceRecordPersistenceImpl extends BasePersistenceImpl<DD
 		}
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(ddmFormInstanceRecord);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					ddmFormInstanceRecord)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -1373,10 +1372,9 @@ public class DDMFormInstanceRecordPersistenceImpl extends BasePersistenceImpl<DD
 		qPos.add(companyId);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(ddmFormInstanceRecord);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					ddmFormInstanceRecord)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -1907,10 +1905,9 @@ public class DDMFormInstanceRecordPersistenceImpl extends BasePersistenceImpl<DD
 		qPos.add(companyId);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(ddmFormInstanceRecord);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					ddmFormInstanceRecord)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -2431,10 +2428,9 @@ public class DDMFormInstanceRecordPersistenceImpl extends BasePersistenceImpl<DD
 		qPos.add(formInstanceId);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(ddmFormInstanceRecord);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					ddmFormInstanceRecord)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -2977,10 +2973,9 @@ public class DDMFormInstanceRecordPersistenceImpl extends BasePersistenceImpl<DD
 		qPos.add(formInstanceId);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(ddmFormInstanceRecord);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					ddmFormInstanceRecord)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -3559,10 +3554,9 @@ public class DDMFormInstanceRecordPersistenceImpl extends BasePersistenceImpl<DD
 		}
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(ddmFormInstanceRecord);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					ddmFormInstanceRecord)) {
+				qPos.add(curValue);
 			}
 		}
 

@@ -523,10 +523,9 @@ public class MicroblogsEntryPersistenceImpl extends BasePersistenceImpl<Microblo
 		qPos.add(companyId);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(microblogsEntry);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					microblogsEntry)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -1029,10 +1028,9 @@ public class MicroblogsEntryPersistenceImpl extends BasePersistenceImpl<Microblo
 		qPos.add(userId);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(microblogsEntry);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					microblogsEntry)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -1566,10 +1564,9 @@ public class MicroblogsEntryPersistenceImpl extends BasePersistenceImpl<Microblo
 		qPos.add(type);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(microblogsEntry);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					microblogsEntry)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -2127,10 +2124,9 @@ public class MicroblogsEntryPersistenceImpl extends BasePersistenceImpl<Microblo
 		qPos.add(creatorClassPK);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(microblogsEntry);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					microblogsEntry)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -2963,10 +2959,9 @@ public class MicroblogsEntryPersistenceImpl extends BasePersistenceImpl<Microblo
 		qPos.add(type);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(microblogsEntry);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					microblogsEntry)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -3517,10 +3512,9 @@ public class MicroblogsEntryPersistenceImpl extends BasePersistenceImpl<Microblo
 		qPos.add(parentMicroblogsEntryId);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(microblogsEntry);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					microblogsEntry)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -4117,10 +4111,9 @@ public class MicroblogsEntryPersistenceImpl extends BasePersistenceImpl<Microblo
 		qPos.add(creatorClassPK);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(microblogsEntry);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					microblogsEntry)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -5021,10 +5014,9 @@ public class MicroblogsEntryPersistenceImpl extends BasePersistenceImpl<Microblo
 		qPos.add(type);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(microblogsEntry);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					microblogsEntry)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -5628,10 +5620,9 @@ public class MicroblogsEntryPersistenceImpl extends BasePersistenceImpl<Microblo
 		qPos.add(type);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(microblogsEntry);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					microblogsEntry)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -6576,10 +6567,9 @@ public class MicroblogsEntryPersistenceImpl extends BasePersistenceImpl<Microblo
 		qPos.add(type);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(microblogsEntry);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					microblogsEntry)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -7558,10 +7548,9 @@ public class MicroblogsEntryPersistenceImpl extends BasePersistenceImpl<Microblo
 		qPos.add(socialRelationType);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(microblogsEntry);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					microblogsEntry)) {
+				qPos.add(curValue);
 			}
 		}
 

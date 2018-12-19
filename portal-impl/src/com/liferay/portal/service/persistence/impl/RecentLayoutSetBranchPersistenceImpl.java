@@ -510,10 +510,9 @@ public class RecentLayoutSetBranchPersistenceImpl extends BasePersistenceImpl<Re
 		qPos.add(groupId);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(recentLayoutSetBranch);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					recentLayoutSetBranch)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -1019,10 +1018,9 @@ public class RecentLayoutSetBranchPersistenceImpl extends BasePersistenceImpl<Re
 		qPos.add(userId);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(recentLayoutSetBranch);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					recentLayoutSetBranch)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -1545,10 +1543,9 @@ public class RecentLayoutSetBranchPersistenceImpl extends BasePersistenceImpl<Re
 		qPos.add(layoutSetBranchId);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(recentLayoutSetBranch);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					recentLayoutSetBranch)) {
+				qPos.add(curValue);
 			}
 		}
 

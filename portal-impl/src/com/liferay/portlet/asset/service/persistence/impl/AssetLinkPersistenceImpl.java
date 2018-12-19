@@ -504,10 +504,9 @@ public class AssetLinkPersistenceImpl extends BasePersistenceImpl<AssetLink>
 		qPos.add(entryId1);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(assetLink);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					assetLink)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -1005,10 +1004,9 @@ public class AssetLinkPersistenceImpl extends BasePersistenceImpl<AssetLink>
 		qPos.add(entryId2);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(assetLink);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					assetLink)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -1540,10 +1538,9 @@ public class AssetLinkPersistenceImpl extends BasePersistenceImpl<AssetLink>
 		qPos.add(entryId2);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(assetLink);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					assetLink)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -2081,10 +2078,9 @@ public class AssetLinkPersistenceImpl extends BasePersistenceImpl<AssetLink>
 		qPos.add(type);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(assetLink);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					assetLink)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -2622,10 +2618,9 @@ public class AssetLinkPersistenceImpl extends BasePersistenceImpl<AssetLink>
 		qPos.add(type);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(assetLink);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					assetLink)) {
+				qPos.add(curValue);
 			}
 		}
 

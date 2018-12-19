@@ -524,10 +524,9 @@ public class AssetAutoTaggerEntryPersistenceImpl extends BasePersistenceImpl<Ass
 		qPos.add(assetEntryId);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(assetAutoTaggerEntry);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					assetAutoTaggerEntry)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -1038,10 +1037,9 @@ public class AssetAutoTaggerEntryPersistenceImpl extends BasePersistenceImpl<Ass
 		qPos.add(assetTagId);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(assetAutoTaggerEntry);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					assetAutoTaggerEntry)) {
+				qPos.add(curValue);
 			}
 		}
 

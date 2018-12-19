@@ -540,10 +540,9 @@ public class DDMStructureLayoutPersistenceImpl extends BasePersistenceImpl<DDMSt
 		}
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(ddmStructureLayout);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					ddmStructureLayout)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -1365,10 +1364,9 @@ public class DDMStructureLayoutPersistenceImpl extends BasePersistenceImpl<DDMSt
 		qPos.add(companyId);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(ddmStructureLayout);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					ddmStructureLayout)) {
+				qPos.add(curValue);
 			}
 		}
 

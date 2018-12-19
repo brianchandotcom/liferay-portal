@@ -539,10 +539,9 @@ public class DLContentPersistenceImpl extends BasePersistenceImpl<DLContent>
 		qPos.add(repositoryId);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(dlContent);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					dlContent)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -1143,10 +1142,9 @@ public class DLContentPersistenceImpl extends BasePersistenceImpl<DLContent>
 		}
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(dlContent);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					dlContent)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -1752,10 +1750,9 @@ public class DLContentPersistenceImpl extends BasePersistenceImpl<DLContent>
 		}
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(dlContent);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					dlContent)) {
+				qPos.add(curValue);
 			}
 		}
 

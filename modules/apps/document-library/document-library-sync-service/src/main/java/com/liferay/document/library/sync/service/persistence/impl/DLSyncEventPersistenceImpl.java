@@ -496,10 +496,9 @@ public class DLSyncEventPersistenceImpl extends BasePersistenceImpl<DLSyncEvent>
 		qPos.add(modifiedTime);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(dlSyncEvent);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					dlSyncEvent)) {
+				qPos.add(curValue);
 			}
 		}
 

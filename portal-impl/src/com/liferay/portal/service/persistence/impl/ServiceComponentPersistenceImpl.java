@@ -547,10 +547,9 @@ public class ServiceComponentPersistenceImpl extends BasePersistenceImpl<Service
 		}
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(serviceComponent);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					serviceComponent)) {
+				qPos.add(curValue);
 			}
 		}
 

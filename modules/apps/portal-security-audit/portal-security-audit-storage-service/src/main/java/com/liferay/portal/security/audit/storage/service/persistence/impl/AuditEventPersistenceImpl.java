@@ -505,10 +505,9 @@ public class AuditEventPersistenceImpl extends BasePersistenceImpl<AuditEvent>
 		qPos.add(companyId);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(auditEvent);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					auditEvent)) {
+				qPos.add(curValue);
 			}
 		}
 

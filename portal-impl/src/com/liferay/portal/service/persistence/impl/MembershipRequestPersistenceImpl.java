@@ -510,10 +510,9 @@ public class MembershipRequestPersistenceImpl extends BasePersistenceImpl<Member
 		qPos.add(groupId);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(membershipRequest);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					membershipRequest)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -1018,10 +1017,9 @@ public class MembershipRequestPersistenceImpl extends BasePersistenceImpl<Member
 		qPos.add(userId);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(membershipRequest);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					membershipRequest)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -1558,10 +1556,9 @@ public class MembershipRequestPersistenceImpl extends BasePersistenceImpl<Member
 		qPos.add(statusId);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(membershipRequest);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					membershipRequest)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -2137,10 +2134,9 @@ public class MembershipRequestPersistenceImpl extends BasePersistenceImpl<Member
 		qPos.add(statusId);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(membershipRequest);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					membershipRequest)) {
+				qPos.add(curValue);
 			}
 		}
 

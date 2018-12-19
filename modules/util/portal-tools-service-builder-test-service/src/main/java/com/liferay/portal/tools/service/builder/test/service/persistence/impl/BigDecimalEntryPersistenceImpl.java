@@ -551,10 +551,9 @@ public class BigDecimalEntryPersistenceImpl extends BasePersistenceImpl<BigDecim
 		}
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(bigDecimalEntry);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					bigDecimalEntry)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -1092,10 +1091,9 @@ public class BigDecimalEntryPersistenceImpl extends BasePersistenceImpl<BigDecim
 		}
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(bigDecimalEntry);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					bigDecimalEntry)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -1633,10 +1631,9 @@ public class BigDecimalEntryPersistenceImpl extends BasePersistenceImpl<BigDecim
 		}
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(bigDecimalEntry);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					bigDecimalEntry)) {
+				qPos.add(curValue);
 			}
 		}
 

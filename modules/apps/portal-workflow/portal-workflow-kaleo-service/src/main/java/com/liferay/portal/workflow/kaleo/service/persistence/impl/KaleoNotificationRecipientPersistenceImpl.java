@@ -521,10 +521,9 @@ public class KaleoNotificationRecipientPersistenceImpl
 		qPos.add(companyId);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(kaleoNotificationRecipient);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					kaleoNotificationRecipient)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -1051,10 +1050,9 @@ public class KaleoNotificationRecipientPersistenceImpl
 		qPos.add(kaleoDefinitionVersionId);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(kaleoNotificationRecipient);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					kaleoNotificationRecipient)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -1579,10 +1577,9 @@ public class KaleoNotificationRecipientPersistenceImpl
 		qPos.add(kaleoNotificationId);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(kaleoNotificationRecipient);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					kaleoNotificationRecipient)) {
+				qPos.add(curValue);
 			}
 		}
 

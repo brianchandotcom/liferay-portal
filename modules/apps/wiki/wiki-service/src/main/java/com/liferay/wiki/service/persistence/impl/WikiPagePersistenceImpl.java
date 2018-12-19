@@ -532,10 +532,9 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 		qPos.add(resourcePrimKey);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(wikiPage);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					wikiPage)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -1060,10 +1059,9 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 		}
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(wikiPage);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					wikiPage)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -1881,10 +1879,9 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 		qPos.add(companyId);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(wikiPage);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					wikiPage)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -2403,10 +2400,9 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 		qPos.add(nodeId);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(wikiPage);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					wikiPage)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -2931,10 +2927,9 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 		}
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(wikiPage);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					wikiPage)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -3481,10 +3476,9 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 		qPos.add(nodeId);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(wikiPage);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					wikiPage)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -4025,10 +4019,9 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 		qPos.add(status);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(wikiPage);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					wikiPage)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -4589,10 +4582,9 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 		}
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(wikiPage);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					wikiPage)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -5142,10 +5134,9 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 		qPos.add(head);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(wikiPage);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					wikiPage)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -5711,10 +5702,9 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 		}
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(wikiPage);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					wikiPage)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -6294,10 +6284,9 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 		}
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(wikiPage);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					wikiPage)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -6846,10 +6835,9 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 		qPos.add(status);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(wikiPage);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					wikiPage)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -7667,10 +7655,9 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 		qPos.add(head);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(wikiPage);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					wikiPage)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -8252,10 +8239,9 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 		qPos.add(status);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(wikiPage);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					wikiPage)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -8834,10 +8820,9 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 		qPos.add(head);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(wikiPage);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					wikiPage)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -9171,10 +9156,9 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 		qPos.add(head);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(wikiPage);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					wikiPage)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -9811,10 +9795,9 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 		qPos.add(status);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(wikiPage);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					wikiPage)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -10148,10 +10131,9 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 		qPos.add(status);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(wikiPage);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					wikiPage)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -10788,10 +10770,9 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 		qPos.add(status);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(wikiPage);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					wikiPage)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -11665,10 +11646,9 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 		qPos.add(head);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(wikiPage);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					wikiPage)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -12286,10 +12266,9 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 		qPos.add(status);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(wikiPage);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					wikiPage)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -12911,10 +12890,9 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 		}
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(wikiPage);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					wikiPage)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -13536,10 +13514,9 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 		}
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(wikiPage);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					wikiPage)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -14132,10 +14109,9 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 		qPos.add(status);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(wikiPage);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					wikiPage)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -14695,10 +14671,9 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 		qPos.add(status);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(wikiPage);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					wikiPage)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -15306,10 +15281,9 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 		qPos.add(status);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(wikiPage);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					wikiPage)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -15657,10 +15631,9 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 		qPos.add(status);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(wikiPage);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					wikiPage)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -16369,10 +16342,9 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 		qPos.add(head);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(wikiPage);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					wikiPage)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -16747,10 +16719,9 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 		qPos.add(head);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(wikiPage);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					wikiPage)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -17458,10 +17429,9 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 		qPos.add(status);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(wikiPage);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					wikiPage)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -17809,10 +17779,9 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 		qPos.add(status);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(wikiPage);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					wikiPage)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -18524,10 +18493,9 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 		qPos.add(status);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(wikiPage);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					wikiPage)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -19170,10 +19138,9 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 		qPos.add(status);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(wikiPage);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					wikiPage)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -19836,10 +19803,9 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 		qPos.add(status);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(wikiPage);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					wikiPage)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -20482,10 +20448,9 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 		qPos.add(status);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(wikiPage);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					wikiPage)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -21177,10 +21142,9 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 		qPos.add(status);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(wikiPage);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					wikiPage)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -21569,10 +21533,9 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 		qPos.add(status);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(wikiPage);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					wikiPage)) {
+				qPos.add(curValue);
 			}
 		}
 

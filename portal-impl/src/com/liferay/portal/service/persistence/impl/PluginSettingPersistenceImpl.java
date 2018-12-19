@@ -512,10 +512,9 @@ public class PluginSettingPersistenceImpl extends BasePersistenceImpl<PluginSett
 		qPos.add(companyId);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(pluginSetting);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					pluginSetting)) {
+				qPos.add(curValue);
 			}
 		}
 

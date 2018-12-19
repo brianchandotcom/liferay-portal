@@ -547,10 +547,9 @@ public class LayoutPageTemplateEntryPersistenceImpl extends BasePersistenceImpl<
 		}
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(layoutPageTemplateEntry);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					layoutPageTemplateEntry)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -1383,10 +1382,9 @@ public class LayoutPageTemplateEntryPersistenceImpl extends BasePersistenceImpl<
 		qPos.add(companyId);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(layoutPageTemplateEntry);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					layoutPageTemplateEntry)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -1914,10 +1912,9 @@ public class LayoutPageTemplateEntryPersistenceImpl extends BasePersistenceImpl<
 		qPos.add(groupId);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(layoutPageTemplateEntry);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					layoutPageTemplateEntry)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -2231,10 +2228,9 @@ public class LayoutPageTemplateEntryPersistenceImpl extends BasePersistenceImpl<
 		qPos.add(groupId);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(layoutPageTemplateEntry);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					layoutPageTemplateEntry)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -2805,10 +2801,9 @@ public class LayoutPageTemplateEntryPersistenceImpl extends BasePersistenceImpl<
 		qPos.add(layoutPrototypeId);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(layoutPageTemplateEntry);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					layoutPageTemplateEntry)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -3358,10 +3353,9 @@ public class LayoutPageTemplateEntryPersistenceImpl extends BasePersistenceImpl<
 		qPos.add(layoutPageTemplateCollectionId);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(layoutPageTemplateEntry);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					layoutPageTemplateEntry)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -3693,10 +3687,9 @@ public class LayoutPageTemplateEntryPersistenceImpl extends BasePersistenceImpl<
 		qPos.add(layoutPageTemplateCollectionId);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(layoutPageTemplateEntry);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					layoutPageTemplateEntry)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -4545,10 +4538,9 @@ public class LayoutPageTemplateEntryPersistenceImpl extends BasePersistenceImpl<
 		qPos.add(type);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(layoutPageTemplateEntry);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					layoutPageTemplateEntry)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -4876,10 +4868,9 @@ public class LayoutPageTemplateEntryPersistenceImpl extends BasePersistenceImpl<
 		qPos.add(type);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(layoutPageTemplateEntry);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					layoutPageTemplateEntry)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -5534,10 +5525,9 @@ public class LayoutPageTemplateEntryPersistenceImpl extends BasePersistenceImpl<
 		}
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(layoutPageTemplateEntry);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					layoutPageTemplateEntry)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -5909,10 +5899,9 @@ public class LayoutPageTemplateEntryPersistenceImpl extends BasePersistenceImpl<
 		}
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(layoutPageTemplateEntry);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					layoutPageTemplateEntry)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -6602,10 +6591,9 @@ public class LayoutPageTemplateEntryPersistenceImpl extends BasePersistenceImpl<
 		qPos.add(type);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(layoutPageTemplateEntry);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					layoutPageTemplateEntry)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -6951,10 +6939,9 @@ public class LayoutPageTemplateEntryPersistenceImpl extends BasePersistenceImpl<
 		qPos.add(type);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(layoutPageTemplateEntry);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					layoutPageTemplateEntry)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -7617,10 +7604,9 @@ public class LayoutPageTemplateEntryPersistenceImpl extends BasePersistenceImpl<
 		qPos.add(status);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(layoutPageTemplateEntry);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					layoutPageTemplateEntry)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -7966,10 +7952,9 @@ public class LayoutPageTemplateEntryPersistenceImpl extends BasePersistenceImpl<
 		qPos.add(status);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(layoutPageTemplateEntry);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					layoutPageTemplateEntry)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -8636,10 +8621,9 @@ public class LayoutPageTemplateEntryPersistenceImpl extends BasePersistenceImpl<
 		qPos.add(type);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(layoutPageTemplateEntry);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					layoutPageTemplateEntry)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -9007,10 +8991,9 @@ public class LayoutPageTemplateEntryPersistenceImpl extends BasePersistenceImpl<
 		qPos.add(type);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(layoutPageTemplateEntry);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					layoutPageTemplateEntry)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -9682,10 +9665,9 @@ public class LayoutPageTemplateEntryPersistenceImpl extends BasePersistenceImpl<
 		qPos.add(status);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(layoutPageTemplateEntry);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					layoutPageTemplateEntry)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -10027,10 +10009,9 @@ public class LayoutPageTemplateEntryPersistenceImpl extends BasePersistenceImpl<
 		qPos.add(status);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(layoutPageTemplateEntry);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					layoutPageTemplateEntry)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -10727,10 +10708,9 @@ public class LayoutPageTemplateEntryPersistenceImpl extends BasePersistenceImpl<
 		qPos.add(status);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(layoutPageTemplateEntry);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					layoutPageTemplateEntry)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -11118,10 +11098,9 @@ public class LayoutPageTemplateEntryPersistenceImpl extends BasePersistenceImpl<
 		qPos.add(status);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(layoutPageTemplateEntry);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					layoutPageTemplateEntry)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -11847,10 +11826,9 @@ public class LayoutPageTemplateEntryPersistenceImpl extends BasePersistenceImpl<
 		qPos.add(type);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(layoutPageTemplateEntry);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					layoutPageTemplateEntry)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -12206,10 +12184,9 @@ public class LayoutPageTemplateEntryPersistenceImpl extends BasePersistenceImpl<
 		qPos.add(type);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(layoutPageTemplateEntry);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					layoutPageTemplateEntry)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -12913,10 +12890,9 @@ public class LayoutPageTemplateEntryPersistenceImpl extends BasePersistenceImpl<
 		qPos.add(defaultTemplate);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(layoutPageTemplateEntry);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					layoutPageTemplateEntry)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -13275,10 +13251,9 @@ public class LayoutPageTemplateEntryPersistenceImpl extends BasePersistenceImpl<
 		qPos.add(defaultTemplate);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(layoutPageTemplateEntry);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					layoutPageTemplateEntry)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -13978,10 +13953,9 @@ public class LayoutPageTemplateEntryPersistenceImpl extends BasePersistenceImpl<
 		qPos.add(defaultTemplate);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(layoutPageTemplateEntry);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					layoutPageTemplateEntry)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -14337,10 +14311,9 @@ public class LayoutPageTemplateEntryPersistenceImpl extends BasePersistenceImpl<
 		qPos.add(defaultTemplate);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(layoutPageTemplateEntry);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					layoutPageTemplateEntry)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -15043,10 +15016,9 @@ public class LayoutPageTemplateEntryPersistenceImpl extends BasePersistenceImpl<
 		qPos.add(status);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(layoutPageTemplateEntry);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					layoutPageTemplateEntry)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -15427,10 +15399,9 @@ public class LayoutPageTemplateEntryPersistenceImpl extends BasePersistenceImpl<
 		qPos.add(status);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(layoutPageTemplateEntry);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					layoutPageTemplateEntry)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -16187,10 +16158,9 @@ public class LayoutPageTemplateEntryPersistenceImpl extends BasePersistenceImpl<
 		qPos.add(type);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(layoutPageTemplateEntry);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					layoutPageTemplateEntry)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -16586,10 +16556,9 @@ public class LayoutPageTemplateEntryPersistenceImpl extends BasePersistenceImpl<
 		qPos.add(type);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(layoutPageTemplateEntry);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					layoutPageTemplateEntry)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -17357,10 +17326,9 @@ public class LayoutPageTemplateEntryPersistenceImpl extends BasePersistenceImpl<
 		qPos.add(status);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(layoutPageTemplateEntry);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					layoutPageTemplateEntry)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -17730,10 +17698,9 @@ public class LayoutPageTemplateEntryPersistenceImpl extends BasePersistenceImpl<
 		qPos.add(status);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(layoutPageTemplateEntry);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					layoutPageTemplateEntry)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -18480,10 +18447,9 @@ public class LayoutPageTemplateEntryPersistenceImpl extends BasePersistenceImpl<
 		qPos.add(status);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(layoutPageTemplateEntry);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					layoutPageTemplateEntry)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -18855,10 +18821,9 @@ public class LayoutPageTemplateEntryPersistenceImpl extends BasePersistenceImpl<
 		qPos.add(status);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(layoutPageTemplateEntry);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					layoutPageTemplateEntry)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -19632,10 +19597,9 @@ public class LayoutPageTemplateEntryPersistenceImpl extends BasePersistenceImpl<
 		qPos.add(status);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(layoutPageTemplateEntry);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					layoutPageTemplateEntry)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -20046,10 +20010,9 @@ public class LayoutPageTemplateEntryPersistenceImpl extends BasePersistenceImpl<
 		qPos.add(status);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(layoutPageTemplateEntry);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					layoutPageTemplateEntry)) {
+				qPos.add(curValue);
 			}
 		}
 

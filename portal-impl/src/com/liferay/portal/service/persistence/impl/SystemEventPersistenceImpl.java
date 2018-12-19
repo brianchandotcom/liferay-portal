@@ -504,10 +504,9 @@ public class SystemEventPersistenceImpl extends BasePersistenceImpl<SystemEvent>
 		qPos.add(groupId);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(systemEvent);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					systemEvent)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -1041,10 +1040,9 @@ public class SystemEventPersistenceImpl extends BasePersistenceImpl<SystemEvent>
 		qPos.add(systemEventSetKey);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(systemEvent);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					systemEvent)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -1617,10 +1615,9 @@ public class SystemEventPersistenceImpl extends BasePersistenceImpl<SystemEvent>
 		qPos.add(classPK);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(systemEvent);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					systemEvent)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -2231,10 +2228,9 @@ public class SystemEventPersistenceImpl extends BasePersistenceImpl<SystemEvent>
 		qPos.add(type);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(systemEvent);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					systemEvent)) {
+				qPos.add(curValue);
 			}
 		}
 

@@ -538,10 +538,9 @@ public class FragmentEntryPersistenceImpl extends BasePersistenceImpl<FragmentEn
 		}
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(fragmentEntry);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					fragmentEntry)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -1360,10 +1359,9 @@ public class FragmentEntryPersistenceImpl extends BasePersistenceImpl<FragmentEn
 		qPos.add(companyId);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(fragmentEntry);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					fragmentEntry)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -1886,10 +1884,9 @@ public class FragmentEntryPersistenceImpl extends BasePersistenceImpl<FragmentEn
 		qPos.add(groupId);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(fragmentEntry);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					fragmentEntry)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -2410,10 +2407,9 @@ public class FragmentEntryPersistenceImpl extends BasePersistenceImpl<FragmentEn
 		qPos.add(fragmentCollectionId);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(fragmentEntry);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					fragmentEntry)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -2956,10 +2952,9 @@ public class FragmentEntryPersistenceImpl extends BasePersistenceImpl<FragmentEn
 		qPos.add(fragmentCollectionId);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(fragmentEntry);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					fragmentEntry)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -3798,10 +3793,9 @@ public class FragmentEntryPersistenceImpl extends BasePersistenceImpl<FragmentEn
 		}
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(fragmentEntry);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					fragmentEntry)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -4411,10 +4405,9 @@ public class FragmentEntryPersistenceImpl extends BasePersistenceImpl<FragmentEn
 		qPos.add(type);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(fragmentEntry);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					fragmentEntry)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -5009,10 +5002,9 @@ public class FragmentEntryPersistenceImpl extends BasePersistenceImpl<FragmentEn
 		qPos.add(status);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(fragmentEntry);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					fragmentEntry)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -5644,10 +5636,9 @@ public class FragmentEntryPersistenceImpl extends BasePersistenceImpl<FragmentEn
 		qPos.add(status);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(fragmentEntry);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					fragmentEntry)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -6296,10 +6287,9 @@ public class FragmentEntryPersistenceImpl extends BasePersistenceImpl<FragmentEn
 		qPos.add(status);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(fragmentEntry);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					fragmentEntry)) {
+				qPos.add(curValue);
 			}
 		}
 

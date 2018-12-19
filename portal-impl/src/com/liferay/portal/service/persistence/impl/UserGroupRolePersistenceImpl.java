@@ -509,10 +509,9 @@ public class UserGroupRolePersistenceImpl extends BasePersistenceImpl<UserGroupR
 		qPos.add(userId);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(userGroupRole);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					userGroupRole)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -1015,10 +1014,9 @@ public class UserGroupRolePersistenceImpl extends BasePersistenceImpl<UserGroupR
 		qPos.add(groupId);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(userGroupRole);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					userGroupRole)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -1520,10 +1518,9 @@ public class UserGroupRolePersistenceImpl extends BasePersistenceImpl<UserGroupR
 		qPos.add(roleId);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(userGroupRole);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					userGroupRole)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -2057,10 +2054,9 @@ public class UserGroupRolePersistenceImpl extends BasePersistenceImpl<UserGroupR
 		qPos.add(groupId);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(userGroupRole);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					userGroupRole)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -2601,10 +2597,9 @@ public class UserGroupRolePersistenceImpl extends BasePersistenceImpl<UserGroupR
 		qPos.add(roleId);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(userGroupRole);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					userGroupRole)) {
+				qPos.add(curValue);
 			}
 		}
 

@@ -513,10 +513,9 @@ public class LVEntryLocalizationPersistenceImpl extends BasePersistenceImpl<LVEn
 		qPos.add(lvEntryId);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(lvEntryLocalization);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					lvEntryLocalization)) {
+				qPos.add(curValue);
 			}
 		}
 

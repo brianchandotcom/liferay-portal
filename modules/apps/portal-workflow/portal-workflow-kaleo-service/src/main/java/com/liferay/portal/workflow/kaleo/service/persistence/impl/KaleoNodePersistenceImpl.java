@@ -508,10 +508,9 @@ public class KaleoNodePersistenceImpl extends BasePersistenceImpl<KaleoNode>
 		qPos.add(companyId);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(kaleoNode);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					kaleoNode)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -1033,10 +1032,9 @@ public class KaleoNodePersistenceImpl extends BasePersistenceImpl<KaleoNode>
 		qPos.add(kaleoDefinitionVersionId);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(kaleoNode);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					kaleoNode)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -1579,10 +1577,9 @@ public class KaleoNodePersistenceImpl extends BasePersistenceImpl<KaleoNode>
 		qPos.add(kaleoDefinitionVersionId);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(kaleoNode);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					kaleoNode)) {
+				qPos.add(curValue);
 			}
 		}
 

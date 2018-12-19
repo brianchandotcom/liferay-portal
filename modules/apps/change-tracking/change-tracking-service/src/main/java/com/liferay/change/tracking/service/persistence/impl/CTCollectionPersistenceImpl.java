@@ -519,10 +519,9 @@ public class CTCollectionPersistenceImpl extends BasePersistenceImpl<CTCollectio
 		qPos.add(companyId);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(ctCollection);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					ctCollection)) {
+				qPos.add(curValue);
 			}
 		}
 

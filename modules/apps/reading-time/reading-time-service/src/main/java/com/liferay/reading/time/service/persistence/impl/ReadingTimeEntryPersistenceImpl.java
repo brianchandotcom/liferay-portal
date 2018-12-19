@@ -540,10 +540,9 @@ public class ReadingTimeEntryPersistenceImpl extends BasePersistenceImpl<Reading
 		}
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(readingTimeEntry);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					readingTimeEntry)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -1365,10 +1364,9 @@ public class ReadingTimeEntryPersistenceImpl extends BasePersistenceImpl<Reading
 		qPos.add(companyId);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(readingTimeEntry);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					readingTimeEntry)) {
+				qPos.add(curValue);
 			}
 		}
 

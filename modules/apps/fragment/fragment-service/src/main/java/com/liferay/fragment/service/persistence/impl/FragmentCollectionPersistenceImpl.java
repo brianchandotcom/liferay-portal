@@ -543,10 +543,9 @@ public class FragmentCollectionPersistenceImpl extends BasePersistenceImpl<Fragm
 		}
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(fragmentCollection);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					fragmentCollection)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -1369,10 +1368,9 @@ public class FragmentCollectionPersistenceImpl extends BasePersistenceImpl<Fragm
 		qPos.add(companyId);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(fragmentCollection);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					fragmentCollection)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -1899,10 +1897,9 @@ public class FragmentCollectionPersistenceImpl extends BasePersistenceImpl<Fragm
 		qPos.add(groupId);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(fragmentCollection);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					fragmentCollection)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -2696,10 +2693,9 @@ public class FragmentCollectionPersistenceImpl extends BasePersistenceImpl<Fragm
 		}
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(fragmentCollection);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					fragmentCollection)) {
+				qPos.add(curValue);
 			}
 		}
 

@@ -529,10 +529,9 @@ public class ResourceActionPersistenceImpl extends BasePersistenceImpl<ResourceA
 		}
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(resourceAction);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					resourceAction)) {
+				qPos.add(curValue);
 			}
 		}
 

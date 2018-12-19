@@ -530,10 +530,9 @@ public class KaleoTimerInstanceTokenPersistenceImpl extends BasePersistenceImpl<
 		qPos.add(kaleoInstanceId);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(kaleoTimerInstanceToken);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					kaleoTimerInstanceToken)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -1314,10 +1313,9 @@ public class KaleoTimerInstanceTokenPersistenceImpl extends BasePersistenceImpl<
 		qPos.add(completed);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(kaleoTimerInstanceToken);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					kaleoTimerInstanceToken)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -1908,10 +1906,9 @@ public class KaleoTimerInstanceTokenPersistenceImpl extends BasePersistenceImpl<
 		qPos.add(completed);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(kaleoTimerInstanceToken);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					kaleoTimerInstanceToken)) {
+				qPos.add(curValue);
 			}
 		}
 

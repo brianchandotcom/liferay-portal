@@ -536,10 +536,9 @@ public class MBMailingListPersistenceImpl extends BasePersistenceImpl<MBMailingL
 		}
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(mbMailingList);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					mbMailingList)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -1357,10 +1356,9 @@ public class MBMailingListPersistenceImpl extends BasePersistenceImpl<MBMailingL
 		qPos.add(companyId);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(mbMailingList);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					mbMailingList)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -1881,10 +1879,9 @@ public class MBMailingListPersistenceImpl extends BasePersistenceImpl<MBMailingL
 		qPos.add(active);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(mbMailingList);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					mbMailingList)) {
+				qPos.add(curValue);
 			}
 		}
 

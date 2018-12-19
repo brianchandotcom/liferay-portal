@@ -805,10 +805,9 @@ public class PushNotificationsDevicePersistenceImpl extends BasePersistenceImpl<
 		}
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(pushNotificationsDevice);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					pushNotificationsDevice)) {
+				qPos.add(curValue);
 			}
 		}
 

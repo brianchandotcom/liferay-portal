@@ -535,10 +535,9 @@ public class SharingEntryPersistenceImpl extends BasePersistenceImpl<SharingEntr
 		}
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(sharingEntry);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					sharingEntry)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -1354,10 +1353,9 @@ public class SharingEntryPersistenceImpl extends BasePersistenceImpl<SharingEntr
 		qPos.add(companyId);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(sharingEntry);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					sharingEntry)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -1877,10 +1875,9 @@ public class SharingEntryPersistenceImpl extends BasePersistenceImpl<SharingEntr
 		qPos.add(groupId);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(sharingEntry);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					sharingEntry)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -2383,10 +2380,9 @@ public class SharingEntryPersistenceImpl extends BasePersistenceImpl<SharingEntr
 		qPos.add(fromUserId);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(sharingEntry);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					sharingEntry)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -2887,10 +2883,9 @@ public class SharingEntryPersistenceImpl extends BasePersistenceImpl<SharingEntr
 		qPos.add(toUserId);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(sharingEntry);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					sharingEntry)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -3409,10 +3404,9 @@ public class SharingEntryPersistenceImpl extends BasePersistenceImpl<SharingEntr
 		}
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(sharingEntry);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					sharingEntry)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -3956,10 +3950,9 @@ public class SharingEntryPersistenceImpl extends BasePersistenceImpl<SharingEntr
 		qPos.add(classNameId);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(sharingEntry);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					sharingEntry)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -4498,10 +4491,9 @@ public class SharingEntryPersistenceImpl extends BasePersistenceImpl<SharingEntr
 		qPos.add(classPK);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(sharingEntry);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					sharingEntry)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -5074,10 +5066,9 @@ public class SharingEntryPersistenceImpl extends BasePersistenceImpl<SharingEntr
 		qPos.add(classPK);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(sharingEntry);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					sharingEntry)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -5657,10 +5648,9 @@ public class SharingEntryPersistenceImpl extends BasePersistenceImpl<SharingEntr
 		qPos.add(classPK);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(sharingEntry);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					sharingEntry)) {
+				qPos.add(curValue);
 			}
 		}
 

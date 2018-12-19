@@ -540,10 +540,9 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 		}
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(role);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					role)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -869,10 +868,9 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 		}
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(role);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					role)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -1502,10 +1500,9 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 		qPos.add(companyId);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(role);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					role)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -1848,10 +1845,9 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 		qPos.add(companyId);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(role);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					role)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -2436,10 +2432,9 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 		qPos.add(companyId);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(role);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					role)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -2743,10 +2738,9 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 		qPos.add(companyId);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(role);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					role)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -3310,10 +3304,9 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 		}
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(role);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					role)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -3639,10 +3632,9 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 		}
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(role);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					role)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -4208,10 +4200,9 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 		qPos.add(type);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(role);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					role)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -4511,10 +4502,9 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 		qPos.add(type);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(role);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					role)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -5083,10 +5073,9 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 		}
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(role);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					role)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -5414,10 +5403,9 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 		}
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(role);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					role)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -6265,10 +6253,9 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 		qPos.add(type);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(role);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					role)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -6585,10 +6572,9 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 		qPos.add(type);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(role);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					role)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -7688,10 +7674,9 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 		}
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(role);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					role)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -8034,10 +8019,9 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 		}
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(role);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					role)) {
+				qPos.add(curValue);
 			}
 		}
 

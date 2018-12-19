@@ -535,10 +535,9 @@ public class WikiNodePersistenceImpl extends BasePersistenceImpl<WikiNode>
 		}
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(wikiNode);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					wikiNode)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -1354,10 +1353,9 @@ public class WikiNodePersistenceImpl extends BasePersistenceImpl<WikiNode>
 		qPos.add(companyId);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(wikiNode);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					wikiNode)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -1875,10 +1873,9 @@ public class WikiNodePersistenceImpl extends BasePersistenceImpl<WikiNode>
 		qPos.add(groupId);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(wikiNode);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					wikiNode)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -2183,10 +2180,9 @@ public class WikiNodePersistenceImpl extends BasePersistenceImpl<WikiNode>
 		qPos.add(groupId);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(wikiNode);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					wikiNode)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -2733,10 +2729,9 @@ public class WikiNodePersistenceImpl extends BasePersistenceImpl<WikiNode>
 		qPos.add(companyId);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(wikiNode);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					wikiNode)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -3507,10 +3502,9 @@ public class WikiNodePersistenceImpl extends BasePersistenceImpl<WikiNode>
 		qPos.add(status);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(wikiNode);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					wikiNode)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -3829,10 +3823,9 @@ public class WikiNodePersistenceImpl extends BasePersistenceImpl<WikiNode>
 		qPos.add(status);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(wikiNode);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					wikiNode)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -4422,10 +4415,9 @@ public class WikiNodePersistenceImpl extends BasePersistenceImpl<WikiNode>
 		qPos.add(status);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(wikiNode);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					wikiNode)) {
+				qPos.add(curValue);
 			}
 		}
 

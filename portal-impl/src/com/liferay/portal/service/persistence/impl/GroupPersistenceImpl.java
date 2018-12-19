@@ -536,10 +536,9 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 		}
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(group);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					group)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -1353,10 +1352,9 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 		qPos.add(companyId);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(group);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					group)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -1874,10 +1872,9 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 		qPos.add(companyId);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(group);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					group)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -2616,10 +2613,9 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 		qPos.add(classNameId);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(group);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					group)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -3157,10 +3153,9 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 		qPos.add(parentGroupId);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(group);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					group)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -4186,10 +4181,9 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 		qPos.add(site);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(group);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					group)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -4723,10 +4717,9 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 		qPos.add(active);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(group);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					group)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -5262,10 +5255,9 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 		qPos.add(classPK);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(group);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					group)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -5797,10 +5789,9 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 		qPos.add(active);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(group);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					group)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -7021,10 +7012,9 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 		qPos.add(parentGroupId);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(group);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					group)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -7606,10 +7596,9 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 		qPos.add(site);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(group);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					group)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -8468,10 +8457,9 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 		qPos.add(site);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(group);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					group)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -9075,10 +9063,9 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 		qPos.add(site);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(group);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					group)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -9671,10 +9658,9 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 		qPos.add(active);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(group);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					group)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -11474,10 +11460,9 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 		qPos.add(site);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(group);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					group)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -12115,10 +12100,9 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 		qPos.add(inheritContent);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(group);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					group)) {
+				qPos.add(curValue);
 			}
 		}
 

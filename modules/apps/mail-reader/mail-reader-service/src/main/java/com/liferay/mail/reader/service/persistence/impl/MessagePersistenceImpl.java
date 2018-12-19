@@ -508,10 +508,9 @@ public class MessagePersistenceImpl extends BasePersistenceImpl<Message>
 		qPos.add(companyId);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(message);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					message)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -1009,10 +1008,9 @@ public class MessagePersistenceImpl extends BasePersistenceImpl<Message>
 		qPos.add(folderId);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(message);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					message)) {
+				qPos.add(curValue);
 			}
 		}
 

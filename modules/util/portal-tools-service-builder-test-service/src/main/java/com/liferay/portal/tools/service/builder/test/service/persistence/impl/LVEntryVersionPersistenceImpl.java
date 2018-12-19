@@ -511,10 +511,9 @@ public class LVEntryVersionPersistenceImpl extends BasePersistenceImpl<LVEntryVe
 		qPos.add(lvEntryId);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(lvEntryVersion);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					lvEntryVersion)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -1239,10 +1238,9 @@ public class LVEntryVersionPersistenceImpl extends BasePersistenceImpl<LVEntryVe
 		qPos.add(groupId);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(lvEntryVersion);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					lvEntryVersion)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -1781,10 +1779,9 @@ public class LVEntryVersionPersistenceImpl extends BasePersistenceImpl<LVEntryVe
 		qPos.add(version);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(lvEntryVersion);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					lvEntryVersion)) {
+				qPos.add(curValue);
 			}
 		}
 

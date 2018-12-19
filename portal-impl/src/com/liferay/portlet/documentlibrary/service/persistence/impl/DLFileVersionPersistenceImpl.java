@@ -540,10 +540,9 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 		}
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(dlFileVersion);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					dlFileVersion)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -1366,10 +1365,9 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 		qPos.add(companyId);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(dlFileVersion);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					dlFileVersion)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -1897,10 +1895,9 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 		qPos.add(companyId);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(dlFileVersion);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					dlFileVersion)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -2407,10 +2404,9 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 		qPos.add(fileEntryId);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(dlFileVersion);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					dlFileVersion)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -2942,10 +2938,9 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 		}
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(dlFileVersion);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					dlFileVersion)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -3479,10 +3474,9 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 		qPos.add(status);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(dlFileVersion);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					dlFileVersion)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -4271,10 +4265,9 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 		qPos.add(status);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(dlFileVersion);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					dlFileVersion)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -4853,10 +4846,9 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 		qPos.add(status);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(dlFileVersion);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					dlFileVersion)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -5523,10 +5515,9 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 		}
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(dlFileVersion);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					dlFileVersion)) {
+				qPos.add(curValue);
 			}
 		}
 

@@ -544,10 +544,9 @@ public class CalendarBookingPersistenceImpl extends BasePersistenceImpl<Calendar
 		}
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(calendarBooking);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					calendarBooking)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -1369,10 +1368,9 @@ public class CalendarBookingPersistenceImpl extends BasePersistenceImpl<Calendar
 		qPos.add(companyId);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(calendarBooking);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					calendarBooking)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -1901,10 +1899,9 @@ public class CalendarBookingPersistenceImpl extends BasePersistenceImpl<Calendar
 		qPos.add(calendarId);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(calendarBooking);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					calendarBooking)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -2426,10 +2423,9 @@ public class CalendarBookingPersistenceImpl extends BasePersistenceImpl<Calendar
 		qPos.add(calendarResourceId);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(calendarBooking);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					calendarBooking)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -2956,10 +2952,9 @@ public class CalendarBookingPersistenceImpl extends BasePersistenceImpl<Calendar
 		qPos.add(parentCalendarBookingId);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(calendarBooking);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					calendarBooking)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -3488,10 +3483,9 @@ public class CalendarBookingPersistenceImpl extends BasePersistenceImpl<Calendar
 		qPos.add(recurringCalendarBookingId);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(calendarBooking);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					calendarBooking)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -4499,10 +4493,9 @@ public class CalendarBookingPersistenceImpl extends BasePersistenceImpl<Calendar
 		qPos.add(status);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(calendarBooking);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					calendarBooking)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -5331,10 +5324,9 @@ public class CalendarBookingPersistenceImpl extends BasePersistenceImpl<Calendar
 		qPos.add(status);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(calendarBooking);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					calendarBooking)) {
+				qPos.add(curValue);
 			}
 		}
 

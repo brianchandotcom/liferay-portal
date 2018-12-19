@@ -540,10 +540,9 @@ public class PortletItemPersistenceImpl extends BasePersistenceImpl<PortletItem>
 		qPos.add(classNameId);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(portletItem);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					portletItem)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -1145,10 +1144,9 @@ public class PortletItemPersistenceImpl extends BasePersistenceImpl<PortletItem>
 		qPos.add(classNameId);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(portletItem);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					portletItem)) {
+				qPos.add(curValue);
 			}
 		}
 

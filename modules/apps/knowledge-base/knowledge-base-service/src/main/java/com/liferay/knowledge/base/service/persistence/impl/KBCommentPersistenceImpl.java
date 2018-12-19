@@ -537,10 +537,9 @@ public class KBCommentPersistenceImpl extends BasePersistenceImpl<KBComment>
 		}
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(kbComment);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					kbComment)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -1356,10 +1355,9 @@ public class KBCommentPersistenceImpl extends BasePersistenceImpl<KBComment>
 		qPos.add(companyId);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(kbComment);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					kbComment)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -1878,10 +1876,9 @@ public class KBCommentPersistenceImpl extends BasePersistenceImpl<KBComment>
 		qPos.add(groupId);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(kbComment);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					kbComment)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -2413,10 +2410,9 @@ public class KBCommentPersistenceImpl extends BasePersistenceImpl<KBComment>
 		qPos.add(classNameId);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(kbComment);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					kbComment)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -2953,10 +2949,9 @@ public class KBCommentPersistenceImpl extends BasePersistenceImpl<KBComment>
 		qPos.add(status);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(kbComment);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					kbComment)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -3496,10 +3491,9 @@ public class KBCommentPersistenceImpl extends BasePersistenceImpl<KBComment>
 		qPos.add(classPK);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(kbComment);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					kbComment)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -4071,10 +4065,9 @@ public class KBCommentPersistenceImpl extends BasePersistenceImpl<KBComment>
 		qPos.add(classPK);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(kbComment);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					kbComment)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -4663,10 +4656,9 @@ public class KBCommentPersistenceImpl extends BasePersistenceImpl<KBComment>
 		qPos.add(status);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(kbComment);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					kbComment)) {
+				qPos.add(curValue);
 			}
 		}
 

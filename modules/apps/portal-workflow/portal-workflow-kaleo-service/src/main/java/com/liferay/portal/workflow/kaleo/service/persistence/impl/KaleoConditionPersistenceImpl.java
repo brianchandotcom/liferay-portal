@@ -513,10 +513,9 @@ public class KaleoConditionPersistenceImpl extends BasePersistenceImpl<KaleoCond
 		qPos.add(companyId);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(kaleoCondition);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					kaleoCondition)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -1041,10 +1040,9 @@ public class KaleoConditionPersistenceImpl extends BasePersistenceImpl<KaleoCond
 		qPos.add(kaleoDefinitionVersionId);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(kaleoCondition);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					kaleoCondition)) {
+				qPos.add(curValue);
 			}
 		}
 

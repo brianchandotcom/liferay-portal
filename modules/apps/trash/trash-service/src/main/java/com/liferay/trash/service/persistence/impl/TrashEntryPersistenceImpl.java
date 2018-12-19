@@ -504,10 +504,9 @@ public class TrashEntryPersistenceImpl extends BasePersistenceImpl<TrashEntry>
 		qPos.add(groupId);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(trashEntry);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					trashEntry)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -1010,10 +1009,9 @@ public class TrashEntryPersistenceImpl extends BasePersistenceImpl<TrashEntry>
 		qPos.add(companyId);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(trashEntry);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					trashEntry)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -1553,10 +1551,9 @@ public class TrashEntryPersistenceImpl extends BasePersistenceImpl<TrashEntry>
 		}
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(trashEntry);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					trashEntry)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -2107,10 +2104,9 @@ public class TrashEntryPersistenceImpl extends BasePersistenceImpl<TrashEntry>
 		qPos.add(classNameId);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(trashEntry);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					trashEntry)) {
+				qPos.add(curValue);
 			}
 		}
 

@@ -519,10 +519,9 @@ public class DDLRecordSetVersionPersistenceImpl extends BasePersistenceImpl<DDLR
 		qPos.add(recordSetId);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(ddlRecordSetVersion);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					ddlRecordSetVersion)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -1306,10 +1305,9 @@ public class DDLRecordSetVersionPersistenceImpl extends BasePersistenceImpl<DDLR
 		qPos.add(status);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(ddlRecordSetVersion);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					ddlRecordSetVersion)) {
+				qPos.add(curValue);
 			}
 		}
 

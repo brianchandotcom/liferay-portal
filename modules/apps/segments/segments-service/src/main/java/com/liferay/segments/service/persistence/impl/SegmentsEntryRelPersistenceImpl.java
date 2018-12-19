@@ -522,10 +522,9 @@ public class SegmentsEntryRelPersistenceImpl extends BasePersistenceImpl<Segment
 		qPos.add(segmentsEntryId);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(segmentsEntryRel);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					segmentsEntryRel)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -1063,10 +1062,9 @@ public class SegmentsEntryRelPersistenceImpl extends BasePersistenceImpl<Segment
 		qPos.add(classPK);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(segmentsEntryRel);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					segmentsEntryRel)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -1644,10 +1642,9 @@ public class SegmentsEntryRelPersistenceImpl extends BasePersistenceImpl<Segment
 		qPos.add(classPK);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(segmentsEntryRel);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					segmentsEntryRel)) {
+				qPos.add(curValue);
 			}
 		}
 

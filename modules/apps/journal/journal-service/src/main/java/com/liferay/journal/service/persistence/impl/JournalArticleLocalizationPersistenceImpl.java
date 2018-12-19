@@ -520,10 +520,9 @@ public class JournalArticleLocalizationPersistenceImpl
 		qPos.add(articlePK);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(journalArticleLocalization);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					journalArticleLocalization)) {
+				qPos.add(curValue);
 			}
 		}
 

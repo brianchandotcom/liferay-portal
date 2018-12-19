@@ -507,10 +507,9 @@ public class VersionedEntryPersistenceImpl extends BasePersistenceImpl<Versioned
 		qPos.add(groupId);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(versionedEntry);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					versionedEntry)) {
+				qPos.add(curValue);
 			}
 		}
 

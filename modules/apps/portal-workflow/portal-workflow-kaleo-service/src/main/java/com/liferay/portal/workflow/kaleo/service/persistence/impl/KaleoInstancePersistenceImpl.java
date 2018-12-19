@@ -514,10 +514,9 @@ public class KaleoInstancePersistenceImpl extends BasePersistenceImpl<KaleoInsta
 		qPos.add(companyId);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(kaleoInstance);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					kaleoInstance)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -1041,10 +1040,9 @@ public class KaleoInstancePersistenceImpl extends BasePersistenceImpl<KaleoInsta
 		qPos.add(kaleoDefinitionVersionId);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(kaleoInstance);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					kaleoInstance)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -1579,10 +1577,9 @@ public class KaleoInstancePersistenceImpl extends BasePersistenceImpl<KaleoInsta
 		qPos.add(userId);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(kaleoInstance);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					kaleoInstance)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -2130,10 +2127,9 @@ public class KaleoInstancePersistenceImpl extends BasePersistenceImpl<KaleoInsta
 		qPos.add(completed);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(kaleoInstance);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					kaleoInstance)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -2703,10 +2699,9 @@ public class KaleoInstancePersistenceImpl extends BasePersistenceImpl<KaleoInsta
 		qPos.add(classPK);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(kaleoInstance);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					kaleoInstance)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -3398,10 +3393,9 @@ public class KaleoInstancePersistenceImpl extends BasePersistenceImpl<KaleoInsta
 		}
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(kaleoInstance);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					kaleoInstance)) {
+				qPos.add(curValue);
 			}
 		}
 

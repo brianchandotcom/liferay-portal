@@ -530,10 +530,9 @@ public class LocalizedEntryLocalizationPersistenceImpl
 		qPos.add(localizedEntryId);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(localizedEntryLocalization);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					localizedEntryLocalization)) {
+				qPos.add(curValue);
 			}
 		}
 

@@ -591,10 +591,9 @@ public class OAuthTokenPersistenceImpl extends BasePersistenceImpl<OAuthToken>
 		}
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(oAuthToken);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					oAuthToken)) {
+				qPos.add(curValue);
 			}
 		}
 

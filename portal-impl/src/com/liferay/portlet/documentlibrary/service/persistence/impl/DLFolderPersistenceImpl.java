@@ -545,10 +545,9 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 		}
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(dlFolder);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					dlFolder)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -1368,10 +1367,9 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 		qPos.add(companyId);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(dlFolder);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					dlFolder)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -1891,10 +1889,9 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 		qPos.add(groupId);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(dlFolder);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					dlFolder)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -2200,10 +2197,9 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 		qPos.add(groupId);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(dlFolder);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					dlFolder)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -2752,10 +2748,9 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 		qPos.add(companyId);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(dlFolder);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					dlFolder)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -3266,10 +3261,9 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 		qPos.add(repositoryId);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(dlFolder);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					dlFolder)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -3802,10 +3796,9 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 		qPos.add(parentFolderId);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(dlFolder);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					dlFolder)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -4125,10 +4118,9 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 		qPos.add(parentFolderId);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(dlFolder);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					dlFolder)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -4706,10 +4698,9 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 		qPos.add(status);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(dlFolder);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					dlFolder)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -5479,10 +5470,9 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 		qPos.add(parentFolderId);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(dlFolder);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					dlFolder)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -6047,10 +6037,9 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 		}
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(dlFolder);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					dlFolder)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -6640,10 +6629,9 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 		qPos.add(parentFolderId);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(dlFolder);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					dlFolder)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -6980,10 +6968,9 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 		qPos.add(parentFolderId);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(dlFolder);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					dlFolder)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -8379,10 +8366,9 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 		qPos.add(hidden);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(dlFolder);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					dlFolder)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -8733,10 +8719,9 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 		qPos.add(hidden);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(dlFolder);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					dlFolder)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -9433,10 +9418,9 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 		qPos.add(hidden);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(dlFolder);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					dlFolder)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -9813,10 +9797,9 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 		qPos.add(hidden);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(dlFolder);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					dlFolder)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -10531,10 +10514,9 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 		qPos.add(status);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(dlFolder);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					dlFolder)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -10885,10 +10867,9 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 		qPos.add(status);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(dlFolder);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					dlFolder)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -11613,10 +11594,9 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 		qPos.add(status);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(dlFolder);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					dlFolder)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -11980,10 +11960,9 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 		qPos.add(status);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(dlFolder);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					dlFolder)) {
+				qPos.add(curValue);
 			}
 		}
 

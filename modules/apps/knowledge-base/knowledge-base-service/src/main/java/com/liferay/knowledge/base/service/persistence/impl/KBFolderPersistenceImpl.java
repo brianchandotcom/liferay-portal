@@ -535,10 +535,9 @@ public class KBFolderPersistenceImpl extends BasePersistenceImpl<KBFolder>
 		}
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(kbFolder);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					kbFolder)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -1353,10 +1352,9 @@ public class KBFolderPersistenceImpl extends BasePersistenceImpl<KBFolder>
 		qPos.add(companyId);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(kbFolder);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					kbFolder)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -1908,10 +1906,9 @@ public class KBFolderPersistenceImpl extends BasePersistenceImpl<KBFolder>
 		qPos.add(parentKBFolderId);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(kbFolder);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					kbFolder)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -2232,10 +2229,9 @@ public class KBFolderPersistenceImpl extends BasePersistenceImpl<KBFolder>
 		qPos.add(parentKBFolderId);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(kbFolder);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					kbFolder)) {
+				qPos.add(curValue);
 			}
 		}
 

@@ -519,10 +519,9 @@ public class SyncDLFileVersionDiffPersistenceImpl extends BasePersistenceImpl<Sy
 		qPos.add(fileEntryId);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(syncDLFileVersionDiff);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					syncDLFileVersionDiff)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -1052,10 +1051,9 @@ public class SyncDLFileVersionDiffPersistenceImpl extends BasePersistenceImpl<Sy
 		}
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(syncDLFileVersionDiff);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					syncDLFileVersionDiff)) {
+				qPos.add(curValue);
 			}
 		}
 

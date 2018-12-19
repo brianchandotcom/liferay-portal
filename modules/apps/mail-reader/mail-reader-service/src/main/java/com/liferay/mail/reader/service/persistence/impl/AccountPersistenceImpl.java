@@ -507,10 +507,9 @@ public class AccountPersistenceImpl extends BasePersistenceImpl<Account>
 		qPos.add(userId);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(account);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					account)) {
+				qPos.add(curValue);
 			}
 		}
 

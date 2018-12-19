@@ -518,10 +518,9 @@ public class KaleoTaskFormInstancePersistenceImpl extends BasePersistenceImpl<Ka
 		qPos.add(companyId);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(kaleoTaskFormInstance);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					kaleoTaskFormInstance)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -1048,10 +1047,9 @@ public class KaleoTaskFormInstancePersistenceImpl extends BasePersistenceImpl<Ka
 		qPos.add(kaleoDefinitionVersionId);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(kaleoTaskFormInstance);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					kaleoTaskFormInstance)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -1575,10 +1573,9 @@ public class KaleoTaskFormInstancePersistenceImpl extends BasePersistenceImpl<Ka
 		qPos.add(kaleoInstanceId);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(kaleoTaskFormInstance);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					kaleoTaskFormInstance)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -2090,10 +2087,9 @@ public class KaleoTaskFormInstancePersistenceImpl extends BasePersistenceImpl<Ka
 		qPos.add(kaleoTaskId);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(kaleoTaskFormInstance);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					kaleoTaskFormInstance)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -2620,10 +2616,9 @@ public class KaleoTaskFormInstancePersistenceImpl extends BasePersistenceImpl<Ka
 		qPos.add(kaleoTaskInstanceTokenId);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(kaleoTaskFormInstance);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					kaleoTaskFormInstance)) {
+				qPos.add(curValue);
 			}
 		}
 

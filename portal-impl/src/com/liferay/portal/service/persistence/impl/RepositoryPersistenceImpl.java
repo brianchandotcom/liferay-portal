@@ -533,10 +533,9 @@ public class RepositoryPersistenceImpl extends BasePersistenceImpl<Repository>
 		}
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(repository);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					repository)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -1355,10 +1354,9 @@ public class RepositoryPersistenceImpl extends BasePersistenceImpl<Repository>
 		qPos.add(companyId);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(repository);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					repository)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -1877,10 +1875,9 @@ public class RepositoryPersistenceImpl extends BasePersistenceImpl<Repository>
 		qPos.add(groupId);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(repository);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					repository)) {
+				qPos.add(curValue);
 			}
 		}
 

@@ -534,10 +534,9 @@ public class DDMDataProviderInstanceLinkPersistenceImpl
 		qPos.add(dataProviderInstanceId);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(ddmDataProviderInstanceLink);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					ddmDataProviderInstanceLink)) {
+				qPos.add(curValue);
 			}
 		}
 
@@ -1057,10 +1056,9 @@ public class DDMDataProviderInstanceLinkPersistenceImpl
 		qPos.add(structureId);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(ddmDataProviderInstanceLink);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object curValue : orderByComparator.getOrderByConditionValues(
+					ddmDataProviderInstanceLink)) {
+				qPos.add(curValue);
 			}
 		}
 

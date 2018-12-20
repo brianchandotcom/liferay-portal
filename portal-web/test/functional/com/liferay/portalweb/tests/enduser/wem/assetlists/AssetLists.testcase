@@ -76,7 +76,7 @@ definition {
 			);
 		}
 
-		task ("Create another asset list, except expect it to fail with the correct error message") {
+		task ("Create an asset list that has the same name as the first asset list") {
 			AssetListsAdmin.openAssetListsAdmin(
 				siteURLKey = "test-site-name"
 			);
@@ -89,7 +89,9 @@ definition {
 			);
 
 			Button.clickSave();
+		}
 
+		task ("Assert an error displays notifying that the user is not allowed to create a duplicate asset list") {
 			AssertTextEquals.assertPartialText(
 				locator1 = "Message#ERROR_MODAL_CONTENT",
 				value1 = "An asset list with that title already exists."
@@ -172,7 +174,7 @@ definition {
 	@description = "Assert that Asset Lists correctly display their selected content."
 	@priority = "4"
 	test ViewAssetListContent {
-		task ("Create a WC using JSON for performance") {
+		task ("Create a web content article") {
 			JSONWebcontent.addWebContent(
 				content = "WC WebContent Content",
 				groupName = "Test Site Name",
@@ -190,7 +192,7 @@ definition {
 			);
 		}
 
-		task ("Select the created WC to be linked to the asset list") {
+		task ("Select the created web content article to be linked to the asset list") {
 			AssetListsAdmin.openAssetListsAdmin(
 				siteURLKey = "test-site-name"
 			);
@@ -202,7 +204,7 @@ definition {
 			);
 		}
 
-		task ("Assert we can see the selected WC from the View Content action for the asset list") {
+		task ("Assert the selected web content article is viewable from the View Content action for the asset list") {
 			AssetListsAdmin.openAssetListsAdmin(
 				siteURLKey = "test-site-name"
 			);
@@ -215,10 +217,10 @@ definition {
 		}
 	}
 
-	@description = "Assert that Asset Lists correctly display where they are used."
+	@description = "This is a test for LPS-84331. Assert that Asset Lists correctly display where they are used."
 	@priority = "4"
 	test ViewAssetListUsages {
-		task ("Create a public page using JSON for performance") {
+		task ("Create a public page") {
 			JSONLayout.addPublicLayout(
 				groupName = "Test Site Name",
 				layoutName = "Test Page Name"

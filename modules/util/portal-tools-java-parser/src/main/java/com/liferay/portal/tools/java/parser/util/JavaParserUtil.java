@@ -33,6 +33,8 @@ import com.liferay.portal.tools.java.parser.JavaConstructorDefinition;
 import com.liferay.portal.tools.java.parser.JavaContinueStatement;
 import com.liferay.portal.tools.java.parser.JavaElseStatement;
 import com.liferay.portal.tools.java.parser.JavaEnhancedForStatement;
+import com.liferay.portal.tools.java.parser.JavaEnumConstantDefinition;
+import com.liferay.portal.tools.java.parser.JavaEnumConstantDefinitions;
 import com.liferay.portal.tools.java.parser.JavaExpression;
 import com.liferay.portal.tools.java.parser.JavaForStatement;
 import com.liferay.portal.tools.java.parser.JavaIfStatement;
@@ -290,6 +292,31 @@ public class JavaParserUtil {
 		}
 
 		return javaElseStatement;
+	}
+
+	public static JavaEnumConstantDefinitions parseJavaEnumConstantDefinitions(
+		DetailAST enumConstantDefinitionDetailAST) {
+
+		JavaEnumConstantDefinitions javaEnumConstantDefinitions =
+			new JavaEnumConstantDefinitions();
+
+		DetailAST detailAST = enumConstantDefinitionDetailAST;
+
+		while (true) {
+			if (detailAST == null) {
+				return javaEnumConstantDefinitions;
+			}
+
+			if (detailAST.getType() == TokenTypes.ENUM_CONSTANT_DEF) {
+				javaEnumConstantDefinitions.addJavaEnumConstantDefinition(
+					_parseJavaEnumConstantDefinition(detailAST));
+			}
+			else if (detailAST.getType() != TokenTypes.COMMA) {
+				return javaEnumConstantDefinitions;
+			}
+
+			detailAST = detailAST.getNextSibling();
+		}
 	}
 
 	public static JavaExpression parseJavaExpression(DetailAST detailAST) {
@@ -1065,6 +1092,29 @@ public class JavaParserUtil {
 					TokenTypes.VARIABLE_DEF)));
 
 		return javaEnhancedForStatement;
+	}
+
+	private static JavaEnumConstantDefinition _parseJavaEnumConstantDefinition(
+		DetailAST enumConstantDefinitionDetailAST) {
+
+		JavaEnumConstantDefinition javaEnumConstantDefinition =
+			new JavaEnumConstantDefinition(
+				_getName(enumConstantDefinitionDetailAST));
+
+		javaEnumConstantDefinition.setJavaAnnotations(
+			_parseJavaAnnotations(
+				enumConstantDefinitionDetailAST.findFirstToken(
+					TokenTypes.ANNOTATIONS)));
+
+		DetailAST elistDetailAST =
+			enumConstantDefinitionDetailAST.findFirstToken(TokenTypes.ELIST);
+
+		if (elistDetailAST != null) {
+			javaEnumConstantDefinition.setParameterValueJavaExpressions(
+				_parseParameterValueJavaExpressions(elistDetailAST));
+		}
+
+		return javaEnumConstantDefinition;
 	}
 
 	private static JavaForStatement _parseJavaForStatement(

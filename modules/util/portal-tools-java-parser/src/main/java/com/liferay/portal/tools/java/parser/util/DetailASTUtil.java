@@ -42,6 +42,20 @@ public class DetailASTUtil {
 			return null;
 		}
 
+		if (detailAST.getType() == TokenTypes.ENUM_CONSTANT_DEF) {
+			while ((detailAST.getType() == TokenTypes.COMMA) ||
+				   (detailAST.getType() == TokenTypes.ENUM_CONSTANT_DEF)) {
+
+				detailAST = detailAST.getNextSibling();
+			}
+
+			if (detailAST.getType() == TokenTypes.SEMI) {
+				return detailAST;
+			}
+
+			return null;
+		}
+
 		if (detailAST.getType() == TokenTypes.LABELED_STAT) {
 			detailAST = detailAST.getFirstChild();
 

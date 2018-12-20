@@ -683,7 +683,7 @@ definition {
 
 		Button.clickPublish();
 
-		Navigator.gotoSitePage(pageName = "Site Page Name", siteName = "Site Name");
+		IFrame.selectTopFrame();
 
 		RSSPortlet.viewUpdateFeedTitle(
 			feedHeading = "Web Content Title Updated Feed",

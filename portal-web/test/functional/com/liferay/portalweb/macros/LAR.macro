@@ -253,6 +253,8 @@ definition {
 		else {
 			AssertClickNoError(locator1 = "Button#CONTINUE", value1 = "Continue");
 
+			Pause(locator1 = "5000");
+
 			if ("${mirrorWithOverwriting}" == "true") {
 				LAR._mirrorWithOverwriting();
 			}

@@ -40,6 +40,6 @@ public class GitLPushFailureMessageGenerator
 	private static final String _TOKEN_ERROR = "error:";
 
 	private static final String _TOKEN_GIT_LPUSH_ERROR =
-		"A git-lpush failure has occurred.";
+		"A git-lpush validation failure has occurred.";
 
 }

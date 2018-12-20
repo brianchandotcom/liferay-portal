@@ -1,5 +1,5 @@
 definition {
-	macro addDynamic {
+	macro addDynamicSelection {
 		LexiconEntry.gotoAddMenuItem(menuItem = "Dynamic Selection");
 
 		PortletEntry.inputText(
@@ -19,7 +19,7 @@ definition {
 		}
 	}
 
-	macro addManual {
+	macro addManualSelection {
 		LexiconEntry.gotoAddMenuItem(menuItem = "Manual Selection");
 
 		PortletEntry.inputText(
@@ -45,7 +45,7 @@ definition {
 		);
 	}
 
-	macro rename {
+	macro renameAssetList {
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Rename",
 			rowEntry = "${assetListName}"
@@ -80,7 +80,7 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro viewAssetListEntry {
+	macro viewAssetList {
 		var key_title = "${title}";
 		var key_type = "${type}";
 

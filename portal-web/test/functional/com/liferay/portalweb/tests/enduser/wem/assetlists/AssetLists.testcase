@@ -31,7 +31,7 @@ definition {
 				siteURLKey = "test-site-name"
 			);
 
-			AssetListsAdmin.addManual(
+			AssetListsAdmin.addManualSelection(
 				title = "Manual Asset List Test"
 			);
 		}
@@ -41,7 +41,7 @@ definition {
 				siteURLKey = "test-site-name"
 			);
 
-			AssetListsAdmin.addDynamic(
+			AssetListsAdmin.addDynamicSelection(
 				title = "Dynamic Asset List Test"
 			);
 		}
@@ -51,12 +51,12 @@ definition {
 				siteURLKey = "test-site-name"
 			);
 
-			AssetListsAdmin.viewAssetListEntry(
+			AssetListsAdmin.viewAssetList(
 				title = "Manual Asset List Test",
 				type = "Manual"
 			);
 
-			AssetListsAdmin.viewAssetListEntry(
+			AssetListsAdmin.viewAssetList(
 				title = "Dynamic Asset List Test",
 				type = "Dynamic"
 			);
@@ -71,7 +71,7 @@ definition {
 				siteURLKey = "test-site-name"
 			);
 
-			AssetListsAdmin.addManual(
+			AssetListsAdmin.addManualSelection(
 				title = "Manual Asset List Test"
 			);
 		}
@@ -81,7 +81,7 @@ definition {
 				siteURLKey = "test-site-name"
 			);
 
-			AssetListsAdmin.addManual(
+			AssetListsAdmin.addManualSelection(
 				errorMessage = "An asset list with that title already exists.",
 				expectFail = "true",
 				title = "Asset List Test"
@@ -97,7 +97,7 @@ definition {
 				siteURLKey = "test-site-name"
 			);
 
-			AssetListsAdmin.addManual(
+			AssetListsAdmin.addManualSelection(
 				title = "Manual Asset List Test"
 			);
 		}
@@ -107,7 +107,7 @@ definition {
 				siteURLKey = "test-site-name"
 			);
 
-			AssetListsAdmin.addDynamic(
+			AssetListsAdmin.addDynamicSelection(
 				title = "Dynamic Asset List Test"
 			);
 		}
@@ -137,7 +137,7 @@ definition {
 				siteURLKey = "test-site-name"
 			);
 
-			AssetListsAdmin.addManual(
+			AssetListsAdmin.addManualSelection(
 				title = "Manual Asset List Test"
 			);
 		}
@@ -147,14 +147,14 @@ definition {
 				siteURLKey = "test-site-name"
 			);
 
-			AssetListsAdmin.rename(
+			AssetListsAdmin.renameAssetList(
 				assetListName = "Manual Asset List Test",
 				title = "Manual Asset List Edit"
 			);
 		}
 
 		task("Assert that the name of the asset list changed correctly.") {
-			AssetListsAdmin.viewAssetListEntry(
+			AssetListsAdmin.viewAssetList(
 				title = "Manual Asset List Edit",
 				type = "Manual"
 			);
@@ -177,7 +177,7 @@ definition {
 				siteURLKey = "test-site-name"
 			);
 
-			AssetListsAdmin.addManual(
+			AssetListsAdmin.addManualSelection(
 				title = "Manual Asset List Test"
 			);
 		}
@@ -222,7 +222,7 @@ definition {
 				siteURLKey = "test-site-name"
 			);
 
-			AssetListsAdmin.addManual(
+			AssetListsAdmin.addManualSelection(
 				title = "Manual Asset List Test"
 			);
 		}

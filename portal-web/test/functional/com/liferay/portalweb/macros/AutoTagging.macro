@@ -19,9 +19,7 @@ definition {
 
 	macro enableAutoTagging {
 		FormFields.enableCheckbox(fieldName = "enabled");
-			
-		Click(locator1 = "Button#SAVE");
-		
-		Alert.viewSuccessMessage();
+
+		PortletEntry.save();
 	}
 }

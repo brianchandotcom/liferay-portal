@@ -165,7 +165,7 @@ public class BlogPostingNestedCollectionResource
 				_getUserId(blogPosting, currentUser), blogPosting.getHeadline(),
 				blogPosting.getAlternativeHeadline(),
 				blogPosting.getFriendlyURLPath(), blogPosting.getDescription(),
-				blogPosting.getArticleBody(), blogPosting.getDatePublished(),
+				blogPosting.getArticleBody(), blogPosting.getPublishedDate(),
 				true, true, new String[0], blogPosting.getCaption(),
 				_getImageSelector(blogPosting), null,
 				_getServiceContext(groupId, blogPosting));
@@ -276,7 +276,7 @@ public class BlogPostingNestedCollectionResource
 			userId, blogsEntryId, blogPosting.getHeadline(),
 			blogPosting.getAlternativeHeadline(),
 			blogPosting.getFriendlyURLPath(), blogPosting.getDescription(),
-			blogPosting.getArticleBody(), blogPosting.getDatePublished(), true,
+			blogPosting.getArticleBody(), blogPosting.getPublishedDate(), true,
 			true, new String[0], blogPosting.getCaption(), imageSelector, null,
 			serviceContext);
 	}

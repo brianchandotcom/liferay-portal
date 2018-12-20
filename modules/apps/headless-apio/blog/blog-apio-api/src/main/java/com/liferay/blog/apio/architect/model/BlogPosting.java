@@ -93,16 +93,6 @@ public interface BlogPosting {
 	public Date getDateModified();
 
 	/**
-	 * Returns the blog posting's publication date. See <a
-	 * href="https://schema.org/datePublished">datePublished </a> for more
-	 * information.
-	 *
-	 * @return the modification date
-	 * @review
-	 */
-	public Date getDatePublished();
-
-	/**
 	 * Returns the blog posting's description. See <a
 	 * href="https://schema.org/description">description </a> for more information.
 	 *
@@ -143,5 +133,15 @@ public interface BlogPosting {
 	 * @review
 	 */
 	public List<String> getKeywords();
+
+	/**
+	 * Returns the blog posting's publication date. See <a
+	 * href="https://schema.org/datePublished">datePublished </a> for more
+	 * information.
+	 *
+	 * @return the modification date
+	 * @review
+	 */
+	public Date getPublishedDate();
 
 }

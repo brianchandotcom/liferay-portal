@@ -377,11 +377,6 @@ public class DefaultBlogPostingNestedCollectionResourceTest
 		}
 
 		@Override
-		public Date getDatePublished() {
-			return _datePublished;
-		}
-
-		@Override
 		public String getDescription() {
 			return _description;
 		}
@@ -404,6 +399,11 @@ public class DefaultBlogPostingNestedCollectionResourceTest
 		@Override
 		public List<String> getKeywords() {
 			return _keywords;
+		}
+
+		@Override
+		public Date getPublishedDate() {
+			return _datePublished;
 		}
 
 		private final String _alternativeHeadline;

@@ -38,7 +38,7 @@ public class SecurityConfigurationBootstrap {
 	@Activate
 	@Modified
 	public void activate(Map<String, Object> properties) {
-		BasicSignatureSigningConfiguration signatureSigningConfiguration =
+		BasicSignatureSigningConfiguration basicSignatureSigningConfiguration =
 			DefaultSecurityConfigurationBootstrap.
 				buildDefaultSignatureSigningConfiguration();
 
@@ -46,18 +46,19 @@ public class SecurityConfigurationBootstrap {
 			"blacklisted.algorithms");
 
 		Collection<String> blacklistedAlgorithms = new ArrayList<>(
-			signatureSigningConfiguration.getBlacklistedAlgorithms());
+			basicSignatureSigningConfiguration.getBlacklistedAlgorithms());
 
 		if (blacklistedAlgorithmsObject instanceof String[]) {
 			Collections.addAll(
 				blacklistedAlgorithms, (String[])blacklistedAlgorithmsObject);
 
-			signatureSigningConfiguration.setBlacklistedAlgorithms(
+			basicSignatureSigningConfiguration.setBlacklistedAlgorithms(
 				blacklistedAlgorithms);
 		}
 
 		ConfigurationService.register(
-			SignatureSigningConfiguration.class, signatureSigningConfiguration);
+			SignatureSigningConfiguration.class,
+			basicSignatureSigningConfiguration);
 	}
 
 	@Reference

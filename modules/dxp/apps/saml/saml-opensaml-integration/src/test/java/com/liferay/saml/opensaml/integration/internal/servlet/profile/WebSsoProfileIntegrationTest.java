@@ -466,6 +466,7 @@ public class WebSsoProfileIntegrationTest extends BaseSamlTestCase {
 				SamlSpIdpConnectionLocalService.class);
 
 		SamlSpIdpConnection samlSpIdpConnection = new SamlSpIdpConnectionImpl();
+
 		metadataManagerImpl = new MetadataManagerImpl();
 
 		metadataManagerImpl.setCredentialResolver(credentialResolver);

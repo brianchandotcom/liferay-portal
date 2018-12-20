@@ -676,6 +676,6 @@ public class MetadataManagerImpl
 	private SamlSpIdpConnectionLocalService _samlSpIdpConnectionLocalService;
 
 	@Reference
-	private SecurityConfigurationBootstrap _securityComponent;
+	private SecurityConfigurationBootstrap _securityConfigurationBootstrap;
 
 }

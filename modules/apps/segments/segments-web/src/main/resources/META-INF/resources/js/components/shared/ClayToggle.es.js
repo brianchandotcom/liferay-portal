@@ -10,11 +10,20 @@ class ClayToggle extends Component {
 		iconOff: PropTypes.string,
 		iconOn: PropTypes.string,
 		label: PropTypes.string,
+		labelLeft: PropTypes.string,
+		labelOff: PropTypes.string,
+		labelOn: PropTypes.string,
+		labelRight: PropTypes.string,
+		name: PropTypes.string,
 		onChange: PropTypes.func
 	};
 
 	static defaultProps = {
-		label: ''
+		label: '',
+		labelLeft: '',
+		labelOff: '',
+		labelOn: '',
+		labelRight: ''
 	};
 
 	render() {
@@ -24,6 +33,11 @@ class ClayToggle extends Component {
 			iconOff,
 			iconOn,
 			label,
+			labelLeft,
+			labelOff,
+			labelOn,
+			labelRight,
+			name,
 			onChange,
 			...otherProps
 		} = this.props;
@@ -38,15 +52,32 @@ class ClayToggle extends Component {
 				<input
 					checked={checked}
 					className="toggle-switch-check"
+					name={name}
 					onChange={onChange}
 					type="checkbox"
 				/>
 
+				{label &&
+					<span className="toggle-switch-label">{label}</span>
+				}
+
+				{labelLeft &&
+					<span className="toggle-switch-text toggle-switch-text-left">
+						{labelLeft}
+					</span>
+				}
+
+				{labelRight &&
+					<span className="toggle-switch-text toggle-switch-text-right">
+						{labelRight}
+					</span>
+				}
+
 				<span aria-hidden="true" className="toggle-switch-bar">
 					<span
 						className="toggle-switch-handle"
-						data-label-off={label}
-						data-label-on={label}
+						data-label-off={labelOff}
+						data-label-on={labelOn}
 					>
 						{iconOff &&
 							<span className="button-icon button-icon-off toggle-switch-icon">

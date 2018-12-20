@@ -39,7 +39,6 @@ import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceTracker;
 import com.liferay.segments.criteria.Field;
 import com.liferay.segments.criteria.contributor.SegmentsCriteriaContributor;
-import com.liferay.segments.odata.retriever.ODataRetriever;
 
 import java.util.List;
 import java.util.Map;
@@ -47,8 +46,10 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -67,20 +68,39 @@ public class UserSegmentsCriteriaContributorTest {
 			new LiferayIntegrationTestRule(),
 			PermissionCheckerTestRule.INSTANCE);
 
+	@BeforeClass
+	public static void setUpClass() {
+		Registry registry = RegistryUtil.getRegistry();
+
+		Filter filter = registry.getFilter(
+			"(&(entity.model.name=User)(objectClass=" +
+				EntityModel.class.getName() + "))");
+
+		_entityModelServiceTracker = registry.trackServices(filter);
+
+		_entityModelServiceTracker.open();
+
+		filter = registry.getFilter(
+			"(&(segments.criteria.contributor.key=user)(objectClass=" +
+				SegmentsCriteriaContributor.class.getName() + "))");
+
+		_segmentsCriteriaContributorServiceTracker = registry.trackServices(
+			filter);
+
+		_segmentsCriteriaContributorServiceTracker.open();
+	}
+
+	@AfterClass
+	public static void tearDownClass() {
+		_entityModelServiceTracker.close();
+
+		_segmentsCriteriaContributorServiceTracker.close();
+	}
+
 	@Before
 	public void setUp() throws Exception {
 		_expandoTable = ExpandoTestUtil.addTable(
 			PortalUtil.getClassNameId(User.class), "CUSTOM_FIELDS");
-
-		Registry registry = RegistryUtil.getRegistry();
-
-		Filter filter = registry.getFilter(
-			"(&(model.class.name=com.liferay.portal.kernel.model.User)" +
-				"(objectClass=" + ODataRetriever.class.getName() + "))");
-
-		_serviceTracker = registry.trackServices(filter);
-
-		_serviceTracker.open();
 	}
 
 	@Test
@@ -90,7 +110,10 @@ public class UserSegmentsCriteriaContributorTest {
 			ExpandoColumnConstants.STRING,
 			ExpandoColumnConstants.INDEX_TYPE_KEYWORD);
 
-		List<Field> fields = _segmentsCriteriaContributor.getFields(
+		SegmentsCriteriaContributor segmentsCriteriaContributor =
+			_getSegmentsCriteriaContributor();
+
+		List<Field> fields = segmentsCriteriaContributor.getFields(
 			LocaleUtil.getDefault());
 
 		Stream<Field> stream = fields.stream();
@@ -101,8 +124,10 @@ public class UserSegmentsCriteriaContributorTest {
 			Collectors.toSet()
 		);
 
+		EntityModel entityModel = _getEntityModel();
+
 		Map<String, EntityField> entityFieldsMap =
-			_entityModel.getEntityFieldsMap();
+			entityModel.getEntityFieldsMap();
 
 		ComplexEntityField customFields =
 			(ComplexEntityField)entityFieldsMap.remove("customField");
@@ -136,19 +161,24 @@ public class UserSegmentsCriteriaContributorTest {
 		return _expandoColumnLocalService.updateExpandoColumn(expandoColumn);
 	}
 
+	private EntityModel _getEntityModel() {
+		return _entityModelServiceTracker.getService();
+	}
+
+	private SegmentsCriteriaContributor _getSegmentsCriteriaContributor() {
+		return _segmentsCriteriaContributorServiceTracker.getService();
+	}
+
+	private static ServiceTracker<EntityModel, EntityModel>
+		_entityModelServiceTracker;
+	private static ServiceTracker
+		<SegmentsCriteriaContributor, SegmentsCriteriaContributor>
+			_segmentsCriteriaContributorServiceTracker;
+
 	@Inject
-	private static ExpandoColumnLocalService _expandoColumnLocalService;
-
-	private static ServiceTracker<ODataRetriever<User>, ODataRetriever<User>>
-		_serviceTracker;
-
-	@Inject(filter = "entity.model.name=User")
-	private EntityModel _entityModel;
+	private ExpandoColumnLocalService _expandoColumnLocalService;
 
 	@DeleteAfterTestRun
 	private ExpandoTable _expandoTable;
-
-	@Inject(filter = "segments.criteria.contributor.key=user")
-	private SegmentsCriteriaContributor _segmentsCriteriaContributor;
 
 }

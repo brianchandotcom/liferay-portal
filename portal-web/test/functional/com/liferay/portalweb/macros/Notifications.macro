@@ -156,6 +156,13 @@ definition {
 			locator1 = "DocumentsAndMediaShare#NOTIFICATIONS_TITLE",
 			value1 = "${ownerName} has shared ${dmDocumentTitle} with you for ${assetSharingPermission}."
 		);
+
+		if (isSet(openNotification)) {
+			AssertClick(
+				locator1 = "DocumentsAndMediaShare#NOTIFICATIONS_TITLE",
+				value1 = "${ownerName} has shared ${dmDocumentTitle} with you for ${assetSharingPermission}."
+			);
+		}
 	}
 
 	macro viewNoNotificationEntry {

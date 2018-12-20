@@ -28,6 +28,7 @@ class SegmentEdit extends Component {
 		initialMembersCount: PropTypes.number,
 		initialSegmentActive: PropTypes.bool,
 		initialSegmentName: PropTypes.string,
+		locale: PropTypes.string.isRequired,
 		portletNamespace: PropTypes.string,
 		redirect: PropTypes.string,
 		setValues: PropTypes.func,
@@ -36,7 +37,8 @@ class SegmentEdit extends Component {
 
 	static defaultProps = {
 		initialSegmentActive: true,
-		initialSegmentName: DEFAULT_SEGMENT_NAME
+		initialSegmentName: DEFAULT_SEGMENT_NAME,
+		portletNamespace: ''
 	};
 
 	state = {
@@ -100,6 +102,7 @@ class SegmentEdit extends Component {
 	render() {
 		const {
 			handleChange,
+			locale,
 			portletNamespace,
 			redirect,
 			values
@@ -116,7 +119,7 @@ class SegmentEdit extends Component {
 				/>
 
 				<input
-					name={`${portletNamespace}name_en_US`}
+					name={`${portletNamespace}name_${locale}`}
 					type="hidden"
 					value={values.name}
 				/>

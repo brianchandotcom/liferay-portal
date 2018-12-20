@@ -83,6 +83,7 @@ for (int i = 0; i < segmentsCriteriaContributors.size(); i++) {
 				initialMembersCount: <%= editSegmentsEntryDisplayContext.getSegmentsEntryClassPKsCount() %>,
 				initialSegmentActive: <%= (segmentsEntry == null) ? false : segmentsEntry.isActive() %>,
 				initialSegmentName: '<%= (segmentsEntry != null) ? segmentsEntry.getName(locale) : StringPool.BLANK %>',
+				locale: '<%= locale %>',
 				portletNamespace: '<portlet:namespace />',
 				redirect: '<%= HtmlUtil.escape(redirect) %>'
 			},

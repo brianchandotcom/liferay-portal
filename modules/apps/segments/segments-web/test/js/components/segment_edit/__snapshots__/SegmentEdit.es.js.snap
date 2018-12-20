@@ -6,26 +6,24 @@ exports[`SegmentEdit should render 1`] = `
     class="segment-edit-page-root"
   >
     <input
-      id="undefinedname"
-      name="undefinedname"
+      name="name"
       type="hidden"
       value="unnamed-segment"
     />
     <input
-      id="undefinedname_en_US"
-      name="undefinedname_en_US"
+      name="name_en_US"
       type="hidden"
       value="unnamed-segment"
     />
     <input
-      id="undefinedkey"
-      name="undefinedkey"
+      id="key"
+      name="key"
       type="hidden"
       value="unnamed-segment"
     />
     <input
-      id="undefinedactive"
-      name="undefinedactive"
+      id="active"
+      name="active"
       type="hidden"
       value="true"
     />

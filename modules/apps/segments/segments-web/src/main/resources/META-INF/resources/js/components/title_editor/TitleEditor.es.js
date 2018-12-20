@@ -2,6 +2,7 @@ import React, {Component, createRef} from 'react';
 import PropTypes from 'prop-types';
 import ClayButton from '../shared/ClayButton.es';
 import getCN from 'classnames';
+import {ENTER} from 'utils/key-constants.es';
 
 class TitleEditor extends Component {
 	static propTypes = {
@@ -39,6 +40,12 @@ class TitleEditor extends Component {
 		);
 	};
 
+	_handleKeyDown = event => {
+		if (event.keyCode === ENTER) {
+			this.titleInput.current.blur();
+		}
+	};
+
 	render() {
 		const {inputName, onChange, placeholder, value} = this.props;
 
@@ -68,6 +75,7 @@ class TitleEditor extends Component {
 					name={inputName}
 					onBlur={this._handleBlur}
 					onChange={onChange}
+					onKeyDown={this._handleKeyDown}
 					placeholder={placeholder}
 					ref={this.titleInput}
 					type="text"

@@ -16,6 +16,7 @@ package com.liferay.asset.display.page.internal.upgrade.v2_1_0;
 
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
+import com.liferay.layout.constants.LayoutConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryService;
@@ -111,13 +112,6 @@ public class UpgradeAssetDisplayLayout extends UpgradeProcess {
 			long layoutPageTemplateEntryId, ServiceContext serviceContext)
 		throws PortalException {
 
-		UnicodeProperties typeSettingsProperties = new UnicodeProperties();
-
-		typeSettingsProperties.put("visible", Boolean.FALSE.toString());
-
-		serviceContext.setAttribute(
-			"layout.instanceable.allowed", Boolean.TRUE);
-
 		LayoutPageTemplateEntry layoutPageTemplateEntry = Optional.ofNullable(
 			_layoutPageTemplateEntryService.fetchLayoutPageTemplateEntry(
 				layoutPageTemplateEntryId)
@@ -131,11 +125,19 @@ public class UpgradeAssetDisplayLayout extends UpgradeProcess {
 			return layoutPageTemplateEntry.getPlid();
 		}
 
+		UnicodeProperties typeSettingsProperties = new UnicodeProperties();
+
+		typeSettingsProperties.put("visible", Boolean.FALSE.toString());
+
+		serviceContext.setAttribute(
+			"layout.instanceable.allowed", Boolean.TRUE);
+
 		Layout layout = _layoutLocalService.addLayout(
 			userId, groupId, false, 0, assetEntry.getTitleMap(),
 			assetEntry.getTitleMap(), assetEntry.getDescriptionMap(), null,
-			null, "asset_display", typeSettingsProperties.toString(), true,
-			new HashMap<>(), serviceContext);
+			null, LayoutConstants.LAYOUT_TYPE_ASSET_DISPLAY,
+			typeSettingsProperties.toString(), true, new HashMap<>(),
+			serviceContext);
 
 		layoutPageTemplateEntry.setPlid(layout.getPlid());
 

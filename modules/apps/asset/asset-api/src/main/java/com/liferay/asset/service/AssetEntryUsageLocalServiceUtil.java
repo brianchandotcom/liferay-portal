@@ -54,6 +54,16 @@ public class AssetEntryUsageLocalServiceUtil {
 		return getService().addAssetEntryUsage(assetEntryUsage);
 	}
 
+	public static com.liferay.asset.model.AssetEntryUsage addAssetEntryUsage(
+		long userId, long groupId, long assetEntryId, long classNameId,
+		long classPK, String portletId,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .addAssetEntryUsage(userId, groupId, assetEntryId,
+			classNameId, classPK, portletId, serviceContext);
+	}
+
 	/**
 	* Creates a new asset entry usage with the primary key. Does not add the asset entry usage to the database.
 	*
@@ -181,6 +191,11 @@ public class AssetEntryUsageLocalServiceUtil {
 		return getService().fetchAssetEntryUsage(assetEntryUsageId);
 	}
 
+	public static com.liferay.asset.model.AssetEntryUsage fetchAssetEntryUsage(
+		long classNameId, long classPK, String portletId) {
+		return getService().fetchAssetEntryUsage(classNameId, classPK, portletId);
+	}
+
 	/**
 	* Returns the asset entry usage matching the UUID and group.
 	*
@@ -240,6 +255,32 @@ public class AssetEntryUsageLocalServiceUtil {
 		return getService().getAssetEntryUsages(start, end);
 	}
 
+	public static java.util.List<com.liferay.asset.model.AssetEntryUsage> getAssetEntryUsages(
+		long assetEntryId) {
+		return getService().getAssetEntryUsages(assetEntryId);
+	}
+
+	public static java.util.List<com.liferay.asset.model.AssetEntryUsage> getAssetEntryUsages(
+		long assetEntryId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.asset.model.AssetEntryUsage> orderByComparator) {
+		return getService()
+				   .getAssetEntryUsages(assetEntryId, start, end,
+			orderByComparator);
+	}
+
+	public static java.util.List<com.liferay.asset.model.AssetEntryUsage> getAssetEntryUsages(
+		long assetEntryId, long classNameId) {
+		return getService().getAssetEntryUsages(assetEntryId, classNameId);
+	}
+
+	public static java.util.List<com.liferay.asset.model.AssetEntryUsage> getAssetEntryUsages(
+		long assetEntryId, long classNameId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.asset.model.AssetEntryUsage> orderByComparator) {
+		return getService()
+				   .getAssetEntryUsages(assetEntryId, classNameId, start, end,
+			orderByComparator);
+	}
+
 	/**
 	* Returns all the asset entry usages matching the UUID and company.
 	*
@@ -278,6 +319,15 @@ public class AssetEntryUsageLocalServiceUtil {
 	*/
 	public static int getAssetEntryUsagesCount() {
 		return getService().getAssetEntryUsagesCount();
+	}
+
+	public static int getAssetEntryUsagesCount(long assetEntryId) {
+		return getService().getAssetEntryUsagesCount(assetEntryId);
+	}
+
+	public static int getAssetEntryUsagesCount(long assetEntryId,
+		long classNameId) {
+		return getService().getAssetEntryUsagesCount(assetEntryId, classNameId);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(

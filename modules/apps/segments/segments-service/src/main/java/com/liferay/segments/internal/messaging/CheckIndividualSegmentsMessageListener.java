@@ -27,15 +27,8 @@ import com.liferay.portal.kernel.scheduler.SchedulerEntryImpl;
 import com.liferay.portal.kernel.scheduler.TimeUnit;
 import com.liferay.portal.kernel.scheduler.Trigger;
 import com.liferay.portal.kernel.scheduler.TriggerFactory;
-import com.liferay.segments.configuration.SegmentsServiceConfiguration;
-import com.liferay.segments.internal.asah.client.AsahFaroBackendClient;
-import com.liferay.segments.internal.asah.client.model.Individual;
-import com.liferay.segments.internal.asah.client.model.IndividualSegment;
-import com.liferay.segments.internal.asah.client.model.Results;
-import com.liferay.segments.internal.asah.client.util.OrderByField;
+import com.liferay.segments.internal.configuration.SegmentsServiceConfiguration;
 
-import java.util.Collections;
-import java.util.List;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Activate;
@@ -89,14 +82,14 @@ public class CheckIndividualSegmentsMessageListener
 			_log.debug(message.toString());
 		}
 
-		_checkIndividualSegments();
+		_individualSegmentsCheckerUtil.checkIndividualSegments();
 	}
 
 	@Reference(unbind = "-")
-	protected void setAsahFaroBackendClient(
-		AsahFaroBackendClient asahFaroBackendClient) {
+	protected void setIndividualSegmentsCheckerUtil(
+		IndividualSegmentsCheckerUtil individualSegmentsCheckerUtil) {
 
-		_asahFaroBackendClient = asahFaroBackendClient;
+		_individualSegmentsCheckerUtil = individualSegmentsCheckerUtil;
 	}
 
 	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
@@ -111,65 +104,10 @@ public class CheckIndividualSegmentsMessageListener
 		_schedulerEngineHelper = schedulerEngineHelper;
 	}
 
-	private void _checkIndividual(Individual individual) {
-		if (_log.isInfoEnabled()) {
-			_log.info("Checking individual : " + individual.getId());
-		}
-
-		if (_log.isDebugEnabled()) {
-			_log.debug(individual.toString());
-		}
-	}
-
-	private void _checkIndividualSegmentMembers(
-		IndividualSegment individualSegment) {
-
-		if (_log.isInfoEnabled()) {
-			_log.info(
-				"Checking segment members for: " + individualSegment.getName());
-		}
-
-		if (_log.isDebugEnabled()) {
-			_log.debug(individualSegment.toString());
-		}
-
-		Results<Individual> individualResults =
-			_asahFaroBackendClient.getIndividualResults(
-				individualSegment.getId(), 1, 10000,
-				Collections.singletonList(OrderByField.desc("dateModified")));
-
-		if (_log.isInfoEnabled()) {
-			_log.info(
-				individualResults.getTotal() + " members found for Segment " +
-					individualSegment.getName());
-		}
-
-		List<Individual> individuals = individualResults.getItems();
-
-		individuals.forEach(this::_checkIndividual);
-	}
-
-	private void _checkIndividualSegments() {
-		Results<IndividualSegment> individualSegmentResults =
-			_asahFaroBackendClient.getIndividualSegmentResults(
-				1, 10000,
-				Collections.singletonList(OrderByField.desc("dateModified")));
-
-		if (_log.isInfoEnabled()) {
-			_log.info(
-				individualSegmentResults.getTotal() + " Active Segments found");
-		}
-
-		List<IndividualSegment> individualSegments =
-			individualSegmentResults.getItems();
-
-		individualSegments.forEach(this::_checkIndividualSegmentMembers);
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		CheckIndividualSegmentsMessageListener.class);
 
-	private AsahFaroBackendClient _asahFaroBackendClient;
+	private IndividualSegmentsCheckerUtil _individualSegmentsCheckerUtil;
 	private SchedulerEngineHelper _schedulerEngineHelper;
 
 	@Reference

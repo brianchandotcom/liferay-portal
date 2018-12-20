@@ -189,7 +189,7 @@ renderResponse.setTitle(selLayout.getName(locale));
 					<aui:input name="layoutSetBranchId" type="hidden" value="<%= layoutRevision.getLayoutSetBranchId() %>" />
 				</c:if>
 
-				<c:if test="<%= !group.isLayoutPrototype() && (selLayout != null) %>">
+				<c:if test="<%= !group.isLayoutPrototype() %>">
 					<c:if test="<%= selGroup.hasLocalOrRemoteStagingGroup() && !selGroup.isStagingGroup() %>">
 						<div class="alert alert-warning">
 							<liferay-ui:message key="changes-are-immediately-available-to-end-users" />

@@ -1,5 +1,7 @@
 definition {
 	macro assertAutoTagPresent {
+		var key_tagName = "${tagName}";
+
 		AssertElementPresent(locator1 = "DocumentsAndMedia#TAG");
 	}
 

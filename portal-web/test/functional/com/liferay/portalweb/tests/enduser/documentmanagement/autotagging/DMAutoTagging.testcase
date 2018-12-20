@@ -160,6 +160,8 @@ definition {
 
 		DMDocument.viewCP(dmDocumentTitle = "DM Document JPG");
 
-		AutoTagging.assertAutoTagPresent();
+		AutoTagging.assertAutoTagPresent(
+			tagName = "carton"
+		);
 	}
 }

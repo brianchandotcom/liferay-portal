@@ -422,6 +422,35 @@ jdbc.counter.connectionProperties=oracle.jdbc.ReadTimeout=0;oracle.net.CONNECT_T
 		</sequential>
 	</macrodef>
 
+	<macrodef name="get-java-jdk-bundle-version">
+		<attribute default="" name="test.batch.name" />
+
+		<sequential>
+			<var name="java.jdk.bundle.version" unset="true" />
+
+			<if>
+				<contains string="@{test.batch.name}" substring="-jdk7" />
+				<then>
+					<property name="java.jdk.bundle.version" value="1.7" />
+				</then>
+				<elseif>
+					<contains string="@{test.batch.name}" substring="-jdk8" />
+					<then>
+						<property name="java.jdk.bundle.version" value="1.8" />
+					</then>
+				</elseif>
+				<elseif>
+					<contains string="@{test.batch.name}" substring="-open11" />
+					<then>
+						<property name="java.jdk.bundle.version" value="1.11" />
+					</then>
+				</elseif>
+			</if>
+
+			<property name="java.jdk.bundle.version" value="${ant.java.version}" />
+		</sequential>
+	</macrodef>
+
 	<macrodef name="get-java-jdk-home">
 		<attribute default="x64" name="architecture" />
 		<attribute default="${ant.java.version}" name="version" />
@@ -470,35 +499,6 @@ jdbc.counter.connectionProperties=oracle.jdbc.ReadTimeout=0;oracle.net.CONNECT_T
 					<var name="java.jdk.home" value="${java.home}" />
 				</then>
 			</if>
-		</sequential>
-	</macrodef>
-
-	<macrodef name="get-java-jdk-bundle-version">
-		<attribute default="" name="test.batch.name" />
-
-		<sequential>
-			<var name="java.jdk.bundle.version" unset="true" />
-
-			<if>
-				<contains string="@{test.batch.name}" substring="-jdk7" />
-				<then>
-					<property name="java.jdk.bundle.version" value="1.7" />
-				</then>
-				<elseif>
-					<contains string="@{test.batch.name}" substring="-jdk8" />
-					<then>
-						<property name="java.jdk.bundle.version" value="1.8" />
-					</then>
-				</elseif>
-				<elseif>
-					<contains string="@{test.batch.name}" substring="-open11" />
-					<then>
-						<property name="java.jdk.bundle.version" value="1.11" />
-					</then>
-				</elseif>
-			</if>
-
-			<property name="java.jdk.bundle.version" value="${ant.java.version}" />
 		</sequential>
 	</macrodef>
 

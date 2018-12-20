@@ -10,34 +10,24 @@ module.exports = {
 	mode: 'development',
 	module: {
 		rules: [
-		  {
-			test: /\.(js|jsx)$/,
-			exclude: /node_modules/,
-			use: [{
-				loader: 'babel-loader',
-				options: {
-						presets: ['babel-preset-env', 'babel-preset-env'],
-						"plugins": [
-							"transform-class-properties",
-							"transform-object-rest-spread",
-							["module-resolver", {
-								"root": ["./src/main/resources/META-INF/resources/js/"],
-								"alias": {
-									"test": "./test/js/"
-								}
-							}]
-						]
-					}
-			  },'liferay-lang-key-dev-loader']
+		  	{
+				test: /\.(js|jsx)$/,
+				exclude: /node_modules/,
+				use: [
+					{
+						loader: 'babel-loader',
+					},
+					'liferay-lang-key-dev-loader'
+				]
 			},
 			{
-        test: /\.(scss|css)$/,
-        use: [
-          {loader: "style-loader"},
-          {loader: "css-loader"},
-          {loader: "sass-loader"}
-        ]
-      }
+				test: /\.(scss|css)$/,
+				use: [
+					{loader: "style-loader"},
+					{loader: "css-loader"},
+					{loader: "sass-loader"}
+				]
+			}
 		]
 	},
 	resolve: {

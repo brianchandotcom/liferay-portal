@@ -6,6 +6,8 @@ export default class ProcessListCard extends React.Component {
 		return (
 			<div className="row">
 				<div className="col-12">
+					<ProcessListManagementBar />
+
 					<div className="card">
 						<div className="card-body">
 							<div className="table-responsive">

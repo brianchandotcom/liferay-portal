@@ -19,6 +19,7 @@ export default class ProcessListManagementBar extends React.Component {
 									<span className="navbar-text-truncate">
 										{'Filter and Order2'}
 									</span>
+
 									<svg
 										className="lexicon-icon lexicon-icon-caret-bottom"
 										focusable="false"
@@ -27,6 +28,7 @@ export default class ProcessListManagementBar extends React.Component {
 										<use href="/images/icons/icons.svg#caret-bottom" />
 									</svg>
 								</a>
+
 								<a
 									aria-expanded="false"
 									aria-haspopup="true"
@@ -43,6 +45,7 @@ export default class ProcessListManagementBar extends React.Component {
 										<use href="/images/icons/icons.svg#filter" />
 									</svg>
 								</a>
+
 								<div className="dropdown-menu" role="menu">
 									<ul className="list-unstyled">
 										<li>
@@ -50,11 +53,13 @@ export default class ProcessListManagementBar extends React.Component {
 												{'Filter Action 1'}
 											</a>
 										</li>
+
 										<li>
 											<a className="dropdown-item" href="#1" role="button">
 												{'Filter Action 2'}
 											</a>
 										</li>
+
 										<li>
 											<a className="dropdown-item" href="#1" role="button">
 												{'Filter Action 3'}
@@ -64,6 +69,7 @@ export default class ProcessListManagementBar extends React.Component {
 								</div>
 							</li>
 						</ul>
+
 						<div className="navbar-form navbar-form-autofit navbar-overlay navbar-overlay-sm-down">
 							<div className="container">
 								<form role="search">
@@ -74,6 +80,7 @@ export default class ProcessListManagementBar extends React.Component {
 												placeholder="Search for..."
 												type="text"
 											/>
+
 											<span className="input-group-inset-item input-group-inset-item-after">
 												<button
 													className="btn btn-unstyled navbar-breakpoint-d-none"
@@ -87,6 +94,7 @@ export default class ProcessListManagementBar extends React.Component {
 														<use href="/images/icons/icons.svg#times" />
 													</svg>
 												</button>
+
 												<button
 													className="btn btn-unstyled navbar-breakpoint-d-block"
 													type="button"

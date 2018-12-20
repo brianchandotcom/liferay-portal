@@ -1,4 +1,8 @@
 {
+	"ecmaFeatures": {
+		"jsx": true,
+		"modules": true
+	},
 	"env": {
 		"browser": true,
 		"es6": true,
@@ -81,7 +85,9 @@
 		"react/jsx-no-bind": 2,
 		"react/jsx-no-literals": 2,
 		"react/jsx-sort-props": 2,
+		"react/jsx-uses-react": 2,
 		"react/jsx-uses-vars": 2,
+		"react/react-in-jsx-scope": 2,
 		"react/sort-comp": [
 			2,
 			{

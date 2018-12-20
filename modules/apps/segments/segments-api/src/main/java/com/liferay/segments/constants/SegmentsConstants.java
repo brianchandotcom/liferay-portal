@@ -21,4 +21,8 @@ public class SegmentsConstants {
 
 	public static final String RESOURCE_NAME = "com.liferay.segments";
 
+	public static final String SOURCE_ASAH_FARO_BACKEND = "ASAH_FARO_BACKEND";
+
+	public static final String SOURCE_DEFAULT = "DEFAULT";
+
 }

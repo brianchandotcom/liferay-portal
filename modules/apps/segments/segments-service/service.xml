@@ -29,6 +29,7 @@
 		<column name="active" type="boolean" />
 		<column name="criteria" type="String" />
 		<column name="key" type="String" />
+		<column name="source" type="String" />
 		<column name="type" type="String" />
 
 		<!-- Order -->
@@ -41,6 +42,9 @@
 
 		<finder name="GroupId" return-type="Collection">
 			<finder-column name="groupId" />
+		</finder>
+		<finder name="Source" return-type="Collection">
+			<finder-column name="source" />
 		</finder>
 		<finder name="Type" return-type="Collection">
 			<finder-column name="type" />

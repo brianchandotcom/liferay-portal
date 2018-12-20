@@ -41,8 +41,8 @@ public class SegmentsEntryServiceImpl extends SegmentsEntryServiceBaseImpl {
 	@Override
 	public SegmentsEntry addSegmentsEntry(
 			Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
-			boolean active, String criteria, String key, String type,
-			ServiceContext serviceContext)
+			boolean active, String criteria, String key, String source,
+			String type, ServiceContext serviceContext)
 		throws PortalException {
 
 		_portletResourcePermission.check(
@@ -50,7 +50,7 @@ public class SegmentsEntryServiceImpl extends SegmentsEntryServiceBaseImpl {
 			SegmentsActionKeys.MANAGE_SEGMENTS_ENTRIES);
 
 		return segmentsEntryLocalService.addSegmentsEntry(
-			nameMap, descriptionMap, active, criteria, key, type,
+			nameMap, descriptionMap, active, criteria, key, source, type,
 			serviceContext);
 	}
 

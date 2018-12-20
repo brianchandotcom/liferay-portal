@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.segments.constants.SegmentsConstants;
 import com.liferay.segments.exception.SegmentsEntryKeyException;
 import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.service.base.SegmentsEntryLocalServiceBaseImpl;
@@ -60,8 +61,8 @@ public class SegmentsEntryLocalServiceImpl
 	@Override
 	public SegmentsEntry addSegmentsEntry(
 			Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
-			boolean active, String criteria, String key, String type,
-			ServiceContext serviceContext)
+			boolean active, String criteria, String key, String source,
+			String type, ServiceContext serviceContext)
 		throws PortalException {
 
 		// Segments entry
@@ -90,6 +91,16 @@ public class SegmentsEntryLocalServiceImpl
 		segmentsEntry.setActive(active);
 		segmentsEntry.setCriteria(criteria);
 		segmentsEntry.setKey(key);
+
+		if (Validator.isNull(source)) {
+			segmentsEntry.setSource(SegmentsConstants.SOURCE_DEFAULT);
+		}
+
+		else
+			{
+			segmentsEntry.setSource(source);
+		}
+
 		segmentsEntry.setType(type);
 
 		segmentsEntryPersistence.update(segmentsEntry);
@@ -109,6 +120,16 @@ public class SegmentsEntryLocalServiceImpl
 		for (SegmentsEntry segmentsEntry : segmentsEntries) {
 			segmentsEntryLocalService.deleteSegmentsEntry(
 				segmentsEntry.getSegmentsEntryId());
+		}
+	}
+
+	@Override
+	public void deleteSegmentsEntries(String source) throws PortalException {
+		List<SegmentsEntry> segmentsEntries =
+			segmentsEntryPersistence.findBySource(source);
+
+		for (SegmentsEntry segmentsEntry : segmentsEntries) {
+			segmentsEntryLocalService.deleteSegmentsEntry(segmentsEntry);
 		}
 	}
 
@@ -184,6 +205,15 @@ public class SegmentsEntryLocalServiceImpl
 
 		return segmentsEntryPersistence.findByType(
 			type, start, end, orderByComparator);
+	}
+
+	@Override
+	public List<SegmentsEntry> getSegmentsEntriesBySource(
+		String source, int start, int end,
+		OrderByComparator<SegmentsEntry> orderByComparator) {
+
+		return segmentsEntryPersistence.findBySource(
+			source, start, end, orderByComparator);
 	}
 
 	@Override

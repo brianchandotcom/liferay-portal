@@ -2332,6 +2332,12 @@ definition {
 			roleTitle = "Roles Regrole Name"
 		);
 
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "VIEW",
+			resourceName = "com.liferay.dynamic.data.mapping.model.DDMStructure-com.liferay.journal.model.JournalArticle",
+			roleTitle = "Roles Regrole Name"
+		);
+
 		ProductMenu.gotoPortlet(
 			category = "Sites",
 			panel = "Control Panel",

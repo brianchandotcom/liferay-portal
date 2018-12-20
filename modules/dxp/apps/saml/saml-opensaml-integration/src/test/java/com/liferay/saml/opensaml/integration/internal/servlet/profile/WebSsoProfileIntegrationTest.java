@@ -177,7 +177,8 @@ public class WebSsoProfileIntegrationTest extends BaseSamlTestCase {
 
 		Iterator<XMLObject> iterator = unknownXMLObjects.iterator();
 
-		//peer only allows sha512
+		// Peer only allows SHA512
+
 		while (iterator.hasNext()) {
 			XMLObject xmlObject = iterator.next();
 
@@ -202,8 +203,9 @@ public class WebSsoProfileIntegrationTest extends BaseSamlTestCase {
 			"http://www.w3.org/2001/04/xmldsig-more#rsa-sha512",
 			signature.getSignatureAlgorithm());
 
-		/* we blacklist sha512 and check it is not used even though it is the
-		only one signaled by the peer*/
+		// Blacklist SHA512 and check that it is not used even though it is the
+		// only one signaled by the peer
+
 		SecurityConfigurationBootstrap securityConfigurationBootstrap =
 			new SecurityConfigurationBootstrap();
 
@@ -228,8 +230,9 @@ public class WebSsoProfileIntegrationTest extends BaseSamlTestCase {
 			"http://www.w3.org/2001/04/xmldsig-more#rsa-sha512",
 			signature.getSignatureAlgorithm());
 
-		/* we check that sha512 was actually negotiated and that the default is
-		different*/
+		// Check that SHA512 was actually negotiated and that the default is
+		// different
+
 		assertion = OpenSamlUtil.buildAssertion();
 
 		OpenSamlUtil.signObject(assertion, credential, null);

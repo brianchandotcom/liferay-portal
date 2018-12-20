@@ -14,7 +14,6 @@ class ODataQueryBuilder extends Component {
 		initialQuery: PropTypes.string,
 		inputId: PropTypes.string,
 		modelLabel: PropTypes.string,
-		operators: PropTypes.array,
 		properties: PropTypes.array.isRequired
 	};
 
@@ -60,12 +59,12 @@ class ODataQueryBuilder extends Component {
 				</div>
 
 				<div className="form-group">
-					<textarea
+					<input
 						className="field form-control"
 						data-testid="query-input"
 						id={inputId}
 						name={inputId}
-						readOnly
+						type="hidden"
 						value={criteriaMap ? buildQueryString([criteriaMap]) : ''}
 					/>
 				</div>

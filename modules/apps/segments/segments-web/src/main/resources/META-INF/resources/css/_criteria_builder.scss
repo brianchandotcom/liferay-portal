@@ -1,12 +1,16 @@
 .criteria-builder-root {
 	display: flex;
 	height: 800px;
-	max-width: 1280px;
 
 	.criteria-builder-section-main {
 		flex: 1;
 		overflow: auto;
 		padding-right: 16px;
+
+		.sheet {
+			margin-top: 24px;
+			padding-bottom: 1.5rem;
+		}
 	}
 
 	.criteria-builder-section-sidebar {

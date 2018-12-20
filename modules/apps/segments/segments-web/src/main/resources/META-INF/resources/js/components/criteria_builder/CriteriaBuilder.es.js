@@ -262,28 +262,30 @@ class CriteriaBuilder extends Component {
 		return (
 			<div className={classes}>
 				<div className="criteria-builder-section-main">
-					<div className="criteria-builder-toolbar">
-						<ClayToggle
-							checked={editing}
-							iconOff="pencil"
-							iconOn="pencil"
-							onChange={this._handleToggleEdit}
+					<div className="sheet sheet-lg">
+						<div className="criteria-builder-toolbar">
+							<ClayToggle
+								checked={editing}
+								iconOff="pencil"
+								iconOn="pencil"
+								onChange={this._handleToggleEdit}
+							/>
+						</div>
+
+						<CriteriaGroup
+							criteria={criteria}
+							editing={editing}
+							groupId={criteria && criteria.groupId}
+							modelLabel={modelLabel}
+							onChange={this._handleCriteriaChange}
+							onMove={this._handleCriterionMove}
+							root
+							supportedConjunctions={supportedConjunctions}
+							supportedOperators={supportedOperators}
+							supportedProperties={supportedProperties}
+							supportedPropertyTypes={supportedPropertyTypes}
 						/>
 					</div>
-
-					<CriteriaGroup
-						criteria={criteria}
-						editing={editing}
-						groupId={criteria && criteria.groupId}
-						modelLabel={modelLabel}
-						onChange={this._handleCriteriaChange}
-						onMove={this._handleCriterionMove}
-						root
-						supportedConjunctions={supportedConjunctions}
-						supportedOperators={supportedOperators}
-						supportedProperties={supportedProperties}
-						supportedPropertyTypes={supportedPropertyTypes}
-					/>
 				</div>
 
 				<div className="criteria-builder-section-sidebar">

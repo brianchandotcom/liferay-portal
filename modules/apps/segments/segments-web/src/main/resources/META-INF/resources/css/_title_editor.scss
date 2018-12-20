@@ -1,0 +1,31 @@
+.title-editor-root {
+	.title-display,
+	.title-input {
+		font-size: 20px;
+		font-weight: bold;
+	}
+
+	.title-display {
+		align-items: center;
+		display: flex;
+
+		&.placeholder-display {
+			color: $mainLighten52;
+			font-style: italic;
+		}
+	}
+
+	.title-input {
+		border: 0;
+		width: 100%;
+
+		&:focus {
+			outline: none;
+		}
+
+		&::placeholder {
+			color: $mainLighten52;
+			font-style: italic;
+		}
+	}
+}

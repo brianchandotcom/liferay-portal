@@ -1,0 +1,51 @@
+.segment-edit-page-root {
+	.contributor-conjunction {
+		margin: 0 auto;
+		width: 120px;
+	}
+
+	.form-header-root {
+		background-color: $white;
+		border-bottom: 1px solid $mainLighten65;
+
+		.edit-icon {
+			color: $mainLighten52;
+			margin-left: 8px;
+		}
+
+		.form-header-container {
+			align-items: center;
+			display: flex;
+			justify-content: space-between;
+			padding: 24px;
+		}
+
+		.form-header-section-left {
+			flex: 1;
+		}
+
+		.form-header-section-right {
+			align-items: center;
+			display: flex;
+
+			.active-toggle,
+			.members-count {
+				margin-right: 16px;
+			}
+
+			.active-toggle {
+				margin-bottom: 0;
+
+				.toggle-switch-text {
+					font-size: 16px;
+				}
+			}
+
+			.members-count {
+				font-size: 16px;
+				font-weight: 600;
+				margin-right: 40px;
+			}
+		}
+	}
+}

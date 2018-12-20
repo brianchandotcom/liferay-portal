@@ -1345,10 +1345,10 @@ public class TopLevelBuild extends BaseBuild {
 
 			new GradleTaskFailureMessageGenerator(),
 			new RebaseFailureMessageGenerator(),
+			new GitLPushFailureMessageGenerator(),
 
 			new CIFailureMessageGenerator(),
 			new DownstreamFailureMessageGenerator(),
-			new GitLPushFailureMessageGenerator(),
 
 			new GenericFailureMessageGenerator()
 		};

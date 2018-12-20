@@ -33,7 +33,7 @@ class EditTags extends Component {
 	}
 
 	attached() {
-		this._fetchTagsData();
+		this._getCommonTags();
 	}
 
 	close() {
@@ -42,19 +42,10 @@ class EditTags extends Component {
 
 	open() {
 		this.refs.modal.visible = true;
-		this._fetchTagsData();
+		this._getCommonTags();
 	}
 
-	_fetchTagsData() {
-		this.loading = true;
-
-		let bodyData = {
-			"bulkAssetEntryCommonTagsActionModel": {
-				repositoryId: this.repositoryId,
-				selection: this.fileEntries
-			}
-		};
-
+	_fetchTagsRequest(url, bodyData, callback) {
 		let body = JSON.stringify(bodyData);
 
 		let headers = new Headers();
@@ -67,19 +58,13 @@ class EditTags extends Component {
 			method: 'POST'
 		};
 
-		fetch(this.urlTags, request)
+		fetch(url, request)
 			.then(
 				response => response.json()
 			)
 			.then(
 				response => {
-					var responseData = response.bulkAssetEntryCommonTagsModel;
-
-					if (responseData) {
-						this.loading = false;
-						this.commonTags = responseData.tagNames;
-						this.description = responseData.description;
-					}
+					callback(response).bind(this)
 				}
 			)
 			.catch(
@@ -90,6 +75,68 @@ class EditTags extends Component {
 			);
 	}
 
+	_getCommonTags() {
+		this.loading = true;
+
+		let bodyData = {
+			"bulkAssetEntryCommonTagsActionModel": {
+				repositoryId: this.repositoryId,
+				selection: this.fileEntries
+			}
+		};
+
+		this._fetchTagsRequest(
+			this.urlTags,
+			bodyData,
+			response => {
+				var responseData = response.bulkAssetEntryCommonTagsModel;
+
+				if (responseData) {
+					this.loading = false;
+					this.commonTags = responseData.tagNames;
+					this.description = responseData.description;
+				}
+			}
+		);
+	}
+
+	_handleAddTag(event) {
+		event.target.selectedItems.push({label: event.data.label, value: event.data.label});
+		event.target.selectedItems = event.target.selectedItems;
+	}
+
+	_handleSaveBtnClick() {
+		let finalTags = this.commonTags.map(tag => tag.label);
+
+		let addedTags = finalTags.filter(
+			tag => this._initialTags.indexOf(tag) == -1
+		);
+
+		let removedTags = this._initialTags.filter(
+			tag => finalTags.indexOf(tag) == -1
+		);
+
+		console.log('Initial tags: ' + this._initialTags);
+		console.log('Final tags: ' + finalTags);
+		console.log('Added: ' + addedTags);
+		console.log('Removed: ' + removedTags);
+
+		let bodyData = {
+			"bulkAssetEntryUpdateTagsActionModel": {
+				repositoryId: this.repositoryId,
+				selection: this.fileEntries,
+				toAddTagNames: addedTags,
+				toRemoveTagNames: removedTags
+			}
+		};
+
+	}
+
+	_handleRemoveTag(event) {
+		event.target.selectedItems.splice(event.data.index, 1);
+		event.target.selectedItems = event.target.selectedItems;
+	}
+
 	/**
 	 * Transforms the tags list in the object needed
 	 * for the ClayMultiSelect component.
@@ -98,6 +145,8 @@ class EditTags extends Component {
 	 * @return {List<{label, value}>} new commonTags object list
 	 */
 	_setCommonTags(commonTags) {
+		this._initialTags = commonTags;
+
 		let commonTagsObjList = [];
 
 		if (commonTags.length > 0) {

@@ -7,6 +7,9 @@
 	{@param spritemap: string}
 	{@param? description: string}
 	{@param? multiple: bool}
+	{@param? _handleAddTag: any}
+	{@param? _handleSaveBtnClick: any}
+	{@param? _handleRemoveTag: any}
 
 	{call liferay.frontend.Modal.render}
 		{param body kind="html"}
@@ -20,6 +23,8 @@
 					{param dataSource: $dataSource /}
 					{param multiple: $multiple /}
 					{param spritemap: $spritemap /}
+					{param _handleAddTag: $_handleAddTag /}
+					{param _handleRemoveTag: $_handleRemoveTag /}
 				{/call}
 			{/if}
 		{/param}
@@ -32,7 +37,7 @@
 
 		{param footer kind="html"}
 			<button class="btn btn-secondary" data-onclick="hide" type="button">{msg desc=""}cancel{/msg}</button>
-			<button class="btn btn-primary" type="button">{msg desc=""}save{/msg}</button>
+			<button class="btn btn-primary" data-onclick="{$_handleSaveBtnClick}" type="button">{msg desc=""}save{/msg}</button>
 		{/param}
 
 		{param ref: 'modal' /}
@@ -55,6 +60,8 @@
 	{@param spritemap: string}
 	{@param? description: string}
 	{@param? multiple: bool}
+	{@param? _handleAddTag: any}
+	{@param? _handleRemoveTag: any}
 
 	<p>{$description}</p>
 
@@ -73,11 +80,14 @@
 
 	{call ClayMultiSelect.render}
 		{param dataSource: $dataSource /}
+		{param events: [
+			'itemAdded': $_handleAddTag,
+			'itemRemoved': $_handleRemoveTag
+		] /}
 		{param helpText: '' /}
 		{param label kind="text"} {msg desc=""}tags{/msg} {/param}
+		{param ref: 'tagselector' /}
 		{param selectedItems: $commonTags /}
 		{param spritemap: $spritemap /}
 	{/call}
-
-	<p>Common Tags: {$commonTags}</p>
 {/template}

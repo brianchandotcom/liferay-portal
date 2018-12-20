@@ -33,8 +33,6 @@ Group group = layoutsAdminDisplayContext.getGroup();
 
 Layout selLayout = layoutsAdminDisplayContext.getSelLayout();
 
-boolean assetDisplayLayout = StringUtil.equals(selLayout.getType(), com.liferay.layout.constants.LayoutConstants.LAYOUT_TYPE_ASSET_DISPLAY);
-
 PortletURL redirectURL = layoutsAdminDisplayContext.getRedirectURL();
 
 long refererPlid = ParamUtil.getLong(request, "refererPlid", LayoutConstants.DEFAULT_PLID);
@@ -155,7 +153,7 @@ renderResponse.setTitle(selLayout.getName(locale));
 			<aui:input name="type" type="hidden" value="<%= selLayout.getType() %>" />
 			<aui:input name="<%= PortletDataHandlerKeys.SELECTED_LAYOUTS %>" type="hidden" />
 
-			<c:if test="<%= assetDisplayLayout %>">
+			<c:if test="<%= StringUtil.equals(selLayout.getType(), LayoutConstants.LAYOUT_TYPE_ASSET_DISPLAY) %>">
 
 				<%
 				for (String languageId : group.getAvailableLanguageIds()) {

@@ -23,9 +23,12 @@ import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 
+import java.io.Serializable;
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -95,10 +98,17 @@ public class IndexerFixture<T> {
 	}
 
 	public void searchNoOne(long userId, String keywords, Locale locale) {
+		searchNoOne(userId, keywords, locale, null);
+	}
+
+	public void searchNoOne(
+		long userId, String keywords, Locale locale,
+		Map<String, Serializable> attributes) {
+
 		try {
 			SearchContext searchContext =
 				SearchContextTestUtil.getSearchContext(
-					userId, keywords, locale);
+					userId, null, keywords, locale, attributes);
 
 			Hits hits = _indexer.search(searchContext);
 
@@ -110,17 +120,19 @@ public class IndexerFixture<T> {
 	}
 
 	public void searchNoOne(String keywords) {
-		try {
-			searchNoOne(TestPropsValues.getUserId(), keywords, null);
-		}
-		catch (PortalException pe) {
-			throw new RuntimeException(pe);
-		}
+		searchNoOne(keywords, null);
 	}
 
 	public void searchNoOne(String keywords, Locale locale) {
+		searchNoOne(keywords, locale, null);
+	}
+
+	public void searchNoOne(
+		String keywords, Locale locale, Map<String, Serializable> attributes) {
+
 		try {
-			searchNoOne(TestPropsValues.getUserId(), keywords, locale);
+			searchNoOne(
+				TestPropsValues.getUserId(), keywords, locale, attributes);
 		}
 		catch (PortalException pe) {
 			throw new RuntimeException(pe);
@@ -128,10 +140,17 @@ public class IndexerFixture<T> {
 	}
 
 	public Document searchOnlyOne(long userId, String keywords, Locale locale) {
+		return searchOnlyOne(userId, keywords, locale, null);
+	}
+
+	public Document searchOnlyOne(
+		long userId, String keywords, Locale locale,
+		Map<String, Serializable> attributes) {
+
 		try {
 			SearchContext searchContext =
 				SearchContextTestUtil.getSearchContext(
-					userId, keywords, locale);
+					userId, null, keywords, locale, attributes);
 
 			Hits hits = _indexer.search(searchContext);
 
@@ -143,21 +162,29 @@ public class IndexerFixture<T> {
 	}
 
 	public Document searchOnlyOne(String keywords) {
+		return searchOnlyOne(keywords, null, null);
+	}
+
+	public Document searchOnlyOne(String keywords, Locale locale) {
+		return searchOnlyOne(keywords, locale, null);
+	}
+
+	public Document searchOnlyOne(
+		String keywords, Locale locale, Map<String, Serializable> attributes) {
+
 		try {
-			return searchOnlyOne(TestPropsValues.getUserId(), keywords, null);
+			return searchOnlyOne(
+				TestPropsValues.getUserId(), keywords, locale, attributes);
 		}
 		catch (PortalException pe) {
 			throw new RuntimeException(pe);
 		}
 	}
 
-	public Document searchOnlyOne(String keywords, Locale locale) {
-		try {
-			return searchOnlyOne(TestPropsValues.getUserId(), keywords, locale);
-		}
-		catch (PortalException pe) {
-			throw new RuntimeException(pe);
-		}
+	public Document searchOnlyOne(
+		String keywords, Map<String, Serializable> attributes) {
+
+			return searchOnlyOne(keywords, null, attributes);
 	}
 
 	private final Indexer<T> _indexer;

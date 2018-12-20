@@ -20,7 +20,10 @@ import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 
+import java.io.Serializable;
+
 import java.util.Locale;
+import java.util.Map;
 
 /**
  * @author Adam Brandizzi
@@ -36,7 +39,7 @@ public class SearchContextTestUtil {
 
 		return getSearchContext(
 			TestPropsValues.getUserId(), new long[] {groupId}, StringPool.BLANK,
-			null);
+			null, null);
 	}
 
 	public static SearchContext getSearchContext(
@@ -51,8 +54,18 @@ public class SearchContextTestUtil {
 			boolean highlightEnabled)
 		throws PortalException {
 
+		return getSearchContext(
+			userId, groupIds, keywords, locale, highlightEnabled, null);
+	}
+
+	public static SearchContext getSearchContext(
+			long userId, long[] groupIds, String keywords, Locale locale,
+			boolean highlightEnabled, Map<String, Serializable> attributes)
+		throws PortalException {
+
 		SearchContext searchContext = new SearchContext();
 
+		searchContext.setAttributes(attributes);
 		searchContext.setCompanyId(TestPropsValues.getCompanyId());
 		searchContext.setKeywords(keywords);
 		searchContext.setGroupIds(groupIds);
@@ -68,10 +81,19 @@ public class SearchContextTestUtil {
 	}
 
 	public static SearchContext getSearchContext(
+			long userId, long[] groupIds, String keywords, Locale locale,
+			Map<String, Serializable> attributes)
+		throws PortalException {
+
+		return getSearchContext(
+			userId, groupIds, keywords, locale, false, attributes);
+	}
+
+	public static SearchContext getSearchContext(
 			long userId, String keywords, Locale locale)
 		throws PortalException {
 
-		return getSearchContext(userId, null, keywords, locale);
+		return getSearchContext(userId, null, keywords, locale, null);
 	}
 
 }

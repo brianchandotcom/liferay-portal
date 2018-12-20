@@ -26,7 +26,7 @@ definition {
 	@description = "Assert that the UI works correctly for adding Asset Lists."
 	@priority = "5"
 	test AddAssetList {
-		task("Create a manual asset list.") {
+		task ("Create a manual asset list") {
 			AssetListsAdmin.openAssetListsAdmin(
 				siteURLKey = "test-site-name"
 			);
@@ -36,7 +36,7 @@ definition {
 			);
 		}
 
-		task("Create a dynamic asset list.") {
+		task ("Create a dynamic asset list") {
 			AssetListsAdmin.openAssetListsAdmin(
 				siteURLKey = "test-site-name"
 			);
@@ -46,7 +46,7 @@ definition {
 			);
 		}
 
-		task("Assert Asset List Entry names and types.") {
+		task ("Assert Asset List Entry names and types") {
 			AssetListsAdmin.openAssetListsAdmin(
 				siteURLKey = "test-site-name"
 			);
@@ -66,7 +66,7 @@ definition {
 	@description = "Assert that the UI correctly displays a useful error message when an Asset List is added with a duplicate name."
 	@priority = "3"
 	test AddDuplicateAssetList {
-		task("Create a manual asset list.") {
+		task ("Create a manual asset list") {
 			AssetListsAdmin.openAssetListsAdmin(
 				siteURLKey = "test-site-name"
 			);
@@ -76,7 +76,7 @@ definition {
 			);
 		}
 
-		task("Create another asset list, except expect it to fail with the correct error message.") {
+		task ("Create another asset list, except expect it to fail with the correct error message") {
 			AssetListsAdmin.openAssetListsAdmin(
 				siteURLKey = "test-site-name"
 			);
@@ -100,7 +100,7 @@ definition {
 	@description = "Assert that the UI works correctly for deleting Asset Lists."
 	@priority = "5"
 	test DeleteAssetList {
-		task("Create a manual asset list.") {
+		task ("Create a manual asset list") {
 			AssetListsAdmin.openAssetListsAdmin(
 				siteURLKey = "test-site-name"
 			);
@@ -110,7 +110,7 @@ definition {
 			);
 		}
 
-		task("Create a dynamic asset list.") {
+		task ("Create a dynamic asset list") {
 			AssetListsAdmin.openAssetListsAdmin(
 				siteURLKey = "test-site-name"
 			);
@@ -120,7 +120,7 @@ definition {
 			);
 		}
 
-		task("Delete both asset lists.") {
+		task ("Delete both asset lists") {
 			LexiconEntry.delete(
 				rowEntry = "Manual Asset List Test"
 			);
@@ -130,7 +130,7 @@ definition {
 			);
 		}
 
-		task("Assert the taglib that displays when there are no entries displays.") {
+		task ("Assert the taglib that displays when there are no entries displays") {
 			AssertElementPresent(
 				locator1 = "Message#EMPTY_INFO_TAGLIB"
 			);
@@ -140,7 +140,7 @@ definition {
 	@description = "Assert that the UI works correctly for renaming Asset Lists."
 	@priority = "5"
 	test RenameAssetList {
-		task ("Create a manual asset list.") {
+		task ("Create a manual asset list") {
 			AssetListsAdmin.openAssetListsAdmin(
 				siteURLKey = "test-site-name"
 			);
@@ -150,7 +150,7 @@ definition {
 			);
 		}
 
-		task ("Rename the asset list.") {
+		task ("Rename the asset list") {
 			AssetListsAdmin.openAssetListsAdmin(
 				siteURLKey = "test-site-name"
 			);
@@ -161,7 +161,7 @@ definition {
 			);
 		}
 
-		task("Assert that the name of the asset list changed correctly.") {
+		task ("Assert that the name of the asset list changed correctly") {
 			AssetListsAdmin.viewAssetList(
 				title = "Manual Asset List Edit",
 				type = "Manual"
@@ -172,7 +172,7 @@ definition {
 	@description = "Assert that Asset Lists correctly display their selected content."
 	@priority = "4"
 	test ViewAssetListContent {
-		task("Create a WC using JSON for performance.") {
+		task ("Create a WC using JSON for performance") {
 			JSONWebcontent.addWebContent(
 				content = "WC WebContent Content",
 				groupName = "Test Site Name",
@@ -180,7 +180,7 @@ definition {
 			);
 		}
 
-		task("Create a manual asset list.") {
+		task ("Create a manual asset list") {
 			AssetListsAdmin.openAssetListsAdmin(
 				siteURLKey = "test-site-name"
 			);
@@ -190,7 +190,7 @@ definition {
 			);
 		}
 
-		task("Select the created WC to be linked to the asset list.") {
+		task ("Select the created WC to be linked to the asset list") {
 			AssetListsAdmin.openAssetListsAdmin(
 				siteURLKey = "test-site-name"
 			);
@@ -202,7 +202,7 @@ definition {
 			);
 		}
 
-		task("Assert we can see the selected WC from the View Content action for the asset list.") {
+		task ("Assert we can see the selected WC from the View Content action for the asset list") {
 			AssetListsAdmin.openAssetListsAdmin(
 				siteURLKey = "test-site-name"
 			);
@@ -218,14 +218,14 @@ definition {
 	@description = "Assert that Asset Lists correctly display where they are used."
 	@priority = "4"
 	test ViewAssetListUsages {
-		task("Create a public page using JSON for performance.") {
+		task ("Create a public page using JSON for performance") {
 			JSONLayout.addPublicLayout(
 				groupName = "Test Site Name",
 				layoutName = "Test Page Name"
 			);
 		}
 
-		task("Create a manual asset list.") {
+		task ("Create a manual asset list") {
 			AssetListsAdmin.openAssetListsAdmin(
 				siteURLKey = "test-site-name"
 			);
@@ -235,7 +235,7 @@ definition {
 			);
 		}
 
-		task("Add an Asset Publisher portlet to the created public page.") {
+		task ("Add an Asset Publisher portlet to the created public page") {
 			Navigator.gotoSitePage(
 				pageName = "Test Page Name",
 				siteName = "Test Site Name"
@@ -244,7 +244,7 @@ definition {
 			Portlet.addPG(portletName = "Asset Publisher");
 		}
 
-		task("Select the created manual asset list to be used in the asset publisher portlet.") {
+		task ("Select the created manual asset list to be used in the asset publisher portlet") {
 			Navigator.gotoSitePage(
 				pageName = "Test Page Name",
 				siteName = "Test Site Name"
@@ -255,7 +255,7 @@ definition {
 			);
 		}
 
-		task("Assert the created asset list is used exactly once.") {
+		task ("Assert the created asset list is used exactly once") {
 			AssetListsAdmin.openAssetListsAdmin(
 				siteURLKey = "test-site-name"
 			);

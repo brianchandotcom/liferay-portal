@@ -14,6 +14,7 @@
 
 package com.liferay.asset.display.page.internal.upgrade.v2_1_0;
 
+import com.liferay.asset.display.page.internal.upgrade.v2_1_0.util.AssetDisplayPageEntryTable;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.layout.constants.LayoutConstants;
@@ -57,6 +58,52 @@ public class UpgradeAssetDisplayLayout extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
+		_upgradeSchema();
+
+		_upgradePlid();
+	}
+
+	private long _getPlid(
+			AssetEntry assetEntry, long userId, long groupId,
+			long layoutPageTemplateEntryId, ServiceContext serviceContext)
+		throws PortalException {
+
+		LayoutPageTemplateEntry layoutPageTemplateEntry = Optional.ofNullable(
+			_layoutPageTemplateEntryService.fetchLayoutPageTemplateEntry(
+				layoutPageTemplateEntryId)
+		).orElse(
+			_layoutPageTemplateEntryService.fetchDefaultLayoutPageTemplateEntry(
+				groupId, assetEntry.getClassNameId(),
+				assetEntry.getClassTypeId())
+		);
+
+		if (layoutPageTemplateEntry.getPlid() > 0) {
+			return layoutPageTemplateEntry.getPlid();
+		}
+
+		UnicodeProperties typeSettingsProperties = new UnicodeProperties();
+
+		typeSettingsProperties.put("visible", Boolean.FALSE.toString());
+
+		serviceContext.setAttribute(
+			"layout.instanceable.allowed", Boolean.TRUE);
+
+		Layout layout = _layoutLocalService.addLayout(
+			userId, groupId, false, 0, assetEntry.getTitleMap(),
+			assetEntry.getTitleMap(), assetEntry.getDescriptionMap(), null,
+			null, LayoutConstants.LAYOUT_TYPE_ASSET_DISPLAY,
+			typeSettingsProperties.toString(), true, new HashMap<>(),
+			serviceContext);
+
+		layoutPageTemplateEntry.setPlid(layout.getPlid());
+
+		_layoutPageTemplateEntryLocalService.updateLayoutPageTemplateEntry(
+			layoutPageTemplateEntry);
+
+		return layout.getPlid();
+	}
+
+	private void _upgradePlid() throws Exception {
 		StringBundler sb = new StringBundler(3);
 
 		sb.append("select assetDisplayPageEntryId, userId, groupId, ");
@@ -107,44 +154,10 @@ public class UpgradeAssetDisplayLayout extends UpgradeProcess {
 		}
 	}
 
-	private long _getPlid(
-			AssetEntry assetEntry, long userId, long groupId,
-			long layoutPageTemplateEntryId, ServiceContext serviceContext)
-		throws PortalException {
-
-		LayoutPageTemplateEntry layoutPageTemplateEntry = Optional.ofNullable(
-			_layoutPageTemplateEntryService.fetchLayoutPageTemplateEntry(
-				layoutPageTemplateEntryId)
-		).orElse(
-			_layoutPageTemplateEntryService.fetchDefaultLayoutPageTemplateEntry(
-				groupId, assetEntry.getClassNameId(),
-				assetEntry.getClassTypeId())
-		);
-
-		if (layoutPageTemplateEntry.getPlid() > 0) {
-			return layoutPageTemplateEntry.getPlid();
-		}
-
-		UnicodeProperties typeSettingsProperties = new UnicodeProperties();
-
-		typeSettingsProperties.put("visible", Boolean.FALSE.toString());
-
-		serviceContext.setAttribute(
-			"layout.instanceable.allowed", Boolean.TRUE);
-
-		Layout layout = _layoutLocalService.addLayout(
-			userId, groupId, false, 0, assetEntry.getTitleMap(),
-			assetEntry.getTitleMap(), assetEntry.getDescriptionMap(), null,
-			null, LayoutConstants.LAYOUT_TYPE_ASSET_DISPLAY,
-			typeSettingsProperties.toString(), true, new HashMap<>(),
-			serviceContext);
-
-		layoutPageTemplateEntry.setPlid(layout.getPlid());
-
-		_layoutPageTemplateEntryLocalService.updateLayoutPageTemplateEntry(
-			layoutPageTemplateEntry);
-
-		return layout.getPlid();
+	private void _upgradeSchema() throws Exception {
+		alter(
+			AssetDisplayPageEntryTable.class,
+			new AlterTableAddColumn("plid LONG"));
 	}
 
 	private final AssetEntryLocalService _assetEntryLocalService;

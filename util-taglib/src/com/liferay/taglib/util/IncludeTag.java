@@ -287,6 +287,14 @@ public class IncludeTag extends AttributesTagSupport {
 			return null;
 		}
 
+		if (customJspServletContextName.contains("/../")) {
+			_log.error(
+				"Illegal directory traversal in " +
+					customJspServletContextName);
+
+			return null;
+		}
+
 		String customPage = CustomJspRegistryUtil.getCustomJspFileName(
 			customJspServletContextName, page);
 

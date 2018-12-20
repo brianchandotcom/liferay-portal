@@ -22,8 +22,10 @@ taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
 
 <%@ page import="com.liferay.document.library.opener.google.drive.DLOpenerGoogleDriveFileReference" %><%@
+page import="com.liferay.document.library.opener.google.drive.web.internal.configuration.DLOpenerGoogleDriveCompanyConfiguration" %><%@
 page import="com.liferay.document.library.opener.google.drive.web.internal.constants.DLOpenerGoogleDriveWebConstants" %><%@
 page import="com.liferay.document.library.opener.google.drive.web.internal.constants.DLOpenerGoogleDriveWebKeys" %><%@
+page import="com.liferay.document.library.opener.google.drive.web.internal.constants.PortalSettingsDLOpenerGoogleDriveConstants" %><%@
 page import="com.liferay.petra.string.StringBundler" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.servlet.PortalWebResourceConstants" %><%@
@@ -32,6 +34,8 @@ page import="com.liferay.portal.kernel.util.Constants" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
 page import="com.liferay.portal.kernel.util.PortalUtil" %>
+
+<%@ page import="javax.portlet.ActionRequest" %>
 
 <liferay-frontend:defineObjects />
 

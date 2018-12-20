@@ -53,7 +53,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Adolfo Pérez
  */
 @Component(
-	configurationPid = "com.liferay.document.library.opener.google.drive.internal.configuration.DLOpenerGoogleDriveConfiguration",
+	configurationPid = "com.liferay.document.library.opener.google.drive.web.internal.configuration.DLOpenerGoogleDriveConfiguration",
 	configurationPolicy = ConfigurationPolicy.REQUIRE, immediate = true,
 	service = DLPortletToolbarContributorContext.class
 )

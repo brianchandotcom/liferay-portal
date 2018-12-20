@@ -16,7 +16,9 @@ package com.liferay.frontend.taglib.soy.servlet.taglib;
 
 import com.liferay.frontend.taglib.soy.internal.util.SoyContextFactoryUtil;
 import com.liferay.frontend.taglib.soy.internal.util.SoyJavaScriptRendererUtil;
+import com.liferay.frontend.taglib.soy.internal.util.SoyRendererProvider;
 import com.liferay.frontend.taglib.soy.internal.util.SoyTemplateResourcesProviderUtil;
+import com.liferay.frontend.taglib.soy.servlet.taglib.util.SoyRenderer;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONSerializer;
@@ -280,19 +282,16 @@ public class TemplateRendererTag extends ParamAndPropertyAncestorTagImpl {
 			context.put("id", getWrapperId());
 		}
 
-		_template.putAll(context);
-
-		_template.put(TemplateConstants.NAMESPACE, getTemplateNamespace());
-
-		_template.prepare(request);
-
 		if (wrapper) {
 			jspWriter.append("<div id=\"");
 			jspWriter.append(HtmlUtil.escapeAttribute(getWrapperId()));
 			jspWriter.append("\">");
 		}
 
-		_template.processTemplate(jspWriter);
+		SoyRenderer soyRenderer = SoyRendererProvider.getSoyRenderer();
+
+		soyRenderer.renderSoy(
+			request, jspWriter, getTemplateNamespace(), context);
 
 		if (wrapper) {
 			jspWriter.append("</div>");

@@ -7,41 +7,24 @@ import State, {Config} from 'metal-state';
  * @review
  */
 const connect = function(component, store) {
-	component.store = store;
-
-	store.on(
+	component._storeChangeListener = store.on(
 		'change',
-		nextState => Object.entries(nextState).forEach(
-			entry => {
-				const [key, newVal] = entry;
-				const oldVal = component[key];
-
-				if (newVal !== oldVal) {
-					component[key] = newVal;
-				}
-			}
-		)
+		() => syncStoreState(component, store)
 	);
 
-	component.on(
-		'stateChanged',
-		data => {
-			const nextState = Object.assign({}, store.getState());
+	syncStoreState(component, store);
+};
 
-			Object.values(data.changes).forEach(
-				change => {
-					const {key, newVal} = change;
-					const oldVal = nextState[key];
+/**
+ * Disconnects a given component from it's store
+ * @param {ConnectedComponent} component
+ */
+const disconnect = function(component) {
+	if (component._storeChangeListener) {
+		component._storeChangeListener.removeListener();
 
-					if ((key in nextState) && (oldVal !== newVal)) {
-						nextState[key] = newVal;
-					}
-				}
-			);
-
-			store._setInitialState(nextState);
-		}
-	);
+		component._storeChangeListener = null;
+	}
 };
 
 /**
@@ -64,6 +47,8 @@ const createStore = function(initialState, reducers, componentIds = []) {
 				)
 				.then(
 					component => {
+						component.store = store;
+
 						connect(component, store);
 					}
 				);
@@ -71,6 +56,23 @@ const createStore = function(initialState, reducers, componentIds = []) {
 	);
 
 	return store;
+};
+
+/**
+ * @param {ConnectedComponent} component
+ * @param {Store} store
+ */
+const syncStoreState = function(component, store) {
+	const state = store.getState();
+
+	component.getStateKeys()
+		.filter(key => key in state)
+		.filter(key => component[key] !== state[key])
+		.forEach(
+			key => {
+				component[key] = state[key];
+			}
+		);
 };
 
 /**
@@ -251,5 +253,5 @@ Store.STATE = {
 		.value({})
 };
 
-export {connect, createStore, Store};
+export {connect, disconnect, createStore, Store};
 export default Store;

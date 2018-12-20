@@ -72,19 +72,20 @@ definition {
 			Card.clickSitePagesCardLink(cardName = "${rowEntry}");
 		}
 
+		SelectFrame(locator1 = "IFrame#DIALOG");
+
 		PortletEntry.inputName(name = "${pageName}");
 
 		if ("${hideFromNavMenu}" == "true") {
 			Uncheck(locator1 = "Checkbox#ADD_TO_NAVIGATION_MENU");
 		}
 
-		if ("${sitePageType}" == "Content Page") {
+		Button.click(button = "Save");
+
+		SelectFrame.selectFrameTop();
+
+		if (!("${sitePageType}" == "Content Page")) {
 			Button.click(button = "Save");
-		}
-		else {
-			for (var iteration : list "1,2") {
-				Button.click(button = "Save");
-			}
 		}
 	}
 

@@ -90,7 +90,7 @@ definition {
 			portlet = "Sites"
 		);
 
-		Site.addBlankCP(singleSiteTypePermission = "true", siteName = "Site Name");
+		Site.addBlankCP(siteName = "Site Name");
 
 		Permissions.removePermissionViaAPI(
 			resourceAction = "ADD_COMMUNITY",

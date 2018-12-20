@@ -31,7 +31,9 @@ import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionLocalService;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutPrototype;
+import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutPrototypeLocalService;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -83,6 +85,15 @@ public class LayoutPageTemplateEntryStagedModelDataHandler
 				portletDataContext, layoutPageTemplateEntry,
 				layoutPageTemplateCollection,
 				PortletDataContext.REFERENCE_TYPE_PARENT);
+		}
+
+		Layout layout = _layoutLocalService.fetchLayout(
+			layoutPageTemplateEntry.getPlid());
+
+		if (layout != null) {
+			StagedModelDataHandlerUtil.exportReferenceStagedModel(
+				portletDataContext, layoutPageTemplateEntry, layout,
+				PortletDataContext.REFERENCE_TYPE_DEPENDENCY);
 		}
 
 		_exportAssetDisplayPages(portletDataContext, layoutPageTemplateEntry);
@@ -151,6 +162,14 @@ public class LayoutPageTemplateEntryStagedModelDataHandler
 			layoutPageTemplateEntry.getLayoutPageTemplateCollectionId(),
 			layoutPageTemplateEntry.getLayoutPageTemplateCollectionId());
 
+		Map<Long, Long> plids =
+			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
+				Layout.class);
+
+		long plid = MapUtil.getLong(
+			plids, layoutPageTemplateEntry.getPlid(),
+			layoutPageTemplateEntry.getPlid());
+
 		LayoutPageTemplateEntry importedLayoutPageTemplateEntry =
 			(LayoutPageTemplateEntry)layoutPageTemplateEntry.clone();
 
@@ -158,6 +177,7 @@ public class LayoutPageTemplateEntryStagedModelDataHandler
 			portletDataContext.getScopeGroupId());
 		importedLayoutPageTemplateEntry.setLayoutPageTemplateCollectionId(
 			layoutPageTemplateCollectionId);
+		importedLayoutPageTemplateEntry.setPlid(plid);
 
 		LayoutPageTemplateEntry existingLayoutPageTemplateEntry =
 			_stagedModelRepository.fetchStagedModelByUuidAndGroupId(
@@ -355,6 +375,8 @@ public class LayoutPageTemplateEntryStagedModelDataHandler
 				existingAssetDisplayPageEntry.setLayoutPageTemplateEntryId(
 					importedLayoutPageTemplateEntry.
 						getLayoutPageTemplateEntryId());
+				existingAssetDisplayPageEntry.setPlid(
+					importedLayoutPageTemplateEntry.getPlid());
 
 				_assetDisplayPageEntryLocalService.updateAssetDisplayPageEntry(
 					existingAssetDisplayPageEntry);
@@ -397,6 +419,9 @@ public class LayoutPageTemplateEntryStagedModelDataHandler
 
 	@Reference
 	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;
+
+	@Reference
+	private LayoutLocalService _layoutLocalService;
 
 	@Reference
 	private LayoutPageTemplateCollectionLocalService

@@ -1651,12 +1651,6 @@ definition {
 			searchPortletList = "Search Options,Category Facet,Folder Facet,Site Facet,Tag Facet,Type Facet,User Facet,Search Results,Search Bar"
 		);
 
-		Portlet.dragAndDropPortletToColumnPG(
-			columnNumberFrom = "1",
-			columnNumberTo = "2",
-			portletName = "Search Results"
-		);
-
 		SearchPortlets.configureWidgetScope(searchScope = "Everything");
 
 		SearchPortlets.configureSearchOptions(

@@ -15,6 +15,7 @@
 package com.liferay.petra.log4j;
 
 import com.liferay.petra.reflect.ReflectionUtil;
+import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
@@ -174,7 +175,7 @@ public class Log4JUtil {
 			ServerDetector.SYSTEM_PROPERTY_KEY_SERVER_DETECTOR_SERVER_ID,
 			serverId);
 
-		_liferayHome = liferayHome;
+		_liferayHome = _xmlAttributeEscape(liferayHome);
 
 		configureLog4J(classLoader);
 
@@ -256,7 +257,8 @@ public class Log4JUtil {
 
 	private static String _getLiferayHome() {
 		if (_liferayHome == null) {
-			_liferayHome = PropsUtil.get(PropsKeys.LIFERAY_HOME);
+			_liferayHome = _xmlAttributeEscape(
+				PropsUtil.get(PropsKeys.LIFERAY_HOME));
 		}
 
 		return _liferayHome;
@@ -318,6 +320,16 @@ public class Log4JUtil {
 		return StringUtil.replace(
 			content, "<appender-ref ref=\"" + appenderName + "\" />",
 			StringPool.BLANK);
+	}
+
+	private static String _xmlAttributeEscape(String s) {
+		return StringUtil.replace(
+			s,
+			new char[] {
+				CharPool.AMPERSAND, CharPool.LESS_THAN, CharPool.QUOTE,
+				CharPool.APOSTROPHE
+			},
+			new String[] {"&amp;", "&lt;", "&quot;", "&apos;"});
 	}
 
 	private static final Logger _logger = Logger.getRootLogger();

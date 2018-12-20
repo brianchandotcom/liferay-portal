@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.tools.java.parser.Position;
 
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
+import com.puppycrawl.tools.checkstyle.api.FileContents;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 
 import java.util.ArrayList;
@@ -86,7 +87,9 @@ public class DetailASTUtil {
 		return null;
 	}
 
-	public static Position getEndPosition(DetailAST detailAST) {
+	public static Position getEndPosition(
+		DetailAST detailAST, FileContents fileContents) {
+
 		DetailAST closingDetailAST = getClosingDetailAST(detailAST);
 
 		if (closingDetailAST != null) {
@@ -97,22 +100,34 @@ public class DetailASTUtil {
 				closingDetailAST.getColumnNo() + s.length());
 		}
 
+		Position endPosition = null;
+
 		String s = detailAST.getText();
 
-		Position endPosition = new Position(
-			detailAST.getLineNo(), detailAST.getColumnNo() + s.length());
+		String line = fileContents.getLine(detailAST.getLineNo() - 1);
+
+		if (line.contains(s)) {
+			endPosition = new Position(
+				detailAST.getLineNo(), detailAST.getColumnNo() + s.length());
+		}
 
 		for (DetailAST childDetailAST :
 				getAllChildTokens(detailAST, true, ALL_TYPES)) {
 
 			s = childDetailAST.getText();
 
-			Position childDetailASTEndPosition = new Position(
-				childDetailAST.getLineNo(),
-				childDetailAST.getColumnNo() + s.length());
+			line = fileContents.getLine(childDetailAST.getLineNo() - 1);
 
-			if (childDetailASTEndPosition.compareTo(endPosition) > 0) {
-				endPosition = childDetailASTEndPosition;
+			if (line.contains(s)) {
+				Position childDetailASTEndPosition = new Position(
+					childDetailAST.getLineNo(),
+					childDetailAST.getColumnNo() + s.length());
+
+				if ((endPosition == null) ||
+					(childDetailASTEndPosition.compareTo(endPosition) > 0)) {
+
+					endPosition = childDetailASTEndPosition;
+				}
 			}
 		}
 

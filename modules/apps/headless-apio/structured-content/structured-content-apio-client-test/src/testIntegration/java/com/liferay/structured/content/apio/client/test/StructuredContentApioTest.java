@@ -187,7 +187,7 @@ public class StructuredContentApioTest {
 			structuredContentHref
 		).then(
 		).statusCode(
-			200
+			Matchers.isOneOf(200, 204)
 		);
 	}
 

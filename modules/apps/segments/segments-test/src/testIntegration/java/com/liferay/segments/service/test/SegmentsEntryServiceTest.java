@@ -42,6 +42,7 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerTestRule;
 import com.liferay.segments.constants.SegmentsActionKeys;
+import com.liferay.segments.constants.SegmentsConstants;
 import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.service.SegmentsEntryService;
 import com.liferay.segments.test.util.SegmentsTestUtil;
@@ -107,7 +108,7 @@ public class SegmentsEntryServiceTest {
 				RandomTestUtil.randomLocaleStringMap(),
 				RandomTestUtil.randomLocaleStringMap(), true,
 				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-				RandomTestUtil.randomString(),
+				SegmentsConstants.SOURCE_DEFAULT, RandomTestUtil.randomString(),
 				ServiceContextTestUtil.getServiceContext(
 					_group, _groupUser.getUserId()));
 		}
@@ -124,7 +125,7 @@ public class SegmentsEntryServiceTest {
 				RandomTestUtil.randomLocaleStringMap(),
 				RandomTestUtil.randomLocaleStringMap(), true,
 				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-				RandomTestUtil.randomString(),
+				SegmentsConstants.SOURCE_DEFAULT, RandomTestUtil.randomString(),
 				ServiceContextTestUtil.getServiceContext(
 					_group, _groupUser.getUserId()));
 		}

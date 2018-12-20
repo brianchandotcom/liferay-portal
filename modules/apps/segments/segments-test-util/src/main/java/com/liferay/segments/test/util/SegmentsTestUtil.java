@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.segments.constants.SegmentsConstants;
 import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.service.SegmentsEntryLocalServiceUtil;
 import com.liferay.segments.service.SegmentsEntryRelLocalServiceUtil;
@@ -80,8 +81,8 @@ public class SegmentsTestUtil {
 		throws PortalException {
 
 		return addSegmentsEntry(
-			name, description, criteria, key, type,
-			ServiceContextTestUtil.getServiceContext(groupId));
+			name, description, criteria, key, SegmentsConstants.SOURCE_DEFAULT,
+			type, ServiceContextTestUtil.getServiceContext(groupId));
 	}
 
 	public static SegmentsEntry addSegmentsEntry(ServiceContext serviceContext)
@@ -90,12 +91,14 @@ public class SegmentsTestUtil {
 		return addSegmentsEntry(
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(), serviceContext);
+			SegmentsConstants.SOURCE_DEFAULT, RandomTestUtil.randomString(),
+			serviceContext);
 	}
 
 	public static SegmentsEntry addSegmentsEntry(
 			final String name, final String description, String criteria,
-			String key, String type, ServiceContext serviceContext)
+			String key, String source, String type,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		Map<Locale, String> nameMap = new HashMap<>();
@@ -107,7 +110,8 @@ public class SegmentsTestUtil {
 		descriptionMap.put(LocaleUtil.getDefault(), description);
 
 		return SegmentsEntryLocalServiceUtil.addSegmentsEntry(
-			nameMap, descriptionMap, true, criteria, key, type, serviceContext);
+			nameMap, descriptionMap, true, criteria, key, source, type,
+			serviceContext);
 	}
 
 }

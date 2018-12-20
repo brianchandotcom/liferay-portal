@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.segments.constants.SegmentsConstants;
 import com.liferay.segments.constants.SegmentsPortletKeys;
 import com.liferay.segments.criteria.Criteria;
 import com.liferay.segments.criteria.CriteriaSerializer;
@@ -100,8 +101,8 @@ public class UpdateSegmentsEntryMVCActionCommand extends BaseMVCActionCommand {
 			if (segmentsEntryId <= 0) {
 				segmentsEntry = _segmentsEntryService.addSegmentsEntry(
 					nameMap, descriptionMap, active,
-					CriteriaSerializer.serialize(criteria), key, type,
-					serviceContext);
+					CriteriaSerializer.serialize(criteria), key,
+					SegmentsConstants.SOURCE_DEFAULT, type, serviceContext);
 			}
 			else {
 				segmentsEntry = _segmentsEntryService.updateSegmentsEntry(

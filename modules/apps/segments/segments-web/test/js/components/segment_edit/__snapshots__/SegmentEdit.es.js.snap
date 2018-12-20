@@ -1,0 +1,114 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SegmentEdit should render 1`] = `
+<DocumentFragment>
+  <div
+    class="segment-edit-page-root"
+  >
+    <input
+      id="undefinedname"
+      name="undefinedname"
+      type="hidden"
+      value="unnamed-segment"
+    />
+    <input
+      id="undefinedname_en_US"
+      name="undefinedname_en_US"
+      type="hidden"
+      value="unnamed-segment"
+    />
+    <input
+      id="undefinedkey"
+      name="undefinedkey"
+      type="hidden"
+      value="unnamed-segment"
+    />
+    <input
+      id="undefinedactive"
+      name="undefinedactive"
+      type="hidden"
+      value="true"
+    />
+    <div
+      class="form-header-root"
+    >
+      <div
+        class="container-fluid container-fluid-max-xl form-header-container"
+      >
+        <div
+          class="form-header-section-left"
+        >
+          <div
+            class="title-editor-root"
+          >
+            <input
+              class="title-input hide"
+              data-testid="title-input"
+              name="name"
+              placeholder="unnamed-segment"
+              type="text"
+              value="unnamed-segment"
+            />
+            <div
+              class="title-display placeholder-display"
+            >
+              <span>
+                unnamed-segment
+              </span>
+              <button
+                class="btn btn-outline-secondary btn-monospaced btn-outline-borderless edit-icon"
+                data-testid="edit-button"
+                type="button"
+              >
+                <svg
+                  aria-hidden="true"
+                  class="lexicon-icon lexicon-icon-pencil icon"
+                  viewBox="0 0 512 512"
+                >
+                  <use
+                    xlink:href="#pencil"
+                  />
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
+        <div
+          class="form-header-section-right"
+        >
+          <div
+            class="members-count"
+          >
+            x-members
+          </div>
+          <div
+            class="btn-group"
+          >
+            <div
+              class="btn-group-item"
+            >
+              <button
+                class="btn btn-outline-secondary btn-outline-borderless"
+                type="button"
+              >
+                cancel
+              </button>
+            </div>
+            <div
+              class="btn-group-item"
+            >
+              <button
+                class="btn btn-primary"
+                type="submit"
+              >
+                save
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div />
+  </div>
+</DocumentFragment>
+`;

@@ -1,0 +1,90 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TitleEditor should render 1`] = `
+<DocumentFragment>
+  <div
+    class="title-editor-root"
+  >
+    <input
+      class="title-input hide"
+      data-testid="title-input"
+      type="text"
+      value=""
+    />
+    <div
+      class="title-display placeholder-display"
+    >
+      <span />
+      <button
+        class="btn btn-outline-secondary btn-monospaced btn-outline-borderless edit-icon"
+        data-testid="edit-button"
+        type="button"
+      >
+        <svg
+          aria-hidden="true"
+          class="lexicon-icon lexicon-icon-pencil icon"
+          viewBox="0 0 512 512"
+        >
+          <use
+            xlink:href="#pencil"
+          />
+        </svg>
+      </button>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`TitleEditor should show and hide the text input after blurring from the input 1`] = `
+"Snapshot Diff:
+- First value
++ Second value
+
+@@ -1,17 +1,17 @@
+  <DocumentFragment>
+    <div
+      class=\\"title-editor-root\\"
+    >
+      <input
+-       class=\\"title-input\\"
++       class=\\"title-input hide\\"
+        data-testid=\\"title-input\\"
+        type=\\"text\\"
+        value=\\"\\"
+      />
+      <div
+-       class=\\"title-display hide placeholder-display\\"
++       class=\\"title-display placeholder-display\\"
+      >
+        <span />
+        <button
+          class=\\"btn btn-outline-secondary btn-monospaced btn-outline-borderless edit-icon\\"
+          data-testid=\\"edit-button\\""
+`;
+
+exports[`TitleEditor should show the text input after clicking on the edit button 1`] = `
+"Snapshot Diff:
+- First value
++ Second value
+
+@@ -1,17 +1,17 @@
+  <DocumentFragment>
+    <div
+      class=\\"title-editor-root\\"
+    >
+      <input
+-       class=\\"title-input hide\\"
++       class=\\"title-input\\"
+        data-testid=\\"title-input\\"
+        type=\\"text\\"
+        value=\\"\\"
+      />
+      <div
+-       class=\\"title-display placeholder-display\\"
++       class=\\"title-display hide placeholder-display\\"
+      >
+        <span />
+        <button
+          class=\\"btn btn-outline-secondary btn-monospaced btn-outline-borderless edit-icon\\"
+          data-testid=\\"edit-button\\""
+`;

@@ -9,90 +9,94 @@ exports[`CriteriaBuilder should render 1`] = `
       class="criteria-builder-section-main"
     >
       <div
-        class="criteria-builder-toolbar"
-      >
-        <label
-          class="toggle-switch"
-        >
-          <input
-            class="toggle-switch-check"
-            type="checkbox"
-          />
-          <span
-            aria-hidden="true"
-            class="toggle-switch-bar"
-          >
-            <span
-              class="toggle-switch-handle"
-              data-label-off=""
-              data-label-on=""
-            >
-              <span
-                class="button-icon button-icon-off toggle-switch-icon"
-              >
-                <svg
-                  aria-hidden="true"
-                  class="lexicon-icon lexicon-icon-pencil"
-                  viewBox="0 0 512 512"
-                >
-                  <use
-                    xlink:href="#pencil"
-                  />
-                </svg>
-              </span>
-              <span
-                class="button-icon button-icon-on toggle-switch-icon"
-              >
-                <svg
-                  aria-hidden="true"
-                  class="lexicon-icon lexicon-icon-pencil"
-                  viewBox="0 0 512 512"
-                >
-                  <use
-                    xlink:href="#pencil"
-                  />
-                </svg>
-              </span>
-            </span>
-          </span>
-        </label>
-      </div>
-      <div
-        class="criteria-group-root criteria-group-item-root"
+        class="sheet sheet-lg"
       >
         <div
-          class="empty-drop-zone-root"
+          class="criteria-builder-toolbar"
+        >
+          <label
+            class="toggle-switch"
+          >
+            <input
+              class="toggle-switch-check"
+              type="checkbox"
+            />
+            <span
+              aria-hidden="true"
+              class="toggle-switch-bar"
+            >
+              <span
+                class="toggle-switch-handle"
+                data-label-off=""
+                data-label-on=""
+              >
+                <span
+                  class="button-icon button-icon-off toggle-switch-icon"
+                >
+                  <svg
+                    aria-hidden="true"
+                    class="lexicon-icon lexicon-icon-pencil"
+                    viewBox="0 0 512 512"
+                  >
+                    <use
+                      xlink:href="#pencil"
+                    />
+                  </svg>
+                </span>
+                <span
+                  class="button-icon button-icon-on toggle-switch-icon"
+                >
+                  <svg
+                    aria-hidden="true"
+                    class="lexicon-icon lexicon-icon-pencil"
+                    viewBox="0 0 512 512"
+                  >
+                    <use
+                      xlink:href="#pencil"
+                    />
+                  </svg>
+                </span>
+              </span>
+            </span>
+          </label>
+        </div>
+        <div
+          class="criteria-group-root criteria-group-item-root"
         >
           <div
-            class="empty-drop-zone-target"
+            class="empty-drop-zone-root"
           >
             <div
-              class="empty-drop-zone-indicator"
-            />
-            <div
-              class="empty-drop-zone-help-message"
+              class="empty-drop-zone-target"
             >
               <div
-                class="message-item"
-              >
-                <img
-                  class="message-icon"
-                  src="/drag-and-drop.svg"
-                />
-                <span>
-                  drag-and-drop-criterion-from-the-right-to-add-rules
-                </span>
-              </div>
+                class="empty-drop-zone-indicator"
+              />
               <div
-                class="message-item"
+                class="empty-drop-zone-help-message"
               >
-                <img
-                  class="message-icon"
-                  src="/drag-over.svg"
-                />
-                <span>
-                  drag-and-drop-over-an-existing-criteria-to-form-groups
-                </span>
+                <div
+                  class="message-item"
+                >
+                  <img
+                    class="message-icon"
+                    src="/drag-and-drop.svg"
+                  />
+                  <span>
+                    drag-and-drop-criterion-from-the-right-to-add-rules
+                  </span>
+                </div>
+                <div
+                  class="message-item"
+                >
+                  <img
+                    class="message-icon"
+                    src="/drag-over.svg"
+                  />
+                  <span>
+                    drag-and-drop-over-an-existing-criteria-to-form-groups
+                  </span>
+                </div>
               </div>
             </div>
           </div>

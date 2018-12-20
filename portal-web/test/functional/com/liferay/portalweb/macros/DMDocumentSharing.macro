@@ -73,4 +73,21 @@ definition {
 			);
 		}
 	}
+
+	macro viewDocumentViaSharedWithMe {
+		AssertTextEquals(
+			locator1 = "Portlet#HEADER",
+			value1 = "Shared With Me"
+		);
+
+		if ("${assetSharingPermission}" == "View") {
+			AssertElementNotPresent(locator1 = "Comments#COMMENT_FIELD");
+		}
+
+		else {
+			AssertElementPresent(locator1 = "Comments#COMMENT_FIELD");
+		}
+		
+		DMDocument.viewCP(dmDocumentTitle = "${dmDocumentTitle}");
+	}
 }

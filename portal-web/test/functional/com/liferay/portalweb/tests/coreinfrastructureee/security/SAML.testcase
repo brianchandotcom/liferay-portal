@@ -141,6 +141,7 @@ definition {
 		AssertConsoleTextPresent(value1 = "TestSiteRole");
 	}
 
+	@ignore = "true"
 	@priority = "4"
 	test AssertSSOIdleSessionTakesPrecedenceOverIdPSessionTimeout {
 		property test.name.skip.portal.instance = "CPSAML#AssertSSOIdleSessionTakesPrecedenceOverIdPSessionTimeout";

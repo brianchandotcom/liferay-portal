@@ -18,13 +18,16 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.expando.kernel.model.ExpandoColumn;
 import com.liferay.expando.kernel.model.ExpandoColumnConstants;
 import com.liferay.expando.kernel.model.ExpandoTable;
+import com.liferay.expando.kernel.model.ExpandoValue;
 import com.liferay.expando.kernel.service.ExpandoColumnLocalService;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.odata.entity.ComplexEntityField;
 import com.liferay.portal.odata.entity.EntityField;
@@ -40,8 +43,12 @@ import com.liferay.registry.ServiceTracker;
 import com.liferay.segments.criteria.Field;
 import com.liferay.segments.criteria.contributor.SegmentsCriteriaContributor;
 
+import java.io.Serializable;
+
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -108,7 +115,7 @@ public class UserSegmentsCriteriaContributorTest {
 		_addExpandoColumn(
 			_expandoTable, RandomTestUtil.randomString(),
 			ExpandoColumnConstants.STRING,
-			ExpandoColumnConstants.INDEX_TYPE_KEYWORD);
+			ExpandoColumnConstants.INDEX_TYPE_KEYWORD, null);
 
 		SegmentsCriteriaContributor segmentsCriteriaContributor =
 			_getSegmentsCriteriaContributor();
@@ -142,13 +149,60 @@ public class UserSegmentsCriteriaContributorTest {
 		Assert.assertEquals(entityFieldsMap.keySet(), fieldNames);
 	}
 
+	@Test
+	public void testGetFieldsWithOptions() throws Exception {
+		String[] defaultValue = {"one", "two", "three"};
+
+		ExpandoColumn expandoColumn = _addExpandoColumn(
+			_expandoTable, RandomTestUtil.randomString(),
+			ExpandoColumnConstants.STRING_ARRAY,
+			ExpandoColumnConstants.INDEX_TYPE_KEYWORD, defaultValue);
+
+		SegmentsCriteriaContributor segmentsCriteriaContributor =
+			_getSegmentsCriteriaContributor();
+
+		List<Field> fields = segmentsCriteriaContributor.getFields(
+			LocaleUtil.getDefault());
+
+		Stream<Field> fieldStream = fields.stream();
+
+		Optional<Field> optionalField = fieldStream.filter(
+			field -> StringUtil.endsWith(
+				field.getName(),
+				FriendlyURLNormalizerUtil.normalize(expandoColumn.getName()))
+		).findFirst();
+
+		Assert.assertTrue(optionalField.isPresent());
+
+		Field field = optionalField.get();
+
+		List<Field.Option> options = field.getOptions();
+
+		Stream<Field.Option> optionStream = options.stream();
+
+		List<String> optionNames = optionStream.map(
+			Field.Option::getName
+		).collect(
+			Collectors.toList()
+		);
+
+		Assert.assertEquals(Arrays.asList(defaultValue), optionNames);
+	}
+
 	private ExpandoColumn _addExpandoColumn(
 			ExpandoTable expandoTable, String columnName, int columnType,
-			int indexType)
+			int indexType, Serializable defaultValue)
 		throws Exception {
 
 		ExpandoColumn expandoColumn = ExpandoTestUtil.addColumn(
 			expandoTable, columnName, columnType);
+
+		if (defaultValue != null) {
+			ExpandoValue expandoValue = ExpandoTestUtil.addValue(
+				_expandoTable, expandoColumn, defaultValue);
+
+			expandoColumn.setDefaultData(expandoValue.getData());
+		}
 
 		UnicodeProperties unicodeProperties =
 			expandoColumn.getTypeSettingsProperties();

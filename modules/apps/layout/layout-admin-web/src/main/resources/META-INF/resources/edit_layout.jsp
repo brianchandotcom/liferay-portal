@@ -35,29 +35,6 @@ Layout selLayout = layoutsAdminDisplayContext.getSelLayout();
 
 PortletURL redirectURL = layoutsAdminDisplayContext.getRedirectURL();
 
-long refererPlid = ParamUtil.getLong(request, "refererPlid", LayoutConstants.DEFAULT_PLID);
-
-Set<Long> parentPlids = new HashSet<Long>();
-
-long parentPlid = refererPlid;
-
-while (parentPlid > 0) {
-	try {
-		Layout parentLayout = LayoutLocalServiceUtil.getLayout(parentPlid);
-
-		if (parentLayout.isRootLayout()) {
-			break;
-		}
-
-		parentPlid = parentLayout.getParentPlid();
-
-		parentPlids.add(parentPlid);
-	}
-	catch (Exception e) {
-		break;
-	}
-}
-
 LayoutRevision layoutRevision = LayoutStagingUtil.getLayoutRevision(selLayout);
 
 String layoutSetBranchName = StringPool.BLANK;

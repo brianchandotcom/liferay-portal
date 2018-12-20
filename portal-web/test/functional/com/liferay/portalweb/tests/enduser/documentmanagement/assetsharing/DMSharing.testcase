@@ -165,7 +165,7 @@ definition {
 			dmDocumentTitle = "DM Document Title",
 			userEmailAddress = "userea@liferay.com"
 		);
-		
+
 		User.logoutPG();
 
 		User.loginUserPG(password = "test", userEmailAddress = "userea@liferay.com");
@@ -185,7 +185,7 @@ definition {
 			assetSharingPermission = "View",
 			dmDocumentTitle = "DM Document Title (Version 1.0)"
 		);
-	}	
+	}
 
 	@description = "This use case covers sharing a document to a user, and changing its sharing permissions via Manage Collaborators. This test also covers permissions and making sure users only have access to sharing permissions assigned to him. "
 	@priority = "5"

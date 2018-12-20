@@ -87,7 +87,7 @@ definition {
 		else {
 			AssertElementPresent(locator1 = "Comments#COMMENT_FIELD");
 		}
-		
+
 		DMDocument.viewCP(dmDocumentTitle = "${dmDocumentTitle}");
 	}
 }

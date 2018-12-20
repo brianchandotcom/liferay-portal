@@ -424,20 +424,35 @@ jdbc.counter.connectionProperties=oracle.jdbc.ReadTimeout=0;oracle.net.CONNECT_T
 
 	<macrodef name="get-java-jdk-home">
 		<attribute default="x64" name="architecture" />
+		<attribute default="${ant.java.version}" name="version" />
 
 		<sequential>
+			<var name="java.jdk.home" unset="true" />
+
 			<if>
 				<and>
-					<equals arg1="${ant.java.version}" arg2="1.7" />
+					<equals arg1="@{version}" arg2="1.7" />
 					<isset property="java.jdk.7.@{architecture}.home" />
 				</and>
 				<then>
 					<property name="java.jdk.home" value="${java.jdk.7.@{architecture}.home}" />
 				</then>
 				<elseif>
-					<isset property="java.jdk.8.@{architecture}.home" />
+					<and>
+						<equals arg1="@{version}" arg2="1.8" />
+						<isset property="java.jdk.8.@{architecture}.home" />
+					</and>
 					<then>
 						<property name="java.jdk.home" value="${java.jdk.8.@{architecture}.home}" />
+					</then>
+				</elseif>
+				<elseif>
+					<and>
+						<equals arg1="@{version}" arg2="1.11" />
+						<isset property="java.jdk.11.@{architecture}.home" />
+					</and>
+					<then>
+						<property name="java.jdk.home" value="${java.jdk.11.@{architecture}.home}" />
 					</then>
 				</elseif>
 				<else>
@@ -450,9 +465,40 @@ jdbc.counter.connectionProperties=oracle.jdbc.ReadTimeout=0;oracle.net.CONNECT_T
 					<available file="${java.jdk.home}" />
 				</not>
 				<then>
+					<var name="java.jdk.home" unset="true" />
+
 					<var name="java.jdk.home" value="${java.home}" />
 				</then>
 			</if>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="get-java-jdk-bundle-version">
+		<attribute default="" name="test.batch.name" />
+
+		<sequential>
+			<var name="java.jdk.bundle.version" unset="true" />
+
+			<if>
+				<contains string="@{test.batch.name}" substring="-jdk7" />
+				<then>
+					<property name="java.jdk.bundle.version" value="1.7" />
+				</then>
+				<elseif>
+					<contains string="@{test.batch.name}" substring="-jdk8" />
+					<then>
+						<property name="java.jdk.bundle.version" value="1.8" />
+					</then>
+				</elseif>
+				<elseif>
+					<contains string="@{test.batch.name}" substring="-open11" />
+					<then>
+						<property name="java.jdk.bundle.version" value="1.11" />
+					</then>
+				</elseif>
+			</if>
+
+			<property name="java.jdk.bundle.version" value="${ant.java.version}" />
 		</sequential>
 	</macrodef>
 
@@ -1221,10 +1267,9 @@ war.path=${app.server.portal.dir}/</echo>
 			<if>
 				<isset property="env.JENKINS_HOME" />
 				<then>
-					<local name="java.jdk.home" />
 					<local name="poshi.java.jdk.opts" />
 
-					<get-java-jdk-home architecture="x32" />
+					<get-java-jdk-home architecture="x32" version="1.8" />
 
 					<get-poshi-java-jdk-opts />
 
@@ -3844,13 +3889,13 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 						/>
 					</delete>
 
+					<get-java-jdk-bundle-version test.batch.name="${test.batch.name}" />
+
+					<get-java-jdk-home version="${java.jdk.bundle.version}" />
+
 					<if>
 						<equals arg1="${test.ant.launched.by.selenium}" arg2="true" />
 						<then>
-							<local name="java.jdk.home" />
-
-							<get-java-jdk-home />
-
 							<exec dir="${test.app.server.bin.dir}" executable="${app.server.start.executable}" resolveexecutable="true">
 								<arg line="${app.server.start.executable.arg.line}" />
 								<env key="JAVA_HOME" path="${java.jdk.home}" />
@@ -3876,6 +3921,7 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 								<daemons>
 									<exec dir="${test.app.server.bin.dir}" executable="${app.server.start.executable}" failonerror="true" resolveexecutable="true">
 										<arg line="${app.server.start.executable.arg.line}" />
+										<env key="JAVA_HOME" path="${java.jdk.home}" />
 									</exec>
 								</daemons>
 							</parallel>
@@ -4031,15 +4077,15 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 				app.server.bundle.index="@{app.server.bundle.index}"
 			/>
 
+			<get-java-jdk-bundle-version test.batch.name="${test.batch.name}" />
+
+			<get-java-jdk-home version="${java.jdk.bundle.version}" />
+
 			<parallel>
 				<daemons>
 					<if>
 						<equals arg1="${test.ant.launched.by.selenium}" arg2="true" />
 						<then>
-							<local name="java.jdk.home" />
-
-							<get-java-jdk-home />
-
 							<exec dir="${test.app.server.bin.dir}" executable="${app.server.stop.executable}" resolveexecutable="true">
 								<arg line="${app.server.stop.executable.arg.line}" />
 								<env key="JAVA_HOME" path="${java.jdk.home}" />
@@ -4048,6 +4094,7 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 						<else>
 							<exec dir="${test.app.server.bin.dir}" executable="${app.server.stop.executable}" resolveexecutable="true">
 								<arg line="${app.server.stop.executable.arg.line}" />
+								<env key="JAVA_HOME" path="${java.jdk.home}" />
 							</exec>
 						</else>
 					</if>

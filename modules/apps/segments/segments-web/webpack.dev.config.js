@@ -6,8 +6,6 @@ module.exports = {
 	entry: {
 		'ODataParser': path.resolve(__dirname,'src','main','resources','META-INF','resources','js','libs','ODataParser.es.js'),
 		'index.dev': path.resolve(__dirname,'src','main','resources','META-INF','resources','js','index.dev.js'),
-		'style': path.resolve(__dirname,'src','main','resources','META-INF','resources','css','main.scss'),
-		'clay': path.resolve(__dirname, 'node_modules', 'clay-css','lib','css', 'atlas.css')
 	},
 	mode: 'development',
 	module: {

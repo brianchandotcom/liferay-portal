@@ -14,29 +14,97 @@
 
 package com.liferay.asset.service.impl;
 
+import com.liferay.asset.model.AssetEntryUsage;
 import com.liferay.asset.service.base.AssetEntryUsageLocalServiceBaseImpl;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.OrderByComparator;
+
+import java.util.Date;
+import java.util.List;
 
 /**
- * The implementation of the asset entry usage local service.
- *
- * <p>
- * All custom service methods should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the {@link com.liferay.asset.service.AssetEntryUsageLocalService} interface.
- *
- * <p>
- * This is a local service. Methods of this service will not have security checks based on the propagated JAAS credentials because this service can only be accessed from within the same VM.
- * </p>
- *
- * @author Brian Wing Shun Chan
- * @see AssetEntryUsageLocalServiceBaseImpl
- * @see com.liferay.asset.service.AssetEntryUsageLocalServiceUtil
+ * @author Pavel Savinov
  */
 public class AssetEntryUsageLocalServiceImpl
 	extends AssetEntryUsageLocalServiceBaseImpl {
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this class directly. Always use {@link com.liferay.asset.service.AssetEntryUsageLocalServiceUtil} to access the asset entry usage local service.
-	 */
+	@Override
+	public AssetEntryUsage addAssetEntryUsage(
+			long userId, long groupId, long assetEntryId, long classNameId,
+			long classPK, String portletId, ServiceContext serviceContext)
+		throws PortalException {
+
+		User user = userLocalService.getUser(userId);
+
+		long assetEntryUsageId = counterLocalService.increment();
+
+		AssetEntryUsage assetEntryUsage = assetEntryUsagePersistence.create(
+			assetEntryUsageId);
+
+		assetEntryUsage.setUuid(serviceContext.getUuid());
+		assetEntryUsage.setGroupId(groupId);
+		assetEntryUsage.setCompanyId(user.getCompanyId());
+		assetEntryUsage.setUserId(userId);
+		assetEntryUsage.setUserName(user.getFullName());
+		assetEntryUsage.setCreateDate(serviceContext.getCreateDate(new Date()));
+		assetEntryUsage.setModifiedDate(
+			serviceContext.getModifiedDate(new Date()));
+		assetEntryUsage.setAssetEntryId(assetEntryId);
+		assetEntryUsage.setClassNameId(classNameId);
+		assetEntryUsage.setClassPK(classPK);
+		assetEntryUsage.setPortletId(portletId);
+
+		return assetEntryUsagePersistence.update(assetEntryUsage);
+	}
+
+	@Override
+	public AssetEntryUsage fetchAssetEntryUsage(
+		long classNameId, long classPK, String portletId) {
+
+		return assetEntryUsagePersistence.fetchByC_C_P(
+			classNameId, classPK, portletId);
+	}
+
+	@Override
+	public List<AssetEntryUsage> getAssetEntryUsages(long assetEntryId) {
+		return assetEntryUsagePersistence.findByAssetEntryId(assetEntryId);
+	}
+
+	@Override
+	public List<AssetEntryUsage> getAssetEntryUsages(
+		long assetEntryId, int start, int end,
+		OrderByComparator<AssetEntryUsage> orderByComparator) {
+
+		return assetEntryUsagePersistence.findByAssetEntryId(
+			assetEntryId, start, end, orderByComparator);
+	}
+
+	@Override
+	public List<AssetEntryUsage> getAssetEntryUsages(
+		long assetEntryId, long classNameId) {
+
+		return assetEntryUsagePersistence.findByA_C(assetEntryId, classNameId);
+	}
+
+	@Override
+	public List<AssetEntryUsage> getAssetEntryUsages(
+		long assetEntryId, long classNameId, int start, int end,
+		OrderByComparator<AssetEntryUsage> orderByComparator) {
+
+		return assetEntryUsagePersistence.findByA_C(
+			assetEntryId, classNameId, start, end, orderByComparator);
+	}
+
+	@Override
+	public int getAssetEntryUsagesCount(long assetEntryId) {
+		return assetEntryUsagePersistence.countByAssetEntryId(assetEntryId);
+	}
+
+	@Override
+	public int getAssetEntryUsagesCount(long assetEntryId, long classNameId) {
+		return assetEntryUsagePersistence.countByA_C(assetEntryId, classNameId);
+	}
 
 }

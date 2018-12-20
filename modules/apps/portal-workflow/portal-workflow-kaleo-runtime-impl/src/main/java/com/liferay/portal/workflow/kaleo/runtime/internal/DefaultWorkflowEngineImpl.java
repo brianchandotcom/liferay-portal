@@ -16,6 +16,7 @@ package com.liferay.portal.workflow.kaleo.runtime.internal;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.portal.kernel.log.Log;
@@ -37,7 +38,6 @@ import com.liferay.portal.kernel.workflow.WorkflowDefinition;
 import com.liferay.portal.kernel.workflow.WorkflowDefinitionFileException;
 import com.liferay.portal.kernel.workflow.WorkflowException;
 import com.liferay.portal.kernel.workflow.WorkflowInstance;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.portal.workflow.kaleo.KaleoWorkflowModelConverter;
 import com.liferay.portal.workflow.kaleo.definition.Definition;
 import com.liferay.portal.workflow.kaleo.definition.deployment.WorkflowDeployer;
@@ -67,15 +67,19 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Callable;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Michael C. Han
  */
+@Component(immediate = true, service = AopService.class)
 @Transactional(
 	isolation = Isolation.PORTAL, propagation = Propagation.REQUIRED,
 	rollbackFor = Exception.class
 )
 public class DefaultWorkflowEngineImpl
-	extends BaseKaleoBean implements WorkflowEngine {
+	extends BaseKaleoBean implements AopService, WorkflowEngine {
 
 	@Override
 	public void deleteWorkflowDefinition(
@@ -459,10 +463,6 @@ public class DefaultWorkflowEngineImpl
 		}
 	}
 
-	public void setKaleoSignaler(KaleoSignaler kaleoSignaler) {
-		_kaleoSignaler = kaleoSignaler;
-	}
-
 	@Override
 	public WorkflowInstance signalWorkflowInstance(
 			long workflowInstanceId, final String transitionName,
@@ -759,7 +759,7 @@ public class DefaultWorkflowEngineImpl
 		return workflowInstances;
 	}
 
-	@ServiceReference(type = PortalUUID.class)
+	@Reference
 	protected PortalUUID portalUUID;
 
 	private String _getDefinitionName(
@@ -787,24 +787,25 @@ public class DefaultWorkflowEngineImpl
 	private static final Log _log = LogFactoryUtil.getLog(
 		DefaultWorkflowEngineImpl.class);
 
-	@ServiceReference(type = GroupLocalService.class)
+	@Reference
 	private GroupLocalService _groupLocalService;
 
+	@Reference
 	private KaleoSignaler _kaleoSignaler;
 
-	@ServiceReference(type = KaleoWorkflowModelConverter.class)
+	@Reference
 	private KaleoWorkflowModelConverter _kaleoWorkflowModelConverter;
 
-	@ServiceReference(type = NodeExecutorFactory.class)
+	@Reference
 	private NodeExecutorFactory _nodeExecutorFactory;
 
-	@ServiceReference(type = WorkflowDeployer.class)
+	@Reference
 	private WorkflowDeployer _workflowDeployer;
 
-	@ServiceReference(type = WorkflowModelParser.class)
+	@Reference
 	private WorkflowModelParser _workflowModelParser;
 
-	@ServiceReference(type = WorkflowValidator.class)
+	@Reference
 	private WorkflowValidator _workflowValidator;
 
 }

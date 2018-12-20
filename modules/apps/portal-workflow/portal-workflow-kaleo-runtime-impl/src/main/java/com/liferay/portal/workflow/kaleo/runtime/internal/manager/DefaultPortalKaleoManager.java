@@ -30,14 +30,12 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
-import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.workflow.WorkflowDefinition;
 import com.liferay.portal.kernel.workflow.WorkflowDefinitionManager;
 import com.liferay.portal.kernel.workflow.comparator.WorkflowComparatorFactory;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.portal.workflow.kaleo.runtime.internal.BaseKaleoBean;
 import com.liferay.portal.workflow.kaleo.runtime.manager.PortalKaleoManager;
 
@@ -48,9 +46,13 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Michael C. Han
  */
+@Component(immediate = true, service = PortalKaleoManager.class)
 public class DefaultPortalKaleoManager
 	extends BaseKaleoBean implements PortalKaleoManager {
 
@@ -74,7 +76,7 @@ public class DefaultPortalKaleoManager
 
 			Group companyGroup = groupLocalService.getCompanyGroup(companyId);
 
-			String definitionName = _defaultDefinitionName;
+			String definitionName = _DEFAULT_DEFINITION_NAME;
 
 			if (_definitionAssets.containsKey(assetClassName)) {
 				definitionName = _definitionAssets.get(assetClassName);
@@ -221,10 +223,6 @@ public class DefaultPortalKaleoManager
 		deployDefaultDefinitionLinks(companyId);
 	}
 
-	public void setDefaultDefinitionName(String defaultDefinitionName) {
-		_defaultDefinitionName = defaultDefinitionName;
-	}
-
 	public void setDefaultRoles(Map<String, String> defaultRoles) {
 		_defaultRoles.putAll(defaultRoles);
 	}
@@ -274,40 +272,38 @@ public class DefaultPortalKaleoManager
 			workflowDefinition.getVersion());
 	}
 
-	@ServiceReference(type = CompanyLocalService.class)
+	@Reference
 	protected CompanyLocalService companyLocalService;
 
-	@ServiceReference(type = GroupLocalService.class)
+	@Reference
 	protected GroupLocalService groupLocalService;
 
-	@ServiceReference(type = RoleLocalService.class)
+	@Reference
 	protected RoleLocalService roleLocalService;
 
-	@ServiceReference(type = UserLocalService.class)
+	@Reference
 	protected UserLocalService userLocalService;
 
-	@ServiceReference(
-		filterString = "(proxy.bean=false)",
-		type = WorkflowComparatorFactory.class
-	)
+	@Reference(target = "(proxy.bean=false)")
 	protected WorkflowComparatorFactory workflowComparatorFactory;
 
-	@ServiceReference(type = WorkflowDefinitionLinkLocalService.class)
-	protected WorkflowDefinitionLinkLocalService
-		workflowDefinitionLinkLocalService;
+	private static final String _DEFAULT_DEFINITION_NAME = "Single Approver";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DefaultPortalKaleoManager.class);
 
-	private String _defaultDefinitionName;
 	private final Map<String, String> _defaultRoles = new HashMap<>();
 	private final Map<String, String> _definitionAssets = new HashMap<>();
-	private final Map<String, String> _definitionFiles = new HashMap<>();
+	private final Map<String, String> _definitionFiles =
+		new HashMap<String, String>() {
+			{
+				put(
+					_DEFAULT_DEFINITION_NAME,
+					"META-INF/definitions/single-approver-definition.xml");
+			}
+		};
 
-	@ServiceReference(
-		filterString = "(proxy.bean=false)",
-		type = WorkflowDefinitionManager.class
-	)
+	@Reference(target = "(proxy.bean=false)")
 	private WorkflowDefinitionManager _workflowDefinitionManager;
 
 }

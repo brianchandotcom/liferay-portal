@@ -14,13 +14,13 @@
 
 package com.liferay.portal.workflow.kaleo.runtime.internal;
 
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageBus;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.portal.workflow.kaleo.model.KaleoInstanceToken;
 import com.liferay.portal.workflow.kaleo.model.KaleoNode;
 import com.liferay.portal.workflow.kaleo.runtime.ExecutionContext;
@@ -34,15 +34,19 @@ import com.liferay.portal.workflow.kaleo.runtime.util.ExecutionContextHelper;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Michael C. Han
  */
+@Component(immediate = true, service = AopService.class)
 @Transactional(
 	isolation = Isolation.PORTAL, propagation = Propagation.SUPPORTS,
 	rollbackFor = Exception.class
 )
 public class DefaultKaleoSignaler
-	extends BaseKaleoBean implements KaleoSignaler {
+	extends BaseKaleoBean implements AopService, KaleoSignaler {
 
 	@Override
 	public void signalEntry(
@@ -111,13 +115,13 @@ public class DefaultKaleoSignaler
 			KaleoRuntimeDestinationNames.KALEO_GRAPH_WALKER, message);
 	}
 
-	@ServiceReference(type = ExecutionContextHelper.class)
+	@Reference
 	private ExecutionContextHelper _executionContextHelper;
 
-	@ServiceReference(type = MessageBus.class)
+	@Reference
 	private MessageBus _messageBus;
 
-	@ServiceReference(type = NodeExecutorFactory.class)
+	@Reference
 	private NodeExecutorFactory _nodeExecutorFactory;
 
 }

@@ -16,6 +16,7 @@ package com.liferay.portal.workflow.kaleo.runtime.internal;
 
 import com.liferay.osgi.util.ServiceTrackerFactory;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -29,7 +30,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowException;
 import com.liferay.portal.kernel.workflow.WorkflowTask;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.portal.workflow.kaleo.KaleoWorkflowModelConverter;
 import com.liferay.portal.workflow.kaleo.definition.ExecutionType;
 import com.liferay.portal.workflow.kaleo.model.KaleoInstance;
@@ -53,17 +53,20 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 import org.osgi.util.tracker.ServiceTracker;
 
 /**
  * @author Michael C. Han
  */
+@Component(immediate = true, service = AopService.class)
 @Transactional(
 	isolation = Isolation.PORTAL, propagation = Propagation.REQUIRED,
 	rollbackFor = Exception.class
 )
 public class DefaultTaskManagerImpl
-	extends BaseKaleoBean implements TaskManager {
+	extends BaseKaleoBean implements AopService, TaskManager {
 
 	@Override
 	public WorkflowTask assignWorkflowTaskToRole(
@@ -427,13 +430,13 @@ public class DefaultTaskManagerImpl
 		<FormDefinitionRetriever, FormDefinitionRetriever> _serviceTracker =
 			ServiceTrackerFactory.open(FormDefinitionRetriever.class);
 
-	@ServiceReference(type = KaleoActionExecutor.class)
+	@Reference
 	private KaleoActionExecutor _kaleoActionExecutor;
 
-	@ServiceReference(type = KaleoWorkflowModelConverter.class)
+	@Reference
 	private KaleoWorkflowModelConverter _kaleoWorkflowModelConverter;
 
-	@ServiceReference(type = NotificationHelper.class)
+	@Reference
 	private NotificationHelper _notificationHelper;
 
 }

@@ -15,7 +15,6 @@
 package com.liferay.portal.workflow.kaleo.runtime.internal;
 
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.portal.workflow.kaleo.service.KaleoActionLocalService;
 import com.liferay.portal.workflow.kaleo.service.KaleoConditionLocalService;
 import com.liferay.portal.workflow.kaleo.service.KaleoDefinitionLocalService;
@@ -35,71 +34,73 @@ import com.liferay.portal.workflow.kaleo.service.KaleoTimerInstanceTokenLocalSer
 import com.liferay.portal.workflow.kaleo.service.KaleoTimerLocalService;
 import com.liferay.portal.workflow.kaleo.service.KaleoTransitionLocalService;
 
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Brian Wing Shun Chan
  */
-public class BaseKaleoBean {
+public abstract class BaseKaleoBean {
 
-	@ServiceReference(type = KaleoActionLocalService.class)
+	@Reference
 	protected KaleoActionLocalService kaleoActionLocalService;
 
-	@ServiceReference(type = KaleoConditionLocalService.class)
+	@Reference
 	protected KaleoConditionLocalService kaleoConditionLocalService;
 
-	@ServiceReference(type = KaleoDefinitionLocalService.class)
+	@Reference
 	protected KaleoDefinitionLocalService kaleoDefinitionLocalService;
 
-	@ServiceReference(type = KaleoDefinitionVersionLocalService.class)
+	@Reference
 	protected KaleoDefinitionVersionLocalService
 		kaleoDefinitionVersionLocalService;
 
-	@ServiceReference(type = KaleoInstanceLocalService.class)
+	@Reference
 	protected KaleoInstanceLocalService kaleoInstanceLocalService;
 
-	@ServiceReference(type = KaleoInstanceTokenLocalService.class)
+	@Reference
 	protected KaleoInstanceTokenLocalService kaleoInstanceTokenLocalService;
 
-	@ServiceReference(type = KaleoLogLocalService.class)
+	@Reference
 	protected KaleoLogLocalService kaleoLogLocalService;
 
-	@ServiceReference(type = KaleoNodeLocalService.class)
+	@Reference
 	protected KaleoNodeLocalService kaleoNodeLocalService;
 
-	@ServiceReference(type = KaleoNotificationLocalService.class)
+	@Reference
 	protected KaleoNotificationLocalService kaleoNotificationLocalService;
 
-	@ServiceReference(type = KaleoNotificationRecipientLocalService.class)
+	@Reference
 	protected KaleoNotificationRecipientLocalService
 		kaleoNotificationRecipientLocalService;
 
-	@ServiceReference(type = KaleoTaskAssignmentLocalService.class)
+	@Reference
 	protected KaleoTaskAssignmentLocalService kaleoTaskAssignmentLocalService;
 
-	@ServiceReference(type = KaleoTaskFormInstanceLocalService.class)
+	@Reference
 	protected KaleoTaskFormInstanceLocalService
 		kaleoTaskFormInstanceLocalService;
 
-	@ServiceReference(type = KaleoTaskFormLocalService.class)
+	@Reference
 	protected KaleoTaskFormLocalService kaleoTaskFormLocalService;
 
-	@ServiceReference(type = KaleoTaskInstanceTokenLocalService.class)
+	@Reference
 	protected KaleoTaskInstanceTokenLocalService
 		kaleoTaskInstanceTokenLocalService;
 
-	@ServiceReference(type = KaleoTaskLocalService.class)
+	@Reference
 	protected KaleoTaskLocalService kaleoTaskLocalService;
 
-	@ServiceReference(type = KaleoTimerInstanceTokenLocalService.class)
+	@Reference
 	protected KaleoTimerInstanceTokenLocalService
 		kaleoTimerInstanceTokenLocalService;
 
-	@ServiceReference(type = KaleoTimerLocalService.class)
+	@Reference
 	protected KaleoTimerLocalService kaleoTimerLocalService;
 
-	@ServiceReference(type = KaleoTransitionLocalService.class)
+	@Reference
 	protected KaleoTransitionLocalService kaleoTransitionLocalService;
 
-	@ServiceReference(type = WorkflowDefinitionLinkLocalService.class)
+	@Reference
 	protected WorkflowDefinitionLinkLocalService
 		workflowDefinitionLinkLocalService;
 

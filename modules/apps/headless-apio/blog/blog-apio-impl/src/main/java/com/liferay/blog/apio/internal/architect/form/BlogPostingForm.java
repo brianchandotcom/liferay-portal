@@ -147,21 +147,6 @@ public class BlogPostingForm implements BlogPosting {
 	}
 
 	/**
-	 * Returns the blog post's display date, if present; otherwise, returns
-	 * today's date.
-	 *
-	 * @return the display date, if present; today's date otherwise
-	 */
-	@Override
-	public Date getPublishedDate() {
-		return Optional.ofNullable(
-			_publishedDate
-		).orElseGet(
-			Date::new
-		);
-	}
-
-	/**
 	 * Returns the blog post's description, if present; otherwise, returns an
 	 * empty string.
 	 *
@@ -208,6 +193,21 @@ public class BlogPostingForm implements BlogPosting {
 		return _keywords;
 	}
 
+	/**
+	 * Returns the blog post's display date, if present; otherwise, returns
+	 * today's date.
+	 *
+	 * @return the display date, if present; today's date otherwise
+	 */
+	@Override
+	public Date getPublishedDate() {
+		return Optional.ofNullable(
+			_publishedDate
+		).orElseGet(
+			Date::new
+		);
+	}
+
 	public void setAlternativeHeadline(String alternativeHeadline) {
 		_alternativeHeadline = alternativeHeadline;
 	}
@@ -226,10 +226,6 @@ public class BlogPostingForm implements BlogPosting {
 
 	public void setCreatorId(long creatorId) {
 		_creatorId = creatorId;
-	}
-
-	public void setPublishedDate(Date publishedDate) {
-		_publishedDate = publishedDate;
 	}
 
 	public void setDescription(String description) {
@@ -260,12 +256,15 @@ public class BlogPostingForm implements BlogPosting {
 		_modifiedDate = modifiedDate;
 	}
 
+	public void setPublishedDate(Date publishedDate) {
+		_publishedDate = publishedDate;
+	}
+
 	private String _alternativeHeadline;
 	private String _articleBody;
 	private List<Long> _categories;
 	private Date _createDate;
 	private Long _creatorId;
-	private Date _publishedDate;
 	private String _description;
 	private String _friendlyURLPath;
 	private String _headline;
@@ -273,5 +272,6 @@ public class BlogPostingForm implements BlogPosting {
 	private Long _imageId;
 	private List<String> _keywords;
 	private Date _modifiedDate;
+	private Date _publishedDate;
 
 }

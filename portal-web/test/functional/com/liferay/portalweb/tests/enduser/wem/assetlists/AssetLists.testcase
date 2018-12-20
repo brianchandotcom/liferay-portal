@@ -81,10 +81,18 @@ definition {
 				siteURLKey = "test-site-name"
 			);
 
-			AssetListsAdmin.addManualSelection(
-				errorMessage = "An asset list with that title already exists.",
-				expectFail = "true",
-				title = "Asset List Test"
+			LexiconEntry.gotoAddMenuItem(menuItem = "Manual Selection");
+
+			PortletEntry.inputText(
+				fieldLabel = "Title",
+				text = "Asset List Test"
+			);
+
+			Button.clickSave();
+
+			AssertTextEquals.assertPartialText(
+				locator1 = "Message#ERROR_MODAL_CONTENT",
+				value1 = "An asset list with that title already exists."
 			);
 		}
 	}

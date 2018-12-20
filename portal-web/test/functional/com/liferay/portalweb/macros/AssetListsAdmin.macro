@@ -9,14 +9,7 @@ definition {
 
 		Button.clickSave();
 
-		if ("${expectFail}" == "true") {
-			AssertTextEquals.assertPartialText(
-				locator1 = "Message#ERROR_MODAL_CONTENT",
-				value1 = "${errorMessage}"
-			);
-		} else {
-			Alert.viewSuccessMessage();
-		}
+		Alert.viewSuccessMessage();
 	}
 
 	macro addManualSelection {
@@ -29,14 +22,7 @@ definition {
 
 		Button.clickSave();
 
-		if ("${expectFail}" == "true") {
-			AssertTextEquals.assertPartialText(
-				locator1 = "Message#ERROR_MODAL_CONTENT",
-				value1 = "${errorMessage}"
-			);
-		} else {
-			Alert.viewSuccessMessage();
-		}
+		Alert.viewSuccessMessage();
 	}
 
 	macro openAssetListsAdmin {

@@ -216,4 +216,57 @@ definition {
 			);
 		}
 	}
+
+	@description = "This is a test for LPS-84331. Assert that Asset Lists correctly display where they are used."
+	@priority = "4"
+	test ViewAssetListUsages {
+		task ("Create a public page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name"
+			);
+		}
+
+		task ("Create a manual asset list") {
+			AssetListsAdmin.openAssetListsAdmin(
+				siteURLKey = "test-site-name"
+			);
+
+			AssetListsAdmin.addManualSelection(
+				title = "Manual Asset List Test"
+			);
+		}
+
+		task ("Add an Asset Publisher portlet to the created public page") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name"
+			);
+
+			Portlet.addPG(portletName = "Asset Publisher");
+		}
+
+		task ("Select the created manual asset list to be used in the asset publisher portlet") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name"
+			);
+
+			AssetPublisherPortlet.selectAssetList(
+				assetListName = "Manual Asset List Test"
+			);
+		}
+
+		task ("Assert the created asset list is used exactly once") {
+			AssetListsAdmin.openAssetListsAdmin(
+				siteURLKey = "test-site-name"
+			);
+
+			AssetListsAdmin.viewUsages(
+				assetListName = "Manual Asset List Test",
+				usageAmount = "1",
+				usageType = "All"
+			);
+		}
+	}
 }

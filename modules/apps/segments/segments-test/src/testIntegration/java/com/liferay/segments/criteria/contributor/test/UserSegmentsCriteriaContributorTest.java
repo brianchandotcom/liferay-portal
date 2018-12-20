@@ -20,13 +20,9 @@ import com.liferay.expando.kernel.model.ExpandoColumnConstants;
 import com.liferay.expando.kernel.model.ExpandoTable;
 import com.liferay.expando.kernel.service.ExpandoColumnLocalService;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
-import com.liferay.portal.kernel.test.util.TestPropsValues;
-import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
@@ -45,10 +41,6 @@ import com.liferay.segments.criteria.Field;
 import com.liferay.segments.criteria.contributor.SegmentsCriteriaContributor;
 import com.liferay.segments.odata.retriever.ODataRetriever;
 
-import java.io.Serializable;
-
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -93,16 +85,10 @@ public class UserSegmentsCriteriaContributorTest {
 
 	@Test
 	public void testGetFields() throws Exception {
-		ExpandoColumn expandoColumn = _addExpandoColumn(
+		_addExpandoColumn(
 			_expandoTable, RandomTestUtil.randomString(),
 			ExpandoColumnConstants.STRING,
 			ExpandoColumnConstants.INDEX_TYPE_KEYWORD);
-
-		String columnValue = RandomTestUtil.randomString();
-
-		User user = _addUser(expandoColumn.getName(), columnValue);
-
-		_users.add(user);
 
 		List<Field> fields = _segmentsCriteriaContributor.getFields(
 			LocaleUtil.getDefault());
@@ -150,26 +136,6 @@ public class UserSegmentsCriteriaContributorTest {
 		return _expandoColumnLocalService.updateExpandoColumn(expandoColumn);
 	}
 
-	private User _addUser(String columnName, Serializable columnValue)
-		throws Exception {
-
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext();
-
-		serviceContext.setExpandoBridgeAttributes(
-			new HashMap<String, Serializable>() {
-				{
-					put(columnName, columnValue);
-				}
-			});
-
-		return UserTestUtil.addUser(
-			TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
-			RandomTestUtil.randomString(), LocaleUtil.getDefault(),
-			RandomTestUtil.randomString(), RandomTestUtil.randomString(), null,
-			serviceContext);
-	}
-
 	@Inject
 	private static ExpandoColumnLocalService _expandoColumnLocalService;
 
@@ -184,8 +150,5 @@ public class UserSegmentsCriteriaContributorTest {
 
 	@Inject(filter = "segments.criteria.contributor.key=user")
 	private SegmentsCriteriaContributor _segmentsCriteriaContributor;
-
-	@DeleteAfterTestRun
-	private final List<User> _users = new ArrayList<>();
 
 }

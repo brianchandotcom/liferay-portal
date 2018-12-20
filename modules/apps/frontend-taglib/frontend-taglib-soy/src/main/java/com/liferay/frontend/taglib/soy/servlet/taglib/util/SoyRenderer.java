@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.frontend.taglib.servlet.taglib.util;
+package com.liferay.frontend.taglib.soy.servlet.taglib.util;
 
 import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.template.TemplateConstants;
@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.template.TemplateManager;
 import com.liferay.portal.template.soy.utils.SoyTemplateResourcesProvider;
 
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.io.Writer;
 
 import java.util.Map;
 
@@ -44,6 +44,14 @@ public class SoyRenderer {
 			String templateNamespace, Map<String, ?> context)
 		throws IOException, TemplateException {
 
+		renderSoy(request, response.getWriter(), templateNamespace, context);
+	}
+
+	public void renderSoy(
+			HttpServletRequest request, Writer writer, String templateNamespace,
+			Map<String, ?> context)
+		throws TemplateException {
+
 		Template template = _getTemplate();
 
 		template.putAll(context);
@@ -51,8 +59,6 @@ public class SoyRenderer {
 		template.put(TemplateConstants.NAMESPACE, templateNamespace);
 
 		template.prepare(request);
-
-		PrintWriter writer = response.getWriter();
 
 		template.processTemplate(writer);
 	}

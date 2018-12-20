@@ -17,6 +17,7 @@ package com.liferay.saml.opensaml.integration.internal.servlet.profile;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.saml.constants.SamlWebKeys;
 import com.liferay.saml.opensaml.integration.internal.BaseSamlTestCase;
+import com.liferay.saml.opensaml.integration.internal.bootstrap.SecurityConfigurationBootstrap;
 import com.liferay.saml.opensaml.integration.internal.metadata.MetadataManagerImpl;
 import com.liferay.saml.opensaml.integration.internal.util.OpenSamlUtil;
 import com.liferay.saml.opensaml.integration.internal.util.SamlUtil;
@@ -43,10 +44,12 @@ import com.liferay.saml.runtime.exception.SubjectException;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
+import net.shibboleth.utilities.java.support.resolver.CriteriaSet;
 import net.shibboleth.utilities.java.support.security.IdentifierGenerationStrategy;
 
 import org.joda.time.DateTime;
@@ -59,6 +62,8 @@ import org.junit.runner.RunWith;
 
 import org.mockito.Mockito;
 
+import org.opensaml.core.criterion.EntityIdCriterion;
+import org.opensaml.core.xml.XMLObject;
 import org.opensaml.messaging.context.InOutOperationContext;
 import org.opensaml.messaging.context.MessageContext;
 import org.opensaml.messaging.handler.MessageHandlerException;
@@ -69,6 +74,8 @@ import org.opensaml.saml.common.messaging.context.SAMLPeerEntityContext;
 import org.opensaml.saml.common.messaging.context.SAMLSelfEntityContext;
 import org.opensaml.saml.common.messaging.context.SAMLSubjectNameIdentifierContext;
 import org.opensaml.saml.common.xml.SAMLConstants;
+import org.opensaml.saml.ext.saml2alg.SigningMethod;
+import org.opensaml.saml.metadata.resolver.MetadataResolver;
 import org.opensaml.saml.saml2.core.Assertion;
 import org.opensaml.saml.saml2.core.AudienceRestriction;
 import org.opensaml.saml.saml2.core.AuthnRequest;
@@ -82,9 +89,11 @@ import org.opensaml.saml.saml2.core.SubjectConfirmation;
 import org.opensaml.saml.saml2.core.SubjectConfirmationData;
 import org.opensaml.saml.saml2.metadata.AssertionConsumerService;
 import org.opensaml.saml.saml2.metadata.EntityDescriptor;
+import org.opensaml.saml.saml2.metadata.Extensions;
 import org.opensaml.saml.saml2.metadata.IDPSSODescriptor;
 import org.opensaml.saml.saml2.metadata.SPSSODescriptor;
 import org.opensaml.security.credential.Credential;
+import org.opensaml.xmlsec.signature.Signature;
 
 import org.powermock.core.classloader.annotations.PowerMockIgnore;
 import org.powermock.modules.junit4.PowerMockRunner;
@@ -145,6 +154,91 @@ public class WebSsoProfileIntegrationTest extends BaseSamlTestCase {
 		_webSsoProfileImpl.activate(new HashMap<String, Object>());
 
 		prepareServiceProvider(SP_ENTITY_ID);
+	}
+
+	@Test
+	public void testAssertionSignatureAlgorithmIsNegotiated() throws Exception {
+		Assertion assertion = OpenSamlUtil.buildAssertion();
+
+		Credential credential = getCredential(IDP_ENTITY_ID);
+
+		MetadataResolver metadataResolver =
+			metadataManagerImpl.getMetadataResolver();
+
+		EntityDescriptor entityDescriptor = metadataResolver.resolveSingle(
+			new CriteriaSet(new EntityIdCriterion(SP_ENTITY_ID)));
+
+		SPSSODescriptor spSSODescriptor = entityDescriptor.getSPSSODescriptor(
+			SAMLConstants.SAML20P_NS);
+
+		Extensions extensions = spSSODescriptor.getExtensions();
+
+		List<XMLObject> unknownXMLObjects = extensions.getUnknownXMLObjects();
+
+		Iterator<XMLObject> iterator = unknownXMLObjects.iterator();
+
+		//peer only allows sha512
+		while (iterator.hasNext()) {
+			XMLObject xmlObject = iterator.next();
+
+			if (xmlObject instanceof SigningMethod) {
+				SigningMethod signingMethod = (SigningMethod)xmlObject;
+
+				String algorithm = signingMethod.getAlgorithm();
+
+				if (!algorithm.equals(
+						"http://www.w3.org/2001/04/xmldsig-more#rsa-sha512")) {
+
+					iterator.remove();
+				}
+			}
+		}
+
+		OpenSamlUtil.signObject(assertion, credential, spSSODescriptor);
+
+		Signature signature = assertion.getSignature();
+
+		Assert.assertEquals(
+			"http://www.w3.org/2001/04/xmldsig-more#rsa-sha512",
+			signature.getSignatureAlgorithm());
+
+		/* we blacklist sha512 and check it is not used even though it is the
+		only one signaled by the peer*/
+		SecurityConfigurationBootstrap securityConfigurationBootstrap =
+			new SecurityConfigurationBootstrap();
+
+		securityConfigurationBootstrap.activate(
+			new HashMap<String, Object>() {
+				{
+					put(
+						"blacklisted.algorithms",
+						new String[] {
+							"http://www.w3.org/2001/04/xmldsig-more#rsa-sha512"
+						});
+				}
+			});
+
+		assertion = OpenSamlUtil.buildAssertion();
+
+		OpenSamlUtil.signObject(assertion, credential, spSSODescriptor);
+
+		signature = assertion.getSignature();
+
+		Assert.assertNotEquals(
+			"http://www.w3.org/2001/04/xmldsig-more#rsa-sha512",
+			signature.getSignatureAlgorithm());
+
+		/* we check that sha512 was actually negotiated and that the default is
+		different*/
+		assertion = OpenSamlUtil.buildAssertion();
+
+		OpenSamlUtil.signObject(assertion, credential, null);
+
+		signature = assertion.getSignature();
+
+		Assert.assertEquals(
+			"http://www.w3.org/2001/04/xmldsig-more#rsa-sha256",
+			signature.getSignatureAlgorithm());
 	}
 
 	@Test

@@ -179,6 +179,8 @@ public class JspServlet extends HttpServlet {
 
 		bundles.add(_jspBundle);
 
+		bundles.add(_utilTaglibBundle);
+
 		_logger = new Logger(_bundle.getBundleContext());
 
 		collectTaglibProviderBundles(bundles);
@@ -408,6 +410,8 @@ public class JspServlet extends HttpServlet {
 		JspServlet.class);
 	private static final Pattern _originalJspPattern = Pattern.compile(
 		"^(?<file>.*)(\\.(portal|original))(?<extension>\\.(jsp|jspf))$");
+	private static final Bundle _utilTaglibBundle = FrameworkUtil.getBundle(
+		JspFactorySwapper.class);
 
 	private Bundle[] _allParticipatingBundles;
 	private Bundle _bundle;

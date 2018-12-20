@@ -1,8 +1,6 @@
 import renderApp from './index.es'
-
-
-
-
+import '../css/main.scss'
+import 'clay-css/lib/css/atlas.css'
 
 renderApp('app', {
     "initialQuery": "",

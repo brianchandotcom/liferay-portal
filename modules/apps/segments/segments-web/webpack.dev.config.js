@@ -1,6 +1,6 @@
 const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
-
+const CopyFilesPlugin = require('webpack-copyfiles-plugin')
 
 module.exports = {
 	entry: {
@@ -31,7 +31,7 @@ module.exports = {
 		]
 	},
 	resolve: {
-		extensions: ['.js', '.jsx']
+		extensions: ['.js', '.jsx', '.svg']
 	},
 	output: {
 		filename: `[name].js`,
@@ -48,6 +48,17 @@ module.exports = {
 		new HtmlWebpackPlugin({
 			template: require('html-webpack-template'),
 			appMountId: 'app',
-		})
+		}),
+		new CopyFilesPlugin([{
+			sourceRoot: path.join(__dirname, '..', '..','frontend-theme','frontend-theme-admin','build','images','lexicon'),
+			targetRoot: path.join(__dirname, "dev-build", "lexicon"),
+			files: 'icons.svg',
+			cleanDirs: [path.join(__dirname, "dev-build", "lexicon")]
+		},{
+			sourceRoot: path.join(__dirname, "src","main","resources","META-INF","resources","assets"),
+			targetRoot: path.join(__dirname, "dev-build", "assets"),
+			files: '*',
+			cleanDirs: [path.join(__dirname, "dev-build", "assets")]
+		}])
 	]
 };

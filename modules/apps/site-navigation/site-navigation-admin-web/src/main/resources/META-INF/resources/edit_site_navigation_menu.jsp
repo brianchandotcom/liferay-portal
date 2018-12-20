@@ -148,7 +148,8 @@ renderResponse.setTitle(siteNavigationAdminDisplayContext.getSiteNavigationMenuN
 
 	var closeSidebar = function() {
 		let form = document.querySelector('#<portlet:namespace />fm');
-		let error = form ? form.querySelector("[role='alert']") : null;
+
+		let error = form ? form.querySelector('[role="alert"]') : null;
 
 		var saveChanges = false;
 

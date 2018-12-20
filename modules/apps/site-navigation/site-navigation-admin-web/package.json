@@ -1,4 +1,16 @@
 {
+	"csfConfig": {
+		"path:**/edit_site_navigation_menu.jsp": {
+			"js": {
+				"lint": {
+					"globals": {
+						"siteNavigationMenuEditorModule": true,
+						"siteNavigationMenuItemDOMHandlerModule": true
+					}
+				}
+			}
+		}
+	},
 	"dependencies": {
 		"metal-dom": "^2.0.0",
 		"metal-drag-drop": "~3.0.1",

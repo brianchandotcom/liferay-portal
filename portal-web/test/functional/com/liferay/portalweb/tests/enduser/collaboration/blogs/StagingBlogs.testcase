@@ -172,7 +172,7 @@ definition {
 		PortletEntry.publish();
 
 		Navigator.gotoStagedSitePage(
-			pageName = "Site Page Name",
+			pageName = "Staging Blogs Page",
 			siteName = "Site Name"
 		);
 
@@ -198,7 +198,7 @@ definition {
 		);
 
 		Navigator.gotoStagedSitePage(
-			pageName = "Site Page Name",
+			pageName = "Staging Blogs Page",
 			siteName = "Site Name"
 		);
 
@@ -217,7 +217,7 @@ definition {
 		PortletEntry.publish();
 
 		Navigator.gotoStagedSitePage(
-			pageName = "Site Page Name",
+			pageName = "Staging Blogs Page",
 			siteName = "Site Name"
 		);
 
@@ -226,7 +226,7 @@ definition {
 		Staging.publishToLive();
 
 		Navigator.gotoStagedSitePage(
-			pageName = "Site Page Name",
+			pageName = "Staging Blogs Page",
 			siteName = "Site Name"
 		);
 

@@ -1084,7 +1084,7 @@ public class JournalDisplayContext {
 		return _status;
 	}
 
-	public String getStatusLabelClass(int status) {
+	public String getStatusLabelCssClass(int status) {
 		if (status == WorkflowConstants.STATUS_APPROVED) {
 			return "success";
 		}

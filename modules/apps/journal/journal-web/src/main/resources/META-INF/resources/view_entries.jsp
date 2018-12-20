@@ -129,7 +129,7 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 									</span>
 								</c:if>
 
-								<span class="label label-<%= journalDisplayContext.getStatusLabelClass(curArticle.getStatus()) %> text-uppercase">
+								<span class="label label-<%= journalDisplayContext.getStatusLabelCssClass(curArticle.getStatus()) %> text-uppercase">
 									<liferay-ui:message key="<%= WorkflowConstants.getStatusLabel(curArticle.getStatus()) %>" />
 								</span>
 							</h6>
@@ -226,7 +226,7 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 								</span>
 							</c:if>
 
-							<span class="label label-<%= journalDisplayContext.getStatusLabelClass(curArticle.getStatus()) %> text-uppercase">
+							<span class="label label-<%= journalDisplayContext.getStatusLabelCssClass(curArticle.getStatus()) %> text-uppercase">
 								<liferay-ui:message key="<%= WorkflowConstants.getStatusLabel(curArticle.getStatus()) %>" />
 							</span>
 						</liferay-ui:search-container-column-text>

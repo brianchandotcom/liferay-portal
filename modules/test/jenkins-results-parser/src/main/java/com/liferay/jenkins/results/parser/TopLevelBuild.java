@@ -19,6 +19,7 @@ import com.liferay.jenkins.results.parser.failure.message.generator.CompileFailu
 import com.liferay.jenkins.results.parser.failure.message.generator.DownstreamFailureMessageGenerator;
 import com.liferay.jenkins.results.parser.failure.message.generator.FailureMessageGenerator;
 import com.liferay.jenkins.results.parser.failure.message.generator.GenericFailureMessageGenerator;
+import com.liferay.jenkins.results.parser.failure.message.generator.GitLPushFailureMessageGenerator;
 import com.liferay.jenkins.results.parser.failure.message.generator.GradleTaskFailureMessageGenerator;
 import com.liferay.jenkins.results.parser.failure.message.generator.PoshiTestFailureMessageGenerator;
 import com.liferay.jenkins.results.parser.failure.message.generator.PoshiValidationFailureMessageGenerator;
@@ -1347,6 +1348,7 @@ public class TopLevelBuild extends BaseBuild {
 
 			new CIFailureMessageGenerator(),
 			new DownstreamFailureMessageGenerator(),
+			new GitLPushFailureMessageGenerator(),
 
 			new GenericFailureMessageGenerator()
 		};

@@ -60,6 +60,7 @@
 		"snapshot-diff": "^0.4.1",
 		"webpack": "^4.27.0",
 		"webpack-cli": "^3.1.2",
+		"webpack-copyfiles-plugin": "^1.0.6",
 		"webpack-dev-server": "^3.1.10"
 	},
 	"jest": {
@@ -76,7 +77,7 @@
 	"private": true,
 	"scripts": {
 		"build": "babel --source-maps -d classes/META-INF/resources src/main/resources/META-INF/resources && liferay-npm-bundler",
-		"start": "cpr ../../../../modules/apps/frontend-theme/frontend-theme-admin/build/images/lexicon dev-build/lexicon -d && cpr src/main/resources/META-INF/resources/assets dev-build/assets -d && webpack-dev-server --config webpack.dev.config.js",
+		"start": "webpack-dev-server --config webpack.dev.config.js",
 		"build:libs": "webpack",
 		"checkFormat": "npm run csf",
 		"csf": "csf src/**/*.es.js",

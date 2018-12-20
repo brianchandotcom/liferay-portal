@@ -105,5 +105,5 @@ renderApp('app', {
     ]
   }, {
     "assetsPath": "assets",
-    "spritemap": "assets/drag-and-drop.svg"
+    "spritemap": "lexicon/icons.svg"
   })

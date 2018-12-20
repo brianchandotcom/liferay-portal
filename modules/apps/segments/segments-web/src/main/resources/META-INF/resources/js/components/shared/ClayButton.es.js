@@ -7,6 +7,7 @@ class ClayButton extends Component {
 	static propTypes = {
 		borderless: PropTypes.bool,
 		className: PropTypes.string,
+		href: PropTypes.string,
 		iconName: PropTypes.string,
 		label: PropTypes.string,
 		monospaced: PropTypes.bool,
@@ -37,6 +38,7 @@ class ClayButton extends Component {
 		const {
 			borderless,
 			className,
+			href,
 			iconName,
 			label,
 			monospaced,
@@ -57,7 +59,9 @@ class ClayButton extends Component {
 			className
 		);
 
-		return (
+		return href ? (
+			<a className={classes} href={href} {...otherProps}>{label}</a>
+		) : (
 			<button
 				className={classes}
 				type={type}

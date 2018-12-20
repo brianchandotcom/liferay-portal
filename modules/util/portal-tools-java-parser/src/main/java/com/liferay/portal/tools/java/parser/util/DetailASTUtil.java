@@ -42,6 +42,18 @@ public class DetailASTUtil {
 			return null;
 		}
 
+		if (detailAST.getType() == TokenTypes.DO_WHILE) {
+			while (detailAST != null) {
+				if (detailAST.getType() == TokenTypes.SEMI) {
+					return detailAST;
+				}
+
+				detailAST = detailAST.getNextSibling();
+			}
+
+			return null;
+		}
+
 		if (detailAST.getType() == TokenTypes.ENUM_CONSTANT_DEF) {
 			while ((detailAST.getType() == TokenTypes.COMMA) ||
 				   (detailAST.getType() == TokenTypes.ENUM_CONSTANT_DEF)) {

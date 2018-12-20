@@ -624,14 +624,21 @@ public class JavaParserUtil {
 	}
 
 	public static JavaWhileStatement parseJavaWhileStatement(
-		DetailAST literalWhileDetailAST) {
+		DetailAST detailAST) {
 
 		JavaWhileStatement javaWhileStatement = new JavaWhileStatement();
 
-		DetailAST firstChildDetailAST = literalWhileDetailAST.getFirstChild();
+		DetailAST lparenDetailAST = null;
+
+		if (detailAST.getType() == TokenTypes.LITERAL_WHILE) {
+			lparenDetailAST = detailAST.getFirstChild();
+		}
+		else {
+			lparenDetailAST = detailAST.getNextSibling();
+		}
 
 		javaWhileStatement.setConditionJavaExpression(
-			parseJavaExpression(firstChildDetailAST.getNextSibling()));
+			parseJavaExpression(lparenDetailAST.getNextSibling()));
 
 		return javaWhileStatement;
 	}

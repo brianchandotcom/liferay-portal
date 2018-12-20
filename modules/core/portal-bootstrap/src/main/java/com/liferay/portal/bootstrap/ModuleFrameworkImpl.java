@@ -34,8 +34,6 @@ import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
-import com.liferay.portal.kernel.util.Html;
-import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.NamedThreadFactory;
 import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -1626,7 +1624,7 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 
 		Props props = PropsUtil.getProps();
 
-		ServiceRegistration<Props> propsServiceRegistration =
+		ServiceRegistration<Props> serviceRegistration =
 			bundleContext.registerService(
 				Props.class, props,
 				_getProperties(props, Props.class.getName()));
@@ -1634,19 +1632,7 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 		if (_log.isDebugEnabled()) {
 			_log.debug(
 				"Registered required service as " +
-					propsServiceRegistration.getReference());
-		}
-
-		Html html = HtmlUtil.getHtml();
-
-		ServiceRegistration<Html> htmlServiceRegistration =
-			bundleContext.registerService(
-				Html.class, html, _getProperties(html, Html.class.getName()));
-
-		if (_log.isDebugEnabled()) {
-			_log.debug(
-				"Registered required service as " +
-					htmlServiceRegistration.getReference());
+					serviceRegistration.getReference());
 		}
 
 		if (_log.isDebugEnabled()) {

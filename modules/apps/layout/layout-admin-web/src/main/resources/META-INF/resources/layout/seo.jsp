@@ -19,11 +19,7 @@
 <%
 Layout selLayout = layoutsAdminDisplayContext.getSelLayout();
 
-UnicodeProperties layoutTypeSettings = null;
-
-if (selLayout != null) {
-	layoutTypeSettings = selLayout.getTypeSettingsProperties();
-}
+UnicodeProperties layoutTypeSettings = selLayout.getTypeSettingsProperties();
 %>
 
 <liferay-ui:error-marker

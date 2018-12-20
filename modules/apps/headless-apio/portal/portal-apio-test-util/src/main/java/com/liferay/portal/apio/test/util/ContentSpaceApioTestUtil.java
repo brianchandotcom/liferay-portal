@@ -12,9 +12,7 @@
  * details.
  */
 
-package com.liferay.content.space.apio.client.test.util;
-
-import com.liferay.portal.apio.test.util.ApioClientBuilder;
+package com.liferay.portal.apio.test.util;
 
 /**
  * @author Cristina González

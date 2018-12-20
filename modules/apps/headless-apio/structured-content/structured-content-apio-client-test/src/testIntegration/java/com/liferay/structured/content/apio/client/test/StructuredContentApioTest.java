@@ -14,10 +14,10 @@
 
 package com.liferay.structured.content.apio.client.test;
 
-import com.liferay.content.space.apio.client.test.util.ContentSpaceApioTestUtil;
 import com.liferay.oauth2.provider.test.util.OAuth2ProviderTestUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.apio.test.util.ApioClientBuilder;
+import com.liferay.portal.apio.test.util.ContentSpaceApioTestUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.structured.content.apio.client.test.activator.StructuredContentApioTestBundleActivator;
 

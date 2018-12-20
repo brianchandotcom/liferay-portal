@@ -1,5 +1,0 @@
-Bundle-Name: Liferay Content Space Apio Client Test Utilities
-Bundle-SymbolicName: com.liferay.content.space.apio.client.test.util
-Bundle-Version: 2.0.0
-Export-Package: com.liferay.content.space.apio.client.test.util
-Import-Package: *;resolution:=optional

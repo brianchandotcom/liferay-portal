@@ -79,27 +79,26 @@ if (organization != null) {
 <c:choose>
 	<c:when test="<%= (organizationGroup == null) || GroupPermissionUtil.contains(permissionChecker, organizationGroup, ActionKeys.UPDATE) %>">
 		<aui:fieldset cssClass="hide-data-labels">
-			<c:choose>
-				<c:when test="<%= (organization == null) || ((publicLayoutSetPrototype == null) && (privateLayoutSetPrototype == null)) %>">
-					<div class="sheet-section">
+			<div class="sheet-section">
+				<c:choose>
+					<c:when test="<%= (organization == null) || ((publicLayoutSetPrototype == null) && (privateLayoutSetPrototype == null)) %>">
 						<p class="sheet-text"><liferay-ui:message key="by-clicking-this-toggle-you-could-create-a-public-and-or-private-site-for-your-organization" /></p>
+
 						<aui:input label="create-site" name="site" type="toggle-switch" value="<%= site %>" />
-					</div>
-				</c:when>
-				<c:otherwise>
-					<aui:input label="create-site" name="site" type="hidden" value="<%= site %>" />
-				</c:otherwise>
-			</c:choose>
+					</c:when>
+					<c:otherwise>
+						<aui:input label="create-site" name="site" type="hidden" value="<%= site %>" />
+					</c:otherwise>
+				</c:choose>
 
-			<c:if test="<%= site %>">
+				<c:if test="<%= site %>">
 
-				<%
-				PortletURL editOrganizationSiteURL = PortletProviderUtil.getPortletURL(request, organizationGroup, Group.class.getName(), PortletProvider.Action.EDIT);
+					<%
+					PortletURL editOrganizationSiteURL = PortletProviderUtil.getPortletURL(request, organizationGroup, Group.class.getName(), PortletProvider.Action.EDIT);
 
-				editOrganizationSiteURL.setParameter("viewOrganizationsRedirect", currentURL);
-				%>
+					editOrganizationSiteURL.setParameter("viewOrganizationsRedirect", currentURL);
+					%>
 
-				<div class="sheet-section">
 					<aui:input inlineField="<%= true %>" name="siteId" type="resource" value="<%= String.valueOf(organizationGroup.getGroupId()) %>" />
 
 					<div class="form-group">
@@ -110,8 +109,8 @@ if (organization != null) {
 							url="<%= editOrganizationSiteURL.toString() %>"
 						/>
 					</div>
-				</div>
-			</c:if>
+				</c:if>
+			</div>
 
 			<%
 			boolean hasUnlinkLayoutSetPrototypePermission = PortalPermissionUtil.contains(permissionChecker, ActionKeys.UNLINK_LAYOUT_SET_PROTOTYPE);

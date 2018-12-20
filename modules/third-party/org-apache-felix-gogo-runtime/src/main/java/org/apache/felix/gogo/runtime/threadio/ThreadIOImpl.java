@@ -87,9 +87,9 @@ public class ThreadIOImpl implements ThreadIO
 		if (markers.isEmpty()) {
 			current.remove();
 
-			System.setOut(defaultMarker.out);
-			System.setIn(defaultMarker.in);
-			System.setErr(defaultMarker.err);
+			System.setOut(this.out);
+			System.setIn(this.in);
+			System.setErr(this.err);
 		}
     }
 

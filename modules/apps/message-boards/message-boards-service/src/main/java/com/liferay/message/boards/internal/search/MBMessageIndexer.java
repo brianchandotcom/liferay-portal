@@ -487,6 +487,8 @@ public class MBMessageIndexer
 						MBCategoryConstants.DISCUSSION_CATEGORY_ID);
 				}
 
+				intervalActionProcessor.incrementStart(groupIds.size());
+
 				return null;
 			});
 
@@ -573,6 +575,8 @@ public class MBMessageIndexer
 						companyId, groupId,
 						MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID);
 				}
+
+				intervalActionProcessor.incrementStart(groupIds.size());
 
 				return null;
 			});

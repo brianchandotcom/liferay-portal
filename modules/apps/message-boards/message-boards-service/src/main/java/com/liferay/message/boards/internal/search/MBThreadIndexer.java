@@ -225,6 +225,8 @@ public class MBThreadIndexer extends BaseIndexer<MBThread> {
 						MBCategoryConstants.DISCUSSION_CATEGORY_ID);
 				}
 
+				intervalActionProcessor.incrementStart(groupIds.size());
+
 				return null;
 			});
 
@@ -254,6 +256,8 @@ public class MBThreadIndexer extends BaseIndexer<MBThread> {
 						companyId, groupId,
 						MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID);
 				}
+
+				intervalActionProcessor.incrementStart(groupIds.size());
 
 				return null;
 			});

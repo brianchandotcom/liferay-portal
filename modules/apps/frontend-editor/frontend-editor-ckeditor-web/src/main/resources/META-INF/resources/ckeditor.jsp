@@ -155,12 +155,12 @@ name = HtmlUtil.escapeJS(name);
 		nativeEditor.config.contentsLangDirection = contentsLanguageDir;
 	};
 
-	windowNode.on('dragover', function(event) {
+	var preventImageDragoverHandler = windowNode.on('dragover', function(event) {
 		event.preventDefault();
 		event.stopPropagation();
 	});
 
-	windowNode.on('drop', function(event) {
+	var preventImageDropHandler = windowNode.on('drop', function(event) {
 		event.preventDefault();
 		event.stopImmediatePropagation();
 		showError();
@@ -184,7 +184,9 @@ name = HtmlUtil.escapeJS(name);
 	};
 
 	var eventHandles = [
-		Liferay.on('inputLocalized:localeChanged', onLocaleChangedHandler)
+		Liferay.on('inputLocalized:localeChanged', onLocaleChangedHandler),
+		preventImageDragoverHandler,
+		preventImageDropHandler
 	];
 
 	window['<%= name %>'] = {

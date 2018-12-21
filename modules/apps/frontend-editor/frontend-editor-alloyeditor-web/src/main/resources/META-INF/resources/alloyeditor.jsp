@@ -257,12 +257,12 @@ name = HtmlUtil.escapeJS(name);
 		Liferay.namespace('EDITORS').alloyEditor.addInstance();
 	};
 
-	windowNode.on('dragover', function(event) {
+	var preventImageDragoverHandler = windowNode.on('dragover', function(event) {
 		event.preventDefault();
 		event.stopPropagation();
 	});
 
-	windowNode.on('drop', function(event) {
+	var preventImageDropHandler = windowNode.on('drop', function(event) {
 		if (!event.target.getDOMNode().isContentEditable) {
 			event.preventDefault();
 			event.stopImmediatePropagation();
@@ -286,6 +286,11 @@ name = HtmlUtil.escapeJS(name);
 			}
 		);
 	};
+
+	var eventHandles = [
+		preventImageDragoverHandler,
+		preventImageDropHandler
+	];
 
 	window['<%= name %>'] = {
 		create: function() {
@@ -314,6 +319,8 @@ name = HtmlUtil.escapeJS(name);
 
 				alloyEditor = null;
 			}
+
+			(new A.EventHandle(eventHandles)).detach();
 
 			var editorNode = document.getElementById('<%= name %>');
 

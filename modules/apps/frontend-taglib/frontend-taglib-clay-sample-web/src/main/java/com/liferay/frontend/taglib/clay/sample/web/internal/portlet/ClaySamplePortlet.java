@@ -16,6 +16,7 @@ package com.liferay.frontend.taglib.clay.sample.web.internal.portlet;
 
 import com.liferay.frontend.taglib.clay.sample.web.constants.ClaySamplePortletKeys;
 import com.liferay.frontend.taglib.clay.sample.web.internal.display.context.CardsDisplayContext;
+import com.liferay.frontend.taglib.clay.sample.web.internal.display.context.ClaySampleTableDisplayContext;
 import com.liferay.frontend.taglib.clay.sample.web.internal.display.context.DropdownsDisplayContext;
 import com.liferay.frontend.taglib.clay.sample.web.internal.display.context.ManagementToolbarsDisplayContext;
 import com.liferay.frontend.taglib.clay.sample.web.internal.display.context.NavigationBarsDisplayContext;
@@ -88,6 +89,13 @@ public class ClaySamplePortlet extends MVCPortlet {
 		renderRequest.setAttribute(
 			ClaySamplePortletKeys.NAVIGATION_BARS_DISPLAY_CONTEXT,
 			navigationBarsDisplayContext);
+
+		ClaySampleTableDisplayContext claySampleTableDisplayContext =
+			new ClaySampleTableDisplayContext();
+
+		renderRequest.setAttribute(
+			ClaySamplePortletKeys.CLAY_SAMPLE_TABLE_DISPLAY_CONTEXT,
+			claySampleTableDisplayContext);
 
 		super.doDispatch(renderRequest, renderResponse);
 	}

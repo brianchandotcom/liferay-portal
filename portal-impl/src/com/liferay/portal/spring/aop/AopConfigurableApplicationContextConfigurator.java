@@ -121,7 +121,7 @@ public class AopConfigurableApplicationContextConfigurator
 						chainableMethodAdvices);
 
 				defaultSingletonBeanRegistry.registerDisposableBean(
-					"counterServiceBeanAopCacheManagerDestroyer",
+					"counterServiceBeanAutoProxyCreatorDestroyer",
 					serviceBeanAutoProxyCreator::destroy);
 
 				configurableListableBeanFactory.addBeanPostProcessor(
@@ -148,7 +148,7 @@ public class AopConfigurableApplicationContextConfigurator
 						serviceMonitoringControl));
 
 			defaultSingletonBeanRegistry.registerDisposableBean(
-				"serviceBeanAopCacheManagerDestroyer",
+				"serviceBeanAutoProxyCreatorDestroyer",
 				serviceBeanAutoProxyCreator::destroy);
 
 			configurableListableBeanFactory.addBeanPostProcessor(

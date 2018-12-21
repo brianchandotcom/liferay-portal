@@ -25,7 +25,6 @@ import java.io.File;
 import java.io.InputStream;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Properties;
 import java.util.zip.ZipEntry;
@@ -36,7 +35,6 @@ import org.osgi.framework.BundleContext;
 import org.osgi.framework.Version;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Shuyang Zhou
@@ -89,11 +87,6 @@ public class DefaultLPKGVerifier implements LPKGVerifier {
 					iae);
 			}
 
-			if (LPKGIndexValidatorThreadLocal.isEnabled()) {
-				_lpkgIndexValidator.validate(
-					Collections.singletonList(lpkgFile));
-			}
-
 			List<Bundle> oldBundles = new ArrayList<>();
 
 			for (Bundle bundle : _bundleContext.getBundles()) {
@@ -132,8 +125,5 @@ public class DefaultLPKGVerifier implements LPKGVerifier {
 	}
 
 	private BundleContext _bundleContext;
-
-	@Reference
-	private LPKGIndexValidator _lpkgIndexValidator;
 
 }

@@ -1390,6 +1390,8 @@ public class ServicePreAction extends Action {
 						}
 					}
 
+					intervalActionProcessor.incrementStart(groups.size());
+
 					return null;
 				}
 

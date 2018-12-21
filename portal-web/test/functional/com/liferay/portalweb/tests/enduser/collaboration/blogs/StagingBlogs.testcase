@@ -165,14 +165,14 @@ definition {
 		Panel.expandPanel(panel = "Configuration");
 
 		BlogsEntry.addSmallImage(
-			navTab = "Documents and Media",
+			navTab = "Upload Image",
 			uploadFileName = "Document_3.jpg"
 		);
 
 		PortletEntry.publish();
 
 		Navigator.gotoStagedSitePage(
-			pageName = "Site Page Name",
+			pageName = "Staging Blogs Page",
 			siteName = "Site Name"
 		);
 
@@ -198,7 +198,7 @@ definition {
 		);
 
 		Navigator.gotoStagedSitePage(
-			pageName = "Site Page Name",
+			pageName = "Staging Blogs Page",
 			siteName = "Site Name"
 		);
 
@@ -217,7 +217,7 @@ definition {
 		PortletEntry.publish();
 
 		Navigator.gotoStagedSitePage(
-			pageName = "Site Page Name",
+			pageName = "Staging Blogs Page",
 			siteName = "Site Name"
 		);
 
@@ -226,7 +226,7 @@ definition {
 		Staging.publishToLive();
 
 		Navigator.gotoStagedSitePage(
-			pageName = "Site Page Name",
+			pageName = "Staging Blogs Page",
 			siteName = "Site Name"
 		);
 
@@ -265,7 +265,7 @@ definition {
 
 		Navigator.gotoNavItem(navItem = "Images");
 
-		AssertElementNotPresent(
+		AssertElementPresent(
 			locator1 = "Card#SPECIFIC_LARGE_TEXT",
 			value1 = "${rowEntry}",
 			key_cardText = "Document_3.jpg"

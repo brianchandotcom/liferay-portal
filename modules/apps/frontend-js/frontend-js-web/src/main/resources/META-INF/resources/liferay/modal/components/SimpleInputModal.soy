@@ -5,6 +5,7 @@
  */
 {template .render}
 	{@param dialogTitle: string}
+	{@param fixFormData: bool}
 	{@param formSubmitURL: string}
 	{@param mainFieldLabel: html}
 	{@param mainFieldName: string}
@@ -95,6 +96,12 @@
 								</span>
 							</label>
 						</div>
+					{/if}
+
+					// LPS-86960
+
+					{if $fixFormData}
+						<input type="hidden" name="__ie11_formdata_fix__">
 					{/if}
 				</form>
 			{/param}

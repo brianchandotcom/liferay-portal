@@ -207,6 +207,18 @@ SimpleInputModal.STATE = {
 	dialogTitle: Config.string().required(),
 
 	/**
+	 * Adds a hidden bogus input when necessary to work around some formdata + ajax
+	 * formatting issues. See LPS-86960 for more details
+	 * @default false
+	 * @instance
+	 * @memberOf SimpleInputModal
+	 * @review
+	 * @type {!string}
+	 */
+
+	fixFormData: Config.bool().value(false),
+
+	/**
 	 * URL where the form will be submitted to
 	 * @default undefined
 	 * @instance

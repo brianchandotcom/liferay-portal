@@ -72,6 +72,8 @@ function openSimpleInputModal(
 		spritemap
 	}
 ) {
+	const fixFormData = Liferay.Browser.isIe();
+
 	let simpleInputModal = null;
 
 	/**
@@ -122,6 +124,7 @@ function openSimpleInputModal(
 				dialogHidden: handleSimpleInputModalDisposal,
 				formSuccess: handleSimpleInputModalSubmission
 			},
+			fixFormData,
 			formSubmitURL,
 			idFieldName,
 			idFieldValue,

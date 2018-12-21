@@ -223,13 +223,13 @@ public class BlogPostingNestedCollectionResource
 		serviceContext.setAddGuestPermissions(true);
 		serviceContext.setScopeGroupId(groupId);
 
-		Date dateCreated = blogPosting.getDateCreated();
+		Date dateCreated = blogPosting.getCreatedDate();
 
 		if (dateCreated != null) {
 			serviceContext.setCreateDate(dateCreated);
 		}
 
-		Date dateModified = blogPosting.getDateModified();
+		Date dateModified = blogPosting.getModifiedDate();
 
 		if (dateModified != null) {
 			serviceContext.setModifiedDate(dateModified);

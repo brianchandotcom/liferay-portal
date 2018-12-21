@@ -321,8 +321,8 @@ public class DefaultBlogPostingNestedCollectionResourceTest
 
 		public BlogPostingImpl(
 			String alternativeHeadline, String articleBody, String caption,
-			List<Long> categories, long creatorId, Date dateCreated,
-			Date dateModified, Date datePublished, String description,
+			List<Long> categories, long creatorId, Date createdDate,
+			Date modifiedDate, Date publishedDate, String description,
 			String friendlyURLPath, String headline, long imageId,
 			List<String> keywords) {
 
@@ -331,9 +331,9 @@ public class DefaultBlogPostingNestedCollectionResourceTest
 			_caption = caption;
 			_categories = categories;
 			_creatorId = creatorId;
-			_dateCreated = dateCreated;
-			_dateModified = dateModified;
-			_datePublished = datePublished;
+			_createdDate = createdDate;
+			_modifiedDate = modifiedDate;
+			_publishedDate = publishedDate;
 			_description = description;
 			_friendlyURLPath = friendlyURLPath;
 			_headline = headline;
@@ -362,18 +362,13 @@ public class DefaultBlogPostingNestedCollectionResourceTest
 		}
 
 		@Override
+		public Date getCreatedDate() {
+			return _createdDate;
+		}
+
+		@Override
 		public Long getCreatorId() {
 			return _creatorId;
-		}
-
-		@Override
-		public Date getDateCreated() {
-			return _dateCreated;
-		}
-
-		@Override
-		public Date getDateModified() {
-			return _dateModified;
 		}
 
 		@Override
@@ -402,23 +397,28 @@ public class DefaultBlogPostingNestedCollectionResourceTest
 		}
 
 		@Override
+		public Date getModifiedDate() {
+			return _modifiedDate;
+		}
+
+		@Override
 		public Date getPublishedDate() {
-			return _datePublished;
+			return _publishedDate;
 		}
 
 		private final String _alternativeHeadline;
 		private final String _articleBody;
 		private final String _caption;
 		private final List<Long> _categories;
+		private final Date _createdDate;
 		private final long _creatorId;
-		private final Date _dateCreated;
-		private final Date _dateModified;
-		private final Date _datePublished;
 		private final String _description;
 		private final String _friendlyURLPath;
 		private final String _headline;
 		private final long _imageId;
 		private final List<String> _keywords;
+		private final Date _modifiedDate;
+		private final Date _publishedDate;
 
 	}
 

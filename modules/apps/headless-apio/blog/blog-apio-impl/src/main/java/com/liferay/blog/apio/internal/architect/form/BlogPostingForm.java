@@ -118,6 +118,15 @@ public class BlogPostingForm implements BlogPosting {
 		return _categories;
 	}
 
+	@Override
+	public Date getCreatedDate() {
+		return Optional.ofNullable(
+			_createDate
+		).orElseGet(
+			Date::new
+		);
+	}
+
 	/**
 	 * Returns the blog post's creator ID, if present; otherwise, returns the
 	 * provided default ID.
@@ -126,24 +135,6 @@ public class BlogPostingForm implements BlogPosting {
 	 */
 	public Long getCreatorId() {
 		return _creatorId;
-	}
-
-	@Override
-	public Date getDateCreated() {
-		return Optional.ofNullable(
-			_createDate
-		).orElseGet(
-			Date::new
-		);
-	}
-
-	@Override
-	public Date getDateModified() {
-		return Optional.ofNullable(
-			_modifiedDate
-		).orElseGet(
-			Date::new
-		);
 	}
 
 	/**
@@ -191,6 +182,15 @@ public class BlogPostingForm implements BlogPosting {
 	@Override
 	public List<String> getKeywords() {
 		return _keywords;
+	}
+
+	@Override
+	public Date getModifiedDate() {
+		return Optional.ofNullable(
+			_modifiedDate
+		).orElseGet(
+			Date::new
+		);
 	}
 
 	/**

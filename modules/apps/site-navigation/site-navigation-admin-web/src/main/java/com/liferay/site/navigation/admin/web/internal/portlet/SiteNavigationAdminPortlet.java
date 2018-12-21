@@ -79,6 +79,10 @@ public class SiteNavigationAdminPortlet extends MVCPortlet {
 		HttpServletRequest request = _portal.getHttpServletRequest(
 			renderRequest);
 
+		renderRequest.setAttribute(
+			SiteNavigationAdminWebKeys.RESOLVED_MODULE_NAME,
+			_npmResolver.resolveModuleName("site-navigation-admin-web"));
+
 		SiteNavigationAdminDisplayContext siteNavigationAdminDisplayContext =
 			new SiteNavigationAdminDisplayContext(
 				liferayPortletRequest, liferayPortletResponse, request,
@@ -89,10 +93,6 @@ public class SiteNavigationAdminPortlet extends MVCPortlet {
 			SiteNavigationAdminWebKeys.
 				SITE_NAVIGATION_MENU_ADMIN_DISPLAY_CONTEXT,
 			siteNavigationAdminDisplayContext);
-
-		renderRequest.setAttribute(
-			SiteNavigationAdminWebKeys.RESOLVED_MODULE_NAME,
-			_npmResolver.resolveModuleName("site-navigation-admin-web"));
 
 		super.doDispatch(renderRequest, renderResponse);
 	}

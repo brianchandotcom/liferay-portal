@@ -19,8 +19,8 @@ import com.liferay.data.engine.model.DEDataDefinitionField;
 import com.liferay.data.engine.service.DEDataDefinitionSaveRequest;
 import com.liferay.data.engine.service.DEDataDefinitionSaveResponse;
 import com.liferay.data.engine.service.DEDataDefinitionService;
+import com.liferay.data.engine.web.internal.graphql.model.DataDefinition;
 import com.liferay.data.engine.web.internal.graphql.model.DataDefinitionFieldType;
-import com.liferay.data.engine.web.internal.graphql.model.DataDefinitionType;
 import com.liferay.data.engine.web.internal.graphql.model.LocalizedValueType;
 import com.liferay.data.engine.web.internal.graphql.model.SaveDataDefinitionType;
 
@@ -366,14 +366,14 @@ public class DESaveDataDefinitionDataFetcherTest {
 		DESaveDataDefinitionDataFetcher deSaveDataDefinitionDataFetcher =
 			new DESaveDataDefinitionDataFetcher();
 
-		DataDefinitionType dataDefinitionType =
-			deSaveDataDefinitionDataFetcher.createDataDefinitionType(
+		DataDefinition dataDefinition =
+			deSaveDataDefinitionDataFetcher.createDataDefinition(
 				1, deDataDefinition);
 
-		Assert.assertEquals("1", dataDefinitionType.getDataDefinitionId());
-		Assert.assertEquals("json", dataDefinitionType.getStorageType());
+		Assert.assertEquals("1", dataDefinition.getDataDefinitionId());
+		Assert.assertEquals("json", dataDefinition.getStorageType());
 
-		List<LocalizedValueType> names = dataDefinitionType.getNames();
+		List<LocalizedValueType> names = dataDefinition.getNames();
 
 		LocalizedValueType localizedValueType = names.get(0);
 
@@ -387,7 +387,7 @@ public class DESaveDataDefinitionDataFetcherTest {
 			"Definição de Dados", localizedValueType.getValue());
 
 		List<LocalizedValueType> descriptions =
-			dataDefinitionType.getDescriptions();
+			dataDefinition.getDescriptions();
 
 		localizedValueType = descriptions.get(0);
 
@@ -399,7 +399,7 @@ public class DESaveDataDefinitionDataFetcherTest {
 		Assert.assertEquals("pt_BR", localizedValueType.getKey());
 		Assert.assertEquals("Descrição", localizedValueType.getValue());
 
-		List<DataDefinitionFieldType> fields = dataDefinitionType.getFields();
+		List<DataDefinitionFieldType> fields = dataDefinition.getFields();
 
 		DataDefinitionFieldType dataDefinitionFieldType = fields.get(0);
 
@@ -655,13 +655,13 @@ public class DESaveDataDefinitionDataFetcherTest {
 		SaveDataDefinitionType saveDataDefinitionType =
 			deSaveDataDefinitionDataFetcher.get(dataFetchingEnvironment);
 
-		DataDefinitionType dataDefinitionType =
+		DataDefinition dataDefinition2 =
 			saveDataDefinitionType.getDataDefinition();
 
-		Assert.assertEquals("1", dataDefinitionType.getDataDefinitionId());
-		Assert.assertEquals("xml", dataDefinitionType.getStorageType());
+		Assert.assertEquals("1", dataDefinition2.getDataDefinitionId());
+		Assert.assertEquals("xml", dataDefinition2.getStorageType());
 
-		List<LocalizedValueType> nameList = dataDefinitionType.getNames();
+		List<LocalizedValueType> nameList = dataDefinition2.getNames();
 
 		LocalizedValueType localizedValueType = nameList.get(0);
 
@@ -675,7 +675,7 @@ public class DESaveDataDefinitionDataFetcherTest {
 			"Definição de Dados", localizedValueType.getValue());
 
 		List<LocalizedValueType> descriptionList =
-			dataDefinitionType.getDescriptions();
+			dataDefinition2.getDescriptions();
 
 		localizedValueType = descriptionList.get(0);
 
@@ -689,8 +689,7 @@ public class DESaveDataDefinitionDataFetcherTest {
 		Assert.assertEquals(
 			"Descrição da Definição de Dados", localizedValueType.getValue());
 
-		List<DataDefinitionFieldType> fieldList =
-			dataDefinitionType.getFields();
+		List<DataDefinitionFieldType> fieldList = dataDefinition2.getFields();
 
 		DataDefinitionFieldType dataDefinitionFieldType = fieldList.get(0);
 

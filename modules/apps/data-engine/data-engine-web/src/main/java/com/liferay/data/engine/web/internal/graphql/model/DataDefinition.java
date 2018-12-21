@@ -14,19 +14,31 @@
 
 package com.liferay.data.engine.web.internal.graphql.model;
 
+import java.util.List;
+
 /**
- * @author Leonardo Barros
+ * @author Jeyvison Nascimento
  */
-public class DeleteDataDefinitionType {
+public interface DataDefinition {
 
-	public DataDefinition getDataDefinition() {
-		return _dataDefinition;
-	}
+	public String getDataDefinitionId();
 
-	public void setDataDefinition(DataDefinition dataDefinition) {
-		_dataDefinition = dataDefinition;
-	}
+	public List<LocalizedValueType> getDescriptions();
 
-	private DataDefinition _dataDefinition;
+	public List<DataDefinitionFieldType> getFields();
+
+	public List<LocalizedValueType> getNames();
+
+	public String getStorageType();
+
+	public void setDataDefinitionId(String dataDefinitionId);
+
+	public void setDescriptions(List<LocalizedValueType> descriptions);
+
+	public void setFields(List<DataDefinitionFieldType> fields);
+
+	public void setNames(List<LocalizedValueType> names);
+
+	public void setStorageType(String storageType);
 
 }

@@ -19,44 +19,54 @@ import java.util.List;
 /**
  * @author Leonardo Barros
  */
-public class DataDefinitionType {
+public class DataDefinitionType implements DataDefinition {
 
+	@Override
 	public String getDataDefinitionId() {
 		return _dataDefinitionId;
 	}
 
+	@Override
 	public List<LocalizedValueType> getDescriptions() {
 		return _descriptions;
 	}
 
+	@Override
 	public List<DataDefinitionFieldType> getFields() {
 		return _fields;
 	}
 
+	@Override
 	public List<LocalizedValueType> getNames() {
 		return _names;
 	}
 
+	@Override
 	public String getStorageType() {
 		return _storageType;
 	}
 
+	@Override
 	public void setDataDefinitionId(String dataDefinitionId) {
 		_dataDefinitionId = dataDefinitionId;
 	}
 
+	@Override
 	public void setDescriptions(List<LocalizedValueType> descriptions) {
 		_descriptions = descriptions;
 	}
 
+	@Override
 	public void setFields(List<DataDefinitionFieldType> fields) {
 		_fields = fields;
 	}
 
+	@Override
 	public void setNames(List<LocalizedValueType> names) {
 		_names = names;
 	}
 
+	@Override
 	public void setStorageType(String storageType) {
 		_storageType = storageType;
 	}

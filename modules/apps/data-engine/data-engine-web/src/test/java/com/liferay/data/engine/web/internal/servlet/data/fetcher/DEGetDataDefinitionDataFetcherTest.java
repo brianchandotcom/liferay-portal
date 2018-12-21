@@ -19,8 +19,8 @@ import com.liferay.data.engine.model.DEDataDefinitionField;
 import com.liferay.data.engine.service.DEDataDefinitionGetRequest;
 import com.liferay.data.engine.service.DEDataDefinitionGetResponse;
 import com.liferay.data.engine.service.DEDataDefinitionService;
+import com.liferay.data.engine.web.internal.graphql.model.DataDefinition;
 import com.liferay.data.engine.web.internal.graphql.model.DataDefinitionFieldType;
-import com.liferay.data.engine.web.internal.graphql.model.DataDefinitionType;
 import com.liferay.data.engine.web.internal.graphql.model.GetDataDefinitionType;
 import com.liferay.data.engine.web.internal.graphql.model.LocalizedValueType;
 
@@ -120,13 +120,13 @@ public class DEGetDataDefinitionDataFetcherTest {
 		GetDataDefinitionType getDataDefinitionType =
 			deGetDataDefinitionDataFetcher.get(dataFetchingEnvironment);
 
-		DataDefinitionType dataDefinitionType =
+		DataDefinition dataDefinition =
 			getDataDefinitionType.getDataDefinition();
 
-		Assert.assertEquals("1", dataDefinitionType.getDataDefinitionId());
-		Assert.assertEquals("json", dataDefinitionType.getStorageType());
+		Assert.assertEquals("1", dataDefinition.getDataDefinitionId());
+		Assert.assertEquals("json", dataDefinition.getStorageType());
 
-		List<LocalizedValueType> names = dataDefinitionType.getNames();
+		List<LocalizedValueType> names = dataDefinition.getNames();
 
 		LocalizedValueType localizedValueType = names.get(0);
 
@@ -139,7 +139,7 @@ public class DEGetDataDefinitionDataFetcherTest {
 		Assert.assertEquals(
 			"Definição de Dados", localizedValueType.getValue());
 
-		List<DataDefinitionFieldType> fields = dataDefinitionType.getFields();
+		List<DataDefinitionFieldType> fields = dataDefinition.getFields();
 
 		DataDefinitionFieldType dataDefinitionFieldType = fields.get(0);
 

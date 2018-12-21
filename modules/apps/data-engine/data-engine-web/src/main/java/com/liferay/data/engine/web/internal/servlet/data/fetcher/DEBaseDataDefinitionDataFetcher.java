@@ -16,6 +16,7 @@ package com.liferay.data.engine.web.internal.servlet.data.fetcher;
 
 import com.liferay.data.engine.model.DEDataDefinition;
 import com.liferay.data.engine.model.DEDataDefinitionField;
+import com.liferay.data.engine.web.internal.graphql.model.DataDefinition;
 import com.liferay.data.engine.web.internal.graphql.model.DataDefinitionFieldType;
 import com.liferay.data.engine.web.internal.graphql.model.DataDefinitionType;
 import com.liferay.data.engine.web.internal.graphql.model.LocalizedValueType;
@@ -32,6 +33,24 @@ import java.util.stream.Stream;
 public abstract class DEBaseDataDefinitionDataFetcher
 	extends DEBaseDataFetcher {
 
+	protected DataDefinition createDataDefinition(
+		long deDataDefinitionId, DEDataDefinition deDataDefinition) {
+
+		DataDefinition dataDefinition = new DataDefinitionType();
+
+		dataDefinition.setDataDefinitionId(String.valueOf(deDataDefinitionId));
+		dataDefinition.setDescriptions(
+			getLocalizedValuesType(deDataDefinition.getDescription()));
+		dataDefinition.setFields(
+			createDataDefinitionFieldTypes(
+				deDataDefinition.getDEDataDefinitionFields()));
+		dataDefinition.setNames(
+			getLocalizedValuesType(deDataDefinition.getName()));
+		dataDefinition.setStorageType(deDataDefinition.getStorageType());
+
+		return dataDefinition;
+	}
+
 	protected List<DataDefinitionFieldType> createDataDefinitionFieldTypes(
 		List<DEDataDefinitionField> deDataDefinitionFields) {
 
@@ -42,25 +61,6 @@ public abstract class DEBaseDataDefinitionDataFetcher
 		).collect(
 			Collectors.toList()
 		);
-	}
-
-	protected DataDefinitionType createDataDefinitionType(
-		long deDataDefinitionId, DEDataDefinition deDataDefinition) {
-
-		DataDefinitionType dataDefinitionType = new DataDefinitionType();
-
-		dataDefinitionType.setDataDefinitionId(
-			String.valueOf(deDataDefinitionId));
-		dataDefinitionType.setDescriptions(
-			getLocalizedValuesType(deDataDefinition.getDescription()));
-		dataDefinitionType.setFields(
-			createDataDefinitionFieldTypes(
-				deDataDefinition.getDEDataDefinitionFields()));
-		dataDefinitionType.setNames(
-			getLocalizedValuesType(deDataDefinition.getName()));
-		dataDefinitionType.setStorageType(deDataDefinition.getStorageType());
-
-		return dataDefinitionType;
 	}
 
 	protected List<LocalizedValueType> getLocalizedValuesType(

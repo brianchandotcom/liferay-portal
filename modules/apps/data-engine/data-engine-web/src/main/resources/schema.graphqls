@@ -40,7 +40,7 @@ type DataDefinitionFieldType {
 	type: String
 }
 
-type DataDefinitionType {
+type DataDefinition {
 	dataDefinitionId: ID
 	descriptions: [LocalizedValueType]
 	fields: [DataDefinitionFieldType]
@@ -49,11 +49,11 @@ type DataDefinitionType {
 }
 
 type DeleteDataDefinitionType {
-	dataDefinition: DataDefinitionType
+	dataDefinition: DataDefinition
 }
 
 type GetDataDefinitionType {
-	dataDefinition: DataDefinitionType
+	dataDefinition: DataDefinition
 }
 
 type LocalizedValueType {
@@ -71,5 +71,5 @@ type QueryType {
 }
 
 type SaveDataDefinitionType {
-	dataDefinition: DataDefinitionType
+	dataDefinition: DataDefinition
 }

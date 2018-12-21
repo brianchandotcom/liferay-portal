@@ -20,7 +20,7 @@ import com.liferay.data.engine.service.DEDataDefinitionGetRequest;
 import com.liferay.data.engine.service.DEDataDefinitionGetResponse;
 import com.liferay.data.engine.service.DEDataDefinitionRequestBuilder;
 import com.liferay.data.engine.service.DEDataDefinitionService;
-import com.liferay.data.engine.web.internal.graphql.model.DataDefinitionType;
+import com.liferay.data.engine.web.internal.graphql.model.DataDefinition;
 import com.liferay.data.engine.web.internal.graphql.model.GetDataDefinitionType;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -64,10 +64,10 @@ public class DEGetDataDefinitionDataFetcher
 			DEDataDefinition deDataDefinition =
 				deDataDefinitionGetResponse.getDeDataDefinition();
 
-			DataDefinitionType dataDefinitionType = createDataDefinitionType(
+			DataDefinition dataDefinition = createDataDefinition(
 				dataDefinitionId, deDataDefinition);
 
-			getDataDefinitionType.setDataDefinition(dataDefinitionType);
+			getDataDefinitionType.setDataDefinition(dataDefinition);
 		}
 		catch (DEDataDefinitionException.MustHavePermission mhp) {
 			errorMessage = getMessage(

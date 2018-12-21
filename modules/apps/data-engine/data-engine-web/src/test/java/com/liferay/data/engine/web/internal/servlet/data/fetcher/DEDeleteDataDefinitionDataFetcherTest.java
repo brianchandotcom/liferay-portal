@@ -17,7 +17,7 @@ package com.liferay.data.engine.web.internal.servlet.data.fetcher;
 import com.liferay.data.engine.service.DEDataDefinitionDeleteRequest;
 import com.liferay.data.engine.service.DEDataDefinitionDeleteResponse;
 import com.liferay.data.engine.service.DEDataDefinitionService;
-import com.liferay.data.engine.web.internal.graphql.model.DataDefinitionType;
+import com.liferay.data.engine.web.internal.graphql.model.DataDefinition;
 import com.liferay.data.engine.web.internal.graphql.model.DeleteDataDefinitionType;
 
 import graphql.schema.DataFetchingEnvironment;
@@ -68,10 +68,10 @@ public class DEDeleteDataDefinitionDataFetcherTest {
 		DeleteDataDefinitionType deleteDataDefinitionType =
 			deDeleteDataDefinitionDataFetcher.get(dataFetchingEnvironment);
 
-		DataDefinitionType deDataDefinitionType =
+		DataDefinition dataDefinition =
 			deleteDataDefinitionType.getDataDefinition();
 
-		Assert.assertEquals("1", deDataDefinitionType.getDataDefinitionId());
+		Assert.assertEquals("1", dataDefinition.getDataDefinitionId());
 	}
 
 }

@@ -219,7 +219,7 @@ AUI.add(
 							var cropHeight = portraitPreviewImgHeight;
 							var cropWidth = portraitPreviewImgWidth;
 
-							if (aspectRatio !== null) {
+							if (aspectRatio) {
 								if (cropHeight < cropWidth) {
 									cropWidth = cropHeight;
 								}

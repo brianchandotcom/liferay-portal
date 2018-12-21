@@ -151,11 +151,13 @@ User selUser = (User)request.getAttribute(UsersAdminWebKeys.SELECTED_USER);
 						%>
 
 						<liferay-ui:logo-selector
+							aspectRatio="<%= 1 %>"
 							currentLogoURL="<%= selUser.getPortraitURL(themeDisplay) %>"
 							defaultLogo="<%= selUser.getPortraitId() == 0 %>"
 							defaultLogoURL="<%= UserConstants.getPortraitURL(themeDisplay.getPathImage(), selUser.isMale(), 0, null) %>"
 							logoDisplaySelector=".user-logo"
 							maxFileSize="<%= userFileUploadsConfiguration.imageMaxSize() %>"
+							preserveRatio="<%= true %>"
 							tempImageFileName="<%= String.valueOf(selUser.getUserId()) %>"
 						/>
 					</c:when>

@@ -1885,6 +1885,12 @@
 		<tag-class>com.liferay.taglib.ui.LogoSelectorTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
+			<name>aspectRatio</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>int</type>
+		</attribute>
+		<attribute>
 			<name>currentLogoURL</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -1913,6 +1919,12 @@
 			<name>maxFileSize</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>preserveRatio</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
 		</attribute>
 		<attribute>
 			<name>showBackground</name>

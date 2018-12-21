@@ -20,6 +20,25 @@
 List<String> previewFileURLs = (List<String>)request.getAttribute(DLPreviewAudioWebKeys.PREVIEW_FILE_URLS);
 
 String randomNamespace = PortalUtil.generateRandomKey(request, "portlet_document_library_view_file_entry_preview") + StringPool.UNDERLINE;
+
+	Map<String, Object> context = new HashMap<>();
+
+	context.put(
+		"audioSources",
+		new ArrayList<Map<String, String>>() {
+			{
+				for (String previewFileURL : previewFileURLs) {
+					if (Validator.isNotNull(previewFileURL)) {
+						if (previewFileURL.endsWith("mp3")) {
+							add(MapUtil.fromArray("type", "audio/mp3", "url", previewFileURL));
+						}
+						else if (previewFileURL.endsWith("ogg")) {
+							add(MapUtil.fromArray("type", "audio/ogg", "url", previewFileURL));
+						}
+					}
+				}
+			}
+		});
 %>
 
 <div class="lfr-preview-audio" id="<portlet:namespace /><%= randomNamespace %>previewFile">
@@ -99,3 +118,22 @@ for (String previewFileURL : previewFileURLs) {
 		}
 	);
 </aui:script>
+
+<liferay-util:html-top
+	outputKey="document_library_preview_audio_css"
+>
+	<link href="<%= PortalUtil.getStaticResourceURL(request, application.getContextPath() + "/preview/css/main.css") %>" rel="stylesheet" type="text/css" />
+
+	<style type="text/css">
+		.preview-file .preview-file-audio {
+			max-width: <%= PropsValues.DL_FILE_ENTRY_PREVIEW_VIDEO_WIDTH %>px;
+		}
+	</style>
+</liferay-util:html-top>
+
+<soy:component-renderer
+	componentId='<%= renderResponse.getNamespace() + randomNamespace + "Audio" %>'
+	context="<%= context %>"
+	module="<%= (String)request.getAttribute(DLPreviewAudioWebKeys.MODULE_PATH) %>"
+	templateNamespace="com.liferay.document.library.preview.AudioPreviewer.render"
+/>

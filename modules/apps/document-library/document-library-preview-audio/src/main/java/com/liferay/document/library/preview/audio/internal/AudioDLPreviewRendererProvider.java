@@ -20,6 +20,7 @@ import com.liferay.document.library.preview.DLPreviewRenderer;
 import com.liferay.document.library.preview.DLPreviewRendererProvider;
 import com.liferay.document.library.preview.audio.internal.constants.DLPreviewAudioWebKeys;
 import com.liferay.document.library.preview.exception.DLPreviewGenerationInProcessException;
+import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -42,7 +43,10 @@ import javax.servlet.http.HttpServletRequest;
 public class AudioDLPreviewRendererProvider
 	implements DLPreviewRendererProvider {
 
-	public AudioDLPreviewRendererProvider(ServletContext servletContext) {
+	public AudioDLPreviewRendererProvider(
+		NPMResolver npmResolver, ServletContext servletContext) {
+
+		_npmResolver = npmResolver;
 		_servletContext = servletContext;
 	}
 
@@ -71,6 +75,12 @@ public class AudioDLPreviewRendererProvider
 					_getPreviewFileURLs(fileVersion, request));
 
 				requestDispatcher.include(request, response);
+
+				request.setAttribute(
+					DLPreviewAudioWebKeys.MODULE_PATH,
+					_npmResolver.resolveModuleName(
+						"document-library-preview-audio/preview/js" +
+							"/AudioPreviewer.es"));
 			});
 	}
 
@@ -127,6 +137,7 @@ public class AudioDLPreviewRendererProvider
 		return previewFileURLs;
 	}
 
+	private final NPMResolver _npmResolver;
 	private final ServletContext _servletContext;
 
 }

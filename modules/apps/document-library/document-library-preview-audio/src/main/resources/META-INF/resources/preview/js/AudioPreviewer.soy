@@ -1,0 +1,22 @@
+{namespace com.liferay.document.library.preview.AudioPreviewer}
+
+/**
+ * AudioPreviewer Component
+ */
+{template .render}
+	{@param audioSources: list<?>}
+	{@param? id: string}
+
+	<div class="preview-file" id="{$id}">
+		<div class="preview-file-container">
+			<audio
+				class="preview-file-audio"
+				controls
+			>
+				{foreach $audioSource in $audioSources}
+					<source src="{$audioSource.url}" type="{$audioSource.type}">
+				{/foreach}
+			</audio>
+		</div>
+	</div>
+{/template}

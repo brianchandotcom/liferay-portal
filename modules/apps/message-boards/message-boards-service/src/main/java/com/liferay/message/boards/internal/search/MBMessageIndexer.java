@@ -601,8 +601,7 @@ public class MBMessageIndexer
 	protected MBMessageLocalService mbMessageLocalService;
 
 	private DynamicQuery _getDistinctGroupIdDynamicQuery(
-			long companyId, long categoryId)
-		throws PortalException {
+		long companyId, long categoryId) {
 
 		DynamicQuery dynamicQuery = mbMessageLocalService.dynamicQuery();
 

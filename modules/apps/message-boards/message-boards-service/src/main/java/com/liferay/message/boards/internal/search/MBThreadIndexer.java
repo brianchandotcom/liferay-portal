@@ -78,9 +78,8 @@ public class MBThreadIndexer extends BaseIndexer<MBThread> {
 
 	@Override
 	public boolean hasPermission(
-			PermissionChecker permissionChecker, String entryClassName,
-			long entryClassPK, String actionId)
-		throws Exception {
+		PermissionChecker permissionChecker, String entryClassName,
+		long entryClassPK, String actionId) {
 
 		return true;
 	}
@@ -126,7 +125,7 @@ public class MBThreadIndexer extends BaseIndexer<MBThread> {
 	}
 
 	@Override
-	protected Document doGetDocument(MBThread mbThread) throws Exception {
+	protected Document doGetDocument(MBThread mbThread) {
 		Document document = getBaseModelDocument(CLASS_NAME, mbThread);
 
 		MBDiscussion discussion =
@@ -325,8 +324,7 @@ public class MBThreadIndexer extends BaseIndexer<MBThread> {
 	protected MBThreadLocalService mbThreadLocalService;
 
 	private DynamicQuery _getDistinctGroupIdDynamicQuery(
-			long companyId, long categoryId)
-		throws PortalException {
+		long companyId, long categoryId) {
 
 		DynamicQuery dynamicQuery = mbThreadLocalService.dynamicQuery();
 

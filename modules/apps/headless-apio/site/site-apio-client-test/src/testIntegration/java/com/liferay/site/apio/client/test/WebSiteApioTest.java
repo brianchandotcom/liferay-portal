@@ -16,7 +16,7 @@ package com.liferay.site.apio.client.test;
 
 import com.liferay.oauth2.provider.test.util.OAuth2ProviderTestUtil;
 import com.liferay.portal.apio.test.util.ApioClientBuilder;
-import com.liferay.site.apio.client.test.activator.WebSiteApioTestBundleActivator;
+import com.liferay.site.apio.client.test.internal.activator.WebSiteApioTestBundleActivator;
 
 import java.net.MalformedURLException;
 import java.net.URL;

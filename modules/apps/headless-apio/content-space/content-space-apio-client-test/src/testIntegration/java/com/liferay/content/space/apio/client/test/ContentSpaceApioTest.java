@@ -14,7 +14,7 @@
 
 package com.liferay.content.space.apio.client.test;
 
-import com.liferay.content.space.apio.client.test.activator.ContentSpaceTestActivator;
+import com.liferay.content.space.apio.client.test.internal.activator.ContentSpaceTestActivator;
 import com.liferay.oauth2.provider.test.util.OAuth2ProviderTestUtil;
 import com.liferay.portal.apio.test.util.ApioClientBuilder;
 import com.liferay.portal.apio.test.util.ContentSpaceApioTestUtil;

@@ -608,6 +608,7 @@ mariadb.executable=${mariadb.executable}]]></echo>
 		<attribute default="" name="test.build.fix.pack.zip.url" />
 		<attribute default="" name="test.fix.pack.base.url" />
 		<attribute default="" name="test.license.xml.url" />
+		<attribute default="" name="test.plugins.war.zip.url" />
 		<attribute default="" name="test.portal.bundle.dependencies.zip.url" />
 		<attribute default="" name="test.portal.bundle.osgi.zip.url" />
 		<attribute default="" name="test.portal.bundle.tools.zip.url" />
@@ -681,6 +682,30 @@ mariadb.executable=${mariadb.executable}]]></echo>
 						/>
 					</then>
 				</elseif>
+			</if>
+
+			<if>
+				<matches pattern="https?://" string="@{test.plugins.war.zip.url}" />
+				<then>
+					<mirrors-get
+						dest="plugins.war.zip"
+						src="@{test.plugins.war.zip.url}"
+					/>
+
+					<unzip
+						dest="."
+						src="plugins.war.zip"
+					>
+						<mapper>
+							<globmapper
+								from="plugins/*"
+								to="plugins/marketplace/*"
+							/>
+						</mapper>
+					</unzip>
+
+					<delete file="plugins.war.zip" />
+				</then>
 			</if>
 		</sequential>
 	</macrodef>
@@ -1268,6 +1293,7 @@ app.server.type=@{app.server.type}]]></echo>
 								test.build.fix.pack.zip.url="${test.build.fix.pack.zip.url}"
 								test.fix.pack.base.url="${test.fix.pack.base.url}"
 								test.license.xml.url="${test.license.xml.url}"
+								test.plugins.war.zip.url="@{test.plugins.war.zip.url}"
 								test.portal.bundle.dependencies.zip.url="${test.portal.bundle.dependencies.zip.url}"
 								test.portal.bundle.osgi.zip.url="${test.portal.bundle.osgi.zip.url}"
 								test.portal.bundle.tools.zip.url="${test.portal.bundle.tools.zip.url}"

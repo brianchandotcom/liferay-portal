@@ -127,14 +127,12 @@ class SegmentEdit extends Component {
 				/>
 
 				<input
-					id={`${portletNamespace}key`}
 					name={`${portletNamespace}key`}
 					type="hidden"
 					value={values.name}
 				/>
 
 				<input
-					id={`${portletNamespace}active`}
 					name={`${portletNamespace}active`}
 					type="hidden"
 					value={values.active}
@@ -174,7 +172,6 @@ class SegmentEdit extends Component {
 										borderless
 										href={redirect}
 										label={Liferay.Language.get('cancel')}
-										style="secondary"
 									/>
 								</div>
 

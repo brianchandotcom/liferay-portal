@@ -16,13 +16,11 @@ exports[`SegmentEdit should render 1`] = `
       value="unnamed-segment"
     />
     <input
-      id="key"
       name="key"
       type="hidden"
       value="unnamed-segment"
     />
     <input
-      id="active"
       name="active"
       type="hidden"
       value="true"

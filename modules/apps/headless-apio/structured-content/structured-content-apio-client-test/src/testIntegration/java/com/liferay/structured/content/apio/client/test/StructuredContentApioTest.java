@@ -19,7 +19,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.apio.test.util.ApioClientBuilder;
 import com.liferay.portal.apio.test.util.ContentSpaceApioTestUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.structured.content.apio.client.test.activator.StructuredContentApioTestBundleActivator;
+import com.liferay.structured.content.apio.client.test.internal.activator.StructuredContentApioTestBundleActivator;
 
 import java.net.MalformedURLException;
 import java.net.URL;

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.structured.content.apio.client.test.activator;
+package com.liferay.structured.content.apio.client.test.internal.activator;
 
 import com.liferay.dynamic.data.mapping.io.DDMFormDeserializer;
 import com.liferay.dynamic.data.mapping.io.DDMFormDeserializerDeserializeRequest;
@@ -46,6 +46,8 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.InputStream;
+
+import java.net.URL;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -212,9 +214,13 @@ public class StructuredContentApioTestBundleActivator
 
 		ClassLoader classLoader = clazz.getClassLoader();
 
+		URL url = clazz.getResource(".");
+
+		System.out.println(url);
+
 		InputStream inputStream = classLoader.getResourceAsStream(
-			"/com/liferay/structured/content/apio/client/test/activator/" +
-				fileName);
+			"/com/liferay/structured/content/apio/client/test/internal" +
+				"/activator/" + fileName);
 
 		return StringUtil.read(inputStream);
 	}

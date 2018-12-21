@@ -17,53 +17,60 @@ package com.liferay.structured.content.apio.internal.architect.form;
 import com.liferay.apio.architect.form.Form;
 import com.liferay.media.object.apio.architect.identifier.MediaObjectIdentifier;
 import com.liferay.structured.content.apio.architect.identifier.StructuredContentIdentifier;
+import com.liferay.structured.content.apio.architect.model.StructuredContentLocation;
+import com.liferay.structured.content.apio.architect.model.StructuredContentValue;
 
 /**
  * @author Javier Gamarra
  */
-public class StructuredContentValuesForm {
+public class StructuredContentValueForm implements StructuredContentValue {
 
-	public static Form<StructuredContentValuesForm> buildForm(
-		Form.Builder<StructuredContentValuesForm> builder) {
+	public static Form<StructuredContentValueForm> buildForm(
+		Form.Builder<StructuredContentValueForm> builder) {
 
 		return builder.title(
 			__ -> "The structured content values form"
 		).description(
 			__ -> "This form is used to create the values of a structured form"
 		).constructor(
-			StructuredContentValuesForm::new
+			StructuredContentValueForm::new
 		).addOptionalLinkedModel(
 			"document", MediaObjectIdentifier.class,
-			StructuredContentValuesForm::setDocument
+			StructuredContentValueForm::setDocument
 		).addOptionalLinkedModel(
 			"structuredContent", StructuredContentIdentifier.class,
-			StructuredContentValuesForm::setStructuredContent
+			StructuredContentValueForm::setStructuredContentId
 		).addOptionalNestedModel(
 			"geo", StructuredContentLocationForm::buildForm,
-			StructuredContentValuesForm::setStructuredContentLocationForm
+			StructuredContentValueForm::setStructuredContentLocationForm
 		).addOptionalString(
-			"name", StructuredContentValuesForm::setName
+			"name", StructuredContentValueForm::setName
 		).addOptionalString(
-			"value", StructuredContentValuesForm::setValue
+			"value", StructuredContentValueForm::setValue
 		).build();
 	}
 
+	@Override
 	public Long getDocument() {
 		return _document;
 	}
 
+	@Override
 	public String getName() {
 		return _name;
 	}
 
-	public Long getStructuredContent() {
-		return _structuredContent;
+	@Override
+	public Long getStructuredContentId() {
+		return _structuredContentId;
 	}
 
-	public StructuredContentLocationForm getStructuredContentLocationForm() {
-		return _structuredContentLocationForm;
+	@Override
+	public StructuredContentLocation getStructuredContentLocation() {
+		return _structuredContentLocation;
 	}
 
+	@Override
 	public String getValue() {
 		return _value;
 	}
@@ -76,14 +83,14 @@ public class StructuredContentValuesForm {
 		_name = name;
 	}
 
-	public void setStructuredContent(Long structuredContent) {
-		_structuredContent = structuredContent;
+	public void setStructuredContentId(Long structuredContentId) {
+		_structuredContentId = structuredContentId;
 	}
 
 	public void setStructuredContentLocationForm(
-		StructuredContentLocationForm structuredContentLocationForm) {
+		StructuredContentLocation structuredContentLocation) {
 
-		_structuredContentLocationForm = structuredContentLocationForm;
+		_structuredContentLocation = structuredContentLocation;
 	}
 
 	public void setValue(String value) {
@@ -92,8 +99,8 @@ public class StructuredContentValuesForm {
 
 	private Long _document;
 	private String _name;
-	private Long _structuredContent;
-	private StructuredContentLocationForm _structuredContentLocationForm;
+	private Long _structuredContentId;
+	private StructuredContentLocation _structuredContentLocation;
 	private String _value;
 
 }

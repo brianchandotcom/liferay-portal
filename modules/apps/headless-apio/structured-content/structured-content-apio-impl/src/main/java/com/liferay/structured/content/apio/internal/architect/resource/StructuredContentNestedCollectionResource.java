@@ -79,6 +79,7 @@ import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -94,6 +95,7 @@ import com.liferay.portal.odata.sort.SortField;
 import com.liferay.structure.apio.architect.identifier.ContentStructureIdentifier;
 import com.liferay.structure.apio.architect.util.StructureFieldConverter;
 import com.liferay.structured.content.apio.architect.identifier.StructuredContentIdentifier;
+import com.liferay.structured.content.apio.architect.model.StructuredContent;
 import com.liferay.structured.content.apio.architect.resource.StructuredContentField;
 import com.liferay.structured.content.apio.architect.util.StructuredContentUtil;
 import com.liferay.structured.content.apio.internal.architect.filter.StructuredContentEntityModel;
@@ -105,6 +107,7 @@ import com.liferay.structured.content.apio.internal.util.JournalArticleContentHe
 
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -161,6 +164,29 @@ public class StructuredContentNestedCollectionResource
 	@Override
 	public String getName() {
 		return "structured-contents";
+	}
+
+	public ServiceContext getServiceContext(
+		long contentSpaceId, StructuredContent structuredContent) {
+
+		ServiceContext serviceContext = new ServiceContext();
+
+		serviceContext.setAddGroupPermissions(true);
+		serviceContext.setAddGuestPermissions(true);
+
+		if (ListUtil.isNotEmpty(structuredContent.getKeywords())) {
+			serviceContext.setAssetTagNames(
+				ArrayUtil.toStringArray(structuredContent.getKeywords()));
+		}
+
+		if (ListUtil.isNotEmpty(structuredContent.getCategories())) {
+			serviceContext.setAssetCategoryIds(
+				ArrayUtil.toLongArray(structuredContent.getCategories()));
+		}
+
+		serviceContext.setScopeGroupId(contentSpaceId);
+
+		return serviceContext;
 	}
 
 	@Override
@@ -299,50 +325,48 @@ public class StructuredContentNestedCollectionResource
 	}
 
 	private JournalArticleWrapper _addJournalArticle(
-			long contentSpaceId,
-			StructuredContentCreatorForm structuredContentCreatorForm,
+			long contentSpaceId, StructuredContent structuredContent,
 			AcceptLanguage acceptLanguage, ThemeDisplay themeDisplay)
 		throws PortalException {
 
-		Long ddmStructureId =
-			structuredContentCreatorForm.getContentStructureId();
-
 		DDMStructure ddmStructure = _ddmStructureService.getStructure(
-			ddmStructureId);
+			structuredContent.getContentStructureId());
 
 		Locale locale = _getLocale(acceptLanguage, contentSpaceId);
 
 		String content =
 			_journalArticleContentHelper.createJournalArticleContent(
-				structuredContentCreatorForm.getStructuredContentValuesForms(),
-				ddmStructure, locale);
+				structuredContent.getStructuredContentValues(), ddmStructure,
+				locale);
 
 		String ddmStructureKey = ddmStructure.getStructureKey();
 		String ddmTemplateKey = _getDDMTemplateKey(ddmStructure);
 		Calendar calendar = Calendar.getInstance();
 
-		ServiceContext serviceContext =
-			structuredContentCreatorForm.getServiceContext(contentSpaceId);
+		ServiceContext serviceContext = getServiceContext(
+			contentSpaceId, structuredContent);
 
 		JournalArticle journalArticle = _journalArticleService.addArticle(
 			contentSpaceId, 0, 0, 0, null, true,
-			structuredContentCreatorForm.getTitleMap(locale),
-			structuredContentCreatorForm.getDescriptionMap(locale), content,
-			ddmStructureKey, ddmTemplateKey, null,
+			structuredContent.getTitleMap(locale),
 			_getDefaultValue(
-				structuredContentCreatorForm.getPublishedDateMonthOptional(),
+				structuredContent.getDescriptionMapOptional(locale),
+				Collections.emptyMap()),
+			content, ddmStructureKey, ddmTemplateKey, null,
+			_getDefaultValue(
+				structuredContent.getPublishedDateMonthOptional(),
 				calendar.get(Calendar.MONTH)),
 			_getDefaultValue(
-				structuredContentCreatorForm.getPublishedDateDayOptional(),
+				structuredContent.getPublishedDateDayOptional(),
 				calendar.get(Calendar.DATE)),
 			_getDefaultValue(
-				structuredContentCreatorForm.getPublishedDateYearOptional(),
+				structuredContent.getPublishedDateYearOptional(),
 				calendar.get(Calendar.YEAR)),
 			_getDefaultValue(
-				structuredContentCreatorForm.getPublishedDateHourOptional(),
+				structuredContent.getPublishedDateHourOptional(),
 				calendar.get(Calendar.HOUR)),
 			_getDefaultValue(
-				structuredContentCreatorForm.getPublishedDateMinuteOptional(),
+				structuredContent.getPublishedDateMinuteOptional(),
 				calendar.get(Calendar.MINUTE)),
 			0, 0, 0, 0, 0, true, 0, 0, 0, 0, 0, true, true, null,
 			serviceContext);
@@ -736,17 +760,15 @@ public class StructuredContentNestedCollectionResource
 	}
 
 	private JournalArticleWrapper _updateJournalArticle(
-			long journalArticleId,
-			StructuredContentUpdaterForm structuredContentUpdaterForm,
+			long journalArticleId, StructuredContent structuredContent,
 			AcceptLanguage acceptLanguage, ThemeDisplay themeDisplay)
 		throws PortalException {
 
 		JournalArticle journalArticle = _journalArticleService.getLatestArticle(
 			journalArticleId);
 
-		ServiceContext serviceContext =
-			structuredContentUpdaterForm.getServiceContext(
-				journalArticle.getGroupId());
+		ServiceContext serviceContext = getServiceContext(
+			journalArticle.getGroupId(), structuredContent);
 
 		DDMStructure ddmStructure = journalArticle.getDDMStructure();
 
@@ -754,8 +776,8 @@ public class StructuredContentNestedCollectionResource
 
 		String content =
 			_journalArticleContentHelper.createJournalArticleContent(
-				structuredContentUpdaterForm.getStructuredContentValuesForms(),
-				ddmStructure, locale);
+				structuredContent.getStructuredContentValues(), ddmStructure,
+				locale);
 
 		String ddmTemplateKey = _getDDMTemplateKey(ddmStructure);
 
@@ -766,31 +788,28 @@ public class StructuredContentNestedCollectionResource
 				journalArticle.getGroupId(), journalArticle.getFolderId(),
 				journalArticle.getArticleId(), journalArticle.getVersion(),
 				_getDefaultValue(
-					structuredContentUpdaterForm.getTitleMapOptional(locale),
+					Optional.ofNullable(structuredContent.getTitleMap(locale)),
 					journalArticle.getTitleMap()),
 				_getDefaultValue(
-					structuredContentUpdaterForm.getDescriptionMapOptional(
-						locale),
+					structuredContent.getDescriptionMapOptional(locale),
 					journalArticle.getDescriptionMap()),
 				journalArticle.getFriendlyURLMap(), content,
 				journalArticle.getDDMStructureKey(), ddmTemplateKey,
 				journalArticle.getLayoutUuid(),
 				_getDefaultValue(
-					structuredContentUpdaterForm.
-						getPublishedDateMonthOptional(),
+					structuredContent.getPublishedDateMonthOptional(),
 					displayDate.getMonth()),
 				_getDefaultValue(
-					structuredContentUpdaterForm.getPublishedDateDayOptional(),
+					structuredContent.getPublishedDateDayOptional(),
 					displayDate.getDate()),
 				_getDefaultValue(
-					structuredContentUpdaterForm.getPublishedDateYearOptional(),
+					structuredContent.getPublishedDateYearOptional(),
 					displayDate.getYear()),
 				_getDefaultValue(
-					structuredContentUpdaterForm.getPublishedDateHourOptional(),
+					structuredContent.getPublishedDateHourOptional(),
 					displayDate.getHours()),
 				_getDefaultValue(
-					structuredContentUpdaterForm.
-						getPublishedDateMinuteOptional(),
+					structuredContent.getPublishedDateMinuteOptional(),
 					displayDate.getMinutes()),
 				0, 0, 0, 0, 0, true, 0, 0, 0, 0, 0, true, true, false, null,
 				null, null, null, serviceContext);

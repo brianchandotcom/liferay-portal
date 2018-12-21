@@ -16,10 +16,9 @@ package com.liferay.structured.content.apio.internal.architect.form;
 
 import com.liferay.apio.architect.form.Form;
 import com.liferay.category.apio.architect.identifier.CategoryIdentifier;
-import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.structure.apio.architect.identifier.ContentStructureIdentifier;
+import com.liferay.structured.content.apio.architect.model.StructuredContent;
+import com.liferay.structured.content.apio.architect.model.StructuredContentValue;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -35,7 +34,7 @@ import java.util.Optional;
  *
  * @author Alejandro Hernández
  */
-public class StructuredContentCreatorForm {
+public class StructuredContentCreatorForm implements StructuredContent {
 
 	/**
 	 * Builds a {@code Form} that generates a {@code
@@ -59,8 +58,8 @@ public class StructuredContentCreatorForm {
 			"category", CategoryIdentifier.class,
 			StructuredContentCreatorForm::setCategories
 		).addOptionalNestedModelList(
-			"values", StructuredContentValuesForm::buildForm,
-			StructuredContentCreatorForm::setStructuredContentValuesForms
+			"values", StructuredContentValueForm::buildForm,
+			StructuredContentCreatorForm::setStructuredContentValues
 		).addOptionalString(
 			"description", StructuredContentCreatorForm::setDescription
 		).addOptionalStringList(
@@ -73,112 +72,59 @@ public class StructuredContentCreatorForm {
 		).build();
 	}
 
+	@Override
 	public List<Long> getCategories() {
 		return _categories;
 	}
 
-	/**
-	 * Returns the structured content's structure ID.
-	 *
-	 * @return the structure ID
-	 */
+	@Override
 	public Long getContentStructureId() {
 		return _contentStructureId;
 	}
 
-	/**
-	 * Returns the structured content's description map.
-	 *
-	 * @return the description map
-	 */
-	public Map<Locale, String> getDescriptionMap(Locale locale) {
-		Map<Locale, String> descriptionMap = new HashMap<>();
+	@Override
+	public Optional<Map<Locale, String>> getDescriptionMapOptional(
+		Locale locale) {
 
-		descriptionMap.put(locale, _description);
-
-		return descriptionMap;
+		return _getStringMapOptional(locale, _description);
 	}
 
-	/**
-	 * Returns the day from the structured content's publication date.
-	 *
-	 * @return the publication date's day
-	 */
+	@Override
+	public List<String> getKeywords() {
+		return _keywords;
+	}
+
+	@Override
 	public Optional<Integer> getPublishedDateDayOptional() {
 		return Optional.ofNullable(_publishedDateDay);
 	}
 
-	/**
-	 * Returns the hour from the structured content's publication date.
-	 *
-	 * @return the publication date's hour
-	 */
+	@Override
 	public Optional<Integer> getPublishedDateHourOptional() {
 		return Optional.ofNullable(_publishedDateHour);
 	}
 
-	/**
-	 * Returns the minute from the structured content's publication date.
-	 *
-	 * @return the publication date's minute
-	 */
+	@Override
 	public Optional<Integer> getPublishedDateMinuteOptional() {
 		return Optional.ofNullable(_publishedDateMinute);
 	}
 
-	/**
-	 * Returns the month from the structured content's publication date.
-	 *
-	 * @return the publication date's month
-	 */
+	@Override
 	public Optional<Integer> getPublishedDateMonthOptional() {
 		return Optional.ofNullable(_publishedDateMonth);
 	}
 
-	/**
-	 * Returns the year from the structured content's publication date.
-	 *
-	 * @return the publication date's year
-	 */
+	@Override
 	public Optional<Integer> getPublishedDateYearOptional() {
 		return Optional.ofNullable(_publishedDateYear);
 	}
 
-	/**
-	 * Returns this form's service context.
-	 *
-	 * @param  groupId the group ID
-	 * @return the service context
-	 */
-	public ServiceContext getServiceContext(long groupId) {
-		ServiceContext serviceContext = new ServiceContext();
-
-		serviceContext.setAddGroupPermissions(true);
-		serviceContext.setAddGuestPermissions(true);
-
-		if (ListUtil.isNotEmpty(_keywords)) {
-			serviceContext.setAssetTagNames(ArrayUtil.toStringArray(_keywords));
-		}
-
-		if (ListUtil.isNotEmpty(_categories)) {
-			serviceContext.setAssetCategoryIds(
-				ArrayUtil.toLongArray(_categories));
-		}
-
-		serviceContext.setScopeGroupId(groupId);
-
-		return serviceContext;
+	@Override
+	public List<? extends StructuredContentValue> getStructuredContentValues() {
+		return _structuredContentValues;
 	}
 
-	public List<StructuredContentValuesForm> getStructuredContentValuesForms() {
-		return _structuredContentValuesForms;
-	}
-
-	/**
-	 * Returns the structured content's title map.
-	 *
-	 * @return the title map
-	 */
+	@Override
 	public Map<Locale, String> getTitleMap(Locale locale) {
 		Map<Locale, String> titleMap = new HashMap<>();
 
@@ -215,14 +161,30 @@ public class StructuredContentCreatorForm {
 		_publishedDateYear = calendar.get(Calendar.YEAR);
 	}
 
-	public void setStructuredContentValuesForms(
-		List<StructuredContentValuesForm> structuredContentValuesForms) {
+	public void setStructuredContentValues(
+		List<? extends StructuredContentValue> structuredContentValues) {
 
-		_structuredContentValuesForms = structuredContentValuesForms;
+		_structuredContentValues = structuredContentValues;
 	}
 
 	public void setTitle(String title) {
 		_title = title;
+	}
+
+	private Optional<Map<Locale, String>> _getStringMapOptional(
+		Locale locale, String value) {
+
+		return Optional.ofNullable(
+			value
+		).map(
+			description -> {
+				Map<Locale, String> map = new HashMap<>();
+
+				map.put(locale, value);
+
+				return map;
+			}
+		);
 	}
 
 	private List<Long> _categories;
@@ -234,7 +196,7 @@ public class StructuredContentCreatorForm {
 	private Integer _publishedDateMinute;
 	private Integer _publishedDateMonth;
 	private Integer _publishedDateYear;
-	private List<StructuredContentValuesForm> _structuredContentValuesForms =
+	private List<? extends StructuredContentValue> _structuredContentValues =
 		new ArrayList<>();
 	private String _title;
 

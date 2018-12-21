@@ -15,11 +15,13 @@
 package com.liferay.structured.content.apio.internal.architect.form;
 
 import com.liferay.apio.architect.form.Form;
+import com.liferay.structured.content.apio.architect.model.StructuredContentLocation;
 
 /**
  * @author Javier Gamarra
  */
-public class StructuredContentLocationForm {
+public class StructuredContentLocationForm
+	implements StructuredContentLocation {
 
 	public static Form<StructuredContentLocationForm> buildForm(
 		Form.Builder<StructuredContentLocationForm> builder) {
@@ -39,10 +41,12 @@ public class StructuredContentLocationForm {
 		).build();
 	}
 
+	@Override
 	public Double getLatitude() {
 		return _latitude;
 	}
 
+	@Override
 	public Double getLongitude() {
 		return _longitude;
 	}

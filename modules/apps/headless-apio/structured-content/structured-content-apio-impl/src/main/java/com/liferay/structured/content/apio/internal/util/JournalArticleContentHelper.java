@@ -25,13 +25,14 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.security.xml.SecureXMLFactoryProviderUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.structured.content.apio.internal.architect.form.StructuredContentLocationForm;
-import com.liferay.structured.content.apio.internal.architect.form.StructuredContentValuesForm;
+import com.liferay.structured.content.apio.architect.model.StructuredContentLocation;
+import com.liferay.structured.content.apio.architect.model.StructuredContentValue;
 
 import java.io.StringWriter;
 
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Stream;
 
@@ -57,7 +58,7 @@ import org.w3c.dom.Element;
 public class JournalArticleContentHelper {
 
 	public String createJournalArticleContent(
-		List<StructuredContentValuesForm> structuredContentValuesForms,
+		List<? extends StructuredContentValue> structuredContentValues,
 		DDMStructure ddmStructure, Locale locale) {
 
 		return Try.fromFallible(
@@ -80,13 +81,13 @@ public class JournalArticleContentHelper {
 					Element dynamicElement = _getDynamicElement(
 						document, name, type);
 
-					Optional<StructuredContentValuesForm>
-						structuredContentValuesFormOptional =
-							_findStructuredContentValuesFormOptional(
-								structuredContentValuesForms, name);
+					Optional<? extends StructuredContentValue>
+						structuredContentValueOptional =
+							_findStructuredContentValueOptional(
+								structuredContentValues, name);
 
 					Element contentElement = _getContentElement(
-						document, localeId, structuredContentValuesFormOptional,
+						document, localeId, structuredContentValueOptional,
 						type);
 
 					dynamicElement.appendChild(contentElement);
@@ -101,39 +102,40 @@ public class JournalArticleContentHelper {
 		);
 	}
 
-	private Optional<StructuredContentValuesForm>
-		_findStructuredContentValuesFormOptional(
-			List<StructuredContentValuesForm> structuredContentValuesForms,
+	private Optional<? extends StructuredContentValue>
+		_findStructuredContentValueOptional(
+			List<? extends StructuredContentValue> structuredContentValues,
 			String name) {
 
-		Stream<StructuredContentValuesForm> stream =
-			structuredContentValuesForms.stream();
+		Stream<? extends StructuredContentValue> stream =
+			structuredContentValues.stream();
 
 		return stream.filter(
-			value -> name.equals(value.getName())
+			structuredContentValue ->
+				Objects.equals(name, structuredContentValue.getName())
 		).findFirst();
 	}
 
 	private Element _getContentElement(
 		Document document, String localeId,
-		Optional<StructuredContentValuesForm>
-			structuredContentValuesFormOptional,
+		Optional<? extends StructuredContentValue>
+			structuredContentValueOptional,
 		String type) {
 
 		Element element = document.createElement("dynamic-content");
 
 		element.setAttribute("language-id", localeId);
 
-		return structuredContentValuesFormOptional.map(
-			structuredContentValuesForm -> {
+		return structuredContentValueOptional.map(
+			structuredContentValue -> {
 				if (type.equals("list") &&
-					_isJsonArray(structuredContentValuesForm.getValue())) {
+					_isJsonArray(structuredContentValue.getValue())) {
 
 					return _getDynamicContentListElement(
-						document, element, structuredContentValuesForm);
+						document, element, structuredContentValue);
 				}
 
-				String data = _getData(structuredContentValuesForm, type);
+				String data = _getData(structuredContentValue, type);
 
 				element.appendChild(document.createCDATASection(data));
 
@@ -145,19 +147,19 @@ public class JournalArticleContentHelper {
 	}
 
 	private String _getData(
-		StructuredContentValuesForm structuredContentValuesForm, String type) {
+		StructuredContentValue structuredContentValue, String type) {
 
 		if (type.equals("image") || type.equals("document-library")) {
-			return _getFileData(structuredContentValuesForm, type);
+			return _getFileData(structuredContentValue, type);
 		}
 		else if (type.equals("ddm-geolocation")) {
-			return _getGeoLocationData(structuredContentValuesForm);
+			return _getGeoLocationData(structuredContentValue);
 		}
 		else if (type.equals("ddm-journal-article")) {
-			return _getStructuredContentData(structuredContentValuesForm);
+			return _getStructuredContentData(structuredContentValue);
 		}
 
-		return structuredContentValuesForm.getValue();
+		return structuredContentValue.getValue();
 	}
 
 	private Document _getDocument() throws ParserConfigurationException {
@@ -180,10 +182,10 @@ public class JournalArticleContentHelper {
 
 	private Element _getDynamicContentListElement(
 		Document document, Element element,
-		StructuredContentValuesForm structuredContentValuesForm) {
+		StructuredContentValue structuredContentValue) {
 
 		return Try.fromFallible(
-			structuredContentValuesForm::getValue
+			structuredContentValue::getValue
 		).map(
 			JSONFactoryUtil::createJSONArray
 		).map(
@@ -219,17 +221,17 @@ public class JournalArticleContentHelper {
 	}
 
 	private String _getFileData(
-		StructuredContentValuesForm structuredContentValuesForm, String type) {
+		StructuredContentValue structuredContentValue, String type) {
 
 		return Try.fromFallible(
-			structuredContentValuesForm::getDocument
+			structuredContentValue::getDocument
 		).map(
 			_dlAppService::getFileEntry
 		).map(
 			fileEntry -> {
 				JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
-				jsonObject.put("alt", structuredContentValuesForm.getValue());
+				jsonObject.put("alt", structuredContentValue.getValue());
 				jsonObject.put("fileEntryId", fileEntry.getFileEntryId());
 				jsonObject.put("groupId", fileEntry.getGroupId());
 				jsonObject.put("name", fileEntry.getFileName());
@@ -246,16 +248,15 @@ public class JournalArticleContentHelper {
 	}
 
 	private String _getGeoLocationData(
-		StructuredContentValuesForm structuredContentValuesForm) {
+		StructuredContentValue structuredContentValue) {
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
-		StructuredContentLocationForm structuredContentLocationForm =
-			structuredContentValuesForm.getStructuredContentLocationForm();
+		StructuredContentLocation structuredContentLocation =
+			structuredContentValue.getStructuredContentLocation();
 
-		jsonObject.put("latitude", structuredContentLocationForm.getLatitude());
-		jsonObject.put(
-			"longitude", structuredContentLocationForm.getLongitude());
+		jsonObject.put("latitude", structuredContentLocation.getLatitude());
+		jsonObject.put("longitude", structuredContentLocation.getLongitude());
 
 		return jsonObject.toString();
 	}
@@ -270,10 +271,10 @@ public class JournalArticleContentHelper {
 	}
 
 	private String _getStructuredContentData(
-		StructuredContentValuesForm structuredContentValuesForm) {
+		StructuredContentValue structuredContentValue) {
 
 		return Try.fromFallible(
-			structuredContentValuesForm::getStructuredContent
+			structuredContentValue::getStructuredContentId
 		).map(
 			_journalArticleService::getArticle
 		).map(

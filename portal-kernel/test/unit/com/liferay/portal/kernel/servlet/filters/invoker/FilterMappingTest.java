@@ -206,6 +206,7 @@ public class FilterMappingTest {
 			filterMapping.replaceFilter(_dummyFilter));
 	}
 
+	@SuppressWarnings("deprecation")
 	private void _assertFilterMapping(
 		String expectedFilterName, Filter expectedFilter,
 		String expectedUrlRegexIgnore, String expectedUrlRegex,

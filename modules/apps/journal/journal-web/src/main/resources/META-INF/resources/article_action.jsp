@@ -238,5 +238,22 @@ else {
 				url="<%= viewHistoryURL.toString() %>"
 			/>
 		</c:if>
+
+		<%
+		PortletURL viewUsagesURL = PortletProviderUtil.getPortletURL(request, AssetEntryUsage.class.getName(), PortletProvider.Action.VIEW);
+
+		long classPK = JournalArticleAssetRenderer.getClassPK(article);
+
+		AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(JournalArticle.class.getName(), classPK);
+
+		viewUsagesURL.setParameter("assetEntryId", String.valueOf(assetEntry.getEntryId()));
+		%>
+
+		<c:if test="<%= Validator.isNotNull(viewUsagesURL) %>">
+			<liferay-ui:icon
+				message="view-usages"
+				url="<%= viewUsagesURL.toString() %>"
+			/>
+		</c:if>
 	</c:if>
 </liferay-ui:icon-menu>

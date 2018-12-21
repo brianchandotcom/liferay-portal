@@ -49,6 +49,7 @@ String randomNamespace = PortalUtil.generateRandomKey(request, "portlet_document
 	<style type="text/css">
 		.preview-file .preview-file-audio {
 			max-width: <%= PropsValues.DL_FILE_ENTRY_PREVIEW_VIDEO_WIDTH %>px;
+			width: 100%;
 		}
 	</style>
 </liferay-util:html-top>

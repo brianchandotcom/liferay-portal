@@ -2,7 +2,7 @@ import React from 'react';
 import ProcessListCard from '../ProcessListCard';
 import renderer from 'react-test-renderer';
 
-test('Link changes the class when hovered', () => {
+test('Should render component', () => {
 	const component = renderer.create(<ProcessListCard />);
 
 	const tree = component.toJSON();

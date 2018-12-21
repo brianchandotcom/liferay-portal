@@ -2320,6 +2320,15 @@ AUI.add(
 								themeDisplay.getPathMain() + '/portal/get_layouts',
 								{
 									after: {
+										failure: function() {
+											var bodyNode = instance._modal.bodyNode;
+
+											var listNode = bodyNode.one('.lfr-ddm-pages-container');
+
+											listNode.addClass('top-ended');
+
+											instance._requestInitialLayouts(0, groupId, privateLayout, instance._renderLayouts);
+										},
 										success: function() {
 											var	response = JSON.parse(this.get('responseData'));
 

@@ -997,9 +997,15 @@ definition {
 			key_portletName = "Asset Publisher"
 		);
 
-		WebContent.viewPGViaAP(
-			webContentContent = "Web Content Content",
-			webContentTitle = "Web Content Title"
+		AssetPublisherPortlet.viewAssetPG(
+			assetContent = "Web Content Content",
+			assetTitle = "Web Content Title"
+		);
+
+		AssetPublisherPortlet.viewAssetMetadataPG(
+			addMetadata = "true",
+			categoryName = "Category Name",
+			vocabularyName = "Vocabulary Name"
 		);
 	}
 

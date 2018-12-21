@@ -35,6 +35,7 @@ definition {
 	@priority = "5"
 	test ViewAssetPublisherArchive6130 {
 		property data.archive.type = "data-archive-asset-publisher";
+		property database.types = "db2,mysql,oracle,sybase";
 		property portal.version = "6.1.30";
 
 		Upgrade.viewAssetPublisher();
@@ -51,6 +52,7 @@ definition {
 	@priority = "5"
 	test ViewAssetPublisherArchive621021 {
 		property data.archive.type = "data-archive-asset-publisher";
+		property database.types = "db2,mysql,oracle,postgresql,sybase";
 		property portal.version = "6.2.10.21";
 
 		Upgrade.viewAssetPublisher();
@@ -61,6 +63,15 @@ definition {
 		property data.archive.type = "data-archive-asset-publisher";
 		property database.types = "mariadb,mysql,postgresql";
 		property portal.version = "6.2.5";
+
+		Upgrade.viewAssetPublisher();
+	}
+
+	@priority = "5"
+	test ViewAssetPublisherArchive70106 {
+		property data.archive.type = "data-archive-asset-publisher";
+		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
+		property portal.version = "7.0.10.6";
 
 		Upgrade.viewAssetPublisher();
 	}

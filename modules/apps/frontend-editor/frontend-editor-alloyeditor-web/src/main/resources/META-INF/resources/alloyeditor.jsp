@@ -140,6 +140,7 @@ name = HtmlUtil.escapeJS(name);
 %>
 
 <aui:script use="<%= modules %>">
+	var windowNode = A.getWin();
 
 	<%
 	Locale contentsLocale = LocaleUtil.fromLanguageId(contentsLanguageId);
@@ -256,18 +257,18 @@ name = HtmlUtil.escapeJS(name);
 		Liferay.namespace('EDITORS').alloyEditor.addInstance();
 	};
 
-	window.addEventListener('dragover', function(event) {
+	windowNode.on('dragover', function(event) {
 		event.preventDefault();
 		event.stopPropagation();
-	}, false);
+	});
 
-	window.addEventListener('drop', function(event) {
-		if (!event.target.isContentEditable) {
+	windowNode.on('drop', function(event) {
+		if (!event.target.getDOMNode().isContentEditable) {
 			event.preventDefault();
 			event.stopImmediatePropagation();
 			showError();
 		}
-	}, false);
+	});
 
 	var showError = function() {
 		new Liferay.Notification(

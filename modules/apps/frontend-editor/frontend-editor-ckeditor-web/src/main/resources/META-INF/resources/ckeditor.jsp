@@ -125,6 +125,8 @@ name = HtmlUtil.escapeJS(name);
 <aui:script use="<%= modules %>">
 	var UA = A.UA;
 
+	var windowNode = A.getWin();
+
 	var contents = '<%= HtmlUtil.escapeJS(contents) %>';
 
 	var instanceDataReady = false;
@@ -153,16 +155,16 @@ name = HtmlUtil.escapeJS(name);
 		nativeEditor.config.contentsLangDirection = contentsLanguageDir;
 	};
 
-	window.addEventListener('dragover', function(event) {
+	windowNode.on('dragover', function(event) {
 		event.preventDefault();
 		event.stopPropagation();
-	}, false);
+	});
 
-	window.addEventListener('drop', function(event) {
+	windowNode.on('drop', function(event) {
 		event.preventDefault();
 		event.stopImmediatePropagation();
 		showError();
-	}, false);
+	});
 
 	var showError = function() {
 		new Liferay.Notification(

@@ -19,8 +19,8 @@ package com.liferay.document.library.preview.audio.internal.constants;
  */
 public interface DLPreviewAudioWebKeys {
 
-	public static final String MODULE_PATH = "MODULE_PATH";
-
 	public static final String PREVIEW_FILE_URLS = "PREVIEW_FILE_URLS";
+
+	public static final String RESOLVED_MODULE_NAME = "RESOLVED_MODULE_NAME";
 
 }

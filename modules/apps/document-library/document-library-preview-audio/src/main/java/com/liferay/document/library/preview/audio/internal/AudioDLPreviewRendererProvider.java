@@ -85,7 +85,7 @@ public class AudioDLPreviewRendererProvider
 				requestDispatcher.include(request, response);
 
 				request.setAttribute(
-					DLPreviewAudioWebKeys.MODULE_PATH,
+					DLPreviewAudioWebKeys.RESOLVED_MODULE_NAME,
 					_npmResolver.resolveModuleName(
 						"document-library-preview-audio/preview/js" +
 							"/AudioPreviewer.es"));

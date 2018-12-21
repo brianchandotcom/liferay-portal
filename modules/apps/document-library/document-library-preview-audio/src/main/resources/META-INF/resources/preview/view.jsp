@@ -21,24 +21,22 @@ List<String> previewFileURLs = (List<String>)request.getAttribute(DLPreviewAudio
 
 String randomNamespace = PortalUtil.generateRandomKey(request, "portlet_document_library_view_file_entry_preview") + StringPool.UNDERLINE;
 
-	Map<String, Object> context = new HashMap<>();
+List<Map<String, String>> audioSources = new ArrayList<>(previewFileURLs.size());
 
-	context.put(
-		"audioSources",
-		new ArrayList<Map<String, String>>() {
-			{
-				for (String previewFileURL : previewFileURLs) {
-					if (Validator.isNotNull(previewFileURL)) {
-						if (previewFileURL.endsWith("mp3")) {
-							add(MapUtil.fromArray("type", "audio/mp3", "url", previewFileURL));
-						}
-						else if (previewFileURL.endsWith("ogg")) {
-							add(MapUtil.fromArray("type", "audio/ogg", "url", previewFileURL));
-						}
-					}
-				}
-			}
-		});
+for (String previewFileURL : previewFileURLs) {
+	if (Validator.isNotNull(previewFileURL)) {
+		if (previewFileURL.endsWith("mp3")) {
+			audioSources.add(MapUtil.fromArray("type", "audio/mp3", "url", previewFileURL));
+		}
+		else if (previewFileURL.endsWith("ogg")) {
+			audioSources.add(MapUtil.fromArray("type", "audio/ogg", "url", previewFileURL));
+		}
+	}
+}
+
+Map<String, Object> context = new HashMap<>();
+
+context.put("audioSources", audioSources);
 %>
 
 <liferay-util:html-top

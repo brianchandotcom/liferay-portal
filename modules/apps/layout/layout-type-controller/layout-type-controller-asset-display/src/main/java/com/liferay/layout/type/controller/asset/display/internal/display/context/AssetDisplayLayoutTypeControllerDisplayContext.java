@@ -27,7 +27,6 @@ import com.liferay.layout.page.template.service.LayoutPageTemplateEntryServiceUt
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalServiceUtil;
 import com.liferay.layout.page.template.util.LayoutPageTemplateStructureRenderUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -58,18 +57,13 @@ public class AssetDisplayLayoutTypeControllerDisplayContext {
 	}
 
 	public String getRenderedContent() throws PortalException {
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		Layout layout = themeDisplay.getLayout();
-
 		LayoutPageTemplateStructure layoutPageTemplateStructure =
 			LayoutPageTemplateStructureLocalServiceUtil.
 				fetchLayoutPageTemplateStructure(
-					layout.getGroupId(),
+					_assetEntry.getGroupId(),
 					PortalUtil.getClassNameId(
 						LayoutPageTemplateEntry.class.getName()),
-					_getLayoutPageTemplateEntryId(layout.getGroupId()), true);
+					_getLayoutPageTemplateEntryId(), true);
 
 		return LayoutPageTemplateStructureRenderUtil.renderLayoutContent(
 			_request, _response, layoutPageTemplateStructure,
@@ -99,7 +93,7 @@ public class AssetDisplayLayoutTypeControllerDisplayContext {
 			_assetEntry, themeDisplay.getLocale());
 	}
 
-	private long _getLayoutPageTemplateEntryId(long groupId) {
+	private long _getLayoutPageTemplateEntryId() {
 		AssetDisplayPageEntry assetDisplayPageEntry =
 			AssetDisplayPageEntryLocalServiceUtil.fetchAssetDisplayPageEntry(
 				_assetEntry.getGroupId(), _assetEntry.getClassNameId(),
@@ -121,7 +115,7 @@ public class AssetDisplayLayoutTypeControllerDisplayContext {
 		LayoutPageTemplateEntry defaultLayoutPageTemplateEntry =
 			LayoutPageTemplateEntryServiceUtil.
 				fetchDefaultLayoutPageTemplateEntry(
-					groupId, _assetEntry.getClassNameId(),
+					_assetEntry.getGroupId(), _assetEntry.getClassNameId(),
 					_assetEntry.getClassTypeId());
 
 		if (defaultLayoutPageTemplateEntry != null) {

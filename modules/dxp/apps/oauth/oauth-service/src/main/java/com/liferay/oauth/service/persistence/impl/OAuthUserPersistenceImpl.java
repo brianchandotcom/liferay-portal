@@ -504,10 +504,9 @@ public class OAuthUserPersistenceImpl extends BasePersistenceImpl<OAuthUser>
 		qPos.add(userId);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(oAuthUser);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object orderByConditionValue : orderByComparator.getOrderByConditionValues(
+					oAuthUser)) {
+				qPos.add(orderByConditionValue);
 			}
 		}
 
@@ -1015,10 +1014,9 @@ public class OAuthUserPersistenceImpl extends BasePersistenceImpl<OAuthUser>
 		qPos.add(oAuthApplicationId);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(oAuthUser);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object orderByConditionValue : orderByComparator.getOrderByConditionValues(
+					oAuthUser)) {
+				qPos.add(orderByConditionValue);
 			}
 		}
 

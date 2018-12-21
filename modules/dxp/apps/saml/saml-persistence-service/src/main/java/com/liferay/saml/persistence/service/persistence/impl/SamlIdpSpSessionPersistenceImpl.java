@@ -531,10 +531,9 @@ public class SamlIdpSpSessionPersistenceImpl extends BasePersistenceImpl<SamlIdp
 		}
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(samlIdpSpSession);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object orderByConditionValue : orderByComparator.getOrderByConditionValues(
+					samlIdpSpSession)) {
+				qPos.add(orderByConditionValue);
 			}
 		}
 
@@ -1067,10 +1066,9 @@ public class SamlIdpSpSessionPersistenceImpl extends BasePersistenceImpl<SamlIdp
 		qPos.add(samlIdpSsoSessionId);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(samlIdpSpSession);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object orderByConditionValue : orderByComparator.getOrderByConditionValues(
+					samlIdpSpSession)) {
+				qPos.add(orderByConditionValue);
 			}
 		}
 

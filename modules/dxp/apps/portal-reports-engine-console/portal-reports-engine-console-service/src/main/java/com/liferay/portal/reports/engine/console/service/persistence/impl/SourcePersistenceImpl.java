@@ -532,10 +532,9 @@ public class SourcePersistenceImpl extends BasePersistenceImpl<Source>
 		}
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(source);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object orderByConditionValue : orderByComparator.getOrderByConditionValues(
+					source)) {
+				qPos.add(orderByConditionValue);
 			}
 		}
 
@@ -1348,10 +1347,9 @@ public class SourcePersistenceImpl extends BasePersistenceImpl<Source>
 		qPos.add(companyId);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(source);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object orderByConditionValue : orderByComparator.getOrderByConditionValues(
+					source)) {
+				qPos.add(orderByConditionValue);
 			}
 		}
 
@@ -1868,10 +1866,9 @@ public class SourcePersistenceImpl extends BasePersistenceImpl<Source>
 		qPos.add(groupId);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(source);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object orderByConditionValue : orderByComparator.getOrderByConditionValues(
+					source)) {
+				qPos.add(orderByConditionValue);
 			}
 		}
 
@@ -2177,10 +2174,9 @@ public class SourcePersistenceImpl extends BasePersistenceImpl<Source>
 		qPos.add(groupId);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(source);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object orderByConditionValue : orderByComparator.getOrderByConditionValues(
+					source)) {
+				qPos.add(orderByConditionValue);
 			}
 		}
 
@@ -2726,10 +2722,9 @@ public class SourcePersistenceImpl extends BasePersistenceImpl<Source>
 		qPos.add(companyId);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(source);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object orderByConditionValue : orderByComparator.getOrderByConditionValues(
+					source)) {
+				qPos.add(orderByConditionValue);
 			}
 		}
 

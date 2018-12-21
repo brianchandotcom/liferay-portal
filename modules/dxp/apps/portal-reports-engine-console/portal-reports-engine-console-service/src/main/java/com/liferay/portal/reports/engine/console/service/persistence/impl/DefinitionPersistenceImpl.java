@@ -535,10 +535,9 @@ public class DefinitionPersistenceImpl extends BasePersistenceImpl<Definition>
 		}
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(definition);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object orderByConditionValue : orderByComparator.getOrderByConditionValues(
+					definition)) {
+				qPos.add(orderByConditionValue);
 			}
 		}
 
@@ -1355,10 +1354,9 @@ public class DefinitionPersistenceImpl extends BasePersistenceImpl<Definition>
 		qPos.add(companyId);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(definition);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object orderByConditionValue : orderByComparator.getOrderByConditionValues(
+					definition)) {
+				qPos.add(orderByConditionValue);
 			}
 		}
 
@@ -1877,10 +1875,9 @@ public class DefinitionPersistenceImpl extends BasePersistenceImpl<Definition>
 		qPos.add(groupId);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(definition);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object orderByConditionValue : orderByComparator.getOrderByConditionValues(
+					definition)) {
+				qPos.add(orderByConditionValue);
 			}
 		}
 
@@ -2186,10 +2183,9 @@ public class DefinitionPersistenceImpl extends BasePersistenceImpl<Definition>
 		qPos.add(groupId);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(definition);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object orderByConditionValue : orderByComparator.getOrderByConditionValues(
+					definition)) {
+				qPos.add(orderByConditionValue);
 			}
 		}
 
@@ -2740,10 +2736,9 @@ public class DefinitionPersistenceImpl extends BasePersistenceImpl<Definition>
 		qPos.add(companyId);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(definition);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object orderByConditionValue : orderByComparator.getOrderByConditionValues(
+					definition)) {
+				qPos.add(orderByConditionValue);
 			}
 		}
 

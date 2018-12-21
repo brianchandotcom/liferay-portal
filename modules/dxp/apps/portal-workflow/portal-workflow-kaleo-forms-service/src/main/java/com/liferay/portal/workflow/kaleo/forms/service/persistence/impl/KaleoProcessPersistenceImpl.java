@@ -535,10 +535,9 @@ public class KaleoProcessPersistenceImpl extends BasePersistenceImpl<KaleoProces
 		}
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(kaleoProcess);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object orderByConditionValue : orderByComparator.getOrderByConditionValues(
+					kaleoProcess)) {
+				qPos.add(orderByConditionValue);
 			}
 		}
 
@@ -1354,10 +1353,9 @@ public class KaleoProcessPersistenceImpl extends BasePersistenceImpl<KaleoProces
 		qPos.add(companyId);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(kaleoProcess);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object orderByConditionValue : orderByComparator.getOrderByConditionValues(
+					kaleoProcess)) {
+				qPos.add(orderByConditionValue);
 			}
 		}
 
@@ -1877,10 +1875,9 @@ public class KaleoProcessPersistenceImpl extends BasePersistenceImpl<KaleoProces
 		qPos.add(groupId);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(kaleoProcess);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object orderByConditionValue : orderByComparator.getOrderByConditionValues(
+					kaleoProcess)) {
+				qPos.add(orderByConditionValue);
 			}
 		}
 
@@ -2188,10 +2185,9 @@ public class KaleoProcessPersistenceImpl extends BasePersistenceImpl<KaleoProces
 		qPos.add(groupId);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(kaleoProcess);
-
-			for (Object value : values) {
-				qPos.add(value);
+			for (Object orderByConditionValue : orderByComparator.getOrderByConditionValues(
+					kaleoProcess)) {
+				qPos.add(orderByConditionValue);
 			}
 		}
 

@@ -45,12 +45,9 @@ public abstract class ChainableMethodAdvice {
 		return null;
 	}
 
-	public Object createMethodContext(
+	public abstract Object createMethodContext(
 		Class<?> targetClass, Method method,
-		Map<Class<? extends Annotation>, Annotation> annotations) {
-
-		return nullResult;
-	}
+		Map<Class<? extends Annotation>, Annotation> annotations);
 
 	public void duringFinally(
 		ServiceBeanMethodInvocation serviceBeanMethodInvocation,

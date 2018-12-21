@@ -30,6 +30,7 @@ class SegmentEdit extends Component {
 		initialSegmentName: PropTypes.string,
 		locale: PropTypes.string.isRequired,
 		portletNamespace: PropTypes.string,
+		previewMembersURL: PropTypes.string,
 		redirect: PropTypes.string,
 		setValues: PropTypes.func,
 		values: PropTypes.object
@@ -104,6 +105,7 @@ class SegmentEdit extends Component {
 			handleChange,
 			locale,
 			portletNamespace,
+			previewMembersURL,
 			redirect,
 			values
 		} = this.props;
@@ -157,6 +159,14 @@ class SegmentEdit extends Component {
 									[membersCount]
 								)}
 							</div>
+
+							{previewMembersURL &&
+								<ClayButton
+									className="members-preview-button"
+									href={previewMembersURL}
+									label={Liferay.Language.get('preview-members')}
+								/>
+							}
 
 							<div className="btn-group">
 								<div className="btn-group-item">

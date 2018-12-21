@@ -75,6 +75,13 @@ for (int i = 0; i < segmentsCriteriaContributors.size(); i++) {
 
 	<div id="<%= segmentEditRootElementId %>"></div>
 
+	<portlet:renderURL var="previewMembersURL">
+		<portlet:param name="mvcRenderCommandName" value="editSegmentsEntryUsers" />
+		<portlet:param name="tabs1" value="users" />
+		<portlet:param name="redirect" value="<%= currentURL %>" />
+		<portlet:param name="segmentsEntryId" value="<%= String.valueOf(segmentsEntryId) %>" />
+	</portlet:renderURL>
+
 	<aui:script require='<%= renderRequest.getAttribute(SegmentsWebKeys.RESOLVED_MODULE_NAME) + "/js/index.es as SegmentEdit" %>'>
 		SegmentEdit.default(
 			'<%= segmentEditRootElementId %>',
@@ -85,6 +92,7 @@ for (int i = 0; i < segmentsCriteriaContributors.size(); i++) {
 				initialSegmentName: '<%= (segmentsEntry != null) ? segmentsEntry.getName(locale) : StringPool.BLANK %>',
 				locale: '<%= locale %>',
 				portletNamespace: '<portlet:namespace />',
+				previewMembersURL: '<%= (segmentsEntry != null) ? previewMembersURL : StringPool.BLANK %>',
 				redirect: '<%= HtmlUtil.escape(redirect) %>'
 			},
 			{

@@ -93,11 +93,9 @@ public class ServiceBeanAopInvocationHandler implements InvocationHandler {
 			}
 		}
 
-		serviceBeanMethodInvocation = new ServiceBeanMethodInvocation(
+		return new ServiceBeanMethodInvocation(
 			aopMethod, null, nextChainableMethodAdvice,
 			serviceBeanMethodInvocation);
-
-		return serviceBeanMethodInvocation;
 	}
 
 	private ServiceBeanMethodInvocation _getServiceBeanMethodInvocation(

@@ -19,14 +19,14 @@ package com.liferay.data.engine.web.internal.graphql.model;
  */
 public class GetDataDefinitionType {
 
-	public DataDefinitionType getDataDefinition() {
+	public DataDefinition getDataDefinition() {
 		return _dataDefinition;
 	}
 
-	public void setDataDefinition(DataDefinitionType dataDefinition) {
+	public void setDataDefinition(DataDefinition dataDefinition) {
 		_dataDefinition = dataDefinition;
 	}
 
-	private DataDefinitionType _dataDefinition;
+	private DataDefinition _dataDefinition;
 
 }

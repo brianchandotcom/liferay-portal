@@ -21,7 +21,7 @@ import com.liferay.data.engine.service.DEDataDefinitionRequestBuilder;
 import com.liferay.data.engine.service.DEDataDefinitionSaveRequest;
 import com.liferay.data.engine.service.DEDataDefinitionSaveResponse;
 import com.liferay.data.engine.service.DEDataDefinitionService;
-import com.liferay.data.engine.web.internal.graphql.model.DataDefinitionType;
+import com.liferay.data.engine.web.internal.graphql.model.DataDefinition;
 import com.liferay.data.engine.web.internal.graphql.model.SaveDataDefinitionType;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
@@ -51,22 +51,24 @@ public class DESaveDataDefinitionDataFetcher
 		long userId = GetterUtil.getLong(environment.getArgument("userId"));
 		long groupId = GetterUtil.getLong(environment.getArgument("groupId"));
 
-		Map<String, Object> dataDefinition = environment.getArgument(
+		Map<String, Object> dataDefinitionAttributes = environment.getArgument(
 			"dataDefinition");
 
 		String languageId = environment.getArgument("languageId");
 
 		List<DEDataDefinitionField> deDataDefinitionFields =
 			createDEDataDefinitionFields(
-				(List<Map<String, Object>>)dataDefinition.get("fields"));
+				(List<Map<String, Object>>)dataDefinitionAttributes.get(
+					"fields"));
 		long dataDefinitionId = GetterUtil.getLong(
-			dataDefinition.get("dataDefinitionId"));
+			dataDefinitionAttributes.get("dataDefinitionId"));
 		Map<String, String> descriptions = getLocalizedValues(
-			(List<Map<String, Object>>)dataDefinition.get("descriptions"));
+			(List<Map<String, Object>>)dataDefinitionAttributes.get(
+				"descriptions"));
 		Map<String, String> names = getLocalizedValues(
-			(List<Map<String, Object>>)dataDefinition.get("names"));
+			(List<Map<String, Object>>)dataDefinitionAttributes.get("names"));
 		String storageType = GetterUtil.getString(
-			dataDefinition.get("storageType"), "json");
+			dataDefinitionAttributes.get("storageType"), "json");
 
 		DEDataDefinition deDataDefinition = new DEDataDefinition(
 			deDataDefinitionFields);
@@ -94,11 +96,11 @@ public class DESaveDataDefinitionDataFetcher
 			DEDataDefinitionSaveResponse deDataDefinitionSaveResponse =
 				deDataDefinitionService.execute(deDataDefinitionSaveRequest);
 
-			DataDefinitionType dataDefinitionType = createDataDefinitionType(
+			DataDefinition dataDefinition = createDataDefinition(
 				deDataDefinitionSaveResponse.getDEDataDefinitionId(),
 				deDataDefinition);
 
-			saveDataDefinitionType.setDataDefinition(dataDefinitionType);
+			saveDataDefinitionType.setDataDefinition(dataDefinition);
 		}
 		catch (DEDataDefinitionException.MustHavePermission mhp) {
 			errorMessage = getMessage(

@@ -18,6 +18,7 @@ import com.liferay.data.engine.exception.DEDataDefinitionException;
 import com.liferay.data.engine.service.DEDataDefinitionDeleteRequest;
 import com.liferay.data.engine.service.DEDataDefinitionRequestBuilder;
 import com.liferay.data.engine.service.DEDataDefinitionService;
+import com.liferay.data.engine.web.internal.graphql.model.DataDefinition;
 import com.liferay.data.engine.web.internal.graphql.model.DataDefinitionType;
 import com.liferay.data.engine.web.internal.graphql.model.DeleteDataDefinitionType;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -57,12 +58,12 @@ public class DEDeleteDataDefinitionDataFetcher
 		try {
 			deDataDefinitionService.execute(deDataDefinitionDeleteRequest);
 
-			DataDefinitionType deDataDefinitionType = new DataDefinitionType();
+			DataDefinition dataDefinition = new DataDefinitionType();
 
-			deDataDefinitionType.setDataDefinitionId(
+			dataDefinition.setDataDefinitionId(
 				String.valueOf(dataDefinitionId));
 
-			deleteDataDefinitionType.setDataDefinition(deDataDefinitionType);
+			deleteDataDefinitionType.setDataDefinition(dataDefinition);
 		}
 		catch (DEDataDefinitionException.MustHavePermission mhp) {
 			errorMessage = getMessage(

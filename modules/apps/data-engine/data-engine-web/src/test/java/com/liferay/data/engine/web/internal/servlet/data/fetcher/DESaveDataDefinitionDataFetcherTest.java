@@ -367,7 +367,7 @@ public class DESaveDataDefinitionDataFetcherTest {
 			new DESaveDataDefinitionDataFetcher();
 
 		DataDefinitionType dataDefinitionType =
-			deSaveDataDefinitionDataFetcher.createDataDefinitionType(
+			deSaveDataDefinitionDataFetcher.createDataDefinition(
 				1, deDataDefinition);
 
 		Assert.assertEquals("1", dataDefinitionType.getDataDefinitionId());

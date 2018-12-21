@@ -1512,11 +1512,6 @@ app.server.type=@{app.server.type}]]></echo>
 								/>
 							</delete>
 
-							<ant dir="modules" inheritAll="false" target="index-modules-and-app-lpkgs">
-								<property name="app.server.parent.dir" value="${project.dir}/bundles" />
-								<property name="osgi.dir" value="${app.server.parent.dir}/osgi" />
-							</ant>
-
 							<trycatch>
 								<try>
 									<antcall inheritall="false" target="start-app-server" />
@@ -1590,11 +1585,6 @@ log.sanitizer.enabled=false</echo>
 								<arg value="*.LPKGContainerTest" />
 								<arg value="-Dliferay.home=${liferay.home}" />
 							</gradle-execute>
-
-							<ant dir="modules" inheritAll="false" target="index-modules-and-app-lpkgs">
-								<property name="app.server.parent.dir" value="${project.dir}/bundles" />
-								<property name="osgi.dir" value="${app.server.parent.dir}/osgi" />
-							</ant>
 
 							<trycatch>
 								<try>
@@ -1779,11 +1769,6 @@ module.framework.properties.lpkg.index.validator.enabled=true</echo>
 									excludes="com.liferay.portal.test.jar,com.liferay.portal.test.integration.jar"
 								/>
 							</delete>
-
-							<ant dir="modules" inheritAll="false" target="index-modules-and-app-lpkgs">
-								<property name="app.server.parent.dir" value="${project.dir}/bundles" />
-								<property name="osgi.dir" value="${app.server.parent.dir}/osgi" />
-							</ant>
 
 							<trycatch>
 								<try>
@@ -2050,11 +2035,6 @@ module.framework.properties.lpkg.index.validator.enabled=true</echo>
 									excludes="com.liferay.portal.test.jar,com.liferay.portal.test.integration.jar"
 								/>
 							</delete>
-
-							<ant dir="modules" inheritAll="false" target="index-modules-and-app-lpkgs">
-								<property name="app.server.parent.dir" value="${project.dir}/bundles" />
-								<property name="osgi.dir" value="${app.server.parent.dir}/osgi" />
-							</ant>
 
 							<trycatch>
 								<try>

@@ -1,4 +1,11 @@
 Bundle-Name: Liferay Document Library Preview Audio
 Bundle-SymbolicName: com.liferay.document.library.preview.audio
 Bundle-Version: 1.0.0
+Provide-Capability:\
+	soy;\
+		type="document-library-preview-audio";\
+		version:Version="${Bundle-Version}"
+Require-Capability:\
+	osgi.extender;\
+		filter:="(&(osgi.extender=jsp.taglib)(uri=http://liferay.com/tld/soy))"
 Web-ContextPath: /document-library-preview-audio

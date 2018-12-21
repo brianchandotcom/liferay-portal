@@ -23,4 +23,7 @@ public class ContentLayoutTypeControllerWebKeys {
 
 	public static final String LAYOUT_FRAGMENTS = "LAYOUT_FRAGMENTS";
 
+	public static final String LIFERAY_SHARED_FRAGMENTS_EDITOR_DISPLAY_CONTEXT =
+		"LIFERAY_SHARED_FRAGMENTS_EDITOR_DISPLAY_CONTEXT";
+
 }

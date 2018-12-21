@@ -52,8 +52,6 @@ public class FileEntryBulkSelectionBackgroundTaskExecutor
 	extends BaseBackgroundTaskExecutor {
 
 	public FileEntryBulkSelectionBackgroundTaskExecutor() {
-		setBackgroundTaskStatusMessageTranslator(
-			new UpdateFileEntryTagsBackgroundTaskStatusMessageTranslator());
 		setIsolationLevel(BackgroundTaskConstants.ISOLATION_LEVEL_TASK_NAME);
 	}
 

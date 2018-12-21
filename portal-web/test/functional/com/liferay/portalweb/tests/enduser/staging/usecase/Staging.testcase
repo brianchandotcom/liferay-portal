@@ -1784,7 +1784,7 @@ definition {
 	@priority = "5"
 	test StagingRemoteLiveWebContentViaPortletCP {
 		property custom.properties = "tunneling.servlet.shared.secret=1234567890123456${line.separator}auth.verifier.TunnelAuthVerifier.hosts.allowed=";
-		property test.name.skip.portal.instance = "Staging#StagingRemoteLiveWebContentCP";
+		property test.name.skip.portal.instance = "Staging#StagingRemoteLiveWebContentViaPortletCP";
 
 		Staging.remoteStagingSetUp(siteName = "Site Name");
 

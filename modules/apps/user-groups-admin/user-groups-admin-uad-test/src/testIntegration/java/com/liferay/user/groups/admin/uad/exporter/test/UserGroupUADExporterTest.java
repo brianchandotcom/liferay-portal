@@ -30,6 +30,7 @@ import java.util.List;
 import org.junit.After;
 import org.junit.ClassRule;
 import org.junit.Rule;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
@@ -47,6 +48,18 @@ public class UserGroupUADExporterTest
 	@After
 	public void tearDown() throws Exception {
 		_userGroupUADTestHelper.cleanUpDependencies(_userGroups);
+	}
+
+	@Test
+	public void testExportModelWithCDATASyntax() throws Exception {
+		UserGroup userGroup = _userGroupUADTestHelper.addUserGroup(
+			user.getUserId());
+
+		userGroup.setUserName("UserGroup]]>UserName");
+
+		_userGroups.add(userGroup);
+
+		_uadExporter.export(userGroup);
 	}
 
 	@Override

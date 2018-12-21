@@ -24,6 +24,28 @@
 		"prettier-eslint-cli": "^4.7.1",
 		"react-test-renderer": "^16.6.3"
 	},
+	"jest": {
+		"collectCoverageFrom": [
+			"<rootDir>/src/main/resources/META-INF/resources/js/components/**/*.js",
+			"!<rootDir>/src/main/resources/META-INF/resources/js/**/**/__tests__/*.js"
+		],
+		"coverageDirectory": "build/coverage",
+		"coverageThreshold": {
+			"global": {
+				"branches": 70,
+				"functions": 70,
+				"lines": 70
+			}
+		},
+		"globals": {
+			"CEREBRO_PATHS_GEOMAP_KEY": "paths"
+		},
+		"testMatch": [
+			"<rootDir>/src/main/resources/META-INF/resources/js/components/**/__tests__/*.js"
+		],
+		"testURL": "http://liferay.com",
+		"timers": "fake"
+	},
 	"license": "ISC",
 	"main": "js/index.js",
 	"name": "portal-workflow-reports-portlet",

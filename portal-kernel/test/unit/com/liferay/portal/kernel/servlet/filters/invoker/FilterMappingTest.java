@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.EnumSet;
 import java.util.Enumeration;
 import java.util.HashSet;
 import java.util.List;
@@ -117,7 +118,7 @@ public class FilterMappingTest {
 	public void testIsMatchURLPattern() {
 		FilterMapping filterMapping = new FilterMapping(
 			null, null, ProxyFactory.newDummyInstance(FilterConfig.class),
-			Collections.emptyList(), Collections.emptyList());
+			Collections.emptyList(), EnumSet.of(Dispatcher.REQUEST));
 
 		Assert.assertTrue(
 			_getIsMatchURLPatternMessage(
@@ -196,7 +197,7 @@ public class FilterMappingTest {
 			new TestFilterConfig(
 				_TEST_URL_REGEX_IGNORE_PATTERN, _TEST_URL_REGEX_PATTERN),
 			Collections.singletonList(_TEST_URL_PATTERN),
-			Collections.singletonList(String.valueOf(Dispatcher.ASYNC)));
+			EnumSet.of(Dispatcher.ASYNC));
 
 		_assertFilterMapping(
 			_TEST_FILTER_NAME, _dummyFilter, _TEST_URL_REGEX_IGNORE_PATTERN,
@@ -305,8 +306,7 @@ public class FilterMappingTest {
 			_TEST_FILTER_NAME, _dummyFilter,
 			new TestFilterConfig(
 				_TEST_URL_REGEX_IGNORE_PATTERN, _TEST_URL_REGEX_PATTERN),
-			urlPatterns,
-			Collections.singletonList(String.valueOf(Dispatcher.ASYNC)));
+			urlPatterns, EnumSet.of(Dispatcher.ASYNC));
 
 		Assert.assertEquals(
 			expectedResult,
@@ -326,7 +326,7 @@ public class FilterMappingTest {
 
 		FilterMapping filterMapping = new FilterMapping(
 			_TEST_FILTER_NAME, _dummyFilter, filterConfig,
-			Collections.emptyList(), Collections.emptyList());
+			Collections.emptyList(), EnumSet.of(Dispatcher.REQUEST));
 
 		Assert.assertEquals(
 			expectedResult,

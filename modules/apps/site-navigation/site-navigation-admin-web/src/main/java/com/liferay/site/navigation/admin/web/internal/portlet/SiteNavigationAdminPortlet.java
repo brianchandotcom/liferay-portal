@@ -79,15 +79,12 @@ public class SiteNavigationAdminPortlet extends MVCPortlet {
 		HttpServletRequest request = _portal.getHttpServletRequest(
 			renderRequest);
 
-		renderRequest.setAttribute(
-			SiteNavigationAdminWebKeys.RESOLVED_MODULE_NAME,
-			_npmResolver.resolveModuleName("site-navigation-admin-web"));
-
 		SiteNavigationAdminDisplayContext siteNavigationAdminDisplayContext =
 			new SiteNavigationAdminDisplayContext(
 				liferayPortletRequest, liferayPortletResponse, request,
 				_siteNavigationMenuItemTypeRegistry,
-				_siteNavigationMenuLocalService, _siteNavigationMenuService);
+				_siteNavigationMenuLocalService, _siteNavigationMenuService,
+				_npmResolver.resolveModuleName("site-navigation-admin-web"));
 
 		renderRequest.setAttribute(
 			SiteNavigationAdminWebKeys.

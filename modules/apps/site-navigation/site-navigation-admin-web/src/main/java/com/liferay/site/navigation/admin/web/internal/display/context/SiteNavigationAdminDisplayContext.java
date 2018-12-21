@@ -34,7 +34,6 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.site.navigation.admin.constants.SiteNavigationAdminPortletKeys;
-import com.liferay.site.navigation.admin.web.internal.constants.SiteNavigationAdminWebKeys;
 import com.liferay.site.navigation.admin.web.internal.security.permission.resource.SiteNavigationPermission;
 import com.liferay.site.navigation.admin.web.internal.util.SiteNavigationMenuPortletUtil;
 import com.liferay.site.navigation.constants.SiteNavigationActionKeys;
@@ -65,7 +64,8 @@ public class SiteNavigationAdminDisplayContext {
 		HttpServletRequest request,
 		SiteNavigationMenuItemTypeRegistry siteNavigationMenuItemTypeRegistry,
 		SiteNavigationMenuLocalService siteNavigationMenuLocalService,
-		SiteNavigationMenuService siteNavigationMenuService) {
+		SiteNavigationMenuService siteNavigationMenuService,
+		String moduleName) {
 
 		_liferayPortletRequest = liferayPortletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
@@ -74,9 +74,7 @@ public class SiteNavigationAdminDisplayContext {
 			siteNavigationMenuItemTypeRegistry;
 		_siteNavigationMenuLocalService = siteNavigationMenuLocalService;
 		_siteNavigationMenuService = siteNavigationMenuService;
-
-		_resolvedModuleName = (String)_request.getAttribute(
-			SiteNavigationAdminWebKeys.RESOLVED_MODULE_NAME);
+		_moduleName = moduleName;
 	}
 
 	public List<DropdownItem> getActionDropdownItems() {
@@ -173,7 +171,7 @@ public class SiteNavigationAdminDisplayContext {
 	}
 
 	public String getModuleName() {
-		return _resolvedModuleName;
+		return _moduleName;
 	}
 
 	public String getOrderByCol() {
@@ -472,10 +470,10 @@ public class SiteNavigationAdminDisplayContext {
 	private String _keywords;
 	private final LiferayPortletRequest _liferayPortletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;
+	private final String _moduleName;
 	private String _orderByCol;
 	private String _orderByType;
 	private final HttpServletRequest _request;
-	private final String _resolvedModuleName;
 	private SearchContainer _searchContainer;
 	private Long _siteNavigationMenuId;
 	private final SiteNavigationMenuItemTypeRegistry

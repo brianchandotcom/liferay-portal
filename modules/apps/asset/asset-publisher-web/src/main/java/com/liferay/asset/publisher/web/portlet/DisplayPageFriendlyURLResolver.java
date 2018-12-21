@@ -169,11 +169,6 @@ public class DisplayPageFriendlyURLResolver implements FriendlyURLResolver {
 				journalArticle.getLayoutUuid(), groupId, privateLayout);
 		}
 
-		if (Validator.isNotNull(journalArticle.getLayoutUuid())) {
-			return _layoutLocalService.getLayoutByUuidAndGroupId(
-				journalArticle.getLayoutUuid(), groupId, privateLayout);
-		}
-
 		AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
 			JournalArticle.class.getName(),
 			journalArticle.getResourcePrimKey());

@@ -18,11 +18,9 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageBus;
+import com.liferay.portal.workflow.reports.messaging.WorkflowReportsMessage;
 import com.liferay.portal.workflow.reports.messaging.WorkflowReportsMessageSender;
 import com.liferay.portal.workflow.reports.messaging.constants.WorkflowReportsDestinationNames;
-
-import java.util.HashMap;
-import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -34,23 +32,11 @@ import org.osgi.service.component.annotations.Reference;
 public class WorkflowReportsMessageSenderImpl
 	implements WorkflowReportsMessageSender {
 
-	public void sendMessage(
-		long companyId, String eventId, long userId,
-		Map<String, String> properties) {
-
+	public void sendMessage(WorkflowReportsMessage workflowReportsMessage) {
 		try {
 			Message message = new Message();
 
-			Map<String, String> values = new HashMap<>();
-
-			values.put("applicationId", "workflow:1.0.0");
-			values.put("companyId", String.valueOf(companyId));
-			values.put("eventId", eventId);
-			values.put("userId", String.valueOf(userId));
-
-			values.putAll(properties);
-
-			message.setPayload(values);
+			message.setPayload(workflowReportsMessage);
 
 			_messageBus.sendMessage(
 				WorkflowReportsDestinationNames.WORKFLOW_REPORTS, message);

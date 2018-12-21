@@ -22,16 +22,15 @@ import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.spring.aop.ChainableMethodAdvice;
-import com.liferay.portal.spring.aop.ServiceBeanAopCacheManager;
 import com.liferay.portal.spring.aop.ServiceBeanAopInvocationHandler;
 import com.liferay.portal.spring.aop.ServiceBeanMethodInvocation;
 
+import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 
 import javax.sql.DataSource;
 
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -47,7 +46,7 @@ public class DynamicDataSourceAdviceTest {
 		CodeCoverageAssertor.INSTANCE;
 
 	@Before
-	public void setUp() {
+	public void setUp() throws Exception {
 		DynamicDataSourceAdvice dynamicDataSourceAdvice =
 			new DynamicDataSourceAdvice();
 
@@ -81,13 +80,14 @@ public class DynamicDataSourceAdviceTest {
 		dynamicDataSourceAdvice.setDynamicDataSourceTargetSource(
 			_dynamicDataSourceTargetSource);
 
-		_serviceBeanAopInvocationHandler = ServiceBeanAopCacheManager.create(
-			_testClass, new ChainableMethodAdvice[] {dynamicDataSourceAdvice});
-	}
+		Constructor<ServiceBeanAopInvocationHandler> constructor =
+			ServiceBeanAopInvocationHandler.class.getDeclaredConstructor(
+				Object.class, ChainableMethodAdvice[].class);
 
-	@After
-	public void tearDown() {
-		ServiceBeanAopCacheManager.destroy(_serviceBeanAopInvocationHandler);
+		constructor.setAccessible(true);
+
+		_serviceBeanAopInvocationHandler = constructor.newInstance(
+			_testClass, new ChainableMethodAdvice[] {dynamicDataSourceAdvice});
 	}
 
 	@Test

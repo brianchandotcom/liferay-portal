@@ -19,13 +19,12 @@ import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
 import com.liferay.portal.spring.aop.ChainableMethodAdvice;
-import com.liferay.portal.spring.aop.ServiceBeanAopCacheManager;
 import com.liferay.portal.spring.aop.ServiceBeanAopInvocationHandler;
 import com.liferay.portal.spring.aop.ServiceBeanMethodInvocation;
 
+import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -41,15 +40,16 @@ public class ServiceContextAdviceTest {
 		CodeCoverageAssertor.INSTANCE;
 
 	@Before
-	public void setUp() {
-		_serviceBeanAopInvocationHandler = ServiceBeanAopCacheManager.create(
+	public void setUp() throws Exception {
+		Constructor<ServiceBeanAopInvocationHandler> constructor =
+			ServiceBeanAopInvocationHandler.class.getDeclaredConstructor(
+				Object.class, ChainableMethodAdvice[].class);
+
+		constructor.setAccessible(true);
+
+		_serviceBeanAopInvocationHandler = constructor.newInstance(
 			_testInterceptedClass,
 			new ChainableMethodAdvice[] {new ServiceContextAdvice()});
-	}
-
-	@After
-	public void tearDown() {
-		ServiceBeanAopCacheManager.destroy(_serviceBeanAopInvocationHandler);
 	}
 
 	@Test

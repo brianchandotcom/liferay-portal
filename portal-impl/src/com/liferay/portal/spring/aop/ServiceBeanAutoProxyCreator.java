@@ -38,6 +38,14 @@ import org.springframework.beans.factory.config.SmartInstantiationAwareBeanPostP
 public class ServiceBeanAutoProxyCreator
 	implements SmartInstantiationAwareBeanPostProcessor {
 
+	public static void reset() {
+		for (ServiceBeanAopInvocationHandler serviceBeanAopInvocationHandler :
+				_globalServiceBeanAopInvocationHandlers) {
+
+			serviceBeanAopInvocationHandler.reset();
+		}
+	}
+
 	public ServiceBeanAutoProxyCreator(
 		BeanMatcher beanMatcher, ClassLoader classLoader,
 		ChainableMethodAdvice[] chainableMethodAdvices) {
@@ -48,11 +56,8 @@ public class ServiceBeanAutoProxyCreator
 	}
 
 	public void destroy() {
-		for (ServiceBeanAopInvocationHandler serviceBeanAopInvocationHandler :
-				_serviceBeanAopInvocationHandlers) {
-
-			ServiceBeanAopCacheManager.destroy(serviceBeanAopInvocationHandler);
-		}
+		_globalServiceBeanAopInvocationHandlers.removeAll(
+			_serviceBeanAopInvocationHandlers);
 	}
 
 	@Override
@@ -122,14 +127,21 @@ public class ServiceBeanAutoProxyCreator
 
 	private Object _createProxy(Object bean) {
 		ServiceBeanAopInvocationHandler serviceBeanAopInvocationHandler =
-			ServiceBeanAopCacheManager.create(bean, _chainableMethodAdvices);
+			new ServiceBeanAopInvocationHandler(bean, _chainableMethodAdvices);
 
 		_serviceBeanAopInvocationHandlers.add(serviceBeanAopInvocationHandler);
+
+		_globalServiceBeanAopInvocationHandlers.add(
+			serviceBeanAopInvocationHandler);
 
 		return ProxyUtil.newProxyInstance(
 			_classLoader, ReflectionUtil.getInterfaces(bean),
 			serviceBeanAopInvocationHandler);
 	}
+
+	private static final Set<ServiceBeanAopInvocationHandler>
+		_globalServiceBeanAopInvocationHandlers = Collections.newSetFromMap(
+			new ConcurrentHashMap<>());
 
 	private final BeanMatcher _beanMatcher;
 	private final ChainableMethodAdvice[] _chainableMethodAdvices;

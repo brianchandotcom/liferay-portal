@@ -16,7 +16,7 @@ package com.liferay.portal.monitoring.statistics.service;
 
 import com.liferay.portal.kernel.monitoring.MethodSignature;
 import com.liferay.portal.kernel.monitoring.ServiceMonitoringControl;
-import com.liferay.portal.spring.aop.ServiceBeanAopCacheManager;
+import com.liferay.portal.spring.aop.ServiceBeanAutoProxyCreator;
 
 import java.util.Collections;
 import java.util.HashSet;
@@ -70,7 +70,7 @@ public class ServiceMonitoringControlImpl implements ServiceMonitoringControl {
 	@Override
 	public void setMonitorServiceRequest(boolean monitorServiceRequest) {
 		if (monitorServiceRequest && !_monitorServiceRequest) {
-			ServiceBeanAopCacheManager.reset();
+			ServiceBeanAutoProxyCreator.reset();
 		}
 
 		_monitorServiceRequest = monitorServiceRequest;

@@ -5,6 +5,12 @@ import Soy from 'metal-soy';
 import templates from './ImagePreviewer.soy';
 
 /**
+ * Zoom ratio limit that fire the autocenter
+ * @type {number}
+ */
+const MIN_ZOOM_RATIO_AUTOCENTER = 3;
+
+/**
  * Available zoom sizes
  * @type {Array<number>}
  */
@@ -28,12 +34,6 @@ const ZOOM_LEVELS = [
 const ZOOM_LEVELS_REVERSED = ZOOM_LEVELS.slice().reverse();
 
 /**
- * Zoom ratio limit that fire the autocenter
- * @type {number}
- */
-const MIN_ZOOM_RATIO_AUTOCENTER = 3;
-
-/**
  * Component that create an image preview to allow zoom
  * @review
  */
@@ -43,8 +43,8 @@ class ImagePreviewer extends Component {
 	 * @inheritDoc
 	 */
 	attached() {
-		this._imageNaturalWidth = this.refs.image.naturalWidth;
 		this._imageNaturalHeight = this.refs.image.naturalHeight;
+		this._imageNaturalWidth = this.refs.image.naturalWidth;
 		this._isPreviewFit = true;
 
 		this._updateDimensions();
@@ -94,7 +94,6 @@ class ImagePreviewer extends Component {
 		this.imageWidth = this._imageNaturalWidth * zoomNumber;
 		this._zoomRatio = zoomNumber / this.currentZoom;
 		this._isPreviewFit = false;
-
 		this.currentZoom = zoomNumber;
 		this._updateDimensions();
 	}
@@ -115,8 +114,8 @@ class ImagePreviewer extends Component {
 	 */
 	_clearZoom() {
 		this.imageHeight = null;
-		this.imageWidth = null;
 		this.imageMargin = null;
+		this.imageWidth = null;
 		this._isPreviewFit = true;
 		this._reCalculateCurrentZoom = true;
 	}
@@ -203,7 +202,6 @@ class ImagePreviewer extends Component {
  * @static
  * @type {!Object}
  */
-
 ImagePreviewer.STATE = {
 
 	/**

@@ -92,6 +92,18 @@ renderResponse.setTitle(assetEntryUsagesDisplayContext.getAssetEntryTitle());
 									<liferay-ui:message arguments="<%= assetEntryUsagesDisplayContext.getDisplayPagesUsageCount() %>" key="display-pages-x" />
 								</a>
 							</li>
+							<li class="nav-item">
+
+								<%
+								PortletURL fragmentsNavigationURL = assetEntryUsagesDisplayContext.getPortletURL();
+
+								displayPagesNavigationURL.setParameter("navigation", "fragments");
+								%>
+
+								<a class="nav-link <%= Objects.equals(assetEntryUsagesDisplayContext.getNavigation(), "fragments") ? "active" : StringPool.BLANK %>" href="<%= fragmentsNavigationURL.toString() %>">
+									<liferay-ui:message arguments="<%= assetEntryUsagesDisplayContext.getFragmentsUsageCount() %>" key="fragments-x" />
+								</a>
+							</li>
 						</ul>
 					</li>
 				</ul>
@@ -110,6 +122,9 @@ renderResponse.setTitle(assetEntryUsagesDisplayContext.getAssetEntryTitle());
 						</c:when>
 						<c:when test='<%= Objects.equals(assetEntryUsagesDisplayContext.getNavigation(), "display-pages") %>'>
 							<liferay-ui:message arguments="<%= assetEntryUsagesDisplayContext.getDisplayPagesUsageCount() %>" key="display-pages-x" />
+						</c:when>
+						<c:when test='<%= Objects.equals(assetEntryUsagesDisplayContext.getNavigation(), "fragments") %>'>
+							<liferay-ui:message arguments="<%= assetEntryUsagesDisplayContext.getFragmentsUsageCount() %>" key="fragments-x" />
 						</c:when>
 						<c:otherwise>
 							<liferay-ui:message arguments="<%= assetEntryUsagesDisplayContext.getAllUsageCount() %>" key="all-x" />

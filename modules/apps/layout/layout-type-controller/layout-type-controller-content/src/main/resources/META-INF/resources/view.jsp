@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-FragmentsEditorDisplayContext fragmentsEditorDisplayContext = new FragmentsEditorDisplayContext(request, renderResponse);
+FragmentsEditorDisplayContext fragmentsEditorDisplayContext = (FragmentsEditorDisplayContext)request.getAttribute(ContentLayoutTypeControllerWebKeys.LIFERAY_SHARED_FRAGMENTS_EDITOR_DISPLAY_CONTEXT);
 %>
 
 <liferay-editor:resources

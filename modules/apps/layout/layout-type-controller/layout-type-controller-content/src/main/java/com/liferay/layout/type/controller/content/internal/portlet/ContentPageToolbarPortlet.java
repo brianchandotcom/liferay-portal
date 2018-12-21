@@ -15,11 +15,22 @@
 package com.liferay.layout.type.controller.content.internal.portlet;
 
 import com.liferay.layout.type.controller.content.internal.constants.ContentLayoutPortletKeys;
+import com.liferay.layout.type.controller.content.internal.constants.ContentLayoutTypeControllerWebKeys;
+import com.liferay.layout.type.controller.content.internal.display.context.FragmentsEditorDisplayContext;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.portal.kernel.util.Portal;
+
+import java.io.IOException;
 
 import javax.portlet.Portlet;
+import javax.portlet.PortletException;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eudaldo Alonso
@@ -44,4 +55,34 @@ import org.osgi.service.component.annotations.Component;
 	service = Portlet.class
 )
 public class ContentPageToolbarPortlet extends MVCPortlet {
+
+	@Override
+	protected void doDispatch(
+			RenderRequest renderRequest, RenderResponse renderResponse)
+		throws IOException, PortletException {
+
+		HttpServletRequest request = _portal.getHttpServletRequest(
+			renderRequest);
+
+		FragmentsEditorDisplayContext fragmentsEditorDisplayContext =
+			(FragmentsEditorDisplayContext)request.getAttribute(
+				ContentLayoutTypeControllerWebKeys.
+					LIFERAY_SHARED_FRAGMENTS_EDITOR_DISPLAY_CONTEXT);
+
+		if (fragmentsEditorDisplayContext == null) {
+			fragmentsEditorDisplayContext = new FragmentsEditorDisplayContext(
+				request, renderResponse);
+
+			request.setAttribute(
+				ContentLayoutTypeControllerWebKeys.
+					LIFERAY_SHARED_FRAGMENTS_EDITOR_DISPLAY_CONTEXT,
+				fragmentsEditorDisplayContext);
+		}
+
+		super.doDispatch(renderRequest, renderResponse);
+	}
+
+	@Reference
+	private Portal _portal;
+
 }

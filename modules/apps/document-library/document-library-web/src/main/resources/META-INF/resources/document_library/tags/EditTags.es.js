@@ -9,27 +9,7 @@ import templates from './EditTags.soy';
 
 class EditTags extends Component {
 	created() {
-		this.dataSource = [
-			'Bread',
-			'Ammonia cookie',
-			'Cuisine of Antebellum America',
-			'Apple butter',
-			'Apple sauce',
-			'Baked potato',
-			'Barbecue',
-			'Bear claw',
-			'Beef Manhattan',
-			'Blue cheese dressing',
-			'Blue-plate special',
-			'Bookbinder soup',
-			'Breakfast burrito',
-			'Brunswick stew',
-			'Buffalo burger',
-			'Buffalo wing',
-			'Bull roast',
-			'Burnt ends',
-			'Butter cookie',
-		];
+		this.dataSource = [];
 	}
 
 	attached() {

@@ -1936,6 +1936,7 @@ passthrough=&quot;true&quot;</echo>
 
 			<get
 				dest="${basedir}"
+				httpusecaches="false"
 				src="${patching.tool.version.url}"
 			/>
 

@@ -105,5 +105,5 @@ renderApp('app', {
     ]
   }, {
     "assetsPath": "assets",
-    "spritemap": "lexicon/icons.svg"
+    "spritemap": "/o/admin-theme/images/lexicon/icons.svg"
   })

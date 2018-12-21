@@ -143,6 +143,10 @@ public class SearchSearchRequest
 		return _version;
 	}
 
+	public boolean isAllFieldsSelected() {
+		return _allFieldsSelected;
+	}
+
 	public boolean isHighlightEnabled() {
 		return _highlightEnabled;
 	}
@@ -169,6 +173,10 @@ public class SearchSearchRequest
 		}
 
 		_stats.putAll(stats);
+	}
+
+	public void setAllFieldsSelected(boolean allFieldsSelected) {
+		_allFieldsSelected = allFieldsSelected;
 	}
 
 	public void setAlternateUidFieldName(String alternateUidFieldName) {
@@ -270,6 +278,7 @@ public class SearchSearchRequest
 		_version = version;
 	}
 
+	private boolean _allFieldsSelected;
 	private String _alternateUidFieldName;
 	private Boolean _fetchSource;
 	private GroupBy _groupBy;

@@ -30,7 +30,7 @@ public class ServiceBeanAopCacheManager {
 		ServiceBeanAopInvocationHandler serviceBeanAopCacheManager =
 			new ServiceBeanAopInvocationHandler(target, chainableMethodAdvices);
 
-		_serviceBeanAopInvocationHandler.add(serviceBeanAopCacheManager);
+		_serviceBeanAopInvocationHandlers.add(serviceBeanAopCacheManager);
 
 		return serviceBeanAopCacheManager;
 	}
@@ -38,13 +38,13 @@ public class ServiceBeanAopCacheManager {
 	public static void destroy(
 		ServiceBeanAopInvocationHandler serviceBeanAopInvocationHandler) {
 
-		_serviceBeanAopInvocationHandler.remove(
+		_serviceBeanAopInvocationHandlers.remove(
 			serviceBeanAopInvocationHandler);
 	}
 
 	public static void reset() {
 		for (ServiceBeanAopInvocationHandler serviceBeanAopInvocationHandler :
-				_serviceBeanAopInvocationHandler) {
+				_serviceBeanAopInvocationHandlers) {
 
 			serviceBeanAopInvocationHandler.reset();
 		}
@@ -54,7 +54,7 @@ public class ServiceBeanAopCacheManager {
 	}
 
 	private static final Set<ServiceBeanAopInvocationHandler>
-		_serviceBeanAopInvocationHandler = Collections.newSetFromMap(
+		_serviceBeanAopInvocationHandlers = Collections.newSetFromMap(
 			new ConcurrentHashMap<>());
 
 }

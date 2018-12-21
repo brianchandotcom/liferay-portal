@@ -56,10 +56,10 @@
 						&:first-child {
 							border-bottom-left-radius: $table-list-border-radius;
 						}
-					}
 
-					&:last-child {
-						border-bottom-right-radius: $table-list-border-radius;
+						&:last-child {
+							border-bottom-right-radius: $table-list-border-radius;
+						}
 					}
 				}
 			}

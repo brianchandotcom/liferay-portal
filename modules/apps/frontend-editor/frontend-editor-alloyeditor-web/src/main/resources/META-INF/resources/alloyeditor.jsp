@@ -147,36 +147,6 @@ name = HtmlUtil.escapeJS(name);
 	contentsLanguageId = LocaleUtil.toLanguageId(contentsLocale);
 	%>
 
-	window.addEventListener('dragover', function(event) {
-		event.preventDefault();
-		event.stopPropagation();
-	}, false);
-
-	window.addEventListener('drop', function(event) {
-		if (!event.target.isContentEditable) {
-			event.preventDefault();
-			event.stopImmediatePropagation();
-			showError();
-		}
-	}, false);
-
-	var showError = function() {
-		new Liferay.Notification(
-			{
-				closeable: true,
-				delay: {
-					hide: 5000,
-					show: 0
-				},
-				duration: 250,
-				message: '<%= UnicodeLanguageUtil.get(resourceBundle, "your-request-failed-to-complete") %>',
-				render: true,
-				title: '<%= UnicodeLanguageUtil.get(resourceBundle, "error") %>',
-				type: 'danger'
-			}
-		);
-	};
-
 	var alloyEditor;
 
 	var getInitialContent = function() {
@@ -284,6 +254,36 @@ name = HtmlUtil.escapeJS(name);
 		<liferay-util:dynamic-include key='<%= "com.liferay.frontend.editor.alloyeditor.web#" + editorName + "#onEditorCreate" %>' />
 
 		Liferay.namespace('EDITORS').alloyEditor.addInstance();
+	};
+
+	window.addEventListener('dragover', function(event) {
+		event.preventDefault();
+		event.stopPropagation();
+	}, false);
+
+	window.addEventListener('drop', function(event) {
+		if (!event.target.isContentEditable) {
+			event.preventDefault();
+			event.stopImmediatePropagation();
+			showError();
+		}
+	}, false);
+
+	var showError = function() {
+		new Liferay.Notification(
+			{
+				closeable: true,
+				delay: {
+					hide: 5000,
+					show: 0
+				},
+				duration: 250,
+				message: '<%= UnicodeLanguageUtil.get(resourceBundle, "your-request-failed-to-complete") %>',
+				render: true,
+				title: '<%= UnicodeLanguageUtil.get(resourceBundle, "error") %>',
+				type: 'danger'
+			}
+		);
 	};
 
 	window['<%= name %>'] = {

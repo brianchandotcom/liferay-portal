@@ -89,6 +89,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 
@@ -790,12 +791,11 @@ public class JournalArticleStagedModelDataHandler
 				}
 			}
 
-			Map<java.util.Locale, String> friendlyURLMap =
-				article.getFriendlyURLMap();
+			Map<Locale, String> friendlyURLMap = article.getFriendlyURLMap();
 
-			friendlyURLMap.keySet().forEach(
-				(key) -> friendlyURLMap.replace(key,
-					_http.decodeURL(friendlyURLMap.get(key))));
+			friendlyURLMap.forEach(
+				(locale, url) -> friendlyURLMap.replace(
+					locale, _http.decodeURL(url)));
 
 			String articleURL = null;
 

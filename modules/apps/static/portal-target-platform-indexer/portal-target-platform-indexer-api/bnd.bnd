@@ -1,4 +1,0 @@
-Bundle-Name: Liferay Portal Target Platform Indexer API
-Bundle-SymbolicName: com.liferay.portal.target.platform.indexer.api
-Bundle-Version: 2.0.0
-Export-Package: com.liferay.portal.target.platform.indexer

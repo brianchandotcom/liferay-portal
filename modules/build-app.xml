@@ -173,8 +173,6 @@
 				</antcall>
 			</sequential>
 		</for>
-
-		<antcall target="index-modules-and-app-lpkgs" />
 	</target>
 
 	<target name="build-app-lpkg-base">
@@ -647,54 +645,6 @@
 			<arg value="-m" />
 			<arg value="${git.commit.app.ticket} Release Apps: ${app.names.spaced}" />
 		</exec>
-	</target>
-
-	<target name="index-modules-and-app-lpkgs">
-		<tstamp>
-			<format pattern="yyMMddHHmmssSSS" property="lpkg.timestamp" />
-		</tstamp>
-
-		<if>
-			<equals arg1="${lpkg.index.tar.enabled}" arg2="true" />
-			<then>
-				<tar baseDir="${liferay.home}" destfile="/tmp/lpkg-index-tomcat-${lpkg.timestamp}.tar" longfile="gnu" />
-			</then>
-		</if>
-
-		<path id="target.platform.indexer.classpath">
-
-			<!-- Order is important -->
-
-			<fileset
-				dir="${liferay.home}/tools/portal-tools-target-platform-indexer-client"
-				includes="com.liferay.portal.target.platform.indexer.api.jar,com.liferay.portal.target.platform.indexer.impl.jar,com.liferay.portal.tools.target.platform.indexer.client.jar,slf4j-api.jar,slf4j-simple.jar"
-			/>
-			<fileset
-				dir="${osgi.dir}/core"
-				includes="com.liferay.portal.bootstrap.jar,org.eclipse.osgi.jar"
-			/>
-		</path>
-
-		<if>
-			<equals arg1="${jvm.debug}" arg2="true" />
-			<then>
-				<var name="junit.debug.jpda" value="-agentlib:jdwp=transport=dt_socket,address=8000,server=y,suspend=y" />
-			</then>
-		</if>
-
-		<property name="junit.debug.jpda" value="" />
-
-		<java
-			classname="com.liferay.portal.tools.target.platform.indexer.client.TargetPlatformIndexerClient"
-			classpathref="target.platform.indexer.classpath"
-			failonerror="true"
-			fork="true"
-			newenvironment="true"
-		>
-			<jvmarg value="-Dliferay.home=${liferay.home}" />
-			<jvmarg value="-Dportal.lib.dir=${portal.lib.dir}" />
-			<jvmarg line="${junit.debug.jpda}" />
-		</java>
 	</target>
 
 	<target depends="checkout-public-modules-releng" name="init-build-app">

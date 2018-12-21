@@ -21,22 +21,14 @@ import com.liferay.portal.kernel.util.StringBundler;
  */
 public class JavaTernaryOperator extends JavaExpression {
 
-	public void setConditionJavaExpression(
-		JavaExpression conditionJavaExpression) {
-
-		_conditionJavaExpression = conditionJavaExpression;
-	}
-
-	public void setFalseValueJavaExpression(
+	public JavaTernaryOperator(
+		JavaExpression conditionJavaExpression,
+		JavaExpression trueValueJavaExpression,
 		JavaExpression falseValueJavaExpression) {
 
-		_falseValueJavaExpression = falseValueJavaExpression;
-	}
-
-	public void setTrueValueJavaExpression(
-		JavaExpression trueValueJavaExpression) {
-
+		_conditionJavaExpression = conditionJavaExpression;
 		_trueValueJavaExpression = trueValueJavaExpression;
+		_falseValueJavaExpression = falseValueJavaExpression;
 	}
 
 	@Override
@@ -57,8 +49,8 @@ public class JavaTernaryOperator extends JavaExpression {
 		return sb.toString();
 	}
 
-	private JavaExpression _conditionJavaExpression;
-	private JavaExpression _falseValueJavaExpression;
-	private JavaExpression _trueValueJavaExpression;
+	private final JavaExpression _conditionJavaExpression;
+	private final JavaExpression _falseValueJavaExpression;
+	private final JavaExpression _trueValueJavaExpression;
 
 }

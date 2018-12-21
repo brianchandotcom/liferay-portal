@@ -24,11 +24,10 @@ import java.util.List;
  */
 public class JavaPackageDefinition extends BaseJavaTerm {
 
-	public JavaPackageDefinition(String name) {
-		_name = new JavaSimpleValue(name);
-	}
+	public JavaPackageDefinition(
+		String name, List<JavaAnnotation> javaAnnotations) {
 
-	public void setJavaAnnotations(List<JavaAnnotation> javaAnnotations) {
+		_name = new JavaSimpleValue(name);
 		_javaAnnotations = javaAnnotations;
 	}
 
@@ -57,7 +56,7 @@ public class JavaPackageDefinition extends BaseJavaTerm {
 		return sb.toString();
 	}
 
-	private List<JavaAnnotation> _javaAnnotations;
+	private final List<JavaAnnotation> _javaAnnotations;
 	private final JavaSimpleValue _name;
 
 }

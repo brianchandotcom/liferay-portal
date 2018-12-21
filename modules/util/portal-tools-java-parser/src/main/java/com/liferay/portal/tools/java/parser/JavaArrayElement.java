@@ -23,13 +23,11 @@ import java.util.List;
  */
 public class JavaArrayElement extends JavaExpression {
 
-	public JavaArrayElement(JavaExpression arrayJavaExpression) {
-		_arrayJavaExpression = arrayJavaExpression;
-	}
-
-	public void setIndexValueJavaExpressions(
+	public JavaArrayElement(
+		JavaExpression arrayJavaExpression,
 		List<JavaExpression> indexValueJavaExpressions) {
 
+		_arrayJavaExpression = arrayJavaExpression;
 		_indexValueJavaExpressions = indexValueJavaExpressions;
 	}
 
@@ -71,6 +69,6 @@ public class JavaArrayElement extends JavaExpression {
 	}
 
 	private final JavaExpression _arrayJavaExpression;
-	private List<JavaExpression> _indexValueJavaExpressions;
+	private final List<JavaExpression> _indexValueJavaExpressions;
 
 }

@@ -24,7 +24,13 @@ import java.util.List;
  */
 public class JavaClassDefinition extends BaseJavaTerm {
 
-	public void setClassJavaType(JavaType classJavaType) {
+	public JavaClassDefinition(
+		String type, List<JavaAnnotation> javaAnnotations,
+		List<JavaSimpleValue> modifiers, JavaType classJavaType) {
+
+		_type = type;
+		_javaAnnotations = javaAnnotations;
+		_modifiers = modifiers;
 		_classJavaType = classJavaType;
 	}
 
@@ -38,18 +44,6 @@ public class JavaClassDefinition extends BaseJavaTerm {
 		List<JavaType> implementedClassJavaTypes) {
 
 		_implementedClassJavaTypes = implementedClassJavaTypes;
-	}
-
-	public void setJavaAnnotations(List<JavaAnnotation> javaAnnotations) {
-		_javaAnnotations = javaAnnotations;
-	}
-
-	public void setModifiers(List<JavaSimpleValue> modifiers) {
-		_modifiers = modifiers;
-	}
-
-	public void setType(String type) {
-		_type = type;
 	}
 
 	@Override
@@ -156,11 +150,11 @@ public class JavaClassDefinition extends BaseJavaTerm {
 		return sb.toString();
 	}
 
-	private JavaType _classJavaType;
+	private final JavaType _classJavaType;
 	private List<JavaType> _extendedClassJavaTypes;
 	private List<JavaType> _implementedClassJavaTypes;
-	private List<JavaAnnotation> _javaAnnotations;
-	private List<JavaSimpleValue> _modifiers;
-	private String _type;
+	private final List<JavaAnnotation> _javaAnnotations;
+	private final List<JavaSimpleValue> _modifiers;
+	private final String _type;
 
 }

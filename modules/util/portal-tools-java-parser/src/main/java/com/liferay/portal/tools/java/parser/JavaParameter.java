@@ -24,20 +24,14 @@ import java.util.List;
  */
 public class JavaParameter extends BaseJavaTerm {
 
-	public JavaParameter(String name) {
+	public JavaParameter(
+		String name, List<JavaAnnotation> javaAnnotations,
+		List<JavaSimpleValue> modifiers, JavaType javaType) {
+
 		_name = new JavaSimpleValue(name);
-	}
-
-	public void setJavaAnnotations(List<JavaAnnotation> javaAnnotations) {
 		_javaAnnotations = javaAnnotations;
-	}
-
-	public void setJavaType(JavaType javaType) {
-		_javaType = javaType;
-	}
-
-	public void setModifiers(List<JavaSimpleValue> modifiers) {
 		_modifiers = modifiers;
+		_javaType = javaType;
 	}
 
 	@Override
@@ -67,9 +61,9 @@ public class JavaParameter extends BaseJavaTerm {
 		return sb.toString();
 	}
 
-	private List<JavaAnnotation> _javaAnnotations;
-	private JavaType _javaType;
-	private List<JavaSimpleValue> _modifiers;
+	private final List<JavaAnnotation> _javaAnnotations;
+	private final JavaType _javaType;
+	private final List<JavaSimpleValue> _modifiers;
 	private final JavaSimpleValue _name;
 
 }

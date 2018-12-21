@@ -24,8 +24,13 @@ import java.util.List;
  */
 public class JavaVariableDefinition extends BaseJavaTerm {
 
-	public JavaVariableDefinition(String name) {
+	public JavaVariableDefinition(
+		String name, List<JavaAnnotation> javaAnnotations,
+		List<JavaSimpleValue> modifiers) {
+
 		_name = new JavaSimpleValue(name);
+		_javaAnnotations = javaAnnotations;
+		_modifiers = modifiers;
 	}
 
 	public JavaExpression getAssignValueJavaExpression() {
@@ -38,16 +43,8 @@ public class JavaVariableDefinition extends BaseJavaTerm {
 		_assignValueJavaExpression = assignValueJavaExpression;
 	}
 
-	public void setJavaAnnotations(List<JavaAnnotation> javaAnnotations) {
-		_javaAnnotations = javaAnnotations;
-	}
-
 	public void setJavaType(JavaType javaType) {
 		_javaType = javaType;
-	}
-
-	public void setModifiers(List<JavaSimpleValue> modifiers) {
-		_modifiers = modifiers;
 	}
 
 	@Override
@@ -107,9 +104,9 @@ public class JavaVariableDefinition extends BaseJavaTerm {
 	}
 
 	private JavaExpression _assignValueJavaExpression;
-	private List<JavaAnnotation> _javaAnnotations;
+	private final List<JavaAnnotation> _javaAnnotations;
 	private JavaType _javaType;
-	private List<JavaSimpleValue> _modifiers;
+	private final List<JavaSimpleValue> _modifiers;
 	private final JavaSimpleValue _name;
 
 }

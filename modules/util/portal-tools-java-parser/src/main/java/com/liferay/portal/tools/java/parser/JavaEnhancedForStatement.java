@@ -21,15 +21,11 @@ import com.liferay.portal.kernel.util.StringBundler;
  */
 public class JavaEnhancedForStatement extends JavaLoopStatement {
 
-	public void setCollectionJavaExpression(
-		JavaExpression collectionJavaExpression) {
-
-		_collectionJavaExpression = collectionJavaExpression;
-	}
-
-	public void setJavaVariableDefinition(
+	public JavaEnhancedForStatement(
+		JavaExpression collectionJavaExpression,
 		JavaVariableDefinition javaVariableDefinition) {
 
+		_collectionJavaExpression = collectionJavaExpression;
 		_javaVariableDefinition = javaVariableDefinition;
 	}
 
@@ -58,7 +54,7 @@ public class JavaEnhancedForStatement extends JavaLoopStatement {
 		return sb.toString();
 	}
 
-	private JavaExpression _collectionJavaExpression;
-	private JavaVariableDefinition _javaVariableDefinition;
+	private final JavaExpression _collectionJavaExpression;
+	private final JavaVariableDefinition _javaVariableDefinition;
 
 }

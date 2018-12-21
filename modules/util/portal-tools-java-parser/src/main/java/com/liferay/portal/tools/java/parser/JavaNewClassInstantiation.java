@@ -21,12 +21,12 @@ import com.liferay.portal.kernel.util.StringBundler;
  */
 public class JavaNewClassInstantiation extends JavaExpression {
 
-	public boolean hasBody() {
-		return _javaClassCall.hasBody();
+	public JavaNewClassInstantiation(JavaClassCall javaClassCall) {
+		_javaClassCall = javaClassCall;
 	}
 
-	public void setJavaClassCall(JavaClassCall javaClassCall) {
-		_javaClassCall = javaClassCall;
+	public boolean hasBody() {
+		return _javaClassCall.hasBody();
 	}
 
 	@Override
@@ -54,6 +54,6 @@ public class JavaNewClassInstantiation extends JavaExpression {
 		return sb.toString();
 	}
 
-	private JavaClassCall _javaClassCall;
+	private final JavaClassCall _javaClassCall;
 
 }

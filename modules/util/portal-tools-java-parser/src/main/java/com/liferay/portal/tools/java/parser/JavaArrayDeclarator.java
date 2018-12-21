@@ -23,13 +23,10 @@ import java.util.List;
  */
 public class JavaArrayDeclarator extends JavaExpression {
 
-	public JavaArrayDeclarator(String className) {
+	public JavaArrayDeclarator(
+		String className, List<JavaExpression> dimensionValueJavaExpressions) {
+
 		_className = new JavaSimpleValue(className);
-	}
-
-	public void setDimensionValueJavaExpressions(
-		List<JavaExpression> dimensionValueJavaExpressions) {
-
 		_dimensionValueJavaExpressions = dimensionValueJavaExpressions;
 	}
 
@@ -98,7 +95,7 @@ public class JavaArrayDeclarator extends JavaExpression {
 	}
 
 	private final JavaSimpleValue _className;
-	private List<JavaExpression> _dimensionValueJavaExpressions;
+	private final List<JavaExpression> _dimensionValueJavaExpressions;
 	private List<JavaType> _genericJavaTypes;
 
 }

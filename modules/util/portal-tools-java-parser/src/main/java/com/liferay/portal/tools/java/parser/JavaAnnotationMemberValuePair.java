@@ -23,11 +23,10 @@ import java.util.Objects;
  */
 public class JavaAnnotationMemberValuePair extends BaseJavaTerm {
 
-	public JavaAnnotationMemberValuePair(String name) {
-		_name = new JavaSimpleValue(name);
-	}
+	public JavaAnnotationMemberValuePair(
+		String name, JavaExpression valueJavaExpression) {
 
-	public void setValueJavaExpression(JavaExpression valueJavaExpression) {
+		_name = new JavaSimpleValue(name);
 		_valueJavaExpression = valueJavaExpression;
 	}
 
@@ -59,6 +58,6 @@ public class JavaAnnotationMemberValuePair extends BaseJavaTerm {
 	}
 
 	private final JavaSimpleValue _name;
-	private JavaExpression _valueJavaExpression;
+	private final JavaExpression _valueJavaExpression;
 
 }

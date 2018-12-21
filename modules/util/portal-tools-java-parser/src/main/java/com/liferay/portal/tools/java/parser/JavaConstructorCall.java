@@ -23,14 +23,11 @@ import java.util.List;
  */
 public class JavaConstructorCall extends BaseJavaTerm {
 
-	public JavaConstructorCall(boolean superCall) {
-		_superCall = superCall;
-	}
-
-	public void setParameterValueJavaExpressions(
-		List<JavaExpression> parameterValueJavaExpressions) {
+	public JavaConstructorCall(
+		List<JavaExpression> parameterValueJavaExpressions, boolean superCall) {
 
 		_parameterValueJavaExpressions = parameterValueJavaExpressions;
+		_superCall = superCall;
 	}
 
 	@Override
@@ -66,7 +63,7 @@ public class JavaConstructorCall extends BaseJavaTerm {
 		return sb.toString();
 	}
 
-	private List<JavaExpression> _parameterValueJavaExpressions;
+	private final List<JavaExpression> _parameterValueJavaExpressions;
 	private final boolean _superCall;
 
 }

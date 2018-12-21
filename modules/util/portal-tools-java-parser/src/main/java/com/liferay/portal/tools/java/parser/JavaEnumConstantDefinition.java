@@ -24,11 +24,10 @@ import java.util.List;
  */
 public class JavaEnumConstantDefinition extends BaseJavaTerm {
 
-	public JavaEnumConstantDefinition(String name) {
-		_name = new JavaSimpleValue(name);
-	}
+	public JavaEnumConstantDefinition(
+		String name, List<JavaAnnotation> javaAnnotations) {
 
-	public void setJavaAnnotations(List<JavaAnnotation> javaAnnotations) {
+		_name = new JavaSimpleValue(name);
 		_javaAnnotations = javaAnnotations;
 	}
 
@@ -74,7 +73,7 @@ public class JavaEnumConstantDefinition extends BaseJavaTerm {
 		return sb.toString();
 	}
 
-	private List<JavaAnnotation> _javaAnnotations;
+	private final List<JavaAnnotation> _javaAnnotations;
 	private final JavaSimpleValue _name;
 	private List<JavaExpression> _parameterValueJavaExpressions;
 

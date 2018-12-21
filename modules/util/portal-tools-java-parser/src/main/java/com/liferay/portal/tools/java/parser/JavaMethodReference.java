@@ -24,13 +24,11 @@ import java.util.List;
 public class JavaMethodReference extends JavaExpression {
 
 	public JavaMethodReference(
-		String methodName, JavaExpression referenceJavaExpression) {
+		String methodName, JavaExpression referenceJavaExpression,
+		List<JavaType> genericJavaTypes) {
 
 		_methodName = new JavaSimpleValue(methodName);
 		_referenceJavaExpression = referenceJavaExpression;
-	}
-
-	public void setGenericJavaTypes(List<JavaType> genericJavaTypes) {
 		_genericJavaTypes = genericJavaTypes;
 	}
 
@@ -61,7 +59,7 @@ public class JavaMethodReference extends JavaExpression {
 		return sb.toString();
 	}
 
-	private List<JavaType> _genericJavaTypes;
+	private final List<JavaType> _genericJavaTypes;
 	private final JavaSimpleValue _methodName;
 	private final JavaExpression _referenceJavaExpression;
 

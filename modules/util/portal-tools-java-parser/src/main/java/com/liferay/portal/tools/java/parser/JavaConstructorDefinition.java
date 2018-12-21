@@ -24,11 +24,10 @@ import java.util.List;
  */
 public class JavaConstructorDefinition extends BaseJavaTerm {
 
-	public void setJavaAnnotations(List<JavaAnnotation> javaAnnotations) {
-		_javaAnnotations = javaAnnotations;
-	}
+	public JavaConstructorDefinition(
+		List<JavaAnnotation> javaAnnotations, JavaSignature javaSignature) {
 
-	public void setJavaSignature(JavaSignature javaSignature) {
+		_javaAnnotations = javaAnnotations;
 		_javaSignature = javaSignature;
 	}
 
@@ -58,7 +57,7 @@ public class JavaConstructorDefinition extends BaseJavaTerm {
 		return sb.toString();
 	}
 
-	private List<JavaAnnotation> _javaAnnotations;
-	private JavaSignature _javaSignature;
+	private final List<JavaAnnotation> _javaAnnotations;
+	private final JavaSignature _javaSignature;
 
 }

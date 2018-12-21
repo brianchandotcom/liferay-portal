@@ -21,11 +21,10 @@ import com.liferay.portal.kernel.util.StringBundler;
  */
 public class JavaInstanceofStatement extends JavaExpression {
 
-	public JavaInstanceofStatement(JavaType classJavaType) {
-		_classJavaType = classJavaType;
-	}
+	public JavaInstanceofStatement(
+		JavaType classJavaType, JavaExpression valueJavaExpression) {
 
-	public void setValue(JavaExpression valueJavaExpression) {
+		_classJavaType = classJavaType;
 		_valueJavaExpression = valueJavaExpression;
 	}
 
@@ -52,6 +51,6 @@ public class JavaInstanceofStatement extends JavaExpression {
 	}
 
 	private final JavaType _classJavaType;
-	private JavaExpression _valueJavaExpression;
+	private final JavaExpression _valueJavaExpression;
 
 }

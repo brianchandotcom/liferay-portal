@@ -23,8 +23,13 @@ import java.util.List;
  */
 public class JavaClassCall extends JavaExpression {
 
-	public JavaClassCall(String className) {
+	public JavaClassCall(
+		String className, List<JavaType> genericJavaTypes,
+		List<JavaExpression> parameterValueJavaExpressions) {
+
 		_className = new JavaSimpleValue(className);
+		_genericJavaTypes = genericJavaTypes;
+		_parameterValueJavaExpressions = parameterValueJavaExpressions;
 	}
 
 	public boolean hasBody() {
@@ -35,18 +40,8 @@ public class JavaClassCall extends JavaExpression {
 		_emptyBody = emptyBody;
 	}
 
-	public void setGenericJavaTypes(List<JavaType> genericJavaTypes) {
-		_genericJavaTypes = genericJavaTypes;
-	}
-
 	public void setHasBody(boolean hasBody) {
 		_hasBody = hasBody;
-	}
-
-	public void setParameterValueJavaExpressions(
-		List<JavaExpression> parameterValueJavaExpressions) {
-
-		_parameterValueJavaExpressions = parameterValueJavaExpressions;
 	}
 
 	@Override
@@ -123,8 +118,8 @@ public class JavaClassCall extends JavaExpression {
 
 	private final JavaSimpleValue _className;
 	private boolean _emptyBody;
-	private List<JavaType> _genericJavaTypes;
+	private final List<JavaType> _genericJavaTypes;
 	private boolean _hasBody;
-	private List<JavaExpression> _parameterValueJavaExpressions;
+	private final List<JavaExpression> _parameterValueJavaExpressions;
 
 }

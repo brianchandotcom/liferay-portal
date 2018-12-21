@@ -85,14 +85,11 @@ public class JavaParserUtil {
 			DetailAST annotationFieldDefinitionDetailAST) {
 
 		JavaAnnotationFieldDefinition javaAnnotationFieldDefinition =
-			new JavaAnnotationFieldDefinition();
-
-		javaAnnotationFieldDefinition.setJavaAnnotations(
-			_parseJavaAnnotations(
-				annotationFieldDefinitionDetailAST.findFirstToken(
-					TokenTypes.MODIFIERS)));
-		javaAnnotationFieldDefinition.setJavaSignature(
-			_parseJavaSignature(annotationFieldDefinitionDetailAST));
+			new JavaAnnotationFieldDefinition(
+				_parseJavaAnnotations(
+					annotationFieldDefinitionDetailAST.findFirstToken(
+						TokenTypes.MODIFIERS)),
+				_parseJavaSignature(annotationFieldDefinitionDetailAST));
 
 		DetailAST literalDefaultDetailAST =
 			annotationFieldDefinitionDetailAST.findFirstToken(
@@ -123,20 +120,16 @@ public class JavaParserUtil {
 	public static JavaCatchStatement parseJavaCatchStatement(
 		DetailAST literalCatchDetailAST) {
 
-		JavaCatchStatement javaCatchStatement = new JavaCatchStatement();
-
 		DetailAST parameterDefinitionDetailAST =
 			literalCatchDetailAST.findFirstToken(TokenTypes.PARAMETER_DEF);
 
-		javaCatchStatement.setModifiers(
-			_parseModifiers(
-				parameterDefinitionDetailAST.findFirstToken(
-					TokenTypes.MODIFIERS)));
+		List<JavaSimpleValue> modifiers = _parseModifiers(
+			parameterDefinitionDetailAST.findFirstToken(TokenTypes.MODIFIERS));
 
 		DetailAST identDetailAST = parameterDefinitionDetailAST.findFirstToken(
 			TokenTypes.IDENT);
 
-		javaCatchStatement.setParameterName(identDetailAST.getText());
+		String parameterName = identDetailAST.getText();
 
 		List<JavaSimpleValue> parameterTypeNames = new ArrayList<>();
 
@@ -172,15 +165,12 @@ public class JavaParserUtil {
 			Collections.reverse(parameterTypeNames);
 		}
 
-		javaCatchStatement.setParameterTypeNames(parameterTypeNames);
-
-		return javaCatchStatement;
+		return new JavaCatchStatement(
+			modifiers, parameterName, parameterTypeNames);
 	}
 
 	public static JavaClassDefinition parseJavaClassDefinition(
 		DetailAST definitionDetailAST) {
-
-		JavaClassDefinition javaClassDefinition = new JavaClassDefinition();
 
 		DetailAST modifiersDetailAST = definitionDetailAST.findFirstToken(
 			TokenTypes.MODIFIERS);
@@ -195,12 +185,6 @@ public class JavaParserUtil {
 			nextSiblingDetailAST = nextSiblingDetailAST.getNextSibling();
 		}
 
-		javaClassDefinition.setType(type);
-
-		javaClassDefinition.setJavaAnnotations(
-			_parseJavaAnnotations(modifiersDetailAST));
-		javaClassDefinition.setModifiers(_parseModifiers(modifiersDetailAST));
-
 		JavaType classJavaType = new JavaType(_getName(definitionDetailAST), 0);
 
 		DetailAST typeParametersDetailAST = definitionDetailAST.findFirstToken(
@@ -212,7 +196,9 @@ public class JavaParserUtil {
 					typeParametersDetailAST, TokenTypes.TYPE_PARAMETER));
 		}
 
-		javaClassDefinition.setClassJavaType(classJavaType);
+		JavaClassDefinition javaClassDefinition = new JavaClassDefinition(
+			type, _parseJavaAnnotations(modifiersDetailAST),
+			_parseModifiers(modifiersDetailAST), classJavaType);
 
 		DetailAST extendsClauseDetailAST = definitionDetailAST.findFirstToken(
 			TokenTypes.EXTENDS_CLAUSE);
@@ -238,30 +224,26 @@ public class JavaParserUtil {
 	public static JavaConstructorCall parseJavaConstructorCall(
 		DetailAST detailAST) {
 
-		JavaConstructorCall javaConstructorCall = new JavaConstructorCall(
-			detailAST.getType() == TokenTypes.SUPER_CTOR_CALL);
+		boolean superCall = false;
 
-		javaConstructorCall.setParameterValueJavaExpressions(
+		if (detailAST.getType() == TokenTypes.SUPER_CTOR_CALL) {
+			superCall = true;
+		}
+
+		return new JavaConstructorCall(
 			_parseParameterValueJavaExpressions(
-				detailAST.findFirstToken(TokenTypes.ELIST)));
-
-		return javaConstructorCall;
+				detailAST.findFirstToken(TokenTypes.ELIST)),
+			superCall);
 	}
 
 	public static JavaConstructorDefinition parseJavaConstructorDefinition(
 		DetailAST constructorDefinitionDetailAST) {
 
-		JavaConstructorDefinition javaConstructorDefinition =
-			new JavaConstructorDefinition();
-
-		javaConstructorDefinition.setJavaAnnotations(
+		return new JavaConstructorDefinition(
 			_parseJavaAnnotations(
 				constructorDefinitionDetailAST.findFirstToken(
-					TokenTypes.MODIFIERS)));
-		javaConstructorDefinition.setJavaSignature(
+					TokenTypes.MODIFIERS)),
 			_parseJavaSignature(constructorDefinitionDetailAST));
-
-		return javaConstructorDefinition;
 	}
 
 	public static JavaContinueStatement parseJavaContinueStatement(
@@ -459,14 +441,10 @@ public class JavaParserUtil {
 	public static JavaIfStatement parseJavaIfStatement(
 		DetailAST literalIfDetailAST) {
 
-		JavaIfStatement javaIfStatement = new JavaIfStatement();
-
 		DetailAST firstChildDetailAST = literalIfDetailAST.getFirstChild();
 
-		javaIfStatement.setConditionJavaExpression(
+		return new JavaIfStatement(
 			parseJavaExpression(firstChildDetailAST.getNextSibling()));
-
-		return javaIfStatement;
 	}
 
 	public static JavaImport parseJavaImport(
@@ -502,30 +480,20 @@ public class JavaParserUtil {
 	public static JavaMethodDefinition parseJavaMethodDefinition(
 		DetailAST methodDefinitionDetailAST) {
 
-		JavaMethodDefinition javaMethodDefinition = new JavaMethodDefinition();
-
-		javaMethodDefinition.setJavaAnnotations(
+		return new JavaMethodDefinition(
 			_parseJavaAnnotations(
-				methodDefinitionDetailAST.findFirstToken(
-					TokenTypes.MODIFIERS)));
-		javaMethodDefinition.setJavaSignature(
+				methodDefinitionDetailAST.findFirstToken(TokenTypes.MODIFIERS)),
 			_parseJavaSignature(methodDefinitionDetailAST));
-
-		return javaMethodDefinition;
 	}
 
 	public static JavaPackageDefinition parseJavaPackageDefinition(
 		DetailAST packageDefinitionDetailAST) {
 
-		JavaPackageDefinition javaPackageDefinition = new JavaPackageDefinition(
-			_getName(packageDefinitionDetailAST));
-
-		javaPackageDefinition.setJavaAnnotations(
+		return new JavaPackageDefinition(
+			_getName(packageDefinitionDetailAST),
 			_parseJavaAnnotations(
 				packageDefinitionDetailAST.findFirstToken(
 					TokenTypes.ANNOTATIONS)));
-
-		return javaPackageDefinition;
 	}
 
 	public static JavaReturnStatement parseJavaReturnStatement(
@@ -628,16 +596,13 @@ public class JavaParserUtil {
 	public static JavaVariableDefinition parseJavaVariableDefinition(
 		DetailAST detailAST) {
 
-		JavaVariableDefinition javaVariableDefinition =
-			new JavaVariableDefinition(_getName(detailAST));
-
 		DetailAST modifiersDetailAST = detailAST.findFirstToken(
 			TokenTypes.MODIFIERS);
 
-		javaVariableDefinition.setJavaAnnotations(
-			_parseJavaAnnotations(modifiersDetailAST));
-		javaVariableDefinition.setModifiers(
-			_parseModifiers(modifiersDetailAST));
+		JavaVariableDefinition javaVariableDefinition =
+			new JavaVariableDefinition(
+				_getName(detailAST), _parseJavaAnnotations(modifiersDetailAST),
+				_parseModifiers(modifiersDetailAST));
 
 		javaVariableDefinition.setJavaType(
 			_parseJavaType(detailAST.findFirstToken(TokenTypes.TYPE)));
@@ -655,8 +620,6 @@ public class JavaParserUtil {
 	public static JavaWhileStatement parseJavaWhileStatement(
 		DetailAST detailAST) {
 
-		JavaWhileStatement javaWhileStatement = new JavaWhileStatement();
-
 		DetailAST lparenDetailAST = null;
 
 		if (detailAST.getType() == TokenTypes.LITERAL_WHILE) {
@@ -666,10 +629,8 @@ public class JavaParserUtil {
 			lparenDetailAST = detailAST.getNextSibling();
 		}
 
-		javaWhileStatement.setConditionJavaExpression(
+		return new JavaWhileStatement(
 			parseJavaExpression(lparenDetailAST.getNextSibling()));
-
-		return javaWhileStatement;
 	}
 
 	private static Tuple _getChainTuple(DetailAST dotDetailAST) {
@@ -951,14 +912,10 @@ public class JavaParserUtil {
 		DetailAST identDetailAST =
 			annotationMemberValuePairDetailAST.findFirstToken(TokenTypes.IDENT);
 
-		JavaAnnotationMemberValuePair javaAnnotationMemberValuePair =
-			new JavaAnnotationMemberValuePair(identDetailAST.getText());
-
-		javaAnnotationMemberValuePair.setValueJavaExpression(
+		return new JavaAnnotationMemberValuePair(
+			identDetailAST.getText(),
 			parseJavaExpression(
 				annotationMemberValuePairDetailAST.getLastChild()));
-
-		return javaAnnotationMemberValuePair;
 	}
 
 	private static List<JavaAnnotationMemberValuePair>
@@ -1033,13 +990,8 @@ public class JavaParserUtil {
 			if (childDetailAST.getType() != TokenTypes.ARRAY_DECLARATOR) {
 				FullIdent fullIdent = FullIdent.createFullIdent(childDetailAST);
 
-				JavaArrayDeclarator javaArrayDeclarator =
-					new JavaArrayDeclarator(fullIdent.getText());
-
-				javaArrayDeclarator.setDimensionValueJavaExpressions(
-					dimensionValueJavaExpressions);
-
-				return javaArrayDeclarator;
+				return new JavaArrayDeclarator(
+					fullIdent.getText(), dimensionValueJavaExpressions);
 			}
 
 			dimensionValueJavaExpressions.add(
@@ -1052,14 +1004,13 @@ public class JavaParserUtil {
 	private static JavaArrayElement _parseJavaArrayElement(
 		DetailAST indexOpDetailAST) {
 
-		JavaArrayElement javaArrayElement = null;
+		JavaExpression arrayJavaExpression = null;
 
 		DetailAST firstChildDetailAST = indexOpDetailAST.getFirstChild();
 
 		while (true) {
 			if (firstChildDetailAST.getType() != TokenTypes.INDEX_OP) {
-				javaArrayElement = new JavaArrayElement(
-					parseJavaExpression(firstChildDetailAST));
+				arrayJavaExpression = parseJavaExpression(firstChildDetailAST);
 
 				break;
 			}
@@ -1067,21 +1018,13 @@ public class JavaParserUtil {
 			firstChildDetailAST = firstChildDetailAST.getFirstChild();
 		}
 
-		javaArrayElement.setIndexValueJavaExpressions(
+		return new JavaArrayElement(
+			arrayJavaExpression,
 			_parseArrayValueJavaExpressions(indexOpDetailAST));
-
-		return javaArrayElement;
 	}
 
 	private static JavaClassCall _parseJavaClassCall(
 		DetailAST literalNewDetailAST) {
-
-		JavaClassCall javaClassCall = new JavaClassCall(
-			_getName(literalNewDetailAST));
-
-		javaClassCall.setParameterValueJavaExpressions(
-			_parseParameterValueJavaExpressions(
-				literalNewDetailAST.findFirstToken(TokenTypes.ELIST)));
 
 		DetailAST typeArgumentDetailAST = literalNewDetailAST.findFirstToken(
 			TokenTypes.TYPE_ARGUMENTS);
@@ -1095,9 +1038,12 @@ public class JavaParserUtil {
 			}
 		}
 
-		javaClassCall.setGenericJavaTypes(
+		JavaClassCall javaClassCall = new JavaClassCall(
+			_getName(literalNewDetailAST),
 			_parseGenericJavaTypes(
-				typeArgumentDetailAST, TokenTypes.TYPE_ARGUMENT));
+				typeArgumentDetailAST, TokenTypes.TYPE_ARGUMENT),
+			_parseParameterValueJavaExpressions(
+				literalNewDetailAST.findFirstToken(TokenTypes.ELIST)));
 
 		DetailAST objBlockDetailAST = literalNewDetailAST.findFirstToken(
 			TokenTypes.OBJBLOCK);
@@ -1116,18 +1062,12 @@ public class JavaParserUtil {
 	private static JavaEnhancedForStatement _parseJavaEnhancedForStatement(
 		DetailAST forEachClauseDetailAST) {
 
-		JavaEnhancedForStatement javaEnhancedForStatement =
-			new JavaEnhancedForStatement();
-
-		javaEnhancedForStatement.setCollectionJavaExpression(
+		return new JavaEnhancedForStatement(
 			parseJavaExpression(
-				forEachClauseDetailAST.findFirstToken(TokenTypes.EXPR)));
-		javaEnhancedForStatement.setJavaVariableDefinition(
+				forEachClauseDetailAST.findFirstToken(TokenTypes.EXPR)),
 			parseJavaVariableDefinition(
 				forEachClauseDetailAST.findFirstToken(
 					TokenTypes.VARIABLE_DEF)));
-
-		return javaEnhancedForStatement;
 	}
 
 	private static JavaEnumConstantDefinition _parseJavaEnumConstantDefinition(
@@ -1135,12 +1075,10 @@ public class JavaParserUtil {
 
 		JavaEnumConstantDefinition javaEnumConstantDefinition =
 			new JavaEnumConstantDefinition(
-				_getName(enumConstantDefinitionDetailAST));
-
-		javaEnumConstantDefinition.setJavaAnnotations(
-			_parseJavaAnnotations(
-				enumConstantDefinitionDetailAST.findFirstToken(
-					TokenTypes.ANNOTATIONS)));
+				_getName(enumConstantDefinitionDetailAST),
+				_parseJavaAnnotations(
+					enumConstantDefinitionDetailAST.findFirstToken(
+						TokenTypes.ANNOTATIONS)));
 
 		DetailAST elistDetailAST =
 			enumConstantDefinitionDetailAST.findFirstToken(TokenTypes.ELIST);
@@ -1233,13 +1171,9 @@ public class JavaParserUtil {
 		DetailAST typeDetailAST = literalInstanceofDetailAST.findFirstToken(
 			TokenTypes.TYPE);
 
-		JavaInstanceofStatement javaInstanceofStatement =
-			new JavaInstanceofStatement(_parseJavaType(typeDetailAST));
-
-		javaInstanceofStatement.setValue(
+		return new JavaInstanceofStatement(
+			_parseJavaType(typeDetailAST),
 			parseJavaExpression(literalInstanceofDetailAST.getFirstChild()));
-
-		return javaInstanceofStatement;
 	}
 
 	private static JavaExpression _parseJavaLambdaExpression(
@@ -1362,17 +1296,13 @@ public class JavaParserUtil {
 
 		DetailAST lastChildDetailAST = methodReferenceDetailAST.getLastChild();
 
-		JavaMethodReference javaMethodReference = new JavaMethodReference(
+		return new JavaMethodReference(
 			lastChildDetailAST.getText(),
-			parseJavaExpression(methodReferenceDetailAST.getFirstChild()));
-
-		javaMethodReference.setGenericJavaTypes(
+			parseJavaExpression(methodReferenceDetailAST.getFirstChild()),
 			_parseGenericJavaTypes(
 				methodReferenceDetailAST.findFirstToken(
 					TokenTypes.TYPE_ARGUMENTS),
 				TokenTypes.TYPE_ARGUMENT));
-
-		return javaMethodReference;
 	}
 
 	private static JavaNewArrayInstantiation _parseJavaNewArrayInstantiation(
@@ -1382,12 +1312,11 @@ public class JavaParserUtil {
 			new JavaNewArrayInstantiation();
 
 		JavaArrayDeclarator javaArrayDeclarator = new JavaArrayDeclarator(
-			_getName(literalNewDetailAST));
-
-		javaArrayDeclarator.setDimensionValueJavaExpressions(
+			_getName(literalNewDetailAST),
 			_parseArrayValueJavaExpressions(
 				literalNewDetailAST.findFirstToken(
 					TokenTypes.ARRAY_DECLARATOR)));
+
 		javaArrayDeclarator.setGenericJavaTypes(
 			_parseGenericJavaTypes(
 				literalNewDetailAST.findFirstToken(TokenTypes.TYPE_ARGUMENTS),
@@ -1409,13 +1338,8 @@ public class JavaParserUtil {
 	private static JavaNewClassInstantiation _parseJavaNewClassInstantiation(
 		DetailAST literalNewDetailAST) {
 
-		JavaNewClassInstantiation javaNewClassInstantiation =
-			new JavaNewClassInstantiation();
-
-		javaNewClassInstantiation.setJavaClassCall(
+		return new JavaNewClassInstantiation(
 			_parseJavaClassCall(literalNewDetailAST));
-
-		return javaNewClassInstantiation;
 	}
 
 	private static JavaOperatorExpression _parseJavaOperatorExpression(
@@ -1440,15 +1364,8 @@ public class JavaParserUtil {
 	private static JavaParameter _parseJavaParameter(
 		DetailAST parameterDefinitionDetailAST) {
 
-		JavaParameter javaParameter = new JavaParameter(
-			_getName(parameterDefinitionDetailAST));
-
 		DetailAST modifiersDetailAST =
 			parameterDefinitionDetailAST.findFirstToken(TokenTypes.MODIFIERS);
-
-		javaParameter.setJavaAnnotations(
-			_parseJavaAnnotations(modifiersDetailAST));
-		javaParameter.setModifiers(_parseModifiers(modifiersDetailAST));
 
 		DetailAST typeDetailAST = parameterDefinitionDetailAST.findFirstToken(
 			TokenTypes.TYPE);
@@ -1462,9 +1379,10 @@ public class JavaParserUtil {
 			javaType.setVarargs(true);
 		}
 
-		javaParameter.setJavaType(javaType);
-
-		return javaParameter;
+		return new JavaParameter(
+			_getName(parameterDefinitionDetailAST),
+			_parseJavaAnnotations(modifiersDetailAST),
+			_parseModifiers(modifiersDetailAST), javaType);
 	}
 
 	private static List<JavaParameter> _parseJavaParameters(
@@ -1492,49 +1410,31 @@ public class JavaParserUtil {
 
 	private static JavaSignature _parseJavaSignature(DetailAST detailAST) {
 		DetailAST identDetailAST = detailAST.findFirstToken(TokenTypes.IDENT);
-
-		JavaSignature javaSignature = new JavaSignature(
-			identDetailAST.getText());
-
-		javaSignature.setExceptionJavaExpressions(
-			_parseExceptionJavaExpressions(
-				detailAST.findFirstToken(TokenTypes.LITERAL_THROWS)));
-		javaSignature.setGenericJavaTypes(
-			_parseGenericJavaTypes(
-				detailAST.findFirstToken(TokenTypes.TYPE_PARAMETERS),
-				TokenTypes.TYPE_PARAMETER));
-
 		DetailAST modifiersDetailAST = detailAST.findFirstToken(
 			TokenTypes.MODIFIERS);
 
-		javaSignature.setModifiers(_parseModifiers(modifiersDetailAST));
-
-		javaSignature.setJavaParameters(
+		return new JavaSignature(
+			identDetailAST.getText(), _parseModifiers(modifiersDetailAST),
+			_parseJavaType(detailAST.findFirstToken(TokenTypes.TYPE)),
+			_parseGenericJavaTypes(
+				detailAST.findFirstToken(TokenTypes.TYPE_PARAMETERS),
+				TokenTypes.TYPE_PARAMETER),
 			_parseJavaParameters(
-				detailAST.findFirstToken(TokenTypes.PARAMETERS)));
-		javaSignature.setReturnJavaType(
-			_parseJavaType(detailAST.findFirstToken(TokenTypes.TYPE)));
-
-		return javaSignature;
+				detailAST.findFirstToken(TokenTypes.PARAMETERS)),
+			_parseExceptionJavaExpressions(
+				detailAST.findFirstToken(TokenTypes.LITERAL_THROWS)));
 	}
 
 	private static JavaTernaryOperator _parseJavaTernaryOperator(
 		DetailAST questionDetailAST) {
 
-		JavaTernaryOperator javaTernaryOperator = new JavaTernaryOperator();
-
-		javaTernaryOperator.setConditionJavaExpression(
-			parseJavaExpression(questionDetailAST.getFirstChild()));
-
 		DetailAST colonDetailAST = questionDetailAST.findFirstToken(
 			TokenTypes.COLON);
 
-		javaTernaryOperator.setFalseValueJavaExpression(
+		return new JavaTernaryOperator(
+			parseJavaExpression(questionDetailAST.getFirstChild()),
+			parseJavaExpression(colonDetailAST.getPreviousSibling()),
 			parseJavaExpression(colonDetailAST.getNextSibling()));
-		javaTernaryOperator.setTrueValueJavaExpression(
-			parseJavaExpression(colonDetailAST.getPreviousSibling()));
-
-		return javaTernaryOperator;
 	}
 
 	private static JavaType _parseJavaType(DetailAST detailAST) {
@@ -1589,8 +1489,6 @@ public class JavaParserUtil {
 	private static JavaTypeCast _parseJavaTypeCast(
 		DetailAST typeCastDetailAST) {
 
-		JavaTypeCast javaTypeCast = new JavaTypeCast();
-
 		List<JavaType> javaTypes = new ArrayList<>();
 
 		DetailAST firstChildDetailAST = typeCastDetailAST.getFirstChild();
@@ -1604,12 +1502,8 @@ public class JavaParserUtil {
 			javaTypes.add(_parseJavaType(firstChildDetailAST.getLastChild()));
 		}
 
-		javaTypeCast.setJavaTypes(javaTypes);
-
-		javaTypeCast.setValueJavaExpression(
-			parseJavaExpression(typeCastDetailAST.getLastChild()));
-
-		return javaTypeCast;
+		return new JavaTypeCast(
+			javaTypes, parseJavaExpression(typeCastDetailAST.getLastChild()));
 	}
 
 	private static List<JavaSimpleValue> _parseModifiers(

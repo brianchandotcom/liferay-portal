@@ -24,16 +24,15 @@ import java.util.List;
  */
 public class JavaAnnotationFieldDefinition extends BaseJavaTerm {
 
+	public JavaAnnotationFieldDefinition(
+		List<JavaAnnotation> javaAnnotations, JavaSignature javaSignature) {
+
+		_javaAnnotations = javaAnnotations;
+		_javaSignature = javaSignature;
+	}
+
 	public void setDefaultJavaExpression(JavaExpression defaultJavaExpression) {
 		_defaultJavaExpression = defaultJavaExpression;
-	}
-
-	public void setJavaAnnotations(List<JavaAnnotation> javaAnnotations) {
-		_javaAnnotations = javaAnnotations;
-	}
-
-	public void setJavaSignature(JavaSignature javaSignature) {
-		_javaSignature = javaSignature;
 	}
 
 	@Override
@@ -75,7 +74,7 @@ public class JavaAnnotationFieldDefinition extends BaseJavaTerm {
 	}
 
 	private JavaExpression _defaultJavaExpression;
-	private List<JavaAnnotation> _javaAnnotations;
-	private JavaSignature _javaSignature;
+	private final List<JavaAnnotation> _javaAnnotations;
+	private final JavaSignature _javaSignature;
 
 }

@@ -24,38 +24,26 @@ import java.util.Objects;
  */
 public class JavaSignature extends BaseJavaTerm {
 
-	public JavaSignature(String objectName) {
+	public JavaSignature(
+		String objectName, List<JavaSimpleValue> modifiers,
+		JavaType returnJavaType, List<JavaType> genericJavaTypes,
+		List<JavaParameter> javaParameters,
+		List<JavaExpression> exceptionJavaExpressions) {
+
 		_objectName = new JavaSimpleValue(objectName);
+		_modifiers = modifiers;
+		_returnJavaType = returnJavaType;
+		_genericJavaTypes = genericJavaTypes;
+		_javaParameters = javaParameters;
+		_exceptionJavaExpressions = exceptionJavaExpressions;
 	}
 
 	public String getIndent() {
 		return _indent;
 	}
 
-	public void setExceptionJavaExpressions(
-		List<JavaExpression> exceptionJavaExpressions) {
-
-		_exceptionJavaExpressions = exceptionJavaExpressions;
-	}
-
-	public void setGenericJavaTypes(List<JavaType> genericJavaTypes) {
-		_genericJavaTypes = genericJavaTypes;
-	}
-
 	public void setIndent(String indent) {
 		_indent = indent;
-	}
-
-	public void setJavaParameters(List<JavaParameter> javaParameters) {
-		_javaParameters = javaParameters;
-	}
-
-	public void setModifiers(List<JavaSimpleValue> modifiers) {
-		_modifiers = modifiers;
-	}
-
-	public void setReturnJavaType(JavaType returnJavaType) {
-		_returnJavaType = returnJavaType;
 	}
 
 	@Override
@@ -206,12 +194,12 @@ public class JavaSignature extends BaseJavaTerm {
 		return sb.toString();
 	}
 
-	private List<JavaExpression> _exceptionJavaExpressions;
-	private List<JavaType> _genericJavaTypes;
+	private final List<JavaExpression> _exceptionJavaExpressions;
+	private final List<JavaType> _genericJavaTypes;
 	private String _indent;
-	private List<JavaParameter> _javaParameters;
-	private List<JavaSimpleValue> _modifiers;
+	private final List<JavaParameter> _javaParameters;
+	private final List<JavaSimpleValue> _modifiers;
 	private final JavaSimpleValue _objectName;
-	private JavaType _returnJavaType;
+	private final JavaType _returnJavaType;
 
 }

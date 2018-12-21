@@ -21,9 +21,7 @@ import com.liferay.portal.kernel.util.StringBundler;
  */
 public class JavaIfStatement extends BaseJavaTerm {
 
-	public void setConditionJavaExpression(
-		JavaExpression conditionJavaExpression) {
-
+	public JavaIfStatement(JavaExpression conditionJavaExpression) {
 		_conditionJavaExpression = conditionJavaExpression;
 	}
 
@@ -44,6 +42,6 @@ public class JavaIfStatement extends BaseJavaTerm {
 		return sb.toString();
 	}
 
-	private JavaExpression _conditionJavaExpression;
+	private final JavaExpression _conditionJavaExpression;
 
 }

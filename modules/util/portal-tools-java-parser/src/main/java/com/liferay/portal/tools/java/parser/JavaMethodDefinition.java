@@ -24,11 +24,10 @@ import java.util.List;
  */
 public class JavaMethodDefinition extends BaseJavaTerm {
 
-	public void setJavaAnnotations(List<JavaAnnotation> javaAnnotations) {
-		_javaAnnotations = javaAnnotations;
-	}
+	public JavaMethodDefinition(
+		List<JavaAnnotation> javaAnnotations, JavaSignature javaSignature) {
 
-	public void setJavaSignature(JavaSignature javaSignature) {
+		_javaAnnotations = javaAnnotations;
 		_javaSignature = javaSignature;
 	}
 
@@ -58,7 +57,7 @@ public class JavaMethodDefinition extends BaseJavaTerm {
 		return sb.toString();
 	}
 
-	private List<JavaAnnotation> _javaAnnotations;
-	private JavaSignature _javaSignature;
+	private final List<JavaAnnotation> _javaAnnotations;
+	private final JavaSignature _javaSignature;
 
 }

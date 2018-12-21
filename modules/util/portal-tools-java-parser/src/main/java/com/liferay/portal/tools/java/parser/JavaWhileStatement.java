@@ -21,9 +21,7 @@ import com.liferay.portal.kernel.util.StringBundler;
  */
 public class JavaWhileStatement extends JavaLoopStatement {
 
-	public void setConditionJavaExpression(
-		JavaExpression conditionJavaExpression) {
-
+	public JavaWhileStatement(JavaExpression conditionJavaExpression) {
 		_conditionJavaExpression = conditionJavaExpression;
 	}
 
@@ -40,6 +38,6 @@ public class JavaWhileStatement extends JavaLoopStatement {
 		return sb.toString();
 	}
 
-	private JavaExpression _conditionJavaExpression;
+	private final JavaExpression _conditionJavaExpression;
 
 }

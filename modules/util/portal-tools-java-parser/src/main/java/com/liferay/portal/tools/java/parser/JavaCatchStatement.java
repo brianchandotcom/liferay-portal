@@ -25,17 +25,12 @@ import java.util.List;
  */
 public class JavaCatchStatement extends BaseJavaTerm {
 
-	public void setModifiers(List<JavaSimpleValue> modifiers) {
-		_modifiers = modifiers;
-	}
-
-	public void setParameterName(String parameterName) {
-		_parameterName = new JavaSimpleValue(parameterName);
-	}
-
-	public void setParameterTypeNames(
+	public JavaCatchStatement(
+		List<JavaSimpleValue> modifiers, String parameterName,
 		List<JavaSimpleValue> parameterTypeNames) {
 
+		_modifiers = modifiers;
+		_parameterName = new JavaSimpleValue(parameterName);
 		_parameterTypeNames = parameterTypeNames;
 	}
 
@@ -65,8 +60,8 @@ public class JavaCatchStatement extends BaseJavaTerm {
 		return sb.toString();
 	}
 
-	private List<JavaSimpleValue> _modifiers;
-	private JavaSimpleValue _parameterName;
-	private List<JavaSimpleValue> _parameterTypeNames;
+	private final List<JavaSimpleValue> _modifiers;
+	private final JavaSimpleValue _parameterName;
+	private final List<JavaSimpleValue> _parameterTypeNames;
 
 }

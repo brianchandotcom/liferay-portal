@@ -23,16 +23,15 @@ import java.util.List;
  */
 public class JavaTypeCast extends JavaExpression {
 
+	public JavaTypeCast(
+		List<JavaType> javaTypes, JavaExpression valueJavaExpression) {
+
+		_javaTypes = javaTypes;
+		_valueJavaExpression = valueJavaExpression;
+	}
+
 	public JavaExpression getValueJavaExpression() {
 		return _valueJavaExpression;
-	}
-
-	public void setJavaTypes(List<JavaType> javaTypes) {
-		_javaTypes = javaTypes;
-	}
-
-	public void setValueJavaExpression(JavaExpression valueJavaExpression) {
-		_valueJavaExpression = valueJavaExpression;
 	}
 
 	@Override
@@ -62,7 +61,7 @@ public class JavaTypeCast extends JavaExpression {
 		return sb.toString();
 	}
 
-	private List<JavaType> _javaTypes;
-	private JavaExpression _valueJavaExpression;
+	private final List<JavaType> _javaTypes;
+	private final JavaExpression _valueJavaExpression;
 
 }

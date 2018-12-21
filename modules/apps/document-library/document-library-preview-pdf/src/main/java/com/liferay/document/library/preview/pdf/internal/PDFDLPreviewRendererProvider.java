@@ -73,7 +73,7 @@ public class PDFDLPreviewRendererProvider implements DLPreviewRendererProvider {
 					WebKeys.DOCUMENT_LIBRARY_FILE_VERSION, fileVersion);
 
 				request.setAttribute(
-					PDFDLPreviewWebKeys.MODULE_PATH,
+					PDFDLPreviewWebKeys.RESOLVED_MODULE_NAME,
 					_npmResolver.resolveModuleName(
 						"document-library-preview-pdf/preview/js" +
 							"/PdfPreviewer.es"));

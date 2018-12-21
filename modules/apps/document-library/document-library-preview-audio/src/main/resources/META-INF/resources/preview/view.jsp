@@ -55,6 +55,6 @@ context.put("audioSources", audioSources);
 <soy:component-renderer
 	componentId='<%= renderResponse.getNamespace() + randomNamespace + "Audio" %>'
 	context="<%= context %>"
-	module="<%= (String)request.getAttribute(DLPreviewAudioWebKeys.MODULE_PATH) %>"
+	module="<%= (String)request.getAttribute(DLPreviewAudioWebKeys.RESOLVED_MODULE_NAME) %>"
 	templateNamespace="com.liferay.document.library.preview.AudioPreviewer.render"
 />

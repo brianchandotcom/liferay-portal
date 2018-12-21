@@ -90,7 +90,7 @@ public class VideoDLPreviewRendererProvider
 					DLPreviewVideoWebKeys.VIDEO_POSTER_URL, videoPosterURL);
 
 				request.setAttribute(
-					DLPreviewVideoWebKeys.MODULE_PATH,
+					DLPreviewVideoWebKeys.RESOLVED_MODULE_NAME,
 					_npmResolver.resolveModuleName(
 						"document-library-preview-video/preview/js" +
 							"/VideoPreviewer.es"));

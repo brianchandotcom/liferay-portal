@@ -54,6 +54,6 @@ context.put("totalPages", previewFileCount);
 <soy:component-renderer
 	componentId='<%= renderResponse.getNamespace() + randomNamespace + "previewFile" %>'
 	context="<%= context %>"
-	module="<%= (String)request.getAttribute(PDFDLPreviewWebKeys.MODULE_PATH) %>"
+	module="<%= (String)request.getAttribute(PDFDLPreviewWebKeys.RESOLVED_MODULE_NAME) %>"
 	templateNamespace="com.liferay.document.library.preview.PdfPreviewer.render"
 />

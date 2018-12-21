@@ -62,6 +62,10 @@ public class FilterUtil {
 		return sb.toString();
 	}
 
+	public static String getNullFilter(String fieldName, String operator) {
+		return fieldName.concat(operator).concat(StringPool.NULL);
+	}
+
 	private FilterUtil() {
 	}
 

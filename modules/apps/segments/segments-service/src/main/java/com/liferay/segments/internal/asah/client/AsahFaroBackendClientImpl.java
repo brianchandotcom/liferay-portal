@@ -55,10 +55,11 @@ public class AsahFaroBackendClientImpl implements AsahFaroBackendClient {
 
 		FilterBuilder filterBuilder = new FilterBuilder();
 
-		filterBuilder.addFilter(
+		filterBuilder.addNullFilter(
 			"dataSourceIndividualPKs/" +
 				System.getProperty("asah.faro.backend.dxp.dataSourceId"),
-			FilterConstants.COMPARISON_OPERATOR_NOT_EQUALS, StringPool.NULL);
+			FilterConstants.COMPARISON_OPERATOR_NOT_EQUALS);
+
 		filterBuilder.addFilter(
 			"individualSegmentIds", FilterConstants.COMPARISON_OPERATOR_EQUALS,
 			individualSegmentId);

@@ -31,6 +31,10 @@ public class FilterBuilder {
 		_addFilter(fieldName, operator, value, true);
 	}
 
+	public void addNullFilter(String fieldName, String operator) {
+		_requiredFilters.add(FilterUtil.getNullFilter(fieldName, operator));
+	}
+
 	public String build() {
 		StringBundler sb = new StringBundler();
 

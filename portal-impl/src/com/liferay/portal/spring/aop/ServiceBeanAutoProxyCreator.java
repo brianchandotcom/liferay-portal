@@ -72,14 +72,7 @@ public class ServiceBeanAutoProxyCreator
 
 		_earlyProxyReferences.add(new CacheKey(beanClass, beanName));
 
-		ServiceBeanAopInvocationHandler serviceBeanAopInvocationHandler =
-			ServiceBeanAopCacheManager.create(bean, _chainableMethodAdvices);
-
-		_serviceBeanAopInvocationHandlers.add(serviceBeanAopInvocationHandler);
-
-		return ProxyUtil.newProxyInstance(
-			_classLoader, ReflectionUtil.getInterfaces(bean),
-			serviceBeanAopInvocationHandler);
+		return _createProxy(bean);
 	}
 
 	@Override
@@ -92,14 +85,7 @@ public class ServiceBeanAutoProxyCreator
 			return bean;
 		}
 
-		ServiceBeanAopInvocationHandler serviceBeanAopInvocationHandler =
-			ServiceBeanAopCacheManager.create(bean, _chainableMethodAdvices);
-
-		_serviceBeanAopInvocationHandlers.add(serviceBeanAopInvocationHandler);
-
-		return ProxyUtil.newProxyInstance(
-			_classLoader, ReflectionUtil.getInterfaces(bean),
-			serviceBeanAopInvocationHandler);
+		return _createProxy(bean);
 	}
 
 	@Override
@@ -132,6 +118,17 @@ public class ServiceBeanAutoProxyCreator
 	@Override
 	public Class<?> predictBeanType(Class<?> beanClass, String beanName) {
 		return null;
+	}
+
+	private Object _createProxy(Object bean) {
+		ServiceBeanAopInvocationHandler serviceBeanAopInvocationHandler =
+			ServiceBeanAopCacheManager.create(bean, _chainableMethodAdvices);
+
+		_serviceBeanAopInvocationHandlers.add(serviceBeanAopInvocationHandler);
+
+		return ProxyUtil.newProxyInstance(
+			_classLoader, ReflectionUtil.getInterfaces(bean),
+			serviceBeanAopInvocationHandler);
 	}
 
 	private final BeanMatcher _beanMatcher;

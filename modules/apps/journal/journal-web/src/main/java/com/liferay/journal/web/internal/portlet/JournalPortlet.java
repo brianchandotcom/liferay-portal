@@ -761,7 +761,9 @@ public class JournalPortlet extends MVCPortlet {
 		String layoutUuid = ParamUtil.getString(
 			uploadPortletRequest, "layoutUuid");
 
-		if (displayPageType == AssetDisplayPageConstants.TYPE_SPECIFIC) {
+		if ((displayPageType == AssetDisplayPageConstants.TYPE_SPECIFIC) ||
+			(displayPageType == AssetDisplayPageConstants.TYPE_DEFAULT)) {
+
 			Layout targetLayout = _journalHelper.getArticleLayout(
 				layoutUuid, groupId);
 

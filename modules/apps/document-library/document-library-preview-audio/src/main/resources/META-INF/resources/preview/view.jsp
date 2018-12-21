@@ -17,9 +17,9 @@
 <%@ include file="/preview/init.jsp" %>
 
 <%
-List<String> previewFileURLs = (List<String>)request.getAttribute(DLPreviewAudioWebKeys.PREVIEW_FILE_URLS);
-
 String randomNamespace = PortalUtil.generateRandomKey(request, "portlet_document_library_view_file_entry_preview") + StringPool.UNDERLINE;
+
+List<String> previewFileURLs = (List<String>)request.getAttribute(DLPreviewAudioWebKeys.PREVIEW_FILE_URLS);
 
 List<Map<String, String>> audioSources = new ArrayList<>(previewFileURLs.size());
 

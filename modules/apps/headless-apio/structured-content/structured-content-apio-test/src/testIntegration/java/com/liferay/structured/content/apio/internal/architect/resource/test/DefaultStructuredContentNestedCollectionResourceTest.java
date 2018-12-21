@@ -73,7 +73,7 @@ import org.junit.runner.RunWith;
  * @author Cristina González
  */
 @RunWith(Arquillian.class)
-public class StructuredContentNestedCollectionResourceTest
+public class DefaultStructuredContentNestedCollectionResourceTest
 	extends BaseStructuredContentNestedCollectionResourceTestCase {
 
 	@ClassRule

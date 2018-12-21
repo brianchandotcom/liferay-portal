@@ -80,7 +80,7 @@ import org.junit.runner.RunWith;
  * @author Julio Camarero
  */
 @RunWith(Arquillian.class)
-public class StructuredContentNestedCollectionResourceFilteringTest
+public class ResourceFilteringStructuredContentNestedCollectionResourceTest
 	extends BaseStructuredContentNestedCollectionResourceTestCase {
 
 	@ClassRule

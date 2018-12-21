@@ -123,6 +123,7 @@ String navigation = ParamUtil.getString(request, "navigation");
 					</aui:form>
 				</div>
 			</div>
+
 			<div id="<portlet:namespace />documentLibraryModal"></div>
 		</div>
 

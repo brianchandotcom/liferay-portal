@@ -42,6 +42,12 @@ public class DetailASTUtil {
 			return null;
 		}
 
+		if (detailAST.getType() == TokenTypes.CASE_GROUP) {
+			DetailAST firstChildDetailAST = detailAST.getFirstChild();
+
+			return firstChildDetailAST.findFirstToken(TokenTypes.COLON);
+		}
+
 		if (detailAST.getType() == TokenTypes.DO_WHILE) {
 			while (detailAST != null) {
 				if (detailAST.getType() == TokenTypes.SEMI) {
@@ -66,6 +72,10 @@ public class DetailASTUtil {
 			}
 
 			return null;
+		}
+
+		if (detailAST.getType() == TokenTypes.LITERAL_SWITCH) {
+			return detailAST.findFirstToken(TokenTypes.LCURLY);
 		}
 
 		if (detailAST.getType() == TokenTypes.LABELED_STAT) {

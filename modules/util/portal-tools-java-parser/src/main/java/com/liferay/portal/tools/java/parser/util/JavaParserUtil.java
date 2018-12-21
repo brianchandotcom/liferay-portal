@@ -55,6 +55,8 @@ import com.liferay.portal.tools.java.parser.JavaParameter;
 import com.liferay.portal.tools.java.parser.JavaReturnStatement;
 import com.liferay.portal.tools.java.parser.JavaSignature;
 import com.liferay.portal.tools.java.parser.JavaSimpleValue;
+import com.liferay.portal.tools.java.parser.JavaSwitchCaseStatement;
+import com.liferay.portal.tools.java.parser.JavaSwitchStatement;
 import com.liferay.portal.tools.java.parser.JavaSynchronizedStatement;
 import com.liferay.portal.tools.java.parser.JavaTerm;
 import com.liferay.portal.tools.java.parser.JavaTernaryOperator;
@@ -539,6 +541,33 @@ public class JavaParserUtil {
 		}
 
 		return javaReturnStatement;
+	}
+
+	public static JavaSwitchCaseStatement parseJavaSwitchCaseStatement(
+		DetailAST caseGroupDetailAST) {
+
+		DetailAST firstChildDetailAST = caseGroupDetailAST.getFirstChild();
+
+		if (firstChildDetailAST.getType() == TokenTypes.LITERAL_DEFAULT) {
+			return new JavaSwitchCaseStatement(true);
+		}
+
+		JavaSwitchCaseStatement javaSwitchCaseStatement =
+			new JavaSwitchCaseStatement(false);
+
+		javaSwitchCaseStatement.setSwitchCaseJavaExpression(
+			parseJavaExpression(firstChildDetailAST.getFirstChild()));
+
+		return javaSwitchCaseStatement;
+	}
+
+	public static JavaSwitchStatement parseJavaSwitchStatement(
+		DetailAST literalSwitchDetailAST) {
+
+		DetailAST lparenDetailAST = literalSwitchDetailAST.getFirstChild();
+
+		return new JavaSwitchStatement(
+			parseJavaExpression(lparenDetailAST.getNextSibling()));
 	}
 
 	public static JavaSynchronizedStatement parseJavaSynchronizedStatement(

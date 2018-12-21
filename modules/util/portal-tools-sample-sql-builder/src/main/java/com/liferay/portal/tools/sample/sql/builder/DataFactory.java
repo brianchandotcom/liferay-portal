@@ -1446,7 +1446,6 @@ public class DataFactory {
 		contactModel.setEmailAddress(userModel.getEmailAddress());
 		contactModel.setFirstName(userModel.getFirstName());
 		contactModel.setLastName(userModel.getLastName());
-		contactModel.setMale(true);
 		contactModel.setBirthday(new Date());
 
 		return contactModel;

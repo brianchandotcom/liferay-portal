@@ -59,8 +59,6 @@ public class BlogApioTestBundleActivator implements BundleActivator {
 			_prepareTest();
 		}
 		catch (Exception e) {
-			_cleanUp();
-
 			_log.error("Error found during startup ", e);
 		}
 	}

@@ -103,6 +103,18 @@ public class SelectAssetDisplayPageDisplayContext {
 		if (assetDisplayPageEntry != null) {
 			_assetDisplayPageId =
 				assetDisplayPageEntry.getLayoutPageTemplateEntryId();
+
+			return _assetDisplayPageId;
+		}
+
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			LayoutPageTemplateEntryServiceUtil.
+				fetchDefaultLayoutPageTemplateEntry(
+					_groupId, _classNameId, _classTypeId);
+
+		if (layoutPageTemplateEntry != null) {
+			_assetDisplayPageId =
+				layoutPageTemplateEntry.getLayoutPageTemplateEntryId();
 		}
 		else {
 			_assetDisplayPageId = 0L;

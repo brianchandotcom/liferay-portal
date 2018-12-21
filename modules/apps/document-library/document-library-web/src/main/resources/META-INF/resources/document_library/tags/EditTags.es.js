@@ -64,7 +64,7 @@ class EditTags extends Component {
 			)
 			.then(
 				response => {
-					callback(response).bind(this)
+					callback(response)
 				}
 			)
 			.catch(
@@ -116,19 +116,25 @@ class EditTags extends Component {
 			tag => finalTags.indexOf(tag) == -1
 		);
 
-		console.log('Initial tags: ' + this._initialTags);
-		console.log('Final tags: ' + finalTags);
-		console.log('Added: ' + addedTags);
-		console.log('Removed: ' + removedTags);
-
 		let bodyData = {
 			"bulkAssetEntryUpdateTagsActionModel": {
+				append: true,
 				repositoryId: this.repositoryId,
 				selection: this.fileEntries,
 				toAddTagNames: addedTags,
 				toRemoveTagNames: removedTags
 			}
 		};
+
+		let instance = this;
+
+		this._fetchTagsRequest(
+			this.urlUpdateTags,
+			bodyData,
+			response => {
+				instance.close();
+			}
+		);
 
 	}
 
@@ -222,7 +228,15 @@ EditTags.STATE = {
 	 *
 	 * @type {String}
 	 */
-	urlTags: Config.string().required()
+	urlTags: Config.string().required(),
+
+	/**
+	 * Url to backend service that updates
+	 * the tags.
+	 *
+	 * @type {String}
+	 */
+	urlUpdateTags: Config.string().required()
 }
 
 // Register component

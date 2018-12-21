@@ -254,6 +254,7 @@ AUI.add(
 							var form = instance.get('form').node;
 							var namespace = instance.NS;
 							var urlTags = themeDisplay.getPortalURL() + '/o/bulk/asset/tags/' + instance.get('classNameId') + '/common';
+							var urlUpdateTags = themeDisplay.getPortalURL() + '/o/bulk/asset/tags/' + instance.get('classNameId');
 
 							Liferay.Loader.require(
 								'document-library-web/document_library/tags/EditTags.es',
@@ -263,7 +264,8 @@ AUI.add(
 											fileEntries: instance._selectedFileEntries,
 											repositoryId: parseFloat(form.get(namespace + 'repositoryId').val()),
 											spritemap: themeDisplay.getPathThemeImages() + "/lexicon/icons.svg",
-											urlTags: urlTags
+											urlTags: urlTags,
+											urlUpdateTags: urlUpdateTags
 										},
 										'#' + instance.NS + 'documentLibraryModal'
 									);

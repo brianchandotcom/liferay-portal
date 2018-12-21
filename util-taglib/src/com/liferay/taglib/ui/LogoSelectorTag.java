@@ -148,7 +148,7 @@ public class LogoSelectorTag extends IncludeTag {
 	private static final Log _log = LogFactoryUtil.getLog(
 		LogoSelectorTag.class);
 
-	private int _aspectRatio = 0;
+	private int _aspectRatio;
 	private String _currentLogoURL;
 	private boolean _defaultLogo;
 	private String _defaultLogoURL;

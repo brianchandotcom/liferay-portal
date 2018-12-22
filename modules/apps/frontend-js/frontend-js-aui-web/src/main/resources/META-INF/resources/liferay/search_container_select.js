@@ -212,7 +212,7 @@ AUI.add(
 							function(commonActions, elementActions) {
 								return commonActions.filter(
 									function(action) {
-										return (elementActions.indexOf(action) != -1);
+										return elementActions.indexOf(action) != -1;
 									}
 								);
 							},

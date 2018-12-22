@@ -158,31 +158,39 @@ name = HtmlUtil.escapeJS(name);
 	var preventImageDragoverHandler = windowNode.on(
 		'dragover',
 		function(event) {
-			event.preventDefault();
-			event.stopPropagation();
+			var validDropTarget = event.target.getDOMNode().isContentEditable;
+
+			if (!validDropTarget) {
+				event.preventDefault();
+				event.stopPropagation();
+			}
 		}
 	);
 
 	var preventImageDropHandler = windowNode.on(
 		'drop',
 		function(event) {
-			event.preventDefault();
-			event.stopImmediatePropagation();
+			var validDropTarget = event.target.getDOMNode().isContentEditable;
 
-			new Liferay.Notification(
-				{
-					closeable: true,
-					delay: {
-						hide: 5000,
-						show: 0
-					},
-					duration: 500,
-					message: '<liferay-ui:message key="your-request-failed-to-complete" />',
-					render: true,
-					title: '<liferay-ui:message key="error" />',
-					type: 'danger'
-				}
-			);
+			if (!validDropTarget) {
+				event.preventDefault();
+				event.stopImmediatePropagation();
+
+				new Liferay.Notification(
+					{
+						closeable: true,
+						delay: {
+							hide: 5000,
+							show: 0
+						},
+						duration: 500,
+						message: '<liferay-ui:message key="your-request-failed-to-complete" />',
+						render: true,
+						title: '<liferay-ui:message key="error" />',
+						type: 'danger'
+					}
+				);
+			}
 		}
 	);
 

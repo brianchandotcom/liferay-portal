@@ -260,8 +260,12 @@ name = HtmlUtil.escapeJS(name);
 	var preventImageDragoverHandler = windowNode.on(
 		'dragover',
 		function(event) {
-			event.preventDefault();
-			event.stopPropagation();
+			var validDropTarget = event.target.getDOMNode().isContentEditable;
+
+			if (!validDropTarget) {
+				event.preventDefault();
+				event.stopPropagation();
+			}
 		}
 	);
 

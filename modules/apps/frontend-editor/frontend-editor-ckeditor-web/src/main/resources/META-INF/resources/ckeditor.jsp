@@ -162,7 +162,6 @@ name = HtmlUtil.escapeJS(name);
 
 			if (!validDropTarget) {
 				event.preventDefault();
-				event.stopPropagation();
 			}
 		}
 	);

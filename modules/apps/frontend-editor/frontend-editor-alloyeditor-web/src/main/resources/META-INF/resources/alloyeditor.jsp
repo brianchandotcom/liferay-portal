@@ -257,35 +257,40 @@ name = HtmlUtil.escapeJS(name);
 		Liferay.namespace('EDITORS').alloyEditor.addInstance();
 	};
 
-	var preventImageDragoverHandler = windowNode.on('dragover', function(event) {
-		event.preventDefault();
-		event.stopPropagation();
-	});
-
-	var preventImageDropHandler = windowNode.on('drop', function(event) {
-		if (!event.target.getDOMNode().isContentEditable) {
+	var preventImageDragoverHandler = windowNode.on(
+		'dragover',
+		function(event) {
 			event.preventDefault();
-			event.stopImmediatePropagation();
-			showError();
+			event.stopPropagation();
 		}
-	});
+	);
 
-	var showError = function() {
-		new Liferay.Notification(
-			{
-				closeable: true,
-				delay: {
-					hide: 5000,
-					show: 0
-				},
-				duration: 250,
-				message: '<%= UnicodeLanguageUtil.get(resourceBundle, "your-request-failed-to-complete") %>',
-				render: true,
-				title: '<%= UnicodeLanguageUtil.get(resourceBundle, "error") %>',
-				type: 'danger'
+	var preventImageDropHandler = windowNode.on(
+		'drop',
+		function(event) {
+			var validDropTarget = event.target.getDOMNode().isContentEditable;
+
+			if (!validDropTarget) {
+				event.preventDefault();
+				event.stopImmediatePropagation();
+
+				new Liferay.Notification(
+					{
+						closeable: true,
+						delay: {
+							hide: 5000,
+							show: 0
+						},
+						duration: 500,
+						message: '<liferay-ui:message key="your-request-failed-to-complete" />',
+						render: true,
+						title: '<liferay-ui:message key="error" />>',
+						type: 'danger'
+					}
+				);
 			}
-		);
-	};
+		}
+	);
 
 	var eventHandles = [
 		preventImageDragoverHandler,

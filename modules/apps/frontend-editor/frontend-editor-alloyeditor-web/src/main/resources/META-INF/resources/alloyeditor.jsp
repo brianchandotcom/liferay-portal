@@ -264,6 +264,10 @@ name = HtmlUtil.escapeJS(name);
 
 			if (!validDropTarget) {
 				event.preventDefault();
+
+				if (event._event && event._event.dataTransfer) {
+					event._event.dataTransfer.dropEffect = 'none';
+				}
 			}
 		}
 	);

@@ -84,6 +84,10 @@ public class FragmentsEditorDisplayContext {
 	}
 
 	public SoyContext getEditorContext() throws PortalException {
+		if (_editorContext != null) {
+			return _editorContext;
+		}
+
 		SoyContext soyContext = SoyContextFactoryUtil.createSoyContext();
 
 		soyContext.put(
@@ -171,10 +175,16 @@ public class FragmentsEditorDisplayContext {
 			_getFragmentEntryActionURL(
 				"/content_layout/update_layout_page_template_data"));
 
-		return soyContext;
+		_editorContext = soyContext;
+
+		return _editorContext;
 	}
 
 	public SoyContext getFragmentEntryLinkListContext() throws PortalException {
+		if (_fragmentEntryLinkListContext != null) {
+			return _fragmentEntryLinkListContext;
+		}
+
 		SoyContext soyContext = SoyContextFactoryUtil.createSoyContext();
 
 		soyContext.put(
@@ -198,11 +208,17 @@ public class FragmentsEditorDisplayContext {
 			"spritemap",
 			_themeDisplay.getPathThemeImages() + "/lexicon/icons.svg");
 
-		return soyContext;
+		_fragmentEntryLinkListContext = soyContext;
+
+		return _fragmentEntryLinkListContext;
 	}
 
 	public SoyContext getFragmentsEditorSidebarContext()
 		throws PortalException {
+
+		if (_fragmentsEditorSidebarContext != null) {
+			return _fragmentsEditorSidebarContext;
+		}
 
 		SoyContext soyContext = SoyContextFactoryUtil.createSoyContext();
 
@@ -223,10 +239,16 @@ public class FragmentsEditorDisplayContext {
 			"spritemap",
 			_themeDisplay.getPathThemeImages() + "/lexicon/icons.svg");
 
-		return soyContext;
+		_fragmentsEditorSidebarContext = soyContext;
+
+		return _fragmentsEditorSidebarContext;
 	}
 
 	public SoyContext getFragmentsEditorToolbarContext() {
+		if (_fragmentsEditorToolbarContext != null) {
+			return _fragmentsEditorToolbarContext;
+		}
+
 		SoyContext soyContext = SoyContextFactoryUtil.createSoyContext();
 
 		SoyContext availableLanguagesSoyContext =
@@ -262,10 +284,16 @@ public class FragmentsEditorDisplayContext {
 			"spritemap",
 			_themeDisplay.getPathThemeImages() + "/lexicon/icons.svg");
 
-		return soyContext;
+		_fragmentsEditorToolbarContext = soyContext;
+
+		return _fragmentsEditorToolbarContext;
 	}
 
 	private Map<String, Object> _getDefaultConfigurations() {
+		if (_defaultConfigurations != null) {
+			return _defaultConfigurations;
+		}
+
 		Map<String, Object> configurations = new HashMap<>();
 
 		EditorConfiguration richTextEditorConfiguration =
@@ -285,7 +313,9 @@ public class FragmentsEditorDisplayContext {
 
 		configurations.put("text", editorConfiguration.getData());
 
-		return configurations;
+		_defaultConfigurations = configurations;
+
+		return _defaultConfigurations;
 	}
 
 	private List<SoyContext> _getFragmentEntriesSoyContext(
@@ -318,6 +348,10 @@ public class FragmentsEditorDisplayContext {
 	}
 
 	private ItemSelectorCriterion _getImageItemSelectorCriterion() {
+		if (_imageItemSelectorCriterion != null) {
+			return _imageItemSelectorCriterion;
+		}
+
 		List<ItemSelectorReturnType> desiredItemSelectorReturnTypes =
 			new ArrayList<>();
 
@@ -330,10 +364,16 @@ public class FragmentsEditorDisplayContext {
 		imageItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
 			desiredItemSelectorReturnTypes);
 
-		return imageItemSelectorCriterion;
+		_imageItemSelectorCriterion = imageItemSelectorCriterion;
+
+		return _imageItemSelectorCriterion;
 	}
 
 	private String _getLayoutData() throws PortalException {
+		if (_layoutData != null) {
+			return _layoutData;
+		}
+
 		LayoutPageTemplateStructure layoutPageTemplateStructure =
 			LayoutPageTemplateStructureLocalServiceUtil.
 				fetchLayoutPageTemplateStructure(
@@ -341,7 +381,9 @@ public class FragmentsEditorDisplayContext {
 					PortalUtil.getClassNameId(Layout.class.getName()),
 					_themeDisplay.getPlid(), true);
 
-		return layoutPageTemplateStructure.getData();
+		_layoutData = layoutPageTemplateStructure.getData();
+
+		return _layoutData;
 	}
 
 	private List<SoyContext> _getSoyContextFragmentCollections(int type) {
@@ -380,6 +422,10 @@ public class FragmentsEditorDisplayContext {
 
 	private SoyContext _getSoyContextFragmentEntryLinks()
 		throws PortalException {
+
+		if (_soyContextFragmentEntryLinks != null) {
+			return _soyContextFragmentEntryLinks;
+		}
 
 		SoyContext soyContexts = SoyContextFactoryUtil.createSoyContext();
 
@@ -427,10 +473,16 @@ public class FragmentsEditorDisplayContext {
 			_themeDisplay.setIsolated(isolated);
 		}
 
-		return soyContexts;
+		_soyContextFragmentEntryLinks = soyContexts;
+
+		return _soyContextFragmentEntryLinks;
 	}
 
 	private List<SoyContext> _getSoyContextPanels() {
+		if (_soyContextPanels != null) {
+			return _soyContextPanels;
+		}
+
 		List<SoyContext> soyContexts = new ArrayList<>();
 
 		SoyContext availableSoyContext =
@@ -473,10 +525,16 @@ public class FragmentsEditorDisplayContext {
 
 		soyContexts.add(availableSoyContext);
 
-		return soyContexts;
+		_soyContextPanels = soyContexts;
+
+		return _soyContextPanels;
 	}
 
 	private ItemSelectorCriterion _getURLItemSelectorCriterion() {
+		if (_urlItemSelectorCriterion != null) {
+			return _urlItemSelectorCriterion;
+		}
+
 		ItemSelectorCriterion urlItemSelectorCriterion =
 			new URLItemSelectorCriterion();
 
@@ -488,12 +546,24 @@ public class FragmentsEditorDisplayContext {
 		urlItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
 			desiredItemSelectorReturnTypes);
 
-		return urlItemSelectorCriterion;
+		_urlItemSelectorCriterion = urlItemSelectorCriterion;
+
+		return _urlItemSelectorCriterion;
 	}
 
+	private Map<String, Object> _defaultConfigurations;
+	private SoyContext _editorContext;
+	private SoyContext _fragmentEntryLinkListContext;
+	private SoyContext _fragmentsEditorSidebarContext;
+	private SoyContext _fragmentsEditorToolbarContext;
+	private ItemSelectorCriterion _imageItemSelectorCriterion;
 	private final ItemSelector _itemSelector;
+	private String _layoutData;
 	private final RenderResponse _renderResponse;
 	private final HttpServletRequest _request;
+	private SoyContext _soyContextFragmentEntryLinks;
+	private List<SoyContext> _soyContextPanels;
 	private final ThemeDisplay _themeDisplay;
+	private ItemSelectorCriterion _urlItemSelectorCriterion;
 
 }

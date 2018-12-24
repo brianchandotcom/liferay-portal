@@ -620,6 +620,8 @@ definition {
 	@description = "This test checks if the file extension upload restrictions in System Settings works as expected."
 	@priority = "5"
 	test CheckValidationForFileEntries {
+		property test.name.skip.portal.instance = "DocumentsadministrationUsecase#CheckValidationForFileEntries";
+
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",

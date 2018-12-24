@@ -1,9 +1,9 @@
 {
 	"dependencies": {
-		"metal": "^2.5.18",
-		"metal-component": "^2.10.0",
-		"metal-soy": "^2.4.5",
-		"metal-state": "^2.6.4"
+		"metal": "^2.16.7",
+		"metal-component": "^2.16.7",
+		"metal-soy": "^2.16.7",
+		"metal-state": "^2.16.7"
 	},
 	"devDependencies": {
 		"babel-cli": "^6.26.0",

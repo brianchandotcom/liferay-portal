@@ -14,11 +14,20 @@
 
 package com.liferay.portal.workflow.reports.messaging;
 
+import java.util.Map;
+
 /**
  * @author Inácio Nery
  */
 public interface WorkflowReportsMessageSender {
 
-	public void sendMessage(WorkflowReportsMessage workflowReportsMessage);
+	public default void sendMessage(
+		long companyId, String eventId, long userId,
+		Map<String, String> properties) {
+	}
+
+	public default void sendMessage(
+		WorkflowReportsMessage workflowReportsMessage) {
+	}
 
 }

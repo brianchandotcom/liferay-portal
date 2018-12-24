@@ -14,6 +14,7 @@
 
 package com.liferay.asset.categories.selector.web.display.context;
 
+import com.liferay.asset.categories.selector.web.contants.AssetCategoriesSelectorPortletKeys;
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetCategoryServiceUtil;
@@ -99,6 +100,11 @@ public class AssetCategoriesSelectorDisplayContext {
 			_renderResponse.getNamespace() + "selectCategory");
 
 		return _eventName;
+	}
+
+	public String getModuleName() {
+		return (String)_request.getAttribute(
+			AssetCategoriesSelectorPortletKeys.RESOLVED_MODULE_NAME);
 	}
 
 	public String getSelectedCategories() {

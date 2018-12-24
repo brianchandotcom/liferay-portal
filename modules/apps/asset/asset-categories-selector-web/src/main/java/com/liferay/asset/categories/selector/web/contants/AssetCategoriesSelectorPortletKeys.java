@@ -23,4 +23,6 @@ public class AssetCategoriesSelectorPortletKeys {
 		"com_liferay_asset_categories_selector_web_portlet_" +
 			"AssetCategoriesSelectorPortlet";
 
+	public static final String RESOLVED_MODULE_NAME =
+		"RESOLVED_MODULE_NAME";
 }

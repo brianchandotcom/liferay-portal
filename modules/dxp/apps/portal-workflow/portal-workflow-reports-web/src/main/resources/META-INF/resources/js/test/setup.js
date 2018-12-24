@@ -15,22 +15,6 @@ const languageProperties = fs.readFileSync(LANG_KEY_PATH);
 const TRANSLATIONS =
 	properties.parse(languageProperties.toString('utf8')) || {};
 
-window.analyticsConstants = {
-	formId: '1',
-	layoutRelativePath: '/web/analytics/main_page',
-	pathThemeImages: '/images',
-	rangeKey: 1,
-	sidebarItems: {
-		ACCOUNTS: 'accounts',
-		ASSETS: 'assets',
-		INDIVIDUALS: 'individuals',
-		SEGMENTS: 'segments',
-		SETTINGS: 'settings',
-		TOUCHPOINTS: 'pages'
-	},
-	touchpoint: 'Any'
-};
-
 window.AUI = () => ({
 	use: (module, callback) => callback()
 });

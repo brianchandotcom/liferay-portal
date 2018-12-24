@@ -473,18 +473,6 @@ public class AssetEntryUsagePersistenceTest {
 		Assert.assertEquals(Long.valueOf(existingAssetEntryUsage.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(existingAssetEntryUsage,
 				"getOriginalGroupId", new Class<?>[0]));
-
-		Assert.assertEquals(Long.valueOf(
-				existingAssetEntryUsage.getClassNameId()),
-			ReflectionTestUtil.<Long>invoke(existingAssetEntryUsage,
-				"getOriginalClassNameId", new Class<?>[0]));
-		Assert.assertEquals(Long.valueOf(existingAssetEntryUsage.getClassPK()),
-			ReflectionTestUtil.<Long>invoke(existingAssetEntryUsage,
-				"getOriginalClassPK", new Class<?>[0]));
-		Assert.assertTrue(Objects.equals(
-				existingAssetEntryUsage.getPortletId(),
-				ReflectionTestUtil.invoke(existingAssetEntryUsage,
-					"getOriginalPortletId", new Class<?>[0])));
 	}
 
 	protected AssetEntryUsage addAssetEntryUsage() throws Exception {

@@ -196,13 +196,6 @@ public class AssetEntryUsageLocalServiceWrapper
 		return _assetEntryUsageLocalService.fetchAssetEntryUsage(assetEntryUsageId);
 	}
 
-	@Override
-	public com.liferay.asset.model.AssetEntryUsage fetchAssetEntryUsage(
-		long classNameId, long classPK, String portletId) {
-		return _assetEntryUsageLocalService.fetchAssetEntryUsage(classNameId,
-			classPK, portletId);
-	}
-
 	/**
 	* Returns the asset entry usage matching the UUID and group.
 	*
@@ -296,6 +289,13 @@ public class AssetEntryUsageLocalServiceWrapper
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.asset.model.AssetEntryUsage> orderByComparator) {
 		return _assetEntryUsageLocalService.getAssetEntryUsages(assetEntryId,
 			classNameId, start, end, orderByComparator);
+	}
+
+	@Override
+	public java.util.List<com.liferay.asset.model.AssetEntryUsage> getAssetEntryUsages(
+		long classNameId, long classPK, String portletId) {
+		return _assetEntryUsageLocalService.getAssetEntryUsages(classNameId,
+			classPK, portletId);
 	}
 
 	/**

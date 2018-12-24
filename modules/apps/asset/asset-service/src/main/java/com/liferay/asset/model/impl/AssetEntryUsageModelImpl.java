@@ -102,7 +102,7 @@ public class AssetEntryUsageModelImpl extends BaseModelImpl<AssetEntryUsage>
 		TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table AssetEntryUsage (uuid_ VARCHAR(75) null,assetEntryUsageId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,assetEntryId LONG,classNameId LONG,classPK LONG,portletId VARCHAR(75) null,lastPublishDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table AssetEntryUsage (uuid_ VARCHAR(75) null,assetEntryUsageId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,assetEntryId LONG,classNameId LONG,classPK LONG,portletId VARCHAR(200) null,lastPublishDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table AssetEntryUsage";
 	public static final String ORDER_BY_JPQL = " ORDER BY assetEntryUsage.assetEntryUsageId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY AssetEntryUsage.assetEntryUsageId ASC";

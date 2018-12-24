@@ -403,6 +403,11 @@ public class EditAssetListDisplayContext {
 		return itemSelectorURL.toString();
 	}
 
+	public String getModuleName() {
+		return (String)_request.getAttribute(
+			AssetListWebKeys.RESOLVED_MODULE_NAME);
+	}
+
 	public Map<String, Map<String, Object>> getManualAddIconDataMap()
 		throws Exception {
 

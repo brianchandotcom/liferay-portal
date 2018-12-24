@@ -130,7 +130,7 @@ public class RoleNotificationRecipientBuilder
 		List<Long> groupIds = new ArrayList<>();
 
 		Organization organization = _organizationLocalService.getOrganization(
-			group.getClassPK());
+			group.getOrganizationId());
 
 		for (Organization ancestorOrganization : organization.getAncestors()) {
 			if (isValidGroup(group, role)) {

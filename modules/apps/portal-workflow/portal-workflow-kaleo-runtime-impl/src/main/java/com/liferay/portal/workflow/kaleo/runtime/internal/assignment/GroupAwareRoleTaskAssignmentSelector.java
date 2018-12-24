@@ -139,7 +139,7 @@ public class GroupAwareRoleTaskAssignmentSelector
 		List<Long> groupIds = new ArrayList<>();
 
 		Organization organization = _organizationLocalService.getOrganization(
-			group.getClassPK());
+			group.getOrganizationId());
 
 		for (Organization ancestorOrganization : organization.getAncestors()) {
 			if (isValidAssignment(group, role)) {

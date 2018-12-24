@@ -98,7 +98,8 @@ public class WorkflowTaskPermissionChecker {
 		List<Group> groups = new ArrayList<>();
 
 		Organization organization =
-			OrganizationLocalServiceUtil.getOrganization(group.getClassPK());
+			OrganizationLocalServiceUtil.getOrganization(
+				group.getOrganizationId());
 
 		for (Organization ancestorOrganization : organization.getAncestors()) {
 			groups.add(ancestorOrganization.getGroup());

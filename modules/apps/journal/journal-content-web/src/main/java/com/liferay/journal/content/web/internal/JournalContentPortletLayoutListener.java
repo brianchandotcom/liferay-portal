@@ -14,6 +14,10 @@
 
 package com.liferay.journal.content.web.internal;
 
+import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.asset.kernel.service.AssetEntryLocalService;
+import com.liferay.asset.model.AssetEntryUsage;
+import com.liferay.asset.service.AssetEntryUsageLocalService;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
@@ -24,6 +28,7 @@ import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.service.JournalContentSearchLocalService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -32,9 +37,12 @@ import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.portlet.PortletLayoutListener;
 import com.liferay.portal.kernel.portlet.PortletLayoutListenerException;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
+import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.PortletLocalService;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.UnicodeProperties;
@@ -45,6 +53,7 @@ import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.layoutconfiguration.util.xml.PortletLogic;
 
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.portlet.PortletPreferences;
@@ -76,15 +85,17 @@ public class JournalContentPortletLayoutListener
 		try {
 			Layout layout = _layoutLocalService.getLayout(plid);
 
-			String articleId = _getArticleId(layout, portletId);
+			JournalArticle article = _getArticle(layout, portletId);
 
-			if (Validator.isNull(articleId)) {
+			if (article == null) {
 				return;
 			}
 
+			_addAssetEntryUsage(layout, portletId, article);
+
 			_journalContentSearchLocalService.updateContentSearch(
 				layout.getGroupId(), layout.isPrivateLayout(),
-				layout.getLayoutId(), portletId, articleId, true);
+				layout.getLayoutId(), portletId, article.getArticleId(), true);
 		}
 		catch (Exception e) {
 			throw new PortletLayoutListenerException(e);
@@ -114,18 +125,21 @@ public class JournalContentPortletLayoutListener
 		try {
 			Layout layout = _layoutLocalService.getLayout(plid);
 
-			String articleId = _getArticleId(layout, portletId);
+			JournalArticle article = _getArticle(layout, portletId);
 
-			if (Validator.isNull(articleId)) {
+			if (article == null) {
 				return;
 			}
 
+			_deleteAssetEntryUsages(layout.getPlid(), portletId);
+
 			_journalContentSearchLocalService.deleteArticleContentSearch(
 				layout.getGroupId(), layout.isPrivateLayout(),
-				layout.getLayoutId(), portletId, articleId);
+				layout.getLayoutId(), portletId, article.getArticleId());
 
 			String[] runtimePortletIds = getRuntimePortletIds(
-				layout.getCompanyId(), layout.getGroupId(), articleId);
+				layout.getCompanyId(), layout.getGroupId(),
+				article.getArticleId());
 
 			if (runtimePortletIds.length > 0) {
 				_portletLocalService.deletePortlets(
@@ -150,9 +164,11 @@ public class JournalContentPortletLayoutListener
 		try {
 			Layout layout = _layoutLocalService.getLayout(plid);
 
-			String articleId = _getArticleId(layout, portletId);
+			JournalArticle article = _getArticle(layout, portletId);
 
-			if (Validator.isNull(articleId)) {
+			if (article == null) {
+				_deleteAssetEntryUsages(layout.getPlid(), portletId);
+
 				_journalContentSearchLocalService.deleteArticleContentSearch(
 					layout.getGroupId(), layout.isPrivateLayout(),
 					layout.getLayoutId(), portletId);
@@ -160,9 +176,11 @@ public class JournalContentPortletLayoutListener
 				return;
 			}
 
+			_addAssetEntryUsage(layout, portletId, article);
+
 			_journalContentSearchLocalService.updateContentSearch(
 				layout.getGroupId(), layout.isPrivateLayout(),
-				layout.getLayoutId(), portletId, articleId, true);
+				layout.getLayoutId(), portletId, article.getArticleId(), true);
 		}
 		catch (Exception e) {
 			throw new PortletLayoutListenerException(e);
@@ -261,7 +279,35 @@ public class JournalContentPortletLayoutListener
 		return portletIds;
 	}
 
-	private String _getArticleId(Layout layout, String portletId) {
+	private void _addAssetEntryUsage(
+			Layout layout, String portletId, JournalArticle article)
+		throws PortalException {
+
+		AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
+			_portal.getClassNameId(JournalArticle.class),
+			article.getResourcePrimKey());
+
+		if (assetEntry != null) {
+			_assetEntryUsageLocalService.addAssetEntryUsage(
+				PrincipalThreadLocal.getUserId(), layout.getGroupId(),
+				assetEntry.getEntryId(), _portal.getClassNameId(Layout.class),
+				layout.getPlid(), portletId,
+				ServiceContextThreadLocal.getServiceContext());
+		}
+	}
+
+	private void _deleteAssetEntryUsages(long plid, String portletId) {
+		List<AssetEntryUsage> assetEntryUsages =
+			_assetEntryUsageLocalService.getAssetEntryUsages(
+				_portal.getClassNameId(Layout.class), plid, portletId);
+
+		assetEntryUsages.forEach(
+			assetEntryUsage ->
+				_assetEntryUsageLocalService.deleteAssetEntryUsage(
+					assetEntryUsage));
+	}
+
+	private JournalArticle _getArticle(Layout layout, String portletId) {
 		PortletPreferences portletPreferences = null;
 
 		if (layout.isPortletEmbedded(portletId, layout.getGroupId())) {
@@ -277,7 +323,10 @@ public class JournalContentPortletLayoutListener
 		}
 
 		if (portletPreferences != null) {
-			return portletPreferences.getValue("articleId", null);
+			return _journalArticleLocalService.fetchArticle(
+				GetterUtil.getLong(
+					portletPreferences.getValue("groupId", null)),
+				portletPreferences.getValue("articleId", null));
 		}
 
 		return null;
@@ -285,6 +334,12 @@ public class JournalContentPortletLayoutListener
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		JournalContentPortletLayoutListener.class);
+
+	@Reference
+	private AssetEntryLocalService _assetEntryLocalService;
+
+	@Reference
+	private AssetEntryUsageLocalService _assetEntryUsageLocalService;
 
 	@Reference
 	private DDMTemplateLocalService _ddmTemplateLocalService;

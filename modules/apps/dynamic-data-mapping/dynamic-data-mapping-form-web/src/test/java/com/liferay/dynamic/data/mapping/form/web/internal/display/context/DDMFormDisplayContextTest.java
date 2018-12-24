@@ -14,9 +14,11 @@
 
 package com.liferay.dynamic.data.mapping.form.web.internal.display.context;
 
+import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesTracker;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderer;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderingContext;
 import com.liferay.dynamic.data.mapping.form.values.factory.DDMFormValuesFactory;
+import com.liferay.dynamic.data.mapping.io.DDMFormFieldTypesSerializerTracker;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceLocalService;
@@ -24,6 +26,7 @@ import com.liferay.dynamic.data.mapping.service.DDMFormInstanceRecordVersionLoca
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceService;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceVersionLocalService;
 import com.liferay.dynamic.data.mapping.util.DDMFormValuesMerger;
+import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -199,12 +202,15 @@ public class DDMFormDisplayContextTest extends PowerMockito {
 
 		return new DDMFormDisplayContext(
 			renderRequest, new MockRenderResponse(),
+			mock(DDMFormFieldTypeServicesTracker.class),
+			mock(DDMFormFieldTypesSerializerTracker.class),
 			_ddmFormInstanceLocalService,
 			mock(DDMFormInstanceRecordVersionLocalService.class),
 			_ddmFormInstanceService,
 			mock(DDMFormInstanceVersionLocalService.class),
 			mock(DDMFormRenderer.class), mock(DDMFormValuesFactory.class),
 			mock(DDMFormValuesMerger.class), mock(GroupLocalService.class),
+			new JSONFactoryImpl(),
 			mock(WorkflowDefinitionLinkLocalService.class), mock(Portal.class));
 	}
 

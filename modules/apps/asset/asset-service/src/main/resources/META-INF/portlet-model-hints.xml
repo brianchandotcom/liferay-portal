@@ -13,7 +13,9 @@
 		<field name="assetEntryId" type="long" />
 		<field name="classNameId" type="long" />
 		<field name="classPK" type="long" />
-		<field name="portletId" type="String" />
+		<field name="portletId" type="String">
+			<hint name="max-length">200</hint>
+		</field>
 		<field name="lastPublishDate" type="Date" />
 	</model>
 </model-hints>

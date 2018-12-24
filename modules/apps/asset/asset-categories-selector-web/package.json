@@ -6,12 +6,20 @@
 		"metal-state": "^2.6.4"
 	},
 	"devDependencies": {
+		"babel-cli": "^6.26.0",
+		"babel-preset-env": "^1.7.0",
 		"check-source-formatting": "^2.0.4",
-		"liferay-module-config-generator": "^1.2.1",
-		"metal-cli": "^4.2.0"
+		"cross-env": "^5.2.0",
+		"liferay-npm-bundler": "^2.6.1",
+		"liferay-npm-bundler-preset-liferay-dev": "^1.1.1",
+		"metal-tools-soy": "^4.2.9"
 	},
 	"name": "asset-categories-selector-web",
 	"scripts": {
+		"build": "npm run build:soy && npm run compile && liferay-npm-bundler && npm run cleanSoy",
+		"build:soy": "metalsoy --soyDeps \"node_modules/+(com.liferay.frontend.taglib|com.liferay.frontend.js.web|com.liferay.frontend.js.metal.web)/**/*.soy\"",
+		"compile": "cross-env NODE_ENV=production babel --source-maps -d classes/META-INF/resources src/main/resources/META-INF/resources",
+		"cleanSoy": "rimraf src/**/*.soy.js",
 		"checkFormat": "npm run csf",
 		"csf": "csf src/**/*.js",
 		"format": "npm run csf -- -i"

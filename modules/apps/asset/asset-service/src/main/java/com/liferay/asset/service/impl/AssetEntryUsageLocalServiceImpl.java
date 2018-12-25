@@ -60,14 +60,6 @@ public class AssetEntryUsageLocalServiceImpl
 	}
 
 	@Override
-	public AssetEntryUsage fetchAssetEntryUsage(
-		long classNameId, long classPK, String portletId) {
-
-		return assetEntryUsagePersistence.fetchByC_C_P(
-			classNameId, classPK, portletId);
-	}
-
-	@Override
 	public List<AssetEntryUsage> getAssetEntryUsages(long assetEntryId) {
 		return assetEntryUsagePersistence.findByAssetEntryId(assetEntryId);
 	}
@@ -95,6 +87,14 @@ public class AssetEntryUsageLocalServiceImpl
 
 		return assetEntryUsagePersistence.findByA_C(
 			assetEntryId, classNameId, start, end, orderByComparator);
+	}
+
+	@Override
+	public List<AssetEntryUsage> getAssetEntryUsages(
+		long classNameId, long classPK, String portletId) {
+
+		return assetEntryUsagePersistence.findByC_C_P(
+			classNameId, classPK, portletId);
 	}
 
 	@Override

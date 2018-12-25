@@ -48,8 +48,6 @@ public class PersonUpdaterForm {
 		).addOptionalDate(
 			"birthDate", PersonUpdaterForm::setBirthDate
 		).addOptionalString(
-			"gender", PersonUpdaterForm::setGender
-		).addOptionalString(
 			"honorificPrefix", PersonUpdaterForm::setHonorificPrefix
 		).addOptionalString(
 			"honorificSuffix", PersonUpdaterForm::setHonorificSuffix

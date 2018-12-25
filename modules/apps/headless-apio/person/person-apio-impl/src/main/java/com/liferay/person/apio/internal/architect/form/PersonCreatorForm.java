@@ -50,8 +50,6 @@ public class PersonCreatorForm {
 		).addOptionalDate(
 			"birthDate", PersonCreatorForm::setBirthDate
 		).addOptionalString(
-			"gender", PersonCreatorForm::setGender
-		).addOptionalString(
 			"honorificPrefix", PersonCreatorForm::setHonorificPrefix
 		).addOptionalString(
 			"honorificSuffix", PersonCreatorForm::setHonorificSuffix

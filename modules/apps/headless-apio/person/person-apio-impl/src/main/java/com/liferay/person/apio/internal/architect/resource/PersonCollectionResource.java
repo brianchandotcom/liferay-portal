@@ -154,8 +154,7 @@ public class PersonCollectionResource
 						LocaleUtil.getDefault(),
 						personCreatorForm.getGivenName(), StringPool.BLANK,
 						personCreatorForm.getFamilyName(), prefixId, suffixId,
-						personCreatorForm.isMale(),
-						personCreatorForm.getBirthdayMonth(),
+						false, personCreatorForm.getBirthdayMonth(),
 						personCreatorForm.getBirthdayDay(),
 						personCreatorForm.getBirthdayYear(),
 						personCreatorForm.getJobTitle(), null, null, null, null,
@@ -270,14 +269,6 @@ public class PersonCollectionResource
 		return new UserWrapper(user, themeDisplay);
 	}
 
-	private Boolean _isMale(PersonUpdaterForm personUpdaterForm, User user)
-		throws PortalException {
-
-		Optional<Boolean> optional = personUpdaterForm.isMaleOptional();
-
-		return optional.orElse(user.isMale());
-	}
-
 	private byte[] _readInputStream(InputStream inputStream)
 		throws IOException {
 
@@ -339,8 +330,7 @@ public class PersonCollectionResource
 			user.getOpenId(), false, null, user.getLanguageId(),
 			user.getTimeZoneId(), user.getGreeting(), user.getComments(),
 			personUpdaterForm.getGivenName(), user.getMiddleName(),
-			personUpdaterForm.getFamilyName(), prefixId, suffixId,
-			_isMale(personUpdaterForm, user),
+			personUpdaterForm.getFamilyName(), prefixId, suffixId, false,
 			_getDefaultValue(
 				personUpdaterForm.getBirthdayMonthOptional(),
 				birthdayDate.getMonth()),

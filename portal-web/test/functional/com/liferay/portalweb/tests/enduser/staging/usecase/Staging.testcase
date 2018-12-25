@@ -2642,6 +2642,8 @@ definition {
 	@description = "This is a use case for LPS-76633."
 	@priority = "5"
 	test ViewSingleAssetPublication {
+		property portal.release = "false";
+
 		Navigator.openSiteURL(siteName = "Site Name");
 
 		ProductMenu.gotoPortlet(

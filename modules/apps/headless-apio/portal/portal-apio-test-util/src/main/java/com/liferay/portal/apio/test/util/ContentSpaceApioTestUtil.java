@@ -14,10 +14,74 @@
 
 package com.liferay.portal.apio.test.util;
 
+import java.net.URL;
+
 /**
  * @author Cristina González
  */
 public class ContentSpaceApioTestUtil {
+
+	public static final void deleteAllStructuredContents(
+			URL contentSpaceHrefURL)
+		throws Exception {
+
+		URL structuredContentEndpointURL = new URL(
+			ApioClientBuilder.given(
+			).basicAuth(
+				"test@liferay.com", "test"
+			).header(
+				"Accept", "application/hal+json"
+			).when(
+			).get(
+				contentSpaceHrefURL.toExternalForm()
+			).then(
+			).extract(
+			).path(
+				"_links.structuredContents.href"
+			));
+
+		String href = ApioClientBuilder.given(
+		).basicAuth(
+			"test@liferay.com", "test"
+		).header(
+			"Accept", "application/hal+json"
+		).when(
+		).get(
+			structuredContentEndpointURL.toExternalForm()
+		).then(
+		).extract(
+		).path(
+			"_embedded.StructuredContent[0]._links.self.href"
+		);
+
+		while (href != null) {
+			ApioClientBuilder.given(
+			).basicAuth(
+				"test@liferay.com", "test"
+			).header(
+				"Accept", "application/hal+json"
+			).header(
+				"Content-Type", "application/json"
+			).when(
+			).delete(
+				href
+			);
+
+			href = ApioClientBuilder.given(
+			).basicAuth(
+				"test@liferay.com", "test"
+			).header(
+				"Accept", "application/hal+json"
+			).when(
+			).get(
+				structuredContentEndpointURL.toExternalForm()
+			).then(
+			).extract(
+			).path(
+				"_embedded.StructuredContent[0]._links.self.href"
+			);
+		}
+	}
 
 	public static final String getContentSpaceHref(
 		String url, String contentSpaceName) {

@@ -15,9 +15,9 @@
 package com.liferay.structured.content.apio.client.test;
 
 import com.liferay.oauth2.provider.test.util.OAuth2ProviderTestUtil;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.apio.test.util.ApioClientBuilder;
 import com.liferay.portal.apio.test.util.ContentSpaceApioTestUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.structured.content.apio.client.test.internal.activator.StructuredContentApioTestBundleActivator;
 
@@ -26,6 +26,7 @@ import java.net.URL;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 
 import org.hamcrest.Matchers;
 import org.hamcrest.core.IsEqual;
@@ -37,6 +38,7 @@ import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.arquillian.test.api.ArquillianResource;
 import org.jboss.shrinkwrap.api.Archive;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -58,7 +60,7 @@ public class StructuredContentApioTest {
 	public void setUp() throws MalformedURLException {
 		URL rootEndpointURL = new URL(_url, "/o/api");
 
-		URL contentSpaceEndpointURL = new URL(
+		_contentSpaceHrefURL = new URL(
 			ContentSpaceApioTestUtil.getContentSpaceHref(
 				rootEndpointURL.toExternalForm(),
 				StructuredContentApioTestBundleActivator.SITE_NAME));
@@ -71,7 +73,7 @@ public class StructuredContentApioTest {
 				"Accept", "application/hal+json"
 			).when(
 			).get(
-				contentSpaceEndpointURL.toExternalForm()
+				_contentSpaceHrefURL.toExternalForm()
 			).then(
 			).extract(
 			).path(
@@ -103,12 +105,18 @@ public class StructuredContentApioTest {
 				"Accept", "application/hal+json"
 			).when(
 			).get(
-				contentSpaceEndpointURL.toExternalForm()
+				_contentSpaceHrefURL.toExternalForm()
 			).then(
 			).extract(
 			).path(
 				"_links.structuredContents.href"
 			));
+	}
+
+	@After
+	public void tearDown() throws Exception {
+		ContentSpaceApioTestUtil.deleteAllStructuredContents(
+			_contentSpaceHrefURL);
 	}
 
 	@Test
@@ -142,7 +150,7 @@ public class StructuredContentApioTest {
 	@Test
 	public void testDeleteStructuredContent() throws Exception {
 		URL structuredContentIdURL = _createStructuredContent(
-			"test-create-structured-content.json",
+			LocaleUtil.US, "test-create-structured-content.json",
 			Collections.singletonList(
 				_contentStructureHrefURL.toExternalForm()));
 
@@ -163,7 +171,20 @@ public class StructuredContentApioTest {
 	}
 
 	@Test
-	public void testGetStructuredContentWithAcceptedLanguageEqualsDefaultLocale() {
+	public void testGetStructuredContentWithAcceptedLanguageEqualsDefaultLocale()
+		throws Exception {
+
+		URL structuredContentIdURL = _createStructuredContent(
+			LocaleUtil.US, "test-get-structured-content-us.json",
+			Collections.singletonList(
+				_contentStructureHrefURL.toExternalForm()));
+
+		_updateStructuredContent(
+			structuredContentIdURL, LocaleUtil.SPAIN,
+			"test-get-structured-content-es.json",
+			Collections.singletonList(
+				_contentStructureHrefURL.toExternalForm()));
+
 		ApioClientBuilder.given(
 		).basicAuth(
 			"test@liferay.com", "test"
@@ -173,10 +194,8 @@ public class StructuredContentApioTest {
 			"Accept-Language", "en-US"
 		).when(
 		).get(
-			StringBundler.concat(
-				_structuredContentEndpointURL.toExternalForm(),
-				"?filter=title eq '",
-				StructuredContentApioTestBundleActivator.TITLE_2_LOCALE_US, "'")
+			_structuredContentEndpointURL.toExternalForm() +
+				"?filter=title eq 'Example Structured Content in English'"
 		).then(
 		).log(
 		).ifError(
@@ -186,8 +205,7 @@ public class StructuredContentApioTest {
 			"_embedded.StructuredContent", Matchers.hasSize(1)
 		).body(
 			"_embedded.StructuredContent[0].title",
-			IsEqual.equalTo(
-				StructuredContentApioTestBundleActivator.TITLE_2_LOCALE_US)
+			IsEqual.equalTo("Example Structured Content in English")
 		).body(
 			"_embedded.StructuredContent[0]._embedded.values._embedded.find " +
 				"{it.name == 'MyBoolean'}.dataType",
@@ -209,16 +227,25 @@ public class StructuredContentApioTest {
 				"{it.name == 'TextFieldName'}.label",
 			IsEqual.equalTo("TextFieldNameLabel_us")
 		).body(
-			"_embedded.StructuredContent[0]._embedded.values._embedded.find " +
-				"{it.name == 'NestedTextFieldName'}.label",
-			IsEqual.equalTo("NestedTextFieldNameLabel_us")
-		).body(
 			"_links.self.href", IsNull.notNullValue()
 		);
 	}
 
 	@Test
-	public void testGetStructuredContentWithAcceptedLanguageEqualsLanguageAvailableInStructureContent() {
+	public void testGetStructuredContentWithAcceptedLanguageEqualsLanguageAvailableInStructureContent()
+		throws Exception {
+
+		URL structuredContentIdURL = _createStructuredContent(
+			LocaleUtil.US, "test-get-structured-content-us.json",
+			Collections.singletonList(
+				_contentStructureHrefURL.toExternalForm()));
+
+		_updateStructuredContent(
+			structuredContentIdURL, LocaleUtil.SPAIN,
+			"test-get-structured-content-es.json",
+			Collections.singletonList(
+				_contentStructureHrefURL.toExternalForm()));
+
 		ApioClientBuilder.given(
 		).basicAuth(
 			"test@liferay.com", "test"
@@ -228,10 +255,8 @@ public class StructuredContentApioTest {
 			"Accept-Language", "es-ES"
 		).when(
 		).get(
-			StringBundler.concat(
-				_structuredContentEndpointURL.toExternalForm(),
-				"?filter=title eq '",
-				StructuredContentApioTestBundleActivator.TITLE_2_LOCALE_ES, "'")
+			_structuredContentEndpointURL.toExternalForm() +
+				"?filter=title eq 'Example Structured Content in Spanish'"
 		).then(
 		).log(
 		).ifError(
@@ -241,8 +266,7 @@ public class StructuredContentApioTest {
 			"_embedded.StructuredContent", Matchers.hasSize(1)
 		).body(
 			"_embedded.StructuredContent[0].title",
-			IsEqual.equalTo(
-				StructuredContentApioTestBundleActivator.TITLE_2_LOCALE_ES)
+			IsEqual.equalTo("Example Structured Content in Spanish")
 		).body(
 			"_embedded.StructuredContent[0]._embedded.values._embedded.find " +
 				"{it.name == 'MyBoolean'}.dataType",
@@ -264,16 +288,28 @@ public class StructuredContentApioTest {
 				"{it.name == 'TextFieldName'}.label",
 			IsEqual.equalTo("TextFieldNameLabel_es")
 		).body(
-			"_embedded.StructuredContent[0]._embedded.values._embedded.find " +
-				"{it.name == 'NestedTextFieldName'}.label",
-			IsEqual.equalTo("NestedTextFieldNameLabel_es")
+			"_embedded.StructuredContent[0]._links.self.href",
+			IsEqual.equalTo(structuredContentIdURL.toExternalForm())
 		).body(
 			"_links.self.href", IsNull.notNullValue()
 		);
 	}
 
 	@Test
-	public void testGetStructuredContentWithAcceptedLanguageEqualsLanguageNotAvailableInStructureContent() {
+	public void testGetStructuredContentWithAcceptedLanguageEqualsLanguageNotAvailableInStructureContent()
+		throws Exception {
+
+		URL structuredContentIdURL = _createStructuredContent(
+			LocaleUtil.US, "test-get-structured-content-us.json",
+			Collections.singletonList(
+				_contentStructureHrefURL.toExternalForm()));
+
+		_updateStructuredContent(
+			structuredContentIdURL, LocaleUtil.SPAIN,
+			"test-get-structured-content-es.json",
+			Collections.singletonList(
+				_contentStructureHrefURL.toExternalForm()));
+
 		ApioClientBuilder.given(
 		).basicAuth(
 			"test@liferay.com", "test"
@@ -283,10 +319,8 @@ public class StructuredContentApioTest {
 			"Accept-Language", "de-DE"
 		).when(
 		).get(
-			StringBundler.concat(
-				_structuredContentEndpointURL.toExternalForm(),
-				"?filter=title eq '",
-				StructuredContentApioTestBundleActivator.TITLE_2_LOCALE_US, "'")
+			_structuredContentEndpointURL.toExternalForm() +
+				"?filter=title eq 'Example Structured Content in English'"
 		).then(
 		).log(
 		).ifError(
@@ -296,8 +330,7 @@ public class StructuredContentApioTest {
 			"_embedded.StructuredContent", Matchers.hasSize(1)
 		).body(
 			"_embedded.StructuredContent[0].title",
-			IsEqual.equalTo(
-				StructuredContentApioTestBundleActivator.TITLE_2_LOCALE_US)
+			IsEqual.equalTo("Example Structured Content in English")
 		).body(
 			"_embedded.StructuredContent[0]._embedded.values._embedded.find " +
 				"{it.name == 'MyBoolean'}.dataType",
@@ -319,16 +352,19 @@ public class StructuredContentApioTest {
 				"{it.name == 'TextFieldName'}.label",
 			IsEqual.equalTo("TextFieldNameLabel_us")
 		).body(
-			"_embedded.StructuredContent[0]._embedded.values._embedded.find " +
-				"{it.name == 'NestedTextFieldName'}.label",
-			IsEqual.equalTo("NestedTextFieldNameLabel_us")
-		).body(
 			"_links.self.href", IsNull.notNullValue()
 		);
 	}
 
 	@Test
-	public void testGetStructuredContentWithoutAcceptedLanguageAndDefaultLanguageDifferentThanUserLanguage() {
+	public void testGetStructuredContentWithoutAcceptedLanguageAndDefaultLanguageDifferentThanUserLanguage()
+		throws Exception {
+
+		URL structuredContentIdURL = _createStructuredContent(
+			LocaleUtil.SPAIN, "test-get-structured-content-es.json",
+			Collections.singletonList(
+				_contentStructureHrefURL.toExternalForm()));
+
 		ApioClientBuilder.given(
 		).basicAuth(
 			"test@liferay.com", "test"
@@ -336,10 +372,8 @@ public class StructuredContentApioTest {
 			"Accept", "application/hal+json"
 		).when(
 		).get(
-			StringBundler.concat(
-				_structuredContentEndpointURL.toExternalForm(),
-				"?filter=title eq '",
-				StructuredContentApioTestBundleActivator.TITLE_1_LOCALE_ES, "'")
+			_structuredContentEndpointURL.toExternalForm() +
+				"?filter=title eq 'Example Structured Content in Spanish'"
 		).then(
 		).log(
 		).ifError(
@@ -349,8 +383,7 @@ public class StructuredContentApioTest {
 			"_embedded.StructuredContent", Matchers.hasSize(1)
 		).body(
 			"_embedded.StructuredContent[0].title",
-			IsEqual.equalTo(
-				StructuredContentApioTestBundleActivator.TITLE_1_LOCALE_ES)
+			IsEqual.equalTo("Example Structured Content in Spanish")
 		).body(
 			"_embedded.StructuredContent[0]._embedded.values._embedded.find " +
 				"{it.name == 'MyBoolean'}.dataType",
@@ -372,9 +405,8 @@ public class StructuredContentApioTest {
 				"{it.name == 'TextFieldName'}.label",
 			IsEqual.equalTo("TextFieldNameLabel_us")
 		).body(
-			"_embedded.StructuredContent[0]._embedded.values._embedded.find " +
-				"{it.name == 'NestedTextFieldName'}.label",
-			IsEqual.equalTo("NestedTextFieldNameLabel_us")
+			"_embedded.StructuredContent[0]._links.self.href",
+			IsEqual.equalTo(structuredContentIdURL.toExternalForm())
 		).body(
 			"_links.self.href", IsNull.notNullValue()
 		);
@@ -402,7 +434,7 @@ public class StructuredContentApioTest {
 	@Test
 	public void testUpdateStructuredContent() throws Exception {
 		URL structuredContentIdURL = _createStructuredContent(
-			"test-create-structured-content.json",
+			LocaleUtil.US, "test-create-structured-content.json",
 			Collections.singletonList(
 				_contentStructureHrefURL.toExternalForm()));
 
@@ -430,7 +462,8 @@ public class StructuredContentApioTest {
 		);
 	}
 
-	private URL _createStructuredContent(String fileName, List<String> vars)
+	private URL _createStructuredContent(
+			Locale locale, String fileName, List<String> vars)
 		throws Exception {
 
 		return new URL(
@@ -439,6 +472,8 @@ public class StructuredContentApioTest {
 				"test@liferay.com", "test"
 			).header(
 				"Accept", "application/hal+json"
+			).header(
+				"Accept-Language", LocaleUtil.toW3cLanguageId(locale)
 			).header(
 				"Content-Type", "application/json"
 			).body(
@@ -461,6 +496,34 @@ public class StructuredContentApioTest {
 		return String.format(StringUtil.read(url.openStream()), vars.toArray());
 	}
 
+	private URL _updateStructuredContent(
+			URL structuredContentIdURL, Locale locale, String fileName,
+			List<String> vars)
+		throws Exception {
+
+		return new URL(
+			ApioClientBuilder.given(
+			).basicAuth(
+				"test@liferay.com", "test"
+			).header(
+				"Accept", "application/hal+json"
+			).header(
+				"Accept-Language", LocaleUtil.toW3cLanguageId(locale)
+			).header(
+				"Content-Type", "application/json"
+			).body(
+				_read(fileName, vars)
+			).when(
+			).put(
+				structuredContentIdURL.toExternalForm()
+			).then(
+			).extract(
+			).path(
+				"_links.self.href"
+			));
+	}
+
+	private URL _contentSpaceHrefURL;
 	private URL _contentStructureHrefURL;
 	private URL _structuredContentEndpointURL;
 

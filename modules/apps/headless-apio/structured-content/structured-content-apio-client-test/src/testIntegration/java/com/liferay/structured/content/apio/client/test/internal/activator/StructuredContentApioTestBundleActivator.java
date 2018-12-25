@@ -21,13 +21,10 @@ import com.liferay.dynamic.data.mapping.io.DDMFormDeserializerTracker;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMStructureConstants;
-import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.storage.StorageType;
 import com.liferay.dynamic.data.mapping.test.util.DDMStructureTestHelper;
 import com.liferay.dynamic.data.mapping.test.util.DDMTemplateTestUtil;
 import com.liferay.journal.model.JournalArticle;
-import com.liferay.journal.model.JournalFolderConstants;
-import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.apio.test.util.AuthConfigurationTestUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -50,7 +47,6 @@ import java.io.InputStream;
 import java.net.URL;
 
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
@@ -67,18 +63,6 @@ public class StructuredContentApioTestBundleActivator
 	public static final String SITE_NAME =
 		StructuredContentApioTestBundleActivator.class.getSimpleName() + "Site";
 
-	public static final String TITLE_1_LOCALE_ES =
-		StructuredContentApioTestBundleActivator.class.getSimpleName() +
-			"Title1_es";
-
-	public static final String TITLE_2_LOCALE_ES =
-		StructuredContentApioTestBundleActivator.class.getSimpleName() +
-			"Title2_es";
-
-	public static final String TITLE_2_LOCALE_US =
-		StructuredContentApioTestBundleActivator.class.getSimpleName() +
-			"Title2_us";
-
 	@Override
 	public void start(BundleContext bundleContext) {
 		_ddmFormDeserializerTrackerServiceReference =
@@ -92,12 +76,6 @@ public class StructuredContentApioTestBundleActivator
 
 		_groupLocalService = bundleContext.getService(
 			_groupLocalServiceServiceReference);
-
-		_journalArticleLocalServiceServiceReference =
-			bundleContext.getServiceReference(JournalArticleLocalService.class);
-
-		_journalArticleLocalService = bundleContext.getService(
-			_journalArticleLocalServiceServiceReference);
 
 		try {
 			AuthConfigurationTestUtil.deployOAuthConfiguration(bundleContext);
@@ -117,7 +95,6 @@ public class StructuredContentApioTestBundleActivator
 
 		bundleContext.ungetService(_ddmFormDeserializerTrackerServiceReference);
 		bundleContext.ungetService(_groupLocalServiceServiceReference);
-		bundleContext.ungetService(_journalArticleLocalServiceServiceReference);
 	}
 
 	protected DDMForm deserialize(String content) {
@@ -173,40 +150,11 @@ public class StructuredContentApioTestBundleActivator
 		DDMStructure ddmStructure = _getDDMStructure(
 			_group, "test-journal-all-fields-structure.json");
 
-		DDMTemplate ddmTemplate = DDMTemplateTestUtil.addTemplate(
+		DDMTemplateTestUtil.addTemplate(
 			_group.getGroupId(), ddmStructure.getStructureId(),
 			PortalUtil.getClassNameId(JournalArticle.class),
 			TemplateConstants.LANG_TYPE_VM,
 			_read("test-journal-all-fields-template.xsl"), LocaleUtil.US);
-
-		Map<Locale, String> titleMap1 = new HashMap<Locale, String>() {
-			{
-				put(LocaleUtil.SPAIN, TITLE_1_LOCALE_ES);
-			}
-		};
-
-		_journalArticleLocalService.addArticle(
-			user.getUserId(), _group.getGroupId(),
-			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID, titleMap1, null,
-			_read("test-journal-all-fields-content-1.xml"),
-			ddmStructure.getStructureKey(), ddmTemplate.getTemplateKey(),
-			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), user.getUserId()));
-
-		Map<Locale, String> titleMap2 = new HashMap<Locale, String>() {
-			{
-				put(LocaleUtil.getDefault(), TITLE_2_LOCALE_US);
-				put(LocaleUtil.SPAIN, TITLE_2_LOCALE_ES);
-			}
-		};
-
-		_journalArticleLocalService.addArticle(
-			user.getUserId(), _group.getGroupId(),
-			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID, titleMap2, null,
-			_read("test-journal-all-fields-content-2.xml"),
-			ddmStructure.getStructureKey(), ddmTemplate.getTemplateKey(),
-			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), user.getUserId()));
 	}
 
 	private String _read(String fileName) throws Exception {
@@ -235,8 +183,5 @@ public class StructuredContentApioTestBundleActivator
 	private GroupLocalService _groupLocalService;
 	private ServiceReference<GroupLocalService>
 		_groupLocalServiceServiceReference;
-	private JournalArticleLocalService _journalArticleLocalService;
-	private ServiceReference<JournalArticleLocalService>
-		_journalArticleLocalServiceServiceReference;
 
 }

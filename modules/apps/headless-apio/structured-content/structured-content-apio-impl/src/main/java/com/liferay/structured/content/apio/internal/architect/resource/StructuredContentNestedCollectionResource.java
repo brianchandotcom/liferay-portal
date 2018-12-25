@@ -105,8 +105,10 @@ import com.liferay.structured.content.apio.internal.model.JournalArticleWrapper;
 import com.liferay.structured.content.apio.internal.model.RenderedJournalArticle;
 import com.liferay.structured.content.apio.internal.util.JournalArticleContentHelper;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -337,7 +339,9 @@ public class StructuredContentNestedCollectionResource
 		String content =
 			_journalArticleContentHelper.createJournalArticleContent(
 				structuredContent.getStructuredContentValues(), ddmStructure,
-				locale);
+				LocaleUtil.toLanguageId(locale),
+				Collections.singletonList(LocaleUtil.toLanguageId(locale)),
+				LocaleUtil.toLanguageId(locale));
 
 		String ddmStructureKey = ddmStructure.getStructureKey();
 		String ddmTemplateKey = _getDDMTemplateKey(ddmStructure);
@@ -514,6 +518,22 @@ public class StructuredContentNestedCollectionResource
 
 		return new JournalArticleWrapper(
 			journalArticle, acceptLanguage.getPreferredLocale(), themeDisplay);
+	}
+
+	private List<String> _getLanguagesIds(
+		List<String> languagesIds, Locale locale) {
+
+		String languageId = LocaleUtil.toLanguageId(locale);
+
+		if (!languagesIds.contains(languageId)) {
+			return Stream.concat(
+				languagesIds.stream(), Stream.of(languageId)
+			).collect(
+				Collectors.toList()
+			);
+		}
+
+		return new ArrayList(languagesIds);
 	}
 
 	private String _getLayoutLink(JSONObject jsonObject)
@@ -777,25 +797,52 @@ public class StructuredContentNestedCollectionResource
 		String content =
 			_journalArticleContentHelper.createJournalArticleContent(
 				structuredContent.getStructuredContentValues(), ddmStructure,
-				locale);
+				journalArticle.getDefaultLanguageId(),
+				_getLanguagesIds(
+					Arrays.asList(journalArticle.getAvailableLanguageIds()),
+					locale),
+				LocaleUtil.toLanguageId(locale));
 
 		String ddmTemplateKey = _getDDMTemplateKey(ddmStructure);
 
 		Date displayDate = journalArticle.getDisplayDate();
 
+		Map<Locale, String> titleMap = Stream.of(
+			journalArticle.getTitleMap(), structuredContent.getTitleMap(locale)
+		).map(
+			Map::entrySet
+		).flatMap(
+			Collection::stream
+		).collect(
+			Collectors.toMap(
+				Map.Entry::getKey, Map.Entry::getValue,
+				(journalTitle, structuredContentTitle) ->
+					structuredContentTitle)
+		);
+
+		Map<Locale, String> friendlyURLMap = Stream.of(
+			journalArticle.getFriendlyURLMap(),
+			structuredContent.getTitleMap(locale)
+		).map(
+			Map::entrySet
+		).flatMap(
+			Collection::stream
+		).collect(
+			Collectors.toMap(
+				Map.Entry::getKey, Map.Entry::getValue,
+				(journalTitle, structuredContentTitle) -> journalTitle)
+		);
+
 		JournalArticle updatedJournalArticle =
 			_journalArticleService.updateArticle(
 				journalArticle.getGroupId(), journalArticle.getFolderId(),
 				journalArticle.getArticleId(), journalArticle.getVersion(),
-				_getDefaultValue(
-					Optional.ofNullable(structuredContent.getTitleMap(locale)),
-					journalArticle.getTitleMap()),
+				titleMap,
 				_getDefaultValue(
 					structuredContent.getDescriptionMapOptional(locale),
 					journalArticle.getDescriptionMap()),
-				journalArticle.getFriendlyURLMap(), content,
-				journalArticle.getDDMStructureKey(), ddmTemplateKey,
-				journalArticle.getLayoutUuid(),
+				friendlyURLMap, content, journalArticle.getDDMStructureKey(),
+				ddmTemplateKey, journalArticle.getLayoutUuid(),
 				_getDefaultValue(
 					structuredContent.getPublishedDateMonthOptional(),
 					displayDate.getMonth()),

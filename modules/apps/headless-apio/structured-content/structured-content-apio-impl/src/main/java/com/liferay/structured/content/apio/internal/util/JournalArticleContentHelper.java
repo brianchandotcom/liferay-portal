@@ -24,16 +24,15 @@ import com.liferay.journal.service.JournalArticleService;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.security.xml.SecureXMLFactoryProviderUtil;
-import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.structured.content.apio.architect.model.StructuredContentLocation;
 import com.liferay.structured.content.apio.architect.model.StructuredContentValue;
 
 import java.io.StringWriter;
 
 import java.util.List;
-import java.util.Locale;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -59,15 +58,20 @@ public class JournalArticleContentHelper {
 
 	public String createJournalArticleContent(
 		List<? extends StructuredContentValue> structuredContentValues,
-		DDMStructure ddmStructure, Locale locale) {
+		DDMStructure ddmStructure, String defaultLocaleId,
+		List<String> availableLocaleIds, String localeId) {
 
 		return Try.fromFallible(
 			() -> {
-				String localeId = LocaleUtil.toLanguageId(locale);
-
 				Document document = _getDocument();
 
-				Element rootElement = _getRootElement(localeId, document);
+				Stream<String> stream = availableLocaleIds.stream();
+
+				String availableLocaleIdsString = stream.collect(
+					Collectors.joining(","));
+
+				Element rootElement = _getRootElement(
+					defaultLocaleId, availableLocaleIdsString, document);
 
 				document.appendChild(rootElement);
 
@@ -261,11 +265,13 @@ public class JournalArticleContentHelper {
 		return jsonObject.toString();
 	}
 
-	private Element _getRootElement(String localeId, Document document) {
+	private Element _getRootElement(
+		String defaultLocaleId, String availableLocaleIds, Document document) {
+
 		Element element = document.createElement("root");
 
-		element.setAttribute("available-locales", localeId);
-		element.setAttribute("default-locale", localeId);
+		element.setAttribute("available-locales", availableLocaleIds);
+		element.setAttribute("default-locale", defaultLocaleId);
 
 		return element;
 	}

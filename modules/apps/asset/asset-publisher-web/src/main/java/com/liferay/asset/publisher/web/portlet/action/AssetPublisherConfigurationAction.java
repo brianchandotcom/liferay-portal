@@ -19,6 +19,7 @@ import com.liferay.asset.kernel.exception.AssetTagException;
 import com.liferay.asset.kernel.exception.DuplicateQueryRuleException;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.service.AssetTagLocalService;
+import com.liferay.asset.model.AssetEntryUsage;
 import com.liferay.asset.publisher.constants.AssetPublisherPortletKeys;
 import com.liferay.asset.publisher.constants.AssetPublisherWebKeys;
 import com.liferay.asset.publisher.web.configuration.AssetPublisherPortletInstanceConfiguration;
@@ -28,6 +29,7 @@ import com.liferay.asset.publisher.web.util.AssetPublisherCustomizer;
 import com.liferay.asset.publisher.web.util.AssetPublisherCustomizerRegistry;
 import com.liferay.asset.publisher.web.util.AssetPublisherUtil;
 import com.liferay.asset.publisher.web.util.AssetQueryRule;
+import com.liferay.asset.service.AssetEntryUsageLocalService;
 import com.liferay.exportimport.kernel.staging.LayoutStagingUtil;
 import com.liferay.exportimport.kernel.staging.Staging;
 import com.liferay.item.selector.ItemSelector;
@@ -48,6 +50,8 @@ import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutRevisionLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.settings.LocalizedValuesMap;
@@ -250,10 +254,29 @@ public class AssetPublisherConfigurationAction
 				String assetEntryType = ParamUtil.getString(
 					actionRequest, "assetEntryType");
 
+				long userId = portal.getUserId(actionRequest);
+				long groupId = portal.getScopeGroupId(actionRequest);
+				long classNameId = portal.getClassNameId(Layout.class);
+
+				ThemeDisplay themeDisplay =
+					(ThemeDisplay)actionRequest.getAttribute(
+						WebKeys.THEME_DISPLAY);
+
+				PortletDisplay portletDisplay =
+					themeDisplay.getPortletDisplay();
+
+				ServiceContext serviceContext =
+					ServiceContextFactory.getInstance(actionRequest);
+
 				for (long assetEntryId : assetEntryIds) {
 					assetPublisherWebUtil.addSelection(
 						preferences, assetEntryId, assetEntryOrder,
 						assetEntryType);
+
+					assetEntryUsageLocalService.addAssetEntryUsage(
+						userId, groupId, assetEntryId, classNameId,
+						themeDisplay.getPlid(),
+						portletDisplay.getPortletResource(), serviceContext);
 				}
 			}
 			else if (cmd.equals("move-selection-down")) {
@@ -568,6 +591,19 @@ public class AssetPublisherConfigurationAction
 		}
 
 		preferences.setValues("assetEntryXml", newEntries);
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		List<AssetEntryUsage> assetEntryUsages =
+			assetEntryUsageLocalService.getAssetEntryUsages(
+				portal.getClassNameId(Layout.class), themeDisplay.getPlid(),
+				portal.getPortletId(actionRequest));
+
+		assetEntryUsages.forEach(
+			assetEntryUsage ->
+				assetEntryUsageLocalService.deleteAssetEntryUsage(
+					assetEntryUsage));
 	}
 
 	@Reference(unbind = "-")
@@ -818,6 +854,9 @@ public class AssetPublisherConfigurationAction
 				queryRule.getName());
 		}
 	}
+
+	@Reference
+	protected AssetEntryUsageLocalService assetEntryUsageLocalService;
 
 	@Reference
 	protected AssetPublisherCustomizerRegistry assetPublisherCustomizerRegistry;

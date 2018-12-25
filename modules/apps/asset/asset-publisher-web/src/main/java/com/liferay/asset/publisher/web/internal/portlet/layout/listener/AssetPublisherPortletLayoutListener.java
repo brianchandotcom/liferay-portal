@@ -16,8 +16,10 @@ package com.liferay.asset.publisher.web.internal.portlet.layout.listener;
 
 import com.liferay.asset.list.model.AssetListEntryUsage;
 import com.liferay.asset.list.service.AssetListEntryUsageLocalService;
+import com.liferay.asset.model.AssetEntryUsage;
 import com.liferay.asset.publisher.constants.AssetPublisherPortletKeys;
 import com.liferay.asset.publisher.web.internal.util.AssetPublisherWebUtil;
+import com.liferay.asset.service.AssetEntryUsageLocalService;
 import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -39,6 +41,7 @@ import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.subscription.service.SubscriptionLocalService;
 
+import java.util.List;
 import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
@@ -95,6 +98,8 @@ public class AssetPublisherPortletLayoutListener
 				_assetPublisherWebUtil.getSubscriptionClassPK(
 					ownerId, ownerType, plid, portletId));
 
+			_removeAssetEntryUsages(plid, portletId);
+
 			_removeAssetListEntryUsage(plid, portletId);
 		}
 		catch (Exception e) {
@@ -127,6 +132,10 @@ public class AssetPublisherPortletLayoutListener
 		}
 		else if (!Objects.equals(selectionStyle, "asset-list")) {
 			_removeAssetListEntryUsage(plid, portletId);
+		}
+
+		if (!Objects.equals(selectionStyle, "manual")) {
+			_removeAssetEntryUsages(plid, portletId);
 		}
 	}
 
@@ -197,6 +206,17 @@ public class AssetPublisherPortletLayoutListener
 		}
 	}
 
+	private void _removeAssetEntryUsages(long plid, String portletId) {
+		List<AssetEntryUsage> assetEntryUsages =
+			_assetEntryUsageLocalService.getAssetEntryUsages(
+				_portal.getClassNameId(Layout.class), plid, portletId);
+
+		assetEntryUsages.forEach(
+			assetEntryUsage ->
+				_assetEntryUsageLocalService.deleteAssetEntryUsage(
+					assetEntryUsage));
+	}
+
 	private void _removeAssetListEntryUsage(long plid, String portletId) {
 		AssetListEntryUsage assetListEntryUsage =
 			_assetListEntryUsageLocalService.fetchAssetListEntryUsage(
@@ -210,6 +230,9 @@ public class AssetPublisherPortletLayoutListener
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		AssetPublisherPortletLayoutListener.class);
+
+	@Reference
+	private AssetEntryUsageLocalService _assetEntryUsageLocalService;
 
 	@Reference
 	private AssetListEntryUsageLocalService _assetListEntryUsageLocalService;

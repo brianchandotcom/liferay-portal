@@ -19,6 +19,16 @@ class AudioPreviewer extends Component {}
 AudioPreviewer.STATE = {
 
 	/**
+	 * The max witdh of audio player based in
+	 * video player width
+	 * @instance
+	 * @memberof AudioPreviewer
+	 * @review
+	 * @type {!number}
+	 */
+	audioMaxWidth: Config.number().required(),
+
+	/**
 	 * List of of audio sources
 	 * @instance
 	 * @memberof AudioPreviewer

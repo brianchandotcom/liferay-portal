@@ -55,9 +55,31 @@
 	margin-top: $controlMenuHeight + $managementBarHeight;
 
 	@media (min-width: 768px) {
-		& {
-			margin-top: $desktopControlMenuHeight + $desktopManagementBarHeight;
-		}
+		margin-top: $desktopControlMenuHeight + $desktopManagementBarHeight;
+	}
+}
+
+.fragment-entry-link-list-wrapper {
+	padding: 0 $sidebarButtonsWidth 0 0;
+	transition: padding-right ease $productMenuTransitionDuration;
+
+	&--padded {
+		padding-right: $sidebarWidth;
+	}
+}
+
+.fragment-entry-link-list {
+	margin-top: 0;
+	padding: $fragmentEntryLinkListPadding 0;
+	padding-right: 0;
+
+	&--padded, &--padded.no-fragments-message {
+		padding: $fragmentEntryLinkListPadding 0;
+		padding-right: 0;
+	}
+
+	@media (min-width: 768px) {
+		margin-top: 0;
 	}
 }
 

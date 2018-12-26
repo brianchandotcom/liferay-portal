@@ -7,12 +7,9 @@
 	left: 0;
 	max-height: $managementBarHeight;
 	min-height: $managementBarHeight;
-	overflow: hidden;
-	padding-right: $sidebarButtonsWidth;
 	position: fixed;
 	top: $controlMenuHeight;
-	transition: ease $productMenuTransitionDuration;
-	transition-property: left, width, padding-right;
+	transition-property: left, width;
 	width: 100%;
 	will-change: left, width;
 	z-index: $managementBarZIndex;
@@ -23,10 +20,13 @@
 	}
 
 	& > .container-fluid {
-		padding: 0 20px;
+		padding: 6px 1rem 7px;
+		padding-right: $sidebarButtonsWidth;
+		transition: ease $productMenuTransitionDuration padding-right;
+		will-change: padding-right;
 	}
 
-	&--padded {
+	&--padded > .container-fluid {
 		padding-right: $sidebarWidth;
 	}
 
@@ -85,5 +85,14 @@
 	@media (min-width: 768px) {
 		height: $desktopManagementBarHeight;
 		top: $desktopControlMenuHeight;
+
+		& > .container-fluid {
+			padding: 10px 1.25rem;
+			padding-right: $sidebarButtonsWidth;
+		}
+
+		&--padded > .container-fluid {
+			padding-right: $sidebarWidth;
+		}
 	}
 }

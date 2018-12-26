@@ -5264,6 +5264,13 @@ respective `.digest` file needs to be updated.
 - [LPS-88382]: Update the [Liferay Gradle Plugins Baseline] dependency to
 version 2.0.6.
 
+## 5.5.152 - 2018-12-19
+
+### Fixed
+- [LPS-88588]: Change the constant `jsonVersionPattern` in the
+`GradlePluginsDefaultsUtil` class to allow for two spaces or a tab so the
+`updateVersion` task can find the version in the `package-lock.json` file.
+
 [Find Security Bugs]: https://github.com/liferay/liferay-portal/tree/master/modules/third-party/com-h3xstream-findsecbugs
 [Gradle Dependency Management]: https://github.com/spring-gradle-plugins/dependency-management-plugin
 [Gradle License Report]: https://github.com/jk1/Gradle-License-Report
@@ -5800,6 +5807,7 @@ version 2.0.6.
 [LPS-88319]: https://issues.liferay.com/browse/LPS-88319
 [LPS-88382]: https://issues.liferay.com/browse/LPS-88382
 [LPS-88552]: https://issues.liferay.com/browse/LPS-88552
+[LPS-88588]: https://issues.liferay.com/browse/LPS-88588
 [LRDOCS-2594]: https://issues.liferay.com/browse/LRDOCS-2594
 [LRDOCS-2841]: https://issues.liferay.com/browse/LRDOCS-2841
 [LRDOCS-2981]: https://issues.liferay.com/browse/LRDOCS-2981

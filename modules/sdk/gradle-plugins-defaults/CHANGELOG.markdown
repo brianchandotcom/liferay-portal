@@ -5271,6 +5271,12 @@ version 2.0.6.
 `GradlePluginsDefaultsUtil` class to allow for two spaces or a tab so the
 `updateVersion` task can find the version in the `package-lock.json` file.
 
+## 5.5.153 - 2018-12-20
+
+### Changed
+- [LPS-88382]: Update the [Liferay Gradle Plugins Baseline] dependency to
+version 2.0.7.
+
 [Find Security Bugs]: https://github.com/liferay/liferay-portal/tree/master/modules/third-party/com-h3xstream-findsecbugs
 [Gradle Dependency Management]: https://github.com/spring-gradle-plugins/dependency-management-plugin
 [Gradle License Report]: https://github.com/jk1/Gradle-License-Report

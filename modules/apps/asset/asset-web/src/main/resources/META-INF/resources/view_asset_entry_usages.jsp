@@ -160,6 +160,12 @@ renderResponse.setTitle(assetEntryUsagesDisplayContext.getAssetEntryTitle());
 							value="<%= assetEntryUsagesDisplayContext.getAssetEntryUsageTypeLabel(assetEntryUsage) %>"
 						/>
 
+						<liferay-ui:search-container-column-text
+							name="portlet"
+							translate="<%= true %>"
+							value="<%= PortalUtil.getPortletTitle(assetEntryUsage.getPortletId(), locale) %>"
+						/>
+
 						<liferay-ui:search-container-column-date
 							name="modified-date"
 							value="<%= assetEntryUsage.getModifiedDate() %>"

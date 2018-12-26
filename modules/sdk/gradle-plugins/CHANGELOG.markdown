@@ -6259,6 +6259,12 @@ version 1.0.253.
 version 3.0.5.
 - [LPS-87590]: Update the [Liferay Lang Builder] dependency to version 1.0.28.
 
+## 3.13.43 - 2018-12-19
+
+### Fixed
+- [LPS-88552]: Lazily evaluate the `cleanDeployed` extension object property to
+fix the `update-gradle-cache` Ant task.
+
 [Gradle Bundle Plugin]: https://github.com/TomDmitriev/gradle-bundle-plugin
 [Liferay Alloy Taglib]: https://github.com/liferay/alloy-taglibs
 [Liferay Ant BND]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/ant-bnd
@@ -6745,4 +6751,5 @@ version 3.0.5.
 [LPS-88183]: https://issues.liferay.com/browse/LPS-88183
 [LPS-88186]: https://issues.liferay.com/browse/LPS-88186
 [LPS-88223]: https://issues.liferay.com/browse/LPS-88223
+[LPS-88552]: https://issues.liferay.com/browse/LPS-88552
 [LRDOCS-3023]: https://issues.liferay.com/browse/LRDOCS-3023

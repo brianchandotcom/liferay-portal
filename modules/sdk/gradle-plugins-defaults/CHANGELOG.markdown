@@ -5250,6 +5250,12 @@ respective `.digest` file needs to be updated.
 - [LPS-88319]: Automatically include projects in the `modules` directory if a
 `settings.gradle` file is located at the portal root directory.
 
+## 5.5.150 - 2018-12-19
+
+### Changed
+- [LPS-88552]: Update the [Liferay Gradle Plugins] dependency to version
+3.13.43.
+
 [Find Security Bugs]: https://github.com/liferay/liferay-portal/tree/master/modules/third-party/com-h3xstream-findsecbugs
 [Gradle Dependency Management]: https://github.com/spring-gradle-plugins/dependency-management-plugin
 [Gradle License Report]: https://github.com/jk1/Gradle-License-Report
@@ -5784,6 +5790,7 @@ respective `.digest` file needs to be updated.
 [LPS-88306]: https://issues.liferay.com/browse/LPS-88306
 [LPS-88314]: https://issues.liferay.com/browse/LPS-88314
 [LPS-88319]: https://issues.liferay.com/browse/LPS-88319
+[LPS-88552]: https://issues.liferay.com/browse/LPS-88552
 [LRDOCS-2594]: https://issues.liferay.com/browse/LRDOCS-2594
 [LRDOCS-2841]: https://issues.liferay.com/browse/LRDOCS-2841
 [LRDOCS-2981]: https://issues.liferay.com/browse/LRDOCS-2981

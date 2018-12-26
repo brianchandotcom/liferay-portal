@@ -89,7 +89,9 @@ public class EntityModelFieldMapper {
 		if (entityFieldType == EntityField.Type.BOOLEAN) {
 			return "boolean";
 		}
-		else if (entityFieldType == EntityField.Type.DATE) {
+		else if ((entityFieldType == EntityField.Type.DATE) ||
+				 (entityFieldType == EntityField.Type.DATE_TIME)) {
+
 			return "date";
 		}
 		else if (entityFieldType == EntityField.Type.DOUBLE) {

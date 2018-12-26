@@ -2080,6 +2080,8 @@ definition {
 
 	@priority = "4"
 	test ViewUpdateUserViaJSONWS {
+		property test.name.skip.portal.instance = "CPUsersandorganizations#ViewUpdateUserViaJSONWS";
+
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",

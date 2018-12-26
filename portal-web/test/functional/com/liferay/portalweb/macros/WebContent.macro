@@ -1658,6 +1658,29 @@ definition {
 		);
 	}
 
+	macro viewFieldRepeated {
+		AssertTextEquals(
+			locator1 = "xpath=(//div[@data-fieldname='${fieldName}'][1]//a[contains(@class,'ddm-repeatable-add-button')]/../div//input)",
+			value1 = "${ddlRecordFieldData1}"
+		);
+
+		AssertTextEquals(
+			locator1 = "xpath=(//div[@data-fieldname='${fieldName}'][2]//a[contains(@class,'ddm-repeatable-add-button')]/../div//input)",
+			value1 = "${ddlRecordFieldData2}"
+		);
+
+		var i = "3";
+
+		while (IsElementPresent(locator1 = "xpath=(//div[@data-fieldname='${fieldName}'])[${i}]")) {
+			AssertTextEquals(
+				locator1 = "xpath=(//div[@data-fieldname='${fieldName}'][${i}]//a[contains(@class,'ddm-repeatable-add-button')]/../div//input)",
+				value1 = "${ddlRecordFieldData${i}} "
+			);
+
+			var i = MathUtil.sum("${i}", "1");
+		}
+	}
+
 	macro viewLinkedAssetPGViaAP {
 		AssertClick.assertPartialTextClickAt(
 			locator1 = "APAsset#ASSET_TITLE",

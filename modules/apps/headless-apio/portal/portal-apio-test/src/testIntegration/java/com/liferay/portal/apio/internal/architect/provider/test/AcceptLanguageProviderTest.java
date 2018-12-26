@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserConstants;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -92,14 +93,20 @@ public class AcceptLanguageProviderTest {
 	}
 
 	@Test
-	public void testCreateContextWithNoAcceptLanguageGuestUser() {
+	public void testCreateContextWithNoAcceptLanguageGuestUser()
+		throws Exception {
+
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest();
 
 		AcceptLanguage acceptLanguage = _provider.createContext(
 			mockHttpServletRequest);
 
-		Assert.assertNull(acceptLanguage.getPreferredLocale());
+		User defaultUser = _userLocalService.getDefaultUser(
+			TestPropsValues.getCompanyId());
+
+		Assert.assertEquals(
+			defaultUser.getLocale(), acceptLanguage.getPreferredLocale());
 	}
 
 	@Test
@@ -126,5 +133,8 @@ public class AcceptLanguageProviderTest {
 
 	@DeleteAfterTestRun
 	private User _user;
+
+	@Inject
+	private UserLocalService _userLocalService;
 
 }

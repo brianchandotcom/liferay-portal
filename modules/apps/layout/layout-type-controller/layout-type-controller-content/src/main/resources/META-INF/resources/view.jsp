@@ -29,6 +29,13 @@ FragmentsEditorDisplayContext fragmentsEditorDisplayContext = new FragmentsEdito
 </liferay-util:html-top>
 
 <soy:component-renderer
+	componentId='<%= renderResponse.getNamespace() + "sidebar" %>'
+	context="<%= fragmentsEditorDisplayContext.getFragmentsEditorSidebarContext() %>"
+	module="layout-admin-web/js/fragments_editor/components/sidebar/FragmentsEditorSidebar.es"
+	templateNamespace="com.liferay.layout.admin.web.FragmentsEditorSidebar.render"
+/>
+
+<soy:component-renderer
 	componentId='<%= renderResponse.getNamespace() + "fragments" %>'
 	context="<%= fragmentsEditorDisplayContext.getFragmentEntryLinkListContext() %>"
 	module="layout-admin-web/js/fragments_editor/components/fragment_entry_link/FragmentEntryLinkList.es"

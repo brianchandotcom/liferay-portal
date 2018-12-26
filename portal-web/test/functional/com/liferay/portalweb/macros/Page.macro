@@ -199,15 +199,32 @@ definition {
 		Button.clickSave();
 	}
 
-	macro getGroupIdFromHtmlSource {
-		var portalURL = PropsUtil.get("portal.url");
-		var pageURL = selenium.getAttribute("//li[@class='control-menu-nav-item']/a[contains(@data-qa-id,'editLayout')]@href");
-		var partialPageURL = StringUtil.stripBetween("${pageURL}", "${portalURL}", "GroupPagesPortlet_groupId=");
-		var groupId = StringUtil.extractFirst("${partialPageURL}", "&");
+	macro getAuthTokenFromHtmlSource {
+		var javaScript = '''
+		var authToken = Liferay.authToken;
 
-		echo("## * Group ID: ${groupId}");
+		return authToken;
+		''';
 
-		return "${groupId}";
+		var authToken = selenium.getEval("${javaScript}");
+
+		echo("## * Auth Token: ${authToken}");
+
+		return "${authToken}";
+	}
+
+	macro getPlidFromHtmlSource {
+		var javaScript = '''
+		var plid = Liferay.ThemeDisplay.getPlid();
+
+		return plid;
+		''';
+
+		var plid = selenium.getEval("${javaScript}");
+
+		echo("## * p_l_id: ${plid}");
+
+		return "${plid}";
 	}
 
 	macro gotoChildPagePG {

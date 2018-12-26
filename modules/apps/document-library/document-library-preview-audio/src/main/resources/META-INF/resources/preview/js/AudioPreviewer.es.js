@@ -46,5 +46,6 @@ AudioPreviewer.STATE = {
 };
 
 Soy.register(AudioPreviewer, templates);
+
 export {AudioPreviewer};
 export default AudioPreviewer;

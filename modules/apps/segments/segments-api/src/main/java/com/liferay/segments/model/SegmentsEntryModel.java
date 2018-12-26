@@ -448,6 +448,21 @@ public interface SegmentsEntryModel extends BaseModel<SegmentsEntry>,
 	public void setKey(String key);
 
 	/**
+	 * Returns the source of this segments entry.
+	 *
+	 * @return the source of this segments entry
+	 */
+	@AutoEscape
+	public String getSource();
+
+	/**
+	 * Sets the source of this segments entry.
+	 *
+	 * @param source the source of this segments entry
+	 */
+	public void setSource(String source);
+
+	/**
 	 * Returns the type of this segments entry.
 	 *
 	 * @return the type of this segments entry

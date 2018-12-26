@@ -11,6 +11,7 @@ create table SegmentsEntry (
 	active_ BOOLEAN,
 	criteria TEXT null,
 	key_ VARCHAR(75) null,
+	source VARCHAR(75) null,
 	type_ VARCHAR(75) null
 );
 

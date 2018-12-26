@@ -91,6 +91,7 @@ public class SegmentsEntryModelImpl extends BaseModelImpl<SegmentsEntry>
 			{ "active_", Types.BOOLEAN },
 			{ "criteria", Types.CLOB },
 			{ "key_", Types.VARCHAR },
+			{ "source", Types.VARCHAR },
 			{ "type_", Types.VARCHAR }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
@@ -108,10 +109,11 @@ public class SegmentsEntryModelImpl extends BaseModelImpl<SegmentsEntry>
 		TABLE_COLUMNS_MAP.put("active_", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("criteria", Types.CLOB);
 		TABLE_COLUMNS_MAP.put("key_", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("source", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("type_", Types.VARCHAR);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table SegmentsEntry (segmentsEntryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name STRING null,description STRING null,active_ BOOLEAN,criteria TEXT null,key_ VARCHAR(75) null,type_ VARCHAR(75) null)";
+	public static final String TABLE_SQL_CREATE = "create table SegmentsEntry (segmentsEntryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name STRING null,description STRING null,active_ BOOLEAN,criteria TEXT null,key_ VARCHAR(75) null,source VARCHAR(75) null,type_ VARCHAR(75) null)";
 	public static final String TABLE_SQL_DROP = "drop table SegmentsEntry";
 	public static final String ORDER_BY_JPQL = " ORDER BY segmentsEntry.modifiedDate DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY SegmentsEntry.modifiedDate DESC";
@@ -130,8 +132,9 @@ public class SegmentsEntryModelImpl extends BaseModelImpl<SegmentsEntry>
 	public static final long ACTIVE_COLUMN_BITMASK = 1L;
 	public static final long GROUPID_COLUMN_BITMASK = 2L;
 	public static final long KEY_COLUMN_BITMASK = 4L;
-	public static final long TYPE_COLUMN_BITMASK = 8L;
-	public static final long MODIFIEDDATE_COLUMN_BITMASK = 16L;
+	public static final long SOURCE_COLUMN_BITMASK = 8L;
+	public static final long TYPE_COLUMN_BITMASK = 16L;
+	public static final long MODIFIEDDATE_COLUMN_BITMASK = 32L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -158,6 +161,7 @@ public class SegmentsEntryModelImpl extends BaseModelImpl<SegmentsEntry>
 		model.setActive(soapModel.isActive());
 		model.setCriteria(soapModel.getCriteria());
 		model.setKey(soapModel.getKey());
+		model.setSource(soapModel.getSource());
 		model.setType(soapModel.getType());
 
 		return model;
@@ -235,6 +239,7 @@ public class SegmentsEntryModelImpl extends BaseModelImpl<SegmentsEntry>
 		attributes.put("active", isActive());
 		attributes.put("criteria", getCriteria());
 		attributes.put("key", getKey());
+		attributes.put("source", getSource());
 		attributes.put("type", getType());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
@@ -315,6 +320,12 @@ public class SegmentsEntryModelImpl extends BaseModelImpl<SegmentsEntry>
 
 		if (key != null) {
 			setKey(key);
+		}
+
+		String source = (String)attributes.get("source");
+
+		if (source != null) {
+			setSource(source);
 		}
 
 		String type = (String)attributes.get("type");
@@ -717,6 +728,32 @@ public class SegmentsEntryModelImpl extends BaseModelImpl<SegmentsEntry>
 
 	@JSON
 	@Override
+	public String getSource() {
+		if (_source == null) {
+			return "";
+		}
+		else {
+			return _source;
+		}
+	}
+
+	@Override
+	public void setSource(String source) {
+		_columnBitmask |= SOURCE_COLUMN_BITMASK;
+
+		if (_originalSource == null) {
+			_originalSource = _source;
+		}
+
+		_source = source;
+	}
+
+	public String getOriginalSource() {
+		return GetterUtil.getString(_originalSource);
+	}
+
+	@JSON
+	@Override
 	public String getType() {
 		if (_type == null) {
 			return "";
@@ -866,6 +903,7 @@ public class SegmentsEntryModelImpl extends BaseModelImpl<SegmentsEntry>
 		segmentsEntryImpl.setActive(isActive());
 		segmentsEntryImpl.setCriteria(getCriteria());
 		segmentsEntryImpl.setKey(getKey());
+		segmentsEntryImpl.setSource(getSource());
 		segmentsEntryImpl.setType(getType());
 
 		segmentsEntryImpl.resetOriginalValues();
@@ -941,6 +979,8 @@ public class SegmentsEntryModelImpl extends BaseModelImpl<SegmentsEntry>
 		segmentsEntryModelImpl._setOriginalActive = false;
 
 		segmentsEntryModelImpl._originalKey = segmentsEntryModelImpl._key;
+
+		segmentsEntryModelImpl._originalSource = segmentsEntryModelImpl._source;
 
 		segmentsEntryModelImpl._originalType = segmentsEntryModelImpl._type;
 
@@ -1019,6 +1059,14 @@ public class SegmentsEntryModelImpl extends BaseModelImpl<SegmentsEntry>
 			segmentsEntryCacheModel.key = null;
 		}
 
+		segmentsEntryCacheModel.source = getSource();
+
+		String source = segmentsEntryCacheModel.source;
+
+		if ((source != null) && (source.length() == 0)) {
+			segmentsEntryCacheModel.source = null;
+		}
+
 		segmentsEntryCacheModel.type = getType();
 
 		String type = segmentsEntryCacheModel.type;
@@ -1032,7 +1080,7 @@ public class SegmentsEntryModelImpl extends BaseModelImpl<SegmentsEntry>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(27);
+		StringBundler sb = new StringBundler(29);
 
 		sb.append("{segmentsEntryId=");
 		sb.append(getSegmentsEntryId());
@@ -1058,6 +1106,8 @@ public class SegmentsEntryModelImpl extends BaseModelImpl<SegmentsEntry>
 		sb.append(getCriteria());
 		sb.append(", key=");
 		sb.append(getKey());
+		sb.append(", source=");
+		sb.append(getSource());
 		sb.append(", type=");
 		sb.append(getType());
 		sb.append("}");
@@ -1067,7 +1117,7 @@ public class SegmentsEntryModelImpl extends BaseModelImpl<SegmentsEntry>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(43);
+		StringBundler sb = new StringBundler(46);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.segments.model.SegmentsEntry");
@@ -1122,6 +1172,10 @@ public class SegmentsEntryModelImpl extends BaseModelImpl<SegmentsEntry>
 		sb.append(getKey());
 		sb.append("]]></column-value></column>");
 		sb.append(
+			"<column><column-name>source</column-name><column-value><![CDATA[");
+		sb.append(getSource());
+		sb.append("]]></column-value></column>");
+		sb.append(
 			"<column><column-name>type</column-name><column-value><![CDATA[");
 		sb.append(getType());
 		sb.append("]]></column-value></column>");
@@ -1155,6 +1209,8 @@ public class SegmentsEntryModelImpl extends BaseModelImpl<SegmentsEntry>
 	private String _criteria;
 	private String _key;
 	private String _originalKey;
+	private String _source;
+	private String _originalSource;
 	private String _type;
 	private String _originalType;
 	private long _columnBitmask;

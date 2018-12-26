@@ -45,12 +45,12 @@ public class SegmentsEntryServiceUtil {
 	public static com.liferay.segments.model.SegmentsEntry addSegmentsEntry(
 		java.util.Map<java.util.Locale, String> nameMap,
 		java.util.Map<java.util.Locale, String> descriptionMap, boolean active,
-		String criteria, String key, String type,
+		String criteria, String key, String source, String type,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addSegmentsEntry(nameMap, descriptionMap, active, criteria,
-			key, type, serviceContext);
+			key, source, type, serviceContext);
 	}
 
 	public static com.liferay.segments.model.SegmentsEntry deleteSegmentsEntry(

@@ -37,11 +37,11 @@ public class SegmentsEntryServiceWrapper implements SegmentsEntryService,
 	public com.liferay.segments.model.SegmentsEntry addSegmentsEntry(
 		java.util.Map<java.util.Locale, String> nameMap,
 		java.util.Map<java.util.Locale, String> descriptionMap, boolean active,
-		String criteria, String key, String type,
+		String criteria, String key, String source, String type,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _segmentsEntryService.addSegmentsEntry(nameMap, descriptionMap,
-			active, criteria, key, type, serviceContext);
+			active, criteria, key, source, type, serviceContext);
 	}
 
 	@Override

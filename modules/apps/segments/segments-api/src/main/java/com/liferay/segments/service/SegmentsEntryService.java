@@ -62,7 +62,7 @@ public interface SegmentsEntryService extends BaseService {
 	 */
 	public SegmentsEntry addSegmentsEntry(Map<Locale, String> nameMap,
 		Map<Locale, String> descriptionMap, boolean active, String criteria,
-		String key, String type, ServiceContext serviceContext)
+		String key, String source, String type, ServiceContext serviceContext)
 		throws PortalException;
 
 	public SegmentsEntry deleteSegmentsEntry(long segmentsEntryId)

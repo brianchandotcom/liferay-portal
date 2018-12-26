@@ -146,6 +146,8 @@ public class SegmentsEntryPersistenceTest {
 
 		newSegmentsEntry.setKey(RandomTestUtil.randomString());
 
+		newSegmentsEntry.setSource(RandomTestUtil.randomString());
+
 		newSegmentsEntry.setType(RandomTestUtil.randomString());
 
 		_segmentsEntries.add(_persistence.update(newSegmentsEntry));
@@ -178,6 +180,8 @@ public class SegmentsEntryPersistenceTest {
 			newSegmentsEntry.getCriteria());
 		Assert.assertEquals(existingSegmentsEntry.getKey(),
 			newSegmentsEntry.getKey());
+		Assert.assertEquals(existingSegmentsEntry.getSource(),
+			newSegmentsEntry.getSource());
 		Assert.assertEquals(existingSegmentsEntry.getType(),
 			newSegmentsEntry.getType());
 	}
@@ -187,6 +191,15 @@ public class SegmentsEntryPersistenceTest {
 		_persistence.countByGroupId(RandomTestUtil.nextLong());
 
 		_persistence.countByGroupId(0L);
+	}
+
+	@Test
+	public void testCountBySource() throws Exception {
+		_persistence.countBySource("");
+
+		_persistence.countBySource("null");
+
+		_persistence.countBySource((String)null);
 	}
 
 	@Test
@@ -268,7 +281,7 @@ public class SegmentsEntryPersistenceTest {
 			"segmentsEntryId", true, "groupId", true, "companyId", true,
 			"userId", true, "userName", true, "createDate", true,
 			"modifiedDate", true, "name", true, "description", true, "active",
-			true, "key", true, "type", true);
+			true, "key", true, "source", true, "type", true);
 	}
 
 	@Test
@@ -507,6 +520,8 @@ public class SegmentsEntryPersistenceTest {
 		segmentsEntry.setCriteria(RandomTestUtil.randomString());
 
 		segmentsEntry.setKey(RandomTestUtil.randomString());
+
+		segmentsEntry.setSource(RandomTestUtil.randomString());
 
 		segmentsEntry.setType(RandomTestUtil.randomString());
 

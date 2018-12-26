@@ -361,6 +361,20 @@ public interface LayoutPageTemplateEntryModel extends BaseModel<LayoutPageTempla
 	public void setLastPublishDate(Date lastPublishDate);
 
 	/**
+	 * Returns the plid of this layout page template entry.
+	 *
+	 * @return the plid of this layout page template entry
+	 */
+	public long getPlid();
+
+	/**
+	 * Sets the plid of this layout page template entry.
+	 *
+	 * @param plid the plid of this layout page template entry
+	 */
+	public void setPlid(long plid);
+
+	/**
 	 * Returns the status of this layout page template entry.
 	 *
 	 * @return the status of this layout page template entry
@@ -440,20 +454,6 @@ public interface LayoutPageTemplateEntryModel extends BaseModel<LayoutPageTempla
 	 */
 	@Override
 	public void setStatusDate(Date statusDate);
-
-	/**
-	 * Returns the plid of this layout page template entry.
-	 *
-	 * @return the plid of this layout page template entry
-	 */
-	public long getPlid();
-
-	/**
-	 * Sets the plid of this layout page template entry.
-	 *
-	 * @param plid the plid of this layout page template entry
-	 */
-	public void setPlid(long plid);
 
 	/**
 	 * Returns <code>true</code> if this layout page template entry is approved.

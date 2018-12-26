@@ -30,11 +30,11 @@ create table LayoutPageTemplateEntry (
 	defaultTemplate BOOLEAN,
 	layoutPrototypeId LONG,
 	lastPublishDate DATE null,
+	plid LONG,
 	status INTEGER,
 	statusByUserId LONG,
 	statusByUserName VARCHAR(75) null,
-	statusDate DATE null,
-	plid LONG
+	statusDate DATE null
 );
 
 create table LayoutPageTemplateStructure (

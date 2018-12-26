@@ -36,11 +36,11 @@
 		<field name="defaultTemplate" type="boolean" />
 		<field name="layoutPrototypeId" type="long" />
 		<field name="lastPublishDate" type="Date" />
+		<field name="plid" type="long" />
 		<field name="status" type="int" />
 		<field name="statusByUserId" type="long" />
 		<field name="statusByUserName" type="String" />
 		<field name="statusDate" type="Date" />
-		<field name="plid" type="long" />
 	</model>
 	<model name="com.liferay.layout.page.template.model.LayoutPageTemplateStructure">
 		<field name="uuid" type="String" />

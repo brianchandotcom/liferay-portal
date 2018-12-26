@@ -80,11 +80,11 @@ public class LayoutPageTemplateEntryWrapper implements LayoutPageTemplateEntry,
 		attributes.put("defaultTemplate", isDefaultTemplate());
 		attributes.put("layoutPrototypeId", getLayoutPrototypeId());
 		attributes.put("lastPublishDate", getLastPublishDate());
+		attributes.put("plid", getPlid());
 		attributes.put("status", getStatus());
 		attributes.put("statusByUserId", getStatusByUserId());
 		attributes.put("statusByUserName", getStatusByUserName());
 		attributes.put("statusDate", getStatusDate());
-		attributes.put("plid", getPlid());
 
 		return attributes;
 	}
@@ -195,6 +195,12 @@ public class LayoutPageTemplateEntryWrapper implements LayoutPageTemplateEntry,
 			setLastPublishDate(lastPublishDate);
 		}
 
+		Long plid = (Long)attributes.get("plid");
+
+		if (plid != null) {
+			setPlid(plid);
+		}
+
 		Integer status = (Integer)attributes.get("status");
 
 		if (status != null) {
@@ -217,12 +223,6 @@ public class LayoutPageTemplateEntryWrapper implements LayoutPageTemplateEntry,
 
 		if (statusDate != null) {
 			setStatusDate(statusDate);
-		}
-
-		Long plid = (Long)attributes.get("plid");
-
-		if (plid != null) {
-			setPlid(plid);
 		}
 	}
 

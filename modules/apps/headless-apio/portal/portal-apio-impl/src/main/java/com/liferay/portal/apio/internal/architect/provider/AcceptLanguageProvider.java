@@ -104,10 +104,14 @@ public class AcceptLanguageProvider implements Provider<AcceptLanguage> {
 			 * If the request doesn't have an {@code Accept-Language} header,
 			 * this method returns the user's default locale.
 			 *
+			 * If the request doesn't have an user ,
+			 * this method returns the default user's default locale.
+			 *
 			 * @return the request's {@code Locale} with the highest quality
 			 * 			value, if the {@code Accept-Language} header is present;
 			 * 			otherwise returns the {@code Enumeration} containing the
-			 * 			default locale for the user
+			 * 			default locale for the user, if the user is not
+			 * 			configured, the locale for the default user.
 			 * @review
 			 */
 			@Override
@@ -119,15 +123,13 @@ public class AcceptLanguageProvider implements Provider<AcceptLanguage> {
 				return localeOptional.orElseGet(
 					() -> Try.fromFallible(
 						() -> Optional.ofNullable(
-							_portal.getUser(httpServletRequest))
+							_portal.initUser(httpServletRequest))
 					).filter(
 						Optional::isPresent
 					).map(
 						Optional::get
 					).map(
 						CurrentUser::new
-					).filter(
-						currentUser -> !currentUser.isDefaultUser()
 					).map(
 						CurrentUser::getLocale
 					).orElse(

@@ -46,7 +46,7 @@ module.exports = {
 			'**': 'http://0.0.0.0:8080'
 		},
 		publicPath: '/o/segments-web/',
-		open: 'Google Chrome',
+		open: true,
 		openPage: 'o/segments-web/'
 	},
 	plugins: [
@@ -54,5 +54,5 @@ module.exports = {
 			template: require('html-webpack-template'),
 			appMountId: 'app',
 		}),
-	]
+	],
 };

@@ -104,6 +104,7 @@ definition {
 	@priority = "5"
 	test EditFragment {
 		property portal.acceptance = "true";
+		property testray.component.names = "Training";
 
 		PortletEntry.publish();
 

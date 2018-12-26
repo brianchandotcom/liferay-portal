@@ -181,6 +181,8 @@ definition {
 	@description = "This is a use case for LPS-86501."
 	@priority = "3"
 	test EditImportedContentPageViaImportedSiteTemplate {
+		property testray.component.names = "Training";
+
 		ProductMenu.gotoPortlet(
 			category = "Sites",
 			panel = "Control Panel",

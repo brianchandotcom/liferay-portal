@@ -34,6 +34,8 @@ definition {
 	@description = "Change a fragment's editable image field."
 	@priority = "5"
 	test ChangeEditableImage {
+		property testray.component.names = "Training";
+
 		PageTemplatesAdmin.addCollection(collectionName = "Page Template Collection");
 
 		Navigator.gotoNavNested(navNested = "Page Template Collection");

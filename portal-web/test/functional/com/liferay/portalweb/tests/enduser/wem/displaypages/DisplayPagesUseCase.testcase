@@ -279,6 +279,8 @@ definition {
 	@description = "Add a fragment with multiple editable fields in it."
 	@priority = "4"
 	test ViewDisplayPageWithComplexRichTextFragments {
+		property testray.component.names = "Training";
+
 		DisplayPagesAdmin.add(displayPageName = "Display Page Name");
 
 		PageEditor.addFragment(

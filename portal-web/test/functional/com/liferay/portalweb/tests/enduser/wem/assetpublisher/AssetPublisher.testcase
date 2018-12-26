@@ -312,7 +312,7 @@ definition {
 	@priority = "4"
 	test ConfigureAPPortletDisplaytemplateWithBookmarks {
 		property portal.release = "false";
-		property testray.component.names = "Asset Publisher,Bookmarks,Content and Display Templates";
+		property testray.component.names = "Asset Publisher,Bookmarks,Content and Display Templates,Training";
 
 		ProductMenu.gotoPortlet(
 			category = "Build",
@@ -929,7 +929,7 @@ definition {
 
 	@priority = "3"
 	test OrderWCByPublishDateViaAP {
-		property testray.component.names = "Asset Publisher";
+		property testray.component.names = "Asset Publisher,Training";
 
 		Navigator.gotoPage(pageName = "Asset Publisher Page");
 

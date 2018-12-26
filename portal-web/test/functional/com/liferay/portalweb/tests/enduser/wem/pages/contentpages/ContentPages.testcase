@@ -33,6 +33,7 @@ definition {
 	@priority = "5"
 	test AddContentPage {
 		property portal.acceptance = "true";
+		property testray.component.names = "Training";
 
 		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
@@ -132,6 +133,8 @@ definition {
 	@description = "Add a content page and edit its fragment immediately. This is a variation of the steps from LPS-85872."
 	@priority = "5"
 	test AddContentPageWithEditedFragmentText {
+		property testray.component.names = "Training";
+
 		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
 		ContentPages.addPage(pageName = "Test Content Page Name");
@@ -185,6 +188,7 @@ definition {
 	@priority = "5"
 	test EditContentPage {
 		property portal.acceptance = "true";
+		property testray.component.names = "Training";
 
 		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 

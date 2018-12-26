@@ -94,6 +94,8 @@ definition {
 
 	@priority = "5"
 	test AddElementSetsWithTranslation {
+		property testray.component.names = "Training";
+
 		ProductMenu.gotoPortlet(
 			category = "Content",
 			panel = "Site Administration",
@@ -4526,6 +4528,8 @@ definition {
 	@description = "This is a use case for LPS-71072."
 	@priority = "5"
 	test ViewSuccessPage {
+		property testray.component.names = "Training";
+
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(

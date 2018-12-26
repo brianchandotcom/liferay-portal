@@ -36,6 +36,7 @@ for (String previewFileURL : previewFileURLs) {
 
 Map<String, Object> context = new HashMap<>();
 
+context.put("audioMaxWidth", PropsValues.DL_FILE_ENTRY_PREVIEW_VIDEO_WIDTH);
 context.put("audioSources", audioSources);
 %>
 
@@ -43,13 +44,6 @@ context.put("audioSources", audioSources);
 	outputKey="document_library_preview_audio_css"
 >
 	<link href="<%= PortalUtil.getStaticResourceURL(request, application.getContextPath() + "/preview/css/main.css") %>" rel="stylesheet" type="text/css" />
-
-	<style type="text/css">
-		.preview-file .preview-file-audio {
-			max-width: <%= PropsValues.DL_FILE_ENTRY_PREVIEW_VIDEO_WIDTH %>px;
-			width: 100%;
-		}
-	</style>
 </liferay-util:html-top>
 
 <soy:component-renderer

@@ -60,7 +60,6 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -318,11 +317,9 @@ public class PersonCollectionResource
 
 		String alternateName = _getAlternateName(personUpdaterForm, user);
 
-		Date birthdayDate = user.getBirthday();
-
 		Calendar calendar = Calendar.getInstance();
 
-		calendar.setTime(birthdayDate);
+		calendar.setTime(user.getBirthday());
 
 		user = _userLocalService.updateUser(
 			user.getUserId(), user.getPassword(),

@@ -227,7 +227,6 @@
 		<column name="lastName" type="String" />
 		<column name="prefixId" type="long" />
 		<column name="suffixId" type="long" />
-		<column name="male" type="boolean" />
 		<column name="birthday" type="Date" />
 		<column name="smsSn" type="String" />
 		<column name="facebookSn" type="String" />

@@ -1661,12 +1661,12 @@ definition {
 	macro viewFieldRepeated {
 		AssertTextEquals(
 			locator1 = "xpath=(//div[@data-fieldname='${fieldName}'][1]//a[contains(@class,'ddm-repeatable-add-button')]/../div//input)",
-			value1 = "${ddlRecordFieldData1}"
+			value1 = "${ddlRecordFieldData}"
 		);
 
 		AssertTextEquals(
 			locator1 = "xpath=(//div[@data-fieldname='${fieldName}'][2]//a[contains(@class,'ddm-repeatable-add-button')]/../div//input)",
-			value1 = "${ddlRecordFieldData2}"
+			value1 = "${ddlRecordFieldData} 2"
 		);
 
 		var i = "3";
@@ -1674,7 +1674,7 @@ definition {
 		while (IsElementPresent(locator1 = "xpath=(//div[@data-fieldname='${fieldName}'])[${i}]")) {
 			AssertTextEquals(
 				locator1 = "xpath=(//div[@data-fieldname='${fieldName}'][${i}]//a[contains(@class,'ddm-repeatable-add-button')]/../div//input)",
-				value1 = "${ddlRecordFieldData${i}} "
+				value1 = "${ddlRecordFieldData} ${i}"
 			);
 
 			var i = MathUtil.sum("${i}", "1");

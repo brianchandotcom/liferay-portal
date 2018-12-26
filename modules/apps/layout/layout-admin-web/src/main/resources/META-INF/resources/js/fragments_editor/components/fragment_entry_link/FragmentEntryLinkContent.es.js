@@ -65,7 +65,7 @@ class FragmentEntryLinkContent extends Component {
 	 * @review
 	 */
 	syncContent(newContent) {
-		if (newContent) {
+		if (newContent && (newContent !== this.content)) {
 			this._renderContent(newContent);
 		}
 	}

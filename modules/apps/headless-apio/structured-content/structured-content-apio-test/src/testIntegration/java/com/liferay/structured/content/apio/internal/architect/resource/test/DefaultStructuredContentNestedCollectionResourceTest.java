@@ -37,7 +37,6 @@ import com.liferay.portal.apio.test.util.PaginationRequest;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -53,14 +52,19 @@ import com.liferay.portal.odata.sort.Sort;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerTestRule;
+import com.liferay.structured.content.apio.architect.model.StructuredContent;
+import com.liferay.structured.content.apio.architect.model.StructuredContentLocation;
+import com.liferay.structured.content.apio.architect.model.StructuredContentValue;
 import com.liferay.structured.content.apio.architect.resource.StructuredContentField;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -86,6 +90,71 @@ public class DefaultStructuredContentNestedCollectionResourceTest
 	@Before
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
+	}
+
+	@Test
+	public void testAddJournalArticle() throws Throwable {
+		DDMStructureTestHelper ddmStructureTestHelper =
+			new DDMStructureTestHelper(
+				PortalUtil.getClassNameId(JournalArticle.class), _group);
+
+		DDMStructure ddmStructure = ddmStructureTestHelper.addStructure(
+			PortalUtil.getClassNameId(JournalArticle.class),
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			deserialize(
+				_ddmFormDeserializerTracker,
+				read("test-journal-all-fields-structure.json")),
+			StorageType.JSON.getValue(), DDMStructureConstants.TYPE_DEFAULT);
+
+		DDMTemplateTestUtil.addTemplate(
+			_group.getGroupId(), ddmStructure.getStructureId(),
+			PortalUtil.getClassNameId(JournalArticle.class),
+			TemplateConstants.LANG_TYPE_VM,
+			read("test-journal-all-fields-template.xsl"), LocaleUtil.US);
+
+		StructuredContent structuredContent = _getStructuredContent(
+			ddmStructure.getStructureId(), "Title",
+			new ArrayList<StructuredContentValue>() {
+				{
+					add(_getStructuredContentValue("MyBoolean", "true"));
+				}
+			});
+
+		JournalArticle journalArticle = addJournalArticle(
+			_group.getGroupId(), structuredContent, _acceptLanguage,
+			getThemeDisplay(_group, _acceptLanguage.getPreferredLocale()));
+
+		String[] availableLanguageIds =
+			journalArticle.getAvailableLanguageIds();
+
+		Assert.assertEquals(
+			availableLanguageIds.toString(), 1, availableLanguageIds.length);
+
+		Assert.assertEquals(
+			LocaleUtil.toLanguageId(_acceptLanguage.getPreferredLocale()),
+			availableLanguageIds[0]);
+
+		Assert.assertEquals(
+			"Title",
+			journalArticle.getTitle(_acceptLanguage.getPreferredLocale()));
+
+		List<StructuredContentField> structuredContentFields =
+			getStructuredContentFields(
+				new JournalArticleWrapper(journalArticle));
+
+		Assert.assertEquals(
+			structuredContentFields.toString(), 1,
+			structuredContentFields.size());
+
+		StructuredContentField structuredContentField =
+			structuredContentFields.get(0);
+
+		Assert.assertEquals("MyBoolean", structuredContentField.getName());
+
+		Assert.assertEquals(
+			"true",
+			structuredContentField.getLocalizedValue(
+				_acceptLanguage.getPreferredLocale()));
 	}
 
 	@Test
@@ -661,7 +730,7 @@ public class DefaultStructuredContentNestedCollectionResourceTest
 	}
 
 	@Test
-	public void testGetPageItems() throws Exception {
+	public void testGetPageItems() throws Throwable {
 		Map<Locale, String> stringMap = new HashMap<>();
 
 		stringMap.put(LocaleUtil.getDefault(), RandomTestUtil.randomString());
@@ -695,7 +764,7 @@ public class DefaultStructuredContentNestedCollectionResourceTest
 	}
 
 	@Test
-	public void testGetPageItemsWith2VersionsAnd1Scheduled() throws Exception {
+	public void testGetPageItemsWith2VersionsAnd1Scheduled() throws Throwable {
 		Map<Locale, String> stringMap = new HashMap<>();
 
 		stringMap.put(LocaleUtil.getDefault(), "Version 1");
@@ -752,7 +821,7 @@ public class DefaultStructuredContentNestedCollectionResourceTest
 
 	@Test
 	public void testGetPageItemsWith2VersionsAndOnly1Approved()
-		throws Exception {
+		throws Throwable {
 
 		Map<Locale, String> stringMap = new HashMap<>();
 
@@ -803,7 +872,7 @@ public class DefaultStructuredContentNestedCollectionResourceTest
 	}
 
 	@Test
-	public void testGetPageItemsWith2VersionsApproved() throws Exception {
+	public void testGetPageItemsWith2VersionsApproved() throws Throwable {
 		Map<Locale, String> stringMap = new HashMap<>();
 
 		stringMap.put(LocaleUtil.getDefault(), RandomTestUtil.randomString());
@@ -851,7 +920,7 @@ public class DefaultStructuredContentNestedCollectionResourceTest
 	}
 
 	@Test
-	public void testGetPageItemsWithOnlyOneDraftVersion() throws Exception {
+	public void testGetPageItemsWithOnlyOneDraftVersion() throws Throwable {
 		Map<Locale, String> stringMap = new HashMap<>();
 
 		stringMap.put(LocaleUtil.getDefault(), "Version 1");
@@ -883,7 +952,7 @@ public class DefaultStructuredContentNestedCollectionResourceTest
 	}
 
 	@Test
-	public void testGetPageItemsWithOnlyOneExpiredVersion() throws Exception {
+	public void testGetPageItemsWithOnlyOneExpiredVersion() throws Throwable {
 		Map<Locale, String> stringMap = new HashMap<>();
 
 		stringMap.put(LocaleUtil.getDefault(), "Version 1");
@@ -920,7 +989,7 @@ public class DefaultStructuredContentNestedCollectionResourceTest
 	}
 
 	@Test
-	public void testGetPageItemsWithOnlyOneSheduledVersion() throws Exception {
+	public void testGetPageItemsWithOnlyOneSheduledVersion() throws Throwable {
 		Map<Locale, String> stringMap = new HashMap<>();
 
 		stringMap.put(LocaleUtil.getDefault(), "Version 1");
@@ -1068,8 +1137,190 @@ public class DefaultStructuredContentNestedCollectionResourceTest
 			structuredContentFields.size());
 	}
 
-	private static final AcceptLanguage _acceptLanguage =
-		() -> LocaleUtil.US;
+	@Test
+	public void testUpdateJournalArticle() throws Throwable {
+		DDMStructureTestHelper ddmStructureTestHelper =
+			new DDMStructureTestHelper(
+				PortalUtil.getClassNameId(JournalArticle.class), _group);
+
+		DDMStructure ddmStructure = ddmStructureTestHelper.addStructure(
+			PortalUtil.getClassNameId(JournalArticle.class),
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			deserialize(
+				_ddmFormDeserializerTracker,
+				read("test-journal-all-fields-structure.json")),
+			StorageType.JSON.getValue(), DDMStructureConstants.TYPE_DEFAULT);
+
+		DDMTemplateTestUtil.addTemplate(
+			_group.getGroupId(), ddmStructure.getStructureId(),
+			PortalUtil.getClassNameId(JournalArticle.class),
+			TemplateConstants.LANG_TYPE_VM,
+			read("test-journal-all-fields-template.xsl"), LocaleUtil.US);
+
+		StructuredContent initialStructuredContent = _getStructuredContent(
+			ddmStructure.getStructureId(), "Title",
+			new ArrayList<StructuredContentValue>() {
+				{
+					add(_getStructuredContentValue("MyBoolean", "true"));
+				}
+			});
+
+		JournalArticle initialJournalArticle = addJournalArticle(
+			_group.getGroupId(), initialStructuredContent, _acceptLanguage,
+			getThemeDisplay(_group, _acceptLanguage.getPreferredLocale()));
+
+		StructuredContent finalStructuredContent = _getStructuredContent(
+			ddmStructure.getStructureId(), "Final Title",
+			new ArrayList<StructuredContentValue>() {
+				{
+					add(_getStructuredContentValue("MyBoolean", "false"));
+				}
+			});
+
+		JournalArticle finalJournalArticle = updateJournalArticle(
+			initialJournalArticle.getResourcePrimKey(), finalStructuredContent,
+			_acceptLanguage,
+			getThemeDisplay(_group, _acceptLanguage.getPreferredLocale()));
+
+		String[] availableLanguageIds =
+			finalJournalArticle.getAvailableLanguageIds();
+
+		Assert.assertEquals(
+			availableLanguageIds.toString(), 1, availableLanguageIds.length);
+
+		Assert.assertEquals(
+			LocaleUtil.toLanguageId(_acceptLanguage.getPreferredLocale()),
+			availableLanguageIds[0]);
+
+		Assert.assertEquals(
+			"Final Title",
+			finalJournalArticle.getTitle(_acceptLanguage.getPreferredLocale()));
+
+		List<StructuredContentField> structuredContentFields =
+			getStructuredContentFields(
+				new JournalArticleWrapper(finalJournalArticle));
+
+		Assert.assertEquals(
+			structuredContentFields.toString(), 1,
+			structuredContentFields.size());
+
+		StructuredContentField structuredContentField =
+			structuredContentFields.get(0);
+
+		Assert.assertEquals("MyBoolean", structuredContentField.getName());
+
+		Assert.assertEquals(
+			"false",
+			structuredContentField.getLocalizedValue(
+				_acceptLanguage.getPreferredLocale()));
+	}
+
+	private StructuredContent _getStructuredContent(
+		long contentStructureId, String title,
+		List<StructuredContentValue> structuredContentValues) {
+
+		return new StructuredContent() {
+
+			@Override
+			public List<Long> getCategories() {
+				return null;
+			}
+
+			@Override
+			public Long getContentStructureId() {
+				return contentStructureId;
+			}
+
+			@Override
+			public Optional<Map<Locale, String>> getDescriptionMapOptional(
+				Locale locale) {
+
+				return Optional.empty();
+			}
+
+			@Override
+			public List<String> getKeywords() {
+				return null;
+			}
+
+			@Override
+			public Optional<Integer> getPublishedDateDayOptional() {
+				return Optional.empty();
+			}
+
+			@Override
+			public Optional<Integer> getPublishedDateHourOptional() {
+				return Optional.empty();
+			}
+
+			@Override
+			public Optional<Integer> getPublishedDateMinuteOptional() {
+				return Optional.empty();
+			}
+
+			@Override
+			public Optional<Integer> getPublishedDateMonthOptional() {
+				return Optional.empty();
+			}
+
+			@Override
+			public Optional<Integer> getPublishedDateYearOptional() {
+				return Optional.empty();
+			}
+
+			@Override
+			public List<? extends StructuredContentValue>
+				getStructuredContentValues() {
+
+				return structuredContentValues;
+			}
+
+			@Override
+			public Map<Locale, String> getTitleMap(Locale locale) {
+				return new HashMap<Locale, String>() {
+					{
+						put(locale, title);
+					}
+				};
+			}
+
+		};
+	}
+
+	private StructuredContentValue _getStructuredContentValue(
+		String name, String value) {
+
+		return new StructuredContentValue() {
+
+			@Override
+			public Long getDocument() {
+				return null;
+			}
+
+			@Override
+			public String getName() {
+				return name;
+			}
+
+			@Override
+			public Long getStructuredContentId() {
+				return null;
+			}
+
+			@Override
+			public StructuredContentLocation getStructuredContentLocation() {
+				return null;
+			}
+
+			@Override
+			public String getValue() {
+				return value;
+			}
+
+		};
+	}
+
+	private static final AcceptLanguage _acceptLanguage = () -> LocaleUtil.US;
 
 	@Inject
 	private DDMFormDeserializerTracker _ddmFormDeserializerTracker;

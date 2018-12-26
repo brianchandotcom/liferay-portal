@@ -5244,7 +5244,7 @@ respective `.digest` file needs to be updated.
 - [LPS-87590]: Update the [Liferay Gradle Plugins] dependency to version
 3.13.42.
 
-## 5.5.149 - 2018-12-17
+## 5.5.149 - 2018-12-18
 
 ### Added
 - [LPS-88319]: Automatically include projects in the `modules` directory if a

@@ -1,5 +1,6 @@
 'use strict';
 
+import Uri from 'metal-uri/lib/Uri';
 import App from 'senna/lib/app/App';
 import core from 'metal/lib/core';
 import dom from 'metal-dom/lib/dom';
@@ -65,6 +66,30 @@ class LiferayApp extends App {
 		this.addSurfaces(new LiferaySurface(body.id));
 
 		dom.append(body, '<div class="lfr-spa-loading-bar"></div>');
+	}
+
+	/**
+	 * Retrieves or create a screen instance to a path. This method overrides
+	 * the default one to avoid ActionURLScreens to be cached and reused across
+	 * navigations causing different lifecycle mechanisms to be called on live
+	 * documents instead of on inert fragments
+	 * @param {!string} path Path containing the querystring part.
+	 * @return {Screen}
+	 */
+	createScreenInstance(path, route) {
+		if (path === this.activePath) {
+			const uri = new Uri(path);
+
+			if (uri.getParameterValue('p_p_lifecycle') === '1') {
+				this.activePath = this.activePath + `__${core.getUid()}`;
+
+				this.screens[this.activePath] = this.screens[path];
+
+				delete this.screens[path];
+			}
+		}
+
+		return super.createScreenInstance(path, route);
 	}
 
 	/**

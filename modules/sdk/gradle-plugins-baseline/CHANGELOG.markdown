@@ -205,6 +205,11 @@ when all the `packageinfo` files are correct.
 ### Changed
 - [LPS-88382]: Update the [Liferay Ant BND] dependency to version 3.0.3.
 
+## 2.0.8 - 2018-12-20
+
+### Changed
+- [LPS-88382]: Update the [Liferay Ant BND] dependency to version 3.0.5.
+
 [Bnd Builder Gradle Plugin]: https://github.com/bndtools/bnd/tree/master/biz.aQute.bnd.gradle
 [Liferay Ant BND]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/ant-bnd
 [Liferay Gradle Util]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-util

@@ -944,7 +944,7 @@ definition {
 		DDLRecord.addRepeatableField(fieldName = "Separator");
 
 		DDLRecord.populateFieldText(
-			ddlRecordFieldData = "LuAn",
+			ddlRecordFieldData = "Liferay",
 			fieldName = "Separator"
 		);
 
@@ -977,8 +977,7 @@ definition {
 		WebContent.viewWithStructureCP(webContentTitle = "Exported Article");
 
 		WebContent.viewFieldRepeated(
-			ddlRecordFieldData1 = "LuAn",
-			ddlRecordFieldData2 = "LuAn 2",
+			ddlRecordFieldData = "Liferay",
 			fieldName = "Separator"
 		);
 

@@ -6280,6 +6280,14 @@ fix the `update-gradle-cache` Ant task.
 ### Changed
 - [LPS-88382]: Update the [Liferay Ant BND] dependency to version 3.0.5.
 
+## 3.13.47 - 2018-12-20
+
+### Changed
+- [LPS-88170]: Update the [Liferay Gradle Plugins Service Builder] dependency to
+version 2.2.5.
+- [LPS-88170]: Update the [Liferay Portal Tools Service Builder] dependency to
+version 1.0.254.
+
 [Gradle Bundle Plugin]: https://github.com/TomDmitriev/gradle-bundle-plugin
 [Liferay Alloy Taglib]: https://github.com/liferay/alloy-taglibs
 [Liferay Ant BND]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/ant-bnd
@@ -6761,6 +6769,7 @@ fix the `update-gradle-cache` Ant task.
 [LPS-87839]: https://issues.liferay.com/browse/LPS-87839
 [LPS-87936]: https://issues.liferay.com/browse/LPS-87936
 [LPS-87978]: https://issues.liferay.com/browse/LPS-87978
+[LPS-88170]: https://issues.liferay.com/browse/LPS-88170
 [LPS-88171]: https://issues.liferay.com/browse/LPS-88171
 [LPS-88181]: https://issues.liferay.com/browse/LPS-88181
 [LPS-88183]: https://issues.liferay.com/browse/LPS-88183

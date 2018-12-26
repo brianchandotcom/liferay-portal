@@ -880,6 +880,142 @@ definition {
 		);
 	}
 
+	@description = "This is a use case for LPS-86608."
+	@priority = "3"
+	test ExportImportWebcontentWithRepeatField{
+		ProductMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Sites"
+		);
+
+		Site.addBlankCP(siteName = "Exported Site");
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Web Content"
+		);
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(
+			structureDescription = "Exported Structure Description",
+			structureName = "Exported Structure"
+		);
+
+		DynamicDataMapping.addField(
+			field = "Separator",
+			fieldFieldLabel = "SeparatorField",
+			fieldName = "Separator"
+		);
+
+		DynamicDataMapping.editFieldRepeatable(fieldFieldLabel = "SeparatorField");
+
+		DynamicDataMapping.addFieldNested(
+			field = "Text",
+			fieldFieldLabel = "Text",
+			fieldName = "Text"
+		);
+
+		WebContentStructures.saveCP(structureName = "Exported Structure");
+
+		WebContent.openWebContentAdmin(siteURLKey = "exported-site");
+
+		NavItem.gotoTemplates();
+
+		WebContentTemplates.addCP(
+			structureName = "Exported Structure",
+			templateDescription = "Exported Template Description",
+			templateFieldNames = "Text",
+			templateName = "Exported Template"
+		);
+
+		WebContent.openWebContentAdmin(siteURLKey = "exported-site");
+
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "Exported Structure");
+
+		WebContent.addWithStructureCP(
+			structureName = "Exported Structure",
+			webContentText = "Exported Template",
+			webContentTitle = "Exported Article"
+		);
+
+		DDLRecord.addRepeatableField(fieldName = "Separator");
+
+		DDLRecord.populateFieldText(
+			ddlRecordFieldData = "LuAn",
+			fieldName = "Separator"
+		);
+
+		PortletEntry.publish();
+
+		WebContent.viewTitle(webContentTitle = "Exported Article");
+
+		WebContent.openWebContentAdmin(siteURLKey = "exported-site");
+
+		LAR.exportPortlet(larFileName = "WebContent_portlet.lar");
+
+		ProductMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Sites"
+		);
+
+		Site.addBlankCP(siteName = "Imported Site");
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Web Content"
+		);
+
+		LAR.importPortlet(larFileName = "WebContent_portlet.lar");
+
+		WebContent.openWebContentAdmin(siteURLKey = "imported-site");
+
+		WebContent.viewWithStructureCP(webContentTitle = "Exported Article");
+
+		WebContent.viewFieldRepeated(
+			ddlRecordFieldData1 = "LuAn",
+			ddlRecordFieldData2 = "LuAn 2",
+			fieldName = "Separator"
+		);
+
+		WebContent.openWebContentAdmin(siteURLKey = "imported-site");
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.viewCP(
+			structureDescription = "Exported Structure Description",
+			structureName = "Exported Structure"
+		);
+
+		LexiconEntry.gotoEntry(rowEntry = "Exported Structure");
+
+		DynamicDataMapping.viewField(
+			field = "Separator",
+			fieldFieldLabel = "SeparatorField",
+			fieldName = "Separator"
+		);
+
+		DynamicDataMapping.viewField(
+			field = "Text",
+			fieldFieldLabel = "Text",
+			fieldName = "Text"
+		);
+
+		WebContent.openWebContentAdmin(siteURLKey = "imported-site");
+
+		NavItem.gotoTemplates();
+
+		WebContentTemplates.viewCP(
+			structureName = "Exported Structure",
+			templateDescription = "Exported Template Description",
+			templateName = "Exported Template"
+		);
+	}
+
 	@priority = "4"
 	test ExportImportWithExportTemplate {
 		property test.name.skip.portal.instance = "ExportImport#ExportImportWithExportTemplate";

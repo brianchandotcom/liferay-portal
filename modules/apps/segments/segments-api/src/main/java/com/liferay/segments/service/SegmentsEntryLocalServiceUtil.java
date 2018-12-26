@@ -45,12 +45,12 @@ public class SegmentsEntryLocalServiceUtil {
 	public static com.liferay.segments.model.SegmentsEntry addSegmentsEntry(
 		java.util.Map<java.util.Locale, String> nameMap,
 		java.util.Map<java.util.Locale, String> descriptionMap, boolean active,
-		String criteria, String key, String type,
+		String criteria, String key, String source, String type,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addSegmentsEntry(nameMap, descriptionMap, active, criteria,
-			key, type, serviceContext);
+			key, source, type, serviceContext);
 	}
 
 	/**
@@ -87,6 +87,11 @@ public class SegmentsEntryLocalServiceUtil {
 	public static void deleteSegmentsEntries(long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().deleteSegmentsEntries(groupId);
+	}
+
+	public static void deleteSegmentsEntries(String source)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().deleteSegmentsEntries(source);
 	}
 
 	/**
@@ -270,6 +275,14 @@ public class SegmentsEntryLocalServiceUtil {
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.segments.model.SegmentsEntry> orderByComparator) {
 		return getService()
 				   .getSegmentsEntries(type, start, end, orderByComparator);
+	}
+
+	public static java.util.List<com.liferay.segments.model.SegmentsEntry> getSegmentsEntriesBySource(
+		String source, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.segments.model.SegmentsEntry> orderByComparator) {
+		return getService()
+				   .getSegmentsEntriesBySource(source, start, end,
+			orderByComparator);
 	}
 
 	/**

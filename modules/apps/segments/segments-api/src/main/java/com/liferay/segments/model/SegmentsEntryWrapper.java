@@ -70,6 +70,7 @@ public class SegmentsEntryWrapper implements SegmentsEntry,
 		attributes.put("active", isActive());
 		attributes.put("criteria", getCriteria());
 		attributes.put("key", getKey());
+		attributes.put("source", getSource());
 		attributes.put("type", getType());
 
 		return attributes;
@@ -147,6 +148,12 @@ public class SegmentsEntryWrapper implements SegmentsEntry,
 
 		if (key != null) {
 			setKey(key);
+		}
+
+		String source = (String)attributes.get("source");
+
+		if (source != null) {
+			setSource(source);
 		}
 
 		String type = (String)attributes.get("type");
@@ -431,6 +438,16 @@ public class SegmentsEntryWrapper implements SegmentsEntry,
 	@Override
 	public long getSegmentsEntryId() {
 		return _segmentsEntry.getSegmentsEntryId();
+	}
+
+	/**
+	* Returns the source of this segments entry.
+	*
+	* @return the source of this segments entry
+	*/
+	@Override
+	public String getSource() {
+		return _segmentsEntry.getSource();
 	}
 
 	/**
@@ -763,6 +780,16 @@ public class SegmentsEntryWrapper implements SegmentsEntry,
 	@Override
 	public void setSegmentsEntryId(long segmentsEntryId) {
 		_segmentsEntry.setSegmentsEntryId(segmentsEntryId);
+	}
+
+	/**
+	* Sets the source of this segments entry.
+	*
+	* @param source the source of this segments entry
+	*/
+	@Override
+	public void setSource(String source) {
+		_segmentsEntry.setSource(source);
 	}
 
 	/**

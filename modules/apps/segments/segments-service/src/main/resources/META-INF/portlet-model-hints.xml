@@ -18,6 +18,7 @@
 			<hint-collection name="CLOB" />
 		</field>
 		<field name="key" type="String" />
+		<field name="source" type="String" />
 		<field name="type" type="String" />
 	</model>
 	<model name="com.liferay.segments.model.SegmentsEntryRel">

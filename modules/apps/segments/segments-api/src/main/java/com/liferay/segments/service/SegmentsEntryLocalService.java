@@ -71,7 +71,7 @@ public interface SegmentsEntryLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.REINDEX)
 	public SegmentsEntry addSegmentsEntry(Map<Locale, String> nameMap,
 		Map<Locale, String> descriptionMap, boolean active, String criteria,
-		String key, String type, ServiceContext serviceContext)
+		String key, String source, String type, ServiceContext serviceContext)
 		throws PortalException;
 
 	/**
@@ -100,6 +100,8 @@ public interface SegmentsEntryLocalService extends BaseLocalService,
 		throws PortalException;
 
 	public void deleteSegmentsEntries(long groupId) throws PortalException;
+
+	public void deleteSegmentsEntries(String source) throws PortalException;
 
 	/**
 	* Deletes the segments entry with the primary key from the database. Also notifies the appropriate model listeners.
@@ -243,6 +245,10 @@ public interface SegmentsEntryLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<SegmentsEntry> getSegmentsEntries(String type, int start,
 		int end, OrderByComparator<SegmentsEntry> orderByComparator);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<SegmentsEntry> getSegmentsEntriesBySource(String source,
+		int start, int end, OrderByComparator<SegmentsEntry> orderByComparator);
 
 	/**
 	* Returns the number of segments entries.

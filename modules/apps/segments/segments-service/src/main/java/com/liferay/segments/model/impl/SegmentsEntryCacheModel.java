@@ -66,7 +66,7 @@ public class SegmentsEntryCacheModel implements CacheModel<SegmentsEntry>,
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(27);
+		StringBundler sb = new StringBundler(29);
 
 		sb.append("{segmentsEntryId=");
 		sb.append(segmentsEntryId);
@@ -92,6 +92,8 @@ public class SegmentsEntryCacheModel implements CacheModel<SegmentsEntry>,
 		sb.append(criteria);
 		sb.append(", key=");
 		sb.append(key);
+		sb.append(", source=");
+		sb.append(source);
 		sb.append(", type=");
 		sb.append(type);
 		sb.append("}");
@@ -159,6 +161,13 @@ public class SegmentsEntryCacheModel implements CacheModel<SegmentsEntry>,
 			segmentsEntryImpl.setKey(key);
 		}
 
+		if (source == null) {
+			segmentsEntryImpl.setSource("");
+		}
+		else {
+			segmentsEntryImpl.setSource(source);
+		}
+
 		if (type == null) {
 			segmentsEntryImpl.setType("");
 		}
@@ -189,6 +198,7 @@ public class SegmentsEntryCacheModel implements CacheModel<SegmentsEntry>,
 		active = objectInput.readBoolean();
 		criteria = objectInput.readUTF();
 		key = objectInput.readUTF();
+		source = objectInput.readUTF();
 		type = objectInput.readUTF();
 	}
 
@@ -243,6 +253,13 @@ public class SegmentsEntryCacheModel implements CacheModel<SegmentsEntry>,
 			objectOutput.writeUTF(key);
 		}
 
+		if (source == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(source);
+		}
+
 		if (type == null) {
 			objectOutput.writeUTF("");
 		}
@@ -263,5 +280,6 @@ public class SegmentsEntryCacheModel implements CacheModel<SegmentsEntry>,
 	public boolean active;
 	public String criteria;
 	public String key;
+	public String source;
 	public String type;
 }

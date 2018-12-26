@@ -59,7 +59,7 @@ public class SegmentsEntryServiceHttp {
 		HttpPrincipal httpPrincipal,
 		java.util.Map<java.util.Locale, String> nameMap,
 		java.util.Map<java.util.Locale, String> descriptionMap, boolean active,
-		String criteria, String key, String type,
+		String criteria, String key, String source, String type,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -67,7 +67,8 @@ public class SegmentsEntryServiceHttp {
 					"addSegmentsEntry", _addSegmentsEntryParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, nameMap,
-					descriptionMap, active, criteria, key, type, serviceContext);
+					descriptionMap, active, criteria, key, source, type,
+					serviceContext);
 
 			Object returnObj = null;
 
@@ -329,7 +330,7 @@ public class SegmentsEntryServiceHttp {
 	private static Log _log = LogFactoryUtil.getLog(SegmentsEntryServiceHttp.class);
 	private static final Class<?>[] _addSegmentsEntryParameterTypes0 = new Class[] {
 			java.util.Map.class, java.util.Map.class, boolean.class,
-			String.class, String.class, String.class,
+			String.class, String.class, String.class, String.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _deleteSegmentsEntryParameterTypes1 = new Class[] {

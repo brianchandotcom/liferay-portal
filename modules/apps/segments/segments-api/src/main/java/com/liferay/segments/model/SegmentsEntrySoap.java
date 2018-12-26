@@ -46,6 +46,7 @@ public class SegmentsEntrySoap implements Serializable {
 		soapModel.setActive(model.isActive());
 		soapModel.setCriteria(model.getCriteria());
 		soapModel.setKey(model.getKey());
+		soapModel.setSource(model.getSource());
 		soapModel.setType(model.getType());
 
 		return soapModel;
@@ -199,6 +200,14 @@ public class SegmentsEntrySoap implements Serializable {
 		_key = key;
 	}
 
+	public String getSource() {
+		return _source;
+	}
+
+	public void setSource(String source) {
+		_source = source;
+	}
+
 	public String getType() {
 		return _type;
 	}
@@ -219,5 +228,6 @@ public class SegmentsEntrySoap implements Serializable {
 	private boolean _active;
 	private String _criteria;
 	private String _key;
+	private String _source;
 	private String _type;
 }

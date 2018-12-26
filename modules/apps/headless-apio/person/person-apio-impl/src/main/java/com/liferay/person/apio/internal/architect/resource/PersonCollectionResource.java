@@ -59,6 +59,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -182,9 +183,7 @@ public class PersonCollectionResource
 		return personUpdaterForm.getAlternateName();
 	}
 
-	private Integer _getDefaultValue(
-		Optional<Integer> optional, int defaultValue) {
-
+	private <T> T _getDefaultValue(Optional<T> optional, T defaultValue) {
 		return optional.orElse(defaultValue);
 	}
 
@@ -321,6 +320,10 @@ public class PersonCollectionResource
 
 		Date birthdayDate = user.getBirthday();
 
+		Calendar calendar = Calendar.getInstance();
+
+		calendar.setTime(birthdayDate);
+
 		user = _userLocalService.updateUser(
 			user.getUserId(), user.getPassword(),
 			personUpdaterForm.getPassword(), personUpdaterForm.getPassword(),
@@ -333,18 +336,19 @@ public class PersonCollectionResource
 			personUpdaterForm.getFamilyName(), prefixId, suffixId, true,
 			_getDefaultValue(
 				personUpdaterForm.getBirthdayMonthOptional(),
-				birthdayDate.getMonth()),
+				calendar.get(Calendar.MONTH)),
 			_getDefaultValue(
 				personUpdaterForm.getBirthdayDayOptional(),
-				birthdayDate.getDate()),
+				calendar.get(Calendar.DATE)),
 			_getDefaultValue(
 				personUpdaterForm.getBirthdayYearOptional(),
-				birthdayDate.getYear()),
+				calendar.get(Calendar.YEAR)),
 			contact.getSmsSn(), contact.getFacebookSn(), contact.getJabberSn(),
 			contact.getSkypeSn(), contact.getTwitterSn(),
-			personUpdaterForm.getJobTitle(), user.getGroupIds(),
-			user.getOrganizationIds(), user.getRoleIds(), null,
-			user.getUserGroupIds(), new ServiceContext());
+			_getDefaultValue(
+				personUpdaterForm.getJobTitleOptional(), user.getJobTitle()),
+			user.getGroupIds(), user.getOrganizationIds(), user.getRoleIds(),
+			null, user.getUserGroupIds(), new ServiceContext());
 
 		return new UserWrapper(user, themeDisplay);
 	}

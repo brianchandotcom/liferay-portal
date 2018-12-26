@@ -145,6 +145,15 @@ public class PersonUpdaterForm {
 	}
 
 	/**
+	 * Returns the person's birth day.
+	 *
+	 * @return the person's birth day
+	 */
+	public Optional<String> getJobTitleOptional() {
+		return Optional.ofNullable(_jobTitle);
+	}
+
+	/**
 	 * Returns the person's password.
 	 *
 	 * @return the person's password

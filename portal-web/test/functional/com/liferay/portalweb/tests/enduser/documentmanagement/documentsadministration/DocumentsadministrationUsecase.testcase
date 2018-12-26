@@ -604,17 +604,11 @@ definition {
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
-		DMDocument.viewCheckedoutPG(
+		DMDocument.editCmdPG(
+			checkedOut = "true",
 			dmDocumentTitle = "Document_1.doc",
-			status = "Approved"
+			userName = "Test Test"
 		);
-
-		for (var menuItem : list "Checkout,Edit,Move,Move to Recycle Bin") {
-			AssertElementNotPresent(
-				locator1 = "MenuItem#ANY_MENU_ITEM",
-				key_menuItem = "${menuItem}"
-			);
-		}
 	}
 
 	@description = "This test checks if the file extension upload restrictions in System Settings works as expected."

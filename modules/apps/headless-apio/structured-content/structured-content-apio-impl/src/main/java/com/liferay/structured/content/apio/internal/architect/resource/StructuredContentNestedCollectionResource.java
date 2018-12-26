@@ -334,7 +334,7 @@ public class StructuredContentNestedCollectionResource
 		DDMStructure ddmStructure = _ddmStructureService.getStructure(
 			structuredContent.getContentStructureId());
 
-		Locale locale = _getLocale(acceptLanguage, contentSpaceId);
+		Locale locale = acceptLanguage.getPreferredLocale();
 
 		String content =
 			_journalArticleContentHelper.createJournalArticleContent(
@@ -566,24 +566,13 @@ public class StructuredContentNestedCollectionResource
 		);
 	}
 
-	private Locale _getLocale(
-			AcceptLanguage acceptLanguage, long contentSpaceId)
-		throws PortalException {
-
-		return Optional.ofNullable(
-			acceptLanguage.getPreferredLocale()
-		).orElse(
-			_portal.getSiteDefaultLocale(contentSpaceId)
-		);
-	}
-
 	private PageItems<JournalArticleWrapper> _getPageItems(
 			Pagination pagination, long contentSpaceId,
 			AcceptLanguage acceptLanguage, ThemeDisplay themeDisplay,
 			Filter filter, Sort sort)
 		throws PortalException {
 
-		Locale locale = _getLocale(acceptLanguage, contentSpaceId);
+		Locale locale = acceptLanguage.getPreferredLocale();
 
 		SearchContext searchContext = _createSearchContext(
 			themeDisplay.getCompanyId(), contentSpaceId, locale, sort,
@@ -792,7 +781,7 @@ public class StructuredContentNestedCollectionResource
 
 		DDMStructure ddmStructure = journalArticle.getDDMStructure();
 
-		Locale locale = _getLocale(acceptLanguage, journalArticle.getGroupId());
+		Locale locale = acceptLanguage.getPreferredLocale();
 
 		String content =
 			_journalArticleContentHelper.createJournalArticleContent(

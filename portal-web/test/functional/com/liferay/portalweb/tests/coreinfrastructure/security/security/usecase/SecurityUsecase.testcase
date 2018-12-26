@@ -91,7 +91,7 @@ out.println(PortalUtil.escapeRedirect("/"));
 		);
 	}
 
-	@description = "This is a use case for LPS-68070."
+	@description = "This is a use case for LPS-87768."
 	@priority = "5"
 	test NoPermissionFromUnauthorizedURLAsPowerUser {
 		property test.name.skip.portal.instance = "SecurityUsecase#NoPermissionFromUnauthorizedURLAsPowerUser";
@@ -137,29 +137,19 @@ out.println(PortalUtil.escapeRedirect("/"));
 
 		WaitForSPARefresh();
 
-		var groupId = Page.getGroupIdFromHtmlSource();
-
+		var authToken = Page.getAuthTokenFromHtmlSource();
+		var plid = Page.getPlidFromHtmlSource();
 		var portalURL = PropsUtil.get("portal.url");
 
-		Api.gotoPAuthURL(
-			url = "${portalURL}/api/jsonws/layout/update-layout/group-id/${groupId}/private-layout/false/layout-id/1/type-settings/layout-template-id%3D2_columns_ii%0Acolumn-1%3Dcom_liferay_marketplace_app_manager_web_portlet_MarketplaceAppManagerPortlet?p_auth="
+		Navigator.openSpecificURL(
+			url = '''${portalURL}/c/portal/update_layout?cmd=add&p_p_col_id=column-1&p_p_col_pos=0&p_p_id=com_liferay_marketplace_store_web_portlet_MarketplacePurchasedPortlet&p_auth=${authToken}&p_l_id=${plid}'''
 		);
 
 		UserBar.gotoProfile();
 
 		AssertElementNotPresent(
-			locator1 = "ListGroupItem#ITEM_NAME",
-			key_itemName = "Liferay Marketplace"
-		);
-
-		AssertTextEquals(
 			locator1 = "Portlet#BODY",
-			value1 = "Portlet is temporarily unavailable.",
-			key_portletName = "App Manager"
-		);
-
-		AssertConsoleTextPresent(
-			value1 = "must be the company administrator to perform the action"
+			key_portletName = "Purchased"
 		);
 	}
 

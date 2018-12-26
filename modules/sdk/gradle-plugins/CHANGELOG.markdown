@@ -6265,6 +6265,11 @@ version 3.0.5.
 - [LPS-88552]: Lazily evaluate the `cleanDeployed` extension object property to
 fix the `update-gradle-cache` Ant task.
 
+## 3.13.44 - 2018-12-19
+
+### Changed
+- [LPS-88382]: Update the [Liferay Ant BND] dependency to version 3.0.4.
+
 [Gradle Bundle Plugin]: https://github.com/TomDmitriev/gradle-bundle-plugin
 [Liferay Alloy Taglib]: https://github.com/liferay/alloy-taglibs
 [Liferay Ant BND]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/ant-bnd
@@ -6751,5 +6756,6 @@ fix the `update-gradle-cache` Ant task.
 [LPS-88183]: https://issues.liferay.com/browse/LPS-88183
 [LPS-88186]: https://issues.liferay.com/browse/LPS-88186
 [LPS-88223]: https://issues.liferay.com/browse/LPS-88223
+[LPS-88382]: https://issues.liferay.com/browse/LPS-88382
 [LPS-88552]: https://issues.liferay.com/browse/LPS-88552
 [LRDOCS-3023]: https://issues.liferay.com/browse/LRDOCS-3023

@@ -5256,6 +5256,14 @@ respective `.digest` file needs to be updated.
 - [LPS-88552]: Update the [Liferay Gradle Plugins] dependency to version
 3.13.43.
 
+## 5.5.151 - 2018-12-19
+
+### Changed
+- [LPS-88382]: Update the [Liferay Gradle Plugins] dependency to version
+3.13.44.
+- [LPS-88382]: Update the [Liferay Gradle Plugins Baseline] dependency to
+version 2.0.6.
+
 [Find Security Bugs]: https://github.com/liferay/liferay-portal/tree/master/modules/third-party/com-h3xstream-findsecbugs
 [Gradle Dependency Management]: https://github.com/spring-gradle-plugins/dependency-management-plugin
 [Gradle License Report]: https://github.com/jk1/Gradle-License-Report
@@ -5790,6 +5798,7 @@ respective `.digest` file needs to be updated.
 [LPS-88306]: https://issues.liferay.com/browse/LPS-88306
 [LPS-88314]: https://issues.liferay.com/browse/LPS-88314
 [LPS-88319]: https://issues.liferay.com/browse/LPS-88319
+[LPS-88382]: https://issues.liferay.com/browse/LPS-88382
 [LPS-88552]: https://issues.liferay.com/browse/LPS-88552
 [LRDOCS-2594]: https://issues.liferay.com/browse/LRDOCS-2594
 [LRDOCS-2841]: https://issues.liferay.com/browse/LRDOCS-2841

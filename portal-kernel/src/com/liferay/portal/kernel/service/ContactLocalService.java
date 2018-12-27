@@ -67,6 +67,31 @@ public interface ContactLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.REINDEX)
 	public Contact addContact(Contact contact);
 
+	/**
+	* Returns a Contact after creating it and adding it to the database.
+	*
+	* @param userId the primary key of the user adding the contact
+	* @param className the class name of the entity the contact is for
+	* @param classPK the primary key of the class
+	* @param emailAddress the email address for the contact
+	* @param firstName the first name of the contact
+	* @param middleName the middle name of the contact
+	* @param lastName the last name of the contact
+	* @param prefixId the primary key of the prefix
+	* @param suffixId the primary key of the suffix
+	* @param male whether the contact is male (ignored)
+	* @param birthdayMonth the birthday month of the contact
+	* @param birthdayDay the birthday day of the contact
+	* @param birthdayYear the birthday year of the contact
+	* @param smsSn the SMS screen name of the contact
+	* @param facebookSn the Facebook screen name of the contact
+	* @param jabberSn the Jabber screen name of the contact
+	* @param skypeSn the Skype screen name of the contact
+	* @param twitterSn the Twitter screen name of the contact
+	* @param jobTitle the job title of the contact of the contact
+	* @return the newly added contact
+	* @throws PortalException
+	*/
 	@Indexable(type = IndexableType.REINDEX)
 	public Contact addContact(long userId, String className, long classPK,
 		String emailAddress, String firstName, String middleName,
@@ -250,6 +275,29 @@ public interface ContactLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.REINDEX)
 	public Contact updateContact(Contact contact);
 
+	/**
+	* Returns a Contact after updating it in the database.
+	*
+	* @param contactId the primary key of the contact
+	* @param emailAddress the email address for the contact
+	* @param firstName the first name of the contact
+	* @param middleName the middle name of the contact
+	* @param lastName the last name of the contact
+	* @param prefixId the primary key of the prefix
+	* @param suffixId the primary key of the suffix
+	* @param male whether the contact is male (ignored)
+	* @param birthdayMonth the birthday month of the contact
+	* @param birthdayDay the birthday day of the contact
+	* @param birthdayYear the birthday year of the contact
+	* @param smsSn the SMS screen name of the contact
+	* @param facebookSn the Facebook screen name of the contact
+	* @param jabberSn the Jabber screen name of the contact
+	* @param skypeSn the Skype screen name of the contact
+	* @param twitterSn the Twitter screen name of the contact
+	* @param jobTitle the job title of the contact of the contact
+	* @return the updated contact
+	* @throws PortalException
+	*/
 	@Indexable(type = IndexableType.REINDEX)
 	public Contact updateContact(long contactId, String emailAddress,
 		String firstName, String middleName, String lastName, long prefixId,

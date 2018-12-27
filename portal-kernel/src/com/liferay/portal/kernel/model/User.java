@@ -249,11 +249,11 @@ public interface User extends UserModel, PersistedModel {
 	public java.util.List<EmailAddress> getEmailAddresses();
 
 	/**
-	* Returns <code>true</code> if the user is female.
+	* Always returns false, since this information is no longer stored in the database
 	*
-	* @return <code>true</code> if the user is female; <code>false</code>
-	otherwise
+	* @deprecated As of Mueller (7.2.x)
 	*/
+	@Deprecated()
 	public boolean getFemale()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
@@ -289,11 +289,11 @@ public interface User extends UserModel, PersistedModel {
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
-	* Returns <code>true</code> if the user is male.
+	* Always returns true, since this information is no longer stored in the database
 	*
-	* @return <code>true</code> if the user is male; <code>false</code>
-	otherwise
+	* @deprecated As of Mueller (7.2.x)
 	*/
+	@Deprecated()
 	public boolean getMale()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
@@ -400,9 +400,21 @@ public interface User extends UserModel, PersistedModel {
 
 	public boolean isEmailAddressVerificationComplete();
 
+	/**
+	* Always returns false, since this information is no longer stored in the database
+	*
+	* @deprecated As of Mueller (7.2.x)
+	*/
+	@Deprecated()
 	public boolean isFemale()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
+	/**
+	* Always returns true, since this information is no longer stored in the database
+	*
+	* @deprecated As of Mueller (7.2.x)
+	*/
+	@Deprecated()
 	public boolean isMale()
 		throws com.liferay.portal.kernel.exception.PortalException;
 

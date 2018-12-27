@@ -241,7 +241,6 @@ create table Contact_ (
 	lastName VARCHAR(75) null,
 	prefixId LONG,
 	suffixId LONG,
-	male BOOLEAN,
 	birthday DATE null,
 	smsSn VARCHAR(75) null,
 	facebookSn VARCHAR(75) null,

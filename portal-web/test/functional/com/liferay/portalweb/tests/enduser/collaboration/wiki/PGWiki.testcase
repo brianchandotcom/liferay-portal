@@ -822,7 +822,7 @@ definition {
 		WikiTable.viewEntry(draftStatus = "APPROVED", wikiPageTitle = "Wiki Page Title");
 
 		WikiTable.viewEntry(
-			draftStatus = "Approved",
+			draftStatus = "APPROVED",
 			wikiPageTitle = "Copied Wiki Page Title"
 		);
 

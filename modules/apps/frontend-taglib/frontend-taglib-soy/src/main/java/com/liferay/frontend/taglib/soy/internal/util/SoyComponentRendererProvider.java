@@ -14,7 +14,7 @@
 
 package com.liferay.frontend.taglib.soy.internal.util;
 
-import com.liferay.frontend.taglib.soy.servlet.taglib.util.SoyRenderer;
+import com.liferay.frontend.taglib.soy.servlet.taglib.util.SoyComponentRenderer;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -23,23 +23,23 @@ import org.osgi.service.component.annotations.Reference;
  * @author Iván Zaera Avellón
  */
 @Component(immediate = true, service = {})
-public class SoyRendererProvider {
+public class SoyComponentRendererProvider {
 
-	public static SoyRenderer getSoyRenderer() {
+	public static SoyComponentRenderer getSoyComponentRenderer() {
 		if (_soyRendererProvider == null) {
 			return null;
 		}
 
-		return _soyRendererProvider._soyRenderer;
+		return _soyRendererProvider._soyComponentRenderer;
 	}
 
-	public SoyRendererProvider() {
+	public SoyComponentRendererProvider() {
 		_soyRendererProvider = this;
 	}
 
-	private static SoyRendererProvider _soyRendererProvider;
+	private static SoyComponentRendererProvider _soyRendererProvider;
 
 	@Reference
-	private SoyRenderer _soyRenderer;
+	private SoyComponentRenderer _soyComponentRenderer;
 
 }

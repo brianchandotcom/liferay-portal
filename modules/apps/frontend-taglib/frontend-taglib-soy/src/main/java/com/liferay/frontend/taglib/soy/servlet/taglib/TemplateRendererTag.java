@@ -14,31 +14,19 @@
 
 package com.liferay.frontend.taglib.soy.servlet.taglib;
 
+import com.liferay.frontend.taglib.soy.internal.util.SoyComponentRendererProvider;
 import com.liferay.frontend.taglib.soy.internal.util.SoyContextFactoryUtil;
-import com.liferay.frontend.taglib.soy.internal.util.SoyJavaScriptRendererUtil;
-import com.liferay.frontend.taglib.soy.internal.util.SoyRendererProvider;
-import com.liferay.frontend.taglib.soy.internal.util.SoyTemplateResourcesProviderUtil;
-import com.liferay.frontend.taglib.soy.servlet.taglib.util.SoyRenderer;
-import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
-import com.liferay.portal.kernel.json.JSONSerializer;
-import com.liferay.portal.kernel.template.Template;
-import com.liferay.portal.kernel.template.TemplateConstants;
-import com.liferay.portal.kernel.template.TemplateException;
-import com.liferay.portal.kernel.template.TemplateManagerUtil;
-import com.liferay.portal.kernel.util.HtmlUtil;
-import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.frontend.taglib.soy.servlet.taglib.util.ComponentDescriptor;
+import com.liferay.frontend.taglib.soy.servlet.taglib.util.SoyComponentRenderer;
+import com.liferay.portal.kernel.theme.PortletDisplay;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.ServerDetector;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.template.soy.utils.SoyContext;
-import com.liferay.taglib.aui.ScriptTag;
 import com.liferay.taglib.util.ParamAndPropertyAncestorTagImpl;
 
-import java.io.IOException;
-
-import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
@@ -59,26 +47,16 @@ public class TemplateRendererTag extends ParamAndPropertyAncestorTagImpl {
 		try {
 			prepareContext(context);
 
-			Locale locale = (Locale)context.get("locale");
+			ComponentDescriptor componentDescriptor = new ComponentDescriptor(
+				getTemplateNamespace(), getModule(), _dependencies,
+				getComponentId(), isWrapper(), isRenderJavaScript(),
+				isPositionInLine());
 
-			if (locale == null) {
-				context.put("locale", LocaleUtil.getMostRelevantLocale());
-			}
+			SoyComponentRenderer soyComponentRenderer =
+				SoyComponentRendererProvider.getSoyComponentRenderer();
 
-			String portletId = (String)context.get("portletId");
-
-			if (Validator.isNull(portletId)) {
-				context.put(
-					"portletId", request.getAttribute(WebKeys.PORTLET_ID));
-			}
-
-			if (isRenderTemplate()) {
-				renderTemplate(jspWriter, context);
-			}
-
-			if (isRenderJavaScript()) {
-				renderJavaScript(jspWriter, context);
-			}
+			soyComponentRenderer.renderSoyComponent(
+				request, jspWriter, componentDescriptor, context);
 		}
 		catch (Exception e) {
 			throw new JspException(e);
@@ -92,13 +70,6 @@ public class TemplateRendererTag extends ParamAndPropertyAncestorTagImpl {
 
 	@Override
 	public int doStartTag() {
-		try {
-			_template = _getTemplate();
-		}
-		catch (TemplateException te) {
-			te.printStackTrace();
-		}
-
 		return EVAL_BODY_INCLUDE;
 	}
 
@@ -128,26 +99,6 @@ public class TemplateRendererTag extends ParamAndPropertyAncestorTagImpl {
 
 	public String getTemplateNamespace() {
 		return _templateNamespace;
-	}
-
-	public String getWrapperId() {
-		if (_wrapperId != null) {
-			return _wrapperId;
-		}
-
-		Map<String, Object> context = getContext();
-
-		_wrapperId = (String)context.get("id");
-
-		if (Validator.isNull(_wrapperId)) {
-			_wrapperId = getComponentId();
-
-			if (Validator.isNull(_wrapperId)) {
-				_wrapperId = StringUtil.randomId();
-			}
-		}
-
-		return _wrapperId;
 	}
 
 	public void putHTMLValue(String key, String value) {
@@ -209,7 +160,6 @@ public class TemplateRendererTag extends ParamAndPropertyAncestorTagImpl {
 			_module = null;
 			_templateNamespace = null;
 			_wrapper = null;
-			_wrapperId = null;
 		}
 	}
 
@@ -221,14 +171,44 @@ public class TemplateRendererTag extends ParamAndPropertyAncestorTagImpl {
 		return _context;
 	}
 
-	protected String getElementSelector() {
-		String selector = StringPool.POUND.concat(getWrapperId());
+	protected boolean isPositionInLine() {
+		Boolean positionInline = null;
 
-		if (isWrapper()) {
-			selector = selector.concat(" > *:first-child");
+		String fragmentId = ParamUtil.getString(request, "p_f_id");
+
+		if (Validator.isNotNull(fragmentId)) {
+			positionInline = true;
 		}
 
-		return selector;
+		if (positionInline == null) {
+			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+			if (themeDisplay.isIsolated() ||
+				themeDisplay.isLifecycleResource() ||
+				themeDisplay.isStateExclusive()) {
+
+				positionInline = true;
+			}
+
+			PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+
+			String portletId = portletDisplay.getId();
+
+			if (Validator.isNotNull(portletId) &&
+				themeDisplay.isPortletEmbedded(
+					themeDisplay.getScopeGroupId(), themeDisplay.getLayout(),
+					portletId)) {
+
+				positionInline = true;
+			}
+		}
+
+		if (positionInline == null) {
+			positionInline = false;
+		}
+
+		return positionInline;
 	}
 
 	protected boolean isRenderJavaScript() {
@@ -237,10 +217,6 @@ public class TemplateRendererTag extends ParamAndPropertyAncestorTagImpl {
 		}
 
 		return false;
-	}
-
-	protected boolean isRenderTemplate() {
-		return true;
 	}
 
 	protected boolean isWrapper() {
@@ -254,64 +230,12 @@ public class TemplateRendererTag extends ParamAndPropertyAncestorTagImpl {
 	protected void prepareContext(Map<String, Object> context) {
 	}
 
-	protected void renderJavaScript(
-			JspWriter jspWriter, Map<String, Object> context)
-		throws Exception, IOException {
-
-		if (!context.containsKey("element")) {
-			context.put("element", getElementSelector());
-		}
-
-		String componentJavaScript = SoyJavaScriptRendererUtil.getJavaScript(
-			context, getWrapperId(), getModule(), isWrapper());
-
-		JSONSerializer jsonSerializer = JSONFactoryUtil.createJSONSerializer();
-
-		ScriptTag.doTag(
-			null, jsonSerializer.serialize(_dependencies), null,
-			componentJavaScript, getBodyContent(), pageContext);
-	}
-
-	protected void renderTemplate(
-			JspWriter jspWriter, Map<String, Object> context)
-		throws IOException, TemplateException {
-
-		boolean wrapper = isWrapper();
-
-		if (!wrapper && Validator.isNull(context.get("id"))) {
-			context.put("id", getWrapperId());
-		}
-
-		if (wrapper) {
-			jspWriter.append("<div id=\"");
-			jspWriter.append(HtmlUtil.escapeAttribute(getWrapperId()));
-			jspWriter.append("\">");
-		}
-
-		SoyRenderer soyRenderer = SoyRendererProvider.getSoyRenderer();
-
-		soyRenderer.renderSoy(
-			request, jspWriter, getTemplateNamespace(), context);
-
-		if (wrapper) {
-			jspWriter.append("</div>");
-		}
-	}
-
-	private Template _getTemplate() throws TemplateException {
-		return TemplateManagerUtil.getTemplate(
-			TemplateConstants.LANG_TYPE_SOY,
-			SoyTemplateResourcesProviderUtil.getAllTemplateResources(), false);
-	}
-
 	private String _componentId;
 	private Map<String, Object> _context;
 	private Set<String> _dependencies;
 	private Boolean _hydrate;
 	private String _module;
-	private Template _template;
 	private String _templateNamespace;
 	private Boolean _wrapper;
-	private String _wrapperId;
 
 }

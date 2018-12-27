@@ -24,20 +24,29 @@ import java.util.Set;
 public class ComponentDescriptor {
 
 	public ComponentDescriptor(String templateNamespace, String module) {
-		this(templateNamespace, module, null);
+		this(templateNamespace, module, null, null);
 	}
 
 	public ComponentDescriptor(
 		String templateNamespace, String module,
 		Collection<String> dependencies) {
 
-		this(templateNamespace, module, dependencies, null, null, null, null);
+		this(templateNamespace, module, dependencies, null);
 	}
 
 	public ComponentDescriptor(
 		String templateNamespace, String module,
-		Collection<String> dependencies, String id, String componentId,
-		Boolean wrapper, Boolean positionInLine) {
+		Collection<String> dependencies, String componentId) {
+
+		this(
+			templateNamespace, module, dependencies, componentId, true, true,
+			false);
+	}
+
+	public ComponentDescriptor(
+		String templateNamespace, String module,
+		Collection<String> dependencies, String componentId, boolean wrapper,
+		boolean renderJavascript, boolean positionInLine) {
 
 		_templateNamespace = templateNamespace;
 		_module = module;
@@ -46,21 +55,16 @@ public class ComponentDescriptor {
 			_dependencies.addAll(dependencies);
 		}
 
-		if (id != null) {
-			_id = id;
-		}
+		_componentId = componentId;
+		_wrapper = wrapper;
+		_renderJavascript = renderJavascript;
+		_positionInLine = positionInLine;
+	}
 
-		if (componentId != null) {
-			_componentId = componentId;
-		}
+	public ComponentDescriptor(
+		String templateNamespace, String module, String componentId) {
 
-		if (wrapper != null) {
-			_wrapper = wrapper;
-		}
-
-		if (positionInLine != null) {
-			_positionInLine = positionInLine;
-		}
+		this(templateNamespace, module, null, componentId);
 	}
 
 	public String getComponentId() {
@@ -69,10 +73,6 @@ public class ComponentDescriptor {
 
 	public Set<String> getDependencies() {
 		return _dependencies;
-	}
-
-	public String getId() {
-		return _id;
 	}
 
 	public String getModule() {
@@ -87,16 +87,20 @@ public class ComponentDescriptor {
 		return _positionInLine;
 	}
 
+	public boolean isRenderJavascript() {
+		return _renderJavascript;
+	}
+
 	public boolean isWrapper() {
 		return _wrapper;
 	}
 
 	private String _componentId;
 	private Set<String> _dependencies = new HashSet<>();
-	private String _id;
 	private String _module;
 	private boolean _positionInLine;
+	private boolean _renderJavascript;
 	private String _templateNamespace;
-	private boolean _wrapper = true;
+	private boolean _wrapper;
 
 }

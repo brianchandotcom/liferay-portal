@@ -14,11 +14,7 @@
 
 package com.liferay.frontend.taglib.soy.servlet.taglib.util;
 
-import com.liferay.portal.kernel.template.Template;
-import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.template.TemplateException;
-import com.liferay.portal.kernel.template.TemplateManager;
-import com.liferay.portal.template.soy.utils.SoyTemplateResourcesProvider;
 
 import java.io.IOException;
 import java.io.Writer;
@@ -28,75 +24,19 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferenceCardinality;
-import org.osgi.service.component.annotations.ReferencePolicy;
-
 /**
  * @author Iván Zaera Avellón
  */
-@Component(immediate = true, service = SoyRenderer.class)
-public class SoyRenderer {
+public interface SoyRenderer {
 
 	public void renderSoy(
 			HttpServletRequest request, HttpServletResponse response,
 			String templateNamespace, Map<String, ?> context)
-		throws IOException, TemplateException {
-
-		renderSoy(request, response.getWriter(), templateNamespace, context);
-	}
+		throws IOException, TemplateException;
 
 	public void renderSoy(
 			HttpServletRequest request, Writer writer, String templateNamespace,
 			Map<String, ?> context)
-		throws TemplateException {
-
-		Template template = _getTemplate();
-
-		template.putAll(context);
-
-		template.put(TemplateConstants.NAMESPACE, templateNamespace);
-
-		template.prepare(request);
-
-		template.processTemplate(writer);
-	}
-
-	@Reference(
-		cardinality = ReferenceCardinality.MULTIPLE,
-		policy = ReferencePolicy.DYNAMIC
-	)
-	protected void addTemplateManager(TemplateManager templateManager) {
-		String templateManagerName = templateManager.getName();
-
-		if (templateManagerName.equals(TemplateConstants.LANG_TYPE_SOY)) {
-			_templateManager = templateManager;
-		}
-	}
-
-	protected void removeTemplateManager(TemplateManager templateManager) {
-		String templateManagerName = templateManager.getName();
-
-		if (templateManagerName.equals(TemplateConstants.LANG_TYPE_SOY)) {
-			_templateManager = null;
-		}
-	}
-
-	private Template _getTemplate() throws TemplateException {
-		if (_templateManager == null) {
-			throw new TemplateException(
-				"Unable to find the '" + TemplateConstants.LANG_TYPE_SOY +
-					"' template manager");
-		}
-
-		return _templateManager.getTemplate(
-			_soyTemplateResourcesProvider.getAllTemplateResources(), false);
-	}
-
-	@Reference
-	private SoyTemplateResourcesProvider _soyTemplateResourcesProvider;
-
-	private volatile TemplateManager _templateManager;
+		throws TemplateException;
 
 }

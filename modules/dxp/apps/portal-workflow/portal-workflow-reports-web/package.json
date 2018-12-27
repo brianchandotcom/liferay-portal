@@ -54,7 +54,7 @@
 		"csf": "csf src/main/resources/META-INF/resources/css/**/*.scss",
 		"format": "prettier-eslint --write 'src/main/resources/META-INF/resources/js/**/*.js'",
 		"lint": "eslint src/main/resources/META-INF/resources/js/",
-		"test": "cross-env TZ=Etc/GMT jest --coverage --config .jest.json"
+		"test": "cross-env TZ=Etc/GMT jest --coverage"
 	},
 	"version": "1.0.0"
 }

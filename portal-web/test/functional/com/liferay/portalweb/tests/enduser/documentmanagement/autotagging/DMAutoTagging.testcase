@@ -27,6 +27,8 @@ definition {
 
 	@priority = "4"
 	test ConfigureAutoTaggingPerSite {
+		property test.name.skip.portal.instance = "DMAutoTagging#ConfigureAutoTaggingPerSite";
+
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
@@ -123,6 +125,7 @@ definition {
 	@priority = "5"
 	test Smoke {
 		property portal.acceptance = "false";
+		property test.name.skip.portal.instance = "DMAutoTagging#Smoke";
 
 		ProductMenu.gotoPortlet(
 			category = "Configuration",

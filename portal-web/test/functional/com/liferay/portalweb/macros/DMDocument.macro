@@ -1186,6 +1186,13 @@ definition {
 			value1 = "${userEmailAddress}"
 		);
 
+		if (isSet(shareable)) {
+			FormFields.enableCheckbox(fieldName = "shareable");
+		}
+		else {
+			FormFields.disableCheckbox(fieldName = "shareable");
+		}
+
 		if ("${sharingPermissions}" == "Update") {
 			FormFields.selectRadioOption(
 				fieldName = "sharingEntryPermission",

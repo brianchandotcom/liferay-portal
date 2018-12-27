@@ -187,7 +187,6 @@ public class HookHotDeployListener
 		"dl.store.antivirus.enabled", "dl.store.antivirus.impl",
 		"dl.store.impl",
 		"field.enable.com.liferay.portal.kernel.model.Contact.birthday",
-		"field.enable.com.liferay.portal.kernel.model.Contact.male",
 		"field.enable.com.liferay.portal.kernel.model.Organization.status",
 		"hot.deploy.listeners", "javascript.fast.load",
 		"journal.article.form.add", "journal.article.form.translate",
@@ -2259,7 +2258,6 @@ public class HookHotDeployListener
 		"dl.file.entry.open.in.ms.office.manual.check.in.required",
 		"dl.store.antivirus.enabled",
 		"field.enable.com.liferay.portal.kernel.model.Contact.birthday",
-		"field.enable.com.liferay.portal.kernel.model.Contact.male",
 		"field.enable.com.liferay.portal.kernel.model.Organization.status",
 		"javascript.fast.load", "layout.template.cache.enabled",
 		"layout.user.private.layouts.auto.create",
@@ -2322,6 +2320,7 @@ public class HookHotDeployListener
 	};
 
 	private static final String[] _PROPS_VALUES_OBSOLETE = {
+		"field.enable.com.liferay.portal.kernel.model.Contact.male",
 		"layout.user.private.layouts.modifiable",
 		"layout.user.public.layouts.modifiable"
 	};

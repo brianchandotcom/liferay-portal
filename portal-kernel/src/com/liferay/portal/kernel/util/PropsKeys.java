@@ -923,6 +923,10 @@ public interface PropsKeys {
 
 	public static final String FIELD_ENABLE_COM_LIFERAY_PORTAL_KERNEL_MODEL_CONTACT_BIRTHDAY = "field.enable.com.liferay.portal.kernel.model.Contact.birthday";
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), with no direct replacement
+	 */
+	@Deprecated
 	public static final String FIELD_ENABLE_COM_LIFERAY_PORTAL_KERNEL_MODEL_CONTACT_MALE = "field.enable.com.liferay.portal.kernel.model.Contact.male";
 
 	public static final String FIELD_ENABLE_COM_LIFERAY_PORTAL_KERNEL_MODEL_LAYOUT_JAVASCRIPT = "field.enable.com.liferay.portal.kernel.model.Layout.javascript";
@@ -998,9 +1002,21 @@ public interface PropsKeys {
 
 	public static final String IMAGE_DEFAULT_SPACER = "image.default.spacer";
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 *             #IMAGE_DEFAULT_USER_PORTRAIT}
+	 */
+	@Deprecated
 	public static final String IMAGE_DEFAULT_USER_FEMALE_PORTRAIT = "image.default.user.female.portrait";
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 *             #IMAGE_DEFAULT_USER_PORTRAIT}
+	 */
+	@Deprecated
 	public static final String IMAGE_DEFAULT_USER_MALE_PORTRAIT = "image.default.user.male.portrait";
+
+	public static final String IMAGE_DEFAULT_USER_PORTRAIT = "image.default.user.portrait";
 
 	public static final String IMAGE_HOOK_FILE_SYSTEM_ROOT_DIR = "image.hook.file.system.root.dir";
 

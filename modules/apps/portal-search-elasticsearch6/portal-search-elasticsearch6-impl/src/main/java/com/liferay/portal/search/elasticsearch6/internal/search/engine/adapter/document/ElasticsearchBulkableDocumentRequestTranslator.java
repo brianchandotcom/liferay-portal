@@ -16,7 +16,7 @@ package com.liferay.portal.search.elasticsearch6.internal.search.engine.adapter.
 
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.search.Document;
-import com.liferay.portal.search.elasticsearch6.internal.connection.ElasticsearchConnectionManager;
+import com.liferay.portal.search.elasticsearch6.internal.connection.ElasticsearchClientResolver;
 import com.liferay.portal.search.elasticsearch6.internal.document.DefaultElasticsearchDocumentFactory;
 import com.liferay.portal.search.elasticsearch6.internal.document.ElasticsearchDocumentFactory;
 import com.liferay.portal.search.engine.adapter.document.BulkableDocumentRequestTranslator;
@@ -57,7 +57,7 @@ public class ElasticsearchBulkableDocumentRequestTranslator
 		DeleteDocumentRequest deleteDocumentRequest,
 		BulkRequestBuilder searchEngineAdapterRequest) {
 
-		Client client = elasticsearchConnectionManager.getClient();
+		Client client = elasticsearchClientResolver.getClient();
 
 		DeleteRequestBuilder deleteRequestBuilder =
 			DeleteAction.INSTANCE.newRequestBuilder(client);
@@ -85,7 +85,7 @@ public class ElasticsearchBulkableDocumentRequestTranslator
 		BulkRequestBuilder searchEngineAdapterRequest) {
 
 		try {
-			Client client = elasticsearchConnectionManager.getClient();
+			Client client = elasticsearchClientResolver.getClient();
 
 			IndexRequestBuilder indexRequestBuilder =
 				IndexAction.INSTANCE.newRequestBuilder(client);
@@ -129,7 +129,7 @@ public class ElasticsearchBulkableDocumentRequestTranslator
 		BulkRequestBuilder searchEngineAdapterRequest) {
 
 		try {
-			Client client = elasticsearchConnectionManager.getClient();
+			Client client = elasticsearchClientResolver.getClient();
 
 			UpdateRequestBuilder updateRequestBuilder =
 				UpdateAction.INSTANCE.newRequestBuilder(client);
@@ -168,6 +168,6 @@ public class ElasticsearchBulkableDocumentRequestTranslator
 	}
 
 	@Reference
-	protected ElasticsearchConnectionManager elasticsearchConnectionManager;
+	protected ElasticsearchClientResolver elasticsearchClientResolver;
 
 }

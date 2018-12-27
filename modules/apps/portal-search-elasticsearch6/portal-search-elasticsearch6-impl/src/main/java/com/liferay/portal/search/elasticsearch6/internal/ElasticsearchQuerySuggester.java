@@ -31,7 +31,7 @@ import com.liferay.portal.kernel.search.suggest.TermSuggester;
 import com.liferay.portal.kernel.util.Localization;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.search.elasticsearch6.internal.connection.ElasticsearchConnectionManager;
+import com.liferay.portal.search.elasticsearch6.internal.connection.ElasticsearchClientResolver;
 import com.liferay.portal.search.elasticsearch6.internal.index.IndexNameBuilder;
 
 import java.util.ArrayList;
@@ -238,7 +238,7 @@ public class ElasticsearchQuerySuggester implements QuerySuggester {
 
 		stopWatch.start();
 
-		Client client = elasticsearchConnectionManager.getClient();
+		Client client = elasticsearchClientResolver.getClient();
 
 		SuggestBuilder suggestBuilder = suggesterTranslator.translate(
 			suggester, searchContext);
@@ -408,7 +408,7 @@ public class ElasticsearchQuerySuggester implements QuerySuggester {
 	}
 
 	@Reference(unbind = "-")
-	protected ElasticsearchConnectionManager elasticsearchConnectionManager;
+	protected ElasticsearchClientResolver elasticsearchClientResolver;
 
 	@Reference(unbind = "-")
 	protected IndexNameBuilder indexNameBuilder;

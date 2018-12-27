@@ -14,7 +14,7 @@
 
 package com.liferay.portal.search.elasticsearch6.internal.search.engine.adapter.snapshot;
 
-import com.liferay.portal.search.elasticsearch6.internal.connection.ElasticsearchConnectionManager;
+import com.liferay.portal.search.elasticsearch6.internal.connection.ElasticsearchClientResolver;
 import com.liferay.portal.search.engine.adapter.snapshot.GetSnapshotsRequest;
 import com.liferay.portal.search.engine.adapter.snapshot.GetSnapshotsResponse;
 import com.liferay.portal.search.engine.adapter.snapshot.SnapshotDetails;
@@ -67,7 +67,7 @@ public class GetSnapshotsRequestExecutorImpl
 
 		GetSnapshotsRequestBuilder getSnapshotsRequestBuilder =
 			GetSnapshotsAction.INSTANCE.newRequestBuilder(
-				elasticsearchConnectionManager.getClient());
+				elasticsearchClientResolver.getClient());
 
 		getSnapshotsRequestBuilder.setIgnoreUnavailable(
 			getSnapshotsRequest.isIgnoreUnavailable());
@@ -81,6 +81,6 @@ public class GetSnapshotsRequestExecutorImpl
 	}
 
 	@Reference
-	protected ElasticsearchConnectionManager elasticsearchConnectionManager;
+	protected ElasticsearchClientResolver elasticsearchClientResolver;
 
 }

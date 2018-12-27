@@ -15,7 +15,7 @@
 package com.liferay.portal.search.elasticsearch6.internal.search.engine.adapter.index;
 
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.search.elasticsearch6.internal.connection.ElasticsearchConnectionManager;
+import com.liferay.portal.search.elasticsearch6.internal.connection.ElasticsearchClientResolver;
 import com.liferay.portal.search.engine.adapter.index.FlushIndexRequest;
 import com.liferay.portal.search.engine.adapter.index.FlushIndexResponse;
 import com.liferay.portal.search.engine.adapter.index.IndexRequestShardFailure;
@@ -77,7 +77,7 @@ public class FlushIndexRequestExecutorImpl
 	protected FlushRequestBuilder createFlushRequestBuilder(
 		FlushIndexRequest flushIndexRequest) {
 
-		Client client = elasticsearchConnectionManager.getClient();
+		Client client = elasticsearchClientResolver.getClient();
 
 		FlushRequestBuilder flushRequestBuilder =
 			FlushAction.INSTANCE.newRequestBuilder(client);
@@ -91,7 +91,7 @@ public class FlushIndexRequestExecutorImpl
 	}
 
 	@Reference
-	protected ElasticsearchConnectionManager elasticsearchConnectionManager;
+	protected ElasticsearchClientResolver elasticsearchClientResolver;
 
 	@Reference
 	protected IndexRequestShardFailureTranslator

@@ -14,7 +14,7 @@
 
 package com.liferay.portal.search.elasticsearch6.internal.search.engine.adapter.index;
 
-import com.liferay.portal.search.elasticsearch6.internal.connection.ElasticsearchConnectionManager;
+import com.liferay.portal.search.elasticsearch6.internal.connection.ElasticsearchClientResolver;
 import com.liferay.portal.search.engine.adapter.index.CreateIndexRequest;
 import com.liferay.portal.search.engine.adapter.index.CreateIndexResponse;
 
@@ -50,7 +50,7 @@ public class CreateIndexRequestExecutorImpl
 	protected CreateIndexRequestBuilder createCreateIndexRequestBuilder(
 		CreateIndexRequest createIndexRequest) {
 
-		Client client = elasticsearchConnectionManager.getClient();
+		Client client = elasticsearchClientResolver.getClient();
 
 		CreateIndexRequestBuilder createIndexRequestBuilder =
 			CreateIndexAction.INSTANCE.newRequestBuilder(client);
@@ -63,6 +63,6 @@ public class CreateIndexRequestExecutorImpl
 	}
 
 	@Reference
-	protected ElasticsearchConnectionManager elasticsearchConnectionManager;
+	protected ElasticsearchClientResolver elasticsearchClientResolver;
 
 }

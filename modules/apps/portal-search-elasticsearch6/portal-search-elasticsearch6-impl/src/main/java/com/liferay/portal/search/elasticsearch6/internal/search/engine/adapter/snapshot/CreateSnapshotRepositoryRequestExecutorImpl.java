@@ -14,7 +14,7 @@
 
 package com.liferay.portal.search.elasticsearch6.internal.search.engine.adapter.snapshot;
 
-import com.liferay.portal.search.elasticsearch6.internal.connection.ElasticsearchConnectionManager;
+import com.liferay.portal.search.elasticsearch6.internal.connection.ElasticsearchClientResolver;
 import com.liferay.portal.search.engine.adapter.snapshot.CreateSnapshotRepositoryRequest;
 import com.liferay.portal.search.engine.adapter.snapshot.CreateSnapshotRepositoryResponse;
 
@@ -53,7 +53,7 @@ public class CreateSnapshotRepositoryRequestExecutorImpl
 
 		PutRepositoryRequestBuilder putRepositoryRequestBuilder =
 			PutRepositoryAction.INSTANCE.newRequestBuilder(
-				elasticsearchConnectionManager.getClient());
+				elasticsearchClientResolver.getClient());
 
 		putRepositoryRequestBuilder.setName(
 			createSnapshotRepositoryRequest.getName());
@@ -79,6 +79,6 @@ public class CreateSnapshotRepositoryRequestExecutorImpl
 	}
 
 	@Reference
-	protected ElasticsearchConnectionManager elasticsearchConnectionManager;
+	protected ElasticsearchClientResolver elasticsearchClientResolver;
 
 }

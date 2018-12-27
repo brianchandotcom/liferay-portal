@@ -14,7 +14,7 @@
 
 package com.liferay.portal.search.elasticsearch6.internal.search.engine.adapter.index;
 
-import com.liferay.portal.search.elasticsearch6.internal.connection.ElasticsearchConnectionManager;
+import com.liferay.portal.search.elasticsearch6.internal.connection.ElasticsearchClientResolver;
 import com.liferay.portal.search.engine.adapter.index.IndicesOptions;
 import com.liferay.portal.search.engine.adapter.index.UpdateIndexSettingsIndexRequest;
 import com.liferay.portal.search.engine.adapter.index.UpdateIndexSettingsIndexResponse;
@@ -52,7 +52,7 @@ public class UpdateIndexSettingsIndexRequestExecutorImpl
 	protected UpdateSettingsRequestBuilder createUpdateSettingsRequestBuilder(
 		UpdateIndexSettingsIndexRequest updateIndexSettingsIndexRequest) {
 
-		Client client = elasticsearchConnectionManager.getClient();
+		Client client = elasticsearchClientResolver.getClient();
 
 		UpdateSettingsRequestBuilder updateSettingsRequestBuilder =
 			UpdateSettingsAction.INSTANCE.newRequestBuilder(client);
@@ -75,7 +75,7 @@ public class UpdateIndexSettingsIndexRequestExecutorImpl
 	}
 
 	@Reference
-	protected ElasticsearchConnectionManager elasticsearchConnectionManager;
+	protected ElasticsearchClientResolver elasticsearchClientResolver;
 
 	@Reference
 	protected IndicesOptionsTranslator indicesOptionsTranslator;

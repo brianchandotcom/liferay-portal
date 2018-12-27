@@ -15,7 +15,7 @@
 package com.liferay.portal.search.elasticsearch6.internal.search.engine.adapter.snapshot;
 
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.search.elasticsearch6.internal.connection.ElasticsearchConnectionManager;
+import com.liferay.portal.search.elasticsearch6.internal.connection.ElasticsearchClientResolver;
 import com.liferay.portal.search.engine.adapter.snapshot.CreateSnapshotRequest;
 import com.liferay.portal.search.engine.adapter.snapshot.CreateSnapshotResponse;
 import com.liferay.portal.search.engine.adapter.snapshot.SnapshotDetails;
@@ -58,7 +58,7 @@ public class CreateSnapshotRequestExecutorImpl
 
 		CreateSnapshotRequestBuilder createSnapshotRequestBuilder =
 			CreateSnapshotAction.INSTANCE.newRequestBuilder(
-				elasticsearchConnectionManager.getClient());
+				elasticsearchClientResolver.getClient());
 
 		if (ArrayUtil.isNotEmpty(createSnapshotRequest.getIndexNames())) {
 			createSnapshotRequestBuilder.setIndices(
@@ -76,6 +76,6 @@ public class CreateSnapshotRequestExecutorImpl
 	}
 
 	@Reference
-	protected ElasticsearchConnectionManager elasticsearchConnectionManager;
+	protected ElasticsearchClientResolver elasticsearchClientResolver;
 
 }

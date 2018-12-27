@@ -51,6 +51,7 @@ import com.liferay.portal.search.engine.adapter.snapshot.SnapshotState;
 import java.util.List;
 import java.util.Map;
 
+import org.elasticsearch.client.Client;
 import org.elasticsearch.common.Strings;
 
 import org.osgi.service.component.annotations.Activate;
@@ -107,8 +108,9 @@ public class ElasticsearchSearchEngine extends BaseSearchEngine {
 		waitForYellowStatus();
 
 		try {
-			indexFactory.createIndices(
-				elasticsearchConnectionManager.getAdminClient(), companyId);
+			Client client = elasticsearchConnectionManager.getClient();
+
+			indexFactory.createIndices(client.admin(), companyId);
 
 			elasticsearchConnectionManager.registerCompanyId(companyId);
 		}

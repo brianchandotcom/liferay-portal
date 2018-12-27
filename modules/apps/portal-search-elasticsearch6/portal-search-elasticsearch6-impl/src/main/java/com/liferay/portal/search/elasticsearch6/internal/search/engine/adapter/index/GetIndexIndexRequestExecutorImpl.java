@@ -16,7 +16,7 @@ package com.liferay.portal.search.elasticsearch6.internal.search.engine.adapter.
 
 import com.carrotsearch.hppc.cursors.ObjectObjectCursor;
 
-import com.liferay.portal.search.elasticsearch6.internal.connection.ElasticsearchConnectionManager;
+import com.liferay.portal.search.elasticsearch6.internal.connection.ElasticsearchClientResolver;
 import com.liferay.portal.search.engine.adapter.index.GetIndexIndexRequest;
 import com.liferay.portal.search.engine.adapter.index.GetIndexIndexResponse;
 
@@ -138,7 +138,7 @@ public class GetIndexIndexRequestExecutorImpl
 	protected GetIndexRequestBuilder createGetIndexRequestBuilder(
 		GetIndexIndexRequest getIndexIndexRequest) {
 
-		Client client = elasticsearchConnectionManager.getClient();
+		Client client = elasticsearchClientResolver.getClient();
 
 		GetIndexRequestBuilder getIndexRequestBuilder =
 			GetIndexAction.INSTANCE.newRequestBuilder(client);
@@ -149,6 +149,6 @@ public class GetIndexIndexRequestExecutorImpl
 	}
 
 	@Reference
-	protected ElasticsearchConnectionManager elasticsearchConnectionManager;
+	protected ElasticsearchClientResolver elasticsearchClientResolver;
 
 }

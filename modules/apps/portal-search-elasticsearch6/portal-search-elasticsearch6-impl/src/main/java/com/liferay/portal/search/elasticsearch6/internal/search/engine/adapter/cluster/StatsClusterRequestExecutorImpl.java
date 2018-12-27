@@ -15,7 +15,7 @@
 package com.liferay.portal.search.elasticsearch6.internal.search.engine.adapter.cluster;
 
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.search.elasticsearch6.internal.connection.ElasticsearchConnectionManager;
+import com.liferay.portal.search.elasticsearch6.internal.connection.ElasticsearchClientResolver;
 import com.liferay.portal.search.engine.adapter.cluster.StatsClusterRequest;
 import com.liferay.portal.search.engine.adapter.cluster.StatsClusterResponse;
 
@@ -81,7 +81,7 @@ public class StatsClusterRequestExecutorImpl
 
 		ClusterStatsRequestBuilder clusterStatsRequestBuilder =
 			ClusterStatsAction.INSTANCE.newRequestBuilder(
-				elasticsearchConnectionManager.getClient());
+				elasticsearchClientResolver.getClient());
 
 		return clusterStatsRequestBuilder;
 	}
@@ -90,6 +90,6 @@ public class StatsClusterRequestExecutorImpl
 	protected ClusterHealthStatusTranslator clusterHealthStatusTranslator;
 
 	@Reference
-	protected ElasticsearchConnectionManager elasticsearchConnectionManager;
+	protected ElasticsearchClientResolver elasticsearchClientResolver;
 
 }

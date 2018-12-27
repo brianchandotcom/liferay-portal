@@ -14,7 +14,7 @@
 
 package com.liferay.portal.search.elasticsearch6.internal.search.engine.adapter.document;
 
-import com.liferay.portal.search.elasticsearch6.internal.connection.ElasticsearchConnectionManager;
+import com.liferay.portal.search.elasticsearch6.internal.connection.ElasticsearchClientResolver;
 import com.liferay.portal.search.engine.adapter.document.BulkDocumentItemResponse;
 import com.liferay.portal.search.engine.adapter.document.BulkDocumentRequest;
 import com.liferay.portal.search.engine.adapter.document.BulkDocumentResponse;
@@ -98,7 +98,7 @@ public class BulkDocumentRequestExecutorImpl
 	protected BulkRequestBuilder createBulkRequestBuilder(
 		BulkDocumentRequest bulkDocumentRequest) {
 
-		Client client = elasticsearchConnectionManager.getClient();
+		Client client = elasticsearchClientResolver.getClient();
 
 		BulkRequestBuilder bulkRequestBuilder =
 			BulkAction.INSTANCE.newRequestBuilder(client);
@@ -141,6 +141,6 @@ public class BulkDocumentRequestExecutorImpl
 		 BulkRequestBuilder> bulkableDocumentRequestTranslator;
 
 	@Reference
-	protected ElasticsearchConnectionManager elasticsearchConnectionManager;
+	protected ElasticsearchClientResolver elasticsearchClientResolver;
 
 }

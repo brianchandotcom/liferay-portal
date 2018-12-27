@@ -17,7 +17,7 @@ package com.liferay.portal.search.elasticsearch6.internal.search.engine.adapter.
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.search.elasticsearch6.internal.connection.ElasticsearchConnectionManager;
+import com.liferay.portal.search.elasticsearch6.internal.connection.ElasticsearchClientResolver;
 import com.liferay.portal.search.elasticsearch6.internal.io.StringOutputStream;
 import com.liferay.portal.search.engine.adapter.index.AnalysisIndexResponseToken;
 import com.liferay.portal.search.engine.adapter.index.AnalyzeIndexRequest;
@@ -83,7 +83,7 @@ public class AnalyzeIndexRequestExecutorImpl
 	protected AnalyzeRequestBuilder createAnalyzeRequestBuilder(
 		AnalyzeIndexRequest analyzeIndexRequest) {
 
-		Client client = elasticsearchConnectionManager.getClient();
+		Client client = elasticsearchClientResolver.getClient();
 
 		AnalyzeRequestBuilder analyzeRequestBuilder =
 			AnalyzeAction.INSTANCE.newRequestBuilder(client);
@@ -163,7 +163,7 @@ public class AnalyzeIndexRequestExecutorImpl
 	}
 
 	@Reference
-	protected ElasticsearchConnectionManager elasticsearchConnectionManager;
+	protected ElasticsearchClientResolver elasticsearchClientResolver;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		AnalyzeIndexRequestExecutorImpl.class);

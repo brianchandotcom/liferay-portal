@@ -14,7 +14,7 @@
 
 package com.liferay.portal.search.elasticsearch6.internal.search.engine.adapter.cluster;
 
-import com.liferay.portal.search.elasticsearch6.internal.connection.ElasticsearchConnectionManager;
+import com.liferay.portal.search.elasticsearch6.internal.connection.ElasticsearchClientResolver;
 import com.liferay.portal.search.engine.adapter.cluster.HealthClusterRequest;
 import com.liferay.portal.search.engine.adapter.cluster.HealthClusterResponse;
 
@@ -57,7 +57,7 @@ public class HealthClusterRequestExecutorImpl
 
 		ClusterHealthRequestBuilder clusterHealthRequestBuilder =
 			ClusterHealthAction.INSTANCE.newRequestBuilder(
-				elasticsearchConnectionManager.getClient());
+				elasticsearchClientResolver.getClient());
 
 		clusterHealthRequestBuilder.setIndices(
 			healthClusterRequest.getIndexNames());
@@ -84,6 +84,6 @@ public class HealthClusterRequestExecutorImpl
 	protected ClusterHealthStatusTranslator clusterHealthStatusTranslator;
 
 	@Reference
-	protected ElasticsearchConnectionManager elasticsearchConnectionManager;
+	protected ElasticsearchClientResolver elasticsearchClientResolver;
 
 }

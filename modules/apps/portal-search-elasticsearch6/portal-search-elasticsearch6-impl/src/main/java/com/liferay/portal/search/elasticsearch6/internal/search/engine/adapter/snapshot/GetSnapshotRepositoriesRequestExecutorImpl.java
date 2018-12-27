@@ -16,7 +16,7 @@ package com.liferay.portal.search.elasticsearch6.internal.search.engine.adapter.
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.search.elasticsearch6.internal.connection.ElasticsearchConnectionManager;
+import com.liferay.portal.search.elasticsearch6.internal.connection.ElasticsearchClientResolver;
 import com.liferay.portal.search.engine.adapter.snapshot.GetSnapshotRepositoriesRequest;
 import com.liferay.portal.search.engine.adapter.snapshot.GetSnapshotRepositoriesResponse;
 import com.liferay.portal.search.engine.adapter.snapshot.SnapshotRepositoryDetails;
@@ -88,7 +88,7 @@ public class GetSnapshotRepositoriesRequestExecutorImpl
 
 		GetRepositoriesRequestBuilder getRepositoriesRequestBuilder =
 			GetRepositoriesAction.INSTANCE.newRequestBuilder(
-				elasticsearchConnectionManager.getClient());
+				elasticsearchClientResolver.getClient());
 
 		getRepositoriesRequestBuilder.addRepositories(
 			getSnapshotRepositoriesRequest.getRepositoryNames());
@@ -97,7 +97,7 @@ public class GetSnapshotRepositoriesRequestExecutorImpl
 	}
 
 	@Reference
-	protected ElasticsearchConnectionManager elasticsearchConnectionManager;
+	protected ElasticsearchClientResolver elasticsearchClientResolver;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		GetSnapshotRepositoriesRequestExecutorImpl.class);

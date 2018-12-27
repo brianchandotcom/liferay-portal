@@ -80,7 +80,7 @@ List<EmailAddress> emailAddresses = EmailAddressServiceUtil.getEmailAddresses(cl
 		modelVar="emailAddress"
 	>
 		<liferay-ui:search-container-column-text
-			cssClass="table-cell-content"
+			cssClass="table-cell-expand"
 			name="email-address"
 			property="address"
 		/>
@@ -92,14 +92,12 @@ List<EmailAddress> emailAddresses = EmailAddressServiceUtil.getEmailAddresses(cl
 		%>
 
 		<liferay-ui:search-container-column-text
-			cssClass="table-cell-content"
+			cssClass="table-cell-expand-small"
 			name="type"
 			value="<%= LanguageUtil.get(request, emailAddressTypeKey) %>"
 		/>
 
-		<liferay-ui:search-container-column-text
-			cssClass="table-cell-content"
-		>
+		<liferay-ui:search-container-column-text>
 			<c:if test="<%= emailAddress.isPrimary() %>">
 				<span class="label label-primary">
 					<span class="label-item label-item-expand"><%= StringUtil.toUpperCase(LanguageUtil.get(request, "primary"), locale) %></span>

@@ -26,6 +26,11 @@ import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.OrganizationConstants;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
+import com.liferay.portal.kernel.search.BaseModelSearchResult;
+import com.liferay.portal.kernel.search.Indexer;
+import com.liferay.portal.kernel.search.IndexerRegistryUtil;
+import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.search.SortFactoryUtil;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.OrganizationLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -33,6 +38,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.sitesadmin.search.OrganizationSiteMembershipChecker;
 import com.liferay.portlet.usersadmin.search.OrganizationSearch;
 import com.liferay.portlet.usersadmin.search.OrganizationSearchTerms;
@@ -165,13 +171,16 @@ public class SelectOrganizationsDisplayContext {
 		return _orderByType;
 	}
 
-	public SearchContainer getOrganizationSearchContainer() {
+	public SearchContainer getOrganizationSearchContainer() throws Exception {
 		if (_organizationSearch != null) {
 			return _organizationSearch;
 		}
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
 			WebKeys.THEME_DISPLAY);
+
+		long parentOrganizationId =
+			OrganizationConstants.ANY_PARENT_ORGANIZATION_ID;
 
 		OrganizationSearch organizationSearch = new OrganizationSearch(
 			_renderRequest, getPortletURL());
@@ -187,25 +196,48 @@ public class SelectOrganizationsDisplayContext {
 		LinkedHashMap<String, Object> organizationParams =
 			new LinkedHashMap<>();
 
-		int organizationsCount = OrganizationLocalServiceUtil.searchCount(
-			themeDisplay.getCompanyId(),
-			OrganizationConstants.ANY_PARENT_ORGANIZATION_ID,
-			searchTerms.getKeywords(), searchTerms.getType(),
-			searchTerms.getRegionIdObj(), searchTerms.getCountryIdObj(),
-			organizationParams);
+		String keywords = searchTerms.getKeywords();
 
-		organizationSearch.setTotal(organizationsCount);
+		List<Organization> results = null;
+		int total = 0;
 
-		List<Organization> organizations = OrganizationLocalServiceUtil.search(
-			themeDisplay.getCompanyId(),
-			OrganizationConstants.ANY_PARENT_ORGANIZATION_ID,
-			searchTerms.getKeywords(), searchTerms.getType(),
-			searchTerms.getRegionIdObj(), searchTerms.getCountryIdObj(),
-			organizationParams, organizationSearch.getStart(),
-			organizationSearch.getEnd(),
-			organizationSearch.getOrderByComparator());
+		Indexer<?> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+			Organization.class);
 
-		organizationSearch.setResults(organizations);
+		if (indexer.isIndexerEnabled() &&
+			PropsValues.ORGANIZATIONS_SEARCH_WITH_INDEX) {
+
+			organizationParams.put("expandoAttributes", keywords);
+
+			Sort sort = SortFactoryUtil.getSort(
+				Organization.class, organizationSearch.getOrderByCol(),
+				organizationSearch.getOrderByType());
+
+			BaseModelSearchResult<Organization> baseModelSearchResult =
+				OrganizationLocalServiceUtil.searchOrganizations(
+					themeDisplay.getCompanyId(), parentOrganizationId, keywords,
+					organizationParams, organizationSearch.getStart(),
+					organizationSearch.getEnd(), sort);
+
+			results = baseModelSearchResult.getBaseModels();
+			total = baseModelSearchResult.getLength();
+		}
+		else {
+			total = OrganizationLocalServiceUtil.searchCount(
+				themeDisplay.getCompanyId(), parentOrganizationId, keywords,
+				searchTerms.getType(), searchTerms.getRegionIdObj(),
+				searchTerms.getCountryIdObj(), organizationParams);
+
+			results = OrganizationLocalServiceUtil.search(
+				themeDisplay.getCompanyId(), parentOrganizationId, keywords,
+				searchTerms.getType(), searchTerms.getRegionIdObj(),
+				searchTerms.getCountryIdObj(), organizationParams,
+				organizationSearch.getStart(), organizationSearch.getEnd(),
+				organizationSearch.getOrderByComparator());
+		}
+
+		organizationSearch.setResults(results);
+		organizationSearch.setTotal(total);
 
 		_organizationSearch = organizationSearch;
 
@@ -262,7 +294,7 @@ public class SelectOrganizationsDisplayContext {
 		return sortingURL.toString();
 	}
 
-	public int getTotalItems() {
+	public int getTotalItems() throws Exception {
 		SearchContainer organizationSearchContainer =
 			getOrganizationSearchContainer();
 
@@ -285,7 +317,7 @@ public class SelectOrganizationsDisplayContext {
 		};
 	}
 
-	public boolean isDisabledManagementBar() {
+	public boolean isDisabledManagementBar() throws Exception {
 		if (getTotalItems() <= 0) {
 			return true;
 		}
@@ -293,7 +325,7 @@ public class SelectOrganizationsDisplayContext {
 		return false;
 	}
 
-	public boolean isShowSearch() {
+	public boolean isShowSearch() throws Exception {
 		if (getTotalItems() > 0) {
 			return true;
 		}

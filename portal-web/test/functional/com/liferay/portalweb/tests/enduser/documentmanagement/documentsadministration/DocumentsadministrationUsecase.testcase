@@ -632,11 +632,7 @@ definition {
 
 		Type(locator1 = "TextArea#ANY", value1 = ".doc", key_text = "fileExtensions");
 
-		ScrollWebElementIntoView(locator1 = "Button#UPDATE");
-
-		AssertClick(locator1 = "Button#UPDATE", value1 = "Update");
-
-		AssertElementPresent(locator1 = "Message#SUCCESS");
+		SystemSettings.saveConfiguration();
 
 		ProductMenu.gotoPortlet(
 			category = "Content",

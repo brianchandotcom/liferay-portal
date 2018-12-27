@@ -41,6 +41,6 @@ context.put("spritemap", themeDisplay.getPathThemeImages() + "/lexicon/icons.svg
 
 <soy:component-renderer
 	context="<%= context %>"
-	module="document-library-preview-image/preview/js/ImagePreviewer.es"
+	module="document-library-preview-image@1.0.0/preview/js/ImagePreviewer.es"
 	templateNamespace="com.liferay.document.library.preview.ImagePreviewer.render"
 />

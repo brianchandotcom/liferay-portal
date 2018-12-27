@@ -1,4 +1,5 @@
 import {Config} from 'metal-state';
+import {debounce} from 'metal-debounce';
 import Component from 'metal-component';
 import Soy from 'metal-soy';
 
@@ -49,15 +50,18 @@ class ImagePreviewer extends Component {
 
 		this._updateDimensions();
 
-		this._updateDimensionsFn = this._updateDimensions.bind(this);
-		window.addEventListener('resize', this._updateDimensionsFn);
+		this._updateDimensionsDebounced = debounce(
+			this._updateDimensions.bind(this),
+			250
+		);
+		window.addEventListener('resize', this._updateDimensionsDebounced);
 	}
 
 	/**
 	 * @inheritDoc
 	 */
 	detached() {
-		window.removeEventListener('resize', this._updateDimensionsFn);
+		window.removeEventListener('resize', this._updateDimensionsDebounced);
 	}
 
 	/**

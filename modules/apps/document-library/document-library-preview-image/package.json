@@ -1,19 +1,28 @@
 {
 	"dependencies": {
-		"clay-button": "^2.3.4",
-		"metal": "^2.13.2",
-		"metal-component": "^2.16.3",
-		"metal-soy": "^2.13.2",
-		"metal-state": "^2.13.2"
+		"clay-button": "^2.3.2",
+		"clay-icon": "^2.3.2",
+		"metal": "^2.16.5",
+		"metal-component": "^2.16.5",
+		"metal-debounce": "^2.0.1",
+		"metal-soy": "^2.16.5",
+		"metal-state": "^2.16.5"
 	},
 	"devDependencies": {
+		"babel-cli": "^6.26.0",
+		"babel-preset-env": "^1.6.1",
 		"check-source-formatting": "^2.0.13",
-		"liferay-module-config-generator": "^1.1.10",
-		"metal-cli": "^4.3.3"
+		"cross-env": "^5.1.3",
+		"liferay-npm-bundler": "^2.1.0",
+		"liferay-npm-bundler-preset-liferay-dev": "^1.1.0",
+		"metal-tools-soy": "^4.0.0",
+		"rimraf": "^2.6.2"
 	},
 	"name": "document-library-preview-image",
 	"scripts": {
+		"build": "metalsoy --soyDeps \"node_modules/+(clay-*|com.liferay.frontend.js.web)/**/*.soy\" && cross-env NODE_ENV=production babel --source-maps -d classes/META-INF/resources src/main/resources/META-INF/resources && liferay-npm-bundler && npm run cleanSoy",
 		"checkFormat": "npm run csf",
+		"cleanSoy": "rimraf src/**/*.soy.js",
 		"csf": "csf src/**/*.{js,soy,scss}",
 		"format": "npm run csf -- -i"
 	},

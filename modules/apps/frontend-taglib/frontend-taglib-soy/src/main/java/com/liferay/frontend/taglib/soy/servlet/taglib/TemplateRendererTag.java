@@ -18,6 +18,8 @@ import com.liferay.frontend.taglib.soy.internal.util.SoyContextFactoryUtil;
 import com.liferay.frontend.taglib.soy.internal.util.SoyJavaScriptRendererUtil;
 import com.liferay.frontend.taglib.soy.internal.util.SoyTemplateResourcesProviderUtil;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONSerializer;
 import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.template.TemplateException;
@@ -34,7 +36,6 @@ import com.liferay.taglib.util.ParamAndPropertyAncestorTagImpl;
 
 import java.io.IOException;
 
-import java.util.LinkedHashSet;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
@@ -259,20 +260,14 @@ public class TemplateRendererTag extends ParamAndPropertyAncestorTagImpl {
 			context.put("element", getElementSelector());
 		}
 
-		Set<String> requiredModules = new LinkedHashSet<>();
-
-		requiredModules.add(getModule());
-
-		if (_dependencies != null) {
-			requiredModules.addAll(_dependencies);
-		}
-
 		String componentJavaScript = SoyJavaScriptRendererUtil.getJavaScript(
-			context, getWrapperId(), requiredModules, isWrapper());
+			context, getWrapperId(), getModule(), isWrapper());
+
+		JSONSerializer jsonSerializer = JSONFactoryUtil.createJSONSerializer();
 
 		ScriptTag.doTag(
-			null, null, null, componentJavaScript, getBodyContent(),
-			pageContext);
+			null, jsonSerializer.serialize(_dependencies), null,
+			componentJavaScript, getBodyContent(), pageContext);
 	}
 
 	protected void renderTemplate(

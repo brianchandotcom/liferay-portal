@@ -2,9 +2,8 @@ definition {
 	macro addFragment {
 		PageEditor.expandFragmentCollection(collectionName = "${collectionName}");
 
-		Click(
+		Click.clickNoMouseOverNoWaitForVisible(
 			locator1 = "PageEditor#FRAGMENT_SIDEBAR_FRAGMENT",
-			key_collectionName = "${collectionName}",
 			key_fragmentName = "${fragmentName}"
 		);
 
@@ -86,7 +85,7 @@ definition {
 		);
 
 		if (IsElementPresent(locator1 = "PageEditor#FRAGMENT_SIDEBAR_COLLECTION_PANEL_COLLAPSED", key_collectionName = "${collectionName}")) {
-			AssertClick(
+			AssertClick.assertTextClickCaseInsensitive(
 				locator1 = "PageEditor#FRAGMENT_SIDEBAR_COLLECTION_PANEL_COLLAPSED",
 				value1 = "${collectionName}",
 				key_collectionName = "${collectionName}"

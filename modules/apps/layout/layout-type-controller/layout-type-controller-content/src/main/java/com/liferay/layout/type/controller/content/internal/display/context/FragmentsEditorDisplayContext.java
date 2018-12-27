@@ -175,6 +175,10 @@ public class FragmentsEditorDisplayContext {
 	}
 
 	public SoyContext getFragmentEntryLinkListContext() throws PortalException {
+		if (_fragmentsContext != null) {
+			return _fragmentsContext;
+		}
+
 		SoyContext soyContext = SoyContextFactoryUtil.createSoyContext();
 
 		soyContext.put(
@@ -198,11 +202,17 @@ public class FragmentsEditorDisplayContext {
 			"spritemap",
 			_themeDisplay.getPathThemeImages() + "/lexicon/icons.svg");
 
+		_fragmentsContext = soyContext;
+
 		return soyContext;
 	}
 
 	public SoyContext getFragmentsEditorSidebarContext()
 		throws PortalException {
+
+		if (_sidebarContext != null) {
+			return _sidebarContext;
+		}
 
 		SoyContext soyContext = SoyContextFactoryUtil.createSoyContext();
 
@@ -222,6 +232,8 @@ public class FragmentsEditorDisplayContext {
 		soyContext.put(
 			"spritemap",
 			_themeDisplay.getPathThemeImages() + "/lexicon/icons.svg");
+
+		_sidebarContext = soyContext;
 
 		return soyContext;
 	}
@@ -381,6 +393,10 @@ public class FragmentsEditorDisplayContext {
 	private SoyContext _getSoyContextFragmentEntryLinks()
 		throws PortalException {
 
+		if (_fragmentEntryLinksContext != null) {
+			return _fragmentEntryLinksContext;
+		}
+
 		SoyContext soyContexts = SoyContextFactoryUtil.createSoyContext();
 
 		List<FragmentEntryLink> fragmentEntryLinks =
@@ -426,6 +442,8 @@ public class FragmentsEditorDisplayContext {
 		finally {
 			_themeDisplay.setIsolated(isolated);
 		}
+
+		_fragmentEntryLinksContext = soyContexts;
 
 		return soyContexts;
 	}
@@ -491,9 +509,12 @@ public class FragmentsEditorDisplayContext {
 		return urlItemSelectorCriterion;
 	}
 
+	private SoyContext _fragmentEntryLinksContext;
+	private SoyContext _fragmentsContext;
 	private final ItemSelector _itemSelector;
 	private final RenderResponse _renderResponse;
 	private final HttpServletRequest _request;
+	private SoyContext _sidebarContext;
 	private final ThemeDisplay _themeDisplay;
 
 }

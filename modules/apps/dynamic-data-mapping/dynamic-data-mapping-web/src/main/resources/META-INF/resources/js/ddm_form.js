@@ -1336,7 +1336,7 @@ AUI.add(
 
 						var titleNode = A.one('#' + instance.getInputName() + 'Title');
 
-						if (parsedValue.title != null) {
+						if (!parsedValue.title) {
 							titleNode.val(parsedValue.title);
 						}
 

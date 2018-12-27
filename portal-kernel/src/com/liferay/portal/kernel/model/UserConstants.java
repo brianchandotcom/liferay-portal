@@ -60,22 +60,21 @@ public class UserConstants {
 		String imagePath, boolean male, long portraitId) {
 
 		if (!_userFileUploadsSettings.isImageCheckToken()) {
-			return getPortraitURL(imagePath, male, portraitId, null);
+			return getPortraitURL(imagePath, portraitId, null);
 		}
 
 		if (portraitId <= 0) {
-			return getPortraitURL(imagePath, male, 0, StringPool.BLANK);
+			return getPortraitURL(imagePath, 0, StringPool.BLANK);
 		}
 
 		try {
 			User user = UserLocalServiceUtil.fetchUserByPortraitId(portraitId);
 
 			if (user == null) {
-				return getPortraitURL(imagePath, male, 0, StringPool.BLANK);
+				return getPortraitURL(imagePath, 0, StringPool.BLANK);
 			}
 
-			return getPortraitURL(
-				imagePath, male, portraitId, user.getUserUuid());
+			return getPortraitURL(imagePath, portraitId, user.getUserUuid());
 		}
 		catch (Exception e) {
 			if (_log.isWarnEnabled()) {
@@ -86,22 +85,24 @@ public class UserConstants {
 		return StringPool.BLANK;
 	}
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 *             #getPortraitURL(String, long, String)}
+	 */
+	@Deprecated
 	public static String getPortraitURL(
 		String imagePath, boolean male, long portraitId, String userUuid) {
 
-		StringBundler sb = new StringBundler(9);
+		return getPortraitURL(imagePath, portraitId, userUuid);
+	}
+
+	public static String getPortraitURL(
+		String imagePath, long portraitId, String userUuid) {
+
+		StringBundler sb = new StringBundler(7);
 
 		sb.append(imagePath);
-		sb.append("/user_");
-
-		if (male) {
-			sb.append("male");
-		}
-		else {
-			sb.append("female");
-		}
-
-		sb.append("_portrait?img_id=");
+		sb.append("/user_portrait?img_id=");
 		sb.append(portraitId);
 
 		if (_userFileUploadsSettings.isImageCheckToken()) {

@@ -12,7 +12,7 @@
  *
  */
 
-package com.liferay.portal.workflow.reports.web.internal.servlet;
+package com.liferay.portal.workflow.reports.internal.servlet;
 
 import com.fasterxml.jackson.databind.Module;
 import com.fasterxml.jackson.databind.ObjectMapper;

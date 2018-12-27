@@ -12,7 +12,7 @@
  *
  */
 
-package com.liferay.portal.workflow.reports.web.internal.servlet.filter;
+package com.liferay.portal.workflow.reports.internal.servlet.filter;
 
 import com.liferay.portal.servlet.filters.authverifier.AuthVerifierFilter;
 

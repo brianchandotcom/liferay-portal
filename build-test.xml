@@ -417,9 +417,9 @@ jdbc.counter.connectionProperties=oracle.jdbc.ReadTimeout=0;oracle.net.CONNECT_T
 				</elseif>
 				<elseif>
 					<os family="windows" />
-						<then>
-							<var name="ip.address" value="127.0.0.1" />
-						</then>
+					<then>
+						<var name="ip.address" value="127.0.0.1" />
+					</then>
 				</elseif>
 				<else>
 					<fail message="Please set the property ${ip.address}." />

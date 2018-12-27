@@ -1153,9 +1153,7 @@ definition {
 
 		LAR.exportSuccess();
 
-		LexiconEntry.changeDisplayStyle(displayStyle = "table");
-
-		var valueName = selenium.getText("//tr/td[7]//span/a");
+		var valueName = selenium.getText("//ul/li/div/h5");
 
 		echo("value name ${valueName}");
 

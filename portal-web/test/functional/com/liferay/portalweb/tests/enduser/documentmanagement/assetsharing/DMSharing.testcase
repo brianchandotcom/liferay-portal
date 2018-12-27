@@ -92,10 +92,9 @@ definition {
 
 		Pause(locator1 = "5000");
 
-		DMDocument.sharePG(
-			dmDocumentTitle = "DM Document Title",
-			userEmailAddress = "userea@liferay.com"
-		);
+		DMNavigator.gotoShare(dmDocumentTitle = "DM Document Title");
+
+		DMDocument.sharePG(userEmailAddress = "userea@liferay.com");
 
 		User.logoutPG();
 
@@ -161,10 +160,9 @@ definition {
 
 		Pause(locator1 = "5000");
 
-		DMDocument.sharePG(
-			dmDocumentTitle = "DM Document Title",
-			userEmailAddress = "userea@liferay.com"
-		);
+		DMNavigator.gotoShare(dmDocumentTitle = "DM Document Title");
+
+		DMDocument.sharePG(userEmailAddress = "userea@liferay.com");
 
 		User.logoutPG();
 
@@ -208,10 +206,9 @@ definition {
 
 		Pause(locator1 = "5000");
 
-		DMDocument.sharePG(
-			dmDocumentTitle = "DM Document Title",
-			userEmailAddress = "userea@liferay.com"
-		);
+		DMNavigator.gotoShare(dmDocumentTitle = "DM Document Title");
+
+		DMDocument.sharePG(userEmailAddress = "userea@liferay.com");
 
 		User.logoutPG();
 
@@ -328,10 +325,9 @@ definition {
 
 		Pause(locator1 = "5000");
 
-		DMDocument.sharePG(
-			dmDocumentTitle = "DM Document Title",
-			userEmailAddress = "userea@liferay.com,userea2@liferay.com"
-		);
+		DMNavigator.gotoShare(dmDocumentTitle = "DM Document Title");
+
+		DMDocument.sharePG(userEmailAddress = "userea@liferay.com,userea2@liferay.com");
 
 		DMDocument.viewPG(
 			dmDocumentDescription = "DM Document Description",

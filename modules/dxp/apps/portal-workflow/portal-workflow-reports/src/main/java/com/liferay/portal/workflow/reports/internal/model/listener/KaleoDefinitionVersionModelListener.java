@@ -17,8 +17,8 @@ package com.liferay.portal.workflow.reports.internal.model.listener;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.ModelListener;
-import com.liferay.portal.workflow.kaleo.model.KaleoTask;
-import com.liferay.portal.workflow.kaleo.service.KaleoDefinitionVersionLocalService;
+import com.liferay.portal.workflow.kaleo.model.KaleoDefinition;
+import com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion;
 import com.liferay.portal.workflow.reports.internal.constants.WorkflowIndexerFieldNames;
 import com.liferay.portal.workflow.reports.messaging.WorkflowReportsEvent;
 import com.liferay.portal.workflow.reports.messaging.WorkflowReportsMessage;
@@ -36,17 +36,18 @@ import org.osgi.service.component.annotations.Reference;
  * @author Inácio Nery
  */
 @Component(immediate = true, service = ModelListener.class)
-public class KaleoTaskModelListener extends BaseModelListener<KaleoTask> {
+public class KaleoDefinitionVersionModelListener
+	extends BaseModelListener<KaleoDefinitionVersion> {
 
 	@Override
-	public void onAfterCreate(KaleoTask kaleoTask)
+	public void onAfterCreate(KaleoDefinitionVersion kaleoDefinitionVersion)
 		throws ModelListenerException {
 
 		try {
 			WorkflowReportsMessage.Builder builder = createBuilder(
-				kaleoTask, WorkflowReportsEvent.TASK_CREATE);
+				kaleoDefinitionVersion, WorkflowReportsEvent.PROCESS_CREATE);
 
-			Date date = kaleoTask.getCreateDate();
+			Date date = kaleoDefinitionVersion.getCreateDate();
 
 			OffsetDateTime offsetDateTime = OffsetDateTime.ofInstant(
 				date.toInstant(), ZoneId.systemDefault());
@@ -62,12 +63,12 @@ public class KaleoTaskModelListener extends BaseModelListener<KaleoTask> {
 	}
 
 	@Override
-	public void onAfterRemove(KaleoTask kaleoTask)
+	public void onAfterRemove(KaleoDefinitionVersion kaleoDefinitionVersion)
 		throws ModelListenerException {
 
 		try {
 			WorkflowReportsMessage.Builder builder = createBuilder(
-				kaleoTask, WorkflowReportsEvent.TASK_REMOVE);
+				kaleoDefinitionVersion, WorkflowReportsEvent.PROCESS_REMOVE);
 
 			OffsetDateTime offsetDateTime = OffsetDateTime.now();
 
@@ -84,29 +85,68 @@ public class KaleoTaskModelListener extends BaseModelListener<KaleoTask> {
 		}
 	}
 
+	@Override
+	public void onAfterUpdate(KaleoDefinitionVersion kaleoDefinitionVersion)
+		throws ModelListenerException {
+
+		try {
+			WorkflowReportsMessage.Builder builder = createBuilder(
+				kaleoDefinitionVersion, WorkflowReportsEvent.PROCESS_UPDATE);
+
+			Date date = kaleoDefinitionVersion.getModifiedDate();
+
+			OffsetDateTime offsetDateTime = OffsetDateTime.ofInstant(
+				date.toInstant(), ZoneId.systemDefault());
+
+			builder.withProperty(
+				WorkflowIndexerFieldNames.DATE, offsetDateTime.toString());
+
+			_workflowReportsMessageSender.sendMessage(builder.build());
+		}
+		catch (Exception e) {
+			throw new ModelListenerException(e);
+		}
+	}
+
 	protected WorkflowReportsMessage.Builder createBuilder(
-		KaleoTask kaleoTask, WorkflowReportsEvent workflowReportsEvent) {
+		KaleoDefinitionVersion kaleoDefinitionVersion,
+		WorkflowReportsEvent workflowReportsEvent) {
 
 		WorkflowReportsMessage.Builder builder =
 			WorkflowReportsMessage.Builder.newBuilder(
-				kaleoTask.getCompanyId(), workflowReportsEvent.name(),
-				kaleoTask.getUserId());
+				kaleoDefinitionVersion.getCompanyId(),
+				workflowReportsEvent.name(),
+				kaleoDefinitionVersion.getUserId());
+
+		boolean active = false;
+
+		KaleoDefinition kaleoDefinition =
+			kaleoDefinitionVersion.fetchKaleoDefinition();
+
+		if (kaleoDefinition != null) {
+			active = kaleoDefinition.isActive();
+		}
 
 		builder.withProperty(
-			WorkflowIndexerFieldNames.NAME, kaleoTask.getName()
+			WorkflowIndexerFieldNames.ACTIVE, active
 		).withProperty(
-			WorkflowIndexerFieldNames.TASK_ID, kaleoTask.getKaleoTaskId()
+			WorkflowIndexerFieldNames.DESCRIPTION,
+			kaleoDefinitionVersion.getDescription()
+		).withProperty(
+			WorkflowIndexerFieldNames.NAME, kaleoDefinitionVersion.getName()
 		).withProperty(
 			WorkflowIndexerFieldNames.PROCESS_ID,
-			kaleoTask.getKaleoDefinitionVersionId()
+			kaleoDefinitionVersion.getKaleoDefinitionVersionId()
+		).withProperty(
+			WorkflowIndexerFieldNames.TITLE,
+			kaleoDefinitionVersion.getTitleMap()
+		).withProperty(
+			WorkflowIndexerFieldNames.VERSION,
+			kaleoDefinitionVersion.getVersion()
 		);
 
 		return builder;
 	}
-
-	@Reference
-	private KaleoDefinitionVersionLocalService
-		_kaleoDefinitionVersionLocalService;
 
 	@Reference
 	private WorkflowReportsMessageSender _workflowReportsMessageSender;

@@ -15,11 +15,12 @@
 package com.liferay.portal.workflow.reports.internal.model.listener;
 
 import com.liferay.portal.kernel.exception.ModelListenerException;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.workflow.kaleo.model.KaleoInstance;
+import com.liferay.portal.workflow.reports.internal.constants.WorkflowIndexerFieldNames;
 import com.liferay.portal.workflow.reports.messaging.WorkflowReportsEvent;
+import com.liferay.portal.workflow.reports.messaging.WorkflowReportsMessage;
 import com.liferay.portal.workflow.reports.messaging.WorkflowReportsMessageSender;
 
 import java.time.Duration;
@@ -27,8 +28,6 @@ import java.time.OffsetDateTime;
 import java.time.ZoneId;
 
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -45,19 +44,18 @@ public class KaleoInstanceModelListener
 		throws ModelListenerException {
 
 		try {
-			Map<String, String> properties = createProperties(kaleoInstance);
+			WorkflowReportsMessage.Builder builder = createBuilder(
+				kaleoInstance, WorkflowReportsEvent.INSTANCE_CREATE);
 
 			Date date = kaleoInstance.getCreateDate();
 
 			OffsetDateTime offsetDateTime = OffsetDateTime.ofInstant(
 				date.toInstant(), ZoneId.systemDefault());
 
-			properties.put("date", offsetDateTime.toString());
+			builder.withProperty(
+				WorkflowIndexerFieldNames.DATE, offsetDateTime.toString());
 
-			_workflowReportsMessageSender.sendMessage(
-				kaleoInstance.getCompanyId(),
-				WorkflowReportsEvent.INSTANCE_CREATE.name(),
-				kaleoInstance.getUserId(), properties);
+			_workflowReportsMessageSender.sendMessage(builder.build());
 		}
 		catch (Exception e) {
 			throw new ModelListenerException(e);
@@ -73,16 +71,18 @@ public class KaleoInstanceModelListener
 				return;
 			}
 
-			Map<String, String> properties = createProperties(kaleoInstance);
+			WorkflowReportsMessage.Builder builder = createBuilder(
+				kaleoInstance, WorkflowReportsEvent.INSTANCE_REMOVE);
 
 			OffsetDateTime offsetDateTime = OffsetDateTime.now();
 
-			properties.put("date", offsetDateTime.toString());
+			builder.withProperty(
+				WorkflowIndexerFieldNames.DATE, offsetDateTime.toString()
+			).withProperty(
+				WorkflowIndexerFieldNames.DELETED, true
+			);
 
-			_workflowReportsMessageSender.sendMessage(
-				kaleoInstance.getCompanyId(),
-				WorkflowReportsEvent.INSTANCE_REMOVE.name(),
-				kaleoInstance.getUserId(), properties);
+			_workflowReportsMessageSender.sendMessage(builder.build());
 		}
 		catch (Exception e) {
 			throw new ModelListenerException(e);
@@ -94,15 +94,13 @@ public class KaleoInstanceModelListener
 		throws ModelListenerException {
 
 		try {
-			Map<String, String> properties = createProperties(kaleoInstance);
-
-			WorkflowReportsEvent workflowEvent =
-				WorkflowReportsEvent.INSTANCE_UPDATE;
+			WorkflowReportsMessage.Builder builder = null;
 
 			Date date = kaleoInstance.getModifiedDate();
 
 			if (kaleoInstance.isCompleted()) {
-				workflowEvent = WorkflowReportsEvent.INSTANCE_COMPLETE;
+				builder = createBuilder(
+					kaleoInstance, WorkflowReportsEvent.INSTANCE_COMPLETE);
 
 				Date createDate = kaleoInstance.getCreateDate();
 
@@ -111,37 +109,53 @@ public class KaleoInstanceModelListener
 				Duration duration = Duration.between(
 					createDate.toInstant(), date.toInstant());
 
-				properties.put("duration", String.valueOf(duration.toMillis()));
+				builder.withProperty(
+					WorkflowIndexerFieldNames.DURATION, duration.toMillis());
 			}
+			else {
+				builder = createBuilder(
+					kaleoInstance, WorkflowReportsEvent.INSTANCE_UPDATE);
+			}
+
+			builder.withProperty(
+				WorkflowIndexerFieldNames.COMPLETED,
+				kaleoInstance.isCompleted());
 
 			OffsetDateTime offsetDateTime = OffsetDateTime.ofInstant(
 				date.toInstant(), ZoneId.systemDefault());
 
-			properties.put("date", offsetDateTime.toString());
+			builder.withProperty(
+				WorkflowIndexerFieldNames.DATE, offsetDateTime.toString());
 
-			_workflowReportsMessageSender.sendMessage(
-				kaleoInstance.getCompanyId(), workflowEvent.name(),
-				kaleoInstance.getUserId(), properties);
+			_workflowReportsMessageSender.sendMessage(builder.build());
 		}
 		catch (Exception e) {
 			throw new ModelListenerException(e);
 		}
 	}
 
-	protected Map<String, String> createProperties(KaleoInstance kaleoInstance)
-		throws PortalException {
+	protected WorkflowReportsMessage.Builder createBuilder(
+		KaleoInstance kaleoInstance,
+		WorkflowReportsEvent workflowReportsEvent) {
 
-		Map<String, String> properties = new HashMap<>();
+		WorkflowReportsMessage.Builder builder =
+			WorkflowReportsMessage.Builder.newBuilder(
+				kaleoInstance.getCompanyId(), workflowReportsEvent.name(),
+				kaleoInstance.getUserId());
 
-		properties.put("className", kaleoInstance.getClassName());
-		properties.put("classPK", String.valueOf(kaleoInstance.getClassPK()));
-		properties.put(
-			"instanceId", String.valueOf(kaleoInstance.getKaleoInstanceId()));
-		properties.put(
-			"processId",
-			String.valueOf(kaleoInstance.getKaleoDefinitionVersionId()));
+		builder.withProperty(
+			WorkflowIndexerFieldNames.CLASS_NAME, kaleoInstance.getClassName()
+		).withProperty(
+			WorkflowIndexerFieldNames.CLASS_PK, kaleoInstance.getClassPK()
+		).withProperty(
+			WorkflowIndexerFieldNames.INSTANCE_ID,
+			kaleoInstance.getKaleoInstanceId()
+		).withProperty(
+			WorkflowIndexerFieldNames.PROCESS_ID,
+			kaleoInstance.getKaleoDefinitionVersionId()
+		);
 
-		return properties;
+		return builder;
 	}
 
 	@Reference

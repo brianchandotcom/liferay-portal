@@ -15,11 +15,13 @@
 package com.liferay.portal.workflow.reports.internal.model.listener;
 
 import com.liferay.portal.kernel.exception.ModelListenerException;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.workflow.kaleo.model.KaleoTaskInstanceToken;
+import com.liferay.portal.workflow.kaleo.service.KaleoDefinitionVersionLocalService;
+import com.liferay.portal.workflow.reports.internal.constants.WorkflowIndexerFieldNames;
 import com.liferay.portal.workflow.reports.messaging.WorkflowReportsEvent;
+import com.liferay.portal.workflow.reports.messaging.WorkflowReportsMessage;
 import com.liferay.portal.workflow.reports.messaging.WorkflowReportsMessageSender;
 
 import java.time.Duration;
@@ -27,8 +29,6 @@ import java.time.OffsetDateTime;
 import java.time.ZoneId;
 
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -45,20 +45,18 @@ public class KaleoTaskInstanceTokenModelListener
 		throws ModelListenerException {
 
 		try {
-			Map<String, String> properties = createProperties(
-				kaleoTaskInstanceToken);
+			WorkflowReportsMessage.Builder builder = createBuilder(
+				kaleoTaskInstanceToken, WorkflowReportsEvent.TOKEN_CREATE);
 
 			Date date = kaleoTaskInstanceToken.getCreateDate();
 
 			OffsetDateTime offsetDateTime = OffsetDateTime.ofInstant(
 				date.toInstant(), ZoneId.systemDefault());
 
-			properties.put("date", offsetDateTime.toString());
+			builder.withProperty(
+				WorkflowIndexerFieldNames.DATE, offsetDateTime.toString());
 
-			_workflowReportsMessageSender.sendMessage(
-				kaleoTaskInstanceToken.getCompanyId(),
-				WorkflowReportsEvent.TOKEN_CREATE.name(),
-				kaleoTaskInstanceToken.getUserId(), properties);
+			_workflowReportsMessageSender.sendMessage(builder.build());
 		}
 		catch (Exception e) {
 			throw new ModelListenerException(e);
@@ -74,17 +72,18 @@ public class KaleoTaskInstanceTokenModelListener
 				return;
 			}
 
-			Map<String, String> properties = createProperties(
-				kaleoTaskInstanceToken);
+			WorkflowReportsMessage.Builder builder = createBuilder(
+				kaleoTaskInstanceToken, WorkflowReportsEvent.TOKEN_REMOVE);
 
 			OffsetDateTime offsetDateTime = OffsetDateTime.now();
 
-			properties.put("date", offsetDateTime.toString());
+			builder.withProperty(
+				WorkflowIndexerFieldNames.DATE, offsetDateTime.toString()
+			).withProperty(
+				WorkflowIndexerFieldNames.DELETED, true
+			);
 
-			_workflowReportsMessageSender.sendMessage(
-				kaleoTaskInstanceToken.getCompanyId(),
-				WorkflowReportsEvent.TOKEN_REMOVE.name(),
-				kaleoTaskInstanceToken.getUserId(), properties);
+			_workflowReportsMessageSender.sendMessage(builder.build());
 		}
 		catch (Exception e) {
 			throw new ModelListenerException(e);
@@ -96,16 +95,14 @@ public class KaleoTaskInstanceTokenModelListener
 		throws ModelListenerException {
 
 		try {
-			Map<String, String> properties = createProperties(
-				kaleoTaskInstanceToken);
-
-			WorkflowReportsEvent workflowEvent =
-				WorkflowReportsEvent.TOKEN_UPDATE;
+			WorkflowReportsMessage.Builder builder = null;
 
 			Date date = kaleoTaskInstanceToken.getModifiedDate();
 
 			if (kaleoTaskInstanceToken.isCompleted()) {
-				workflowEvent = WorkflowReportsEvent.TOKEN_COMPLETE;
+				builder = createBuilder(
+					kaleoTaskInstanceToken,
+					WorkflowReportsEvent.TOKEN_COMPLETE);
 
 				Date createDate = kaleoTaskInstanceToken.getCreateDate();
 
@@ -114,47 +111,64 @@ public class KaleoTaskInstanceTokenModelListener
 				Duration duration = Duration.between(
 					createDate.toInstant(), date.toInstant());
 
-				properties.put("duration", String.valueOf(duration.toMillis()));
+				builder.withProperty(
+					WorkflowIndexerFieldNames.DURATION,
+					String.valueOf(duration.toMillis()));
+			}
+			else {
+				builder = createBuilder(
+					kaleoTaskInstanceToken, WorkflowReportsEvent.TOKEN_UPDATE);
 			}
 
 			OffsetDateTime offsetDateTime = OffsetDateTime.ofInstant(
 				date.toInstant(), ZoneId.systemDefault());
 
-			properties.put("date", offsetDateTime.toString());
+			builder.withProperty(
+				WorkflowIndexerFieldNames.DATE, offsetDateTime.toString());
 
-			_workflowReportsMessageSender.sendMessage(
-				kaleoTaskInstanceToken.getCompanyId(), workflowEvent.name(),
-				kaleoTaskInstanceToken.getUserId(), properties);
+			_workflowReportsMessageSender.sendMessage(builder.build());
 		}
 		catch (Exception e) {
 			throw new ModelListenerException(e);
 		}
 	}
 
-	protected Map<String, String> createProperties(
-			KaleoTaskInstanceToken kaleoTaskInstanceToken)
-		throws PortalException {
+	protected WorkflowReportsMessage.Builder createBuilder(
+		KaleoTaskInstanceToken kaleoTaskInstanceToken,
+		WorkflowReportsEvent workflowReportsEvent) {
 
-		Map<String, String> properties = new HashMap<>();
+		WorkflowReportsMessage.Builder builder =
+			WorkflowReportsMessage.Builder.newBuilder(
+				kaleoTaskInstanceToken.getCompanyId(),
+				workflowReportsEvent.name(),
+				kaleoTaskInstanceToken.getUserId());
 
-		properties.put("className", kaleoTaskInstanceToken.getClassName());
-		properties.put(
-			"classPK", String.valueOf(kaleoTaskInstanceToken.getClassPK()));
-		properties.put(
-			"instanceId",
-			String.valueOf(kaleoTaskInstanceToken.getKaleoInstanceId()));
-		properties.put(
-			"processId",
-			String.valueOf(
-				kaleoTaskInstanceToken.getKaleoDefinitionVersionId()));
-		properties.put(
-			"taskId", String.valueOf(kaleoTaskInstanceToken.getKaleoTaskId()));
-		properties.put(
-			"tokenId",
-			String.valueOf(kaleoTaskInstanceToken.getKaleoInstanceTokenId()));
+		builder.withProperty(
+			WorkflowIndexerFieldNames.CLASS_NAME,
+			kaleoTaskInstanceToken.getClassName()
+		).withProperty(
+			WorkflowIndexerFieldNames.CLASS_PK,
+			kaleoTaskInstanceToken.getClassPK()
+		).withProperty(
+			WorkflowIndexerFieldNames.INSTANCE_ID,
+			kaleoTaskInstanceToken.getKaleoInstanceId()
+		).withProperty(
+			WorkflowIndexerFieldNames.TASK_ID,
+			kaleoTaskInstanceToken.getKaleoTaskId()
+		).withProperty(
+			WorkflowIndexerFieldNames.TOKEN_ID,
+			kaleoTaskInstanceToken.getKaleoInstanceTokenId()
+		).withProperty(
+			WorkflowIndexerFieldNames.PROCESS_ID,
+			kaleoTaskInstanceToken.getKaleoDefinitionVersionId()
+		);
 
-		return properties;
+		return builder;
 	}
+
+	@Reference
+	private KaleoDefinitionVersionLocalService
+		_kaleoDefinitionVersionLocalService;
 
 	@Reference
 	private WorkflowReportsMessageSender _workflowReportsMessageSender;

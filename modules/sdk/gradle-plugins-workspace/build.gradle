@@ -24,6 +24,10 @@ tasks.eclipse {
 }
 
 copyDistBundleZipPluginsSdk {
+	ext {
+		autoClean = false
+	}
+
 	dependsOn downloadPluginsSdk
 	eachFile new StripPathSegmentsAction(1)
 

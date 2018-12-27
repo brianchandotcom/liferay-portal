@@ -72,7 +72,7 @@ definition {
 	macro expandContentPageFragmentSidebar {
 		Pause(locator1 = "3000");
 
-		if (!(IsElementPresent(locator1 = "PageEditor#CONTENT_PAGE_FRAGMENT_SIDEBAR"))) {
+		if (IsElementNotPresent(locator1 = "PageEditor#CONTENT_PAGE_FRAGMENT_SIDEBAR")) {
 			Click.clickAt(locator1 = "ControlMenu#ADD");
 		}
 

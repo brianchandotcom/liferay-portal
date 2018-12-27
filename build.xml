@@ -1394,6 +1394,19 @@ print AdminControl.invoke(appManager, 'startApplication', 'liferay-portal')
 		</gradle-execute>
 
 		<ant dir="portal-web" inheritAll="false" target="update-gradle-cache" />
+
+		<property name="git.unignore.gradle.cache" value="**/.gradle/*${line.separator}/.gradle/caches/*${line.separator}/.gradle/caches/modules-2/*${line.separator}!/.gradle/caches${line.separator}!/.gradle/caches/modules-2${line.separator}!/.gradle/caches/modules-2/files-2.1" />
+
+		<replace
+			file="${basedir}/.gitignore"
+			token="**/.gradle"
+			value="${git.unignore.gradle.cache}"
+		/>
+
+		<execute>
+			git add --all
+			git checkout HEAD -- .gitignore
+		</execute>
 	</target>
 
 	<target name="validate-xml">

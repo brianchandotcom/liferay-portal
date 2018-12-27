@@ -55,5 +55,29 @@ public interface Contact extends ContactModel, PersistedModel {
 
 	public String getFullName();
 
+	/**
+	* Always returns true, since this information is no longer stored in the database
+	*
+	* @deprecated As of Mueller (7.2.x), with no direct replacement
+	*/
+	@Deprecated()
+	public boolean getMale();
+
+	/**
+	* Always returns true, since this information is no longer stored in the database
+	*
+	* @deprecated As of Mueller (7.2.x), with no direct replacement
+	*/
+	@Deprecated()
+	public boolean isMale();
+
 	public boolean isUser();
+
+	/**
+	* Does nothing, since this information is no longer stored in the database
+	*
+	* @deprecated As of Mueller (7.2.x), with no direct replacement
+	*/
+	@Deprecated()
+	public void setMale(boolean male);
 }

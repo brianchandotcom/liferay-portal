@@ -73,7 +73,6 @@ public class ContactWrapper implements Contact, ModelWrapper<Contact> {
 		attributes.put("lastName", getLastName());
 		attributes.put("prefixId", getPrefixId());
 		attributes.put("suffixId", getSuffixId());
-		attributes.put("male", isMale());
 		attributes.put("birthday", getBirthday());
 		attributes.put("smsSn", getSmsSn());
 		attributes.put("facebookSn", getFacebookSn());
@@ -191,12 +190,6 @@ public class ContactWrapper implements Contact, ModelWrapper<Contact> {
 
 		if (suffixId != null) {
 			setSuffixId(suffixId);
-		}
-
-		Boolean male = (Boolean)attributes.get("male");
-
-		if (male != null) {
-			setMale(male);
 		}
 
 		Date birthday = (Date)attributes.get("birthday");
@@ -467,10 +460,11 @@ public class ContactWrapper implements Contact, ModelWrapper<Contact> {
 	}
 
 	/**
-	* Returns the male of this contact.
+	* Always returns true, since this information is no longer stored in the database
 	*
-	* @return the male of this contact
+	* @deprecated As of Mueller (7.2.x), with no direct replacement
 	*/
+	@Deprecated
 	@Override
 	public boolean getMale() {
 		return _contact.getMale();
@@ -627,10 +621,11 @@ public class ContactWrapper implements Contact, ModelWrapper<Contact> {
 	}
 
 	/**
-	* Returns <code>true</code> if this contact is male.
+	* Always returns true, since this information is no longer stored in the database
 	*
-	* @return <code>true</code> if this contact is male; <code>false</code> otherwise
+	* @deprecated As of Mueller (7.2.x), with no direct replacement
 	*/
+	@Deprecated
 	@Override
 	public boolean isMale() {
 		return _contact.isMale();
@@ -847,10 +842,11 @@ public class ContactWrapper implements Contact, ModelWrapper<Contact> {
 	}
 
 	/**
-	* Sets whether this contact is male.
+	* Does nothing, since this information is no longer stored in the database
 	*
-	* @param male the male of this contact
+	* @deprecated As of Mueller (7.2.x), with no direct replacement
 	*/
+	@Deprecated
 	@Override
 	public void setMale(boolean male) {
 		_contact.setMale(male);

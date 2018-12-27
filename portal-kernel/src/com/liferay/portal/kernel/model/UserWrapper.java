@@ -742,11 +742,11 @@ public class UserWrapper implements User, ModelWrapper<User> {
 	}
 
 	/**
-	* Returns <code>true</code> if the user is female.
+	* Always returns false, since this information is no longer stored in the database
 	*
-	* @return <code>true</code> if the user is female; <code>false</code>
-	otherwise
+	* @deprecated As of Mueller (7.2.x)
 	*/
+	@Deprecated
 	@Override
 	public boolean getFemale()
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -960,11 +960,11 @@ public class UserWrapper implements User, ModelWrapper<User> {
 	}
 
 	/**
-	* Returns <code>true</code> if the user is male.
+	* Always returns true, since this information is no longer stored in the database
 	*
-	* @return <code>true</code> if the user is male; <code>false</code>
-	otherwise
+	* @deprecated As of Mueller (7.2.x)
 	*/
+	@Deprecated
 	@Override
 	public boolean getMale()
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -1424,6 +1424,12 @@ public class UserWrapper implements User, ModelWrapper<User> {
 		return _user.isEscapedModel();
 	}
 
+	/**
+	* Always returns false, since this information is no longer stored in the database
+	*
+	* @deprecated As of Mueller (7.2.x)
+	*/
+	@Deprecated
 	@Override
 	public boolean isFemale()
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -1440,6 +1446,12 @@ public class UserWrapper implements User, ModelWrapper<User> {
 		return _user.isLockout();
 	}
 
+	/**
+	* Always returns true, since this information is no longer stored in the database
+	*
+	* @deprecated As of Mueller (7.2.x)
+	*/
+	@Deprecated
 	@Override
 	public boolean isMale()
 		throws com.liferay.portal.kernel.exception.PortalException {

@@ -55,6 +55,17 @@
 	<td>//h4/a[contains(.,'${key_ownerName} has shared ${key_dmDocumentTitle} with you for ${key_assetSharingPermission}')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--SHARED_WITH_ME-->
+<tr>
+	<td>SHARED_WITH_ME_DOCUMENT_OPTIONS</td>
+	<td>//tr/td[contains(.,'${key_dmDocumentTitle}')]/..//div//a[span/*[name()='svg'][contains(@class,'icon-ellipsis')]]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

@@ -4,16 +4,16 @@
  * FragmentsEditorToolbar
  */
 {template .render}
-	{@param classPK: ?}
-	{@param lastSaveDate: string}
-	{@param portletNamespace: string}
-	{@param spritemap: string}
 	{@param? _handleToggleContextualSidebarButtonClick: any}
+	{@param? classPK: ?}
 	{@param? fragmentsEditorSidebarVisible: bool}
+	{@param? lastSaveDate: string}
+	{@param? portletNamespace: string}
 	{@param? publishLayoutPageTemplateEntryURL: string}
-	{@param? publishRedirectURL: string}
-	{@param? publishStatus: string}
+	{@param? redirectURL: string}
 	{@param? savingChanges: bool}
+	{@param? spritemap: string}
+	{@param? status: string}
 	{@param? store: ?}
 
 	{let $toolbarClasses kind="text"}
@@ -47,24 +47,24 @@
 			</ul>
 
 			<ul class="navbar-nav">
-				{if $publishStatus}
+				{if $status}
 					<li class="nav-item">
-						<span class="label label-secondary">{$publishStatus}</span>
+						<span class="label label-secondary">{$status}</span>
 					</li>
 				{/if}
 				{if $publishLayoutPageTemplateEntryURL}
 					<li class="nav-item">
 						<form action="{$publishLayoutPageTemplateEntryURL}" method="POST">
 							<input
-								name="{$portletNamespace}classPK"
+								name="{$portletNamespace ?: ''}classPK"
 								type="hidden"
-								value="{$classPK}"
+								value="{$classPK ?: ''}"
 							/>
 
 							<input
 								name="{$portletNamespace}redirect"
 								type="hidden"
-								value="{$publishRedirectURL}"
+								value="{$redirectURL}"
 							/>
 
 							<button class="btn btn-outline-light nav-btn" type="submit">

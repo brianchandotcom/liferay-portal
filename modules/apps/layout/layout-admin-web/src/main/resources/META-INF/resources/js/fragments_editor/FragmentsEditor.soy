@@ -26,7 +26,6 @@
 		panelId:string
 	]>}
 	{@param portletNamespace: string}
-	{@param redirectURL: string}
 	{@param sections: list<[
 		fragmentEntries: list<[
 			fragmentEntryId: string,
@@ -49,10 +48,7 @@
 	{@param? hoveredItemId: string}
 	{@param? hoveredItemType: string}
 	{@param? id: string}
-	{@param? lastSaveDate: string}
 	{@param? mappingFieldsURL: string}
-	{@param? publishLayoutPageTemplateEntryURL: string}
-	{@param? savingChanges: bool}
 	{@param? selectMappingDialogEditableId: string}
 	{@param? selectMappingDialogEditableType: string}
 	{@param? selectMappingDialogFragmentEntryLinkId: string}
@@ -69,21 +65,11 @@
 			label: string
 		]
 	]}
-	{@param? status: string}
 	{@param? store: ?}
 	{@param? updateLayoutPageTemplateEntryAssetTypeURL: any}
 
 	<div class="fragments-editor" id="{$id}">
 		{call com.liferay.layout.admin.web.FragmentsEditorToolbar.render}
-			{param classPK: $classPK /}
-			{param fragmentsEditorSidebarVisible: $fragmentsEditorSidebarVisible ?: true /}
-			{param lastSaveDate: $lastSaveDate ?: '' /}
-			{param publishLayoutPageTemplateEntryURL: $publishLayoutPageTemplateEntryURL /}
-			{param publishRedirectURL: $redirectURL /}
-			{param publishStatus: $status /}
-			{param portletNamespace: $portletNamespace /}
-			{param savingChanges: $savingChanges ?: false /}
-			{param spritemap: $spritemap /}
 			{param store: $store /}
 		{/call}
 

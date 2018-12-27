@@ -1,9 +1,8 @@
 import Component from 'metal-component';
-import {Config} from 'metal-state';
 import Soy from 'metal-soy';
 
 import './TranslationStatus.es';
-import {Store} from '../../store/store.es';
+import getConnectedComponent from '../../store/ConnectedComponent.es';
 import templates from './FragmentsEditorToolbar.soy';
 import {
 	TOGGLE_SIDEBAR,
@@ -40,26 +39,22 @@ class FragmentsEditorToolbar extends Component {
 
 }
 
-/**
- * State definition.
- * @review
- * @static
- * @type {!Object}
- */
-FragmentsEditorToolbar.STATE = {
+const ConnectedFragmentsEditorToolbar = getConnectedComponent(
+	FragmentsEditorToolbar,
+	[
+		'classPK',
+		'fragmentsEditorSidebarVisible',
+		'lastSaveDate',
+		'portletNamespace',
+		'publishLayoutPageTemplateEntryURL',
+		'redirectURL',
+		'savingChanges',
+		'spritemap',
+		'status'
+	]
+);
 
-	/**
-	 * Store instance
-	 * @default undefined
-	 * @instance
-	 * @memberOf FragmentsEditorToolbar
-	 * @review
-	 * @type {Store}
-	 */
-	store: Config.instanceOf(Store)
-};
+Soy.register(ConnectedFragmentsEditorToolbar, templates);
 
-Soy.register(FragmentsEditorToolbar, templates);
-
-export {FragmentsEditorToolbar};
-export default FragmentsEditorToolbar;
+export {ConnectedFragmentsEditorToolbar, FragmentsEditorToolbar};
+export default ConnectedFragmentsEditorToolbar;

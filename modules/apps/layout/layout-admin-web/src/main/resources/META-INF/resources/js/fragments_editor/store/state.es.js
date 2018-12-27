@@ -258,6 +258,24 @@ const INITIAL_STATE = {
 		.value(''),
 
 	/**
+	 * @default ''
+	 * @review
+	 * @type {!string}
+	 */
+	publishLayoutPageTemplateEntryURL: Config
+		.string()
+		.value(''),
+
+	/**
+	 * @default ''
+	 * @review
+	 * @type {!string}
+	 */
+	redirectURL: Config
+		.string()
+		.value(''),
+
+	/**
 	 * URL for getting a fragment content.
 	 * @default ''
 	 * @review
@@ -344,6 +362,15 @@ const INITIAL_STATE = {
 	 * @type {string}
 	 */
 	spritemap: Config
+		.string()
+		.value(''),
+
+	/**
+	 * @default ''
+	 * @review
+	 * @type {!string}
+	 */
+	status: Config
 		.string()
 		.value(''),
 

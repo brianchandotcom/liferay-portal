@@ -21,7 +21,7 @@ definition {
 		SystemSettings.gotoConfiguration(
 			configurationCategory = "Documents and Media",
 			configurationName = "Google Drive",
-			configurationScope = "System Scope"
+			configurationScope = "Virtual Instance Scope"
 		);
 
 		var googleClientID = PropsUtil.get("google.client.id.1");

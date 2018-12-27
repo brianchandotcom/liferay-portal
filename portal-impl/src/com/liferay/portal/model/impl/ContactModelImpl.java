@@ -89,7 +89,6 @@ public class ContactModelImpl extends BaseModelImpl<Contact>
 			{ "lastName", Types.VARCHAR },
 			{ "prefixId", Types.BIGINT },
 			{ "suffixId", Types.BIGINT },
-			{ "male", Types.BOOLEAN },
 			{ "birthday", Types.TIMESTAMP },
 			{ "smsSn", Types.VARCHAR },
 			{ "facebookSn", Types.VARCHAR },
@@ -122,7 +121,6 @@ public class ContactModelImpl extends BaseModelImpl<Contact>
 		TABLE_COLUMNS_MAP.put("lastName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("prefixId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("suffixId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("male", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("birthday", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("smsSn", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("facebookSn", Types.VARCHAR);
@@ -136,7 +134,7 @@ public class ContactModelImpl extends BaseModelImpl<Contact>
 		TABLE_COLUMNS_MAP.put("hoursOfOperation", Types.VARCHAR);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table Contact_ (mvccVersion LONG default 0 not null,contactId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,accountId LONG,parentContactId LONG,emailAddress VARCHAR(254) null,firstName VARCHAR(75) null,middleName VARCHAR(75) null,lastName VARCHAR(75) null,prefixId LONG,suffixId LONG,male BOOLEAN,birthday DATE null,smsSn VARCHAR(75) null,facebookSn VARCHAR(75) null,jabberSn VARCHAR(75) null,skypeSn VARCHAR(75) null,twitterSn VARCHAR(75) null,employeeStatusId VARCHAR(75) null,employeeNumber VARCHAR(75) null,jobTitle VARCHAR(100) null,jobClass VARCHAR(75) null,hoursOfOperation VARCHAR(75) null)";
+	public static final String TABLE_SQL_CREATE = "create table Contact_ (mvccVersion LONG default 0 not null,contactId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,accountId LONG,parentContactId LONG,emailAddress VARCHAR(254) null,firstName VARCHAR(75) null,middleName VARCHAR(75) null,lastName VARCHAR(75) null,prefixId LONG,suffixId LONG,birthday DATE null,smsSn VARCHAR(75) null,facebookSn VARCHAR(75) null,jabberSn VARCHAR(75) null,skypeSn VARCHAR(75) null,twitterSn VARCHAR(75) null,employeeStatusId VARCHAR(75) null,employeeNumber VARCHAR(75) null,jobTitle VARCHAR(100) null,jobClass VARCHAR(75) null,hoursOfOperation VARCHAR(75) null)";
 	public static final String TABLE_SQL_DROP = "drop table Contact_";
 	public static final String ORDER_BY_JPQL = " ORDER BY contact.contactId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY Contact_.contactId ASC";
@@ -188,7 +186,6 @@ public class ContactModelImpl extends BaseModelImpl<Contact>
 		model.setLastName(soapModel.getLastName());
 		model.setPrefixId(soapModel.getPrefixId());
 		model.setSuffixId(soapModel.getSuffixId());
-		model.setMale(soapModel.isMale());
 		model.setBirthday(soapModel.getBirthday());
 		model.setSmsSn(soapModel.getSmsSn());
 		model.setFacebookSn(soapModel.getFacebookSn());
@@ -281,7 +278,6 @@ public class ContactModelImpl extends BaseModelImpl<Contact>
 		attributes.put("lastName", getLastName());
 		attributes.put("prefixId", getPrefixId());
 		attributes.put("suffixId", getSuffixId());
-		attributes.put("male", isMale());
 		attributes.put("birthday", getBirthday());
 		attributes.put("smsSn", getSmsSn());
 		attributes.put("facebookSn", getFacebookSn());
@@ -402,12 +398,6 @@ public class ContactModelImpl extends BaseModelImpl<Contact>
 
 		if (suffixId != null) {
 			setSuffixId(suffixId);
-		}
-
-		Boolean male = (Boolean)attributes.get("male");
-
-		if (male != null) {
-			setMale(male);
 		}
 
 		Date birthday = (Date)attributes.get("birthday");
@@ -783,23 +773,6 @@ public class ContactModelImpl extends BaseModelImpl<Contact>
 
 	@JSON
 	@Override
-	public boolean getMale() {
-		return _male;
-	}
-
-	@JSON
-	@Override
-	public boolean isMale() {
-		return _male;
-	}
-
-	@Override
-	public void setMale(boolean male) {
-		_male = male;
-	}
-
-	@JSON
-	@Override
 	public Date getBirthday() {
 		return _birthday;
 	}
@@ -1017,7 +990,6 @@ public class ContactModelImpl extends BaseModelImpl<Contact>
 		contactImpl.setLastName(getLastName());
 		contactImpl.setPrefixId(getPrefixId());
 		contactImpl.setSuffixId(getSuffixId());
-		contactImpl.setMale(isMale());
 		contactImpl.setBirthday(getBirthday());
 		contactImpl.setSmsSn(getSmsSn());
 		contactImpl.setFacebookSn(getFacebookSn());
@@ -1200,8 +1172,6 @@ public class ContactModelImpl extends BaseModelImpl<Contact>
 
 		contactCacheModel.suffixId = getSuffixId();
 
-		contactCacheModel.male = isMale();
-
 		Date birthday = getBirthday();
 
 		if (birthday != null) {
@@ -1296,7 +1266,7 @@ public class ContactModelImpl extends BaseModelImpl<Contact>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(59);
+		StringBundler sb = new StringBundler(57);
 
 		sb.append("{mvccVersion=");
 		sb.append(getMvccVersion());
@@ -1332,8 +1302,6 @@ public class ContactModelImpl extends BaseModelImpl<Contact>
 		sb.append(getPrefixId());
 		sb.append(", suffixId=");
 		sb.append(getSuffixId());
-		sb.append(", male=");
-		sb.append(isMale());
 		sb.append(", birthday=");
 		sb.append(getBirthday());
 		sb.append(", smsSn=");
@@ -1363,7 +1331,7 @@ public class ContactModelImpl extends BaseModelImpl<Contact>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(91);
+		StringBundler sb = new StringBundler(88);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.portal.kernel.model.Contact");
@@ -1436,10 +1404,6 @@ public class ContactModelImpl extends BaseModelImpl<Contact>
 		sb.append(
 			"<column><column-name>suffixId</column-name><column-value><![CDATA[");
 		sb.append(getSuffixId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>male</column-name><column-value><![CDATA[");
-		sb.append(isMale());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>birthday</column-name><column-value><![CDATA[");
@@ -1521,7 +1485,6 @@ public class ContactModelImpl extends BaseModelImpl<Contact>
 	private String _lastName;
 	private long _prefixId;
 	private long _suffixId;
-	private boolean _male;
 	private Date _birthday;
 	private String _smsSn;
 	private String _facebookSn;

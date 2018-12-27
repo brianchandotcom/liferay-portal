@@ -51,7 +51,6 @@ public class ContactSoap implements Serializable {
 		soapModel.setLastName(model.getLastName());
 		soapModel.setPrefixId(model.getPrefixId());
 		soapModel.setSuffixId(model.getSuffixId());
-		soapModel.setMale(model.isMale());
 		soapModel.setBirthday(model.getBirthday());
 		soapModel.setSmsSn(model.getSmsSn());
 		soapModel.setFacebookSn(model.getFacebookSn());
@@ -251,18 +250,6 @@ public class ContactSoap implements Serializable {
 		_suffixId = suffixId;
 	}
 
-	public boolean getMale() {
-		return _male;
-	}
-
-	public boolean isMale() {
-		return _male;
-	}
-
-	public void setMale(boolean male) {
-		_male = male;
-	}
-
 	public Date getBirthday() {
 		return _birthday;
 	}
@@ -368,7 +355,6 @@ public class ContactSoap implements Serializable {
 	private String _lastName;
 	private long _prefixId;
 	private long _suffixId;
-	private boolean _male;
 	private Date _birthday;
 	private String _smsSn;
 	private String _facebookSn;

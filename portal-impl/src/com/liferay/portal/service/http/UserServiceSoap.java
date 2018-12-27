@@ -186,7 +186,7 @@ public class UserServiceSoap {
 	* @param lastName the user's last name
 	* @param prefixId the user's name prefix ID
 	* @param suffixId the user's name suffix ID
-	* @param male whether the user is male
+	* @param male whether the user is male (ignored)
 	* @param birthdayMonth the user's birthday month (0-based, meaning 0 for
 	January)
 	* @param birthdayDay the user's birthday day
@@ -261,7 +261,7 @@ public class UserServiceSoap {
 	* @param lastName the user's last name
 	* @param prefixId the user's name prefix ID
 	* @param suffixId the user's name suffix ID
-	* @param male whether the user is male
+	* @param male whether the user is male (ignored)
 	* @param birthdayMonth the user's birthday month (0-based, meaning 0 for
 	January)
 	* @param birthdayDay the user's birthday day
@@ -373,7 +373,7 @@ public class UserServiceSoap {
 	* @param lastName the user's last name
 	* @param prefixId the user's name prefix ID
 	* @param suffixId the user's name suffix ID
-	* @param male whether the user is male
+	* @param male whether the user is male (ignored)
 	* @param birthdayMonth the user's birthday month (0-based, meaning 0 for
 	January)
 	* @param birthdayDay the user's birthday day
@@ -448,7 +448,7 @@ public class UserServiceSoap {
 	* @param lastName the user's last name
 	* @param prefixId the user's name prefix ID
 	* @param suffixId the user's name suffix ID
-	* @param male whether the user is male
+	* @param male whether the user is male (ignored)
 	* @param birthdayMonth the user's birthday month (0-based, meaning 0 for
 	January)
 	* @param birthdayDay the user's birthday day
@@ -1470,7 +1470,7 @@ public class UserServiceSoap {
 	* @param lastName the user's last name
 	* @param prefixId the user's name prefix ID
 	* @param suffixId the user's name suffix ID
-	* @param male whether the user is male
+	* @param male whether the user is male (ignored)
 	* @param birthdayMonth the user's birthday month (0-based, meaning 0 for
 	January)
 	* @param birthdayDay the user's birthday day
@@ -1752,7 +1752,7 @@ public class UserServiceSoap {
 	* @param lastName the user's new last name
 	* @param prefixId the user's new name prefix ID
 	* @param suffixId the user's new name suffix ID
-	* @param male whether user is male
+	* @param male whether user is male (ignored)
 	* @param birthdayMonth the user's new birthday month (0-based, meaning 0
 	for January)
 	* @param birthdayDay the user's new birthday day
@@ -1858,7 +1858,7 @@ public class UserServiceSoap {
 	* @param lastName the user's new last name
 	* @param prefixId the user's new name prefix ID
 	* @param suffixId the user's new name suffix ID
-	* @param male whether user is male
+	* @param male whether user is male (ignored)
 	* @param birthdayMonth the user's new birthday month (0-based, meaning
 	0 for January)
 	* @param birthdayDay the user's new birthday day
@@ -1970,7 +1970,7 @@ public class UserServiceSoap {
 	* @param lastName the user's new last name
 	* @param prefixId the user's new name prefix ID
 	* @param suffixId the user's new name suffix ID
-	* @param male whether user is male
+	* @param male whether user is male (ignored)
 	* @param birthdayMonth the user's new birthday month (0-based, meaning 0
 	for January)
 	* @param birthdayDay the user's new birthday day

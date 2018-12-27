@@ -347,27 +347,6 @@ public interface ContactModel extends AttachedModel, AuditedModel,
 	public void setSuffixId(long suffixId);
 
 	/**
-	 * Returns the male of this contact.
-	 *
-	 * @return the male of this contact
-	 */
-	public boolean getMale();
-
-	/**
-	 * Returns <code>true</code> if this contact is male.
-	 *
-	 * @return <code>true</code> if this contact is male; <code>false</code> otherwise
-	 */
-	public boolean isMale();
-
-	/**
-	 * Sets whether this contact is male.
-	 *
-	 * @param male the male of this contact
-	 */
-	public void setMale(boolean male);
-
-	/**
 	 * Returns the birthday of this contact.
 	 *
 	 * @return the birthday of this contact

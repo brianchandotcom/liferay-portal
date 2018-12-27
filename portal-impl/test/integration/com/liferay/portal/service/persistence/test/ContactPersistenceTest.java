@@ -147,8 +147,6 @@ public class ContactPersistenceTest {
 
 		newContact.setSuffixId(RandomTestUtil.nextLong());
 
-		newContact.setMale(RandomTestUtil.randomBoolean());
-
 		newContact.setBirthday(RandomTestUtil.nextDate());
 
 		newContact.setSmsSn(RandomTestUtil.randomString());
@@ -210,7 +208,6 @@ public class ContactPersistenceTest {
 			newContact.getPrefixId());
 		Assert.assertEquals(existingContact.getSuffixId(),
 			newContact.getSuffixId());
-		Assert.assertEquals(existingContact.isMale(), newContact.isMale());
 		Assert.assertEquals(Time.getShortTimestamp(
 				existingContact.getBirthday()),
 			Time.getShortTimestamp(newContact.getBirthday()));
@@ -286,8 +283,8 @@ public class ContactPersistenceTest {
 			"classNameId", true, "classPK", true, "accountId", true,
 			"parentContactId", true, "emailAddress", true, "firstName", true,
 			"middleName", true, "lastName", true, "prefixId", true, "suffixId",
-			true, "male", true, "birthday", true, "smsSn", true, "facebookSn",
-			true, "jabberSn", true, "skypeSn", true, "twitterSn", true,
+			true, "birthday", true, "smsSn", true, "facebookSn", true,
+			"jabberSn", true, "skypeSn", true, "twitterSn", true,
 			"employeeStatusId", true, "employeeNumber", true, "jobTitle", true,
 			"jobClass", true, "hoursOfOperation", true);
 	}
@@ -518,8 +515,6 @@ public class ContactPersistenceTest {
 		contact.setPrefixId(RandomTestUtil.nextLong());
 
 		contact.setSuffixId(RandomTestUtil.nextLong());
-
-		contact.setMale(RandomTestUtil.randomBoolean());
 
 		contact.setBirthday(RandomTestUtil.nextDate());
 

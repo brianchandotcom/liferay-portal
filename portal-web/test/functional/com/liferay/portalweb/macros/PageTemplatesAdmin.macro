@@ -34,6 +34,17 @@ definition {
 		Button.clickSave();
 	}
 
+	macro configureWidgetPageTemplateLayout {
+		Click.pauseClickAt(locator1 = "ControlMenu#EDIT_COG");
+
+		Click(
+			locator1 = "SitePagesEditPage#LAYOUT_CARD",
+			key_columnName = "${columnName}"
+		);
+
+		PortletEntry.save();
+	}
+
 	macro openPageTemplatesAdmin {
 		Navigator.openWithAppendToBaseURL(
 			urlAppend = "group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_layout_admin_web_portlet_GroupPagesPortlet&amp;_com_liferay_layout_admin_web_portlet_GroupPagesPortlet_tabs1=page-templates"

@@ -113,7 +113,9 @@ public class EditSegmentsEntryDisplayContext {
 	public Criteria getCriteria() throws PortalException {
 		SegmentsEntry segmentsEntry = getSegmentsEntry();
 
-		if (segmentsEntry == null) {
+		if ((segmentsEntry == null) ||
+			(segmentsEntry.getCriteriaObj() == null)) {
+
 			return new Criteria();
 		}
 

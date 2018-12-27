@@ -51,10 +51,22 @@ import org.osgi.service.component.annotations.Reference;
 public class AsahFaroBackendIndividualSegmentsCheckerUtil {
 
 	public void checkIndividualSegments() throws PortalException {
-		Results<IndividualSegment> individualSegmentResults =
-			_asahFaroBackendClient.getIndividualSegmentResults(
-				1, _MAX_PAGE_SIZE,
-				Collections.singletonList(OrderByField.desc("dateModified")));
+		Results<IndividualSegment> individualSegmentResults;
+
+		try {
+			individualSegmentResults =
+				_asahFaroBackendClient.getIndividualSegmentResults(
+					1, _MAX_PAGE_SIZE,
+					Collections.singletonList(
+						OrderByField.desc("dateModified")));
+		}
+		catch (RuntimeException re) {
+			if (_log.isWarnEnabled()) {
+				_log.warn("Unable to retrieve individual segments", re);
+			}
+
+			return;
+		}
 
 		int totalElements = individualSegmentResults.getTotal();
 

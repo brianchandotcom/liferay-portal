@@ -18,5 +18,6 @@ dependencies {
 	testIntegrationCompile project(":apps:headless-apio:folder:folder-apio-api")
 	testIntegrationCompile project(":apps:headless-apio:portal:portal-apio-api")
 	testIntegrationCompile project(":apps:petra:petra-json-web-service-client")
+	testIntegrationCompile project(":core:registry-api")
 	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
 }

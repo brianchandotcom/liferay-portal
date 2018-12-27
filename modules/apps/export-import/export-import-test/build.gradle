@@ -19,5 +19,6 @@ dependencies {
 	testIntegrationCompile project(":apps:xstream:xstream-configurator-api")
 	testIntegrationCompile project(":core:petra:petra-reflect")
 	testIntegrationCompile project(":core:petra:petra-string")
+	testIntegrationCompile project(":core:registry-api")
 	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
 }

@@ -8,13 +8,7 @@ Liferay-JS-Submodules-Bridge:\
 	layout-admin-web/js/fragments_editor/components/fragment_entry_link/FragmentEntryLinkList.es,\
 	layout-admin-web/js/fragments_editor/components/sidebar/FragmentsEditorSidebar.es,\
 	layout-admin-web/js/fragments_editor/components/toolbar/FragmentsEditorToolbar.es,\
-	layout-admin-web/js/fragments_editor/reducers/changes.es,\
-	layout-admin-web/js/fragments_editor/reducers/dialogs.es,\
-	layout-admin-web/js/fragments_editor/reducers/fragments.es,\
-	layout-admin-web/js/fragments_editor/reducers/placeholders.es,\
-	layout-admin-web/js/fragments_editor/reducers/sections.es,\
-	layout-admin-web/js/fragments_editor/reducers/sidebar.es,\
-	layout-admin-web/js/fragments_editor/reducers/translations.es,\
+	layout-admin-web/js/fragments_editor/reducers/reducers.es,\
 	layout-admin-web/js/fragments_editor/store/store.es
 Provide-Capability:\
 	soy;\

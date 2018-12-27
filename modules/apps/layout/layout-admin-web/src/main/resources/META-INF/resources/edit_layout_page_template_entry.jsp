@@ -46,19 +46,7 @@ JSONSerializer jsonSerializer = JSONFactoryUtil.createJSONSerializer();
 StringBundler sb = new StringBundler(16);
 
 sb.append(layoutsAdminDisplayContext.getModuleName());
-sb.append("/js/fragments_editor/reducers/changes.es as ChangesReducerModule, ");
-sb.append(layoutsAdminDisplayContext.getModuleName());
-sb.append("/js/fragments_editor/reducers/dialogs.es as DialogsReducerModule, ");
-sb.append(layoutsAdminDisplayContext.getModuleName());
-sb.append("/js/fragments_editor/reducers/fragments.es as FragmentsReducerModule, ");
-sb.append(layoutsAdminDisplayContext.getModuleName());
-sb.append("/js/fragments_editor/reducers/placeholders.es as PlaceholdersReducerModule, ");
-sb.append(layoutsAdminDisplayContext.getModuleName());
-sb.append("/js/fragments_editor/reducers/sections.es as SectionsReducerModule, ");
-sb.append(layoutsAdminDisplayContext.getModuleName());
-sb.append("/js/fragments_editor/reducers/sidebar.es as SidebarReducerModule, ");
-sb.append(layoutsAdminDisplayContext.getModuleName());
-sb.append("/js/fragments_editor/reducers/translations.es as TranslationsReducerModule, ");
+sb.append("/js/fragments_editor/reducers/reducers.es as ReducersModule, ");
 sb.append(layoutsAdminDisplayContext.getModuleName());
 sb.append("/js/fragments_editor/store/store.es as StoreModule");
 %>
@@ -66,31 +54,7 @@ sb.append("/js/fragments_editor/store/store.es as StoreModule");
 <aui:script require="<%= sb.toString() %>">
 	StoreModule.createStore(
 		<%= jsonSerializer.serializeDeep(fragmentsEditorDisplayContext.getEditorContext()) %>,
-		[
-			ChangesReducerModule.saveChangesReducer,
-			DialogsReducerModule.hideMappingDialogReducer,
-			DialogsReducerModule.hideMappingTypeDialogReducer,
-			DialogsReducerModule.openAssetTypeDialogReducer,
-			DialogsReducerModule.openMappingFieldsDialogReducer,
-			DialogsReducerModule.selectMappeableTypeReducer,
-			FragmentsReducerModule.addFragmentEntryLinkReducer,
-			FragmentsReducerModule.moveFragmentEntryLinkReducer,
-			FragmentsReducerModule.removeFragmentEntryLinkReducer,
-			FragmentsReducerModule.updateEditableValueReducer,
-			PlaceholdersReducerModule.updateActiveItemReducer,
-			PlaceholdersReducerModule.updateDropTargetReducer,
-			PlaceholdersReducerModule.updateHighlightMappingReducer,
-			PlaceholdersReducerModule.updateHoveredItemReducer,
-			SidebarReducerModule.hideFragmentsEditorSidebarReducer,
-			SidebarReducerModule.toggleFragmentsEditorSidebarReducer,
-			SectionsReducerModule.addSectionReducer,
-			SectionsReducerModule.moveSectionReducer,
-			SectionsReducerModule.removeSectionReducer,
-			TranslationsReducerModule.languageIdReducer,
-			TranslationsReducerModule.translationStatusReducer
-		],
-		[
-			'<portlet:namespace />fragmentsEditor'
-		]
+		ReducersModule.reducers,
+		['<portlet:namespace />fragmentsEditor']
 	);
 </aui:script>

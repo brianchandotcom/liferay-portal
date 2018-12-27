@@ -46,32 +46,10 @@ FragmentsEditorDisplayContext fragmentsEditorDisplayContext = new FragmentsEdito
 JSONSerializer jsonSerializer = JSONFactoryUtil.createJSONSerializer();
 %>
 
-<aui:script require="layout-admin-web/js/fragments_editor/components/edit_mode/DisabledAreaMask.es as DisabledAreaMaskModule, layout-admin-web/js/fragments_editor/components/edit_mode/EditModeWrapper.es as EditModeWrapperModule, layout-admin-web/js/fragments_editor/reducers/changes.es as ChangesReducerModule, layout-admin-web/js/fragments_editor/reducers/fragments.es as FragmentsReducerModule, layout-admin-web/js/fragments_editor/reducers/placeholders.es as PlaceholdersReducerModule, layout-admin-web/js/fragments_editor/reducers/translations.es as TranslationsReducerModule, layout-admin-web/js/fragments_editor/reducers/sidebar.es as SidebarReducerModule, layout-admin-web/js/fragments_editor/store/store.es as StoreModule, layout-admin-web/js/fragments_editor/reducers/dialogs.es as DialogsReducerModule, layout-admin-web/js/fragments_editor/reducers/sections.es as SectionsReducerModule">
+<aui:script require="layout-admin-web/js/fragments_editor/components/edit_mode/DisabledAreaMask.es as DisabledAreaMaskModule, layout-admin-web/js/fragments_editor/components/edit_mode/EditModeWrapper.es as EditModeWrapperModule, layout-admin-web/js/fragments_editor/reducers/reducers.es as ReducersModule, layout-admin-web/js/fragments_editor/store/store.es as StoreModule">
 	StoreModule.createStore(
 		<%= jsonSerializer.serializeDeep(fragmentsEditorDisplayContext.getEditorContext()) %>,
-		[
-			ChangesReducerModule.saveChangesReducer,
-			DialogsReducerModule.hideMappingDialogReducer,
-			DialogsReducerModule.hideMappingTypeDialogReducer,
-			DialogsReducerModule.openAssetTypeDialogReducer,
-			DialogsReducerModule.openMappingFieldsDialogReducer,
-			DialogsReducerModule.selectMappeableTypeReducer,
-			FragmentsReducerModule.addFragmentEntryLinkReducer,
-			FragmentsReducerModule.moveFragmentEntryLinkReducer,
-			FragmentsReducerModule.removeFragmentEntryLinkReducer,
-			FragmentsReducerModule.updateEditableValueReducer,
-			PlaceholdersReducerModule.updateActiveItemReducer,
-			PlaceholdersReducerModule.updateDropTargetReducer,
-			PlaceholdersReducerModule.updateHighlightMappingReducer,
-			PlaceholdersReducerModule.updateHoveredItemReducer,
-			SidebarReducerModule.hideFragmentsEditorSidebarReducer,
-			SidebarReducerModule.toggleFragmentsEditorSidebarReducer,
-			SectionsReducerModule.addSectionReducer,
-			SectionsReducerModule.moveSectionReducer,
-			SectionsReducerModule.removeSectionReducer,
-			TranslationsReducerModule.languageIdReducer,
-			TranslationsReducerModule.translationStatusReducer
-		],
+		ReducersModule.reducers,
 		[
 			'<portlet:namespace />editModeWrapper',
 			'<portlet:namespace />fragments',

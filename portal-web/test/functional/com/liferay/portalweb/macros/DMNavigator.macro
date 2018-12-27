@@ -152,6 +152,32 @@ definition {
 		AssertVisible(locator1 = "DocumentsAndMedia#BREADCRUMB_FOLDER_NAME");
 	}
 
+	macro gotoShare {
+		var key_dmDocumentTitle = "${dmDocumentTitle}";
+
+		AssertClick(
+			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_TITLE",
+			value1 = "${dmDocumentTitle}"
+		);
+
+		DMDocument.viewDocumentTitleCmdPG(dmDocumentTitle = "${dmDocumentTitle}");
+
+		var key_text = "Share";
+
+		AssertClick(locator1 = "Button#ANY", value1 = "Share");
+	}
+
+	macro gotoShareViaSharedWithMe {
+		var key_dmDocumentTitle = "${dmDocumentTitle}";
+
+		Click(
+			locator1 = "DocumentsAndMediaShare#SHARED_WITH_ME_DOCUMENT_OPTIONS",
+			value1 = "${dmDocumentTitle}"
+		);
+
+		MenuItem.click(menuItem = "Share");
+	}
+
 	macro gotoURLDetail {
 		Click(locator1 = "Icon#INFO");
 

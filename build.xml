@@ -1377,19 +1377,19 @@ print AdminControl.invoke(appManager, 'startApplication', 'liferay-portal')
 
 		<delete dir="${basedir}/.gradle" />
 
-		<setup-sdk />
+		<setup-sdk setupbinariescache="false" />
 
-		<gradle-execute dir="modules" forcedcacheenabled="false" task="clean">
+		<gradle-execute dir="modules" forcedcacheenabled="false" setupbinariescache="false" task="clean">
 			<arg value="--parallel" />
 		</gradle-execute>
 
-		<gradle-execute dir="modules" forcedcacheenabled="false" task="classes">
+		<gradle-execute dir="modules" forcedcacheenabled="false" setupbinariescache="false" task="classes">
 			<arg value="--parallel" />
 			<arg value="testClasses" />
 			<arg value="testIntegrationClasses" />
 		</gradle-execute>
 
-		<gradle-execute dir="modules/sdk/gradle-util" failonerror="false" forcedcacheenabled="false" task="findbugsMain">
+		<gradle-execute dir="modules/sdk/gradle-util" failonerror="false" forcedcacheenabled="false" setupbinariescache="false" task="findbugsMain">
 			<arg value="--parallel" />
 		</gradle-execute>
 

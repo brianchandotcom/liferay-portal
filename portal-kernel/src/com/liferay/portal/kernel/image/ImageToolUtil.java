@@ -149,12 +149,26 @@ public class ImageToolUtil {
 		return getImageTool().getDefaultSpacer();
 	}
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 *             #getDefaultUserPortrait}
+	 */
+	@Deprecated
 	public static Image getDefaultUserFemalePortrait() {
-		return getImageTool().getDefaultUserFemalePortrait();
+		return getImageTool().getDefaultUserPortrait();
 	}
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 *             #getDefaultUserPortrait}
+	 */
+	@Deprecated
 	public static Image getDefaultUserMalePortrait() {
-		return getImageTool().getDefaultUserMalePortrait();
+		return getImageTool().getDefaultUserPortrait();
+	}
+
+	public static Image getDefaultUserPortrait() {
+		return getImageTool().getDefaultUserPortrait();
 	}
 
 	public static Image getImage(byte[] bytes)

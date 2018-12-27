@@ -269,7 +269,7 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 	 * @param  lastName the user's last name
 	 * @param  prefixId the user's name prefix ID
 	 * @param  suffixId the user's name suffix ID
-	 * @param  male whether the user is male
+	 * @param  male whether the user is male (ignored)
 	 * @param  birthdayMonth the user's birthday month (0-based, meaning 0 for
 	 *         January)
 	 * @param  birthdayDay the user's birthday day
@@ -307,7 +307,7 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 			return addUserWithWorkflow(
 				companyId, autoPassword, password1, password2, autoScreenName,
 				screenName, emailAddress, facebookId, openId, locale, firstName,
-				middleName, lastName, prefixId, suffixId, male, birthdayMonth,
+				middleName, lastName, prefixId, suffixId, true, birthdayMonth,
 				birthdayDay, birthdayYear, jobTitle, groupIds, organizationIds,
 				roleIds, userGroupIds, sendEmail, serviceContext);
 		}
@@ -343,7 +343,7 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 	 * @param  lastName the user's last name
 	 * @param  prefixId the user's name prefix ID
 	 * @param  suffixId the user's name suffix ID
-	 * @param  male whether the user is male
+	 * @param  male whether the user is male (ignored)
 	 * @param  birthdayMonth the user's birthday month (0-based, meaning 0 for
 	 *         January)
 	 * @param  birthdayDay the user's birthday day
@@ -389,7 +389,7 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 			return addUserWithWorkflow(
 				companyId, autoPassword, password1, password2, autoScreenName,
 				screenName, emailAddress, facebookId, openId, locale, firstName,
-				middleName, lastName, prefixId, suffixId, male, birthdayMonth,
+				middleName, lastName, prefixId, suffixId, true, birthdayMonth,
 				birthdayDay, birthdayYear, jobTitle, groupIds, organizationIds,
 				roleIds, userGroupIds, addresses, emailAddresses, phones,
 				websites, announcementsDelivers, sendEmail, serviceContext);
@@ -452,7 +452,7 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 	 * @param  lastName the user's last name
 	 * @param  prefixId the user's name prefix ID
 	 * @param  suffixId the user's name suffix ID
-	 * @param  male whether the user is male
+	 * @param  male whether the user is male (ignored)
 	 * @param  birthdayMonth the user's birthday month (0-based, meaning 0 for
 	 *         January)
 	 * @param  birthdayDay the user's birthday day
@@ -500,7 +500,7 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 		User user = userLocalService.addUserWithWorkflow(
 			creatorUserId, companyId, autoPassword, password1, password2,
 			autoScreenName, screenName, emailAddress, facebookId, openId,
-			locale, firstName, middleName, lastName, prefixId, suffixId, male,
+			locale, firstName, middleName, lastName, prefixId, suffixId, true,
 			birthdayMonth, birthdayDay, birthdayYear, jobTitle, groupIds,
 			organizationIds, roleIds, userGroupIds, sendEmail, serviceContext);
 
@@ -542,7 +542,7 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 	 * @param  lastName the user's last name
 	 * @param  prefixId the user's name prefix ID
 	 * @param  suffixId the user's name suffix ID
-	 * @param  male whether the user is male
+	 * @param  male whether the user is male (ignored)
 	 * @param  birthdayMonth the user's birthday month (0-based, meaning 0 for
 	 *         January)
 	 * @param  birthdayDay the user's birthday day
@@ -592,7 +592,7 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 			User user = addUserWithWorkflow(
 				companyId, autoPassword, password1, password2, autoScreenName,
 				screenName, emailAddress, facebookId, openId, locale, firstName,
-				middleName, lastName, prefixId, suffixId, male, birthdayMonth,
+				middleName, lastName, prefixId, suffixId, true, birthdayMonth,
 				birthdayDay, birthdayYear, jobTitle, groupIds, organizationIds,
 				roleIds, userGroupIds, sendEmail, serviceContext);
 
@@ -1589,7 +1589,7 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 	 * @param  lastName the user's last name
 	 * @param  prefixId the user's name prefix ID
 	 * @param  suffixId the user's name suffix ID
-	 * @param  male whether the user is male
+	 * @param  male whether the user is male (ignored)
 	 * @param  birthdayMonth the user's birthday month (0-based, meaning 0 for
 	 *         January)
 	 * @param  birthdayDay the user's birthday day
@@ -1632,7 +1632,7 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 		return userLocalService.updateIncompleteUser(
 			creatorUserId, companyId, autoPassword, password1, password2,
 			autoScreenName, screenName, emailAddress, facebookId, openId,
-			locale, firstName, middleName, lastName, prefixId, suffixId, male,
+			locale, firstName, middleName, lastName, prefixId, suffixId, true,
 			birthdayMonth, birthdayDay, birthdayYear, jobTitle,
 			updateUserInformation, sendEmail, serviceContext);
 	}
@@ -1839,7 +1839,7 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 	 * @param  lastName the user's new last name
 	 * @param  prefixId the user's new name prefix ID
 	 * @param  suffixId the user's new name suffix ID
-	 * @param  male whether user is male
+	 * @param  male whether user is male (ignored)
 	 * @param  birthdayMonth the user's new birthday month (0-based, meaning 0
 	 *         for January)
 	 * @param  birthdayDay the user's new birthday day
@@ -1932,7 +1932,7 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 
 		validateUpdatePermission(
 			user, screenName, emailAddress, firstName, middleName, lastName,
-			prefixId, suffixId, birthdayMonth, birthdayDay, birthdayYear, male,
+			prefixId, suffixId, birthdayMonth, birthdayDay, birthdayYear, true,
 			jobTitle);
 
 		// Group membership policy
@@ -2122,7 +2122,7 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 			reminderQueryQuestion, reminderQueryAnswer, screenName,
 			emailAddress, facebookId, openId, portrait, portraitBytes,
 			languageId, timeZoneId, greeting, comments, firstName, middleName,
-			lastName, prefixId, suffixId, male, birthdayMonth, birthdayDay,
+			lastName, prefixId, suffixId, true, birthdayMonth, birthdayDay,
 			birthdayYear, smsSn, facebookSn, jabberSn, skypeSn, twitterSn,
 			jobTitle, groupIds, organizationIds, roleIds, userGroupRoles,
 			userGroupIds, serviceContext);
@@ -2199,7 +2199,7 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 	 * @param      lastName the user's new last name
 	 * @param      prefixId the user's new name prefix ID
 	 * @param      suffixId the user's new name suffix ID
-	 * @param      male whether user is male
+	 * @param      male whether user is male (ignored)
 	 * @param      birthdayMonth the user's new birthday month (0-based, meaning
 	 *             0 for January)
 	 * @param      birthdayDay the user's new birthday day
@@ -2259,7 +2259,7 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 			reminderQueryQuestion, reminderQueryAnswer, screenName,
 			emailAddress, facebookId, openId, true, null, languageId,
 			timeZoneId, greeting, comments, firstName, middleName, lastName,
-			prefixId, suffixId, male, birthdayMonth, birthdayDay, birthdayYear,
+			prefixId, suffixId, true, birthdayMonth, birthdayDay, birthdayYear,
 			smsSn, facebookSn, jabberSn, skypeSn, twitterSn, jobTitle, groupIds,
 			organizationIds, roleIds, userGroupRoles, userGroupIds, addresses,
 			emailAddresses, phones, websites, announcementsDelivers,
@@ -2292,7 +2292,7 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 	 * @param  lastName the user's new last name
 	 * @param  prefixId the user's new name prefix ID
 	 * @param  suffixId the user's new name suffix ID
-	 * @param  male whether user is male
+	 * @param  male whether user is male (ignored)
 	 * @param  birthdayMonth the user's new birthday month (0-based, meaning 0
 	 *         for January)
 	 * @param  birthdayDay the user's new birthday day
@@ -2336,7 +2336,7 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 			reminderQueryQuestion, reminderQueryAnswer, screenName,
 			emailAddress, facebookId, openId, true, null, languageId,
 			timeZoneId, greeting, comments, firstName, middleName, lastName,
-			prefixId, suffixId, male, birthdayMonth, birthdayDay, birthdayYear,
+			prefixId, suffixId, true, birthdayMonth, birthdayDay, birthdayYear,
 			smsSn, facebookSn, jabberSn, skypeSn, twitterSn, jobTitle, groupIds,
 			organizationIds, roleIds, userGroupRoles, userGroupIds, null, null,
 			null, null, null, serviceContext);
@@ -2837,10 +2837,6 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 
 		if (!StringUtil.equalsIgnoreCase(firstName, user.getFirstName())) {
 			fields.add("firstName");
-		}
-
-		if (male != contact.isMale()) {
-			fields.add("gender");
 		}
 
 		if (!StringUtil.equalsIgnoreCase(jobTitle, user.getJobTitle())) {

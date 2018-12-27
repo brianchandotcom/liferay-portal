@@ -80,32 +80,29 @@ public class PropsHelperUtil {
 
 						_propertiesMap.put(propertiesLocation, properties);
 					}
-					catch (IOException ioe) {
-						_log.error("Unable to read " + propertiesLocation, ioe);
-					}
-
-					continue;
 				}
+				else {
+					try (InputStream inputStream =
+							classLoader.getResourceAsStream(
+								propertiesLocation)) {
+
+						if (inputStream != null) {
+							Properties properties = new Properties();
+
+							properties.load(inputStream);
+
+							_propertiesMap.put(propertiesLocation, properties);
+						}
+					}
+				}
+			}
+			catch (IOException ioe) {
+				_log.error("Unable to read " + propertiesLocation, ioe);
 			}
 			catch (InvalidPathException ipe) {
 				if (_log.isDebugEnabled()) {
 					_log.debug("Unable to parse " + propertiesLocation, ipe);
 				}
-			}
-
-			try (InputStream inputStream =
-					classLoader.getResourceAsStream(propertiesLocation)) {
-
-				if (inputStream != null) {
-					Properties properties = new Properties();
-
-					properties.load(inputStream);
-
-					_propertiesMap.put(propertiesLocation, properties);
-				}
-			}
-			catch (IOException ioe) {
-				_log.error("Unable to read " + propertiesLocation, ioe);
 			}
 		}
 	}

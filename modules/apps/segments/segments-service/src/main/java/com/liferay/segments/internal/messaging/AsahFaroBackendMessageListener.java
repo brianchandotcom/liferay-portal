@@ -44,10 +44,9 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	configurationPid = "com.liferay.journal.configuration.SegmentsServiceConfiguration",
 	configurationPolicy = ConfigurationPolicy.OPTIONAL, immediate = true,
-	service = CheckIndividualSegmentsMessageListener.class
+	service = AsahFaroBackendMessageListener.class
 )
-public class CheckIndividualSegmentsMessageListener
-	extends BaseMessageListener {
+public class AsahFaroBackendMessageListener extends BaseMessageListener {
 
 	@Activate
 	@Modified
@@ -82,14 +81,16 @@ public class CheckIndividualSegmentsMessageListener
 			_log.debug(message.toString());
 		}
 
-		_individualSegmentsCheckerUtil.checkIndividualSegments();
+		_asahFaroBackendIndividualSegmentsCheckerUtil.checkIndividualSegments();
 	}
 
 	@Reference(unbind = "-")
-	protected void setIndividualSegmentsCheckerUtil(
-		IndividualSegmentsCheckerUtil individualSegmentsCheckerUtil) {
+	protected void setAsahFaroBackendIndividualSegmentsCheckerUtil(
+		AsahFaroBackendIndividualSegmentsCheckerUtil
+			asahFaroBackendIndividualSegmentsCheckerUtil) {
 
-		_individualSegmentsCheckerUtil = individualSegmentsCheckerUtil;
+		_asahFaroBackendIndividualSegmentsCheckerUtil =
+			asahFaroBackendIndividualSegmentsCheckerUtil;
 	}
 
 	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
@@ -105,9 +106,10 @@ public class CheckIndividualSegmentsMessageListener
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		CheckIndividualSegmentsMessageListener.class);
+		AsahFaroBackendMessageListener.class);
 
-	private IndividualSegmentsCheckerUtil _individualSegmentsCheckerUtil;
+	private AsahFaroBackendIndividualSegmentsCheckerUtil
+		_asahFaroBackendIndividualSegmentsCheckerUtil;
 	private SchedulerEngineHelper _schedulerEngineHelper;
 
 	@Reference

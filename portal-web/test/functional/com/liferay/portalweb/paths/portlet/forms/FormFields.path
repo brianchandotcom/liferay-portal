@@ -36,12 +36,12 @@
 <!--CHECKBOX-->
 <tr>
 	<td>CHECKBOX</td>
-	<td>//input[@type='checkbox' and contains(@id,'${key_fieldName}')] | //li[contains(.,'${key_fieldName}')]//input[@type='checkbox']</td>
+	<td>//input[@type='checkbox' and contains(@id,'${key_fieldName}') or contains (@name,'${key_fieldName}')] | //li[contains(.,'${key_fieldName}')]//input[@type='checkbox']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>CHECKBOX_LABEL</td>
-	<td>//div[contains(@data-fieldname,'${key_fieldName}')]//label | //li[contains(.,'${key_fieldName}')]//label | //label[.//input[@type='checkbox' and contains(@id,'${key_fieldName}')]]</td>
+	<td>//div[contains(@data-fieldname,'${key_fieldName}')]//label | //li[contains(.,'${key_fieldName}')]//label | //label[.//input[@type='checkbox' and contains(@id,'${key_fieldName}') or contains(@name,'${key_fieldName}')]]</td>
 	<td></td>
 </tr>
 <tr>

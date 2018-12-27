@@ -95,9 +95,7 @@ public class SegmentsEntryLocalServiceImpl
 		if (Validator.isNull(source)) {
 			segmentsEntry.setSource(SegmentsConstants.SOURCE_DEFAULT);
 		}
-
-		else
-			{
+		else {
 			segmentsEntry.setSource(source);
 		}
 

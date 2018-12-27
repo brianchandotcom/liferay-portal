@@ -14,41 +14,16 @@
 
 package com.liferay.portal.spring.aop;
 
-import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
-import java.util.Objects;
-
 /**
  * @author Shuyang Zhou
  */
 public class ServiceBeanMethodInvocation {
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-
-		if (!(obj instanceof ServiceBeanMethodInvocation)) {
-			return false;
-		}
-
-		ServiceBeanMethodInvocation serviceBeanMethodInvocation =
-			(ServiceBeanMethodInvocation)obj;
-
-		if (Objects.equals(_target, serviceBeanMethodInvocation._target) &&
-			Objects.equals(_method, serviceBeanMethodInvocation._method)) {
-
-			return true;
-		}
-
-		return false;
-	}
 
 	@SuppressWarnings("unchecked")
 	public <T> T getAdviceMethodContext() {
@@ -61,17 +36,6 @@ public class ServiceBeanMethodInvocation {
 
 	public Object getThis() {
 		return _target;
-	}
-
-	@Override
-	public int hashCode() {
-		if (_hashCode == 0) {
-			int hashCode = HashUtil.hash(0, _target);
-
-			_hashCode = HashUtil.hash(hashCode, _method);
-		}
-
-		return _hashCode;
 	}
 
 	public Object proceed(Object[] arguments) throws Throwable {
@@ -145,7 +109,6 @@ public class ServiceBeanMethodInvocation {
 	}
 
 	private final Object _adviceMethodContext;
-	private int _hashCode;
 	private final Method _method;
 	private final ChainableMethodAdvice _nextChainableMethodAdvice;
 	private final ServiceBeanMethodInvocation _nextServiceBeanMethodInvocation;

@@ -33,6 +33,26 @@ public class ContactImpl extends ContactBaseImpl {
 			getFirstName(), getMiddleName(), getLastName());
 	}
 
+	/**
+	 * Always returns true, since this information is no longer stored in the database
+	 *
+	 * @deprecated As of Mueller (7.2.x), with no direct replacement
+	 */
+	@Deprecated
+	public boolean getMale() {
+		return true;
+	}
+
+	/**
+	 * Always returns true, since this information is no longer stored in the database
+	 *
+	 * @deprecated As of Mueller (7.2.x), with no direct replacement
+	 */
+	@Deprecated
+	public boolean isMale() {
+		return true;
+	}
+
 	@Override
 	public boolean isUser() {
 		if (getClassNameId() == ClassNameIds._USER_CLASS_NAME_ID) {
@@ -40,6 +60,15 @@ public class ContactImpl extends ContactBaseImpl {
 		}
 
 		return false;
+	}
+
+	/**
+	 * Does nothing, since this information is no longer stored in the database
+	 *
+	 * @deprecated As of Mueller (7.2.x), with no direct replacement
+	 */
+	@Deprecated
+	public void setMale(boolean male) {
 	}
 
 	private static class ClassNameIds {

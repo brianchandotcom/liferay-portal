@@ -17,7 +17,6 @@ package com.liferay.person.apio.client.test;
 import com.liferay.portal.apio.test.util.ApioClientBuilder;
 import com.liferay.portal.kernel.util.StringUtil;
 
-import java.net.MalformedURLException;
 import java.net.URL;
 
 import org.hamcrest.core.IsNull;
@@ -26,6 +25,7 @@ import org.jboss.arquillian.container.test.api.RunAsClient;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.arquillian.test.api.ArquillianResource;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -38,13 +38,10 @@ import org.junit.runner.RunWith;
 public class MyUserAccountApioTest {
 
 	@Before
-	public void setUp() throws MalformedURLException {
+	public void setUp() throws Exception {
 		_rootEndpointURL = new URL(_url, "/o/api");
-	}
 
-	@Test
-	public void testGetMyUserAccount() throws Exception {
-		String href = ApioClientBuilder.given(
+		String userAccountHrefURL = ApioClientBuilder.given(
 		).basicAuth(
 			"test@liferay.com", "test"
 		).header(
@@ -58,7 +55,7 @@ public class MyUserAccountApioTest {
 			"_links.user-account.href"
 		);
 
-		String userHref = ApioClientBuilder.given(
+		_userHrefURL = ApioClientBuilder.given(
 		).basicAuth(
 			"test@liferay.com", "test"
 		).header(
@@ -69,7 +66,7 @@ public class MyUserAccountApioTest {
 			_read("test-get-my-user-account-create-user.json")
 		).when(
 		).post(
-			href
+			userAccountHrefURL
 		).then(
 		).statusCode(
 			200
@@ -89,13 +86,13 @@ public class MyUserAccountApioTest {
 			_read("test-get-my-user-account-update-user.json")
 		).when(
 		).put(
-			userHref
+			_userHrefURL
 		).then(
 		).statusCode(
 			200
 		);
 
-		ApioClientBuilder.given(
+		_myUserAccountHref = ApioClientBuilder.given(
 		).basicAuth(
 			"kate.williams@liferay.com", "wkate"
 		).header(
@@ -103,8 +100,37 @@ public class MyUserAccountApioTest {
 		).when(
 		).get(
 			_rootEndpointURL.toExternalForm()
-		).follow(
+		).then(
+		).extract(
+		).path(
 			"_links.my-user-account.href"
+		);
+	}
+
+	@After
+	public void tearDown() {
+		ApioClientBuilder.given(
+		).basicAuth(
+			"test@liferay.com", "test"
+		).when(
+		).delete(
+			_userHrefURL
+		).then(
+		).statusCode(
+			200
+		);
+	}
+
+	@Test
+	public void testGetMyUserAccount() {
+		ApioClientBuilder.given(
+		).basicAuth(
+			"kate.williams@liferay.com", "wkate"
+		).header(
+			"Accept", "application/hal+json"
+		).when(
+		).get(
+			_myUserAccountHref
 		).then(
 		).statusCode(
 			200
@@ -132,17 +158,6 @@ public class MyUserAccountApioTest {
 				"Designer'}",
 			IsNull.notNullValue()
 		);
-
-		ApioClientBuilder.given(
-		).basicAuth(
-			"test@liferay.com", "test"
-		).when(
-		).delete(
-			userHref
-		).then(
-		).statusCode(
-			200
-		);
 	}
 
 	private String _read(String fileName) throws Exception {
@@ -153,9 +168,12 @@ public class MyUserAccountApioTest {
 		return String.format(StringUtil.read(url.openStream()));
 	}
 
+	private String _myUserAccountHref;
 	private URL _rootEndpointURL;
 
 	@ArquillianResource
 	private URL _url;
+
+	private String _userHrefURL;
 
 }

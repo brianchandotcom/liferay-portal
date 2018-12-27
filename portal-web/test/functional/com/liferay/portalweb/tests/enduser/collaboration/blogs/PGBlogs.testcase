@@ -1573,6 +1573,8 @@ definition {
 	@description = "Basic test that ensures reading time displays when enabled."
 	@priority = "5"
 	test ViewBlogsEntryReadingTime {
+		property test.name.skip.portal.instance = "PGBlogs#ViewBlogsEntryReadingTime";
+
 		BlogsConfiguration.enableReadingTime();
 
 		Navigator.gotoPage(pageName = "Blogs Page");

@@ -436,14 +436,14 @@ public class UserImpl extends UserBaseImpl {
 	}
 
 	/**
-	 * Returns <code>true</code> if the user is female.
+	 * Always returns false, since this information is no longer stored in the database
 	 *
-	 * @return <code>true</code> if the user is female; <code>false</code>
-	 *         otherwise
+	 * @deprecated As of Mueller (7.2.x)
 	 */
+	@Deprecated
 	@Override
 	public boolean getFemale() throws PortalException {
-		return !getMale();
+		return false;
 	}
 
 	/**
@@ -558,14 +558,14 @@ public class UserImpl extends UserBaseImpl {
 	}
 
 	/**
-	 * Returns <code>true</code> if the user is male.
+	 * Always returns true, since this information is no longer stored in the database
 	 *
-	 * @return <code>true</code> if the user is male; <code>false</code>
-	 *         otherwise
+	 * @deprecated As of Mueller (7.2.x)
 	 */
+	@Deprecated
 	@Override
 	public boolean getMale() throws PortalException {
-		return getContact().getMale();
+		return true;
 	}
 
 	@Override
@@ -648,8 +648,7 @@ public class UserImpl extends UserBaseImpl {
 		throws PortalException {
 
 		return UserConstants.getPortraitURL(
-			themeDisplay.getPathImage(), isMale(), getPortraitId(),
-			getUserUuid());
+			themeDisplay.getPathImage(), getPortraitId(), getUserUuid());
 	}
 
 	@Override
@@ -893,14 +892,26 @@ public class UserImpl extends UserBaseImpl {
 		return true;
 	}
 
+	/**
+	 * Always returns false, since this information is no longer stored in the database
+	 *
+	 * @deprecated As of Mueller (7.2.x)
+	 */
+	@Deprecated
 	@Override
 	public boolean isFemale() throws PortalException {
-		return getFemale();
+		return false;
 	}
 
+	/**
+	 * Always returns true, since this information is no longer stored in the database
+	 *
+	 * @deprecated As of Mueller (7.2.x)
+	 */
+	@Deprecated
 	@Override
 	public boolean isMale() throws PortalException {
-		return getMale();
+		return true;
 	}
 
 	@Override

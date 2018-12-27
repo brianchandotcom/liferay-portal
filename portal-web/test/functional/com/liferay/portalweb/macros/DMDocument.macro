@@ -1166,19 +1166,6 @@ definition {
 	}
 
 	macro sharePG {
-		var key_dmDocumentTitle = "${dmDocumentTitle}";
-
-		AssertClick(
-			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_TITLE",
-			value1 = "${dmDocumentTitle}"
-		);
-
-		DMDocument.viewDocumentTitleCmdPG(dmDocumentTitle = "${dmDocumentTitle}");
-
-		var key_text = "Share";
-
-		AssertClick(locator1 = "Button#ANY", value1 = "Share");
-
 		IFrame.selectModalFrame();
 
 		Type(

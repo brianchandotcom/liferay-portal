@@ -141,7 +141,6 @@ definition {
 		AssertConsoleTextPresent(value1 = "TestSiteRole");
 	}
 
-	@ignore = "true"
 	@priority = "4"
 	test AssertSSOIdleSessionTakesPrecedenceOverIdPSessionTimeout {
 		property test.name.skip.portal.instance = "CPSAML#AssertSSOIdleSessionTakesPrecedenceOverIdPSessionTimeout";
@@ -227,7 +226,6 @@ definition {
 		User.viewLoggedOutPG();
 	}
 
-	@ignore = "true"
 	@priority = "4"
 	test AssertSSOSessionExistsAfterSPSessionTimeout {
 		property test.name.skip.portal.instance = "CPSAML#AssertSSOSessionExistsAfterSPSessionTimeout";
@@ -271,7 +269,6 @@ definition {
 		User.viewLoggedInPG(userFirstName = "Test", userLastName = "Test");
 	}
 
-	@ignore = "true"
 	@priority = "4"
 	test AssertSSOSessionExpiresAfterMaximumSessionAge {
 		property test.name.skip.portal.instance = "CPSAML#AssertSSOSessionExpiresAfterMaximumSessionAge";

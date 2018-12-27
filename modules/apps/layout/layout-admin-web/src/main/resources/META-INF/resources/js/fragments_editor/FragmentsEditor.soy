@@ -4,7 +4,6 @@
  * FragmentsEditor
  */
 {template .render}
-	{@param availableLanguages: ?}
 	{@param classPK: ?}
 	{@param defaultEditorConfigurations: ?}
 	{@param defaultLanguageId: string}
@@ -72,19 +71,12 @@
 	]}
 	{@param? status: string}
 	{@param? store: ?}
-	{@param? translationStatus: [
-		languageValues: list<[languageId: string, values: list<string>]>,
-		translationKeys: list<string>
-	]}
 	{@param? updateLayoutPageTemplateEntryAssetTypeURL: any}
 
 	<div class="fragments-editor" id="{$id}">
 		{call com.liferay.layout.admin.web.FragmentsEditorToolbar.render}
-			{param availableLanguages: $availableLanguages /}
 			{param classPK: $classPK /}
-			{param defaultLanguageId: $defaultLanguageId /}
 			{param fragmentsEditorSidebarVisible: $fragmentsEditorSidebarVisible ?: true /}
-			{param languageId: $languageId /}
 			{param lastSaveDate: $lastSaveDate ?: '' /}
 			{param publishLayoutPageTemplateEntryURL: $publishLayoutPageTemplateEntryURL /}
 			{param publishRedirectURL: $redirectURL /}
@@ -93,7 +85,6 @@
 			{param savingChanges: $savingChanges ?: false /}
 			{param spritemap: $spritemap /}
 			{param store: $store /}
-			{param translationStatus: $translationStatus /}
 		{/call}
 
 		{call com.liferay.layout.admin.web.FragmentsEditorSidebar.render}

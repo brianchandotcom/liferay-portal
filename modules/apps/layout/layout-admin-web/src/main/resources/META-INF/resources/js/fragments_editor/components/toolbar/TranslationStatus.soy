@@ -4,10 +4,10 @@
  * TranslationStatus
  */
 {template .render}
-	{@param availableLanguages: ?}
-	{@param defaultLanguageId: string}
-	{@param languageId: string}
-	{@param spritemap: string}
+	{@param? availableLanguages: ?}
+	{@param? defaultLanguageId: string}
+	{@param? languageId: string}
+	{@param? spritemap: string}
 	{@param? translationStatus: [
 		languageValues: list<[
 			languageId: string,
@@ -22,16 +22,20 @@
 			data-toggle="dropdown"
 			type="button"
 		>
-			<span class="inline-item">
-				{call .lexiconIcon}
-					{param name: $availableLanguages[$languageId].languageIcon /}
-					{param spritemap: $spritemap /}
-				{/call}
-			</span>
-			<span class="btn-section">{$availableLanguages[$languageId].languageLabel}</span>
+			{if $availableLanguages and $languageId and $spritemap}
+				<span class="inline-item">
+					{call .lexiconIcon}
+						{param name: $availableLanguages[$languageId].languageIcon /}
+						{param spritemap: $spritemap /}
+					{/call}
+				</span>
+				<span class="btn-section">
+					{$availableLanguages[$languageId].languageLabel}
+				</span>
+			{/if}
 		</button>
 
-		{if isNonnull($translationStatus)}
+		{if $availableLanguages and $defaultLanguageId and $languageId and $spritemap and $translationStatus}
 			<div class="dropdown-menu dropdown-menu-indicator-end fragments-editor-toolbar__translation-status-list">
 				{call .translationStatusItem}
 					{param isCurrent: $defaultLanguageId == $languageId /}

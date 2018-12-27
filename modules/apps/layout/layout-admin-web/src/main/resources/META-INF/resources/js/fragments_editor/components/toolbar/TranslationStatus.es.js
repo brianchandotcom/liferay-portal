@@ -1,10 +1,9 @@
 import Component from 'metal-component';
-import {Config} from 'metal-state';
 import {object} from 'metal';
 import Soy from 'metal-soy';
 
+import getConnectedComponent from '../../store/ConnectedComponent.es';
 import {CHANGE_LANGUAGE_ID} from '../../actions/actions.es';
-import {Store} from '../../store/store.es';
 import templates from './TranslationStatus.soy';
 
 /**
@@ -59,27 +58,18 @@ class TranslationStatus extends Component {
 
 }
 
-/**
- * State definition.
- * @review
- * @static
- * @type {!Object}
- */
-TranslationStatus.STATE = {
+const ConnectedTranslationStatus = getConnectedComponent(
+	TranslationStatus,
+	[
+		'availableLanguages',
+		'defaultLanguageId',
+		'languageId',
+		'spritemap',
+		'translationStatus'
+	]
+);
 
-	/**
-	 * Store instance
-	 * @default undefined
-	 * @instance
-	 * @memberOf TranslationStatus
-	 * @private
-	 * @review
-	 * @type {Store}
-	 */
-	store: Config.instanceOf(Store)
-};
+Soy.register(ConnectedTranslationStatus, templates);
 
-Soy.register(TranslationStatus, templates);
-
-export {TranslationStatus};
-export default TranslationStatus;
+export {ConnectedTranslationStatus};
+export default ConnectedTranslationStatus;

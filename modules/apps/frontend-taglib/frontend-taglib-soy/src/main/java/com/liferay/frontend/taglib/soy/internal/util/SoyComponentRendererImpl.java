@@ -76,12 +76,16 @@ public class SoyComponentRendererImpl implements SoyComponentRenderer {
 
 		_renderTemplate(request, writer, componentDescriptor, contextCopy);
 
-		if (!context.containsKey("element")) {
-			contextCopy.put(
-				"element", _getElementSelector(componentDescriptor, context));
-		}
+		if (componentDescriptor.isRenderJavascript()) {
+			if (!context.containsKey("element")) {
+				contextCopy.put(
+					"element",
+					_getElementSelector(componentDescriptor, context));
+			}
 
-		_renderJavaScript(request, writer, componentDescriptor, contextCopy);
+			_renderJavaScript(
+				request, writer, componentDescriptor, contextCopy);
+		}
 	}
 
 	private String _getElementSelector(

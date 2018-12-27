@@ -71,17 +71,6 @@ import org.osgi.service.component.annotations.Reference;
 public class AssetCategoriesSelectorPortlet extends MVCPortlet {
 
 	@Override
-	protected void doDispatch(RenderRequest renderRequest, RenderResponse renderResponse)
-			throws IOException, PortletException {
-
-		renderRequest.setAttribute(
-			AssetCategoriesSelectorPortletKeys.RESOLVED_MODULE_NAME,
-				_npmResolver.resolveModuleName("asset-categories-selector-web"));
-
-		super.doDispatch(renderRequest, renderResponse);
-	}
-
-	@Override
 	public void serveResource(
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws IOException, PortletException {
@@ -126,6 +115,19 @@ public class AssetCategoriesSelectorPortlet extends MVCPortlet {
 		}
 	}
 
+	@Override
+	protected void doDispatch(
+			RenderRequest renderRequest, RenderResponse renderResponse)
+		throws IOException, PortletException {
+
+		renderRequest.setAttribute(
+			AssetCategoriesSelectorPortletKeys.RESOLVED_MODULE_NAME,
+				_npmResolver.resolveModuleName(
+					"asset-categories-selector-web"));
+
+		super.doDispatch(renderRequest, renderResponse);
+	}
+
 	protected List<AssetCategory> getCategories(PortletRequest portletRequest)
 		throws PortalException {
 
@@ -161,9 +163,9 @@ public class AssetCategoriesSelectorPortlet extends MVCPortlet {
 		_assetCategoryService = assetCategoryService;
 	}
 
+	private AssetCategoryService _assetCategoryService;
+
 	@Reference
 	private NPMResolver _npmResolver;
-
-	private AssetCategoryService _assetCategoryService;
 
 }

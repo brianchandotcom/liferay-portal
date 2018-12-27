@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import java.io.InputStream;
 
 import java.util.Map;
-import java.util.Set;
 
 /**
  * @author Shuyang Zhou
@@ -32,25 +31,24 @@ import java.util.Set;
 public class SoyJavaScriptRendererUtil {
 
 	public static String getJavaScript(
-		Map<String, Object> context, String id, Set<String> modules) {
+		Map<String, Object> context, String id, String module) {
 
-		return getJavaScript(context, id, modules, true);
+		return getJavaScript(context, id, module, true);
 	}
 
 	public static String getJavaScript(
-		Map<String, Object> context, String id, Set<String> modules,
+		Map<String, Object> context, String id, String module,
 		boolean wrapper) {
 
 		JSONSerializer jsonSerializer = JSONFactoryUtil.createJSONSerializer();
 
 		String contextString = jsonSerializer.serializeDeep(context);
-		String modulesString = jsonSerializer.serialize(modules);
 		String wrapperString = jsonSerializer.serialize(wrapper);
 
 		return StringUtil.replace(
 			_JAVA_SCRIPT_TPL,
-			new String[] {"$CONTEXT", "$ID", "$MODULES", "$WRAPPER"},
-			new String[] {contextString, id, modulesString, wrapperString});
+			new String[] {"$CONTEXT", "$ID", "$MODULE", "$WRAPPER"},
+			new String[] {contextString, id, module, wrapperString});
 	}
 
 	private static final String _JAVA_SCRIPT_TPL;

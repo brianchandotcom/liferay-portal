@@ -31,7 +31,7 @@ List<Group> groups = null;
 if (step == 1) {
 	groups = selUser.getGroups();
 
-	if (!keywords.isEmpty()) {
+	if (Validator.isNotNull(keywords)) {
 		LinkedHashMap<String, Object> groupParams = new LinkedHashMap<>();
 
 		groupParams.put("inherit", Boolean.FALSE);

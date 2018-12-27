@@ -51,41 +51,28 @@ public class AsahFaroBackendIndividualSegmentsCheckerUtil {
 	public void checkIndividualSegments() throws PortalException {
 		_deleteAsahFaroBackendSegmentEntries();
 
-		Results<IndividualSegment> firstPageIndividualSegmentResults =
+		Results<IndividualSegment> individualSegmentResults =
 			_asahFaroBackendClient.getIndividualSegmentResults(
-				1, _PAGE_SIZE,
+				1, _MAX_PAGE_SIZE,
 				Collections.singletonList(OrderByField.desc("dateModified")));
 
-		int totalElements = firstPageIndividualSegmentResults.getTotal();
+		int totalElements = individualSegmentResults.getTotal();
 
 		if (_log.isDebugEnabled()) {
-			_log.debug(totalElements + " Active Segments found");
+			_log.debug(totalElements + " active individual segments found");
 		}
 
-		int totalPages = (int)Math.ceil((double)totalElements / _PAGE_SIZE);
-
-		if (totalPages == 0) {
+		if (totalElements == 0) {
 			return;
 		}
 
 		ServiceContext serviceContext = _getServiceContext();
 
-		if (totalPages > 0) {
-			_checkIndividualSegmentResultsPage(
-				firstPageIndividualSegmentResults, totalPages, 1,
-				firstPageIndividualSegmentResults.getTotal(), serviceContext);
-		}
+		List<IndividualSegment> items = individualSegmentResults.getItems();
 
-		if (totalPages > 1) {
-			for (int i = 2; i <= totalPages; i++) {
-				_checkIndividualSegmentResultsPage(
-					_asahFaroBackendClient.getIndividualSegmentResults(
-						i, _PAGE_SIZE,
-						Collections.singletonList(
-							OrderByField.desc("dateModified"))),
-					totalPages, i, totalElements, serviceContext);
-			}
-		}
+		items.forEach(
+			individualSegment -> _checkIndividualSegment(
+				individualSegment, serviceContext));
 	}
 
 	private void _checkIndividualSegment(
@@ -110,25 +97,6 @@ public class AsahFaroBackendIndividualSegmentsCheckerUtil {
 					individualSegment.getId(),
 				pe);
 		}
-	}
-
-	private void _checkIndividualSegmentResultsPage(
-		Results<IndividualSegment> pageIndividualSegmentResults, int totalPages,
-		int currentPage, int totalElements, ServiceContext serviceContext) {
-
-		if (_log.isDebugEnabled()) {
-			_log.debug(
-				String.format(
-					"Checking Individual Segments: Current Page %d; Page " +
-						"Size: %s; Total Pages: %d; Total elements: %d",
-					currentPage, _PAGE_SIZE, totalPages, totalElements));
-		}
-
-		List<IndividualSegment> items = pageIndividualSegmentResults.getItems();
-
-		items.forEach(
-			individualSegment -> _checkIndividualSegment(
-				individualSegment, serviceContext));
 	}
 
 	private void _deleteAsahFaroBackendSegmentEntries() {
@@ -157,7 +125,7 @@ public class AsahFaroBackendIndividualSegmentsCheckerUtil {
 		return serviceContext;
 	}
 
-	private static final int _PAGE_SIZE = 2;
+	private static final int _MAX_PAGE_SIZE = 100;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		AsahFaroBackendIndividualSegmentsCheckerUtil.class);

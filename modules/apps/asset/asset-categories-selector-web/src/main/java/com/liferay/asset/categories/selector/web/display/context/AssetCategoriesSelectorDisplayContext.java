@@ -55,6 +55,8 @@ public class AssetCategoriesSelectorDisplayContext {
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
 		_request = request;
+		_resolvedModuleName = (String)_request.getAttribute(
+			AssetCategoriesSelectorPortletKeys.RESOLVED_MODULE_NAME);
 	}
 
 	public JSONArray getCategoriesJSONArray() throws Exception {
@@ -103,8 +105,7 @@ public class AssetCategoriesSelectorDisplayContext {
 	}
 
 	public String getModuleName() {
-		return (String)_request.getAttribute(
-			AssetCategoriesSelectorPortletKeys.RESOLVED_MODULE_NAME);
+		return _resolvedModuleName;
 	}
 
 	public String getSelectedCategories() {
@@ -269,6 +270,7 @@ public class AssetCategoriesSelectorDisplayContext {
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
 	private final HttpServletRequest _request;
+	private final String _resolvedModuleName;
 	private String _selectedCategories;
 	private Boolean _singleSelect;
 	private String _type;

@@ -24,6 +24,7 @@ page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
 page import="com.liferay.portal.kernel.util.PortalUtil" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %><%@
 page import="com.liferay.portal.kernel.workflow.WorkflowConstants" %>
+<%@ page import="com.liferay.document.library.preview.image.internal.constants.ImageDLPreviewWebKeys" %>
 
 <%@ page import="java.util.HashMap" %><%@
 page import="java.util.Map" %>

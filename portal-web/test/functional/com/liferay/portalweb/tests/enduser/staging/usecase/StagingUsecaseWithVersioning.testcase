@@ -854,6 +854,46 @@ definition {
 		);
 	}
 
+	@description = "This is a use case for LPS-87030."
+	@priority = "3"
+	test StagingTurnOffPageTemplatePropagation {
+		PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "site-name-staging");
+
+		PageTemplatesAdmin.addCollection(collectionName = "Page Template Collection");
+
+		PageTemplatesAdmin.add(
+			pageTemplateType = "Widget Page Template",
+			pageTemplateName = "Page Template Name"
+		);
+
+		PageTemplatesAdmin.configureWidgetPageTemplateLayout(columnName = "1 Column");
+
+		Navigator.openStagingSiteURL(siteName = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		ContentPages.addPage(
+			collectionName = "Page Template Collection",
+			pageName = "Test Page Name",
+			pageTemplateName = "Page Template Name"
+		);
+
+		Page.togglePageTemplateInheritChanges(toggleValue = "disable");
+
+		Button.clickSave();
+
+		SitePages.gotoPageMenuItem(
+			menuItem = "Configure",
+			pageName = "Test Page Name"
+		);
+
+		Page.viewPageLayoutColumn(columnName = "1 Column");
+	}
+
 	@priority = "4"
 	test StagingVersionHistory {
 		Click(locator1 = "Icon#STAGING_BAR_VERTICAL_ELLIPSIS");

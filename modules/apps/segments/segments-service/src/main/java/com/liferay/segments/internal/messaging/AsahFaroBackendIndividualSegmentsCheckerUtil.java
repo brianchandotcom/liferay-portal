@@ -23,7 +23,7 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.segments.constants.SegmentsConstants;
 import com.liferay.segments.internal.asah.client.AsahFaroBackendClient;
 import com.liferay.segments.internal.asah.client.model.IndividualSegment;
@@ -139,7 +139,7 @@ public class AsahFaroBackendIndividualSegmentsCheckerUtil {
 	}
 
 	private ServiceContext _getServiceContext() throws PortalException {
-		long companyId = PortalUtil.getDefaultCompanyId();
+		long companyId = _portal.getDefaultCompanyId();
 
 		Company company = _companyLocalService.getCompany(companyId);
 
@@ -163,6 +163,9 @@ public class AsahFaroBackendIndividualSegmentsCheckerUtil {
 
 	@Reference
 	private CompanyLocalService _companyLocalService;
+
+	@Reference
+	private Portal _portal;
 
 	@Reference
 	private SegmentsEntryLocalService _segmentsEntryLocalService;

@@ -15,6 +15,7 @@
 package com.liferay.configuration.admin.web.internal.category;
 
 import com.liferay.configuration.admin.category.ConfigurationCategory;
+
 import org.osgi.service.component.annotations.Component;
 
 /**

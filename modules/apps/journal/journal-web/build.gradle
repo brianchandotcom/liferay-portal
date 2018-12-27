@@ -20,6 +20,7 @@ dependencies {
 	compileOnly project(":apps:expando:expando-taglib")
 	compileOnly project(":apps:export-import:export-import-changeset-api")
 	compileOnly project(":apps:export-import:export-import-changeset-taglib")
+	compileOnly project(":apps:frontend-js:frontend-js-loader-modules-extender-api")
 	compileOnly project(":apps:frontend-taglib:frontend-taglib")
 	compileOnly project(":apps:frontend-taglib:frontend-taglib-clay")
 	compileOnly project(":apps:frontend-taglib:frontend-taglib-form-navigator")
@@ -45,7 +46,7 @@ dependencies {
 	compileOnly project(":core:petra:petra-lang")
 	compileOnly project(":core:petra:petra-string")
 
-	soyCompile project(":apps:frontend-js:frontend-js-metal-web")
-	soyCompile project(":apps:frontend-js:frontend-js-web")
-	soyCompile project(":apps:frontend-taglib:frontend-taglib")
+	jsCompile project(":apps:frontend-js:frontend-js-metal-web")
+	jsCompile project(":apps:frontend-js:frontend-js-web")
+	jsCompile project(":apps:frontend-taglib:frontend-taglib")
 }

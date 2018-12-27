@@ -29,4 +29,6 @@ public class JournalWebKeys {
 
 	public static final String JOURNAL_FOLDERS = "JOURNAL_FOLDERS";
 
+	public static final String RESOLVED_MODULE_NAME = "RESOLVED_MODULE_NAME";
+
 }

@@ -28,6 +28,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemList;
 import com.liferay.journal.configuration.JournalServiceConfiguration;
 import com.liferay.journal.constants.JournalPortletKeys;
+import com.liferay.journal.constants.JournalWebKeys;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleConstants;
 import com.liferay.journal.model.JournalArticleDisplay;
@@ -480,6 +481,10 @@ public class JournalDisplayContext {
 		}
 
 		return StringPool.BLANK;
+	}
+
+	public String getModuleName() {
+		return (String)_request.getAttribute(JournalWebKeys.RESOLVED_MODULE_NAME);
 	}
 
 	public List<NavigationItem> getInfoPanelNavigationItems() {

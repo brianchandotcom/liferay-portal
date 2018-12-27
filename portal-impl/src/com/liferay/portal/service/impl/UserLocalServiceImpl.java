@@ -238,7 +238,6 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		String openId = StringPool.BLANK;
 		long prefixId = 0;
 		long suffixId = 0;
-		boolean male = true;
 		int birthdayMonth = Calendar.JANUARY;
 		int birthdayDay = 1;
 		int birthdayYear = 1970;
@@ -266,7 +265,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		User defaultAdminUser = addUser(
 			creatorUserId, companyId, autoPassword, password1, password2,
 			autoScreenName, screenName, emailAddress, facebookId, openId,
-			locale, firstName, middleName, lastName, prefixId, suffixId, male,
+			locale, firstName, middleName, lastName, prefixId, suffixId, true,
 			birthdayMonth, birthdayDay, birthdayYear, jobTitle, groupIds,
 			organizationIds, roleIds, userGroupIds, sendEmail, serviceContext);
 
@@ -738,7 +737,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 * @param  lastName the user's last name
 	 * @param  prefixId the user's name prefix ID
 	 * @param  suffixId the user's name suffix ID
-	 * @param  male whether the user is male
+	 * @param  male whether the user is male (ignored)
 	 * @param  birthdayMonth the user's birthday month (0-based, meaning 0 for
 	 *         January)
 	 * @param  birthdayDay the user's birthday day
@@ -789,7 +788,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 				creatorUserId, companyId, autoPassword, password1, password2,
 				autoScreenName, screenName, emailAddress, facebookId, openId,
 				locale, firstName, middleName, lastName, prefixId, suffixId,
-				male, birthdayMonth, birthdayDay, birthdayYear, jobTitle,
+				true, birthdayMonth, birthdayDay, birthdayYear, jobTitle,
 				groupIds, organizationIds, roleIds, userGroupIds, sendEmail,
 				serviceContext);
 		}
@@ -904,7 +903,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 * @param  lastName the user's last name
 	 * @param  prefixId the user's name prefix ID
 	 * @param  suffixId the user's name suffix ID
-	 * @param  male whether the user is male
+	 * @param  male whether the user is male (ignored)
 	 * @param  birthdayMonth the user's birthday month (0-based, meaning 0 for
 	 *         January)
 	 * @param  birthdayDay the user's birthday day
@@ -1104,7 +1103,6 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		contact.setLastName(lastName);
 		contact.setPrefixId(prefixId);
 		contact.setSuffixId(suffixId);
-		contact.setMale(male);
 		contact.setBirthday(birthday);
 		contact.setJobTitle(jobTitle);
 
@@ -4578,7 +4576,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 * @param  lastName the user's last name
 	 * @param  prefixId the user's name prefix ID
 	 * @param  suffixId the user's name suffix ID
-	 * @param  male whether the user is male
+	 * @param  male whether the user is male (ignored)
 	 * @param  birthdayMonth the user's birthday month (0-based, meaning 0 for
 	 *         January)
 	 * @param  birthdayDay the user's birthday day
@@ -4710,7 +4708,6 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			contact.setLastName(lastName);
 			contact.setPrefixId(prefixId);
 			contact.setSuffixId(suffixId);
-			contact.setMale(male);
 			contact.setBirthday(birthday);
 			contact.setJobTitle(jobTitle);
 
@@ -5313,7 +5310,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 * @param  lastName the user's new last name
 	 * @param  prefixId the user's new name prefix ID
 	 * @param  suffixId the user's new name suffix ID
-	 * @param  male whether user is male
+	 * @param  male whether user is male (ignored)
 	 * @param  birthdayMonth the user's new birthday month (0-based, meaning 0
 	 *         for January)
 	 * @param  birthdayDay the user's new birthday day
@@ -5499,7 +5496,6 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		contact.setLastName(lastName);
 		contact.setPrefixId(prefixId);
 		contact.setSuffixId(suffixId);
-		contact.setMale(male);
 		contact.setBirthday(birthday);
 		contact.setSmsSn(smsSn);
 		contact.setFacebookSn(facebookSn);
@@ -5613,7 +5609,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 * @param      lastName the user's new last name
 	 * @param      prefixId the user's new name prefix ID
 	 * @param      suffixId the user's new name suffix ID
-	 * @param      male whether user is male
+	 * @param      male whether user is male (ignored)
 	 * @param      birthdayMonth the user's new birthday month (0-based, meaning
 	 *             0 for January)
 	 * @param      birthdayDay the user's new birthday day
@@ -5665,7 +5661,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			reminderQueryQuestion, reminderQueryAnswer, screenName,
 			emailAddress, facebookId, openId, true, null, languageId,
 			timeZoneId, greeting, comments, firstName, middleName, lastName,
-			prefixId, suffixId, male, birthdayMonth, birthdayDay, birthdayYear,
+			prefixId, suffixId, true, birthdayMonth, birthdayDay, birthdayYear,
 			smsSn, facebookSn, jabberSn, skypeSn, twitterSn, jobTitle, groupIds,
 			organizationIds, roleIds, userGroupRoles, userGroupIds,
 			serviceContext);

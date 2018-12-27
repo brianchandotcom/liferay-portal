@@ -12,111 +12,135 @@ const INITIAL_STATE = {
 
 	/**
 	 * Id of the active item
-	 * @default null
-	 * @instance
+	 * @default ''
 	 * @review
 	 * @type {string}
 	 */
 	activeItemId: Config
 		.string()
-		.value(null),
+		.value(''),
 
 	/**
 	 * Type of the active item
-	 * @default null
-	 * @instance
+	 * @default ''
 	 * @review
 	 * @type {string}
 	 */
 	activeItemType: Config
 		.string()
-		.value(null),
+		.value(''),
 
 	/**
 	 * URL for associating fragment entries to the underlying model.
-	 * @default undefined
-	 * @instance
-	 * @memberOf FragmentsEditor
+	 * @default ''
 	 * @review
-	 * @type {!string}
+	 * @type {string}
 	 */
-	addFragmentEntryLinkURL: Config.string().required(),
+	addFragmentEntryLinkURL: Config
+		.string()
+		.value(''),
+
+	/**
+	 * Object of available languages.
+	 * @default {}
+	 * @review
+	 * @type {object}
+	 */
+	availableLanguages: Config
+		.objectOf(
+			Config.shapeOf(
+				{
+					languageId: Config.string(),
+					languageLabel: Config.string()
+				}
+			)
+		)
+		.value({}),
 
 	/**
 	 * Class name id used for storing changes.
-	 * @default undefined
-	 * @instance
-	 * @memberOf FragmentsEditor
+	 * @default ''
 	 * @review
-	 * @type {!string}
+	 * @type {string}
 	 */
-	classNameId: Config.string().required(),
+	classNameId: Config
+		.string()
+		.value(''),
 
 	/**
 	 * Class primary key used for storing changes.
-	 * @default undefined
-	 * @instance
-	 * @memberOf FragmentsEditor
+	 * @default ''
 	 * @review
-	 * @type {!string}
+	 * @type {string}
 	 */
-	classPK: Config.string().required(),
+	classPK: Config
+		.string()
+		.value(''),
+
+	/**
+	 * Default language id.
+	 * @default ''
+	 * @review
+	 * @type {string}
+	 */
+	defaultLanguageId: Config
+		.string()
+		.value(''),
 
 	/**
 	 * URL for removing fragment entries of the underlying model.
-	 * @default undefined
-	 * @instance
-	 * @memberOf FragmentsEditor
+	 * @default ''
 	 * @review
-	 * @type {!string}
+	 * @type {string}
 	 */
-	deleteFragmentEntryLinkURL: Config.string().required(),
+	deleteFragmentEntryLinkURL: Config
+		.string()
+		.value(''),
 
 	/**
 	 * List of fragment instances being used.
 	 * @default {}
-	 * @instance
 	 * @review
-	 * @type {!object}
+	 * @type {object}
 	 */
-	fragmentEntryLinks: Config.objectOf(
-		Config.shapeOf(
-			{
-				config: Config.object().value({}),
-				content: Config.any().value(''),
-				editableValues: Config.object().value({}),
-				fragmentEntryId: Config.string().required(),
-				fragmentEntryLinkId: Config.string().required(),
-				name: Config.string().required()
-			}
+	fragmentEntryLinks: Config
+		.objectOf(
+			Config.shapeOf(
+				{
+					config: Config.object().value({}),
+					content: Config.any().value(''),
+					editableValues: Config.object().value({}),
+					fragmentEntryId: Config.string().required(),
+					fragmentEntryLinkId: Config.string().required(),
+					name: Config.string().required()
+				}
+			)
 		)
-	).value({}),
+		.value({}),
 
 	/**
 	 * Allow opening/closing fragments editor sidebar
 	 * @default true
-	 * @instance
-	 * @memberOf FragmentsEditor
-	 * @private
 	 * @review
 	 * @type {boolean}
 	 */
-	fragmentsEditorSidebarVisible: Config.bool().value(true),
+	fragmentsEditorSidebarVisible: Config
+		.bool()
+		.value(true),
 
 	/**
 	 * If true, editable values should be highlighted.
 	 * @default false
-	 * @instance
 	 * @review
 	 * @type {boolean}
 	 */
-	highlightMapping: Config.bool()
+	highlightMapping: Config
+		.bool()
 		.value(false),
 
 	/**
 	 * Border of the target item where another item is being dragged to
 	 * @default null
-	 * @instance
 	 * @review
 	 * @type {string}
 	 */
@@ -126,72 +150,67 @@ const INITIAL_STATE = {
 
 	/**
 	 * Id of the element where a fragment is being dragged over
-	 * @default null
-	 * @instance
+	 * @default ''
 	 * @review
 	 * @type {string}
 	 */
 	dropTargetItemId: Config
 		.string()
-		.value(null),
+		.value(''),
 
 	/**
 	 * Type of the element where a fragment is being dragged over
-	 * @default null
-	 * @instance
+	 * @default ''
 	 * @review
 	 * @type {string}
 	 */
 	dropTargetItemType: Config
 		.string()
-		.value(null),
+		.value(''),
 
 	/**
 	 * Id of the last element that was hovered
-	 * @default null
-	 * @instance
+	 * @default ''
 	 * @review
 	 * @type {string}
 	 */
 	hoveredItemId: Config
 		.string()
-		.value(null),
+		.value(''),
 
 	/**
 	 * Type of the last element that was hovered
-	 * @default null
-	 * @instance
+	 * @default ''
 	 * @review
 	 * @type {string}
 	 */
 	hoveredItemType: Config
 		.string()
-		.value(null),
+		.value(''),
 
 	/**
 	 * Currently selected language id.
-	 * @default undefined
-	 * @instance
+	 * @default ''
 	 * @review
-	 * @type {!string}
+	 * @type {string}
 	 */
-	languageId: Config.string().required(),
+	languageId: Config
+		.string()
+		.value(''),
 
 	/**
 	 * Last date when the autosave has been executed.
 	 * @default ''
-	 * @instance
 	 * @review
 	 * @type {string}
 	 */
-	lastSaveDate: Config.string()
-		.internal()
+	lastSaveDate: Config
+		.string()
 		.value(''),
 
 	/**
 	 * Data associated to the layout
 	 * @default {structure: []}
-	 * @instance
 	 * @review
 	 * @type {{structure: Array}}
 	 */
@@ -222,47 +241,45 @@ const INITIAL_STATE = {
 		)
 		.value(
 			{
+				nextColumnId: 0,
+				nextRowId: 0,
 				structure: []
 			}
 		),
 
 	/**
 	 * Portlet namespace needed for prefixing form inputs
-	 * @default undefined
-	 * @instance
-	 * @memberOf FragmentsEditor
+	 * @default ''
 	 * @review
-	 * @type {!string}
+	 * @type {string}
 	 */
-	portletNamespace: Config.string().required(),
+	portletNamespace: Config
+		.string()
+		.value(''),
 
 	/**
 	 * URL for getting a fragment content.
-	 * @default undefined
-	 * @instance
-	 * @memberOf FragmentsEditor
+	 * @default ''
 	 * @review
-	 * @type {!string}
+	 * @type {string}
 	 */
-	renderFragmentEntryURL: Config.string().required(),
+	renderFragmentEntryURL: Config
+		.string()
+		.value(''),
 
 	/**
 	 * When true, it indicates that are changes pending to save.
 	 * @default false
-	 * @instance
 	 * @review
 	 * @type {boolean}
 	 */
-	savingChanges: Config.bool()
-		.internal()
+	savingChanges: Config
+		.bool()
 		.value(false),
 
 	/**
 	 * Editable type of the field that is being mapped
 	 * @default ''
-	 * @instance
-	 * @memberOf FragmentsEditor
-	 * @private
 	 * @review
 	 * @type {string}
 	 */
@@ -273,9 +290,6 @@ const INITIAL_STATE = {
 	/**
 	 * EditableId of the field that is being mapped
 	 * @default ''
-	 * @instance
-	 * @memberOf FragmentsEditor
-	 * @private
 	 * @review
 	 * @type {string}
 	 */
@@ -286,9 +300,6 @@ const INITIAL_STATE = {
 	/**
 	 * FragmentEntryLinkId of the field that is being mapped
 	 * @default ''
-	 * @instance
-	 * @memberOf FragmentsEditor
-	 * @private
 	 * @review
 	 * @type {string}
 	 */
@@ -299,9 +310,6 @@ const INITIAL_STATE = {
 	/**
 	 * Mapped field ID of the field that is being mapped
 	 * @default ''
-	 * @instance
-	 * @memberOf FragmentsEditor
-	 * @private
 	 * @review
 	 * @type {string}
 	 */
@@ -312,9 +320,6 @@ const INITIAL_STATE = {
 	/**
 	 * Flag indicating if the SelectMappingDialog should be shown
 	 * @default false
-	 * @instance
-	 * @memberOf FragmentsEditor
-	 * @private
 	 * @review
 	 * @type {boolean}
 	 */
@@ -325,9 +330,6 @@ const INITIAL_STATE = {
 	/**
 	 * Flag indicating if the SelectMappingTypeDialog should be shown
 	 * @default false
-	 * @instance
-	 * @memberOf FragmentsEditor
-	 * @private
 	 * @review
 	 * @type {boolean}
 	 */
@@ -336,23 +338,65 @@ const INITIAL_STATE = {
 		.value(false),
 
 	/**
-	 * URL for updating layout data.
-	 * @default undefined
-	 * @instance
+	 * Path of the available icons.
+	 * @default ''
 	 * @review
-	 * @type {!string}
+	 * @type {string}
 	 */
-	updateLayoutPageTemplateDataURL: Config.string().required(),
+	spritemap: Config
+		.string()
+		.value(''),
+
+	/**
+	 * Translation status
+	 * @default {languageValues: [], translationKeys: []}
+	 * @review
+	 * @type {{languageValues: object[], translationKeys: string[]}}
+	 */
+	translationStatus: Config
+		.shapeOf(
+			{
+				languageValues: Config.arrayOf(
+					Config.shapeOf(
+						{
+							languageId: Config.string(),
+							values: Config.arrayOf(
+								Config.string()
+							)
+						}
+					)
+				),
+				translationKeys: Config.arrayOf(
+					Config.string()
+				)
+			}
+		)
+		.value(
+			{
+				languageValues: [],
+				translationKeys: []
+			}
+		),
+
+	/**
+	 * URL for updating layout data.
+	 * @default ''
+	 * @review
+	 * @type {string}
+	 */
+	updateLayoutPageTemplateDataURL: Config
+		.string()
+		.value(''),
 
 	/**
 	 * URL for updating the asset type associated to a template.
-	 * @default undefined
-	 * @instance
-	 * @memberOf SelectMappingTypeDialog
+	 * @default ''
 	 * @review
-	 * @type {!string}
+	 * @type {string}
 	 */
-	updateLayoutPageTemplateEntryAssetTypeURL: Config.string().required()
+	updateLayoutPageTemplateEntryAssetTypeURL: Config
+		.string()
+		.value('')
 };
 
 export {INITIAL_STATE};

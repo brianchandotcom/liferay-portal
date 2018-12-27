@@ -94,9 +94,21 @@ public interface ImageTool {
 
 	public Image getDefaultSpacer();
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 *             #getDefaultUserPortrait}
+	 */
+	@Deprecated
 	public Image getDefaultUserFemalePortrait();
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 *             #getDefaultUserPortrait}
+	 */
+	@Deprecated
 	public Image getDefaultUserMalePortrait();
+
+	public Image getDefaultUserPortrait();
 
 	public Image getImage(byte[] bytes)
 		throws ImageResolutionException, IOException;

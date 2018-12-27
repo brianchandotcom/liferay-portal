@@ -22,5 +22,6 @@ dependencies {
 	testIntegrationCompile project(":apps:journal:journal-test-util")
 	testIntegrationCompile project(":apps:petra:petra-json-web-service-client")
 	testIntegrationCompile project(":apps:portal-odata:portal-odata-api")
+	testIntegrationCompile project(":core:registry-api")
 	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
 }

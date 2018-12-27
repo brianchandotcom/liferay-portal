@@ -14,6 +14,7 @@
 
 package com.liferay.segments.internal.messaging;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -28,6 +29,7 @@ import com.liferay.segments.internal.asah.client.AsahFaroBackendClient;
 import com.liferay.segments.internal.asah.client.model.IndividualSegment;
 import com.liferay.segments.internal.asah.client.model.Results;
 import com.liferay.segments.internal.asah.client.util.OrderByField;
+import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.service.SegmentsEntryLocalService;
 
 import java.util.Collections;
@@ -49,8 +51,6 @@ import org.osgi.service.component.annotations.Reference;
 public class AsahFaroBackendIndividualSegmentsCheckerUtil {
 
 	public void checkIndividualSegments() throws PortalException {
-		_deleteAsahFaroBackendSegmentEntries();
-
 		Results<IndividualSegment> individualSegmentResults =
 			_asahFaroBackendClient.getIndividualSegmentResults(
 				1, _MAX_PAGE_SIZE,
@@ -71,42 +71,58 @@ public class AsahFaroBackendIndividualSegmentsCheckerUtil {
 		List<IndividualSegment> items = individualSegmentResults.getItems();
 
 		items.forEach(
-			individualSegment -> _checkIndividualSegment(
+			individualSegment -> _addIndividualSegment(
 				individualSegment, serviceContext));
 	}
 
-	private void _checkIndividualSegment(
+	private void _addIndividualSegment(
 		IndividualSegment individualSegment, ServiceContext serviceContext) {
 
-		try {
-			Map<Locale, String> nameMap = new HashMap<Locale, String>() {
-				{
-					put(LocaleUtil.getDefault(), individualSegment.getName());
-				}
-			};
+		Map<Locale, String> nameMap = new HashMap<Locale, String>() {
+			{
+				put(LocaleUtil.getDefault(), individualSegment.getName());
+			}
+		};
 
-			_segmentsEntryLocalService.addSegmentsEntry(
-				nameMap, Collections.emptyMap(), true, null,
-				individualSegment.getId(),
-				SegmentsConstants.SOURCE_ASAH_FARO_BACKEND,
-				User.class.getName(), serviceContext);
+		SegmentsEntry segmentsEntry =
+			_segmentsEntryLocalService.fetchSegmentsEntry(
+				serviceContext.getScopeGroupId(), individualSegment.getId());
+
+		try {
+			if (segmentsEntry == null) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(
+						"Adding new segment from individual segment with ID " +
+							individualSegment.getId());
+				}
+
+				_segmentsEntryLocalService.addSegmentsEntry(
+					nameMap, Collections.emptyMap(), true, null,
+					individualSegment.getId(),
+					SegmentsConstants.SOURCE_ASAH_FARO_BACKEND,
+					User.class.getName(), serviceContext);
+
+				return;
+			}
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					StringBundler.concat(
+						"Updating existing segment with ID ",
+						segmentsEntry.getSegmentsEntryId(),
+						" from individual segment with ID ",
+						individualSegment.getId()));
+			}
+
+			_segmentsEntryLocalService.updateSegmentsEntry(
+				segmentsEntry.getSegmentsEntryId(), nameMap, null, true, null,
+				individualSegment.getId(), serviceContext);
 		}
 		catch (PortalException pe) {
 			_log.error(
-				"Unable to Check Individual Segment with ID: " +
+				"Unable to process individual segment with ID " +
 					individualSegment.getId(),
 				pe);
-		}
-	}
-
-	private void _deleteAsahFaroBackendSegmentEntries() {
-		try {
-			_segmentsEntryLocalService.deleteSegmentsEntries(
-				SegmentsConstants.SOURCE_ASAH_FARO_BACKEND);
-		}
-		catch (PortalException pe) {
-			_log.error(
-				"Error deleting segments entries: " + pe.getMessage(), pe);
 		}
 	}
 

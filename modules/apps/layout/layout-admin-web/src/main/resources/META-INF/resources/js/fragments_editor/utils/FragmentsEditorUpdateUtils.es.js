@@ -12,6 +12,7 @@ import {DROP_TARGET_ITEM_TYPES} from '../reducers/placeholders.es';
  * @param {!Array} array
  * @param {*} element
  * @param {!number} position
+ * @return {Array}
  */
 function add(array, element, position) {
 	const newArray = [...array];
@@ -21,8 +22,13 @@ function add(array, element, position) {
 	return newArray;
 }
 
+/**
+ * @param {string} itemId
+ * @param {DROP_TARGET_ITEM_TYPES} itemType
+ * @review
+ */
 function focusItem(itemId, itemType) {
-	let attr;
+	let attr = '';
 
 	if (itemType === DROP_TARGET_ITEM_TYPES.section) {
 		attr = 'data-layout-section-id';
@@ -82,6 +88,8 @@ function moveItem(store, moveItemAction, moveItemPayload) {
  * returns a new array
  * @param {!Array} array
  * @param {!number} position
+ * @return {Array}
+ * @review
  */
 function remove(array, position) {
 	const newArray = [...array];
@@ -118,9 +126,11 @@ function setIn(object, keyPath, value) {
  * @param {!Array<string>} keyPath Array of strings used for reaching the deep property
  * @param {!function} updater
  * @param {*} defaultValue
+ * @return {object}
+ * @review
  */
 function updateIn(object, keyPath, updater, defaultValue) {
-	const nextKey = keyPath[0];
+	const [nextKey] = keyPath;
 	const target = object instanceof Array ?
 		[...object] :
 		Object.assign({}, object);

@@ -50,6 +50,7 @@ class SidebarStructurePanel extends Component {
 				}
 			);
 	}
+
 }
 
 /**

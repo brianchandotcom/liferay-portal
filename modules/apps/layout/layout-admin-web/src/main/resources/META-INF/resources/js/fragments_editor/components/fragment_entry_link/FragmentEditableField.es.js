@@ -137,12 +137,12 @@ class FragmentEditableField extends Component {
 
 	/**
 	 * @inheritDoc
-	 * @param changes
+	 * @param {{_showTooltip: bool}} changes
 	 * @return {boolean}
 	 * @review
 	 */
 	shouldUpdate(changes) {
-		return !!changes._showTooltip;
+		return Boolean(changes._showTooltip);
 	}
 
 	/**
@@ -234,12 +234,12 @@ class FragmentEditableField extends Component {
 			(this.showMapping && !this._editing) ||
 			(getActiveEditableElement() !== this.refs.editable)
 		) {
-			if (!this.showMapping) {
-				this._showTooltip = false;
-				this._enableEditor();
+			if (this.showMapping) {
+				this._showTooltip = !this._showTooltip;
 			}
 			else {
-				this._showTooltip = !this._showTooltip;
+				this._showTooltip = false;
+				this._enableEditor();
 			}
 
 			if (!this._showTooltip) {
@@ -378,6 +378,7 @@ class FragmentEditableField extends Component {
 				}
 			);
 	}
+
 }
 
 /**
@@ -507,7 +508,10 @@ FragmentEditableField.STATE = {
 	 * @review
 	 * @type {boolean}
 	 */
-	_editing: Config.internal().bool().value(false),
+	_editing: Config
+		.internal()
+		.bool()
+		.value(false),
 
 	/**
 	 * Id of the timeout to save changes
@@ -529,7 +533,10 @@ FragmentEditableField.STATE = {
 	 * @review
 	 * @type {boolean}
 	 */
-	_showEditor: Config.internal().bool().value(false),
+	_showEditor: Config
+		.internal()
+		.bool()
+		.value(false),
 
 	/**
 	 * Flag indicating if the click tooltip should be visible.
@@ -540,7 +547,10 @@ FragmentEditableField.STATE = {
 	 * @review
 	 * @type {boolean}
 	 */
-	_showTooltip: Config.internal().bool().value(false),
+	_showTooltip: Config
+		.internal()
+		.bool()
+		.value(false),
 
 	/**
 	 * Reference element used for aligning the tooltip

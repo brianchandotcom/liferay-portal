@@ -156,6 +156,7 @@ class DisabledAreaPopover extends Component {
 	_setPosition(alignPosition) {
 		this._position = POPOVER_POSITIONS[alignPosition];
 	}
+
 }
 
 /**

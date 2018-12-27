@@ -8,10 +8,10 @@ import {object} from 'metal';
  */
 const KEY_ENTER = 13;
 
-let _destroyedCallback;
-let _editableElement;
-let _editor;
-let _editorEventHandler;
+let _destroyedCallback = null;
+let _editableElement = null;
+let _editor = null;
+let _editorEventHandler = null;
 
 /**
  * Destroys, if any, an existing instance of AlloyEditor.
@@ -119,7 +119,7 @@ function init(
 	_editorEventHandler.add(
 		nativeEditor.on(
 			'blur',
-			(event) => {
+			() => {
 				if (_editor._mainUI.state.hidden) {
 					requestAnimationFrame(destroy);
 				}

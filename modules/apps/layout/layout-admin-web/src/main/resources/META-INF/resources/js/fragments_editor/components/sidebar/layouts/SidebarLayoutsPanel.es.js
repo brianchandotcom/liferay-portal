@@ -154,11 +154,37 @@ SidebarLayoutsPanel.STATE = {
 		)
 	).value(
 		[
-			{columns: ['12']},
-			{columns: ['6', '6']},
-			{columns: ['4', '4', '4']},
-			{columns: ['3', '6', '3']},
-			{columns: ['3', '3', '3', '3']}
+			{
+				columns: ['12']
+			},
+			{
+				columns: [
+					'6',
+					'6'
+				]
+			},
+			{
+				columns: [
+					'4',
+					'4',
+					'4'
+				]
+			},
+			{
+				columns: [
+					'3',
+					'6',
+					'3'
+				]
+			},
+			{
+				columns: [
+					'3',
+					'3',
+					'3',
+					'3'
+				]
+			}
 		]
 	),
 

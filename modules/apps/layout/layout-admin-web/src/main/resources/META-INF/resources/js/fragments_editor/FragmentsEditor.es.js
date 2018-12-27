@@ -55,7 +55,9 @@ class FragmentsEditor extends Component {
 		this._setFragmentEntryLinkEditableValue(
 			event.fragmentEntryLinkId,
 			event.editableId,
-			{mappedField: event.key}
+			{
+				mappedField: event.key
+			}
 		);
 	}
 
@@ -68,7 +70,10 @@ class FragmentsEditor extends Component {
 	 * @private
 	 */
 	_swapListElements(list, indexA, indexB) {
-		[list[indexA], list[indexB]] = [list[indexB], list[indexA]];
+		[list[indexA], list[indexB]] = [
+			list[indexB],
+			list[indexA]
+		];
 
 		return list;
 	}

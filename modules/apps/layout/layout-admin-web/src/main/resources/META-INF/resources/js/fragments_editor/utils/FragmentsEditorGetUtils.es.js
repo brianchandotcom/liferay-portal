@@ -87,20 +87,21 @@ function getFragmentColumn(structure, fragmentEntryLinkId) {
  */
 function getFragmentRowIndex(structure, fragmentEntryLinkId) {
 	return structure.findIndex(
-		row => {
-			return row.columns.find(
-				column => {
-					return column.fragmentEntryLinkIds.find(
-						_fragmentEntryLinkId => (
-							_fragmentEntryLinkId === fragmentEntryLinkId
-						)
-					);
-				}
-			);
-		}
+		row => row.columns.find(
+			column => column.fragmentEntryLinkIds.find(
+				_fragmentEntryLinkId => (
+					_fragmentEntryLinkId === fragmentEntryLinkId
+				)
+			)
+		)
 	);
 }
 
+/**
+ * @param {string} keycode
+ * @return {MOVE_ITEM_DIRECTIONS}
+ * @review
+ */
 function getItemMoveDirection(keycode) {
 	let direction = null;
 
@@ -118,6 +119,8 @@ function getItemMoveDirection(keycode) {
  * Get the fragmentEntryLinkIds of the fragments inside the given section
  * @param {array} structure
  * @param {string} sectionId
+ * @return {string[]}
+ * @review
  */
 function getSectionFragmentEntryLinkIds(structure, sectionId) {
 	const section = structure[getSectionIndex(structure, sectionId)];
@@ -143,15 +146,15 @@ function getSectionFragmentEntryLinkIds(structure, sectionId) {
  */
 function getSectionIndex(structure, sectionId) {
 	return structure.findIndex(
-		row => {
-			return row.rowId === sectionId;
-		}
+		row => (row.rowId === sectionId)
 	);
 }
 
 /**
  * Get target item border from the direction the item is moving in
  * @param {!string} direction
+ * @return {DROP_TARGET_BORDERS}
+ * @review
  */
 function getTargetBorder(direction) {
 	let targetBorder = null;

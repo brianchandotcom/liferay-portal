@@ -37,6 +37,7 @@ class FragmentsEditorToolbar extends Component {
 	_handleToggleContextualSidebarButtonClick() {
 		this.store.dispatchAction(TOGGLE_SIDEBAR);
 	}
+
 }
 
 /**

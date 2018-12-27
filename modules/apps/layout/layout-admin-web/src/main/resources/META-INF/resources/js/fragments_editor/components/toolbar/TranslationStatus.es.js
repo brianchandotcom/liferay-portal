@@ -21,9 +21,7 @@ class TranslationStatus extends Component {
 
 		const languageValues = translationStatus.languageValues || [];
 		const sortedLanguageValues = languageValues.sort(
-			(languageA, languageB) => {
-				return languageB.values.length - languageA.values.length;
-			}
+			(languageA, languageB) => (languageB.values.length - languageA.values.length)
 		);
 
 		return object.mixin(
@@ -33,7 +31,9 @@ class TranslationStatus extends Component {
 				translationStatus: object.mixin(
 					{},
 					translationStatus,
-					{languageValues: sortedLanguageValues}
+					{
+						languageValues: sortedLanguageValues
+					}
 				)
 			}
 		);
@@ -56,6 +56,7 @@ class TranslationStatus extends Component {
 			}
 		);
 	}
+
 }
 
 /**

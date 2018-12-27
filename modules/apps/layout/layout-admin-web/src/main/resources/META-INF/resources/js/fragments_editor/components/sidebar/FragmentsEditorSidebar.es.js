@@ -50,6 +50,7 @@ class FragmentsEditorSidebar extends Component {
 	_handleHide() {
 		this.store.dispatchAction(HIDE_SIDEBAR);
 	}
+
 }
 
 /**

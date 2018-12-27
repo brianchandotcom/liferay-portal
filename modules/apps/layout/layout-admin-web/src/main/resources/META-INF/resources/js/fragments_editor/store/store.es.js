@@ -109,17 +109,15 @@ class Store extends State {
 	 */
 	dispatchAction(actionType, payload) {
 		this._dispatchPromise = this._dispatchPromise.then(
-			() => {
-				return this._reducers.reduce(
-					(promiseNextState, reducer) => {
-						return promiseNextState.then(
-							nextState => Promise.resolve(
-								reducer(nextState, actionType, payload)
-							)
-						);
-					},
-					Promise.resolve(this._state)
-				).then(
+			() => this._reducers.reduce(
+				(promiseNextState, reducer) => promiseNextState.then(
+					nextState => Promise.resolve(
+						reducer(nextState, actionType, payload)
+					)
+				),
+				Promise.resolve(this._state)
+			)
+				.then(
 					nextState => {
 						this._state = this._getFrozenState(nextState);
 
@@ -127,8 +125,7 @@ class Store extends State {
 
 						return this;
 					}
-				);
-			}
+				)
 		);
 
 		return this;
@@ -155,7 +152,10 @@ class Store extends State {
 	 * @review
 	 */
 	registerReducer(reducer) {
-		this._reducers = [...this._reducers, reducer];
+		this._reducers = [
+			...this._reducers,
+			reducer
+		];
 	}
 
 	/**
@@ -165,7 +165,10 @@ class Store extends State {
 	 * @see {Store.registerReducer}
 	 */
 	registerReducers(reducers) {
-		this._reducers = [...this._reducers, ...reducers];
+		this._reducers = [
+			...this._reducers,
+			...reducers
+		];
 	}
 
 	/**
@@ -177,7 +180,7 @@ class Store extends State {
 	 */
 	_getFrozenState(state) {
 		const differentState = Object.entries(state).some(
-			([key, value]) => value !== this._state[key]
+			entry => entry[1] !== this._state[entry[0]]
 		);
 
 		if (differentState) {
@@ -199,6 +202,7 @@ class Store extends State {
 	_setInitialState(initialState) {
 		this._state = this._getFrozenState(initialState);
 	}
+
 }
 
 /**

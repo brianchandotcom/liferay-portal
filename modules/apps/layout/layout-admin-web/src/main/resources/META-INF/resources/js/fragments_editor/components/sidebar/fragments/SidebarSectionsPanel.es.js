@@ -16,8 +16,7 @@ class SidebarSectionsPanel extends Component {
  * @static
  * @type {!Object}
  */
-SidebarSectionsPanel.STATE = {
-};
+SidebarSectionsPanel.STATE = {};
 
 Soy.register(SidebarSectionsPanel, templates);
 

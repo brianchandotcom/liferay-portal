@@ -83,8 +83,11 @@ class FragmentEntryLinkContent extends Component {
 					const editableValues = (
 						newEditableValues[EDITABLE_FRAGMENT_ENTRY_PROCESSOR] &&
 						newEditableValues[EDITABLE_FRAGMENT_ENTRY_PROCESSOR][editable.editableId]
-					) ? newEditableValues[EDITABLE_FRAGMENT_ENTRY_PROCESSOR][editable.editableId] :
-						{defaultValue: editable.content};
+					) ?
+						newEditableValues[EDITABLE_FRAGMENT_ENTRY_PROCESSOR][editable.editableId] :
+						{
+							defaultValue: editable.content
+						};
 
 					editable.editableValues = editableValues;
 				}
@@ -143,7 +146,9 @@ class FragmentEntryLinkContent extends Component {
 					node => new FragmentStyleEditor(
 						{
 							cssText: style.cssText,
-							editorsOptions: {imageSelectorURL: this.imageSelectorURL},
+							editorsOptions: {
+								imageSelectorURL: this.imageSelectorURL
+							},
 							fragmentEntryLinkId: this.fragmentEntryLinkId,
 							node,
 							portletNamespace: this.portletNamespace,
@@ -177,15 +182,15 @@ class FragmentEntryLinkContent extends Component {
 	_createEditables() {
 		this._destroyEditables();
 
-		this._editables = [
-			...this.refs.content.querySelectorAll('lfr-editable')
-		].map(
+		this._editables = [...this.refs.content.querySelectorAll('lfr-editable')].map(
 			editable => {
-				let editableValues = (
+				const editableValues = (
 					this.editableValues[EDITABLE_FRAGMENT_ENTRY_PROCESSOR] &&
 					this.editableValues[EDITABLE_FRAGMENT_ENTRY_PROCESSOR][editable.id]
 				) ? this.editableValues[EDITABLE_FRAGMENT_ENTRY_PROCESSOR][editable.id] :
-					{defaultValue: editable.innerHTML};
+					{
+						defaultValue: editable.innerHTML
+					};
 
 				const defaultEditorConfiguration = this
 					.defaultEditorConfigurations[editable.getAttribute('type')] ||
@@ -226,11 +231,11 @@ class FragmentEntryLinkContent extends Component {
 	_createStyles() {
 		const elements = [];
 
-		for (let styleIndex = 0; styleIndex < document.styleSheets.length; styleIndex++) {
+		for (let styleIndex = 0; styleIndex < document.styleSheets.length; styleIndex += 1) {
 			const cssStyle = document.styleSheets[styleIndex];
 
 			if (contains(this.refs.content, cssStyle.ownerNode) && cssStyle.rules) {
-				for (let ruleIndex = 0; ruleIndex < cssStyle.rules.length; ruleIndex++) {
+				for (let ruleIndex = 0; ruleIndex < cssStyle.rules.length; ruleIndex += 1) {
 					const cssRule = cssStyle.rules[ruleIndex];
 
 					elements.push(

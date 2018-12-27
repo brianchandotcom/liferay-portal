@@ -77,20 +77,22 @@ function selectMappeableTypeReducer(state, actionType, payload) {
 					payload.selectedMappingSubtypeId,
 					payload.selectedMappingTypeId,
 					state.updateLayoutPageTemplateEntryAssetTypeURL
-				).then(
-					() => {
-						nextState.selectedMappingTypes = payload.mappingTypes;
-						if (nextState.selectMappingDialogFragmentEntryLinkId &&
-							nextState.selectMappingDialogEditableId) {
-							nextState.selectMappingDialogVisible = true;
+				)
+					.then(
+						() => {
+							nextState.selectedMappingTypes = payload.mappingTypes;
+							if (nextState.selectMappingDialogFragmentEntryLinkId &&
+								nextState.selectMappingDialogEditableId) {
+								nextState.selectMappingDialogVisible = true;
+							}
+							resolve(nextState);
 						}
-						resolve(nextState);
-					}
-				).catch(
-					() => {
-						resolve(nextState);
-					}
-				);
+					)
+					.catch(
+						() => {
+							resolve(nextState);
+						}
+					);
 			}
 			else {
 				resolve(nextState);
@@ -133,6 +135,15 @@ function hideMappingTypeDialogReducer(state, actionType) {
 	return nextState;
 }
 
+/**
+ * @param {string} classPK
+ * @param {string} portletNamespace
+ * @param {string} selectedMappingSubtypeId
+ * @param {string} selectedMappingTypeId
+ * @param {string} updateLayoutPageTemplateEntryAssetTypeURL
+ * @return {object}
+ * @review
+ */
 function _selectMappingType(
 	classPK,
 	portletNamespace,

@@ -187,8 +187,8 @@ class FragmentEntryLinkList extends Component {
 	 * @private
 	 * @review
 	 */
-	prepareStateForRender(state) {
-		let _state = FragmentEntryLinkList._addDropTargetItemTypesToState(state);
+	prepareStateForRender(nextState) {
+		let _state = FragmentEntryLinkList._addDropTargetItemTypesToState(nextState);
 
 		_state = FragmentEntryLinkList._setEmptySections(_state);
 
@@ -321,7 +321,7 @@ class FragmentEntryLinkList extends Component {
 	 * @review
 	 */
 	_handleFragmentMove(event) {
-		const fragmentEntryLinkId = event.fragmentEntryLinkId;
+		const {fragmentEntryLinkId} = event;
 
 		const column = getFragmentColumn(
 			this.layoutData.structure,

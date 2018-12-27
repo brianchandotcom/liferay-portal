@@ -61,6 +61,7 @@ class FragmentsEditorSidebarContent extends Component {
 		this._panelId = panelId;
 		this._sidebarTitle = title;
 	}
+
 }
 
 /**

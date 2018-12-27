@@ -18,7 +18,7 @@ import templates from './SelectMappingDialog.soy';
  */
 
 const COMPATIBLE_TYPES = {
-	html: [
+	'html': [
 		'ddm-date',
 		'ddm-decimal',
 		'ddm-integer',
@@ -28,7 +28,7 @@ const COMPATIBLE_TYPES = {
 		'textarea'
 	],
 
-	image: [
+	'image': [
 		'ddm-image',
 		'image'
 	],
@@ -43,7 +43,7 @@ const COMPATIBLE_TYPES = {
 		'textarea'
 	],
 
-	text: [
+	'text': [
 		'ddm-date',
 		'ddm-decimal',
 		'ddm-integer',
@@ -56,19 +56,17 @@ const COMPATIBLE_TYPES = {
 /**
  * SelectMappingDialog
  */
-
 class SelectMappingDialog extends PortletBase {
 
 	/**
 	 * @inheritDoc
 	 * @review
 	 */
-
 	prepareStateForRender(state) {
-		const editableType = state.editableType;
+		const {_mappeableFields, editableType} = state;
 
-		const mappeableFields = state._mappeableFields ?
-			state._mappeableFields.map(
+		const mappeableFields = _mappeableFields ?
+			_mappeableFields.map(
 				mappeableField => (
 					{
 						enabled: (
@@ -80,12 +78,15 @@ class SelectMappingDialog extends PortletBase {
 						label: mappeableField.label
 					}
 				)
-			) : null;
+			) :
+			null;
 
 		return Object.assign(
 			{},
 			state,
-			{_mappeableFields: mappeableFields}
+			{
+				_mappeableFields: mappeableFields
+			}
 		);
 	}
 
@@ -93,7 +94,6 @@ class SelectMappingDialog extends PortletBase {
 	 * @inheritDoc
 	 * @review
 	 */
-
 	rendered() {
 		if (
 			this.visible &&
@@ -110,7 +110,6 @@ class SelectMappingDialog extends PortletBase {
 	 * @private
 	 * @review
 	 */
-
 	_handleMappeableFieldSelected(key = '') {
 		this.store
 			.dispatchAction(
@@ -131,7 +130,6 @@ class SelectMappingDialog extends PortletBase {
 	 * @private
 	 * @review
 	 */
-
 	_handleCancelButtonClick() {
 		this.store
 			.dispatchAction(
@@ -144,7 +142,6 @@ class SelectMappingDialog extends PortletBase {
 	 * @private
 	 * @review
 	 */
-
 	_handleUnmapButtonClick() {
 		this._handleMappeableFieldSelected('');
 	}
@@ -155,7 +152,6 @@ class SelectMappingDialog extends PortletBase {
 	 * @private
 	 * @review
 	 */
-
 	_handleMappeableFieldLinkClick(event) {
 		this._handleMappeableFieldSelected(
 			event.delegateTarget.dataset.key
@@ -166,14 +162,16 @@ class SelectMappingDialog extends PortletBase {
 	 * Load the list of mappeable fields from the server
 	 * @private
 	 * @review
+	 * @return {Promise}
 	 */
-
 	_loadMappeableFields() {
 		const classNameId = this.selectedMappingTypes.type ?
-			this.selectedMappingTypes.type.id : '';
+			this.selectedMappingTypes.type.id :
+			'';
 
 		const classTypeId = this.selectedMappingTypes.subtype ?
-			this.selectedMappingTypes.subtype.id : '';
+			this.selectedMappingTypes.subtype.id :
+			'';
 
 		this._loadingMappeableFields = true;
 		this._mappeableFields = null;
@@ -184,14 +182,16 @@ class SelectMappingDialog extends PortletBase {
 				classNameId,
 				classTypeId
 			}
-		).then(
-			response => response.json()
-		).then(
-			responseContent => {
-				this._loadingMappeableFields = false;
-				this._mappeableFields = responseContent;
-			}
-		);
+		)
+			.then(
+				response => response.json()
+			)
+			.then(
+				responseContent => {
+					this._loadingMappeableFields = false;
+					this._mappeableFields = responseContent;
+				}
+			);
 	}
 
 }
@@ -202,7 +202,6 @@ class SelectMappingDialog extends PortletBase {
  * @static
  * @type {!Object}
  */
-
 SelectMappingDialog.STATE = {
 
 	/**
@@ -213,7 +212,6 @@ SelectMappingDialog.STATE = {
 	 * @review
 	 * @type {string}
 	 */
-
 	editableId: Config
 		.string()
 		.value(''),
@@ -228,7 +226,6 @@ SelectMappingDialog.STATE = {
 	 * @review
 	 * @type {string}
 	 */
-
 	editableType: Config
 		.string()
 		.value(''),
@@ -241,7 +238,6 @@ SelectMappingDialog.STATE = {
 	 * @review
 	 * @type {string}
 	 */
-
 	fragmentEntryLinkId: Config
 		.string()
 		.value(''),
@@ -255,7 +251,6 @@ SelectMappingDialog.STATE = {
 	 * @review
 	 * @type {string}
 	 */
-
 	mappedFieldId: Config
 		.string()
 		.value(''),
@@ -268,7 +263,6 @@ SelectMappingDialog.STATE = {
 	 * @review
 	 * @type {!string}
 	 */
-
 	mappingFieldsURL: Config.string().required(),
 
 	/**
@@ -288,7 +282,6 @@ SelectMappingDialog.STATE = {
 	 *   }
 	 * }}
 	 */
-
 	selectedMappingTypes: Config
 		.shapeOf(
 			{
@@ -316,7 +309,6 @@ SelectMappingDialog.STATE = {
 	 * @review
 	 * @type {!string}
 	 */
-
 	spritemap: Config
 		.string()
 		.required(),
@@ -329,7 +321,6 @@ SelectMappingDialog.STATE = {
 	 * @review
 	 * @type {Store}
 	 */
-
 	store: Config.instanceOf(Store),
 
 	/**
@@ -341,7 +332,6 @@ SelectMappingDialog.STATE = {
 	 * @review
 	 * @type {boolean}
 	 */
-
 	_loadingMappeableFields: Config
 		.bool()
 		.value(false),
@@ -358,7 +348,6 @@ SelectMappingDialog.STATE = {
 	 *   label: !string
 	 * }>}
 	 */
-
 	_mappeableFields: Config
 		.arrayOf(
 			Config.shapeOf(

@@ -62,7 +62,7 @@ class SelectMappingTypeDialog extends PortletBase {
 		const selectInput = this.refs.modal.refs.selectMappingSubtype;
 
 		const mappingSubtype = this._mappingSubtypes.find(
-			mappingSubtype => mappingSubtype.id === selectInput.value
+			_mappingSubtype => _mappingSubtype.id === selectInput.value
 		);
 
 		this._selectedMappingSubtypeId = mappingSubtype.id;
@@ -78,7 +78,7 @@ class SelectMappingTypeDialog extends PortletBase {
 		const selectInput = this.refs.modal.refs.selectMappingType;
 
 		const mappingType = this._mappingTypes.find(
-			mappingType => mappingType.id === selectInput.value
+			_mappingType => _mappingType.id === selectInput.value
 		);
 
 		this._selectedMappingTypeId = mappingType.id;
@@ -96,10 +96,10 @@ class SelectMappingTypeDialog extends PortletBase {
 	_handleSubmitButtonClick() {
 		const mappingTypes = {};
 		const subtype = this._mappingSubtypes.find(
-			subtype => subtype.id === this._selectedMappingSubtypeId
+			_subtype => _subtype.id === this._selectedMappingSubtypeId
 		);
 		const type = this._mappingTypes.find(
-			type => type.id === this._selectedMappingTypeId
+			_type => _type.id === this._selectedMappingTypeId
 		);
 
 		if (subtype) {
@@ -134,6 +134,7 @@ class SelectMappingTypeDialog extends PortletBase {
 
 	/**
 	 * Change asset type selection dialog visibility.
+	 * @param {{newVal: bool}} change
 	 * @private
 	 * @review
 	 */
@@ -155,6 +156,7 @@ class SelectMappingTypeDialog extends PortletBase {
 	/**
 	 * Load a list of mapping subtypes.
 	 * @private
+	 * @return {Promise}
 	 * @review
 	 */
 	_loadMappingSubtypes() {
@@ -162,11 +164,14 @@ class SelectMappingTypeDialog extends PortletBase {
 
 		return this.fetch(
 			this.getAssetClassTypesURL,
-			{classNameId: this._selectedMappingTypeId}
+			{
+				classNameId: this._selectedMappingTypeId
+			}
 		)
 			.then(
 				response => response.json()
-			).then(
+			)
+			.then(
 				response => {
 					this._mappingSubtypes = response;
 				}
@@ -176,7 +181,7 @@ class SelectMappingTypeDialog extends PortletBase {
 	/**
 	 * Load a list of mapping types.
 	 * @private
-	 * @return {Promise<Response>}
+	 * @return {Promise}
 	 * @review
 	 */
 	_loadMappingTypes() {
@@ -190,6 +195,7 @@ class SelectMappingTypeDialog extends PortletBase {
 				}
 			);
 	}
+
 }
 
 /**

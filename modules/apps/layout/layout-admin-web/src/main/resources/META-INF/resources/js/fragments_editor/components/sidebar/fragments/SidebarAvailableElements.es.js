@@ -63,7 +63,10 @@ class SidebarAvailableElements extends Component {
 
 			let nearestBorder = DROP_TARGET_BORDERS.bottom;
 
-			if (Math.abs(mouseY - targetItemRegion.top) <= Math.abs(mouseY - targetItemRegion.bottom)) {
+			if (
+				Math.abs(mouseY - targetItemRegion.top) <=
+				Math.abs(mouseY - targetItemRegion.bottom)
+			) {
 				nearestBorder = DROP_TARGET_BORDERS.top;
 			}
 
@@ -116,8 +119,7 @@ class SidebarAvailableElements extends Component {
 		event.preventDefault();
 
 		if (data.target) {
-			const itemId = data.source.dataset.itemId;
-			const itemName = data.source.dataset.itemName;
+			const {itemId, itemName} = data.source.dataset;
 
 			requestAnimationFrame(
 				() => {
@@ -228,6 +230,7 @@ class SidebarAvailableElements extends Component {
 			this._handleDragEnd.bind(this)
 		);
 	}
+
 }
 
 /**

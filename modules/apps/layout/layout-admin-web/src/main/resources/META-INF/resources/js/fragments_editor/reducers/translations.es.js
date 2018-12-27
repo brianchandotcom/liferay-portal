@@ -105,11 +105,9 @@ function _getLanguageKeys(availableLanguages) {
  */
 function _getTranslationStatus(languageIds, editableValues) {
 	const translationKeys = editableValues.map(
-		editableValue => {
-			return Object.keys(editableValue).map(
-				editableValueId => editableValue[editableValueId].defaultValue
-			);
-		}
+		editableValue => Object.keys(editableValue).map(
+			editableValueId => editableValue[editableValueId].defaultValue
+		)
 	).reduce(
 		(acc, val) => acc.concat(val),
 		[]
@@ -118,11 +116,9 @@ function _getTranslationStatus(languageIds, editableValues) {
 	const languageValues = languageIds.map(
 		languageId => {
 			const values = editableValues.map(
-				editableValue => {
-					return Object.keys(editableValue).map(
-						editableValueId => editableValue[editableValueId][languageId]
-					);
-				}
+				editableValue => Object.keys(editableValue).map(
+					editableValueId => editableValue[editableValueId][languageId]
+				)
 			)
 				.reduce(
 					(acc, val) => acc.concat(val),

@@ -8,6 +8,11 @@ import Soy from 'metal-soy';
 import templates from './FragmentEditableFieldTooltip.soy';
 
 /**
+ * @type number
+ */
+const WINDOW_RESIZE_DEBOUNCE_DELAY = 100;
+
+/**
  * FragmentEditableFieldTooltip
  */
 class FragmentEditableFieldTooltip extends Component {
@@ -29,7 +34,7 @@ class FragmentEditableFieldTooltip extends Component {
 
 		this._handleWindowResize = debounce(
 			this._handleWindowResize.bind(this),
-			100
+			WINDOW_RESIZE_DEBOUNCE_DELAY
 		);
 
 		this._windowResizeHandler = dom.on(
@@ -94,7 +99,9 @@ class FragmentEditableFieldTooltip extends Component {
 
 		this.emit(
 			'buttonClick',
-			{buttonId}
+			{
+				buttonId
+			}
 		);
 	}
 
@@ -120,6 +127,7 @@ class FragmentEditableFieldTooltip extends Component {
 	_handleWindowResize() {
 		this._alignTooltip();
 	}
+
 }
 
 /**

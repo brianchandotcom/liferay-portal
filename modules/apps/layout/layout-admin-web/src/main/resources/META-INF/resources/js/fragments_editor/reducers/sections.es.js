@@ -233,6 +233,7 @@ function _addSection(layoutColumns, layoutData, position) {
  * @param {string} targetItemId
  * @param {string} targetItemBorder
  * @private
+ * @return {object}
  * @review
  */
 function _moveSection(sectionId, layoutData, targetItemId, targetItemBorder) {
@@ -256,15 +257,15 @@ function _moveSection(sectionId, layoutData, targetItemId, targetItemBorder) {
  * Returns a new layoutData with the section with the given sectionId removed
  * @param {object} layoutData
  * @param {string} sectionId
+ * @return {object}
+ * @review
  */
 function _removeSection(layoutData, sectionId) {
-	let sectionIndex = getSectionIndex(layoutData.structure, sectionId);
+	const sectionIndex = getSectionIndex(layoutData.structure, sectionId);
 
 	return updateIn(
 		layoutData,
-		[
-			'structure'
-		],
+		['structure'],
 		structure => remove(
 			structure,
 			sectionIndex

@@ -43,7 +43,10 @@ class SidebarLayoutsDragDrop extends State {
 
 			let nearestBorder = DROP_TARGET_BORDERS.bottom;
 
-			if (Math.abs(mouseY - targetItemRegion.top) <= Math.abs(mouseY - targetItemRegion.bottom)) {
+			if (
+				Math.abs(mouseY - targetItemRegion.top) <=
+				Math.abs(mouseY - targetItemRegion.bottom)
+			) {
 				nearestBorder = DROP_TARGET_BORDERS.top;
 			}
 

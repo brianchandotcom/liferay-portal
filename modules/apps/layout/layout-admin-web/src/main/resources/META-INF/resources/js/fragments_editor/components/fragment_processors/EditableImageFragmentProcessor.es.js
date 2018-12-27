@@ -25,7 +25,7 @@ function _handleImageEditorChange(
 	const selectedItem = changeEvent.newVal;
 
 	if (imageElement && selectedItem) {
-		const returnType = selectedItem.returnType;
+		const {returnType} = selectedItem;
 		let url = '';
 
 		if (returnType === RETURN_TYPES.url) {
@@ -79,7 +79,7 @@ function init(
 				{
 					eventName,
 					on: {
-						selectedItemChange: (changeEvent) => {
+						selectedItemChange: changeEvent => {
 							_handleImageEditorChange(
 								changeEvent,
 								editableElement,
@@ -88,7 +88,7 @@ function init(
 							);
 						},
 
-						visibleChange: (change) => {
+						visibleChange: change => {
 							if (change.newVal === false) {
 								destroyedCallback();
 							}

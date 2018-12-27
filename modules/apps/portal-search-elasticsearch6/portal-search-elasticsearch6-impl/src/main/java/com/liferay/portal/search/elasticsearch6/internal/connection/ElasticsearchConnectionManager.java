@@ -38,9 +38,19 @@ import org.osgi.service.component.annotations.ReferenceCardinality;
  */
 @Component(
 	configurationPid = "com.liferay.portal.search.elasticsearch6.configuration.ElasticsearchConfiguration",
-	immediate = true, service = ElasticsearchConnectionManager.class
+	immediate = true,
+	service = {
+		ElasticsearchClientResolver.class, ElasticsearchConnectionManager.class
+	}
 )
-public class ElasticsearchConnectionManager {
+public class ElasticsearchConnectionManager
+	implements ElasticsearchClientResolver {
+
+	public void activate(OperationMode operationMode) {
+		validate(operationMode);
+
+		_operationMode = operationMode;
+	}
 
 	public void connect() {
 		ElasticsearchConnection elasticsearchConnection =
@@ -55,6 +65,7 @@ public class ElasticsearchConnectionManager {
 		return client.admin();
 	}
 
+	@Override
 	public Client getClient() {
 		ElasticsearchConnection elasticsearchConnection =
 			getElasticsearchConnection();
@@ -119,12 +130,6 @@ public class ElasticsearchConnectionManager {
 			ElasticsearchConfiguration.class, properties);
 
 		activate(translate(_elasticsearchConfiguration.operationMode()));
-	}
-
-	protected void activate(OperationMode operationMode) {
-		validate(operationMode);
-
-		_operationMode = operationMode;
 	}
 
 	@Modified

@@ -29,8 +29,6 @@ long uniqueGroupId = 0;
 List<Group> groups = null;
 
 if (step == 1) {
-	groups = selUser.getGroups();
-
 	if (Validator.isNotNull(keywords)) {
 		LinkedHashMap<String, Object> groupParams = new LinkedHashMap<>();
 
@@ -39,6 +37,9 @@ if (step == 1) {
 		groupParams.put("usersGroups", selUser.getUserId());
 
 		groups = GroupLocalServiceUtil.search(user.getCompanyId(), keywords, groupParams, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+	}
+	else {
+		groups = selUser.getGroups();
 	}
 
 	if (filterManageableGroups) {

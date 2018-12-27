@@ -97,8 +97,8 @@ definition {
 		);
 
 		Audit.searchCP(
-			resourceName = "User",
-			searchTerm = "User",
+			resourceName = "com.liferay.portal.kernel.model.User",
+			searchTerm = "com.liferay.portal.kernel.model.User",
 			userName = "Test Test"
 		);
 

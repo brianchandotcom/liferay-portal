@@ -767,11 +767,17 @@ information.
 		<attribute default="${env.ANT_OPTS}" name="gradleopts" />
 		<attribute default="" name="outputproperty" />
 		<attribute default="" name="refreshdependencies" />
+		<attribute default="true" name="setupbinariescache" />
 		<attribute name="task" />
 		<element implicit="true" name="args" optional="true" />
 
 		<sequential>
-			<setup-binaries-cache unless:true="${setup.binaries.cache.executed}" />
+			<if>
+				<equals arg1="@{setupbinariescache}" arg2="true" />
+				<then>
+					<setup-binaries-cache unless:true="${setup.binaries.cache.executed}" />
+				</then>
+			</if>
 
 			<if>
 				<not>
@@ -1462,8 +1468,10 @@ artifact.url=${remote.repository.url}/com/liferay/portal/com.liferay.${processed
 	</macrodef>
 
 	<macrodef name="setup-sdk">
+		<attribute default="true" name="setupbinariescache" />
+
 		<sequential>
-			<gradle-execute forcedcacheenabled="true" outputproperty="sdk.zip.file" task="printDependencyPath">
+			<gradle-execute forcedcacheenabled="true" outputproperty="sdk.zip.file" setupbinariescache="@{setupbinariescache}" task="printDependencyPath">
 				<arg value="--build-file=${project.dir}/modules/util.gradle" />
 				<arg value="--quiet" />
 				<arg value="-Dorg.gradle.internal.launcher.welcomeMessageEnabled=false" />
@@ -1510,7 +1518,7 @@ artifact.url=${remote.repository.url}/com/liferay/portal/com.liferay.${processed
 
 			<update-gradle-properties />
 
-			<gradle-execute task="setUpPortalTools">
+			<gradle-execute setupbinariescache="@{setupbinariescache}" task="setUpPortalTools">
 				<arg value="--build-file=${project.dir}/modules/util.gradle" />
 			</gradle-execute>
 		</sequential>

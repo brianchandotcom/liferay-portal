@@ -75,9 +75,12 @@ public class AssetListFilterScreenNavigationEntry
 	}
 
 	@Override
-	public void render(HttpServletRequest request, HttpServletResponse response) throws IOException {
+	public void render(HttpServletRequest request, HttpServletResponse response)
+		throws IOException {
 
-		request.setAttribute(AssetListWebKeys.RESOLVED_MODULE_NAME, _npmResolver.resolveModuleName("asset-list-web"));
+		request.setAttribute(
+			AssetListWebKeys.RESOLVED_MODULE_NAME,
+			_npmResolver.resolveModuleName("asset-list-web"));
 
 		super.render(request, response);
 	}

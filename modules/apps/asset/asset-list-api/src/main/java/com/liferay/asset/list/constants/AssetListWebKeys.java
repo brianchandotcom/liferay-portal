@@ -23,10 +23,9 @@ public class AssetListWebKeys {
 
 	public static final String ITEM_SELECTOR = "ITEM_SELECTOR";
 
+	public static final String RESOLVED_MODULE_NAME = "RESOLVED_MODULE_NAME";
+
 	public static final String SCREEN_NAVIGATION_REGISTRY =
 		"SCREEN_NAVIGATION_REGISTRY";
-
-	public static final String RESOLVED_MODULE_NAME =
-		"RESOLVED_MODULE_NAME";
 
 }

@@ -14,9 +14,7 @@
 
 package com.liferay.portal.search.elasticsearch6.internal.search.engine.adapter.index;
 
-import com.liferay.portal.search.elasticsearch6.internal.connection.ElasticsearchConnectionManager;
 import com.liferay.portal.search.elasticsearch6.internal.connection.ElasticsearchFixture;
-import com.liferay.portal.search.elasticsearch6.internal.connection.TestElasticsearchConnectionManager;
 import com.liferay.portal.search.engine.adapter.index.IndicesOptions;
 import com.liferay.portal.search.engine.adapter.index.OpenIndexRequest;
 
@@ -40,9 +38,6 @@ public class OpenIndexRequestExecutorTest {
 			CreateIndexRequestExecutorTest.class.getSimpleName());
 
 		_elasticsearchFixture.setUp();
-
-		_elasticsearchConnectionManager =
-			new TestElasticsearchConnectionManager(_elasticsearchFixture);
 	}
 
 	@After
@@ -66,8 +61,7 @@ public class OpenIndexRequestExecutorTest {
 		OpenIndexRequestExecutorImpl openIndexRequestExecutorImpl =
 			new OpenIndexRequestExecutorImpl() {
 				{
-					elasticsearchConnectionManager =
-						_elasticsearchConnectionManager;
+					elasticsearchClientResolver = _elasticsearchFixture;
 					indicesOptionsTranslator =
 						new IndicesOptionsTranslatorImpl();
 				}
@@ -107,7 +101,6 @@ public class OpenIndexRequestExecutorTest {
 
 	private static final String _INDEX_NAME = "test_request_index";
 
-	private ElasticsearchConnectionManager _elasticsearchConnectionManager;
 	private ElasticsearchFixture _elasticsearchFixture;
 
 }

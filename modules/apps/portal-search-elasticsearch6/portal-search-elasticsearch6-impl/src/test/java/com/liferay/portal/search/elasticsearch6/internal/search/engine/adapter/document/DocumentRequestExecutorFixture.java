@@ -14,7 +14,7 @@
 
 package com.liferay.portal.search.elasticsearch6.internal.search.engine.adapter.document;
 
-import com.liferay.portal.search.elasticsearch6.internal.connection.ElasticsearchConnectionManager;
+import com.liferay.portal.search.elasticsearch6.internal.connection.ElasticsearchClientResolver;
 import com.liferay.portal.search.elasticsearch6.internal.query.ElasticsearchQueryTranslatorFixture;
 import com.liferay.portal.search.engine.adapter.document.DocumentRequestExecutor;
 
@@ -24,9 +24,9 @@ import com.liferay.portal.search.engine.adapter.document.DocumentRequestExecutor
 public class DocumentRequestExecutorFixture {
 
 	public DocumentRequestExecutorFixture(
-		ElasticsearchConnectionManager elasticsearchConnectionManager) {
+		ElasticsearchClientResolver elasticsearchClientResolver) {
 
-		_elasticsearchConnectionManager = elasticsearchConnectionManager;
+		_elasticsearchClientResolver = elasticsearchClientResolver;
 	}
 
 	public DocumentRequestExecutor createExecutor() {
@@ -53,8 +53,7 @@ public class DocumentRequestExecutorFixture {
 			{
 				bulkableDocumentRequestTranslator =
 					createElasticsearchBulkableDocumentRequestTranslator();
-				elasticsearchConnectionManager =
-					_elasticsearchConnectionManager;
+				elasticsearchClientResolver = _elasticsearchClientResolver;
 			}
 		};
 	}
@@ -64,8 +63,7 @@ public class DocumentRequestExecutorFixture {
 
 		return new DeleteByQueryDocumentRequestExecutorImpl() {
 			{
-				elasticsearchConnectionManager =
-					_elasticsearchConnectionManager;
+				elasticsearchClientResolver = _elasticsearchClientResolver;
 
 				ElasticsearchQueryTranslatorFixture
 					elasticsearchQueryTranslatorFixture =
@@ -94,8 +92,7 @@ public class DocumentRequestExecutorFixture {
 
 		return new ElasticsearchBulkableDocumentRequestTranslator() {
 			{
-				elasticsearchConnectionManager =
-					_elasticsearchConnectionManager;
+				elasticsearchClientResolver = _elasticsearchClientResolver;
 			}
 		};
 	}
@@ -116,8 +113,7 @@ public class DocumentRequestExecutorFixture {
 
 		return new UpdateByQueryDocumentRequestExecutorImpl() {
 			{
-				elasticsearchConnectionManager =
-					_elasticsearchConnectionManager;
+				elasticsearchClientResolver = _elasticsearchClientResolver;
 
 				ElasticsearchQueryTranslatorFixture
 					elasticsearchQueryTranslatorFixture =
@@ -141,7 +137,6 @@ public class DocumentRequestExecutorFixture {
 		};
 	}
 
-	private final ElasticsearchConnectionManager
-		_elasticsearchConnectionManager;
+	private final ElasticsearchClientResolver _elasticsearchClientResolver;
 
 }

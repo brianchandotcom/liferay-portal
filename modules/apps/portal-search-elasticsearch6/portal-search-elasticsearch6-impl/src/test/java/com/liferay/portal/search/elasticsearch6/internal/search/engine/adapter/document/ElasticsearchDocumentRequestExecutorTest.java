@@ -56,7 +56,7 @@ public class ElasticsearchDocumentRequestExecutorTest {
 	@Test
 	public void testExecuteDeleteByQueryDocumentRequest() {
 		DeleteByQueryDocumentRequest deleteByQueryDocumentRequest =
-			new DeleteByQueryDocumentRequest(null, null);
+			new DeleteByQueryDocumentRequest(null);
 
 		_elasticsearchDocumentRequestExecutor.executeDocumentRequest(
 			deleteByQueryDocumentRequest);
@@ -71,7 +71,7 @@ public class ElasticsearchDocumentRequestExecutorTest {
 	@Test
 	public void testExecuteDeleteDocumentRequest() {
 		DeleteDocumentRequest deleteDocumentRequest = new DeleteDocumentRequest(
-			null, null, null);
+			null, null);
 
 		_elasticsearchDocumentRequestExecutor.executeDocumentRequest(
 			deleteDocumentRequest);
@@ -101,7 +101,7 @@ public class ElasticsearchDocumentRequestExecutorTest {
 	@Test
 	public void testExecuteUpdateByQueryDocumentRequest() {
 		UpdateByQueryDocumentRequest updateByQueryDocumentRequest =
-			new UpdateByQueryDocumentRequest(null, null, null);
+			new UpdateByQueryDocumentRequest(null, null);
 
 		_elasticsearchDocumentRequestExecutor.executeDocumentRequest(
 			updateByQueryDocumentRequest);

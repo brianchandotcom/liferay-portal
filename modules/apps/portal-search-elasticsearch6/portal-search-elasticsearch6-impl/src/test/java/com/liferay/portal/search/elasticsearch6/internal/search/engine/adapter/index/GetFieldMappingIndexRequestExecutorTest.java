@@ -14,9 +14,7 @@
 
 package com.liferay.portal.search.elasticsearch6.internal.search.engine.adapter.index;
 
-import com.liferay.portal.search.elasticsearch6.internal.connection.ElasticsearchConnectionManager;
 import com.liferay.portal.search.elasticsearch6.internal.connection.ElasticsearchFixture;
-import com.liferay.portal.search.elasticsearch6.internal.connection.TestElasticsearchConnectionManager;
 import com.liferay.portal.search.engine.adapter.index.GetFieldMappingIndexRequest;
 
 import org.elasticsearch.action.admin.indices.mapping.get.GetFieldMappingsRequest;
@@ -38,9 +36,6 @@ public class GetFieldMappingIndexRequestExecutorTest {
 			GetFieldMappingIndexRequestExecutorTest.class.getSimpleName());
 
 		_elasticsearchFixture.setUp();
-
-		_elasticsearchConnectionManager =
-			new TestElasticsearchConnectionManager(_elasticsearchFixture);
 	}
 
 	@After
@@ -59,8 +54,7 @@ public class GetFieldMappingIndexRequestExecutorTest {
 			getFieldMappingIndexRequestExecutorImpl =
 				new GetFieldMappingIndexRequestExecutorImpl() {
 					{
-						elasticsearchConnectionManager =
-							_elasticsearchConnectionManager;
+						elasticsearchClientResolver = _elasticsearchFixture;
 					}
 				};
 
@@ -86,7 +80,6 @@ public class GetFieldMappingIndexRequestExecutorTest {
 
 	private static final String _MAPPING_NAME = "testMapping";
 
-	private ElasticsearchConnectionManager _elasticsearchConnectionManager;
 	private ElasticsearchFixture _elasticsearchFixture;
 
 }

@@ -17,9 +17,7 @@ package com.liferay.portal.search.elasticsearch6.internal.search.engine.adapter.
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.DocumentImpl;
 import com.liferay.portal.kernel.search.Field;
-import com.liferay.portal.search.elasticsearch6.internal.connection.ElasticsearchConnectionManager;
 import com.liferay.portal.search.elasticsearch6.internal.connection.ElasticsearchFixture;
-import com.liferay.portal.search.elasticsearch6.internal.connection.TestElasticsearchConnectionManager;
 import com.liferay.portal.search.elasticsearch6.internal.document.DefaultElasticsearchDocumentFactory;
 import com.liferay.portal.search.elasticsearch6.internal.document.ElasticsearchDocumentFactory;
 import com.liferay.portal.search.engine.adapter.document.DeleteDocumentRequest;
@@ -60,16 +58,12 @@ public class ElasticsearchBulkableDocumentRequestTranslatorTest {
 
 		_elasticsearchFixture.setUp();
 
-		_elasticsearchConnectionManager =
-			new TestElasticsearchConnectionManager(_elasticsearchFixture);
-
 		_documentFixture.setUp();
 
 		_elasticsearchBulkableDocumentRequestTranslator =
 			new ElasticsearchBulkableDocumentRequestTranslator() {
 				{
-					elasticsearchConnectionManager =
-						_elasticsearchConnectionManager;
+					elasticsearchClientResolver = _elasticsearchFixture;
 				}
 			};
 	}
@@ -149,7 +143,7 @@ public class ElasticsearchBulkableDocumentRequestTranslatorTest {
 		Assert.assertEquals(_MAPPING_NAME, deleteRequest.type());
 		Assert.assertEquals(id, deleteRequest.id());
 
-		Client client = _elasticsearchConnectionManager.getClient();
+		Client client = _elasticsearchFixture.getClient();
 
 		BulkRequestBuilder bulkRequestBuilder =
 			BulkAction.INSTANCE.newRequestBuilder(client);
@@ -199,7 +193,7 @@ public class ElasticsearchBulkableDocumentRequestTranslatorTest {
 			elasticsearchDocumentFactory.getElasticsearchDocument(document),
 			source);
 
-		Client client = _elasticsearchConnectionManager.getClient();
+		Client client = _elasticsearchFixture.getClient();
 
 		BulkRequestBuilder bulkRequestBuilder =
 			BulkAction.INSTANCE.newRequestBuilder(client);
@@ -250,7 +244,7 @@ public class ElasticsearchBulkableDocumentRequestTranslatorTest {
 			elasticsearchDocumentFactory.getElasticsearchDocument(document),
 			source);
 
-		Client client = _elasticsearchConnectionManager.getClient();
+		Client client = _elasticsearchFixture.getClient();
 
 		BulkRequestBuilder bulkRequestBuilder =
 			BulkAction.INSTANCE.newRequestBuilder(client);
@@ -268,7 +262,6 @@ public class ElasticsearchBulkableDocumentRequestTranslatorTest {
 	private final DocumentFixture _documentFixture = new DocumentFixture();
 	private ElasticsearchBulkableDocumentRequestTranslator
 		_elasticsearchBulkableDocumentRequestTranslator;
-	private ElasticsearchConnectionManager _elasticsearchConnectionManager;
 	private ElasticsearchFixture _elasticsearchFixture;
 
 }

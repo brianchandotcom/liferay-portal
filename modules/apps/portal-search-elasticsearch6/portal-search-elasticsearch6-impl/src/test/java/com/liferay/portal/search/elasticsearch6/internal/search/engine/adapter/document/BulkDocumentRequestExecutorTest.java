@@ -17,9 +17,7 @@ package com.liferay.portal.search.elasticsearch6.internal.search.engine.adapter.
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.DocumentImpl;
 import com.liferay.portal.kernel.search.Field;
-import com.liferay.portal.search.elasticsearch6.internal.connection.ElasticsearchConnectionManager;
 import com.liferay.portal.search.elasticsearch6.internal.connection.ElasticsearchFixture;
-import com.liferay.portal.search.elasticsearch6.internal.connection.TestElasticsearchConnectionManager;
 import com.liferay.portal.search.engine.adapter.document.BulkDocumentRequest;
 import com.liferay.portal.search.engine.adapter.document.DeleteDocumentRequest;
 import com.liferay.portal.search.engine.adapter.document.IndexDocumentRequest;
@@ -45,17 +43,13 @@ public class BulkDocumentRequestExecutorTest {
 
 		_elasticsearchFixture.setUp();
 
-		_elasticsearchConnectionManager =
-			new TestElasticsearchConnectionManager(_elasticsearchFixture);
-
 		_documentFixture.setUp();
 
 		final ElasticsearchBulkableDocumentRequestTranslator
 			elasticsearchBulkableDocumentRequestTranslator =
 				new ElasticsearchBulkableDocumentRequestTranslator() {
 					{
-						elasticsearchConnectionManager =
-							_elasticsearchConnectionManager;
+						elasticsearchClientResolver = _elasticsearchFixture;
 					}
 				};
 
@@ -64,8 +58,7 @@ public class BulkDocumentRequestExecutorTest {
 				bulkableDocumentRequestTranslator =
 					elasticsearchBulkableDocumentRequestTranslator;
 
-				elasticsearchConnectionManager =
-					_elasticsearchConnectionManager;
+				elasticsearchClientResolver = _elasticsearchFixture;
 			}
 		};
 	}
@@ -95,7 +88,7 @@ public class BulkDocumentRequestExecutorTest {
 		bulkDocumentRequest.addBulkableDocumentRequest(indexDocumentRequest);
 
 		DeleteDocumentRequest deleteDocumentRequest = new DeleteDocumentRequest(
-			_INDEX_NAME, _MAPPING_NAME, uid);
+			_INDEX_NAME, uid);
 
 		bulkDocumentRequest.addBulkableDocumentRequest(deleteDocumentRequest);
 
@@ -122,7 +115,6 @@ public class BulkDocumentRequestExecutorTest {
 
 	private BulkDocumentRequestExecutorImpl _bulkDocumentRequestExecutor;
 	private final DocumentFixture _documentFixture = new DocumentFixture();
-	private ElasticsearchConnectionManager _elasticsearchConnectionManager;
 	private ElasticsearchFixture _elasticsearchFixture;
 
 }

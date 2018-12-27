@@ -14,9 +14,8 @@
 
 package com.liferay.portal.search.elasticsearch6.internal.search.engine.adapter;
 
-import com.liferay.portal.search.elasticsearch6.internal.connection.ElasticsearchConnectionManager;
+import com.liferay.portal.search.elasticsearch6.internal.connection.ElasticsearchClientResolver;
 import com.liferay.portal.search.elasticsearch6.internal.connection.ElasticsearchFixture;
-import com.liferay.portal.search.elasticsearch6.internal.connection.TestElasticsearchConnectionManager;
 import com.liferay.portal.search.elasticsearch6.internal.search.engine.adapter.snapshot.SnapshotRequestExecutorFixture;
 import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
 import com.liferay.portal.search.engine.adapter.snapshot.CreateSnapshotRepositoryRequest;
@@ -81,11 +80,7 @@ public class ElasticsearchSearchEngineAdapterSnapshotRequestTest {
 
 		_elasticsearchFixture.setUp();
 
-		TestElasticsearchConnectionManager elasticsearchConnectionManager =
-			new TestElasticsearchConnectionManager(_elasticsearchFixture);
-
-		_searchEngineAdapter = createSearchEngineAdapter(
-			elasticsearchConnectionManager);
+		_searchEngineAdapter = createSearchEngineAdapter(_elasticsearchFixture);
 
 		_indicesAdminClient = _elasticsearchFixture.getIndicesAdminClient();
 
@@ -369,21 +364,21 @@ public class ElasticsearchSearchEngineAdapterSnapshotRequestTest {
 	}
 
 	protected SearchEngineAdapter createSearchEngineAdapter(
-		ElasticsearchConnectionManager elasticsearchConnectionManager) {
+		ElasticsearchClientResolver elasticsearchClientResolver) {
 
 		return new ElasticsearchSearchEngineAdapterImpl() {
 			{
 				snapshotRequestExecutor = createSnapshotRequestExecutor(
-					elasticsearchConnectionManager);
+					elasticsearchClientResolver);
 			}
 		};
 	}
 
 	protected SnapshotRequestExecutor createSnapshotRequestExecutor(
-		ElasticsearchConnectionManager elasticsearchConnectionManager) {
+		ElasticsearchClientResolver elasticsearchClientResolver) {
 
 		SnapshotRequestExecutorFixture snapshotRequestExecutorFixture =
-			new SnapshotRequestExecutorFixture(elasticsearchConnectionManager);
+			new SnapshotRequestExecutorFixture(elasticsearchClientResolver);
 
 		return snapshotRequestExecutorFixture.createExecutor();
 	}

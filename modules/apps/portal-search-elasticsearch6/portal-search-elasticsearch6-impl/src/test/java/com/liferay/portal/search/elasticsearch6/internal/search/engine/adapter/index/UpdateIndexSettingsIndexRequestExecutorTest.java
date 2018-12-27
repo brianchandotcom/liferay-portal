@@ -15,9 +15,7 @@
 package com.liferay.portal.search.elasticsearch6.internal.search.engine.adapter.index;
 
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.search.elasticsearch6.internal.connection.ElasticsearchConnectionManager;
 import com.liferay.portal.search.elasticsearch6.internal.connection.ElasticsearchFixture;
-import com.liferay.portal.search.elasticsearch6.internal.connection.TestElasticsearchConnectionManager;
 import com.liferay.portal.search.engine.adapter.index.UpdateIndexSettingsIndexRequest;
 
 import org.elasticsearch.action.admin.indices.settings.put.UpdateSettingsRequest;
@@ -39,9 +37,6 @@ public class UpdateIndexSettingsIndexRequestExecutorTest {
 			UpdateIndexSettingsIndexRequestExecutorTest.class.getSimpleName());
 
 		_elasticsearchFixture.setUp();
-
-		_elasticsearchConnectionManager =
-			new TestElasticsearchConnectionManager(_elasticsearchFixture);
 
 		_indicesOptionsTranslator = new IndicesOptionsTranslatorImpl();
 	}
@@ -75,8 +70,7 @@ public class UpdateIndexSettingsIndexRequestExecutorTest {
 			updateIndexSettingsIndexRequestExecutorImpl =
 				new UpdateIndexSettingsIndexRequestExecutorImpl() {
 					{
-						elasticsearchConnectionManager =
-							_elasticsearchConnectionManager;
+						elasticsearchClientResolver = _elasticsearchFixture;
 						indicesOptionsTranslator = _indicesOptionsTranslator;
 					}
 				};
@@ -95,7 +89,6 @@ public class UpdateIndexSettingsIndexRequestExecutorTest {
 
 	private static final String _INDEX_NAME = "test_request_index";
 
-	private ElasticsearchConnectionManager _elasticsearchConnectionManager;
 	private ElasticsearchFixture _elasticsearchFixture;
 	private IndicesOptionsTranslator _indicesOptionsTranslator;
 

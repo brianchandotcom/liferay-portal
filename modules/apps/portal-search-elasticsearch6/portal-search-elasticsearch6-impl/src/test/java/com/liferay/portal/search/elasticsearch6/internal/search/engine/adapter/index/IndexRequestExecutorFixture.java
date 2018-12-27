@@ -14,7 +14,7 @@
 
 package com.liferay.portal.search.elasticsearch6.internal.search.engine.adapter.index;
 
-import com.liferay.portal.search.elasticsearch6.internal.connection.ElasticsearchConnectionManager;
+import com.liferay.portal.search.elasticsearch6.internal.connection.ElasticsearchClientResolver;
 import com.liferay.portal.search.engine.adapter.index.IndexRequestExecutor;
 
 /**
@@ -23,9 +23,9 @@ import com.liferay.portal.search.engine.adapter.index.IndexRequestExecutor;
 public class IndexRequestExecutorFixture {
 
 	public IndexRequestExecutorFixture(
-		ElasticsearchConnectionManager elasticsearchConnectionManager) {
+		ElasticsearchClientResolver elasticsearchClientResolver) {
 
-		_elasticsearchConnectionManager = elasticsearchConnectionManager;
+		_elasticsearchClientResolver = elasticsearchClientResolver;
 	}
 
 	public IndexRequestExecutor createExecutor() {
@@ -59,8 +59,7 @@ public class IndexRequestExecutorFixture {
 	protected AnalyzeIndexRequestExecutor createAnalyzeIndexRequestExecutor() {
 		return new AnalyzeIndexRequestExecutorImpl() {
 			{
-				elasticsearchConnectionManager =
-					_elasticsearchConnectionManager;
+				elasticsearchClientResolver = _elasticsearchClientResolver;
 			}
 		};
 	}
@@ -68,8 +67,7 @@ public class IndexRequestExecutorFixture {
 	protected CloseIndexRequestExecutor createCloseIndexRequestExecutor() {
 		return new CloseIndexRequestExecutorImpl() {
 			{
-				elasticsearchConnectionManager =
-					_elasticsearchConnectionManager;
+				elasticsearchClientResolver = _elasticsearchClientResolver;
 				indicesOptionsTranslator = new IndicesOptionsTranslatorImpl();
 			}
 		};
@@ -78,8 +76,7 @@ public class IndexRequestExecutorFixture {
 	protected CreateIndexRequestExecutor createCreateIndexRequestExecutor() {
 		return new CreateIndexRequestExecutorImpl() {
 			{
-				elasticsearchConnectionManager =
-					_elasticsearchConnectionManager;
+				elasticsearchClientResolver = _elasticsearchClientResolver;
 			}
 		};
 	}
@@ -87,8 +84,7 @@ public class IndexRequestExecutorFixture {
 	protected DeleteIndexRequestExecutor createDeleteIndexRequestExecutor() {
 		return new DeleteIndexRequestExecutorImpl() {
 			{
-				elasticsearchConnectionManager =
-					_elasticsearchConnectionManager;
+				elasticsearchClientResolver = _elasticsearchClientResolver;
 				indicesOptionsTranslator = new IndicesOptionsTranslatorImpl();
 			}
 		};
@@ -97,8 +93,7 @@ public class IndexRequestExecutorFixture {
 	protected FlushIndexRequestExecutor createFlushIndexRequestExecutor() {
 		return new FlushIndexRequestExecutorImpl() {
 			{
-				elasticsearchConnectionManager =
-					_elasticsearchConnectionManager;
+				elasticsearchClientResolver = _elasticsearchClientResolver;
 				indexRequestShardFailureTranslator =
 					new IndexRequestShardFailureTranslatorImpl();
 			}
@@ -110,8 +105,7 @@ public class IndexRequestExecutorFixture {
 
 		return new GetFieldMappingIndexRequestExecutorImpl() {
 			{
-				elasticsearchConnectionManager =
-					_elasticsearchConnectionManager;
+				elasticsearchClientResolver = _elasticsearchClientResolver;
 			}
 		};
 	}
@@ -121,8 +115,7 @@ public class IndexRequestExecutorFixture {
 
 		return new GetIndexIndexRequestExecutorImpl() {
 			{
-				elasticsearchConnectionManager =
-					_elasticsearchConnectionManager;
+				elasticsearchClientResolver = _elasticsearchClientResolver;
 			}
 		};
 	}
@@ -132,8 +125,7 @@ public class IndexRequestExecutorFixture {
 
 		return new GetMappingIndexRequestExecutorImpl() {
 			{
-				elasticsearchConnectionManager =
-					_elasticsearchConnectionManager;
+				elasticsearchClientResolver = _elasticsearchClientResolver;
 			}
 		};
 	}
@@ -143,8 +135,7 @@ public class IndexRequestExecutorFixture {
 
 		return new IndicesExistsIndexRequestExecutorImpl() {
 			{
-				elasticsearchConnectionManager =
-					_elasticsearchConnectionManager;
+				elasticsearchClientResolver = _elasticsearchClientResolver;
 			}
 		};
 	}
@@ -152,8 +143,7 @@ public class IndexRequestExecutorFixture {
 	protected OpenIndexRequestExecutor createOpenIndexRequestExecutor() {
 		return new OpenIndexRequestExecutorImpl() {
 			{
-				elasticsearchConnectionManager =
-					_elasticsearchConnectionManager;
+				elasticsearchClientResolver = _elasticsearchClientResolver;
 				indicesOptionsTranslator = new IndicesOptionsTranslatorImpl();
 			}
 		};
@@ -164,8 +154,7 @@ public class IndexRequestExecutorFixture {
 
 		return new PutMappingIndexRequestExecutorImpl() {
 			{
-				elasticsearchConnectionManager =
-					_elasticsearchConnectionManager;
+				elasticsearchClientResolver = _elasticsearchClientResolver;
 			}
 		};
 	}
@@ -173,8 +162,7 @@ public class IndexRequestExecutorFixture {
 	protected RefreshIndexRequestExecutor createRefreshIndexRequestExecutor() {
 		return new RefreshIndexRequestExecutorImpl() {
 			{
-				elasticsearchConnectionManager =
-					_elasticsearchConnectionManager;
+				elasticsearchClientResolver = _elasticsearchClientResolver;
 				indexRequestShardFailureTranslator =
 					new IndexRequestShardFailureTranslatorImpl();
 			}
@@ -186,14 +174,12 @@ public class IndexRequestExecutorFixture {
 
 		return new UpdateIndexSettingsIndexRequestExecutorImpl() {
 			{
-				elasticsearchConnectionManager =
-					_elasticsearchConnectionManager;
+				elasticsearchClientResolver = _elasticsearchClientResolver;
 				indicesOptionsTranslator = new IndicesOptionsTranslatorImpl();
 			}
 		};
 	}
 
-	private final ElasticsearchConnectionManager
-		_elasticsearchConnectionManager;
+	private final ElasticsearchClientResolver _elasticsearchClientResolver;
 
 }

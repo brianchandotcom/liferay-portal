@@ -14,9 +14,7 @@
 
 package com.liferay.portal.search.elasticsearch6.internal.search.engine.adapter.index;
 
-import com.liferay.portal.search.elasticsearch6.internal.connection.ElasticsearchConnectionManager;
 import com.liferay.portal.search.elasticsearch6.internal.connection.ElasticsearchFixture;
-import com.liferay.portal.search.elasticsearch6.internal.connection.TestElasticsearchConnectionManager;
 import com.liferay.portal.search.engine.adapter.index.CloseIndexRequest;
 import com.liferay.portal.search.engine.adapter.index.IndicesOptions;
 
@@ -39,9 +37,6 @@ public class CloseIndexRequestExecutorTest {
 			CreateIndexRequestExecutorTest.class.getSimpleName());
 
 		_elasticsearchFixture.setUp();
-
-		_elasticsearchConnectionManager =
-			new TestElasticsearchConnectionManager(_elasticsearchFixture);
 	}
 
 	@After
@@ -65,8 +60,7 @@ public class CloseIndexRequestExecutorTest {
 		CloseIndexRequestExecutorImpl closeIndexRequestExecutorImpl =
 			new CloseIndexRequestExecutorImpl() {
 				{
-					elasticsearchConnectionManager =
-						_elasticsearchConnectionManager;
+					elasticsearchClientResolver = _elasticsearchFixture;
 					indicesOptionsTranslator =
 						new IndicesOptionsTranslatorImpl();
 				}
@@ -103,7 +97,6 @@ public class CloseIndexRequestExecutorTest {
 
 	private static final String _INDEX_NAME = "test_request_index";
 
-	private ElasticsearchConnectionManager _elasticsearchConnectionManager;
 	private ElasticsearchFixture _elasticsearchFixture;
 
 }

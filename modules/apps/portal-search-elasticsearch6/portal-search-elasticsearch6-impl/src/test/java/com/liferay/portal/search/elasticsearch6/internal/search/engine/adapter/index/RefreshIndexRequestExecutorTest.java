@@ -14,9 +14,7 @@
 
 package com.liferay.portal.search.elasticsearch6.internal.search.engine.adapter.index;
 
-import com.liferay.portal.search.elasticsearch6.internal.connection.ElasticsearchConnectionManager;
 import com.liferay.portal.search.elasticsearch6.internal.connection.ElasticsearchFixture;
-import com.liferay.portal.search.elasticsearch6.internal.connection.TestElasticsearchConnectionManager;
 import com.liferay.portal.search.engine.adapter.index.RefreshIndexRequest;
 
 import org.elasticsearch.action.admin.indices.refresh.RefreshRequest;
@@ -38,9 +36,6 @@ public class RefreshIndexRequestExecutorTest {
 			RefreshIndexRequestExecutorTest.class.getSimpleName());
 
 		_elasticsearchFixture.setUp();
-
-		_elasticsearchConnectionManager =
-			new TestElasticsearchConnectionManager(_elasticsearchFixture);
 	}
 
 	@After
@@ -56,8 +51,7 @@ public class RefreshIndexRequestExecutorTest {
 		RefreshIndexRequestExecutorImpl refreshIndexRequestExecutorImpl =
 			new RefreshIndexRequestExecutorImpl() {
 				{
-					elasticsearchConnectionManager =
-						_elasticsearchConnectionManager;
+					elasticsearchClientResolver = _elasticsearchFixture;
 
 					indexRequestShardFailureTranslator =
 						new IndexRequestShardFailureTranslatorImpl();
@@ -76,7 +70,6 @@ public class RefreshIndexRequestExecutorTest {
 
 	private static final String _INDEX_NAME = "test_request_index";
 
-	private ElasticsearchConnectionManager _elasticsearchConnectionManager;
 	private ElasticsearchFixture _elasticsearchFixture;
 
 }

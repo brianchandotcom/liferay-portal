@@ -19,9 +19,8 @@ import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.DocumentImpl;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
-import com.liferay.portal.search.elasticsearch6.internal.connection.ElasticsearchConnectionManager;
+import com.liferay.portal.search.elasticsearch6.internal.connection.ElasticsearchClientResolver;
 import com.liferay.portal.search.elasticsearch6.internal.connection.ElasticsearchFixture;
-import com.liferay.portal.search.elasticsearch6.internal.connection.TestElasticsearchConnectionManager;
 import com.liferay.portal.search.elasticsearch6.internal.search.engine.adapter.document.DocumentRequestExecutorFixture;
 import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
 import com.liferay.portal.search.engine.adapter.document.BulkDocumentItemResponse;
@@ -73,13 +72,9 @@ public class ElasticsearchSearchEngineAdapterDocumentRequestTest {
 
 		_elasticsearchFixture.setUp();
 
-		_elasticsearchConnectionManager =
-			new TestElasticsearchConnectionManager(_elasticsearchFixture);
+		_client = _elasticsearchFixture.getClient();
 
-		_client = _elasticsearchConnectionManager.getClient();
-
-		_searchEngineAdapter = createSearchEngineAdapter(
-			_elasticsearchConnectionManager);
+		_searchEngineAdapter = createSearchEngineAdapter(_elasticsearchFixture);
 
 		_documentFixture.setUp();
 
@@ -326,17 +321,16 @@ public class ElasticsearchSearchEngineAdapterDocumentRequestTest {
 	}
 
 	protected DocumentRequestExecutor createDocumentRequestExecutor(
-		ElasticsearchConnectionManager elasticsearchConnectionManager) {
+		ElasticsearchClientResolver elasticsearchClientResolver) {
 
 		DocumentRequestExecutorFixture documentRequestExecutorFixture =
-			new DocumentRequestExecutorFixture(elasticsearchConnectionManager);
+			new DocumentRequestExecutorFixture(elasticsearchClientResolver);
 
 		return documentRequestExecutorFixture.createExecutor();
 	}
 
 	protected void createIndex() {
-		AdminClient adminClient =
-			_elasticsearchConnectionManager.getAdminClient();
+		AdminClient adminClient = _client.admin();
 
 		IndicesAdminClient indicesAdminClient = adminClient.indices();
 
@@ -350,19 +344,18 @@ public class ElasticsearchSearchEngineAdapterDocumentRequestTest {
 	}
 
 	protected SearchEngineAdapter createSearchEngineAdapter(
-		ElasticsearchConnectionManager elasticsearchConnectionManager) {
+		ElasticsearchClientResolver elasticsearchClientResolver) {
 
 		return new ElasticsearchSearchEngineAdapterImpl() {
 			{
 				documentRequestExecutor = createDocumentRequestExecutor(
-					elasticsearchConnectionManager);
+					elasticsearchClientResolver);
 			}
 		};
 	}
 
 	protected void deleteIndex() {
-		AdminClient adminClient =
-			_elasticsearchConnectionManager.getAdminClient();
+		AdminClient adminClient = _client.admin();
 
 		IndicesAdminClient indicesAdminClient = adminClient.indices();
 
@@ -403,7 +396,6 @@ public class ElasticsearchSearchEngineAdapterDocumentRequestTest {
 
 	private Client _client;
 	private final DocumentFixture _documentFixture = new DocumentFixture();
-	private ElasticsearchConnectionManager _elasticsearchConnectionManager;
 	private ElasticsearchFixture _elasticsearchFixture;
 	private SearchEngineAdapter _searchEngineAdapter;
 

@@ -14,7 +14,7 @@
 
 package com.liferay.portal.search.elasticsearch6.internal.search.engine.adapter;
 
-import com.liferay.portal.search.elasticsearch6.internal.connection.ElasticsearchConnectionManager;
+import com.liferay.portal.search.elasticsearch6.internal.connection.ElasticsearchClientResolver;
 import com.liferay.portal.search.elasticsearch6.internal.facet.FacetProcessor;
 import com.liferay.portal.search.elasticsearch6.internal.search.engine.adapter.cluster.ClusterRequestExecutorFixture;
 import com.liferay.portal.search.elasticsearch6.internal.search.engine.adapter.document.DocumentRequestExecutorFixture;
@@ -31,49 +31,54 @@ import org.elasticsearch.action.search.SearchRequestBuilder;
 public class ElasticsearchEngineAdapterFixture {
 
 	public ElasticsearchEngineAdapterFixture(
-		ElasticsearchConnectionManager elasticsearchConnectionManager,
+		ElasticsearchClientResolver elasticsearchClientResolver,
 		FacetProcessor<SearchRequestBuilder> facetProcessor) {
 
-		_elasticsearchConnectionManager = elasticsearchConnectionManager;
-		_facetProcessor = facetProcessor;
+		_searchEngineAdapter = createSearchEngineAdapter(
+			elasticsearchClientResolver, facetProcessor);
 	}
 
 	public SearchEngineAdapter getSearchEngineAdapter() {
+		return _searchEngineAdapter;
+	}
+
+	protected SearchEngineAdapter createSearchEngineAdapter(
+		ElasticsearchClientResolver elasticsearchClientResolver,
+		FacetProcessor<SearchRequestBuilder> facetProcessor) {
+
 		return new ElasticsearchSearchEngineAdapterImpl() {
 			{
 				ClusterRequestExecutorFixture clusterRequestExecutorFixture =
 					new ClusterRequestExecutorFixture(
-						_elasticsearchConnectionManager);
+						elasticsearchClientResolver);
 
 				clusterRequestExecutor =
 					clusterRequestExecutorFixture.createExecutor();
 
 				DocumentRequestExecutorFixture documentRequestExecutorFixture =
 					new DocumentRequestExecutorFixture(
-						_elasticsearchConnectionManager);
+						elasticsearchClientResolver);
 
 				documentRequestExecutor =
 					documentRequestExecutorFixture.createExecutor();
 
 				IndexRequestExecutorFixture indexRequestExecutorFixture =
 					new IndexRequestExecutorFixture(
-						_elasticsearchConnectionManager);
+						elasticsearchClientResolver);
 
 				indexRequestExecutor =
 					indexRequestExecutorFixture.createExecutor();
 
 				SearchRequestExecutorFixture searchRequestExecutorFixture =
 					new SearchRequestExecutorFixture(
-						_elasticsearchConnectionManager);
-
-				searchRequestExecutorFixture.setFacetProcessor(_facetProcessor);
+						elasticsearchClientResolver, facetProcessor);
 
 				searchRequestExecutor =
 					searchRequestExecutorFixture.createExecutor();
 
 				SnapshotRequestExecutorFixture snapshotRequestExecutorFixture =
 					new SnapshotRequestExecutorFixture(
-						_elasticsearchConnectionManager);
+						elasticsearchClientResolver);
 
 				snapshotRequestExecutor =
 					snapshotRequestExecutorFixture.createExecutor();
@@ -81,8 +86,6 @@ public class ElasticsearchEngineAdapterFixture {
 		};
 	}
 
-	private final ElasticsearchConnectionManager
-		_elasticsearchConnectionManager;
-	private final FacetProcessor<SearchRequestBuilder> _facetProcessor;
+	private final SearchEngineAdapter _searchEngineAdapter;
 
 }

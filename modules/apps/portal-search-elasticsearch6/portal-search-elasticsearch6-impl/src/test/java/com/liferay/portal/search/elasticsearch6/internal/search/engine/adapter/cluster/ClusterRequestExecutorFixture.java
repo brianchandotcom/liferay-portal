@@ -14,7 +14,7 @@
 
 package com.liferay.portal.search.elasticsearch6.internal.search.engine.adapter.cluster;
 
-import com.liferay.portal.search.elasticsearch6.internal.connection.ElasticsearchConnectionManager;
+import com.liferay.portal.search.elasticsearch6.internal.connection.ElasticsearchClientResolver;
 import com.liferay.portal.search.engine.adapter.cluster.ClusterRequestExecutor;
 
 /**
@@ -23,9 +23,9 @@ import com.liferay.portal.search.engine.adapter.cluster.ClusterRequestExecutor;
 public class ClusterRequestExecutorFixture {
 
 	public ClusterRequestExecutorFixture(
-		ElasticsearchConnectionManager elasticsearchConnectionManager) {
+		ElasticsearchClientResolver elasticsearchClientResolver) {
 
-		_elasticsearchConnectionManager = elasticsearchConnectionManager;
+		_elasticsearchClientResolver = elasticsearchClientResolver;
 	}
 
 	public ClusterRequestExecutor createExecutor() {
@@ -47,8 +47,7 @@ public class ClusterRequestExecutorFixture {
 		return new HealthClusterRequestExecutorImpl() {
 			{
 				clusterHealthStatusTranslator = _clusterHealthStatusTranslator;
-				elasticsearchConnectionManager =
-					_elasticsearchConnectionManager;
+				elasticsearchClientResolver = _elasticsearchClientResolver;
 			}
 		};
 	}
@@ -56,8 +55,7 @@ public class ClusterRequestExecutorFixture {
 	protected StateClusterRequestExecutor createStateClusterRequestExecutor() {
 		return new StateClusterRequestExecutorImpl() {
 			{
-				elasticsearchConnectionManager =
-					_elasticsearchConnectionManager;
+				elasticsearchClientResolver = _elasticsearchClientResolver;
 			}
 		};
 	}
@@ -66,16 +64,13 @@ public class ClusterRequestExecutorFixture {
 		return new StatsClusterRequestExecutorImpl() {
 			{
 				clusterHealthStatusTranslator = _clusterHealthStatusTranslator;
-
-				elasticsearchConnectionManager =
-					_elasticsearchConnectionManager;
+				elasticsearchClientResolver = _elasticsearchClientResolver;
 			}
 		};
 	}
 
 	private final ClusterHealthStatusTranslator _clusterHealthStatusTranslator =
 		new ClusterHealthStatusTranslatorImpl();
-	private final ElasticsearchConnectionManager
-		_elasticsearchConnectionManager;
+	private final ElasticsearchClientResolver _elasticsearchClientResolver;
 
 }

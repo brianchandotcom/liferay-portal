@@ -20,11 +20,10 @@ import com.liferay.portal.kernel.search.suggest.QuerySuggester;
 import com.liferay.portal.kernel.util.Localization;
 import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.search.elasticsearch6.internal.connection.ElasticsearchConnectionManager;
+import com.liferay.portal.search.elasticsearch6.internal.connection.ElasticsearchClientResolver;
 import com.liferay.portal.search.elasticsearch6.internal.connection.ElasticsearchFixture;
 import com.liferay.portal.search.elasticsearch6.internal.connection.IndexCreator;
 import com.liferay.portal.search.elasticsearch6.internal.connection.IndexName;
-import com.liferay.portal.search.elasticsearch6.internal.connection.TestElasticsearchConnectionManager;
 import com.liferay.portal.search.elasticsearch6.internal.facet.DefaultFacetProcessor;
 import com.liferay.portal.search.elasticsearch6.internal.facet.FacetProcessor;
 import com.liferay.portal.search.elasticsearch6.internal.index.IndexNameBuilder;
@@ -96,18 +95,18 @@ public class ElasticsearchIndexingFixture implements IndexingFixture {
 
 		createIndex();
 
-		ElasticsearchConnectionManager elasticsearchConnectionManager =
-			new TestElasticsearchConnectionManager(_elasticsearchFixture);
+		ElasticsearchClientResolver elasticsearchClientResolver =
+			_elasticsearchFixture;
 
 		ElasticsearchEngineAdapterFixture elasticsearchEngineAdapterFixture =
 			new ElasticsearchEngineAdapterFixture(
-				elasticsearchConnectionManager, _facetProcessor);
+				_elasticsearchFixture, _facetProcessor);
 
 		SearchEngineAdapter searchEngineAdapter =
 			elasticsearchEngineAdapterFixture.getSearchEngineAdapter();
 
 		_indexSearcher = createIndexSearcher(
-			elasticsearchConnectionManager, searchEngineAdapter,
+			elasticsearchClientResolver, searchEngineAdapter,
 			_indexNameBuilder);
 
 		_indexWriter = createIndexWriter(
@@ -120,13 +119,12 @@ public class ElasticsearchIndexingFixture implements IndexingFixture {
 	}
 
 	protected QuerySuggester createElasticsearchQuerySuggester(
-		final ElasticsearchConnectionManager elasticsearchConnectionManager1,
-		final IndexNameBuilder indexNameBuilder1) {
+		ElasticsearchClientResolver elasticsearchClientResolver1,
+		IndexNameBuilder indexNameBuilder1) {
 
 		return new ElasticsearchQuerySuggester() {
 			{
-				elasticsearchConnectionManager =
-					elasticsearchConnectionManager1;
+				elasticsearchClientResolver = elasticsearchClientResolver1;
 				indexNameBuilder = indexNameBuilder1;
 				localization = _localization;
 				suggesterTranslator = createElasticsearchSuggesterTranslator();
@@ -166,9 +164,9 @@ public class ElasticsearchIndexingFixture implements IndexingFixture {
 	}
 
 	protected IndexSearcher createIndexSearcher(
-		final ElasticsearchConnectionManager elasticsearchConnectionManager1,
+		ElasticsearchClientResolver elasticsearchClientResolver,
 		SearchEngineAdapter searchEngineAdapter1,
-		final IndexNameBuilder indexNameBuilder1) {
+		IndexNameBuilder indexNameBuilder1) {
 
 		return new ElasticsearchIndexSearcher() {
 			{
@@ -182,7 +180,7 @@ public class ElasticsearchIndexingFixture implements IndexingFixture {
 
 				setQuerySuggester(
 					createElasticsearchQuerySuggester(
-						elasticsearchConnectionManager1, indexNameBuilder));
+						elasticsearchClientResolver, indexNameBuilder));
 
 				activate(
 					_elasticsearchFixture.

@@ -15,10 +15,10 @@
 package com.liferay.portal.search.elasticsearch6.internal.search.engine.adapter.search;
 
 import com.liferay.portal.search.elasticsearch6.internal.SearchHitDocumentTranslatorImpl;
-import com.liferay.portal.search.elasticsearch6.internal.connection.ElasticsearchConnectionManager;
-import com.liferay.portal.search.elasticsearch6.internal.facet.DefaultFacetProcessor;
+import com.liferay.portal.search.elasticsearch6.internal.connection.ElasticsearchClientResolver;
 import com.liferay.portal.search.elasticsearch6.internal.facet.DefaultFacetTranslator;
 import com.liferay.portal.search.elasticsearch6.internal.facet.FacetProcessor;
+import com.liferay.portal.search.elasticsearch6.internal.facet.FacetTranslator;
 import com.liferay.portal.search.elasticsearch6.internal.filter.ElasticsearchFilterTranslatorFixture;
 import com.liferay.portal.search.elasticsearch6.internal.groupby.DefaultGroupByTranslator;
 import com.liferay.portal.search.elasticsearch6.internal.highlight.DefaultHighlighterTranslator;
@@ -36,9 +36,11 @@ import org.elasticsearch.action.search.SearchRequestBuilder;
 public class SearchRequestExecutorFixture {
 
 	public SearchRequestExecutorFixture(
-		ElasticsearchConnectionManager elasticsearchConnectionManager) {
+		ElasticsearchClientResolver elasticsearchClientResolver,
+		FacetProcessor<SearchRequestBuilder> facetProcessor) {
 
-		_elasticsearchConnectionManager = elasticsearchConnectionManager;
+		_elasticsearchClientResolver = elasticsearchClientResolver;
+		_facetProcessor = facetProcessor;
 	}
 
 	public SearchRequestExecutor createExecutor() {
@@ -53,18 +55,12 @@ public class SearchRequestExecutorFixture {
 		};
 	}
 
-	public void setFacetProcessor(
-		FacetProcessor<SearchRequestBuilder> facetProcessor) {
-
-		_facetProcessor = facetProcessor;
-	}
-
 	protected CommonSearchRequestBuilderAssembler
 		createCommonSearchRequestBuilderAssembler() {
 
 		return new CommonSearchRequestBuilderAssemblerImpl() {
 			{
-				facetTranslator = createDefaultFacetTranslator();
+				facetTranslator = createFacetTranslator();
 
 				ElasticsearchFilterTranslatorFixture
 					elasticsearchFilterTranslatorFixture =
@@ -92,13 +88,12 @@ public class SearchRequestExecutorFixture {
 					createCommonSearchRequestBuilderAssembler();
 				commonSearchResponseAssembler =
 					new CommonSearchResponseAssemblerImpl();
-				elasticsearchConnectionManager =
-					_elasticsearchConnectionManager;
+				elasticsearchClientResolver = _elasticsearchClientResolver;
 			}
 		};
 	}
 
-	protected DefaultFacetTranslator createDefaultFacetTranslator() {
+	protected FacetTranslator createFacetTranslator() {
 		return new DefaultFacetTranslator() {
 			{
 				facetProcessor = _facetProcessor;
@@ -119,8 +114,7 @@ public class SearchRequestExecutorFixture {
 
 		return new MultisearchSearchRequestExecutorImpl() {
 			{
-				elasticsearchConnectionManager =
-					_elasticsearchConnectionManager;
+				elasticsearchClientResolver = _elasticsearchClientResolver;
 				searchSearchRequestAssembler =
 					createSearchSearchRequestAssembler();
 				searchSearchResponseAssembler =
@@ -147,8 +141,7 @@ public class SearchRequestExecutorFixture {
 	protected SearchSearchRequestExecutor createSearchSearchRequestExecutor() {
 		return new SearchSearchRequestExecutorImpl() {
 			{
-				elasticsearchConnectionManager =
-					_elasticsearchConnectionManager;
+				elasticsearchClientResolver = _elasticsearchClientResolver;
 				searchSearchRequestAssembler =
 					createSearchSearchRequestAssembler();
 				searchSearchResponseAssembler =
@@ -176,9 +169,7 @@ public class SearchRequestExecutorFixture {
 		};
 	}
 
-	private final ElasticsearchConnectionManager
-		_elasticsearchConnectionManager;
-	private FacetProcessor<SearchRequestBuilder> _facetProcessor =
-		new DefaultFacetProcessor();
+	private final ElasticsearchClientResolver _elasticsearchClientResolver;
+	private final FacetProcessor<SearchRequestBuilder> _facetProcessor;
 
 }

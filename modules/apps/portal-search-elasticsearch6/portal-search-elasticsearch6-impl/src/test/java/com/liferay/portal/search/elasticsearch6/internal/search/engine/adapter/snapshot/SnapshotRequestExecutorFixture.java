@@ -14,7 +14,7 @@
 
 package com.liferay.portal.search.elasticsearch6.internal.search.engine.adapter.snapshot;
 
-import com.liferay.portal.search.elasticsearch6.internal.connection.ElasticsearchConnectionManager;
+import com.liferay.portal.search.elasticsearch6.internal.connection.ElasticsearchClientResolver;
 import com.liferay.portal.search.engine.adapter.snapshot.SnapshotRequestExecutor;
 
 /**
@@ -23,9 +23,9 @@ import com.liferay.portal.search.engine.adapter.snapshot.SnapshotRequestExecutor
 public class SnapshotRequestExecutorFixture {
 
 	public SnapshotRequestExecutorFixture(
-		ElasticsearchConnectionManager elasticsearchConnectionManager) {
+		ElasticsearchClientResolver elasticsearchClientResolver) {
 
-		_elasticsearchConnectionManager = elasticsearchConnectionManager;
+		_elasticsearchClientResolver = elasticsearchClientResolver;
 	}
 
 	public SnapshotRequestExecutor createExecutor() {
@@ -53,8 +53,7 @@ public class SnapshotRequestExecutorFixture {
 
 		return new CreateSnapshotRepositoryRequestExecutorImpl() {
 			{
-				elasticsearchConnectionManager =
-					_elasticsearchConnectionManager;
+				elasticsearchClientResolver = _elasticsearchClientResolver;
 			}
 		};
 	}
@@ -64,8 +63,7 @@ public class SnapshotRequestExecutorFixture {
 
 		return new CreateSnapshotRequestExecutorImpl() {
 			{
-				elasticsearchConnectionManager =
-					_elasticsearchConnectionManager;
+				elasticsearchClientResolver = _elasticsearchClientResolver;
 			}
 		};
 	}
@@ -75,8 +73,7 @@ public class SnapshotRequestExecutorFixture {
 
 		return new DeleteSnapshotRequestExecutorImpl() {
 			{
-				elasticsearchConnectionManager =
-					_elasticsearchConnectionManager;
+				elasticsearchClientResolver = _elasticsearchClientResolver;
 			}
 		};
 	}
@@ -86,8 +83,7 @@ public class SnapshotRequestExecutorFixture {
 
 		return new GetSnapshotRepositoriesRequestExecutorImpl() {
 			{
-				elasticsearchConnectionManager =
-					_elasticsearchConnectionManager;
+				elasticsearchClientResolver = _elasticsearchClientResolver;
 			}
 		};
 	}
@@ -95,8 +91,7 @@ public class SnapshotRequestExecutorFixture {
 	protected GetSnapshotsRequestExecutor createGetSnapshotsRequestExecutor() {
 		return new GetSnapshotsRequestExecutorImpl() {
 			{
-				elasticsearchConnectionManager =
-					_elasticsearchConnectionManager;
+				elasticsearchClientResolver = _elasticsearchClientResolver;
 			}
 		};
 	}
@@ -106,13 +101,11 @@ public class SnapshotRequestExecutorFixture {
 
 		return new RestoreSnapshotRequestExecutorImpl() {
 			{
-				elasticsearchConnectionManager =
-					_elasticsearchConnectionManager;
+				elasticsearchClientResolver = _elasticsearchClientResolver;
 			}
 		};
 	}
 
-	private final ElasticsearchConnectionManager
-		_elasticsearchConnectionManager;
+	private final ElasticsearchClientResolver _elasticsearchClientResolver;
 
 }

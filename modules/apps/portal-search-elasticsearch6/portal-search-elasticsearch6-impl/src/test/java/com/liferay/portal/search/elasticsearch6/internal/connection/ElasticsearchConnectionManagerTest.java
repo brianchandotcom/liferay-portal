@@ -35,12 +35,8 @@ public class ElasticsearchConnectionManagerTest {
 
 		resetMockConnections();
 
-		_elasticsearchConnectionManager = new ElasticsearchConnectionManager();
-
-		_elasticsearchConnectionManager.setEmbeddedElasticsearchConnection(
-			_embeddedElasticsearchConnection);
-		_elasticsearchConnectionManager.setRemoteElasticsearchConnection(
-			_remoteElasticsearchConnection);
+		_elasticsearchConnectionManager = createElasticsearchConnectionManager(
+			_embeddedElasticsearchConnection, _remoteElasticsearchConnection);
 	}
 
 	@Test
@@ -226,6 +222,22 @@ public class ElasticsearchConnectionManagerTest {
 
 		verifyConnectNeverClose(_remoteElasticsearchConnection);
 		verifyNeverCloseNeverConnect(_embeddedElasticsearchConnection);
+	}
+
+	protected ElasticsearchConnectionManager
+		createElasticsearchConnectionManager(
+			ElasticsearchConnection embeddedElasticsearchConnection,
+			ElasticsearchConnection remoteElasticsearchConnection) {
+
+		ElasticsearchConnectionManager elasticsearchConnectionManager =
+			new ElasticsearchConnectionManager();
+
+		elasticsearchConnectionManager.setEmbeddedElasticsearchConnection(
+			embeddedElasticsearchConnection);
+		elasticsearchConnectionManager.setRemoteElasticsearchConnection(
+			remoteElasticsearchConnection);
+
+		return elasticsearchConnectionManager;
 	}
 
 	protected void modify(OperationMode operationMode) {

@@ -18,9 +18,8 @@ import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.search.elasticsearch6.internal.connection.ElasticsearchConnectionManager;
+import com.liferay.portal.search.elasticsearch6.internal.connection.ElasticsearchClientResolver;
 import com.liferay.portal.search.elasticsearch6.internal.connection.ElasticsearchFixture;
-import com.liferay.portal.search.elasticsearch6.internal.connection.TestElasticsearchConnectionManager;
 import com.liferay.portal.search.elasticsearch6.internal.search.engine.adapter.cluster.ClusterRequestExecutorFixture;
 import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
 import com.liferay.portal.search.engine.adapter.cluster.ClusterHealthStatus;
@@ -35,6 +34,7 @@ import com.liferay.portal.search.engine.adapter.cluster.StatsClusterResponse;
 import org.elasticsearch.action.admin.indices.create.CreateIndexRequestBuilder;
 import org.elasticsearch.action.admin.indices.delete.DeleteIndexRequestBuilder;
 import org.elasticsearch.client.AdminClient;
+import org.elasticsearch.client.Client;
 import org.elasticsearch.client.IndicesAdminClient;
 
 import org.junit.After;
@@ -55,11 +55,7 @@ public class ElasticsearchSearchEngineAdapterClusterRequestTest {
 
 		_elasticsearchFixture.setUp();
 
-		_elasticsearchConnectionManager =
-			new TestElasticsearchConnectionManager(_elasticsearchFixture);
-
-		_searchEngineAdapter = createSearchEngineAdapter(
-			_elasticsearchConnectionManager);
+		_searchEngineAdapter = createSearchEngineAdapter(_elasticsearchFixture);
 
 		createIndex();
 	}
@@ -146,17 +142,18 @@ public class ElasticsearchSearchEngineAdapterClusterRequestTest {
 	}
 
 	protected ClusterRequestExecutor createClusterRequestExecutor(
-		ElasticsearchConnectionManager elasticsearchConnectionManager) {
+		ElasticsearchClientResolver elasticsearchClientResolver) {
 
 		ClusterRequestExecutorFixture clusterRequestExecutorFixture =
-			new ClusterRequestExecutorFixture(elasticsearchConnectionManager);
+			new ClusterRequestExecutorFixture(elasticsearchClientResolver);
 
 		return clusterRequestExecutorFixture.createExecutor();
 	}
 
 	protected void createIndex() {
-		AdminClient adminClient =
-			_elasticsearchConnectionManager.getAdminClient();
+		Client client = _elasticsearchFixture.getClient();
+
+		AdminClient adminClient = client.admin();
 
 		IndicesAdminClient indicesAdminClient = adminClient.indices();
 
@@ -167,19 +164,20 @@ public class ElasticsearchSearchEngineAdapterClusterRequestTest {
 	}
 
 	protected SearchEngineAdapter createSearchEngineAdapter(
-		ElasticsearchConnectionManager elasticsearchConnectionManager) {
+		ElasticsearchClientResolver elasticsearchClientResolver) {
 
 		return new ElasticsearchSearchEngineAdapterImpl() {
 			{
 				clusterRequestExecutor = createClusterRequestExecutor(
-					elasticsearchConnectionManager);
+					elasticsearchClientResolver);
 			}
 		};
 	}
 
 	protected void deleteIndex() {
-		AdminClient adminClient =
-			_elasticsearchConnectionManager.getAdminClient();
+		Client client = _elasticsearchFixture.getClient();
+
+		AdminClient adminClient = client.admin();
 
 		IndicesAdminClient indicesAdminClient = adminClient.indices();
 
@@ -191,7 +189,6 @@ public class ElasticsearchSearchEngineAdapterClusterRequestTest {
 
 	private static final String _INDEX_NAME = "test_request_index";
 
-	private ElasticsearchConnectionManager _elasticsearchConnectionManager;
 	private ElasticsearchFixture _elasticsearchFixture;
 	private SearchEngineAdapter _searchEngineAdapter;
 

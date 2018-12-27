@@ -182,7 +182,11 @@ public class FileUtil {
 			destinationPath = destinationPath.resolve(fileName);
 		}
 
-		Files.createDirectories(destinationPath.getParent());
+		Path destinationParentPath = destinationPath.getParent();
+
+		if (destinationParentPath != null) {
+			Files.createDirectories(destinationParentPath);
+		}
 
 		Files.copy(
 			mirrorsCacheArtifactFile.toPath(), destinationPath,

@@ -91,6 +91,8 @@ public class EditAssetListDisplayContext {
 		_portletResponse = portletResponse;
 		_properties = properties;
 		_request = PortalUtil.getHttpServletRequest(portletRequest);
+		_resolvedModuleName = (String)_request.getAttribute(
+			AssetListWebKeys.RESOLVED_MODULE_NAME);
 
 		_themeDisplay = (ThemeDisplay)_request.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -505,8 +507,7 @@ public class EditAssetListDisplayContext {
 	}
 
 	public String getModuleName() {
-		return (String)_request.getAttribute(
-			AssetListWebKeys.RESOLVED_MODULE_NAME);
+		return _resolvedModuleName;
 	}
 
 	public String getOrderByColumn1() {
@@ -853,6 +854,7 @@ public class EditAssetListDisplayContext {
 	private String _redirect;
 	private long[] _referencedModelsGroupIds;
 	private final HttpServletRequest _request;
+	private final String _resolvedModuleName;
 	private SearchContainer _searchContainer;
 	private Boolean _subtypeFieldsFilterEnabled;
 	private final ThemeDisplay _themeDisplay;

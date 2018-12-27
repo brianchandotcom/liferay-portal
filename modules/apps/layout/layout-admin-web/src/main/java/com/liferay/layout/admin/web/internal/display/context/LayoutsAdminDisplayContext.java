@@ -113,7 +113,8 @@ public class LayoutsAdminDisplayContext {
 
 		_liferayPortletRequest.setAttribute(
 			WebKeys.LAYOUT_DESCRIPTIONS, getLayoutDescriptions());
-		_moduleName = (String)_request.getAttribute(
+
+		_resolvedModuleName = (String)_request.getAttribute(
 			LayoutAdminWebKeys.RESOLVED_MODULE_NAME);
 	}
 
@@ -698,7 +699,7 @@ public class LayoutsAdminDisplayContext {
 	}
 
 	public String getModuleName() {
-		return _moduleName;
+		return _resolvedModuleName;
 	}
 
 	public String getMoveLayoutColumnItemURL() {
@@ -1684,13 +1685,13 @@ public class LayoutsAdminDisplayContext {
 	private SearchContainer _layoutsSearchContainer;
 	private final LiferayPortletRequest _liferayPortletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;
-	private final String _moduleName;
 	private String _orderByCol;
 	private String _orderByType;
 	private Long _parentLayoutId;
 	private Boolean _privateLayout;
 	private String _redirect;
 	private final HttpServletRequest _request;
+	private final String _resolvedModuleName;
 	private String _rootNodeName;
 	private Layout _selLayout;
 	private LayoutSet _selLayoutSet;

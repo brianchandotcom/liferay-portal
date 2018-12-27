@@ -153,10 +153,6 @@ public class PersonUpdaterForm {
 		return _password;
 	}
 
-	public Optional<Boolean> isMaleOptional() {
-		return Optional.ofNullable(_male);
-	}
-
 	public void setAlternateName(String alternateName) {
 		_alternateName = alternateName;
 	}
@@ -177,10 +173,6 @@ public class PersonUpdaterForm {
 
 	public void setFamilyName(String lastName) {
 		_familyName = lastName;
-	}
-
-	public void setGender(String gender) {
-		_male = "male".equals(gender);
 	}
 
 	public void setGivenName(String givenName) {
@@ -213,7 +205,6 @@ public class PersonUpdaterForm {
 	private String _honorificPrefix;
 	private String _honorificSuffix;
 	private String _jobTitle;
-	private Boolean _male;
 	private String _password;
 
 }

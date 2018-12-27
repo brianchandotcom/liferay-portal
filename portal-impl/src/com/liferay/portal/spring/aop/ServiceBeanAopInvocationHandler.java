@@ -72,8 +72,6 @@ public class ServiceBeanAopInvocationHandler implements InvocationHandler {
 
 		Class<?> targetClass = target.getClass();
 
-		AopMethod aopMethod = new AopMethod(target, method);
-
 		Map<Class<? extends Annotation>, Annotation> annotations =
 			AnnotationLocator.index(method, targetClass);
 
@@ -86,7 +84,7 @@ public class ServiceBeanAopInvocationHandler implements InvocationHandler {
 
 			if (methodContext != null) {
 				serviceBeanMethodInvocation = new ServiceBeanMethodInvocation(
-					aopMethod, methodContext, nextChainableMethodAdvice,
+					target, method, methodContext, nextChainableMethodAdvice,
 					serviceBeanMethodInvocation);
 
 				nextChainableMethodAdvice = chainableMethodAdvice;
@@ -94,7 +92,7 @@ public class ServiceBeanAopInvocationHandler implements InvocationHandler {
 		}
 
 		return new ServiceBeanMethodInvocation(
-			aopMethod, null, nextChainableMethodAdvice,
+			target, method, null, nextChainableMethodAdvice,
 			serviceBeanMethodInvocation);
 	}
 
@@ -107,7 +105,7 @@ public class ServiceBeanAopInvocationHandler implements InvocationHandler {
 		}
 
 		return new ServiceBeanMethodInvocation(
-			new AopMethod(_target, method), null, null, null);
+			_target, method, null, null, null);
 	}
 
 	private final ChainableMethodAdvice[] _chainableMethodAdvices;

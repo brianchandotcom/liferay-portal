@@ -14,6 +14,11 @@
 
 package com.liferay.portal.spring.aop;
 
+import com.liferay.petra.lang.HashUtil;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
+
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 import java.util.Objects;
@@ -36,8 +41,8 @@ public class ServiceBeanMethodInvocation {
 		ServiceBeanMethodInvocation serviceBeanMethodInvocation =
 			(ServiceBeanMethodInvocation)obj;
 
-		if (Objects.equals(
-				_aopMethod, serviceBeanMethodInvocation._aopMethod)) {
+		if (Objects.equals(_target, serviceBeanMethodInvocation._target) &&
+			Objects.equals(_method, serviceBeanMethodInvocation._method)) {
 
 			return true;
 		}
@@ -51,21 +56,32 @@ public class ServiceBeanMethodInvocation {
 	}
 
 	public Method getMethod() {
-		return _aopMethod.getMethod();
+		return _method;
 	}
 
 	public Object getThis() {
-		return _aopMethod.getTarget();
+		return _target;
 	}
 
 	@Override
 	public int hashCode() {
-		return _aopMethod.hashCode();
+		if (_hashCode == 0) {
+			int hashCode = HashUtil.hash(0, _target);
+
+			_hashCode = HashUtil.hash(hashCode, _method);
+		}
+
+		return _hashCode;
 	}
 
 	public Object proceed(Object[] arguments) throws Throwable {
 		if (_nextChainableMethodAdvice == null) {
-			return _aopMethod.invoke(arguments);
+			try {
+				return _method.invoke(_target, arguments);
+			}
+			catch (InvocationTargetException ite) {
+				throw ite.getTargetException();
+			}
 		}
 
 		return _nextChainableMethodAdvice.invoke(
@@ -74,23 +90,66 @@ public class ServiceBeanMethodInvocation {
 
 	@Override
 	public String toString() {
-		return _aopMethod.toString();
+		if (_toString != null) {
+			return _toString;
+		}
+
+		Class<?>[] parameterTypes = _method.getParameterTypes();
+
+		StringBundler sb = new StringBundler(parameterTypes.length * 2 + 6);
+
+		Class<?> declaringClass = _method.getDeclaringClass();
+
+		sb.append(declaringClass.getName());
+
+		sb.append(StringPool.PERIOD);
+		sb.append(_method.getName());
+		sb.append(StringPool.OPEN_PARENTHESIS);
+
+		for (Class<?> parameterType : parameterTypes) {
+			sb.append(parameterType.getName());
+
+			sb.append(StringPool.COMMA);
+		}
+
+		if (parameterTypes.length > 0) {
+			sb.setIndex(sb.index() - 1);
+		}
+
+		sb.append(StringPool.CLOSE_PARENTHESIS);
+
+		sb.append(StringPool.AT);
+
+		Class<?> targetClass = _target.getClass();
+
+		sb.append(targetClass.getName());
+
+		_toString = sb.toString();
+
+		return _toString;
 	}
 
 	protected ServiceBeanMethodInvocation(
-		AopMethod aopMethod, Object adviceMethodContext,
+		Object target, Method method, Object adviceMethodContext,
 		ChainableMethodAdvice nextChainableMethodAdvice,
 		ServiceBeanMethodInvocation nextServiceBeanMethodInvocation) {
 
-		_aopMethod = aopMethod;
+		_target = target;
+		_method = method;
+
+		_method.setAccessible(true);
+
 		_adviceMethodContext = adviceMethodContext;
 		_nextChainableMethodAdvice = nextChainableMethodAdvice;
 		_nextServiceBeanMethodInvocation = nextServiceBeanMethodInvocation;
 	}
 
 	private final Object _adviceMethodContext;
-	private final AopMethod _aopMethod;
+	private int _hashCode;
+	private final Method _method;
 	private final ChainableMethodAdvice _nextChainableMethodAdvice;
 	private final ServiceBeanMethodInvocation _nextServiceBeanMethodInvocation;
+	private final Object _target;
+	private String _toString;
 
 }

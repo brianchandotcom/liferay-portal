@@ -1381,19 +1381,16 @@ print AdminControl.invoke(appManager, 'startApplication', 'liferay-portal')
 
 		<gradle-execute dir="modules" forcedcacheenabled="false" task="clean">
 			<arg value="--parallel" />
-			<arg value="-Dmaven.local.ignore=true" />
 		</gradle-execute>
 
 		<gradle-execute dir="modules" forcedcacheenabled="false" task="classes">
 			<arg value="--parallel" />
-			<arg value="-Dmaven.local.ignore=true" />
 			<arg value="testClasses" />
 			<arg value="testIntegrationClasses" />
 		</gradle-execute>
 
 		<gradle-execute dir="modules/sdk/gradle-util" failonerror="false" forcedcacheenabled="false" task="findbugsMain">
 			<arg value="--parallel" />
-			<arg value="-Dmaven.local.ignore=true" />
 		</gradle-execute>
 
 		<ant dir="portal-web" inheritAll="false" target="update-gradle-cache" />

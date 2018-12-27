@@ -2,6 +2,7 @@ import {
 	CONJUNCTIONS,
 	FUNCTIONAL_OPERATORS,
 	GROUP,
+	NOT_OPERATORS,
 	RELATIONAL_OPERATORS
 } from './constants.es';
 import {generateGroupId} from './utils.es';
@@ -21,12 +22,12 @@ const oDataFilterFn = window.oDataParser.filter;
 const oDataV4ParserNameMap = {
 	AndExpression: CONJUNCTIONS.AND,
 	BoolParenExpression: GROUP,
+	contains: OPERATORS.CONTAINS,
 	EqualsExpression: OPERATORS.EQ,
 	GreaterOrEqualsExpression: OPERATORS.GE,
 	GreaterThanExpression: OPERATORS.GT,
 	LesserOrEqualsExpression: OPERATORS.LE,
 	LesserThanExpression: OPERATORS.LT,
-	NotEqualsExpression: OPERATORS.NE,
 	OrExpression: CONJUNCTIONS.OR
 };
 
@@ -83,7 +84,21 @@ function buildQueryString(criteria, queryConjunction) {
 				}
 				else if (isValueType(FUNCTIONAL_OPERATORS, operatorName)) {
 					queryString = queryString.concat(
-						`${operatorName} (${propertyName}, '${value}')`
+						`${operatorName}(${propertyName}, '${value}')`
+					);
+				}
+				else if (isValueType(NOT_OPERATORS, operatorName)) {
+					const baseOperator = operatorName.replace(/not-/g, '');
+
+					const baseExpression = [{
+						operatorName: baseOperator,
+						propertyName,
+						value
+					}]
+
+					//Not is wrapped in a group to simplify AST parsing
+					queryString = queryString.concat(
+						`(not (${buildQueryString(baseExpression)}))`
 					);
 				}
 
@@ -119,7 +134,19 @@ function getConjunctionForGroup(oDataASTNode) {
  * @returns String value of the internal name
  */
 function getExpressionName(oDataASTNode) {
-	return oDataV4ParserNameMap[oDataASTNode.type];
+	const type = oDataASTNode.type;
+
+	let returnValue = oDataV4ParserNameMap[type];
+
+	if (type == 'MethodCallExpression') {
+		returnValue = oDataASTNode.value.method;
+	}
+
+	return returnValue;
+}
+
+function getFunctionName(oDataASTNode) {
+	return oDataV4ParserNameMap[oDataASTNode.value.method]
 }
 
 /**
@@ -127,11 +154,11 @@ function getExpressionName(oDataASTNode) {
  * @param {object} oDataASTNode
  * @returns String value of the internal name of the next expression.
  */
-const getNextNonGroupExpressionName = oDataASTNode => {
+const getNextNonGroupExpression = oDataASTNode => {
 	let returnValue;
 
-	if (oDataASTNode.value.type === 'BoolParentExpression') {
-		returnValue = getNextNonGroupExpressionName(oDataASTNode.value);
+	if (oDataASTNode.value.type === 'BoolParenExpression') {
+		returnValue = getNextNonGroupExpression(oDataASTNode.value);
 	}
 	else {
 		returnValue = oDataASTNode.value.left ?
@@ -139,7 +166,31 @@ const getNextNonGroupExpressionName = oDataASTNode => {
 			oDataASTNode.value;
 	}
 
-	return getExpressionName(returnValue);
+	return returnValue;
+};
+
+/**
+ * Returns the next expression in the syntax tree that is not a grouping.
+ * @param {object} oDataASTNode
+ * @returns String value of the internal name of the next expression.
+ */
+const getNextOperatorExpression = oDataASTNode => {
+	let returnValue;
+
+	const nextNode = oDataASTNode.value.left ?
+		oDataASTNode.value.left :
+		oDataASTNode.value;
+
+	const type = nextNode.type;
+
+	if (type === 'BoolParenExpression' || type === 'AndExpression' || type === 'OrExpression') {
+		returnValue = getNextOperatorExpression(nextNode);
+	}
+	else {
+		returnValue = nextNode
+	}
+
+	return returnValue;
 };
 
 /**
@@ -181,7 +232,9 @@ function isValueType(types, value) {
  * @returns a boolean of whether a group is necessary.
  */
 function isRedundantGroup({lastNodeWasGroup, oDataASTNode, prevConjunction}) {
-	const nextNodeExpressionName = getNextNonGroupExpressionName(oDataASTNode);
+	const nextNodeExpressionName = getExpressionName(
+		getNextNonGroupExpression(oDataASTNode)
+	);
 
 	return lastNodeWasGroup ||
 		oDataV4ParserNameMap[prevConjunction] === nextNodeExpressionName ||
@@ -245,8 +298,14 @@ function toCriteria(context) {
 
 	let criterion;
 
-	if (isValueType(RELATIONAL_OPERATORS, expressionName)) {
+	if (isValueType(OPERATORS, expressionName)) {
 		criterion = transformOperatorNode(context);
+	}
+	else if (oDataASTNode.type === 'NotExpression') {
+		criterion = transformNotNode(context);
+	}
+	else if (oDataASTNode.type === 'MethodCallExpression') {
+		criterion = transformFunctionalNode(context);
 	}
 	else if (isValueType(CONJUNCTIONS, expressionName)) {
 		criterion = transformConjunctionNode(context);
@@ -291,6 +350,23 @@ function transformConjunctionNode(context) {
 }
 
 /**
+ * Transform a function expression node into a criterion for the criteria
+ * builder.
+ * @param {object} oDataASTNode
+ * @returns an array containing the object representation of an operator
+ * criterion
+ */
+function transformFunctionalNode({oDataASTNode}) {
+	return [
+		{
+			operatorName: getFunctionName(oDataASTNode),
+			propertyName: oDataASTNode.value.parameters[0].raw,
+			value: oDataASTNode.value.parameters[1].raw.replace(/['"]+/g, '')
+		}
+	];
+}
+
+/**
  * Transforms a group expression node into a criterion for the criteria
  * builder. If it comes across a grouping that is redundant (doesn't provide
  * readability improvements, superfluous to order of operations), it will remove
@@ -316,6 +392,42 @@ function transformGroupNode(context) {
 				}
 			)
 		}];
+}
+
+/**
+ * Transform an operator expression node into a criterion for the criteria
+ * builder.
+ * @param {object} oDataASTNode
+ * @returns an array containing the object representation of an operator
+ * criterion
+ */
+function transformNotNode({oDataASTNode}) {
+	const nextNodeExpression = getNextOperatorExpression(oDataASTNode);
+
+	const nextNodeExpressionName = getExpressionName(nextNodeExpression);
+
+	let returnValue;
+
+	if (nextNodeExpressionName == OPERATORS.CONTAINS) {
+		returnValue = [
+			{
+				operatorName: NOT_OPERATORS.NOT_CONTAINS,
+				propertyName: nextNodeExpression.value.parameters[0].raw,
+				value: nextNodeExpression.value.parameters[1].raw.replace(/['"]+/g, '')
+			}
+		]
+	}
+	else if (nextNodeExpressionName == OPERATORS.EQ) {
+		returnValue = [
+			{
+				operatorName: NOT_OPERATORS.NOT_EQ,
+				propertyName: nextNodeExpression.value.left.raw,
+				value: nextNodeExpression.value.right.raw.replace(/['"]+/g, '')
+			}
+		]
+	}
+
+	return returnValue;
 }
 
 /**

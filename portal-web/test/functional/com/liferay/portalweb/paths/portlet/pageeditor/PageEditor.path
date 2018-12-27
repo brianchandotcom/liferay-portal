@@ -31,22 +31,22 @@
 <!--FRAGMENT_SIDEBAR-->
 <tr>
 	<td>FRAGMENT_SIDEBAR_COLLECTION_PANEL</td>
-	<td>//div[contains(@class,'sidebar-body')]//a[contains(@href,'fragment-collection')][normalize-space()='${key_collectionName}']</td>
+	<td>//div[contains(@class,'fragments-editor-sidebar-section')]//a[contains(@href,'fragment-collection')][normalize-space()='${key_collectionName}']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>FRAGMENT_SIDEBAR_COLLECTION_PANEL_COLLAPSED</td>
-	<td>//div[contains(@class,'sidebar-body')]//a[contains(@href,'fragment-collection')][contains(@class,'collapsed')][normalize-space()='${key_collectionName}']</td>
+	<td>//div[contains(@class,'fragments-editor-sidebar-section')]//a[contains(@href,'fragment-collection')][contains(@class,'collapsed')][normalize-space()='${key_collectionName}']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>FRAGMENT_SIDEBAR_COLLECTION_PANEL_EXPANDED</td>
-	<td>//div[contains(@class,'sidebar-body')]//a[contains(@href,'fragment-collection')][@aria-expanded='true'][normalize-space()='${key_collectionName}']</td>
+	<td>//div[contains(@class,'fragments-editor-sidebar-section')]//a[contains(@href,'fragment-collection')][@aria-expanded='true'][normalize-space()='${key_collectionName}']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>FRAGMENT_SIDEBAR_FRAGMENT</td>
-	<td>//ul[contains(@class,'nav')]//li[contains(.,'${key_collectionName}')]//button[@data-item-name='${key_fragmentName}']</td>
+	<td>//div[contains(@class,'fragments-editor-sidebar-section')]//div[contains(@class,'draggable-item')][contains(.,'${key_fragmentName}')]//button</td>
 	<td></td>
 </tr>
 <tr>
@@ -62,7 +62,7 @@
 <!--CONTENT_PAGE-->
 <tr>
 	<td>CONTENT_PAGE_FRAGMENT_SIDEBAR</td>
-	<td>//div[contains(@class,'open-admin-panel') and not(contains(@class,'transition'))]//div[contains(@id,'ContentPageEditorPortlet_sidebar')]</td>
+	<td>//div[contains(@class,'fragments-editor-sidebar-section')]</td>
 	<td></td>
 </tr>
 <tr>

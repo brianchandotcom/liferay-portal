@@ -1,6 +1,7 @@
 import Component from 'metal-component';
 import Soy from 'metal-soy';
 
+import {getConnectedComponent} from '../../../store/ConnectedComponent.es';
 import templates from './FragmentsEditorSidebarCard.soy';
 
 /**
@@ -30,15 +31,12 @@ class FragmentsEditorSidebarCard extends Component {
 
 }
 
-/**
- * State definition.
- * @review
- * @static
- * @type {!Object}
- */
-FragmentsEditorSidebarCard.STATE = {};
+const ConnectedFragmentsEditorSidebarCard = getConnectedComponent(
+	FragmentsEditorSidebarCard,
+	['spritemap']
+);
 
-Soy.register(FragmentsEditorSidebarCard, templates);
+Soy.register(ConnectedFragmentsEditorSidebarCard, templates);
 
-export {FragmentsEditorSidebarCard};
-export default FragmentsEditorSidebarCard;
+export {ConnectedFragmentsEditorSidebarCard, FragmentsEditorSidebarCard};
+export default ConnectedFragmentsEditorSidebarCard;

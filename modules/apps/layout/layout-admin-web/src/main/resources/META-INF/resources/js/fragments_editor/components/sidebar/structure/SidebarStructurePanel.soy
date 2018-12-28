@@ -6,7 +6,6 @@
 {template .render}
 	{@param fragmentEntryLinks: ?}
 	{@param layoutData: ?}
-	{@param spritemap: string}
 	{@param? _handleFragmentRemoveButtonClick: any}
 	{@param? store: ?}
 
@@ -24,7 +23,6 @@
 								{param itemId: $fragmentEntryLink.fragmentEntryLinkId /}
 								{param itemName: $fragmentEntryLink.name /}
 								{param key: $fragmentEntryLink.fragmentEntryLinkId /}
-								{param spritemap: $spritemap /}
 								{param store: $store /}
 							{/call}
 						{/if}

@@ -7,9 +7,9 @@
 	{@param icon: string}
 	{@param itemId: string}
 	{@param itemName: string}
-	{@param spritemap: string}
 	{@param? _handleClick: any}
 	{@param? imagePreviewURL: string}
+	{@param? spritemap: string}
 
 <div
 	class="card drag-card fragments-editor-sidebar-section__card fragments-editor__draggable-item"
@@ -24,7 +24,7 @@
 	{else}
 		<div class="fragments-editor-sidebar-section__card-no-preview">
 			<svg class="lexicon-icon">
-				<use xlink:href="{$spritemap}#picture"></use>
+				<use xlink:href="{$spritemap ?: ''}#picture"></use>
 			</svg>
 		</div>
 	{/if}
@@ -47,7 +47,7 @@
 					data-onclick="{$_handleClick}"
 				>
 				<svg class="lexicon-icon">
-					<use xlink:href="{$spritemap}#{$icon}"></use>
+					<use xlink:href="{$spritemap ?: ''}#{$icon}"></use>
 				</svg>
 				</button>
 			</div>

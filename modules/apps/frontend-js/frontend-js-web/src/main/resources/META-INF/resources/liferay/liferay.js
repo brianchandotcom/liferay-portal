@@ -89,6 +89,27 @@ Liferay = window.Liferay || {};
 		}
 	);
 
+	$(document).on(
+		'show.bs.dropdown',
+		function() {
+			Liferay.fire(
+				'dropdownShow',
+				{
+					src: 'BootstrapDropdown'
+				}
+			);
+		}
+	);
+
+	Liferay.on(
+		'dropdownShow',
+		function(event) {
+			if (event.src !== 'BootstrapDropdown') {
+				$('.dropdown.show .dropdown-toggle').dropdown('toggle');
+			}
+		}
+	);
+
 	/**
 	 * OPTIONS
 	 *

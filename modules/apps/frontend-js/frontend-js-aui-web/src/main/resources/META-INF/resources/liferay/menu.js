@@ -635,6 +635,14 @@ AUI.add(
 									menuInstance._closeActiveMenu();
 								},
 								menuInstance
+							),
+							Liferay.on(
+								'dropdownShow',
+								function(event) {
+									if (event.src !== 'LiferayMenu') {
+										menuInstance._closeActiveMenu();
+									}
+								}
 							)
 						);
 
@@ -646,6 +654,13 @@ AUI.add(
 					}
 
 					menuInstance._positionActiveMenu();
+
+					Liferay.fire(
+						'dropdownShow',
+						{
+							src: 'LiferayMenu'
+						}
+					);
 
 					event.halt();
 				}

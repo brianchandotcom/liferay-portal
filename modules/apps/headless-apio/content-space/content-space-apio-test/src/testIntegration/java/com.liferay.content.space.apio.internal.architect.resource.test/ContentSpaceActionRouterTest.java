@@ -77,14 +77,33 @@ public class ContentSpaceActionRouterTest {
 
 		Assert.assertNotNull(contentSpace);
 
+		Assert.assertEquals(
+			Long.valueOf(_group.getCreatorUserId()),
+			contentSpace.getCreatorId());
+
+		Assert.assertEquals(
+			Long.valueOf(_group.getGroupId()),
+			contentSpace.getDocumentsRepositoryId());
+
+		Assert.assertEquals(_group.getGroupId(), contentSpace.getId());
+
 		Locale locale = LocaleUtil.fromLanguageId(
 			_group.getDefaultLanguageId());
 
 		Assert.assertEquals(
-			_group.getName(locale), contentSpace.getName(locale));
+			_group.getDescription(locale), contentSpace.getDescription(locale));
 
 		Assert.assertEquals(
-			_group.getDescription(locale), contentSpace.getDescription(locale));
+			_group.getName(locale), contentSpace.getName(locale));
+
+		List<String> availableLanguages = contentSpace.getAvailableLanguages();
+
+		Assert.assertEquals(
+			availableLanguages.toString(), 1, availableLanguages.size());
+
+		Assert.assertEquals(
+			LocaleUtil.toW3cLanguageId(_group.getDefaultLanguageId()),
+			availableLanguages.get(0));
 	}
 
 	@Test

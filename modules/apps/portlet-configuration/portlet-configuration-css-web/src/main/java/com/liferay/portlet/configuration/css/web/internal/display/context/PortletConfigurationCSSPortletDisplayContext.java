@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portlet.configuration.css.web.internal.constants.PortletConfigurationCSSPortletKeys;
 
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
@@ -209,6 +210,11 @@ public class PortletConfigurationCSSPortletDisplayContext {
 			position);
 
 		return marginPositionJSONObject.getString(property);
+	}
+
+	public String getModuleName() {
+		return (String)_renderRequest.getAttribute(
+			PortletConfigurationCSSPortletKeys.RESOLVED_MODULE_NAME);
 	}
 
 	public String getPaddingProperty(String position, String property) {

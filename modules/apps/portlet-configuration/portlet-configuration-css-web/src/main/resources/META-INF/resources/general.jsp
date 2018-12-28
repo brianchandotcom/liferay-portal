@@ -28,7 +28,7 @@ contextUseForAllTitle.put("inputSelector", ".custom-title input");
 
 <soy:component-renderer
 	context="<%= contextUseForAllTitle %>"
-	module="portlet-configuration-css-web/js/ToggleDisableInputs.es"
+	module='<%= portletConfigurationCSSPortletDisplayContext.getModuleName() + "/js/ToggleDisableInputs.es" %>'
 	templateNamespace="com.liferay.portlet.configuration.css.web.ToggleDisableInputs.render"
 />
 

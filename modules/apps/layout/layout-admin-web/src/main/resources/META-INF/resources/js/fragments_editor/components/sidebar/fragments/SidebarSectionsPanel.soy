@@ -4,15 +4,11 @@
  * SidebarSectionsPanel
  */
 {template .render}
-	{@param sections: ?}
-	{@param spritemap: string}
 	{@param? store: ?}
 
 	<div class="sidebar-fragments-section sidebar-section">
 		{call com.liferay.layout.admin.web.SidebarAvailableSections.render}
 			{param ref: 'sidebarTab' /}
-			{param sections: $sections /}
-			{param spritemap: $spritemap /}
 			{param store: $store /}
 		{/call}
 	</div>

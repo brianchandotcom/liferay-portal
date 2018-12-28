@@ -401,6 +401,41 @@ const INITIAL_STATE = {
 		.value(''),
 
 	/**
+	 * Available sections that can be dragged inside the existing Page Template,
+	 * organized by fragment categories.
+	 * @default []
+	 * @review
+	 * @type {Array<{
+	 *   fragmentCollectionId: !string,
+	 *   fragmentEntries: Array<{
+	 *     fragmentEntryId: !string,
+	 *     imagePreviewURL: string,
+	 *     name: !string
+	 *   }>,
+	 *   name: !string
+	 * }>}
+	 */
+	sections: Config
+		.arrayOf(
+			Config.shapeOf(
+				{
+					fragmentCollectionId: Config.string().required(),
+					fragmentEntries: Config.arrayOf(
+						Config.shapeOf(
+							{
+								fragmentEntryId: Config.string().required(),
+								imagePreviewURL: Config.string(),
+								name: Config.string().required()
+							}
+						).required()
+					).required(),
+					name: Config.string().required()
+				}
+			)
+		)
+		.value([]),
+
+	/**
 	 * @default ''
 	 * @review
 	 * @type {!string}

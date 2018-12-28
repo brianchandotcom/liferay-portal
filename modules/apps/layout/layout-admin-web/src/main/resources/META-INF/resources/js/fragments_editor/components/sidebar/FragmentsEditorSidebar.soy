@@ -11,15 +11,6 @@
 		label:string,
 		panelId:string
 	]>}
-	{@param sections: list<[
-		fragmentEntries: list<[
-			fragmentEntryId: string,
-			imagePreviewURL: string,
-			name: string
-		]>,
-		fragmentCollectionId: string,
-		name: string
-	]>}
 	{@param spritemap: string}
 	{@param? fragmentsEditorSidebarVisible: bool}
 	{@param? highlightMapping: bool}
@@ -47,11 +38,9 @@
 	<div class="{$sidebarClasses}">
 		{call com.liferay.layout.admin.web.FragmentsEditorSidebarContent.render}
 			{param fragmentEntryLinks: $fragmentEntryLinks /}
-			{param fragmentsEditorSidebarVisible: $fragmentsEditorSidebarVisible ?: true /}
 			{param highlightMapping: $highlightMapping ?: false /}
 			{param layoutData: $layoutData /}
 			{param panels: $panels /}
-			{param sections: $sections /}
 			{param selectedMappingTypes: $selectedMappingTypes /}
 			{param spritemap: $spritemap /}
 			{param store: $store /}

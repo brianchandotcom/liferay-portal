@@ -4,7 +4,8 @@
  * SidebarAvailableSections
  */
 {template .render}
-	{@param sections: list<[
+	{@param? _handleEntryClick: any}
+	{@param? sections: list<[
 		fragmentEntries: list<[
 			fragmentEntryId: string,
 			imagePreviewURL: string,
@@ -13,79 +14,80 @@
 		fragmentCollectionId: string,
 		name: string
 	]>}
-	{@param spritemap: string}
-	{@param? _handleEntryClick: any}
+	{@param? spritemap: string}
 	{@param? store: ?}
 
 	<div class="sidebar-fragment-collections">
-		{foreach $fragmentCollection in $sections}
-			{let $collapseId kind="text"}
-				fragment-collection-{$fragmentCollection.fragmentCollectionId}
-			{/let}
+		{if $sections}
+			{foreach $fragmentCollection in $sections}
+				{let $collapseId kind="text"}
+					fragment-collection-{$fragmentCollection.fragmentCollectionId}
+				{/let}
 
-			{let $panelClasses kind="text"}
-				fragments-editor-sidebar-section__panel
-				{sp}fragments-editor-sidebar-section__sections-panel
-				{sp}panel
-			{/let}
+				{let $panelClasses kind="text"}
+					fragments-editor-sidebar-section__panel
+					{sp}fragments-editor-sidebar-section__sections-panel
+					{sp}panel
+				{/let}
 
-			<div aria-orientation="vertical" class="panel-group panel-group-flush" role="tablist">
-				<div class="{$panelClasses}">
-					<a
-						aria-controls="{$collapseId}"
-						aria-expanded="false"
-						class="collapse-icon collapsed sheet-subtitle"
-						data-fragment-collection-id="{$fragmentCollection.fragmentCollectionId}"
-						data-toggle="collapse"
-						href="#{$collapseId}"
-						role="tab"
-					>
-						<span>{$fragmentCollection.name}</span>
-						<span class="collapse-icon-closed">
-							<svg class="lexicon-icon lexicon-icon-angle-right">
-								<use xlink:href="{$spritemap}#angle-right"></use>
-							</svg>
-						</span>
-						<span class="collapse-icon-open">
-							<svg class="lexicon-icon lexicon-icon-angle-down">
-								<use xlink:href="{$spritemap}#angle-down"></use>
-							</svg>
-						</span>
-					</a>
+				<div aria-orientation="vertical" class="panel-group panel-group-flush" role="tablist">
+					<div class="{$panelClasses}">
+						<a
+							aria-controls="{$collapseId}"
+							aria-expanded="false"
+							class="collapse-icon collapsed sheet-subtitle"
+							data-fragment-collection-id="{$fragmentCollection.fragmentCollectionId}"
+							data-toggle="collapse"
+							href="#{$collapseId}"
+							role="tab"
+						>
+							<span>{$fragmentCollection.name}</span>
+							<span class="collapse-icon-closed">
+								<svg class="lexicon-icon lexicon-icon-angle-right">
+									<use xlink:href="{$spritemap ?: ''}#angle-right"></use>
+								</svg>
+							</span>
+							<span class="collapse-icon-open">
+								<svg class="lexicon-icon lexicon-icon-angle-down">
+									<use xlink:href="{$spritemap ?: ''}#angle-down"></use>
+								</svg>
+							</span>
+						</a>
 
-					<div
-						class="panel-collapse collapse"
-						id="{$collapseId}"
-						role="tabpanel"
-					>
-						{foreach $fragmentEntry in $fragmentCollection.fragmentEntries}
-							{call com.liferay.layout.admin.web.FragmentsEditorSidebarCard.render}
-								{param events: ['itemClick': $_handleEntryClick] /}
-								{param icon: 'plus' /}
-								{param imagePreviewURL: $fragmentEntry.imagePreviewURL /}
-								{param itemId: $fragmentEntry.fragmentEntryId /}
-								{param itemName: $fragmentEntry.name /}
-								{param key: $fragmentEntry.fragmentEntryId /}
-								{param store: $store /}
-							{/call}
-						{/foreach}
+						<div
+							class="panel-collapse collapse"
+							id="{$collapseId}"
+							role="tabpanel"
+						>
+							{foreach $fragmentEntry in $fragmentCollection.fragmentEntries}
+								{call com.liferay.layout.admin.web.FragmentsEditorSidebarCard.render}
+									{param events: ['itemClick': $_handleEntryClick] /}
+									{param icon: 'plus' /}
+									{param imagePreviewURL: $fragmentEntry.imagePreviewURL /}
+									{param itemId: $fragmentEntry.fragmentEntryId /}
+									{param itemName: $fragmentEntry.name /}
+									{param key: $fragmentEntry.fragmentEntryId /}
+									{param store: $store /}
+								{/call}
+							{/foreach}
+						</div>
 					</div>
 				</div>
-			</div>
-		{ifempty}
-			<div class="alert alert-primary" role="alert">
-				<span class="alert-indicator">
-					<svg class="lexicon-icon">
-						<use xlink:href="{$spritemap}#info-circle"></use>
-					</svg>
-				</span>
+			{ifempty}
+				<div class="alert alert-primary" role="alert">
+					<span class="alert-indicator">
+						<svg class="lexicon-icon">
+							<use xlink:href="{$spritemap ?: ''}#info-circle"></use>
+						</svg>
+					</span>
 
-				<strong class="lead">
-					{msg desc=""}info{/msg}:
-				</strong>
+					<strong class="lead">
+						{msg desc=""}info{/msg}:
+					</strong>
 
-				{msg desc=""}you-do-not-have-any-sections{/msg}
-			</div>
-		{/foreach}
+					{msg desc=""}you-do-not-have-any-sections{/msg}
+				</div>
+			{/foreach}
+		{/if}
 	</div>
 {/template}

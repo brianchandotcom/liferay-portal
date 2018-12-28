@@ -11,7 +11,6 @@
 		label:string,
 		panelId:string
 	]>}
-	{@param sections: ?}
 	{@param spritemap: string}
 	{@param? highlightMapping: bool}
 	{@param? selectedMappingTypes: ?}
@@ -25,12 +24,6 @@
 			<h1 class="fragments-editor-sidebar-section__title">{$_sidebarTitle ?: ''}</h1>
 			{if $_panelId == 'sections'}
 				{call com.liferay.layout.admin.web.SidebarSectionsPanel.render}
-					{param fragmentEntryLinks: $fragmentEntryLinks /}
-					{param layoutData: $layoutData /}
-					{param sections: $sections /}
-					{param spritemap: $spritemap /}
-					{param highlightMapping: $highlightMapping /}
-					{param selectedMappingTypes: $selectedMappingTypes /}
 					{param store: $store /}
 				{/call}
 			{elseif $_panelId == 'elements'}

@@ -214,7 +214,14 @@ AUI.add(
 								obj = obj.ancestor('tr');
 							}
 
-							obj.remove(true);
+							// LPS-83031
+
+							setTimeout(
+								function() {
+									obj.remove(true);
+								},
+								0
+							);
 						}
 					},
 

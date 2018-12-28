@@ -3,8 +3,8 @@ import {Config} from 'metal-state';
 import Soy from 'metal-soy';
 
 import './FragmentsEditorSidebarContent.es';
+import {getConnectedComponent} from '../../store/ConnectedComponent.es';
 import {HIDE_SIDEBAR} from '../../actions/actions.es';
-import {Store} from '../../store/store.es';
 import templates from './FragmentsEditorSidebar.soy';
 
 /**
@@ -62,16 +62,6 @@ class FragmentsEditorSidebar extends Component {
 FragmentsEditorSidebar.STATE = {
 
 	/**
-	 * Store instance
-	 * @default undefined
-	 * @instance
-	 * @memberOf FragmentsEditorSidebar
-	 * @review
-	 * @type {Store}
-	 */
-	store: Config.instanceOf(Store),
-
-	/**
 	 * Synced ProductMenu sidebar.
 	 * @default undefined
 	 * @instance
@@ -92,7 +82,12 @@ FragmentsEditorSidebar.STATE = {
 	_productMenuToggle: Config.internal()
 };
 
-Soy.register(FragmentsEditorSidebar, templates);
+const ConnectedFragmentsEditorSidebar = getConnectedComponent(
+	FragmentsEditorSidebar,
+	['fragmentsEditorSidebarVisible']
+);
 
-export {FragmentsEditorSidebar};
-export default FragmentsEditorSidebar;
+Soy.register(ConnectedFragmentsEditorSidebar, templates);
+
+export {ConnectedFragmentsEditorSidebar, FragmentsEditorSidebar};
+export default ConnectedFragmentsEditorSidebar;

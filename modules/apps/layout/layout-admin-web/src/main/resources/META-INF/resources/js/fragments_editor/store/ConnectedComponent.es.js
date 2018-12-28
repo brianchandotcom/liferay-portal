@@ -42,7 +42,7 @@ const getConnectedComponent = (Component, properties) => {
 			);
 
 			this.on(
-				'dispose',
+				'disposed',
 				() => {
 					disconnect(this);
 				}

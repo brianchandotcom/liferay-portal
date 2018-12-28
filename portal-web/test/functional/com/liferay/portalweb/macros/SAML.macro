@@ -94,6 +94,10 @@ definition {
 
 		Navigator.openURL();
 
+		if (IsElementNotPresent(locator1 = "ProductMenu#PRODUCT_MENU_OPENED")) {
+			User.loginPG(password = "test", userEmailAddress = "test@liferay.com");
+		}
+
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",

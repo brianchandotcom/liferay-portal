@@ -10,7 +10,7 @@
 <tbody>
 <tr>
 	<td>BREADCRUMB_PAGE</td>
-	<td>//div[contains(@class,'portlet-content')]//ul[contains(@class,'breadcrumb') and contains(@class,'breadcrumb')]//a[contains(.,'${key_breadcrumbName}')]</td>
+	<td>//div[contains(@class,'portlet-content')]//ol[contains(@class,'breadcrumb') and contains(@class,'breadcrumb')]//a[contains(.,'${key_breadcrumbName}')]</td>
 	<td></td>
 </tr>
 <tr>

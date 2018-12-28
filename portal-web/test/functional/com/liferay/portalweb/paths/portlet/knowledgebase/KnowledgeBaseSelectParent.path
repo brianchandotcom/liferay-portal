@@ -20,7 +20,7 @@
 </tr>
 <tr>
 	<td>BREADCRUMB_HOME</td>
-	<td>//ul[contains(@class,'breadcrumb')]//li[contains(.,'Home')]</td>
+	<td>//ol[contains(@class,'breadcrumb')]//li[contains(.,'Home')]</td>
 	<td></td>
 </tr>
 <tr>

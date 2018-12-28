@@ -60,7 +60,7 @@
 </tr>
 <tr>
 	<td>HOME</td>
-	<td>//ul[contains(@class,'breadcrumb')]/li//a[contains(.,'Home')]</td>
+	<td>//ol[contains(@class,'breadcrumb')]/li//a[contains(.,'Home')]</td>
 	<td></td>
 </tr>
 <tr>

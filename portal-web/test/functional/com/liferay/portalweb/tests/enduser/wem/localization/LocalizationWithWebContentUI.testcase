@@ -308,9 +308,10 @@ definition {
 
 		WebContent.viewPGViaWCD(webContentContent = "WC WebContent Text");
 
-		Portlet.gotoPortletOptions(portletName = "网页内容展示", portletOption = "编辑网页内容");
-
-		IFrame.selectEditAssetFrame();
+		WebContentNavigator.gotoEditPGViaWCD(
+			menuItem = "编辑 Web 内容",
+			webContentTitle = "WC WebContent Title"
+		);
 
 		WebContent.viewStructureAndTemplateLocalization(
 			panel = "结构和模板",

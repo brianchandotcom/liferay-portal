@@ -4,15 +4,6 @@
  * FragmentsEditorSidebar
  */
 {template .render}
-	{@param elements: list<[
-		fragmentEntries: list<[
-			fragmentEntryId: string,
-			imagePreviewURL: string,
-			name: string
-		]>,
-		fragmentCollectionId: string,
-		name: string
-	]>}
 	{@param fragmentEntryLinks: ?}
 	{@param layoutData: ?}
 	{@param panels: list<[
@@ -55,7 +46,6 @@
 
 	<div class="{$sidebarClasses}">
 		{call com.liferay.layout.admin.web.FragmentsEditorSidebarContent.render}
-			{param elements: $elements /}
 			{param fragmentEntryLinks: $fragmentEntryLinks /}
 			{param fragmentsEditorSidebarVisible: $fragmentsEditorSidebarVisible ?: true /}
 			{param highlightMapping: $highlightMapping ?: false /}

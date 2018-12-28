@@ -16,7 +16,7 @@ import {
 	DROP_TARGET_BORDERS,
 	DROP_TARGET_ITEM_TYPES
 } from '../../../reducers/placeholders.es';
-import {Store} from '../../../store/store.es';
+import {getConnectedComponent} from '../../../store/ConnectedComponent.es';
 import templates from './SidebarAvailableElements.soy';
 
 /**
@@ -241,59 +241,6 @@ class SidebarAvailableElements extends Component {
 SidebarAvailableElements.STATE = {
 
 	/**
-	 * Available elements that can be dragged inside the existing Page Template,
-	 * organized by fragment categories.
-	 * @default undefined
-	 * @instance
-	 * @memberOf SidebarAvailableElements
-	 * @type {!Array<{
-	 *   fragmentCollectionId: !string,
-	 *   fragmentEntries: Array<{
-	 *     fragmentEntryId: !string,
-	 *     imagePreviewURL: string,
-	 *     name: !string
-	 *   }>,
-	 *   name: !string
-	 * }>}
-	 */
-	elements: Config.arrayOf(
-		Config.shapeOf(
-			{
-				fragmentCollectionId: Config.string().required(),
-				fragmentEntries: Config.arrayOf(
-					Config.shapeOf(
-						{
-							fragmentEntryId: Config.string().required(),
-							imagePreviewURL: Config.string(),
-							name: Config.string().required()
-						}
-					).required()
-				).required(),
-				name: Config.string().required()
-			}
-		)
-	),
-
-	/**
-	 * Path of the available icons.
-	 * @default undefined
-	 * @instance
-	 * @memberOf SidebarAvailableElements
-	 * @type {!string}
-	 */
-	spritemap: Config.string().required(),
-
-	/**
-	 * Store instance
-	 * @default undefined
-	 * @instance
-	 * @memberOf SidebarAvailableElements
-	 * @review
-	 * @type {Store}
-	 */
-	store: Config.instanceOf(Store),
-
-	/**
 	 * Internal DragDrop instance.
 	 * @default null
 	 * @instance
@@ -304,7 +251,15 @@ SidebarAvailableElements.STATE = {
 	_dragDrop: Config.internal().value(null)
 };
 
-Soy.register(SidebarAvailableElements, templates);
+const ConnectedSidebarAvailableElements = getConnectedComponent(
+	SidebarAvailableElements,
+	[
+		'elements',
+		'spritemap'
+	]
+);
 
-export {SidebarAvailableElements};
-export default SidebarAvailableElements;
+Soy.register(ConnectedSidebarAvailableElements, templates);
+
+export {ConnectedSidebarAvailableElements, SidebarAvailableElements};
+export default ConnectedSidebarAvailableElements;

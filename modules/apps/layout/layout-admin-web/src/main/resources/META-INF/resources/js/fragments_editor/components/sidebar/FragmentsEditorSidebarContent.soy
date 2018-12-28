@@ -4,7 +4,6 @@
  * FragmentsEditorSidebarContent
  */
 {template .render}
-	{@param elements: ?}
 	{@param fragmentEntryLinks: ?}
 	{@param layoutData: ?}
 	{@param panels: list<[
@@ -36,12 +35,6 @@
 				{/call}
 			{elseif $_panelId == 'elements'}
 				{call com.liferay.layout.admin.web.SidebarElementsPanel.render}
-					{param fragmentEntryLinks: $fragmentEntryLinks /}
-					{param layoutData: $layoutData /}
-					{param elements: $elements /}
-					{param spritemap: $spritemap /}
-					{param highlightMapping: $highlightMapping /}
-					{param selectedMappingTypes: $selectedMappingTypes /}
 					{param store: $store /}
 				{/call}
 			{elseif $_panelId == 'layouts'}

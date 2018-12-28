@@ -4,46 +4,12 @@
  * SidebarElementsPanel
  */
 {template .render}
-	{@param elements: ?}
-	{@param spritemap: string}
 	{@param? store: ?}
 
 	<div class="sidebar-fragments-section sidebar-section">
 		{call com.liferay.layout.admin.web.SidebarAvailableElements.render}
 			{param ref: 'sidebarTab' /}
-			{param elements: $elements /}
-			{param spritemap: $spritemap /}
 			{param store: $store /}
 		{/call}
 	</div>
-{/template}
-
-/**
- * Sidebar tab
- */
-{template .sidebarTab}
-	{@param id: string}
-	{@param handleTabClick: any}
-	{@param active: bool}
-	{@param label: string}
-
-	<li class="nav-item">
-		{let $navLinkClasses kind="text"}
-			nav-link
-			{if $active}
-				{sp}active
-			{/if}
-		{/let}
-
-		<a
-			class="{$navLinkClasses}"
-			data-onclick="{$handleTabClick}"
-			data-tab-id="{$id}"
-			href="javascript:;"
-		>
-			<span class="text-truncate">
-				{$label}
-			</span>
-		</a>
-	</li>
 {/template}

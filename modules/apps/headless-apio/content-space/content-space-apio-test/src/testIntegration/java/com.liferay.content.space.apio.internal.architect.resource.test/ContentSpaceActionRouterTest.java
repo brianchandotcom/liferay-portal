@@ -40,7 +40,9 @@ import java.util.Locale;
 import java.util.Objects;
 import java.util.stream.Stream;
 
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -59,76 +61,62 @@ public class ContentSpaceActionRouterTest {
 			new LiferayIntegrationTestRule(),
 			PermissionCheckerTestRule.INSTANCE);
 
+	@Before
+	public void setUp() throws Exception {
+		_group = GroupTestUtil.addGroup();
+	}
+
+	@After
+	public void tearDown() throws Exception {
+		_groupLocalService.deleteGroup(_group);
+	}
+
 	@Test
 	public void testGetContentSpace() throws Throwable {
-		Group group = GroupTestUtil.addGroup();
+		ContentSpace contentSpace = getContentSpace(_group.getGroupId());
 
-		try {
-			ContentSpace contentSpace = getContentSpace(group.getGroupId());
+		Assert.assertNotNull(contentSpace);
 
-			Assert.assertNotNull(contentSpace);
+		Locale locale = LocaleUtil.fromLanguageId(
+			_group.getDefaultLanguageId());
 
-			Locale locale = LocaleUtil.fromLanguageId(
-				group.getDefaultLanguageId());
+		Assert.assertEquals(
+			_group.getName(locale), contentSpace.getName(locale));
 
-			Assert.assertEquals(
-				group.getName(locale), contentSpace.getName(locale));
-
-			Assert.assertEquals(
-				group.getDescription(locale),
-				contentSpace.getDescription(locale));
-		}
-		finally {
-			_groupLocalService.deleteGroup(group);
-		}
+		Assert.assertEquals(
+			_group.getDescription(locale), contentSpace.getDescription(locale));
 	}
 
 	@Test
 	public void testGetPageItemsWithActiveGroup() throws Throwable {
-		Group group = GroupTestUtil.addGroup();
+		Company company = _companyLocalService.getCompany(
+			_group.getCompanyId());
 
-		try {
-			Company company = _companyLocalService.getCompany(
-				group.getCompanyId());
+		PageItems<ContentSpace> contentSpacePageItems = getPageItems(
+			PaginationRequest.of(50, 1), company);
 
-			PageItems<ContentSpace> contentSpacePageItems = getPageItems(
-				PaginationRequest.of(50, 1), company);
+		ContentSpace contentSpace = _findContentSpace(
+			(List<ContentSpace>)contentSpacePageItems.getItems(),
+			_group.getGroupId());
 
-			ContentSpace contentSpace = _findContentSpace(
-				(List<ContentSpace>)
-					contentSpacePageItems.getItems(),
-				group.getGroupId());
-
-			Assert.assertNotNull(contentSpace);
-		}
-		finally {
-			_groupLocalService.deleteGroup(group);
-		}
+		Assert.assertNotNull(contentSpace);
 	}
 
 	@Test
 	public void testGetPageItemsWithInactiveGroup() throws Throwable {
-		Group group = GroupTestUtil.addGroup();
+		_deactivateGroup(_group);
 
-		try {
-			_deactivateGroup(group);
+		Company company = _companyLocalService.getCompany(
+			_group.getCompanyId());
 
-			Company company = _companyLocalService.getCompany(
-				group.getCompanyId());
+		PageItems<ContentSpace> contentSpacePageItems = getPageItems(
+			PaginationRequest.of(50, 1), company);
 
-			PageItems<ContentSpace> contentSpacePageItems = getPageItems(
-				PaginationRequest.of(50, 1), company);
+		ContentSpace contentSpace = _findContentSpace(
+			(List<ContentSpace>)contentSpacePageItems.getItems(),
+			_group.getGroupId());
 
-			ContentSpace contentSpace = _findContentSpace(
-				(List<ContentSpace>)
-					contentSpacePageItems.getItems(),
-				group.getGroupId());
-
-			Assert.assertNull(contentSpace);
-		}
-		finally {
-			_groupLocalService.deleteGroup(group);
-		}
+		Assert.assertNull(contentSpace);
 	}
 
 	protected ContentSpace getContentSpace(long contentSpaceId)
@@ -186,6 +174,8 @@ public class ContentSpaceActionRouterTest {
 
 	@Inject
 	private CompanyLocalService _companyLocalService;
+
+	private Group _group;
 
 	@Inject
 	private GroupLocalService _groupLocalService;

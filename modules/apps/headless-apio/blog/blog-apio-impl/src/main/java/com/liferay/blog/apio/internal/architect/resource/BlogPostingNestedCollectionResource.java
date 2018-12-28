@@ -34,7 +34,7 @@ import com.liferay.blogs.service.BlogsEntryLocalService;
 import com.liferay.blogs.service.BlogsEntryService;
 import com.liferay.category.apio.architect.identifier.CategoryIdentifier;
 import com.liferay.comment.apio.architect.identifier.CommentIdentifier;
-import com.liferay.content.space.apio.architect.identifier.ContentSpaceIdentifier;
+import com.liferay.content.space.apio.architect.model.ContentSpace;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.friendly.url.exception.DuplicateFriendlyURLEntryException;
 import com.liferay.media.object.apio.architect.identifier.MediaObjectIdentifier;
@@ -72,8 +72,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(immediate = true, service = NestedCollectionResource.class)
 public class BlogPostingNestedCollectionResource
 	implements NestedCollectionResource
-		<BlogsEntry, Long, BlogPostingIdentifier, Long,
-		 ContentSpaceIdentifier> {
+		<BlogsEntry, Long, BlogPostingIdentifier, Long, ContentSpace> {
 
 	@Override
 	public NestedCollectionRoutes<BlogsEntry, Long, Long> collectionRoutes(
@@ -83,7 +82,7 @@ public class BlogPostingNestedCollectionResource
 			this::_getPageItems
 		).addCreator(
 			this::_addBlogsEntry, CurrentUser.class,
-			_hasPermission.forAddingIn(ContentSpaceIdentifier.class),
+			_hasPermission.forAddingIn(ContentSpace.class),
 			BlogPostingForm::buildForm
 		).build();
 	}
@@ -117,7 +116,7 @@ public class BlogPostingNestedCollectionResource
 		).identifier(
 			BlogsEntry::getEntryId
 		).addBidirectionalModel(
-			"contentSpace", "blogPosts", ContentSpaceIdentifier.class,
+			"contentSpace", "blogPosts", ContentSpace.class,
 			BlogsEntry::getGroupId
 		).addDate(
 			"dateCreated", BlogsEntry::getCreateDate

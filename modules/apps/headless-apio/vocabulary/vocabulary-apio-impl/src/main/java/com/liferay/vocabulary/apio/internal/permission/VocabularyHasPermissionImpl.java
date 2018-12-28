@@ -17,7 +17,7 @@ package com.liferay.vocabulary.apio.internal.permission;
 import com.liferay.apio.architect.alias.routes.permission.HasNestedAddingPermissionFunction;
 import com.liferay.apio.architect.credentials.Credentials;
 import com.liferay.apio.architect.identifier.Identifier;
-import com.liferay.content.space.apio.architect.identifier.ContentSpaceIdentifier;
+import com.liferay.content.space.apio.architect.model.ContentSpace;
 import com.liferay.portal.apio.permission.HasPermission;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
@@ -40,7 +40,7 @@ public class VocabularyHasPermissionImpl implements HasPermission<Long> {
 	public <S> HasNestedAddingPermissionFunction<S> forAddingIn(
 		Class<? extends Identifier<S>> identifierClass) {
 
-		if (identifierClass.equals(ContentSpaceIdentifier.class)) {
+		if (identifierClass.equals(ContentSpace.class)) {
 			return (credentials, groupId) -> AssetCategoriesPermission.contains(
 				(PermissionChecker)credentials.get(), (Long)groupId,
 				ActionKeys.ADD_VOCABULARY);

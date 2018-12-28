@@ -33,7 +33,7 @@ import com.liferay.asset.kernel.model.DDMFormValuesReader;
 import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.category.apio.architect.identifier.CategoryIdentifier;
 import com.liferay.comment.apio.architect.identifier.CommentIdentifier;
-import com.liferay.content.space.apio.architect.identifier.ContentSpaceIdentifier;
+import com.liferay.content.space.apio.architect.model.ContentSpace;
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.dynamic.data.mapping.kernel.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.kernel.DDMFormValues;
@@ -135,7 +135,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 public class StructuredContentNestedCollectionResource
 	implements NestedCollectionResource
 		<JournalArticleWrapper, Long, StructuredContentIdentifier, Long,
-		 ContentSpaceIdentifier> {
+		 ContentSpace> {
 
 	public static final String VALUES_NAME = "values";
 
@@ -158,7 +158,7 @@ public class StructuredContentNestedCollectionResource
 			Filter.class, Sort.class
 		).addCreator(
 			this::_addJournalArticle, AcceptLanguage.class, ThemeDisplay.class,
-			_hasPermission.forAddingIn(ContentSpaceIdentifier.class),
+			_hasPermission.forAddingIn(ContentSpace.class),
 			StructuredContentCreatorForm::buildForm
 		).build();
 	}
@@ -216,7 +216,7 @@ public class StructuredContentNestedCollectionResource
 		).identifier(
 			JournalArticle::getResourcePrimKey
 		).addBidirectionalModel(
-			"contentSpace", "structuredContents", ContentSpaceIdentifier.class,
+			"contentSpace", "structuredContents", ContentSpace.class,
 			JournalArticle::getGroupId
 		).addDate(
 			"dateCreated", JournalArticle::getCreateDate

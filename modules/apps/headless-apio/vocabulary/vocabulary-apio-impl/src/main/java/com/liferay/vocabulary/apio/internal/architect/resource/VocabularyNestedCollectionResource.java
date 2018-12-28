@@ -24,7 +24,7 @@ import com.liferay.apio.architect.routes.ItemRoutes;
 import com.liferay.apio.architect.routes.NestedCollectionRoutes;
 import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetVocabularyService;
-import com.liferay.content.space.apio.architect.identifier.ContentSpaceIdentifier;
+import com.liferay.content.space.apio.architect.model.ContentSpace;
 import com.liferay.person.apio.architect.identifier.PersonIdentifier;
 import com.liferay.portal.apio.permission.HasPermission;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -53,8 +53,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(immediate = true, service = NestedCollectionResource.class)
 public class VocabularyNestedCollectionResource
 	implements NestedCollectionResource
-		<AssetVocabulary, Long, VocabularyIdentifier, Long,
-		 ContentSpaceIdentifier> {
+		<AssetVocabulary, Long, VocabularyIdentifier, Long, ContentSpace> {
 
 	@Override
 	public NestedCollectionRoutes<AssetVocabulary, Long, Long> collectionRoutes(
@@ -64,7 +63,7 @@ public class VocabularyNestedCollectionResource
 			this::_getPageItems
 		).addCreator(
 			this::_addAssetVocabulary,
-			_hasPermission.forAddingIn(ContentSpaceIdentifier.class),
+			_hasPermission.forAddingIn(ContentSpace.class),
 			VocabularyForm::buildForm
 		).build();
 	}
@@ -98,7 +97,7 @@ public class VocabularyNestedCollectionResource
 		).identifier(
 			AssetVocabulary::getVocabularyId
 		).addBidirectionalModel(
-			"contentSpace", "vocabularies", ContentSpaceIdentifier.class,
+			"contentSpace", "vocabularies", ContentSpace.class,
 			AssetVocabulary::getGroupId
 		).addDate(
 			"dateCreated", AssetVocabulary::getCreateDate

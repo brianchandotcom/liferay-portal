@@ -25,7 +25,7 @@ import com.liferay.apio.architect.representor.Representor;
 import com.liferay.apio.architect.resource.NestedCollectionResource;
 import com.liferay.apio.architect.routes.ItemRoutes;
 import com.liferay.apio.architect.routes.NestedCollectionRoutes;
-import com.liferay.content.space.apio.architect.identifier.ContentSpaceIdentifier;
+import com.liferay.content.space.apio.architect.model.ContentSpace;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderingContext;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecord;
@@ -74,8 +74,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(immediate = true, service = NestedCollectionResource.class)
 public class FormInstanceNestedCollectionResource
 	implements NestedCollectionResource
-		<DDMFormInstance, Long, FormInstanceIdentifier, Long,
-		 ContentSpaceIdentifier> {
+		<DDMFormInstance, Long, FormInstanceIdentifier, Long, ContentSpace> {
 
 	@Override
 	public NestedCollectionRoutes<DDMFormInstance, Long, Long> collectionRoutes(
@@ -122,7 +121,7 @@ public class FormInstanceNestedCollectionResource
 		).identifier(
 			DDMFormInstance::getFormInstanceId
 		).addBidirectionalModel(
-			"contentSpace", "forms", ContentSpaceIdentifier.class,
+			"contentSpace", "forms", ContentSpace.class,
 			DDMFormInstance::getGroupId
 		).addDate(
 			"dateCreated", DDMFormInstance::getCreateDate

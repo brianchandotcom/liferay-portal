@@ -4,10 +4,9 @@
  * SidebarMappingPanel
  */
 {template .render}
-	{@param highlightMapping: bool}
-	{@param spritemap: string}
 	{@param? _handleHighlightMappingCheckboxChange: any}
 	{@param? _handleSelectAssetTypeButtonClick: any}
+	{@param? highlightMapping: bool}
 	{@param? selectedMappingTypes: [
 		subtype: [
 			id: string,
@@ -18,6 +17,7 @@
 			label: string
 		]
 	]}
+	{@param? spritemap: string}
 
 	<div class="sidebar-mapping">
 		<dt class="sidebar-dt">
@@ -33,7 +33,7 @@
 						{if $selectedMappingTypes.subtype}
 							<span class="inline-item inline-item-after inline-item-before">
 								<svg class="lexicon-icon">
-									<use xlink:href="{$spritemap}#angle-right"></use>
+									<use xlink:href="{$spritemap ?: ''}#angle-right"></use>
 								</svg>
 							</span>
 

@@ -11,17 +11,6 @@
 	]>}
 	{@param spritemap: string}
 	{@param? fragmentsEditorSidebarVisible: bool}
-	{@param? highlightMapping: bool}
-	{@param? selectedMappingTypes: [
-		subtype: [
-			id: string,
-			label: string
-		],
-		type: [
-			id: string,
-			label: string
-		]
-	]}
 	{@param? store: ?}
 
 	{let $sidebarClasses kind="text"}
@@ -35,9 +24,7 @@
 
 	<div class="{$sidebarClasses}">
 		{call com.liferay.layout.admin.web.FragmentsEditorSidebarContent.render}
-			{param highlightMapping: $highlightMapping ?: false /}
 			{param panels: $panels /}
-			{param selectedMappingTypes: $selectedMappingTypes /}
 			{param spritemap: $spritemap /}
 			{param store: $store /}
 		{/call}

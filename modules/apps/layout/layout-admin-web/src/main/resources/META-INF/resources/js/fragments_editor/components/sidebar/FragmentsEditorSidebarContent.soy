@@ -10,8 +10,6 @@
 		panelId:string
 	]>}
 	{@param spritemap: string}
-	{@param? highlightMapping: bool}
-	{@param? selectedMappingTypes: ?}
 	{@param? store: ?}
 	{@param? _handlePanelButtonClick: any}
 	{@param? _panelId: string}
@@ -34,9 +32,6 @@
 				{/call}
 			{elseif $_panelId == 'mapping'}
 				{call com.liferay.layout.admin.web.SidebarMappingPanel.render}
-					{param highlightMapping: $highlightMapping ?: false /}
-					{param selectedMappingTypes: $selectedMappingTypes /}
-					{param spritemap: $spritemap /}
 					{param store: $store /}
 				{/call}
 			{elseif $_panelId == 'structure'}

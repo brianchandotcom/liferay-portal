@@ -391,6 +391,40 @@ const INITIAL_STATE = {
 		.value(false),
 
 	/**
+	 * Selected mapping type label
+	 * @default {}
+	 * @review
+	 * @type {{
+	 *   subtype: {
+	 *   	id: !string,
+	 *   	label: !string
+	 *   },
+	 *   type: {
+	 *   	id: !string,
+	 *   	label: !string
+	 *   }
+	 * }}
+	 */
+	selectedMappingTypes: Config
+		.shapeOf(
+			{
+				subtype: Config.shapeOf(
+					{
+						id: Config.string().required(),
+						label: Config.string().required()
+					}
+				),
+				type: Config.shapeOf(
+					{
+						id: Config.string().required(),
+						label: Config.string().required()
+					}
+				)
+			}
+		)
+		.value({}),
+
+	/**
 	 * Path of the available icons.
 	 * @default ''
 	 * @review

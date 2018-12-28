@@ -1,5 +1,9 @@
 package ${apiPackagePath}.model;
 
+<#if entity.hasCompoundPK()>
+	import ${apiPackagePath}.service.persistence.${entity.name}PK;
+</#if>
+
 import aQute.bnd.annotation.ProviderType;
 
 import java.sql.Blob;
@@ -17,27 +21,42 @@ public class ${entity.name}${column.methodName}BlobModel {
 	public ${entity.name}${column.methodName}BlobModel() {
 	}
 
-	<#assign pkEntityColumn = entity.PKEntityColumns?first />
+	<#if entity.hasCompoundPK()>
+		<#assign
+			pkEntityMethodName = entity.PKClassName
+			pkEntityType = entity.PKClassName
+			pkEntityVarName = entity.PKVarName
+		/>
+
+	<#else>
+		<#assign
+			pkEntityColumn = entity.PKEntityColumns?first
+
+			pkEntityMethodName = pkEntityColumn.methodName
+			pkEntityType = pkEntityColumn.type
+			pkEntityVarName = pkEntityColumn.name
+		/>
+	</#if>
 
 	public ${entity.name}${column.methodName}BlobModel(
-		${pkEntityColumn.type} ${pkEntityColumn.name}) {
+		${pkEntityType} ${pkEntityVarName}) {
 
-		_${pkEntityColumn.name} = ${pkEntityColumn.name};
+		_${pkEntityVarName} = ${pkEntityVarName};
 	}
 
 	public ${entity.name}${column.methodName}BlobModel(
-		${pkEntityColumn.type} ${pkEntityColumn.name}, Blob ${column.name}Blob) {
+		${pkEntityType} ${pkEntityVarName}, Blob ${column.name}Blob) {
 
-		_${pkEntityColumn.name} = ${pkEntityColumn.name};
+		_${pkEntityVarName} = ${pkEntityVarName};
 		_${column.name}Blob = ${column.name}Blob;
 	}
 
-	public ${entity.PKClassName} get${pkEntityColumn.methodName}() {
-		return _${entity.PKVarName};
+	public ${pkEntityType} get${pkEntityMethodName}() {
+		return _${pkEntityVarName};
 	}
 
-	public void set${pkEntityColumn.methodName}(${entity.PKClassName} ${entity.PKVarName}) {
-		_${entity.PKVarName} = ${entity.PKVarName};
+	public void set${pkEntityMethodName}(${pkEntityType} ${pkEntityVarName}) {
+		_${pkEntityVarName} = ${pkEntityVarName};
 	}
 
 	public Blob get${column.methodName}Blob() {
@@ -48,11 +67,7 @@ public class ${entity.name}${column.methodName}BlobModel {
 		_${column.name}Blob = ${column.name}Blob;
 	}
 
-	<#if entity.hasCompoundPK()>
-		private ${entity.PKClassName} _${entity.PKVarName};
-	<#else>
-		private ${pkEntityColumn.type} _${pkEntityColumn.name};
-	</#if>
+	private ${pkEntityType} _${pkEntityVarName};
 
 	private Blob _${column.name}Blob;
 

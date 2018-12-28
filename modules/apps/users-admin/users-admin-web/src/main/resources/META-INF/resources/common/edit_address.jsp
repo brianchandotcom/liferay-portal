@@ -35,12 +35,6 @@ if (addressId > 0L) {
 %>
 
 <aui:form cssClass="modal-body" name="fm">
-	<clay:alert
-		message='<%= LanguageUtil.get(request, "postal-code-could-be-required-in-some-countries") %>'
-		style="info"
-		title='<%= LanguageUtil.get(request, "info") + ":" %>'
-	/>
-
 	<aui:model-context bean="<%= address %>" model="<%= Address.class %>" />
 
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.EDIT %>" />
@@ -63,7 +57,19 @@ if (addressId > 0L) {
 
 	<aui:select label="region" name='<%= "addressRegionId" %>' />
 
-	<aui:input fieldParam='<%= "addressZip" %>' id='<%= "addressZip" %>' label="postal-code" name="zip" required="<%= true %>" />
+	<div class="form-group">
+		<label class="control-label" for="<portlet:namespace />addressZip">
+			<liferay-ui:message key="postal-code" />
+
+			<span hidden id="addressZipRequiredWrapper">
+				<aui:icon cssClass="reference-mark text-warning" image="asterisk" markupView="lexicon" />
+
+				<span class="hide-accessible"><liferay-ui:message key="required" /></span>
+			</span>
+		</label>
+
+		<aui:input fieldParam='<%= "addressZip" %>' id='<%= "addressZip" %>' label="" name="zip" />
+	</div>
 
 	<aui:input cssClass="mailing-ctrl" fieldParam='<%= "addressMailing" %>' id='<%= "addressMailing" %>' name="mailing" />
 
@@ -89,3 +95,50 @@ if (addressId > 0L) {
 		);
 	</aui:script>
 </aui:form>
+
+<aui:script use="liferay-form">
+	const addressCountry = document.getElementById('<portlet:namespace />addressCountryId');
+
+	if (addressCountry) {
+		addressCountry.addEventListener('change', function(event) {
+			if (addressCountry.value && (addressCountry.value !== '0')) {
+				Liferay.Service(
+					'/country/get-country',
+					{
+						countryId: addressCountry.value
+					},
+					function(response, err) {
+						if (err) {
+							console.error(err);
+						}
+						else {
+							updateAdressZipRequired(response.zipRequired);
+						}
+					}
+				);
+			}
+			else {
+				updateAdressZipRequired(false);
+			}
+		});
+	}
+
+	function updateAdressZipRequired(required) {
+		const addressZipRequiredWrapper = document.getElementById('addressZipRequiredWrapper');
+
+		const formValidator = Liferay.Form.get('<portlet:namespace />fm').formValidator;
+
+		const rules = formValidator._getAttr('rules');
+
+		if (required) {
+			addressZipRequiredWrapper.removeAttribute('hidden');
+
+			rules['<portlet:namespace />addressZip'] = {required: true};
+		}
+		else {
+			addressZipRequiredWrapper.setAttribute('hidden', true);
+
+			rules['<portlet:namespace />addressZip'] = null;
+		}
+	}
+</aui:script>

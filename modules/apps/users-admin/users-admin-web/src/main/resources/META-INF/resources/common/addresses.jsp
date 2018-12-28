@@ -144,6 +144,6 @@ List<Address> addresses = AddressServiceUtil.getAddresses(className, classPK);
 	ContactInformation.registerContactInformationListener(
 		'.modify-address-link a',
 		'<%= editAddressRenderURL.toString() %>',
-		1000
+		925
 	);
 </aui:script>

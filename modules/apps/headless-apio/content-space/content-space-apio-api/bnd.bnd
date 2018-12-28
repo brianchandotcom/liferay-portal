@@ -1,4 +1,6 @@
 Bundle-Name: Liferay Content Space Apio API
 Bundle-SymbolicName: com.liferay.content.space.apio.api
 Bundle-Version: 2.0.0
-Export-Package: com.liferay.content.space.apio.architect.identifier
+Export-Package:\
+	com.liferay.content.space.apio.architect.identifier,\
+	com.liferay.content.space.apio.architect.model

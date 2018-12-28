@@ -1,4 +1,6 @@
 dependencies {
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	compileOnly project(":apps:apio-architect:apio-architect-api")
+	compileOnly project(":apps:headless-apio:folder:folder-apio-api")
+	compileOnly project(":apps:headless-apio:person:person-apio-api")
 }

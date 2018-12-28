@@ -14,16 +14,14 @@
 
 package com.liferay.content.space.apio.internal.architect.resource;
 
+import com.liferay.apio.architect.annotation.Actions;
+import com.liferay.apio.architect.annotation.EntryPoint;
+import com.liferay.apio.architect.annotation.Id;
 import com.liferay.apio.architect.pagination.PageItems;
 import com.liferay.apio.architect.pagination.Pagination;
-import com.liferay.apio.architect.representor.Representor;
-import com.liferay.apio.architect.resource.CollectionResource;
-import com.liferay.apio.architect.routes.CollectionRoutes;
-import com.liferay.apio.architect.routes.ItemRoutes;
-import com.liferay.content.space.apio.architect.identifier.ContentSpaceIdentifier;
+import com.liferay.apio.architect.router.ActionRouter;
+import com.liferay.content.space.apio.architect.model.ContentSpace;
 import com.liferay.content.space.apio.architect.util.ContentSpaceUtil;
-import com.liferay.folder.apio.architect.identifier.RootFolderIdentifier;
-import com.liferay.person.apio.architect.identifier.PersonIdentifier;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
@@ -33,6 +31,9 @@ import com.liferay.portal.kernel.util.comparator.GroupIdComparator;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -42,74 +43,84 @@ import org.osgi.service.component.annotations.Reference;
  * a web API. The resources are mapped from the internal model {@code Group}.
  *
  * @author Javier Gamarra
+ * @author Cristina González
  */
-@Component(immediate = true, service = CollectionResource.class)
-public class ContentSpaceCollectionResource
-	implements CollectionResource<Group, Long, ContentSpaceIdentifier> {
+@Component(immediate = true, service = ActionRouter.class)
+public class ContentSpaceActionRouter implements ActionRouter<ContentSpace> {
 
-	@Override
-	public CollectionRoutes<Group, Long> collectionRoutes(
-		CollectionRoutes.Builder<Group, Long> builder) {
+	@Actions.Retrieve
+	public ContentSpace getContentSpace(@Id long contentSpaceId)
+		throws PortalException {
 
-		return builder.addGetter(
-			this::_getPageItems, Company.class
-		).build();
+		return new ContentSpaceImpl(
+			_groupLocalService.getGroup(contentSpaceId));
 	}
 
-	@Override
-	public String getName() {
-		return "content-space";
-	}
-
-	@Override
-	public ItemRoutes<Group, Long> itemRoutes(
-		ItemRoutes.Builder<Group, Long> builder) {
-
-		return builder.addGetter(
-			this::_getGroup
-		).build();
-	}
-
-	@Override
-	public Representor<Group> representor(
-		Representor.Builder<Group, Long> builder) {
-
-		return builder.types(
-			"ContentSpace"
-		).identifier(
-			Group::getGroupId
-		).addLinkedModel(
-			"creator", PersonIdentifier.class, Group::getCreatorUserId
-		).addLinkedModel(
-			"documentsRepository", RootFolderIdentifier.class, Group::getGroupId
-		).addLocalizedStringByLocale(
-			"description", Group::getDescription
-		).addLocalizedStringByLocale(
-			"name", ContentSpaceUtil::getName
-		).addStringList(
-			"availableLanguages",
-			group -> Arrays.asList(
-				LocaleUtil.toW3cLanguageIds(group.getAvailableLanguageIds()))
-		).build();
-	}
-
-	private Group _getGroup(long groupId) throws PortalException {
-		return _groupLocalService.getGroup(groupId);
-	}
-
-	private PageItems<Group> _getPageItems(
+	@Actions.Retrieve
+	@EntryPoint
+	public PageItems<ContentSpace> getPageItems(
 		Pagination pagination, Company company) {
 
 		List<Group> groups = _groupLocalService.getActiveGroups(
 			company.getCompanyId(), true, true, pagination.getStartPosition(),
 			pagination.getEndPosition(), new GroupIdComparator(true));
+
+		Stream<Group> stream = groups.stream();
+
+		List<ContentSpace> contentSpaceIdentifiers = stream.map(
+			ContentSpaceImpl::new
+		).collect(
+			Collectors.toList()
+		);
+
 		int count = _groupLocalService.getActiveGroupsCount(
 			company.getCompanyId(), true, true);
 
-		return new PageItems<>(groups, count);
+		return new PageItems<>(contentSpaceIdentifiers, count);
 	}
 
 	@Reference
 	private GroupLocalService _groupLocalService;
+
+	private static class ContentSpaceImpl implements ContentSpace {
+
+		public ContentSpaceImpl(Group group) {
+			_group = group;
+		}
+
+		@Override
+		public List<String> getAvailableLanguages() {
+			return Arrays.asList(
+				LocaleUtil.toW3cLanguageIds(_group.getAvailableLanguageIds()));
+		}
+
+		@Override
+		public Long getCreatorId() {
+			return _group.getCreatorUserId();
+		}
+
+		@Override
+		public String getDescription(Locale locale) {
+			return _group.getDescription(locale);
+		}
+
+		@Override
+		public Long getDocumentsRepositoryId() {
+			return _group.getGroupId();
+		}
+
+		@Override
+		public long getId() {
+			return _group.getGroupId();
+		}
+
+		@Override
+		public String getName(Locale locale) {
+			return ContentSpaceUtil.getName(_group, locale);
+		}
+
+		private final Group _group;
+
+	}
 
 }

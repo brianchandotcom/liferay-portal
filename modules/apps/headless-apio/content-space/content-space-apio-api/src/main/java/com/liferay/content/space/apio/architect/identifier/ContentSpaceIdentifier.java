@@ -21,7 +21,9 @@ import com.liferay.apio.architect.identifier.Identifier;
  * {@code com.liferay.portal.kernel.model.GroupModel#getGroupId()} returns the
  * identifier.
  *
- * @author Javier Gamarra
+ * @author     Javier Gamarra
+ * @deprecated As of Mueller (7.2.x)
  */
+@Deprecated
 public interface ContentSpaceIdentifier extends Identifier<Long> {
 }

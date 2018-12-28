@@ -17,11 +17,18 @@ package com.liferay.journal.content.web.internal.servlet.taglib;
 import com.liferay.journal.constants.JournalContentPortletKeys;
 import com.liferay.journal.content.web.internal.constants.JournalContentWebKeys;
 import com.liferay.journal.content.web.internal.display.context.JournalContentDisplayContext;
+import com.liferay.layout.constants.LayoutConstants;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.servlet.taglib.BaseJSPDynamicInclude;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.IOException;
 
@@ -44,6 +51,21 @@ public class JournalContentPortletHeaderJSPDynamicInclude
 			HttpServletRequest request, HttpServletResponse response,
 			String key)
 		throws IOException {
+
+		String layoutMode = ParamUtil.getString(
+			request, "p_l_mode", Constants.VIEW);
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		Layout layout = themeDisplay.getLayout();
+
+		if (StringUtil.equals(
+				layout.getType(), LayoutConstants.LAYOUT_TYPE_CONTENT) &&
+			!StringUtil.equals(layoutMode, Constants.EDIT)) {
+
+			return;
+		}
 
 		JournalContentDisplayContext journalContentDisplayContext =
 			(JournalContentDisplayContext)request.getAttribute(

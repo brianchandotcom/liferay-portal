@@ -77,7 +77,7 @@ public class ImageDLPreviewRendererProvider
 					ImageDLPreviewWebKeys.MODULE_PATH,
 					_npmResolver.resolveModuleName(
 						"document-library-preview-image/preview/js" +
-						"/ImagePreviewer.es"));
+							"/ImagePreviewer.es"));
 
 				requestDispatcher.include(request, response);
 			});

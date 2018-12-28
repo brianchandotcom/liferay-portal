@@ -1,0 +1,739 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Licensed to the Apache Software Foundation (ASF) under one
+  or more contributor license agreements.  See the NOTICE file
+  distributed with this work for additional information
+  regarding copyright ownership.  The ASF licenses this file
+  to you under the Apache License, Version 2.0 (the
+  "License"); you may not use this file except in compliance
+  with the License.  You may obtain a copy of the License at
+
+   http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing,
+  software distributed under the License is distributed on an
+  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+  KIND, either express or implied.  See the License for the
+  specific language governing permissions and limitations
+  under the License.
+-->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+  <parent>
+    <groupId>org.apache.portals</groupId>
+    <artifactId>portals-pom</artifactId>
+    <version>1.4</version>
+  </parent>
+
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>org.apache.portals.pluto</groupId>
+  <artifactId>pluto</artifactId>
+  <packaging>pom</packaging>
+  <name>Apache Pluto</name>
+  <version>3.0.0</version>
+  <!-- Due to a bug in maven 2.0, the description must not contain any line breaks or tabs. -->
+  <description>Apache Pluto is the Reference Implementation of the Java Portlet Specification.</description>
+  <url>http://portals.apache.org/pluto</url>
+
+  <issueManagement>
+    <system>jira</system>
+    <url>http://issues.apache.org/jira/secure/BrowseProject.jspa?id=10560</url>
+  </issueManagement>
+  <inceptionYear>2003</inceptionYear>
+
+
+  <!-- Mailing Lists ======================================================= -->
+
+  <mailingLists>
+    <mailingList>
+      <name>Pluto User List</name>
+      <subscribe>pluto-user-subscribe@portals.apache.org</subscribe>
+      <unsubscribe>pluto-user-unsubscribe@portals.apache.org</unsubscribe>
+      <post>pluto-user@portals.apache.org</post>
+      <archive>http://mail-archives.apache.org/mod_mbox/portals-pluto-user</archive>
+    </mailingList>
+    <mailingList>
+      <name>Pluto Developer List</name>
+      <subscribe>pluto-dev-subscribe@portals.apache.org</subscribe>
+      <unsubscribe>pluto-dev-unsubscribe@portals.apache.org</unsubscribe>
+      <post>pluto-dev@portals.apache.org</post>
+      <archive>http://mail-archives.apache.org/mod_mbox/portals-pluto-dev</archive>
+    </mailingList>
+    <mailingList>
+      <name>Pluto SCM List</name>
+      <subscribe>pluto-scm-subscribe@portals.apache.org</subscribe>
+      <unsubscribe>pluto-scm-unsubscribe@portals.apache.org</unsubscribe>
+      <post>pluto-scm@portals.apache.org</post>
+      <archive>http://mail-archives.apache.org/mod_mbox/portals-pluto-scm</archive>
+    </mailingList>
+  </mailingLists>
+
+
+  <!-- Pluto Committers ==================================================== -->
+
+  <!-- Email format: [name]#a@T#[domain].d0t.[extension]
+'@' and '.' characters are added because m2 seems to need them to
+generate mailto links. -->
+
+  <developers>
+
+    <developer>
+      <name>Michael Blum</name>
+      <id>blumm</id>
+      <email>blumm#a@T#apache.d0t.org</email>
+    </developer>
+
+    <developer>
+      <name>Carsten Ziegeler</name>
+      <id>cziegeler</id>
+      <email>cziegeler#a@T#apache.d0t.org</email>
+    </developer>
+
+    <developer>
+      <name>David DeWolf</name>
+      <id>ddewolf</id>
+      <email>ddewolf@apache.org</email>
+      <timezone>-4</timezone>
+      <url>http://www.daviddewolf.com</url>
+      <organization>Three Pillar Software, Inc.</organization>
+      <organizationUrl>http://www.threepillarsoftware.com</organizationUrl>
+      <roles>
+        <role>Java Developer</role>
+      </roles>
+    </developer>
+
+    <developer>
+      <name>Scott Nicklous</name>
+      <id>msnicklous</id>
+      <email>msnicklous#a@T#apache.d0t.org</email>
+      <timezone>+1</timezone>
+      <organization>IBM Corporation</organization>
+      <organizationUrl>http://www.ibm.com</organizationUrl>
+      <roles>
+        <role>Specification Lead, JSR 362 Portlet Specification 3.0</role>
+        <role>Java Developer</role>
+      </roles>
+    </developer>
+
+    <developer>
+      <name>Neil Griffin</name>
+      <id>asfgriff</id>
+      <email>neil.griffin#a@T#portletfaces.d0t.org</email>
+      <timezone>+8</timezone>
+      <organization>Liferay</organization>
+      <organizationUrl>https://www.liferay.com/</organizationUrl>
+      <roles>
+        <role>Specification Architect, JSR 362 Portlet Specification 3.0</role>
+        <role>Java Developer</role>
+      </roles>
+    </developer>
+
+    <developer>
+      <name>Nick Lothian</name>
+      <id>nlothian</id>
+      <email>nlothian#a@T#apache.d0t.org</email>
+    </developer>
+
+    <developer>
+      <name>Craig Doremus</name>
+      <id>cdoremus</id>
+      <email>cdoremus#a@T#apache.d0t.org</email>
+    </developer>
+
+    <developer>
+      <name>Zhong Zheng</name>
+      <id>zheng</id>
+      <email>zheng#a@T#apache.d0t.org</email>
+      <timezone>+1</timezone>
+      <organization />
+      <roles>
+        <role>Java Developer</role>
+      </roles>
+    </developer>
+
+    <developer>
+      <name>Santiago Gala</name>
+      <id>sgala</id>
+      <email>sgala#a@T#hisitech.d0t.com</email>
+      <organization />
+    </developer>
+
+    <developer>
+      <name>Raphael Luta</name>
+      <id>raphael</id>
+      <email>raphael#a@T#apache.d0t.org</email>
+      <organization />
+    </developer>
+
+    <developer>
+      <name>David S. Taylor</name>
+      <id>taylor</id>
+      <email>david#a@T#bluesunrise.d0t.com</email>
+      <timezone>+8</timezone>
+      <organization>Bluesunrise</organization>
+      <organizationUrl>https://www.bluesunrise.com/</organizationUrl>
+      <roles>
+        <role>Expert Group Member, JSR 362 Portlet Specification 3.0</role>
+        <role>Java Developer</role>
+      </roles>
+    </developer>
+
+    <developer>
+      <name>Scott T. Weaver</name>
+      <id>weaver</id>
+      <email>weaver#a@T#apache.d0t.org</email>
+    </developer>
+
+    <developer>
+      <name>Stefan Hepper</name>
+      <id>sthepper</id>
+      <email>sthepper#a@T#apache.d0t.org</email>
+    </developer>
+
+    <developer>
+      <name>Elliot Metsger</name>
+      <id>esm</id>
+      <email>esm#a@T#apache.d0t.org</email>
+      <timezone>-4</timezone>
+      <url>http://uppertank.net/blog</url>
+      <organization>Johns Hopkins University, Sheridan Libraries</organization>
+      <organizationUrl>http://www.library.jhu.edu</organizationUrl>
+    </developer>
+
+    <developer>
+      <name>Ate Douma</name>
+      <id>ate</id>
+      <email>ate#aT#apache.d0t.org</email>
+      <timezone>+2</timezone>
+      <organization>Hippo</organization>
+      <organizationUrl>http://www.onehippo.com</organizationUrl>
+      <roles>
+        <role>Java Developer</role>
+      </roles>
+    </developer>
+
+    <developer>
+      <name>David Jencks</name>
+      <id>djencks</id>
+      <email>djencks#aT#apache.d0t.org</email>
+      <timezone>-7</timezone>
+    </developer>
+
+  </developers>
+
+
+  <!-- Pluto Contributors ================================================== -->
+
+  <contributors>
+    <contributor>
+      <name>Michael Westbay</name>
+      <email>westbay#a@T#users.d0t.sourceforge.d0t.net</email>
+    </contributor>
+    <contributor>
+      <name>Ken Weiner</name>
+      <email>kweiner#a@T#unicon.d0t.net</email>
+    </contributor>
+    <contributor>
+      <name>Ken Atherton</name>
+      <email>katherto#a@T#visa.d0t.com</email>
+    </contributor>
+    <contributor>
+      <name>David Hay</name>
+    </contributor>
+
+    <contributor>
+
+    </contributor>
+  </contributors>
+
+   <scm>
+      <connection>scm:git:https://git-wip-us.apache.org/repos/asf/portals-pluto.git</connection>
+      <developerConnection>scm:git:https://git-wip-us.apache.org/repos/asf/portals-pluto.git</developerConnection>
+      <url>https://github.com/apache/portals-pluto</url>
+      <tag>pluto-3.0.0</tag>
+   </scm>
+
+  <!-- Dependency Version Properties ======================================= -->
+
+  <!--
+  NOTE:
+
+  Modification of these properties affects:
+  1)  pluto-maven-plugin/src/main/resources/versions.properties as well!
+  -->
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+    <pluto.container.name>Pluto</pluto.container.name>
+    <javax.portlet.version.major>3</javax.portlet.version.major>
+    <javax.portlet.version.minor>0</javax.portlet.version.minor>
+    <portals.portlet-api.version>${project.version}</portals.portlet-api.version>
+    <servlet-api.version>8.0.28</servlet-api.version>
+    <jsp-api.version>8.0.28</jsp-api.version>
+    <jstl.version>8.0.28</jstl.version>
+    <el-api.version>8.0.28</el-api.version>
+    <taglibs.standard.version>1.2.1</taglibs.standard.version>
+    <jaxb.version>2.1</jaxb.version>
+    <jaxb-impl.version>2.1.9</jaxb-impl.version>
+    <stax.impl.version>1.2.0</stax.impl.version>
+    <commons-digester.version>1.8</commons-digester.version>
+    <commons-cli.version>1.0</commons-cli.version>
+    <slf4j.version>1.7.5</slf4j.version>
+    <springframework.version>2.0.2</springframework.version>
+<!--     <springframework.version>4.2.3.RELEASE</springframework.version> -->
+    <maven.version>2.0.5</maven.version>
+    <ant.version>1.6.5</ant.version>
+    <commons-lang.version>3.4</commons-lang.version>
+    <commons-io.version>2.4</commons-io.version>
+    <ccpp-api.version>1.0</ccpp-api.version>
+    <junit.version>4.12</junit.version>
+    <jmock.version>1.2.0</jmock.version>
+    <xmlunit.version>1.1</xmlunit.version>
+    <cdi.version>2.3.1.Final</cdi.version>
+    <annotation-detector.version>3.0.5</annotation-detector.version>
+
+    <!-- The following properties are not directly used as maven
+dependencies, they're used by the maven pluto plugin for
+handling installation dependencies
+TODO: Check if we need all of them. -->
+    <xerces.version>2.6.2</xerces.version>
+    <xalan.version>2.7.0</xalan.version>
+    <castor.version>1.1.1</castor.version>
+    <commons-collections.version>3.2</commons-collections.version>
+    <commons-httpclient.version>3.0</commons-httpclient.version>
+    <commons-beanutils.version>1.7.0</commons-beanutils.version>
+    <log4j.version>1.2.14</log4j.version>
+    <activation.version>1.1</activation.version>
+    <ccpp-ri.version>1.0</ccpp-ri.version>
+    <rdffilter.version>1.0</rdffilter.version>
+    <jena.version>1.4.0</jena.version>
+
+    <!-- scope of certain dependencies is "compile" for deployment on tomcat, 
+         but "provided" for deployment on tomee. See tomee profile. -->
+    <dependency.scope>compile</dependency.scope>
+    
+    <!-- following properties control whether or not demos are included in page 
+         config file (see profile 'excludeDemos' below) -->
+    <includeDemosBegin />
+	 <includeDemosEnd />
+  </properties>
+
+  <dependencyManagement>
+    <dependencies>
+      <!-- Logging =========================================== -->
+      <dependency>
+        <groupId>org.slf4j</groupId>
+        <artifactId>slf4j-api</artifactId>
+        <version>${slf4j.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.slf4j</groupId>
+        <artifactId>slf4j-jdk14</artifactId>
+        <version>${slf4j.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.slf4j</groupId>
+        <artifactId>jcl-over-slf4j</artifactId>
+        <version>${slf4j.version}</version>
+      </dependency>
+
+      <!-- Specification Libraries =========================================== -->
+      <dependency>
+         <groupId>javax.portlet</groupId>
+         <artifactId>portlet-api</artifactId>
+         <version>${project.version}</version>
+         <scope>provided</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.tomcat</groupId>
+        <artifactId>tomcat-servlet-api</artifactId>
+        <version>${servlet-api.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>javax.xml.bind</groupId>
+        <artifactId>jaxb-api</artifactId>
+        <version>${jaxb.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>com.sun.xml.bind</groupId>
+        <artifactId>jaxb-impl</artifactId>
+        <version>${jaxb-impl.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>stax</groupId>
+        <artifactId>stax</artifactId>
+        <version>${stax.impl.version}</version>
+        <exclusions>
+          <exclusion>
+            <groupId>stax</groupId>
+            <artifactId>stax-api</artifactId>
+          </exclusion>
+        </exclusions>
+      </dependency>
+      
+      <!-- CDI Library -->
+      <dependency>
+         <groupId>javax.enterprise</groupId>
+         <artifactId>cdi-api</artifactId>
+         <version>1.2</version>
+      </dependency>
+      <dependency>
+          <groupId>org.jboss.weld.servlet</groupId>
+          <artifactId>weld-servlet</artifactId>
+          <version>${cdi.version}</version>
+      </dependency>      
+
+      <!-- For method annotation scanning ==================================== -->
+      <dependency>
+         <groupId>eu.infomas</groupId>
+         <artifactId>annotation-detector</artifactId>
+         <version>${annotation-detector.version}</version>
+      </dependency>
+
+      <!--  CCPP Libraries -->
+      <dependency>
+        <groupId>javax.ccpp</groupId>
+        <artifactId>ccpp</artifactId>
+        <version>${ccpp-api.version}</version>
+      </dependency>
+
+      <!-- Testing Libraries ================================================= -->
+      <dependency>
+        <groupId>junit</groupId>
+        <artifactId>junit</artifactId>
+        <version>${junit.version}</version>
+        <scope>test</scope>
+      </dependency>
+      <dependency>
+        <groupId>jmock</groupId>
+        <artifactId>jmock</artifactId>
+        <version>${jmock.version}</version>
+        <scope>test</scope>
+      </dependency>
+      <dependency>
+        <groupId>jmock</groupId>
+        <artifactId>jmock-cglib</artifactId>
+        <version>${jmock.version}</version>
+        <scope>test</scope>
+      </dependency>
+      <dependency>
+        <groupId>xmlunit</groupId>
+        <artifactId>xmlunit</artifactId>
+        <version>${xmlunit.version}</version>
+        <scope>test</scope>
+      </dependency>
+      <!-- Misc ================================================= -->
+      <dependency>
+        <groupId>ant</groupId>
+        <artifactId>ant</artifactId>
+        <version>${ant.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.maven</groupId>
+        <artifactId>maven-core</artifactId>
+        <version>${maven.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.maven</groupId>
+        <artifactId>maven-artifact</artifactId>
+        <version>${maven.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.maven</groupId>
+        <artifactId>maven-model</artifactId>
+        <version>${maven.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.maven</groupId>
+        <artifactId>maven-project</artifactId>
+        <version>${maven.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.maven</groupId>
+        <artifactId>maven-plugin-api</artifactId>
+        <version>${maven.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.tomcat</groupId>
+        <artifactId>tomcat-jsp-api</artifactId>
+        <version>${jsp-api.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.tomcat</groupId>
+        <artifactId>tomcat-el-api</artifactId>
+        <version>${el-api.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.taglibs</groupId>
+        <artifactId>taglibs-standard-spec</artifactId>
+        <version>${taglibs.standard.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.taglibs</groupId>
+        <artifactId>taglibs-standard-impl</artifactId>
+        <version>${taglibs.standard.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.taglibs</groupId>
+        <artifactId>taglibs-standard-jstlel</artifactId>
+        <version>${taglibs.standard.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.springframework</groupId>
+        <artifactId>spring-core</artifactId>
+        <version>${springframework.version}</version>
+        <scope>compile</scope>
+        <exclusions>
+          <exclusion>
+            <groupId>commons-logging</groupId>
+            <artifactId>commons-logging</artifactId>
+          </exclusion>
+        </exclusions>
+      </dependency>
+      <dependency>
+        <groupId>org.springframework</groupId>
+        <artifactId>spring-beans</artifactId>
+        <version>${springframework.version}</version>
+        <exclusions>
+          <exclusion>
+            <groupId>commons-logging</groupId>
+            <artifactId>commons-logging</artifactId>
+          </exclusion>
+        </exclusions>
+      </dependency>
+      <dependency>
+        <groupId>org.springframework</groupId>
+        <artifactId>spring-web</artifactId>
+        <version>${springframework.version}</version>
+        <exclusions>
+          <exclusion>
+            <groupId>commons-logging</groupId>
+            <artifactId>commons-logging</artifactId>
+          </exclusion>
+        </exclusions>
+      </dependency>
+      <dependency>
+        <groupId>commons-io</groupId>
+        <artifactId>commons-io</artifactId>
+        <version>${commons-io.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.commons</groupId>
+        <artifactId>commons-lang3</artifactId>
+        <version>${commons-lang.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>commons-digester</groupId>
+        <artifactId>commons-digester</artifactId>
+        <version>${commons-digester.version}</version>
+        <exclusions>
+          <exclusion>
+            <groupId>commons-logging</groupId>
+            <artifactId>commons-logging</artifactId>
+          </exclusion>
+        </exclusions>
+      </dependency>
+      <dependency>
+        <groupId>commons-cli</groupId>
+        <artifactId>commons-cli</artifactId>
+        <version>${commons-cli.version}</version>
+        <exclusions>
+          <exclusion>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+          </exclusion>
+          <exclusion>
+            <groupId>commons-logging</groupId>
+            <artifactId>commons-logging</artifactId>
+          </exclusion>
+        </exclusions>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
+
+  <build>
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <groupId>org.apache.portals.pluto</groupId>
+          <artifactId>pluto-maven-plugin</artifactId>
+          <version>${project.version}</version>
+        </plugin>
+        <plugin>
+           <groupId>org.apache.maven.plugins</groupId>
+           <artifactId>maven-jar-plugin</artifactId>
+           <version>2.4</version>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-war-plugin</artifactId>
+          <version>2.4</version>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.rat</groupId>
+          <artifactId>apache-rat-plugin</artifactId>
+          <version>0.12</version>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-antrun-plugin</artifactId>
+          <version>1.7</version>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-compiler-plugin</artifactId>
+          <version>3.1</version>
+          <configuration>
+            <source>1.7</source>
+            <target>1.7</target>
+          </configuration>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.felix</groupId>
+          <artifactId>maven-bundle-plugin</artifactId>
+          <version>3.2.0</version>
+          <extensions>true</extensions>
+          <configuration>
+            <instructions>
+              <Implementation-Title>${project.name}</Implementation-Title>
+              <Specification-Version>${project.version}</Specification-Version>
+              <Implementation-Version>${project.version}</Implementation-Version>
+              <Bundle-DocURL>${project.url}</Bundle-DocURL>
+            </instructions>
+          </configuration>
+        </plugin>
+        <plugin>
+           <groupId>org.apache.maven.scm</groupId>
+           <artifactId>maven-scm-providers-git</artifactId>
+           <!-- http://jira.codehaus.org/browse/SCM-444 -->
+           <version>(,1.4]</version>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-release-plugin</artifactId>
+          <configuration>
+            <!-- During release (prepare) the org.apache.felix maven-bundle-plugin needs classpath access to just build dependent artifacts
+                 like the pluto-container-api to determine the needed OSGi imports.
+                 However, the default maven-release-plugin goals (clean verify) somehow don't provide those.
+                 To fix that, the default release plugin set of preparationGoals is changed to do an "install" instead of just "verify".
+            -->
+            <preparationGoals>clean install</preparationGoals>
+            <mavenExecutorId>forked-path</mavenExecutorId>
+            <autoVersionSubmodules>true</autoVersionSubmodules>
+            <pushChanges>false</pushChanges>
+            <localCheckout>true</localCheckout>
+            
+            <!-- by default, the release build includes the V3 demos. To perform the release build without the demos, 
+                 activate the 'excludeDemos profile 'arguments' line as shown below. -->
+            <!--
+            <arguments>-Ppluto,excludeDemos</arguments>
+            -->
+            <arguments>-Ppluto</arguments>
+          </configuration>
+        </plugin>
+
+			<!-- Javascript compressor plugin -->
+			<plugin>
+				<groupId>net.alchim31.maven</groupId>
+				<artifactId>yuicompressor-maven-plugin</artifactId>
+				<version>1.1</version>
+				<executions>
+					<execution>
+						<id>compress-js</id>
+						<goals>
+							<goal>compress</goal>
+						</goals>
+						<configuration>
+							<jswarn>false</jswarn>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+      </plugins>
+    </pluginManagement>
+
+    <plugins>
+      <plugin>
+        <groupId>org.apache.felix</groupId>
+        <artifactId>maven-bundle-plugin</artifactId>
+      </plugin>
+    </plugins>
+  </build>
+
+  <profiles>
+    <profile>
+      <id>all</id>
+      <activation>
+        <activeByDefault>true</activeByDefault>
+        <!-- profile must also be activated when building for tomee -->
+        <property>
+          <name>tomee</name>
+        </property>
+      </activation>
+      
+      <!-- Pluto Modules ======================================================= -->
+      <modules>
+        <!-- Portlet API module (spec -->
+        <module>portlet-api</module>
+
+        <!-- Pluto Container API -->
+        <module>pluto-container-api</module>
+
+        <!-- Pluto Core Modules -->
+        <module>pluto-container</module>
+        <module>pluto-taglib</module>
+
+        <!-- Pluto Portal and Testsuite Modules -->
+        <module>pluto-container-driver-api</module>
+        <module>pluto-portal-driver</module>
+        <module>pluto-portal-driver-impl</module>
+        <module>pluto-portal</module>
+        <module>pluto-testsuite</module>
+
+        <!-- Aggregated common jar for shared library location -->
+        <module>pluto-common</module>
+        
+        <!-- PortletHub demo portlets -->
+        <module>ChatRoomDemo</module>
+        <module>PortletHubDemo</module>
+        <module>PortletV3Demo</module>
+        <module>PortletV3AnnotatedDemo</module>
+
+        <!-- Pluto Utilities, Maven Plugins and Ant Tasks -->
+        <module>pluto-util</module>
+        <module>maven-pluto-plugin</module>
+        <module>pluto-ant-tasks</module>
+        <module>pluto-site-skin</module>
+        
+        <!-- the Technology Compliance Kit -->
+        <module>portlet-tck_3.0</module>
+      </modules>
+    </profile>
+    
+    <profile>
+      <id>website</id>
+      <!-- For building website documentation, there's no need to include modules. -->
+      <modules />
+    </profile>
+    
+    <!-- To build Pluto for deployment on tomee, activate this profile -->
+    <!-- Activate using the tomee property: mvn clean install -Dtomee -->
+    <profile>
+      <id>tomee</id>
+      <activation>
+        <property>
+          <name>tomee</name>
+        </property>
+      </activation>
+      <properties>
+         <!-- scope of certain dependencies is "compile" for deployment on tomcat, 
+              but "provided" for deployment on tomee. See tomee profile. -->
+		  <dependency.scope>provided</dependency.scope>
+      </properties>
+    </profile>
+
+  </profiles>
+
+</project>

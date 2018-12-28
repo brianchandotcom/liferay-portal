@@ -1,0 +1,286 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>org.jboss.weld</groupId>
+		<artifactId>weld-parent</artifactId>
+		<version>36</version>
+		<relativePath />
+	</parent>
+
+	<groupId>javax.enterprise</groupId>
+	<artifactId>cdi-api</artifactId>
+	<packaging>jar</packaging>
+	<version>2.0</version>
+
+	<name>CDI APIs</name>
+	<description>APIs for CDI (Contexts and Dependency Injection for Java)</description>
+
+	<url>http://cdi-spec.org</url>
+	<licenses>
+		<license>
+			<name>Apache License, Version 2.0</name>
+			<distribution>repo</distribution>
+			<url>http://www.apache.org/licenses/LICENSE-2.0.html</url>
+		</license>
+	</licenses>
+
+	<ciManagement>
+		<system>Hudson</system>
+		<url>http://hudson.jboss.org</url>
+	</ciManagement>
+
+	<issueManagement>
+		<system>JIRA</system>
+		<url>http://jira.jboss.org/browse/CDI</url>
+	</issueManagement>
+
+	<organization>
+		<name>JBoss by Red Hat, Inc.</name>
+		<url>http://jboss.org</url>
+	</organization>
+
+	<inceptionYear>2008</inceptionYear>
+
+	<developers>
+		<developer>
+			<name>Antoine Sabot-Durand</name>
+			<id>asabotdu</id>
+			<timezone>CET</timezone>
+			<organization>Red Hat Inc.</organization>
+			<roles>
+				<role>Specfication Lead</role>
+			</roles>
+			<email>asd[at]redhat[dot]com</email>
+		</developer>
+
+		<developer>
+			<name>Martin Kouba</name>
+			<id>mkouba</id>
+			<organization>Red Hat Inc.</organization>
+			<roles>
+				<role>RI tech lead</role>
+			</roles>
+			<email>mkouba[at]redhat[dot]com</email>
+		</developer>
+
+		<developer>
+			<name>Tomas Remes</name>
+			<id>tremes</id>
+			<organization>Red Hat Inc.</organization>
+			<roles>
+				<role>TCK tech lead</role>
+			</roles>
+			<email>tremes[at]redhat[dot]com</email>
+		</developer>
+
+		<developer>
+			<name>Mark Struberg</name>
+			<id>mstruberg</id>
+			<timezone>CET</timezone>
+			<roles>
+				<role>Implementation developer</role>
+			</roles>
+			<email>struberg[at]yahoo[dot]de</email>
+		</developer>
+
+		<developer>
+			<name>John D. Ament</name>
+			<id>johndament</id>
+			<organization>Independent</organization>
+			<timezone>EST</timezone>
+			<roles>
+				<role>EG Member</role>
+			</roles>
+			<email>johndament[at]apache[dot]org</email>
+		</developer>
+
+		<developer>
+			<name>Matej Novotny</name>
+			<id>manovotn</id>
+			<organization>Red Hat Inc.</organization>
+			<roles>
+				<role>TCK and RI developer</role>
+			</roles>
+			<email>manovotn[at]redhat[dot]com</email>
+		</developer>
+
+		<developer>
+			<name>Mark Paluch</name>
+			<id>mp911de</id>
+			<organization>Independent</organization>
+			<timezone>CET</timezone>
+			<roles>
+				<role>EG Member</role>
+			</roles>
+			<email>mpaluch[at]paluch[dot]biz</email>
+		</developer>
+
+	</developers>
+
+
+	<properties>
+		<atinject.api.version>1</atinject.api.version>
+		<uel.api.version>3.0.0</uel.api.version>
+		<interceptor.api.version>1.2</interceptor.api.version>
+		<maven.compiler.source>1.8</maven.compiler.source>
+		<maven.compiler.target>1.8</maven.compiler.target>
+		<maven-bundle-plugin.version>2.5.4</maven-bundle-plugin.version>
+	</properties>
+
+	<!-- Configure all dependencies (e.g. testing) -->
+	<dependencyManagement>
+		<dependencies>
+
+			<dependency>
+				<groupId>org.testng</groupId>
+				<artifactId>testng</artifactId>
+				<version>6.8.8</version>
+			</dependency>
+
+			<dependency>
+				<groupId>javax.inject</groupId>
+				<artifactId>javax.inject</artifactId>
+				<version>${atinject.api.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>javax.el</groupId>
+				<artifactId>javax.el-api</artifactId>
+				<version>${uel.api.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>javax.interceptor</groupId>
+				<artifactId>javax.interceptor-api</artifactId>
+				<version>${interceptor.api.version}</version>
+			</dependency>
+
+		</dependencies>
+	</dependencyManagement>
+
+	<dependencies>
+		<dependency>
+			<groupId>javax.el</groupId>
+			<artifactId>javax.el-api</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>javax.interceptor</groupId>
+			<artifactId>javax.interceptor-api</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>javax.inject</groupId>
+			<artifactId>javax.inject</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.testng</groupId>
+			<artifactId>testng</artifactId>
+			<scope>test</scope>
+		</dependency>
+
+	</dependencies>
+
+	<scm>
+		<connection>scm:git:git@github.com:cdi-spec/cdi.git</connection>
+		<url>scm:git:git@github.com:cdi-spec/cdi.git</url>
+		<developerConnection>scm:git:git@github.com:cdi-spec/cdi.git</developerConnection>
+	</scm>
+
+	<profiles>
+		<profile>
+			<id>jboss-public-repository</id>
+			<activation>
+				<property>
+					<name>jboss-public-repository</name>
+					<value>!false</value>
+				</property>
+			</activation>
+			<repositories>
+				<repository>
+					<id>jboss-public-repository-group</id>
+					<name>JBoss Public Maven Repository Group</name>
+					<url>http://repository.jboss.org/nexus/content/groups/public</url>
+					<releases>
+						<enabled>true</enabled>
+						<updatePolicy>never</updatePolicy>
+					</releases>
+					<snapshots>
+						<enabled>false</enabled>
+						<updatePolicy>never</updatePolicy>
+					</snapshots>
+				</repository>
+			</repositories>
+			<pluginRepositories>
+				<pluginRepository>
+					<id>jboss-public-repository-group</id>
+					<name>JBoss Public Maven Repository Group</name>
+					<url>http://repository.jboss.org/nexus/content/groups/public</url>
+					<releases>
+						<enabled>true</enabled>
+						<updatePolicy>never</updatePolicy>
+					</releases>
+					<snapshots>
+						<enabled>false</enabled>
+						<updatePolicy>never</updatePolicy>
+					</snapshots>
+				</pluginRepository>
+			</pluginRepositories>
+		</profile>
+	</profiles>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.felix</groupId>
+				<artifactId>maven-bundle-plugin</artifactId>
+				<version>${maven-bundle-plugin.version}</version>
+				<executions>
+					<execution>
+						<id>bundle-manifest</id>
+						<phase>process-classes</phase>
+						<goals>
+							<goal>manifest</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<instructions>
+						<Export-Package>
+							javax.decorator;version=2.0,
+							javax.enterprise.*;version=2.0,
+						</Export-Package>
+						<Import-Package>
+							javax.el; version=2.2,
+							*
+						</Import-Package>
+					</instructions>
+				</configuration>
+			</plugin>
+			<!-- Add the OSGi Manifest to the main jar -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<configuration>
+					<archive>
+						<manifestFile>${project.build.outputDirectory}/META-INF/MANIFEST.MF</manifestFile>
+					</archive>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>2.19</version>
+				<configuration>
+					<systemPropertyVariables>
+						<serviceDir>${project.build.testOutputDirectory}/META-INF/services/</serviceDir>
+					</systemPropertyVariables>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+
+</project>

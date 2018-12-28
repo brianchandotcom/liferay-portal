@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?><project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>org.kohsuke</groupId>
+    <artifactId>pom</artifactId>
+    <version>6</version>
+  </parent>
+
+  <groupId>args4j</groupId>
+  <artifactId>args4j-site</artifactId>
+  <name>args4j parent</name>
+  <version>2.0.26</version>
+  <packaging>pom</packaging>
+  <description>args4j : Java command line arguments parser</description>
+  <url>http://args4j.kohsuke.org/</url>
+  <issueManagement>
+    <url>https://args4j.dev.java.net/issues</url>
+  </issueManagement>
+  <inceptionYear>2003</inceptionYear>
+  
+  <ciManagement>
+    <notifiers>
+      <notifier>
+        <configuration>
+          <address>kk@kohsuke.org</address>
+        </configuration>
+      </notifier>
+    </notifiers>
+  </ciManagement>
+  <mailingLists>
+    <mailingList>
+      <name>discussion list</name>
+      <subscribe>users-subscribe@args4j.dev.java.net</subscribe>
+      <unsubscribe>users-ubsubscribe@args4j.dev.java.net</unsubscribe>
+      <archive>https://args4j.dev.java.net/servlets/SummarizeList?listName=users</archive>
+    </mailingList>
+  </mailingLists>
+
+  <developers>
+    <developer>
+      <id>kohsuke</id>
+      <name>Kohsuke Kawaguchi</name>
+      <email>kk@kohsuke.org</email>
+      <organization>Sun Microsystems</organization>
+    </developer>
+    <developer>
+      <id>jhm</id>
+      <name>Jan Materne</name>
+      <email>jhm@apache.org</email>
+    </developer>
+    <developer>
+      <id>marksinke</id>
+      <name>Mark Sinke</name>
+      <email>marksinke@dev.java.net</email>
+    </developer>
+    <developer>
+      <id>lacostej</id>
+      <name>Jerome Lacoste</name>
+      <email>jerome@coffeebreaks.org</email>
+    </developer>
+  </developers>
+
+  <scm>
+    <connection>scm:git:git@github.com/kohsuke/args4j.git</connection>
+    <developerConnection>scm:git:ssh://git@github.com/kohsuke/args4j.git</developerConnection>
+    <url>http://args4j.kohsuke.org/</url>
+  </scm>
+
+  <distributionManagement>
+    <site>
+      <id>github-pages</id>
+      <url>gitsite:git@github.com/kohsuke/args4j.git</url>
+    </site>
+  </distributionManagement>
+
+  <organization>
+    <name>Kohsuke Kawaguchi</name>
+    <url>http://www.kohsuke.org/</url>
+  </organization>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
+
+  <build>
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <artifactId>maven-compiler-plugin</artifactId>
+          <version>2.3.2</version>
+          <configuration>
+            <source>1.5</source>
+            <target>1.5</target>
+          </configuration>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-jar-plugin</artifactId>
+          <version>2.3.1</version>
+        </plugin>
+      </plugins>
+    </pluginManagement>  
+  
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-site-plugin</artifactId>
+        <version>3.0-beta-3</version>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.felix</groupId>
+        <artifactId>maven-bundle-plugin</artifactId>
+        <extensions>true</extensions>
+        <configuration>
+          <instructions>
+            <Bundle-SymbolicName>org.kohsuke.${pom.artifactId}</Bundle-SymbolicName>
+          </instructions>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+
+  <reporting>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-project-info-reports-plugin</artifactId>
+        <version>2.4</version>
+      </plugin>
+      <plugin>
+        <artifactId>maven-javadoc-plugin</artifactId>
+      </plugin>
+    </plugins>
+  </reporting>
+
+  <licenses>
+    <license>
+      <name>MIT License</name>
+      <url>http://www.opensource.org/licenses/mit-license.php</url>
+    </license>
+  </licenses>
+  
+  <modules>
+    <module>args4j</module>
+    <module>args4j-tools</module>
+    <module>args4j-maven-plugin</module>
+    <module>args4j-maven-plugin-example</module>
+  </modules>
+</project>

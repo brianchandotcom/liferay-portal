@@ -1,0 +1,6 @@
+<project>
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>relaxngDatatype</groupId>
+  <artifactId>relaxngDatatype</artifactId>
+  <version>20020414</version>
+</project>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <parent>
+        <groupId>org.cometd</groupId>
+        <artifactId>cometd-project</artifactId>
+        <version>2.3.1</version>
+    </parent>
+
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>org.cometd.java</groupId>
+    <artifactId>cometd-java</artifactId>
+    <packaging>pom</packaging>
+    <name>CometD :: Java</name>
+
+    <properties>
+    </properties>
+
+    <modules>
+        <module>bayeux-api</module>
+        <module>cometd-java-annotations</module>
+        <module>cometd-java-client</module>
+        <module>cometd-java-common</module>
+        <module>cometd-java-examples</module>
+        <module>cometd-java-oort</module>
+        <module>cometd-java-server</module>
+        <module>cometd-websocket-jetty</module>
+    </modules>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-api</artifactId>
+                <version>1.5.6</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+</project>

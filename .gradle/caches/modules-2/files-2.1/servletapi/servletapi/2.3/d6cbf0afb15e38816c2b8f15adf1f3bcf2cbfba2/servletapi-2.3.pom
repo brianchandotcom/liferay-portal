@@ -1,0 +1,19 @@
+<project>
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>servletapi</groupId>
+  <artifactId>servletapi</artifactId>
+  <version>2.3</version>
+  <name>Java Servlet Technology</name>
+  <description>
+    Java Servlet technology provides Web developers with a simple, consistent mechanism for extending the functionality of a Web server and for accessing existing business systems.
+  </description>
+  <url>http://java.sun.com/products/servlet/</url>
+  <distributionManagement>
+    <downloadUrl>http://java.sun.com/products/servlet/download.html</downloadUrl>
+    <relocation>
+      <groupId>javax.servlet</groupId>
+      <artifactId>servlet-api</artifactId>
+      <version>2.3</version>
+    </relocation>
+  </distributionManagement>
+</project>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.liferay.mobile</groupId>
+  <artifactId>fcm-client</artifactId>
+  <version>0.3.0</version>
+  <packaging>pom</packaging>
+  <dependencies>
+    <dependency>
+      <groupId>com.google.code.gson</groupId>
+      <artifactId>gson</artifactId>
+      <version>2.8.0</version>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.squareup.okhttp3</groupId>
+      <artifactId>okhttp</artifactId>
+      <version>3.5.0</version>
+      <scope>compile</scope>
+    </dependency>
+  </dependencies>
+  <name>Firebase Cloud Messaging Client</name>
+  <description>Firebase Cloud Messaging Client</description>
+  <url>https://github.com/liferay-mobile/fcm-client</url>
+  <licenses>
+    <license>
+      <name>LGPL 2.1</name>
+      <url>http://opensource.org/licenses/lgpl-2.1.php</url>
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
+  <scm>
+    <url>https://github.com/liferay-mobile/fcm-client</url>
+    <connection>scm:git:git://github.com/liferay-mobile/fcm-client.git</connection>
+  </scm>
+  <developers>
+    <developer>
+      <id>brunofarache</id>
+      <name>Bruno Farache</name>
+      <email>bruno.farache@liferay.com</email>
+    </developer>
+  </developers>
+</project>

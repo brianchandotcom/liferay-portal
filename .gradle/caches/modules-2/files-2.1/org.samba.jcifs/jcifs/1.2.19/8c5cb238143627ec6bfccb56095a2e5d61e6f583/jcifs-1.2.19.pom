@@ -1,0 +1,17 @@
+<project>
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>org.samba.jcifs</groupId>
+  <artifactId>jcifs</artifactId>
+  <version>1.2.19</version>
+  <packaging>jar</packaging>
+  <name>jCIFS</name>
+  <url>http://jcifs.samba.org</url>
+  <description>JCIFS is an Open Source client library that implements the CIFS/SMB networking protocol in 100% Java</description>
+  <licenses>
+      <license>
+        <name>GNU Lesser General Public License, version 2.1</name>
+        <url>http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt</url>
+        <distribution>repo</distribution>
+      </license>
+  </licenses>
+</project>

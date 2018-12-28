@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>org.hamcrest</groupId>
+  <artifactId>hamcrest-junit</artifactId>
+  <version>2.0.0.0</version>
+  <name>Hamcrest JUnit</name>
+  <description>Classes to use Hamcrest matchers within JUnit tests</description>
+  <url>https://github.com/hamcrest/hamcrest-junit</url>
+  <licenses>
+    <license>
+      <name>Eclipse Public License - v 1.0</name>
+      <url>http://opensource.org/licenses/EPL-1.0</url>
+    </license>
+  </licenses>
+  <developers>
+    <developer>
+      <id>npryce</id>
+      <name>Nat Pryce</name>
+    </developer>
+    <developer>
+      <id>sf105</id>
+      <name>Steve Freeman</name>
+    </developer>
+  </developers>
+  <scm>
+    <connection>git@github.com:hamcrest/hamcrest-junit.git</connection>
+    <url>https://github.com/hamcrest/hamcrest-junit</url>
+  </scm>
+  <dependencies>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>4.12</version>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.hamcrest</groupId>
+      <artifactId>java-hamcrest</artifactId>
+      <version>2.0.0.0</version>
+      <scope>compile</scope>
+    </dependency>
+  </dependencies>
+</project>

@@ -1,0 +1,114 @@
+<project xsi:schemaLocation='http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd' xmlns='http://maven.apache.org/POM/4.0.0' xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'>
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>org.glassfish.web</groupId>
+    <artifactId>el</artifactId>
+    <version>2.2</version>
+    <packaging>pom</packaging>
+    <name>Expression Language related modules</name>
+
+    <properties>
+        <findbugs.exclude/>
+    </properties>
+
+    <build>
+        <plugins>
+            <plugin>
+                <artifactId>maven-compiler-plugin</artifactId>
+                    <configuration>
+                        <source>1.5</source>
+                        <target>1.5</target>
+                    </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <version> 2.1 </version>
+                <configuration>
+                    <includePom>true</includePom>
+                </configuration>
+                <executions>
+                    <execution>
+                       <id>attach-sources</id>
+                       <goals>
+                           <goal>jar-no-fork</goal> 
+                       </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+              <groupId>org.apache.maven.plugins</groupId>
+              <artifactId>maven-javadoc-plugin</artifactId>
+              <executions>
+                  <execution>
+                      <id>attach-javadocs</id>
+                      <goals>
+                          <goal>jar</goal>
+                      </goals>
+                 </execution>
+              </executions>
+           </plugin>
+           <plugin>
+              <groupId>org.codehaus.mojo</groupId>
+              <artifactId>findbugs-maven-plugin</artifactId>
+              <version>2.1</version>
+              <configuration>
+                  <threshold>High</threshold>
+                  <excludeFilterFile>${findbugs.exclude}</excludeFilterFile>
+                  <findbugsXmlOutput>true</findbugsXmlOutput>
+                  <findbugsXmlWithMessages>true</findbugsXmlWithMessages>
+              </configuration>
+           </plugin>
+        </plugins>
+        <extensions>
+            <extension>
+                <groupId>org.jvnet.wagon-svn</groupId>
+                <artifactId>wagon-svn</artifactId>
+            </extension>
+        </extensions>
+    </build>
+
+    <reporting>
+        <plugins>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>findbugs-maven-plugin</artifactId>
+                <version>2.1</version>
+                <configuration>
+                    <threshold>High</threshold>
+                    <excludeFilterFile>${findbugs.exclude}</excludeFilterFile>
+                </configuration>
+            </plugin>
+        </plugins>
+    </reporting>
+
+    <scm>
+        <connection>scm:svn:https://uel.dev.java.net/svn/uel/tags/2.2</connection>
+        <developerConnection>scm:svn:https://uel.dev.java.net/svn/uel/tags/2.2</developerConnection>
+        <url>https://uel.dev.java.net/source/browse/uel/tags/2.2</url>
+    </scm>
+
+    <repositories>
+        
+        
+    </repositories>
+    <pluginRepositories>
+        
+    </pluginRepositories>
+    <distributionManagement>
+        <site>
+            <id>java.net-el</id>
+            <url>java-net:/uel/trunk/repo/</url>
+        </site>
+        <repository>
+            <uniqueVersion>false</uniqueVersion>
+            <id>java.net-maven2-repository</id>
+            <url>java-net:/maven2-repository/trunk/repository/</url>
+        </repository>
+    </distributionManagement>
+
+    <modules>
+        <module>api</module>
+        <module>impl</module>
+    </modules>
+</project>
+

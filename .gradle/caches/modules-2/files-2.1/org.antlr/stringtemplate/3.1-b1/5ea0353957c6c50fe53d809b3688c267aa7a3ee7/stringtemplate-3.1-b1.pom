@@ -1,0 +1,22 @@
+<project>
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>org.antlr</groupId>
+  <artifactId>stringtemplate</artifactId>
+  <version>3.1-b1</version>
+  <packaging>jar</packaging>  
+  <name>StringTemplate Template Engine</name>
+  <url>http://www.stringtemplate.org</url>
+  <description>
+  StringTemplate is a java template engine (with ports for C# and Python) for generating source code, web pages, emails, or any other formatted text output.
+  </description>
+  <licenses>
+    <license>
+      <name>BSD licence</name>
+      <url>http://www.stringtemplate.org/license.html</url>
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
+  <scm>
+    <url>http://fisheye2.cenqua.com/browse/stringtemplate</url>
+  </scm>  
+</project>

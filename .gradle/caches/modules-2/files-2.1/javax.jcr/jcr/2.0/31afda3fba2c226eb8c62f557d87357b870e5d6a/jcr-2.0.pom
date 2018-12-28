@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>javax.jcr</groupId>
+    <artifactId>jcr</artifactId>
+    <version>2.0</version>
+
+    <name>Content Repository for JavaTM Technology API</name>
+    <description>
+        The Content Repository API for JavaTM Technology Version 2.0 is specified by JSR-283.
+        This module contains the complete API as specified.
+    </description>
+    <inceptionYear>2009</inceptionYear>
+    <organization>
+        <name>Day Software</name>
+        <url>http://www.day.com</url>
+    </organization>
+
+    <url>http://www.jcp.org/en/jsr/detail?id=283</url>
+
+    <licenses>
+        <license>
+            <name>Day Specification License</name>
+            <url>http://www.day.com/dam/day/downloads/jsr283/day-spec-license.htm</url>
+        </license>
+        <license>
+            <name>Day Specification License addendum</name>
+            <url>http://www.day.com/content/dam/day/downloads/jsr283/LICENSE.txt</url>
+        </license>
+    </licenses>
+
+</project>

@@ -4,12 +4,6 @@
  * FragmentsEditorSidebar
  */
 {template .render}
-	{@param panels: list<[
-		icon:string,
-		label:string,
-		panelId:string
-	]>}
-	{@param spritemap: string}
 	{@param? fragmentsEditorSidebarVisible: bool}
 	{@param? store: ?}
 
@@ -24,8 +18,6 @@
 
 	<div class="{$sidebarClasses}">
 		{call com.liferay.layout.admin.web.FragmentsEditorSidebarContent.render}
-			{param panels: $panels /}
-			{param spritemap: $spritemap /}
 			{param store: $store /}
 		{/call}
 	</div>

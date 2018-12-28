@@ -283,6 +283,24 @@ const INITIAL_STATE = {
 		),
 
 	/**
+	 * List of sidebar panels
+	 * @default []
+	 * @review
+	 * @type {object[]}
+	 */
+	panels: Config
+		.arrayOf(
+			Config.shapeOf(
+				{
+					icon: Config.string().required(),
+					label: Config.string().required(),
+					panelId: Config.string().required()
+				}
+			)
+		)
+		.value([]),
+
+	/**
 	 * Portlet namespace needed for prefixing form inputs
 	 * @default ''
 	 * @review

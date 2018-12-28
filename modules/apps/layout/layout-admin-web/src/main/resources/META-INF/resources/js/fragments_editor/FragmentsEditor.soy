@@ -11,11 +11,6 @@
 	{@param imageSelectorURL: string}
 	{@param languageId: string}
 	{@param layoutData: ?}
-	{@param panels: list<[
-		icon:string,
-		label:string,
-		panelId:string
-	]>}
 	{@param portletNamespace: string}
 	{@param spritemap: string}
 	{@param? activeItemId: string}
@@ -56,9 +51,7 @@
 		{/call}
 
 		{call com.liferay.layout.admin.web.FragmentsEditorSidebar.render}
-			{param panels: $panels /}
 			{param ref: 'sidebar' /}
-			{param spritemap: $spritemap /}
 			{param store: $store /}
 		{/call}
 

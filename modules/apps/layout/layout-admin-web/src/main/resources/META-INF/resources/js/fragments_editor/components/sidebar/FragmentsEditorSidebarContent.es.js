@@ -7,9 +7,8 @@ import './fragments/SidebarSectionsPanel.es';
 import './layouts/SidebarLayoutsPanel.es';
 import './mapping/SidebarMappingPanel.es';
 import './structure/SidebarStructurePanel.es';
+import {getConnectedComponent} from '../../store/ConnectedComponent.es';
 import {HIDE_SIDEBAR, TOGGLE_SIDEBAR} from '../../actions/actions.es';
-import state from '../../store/state.es';
-import {Store} from '../../store/store.es';
 import templates from './FragmentsEditorSidebarContent.soy';
 
 /**
@@ -73,26 +72,6 @@ class FragmentsEditorSidebarContent extends Component {
 FragmentsEditorSidebarContent.STATE = {
 
 	/**
-	 * Determines if sidebar should show or not
-	 * @default true
-	 * @memberOf FragmentsEditorSidebarContent
-	 * @private
-	 * @review
-	 * @type {boolean}
-	 */
-	fragmentsEditorSidebarVisible: state.fragmentsEditorSidebarVisible,
-
-	/**
-	 * Store instance
-	 * @default undefined
-	 * @instance
-	 * @memberOf SidebarAvailableElements
-	 * @review
-	 * @type {Store}
-	 */
-	store: Config.instanceOf(Store),
-
-	/**
 	 * Sidebar active panel ID
 	 * @default sections
 	 * @memberof FragmentsEditorSidebarContent
@@ -119,7 +98,16 @@ FragmentsEditorSidebarContent.STATE = {
 		.value('Sections')
 };
 
-Soy.register(FragmentsEditorSidebarContent, templates);
+const ConnectedFragmentsEditorSidebarContent = getConnectedComponent(
+	FragmentsEditorSidebarContent,
+	[
+		'fragmentsEditorSidebarVisible',
+		'panels',
+		'spritemap'
+	]
+);
 
-export {FragmentsEditorSidebarContent};
-export default FragmentsEditorSidebarContent;
+Soy.register(ConnectedFragmentsEditorSidebarContent, templates);
+
+export {ConnectedFragmentsEditorSidebarContent, FragmentsEditorSidebarContent};
+export default ConnectedFragmentsEditorSidebarContent;

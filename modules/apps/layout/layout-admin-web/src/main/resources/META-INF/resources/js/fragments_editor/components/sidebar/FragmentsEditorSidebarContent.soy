@@ -4,16 +4,16 @@
  * FragmentsEditorSidebarContent
  */
 {template .render}
-	{@param panels: list<[
+	{@param? _handlePanelButtonClick: any}
+	{@param? _panelId: string}
+	{@param? _sidebarTitle: string}
+	{@param? panels: list<[
 		icon:string,
 		label:string,
 		panelId:string
 	]>}
-	{@param spritemap: string}
+	{@param? spritemap: string}
 	{@param? store: ?}
-	{@param? _handlePanelButtonClick: any}
-	{@param? _panelId: string}
-	{@param? _sidebarTitle: string}
 
 	<div class="fragments-editor-sidebar-content">
 		<div class="fragments-editor-sidebar-section">
@@ -64,7 +64,7 @@
 						type="button"
 					>
 						<svg class="lexicon-icon">
-							<use xlink:href="{$spritemap}#{$panel.icon}"></use>
+							<use xlink:href="{$spritemap ?: ''}#{$panel.icon}"></use>
 						</svg>
 					</button>
 				{/foreach}

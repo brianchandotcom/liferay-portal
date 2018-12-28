@@ -365,13 +365,13 @@ public class MediaObjectApioTest {
 		);
 	}
 
-	private void _delete(String url) {
+	private void _delete(String href) {
 		ApioClientBuilder.given(
 		).basicAuth(
 			"test@liferay.com", "test"
 		).when(
 		).delete(
-			url
+			href
 		);
 	}
 

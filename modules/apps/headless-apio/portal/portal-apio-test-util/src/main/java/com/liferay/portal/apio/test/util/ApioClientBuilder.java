@@ -140,13 +140,13 @@ public class ApioClientBuilder {
 			_requestSpecification = requestSpecification;
 		}
 
-		public Response delete(String url) {
+		public Response delete(String href) {
 			io.restassured.specification.RequestSpecification
 				requestSpecification =
 					_requestSpecification.getRestAssuredRequestSpecification();
 
 			io.restassured.response.Response response =
-				requestSpecification.delete(url);
+				requestSpecification.delete(href);
 
 			return new Response(response.then(), _requestSpecification);
 		}
@@ -158,35 +158,35 @@ public class ApioClientBuilder {
 			return get(extractableResponse.path(jsonPath));
 		}
 
-		public Response get(String url) {
+		public Response get(String href) {
 			io.restassured.specification.RequestSpecification
 				requestSpecification =
 					_requestSpecification.getRestAssuredRequestSpecification();
 
 			io.restassured.response.Response response =
-				requestSpecification.get(url);
+				requestSpecification.get(href);
 
 			return new Response(response.then(), _requestSpecification);
 		}
 
-		public Response post(String url) {
+		public Response post(String href) {
 			io.restassured.specification.RequestSpecification
 				requestSpecification =
 					_requestSpecification.getRestAssuredRequestSpecification();
 
 			io.restassured.response.Response response =
-				requestSpecification.post(url);
+				requestSpecification.post(href);
 
 			return new Response(response.then(), _requestSpecification);
 		}
 
-		public Response put(String url) {
+		public Response put(String href) {
 			io.restassured.specification.RequestSpecification
 				requestSpecification =
 					_requestSpecification.getRestAssuredRequestSpecification();
 
 			io.restassured.response.Response response =
-				requestSpecification.put(url);
+				requestSpecification.put(href);
 
 			return new Response(response.then(), _requestSpecification);
 		}

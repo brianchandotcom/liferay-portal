@@ -1,0 +1,78 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>org.jvnet.hudson</groupId>
+  <artifactId>jtidy</artifactId>
+  <version>4aug2000r7-dev-hudson-1</version>
+  <name>JTidy</name>
+  <url>http://jtidy.sourceforge.net</url>
+  <description>
+    JTidy is a Java port of HTML Tidy, a HTML syntax checker and pretty printer. Like its non-Java cousin,
+    JTidy can be used as a tool for cleaning up malformed and faulty HTML. In addition, JTidy provides a DOM parser
+    for real-world HTML.
+  
+    Hudson modifications:
+    =====================
+    Removed SAX APIs
+  </description>
+
+  <organization>
+    <name>JTidy</name>
+    <url>http://jtidy.sf.net</url>
+  </organization>
+
+  <licenses>
+    <license>
+      <name>Java HTML Tidy License</name>
+      <url>http://svn.sourceforge.net/viewvc/*checkout*/jtidy/trunk/jtidy/LICENSE.txt?revision=95</url>
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
+
+  <scm>
+    <connection>scm:svn:https://svn.sourceforge.net/svnroot/jtidy/trunk/jtidy/</connection>
+    <developerConnection>scm:svn:https://svn.sourceforge.net/svnroot/jtidy/trunk/jtidy/</developerConnection>
+    <url>http://svn.sourceforge.net/viewcvs.cgi/jtidy/trunk/jtidy/</url>
+  </scm>
+
+    <distributionManagement>
+      <repository>
+        <uniqueVersion>false</uniqueVersion>
+        <id>java.net-m2-repository</id>
+        <url>java-net:/maven2-repository/trunk/www/repository/</url>
+      </repository>
+    </distributionManagement>
+
+  <build>
+    <plugins>
+      <!-- fake out maven and install the binary artifact -->
+      <plugin>
+        <groupId>org.jvnet.maven-antrun-extended-plugin</groupId>
+        <artifactId>maven-antrun-extended-plugin</artifactId>
+        <executions>
+          <execution>
+
+            <phase>package</phase>
+            <goals>
+              <goal>run</goal>
+            </goals>
+            <configuration>
+              <tasks>
+                <attachArtifact file="jtidy-4aug2000r7-dev.jar" />
+                <attachArtifact file="jtidy-4aug2000r7-dev-sources.jar" classifier="sources" type="jar"/>
+              </tasks>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+    <extensions>
+      <extension>
+        <groupId>org.jvnet.wagon-svn</groupId>
+        <artifactId>wagon-svn</artifactId>
+        <version>1.8</version>
+      </extension>
+    </extensions>
+  </build>
+</project>

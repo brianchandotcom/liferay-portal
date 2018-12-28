@@ -1,0 +1,10 @@
+<project>
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>xml-apis</groupId>
+  <artifactId>xml-apis</artifactId>
+  <version>1.3.02</version>
+  <url>http://xml.apache.org/commons/#external</url>
+  <distributionManagement>
+    <downloadUrl>http://www.apache.org/dist/xml/xerces-j/Xerces-J-bin.2.7.1.tar.gz</downloadUrl>
+  </distributionManagement>
+</project>

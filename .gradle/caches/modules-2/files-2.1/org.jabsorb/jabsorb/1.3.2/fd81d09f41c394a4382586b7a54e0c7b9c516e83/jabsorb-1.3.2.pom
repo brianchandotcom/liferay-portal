@@ -1,0 +1,190 @@
+<!--
+  jabsorb - a Java to JavaScript Advanced Object Request Broker
+  http://www.jabsorb.org
+
+  Copyright 2007-2009 The jabsorb team
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+
+  Ant build script for Apache Ant version 1.6.5 or 1.7
+-->
+
+
+<!-- 
+  This POM file is only used for deployment in the Maven repository. 
+    It may not be used to build the project.
+-->
+<project>
+
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>org.jabsorb</groupId>
+  <artifactId>jabsorb</artifactId>
+  <version>1.3.2</version>
+  <packaging>jar</packaging>
+  <name>jabsorb</name>
+  <url>http://jabsorb.org</url>
+  <description>
+    jabsorb -- A JSON-RPC ORB in Java and JavaScript
+  </description>
+  <licenses>
+    <license>
+      <name>The Apache Software License, Version 2.0</name>
+      <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
+  <developers>
+    <developer>
+      <name>Arthur Blake</name>
+      <email>arthur.blake@gmail.com</email>
+      <url />
+      <organization />
+      <timezone />
+    </developer>
+  </developers>
+  <scm>
+    <connection>scm:hg:https://code.google.com/p/jabsorb/</connection>
+    <developerConnection>scm:hg:https://code.google.com/p/jabsorb/</developerConnection>
+    <url>http://svn.jabsorb.org/svn/jabsorb</url>
+  </scm>
+  <distributionManagement>
+     <repository>
+         <id>ossrh</id>
+        <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+     </repository>
+    <snapshotRepository>
+      <id>ossrh</id>
+      <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+    </snapshotRepository>
+  </distributionManagement>
+  <build>
+    <sourceDirectory>src</sourceDirectory>
+    <testSourceDirectory>test/src</testSourceDirectory>
+     <plugins>
+            <plugin>
+              <groupId>org.sonatype.plugins</groupId>
+              <artifactId>nexus-staging-maven-plugin</artifactId>
+              <version>1.6.5</version>
+              <extensions>true</extensions>
+              <configuration>
+                <serverId>ossrh</serverId>
+                <nexusUrl>https://oss.sonatype.org/</nexusUrl>
+                <autoReleaseAfterClose>true</autoReleaseAfterClose>
+              </configuration>
+            </plugin>
+            <plugin>
+              <groupId>org.apache.maven.plugins</groupId>
+              <artifactId>maven-gpg-plugin</artifactId>
+              <version>1.5</version>
+              <executions>
+                <execution>
+                  <id>sign-artifacts</id>
+                  <phase>verify</phase>
+                  <goals>
+                    <goal>sign</goal>
+                  </goals>
+                </execution>
+              </executions>
+            </plugin>
+             <plugin>
+              <artifactId>maven-jar-plugin</artifactId>
+              <version>2.5</version>
+              <configuration>
+                <archive>
+                  <manifest>
+                    <addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
+                    <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+                  </manifest>
+                </archive>
+              </configuration>
+            </plugin>
+            <plugin>
+              <groupId>org.apache.maven.plugins</groupId>
+              <artifactId>maven-source-plugin</artifactId>
+              <version>2.4</version>
+              <executions>
+                <execution>
+                  <id>attach-sources</id>
+                  <goals>
+                    <goal>jar</goal>
+                  </goals>
+                </execution>
+              </executions>
+            </plugin>
+            <plugin>
+              <groupId>org.apache.maven.plugins</groupId>
+              <artifactId>maven-javadoc-plugin</artifactId>
+              <version>2.10.1</version>
+              <executions>
+                <execution>
+                  <id>attach-javadocs</id>
+                  <goals>
+                    <goal>jar</goal>
+                  </goals>
+                </execution>
+              </executions>
+            </plugin>
+        </plugins>
+  </build>
+  <dependencies>
+    <!-- Runtime dependencies -->
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-api</artifactId>
+      <version>1.5.0</version>
+    </dependency>
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-jdk14</artifactId>
+      <version>1.5.0</version>
+    </dependency>
+
+    <!-- Optional runtime dependencies -->
+    <dependency>
+      <!-- Replacement for commons-logging required by httpclient -->
+      <groupId>org.slf4j</groupId>
+      <artifactId>jcl104-over-slf4j</artifactId>
+      <version>1.5.0</version>
+    </dependency>
+    <dependency>
+      <groupId>commons-httpclient</groupId>
+      <artifactId>commons-httpclient</artifactId>
+      <version>3.1</version>
+      <exclusions>
+        <exclusion>
+          <artifactId>commons-logging</artifactId>
+          <groupId>commons-logging</groupId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+
+    <!-- Test dependencies -->
+    <dependency>
+      <groupId>org.mortbay.jetty</groupId>
+      <artifactId>jetty</artifactId>
+      <version>6.1.6</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>3.8.2</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.mortbay.jetty</groupId>
+      <artifactId>jsp-2.1</artifactId>
+      <version>6.1.6</version>
+    </dependency>
+  </dependencies>
+</project>

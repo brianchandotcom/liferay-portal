@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright (c) 2016, 2017 GK Software AG and others.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+
+  Contributors:
+      Stephan Herrmann - initial implementation
+-->
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd" xsi:noNamespaceSchemaLocation="http://maven.apache.org/POM/4.0.0">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>org.eclipse.platform</groupId>
+  <artifactId>org.eclipse.osgi</artifactId>
+  <version>3.13.0</version>
+  <description>OSGi System Bundle
+
+%systemBundle</description>
+  <name>OSGi System Bundle</name>
+  <url>http://www.eclipse.org/platform</url>
+  <licenses>
+    <license>
+      <name>Eclipse Public License</name>
+      <url>http://www.eclipse.org/legal/epl-v10.html</url>
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
+  <organization>
+    <name>Eclipse Foundation</name>
+    <url>http://www.eclipse.org/</url>
+  </organization>
+  <issueManagement>
+    <system>Bugzilla</system>
+    <url>https://bugs.eclipse.org/</url>
+  </issueManagement>
+  <scm>
+    <connection>scm:git:git://git.eclipse.org/gitroot/equinox/rt.equinox.framework.git</connection>
+    <tag>I20180409-2000</tag>
+    <url>https://git.eclipse.org/c/equinox/rt.equinox.framework.git</url>
+  </scm>
+  <developers>
+    <developer>
+      <url>https://projects.eclipse.org/projects/rt.equinox/who</url>
+    </developer>
+  </developers>
+</project>

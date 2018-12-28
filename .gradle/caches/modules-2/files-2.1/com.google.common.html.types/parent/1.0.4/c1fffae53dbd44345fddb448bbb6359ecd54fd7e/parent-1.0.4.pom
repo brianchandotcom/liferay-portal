@@ -1,0 +1,218 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <name>Safe HTML Types</name>
+  <groupId>com.google.common.html.types</groupId>
+  <artifactId>parent</artifactId>
+  <version>1.0.4</version>
+  <packaging>pom</packaging>
+
+  <description>
+    Parent project for typed strings of web content that can be
+    used to bring safe-by-construction methods to web applications.
+
+    https://github.com/google/safe-html-types/blob/master/README.md
+  </description>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+    <java.version>1.7</java.version>
+    <guava.version>19.0</guava.version>
+    <gwt.version>2.8.0-beta1</gwt.version>
+    <protobuf.version>3.0.0-beta-2</protobuf.version>
+  </properties>
+
+  <url>https://github.com/google/safe-html-types</url>
+  <inceptionYear>2015</inceptionYear>
+
+  <organization>
+    <name>Google</name>
+    <url>https://www.google.com</url>
+  </organization>
+
+  <developers>
+    <developer>
+      <name>Googlers</name>
+      <organization>Google</organization>
+      <organizationUrl>https://www.google.com</organizationUrl>
+    </developer>
+  </developers>
+
+  <licenses>
+    <license>
+      <name>The Apache Software License, Version 2.0</name>
+      <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
+
+  <issueManagement>
+    <system>GitHub</system>
+    <url>https://github.com/google/safe-html-types/issues</url>
+  </issueManagement>
+
+  <mailingLists>
+    <mailingList>
+      <name>Safe HTML Types Discussion List</name>
+      <subscribe>safe-html-types-discuss+subscribe@googlegroups.com</subscribe>
+      <unsubscribe>safe-html-types-discuss+unsubscribe@googlegroups.com</unsubscribe>
+      <post>safe-html-types-discuss@googlegroups.com</post>
+      <archive>https://groups.google.com/group/safe-html-types-discuss</archive>
+    </mailingList>
+  </mailingLists>
+
+  <scm>
+    <connection>scm:git:https://github.com/google/safe-html-types.git</connection>
+    <developerConnection>scm:git:git://github.com/google/safe-html-types.git</developerConnection>
+    <url>https://github.com/google/safe-html-types.git</url>
+    <tag>HEAD</tag>
+  </scm>
+
+  <distributionManagement>
+    <!-- Full version from
+      http://central.sonatype.org/pages/apache-maven.html#distribution-management-and-authentication
+    -->
+    <snapshotRepository>
+      <id>ossrh</id>
+      <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+    </snapshotRepository>
+    <repository>
+      <id>ossrh</id>
+      <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+    </repository>
+  </distributionManagement>
+
+  <modules>
+    <module>proto</module>
+    <module>types</module>
+  </modules>
+
+  <build>
+    <defaultGoal>verify</defaultGoal>
+
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-jar-plugin</artifactId>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-install-plugin</artifactId>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-deploy-plugin</artifactId>
+      </plugin>
+      <!-- manages push to maven -->
+      <plugin>
+        <groupId>external.atlassian.jgitflow</groupId>
+        <artifactId>jgitflow-maven-plugin</artifactId>
+        <version>1.0-m5.1</version>
+        <configuration>
+          <!-- Try ssh-agent before prompting for passphrases -->
+          <enableSshAgent>true</enableSshAgent>
+          <!-- Keep your maven submodules at the same version as the parent POM -->
+          <autoVersionSubmodules>true</autoVersionSubmodules>
+        </configuration>
+      </plugin>
+    </plugins>
+
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-resources-plugin</artifactId>
+          <version>2.6</version>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-compiler-plugin</artifactId>
+          <version>3.3</version>
+          <configuration>
+            <source>${java.version}</source>
+            <target>${java.version}</target>
+            <debug>true</debug>
+            <debuglevel>lines,vars,source</debuglevel>
+            <compilerArgument>-Werror</compilerArgument>
+            <compilerArgument>-Xlint:deprecation</compilerArgument>
+          </configuration>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-surefire-plugin</artifactId>
+          <version>2.17</version>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-jar-plugin</artifactId>
+          <version>2.6</version>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-install-plugin</artifactId>
+          <version>2.4</version>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-deploy-plugin</artifactId>
+          <version>2.4</version>
+        </plugin>
+        <plugin>
+          <groupId>com.comoyo.maven.plugins</groupId>
+          <artifactId>protoc-bundled-plugin</artifactId>
+          <version>1.4.55</version>
+        </plugin>
+        <plugin>
+          <groupId>org.codehaus.mojo</groupId>
+          <artifactId>build-helper-maven-plugin</artifactId>
+          <version>1.9.1</version>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-javadoc-plugin</artifactId>
+          <version>2.10.3</version>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-source-plugin</artifactId>
+          <version>2.4</version>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+  </build>
+
+  <!-- sign files -->
+  <profiles>
+    <profile>
+      <id>release-sign-artifact</id>
+      <activation>
+        <property>
+          <name>performRelease</name>
+          <value>true</value>
+        </property>
+      </activation>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-gpg-plugin</artifactId>
+            <version>1.5</version>
+            <executions>
+              <execution>
+                <id>sign-artifacts</id>
+                <phase>verify</phase>
+                <goals>
+                  <goal>sign</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
+</project>

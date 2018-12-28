@@ -1,0 +1,13 @@
+<project>
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>bsh</groupId>
+  <artifactId>bsh</artifactId>
+  <version>2.0b4</version>
+
+  <distributionManagement>
+    <relocation>
+      <groupId>org.beanshell</groupId>
+    </relocation>
+  </distributionManagement>
+
+</project>

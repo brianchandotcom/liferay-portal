@@ -1,0 +1,327 @@
+<project>
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>commons-configuration</groupId>
+  <artifactId>commons-configuration</artifactId>
+  <name>Commons Configuration</name>
+  <version>1.1</version>
+  <description>Tools to assist in the reading of configuration/preferences files in
+    various formats</description>
+  <url>http://jakarta.apache.org/commons/configuration/</url>
+  <issueManagement>
+    <url>http://issues.apache.org/bugzilla/buglist.cgi?bug_status=NEW&amp;bug_status=ASSIGNED&amp;bug_status=REOPENED&amp;product=Commons&amp;component=Configuration</url>
+  </issueManagement>
+  <ciManagement>
+    <notifiers>
+      <notifier>
+        <configuration>
+          <address>commons-dev@jakarta.apache.org</address>
+        </configuration>
+      </notifier>
+    </notifiers>
+  </ciManagement>
+  <inceptionYear>2001</inceptionYear>
+  <mailingLists>
+    <mailingList>
+      <name>Commons Dev List</name>
+      <subscribe>commons-dev-subscribe@jakarta.apache.org</subscribe>
+      <unsubscribe>commons-dev-unsubscribe@jakarta.apache.org</unsubscribe>
+      <archive>http://mail-archives.apache.org/eyebrowse/SummarizeList?listName=commons-dev@jakarta.apache.org</archive>
+    </mailingList>
+    <mailingList>
+      <name>Commons User List</name>
+      <subscribe>commons-user-subscribe@jakarta.apache.org</subscribe>
+      <unsubscribe>commons-user-unsubscribe@jakarta.apache.org</unsubscribe>
+      <archive>http://mail-archives.apache.org/eyebrowse/SummarizeList?listName=commons-user@jakarta.apache.org</archive>
+    </mailingList>
+  </mailingLists>
+  <developers>
+    <developer>
+      <id>dlr</id>
+      <name>Daniel Rall</name>
+      <email>dlr@finemaltcoding.com</email>
+      <organization>CollabNet, Inc.</organization>
+    </developer>
+    <developer>
+      <id>jvanzyl</id>
+      <name>Jason van Zyl</name>
+      <email>jason@zenplex.com</email>
+      <organization>Zenplex</organization>
+    </developer>
+    <developer>
+      <id>mpoeschl</id>
+      <name>Martin Poeschl</name>
+      <email>mpoeschl@marmot.at</email>
+      <organization>tucana.at</organization>
+    </developer>
+    <developer>
+      <id>dion</id>
+      <name>dIon Gillard</name>
+      <email>dion@multitask.com.au</email>
+      <organization>Multitask Consulting</organization>
+    </developer>
+    <developer>
+      <id>henning</id>
+      <name>Henning P. Schmiedehausen</name>
+      <email>hps@intermeta.de</email>
+      <organization>INTERMETA - Gesellschaft fuer Mehrwertdienste mbH</organization>
+      <timezone>2</timezone>
+    </developer>
+    <developer>
+      <id>epugh</id>
+      <name>Eric Pugh</name>
+      <email>epugh@upstate.com</email>
+      <organization>upstate.com</organization>
+    </developer>
+    <developer>
+      <id>bdunbar</id>
+      <name>Brian E. Dunbar</name>
+      <email>bdunbar@dunbarconsulting.org</email>
+      <organization>dunbarconsulting.org</organization>
+    </developer>
+    <developer>
+      <id>ebourg</id>
+      <name>Emmanuel Bourg</name>
+      <email>smanux@lfjr.net</email>
+    </developer>
+    <developer>
+      <id>oheger</id>
+      <name>Oliver Heger</name>
+      <email>oliver.heger@t-online.de</email>
+      <organization>University Marburg</organization>
+      <timezone>+1</timezone>
+    </developer>
+  </developers>
+  <contributors>
+    <contributor>
+      <name>Jorg Schaible</name>
+      <email>joerg.schaible@gmx.de</email>
+      <organization>Elsag-Solutions AG</organization>
+      <timezone>+1</timezone>
+    </contributor>
+    <contributor>
+      <name>Konstantin Shaposhnikov</name>
+      <email>ksh@scand.com</email>
+      <organization>scand.com</organization>
+    </contributor>
+  </contributors>
+  <licenses>
+    <license>
+      <name>The Apache Software License, Version 2.0</name>
+      <url>/LICENSE.txt</url>
+    </license>
+  </licenses>
+  <scm>
+    <connection>scm:svn:http://svn.apache.org/repos/asf/jakarta/commons/proper/${pom.artifactId.substring(8)}/trunk</connection>
+    <url>http://svn.apache.org/repos/asf/jakarta/commons/proper/${pom.artifactId.substring(8)}/trunk</url>
+  </scm>
+  <organization>
+    <name>The Apache Software Foundation</name>
+    <url>http://jakarta.apache.org</url>
+  </organization>
+  <build>
+    <sourceDirectory>src/java</sourceDirectory>
+    <testSourceDirectory>src/test</testSourceDirectory>
+    <resources>
+      <resource>
+        <directory>conf</directory>
+        <includes>
+          <include>digesterRules.xml</include>
+          <include>properties.dtd</include>
+        </includes>
+      </resource>
+      <resource>
+        <targetPath>META-INF</targetPath>
+        <directory>${basedir}</directory>
+        <includes>
+          <include>NOTICE.txt</include>
+        </includes>
+      </resource>
+    </resources>
+    <testResources>
+      <testResource>
+        <directory>conf</directory>
+        <includes>
+          <include>*.xml</include>
+        </includes>
+      </testResource>
+      <testResource>
+        <directory>conf</directory>
+        <includes>
+          <include>testClasspath.properties</include>
+          <include>testdb.script</include>
+          <include>*.properties</include>
+          <include>*.dtd</include>
+        </includes>
+      </testResource>
+      <testResource>
+        <targetPath>org/apache/commons/configuration</targetPath>
+        <directory>conf</directory>
+        <includes>
+          <include>test.properties</include>
+          <include>include.properties</include>
+        </includes>
+      </testResource>
+      <testResource>
+        <targetPath>config</targetPath>
+        <directory>conf/config</directory>
+        <includes>
+          <include>**/*.properties</include>
+        </includes>
+      </testResource>
+    </testResources>
+    <plugins>
+      <plugin>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <configuration>
+          <includes>
+            <include>**/*Test*.java</include>
+          </includes>
+          <excludes>
+            <exclude>**/TestBasePropertiesConfiguration.java</exclude>
+            <exclude>**/NonStringTestHolder.java</exclude>
+            <exclude>**/TestAbstractConfiguration.java</exclude>
+          </excludes>
+        </configuration>
+      </plugin>
+<!--
+      <plugin>
+        <groupId>maven-plugins</groupId>
+        <artifactId>maven-tasks-plugin</artifactId>
+        <version>1.1.0</version>
+        <configuration />
+      </plugin>
+      <plugin>
+        <groupId>maven-plugins</groupId>
+        <artifactId>maven-findbugs-plugin</artifactId>
+        <version>0.8.4</version>
+        <configuration />
+      </plugin>
+-->
+    </plugins>
+  </build>
+  <dependencies>
+    <dependency>
+      <groupId>commons-collections</groupId>
+      <artifactId>commons-collections</artifactId>
+      <version>3.0</version>
+    </dependency>
+    <dependency>
+      <groupId>commons-lang</groupId>
+      <artifactId>commons-lang</artifactId>
+      <version>2.0</version>
+    </dependency>
+    <dependency>
+      <groupId>dom4j</groupId>
+      <artifactId>dom4j</artifactId>
+      <version>1.4</version>
+    </dependency>
+    <dependency>
+      <groupId>commons-logging</groupId>
+      <artifactId>commons-logging</artifactId>
+      <version>1.0.4</version>
+    </dependency>
+    <dependency>
+      <groupId>commons-digester</groupId>
+      <artifactId>commons-digester</artifactId>
+      <version>1.5</version>
+    </dependency>
+    <dependency>
+      <groupId>commons-beanutils</groupId>
+      <artifactId>commons-beanutils-core</artifactId>
+      <version>1.7.0</version>
+    </dependency>
+    <dependency>
+      <groupId>commons-beanutils</groupId>
+      <artifactId>commons-beanutils-bean-collections</artifactId>
+      <version>1.7.0</version>
+    </dependency>
+    <dependency>
+      <groupId>xerces</groupId>
+      <artifactId>xerces</artifactId>
+      <version>2.2.1</version>
+    </dependency>
+    <dependency>
+      <groupId>xml-apis</groupId>
+      <artifactId>xml-apis</artifactId>
+      <version>2.0.2</version>
+    </dependency>
+    <dependency>
+      <groupId>servletapi</groupId>
+      <artifactId>servletapi</artifactId>
+      <version>2.3</version>
+    </dependency>
+    <dependency>
+      <groupId>spice</groupId>
+      <artifactId>spice-jndikit</artifactId>
+      <version>1.1</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>commons-dbcp</groupId>
+      <artifactId>commons-dbcp</artifactId>
+      <version>1.1</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>commons-pool</groupId>
+      <artifactId>commons-pool</artifactId>
+      <version>1.1</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>hsqldb</groupId>
+      <artifactId>hsqldb</artifactId>
+      <version>1.7.2.2</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>dbunit</groupId>
+      <artifactId>dbunit</artifactId>
+      <version>2.1</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>3.8.1</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>junit-addons</groupId>
+      <artifactId>junit-addons</artifactId>
+      <version>1.4</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>mockobjects</groupId>
+      <artifactId>mockobjects-core</artifactId>
+      <version>0.09</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>mockobjects</groupId>
+      <artifactId>mockobjects-jdk1.4-j2ee1.3</artifactId>
+      <version>0.09</version>
+      <scope>test</scope>
+    </dependency>
+<!--
+    <dependency>
+      <groupId>resources</groupId>
+      <artifactId>resources</artifactId>
+      <version>1.0</version>
+    </dependency>
+-->
+  </dependencies>
+  <distributionManagement>
+    <repository>
+      <id>default</id>
+      <name>Default Repository</name>
+      <url>www.apache.org//www/www.apache.org/dist/java-repository/</url>
+    </repository>
+    <site>
+      <id>default</id>
+      <name>Default Site</name>
+      <url>scp://cvs.apache.org//www/jakarta.apache.org/commons/${pom.artifactId.substring(8)}/</url>
+    </site>
+  </distributionManagement>
+</project>

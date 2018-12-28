@@ -1,0 +1,6 @@
+<project>
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>axis</groupId>
+  <artifactId>axis-wsdl4j</artifactId>
+  <version>1.5.1</version>
+</project>

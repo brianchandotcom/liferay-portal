@@ -1,0 +1,70 @@
+<?xml version="1.0"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<parent>
+		<groupId>uk.co.datumedge</groupId>
+		<artifactId>datumedge-base</artifactId>
+		<version>0.2</version>
+	</parent>
+	<modelVersion>4.0.0</modelVersion>
+	<artifactId>hamcrest-json</artifactId>
+	<version>0.2</version>
+	<packaging>jar</packaging>
+	
+	<prerequisites>
+		<maven>2.2.1</maven>
+	</prerequisites>
+	
+	<dependencies>
+		<dependency>
+			<groupId>org.skyscreamer</groupId>
+			<artifactId>jsonassert</artifactId>
+			<version>1.1.1</version>
+		</dependency>
+		<dependency>
+			<groupId>org.hamcrest</groupId>
+			<artifactId>hamcrest-core</artifactId>
+			<version>1.3</version>
+		</dependency>
+	
+		<dependency>
+			<groupId>org.hamcrest</groupId>
+			<artifactId>hamcrest-library</artifactId>
+			<version>1.3</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.jmock</groupId>
+			<artifactId>jmock-junit4</artifactId>
+			<version>2.6.0-RC2</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.10</version>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+	
+	<name>Hamcrest JSON</name>
+	<description>Hamcrest JSON matchers</description>
+	<url>https://github.com/hertzsprung/hamcrest-json</url>
+	<inceptionYear>2012</inceptionYear>
+	
+	<issueManagement>
+		<system>GitHub</system>
+		<url>https://github.com/hertzsprung/hamcrest-json/issues</url>
+	</issueManagement>
+	<scm>
+		<connection>scm:git:git://github.com/hertzsprung/hamcrest-json.git</connection>
+		<developerConnection>scm:git:git@github.com:hertzsprung/hamcrest-json.git</developerConnection>
+		<url>http://github.com/hertzsprung/hamcrest-json</url>
+	</scm>
+	<distributionManagement>
+		<site>
+			<id>datumedge-site</id>
+			<name>DatumEdge website</name>
+			<url>scp://pepperfish.net/home/jshaw/websites/datumedge.co.uk/www/html/hamcrest-json</url>
+		</site>
+	</distributionManagement>
+</project>

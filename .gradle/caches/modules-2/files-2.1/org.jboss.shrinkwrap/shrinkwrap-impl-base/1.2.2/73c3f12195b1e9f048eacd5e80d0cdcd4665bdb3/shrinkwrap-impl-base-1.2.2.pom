@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+  <!--
+  vi:ts=2:sw=2:expandtab:
+-->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+  <!-- Parent -->
+  <parent>
+    <groupId>org.jboss.shrinkwrap</groupId>
+    <artifactId>shrinkwrap-parent</artifactId>
+    <version>1.2.2</version>
+    <relativePath>../pom.xml</relativePath>
+  </parent>
+
+  <!-- Model Version -->
+  <modelVersion>4.0.0</modelVersion>
+
+  <!-- Artifact Configuration -->
+  <artifactId>shrinkwrap-impl-base</artifactId>
+  <name>ShrinkWrap Implementation Base</name>
+  <description>Common Base for Implementations of the ShrinkWrap Project</description>
+
+
+  <!-- Properties -->
+  <properties>
+
+  </properties>
+
+  <!-- Dependencies -->
+  <dependencies>
+
+    <!-- 
+    org.jboss.shrinkwrap    
+     -->
+    <dependency>
+      <groupId>org.jboss.shrinkwrap</groupId>
+      <artifactId>shrinkwrap-api</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.jboss.shrinkwrap</groupId>
+      <artifactId>shrinkwrap-spi</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    
+    <!--
+    shrinkwrap-api test jar
+    -->
+    <dependency>
+      <groupId>org.jboss.shrinkwrap</groupId>
+      <artifactId>shrinkwrap-api</artifactId>
+      <version>${project.version}</version>
+      <type>test-jar</type>
+      <scope>test</scope>
+    </dependency>
+
+    <!-- 
+    External Projects
+     -->
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <scope>test</scope>
+    </dependency>
+
+  </dependencies>
+
+  <!-- Build Configuration -->
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-jar-plugin</artifactId>
+        <executions>
+          <execution>
+            <goals>
+              <goal>test-jar</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+
+      <!-- Resources Plugin -->
+      <plugin>
+        <artifactId>maven-resources-plugin</artifactId>
+        <configuration>
+          <!-- For the importer tests, we must copy empty directories -->
+          <includeEmptyDirs>true</includeEmptyDirs>
+        </configuration>
+      </plugin>
+      
+      <!-- Surefire -->
+      <plugin>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <configuration>
+          <!-- Run in Java5; we build with a JDK7 compiler so ensure we don't use any JDK7 libs-->
+          <jvm>${env.JAVA5_HOME}/bin/java</jvm>
+        </configuration>
+      </plugin>
+      
+      <!-- Checkstyle -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-checkstyle-plugin</artifactId>
+      </plugin>
+
+    </plugins>
+  </build>
+
+  <profiles>
+    <profile>
+      <id>stress</id>
+      <build>
+        <plugins>
+
+          <!--
+            Stress Tests run in a separate profile so we don't bog down
+            the main build
+          -->
+          <plugin>
+            <artifactId>maven-surefire-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>stress-test</id>
+                <phase>test</phase>
+                <goals>
+                  <goal>test</goal>
+                </goals>
+                <configuration>
+                  <jvm>${env.JAVA5_HOME}/bin/java</jvm>
+                  <includes>
+                    <include>**/*StressTest.java</include>
+                  </includes>
+                  <redirectTestOutputToFile>true</redirectTestOutputToFile>
+                  <trimStackTrace>false</trimStackTrace>
+                  <printSummary>true</printSummary>
+                  <forkMode>always</forkMode>
+                </configuration>
+              </execution>
+            </executions>
+
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
+</project>
+

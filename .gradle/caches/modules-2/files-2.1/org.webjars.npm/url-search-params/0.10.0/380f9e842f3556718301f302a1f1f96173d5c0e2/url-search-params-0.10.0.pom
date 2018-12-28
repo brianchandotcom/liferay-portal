@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <packaging>jar</packaging>
+    <groupId>org.webjars.npm</groupId>
+    <artifactId>url-search-params</artifactId>
+    <version>0.10.0</version>
+    <name>url-search-params</name>
+    <description>WebJar for url-search-params</description>
+    <url>http://webjars.org</url>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
+    <scm>
+        <url>https://github.com/WebReflection/url-search-params</url>
+        <connection>https://github.com/WebReflection/url-search-params.git</connection>
+        <developerConnection>https://github.com/WebReflection/url-search-params.git</developerConnection>
+        <tag>v0.10.0</tag>
+    </scm>
+
+    <developers>
+        <developer>
+            <id>webjars</id>
+            <url>http://webjars.org</url>
+        </developer>
+    </developers>
+
+    <licenses>
+        
+        <license>
+            <name>MIT</name>
+            <url>https://spdx.org/licenses/MIT#licenseText</url>
+            <distribution>repo</distribution>
+        </license>
+        
+    </licenses>
+
+    
+    <issueManagement>
+        <url>https://github.com/WebReflection/url-search-params/issues</url>
+    </issueManagement>
+    
+
+    <dependencies>
+        
+        
+    </dependencies>
+
+</project>

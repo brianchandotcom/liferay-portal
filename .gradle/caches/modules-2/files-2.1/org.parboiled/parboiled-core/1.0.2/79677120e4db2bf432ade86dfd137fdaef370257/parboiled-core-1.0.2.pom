@@ -1,0 +1,35 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>org.parboiled</groupId>
+    <artifactId>parboiled-core</artifactId>
+    <packaging>jar</packaging>
+    <version>1.0.2</version>
+    <url>http://parboiled.org/</url>
+    <inceptionYear>2009</inceptionYear>
+    <licenses>
+        <license>
+            <name>Apache 2</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+    <developers>
+        <developer>
+            <id>sirthias</id>
+            <name>Mathias Doenitz</name>
+            <timezone>+1</timezone>
+            <email>mathias [at] parboiled.org</email>
+        </developer>
+    </developers>
+    <scm>
+        <url>http://github.com/sirthias/parboiled/</url>
+    </scm>
+    <repositories>
+        <repository>
+            <id>ScalaToolsMaven2Repository</id>
+            <name>Scala-Tools Maven2 Repository</name>
+            <url>http://scala-tools.org/repo-releases/</url>
+        </repository>
+    </repositories>
+</project>

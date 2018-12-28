@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>org.osgi</groupId>
+  <artifactId>osgi.core</artifactId>
+  <version>6.0.0</version>
+  <description>OSGi Core Release 6, Interfaces and Classes for use in compiling bundles.</description>
+  <name>org.osgi:osgi.core</name>
+  <url>http://www.osgi.org/</url>
+  <organization>
+    <name>OSGi Alliance</name>
+    <url>http://www.osgi.org/</url>
+  </organization>
+  <licenses>
+    <license>
+      <name>Apache License, Version 2.0</name>
+      <url>http://opensource.org/licenses/apache2.0.php</url>
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
+  <scm>
+    <url>https://www.osgi.org/members/git/build.git</url>
+    <connection>scm:git:https://www.osgi.org/members/git/build.git</connection>
+    <developerConnection>scm:git:https://www.osgi.org/members/git/build.git</developerConnection>
+  </scm>
+  <developers>
+    <developer>
+      <id>osgi</id>
+      <email>info@osgi.org</email>
+      <name>OSGi Alliance</name>
+      <organization>OSGi Alliance</organization>
+    </developer>
+  </developers>
+</project>

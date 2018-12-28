@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Set these VM properties in your IDE debugger -->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<!-- Parent -->
+	<parent>
+		<groupId>org.jboss.arquillian.container</groupId>
+		<artifactId>arquillian-container-karaf</artifactId>
+		<version>2.1.0.Final</version>
+	</parent>
+
+	<artifactId>arquillian-container-karaf-remote</artifactId>
+	<name>Arquillian OSGi :: Container :: Karaf :: Remote</name>
+
+	<properties>
+		<karaf.home>${project.build.directory}/apache-karaf-${version.apache.karaf}</karaf.home>
+		<karaf.started.indicator.file>${karaf.home}/karaf.started</karaf.started.indicator.file>
+		<karaf.executable.start>${karaf.home}/bin/start</karaf.executable.start>
+		<karaf.executable.stop>${karaf.home}/bin/stop</karaf.executable.stop>
+	</properties>
+
+	<!-- Dependencies -->
+	<dependencies>
+		<dependency>
+			<groupId>org.jboss.arquillian.container</groupId>
+			<artifactId>arquillian-container-osgi</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.jboss.arquillian.protocol</groupId>
+			<artifactId>arquillian-protocol-osgi</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.jboss.arquillian.testenricher</groupId>
+			<artifactId>arquillian-testenricher-osgi</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.jboss.osgi.spi</groupId>
+			<artifactId>jbosgi-spi</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.jboss.osgi.vfs</groupId>
+			<artifactId>jbosgi-vfs30</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+		</dependency>
+
+		<!-- Provided Dependencies -->
+		<dependency>
+			<groupId>org.osgi</groupId>
+			<artifactId>org.osgi.core</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.osgi</groupId>
+			<artifactId>org.osgi.enterprise</artifactId>
+			<scope>provided</scope>
+		</dependency>
+
+		<!-- Test Dependencies -->
+		<dependency>
+			<groupId>org.jboss.arquillian.junit</groupId>
+			<artifactId>arquillian-junit-container</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-log4j12</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<!-- Shared tests -->
+		<dependency>
+			<groupId>org.jboss.arquillian.container</groupId>
+			<artifactId>arquillian-container-osgi-tests</artifactId>
+			<version>${project.version}</version>
+			<type>test-jar</type>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<testResources>
+			<testResource>
+				<directory>src/test/resources</directory>
+				<filtering>true</filtering>
+			</testResource>
+		</testResources>
+		<plugins>
+			<plugin>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>unpack-karaf</id>
+						<phase>process-test-resources</phase>
+						<goals>
+							<goal>unpack</goal>
+						</goals>
+						<configuration>
+							<artifactItems>
+								<artifactItem>
+									<groupId>org.apache.karaf</groupId>
+									<artifactId>apache-karaf</artifactId>
+									<version>${version.apache.karaf}</version>
+									<classifier>minimal</classifier>
+									<type>tar.gz</type>
+									<outputDirectory>${project.build.directory}</outputDirectory>
+								</artifactItem>
+							</artifactItems>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>adjust-karaf</id>
+						<phase>process-test-resources</phase>
+						<goals>
+							<goal>run</goal>
+						</goals>
+						<configuration>
+							<target>
+								<echo file="${karaf.home}/etc/custom.properties" append="true">
+									#
+									Clean the persitent bundle store on Framework INIT
+									org.osgi.framework.storage.clean=onFirstInit
+								</echo>
+							</target>
+						</configuration>
+					</execution>
+					<execution>
+						<id>start-karaf</id>
+						<phase>process-test-resources</phase>
+						<goals>
+							<goal>run</goal>
+						</goals>
+						<configuration>
+							<target>
+								<taskdef resource="net/sf/antcontrib/antcontrib.properties">
+								</taskdef>
+								<if>
+									<available file="${karaf.started.indicator.file}" />
+									<then>
+										<fail>
+											A karaf instance is already running or file '${karaf.started.indicator.file}' was not deleted!
+											Execute 'mvn clean' to solve this problem.
+										</fail>
+									</then>
+									<else>
+										<echo message="Start karaf" />
+										<exec executable="${karaf.executable.start}" />
+										<touch file="${karaf.started.indicator.file}" />
+									</else>
+								</if>
+							</target>
+							<skip>${skipTests}</skip>
+						</configuration>
+					</execution>
+					<execution>
+						<id>stop-karaf</id>
+						<phase>test</phase>
+						<goals>
+							<goal>run</goal>
+						</goals>
+						<configuration>
+							<target>
+								<taskdef resource="net/sf/antcontrib/antcontrib.properties">
+								</taskdef>
+								<if>
+									<available file="${karaf.started.indicator.file}" />
+									<then>
+										<echo message="Stop karaf" />
+										<exec executable="${karaf.executable.stop}" />
+										<delete file="${karaf.started.indicator.file}" />
+									</then>
+								</if>
+							</target>
+							<skip>${skipTests}</skip>
+						</configuration>
+					</execution>
+					<execution>
+						<id>stop-karaf-clean</id>
+						<phase>pre-clean</phase>
+						<goals>
+							<goal>run</goal>
+						</goals>
+						<configuration>
+							<target>
+								<taskdef resource="net/sf/antcontrib/antcontrib.properties">
+								</taskdef>
+								<if>
+									<available file="${karaf.started.indicator.file}" />
+									<then>
+										<echo message="Stop karaf" />
+										<exec executable="${karaf.executable.stop}" />
+										<delete file="${karaf.started.indicator.file}" />
+									</then>
+								</if>
+							</target>
+						</configuration>
+					</execution>
+				</executions>
+				<dependencies>
+					<dependency>
+						<groupId>ant-contrib</groupId>
+						<artifactId>ant-contrib</artifactId>
+						<version>20020829</version>
+					</dependency>
+				</dependencies>
+			</plugin>
+			<!-- surefire:test goal will be executed first in the test phase (before karaf stop),
+				because it is contained in the JAR packaging lifecycle. -->
+			<plugin>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<configuration>
+					<argLine>${surefire.system.args}</argLine>
+					<redirectTestOutputToFile>false</redirectTestOutputToFile>
+					<systemPropertyVariables>
+						<log4j.configuration>file://${basedir}/src/test/resources/logging.properties</log4j.configuration>
+					</systemPropertyVariables>
+					<dependenciesToScan>
+						<dependency>org.jboss.arquillian.container:arquillian-container-osgi-tests</dependency>
+					</dependenciesToScan>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+</project>

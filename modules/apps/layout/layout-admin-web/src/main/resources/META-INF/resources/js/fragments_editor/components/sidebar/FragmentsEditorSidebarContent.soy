@@ -4,8 +4,6 @@
  * FragmentsEditorSidebarContent
  */
 {template .render}
-	{@param fragmentEntryLinks: ?}
-	{@param layoutData: ?}
 	{@param panels: list<[
 		icon:string,
 		label:string,
@@ -43,8 +41,6 @@
 				{/call}
 			{elseif $_panelId == 'structure'}
 				{call com.liferay.layout.admin.web.SidebarStructurePanel.render}
-					{param fragmentEntryLinks: $fragmentEntryLinks /}
-					{param layoutData: $layoutData /}
 					{param store: $store /}
 				{/call}
 			{/if}

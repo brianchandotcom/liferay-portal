@@ -4,8 +4,6 @@
  * FragmentsEditorSidebar
  */
 {template .render}
-	{@param fragmentEntryLinks: ?}
-	{@param layoutData: ?}
 	{@param panels: list<[
 		icon:string,
 		label:string,
@@ -37,9 +35,7 @@
 
 	<div class="{$sidebarClasses}">
 		{call com.liferay.layout.admin.web.FragmentsEditorSidebarContent.render}
-			{param fragmentEntryLinks: $fragmentEntryLinks /}
 			{param highlightMapping: $highlightMapping ?: false /}
-			{param layoutData: $layoutData /}
 			{param panels: $panels /}
 			{param selectedMappingTypes: $selectedMappingTypes /}
 			{param spritemap: $spritemap /}

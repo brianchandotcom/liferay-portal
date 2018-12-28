@@ -1,14 +1,13 @@
 import Component from 'metal-component';
-import {Config} from 'metal-state';
 import Soy from 'metal-soy';
 
 import '../fragments/FragmentsEditorSidebarCard.es';
+import {getConnectedComponent} from '../../../store/ConnectedComponent.es';
 import {
 	REMOVE_FRAGMENT_ENTRY_LINK,
 	UPDATE_LAST_SAVE_DATE,
 	UPDATE_SAVING_CHANGES_STATUS
 } from '../../../actions/actions.es';
-import {Store} from '../../../store/store.es';
 import templates from './SidebarStructurePanel.soy';
 
 /**
@@ -53,26 +52,15 @@ class SidebarStructurePanel extends Component {
 
 }
 
-/**
- * State definition.
- * @review
- * @static
- * @type {!Object}
- */
-SidebarStructurePanel.STATE = {
+const ConnectedSidebarStructurePanel = getConnectedComponent(
+	SidebarStructurePanel,
+	[
+		'fragmentEntryLinks',
+		'layoutData'
+	]
+);
 
-	/**
-	 * Store instance
-	 * @default undefined
-	 * @instance
-	 * @memberOf SidebarStructurePanel
-	 * @review
-	 * @type {Store}
-	 */
-	store: Config.instanceOf(Store)
-};
+Soy.register(ConnectedSidebarStructurePanel, templates);
 
-Soy.register(SidebarStructurePanel, templates);
-
-export {SidebarStructurePanel};
-export default SidebarStructurePanel;
+export {ConnectedSidebarStructurePanel, SidebarStructurePanel};
+export default ConnectedSidebarStructurePanel;

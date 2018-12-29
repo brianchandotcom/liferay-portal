@@ -30,88 +30,19 @@
 
 </aui:select>
 
-<aui:script use="liferay-portlet-url">
-	const form = document.getElementById('<portlet:namespace />fm');
-	const select = document.getElementById('<portlet:namespace />languageId');
-
-	if (form && select) {
-		const maxLengthsCache = {};
-
-		const userNameFields = document.getElementById('<portlet:namespace />userNameFields');
-
-		select.addEventListener(
-			'change',
-			function(event) {
-				const currentFormData = new FormData(form);
-
-				for (const tuple of currentFormData) {
-					const fieldName = tuple[0];
-
-					const field = userNameFields.querySelector('#' + fieldName);
-
-					if (field && field.hasAttribute('maxLength')) {
-						maxLengthsCache[fieldName] = field.getAttribute('maxLength');
-					}
-				}
-
-				userNameFields.insertAdjacentHTML('beforebegin', '<div class="loading-animation" id="<portlet:namespace />loadingUserNameFields"></div>');
-
-				userNameFields.classList.add('hide');
-
-				const cleanUp = function() {
-					const loadingAnimation = document.getElementById('<portlet:namespace />loadingUserNameFields');
-
-					if (loadingAnimation) {
-						loadingAnimation.parentNode.removeChild(loadingAnimation);
-					}
-
-					if (userNameFields.classList.contains('hide')) {
-						userNameFields.classList.remove('hide');
-					}
-
-					for (const tuple of currentFormData) {
-						const fieldName = tuple[0];
-
-						const newField = userNameFields.querySelector('#' + fieldName);
-
-						if (newField) {
-							newField.value = tuple[1];
-
-							if (maxLengthsCache.hasOwnProperty(fieldName)) {
-								newField.setAttribute('maxLength', maxLengthsCache[fieldName]);
-							}
-						}
-					}
-				};
-
-				const userDetailsURL = Liferay.PortletURL.createURL('<%= themeDisplay.getURLCurrent() %>');
-
-				userDetailsURL.setParameter('languageId', select.value);
-
-				fetch(userDetailsURL.toString())
-					.then(
-						function(response) {
-							return response.text();
-						}
-					)
-					.then(
-						function(responseData) {
-							const temp = document.implementation.createHTMLDocument();
-
-							temp.body.innerHTML = responseData;
-
-							const newUserNameFields = temp.getElementById('<portlet:namespace />userNameFields');
-
-							if (newUserNameFields) {
-								userNameFields.innerHTML = newUserNameFields.innerHTML;
-							}
-						}
-					)
-					.then(cleanUp)
-					.catch(cleanUp);
+<aui:script require="users-admin-web@4.0.0/js/UserNameFields.es as UserNameFields">
+	var component = Liferay.component(
+		'<portlet:namespace />UserNameFields',
+		new UserNameFields.default(
+			{
+				baseURL: '<%= themeDisplay.getURLCurrent() %>',
+				formNode: <portlet:namespace />fm,
+				portletNamespace: '<portlet:namespace />',
+				selectNode: <portlet:namespace />languageId,
+				userNameFieldsNode: <portlet:namespace />userNameFields,
 			}
-		);
-	}
+		)
+	);
 </aui:script>
 
 <%

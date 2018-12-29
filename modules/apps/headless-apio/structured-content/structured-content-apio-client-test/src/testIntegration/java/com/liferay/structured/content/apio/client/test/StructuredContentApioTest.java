@@ -60,7 +60,7 @@ public class StructuredContentApioTest {
 	public void setUp() throws MalformedURLException {
 		URL rootEndpointURL = new URL(_url, "/o/api");
 
-		_contentSpaceHrefURL = new URL(
+		_contentSpaceURL = new URL(
 			ContentSpaceApioTestUtil.getContentSpaceHref(
 				rootEndpointURL.toExternalForm(),
 				StructuredContentApioTestBundleActivator.SITE_NAME));
@@ -73,14 +73,14 @@ public class StructuredContentApioTest {
 				"Accept", "application/hal+json"
 			).when(
 			).get(
-				_contentSpaceHrefURL.toExternalForm()
+				_contentSpaceURL.toExternalForm()
 			).then(
 			).extract(
 			).path(
 				"_links.contentStructures.href"
 			));
 
-		_contentStructureHrefURL = new URL(
+		_contentStructureURL = new URL(
 			ApioClientBuilder.given(
 			).basicAuth(
 				"test@liferay.com", "test"
@@ -105,7 +105,7 @@ public class StructuredContentApioTest {
 				"Accept", "application/hal+json"
 			).when(
 			).get(
-				_contentSpaceHrefURL.toExternalForm()
+				_contentSpaceURL.toExternalForm()
 			).then(
 			).extract(
 			).path(
@@ -115,8 +115,7 @@ public class StructuredContentApioTest {
 
 	@After
 	public void tearDown() throws Exception {
-		ContentSpaceApioTestUtil.deleteAllStructuredContents(
-			_contentSpaceHrefURL);
+		ContentSpaceApioTestUtil.deleteAllStructuredContents(_contentSpaceURL);
 	}
 
 	@Test
@@ -132,7 +131,7 @@ public class StructuredContentApioTest {
 			FileTestUtil.readFile(
 				"test-create-structured-content.json", getClass(),
 				Collections.singletonList(
-					_contentStructureHrefURL.toExternalForm()))
+					_contentStructureURL.toExternalForm()))
 		).when(
 		).post(
 			_structuredContentEndpointURL.toExternalForm()
@@ -151,8 +150,7 @@ public class StructuredContentApioTest {
 	public void testDeleteStructuredContent() throws Exception {
 		URL structuredContentIdURL = _createStructuredContent(
 			LocaleUtil.US, "test-create-structured-content.json",
-			Collections.singletonList(
-				_contentStructureHrefURL.toExternalForm()));
+			Collections.singletonList(_contentStructureURL.toExternalForm()));
 
 		ApioClientBuilder.given(
 		).basicAuth(
@@ -176,14 +174,12 @@ public class StructuredContentApioTest {
 
 		URL structuredContentIdURL = _createStructuredContent(
 			LocaleUtil.US, "test-get-structured-content-us.json",
-			Collections.singletonList(
-				_contentStructureHrefURL.toExternalForm()));
+			Collections.singletonList(_contentStructureURL.toExternalForm()));
 
 		_updateStructuredContent(
 			structuredContentIdURL, LocaleUtil.SPAIN,
 			"test-get-structured-content-es.json",
-			Collections.singletonList(
-				_contentStructureHrefURL.toExternalForm()));
+			Collections.singletonList(_contentStructureURL.toExternalForm()));
 
 		ApioClientBuilder.given(
 		).basicAuth(
@@ -237,14 +233,12 @@ public class StructuredContentApioTest {
 
 		URL structuredContentIdURL = _createStructuredContent(
 			LocaleUtil.US, "test-get-structured-content-us.json",
-			Collections.singletonList(
-				_contentStructureHrefURL.toExternalForm()));
+			Collections.singletonList(_contentStructureURL.toExternalForm()));
 
 		_updateStructuredContent(
 			structuredContentIdURL, LocaleUtil.SPAIN,
 			"test-get-structured-content-es.json",
-			Collections.singletonList(
-				_contentStructureHrefURL.toExternalForm()));
+			Collections.singletonList(_contentStructureURL.toExternalForm()));
 
 		ApioClientBuilder.given(
 		).basicAuth(
@@ -301,14 +295,12 @@ public class StructuredContentApioTest {
 
 		URL structuredContentIdURL = _createStructuredContent(
 			LocaleUtil.US, "test-get-structured-content-us.json",
-			Collections.singletonList(
-				_contentStructureHrefURL.toExternalForm()));
+			Collections.singletonList(_contentStructureURL.toExternalForm()));
 
 		_updateStructuredContent(
 			structuredContentIdURL, LocaleUtil.SPAIN,
 			"test-get-structured-content-es.json",
-			Collections.singletonList(
-				_contentStructureHrefURL.toExternalForm()));
+			Collections.singletonList(_contentStructureURL.toExternalForm()));
 
 		ApioClientBuilder.given(
 		).basicAuth(
@@ -362,8 +354,7 @@ public class StructuredContentApioTest {
 
 		URL structuredContentIdURL = _createStructuredContent(
 			LocaleUtil.SPAIN, "test-get-structured-content-es.json",
-			Collections.singletonList(
-				_contentStructureHrefURL.toExternalForm()));
+			Collections.singletonList(_contentStructureURL.toExternalForm()));
 
 		ApioClientBuilder.given(
 		).basicAuth(
@@ -435,8 +426,7 @@ public class StructuredContentApioTest {
 	public void testUpdateStructuredContent() throws Exception {
 		URL structuredContentIdURL = _createStructuredContent(
 			LocaleUtil.US, "test-create-structured-content.json",
-			Collections.singletonList(
-				_contentStructureHrefURL.toExternalForm()));
+			Collections.singletonList(_contentStructureURL.toExternalForm()));
 
 		ApioClientBuilder.given(
 		).basicAuth(
@@ -449,7 +439,7 @@ public class StructuredContentApioTest {
 			FileTestUtil.readFile(
 				"test-update-structured-content.json", getClass(),
 				Collections.singletonList(
-					_contentStructureHrefURL.toExternalForm()))
+					_contentStructureURL.toExternalForm()))
 		).when(
 		).put(
 			structuredContentIdURL.toExternalForm()
@@ -515,8 +505,8 @@ public class StructuredContentApioTest {
 			));
 	}
 
-	private URL _contentSpaceHrefURL;
-	private URL _contentStructureHrefURL;
+	private URL _contentSpaceURL;
+	private URL _contentStructureURL;
 	private URL _structuredContentEndpointURL;
 
 	@ArquillianResource

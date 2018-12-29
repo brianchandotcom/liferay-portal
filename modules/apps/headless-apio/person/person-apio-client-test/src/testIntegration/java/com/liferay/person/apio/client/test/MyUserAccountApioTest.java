@@ -40,7 +40,7 @@ public class MyUserAccountApioTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_rootEndpointURL = new URL(_url, "/o/api");
+		URL rootEndpointURL = new URL(_url, "/o/api");
 
 		String userAccountHrefURL = ApioClientBuilder.given(
 		).basicAuth(
@@ -49,7 +49,7 @@ public class MyUserAccountApioTest {
 			"Accept", "application/hal+json"
 		).when(
 		).get(
-			_rootEndpointURL.toExternalForm()
+			rootEndpointURL.toExternalForm()
 		).then(
 		).extract(
 		).path(
@@ -102,7 +102,7 @@ public class MyUserAccountApioTest {
 				"Accept", "application/hal+json"
 			).when(
 			).get(
-				_rootEndpointURL.toExternalForm()
+				rootEndpointURL.toExternalForm()
 			).then(
 			).extract(
 			).path(
@@ -172,7 +172,6 @@ public class MyUserAccountApioTest {
 	}
 
 	private URL _myUserAccountURL;
-	private URL _rootEndpointURL;
 
 	@ArquillianResource
 	private URL _url;

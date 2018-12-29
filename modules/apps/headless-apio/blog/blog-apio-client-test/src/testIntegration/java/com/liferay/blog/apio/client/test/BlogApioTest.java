@@ -61,24 +61,25 @@ public class BlogApioTest {
 	public void setUp() throws MalformedURLException {
 		URL rootEndpointURL = new URL(_url, "/o/api");
 
-		_contentSpaceHrefURL = new URL(
+		_contentSpaceURL = new URL(
 			ContentSpaceApioTestUtil.getContentSpaceHref(
 				rootEndpointURL.toExternalForm(),
 				BlogApioTestBundleActivator.CONTENT_SPACE_NAME));
 
-		_blogPostsHref = ApioClientBuilder.given(
-		).basicAuth(
-			"test@liferay.com", "test"
-		).header(
-			"Accept", "application/hal+json"
-		).when(
-		).get(
-			_contentSpaceHrefURL.toExternalForm()
-		).then(
-		).extract(
-		).path(
-			"_links.blogPosts.href"
-		);
+		_blogPostsURL = new URL(
+			ApioClientBuilder.given(
+			).basicAuth(
+				"test@liferay.com", "test"
+			).header(
+				"Accept", "application/hal+json"
+			).when(
+			).get(
+				_contentSpaceURL.toExternalForm()
+			).then(
+			).extract(
+			).path(
+				"_links.blogPosts.href"
+			));
 	}
 
 	@After
@@ -90,7 +91,7 @@ public class BlogApioTest {
 			"Accept", "application/hal+json"
 		).when(
 		).get(
-			_blogPostsHref
+			_blogPostsURL.toExternalForm()
 		).then(
 		).extract(
 		).path(
@@ -113,7 +114,7 @@ public class BlogApioTest {
 			"Accept", "application/hal+json"
 		).when(
 		).get(
-			_contentSpaceHrefURL.toExternalForm()
+			_contentSpaceURL.toExternalForm()
 		).then(
 		).statusCode(
 			200
@@ -135,7 +136,7 @@ public class BlogApioTest {
 			FileTestUtil.readFile("test-create-blog-posting.json", getClass())
 		).when(
 		).post(
-			_blogPostsHref
+			_blogPostsURL.toExternalForm()
 		).then(
 		).statusCode(
 			200
@@ -171,7 +172,7 @@ public class BlogApioTest {
 	@Test
 	public void testCreateBlogPostWithImage() throws Exception {
 		String documentHref = MediaObjectTestUtil.createDocumentInRootFolder(
-			_contentSpaceHrefURL.toExternalForm(),
+			_contentSpaceURL.toExternalForm(),
 			FileTestUtil.getFile("image.png", getClass()));
 
 		ApioClientBuilder.given(
@@ -187,7 +188,7 @@ public class BlogApioTest {
 				Collections.singletonList(documentHref))
 		).when(
 		).post(
-			_blogPostsHref
+			_blogPostsURL.toExternalForm()
 		).then(
 		).statusCode(
 			200
@@ -251,7 +252,7 @@ public class BlogApioTest {
 			"Accept", "application/hal+json"
 		).when(
 		).get(
-			_blogPostsHref
+			_blogPostsURL.toExternalForm()
 		).then(
 		).statusCode(
 			200
@@ -356,7 +357,7 @@ public class BlogApioTest {
 			FileTestUtil.readFile("test-create-blog-posting.json", getClass())
 		).when(
 		).post(
-			_blogPostsHref
+			_blogPostsURL.toExternalForm()
 		).then(
 		).extract(
 		).path(
@@ -379,8 +380,8 @@ public class BlogApioTest {
 		);
 	}
 
-	private String _blogPostsHref;
-	private URL _contentSpaceHrefURL;
+	private URL _blogPostsURL;
+	private URL _contentSpaceURL;
 
 	@ArquillianResource
 	private URL _url;

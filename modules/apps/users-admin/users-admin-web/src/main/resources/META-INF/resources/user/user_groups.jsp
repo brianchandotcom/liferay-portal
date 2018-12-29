@@ -32,21 +32,21 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "userGr
 
 <h3 class="autofit-row sheet-subtitle">
 	<span class="autofit-col autofit-col-expand">
-		<span class="heading-text">
-			<liferay-ui:message key="user-groups" />
-		</span>
+		<span class="heading-text"><liferay-ui:message key="user-groups" /></span>
 	</span>
 
 	<c:if test="<%= !portletName.equals(myAccountPortletId) %>">
 		<span class="autofit-col">
-			<liferay-ui:icon
-				cssClass="modify-link"
-				id="openUserGroupsLink"
-				label="<%= true %>"
-				linkCssClass="btn btn-secondary btn-sm"
-				message="select"
-				url="javascript:;"
-			/>
+			<span class="heading-end">
+				<liferay-ui:icon
+					cssClass="modify-link"
+					id="openUserGroupsLink"
+					label="<%= true %>"
+					linkCssClass="btn btn-secondary btn-sm"
+					message="select"
+					url="javascript:;"
+				/>
+			</span>
 		</span>
 	</c:if>
 </h3>

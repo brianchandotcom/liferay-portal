@@ -24,30 +24,30 @@ long organizationId = organizationScreenNavigationDisplayContext.getOrganization
 List<OrgLabor> orgLabors = OrgLaborServiceUtil.getOrgLabors(organizationId);
 %>
 
-<div class="sheet-title">
-	<span class="autofit-row">
+<div class="sheet-header">
+	<h2 class="autofit-row sheet-title">
 		<span class="autofit-col autofit-col-expand">
-			<h2 class="sheet-title">
-				<%= organizationScreenNavigationDisplayContext.getFormLabel() %>
-			</h2>
+			<span class="heading-text"><%= organizationScreenNavigationDisplayContext.getFormLabel() %></span>
 		</span>
 		<span class="autofit-col">
-			<liferay-ui:icon
-				cssClass="modify-opening-hours-link"
-				data="<%=
-					new HashMap<String, Object>() {
-						{
-							put("title", LanguageUtil.get(request, "add-opening-hours"));
+			<span class="heading-end">
+				<liferay-ui:icon
+					cssClass="modify-opening-hours-link"
+					data="<%=
+						new HashMap<String, Object>() {
+							{
+								put("title", LanguageUtil.get(request, "add-opening-hours"));
+							}
 						}
-					}
-				%>"
-				label="<%= true %>"
-				linkCssClass="btn btn-secondary btn-sm"
-				message="add"
-				url="javascript:;"
-			/>
+					%>"
+					label="<%= true %>"
+					linkCssClass="btn btn-secondary btn-sm"
+					message="add"
+					url="javascript:;"
+				/>
+			</span>
 		</span>
-	</span>
+	</h2>
 </div>
 
 <liferay-ui:error-marker

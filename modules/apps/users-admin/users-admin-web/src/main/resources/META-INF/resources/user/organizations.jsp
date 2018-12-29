@@ -35,22 +35,22 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "organi
 
 <h3 class="autofit-row sheet-subtitle">
 	<span class="autofit-col autofit-col-expand">
-		<span class="heading-text">
-			<liferay-ui:message key="organizations" />
-		</span>
+		<span class="heading-text"><liferay-ui:message key="organizations" /></span>
 	</span>
 
 	<c:if test="<%= !portletName.equals(myAccountPortletId) %>">
 		<span class="autofit-col">
-			<liferay-ui:icon
-				cssClass="modify-link"
-				id="selectOrganizationLink"
-				label="<%= true %>"
-				linkCssClass="btn btn-secondary btn-sm"
-				message="select"
-				method="get"
-				url="javascript:;"
-			/>
+			<span class="heading-end">
+				<liferay-ui:icon
+					cssClass="modify-link"
+					id="selectOrganizationLink"
+					label="<%= true %>"
+					linkCssClass="btn btn-secondary btn-sm"
+					message="select"
+					method="get"
+					url="javascript:;"
+				/>
+			</span>
 		</span>
 	</c:if>
 </h3>

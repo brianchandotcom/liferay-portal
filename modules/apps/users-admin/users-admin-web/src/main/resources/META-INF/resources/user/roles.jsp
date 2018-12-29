@@ -61,22 +61,22 @@ String organizationRoleSyncEntitiesEventName = liferayPortletResponse.getNamespa
 <div class="sheet-section">
 	<h3 class="autofit-row sheet-subtitle">
 		<span class="autofit-col autofit-col-expand">
-			<span class="heading-text">
-				<liferay-ui:message key="regular-roles" />
-			</span>
+			<span class="heading-text"><liferay-ui:message key="regular-roles" /></span>
 		</span>
 
 		<c:if test="<%= !portletName.equals(myAccountPortletId) %>">
 			<span class="autofit-col">
-				<liferay-ui:icon
-					cssClass="modify-link"
-					id="selectRegularRoleLink"
-					label="<%= true %>"
-					linkCssClass="btn btn-secondary btn-sm"
-					message="select"
-					method="get"
-					url="javascript:;"
-				/>
+				<span class="heading-end">
+					<liferay-ui:icon
+						cssClass="modify-link"
+						id="selectRegularRoleLink"
+						label="<%= true %>"
+						linkCssClass="btn btn-secondary btn-sm"
+						message="select"
+						method="get"
+						url="javascript:;"
+					/>
+				</span>
 			</span>
 		</c:if>
 	</h3>
@@ -229,22 +229,22 @@ String organizationRoleSyncEntitiesEventName = liferayPortletResponse.getNamespa
 <div class="sheet-section">
 	<h3 class="autofit-row sheet-subtitle">
 		<span class="autofit-col autofit-col-expand">
-			<span class="heading-text">
-				<liferay-ui:message key="organization-roles" />
-			</span>
+			<span class="heading-text"><liferay-ui:message key="organization-roles" /></span>
 		</span>
 
-		<c:if test="<%= !organizations.isEmpty() && !portletName.equals(myAccountPortletId) %>">
+		<c:if test="<%= !portletName.equals(myAccountPortletId) %>">
 			<span class="autofit-col">
-				<liferay-ui:icon
-					cssClass="modify-link"
-					id="selectOrganizationRoleLink"
-					label="<%= true %>"
-					linkCssClass="btn btn-secondary btn-sm"
-					message="select"
-					method="get"
-					url="javascript:;"
-				/>
+				<span class="heading-end">
+					<liferay-ui:icon
+						cssClass="modify-link"
+						id="selectOrganizationRoleLink"
+						label="<%= true %>"
+						linkCssClass="btn btn-secondary btn-sm"
+						message="select"
+						method="get"
+						url="javascript:;"
+					/>
+				</span>
 			</span>
 		</c:if>
 	</h3>
@@ -427,22 +427,22 @@ String organizationRoleSyncEntitiesEventName = liferayPortletResponse.getNamespa
 <div class="sheet-section">
 	<h3 class="autofit-row sheet-subtitle">
 		<span class="autofit-col autofit-col-expand">
-			<span class="heading-text">
-				<liferay-ui:message key="site-roles" />
-			</span>
+			<span class="heading-text"><liferay-ui:message key="site-roles" /></span>
 		</span>
 
-		<c:if test="<%= !groups.isEmpty() && !portletName.equals(myAccountPortletId) %>">
+		<c:if test="<%= !portletName.equals(myAccountPortletId) %>">
 			<span class="autofit-col">
-				<liferay-ui:icon
-					cssClass="modify-link"
-					id="selectSiteRoleLink"
-					label="<%= true %>"
-					linkCssClass="btn btn-secondary btn-sm"
-					message="select"
-					method="get"
-					url="javascript:;"
-				/>
+				<span class="heading-end">
+					<liferay-ui:icon
+						cssClass="modify-link"
+						id="selectSiteRoleLink"
+						label="<%= true %>"
+						linkCssClass="btn btn-secondary btn-sm"
+						message="select"
+						method="get"
+						url="javascript:;"
+					/>
+				</span>
 			</span>
 		</c:if>
 	</h3>

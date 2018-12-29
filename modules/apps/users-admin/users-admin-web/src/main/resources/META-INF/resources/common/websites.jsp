@@ -36,25 +36,25 @@ List<Website> websites = WebsiteServiceUtil.getWebsites(className, classPK);
 
 <h3 class="autofit-row sheet-subtitle">
 	<span class="autofit-col autofit-col-expand">
-		<span class="heading-text">
-			<liferay-ui:message key="websites" />
-		</span>
+		<span class="heading-text"><liferay-ui:message key="websites" /></span>
 	</span>
 	<span class="autofit-col">
-		<liferay-ui:icon
-			cssClass="modify-website-link"
-			data="<%=
-				new HashMap<String, Object>() {
-					{
-						put("title", LanguageUtil.get(request, "add-website"));
+		<span class="heading-end">
+			<liferay-ui:icon
+				cssClass="modify-website-link"
+				data="<%=
+					new HashMap<String, Object>() {
+						{
+							put("title", LanguageUtil.get(request, "add-website"));
+						}
 					}
-				}
-			%>"
-			label="<%= true %>"
-			linkCssClass="btn btn-secondary btn-sm"
-			message="add"
-			url="javascript:;"
-		/>
+				%>"
+				label="<%= true %>"
+				linkCssClass="btn btn-secondary btn-sm"
+				message="add"
+				url="javascript:;"
+			/>
+		</span>
 	</span>
 </h3>
 

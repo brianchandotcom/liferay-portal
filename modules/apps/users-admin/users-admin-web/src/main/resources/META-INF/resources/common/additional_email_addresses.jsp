@@ -36,25 +36,25 @@ List<EmailAddress> emailAddresses = EmailAddressServiceUtil.getEmailAddresses(cl
 
 <h3 class="autofit-row sheet-subtitle">
 	<span class="autofit-col autofit-col-expand">
-		<span class="heading-text">
-			<liferay-ui:message key="additional-email-addresses" />
-		</span>
+		<span class="heading-text"><liferay-ui:message key="additional-email-addresses" /></span>
 	</span>
 	<span class="autofit-col">
-		<liferay-ui:icon
-			cssClass="modify-email-address-link"
-			data="<%=
-				new HashMap<String, Object>() {
-					{
-						put("title", LanguageUtil.get(request, "add-email-address"));
+		<span class="heading-end">
+			<liferay-ui:icon
+				cssClass="modify-email-address-link"
+				data="<%=
+					new HashMap<String, Object>() {
+						{
+							put("title", LanguageUtil.get(request, "add-email-address"));
+						}
 					}
-				}
-			%>"
-			label="<%= true %>"
-			linkCssClass="btn btn-secondary btn-sm"
-			message="add"
-			url="javascript:;"
-		/>
+				%>"
+				label="<%= true %>"
+				linkCssClass="btn btn-secondary btn-sm"
+				message="add"
+				url="javascript:;"
+			/>
+		</span>
 	</span>
 </h3>
 

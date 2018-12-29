@@ -26,30 +26,30 @@ String emptyResultsMessage = ParamUtil.getString(request, "emptyResultsMessage")
 List<Address> addresses = AddressServiceUtil.getAddresses(className, classPK);
 %>
 
-<div class="sheet-title">
-	<span class="autofit-row">
+<div class="sheet-header">
+	<h2 class="autofit-row sheet-title">
 		<span class="autofit-col autofit-col-expand">
-			<h2 class="sheet-title">
-				<liferay-ui:message key="addresses" />
-			</h2>
+			<span class="heading-text"><liferay-ui:message key="addresses" /></span>
 		</span>
 		<span class="autofit-col">
-			<liferay-ui:icon
-				cssClass="modify-address-link"
-				data="<%=
-					new HashMap<String, Object>() {
-						{
-							put("title", LanguageUtil.get(request, "add-address"));
+			<span class="heading-end">
+				<liferay-ui:icon
+					cssClass="modify-address-link"
+					data="<%=
+						new HashMap<String, Object>() {
+							{
+								put("title", LanguageUtil.get(request, "add-address"));
+							}
 						}
-					}
-				%>"
-				label="<%= true %>"
-				linkCssClass="btn btn-secondary btn-sm"
-				message="add"
-				url="javascript:;"
-			/>
+					%>"
+					label="<%= true %>"
+					linkCssClass="btn btn-secondary btn-sm"
+					message="add"
+					url="javascript:;"
+				/>
+			</span>
 		</span>
-	</span>
+	</h2>
 </div>
 
 <liferay-ui:error-marker

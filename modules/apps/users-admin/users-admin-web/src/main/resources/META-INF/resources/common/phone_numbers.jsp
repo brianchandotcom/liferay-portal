@@ -37,25 +37,25 @@ List<Phone> phones = PhoneServiceUtil.getPhones(className, classPK);
 
 <h3 class="autofit-row sheet-subtitle">
 	<span class="autofit-col autofit-col-expand">
-		<span class="heading-text">
-			<liferay-ui:message key="phone-numbers" />
-		</span>
+		<span class="heading-text"><liferay-ui:message key="phone-numbers" /></span>
 	</span>
 	<span class="autofit-col">
-		<liferay-ui:icon
-			cssClass="modify-phone-number-link"
-			data="<%=
-				new HashMap<String, Object>() {
-					{
-						put("title", LanguageUtil.get(request, "add-phone-number"));
+		<span class="heading-end">
+			<liferay-ui:icon
+				cssClass="modify-phone-number-link"
+				data="<%=
+					new HashMap<String, Object>() {
+						{
+							put("title", LanguageUtil.get(request, "add-phone-number"));
+						}
 					}
-				}
-			%>"
-			label="<%= true %>"
-			linkCssClass="btn btn-secondary btn-sm"
-			message="add"
-			url="javascript:;"
-		/>
+				%>"
+				label="<%= true %>"
+				linkCssClass="btn btn-secondary btn-sm"
+				message="add"
+				url="javascript:;"
+			/>
+		</span>
 	</span>
 </h3>
 

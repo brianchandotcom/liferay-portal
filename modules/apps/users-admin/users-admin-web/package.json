@@ -5,8 +5,9 @@
 		]
 	},
 	"dependencies": {
-		"metal-dom": "^2.16.6",
-		"metal-uri": "^3.1.2"
+		"metal-dom": "^2.6.4",
+		"metal-events": "^2.6.4",
+		"metal-state": "^2.16.7"
 	},
 	"devDependencies": {
 		"babel-cli": "^6.26.0",

@@ -30,6 +30,7 @@ import java.util.Locale;
  *
  * @author Javier Gamarra
  * @author Cristina González
+ * @review
  */
 @Vocabulary.Type("ContentSpace")
 public interface ContentSpace extends Identifier<Long> {

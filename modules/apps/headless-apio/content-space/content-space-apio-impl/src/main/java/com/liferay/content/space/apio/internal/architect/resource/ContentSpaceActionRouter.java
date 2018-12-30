@@ -67,7 +67,7 @@ public class ContentSpaceActionRouter implements ActionRouter<ContentSpace> {
 
 		Stream<Group> stream = groups.stream();
 
-		List<ContentSpace> contentSpaceIdentifiers = stream.map(
+		List<ContentSpace> contentSpaces = stream.map(
 			ContentSpaceImpl::new
 		).collect(
 			Collectors.toList()
@@ -76,7 +76,7 @@ public class ContentSpaceActionRouter implements ActionRouter<ContentSpace> {
 		int count = _groupLocalService.getActiveGroupsCount(
 			company.getCompanyId(), true, true);
 
-		return new PageItems<>(contentSpaceIdentifiers, count);
+		return new PageItems<>(contentSpaces, count);
 	}
 
 	@Reference

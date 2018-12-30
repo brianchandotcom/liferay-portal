@@ -35,7 +35,7 @@ import org.apache.maven.project.MavenProject;
  * @author David Truong
  * @author Andrea Di Giorgi
  */
-@Mojo(name = "dist")
+@Mojo(defaultPhase = LifecyclePhase.VERIFY, name = "dist")
 public class DistBundleMojo extends InitBundleMojo {
 
 	@Override

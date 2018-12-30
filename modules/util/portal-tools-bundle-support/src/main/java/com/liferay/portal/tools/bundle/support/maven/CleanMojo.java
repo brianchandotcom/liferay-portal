@@ -17,13 +17,14 @@ package com.liferay.portal.tools.bundle.support.maven;
 import com.liferay.portal.tools.bundle.support.commands.CleanCommand;
 
 import org.apache.maven.plugin.MojoExecutionException;
+import org.apache.maven.plugins.annotations.LifecyclePhase;
 import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
 
 /**
  * @author David Truong
  */
-@Mojo(name = "clean")
+@Mojo(defaultPhase = LifecyclePhase.CLEAN, name = "clean")
 public class CleanMojo extends AbstractLiferayMojo {
 
 	@Override

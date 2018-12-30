@@ -64,29 +64,6 @@ import org.apache.commons.compress.utils.IOUtils;
  */
 public class FileUtil {
 
-	public static void appendTar(File entryFile, Path entryPath, File tarFile)
-		throws IOException {
-
-		try (TarArchiveOutputStream tarArchiveOutputStream =
-				new TarArchiveOutputStream(
-					new GzipCompressorOutputStream(
-						new BufferedOutputStream(
-							new FileOutputStream(tarFile))))) {
-
-			_appendTar(entryFile, entryPath, tarArchiveOutputStream);
-		}
-	}
-
-	public static void appendZip(File entryFile, Path entryPath, File zipFile)
-		throws Exception {
-
-		try (FileSystem fileSystem = _createFileSystem(
-				zipFile.toPath(), false)) {
-
-			_appendZip(entryFile, entryPath, fileSystem);
-		}
-	}
-
 	public static void copyDirectory(
 			final Path dirPath, final Path destinationDirPath)
 		throws IOException {
@@ -116,7 +93,11 @@ public class FileUtil {
 	public static void copyFile(Path path, Path destinationPath)
 		throws IOException {
 
-		Files.createDirectories(destinationPath.getParent());
+		Path parentPath = destinationPath.getParent();
+
+		if (parentPath != null) {
+			Files.createDirectories(parentPath);
+		}
 
 		Files.copy(path, destinationPath, StandardCopyOption.REPLACE_EXISTING);
 
@@ -252,6 +233,9 @@ public class FileUtil {
 						new BufferedOutputStream(
 							new FileOutputStream(tarFile))))) {
 
+			tarArchiveOutputStream.setLongFileMode(
+				TarArchiveOutputStream.BIGNUMBER_POSIX);
+
 			Files.walkFileTree(
 				sourcePath,
 				new SimpleFileVisitor<Path>() {
@@ -363,15 +347,6 @@ public class FileUtil {
 		IOUtils.copy(new FileInputStream(entryFile), tarArchiveOutputStream);
 
 		tarArchiveOutputStream.closeArchiveEntry();
-	}
-
-	private static void _appendZip(
-			File entryFile, Path entryPath, FileSystem fileSystem)
-		throws IOException {
-
-		Path zipPath = fileSystem.getPath(entryPath.toString());
-
-		copyFile(entryFile.toPath(), zipPath);
 	}
 
 	private static FileSystem _createFileSystem(Path path, boolean create)

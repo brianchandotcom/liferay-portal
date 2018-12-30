@@ -14,19 +14,19 @@
 
 package com.liferay.portal.tools.bundle.support.maven;
 
+import com.liferay.portal.tools.bundle.support.commands.DeployCommand;
 import com.liferay.portal.tools.bundle.support.commands.DistBundleCommand;
 import com.liferay.portal.tools.bundle.support.constants.BundleSupportConstants;
-import com.liferay.portal.tools.bundle.support.internal.util.BundleSupportUtil;
 import com.liferay.portal.tools.bundle.support.internal.util.FileUtil;
 import com.liferay.portal.tools.bundle.support.internal.util.MavenUtil;
 
 import java.io.File;
 
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.util.List;
 
 import org.apache.maven.model.Build;
 import org.apache.maven.plugin.MojoExecutionException;
+import org.apache.maven.plugins.annotations.LifecyclePhase;
 import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
 import org.apache.maven.project.MavenProject;
@@ -58,35 +58,30 @@ public class DistBundleMojo extends InitBundleMojo {
 
 		try {
 			if (packaging.equals("jar") || packaging.equals("war")) {
-				String deployDirName = BundleSupportUtil.getDeployDirName(
-					deployFile.getName());
+				try {
+					DeployCommand deployCommand = new DeployCommand();
 
-				if (includeFolder) {
-					deployDirName = archiveFileName + "/" + deployDirName;
+					deployCommand.setFile(deployFile);
+					deployCommand.setLiferayHomeDir(getLiferayHomeDir());
+					deployCommand.setOutputFileName(outputFileName);
+
+					deployCommand.execute();
 				}
-
-				Path entryPath = Paths.get(deployDirName, outputFileName);
-
-				if (format.equals("zip")) {
-					FileUtil.appendZip(deployFile, entryPath, archiveFile);
-				}
-				else if (format.equals("gz") || format.equals("tar") ||
-						 format.equals("tar.gz") || format.equals("tgz")) {
-
-					FileUtil.appendTar(deployFile, entryPath, archiveFile);
-				}
-				else {
-					throw new IllegalArgumentException(
-						"Please specify either zip or tar.gz or tgz");
+				catch (Exception e) {
+					throw new MojoExecutionException(
+						"Unable to deploy " + outputFileName, e);
 				}
 			}
 			else if (!project.hasParent()) {
 				archiveFile.delete();
 
-				File liferayHomeDir = getLiferayHomeDir();
-
 				super.execute();
+			}
 
+			MavenProject mavenProject = reactorProjects.get(
+				reactorProjects.size() - 1);
+
+			if (project.equals(mavenProject)) {
 				DistBundleCommand distBundleCommand = new DistBundleCommand();
 
 				distBundleCommand.setFormat(format);
@@ -95,6 +90,8 @@ public class DistBundleMojo extends InitBundleMojo {
 				distBundleCommand.setOutputFile(archiveFile);
 
 				distBundleCommand.execute();
+
+				File liferayHomeDir = getLiferayHomeDir();
 
 				FileUtil.deleteDirectory(liferayHomeDir.toPath());
 			}
@@ -134,5 +131,8 @@ public class DistBundleMojo extends InitBundleMojo {
 		required = true
 	)
 	protected String outputFileName;
+
+	@Parameter(property = "reactorProjects", readonly = true)
+	protected List<MavenProject> reactorProjects;
 
 }

@@ -48,6 +48,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
+import org.apache.commons.compress.archivers.sevenz.SevenZArchiveEntry;
+import org.apache.commons.compress.archivers.sevenz.SevenZFile;
+import org.apache.commons.compress.archivers.sevenz.SevenZOutputFile;
 import org.apache.commons.compress.archivers.tar.TarArchiveEntry;
 import org.apache.commons.compress.archivers.tar.TarArchiveInputStream;
 import org.apache.commons.compress.archivers.tar.TarArchiveOutputStream;
@@ -194,6 +197,43 @@ public class FileUtil {
 			Files.readAllBytes(file.toPath()), StandardCharsets.UTF_8);
 	}
 
+	public static void sevenZip(
+			Path sourcePath, File sevenZipFile, boolean includeFolder)
+		throws Exception {
+
+		final Path parentPath;
+
+		if (includeFolder) {
+			parentPath = sourcePath.getParent();
+		}
+		else {
+			parentPath = sourcePath;
+		}
+
+		try (SevenZOutputFile sevenZOutputFile =
+				new SevenZOutputFile(sevenZipFile)) {
+
+			Files.walkFileTree(
+				sourcePath,
+				new SimpleFileVisitor<Path>() {
+
+					@Override
+					public FileVisitResult visitFile(
+							Path path, BasicFileAttributes basicFileAttributes)
+						throws IOException {
+
+						Path entryPath = parentPath.relativize(path);
+
+						_appendSevenZip(
+							path.toFile(), entryPath, sevenZOutputFile);
+
+						return FileVisitResult.CONTINUE;
+					}
+
+				});
+		}
+	}
+
 	public static void tar(Path sourcePath, File tarFile, boolean includeFolder)
 		throws Exception {
 
@@ -247,6 +287,9 @@ public class FileUtil {
 		else if (fileName.endsWith(".zip")) {
 			_unzip(path, destinationDirPath, stripComponents);
 		}
+		else if (fileName.endsWith(".7z")) {
+			_unsevenZip(path, destinationDirPath, stripComponents);
+		}
 		else {
 			throw new UnsupportedOperationException(
 				"Unsupported format for " + fileName);
@@ -290,6 +333,21 @@ public class FileUtil {
 		}
 	}
 
+	private static void _appendSevenZip(
+			File entryFile, Path entryPath, SevenZOutputFile sevenZOutputFile)
+		throws IOException {
+
+		SevenZArchiveEntry sevenZArchiveEntry =
+			sevenZOutputFile.createArchiveEntry(
+				entryFile, entryPath.toString());
+
+		sevenZOutputFile.putArchiveEntry(sevenZArchiveEntry);
+
+		sevenZOutputFile.write(Files.readAllBytes(entryFile.toPath()));
+
+		sevenZOutputFile.closeArchiveEntry();
+	}
+
 	private static void _appendTar(
 			File entryFile, Path entryPath,
 			TarArchiveOutputStream tarArchiveOutputStream)
@@ -328,6 +386,41 @@ public class FileUtil {
 
 		return FileSystems.newFileSystem(
 			new URI("jar:" + uri.getScheme(), uri.getPath(), null), properties);
+	}
+
+	private static void _unsevenZip(
+			Path sevenZipPath, Path destinationDirPath, int stripComponents)
+		throws IOException {
+
+		SevenZFile sevenZFile = new SevenZFile(sevenZipPath.toFile());
+
+		SevenZArchiveEntry sevenZArchiveEntry;
+
+		while ((sevenZArchiveEntry = sevenZFile.getNextEntry()) != null) {
+			if (sevenZArchiveEntry.isDirectory()) {
+				continue;
+			}
+
+			Path destinationPath = Paths.get(sevenZArchiveEntry.getName());
+
+			destinationPath = destinationDirPath.resolve(
+				destinationPath.subpath(
+					stripComponents, destinationPath.getNameCount()));
+
+			Files.createDirectories(destinationPath.getParent());
+
+			byte[] content = new byte[(int)sevenZArchiveEntry.getSize()];
+
+			sevenZFile.read(content, 0, content.length);
+
+			Files.write(destinationPath, content);
+
+			Date lastModifiedDate = sevenZArchiveEntry.getLastModifiedDate();
+
+			Files.setLastModifiedTime(
+				destinationPath,
+				FileTime.fromMillis(lastModifiedDate.getTime()));
+		}
 	}
 
 	private static void _untar(

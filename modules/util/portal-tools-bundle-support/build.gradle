@@ -20,9 +20,10 @@ dependencies {
 	compileInclude group: "com.beust", name: "jcommander", version: "1.48"
 	compileInclude group: "commons-codec", name: "commons-codec", version: "1.10"
 	compileInclude group: "commons-logging", name: "commons-logging", version: "1.2"
-	compileInclude group: "org.apache.commons", name: "commons-compress", version: "1.12"
+	compileInclude group: "org.apache.commons", name: "commons-compress", version: "1.18"
 	compileInclude group: "org.apache.httpcomponents", name: "httpclient", version: "4.5.2"
 	compileInclude group: "org.apache.httpcomponents", name: "httpcore", version: "4.4.4"
+	compileInclude group: "org.tukaani", name: "xz", version: "1.6"
 
 	compileOnly group: "org.apache.ant", name: "ant", transitive: false, version: "1.9.7"
 	compileOnly group: "org.apache.maven", name: "maven-core", transitive: false, version: "3.2.5"

@@ -56,9 +56,12 @@ public class DistBundleCommand extends BaseCommand {
 
 			FileUtil.tar(liferayHomeDirPath, _outputFile, _includeFolder);
 		}
+		else if (_format.equals("7z")) {
+			FileUtil.sevenZip(liferayHomeDirPath, _outputFile, _includeFolder);
+		}
 		else {
 			throw new IllegalArgumentException(
-				"Please specify either zip or tar.gz for format");
+				"Please specify either 7z, zip, or tar.gz for format");
 		}
 	}
 

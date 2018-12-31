@@ -80,8 +80,8 @@ import java.util.List;
  */
 public class JavaParserUtil {
 
-	public static JavaAnnotationFieldDefinition
-		parseJavaAnnotationFieldDefinition(
+	private static JavaAnnotationFieldDefinition
+		_parseJavaAnnotationFieldDefinition(
 			DetailAST annotationFieldDefinitionDetailAST) {
 
 		JavaAnnotationFieldDefinition javaAnnotationFieldDefinition =
@@ -97,13 +97,13 @@ public class JavaParserUtil {
 
 		if (literalDefaultDetailAST != null) {
 			javaAnnotationFieldDefinition.setDefaultJavaExpression(
-				parseJavaExpression(literalDefaultDetailAST.getFirstChild()));
+				_parseJavaExpression(literalDefaultDetailAST.getFirstChild()));
 		}
 
 		return javaAnnotationFieldDefinition;
 	}
 
-	public static JavaBreakStatement parseJavaBreakStatement(
+	private static JavaBreakStatement _parseJavaBreakStatement(
 		DetailAST literalBreakDetailAST) {
 
 		JavaBreakStatement javaBreakStatement = new JavaBreakStatement();
@@ -117,7 +117,7 @@ public class JavaParserUtil {
 		return javaBreakStatement;
 	}
 
-	public static JavaCatchStatement parseJavaCatchStatement(
+	private static JavaCatchStatement _parseJavaCatchStatement(
 		DetailAST literalCatchDetailAST) {
 
 		DetailAST parameterDefinitionDetailAST =
@@ -169,7 +169,7 @@ public class JavaParserUtil {
 			modifiers, parameterName, parameterTypeNames);
 	}
 
-	public static JavaClassDefinition parseJavaClassDefinition(
+	private static JavaClassDefinition _parseJavaClassDefinition(
 		DetailAST definitionDetailAST) {
 
 		DetailAST modifiersDetailAST = definitionDetailAST.findFirstToken(
@@ -221,7 +221,7 @@ public class JavaParserUtil {
 		return javaClassDefinition;
 	}
 
-	public static JavaConstructorCall parseJavaConstructorCall(
+	private static JavaConstructorCall _parseJavaConstructorCall(
 		DetailAST detailAST) {
 
 		boolean superCall = false;
@@ -236,7 +236,7 @@ public class JavaParserUtil {
 			superCall);
 	}
 
-	public static JavaConstructorDefinition parseJavaConstructorDefinition(
+	private static JavaConstructorDefinition _parseJavaConstructorDefinition(
 		DetailAST constructorDefinitionDetailAST) {
 
 		return new JavaConstructorDefinition(
@@ -246,7 +246,7 @@ public class JavaParserUtil {
 			_parseJavaSignature(constructorDefinitionDetailAST));
 	}
 
-	public static JavaContinueStatement parseJavaContinueStatement(
+	private static JavaContinueStatement _parseJavaContinueStatement(
 		DetailAST literalContinueDetailAST) {
 
 		JavaContinueStatement javaContinueStatement =
@@ -263,7 +263,7 @@ public class JavaParserUtil {
 		return javaContinueStatement;
 	}
 
-	public static JavaElseStatement parseJavaElseStatement(
+	private static JavaElseStatement _parseJavaElseStatement(
 		DetailAST literalElseDetailAST) {
 
 		JavaElseStatement javaElseStatement = new JavaElseStatement();
@@ -272,13 +272,13 @@ public class JavaParserUtil {
 
 		if (firstChildDetailAST.getType() == TokenTypes.LITERAL_IF) {
 			javaElseStatement.setJavaIfStatement(
-				parseJavaIfStatement(firstChildDetailAST));
+				_parseJavaIfStatement(firstChildDetailAST));
 		}
 
 		return javaElseStatement;
 	}
 
-	public static JavaEnumConstantDefinitions parseJavaEnumConstantDefinitions(
+	private static JavaEnumConstantDefinitions _parseJavaEnumConstantDefinitions(
 		DetailAST enumConstantDefinitionDetailAST) {
 
 		JavaEnumConstantDefinitions javaEnumConstantDefinitions =
@@ -303,7 +303,7 @@ public class JavaParserUtil {
 		}
 	}
 
-	public static JavaExpression parseJavaExpression(DetailAST detailAST) {
+	private static JavaExpression _parseJavaExpression(DetailAST detailAST) {
 		if (detailAST.getType() == TokenTypes.EXPR) {
 			detailAST = detailAST.getFirstChild();
 		}
@@ -349,7 +349,7 @@ public class JavaParserUtil {
 					firstChildDetailAST.getText());
 
 				javaExpression.setChainedJavaExpression(
-					parseJavaExpression(lastChildDetailAST));
+					_parseJavaExpression(lastChildDetailAST));
 			}
 			else {
 				Tuple chainTuple = _getChainTuple(detailAST);
@@ -424,7 +424,7 @@ public class JavaParserUtil {
 		return javaExpression;
 	}
 
-	public static JavaLoopStatement parseJavaForStatement(
+	private static JavaLoopStatement _parseJavaForStatement(
 		DetailAST literalForDetailAST) {
 
 		DetailAST firstChildDetailAST = literalForDetailAST.getFirstChild();
@@ -452,7 +452,7 @@ public class JavaParserUtil {
 
 				for (DetailAST exprDetailAST : exprDetailASTList) {
 					initializationJavaTerms.add(
-						parseJavaExpression(exprDetailAST));
+						_parseJavaExpression(exprDetailAST));
 				}
 			}
 			else {
@@ -464,7 +464,7 @@ public class JavaParserUtil {
 						variableDefinitionASTList) {
 
 					initializationJavaTerms.add(
-						parseJavaVariableDefinition(
+						_parseJavaVariableDefinition(
 							variableDefinitionDetailAST));
 				}
 			}
@@ -480,7 +480,7 @@ public class JavaParserUtil {
 
 		if (exprDetailAST != null) {
 			javaForStatement.setConditionJavaExpression(
-				parseJavaExpression(exprDetailAST));
+				_parseJavaExpression(exprDetailAST));
 		}
 
 		DetailAST forIteratorDetailAST = literalForDetailAST.findFirstToken(
@@ -497,7 +497,7 @@ public class JavaParserUtil {
 
 			for (DetailAST curExprDetailAST : exprDetailASTList) {
 				iteratorJavaExpressions.add(
-					parseJavaExpression(curExprDetailAST));
+					_parseJavaExpression(curExprDetailAST));
 			}
 		}
 
@@ -506,22 +506,22 @@ public class JavaParserUtil {
 		return javaForStatement;
 	}
 
-	public static JavaIfStatement parseJavaIfStatement(
+	private static JavaIfStatement _parseJavaIfStatement(
 		DetailAST literalIfDetailAST) {
 
 		DetailAST firstChildDetailAST = literalIfDetailAST.getFirstChild();
 
 		return new JavaIfStatement(
-			parseJavaExpression(firstChildDetailAST.getNextSibling()));
+			_parseJavaExpression(firstChildDetailAST.getNextSibling()));
 	}
 
-	public static JavaImport parseJavaImport(
+	private static JavaImport _parseJavaImport(
 		DetailAST importDetailAST, boolean isStatic) {
 
 		return new JavaImport(_getName(importDetailAST), isStatic);
 	}
 
-	public static JavaLoopStatement parseJavaLabeledStatement(
+	private static JavaLoopStatement _parseJavaLabeledStatement(
 		DetailAST labeledStatementDetailAST) {
 
 		JavaLoopStatement javaLoopStatement = null;
@@ -532,10 +532,10 @@ public class JavaParserUtil {
 		DetailAST nextSiblingDetailAST = firstChildDetailAST.getNextSibling();
 
 		if (nextSiblingDetailAST.getType() == TokenTypes.LITERAL_FOR) {
-			javaLoopStatement = parseJavaForStatement(nextSiblingDetailAST);
+			javaLoopStatement = _parseJavaForStatement(nextSiblingDetailAST);
 		}
 		else if (nextSiblingDetailAST.getType() == TokenTypes.LITERAL_WHILE) {
-			javaLoopStatement = parseJavaWhileStatement(nextSiblingDetailAST);
+			javaLoopStatement = _parseJavaWhileStatement(nextSiblingDetailAST);
 		}
 
 		if (javaLoopStatement != null) {
@@ -545,7 +545,7 @@ public class JavaParserUtil {
 		return javaLoopStatement;
 	}
 
-	public static JavaMethodDefinition parseJavaMethodDefinition(
+	private static JavaMethodDefinition _parseJavaMethodDefinition(
 		DetailAST methodDefinitionDetailAST) {
 
 		return new JavaMethodDefinition(
@@ -554,7 +554,7 @@ public class JavaParserUtil {
 			_parseJavaSignature(methodDefinitionDetailAST));
 	}
 
-	public static JavaPackageDefinition parseJavaPackageDefinition(
+	private static JavaPackageDefinition _parseJavaPackageDefinition(
 		DetailAST packageDefinitionDetailAST) {
 
 		return new JavaPackageDefinition(
@@ -564,7 +564,7 @@ public class JavaParserUtil {
 					TokenTypes.ANNOTATIONS)));
 	}
 
-	public static JavaReturnStatement parseJavaReturnStatement(
+	private static JavaReturnStatement _parseJavaReturnStatement(
 		DetailAST literalReturnDetailAST) {
 
 		JavaReturnStatement javaReturnStatement = new JavaReturnStatement();
@@ -573,13 +573,13 @@ public class JavaParserUtil {
 
 		if (firstChildDetailAST.getType() != TokenTypes.SEMI) {
 			javaReturnStatement.setReturnJavaExpression(
-				parseJavaExpression(firstChildDetailAST));
+				_parseJavaExpression(firstChildDetailAST));
 		}
 
 		return javaReturnStatement;
 	}
 
-	public static JavaSwitchCaseStatement parseJavaSwitchCaseStatement(
+	private static JavaSwitchCaseStatement _parseJavaSwitchCaseStatement(
 		DetailAST caseGroupDetailAST) {
 
 		DetailAST firstChildDetailAST = caseGroupDetailAST.getFirstChild();
@@ -592,21 +592,21 @@ public class JavaParserUtil {
 			new JavaSwitchCaseStatement(false);
 
 		javaSwitchCaseStatement.setSwitchCaseJavaExpression(
-			parseJavaExpression(firstChildDetailAST.getFirstChild()));
+			_parseJavaExpression(firstChildDetailAST.getFirstChild()));
 
 		return javaSwitchCaseStatement;
 	}
 
-	public static JavaSwitchStatement parseJavaSwitchStatement(
+	private static JavaSwitchStatement _parseJavaSwitchStatement(
 		DetailAST literalSwitchDetailAST) {
 
 		DetailAST lparenDetailAST = literalSwitchDetailAST.getFirstChild();
 
 		return new JavaSwitchStatement(
-			parseJavaExpression(lparenDetailAST.getNextSibling()));
+			_parseJavaExpression(lparenDetailAST.getNextSibling()));
 	}
 
-	public static JavaSynchronizedStatement parseJavaSynchronizedStatement(
+	private static JavaSynchronizedStatement _parseJavaSynchronizedStatement(
 		DetailAST literalSynchronizedDetailAST) {
 
 		JavaSynchronizedStatement javaSynchronizedStatement =
@@ -616,19 +616,19 @@ public class JavaParserUtil {
 			literalSynchronizedDetailAST.getFirstChild();
 
 		javaSynchronizedStatement.setSynchronizedJavaExpression(
-			parseJavaExpression(firstChildDetailAST.getNextSibling()));
+			_parseJavaExpression(firstChildDetailAST.getNextSibling()));
 
 		return javaSynchronizedStatement;
 	}
 
-	public static JavaThrowStatement parseJavaThrowStatement(
+	private static JavaThrowStatement _parseJavaThrowStatement(
 		DetailAST literalThrowDetailAST) {
 
 		return new JavaThrowStatement(
-			parseJavaExpression(literalThrowDetailAST.getFirstChild()));
+			_parseJavaExpression(literalThrowDetailAST.getFirstChild()));
 	}
 
-	public static JavaTryStatement parseJavaTryStatement(
+	private static JavaTryStatement _parseJavaTryStatement(
 		DetailAST literalTryDetailAST) {
 
 		JavaTryStatement javaTryStatement = new JavaTryStatement();
@@ -652,7 +652,7 @@ public class JavaParserUtil {
 
 		for (DetailAST resourceDetailAST : resourceDetailASTList) {
 			resourceJavaVariableDefinitions.add(
-				parseJavaVariableDefinition(resourceDetailAST));
+				_parseJavaVariableDefinition(resourceDetailAST));
 		}
 
 		javaTryStatement.setResourceJavaVariableDefinitions(
@@ -661,7 +661,7 @@ public class JavaParserUtil {
 		return javaTryStatement;
 	}
 
-	public static JavaVariableDefinition parseJavaVariableDefinition(
+	private static JavaVariableDefinition _parseJavaVariableDefinition(
 		DetailAST detailAST) {
 
 		DetailAST modifiersDetailAST = detailAST.findFirstToken(
@@ -679,13 +679,13 @@ public class JavaParserUtil {
 
 		if (assignDetailAST != null) {
 			javaVariableDefinition.setAssignValueJavaExpression(
-				parseJavaExpression(assignDetailAST.getFirstChild()));
+				_parseJavaExpression(assignDetailAST.getFirstChild()));
 		}
 
 		return javaVariableDefinition;
 	}
 
-	public static JavaWhileStatement parseJavaWhileStatement(
+	private static JavaWhileStatement _parseJavaWhileStatement(
 		DetailAST detailAST) {
 
 		DetailAST lparenDetailAST = null;
@@ -698,7 +698,7 @@ public class JavaParserUtil {
 		}
 
 		return new JavaWhileStatement(
-			parseJavaExpression(lparenDetailAST.getNextSibling()));
+			_parseJavaExpression(lparenDetailAST.getNextSibling()));
 	}
 
 	private static Tuple _getChainTuple(DetailAST dotDetailAST) {
@@ -730,7 +730,7 @@ public class JavaParserUtil {
 				name = detailAST.getText() + "." + name;
 			}
 			else {
-				javaExpression = parseJavaExpression(detailAST);
+				javaExpression = _parseJavaExpression(detailAST);
 			}
 
 			return new Tuple(name, javaExpression);
@@ -789,7 +789,7 @@ public class JavaParserUtil {
 			}
 			else {
 				arrayValueJavaExpressions.add(
-					parseJavaExpression(previousSiblingDetailAST));
+					_parseJavaExpression(previousSiblingDetailAST));
 			}
 
 			firstChildDetailAST = firstChildDetailAST.getFirstChild();
@@ -814,7 +814,7 @@ public class JavaParserUtil {
 
 			if (childDetailAST.getType() != TokenTypes.COMMA) {
 				exceptionJavaExpressions.add(
-					parseJavaExpression(childDetailAST));
+					_parseJavaExpression(childDetailAST));
 			}
 
 			childDetailAST = childDetailAST.getNextSibling();
@@ -967,7 +967,7 @@ public class JavaParserUtil {
 		}
 		else {
 			javaAnnotation.setValueJavaExpression(
-				parseJavaExpression(lparenDetailAST.getNextSibling()));
+				_parseJavaExpression(lparenDetailAST.getNextSibling()));
 		}
 
 		return javaAnnotation;
@@ -982,7 +982,7 @@ public class JavaParserUtil {
 
 		return new JavaAnnotationMemberValuePair(
 			identDetailAST.getText(),
-			parseJavaExpression(
+			_parseJavaExpression(
 				annotationMemberValuePairDetailAST.getLastChild()));
 	}
 
@@ -1037,7 +1037,7 @@ public class JavaParserUtil {
 			}
 
 			javaArray.addValueJavaExpression(
-				parseJavaExpression(childDetailAST));
+				_parseJavaExpression(childDetailAST));
 
 			childDetailAST = childDetailAST.getNextSibling();
 			childDetailAST = childDetailAST.getNextSibling();
@@ -1078,7 +1078,7 @@ public class JavaParserUtil {
 
 		while (true) {
 			if (firstChildDetailAST.getType() != TokenTypes.INDEX_OP) {
-				arrayJavaExpression = parseJavaExpression(firstChildDetailAST);
+				arrayJavaExpression = _parseJavaExpression(firstChildDetailAST);
 
 				break;
 			}
@@ -1131,9 +1131,9 @@ public class JavaParserUtil {
 		DetailAST forEachClauseDetailAST) {
 
 		return new JavaEnhancedForStatement(
-			parseJavaExpression(
+			_parseJavaExpression(
 				forEachClauseDetailAST.findFirstToken(TokenTypes.EXPR)),
-			parseJavaVariableDefinition(
+			_parseJavaVariableDefinition(
 				forEachClauseDetailAST.findFirstToken(
 					TokenTypes.VARIABLE_DEF)));
 	}
@@ -1167,7 +1167,7 @@ public class JavaParserUtil {
 
 		return new JavaInstanceofStatement(
 			_parseJavaType(typeDetailAST),
-			parseJavaExpression(literalInstanceofDetailAST.getFirstChild()));
+			_parseJavaExpression(literalInstanceofDetailAST.getFirstChild()));
 	}
 
 	private static JavaExpression _parseJavaLambdaExpression(
@@ -1191,7 +1191,7 @@ public class JavaParserUtil {
 
 		if (lastChildDetailAST.getType() != TokenTypes.SLIST) {
 			javaLambdaExpression.setLambdaActionJavaExpression(
-				parseJavaExpression(lastChildDetailAST));
+				_parseJavaExpression(lastChildDetailAST));
 		}
 
 		return javaLambdaExpression;
@@ -1292,7 +1292,7 @@ public class JavaParserUtil {
 
 		return new JavaMethodReference(
 			lastChildDetailAST.getText(),
-			parseJavaExpression(methodReferenceDetailAST.getFirstChild()),
+			_parseJavaExpression(methodReferenceDetailAST.getFirstChild()),
 			_parseGenericJavaTypes(
 				methodReferenceDetailAST.findFirstToken(
 					TokenTypes.TYPE_ARGUMENTS),
@@ -1344,12 +1344,12 @@ public class JavaParserUtil {
 
 		if (javaOperator.hasLeftHandExpression()) {
 			javaOperatorExpression.setLeftHandJavaExpression(
-				parseJavaExpression(detailAST.getFirstChild()));
+				_parseJavaExpression(detailAST.getFirstChild()));
 		}
 
 		if (javaOperator.hasRightHandExpression()) {
 			javaOperatorExpression.setRightHandJavaExpression(
-				parseJavaExpression(detailAST.getLastChild()));
+				_parseJavaExpression(detailAST.getLastChild()));
 		}
 
 		return javaOperatorExpression;
@@ -1426,9 +1426,9 @@ public class JavaParserUtil {
 			TokenTypes.COLON);
 
 		return new JavaTernaryOperator(
-			parseJavaExpression(questionDetailAST.getFirstChild()),
-			parseJavaExpression(colonDetailAST.getPreviousSibling()),
-			parseJavaExpression(colonDetailAST.getNextSibling()));
+			_parseJavaExpression(questionDetailAST.getFirstChild()),
+			_parseJavaExpression(colonDetailAST.getPreviousSibling()),
+			_parseJavaExpression(colonDetailAST.getNextSibling()));
 	}
 
 	private static JavaType _parseJavaType(DetailAST detailAST) {
@@ -1497,7 +1497,7 @@ public class JavaParserUtil {
 		}
 
 		return new JavaTypeCast(
-			javaTypes, parseJavaExpression(typeCastDetailAST.getLastChild()));
+			javaTypes, _parseJavaExpression(typeCastDetailAST.getLastChild()));
 	}
 
 	private static List<JavaSimpleValue> _parseModifiers(
@@ -1533,7 +1533,7 @@ public class JavaParserUtil {
 
 		while (true) {
 			parameterValueJavaExpressions.add(
-				parseJavaExpression(childDetailAST));
+				_parseJavaExpression(childDetailAST));
 
 			childDetailAST = childDetailAST.getNextSibling();
 

@@ -57,6 +57,10 @@
 			<matches></matches>
 		</ignore-error>
 		<ignore-error description="">
+			<contains>Do NOT use Hypersonic in production</contains>
+			<matches></matches>
+		</ignore-error>
+		<ignore-error description="">
 			<contains>INFO:</contains>
 			<matches></matches>
 		</ignore-error>

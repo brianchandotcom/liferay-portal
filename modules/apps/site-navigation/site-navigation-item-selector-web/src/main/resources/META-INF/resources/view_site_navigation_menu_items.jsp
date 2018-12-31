@@ -42,7 +42,7 @@ SiteNavigationMenuItemItemSelectorViewDisplayContext siteNavigationMenuItemItemS
 
 		<soy:component-renderer
 			context="<%= context %>"
-			module="site-navigation-item-selector-web/js/SelectSiteNavigationMenuItem.es"
+			module='<%= siteNavigationMenuItemItemSelectorViewDisplayContext.getModuleName() + "/js/SelectSiteNavigationMenuItem.es" %>'
 			templateNamespace="com.liferay.site.navigation.item.selector.web.SelectSiteNavigationMenuItem.render"
 		/>
 	</c:when>

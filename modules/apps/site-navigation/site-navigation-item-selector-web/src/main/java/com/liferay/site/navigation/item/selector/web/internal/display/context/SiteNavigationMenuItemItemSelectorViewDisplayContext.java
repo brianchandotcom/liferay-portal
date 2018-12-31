@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.site.navigation.constants.SiteNavigationConstants;
+import com.liferay.site.navigation.item.selector.web.internal.constants.SiteNavigationItemSelectorWebKeys;
 import com.liferay.site.navigation.model.SiteNavigationMenu;
 import com.liferay.site.navigation.model.SiteNavigationMenuItem;
 import com.liferay.site.navigation.service.SiteNavigationMenuItemLocalServiceUtil;
@@ -55,6 +56,12 @@ public class SiteNavigationMenuItemItemSelectorViewDisplayContext {
 
 	public String getItemSelectedEventName() {
 		return _itemSelectedEventName;
+	}
+
+	public String getModuleName() {
+		return (String)_request.getAttribute(
+			SiteNavigationItemSelectorWebKeys.
+				SITE_NAVIGATION_MENU_ITEM_SELECTOR_RESOLVED_MODULE_NAME);
 	}
 
 	public SiteNavigationMenu getSiteNavigationMenu() {

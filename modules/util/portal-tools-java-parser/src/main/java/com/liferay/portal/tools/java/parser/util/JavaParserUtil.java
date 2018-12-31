@@ -435,7 +435,75 @@ public class JavaParserUtil {
 			return _parseJavaEnhancedForStatement(nextSiblingDetailAST);
 		}
 
-		return _parseJavaForStatement(literalForDetailAST);
+		JavaForStatement javaForStatement = new JavaForStatement();
+
+		List<JavaTerm> initializationJavaTerms = new ArrayList<>();
+
+		DetailAST forInitDetailAST = literalForDetailAST.findFirstToken(
+			TokenTypes.FOR_INIT);
+
+		firstChildDetailAST = forInitDetailAST.getFirstChild();
+
+		if (firstChildDetailAST != null) {
+			if (firstChildDetailAST.getType() == TokenTypes.ELIST) {
+				List<DetailAST> exprDetailASTList =
+					DetailASTUtil.getAllChildTokens(
+						firstChildDetailAST, false, TokenTypes.EXPR);
+
+				for (DetailAST exprDetailAST : exprDetailASTList) {
+					initializationJavaTerms.add(
+						parseJavaExpression(exprDetailAST));
+				}
+			}
+			else {
+				List<DetailAST> variableDefinitionASTList =
+					DetailASTUtil.getAllChildTokens(
+						forInitDetailAST, false, TokenTypes.VARIABLE_DEF);
+
+				for (DetailAST variableDefinitionDetailAST :
+						variableDefinitionASTList) {
+
+					initializationJavaTerms.add(
+						parseJavaVariableDefinition(
+							variableDefinitionDetailAST));
+				}
+			}
+		}
+
+		javaForStatement.setInitializationJavaTerms(initializationJavaTerms);
+
+		DetailAST forConditionDetailAST = literalForDetailAST.findFirstToken(
+			TokenTypes.FOR_CONDITION);
+
+		DetailAST exprDetailAST = forConditionDetailAST.findFirstToken(
+			TokenTypes.EXPR);
+
+		if (exprDetailAST != null) {
+			javaForStatement.setConditionJavaExpression(
+				parseJavaExpression(exprDetailAST));
+		}
+
+		DetailAST forIteratorDetailAST = literalForDetailAST.findFirstToken(
+			TokenTypes.FOR_ITERATOR);
+
+		List<JavaExpression> iteratorJavaExpressions = new ArrayList<>();
+
+		DetailAST elistDetailAST = forIteratorDetailAST.findFirstToken(
+			TokenTypes.ELIST);
+
+		if (elistDetailAST != null) {
+			List<DetailAST> exprDetailASTList = DetailASTUtil.getAllChildTokens(
+				elistDetailAST, false, TokenTypes.EXPR);
+
+			for (DetailAST curExprDetailAST : exprDetailASTList) {
+				iteratorJavaExpressions.add(
+					parseJavaExpression(curExprDetailAST));
+			}
+		}
+
+		javaForStatement.setIteratorJavaExpression(iteratorJavaExpressions);
+
+		return javaForStatement;
 	}
 
 	public static JavaIfStatement parseJavaIfStatement(
@@ -1089,80 +1157,6 @@ public class JavaParserUtil {
 		}
 
 		return javaEnumConstantDefinition;
-	}
-
-	private static JavaForStatement _parseJavaForStatement(
-		DetailAST literalForDetailAST) {
-
-		JavaForStatement javaForStatement = new JavaForStatement();
-
-		List<JavaTerm> initializationJavaTerms = new ArrayList<>();
-
-		DetailAST forInitDetailAST = literalForDetailAST.findFirstToken(
-			TokenTypes.FOR_INIT);
-
-		DetailAST firstChildDetailAST = forInitDetailAST.getFirstChild();
-
-		if (firstChildDetailAST != null) {
-			if (firstChildDetailAST.getType() == TokenTypes.ELIST) {
-				List<DetailAST> exprDetailASTList =
-					DetailASTUtil.getAllChildTokens(
-						firstChildDetailAST, false, TokenTypes.EXPR);
-
-				for (DetailAST exprDetailAST : exprDetailASTList) {
-					initializationJavaTerms.add(
-						parseJavaExpression(exprDetailAST));
-				}
-			}
-			else {
-				List<DetailAST> variableDefinitionASTList =
-					DetailASTUtil.getAllChildTokens(
-						forInitDetailAST, false, TokenTypes.VARIABLE_DEF);
-
-				for (DetailAST variableDefinitionDetailAST :
-						variableDefinitionASTList) {
-
-					initializationJavaTerms.add(
-						parseJavaVariableDefinition(
-							variableDefinitionDetailAST));
-				}
-			}
-		}
-
-		javaForStatement.setInitializationJavaTerms(initializationJavaTerms);
-
-		DetailAST forConditionDetailAST = literalForDetailAST.findFirstToken(
-			TokenTypes.FOR_CONDITION);
-
-		DetailAST exprDetailAST = forConditionDetailAST.findFirstToken(
-			TokenTypes.EXPR);
-
-		if (exprDetailAST != null) {
-			javaForStatement.setConditionJavaExpression(
-				parseJavaExpression(exprDetailAST));
-		}
-
-		DetailAST forIteratorDetailAST = literalForDetailAST.findFirstToken(
-			TokenTypes.FOR_ITERATOR);
-
-		List<JavaExpression> iteratorJavaExpressions = new ArrayList<>();
-
-		DetailAST elistDetailAST = forIteratorDetailAST.findFirstToken(
-			TokenTypes.ELIST);
-
-		if (elistDetailAST != null) {
-			List<DetailAST> exprDetailASTList = DetailASTUtil.getAllChildTokens(
-				elistDetailAST, false, TokenTypes.EXPR);
-
-			for (DetailAST curExprDetailAST : exprDetailASTList) {
-				iteratorJavaExpressions.add(
-					parseJavaExpression(curExprDetailAST));
-			}
-		}
-
-		javaForStatement.setIteratorJavaExpression(iteratorJavaExpressions);
-
-		return javaForStatement;
 	}
 
 	private static JavaInstanceofStatement _parseJavaInstanceofStatement(

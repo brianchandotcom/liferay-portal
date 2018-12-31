@@ -43,6 +43,11 @@ public abstract class BaseJavaTerm implements JavaTerm {
 	}
 
 	@Override
+	public String getSuffix() {
+		return _suffix;
+	}
+
+	@Override
 	public void setEndPosition(Position endPosition) {
 		_endPosition = endPosition;
 	}
@@ -53,9 +58,19 @@ public abstract class BaseJavaTerm implements JavaTerm {
 	}
 
 	@Override
+	public void setSuffix(String suffix) {
+		_suffix = suffix;
+	}
+
+	@Override
 	public String toString() {
 		return toString(
 			StringPool.BLANK, StringPool.BLANK, StringPool.BLANK, -1);
+	}
+
+	@Override
+	public String toString(String indent, String prefix, int maxLineLength) {
+		return toString(indent, prefix, _suffix, maxLineLength);
 	}
 
 	@Override
@@ -725,5 +740,6 @@ public abstract class BaseJavaTerm implements JavaTerm {
 
 	private Position _endPosition;
 	private Position _startPosition;
+	private String _suffix;
 
 }

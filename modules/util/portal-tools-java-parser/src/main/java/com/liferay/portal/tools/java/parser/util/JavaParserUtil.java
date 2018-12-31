@@ -85,108 +85,114 @@ import java.util.List;
 public class JavaParserUtil {
 
 	public static JavaTerm parseJavaTerm(DetailAST detailAST) {
+		JavaTerm javaTerm = null;
+
 		if ((detailAST.getType() == TokenTypes.ANNOTATION_DEF) ||
 			(detailAST.getType() == TokenTypes.CLASS_DEF) ||
 			(detailAST.getType() == TokenTypes.ENUM_DEF) ||
 			(detailAST.getType() == TokenTypes.INTERFACE_DEF)) {
 
-			return _parseJavaClassDefinition(detailAST);
+			javaTerm = _parseJavaClassDefinition(detailAST);
 		}
 		else if (detailAST.getType() == TokenTypes.CASE_GROUP) {
-			return _parseJavaSwitchCaseStatement(detailAST);
+			javaTerm = _parseJavaSwitchCaseStatement(detailAST);
 		}
 		else if (detailAST.getType() == TokenTypes.ANNOTATION_FIELD_DEF) {
-			return _parseJavaAnnotationFieldDefinition(detailAST);
+			javaTerm = _parseJavaAnnotationFieldDefinition(detailAST);
 		}
 		else if ((detailAST.getType() == TokenTypes.CTOR_CALL) ||
 				 (detailAST.getType() == TokenTypes.SUPER_CTOR_CALL)) {
 
-			return _parseJavaConstructorCall(detailAST);
+			javaTerm = _parseJavaConstructorCall(detailAST);
 		}
 		else if (detailAST.getType() == TokenTypes.CTOR_DEF) {
-			return _parseJavaConstructorDefinition(detailAST);
+			javaTerm = _parseJavaConstructorDefinition(detailAST);
 		}
 		else if (detailAST.getType() == TokenTypes.DO_WHILE) {
-			return _parseJavaWhileStatement(detailAST);
+			javaTerm = _parseJavaWhileStatement(detailAST);
 		}
 		else if (detailAST.getType() == TokenTypes.ENUM_CONSTANT_DEF) {
 			DetailAST previousSiblingDetailAST = detailAST.getPreviousSibling();
 
 			if (previousSiblingDetailAST.getType() == TokenTypes.LCURLY) {
-				return _parseJavaEnumConstantDefinitions(detailAST);
+				javaTerm = _parseJavaEnumConstantDefinitions(detailAST);
 			}
 		}
 		else if (detailAST.getType() == TokenTypes.EXPR) {
-			return _parseJavaExpression(detailAST);
+			javaTerm = _parseJavaExpression(detailAST);
 		}
 		else if (detailAST.getType() == TokenTypes.IMPORT) {
-			return _parseJavaImport(detailAST, false);
+			javaTerm = _parseJavaImport(detailAST, false);
 		}
 		else if (detailAST.getType() == TokenTypes.INSTANCE_INIT) {
-			return new JavaInstanceInitialization();
+			javaTerm = new JavaInstanceInitialization();
 		}
 		else if (detailAST.getType() == TokenTypes.LABELED_STAT) {
-			return _parseJavaLabeledStatement(detailAST);
+			javaTerm = _parseJavaLabeledStatement(detailAST);
 		}
 		else if (detailAST.getType() == TokenTypes.LITERAL_BREAK) {
-			return _parseJavaBreakStatement(detailAST);
+			javaTerm = _parseJavaBreakStatement(detailAST);
 		}
 		else if (detailAST.getType() == TokenTypes.LITERAL_CATCH) {
-			return _parseJavaCatchStatement(detailAST);
+			javaTerm = _parseJavaCatchStatement(detailAST);
 		}
 		else if (detailAST.getType() == TokenTypes.LITERAL_CONTINUE) {
-			return _parseJavaContinueStatement(detailAST);
+			javaTerm = _parseJavaContinueStatement(detailAST);
 		}
 		else if (detailAST.getType() == TokenTypes.LITERAL_DO) {
-			return new JavaDoStatement();
+			javaTerm = new JavaDoStatement();
 		}
 		else if (detailAST.getType() == TokenTypes.LITERAL_ELSE) {
-			return _parseJavaElseStatement(detailAST);
+			javaTerm = _parseJavaElseStatement(detailAST);
 		}
 		else if (detailAST.getType() == TokenTypes.LITERAL_FINALLY) {
-			return new JavaFinallyStatement();
+			javaTerm = new JavaFinallyStatement();
 		}
 		else if (detailAST.getType() == TokenTypes.LITERAL_FOR) {
-			return _parseJavaForStatement(detailAST);
+			javaTerm = _parseJavaForStatement(detailAST);
 		}
 		else if (detailAST.getType() == TokenTypes.LITERAL_IF) {
-			return _parseJavaIfStatement(detailAST);
+			javaTerm = _parseJavaIfStatement(detailAST);
 		}
 		else if (detailAST.getType() == TokenTypes.LITERAL_RETURN) {
-			return _parseJavaReturnStatement(detailAST);
+			javaTerm = _parseJavaReturnStatement(detailAST);
 		}
 		else if (detailAST.getType() == TokenTypes.LITERAL_SYNCHRONIZED) {
-			return _parseJavaSynchronizedStatement(detailAST);
+			javaTerm = _parseJavaSynchronizedStatement(detailAST);
 		}
 		else if (detailAST.getType() == TokenTypes.LITERAL_SWITCH) {
-			return _parseJavaSwitchStatement(detailAST);
+			javaTerm = _parseJavaSwitchStatement(detailAST);
 		}
 		else if (detailAST.getType() == TokenTypes.LITERAL_THROW) {
-			return _parseJavaThrowStatement(detailAST);
+			javaTerm = _parseJavaThrowStatement(detailAST);
 		}
 		else if (detailAST.getType() == TokenTypes.LITERAL_TRY) {
-			return _parseJavaTryStatement(detailAST);
+			javaTerm = _parseJavaTryStatement(detailAST);
 		}
 		else if (detailAST.getType() == TokenTypes.LITERAL_WHILE) {
-			return _parseJavaWhileStatement(detailAST);
+			javaTerm = _parseJavaWhileStatement(detailAST);
 		}
 		else if (detailAST.getType() == TokenTypes.METHOD_DEF) {
-			return _parseJavaMethodDefinition(detailAST);
+			javaTerm = _parseJavaMethodDefinition(detailAST);
 		}
 		else if (detailAST.getType() == TokenTypes.PACKAGE_DEF) {
-			return _parseJavaPackageDefinition(detailAST);
+			javaTerm = _parseJavaPackageDefinition(detailAST);
 		}
 		else if (detailAST.getType() == TokenTypes.STATIC_IMPORT) {
-			return _parseJavaImport(detailAST, true);
+			javaTerm = _parseJavaImport(detailAST, true);
 		}
 		else if (detailAST.getType() == TokenTypes.STATIC_INIT) {
-			return new JavaStaticInitialization();
+			javaTerm = new JavaStaticInitialization();
 		}
 		else if (detailAST.getType() == TokenTypes.VARIABLE_DEF) {
-			return _parseJavaVariableDefinition(detailAST);
+			javaTerm = _parseJavaVariableDefinition(detailAST);
 		}
 
-		return null;
+		if (javaTerm != null) {
+			javaTerm.setSuffix(_getSuffix(detailAST));
+		}
+
+		return javaTerm;
 	}
 
 	private static Tuple _getChainTuple(DetailAST dotDetailAST) {
@@ -243,6 +249,23 @@ public class JavaParserUtil {
 		FullIdent fullIdent = FullIdent.createFullIdent(dotDetailAST);
 
 		return fullIdent.getText();
+	}
+
+	private static String _getSuffix(DetailAST detailAST) {
+		DetailAST closingDetailAST = DetailASTUtil.getClosingDetailAST(
+			detailAST);
+
+		if (closingDetailAST == null) {
+			return StringPool.BLANK;
+		}
+
+		if ((closingDetailAST.getType() == TokenTypes.LCURLY) ||
+			(closingDetailAST.getType() == TokenTypes.SLIST)) {
+
+			return " {";
+		}
+
+		return closingDetailAST.getText();
 	}
 
 	private static List<JavaExpression> _parseArrayValueJavaExpressions(

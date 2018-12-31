@@ -53,9 +53,9 @@ public class DEGetDataDefinitionDataFetcher
 			DEDataDefinitionGetResponse deDataDefinitionGetResponse =
 				deDataDefinitionService.execute(
 					DEDataDefinitionRequestBuilder.getBuilder(
-						).byId(
-							dataDefinitionId
-						).build());
+					).byId(
+						dataDefinitionId
+					).build());
 
 			DEDataDefinition deDataDefinition =
 				deDataDefinitionGetResponse.getDeDataDefinition();

@@ -21,6 +21,10 @@ import com.liferay.petra.string.StringBundler;
  */
 public class JavaElseStatement extends BaseJavaTerm {
 
+	public void setExecutionJavaTerm(JavaTerm executionJavaTerm) {
+		_executionJavaTerm = executionJavaTerm;
+	}
+
 	public void setJavaIfStatement(JavaIfStatement javaIfStatement) {
 		_javaIfStatement = javaIfStatement;
 	}
@@ -29,14 +33,20 @@ public class JavaElseStatement extends BaseJavaTerm {
 	public String toString(
 		String indent, String prefix, String suffix, int maxLineLength) {
 
-		if (_javaIfStatement == null) {
-			return StringBundler.concat(indent, prefix, "else {");
+		if (_javaIfStatement != null) {
+			return _javaIfStatement.toString(
+				indent, "else ", suffix, maxLineLength);
 		}
 
-		return _javaIfStatement.toString(
-			indent, "else ", suffix, maxLineLength);
+		if (_executionJavaTerm != null) {
+			return _executionJavaTerm.toString(
+				indent, "else ", suffix, maxLineLength);
+		}
+
+		return StringBundler.concat(indent, prefix, "else", suffix);
 	}
 
+	private JavaTerm _executionJavaTerm;
 	private JavaIfStatement _javaIfStatement;
 
 }

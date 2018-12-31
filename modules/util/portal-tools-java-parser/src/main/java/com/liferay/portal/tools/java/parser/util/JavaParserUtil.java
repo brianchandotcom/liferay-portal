@@ -31,14 +31,17 @@ import com.liferay.portal.tools.java.parser.JavaClassDefinition;
 import com.liferay.portal.tools.java.parser.JavaConstructorCall;
 import com.liferay.portal.tools.java.parser.JavaConstructorDefinition;
 import com.liferay.portal.tools.java.parser.JavaContinueStatement;
+import com.liferay.portal.tools.java.parser.JavaDoStatement;
 import com.liferay.portal.tools.java.parser.JavaElseStatement;
 import com.liferay.portal.tools.java.parser.JavaEnhancedForStatement;
 import com.liferay.portal.tools.java.parser.JavaEnumConstantDefinition;
 import com.liferay.portal.tools.java.parser.JavaEnumConstantDefinitions;
 import com.liferay.portal.tools.java.parser.JavaExpression;
+import com.liferay.portal.tools.java.parser.JavaFinallyStatement;
 import com.liferay.portal.tools.java.parser.JavaForStatement;
 import com.liferay.portal.tools.java.parser.JavaIfStatement;
 import com.liferay.portal.tools.java.parser.JavaImport;
+import com.liferay.portal.tools.java.parser.JavaInstanceInitialization;
 import com.liferay.portal.tools.java.parser.JavaInstanceofStatement;
 import com.liferay.portal.tools.java.parser.JavaLambdaExpression;
 import com.liferay.portal.tools.java.parser.JavaLambdaParameter;
@@ -55,6 +58,7 @@ import com.liferay.portal.tools.java.parser.JavaParameter;
 import com.liferay.portal.tools.java.parser.JavaReturnStatement;
 import com.liferay.portal.tools.java.parser.JavaSignature;
 import com.liferay.portal.tools.java.parser.JavaSimpleValue;
+import com.liferay.portal.tools.java.parser.JavaStaticInitialization;
 import com.liferay.portal.tools.java.parser.JavaSwitchCaseStatement;
 import com.liferay.portal.tools.java.parser.JavaSwitchStatement;
 import com.liferay.portal.tools.java.parser.JavaSynchronizedStatement;
@@ -79,6 +83,111 @@ import java.util.List;
  * @author Hugo Huijser
  */
 public class JavaParserUtil {
+
+	public static JavaTerm parseJavaTerm(DetailAST detailAST) {
+		if ((detailAST.getType() == TokenTypes.ANNOTATION_DEF) ||
+			(detailAST.getType() == TokenTypes.CLASS_DEF) ||
+			(detailAST.getType() == TokenTypes.ENUM_DEF) ||
+			(detailAST.getType() == TokenTypes.INTERFACE_DEF)) {
+
+			return _parseJavaClassDefinition(detailAST);
+		}
+		else if (detailAST.getType() == TokenTypes.CASE_GROUP) {
+			return _parseJavaSwitchCaseStatement(detailAST);
+		}
+		else if (detailAST.getType() == TokenTypes.ANNOTATION_FIELD_DEF) {
+			return _parseJavaAnnotationFieldDefinition(detailAST);
+		}
+		else if ((detailAST.getType() == TokenTypes.CTOR_CALL) ||
+				 (detailAST.getType() == TokenTypes.SUPER_CTOR_CALL)) {
+
+			return _parseJavaConstructorCall(detailAST);
+		}
+		else if (detailAST.getType() == TokenTypes.CTOR_DEF) {
+			return _parseJavaConstructorDefinition(detailAST);
+		}
+		else if (detailAST.getType() == TokenTypes.DO_WHILE) {
+			return _parseJavaWhileStatement(detailAST);
+		}
+		else if (detailAST.getType() == TokenTypes.ENUM_CONSTANT_DEF) {
+			DetailAST previousSiblingDetailAST = detailAST.getPreviousSibling();
+
+			if (previousSiblingDetailAST.getType() == TokenTypes.LCURLY) {
+				return _parseJavaEnumConstantDefinitions(detailAST);
+			}
+		}
+		else if (detailAST.getType() == TokenTypes.EXPR) {
+			return _parseJavaExpression(detailAST);
+		}
+		else if (detailAST.getType() == TokenTypes.IMPORT) {
+			return _parseJavaImport(detailAST, false);
+		}
+		else if (detailAST.getType() == TokenTypes.INSTANCE_INIT) {
+			return new JavaInstanceInitialization();
+		}
+		else if (detailAST.getType() == TokenTypes.LABELED_STAT) {
+			return _parseJavaLabeledStatement(detailAST);
+		}
+		else if (detailAST.getType() == TokenTypes.LITERAL_BREAK) {
+			return _parseJavaBreakStatement(detailAST);
+		}
+		else if (detailAST.getType() == TokenTypes.LITERAL_CATCH) {
+			return _parseJavaCatchStatement(detailAST);
+		}
+		else if (detailAST.getType() == TokenTypes.LITERAL_CONTINUE) {
+			return _parseJavaContinueStatement(detailAST);
+		}
+		else if (detailAST.getType() == TokenTypes.LITERAL_DO) {
+			return new JavaDoStatement();
+		}
+		else if (detailAST.getType() == TokenTypes.LITERAL_ELSE) {
+			return _parseJavaElseStatement(detailAST);
+		}
+		else if (detailAST.getType() == TokenTypes.LITERAL_FINALLY) {
+			return new JavaFinallyStatement();
+		}
+		else if (detailAST.getType() == TokenTypes.LITERAL_FOR) {
+			return _parseJavaForStatement(detailAST);
+		}
+		else if (detailAST.getType() == TokenTypes.LITERAL_IF) {
+			return _parseJavaIfStatement(detailAST);
+		}
+		else if (detailAST.getType() == TokenTypes.LITERAL_RETURN) {
+			return _parseJavaReturnStatement(detailAST);
+		}
+		else if (detailAST.getType() == TokenTypes.LITERAL_SYNCHRONIZED) {
+			return _parseJavaSynchronizedStatement(detailAST);
+		}
+		else if (detailAST.getType() == TokenTypes.LITERAL_SWITCH) {
+			return _parseJavaSwitchStatement(detailAST);
+		}
+		else if (detailAST.getType() == TokenTypes.LITERAL_THROW) {
+			return _parseJavaThrowStatement(detailAST);
+		}
+		else if (detailAST.getType() == TokenTypes.LITERAL_TRY) {
+			return _parseJavaTryStatement(detailAST);
+		}
+		else if (detailAST.getType() == TokenTypes.LITERAL_WHILE) {
+			return _parseJavaWhileStatement(detailAST);
+		}
+		else if (detailAST.getType() == TokenTypes.METHOD_DEF) {
+			return _parseJavaMethodDefinition(detailAST);
+		}
+		else if (detailAST.getType() == TokenTypes.PACKAGE_DEF) {
+			return _parseJavaPackageDefinition(detailAST);
+		}
+		else if (detailAST.getType() == TokenTypes.STATIC_IMPORT) {
+			return _parseJavaImport(detailAST, true);
+		}
+		else if (detailAST.getType() == TokenTypes.STATIC_INIT) {
+			return new JavaStaticInitialization();
+		}
+		else if (detailAST.getType() == TokenTypes.VARIABLE_DEF) {
+			return _parseJavaVariableDefinition(detailAST);
+		}
+
+		return null;
+	}
 
 	private static Tuple _getChainTuple(DetailAST dotDetailAST) {
 		String name = StringPool.BLANK;

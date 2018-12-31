@@ -3,7 +3,7 @@ definition {
 	property portal.release = "false";
 	property portal.upstream = "true";
 	property custom.properties = "default.layout.template.id=1_column";
-	property testray.main.component.name = "Documents Management";
+	property testray.main.component.name = "Online Editing";
 	var pageName = "Documents and Media Page";
 	var portletName = "Documents and Media";
 

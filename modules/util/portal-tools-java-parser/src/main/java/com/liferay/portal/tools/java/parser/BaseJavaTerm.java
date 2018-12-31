@@ -59,10 +59,6 @@ public abstract class BaseJavaTerm implements JavaTerm {
 	}
 
 	@Override
-	public abstract String toString(
-		String indent, String prefix, String suffix, int maxLineLength);
-
-	@Override
 	public String toString(
 		String indent, String prefix, String suffix, int maxLineLength,
 		boolean forceLineBreak) {

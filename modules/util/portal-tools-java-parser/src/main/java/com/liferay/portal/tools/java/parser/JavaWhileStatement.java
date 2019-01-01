@@ -49,7 +49,9 @@ public class JavaWhileStatement extends JavaLoopStatement {
 
 		indent = "\t" + getIndent(getLastLine(sb));
 
-		append(sb, _executionJavaTerm, indent, "", suffix, maxLineLength);
+		append(
+			sb, _executionJavaTerm, indent, "", _executionJavaTerm.getSuffix(),
+			maxLineLength);
 
 		return sb.toString();
 	}

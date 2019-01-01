@@ -51,7 +51,9 @@ public class JavaIfStatement extends BaseJavaTerm {
 			sb, _conditionJavaExpression, indent, prefix + "if (", ") ",
 			maxLineLength);
 
-		append(sb, _executionJavaTerm, indent, "", suffix, maxLineLength);
+		append(
+			sb, _executionJavaTerm, indent, "", _executionJavaTerm.getSuffix(),
+			maxLineLength);
 
 		return sb.toString();
 	}

@@ -40,7 +40,7 @@ public class JavaElseStatement extends BaseJavaTerm {
 
 		if (_executionJavaTerm != null) {
 			return _executionJavaTerm.toString(
-				indent, "else ", suffix, maxLineLength);
+				indent, "else ", _executionJavaTerm.getSuffix(), maxLineLength);
 		}
 
 		return StringBundler.concat(indent, prefix, "else", suffix);

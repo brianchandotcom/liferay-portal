@@ -14,8 +14,8 @@
 
 package com.liferay.data.engine.executor;
 
+import com.liferay.data.engine.exception.DEDataDefinitionException;
 import com.liferay.data.engine.service.DEDataDefinitionDeleteResponse;
-import com.liferay.portal.kernel.exception.PortalException;
 
 /**
  * @author Jeyvison Nascimento
@@ -24,6 +24,6 @@ public interface DEDeleteRequest {
 
 	public <T> DEDataDefinitionDeleteResponse accept(
 			DEDeleteRequestExecutor deDeleteRequestExecutor)
-		throws PortalException;
+		throws DEDataDefinitionException;
 
 }

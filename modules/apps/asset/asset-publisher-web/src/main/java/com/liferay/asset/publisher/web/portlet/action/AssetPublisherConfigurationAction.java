@@ -19,7 +19,6 @@ import com.liferay.asset.kernel.exception.AssetTagException;
 import com.liferay.asset.kernel.exception.DuplicateQueryRuleException;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.service.AssetTagLocalService;
-import com.liferay.asset.model.AssetEntryUsage;
 import com.liferay.asset.publisher.constants.AssetPublisherPortletKeys;
 import com.liferay.asset.publisher.constants.AssetPublisherWebKeys;
 import com.liferay.asset.publisher.util.AssetPublisherHelper;
@@ -593,15 +592,9 @@ public class AssetPublisherConfigurationAction
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		List<AssetEntryUsage> assetEntryUsages =
-			assetEntryUsageLocalService.getAssetEntryUsages(
-				portal.getClassNameId(Layout.class), themeDisplay.getPlid(),
-				portal.getPortletId(actionRequest));
-
-		assetEntryUsages.forEach(
-			assetEntryUsage ->
-				assetEntryUsageLocalService.deleteAssetEntryUsage(
-					assetEntryUsage));
+		assetEntryUsageLocalService.deleteAssetEntryUsages(
+			portal.getClassNameId(Layout.class), themeDisplay.getPlid(),
+			portal.getPortletId(actionRequest));
 	}
 
 	@Reference(unbind = "-")

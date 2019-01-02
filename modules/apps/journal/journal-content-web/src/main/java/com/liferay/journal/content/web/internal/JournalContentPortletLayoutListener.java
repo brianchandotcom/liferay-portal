@@ -16,7 +16,6 @@ package com.liferay.journal.content.web.internal;
 
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
-import com.liferay.asset.model.AssetEntryUsage;
 import com.liferay.asset.service.AssetEntryUsageLocalService;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
@@ -52,7 +51,6 @@ import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.layoutconfiguration.util.xml.PortletLogic;
 
 import java.util.LinkedHashSet;
-import java.util.List;
 import java.util.Set;
 
 import javax.portlet.PortletPreferences;
@@ -130,7 +128,8 @@ public class JournalContentPortletLayoutListener
 				return;
 			}
 
-			_deleteAssetEntryUsages(layout.getPlid(), portletId);
+			_assetEntryUsageLocalService.deleteAssetEntryUsages(
+				_portal.getClassNameId(Layout.class), plid, portletId);
 
 			_journalContentSearchLocalService.deleteArticleContentSearch(
 				layout.getGroupId(), layout.isPrivateLayout(),
@@ -166,7 +165,8 @@ public class JournalContentPortletLayoutListener
 			JournalArticle article = _getArticle(layout, portletId);
 
 			if (article == null) {
-				_deleteAssetEntryUsages(layout.getPlid(), portletId);
+				_assetEntryUsageLocalService.deleteAssetEntryUsages(
+					_portal.getClassNameId(Layout.class), plid, portletId);
 
 				_journalContentSearchLocalService.deleteArticleContentSearch(
 					layout.getGroupId(), layout.isPrivateLayout(),
@@ -296,17 +296,6 @@ public class JournalContentPortletLayoutListener
 			assetEntry.getEntryId(), _portal.getClassNameId(Layout.class),
 			layout.getPlid(), portletId,
 			ServiceContextThreadLocal.getServiceContext());
-	}
-
-	private void _deleteAssetEntryUsages(long plid, String portletId) {
-		List<AssetEntryUsage> assetEntryUsages =
-			_assetEntryUsageLocalService.getAssetEntryUsages(
-				_portal.getClassNameId(Layout.class), plid, portletId);
-
-		assetEntryUsages.forEach(
-			assetEntryUsage ->
-				_assetEntryUsageLocalService.deleteAssetEntryUsage(
-					assetEntryUsage));
 	}
 
 	private JournalArticle _getArticle(Layout layout, String portletId) {

@@ -16,7 +16,6 @@ package com.liferay.asset.publisher.web.internal.portlet.layout.listener;
 
 import com.liferay.asset.list.model.AssetListEntryUsage;
 import com.liferay.asset.list.service.AssetListEntryUsageLocalService;
-import com.liferay.asset.model.AssetEntryUsage;
 import com.liferay.asset.publisher.constants.AssetPublisherPortletKeys;
 import com.liferay.asset.publisher.web.internal.util.AssetPublisherWebUtil;
 import com.liferay.asset.service.AssetEntryUsageLocalService;
@@ -41,7 +40,6 @@ import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.subscription.service.SubscriptionLocalService;
 
-import java.util.List;
 import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
@@ -207,14 +205,8 @@ public class AssetPublisherPortletLayoutListener
 	}
 
 	private void _removeAssetEntryUsages(long plid, String portletId) {
-		List<AssetEntryUsage> assetEntryUsages =
-			_assetEntryUsageLocalService.getAssetEntryUsages(
-				_portal.getClassNameId(Layout.class), plid, portletId);
-
-		assetEntryUsages.forEach(
-			assetEntryUsage ->
-				_assetEntryUsageLocalService.deleteAssetEntryUsage(
-					assetEntryUsage));
+		_assetEntryUsageLocalService.deleteAssetEntryUsages(
+			_portal.getClassNameId(Layout.class), plid, portletId);
 	}
 
 	private void _removeAssetListEntryUsage(long plid, String portletId) {

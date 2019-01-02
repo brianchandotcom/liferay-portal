@@ -201,12 +201,8 @@ public class AssetEntryUsagesDisplayContext {
 			return _searchContainer;
 		}
 
-		int allUsageCount = getAllUsageCount();
-
-		if (allUsageCount == 0) {
-			_assetEntryUsageHelper.checkAssetEntryUsages(
-				AssetEntryLocalServiceUtil.fetchEntry(getAssetEntryId()));
-		}
+		_assetEntryUsageHelper.checkAssetEntryUsages(
+			AssetEntryLocalServiceUtil.fetchEntry(getAssetEntryId()));
 
 		SearchContainer assetEntryUsagesSearchContainer = new SearchContainer(
 			_renderRequest, _renderResponse.createRenderURL(), null,

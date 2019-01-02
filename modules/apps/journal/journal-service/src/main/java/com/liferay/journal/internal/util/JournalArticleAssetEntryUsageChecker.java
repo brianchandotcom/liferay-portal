@@ -15,6 +15,7 @@
 package com.liferay.journal.internal.util;
 
 import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.asset.model.AssetEntryUsage;
 import com.liferay.asset.publisher.constants.AssetPublisherPortletKeys;
 import com.liferay.asset.service.AssetEntryUsageLocalService;
 import com.liferay.asset.util.AssetEntryUsageChecker;
@@ -79,6 +80,15 @@ public class JournalArticleAssetEntryUsageChecker
 				journalContentSearch.isPrivateLayout(),
 				journalContentSearch.getLayoutId());
 
+			AssetEntryUsage assetEntryUsage =
+				_assetEntryUsageLocalService.fetchAssetEntryUsage(
+					_portal.getClassNameId(Layout.class), layout.getPlid(),
+					journalContentSearch.getPortletId());
+
+			if (assetEntryUsage != null) {
+				continue;
+			}
+
 			_assetEntryUsageLocalService.addAssetEntryUsage(
 				article.getUserId(), journalContentSearch.getGroupId(),
 				assetEntry.getEntryId(), _portal.getClassNameId(Layout.class),
@@ -135,6 +145,15 @@ public class JournalArticleAssetEntryUsageChecker
 				"assetEntryXml", StringPool.BLANK);
 
 			if (!assetEntryXml.contains(assetEntry.getClassUuid())) {
+				continue;
+			}
+
+			AssetEntryUsage assetEntryUsage =
+				_assetEntryUsageLocalService.fetchAssetEntryUsage(
+					_portal.getClassNameId(Layout.class), layout.getPlid(),
+					portletId);
+
+			if (assetEntryUsage != null) {
 				continue;
 			}
 

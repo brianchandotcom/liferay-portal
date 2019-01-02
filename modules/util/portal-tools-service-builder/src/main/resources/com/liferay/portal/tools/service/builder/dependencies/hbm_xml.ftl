@@ -146,7 +146,7 @@
 								column="${entityColumn.DBName}"
 							</#if>
 
-								name="${entityColumn.name}"
+							name="${entityColumn.name}"
 
 							<#if entityColumn.isPrimitiveType() || stringUtil.equals(entityColumn.type, "Map") || stringUtil.equals(entityColumn.type, "String")>
 								type="com.liferay.portal.dao.orm.hibernate.${serviceBuilder.getPrimitiveObj("${entityColumn.type}")}Type"

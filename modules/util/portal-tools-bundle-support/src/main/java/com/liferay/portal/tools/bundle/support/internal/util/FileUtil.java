@@ -367,34 +367,35 @@ public class FileUtil {
 			Path sevenZipPath, Path destinationDirPath, int stripComponents)
 		throws IOException {
 
-		SevenZFile sevenZFile = new SevenZFile(sevenZipPath.toFile());
+		try (SevenZFile sevenZFile = new SevenZFile(sevenZipPath.toFile())) {
+			SevenZArchiveEntry sevenZArchiveEntry;
 
-		SevenZArchiveEntry sevenZArchiveEntry;
+			while ((sevenZArchiveEntry = sevenZFile.getNextEntry()) != null) {
+				if (sevenZArchiveEntry.isDirectory()) {
+					continue;
+				}
 
-		while ((sevenZArchiveEntry = sevenZFile.getNextEntry()) != null) {
-			if (sevenZArchiveEntry.isDirectory()) {
-				continue;
+				Path destinationPath = Paths.get(sevenZArchiveEntry.getName());
+
+				destinationPath = destinationDirPath.resolve(
+					destinationPath.subpath(
+						stripComponents, destinationPath.getNameCount()));
+
+				Files.createDirectories(destinationPath.getParent());
+
+				byte[] content = new byte[(int)sevenZArchiveEntry.getSize()];
+
+				sevenZFile.read(content, 0, content.length);
+
+				Files.write(destinationPath, content);
+
+				Date lastModifiedDate =
+					sevenZArchiveEntry.getLastModifiedDate();
+
+				Files.setLastModifiedTime(
+					destinationPath,
+					FileTime.fromMillis(lastModifiedDate.getTime()));
 			}
-
-			Path destinationPath = Paths.get(sevenZArchiveEntry.getName());
-
-			destinationPath = destinationDirPath.resolve(
-				destinationPath.subpath(
-					stripComponents, destinationPath.getNameCount()));
-
-			Files.createDirectories(destinationPath.getParent());
-
-			byte[] content = new byte[(int)sevenZArchiveEntry.getSize()];
-
-			sevenZFile.read(content, 0, content.length);
-
-			Files.write(destinationPath, content);
-
-			Date lastModifiedDate = sevenZArchiveEntry.getLastModifiedDate();
-
-			Files.setLastModifiedTime(
-				destinationPath,
-				FileTime.fromMillis(lastModifiedDate.getTime()));
 		}
 	}
 

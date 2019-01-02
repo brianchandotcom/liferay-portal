@@ -90,6 +90,18 @@ public class IndividualJSONObjectMapperTest {
 		_individualJSONObjectMapper.mapToResults("invalid json");
 	}
 
+	@Test
+	public void testMapToResultsWithNoResults() throws Exception {
+		Results<Individual> results = _individualJSONObjectMapper.mapToResults(
+			_read("get-individuals-noresults.json"));
+
+		Assert.assertEquals(0, results.getTotal());
+
+		List<Individual> individuals = results.getItems();
+
+		Assert.assertEquals(individuals.toString(), 0, individuals.size());
+	}
+
 	private String _read(String fileName) throws Exception {
 		Class<?> clazz = getClass();
 

@@ -83,6 +83,20 @@ public class IndividualSegmentJSONObjectMapperTest {
 		_individualSegmentJSONObjectMapper.mapToResults("invalid json");
 	}
 
+	@Test
+	public void testMapToResultsWithNoResults() throws Exception {
+		Results<IndividualSegment> results =
+			_individualSegmentJSONObjectMapper.mapToResults(
+				_read("get-individual-segments-noresults.json"));
+
+		Assert.assertEquals(0, results.getTotal());
+
+		List<IndividualSegment> individualSegments = results.getItems();
+
+		Assert.assertEquals(
+			individualSegments.toString(), 0, individualSegments.size());
+	}
+
 	private String _read(String fileName) throws Exception {
 		Class<?> clazz = getClass();
 

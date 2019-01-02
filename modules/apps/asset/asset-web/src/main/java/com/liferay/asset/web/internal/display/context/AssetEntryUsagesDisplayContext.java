@@ -14,17 +14,20 @@
 
 package com.liferay.asset.web.internal.display.context;
 
+import com.liferay.asset.constants.AssetWebKeys;
 import com.liferay.asset.display.page.model.AssetDisplayPageEntry;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
 import com.liferay.asset.model.AssetEntryUsage;
 import com.liferay.asset.service.AssetEntryUsageLocalServiceUtil;
+import com.liferay.asset.util.AssetEntryUsageHelper;
 import com.liferay.asset.util.comparator.AssetEntryUsageModifiedDateComparator;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServiceUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -51,6 +54,10 @@ public class AssetEntryUsagesDisplayContext {
 
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
+
+		_assetEntryUsageHelper =
+			(AssetEntryUsageHelper)renderRequest.getAttribute(
+				AssetWebKeys.ASSET_ENTRY_USAGE_HELPER);
 	}
 
 	public int getAllUsageCount() {
@@ -189,9 +196,16 @@ public class AssetEntryUsagesDisplayContext {
 		return _redirect;
 	}
 
-	public SearchContainer getSearchContainer() {
+	public SearchContainer getSearchContainer() throws PortalException {
 		if (_searchContainer != null) {
 			return _searchContainer;
+		}
+
+		int allUsageCount = getAllUsageCount();
+
+		if (allUsageCount == 0) {
+			_assetEntryUsageHelper.checkAssetEntryUsages(
+				AssetEntryLocalServiceUtil.fetchEntry(getAssetEntryId()));
 		}
 
 		SearchContainer assetEntryUsagesSearchContainer = new SearchContainer(
@@ -303,6 +317,7 @@ public class AssetEntryUsagesDisplayContext {
 
 	private Long _assetEntryId;
 	private String _assetEntryTitle;
+	private final AssetEntryUsageHelper _assetEntryUsageHelper;
 	private String _navigation;
 	private String _orderByCol;
 	private String _orderByType;

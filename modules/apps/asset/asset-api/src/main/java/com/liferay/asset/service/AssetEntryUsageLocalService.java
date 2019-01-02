@@ -108,6 +108,9 @@ public interface AssetEntryUsageLocalService extends BaseLocalService,
 	public AssetEntryUsage deleteAssetEntryUsage(long assetEntryUsageId)
 		throws PortalException;
 
+	public void deleteAssetEntryUsages(long classNameId, long classPK,
+		String portletId);
+
 	/**
 	* @throws PortalException
 	*/

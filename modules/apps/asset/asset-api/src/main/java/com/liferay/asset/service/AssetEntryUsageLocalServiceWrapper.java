@@ -94,6 +94,13 @@ public class AssetEntryUsageLocalServiceWrapper
 		return _assetEntryUsageLocalService.deleteAssetEntryUsage(assetEntryUsageId);
 	}
 
+	@Override
+	public void deleteAssetEntryUsages(long classNameId, long classPK,
+		String portletId) {
+		_assetEntryUsageLocalService.deleteAssetEntryUsages(classNameId,
+			classPK, portletId);
+	}
+
 	/**
 	* @throws PortalException
 	*/

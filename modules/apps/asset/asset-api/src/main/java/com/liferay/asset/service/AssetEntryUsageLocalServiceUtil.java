@@ -99,6 +99,11 @@ public class AssetEntryUsageLocalServiceUtil {
 		return getService().deleteAssetEntryUsage(assetEntryUsageId);
 	}
 
+	public static void deleteAssetEntryUsages(long classNameId, long classPK,
+		String portletId) {
+		getService().deleteAssetEntryUsages(classNameId, classPK, portletId);
+	}
+
 	/**
 	* @throws PortalException
 	*/

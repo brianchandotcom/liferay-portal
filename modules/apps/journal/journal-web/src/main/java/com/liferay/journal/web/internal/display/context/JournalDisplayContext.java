@@ -138,6 +138,8 @@ public class JournalDisplayContext {
 				JournalWebConfiguration.class.getName());
 		_portalPreferences = PortletPreferencesFactoryUtil.getPortalPreferences(
 			_request);
+		_resolvedModuleName = (String)_request.getAttribute(
+			JournalWebKeys.RESOLVED_MODULE_NAME);
 		_themeDisplay = (ThemeDisplay)_request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 	}
@@ -483,10 +485,6 @@ public class JournalDisplayContext {
 		return StringPool.BLANK;
 	}
 
-	public String getModuleName() {
-		return (String)_request.getAttribute(JournalWebKeys.RESOLVED_MODULE_NAME);
-	}
-
 	public List<NavigationItem> getInfoPanelNavigationItems() {
 		return new NavigationItemList() {
 			{
@@ -776,6 +774,10 @@ public class JournalDisplayContext {
 		portletURL.setWindowState(LiferayWindowState.POP_UP);
 
 		return portletURL.toString();
+	}
+
+	public String getResolvedModuleName() {
+		return _resolvedModuleName;
 	}
 
 	public int getRestrictionType() {
@@ -1502,6 +1504,7 @@ public class JournalDisplayContext {
 	private final PortalPreferences _portalPreferences;
 	private final PortletPreferences _portletPreferences;
 	private final HttpServletRequest _request;
+	private final String _resolvedModuleName;
 	private Integer _restrictionType;
 	private Integer _status;
 	private String _tabs1;

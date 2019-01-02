@@ -19,6 +19,7 @@
 	"dependencies": {
 		"classnames": "^2.2.6",
 		"formik": "^1.4.1",
+		"lodash.debounce": "^4.0.8",
 		"lodash.uniqueid": "^4.0.1",
 		"prop-types": "^15.6.2",
 		"react": "^16.6.3",

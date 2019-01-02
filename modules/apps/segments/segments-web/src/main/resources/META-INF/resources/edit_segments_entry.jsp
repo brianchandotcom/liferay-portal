@@ -63,7 +63,7 @@ for (int i = 0; i < segmentsCriteriaContributors.size(); i++) {
 
 <portlet:actionURL name="updateSegmentsEntry" var="updateSegmentsEntryActionURL" />
 
-<aui:form action="<%= updateSegmentsEntryActionURL %>" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveSegmentsEntry();" %>'>
+<aui:form action="<%= updateSegmentsEntryActionURL %>" method="post" name="editSegmentFm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveSegmentsEntry();" %>'>
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="segmentsEntryId" type="hidden" value="<%= segmentsEntryId %>" />
 	<aui:input name="type" type="hidden" value="<%= type %>" />
@@ -82,18 +82,22 @@ for (int i = 0; i < segmentsCriteriaContributors.size(); i++) {
 		<portlet:param name="segmentsEntryId" value="<%= String.valueOf(segmentsEntryId) %>" />
 	</portlet:renderURL>
 
+	<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="getSegmentsEntryClassPKsCount" var="getSegmentsEntryClassPKsCountURL" />
+
 	<aui:script require='<%= renderRequest.getAttribute(SegmentsWebKeys.RESOLVED_MODULE_NAME) + "/js/index.es as SegmentEdit" %>'>
 		SegmentEdit.default(
 			'<%= segmentEditRootElementId %>',
 			{
 				contributors: <%= jsonContributorsArray %>,
+				formId: '<portlet:namespace />editSegmentFm',
 				initialMembersCount: <%= editSegmentsEntryDisplayContext.getSegmentsEntryClassPKsCount() %>,
 				initialSegmentActive: <%= (segmentsEntry == null) ? false : segmentsEntry.isActive() %>,
 				initialSegmentName: '<%= (segmentsEntry != null) ? segmentsEntry.getName(locale) : StringPool.BLANK %>',
 				locale: '<%= locale %>',
 				portletNamespace: '<portlet:namespace />',
 				previewMembersURL: '<%= (segmentsEntry != null) ? previewMembersURL : StringPool.BLANK %>',
-				redirect: '<%= HtmlUtil.escape(redirect) %>'
+				redirect: '<%= HtmlUtil.escape(redirect) %>',
+				requestMembersCountURL: '<%= getSegmentsEntryClassPKsCountURL %>'
 			},
 			{
 				assetsPath: '<%= PortalUtil.getPathContext(request) %>/assets/',
@@ -105,6 +109,6 @@ for (int i = 0; i < segmentsCriteriaContributors.size(); i++) {
 
 <aui:script>
 	function <portlet:namespace />saveSegmentsEntry() {
-		submitForm(document.<portlet:namespace />fm);
+		submitForm(document.<portlet:namespace />editSegmentFm);
 	}
 </aui:script>

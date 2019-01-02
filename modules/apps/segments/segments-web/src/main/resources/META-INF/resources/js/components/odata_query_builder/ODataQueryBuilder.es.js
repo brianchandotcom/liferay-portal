@@ -14,6 +14,7 @@ class ODataQueryBuilder extends Component {
 		initialQuery: PropTypes.string,
 		inputId: PropTypes.string,
 		modelLabel: PropTypes.string,
+		onChange: PropTypes.func,
 		properties: PropTypes.array.isRequired
 	};
 
@@ -35,7 +36,8 @@ class ODataQueryBuilder extends Component {
 			{
 				criteriaMap: newCriteriaMap,
 				query: buildQueryString([newCriteriaMap])
-			}
+			},
+			this.props.onChange
 		);
 	};
 

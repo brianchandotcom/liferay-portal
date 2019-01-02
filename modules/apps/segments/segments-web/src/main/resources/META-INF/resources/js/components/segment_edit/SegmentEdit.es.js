@@ -2,6 +2,8 @@ import React, {Component, Fragment} from 'react';
 import PropTypes from 'prop-types';
 import ClayButton from '../shared/ClayButton.es';
 import ClaySelect from '../shared/ClaySelect.es';
+import ClaySpinner from '../shared/ClaySpinner.es';
+import debounce from 'lodash.debounce';
 import TitleEditor from '../title_editor/TitleEditor.es';
 import ODataQueryBuilder from '../odata_query_builder/ODataQueryBuilder.es';
 import {SUPPORTED_CONJUNCTIONS} from '../../utils/constants.es';
@@ -23,6 +25,7 @@ class SegmentEdit extends Component {
 				}
 			)
 		),
+		formId: PropTypes.string,
 		handleBlur: PropTypes.func,
 		handleChange: PropTypes.func,
 		initialMembersCount: PropTypes.number,
@@ -32,6 +35,7 @@ class SegmentEdit extends Component {
 		portletNamespace: PropTypes.string,
 		previewMembersURL: PropTypes.string,
 		redirect: PropTypes.string,
+		requestMembersCountURL: PropTypes.string,
 		setValues: PropTypes.func,
 		values: PropTypes.object
 	};
@@ -43,7 +47,54 @@ class SegmentEdit extends Component {
 	};
 
 	state = {
-		membersCount: this.props.initialMembersCount || 0
+		membersCount: this.props.initialMembersCount || 0,
+		membersCountLoading: false
+	};
+
+	constructor(props) {
+		super(props);
+
+		this._debouncedFetchMembersCount = debounce(
+			this._fetchMembersCount,
+			500
+		);
+	}
+
+	_fetchMembersCount = () => {
+		const formElement = document.getElementById(this.props.formId);
+
+		const formData = new FormData(formElement);
+
+		fetch(
+			this.props.requestMembersCountURL,
+			{
+				body: formData,
+				method: 'POST'
+			}
+		).then(
+			response => response.json()
+		).then(
+			membersCount => {
+				this.setState(
+					{
+						membersCount,
+						membersCountLoading: false
+					}
+				);
+			}
+		).catch(
+			() => {
+				this.setState({membersCountLoading: false});
+
+				Liferay.Util.openToast(
+					{
+						message: Liferay.Language.get('an-unexpected-error-occurred'),
+						title: Liferay.Language.get('error'),
+						type: 'danger'
+					}
+				);
+			}
+		);
 	};
 
 	_handleSegmentNameBlur = event => {
@@ -54,6 +105,12 @@ class SegmentEdit extends Component {
 		}
 
 		handleBlur(event);
+	};
+
+	_handleQueryChange = () => {
+		this.setState({membersCountLoading: true});
+
+		this._debouncedFetchMembersCount();
 	};
 
 	_renderContributors = () => {
@@ -91,6 +148,7 @@ class SegmentEdit extends Component {
 								initialQuery={contributor.initialQuery}
 								inputId={contributor.inputId}
 								modelLabel={contributor.modelLabel}
+								onChange={this._handleQueryChange}
 								properties={contributor.properties}
 							/>
 						</Fragment>
@@ -110,7 +168,7 @@ class SegmentEdit extends Component {
 			values
 		} = this.props;
 
-		const {membersCount} = this.state;
+		const {membersCount, membersCountLoading} = this.state;
 
 		return (
 			<div className="segment-edit-page-root">
@@ -151,6 +209,11 @@ class SegmentEdit extends Component {
 						</div>
 
 						<div className="form-header-section-right">
+							<ClaySpinner
+								loading={membersCountLoading}
+								size="sm"
+							/>
+
 							<div className="members-count">
 								{sub(
 									Liferay.Language.get('x-members'),

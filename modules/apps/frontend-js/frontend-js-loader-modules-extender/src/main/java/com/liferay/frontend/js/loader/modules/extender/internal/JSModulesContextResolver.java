@@ -10,10 +10,9 @@ import org.osgi.service.component.annotations.Reference;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
 /**
@@ -21,57 +20,34 @@ import java.util.stream.Collectors;
  */
 @Component(
 	immediate = true,
-	service = JSModulesResolver.class
+	service = JSModulesContextResolver.class
 )
-public class JSModulesResolver {
+public class JSModulesContextResolver {
 
-	public List<String> resolve(List<String> modules) {
-		return modules.stream()
-			.map(this::_resolve)
-			.flatMap(Collection::stream)
-			.filter(Objects::nonNull)
-			.distinct()
-			.collect(Collectors.toList());
+	public JSModuleContext resolve(List<String> modules) {
+
+		JSModuleContext context = new JSModuleContext();
+
+		for (String module : modules) {
+			_resolve(module, context);
+		}
+
+		return context;
 	}
 
 	@Reference(unbind = "-")
-	protected void setJSLoaderModulesTracker(JSLoaderModulesTracker jsLoaderModulesTracker) {
+	public void setJsLoaderModulesTracker(JSLoaderModulesTracker jsLoaderModulesTracker) {
 		_jsLoaderModulesTracker = jsLoaderModulesTracker;
 	}
 
 	@Reference(unbind = "-")
-	protected void setJSModulesNameMapper(JSModulesNameMapper jsModulesNameMapper) {
-		_mapper = jsModulesNameMapper;
+	public void setMapper(JSModulesNameMapper mapper) {
+		_mapper = mapper;
 	}
 
 	@Reference(unbind = "-")
-	protected void setNPMRegistry(NPMRegistry npmRegistry) {
+	public void setNpmRegistry(NPMRegistry npmRegistry) {
 		_npmRegistry = npmRegistry;
-	}
-
-	private List<String> _findModule(String moduleName) {
-		ArrayList<JSModuleAdapter> allModules = _getAllModules();
-
-		JSModuleAdapter module = null;
-
-		for (JSModuleAdapter m : allModules) {
-			if (m.getAlias().equals(moduleName)) {
-				module = m;
-				break;
-			}
-		}
-
-		if (module != null) {
-			List<String> result = _processModule(module, new ArrayList<>());
-
-			result.add(0, module.getAlias());
-
-			Collections.reverse(result);
-
-			return result;
-		}
-
-		return null;
 	}
 
 	private ArrayList<JSModuleAdapter> _getAllModules() {
@@ -99,21 +75,17 @@ public class JSModulesResolver {
 		return _mapper.mapModule(module);
 	}
 
-	private List<String> _moduleNotFoundMessage(String moduleName) {
-		return Collections.singletonList(":ERROR: Module " + moduleName + " not found");
-	}
-
-	private List<String> _processModule(JSModuleAdapter adapter, List<String> results) {
+	private void _processModule(JSModuleAdapter adapter, JSModuleContext context) {
 
 		if (adapter == null) {
-			return Collections.emptyList();
+			return;
 		}
-
-		List<String> finalResults = results;
 
 		Collection<String> dependencies = adapter.getDependencies();
 
 		String alias = adapter.getAlias();
+
+		Map<String, String> dependenciesMap = new ConcurrentHashMap<>();
 
 		for (String dependency : dependencies) {
 
@@ -125,38 +97,52 @@ public class JSModulesResolver {
 
 				String mappedModuleName = _mapModuleName(resolvedPath, adapter.getMap());
 
-				if (!finalResults.contains(mappedModuleName)) {
-					finalResults = _processModule(mappedModuleName, results);
+				dependenciesMap.put(dependency, mappedModuleName);
 
-					finalResults.add(0, mappedModuleName);
+				if (!context.getResolvedModules().contains(mappedModuleName)) {
+
+					_processModule(mappedModuleName, context);
+
+					context.addResolvedModule(mappedModuleName);
 				}
 			}
 		}
 
-		return finalResults;
+		context.putModuleDependencyMap(alias, dependenciesMap);
 	}
 
-	private List<String> _processModule(String module, List<String> results) {
+	private void _processModule(String module, JSModuleContext context) {
 		JSModule jsModule = _npmRegistry.getResolvedJSModule(module);
 
-		if (jsModule == null) {
-			System.out.println("NOT FOUND: " + module);
+		if (jsModule != null) {
+			_processModule(new NPMRegistryModuleAdapter(jsModule, _npmRegistry), context);
 		}
-
-		return _processModule(new NPMRegistryModuleAdapter(jsModule, _npmRegistry), results);
 	}
 
-	private List<String> _resolve(String module) {
-
+	private void _resolve(String module, JSModuleContext context) {
 		String mappedModule = _mapModuleName(module);
 
-		List<String> modules = _findModule(mappedModule);
+		ArrayList<JSModuleAdapter> allModules = _getAllModules();
 
-		if (modules != null) {
-			return modules;
+		JSModuleAdapter adapter = null;
+
+		for (JSModuleAdapter m : allModules) {
+			if (m.getAlias().equals(mappedModule)) {
+				adapter = m;
+				break;
+			}
 		}
 
-		return _moduleNotFoundMessage(module);
+		if (adapter != null) {
+			context.putConfig(module, mappedModule);
+
+			_processModule(adapter, context);
+
+			context.addResolvedModule(adapter.getAlias());
+		}
+		else {
+			context.addResolvedModule(":ERROR: Module " + module + " not found");
+		}
 	}
 
 	private JSLoaderModulesTracker _jsLoaderModulesTracker;

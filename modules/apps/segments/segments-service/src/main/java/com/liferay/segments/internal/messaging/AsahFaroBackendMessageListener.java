@@ -15,8 +15,6 @@
 package com.liferay.segments.internal.messaging;
 
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.BaseMessageListener;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.Message;
@@ -75,10 +73,6 @@ public class AsahFaroBackendMessageListener extends BaseMessageListener {
 
 	@Override
 	protected void doReceive(Message message) throws Exception {
-		if (_log.isDebugEnabled()) {
-			_log.debug(message.toString());
-		}
-
 		_asahFaroBackendIndividualSegmentsCheckerUtil.checkIndividualSegments();
 	}
 
@@ -102,9 +96,6 @@ public class AsahFaroBackendMessageListener extends BaseMessageListener {
 
 		_schedulerEngineHelper = schedulerEngineHelper;
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		AsahFaroBackendMessageListener.class);
 
 	private AsahFaroBackendIndividualSegmentsCheckerUtil
 		_asahFaroBackendIndividualSegmentsCheckerUtil;

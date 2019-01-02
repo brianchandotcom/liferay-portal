@@ -79,6 +79,9 @@ public class PortletConfigurationCSSPortletDisplayContext {
 		_portletResource = portletResource;
 		_portletSetup = portletSetup;
 		_portletSetupJSONObject = portletSetupJSONObject;
+
+		_resolvedModuleName = (String)_renderRequest.getAttribute(
+			PortletConfigurationCSSPortletKeys.RESOLVED_MODULE_NAME);
 	}
 
 	public String getBackgroundColor() {
@@ -212,11 +215,6 @@ public class PortletConfigurationCSSPortletDisplayContext {
 		return marginPositionJSONObject.getString(property);
 	}
 
-	public String getModuleName() {
-		return (String)_renderRequest.getAttribute(
-			PortletConfigurationCSSPortletKeys.RESOLVED_MODULE_NAME);
-	}
-
 	public String getPaddingProperty(String position, String property) {
 		JSONObject spacingDataJSONObject =
 			_portletSetupJSONObject.getJSONObject("spacingData");
@@ -247,6 +245,10 @@ public class PortletConfigurationCSSPortletDisplayContext {
 
 	public String getPortletResource() {
 		return _portletResource;
+	}
+
+	public String getResolvedModuleName() {
+		return _resolvedModuleName;
 	}
 
 	public String getTextDataProperty(String property) {
@@ -352,6 +354,7 @@ public class PortletConfigurationCSSPortletDisplayContext {
 	private final PortletPreferences _portletSetup;
 	private final JSONObject _portletSetupJSONObject;
 	private final RenderRequest _renderRequest;
+	private final String _resolvedModuleName;
 	private Boolean _useCustomTitle;
 
 }

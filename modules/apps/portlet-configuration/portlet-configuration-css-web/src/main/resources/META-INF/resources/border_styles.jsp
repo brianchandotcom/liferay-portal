@@ -31,7 +31,7 @@
 
 			<soy:component-renderer
 				context="<%= contextUseForAllWidth %>"
-				module='<%= portletConfigurationCSSPortletDisplayContext.getModuleName() + "/js/ToggleDisableInputs.es" %>'
+				module='<%= portletConfigurationCSSPortletDisplayContext.getResolvedModuleName() + "/js/ToggleDisableInputs.es" %>'
 				templateNamespace="com.liferay.portlet.configuration.css.web.ToggleDisableInputs.render"
 			/>
 
@@ -88,7 +88,7 @@
 
 			<soy:component-renderer
 				context="<%= contextUseForAllStyle %>"
-				module='<%= portletConfigurationCSSPortletDisplayContext.getModuleName() + "/js/ToggleDisableInputs.es" %>'
+				module='<%= portletConfigurationCSSPortletDisplayContext.getResolvedModuleName() + "/js/ToggleDisableInputs.es" %>'
 				templateNamespace="com.liferay.portlet.configuration.css.web.ToggleDisableInputs.render"
 			/>
 
@@ -156,7 +156,7 @@
 
 			<soy:component-renderer
 				context="<%= contextUseForAllColor %>"
-				module='<%= portletConfigurationCSSPortletDisplayContext.getModuleName() + "/js/ToggleDisableInputs.es" %>'
+				module='<%= portletConfigurationCSSPortletDisplayContext.getResolvedModuleName() + "/js/ToggleDisableInputs.es" %>'
 				templateNamespace="com.liferay.portlet.configuration.css.web.ToggleDisableInputs.render"
 			/>
 
@@ -172,7 +172,7 @@
 
 			<soy:component-renderer
 				context="<%= contextBorderTop %>"
-				module='<%= portletConfigurationCSSPortletDisplayContext.getModuleName() + "/js/ColorPickerInput.es" %>'
+				module='<%= portletConfigurationCSSPortletDisplayContext.getResolvedModuleName() + "/js/ColorPickerInput.es" %>'
 				templateNamespace="com.liferay.portlet.configuration.css.web.ColorPickerInput.render"
 			/>
 
@@ -190,7 +190,7 @@
 
 			<soy:component-renderer
 				context="<%= contextBorderRight %>"
-				module='<%= portletConfigurationCSSPortletDisplayContext.getModuleName() + "/js/ColorPickerInput.es" %>'
+				module='<%= portletConfigurationCSSPortletDisplayContext.getResolvedModuleName() + "/js/ColorPickerInput.es" %>'
 				templateNamespace="com.liferay.portlet.configuration.css.web.ColorPickerInput.render"
 			/>
 
@@ -208,7 +208,7 @@
 
 			<soy:component-renderer
 				context="<%= contextBorderBottom %>"
-				module='<%= portletConfigurationCSSPortletDisplayContext.getModuleName() + "/js/ColorPickerInput.es" %>'
+				module='<%= portletConfigurationCSSPortletDisplayContext.getResolvedModuleName() + "/js/ColorPickerInput.es" %>'
 				templateNamespace="com.liferay.portlet.configuration.css.web.ColorPickerInput.render"
 			/>
 
@@ -226,7 +226,7 @@
 
 			<soy:component-renderer
 				context="<%= contextBorderLeft %>"
-				module='<%= portletConfigurationCSSPortletDisplayContext.getModuleName() + "/js/ColorPickerInput.es" %>'
+				module='<%= portletConfigurationCSSPortletDisplayContext.getResolvedModuleName() + "/js/ColorPickerInput.es" %>'
 				templateNamespace="com.liferay.portlet.configuration.css.web.ColorPickerInput.render"
 			/>
 		</aui:fieldset>

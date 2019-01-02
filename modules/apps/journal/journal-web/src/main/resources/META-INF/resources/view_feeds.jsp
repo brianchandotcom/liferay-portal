@@ -164,7 +164,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "feeds"));
 		if (confirm('<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-the-selected-feeds") %>')) {
 			submitForm(document.<portlet:namespace />fm);
 		}
-	}
+	};
 
 	var ACTIONS = {
 		'deleteFeeds': deleteFeeds

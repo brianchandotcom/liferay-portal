@@ -255,7 +255,7 @@ JournalArticle article = journalDisplayContext.getArticle();
 
 						submitForm(form, '<portlet:actionURL name="deleteArticles"><portlet:param name="redirect" value="<%= currentURL %>" /></portlet:actionURL>');
 					}
-				}
+				};
 			</c:if>
 
 			<c:if test="<%= JournalArticlePermission.contains(permissionChecker, article, ActionKeys.EXPIRE) %>">
@@ -265,7 +265,7 @@ JournalArticle article = journalDisplayContext.getArticle();
 
 						submitForm(form, '<portlet:actionURL name="expireArticles"><portlet:param name="redirect" value="<%= currentURL %>" /></portlet:actionURL>');
 					}
-				}
+				};
 			</c:if>
 
 			Liferay.componentReady('journalHistoryManagementToolbar').then(

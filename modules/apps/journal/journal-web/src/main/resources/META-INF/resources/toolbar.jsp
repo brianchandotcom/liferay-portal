@@ -34,7 +34,7 @@ JournalManagementToolbarDisplayContext journaManagementToolbarlDisplayContext = 
 				}
 			);
 		}
-	}
+	};
 
 	var expireEntries = function() {
 		Liferay.fire(
@@ -78,7 +78,7 @@ JournalManagementToolbarDisplayContext journaManagementToolbarlDisplayContext = 
 				location.href = uri;
 			}
 		);
-	}
+	};
 
 	var openViewMoreDDMStructuresSelector = function() {
 		Liferay.Util.openWindow(
@@ -99,7 +99,7 @@ JournalManagementToolbarDisplayContext journaManagementToolbarlDisplayContext = 
 				uri: '<%= viewMoreURL %>'
 			}
 		);
-	}
+	};
 
 	var ACTIONS = {
 		'deleteEntries': deleteEntries,

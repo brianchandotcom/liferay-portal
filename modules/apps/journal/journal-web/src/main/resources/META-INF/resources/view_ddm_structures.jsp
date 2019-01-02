@@ -125,7 +125,7 @@ JournalDDMStructuresDisplayContext journalDDMStructuresDisplayContext = new Jour
 		if (confirm('<liferay-ui:message key="are-you-sure-you-want-to-delete-this" />')) {
 			submitForm(document.querySelector('#<portlet:namespace />fm'));
 		}
-	}
+	};
 
 	var ACTIONS = {
 		'deleteDDMStructures': deleteDDMStructures

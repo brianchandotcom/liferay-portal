@@ -122,8 +122,7 @@ public class AssetCategoriesSelectorPortlet extends MVCPortlet {
 
 		renderRequest.setAttribute(
 			AssetCategoriesSelectorPortletKeys.RESOLVED_MODULE_NAME,
-				_npmResolver.resolveModuleName(
-					"asset-categories-selector-web"));
+			_npmResolver.resolveModuleName("asset-categories-selector-web"));
 
 		super.doDispatch(renderRequest, renderResponse);
 	}

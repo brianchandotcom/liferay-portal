@@ -55,6 +55,7 @@ public class AssetCategoriesSelectorDisplayContext {
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
 		_request = request;
+
 		_resolvedModuleName = (String)_request.getAttribute(
 			AssetCategoriesSelectorPortletKeys.RESOLVED_MODULE_NAME);
 	}

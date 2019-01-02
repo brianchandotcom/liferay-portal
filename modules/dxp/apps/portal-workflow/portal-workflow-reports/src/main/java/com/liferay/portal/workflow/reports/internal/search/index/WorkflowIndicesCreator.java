@@ -12,7 +12,7 @@
  *
  */
 
-package com.liferay.portal.workflow.reports.internal.index;
+package com.liferay.portal.workflow.reports.internal.search.index;
 
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -72,7 +72,7 @@ public class WorkflowIndicesCreator {
 		ModuleServiceLifecycle moduleServiceLifecycle) {
 	}
 
-	@Reference(target = "(search.engine.impl=Elasticsearch)")
+	@Reference
 	private SearchEngineAdapter _searchEngineAdapter;
 
 }

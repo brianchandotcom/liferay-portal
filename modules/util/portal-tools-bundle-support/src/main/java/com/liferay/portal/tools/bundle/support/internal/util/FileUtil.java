@@ -368,7 +368,7 @@ public class FileUtil {
 		throws IOException {
 
 		try (SevenZFile sevenZFile = new SevenZFile(sevenZipPath.toFile())) {
-			SevenZArchiveEntry sevenZArchiveEntry;
+			SevenZArchiveEntry sevenZArchiveEntry = null;
 
 			while ((sevenZArchiveEntry = sevenZFile.getNextEntry()) != null) {
 				if (sevenZArchiveEntry.isDirectory()) {

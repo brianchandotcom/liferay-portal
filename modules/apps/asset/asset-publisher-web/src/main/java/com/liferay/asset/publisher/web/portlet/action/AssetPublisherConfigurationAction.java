@@ -247,37 +247,7 @@ public class AssetPublisherConfigurationAction
 				addScope(actionRequest, preferences);
 			}
 			else if (cmd.equals("add-selection")) {
-				long[] assetEntryIds = ParamUtil.getLongValues(
-					actionRequest, "assetEntryIds");
-				int assetEntryOrder = ParamUtil.getInteger(
-					actionRequest, "assetEntryOrder");
-				String assetEntryType = ParamUtil.getString(
-					actionRequest, "assetEntryType");
-
-				long userId = portal.getUserId(actionRequest);
-				long groupId = portal.getScopeGroupId(actionRequest);
-				long classNameId = portal.getClassNameId(Layout.class);
-
-				ThemeDisplay themeDisplay =
-					(ThemeDisplay)actionRequest.getAttribute(
-						WebKeys.THEME_DISPLAY);
-
-				PortletDisplay portletDisplay =
-					themeDisplay.getPortletDisplay();
-
-				ServiceContext serviceContext =
-					ServiceContextFactory.getInstance(actionRequest);
-
-				for (long assetEntryId : assetEntryIds) {
-					assetPublisherWebUtil.addSelection(
-						preferences, assetEntryId, assetEntryOrder,
-						assetEntryType);
-
-					assetEntryUsageLocalService.addAssetEntryUsage(
-						userId, groupId, assetEntryId, classNameId,
-						themeDisplay.getPlid(),
-						portletDisplay.getPortletResource(), serviceContext);
-				}
+				addSelection(actionRequest, preferences);
 			}
 			else if (cmd.equals("move-selection-down")) {
 				moveSelectionDown(actionRequest, preferences);
@@ -369,6 +339,40 @@ public class AssetPublisherConfigurationAction
 		}
 
 		preferences.setValues("scopeIds", scopeIds);
+	}
+
+	protected void addSelection(
+			ActionRequest actionRequest, PortletPreferences preferences)
+		throws Exception {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		long[] assetEntryIds = ParamUtil.getLongValues(
+			actionRequest, "assetEntryIds");
+		int assetEntryOrder = ParamUtil.getInteger(
+			actionRequest, "assetEntryOrder");
+		String assetEntryType = ParamUtil.getString(
+			actionRequest, "assetEntryType");
+
+		long userId = portal.getUserId(actionRequest);
+		long groupId = portal.getScopeGroupId(actionRequest);
+		long classNameId = portal.getClassNameId(Layout.class);
+
+		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+
+		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			actionRequest);
+
+		for (long assetEntryId : assetEntryIds) {
+			assetPublisherWebUtil.addSelection(
+				preferences, assetEntryId, assetEntryOrder, assetEntryType);
+
+			assetEntryUsageLocalService.addAssetEntryUsage(
+				userId, groupId, assetEntryId, classNameId,
+				themeDisplay.getPlid(), portletDisplay.getPortletResource(),
+				serviceContext);
+		}
 	}
 
 	protected void checkPermission(ActionRequest actionRequest, String scopeId)

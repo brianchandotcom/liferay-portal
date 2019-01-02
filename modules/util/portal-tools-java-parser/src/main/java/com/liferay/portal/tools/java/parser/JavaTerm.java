@@ -23,9 +23,16 @@ public interface JavaTerm {
 
 	public abstract Position getStartPosition();
 
+	public abstract String getSuffix();
+
 	public abstract void setEndPosition(Position endPosition);
 
 	public abstract void setStartPosition(Position startPosition);
+
+	public abstract void setSuffix(String suffix);
+
+	public abstract String toString(
+		String indent, String prefix, int maxLineLength);
 
 	public abstract String toString(
 		String indent, String prefix, String suffix, int maxLineLength);

@@ -97,12 +97,6 @@ public class DetailASTUtil {
 			return objBlockDetailAST.getFirstChild();
 		}
 
-		DetailAST semiDetailAST = detailAST.findFirstToken(TokenTypes.SEMI);
-
-		if (semiDetailAST != null) {
-			return semiDetailAST;
-		}
-
 		DetailAST emptyStatDetailAST = detailAST.findFirstToken(
 			TokenTypes.EMPTY_STAT);
 
@@ -110,13 +104,33 @@ public class DetailASTUtil {
 			return emptyStatDetailAST;
 		}
 
+		if ((detailAST.getType() == TokenTypes.LITERAL_IF) ||
+			(detailAST.getType() == TokenTypes.LITERAL_WHILE)) {
+
+			return null;
+		}
+
 		if (detailAST.getType() == TokenTypes.LITERAL_ELSE) {
-			return getClosingDetailAST(detailAST.getFirstChild());
+			DetailAST firstChildDetailAST = detailAST.getFirstChild();
+
+			if (firstChildDetailAST.getType() == TokenTypes.LITERAL_IF) {
+				return getClosingDetailAST(firstChildDetailAST);
+			}
+
+			return null;
+		}
+
+		DetailAST semiDetailAST = detailAST.findFirstToken(TokenTypes.SEMI);
+
+		if (semiDetailAST != null) {
+			return semiDetailAST;
 		}
 
 		DetailAST nextSiblingDetailAST = detailAST.getNextSibling();
 
-		if (nextSiblingDetailAST.getType() == TokenTypes.SEMI) {
+		if ((nextSiblingDetailAST != null) &&
+			(nextSiblingDetailAST.getType() == TokenTypes.SEMI)) {
+
 			return nextSiblingDetailAST;
 		}
 

@@ -1,6 +1,8 @@
 definition {
 
 	macro smoke {
+		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+		
 		ProductMenu.gotoSite(site = "${siteName}");
 
 		ProductMenu.gotoPortlet(

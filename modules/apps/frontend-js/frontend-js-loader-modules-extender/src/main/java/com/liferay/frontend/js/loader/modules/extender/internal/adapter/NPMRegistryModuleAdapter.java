@@ -8,6 +8,7 @@ import com.liferay.frontend.js.loader.modules.extender.npm.NPMRegistry;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author Rodolfo Roza Miranda
@@ -33,7 +34,7 @@ public class NPMRegistryModuleAdapter implements JSModuleAdapter {
 	public Map<String, String> getMap() {
 		JSPackage jsPackage = _module.getJSPackage();
 
-		HashMap<String, String> contextMap = new HashMap<>();
+		Map<String, String> contextMap = new ConcurrentHashMap<>();
 
 		for (String dependencyPackageName : _module.getDependencyPackageNames()) {
 

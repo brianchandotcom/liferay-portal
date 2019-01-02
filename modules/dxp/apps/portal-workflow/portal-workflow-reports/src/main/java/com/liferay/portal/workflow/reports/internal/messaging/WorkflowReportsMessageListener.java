@@ -73,7 +73,6 @@ public class WorkflowReportsMessageListener extends BaseMessageListener {
 	}
 
 	private static final List<WorkflowReportsMessageIndexer>
-		_workflowReportsMessageIndexers =
-			new ArrayList<>();
+		_workflowReportsMessageIndexers = new ArrayList<>();
 
 }

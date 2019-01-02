@@ -21,7 +21,6 @@ import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
 import com.liferay.portal.search.engine.adapter.document.IndexDocumentRequest;
 import com.liferay.portal.workflow.reports.internal.constants.WorkflowIndexConstants;
 import com.liferay.portal.workflow.reports.internal.constants.WorkflowIndexerFieldNames;
-import com.liferay.portal.workflow.reports.internal.search.index.helper.WorkflowReportsMessageIndexerHelper;
 import com.liferay.portal.workflow.reports.messaging.WorkflowReportsEvent;
 import com.liferay.portal.workflow.reports.messaging.WorkflowReportsMessage;
 

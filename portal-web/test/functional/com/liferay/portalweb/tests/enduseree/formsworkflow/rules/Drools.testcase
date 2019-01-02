@@ -81,9 +81,9 @@ definition {
 
 		Portlet.addPG(portletName = "Sample Drools");
 
-		WebContent.viewPGViaWCD(
-			webContentContent = "Web Content Content",
-			webContentTitle = "Web Content Title"
+		Drools.viewContentPG(
+			droolsContent = "Web Content Title",
+			welcomeMessage = "Welcome Test Test!"
 		);
 	}
 }

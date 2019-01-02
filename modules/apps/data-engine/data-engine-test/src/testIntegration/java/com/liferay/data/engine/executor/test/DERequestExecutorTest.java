@@ -427,6 +427,76 @@ public class DERequestExecutorTest {
 	}
 
 	@Test
+	public void testGetCheckingAuditFields() throws Exception {
+		Map<String, String> field1Labels = new HashMap() {
+			{
+				put("en_US", "Field 1");
+			}
+		};
+
+		DEDataDefinitionField deDataDefinitionField1 =
+			new DEDataDefinitionField("field1", "string");
+
+		deDataDefinitionField1.addLabels(field1Labels);
+
+		DEDataDefinition expectedDEDataDefinition = new DEDataDefinition(
+			Arrays.asList(deDataDefinitionField1));
+
+		expectedDEDataDefinition.addName(LocaleUtil.US, "Definition 2");
+		expectedDEDataDefinition.setStorageType("json");
+
+		DEDataDefinitionSaveRequest deDataDefinitionSaveRequest =
+			DEDataDefinitionRequestBuilder.saveBuilder(
+				expectedDEDataDefinition
+			).onBehalfOf(
+				_user.getUserId()
+			).inGroup(
+				_group.getGroupId()
+			).build();
+
+		try {
+			ServiceContext serviceContext = createServiceContext(
+				_group, _user, createModelPermissions());
+
+			ServiceContextThreadLocal.pushServiceContext(serviceContext);
+
+			DEDataDefinitionSaveResponse deDataDefinitionSaveResponse =
+				_deSaveRequestExecutor.execute(deDataDefinitionSaveRequest);
+
+			long deDataDefinitionId =
+				deDataDefinitionSaveResponse.getDEDataDefinitionId();
+
+			DEDataDefinitionGetRequest deDataDefinitionGetRequest =
+				DEDataDefinitionRequestBuilder.getBuilder(
+				).byId(
+					deDataDefinitionId
+				).build();
+
+			DEDataDefinitionGetResponse deDataDefinitionGetResponse =
+				_deGetRequestExecutor.execute(deDataDefinitionGetRequest);
+
+			DEDataDefinition deDataDefinitionResponse =
+				deDataDefinitionGetResponse.getDeDataDefinition();
+
+			Assert.assertNotNull(deDataDefinitionResponse.getCreateDate());
+			Assert.assertNotNull(deDataDefinitionResponse.getModifiedDate());
+			Assert.assertEquals(
+				_user.getUserId(), deDataDefinitionResponse.getUserId());
+
+			DEDataDefinitionDeleteRequest deDataDefinitionDeleteRequest =
+				DEDataDefinitionRequestBuilder.deleteBuilder(
+				).byId(
+					deDataDefinitionId
+				).build();
+
+			_deDeleteRequestExecutor.execute(deDataDefinitionDeleteRequest);
+		}
+		finally {
+			ServiceContextThreadLocal.popServiceContext();
+		}
+	}
+
+	@Test
 	public void testInsert() throws Exception {
 		Map<String, String> expectedNameLabels = new HashMap() {
 			{

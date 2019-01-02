@@ -80,9 +80,7 @@ public abstract class BaseFormApioTestBundleActivator
 			_prepareTest();
 		}
 		catch (Exception e) {
-			_cleanUp();
-
-			throw new RuntimeException(e);
+			_log.error("Error found during startup ", e);
 		}
 	}
 

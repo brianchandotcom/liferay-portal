@@ -287,13 +287,15 @@ public class JournalContentPortletLayoutListener
 			_portal.getClassNameId(JournalArticle.class),
 			article.getResourcePrimKey());
 
-		if (assetEntry != null) {
-			_assetEntryUsageLocalService.addAssetEntryUsage(
-				PrincipalThreadLocal.getUserId(), layout.getGroupId(),
-				assetEntry.getEntryId(), _portal.getClassNameId(Layout.class),
-				layout.getPlid(), portletId,
-				ServiceContextThreadLocal.getServiceContext());
+		if (assetEntry == null) {
+			return;
 		}
+
+		_assetEntryUsageLocalService.addAssetEntryUsage(
+			PrincipalThreadLocal.getUserId(), layout.getGroupId(),
+			assetEntry.getEntryId(), _portal.getClassNameId(Layout.class),
+			layout.getPlid(), portletId,
+			ServiceContextThreadLocal.getServiceContext());
 	}
 
 	private void _deleteAssetEntryUsages(long plid, String portletId) {
@@ -322,14 +324,15 @@ public class JournalContentPortletLayoutListener
 				layout, portletId, StringPool.BLANK);
 		}
 
-		if (portletPreferences != null) {
-			return _journalArticleLocalService.fetchArticle(
-				GetterUtil.getLong(
-					portletPreferences.getValue("groupId", null)),
-				portletPreferences.getValue("articleId", null));
+		if (portletPreferences == null) {
+			return null;
 		}
 
-		return null;
+		long groupId = GetterUtil.getLong(
+			portletPreferences.getValue("groupId", null));
+		String articleId = portletPreferences.getValue("articleId", null);
+
+		return _journalArticleLocalService.fetchArticle(groupId, articleId);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

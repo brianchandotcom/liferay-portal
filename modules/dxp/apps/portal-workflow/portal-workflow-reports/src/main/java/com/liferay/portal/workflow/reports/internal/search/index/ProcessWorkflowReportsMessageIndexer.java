@@ -33,12 +33,12 @@ import org.osgi.service.component.annotations.Reference;
  * @author Rafael Praxedes
  */
 @Component(immediate = true, service = WorkflowReportsMessageIndexer.class)
-public class ProcessWorkflowReportsMessageIndexer
-	implements WorkflowReportsMessageIndexer {
+public class ProcessWorkflowReportsMessageIndexer 
+	extends BaseWorkflowReportsMessageIndexer {
 
 	@Override
 	public void index(WorkflowReportsMessage workflowReportsMessage) {
-		if (!_workflowReportsMessageIndexerHelper.matchAnyEvent(
+		if (!matchAnyEvent(
 				workflowReportsMessage.getEventId(),
 				WorkflowReportsEvent.PROCESS_CREATE.name(),
 				WorkflowReportsEvent.PROCESS_REMOVE.name(),
@@ -49,14 +49,14 @@ public class ProcessWorkflowReportsMessageIndexer
 
 		Document document = new DocumentImpl();
 
-		_workflowReportsMessageIndexerHelper.addField(
+		addField(
 			document, WorkflowIndexerFieldNames.ACTIVE,
 			workflowReportsMessage.getProperty(
 				WorkflowIndexerFieldNames.ACTIVE));
-		_workflowReportsMessageIndexerHelper.addField(
+		addField(
 			document, WorkflowIndexerFieldNames.COMPANY_ID,
 			workflowReportsMessage.getCompanyId());
-		_workflowReportsMessageIndexerHelper.addField(
+		addField(
 			document,
 			Field.getSortableFieldName(WorkflowIndexerFieldNames.DATE),
 			workflowReportsMessage.getProperty(WorkflowIndexerFieldNames.DATE));
@@ -64,32 +64,32 @@ public class ProcessWorkflowReportsMessageIndexer
 		Boolean deleted = workflowReportsMessage.getProperty(
 			WorkflowIndexerFieldNames.DELETED);
 
-		_workflowReportsMessageIndexerHelper.addField(
+		addField(
 			document, WorkflowIndexerFieldNames.DELETED,
 			GetterUtil.getBoolean(deleted));
 
-		_workflowReportsMessageIndexerHelper.addField(
+		addField(
 			document, WorkflowIndexerFieldNames.DESCRIPTION,
 			workflowReportsMessage.getProperty(
 				WorkflowIndexerFieldNames.DESCRIPTION));
-		_workflowReportsMessageIndexerHelper.addField(
+		addField(
 			document, WorkflowIndexerFieldNames.NAME,
 			workflowReportsMessage.getProperty(WorkflowIndexerFieldNames.NAME));
-		_workflowReportsMessageIndexerHelper.addField(
+		addField(
 			document, WorkflowIndexerFieldNames.PROCESS_ID,
 			workflowReportsMessage.getProperty(
 				WorkflowIndexerFieldNames.PROCESS_ID));
-		_workflowReportsMessageIndexerHelper.addLocalizedField(
+		addLocalizedField(
 			document, WorkflowIndexerFieldNames.TITLE,
 			workflowReportsMessage.getProperty(
 				WorkflowIndexerFieldNames.TITLE));
-		_workflowReportsMessageIndexerHelper.addField(
+		addField(
 			document, WorkflowIndexerFieldNames.USER_ID,
 			workflowReportsMessage.getUserId());
 
 		document.addUID(
 			"Process",
-			_workflowReportsMessageIndexerHelper.digest(
+			digest(
 				workflowReportsMessage.getCompanyId(),
 				workflowReportsMessage.getProperty(
 					WorkflowIndexerFieldNames.PROCESS_ID)));
@@ -105,9 +105,5 @@ public class ProcessWorkflowReportsMessageIndexer
 
 	@Reference
 	private SearchEngineAdapter _searchEngineAdapter;
-
-	private final WorkflowReportsMessageIndexerHelper
-		_workflowReportsMessageIndexerHelper =
-			new WorkflowReportsMessageIndexerHelper();
 
 }

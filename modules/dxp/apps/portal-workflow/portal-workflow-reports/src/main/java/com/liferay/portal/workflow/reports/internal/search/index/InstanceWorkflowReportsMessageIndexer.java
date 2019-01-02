@@ -33,11 +33,11 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(immediate = true, service = WorkflowReportsMessageIndexer.class)
 public class InstanceWorkflowReportsMessageIndexer
-	implements WorkflowReportsMessageIndexer {
+	extends BaseWorkflowReportsMessageIndexer {
 
 	@Override
 	public void index(WorkflowReportsMessage workflowReportsMessage) {
-		if (!_workflowReportsMessageIndexerHelper.matchAnyEvent(
+		if (!matchAnyEvent(
 				workflowReportsMessage.getEventId(),
 				WorkflowReportsEvent.INSTANCE_COMPLETE.name(),
 				WorkflowReportsEvent.INSTANCE_CREATE.name(),
@@ -49,14 +49,14 @@ public class InstanceWorkflowReportsMessageIndexer
 
 		Document document = new DocumentImpl();
 
-		_workflowReportsMessageIndexerHelper.addField(
+		addField(
 			document, WorkflowIndexerFieldNames.CLASS_NAME,
 			workflowReportsMessage.getProperty(
 				WorkflowIndexerFieldNames.CLASS_NAME));
-		_workflowReportsMessageIndexerHelper.addField(
+		addField(
 			document, WorkflowIndexerFieldNames.COMPANY_ID,
 			workflowReportsMessage.getCompanyId());
-		_workflowReportsMessageIndexerHelper.addField(
+		addField(
 			document, WorkflowIndexerFieldNames.CLASS_PK,
 			workflowReportsMessage.getProperty(
 				WorkflowIndexerFieldNames.CLASS_PK));
@@ -64,40 +64,40 @@ public class InstanceWorkflowReportsMessageIndexer
 		Boolean completed = workflowReportsMessage.getProperty(
 			WorkflowIndexerFieldNames.COMPLETED);
 
-		_workflowReportsMessageIndexerHelper.addField(
+		addField(
 			document, WorkflowIndexerFieldNames.COMPLETED,
 			GetterUtil.getBoolean(completed));
 
-		_workflowReportsMessageIndexerHelper.addField(
+		addField(
 			document, WorkflowIndexerFieldNames.DATE,
 			workflowReportsMessage.getProperty(WorkflowIndexerFieldNames.DATE));
 
 		Boolean deleted = workflowReportsMessage.getProperty(
 			WorkflowIndexerFieldNames.DELETED);
 
-		_workflowReportsMessageIndexerHelper.addField(
+		addField(
 			document, WorkflowIndexerFieldNames.DELETED,
 			GetterUtil.getBoolean(deleted));
 
-		_workflowReportsMessageIndexerHelper.addField(
+		addField(
 			document, WorkflowIndexerFieldNames.DURATION,
 			workflowReportsMessage.getProperty(
 				WorkflowIndexerFieldNames.DURATION));
-		_workflowReportsMessageIndexerHelper.addField(
+		addField(
 			document, WorkflowIndexerFieldNames.INSTANCE_ID,
 			workflowReportsMessage.getProperty(
 				WorkflowIndexerFieldNames.INSTANCE_ID));
-		_workflowReportsMessageIndexerHelper.addField(
+		addField(
 			document, WorkflowIndexerFieldNames.PROCESS_ID,
 			workflowReportsMessage.getProperty(
 				WorkflowIndexerFieldNames.PROCESS_ID));
-		_workflowReportsMessageIndexerHelper.addField(
+		addField(
 			document, WorkflowIndexerFieldNames.USER_ID,
 			workflowReportsMessage.getUserId());
 
 		document.addUID(
 			"Instance",
-			_workflowReportsMessageIndexerHelper.digest(
+			digest(
 				workflowReportsMessage.getCompanyId(),
 				workflowReportsMessage.getProperty(
 					WorkflowIndexerFieldNames.INSTANCE_ID),
@@ -115,9 +115,5 @@ public class InstanceWorkflowReportsMessageIndexer
 
 	@Reference
 	private SearchEngineAdapter _searchEngineAdapter;
-
-	private final WorkflowReportsMessageIndexerHelper
-		_workflowReportsMessageIndexerHelper =
-			new WorkflowReportsMessageIndexerHelper();
 
 }

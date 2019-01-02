@@ -12,7 +12,7 @@
  *
  */
 
-package com.liferay.portal.workflow.reports.internal.search.index.helper;
+package com.liferay.portal.workflow.reports.internal.search.index;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -33,9 +33,10 @@ import org.apache.commons.codec.digest.DigestUtils;
 /**
  * @author Rafael Praxedes
  */
-public class WorkflowReportsMessageIndexerHelper {
+public abstract class BaseWorkflowReportsMessageIndexer
+	implements WorkflowReportsMessageIndexer {
 
-	public void addField(Document document, String name, Object value) {
+	protected void addField(Document document, String name, Object value) {
 		if (value instanceof Map<?, ?>) {
 			Map<?, ?> valueMap = (Map<?, ?>)value;
 
@@ -52,13 +53,13 @@ public class WorkflowReportsMessageIndexerHelper {
 		}
 	}
 
-	public void addLocalizedField(
+	protected void addLocalizedField(
 		Document document, String name, Map<Locale, String> localizedValue) {
 
 		document.add(new Field(name, localizedValue));
 	}
 
-	public String digest(Serializable... parts) {
+	protected String digest(Serializable... parts) {
 		StringBuilder sb = new StringBuilder();
 
 		for (Serializable part : parts) {
@@ -68,7 +69,7 @@ public class WorkflowReportsMessageIndexerHelper {
 		return DigestUtils.sha256Hex(sb.toString());
 	}
 
-	public boolean matchAnyEvent(
+	protected boolean matchAnyEvent(
 		String value, String... workflowReportsEventNames) {
 
 		if (ArrayUtil.isEmpty(workflowReportsEventNames)) {

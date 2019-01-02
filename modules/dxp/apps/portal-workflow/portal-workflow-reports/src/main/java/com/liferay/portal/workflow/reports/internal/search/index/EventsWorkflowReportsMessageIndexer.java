@@ -34,7 +34,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(immediate = true, service = WorkflowReportsMessageIndexer.class)
 public class EventsWorkflowReportsMessageIndexer
-	implements WorkflowReportsMessageIndexer {
+	extends BaseWorkflowReportsMessageIndexer {
 
 	@Override
 	public void index(WorkflowReportsMessage workflowReportsMessage) {
@@ -42,17 +42,15 @@ public class EventsWorkflowReportsMessageIndexer
 
 		Map<String, ?> properties = workflowReportsMessage.getProperties();
 
-		properties.forEach(
-			(key, value) -> _workflowReportsMessageIndexerHelper.addField(
-				document, key, value));
+		properties.forEach((key, value) -> addField(document, key, value));
 
-		_workflowReportsMessageIndexerHelper.addField(
+		addField(
 			document, WorkflowIndexerFieldNames.COMPANY_ID,
 			workflowReportsMessage.getCompanyId());
-		_workflowReportsMessageIndexerHelper.addField(
+		addField(
 			document, WorkflowIndexerFieldNames.EVENT_ID,
 			workflowReportsMessage.getEventId());
-		_workflowReportsMessageIndexerHelper.addField(
+		addField(
 			document, WorkflowIndexerFieldNames.USER_ID,
 			workflowReportsMessage.getUserId());
 
@@ -71,9 +69,5 @@ public class EventsWorkflowReportsMessageIndexer
 
 	@Reference
 	private SearchEngineAdapter _searchEngineAdapter;
-
-	private final WorkflowReportsMessageIndexerHelper
-		_workflowReportsMessageIndexerHelper =
-			new WorkflowReportsMessageIndexerHelper();
 
 }

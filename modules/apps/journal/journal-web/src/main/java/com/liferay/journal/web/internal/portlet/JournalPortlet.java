@@ -477,7 +477,8 @@ public class JournalPortlet extends MVCPortlet {
 
 		renderRequest.setAttribute(TrashWebKeys.TRASH_HELPER, _trashHelper);
 
-		renderRequest.setAttribute(JournalWebKeys.RESOLVED_MODULE_NAME,
+		renderRequest.setAttribute(
+			JournalWebKeys.RESOLVED_MODULE_NAME,
 			_npmResolver.resolveModuleName("journal-web"));
 
 		String path = getPath(renderRequest, renderResponse);
@@ -1564,9 +1565,6 @@ public class JournalPortlet extends MVCPortlet {
 	private DDMTemplateHelper _ddmTemplateHelper;
 
 	@Reference
-	private NPMResolver _npmResolver;
-
-	@Reference
 	private Http _http;
 
 	@Reference
@@ -1604,6 +1602,9 @@ public class JournalPortlet extends MVCPortlet {
 	@Reference
 	private LayoutPageTemplateEntryLocalService
 		_layoutPageTemplateEntryLocalService;
+
+	@Reference
+	private NPMResolver _npmResolver;
 
 	@Reference
 	private Portal _portal;

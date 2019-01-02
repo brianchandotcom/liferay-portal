@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import java.io.Serializable;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -100,6 +101,10 @@ public final class DEDataDefinition implements ClassedModel, Serializable {
 		return false;
 	}
 
+	public Date getCreateDate() {
+		return _createDate;
+	}
+
 	public List<DEDataDefinitionField> getDEDataDefinitionFields() {
 		return _deDataDefinitionFields;
 	}
@@ -127,6 +132,10 @@ public final class DEDataDefinition implements ClassedModel, Serializable {
 		return DEDataDefinition.class.getName();
 	}
 
+	public Date getModifiedDate() {
+		return _modifiedDate;
+	}
+
 	public Map<String, String> getName() {
 		return _name;
 	}
@@ -140,6 +149,10 @@ public final class DEDataDefinition implements ClassedModel, Serializable {
 		return _storageType;
 	}
 
+	public long getUserId() {
+		return _userId;
+	}
+
 	@Override
 	public int hashCode() {
 		int hash = HashUtil.hash(0, _deDataDefinitionFields.hashCode());
@@ -149,6 +162,10 @@ public final class DEDataDefinition implements ClassedModel, Serializable {
 		hash = HashUtil.hash(hash, _name.hashCode());
 
 		return HashUtil.hash(hash, _storageType.hashCode());
+	}
+
+	public void setCreateDate(Date createDate) {
+		_createDate = createDate;
 	}
 
 	public void setDEDataDefinitionFields(
@@ -173,6 +190,10 @@ public final class DEDataDefinition implements ClassedModel, Serializable {
 		}
 	}
 
+	public void setModifiedDate(Date modifiedDate) {
+		_modifiedDate = modifiedDate;
+	}
+
 	public void setName(Map<String, String> name) {
 		_name = name;
 
@@ -190,11 +211,18 @@ public final class DEDataDefinition implements ClassedModel, Serializable {
 		_storageType = storageType;
 	}
 
+	public void setUserId(long userId) {
+		_userId = userId;
+	}
+
+	private Date _createDate;
 	private List<DEDataDefinitionField> _deDataDefinitionFields =
 		new ArrayList<>();
 	private long _deDataDefinitionId;
 	private Map<String, String> _description = new HashMap<>();
+	private Date _modifiedDate;
 	private Map<String, String> _name = new HashMap<>();
 	private String _storageType = "json";
+	private long _userId;
 
 }

@@ -54,8 +54,6 @@ import org.osgi.framework.ServiceReference;
 public abstract class BaseFormApioTestBundleActivator
 	implements BundleActivator {
 
-	public static final String FORM_DEFAULT_LANGUAGE = "en-US";
-
 	public static final String SITE_NAME =
 		BaseFormApioTestBundleActivator.class.getSimpleName() + "Site";
 

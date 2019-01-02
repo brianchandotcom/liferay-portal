@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermi
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.util.Collections;
@@ -676,9 +675,8 @@ public class DDMStructureServiceImpl extends DDMStructureServiceBaseImpl {
 			SearchContext searchContext =
 				_ddmSearchHelper.buildStructureSearchContext(
 					companyId, groupIds, getUserId(), classNameId, null,
-					keywords, keywords, StringPool.BLANK, null,
-					WorkflowConstants.STATUS_ANY, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null);
+					keywords, keywords, StringPool.BLANK, null, status,
+					QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 
 			return _ddmSearchHelper.doSearchCount(
 				searchContext, DDMStructure.class);

@@ -91,6 +91,7 @@ import com.liferay.portal.spring.extender.service.ServiceReference;
 import java.io.Serializable;
 
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -281,6 +282,8 @@ public class DDMStructureLocalServiceImpl
 
 		DDMStructure structure = ddmStructurePersistence.create(structureId);
 
+		Date now = new Date();
+
 		structure.setUuid(serviceContext.getUuid());
 		structure.setGroupId(groupId);
 		structure.setCompanyId(user.getCompanyId());
@@ -294,6 +297,8 @@ public class DDMStructureLocalServiceImpl
 		structure.setVersion(DDMStructureConstants.VERSION_DEFAULT);
 		structure.setNameMap(nameMap);
 		structure.setDescriptionMap(descriptionMap);
+		structure.setCreateDate(now);
+		structure.setModifiedDate(now);
 		structure.setDefinition(definition);
 		structure.setStorageType(storageType);
 		structure.setType(DDMStructureConstants.TYPE_DEFAULT);

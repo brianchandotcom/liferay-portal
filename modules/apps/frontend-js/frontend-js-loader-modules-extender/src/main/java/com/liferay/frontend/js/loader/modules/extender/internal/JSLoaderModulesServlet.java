@@ -14,13 +14,8 @@
 
 package com.liferay.frontend.js.loader.modules.extender.internal;
 
-import com.liferay.frontend.js.loader.modules.extender.npm.JSModule;
-import com.liferay.frontend.js.loader.modules.extender.npm.JSModuleAlias;
 import com.liferay.frontend.js.loader.modules.extender.npm.JSPackage;
-import com.liferay.frontend.js.loader.modules.extender.npm.JSPackageDependency;
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMRegistry;
-import com.liferay.petra.string.StringBundler;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.util.Portal;
 
@@ -28,7 +23,6 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -41,7 +35,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.felix.utils.log.Logger;
 
 import org.osgi.service.component.ComponentContext;
 import org.osgi.service.component.annotations.Activate;
@@ -64,12 +57,6 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class JSLoaderModulesServlet extends HttpServlet {
 
-	public JSLoaderModulesServlet() {
-		_dependencyAliases.put("exports", "E");
-		_dependencyAliases.put("module", "M");
-		_dependencyAliases.put("require", "R");
-	}
-
 	@Override
 	public void init(ServletConfig config) throws ServletException {
 		super.init(config);
@@ -86,8 +73,6 @@ public class JSLoaderModulesServlet extends HttpServlet {
 
 		_details = ConfigurableUtil.createConfigurable(
 			Details.class, properties);
-
-		_logger = new Logger(componentContext.getBundleContext());
 
 		_componentContext = componentContext;
 	}
@@ -108,10 +93,6 @@ public class JSLoaderModulesServlet extends HttpServlet {
 		printWriter.println("(function() {");
 
 		_writePaths(printWriter);
-
-		_writeModules(printWriter);
-
-		_writeMaps(printWriter);
 
 		printWriter.println(
 			"Liferay.EXPLAIN_RESOLUTIONS = " + _details.explainResolutions() +
@@ -145,248 +126,6 @@ public class JSLoaderModulesServlet extends HttpServlet {
 	@Reference(unbind = "-")
 	protected void setNPMRegistry(NPMRegistry npmRegistry) {
 		_npmRegistry = npmRegistry;
-	}
-
-	private String _applyDependencyAliases(String dependency) {
-		String dependencyAlias = _dependencyAliases.get(dependency);
-
-		if (dependencyAlias == null) {
-			return "\"" + dependency + "\"";
-		}
-
-		return dependencyAlias;
-	}
-
-	private void _writeMaps(PrintWriter printWriter) {
-		printWriter.println("Liferay.MAPS = {");
-
-		String delimiter = "";
-		Set<String> processedNames = new HashSet<>();
-
-		for (JSLoaderModule jsLoaderModule :
-				_jsLoaderModulesTracker.getJSLoaderModules()) {
-
-			if (processedNames.contains(jsLoaderModule.getName())) {
-				continue;
-			}
-
-			processedNames.add(jsLoaderModule.getName());
-
-			printWriter.write(delimiter);
-			printWriter.write("\"");
-			printWriter.write(jsLoaderModule.getName());
-			printWriter.write("\": \"");
-			printWriter.write(jsLoaderModule.getName());
-			printWriter.write("@");
-			printWriter.write(jsLoaderModule.getVersion());
-			printWriter.write("\"");
-
-			delimiter = ",\n";
-
-			String unversionedMapsConfiguration =
-				jsLoaderModule.getUnversionedMapsConfiguration();
-
-			if (!unversionedMapsConfiguration.equals("")) {
-				printWriter.write(delimiter);
-				printWriter.write(unversionedMapsConfiguration);
-			}
-		}
-
-		for (JSPackage jsPackage : _npmRegistry.getResolvedJSPackages()) {
-			printWriter.write(delimiter);
-			printWriter.write("\"");
-			printWriter.write(jsPackage.getResolvedId());
-			printWriter.write("\": {exactMatch: true, value: \"");
-			printWriter.write(jsPackage.getResolvedId());
-			printWriter.write(StringPool.SLASH);
-			printWriter.write(jsPackage.getMainModuleName());
-			printWriter.write("\"}");
-
-			delimiter = ",\n";
-
-			for (JSModuleAlias jsModuleAlias : jsPackage.getJSModuleAliases()) {
-				printWriter.write(delimiter);
-				printWriter.write("\"");
-				printWriter.write(jsPackage.getResolvedId());
-				printWriter.write(StringPool.SLASH);
-				printWriter.write(jsModuleAlias.getAlias());
-				printWriter.write("\": {exactMatch: true, value: \"");
-				printWriter.write(jsPackage.getResolvedId());
-				printWriter.write(StringPool.SLASH);
-				printWriter.write(jsModuleAlias.getModuleName());
-				printWriter.write("\"}");
-			}
-		}
-
-		Map<String, String> globalAliases = _npmRegistry.getGlobalAliases();
-
-		for (Map.Entry<String, String> alias : globalAliases.entrySet()) {
-			printWriter.write(delimiter);
-			printWriter.write(StringPool.QUOTE);
-			printWriter.write(alias.getKey());
-			printWriter.write(StringPool.QUOTE);
-			printWriter.write(StringPool.COLON);
-			printWriter.write(StringPool.QUOTE);
-			printWriter.write(alias.getValue());
-			printWriter.write(StringPool.QUOTE);
-
-			delimiter = ",\n";
-		}
-
-		printWriter.println("\n};");
-	}
-
-	private void _writeModules(PrintWriter printWriter) {
-		String delimiter = "";
-
-		printWriter.write("var ");
-
-		for (Map.Entry<String, String> entry : _dependencyAliases.entrySet()) {
-			printWriter.write(delimiter);
-			printWriter.write(entry.getValue());
-			printWriter.write("=\"");
-			printWriter.write(entry.getKey());
-			printWriter.write("\"");
-
-			delimiter = ",";
-		}
-
-		printWriter.write(";\n");
-
-		printWriter.println("Liferay.MODULES = {");
-
-		Set<String> processedNames = new HashSet<>();
-
-		delimiter = "";
-
-		for (JSLoaderModule jsLoaderModule :
-				_jsLoaderModulesTracker.getJSLoaderModules()) {
-
-			String unversionedConfiguration =
-				jsLoaderModule.getUnversionedConfiguration();
-
-			if (unversionedConfiguration.length() == 0) {
-				continue;
-			}
-
-			if (!processedNames.contains(jsLoaderModule.getName())) {
-				processedNames.add(jsLoaderModule.getName());
-
-				printWriter.write(delimiter);
-				printWriter.write(unversionedConfiguration);
-
-				delimiter = ",\n";
-			}
-
-			String versionedConfiguration =
-				jsLoaderModule.getVersionedConfiguration();
-
-			if (versionedConfiguration.length() > 0) {
-				printWriter.write(delimiter);
-				printWriter.write(versionedConfiguration);
-
-				delimiter = ",\n";
-			}
-		}
-
-		String delimiter2 = "";
-
-		for (JSModule resolvedJSModule : _npmRegistry.getResolvedJSModules()) {
-			printWriter.write(delimiter);
-			printWriter.write("\"");
-			printWriter.write(resolvedJSModule.getResolvedId());
-			printWriter.write("\": {\n");
-
-			delimiter2 = "";
-
-			printWriter.write("  \"dependencies\": [");
-
-			for (String dependency : resolvedJSModule.getDependencies()) {
-				printWriter.write(delimiter2);
-				printWriter.write(_applyDependencyAliases(dependency));
-
-				delimiter2 = ", ";
-			}
-
-			printWriter.write("],\n");
-
-			JSPackage jsPackage = resolvedJSModule.getJSPackage();
-
-			delimiter2 = "";
-
-			printWriter.write("  \"map\": {");
-
-			for (String dependencyPackageName :
-					resolvedJSModule.getDependencyPackageNames()) {
-
-				if (dependencyPackageName == null) {
-					continue;
-				}
-
-				printWriter.write(delimiter2);
-
-				StringBundler aliasSB = new StringBundler(1);
-				StringBundler aliasValueSB = new StringBundler();
-
-				if (dependencyPackageName.equals(jsPackage.getName())) {
-					aliasSB.append(dependencyPackageName);
-
-					aliasValueSB.append(jsPackage.getResolvedId());
-				}
-				else {
-					JSPackageDependency jsPackageDependency =
-						jsPackage.getJSPackageDependency(dependencyPackageName);
-
-					if (jsPackageDependency == null) {
-						aliasSB.append(dependencyPackageName);
-
-						aliasValueSB.append(
-							":ERROR:Missing version constraints for ");
-						aliasValueSB.append(dependencyPackageName);
-						aliasValueSB.append(" in package.json of ");
-						aliasValueSB.append(jsPackage.getResolvedId());
-					}
-					else {
-						JSPackage jsDependencyPackage =
-							_npmRegistry.resolveJSPackageDependency(
-								jsPackageDependency);
-
-						if (jsDependencyPackage == null) {
-							aliasSB.append(dependencyPackageName);
-
-							aliasValueSB.append(":ERROR:Package ");
-							aliasValueSB.append(dependencyPackageName);
-							aliasValueSB.append(" which is a dependency of ");
-							aliasValueSB.append(jsPackage.getResolvedId());
-							aliasValueSB.append(
-								" is not deployed in the server");
-						}
-						else {
-							aliasSB.append(jsDependencyPackage.getName());
-
-							aliasValueSB.append(
-								jsDependencyPackage.getResolvedId());
-						}
-					}
-				}
-
-				printWriter.write("\"");
-				printWriter.write(aliasSB.toString());
-				printWriter.write("\": \"");
-				printWriter.write(aliasValueSB.toString());
-				printWriter.write("\"");
-
-				delimiter2 = ", ";
-			}
-
-			printWriter.write("}\n");
-
-			printWriter.write("}");
-
-			delimiter = ",\n";
-		}
-
-		printWriter.println("\n};");
 	}
 
 	private void _writePaths(PrintWriter printWriter) {
@@ -459,10 +198,8 @@ public class JSLoaderModulesServlet extends HttpServlet {
 	}
 
 	private ComponentContext _componentContext;
-	private final Map<String, String> _dependencyAliases = new HashMap<>();
 	private volatile Details _details;
 	private JSLoaderModulesTracker _jsLoaderModulesTracker;
-	private Logger _logger;
 
 	@Reference
 	private Minifier _minifier;

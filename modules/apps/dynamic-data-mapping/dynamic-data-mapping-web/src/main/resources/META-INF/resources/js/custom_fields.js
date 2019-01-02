@@ -560,7 +560,8 @@ AUI.add(
 									instance.setValue(
 										{
 											className: selectedWebContent.assetclassname,
-											classPK: selectedWebContent.assetclasspk
+											classPK: selectedWebContent.assetclasspk,
+											title: selectedWebContent.assettitle
 										}
 									);
 								}

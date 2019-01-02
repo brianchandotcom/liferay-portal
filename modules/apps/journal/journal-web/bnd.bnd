@@ -3,8 +3,8 @@ Bundle-SymbolicName: com.liferay.journal.web
 Bundle-Version: 3.0.0
 Liferay-JS-Config: /META-INF/resources/js/config.js
 Liferay-JS-Submodules-Bridge:\
- 	journal-web/js/ChangeDefaultLanguage.es,\
- 	journal-web/js/SelectFolder.es
+	journal-web/js/ChangeDefaultLanguage.es,\
+	journal-web/js/SelectFolder.es
 Provide-Capability:\
 	liferay.resource.bundle;\
 		resource.bundle.aggregate:String="(bundle.symbolic.name=com.liferay.journal.lang)";\

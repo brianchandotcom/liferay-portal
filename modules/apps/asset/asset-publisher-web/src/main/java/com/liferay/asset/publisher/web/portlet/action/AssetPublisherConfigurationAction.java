@@ -22,12 +22,12 @@ import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.asset.model.AssetEntryUsage;
 import com.liferay.asset.publisher.constants.AssetPublisherPortletKeys;
 import com.liferay.asset.publisher.constants.AssetPublisherWebKeys;
+import com.liferay.asset.publisher.util.AssetPublisherHelper;
 import com.liferay.asset.publisher.web.configuration.AssetPublisherPortletInstanceConfiguration;
 import com.liferay.asset.publisher.web.configuration.AssetPublisherWebConfiguration;
 import com.liferay.asset.publisher.web.internal.util.AssetPublisherWebUtil;
 import com.liferay.asset.publisher.web.util.AssetPublisherCustomizer;
 import com.liferay.asset.publisher.web.util.AssetPublisherCustomizerRegistry;
-import com.liferay.asset.publisher.web.util.AssetPublisherUtil;
 import com.liferay.asset.publisher.web.util.AssetQueryRule;
 import com.liferay.asset.service.AssetEntryUsageLocalService;
 import com.liferay.exportimport.kernel.staging.LayoutStagingUtil;
@@ -321,7 +321,7 @@ public class AssetPublisherConfigurationAction
 		String[] scopeIds = preferences.getValues(
 			"scopeIds",
 			new String[] {
-				AssetPublisherUtil.SCOPE_ID_GROUP_PREFIX +
+				AssetPublisherHelper.SCOPE_ID_GROUP_PREFIX +
 					GroupConstants.DEFAULT
 			});
 
@@ -329,7 +329,7 @@ public class AssetPublisherConfigurationAction
 
 		Group selectedGroup = groupLocalService.fetchGroup(groupId);
 
-		String scopeId = AssetPublisherUtil.getScopeId(
+		String scopeId = assetPublisherHelper.getScopeId(
 			selectedGroup, themeDisplay.getScopeGroupId());
 
 		checkPermission(actionRequest, scopeId);
@@ -544,7 +544,7 @@ public class AssetPublisherConfigurationAction
 		String[] scopeIds = preferences.getValues(
 			"scopeIds",
 			new String[] {
-				AssetPublisherUtil.SCOPE_ID_GROUP_PREFIX +
+				AssetPublisherHelper.SCOPE_ID_GROUP_PREFIX +
 					GroupConstants.DEFAULT
 			});
 
@@ -553,7 +553,7 @@ public class AssetPublisherConfigurationAction
 		scopeIds = ArrayUtil.remove(scopeIds, scopeId);
 
 		if (scopeId.startsWith(
-				AssetPublisherUtil.SCOPE_ID_PARENT_GROUP_PREFIX)) {
+				AssetPublisherHelper.SCOPE_ID_PARENT_GROUP_PREFIX)) {
 
 			scopeId = scopeId.substring("Parent".length());
 
@@ -856,6 +856,9 @@ public class AssetPublisherConfigurationAction
 
 	@Reference
 	protected AssetPublisherCustomizerRegistry assetPublisherCustomizerRegistry;
+
+	@Reference
+	protected AssetPublisherHelper assetPublisherHelper;
 
 	protected AssetPublisherWebConfiguration assetPublisherWebConfiguration;
 

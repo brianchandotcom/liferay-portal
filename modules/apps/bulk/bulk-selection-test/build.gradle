@@ -1,0 +1,4 @@
+dependencies {
+	testIntegrationCompile project(":apps:bulk:bulk-selection-api")
+	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
+}

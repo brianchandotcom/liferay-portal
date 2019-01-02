@@ -17,20 +17,19 @@ package com.liferay.portal.workflow.reports.internal.messaging;
 import com.liferay.portal.kernel.messaging.BaseMessageListener;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageListener;
-import com.liferay.portal.kernel.search.Document;
-import com.liferay.portal.kernel.search.DocumentImpl;
-import com.liferay.portal.kernel.search.Field;
-import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
-import com.liferay.portal.search.engine.adapter.document.IndexDocumentRequest;
-import com.liferay.portal.workflow.reports.internal.constants.WorkflowIndexConstants;
-import com.liferay.portal.workflow.reports.internal.index.WorkflowIndicesCreator;
+import com.liferay.portal.workflow.reports.internal.search.index.WorkflowIndicesCreator;
+import com.liferay.portal.workflow.reports.internal.search.index.WorkflowReportsMessageIndexer;
+import com.liferay.portal.workflow.reports.messaging.WorkflowReportsMessage;
 import com.liferay.portal.workflow.reports.messaging.constants.WorkflowReportsDestinationNames;
 
-import java.util.Map;
-import java.util.UUID;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferenceCardinality;
+import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Inácio Nery
@@ -42,25 +41,30 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class WorkflowReportsMessageListener extends BaseMessageListener {
 
+	@Reference(
+		cardinality = ReferenceCardinality.MULTIPLE,
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY
+	)
+	protected void addWorkflowIndexerWriter(
+		WorkflowReportsMessageIndexer workflowReportsMessageIndexer) {
+
+		_workflowReportsMessageIndexers.add(workflowReportsMessageIndexer);
+	}
+
 	@Override
 	protected void doReceive(Message message) throws Exception {
-		Document document = new DocumentImpl();
+		WorkflowReportsMessage workflowReportsMessage =
+			(WorkflowReportsMessage)message.getPayload();
 
-		Map<String, String> values = (Map<String, String>)message.getPayload();
+		_workflowReportsMessageIndexers.forEach(
+			indexer -> indexer.index(workflowReportsMessage));
+	}
 
-		values.forEach((key, value) -> document.add(new Field(key, value)));
+	protected void removeWorkflowIndexerWriter(
+		WorkflowReportsMessageIndexer workflowReportsMessageIndexer) {
 
-		UUID uuid = UUID.randomUUID();
-
-		document.addUID("Workflow", uuid.toString());
-
-		IndexDocumentRequest indexDocumentRequest = new IndexDocumentRequest(
-			WorkflowIndexConstants.INDEX_NAME_WORKFLOW_EVENTS, document);
-
-		indexDocumentRequest.setType(
-			WorkflowIndexConstants.TYPE_MAPPING_NAME_WORKFLOW_EVENTS);
-
-		_searchEngineAdapter.execute(indexDocumentRequest);
+		_workflowReportsMessageIndexers.remove(workflowReportsMessageIndexer);
 	}
 
 	@Reference(unbind = "-")
@@ -68,7 +72,8 @@ public class WorkflowReportsMessageListener extends BaseMessageListener {
 		WorkflowIndicesCreator workflowIndicesCreator) {
 	}
 
-	@Reference(target = "(search.engine.impl=Elasticsearch)")
-	private SearchEngineAdapter _searchEngineAdapter;
+	private static final List<WorkflowReportsMessageIndexer>
+		_workflowReportsMessageIndexers =
+			new ArrayList<>();
 
 }

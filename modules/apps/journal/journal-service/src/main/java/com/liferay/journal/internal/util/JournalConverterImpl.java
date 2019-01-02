@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -44,11 +45,14 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.util.AggregateResourceBundle;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -67,6 +71,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
+import java.util.ResourceBundle;
 import java.util.Set;
 
 import org.osgi.service.component.annotations.Component;
@@ -580,9 +585,27 @@ public class JournalConverterImpl implements JournalConverter {
 
 					if (article != null) {
 						jsonObject.put("groupId", article.getGroupId());
-						jsonObject.put(
-							"title", article.getTitle(defaultLocale));
+
+						String title = article.getTitle(defaultLocale);
+
+						if (article.isInTrash()) {
+							jsonObject.put(
+								"message",
+								LanguageUtil.get(
+									_getResourceBundle(defaultLocale),
+									"the-selected-web-content-was-moved-to-" +
+										"the-recycle-bin"));
+						}
+
+						jsonObject.put("title", title);
 						jsonObject.put("uuid", article.getUuid());
+					}
+					else {
+						jsonObject.put(
+							"message",
+							LanguageUtil.get(
+								_getResourceBundle(defaultLocale),
+								"the-selected-web-content-was-deleted"));
 					}
 				}
 
@@ -1137,6 +1160,14 @@ public class JournalConverterImpl implements JournalConverter {
 		}
 	}
 
+	private ResourceBundle _getResourceBundle(Locale locale) {
+		ResourceBundle classResourceBundle = ResourceBundleUtil.getBundle(
+			locale, "com.liferay.journal.lang");
+
+		return new AggregateResourceBundle(
+			classResourceBundle, _portal.getResourceBundle(locale));
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		JournalConverterImpl.class);
 
@@ -1163,5 +1194,8 @@ public class JournalConverterImpl implements JournalConverter {
 
 	@Reference(unbind = "-")
 	private LayoutLocalService _layoutLocalService;
+
+	@Reference
+	private Portal _portal;
 
 }

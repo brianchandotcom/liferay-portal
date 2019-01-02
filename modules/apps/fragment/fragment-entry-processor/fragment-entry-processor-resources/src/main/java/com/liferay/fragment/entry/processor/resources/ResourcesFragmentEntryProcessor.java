@@ -27,7 +27,8 @@ import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil
 import com.liferay.portal.kernel.repository.model.FileEntry;
 
 import java.util.Locale;
-import java.util.Objects;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -78,23 +79,14 @@ public class ResourcesFragmentEntryProcessor implements FragmentEntryProcessor {
 			_fragmentCollectionService.fetchFragmentCollection(
 				fragmentEntry.getFragmentCollectionId());
 
-		while (code.contains(_RESOURCES_PATH)) {
-			int index = code.indexOf(_RESOURCES_PATH);
+		Matcher matcher = _pattern.matcher(code);
 
-			String delimiter = code.substring(index - 1, index);
+		while (matcher.find()) {
+			String imagePath = matcher.group();
 
-			if (Objects.equals(delimiter, StringPool.OPEN_PARENTHESIS)) {
-				delimiter = StringPool.CLOSE_PARENTHESIS;
-			}
+			String[] paths = imagePath.split(StringPool.SLASH);
 
-			int lastIndex = code.indexOf(delimiter, index);
-
-			if (lastIndex < 0) {
-				break;
-			}
-
-			String fileName = code.substring(
-				index + _RESOURCES_PATH.length(), lastIndex);
+			String fileName = paths[paths.length - 1];
 
 			FileEntry fileEntry =
 				PortletFileRepositoryUtil.fetchPortletFileEntry(
@@ -109,13 +101,14 @@ public class ResourcesFragmentEntryProcessor implements FragmentEntryProcessor {
 					StringPool.BLANK, false, false);
 			}
 
-			code = code.replaceAll(_RESOURCES_PATH + fileName, fileEntryURL);
+			code = code.replace(imagePath, fileEntryURL);
 		}
 
 		return code;
 	}
 
-	private static final String _RESOURCES_PATH = "../../resources/";
+	private static final Pattern _pattern = Pattern.compile(
+		"\\.\\./\\.\\./resources/.+\\.[a-zA-Z]+");
 
 	@Reference
 	private FragmentCollectionService _fragmentCollectionService;

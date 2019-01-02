@@ -115,19 +115,26 @@ public class LayoutPageTemplateStructureLocalServiceImpl
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
-		JSONArray structureJSONArray = JSONFactoryUtil.createJSONArray();
-
 		List<FragmentEntryLink> fragmentEntryLinks =
 			_fragmentEntryLinkLocalService.getFragmentEntryLinks(
 				groupId, classNameId, classPK);
 
-		for (FragmentEntryLink fragmentEntryLink : fragmentEntryLinks) {
+		jsonObject.put("nextColumnId", fragmentEntryLinks.size());
+		jsonObject.put("nextRowId", fragmentEntryLinks.size());
+
+		JSONArray structureJSONArray = JSONFactoryUtil.createJSONArray();
+
+		for (int i = 0; i < fragmentEntryLinks.size(); i++) {
+			FragmentEntryLink fragmentEntryLink = fragmentEntryLinks.get(i);
+
 			JSONObject columnsJSONObject = JSONFactoryUtil.createJSONObject();
 
 			JSONArray columnsJSONArray = JSONFactoryUtil.createJSONArray();
 
 			JSONObject fragmentEntryLinkIdsJSONObject =
 				JSONFactoryUtil.createJSONObject();
+
+			fragmentEntryLinkIdsJSONObject.put("columnId", String.valueOf(i));
 
 			JSONArray fragmentEntryLinkIdsJSONArray =
 				JSONFactoryUtil.createJSONArray();
@@ -138,9 +145,13 @@ public class LayoutPageTemplateStructureLocalServiceImpl
 			fragmentEntryLinkIdsJSONObject.put(
 				"fragmentEntryLinkIds", fragmentEntryLinkIdsJSONArray);
 
+			fragmentEntryLinkIdsJSONObject.put("size", "12");
+
 			columnsJSONArray.put(fragmentEntryLinkIdsJSONObject);
 
 			columnsJSONObject.put("columns", columnsJSONArray);
+
+			columnsJSONObject.put("rowId", String.valueOf(i));
 
 			structureJSONArray.put(columnsJSONObject);
 		}

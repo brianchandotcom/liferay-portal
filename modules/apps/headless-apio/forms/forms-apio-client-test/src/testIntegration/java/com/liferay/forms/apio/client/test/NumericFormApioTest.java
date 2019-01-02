@@ -100,7 +100,7 @@ public class NumericFormApioTest {
 		).root(
 			"_embedded.formPages._embedded[0]._embedded.fields._embedded." +
 				"find {it.name == '%s'}",
-			withArgs(_DOUBLE_FIELD_NAME)
+			withArgs(NumericFormApioTestBundleActivator.DOUBLE_FIELD_NAME)
 		).body(
 			"hasFormRules", isBoolean()
 		).body(
@@ -113,7 +113,7 @@ public class NumericFormApioTest {
 		).root(
 			"_embedded.formPages._embedded[0]._embedded.fields._embedded." +
 				"find {it.name == '%s'}",
-			withArgs(_INTEGER_FIELD_NAME)
+			withArgs(NumericFormApioTestBundleActivator.INTEGER_FIELD_NAME)
 		).body(
 			"hasFormRules", isBoolean()
 		).body(
@@ -145,14 +145,14 @@ public class NumericFormApioTest {
 		).root(
 			"_embedded.formPages._embedded[0]._embedded.fields._embedded." +
 				"find {it.name == '%s'}",
-			withArgs(_DOUBLE_FIELD_NAME)
+			withArgs(NumericFormApioTestBundleActivator.DOUBLE_FIELD_NAME)
 		).body(
 			"dataType", equalTo("double")
 		).noRoot(
 		).root(
 			"_embedded.formPages._embedded[0]._embedded.fields._embedded." +
 				"find {it.name == '%s'}",
-			withArgs(_INTEGER_FIELD_NAME)
+			withArgs(NumericFormApioTestBundleActivator.INTEGER_FIELD_NAME)
 		).body(
 			"dataType", equalTo("integer")
 		);
@@ -178,22 +178,18 @@ public class NumericFormApioTest {
 		).root(
 			"_embedded.formPages._embedded[0]._embedded.fields._embedded." +
 				"find {it.name == '%s'}",
-			withArgs(_DOUBLE_FIELD_NAME)
+			withArgs(NumericFormApioTestBundleActivator.DOUBLE_FIELD_NAME)
 		).body(
 			"label", equalTo("My Double Field")
 		).noRoot(
 		).root(
 			"_embedded.formPages._embedded[0]._embedded.fields._embedded." +
 				"find {it.name == '%s'}",
-			withArgs(_INTEGER_FIELD_NAME)
+			withArgs(NumericFormApioTestBundleActivator.INTEGER_FIELD_NAME)
 		).body(
 			"label", equalTo("My Integer Field")
 		);
 	}
-
-	private static final String _DOUBLE_FIELD_NAME = "MyDoubleField";
-
-	private static final String _INTEGER_FIELD_NAME = "MyIntegerField";
 
 	private URL _formHrefURL;
 

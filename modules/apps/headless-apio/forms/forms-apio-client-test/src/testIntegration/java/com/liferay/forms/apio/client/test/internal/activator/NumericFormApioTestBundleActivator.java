@@ -23,6 +23,10 @@ import com.liferay.dynamic.data.mapping.annotations.DDMFormField;
 public class NumericFormApioTestBundleActivator
 	extends BaseFormApioTestBundleActivator {
 
+	public static final String DOUBLE_FIELD_NAME = "MyDoubleField";
+
+	public static final String INTEGER_FIELD_NAME = "MyIntegerField";
+
 	@Override
 	protected Class<?> getFormDefinitionClass() {
 		return FormWithNumericFields.class;
@@ -32,12 +36,12 @@ public class NumericFormApioTestBundleActivator
 	private interface FormWithNumericFields {
 
 		@DDMFormField(
-			label = "My Double Field", name = "MyDoubleField", type = "double"
+			label = "My Double Field", name = DOUBLE_FIELD_NAME, type = "double"
 		)
 		public double doubleValue();
 
 		@DDMFormField(
-			label = "My Integer Field", name = "MyIntegerField",
+			label = "My Integer Field", name = INTEGER_FIELD_NAME,
 			type = "integer"
 		)
 		public int integerValue();

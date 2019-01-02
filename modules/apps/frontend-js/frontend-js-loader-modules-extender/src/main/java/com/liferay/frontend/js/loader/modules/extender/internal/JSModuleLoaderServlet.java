@@ -1,5 +1,6 @@
 package com.liferay.frontend.js.loader.modules.extender.internal;
 
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.util.ParamUtil;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -15,7 +16,6 @@ import java.io.StringWriter;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * @author Rodolfo Roza Miranda
@@ -32,6 +32,11 @@ import java.util.stream.Collectors;
 )
 public class JSModuleLoaderServlet extends HttpServlet {
 
+	@Reference(unbind = "-")
+	public void setJsModulesContextResolver(JSModulesContextResolver jsModulesContextResolver) {
+		_jsModulesContextResolver = jsModulesContextResolver;
+	}
+
 	@Override
 	protected void service(
 		HttpServletRequest req, HttpServletResponse resp)
@@ -39,31 +44,19 @@ public class JSModuleLoaderServlet extends HttpServlet {
 
 		List<String> reqModules = _getRequestModules(req);
 
-		List<String> parsedModules = _jsModulesResolver.resolve(reqModules);
+		JSModuleContext context = _jsModulesContextResolver.resolve(reqModules);
 
 		StringWriter stringWriter = new StringWriter();
 
 		PrintWriter printWriter = new PrintWriter(stringWriter);
 
-		String collect = parsedModules.stream().map(m -> "\"" + m + "\"").collect(Collectors.joining(","));
-
-		printWriter.write("[");
-		printWriter.write(collect);
-		printWriter.write("]");
+		printWriter.write(_jsonFactory.looseSerializeDeep(context));
 
 		printWriter.close();
 
 		String content = stringWriter.toString();
 
-		System.out.println("Resolved modules for " + String.join(",", reqModules) + " : " + parsedModules.size());
-
 		_writeResponse(resp, content);
-	}
-
-	@Reference(unbind = "-")
-	protected void setJSModulesParser(
-		JSModulesResolver jsModulesResolver) {
-		_jsModulesResolver = jsModulesResolver;
 	}
 
 	private List<String> _getRequestModules(HttpServletRequest req) {
@@ -90,5 +83,9 @@ public class JSModuleLoaderServlet extends HttpServlet {
 		printWriter.close();
 	}
 
-	private JSModulesResolver _jsModulesResolver;
+	@Reference
+	private JSModulesContextResolver _jsModulesContextResolver;
+
+	@Reference
+	private JSONFactory _jsonFactory;
 }

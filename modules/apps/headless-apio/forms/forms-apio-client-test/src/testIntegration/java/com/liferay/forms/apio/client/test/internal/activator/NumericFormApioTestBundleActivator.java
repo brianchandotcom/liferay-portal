@@ -27,9 +27,17 @@ public class NumericFormApioTestBundleActivator
 
 	public static final String INTEGER_FIELD_NAME = "MyIntegerField";
 
+	public static final String SITE_NAME =
+		NumericFormApioTestBundleActivator.class.getSimpleName() + "Site";
+
 	@Override
 	protected Class<?> getFormDefinitionClass() {
 		return FormWithNumericFields.class;
+	}
+
+	@Override
+	protected String getSiteName() {
+		return SITE_NAME;
 	}
 
 	@DDMForm

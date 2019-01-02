@@ -26,11 +26,19 @@ public class TextFormApioTestBundleActivator
 	public static final String MULTILINE_TEXT_FIELD_NAME =
 		"MyMultilineTextField";
 
+	public static final String SITE_NAME =
+		TextFormApioTestBundleActivator.class.getSimpleName() + "Site";
+
 	public static final String TEXT_FIELD_NAME = "MyTextField";
 
 	@Override
 	protected Class<?> getFormDefinitionClass() {
 		return FormWithTextFields.class;
+	}
+
+	@Override
+	protected String getSiteName() {
+		return SITE_NAME;
 	}
 
 	@DDMForm

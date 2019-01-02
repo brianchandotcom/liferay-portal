@@ -578,10 +578,12 @@ public class JournalConverterImpl implements JournalConverter {
 					JournalArticle journalArticle =
 						_journalArticleLocalService.fetchLatestArticle(classPK);
 
-					jsonObject.put("groupId", journalArticle.getGroupId());
-					jsonObject.put(
-						"title", journalArticle.getTitle(defaultLocale));
-					jsonObject.put("uuid", journalArticle.getUuid());
+					if (journalArticle != null) {
+						jsonObject.put("groupId", journalArticle.getGroupId());
+						jsonObject.put(
+							"title", journalArticle.getTitle(defaultLocale));
+						jsonObject.put("uuid", journalArticle.getUuid());
+					}
 				}
 
 				serializable = jsonObject.toString();

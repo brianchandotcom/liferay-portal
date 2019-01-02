@@ -19,7 +19,7 @@ import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMStructureConstants;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
-import com.liferay.dynamic.data.mapping.service.DDMFormInstanceLocalServiceUtil;
+import com.liferay.dynamic.data.mapping.service.DDMFormInstanceLocalService;
 import com.liferay.dynamic.data.mapping.storage.StorageType;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormValuesTestUtil;
 import com.liferay.dynamic.data.mapping.test.util.DDMStructureTestHelper;
@@ -32,7 +32,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
@@ -46,6 +46,7 @@ import java.util.Map;
 
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceReference;
 
 /**
  * @author Paulo Cruz
@@ -60,6 +61,19 @@ public abstract class BaseFormApioTestBundleActivator
 
 	@Override
 	public void start(BundleContext bundleContext) {
+		_ddmFormInstanceLocalServiceServiceReference =
+			bundleContext.getServiceReference(
+				DDMFormInstanceLocalService.class);
+
+		_ddmFormInstanceLocalService = bundleContext.getService(
+			_ddmFormInstanceLocalServiceServiceReference);
+
+		_groupLocalServiceServiceReference = bundleContext.getServiceReference(
+			GroupLocalService.class);
+
+		_groupLocalService = bundleContext.getService(
+			_groupLocalServiceServiceReference);
+
 		try {
 			AuthConfigurationTestUtil.deployOAuthConfiguration(bundleContext);
 
@@ -75,6 +89,10 @@ public abstract class BaseFormApioTestBundleActivator
 	@Override
 	public void stop(BundleContext bundleContext) {
 		_cleanUp();
+
+		bundleContext.ungetService(
+			_ddmFormInstanceLocalServiceServiceReference);
+		bundleContext.ungetService(_groupLocalServiceServiceReference);
 	}
 
 	protected abstract Class<?> getFormDefinitionClass();
@@ -91,7 +109,7 @@ public abstract class BaseFormApioTestBundleActivator
 
 		description.addString(LocaleUtil.getDefault(), "This is my Form");
 
-		return DDMFormInstanceLocalServiceUtil.addFormInstance(
+		return _ddmFormInstanceLocalService.addFormInstance(
 			user.getUserId(), group.getGroupId(), ddmStructure.getStructureId(),
 			name.getValues(), description.getValues(),
 			DDMFormValuesTestUtil.createDDMFormValues(
@@ -115,7 +133,7 @@ public abstract class BaseFormApioTestBundleActivator
 
 	private void _cleanUp() {
 		try {
-			GroupLocalServiceUtil.deleteGroup(_group);
+			_groupLocalService.deleteGroup(_group);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -127,7 +145,7 @@ public abstract class BaseFormApioTestBundleActivator
 		Map<Locale, String> nameMap = Collections.singletonMap(
 			LocaleUtil.getDefault(), SITE_NAME);
 
-		_group = GroupLocalServiceUtil.addGroup(
+		_group = _groupLocalService.addGroup(
 			user.getUserId(), GroupConstants.DEFAULT_PARENT_GROUP_ID, null, 0,
 			GroupConstants.DEFAULT_LIVE_GROUP_ID, nameMap, nameMap,
 			GroupConstants.TYPE_SITE_OPEN, true,
@@ -146,6 +164,12 @@ public abstract class BaseFormApioTestBundleActivator
 	private static final Log _log = LogFactoryUtil.getLog(
 		BaseFormApioTestBundleActivator.class);
 
+	private DDMFormInstanceLocalService _ddmFormInstanceLocalService;
+	private ServiceReference<DDMFormInstanceLocalService>
+		_ddmFormInstanceLocalServiceServiceReference;
 	private Group _group;
+	private GroupLocalService _groupLocalService;
+	private ServiceReference<GroupLocalService>
+		_groupLocalServiceServiceReference;
 
 }

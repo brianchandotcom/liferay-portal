@@ -19,6 +19,7 @@ import com.liferay.data.engine.exception.DEDataDefinitionException;
 import com.liferay.data.engine.executor.DECountRequestExecutor;
 import com.liferay.data.engine.executor.DEDeleteRequestExecutor;
 import com.liferay.data.engine.executor.DEGetRequestExecutor;
+import com.liferay.data.engine.executor.DEListRequestExecutor;
 import com.liferay.data.engine.executor.DESaveRequestExecutor;
 import com.liferay.data.engine.model.DEDataDefinition;
 import com.liferay.data.engine.model.DEDataDefinitionField;
@@ -27,6 +28,8 @@ import com.liferay.data.engine.service.DEDataDefinitionCountResponse;
 import com.liferay.data.engine.service.DEDataDefinitionDeleteRequest;
 import com.liferay.data.engine.service.DEDataDefinitionGetRequest;
 import com.liferay.data.engine.service.DEDataDefinitionGetResponse;
+import com.liferay.data.engine.service.DEDataDefinitionListRequest;
+import com.liferay.data.engine.service.DEDataDefinitionListResponse;
 import com.liferay.data.engine.service.DEDataDefinitionRequestBuilder;
 import com.liferay.data.engine.service.DEDataDefinitionSaveRequest;
 import com.liferay.data.engine.service.DEDataDefinitionSaveResponse;
@@ -50,8 +53,10 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.junit.Assert;
@@ -522,6 +527,141 @@ public class DERequestExecutorTest {
 	}
 
 	@Test
+	public void testListWithNoRecords() throws Exception {
+		try {
+			ServiceContext serviceContext = createServiceContext(
+				_group, _user, createModelPermissions());
+
+			ServiceContextThreadLocal.pushServiceContext(serviceContext);
+
+			DEDataDefinitionListRequest deDataDefinitionListRequest =
+				DEDataDefinitionRequestBuilder.listBuilder(
+				).byGroupId(
+					_group.getGroupId()
+				).build();
+
+			DEDataDefinitionListResponse deDataDefinitionListResponse =
+				_deListRequestExecutor.execute(deDataDefinitionListRequest);
+
+			Assert.assertTrue(
+				deDataDefinitionListResponse.getDEDataDefinitions().isEmpty());
+		}
+		finally {
+			ServiceContextThreadLocal.popServiceContext();
+		}
+	}
+
+	@Test
+	public void testListWithRecords() throws Exception {
+		DEDataDefinition deDataDefinitionContact =
+			createDataDefinitionContact();
+		DEDataDefinition deDataDefinitionPet = createDataDefinitionPet();
+		DEDataDefinition deDataDefinitionOrder = createDataDefinitionOrder();
+
+		List<DEDataDefinition> deDataDefinitionsExpected = new ArrayList<>();
+
+		DEDataDefinitionSaveRequest deDataDefinitionSaveRequestContact =
+			DEDataDefinitionRequestBuilder.saveBuilder(
+				deDataDefinitionContact
+			).onBehalfOf(
+				_user.getUserId()
+			).inGroup(
+				_group.getGroupId()
+			).build();
+
+		DEDataDefinitionSaveRequest deDataDefinitionSaveRequestPet =
+			DEDataDefinitionRequestBuilder.saveBuilder(
+				deDataDefinitionPet
+			).onBehalfOf(
+				_user.getUserId()
+			).inGroup(
+				_group.getGroupId()
+			).build();
+
+		DEDataDefinitionSaveRequest deDataDefinitionSaveRequestOrder =
+			DEDataDefinitionRequestBuilder.saveBuilder(
+				deDataDefinitionOrder
+			).onBehalfOf(
+				_user.getUserId()
+			).inGroup(
+				_group.getGroupId()
+			).build();
+
+		try {
+			ServiceContext serviceContext = createServiceContext(
+				_group, _user, createModelPermissions());
+
+			ServiceContextThreadLocal.pushServiceContext(serviceContext);
+
+			DEDataDefinitionSaveResponse deDataDefinitionSaveResponseContact =
+				_deSaveRequestExecutor.execute(
+					deDataDefinitionSaveRequestContact);
+
+			deDataDefinitionContact.setPrimaryKeyObj(
+				deDataDefinitionSaveResponseContact.getDEDataDefinitionId());
+
+			DEDataDefinitionSaveResponse deDataDefinitionSaveResponsePet =
+				_deSaveRequestExecutor.execute(deDataDefinitionSaveRequestPet);
+
+			deDataDefinitionPet.setPrimaryKeyObj(
+				deDataDefinitionSaveResponsePet.getDEDataDefinitionId());
+
+			DEDataDefinitionSaveResponse deDataDefinitionSaveResponseOrder =
+				_deSaveRequestExecutor.execute(
+					deDataDefinitionSaveRequestOrder);
+
+			deDataDefinitionOrder.setPrimaryKeyObj(
+				deDataDefinitionSaveResponseOrder.getDEDataDefinitionId());
+
+			deDataDefinitionsExpected.add(deDataDefinitionContact);
+			deDataDefinitionsExpected.add(deDataDefinitionPet);
+			deDataDefinitionsExpected.add(deDataDefinitionOrder);
+
+			DEDataDefinitionListRequest deDataDefinitionListRequest =
+				DEDataDefinitionRequestBuilder.listBuilder(
+				).byGroupId(
+					_group.getGroupId()
+				).build();
+
+			DEDataDefinitionListResponse deDataDefinitionListResponse =
+				_deListRequestExecutor.execute(deDataDefinitionListRequest);
+
+			Assert.assertEquals(
+				deDataDefinitionsExpected,
+				deDataDefinitionListResponse.getDEDataDefinitions());
+
+			DEDataDefinitionDeleteRequest deDataDefinitionDeleteRequestContact =
+				DEDataDefinitionRequestBuilder.deleteBuilder(
+				).byId(
+					deDataDefinitionSaveResponseContact.getDEDataDefinitionId()
+				).build();
+
+			_deDeleteRequestExecutor.execute(
+				deDataDefinitionDeleteRequestContact);
+
+			DEDataDefinitionDeleteRequest deDataDefinitionDeleteRequestPet =
+				DEDataDefinitionRequestBuilder.deleteBuilder(
+				).byId(
+					deDataDefinitionSaveResponsePet.getDEDataDefinitionId()
+				).build();
+
+			_deDeleteRequestExecutor.execute(deDataDefinitionDeleteRequestPet);
+
+			DEDataDefinitionDeleteRequest deDataDefinitionDeleteRequestOrder =
+				DEDataDefinitionRequestBuilder.deleteBuilder(
+				).byId(
+					deDataDefinitionSaveResponseOrder.getDEDataDefinitionId()
+				).build();
+
+			_deDeleteRequestExecutor.execute(
+				deDataDefinitionDeleteRequestOrder);
+		}
+		finally {
+			ServiceContextThreadLocal.popServiceContext();
+		}
+	}
+
+	@Test
 	public void testUpdate() throws Exception {
 		Map<String, String> expectedTitleLabels = new HashMap() {
 			{
@@ -625,6 +765,104 @@ public class DERequestExecutorTest {
 		}
 	}
 
+	protected DEDataDefinition createDataDefinitionContact() {
+		Map<String, String> field1Labels = new HashMap() {
+			{
+				put("en_US", "Name");
+			}
+		};
+
+		DEDataDefinitionField deDataDefinitionField1 =
+			new DEDataDefinitionField("name", "string");
+
+		deDataDefinitionField1.addLabels(field1Labels);
+
+		Map<String, String> field2Labels = new HashMap() {
+			{
+				put("en_US", "Email Address");
+			}
+		};
+
+		DEDataDefinitionField deDataDefinitionField2 =
+			new DEDataDefinitionField("email", "string");
+
+		deDataDefinitionField2.addLabels(field2Labels);
+
+		Map<String, String> field3Labels = new HashMap() {
+			{
+				put("en_US", "Phone Number");
+			}
+		};
+
+		DEDataDefinitionField deDataDefinitionField3 =
+			new DEDataDefinitionField("phone", "number");
+
+		deDataDefinitionField3.addLabels(field3Labels);
+
+		DEDataDefinition deDataDefinition3 = new DEDataDefinition(
+			Arrays.asList(
+				deDataDefinitionField1, deDataDefinitionField2,
+				deDataDefinitionField3));
+
+		deDataDefinition3.addName(LocaleUtil.US, "Contact");
+		deDataDefinition3.setStorageType("json");
+
+		return deDataDefinition3;
+	}
+
+	protected DEDataDefinition createDataDefinitionOrder() {
+		Map<String, String> field1Labels = new HashMap() {
+			{
+				put("en_US", "Order Number");
+			}
+		};
+
+		DEDataDefinitionField deDataDefinitionField1 =
+			new DEDataDefinitionField("orderNumber", "number");
+
+		deDataDefinitionField1.addLabels(field1Labels);
+
+		DEDataDefinition deDataDefinition5 = new DEDataDefinition(
+			Arrays.asList(deDataDefinitionField1));
+
+		deDataDefinition5.addName(LocaleUtil.US, "Order");
+		deDataDefinition5.setStorageType("json");
+
+		return deDataDefinition5;
+	}
+
+	protected DEDataDefinition createDataDefinitionPet() {
+		Map<String, String> field1Labels = new HashMap() {
+			{
+				put("en_US", "Name");
+			}
+		};
+
+		DEDataDefinitionField deDataDefinitionField1 =
+			new DEDataDefinitionField("name", "string");
+
+		deDataDefinitionField1.addLabels(field1Labels);
+
+		Map<String, String> field2Labels = new HashMap() {
+			{
+				put("en_US", "Breed");
+			}
+		};
+
+		DEDataDefinitionField deDataDefinitionField2 =
+			new DEDataDefinitionField("breed", "string");
+
+		deDataDefinitionField2.addLabels(field2Labels);
+
+		DEDataDefinition deDataDefinition4 = new DEDataDefinition(
+			Arrays.asList(deDataDefinitionField1, deDataDefinitionField2));
+
+		deDataDefinition4.addName(LocaleUtil.US, "Pet");
+		deDataDefinition4.setStorageType("json");
+
+		return deDataDefinition4;
+	}
+
 	protected ModelPermissions createModelPermissions() {
 		ModelPermissions modelPermissions = new ModelPermissions();
 
@@ -657,6 +895,9 @@ public class DERequestExecutorTest {
 
 	@Inject(type = DEGetRequestExecutor.class)
 	private DEGetRequestExecutor _deGetRequestExecutor;
+
+	@Inject(type = DEListRequestExecutor.class)
+	private DEListRequestExecutor _deListRequestExecutor;
 
 	@Inject(type = DESaveRequestExecutor.class)
 	private DESaveRequestExecutor _deSaveRequestExecutor;

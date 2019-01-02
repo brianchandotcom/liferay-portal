@@ -1448,6 +1448,8 @@ AUI.add(
 						var instance = this;
 
 						instance.setValue('');
+
+						instance._hideMessage();
 					},
 
 					_handleSelectButtonClick: function(event) {
@@ -1476,9 +1478,23 @@ AUI.add(
 											title: selectedWebContent.assettitle || ''
 										}
 									);
+
+									instance._hideMessage();
 								}
 							}
 						);
+					},
+
+					_hideMessage: function() {
+						var instance = this;
+
+						var container = instance.get('container');
+
+						var message = container.one('#' + instance.getInputName() + 'Message');
+
+						if (message) {
+							message.addClass('hide');
+						}
 					}
 				}
 			}

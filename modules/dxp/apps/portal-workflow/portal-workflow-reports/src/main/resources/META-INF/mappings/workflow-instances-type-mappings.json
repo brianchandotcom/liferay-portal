@@ -3,22 +3,32 @@
 		"WorkflowInstancesType": {
 			"properties": {
 				"companyId": {
+					"store": true,
 					"type": "keyword"
 				},
 				"date": {
+					"store": true,
 					"type": "date"
 				},
+				"deleted": {
+					"store": true,
+					"type": "boolean"
+				},
 				"id": {
+					"store": true,
 					"type": "keyword"
 				},
 				"instanceId": {
+					"store": true,
 					"type": "keyword"
 				},
 				"processId": {
+					"store": true,
 					"type": "keyword"
 				},
 				"userId": {
-					"type": "long"
+					"store": true,
+					"type": "keyword"
 				}
 			}
 		}

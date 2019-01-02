@@ -36,7 +36,7 @@
 					"type": "keyword"
 				},
 				"userId": {
-					"type": "long"
+					"type": "keyword"
 				},
 				"version": {
 					"type": "float"

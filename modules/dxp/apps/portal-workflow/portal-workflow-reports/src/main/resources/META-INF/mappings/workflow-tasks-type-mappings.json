@@ -8,17 +8,23 @@
 				"date": {
 					"type": "date"
 				},
+				"deleted": {
+					"type": "boolean"
+				},
 				"id": {
 					"type": "keyword"
 				},
 				"instanceId": {
 					"type": "keyword"
 				},
+				"name": {
+					"type": "keyword"
+				},
 				"taskId": {
 					"type": "keyword"
 				},
 				"userId": {
-					"type": "long"
+					"type": "keyword"
 				}
 			}
 		}

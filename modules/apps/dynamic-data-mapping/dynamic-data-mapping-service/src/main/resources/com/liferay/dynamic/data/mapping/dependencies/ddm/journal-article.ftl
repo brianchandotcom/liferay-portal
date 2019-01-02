@@ -8,6 +8,8 @@
 	fieldRawValue = paramUtil.getString(request, "${namespacedFieldName}", fieldRawValue)
 
 	assetTitle = ""
+
+	message = ""
 />
 
 <#if validator.isNotNull(fieldRawValue)>
@@ -15,6 +17,8 @@
 		fieldJournalJSONObject = jsonFactoryUtil.createJSONObject(fieldRawValue)
 
 		journalArticle = fetchLatestArticle(fieldJournalJSONObject)
+
+		message = fieldJournalJSONObject.getString("message")
 	/>
 
 	<#if validator.isNotNull(journalArticle)>
@@ -33,7 +37,7 @@
 	data=data
 	required=required
 >
-	<div class="form-group">
+	<div class="form-group ${(message?has_content)?string('has-warning', '')}" id="${portletNamespace}${namespacedFieldName}FormGroup">
 		<div class="hide" id="${portletNamespace}${namespacedFieldName}SelectContainer"></div>
 
 		<@liferay_aui.input
@@ -61,6 +65,10 @@
 				<@liferay_aui.validator name="required" />
 			</#if>
 		</@>
+
+		<#if validator.isNotNull(message)>
+			<div class="form-feedback-item" id="${portletNamespace}${namespacedFieldName}Message">${message}</div>
+		</#if>
 
 		<div class="button-holder">
 			<@liferay_aui.button

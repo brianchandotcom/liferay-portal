@@ -21,21 +21,19 @@ import com.liferay.data.engine.executor.DECountResponse;
  */
 public class DEDataDefinitionCountResponse implements DECountResponse {
 
-	public int getDeDataDefinitionTotal() {
-		return _deDataDefinitionTotal;
+	public int getTotal() {
+		return _total;
 	}
 
 	public static final class Builder {
 
-		public static Builder newBuilder(int deDataDefinitionTotal) {
-			return new Builder(deDataDefinitionTotal);
+		public static Builder newBuilder(int total) {
+			return new Builder(total);
 		}
 
-		public static DEDataDefinitionCountResponse of(
-			int deDataDefinitionTotal) {
-
+		public static DEDataDefinitionCountResponse of(int total) {
 			return newBuilder(
-				deDataDefinitionTotal
+				total
 			).build();
 		}
 
@@ -43,9 +41,8 @@ public class DEDataDefinitionCountResponse implements DECountResponse {
 			return _deDataDefinitionCountResponse;
 		}
 
-		private Builder(int deDataDefinitionTotal) {
-			_deDataDefinitionCountResponse._deDataDefinitionTotal =
-				deDataDefinitionTotal;
+		private Builder(int total) {
+			_deDataDefinitionCountResponse._total = total;
 		}
 
 		private final DEDataDefinitionCountResponse
@@ -57,6 +54,6 @@ public class DEDataDefinitionCountResponse implements DECountResponse {
 	private DEDataDefinitionCountResponse() {
 	}
 
-	private int _deDataDefinitionTotal;
+	private int _total;
 
 }

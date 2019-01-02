@@ -157,8 +157,7 @@ public class DERequestExecutorTest {
 			DEDataDefinitionCountResponse deDataDefinitionCountResponse =
 				_deCountRequestExecutor.execute(deDataDefinitionCountRequest);
 
-			Assert.assertEquals(
-				2, deDataDefinitionCountResponse.getDeDataDefinitionTotal());
+			Assert.assertEquals(2, deDataDefinitionCountResponse.getTotal());
 		}
 		finally {
 			ServiceContextThreadLocal.popServiceContext();
@@ -214,8 +213,7 @@ public class DERequestExecutorTest {
 			DEDataDefinitionCountResponse deDataDefinitionCountResponse =
 				_deCountRequestExecutor.execute(deDataDefinitionCountRequest);
 
-			Assert.assertEquals(
-				1, deDataDefinitionCountResponse.getDeDataDefinitionTotal());
+			Assert.assertEquals(1, deDataDefinitionCountResponse.getTotal());
 
 			DEDataDefinitionDeleteRequest deDataDefinitionDeleteRequest =
 				DEDataDefinitionRequestBuilder.deleteBuilder(
@@ -238,9 +236,7 @@ public class DERequestExecutorTest {
 						deDataDefinitionCountRequestAfterDelete);
 
 			Assert.assertEquals(
-				0,
-				deDataDefinitionCountResponseAfterDelete.
-					getDeDataDefinitionTotal());
+				0, deDataDefinitionCountResponseAfterDelete.getTotal());
 		}
 		finally {
 			ServiceContextThreadLocal.popServiceContext();
@@ -264,8 +260,7 @@ public class DERequestExecutorTest {
 			DEDataDefinitionCountResponse deDataDefinitionCountResponse =
 				_deCountRequestExecutor.execute(deDataDefinitionCountRequest);
 
-			Assert.assertEquals(
-				0, deDataDefinitionCountResponse.getDeDataDefinitionTotal());
+			Assert.assertEquals(0, deDataDefinitionCountResponse.getTotal());
 		}
 		finally {
 			ServiceContextThreadLocal.popServiceContext();
@@ -613,8 +608,10 @@ public class DERequestExecutorTest {
 			DEDataDefinitionListResponse deDataDefinitionListResponse =
 				_deListRequestExecutor.execute(deDataDefinitionListRequest);
 
-			Assert.assertTrue(
-				deDataDefinitionListResponse.getDEDataDefinitions().isEmpty());
+			List<DEDataDefinition> dataDefinitions =
+				deDataDefinitionListResponse.getDEDataDefinitions();
+
+			Assert.assertTrue(dataDefinitions.isEmpty());
 		}
 		finally {
 			ServiceContextThreadLocal.popServiceContext();

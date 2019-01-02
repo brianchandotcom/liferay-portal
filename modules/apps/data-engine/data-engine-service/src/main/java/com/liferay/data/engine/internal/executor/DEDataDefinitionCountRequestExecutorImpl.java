@@ -39,7 +39,7 @@ public class DEDataDefinitionCountRequestExecutorImpl
 
 		try {
 			long deDataDefinitionGroupId =
-				deDataDefinitionCountRequest.getDEDataDefinitionGroupId();
+				deDataDefinitionCountRequest.getGroupId();
 
 			int deDataDefinitionTotal =
 				ddmStructureLocalService.getStructuresCount(

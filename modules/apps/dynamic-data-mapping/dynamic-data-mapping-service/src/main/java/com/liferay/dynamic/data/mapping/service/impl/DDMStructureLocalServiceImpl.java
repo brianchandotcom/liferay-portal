@@ -291,14 +291,14 @@ public class DDMStructureLocalServiceImpl
 		structure.setUserName(user.getFullName());
 		structure.setVersionUserId(user.getUserId());
 		structure.setVersionUserName(user.getFullName());
+		structure.setCreateDate(now);
+		structure.setModifiedDate(now);
 		structure.setParentStructureId(parentStructureId);
 		structure.setClassNameId(classNameId);
 		structure.setStructureKey(structureKey);
 		structure.setVersion(DDMStructureConstants.VERSION_DEFAULT);
 		structure.setNameMap(nameMap);
 		structure.setDescriptionMap(descriptionMap);
-		structure.setCreateDate(now);
-		structure.setModifiedDate(now);
 		structure.setDefinition(definition);
 		structure.setStorageType(storageType);
 		structure.setType(DDMStructureConstants.TYPE_DEFAULT);

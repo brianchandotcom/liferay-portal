@@ -31,8 +31,8 @@ public class DEDataDefinitionCountRequest implements DECountRequest {
 		return deCountRequestExecutor.executeCountRequest(this);
 	}
 
-	public long getDEDataDefinitionGroupId() {
-		return _deDataDefinitionGroupId;
+	public long getGroupId() {
+		return _groupId;
 	}
 
 	public static final class Builder {
@@ -41,9 +41,8 @@ public class DEDataDefinitionCountRequest implements DECountRequest {
 			return _deDataDefinitionCountRequest;
 		}
 
-		public Builder byGroupId(long deDataDefinitionGroupId) {
-			_deDataDefinitionCountRequest._deDataDefinitionGroupId =
-				deDataDefinitionGroupId;
+		public Builder byGroupId(long groupId) {
+			_deDataDefinitionCountRequest._groupId = groupId;
 
 			return this;
 		}
@@ -56,6 +55,6 @@ public class DEDataDefinitionCountRequest implements DECountRequest {
 	private DEDataDefinitionCountRequest() {
 	}
 
-	private long _deDataDefinitionGroupId;
+	private long _groupId;
 
 }

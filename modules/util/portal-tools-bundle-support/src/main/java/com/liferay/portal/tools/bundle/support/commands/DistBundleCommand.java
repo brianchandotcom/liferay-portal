@@ -61,7 +61,8 @@ public class DistBundleCommand extends BaseCommand {
 		}
 		else {
 			throw new IllegalArgumentException(
-				"Please specify either 7z, zip, or tar.gz for format");
+				"Please specify either 7z, tar.gz, or zip for the archive " +
+					"format");
 		}
 	}
 

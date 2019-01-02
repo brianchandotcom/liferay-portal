@@ -15,11 +15,19 @@
 package com.liferay.asset.web.internal.portlet;
 
 import com.liferay.asset.constants.AssetPortletKeys;
+import com.liferay.asset.constants.AssetWebKeys;
+import com.liferay.asset.util.AssetEntryUsageHelper;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 
+import java.io.IOException;
+
 import javax.portlet.Portlet;
+import javax.portlet.PortletException;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Jürgen Kappler
@@ -44,4 +52,19 @@ import org.osgi.service.component.annotations.Component;
 	service = Portlet.class
 )
 public class AssetPortlet extends MVCPortlet {
+
+	@Override
+	public void render(
+			RenderRequest renderRequest, RenderResponse renderResponse)
+		throws IOException, PortletException {
+
+		renderRequest.setAttribute(
+			AssetWebKeys.ASSET_ENTRY_USAGE_HELPER, _assetEntryUsageHelper);
+
+		super.render(renderRequest, renderResponse);
+	}
+
+	@Reference
+	private AssetEntryUsageHelper _assetEntryUsageHelper;
+
 }

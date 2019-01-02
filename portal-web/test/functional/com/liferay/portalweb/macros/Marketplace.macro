@@ -13,7 +13,7 @@ definition {
 
 		SitePages.addPublicPage(pageName = "Blogs Test Page");
 
-		Navigator.gotoSitePage(pageName = "Blogs Test Page", siteName = "${siteName}");
+		Navigator.gotoPage(pageName = "Blogs Test Page");
 
 		Portlet.addPG(
 			pageName = "Blogs Test Page",
@@ -79,10 +79,7 @@ definition {
 
 		SitePages.addPublicPage(pageName = "Documents and Media Test Page");
 
-		Navigator.gotoSitePage(
-			pageName = "Documents and Media Test Page",
-			siteName = "${siteName}"
-		);
+		Navigator.gotoPage(pageName = "Documents and Media Test Page");
 
 		Portlet.addPG(
 			pageName = "Documents and Media Test Page",
@@ -153,7 +150,7 @@ definition {
 
 		SitePages.addPublicPage(pageName = "Wiki Test Page");
 
-		Navigator.gotoSitePage(pageName = "Wiki Test Page", siteName = "${siteName}");
+		Navigator.gotoPage(pageName = "Wiki Test Page");
 
 		Portlet.addPG(
 			pageName = "Wiki Test Page",
@@ -200,10 +197,7 @@ definition {
 
 		SitePages.addPublicPage(pageName = "Calendar Test Page");
 
-		Navigator.gotoSitePage(
-			pageName = "Calendar Test Page",
-			siteName = "${siteName}"
-		);
+		Navigator.gotoPage(pageName = "Calendar Test Page");
 
 		Portlet.addPG(
 			pageName = "Calendar Test Page",
@@ -257,10 +251,7 @@ definition {
 
 		SitePages.addPublicPage(pageName = "Bookmarks Test Page");
 
-		Navigator.gotoSitePage(
-			pageName = "Bookmarks Test Page",
-			siteName = "${siteName}"
-		);
+		Navigator.gotoPage(pageName = "Bookmarks Test Page");
 
 		Portlet.addPG(
 			pageName = "Bookmarks Test Page",

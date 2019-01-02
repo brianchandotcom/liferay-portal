@@ -10,7 +10,7 @@
 <tbody>
 <tr>
 	<td>DROOLS_CONTENT</td>
-	<td>//div[contains(@id,'sampledroolsportlet')]//div[@class='portlet-body']</td>
+	<td>//div[contains(@id,'SampleDroolsPortlet')]//div[@class='portlet-body']</td>
 	<td></td>
 </tr>
 <tr>

@@ -575,14 +575,14 @@ public class JournalConverterImpl implements JournalConverter {
 				Long classPK = jsonObject.getLong("classPK");
 
 				if (Validator.isNotNull(classPK)) {
-					JournalArticle journalArticle =
+					JournalArticle article =
 						_journalArticleLocalService.fetchLatestArticle(classPK);
 
-					if (journalArticle != null) {
-						jsonObject.put("groupId", journalArticle.getGroupId());
+					if (article != null) {
+						jsonObject.put("groupId", article.getGroupId());
 						jsonObject.put(
-							"title", journalArticle.getTitle(defaultLocale));
-						jsonObject.put("uuid", journalArticle.getUuid());
+							"title", article.getTitle(defaultLocale));
+						jsonObject.put("uuid", article.getUuid());
 					}
 				}
 

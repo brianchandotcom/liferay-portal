@@ -106,6 +106,8 @@ definition {
 	@description = "This is a use case for LPS-74307."
 	@priority = "5"
 	test AddSiteTemplateChangeCurrentTheme {
+		property osgi.app.includes = "frontend-theme-fjord";
+
 		ProductMenu.gotoPortlet(
 			category = "Sites",
 			panel = "Control Panel",

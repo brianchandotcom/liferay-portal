@@ -61,7 +61,7 @@ public class DEDataDefinitionServiceImpl implements DEDataDefinitionService {
 
 		try {
 			long deDataDefinitionGroupId =
-				deDataDefinitionCountRequest.getDEDataDefinitionGroupId();
+				deDataDefinitionCountRequest.getGroupId();
 
 			_modelResourcePermission.check(
 				getPermissionChecker(), deDataDefinitionGroupId,
@@ -153,7 +153,7 @@ public class DEDataDefinitionServiceImpl implements DEDataDefinitionService {
 
 		try {
 			long deDataDefinitionGroupId =
-				deDataDefinitionListRequest.getDEDataGroupId();
+				deDataDefinitionListRequest.getGroupId();
 
 			_modelResourcePermission.check(
 				getPermissionChecker(), deDataDefinitionGroupId,

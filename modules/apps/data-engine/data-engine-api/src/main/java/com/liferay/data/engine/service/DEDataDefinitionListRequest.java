@@ -31,8 +31,8 @@ public final class DEDataDefinitionListRequest implements DEListRequest {
 		return deListRequestExecutor.executeListRequest(this);
 	}
 
-	public long getDEDataGroupId() {
-		return _deDataDefinitionGroupId;
+	public long getGroupId() {
+		return _groupId;
 	}
 
 	public static final class Builder {
@@ -41,9 +41,8 @@ public final class DEDataDefinitionListRequest implements DEListRequest {
 			return _deDataDefinitionListRequest;
 		}
 
-		public Builder byGroupId(long deDataDefinitionGroupId) {
-			_deDataDefinitionListRequest._deDataDefinitionGroupId =
-				deDataDefinitionGroupId;
+		public Builder byGroupId(long groupId) {
+			_deDataDefinitionListRequest._groupId = groupId;
 
 			return this;
 		}
@@ -56,6 +55,6 @@ public final class DEDataDefinitionListRequest implements DEListRequest {
 	private DEDataDefinitionListRequest() {
 	}
 
-	private long _deDataDefinitionGroupId;
+	private long _groupId;
 
 }

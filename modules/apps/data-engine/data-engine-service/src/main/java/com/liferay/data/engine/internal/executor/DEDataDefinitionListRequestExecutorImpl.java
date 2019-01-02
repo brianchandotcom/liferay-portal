@@ -50,7 +50,7 @@ public class DEDataDefinitionListRequestExecutorImpl
 
 		try {
 			long deDataDefinitionGroupId =
-				deDataDefinitionListRequest.getDEDataGroupId();
+				deDataDefinitionListRequest.getGroupId();
 
 			List<DDMStructure> ddmStructures =
 				ddmStructureLocalService.getStructures(deDataDefinitionGroupId);

@@ -99,17 +99,18 @@ public class JournalContentTest {
 		_journalArticle = JournalTestUtil.addArticleWithXMLContent(
 			getXML(), "BASIC-WEB-CONTENT", "BASIC-WEB-CONTENT");
 
-		String languageId = _journalArticle.getDefaultLanguageId();
+		String defaultLanguageId = _journalArticle.getDefaultLanguageId();
 
-		JournalArticleDisplay display = _journalContent.getDisplay(
+		JournalArticleDisplay articleDisplay = _journalContent.getDisplay(
 			_journalArticle.getGroupId(), _journalArticle.getArticleId(),
-			Constants.VIEW, languageId, _portletRequestModel);
+			Constants.VIEW, defaultLanguageId, _portletRequestModel);
 
 		Assert.assertEquals(
-			_journalArticle.getDescription(languageId),
-			display.getDescription());
+			_journalArticle.getDescription(defaultLanguageId),
+			articleDisplay.getDescription());
 		Assert.assertEquals(
-			_journalArticle.getTitle(languageId), display.getTitle());
+			_journalArticle.getTitle(defaultLanguageId),
+			articleDisplay.getTitle());
 	}
 
 	protected static String getXML() {
@@ -130,14 +131,9 @@ public class JournalContentTest {
 
 	protected Layout getLayout() throws PortalException {
 		List<Layout> layouts = _layoutLocalService.getLayouts(
-			TestPropsValues.getGroupId(), false);
+			TestPropsValues.getGroupId(), false, 0, 1, null);
 
 		return layouts.get(0);
-	}
-
-	protected LayoutSet getLayoutSet() throws PortalException {
-		return _layoutSetLocalService.getLayoutSet(
-			TestPropsValues.getGroupId(), false);
 	}
 
 	protected RenderRequest getRenderRequest(
@@ -180,7 +176,8 @@ public class JournalContentTest {
 		themeDisplay.setCompany(getCompany());
 		themeDisplay.setLayout(getLayout());
 
-		LayoutSet layoutSet = getLayoutSet();
+		LayoutSet layoutSet = _layoutSetLocalService.getLayoutSet(
+			TestPropsValues.getGroupId(), false);
 
 		themeDisplay.setLayoutSet(layoutSet);
 		themeDisplay.setLookAndFeel(getTheme(layoutSet), null);

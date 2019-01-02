@@ -21,12 +21,20 @@ import com.liferay.data.engine.model.DEDataDefinition;
  */
 public class DEDataDefinitionRequestBuilder {
 
+	public static DEDataDefinitionCountRequest.Builder countBuilder() {
+		return new DEDataDefinitionCountRequest.Builder();
+	}
+
 	public static DEDataDefinitionDeleteRequest.Builder deleteBuilder() {
 		return new DEDataDefinitionDeleteRequest.Builder();
 	}
 
 	public static DEDataDefinitionGetRequest.Builder getBuilder() {
 		return new DEDataDefinitionGetRequest.Builder();
+	}
+
+	public static DEDataDefinitionListRequest.Builder listBuilder() {
+		return new DEDataDefinitionListRequest.Builder();
 	}
 
 	public static DEDataDefinitionSaveRequest.Builder saveBuilder(

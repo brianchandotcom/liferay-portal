@@ -14,8 +14,16 @@
 
 package com.liferay.bulk.selection;
 
+import com.liferay.portal.kernel.exception.PortalException;
+
 /**
- * @author Adolfo Pérez
+ * @author Alejandro Tardín
  */
-public interface BulkSelectionBackgroundActionExecutor {
+public interface BulkSelectionRunner {
+
+	public <T, I extends BulkSelectionAction.Input> void run(
+			BulkSelection<T> bulkSelection,
+			BulkSelectionAction<T, I> bulkSelectionAction, I input)
+		throws PortalException;
+
 }

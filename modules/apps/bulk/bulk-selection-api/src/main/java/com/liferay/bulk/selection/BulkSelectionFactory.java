@@ -19,9 +19,8 @@ import java.util.Map;
 /**
  * @author Adolfo Pérez
  */
-public interface BulkSelectionFactory
-	<T, S extends BulkSelectionBackgroundActionExecutor> {
+public interface BulkSelectionFactory<T> {
 
-	public BulkSelection<T, S> create(Map<String, String[]> parameterMap);
+	public BulkSelection<T> create(Map<String, String[]> parameterMap);
 
 }

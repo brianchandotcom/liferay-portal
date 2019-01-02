@@ -12,18 +12,17 @@
  * details.
  */
 
-package com.liferay.document.library.internal.bulk.selection;
+package com.liferay.bulk.selection.internal;
 
 import com.liferay.bulk.selection.BulkSelection;
-import com.liferay.bulk.selection.BulkSelectionBackgroundActionExecutorConsumer;
-import com.liferay.document.library.bulk.selection.FileEntryBulkSelectionBackgroundActionExecutor;
-import com.liferay.document.library.internal.background.task.FileEntryBulkSelectionBackgroundTaskExecutor;
-import com.liferay.document.library.internal.constants.BulkSelectionBackgroundTaskConstants;
+import com.liferay.bulk.selection.BulkSelectionAction;
+import com.liferay.bulk.selection.BulkSelectionFactory;
+import com.liferay.bulk.selection.BulkSelectionRunner;
+import com.liferay.bulk.selection.internal.constants.BulkSelectionBackgroundTaskConstants;
 import com.liferay.portal.background.task.constants.BackgroundTaskContextMapConstants;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskManager;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.CompanyConstants;
-import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 
@@ -32,53 +31,57 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Adolfo Pérez
  */
-public abstract class BaseBulkSelection
-	implements BulkSelection
-		<FileEntry, FileEntryBulkSelectionBackgroundActionExecutor> {
-
-	public BaseBulkSelection(
-		Map<String, String[]> parameterMap,
-		BackgroundTaskManager backgroundTaskManager) {
-
-		_parameterMap = parameterMap;
-		_backgroundTaskManager = backgroundTaskManager;
-	}
+@Component(immediate = true, service = BulkSelectionRunner.class)
+public class BulkSelectionSelectionRunnerImpl implements BulkSelectionRunner {
 
 	@Override
-	public
-			<U extends BulkSelectionBackgroundActionExecutorConsumer
-				<FileEntryBulkSelectionBackgroundActionExecutor>>
-					void runBackgroundAction(U consumer)
-				throws PortalException {
+	public <T, I extends BulkSelectionAction.Input> void run(
+			BulkSelection<T> bulkSelection,
+			BulkSelectionAction<T, I> bulkSelectionAction, I input)
+		throws PortalException {
 
 		Map<String, Serializable> taskContextMap = new HashMap<>();
 
+		Class<? extends BulkSelectionAction> bulkSelectionActionClass =
+			bulkSelectionAction.getClass();
+
 		taskContextMap.put(
 			BulkSelectionBackgroundTaskConstants.
-				BULK_SELECTION_BACKGROUND_ACTION_EXECUTOR_CONSUMER,
-			consumer);
+				BULK_SELECTION_ACTION_CLASS_NAME,
+			bulkSelectionActionClass.getName());
+
+		taskContextMap.put(
+			BulkSelectionBackgroundTaskConstants.BULK_SELECTION_ACTION_INPUT,
+			input);
+
+		Class<? extends BulkSelectionFactory> bulkSelectionFactoryClass =
+			bulkSelection.getBulkSelectionFactoryClass();
+
+		taskContextMap.put(
+			BulkSelectionBackgroundTaskConstants.
+				BULK_SELECTION_FACTORY_CLASS_NAME,
+			bulkSelectionFactoryClass.getName());
+
 		taskContextMap.put(
 			BulkSelectionBackgroundTaskConstants.BULK_SELECTION_PARAMETER_MAP,
-			(Serializable)_parameterMap);
+			(Serializable)bulkSelection.getParameterMap());
 		taskContextMap.put(
 			BackgroundTaskContextMapConstants.DELETE_ON_SUCCESS, true);
-		taskContextMap.put(
-			BulkSelectionBackgroundTaskConstants.USER_ID,
-			PrincipalThreadLocal.getUserId());
 
 		_backgroundTaskManager.addBackgroundTask(
 			PrincipalThreadLocal.getUserId(), CompanyConstants.SYSTEM,
-			getBackgroundJobName(),
-			FileEntryBulkSelectionBackgroundTaskExecutor.class.getName(),
-			taskContextMap, new ServiceContext());
+			bulkSelectionActionClass.getName(),
+			BulkSelectionBackgroundTaskExecutor.class.getName(), taskContextMap,
+			new ServiceContext());
 	}
 
-	protected abstract String getBackgroundJobName();
-
-	private final BackgroundTaskManager _backgroundTaskManager;
-	private final Map<String, String[]> _parameterMap;
+	@Reference
+	private BackgroundTaskManager _backgroundTaskManager;
 
 }

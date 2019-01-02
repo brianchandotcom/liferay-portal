@@ -12,17 +12,23 @@
  * details.
  */
 
-package com.liferay.document.library.bulk.selection;
-
-import com.liferay.bulk.selection.BulkSelectionBackgroundActionExecutor;
+package com.liferay.bulk.selection.internal.constants;
 
 /**
  * @author Adolfo Pérez
  */
-public interface FileEntryBulkSelectionBackgroundActionExecutor
-	extends BulkSelectionBackgroundActionExecutor {
+public class BulkSelectionBackgroundTaskConstants {
 
-	public void updateFileEntryTags(
-		String[] toAddTagNames, String[] toRemoveTagNames, boolean append);
+	public static final String BULK_SELECTION_ACTION_CLASS_NAME =
+		"bulkSelectionActionClassName";
+
+	public static final String BULK_SELECTION_ACTION_INPUT =
+		"bulkSelectionActionInput";
+
+	public static final String BULK_SELECTION_FACTORY_CLASS_NAME =
+		"bulkSelectionFactoryClassName";
+
+	public static final String BULK_SELECTION_PARAMETER_MAP =
+		"bulkSelectionParameterMap";
 
 }

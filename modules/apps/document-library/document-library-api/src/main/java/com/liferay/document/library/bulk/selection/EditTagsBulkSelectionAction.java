@@ -12,20 +12,26 @@
  * details.
  */
 
-package com.liferay.document.library.internal.constants;
+package com.liferay.document.library.bulk.selection;
+
+import com.liferay.bulk.selection.BulkSelectionAction;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 
 /**
  * @author Adolfo Pérez
  */
-public class BulkSelectionBackgroundTaskConstants {
+public interface EditTagsBulkSelectionAction
+	extends BulkSelectionAction<FileEntry, EditTagsBulkSelectionAction.Input> {
 
-	public static final String
-		BULK_SELECTION_BACKGROUND_ACTION_EXECUTOR_CONSUMER =
-			"bulkSelectionBackgroundActionExecutorConsumer";
+	public interface Input extends BulkSelectionAction.Input {
+		public String[] geToAddTagNames();
 
-	public static final String BULK_SELECTION_PARAMETER_MAP =
-		"bulkSelectionParameterMap";
+		public String[] geToRemoveTagNames();
 
-	public static final String USER_ID = "userId";
+		public long getUserId();
+
+		public boolean isAppend();
+
+	}
 
 }

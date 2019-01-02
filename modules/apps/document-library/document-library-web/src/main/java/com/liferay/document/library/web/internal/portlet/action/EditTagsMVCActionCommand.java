@@ -16,7 +16,8 @@ package com.liferay.document.library.web.internal.portlet.action;
 
 import com.liferay.bulk.selection.BulkSelection;
 import com.liferay.bulk.selection.BulkSelectionFactory;
-import com.liferay.document.library.bulk.selection.FileEntryBulkSelectionBackgroundActionExecutor;
+import com.liferay.bulk.selection.BulkSelectionRunner;
+import com.liferay.document.library.bulk.selection.EditTagsBulkSelectionAction;
 import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -26,9 +27,13 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.SessionMessages;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.SetUtil;
+import com.liferay.portal.kernel.util.WebKeys;
+
+import java.io.Serializable;
 
 import java.util.Arrays;
 import java.util.Set;
@@ -53,6 +58,46 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class EditTagsMVCActionCommand extends BaseMVCActionCommand {
 
+	public static class EditTagsBulkSelectionActionInput
+		implements EditTagsBulkSelectionAction.Input, Serializable {
+
+		public EditTagsBulkSelectionActionInput(
+			String[] toAddTagNames, String[] toRemoveTagNames, long userId,
+			boolean append) {
+
+			_toAddTagNames = toAddTagNames;
+			_toRemoveTagNames = toRemoveTagNames;
+			_userId = userId;
+			_append = append;
+		}
+
+		@Override
+		public String[] geToAddTagNames() {
+			return _toAddTagNames;
+		}
+
+		@Override
+		public String[] geToRemoveTagNames() {
+			return _toRemoveTagNames;
+		}
+
+		@Override
+		public long getUserId() {
+			return _userId;
+		}
+
+		@Override
+		public boolean isAppend() {
+			return _append;
+		}
+
+		private final boolean _append;
+		private final String[] _toAddTagNames;
+		private final String[] _toRemoveTagNames;
+		private final long _userId;
+
+	}
+
 	@Override
 	protected void doProcessAction(
 			ActionRequest actionRequest, ActionResponse actionResponse)
@@ -67,22 +112,22 @@ public class EditTagsMVCActionCommand extends BaseMVCActionCommand {
 
 			String[] toAddTagNames = serviceContext.getAssetTagNames();
 
-			boolean append = ParamUtil.getBoolean(actionRequest, "append");
-
 			commonTagNamesSet.removeAll(Arrays.asList(toAddTagNames));
 
 			String[] toRemoveTagNames = commonTagNamesSet.toArray(
 				new String[commonTagNamesSet.size()]);
 
-			BulkSelection
-				<FileEntry, FileEntryBulkSelectionBackgroundActionExecutor>
-					bulkSelection = _bulkSelectionFactory.create(
-						actionRequest.getParameterMap());
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
 
-			bulkSelection.runBackgroundAction(
-				(FileEntryBulkSelectionBackgroundActionExecutor executor) ->
-					executor.updateFileEntryTags(
-						toAddTagNames, toRemoveTagNames, append));
+			BulkSelection<FileEntry> bulkSelection =
+				_bulkSelectionFactory.create(actionRequest.getParameterMap());
+
+			_bulkSelectionRunner.run(
+				bulkSelection, _editTagsBulkSelectionAction,
+				new EditTagsBulkSelectionActionInput(
+					toAddTagNames, toRemoveTagNames, themeDisplay.getUserId(),
+					ParamUtil.getBoolean(actionRequest, "append")));
 
 			String successMessage = LanguageUtil.get(
 				_portal.getHttpServletRequest(actionRequest), "changes-saved");
@@ -101,9 +146,13 @@ public class EditTagsMVCActionCommand extends BaseMVCActionCommand {
 	@Reference(
 		target = "(model.class.name=com.liferay.portal.kernel.repository.model.FileEntry)"
 	)
-	private BulkSelectionFactory
-		<FileEntry, FileEntryBulkSelectionBackgroundActionExecutor>
-			_bulkSelectionFactory;
+	private BulkSelectionFactory<FileEntry> _bulkSelectionFactory;
+
+	@Reference
+	private BulkSelectionRunner _bulkSelectionRunner;
+
+	@Reference
+	private EditTagsBulkSelectionAction _editTagsBulkSelectionAction;
 
 	@Reference
 	private Portal _portal;

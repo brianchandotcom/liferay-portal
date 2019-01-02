@@ -14,14 +14,12 @@
 
 package com.liferay.document.library.internal.bulk.selection;
 
+import com.liferay.bulk.selection.BulkSelection;
+import com.liferay.bulk.selection.BulkSelectionFactory;
 import com.liferay.document.library.kernel.service.DLAppService;
-import com.liferay.petra.string.StringBundler;
-import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.backgroundtask.BackgroundTaskManager;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.repository.model.FileEntry;
-import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
 
 import java.io.Serializable;
@@ -36,17 +34,15 @@ import java.util.stream.Stream;
 /**
  * @author Adolfo Pérez
  */
-public class SingleFileEntryBulkSelection extends BaseBulkSelection {
+public class SingleFileEntryBulkSelection implements BulkSelection<FileEntry> {
 
 	public SingleFileEntryBulkSelection(
 		long fileEntryId, Map<String, String[]> parameterMap,
 		ResourceBundleLoader resourceBundleLoader, Language language,
-		DLAppService dlAppService,
-		BackgroundTaskManager backgroundTaskManager) {
-
-		super(parameterMap, backgroundTaskManager);
+		DLAppService dlAppService) {
 
 		_fileEntryId = fileEntryId;
+		_parameterMap = parameterMap;
 		_resourceBundleLoader = resourceBundleLoader;
 		_language = language;
 		_dlAppService = dlAppService;
@@ -62,6 +58,18 @@ public class SingleFileEntryBulkSelection extends BaseBulkSelection {
 		return _language.format(
 			resourceBundle, "these-changes-will-be-applied-to-x",
 			fileEntry.getTitle());
+	}
+
+	@Override
+	public Class<? extends BulkSelectionFactory>
+		getBulkSelectionFactoryClass() {
+
+		return FileEntryBulkSelectionFactory.class;
+	}
+
+	@Override
+	public Map<String, String[]> getParameterMap() {
+		return _parameterMap;
 	}
 
 	@Override
@@ -82,16 +90,10 @@ public class SingleFileEntryBulkSelection extends BaseBulkSelection {
 		return set.stream();
 	}
 
-	@Override
-	protected String getBackgroundJobName() {
-		return StringBundler.concat(
-			"singleFileEntryBulkSelection-", PrincipalThreadLocal.getUserId(),
-			StringPool.DASH, _fileEntryId);
-	}
-
 	private final DLAppService _dlAppService;
 	private final long _fileEntryId;
 	private final Language _language;
+	private final Map<String, String[]> _parameterMap;
 	private final ResourceBundleLoader _resourceBundleLoader;
 
 }

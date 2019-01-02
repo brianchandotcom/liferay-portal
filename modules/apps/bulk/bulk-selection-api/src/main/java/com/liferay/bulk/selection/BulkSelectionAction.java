@@ -16,13 +16,15 @@ package com.liferay.bulk.selection;
 
 import java.io.Serializable;
 
-import java.util.function.Consumer;
-
 /**
  * @author Adolfo Pérez
  */
-@FunctionalInterface
-public interface BulkSelectionBackgroundActionExecutorConsumer
-	<T extends BulkSelectionBackgroundActionExecutor>
-		extends Consumer<T>, Serializable {
+public interface BulkSelectionAction<T, U extends BulkSelectionAction.Input> {
+
+	public void execute(BulkSelection<T> bulkSelection, U input)
+		throws Exception;
+
+	public interface Input extends Serializable {
+	}
+
 }

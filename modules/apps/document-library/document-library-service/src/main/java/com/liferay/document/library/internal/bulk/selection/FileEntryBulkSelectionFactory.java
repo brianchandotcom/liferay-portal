@@ -16,9 +16,7 @@ package com.liferay.document.library.internal.bulk.selection;
 
 import com.liferay.bulk.selection.BulkSelection;
 import com.liferay.bulk.selection.BulkSelectionFactory;
-import com.liferay.document.library.bulk.selection.FileEntryBulkSelectionBackgroundActionExecutor;
 import com.liferay.document.library.kernel.service.DLAppService;
-import com.liferay.portal.kernel.backgroundtask.BackgroundTaskManager;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.repository.RepositoryProvider;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -37,16 +35,12 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = "model.class.name=com.liferay.portal.kernel.repository.model.FileEntry",
-	service = BulkSelectionFactory.class
+	service = {BulkSelectionFactory.class, FileEntryBulkSelectionFactory.class}
 )
 public class FileEntryBulkSelectionFactory
-	implements BulkSelectionFactory
-		<FileEntry, FileEntryBulkSelectionBackgroundActionExecutor> {
+	implements BulkSelectionFactory<FileEntry> {
 
-	public BulkSelection
-		<FileEntry, FileEntryBulkSelectionBackgroundActionExecutor> create(
-			Map<String, String[]> parameterMap) {
-
+	public BulkSelection<FileEntry> create(Map<String, String[]> parameterMap) {
 		if (!parameterMap.containsKey("rowIdsFileEntry")) {
 			throw new IllegalArgumentException();
 		}
@@ -79,14 +73,11 @@ public class FileEntryBulkSelectionFactory
 
 		return new FolderFileEntryBulkSelection(
 			repositoryId, folderId, parameterMap, _resourceBundleLoader,
-			_language, _repositoryProvider, _dlAppService,
-			_backgroundTaskManager);
+			_language, _repositoryProvider, _dlAppService);
 	}
 
-	private BulkSelection
-		<FileEntry, FileEntryBulkSelectionBackgroundActionExecutor>
-			_getFileEntrySelection(
-				String[] values, Map<String, String[]> parameterMap) {
+	private BulkSelection<FileEntry> _getFileEntrySelection(
+		String[] values, Map<String, String[]> parameterMap) {
 
 		if (values.length == 1) {
 			values = StringUtil.split(values[0]);
@@ -97,16 +88,13 @@ public class FileEntryBulkSelectionFactory
 		if (fileEntryIds.length == 1) {
 			return new SingleFileEntryBulkSelection(
 				fileEntryIds[0], parameterMap, _resourceBundleLoader, _language,
-				_dlAppService, _backgroundTaskManager);
+				_dlAppService);
 		}
 
 		return new MultipleFileEntryBulkSelection(
 			fileEntryIds, parameterMap, _resourceBundleLoader, _language,
-			_dlAppService, _backgroundTaskManager);
+			_dlAppService);
 	}
-
-	@Reference
-	private BackgroundTaskManager _backgroundTaskManager;
 
 	@Reference
 	private DLAppService _dlAppService;

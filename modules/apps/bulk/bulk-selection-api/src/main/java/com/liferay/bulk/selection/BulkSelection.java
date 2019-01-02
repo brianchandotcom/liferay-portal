@@ -19,20 +19,21 @@ import com.liferay.portal.kernel.exception.PortalException;
 import java.io.Serializable;
 
 import java.util.Locale;
+import java.util.Map;
 import java.util.stream.Stream;
 
 /**
  * @author Adolfo Pérez
  */
-public interface BulkSelection
-	<T, S extends BulkSelectionBackgroundActionExecutor> {
+public interface BulkSelection<T> {
 
 	public String describe(Locale locale) throws PortalException;
 
-	public boolean isMultiple();
+	public Class<? extends BulkSelectionFactory> getBulkSelectionFactoryClass();
 
-	public <U extends BulkSelectionBackgroundActionExecutorConsumer<S>>
-		void runBackgroundAction(U consumer) throws PortalException;
+	public Map<String, String[]> getParameterMap();
+
+	public boolean isMultiple();
 
 	public Serializable serialize();
 

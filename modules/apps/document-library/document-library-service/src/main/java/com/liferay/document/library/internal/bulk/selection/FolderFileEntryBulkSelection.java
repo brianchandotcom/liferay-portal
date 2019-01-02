@@ -14,11 +14,10 @@
 
 package com.liferay.document.library.internal.bulk.selection;
 
+import com.liferay.bulk.selection.BulkSelection;
+import com.liferay.bulk.selection.BulkSelectionFactory;
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.petra.reflect.ReflectionUtil;
-import com.liferay.petra.string.StringBundler;
-import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.backgroundtask.BackgroundTaskManager;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.repository.DocumentRepository;
@@ -26,7 +25,6 @@ import com.liferay.portal.kernel.repository.RepositoryProvider;
 import com.liferay.portal.kernel.repository.capabilities.BulkOperationCapability;
 import com.liferay.portal.kernel.repository.model.BaseRepositoryModelOperation;
 import com.liferay.portal.kernel.repository.model.FileEntry;
-import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
 
 import java.io.Serializable;
@@ -42,18 +40,16 @@ import java.util.stream.StreamSupport;
 /**
  * @author Adolfo Pérez
  */
-public class FolderFileEntryBulkSelection extends BaseBulkSelection {
+public class FolderFileEntryBulkSelection implements BulkSelection {
 
 	public FolderFileEntryBulkSelection(
 		long repositoryId, long folderId, Map<String, String[]> parameterMap,
 		ResourceBundleLoader resourceBundleLoader, Language language,
-		RepositoryProvider repositoryProvider, DLAppService dlAppService,
-		BackgroundTaskManager backgroundTaskManager) {
-
-		super(parameterMap, backgroundTaskManager);
+		RepositoryProvider repositoryProvider, DLAppService dlAppService) {
 
 		_repositoryId = repositoryId;
 		_folderId = folderId;
+		_parameterMap = parameterMap;
 		_resourceBundleLoader = resourceBundleLoader;
 		_language = language;
 		_repositoryProvider = repositoryProvider;
@@ -68,6 +64,18 @@ public class FolderFileEntryBulkSelection extends BaseBulkSelection {
 		return _language.format(
 			resourceBundle, "these-changes-will-be-applied-to-x-items",
 			_dlAppService.getFileEntriesCount(_repositoryId, _folderId));
+	}
+
+	@Override
+	public Class<? extends BulkSelectionFactory>
+		getBulkSelectionFactoryClass() {
+
+		return FileEntryBulkSelectionFactory.class;
+	}
+
+	@Override
+	public Map<String, String[]> getParameterMap() {
+		return _parameterMap;
 	}
 
 	@Override
@@ -159,16 +167,10 @@ public class FolderFileEntryBulkSelection extends BaseBulkSelection {
 			false);
 	}
 
-	@Override
-	protected String getBackgroundJobName() {
-		return StringBundler.concat(
-			"folderFileEntryBulkSelection-", PrincipalThreadLocal.getUserId(),
-			StringPool.DASH, _folderId);
-	}
-
 	private final DLAppService _dlAppService;
 	private final long _folderId;
 	private final Language _language;
+	private final Map<String, String[]> _parameterMap;
 	private final long _repositoryId;
 	private final RepositoryProvider _repositoryProvider;
 	private final ResourceBundleLoader _resourceBundleLoader;

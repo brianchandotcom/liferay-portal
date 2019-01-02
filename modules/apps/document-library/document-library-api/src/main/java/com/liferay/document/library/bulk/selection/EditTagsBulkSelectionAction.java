@@ -21,17 +21,5 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
  * @author Adolfo Pérez
  */
 public interface EditTagsBulkSelectionAction
-	extends BulkSelectionAction<FileEntry, EditTagsBulkSelectionAction.Input> {
-
-	public interface Input extends BulkSelectionAction.Input {
-		public String[] geToAddTagNames();
-
-		public String[] geToRemoveTagNames();
-
-		public long getUserId();
-
-		public boolean isAppend();
-
-	}
-
+	extends BulkSelectionAction<FileEntry> {
 }

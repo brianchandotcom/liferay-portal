@@ -22,8 +22,8 @@ public class BulkSelectionBackgroundTaskConstants {
 	public static final String BULK_SELECTION_ACTION_CLASS_NAME =
 		"bulkSelectionActionClassName";
 
-	public static final String BULK_SELECTION_ACTION_INPUT =
-		"bulkSelectionActionInput";
+	public static final String BULK_SELECTION_ACTION_INPUT_MAP =
+		"bulkSelectionActionInputMap";
 
 	public static final String BULK_SELECTION_FACTORY_CLASS_NAME =
 		"bulkSelectionFactoryClassName";

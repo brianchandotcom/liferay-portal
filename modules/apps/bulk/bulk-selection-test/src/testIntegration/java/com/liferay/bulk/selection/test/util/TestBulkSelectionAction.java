@@ -17,7 +17,11 @@ package com.liferay.bulk.selection.test.util;
 import com.liferay.bulk.selection.BulkSelection;
 import com.liferay.bulk.selection.BulkSelectionAction;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.util.MapUtil;
 
+import java.io.Serializable;
+
+import java.util.Map;
 import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
@@ -26,8 +30,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Alejandro Tardín
  */
 @Component(service = {BulkSelectionAction.class, TestBulkSelectionAction.class})
-public class TestBulkSelectionAction
-	implements BulkSelectionAction<Integer, TestBulkSelectionActionInput> {
+public class TestBulkSelectionAction implements BulkSelectionAction<Integer> {
 
 	public static Integer getLastResult() {
 		return _lastResult;
@@ -36,13 +39,15 @@ public class TestBulkSelectionAction
 	@Override
 	public void execute(
 			BulkSelection<Integer> bulkSelection,
-			TestBulkSelectionActionInput input)
+			Map<String, Serializable> inputMap)
 		throws PortalException {
+
+		Integer integer = MapUtil.getInteger(inputMap, "integer");
 
 		Stream<Integer> integerStream = bulkSelection.stream();
 
 		_lastResult = integerStream.map(
-			n -> n * input.getNumber()
+			n -> n * integer
 		).mapToInt(
 			Integer::intValue
 		).sum();

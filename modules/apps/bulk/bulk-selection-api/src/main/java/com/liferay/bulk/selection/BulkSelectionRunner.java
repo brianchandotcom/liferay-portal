@@ -16,14 +16,19 @@ package com.liferay.bulk.selection;
 
 import com.liferay.portal.kernel.exception.PortalException;
 
+import java.io.Serializable;
+
+import java.util.Map;
+
 /**
  * @author Alejandro Tardín
  */
 public interface BulkSelectionRunner {
 
-	public <T, I extends BulkSelectionAction.Input> void run(
+	public <T> void run(
 			BulkSelection<T> bulkSelection,
-			BulkSelectionAction<T, I> bulkSelectionAction, I input)
+			BulkSelectionAction<T> bulkSelectionAction,
+			Map<String, Serializable> inputMap)
 		throws PortalException;
 
 }

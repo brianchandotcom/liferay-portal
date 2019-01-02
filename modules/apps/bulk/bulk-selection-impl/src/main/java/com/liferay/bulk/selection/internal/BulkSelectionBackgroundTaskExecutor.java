@@ -83,11 +83,6 @@ public class BulkSelectionBackgroundTaskExecutor
 						BulkSelectionBackgroundTaskConstants.
 							BULK_SELECTION_FACTORY_CLASS_NAME);
 
-				BulkSelectionAction.Input bulkSelectionActionInput =
-					(BulkSelectionAction.Input)taskContextMap.get(
-						BulkSelectionBackgroundTaskConstants.
-							BULK_SELECTION_ACTION_INPUT);
-
 				Optional<BulkSelectionFactory> bulkSelectionFactoryOptional =
 					_getService(
 						BulkSelectionFactory.class,
@@ -96,9 +91,14 @@ public class BulkSelectionBackgroundTaskExecutor
 				bulkSelectionFactoryOptional.ifPresent(
 					bulkSelectionFactory -> {
 						try {
+							Map<String, Serializable> inputMap =
+								(Map<String, Serializable>)taskContextMap.get(
+									BulkSelectionBackgroundTaskConstants.
+										BULK_SELECTION_ACTION_INPUT_MAP);
+
 							bulkSelectionAction.execute(
 								bulkSelectionFactory.create(parameterMap),
-								bulkSelectionActionInput);
+								inputMap);
 						}
 						catch (Exception e) {
 							_log.error(e, e);

@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import java.io.Serializable;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.Set;
 
 import javax.portlet.ActionRequest;
@@ -57,46 +58,6 @@ import org.osgi.service.component.annotations.Reference;
 	service = MVCActionCommand.class
 )
 public class EditTagsMVCActionCommand extends BaseMVCActionCommand {
-
-	public static class EditTagsBulkSelectionActionInput
-		implements EditTagsBulkSelectionAction.Input, Serializable {
-
-		public EditTagsBulkSelectionActionInput(
-			String[] toAddTagNames, String[] toRemoveTagNames, long userId,
-			boolean append) {
-
-			_toAddTagNames = toAddTagNames;
-			_toRemoveTagNames = toRemoveTagNames;
-			_userId = userId;
-			_append = append;
-		}
-
-		@Override
-		public String[] geToAddTagNames() {
-			return _toAddTagNames;
-		}
-
-		@Override
-		public String[] geToRemoveTagNames() {
-			return _toRemoveTagNames;
-		}
-
-		@Override
-		public long getUserId() {
-			return _userId;
-		}
-
-		@Override
-		public boolean isAppend() {
-			return _append;
-		}
-
-		private final boolean _append;
-		private final String[] _toAddTagNames;
-		private final String[] _toRemoveTagNames;
-		private final long _userId;
-
-	}
 
 	@Override
 	protected void doProcessAction(
@@ -123,11 +84,18 @@ public class EditTagsMVCActionCommand extends BaseMVCActionCommand {
 			BulkSelection<FileEntry> bulkSelection =
 				_bulkSelectionFactory.create(actionRequest.getParameterMap());
 
+			boolean append = ParamUtil.getBoolean(actionRequest, "append");
+
 			_bulkSelectionRunner.run(
 				bulkSelection, _editTagsBulkSelectionAction,
-				new EditTagsBulkSelectionActionInput(
-					toAddTagNames, toRemoveTagNames, themeDisplay.getUserId(),
-					ParamUtil.getBoolean(actionRequest, "append")));
+				new HashMap<String, Serializable>() {
+					{
+						put("append", append);
+						put("toAddTagNames", toAddTagNames);
+						put("toRemoveTagNames", toRemoveTagNames);
+						put("userId", themeDisplay.getUserId());
+					}
+				});
 
 			String successMessage = LanguageUtil.get(
 				_portal.getHttpServletRequest(actionRequest), "changes-saved");

@@ -41,9 +41,10 @@ import org.osgi.service.component.annotations.Reference;
 public class BulkSelectionSelectionRunnerImpl implements BulkSelectionRunner {
 
 	@Override
-	public <T, I extends BulkSelectionAction.Input> void run(
+	public <T> void run(
 			BulkSelection<T> bulkSelection,
-			BulkSelectionAction<T, I> bulkSelectionAction, I input)
+			BulkSelectionAction<T> bulkSelectionAction,
+			Map<String, Serializable> inputMap)
 		throws PortalException {
 
 		Map<String, Serializable> taskContextMap = new HashMap<>();
@@ -57,8 +58,9 @@ public class BulkSelectionSelectionRunnerImpl implements BulkSelectionRunner {
 			bulkSelectionActionClass.getName());
 
 		taskContextMap.put(
-			BulkSelectionBackgroundTaskConstants.BULK_SELECTION_ACTION_INPUT,
-			input);
+			BulkSelectionBackgroundTaskConstants.
+				BULK_SELECTION_ACTION_INPUT_MAP,
+			new HashMap<>(inputMap));
 
 		Class<? extends BulkSelectionFactory> bulkSelectionFactoryClass =
 			bulkSelection.getBulkSelectionFactoryClass();
@@ -70,7 +72,7 @@ public class BulkSelectionSelectionRunnerImpl implements BulkSelectionRunner {
 
 		taskContextMap.put(
 			BulkSelectionBackgroundTaskConstants.BULK_SELECTION_PARAMETER_MAP,
-			(Serializable)bulkSelection.getParameterMap());
+			new HashMap<>(bulkSelection.getParameterMap()));
 		taskContextMap.put(
 			BackgroundTaskContextMapConstants.DELETE_ON_SUCCESS, true);
 

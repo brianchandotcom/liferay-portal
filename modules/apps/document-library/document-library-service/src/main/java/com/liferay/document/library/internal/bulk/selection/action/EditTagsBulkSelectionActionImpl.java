@@ -29,8 +29,12 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 
+import java.io.Serializable;
+
+import java.util.Map;
 import java.util.Set;
 import java.util.stream.Stream;
 
@@ -52,20 +56,21 @@ public class EditTagsBulkSelectionActionImpl
 	@Override
 	public void execute(
 			BulkSelection<FileEntry> bulkSelection,
-			EditTagsBulkSelectionAction.Input input)
+			Map<String, Serializable> inputMap)
 		throws Exception {
 
-		Set<String> toAddTagNamesSet = SetUtil.fromArray(
-			input.geToAddTagNames());
+		String[] toAddTagNames = (String[])inputMap.get("toAddTagNames");
+
+		Set<String> toAddTagNamesSet = SetUtil.fromArray(toAddTagNames);
 
 		Set<String> toRemoveTagNamesSet = SetUtil.fromArray(
-			input.geToRemoveTagNames());
+			(String[])inputMap.get("toRemoveTagNames"));
 
 		Stream<FileEntry> fileEntryStream = bulkSelection.stream();
 
 		PermissionChecker permissionChecker =
 			PermissionCheckerFactoryUtil.create(
-				_userLocalService.getUser(input.getUserId()));
+				_userLocalService.getUser(MapUtil.getLong(inputMap, "userId")));
 
 		fileEntryStream.forEach(
 			fileEntry -> {
@@ -80,9 +85,9 @@ public class EditTagsBulkSelectionActionImpl
 						DLFileEntryConstants.getClassName(),
 						fileEntry.getFileEntryId());
 
-					String[] newTagNames = input.geToAddTagNames();
+					String[] newTagNames = toAddTagNames;
 
-					if (input.isAppend()) {
+					if (MapUtil.getBoolean(inputMap, "append")) {
 						Set<String> currentTagNamesSet = SetUtil.fromArray(
 							assetEntry.getTagNames());
 

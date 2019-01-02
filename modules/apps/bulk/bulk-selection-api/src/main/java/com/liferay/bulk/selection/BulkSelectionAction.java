@@ -16,15 +16,15 @@ package com.liferay.bulk.selection;
 
 import java.io.Serializable;
 
+import java.util.Map;
+
 /**
  * @author Adolfo Pérez
  */
-public interface BulkSelectionAction<T, U extends BulkSelectionAction.Input> {
+public interface BulkSelectionAction<T> {
 
-	public void execute(BulkSelection<T> bulkSelection, U input)
+	public void execute(
+			BulkSelection<T> bulkSelection, Map<String, Serializable> inputMap)
 		throws Exception;
-
-	public interface Input extends Serializable {
-	}
 
 }

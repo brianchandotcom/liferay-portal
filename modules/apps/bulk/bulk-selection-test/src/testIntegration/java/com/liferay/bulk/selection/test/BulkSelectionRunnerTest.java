@@ -17,11 +17,12 @@ package com.liferay.bulk.selection.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.bulk.selection.BulkSelectionRunner;
 import com.liferay.bulk.selection.test.util.TestBulkSelectionAction;
-import com.liferay.bulk.selection.test.util.TestBulkSelectionActionInput;
 import com.liferay.bulk.selection.test.util.TestBulkSelectionFactory;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+
+import java.io.Serializable;
 
 import java.util.HashMap;
 
@@ -48,9 +49,13 @@ public class BulkSelectionRunnerTest {
 
 		parameterMap.put("integers", new String[] {"1", "2", "3", "4"});
 
+		HashMap<String, Serializable> inputMap = new HashMap<>();
+
+		inputMap.put("integer", 10);
+
 		_bulkSelectionRunner.run(
 			_testBulkSelectionFactory.create(parameterMap),
-			_testBulkSelectionAction, new TestBulkSelectionActionInput(10));
+			_testBulkSelectionAction, inputMap);
 
 		Assert.assertEquals(
 			(Integer)100, TestBulkSelectionAction.getLastResult());

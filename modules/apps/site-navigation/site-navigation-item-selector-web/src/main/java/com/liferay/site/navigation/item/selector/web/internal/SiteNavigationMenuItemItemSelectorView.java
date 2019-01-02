@@ -14,18 +14,15 @@
 
 package com.liferay.site.navigation.item.selector.web.internal;
 
-import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.item.selector.criteria.UUIDItemSelectorReturnType;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.site.navigation.item.selector.criterion.SiteNavigationMenuItemItemSelectorCriterion;
 import com.liferay.site.navigation.item.selector.web.internal.constants.SiteNavigationItemSelectorWebKeys;
 import com.liferay.site.navigation.item.selector.web.internal.display.context.SiteNavigationMenuItemItemSelectorViewDisplayContext;
-import com.liferay.site.navigation.item.selector.web.internal.js.loader.modules.extender.npm.NPMResolverProvider;
 import com.liferay.site.navigation.type.SiteNavigationMenuItemTypeRegistry;
 
 import java.io.IOException;
@@ -100,11 +97,6 @@ public class SiteNavigationMenuItemItemSelectorView
 			PortletURL portletURL, String itemSelectedEventName, boolean search)
 		throws IOException, ServletException {
 
-		request.setAttribute(
-			SiteNavigationItemSelectorWebKeys.
-				SITE_NAVIGATION_MENU_ITEM_SELECTOR_RESOLVED_MODULE_NAME,
-			_getModuleName());
-
 		SiteNavigationMenuItemItemSelectorViewDisplayContext
 			siteNavigationMenuItemItemSelectorViewDisplayContext =
 				new SiteNavigationMenuItemItemSelectorViewDisplayContext(
@@ -123,16 +115,6 @@ public class SiteNavigationMenuItemItemSelectorView
 				"/view_site_navigation_menu_items.jsp");
 
 		requestDispatcher.include(request, response);
-	}
-
-	private String _getModuleName() {
-		NPMResolver npmResolver = NPMResolverProvider.getNPMResolver();
-
-		if (npmResolver == null) {
-			return StringPool.BLANK;
-		}
-
-		return npmResolver.resolveModuleName("site-navigation-admin-web");
 	}
 
 	private static final List<ItemSelectorReturnType>

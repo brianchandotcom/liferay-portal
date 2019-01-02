@@ -8,6 +8,8 @@
 	fieldRawValue = paramUtil.getString(request, "${namespacedFieldName}", fieldRawValue)
 
 	assetTitle = ""
+
+	message = ""
 />
 
 <#if validator.isNotNull(fieldRawValue)>
@@ -15,6 +17,8 @@
 		fieldJournalJSONObject = jsonFactoryUtil.createJSONObject(fieldRawValue)
 
 		journalArticle = fetchLatestArticle(fieldJournalJSONObject)
+
+		message = fieldJournalJSONObject.getString("message")
 	/>
 
 	<#if validator.isNotNull(journalArticle)>
@@ -35,6 +39,12 @@
 >
 	<div class="form-group">
 		<div class="hide" id="${portletNamespace}${namespacedFieldName}SelectContainer"></div>
+
+		<#if validator.isNotNull(message)>
+			<div class="alert alert-warning" id="${namespacedFieldName}Message">
+				${message}
+			</div>
+		</#if>
 
 		<@liferay_aui.input
 			helpMessage=escape(fieldStructure.tip)

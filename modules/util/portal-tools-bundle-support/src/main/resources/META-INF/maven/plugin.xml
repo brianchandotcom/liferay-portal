@@ -7,7 +7,7 @@
 	<description/>
 	<groupId>com.liferay</groupId>
 	<artifactId>com.liferay.portal.tools.bundle.support</artifactId>
-	<version>3.2.7</version>
+	<version>3.3.0</version>
 	<goalPrefix>bundle-support</goalPrefix>
 	<isolatedRealm>false</isolatedRealm>
 	<inheritedByDefault>true</inheritedByDefault>
@@ -20,6 +20,7 @@
 			<aggregator>false</aggregator>
 			<requiresOnline>false</requiresOnline>
 			<inheritedByDefault>true</inheritedByDefault>
+			<phase>clean</phase>
 			<implementation>com.liferay.portal.tools.bundle.support.maven.CleanMojo</implementation>
 			<language>java</language>
 			<instantiationStrategy>per-lookup</instantiationStrategy>
@@ -57,7 +58,7 @@
 		</mojo>
 		<mojo>
 			<goal>create-token</goal>
-			<requiresDirectInvocation>false</requiresDirectInvocation>
+			<requiresDirectInvocation>true</requiresDirectInvocation>
 			<requiresProject>true</requiresProject>
 			<requiresReports>false</requiresReports>
 			<aggregator>false</aggregator>
@@ -125,6 +126,7 @@
 			<aggregator>false</aggregator>
 			<requiresOnline>false</requiresOnline>
 			<inheritedByDefault>true</inheritedByDefault>
+			<phase>package</phase>
 			<implementation>com.liferay.portal.tools.bundle.support.maven.DeployMojo</implementation>
 			<language>java</language>
 			<instantiationStrategy>per-lookup</instantiationStrategy>
@@ -176,6 +178,7 @@
 			<aggregator>false</aggregator>
 			<requiresOnline>false</requiresOnline>
 			<inheritedByDefault>true</inheritedByDefault>
+			<phase>verify</phase>
 			<implementation>com.liferay.portal.tools.bundle.support.maven.DistBundleMojo</implementation>
 			<language>java</language>
 			<instantiationStrategy>per-lookup</instantiationStrategy>
@@ -268,6 +271,13 @@
 					<description/>
 				</parameter>
 				<parameter>
+					<name>reactorProjects</name>
+					<type>java.util.List</type>
+					<required>false</required>
+					<editable>false</editable>
+					<description/>
+				</parameter>
+				<parameter>
 					<name>stripComponents</name>
 					<type>int</type>
 					<required>false</required>
@@ -314,6 +324,7 @@
 				<includeFolder default-value="true" implementation="boolean" />
 				<outputFileName default-value="${project.artifactId}.${project.packaging}" implementation="java.lang.String" />
 				<project default-value="${project}" implementation="org.apache.maven.project.MavenProject" />
+				<reactorProjects implementation="java.util.List">${reactorProjects}</reactorProjects>
 				<stripComponents default-value="1" implementation="int" />
 				<tokenFile default-value="${user.home}/.liferay/token" implementation="java.io.File" />
 				<url default-value="${liferay.workspace.bundle.url}" implementation="java.net.URL" />

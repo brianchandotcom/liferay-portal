@@ -60,6 +60,14 @@ public class AssetEntryUsageLocalServiceImpl
 	}
 
 	@Override
+	public void deleteAssetEntryUsages(
+		long classNameId, long classPK, String portletId) {
+
+		assetEntryUsagePersistence.removeByC_C_P(
+			classNameId, classPK, portletId);
+	}
+
+	@Override
 	public List<AssetEntryUsage> getAssetEntryUsages(long assetEntryId) {
 		return assetEntryUsagePersistence.findByAssetEntryId(assetEntryId);
 	}

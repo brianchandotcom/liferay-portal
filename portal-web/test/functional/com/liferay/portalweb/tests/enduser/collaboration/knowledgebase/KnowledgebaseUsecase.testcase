@@ -2948,6 +2948,7 @@ definition {
 		SitePages.configureChildPage(
 			columnName = "1 Column",
 			pageName = "Knowledge Base Display Page",
+			parentPagesHierarchy = "Welcome",
 			privacy = "Public Pages",
 			sitePageType = "Widget Page"
 		);

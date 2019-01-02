@@ -91,9 +91,9 @@ public class EditAssetListDisplayContext {
 		_portletResponse = portletResponse;
 		_properties = properties;
 		_request = PortalUtil.getHttpServletRequest(portletRequest);
+
 		_resolvedModuleName = (String)_request.getAttribute(
 			AssetListWebKeys.RESOLVED_MODULE_NAME);
-
 		_themeDisplay = (ThemeDisplay)_request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 	}

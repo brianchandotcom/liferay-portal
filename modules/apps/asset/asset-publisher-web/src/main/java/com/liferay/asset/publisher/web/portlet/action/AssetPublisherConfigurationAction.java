@@ -388,8 +388,7 @@ public class AssetPublisherConfigurationAction
 	}
 
 	protected String getAssetClassName(
-			ActionRequest actionRequest, String[] classNameIds)
-		throws Exception {
+		ActionRequest actionRequest, String[] classNameIds) {
 
 		String anyAssetTypeString = getParameter(actionRequest, "anyAssetType");
 
@@ -415,15 +414,11 @@ public class AssetPublisherConfigurationAction
 			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
 				className);
 
-		String assetClassName = assetPublisherWebUtil.getClassName(
-			assetRendererFactory);
-
-		return assetClassName;
+		return assetPublisherWebUtil.getClassName(assetRendererFactory);
 	}
 
 	protected String[] getClassTypeIds(
-			ActionRequest actionRequest, String[] classNameIds)
-		throws Exception {
+		ActionRequest actionRequest, String[] classNameIds) {
 
 		String assetClassName = getAssetClassName(actionRequest, classNameIds);
 
@@ -477,8 +472,7 @@ public class AssetPublisherConfigurationAction
 	}
 
 	protected boolean getSubtypesFieldsFilterEnabled(
-			ActionRequest actionRequest, String[] classNameIds)
-		throws Exception {
+		ActionRequest actionRequest, String[] classNameIds) {
 
 		String assetClassName = getAssetClassName(actionRequest, classNameIds);
 
@@ -745,9 +739,7 @@ public class AssetPublisherConfigurationAction
 		}
 	}
 
-	protected void updateDisplaySettings(ActionRequest actionRequest)
-		throws Exception {
-
+	protected void updateDisplaySettings(ActionRequest actionRequest) {
 		String[] classNameIds = StringUtil.split(
 			getParameter(actionRequest, "classNameIds"));
 

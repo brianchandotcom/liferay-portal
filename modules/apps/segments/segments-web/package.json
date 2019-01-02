@@ -76,11 +76,11 @@
 	"private": true,
 	"scripts": {
 		"build": "babel --source-maps -d classes/META-INF/resources src/main/resources/META-INF/resources && liferay-npm-bundler",
-		"start": "webpack-dev-server --config webpack.dev.config.js",
 		"build:libs": "webpack",
 		"checkFormat": "npm run csf",
 		"csf": "csf src/**/*.es.js",
 		"format": "npm run csf -- -i",
+		"start": "webpack-dev-server --config webpack.dev.config.js",
 		"test": "jest"
 	},
 	"version": "1.0.0"

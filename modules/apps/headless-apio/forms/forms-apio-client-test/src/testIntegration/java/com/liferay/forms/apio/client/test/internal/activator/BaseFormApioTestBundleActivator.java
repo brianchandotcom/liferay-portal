@@ -20,7 +20,6 @@ import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMStructureConstants;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceLocalServiceUtil;
-import com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.storage.StorageType;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormValuesTestUtil;
 import com.liferay.dynamic.data.mapping.test.util.DDMStructureTestHelper;
@@ -41,9 +40,7 @@ import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 
-import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -63,8 +60,6 @@ public abstract class BaseFormApioTestBundleActivator
 
 	@Override
 	public void start(BundleContext bundleContext) {
-		_autoCloseables = new ArrayList<>();
-
 		try {
 			AuthConfigurationTestUtil.deployOAuthConfiguration(bundleContext);
 
@@ -119,15 +114,11 @@ public abstract class BaseFormApioTestBundleActivator
 	}
 
 	private void _cleanUp() {
-		Collections.reverse(_autoCloseables);
-
-		for (AutoCloseable autoCloseable : _autoCloseables) {
-			try {
-				autoCloseable.close();
-			}
-			catch (Exception e) {
-				_log.error(e, e);
-			}
+		try {
+			GroupLocalServiceUtil.deleteGroup(_group);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
 		}
 	}
 
@@ -136,7 +127,7 @@ public abstract class BaseFormApioTestBundleActivator
 		Map<Locale, String> nameMap = Collections.singletonMap(
 			LocaleUtil.getDefault(), SITE_NAME);
 
-		Group group = GroupLocalServiceUtil.addGroup(
+		_group = GroupLocalServiceUtil.addGroup(
 			user.getUserId(), GroupConstants.DEFAULT_PARENT_GROUP_ID, null, 0,
 			GroupConstants.DEFAULT_LIVE_GROUP_ID, nameMap, nameMap,
 			GroupConstants.TYPE_SITE_OPEN, true,
@@ -145,26 +136,16 @@ public abstract class BaseFormApioTestBundleActivator
 				FriendlyURLNormalizerUtil.normalize(SITE_NAME),
 			true, true, ServiceContextTestUtil.getServiceContext());
 
-		_autoCloseables.add(() -> GroupLocalServiceUtil.deleteGroup(group));
-
 		DDMForm ddmForm = DDMFormFactory.create(getFormDefinitionClass());
 
-		DDMStructure ddmStructure = _addDDMStructure(group, ddmForm);
+		DDMStructure ddmStructure = _addDDMStructure(_group, ddmForm);
 
-		_autoCloseables.add(
-			() -> DDMStructureLocalServiceUtil.deleteStructure(ddmStructure));
-
-		DDMFormInstance ddmFormInstance = _addDDMFormInstance(
-			user, group, ddmStructure);
-
-		_autoCloseables.add(
-			() -> DDMFormInstanceLocalServiceUtil.deleteFormInstance(
-				ddmFormInstance));
+		_addDDMFormInstance(user, _group, ddmStructure);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		BaseFormApioTestBundleActivator.class);
 
-	private List<AutoCloseable> _autoCloseables;
+	private Group _group;
 
 }

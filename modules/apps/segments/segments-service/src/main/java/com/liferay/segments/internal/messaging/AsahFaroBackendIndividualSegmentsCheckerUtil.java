@@ -118,37 +118,7 @@ public class AsahFaroBackendIndividualSegmentsCheckerUtil {
 		_componentFactory = componentFactory;
 	}
 
-	private void _addIndividual(
-		SegmentsEntry segmentsEntry, Individual individual,
-		ServiceContext serviceContext) {
-
-		Optional<Long> userIdOptional = _getUserIdOptional(individual);
-
-		if (!userIdOptional.isPresent()) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					"Unable to find an user corresponding to individual " +
-						individual.getId());
-			}
-
-			return;
-		}
-
-		try {
-			long userClassNameId = _classNameLocalService.getClassNameId(
-				User.class.getName());
-
-			_segmentsEntryRelLocalService.addSegmentsEntryRel(
-				segmentsEntry.getSegmentsEntryId(), userClassNameId,
-				userIdOptional.get(), serviceContext);
-		}
-		catch (PortalException pe) {
-			_log.error(
-				"Unable to process individual " + individual.getId(), pe);
-		}
-	}
-
-	private void _addIndividualSegment(
+	private void _addSegmentsEntry(
 		IndividualSegment individualSegment, ServiceContext serviceContext) {
 
 		Map<Locale, String> nameMap = new HashMap<Locale, String>() {
@@ -181,6 +151,36 @@ public class AsahFaroBackendIndividualSegmentsCheckerUtil {
 				"Unable to process individual segment " +
 					individualSegment.getId(),
 				pe);
+		}
+	}
+
+	private void _addSegmentsEntryRel(
+		SegmentsEntry segmentsEntry, Individual individual,
+		ServiceContext serviceContext) {
+
+		Optional<Long> userIdOptional = _getUserIdOptional(individual);
+
+		if (!userIdOptional.isPresent()) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Unable to find an user corresponding to individual " +
+						individual.getId());
+			}
+
+			return;
+		}
+
+		try {
+			long userClassNameId = _classNameLocalService.getClassNameId(
+				User.class.getName());
+
+			_segmentsEntryRelLocalService.addSegmentsEntryRel(
+				segmentsEntry.getSegmentsEntryId(), userClassNameId,
+				userIdOptional.get(), serviceContext);
+		}
+		catch (PortalException pe) {
+			_log.error(
+				"Unable to process individual " + individual.getId(), pe);
 		}
 	}
 
@@ -221,7 +221,7 @@ public class AsahFaroBackendIndividualSegmentsCheckerUtil {
 				List<Individual> items = individualResults.getItems();
 
 				items.forEach(
-					individual -> _addIndividual(
+					individual -> _addSegmentsEntryRel(
 						segmentsEntry, individual, serviceContext));
 
 				curPage++;
@@ -278,7 +278,7 @@ public class AsahFaroBackendIndividualSegmentsCheckerUtil {
 			individualSegmentResults.getItems();
 
 		individualSegments.forEach(
-			individualSegment -> _addIndividualSegment(
+			individualSegment -> _addSegmentsEntry(
 				individualSegment, serviceContext));
 	}
 

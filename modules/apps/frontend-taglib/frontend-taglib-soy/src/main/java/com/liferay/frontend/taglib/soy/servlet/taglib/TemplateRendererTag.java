@@ -48,8 +48,8 @@ public class TemplateRendererTag extends ParamAndPropertyAncestorTagImpl {
 			prepareContext(context);
 
 			ComponentDescriptor componentDescriptor = new ComponentDescriptor(
-				getTemplateNamespace(), getModule(), _dependencies,
-				getComponentId(), isWrapper(), isRenderJavaScript(),
+				getTemplateNamespace(), getModule(), getComponentId(),
+				_dependencies, isWrapper(), isRenderJavaScript(),
 				isPositionInLine());
 
 			SoyComponentRenderer soyComponentRenderer =

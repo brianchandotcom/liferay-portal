@@ -840,7 +840,7 @@ definition {
 
 		SelectFrame(locator1 = "IFrame#DIALOG");
 
-		AssertTextEquals(
+		AssertTextEquals.assertPartialText(
 			locator1 = "Permissions#CONTENT_PERMISSIONS_ROLE_NAME",
 			value1 = "Roles Siterole Name"
 		);

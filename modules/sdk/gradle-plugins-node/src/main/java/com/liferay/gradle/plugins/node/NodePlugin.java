@@ -217,7 +217,7 @@ public class NodePlugin implements Plugin<Project> {
 
 		Project project = npmInstallTask.getProject();
 
-		String taskName = "npmRun" + _toCamelCase(name, ':', true);
+		String taskName = "npmRun" + _toCamelCase(name, true);
 
 		final NpmRunTask npmRunTask = GradleUtil.addTask(
 			project, taskName, NpmRunTask.class);
@@ -653,7 +653,7 @@ public class NodePlugin implements Plugin<Project> {
 			});
 	}
 
-	private String _toCamelCase(String s, char delimiter, boolean capitalize) {
+	private String _toCamelCase(String s, boolean capitalize) {
 		StringBuilder sb = new StringBuilder(s.length());
 
 		boolean upperCase = capitalize;
@@ -661,7 +661,7 @@ public class NodePlugin implements Plugin<Project> {
 		for (int i = 0; i < s.length(); i++) {
 			char c = s.charAt(i);
 
-			if (c == delimiter) {
+			if (!Character.isDigit(c) && !Character.isLetter(c)) {
 				upperCase = true;
 			}
 			else if (upperCase) {

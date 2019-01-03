@@ -14,30 +14,28 @@
 
 package com.liferay.gradle.plugins.node.tasks;
 
+import com.liferay.gradle.plugins.node.internal.util.FileUtil;
 import com.liferay.gradle.plugins.node.internal.util.GradleUtil;
 
 import groovy.lang.Closure;
 
 import java.io.File;
-import java.io.IOException;
 
 import java.nio.charset.StandardCharsets;
-import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.SimpleFileVisitor;
-import java.nio.file.attribute.BasicFileAttributes;
 
 import java.util.List;
 import java.util.Set;
 
 import org.gradle.api.Project;
+import org.gradle.api.file.FileCollection;
+import org.gradle.api.file.FileTree;
 import org.gradle.api.file.FileTreeElement;
-import org.gradle.api.logging.Logger;
 import org.gradle.api.specs.Spec;
 import org.gradle.api.tasks.Input;
 import org.gradle.api.tasks.InputDirectory;
 import org.gradle.api.tasks.InputFile;
+import org.gradle.api.tasks.InputFiles;
 import org.gradle.api.tasks.OutputFile;
 import org.gradle.api.tasks.util.PatternFilterable;
 import org.gradle.api.tasks.util.PatternSet;
@@ -49,8 +47,6 @@ import org.gradle.api.tasks.util.PatternSet;
 public class NpmRunTask extends ExecuteNpmTask implements PatternFilterable {
 
 	public NpmRunTask() {
-		_reportFile = new File(getTemporaryDir(), "report.txt");
-
 		exclude(_EXCLUDE_DIR_NAMES);
 		include(_INCLUDES);
 
@@ -91,71 +87,11 @@ public class NpmRunTask extends ExecuteNpmTask implements PatternFilterable {
 
 	@Override
 	public void executeNode() throws Exception {
+		String digest = FileUtil.getDigest(getSourceFiles());
+
 		super.executeNode();
 
-		StringBuilder sb = new StringBuilder();
-
-		sb.append("Executed npmRun");
-		sb.append(_scriptName);
-
-		File nodeModulesDir = getNodeModulesDir();
-
-		sb.append("\n\n=====Node Modules=====\n");
-		sb.append("Path: ");
-		sb.append(nodeModulesDir.getAbsolutePath());
-
-		for (File file : nodeModulesDir.listFiles()) {
-			String fileName = file.getName();
-
-			if (fileName.startsWith(".")) {
-				continue;
-			}
-
-			sb.append(fileName);
-			sb.append("\n");
-		}
-
-		File sourceDir = getSourceDir();
-
-		sb.append("\n\n=====Source Files=====\n");
-		sb.append("Path: ");
-		sb.append(sourceDir.getAbsolutePath());
-
-		try {
-			Files.walkFileTree(
-				sourceDir.toPath(),
-				new SimpleFileVisitor<Path>() {
-
-					@Override
-					public FileVisitResult visitFile(
-							Path file, BasicFileAttributes attrs)
-						throws IOException {
-
-						if (!attrs.isDirectory()) {
-							sb.append(file.getFileName());
-							sb.append("\n");
-						}
-
-						return FileVisitResult.CONTINUE;
-					}
-
-				});
-		}
-		catch (IOException ioe) {
-			Logger logger = getLogger();
-
-			logger.warn("Could not generate source files");
-		}
-
-		String report = sb.toString();
-
-		File reportFile = getReportFile();
-
-		Path path = reportFile.toPath();
-
-		Files.createDirectories(path.getParent());
-
-		Files.write(path, report.getBytes(StandardCharsets.UTF_8));
+		_writeSourceDigestFile(digest.getBytes(StandardCharsets.UTF_8));
 	}
 
 	@Override
@@ -182,19 +118,32 @@ public class NpmRunTask extends ExecuteNpmTask implements PatternFilterable {
 		return project.file("package.json");
 	}
 
-	@OutputFile
-	public File getReportFile() {
-		return GradleUtil.toFile(getProject(), _reportFile);
-	}
-
 	@Input
 	public String getScriptName() {
 		return _scriptName;
 	}
 
+	@OutputFile
+	public File getSourceDigestFile() {
+		Project project = getProject();
+
+		String pathname = "npm/script/" + getName() + "/.digest";
+
+		return new File(project.getBuildDir(), pathname);
+	}
+
 	@InputDirectory
 	public File getSourceDir() {
 		return GradleUtil.toFile(getProject(), _sourceDir);
+	}
+
+	@InputFiles
+	public FileCollection getSourceFiles() {
+		Project project = getProject();
+
+		FileTree fileTree = project.fileTree(getSourceDir());
+
+		return fileTree.matching(_patternFilterable);
 	}
 
 	@Override
@@ -259,6 +208,12 @@ public class NpmRunTask extends ExecuteNpmTask implements PatternFilterable {
 		return completeArgs;
 	}
 
+	private void _writeSourceDigestFile(byte[] bytes) throws Exception {
+		File file = getSourceDigestFile();
+
+		Files.write(file.toPath(), bytes);
+	}
+
 	private static final String[] _EXCLUDE_DIR_NAMES = {
 		"bin", "build", "classes", "node_modules", "test-classes", "tmp"
 	};
@@ -268,7 +223,6 @@ public class NpmRunTask extends ExecuteNpmTask implements PatternFilterable {
 	};
 
 	private final PatternFilterable _patternFilterable = new PatternSet();
-	private final Object _reportFile;
 	private String _scriptName;
 	private Object _sourceDir;
 

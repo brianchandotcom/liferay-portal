@@ -14,6 +14,8 @@
 
 package com.liferay.person.apio.client.test;
 
+import com.liferay.oauth2.provider.test.util.OAuth2ProviderTestUtil;
+import com.liferay.person.apio.client.test.internal.activator.MyUserAccountTestBundleActivator;
 import com.liferay.portal.apio.test.util.ApioClientBuilder;
 import com.liferay.portal.kernel.util.StringUtil;
 
@@ -22,9 +24,11 @@ import java.net.URL;
 import org.hamcrest.Matchers;
 import org.hamcrest.core.IsNull;
 
+import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.container.test.api.RunAsClient;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.arquillian.test.api.ArquillianResource;
+import org.jboss.shrinkwrap.api.Archive;
 
 import org.junit.After;
 import org.junit.Before;
@@ -37,6 +41,12 @@ import org.junit.runner.RunWith;
 @RunAsClient
 @RunWith(Arquillian.class)
 public class MyUserAccountApioTest {
+
+	@Deployment
+	public static Archive<?> getArchive() throws Exception {
+		return OAuth2ProviderTestUtil.getArchive(
+			MyUserAccountTestBundleActivator.class);
+	}
 
 	@Before
 	public void setUp() throws Exception {

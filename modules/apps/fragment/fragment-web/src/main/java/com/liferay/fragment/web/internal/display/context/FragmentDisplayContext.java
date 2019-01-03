@@ -30,6 +30,8 @@ import com.liferay.fragment.web.internal.util.SoyContextFactoryUtil;
 import com.liferay.fragment.web.util.FragmentPortletUtil;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemList;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.ItemSelectorCriterion;
 import com.liferay.item.selector.ItemSelectorReturnType;
@@ -473,6 +475,32 @@ public class FragmentDisplayContext {
 		return _navigation;
 	}
 
+	public List<NavigationItem> getNavigationItems() {
+		return new NavigationItemList() {
+			{
+				add(
+					navigationItem -> {
+						navigationItem.setActive(
+							Objects.equals(_getTabs1(), "entries"));
+						navigationItem.setHref(
+							_getPortletURL(), "tabs1", "entries");
+						navigationItem.setLabel(
+							LanguageUtil.get(_request, "entries"));
+					});
+
+				add(
+					navigationItem -> {
+						navigationItem.setActive(
+							Objects.equals(_getTabs1(), "resources"));
+						navigationItem.setHref(
+							_getPortletURL(), "tabs1", "resources");
+						navigationItem.setLabel(
+							LanguageUtil.get(_request, "resources"));
+					});
+			}
+		};
+	}
+
 	public String getOrderByType() {
 		if (Validator.isNotNull(_orderByType)) {
 			return _orderByType;
@@ -528,13 +556,11 @@ public class FragmentDisplayContext {
 	}
 
 	public boolean isViewResources() {
-		if (_viewResources != null) {
-			return _viewResources;
+		if (Objects.equals(_getTabs1(), "resources")) {
+			return true;
 		}
 
-		_viewResources = ParamUtil.getBoolean(_request, "viewResources");
-
-		return _viewResources;
+		return false;
 	}
 
 	private String _getFragmentEntryRenderURL(
@@ -604,6 +630,16 @@ public class FragmentDisplayContext {
 		return portletURL;
 	}
 
+	private String _getTabs1() {
+		if (_tabs1 != null) {
+			return _tabs1;
+		}
+
+		_tabs1 = ParamUtil.getString(_request, "tabs1", "entries");
+
+		return _tabs1;
+	}
+
 	private String _cssContent;
 	private FragmentCollection _fragmentCollection;
 	private Long _fragmentCollectionId;
@@ -625,7 +661,7 @@ public class FragmentDisplayContext {
 	private final RenderResponse _renderResponse;
 	private final HttpServletRequest _request;
 	private final String _resolvedModuleName;
+	private String _tabs1;
 	private final ThemeDisplay _themeDisplay;
-	private Boolean _viewResources;
 
 }

@@ -21,9 +21,11 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Image;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.ImageLocalService;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.upgrade.UpgradeException;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -46,18 +48,21 @@ public class UpgradeImageTypeContent extends UpgradeProcess {
 
 	public UpgradeImageTypeContent(
 		ImageLocalService imageLocalService,
-		JournalArticleImageUpgradeUtil journalArticleImageUpgradeUtil) {
+		JournalArticleImageUpgradeUtil journalArticleImageUpgradeUtil,
+		UserLocalService userLocalService) {
 
 		_imageLocalService = imageLocalService;
 		_journalArticleImageUpgradeUtil = journalArticleImageUpgradeUtil;
+		_userLocalService = userLocalService;
 	}
 
 	protected void copyJournalArticleImagesToJournalRepository()
 		throws Exception {
 
-		StringBundler sb = new StringBundler(7);
+		StringBundler sb = new StringBundler(8);
 
 		sb.append("select JournalArticleImage.articleImageId, ");
+		sb.append("JournalArticleImage.companyId, ");
 		sb.append("JournalArticleImage.groupId, ");
 		sb.append("JournalArticle.resourcePrimKey, JournalArticle.userId ");
 		sb.append("from JournalArticleImage inner join JournalArticle on ");
@@ -75,9 +80,26 @@ public class UpgradeImageTypeContent extends UpgradeProcess {
 			while (rs1.next()) {
 				long articleImageId = rs1.getLong(1);
 
-				long groupId = rs1.getLong(2);
-				long resourcePrimKey = rs1.getLong(3);
-				long userId = rs1.getLong(4);
+				long companyId = rs1.getLong(2);
+				long groupId = rs1.getLong(3);
+				long resourcePrimKey = rs1.getLong(4);
+
+				long userId = rs1.getLong(5);
+
+				User user = _userLocalService.fetchUser(userId);
+
+				if (user == null) {
+					user = _userLocalService.getFallbackUser(companyId);
+
+					userId = user.getUserId();
+
+					if (_log.isWarnEnabled()) {
+						_log.warn(
+							StringBundler.concat(
+								"UserId for ", articleImageId,
+								" has been changed to fallback user."));
+					}
+				}
 
 				long folderId = _journalArticleImageUpgradeUtil.getFolderId(
 					userId, groupId, resourcePrimKey);
@@ -120,6 +142,7 @@ public class UpgradeImageTypeContent extends UpgradeProcess {
 	private final ImageLocalService _imageLocalService;
 	private final JournalArticleImageUpgradeUtil
 		_journalArticleImageUpgradeUtil;
+	private final UserLocalService _userLocalService;
 
 	private class SaveImageFileEntryCallable implements Callable<Boolean> {
 

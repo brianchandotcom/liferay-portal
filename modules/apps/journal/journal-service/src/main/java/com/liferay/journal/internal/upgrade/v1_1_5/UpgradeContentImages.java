@@ -22,8 +22,10 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LoggingTimer;
@@ -46,13 +48,16 @@ import java.util.List;
 public class UpgradeContentImages extends UpgradeProcess {
 
 	public UpgradeContentImages(
-		JournalArticleImageUpgradeUtil journalArticleImageUpgradeUtil) {
+		JournalArticleImageUpgradeUtil journalArticleImageUpgradeUtil,
+		UserLocalService userLocalService) {
 
 		_journalArticleImageUpgradeUtil = journalArticleImageUpgradeUtil;
+		_userLocalService = userLocalService;
 	}
 
 	protected String convertTypeImageElements(
-			long userId, long groupId, String content, long resourcePrimKey)
+			long companyId, long userId, long groupId, String content,
+			long resourcePrimKey)
 		throws Exception {
 
 		Document contentDocument = SAXReaderUtil.read(content);
@@ -80,7 +85,7 @@ public class UpgradeContentImages extends UpgradeProcess {
 
 				if (Validator.isNotNull(id)) {
 					fileEntry = _getFileEntryById(
-						userId, groupId, resourcePrimKey, id);
+						companyId, userId, groupId, resourcePrimKey, id);
 				}
 				else if (fileEntryId > 0) {
 					fileEntry = _getFileEntryByFileEntryId(fileEntryId);
@@ -130,22 +135,23 @@ public class UpgradeContentImages extends UpgradeProcess {
 	protected void updateContentImages() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer();
 			PreparedStatement ps1 = connection.prepareStatement(
-				"select content, groupId, id_, resourcePrimKey, userId from " +
-					"JournalArticle where content like ?")) {
+				"select companyId, content, groupId, id_, resourcePrimKey, " +
+					"userId from JournalArticle where content like ?")) {
 
 			ps1.setString(1, "%type=\"image\"%");
 
 			ResultSet rs1 = ps1.executeQuery();
 
 			while (rs1.next()) {
-				String content = rs1.getString(1);
-				long groupId = rs1.getLong(2);
-				long id = rs1.getLong(3);
-				long resourcePrimKey = rs1.getLong(4);
-				long userId = rs1.getLong(5);
+				long companyId = rs1.getLong(1);
+				String content = rs1.getString(2);
+				long groupId = rs1.getLong(3);
+				long id = rs1.getLong(4);
+				long resourcePrimKey = rs1.getLong(5);
+				long userId = rs1.getLong(6);
 
 				String newContent = convertTypeImageElements(
-					userId, groupId, content, resourcePrimKey);
+					companyId, userId, groupId, content, resourcePrimKey);
 
 				try (PreparedStatement ps2 =
 						AutoBatchPreparedStatementUtil.concurrentAutoBatch(
@@ -177,8 +183,24 @@ public class UpgradeContentImages extends UpgradeProcess {
 	}
 
 	private FileEntry _getFileEntryById(
-			long userId, long groupId, long resourcePrimKey, String id)
+			long companyId, long userId, long groupId, long resourcePrimKey,
+			String id)
 		throws PortalException {
+
+		User user = _userLocalService.fetchUser(userId);
+
+		if (user == null) {
+			user = _userLocalService.getFallbackUser(companyId);
+
+			userId = user.getUserId();
+
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					StringBundler.concat(
+						"UserId for ", id,
+						" has been changed to fallback user."));
+			}
+		}
 
 		long folderId = _journalArticleImageUpgradeUtil.getFolderId(
 			userId, groupId, resourcePrimKey);
@@ -206,5 +228,6 @@ public class UpgradeContentImages extends UpgradeProcess {
 
 	private final JournalArticleImageUpgradeUtil
 		_journalArticleImageUpgradeUtil;
+	private final UserLocalService _userLocalService;
 
 }

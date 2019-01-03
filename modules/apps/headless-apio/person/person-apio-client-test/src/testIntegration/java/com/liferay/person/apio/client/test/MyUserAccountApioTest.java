@@ -80,8 +80,6 @@ public class MyUserAccountApioTest {
 			).post(
 				userAccountHref
 			).then(
-			).statusCode(
-				200
 			).extract(
 			).path(
 				"_links.self.href"
@@ -99,9 +97,6 @@ public class MyUserAccountApioTest {
 		).when(
 		).put(
 			_userURL.toExternalForm()
-		).then(
-		).statusCode(
-			200
 		);
 
 		_myUserAccountURL = new URL(
@@ -128,9 +123,6 @@ public class MyUserAccountApioTest {
 		).when(
 		).delete(
 			_userURL.toExternalForm()
-		).then(
-		).statusCode(
-			Matchers.isOneOf(200, 204)
 		);
 	}
 

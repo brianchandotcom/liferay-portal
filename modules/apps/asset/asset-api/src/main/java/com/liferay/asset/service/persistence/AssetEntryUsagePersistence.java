@@ -812,6 +812,68 @@ public interface AssetEntryUsagePersistence extends BasePersistence<AssetEntryUs
 	public int countByC_C_P(long classNameId, long classPK, String portletId);
 
 	/**
+	* Returns the asset entry usage where assetEntryId = &#63; and classNameId = &#63; and classPK = &#63; and portletId = &#63; or throws a {@link NoSuchEntryUsageException} if it could not be found.
+	*
+	* @param assetEntryId the asset entry ID
+	* @param classNameId the class name ID
+	* @param classPK the class pk
+	* @param portletId the portlet ID
+	* @return the matching asset entry usage
+	* @throws NoSuchEntryUsageException if a matching asset entry usage could not be found
+	*/
+	public AssetEntryUsage findByA_C_C_P(long assetEntryId, long classNameId,
+		long classPK, String portletId) throws NoSuchEntryUsageException;
+
+	/**
+	* Returns the asset entry usage where assetEntryId = &#63; and classNameId = &#63; and classPK = &#63; and portletId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	*
+	* @param assetEntryId the asset entry ID
+	* @param classNameId the class name ID
+	* @param classPK the class pk
+	* @param portletId the portlet ID
+	* @return the matching asset entry usage, or <code>null</code> if a matching asset entry usage could not be found
+	*/
+	public AssetEntryUsage fetchByA_C_C_P(long assetEntryId, long classNameId,
+		long classPK, String portletId);
+
+	/**
+	* Returns the asset entry usage where assetEntryId = &#63; and classNameId = &#63; and classPK = &#63; and portletId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	*
+	* @param assetEntryId the asset entry ID
+	* @param classNameId the class name ID
+	* @param classPK the class pk
+	* @param portletId the portlet ID
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the matching asset entry usage, or <code>null</code> if a matching asset entry usage could not be found
+	*/
+	public AssetEntryUsage fetchByA_C_C_P(long assetEntryId, long classNameId,
+		long classPK, String portletId, boolean retrieveFromCache);
+
+	/**
+	* Removes the asset entry usage where assetEntryId = &#63; and classNameId = &#63; and classPK = &#63; and portletId = &#63; from the database.
+	*
+	* @param assetEntryId the asset entry ID
+	* @param classNameId the class name ID
+	* @param classPK the class pk
+	* @param portletId the portlet ID
+	* @return the asset entry usage that was removed
+	*/
+	public AssetEntryUsage removeByA_C_C_P(long assetEntryId, long classNameId,
+		long classPK, String portletId) throws NoSuchEntryUsageException;
+
+	/**
+	* Returns the number of asset entry usages where assetEntryId = &#63; and classNameId = &#63; and classPK = &#63; and portletId = &#63;.
+	*
+	* @param assetEntryId the asset entry ID
+	* @param classNameId the class name ID
+	* @param classPK the class pk
+	* @param portletId the portlet ID
+	* @return the number of matching asset entry usages
+	*/
+	public int countByA_C_C_P(long assetEntryId, long classNameId,
+		long classPK, String portletId);
+
+	/**
 	* Caches the asset entry usage in the entity cache if it is enabled.
 	*
 	* @param assetEntryUsage the asset entry usage

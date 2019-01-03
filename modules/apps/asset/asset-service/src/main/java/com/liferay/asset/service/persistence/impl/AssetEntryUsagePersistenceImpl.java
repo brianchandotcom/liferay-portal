@@ -3147,6 +3147,305 @@ public class AssetEntryUsagePersistenceImpl extends BasePersistenceImpl<AssetEnt
 	private static final String _FINDER_COLUMN_C_C_P_CLASSPK_2 = "assetEntryUsage.classPK = ? AND ";
 	private static final String _FINDER_COLUMN_C_C_P_PORTLETID_2 = "assetEntryUsage.portletId = ?";
 	private static final String _FINDER_COLUMN_C_C_P_PORTLETID_3 = "(assetEntryUsage.portletId IS NULL OR assetEntryUsage.portletId = '')";
+	public static final FinderPath FINDER_PATH_FETCH_BY_A_C_C_P = new FinderPath(AssetEntryUsageModelImpl.ENTITY_CACHE_ENABLED,
+			AssetEntryUsageModelImpl.FINDER_CACHE_ENABLED,
+			AssetEntryUsageImpl.class, FINDER_CLASS_NAME_ENTITY,
+			"fetchByA_C_C_P",
+			new String[] {
+				Long.class.getName(), Long.class.getName(), Long.class.getName(),
+				String.class.getName()
+			},
+			AssetEntryUsageModelImpl.ASSETENTRYID_COLUMN_BITMASK |
+			AssetEntryUsageModelImpl.CLASSNAMEID_COLUMN_BITMASK |
+			AssetEntryUsageModelImpl.CLASSPK_COLUMN_BITMASK |
+			AssetEntryUsageModelImpl.PORTLETID_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_A_C_C_P = new FinderPath(AssetEntryUsageModelImpl.ENTITY_CACHE_ENABLED,
+			AssetEntryUsageModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByA_C_C_P",
+			new String[] {
+				Long.class.getName(), Long.class.getName(), Long.class.getName(),
+				String.class.getName()
+			});
+
+	/**
+	 * Returns the asset entry usage where assetEntryId = &#63; and classNameId = &#63; and classPK = &#63; and portletId = &#63; or throws a {@link NoSuchEntryUsageException} if it could not be found.
+	 *
+	 * @param assetEntryId the asset entry ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param portletId the portlet ID
+	 * @return the matching asset entry usage
+	 * @throws NoSuchEntryUsageException if a matching asset entry usage could not be found
+	 */
+	@Override
+	public AssetEntryUsage findByA_C_C_P(long assetEntryId, long classNameId,
+		long classPK, String portletId) throws NoSuchEntryUsageException {
+		AssetEntryUsage assetEntryUsage = fetchByA_C_C_P(assetEntryId,
+				classNameId, classPK, portletId);
+
+		if (assetEntryUsage == null) {
+			StringBundler msg = new StringBundler(10);
+
+			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			msg.append("assetEntryId=");
+			msg.append(assetEntryId);
+
+			msg.append(", classNameId=");
+			msg.append(classNameId);
+
+			msg.append(", classPK=");
+			msg.append(classPK);
+
+			msg.append(", portletId=");
+			msg.append(portletId);
+
+			msg.append("}");
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(msg.toString());
+			}
+
+			throw new NoSuchEntryUsageException(msg.toString());
+		}
+
+		return assetEntryUsage;
+	}
+
+	/**
+	 * Returns the asset entry usage where assetEntryId = &#63; and classNameId = &#63; and classPK = &#63; and portletId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param assetEntryId the asset entry ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param portletId the portlet ID
+	 * @return the matching asset entry usage, or <code>null</code> if a matching asset entry usage could not be found
+	 */
+	@Override
+	public AssetEntryUsage fetchByA_C_C_P(long assetEntryId, long classNameId,
+		long classPK, String portletId) {
+		return fetchByA_C_C_P(assetEntryId, classNameId, classPK, portletId,
+			true);
+	}
+
+	/**
+	 * Returns the asset entry usage where assetEntryId = &#63; and classNameId = &#63; and classPK = &#63; and portletId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param assetEntryId the asset entry ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param portletId the portlet ID
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the matching asset entry usage, or <code>null</code> if a matching asset entry usage could not be found
+	 */
+	@Override
+	public AssetEntryUsage fetchByA_C_C_P(long assetEntryId, long classNameId,
+		long classPK, String portletId, boolean retrieveFromCache) {
+		portletId = Objects.toString(portletId, "");
+
+		Object[] finderArgs = new Object[] {
+				assetEntryId, classNameId, classPK, portletId
+			};
+
+		Object result = null;
+
+		if (retrieveFromCache) {
+			result = finderCache.getResult(FINDER_PATH_FETCH_BY_A_C_C_P,
+					finderArgs, this);
+		}
+
+		if (result instanceof AssetEntryUsage) {
+			AssetEntryUsage assetEntryUsage = (AssetEntryUsage)result;
+
+			if ((assetEntryId != assetEntryUsage.getAssetEntryId()) ||
+					(classNameId != assetEntryUsage.getClassNameId()) ||
+					(classPK != assetEntryUsage.getClassPK()) ||
+					!Objects.equals(portletId, assetEntryUsage.getPortletId())) {
+				result = null;
+			}
+		}
+
+		if (result == null) {
+			StringBundler query = new StringBundler(6);
+
+			query.append(_SQL_SELECT_ASSETENTRYUSAGE_WHERE);
+
+			query.append(_FINDER_COLUMN_A_C_C_P_ASSETENTRYID_2);
+
+			query.append(_FINDER_COLUMN_A_C_C_P_CLASSNAMEID_2);
+
+			query.append(_FINDER_COLUMN_A_C_C_P_CLASSPK_2);
+
+			boolean bindPortletId = false;
+
+			if (portletId.isEmpty()) {
+				query.append(_FINDER_COLUMN_A_C_C_P_PORTLETID_3);
+			}
+			else {
+				bindPortletId = true;
+
+				query.append(_FINDER_COLUMN_A_C_C_P_PORTLETID_2);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(assetEntryId);
+
+				qPos.add(classNameId);
+
+				qPos.add(classPK);
+
+				if (bindPortletId) {
+					qPos.add(portletId);
+				}
+
+				List<AssetEntryUsage> list = q.list();
+
+				if (list.isEmpty()) {
+					finderCache.putResult(FINDER_PATH_FETCH_BY_A_C_C_P,
+						finderArgs, list);
+				}
+				else {
+					AssetEntryUsage assetEntryUsage = list.get(0);
+
+					result = assetEntryUsage;
+
+					cacheResult(assetEntryUsage);
+				}
+			}
+			catch (Exception e) {
+				finderCache.removeResult(FINDER_PATH_FETCH_BY_A_C_C_P,
+					finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		if (result instanceof List<?>) {
+			return null;
+		}
+		else {
+			return (AssetEntryUsage)result;
+		}
+	}
+
+	/**
+	 * Removes the asset entry usage where assetEntryId = &#63; and classNameId = &#63; and classPK = &#63; and portletId = &#63; from the database.
+	 *
+	 * @param assetEntryId the asset entry ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param portletId the portlet ID
+	 * @return the asset entry usage that was removed
+	 */
+	@Override
+	public AssetEntryUsage removeByA_C_C_P(long assetEntryId, long classNameId,
+		long classPK, String portletId) throws NoSuchEntryUsageException {
+		AssetEntryUsage assetEntryUsage = findByA_C_C_P(assetEntryId,
+				classNameId, classPK, portletId);
+
+		return remove(assetEntryUsage);
+	}
+
+	/**
+	 * Returns the number of asset entry usages where assetEntryId = &#63; and classNameId = &#63; and classPK = &#63; and portletId = &#63;.
+	 *
+	 * @param assetEntryId the asset entry ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param portletId the portlet ID
+	 * @return the number of matching asset entry usages
+	 */
+	@Override
+	public int countByA_C_C_P(long assetEntryId, long classNameId,
+		long classPK, String portletId) {
+		portletId = Objects.toString(portletId, "");
+
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_A_C_C_P;
+
+		Object[] finderArgs = new Object[] {
+				assetEntryId, classNameId, classPK, portletId
+			};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(5);
+
+			query.append(_SQL_COUNT_ASSETENTRYUSAGE_WHERE);
+
+			query.append(_FINDER_COLUMN_A_C_C_P_ASSETENTRYID_2);
+
+			query.append(_FINDER_COLUMN_A_C_C_P_CLASSNAMEID_2);
+
+			query.append(_FINDER_COLUMN_A_C_C_P_CLASSPK_2);
+
+			boolean bindPortletId = false;
+
+			if (portletId.isEmpty()) {
+				query.append(_FINDER_COLUMN_A_C_C_P_PORTLETID_3);
+			}
+			else {
+				bindPortletId = true;
+
+				query.append(_FINDER_COLUMN_A_C_C_P_PORTLETID_2);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(assetEntryId);
+
+				qPos.add(classNameId);
+
+				qPos.add(classPK);
+
+				if (bindPortletId) {
+					qPos.add(portletId);
+				}
+
+				count = (Long)q.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_A_C_C_P_ASSETENTRYID_2 = "assetEntryUsage.assetEntryId = ? AND ";
+	private static final String _FINDER_COLUMN_A_C_C_P_CLASSNAMEID_2 = "assetEntryUsage.classNameId = ? AND ";
+	private static final String _FINDER_COLUMN_A_C_C_P_CLASSPK_2 = "assetEntryUsage.classPK = ? AND ";
+	private static final String _FINDER_COLUMN_A_C_C_P_PORTLETID_2 = "assetEntryUsage.portletId = ?";
+	private static final String _FINDER_COLUMN_A_C_C_P_PORTLETID_3 = "(assetEntryUsage.portletId IS NULL OR assetEntryUsage.portletId = '')";
 
 	public AssetEntryUsagePersistenceImpl() {
 		setModelClass(AssetEntryUsage.class);
@@ -3170,6 +3469,13 @@ public class AssetEntryUsagePersistenceImpl extends BasePersistenceImpl<AssetEnt
 		finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G,
 			new Object[] { assetEntryUsage.getUuid(), assetEntryUsage.getGroupId() },
 			assetEntryUsage);
+
+		finderCache.putResult(FINDER_PATH_FETCH_BY_A_C_C_P,
+			new Object[] {
+				assetEntryUsage.getAssetEntryId(),
+				assetEntryUsage.getClassNameId(), assetEntryUsage.getClassPK(),
+				assetEntryUsage.getPortletId()
+			}, assetEntryUsage);
 
 		assetEntryUsage.resetOriginalValues();
 	}
@@ -3253,6 +3559,18 @@ public class AssetEntryUsagePersistenceImpl extends BasePersistenceImpl<AssetEnt
 			Long.valueOf(1), false);
 		finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G, args,
 			assetEntryUsageModelImpl, false);
+
+		args = new Object[] {
+				assetEntryUsageModelImpl.getAssetEntryId(),
+				assetEntryUsageModelImpl.getClassNameId(),
+				assetEntryUsageModelImpl.getClassPK(),
+				assetEntryUsageModelImpl.getPortletId()
+			};
+
+		finderCache.putResult(FINDER_PATH_COUNT_BY_A_C_C_P, args,
+			Long.valueOf(1), false);
+		finderCache.putResult(FINDER_PATH_FETCH_BY_A_C_C_P, args,
+			assetEntryUsageModelImpl, false);
 	}
 
 	protected void clearUniqueFindersCache(
@@ -3276,6 +3594,31 @@ public class AssetEntryUsagePersistenceImpl extends BasePersistenceImpl<AssetEnt
 
 			finderCache.removeResult(FINDER_PATH_COUNT_BY_UUID_G, args);
 			finderCache.removeResult(FINDER_PATH_FETCH_BY_UUID_G, args);
+		}
+
+		if (clearCurrent) {
+			Object[] args = new Object[] {
+					assetEntryUsageModelImpl.getAssetEntryId(),
+					assetEntryUsageModelImpl.getClassNameId(),
+					assetEntryUsageModelImpl.getClassPK(),
+					assetEntryUsageModelImpl.getPortletId()
+				};
+
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_A_C_C_P, args);
+			finderCache.removeResult(FINDER_PATH_FETCH_BY_A_C_C_P, args);
+		}
+
+		if ((assetEntryUsageModelImpl.getColumnBitmask() &
+				FINDER_PATH_FETCH_BY_A_C_C_P.getColumnBitmask()) != 0) {
+			Object[] args = new Object[] {
+					assetEntryUsageModelImpl.getOriginalAssetEntryId(),
+					assetEntryUsageModelImpl.getOriginalClassNameId(),
+					assetEntryUsageModelImpl.getOriginalClassPK(),
+					assetEntryUsageModelImpl.getOriginalPortletId()
+				};
+
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_A_C_C_P, args);
+			finderCache.removeResult(FINDER_PATH_FETCH_BY_A_C_C_P, args);
 		}
 	}
 

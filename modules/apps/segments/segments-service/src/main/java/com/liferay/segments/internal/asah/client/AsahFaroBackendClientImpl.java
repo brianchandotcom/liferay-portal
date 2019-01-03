@@ -49,6 +49,11 @@ import org.osgi.service.component.annotations.Reference;
 public class AsahFaroBackendClientImpl implements AsahFaroBackendClient {
 
 	@Override
+	public String getDataSourceId() {
+		return _dataSourceId;
+	}
+
+	@Override
 	public Results<Individual> getIndividualResults(
 		String individualSegmentId, int cur, int delta,
 		List<OrderByField> orderByFields) {

@@ -27,6 +27,8 @@ import java.util.List;
  */
 public interface AsahFaroBackendClient {
 
+	public String getDataSourceId();
+
 	public Results<Individual> getIndividualResults(
 		String individualSegmentId, int cur, int delta,
 		List<OrderByField> orderByFields);

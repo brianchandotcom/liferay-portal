@@ -13,6 +13,21 @@ export function generateGroupId() {
 }
 
 /**
+ * Uses the singular language key if the count is 1. Otherwise uses the plural
+ * language key.
+ * @param {string} singular The language key in singular form.
+ * @param {string} plural The language key in plural form.
+ * @param {number} count The amount to display in the message.
+ * @param {boolean} toString If the message should be converted to a string.
+ * @return {(string|Array)} The translated message.
+ */
+export function getPluralMessage(singular, plural, count = 0, toString) {
+	const message = count === 1 ? singular : plural;
+
+	return sub(message, [count], toString);
+}
+
+/**
  * Gets a list of group ids from a criteria object.
  * Used for disallowing groups to be moved into its own deeper nested groups.
  * Example of returned value: ['group_02', 'group_03']

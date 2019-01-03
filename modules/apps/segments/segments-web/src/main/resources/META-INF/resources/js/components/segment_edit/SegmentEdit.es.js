@@ -7,7 +7,7 @@ import debounce from 'lodash.debounce';
 import TitleEditor from '../title_editor/TitleEditor.es';
 import ODataQueryBuilder from '../odata_query_builder/ODataQueryBuilder.es';
 import {SUPPORTED_CONJUNCTIONS} from '../../utils/constants.es';
-import {sub} from '../../utils/utils.es';
+import {getPluralMessage} from '../../utils/utils.es';
 import {FieldArray, withFormik} from 'formik';
 
 const DEFAULT_SEGMENT_NAME = Liferay.Language.get('unnamed-segment');
@@ -215,9 +215,10 @@ class SegmentEdit extends Component {
 							/>
 
 							<div className="members-count">
-								{sub(
+								{getPluralMessage(
+									Liferay.Language.get('x-member'),
 									Liferay.Language.get('x-members'),
-									[membersCount]
+									membersCount
 								)}
 							</div>
 

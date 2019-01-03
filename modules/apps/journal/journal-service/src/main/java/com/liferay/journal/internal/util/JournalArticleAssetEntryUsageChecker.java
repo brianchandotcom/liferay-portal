@@ -57,14 +57,15 @@ public class JournalArticleAssetEntryUsageChecker
 	public void checkAssetEntryUsages(AssetEntry assetEntry)
 		throws PortalException {
 
-		_checkPortlets(assetEntry, true);
+		_checkAssetPublisherUsages(assetEntry, true);
 
-		_checkPortlets(assetEntry, false);
+		_checkAssetPublisherUsages(assetEntry, false);
 
 		_checkWebContentUsages(assetEntry);
 	}
 
-	private void _checkPortlets(AssetEntry assetEntry, boolean privateLayout)
+	private void _checkAssetPublisherUsages(
+		    AssetEntry assetEntry, boolean privateLayout)
 		throws PortalException {
 
 		ServiceContext serviceContext =

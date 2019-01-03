@@ -16,6 +16,8 @@ package com.liferay.gradle.plugins.node.tasks;
 
 import com.liferay.gradle.plugins.node.internal.util.GradleUtil;
 
+import groovy.lang.Closure;
+
 import java.io.File;
 import java.io.IOException;
 
@@ -27,24 +29,60 @@ import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
 
 import java.util.List;
+import java.util.Set;
 
 import org.gradle.api.Project;
+import org.gradle.api.file.FileTreeElement;
 import org.gradle.api.logging.Logger;
+import org.gradle.api.specs.Spec;
 import org.gradle.api.tasks.Input;
 import org.gradle.api.tasks.InputDirectory;
 import org.gradle.api.tasks.InputFile;
 import org.gradle.api.tasks.OutputFile;
+import org.gradle.api.tasks.util.PatternFilterable;
+import org.gradle.api.tasks.util.PatternSet;
 
 /**
  * @author David Truong
+ * @author Peter Shin
  */
-public class NpmRunTask extends ExecuteNpmTask {
+public class NpmRunTask extends ExecuteNpmTask implements PatternFilterable {
 
 	public NpmRunTask() {
 		Project project = getProject();
 
 		_reportFile = new File(getTemporaryDir(), "report.txt");
 		_sourceDir = project.file("src");
+	}
+
+	@Override
+	public NpmRunTask exclude(
+		@SuppressWarnings("rawtypes") Closure excludeSpec) {
+
+		_patternFilterable.exclude(excludeSpec);
+
+		return this;
+	}
+
+	@Override
+	public NpmRunTask exclude(Iterable<String> excludes) {
+		_patternFilterable.exclude(excludes);
+
+		return this;
+	}
+
+	@Override
+	public NpmRunTask exclude(Spec<FileTreeElement> excludeSpec) {
+		_patternFilterable.exclude(excludeSpec);
+
+		return this;
+	}
+
+	@Override
+	public NpmRunTask exclude(String... excludes) {
+		_patternFilterable.exclude(excludes);
+
+		return this;
 	}
 
 	@Override
@@ -116,6 +154,16 @@ public class NpmRunTask extends ExecuteNpmTask {
 		Files.write(path, report.getBytes(StandardCharsets.UTF_8));
 	}
 
+	@Override
+	public Set<String> getExcludes() {
+		return _patternFilterable.getExcludes();
+	}
+
+	@Override
+	public Set<String> getIncludes() {
+		return _patternFilterable.getIncludes();
+	}
+
 	@InputDirectory
 	public File getNodeModulesDir() {
 		Project project = getProject();
@@ -145,6 +193,50 @@ public class NpmRunTask extends ExecuteNpmTask {
 		return GradleUtil.toFile(getProject(), _sourceDir);
 	}
 
+	@Override
+	public NpmRunTask include(
+		@SuppressWarnings("rawtypes") Closure includeSpec) {
+
+		_patternFilterable.include(includeSpec);
+
+		return this;
+	}
+
+	@Override
+	public NpmRunTask include(Iterable<String> includes) {
+		_patternFilterable.include(includes);
+
+		return this;
+	}
+
+	@Override
+	public NpmRunTask include(Spec<FileTreeElement> includeSpec) {
+		_patternFilterable.include(includeSpec);
+
+		return this;
+	}
+
+	@Override
+	public NpmRunTask include(String... includes) {
+		_patternFilterable.include(includes);
+
+		return this;
+	}
+
+	@Override
+	public NpmRunTask setExcludes(Iterable<String> excludes) {
+		_patternFilterable.setExcludes(excludes);
+
+		return this;
+	}
+
+	@Override
+	public NpmRunTask setIncludes(Iterable<String> includes) {
+		_patternFilterable.setIncludes(includes);
+
+		return this;
+	}
+
 	public void setScriptName(String scriptName) {
 		_scriptName = scriptName;
 	}
@@ -163,6 +255,7 @@ public class NpmRunTask extends ExecuteNpmTask {
 		return completeArgs;
 	}
 
+	private final PatternFilterable _patternFilterable = new PatternSet();
 	private final Object _reportFile;
 	private String _scriptName;
 	private Object _sourceDir;

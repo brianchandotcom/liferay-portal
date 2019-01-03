@@ -26,6 +26,7 @@ import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepository;
 import com.liferay.portal.kernel.service.ImageLocalService;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.upgrade.BaseUpgradeSQLServerDatetime;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 import com.liferay.subscription.service.SubscriptionLocalService;
@@ -51,7 +52,8 @@ public class BlogsServiceUpgrade implements UpgradeStepRegistrator {
 
 		registry.register(
 			"1.1.1", "1.1.2",
-			new UpgradeBlogsImages(_imageLocalService, _portletFileRepository));
+			new UpgradeBlogsImages(
+				_imageLocalService, _portletFileRepository, _userLocalService));
 
 		registry.register(
 			"1.1.2", "1.1.3",
@@ -88,5 +90,8 @@ public class BlogsServiceUpgrade implements UpgradeStepRegistrator {
 
 	@Reference
 	private SubscriptionLocalService _subscriptionLocalService;
+
+	@Reference
+	private UserLocalService _userLocalService;
 
 }

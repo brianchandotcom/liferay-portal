@@ -238,6 +238,12 @@ public class FragmentCollectionWrapper extends BaseModelWrapper<FragmentCollecti
 	}
 
 	@Override
+	public java.util.List<com.liferay.portal.kernel.repository.model.FileEntry> getResources()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return model.getResources();
+	}
+
+	@Override
 	public long getResourcesFolderId()
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return model.getResourcesFolderId();

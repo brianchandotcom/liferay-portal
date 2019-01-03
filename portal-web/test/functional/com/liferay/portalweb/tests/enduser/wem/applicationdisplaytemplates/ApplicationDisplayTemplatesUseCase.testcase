@@ -240,7 +240,9 @@ definition {
 
 		Portlet.addPG(portletName = "Breadcrumb");
 
-		Breadcrumb.viewADTApplied(breadcrumbADTType = "horizontal");
+		AssertVisible(
+			locator1 = "BreadcrumbPortlet#BREADCRUMB"
+		);
 
 		Portlet.gotoPortletOptions(
 			portletName = "Breadcrumb",

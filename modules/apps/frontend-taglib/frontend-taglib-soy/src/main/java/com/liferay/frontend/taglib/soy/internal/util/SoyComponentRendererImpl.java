@@ -17,6 +17,7 @@ package com.liferay.frontend.taglib.soy.internal.util;
 import com.liferay.frontend.taglib.soy.servlet.taglib.util.ComponentDescriptor;
 import com.liferay.frontend.taglib.soy.servlet.taglib.util.SoyComponentRenderer;
 import com.liferay.frontend.taglib.soy.servlet.taglib.util.SoyRenderer;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.servlet.taglib.aui.ScriptData;
 import com.liferay.portal.kernel.template.TemplateException;
@@ -124,17 +125,24 @@ public class SoyComponentRendererImpl implements SoyComponentRenderer {
 
 		String componentJavaScript = SoyJavaScriptRendererUtil.getJavaScript(
 			(Map)context, _getWrapperId(componentDescriptor, context),
-			componentDescriptor.getModule(), componentDescriptor.isWrapper());
+			componentDescriptor.getModuleName(),
+			componentDescriptor.isWrapper());
 
-		String modules = String.join(
-			StringPool.COMMA, componentDescriptor.getDependencies());
+		StringBundler sb = new StringBundler(4);
+
+		sb.append(componentDescriptor.getModule());
+		sb.append(" as ");
+		sb.append(componentDescriptor.getModuleName());
+		sb.append(
+			String.join(
+				StringPool.COMMA, componentDescriptor.getDependencies()));
 
 		if (componentDescriptor.isPositionInLine()) {
 			ScriptData scriptData = new ScriptData();
 
 			scriptData.append(
-				_portal.getPortletId(request), componentJavaScript, modules,
-				ScriptData.ModulesType.ES6);
+				_portal.getPortletId(request), componentJavaScript,
+				sb.toString(), ScriptData.ModulesType.ES6);
 
 			scriptData.writeTo(writer);
 		}
@@ -149,8 +157,8 @@ public class SoyComponentRendererImpl implements SoyComponentRenderer {
 			}
 
 			scriptData.append(
-				_portal.getPortletId(request), componentJavaScript, modules,
-				ScriptData.ModulesType.ES6);
+				_portal.getPortletId(request), componentJavaScript,
+				sb.toString(), ScriptData.ModulesType.ES6);
 		}
 	}
 

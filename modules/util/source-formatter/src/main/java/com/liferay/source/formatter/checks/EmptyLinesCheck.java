@@ -69,7 +69,7 @@ public abstract class EmptyLinesCheck extends BaseFileCheck {
 
 			String tabs = SourceUtil.getIndent(line);
 
-			if (!tabs.equals(matcher.group(1))) {
+			if (!tabs.equals(matcher.group(3))) {
 				continue;
 			}
 
@@ -87,11 +87,20 @@ public abstract class EmptyLinesCheck extends BaseFileCheck {
 				continue;
 			}
 
-			int pos = trimmedLine.indexOf(CharPool.SPACE);
+			String tagName1 = matcher.group(2);
 
-			String tagName = trimmedLine.substring(1, pos);
+			if (tagName1 == null) {
+				int pos = trimmedLine.indexOf(CharPool.SPACE);
 
-			if (!tagName.equals(matcher.group(2))) {
+				tagName1 = trimmedLine.substring(1, pos);
+			}
+
+			String tagName2 = matcher.group(4);
+
+			if (!tagName1.equals(tagName2) &&
+				(!ArrayUtil.contains(_STYLING_TAG_NAMES, tagName1) ||
+				 !ArrayUtil.contains(_STYLING_TAG_NAMES, tagName2))) {
+
 				return StringUtil.replaceFirst(
 					content, "\n", "\n\n", matcher.start());
 			}
@@ -637,7 +646,7 @@ public abstract class EmptyLinesCheck extends BaseFileCheck {
 	private static final Pattern _emptyLineBetweenTagsPattern1 =
 		Pattern.compile("\n(\t*)</([-\\w:]+)>(\n*)(\t*)<([-\\w:]+)[> \n]");
 	private static final Pattern _emptyLineBetweenTagsPattern2 =
-		Pattern.compile(" />\n(\t+)<([-\\w:]+)[> \n]");
+		Pattern.compile("(\\S</(\\w+)>| />)\n(\t+)<([-\\w:]+)[> \n]");
 	private static final Pattern _emptyLineInMultiLineTagsPattern1 =
 		Pattern.compile("\n\t*<[-\\w:#]+\n\n\t*\\w");
 	private static final Pattern _emptyLineInMultiLineTagsPattern2 =

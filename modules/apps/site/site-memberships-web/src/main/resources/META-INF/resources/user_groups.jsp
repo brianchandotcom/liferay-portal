@@ -80,7 +80,9 @@ Role role = userGroupsDisplayContext.getRole();
 	</liferay-ui:search-container>
 </aui:form>
 
-<portlet:actionURL name="addGroupUserGroups" var="addGroupUserGroupsURL" />
+<portlet:actionURL name="addGroupUserGroups" var="addGroupUserGroupsURL" >
+	<portlet:param name="redirect" value="<%= currentURL %>" />
+</portlet:actionURL>
 
 <aui:form action="<%= addGroupUserGroupsURL %>" cssClass="hide" name="addGroupUserGroupsFm">
 	<aui:input name="tabs1" type="hidden" value="user-groups" />

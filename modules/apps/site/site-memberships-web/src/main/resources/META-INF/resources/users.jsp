@@ -103,7 +103,9 @@ Role role = usersDisplayContext.getRole();
 	</div>
 </div>
 
-<portlet:actionURL name="addGroupUsers" var="addGroupUsersURL" />
+<portlet:actionURL name="addGroupUsers" var="addGroupUsersURL">
+	<portlet:param name="redirect" value="<%= currentURL %>" />
+</portlet:actionURL>
 
 <aui:form action="<%= addGroupUsersURL %>" cssClass="hide" method="post" name="addGroupUsersFm">
 	<aui:input name="tabs1" type="hidden" value="users" />

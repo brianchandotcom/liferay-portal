@@ -94,7 +94,9 @@ OrganizationsDisplayContext organizationsDisplayContext = new OrganizationsDispl
 	</div>
 </div>
 
-<portlet:actionURL name="addGroupOrganizations" var="addGroupOrganizationsURL" />
+<portlet:actionURL name="addGroupOrganizations" var="addGroupOrganizationsURL">
+	<portlet:param name="redirect" value="<%= currentURL %>" />
+</portlet:actionURL>
 
 <aui:form action="<%= addGroupOrganizationsURL %>" cssClass="hide" name="addGroupOrganizationsFm">
 	<aui:input name="tabs1" type="hidden" value="organizations" />

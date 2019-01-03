@@ -116,6 +116,15 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 				SearchSearchResponse searchSearchResponse =
 					searchEngineAdapter.execute(searchSearchRequest);
 
+				if (_log.isInfoEnabled()) {
+					_log.info(
+						StringBundler.concat(
+							"The search engine processed ",
+							searchSearchResponse.getSearchRequestString(),
+							" in ",
+							searchSearchResponse.getExecutionTime() + " ms"));
+				}
+
 				populateResponse(searchSearchResponse, searchResponseBuilder);
 
 				hits = searchSearchResponse.getHits();
@@ -177,6 +186,14 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 
 			CountSearchResponse countSearchResponse =
 				searchEngineAdapter.execute(countSearchRequest);
+
+			if (_log.isInfoEnabled()) {
+				_log.info(
+					StringBundler.concat(
+						"The search engine processed ",
+						countSearchResponse.getSearchRequestString(), " in ",
+						countSearchResponse.getExecutionTime() + " ms"));
+			}
 
 			populateResponse(
 				countSearchResponse, _getSearchResponseBuilder(searchContext));

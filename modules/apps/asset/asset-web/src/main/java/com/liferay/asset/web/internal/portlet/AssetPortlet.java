@@ -15,9 +15,14 @@
 package com.liferay.asset.web.internal.portlet;
 
 import com.liferay.asset.constants.AssetPortletKeys;
-import com.liferay.asset.constants.AssetWebKeys;
+import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.asset.util.AssetEntryUsageHelper;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.portal.kernel.util.ParamUtil;
 
 import java.io.IOException;
 
@@ -58,11 +63,30 @@ public class AssetPortlet extends MVCPortlet {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws IOException, PortletException {
 
-		renderRequest.setAttribute(
-			AssetWebKeys.ASSET_ENTRY_USAGE_HELPER, _assetEntryUsageHelper);
+		long assetEntryId = ParamUtil.getLong(renderRequest, "assetEntryId");
+
+		AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
+			assetEntryId);
+
+		try {
+			_assetEntryUsageHelper.checkAssetEntryUsages(assetEntry);
+		}
+		catch (PortalException pe) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"An error occurred while executing the checking of asset " +
+						"entry usages for asset entry " + assetEntryId,
+					pe);
+			}
+		}
 
 		super.render(renderRequest, renderResponse);
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(AssetPortlet.class);
+
+	@Reference
+	private AssetEntryLocalService _assetEntryLocalService;
 
 	@Reference
 	private AssetEntryUsageHelper _assetEntryUsageHelper;

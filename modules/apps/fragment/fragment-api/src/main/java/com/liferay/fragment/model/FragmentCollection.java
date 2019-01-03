@@ -56,6 +56,9 @@ public interface FragmentCollection extends FragmentCollectionModel,
 			}
 		};
 
+	public java.util.List<com.liferay.portal.kernel.repository.model.FileEntry> getResources()
+		throws com.liferay.portal.kernel.exception.PortalException;
+
 	public long getResourcesFolderId()
 		throws com.liferay.portal.kernel.exception.PortalException;
 

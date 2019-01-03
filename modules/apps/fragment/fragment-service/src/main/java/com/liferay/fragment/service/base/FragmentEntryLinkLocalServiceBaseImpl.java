@@ -24,6 +24,7 @@ import com.liferay.exportimport.kernel.lar.StagedModelType;
 
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
+import com.liferay.fragment.service.persistence.FragmentCollectionPersistence;
 import com.liferay.fragment.service.persistence.FragmentEntryLinkFinder;
 import com.liferay.fragment.service.persistence.FragmentEntryLinkPersistence;
 import com.liferay.fragment.service.persistence.FragmentEntryPersistence;
@@ -534,6 +535,44 @@ public abstract class FragmentEntryLinkLocalServiceBaseImpl
 	}
 
 	/**
+	 * Returns the fragment collection local service.
+	 *
+	 * @return the fragment collection local service
+	 */
+	public com.liferay.fragment.service.FragmentCollectionLocalService getFragmentCollectionLocalService() {
+		return fragmentCollectionLocalService;
+	}
+
+	/**
+	 * Sets the fragment collection local service.
+	 *
+	 * @param fragmentCollectionLocalService the fragment collection local service
+	 */
+	public void setFragmentCollectionLocalService(
+		com.liferay.fragment.service.FragmentCollectionLocalService fragmentCollectionLocalService) {
+		this.fragmentCollectionLocalService = fragmentCollectionLocalService;
+	}
+
+	/**
+	 * Returns the fragment collection persistence.
+	 *
+	 * @return the fragment collection persistence
+	 */
+	public FragmentCollectionPersistence getFragmentCollectionPersistence() {
+		return fragmentCollectionPersistence;
+	}
+
+	/**
+	 * Sets the fragment collection persistence.
+	 *
+	 * @param fragmentCollectionPersistence the fragment collection persistence
+	 */
+	public void setFragmentCollectionPersistence(
+		FragmentCollectionPersistence fragmentCollectionPersistence) {
+		this.fragmentCollectionPersistence = fragmentCollectionPersistence;
+	}
+
+	/**
 	 * Returns the fragment entry local service.
 	 *
 	 * @return the fragment entry local service
@@ -668,6 +707,10 @@ public abstract class FragmentEntryLinkLocalServiceBaseImpl
 	protected FragmentEntryLinkFinder fragmentEntryLinkFinder;
 	@ServiceReference(type = com.liferay.counter.kernel.service.CounterLocalService.class)
 	protected com.liferay.counter.kernel.service.CounterLocalService counterLocalService;
+	@BeanReference(type = com.liferay.fragment.service.FragmentCollectionLocalService.class)
+	protected com.liferay.fragment.service.FragmentCollectionLocalService fragmentCollectionLocalService;
+	@BeanReference(type = FragmentCollectionPersistence.class)
+	protected FragmentCollectionPersistence fragmentCollectionPersistence;
 	@BeanReference(type = com.liferay.fragment.service.FragmentEntryLocalService.class)
 	protected com.liferay.fragment.service.FragmentEntryLocalService fragmentEntryLocalService;
 	@BeanReference(type = FragmentEntryPersistence.class)

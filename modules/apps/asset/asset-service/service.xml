@@ -43,6 +43,12 @@
 			<finder-column name="classPK" />
 			<finder-column name="portletId" />
 		</finder>
+		<finder name="A_C_C_P" return-type="AssetEntryUsage" unique="true">
+			<finder-column name="assetEntryId" />
+			<finder-column name="classNameId" />
+			<finder-column name="classPK" />
+			<finder-column name="portletId" />
+		</finder>
 
 		<!-- References -->
 

@@ -26,6 +26,9 @@ public class TextFormApioTestBundleActivator
 	public static final String MULTILINE_TEXT_FIELD_NAME =
 		"MyMultilineTextField";
 
+	public static final String PREDEFINED_TEXT_FIELD_NAME =
+		"MyPredefinedTextField";
+
 	public static final String SITE_NAME =
 		TextFormApioTestBundleActivator.class.getSimpleName() + "Site";
 
@@ -49,6 +52,12 @@ public class TextFormApioTestBundleActivator
 			properties = "displayStyle=multiline", type = "text"
 		)
 		public String multilineTextValue();
+
+		@DDMFormField(
+			label = "My Text Field", name = PREDEFINED_TEXT_FIELD_NAME,
+			predefinedValue = "This is a predefined value", type = "text"
+		)
+		public String predefinedTextValue();
 
 		@DDMFormField(
 			label = "My Text Field", name = TEXT_FIELD_NAME,

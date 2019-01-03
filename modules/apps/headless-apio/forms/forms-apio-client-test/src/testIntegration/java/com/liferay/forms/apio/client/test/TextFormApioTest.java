@@ -226,6 +226,32 @@ public class TextFormApioTest {
 		);
 	}
 
+	@Test
+	public void testTextFieldPredefinedValueIsDisplayed() {
+		ApioClientBuilder.given(
+		).basicAuth(
+			"test@liferay.com", "test"
+		).header(
+			"Accept", "application/hal+json"
+		).header(
+			"Accept-Language", "en-US"
+		).when(
+		).get(
+			_formHrefURL.toExternalForm() + "?embedded=structure"
+		).then(
+		).log(
+		).ifError(
+		).statusCode(
+			200
+		).root(
+			"_embedded.formPages._embedded[0]._embedded.fields._embedded." +
+				"find {it.name == '%s'}",
+			withArgs(TextFormApioTestBundleActivator.PREDEFINED_TEXT_FIELD_NAME)
+		).body(
+			"predefinedValue", equalTo("This is a predefined value")
+		);
+	}
+
 	private URL _formHrefURL;
 
 	@ArquillianResource

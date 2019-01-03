@@ -1124,6 +1124,18 @@ public class UserLocalServiceUtil {
 	}
 
 	/**
+	* Returns the fallback user for the company.
+	*
+	* @param companyId the primary key of the company
+	* @return the default user for the company
+	*/
+	public static com.liferay.portal.kernel.model.User getFallbackUser(
+		long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getFallbackUser(companyId);
+	}
+
+	/**
 	* Returns the groupIds of the groups associated with the user.
 	*
 	* @param userId the userId of the user

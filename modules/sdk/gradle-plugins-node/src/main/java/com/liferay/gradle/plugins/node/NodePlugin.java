@@ -224,9 +224,9 @@ public class NodePlugin implements Plugin<Project> {
 			project, taskName, NpmRunTask.class);
 
 		npmRunTask.dependsOn(npmInstallTask);
-		npmRunTask.setScriptName(name);
 		npmRunTask.setDescription("Runs the \"" + name + "\" NPM script.");
 		npmRunTask.setGroup(BasePlugin.BUILD_GROUP);
+		npmRunTask.setScriptName(name);
 
 		if (taskName.equals(NPM_RUN_BUILD_TASK_NAME)) {
 			PluginContainer pluginContainer = project.getPlugins();

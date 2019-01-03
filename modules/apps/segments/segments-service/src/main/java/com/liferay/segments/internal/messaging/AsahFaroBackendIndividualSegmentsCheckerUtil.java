@@ -14,7 +14,6 @@
 
 package com.liferay.segments.internal.messaging;
 
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -123,29 +122,13 @@ public class AsahFaroBackendIndividualSegmentsCheckerUtil {
 		SegmentsEntry segmentsEntry, Individual individual,
 		ServiceContext serviceContext) {
 
-		if (_log.isDebugEnabled()) {
-			_log.debug(
-				StringBundler.concat(
-					"Checking individual ", individual.getId(), " for segment ",
-					segmentsEntry.getSegmentsEntryId()));
-		}
-
-		Map<String, Set<String>> dataSourceIndividualPKs =
-			individual.getDataSourceIndividualPKs();
-
-		Optional<Long> userIdOptional = _getUserIdOptional(
-			dataSourceIndividualPKs);
+		Optional<Long> userIdOptional = _getUserIdOptional(individual);
 
 		if (!userIdOptional.isPresent()) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
-					StringBundler.concat(
-						"Unable to find an user corresponding to individual ",
-						individual.getId(), " with: segmentsEntryKey=",
-						segmentsEntry.getKey(), "; segmentsEntryId=",
-						segmentsEntry.getSegmentsEntryId(),
-						"; dataSourceIndividualPKs=%s",
-						dataSourceIndividualPKs));
+					"Unable to find an user corresponding to individual " +
+						individual.getId());
 			}
 
 			return;
@@ -161,12 +144,7 @@ public class AsahFaroBackendIndividualSegmentsCheckerUtil {
 		}
 		catch (PortalException pe) {
 			_log.error(
-				StringBundler.concat(
-					"Unable to process individual ", individual.getId(),
-					" with: segmentsEntryKey=", segmentsEntry.getKey(),
-					"; segmentsEntryId=", segmentsEntry.getSegmentsEntryId(),
-					"; dataSourceIndividualPKs=%s", dataSourceIndividualPKs),
-				pe);
+				"Unable to process individual " + individual.getId(), pe);
 		}
 	}
 
@@ -185,12 +163,6 @@ public class AsahFaroBackendIndividualSegmentsCheckerUtil {
 
 		try {
 			if (segmentsEntry == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(
-						"Adding new segment from individual segment " +
-							individualSegment.getId());
-				}
-
 				_segmentsEntryLocalService.addSegmentsEntry(
 					nameMap, Collections.emptyMap(), true, null,
 					individualSegment.getId(),
@@ -198,15 +170,6 @@ public class AsahFaroBackendIndividualSegmentsCheckerUtil {
 					User.class.getName(), serviceContext);
 
 				return;
-			}
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(
-					StringBundler.concat(
-						"Updating existing segment ",
-						segmentsEntry.getSegmentsEntryId(),
-						" from individual segment ",
-						individualSegment.getId()));
 			}
 
 			_segmentsEntryLocalService.updateSegmentsEntry(
@@ -224,14 +187,6 @@ public class AsahFaroBackendIndividualSegmentsCheckerUtil {
 	private void _checkIndividualSegmentMemberships(SegmentsEntry segmentsEntry)
 		throws PortalException {
 
-		if (_log.isDebugEnabled()) {
-			_log.debug(
-				StringBundler.concat(
-					"Checking memberships for segment ",
-					segmentsEntry.getSegmentsEntryId(), " and individual ",
-					"segment ", segmentsEntry.getKey()));
-		}
-
 		_segmentsEntryRelLocalService.deleteSegmentsEntryRels(
 			segmentsEntry.getSegmentsEntryId());
 
@@ -246,8 +201,9 @@ public class AsahFaroBackendIndividualSegmentsCheckerUtil {
 
 			if (_log.isDebugEnabled()) {
 				_log.debug(
-					totalElements + " individuals found for individual segment " +
-						segmentsEntry.getKey());
+					totalElements +
+						" individuals found for individual segment " +
+							segmentsEntry.getKey());
 			}
 
 			if (totalElements == 0) {
@@ -262,14 +218,6 @@ public class AsahFaroBackendIndividualSegmentsCheckerUtil {
 			int curPage = 1;
 
 			while (true) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(
-						StringBundler.concat(
-							"Checking individuals: page=", curPage, "; size=",
-							_DELTA_INDIVIDUALS, "; total pages=", totalPages,
-							"; total elements=", totalElements));
-				}
-
 				List<Individual> items = individualResults.getItems();
 
 				items.forEach(
@@ -340,12 +288,6 @@ public class AsahFaroBackendIndividualSegmentsCheckerUtil {
 				SegmentsConstants.SOURCE_ASAH_FARO_BACKEND, QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS, null);
 
-		if (_log.isDebugEnabled()) {
-			_log.debug(
-				segmentsEntries.size() +
-					" existing Asah Faro Backend segments found");
-		}
-
 		for (SegmentsEntry segmentsEntry : segmentsEntries) {
 			_checkIndividualSegmentMemberships(segmentsEntry);
 		}
@@ -366,8 +308,9 @@ public class AsahFaroBackendIndividualSegmentsCheckerUtil {
 		return serviceContext;
 	}
 
-	private Optional<Long> _getUserIdOptional(
-		Map<String, Set<String>> dataSourceIndividualPKs) {
+	private Optional<Long> _getUserIdOptional(Individual individual) {
+		Map<String, Set<String>> dataSourceIndividualPKs =
+			individual.getDataSourceIndividualPKs();
 
 		Set<String> individualPKs = dataSourceIndividualPKs.get(
 			_asahFaroBackendClient.getDataSourceId());
@@ -385,13 +328,6 @@ public class AsahFaroBackendIndividualSegmentsCheckerUtil {
 
 		if (user == null) {
 			return Optional.empty();
-		}
-
-		if (_log.isDebugEnabled()) {
-			_log.debug(
-				StringBundler.concat(
-					"User found with UUID ", userUuid, ": userId=",
-					user.getUserId(), "; fullName=", user.getFullName()));
 		}
 
 		return Optional.of(user.getUserId());

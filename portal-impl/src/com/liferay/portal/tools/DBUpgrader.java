@@ -145,7 +145,7 @@ public class DBUpgrader {
 
 		// Check required build number
 
-		checkRequiredBuildNumber(ReleaseInfo.RELEASE_6_1_0_BUILD_NUMBER);
+		checkRequiredBuildNumber(ReleaseInfo.RELEASE_6_2_0_BUILD_NUMBER);
 
 		try (Connection connection = DataAccess.getConnection()) {
 			if (PortalUpgradeProcess.isInLatestSchemaVersion(connection)) {

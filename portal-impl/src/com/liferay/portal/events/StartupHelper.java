@@ -178,8 +178,6 @@ public class StartupHelper {
 	}
 
 	private static final String[] _UPGRADE_PROCESS_CLASS_NAMES = {
-		"com.liferay.portal.upgrade.UpgradeProcess_6_1_1",
-		"com.liferay.portal.upgrade.UpgradeProcess_6_2_0",
 		"com.liferay.portal.upgrade.UpgradeProcess_7_0_0",
 		"com.liferay.portal.upgrade.UpgradeProcess_7_0_1",
 		"com.liferay.portal.upgrade.UpgradeProcess_7_0_3",

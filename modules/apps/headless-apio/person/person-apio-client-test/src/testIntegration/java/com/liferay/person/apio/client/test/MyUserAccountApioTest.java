@@ -52,7 +52,7 @@ public class MyUserAccountApioTest {
 	public void setUp() throws Exception {
 		URL rootEndpointURL = new URL(_url, "/o/api");
 
-		String userAccountHrefURL = ApioClientBuilder.given(
+		String userAccountHref = ApioClientBuilder.given(
 		).basicAuth(
 			"test@liferay.com", "test"
 		).header(
@@ -78,7 +78,7 @@ public class MyUserAccountApioTest {
 				_read("test-get-my-user-account-create-user.json")
 			).when(
 			).post(
-				userAccountHrefURL
+				userAccountHref
 			).then(
 			).statusCode(
 				200

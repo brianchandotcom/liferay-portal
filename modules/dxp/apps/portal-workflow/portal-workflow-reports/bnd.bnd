@@ -3,3 +3,4 @@ Bundle-SymbolicName: com.liferay.portal.workflow.reports
 Bundle-Version: 1.0.0
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Workflow
+-dsannotations-options: inherit

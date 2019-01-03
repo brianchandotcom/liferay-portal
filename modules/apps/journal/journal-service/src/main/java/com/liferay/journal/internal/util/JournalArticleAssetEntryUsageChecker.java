@@ -62,7 +62,7 @@ public class JournalArticleAssetEntryUsageChecker
 		JournalArticle article = _journalArticleLocalService.fetchLatestArticle(
 			assetEntry.getClassPK());
 
-		List<JournalContentSearch> journalContentSearchList =
+		List<JournalContentSearch> contentSearches =
 			_journalContentSearchLocalService.getArticleContentSearches(
 				article.getArticleId());
 
@@ -72,28 +72,24 @@ public class JournalArticleAssetEntryUsageChecker
 			new ServiceContext()
 		);
 
-		for (JournalContentSearch journalContentSearch :
-				journalContentSearchList) {
-
+		for (JournalContentSearch contentSearch : contentSearches) {
 			Layout layout = _layoutLocalService.getLayout(
-				journalContentSearch.getGroupId(),
-				journalContentSearch.isPrivateLayout(),
-				journalContentSearch.getLayoutId());
+				contentSearch.getGroupId(), contentSearch.isPrivateLayout(),
+				contentSearch.getLayoutId());
 
 			AssetEntryUsage assetEntryUsage =
 				_assetEntryUsageLocalService.fetchAssetEntryUsage(
 					_portal.getClassNameId(Layout.class), layout.getPlid(),
-					journalContentSearch.getPortletId());
+					contentSearch.getPortletId());
 
 			if (assetEntryUsage != null) {
 				continue;
 			}
 
 			_assetEntryUsageLocalService.addAssetEntryUsage(
-				article.getUserId(), journalContentSearch.getGroupId(),
+				article.getUserId(), contentSearch.getGroupId(),
 				assetEntry.getEntryId(), _portal.getClassNameId(Layout.class),
-				layout.getPlid(), journalContentSearch.getPortletId(),
-				serviceContext);
+				layout.getPlid(), contentSearch.getPortletId(), serviceContext);
 		}
 
 		for (boolean privateLayout : Arrays.asList(false, true)) {

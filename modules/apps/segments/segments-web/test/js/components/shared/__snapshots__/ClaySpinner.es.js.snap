@@ -2,7 +2,6 @@
 
 exports[`ClaySpinner should render 1`] = `
 <span
-  aria-hidden="true"
   class="loading-animation"
   data-testid="spinner"
 />

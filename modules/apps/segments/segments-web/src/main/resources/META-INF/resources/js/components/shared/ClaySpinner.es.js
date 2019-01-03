@@ -22,7 +22,6 @@ class ClaySpinner extends Component {
 
 		return loading && (
 			<span
-				aria-hidden="true"
 				className={classes}
 				data-testid="spinner"
 			/>

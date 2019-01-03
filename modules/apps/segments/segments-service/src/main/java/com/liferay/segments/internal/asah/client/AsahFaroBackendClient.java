@@ -27,8 +27,26 @@ import java.util.List;
  */
 public interface AsahFaroBackendClient {
 
+	/**
+	 * Returns the ID of the data source connected to the client.
+	 *
+	 * @return the ID of the data source connected to the client
+	 * @review
+	 */
 	public String getDataSourceId();
 
+	/**
+	 * Returns a {@link Results} of {@link Individual} that are members of an
+	 * individual segment.
+	 *
+	 * @param  individualSegmentId the ID of the individual segment
+	 * @param  cur the current page (one-based numbering)
+	 * @param  delta the page size
+	 * @param  orderByFields the sort fields
+	 * @return a {@link Results} of {@link Individual} that are members of an
+	 *         individual segment
+	 * @review
+	 */
 	public Results<Individual> getIndividualResults(
 		String individualSegmentId, int cur, int delta,
 		List<OrderByField> orderByFields);

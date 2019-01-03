@@ -1,17 +1,19 @@
+import {ClayActionsDropdown, ClayDropdown} from 'clay-dropdown';
 import {Config} from 'metal-state';
 import {Drag, DragDrop} from 'metal-drag-drop';
 import {EventHandler} from 'metal-events';
 import {focusedFieldStructure} from '../../util/config.es';
+import {normalizeSettingsContextPages} from '../../util/fieldSupport.es';
 import {selectText} from '../../util/dom.es';
+import autobind from 'autobind-decorator';
 import classnames from 'classnames';
-import {ClayActionsDropdown, ClayDropdown} from 'clay-dropdown';
 import ClayButton from 'clay-button';
 import Component, {Fragment} from 'metal-jsx';
 import dom from 'metal-dom';
 import FieldTypeBox from '../FieldTypeBox/FieldTypeBox.es.js';
-import autobind from 'autobind-decorator';
 import FormRenderer, {FormSupport} from '../Form/index.es.js';
 import WithEvaluator from '../Form/Evaluator.es';
+import {PagesVisitor} from '../../util/visitors.es';
 
 const EVALUATOR_URL = '/o/dynamic-data-mapping-form-context-provider/';
 const FormWithEvaluator = WithEvaluator(FormRenderer);
@@ -499,6 +501,68 @@ class Sidebar extends Component {
 	}
 
 	/**
+	 * Handle click on the dropdown to change the field type.
+	 * @protected
+	 */
+	@autobind
+	_handleChangeFieldTypeItemClicked({data}) {
+		const {focusedField, namespace} = this.props;
+		const newFieldType = data.item;
+		const newSettingsContext = {
+			...newFieldType.settingsContext,
+			pages: normalizeSettingsContextPages(newFieldType.settingsContext.pages, namespace, newFieldType, focusedField.fieldName)
+		};
+		const settingsContext = this._mergeFieldTypeSettings(focusedField.settingsContext, newSettingsContext);
+
+		this.emit(
+			'focusedFieldUpdated',
+			{
+				...focusedField,
+				...newFieldType,
+				settingsContext,
+				type: newFieldType.name
+			}
+		);
+	}
+
+	_mergeFieldTypeSettings(oldSettingsContext, newSettingsContext) {
+		const newVisitor = new PagesVisitor(newSettingsContext.pages);
+		const oldVisitor = new PagesVisitor(oldSettingsContext.pages);
+
+		const getByFieldNameAndType = (fieldName, type) => {
+			let field;
+
+			oldVisitor.mapFields(
+				oldField => {
+					if (oldField.fieldName === fieldName && oldField.type === type) {
+						field = oldField;
+					}
+				}
+			);
+
+			return field;
+		};
+
+		return {
+			...newSettingsContext,
+			pages: newVisitor.mapFields(
+				newField => {
+					const mergedField = getByFieldNameAndType(newField.fieldName, newField.type);
+
+					if (mergedField) {
+						newField = {
+							...mergedField,
+							visible: newField.visible
+						};
+					}
+
+					return newField;
+				}
+			)
+		};
+	}
+
+	/**
 	 * Handle click on the previous button.
 	 * @protected
 	 */
@@ -702,6 +766,9 @@ class Sidebar extends Component {
 						<li class="tbar-item ddm-fieldtypes-dropdown tbar-item-expand text-left">
 							<div>
 								<ClayDropdown
+									events={{
+										itemClicked: this._handleChangeFieldTypeItemClicked
+									}}
 									icon={focusedFieldType.icon}
 									items={this.state.dropdownFieldTypes}
 									itemsIconAlignment={'left'}

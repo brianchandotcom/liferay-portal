@@ -80,7 +80,7 @@ public class SoyComponentRendererImpl implements SoyComponentRenderer {
 			if (!context.containsKey("element")) {
 				contextCopy.put(
 					"element",
-					_getElementSelector(componentDescriptor, context));
+					_getElementSelector(componentDescriptor, contextCopy));
 			}
 
 			_renderJavaScript(

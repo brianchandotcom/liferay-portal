@@ -69,7 +69,9 @@ public class AssetPortlet extends MVCPortlet {
 			assetEntryId);
 
 		try {
-			_assetEntryUsageHelper.checkAssetEntryUsages(assetEntry);
+			if (assetEntry != null) {
+				_assetEntryUsageHelper.checkAssetEntryUsages(assetEntry);
+			}
 		}
 		catch (PortalException pe) {
 			if (_log.isDebugEnabled()) {

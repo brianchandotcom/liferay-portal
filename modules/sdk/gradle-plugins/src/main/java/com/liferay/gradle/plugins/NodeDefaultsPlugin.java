@@ -23,14 +23,9 @@ import com.liferay.gradle.plugins.node.tasks.NpmInstallTask;
 import com.liferay.gradle.plugins.node.tasks.PublishNodeModuleTask;
 import com.liferay.gradle.util.Validator;
 
-import java.io.File;
-
 import org.gradle.api.Action;
 import org.gradle.api.Project;
-import org.gradle.api.Task;
-import org.gradle.api.specs.Spec;
 import org.gradle.api.tasks.TaskContainer;
-import org.gradle.api.tasks.TaskOutputs;
 
 /**
  * @author Andrea Di Giorgi
@@ -84,22 +79,6 @@ public class NodeDefaultsPlugin extends BaseDefaultsPlugin<NodePlugin> {
 		if (Validator.isNotNull(sassBinarySite)) {
 			_setTaskExecuteNodeArgDefault(
 				npmInstallTask, _SASS_BINARY_SITE_ARG, sassBinarySite);
-		}
-
-		File nodeModulesDir = npmInstallTask.getNodeModulesDir();
-
-		if (!nodeModulesDir.exists()) {
-			TaskOutputs taskOutputs = npmInstallTask.getOutputs();
-
-			taskOutputs.upToDateWhen(
-				new Spec<Task>() {
-
-					@Override
-					public boolean isSatisfiedBy(Task task) {
-						return false;
-					}
-
-				});
 		}
 	}
 

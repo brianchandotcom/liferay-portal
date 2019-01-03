@@ -46,6 +46,7 @@ import org.gradle.api.tasks.Delete;
 import org.gradle.api.tasks.SourceSet;
 import org.gradle.api.tasks.SourceSetOutput;
 import org.gradle.api.tasks.TaskContainer;
+import org.gradle.api.tasks.TaskOutputs;
 import org.gradle.language.base.plugins.LifecycleBasePlugin;
 import org.gradle.util.VersionNumber;
 
@@ -113,6 +114,7 @@ public class NodePlugin implements Plugin<Project> {
 					_configureTaskDownloadNodeGlobal(
 						downloadNodeTask, nodeExtension);
 					_configureTasksExecuteNpmArgs(project, nodeExtension);
+					_configureTasksNpmInstall(project, nodeExtension);
 					_configureTasksNpmRun(project, nodeExtension);
 				}
 
@@ -474,6 +476,22 @@ public class NodePlugin implements Plugin<Project> {
 		executeNpmTask.args(nodeExtension.getNpmArgs());
 	}
 
+	private void _configureTaskNpmInstall(
+		NpmInstallTask npmInstallTask, NodeExtension nodeExtension) {
+
+		npmInstallTask.setNodeVersion(nodeExtension.getNodeVersion());
+		npmInstallTask.setNpmVersion(nodeExtension.getNpmVersion());
+
+		TaskOutputs taskOutputs = npmInstallTask.getOutputs();
+
+		if (!npmInstallTask.isCheckDigest()) {
+			taskOutputs.dir(npmInstallTask.getNodeModulesDir());
+		}
+		else {
+			taskOutputs.file(npmInstallTask.getNodeModulesDigestFile());
+		}
+	}
+
 	private void _configureTaskNpmRun(
 		NpmRunTask npmRunTask, NodeExtension nodeExtension) {
 
@@ -638,6 +656,23 @@ public class NodePlugin implements Plugin<Project> {
 				@Override
 				public void execute(ExecuteNpmTask executeNpmTask) {
 					_configureTaskExecuteNpmArgs(executeNpmTask, nodeExtension);
+				}
+
+			});
+	}
+
+	private void _configureTasksNpmInstall(
+		Project project, final NodeExtension nodeExtension) {
+
+		TaskContainer taskContainer = project.getTasks();
+
+		taskContainer.withType(
+			NpmInstallTask.class,
+			new Action<NpmInstallTask>() {
+
+				@Override
+				public void execute(NpmInstallTask npmInstallTask) {
+					_configureTaskNpmInstall(npmInstallTask, nodeExtension);
 				}
 
 			});

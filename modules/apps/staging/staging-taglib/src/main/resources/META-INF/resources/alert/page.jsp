@@ -36,10 +36,12 @@
 		</c:when>
 		<c:when test="<%= type == AlertType.SUCCESS.getAlertCode() %>">
 			<i class="icon-ok-sign"></i>
+
 			<strong class="lead"><%= LanguageUtil.get(request, "alert-helper-success") %>: </strong>
 		</c:when>
 		<c:when test="<%= type == AlertType.WARNING.getAlertCode() %>">
 			<i class="icon-warning-sign"></i>
+
 			<strong class="lead"><%= LanguageUtil.get(request, "alert-helper-warning") %>: </strong>
 		</c:when>
 	</c:choose>

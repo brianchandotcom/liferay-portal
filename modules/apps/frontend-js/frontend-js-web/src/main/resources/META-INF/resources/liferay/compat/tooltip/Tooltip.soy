@@ -14,6 +14,7 @@
 	{let $positionClass: isNonnull($currentPosition) ? $positionClasses[$currentPosition] : 'bottom' /}
 	<div class="tooltip {$positionClass}{$elementClasses ? ' ' + $elementClasses : ''}" role="tooltip">
 		<div class="tooltip-arrow"></div>
+
 		<section class="tooltip-inner">
 			{if $title}
 				{$title}

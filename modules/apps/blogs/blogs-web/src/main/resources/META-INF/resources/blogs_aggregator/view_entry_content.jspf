@@ -48,6 +48,7 @@
 						<div class="entry-info text-muted ">
 							<small>
 								<strong><%= HtmlUtil.escape(entry.getUserName()) %></strong>
+
 								<span> - </span>
 								<span class="hide-accessible"><liferay-ui:message key="published-date" /></span>
 								<%= dateFormatDate.format(entry.getDisplayDate()) %>
@@ -58,6 +59,7 @@
 						<div class="entry-info text-muted ">
 							<small>
 								<strong><%= HtmlUtil.escape(entry.getUserName()) %></strong>
+
 								<span> - </span>
 								<span class="hide-accessible"><liferay-ui:message key="published-date" /></span>
 								<%= dateFormatDate.format(entry.getDisplayDate()) %>
@@ -125,6 +127,7 @@
 					<div class="comments">
 						<a href="<%= viewEntryURL %>">
 							<i class="icon-comment icon-monospaced"></i>
+
 							<span><%= String.valueOf(commentsCount) %></span>
 						</a>
 					</div>

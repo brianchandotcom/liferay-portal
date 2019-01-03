@@ -20,6 +20,7 @@
 	<aui:fieldset cssClass="options-group" markupView="lexicon">
 		<div class="sheet-section">
 			<h3 class="sheet-subtitle"><liferay-ui:message key="content" /></h3>
+
 			<ul class="list-unstyled">
 				<li class="tree-item">
 					<aui:input disabled="<%= disableInputs %>" name="<%= PortletDataHandlerKeys.PORTLET_DATA %>" type="hidden" value="<%= MapUtil.getBoolean(parameterMap, PortletDataHandlerKeys.PORTLET_DATA, true) %>" />

@@ -32,6 +32,7 @@ movie = HtmlUtil.escapeHREF(movie);
 <html>
 	<head>
 		<title><%= HtmlUtil.escape(title) %></title>
+
 		<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
 
 		<script src="<%= themeDisplay.getCDNHost() + themeDisplay.getPathJavaScript() %>/misc/swfobject.js" type="text/javascript"></script>

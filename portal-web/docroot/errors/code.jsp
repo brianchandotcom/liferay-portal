@@ -79,6 +79,7 @@ String xRequestWith = request.getHeader(HttpHeaders.X_REQUESTED_WITH);
 
 			<head>
 				<title></title>
+
 				<meta content="1; url=<%= HtmlUtil.escapeAttribute(redirect) %>" http-equiv="refresh" />
 			</head>
 

@@ -20,6 +20,7 @@
 	<aui:fieldset cssClass="options-group" markupView="lexicon">
 		<div class="sheet-section">
 			<h3 class="sheet-subtitle"><liferay-ui:message key="deletions" /></h3>
+
 			<c:if test="<%= !cmd.equals(Constants.EXPORT) %>">
 				<liferay-staging:checkbox
 					checked="<%= MapUtil.getBoolean(parameterMap, PortletDataHandlerKeys.DELETE_PORTLET_DATA, false) %>"

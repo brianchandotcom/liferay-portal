@@ -70,6 +70,7 @@ response.setStatus(HttpServletResponse.SC_MOVED_PERMANENTLY);
 <html>
 	<head>
 		<title></title>
+
 		<meta content="1; url=<%= HtmlUtil.escapeAttribute(redirect) %>" http-equiv="refresh" />
 	</head>
 

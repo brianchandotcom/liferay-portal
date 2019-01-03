@@ -185,6 +185,7 @@ String clientSecret = (oAuth2Application == null) ? "" : oAuth2Application.getCl
 				/>
 
 				<b><liferay-ui:message key="warning" />:</b>
+
 				<liferay-ui:message key="if-changed-clients-with-the-old-client-secret-will-no-longer-be-able-to-request-new-tokens-after-you-save-the-application-details" />
 			</div>
 

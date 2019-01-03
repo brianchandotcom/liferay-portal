@@ -27,6 +27,7 @@
 	<c:if test="<%= Validator.isNotNull(version) %>">
 		<span class="workflow-version">
 			<span class="workflow-label"><liferay-ui:message key="version" />:</span>
+
 			<strong class="workflow-value"><%= version %></strong>
 		</span>
 	</c:if>

@@ -91,6 +91,7 @@ renderResponse.setTitle(oAuth2Application.getName());
 
 							<div class="autofit-col autofit-col-expand">
 								<h4 class="list-group-title text-truncate"><%= HtmlUtil.escape(assignableScopes.getApplicationDescription(applicationName)) %></h4>
+
 								<p class="list-group-subtitle text-truncate"><%= applicationScopeDescription %></p>
 							</div>
 						</li>

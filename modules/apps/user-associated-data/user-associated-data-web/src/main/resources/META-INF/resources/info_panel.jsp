@@ -26,6 +26,7 @@ UADDisplay uadDisplay = (UADDisplay)request.getAttribute(UADWebKeys.INFO_PANEL_U
 		<c:when test="<%= ListUtil.isEmpty(uadEntities) %>">
 			<div class="sidebar-header">
 				<h3 class="sidebar-title"><%= uadDisplay.getTypeName(locale) %></h3>
+
 				<h5 class="sidebar-subtitle"><%= UADLanguageUtil.getApplicationName(uadDisplay, locale) %></h5>
 			</div>
 		</c:when>
@@ -80,6 +81,7 @@ UADDisplay uadDisplay = (UADDisplay)request.getAttribute(UADWebKeys.INFO_PANEL_U
 		<c:when test="<%= ListUtil.isNotEmpty(uadEntities) && (uadEntities.size() > 1) %>">
 			<div class="sidebar-header">
 				<h3 class="sidebar-title"><%= uadDisplay.getTypeName(locale) %></h3>
+
 				<h5 class="sidebar-subtitle"><liferay-ui:message arguments="<%= uadEntities.size() %>" key="x-items-are-selected" /></h5>
 			</div>
 		</c:when>

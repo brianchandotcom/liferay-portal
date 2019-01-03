@@ -111,6 +111,7 @@ if (PropsValues.PORTAL_JAAS_ENABLE && (jUserName != null)) {
 		<html dir="<liferay-ui:message key="lang.dir" />">
 			<head>
 				<title></title>
+
 				<meta content="0; url=<%= themeDisplay.getPathMain() %>" http-equiv="refresh" />
 				<meta content="no-cache" http-equiv="Cache-Control" />
 				<meta content="no-cache" http-equiv="Pragma" />

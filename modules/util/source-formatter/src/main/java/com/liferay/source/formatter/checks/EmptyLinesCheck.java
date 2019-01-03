@@ -16,6 +16,7 @@ package com.liferay.source.formatter.checks;
 
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.tools.ToolsUtil;
@@ -45,8 +46,8 @@ public abstract class EmptyLinesCheck extends BaseFileCheck {
 			String tagName2 = matcher.group(5);
 
 			if (tagName1.endsWith(":when") ||
-				(tagName1.matches("dd|dt|li|span|td|th|tr") &&
-				 tagName2.matches("dd|dt|li|span|td|th|tr"))) {
+				(ArrayUtil.contains(_STYLING_TAG_NAMES, tagName1) &&
+				 ArrayUtil.contains(_STYLING_TAG_NAMES, tagName2))) {
 
 				if (lineBreaks.equals("\n\n")) {
 					return StringUtil.replaceFirst(
@@ -628,6 +629,10 @@ public abstract class EmptyLinesCheck extends BaseFileCheck {
 			}
 		}
 	}
+
+	private static final String[] _STYLING_TAG_NAMES = {
+		"dd", "dt", "li", "span", "td", "th", "tr"
+	};
 
 	private static final Pattern _emptyLineBetweenTagsPattern1 =
 		Pattern.compile("\n(\t*)</([-\\w:]+)>(\n*)(\t*)<([-\\w:]+)[> \n]");

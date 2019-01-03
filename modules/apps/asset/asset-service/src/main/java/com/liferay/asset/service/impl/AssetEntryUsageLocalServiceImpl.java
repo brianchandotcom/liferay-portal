@@ -68,6 +68,14 @@ public class AssetEntryUsageLocalServiceImpl
 	}
 
 	@Override
+	public AssetEntryUsage fetchAssetEntryUsage(
+		long assetEntryId, long classNameId, long classPK, String portletId) {
+
+		return assetEntryUsagePersistence.fetchByA_C_C_P(
+			assetEntryId, classNameId, classPK, portletId);
+	}
+
+	@Override
 	public List<AssetEntryUsage> getAssetEntryUsages(long assetEntryId) {
 		return assetEntryUsagePersistence.findByAssetEntryId(assetEntryId);
 	}

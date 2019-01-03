@@ -16,10 +16,10 @@
 
 <%@ include file="/init.jsp" %>
 
-<div class="sheet sheet-lg">
+<div class="change-lists-configuration-sheet sheet sheet-lg">
 	<div class="sheet-header">
-		<h2 class="sheet-title">My Change Lists example screen</h2>
+		<h2 class="sheet-title">Change Lists Settings</h2>
 
-		<div class="sheet-text">This is only a placeholder for what's later be added to the my change lists screen.</div>
+		<div class="sheet-text">This is only a placeholder for what's later be added to the change lists configuration screen.</div>
 	</div>
 </div>

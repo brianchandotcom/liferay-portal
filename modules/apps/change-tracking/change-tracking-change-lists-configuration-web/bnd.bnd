@@ -1,0 +1,6 @@
+Bundle-Name: Liferay Change Tracking Change Lists Configuration Web
+Bundle-SymbolicName: com.liferay.change.tracking.change.lists.configuration.web
+Bundle-Version: 1.0.0
+Liferay-JS-Config: /META-INF/resources/js/config.js
+Web-ContextPath: /change-tracking-change-lists-configuration-web
+-dsannotations-options: inherit

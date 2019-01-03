@@ -28,6 +28,7 @@ import com.liferay.dynamic.data.mapping.model.DDMStructureConstants;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.storage.StorageType;
 import com.liferay.dynamic.data.mapping.util.DDMUtil;
+import com.liferay.journal.constants.JournalContentPortletKeys;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalFolderConstants;
 import com.liferay.journal.service.JournalArticleLocalService;
@@ -40,15 +41,21 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
+import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.LayoutConstants;
+import com.liferay.portal.kernel.model.LayoutTypePortlet;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.RoleConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.service.LayoutSetLocalService;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.template.TemplateConstants;
+import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -62,6 +69,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+
+import javax.portlet.PortletPreferences;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
@@ -88,7 +97,10 @@ public class HeadlessDemo extends BasePortalInstanceLifecycleListener {
 
 			_group = _createDemoGroup(company, user);
 
-			_createJournalArticles(company, _group, user);
+			List<JournalArticle> journalArticles = _createJournalArticles(
+				company, _group, user);
+
+			_createMainPage(company, _group, user, journalArticles);
 		}
 		catch (Exception e) {
 			_log.error("Error initializing data ", e);
@@ -224,6 +236,92 @@ public class HeadlessDemo extends BasePortalInstanceLifecycleListener {
 			journalArticle1, journalArticle2, journalArticle3, journalArticle4);
 	}
 
+	private void _createMainPage(
+			Company company, Group group, User user,
+			List<JournalArticle> journalArticles)
+		throws Exception {
+
+		_layoutSetLocalService.updateLogo(
+			group.getGroupId(), false, true,
+			FileUtil.getBytes(HeadlessDemo.class, _PATH + "logo.png"));
+
+		DDMStructure mainPageDDMStructure = _getDDMStructure(
+			company, group, user, "demo-variables.json");
+
+		ServiceContext serviceContext = new ServiceContext();
+
+		serviceContext.setAddGroupPermissions(true);
+		serviceContext.setAddGuestPermissions(true);
+
+		DDMTemplate mainPageDDMTemplate = DDMTemplateManagerUtil.addTemplate(
+			user.getUserId(), group.getGroupId(),
+			_portal.getClassNameId(DDMStructure.class),
+			mainPageDDMStructure.getStructureId(),
+			_portal.getClassNameId(JournalArticle.class), null,
+			Collections.singletonMap(
+				LocaleUtil.US, "Template Main Page Example"),
+			null, DDMTemplateManager.TEMPLATE_TYPE_DISPLAY, null,
+			TemplateConstants.LANG_TYPE_VM, _read("demo-variable-template.ftl"),
+			false, false, null, null, serviceContext);
+
+		JournalArticle journalArticle = journalArticles.get(0);
+
+		String friendlyURL =
+			StringPool.SLASH + FriendlyURLNormalizerUtil.normalize("Main Page");
+
+		Layout layout = _layoutLocalService.addLayout(
+			user.getUserId(), group.getGroupId(), false,
+			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, "Main Page", null,
+			"Main Page", LayoutConstants.TYPE_PORTLET, false, friendlyURL,
+			_getServiceContext(
+				company,
+				_groupLocalService.getGroup(
+					company.getCompanyId(), GroupConstants.GUEST),
+				user));
+
+		LayoutTypePortlet layoutTypePortlet =
+			(LayoutTypePortlet)layout.getLayoutType();
+
+		layoutTypePortlet.setLayoutTemplateId(user.getUserId(), "1_column");
+
+		String portletIdAdded = layoutTypePortlet.addPortletId(
+			user.getUserId(), JournalContentPortletKeys.JOURNAL_CONTENT, false);
+
+		long ownerId = 0;
+		int ownerType = 3;
+
+		PortletPreferences prefs =
+			_portletPreferencesLocalService.getPreferences(
+				company.getCompanyId(), ownerId, ownerType, layout.getPlid(),
+				portletIdAdded);
+
+		DDMStructure ddmStructure = journalArticle.getDDMStructure();
+
+		JournalArticle mainPageJournalArticle =
+			_journalArticleLocalService.addArticle(
+				user.getUserId(), _group.getGroupId(),
+				JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+				Collections.singletonMap(LocaleUtil.US, "Main Page"), null,
+				_read(
+					"demo-variables-content.xml",
+					Arrays.asList(
+						String.valueOf(group.getGroupId()),
+						String.valueOf(ddmStructure.getStructureId()),
+						String.valueOf(journalArticle.getResourcePrimKey()))),
+				mainPageDDMStructure.getStructureKey(),
+				mainPageDDMTemplate.getTemplateKey(),
+				_getServiceContext(company, group, user));
+
+		prefs.setValue("articleId", mainPageJournalArticle.getArticleId());
+
+		_portletPreferencesLocalService.updatePreferences(
+			ownerId, ownerType, layout.getPlid(), portletIdAdded, prefs);
+
+		_layoutLocalService.updateLayout(
+			layout.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),
+			layout.getTypeSettings());
+	}
+
 	private DDMStructure _getDDMStructure(
 			Company company, Group group, User user, String fileName)
 		throws Exception {
@@ -266,11 +364,7 @@ public class HeadlessDemo extends BasePortalInstanceLifecycleListener {
 	}
 
 	private String _read(String fileName, List<String> vars) throws Exception {
-		Class<?> clazz = getClass();
-
-		InputStream inputStream = clazz.getResourceAsStream(_PATH + fileName);
-
-		return String.format(StringUtil.read(inputStream), vars.toArray());
+		return String.format(_read(fileName), vars.toArray());
 	}
 
 	private static final String _PATH =
@@ -291,6 +385,12 @@ public class HeadlessDemo extends BasePortalInstanceLifecycleListener {
 
 	@Reference
 	private JournalArticleLocalService _journalArticleLocalService;
+
+	@Reference
+	private LayoutLocalService _layoutLocalService;
+
+	@Reference
+	private LayoutSetLocalService _layoutSetLocalService;
 
 	@Reference
 	private Portal _portal;

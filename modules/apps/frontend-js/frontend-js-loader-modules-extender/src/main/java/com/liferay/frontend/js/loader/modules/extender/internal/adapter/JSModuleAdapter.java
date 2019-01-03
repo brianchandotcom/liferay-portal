@@ -10,4 +10,5 @@ public interface JSModuleAdapter {
 	public String getAlias();
 	public Collection<String> getDependencies();
 	public Map<String, String> getMap();
+	public String getPath();
 }

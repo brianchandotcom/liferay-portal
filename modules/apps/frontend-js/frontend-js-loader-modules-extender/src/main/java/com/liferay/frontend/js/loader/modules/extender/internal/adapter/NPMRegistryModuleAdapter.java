@@ -4,9 +4,9 @@ import com.liferay.frontend.js.loader.modules.extender.npm.JSModule;
 import com.liferay.frontend.js.loader.modules.extender.npm.JSPackage;
 import com.liferay.frontend.js.loader.modules.extender.npm.JSPackageDependency;
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMRegistry;
+import com.liferay.portal.kernel.util.Portal;
 
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -15,9 +15,12 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class NPMRegistryModuleAdapter implements JSModuleAdapter {
 
-	public NPMRegistryModuleAdapter(JSModule module, NPMRegistry npmRegistry) {
+	public NPMRegistryModuleAdapter(
+		JSModule module, NPMRegistry npmRegistry,
+		Portal portal) {
 		_module = module;
 		_npmRegistry = npmRegistry;
+		_portal = portal;
 	}
 
 	@Override
@@ -43,13 +46,16 @@ public class NPMRegistryModuleAdapter implements JSModuleAdapter {
 			}
 
 			if (dependencyPackageName.equals(jsPackage.getName())) {
-				contextMap.put(dependencyPackageName, jsPackage.getResolvedId());
+				contextMap.put(
+					dependencyPackageName, jsPackage.getResolvedId());
 			}
 			else {
-				JSPackageDependency dependency = jsPackage.getJSPackageDependency(dependencyPackageName);
+				JSPackageDependency dependency =
+					jsPackage.getJSPackageDependency(dependencyPackageName);
 
 				if (dependency == null) {
-					String errorMessage = ":ERROR:Missing version constraints for " +
+					String errorMessage =
+						":ERROR:Missing version constraints for " +
 						dependencyPackageName +
 						" in package.json of " +
 						jsPackage.getResolvedId();
@@ -57,19 +63,22 @@ public class NPMRegistryModuleAdapter implements JSModuleAdapter {
 					contextMap.put(dependencyPackageName, errorMessage);
 				}
 				else {
-					JSPackage packageDependency = _npmRegistry.resolveJSPackageDependency(dependency);
+					JSPackage packageDependency =
+						_npmRegistry.resolveJSPackageDependency(dependency);
 
 					if (packageDependency == null) {
 						String errorMessage = ":ERROR:Package " +
-							dependencyPackageName +
-							" which is a dependency of " +
-							jsPackage.getResolvedId() +
-							" is not deployed in the server";
+											  dependencyPackageName +
+											  " which is a dependency of " +
+											  jsPackage.getResolvedId() +
+											  " is not deployed in the server";
 
 						contextMap.put(dependencyPackageName, errorMessage);
 					}
 					else {
-						contextMap.put(packageDependency.getName(), packageDependency.getResolvedId());
+						contextMap.put(
+							packageDependency.getName(),
+							packageDependency.getResolvedId());
 					}
 				}
 			}
@@ -78,7 +87,14 @@ public class NPMRegistryModuleAdapter implements JSModuleAdapter {
 		return contextMap;
 	}
 
-	private final JSModule _module;
+	@Override
+	public String getPath() {
+		String pathModule = _portal.getPathModule();
+		String resolvedPath = "/js/resolved-module/";
+		return pathModule + resolvedPath + _module.getResolvedId();
+	}
 
+	private final JSModule _module;
 	private final NPMRegistry _npmRegistry;
+	private final Portal _portal;
 }

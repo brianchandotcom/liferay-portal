@@ -23,6 +23,10 @@ public class JSModuleContext {
 		return _moduleMap;
 	}
 
+	public Map<String, String> getPathMap() {
+		return _pathMap;
+	}
+
 	public List<String> getResolvedModules() {
 		ArrayList<String> copy = new ArrayList<>(_resolvedModules);
 		Collections.reverse(copy);
@@ -33,14 +37,18 @@ public class JSModuleContext {
 		_configMap.put(module, mappedModule);
 	}
 
-	public void putModuleDependencyMap(String alias, Map<String, String> dependenciesMap) {
+	public void putModuleDependencyMap(
+		String alias, Map<String, String> dependenciesMap) {
 		_moduleMap.put(alias, dependenciesMap);
 	}
 
+	public void putPath(String alias, String path) {
+		_pathMap.put(alias, path);
+	}
+
 	private final Map<String, String> _configMap = new ConcurrentHashMap<>();
-
-	private final Map<String, Map<String, String>> _moduleMap = new ConcurrentHashMap<>();
-
+	private final Map<String, String> _pathMap = new ConcurrentHashMap<>();
+	private final Map<String, Map<String, String>> _moduleMap =
+		new ConcurrentHashMap<>();
 	private final List<String> _resolvedModules = new ArrayList<>();
-
 }

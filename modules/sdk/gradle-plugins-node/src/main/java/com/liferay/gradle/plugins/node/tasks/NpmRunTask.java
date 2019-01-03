@@ -139,7 +139,7 @@ public class NpmRunTask extends ExecuteNpmTask implements PatternFilterable {
 
 	@Input
 	public String getScriptName() {
-		return _scriptName;
+		return GradleUtil.toString(_scriptName);
 	}
 
 	@InputFile
@@ -245,7 +245,7 @@ public class NpmRunTask extends ExecuteNpmTask implements PatternFilterable {
 		_npmVersion = npmVersion;
 	}
 
-	public void setScriptName(String scriptName) {
+	public void setScriptName(Object scriptName) {
 		_scriptName = scriptName;
 	}
 
@@ -258,7 +258,7 @@ public class NpmRunTask extends ExecuteNpmTask implements PatternFilterable {
 		List<String> completeArgs = super.getCompleteArgs();
 
 		completeArgs.add("run-script");
-		completeArgs.add(_scriptName);
+		completeArgs.add(getScriptName());
 
 		return completeArgs;
 	}
@@ -280,7 +280,7 @@ public class NpmRunTask extends ExecuteNpmTask implements PatternFilterable {
 	private Object _nodeVersion;
 	private Object _npmVersion;
 	private final PatternFilterable _patternFilterable = new PatternSet();
-	private String _scriptName;
+	private Object _scriptName;
 	private Object _sourceDir;
 
 }

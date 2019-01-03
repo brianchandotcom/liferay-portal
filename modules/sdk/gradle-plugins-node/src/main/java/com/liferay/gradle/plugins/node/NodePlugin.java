@@ -15,6 +15,7 @@
 package com.liferay.gradle.plugins.node;
 
 import com.liferay.gradle.plugins.node.internal.util.GradleUtil;
+import com.liferay.gradle.plugins.node.internal.util.StringUtil;
 import com.liferay.gradle.plugins.node.tasks.DownloadNodeModuleTask;
 import com.liferay.gradle.plugins.node.tasks.DownloadNodeTask;
 import com.liferay.gradle.plugins.node.tasks.ExecuteNodeTask;
@@ -217,7 +218,7 @@ public class NodePlugin implements Plugin<Project> {
 
 		Project project = npmInstallTask.getProject();
 
-		String taskName = "npmRun" + _toCamelCase(name, true);
+		String taskName = "npmRun" + StringUtil.camelCase(name, true);
 
 		final NpmRunTask npmRunTask = GradleUtil.addTask(
 			project, taskName, NpmRunTask.class);
@@ -651,30 +652,6 @@ public class NodePlugin implements Plugin<Project> {
 				}
 
 			});
-	}
-
-	private String _toCamelCase(String s, boolean capitalize) {
-		StringBuilder sb = new StringBuilder(s.length());
-
-		boolean upperCase = capitalize;
-
-		for (int i = 0; i < s.length(); i++) {
-			char c = s.charAt(i);
-
-			if (!Character.isDigit(c) && !Character.isLetter(c)) {
-				upperCase = true;
-			}
-			else if (upperCase) {
-				sb.append(Character.toUpperCase(c));
-
-				upperCase = false;
-			}
-			else {
-				sb.append(c);
-			}
-		}
-
-		return sb.toString();
 	}
 
 	private static final String _NPM_RUN_TEST_TASK_NAME = "npmRunTest";

@@ -22,11 +22,7 @@ definition {
 			siteURL = "${siteURL}"
 		);
 
-		Navigator.gotoPage(
-			pageName = "Blogs Test Page",
-			siteName = "${siteName}",
-			siteURL = "${siteURL}"
-		);
+		Navigator.gotoPage(pageName = "Blogs Test Page");
 
 		Blogs.addEntry(
 			entryContent = "Blogs Entry 1 Content",
@@ -44,11 +40,7 @@ definition {
 			siteURL = "${siteURL}"
 		);
 
-		Navigator.gotoPage(
-			pageName = "Blogs Test Page",
-			siteName = "${siteName}",
-			siteURL = "${siteURL}"
-		);
+		Navigator.gotoPage(pageName = "Blogs Test Page");
 
 		BlogsNavigator.gotoEntryPG(
 			entryContent = "Blogs Entry 1 Content",
@@ -63,11 +55,7 @@ definition {
 			siteURL = "${siteURL}"
 		);
 
-		Navigator.gotoPage(
-			pageName = "Blogs Test Page",
-			siteName = "${siteName}",
-			siteURL = "${siteURL}"
-		);
+		Navigator.gotoPage(pageName = "Blogs Test Page");
 
 		ProductMenu.gotoSite(site = "${siteName}");
 
@@ -88,11 +76,7 @@ definition {
 			siteURL = "${siteURL}"
 		);
 
-		Navigator.gotoPage(
-			pageName = "Documents and Media Test Page",
-			siteName = "${siteName}",
-			siteURL = "${siteURL}"
-		);
+		Navigator.gotoPage(pageName = "Documents and Media Test Page");
 
 		DMDocument.addPG(
 			dmDocumentDescription = "DM Document Description",
@@ -103,11 +87,7 @@ definition {
 			siteURL = "${siteURL}"
 		);
 
-		Navigator.gotoPage(
-			pageName = "Documents and Media Test Page",
-			siteName = "${siteName}",
-			siteURL = "${siteURL}"
-		);
+		Navigator.gotoPage(pageName = "Documents and Media Test Page");
 
 		DMFolder.addPG(
 			dmFolderName = "DM Folder 1 Name",
@@ -136,11 +116,7 @@ definition {
 			siteURL = "${siteURL}"
 		);
 
-		Navigator.gotoPage(
-			pageName = "Documents and Media Test Page",
-			siteName = "${siteName}",
-			siteURL = "${siteURL}"
-		);
+		Navigator.gotoPage(pageName = "Documents and Media Test Page");
 
 		ProductMenu.gotoPortlet(
 			category = "Build",
@@ -166,11 +142,7 @@ definition {
 			wikiPageTitle = "FrontPage"
 		);
 
-		Navigator.gotoPage(
-			pageName = "Wiki Test Page",
-			siteName = "${siteName}",
-			siteURL = "${siteURL}"
-		);
+		Navigator.gotoPage(pageName = "Wiki Test Page");
 
 		WikiPage.addChildPagePG(
 			siteName = "${siteName}",
@@ -181,11 +153,7 @@ definition {
 			wikiPageTitle = "FrontPage"
 		);
 
-		Navigator.gotoPage(
-			pageName = "Wiki Test Page",
-			siteName = "${siteName}",
-			siteURL = "${siteURL}"
-		);
+		Navigator.gotoPage(pageName = "Wiki Test Page");
 
 		ProductMenu.gotoSite(site = "${siteName}");
 
@@ -206,11 +174,7 @@ definition {
 			siteURL = "${siteURL}"
 		);
 
-		Navigator.gotoPage(
-			pageName = "Calendar Test Page",
-			siteName = "${siteName}",
-			siteURL = "${siteURL}"
-		);
+		Navigator.gotoPage(pageName = "Calendar Test Page");
 
 		CalendarNavigator.gotoAddEvent();
 
@@ -223,11 +187,7 @@ definition {
 			siteURL = "${siteURL}"
 		);
 
-		Navigator.gotoPage(
-			pageName = "Calendar Test Page",
-			siteName = "${siteName}",
-			siteURL = "${siteURL}"
-		);
+		Navigator.gotoPage(pageName = "Calendar Test Page");
 
 		CalendarEvent.view(
 			eventTitle = "Calendar Event Title",
@@ -235,11 +195,7 @@ definition {
 			siteURL = "${siteURL}"
 		);
 
-		Navigator.gotoPage(
-			pageName = "Calendar Test Page",
-			siteName = "${siteName}",
-			siteURL = "${siteURL}"
-		);
+		Navigator.gotoPage(pageName = "Calendar Test Page");
 
 		ProductMenu.gotoSite(site = "${siteName}");
 
@@ -260,11 +216,7 @@ definition {
 			siteURL = "${siteURL}"
 		);
 
-		Navigator.gotoPage(
-			pageName = "Bookmarks Test Page",
-			siteName = "${siteName}",
-			siteURL = "${siteURL}"
-		);
+		Navigator.gotoPage(pageName = "Bookmarks Test Page");
 
 		BookmarksFolder.addPG(
 			folderDescription = "Test Folder Description",
@@ -273,11 +225,7 @@ definition {
 			siteURL = "${siteURL}"
 		);
 
-		Navigator.gotoPage(
-			pageName = "Bookmarks Test Page",
-			siteName = "${siteName}",
-			siteURL = "${siteURL}"
-		);
+		Navigator.gotoPage(pageName = "Bookmarks Test Page");
 
 		BookmarksFolder.gotoPG(
 			folderName = "Test Folder",
@@ -293,11 +241,7 @@ definition {
 			siteURL = "${siteURL}"
 		);
 
-		Navigator.gotoPage(
-			pageName = "Bookmarks Test Page",
-			siteName = "${siteName}",
-			siteURL = "${siteURL}"
-		);
+		Navigator.gotoPage(pageName = "Bookmarks Test Page");
 
 		BookmarksFolder.gotoPG(
 			folderName = "Test Folder",
@@ -312,11 +256,7 @@ definition {
 			siteURL = "${siteURL}"
 		);
 
-		Navigator.gotoPage(
-			pageName = "Bookmarks Test Page",
-			siteName = "${siteName}",
-			siteURL = "${siteURL}"
-		);
+		Navigator.gotoPage(pageName = "Bookmarks Test Page");
 
 		// LPS-69746
 

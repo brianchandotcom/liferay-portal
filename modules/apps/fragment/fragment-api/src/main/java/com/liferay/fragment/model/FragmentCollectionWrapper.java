@@ -273,6 +273,12 @@ public class FragmentCollectionWrapper implements FragmentCollection,
 	}
 
 	@Override
+	public java.util.List<com.liferay.portal.kernel.repository.model.FileEntry> getResources()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _fragmentCollection.getResources();
+	}
+
+	@Override
 	public long getResourcesFolderId()
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _fragmentCollection.getResourcesFolderId();

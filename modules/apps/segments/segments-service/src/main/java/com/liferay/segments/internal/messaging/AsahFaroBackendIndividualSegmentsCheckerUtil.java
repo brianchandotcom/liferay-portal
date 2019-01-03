@@ -221,17 +221,6 @@ public class AsahFaroBackendIndividualSegmentsCheckerUtil {
 		}
 	}
 
-	private void _checkIndividualResultsPage(
-		SegmentsEntry segmentsEntry, Results<Individual> individualResults,
-		ServiceContext serviceContext) {
-
-		List<Individual> items = individualResults.getItems();
-
-		items.forEach(
-			individual -> _addIndividual(
-				segmentsEntry, individual, serviceContext));
-	}
-
 	private void _checkIndividualSegmentMemberships(SegmentsEntry segmentsEntry)
 		throws PortalException {
 
@@ -252,6 +241,52 @@ public class AsahFaroBackendIndividualSegmentsCheckerUtil {
 			individualResults = _asahFaroBackendClient.getIndividualResults(
 				segmentsEntry.getKey(), 1, _DELTA_INDIVIDUALS,
 				Collections.singletonList(OrderByField.desc("dateModified")));
+
+			int totalElements = individualResults.getTotal();
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					totalElements + " individuals found for individual segment " +
+						segmentsEntry.getKey());
+			}
+
+			if (totalElements == 0) {
+				return;
+			}
+
+			int totalPages = (int)Math.ceil(
+				(double)totalElements / _DELTA_INDIVIDUALS);
+
+			ServiceContext serviceContext = _getServiceContext();
+
+			int curPage = 1;
+
+			while (true) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(
+						StringBundler.concat(
+							"Checking individuals: page=", curPage, "; size=",
+							_DELTA_INDIVIDUALS, "; total pages=", totalPages,
+							"; total elements=", totalElements));
+				}
+
+				List<Individual> items = individualResults.getItems();
+
+				items.forEach(
+					individual -> _addIndividual(
+						segmentsEntry, individual, serviceContext));
+
+				curPage++;
+
+				if (curPage > totalPages) {
+					break;
+				}
+
+				individualResults = _asahFaroBackendClient.getIndividualResults(
+					segmentsEntry.getKey(), curPage, _DELTA_INDIVIDUALS,
+					Collections.singletonList(
+						OrderByField.desc("dateModified")));
+			}
 		}
 		catch (RuntimeException re) {
 			_log.error(
@@ -260,61 +295,6 @@ public class AsahFaroBackendIndividualSegmentsCheckerUtil {
 				re);
 
 			return;
-		}
-
-		int totalElements = individualResults.getTotal();
-
-		if (_log.isDebugEnabled()) {
-			_log.debug(
-				totalElements + " individuals found for individual segment " +
-					segmentsEntry.getKey());
-		}
-
-		if (totalElements == 0) {
-			return;
-		}
-
-		int totalPages = (int)Math.ceil(
-			(double)totalElements / _DELTA_INDIVIDUALS);
-
-		ServiceContext serviceContext = _getServiceContext();
-
-		int curPage = 1;
-
-		while (true) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(
-					StringBundler.concat(
-						"Checking individuals: page=", curPage, "; size=",
-						_DELTA_INDIVIDUALS, "; total pages=", totalPages,
-						"; total elements=", totalElements));
-			}
-
-			_checkIndividualResultsPage(
-				segmentsEntry, individualResults, serviceContext);
-
-			curPage++;
-
-			if (curPage > totalPages) {
-				break;
-			}
-
-			try {
-				individualResults = _asahFaroBackendClient.getIndividualResults(
-					segmentsEntry.getKey(), curPage, _DELTA_INDIVIDUALS,
-					Collections.singletonList(
-						OrderByField.desc("dateModified")));
-			}
-			catch (RuntimeException re) {
-				_log.error(
-					StringBundler.concat(
-						"Unable to retrieve individuals for individual ",
-						"segment ", segmentsEntry.getKey(), " and page ",
-						curPage),
-					re);
-
-				return;
-			}
 		}
 	}
 

@@ -179,7 +179,13 @@ definition {
 			SitePages.gotoAddFirstPage(
 				pageType = "Public Page"
 			);
-		} else {
+		}
+		else if (IsElementPresent(locator1 = "SitePages#LIST_GROUP_ITEM", key_itemName = "Public Pages")) {
+			Click(locator1 = "SitePages#LIST_GROUP_ITEM", key_itemName = "Public Pages");
+
+			LexiconEntry.gotoAdd();
+		}
+		else {
 			AssertClick(
 				locator1 = "Breadcrumb#BREADCRUMB_ENTRY",
 				value1="Pages"

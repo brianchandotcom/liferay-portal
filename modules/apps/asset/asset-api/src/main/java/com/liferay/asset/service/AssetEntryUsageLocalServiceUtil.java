@@ -196,6 +196,13 @@ public class AssetEntryUsageLocalServiceUtil {
 		return getService().fetchAssetEntryUsage(assetEntryUsageId);
 	}
 
+	public static com.liferay.asset.model.AssetEntryUsage fetchAssetEntryUsage(
+		long assetEntryId, long classNameId, long classPK, String portletId) {
+		return getService()
+				   .fetchAssetEntryUsage(assetEntryId, classNameId, classPK,
+			portletId);
+	}
+
 	/**
 	* Returns the asset entry usage matching the UUID and group.
 	*

@@ -14,13 +14,11 @@
 
 package com.liferay.asset.web.internal.display.context;
 
-import com.liferay.asset.constants.AssetWebKeys;
 import com.liferay.asset.display.page.model.AssetDisplayPageEntry;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
 import com.liferay.asset.model.AssetEntryUsage;
 import com.liferay.asset.service.AssetEntryUsageLocalServiceUtil;
-import com.liferay.asset.util.AssetEntryUsageHelper;
 import com.liferay.asset.util.comparator.AssetEntryUsageModifiedDateComparator;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
@@ -54,10 +52,6 @@ public class AssetEntryUsagesDisplayContext {
 
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
-
-		_assetEntryUsageHelper =
-			(AssetEntryUsageHelper)renderRequest.getAttribute(
-				AssetWebKeys.ASSET_ENTRY_USAGE_HELPER);
 	}
 
 	public int getAllUsageCount() {
@@ -201,9 +195,6 @@ public class AssetEntryUsagesDisplayContext {
 			return _searchContainer;
 		}
 
-		_assetEntryUsageHelper.checkAssetEntryUsages(
-			AssetEntryLocalServiceUtil.fetchEntry(getAssetEntryId()));
-
 		SearchContainer assetEntryUsagesSearchContainer = new SearchContainer(
 			_renderRequest, _renderResponse.createRenderURL(), null,
 			"there-are-no-asset-entry-usages");
@@ -313,7 +304,6 @@ public class AssetEntryUsagesDisplayContext {
 
 	private Long _assetEntryId;
 	private String _assetEntryTitle;
-	private final AssetEntryUsageHelper _assetEntryUsageHelper;
 	private String _navigation;
 	private String _orderByCol;
 	private String _orderByType;

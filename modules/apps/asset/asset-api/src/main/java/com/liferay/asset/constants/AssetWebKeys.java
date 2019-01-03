@@ -19,9 +19,6 @@ package com.liferay.asset.constants;
  */
 public class AssetWebKeys {
 
-	public static final String ASSET_ENTRY_USAGE_HELPER =
-		"ASSET_ENTRY_USAGE_HELPER";
-
 	public static final String ASSET_HELPER = "ASSET_HELPER";
 
 }

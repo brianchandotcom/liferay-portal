@@ -49,10 +49,14 @@ import org.gradle.api.tasks.util.PatternSet;
 public class NpmRunTask extends ExecuteNpmTask implements PatternFilterable {
 
 	public NpmRunTask() {
+		_reportFile = new File(getTemporaryDir(), "report.txt");
+
+		exclude(_EXCLUDE_DIR_NAMES);
+		include(_INCLUDES);
+
 		Project project = getProject();
 
-		_reportFile = new File(getTemporaryDir(), "report.txt");
-		_sourceDir = project.file("src");
+		setSourceDir(project.getProjectDir());
 	}
 
 	@Override
@@ -254,6 +258,14 @@ public class NpmRunTask extends ExecuteNpmTask implements PatternFilterable {
 
 		return completeArgs;
 	}
+
+	private static final String[] _EXCLUDE_DIR_NAMES = {
+		"bin", "build", "classes", "node_modules", "test-classes", "tmp"
+	};
+
+	private static final String[] _INCLUDES = {
+		"**/*.css", "**/*.js", "**/*.*rc"
+	};
 
 	private final PatternFilterable _patternFilterable = new PatternSet();
 	private final Object _reportFile;

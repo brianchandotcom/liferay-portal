@@ -194,7 +194,7 @@ public class AsahFaroBackendIndividualSegmentsCheckerUtil {
 
 		try {
 			individualResults = _asahFaroBackendClient.getIndividualResults(
-				segmentsEntry.getKey(), 1, _DELTA_INDIVIDUALS,
+				segmentsEntry.getKey(), 1, _DELTA,
 				Collections.singletonList(OrderByField.desc("dateModified")));
 
 			int totalElements = individualResults.getTotal();
@@ -210,8 +210,7 @@ public class AsahFaroBackendIndividualSegmentsCheckerUtil {
 				return;
 			}
 
-			int totalPages = (int)Math.ceil(
-				(double)totalElements / _DELTA_INDIVIDUALS);
+			int totalPages = (int)Math.ceil((double)totalElements / _DELTA);
 
 			ServiceContext serviceContext = _getServiceContext();
 
@@ -231,7 +230,7 @@ public class AsahFaroBackendIndividualSegmentsCheckerUtil {
 				}
 
 				individualResults = _asahFaroBackendClient.getIndividualResults(
-					segmentsEntry.getKey(), curPage, _DELTA_INDIVIDUALS,
+					segmentsEntry.getKey(), curPage, _DELTA,
 					Collections.singletonList(
 						OrderByField.desc("dateModified")));
 			}
@@ -252,7 +251,7 @@ public class AsahFaroBackendIndividualSegmentsCheckerUtil {
 		try {
 			individualSegmentResults =
 				_asahFaroBackendClient.getIndividualSegmentResults(
-					1, _DELTA_INDIVIDUAL_SEGMENTS,
+					1, _DELTA,
 					Collections.singletonList(
 						OrderByField.desc("dateModified")));
 		}
@@ -333,9 +332,7 @@ public class AsahFaroBackendIndividualSegmentsCheckerUtil {
 		return Optional.of(user.getUserId());
 	}
 
-	private static final int _DELTA_INDIVIDUAL_SEGMENTS = 100;
-
-	private static final int _DELTA_INDIVIDUALS = 20;
+	private static final int _DELTA = 100;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		AsahFaroBackendIndividualSegmentsCheckerUtil.class);

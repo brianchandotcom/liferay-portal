@@ -457,7 +457,22 @@ public class SourceFormatter {
 
 		Set<String> dependentFileNames = new HashSet<>();
 
+		boolean buildPropertiesAdded = false;
+
 		for (String recentChangesFileName : recentChangesFileNames) {
+			if (!buildPropertiesAdded &&
+				recentChangesFileName.startsWith("module/")) {
+
+				File file = new File(
+					_sourceFormatterArgs.getBaseDirName() + "build.properties");
+
+				if (file.exists()) {
+					dependentFileNames.add("build.properties");
+				}
+
+				buildPropertiesAdded = true;
+			}
+
 			if (!recentChangesFileName.endsWith("ServiceImpl.java")) {
 				continue;
 			}

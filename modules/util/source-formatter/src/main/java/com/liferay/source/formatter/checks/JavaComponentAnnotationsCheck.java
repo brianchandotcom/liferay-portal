@@ -77,7 +77,8 @@ public class JavaComponentAnnotationsCheck extends JavaAnnotationsCheck {
 		}
 
 		annotation = _formatAnnotationParameterProperties(annotation);
-		annotation = _formatConfigurationPolicyAttribute(javaClass, annotation);
+		annotation = _formatConfigurationAttributes(
+			fileName, javaClass, annotation);
 		annotation = _formatServiceAttribute(
 			fileName, javaClass.getName(), annotation,
 			javaClass.getImplementedClassNames());
@@ -201,8 +202,29 @@ public class JavaComponentAnnotationsCheck extends JavaAnnotationsCheck {
 		return annotation;
 	}
 
-	private String _formatConfigurationPolicyAttribute(
-		JavaClass javaClass, String annotation) {
+	private String _formatConfigurationAttributes(
+		String fileName, JavaClass javaClass, String annotation) {
+
+		if (_getAttributeValue(annotation, "configurationPid") != null) {
+			return annotation;
+		}
+
+		for (JavaMethod javaMethod :
+				_getJavaMethods(javaClass, "Activate", "Modified")) {
+
+			String javaMethodContent = javaMethod.getContent();
+
+			if (javaMethodContent.contains(
+					"ConfigurableUtil.createConfigurable")) {
+
+				addMessage(
+					fileName,
+					"Missing @Component 'configurationPid' attribute, see " +
+						"LPS-88783");
+
+				break;
+			}
+		}
 
 		if (!_checkConfigurationPolicyAttribute) {
 			return annotation;
@@ -212,7 +234,6 @@ public class JavaComponentAnnotationsCheck extends JavaAnnotationsCheck {
 
 		if (imports.contains(
 				"org.osgi.service.component.annotations.Modified") ||
-			(_getAttributeValue(annotation, "configurationPid") != null) ||
 			(_getAttributeValue(annotation, "configurationPolicy ") != null)) {
 
 			return annotation;

@@ -54,24 +54,11 @@ public class UpgradeOracle extends UpgradeProcess {
 
 				String columnName = rs.getString(2);
 
-				int dataLength = rs.getInt(3);
-
-				if (buildNumber < ReleaseInfo.RELEASE_6_2_0_BUILD_NUMBER) {
-
-					// LPS-33903
-
-					if (!ArrayUtil.contains(
-							_ORIGINAL_DATA_LENGTH_VALUES, dataLength)) {
-
-						dataLength = dataLength / 4;
-					}
-				}
-
 				try {
 					runSQL(
 						StringBundler.concat(
 							"alter table ", tableName, " modify ", columnName,
-							" varchar2(", String.valueOf(dataLength),
+							" varchar2(", String.valueOf(rs.getInt(3)),
 							" char)"));
 				}
 				catch (SQLException sqle) {

@@ -49,7 +49,7 @@ public class UpgradeOracleTest {
 		new LiferayIntegrationTestRule();
 
 	@BeforeClass
-	public static void setUpClass() throws Exception {
+	public static void setUpClass() {
 		_db = DBManagerUtil.getDB();
 
 		if (_db.getDBType() != DBType.ORACLE) {
@@ -93,37 +93,6 @@ public class UpgradeOracleTest {
 		_upgradeOracle.upgrade();
 
 		Assert.assertEquals("C", getCharUsed(_TABLE_NAME, _FIELD_NAME));
-	}
-
-	@Test
-	public void testUpgradeDividesFieldSizesByFour() throws Exception {
-		Release release = ReleaseLocalServiceUtil.fetchRelease("portal");
-
-		release.setBuildNumber(ReleaseInfo.RELEASE_6_1_20_BUILD_NUMBER);
-
-		ReleaseLocalServiceUtil.updateRelease(release);
-
-		_upgradeOracle.upgrade();
-
-		Assert.assertEquals(75, getCharLength(_TABLE_NAME, _FIELD_NAME));
-	}
-
-	protected int getCharLength(String tableName, String columnName)
-		throws Exception {
-
-		try (Connection connection = DataAccess.getConnection();
-			PreparedStatement ps = connection.prepareStatement(
-				StringBundler.concat(
-					"select char_length from user_tab_columns where ",
-					"table_name = '", tableName, "' and column_name = '",
-					columnName, "'"))) {
-
-			ResultSet rs = ps.executeQuery();
-
-			rs.next();
-
-			return rs.getInt(1);
-		}
 	}
 
 	protected String getCharUsed(String tableName, String columnName)

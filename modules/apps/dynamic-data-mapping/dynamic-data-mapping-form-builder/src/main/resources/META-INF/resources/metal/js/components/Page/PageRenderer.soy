@@ -312,7 +312,7 @@
 					{param events: [
 						'fieldEdited': $_handleFieldEdited
 					] /}
-					{param ref: $field.fieldName + $field.name + $field.label + $rowIndex + $columnIndex + $pageId /}
+					{param ref: $field.type + $field.fieldName + $field.name + $field.label + $rowIndex + $columnIndex + $pageId /}
 					{param spritemap: $spritemap /}
 				{/delcall}
 			{/for}
@@ -360,7 +360,7 @@
 						{param events: [
 							'fieldEdited': $_handleFieldEdited
 						] /}
-						{param ref: $field.fieldName + $field.name + $field.label + $rowIndex + $columnIndex + $pageId /}
+						{param ref: $field.type + $field.fieldName + $field.name + $field.label + $rowIndex + $columnIndex + $pageId /}
 						{param spritemap: $spritemap /}
 					{/delcall}
 				{/for}

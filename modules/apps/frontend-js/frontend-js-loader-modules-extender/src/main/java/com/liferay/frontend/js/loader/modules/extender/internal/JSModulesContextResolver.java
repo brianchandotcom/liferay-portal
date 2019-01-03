@@ -5,6 +5,7 @@ import com.liferay.frontend.js.loader.modules.extender.internal.adapter.JSModule
 import com.liferay.frontend.js.loader.modules.extender.internal.adapter.NPMRegistryModuleAdapter;
 import com.liferay.frontend.js.loader.modules.extender.npm.JSModule;
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMRegistry;
+import com.liferay.portal.kernel.util.Portal;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -36,7 +37,8 @@ public class JSModulesContextResolver {
 	}
 
 	@Reference(unbind = "-")
-	public void setJsLoaderModulesTracker(JSLoaderModulesTracker jsLoaderModulesTracker) {
+	public void setJsLoaderModulesTracker(
+		JSLoaderModulesTracker jsLoaderModulesTracker) {
 		_jsLoaderModulesTracker = jsLoaderModulesTracker;
 	}
 
@@ -50,14 +52,22 @@ public class JSModulesContextResolver {
 		_npmRegistry = npmRegistry;
 	}
 
-	private ArrayList<JSModuleAdapter> _getAllModules() {
-		List<JSLoaderModuleAdapter> jsLoaderModuleAdapters = _jsLoaderModulesTracker.getJSLoaderModules().stream()
-			.map(JSLoaderModuleAdapter::new)
-			.collect(Collectors.toList());
+	@Reference(unbind = "-")
+	public void setPortal(Portal portal) {
+		_portal = portal;
+	}
 
-		List<NPMRegistryModuleAdapter> npmRegistryModules = _npmRegistry.getResolvedJSModules().stream()
-			.map(m -> new NPMRegistryModuleAdapter(m, _npmRegistry))
-			.collect(Collectors.toList());
+	private ArrayList<JSModuleAdapter> _getAllModules() {
+		List<JSLoaderModuleAdapter> jsLoaderModuleAdapters =
+			_jsLoaderModulesTracker.getJSLoaderModules().stream()
+				.map(m -> new JSLoaderModuleAdapter(m, _portal))
+				.collect(Collectors.toList());
+
+		List<NPMRegistryModuleAdapter> npmRegistryModules =
+			_npmRegistry.getResolvedJSModules().stream()
+				.map(
+					m -> new NPMRegistryModuleAdapter(m, _npmRegistry, _portal))
+				.collect(Collectors.toList());
 
 		ArrayList<JSModuleAdapter> allModules = new ArrayList<>();
 
@@ -67,7 +77,8 @@ public class JSModulesContextResolver {
 		return allModules;
 	}
 
-	private String _mapModuleName(String module, Map<String, String> contextMap) {
+	private String _mapModuleName(
+		String module, Map<String, String> contextMap) {
 		return _mapper.mapModule(module, contextMap);
 	}
 
@@ -75,7 +86,8 @@ public class JSModulesContextResolver {
 		return _mapper.mapModule(module);
 	}
 
-	private void _processModule(JSModuleAdapter adapter, JSModuleContext context) {
+	private void _processModule(
+		JSModuleAdapter adapter, JSModuleContext context) {
 
 		if (adapter == null) {
 			return;
@@ -93,9 +105,11 @@ public class JSModulesContextResolver {
 				!dependency.equals("exports") &&
 				!dependency.equals("module")) {
 
-				String resolvedPath = PathResolver.resolvePath(alias, dependency);
+				String resolvedPath =
+					PathResolver.resolvePath(alias, dependency);
 
-				String mappedModuleName = _mapModuleName(resolvedPath, adapter.getMap());
+				String mappedModuleName =
+					_mapModuleName(resolvedPath, adapter.getMap());
 
 				dependenciesMap.put(dependency, mappedModuleName);
 
@@ -108,6 +122,7 @@ public class JSModulesContextResolver {
 			}
 		}
 
+		context.putPath(alias, adapter.getPath());
 		context.putModuleDependencyMap(alias, dependenciesMap);
 	}
 
@@ -115,7 +130,8 @@ public class JSModulesContextResolver {
 		JSModule jsModule = _npmRegistry.getResolvedJSModule(module);
 
 		if (jsModule != null) {
-			_processModule(new NPMRegistryModuleAdapter(jsModule, _npmRegistry), context);
+			_processModule(new NPMRegistryModuleAdapter(jsModule, _npmRegistry,
+				_portal), context);
 		}
 	}
 
@@ -141,14 +157,14 @@ public class JSModulesContextResolver {
 			context.addResolvedModule(adapter.getAlias());
 		}
 		else {
-			context.addResolvedModule(":ERROR: Module " + module + " not found");
+			context.addResolvedModule(
+				":ERROR: Module " + module + " not found");
 		}
 	}
 
 	private JSLoaderModulesTracker _jsLoaderModulesTracker;
-
 	private JSModulesNameMapper _mapper;
-
 	private NPMRegistry _npmRegistry;
+	private Portal _portal;
 
 }

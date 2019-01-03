@@ -378,13 +378,6 @@ public class FilterMappingTest {
 
 	private class TestFilterConfig implements FilterConfig {
 
-		public TestFilterConfig(
-			String urlRegexIgnorePattern, String urlRegexPattern) {
-
-			_urlRegexIgnorePattern = urlRegexIgnorePattern;
-			_urlRegexPattern = urlRegexPattern;
-		}
-
 		@Override
 		public String getFilterName() {
 			return null;
@@ -411,6 +404,13 @@ public class FilterMappingTest {
 		@Override
 		public ServletContext getServletContext() {
 			return null;
+		}
+
+		private TestFilterConfig(
+			String urlRegexIgnorePattern, String urlRegexPattern) {
+
+			_urlRegexIgnorePattern = urlRegexIgnorePattern;
+			_urlRegexPattern = urlRegexPattern;
 		}
 
 		private final String _urlRegexIgnorePattern;

@@ -41,34 +41,6 @@ FragmentCollection fragmentCollection = fragmentDisplayContext.getFragmentCollec
 		/>
 	</c:if>
 
-	<c:if test="<%= FragmentPermission.contains(permissionChecker, scopeGroupId, FragmentActionKeys.MANAGE_FRAGMENT_ENTRIES) && fragmentCollection.hasResources() %>">
-		<c:choose>
-			<c:when test="<%= fragmentDisplayContext.isViewResources() %>">
-				<portlet:renderURL var="viewFragmentCollectionURL">
-					<portlet:param name="mvcRenderCommandName" value="/fragment/view" />
-					<portlet:param name="fragmentCollectionId" value="<%= String.valueOf(fragmentCollection.getFragmentCollectionId()) %>" />
-				</portlet:renderURL>
-
-				<liferay-ui:icon
-					message="view-fragments"
-					url="<%= viewFragmentCollectionURL %>"
-				/>
-			</c:when>
-			<c:otherwise>
-				<portlet:renderURL var="viewFragmentCollectionResourcesURL">
-					<portlet:param name="mvcRenderCommandName" value="/fragment/view" />
-					<portlet:param name="fragmentCollectionId" value="<%= String.valueOf(fragmentCollection.getFragmentCollectionId()) %>" />
-					<portlet:param name="viewResources" value="<%= Boolean.TRUE.toString() %>" />
-				</portlet:renderURL>
-
-				<liferay-ui:icon
-					message="view-resources"
-					url="<%= viewFragmentCollectionResourcesURL %>"
-				/>
-			</c:otherwise>
-		</c:choose>
-	</c:if>
-
 	<portlet:resourceURL id="/fragment/export_fragment_collections" var="exportFragmentCollectionsURL">
 		<portlet:param name="fragmentCollectionId" value="<%= String.valueOf(fragmentCollection.getFragmentCollectionId()) %>" />
 	</portlet:resourceURL>

@@ -65,7 +65,7 @@ public class FragmentCollectionResourcesDisplayContext {
 		portletURL.setParameter(
 			"fragmentCollectionId",
 			String.valueOf(_fragmentDisplayContext.getFragmentCollectionId()));
-		portletURL.setParameter("viewResources", Boolean.TRUE.toString());
+		portletURL.setParameter("tabs1", "resources");
 
 		SearchContainer searchContainer = new SearchContainer(
 			_renderRequest, portletURL, null, "there-are-no-resources");

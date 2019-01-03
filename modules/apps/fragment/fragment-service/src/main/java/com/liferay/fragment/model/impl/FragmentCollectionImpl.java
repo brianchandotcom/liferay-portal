@@ -39,6 +39,12 @@ import java.util.List;
 public class FragmentCollectionImpl extends FragmentCollectionBaseImpl {
 
 	@Override
+	public List<FileEntry> getResources() throws PortalException {
+		return PortletFileRepositoryUtil.getPortletFileEntries(
+			getGroupId(), getResourcesFolderId());
+	}
+
+	@Override
 	public long getResourcesFolderId() throws PortalException {
 		if (_resourcesFolderId != 0) {
 			return _resourcesFolderId;
@@ -122,11 +128,7 @@ public class FragmentCollectionImpl extends FragmentCollectionBaseImpl {
 			return;
 		}
 
-		List<FileEntry> fileEntries =
-			PortletFileRepositoryUtil.getPortletFileEntries(
-				getGroupId(), getResourcesFolderId());
-
-		for (FileEntry fileEntry : fileEntries) {
+		for (FileEntry fileEntry : getResources()) {
 			StringBundler sb = new StringBundler(4);
 
 			sb.append(path);

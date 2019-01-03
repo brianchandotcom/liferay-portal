@@ -43,6 +43,8 @@ import org.gradle.api.plugins.JavaPlugin;
 import org.gradle.api.plugins.PluginContainer;
 import org.gradle.api.specs.Spec;
 import org.gradle.api.tasks.Delete;
+import org.gradle.api.tasks.SourceSet;
+import org.gradle.api.tasks.SourceSetOutput;
 import org.gradle.api.tasks.TaskContainer;
 import org.gradle.language.base.plugins.LifecycleBasePlugin;
 import org.gradle.util.VersionNumber;
@@ -477,6 +479,27 @@ public class NodePlugin implements Plugin<Project> {
 
 		npmRunTask.setNodeVersion(nodeExtension.getNodeVersion());
 		npmRunTask.setNpmVersion(nodeExtension.getNpmVersion());
+
+		SourceSet sourceSet = GradleUtil.getSourceSet(
+			npmRunTask.getProject(), SourceSet.MAIN_SOURCE_SET_NAME);
+
+		SourceSetOutput sourceSetOutput = sourceSet.getOutput();
+
+		File classesDir = sourceSetOutput.getClassesDir();
+
+		if (!classesDir.exists()) {
+			TaskOutputs taskOutputs = npmRunTask.getOutputs();
+
+			taskOutputs.upToDateWhen(
+				new Spec<Task>() {
+
+					@Override
+					public boolean isSatisfiedBy(Task task) {
+						return false;
+					}
+
+				});
+		}
 	}
 
 	private void _configureTaskNpmRunBuildForJavaPlugin(

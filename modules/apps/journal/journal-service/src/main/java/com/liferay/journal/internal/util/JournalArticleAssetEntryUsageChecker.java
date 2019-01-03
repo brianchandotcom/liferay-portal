@@ -37,7 +37,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 
 import javax.portlet.PortletPreferences;
 
@@ -59,38 +58,7 @@ public class JournalArticleAssetEntryUsageChecker
 	public void checkAssetEntryUsages(AssetEntry assetEntry)
 		throws PortalException {
 
-		JournalArticle article = _journalArticleLocalService.fetchLatestArticle(
-			assetEntry.getClassPK());
-
-		List<JournalContentSearch> contentSearches =
-			_journalContentSearchLocalService.getArticleContentSearches(
-				article.getArticleId());
-
-		ServiceContext serviceContext = Optional.ofNullable(
-			ServiceContextThreadLocal.getServiceContext()
-		).orElse(
-			new ServiceContext()
-		);
-
-		for (JournalContentSearch contentSearch : contentSearches) {
-			Layout layout = _layoutLocalService.getLayout(
-				contentSearch.getGroupId(), contentSearch.isPrivateLayout(),
-				contentSearch.getLayoutId());
-
-			AssetEntryUsage assetEntryUsage =
-				_assetEntryUsageLocalService.fetchAssetEntryUsage(
-					_portal.getClassNameId(Layout.class), layout.getPlid(),
-					contentSearch.getPortletId());
-
-			if (assetEntryUsage != null) {
-				continue;
-			}
-
-			_assetEntryUsageLocalService.addAssetEntryUsage(
-				article.getUserId(), contentSearch.getGroupId(),
-				assetEntry.getEntryId(), _portal.getClassNameId(Layout.class),
-				layout.getPlid(), contentSearch.getPortletId(), serviceContext);
-		}
+		_checkWebContentUsages(assetEntry);
 
 		for (boolean privateLayout : Arrays.asList(false, true)) {
 			List<Layout> layouts = _layoutLocalService.getLayouts(
@@ -108,16 +76,17 @@ public class JournalArticleAssetEntryUsageChecker
 				}
 
 				_checkPortlets(
-					assetEntry, layoutTypePortlet.getPortletIds(), layout,
-					serviceContext);
+					assetEntry, layoutTypePortlet.getPortletIds(), layout);
 			}
 		}
 	}
 
 	private void _checkPortlets(
-			AssetEntry assetEntry, List<String> portletIds, Layout layout,
-			ServiceContext serviceContext)
+			AssetEntry assetEntry, List<String> portletIds, Layout layout)
 		throws PortalException {
+
+		ServiceContext serviceContext =
+			ServiceContextThreadLocal.getServiceContext();
 
 		for (String portletId : portletIds) {
 			if (!StringUtil.startsWith(
@@ -157,6 +126,40 @@ public class JournalArticleAssetEntryUsageChecker
 				assetEntry.getUserId(), assetEntry.getGroupId(),
 				assetEntry.getEntryId(), _portal.getClassNameId(Layout.class),
 				layout.getPlid(), portletId, serviceContext);
+		}
+	}
+
+	private void _checkWebContentUsages(AssetEntry assetEntry)
+		throws PortalException {
+
+		JournalArticle article = _journalArticleLocalService.fetchLatestArticle(
+			assetEntry.getClassPK());
+
+		List<JournalContentSearch> contentSearches =
+			_journalContentSearchLocalService.getArticleContentSearches(
+				article.getArticleId());
+
+		ServiceContext serviceContext =
+			ServiceContextThreadLocal.getServiceContext();
+
+		for (JournalContentSearch contentSearch : contentSearches) {
+			Layout layout = _layoutLocalService.fetchLayout(
+				contentSearch.getGroupId(), contentSearch.isPrivateLayout(),
+				contentSearch.getLayoutId());
+
+			AssetEntryUsage assetEntryUsage =
+				_assetEntryUsageLocalService.fetchAssetEntryUsage(
+					_portal.getClassNameId(Layout.class), layout.getPlid(),
+					contentSearch.getPortletId());
+
+			if (assetEntryUsage != null) {
+				continue;
+			}
+
+			_assetEntryUsageLocalService.addAssetEntryUsage(
+				article.getUserId(), contentSearch.getGroupId(),
+				assetEntry.getEntryId(), _portal.getClassNameId(Layout.class),
+				layout.getPlid(), contentSearch.getPortletId(), serviceContext);
 		}
 	}
 

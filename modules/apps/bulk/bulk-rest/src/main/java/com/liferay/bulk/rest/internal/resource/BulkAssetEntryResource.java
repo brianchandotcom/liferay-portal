@@ -14,8 +14,6 @@
 
 package com.liferay.bulk.rest.internal.resource;
 
-import com.liferay.asset.kernel.model.AssetEntry;
-import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.bulk.rest.internal.model.BulkActionResponseModel;
 import com.liferay.bulk.rest.internal.model.BulkAssetEntryCommonTagsActionModel;
@@ -23,6 +21,8 @@ import com.liferay.bulk.rest.internal.model.BulkAssetEntryCommonTagsModel;
 import com.liferay.bulk.rest.internal.model.BulkAssetEntryUpdateTagsActionModel;
 import com.liferay.bulk.selection.BulkSelection;
 import com.liferay.bulk.selection.BulkSelectionFactory;
+import com.liferay.bulk.selection.BulkSelectionRunner;
+import com.liferay.document.library.bulk.selection.EditTagsBulkSelectionAction;
 import com.liferay.document.library.kernel.model.DLFileEntryConstants;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -36,9 +36,11 @@ import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermi
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.SetUtil;
 
+import java.io.Serializable;
+
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Locale;
 import java.util.Set;
 import java.util.function.Function;
@@ -129,53 +131,21 @@ public class BulkAssetEntryResource {
 		BulkSelection<FileEntry> selection = _bulkSelectionFactory.create(
 			bulkAssetEntryUpdateTagsActionModel.getParameterMap());
 
-		Stream<FileEntry> fileEntryStream = selection.stream();
-
-		PermissionChecker permissionChecker =
-			PermissionCheckerFactoryUtil.create(user);
-
-		boolean append = bulkAssetEntryUpdateTagsActionModel.getAppend();
-
-		fileEntryStream.forEach(
-			fileEntry -> {
-				try {
-					if (!_fileEntryModelResourcePermission.contains(
-							permissionChecker, fileEntry, ActionKeys.UPDATE)) {
-
-						return;
-					}
-
-					AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
-						DLFileEntryConstants.getClassName(),
-						fileEntry.getFileEntryId());
-
-					Collection<String> newTagNames =
-						bulkAssetEntryUpdateTagsActionModel.getToAddTagNames();
-
-					if (append) {
-						Set<String> currentTagNamesSet = SetUtil.fromArray(
-							assetEntry.getTagNames());
-
-						currentTagNamesSet.removeAll(
-							bulkAssetEntryUpdateTagsActionModel.
-								getToRemoveTagNames());
-						currentTagNamesSet.addAll(
-							bulkAssetEntryUpdateTagsActionModel.
-								getToAddTagNames());
-
-						newTagNames = currentTagNamesSet;
-					}
-
-					_assetEntryLocalService.updateEntry(
-						assetEntry.getUserId(), assetEntry.getGroupId(),
-						assetEntry.getClassName(), assetEntry.getClassPK(),
-						assetEntry.getCategoryIds(),
-						newTagNames.toArray(new String[newTagNames.size()]));
-				}
-				catch (PortalException pe) {
-					if (_log.isWarnEnabled()) {
-						_log.warn(pe, pe);
-					}
+		_bulkSelectionRunner.run(
+			selection, _editTagsBulkSelectionAction,
+			new HashMap<String, Serializable>() {
+				{
+					put(
+						"append",
+						bulkAssetEntryUpdateTagsActionModel.getAppend());
+					put(
+						"toAddTagNames",
+						bulkAssetEntryUpdateTagsActionModel.getToAddTagNames());
+					put(
+						"toRemoveTagNames",
+						bulkAssetEntryUpdateTagsActionModel.
+							getToRemoveTagNames());
+					put("userId", user.getUserId());
 				}
 			});
 
@@ -212,15 +182,18 @@ public class BulkAssetEntryResource {
 		BulkAssetEntryResource.class);
 
 	@Reference
-	private AssetEntryLocalService _assetEntryLocalService;
-
-	@Reference
 	private AssetTagLocalService _assetTagLocalService;
 
 	@Reference(
 		target = "(model.class.name=com.liferay.portal.kernel.repository.model.FileEntry)"
 	)
 	private BulkSelectionFactory<FileEntry> _bulkSelectionFactory;
+
+	@Reference
+	private BulkSelectionRunner _bulkSelectionRunner;
+
+	@Reference
+	private EditTagsBulkSelectionAction _editTagsBulkSelectionAction;
 
 	@Reference(
 		target = "(model.class.name=com.liferay.portal.kernel.repository.model.FileEntry)"

@@ -62,12 +62,12 @@ public class BulkAssetEntryUpdateTagsActionModel {
 	}
 
 	@XmlElement
-	public List<String> getToAddTagNames() {
+	public String[] getToAddTagNames() {
 		return _toAddTagNames;
 	}
 
 	@XmlElement
-	public List<String> getToRemoveTagNames() {
+	public String[] getToRemoveTagNames() {
 		return _toRemoveTagNames;
 	}
 
@@ -83,18 +83,18 @@ public class BulkAssetEntryUpdateTagsActionModel {
 		_selection = selection;
 	}
 
-	public void setToAddTagNames(List<String> toAddTagNames) {
+	public void setToAddTagNames(String[] toAddTagNames) {
 		_toAddTagNames = toAddTagNames;
 	}
 
-	public void setToRemoveTagNames(List<String> toRemoveTagNames) {
+	public void setToRemoveTagNames(String[] toRemoveTagNames) {
 		_toRemoveTagNames = toRemoveTagNames;
 	}
 
 	private boolean _append;
 	private long _repositoryId;
 	private List<String> _selection;
-	private List<String> _toAddTagNames;
-	private List<String> _toRemoveTagNames;
+	private String[] _toAddTagNames;
+	private String[] _toRemoveTagNames;
 
 }

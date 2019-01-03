@@ -221,6 +221,7 @@ class Select extends Component {
 		const {predefinedValue, value} = state;
 		const predefinedValueArray = this._getArrayValue(predefinedValue);
 		const valueArray = this._getArrayValue(value);
+
 		const selectedValue = valueArray[0] || '';
 
 		return {

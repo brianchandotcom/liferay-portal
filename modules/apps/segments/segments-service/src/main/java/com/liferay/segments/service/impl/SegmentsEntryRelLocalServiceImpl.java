@@ -25,7 +25,7 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * @author Eduardo Garcia
+ * @author Eduardo García
  */
 public class SegmentsEntryRelLocalServiceImpl
 	extends SegmentsEntryRelLocalServiceBaseImpl {

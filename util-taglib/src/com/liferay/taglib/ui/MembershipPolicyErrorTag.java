@@ -17,7 +17,7 @@ package com.liferay.taglib.ui;
 import com.liferay.taglib.util.IncludeTag;
 
 /**
- * @author Eduardo Garcia
+ * @author Eduardo García
  */
 public class MembershipPolicyErrorTag extends IncludeTag {
 

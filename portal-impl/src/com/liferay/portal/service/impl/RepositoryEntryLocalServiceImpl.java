@@ -28,7 +28,7 @@ import java.util.List;
 /**
  * @author Brian Wing Shun Chan
  * @author Michael C. Han
- * @author Mate Thurzo
+ * @author Máté Thurzó
  */
 public class RepositoryEntryLocalServiceImpl
 	extends RepositoryEntryLocalServiceBaseImpl {

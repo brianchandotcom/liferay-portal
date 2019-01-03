@@ -15,7 +15,7 @@
 package com.liferay.segments.internal.search;
 
 /**
- * @author Eduardo Garcia
+ * @author Eduardo García
  */
 public class SegmentsEntryField {
 

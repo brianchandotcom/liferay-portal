@@ -54,7 +54,7 @@ import org.springframework.mock.web.portlet.MockPortletRequest;
 
 /**
  * @author Connor McKay
- * @author Peter Borkuti
+ * @author Péter Borkuti
  */
 public class LocalizationImplTest {
 

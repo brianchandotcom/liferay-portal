@@ -22,7 +22,7 @@ import com.liferay.portal.kernel.model.WorkflowedModel;
 import com.liferay.portal.kernel.util.ArrayUtil;
 
 /**
- * @author Mate Thurzo
+ * @author Máté Thurzó
  */
 public class ChangesetTaglibDisplayContext {
 

@@ -21,7 +21,7 @@ import com.liferay.portal.model.impl.PortletDecoratorImpl;
 import com.liferay.portal.util.PropsValues;
 
 /**
- * @author Eduardo Garcia
+ * @author Eduardo García
  */
 public class PortletDecoratorFactoryImpl implements PortletDecoratorFactory {
 

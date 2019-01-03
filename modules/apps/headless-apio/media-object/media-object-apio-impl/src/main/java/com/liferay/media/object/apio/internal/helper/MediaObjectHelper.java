@@ -29,7 +29,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * Provides helper methods for creating file entries from different Apio forms.
  *
- * @author Eduardo Perez
+ * @author Eduardo Pérez
  */
 @Component(immediate = true, service = MediaObjectHelper.class)
 public class MediaObjectHelper {

@@ -50,7 +50,7 @@ import javax.portlet.PortletURL;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * @author Ambrin Chaudhary
+ * @author Ambrín Chaudhary
  * @author Roberto Díaz
  */
 public class ItemSelectorRepositoryEntryBrowserUtil {

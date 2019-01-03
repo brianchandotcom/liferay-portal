@@ -26,7 +26,7 @@ import org.postgresql.largeobject.LargeObject;
 import org.postgresql.largeobject.LargeObjectManager;
 
 /**
- * @author Istvan Andras Dezsi
+ * @author István András Dézsi
  */
 public class PostgreSQLJDBCUtil {
 

@@ -15,7 +15,7 @@
 package com.liferay.portal.relationship;
 
 /**
- * @author Mate Thurzo
+ * @author Máté Thurzó
  */
 public class Degree {
 

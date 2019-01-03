@@ -32,7 +32,7 @@ import org.junit.Rule;
 import org.junit.runner.RunWith;
 
 /**
- * @author Levente Hudak
+ * @author Levente Hudák
  */
 @RunWith(Arquillian.class)
 public class ExportImportConfigurationTrashHandlerTest

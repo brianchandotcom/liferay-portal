@@ -32,7 +32,7 @@ import java.util.Date;
 import java.util.Map;
 
 /**
- * @author Mate Thurzo
+ * @author Máté Thurzó
  */
 public class StagedAssetLinkImpl implements StagedAssetLink {
 

@@ -33,7 +33,7 @@ import java.util.Locale;
 
 /**
  * @author Alexander Chow
- * @author Mate Thurzo
+ * @author Máté Thurzó
  */
 public class DLFileEntryTypeImpl extends DLFileEntryTypeBaseImpl {
 

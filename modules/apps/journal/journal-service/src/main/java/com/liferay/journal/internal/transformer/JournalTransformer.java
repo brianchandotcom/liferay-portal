@@ -82,7 +82,7 @@ import javax.servlet.http.HttpServletRequest;
  * @author Hugo Huijser
  * @author Marcellus Tavares
  * @author Juan Fernández
- * @author Eduardo Garcia
+ * @author Eduardo García
  */
 public class JournalTransformer {
 

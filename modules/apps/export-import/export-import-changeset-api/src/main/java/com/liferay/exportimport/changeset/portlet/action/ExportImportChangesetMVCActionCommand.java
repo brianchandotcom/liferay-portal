@@ -23,7 +23,7 @@ import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 
 /**
- * @author Mate Thurzo
+ * @author Máté Thurzó
  */
 @ProviderType
 public interface ExportImportChangesetMVCActionCommand

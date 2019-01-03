@@ -30,7 +30,7 @@ import org.junit.Test;
 import org.skyscreamer.jsonassert.JSONAssert;
 
 /**
- * @author Eduardo Garcia
+ * @author Eduardo García
  */
 public class IdentityContextMessageJSONObjectMapperTest {
 

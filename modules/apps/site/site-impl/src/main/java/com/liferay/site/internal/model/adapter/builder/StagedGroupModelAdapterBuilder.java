@@ -22,7 +22,7 @@ import com.liferay.site.model.adapter.StagedGroup;
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Mate Thurzo
+ * @author Máté Thurzó
  */
 @Component(immediate = true, service = ModelAdapterBuilder.class)
 public class StagedGroupModelAdapterBuilder

@@ -17,7 +17,7 @@ package com.liferay.portal.relationship;
 import com.liferay.portal.kernel.model.ClassedModel;
 
 /**
- * @author Mate Thurzo
+ * @author Máté Thurzó
  */
 public interface RelationshipResource<T extends ClassedModel> {
 

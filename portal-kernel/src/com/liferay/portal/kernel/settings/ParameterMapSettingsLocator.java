@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.util.Validator;
 import java.util.Map;
 
 /**
- * @author Ivan Zaera
+ * @author Iván Zaera
  */
 public class ParameterMapSettingsLocator implements SettingsLocator {
 

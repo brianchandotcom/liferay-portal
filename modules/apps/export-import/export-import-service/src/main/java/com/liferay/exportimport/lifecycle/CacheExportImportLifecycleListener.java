@@ -22,7 +22,7 @@ import com.liferay.portal.security.permission.PermissionCacheUtil;
 import com.liferay.portal.servlet.filters.cache.CacheUtil;
 
 /**
- * @author     Mate Thurzo
+ * @author     Máté Thurzó
  * @deprecated As of Judson (7.1.x)
  */
 @Deprecated

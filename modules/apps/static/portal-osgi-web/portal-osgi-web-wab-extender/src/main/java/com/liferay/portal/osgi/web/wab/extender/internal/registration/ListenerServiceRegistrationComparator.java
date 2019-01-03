@@ -23,7 +23,7 @@ import org.osgi.framework.ServiceReference;
 import org.osgi.framework.ServiceRegistration;
 
 /**
- * @author Juan Gonzalez
+ * @author Juan González
  */
 public class ListenerServiceRegistrationComparator
 	implements Comparator<ServiceRegistration<?>> {

@@ -15,7 +15,7 @@
 package com.liferay.exportimport.changeset.constants;
 
 /**
- * @author Mate Thurzo
+ * @author Máté Thurzó
  */
 public class ChangesetPortletKeys {
 

@@ -17,7 +17,7 @@ package com.liferay.portal.kernel.util;
 import java.util.Date;
 
 /**
- * @author Eduardo Garcia
+ * @author Eduardo García
  */
 public class DateRange {
 

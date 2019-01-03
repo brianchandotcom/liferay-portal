@@ -33,7 +33,7 @@ import org.osgi.service.component.annotations.Reference;
  * through a web API. The resources are mapped from the internal models {@code
  * Comment} and {@code JournalArticle}.
  *
- * @author Eduardo Perez
+ * @author Eduardo Pérez
  */
 @Component(immediate = true, service = NestedCollectionRouter.class)
 public class StructuredContentCommentNestedCollectionRouter

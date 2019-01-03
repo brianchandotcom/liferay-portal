@@ -45,7 +45,7 @@ import org.osgi.service.component.annotations.Reference;
  * Provides the base class for the {@code *CategoryNestedCollectionRouter}
  * classes.
  *
- * @author Eduardo Perez
+ * @author Eduardo Pérez
  */
 public abstract class BaseCategoryNestedCollectionRouter
 	<T extends Identifier<Long>>

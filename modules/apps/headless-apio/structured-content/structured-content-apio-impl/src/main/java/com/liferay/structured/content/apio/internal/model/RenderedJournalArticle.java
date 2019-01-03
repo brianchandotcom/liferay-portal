@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.util.Function;
 import java.util.Locale;
 
 /**
- * @author Eduardo Perez
+ * @author Eduardo Pérez
  */
 public interface RenderedJournalArticle {
 

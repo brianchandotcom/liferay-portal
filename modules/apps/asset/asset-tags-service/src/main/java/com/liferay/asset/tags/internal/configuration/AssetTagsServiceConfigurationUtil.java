@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.configuration.ConfigurationFactoryUtil;
 import com.liferay.portal.kernel.configuration.Filter;
 
 /**
- * @author Mate Thurzo
+ * @author Máté Thurzó
  */
 public class AssetTagsServiceConfigurationUtil {
 

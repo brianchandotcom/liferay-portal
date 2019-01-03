@@ -17,7 +17,7 @@ package com.liferay.portal.validation;
 import com.liferay.portal.kernel.model.ClassedModel;
 
 /**
- * @author Mate Thurzo
+ * @author Máté Thurzó
  */
 public interface ModelValidator<T extends ClassedModel> {
 

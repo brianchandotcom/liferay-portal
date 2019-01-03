@@ -29,7 +29,7 @@ import java.util.List;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Eduardo Perez
+ * @author Eduardo Pérez
  */
 public abstract class BaseUserAccountRoleNestedCollectionRouter
 	<T extends Identifier<Long>>

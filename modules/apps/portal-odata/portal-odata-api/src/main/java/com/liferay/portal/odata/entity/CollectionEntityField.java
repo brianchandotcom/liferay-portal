@@ -17,7 +17,7 @@ package com.liferay.portal.odata.entity;
 /**
  * Models a collection entity field.
  *
- * @author Ruben Pulido
+ * @author Rubén Pulido
  * @review
  */
 public class CollectionEntityField extends EntityField {

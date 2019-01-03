@@ -19,7 +19,7 @@ import java.util.Set;
 /**
  * @author Tomas Polesovsky
  * @author Raymond Augé
- * @author Peter Borkuti
+ * @author Péter Borkuti
  */
 public interface PortletRequestWhitelist {
 

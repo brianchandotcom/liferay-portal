@@ -20,7 +20,7 @@ import com.liferay.portal.odata.filter.expression.ExpressionVisitor;
 import com.liferay.portal.odata.filter.expression.PropertyExpression;
 
 /**
- * @author Ruben Pulido
+ * @author Rubén Pulido
  */
 public class ComplexPropertyExpressionImpl
 	implements ComplexPropertyExpression {

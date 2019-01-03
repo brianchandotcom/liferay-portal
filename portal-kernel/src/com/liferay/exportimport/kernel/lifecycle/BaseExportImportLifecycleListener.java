@@ -25,7 +25,7 @@ import java.util.List;
 
 /**
  * @author     Daniel Kocsis
- * @author     Mate Thurzo
+ * @author     Máté Thurzó
  * @deprecated As of Judson (7.1.x)
  */
 @Deprecated

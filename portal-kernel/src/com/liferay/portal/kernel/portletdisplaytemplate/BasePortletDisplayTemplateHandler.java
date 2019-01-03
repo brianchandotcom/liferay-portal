@@ -21,7 +21,7 @@ import java.util.Locale;
 import java.util.Map;
 
 /**
- * @author Eduardo Garcia
+ * @author Eduardo García
  */
 public abstract class BasePortletDisplayTemplateHandler
 	extends BaseTemplateHandler {

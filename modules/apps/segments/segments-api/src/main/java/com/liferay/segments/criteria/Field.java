@@ -21,7 +21,7 @@ import java.util.List;
 /**
  * Represents a segments criteria field.
  *
- * @author Eduardo Garcia
+ * @author Eduardo García
  * @review
  */
 public final class Field implements Comparable<Field>, Serializable {

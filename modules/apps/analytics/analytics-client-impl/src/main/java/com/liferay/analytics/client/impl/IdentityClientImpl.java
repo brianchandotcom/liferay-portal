@@ -26,7 +26,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * @author Eduardo Garcia
+ * @author Eduardo García
  */
 public class IdentityClientImpl implements IdentityClient {
 

@@ -18,7 +18,7 @@ import com.liferay.dynamic.data.lists.constants.DDLPortletKeys;
 import com.liferay.portal.kernel.util.LoggingTimer;
 
 /**
- * @author Levente Hudak
+ * @author Levente Hudák
  */
 public class UpgradeLastPublishDate
 	extends com.liferay.portal.upgrade.v7_0_0.UpgradeLastPublishDate {

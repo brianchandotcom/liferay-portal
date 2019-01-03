@@ -20,7 +20,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 /**
- * @author Jose Angel Jiménez
+ * @author José Ángel Jiménez
  */
 public abstract class BaseSubscriptionAuthorTestCase
 	extends BaseSubscriptionTestCase {

@@ -34,7 +34,7 @@ import org.osgi.service.component.annotations.Reference;
  * resources are mapped from the internal model {@code Comment} and {@code
  * com.liferay.blogs.model.BlogsEntry}.
  *
- * @author Eduardo Perez
+ * @author Eduardo Pérez
  */
 @Component(immediate = true, service = NestedCollectionRouter.class)
 public class BlogPostingCommentNestedCollectionRouter

@@ -29,7 +29,7 @@ import java.util.Objects;
 import javax.portlet.PortletPreferences;
 
 /**
- * @author Cristina Rodriguez
+ * @author Cristina Rodríguez
  */
 public class UpgradePortletPreferences extends BaseUpgradePortletPreferences {
 

@@ -39,7 +39,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Marcellus Tavares
  * @author Juan Fernández
  * @author Zsolt Berentey
- * @author Mate Thurzo
+ * @author Máté Thurzó
  * @author Gergely Mathe
  */
 @Component(

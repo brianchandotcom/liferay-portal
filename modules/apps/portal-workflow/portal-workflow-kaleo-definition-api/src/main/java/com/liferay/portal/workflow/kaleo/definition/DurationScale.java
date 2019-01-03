@@ -16,7 +16,7 @@ package com.liferay.portal.workflow.kaleo.definition;
 
 /**
  * @author Michael C. Han
- * @author Peter Borkuti
+ * @author Péter Borkuti
  */
 public enum DurationScale {
 

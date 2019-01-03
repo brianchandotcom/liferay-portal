@@ -90,7 +90,7 @@ import javax.portlet.PortletRequest;
 
 /**
  * @author Michael C. Han
- * @author Mate Thurzo
+ * @author Máté Thurzó
  * @author Vilmos Papp
  */
 public class StagingLocalServiceImpl extends StagingLocalServiceBaseImpl {

@@ -60,7 +60,7 @@ import org.junit.runner.RunWith;
 import org.springframework.mock.web.MockHttpServletResponse;
 
 /**
- * @author Eduardo Garcia
+ * @author Eduardo García
  */
 @RunWith(Arquillian.class)
 public class WebServerTrashTest extends BaseWebServerTestCase {

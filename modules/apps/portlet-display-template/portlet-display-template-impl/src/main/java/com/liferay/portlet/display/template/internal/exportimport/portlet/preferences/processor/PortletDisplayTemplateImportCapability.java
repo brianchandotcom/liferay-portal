@@ -36,7 +36,7 @@ import java.util.Map;
 import javax.portlet.PortletPreferences;
 
 /**
- * @author Mate Thurzo
+ * @author Máté Thurzó
  */
 public class PortletDisplayTemplateImportCapability implements Capability {
 

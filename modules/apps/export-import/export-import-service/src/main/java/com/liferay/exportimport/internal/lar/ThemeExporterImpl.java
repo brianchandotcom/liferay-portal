@@ -30,7 +30,7 @@ import com.liferay.portal.kernel.xml.Element;
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Mate Thurzo
+ * @author Máté Thurzó
  */
 @Component(immediate = true, service = ThemeExporter.class)
 public class ThemeExporterImpl implements ThemeExporter {

@@ -85,7 +85,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Sten Martinez
  * @author Edward C. Han
  * @author Vilmos Papp
- * @author Mate Thurzo
+ * @author Máté Thurzó
  * @author Manuel de la Peña
  * @author Daniel Sanz
  */

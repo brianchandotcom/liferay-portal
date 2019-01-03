@@ -28,7 +28,7 @@ import org.osgi.service.component.annotations.Component;
  * versa. The reusable workflow task identifier can be used as a resource's
  * identifier.
  *
- * @author Victor Galan
+ * @author Víctor Galán
  */
 @Component(immediate = true, service = PathIdentifierMapper.class)
 public class ReusableWorkflowTaskIdentifierMapper

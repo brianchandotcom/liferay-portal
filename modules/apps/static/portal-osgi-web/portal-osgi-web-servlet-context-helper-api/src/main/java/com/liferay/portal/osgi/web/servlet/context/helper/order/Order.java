@@ -21,7 +21,7 @@ import java.util.EnumMap;
 
 /**
  * @author Vernon Singleton
- * @author Juan Gonzalez
+ * @author Juan González
  */
 public class Order {
 

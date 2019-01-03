@@ -24,7 +24,7 @@ import com.liferay.portal.kernel.search.filter.TermsFilter;
 import com.liferay.portal.kernel.util.ArrayUtil;
 
 /**
- * @author Eduardo Garcia
+ * @author Eduardo García
  * @author André de Oliveira
  */
 public class FolderSearcher extends BaseSearcher {

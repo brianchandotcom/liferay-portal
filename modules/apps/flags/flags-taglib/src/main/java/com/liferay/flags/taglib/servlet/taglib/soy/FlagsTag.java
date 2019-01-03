@@ -46,7 +46,7 @@ import javax.portlet.PortletURL;
 
 /**
  * @author Julio Camarero
- * @author Ambrin Chaudhary
+ * @author Ambrín Chaudhary
  */
 public class FlagsTag extends ComponentRendererTag {
 

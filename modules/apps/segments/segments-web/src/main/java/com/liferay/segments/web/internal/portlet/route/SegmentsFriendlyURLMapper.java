@@ -21,7 +21,7 @@ import com.liferay.segments.constants.SegmentsPortletKeys;
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Eduardo Garcia
+ * @author Eduardo García
  */
 @Component(
 	property = {

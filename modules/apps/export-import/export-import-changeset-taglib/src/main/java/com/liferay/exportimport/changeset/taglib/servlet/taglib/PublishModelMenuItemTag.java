@@ -28,7 +28,7 @@ import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.PageContext;
 
 /**
- * @author Mate Thurzo
+ * @author Máté Thurzó
  */
 public class PublishModelMenuItemTag extends IncludeTag {
 

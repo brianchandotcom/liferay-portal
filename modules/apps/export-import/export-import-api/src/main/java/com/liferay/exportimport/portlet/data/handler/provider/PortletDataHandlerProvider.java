@@ -20,7 +20,7 @@ import com.liferay.exportimport.kernel.lar.PortletDataHandler;
 import com.liferay.portal.kernel.model.Portlet;
 
 /**
- * @author Mate Thurzo
+ * @author Máté Thurzó
  */
 @ProviderType
 public interface PortletDataHandlerProvider {

@@ -27,7 +27,7 @@ import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
 
 /**
- * @author Ruben Pulido
+ * @author Rubén Pulido
  */
 public class MediaObjectTestActivator implements BundleActivator {
 

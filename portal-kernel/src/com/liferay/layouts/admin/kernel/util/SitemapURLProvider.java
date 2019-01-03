@@ -22,7 +22,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.xml.Element;
 
 /**
- * @author Eduardo Garcia
+ * @author Eduardo García
  */
 @ProviderType
 public interface SitemapURLProvider {

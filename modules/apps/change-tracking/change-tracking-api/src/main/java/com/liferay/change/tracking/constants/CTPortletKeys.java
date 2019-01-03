@@ -15,7 +15,7 @@
 package com.liferay.change.tracking.constants;
 
 /**
- * @author Mate Thurzo
+ * @author Máté Thurzó
  */
 public class CTPortletKeys {
 

@@ -17,7 +17,7 @@ package com.liferay.journal.internal.upgrade.v0_0_2;
 import com.liferay.portal.upgrade.v7_0_0.UpgradeKernelPackage;
 
 /**
- * @author Eduardo Garcia
+ * @author Eduardo García
  */
 public class UpgradeClassNames extends UpgradeKernelPackage {
 

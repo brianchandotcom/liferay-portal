@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.model.ClassedModel;
 import java.io.Serializable;
 
 /**
- * @author Mate Thurzo
+ * @author Máté Thurzó
  */
 @FunctionalInterface
 public interface ModelSupplier<T extends Serializable, U extends ClassedModel> {

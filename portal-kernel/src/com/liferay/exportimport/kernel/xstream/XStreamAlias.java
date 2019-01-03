@@ -15,7 +15,7 @@
 package com.liferay.exportimport.kernel.xstream;
 
 /**
- * @author Mate Thurzo
+ * @author Máté Thurzó
  */
 public class XStreamAlias {
 

@@ -17,7 +17,7 @@ package com.liferay.segments.criteria;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 
 /**
- * @author Eduardo Garcia
+ * @author Eduardo García
  */
 public class CriteriaSerializer {
 

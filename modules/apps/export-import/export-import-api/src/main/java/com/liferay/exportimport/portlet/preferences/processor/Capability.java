@@ -20,7 +20,7 @@ import com.liferay.exportimport.kernel.lar.PortletDataException;
 import javax.portlet.PortletPreferences;
 
 /**
- * @author Mate Thurzo
+ * @author Máté Thurzó
  */
 public interface Capability {
 

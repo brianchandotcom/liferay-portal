@@ -114,7 +114,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Eduardo Lundgren
  * @author Brian Wing Shun Chan
- * @author Eduardo Garcia
+ * @author Eduardo García
  * @author Marcellus Tavares
  */
 @Component(immediate = true, service = DDM.class)

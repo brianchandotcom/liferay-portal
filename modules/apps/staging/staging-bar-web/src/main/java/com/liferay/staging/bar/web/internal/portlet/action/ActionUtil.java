@@ -29,7 +29,7 @@ import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 
 /**
- * @author Mate Thurzo
+ * @author Máté Thurzó
  */
 public class ActionUtil {
 

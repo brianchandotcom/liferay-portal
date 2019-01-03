@@ -37,7 +37,7 @@ import org.junit.Rule;
 import org.junit.Test;
 
 /**
- * @author Laszlo Csontos
+ * @author László Csontos
  */
 public class DB2DialectTest {
 

@@ -28,7 +28,7 @@ import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.PageContext;
 
 /**
- * @author Eduardo Garcia
+ * @author Eduardo García
  */
 public class TemplateRendererTag extends BaseTemplateRendererTag {
 

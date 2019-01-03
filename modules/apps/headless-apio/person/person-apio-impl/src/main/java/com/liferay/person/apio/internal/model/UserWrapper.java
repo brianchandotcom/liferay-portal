@@ -23,7 +23,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
  * Provides a user wrapper that includes a {@code ThemeDisplay} object to allow
  * retrieval of absolute URLs.
  *
- * @author Eduardo Perez
+ * @author Eduardo Pérez
  */
 public class UserWrapper extends com.liferay.portal.kernel.model.UserWrapper {
 

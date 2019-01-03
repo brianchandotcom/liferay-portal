@@ -15,7 +15,7 @@
 package com.liferay.segments.web.internal.constants;
 
 /**
- * @author Eduardo Garcia
+ * @author Eduardo García
  */
 public class SegmentsWebKeys {
 

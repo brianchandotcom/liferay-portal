@@ -32,7 +32,7 @@ import java.io.Serializable;
  * Provides utility methods for generating paths for entities being serialized
  * with the portal's export/import framework.
  *
- * @author Mate Thurzo
+ * @author Máté Thurzó
  * @author Daniel Kocsis
  * @since  6.2
  */

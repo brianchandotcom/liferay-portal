@@ -19,7 +19,7 @@ import com.liferay.portal.odata.filter.expression.ExpressionVisitor;
 import com.liferay.portal.odata.filter.expression.LambdaVariableExpression;
 
 /**
- * @author Ruben Pulido
+ * @author Rubén Pulido
  */
 public class LambdaVariableExpressionImpl implements LambdaVariableExpression {
 

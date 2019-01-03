@@ -28,7 +28,7 @@ import java.util.Map;
 import javax.portlet.PortletPreferences;
 
 /**
- * @author Eduardo Garcia
+ * @author Eduardo García
  */
 public class DefaultConfigurationPortletDataHandler
 	extends BasePortletDataHandler {

@@ -47,7 +47,7 @@ import org.junit.Test;
 import org.springframework.mock.web.MockHttpServletRequest;
 
 /**
- * @author Juan Gonzalez
+ * @author Juan González
  */
 public class I18nServletTest {
 

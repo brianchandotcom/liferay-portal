@@ -39,7 +39,7 @@ import org.osgi.service.component.annotations.Reference;
  * inside a <a href="http://schema.org/Folder">Folder</a> through a web API. The
  * resources are mapped from the internal model {@link FileEntry}.
  *
- * @author Eduardo Perez
+ * @author Eduardo Pérez
  */
 @Component(immediate = true, service = NestedCollectionRouter.class)
 public class FolderMediaObjectNestedCollectionRouter

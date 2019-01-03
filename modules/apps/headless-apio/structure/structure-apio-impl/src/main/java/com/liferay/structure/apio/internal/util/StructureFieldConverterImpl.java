@@ -25,7 +25,7 @@ import org.osgi.service.component.annotations.Component;
  * Converts values used in {@code DDMFormField} to values to be exposed through
  * the web API.
  *
- * @author Ruben Pulido
+ * @author Rubén Pulido
  * @review
  */
 @Component(immediate = true, service = StructureFieldConverter.class)

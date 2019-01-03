@@ -15,7 +15,7 @@
 package com.liferay.asset.tags.internal.configuration;
 
 /**
- * @author Mate Thurzo
+ * @author Máté Thurzó
  */
 public class AssetTagsServiceConfigurationKeys {
 

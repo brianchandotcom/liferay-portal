@@ -18,7 +18,7 @@ import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 /**
- * @author Eduardo Garcia
+ * @author Eduardo García
  */
 public class StructureIdComparator extends OrderByComparator<DDMStructure> {
 

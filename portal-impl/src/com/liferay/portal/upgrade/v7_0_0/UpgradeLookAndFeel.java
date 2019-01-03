@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import javax.portlet.PortletPreferences;
 
 /**
- * @author Eduardo Garcia
+ * @author Eduardo García
  */
 public class UpgradeLookAndFeel extends BaseUpgradePortletPreferences {
 

@@ -26,7 +26,7 @@ import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Edward Han
- * @author Mate Thurzo
+ * @author Máté Thurzó
  */
 @Component(
 	immediate = true,

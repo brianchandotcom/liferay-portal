@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.model.ClassedModel;
 import java.util.Collection;
 
 /**
- * @author Mate Thurzo
+ * @author Máté Thurzó
  */
 @ProviderType
 public interface RelationshipManager {

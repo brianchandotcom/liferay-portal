@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.dao.search.DAOParamUtil;
 import javax.portlet.PortletRequest;
 
 /**
- * @author Mate Thurzo
+ * @author Máté Thurzó
  */
 public class PublishConfigurationSearchTerms
 	extends PublishConfigurationDisplayTerms {

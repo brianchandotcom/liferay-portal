@@ -39,7 +39,7 @@ import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Bruno Farache
- * @author Eduardo Garcia
+ * @author Eduardo García
  */
 @Component(
 	immediate = true,

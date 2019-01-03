@@ -21,7 +21,7 @@ import com.liferay.segments.criteria.Criteria;
 import com.liferay.segments.criteria.CriteriaSerializer;
 
 /**
- * @author Eduardo Garcia
+ * @author Eduardo García
  */
 @ProviderType
 public class SegmentsEntryImpl extends SegmentsEntryBaseImpl {

@@ -25,7 +25,7 @@ import org.junit.Test;
 /**
  * @author Sampsa Sohlman
  * @author Manuel de la Peña
- * @author Peter Borkuti
+ * @author Péter Borkuti
  */
 public class MapUtilWhenCreatingAMapFromArrayTest {
 

@@ -46,7 +46,7 @@ import java.util.Objects;
 import java.util.Optional;
 
 /**
- * @author Mate Thurzo
+ * @author Máté Thurzó
  */
 public class StagedLayoutSetImpl implements StagedLayoutSet {
 

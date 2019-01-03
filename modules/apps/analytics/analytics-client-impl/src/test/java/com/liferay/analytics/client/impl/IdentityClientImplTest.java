@@ -21,7 +21,7 @@ import org.junit.Ignore;
 import org.junit.Test;
 
 /**
- * @author Eduardo Garcia
+ * @author Eduardo García
  */
 @Ignore
 public class IdentityClientImplTest {

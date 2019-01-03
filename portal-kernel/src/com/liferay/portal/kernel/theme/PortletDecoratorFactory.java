@@ -17,7 +17,7 @@ package com.liferay.portal.kernel.theme;
 import com.liferay.portal.kernel.model.PortletDecorator;
 
 /**
- * @author Eduardo Garcia
+ * @author Eduardo García
  */
 public interface PortletDecoratorFactory {
 

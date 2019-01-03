@@ -17,7 +17,7 @@ package com.liferay.asset.tags.internal.configuration;
 import com.liferay.portal.kernel.util.GetterUtil;
 
 /**
- * @author Mate Thurzo
+ * @author Máté Thurzó
  */
 public class AssetTagsServiceConfigurationValues {
 

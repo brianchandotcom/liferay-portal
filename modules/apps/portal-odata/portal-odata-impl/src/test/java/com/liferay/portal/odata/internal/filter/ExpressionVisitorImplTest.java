@@ -55,7 +55,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 /**
- * @author Ruben Pulido
+ * @author Rubén Pulido
  */
 public class ExpressionVisitorImplTest {
 

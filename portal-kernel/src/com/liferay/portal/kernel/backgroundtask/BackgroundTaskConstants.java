@@ -18,7 +18,7 @@ import com.liferay.petra.string.StringPool;
 
 /**
  * @author Daniel Kocsis
- * @author Eduardo Garcia
+ * @author Eduardo García
  */
 public class BackgroundTaskConstants {
 

@@ -72,7 +72,7 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Eduardo Garcia
+ * @author Eduardo García
  * @author Juan Fernández
  * @author Brian Wing Shun Chan
  * @author Raymond Augé

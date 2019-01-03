@@ -27,7 +27,7 @@ import org.osgi.service.component.annotations.Component;
  * {@code MyUserAccount} through a web API. The resources are mapped from the
  * internal model {@link Role}.
  *
- * @author Eduardo Perez
+ * @author Eduardo Pérez
  */
 @Component(immediate = true, service = NestedCollectionRouter.class)
 public class MyUserAcountRoleNestedCollectionRouter

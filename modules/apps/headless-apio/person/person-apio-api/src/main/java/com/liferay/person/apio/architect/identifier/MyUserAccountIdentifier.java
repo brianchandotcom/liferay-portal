@@ -21,7 +21,7 @@ import com.liferay.apio.architect.identifier.Identifier;
  * method {@code com.liferay.portal.kernel.model.User#getUserId()} returns the
  * user's ID.
  *
- * @author Eduardo Perez
+ * @author Eduardo Pérez
  */
 public interface MyUserAccountIdentifier extends Identifier<Long> {
 }

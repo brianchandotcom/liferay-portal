@@ -31,7 +31,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
- * @author Eduardo Garcia
+ * @author Eduardo García
  */
 @Ignore
 @RunWith(Arquillian.class)

@@ -31,7 +31,7 @@ import javax.servlet.Filter;
 import javax.servlet.FilterRegistration;
 
 /**
- * @author Juan Gonzalez
+ * @author Juan González
  */
 public class FilterRegistrationImpl implements FilterRegistration.Dynamic {
 

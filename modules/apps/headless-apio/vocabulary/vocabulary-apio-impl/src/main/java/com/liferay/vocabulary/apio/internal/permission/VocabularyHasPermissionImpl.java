@@ -28,7 +28,7 @@ import com.liferay.portlet.asset.service.permission.AssetVocabularyPermission;
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Eduardo Perez
+ * @author Eduardo Pérez
  */
 @Component(
 	property = "model.class.name=com.liferay.asset.kernel.model.AssetVocabulary",

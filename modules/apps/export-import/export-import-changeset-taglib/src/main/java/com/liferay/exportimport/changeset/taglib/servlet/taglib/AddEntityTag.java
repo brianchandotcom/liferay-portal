@@ -22,7 +22,7 @@ import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.Tag;
 
 /**
- * @author Mate Thurzo
+ * @author Máté Thurzó
  */
 public class AddEntityTag extends TagSupport {
 

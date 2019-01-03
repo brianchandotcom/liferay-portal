@@ -124,7 +124,7 @@ import org.xml.sax.XMLReader;
  * @author Zsolt Berentey
  * @author Levente Hudák
  * @author Julio Camarero
- * @author Mate Thurzo
+ * @author Máté Thurzó
  */
 @Component(immediate = true, service = ExportImportHelper.class)
 @ProviderType

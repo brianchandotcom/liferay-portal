@@ -22,7 +22,7 @@ import java.util.List;
 import javax.portlet.PortletPreferences;
 
 /**
- * @author Mate Thurzo
+ * @author Máté Thurzó
  */
 public interface ExportImportPortletPreferencesProcessor {
 

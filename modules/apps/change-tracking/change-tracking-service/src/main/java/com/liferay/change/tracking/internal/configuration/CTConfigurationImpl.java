@@ -23,7 +23,7 @@ import java.io.Serializable;
 import java.util.function.Function;
 
 /**
- * @author Mate Thurzo
+ * @author Máté Thurzó
  */
 @ProviderType
 public class CTConfigurationImpl<T, U>

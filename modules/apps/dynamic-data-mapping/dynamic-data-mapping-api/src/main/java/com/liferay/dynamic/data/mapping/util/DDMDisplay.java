@@ -28,7 +28,7 @@ import java.util.Locale;
 import java.util.Set;
 
 /**
- * @author Eduardo Garcia
+ * @author Eduardo García
  */
 @ProviderType
 public interface DDMDisplay {

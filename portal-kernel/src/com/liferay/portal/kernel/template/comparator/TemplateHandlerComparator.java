@@ -25,7 +25,7 @@ import java.util.Comparator;
 import java.util.Locale;
 
 /**
- * @author Eduardo Garcia
+ * @author Eduardo García
  */
 public class TemplateHandlerComparator
 	implements Comparator<TemplateHandler>, Serializable {

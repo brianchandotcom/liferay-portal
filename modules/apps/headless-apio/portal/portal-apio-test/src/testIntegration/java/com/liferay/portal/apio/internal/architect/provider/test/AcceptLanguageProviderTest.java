@@ -53,7 +53,7 @@ import org.junit.runner.RunWith;
 import org.springframework.mock.web.MockHttpServletRequest;
 
 /**
- * @author Ruben Pulido
+ * @author Rubén Pulido
  */
 @RunWith(Arquillian.class)
 public class AcceptLanguageProviderTest {

@@ -17,7 +17,7 @@ package com.liferay.knowledge.base.internal.upgrade.v1_3_5;
 import com.liferay.portal.kernel.upgrade.BaseUpgradeLastPublishDate;
 
 /**
- * @author Mate Thurzo
+ * @author Máté Thurzó
  */
 public class UpgradeLastPublishDate extends BaseUpgradeLastPublishDate {
 

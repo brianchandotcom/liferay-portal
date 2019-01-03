@@ -23,7 +23,7 @@ import com.liferay.portal.upgrade.v6_2_0.util.RSSUtil;
 import javax.portlet.PortletPreferences;
 
 /**
- * @author Eduardo Garcia
+ * @author Eduardo García
  * @author Jorge Ferrer
  */
 public class UpgradeAssetPublisher extends BaseUpgradePortletPreferences {

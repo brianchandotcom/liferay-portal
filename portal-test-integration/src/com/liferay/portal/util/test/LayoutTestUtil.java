@@ -50,7 +50,7 @@ import javax.portlet.PortletPreferences;
 
 /**
  * @author Manuel de la Peña
- * @author Mate Thurzo
+ * @author Máté Thurzó
  */
 public class LayoutTestUtil {
 

@@ -18,7 +18,7 @@ import com.liferay.apio.architect.representor.Representor;
 import com.liferay.person.apio.internal.model.UserWrapper;
 
 /**
- * @author Eduardo Perez
+ * @author Eduardo Pérez
  */
 public interface UserAccountRepresentorBuilderHelper {
 

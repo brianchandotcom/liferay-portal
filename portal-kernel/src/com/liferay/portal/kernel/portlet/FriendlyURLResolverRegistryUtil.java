@@ -32,7 +32,7 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * @author Eduardo Garcia
+ * @author Eduardo García
  * @author Raymond Augé
  */
 @ProviderType

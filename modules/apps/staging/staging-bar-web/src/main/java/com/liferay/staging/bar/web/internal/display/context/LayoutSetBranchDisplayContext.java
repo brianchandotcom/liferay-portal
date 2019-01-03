@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.model.LayoutSetBranchConstants;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * @author Mariano Alvaro Saiz
+ * @author Mariano Álvaro Sáiz
  */
 public class LayoutSetBranchDisplayContext {
 

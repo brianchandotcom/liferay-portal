@@ -15,7 +15,7 @@
 package com.liferay.change.tracking.configuration;
 
 /**
- * @author Mate Thurzo
+ * @author Máté Thurzó
  */
 public interface CTConfigurationRegistrar {
 

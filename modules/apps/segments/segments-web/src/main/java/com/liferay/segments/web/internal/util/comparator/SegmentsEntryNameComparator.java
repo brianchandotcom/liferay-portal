@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.segments.model.SegmentsEntry;
 
 /**
- * @author Eduardo Garcia
+ * @author Eduardo García
  */
 public class SegmentsEntryNameComparator
 	extends OrderByComparator<SegmentsEntry> {

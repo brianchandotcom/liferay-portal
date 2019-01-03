@@ -18,7 +18,7 @@ import com.liferay.portal.kernel.model.StagedModel;
 import com.liferay.portal.kernel.model.Theme;
 
 /**
- * @author Mate Thurzo
+ * @author Máté Thurzó
  */
 public interface StagedTheme extends Theme, StagedModel {
 }

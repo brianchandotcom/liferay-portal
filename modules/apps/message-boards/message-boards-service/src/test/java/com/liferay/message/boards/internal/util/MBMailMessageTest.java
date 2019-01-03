@@ -27,7 +27,7 @@ import org.junit.runner.RunWith;
 import org.powermock.modules.junit4.PowerMockRunner;
 
 /**
- * @author Eduardo Perez
+ * @author Eduardo Pérez
  */
 @RunWith(PowerMockRunner.class)
 public class MBMailMessageTest {

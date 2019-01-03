@@ -31,7 +31,7 @@ import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 
 /**
- * @author Eduardo Garcia
+ * @author Eduardo García
  */
 public abstract class BasePortletToolbarContributor
 	implements PortletToolbarContributor {

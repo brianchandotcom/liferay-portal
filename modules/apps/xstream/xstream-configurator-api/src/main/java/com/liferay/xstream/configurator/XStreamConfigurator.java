@@ -21,7 +21,7 @@ import com.liferay.exportimport.kernel.xstream.XStreamType;
 import java.util.List;
 
 /**
- * @author Mate Thurzo
+ * @author Máté Thurzó
  */
 public interface XStreamConfigurator {
 

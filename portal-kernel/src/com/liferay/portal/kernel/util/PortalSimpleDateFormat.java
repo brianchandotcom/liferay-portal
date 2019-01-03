@@ -23,7 +23,7 @@ import java.util.Date;
 import java.util.Locale;
 
 /**
- * @author Mate Thurzo
+ * @author Máté Thurzó
  */
 public class PortalSimpleDateFormat extends SimpleDateFormat {
 

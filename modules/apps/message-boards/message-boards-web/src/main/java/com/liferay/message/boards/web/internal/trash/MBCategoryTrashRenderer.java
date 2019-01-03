@@ -29,7 +29,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * @author Eduardo Garcia
+ * @author Eduardo García
  */
 public class MBCategoryTrashRenderer extends BaseTrashRenderer {
 

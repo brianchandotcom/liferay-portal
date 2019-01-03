@@ -25,7 +25,7 @@ import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.PageContext;
 
 /**
- * @author Peter Borkuti
+ * @author Péter Borkuti
  */
 @ProviderType
 public class CheckboxTag extends BaseCssTag {

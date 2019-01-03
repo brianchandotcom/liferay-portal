@@ -47,7 +47,7 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Istvan Andras Dezsi
+ * @author István András Dézsi
  */
 @Component(immediate = true, service = Indexer.class)
 public class AssetVocabularyIndexer extends BaseIndexer<AssetVocabulary> {

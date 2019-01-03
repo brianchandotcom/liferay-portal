@@ -17,7 +17,7 @@ package com.liferay.portal.servlet.filters.secure;
 import javax.servlet.FilterConfig;
 
 /**
- * @author Mariano Alvaro Saiz
+ * @author Mariano Álvaro Sáiz
  * @author Arthur Chan
  */
 public class SecureFilter extends BaseAuthFilter {

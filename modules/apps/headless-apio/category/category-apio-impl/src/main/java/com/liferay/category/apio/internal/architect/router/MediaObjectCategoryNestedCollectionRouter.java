@@ -33,7 +33,7 @@ import org.osgi.service.component.annotations.Reference;
  * API. The resources are mapped from the internal models {@code AssetCategory}
  * and {@code FileEntry}.
  *
- * @author Eduardo Perez
+ * @author Eduardo Pérez
  */
 @Component(immediate = true, service = NestedCollectionRouter.class)
 public class MediaObjectCategoryNestedCollectionRouter

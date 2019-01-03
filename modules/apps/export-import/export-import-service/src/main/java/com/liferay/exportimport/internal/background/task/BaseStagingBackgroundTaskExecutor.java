@@ -46,7 +46,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * @author Mate Thurzo
+ * @author Máté Thurzó
  */
 public abstract class BaseStagingBackgroundTaskExecutor
 	extends BaseExportImportBackgroundTaskExecutor {

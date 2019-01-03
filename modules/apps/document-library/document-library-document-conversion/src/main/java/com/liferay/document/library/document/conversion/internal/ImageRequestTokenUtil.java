@@ -42,7 +42,7 @@ import org.joda.time.Instant;
 
 /**
  * @author Daniel Sanz
- * @author Istvan Andras Dezsi
+ * @author István András Dézsi
  * @author Tomas Polesovsky
  */
 public class ImageRequestTokenUtil {

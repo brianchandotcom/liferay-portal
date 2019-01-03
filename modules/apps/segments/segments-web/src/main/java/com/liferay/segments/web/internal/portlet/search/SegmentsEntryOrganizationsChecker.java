@@ -23,7 +23,7 @@ import com.liferay.segments.service.SegmentsEntryRelService;
 import javax.portlet.RenderResponse;
 
 /**
- * @author Eduardo Garcia
+ * @author Eduardo García
  */
 public class SegmentsEntryOrganizationsChecker extends EmptyOnClickRowChecker {
 

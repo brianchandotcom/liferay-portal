@@ -49,7 +49,7 @@ import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Eduardo Garcia
+ * @author Eduardo García
  * @author Alejandro Tardín
  * @author Roberto Díaz
  */

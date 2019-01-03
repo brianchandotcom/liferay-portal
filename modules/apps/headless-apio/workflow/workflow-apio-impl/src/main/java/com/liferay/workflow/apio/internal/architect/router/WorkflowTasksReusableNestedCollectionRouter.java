@@ -37,9 +37,9 @@ import org.osgi.service.component.annotations.Reference;
  * through a web API. The resources are mapped from the internal model {@code
  * WorkflowTask}.
  *
- * @author Eduardo Perez
- * @author Sarai Diaz
- * @author Victor Galán
+ * @author Eduardo Pérez
+ * @author Sarai Díaz
+ * @author Víctor Galán
  */
 @Component(immediate = true, service = ReusableNestedCollectionRouter.class)
 public class WorkflowTasksReusableNestedCollectionRouter

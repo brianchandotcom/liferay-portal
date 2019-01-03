@@ -34,7 +34,7 @@ import java.util.Locale;
 import java.util.Map;
 
 /**
- * @author Eduardo Garcia
+ * @author Eduardo García
  */
 @OSGiBeanProperties
 public class LayoutSitemapURLProvider implements SitemapURLProvider {

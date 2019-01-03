@@ -23,7 +23,7 @@ import aQute.bnd.annotation.ProviderType;
  * Helper methods and all application logic should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the {@link com.liferay.segments.model.SegmentsEntryRel} interface.
  * </p>
  *
- * @author Eduardo Garcia
+ * @author Eduardo García
  */
 @ProviderType
 public class SegmentsEntryRelImpl extends SegmentsEntryRelBaseImpl {

@@ -17,7 +17,7 @@ package com.liferay.trash.kernel.exception;
 import com.liferay.portal.kernel.exception.PortalException;
 
 /**
- * @author     Eduardo Garcia
+ * @author     Eduardo García
  * @deprecated As of Judson (7.1.x), replaced by {@link
  *             com.liferay.trash.exception.TrashEntryException}
  */

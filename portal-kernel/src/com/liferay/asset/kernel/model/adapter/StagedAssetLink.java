@@ -18,7 +18,7 @@ import com.liferay.asset.kernel.model.AssetLink;
 import com.liferay.portal.kernel.model.StagedModel;
 
 /**
- * @author Mate Thurzo
+ * @author Máté Thurzó
  */
 public interface StagedAssetLink extends AssetLink, StagedModel {
 

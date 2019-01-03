@@ -17,7 +17,7 @@ package com.liferay.exportimport.internal.lar;
 import com.liferay.portal.kernel.model.StagedModel;
 
 /**
- * @author     Mate Thurzo
+ * @author     Máté Thurzó
  * @deprecated As of Judson (7.1.x)
  */
 @Deprecated

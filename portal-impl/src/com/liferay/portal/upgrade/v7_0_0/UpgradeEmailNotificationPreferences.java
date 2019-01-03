@@ -21,7 +21,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * @author Eduardo Garcia
+ * @author Eduardo García
  */
 public class UpgradeEmailNotificationPreferences
 	extends RenameUpgradePortalPreferences {

@@ -105,7 +105,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Hugo Huijser
  * @author Daniel Kocsis
  * @author László Csontos
- * @author Mate Thurzo
+ * @author Máté Thurzó
  * @see    com.liferay.journal.internal.exportimport.creation.strategy.JournalCreationStrategy
  * @see    PortletDataHandler
  */

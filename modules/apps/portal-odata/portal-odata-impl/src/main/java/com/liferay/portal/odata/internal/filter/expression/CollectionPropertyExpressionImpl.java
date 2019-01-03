@@ -21,7 +21,7 @@ import com.liferay.portal.odata.filter.expression.LambdaFunctionExpression;
 import com.liferay.portal.odata.filter.expression.PropertyExpression;
 
 /**
- * @author Ruben Pulido
+ * @author Rubén Pulido
  */
 public class CollectionPropertyExpressionImpl
 	implements CollectionPropertyExpression {

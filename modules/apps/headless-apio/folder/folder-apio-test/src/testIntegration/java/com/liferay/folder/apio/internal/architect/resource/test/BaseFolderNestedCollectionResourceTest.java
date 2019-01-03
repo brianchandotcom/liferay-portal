@@ -27,7 +27,7 @@ import java.util.Collection;
 import java.util.Iterator;
 
 /**
- * @author Ruben Pulido
+ * @author Rubén Pulido
  */
 public class BaseFolderNestedCollectionResourceTest {
 

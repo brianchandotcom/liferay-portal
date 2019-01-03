@@ -17,7 +17,7 @@ package com.liferay.journal.internal.upgrade.v0_0_5;
 import com.liferay.journal.constants.JournalPortletKeys;
 
 /**
- * @author Mate Thurzo
+ * @author Máté Thurzó
  */
 public class UpgradeLastPublishDate
 	extends com.liferay.portal.upgrade.v7_0_0.UpgradeLastPublishDate {

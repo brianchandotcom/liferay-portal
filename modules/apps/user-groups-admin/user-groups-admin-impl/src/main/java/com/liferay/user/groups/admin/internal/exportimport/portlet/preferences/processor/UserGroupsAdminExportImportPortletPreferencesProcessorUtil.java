@@ -22,7 +22,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import javax.portlet.PortletPreferences;
 
 /**
- * @author Mate Thurzo
+ * @author Máté Thurzó
  */
 public class UserGroupsAdminExportImportPortletPreferencesProcessorUtil {
 

@@ -20,7 +20,7 @@ import com.liferay.portal.kernel.exception.PortalException;
  * Provides methods for obtaining {@link SegmentsEntry} objects and their
  * related entities.
  *
- * @author Eduardo Garcia
+ * @author Eduardo García
  * @review
  */
 public interface SegmentsEntryProvider {

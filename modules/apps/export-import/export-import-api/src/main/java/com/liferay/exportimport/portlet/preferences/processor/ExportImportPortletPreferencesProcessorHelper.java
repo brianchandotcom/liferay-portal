@@ -24,7 +24,7 @@ import java.util.function.Function;
 import javax.portlet.PortletPreferences;
 
 /**
- * @author Mate Thurzo
+ * @author Máté Thurzó
  */
 @ProviderType
 public interface ExportImportPortletPreferencesProcessorHelper {

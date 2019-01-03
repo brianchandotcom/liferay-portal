@@ -17,7 +17,7 @@ package com.liferay.journal.item.selector.criterion;
 import com.liferay.item.selector.BaseItemSelectorCriterion;
 
 /**
- * @author Eduardo Garcia
+ * @author Eduardo García
  * @author Roberto Díaz
  */
 public class JournalItemSelectorCriterion extends BaseItemSelectorCriterion {

@@ -27,7 +27,7 @@ import java.sql.Statement;
 import java.sql.Timestamp;
 
 /**
- * @author Mariano Alvaro Saiz
+ * @author Mariano Álvaro Sáiz
  */
 public class UpgradeJournalArticleDates extends UpgradeProcess {
 

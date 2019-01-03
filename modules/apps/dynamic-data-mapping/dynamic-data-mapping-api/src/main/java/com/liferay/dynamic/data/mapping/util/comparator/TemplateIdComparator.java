@@ -18,7 +18,7 @@ import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 /**
- * @author Eduardo Garcia
+ * @author Eduardo García
  */
 public class TemplateIdComparator extends OrderByComparator<DDMTemplate> {
 

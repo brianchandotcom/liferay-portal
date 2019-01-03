@@ -18,7 +18,7 @@ import com.liferay.mobile.device.rules.constants.MDRPortletKeys;
 import com.liferay.portal.kernel.upgrade.BaseUpgradePortletId;
 
 /**
- * @author Mate Thurzo
+ * @author Máté Thurzó
  */
 public class UpgradePortletId extends BaseUpgradePortletId {
 

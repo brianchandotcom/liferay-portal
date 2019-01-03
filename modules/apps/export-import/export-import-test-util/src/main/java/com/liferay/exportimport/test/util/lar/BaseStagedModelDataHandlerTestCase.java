@@ -85,7 +85,7 @@ import org.junit.Test;
 
 /**
  * @author Daniel Kocsis
- * @author Mate Thurzo
+ * @author Máté Thurzó
  */
 public abstract class BaseStagedModelDataHandlerTestCase {
 

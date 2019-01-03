@@ -23,7 +23,7 @@ import com.liferay.rss.util.RSSUtil;
 import javax.portlet.PortletPreferences;
 
 /**
- * @author Eduardo Garcia
+ * @author Eduardo García
  */
 public class UpgradePortletPreferences extends BaseUpgradePortletPreferences {
 

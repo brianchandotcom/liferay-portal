@@ -35,7 +35,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * Provides a utility facade to the staged model data handler registry
  * framework.
  *
- * @author Mate Thurzo
+ * @author Máté Thurzó
  * @author Brian Wing Shun Chan
  * @since  6.2
  */

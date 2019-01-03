@@ -18,7 +18,7 @@ import com.liferay.journal.model.JournalArticle;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 /**
- * @author Eduardo Perez Garcia
+ * @author Eduardo Pérez Garcia
  */
 public class ArticleResourcePKComparator
 	extends OrderByComparator<JournalArticle> {

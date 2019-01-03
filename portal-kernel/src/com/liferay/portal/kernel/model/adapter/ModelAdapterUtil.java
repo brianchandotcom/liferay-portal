@@ -24,7 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @author Mate Thurzo
+ * @author Máté Thurzó
  */
 public class ModelAdapterUtil {
 

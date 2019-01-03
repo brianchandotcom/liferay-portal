@@ -17,7 +17,7 @@ package com.liferay.portal.odata.filter.expression;
 /**
  * Models a property {@code Expression}.
  *
- * @author Ruben Pulido
+ * @author Rubén Pulido
  * @review
  */
 public interface PropertyExpression extends Expression {

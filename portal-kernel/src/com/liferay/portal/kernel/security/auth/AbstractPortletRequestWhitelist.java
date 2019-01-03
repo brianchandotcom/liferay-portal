@@ -24,7 +24,7 @@ import java.util.Collections;
 import java.util.Set;
 
 /**
- * @author Peter Borkuti
+ * @author Péter Borkuti
  * @author Tomas Polesovsky
  */
 public abstract class AbstractPortletRequestWhitelist

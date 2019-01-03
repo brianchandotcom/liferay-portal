@@ -24,7 +24,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * @author Eduardo Garcia
+ * @author Eduardo García
  * @author Marcellus Tavares
  */
 public final class AnalyticsEventsMessage implements Serializable {

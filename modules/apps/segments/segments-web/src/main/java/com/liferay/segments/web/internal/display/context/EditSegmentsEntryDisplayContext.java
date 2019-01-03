@@ -53,7 +53,7 @@ import javax.portlet.RenderResponse;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * @author Eduardo Garcia
+ * @author Eduardo García
  */
 public class EditSegmentsEntryDisplayContext {
 

@@ -15,7 +15,7 @@
 package com.liferay.portal.kernel.portlet;
 
 /**
- * @author Eduardo Garcia
+ * @author Eduardo García
  */
 public interface EditPortletProvider extends PortletProvider {
 }

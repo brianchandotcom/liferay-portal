@@ -57,8 +57,8 @@ import org.springframework.mock.web.MockHttpServletRequest;
 
 /**
  * @author Julio Camarero
- * @author Laszlo Csontos
- * @author Eduardo Garcia
+ * @author László Csontos
+ * @author Eduardo García
  */
 @RunWith(Arquillian.class)
 public class PortletLayoutFinderTest {

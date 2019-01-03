@@ -15,7 +15,7 @@
 package com.liferay.journal.constants;
 
 /**
- * @author Eduardo Garcia
+ * @author Eduardo García
  */
 public class JournalPortletKeys {
 

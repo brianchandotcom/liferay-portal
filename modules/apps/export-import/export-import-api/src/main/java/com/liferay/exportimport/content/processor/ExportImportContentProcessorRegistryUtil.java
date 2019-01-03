@@ -34,7 +34,7 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
 
 /**
  * @author Gergely Mathe
- * @author Mate Thurzo
+ * @author Máté Thurzó
  */
 @ProviderType
 public class ExportImportContentProcessorRegistryUtil {

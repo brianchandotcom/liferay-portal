@@ -27,7 +27,7 @@ import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Mate Thurzo
+ * @author Máté Thurzó
  */
 @Component(
 	immediate = true,

@@ -17,7 +17,7 @@ package com.liferay.exportimport.constants;
 import aQute.bnd.annotation.ProviderType;
 
 /**
- * @author Mate Thurzo
+ * @author Máté Thurzó
  */
 @ProviderType
 public class ExportImportConstants {

@@ -70,7 +70,7 @@ import org.junit.runner.RunWith;
 
 /**
  * @author Daniel Kocsis
- * @author Mate Thurzo
+ * @author Máté Thurzó
  */
 @RunWith(Arquillian.class)
 @Sync(cleanTransaction = true)

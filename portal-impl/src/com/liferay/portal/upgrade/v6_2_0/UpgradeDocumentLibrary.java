@@ -52,7 +52,7 @@ import java.util.Map;
 
 /**
  * @author Dennis Ju
- * @author Mate Thurzo
+ * @author Máté Thurzó
  * @author Alexander Chow
  * @author Roberto Díaz
  */

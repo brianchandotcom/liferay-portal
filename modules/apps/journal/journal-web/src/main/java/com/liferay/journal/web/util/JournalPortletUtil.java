@@ -51,7 +51,7 @@ import javax.servlet.http.HttpServletRequest;
  * @author Wesley Gong
  * @author Angelo Jefferson
  * @author Hugo Huijser
- * @author Eduardo Garcia
+ * @author Eduardo García
  */
 public class JournalPortletUtil {
 

@@ -23,7 +23,7 @@ import java.util.Map;
 /**
  * Represents the values extracted from a category form.
  *
- * @author Eduardo Perez
+ * @author Eduardo Pérez
  * @author Javier Gamarra
  */
 public class CategoryForm {

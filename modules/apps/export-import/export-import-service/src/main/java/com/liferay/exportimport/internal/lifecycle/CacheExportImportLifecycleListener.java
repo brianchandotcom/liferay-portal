@@ -25,7 +25,7 @@ import com.liferay.portal.servlet.filters.cache.CacheUtil;
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Mate Thurzo
+ * @author Máté Thurzó
  */
 @Component(immediate = true, service = ExportImportLifecycleListener.class)
 public class CacheExportImportLifecycleListener

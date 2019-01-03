@@ -51,7 +51,7 @@ import java.util.Set;
  *
  * @author Brian Wing Shun Chan
  * @author Raymond Augé
- * @author Mate Thurzo
+ * @author Máté Thurzó
  */
 @ProviderType
 public interface PortletDataContext extends Serializable {

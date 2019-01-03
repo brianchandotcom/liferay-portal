@@ -45,7 +45,7 @@ import org.osgi.service.component.annotations.Reference;
  * through a web API. The resources are mapped from the internal model {@code
  * UserWrapper}.
  *
- * @author Eduardo Perez
+ * @author Eduardo Pérez
  */
 @Component(immediate = true, service = CollectionResource.class)
 public class MyUserAccountCollectionResource

@@ -22,7 +22,7 @@ import java.util.Locale;
 /**
  * Wraps a {@code JournalArticle} and includes a {@code ThemeDisplay} object.
  *
- * @author Eduardo Perez
+ * @author Eduardo Pérez
  */
 public class JournalArticleWrapper
 	extends com.liferay.journal.model.JournalArticleWrapper {

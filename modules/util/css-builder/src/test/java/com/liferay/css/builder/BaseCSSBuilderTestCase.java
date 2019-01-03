@@ -35,7 +35,7 @@ import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 
 /**
- * @author Eduardo Garcia
+ * @author Eduardo García
  * @author David Truong
  * @author Andrea Di Giorgi
  */

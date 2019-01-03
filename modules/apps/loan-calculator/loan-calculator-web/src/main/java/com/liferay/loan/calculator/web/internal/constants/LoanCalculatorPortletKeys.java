@@ -15,7 +15,7 @@
 package com.liferay.loan.calculator.web.internal.constants;
 
 /**
- * @author Eduardo Garcia
+ * @author Eduardo García
  */
 public class LoanCalculatorPortletKeys {
 

@@ -18,7 +18,7 @@ import com.liferay.portal.kernel.security.auth.AbstractPortletRequestWhitelist;
 import com.liferay.portal.util.PropsValues;
 
 /**
- * @author Peter Borkuti
+ * @author Péter Borkuti
  */
 public class InterruptedPortletRequestWhitelistImpl
 	extends AbstractPortletRequestWhitelist {

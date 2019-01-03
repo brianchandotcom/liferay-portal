@@ -29,7 +29,7 @@ import org.junit.Test;
 import org.springframework.mock.web.MockHttpServletRequest;
 
 /**
- * @author Ruben Pulido
+ * @author Rubén Pulido
  */
 public class AcceptLanguageProviderTest {
 

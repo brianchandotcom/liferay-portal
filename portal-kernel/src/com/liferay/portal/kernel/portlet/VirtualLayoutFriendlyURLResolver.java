@@ -30,7 +30,7 @@ import com.liferay.portal.kernel.util.Validator;
 import java.util.Map;
 
 /**
- * @author Eduardo Garcia
+ * @author Eduardo García
  * @author Marco Leo
  */
 @OSGiBeanProperties(service = FriendlyURLResolver.class)

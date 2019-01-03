@@ -25,7 +25,7 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import java.io.Serializable;
 
 /**
- * @author Mate Thurzo
+ * @author Máté Thurzó
  */
 @ProviderType
 public class ExportImportClassedModelUtil {

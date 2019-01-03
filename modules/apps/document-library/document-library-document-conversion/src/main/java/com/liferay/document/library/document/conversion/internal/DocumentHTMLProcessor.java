@@ -28,7 +28,7 @@ import java.util.Scanner;
 
 /**
  * @author Daniel Sanz
- * @author Istvan Andras Dezsi
+ * @author István András Dézsi
  */
 public class DocumentHTMLProcessor {
 

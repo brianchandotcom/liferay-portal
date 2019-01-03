@@ -36,7 +36,7 @@ import org.junit.Rule;
 import org.junit.Test;
 
 /**
- * @author Eduardo Garcia
+ * @author Eduardo García
  */
 public class UpgradeLookAndFeelTest extends UpgradeLookAndFeel {
 

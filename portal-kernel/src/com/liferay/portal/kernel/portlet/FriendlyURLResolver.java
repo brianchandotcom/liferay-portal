@@ -22,7 +22,7 @@ import com.liferay.portal.kernel.model.LayoutFriendlyURLComposite;
 import java.util.Map;
 
 /**
- * @author Eduardo Garcia
+ * @author Eduardo García
  * @author Marco Leo
  */
 @ProviderType

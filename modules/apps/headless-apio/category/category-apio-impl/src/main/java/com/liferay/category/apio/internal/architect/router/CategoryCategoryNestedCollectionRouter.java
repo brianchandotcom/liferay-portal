@@ -40,7 +40,7 @@ import org.osgi.service.component.annotations.Reference;
  * of another {@code Category} through a web API. The resources are mapped from
  * the internal model {@code AssetCategory}.
  *
- * @author Eduardo Perez
+ * @author Eduardo Pérez
  */
 @Component(immediate = true, service = NestedCollectionRouter.class)
 public class CategoryCategoryNestedCollectionRouter

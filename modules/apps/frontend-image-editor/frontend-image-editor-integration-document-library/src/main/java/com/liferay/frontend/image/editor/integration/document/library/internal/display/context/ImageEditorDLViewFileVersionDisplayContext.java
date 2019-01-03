@@ -33,7 +33,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * @author Ambrin Chaudhary
+ * @author Ambrín Chaudhary
  */
 public class ImageEditorDLViewFileVersionDisplayContext
 	extends BaseDLViewFileVersionDisplayContext {

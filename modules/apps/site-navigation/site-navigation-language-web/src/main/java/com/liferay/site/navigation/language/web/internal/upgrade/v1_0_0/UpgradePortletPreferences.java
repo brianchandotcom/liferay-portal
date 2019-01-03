@@ -27,7 +27,7 @@ import javax.portlet.PortletPreferences;
 import javax.portlet.ReadOnlyException;
 
 /**
- * @author Eduardo Garcia
+ * @author Eduardo García
  */
 public class UpgradePortletPreferences extends BaseUpgradePortletPreferences {
 

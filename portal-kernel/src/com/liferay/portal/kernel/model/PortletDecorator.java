@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.util.Accessor;
 import java.io.Serializable;
 
 /**
- * @author Eduardo Garcia
+ * @author Eduardo García
  */
 public interface PortletDecorator
 	extends Comparable<PortletDecorator>, Serializable {

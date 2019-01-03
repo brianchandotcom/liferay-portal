@@ -18,7 +18,7 @@ package com.liferay.folder.apio.architect.model;
  * Holds information about a {@code
  * com.liferay.portal.kernel.repository.model.Folder} exposed through the API.
  *
- * @author Ruben Pulido
+ * @author Rubén Pulido
  * @review
  */
 public interface Folder {

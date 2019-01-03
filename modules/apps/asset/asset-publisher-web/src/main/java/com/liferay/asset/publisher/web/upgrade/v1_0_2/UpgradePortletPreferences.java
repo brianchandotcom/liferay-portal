@@ -23,7 +23,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import javax.portlet.PortletPreferences;
 
 /**
- * @author Cristina Rodriguez
+ * @author Cristina Rodríguez
  */
 public class UpgradePortletPreferences extends BaseUpgradePortletPreferences {
 

@@ -20,7 +20,7 @@ import com.liferay.portal.kernel.model.adapter.builder.ModelAdapterBuilder;
 import com.liferay.portal.model.adapter.impl.StagedThemeImpl;
 
 /**
- * @author Mate Thurzo
+ * @author Máté Thurzó
  */
 public class StagedThemeModelAdapterBuilder
 	implements ModelAdapterBuilder<Theme, StagedTheme> {

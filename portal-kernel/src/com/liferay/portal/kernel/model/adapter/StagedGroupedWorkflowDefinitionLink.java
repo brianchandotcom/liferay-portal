@@ -18,7 +18,7 @@ import com.liferay.portal.kernel.model.StagedGroupedModel;
 import com.liferay.portal.kernel.model.WorkflowDefinitionLink;
 
 /**
- * @author Mate Thurzo
+ * @author Máté Thurzó
  */
 public interface StagedGroupedWorkflowDefinitionLink
 	extends StagedGroupedModel, WorkflowDefinitionLink {

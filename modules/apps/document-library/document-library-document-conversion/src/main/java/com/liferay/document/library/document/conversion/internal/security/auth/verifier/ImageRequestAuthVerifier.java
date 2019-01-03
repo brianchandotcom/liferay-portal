@@ -28,7 +28,7 @@ import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Daniel Sanz
- * @author Istvan Andras Dezsi
+ * @author István András Dézsi
  * @author Tomas Polesovsky
  */
 public class ImageRequestAuthVerifier implements AuthVerifier {

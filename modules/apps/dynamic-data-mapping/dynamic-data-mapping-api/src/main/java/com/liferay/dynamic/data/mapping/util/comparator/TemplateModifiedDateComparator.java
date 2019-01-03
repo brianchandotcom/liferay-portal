@@ -18,7 +18,7 @@ import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.exportimport.kernel.lar.StagedModelModifiedDateComparator;
 
 /**
- * @author Eduardo Garcia
+ * @author Eduardo García
  */
 public class TemplateModifiedDateComparator
 	extends StagedModelModifiedDateComparator<DDMTemplate> {

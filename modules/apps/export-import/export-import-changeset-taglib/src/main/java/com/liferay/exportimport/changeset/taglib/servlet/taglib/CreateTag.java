@@ -21,7 +21,7 @@ import com.liferay.taglib.TagSupport;
 import javax.servlet.jsp.JspException;
 
 /**
- * @author Mate Thurzo
+ * @author Máté Thurzó
  */
 public class CreateTag extends TagSupport {
 

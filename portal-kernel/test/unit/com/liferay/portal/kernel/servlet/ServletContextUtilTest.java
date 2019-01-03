@@ -31,7 +31,7 @@ import org.junit.Test;
 import org.springframework.mock.web.MockServletContext;
 
 /**
- * @author Laszlo Csontos
+ * @author László Csontos
  */
 public class ServletContextUtilTest {
 

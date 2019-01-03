@@ -17,7 +17,7 @@ package com.liferay.exportimport.changeset;
 import aQute.bnd.annotation.ProviderType;
 
 /**
- * @author Mate Thurzo
+ * @author Máté Thurzó
  */
 @ProviderType
 public class ChangesetManagerUtil {

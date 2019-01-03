@@ -25,7 +25,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.PageContext;
 
 /**
- * @author Peter Borkuti
+ * @author Péter Borkuti
  */
 @ProviderType
 public class ProcessListTag extends IncludeTag {

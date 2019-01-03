@@ -40,7 +40,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
- * @author Istvan Andras Dezsi
+ * @author István András Dézsi
  * @author Tibor Lipusz
  */
 @RunWith(Arquillian.class)

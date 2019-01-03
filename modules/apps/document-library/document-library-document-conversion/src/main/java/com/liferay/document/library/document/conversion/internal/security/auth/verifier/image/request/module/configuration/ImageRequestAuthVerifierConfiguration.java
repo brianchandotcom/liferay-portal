@@ -19,7 +19,7 @@ import aQute.bnd.annotation.metatype.Meta;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 
 /**
- * @author Istvan Andras Dezsi
+ * @author István András Dézsi
  */
 @ExtendedObjectClassDefinition(category = "api-authentication")
 @Meta.OCD(

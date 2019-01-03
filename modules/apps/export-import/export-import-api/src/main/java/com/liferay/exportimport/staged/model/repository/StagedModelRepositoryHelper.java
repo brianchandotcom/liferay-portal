@@ -17,7 +17,7 @@ package com.liferay.exportimport.staged.model.repository;
 import com.liferay.portal.kernel.model.StagedModel;
 
 /**
- * @author Mate Thurzo
+ * @author Máté Thurzó
  */
 public interface StagedModelRepositoryHelper {
 

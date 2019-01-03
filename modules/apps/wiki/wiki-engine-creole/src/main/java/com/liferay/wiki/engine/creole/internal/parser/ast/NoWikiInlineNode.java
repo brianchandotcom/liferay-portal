@@ -17,7 +17,7 @@ package com.liferay.wiki.engine.creole.internal.parser.ast;
 import com.liferay.wiki.engine.creole.internal.parser.visitor.ASTVisitor;
 
 /**
- * @author Istvan Andras Dezsi
+ * @author István András Dézsi
  */
 public class NoWikiInlineNode extends ASTNode {
 

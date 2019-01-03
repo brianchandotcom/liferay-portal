@@ -31,7 +31,7 @@ import java.util.Map;
 import javax.portlet.PortletPreferences;
 
 /**
- * @author Mate Thurzo
+ * @author Máté Thurzó
  */
 @ProviderType
 public abstract class BaseExportImportPortletPreferencesProcessor

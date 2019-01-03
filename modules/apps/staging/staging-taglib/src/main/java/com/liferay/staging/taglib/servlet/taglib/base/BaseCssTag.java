@@ -24,7 +24,7 @@ import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.PageContext;
 
 /**
- * @author Peter Borkuti
+ * @author Péter Borkuti
  */
 public abstract class BaseCssTag extends IncludeTag {
 

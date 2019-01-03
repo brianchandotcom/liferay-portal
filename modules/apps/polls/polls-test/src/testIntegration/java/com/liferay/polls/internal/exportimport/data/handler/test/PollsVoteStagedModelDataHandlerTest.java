@@ -39,7 +39,7 @@ import org.junit.runner.RunWith;
 
 /**
  * @author Shinn Lok
- * @author Mate Thurzo
+ * @author Máté Thurzó
  */
 @RunWith(Arquillian.class)
 public class PollsVoteStagedModelDataHandlerTest

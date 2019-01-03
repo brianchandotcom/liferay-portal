@@ -50,7 +50,7 @@ import org.osgi.service.metatype.AttributeDefinition;
 /**
  * @author Brian Wing Shun Chan
  * @author Vilmos Papp
- * @author Eduardo Garcia
+ * @author Eduardo García
  * @author Raymond Augé
  */
 @Component(

@@ -52,7 +52,7 @@ import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
 
 /**
- * @author Ruben Pulido
+ * @author Rubén Pulido
  */
 public class ContentStructureApioTestBundleActivator
 	implements BundleActivator {

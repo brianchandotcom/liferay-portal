@@ -29,7 +29,7 @@ import org.apache.pdfbox.rendering.ImageType;
 import org.apache.pdfbox.rendering.PDFRenderer;
 
 /**
- * @author Juan Gonzalez
+ * @author Juan González
  */
 public class LiferayPDFBoxConverter {
 

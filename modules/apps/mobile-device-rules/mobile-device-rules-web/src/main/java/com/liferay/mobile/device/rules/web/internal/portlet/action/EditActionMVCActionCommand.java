@@ -43,7 +43,7 @@ import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Edward Han
- * @author Mate Thurzo
+ * @author Máté Thurzó
  */
 @Component(
 	immediate = true,

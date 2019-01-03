@@ -32,7 +32,7 @@ import javax.portlet.PortletURL;
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Ambrin Chaudhary
+ * @author Ambrín Chaudhary
  */
 @Component(
 	property = {

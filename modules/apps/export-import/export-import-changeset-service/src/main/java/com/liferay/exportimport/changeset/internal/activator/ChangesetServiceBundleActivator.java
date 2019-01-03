@@ -23,7 +23,7 @@ import org.osgi.framework.ServiceReference;
 import org.osgi.util.tracker.ServiceTracker;
 
 /**
- * @author Mate Thurzo
+ * @author Máté Thurzó
  */
 public class ChangesetServiceBundleActivator implements BundleActivator {
 

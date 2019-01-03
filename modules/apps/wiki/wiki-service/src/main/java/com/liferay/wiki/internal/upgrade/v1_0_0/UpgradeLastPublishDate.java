@@ -18,7 +18,7 @@ import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.wiki.constants.WikiPortletKeys;
 
 /**
- * @author Levente Hudak
+ * @author Levente Hudák
  */
 public class UpgradeLastPublishDate
 	extends com.liferay.portal.upgrade.v7_0_0.UpgradeLastPublishDate {

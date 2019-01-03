@@ -21,7 +21,7 @@ import com.liferay.apio.architect.identifier.Identifier;
  * com.liferay.portal.kernel.model.Group#getGroupId()} returns the root folder's
  * ID.
  *
- * @author Eduardo Perez
+ * @author Eduardo Pérez
  */
 public interface RootFolderIdentifier extends Identifier<Long> {
 }

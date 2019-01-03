@@ -19,7 +19,7 @@ import com.liferay.portal.odata.filter.expression.ExpressionVisitor;
 import com.liferay.portal.odata.filter.expression.PrimitivePropertyExpression;
 
 /**
- * @author Ruben Pulido
+ * @author Rubén Pulido
  */
 public class PrimitivePropertyExpressionImpl
 	implements PrimitivePropertyExpression {

@@ -22,7 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @author Eduardo Garcia
+ * @author Eduardo García
  */
 public class FolderSearcher extends BaseSearcher {
 

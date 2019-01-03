@@ -80,7 +80,7 @@ import org.junit.runner.RunWith;
 
 /**
  * @author Julio Camarero
- * @author Eduardo Garcia
+ * @author Eduardo García
  */
 @RunWith(Arquillian.class)
 public class LayoutSetPrototypePropagationTest

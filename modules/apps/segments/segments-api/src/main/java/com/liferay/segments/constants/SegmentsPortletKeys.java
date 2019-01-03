@@ -15,7 +15,7 @@
 package com.liferay.segments.constants;
 
 /**
- * @author Eduardo Garcia
+ * @author Eduardo García
  */
 public class SegmentsPortletKeys {
 

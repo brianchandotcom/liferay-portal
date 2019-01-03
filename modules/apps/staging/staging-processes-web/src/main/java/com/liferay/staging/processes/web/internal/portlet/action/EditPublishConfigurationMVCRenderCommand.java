@@ -20,7 +20,7 @@ import com.liferay.staging.constants.StagingProcessesPortletKeys;
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Mate Thurzo
+ * @author Máté Thurzó
  */
 @Component(
 	immediate = true,

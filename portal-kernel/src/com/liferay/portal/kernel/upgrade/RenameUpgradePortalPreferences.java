@@ -24,7 +24,7 @@ import java.sql.ResultSet;
 import java.util.Map;
 
 /**
- * @author Eduardo Garcia
+ * @author Eduardo García
  */
 public abstract class RenameUpgradePortalPreferences extends UpgradeProcess {
 

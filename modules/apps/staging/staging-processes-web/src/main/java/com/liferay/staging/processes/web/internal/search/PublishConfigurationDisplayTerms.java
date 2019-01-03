@@ -20,7 +20,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import javax.portlet.PortletRequest;
 
 /**
- * @author Mate Thurzo
+ * @author Máté Thurzó
  */
 public class PublishConfigurationDisplayTerms extends DisplayTerms {
 

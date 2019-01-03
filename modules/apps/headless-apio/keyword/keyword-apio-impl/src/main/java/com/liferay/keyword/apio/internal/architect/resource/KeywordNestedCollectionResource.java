@@ -45,7 +45,7 @@ import org.osgi.service.component.annotations.Reference;
  *
  * @author Alejandro Hernández
  * @author Ibai Ruiz
- * @author Eduardo Perez
+ * @author Eduardo Pérez
  */
 @Component(immediate = true, service = NestedCollectionResource.class)
 public class KeywordNestedCollectionResource

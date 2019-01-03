@@ -35,7 +35,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * @author Vernon Singleton
- * @author Juan Gonzalez
+ * @author Juan González
  */
 public class OrderUtil {
 

@@ -26,7 +26,7 @@ import com.liferay.portal.util.PropsValues;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * @author Mate Thurzo
+ * @author Máté Thurzó
  */
 public class GroupDisplayContextHelper {
 

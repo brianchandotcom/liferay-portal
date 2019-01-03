@@ -22,7 +22,7 @@ import java.util.List;
  * Provides methods for retrieving segment criteria contributors defined by
  * {@link SegmentsCriteriaContributor} implementations.
  *
- * @author Eduardo Garcia
+ * @author Eduardo García
  * @review
  */
 @ProviderType

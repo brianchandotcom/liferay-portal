@@ -23,7 +23,7 @@ import com.liferay.segments.model.SegmentsEntry;
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Eduardo Garcia
+ * @author Eduardo García
  */
 @Component(
 	immediate = true,

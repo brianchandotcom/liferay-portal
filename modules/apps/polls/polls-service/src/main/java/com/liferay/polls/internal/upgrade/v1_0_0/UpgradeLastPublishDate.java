@@ -18,7 +18,7 @@ import com.liferay.polls.constants.PollsPortletKeys;
 import com.liferay.portal.kernel.util.LoggingTimer;
 
 /**
- * @author Mate Thurzo
+ * @author Máté Thurzó
  */
 public class UpgradeLastPublishDate
 	extends com.liferay.portal.upgrade.v7_0_0.UpgradeLastPublishDate {

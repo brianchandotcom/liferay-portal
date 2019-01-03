@@ -29,7 +29,7 @@ import org.jdom.IllegalDataException;
 
 /**
  * @author     Brian Wing Shun Chan
- * @author     Eduardo Garcia
+ * @author     Eduardo García
  * @see        com.liferay.rss.util.RSSUtil
  * @deprecated As of Judson (7.1.x), with no direct replacement
  */

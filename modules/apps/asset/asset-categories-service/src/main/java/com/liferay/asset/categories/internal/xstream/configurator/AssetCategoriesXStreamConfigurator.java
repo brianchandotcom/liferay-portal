@@ -29,7 +29,7 @@ import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Mate Thurzo
+ * @author Máté Thurzó
  */
 @Component(immediate = true, service = XStreamConfigurator.class)
 public class AssetCategoriesXStreamConfigurator implements XStreamConfigurator {

@@ -19,7 +19,7 @@ import aQute.bnd.annotation.ProviderType;
 import java.util.Optional;
 
 /**
- * @author Mate Thurzo
+ * @author Máté Thurzó
  */
 @ProviderType
 public interface ChangesetManager {

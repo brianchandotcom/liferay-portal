@@ -15,7 +15,7 @@
 package com.liferay.portal.workflow.definition.link.update.handler;
 
 /**
- * @author Mate Thurzo
+ * @author Máté Thurzó
  */
 public interface WorkflowDefinitionLinkUpdateHandler {
 

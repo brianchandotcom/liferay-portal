@@ -15,7 +15,7 @@
 package com.liferay.portal.kernel.settings;
 
 /**
- * @author Ivan Zaera
+ * @author Iván Zaera
  * @author Jorge Ferrer
  */
 public interface SettingsLocator {

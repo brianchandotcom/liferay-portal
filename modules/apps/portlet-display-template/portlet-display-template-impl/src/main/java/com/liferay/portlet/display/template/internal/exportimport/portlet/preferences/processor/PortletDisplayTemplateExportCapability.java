@@ -30,7 +30,7 @@ import com.liferay.portlet.display.template.exportimport.portlet.preferences.pro
 import javax.portlet.PortletPreferences;
 
 /**
- * @author Mate Thurzo
+ * @author Máté Thurzó
  */
 public class PortletDisplayTemplateExportCapability implements Capability {
 

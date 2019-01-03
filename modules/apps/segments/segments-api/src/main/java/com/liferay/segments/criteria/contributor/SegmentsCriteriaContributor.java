@@ -26,7 +26,7 @@ import java.util.Locale;
  * Provides an interface for extending the segment {@link Criteria} by adding
  * more filters.
  *
- * @author Eduardo Garcia
+ * @author Eduardo García
  * @review
  */
 @ConsumerType

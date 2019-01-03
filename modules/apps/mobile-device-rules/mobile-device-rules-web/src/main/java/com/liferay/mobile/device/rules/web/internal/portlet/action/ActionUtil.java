@@ -34,7 +34,7 @@ import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 
 /**
- * @author Mate Thurzo
+ * @author Máté Thurzó
  */
 public class ActionUtil {
 

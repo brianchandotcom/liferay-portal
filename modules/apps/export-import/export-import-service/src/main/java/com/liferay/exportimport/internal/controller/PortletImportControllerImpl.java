@@ -135,7 +135,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Bruno Farache
  * @author Zsigmond Rab
  * @author Douglas Wong
- * @author Mate Thurzo
+ * @author Máté Thurzó
  */
 @Component(
 	immediate = true,

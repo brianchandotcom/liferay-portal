@@ -27,7 +27,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 /**
- * @author Mate Thurzo
+ * @author Máté Thurzó
  */
 public class StagedThemeImpl extends ThemeImpl implements StagedTheme {
 

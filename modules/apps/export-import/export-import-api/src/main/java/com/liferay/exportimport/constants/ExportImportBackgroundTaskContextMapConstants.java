@@ -15,7 +15,7 @@
 package com.liferay.exportimport.constants;
 
 /**
- * @author Mate Thurzo
+ * @author Máté Thurzó
  */
 public class ExportImportBackgroundTaskContextMapConstants {
 

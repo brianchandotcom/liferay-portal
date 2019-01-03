@@ -20,7 +20,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 /**
- * @author Peter Borkuti
+ * @author Péter Borkuti
  */
 public class DurationScaleTest {
 

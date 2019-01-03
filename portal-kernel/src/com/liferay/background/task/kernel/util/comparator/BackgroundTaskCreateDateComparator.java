@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 /**
- * @author Eduardo Garcia
+ * @author Eduardo García
  */
 public class BackgroundTaskCreateDateComparator
 	extends OrderByComparator<BackgroundTask> {

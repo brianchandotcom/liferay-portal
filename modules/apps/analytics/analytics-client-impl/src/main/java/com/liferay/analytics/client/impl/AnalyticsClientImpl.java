@@ -25,7 +25,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 
 /**
- * @author Eduardo Garcia
+ * @author Eduardo García
  */
 public class AnalyticsClientImpl implements AnalyticsClient {
 

@@ -23,7 +23,7 @@ import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 
 /**
- * @author Eduardo Garcia
+ * @author Eduardo García
  */
 public abstract class BaseRSSMVCResourceCommand implements MVCResourceCommand {
 

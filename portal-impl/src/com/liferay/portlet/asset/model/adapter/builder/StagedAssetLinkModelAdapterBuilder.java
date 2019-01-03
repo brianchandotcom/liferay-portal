@@ -20,7 +20,7 @@ import com.liferay.portal.kernel.model.adapter.builder.ModelAdapterBuilder;
 import com.liferay.portlet.asset.model.adapter.impl.StagedAssetLinkImpl;
 
 /**
- * @author Mate Thurzo
+ * @author Máté Thurzó
  */
 public class StagedAssetLinkModelAdapterBuilder
 	implements ModelAdapterBuilder<AssetLink, StagedAssetLink> {

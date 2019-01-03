@@ -53,7 +53,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * Implements trash handling for the message boards category entity.
  *
- * @author Eduardo Garcia
+ * @author Eduardo García
  */
 @Component(
 	property = "model.class.name=com.liferay.message.boards.model.MBCategory",

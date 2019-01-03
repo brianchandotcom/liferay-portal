@@ -38,7 +38,7 @@ import java.util.Locale;
 import java.util.Map;
 
 /**
- * @author Mate Thurzo
+ * @author Máté Thurzó
  */
 public class AssetTestUtil {
 

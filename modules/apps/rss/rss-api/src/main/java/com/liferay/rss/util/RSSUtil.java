@@ -27,7 +27,7 @@ import javax.portlet.ResourceURL;
 
 /**
  * @author Brian Wing Shun Chan
- * @author Eduardo Garcia
+ * @author Eduardo García
  */
 public class RSSUtil {
 

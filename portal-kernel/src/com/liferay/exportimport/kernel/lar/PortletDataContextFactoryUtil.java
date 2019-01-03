@@ -25,7 +25,7 @@ import java.util.Date;
 import java.util.Map;
 
 /**
- * @author Mate Thurzo
+ * @author Máté Thurzó
  */
 @ProviderType
 public class PortletDataContextFactoryUtil {

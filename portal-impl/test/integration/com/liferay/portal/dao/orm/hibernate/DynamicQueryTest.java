@@ -38,7 +38,7 @@ import org.junit.Rule;
 import org.junit.Test;
 
 /**
- * @author Mate Thurzo
+ * @author Máté Thurzó
  * @author Shuyang Zhou
  */
 public class DynamicQueryTest {

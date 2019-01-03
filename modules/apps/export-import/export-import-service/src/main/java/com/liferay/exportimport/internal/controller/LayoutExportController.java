@@ -93,7 +93,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Karthik Sudarshan
  * @author Zsigmond Rab
  * @author Douglas Wong
- * @author Mate Thurzo
+ * @author Máté Thurzó
  */
 @Component(
 	immediate = true,

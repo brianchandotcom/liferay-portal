@@ -22,7 +22,7 @@ import com.liferay.segments.model.SegmentsEntry;
 import java.io.IOException;
 
 /**
- * @author Eduardo Garcia
+ * @author Eduardo García
  */
 @ProviderType
 public interface SegmentsEntryDemoDataCreator {

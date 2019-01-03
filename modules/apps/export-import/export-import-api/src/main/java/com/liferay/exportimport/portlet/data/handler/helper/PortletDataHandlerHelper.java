@@ -17,7 +17,7 @@ package com.liferay.exportimport.portlet.data.handler.helper;
 import aQute.bnd.annotation.ProviderType;
 
 /**
- * @author Mate Thurzo
+ * @author Máté Thurzó
  */
 @ProviderType
 public interface PortletDataHandlerHelper {

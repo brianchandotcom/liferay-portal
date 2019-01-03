@@ -110,7 +110,7 @@ import org.osgi.service.component.annotations.Reference;
  * and routines for processing portlet preferences while exporting or importing
  * Asset Publisher instances.
  *
- * @author Mate Thurzo
+ * @author Máté Thurzó
  */
 @Component(
 	configurationPid = "com.liferay.asset.publisher.web.configuration.AssetPublisherWebConfiguration",

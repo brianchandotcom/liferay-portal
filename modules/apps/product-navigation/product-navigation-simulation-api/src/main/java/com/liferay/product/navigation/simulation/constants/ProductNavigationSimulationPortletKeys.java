@@ -15,7 +15,7 @@
 package com.liferay.product.navigation.simulation.constants;
 
 /**
- * @author Eduardo Garcia
+ * @author Eduardo García
  */
 public class ProductNavigationSimulationPortletKeys {
 

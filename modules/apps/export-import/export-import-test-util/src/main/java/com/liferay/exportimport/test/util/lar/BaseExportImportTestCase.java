@@ -54,7 +54,7 @@ import org.junit.Assert;
 import org.junit.Before;
 
 /**
- * @author Eduardo Garcia
+ * @author Eduardo García
  */
 public abstract class BaseExportImportTestCase {
 

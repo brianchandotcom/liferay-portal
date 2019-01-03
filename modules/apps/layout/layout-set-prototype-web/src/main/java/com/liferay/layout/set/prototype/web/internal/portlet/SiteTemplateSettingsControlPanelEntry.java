@@ -24,7 +24,7 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Eduardo Garcia
+ * @author Eduardo García
  */
 @Component(
 	immediate = true,

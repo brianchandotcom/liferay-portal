@@ -39,7 +39,7 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Eduardo Perez
+ * @author Eduardo Pérez
  */
 @Component(
 	immediate = true, service = UserAccountRepresentorBuilderHelper.class

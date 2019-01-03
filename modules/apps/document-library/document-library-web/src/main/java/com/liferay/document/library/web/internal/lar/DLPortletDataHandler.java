@@ -42,7 +42,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Bruno Farache
  * @author Raymond Augé
  * @author Sampsa Sohlman
- * @author Mate Thurzo
+ * @author Máté Thurzó
  * @author Zsolt Berentey
  * @author Gergely Mathe
  */

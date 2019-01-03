@@ -28,7 +28,7 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import java.util.Map;
 
 /**
- * @author Ambrin Chaudhary
+ * @author Ambrín Chaudhary
  */
 public class BaseCKEditorConfigContributor extends BaseEditorConfigContributor {
 

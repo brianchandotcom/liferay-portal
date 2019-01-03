@@ -17,7 +17,7 @@ package com.liferay.portal.relationship;
 import java.util.Collection;
 
 /**
- * @author Mate Thurzo
+ * @author Máté Thurzó
  */
 @FunctionalInterface
 public interface MultiRelationshipFunction<T, U> {

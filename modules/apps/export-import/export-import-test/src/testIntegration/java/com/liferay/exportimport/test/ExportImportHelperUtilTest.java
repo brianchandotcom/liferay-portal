@@ -75,7 +75,7 @@ import org.junit.runner.RunWith;
 
 /**
  * @author Zsolt Berentey
- * @author Peter Borkuti
+ * @author Péter Borkuti
  * @author Balázs Sáfrány-Kovalik
  */
 @RunWith(Arquillian.class)

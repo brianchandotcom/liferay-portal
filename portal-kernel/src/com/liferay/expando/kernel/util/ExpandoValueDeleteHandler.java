@@ -15,7 +15,7 @@
 package com.liferay.expando.kernel.util;
 
 /**
- * @author Mate Thurzo
+ * @author Máté Thurzó
  */
 public interface ExpandoValueDeleteHandler {
 

@@ -17,7 +17,7 @@ package com.liferay.portal.odata.filter.expression;
 /**
  * Represents a lambda variable expression in the expression tree
  *
- * @author Ruben Pulido
+ * @author Rubén Pulido
  * @review
  */
 public interface LambdaVariableExpression extends Expression {

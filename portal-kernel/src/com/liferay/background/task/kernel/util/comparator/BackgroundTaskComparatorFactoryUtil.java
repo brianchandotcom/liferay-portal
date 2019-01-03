@@ -18,7 +18,7 @@ import com.liferay.portal.kernel.backgroundtask.BackgroundTask;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 /**
- * @author Eduardo Garcia
+ * @author Eduardo García
  */
 public class BackgroundTaskComparatorFactoryUtil {
 

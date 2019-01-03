@@ -22,7 +22,7 @@ import com.liferay.apio.architect.identifier.Identifier;
  * {@code com.liferay.portal.kernel.model.OrganizationModel#getOrganizationId()}
  * gets the organization's identifier.
  *
- * @author Eduardo Perez
+ * @author Eduardo Pérez
  */
 public interface OrganizationIdentifier extends Identifier<Long> {
 }

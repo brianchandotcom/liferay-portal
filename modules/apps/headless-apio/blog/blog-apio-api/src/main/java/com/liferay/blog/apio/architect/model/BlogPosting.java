@@ -22,7 +22,7 @@ import java.util.List;
  * href="https://schema.org/BlogPosting">BlogPosting </a> for more information.
  *
  * @author Alejandro Hernández
- * @author Victor Galán
+ * @author Víctor Galán
  * @review
  */
 public interface BlogPosting {

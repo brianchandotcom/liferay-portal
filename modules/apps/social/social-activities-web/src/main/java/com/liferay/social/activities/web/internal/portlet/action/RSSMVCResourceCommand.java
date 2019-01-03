@@ -58,7 +58,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Brian Wing Shun Chan
  * @author Vilmos Papp
- * @author Eduardo Garcia
+ * @author Eduardo García
  * @author Raymond Augé
  */
 @Component(

@@ -40,7 +40,7 @@ import org.junit.Rule;
 import org.junit.runner.RunWith;
 
 /**
- * @author Mate Thurzo
+ * @author Máté Thurzó
  */
 @RunWith(Arquillian.class)
 public class BookmarksEntryStagedModelDataHandlerTest

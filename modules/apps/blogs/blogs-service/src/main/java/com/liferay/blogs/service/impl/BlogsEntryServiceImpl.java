@@ -67,7 +67,7 @@ import java.util.List;
  * include permission checks.
  *
  * @author Brian Wing Shun Chan
- * @author Mate Thurzo
+ * @author Máté Thurzó
  */
 public class BlogsEntryServiceImpl extends BlogsEntryServiceBaseImpl {
 

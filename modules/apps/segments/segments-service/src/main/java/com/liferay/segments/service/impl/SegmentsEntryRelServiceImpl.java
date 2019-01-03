@@ -31,7 +31,7 @@ import com.liferay.segments.service.base.SegmentsEntryRelServiceBaseImpl;
 import java.util.List;
 
 /**
- * @author Eduardo Garcia
+ * @author Eduardo García
  */
 public class SegmentsEntryRelServiceImpl
 	extends SegmentsEntryRelServiceBaseImpl {

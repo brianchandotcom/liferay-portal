@@ -20,7 +20,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 /**
- * @author Eduardo Garcia
+ * @author Eduardo García
  */
 public class PortletDecoratorImpl implements PortletDecorator {
 

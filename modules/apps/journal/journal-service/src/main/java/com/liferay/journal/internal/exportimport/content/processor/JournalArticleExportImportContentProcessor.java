@@ -67,7 +67,7 @@ import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Gergely Mathe
- * @author Mate Thurzo
+ * @author Máté Thurzó
  */
 @Component(
 	property = "model.class.name=com.liferay.journal.model.JournalArticle",

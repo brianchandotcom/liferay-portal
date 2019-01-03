@@ -23,7 +23,7 @@ import java.util.Map;
  * com.liferay.portal.kernel.workflow.WorkflowTask} identifier. The workflow
  * task is identified by user, role, or source of the task.
  *
- * @author Victor Galan
+ * @author Víctor Galán
  */
 public interface ReusableWorkflowTaskIdentifier {
 

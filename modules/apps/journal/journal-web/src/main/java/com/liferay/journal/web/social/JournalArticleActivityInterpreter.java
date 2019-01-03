@@ -44,7 +44,7 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Roberto Diaz
+ * @author Roberto Díaz
  * @author Zsolt Berentey
  */
 @Component(

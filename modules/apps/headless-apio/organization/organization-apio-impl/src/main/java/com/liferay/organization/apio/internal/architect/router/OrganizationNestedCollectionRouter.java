@@ -34,7 +34,7 @@ import org.osgi.service.component.annotations.Reference;
  * <a href="http://schema.org/Organization">Organization</a> through a web API.
  * The resources are mapped from the internal model {@code Organization}.
  *
- * @author Eduardo Perez
+ * @author Eduardo Pérez
  */
 @Component(immediate = true, service = NestedCollectionRouter.class)
 public class OrganizationNestedCollectionRouter

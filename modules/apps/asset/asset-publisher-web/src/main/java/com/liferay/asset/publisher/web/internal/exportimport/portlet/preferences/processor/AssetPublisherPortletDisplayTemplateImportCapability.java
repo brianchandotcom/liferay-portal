@@ -27,7 +27,7 @@ import org.osgi.service.component.annotations.Component;
  * portlet. This allows the display style and display style group ID to be
  * provided based on the existence of the template handler.
  *
- * @author Mate Thurzo
+ * @author Máté Thurzó
  */
 @Component(
 	immediate = true,

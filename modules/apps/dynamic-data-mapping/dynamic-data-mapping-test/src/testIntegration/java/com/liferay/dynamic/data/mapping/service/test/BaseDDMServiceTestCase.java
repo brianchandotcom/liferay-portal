@@ -58,7 +58,7 @@ import java.util.Map;
 import org.junit.Before;
 
 /**
- * @author Eduardo Garcia
+ * @author Eduardo García
  * @author Rafael Praxedes
  */
 public abstract class BaseDDMServiceTestCase {

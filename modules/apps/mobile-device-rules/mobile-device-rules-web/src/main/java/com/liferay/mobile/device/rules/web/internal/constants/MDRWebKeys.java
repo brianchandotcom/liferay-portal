@@ -15,7 +15,7 @@
 package com.liferay.mobile.device.rules.web.internal.constants;
 
 /**
- * @author Mate Thurzo
+ * @author Máté Thurzó
  */
 public class MDRWebKeys {
 

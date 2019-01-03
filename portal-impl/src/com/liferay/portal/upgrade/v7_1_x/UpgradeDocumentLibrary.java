@@ -18,7 +18,7 @@ import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.upgrade.v7_1_x.util.DLFileEntryTypeTable;
 
 /**
- * @author Jose Maria Munoz
+ * @author José María Muñoz
  */
 public class UpgradeDocumentLibrary extends UpgradeProcess {
 

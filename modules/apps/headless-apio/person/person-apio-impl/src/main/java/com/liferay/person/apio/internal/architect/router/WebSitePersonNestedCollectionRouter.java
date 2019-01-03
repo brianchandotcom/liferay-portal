@@ -40,7 +40,7 @@ import org.osgi.service.component.annotations.Reference;
  * href="http://schema.org/WebSite">WebSite</a> through a web API. The resources
  * are mapped from the internal model {@link UserWrapper}.
  *
- * @author Eduardo Perez
+ * @author Eduardo Pérez
  */
 @Component(immediate = true, service = NestedCollectionRouter.class)
 public class WebSitePersonNestedCollectionRouter

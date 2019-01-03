@@ -64,7 +64,7 @@ import org.springframework.mock.web.MockHttpServletRequest;
  * Tests whether the friendly URL resolves for existent, nonexistent or expired
  * web content articles in the Asset Publisher.
  *
- * @author Eduardo Garcia
+ * @author Eduardo García
  * @author Roberto Díaz
  */
 @RunWith(Arquillian.class)

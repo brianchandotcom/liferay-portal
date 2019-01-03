@@ -17,7 +17,7 @@ package com.liferay.trash.exception;
 import com.liferay.portal.kernel.exception.PortalException;
 
 /**
- * @author Eduardo Garcia
+ * @author Eduardo García
  */
 public class TrashEntryException extends PortalException {
 

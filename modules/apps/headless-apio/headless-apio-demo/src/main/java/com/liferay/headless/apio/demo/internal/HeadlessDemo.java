@@ -87,6 +87,8 @@ public class HeadlessDemo extends BasePortalInstanceLifecycleListener {
 	@Override
 	public void portalInstanceRegistered(Company company) throws Exception {
 		try {
+			_group = _createDemoGroup(company, user);
+
 			Role role = _roleLocalService.getRole(
 				company.getCompanyId(), RoleConstants.ADMINISTRATOR);
 
@@ -94,8 +96,6 @@ public class HeadlessDemo extends BasePortalInstanceLifecycleListener {
 				role.getRoleId(), 0, 1);
 
 			User user = users.get(0);
-
-			_group = _createDemoGroup(company, user);
 
 			List<JournalArticle> journalArticles = _createJournalArticles(
 				company, _group, user);

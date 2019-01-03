@@ -14,6 +14,8 @@
 
 package com.liferay.portal.dao.orm.hibernate;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.petra.concurrent.ConcurrentReferenceValueHashMap;
 import com.liferay.petra.memory.FinalizeManager;
 import com.liferay.petra.string.StringBundler;
@@ -21,7 +23,6 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.impl.BaseModelImpl;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TextFormatter;
 
 import java.lang.reflect.Field;
@@ -44,6 +45,7 @@ import org.hibernate.property.Setter;
 /**
  * @author Preston Crary
  */
+@ProviderType
 public class LiferayPropertyAccessor extends BasicPropertyAccessor {
 
 	@Override
@@ -58,8 +60,7 @@ public class LiferayPropertyAccessor extends BasicPropertyAccessor {
 			return liferayPropertyMutator;
 		}
 
-		String methodNameSuffix = TextFormatter.format(
-			propertyName, TextFormatter.G);
+		String methodNameSuffix = formatPropertyName(propertyName);
 
 		String getterMethodName = "get".concat(methodNameSuffix);
 
@@ -93,8 +94,7 @@ public class LiferayPropertyAccessor extends BasicPropertyAccessor {
 			return liferayPropertyMutator;
 		}
 
-		String methodNameSuffix = TextFormatter.format(
-			propertyName, TextFormatter.G);
+		String methodNameSuffix = formatPropertyName(propertyName);
 
 		String getterMethodName = "get".concat(methodNameSuffix);
 		String setterMethodName = "set".concat(methodNameSuffix);
@@ -118,6 +118,10 @@ public class LiferayPropertyAccessor extends BasicPropertyAccessor {
 
 			return super.getSetter(clazz, propertyName);
 		}
+	}
+
+	protected String formatPropertyName(String propertyName) {
+		return TextFormatter.format(propertyName, TextFormatter.G);
 	}
 
 	private LiferayPropertyMutator _getLiferayPropertyMutator(
@@ -180,26 +184,6 @@ public class LiferayPropertyAccessor extends BasicPropertyAccessor {
 		}
 
 		Function<Object, Object> getterFunction = attributeGetters.get(name);
-
-		if (getterFunction == null) {
-
-			// See CamelCasePropertyAccessor
-
-			for (Map.Entry<String, Function<Object, Object>> entry :
-					attributeGetters.entrySet()) {
-
-				String getterName = entry.getKey();
-
-				if (StringUtil.equalsIgnoreCase(name, getterName)) {
-					getterFunction = entry.getValue();
-
-					name = getterName;
-
-					break;
-				}
-			}
-		}
-
 		BiConsumer<Object, Object> setterBiConsumer = attributeSetters.get(
 			name);
 

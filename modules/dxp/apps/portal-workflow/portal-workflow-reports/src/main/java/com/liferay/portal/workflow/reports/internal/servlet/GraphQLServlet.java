@@ -19,16 +19,17 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
 
+import com.liferay.petra.string.CharPool;
 import com.liferay.portal.events.EventsProcessorUtil;
 import com.liferay.portal.kernel.events.ActionException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
-import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.portal.workflow.reports.internal.servlet.data.fetcher.WorkflowProcessBagDataFetcher;
 
 import graphql.ExecutionInput;
 import graphql.ExecutionResult;
@@ -65,6 +66,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Rafael Praxedes
@@ -139,6 +141,11 @@ public class GraphQLServlet extends HttpServlet {
 	protected RuntimeWiring createRuntimeWiring() {
 		RuntimeWiring.Builder runtimeWiringBuilder =
 			RuntimeWiring.newRuntimeWiring();
+
+		runtimeWiringBuilder.type(
+			"QueryType",
+			typeWiring -> typeWiring.dataFetcher(
+				"processes", _workflowProcessBagDataFetcher));
 
 		return runtimeWiringBuilder.build();
 	}
@@ -306,6 +313,9 @@ public class GraphQLServlet extends HttpServlet {
 			registerModule(_JDK8_MODULE);
 		}
 	};
+
+	@Reference
+	private WorkflowProcessBagDataFetcher _workflowProcessBagDataFetcher;
 
 	private static class GraphQLRequest {
 

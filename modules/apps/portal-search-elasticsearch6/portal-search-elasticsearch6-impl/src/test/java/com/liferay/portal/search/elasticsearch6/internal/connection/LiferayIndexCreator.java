@@ -20,12 +20,12 @@ package com.liferay.portal.search.elasticsearch6.internal.connection;
 public class LiferayIndexCreator extends IndexCreator {
 
 	public LiferayIndexCreator(
-		IndicesAdminClientSupplier indicesAdminClientSupplier) {
+		ElasticsearchClientResolver elasticsearchClientResolver) {
 
-		super(indicesAdminClientSupplier);
+		super(elasticsearchClientResolver);
 
 		setIndexCreationHelper(
-			new LiferayIndexCreationHelper(indicesAdminClientSupplier));
+			new LiferayIndexCreationHelper(elasticsearchClientResolver));
 	}
 
 }

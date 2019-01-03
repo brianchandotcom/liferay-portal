@@ -53,8 +53,7 @@ import org.osgi.framework.BundleContext;
 /**
  * @author André de Oliveira
  */
-public class ElasticsearchFixture
-	implements ElasticsearchClientResolver, IndicesAdminClientSupplier {
+public class ElasticsearchFixture implements ElasticsearchClientResolver {
 
 	public ElasticsearchFixture(Class clazz) {
 		this(clazz.getSimpleName());
@@ -151,7 +150,6 @@ public class ElasticsearchFixture
 		return getIndexRequestBuilder.get();
 	}
 
-	@Override
 	public IndicesAdminClient getIndicesAdminClient() {
 		AdminClient adminClient = getAdminClient();
 

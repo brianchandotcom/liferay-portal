@@ -18,6 +18,8 @@ import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.search.elasticsearch6.internal.index.LiferayDocumentTypeFactory;
 
 import org.elasticsearch.action.admin.indices.create.CreateIndexRequestBuilder;
+import org.elasticsearch.client.AdminClient;
+import org.elasticsearch.client.Client;
 import org.elasticsearch.common.settings.Settings;
 
 /**
@@ -26,9 +28,9 @@ import org.elasticsearch.common.settings.Settings;
 public class LiferayIndexCreationHelper implements IndexCreationHelper {
 
 	public LiferayIndexCreationHelper(
-		IndicesAdminClientSupplier indicesAdminClientSupplier) {
+		ElasticsearchClientResolver elasticsearchClientResolver) {
 
-		_indicesAdminClientSupplier = indicesAdminClientSupplier;
+		_elasticsearchClientResolver = elasticsearchClientResolver;
 	}
 
 	@Override
@@ -59,11 +61,14 @@ public class LiferayIndexCreationHelper implements IndexCreationHelper {
 	}
 
 	protected LiferayDocumentTypeFactory getLiferayDocumentTypeFactory() {
+		Client client = _elasticsearchClientResolver.getClient();
+
+		AdminClient adminClient = client.admin();
+
 		return new LiferayDocumentTypeFactory(
-			_indicesAdminClientSupplier.getIndicesAdminClient(),
-			new JSONFactoryImpl());
+			adminClient.indices(), new JSONFactoryImpl());
 	}
 
-	private final IndicesAdminClientSupplier _indicesAdminClientSupplier;
+	private final ElasticsearchClientResolver _elasticsearchClientResolver;
 
 }

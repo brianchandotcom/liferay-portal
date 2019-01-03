@@ -17,6 +17,8 @@ package com.liferay.portal.search.elasticsearch6.internal.connection;
 import org.elasticsearch.action.admin.indices.create.CreateIndexRequestBuilder;
 import org.elasticsearch.action.admin.indices.delete.DeleteIndexRequestBuilder;
 import org.elasticsearch.action.support.IndicesOptions;
+import org.elasticsearch.client.AdminClient;
+import org.elasticsearch.client.Client;
 import org.elasticsearch.client.IndicesAdminClient;
 import org.elasticsearch.common.settings.Settings;
 
@@ -27,8 +29,10 @@ import org.mockito.Mockito;
  */
 public class IndexCreator {
 
-	public IndexCreator(IndicesAdminClientSupplier indicesAdminClientSupplier) {
-		_indicesAdminClientSupplier = indicesAdminClientSupplier;
+	public IndexCreator(
+		ElasticsearchClientResolver elasticsearchClientResolver) {
+
+		_elasticsearchClientResolver = elasticsearchClientResolver;
 	}
 
 	public Index createIndex(IndexName indexName) {
@@ -78,10 +82,14 @@ public class IndexCreator {
 	}
 
 	protected final IndicesAdminClient getIndicesAdminClient() {
-		return _indicesAdminClientSupplier.getIndicesAdminClient();
+		Client client = _elasticsearchClientResolver.getClient();
+
+		AdminClient adminClient = client.admin();
+
+		return adminClient.indices();
 	}
 
+	private final ElasticsearchClientResolver _elasticsearchClientResolver;
 	private IndexCreationHelper _indexCreationHelper;
-	private final IndicesAdminClientSupplier _indicesAdminClientSupplier;
 
 }

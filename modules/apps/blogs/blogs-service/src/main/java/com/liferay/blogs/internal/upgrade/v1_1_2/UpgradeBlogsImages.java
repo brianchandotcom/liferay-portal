@@ -22,13 +22,17 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.dao.orm.common.SQLTransformer;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Image;
 import com.liferay.portal.kernel.model.Repository;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepository;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.service.ImageLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
@@ -46,19 +50,21 @@ public class UpgradeBlogsImages extends UpgradeProcess {
 
 	public UpgradeBlogsImages(
 		ImageLocalService imageLocalService,
-		PortletFileRepository portletFileRepository) {
+		PortletFileRepository portletFileRepository,
+		UserLocalService userLocalService) {
 
 		_imageLocalService = imageLocalService;
 		_portletFileRepository = portletFileRepository;
+		_userLocalService = userLocalService;
 	}
 
 	@Override
 	protected void doUpgrade() throws Exception {
 		try (PreparedStatement ps1 = connection.prepareStatement(
 				SQLTransformer.transform(
-					"select entryId, groupId, smallImageId, userId from " +
-						"BlogsEntry where smallImage = [$TRUE$] and " +
-							"smallImageId != 0"));
+					"select companyId, entryId, groupId, smallImageId, " +
+						"userId from BlogsEntry where smallImage = [$TRUE$] " +
+							"and smallImageId != 0"));
 			PreparedStatement ps2 = AutoBatchPreparedStatementUtil.autoBatch(
 				connection.prepareStatement(
 					"update BlogsEntry set smallImageFileEntryId = ?, " +
@@ -74,9 +80,26 @@ public class UpgradeBlogsImages extends UpgradeProcess {
 					continue;
 				}
 
+				long companyId = rs.getLong("companyId");
 				long entryId = rs.getLong("entryId");
 				long groupId = rs.getLong("groupId");
+
 				long userId = rs.getLong("userId");
+
+				User user = _userLocalService.fetchUser(userId);
+
+				if (user == null) {
+					user = _userLocalService.getFallbackUser(companyId);
+
+					userId = user.getUserId();
+
+					if (_log.isWarnEnabled()) {
+						_log.warn(
+							StringBundler.concat(
+								"UserId for ", smallImageId,
+								" has been changed to fallback user."));
+					}
+				}
 
 				byte[] bytes = smallImage.getTextObj();
 
@@ -142,7 +165,11 @@ public class UpgradeBlogsImages extends UpgradeProcess {
 		}
 	}
 
+	private static final Log _log = LogFactoryUtil.getLog(
+		UpgradeBlogsImages.class);
+
 	private final ImageLocalService _imageLocalService;
 	private final PortletFileRepository _portletFileRepository;
+	private final UserLocalService _userLocalService;
 
 }

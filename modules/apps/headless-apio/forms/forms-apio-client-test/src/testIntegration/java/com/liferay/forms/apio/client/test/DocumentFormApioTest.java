@@ -156,11 +156,11 @@ public class DocumentFormApioTest {
 		).body(
 			"hasFormRules", isBoolean()
 		).body(
-			"showLabel", isBoolean()
-		).body(
 			"repeatable", isBoolean()
 		).body(
 			"required", isBoolean()
+		).body(
+			"showLabel", isBoolean()
 		);
 	}
 

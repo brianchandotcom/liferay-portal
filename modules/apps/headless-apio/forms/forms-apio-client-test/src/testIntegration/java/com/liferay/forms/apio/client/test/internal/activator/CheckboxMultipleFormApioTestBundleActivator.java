@@ -34,7 +34,7 @@ public class CheckboxMultipleFormApioTestBundleActivator
 
 	@Override
 	protected Class<?> getFormDefinitionClass() {
-		return FormWithCheckboxMultipleField.class;
+		return FormWithCheckboxMultipleFields.class;
 	}
 
 	@Override
@@ -43,7 +43,7 @@ public class CheckboxMultipleFormApioTestBundleActivator
 	}
 
 	@DDMForm
-	private interface FormWithCheckboxMultipleField {
+	private interface FormWithCheckboxMultipleFields {
 
 		@DDMFormField(
 			label = "My Checkbox Multiple Field",

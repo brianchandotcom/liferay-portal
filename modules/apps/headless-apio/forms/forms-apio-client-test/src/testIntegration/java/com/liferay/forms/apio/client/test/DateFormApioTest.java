@@ -156,11 +156,11 @@ public class DateFormApioTest {
 		).body(
 			"hasFormRules", isBoolean()
 		).body(
-			"showLabel", isBoolean()
-		).body(
 			"repeatable", isBoolean()
 		).body(
 			"required", isBoolean()
+		).body(
+			"showLabel", isBoolean()
 		);
 	}
 

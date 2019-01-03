@@ -14,6 +14,9 @@
 
 package com.liferay.portal.search.elasticsearch6.internal.search.engine.adapter.search;
 
+import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.search.elasticsearch6.internal.connection.ElasticsearchClientResolver;
 import com.liferay.portal.search.engine.adapter.search.MultisearchSearchRequest;
 import com.liferay.portal.search.engine.adapter.search.MultisearchSearchResponse;
@@ -105,6 +108,14 @@ public class MultisearchSearchRequestExecutorImpl
 				searchRequestHolder.getSearchRequestBuilder(), searchResponse,
 				searchSearchRequest, searchSearchResponse);
 
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					StringBundler.concat(
+						"The search engine processed ",
+						searchSearchResponse.getSearchRequestString(), " in ",
+						searchSearchResponse.getExecutionTime() + " ms"));
+			}
+
 			if (searchSearchRequest.isIncludeResponseString()) {
 				searchSearchResponse.setSearchResponseString(
 					searchResponse.toString());
@@ -124,6 +135,9 @@ public class MultisearchSearchRequestExecutorImpl
 
 	@Reference
 	protected SearchSearchResponseAssembler searchSearchResponseAssembler;
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		MultisearchSearchRequestExecutorImpl.class);
 
 	private class SearchRequestHolder {
 

@@ -14,6 +14,9 @@
 
 package com.liferay.portal.search.elasticsearch6.internal.search.engine.adapter.search;
 
+import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.search.elasticsearch6.internal.connection.ElasticsearchClientResolver;
 import com.liferay.portal.search.engine.adapter.search.CountSearchRequest;
 import com.liferay.portal.search.engine.adapter.search.CountSearchResponse;
@@ -59,6 +62,14 @@ public class CountSearchRequestExecutorImpl
 			searchRequestBuilder, searchResponse, countSearchRequest,
 			countSearchResponse);
 
+		if (_log.isDebugEnabled()) {
+			_log.debug(
+				StringBundler.concat(
+					"The search engine processed ",
+					countSearchResponse.getSearchRequestString(), " in ",
+					countSearchResponse.getExecutionTime() + " ms"));
+		}
+
 		return countSearchResponse;
 	}
 
@@ -71,5 +82,8 @@ public class CountSearchRequestExecutorImpl
 
 	@Reference
 	protected ElasticsearchClientResolver elasticsearchClientResolver;
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		CountSearchRequestExecutorImpl.class);
 
 }

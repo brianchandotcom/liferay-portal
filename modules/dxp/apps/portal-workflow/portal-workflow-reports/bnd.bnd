@@ -1,6 +1,10 @@
 Bundle-Name: Liferay Portal Workflow Reports
 Bundle-SymbolicName: com.liferay.portal.workflow.reports
 Bundle-Version: 1.0.0
+Import-Package:\
+	!com.google.errorprone.annotations.*,\
+	\
+	*
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Workflow
 -dsannotations-options: inherit

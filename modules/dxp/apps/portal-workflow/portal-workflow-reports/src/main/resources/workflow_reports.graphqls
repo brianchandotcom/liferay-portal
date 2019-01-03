@@ -3,8 +3,12 @@ schema {
 }
 
 type QueryType {
-  allWorkflowInstance: [WorkflowInstance]
-  allWorkflowProcess: [WorkflowProcess]
+	processes(
+		companyId: Long!,
+		keyword: String,
+		size: Int!,
+		start: Int!
+	): WorkflowProcessBag
 }
 
 type WorkflowInstance {
@@ -12,8 +16,16 @@ type WorkflowInstance {
 }
 
 type WorkflowProcess {
-	name: String!
-	tasks: [WorkflowTask!]!
+	instancesCount: Int!
+	instancesOntime: Int!
+	instancesOverdue: Int!
+	processId: Long!
+	title: String!
+}
+
+type WorkflowProcessBag {
+	workflowProcesses: [WorkflowProcess]
+	total: Long
 }
 
 type WorkflowTask {

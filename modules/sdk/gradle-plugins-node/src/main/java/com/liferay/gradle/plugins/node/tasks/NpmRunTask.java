@@ -33,7 +33,6 @@ import org.gradle.api.file.FileTree;
 import org.gradle.api.file.FileTreeElement;
 import org.gradle.api.specs.Spec;
 import org.gradle.api.tasks.Input;
-import org.gradle.api.tasks.InputDirectory;
 import org.gradle.api.tasks.InputFile;
 import org.gradle.api.tasks.InputFiles;
 import org.gradle.api.tasks.Optional;
@@ -105,11 +104,16 @@ public class NpmRunTask extends ExecuteNpmTask implements PatternFilterable {
 		return _patternFilterable.getIncludes();
 	}
 
-	@InputDirectory
-	public File getNodeModulesDir() {
-		Project project = getProject();
+	@Input
+	@Optional
+	public String getNodeVersion() {
+		return GradleUtil.toString(_nodeVersion);
+	}
 
-		return project.file("node_modules");
+	@Input
+	@Optional
+	public String getNpmVersion() {
+		return GradleUtil.toString(_npmVersion);
 	}
 
 	@InputFile
@@ -119,9 +123,37 @@ public class NpmRunTask extends ExecuteNpmTask implements PatternFilterable {
 		return project.file("package.json");
 	}
 
+	@InputFile
+	@Optional
+	public File getPackageLockJsonFile() {
+		Project project = getProject();
+
+		File file = project.file("package-lock.json");
+
+		if (!file.exists()) {
+			return null;
+		}
+
+		return file;
+	}
+
 	@Input
 	public String getScriptName() {
 		return _scriptName;
+	}
+
+	@InputFile
+	@Optional
+	public File getShrinkwrapJsonFile() {
+		Project project = getProject();
+
+		File file = project.file("npm-shrinkwrap.json");
+
+		if (!file.exists()) {
+			return null;
+		}
+
+		return file;
 	}
 
 	@OutputFile
@@ -205,6 +237,14 @@ public class NpmRunTask extends ExecuteNpmTask implements PatternFilterable {
 		return this;
 	}
 
+	public void setNodeVersion(Object nodeVersion) {
+		_nodeVersion = nodeVersion;
+	}
+
+	public void setNpmVersion(Object npmVersion) {
+		_npmVersion = npmVersion;
+	}
+
 	public void setScriptName(String scriptName) {
 		_scriptName = scriptName;
 	}
@@ -237,6 +277,8 @@ public class NpmRunTask extends ExecuteNpmTask implements PatternFilterable {
 		"**/*.css", "**/*.js", "**/*.*rc"
 	};
 
+	private Object _nodeVersion;
+	private Object _npmVersion;
 	private final PatternFilterable _patternFilterable = new PatternSet();
 	private String _scriptName;
 	private Object _sourceDir;

@@ -110,6 +110,7 @@ public class NodePlugin implements Plugin<Project> {
 					_configureTaskDownloadNodeGlobal(
 						downloadNodeTask, nodeExtension);
 					_configureTasksExecuteNpmArgs(project, nodeExtension);
+					_configureTasksNpmRun(project, nodeExtension);
 				}
 
 			});
@@ -470,6 +471,13 @@ public class NodePlugin implements Plugin<Project> {
 		executeNpmTask.args(nodeExtension.getNpmArgs());
 	}
 
+	private void _configureTaskNpmRun(
+		NpmRunTask npmRunTask, NodeExtension nodeExtension) {
+
+		npmRunTask.setNodeVersion(nodeExtension.getNodeVersion());
+		npmRunTask.setNpmVersion(nodeExtension.getNpmVersion());
+	}
+
 	private void _configureTaskNpmRunBuildForJavaPlugin(
 		ExecuteNpmTask executeNpmTask) {
 
@@ -606,6 +614,23 @@ public class NodePlugin implements Plugin<Project> {
 				@Override
 				public void execute(ExecuteNpmTask executeNpmTask) {
 					_configureTaskExecuteNpmArgs(executeNpmTask, nodeExtension);
+				}
+
+			});
+	}
+
+	private void _configureTasksNpmRun(
+		Project project, final NodeExtension nodeExtension) {
+
+		TaskContainer taskContainer = project.getTasks();
+
+		taskContainer.withType(
+			NpmRunTask.class,
+			new Action<NpmRunTask>() {
+
+				@Override
+				public void execute(NpmRunTask npmRunTask) {
+					_configureTaskNpmRun(npmRunTask, nodeExtension);
 				}
 
 			});

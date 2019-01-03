@@ -95,7 +95,7 @@ import java.util.Objects;
 import java.util.Set;
 
 /**
- * @author Iv�n Zaera
+ * @author Iván Zaera
  */
 public class DocumentumRepository
 	extends ExtRepositoryAdapter

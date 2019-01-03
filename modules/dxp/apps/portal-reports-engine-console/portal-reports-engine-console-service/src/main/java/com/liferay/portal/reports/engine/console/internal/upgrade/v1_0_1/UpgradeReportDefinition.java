@@ -18,7 +18,7 @@ import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.reports.engine.console.internal.upgrade.v1_0_1.util.DefinitionTable;
 
 /**
- * @author Eduardo Perez
+ * @author Eduardo Pérez
  */
 public class UpgradeReportDefinition extends UpgradeProcess {
 

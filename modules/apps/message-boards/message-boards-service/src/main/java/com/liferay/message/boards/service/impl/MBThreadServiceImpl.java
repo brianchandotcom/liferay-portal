@@ -84,8 +84,13 @@ public class MBThreadServiceImpl extends MBThreadServiceBaseImpl {
 			QueryDefinition<MBThread> queryDefinition = new QueryDefinition<>(
 				status, start, end, null);
 
-			return mbThreadFinder.findByG_U_LPD(
-				groupId, userId, modifiedDate, queryDefinition);
+			if (includeAnonymous) {
+				return mbThreadFinder.findByG_U_LPD(
+					groupId, userId, modifiedDate, queryDefinition);
+			}
+
+			return mbThreadFinder.findByG_U_LPD_A(
+				groupId, userId, modifiedDate, false, queryDefinition);
 		}
 
 		long[] categoryIds = mbCategoryService.getCategoryIds(
@@ -212,8 +217,13 @@ public class MBThreadServiceImpl extends MBThreadServiceBaseImpl {
 			QueryDefinition<MBThread> queryDefinition = new QueryDefinition<>(
 				status);
 
-			return mbThreadFinder.countByG_U_LPD(
-				groupId, userId, modifiedDate, queryDefinition);
+			if (includeAnonymous) {
+				return mbThreadFinder.countByG_U_LPD(
+					groupId, userId, modifiedDate, queryDefinition);
+			}
+
+			return mbThreadFinder.countByG_U_LPD_A(
+				groupId, userId, modifiedDate, false, queryDefinition);
 		}
 
 		long[] categoryIds = mbCategoryService.getCategoryIds(

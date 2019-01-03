@@ -215,56 +215,8 @@ public class MBThreadFinderImpl
 		long groupId, long userId, Date lastPostDate,
 		QueryDefinition<MBThread> queryDefinition) {
 
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			String sql = _customSQL.get(getClass(), COUNT_BY_G_U_LPD);
-
-			if (userId <= 0) {
-				sql = StringUtil.replace(
-					sql, _INNER_JOIN_SQL, StringPool.BLANK);
-				sql = StringUtil.replace(sql, _USER_ID_SQL, StringPool.BLANK);
-			}
-
-			sql = updateSQL(sql, queryDefinition);
-
-			SQLQuery q = session.createSynchronizedSQLQuery(sql);
-
-			q.addScalar(COUNT_COLUMN_NAME, Type.LONG);
-
-			QueryPos qPos = QueryPos.getInstance(q);
-
-			qPos.add(groupId);
-			qPos.add(lastPostDate);
-
-			if (userId > 0) {
-				qPos.add(userId);
-			}
-
-			if (queryDefinition.getStatus() != WorkflowConstants.STATUS_ANY) {
-				qPos.add(queryDefinition.getStatus());
-			}
-
-			Iterator<Long> itr = q.iterate();
-
-			if (itr.hasNext()) {
-				Long count = itr.next();
-
-				if (count != null) {
-					return count.intValue();
-				}
-			}
-
-			return 0;
-		}
-		catch (Exception e) {
-			throw new SystemException(e);
-		}
-		finally {
-			closeSession(session);
-		}
+		return countByG_U_LPD_A(
+			groupId, userId, lastPostDate, true, queryDefinition);
 	}
 
 	@Override
@@ -357,6 +309,71 @@ public class MBThreadFinderImpl
 			qPos.add(groupId);
 			qPos.add(userId);
 			qPos.add(anonymous);
+
+			if (queryDefinition.getStatus() != WorkflowConstants.STATUS_ANY) {
+				qPos.add(queryDefinition.getStatus());
+			}
+
+			Iterator<Long> itr = q.iterate();
+
+			if (itr.hasNext()) {
+				Long count = itr.next();
+
+				if (count != null) {
+					return count.intValue();
+				}
+			}
+
+			return 0;
+		}
+		catch (Exception e) {
+			throw new SystemException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	@Override
+	public int countByG_U_LPD_A(
+		long groupId, long userId, Date lastPostDate, boolean includeAnonymous,
+		QueryDefinition<MBThread> queryDefinition) {
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			String sql = _customSQL.get(getClass(), COUNT_BY_G_U_LPD);
+
+			if (userId <= 0) {
+				if (includeAnonymous) {
+					sql = StringUtil.replace(
+						sql, _INNER_JOIN_SQL, StringPool.BLANK);
+				}
+
+				sql = StringUtil.replace(sql, _USER_ID_SQL, StringPool.BLANK);
+			}
+
+			sql = updateSQL(sql, queryDefinition);
+
+			if (!includeAnonymous) {
+				sql = _customSQL.appendCriteria(
+					sql, "AND (MBMessage.anonymous = [$FALSE$])");
+			}
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			q.addScalar(COUNT_COLUMN_NAME, Type.LONG);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(groupId);
+			qPos.add(lastPostDate);
+
+			if (userId > 0) {
+				qPos.add(userId);
+			}
 
 			if (queryDefinition.getStatus() != WorkflowConstants.STATUS_ANY) {
 				qPos.add(queryDefinition.getStatus());
@@ -654,48 +671,8 @@ public class MBThreadFinderImpl
 		long groupId, long userId, Date lastPostDate,
 		QueryDefinition<MBThread> queryDefinition) {
 
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			String sql = _customSQL.get(getClass(), FIND_BY_G_U_LPD);
-
-			if (userId <= 0) {
-				sql = StringUtil.replace(
-					sql, _INNER_JOIN_SQL, StringPool.BLANK);
-				sql = StringUtil.replace(sql, _USER_ID_SQL, StringPool.BLANK);
-			}
-
-			sql = updateSQL(sql, queryDefinition);
-
-			SQLQuery q = session.createSynchronizedSQLQuery(sql);
-
-			q.addEntity("MBThread", MBThreadImpl.class);
-
-			QueryPos qPos = QueryPos.getInstance(q);
-
-			qPos.add(groupId);
-			qPos.add(lastPostDate);
-
-			if (userId > 0) {
-				qPos.add(userId);
-			}
-
-			if (queryDefinition.getStatus() != WorkflowConstants.STATUS_ANY) {
-				qPos.add(queryDefinition.getStatus());
-			}
-
-			return (List<MBThread>)QueryUtil.list(
-				q, getDialect(), queryDefinition.getStart(),
-				queryDefinition.getEnd());
-		}
-		catch (Exception e) {
-			throw new SystemException(e);
-		}
-		finally {
-			closeSession(session);
-		}
+		return findByG_U_LPD_A(
+			groupId, userId, lastPostDate, true, queryDefinition);
 	}
 
 	@Override
@@ -812,6 +789,63 @@ public class MBThreadFinderImpl
 			qPos.add(groupId);
 			qPos.add(userId);
 			qPos.add(anonymous);
+
+			if (queryDefinition.getStatus() != WorkflowConstants.STATUS_ANY) {
+				qPos.add(queryDefinition.getStatus());
+			}
+
+			return (List<MBThread>)QueryUtil.list(
+				q, getDialect(), queryDefinition.getStart(),
+				queryDefinition.getEnd());
+		}
+		catch (Exception e) {
+			throw new SystemException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	@Override
+	public List<MBThread> findByG_U_LPD_A(
+		long groupId, long userId, Date lastPostDate, boolean includeAnonymous,
+		QueryDefinition<MBThread> queryDefinition) {
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			String sql = _customSQL.get(getClass(), FIND_BY_G_U_LPD);
+
+			if (userId <= 0) {
+				if (includeAnonymous) {
+					sql = StringUtil.replace(
+						sql, _INNER_JOIN_SQL, StringPool.BLANK);
+				}
+
+				sql = StringUtil.replace(sql, _USER_ID_SQL, StringPool.BLANK);
+			}
+
+			sql = updateSQL(sql, queryDefinition);
+
+			if (!includeAnonymous) {
+				sql = _customSQL.appendCriteria(
+					sql, "AND (MBMessage.anonymous = [$FALSE$])");
+			}
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			q.addEntity("MBThread", MBThreadImpl.class);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(groupId);
+			qPos.add(lastPostDate);
+
+			if (userId > 0) {
+				qPos.add(userId);
+			}
 
 			if (queryDefinition.getStatus() != WorkflowConstants.STATUS_ANY) {
 				qPos.add(queryDefinition.getStatus());

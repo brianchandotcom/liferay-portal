@@ -3344,6 +3344,7 @@ go</echo>
 					<or>
 						<equals arg1="@{liferay.portal.bundle}" arg2="7.1.0" />
 						<equals arg1="@{liferay.portal.bundle}" arg2="7.1.10" />
+						<equals arg1="@{liferay.portal.bundle}" arg2="7.1.10.1" />
 					</or>
 					<then>
 						<var name="app.server.tomcat.version" value="9.0.6" />

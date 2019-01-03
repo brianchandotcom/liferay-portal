@@ -42,10 +42,20 @@ public class GradleDependenciesCheck extends BaseFileCheck {
 	protected String doProcess(
 		String fileName, String absolutePath, String content) {
 
-		List<String> blocks = GradleSourceUtil.getDependenciesBlocks(content);
+		List<String> dependenciesBlocks =
+			GradleSourceUtil.getDependenciesBlocks(content);
 
-		for (String dependencies : blocks) {
-			content = _formatDependencies(content, dependencies);
+		for (String dependenciesBlock : dependenciesBlocks) {
+			int x = dependenciesBlock.indexOf("\n");
+			int y = dependenciesBlock.lastIndexOf("\n");
+
+			if (x == y) {
+				continue;
+			}
+
+			content = _formatDependencies(
+				content, SourceUtil.getIndent(dependenciesBlock),
+				dependenciesBlock.substring(x, y + 1));
 		}
 
 		return content;
@@ -67,17 +77,8 @@ public class GradleDependenciesCheck extends BaseFileCheck {
 		return true;
 	}
 
-	private String _formatDependencies(String content, String dependencies) {
-		String indent = SourceUtil.getIndent(dependencies);
-
-		int x = dependencies.indexOf("\n");
-		int y = dependencies.lastIndexOf("\n");
-
-		if (x == y) {
-			return content;
-		}
-
-		dependencies = dependencies.substring(x, y + 1);
+	private String _formatDependencies(
+		String content, String indent, String dependencies) {
 
 		Matcher matcher = _incorrectWhitespacePattern.matcher(dependencies);
 

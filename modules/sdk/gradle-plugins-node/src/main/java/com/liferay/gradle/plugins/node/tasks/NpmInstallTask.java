@@ -450,12 +450,15 @@ public class NpmInstallTask extends ExecuteNpmTask {
 	}
 
 	private boolean _isCheckDigest() {
+		if (_isCacheEnabled()) {
+			return false;
+		}
+
 		Project project = getProject();
 
 		PluginContainer pluginContainer = project.getPlugins();
 
 		if (!pluginContainer.hasPlugin("com.liferay.cache") &&
-			(getNodeModulesCacheDir() == null) &&
 			(getNodeModulesDigestFile() != null)) {
 
 			return true;

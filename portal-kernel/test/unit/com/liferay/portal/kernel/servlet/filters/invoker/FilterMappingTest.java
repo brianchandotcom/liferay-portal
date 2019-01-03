@@ -337,18 +337,18 @@ public class FilterMappingTest {
 	private void _testWithLog(String[] expectedMessages, Runnable runnable) {
 		try (CaptureHandler captureHandler =
 				JDKLoggerTestUtil.configureJDKLogger(
-					FilterMapping.class.getName(), Level.OFF)) {
+					FilterMapping.class.getName(), Level.INFO)) {
 
 			runnable.run();
 
 			List<LogRecord> logRecords = captureHandler.getLogRecords();
 
 			Assert.assertTrue(
-				"logRecords should be empty because the log level is OFF but " +
-					"contains " + logRecords,
+				"logRecords should be empty because the log level is INFO " +
+					"but contains " + logRecords,
 				logRecords.isEmpty());
 
-			captureHandler.resetLogLevel(Level.ALL);
+			captureHandler.resetLogLevel(Level.FINE);
 
 			runnable.run();
 

@@ -26,19 +26,18 @@ import com.liferay.journal.service.JournalContentSearchLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.model.LayoutConstants;
-import com.liferay.portal.kernel.model.LayoutTypePortlet;
+import com.liferay.portal.kernel.model.PortletPreferences;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 
-import java.util.Arrays;
 import java.util.List;
-
-import javax.portlet.PortletPreferences;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -58,55 +57,44 @@ public class JournalArticleAssetEntryUsageChecker
 	public void checkAssetEntryUsages(AssetEntry assetEntry)
 		throws PortalException {
 
+		_checkPortlets(assetEntry, true);
+
+		_checkPortlets(assetEntry, false);
+
 		_checkWebContentUsages(assetEntry);
-
-		for (boolean privateLayout : Arrays.asList(false, true)) {
-			List<Layout> layouts = _layoutLocalService.getLayouts(
-				assetEntry.getGroupId(), privateLayout,
-				LayoutConstants.TYPE_PORTLET);
-
-			for (Layout layout : layouts) {
-				LayoutTypePortlet layoutTypePortlet =
-					(LayoutTypePortlet)layout.getLayoutType();
-
-				if (!layoutTypePortlet.hasPortletId(
-						AssetPublisherPortletKeys.ASSET_PUBLISHER)) {
-
-					continue;
-				}
-
-				_checkPortlets(
-					assetEntry, layoutTypePortlet.getPortletIds(), layout);
-			}
-		}
 	}
 
-	private void _checkPortlets(
-			AssetEntry assetEntry, List<String> portletIds, Layout layout)
+	private void _checkPortlets(AssetEntry assetEntry, boolean privateLayout)
 		throws PortalException {
 
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
 
-		for (String portletId : portletIds) {
-			if (!StringUtil.startsWith(
-					portletId, AssetPublisherPortletKeys.ASSET_PUBLISHER)) {
+		List<PortletPreferences> portletPreferencesList =
+			_portletPreferencesLocalService.getPortletPreferences(
+				assetEntry.getCompanyId(), assetEntry.getGroupId(),
+				PortletKeys.PREFS_OWNER_ID_DEFAULT,
+				PortletKeys.PREFS_OWNER_TYPE_LAYOUT,
+				AssetPublisherPortletKeys.ASSET_PUBLISHER, privateLayout);
 
+		for (PortletPreferences portletPreferences : portletPreferencesList) {
+			String preferencesXML = portletPreferences.getPreferences();
+
+			if (Validator.isNull(preferencesXML)) {
 				continue;
 			}
 
-			PortletPreferences portletPreferences =
-				PortletPreferencesFactoryUtil.getLayoutPortletSetup(
-					layout, portletId);
+			javax.portlet.PortletPreferences jxPortletPreferences =
+				PortletPreferencesFactoryUtil.fromDefaultXML(preferencesXML);
 
-			String selectionStyle = portletPreferences.getValue(
+			String selectionStyle = jxPortletPreferences.getValue(
 				"selectionStyle", "dynamic");
 
 			if (!StringUtil.equals(selectionStyle, "manual")) {
 				continue;
 			}
 
-			String assetEntryXml = portletPreferences.getValue(
+			String assetEntryXml = jxPortletPreferences.getValue(
 				"assetEntryXml", StringPool.BLANK);
 
 			if (!assetEntryXml.contains(assetEntry.getClassUuid())) {
@@ -116,8 +104,9 @@ public class JournalArticleAssetEntryUsageChecker
 			AssetEntryUsage assetEntryUsage =
 				_assetEntryUsageLocalService.fetchAssetEntryUsage(
 					assetEntry.getEntryId(),
-					_portal.getClassNameId(Layout.class), layout.getPlid(),
-					portletId);
+					_portal.getClassNameId(Layout.class),
+					portletPreferences.getPlid(),
+					portletPreferences.getPortletId());
 
 			if (assetEntryUsage != null) {
 				continue;
@@ -126,7 +115,8 @@ public class JournalArticleAssetEntryUsageChecker
 			_assetEntryUsageLocalService.addAssetEntryUsage(
 				assetEntry.getUserId(), assetEntry.getGroupId(),
 				assetEntry.getEntryId(), _portal.getClassNameId(Layout.class),
-				layout.getPlid(), portletId, serviceContext);
+				portletPreferences.getPlid(), portletPreferences.getPortletId(),
+				serviceContext);
 		}
 	}
 
@@ -179,5 +169,8 @@ public class JournalArticleAssetEntryUsageChecker
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private PortletPreferencesLocalService _portletPreferencesLocalService;
 
 }

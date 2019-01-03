@@ -59,12 +59,13 @@ public class EditTagsBulkSelectionActionImpl
 			Map<String, Serializable> inputMap)
 		throws Exception {
 
-		String[] toAddTagNames = (String[])inputMap.get("toAddTagNames");
+		String[] toAddTagNames = (String[])inputMap.getOrDefault(
+			"toAddTagNames", new String[0]);
 
 		Set<String> toAddTagNamesSet = SetUtil.fromArray(toAddTagNames);
 
 		Set<String> toRemoveTagNamesSet = SetUtil.fromArray(
-			(String[])inputMap.get("toRemoveTagNames"));
+			(String[])inputMap.getOrDefault("toRemoveTagNames", new String[0]));
 
 		Stream<FileEntry> fileEntryStream = bulkSelection.stream();
 

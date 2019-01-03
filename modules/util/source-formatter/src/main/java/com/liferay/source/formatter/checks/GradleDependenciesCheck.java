@@ -53,9 +53,14 @@ public class GradleDependenciesCheck extends BaseFileCheck {
 				continue;
 			}
 
+			String dependencies = dependenciesBlock.substring(x, y + 1);
+
 			content = _formatDependencies(
-				content, SourceUtil.getIndent(dependenciesBlock),
-				dependenciesBlock.substring(x, y + 1));
+				content, SourceUtil.getIndent(dependenciesBlock), dependencies);
+
+			if (absolutePath.contains("/modules/core/petra/")) {
+				_checkPetraDependencies(fileName, content, dependencies);
+			}
 		}
 
 		return content;
@@ -75,6 +80,19 @@ public class GradleDependenciesCheck extends BaseFileCheck {
 		}
 
 		return true;
+	}
+
+	private void _checkPetraDependencies(
+		String fileName, String content, String dependencies) {
+
+		for (String line : StringUtil.splitLines(dependencies)) {
+			if (Validator.isNotNull(line) && !line.contains("petra")) {
+				addMessage(
+					fileName,
+					"Only modules/core/petra dependencies are allowed",
+					SourceUtil.getLineNumber(content, content.indexOf(line)));
+			}
+		}
 	}
 
 	private String _formatDependencies(

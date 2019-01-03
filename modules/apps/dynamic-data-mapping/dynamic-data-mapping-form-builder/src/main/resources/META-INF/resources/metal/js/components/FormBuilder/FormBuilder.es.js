@@ -2,7 +2,7 @@ import {Config} from 'metal-state';
 import {debounce} from 'metal-debounce';
 import {EventHandler} from 'metal-events';
 import {focusedFieldStructure, pageStructure} from '../../util/config.es';
-import {formatFieldName} from '../../util/fieldSupport.es';
+import {formatFieldName, normalizeSettingsContextPages} from '../../util/fieldSupport.es';
 import {PagesVisitor} from '../../util/visitors.es';
 import autobind from 'autobind-decorator';
 import ClayModal from 'clay-modal';
@@ -168,65 +168,13 @@ class Builder extends Component {
 		sidebar.open();
 	}
 
-	/**
-	 * Makes sure newly created fields have its settings form filled up with some default values.
-	 * @private
-	 */
-
-	_normalizeSettingsContextPages(pages, namespace, fieldType, newFieldName) {
-		const translationManager = Liferay.component(`${namespace}translationManager`);
-		const visitor = new PagesVisitor(pages);
-
-		return visitor.mapFields(
-			field => {
-				const {fieldName} = field;
-
-				if (fieldName === 'name') {
-					field = {
-						...field,
-						value: newFieldName,
-						visible: true
-					};
-				}
-				else if (fieldName === 'label') {
-					field = {
-						...field,
-						localizedValue: {
-							...field.localizedValue,
-							[translationManager.get('editingLocale')]: fieldType.label
-						},
-						type: 'text',
-						value: fieldType.label
-					};
-				}
-				else if (fieldName === 'type') {
-					field = {
-						...field,
-						value: fieldType.name
-					};
-				}
-				else if (fieldName === 'validation') {
-					field = {
-						...field,
-						validation: {
-							...field.validation,
-							fieldName: newFieldName
-						}
-					};
-				}
-				return {
-					...field
-				};
-			}
-		);
-	}
-
 	_handleActivePageUpdated(activePage) {
 		this.emit('activePageUpdated', activePage);
 	}
 
 	/**
 	 * Handles click on plus button. Button shows Sidebar when clicked.
+	 * @param {!Object} index
 	 * @private
 	 */
 
@@ -325,7 +273,7 @@ class Builder extends Component {
 			fieldName: newFieldName,
 			settingsContext: {
 				...settingsContext,
-				pages: this._normalizeSettingsContextPages(pages, namespace, fieldType, newFieldName),
+				pages: normalizeSettingsContextPages(pages, namespace, fieldType, newFieldName),
 				type: fieldType.name
 			}
 		};
@@ -585,6 +533,7 @@ class Builder extends Component {
 			activePage,
 			fieldTypes,
 			focusedField,
+			namespace,
 			pages,
 			paginationMode,
 			spritemap,
@@ -684,6 +633,7 @@ class Builder extends Component {
 					events={sidebarEvents}
 					fieldTypes={fieldTypes}
 					focusedField={focusedField}
+					namespace={namespace}
 					ref="sidebar"
 					spritemap={spritemap}
 					visible={visible}

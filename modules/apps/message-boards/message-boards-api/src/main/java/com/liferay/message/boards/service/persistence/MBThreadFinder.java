@@ -45,6 +45,10 @@ public interface MBThreadFinder {
 		boolean anonymous,
 		com.liferay.portal.kernel.dao.orm.QueryDefinition<com.liferay.message.boards.model.MBThread> queryDefinition);
 
+	public int countByG_U_LPD_A(long groupId, long userId,
+		java.util.Date lastPostDate, boolean includeAnonymous,
+		com.liferay.portal.kernel.dao.orm.QueryDefinition<com.liferay.message.boards.model.MBThread> queryDefinition);
+
 	public int countByS_G_U_C(long groupId, long userId, long[] categoryIds,
 		com.liferay.portal.kernel.dao.orm.QueryDefinition<com.liferay.message.boards.model.MBThread> queryDefinition);
 
@@ -96,6 +100,11 @@ public interface MBThreadFinder {
 
 	public java.util.List<com.liferay.message.boards.model.MBThread> findByG_U_C_A(
 		long groupId, long userId, long[] categoryIds, boolean anonymous,
+		com.liferay.portal.kernel.dao.orm.QueryDefinition<com.liferay.message.boards.model.MBThread> queryDefinition);
+
+	public java.util.List<com.liferay.message.boards.model.MBThread> findByG_U_LPD_A(
+		long groupId, long userId, java.util.Date lastPostDate,
+		boolean includeAnonymous,
 		com.liferay.portal.kernel.dao.orm.QueryDefinition<com.liferay.message.boards.model.MBThread> queryDefinition);
 
 	public java.util.List<com.liferay.message.boards.model.MBThread> findByS_G_U_C(

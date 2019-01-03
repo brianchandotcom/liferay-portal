@@ -61,7 +61,7 @@ public class FilterMappingTest {
 		_assertFilterMapping(
 			_TEST_FILTER_NAME, _dummyFilter, _TEST_URL_REGEX_IGNORE_PATTERN,
 			_TEST_URL_REGEX_PATTERN, new String[] {_TEST_URL_PATTERN},
-			Collections.singleton(Dispatcher.ASYNC));
+			EnumSet.of(Dispatcher.ASYNC));
 	}
 
 	@Test
@@ -202,7 +202,7 @@ public class FilterMappingTest {
 		_assertFilterMapping(
 			_TEST_FILTER_NAME, _dummyFilter, _TEST_URL_REGEX_IGNORE_PATTERN,
 			_TEST_URL_REGEX_PATTERN, new String[] {_TEST_URL_PATTERN},
-			Collections.singleton(Dispatcher.ASYNC),
+			EnumSet.of(Dispatcher.ASYNC),
 			filterMapping.replaceFilter(_dummyFilter));
 	}
 
@@ -215,7 +215,7 @@ public class FilterMappingTest {
 		Set<Dispatcher> expectedDispatchers = new HashSet<>(dispatchers);
 
 		if (expectedDispatchers.isEmpty()) {
-			expectedDispatchers.add(Dispatcher.REQUEST);
+			expectedDispatchers = EnumSet.of(Dispatcher.REQUEST);
 		}
 
 		_assertFilterMapping(

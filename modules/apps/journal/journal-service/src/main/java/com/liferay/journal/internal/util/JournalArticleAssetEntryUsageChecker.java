@@ -115,6 +115,7 @@ public class JournalArticleAssetEntryUsageChecker
 
 			AssetEntryUsage assetEntryUsage =
 				_assetEntryUsageLocalService.fetchAssetEntryUsage(
+					assetEntry.getEntryId(),
 					_portal.getClassNameId(Layout.class), layout.getPlid(),
 					portletId);
 
@@ -149,6 +150,7 @@ public class JournalArticleAssetEntryUsageChecker
 
 			AssetEntryUsage assetEntryUsage =
 				_assetEntryUsageLocalService.fetchAssetEntryUsage(
+					assetEntry.getEntryId(),
 					_portal.getClassNameId(Layout.class), layout.getPlid(),
 					contentSearch.getPortletId());
 

@@ -28,24 +28,23 @@ public class ComponentDescriptor {
 	}
 
 	public ComponentDescriptor(
-		String templateNamespace, String module,
-		Collection<String> dependencies) {
+		String templateNamespace, String module, String componentId) {
 
-		this(templateNamespace, module, dependencies, null);
+		this(templateNamespace, module, componentId, null);
 	}
 
 	public ComponentDescriptor(
-		String templateNamespace, String module,
-		Collection<String> dependencies, String componentId) {
+		String templateNamespace, String module, String componentId,
+		Collection<String> dependencies) {
 
 		this(
-			templateNamespace, module, dependencies, componentId, true, true,
+			templateNamespace, module, componentId, dependencies, true, true,
 			false);
 	}
 
 	public ComponentDescriptor(
-		String templateNamespace, String module,
-		Collection<String> dependencies, String componentId, boolean wrapper,
+		String templateNamespace, String module, String componentId,
+		Collection<String> dependencies, boolean wrapper,
 		boolean renderJavascript, boolean positionInLine) {
 
 		_templateNamespace = templateNamespace;
@@ -59,12 +58,6 @@ public class ComponentDescriptor {
 		_wrapper = wrapper;
 		_renderJavascript = renderJavascript;
 		_positionInLine = positionInLine;
-	}
-
-	public ComponentDescriptor(
-		String templateNamespace, String module, String componentId) {
-
-		this(templateNamespace, module, null, componentId);
 	}
 
 	public String getComponentId() {

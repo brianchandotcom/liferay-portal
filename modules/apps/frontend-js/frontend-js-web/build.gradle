@@ -1,3 +1,4 @@
+import com.liferay.gradle.plugins.node.tasks.NpmRunTask
 import com.liferay.gradle.util.copy.StripPathSegmentsAction
 
 task buildClay(type: Copy)
@@ -8,6 +9,10 @@ task buildLodash(type: Copy)
 task buildSvg4everybody(type: Copy)
 
 File jsDestinationDir = file("tmp/META-INF/resources")
+
+tasks.withType(NpmRunTask) {
+	exclude "**/*.soy.js"
+}
 
 buildClay {
 	File clayDestinationDir = new File(jsDestinationDir, "clay")

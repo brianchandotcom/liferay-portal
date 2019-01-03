@@ -36,6 +36,7 @@ import org.gradle.api.tasks.Input;
 import org.gradle.api.tasks.InputDirectory;
 import org.gradle.api.tasks.InputFile;
 import org.gradle.api.tasks.InputFiles;
+import org.gradle.api.tasks.Optional;
 import org.gradle.api.tasks.OutputFile;
 import org.gradle.api.tasks.util.PatternFilterable;
 import org.gradle.api.tasks.util.PatternSet;
@@ -132,18 +133,32 @@ public class NpmRunTask extends ExecuteNpmTask implements PatternFilterable {
 		return new File(project.getBuildDir(), pathname);
 	}
 
-	@InputDirectory
+	@Input
+	@Optional
 	public File getSourceDir() {
 		return GradleUtil.toFile(getProject(), _sourceDir);
 	}
 
 	@InputFiles
+	@Optional
 	public FileCollection getSourceFiles() {
+		File sourceDir = getSourceDir();
+
+		if ((sourceDir == null) || !sourceDir.exists()) {
+			return null;
+		}
+
 		Project project = getProject();
 
-		FileTree fileTree = project.fileTree(getSourceDir());
+		FileTree fileTree = project.fileTree(sourceDir);
 
-		return fileTree.matching(_patternFilterable);
+		FileCollection fileCollection = fileTree.matching(_patternFilterable);
+
+		if (fileCollection.isEmpty()) {
+			return null;
+		}
+
+		return fileCollection;
 	}
 
 	@Override

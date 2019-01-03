@@ -65,7 +65,7 @@ public class JournalArticleAssetEntryUsageChecker
 	}
 
 	private void _checkAssetPublisherUsages(
-		    AssetEntry assetEntry, boolean privateLayout)
+			AssetEntry assetEntry, boolean privateLayout)
 		throws PortalException {
 
 		ServiceContext serviceContext =

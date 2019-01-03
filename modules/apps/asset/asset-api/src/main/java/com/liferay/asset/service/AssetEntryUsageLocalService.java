@@ -186,6 +186,10 @@ public interface AssetEntryUsageLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public AssetEntryUsage fetchAssetEntryUsage(long assetEntryUsageId);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public AssetEntryUsage fetchAssetEntryUsage(long assetEntryId,
+		long classNameId, long classPK, String portletId);
+
 	/**
 	* Returns the asset entry usage matching the UUID and group.
 	*

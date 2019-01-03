@@ -30,6 +30,7 @@ import com.liferay.source.formatter.parser.JavaTerm;
 
 import java.io.IOException;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -217,10 +218,8 @@ public class JavaComponentAnnotationsCheck extends JavaAnnotationsCheck {
 			return annotation;
 		}
 
-		JavaMethod activateMethod = _getActivateMethod(javaClass);
-
-		if (activateMethod != null) {
-			JavaSignature signature = activateMethod.getSignature();
+		for (JavaMethod javaMethod : _getJavaMethods(javaClass, "Activate")) {
+			JavaSignature signature = javaMethod.getSignature();
 
 			for (JavaParameter parameter : signature.getParameters()) {
 				String parameterType = parameter.getParameterType();
@@ -272,18 +271,6 @@ public class JavaComponentAnnotationsCheck extends JavaAnnotationsCheck {
 		}
 
 		return annotation;
-	}
-
-	private JavaMethod _getActivateMethod(JavaClass javaClass) {
-		for (JavaTerm javaTerm : javaClass.getChildJavaTerms()) {
-			if ((javaTerm instanceof JavaMethod) &&
-				javaTerm.hasAnnotation("Activate")) {
-
-				return (JavaMethod)javaTerm;
-			}
-		}
-
-		return null;
 	}
 
 	private String _getAttributeValue(String annotation, String attributeName) {
@@ -354,6 +341,28 @@ public class JavaComponentAnnotationsCheck extends JavaAnnotationsCheck {
 		sb.append("}");
 
 		return sb.toString();
+	}
+
+	private List<JavaMethod> _getJavaMethods(
+		JavaClass javaClass, String... annotations) {
+
+		List<JavaMethod> javaMethods = new ArrayList<>();
+
+		for (JavaTerm javaTerm : javaClass.getChildJavaTerms()) {
+			if (!(javaTerm instanceof JavaMethod)) {
+				continue;
+			}
+
+			for (String annotation : annotations) {
+				if (javaTerm.hasAnnotation(annotation)) {
+					javaMethods.add((JavaMethod)javaTerm);
+
+					break;
+				}
+			}
+		}
+
+		return javaMethods;
 	}
 
 	private static final Pattern _annotationParameterPropertyPattern =

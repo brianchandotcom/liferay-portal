@@ -168,7 +168,8 @@ public class HeadlessDemo extends BasePortalInstanceLifecycleListener {
 			Arrays.asList(
 				String.valueOf(group.getGroupId()),
 				String.valueOf(ddmStructure.getStructureId()),
-				String.valueOf(journalArticle.getResourcePrimKey())));
+				String.valueOf(journalArticle.getResourcePrimKey()),
+				String.valueOf(user.getUserId())));
 
 		return _dlAppLocalService.addFileEntry(
 			user.getUserId(), group.getGroupId(),
@@ -341,6 +342,7 @@ public class HeadlessDemo extends BasePortalInstanceLifecycleListener {
 						String.valueOf(group.getGroupId()),
 						String.valueOf(ddmStructure.getStructureId()),
 						String.valueOf(journalArticle.getResourcePrimKey()),
+						String.valueOf(user.getUserId()),
 						String.valueOf(fileEntry.getGroupId()),
 						String.valueOf(fileEntry.getTitle()),
 						String.valueOf(fileEntry.getUuid()))),

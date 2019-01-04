@@ -212,7 +212,7 @@ public class DisplayPageFriendlyURLResolverTest {
 			StringBundler.concat(
 				"No JournalArticle exists with the key {groupId=",
 				_group.getGroupId(), ", urlTitle=", urlTitle, ", status=",
-				WorkflowConstants.STATUS_APPROVED, "}"),
+				WorkflowConstants.STATUS_PENDING, "}"),
 			cause.getMessage());
 	}
 

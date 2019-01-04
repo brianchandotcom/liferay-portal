@@ -67,7 +67,7 @@ public class EhcachePortalCacheListenerFactory
 						portalCacheListener);
 		}
 
-		String className = properties.getProperty(
+		String className = (String)properties.remove(
 			EhcacheConstants.CACHE_LISTENER_PROPERTIES_KEY_FACTORY_CLASS_NAME);
 
 		if (Validator.isNull(className)) {

@@ -16,19 +16,14 @@ package com.liferay.mobile.device.rules.model;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
-
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 
 import com.liferay.portal.kernel.model.ModelWrapper;
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -40,20 +35,10 @@ import java.util.Objects;
  * @generated
  */
 @ProviderType
-public class MDRRuleGroupWrapper implements MDRRuleGroup,
-	ModelWrapper<MDRRuleGroup> {
+public class MDRRuleGroupWrapper extends BaseModelWrapper<MDRRuleGroup>
+	implements MDRRuleGroup, ModelWrapper<MDRRuleGroup> {
 	public MDRRuleGroupWrapper(MDRRuleGroup mdrRuleGroup) {
-		_mdrRuleGroup = mdrRuleGroup;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return MDRRuleGroup.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return MDRRuleGroup.class.getName();
+		super(mdrRuleGroup);
 	}
 
 	@Override
@@ -145,18 +130,8 @@ public class MDRRuleGroupWrapper implements MDRRuleGroup,
 	}
 
 	@Override
-	public Object clone() {
-		return new MDRRuleGroupWrapper((MDRRuleGroup)_mdrRuleGroup.clone());
-	}
-
-	@Override
-	public int compareTo(MDRRuleGroup mdrRuleGroup) {
-		return _mdrRuleGroup.compareTo(mdrRuleGroup);
-	}
-
-	@Override
 	public String[] getAvailableLanguageIds() {
-		return _mdrRuleGroup.getAvailableLanguageIds();
+		return model.getAvailableLanguageIds();
 	}
 
 	/**
@@ -166,7 +141,7 @@ public class MDRRuleGroupWrapper implements MDRRuleGroup,
 	*/
 	@Override
 	public long getCompanyId() {
-		return _mdrRuleGroup.getCompanyId();
+		return model.getCompanyId();
 	}
 
 	/**
@@ -176,12 +151,12 @@ public class MDRRuleGroupWrapper implements MDRRuleGroup,
 	*/
 	@Override
 	public Date getCreateDate() {
-		return _mdrRuleGroup.getCreateDate();
+		return model.getCreateDate();
 	}
 
 	@Override
 	public String getDefaultLanguageId() {
-		return _mdrRuleGroup.getDefaultLanguageId();
+		return model.getDefaultLanguageId();
 	}
 
 	/**
@@ -191,7 +166,7 @@ public class MDRRuleGroupWrapper implements MDRRuleGroup,
 	*/
 	@Override
 	public String getDescription() {
-		return _mdrRuleGroup.getDescription();
+		return model.getDescription();
 	}
 
 	/**
@@ -202,7 +177,7 @@ public class MDRRuleGroupWrapper implements MDRRuleGroup,
 	*/
 	@Override
 	public String getDescription(java.util.Locale locale) {
-		return _mdrRuleGroup.getDescription(locale);
+		return model.getDescription(locale);
 	}
 
 	/**
@@ -214,7 +189,7 @@ public class MDRRuleGroupWrapper implements MDRRuleGroup,
 	*/
 	@Override
 	public String getDescription(java.util.Locale locale, boolean useDefault) {
-		return _mdrRuleGroup.getDescription(locale, useDefault);
+		return model.getDescription(locale, useDefault);
 	}
 
 	/**
@@ -225,7 +200,7 @@ public class MDRRuleGroupWrapper implements MDRRuleGroup,
 	*/
 	@Override
 	public String getDescription(String languageId) {
-		return _mdrRuleGroup.getDescription(languageId);
+		return model.getDescription(languageId);
 	}
 
 	/**
@@ -237,17 +212,17 @@ public class MDRRuleGroupWrapper implements MDRRuleGroup,
 	*/
 	@Override
 	public String getDescription(String languageId, boolean useDefault) {
-		return _mdrRuleGroup.getDescription(languageId, useDefault);
+		return model.getDescription(languageId, useDefault);
 	}
 
 	@Override
 	public String getDescriptionCurrentLanguageId() {
-		return _mdrRuleGroup.getDescriptionCurrentLanguageId();
+		return model.getDescriptionCurrentLanguageId();
 	}
 
 	@Override
 	public String getDescriptionCurrentValue() {
-		return _mdrRuleGroup.getDescriptionCurrentValue();
+		return model.getDescriptionCurrentValue();
 	}
 
 	/**
@@ -257,12 +232,7 @@ public class MDRRuleGroupWrapper implements MDRRuleGroup,
 	*/
 	@Override
 	public Map<java.util.Locale, String> getDescriptionMap() {
-		return _mdrRuleGroup.getDescriptionMap();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _mdrRuleGroup.getExpandoBridge();
+		return model.getDescriptionMap();
 	}
 
 	/**
@@ -272,7 +242,7 @@ public class MDRRuleGroupWrapper implements MDRRuleGroup,
 	*/
 	@Override
 	public long getGroupId() {
-		return _mdrRuleGroup.getGroupId();
+		return model.getGroupId();
 	}
 
 	/**
@@ -282,7 +252,7 @@ public class MDRRuleGroupWrapper implements MDRRuleGroup,
 	*/
 	@Override
 	public Date getLastPublishDate() {
-		return _mdrRuleGroup.getLastPublishDate();
+		return model.getLastPublishDate();
 	}
 
 	/**
@@ -292,7 +262,7 @@ public class MDRRuleGroupWrapper implements MDRRuleGroup,
 	*/
 	@Override
 	public Date getModifiedDate() {
-		return _mdrRuleGroup.getModifiedDate();
+		return model.getModifiedDate();
 	}
 
 	/**
@@ -302,7 +272,7 @@ public class MDRRuleGroupWrapper implements MDRRuleGroup,
 	*/
 	@Override
 	public String getName() {
-		return _mdrRuleGroup.getName();
+		return model.getName();
 	}
 
 	/**
@@ -313,7 +283,7 @@ public class MDRRuleGroupWrapper implements MDRRuleGroup,
 	*/
 	@Override
 	public String getName(java.util.Locale locale) {
-		return _mdrRuleGroup.getName(locale);
+		return model.getName(locale);
 	}
 
 	/**
@@ -325,7 +295,7 @@ public class MDRRuleGroupWrapper implements MDRRuleGroup,
 	*/
 	@Override
 	public String getName(java.util.Locale locale, boolean useDefault) {
-		return _mdrRuleGroup.getName(locale, useDefault);
+		return model.getName(locale, useDefault);
 	}
 
 	/**
@@ -336,7 +306,7 @@ public class MDRRuleGroupWrapper implements MDRRuleGroup,
 	*/
 	@Override
 	public String getName(String languageId) {
-		return _mdrRuleGroup.getName(languageId);
+		return model.getName(languageId);
 	}
 
 	/**
@@ -348,17 +318,17 @@ public class MDRRuleGroupWrapper implements MDRRuleGroup,
 	*/
 	@Override
 	public String getName(String languageId, boolean useDefault) {
-		return _mdrRuleGroup.getName(languageId, useDefault);
+		return model.getName(languageId, useDefault);
 	}
 
 	@Override
 	public String getNameCurrentLanguageId() {
-		return _mdrRuleGroup.getNameCurrentLanguageId();
+		return model.getNameCurrentLanguageId();
 	}
 
 	@Override
 	public String getNameCurrentValue() {
-		return _mdrRuleGroup.getNameCurrentValue();
+		return model.getNameCurrentValue();
 	}
 
 	/**
@@ -368,7 +338,7 @@ public class MDRRuleGroupWrapper implements MDRRuleGroup,
 	*/
 	@Override
 	public Map<java.util.Locale, String> getNameMap() {
-		return _mdrRuleGroup.getNameMap();
+		return model.getNameMap();
 	}
 
 	/**
@@ -378,12 +348,7 @@ public class MDRRuleGroupWrapper implements MDRRuleGroup,
 	*/
 	@Override
 	public long getPrimaryKey() {
-		return _mdrRuleGroup.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _mdrRuleGroup.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	/**
@@ -393,12 +358,12 @@ public class MDRRuleGroupWrapper implements MDRRuleGroup,
 	*/
 	@Override
 	public long getRuleGroupId() {
-		return _mdrRuleGroup.getRuleGroupId();
+		return model.getRuleGroupId();
 	}
 
 	@Override
 	public java.util.List<MDRRule> getRules() {
-		return _mdrRuleGroup.getRules();
+		return model.getRules();
 	}
 
 	/**
@@ -408,7 +373,7 @@ public class MDRRuleGroupWrapper implements MDRRuleGroup,
 	*/
 	@Override
 	public long getUserId() {
-		return _mdrRuleGroup.getUserId();
+		return model.getUserId();
 	}
 
 	/**
@@ -418,7 +383,7 @@ public class MDRRuleGroupWrapper implements MDRRuleGroup,
 	*/
 	@Override
 	public String getUserName() {
-		return _mdrRuleGroup.getUserName();
+		return model.getUserName();
 	}
 
 	/**
@@ -428,7 +393,7 @@ public class MDRRuleGroupWrapper implements MDRRuleGroup,
 	*/
 	@Override
 	public String getUserUuid() {
-		return _mdrRuleGroup.getUserUuid();
+		return model.getUserUuid();
 	}
 
 	/**
@@ -438,50 +403,25 @@ public class MDRRuleGroupWrapper implements MDRRuleGroup,
 	*/
 	@Override
 	public String getUuid() {
-		return _mdrRuleGroup.getUuid();
-	}
-
-	@Override
-	public int hashCode() {
-		return _mdrRuleGroup.hashCode();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _mdrRuleGroup.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _mdrRuleGroup.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _mdrRuleGroup.isNew();
+		return model.getUuid();
 	}
 
 	@Override
 	public void persist() {
-		_mdrRuleGroup.persist();
+		model.persist();
 	}
 
 	@Override
 	public void prepareLocalizedFieldsForImport()
 		throws com.liferay.portal.kernel.exception.LocaleException {
-		_mdrRuleGroup.prepareLocalizedFieldsForImport();
+		model.prepareLocalizedFieldsForImport();
 	}
 
 	@Override
 	public void prepareLocalizedFieldsForImport(
 		java.util.Locale defaultImportLocale)
 		throws com.liferay.portal.kernel.exception.LocaleException {
-		_mdrRuleGroup.prepareLocalizedFieldsForImport(defaultImportLocale);
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_mdrRuleGroup.setCachedModel(cachedModel);
+		model.prepareLocalizedFieldsForImport(defaultImportLocale);
 	}
 
 	/**
@@ -491,7 +431,7 @@ public class MDRRuleGroupWrapper implements MDRRuleGroup,
 	*/
 	@Override
 	public void setCompanyId(long companyId) {
-		_mdrRuleGroup.setCompanyId(companyId);
+		model.setCompanyId(companyId);
 	}
 
 	/**
@@ -501,7 +441,7 @@ public class MDRRuleGroupWrapper implements MDRRuleGroup,
 	*/
 	@Override
 	public void setCreateDate(Date createDate) {
-		_mdrRuleGroup.setCreateDate(createDate);
+		model.setCreateDate(createDate);
 	}
 
 	/**
@@ -511,7 +451,7 @@ public class MDRRuleGroupWrapper implements MDRRuleGroup,
 	*/
 	@Override
 	public void setDescription(String description) {
-		_mdrRuleGroup.setDescription(description);
+		model.setDescription(description);
 	}
 
 	/**
@@ -522,7 +462,7 @@ public class MDRRuleGroupWrapper implements MDRRuleGroup,
 	*/
 	@Override
 	public void setDescription(String description, java.util.Locale locale) {
-		_mdrRuleGroup.setDescription(description, locale);
+		model.setDescription(description, locale);
 	}
 
 	/**
@@ -535,12 +475,12 @@ public class MDRRuleGroupWrapper implements MDRRuleGroup,
 	@Override
 	public void setDescription(String description, java.util.Locale locale,
 		java.util.Locale defaultLocale) {
-		_mdrRuleGroup.setDescription(description, locale, defaultLocale);
+		model.setDescription(description, locale, defaultLocale);
 	}
 
 	@Override
 	public void setDescriptionCurrentLanguageId(String languageId) {
-		_mdrRuleGroup.setDescriptionCurrentLanguageId(languageId);
+		model.setDescriptionCurrentLanguageId(languageId);
 	}
 
 	/**
@@ -550,7 +490,7 @@ public class MDRRuleGroupWrapper implements MDRRuleGroup,
 	*/
 	@Override
 	public void setDescriptionMap(Map<java.util.Locale, String> descriptionMap) {
-		_mdrRuleGroup.setDescriptionMap(descriptionMap);
+		model.setDescriptionMap(descriptionMap);
 	}
 
 	/**
@@ -563,23 +503,7 @@ public class MDRRuleGroupWrapper implements MDRRuleGroup,
 	public void setDescriptionMap(
 		Map<java.util.Locale, String> descriptionMap,
 		java.util.Locale defaultLocale) {
-		_mdrRuleGroup.setDescriptionMap(descriptionMap, defaultLocale);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-		_mdrRuleGroup.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_mdrRuleGroup.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_mdrRuleGroup.setExpandoBridgeAttributes(serviceContext);
+		model.setDescriptionMap(descriptionMap, defaultLocale);
 	}
 
 	/**
@@ -589,7 +513,7 @@ public class MDRRuleGroupWrapper implements MDRRuleGroup,
 	*/
 	@Override
 	public void setGroupId(long groupId) {
-		_mdrRuleGroup.setGroupId(groupId);
+		model.setGroupId(groupId);
 	}
 
 	/**
@@ -599,7 +523,7 @@ public class MDRRuleGroupWrapper implements MDRRuleGroup,
 	*/
 	@Override
 	public void setLastPublishDate(Date lastPublishDate) {
-		_mdrRuleGroup.setLastPublishDate(lastPublishDate);
+		model.setLastPublishDate(lastPublishDate);
 	}
 
 	/**
@@ -609,7 +533,7 @@ public class MDRRuleGroupWrapper implements MDRRuleGroup,
 	*/
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
-		_mdrRuleGroup.setModifiedDate(modifiedDate);
+		model.setModifiedDate(modifiedDate);
 	}
 
 	/**
@@ -619,7 +543,7 @@ public class MDRRuleGroupWrapper implements MDRRuleGroup,
 	*/
 	@Override
 	public void setName(String name) {
-		_mdrRuleGroup.setName(name);
+		model.setName(name);
 	}
 
 	/**
@@ -630,7 +554,7 @@ public class MDRRuleGroupWrapper implements MDRRuleGroup,
 	*/
 	@Override
 	public void setName(String name, java.util.Locale locale) {
-		_mdrRuleGroup.setName(name, locale);
+		model.setName(name, locale);
 	}
 
 	/**
@@ -643,12 +567,12 @@ public class MDRRuleGroupWrapper implements MDRRuleGroup,
 	@Override
 	public void setName(String name, java.util.Locale locale,
 		java.util.Locale defaultLocale) {
-		_mdrRuleGroup.setName(name, locale, defaultLocale);
+		model.setName(name, locale, defaultLocale);
 	}
 
 	@Override
 	public void setNameCurrentLanguageId(String languageId) {
-		_mdrRuleGroup.setNameCurrentLanguageId(languageId);
+		model.setNameCurrentLanguageId(languageId);
 	}
 
 	/**
@@ -658,7 +582,7 @@ public class MDRRuleGroupWrapper implements MDRRuleGroup,
 	*/
 	@Override
 	public void setNameMap(Map<java.util.Locale, String> nameMap) {
-		_mdrRuleGroup.setNameMap(nameMap);
+		model.setNameMap(nameMap);
 	}
 
 	/**
@@ -670,12 +594,7 @@ public class MDRRuleGroupWrapper implements MDRRuleGroup,
 	@Override
 	public void setNameMap(Map<java.util.Locale, String> nameMap,
 		java.util.Locale defaultLocale) {
-		_mdrRuleGroup.setNameMap(nameMap, defaultLocale);
-	}
-
-	@Override
-	public void setNew(boolean n) {
-		_mdrRuleGroup.setNew(n);
+		model.setNameMap(nameMap, defaultLocale);
 	}
 
 	/**
@@ -685,12 +604,7 @@ public class MDRRuleGroupWrapper implements MDRRuleGroup,
 	*/
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_mdrRuleGroup.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_mdrRuleGroup.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -700,7 +614,7 @@ public class MDRRuleGroupWrapper implements MDRRuleGroup,
 	*/
 	@Override
 	public void setRuleGroupId(long ruleGroupId) {
-		_mdrRuleGroup.setRuleGroupId(ruleGroupId);
+		model.setRuleGroupId(ruleGroupId);
 	}
 
 	/**
@@ -710,7 +624,7 @@ public class MDRRuleGroupWrapper implements MDRRuleGroup,
 	*/
 	@Override
 	public void setUserId(long userId) {
-		_mdrRuleGroup.setUserId(userId);
+		model.setUserId(userId);
 	}
 
 	/**
@@ -720,7 +634,7 @@ public class MDRRuleGroupWrapper implements MDRRuleGroup,
 	*/
 	@Override
 	public void setUserName(String userName) {
-		_mdrRuleGroup.setUserName(userName);
+		model.setUserName(userName);
 	}
 
 	/**
@@ -730,7 +644,7 @@ public class MDRRuleGroupWrapper implements MDRRuleGroup,
 	*/
 	@Override
 	public void setUserUuid(String userUuid) {
-		_mdrRuleGroup.setUserUuid(userUuid);
+		model.setUserUuid(userUuid);
 	}
 
 	/**
@@ -740,77 +654,16 @@ public class MDRRuleGroupWrapper implements MDRRuleGroup,
 	*/
 	@Override
 	public void setUuid(String uuid) {
-		_mdrRuleGroup.setUuid(uuid);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<MDRRuleGroup> toCacheModel() {
-		return _mdrRuleGroup.toCacheModel();
-	}
-
-	@Override
-	public MDRRuleGroup toEscapedModel() {
-		return new MDRRuleGroupWrapper(_mdrRuleGroup.toEscapedModel());
-	}
-
-	@Override
-	public String toString() {
-		return _mdrRuleGroup.toString();
-	}
-
-	@Override
-	public MDRRuleGroup toUnescapedModel() {
-		return new MDRRuleGroupWrapper(_mdrRuleGroup.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _mdrRuleGroup.toXmlString();
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-
-		if (!(obj instanceof MDRRuleGroupWrapper)) {
-			return false;
-		}
-
-		MDRRuleGroupWrapper mdrRuleGroupWrapper = (MDRRuleGroupWrapper)obj;
-
-		if (Objects.equals(_mdrRuleGroup, mdrRuleGroupWrapper._mdrRuleGroup)) {
-			return true;
-		}
-
-		return false;
+		model.setUuid(uuid);
 	}
 
 	@Override
 	public StagedModelType getStagedModelType() {
-		return _mdrRuleGroup.getStagedModelType();
+		return model.getStagedModelType();
 	}
 
 	@Override
-	public MDRRuleGroup getWrappedModel() {
-		return _mdrRuleGroup;
+	protected MDRRuleGroupWrapper wrap(MDRRuleGroup mdrRuleGroup) {
+		return new MDRRuleGroupWrapper(mdrRuleGroup);
 	}
-
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _mdrRuleGroup.isEntityCacheEnabled();
-	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _mdrRuleGroup.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_mdrRuleGroup.resetOriginalValues();
-	}
-
-	private final MDRRuleGroup _mdrRuleGroup;
 }

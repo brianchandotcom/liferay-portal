@@ -16,16 +16,11 @@ package com.liferay.oauth2.provider.model;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
-
 import com.liferay.portal.kernel.model.ModelWrapper;
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -37,20 +32,10 @@ import java.util.Objects;
  * @generated
  */
 @ProviderType
-public class OAuth2ScopeGrantWrapper implements OAuth2ScopeGrant,
-	ModelWrapper<OAuth2ScopeGrant> {
+public class OAuth2ScopeGrantWrapper extends BaseModelWrapper<OAuth2ScopeGrant>
+	implements OAuth2ScopeGrant, ModelWrapper<OAuth2ScopeGrant> {
 	public OAuth2ScopeGrantWrapper(OAuth2ScopeGrant oAuth2ScopeGrant) {
-		_oAuth2ScopeGrant = oAuth2ScopeGrant;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return OAuth2ScopeGrant.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return OAuth2ScopeGrant.class.getName();
+		super(oAuth2ScopeGrant);
 	}
 
 	@Override
@@ -108,16 +93,6 @@ public class OAuth2ScopeGrantWrapper implements OAuth2ScopeGrant,
 		}
 	}
 
-	@Override
-	public Object clone() {
-		return new OAuth2ScopeGrantWrapper((OAuth2ScopeGrant)_oAuth2ScopeGrant.clone());
-	}
-
-	@Override
-	public int compareTo(OAuth2ScopeGrant oAuth2ScopeGrant) {
-		return _oAuth2ScopeGrant.compareTo(oAuth2ScopeGrant);
-	}
-
 	/**
 	* Returns the application name of this o auth2 scope grant.
 	*
@@ -125,7 +100,7 @@ public class OAuth2ScopeGrantWrapper implements OAuth2ScopeGrant,
 	*/
 	@Override
 	public String getApplicationName() {
-		return _oAuth2ScopeGrant.getApplicationName();
+		return model.getApplicationName();
 	}
 
 	/**
@@ -135,7 +110,7 @@ public class OAuth2ScopeGrantWrapper implements OAuth2ScopeGrant,
 	*/
 	@Override
 	public String getBundleSymbolicName() {
-		return _oAuth2ScopeGrant.getBundleSymbolicName();
+		return model.getBundleSymbolicName();
 	}
 
 	/**
@@ -145,12 +120,7 @@ public class OAuth2ScopeGrantWrapper implements OAuth2ScopeGrant,
 	*/
 	@Override
 	public long getCompanyId() {
-		return _oAuth2ScopeGrant.getCompanyId();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _oAuth2ScopeGrant.getExpandoBridge();
+		return model.getCompanyId();
 	}
 
 	/**
@@ -160,7 +130,7 @@ public class OAuth2ScopeGrantWrapper implements OAuth2ScopeGrant,
 	*/
 	@Override
 	public long getOAuth2ApplicationScopeAliasesId() {
-		return _oAuth2ScopeGrant.getOAuth2ApplicationScopeAliasesId();
+		return model.getOAuth2ApplicationScopeAliasesId();
 	}
 
 	/**
@@ -170,7 +140,7 @@ public class OAuth2ScopeGrantWrapper implements OAuth2ScopeGrant,
 	*/
 	@Override
 	public long getOAuth2ScopeGrantId() {
-		return _oAuth2ScopeGrant.getOAuth2ScopeGrantId();
+		return model.getOAuth2ScopeGrantId();
 	}
 
 	/**
@@ -180,12 +150,7 @@ public class OAuth2ScopeGrantWrapper implements OAuth2ScopeGrant,
 	*/
 	@Override
 	public long getPrimaryKey() {
-		return _oAuth2ScopeGrant.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _oAuth2ScopeGrant.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	/**
@@ -195,32 +160,12 @@ public class OAuth2ScopeGrantWrapper implements OAuth2ScopeGrant,
 	*/
 	@Override
 	public String getScope() {
-		return _oAuth2ScopeGrant.getScope();
-	}
-
-	@Override
-	public int hashCode() {
-		return _oAuth2ScopeGrant.hashCode();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _oAuth2ScopeGrant.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _oAuth2ScopeGrant.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _oAuth2ScopeGrant.isNew();
+		return model.getScope();
 	}
 
 	@Override
 	public void persist() {
-		_oAuth2ScopeGrant.persist();
+		model.persist();
 	}
 
 	/**
@@ -230,7 +175,7 @@ public class OAuth2ScopeGrantWrapper implements OAuth2ScopeGrant,
 	*/
 	@Override
 	public void setApplicationName(String applicationName) {
-		_oAuth2ScopeGrant.setApplicationName(applicationName);
+		model.setApplicationName(applicationName);
 	}
 
 	/**
@@ -240,12 +185,7 @@ public class OAuth2ScopeGrantWrapper implements OAuth2ScopeGrant,
 	*/
 	@Override
 	public void setBundleSymbolicName(String bundleSymbolicName) {
-		_oAuth2ScopeGrant.setBundleSymbolicName(bundleSymbolicName);
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_oAuth2ScopeGrant.setCachedModel(cachedModel);
+		model.setBundleSymbolicName(bundleSymbolicName);
 	}
 
 	/**
@@ -255,28 +195,7 @@ public class OAuth2ScopeGrantWrapper implements OAuth2ScopeGrant,
 	*/
 	@Override
 	public void setCompanyId(long companyId) {
-		_oAuth2ScopeGrant.setCompanyId(companyId);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-		_oAuth2ScopeGrant.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_oAuth2ScopeGrant.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_oAuth2ScopeGrant.setExpandoBridgeAttributes(serviceContext);
-	}
-
-	@Override
-	public void setNew(boolean n) {
-		_oAuth2ScopeGrant.setNew(n);
+		model.setCompanyId(companyId);
 	}
 
 	/**
@@ -287,7 +206,7 @@ public class OAuth2ScopeGrantWrapper implements OAuth2ScopeGrant,
 	@Override
 	public void setOAuth2ApplicationScopeAliasesId(
 		long oAuth2ApplicationScopeAliasesId) {
-		_oAuth2ScopeGrant.setOAuth2ApplicationScopeAliasesId(oAuth2ApplicationScopeAliasesId);
+		model.setOAuth2ApplicationScopeAliasesId(oAuth2ApplicationScopeAliasesId);
 	}
 
 	/**
@@ -297,7 +216,7 @@ public class OAuth2ScopeGrantWrapper implements OAuth2ScopeGrant,
 	*/
 	@Override
 	public void setOAuth2ScopeGrantId(long oAuth2ScopeGrantId) {
-		_oAuth2ScopeGrant.setOAuth2ScopeGrantId(oAuth2ScopeGrantId);
+		model.setOAuth2ScopeGrantId(oAuth2ScopeGrantId);
 	}
 
 	/**
@@ -307,12 +226,7 @@ public class OAuth2ScopeGrantWrapper implements OAuth2ScopeGrant,
 	*/
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_oAuth2ScopeGrant.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_oAuth2ScopeGrant.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -322,73 +236,11 @@ public class OAuth2ScopeGrantWrapper implements OAuth2ScopeGrant,
 	*/
 	@Override
 	public void setScope(String scope) {
-		_oAuth2ScopeGrant.setScope(scope);
+		model.setScope(scope);
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.CacheModel<OAuth2ScopeGrant> toCacheModel() {
-		return _oAuth2ScopeGrant.toCacheModel();
+	protected OAuth2ScopeGrantWrapper wrap(OAuth2ScopeGrant oAuth2ScopeGrant) {
+		return new OAuth2ScopeGrantWrapper(oAuth2ScopeGrant);
 	}
-
-	@Override
-	public OAuth2ScopeGrant toEscapedModel() {
-		return new OAuth2ScopeGrantWrapper(_oAuth2ScopeGrant.toEscapedModel());
-	}
-
-	@Override
-	public String toString() {
-		return _oAuth2ScopeGrant.toString();
-	}
-
-	@Override
-	public OAuth2ScopeGrant toUnescapedModel() {
-		return new OAuth2ScopeGrantWrapper(_oAuth2ScopeGrant.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _oAuth2ScopeGrant.toXmlString();
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-
-		if (!(obj instanceof OAuth2ScopeGrantWrapper)) {
-			return false;
-		}
-
-		OAuth2ScopeGrantWrapper oAuth2ScopeGrantWrapper = (OAuth2ScopeGrantWrapper)obj;
-
-		if (Objects.equals(_oAuth2ScopeGrant,
-					oAuth2ScopeGrantWrapper._oAuth2ScopeGrant)) {
-			return true;
-		}
-
-		return false;
-	}
-
-	@Override
-	public OAuth2ScopeGrant getWrappedModel() {
-		return _oAuth2ScopeGrant;
-	}
-
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _oAuth2ScopeGrant.isEntityCacheEnabled();
-	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _oAuth2ScopeGrant.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_oAuth2ScopeGrant.resetOriginalValues();
-	}
-
-	private final OAuth2ScopeGrant _oAuth2ScopeGrant;
 }

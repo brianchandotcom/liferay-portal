@@ -16,19 +16,14 @@ package com.liferay.fragment.model;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
-
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 
 import com.liferay.portal.kernel.model.ModelWrapper;
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -40,20 +35,10 @@ import java.util.Objects;
  * @generated
  */
 @ProviderType
-public class FragmentCollectionWrapper implements FragmentCollection,
-	ModelWrapper<FragmentCollection> {
+public class FragmentCollectionWrapper extends BaseModelWrapper<FragmentCollection>
+	implements FragmentCollection, ModelWrapper<FragmentCollection> {
 	public FragmentCollectionWrapper(FragmentCollection fragmentCollection) {
-		_fragmentCollection = fragmentCollection;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return FragmentCollection.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return FragmentCollection.class.getName();
+		super(fragmentCollection);
 	}
 
 	@Override
@@ -152,16 +137,6 @@ public class FragmentCollectionWrapper implements FragmentCollection,
 		}
 	}
 
-	@Override
-	public Object clone() {
-		return new FragmentCollectionWrapper((FragmentCollection)_fragmentCollection.clone());
-	}
-
-	@Override
-	public int compareTo(FragmentCollection fragmentCollection) {
-		return _fragmentCollection.compareTo(fragmentCollection);
-	}
-
 	/**
 	* Returns the company ID of this fragment collection.
 	*
@@ -169,7 +144,7 @@ public class FragmentCollectionWrapper implements FragmentCollection,
 	*/
 	@Override
 	public long getCompanyId() {
-		return _fragmentCollection.getCompanyId();
+		return model.getCompanyId();
 	}
 
 	/**
@@ -179,7 +154,7 @@ public class FragmentCollectionWrapper implements FragmentCollection,
 	*/
 	@Override
 	public Date getCreateDate() {
-		return _fragmentCollection.getCreateDate();
+		return model.getCreateDate();
 	}
 
 	/**
@@ -189,12 +164,7 @@ public class FragmentCollectionWrapper implements FragmentCollection,
 	*/
 	@Override
 	public String getDescription() {
-		return _fragmentCollection.getDescription();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _fragmentCollection.getExpandoBridge();
+		return model.getDescription();
 	}
 
 	/**
@@ -204,7 +174,7 @@ public class FragmentCollectionWrapper implements FragmentCollection,
 	*/
 	@Override
 	public long getFragmentCollectionId() {
-		return _fragmentCollection.getFragmentCollectionId();
+		return model.getFragmentCollectionId();
 	}
 
 	/**
@@ -214,7 +184,7 @@ public class FragmentCollectionWrapper implements FragmentCollection,
 	*/
 	@Override
 	public String getFragmentCollectionKey() {
-		return _fragmentCollection.getFragmentCollectionKey();
+		return model.getFragmentCollectionKey();
 	}
 
 	/**
@@ -224,7 +194,7 @@ public class FragmentCollectionWrapper implements FragmentCollection,
 	*/
 	@Override
 	public long getGroupId() {
-		return _fragmentCollection.getGroupId();
+		return model.getGroupId();
 	}
 
 	/**
@@ -234,7 +204,7 @@ public class FragmentCollectionWrapper implements FragmentCollection,
 	*/
 	@Override
 	public Date getLastPublishDate() {
-		return _fragmentCollection.getLastPublishDate();
+		return model.getLastPublishDate();
 	}
 
 	/**
@@ -244,7 +214,7 @@ public class FragmentCollectionWrapper implements FragmentCollection,
 	*/
 	@Override
 	public Date getModifiedDate() {
-		return _fragmentCollection.getModifiedDate();
+		return model.getModifiedDate();
 	}
 
 	/**
@@ -254,7 +224,7 @@ public class FragmentCollectionWrapper implements FragmentCollection,
 	*/
 	@Override
 	public String getName() {
-		return _fragmentCollection.getName();
+		return model.getName();
 	}
 
 	/**
@@ -264,18 +234,13 @@ public class FragmentCollectionWrapper implements FragmentCollection,
 	*/
 	@Override
 	public long getPrimaryKey() {
-		return _fragmentCollection.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _fragmentCollection.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	@Override
 	public long getResourcesFolderId()
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _fragmentCollection.getResourcesFolderId();
+		return model.getResourcesFolderId();
 	}
 
 	/**
@@ -285,7 +250,7 @@ public class FragmentCollectionWrapper implements FragmentCollection,
 	*/
 	@Override
 	public long getUserId() {
-		return _fragmentCollection.getUserId();
+		return model.getUserId();
 	}
 
 	/**
@@ -295,7 +260,7 @@ public class FragmentCollectionWrapper implements FragmentCollection,
 	*/
 	@Override
 	public String getUserName() {
-		return _fragmentCollection.getUserName();
+		return model.getUserName();
 	}
 
 	/**
@@ -305,7 +270,7 @@ public class FragmentCollectionWrapper implements FragmentCollection,
 	*/
 	@Override
 	public String getUserUuid() {
-		return _fragmentCollection.getUserUuid();
+		return model.getUserUuid();
 	}
 
 	/**
@@ -315,50 +280,25 @@ public class FragmentCollectionWrapper implements FragmentCollection,
 	*/
 	@Override
 	public String getUuid() {
-		return _fragmentCollection.getUuid();
-	}
-
-	@Override
-	public int hashCode() {
-		return _fragmentCollection.hashCode();
+		return model.getUuid();
 	}
 
 	@Override
 	public boolean hasResources()
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _fragmentCollection.hasResources();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _fragmentCollection.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _fragmentCollection.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _fragmentCollection.isNew();
+		return model.hasResources();
 	}
 
 	@Override
 	public void persist() {
-		_fragmentCollection.persist();
+		model.persist();
 	}
 
 	@Override
 	public void populateZipWriter(
 		com.liferay.portal.kernel.zip.ZipWriter zipWriter)
 		throws Exception {
-		_fragmentCollection.populateZipWriter(zipWriter);
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_fragmentCollection.setCachedModel(cachedModel);
+		model.populateZipWriter(zipWriter);
 	}
 
 	/**
@@ -368,7 +308,7 @@ public class FragmentCollectionWrapper implements FragmentCollection,
 	*/
 	@Override
 	public void setCompanyId(long companyId) {
-		_fragmentCollection.setCompanyId(companyId);
+		model.setCompanyId(companyId);
 	}
 
 	/**
@@ -378,7 +318,7 @@ public class FragmentCollectionWrapper implements FragmentCollection,
 	*/
 	@Override
 	public void setCreateDate(Date createDate) {
-		_fragmentCollection.setCreateDate(createDate);
+		model.setCreateDate(createDate);
 	}
 
 	/**
@@ -388,23 +328,7 @@ public class FragmentCollectionWrapper implements FragmentCollection,
 	*/
 	@Override
 	public void setDescription(String description) {
-		_fragmentCollection.setDescription(description);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-		_fragmentCollection.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_fragmentCollection.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_fragmentCollection.setExpandoBridgeAttributes(serviceContext);
+		model.setDescription(description);
 	}
 
 	/**
@@ -414,7 +338,7 @@ public class FragmentCollectionWrapper implements FragmentCollection,
 	*/
 	@Override
 	public void setFragmentCollectionId(long fragmentCollectionId) {
-		_fragmentCollection.setFragmentCollectionId(fragmentCollectionId);
+		model.setFragmentCollectionId(fragmentCollectionId);
 	}
 
 	/**
@@ -424,7 +348,7 @@ public class FragmentCollectionWrapper implements FragmentCollection,
 	*/
 	@Override
 	public void setFragmentCollectionKey(String fragmentCollectionKey) {
-		_fragmentCollection.setFragmentCollectionKey(fragmentCollectionKey);
+		model.setFragmentCollectionKey(fragmentCollectionKey);
 	}
 
 	/**
@@ -434,7 +358,7 @@ public class FragmentCollectionWrapper implements FragmentCollection,
 	*/
 	@Override
 	public void setGroupId(long groupId) {
-		_fragmentCollection.setGroupId(groupId);
+		model.setGroupId(groupId);
 	}
 
 	/**
@@ -444,7 +368,7 @@ public class FragmentCollectionWrapper implements FragmentCollection,
 	*/
 	@Override
 	public void setLastPublishDate(Date lastPublishDate) {
-		_fragmentCollection.setLastPublishDate(lastPublishDate);
+		model.setLastPublishDate(lastPublishDate);
 	}
 
 	/**
@@ -454,7 +378,7 @@ public class FragmentCollectionWrapper implements FragmentCollection,
 	*/
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
-		_fragmentCollection.setModifiedDate(modifiedDate);
+		model.setModifiedDate(modifiedDate);
 	}
 
 	/**
@@ -464,12 +388,7 @@ public class FragmentCollectionWrapper implements FragmentCollection,
 	*/
 	@Override
 	public void setName(String name) {
-		_fragmentCollection.setName(name);
-	}
-
-	@Override
-	public void setNew(boolean n) {
-		_fragmentCollection.setNew(n);
+		model.setName(name);
 	}
 
 	/**
@@ -479,12 +398,7 @@ public class FragmentCollectionWrapper implements FragmentCollection,
 	*/
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_fragmentCollection.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_fragmentCollection.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -494,7 +408,7 @@ public class FragmentCollectionWrapper implements FragmentCollection,
 	*/
 	@Override
 	public void setUserId(long userId) {
-		_fragmentCollection.setUserId(userId);
+		model.setUserId(userId);
 	}
 
 	/**
@@ -504,7 +418,7 @@ public class FragmentCollectionWrapper implements FragmentCollection,
 	*/
 	@Override
 	public void setUserName(String userName) {
-		_fragmentCollection.setUserName(userName);
+		model.setUserName(userName);
 	}
 
 	/**
@@ -514,7 +428,7 @@ public class FragmentCollectionWrapper implements FragmentCollection,
 	*/
 	@Override
 	public void setUserUuid(String userUuid) {
-		_fragmentCollection.setUserUuid(userUuid);
+		model.setUserUuid(userUuid);
 	}
 
 	/**
@@ -524,78 +438,17 @@ public class FragmentCollectionWrapper implements FragmentCollection,
 	*/
 	@Override
 	public void setUuid(String uuid) {
-		_fragmentCollection.setUuid(uuid);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<FragmentCollection> toCacheModel() {
-		return _fragmentCollection.toCacheModel();
-	}
-
-	@Override
-	public FragmentCollection toEscapedModel() {
-		return new FragmentCollectionWrapper(_fragmentCollection.toEscapedModel());
-	}
-
-	@Override
-	public String toString() {
-		return _fragmentCollection.toString();
-	}
-
-	@Override
-	public FragmentCollection toUnescapedModel() {
-		return new FragmentCollectionWrapper(_fragmentCollection.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _fragmentCollection.toXmlString();
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-
-		if (!(obj instanceof FragmentCollectionWrapper)) {
-			return false;
-		}
-
-		FragmentCollectionWrapper fragmentCollectionWrapper = (FragmentCollectionWrapper)obj;
-
-		if (Objects.equals(_fragmentCollection,
-					fragmentCollectionWrapper._fragmentCollection)) {
-			return true;
-		}
-
-		return false;
+		model.setUuid(uuid);
 	}
 
 	@Override
 	public StagedModelType getStagedModelType() {
-		return _fragmentCollection.getStagedModelType();
+		return model.getStagedModelType();
 	}
 
 	@Override
-	public FragmentCollection getWrappedModel() {
-		return _fragmentCollection;
+	protected FragmentCollectionWrapper wrap(
+		FragmentCollection fragmentCollection) {
+		return new FragmentCollectionWrapper(fragmentCollection);
 	}
-
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _fragmentCollection.isEntityCacheEnabled();
-	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _fragmentCollection.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_fragmentCollection.resetOriginalValues();
-	}
-
-	private final FragmentCollection _fragmentCollection;
 }

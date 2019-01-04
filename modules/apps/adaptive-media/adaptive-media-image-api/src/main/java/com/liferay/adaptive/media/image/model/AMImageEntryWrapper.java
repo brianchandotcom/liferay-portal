@@ -16,17 +16,12 @@ package com.liferay.adaptive.media.image.model;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
-
 import com.liferay.portal.kernel.model.ModelWrapper;
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -38,20 +33,10 @@ import java.util.Objects;
  * @generated
  */
 @ProviderType
-public class AMImageEntryWrapper implements AMImageEntry,
-	ModelWrapper<AMImageEntry> {
+public class AMImageEntryWrapper extends BaseModelWrapper<AMImageEntry>
+	implements AMImageEntry, ModelWrapper<AMImageEntry> {
 	public AMImageEntryWrapper(AMImageEntry amImageEntry) {
-		_amImageEntry = amImageEntry;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return AMImageEntry.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return AMImageEntry.class.getName();
+		super(amImageEntry);
 	}
 
 	@Override
@@ -142,16 +127,6 @@ public class AMImageEntryWrapper implements AMImageEntry,
 		}
 	}
 
-	@Override
-	public Object clone() {
-		return new AMImageEntryWrapper((AMImageEntry)_amImageEntry.clone());
-	}
-
-	@Override
-	public int compareTo(AMImageEntry amImageEntry) {
-		return _amImageEntry.compareTo(amImageEntry);
-	}
-
 	/**
 	* Returns the am image entry ID of this am image entry.
 	*
@@ -159,7 +134,7 @@ public class AMImageEntryWrapper implements AMImageEntry,
 	*/
 	@Override
 	public long getAmImageEntryId() {
-		return _amImageEntry.getAmImageEntryId();
+		return model.getAmImageEntryId();
 	}
 
 	/**
@@ -169,7 +144,7 @@ public class AMImageEntryWrapper implements AMImageEntry,
 	*/
 	@Override
 	public long getCompanyId() {
-		return _amImageEntry.getCompanyId();
+		return model.getCompanyId();
 	}
 
 	/**
@@ -179,7 +154,7 @@ public class AMImageEntryWrapper implements AMImageEntry,
 	*/
 	@Override
 	public String getConfigurationUuid() {
-		return _amImageEntry.getConfigurationUuid();
+		return model.getConfigurationUuid();
 	}
 
 	/**
@@ -189,12 +164,7 @@ public class AMImageEntryWrapper implements AMImageEntry,
 	*/
 	@Override
 	public Date getCreateDate() {
-		return _amImageEntry.getCreateDate();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _amImageEntry.getExpandoBridge();
+		return model.getCreateDate();
 	}
 
 	/**
@@ -204,7 +174,7 @@ public class AMImageEntryWrapper implements AMImageEntry,
 	*/
 	@Override
 	public long getFileVersionId() {
-		return _amImageEntry.getFileVersionId();
+		return model.getFileVersionId();
 	}
 
 	/**
@@ -214,7 +184,7 @@ public class AMImageEntryWrapper implements AMImageEntry,
 	*/
 	@Override
 	public long getGroupId() {
-		return _amImageEntry.getGroupId();
+		return model.getGroupId();
 	}
 
 	/**
@@ -224,7 +194,7 @@ public class AMImageEntryWrapper implements AMImageEntry,
 	*/
 	@Override
 	public int getHeight() {
-		return _amImageEntry.getHeight();
+		return model.getHeight();
 	}
 
 	/**
@@ -234,7 +204,7 @@ public class AMImageEntryWrapper implements AMImageEntry,
 	*/
 	@Override
 	public String getMimeType() {
-		return _amImageEntry.getMimeType();
+		return model.getMimeType();
 	}
 
 	/**
@@ -244,12 +214,7 @@ public class AMImageEntryWrapper implements AMImageEntry,
 	*/
 	@Override
 	public long getPrimaryKey() {
-		return _amImageEntry.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _amImageEntry.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	/**
@@ -259,7 +224,7 @@ public class AMImageEntryWrapper implements AMImageEntry,
 	*/
 	@Override
 	public long getSize() {
-		return _amImageEntry.getSize();
+		return model.getSize();
 	}
 
 	/**
@@ -269,7 +234,7 @@ public class AMImageEntryWrapper implements AMImageEntry,
 	*/
 	@Override
 	public String getUuid() {
-		return _amImageEntry.getUuid();
+		return model.getUuid();
 	}
 
 	/**
@@ -279,32 +244,12 @@ public class AMImageEntryWrapper implements AMImageEntry,
 	*/
 	@Override
 	public int getWidth() {
-		return _amImageEntry.getWidth();
-	}
-
-	@Override
-	public int hashCode() {
-		return _amImageEntry.hashCode();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _amImageEntry.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _amImageEntry.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _amImageEntry.isNew();
+		return model.getWidth();
 	}
 
 	@Override
 	public void persist() {
-		_amImageEntry.persist();
+		model.persist();
 	}
 
 	/**
@@ -314,12 +259,7 @@ public class AMImageEntryWrapper implements AMImageEntry,
 	*/
 	@Override
 	public void setAmImageEntryId(long amImageEntryId) {
-		_amImageEntry.setAmImageEntryId(amImageEntryId);
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_amImageEntry.setCachedModel(cachedModel);
+		model.setAmImageEntryId(amImageEntryId);
 	}
 
 	/**
@@ -329,7 +269,7 @@ public class AMImageEntryWrapper implements AMImageEntry,
 	*/
 	@Override
 	public void setCompanyId(long companyId) {
-		_amImageEntry.setCompanyId(companyId);
+		model.setCompanyId(companyId);
 	}
 
 	/**
@@ -339,7 +279,7 @@ public class AMImageEntryWrapper implements AMImageEntry,
 	*/
 	@Override
 	public void setConfigurationUuid(String configurationUuid) {
-		_amImageEntry.setConfigurationUuid(configurationUuid);
+		model.setConfigurationUuid(configurationUuid);
 	}
 
 	/**
@@ -349,23 +289,7 @@ public class AMImageEntryWrapper implements AMImageEntry,
 	*/
 	@Override
 	public void setCreateDate(Date createDate) {
-		_amImageEntry.setCreateDate(createDate);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-		_amImageEntry.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_amImageEntry.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_amImageEntry.setExpandoBridgeAttributes(serviceContext);
+		model.setCreateDate(createDate);
 	}
 
 	/**
@@ -375,7 +299,7 @@ public class AMImageEntryWrapper implements AMImageEntry,
 	*/
 	@Override
 	public void setFileVersionId(long fileVersionId) {
-		_amImageEntry.setFileVersionId(fileVersionId);
+		model.setFileVersionId(fileVersionId);
 	}
 
 	/**
@@ -385,7 +309,7 @@ public class AMImageEntryWrapper implements AMImageEntry,
 	*/
 	@Override
 	public void setGroupId(long groupId) {
-		_amImageEntry.setGroupId(groupId);
+		model.setGroupId(groupId);
 	}
 
 	/**
@@ -395,7 +319,7 @@ public class AMImageEntryWrapper implements AMImageEntry,
 	*/
 	@Override
 	public void setHeight(int height) {
-		_amImageEntry.setHeight(height);
+		model.setHeight(height);
 	}
 
 	/**
@@ -405,12 +329,7 @@ public class AMImageEntryWrapper implements AMImageEntry,
 	*/
 	@Override
 	public void setMimeType(String mimeType) {
-		_amImageEntry.setMimeType(mimeType);
-	}
-
-	@Override
-	public void setNew(boolean n) {
-		_amImageEntry.setNew(n);
+		model.setMimeType(mimeType);
 	}
 
 	/**
@@ -420,12 +339,7 @@ public class AMImageEntryWrapper implements AMImageEntry,
 	*/
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_amImageEntry.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_amImageEntry.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -435,7 +349,7 @@ public class AMImageEntryWrapper implements AMImageEntry,
 	*/
 	@Override
 	public void setSize(long size) {
-		_amImageEntry.setSize(size);
+		model.setSize(size);
 	}
 
 	/**
@@ -445,7 +359,7 @@ public class AMImageEntryWrapper implements AMImageEntry,
 	*/
 	@Override
 	public void setUuid(String uuid) {
-		_amImageEntry.setUuid(uuid);
+		model.setUuid(uuid);
 	}
 
 	/**
@@ -455,72 +369,11 @@ public class AMImageEntryWrapper implements AMImageEntry,
 	*/
 	@Override
 	public void setWidth(int width) {
-		_amImageEntry.setWidth(width);
+		model.setWidth(width);
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.CacheModel<AMImageEntry> toCacheModel() {
-		return _amImageEntry.toCacheModel();
+	protected AMImageEntryWrapper wrap(AMImageEntry amImageEntry) {
+		return new AMImageEntryWrapper(amImageEntry);
 	}
-
-	@Override
-	public AMImageEntry toEscapedModel() {
-		return new AMImageEntryWrapper(_amImageEntry.toEscapedModel());
-	}
-
-	@Override
-	public String toString() {
-		return _amImageEntry.toString();
-	}
-
-	@Override
-	public AMImageEntry toUnescapedModel() {
-		return new AMImageEntryWrapper(_amImageEntry.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _amImageEntry.toXmlString();
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-
-		if (!(obj instanceof AMImageEntryWrapper)) {
-			return false;
-		}
-
-		AMImageEntryWrapper amImageEntryWrapper = (AMImageEntryWrapper)obj;
-
-		if (Objects.equals(_amImageEntry, amImageEntryWrapper._amImageEntry)) {
-			return true;
-		}
-
-		return false;
-	}
-
-	@Override
-	public AMImageEntry getWrappedModel() {
-		return _amImageEntry;
-	}
-
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _amImageEntry.isEntityCacheEnabled();
-	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _amImageEntry.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_amImageEntry.resetOriginalValues();
-	}
-
-	private final AMImageEntry _amImageEntry;
 }

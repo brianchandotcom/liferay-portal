@@ -16,19 +16,14 @@ package com.liferay.knowledge.base.model;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
-
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 
 import com.liferay.portal.kernel.model.ModelWrapper;
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -40,19 +35,10 @@ import java.util.Objects;
  * @generated
  */
 @ProviderType
-public class KBCommentWrapper implements KBComment, ModelWrapper<KBComment> {
+public class KBCommentWrapper extends BaseModelWrapper<KBComment>
+	implements KBComment, ModelWrapper<KBComment> {
 	public KBCommentWrapper(KBComment kbComment) {
-		_kbComment = kbComment;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return KBComment.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return KBComment.class.getName();
+		super(kbComment);
 	}
 
 	@Override
@@ -164,16 +150,6 @@ public class KBCommentWrapper implements KBComment, ModelWrapper<KBComment> {
 		}
 	}
 
-	@Override
-	public Object clone() {
-		return new KBCommentWrapper((KBComment)_kbComment.clone());
-	}
-
-	@Override
-	public int compareTo(KBComment kbComment) {
-		return _kbComment.compareTo(kbComment);
-	}
-
 	/**
 	* Returns the fully qualified class name of this kb comment.
 	*
@@ -181,7 +157,7 @@ public class KBCommentWrapper implements KBComment, ModelWrapper<KBComment> {
 	*/
 	@Override
 	public String getClassName() {
-		return _kbComment.getClassName();
+		return model.getClassName();
 	}
 
 	/**
@@ -191,7 +167,7 @@ public class KBCommentWrapper implements KBComment, ModelWrapper<KBComment> {
 	*/
 	@Override
 	public long getClassNameId() {
-		return _kbComment.getClassNameId();
+		return model.getClassNameId();
 	}
 
 	/**
@@ -201,7 +177,7 @@ public class KBCommentWrapper implements KBComment, ModelWrapper<KBComment> {
 	*/
 	@Override
 	public long getClassPK() {
-		return _kbComment.getClassPK();
+		return model.getClassPK();
 	}
 
 	/**
@@ -211,7 +187,7 @@ public class KBCommentWrapper implements KBComment, ModelWrapper<KBComment> {
 	*/
 	@Override
 	public long getCompanyId() {
-		return _kbComment.getCompanyId();
+		return model.getCompanyId();
 	}
 
 	/**
@@ -221,7 +197,7 @@ public class KBCommentWrapper implements KBComment, ModelWrapper<KBComment> {
 	*/
 	@Override
 	public String getContent() {
-		return _kbComment.getContent();
+		return model.getContent();
 	}
 
 	/**
@@ -231,12 +207,7 @@ public class KBCommentWrapper implements KBComment, ModelWrapper<KBComment> {
 	*/
 	@Override
 	public Date getCreateDate() {
-		return _kbComment.getCreateDate();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _kbComment.getExpandoBridge();
+		return model.getCreateDate();
 	}
 
 	/**
@@ -246,7 +217,7 @@ public class KBCommentWrapper implements KBComment, ModelWrapper<KBComment> {
 	*/
 	@Override
 	public long getGroupId() {
-		return _kbComment.getGroupId();
+		return model.getGroupId();
 	}
 
 	/**
@@ -256,7 +227,7 @@ public class KBCommentWrapper implements KBComment, ModelWrapper<KBComment> {
 	*/
 	@Override
 	public long getKbCommentId() {
-		return _kbComment.getKbCommentId();
+		return model.getKbCommentId();
 	}
 
 	/**
@@ -266,7 +237,7 @@ public class KBCommentWrapper implements KBComment, ModelWrapper<KBComment> {
 	*/
 	@Override
 	public Date getLastPublishDate() {
-		return _kbComment.getLastPublishDate();
+		return model.getLastPublishDate();
 	}
 
 	/**
@@ -276,7 +247,7 @@ public class KBCommentWrapper implements KBComment, ModelWrapper<KBComment> {
 	*/
 	@Override
 	public Date getModifiedDate() {
-		return _kbComment.getModifiedDate();
+		return model.getModifiedDate();
 	}
 
 	/**
@@ -286,12 +257,7 @@ public class KBCommentWrapper implements KBComment, ModelWrapper<KBComment> {
 	*/
 	@Override
 	public long getPrimaryKey() {
-		return _kbComment.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _kbComment.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	/**
@@ -301,7 +267,7 @@ public class KBCommentWrapper implements KBComment, ModelWrapper<KBComment> {
 	*/
 	@Override
 	public int getStatus() {
-		return _kbComment.getStatus();
+		return model.getStatus();
 	}
 
 	/**
@@ -311,7 +277,7 @@ public class KBCommentWrapper implements KBComment, ModelWrapper<KBComment> {
 	*/
 	@Override
 	public long getUserId() {
-		return _kbComment.getUserId();
+		return model.getUserId();
 	}
 
 	/**
@@ -321,7 +287,7 @@ public class KBCommentWrapper implements KBComment, ModelWrapper<KBComment> {
 	*/
 	@Override
 	public String getUserName() {
-		return _kbComment.getUserName();
+		return model.getUserName();
 	}
 
 	/**
@@ -331,7 +297,7 @@ public class KBCommentWrapper implements KBComment, ModelWrapper<KBComment> {
 	*/
 	@Override
 	public int getUserRating() {
-		return _kbComment.getUserRating();
+		return model.getUserRating();
 	}
 
 	/**
@@ -341,7 +307,7 @@ public class KBCommentWrapper implements KBComment, ModelWrapper<KBComment> {
 	*/
 	@Override
 	public String getUserUuid() {
-		return _kbComment.getUserUuid();
+		return model.getUserUuid();
 	}
 
 	/**
@@ -351,42 +317,17 @@ public class KBCommentWrapper implements KBComment, ModelWrapper<KBComment> {
 	*/
 	@Override
 	public String getUuid() {
-		return _kbComment.getUuid();
-	}
-
-	@Override
-	public int hashCode() {
-		return _kbComment.hashCode();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _kbComment.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _kbComment.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _kbComment.isNew();
+		return model.getUuid();
 	}
 
 	@Override
 	public void persist() {
-		_kbComment.persist();
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_kbComment.setCachedModel(cachedModel);
+		model.persist();
 	}
 
 	@Override
 	public void setClassName(String className) {
-		_kbComment.setClassName(className);
+		model.setClassName(className);
 	}
 
 	/**
@@ -396,7 +337,7 @@ public class KBCommentWrapper implements KBComment, ModelWrapper<KBComment> {
 	*/
 	@Override
 	public void setClassNameId(long classNameId) {
-		_kbComment.setClassNameId(classNameId);
+		model.setClassNameId(classNameId);
 	}
 
 	/**
@@ -406,7 +347,7 @@ public class KBCommentWrapper implements KBComment, ModelWrapper<KBComment> {
 	*/
 	@Override
 	public void setClassPK(long classPK) {
-		_kbComment.setClassPK(classPK);
+		model.setClassPK(classPK);
 	}
 
 	/**
@@ -416,7 +357,7 @@ public class KBCommentWrapper implements KBComment, ModelWrapper<KBComment> {
 	*/
 	@Override
 	public void setCompanyId(long companyId) {
-		_kbComment.setCompanyId(companyId);
+		model.setCompanyId(companyId);
 	}
 
 	/**
@@ -426,7 +367,7 @@ public class KBCommentWrapper implements KBComment, ModelWrapper<KBComment> {
 	*/
 	@Override
 	public void setContent(String content) {
-		_kbComment.setContent(content);
+		model.setContent(content);
 	}
 
 	/**
@@ -436,23 +377,7 @@ public class KBCommentWrapper implements KBComment, ModelWrapper<KBComment> {
 	*/
 	@Override
 	public void setCreateDate(Date createDate) {
-		_kbComment.setCreateDate(createDate);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-		_kbComment.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_kbComment.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_kbComment.setExpandoBridgeAttributes(serviceContext);
+		model.setCreateDate(createDate);
 	}
 
 	/**
@@ -462,7 +387,7 @@ public class KBCommentWrapper implements KBComment, ModelWrapper<KBComment> {
 	*/
 	@Override
 	public void setGroupId(long groupId) {
-		_kbComment.setGroupId(groupId);
+		model.setGroupId(groupId);
 	}
 
 	/**
@@ -472,7 +397,7 @@ public class KBCommentWrapper implements KBComment, ModelWrapper<KBComment> {
 	*/
 	@Override
 	public void setKbCommentId(long kbCommentId) {
-		_kbComment.setKbCommentId(kbCommentId);
+		model.setKbCommentId(kbCommentId);
 	}
 
 	/**
@@ -482,7 +407,7 @@ public class KBCommentWrapper implements KBComment, ModelWrapper<KBComment> {
 	*/
 	@Override
 	public void setLastPublishDate(Date lastPublishDate) {
-		_kbComment.setLastPublishDate(lastPublishDate);
+		model.setLastPublishDate(lastPublishDate);
 	}
 
 	/**
@@ -492,12 +417,7 @@ public class KBCommentWrapper implements KBComment, ModelWrapper<KBComment> {
 	*/
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
-		_kbComment.setModifiedDate(modifiedDate);
-	}
-
-	@Override
-	public void setNew(boolean n) {
-		_kbComment.setNew(n);
+		model.setModifiedDate(modifiedDate);
 	}
 
 	/**
@@ -507,12 +427,7 @@ public class KBCommentWrapper implements KBComment, ModelWrapper<KBComment> {
 	*/
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_kbComment.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_kbComment.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -522,7 +437,7 @@ public class KBCommentWrapper implements KBComment, ModelWrapper<KBComment> {
 	*/
 	@Override
 	public void setStatus(int status) {
-		_kbComment.setStatus(status);
+		model.setStatus(status);
 	}
 
 	/**
@@ -532,7 +447,7 @@ public class KBCommentWrapper implements KBComment, ModelWrapper<KBComment> {
 	*/
 	@Override
 	public void setUserId(long userId) {
-		_kbComment.setUserId(userId);
+		model.setUserId(userId);
 	}
 
 	/**
@@ -542,7 +457,7 @@ public class KBCommentWrapper implements KBComment, ModelWrapper<KBComment> {
 	*/
 	@Override
 	public void setUserName(String userName) {
-		_kbComment.setUserName(userName);
+		model.setUserName(userName);
 	}
 
 	/**
@@ -552,7 +467,7 @@ public class KBCommentWrapper implements KBComment, ModelWrapper<KBComment> {
 	*/
 	@Override
 	public void setUserRating(int userRating) {
-		_kbComment.setUserRating(userRating);
+		model.setUserRating(userRating);
 	}
 
 	/**
@@ -562,7 +477,7 @@ public class KBCommentWrapper implements KBComment, ModelWrapper<KBComment> {
 	*/
 	@Override
 	public void setUserUuid(String userUuid) {
-		_kbComment.setUserUuid(userUuid);
+		model.setUserUuid(userUuid);
 	}
 
 	/**
@@ -572,77 +487,16 @@ public class KBCommentWrapper implements KBComment, ModelWrapper<KBComment> {
 	*/
 	@Override
 	public void setUuid(String uuid) {
-		_kbComment.setUuid(uuid);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<KBComment> toCacheModel() {
-		return _kbComment.toCacheModel();
-	}
-
-	@Override
-	public KBComment toEscapedModel() {
-		return new KBCommentWrapper(_kbComment.toEscapedModel());
-	}
-
-	@Override
-	public String toString() {
-		return _kbComment.toString();
-	}
-
-	@Override
-	public KBComment toUnescapedModel() {
-		return new KBCommentWrapper(_kbComment.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _kbComment.toXmlString();
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-
-		if (!(obj instanceof KBCommentWrapper)) {
-			return false;
-		}
-
-		KBCommentWrapper kbCommentWrapper = (KBCommentWrapper)obj;
-
-		if (Objects.equals(_kbComment, kbCommentWrapper._kbComment)) {
-			return true;
-		}
-
-		return false;
+		model.setUuid(uuid);
 	}
 
 	@Override
 	public StagedModelType getStagedModelType() {
-		return _kbComment.getStagedModelType();
+		return model.getStagedModelType();
 	}
 
 	@Override
-	public KBComment getWrappedModel() {
-		return _kbComment;
+	protected KBCommentWrapper wrap(KBComment kbComment) {
+		return new KBCommentWrapper(kbComment);
 	}
-
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _kbComment.isEntityCacheEnabled();
-	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _kbComment.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_kbComment.resetOriginalValues();
-	}
-
-	private final KBComment _kbComment;
 }

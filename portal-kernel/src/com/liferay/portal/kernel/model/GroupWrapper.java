@@ -16,15 +16,10 @@ package com.liferay.portal.kernel.model;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
-
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -36,19 +31,10 @@ import java.util.Objects;
  * @generated
  */
 @ProviderType
-public class GroupWrapper implements Group, ModelWrapper<Group> {
+public class GroupWrapper extends BaseModelWrapper<Group> implements Group,
+	ModelWrapper<Group> {
 	public GroupWrapper(Group group) {
-		_group = group;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return Group.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return Group.class.getName();
+		super(group);
 	}
 
 	@Override
@@ -221,22 +207,12 @@ public class GroupWrapper implements Group, ModelWrapper<Group> {
 	@Override
 	public String buildTreePath()
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _group.buildTreePath();
+		return model.buildTreePath();
 	}
 
 	@Override
 	public void clearStagingGroup() {
-		_group.clearStagingGroup();
-	}
-
-	@Override
-	public Object clone() {
-		return new GroupWrapper((Group)_group.clone());
-	}
-
-	@Override
-	public int compareTo(Group group) {
-		return _group.compareTo(group);
+		model.clearStagingGroup();
 	}
 
 	/**
@@ -246,22 +222,22 @@ public class GroupWrapper implements Group, ModelWrapper<Group> {
 	*/
 	@Override
 	public boolean getActive() {
-		return _group.getActive();
+		return model.getActive();
 	}
 
 	@Override
 	public java.util.List<Group> getAncestors() {
-		return _group.getAncestors();
+		return model.getAncestors();
 	}
 
 	@Override
 	public String[] getAvailableLanguageIds() {
-		return _group.getAvailableLanguageIds();
+		return model.getAvailableLanguageIds();
 	}
 
 	@Override
 	public java.util.List<Group> getChildren(boolean site) {
-		return _group.getChildren(site);
+		return model.getChildren(site);
 	}
 
 	/**
@@ -273,19 +249,19 @@ public class GroupWrapper implements Group, ModelWrapper<Group> {
 	@Override
 	public java.util.List<Group> getChildrenWithLayouts(boolean site,
 		int start, int end) {
-		return _group.getChildrenWithLayouts(site, start, end);
+		return model.getChildrenWithLayouts(site, start, end);
 	}
 
 	@Override
 	public java.util.List<Group> getChildrenWithLayouts(boolean site,
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<Group> obc) {
-		return _group.getChildrenWithLayouts(site, start, end, obc);
+		return model.getChildrenWithLayouts(site, start, end, obc);
 	}
 
 	@Override
 	public int getChildrenWithLayoutsCount(boolean site) {
-		return _group.getChildrenWithLayoutsCount(site);
+		return model.getChildrenWithLayoutsCount(site);
 	}
 
 	/**
@@ -295,7 +271,7 @@ public class GroupWrapper implements Group, ModelWrapper<Group> {
 	*/
 	@Override
 	public String getClassName() {
-		return _group.getClassName();
+		return model.getClassName();
 	}
 
 	/**
@@ -305,7 +281,7 @@ public class GroupWrapper implements Group, ModelWrapper<Group> {
 	*/
 	@Override
 	public long getClassNameId() {
-		return _group.getClassNameId();
+		return model.getClassNameId();
 	}
 
 	/**
@@ -315,7 +291,7 @@ public class GroupWrapper implements Group, ModelWrapper<Group> {
 	*/
 	@Override
 	public long getClassPK() {
-		return _group.getClassPK();
+		return model.getClassPK();
 	}
 
 	/**
@@ -325,7 +301,7 @@ public class GroupWrapper implements Group, ModelWrapper<Group> {
 	*/
 	@Override
 	public long getCompanyId() {
-		return _group.getCompanyId();
+		return model.getCompanyId();
 	}
 
 	/**
@@ -335,7 +311,7 @@ public class GroupWrapper implements Group, ModelWrapper<Group> {
 	*/
 	@Override
 	public long getCreatorUserId() {
-		return _group.getCreatorUserId();
+		return model.getCreatorUserId();
 	}
 
 	/**
@@ -345,27 +321,27 @@ public class GroupWrapper implements Group, ModelWrapper<Group> {
 	*/
 	@Override
 	public String getCreatorUserUuid() {
-		return _group.getCreatorUserUuid();
+		return model.getCreatorUserUuid();
 	}
 
 	@Override
 	public String getDefaultLanguageId() {
-		return _group.getDefaultLanguageId();
+		return model.getDefaultLanguageId();
 	}
 
 	@Override
 	public long getDefaultPrivatePlid() {
-		return _group.getDefaultPrivatePlid();
+		return model.getDefaultPrivatePlid();
 	}
 
 	@Override
 	public long getDefaultPublicPlid() {
-		return _group.getDefaultPublicPlid();
+		return model.getDefaultPublicPlid();
 	}
 
 	@Override
 	public java.util.List<Group> getDescendants(boolean site) {
-		return _group.getDescendants(site);
+		return model.getDescendants(site);
 	}
 
 	/**
@@ -375,7 +351,7 @@ public class GroupWrapper implements Group, ModelWrapper<Group> {
 	*/
 	@Override
 	public String getDescription() {
-		return _group.getDescription();
+		return model.getDescription();
 	}
 
 	/**
@@ -386,7 +362,7 @@ public class GroupWrapper implements Group, ModelWrapper<Group> {
 	*/
 	@Override
 	public String getDescription(java.util.Locale locale) {
-		return _group.getDescription(locale);
+		return model.getDescription(locale);
 	}
 
 	/**
@@ -398,7 +374,7 @@ public class GroupWrapper implements Group, ModelWrapper<Group> {
 	*/
 	@Override
 	public String getDescription(java.util.Locale locale, boolean useDefault) {
-		return _group.getDescription(locale, useDefault);
+		return model.getDescription(locale, useDefault);
 	}
 
 	/**
@@ -409,7 +385,7 @@ public class GroupWrapper implements Group, ModelWrapper<Group> {
 	*/
 	@Override
 	public String getDescription(String languageId) {
-		return _group.getDescription(languageId);
+		return model.getDescription(languageId);
 	}
 
 	/**
@@ -421,17 +397,17 @@ public class GroupWrapper implements Group, ModelWrapper<Group> {
 	*/
 	@Override
 	public String getDescription(String languageId, boolean useDefault) {
-		return _group.getDescription(languageId, useDefault);
+		return model.getDescription(languageId, useDefault);
 	}
 
 	@Override
 	public String getDescriptionCurrentLanguageId() {
-		return _group.getDescriptionCurrentLanguageId();
+		return model.getDescriptionCurrentLanguageId();
 	}
 
 	@Override
 	public String getDescriptionCurrentValue() {
-		return _group.getDescriptionCurrentValue();
+		return model.getDescriptionCurrentValue();
 	}
 
 	/**
@@ -441,37 +417,32 @@ public class GroupWrapper implements Group, ModelWrapper<Group> {
 	*/
 	@Override
 	public Map<java.util.Locale, String> getDescriptionMap() {
-		return _group.getDescriptionMap();
+		return model.getDescriptionMap();
 	}
 
 	@Override
 	public String getDescriptiveName()
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _group.getDescriptiveName();
+		return model.getDescriptiveName();
 	}
 
 	@Override
 	public String getDescriptiveName(java.util.Locale locale)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _group.getDescriptiveName(locale);
+		return model.getDescriptiveName(locale);
 	}
 
 	@Override
 	public String getDisplayURL(
 		com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay) {
-		return _group.getDisplayURL(themeDisplay);
+		return model.getDisplayURL(themeDisplay);
 	}
 
 	@Override
 	public String getDisplayURL(
 		com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay,
 		boolean privateLayout) {
-		return _group.getDisplayURL(themeDisplay, privateLayout);
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _group.getExpandoBridge();
+		return model.getDisplayURL(themeDisplay, privateLayout);
 	}
 
 	/**
@@ -481,7 +452,7 @@ public class GroupWrapper implements Group, ModelWrapper<Group> {
 	*/
 	@Override
 	public String getFriendlyURL() {
-		return _group.getFriendlyURL();
+		return model.getFriendlyURL();
 	}
 
 	/**
@@ -491,7 +462,7 @@ public class GroupWrapper implements Group, ModelWrapper<Group> {
 	*/
 	@Override
 	public long getGroupId() {
-		return _group.getGroupId();
+		return model.getGroupId();
 	}
 
 	/**
@@ -501,18 +472,18 @@ public class GroupWrapper implements Group, ModelWrapper<Group> {
 	*/
 	@Override
 	public String getGroupKey() {
-		return _group.getGroupKey();
+		return model.getGroupKey();
 	}
 
 	@Override
 	public String getIconCssClass() {
-		return _group.getIconCssClass();
+		return model.getIconCssClass();
 	}
 
 	@Override
 	public String getIconURL(
 		com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay) {
-		return _group.getIconURL(themeDisplay);
+		return model.getIconURL(themeDisplay);
 	}
 
 	/**
@@ -522,18 +493,18 @@ public class GroupWrapper implements Group, ModelWrapper<Group> {
 	*/
 	@Override
 	public boolean getInheritContent() {
-		return _group.getInheritContent();
+		return model.getInheritContent();
 	}
 
 	@Override
 	public String getLayoutRootNodeName(boolean privateLayout,
 		java.util.Locale locale) {
-		return _group.getLayoutRootNodeName(privateLayout, locale);
+		return model.getLayoutRootNodeName(privateLayout, locale);
 	}
 
 	@Override
 	public Group getLiveGroup() {
-		return _group.getLiveGroup();
+		return model.getLiveGroup();
 	}
 
 	/**
@@ -543,19 +514,19 @@ public class GroupWrapper implements Group, ModelWrapper<Group> {
 	*/
 	@Override
 	public long getLiveGroupId() {
-		return _group.getLiveGroupId();
+		return model.getLiveGroupId();
 	}
 
 	@Override
 	public String getLiveParentTypeSettingsProperty(String key) {
-		return _group.getLiveParentTypeSettingsProperty(key);
+		return model.getLiveParentTypeSettingsProperty(key);
 	}
 
 	@Override
 	public String getLogoURL(
 		com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay,
 		boolean useDefault) {
-		return _group.getLogoURL(themeDisplay, useDefault);
+		return model.getLogoURL(themeDisplay, useDefault);
 	}
 
 	/**
@@ -565,7 +536,7 @@ public class GroupWrapper implements Group, ModelWrapper<Group> {
 	*/
 	@Override
 	public boolean getManualMembership() {
-		return _group.getManualMembership();
+		return model.getManualMembership();
 	}
 
 	/**
@@ -575,7 +546,7 @@ public class GroupWrapper implements Group, ModelWrapper<Group> {
 	*/
 	@Override
 	public int getMembershipRestriction() {
-		return _group.getMembershipRestriction();
+		return model.getMembershipRestriction();
 	}
 
 	/**
@@ -585,7 +556,7 @@ public class GroupWrapper implements Group, ModelWrapper<Group> {
 	*/
 	@Override
 	public long getMvccVersion() {
-		return _group.getMvccVersion();
+		return model.getMvccVersion();
 	}
 
 	/**
@@ -595,7 +566,7 @@ public class GroupWrapper implements Group, ModelWrapper<Group> {
 	*/
 	@Override
 	public String getName() {
-		return _group.getName();
+		return model.getName();
 	}
 
 	/**
@@ -606,7 +577,7 @@ public class GroupWrapper implements Group, ModelWrapper<Group> {
 	*/
 	@Override
 	public String getName(java.util.Locale locale) {
-		return _group.getName(locale);
+		return model.getName(locale);
 	}
 
 	/**
@@ -618,7 +589,7 @@ public class GroupWrapper implements Group, ModelWrapper<Group> {
 	*/
 	@Override
 	public String getName(java.util.Locale locale, boolean useDefault) {
-		return _group.getName(locale, useDefault);
+		return model.getName(locale, useDefault);
 	}
 
 	/**
@@ -629,7 +600,7 @@ public class GroupWrapper implements Group, ModelWrapper<Group> {
 	*/
 	@Override
 	public String getName(String languageId) {
-		return _group.getName(languageId);
+		return model.getName(languageId);
 	}
 
 	/**
@@ -641,17 +612,17 @@ public class GroupWrapper implements Group, ModelWrapper<Group> {
 	*/
 	@Override
 	public String getName(String languageId, boolean useDefault) {
-		return _group.getName(languageId, useDefault);
+		return model.getName(languageId, useDefault);
 	}
 
 	@Override
 	public String getNameCurrentLanguageId() {
-		return _group.getNameCurrentLanguageId();
+		return model.getNameCurrentLanguageId();
 	}
 
 	@Override
 	public String getNameCurrentValue() {
-		return _group.getNameCurrentValue();
+		return model.getNameCurrentValue();
 	}
 
 	/**
@@ -661,17 +632,17 @@ public class GroupWrapper implements Group, ModelWrapper<Group> {
 	*/
 	@Override
 	public Map<java.util.Locale, String> getNameMap() {
-		return _group.getNameMap();
+		return model.getNameMap();
 	}
 
 	@Override
 	public long getOrganizationId() {
-		return _group.getOrganizationId();
+		return model.getOrganizationId();
 	}
 
 	@Override
 	public Group getParentGroup() {
-		return _group.getParentGroup();
+		return model.getParentGroup();
 	}
 
 	/**
@@ -681,18 +652,18 @@ public class GroupWrapper implements Group, ModelWrapper<Group> {
 	*/
 	@Override
 	public long getParentGroupId() {
-		return _group.getParentGroupId();
+		return model.getParentGroupId();
 	}
 
 	@Override
 	public com.liferay.portal.kernel.util.UnicodeProperties getParentLiveGroupTypeSettingsProperties() {
-		return _group.getParentLiveGroupTypeSettingsProperties();
+		return model.getParentLiveGroupTypeSettingsProperties();
 	}
 
 	@Override
 	public String getPathFriendlyURL(boolean privateLayout,
 		com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay) {
-		return _group.getPathFriendlyURL(privateLayout, themeDisplay);
+		return model.getPathFriendlyURL(privateLayout, themeDisplay);
 	}
 
 	/**
@@ -702,37 +673,32 @@ public class GroupWrapper implements Group, ModelWrapper<Group> {
 	*/
 	@Override
 	public long getPrimaryKey() {
-		return _group.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _group.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	@Override
 	public LayoutSet getPrivateLayoutSet() {
-		return _group.getPrivateLayoutSet();
+		return model.getPrivateLayoutSet();
 	}
 
 	@Override
 	public int getPrivateLayoutsPageCount() {
-		return _group.getPrivateLayoutsPageCount();
+		return model.getPrivateLayoutsPageCount();
 	}
 
 	@Override
 	public LayoutSet getPublicLayoutSet() {
-		return _group.getPublicLayoutSet();
+		return model.getPublicLayoutSet();
 	}
 
 	@Override
 	public int getPublicLayoutsPageCount() {
-		return _group.getPublicLayoutsPageCount();
+		return model.getPublicLayoutsPageCount();
 	}
 
 	@Override
 	public long getRemoteLiveGroupId() {
-		return _group.getRemoteLiveGroupId();
+		return model.getRemoteLiveGroupId();
 	}
 
 	/**
@@ -742,20 +708,20 @@ public class GroupWrapper implements Group, ModelWrapper<Group> {
 	*/
 	@Override
 	public int getRemoteStagingGroupCount() {
-		return _group.getRemoteStagingGroupCount();
+		return model.getRemoteStagingGroupCount();
 	}
 
 	@Override
 	public String getScopeDescriptiveName(
 		com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _group.getScopeDescriptiveName(themeDisplay);
+		return model.getScopeDescriptiveName(themeDisplay);
 	}
 
 	@Override
 	public String getScopeLabel(
 		com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay) {
-		return _group.getScopeLabel(themeDisplay);
+		return model.getScopeLabel(themeDisplay);
 	}
 
 	/**
@@ -765,12 +731,12 @@ public class GroupWrapper implements Group, ModelWrapper<Group> {
 	*/
 	@Override
 	public boolean getSite() {
-		return _group.getSite();
+		return model.getSite();
 	}
 
 	@Override
 	public Group getStagingGroup() {
-		return _group.getStagingGroup();
+		return model.getStagingGroup();
 	}
 
 	/**
@@ -780,7 +746,7 @@ public class GroupWrapper implements Group, ModelWrapper<Group> {
 	*/
 	@Override
 	public String getTreePath() {
-		return _group.getTreePath();
+		return model.getTreePath();
 	}
 
 	/**
@@ -790,12 +756,12 @@ public class GroupWrapper implements Group, ModelWrapper<Group> {
 	*/
 	@Override
 	public int getType() {
-		return _group.getType();
+		return model.getType();
 	}
 
 	@Override
 	public String getTypeLabel() {
-		return _group.getTypeLabel();
+		return model.getTypeLabel();
 	}
 
 	/**
@@ -805,22 +771,22 @@ public class GroupWrapper implements Group, ModelWrapper<Group> {
 	*/
 	@Override
 	public String getTypeSettings() {
-		return _group.getTypeSettings();
+		return model.getTypeSettings();
 	}
 
 	@Override
 	public com.liferay.portal.kernel.util.UnicodeProperties getTypeSettingsProperties() {
-		return _group.getTypeSettingsProperties();
+		return model.getTypeSettingsProperties();
 	}
 
 	@Override
 	public String getTypeSettingsProperty(String key) {
-		return _group.getTypeSettingsProperty(key);
+		return model.getTypeSettingsProperty(key);
 	}
 
 	@Override
 	public String getUnambiguousName(String name, java.util.Locale locale) {
-		return _group.getUnambiguousName(name, locale);
+		return model.getUnambiguousName(name, locale);
 	}
 
 	/**
@@ -830,42 +796,37 @@ public class GroupWrapper implements Group, ModelWrapper<Group> {
 	*/
 	@Override
 	public String getUuid() {
-		return _group.getUuid();
+		return model.getUuid();
 	}
 
 	@Override
 	public boolean hasAncestor(long groupId) {
-		return _group.hasAncestor(groupId);
-	}
-
-	@Override
-	public int hashCode() {
-		return _group.hashCode();
+		return model.hasAncestor(groupId);
 	}
 
 	@Override
 	public boolean hasLocalOrRemoteStagingGroup() {
-		return _group.hasLocalOrRemoteStagingGroup();
+		return model.hasLocalOrRemoteStagingGroup();
 	}
 
 	@Override
 	public boolean hasPrivateLayouts() {
-		return _group.hasPrivateLayouts();
+		return model.hasPrivateLayouts();
 	}
 
 	@Override
 	public boolean hasPublicLayouts() {
-		return _group.hasPublicLayouts();
+		return model.hasPublicLayouts();
 	}
 
 	@Override
 	public boolean hasRemoteStagingGroup() {
-		return _group.hasRemoteStagingGroup();
+		return model.hasRemoteStagingGroup();
 	}
 
 	@Override
 	public boolean hasStagingGroup() {
-		return _group.hasStagingGroup();
+		return model.hasStagingGroup();
 	}
 
 	/**
@@ -875,12 +836,7 @@ public class GroupWrapper implements Group, ModelWrapper<Group> {
 	*/
 	@Override
 	public boolean isActive() {
-		return _group.isActive();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _group.isCachedModel();
+		return model.isActive();
 	}
 
 	/**
@@ -889,32 +845,27 @@ public class GroupWrapper implements Group, ModelWrapper<Group> {
 	@Deprecated
 	@Override
 	public boolean isChild(long groupId) {
-		return _group.isChild(groupId);
+		return model.isChild(groupId);
 	}
 
 	@Override
 	public boolean isCompany() {
-		return _group.isCompany();
+		return model.isCompany();
 	}
 
 	@Override
 	public boolean isCompanyStagingGroup() {
-		return _group.isCompanyStagingGroup();
+		return model.isCompanyStagingGroup();
 	}
 
 	@Override
 	public boolean isControlPanel() {
-		return _group.isControlPanel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _group.isEscapedModel();
+		return model.isControlPanel();
 	}
 
 	@Override
 	public boolean isGuest() {
-		return _group.isGuest();
+		return model.isGuest();
 	}
 
 	/**
@@ -924,32 +875,32 @@ public class GroupWrapper implements Group, ModelWrapper<Group> {
 	*/
 	@Override
 	public boolean isInheritContent() {
-		return _group.isInheritContent();
+		return model.isInheritContent();
 	}
 
 	@Override
 	public boolean isInStagingPortlet(String portletId) {
-		return _group.isInStagingPortlet(portletId);
+		return model.isInStagingPortlet(portletId);
 	}
 
 	@Override
 	public boolean isLayout() {
-		return _group.isLayout();
+		return model.isLayout();
 	}
 
 	@Override
 	public boolean isLayoutPrototype() {
-		return _group.isLayoutPrototype();
+		return model.isLayoutPrototype();
 	}
 
 	@Override
 	public boolean isLayoutSetPrototype() {
-		return _group.isLayoutSetPrototype();
+		return model.isLayoutSetPrototype();
 	}
 
 	@Override
 	public boolean isLimitedToParentSiteMembers() {
-		return _group.isLimitedToParentSiteMembers();
+		return model.isLimitedToParentSiteMembers();
 	}
 
 	/**
@@ -959,27 +910,22 @@ public class GroupWrapper implements Group, ModelWrapper<Group> {
 	*/
 	@Override
 	public boolean isManualMembership() {
-		return _group.isManualMembership();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _group.isNew();
+		return model.isManualMembership();
 	}
 
 	@Override
 	public boolean isOrganization() {
-		return _group.isOrganization();
+		return model.isOrganization();
 	}
 
 	@Override
 	public boolean isRegularSite() {
-		return _group.isRegularSite();
+		return model.isRegularSite();
 	}
 
 	@Override
 	public boolean isRoot() {
-		return _group.isRoot();
+		return model.isRoot();
 	}
 
 	@Override
@@ -987,7 +933,7 @@ public class GroupWrapper implements Group, ModelWrapper<Group> {
 		com.liferay.portal.kernel.security.permission.PermissionChecker permissionChecker,
 		boolean privateSite)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _group.isShowSite(permissionChecker, privateSite);
+		return model.isShowSite(permissionChecker, privateSite);
 	}
 
 	/**
@@ -997,60 +943,60 @@ public class GroupWrapper implements Group, ModelWrapper<Group> {
 	*/
 	@Override
 	public boolean isSite() {
-		return _group.isSite();
+		return model.isSite();
 	}
 
 	@Override
 	public boolean isStaged() {
-		return _group.isStaged();
+		return model.isStaged();
 	}
 
 	@Override
 	public boolean isStagedPortlet(String portletId) {
-		return _group.isStagedPortlet(portletId);
+		return model.isStagedPortlet(portletId);
 	}
 
 	@Override
 	public boolean isStagedRemotely() {
-		return _group.isStagedRemotely();
+		return model.isStagedRemotely();
 	}
 
 	@Override
 	public boolean isStagingGroup() {
-		return _group.isStagingGroup();
+		return model.isStagingGroup();
 	}
 
 	@Override
 	public boolean isUser() {
-		return _group.isUser();
+		return model.isUser();
 	}
 
 	@Override
 	public boolean isUserGroup() {
-		return _group.isUserGroup();
+		return model.isUserGroup();
 	}
 
 	@Override
 	public boolean isUserPersonalSite() {
-		return _group.isUserPersonalSite();
+		return model.isUserPersonalSite();
 	}
 
 	@Override
 	public void persist() {
-		_group.persist();
+		model.persist();
 	}
 
 	@Override
 	public void prepareLocalizedFieldsForImport()
 		throws com.liferay.portal.kernel.exception.LocaleException {
-		_group.prepareLocalizedFieldsForImport();
+		model.prepareLocalizedFieldsForImport();
 	}
 
 	@Override
 	public void prepareLocalizedFieldsForImport(
 		java.util.Locale defaultImportLocale)
 		throws com.liferay.portal.kernel.exception.LocaleException {
-		_group.prepareLocalizedFieldsForImport(defaultImportLocale);
+		model.prepareLocalizedFieldsForImport(defaultImportLocale);
 	}
 
 	/**
@@ -1060,17 +1006,12 @@ public class GroupWrapper implements Group, ModelWrapper<Group> {
 	*/
 	@Override
 	public void setActive(boolean active) {
-		_group.setActive(active);
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_group.setCachedModel(cachedModel);
+		model.setActive(active);
 	}
 
 	@Override
 	public void setClassName(String className) {
-		_group.setClassName(className);
+		model.setClassName(className);
 	}
 
 	/**
@@ -1080,7 +1021,7 @@ public class GroupWrapper implements Group, ModelWrapper<Group> {
 	*/
 	@Override
 	public void setClassNameId(long classNameId) {
-		_group.setClassNameId(classNameId);
+		model.setClassNameId(classNameId);
 	}
 
 	/**
@@ -1090,7 +1031,7 @@ public class GroupWrapper implements Group, ModelWrapper<Group> {
 	*/
 	@Override
 	public void setClassPK(long classPK) {
-		_group.setClassPK(classPK);
+		model.setClassPK(classPK);
 	}
 
 	/**
@@ -1100,7 +1041,7 @@ public class GroupWrapper implements Group, ModelWrapper<Group> {
 	*/
 	@Override
 	public void setCompanyId(long companyId) {
-		_group.setCompanyId(companyId);
+		model.setCompanyId(companyId);
 	}
 
 	/**
@@ -1110,7 +1051,7 @@ public class GroupWrapper implements Group, ModelWrapper<Group> {
 	*/
 	@Override
 	public void setCreatorUserId(long creatorUserId) {
-		_group.setCreatorUserId(creatorUserId);
+		model.setCreatorUserId(creatorUserId);
 	}
 
 	/**
@@ -1120,7 +1061,7 @@ public class GroupWrapper implements Group, ModelWrapper<Group> {
 	*/
 	@Override
 	public void setCreatorUserUuid(String creatorUserUuid) {
-		_group.setCreatorUserUuid(creatorUserUuid);
+		model.setCreatorUserUuid(creatorUserUuid);
 	}
 
 	/**
@@ -1130,7 +1071,7 @@ public class GroupWrapper implements Group, ModelWrapper<Group> {
 	*/
 	@Override
 	public void setDescription(String description) {
-		_group.setDescription(description);
+		model.setDescription(description);
 	}
 
 	/**
@@ -1141,7 +1082,7 @@ public class GroupWrapper implements Group, ModelWrapper<Group> {
 	*/
 	@Override
 	public void setDescription(String description, java.util.Locale locale) {
-		_group.setDescription(description, locale);
+		model.setDescription(description, locale);
 	}
 
 	/**
@@ -1154,12 +1095,12 @@ public class GroupWrapper implements Group, ModelWrapper<Group> {
 	@Override
 	public void setDescription(String description, java.util.Locale locale,
 		java.util.Locale defaultLocale) {
-		_group.setDescription(description, locale, defaultLocale);
+		model.setDescription(description, locale, defaultLocale);
 	}
 
 	@Override
 	public void setDescriptionCurrentLanguageId(String languageId) {
-		_group.setDescriptionCurrentLanguageId(languageId);
+		model.setDescriptionCurrentLanguageId(languageId);
 	}
 
 	/**
@@ -1169,7 +1110,7 @@ public class GroupWrapper implements Group, ModelWrapper<Group> {
 	*/
 	@Override
 	public void setDescriptionMap(Map<java.util.Locale, String> descriptionMap) {
-		_group.setDescriptionMap(descriptionMap);
+		model.setDescriptionMap(descriptionMap);
 	}
 
 	/**
@@ -1182,22 +1123,7 @@ public class GroupWrapper implements Group, ModelWrapper<Group> {
 	public void setDescriptionMap(
 		Map<java.util.Locale, String> descriptionMap,
 		java.util.Locale defaultLocale) {
-		_group.setDescriptionMap(descriptionMap, defaultLocale);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(BaseModel<?> baseModel) {
-		_group.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_group.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_group.setExpandoBridgeAttributes(serviceContext);
+		model.setDescriptionMap(descriptionMap, defaultLocale);
 	}
 
 	/**
@@ -1207,7 +1133,7 @@ public class GroupWrapper implements Group, ModelWrapper<Group> {
 	*/
 	@Override
 	public void setFriendlyURL(String friendlyURL) {
-		_group.setFriendlyURL(friendlyURL);
+		model.setFriendlyURL(friendlyURL);
 	}
 
 	/**
@@ -1217,7 +1143,7 @@ public class GroupWrapper implements Group, ModelWrapper<Group> {
 	*/
 	@Override
 	public void setGroupId(long groupId) {
-		_group.setGroupId(groupId);
+		model.setGroupId(groupId);
 	}
 
 	/**
@@ -1227,7 +1153,7 @@ public class GroupWrapper implements Group, ModelWrapper<Group> {
 	*/
 	@Override
 	public void setGroupKey(String groupKey) {
-		_group.setGroupKey(groupKey);
+		model.setGroupKey(groupKey);
 	}
 
 	/**
@@ -1237,7 +1163,7 @@ public class GroupWrapper implements Group, ModelWrapper<Group> {
 	*/
 	@Override
 	public void setInheritContent(boolean inheritContent) {
-		_group.setInheritContent(inheritContent);
+		model.setInheritContent(inheritContent);
 	}
 
 	/**
@@ -1247,7 +1173,7 @@ public class GroupWrapper implements Group, ModelWrapper<Group> {
 	*/
 	@Override
 	public void setLiveGroupId(long liveGroupId) {
-		_group.setLiveGroupId(liveGroupId);
+		model.setLiveGroupId(liveGroupId);
 	}
 
 	/**
@@ -1257,7 +1183,7 @@ public class GroupWrapper implements Group, ModelWrapper<Group> {
 	*/
 	@Override
 	public void setManualMembership(boolean manualMembership) {
-		_group.setManualMembership(manualMembership);
+		model.setManualMembership(manualMembership);
 	}
 
 	/**
@@ -1267,7 +1193,7 @@ public class GroupWrapper implements Group, ModelWrapper<Group> {
 	*/
 	@Override
 	public void setMembershipRestriction(int membershipRestriction) {
-		_group.setMembershipRestriction(membershipRestriction);
+		model.setMembershipRestriction(membershipRestriction);
 	}
 
 	/**
@@ -1277,7 +1203,7 @@ public class GroupWrapper implements Group, ModelWrapper<Group> {
 	*/
 	@Override
 	public void setMvccVersion(long mvccVersion) {
-		_group.setMvccVersion(mvccVersion);
+		model.setMvccVersion(mvccVersion);
 	}
 
 	/**
@@ -1287,7 +1213,7 @@ public class GroupWrapper implements Group, ModelWrapper<Group> {
 	*/
 	@Override
 	public void setName(String name) {
-		_group.setName(name);
+		model.setName(name);
 	}
 
 	/**
@@ -1298,7 +1224,7 @@ public class GroupWrapper implements Group, ModelWrapper<Group> {
 	*/
 	@Override
 	public void setName(String name, java.util.Locale locale) {
-		_group.setName(name, locale);
+		model.setName(name, locale);
 	}
 
 	/**
@@ -1311,12 +1237,12 @@ public class GroupWrapper implements Group, ModelWrapper<Group> {
 	@Override
 	public void setName(String name, java.util.Locale locale,
 		java.util.Locale defaultLocale) {
-		_group.setName(name, locale, defaultLocale);
+		model.setName(name, locale, defaultLocale);
 	}
 
 	@Override
 	public void setNameCurrentLanguageId(String languageId) {
-		_group.setNameCurrentLanguageId(languageId);
+		model.setNameCurrentLanguageId(languageId);
 	}
 
 	/**
@@ -1326,7 +1252,7 @@ public class GroupWrapper implements Group, ModelWrapper<Group> {
 	*/
 	@Override
 	public void setNameMap(Map<java.util.Locale, String> nameMap) {
-		_group.setNameMap(nameMap);
+		model.setNameMap(nameMap);
 	}
 
 	/**
@@ -1338,12 +1264,7 @@ public class GroupWrapper implements Group, ModelWrapper<Group> {
 	@Override
 	public void setNameMap(Map<java.util.Locale, String> nameMap,
 		java.util.Locale defaultLocale) {
-		_group.setNameMap(nameMap, defaultLocale);
-	}
-
-	@Override
-	public void setNew(boolean n) {
-		_group.setNew(n);
+		model.setNameMap(nameMap, defaultLocale);
 	}
 
 	/**
@@ -1353,7 +1274,7 @@ public class GroupWrapper implements Group, ModelWrapper<Group> {
 	*/
 	@Override
 	public void setParentGroupId(long parentGroupId) {
-		_group.setParentGroupId(parentGroupId);
+		model.setParentGroupId(parentGroupId);
 	}
 
 	/**
@@ -1363,12 +1284,7 @@ public class GroupWrapper implements Group, ModelWrapper<Group> {
 	*/
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_group.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_group.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -1378,7 +1294,7 @@ public class GroupWrapper implements Group, ModelWrapper<Group> {
 	*/
 	@Override
 	public void setRemoteStagingGroupCount(int remoteStagingGroupCount) {
-		_group.setRemoteStagingGroupCount(remoteStagingGroupCount);
+		model.setRemoteStagingGroupCount(remoteStagingGroupCount);
 	}
 
 	/**
@@ -1388,7 +1304,7 @@ public class GroupWrapper implements Group, ModelWrapper<Group> {
 	*/
 	@Override
 	public void setSite(boolean site) {
-		_group.setSite(site);
+		model.setSite(site);
 	}
 
 	/**
@@ -1398,7 +1314,7 @@ public class GroupWrapper implements Group, ModelWrapper<Group> {
 	*/
 	@Override
 	public void setTreePath(String treePath) {
-		_group.setTreePath(treePath);
+		model.setTreePath(treePath);
 	}
 
 	/**
@@ -1408,7 +1324,7 @@ public class GroupWrapper implements Group, ModelWrapper<Group> {
 	*/
 	@Override
 	public void setType(int type) {
-		_group.setType(type);
+		model.setType(type);
 	}
 
 	/**
@@ -1418,13 +1334,13 @@ public class GroupWrapper implements Group, ModelWrapper<Group> {
 	*/
 	@Override
 	public void setTypeSettings(String typeSettings) {
-		_group.setTypeSettings(typeSettings);
+		model.setTypeSettings(typeSettings);
 	}
 
 	@Override
 	public void setTypeSettingsProperties(
 		com.liferay.portal.kernel.util.UnicodeProperties typeSettingsProperties) {
-		_group.setTypeSettingsProperties(typeSettingsProperties);
+		model.setTypeSettingsProperties(typeSettingsProperties);
 	}
 
 	/**
@@ -1434,77 +1350,16 @@ public class GroupWrapper implements Group, ModelWrapper<Group> {
 	*/
 	@Override
 	public void setUuid(String uuid) {
-		_group.setUuid(uuid);
-	}
-
-	@Override
-	public CacheModel<Group> toCacheModel() {
-		return _group.toCacheModel();
-	}
-
-	@Override
-	public Group toEscapedModel() {
-		return new GroupWrapper(_group.toEscapedModel());
-	}
-
-	@Override
-	public String toString() {
-		return _group.toString();
-	}
-
-	@Override
-	public Group toUnescapedModel() {
-		return new GroupWrapper(_group.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _group.toXmlString();
+		model.setUuid(uuid);
 	}
 
 	@Override
 	public void updateTreePath(String treePath) {
-		_group.updateTreePath(treePath);
+		model.updateTreePath(treePath);
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-
-		if (!(obj instanceof GroupWrapper)) {
-			return false;
-		}
-
-		GroupWrapper groupWrapper = (GroupWrapper)obj;
-
-		if (Objects.equals(_group, groupWrapper._group)) {
-			return true;
-		}
-
-		return false;
+	protected GroupWrapper wrap(Group group) {
+		return new GroupWrapper(group);
 	}
-
-	@Override
-	public Group getWrappedModel() {
-		return _group;
-	}
-
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _group.isEntityCacheEnabled();
-	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _group.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_group.resetOriginalValues();
-	}
-
-	private final Group _group;
 }

@@ -16,16 +16,11 @@ package com.liferay.portal.kernel.model;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
-
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -37,20 +32,10 @@ import java.util.Objects;
  * @generated
  */
 @ProviderType
-public class UserTrackerWrapper implements UserTracker,
-	ModelWrapper<UserTracker> {
+public class UserTrackerWrapper extends BaseModelWrapper<UserTracker>
+	implements UserTracker, ModelWrapper<UserTracker> {
 	public UserTrackerWrapper(UserTracker userTracker) {
-		_userTracker = userTracker;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return UserTracker.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return UserTracker.class.getName();
+		super(userTracker);
 	}
 
 	@Override
@@ -129,17 +114,12 @@ public class UserTrackerWrapper implements UserTracker,
 
 	@Override
 	public void addPath(UserTrackerPath path) {
-		_userTracker.addPath(path);
-	}
-
-	@Override
-	public Object clone() {
-		return new UserTrackerWrapper((UserTracker)_userTracker.clone());
+		model.addPath(path);
 	}
 
 	@Override
 	public int compareTo(UserTracker userTracker) {
-		return _userTracker.compareTo(userTracker);
+		return model.compareTo(userTracker);
 	}
 
 	/**
@@ -149,27 +129,22 @@ public class UserTrackerWrapper implements UserTracker,
 	*/
 	@Override
 	public long getCompanyId() {
-		return _userTracker.getCompanyId();
+		return model.getCompanyId();
 	}
 
 	@Override
 	public String getEmailAddress() {
-		return _userTracker.getEmailAddress();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _userTracker.getExpandoBridge();
+		return model.getEmailAddress();
 	}
 
 	@Override
 	public String getFullName() {
-		return _userTracker.getFullName();
+		return model.getFullName();
 	}
 
 	@Override
 	public int getHits() {
-		return _userTracker.getHits();
+		return model.getHits();
 	}
 
 	/**
@@ -179,7 +154,7 @@ public class UserTrackerWrapper implements UserTracker,
 	*/
 	@Override
 	public Date getModifiedDate() {
-		return _userTracker.getModifiedDate();
+		return model.getModifiedDate();
 	}
 
 	/**
@@ -189,12 +164,12 @@ public class UserTrackerWrapper implements UserTracker,
 	*/
 	@Override
 	public long getMvccVersion() {
-		return _userTracker.getMvccVersion();
+		return model.getMvccVersion();
 	}
 
 	@Override
 	public java.util.List<UserTrackerPath> getPaths() {
-		return _userTracker.getPaths();
+		return model.getPaths();
 	}
 
 	/**
@@ -204,12 +179,7 @@ public class UserTrackerWrapper implements UserTracker,
 	*/
 	@Override
 	public long getPrimaryKey() {
-		return _userTracker.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _userTracker.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	/**
@@ -219,7 +189,7 @@ public class UserTrackerWrapper implements UserTracker,
 	*/
 	@Override
 	public String getRemoteAddr() {
-		return _userTracker.getRemoteAddr();
+		return model.getRemoteAddr();
 	}
 
 	/**
@@ -229,7 +199,7 @@ public class UserTrackerWrapper implements UserTracker,
 	*/
 	@Override
 	public String getRemoteHost() {
-		return _userTracker.getRemoteHost();
+		return model.getRemoteHost();
 	}
 
 	/**
@@ -239,7 +209,7 @@ public class UserTrackerWrapper implements UserTracker,
 	*/
 	@Override
 	public String getSessionId() {
-		return _userTracker.getSessionId();
+		return model.getSessionId();
 	}
 
 	/**
@@ -249,7 +219,7 @@ public class UserTrackerWrapper implements UserTracker,
 	*/
 	@Override
 	public String getUserAgent() {
-		return _userTracker.getUserAgent();
+		return model.getUserAgent();
 	}
 
 	/**
@@ -259,7 +229,7 @@ public class UserTrackerWrapper implements UserTracker,
 	*/
 	@Override
 	public long getUserId() {
-		return _userTracker.getUserId();
+		return model.getUserId();
 	}
 
 	/**
@@ -269,7 +239,7 @@ public class UserTrackerWrapper implements UserTracker,
 	*/
 	@Override
 	public long getUserTrackerId() {
-		return _userTracker.getUserTrackerId();
+		return model.getUserTrackerId();
 	}
 
 	/**
@@ -279,37 +249,12 @@ public class UserTrackerWrapper implements UserTracker,
 	*/
 	@Override
 	public String getUserUuid() {
-		return _userTracker.getUserUuid();
-	}
-
-	@Override
-	public int hashCode() {
-		return _userTracker.hashCode();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _userTracker.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _userTracker.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _userTracker.isNew();
+		return model.getUserUuid();
 	}
 
 	@Override
 	public void persist() {
-		_userTracker.persist();
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_userTracker.setCachedModel(cachedModel);
+		model.persist();
 	}
 
 	/**
@@ -319,22 +264,7 @@ public class UserTrackerWrapper implements UserTracker,
 	*/
 	@Override
 	public void setCompanyId(long companyId) {
-		_userTracker.setCompanyId(companyId);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(BaseModel<?> baseModel) {
-		_userTracker.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_userTracker.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_userTracker.setExpandoBridgeAttributes(serviceContext);
+		model.setCompanyId(companyId);
 	}
 
 	/**
@@ -344,7 +274,7 @@ public class UserTrackerWrapper implements UserTracker,
 	*/
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
-		_userTracker.setModifiedDate(modifiedDate);
+		model.setModifiedDate(modifiedDate);
 	}
 
 	/**
@@ -354,12 +284,7 @@ public class UserTrackerWrapper implements UserTracker,
 	*/
 	@Override
 	public void setMvccVersion(long mvccVersion) {
-		_userTracker.setMvccVersion(mvccVersion);
-	}
-
-	@Override
-	public void setNew(boolean n) {
-		_userTracker.setNew(n);
+		model.setMvccVersion(mvccVersion);
 	}
 
 	/**
@@ -369,12 +294,7 @@ public class UserTrackerWrapper implements UserTracker,
 	*/
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_userTracker.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_userTracker.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -384,7 +304,7 @@ public class UserTrackerWrapper implements UserTracker,
 	*/
 	@Override
 	public void setRemoteAddr(String remoteAddr) {
-		_userTracker.setRemoteAddr(remoteAddr);
+		model.setRemoteAddr(remoteAddr);
 	}
 
 	/**
@@ -394,7 +314,7 @@ public class UserTrackerWrapper implements UserTracker,
 	*/
 	@Override
 	public void setRemoteHost(String remoteHost) {
-		_userTracker.setRemoteHost(remoteHost);
+		model.setRemoteHost(remoteHost);
 	}
 
 	/**
@@ -404,7 +324,7 @@ public class UserTrackerWrapper implements UserTracker,
 	*/
 	@Override
 	public void setSessionId(String sessionId) {
-		_userTracker.setSessionId(sessionId);
+		model.setSessionId(sessionId);
 	}
 
 	/**
@@ -414,7 +334,7 @@ public class UserTrackerWrapper implements UserTracker,
 	*/
 	@Override
 	public void setUserAgent(String userAgent) {
-		_userTracker.setUserAgent(userAgent);
+		model.setUserAgent(userAgent);
 	}
 
 	/**
@@ -424,7 +344,7 @@ public class UserTrackerWrapper implements UserTracker,
 	*/
 	@Override
 	public void setUserId(long userId) {
-		_userTracker.setUserId(userId);
+		model.setUserId(userId);
 	}
 
 	/**
@@ -434,7 +354,7 @@ public class UserTrackerWrapper implements UserTracker,
 	*/
 	@Override
 	public void setUserTrackerId(long userTrackerId) {
-		_userTracker.setUserTrackerId(userTrackerId);
+		model.setUserTrackerId(userTrackerId);
 	}
 
 	/**
@@ -444,72 +364,11 @@ public class UserTrackerWrapper implements UserTracker,
 	*/
 	@Override
 	public void setUserUuid(String userUuid) {
-		_userTracker.setUserUuid(userUuid);
+		model.setUserUuid(userUuid);
 	}
 
 	@Override
-	public CacheModel<UserTracker> toCacheModel() {
-		return _userTracker.toCacheModel();
+	protected UserTrackerWrapper wrap(UserTracker userTracker) {
+		return new UserTrackerWrapper(userTracker);
 	}
-
-	@Override
-	public UserTracker toEscapedModel() {
-		return new UserTrackerWrapper(_userTracker.toEscapedModel());
-	}
-
-	@Override
-	public String toString() {
-		return _userTracker.toString();
-	}
-
-	@Override
-	public UserTracker toUnescapedModel() {
-		return new UserTrackerWrapper(_userTracker.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _userTracker.toXmlString();
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-
-		if (!(obj instanceof UserTrackerWrapper)) {
-			return false;
-		}
-
-		UserTrackerWrapper userTrackerWrapper = (UserTrackerWrapper)obj;
-
-		if (Objects.equals(_userTracker, userTrackerWrapper._userTracker)) {
-			return true;
-		}
-
-		return false;
-	}
-
-	@Override
-	public UserTracker getWrappedModel() {
-		return _userTracker;
-	}
-
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _userTracker.isEntityCacheEnabled();
-	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _userTracker.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_userTracker.resetOriginalValues();
-	}
-
-	private final UserTracker _userTracker;
 }

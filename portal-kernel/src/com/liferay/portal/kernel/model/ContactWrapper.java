@@ -16,16 +16,11 @@ package com.liferay.portal.kernel.model;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
-
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -37,19 +32,10 @@ import java.util.Objects;
  * @generated
  */
 @ProviderType
-public class ContactWrapper implements Contact, ModelWrapper<Contact> {
+public class ContactWrapper extends BaseModelWrapper<Contact> implements Contact,
+	ModelWrapper<Contact> {
 	public ContactWrapper(Contact contact) {
-		_contact = contact;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return Contact.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return Contact.class.getName();
+		super(contact);
 	}
 
 	@Override
@@ -266,16 +252,6 @@ public class ContactWrapper implements Contact, ModelWrapper<Contact> {
 		}
 	}
 
-	@Override
-	public Object clone() {
-		return new ContactWrapper((Contact)_contact.clone());
-	}
-
-	@Override
-	public int compareTo(Contact contact) {
-		return _contact.compareTo(contact);
-	}
-
 	/**
 	* Returns the account ID of this contact.
 	*
@@ -283,7 +259,7 @@ public class ContactWrapper implements Contact, ModelWrapper<Contact> {
 	*/
 	@Override
 	public long getAccountId() {
-		return _contact.getAccountId();
+		return model.getAccountId();
 	}
 
 	/**
@@ -293,7 +269,7 @@ public class ContactWrapper implements Contact, ModelWrapper<Contact> {
 	*/
 	@Override
 	public Date getBirthday() {
-		return _contact.getBirthday();
+		return model.getBirthday();
 	}
 
 	/**
@@ -303,7 +279,7 @@ public class ContactWrapper implements Contact, ModelWrapper<Contact> {
 	*/
 	@Override
 	public String getClassName() {
-		return _contact.getClassName();
+		return model.getClassName();
 	}
 
 	/**
@@ -313,7 +289,7 @@ public class ContactWrapper implements Contact, ModelWrapper<Contact> {
 	*/
 	@Override
 	public long getClassNameId() {
-		return _contact.getClassNameId();
+		return model.getClassNameId();
 	}
 
 	/**
@@ -323,7 +299,7 @@ public class ContactWrapper implements Contact, ModelWrapper<Contact> {
 	*/
 	@Override
 	public long getClassPK() {
-		return _contact.getClassPK();
+		return model.getClassPK();
 	}
 
 	/**
@@ -333,7 +309,7 @@ public class ContactWrapper implements Contact, ModelWrapper<Contact> {
 	*/
 	@Override
 	public long getCompanyId() {
-		return _contact.getCompanyId();
+		return model.getCompanyId();
 	}
 
 	/**
@@ -343,7 +319,7 @@ public class ContactWrapper implements Contact, ModelWrapper<Contact> {
 	*/
 	@Override
 	public long getContactId() {
-		return _contact.getContactId();
+		return model.getContactId();
 	}
 
 	/**
@@ -353,7 +329,7 @@ public class ContactWrapper implements Contact, ModelWrapper<Contact> {
 	*/
 	@Override
 	public Date getCreateDate() {
-		return _contact.getCreateDate();
+		return model.getCreateDate();
 	}
 
 	/**
@@ -363,7 +339,7 @@ public class ContactWrapper implements Contact, ModelWrapper<Contact> {
 	*/
 	@Override
 	public String getEmailAddress() {
-		return _contact.getEmailAddress();
+		return model.getEmailAddress();
 	}
 
 	/**
@@ -373,7 +349,7 @@ public class ContactWrapper implements Contact, ModelWrapper<Contact> {
 	*/
 	@Override
 	public String getEmployeeNumber() {
-		return _contact.getEmployeeNumber();
+		return model.getEmployeeNumber();
 	}
 
 	/**
@@ -383,12 +359,7 @@ public class ContactWrapper implements Contact, ModelWrapper<Contact> {
 	*/
 	@Override
 	public String getEmployeeStatusId() {
-		return _contact.getEmployeeStatusId();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _contact.getExpandoBridge();
+		return model.getEmployeeStatusId();
 	}
 
 	/**
@@ -398,7 +369,7 @@ public class ContactWrapper implements Contact, ModelWrapper<Contact> {
 	*/
 	@Override
 	public String getFacebookSn() {
-		return _contact.getFacebookSn();
+		return model.getFacebookSn();
 	}
 
 	/**
@@ -408,12 +379,12 @@ public class ContactWrapper implements Contact, ModelWrapper<Contact> {
 	*/
 	@Override
 	public String getFirstName() {
-		return _contact.getFirstName();
+		return model.getFirstName();
 	}
 
 	@Override
 	public String getFullName() {
-		return _contact.getFullName();
+		return model.getFullName();
 	}
 
 	/**
@@ -423,7 +394,7 @@ public class ContactWrapper implements Contact, ModelWrapper<Contact> {
 	*/
 	@Override
 	public String getHoursOfOperation() {
-		return _contact.getHoursOfOperation();
+		return model.getHoursOfOperation();
 	}
 
 	/**
@@ -433,7 +404,7 @@ public class ContactWrapper implements Contact, ModelWrapper<Contact> {
 	*/
 	@Override
 	public String getJabberSn() {
-		return _contact.getJabberSn();
+		return model.getJabberSn();
 	}
 
 	/**
@@ -443,7 +414,7 @@ public class ContactWrapper implements Contact, ModelWrapper<Contact> {
 	*/
 	@Override
 	public String getJobClass() {
-		return _contact.getJobClass();
+		return model.getJobClass();
 	}
 
 	/**
@@ -453,7 +424,7 @@ public class ContactWrapper implements Contact, ModelWrapper<Contact> {
 	*/
 	@Override
 	public String getJobTitle() {
-		return _contact.getJobTitle();
+		return model.getJobTitle();
 	}
 
 	/**
@@ -463,7 +434,7 @@ public class ContactWrapper implements Contact, ModelWrapper<Contact> {
 	*/
 	@Override
 	public String getLastName() {
-		return _contact.getLastName();
+		return model.getLastName();
 	}
 
 	/**
@@ -473,7 +444,7 @@ public class ContactWrapper implements Contact, ModelWrapper<Contact> {
 	*/
 	@Override
 	public boolean getMale() {
-		return _contact.getMale();
+		return model.getMale();
 	}
 
 	/**
@@ -483,7 +454,7 @@ public class ContactWrapper implements Contact, ModelWrapper<Contact> {
 	*/
 	@Override
 	public String getMiddleName() {
-		return _contact.getMiddleName();
+		return model.getMiddleName();
 	}
 
 	/**
@@ -493,7 +464,7 @@ public class ContactWrapper implements Contact, ModelWrapper<Contact> {
 	*/
 	@Override
 	public Date getModifiedDate() {
-		return _contact.getModifiedDate();
+		return model.getModifiedDate();
 	}
 
 	/**
@@ -503,7 +474,7 @@ public class ContactWrapper implements Contact, ModelWrapper<Contact> {
 	*/
 	@Override
 	public long getMvccVersion() {
-		return _contact.getMvccVersion();
+		return model.getMvccVersion();
 	}
 
 	/**
@@ -513,7 +484,7 @@ public class ContactWrapper implements Contact, ModelWrapper<Contact> {
 	*/
 	@Override
 	public long getParentContactId() {
-		return _contact.getParentContactId();
+		return model.getParentContactId();
 	}
 
 	/**
@@ -523,7 +494,7 @@ public class ContactWrapper implements Contact, ModelWrapper<Contact> {
 	*/
 	@Override
 	public long getPrefixId() {
-		return _contact.getPrefixId();
+		return model.getPrefixId();
 	}
 
 	/**
@@ -533,12 +504,7 @@ public class ContactWrapper implements Contact, ModelWrapper<Contact> {
 	*/
 	@Override
 	public long getPrimaryKey() {
-		return _contact.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _contact.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	/**
@@ -548,7 +514,7 @@ public class ContactWrapper implements Contact, ModelWrapper<Contact> {
 	*/
 	@Override
 	public String getSkypeSn() {
-		return _contact.getSkypeSn();
+		return model.getSkypeSn();
 	}
 
 	/**
@@ -558,7 +524,7 @@ public class ContactWrapper implements Contact, ModelWrapper<Contact> {
 	*/
 	@Override
 	public String getSmsSn() {
-		return _contact.getSmsSn();
+		return model.getSmsSn();
 	}
 
 	/**
@@ -568,7 +534,7 @@ public class ContactWrapper implements Contact, ModelWrapper<Contact> {
 	*/
 	@Override
 	public long getSuffixId() {
-		return _contact.getSuffixId();
+		return model.getSuffixId();
 	}
 
 	/**
@@ -578,7 +544,7 @@ public class ContactWrapper implements Contact, ModelWrapper<Contact> {
 	*/
 	@Override
 	public String getTwitterSn() {
-		return _contact.getTwitterSn();
+		return model.getTwitterSn();
 	}
 
 	/**
@@ -588,7 +554,7 @@ public class ContactWrapper implements Contact, ModelWrapper<Contact> {
 	*/
 	@Override
 	public long getUserId() {
-		return _contact.getUserId();
+		return model.getUserId();
 	}
 
 	/**
@@ -598,7 +564,7 @@ public class ContactWrapper implements Contact, ModelWrapper<Contact> {
 	*/
 	@Override
 	public String getUserName() {
-		return _contact.getUserName();
+		return model.getUserName();
 	}
 
 	/**
@@ -608,22 +574,7 @@ public class ContactWrapper implements Contact, ModelWrapper<Contact> {
 	*/
 	@Override
 	public String getUserUuid() {
-		return _contact.getUserUuid();
-	}
-
-	@Override
-	public int hashCode() {
-		return _contact.hashCode();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _contact.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _contact.isEscapedModel();
+		return model.getUserUuid();
 	}
 
 	/**
@@ -633,22 +584,17 @@ public class ContactWrapper implements Contact, ModelWrapper<Contact> {
 	*/
 	@Override
 	public boolean isMale() {
-		return _contact.isMale();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _contact.isNew();
+		return model.isMale();
 	}
 
 	@Override
 	public boolean isUser() {
-		return _contact.isUser();
+		return model.isUser();
 	}
 
 	@Override
 	public void persist() {
-		_contact.persist();
+		model.persist();
 	}
 
 	/**
@@ -658,7 +604,7 @@ public class ContactWrapper implements Contact, ModelWrapper<Contact> {
 	*/
 	@Override
 	public void setAccountId(long accountId) {
-		_contact.setAccountId(accountId);
+		model.setAccountId(accountId);
 	}
 
 	/**
@@ -668,17 +614,12 @@ public class ContactWrapper implements Contact, ModelWrapper<Contact> {
 	*/
 	@Override
 	public void setBirthday(Date birthday) {
-		_contact.setBirthday(birthday);
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_contact.setCachedModel(cachedModel);
+		model.setBirthday(birthday);
 	}
 
 	@Override
 	public void setClassName(String className) {
-		_contact.setClassName(className);
+		model.setClassName(className);
 	}
 
 	/**
@@ -688,7 +629,7 @@ public class ContactWrapper implements Contact, ModelWrapper<Contact> {
 	*/
 	@Override
 	public void setClassNameId(long classNameId) {
-		_contact.setClassNameId(classNameId);
+		model.setClassNameId(classNameId);
 	}
 
 	/**
@@ -698,7 +639,7 @@ public class ContactWrapper implements Contact, ModelWrapper<Contact> {
 	*/
 	@Override
 	public void setClassPK(long classPK) {
-		_contact.setClassPK(classPK);
+		model.setClassPK(classPK);
 	}
 
 	/**
@@ -708,7 +649,7 @@ public class ContactWrapper implements Contact, ModelWrapper<Contact> {
 	*/
 	@Override
 	public void setCompanyId(long companyId) {
-		_contact.setCompanyId(companyId);
+		model.setCompanyId(companyId);
 	}
 
 	/**
@@ -718,7 +659,7 @@ public class ContactWrapper implements Contact, ModelWrapper<Contact> {
 	*/
 	@Override
 	public void setContactId(long contactId) {
-		_contact.setContactId(contactId);
+		model.setContactId(contactId);
 	}
 
 	/**
@@ -728,7 +669,7 @@ public class ContactWrapper implements Contact, ModelWrapper<Contact> {
 	*/
 	@Override
 	public void setCreateDate(Date createDate) {
-		_contact.setCreateDate(createDate);
+		model.setCreateDate(createDate);
 	}
 
 	/**
@@ -738,7 +679,7 @@ public class ContactWrapper implements Contact, ModelWrapper<Contact> {
 	*/
 	@Override
 	public void setEmailAddress(String emailAddress) {
-		_contact.setEmailAddress(emailAddress);
+		model.setEmailAddress(emailAddress);
 	}
 
 	/**
@@ -748,7 +689,7 @@ public class ContactWrapper implements Contact, ModelWrapper<Contact> {
 	*/
 	@Override
 	public void setEmployeeNumber(String employeeNumber) {
-		_contact.setEmployeeNumber(employeeNumber);
+		model.setEmployeeNumber(employeeNumber);
 	}
 
 	/**
@@ -758,22 +699,7 @@ public class ContactWrapper implements Contact, ModelWrapper<Contact> {
 	*/
 	@Override
 	public void setEmployeeStatusId(String employeeStatusId) {
-		_contact.setEmployeeStatusId(employeeStatusId);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(BaseModel<?> baseModel) {
-		_contact.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_contact.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_contact.setExpandoBridgeAttributes(serviceContext);
+		model.setEmployeeStatusId(employeeStatusId);
 	}
 
 	/**
@@ -783,7 +709,7 @@ public class ContactWrapper implements Contact, ModelWrapper<Contact> {
 	*/
 	@Override
 	public void setFacebookSn(String facebookSn) {
-		_contact.setFacebookSn(facebookSn);
+		model.setFacebookSn(facebookSn);
 	}
 
 	/**
@@ -793,7 +719,7 @@ public class ContactWrapper implements Contact, ModelWrapper<Contact> {
 	*/
 	@Override
 	public void setFirstName(String firstName) {
-		_contact.setFirstName(firstName);
+		model.setFirstName(firstName);
 	}
 
 	/**
@@ -803,7 +729,7 @@ public class ContactWrapper implements Contact, ModelWrapper<Contact> {
 	*/
 	@Override
 	public void setHoursOfOperation(String hoursOfOperation) {
-		_contact.setHoursOfOperation(hoursOfOperation);
+		model.setHoursOfOperation(hoursOfOperation);
 	}
 
 	/**
@@ -813,7 +739,7 @@ public class ContactWrapper implements Contact, ModelWrapper<Contact> {
 	*/
 	@Override
 	public void setJabberSn(String jabberSn) {
-		_contact.setJabberSn(jabberSn);
+		model.setJabberSn(jabberSn);
 	}
 
 	/**
@@ -823,7 +749,7 @@ public class ContactWrapper implements Contact, ModelWrapper<Contact> {
 	*/
 	@Override
 	public void setJobClass(String jobClass) {
-		_contact.setJobClass(jobClass);
+		model.setJobClass(jobClass);
 	}
 
 	/**
@@ -833,7 +759,7 @@ public class ContactWrapper implements Contact, ModelWrapper<Contact> {
 	*/
 	@Override
 	public void setJobTitle(String jobTitle) {
-		_contact.setJobTitle(jobTitle);
+		model.setJobTitle(jobTitle);
 	}
 
 	/**
@@ -843,7 +769,7 @@ public class ContactWrapper implements Contact, ModelWrapper<Contact> {
 	*/
 	@Override
 	public void setLastName(String lastName) {
-		_contact.setLastName(lastName);
+		model.setLastName(lastName);
 	}
 
 	/**
@@ -853,7 +779,7 @@ public class ContactWrapper implements Contact, ModelWrapper<Contact> {
 	*/
 	@Override
 	public void setMale(boolean male) {
-		_contact.setMale(male);
+		model.setMale(male);
 	}
 
 	/**
@@ -863,7 +789,7 @@ public class ContactWrapper implements Contact, ModelWrapper<Contact> {
 	*/
 	@Override
 	public void setMiddleName(String middleName) {
-		_contact.setMiddleName(middleName);
+		model.setMiddleName(middleName);
 	}
 
 	/**
@@ -873,7 +799,7 @@ public class ContactWrapper implements Contact, ModelWrapper<Contact> {
 	*/
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
-		_contact.setModifiedDate(modifiedDate);
+		model.setModifiedDate(modifiedDate);
 	}
 
 	/**
@@ -883,12 +809,7 @@ public class ContactWrapper implements Contact, ModelWrapper<Contact> {
 	*/
 	@Override
 	public void setMvccVersion(long mvccVersion) {
-		_contact.setMvccVersion(mvccVersion);
-	}
-
-	@Override
-	public void setNew(boolean n) {
-		_contact.setNew(n);
+		model.setMvccVersion(mvccVersion);
 	}
 
 	/**
@@ -898,7 +819,7 @@ public class ContactWrapper implements Contact, ModelWrapper<Contact> {
 	*/
 	@Override
 	public void setParentContactId(long parentContactId) {
-		_contact.setParentContactId(parentContactId);
+		model.setParentContactId(parentContactId);
 	}
 
 	/**
@@ -908,7 +829,7 @@ public class ContactWrapper implements Contact, ModelWrapper<Contact> {
 	*/
 	@Override
 	public void setPrefixId(long prefixId) {
-		_contact.setPrefixId(prefixId);
+		model.setPrefixId(prefixId);
 	}
 
 	/**
@@ -918,12 +839,7 @@ public class ContactWrapper implements Contact, ModelWrapper<Contact> {
 	*/
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_contact.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_contact.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -933,7 +849,7 @@ public class ContactWrapper implements Contact, ModelWrapper<Contact> {
 	*/
 	@Override
 	public void setSkypeSn(String skypeSn) {
-		_contact.setSkypeSn(skypeSn);
+		model.setSkypeSn(skypeSn);
 	}
 
 	/**
@@ -943,7 +859,7 @@ public class ContactWrapper implements Contact, ModelWrapper<Contact> {
 	*/
 	@Override
 	public void setSmsSn(String smsSn) {
-		_contact.setSmsSn(smsSn);
+		model.setSmsSn(smsSn);
 	}
 
 	/**
@@ -953,7 +869,7 @@ public class ContactWrapper implements Contact, ModelWrapper<Contact> {
 	*/
 	@Override
 	public void setSuffixId(long suffixId) {
-		_contact.setSuffixId(suffixId);
+		model.setSuffixId(suffixId);
 	}
 
 	/**
@@ -963,7 +879,7 @@ public class ContactWrapper implements Contact, ModelWrapper<Contact> {
 	*/
 	@Override
 	public void setTwitterSn(String twitterSn) {
-		_contact.setTwitterSn(twitterSn);
+		model.setTwitterSn(twitterSn);
 	}
 
 	/**
@@ -973,7 +889,7 @@ public class ContactWrapper implements Contact, ModelWrapper<Contact> {
 	*/
 	@Override
 	public void setUserId(long userId) {
-		_contact.setUserId(userId);
+		model.setUserId(userId);
 	}
 
 	/**
@@ -983,7 +899,7 @@ public class ContactWrapper implements Contact, ModelWrapper<Contact> {
 	*/
 	@Override
 	public void setUserName(String userName) {
-		_contact.setUserName(userName);
+		model.setUserName(userName);
 	}
 
 	/**
@@ -993,72 +909,11 @@ public class ContactWrapper implements Contact, ModelWrapper<Contact> {
 	*/
 	@Override
 	public void setUserUuid(String userUuid) {
-		_contact.setUserUuid(userUuid);
+		model.setUserUuid(userUuid);
 	}
 
 	@Override
-	public CacheModel<Contact> toCacheModel() {
-		return _contact.toCacheModel();
+	protected ContactWrapper wrap(Contact contact) {
+		return new ContactWrapper(contact);
 	}
-
-	@Override
-	public Contact toEscapedModel() {
-		return new ContactWrapper(_contact.toEscapedModel());
-	}
-
-	@Override
-	public String toString() {
-		return _contact.toString();
-	}
-
-	@Override
-	public Contact toUnescapedModel() {
-		return new ContactWrapper(_contact.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _contact.toXmlString();
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-
-		if (!(obj instanceof ContactWrapper)) {
-			return false;
-		}
-
-		ContactWrapper contactWrapper = (ContactWrapper)obj;
-
-		if (Objects.equals(_contact, contactWrapper._contact)) {
-			return true;
-		}
-
-		return false;
-	}
-
-	@Override
-	public Contact getWrappedModel() {
-		return _contact;
-	}
-
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _contact.isEntityCacheEnabled();
-	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _contact.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_contact.resetOriginalValues();
-	}
-
-	private final Contact _contact;
 }

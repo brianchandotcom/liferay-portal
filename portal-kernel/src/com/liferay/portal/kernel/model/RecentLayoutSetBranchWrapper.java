@@ -16,15 +16,10 @@ package com.liferay.portal.kernel.model;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
-
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -36,21 +31,11 @@ import java.util.Objects;
  * @generated
  */
 @ProviderType
-public class RecentLayoutSetBranchWrapper implements RecentLayoutSetBranch,
-	ModelWrapper<RecentLayoutSetBranch> {
+public class RecentLayoutSetBranchWrapper extends BaseModelWrapper<RecentLayoutSetBranch>
+	implements RecentLayoutSetBranch, ModelWrapper<RecentLayoutSetBranch> {
 	public RecentLayoutSetBranchWrapper(
 		RecentLayoutSetBranch recentLayoutSetBranch) {
-		_recentLayoutSetBranch = recentLayoutSetBranch;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return RecentLayoutSetBranch.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return RecentLayoutSetBranch.class.getName();
+		super(recentLayoutSetBranch);
 	}
 
 	@Override
@@ -114,16 +99,6 @@ public class RecentLayoutSetBranchWrapper implements RecentLayoutSetBranch,
 		}
 	}
 
-	@Override
-	public Object clone() {
-		return new RecentLayoutSetBranchWrapper((RecentLayoutSetBranch)_recentLayoutSetBranch.clone());
-	}
-
-	@Override
-	public int compareTo(RecentLayoutSetBranch recentLayoutSetBranch) {
-		return _recentLayoutSetBranch.compareTo(recentLayoutSetBranch);
-	}
-
 	/**
 	* Returns the company ID of this recent layout set branch.
 	*
@@ -131,12 +106,7 @@ public class RecentLayoutSetBranchWrapper implements RecentLayoutSetBranch,
 	*/
 	@Override
 	public long getCompanyId() {
-		return _recentLayoutSetBranch.getCompanyId();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _recentLayoutSetBranch.getExpandoBridge();
+		return model.getCompanyId();
 	}
 
 	/**
@@ -146,7 +116,7 @@ public class RecentLayoutSetBranchWrapper implements RecentLayoutSetBranch,
 	*/
 	@Override
 	public long getGroupId() {
-		return _recentLayoutSetBranch.getGroupId();
+		return model.getGroupId();
 	}
 
 	/**
@@ -156,7 +126,7 @@ public class RecentLayoutSetBranchWrapper implements RecentLayoutSetBranch,
 	*/
 	@Override
 	public long getLayoutSetBranchId() {
-		return _recentLayoutSetBranch.getLayoutSetBranchId();
+		return model.getLayoutSetBranchId();
 	}
 
 	/**
@@ -166,7 +136,7 @@ public class RecentLayoutSetBranchWrapper implements RecentLayoutSetBranch,
 	*/
 	@Override
 	public long getLayoutSetId() {
-		return _recentLayoutSetBranch.getLayoutSetId();
+		return model.getLayoutSetId();
 	}
 
 	/**
@@ -176,7 +146,7 @@ public class RecentLayoutSetBranchWrapper implements RecentLayoutSetBranch,
 	*/
 	@Override
 	public long getMvccVersion() {
-		return _recentLayoutSetBranch.getMvccVersion();
+		return model.getMvccVersion();
 	}
 
 	/**
@@ -186,12 +156,7 @@ public class RecentLayoutSetBranchWrapper implements RecentLayoutSetBranch,
 	*/
 	@Override
 	public long getPrimaryKey() {
-		return _recentLayoutSetBranch.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _recentLayoutSetBranch.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	/**
@@ -201,7 +166,7 @@ public class RecentLayoutSetBranchWrapper implements RecentLayoutSetBranch,
 	*/
 	@Override
 	public long getRecentLayoutSetBranchId() {
-		return _recentLayoutSetBranch.getRecentLayoutSetBranchId();
+		return model.getRecentLayoutSetBranchId();
 	}
 
 	/**
@@ -211,7 +176,7 @@ public class RecentLayoutSetBranchWrapper implements RecentLayoutSetBranch,
 	*/
 	@Override
 	public long getUserId() {
-		return _recentLayoutSetBranch.getUserId();
+		return model.getUserId();
 	}
 
 	/**
@@ -221,37 +186,12 @@ public class RecentLayoutSetBranchWrapper implements RecentLayoutSetBranch,
 	*/
 	@Override
 	public String getUserUuid() {
-		return _recentLayoutSetBranch.getUserUuid();
-	}
-
-	@Override
-	public int hashCode() {
-		return _recentLayoutSetBranch.hashCode();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _recentLayoutSetBranch.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _recentLayoutSetBranch.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _recentLayoutSetBranch.isNew();
+		return model.getUserUuid();
 	}
 
 	@Override
 	public void persist() {
-		_recentLayoutSetBranch.persist();
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_recentLayoutSetBranch.setCachedModel(cachedModel);
+		model.persist();
 	}
 
 	/**
@@ -261,22 +201,7 @@ public class RecentLayoutSetBranchWrapper implements RecentLayoutSetBranch,
 	*/
 	@Override
 	public void setCompanyId(long companyId) {
-		_recentLayoutSetBranch.setCompanyId(companyId);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(BaseModel<?> baseModel) {
-		_recentLayoutSetBranch.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_recentLayoutSetBranch.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_recentLayoutSetBranch.setExpandoBridgeAttributes(serviceContext);
+		model.setCompanyId(companyId);
 	}
 
 	/**
@@ -286,7 +211,7 @@ public class RecentLayoutSetBranchWrapper implements RecentLayoutSetBranch,
 	*/
 	@Override
 	public void setGroupId(long groupId) {
-		_recentLayoutSetBranch.setGroupId(groupId);
+		model.setGroupId(groupId);
 	}
 
 	/**
@@ -296,7 +221,7 @@ public class RecentLayoutSetBranchWrapper implements RecentLayoutSetBranch,
 	*/
 	@Override
 	public void setLayoutSetBranchId(long layoutSetBranchId) {
-		_recentLayoutSetBranch.setLayoutSetBranchId(layoutSetBranchId);
+		model.setLayoutSetBranchId(layoutSetBranchId);
 	}
 
 	/**
@@ -306,7 +231,7 @@ public class RecentLayoutSetBranchWrapper implements RecentLayoutSetBranch,
 	*/
 	@Override
 	public void setLayoutSetId(long layoutSetId) {
-		_recentLayoutSetBranch.setLayoutSetId(layoutSetId);
+		model.setLayoutSetId(layoutSetId);
 	}
 
 	/**
@@ -316,12 +241,7 @@ public class RecentLayoutSetBranchWrapper implements RecentLayoutSetBranch,
 	*/
 	@Override
 	public void setMvccVersion(long mvccVersion) {
-		_recentLayoutSetBranch.setMvccVersion(mvccVersion);
-	}
-
-	@Override
-	public void setNew(boolean n) {
-		_recentLayoutSetBranch.setNew(n);
+		model.setMvccVersion(mvccVersion);
 	}
 
 	/**
@@ -331,12 +251,7 @@ public class RecentLayoutSetBranchWrapper implements RecentLayoutSetBranch,
 	*/
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_recentLayoutSetBranch.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_recentLayoutSetBranch.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -346,7 +261,7 @@ public class RecentLayoutSetBranchWrapper implements RecentLayoutSetBranch,
 	*/
 	@Override
 	public void setRecentLayoutSetBranchId(long recentLayoutSetBranchId) {
-		_recentLayoutSetBranch.setRecentLayoutSetBranchId(recentLayoutSetBranchId);
+		model.setRecentLayoutSetBranchId(recentLayoutSetBranchId);
 	}
 
 	/**
@@ -356,7 +271,7 @@ public class RecentLayoutSetBranchWrapper implements RecentLayoutSetBranch,
 	*/
 	@Override
 	public void setUserId(long userId) {
-		_recentLayoutSetBranch.setUserId(userId);
+		model.setUserId(userId);
 	}
 
 	/**
@@ -366,73 +281,12 @@ public class RecentLayoutSetBranchWrapper implements RecentLayoutSetBranch,
 	*/
 	@Override
 	public void setUserUuid(String userUuid) {
-		_recentLayoutSetBranch.setUserUuid(userUuid);
+		model.setUserUuid(userUuid);
 	}
 
 	@Override
-	public CacheModel<RecentLayoutSetBranch> toCacheModel() {
-		return _recentLayoutSetBranch.toCacheModel();
+	protected RecentLayoutSetBranchWrapper wrap(
+		RecentLayoutSetBranch recentLayoutSetBranch) {
+		return new RecentLayoutSetBranchWrapper(recentLayoutSetBranch);
 	}
-
-	@Override
-	public RecentLayoutSetBranch toEscapedModel() {
-		return new RecentLayoutSetBranchWrapper(_recentLayoutSetBranch.toEscapedModel());
-	}
-
-	@Override
-	public String toString() {
-		return _recentLayoutSetBranch.toString();
-	}
-
-	@Override
-	public RecentLayoutSetBranch toUnescapedModel() {
-		return new RecentLayoutSetBranchWrapper(_recentLayoutSetBranch.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _recentLayoutSetBranch.toXmlString();
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-
-		if (!(obj instanceof RecentLayoutSetBranchWrapper)) {
-			return false;
-		}
-
-		RecentLayoutSetBranchWrapper recentLayoutSetBranchWrapper = (RecentLayoutSetBranchWrapper)obj;
-
-		if (Objects.equals(_recentLayoutSetBranch,
-					recentLayoutSetBranchWrapper._recentLayoutSetBranch)) {
-			return true;
-		}
-
-		return false;
-	}
-
-	@Override
-	public RecentLayoutSetBranch getWrappedModel() {
-		return _recentLayoutSetBranch;
-	}
-
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _recentLayoutSetBranch.isEntityCacheEnabled();
-	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _recentLayoutSetBranch.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_recentLayoutSetBranch.resetOriginalValues();
-	}
-
-	private final RecentLayoutSetBranch _recentLayoutSetBranch;
 }

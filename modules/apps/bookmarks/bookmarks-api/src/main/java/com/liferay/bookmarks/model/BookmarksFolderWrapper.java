@@ -16,19 +16,14 @@ package com.liferay.bookmarks.model;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
-
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 
 import com.liferay.portal.kernel.model.ModelWrapper;
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -40,20 +35,10 @@ import java.util.Objects;
  * @generated
  */
 @ProviderType
-public class BookmarksFolderWrapper implements BookmarksFolder,
-	ModelWrapper<BookmarksFolder> {
+public class BookmarksFolderWrapper extends BaseModelWrapper<BookmarksFolder>
+	implements BookmarksFolder, ModelWrapper<BookmarksFolder> {
 	public BookmarksFolderWrapper(BookmarksFolder bookmarksFolder) {
-		_bookmarksFolder = bookmarksFolder;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return BookmarksFolder.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return BookmarksFolder.class.getName();
+		super(bookmarksFolder);
 	}
 
 	@Override
@@ -189,29 +174,19 @@ public class BookmarksFolderWrapper implements BookmarksFolder,
 	@Override
 	public String buildTreePath()
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _bookmarksFolder.buildTreePath();
-	}
-
-	@Override
-	public Object clone() {
-		return new BookmarksFolderWrapper((BookmarksFolder)_bookmarksFolder.clone());
-	}
-
-	@Override
-	public int compareTo(BookmarksFolder bookmarksFolder) {
-		return _bookmarksFolder.compareTo(bookmarksFolder);
+		return model.buildTreePath();
 	}
 
 	@Override
 	public java.util.List<Long> getAncestorFolderIds()
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _bookmarksFolder.getAncestorFolderIds();
+		return model.getAncestorFolderIds();
 	}
 
 	@Override
 	public java.util.List<BookmarksFolder> getAncestors()
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _bookmarksFolder.getAncestors();
+		return model.getAncestors();
 	}
 
 	/**
@@ -221,7 +196,7 @@ public class BookmarksFolderWrapper implements BookmarksFolder,
 	*/
 	@Override
 	public long getCompanyId() {
-		return _bookmarksFolder.getCompanyId();
+		return model.getCompanyId();
 	}
 
 	/**
@@ -231,7 +206,7 @@ public class BookmarksFolderWrapper implements BookmarksFolder,
 	*/
 	@Override
 	public long getContainerModelId() {
-		return _bookmarksFolder.getContainerModelId();
+		return model.getContainerModelId();
 	}
 
 	/**
@@ -241,7 +216,7 @@ public class BookmarksFolderWrapper implements BookmarksFolder,
 	*/
 	@Override
 	public String getContainerModelName() {
-		return _bookmarksFolder.getContainerModelName();
+		return model.getContainerModelName();
 	}
 
 	/**
@@ -251,7 +226,7 @@ public class BookmarksFolderWrapper implements BookmarksFolder,
 	*/
 	@Override
 	public Date getCreateDate() {
-		return _bookmarksFolder.getCreateDate();
+		return model.getCreateDate();
 	}
 
 	/**
@@ -261,12 +236,7 @@ public class BookmarksFolderWrapper implements BookmarksFolder,
 	*/
 	@Override
 	public String getDescription() {
-		return _bookmarksFolder.getDescription();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _bookmarksFolder.getExpandoBridge();
+		return model.getDescription();
 	}
 
 	/**
@@ -276,7 +246,7 @@ public class BookmarksFolderWrapper implements BookmarksFolder,
 	*/
 	@Override
 	public long getFolderId() {
-		return _bookmarksFolder.getFolderId();
+		return model.getFolderId();
 	}
 
 	/**
@@ -286,7 +256,7 @@ public class BookmarksFolderWrapper implements BookmarksFolder,
 	*/
 	@Override
 	public long getGroupId() {
-		return _bookmarksFolder.getGroupId();
+		return model.getGroupId();
 	}
 
 	/**
@@ -296,7 +266,7 @@ public class BookmarksFolderWrapper implements BookmarksFolder,
 	*/
 	@Override
 	public Date getLastPublishDate() {
-		return _bookmarksFolder.getLastPublishDate();
+		return model.getLastPublishDate();
 	}
 
 	/**
@@ -306,7 +276,7 @@ public class BookmarksFolderWrapper implements BookmarksFolder,
 	*/
 	@Override
 	public Date getModifiedDate() {
-		return _bookmarksFolder.getModifiedDate();
+		return model.getModifiedDate();
 	}
 
 	/**
@@ -316,7 +286,7 @@ public class BookmarksFolderWrapper implements BookmarksFolder,
 	*/
 	@Override
 	public String getName() {
-		return _bookmarksFolder.getName();
+		return model.getName();
 	}
 
 	/**
@@ -326,13 +296,13 @@ public class BookmarksFolderWrapper implements BookmarksFolder,
 	*/
 	@Override
 	public long getParentContainerModelId() {
-		return _bookmarksFolder.getParentContainerModelId();
+		return model.getParentContainerModelId();
 	}
 
 	@Override
 	public BookmarksFolder getParentFolder()
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _bookmarksFolder.getParentFolder();
+		return model.getParentFolder();
 	}
 
 	/**
@@ -342,7 +312,7 @@ public class BookmarksFolderWrapper implements BookmarksFolder,
 	*/
 	@Override
 	public long getParentFolderId() {
-		return _bookmarksFolder.getParentFolderId();
+		return model.getParentFolderId();
 	}
 
 	/**
@@ -352,12 +322,7 @@ public class BookmarksFolderWrapper implements BookmarksFolder,
 	*/
 	@Override
 	public long getPrimaryKey() {
-		return _bookmarksFolder.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _bookmarksFolder.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	/**
@@ -367,7 +332,7 @@ public class BookmarksFolderWrapper implements BookmarksFolder,
 	*/
 	@Override
 	public int getStatus() {
-		return _bookmarksFolder.getStatus();
+		return model.getStatus();
 	}
 
 	/**
@@ -377,7 +342,7 @@ public class BookmarksFolderWrapper implements BookmarksFolder,
 	*/
 	@Override
 	public long getStatusByUserId() {
-		return _bookmarksFolder.getStatusByUserId();
+		return model.getStatusByUserId();
 	}
 
 	/**
@@ -387,7 +352,7 @@ public class BookmarksFolderWrapper implements BookmarksFolder,
 	*/
 	@Override
 	public String getStatusByUserName() {
-		return _bookmarksFolder.getStatusByUserName();
+		return model.getStatusByUserName();
 	}
 
 	/**
@@ -397,7 +362,7 @@ public class BookmarksFolderWrapper implements BookmarksFolder,
 	*/
 	@Override
 	public String getStatusByUserUuid() {
-		return _bookmarksFolder.getStatusByUserUuid();
+		return model.getStatusByUserUuid();
 	}
 
 	/**
@@ -407,7 +372,7 @@ public class BookmarksFolderWrapper implements BookmarksFolder,
 	*/
 	@Override
 	public Date getStatusDate() {
-		return _bookmarksFolder.getStatusDate();
+		return model.getStatusDate();
 	}
 
 	/**
@@ -418,7 +383,7 @@ public class BookmarksFolderWrapper implements BookmarksFolder,
 	@Override
 	public com.liferay.trash.kernel.model.TrashEntry getTrashEntry()
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _bookmarksFolder.getTrashEntry();
+		return model.getTrashEntry();
 	}
 
 	/**
@@ -428,7 +393,7 @@ public class BookmarksFolderWrapper implements BookmarksFolder,
 	*/
 	@Override
 	public long getTrashEntryClassPK() {
-		return _bookmarksFolder.getTrashEntryClassPK();
+		return model.getTrashEntryClassPK();
 	}
 
 	/**
@@ -440,7 +405,7 @@ public class BookmarksFolderWrapper implements BookmarksFolder,
 	@Deprecated
 	@Override
 	public com.liferay.portal.kernel.trash.TrashHandler getTrashHandler() {
-		return _bookmarksFolder.getTrashHandler();
+		return model.getTrashHandler();
 	}
 
 	/**
@@ -450,7 +415,7 @@ public class BookmarksFolderWrapper implements BookmarksFolder,
 	*/
 	@Override
 	public String getTreePath() {
-		return _bookmarksFolder.getTreePath();
+		return model.getTreePath();
 	}
 
 	/**
@@ -460,7 +425,7 @@ public class BookmarksFolderWrapper implements BookmarksFolder,
 	*/
 	@Override
 	public long getUserId() {
-		return _bookmarksFolder.getUserId();
+		return model.getUserId();
 	}
 
 	/**
@@ -470,7 +435,7 @@ public class BookmarksFolderWrapper implements BookmarksFolder,
 	*/
 	@Override
 	public String getUserName() {
-		return _bookmarksFolder.getUserName();
+		return model.getUserName();
 	}
 
 	/**
@@ -480,7 +445,7 @@ public class BookmarksFolderWrapper implements BookmarksFolder,
 	*/
 	@Override
 	public String getUserUuid() {
-		return _bookmarksFolder.getUserUuid();
+		return model.getUserUuid();
 	}
 
 	/**
@@ -490,12 +455,7 @@ public class BookmarksFolderWrapper implements BookmarksFolder,
 	*/
 	@Override
 	public String getUuid() {
-		return _bookmarksFolder.getUuid();
-	}
-
-	@Override
-	public int hashCode() {
-		return _bookmarksFolder.hashCode();
+		return model.getUuid();
 	}
 
 	/**
@@ -505,12 +465,7 @@ public class BookmarksFolderWrapper implements BookmarksFolder,
 	*/
 	@Override
 	public boolean isApproved() {
-		return _bookmarksFolder.isApproved();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _bookmarksFolder.isCachedModel();
+		return model.isApproved();
 	}
 
 	/**
@@ -520,7 +475,7 @@ public class BookmarksFolderWrapper implements BookmarksFolder,
 	*/
 	@Override
 	public boolean isDenied() {
-		return _bookmarksFolder.isDenied();
+		return model.isDenied();
 	}
 
 	/**
@@ -530,12 +485,7 @@ public class BookmarksFolderWrapper implements BookmarksFolder,
 	*/
 	@Override
 	public boolean isDraft() {
-		return _bookmarksFolder.isDraft();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _bookmarksFolder.isEscapedModel();
+		return model.isDraft();
 	}
 
 	/**
@@ -545,7 +495,7 @@ public class BookmarksFolderWrapper implements BookmarksFolder,
 	*/
 	@Override
 	public boolean isExpired() {
-		return _bookmarksFolder.isExpired();
+		return model.isExpired();
 	}
 
 	/**
@@ -555,7 +505,7 @@ public class BookmarksFolderWrapper implements BookmarksFolder,
 	*/
 	@Override
 	public boolean isInactive() {
-		return _bookmarksFolder.isInactive();
+		return model.isInactive();
 	}
 
 	/**
@@ -565,7 +515,7 @@ public class BookmarksFolderWrapper implements BookmarksFolder,
 	*/
 	@Override
 	public boolean isIncomplete() {
-		return _bookmarksFolder.isIncomplete();
+		return model.isIncomplete();
 	}
 
 	/**
@@ -575,7 +525,7 @@ public class BookmarksFolderWrapper implements BookmarksFolder,
 	*/
 	@Override
 	public boolean isInTrash() {
-		return _bookmarksFolder.isInTrash();
+		return model.isInTrash();
 	}
 
 	/**
@@ -585,22 +535,17 @@ public class BookmarksFolderWrapper implements BookmarksFolder,
 	*/
 	@Override
 	public boolean isInTrashContainer() {
-		return _bookmarksFolder.isInTrashContainer();
+		return model.isInTrashContainer();
 	}
 
 	@Override
 	public boolean isInTrashExplicitly() {
-		return _bookmarksFolder.isInTrashExplicitly();
+		return model.isInTrashExplicitly();
 	}
 
 	@Override
 	public boolean isInTrashImplicitly() {
-		return _bookmarksFolder.isInTrashImplicitly();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _bookmarksFolder.isNew();
+		return model.isInTrashImplicitly();
 	}
 
 	/**
@@ -610,12 +555,12 @@ public class BookmarksFolderWrapper implements BookmarksFolder,
 	*/
 	@Override
 	public boolean isPending() {
-		return _bookmarksFolder.isPending();
+		return model.isPending();
 	}
 
 	@Override
 	public boolean isRoot() {
-		return _bookmarksFolder.isRoot();
+		return model.isRoot();
 	}
 
 	/**
@@ -625,17 +570,12 @@ public class BookmarksFolderWrapper implements BookmarksFolder,
 	*/
 	@Override
 	public boolean isScheduled() {
-		return _bookmarksFolder.isScheduled();
+		return model.isScheduled();
 	}
 
 	@Override
 	public void persist() {
-		_bookmarksFolder.persist();
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_bookmarksFolder.setCachedModel(cachedModel);
+		model.persist();
 	}
 
 	/**
@@ -645,7 +585,7 @@ public class BookmarksFolderWrapper implements BookmarksFolder,
 	*/
 	@Override
 	public void setCompanyId(long companyId) {
-		_bookmarksFolder.setCompanyId(companyId);
+		model.setCompanyId(companyId);
 	}
 
 	/**
@@ -655,7 +595,7 @@ public class BookmarksFolderWrapper implements BookmarksFolder,
 	*/
 	@Override
 	public void setContainerModelId(long containerModelId) {
-		_bookmarksFolder.setContainerModelId(containerModelId);
+		model.setContainerModelId(containerModelId);
 	}
 
 	/**
@@ -665,7 +605,7 @@ public class BookmarksFolderWrapper implements BookmarksFolder,
 	*/
 	@Override
 	public void setCreateDate(Date createDate) {
-		_bookmarksFolder.setCreateDate(createDate);
+		model.setCreateDate(createDate);
 	}
 
 	/**
@@ -675,23 +615,7 @@ public class BookmarksFolderWrapper implements BookmarksFolder,
 	*/
 	@Override
 	public void setDescription(String description) {
-		_bookmarksFolder.setDescription(description);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-		_bookmarksFolder.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_bookmarksFolder.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_bookmarksFolder.setExpandoBridgeAttributes(serviceContext);
+		model.setDescription(description);
 	}
 
 	/**
@@ -701,7 +625,7 @@ public class BookmarksFolderWrapper implements BookmarksFolder,
 	*/
 	@Override
 	public void setFolderId(long folderId) {
-		_bookmarksFolder.setFolderId(folderId);
+		model.setFolderId(folderId);
 	}
 
 	/**
@@ -711,7 +635,7 @@ public class BookmarksFolderWrapper implements BookmarksFolder,
 	*/
 	@Override
 	public void setGroupId(long groupId) {
-		_bookmarksFolder.setGroupId(groupId);
+		model.setGroupId(groupId);
 	}
 
 	/**
@@ -721,7 +645,7 @@ public class BookmarksFolderWrapper implements BookmarksFolder,
 	*/
 	@Override
 	public void setLastPublishDate(Date lastPublishDate) {
-		_bookmarksFolder.setLastPublishDate(lastPublishDate);
+		model.setLastPublishDate(lastPublishDate);
 	}
 
 	/**
@@ -731,7 +655,7 @@ public class BookmarksFolderWrapper implements BookmarksFolder,
 	*/
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
-		_bookmarksFolder.setModifiedDate(modifiedDate);
+		model.setModifiedDate(modifiedDate);
 	}
 
 	/**
@@ -741,12 +665,7 @@ public class BookmarksFolderWrapper implements BookmarksFolder,
 	*/
 	@Override
 	public void setName(String name) {
-		_bookmarksFolder.setName(name);
-	}
-
-	@Override
-	public void setNew(boolean n) {
-		_bookmarksFolder.setNew(n);
+		model.setName(name);
 	}
 
 	/**
@@ -756,7 +675,7 @@ public class BookmarksFolderWrapper implements BookmarksFolder,
 	*/
 	@Override
 	public void setParentContainerModelId(long parentContainerModelId) {
-		_bookmarksFolder.setParentContainerModelId(parentContainerModelId);
+		model.setParentContainerModelId(parentContainerModelId);
 	}
 
 	/**
@@ -766,7 +685,7 @@ public class BookmarksFolderWrapper implements BookmarksFolder,
 	*/
 	@Override
 	public void setParentFolderId(long parentFolderId) {
-		_bookmarksFolder.setParentFolderId(parentFolderId);
+		model.setParentFolderId(parentFolderId);
 	}
 
 	/**
@@ -776,12 +695,7 @@ public class BookmarksFolderWrapper implements BookmarksFolder,
 	*/
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_bookmarksFolder.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_bookmarksFolder.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -791,7 +705,7 @@ public class BookmarksFolderWrapper implements BookmarksFolder,
 	*/
 	@Override
 	public void setStatus(int status) {
-		_bookmarksFolder.setStatus(status);
+		model.setStatus(status);
 	}
 
 	/**
@@ -801,7 +715,7 @@ public class BookmarksFolderWrapper implements BookmarksFolder,
 	*/
 	@Override
 	public void setStatusByUserId(long statusByUserId) {
-		_bookmarksFolder.setStatusByUserId(statusByUserId);
+		model.setStatusByUserId(statusByUserId);
 	}
 
 	/**
@@ -811,7 +725,7 @@ public class BookmarksFolderWrapper implements BookmarksFolder,
 	*/
 	@Override
 	public void setStatusByUserName(String statusByUserName) {
-		_bookmarksFolder.setStatusByUserName(statusByUserName);
+		model.setStatusByUserName(statusByUserName);
 	}
 
 	/**
@@ -821,7 +735,7 @@ public class BookmarksFolderWrapper implements BookmarksFolder,
 	*/
 	@Override
 	public void setStatusByUserUuid(String statusByUserUuid) {
-		_bookmarksFolder.setStatusByUserUuid(statusByUserUuid);
+		model.setStatusByUserUuid(statusByUserUuid);
 	}
 
 	/**
@@ -831,7 +745,7 @@ public class BookmarksFolderWrapper implements BookmarksFolder,
 	*/
 	@Override
 	public void setStatusDate(Date statusDate) {
-		_bookmarksFolder.setStatusDate(statusDate);
+		model.setStatusDate(statusDate);
 	}
 
 	/**
@@ -841,7 +755,7 @@ public class BookmarksFolderWrapper implements BookmarksFolder,
 	*/
 	@Override
 	public void setTreePath(String treePath) {
-		_bookmarksFolder.setTreePath(treePath);
+		model.setTreePath(treePath);
 	}
 
 	/**
@@ -851,7 +765,7 @@ public class BookmarksFolderWrapper implements BookmarksFolder,
 	*/
 	@Override
 	public void setUserId(long userId) {
-		_bookmarksFolder.setUserId(userId);
+		model.setUserId(userId);
 	}
 
 	/**
@@ -861,7 +775,7 @@ public class BookmarksFolderWrapper implements BookmarksFolder,
 	*/
 	@Override
 	public void setUserName(String userName) {
-		_bookmarksFolder.setUserName(userName);
+		model.setUserName(userName);
 	}
 
 	/**
@@ -871,7 +785,7 @@ public class BookmarksFolderWrapper implements BookmarksFolder,
 	*/
 	@Override
 	public void setUserUuid(String userUuid) {
-		_bookmarksFolder.setUserUuid(userUuid);
+		model.setUserUuid(userUuid);
 	}
 
 	/**
@@ -881,83 +795,21 @@ public class BookmarksFolderWrapper implements BookmarksFolder,
 	*/
 	@Override
 	public void setUuid(String uuid) {
-		_bookmarksFolder.setUuid(uuid);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<BookmarksFolder> toCacheModel() {
-		return _bookmarksFolder.toCacheModel();
-	}
-
-	@Override
-	public BookmarksFolder toEscapedModel() {
-		return new BookmarksFolderWrapper(_bookmarksFolder.toEscapedModel());
-	}
-
-	@Override
-	public String toString() {
-		return _bookmarksFolder.toString();
-	}
-
-	@Override
-	public BookmarksFolder toUnescapedModel() {
-		return new BookmarksFolderWrapper(_bookmarksFolder.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _bookmarksFolder.toXmlString();
+		model.setUuid(uuid);
 	}
 
 	@Override
 	public void updateTreePath(String treePath) {
-		_bookmarksFolder.updateTreePath(treePath);
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-
-		if (!(obj instanceof BookmarksFolderWrapper)) {
-			return false;
-		}
-
-		BookmarksFolderWrapper bookmarksFolderWrapper = (BookmarksFolderWrapper)obj;
-
-		if (Objects.equals(_bookmarksFolder,
-					bookmarksFolderWrapper._bookmarksFolder)) {
-			return true;
-		}
-
-		return false;
+		model.updateTreePath(treePath);
 	}
 
 	@Override
 	public StagedModelType getStagedModelType() {
-		return _bookmarksFolder.getStagedModelType();
+		return model.getStagedModelType();
 	}
 
 	@Override
-	public BookmarksFolder getWrappedModel() {
-		return _bookmarksFolder;
+	protected BookmarksFolderWrapper wrap(BookmarksFolder bookmarksFolder) {
+		return new BookmarksFolderWrapper(bookmarksFolder);
 	}
-
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _bookmarksFolder.isEntityCacheEnabled();
-	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _bookmarksFolder.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_bookmarksFolder.resetOriginalValues();
-	}
-
-	private final BookmarksFolder _bookmarksFolder;
 }

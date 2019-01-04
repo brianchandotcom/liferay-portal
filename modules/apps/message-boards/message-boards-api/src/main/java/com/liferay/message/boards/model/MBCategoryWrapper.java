@@ -16,19 +16,14 @@ package com.liferay.message.boards.model;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
-
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 
 import com.liferay.portal.kernel.model.ModelWrapper;
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -40,19 +35,10 @@ import java.util.Objects;
  * @generated
  */
 @ProviderType
-public class MBCategoryWrapper implements MBCategory, ModelWrapper<MBCategory> {
+public class MBCategoryWrapper extends BaseModelWrapper<MBCategory>
+	implements MBCategory, ModelWrapper<MBCategory> {
 	public MBCategoryWrapper(MBCategory mbCategory) {
-		_mbCategory = mbCategory;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return MBCategory.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return MBCategory.class.getName();
+		super(mbCategory);
 	}
 
 	@Override
@@ -207,25 +193,15 @@ public class MBCategoryWrapper implements MBCategory, ModelWrapper<MBCategory> {
 	}
 
 	@Override
-	public Object clone() {
-		return new MBCategoryWrapper((MBCategory)_mbCategory.clone());
-	}
-
-	@Override
-	public int compareTo(MBCategory mbCategory) {
-		return _mbCategory.compareTo(mbCategory);
-	}
-
-	@Override
 	public java.util.List<Long> getAncestorCategoryIds()
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _mbCategory.getAncestorCategoryIds();
+		return model.getAncestorCategoryIds();
 	}
 
 	@Override
 	public java.util.List<MBCategory> getAncestors()
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _mbCategory.getAncestors();
+		return model.getAncestors();
 	}
 
 	/**
@@ -235,7 +211,7 @@ public class MBCategoryWrapper implements MBCategory, ModelWrapper<MBCategory> {
 	*/
 	@Override
 	public long getCategoryId() {
-		return _mbCategory.getCategoryId();
+		return model.getCategoryId();
 	}
 
 	/**
@@ -245,7 +221,7 @@ public class MBCategoryWrapper implements MBCategory, ModelWrapper<MBCategory> {
 	*/
 	@Override
 	public long getCompanyId() {
-		return _mbCategory.getCompanyId();
+		return model.getCompanyId();
 	}
 
 	/**
@@ -255,7 +231,7 @@ public class MBCategoryWrapper implements MBCategory, ModelWrapper<MBCategory> {
 	*/
 	@Override
 	public long getContainerModelId() {
-		return _mbCategory.getContainerModelId();
+		return model.getContainerModelId();
 	}
 
 	/**
@@ -265,7 +241,7 @@ public class MBCategoryWrapper implements MBCategory, ModelWrapper<MBCategory> {
 	*/
 	@Override
 	public String getContainerModelName() {
-		return _mbCategory.getContainerModelName();
+		return model.getContainerModelName();
 	}
 
 	/**
@@ -275,7 +251,7 @@ public class MBCategoryWrapper implements MBCategory, ModelWrapper<MBCategory> {
 	*/
 	@Override
 	public Date getCreateDate() {
-		return _mbCategory.getCreateDate();
+		return model.getCreateDate();
 	}
 
 	/**
@@ -285,7 +261,7 @@ public class MBCategoryWrapper implements MBCategory, ModelWrapper<MBCategory> {
 	*/
 	@Override
 	public String getDescription() {
-		return _mbCategory.getDescription();
+		return model.getDescription();
 	}
 
 	/**
@@ -295,12 +271,7 @@ public class MBCategoryWrapper implements MBCategory, ModelWrapper<MBCategory> {
 	*/
 	@Override
 	public String getDisplayStyle() {
-		return _mbCategory.getDisplayStyle();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _mbCategory.getExpandoBridge();
+		return model.getDisplayStyle();
 	}
 
 	/**
@@ -310,7 +281,7 @@ public class MBCategoryWrapper implements MBCategory, ModelWrapper<MBCategory> {
 	*/
 	@Override
 	public long getGroupId() {
-		return _mbCategory.getGroupId();
+		return model.getGroupId();
 	}
 
 	/**
@@ -320,7 +291,7 @@ public class MBCategoryWrapper implements MBCategory, ModelWrapper<MBCategory> {
 	*/
 	@Override
 	public Date getLastPostDate() {
-		return _mbCategory.getLastPostDate();
+		return model.getLastPostDate();
 	}
 
 	/**
@@ -330,7 +301,7 @@ public class MBCategoryWrapper implements MBCategory, ModelWrapper<MBCategory> {
 	*/
 	@Override
 	public Date getLastPublishDate() {
-		return _mbCategory.getLastPublishDate();
+		return model.getLastPublishDate();
 	}
 
 	/**
@@ -340,7 +311,7 @@ public class MBCategoryWrapper implements MBCategory, ModelWrapper<MBCategory> {
 	*/
 	@Override
 	public int getMessageCount() {
-		return _mbCategory.getMessageCount();
+		return model.getMessageCount();
 	}
 
 	/**
@@ -350,7 +321,7 @@ public class MBCategoryWrapper implements MBCategory, ModelWrapper<MBCategory> {
 	*/
 	@Override
 	public Date getModifiedDate() {
-		return _mbCategory.getModifiedDate();
+		return model.getModifiedDate();
 	}
 
 	/**
@@ -360,13 +331,13 @@ public class MBCategoryWrapper implements MBCategory, ModelWrapper<MBCategory> {
 	*/
 	@Override
 	public String getName() {
-		return _mbCategory.getName();
+		return model.getName();
 	}
 
 	@Override
 	public MBCategory getParentCategory()
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _mbCategory.getParentCategory();
+		return model.getParentCategory();
 	}
 
 	/**
@@ -376,7 +347,7 @@ public class MBCategoryWrapper implements MBCategory, ModelWrapper<MBCategory> {
 	*/
 	@Override
 	public long getParentCategoryId() {
-		return _mbCategory.getParentCategoryId();
+		return model.getParentCategoryId();
 	}
 
 	/**
@@ -386,7 +357,7 @@ public class MBCategoryWrapper implements MBCategory, ModelWrapper<MBCategory> {
 	*/
 	@Override
 	public long getParentContainerModelId() {
-		return _mbCategory.getParentContainerModelId();
+		return model.getParentContainerModelId();
 	}
 
 	/**
@@ -396,12 +367,7 @@ public class MBCategoryWrapper implements MBCategory, ModelWrapper<MBCategory> {
 	*/
 	@Override
 	public long getPrimaryKey() {
-		return _mbCategory.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _mbCategory.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	/**
@@ -411,7 +377,7 @@ public class MBCategoryWrapper implements MBCategory, ModelWrapper<MBCategory> {
 	*/
 	@Override
 	public int getStatus() {
-		return _mbCategory.getStatus();
+		return model.getStatus();
 	}
 
 	/**
@@ -421,7 +387,7 @@ public class MBCategoryWrapper implements MBCategory, ModelWrapper<MBCategory> {
 	*/
 	@Override
 	public long getStatusByUserId() {
-		return _mbCategory.getStatusByUserId();
+		return model.getStatusByUserId();
 	}
 
 	/**
@@ -431,7 +397,7 @@ public class MBCategoryWrapper implements MBCategory, ModelWrapper<MBCategory> {
 	*/
 	@Override
 	public String getStatusByUserName() {
-		return _mbCategory.getStatusByUserName();
+		return model.getStatusByUserName();
 	}
 
 	/**
@@ -441,7 +407,7 @@ public class MBCategoryWrapper implements MBCategory, ModelWrapper<MBCategory> {
 	*/
 	@Override
 	public String getStatusByUserUuid() {
-		return _mbCategory.getStatusByUserUuid();
+		return model.getStatusByUserUuid();
 	}
 
 	/**
@@ -451,7 +417,7 @@ public class MBCategoryWrapper implements MBCategory, ModelWrapper<MBCategory> {
 	*/
 	@Override
 	public Date getStatusDate() {
-		return _mbCategory.getStatusDate();
+		return model.getStatusDate();
 	}
 
 	/**
@@ -461,7 +427,7 @@ public class MBCategoryWrapper implements MBCategory, ModelWrapper<MBCategory> {
 	*/
 	@Override
 	public int getThreadCount() {
-		return _mbCategory.getThreadCount();
+		return model.getThreadCount();
 	}
 
 	/**
@@ -472,7 +438,7 @@ public class MBCategoryWrapper implements MBCategory, ModelWrapper<MBCategory> {
 	@Override
 	public com.liferay.trash.kernel.model.TrashEntry getTrashEntry()
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _mbCategory.getTrashEntry();
+		return model.getTrashEntry();
 	}
 
 	/**
@@ -482,7 +448,7 @@ public class MBCategoryWrapper implements MBCategory, ModelWrapper<MBCategory> {
 	*/
 	@Override
 	public long getTrashEntryClassPK() {
-		return _mbCategory.getTrashEntryClassPK();
+		return model.getTrashEntryClassPK();
 	}
 
 	/**
@@ -494,7 +460,7 @@ public class MBCategoryWrapper implements MBCategory, ModelWrapper<MBCategory> {
 	@Deprecated
 	@Override
 	public com.liferay.portal.kernel.trash.TrashHandler getTrashHandler() {
-		return _mbCategory.getTrashHandler();
+		return model.getTrashHandler();
 	}
 
 	/**
@@ -504,7 +470,7 @@ public class MBCategoryWrapper implements MBCategory, ModelWrapper<MBCategory> {
 	*/
 	@Override
 	public long getUserId() {
-		return _mbCategory.getUserId();
+		return model.getUserId();
 	}
 
 	/**
@@ -514,7 +480,7 @@ public class MBCategoryWrapper implements MBCategory, ModelWrapper<MBCategory> {
 	*/
 	@Override
 	public String getUserName() {
-		return _mbCategory.getUserName();
+		return model.getUserName();
 	}
 
 	/**
@@ -524,7 +490,7 @@ public class MBCategoryWrapper implements MBCategory, ModelWrapper<MBCategory> {
 	*/
 	@Override
 	public String getUserUuid() {
-		return _mbCategory.getUserUuid();
+		return model.getUserUuid();
 	}
 
 	/**
@@ -534,12 +500,7 @@ public class MBCategoryWrapper implements MBCategory, ModelWrapper<MBCategory> {
 	*/
 	@Override
 	public String getUuid() {
-		return _mbCategory.getUuid();
-	}
-
-	@Override
-	public int hashCode() {
-		return _mbCategory.hashCode();
+		return model.getUuid();
 	}
 
 	/**
@@ -549,12 +510,7 @@ public class MBCategoryWrapper implements MBCategory, ModelWrapper<MBCategory> {
 	*/
 	@Override
 	public boolean isApproved() {
-		return _mbCategory.isApproved();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _mbCategory.isCachedModel();
+		return model.isApproved();
 	}
 
 	/**
@@ -564,7 +520,7 @@ public class MBCategoryWrapper implements MBCategory, ModelWrapper<MBCategory> {
 	*/
 	@Override
 	public boolean isDenied() {
-		return _mbCategory.isDenied();
+		return model.isDenied();
 	}
 
 	/**
@@ -574,12 +530,7 @@ public class MBCategoryWrapper implements MBCategory, ModelWrapper<MBCategory> {
 	*/
 	@Override
 	public boolean isDraft() {
-		return _mbCategory.isDraft();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _mbCategory.isEscapedModel();
+		return model.isDraft();
 	}
 
 	/**
@@ -589,7 +540,7 @@ public class MBCategoryWrapper implements MBCategory, ModelWrapper<MBCategory> {
 	*/
 	@Override
 	public boolean isExpired() {
-		return _mbCategory.isExpired();
+		return model.isExpired();
 	}
 
 	/**
@@ -599,7 +550,7 @@ public class MBCategoryWrapper implements MBCategory, ModelWrapper<MBCategory> {
 	*/
 	@Override
 	public boolean isInactive() {
-		return _mbCategory.isInactive();
+		return model.isInactive();
 	}
 
 	/**
@@ -609,7 +560,7 @@ public class MBCategoryWrapper implements MBCategory, ModelWrapper<MBCategory> {
 	*/
 	@Override
 	public boolean isIncomplete() {
-		return _mbCategory.isIncomplete();
+		return model.isIncomplete();
 	}
 
 	/**
@@ -619,7 +570,7 @@ public class MBCategoryWrapper implements MBCategory, ModelWrapper<MBCategory> {
 	*/
 	@Override
 	public boolean isInTrash() {
-		return _mbCategory.isInTrash();
+		return model.isInTrash();
 	}
 
 	/**
@@ -629,22 +580,17 @@ public class MBCategoryWrapper implements MBCategory, ModelWrapper<MBCategory> {
 	*/
 	@Override
 	public boolean isInTrashContainer() {
-		return _mbCategory.isInTrashContainer();
+		return model.isInTrashContainer();
 	}
 
 	@Override
 	public boolean isInTrashExplicitly() {
-		return _mbCategory.isInTrashExplicitly();
+		return model.isInTrashExplicitly();
 	}
 
 	@Override
 	public boolean isInTrashImplicitly() {
-		return _mbCategory.isInTrashImplicitly();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _mbCategory.isNew();
+		return model.isInTrashImplicitly();
 	}
 
 	/**
@@ -654,12 +600,12 @@ public class MBCategoryWrapper implements MBCategory, ModelWrapper<MBCategory> {
 	*/
 	@Override
 	public boolean isPending() {
-		return _mbCategory.isPending();
+		return model.isPending();
 	}
 
 	@Override
 	public boolean isRoot() {
-		return _mbCategory.isRoot();
+		return model.isRoot();
 	}
 
 	/**
@@ -669,17 +615,12 @@ public class MBCategoryWrapper implements MBCategory, ModelWrapper<MBCategory> {
 	*/
 	@Override
 	public boolean isScheduled() {
-		return _mbCategory.isScheduled();
+		return model.isScheduled();
 	}
 
 	@Override
 	public void persist() {
-		_mbCategory.persist();
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_mbCategory.setCachedModel(cachedModel);
+		model.persist();
 	}
 
 	/**
@@ -689,7 +630,7 @@ public class MBCategoryWrapper implements MBCategory, ModelWrapper<MBCategory> {
 	*/
 	@Override
 	public void setCategoryId(long categoryId) {
-		_mbCategory.setCategoryId(categoryId);
+		model.setCategoryId(categoryId);
 	}
 
 	/**
@@ -699,7 +640,7 @@ public class MBCategoryWrapper implements MBCategory, ModelWrapper<MBCategory> {
 	*/
 	@Override
 	public void setCompanyId(long companyId) {
-		_mbCategory.setCompanyId(companyId);
+		model.setCompanyId(companyId);
 	}
 
 	/**
@@ -709,7 +650,7 @@ public class MBCategoryWrapper implements MBCategory, ModelWrapper<MBCategory> {
 	*/
 	@Override
 	public void setContainerModelId(long containerModelId) {
-		_mbCategory.setContainerModelId(containerModelId);
+		model.setContainerModelId(containerModelId);
 	}
 
 	/**
@@ -719,7 +660,7 @@ public class MBCategoryWrapper implements MBCategory, ModelWrapper<MBCategory> {
 	*/
 	@Override
 	public void setCreateDate(Date createDate) {
-		_mbCategory.setCreateDate(createDate);
+		model.setCreateDate(createDate);
 	}
 
 	/**
@@ -729,7 +670,7 @@ public class MBCategoryWrapper implements MBCategory, ModelWrapper<MBCategory> {
 	*/
 	@Override
 	public void setDescription(String description) {
-		_mbCategory.setDescription(description);
+		model.setDescription(description);
 	}
 
 	/**
@@ -739,23 +680,7 @@ public class MBCategoryWrapper implements MBCategory, ModelWrapper<MBCategory> {
 	*/
 	@Override
 	public void setDisplayStyle(String displayStyle) {
-		_mbCategory.setDisplayStyle(displayStyle);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-		_mbCategory.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_mbCategory.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_mbCategory.setExpandoBridgeAttributes(serviceContext);
+		model.setDisplayStyle(displayStyle);
 	}
 
 	/**
@@ -765,7 +690,7 @@ public class MBCategoryWrapper implements MBCategory, ModelWrapper<MBCategory> {
 	*/
 	@Override
 	public void setGroupId(long groupId) {
-		_mbCategory.setGroupId(groupId);
+		model.setGroupId(groupId);
 	}
 
 	/**
@@ -775,7 +700,7 @@ public class MBCategoryWrapper implements MBCategory, ModelWrapper<MBCategory> {
 	*/
 	@Override
 	public void setLastPostDate(Date lastPostDate) {
-		_mbCategory.setLastPostDate(lastPostDate);
+		model.setLastPostDate(lastPostDate);
 	}
 
 	/**
@@ -785,7 +710,7 @@ public class MBCategoryWrapper implements MBCategory, ModelWrapper<MBCategory> {
 	*/
 	@Override
 	public void setLastPublishDate(Date lastPublishDate) {
-		_mbCategory.setLastPublishDate(lastPublishDate);
+		model.setLastPublishDate(lastPublishDate);
 	}
 
 	/**
@@ -795,7 +720,7 @@ public class MBCategoryWrapper implements MBCategory, ModelWrapper<MBCategory> {
 	*/
 	@Override
 	public void setMessageCount(int messageCount) {
-		_mbCategory.setMessageCount(messageCount);
+		model.setMessageCount(messageCount);
 	}
 
 	/**
@@ -805,7 +730,7 @@ public class MBCategoryWrapper implements MBCategory, ModelWrapper<MBCategory> {
 	*/
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
-		_mbCategory.setModifiedDate(modifiedDate);
+		model.setModifiedDate(modifiedDate);
 	}
 
 	/**
@@ -815,12 +740,7 @@ public class MBCategoryWrapper implements MBCategory, ModelWrapper<MBCategory> {
 	*/
 	@Override
 	public void setName(String name) {
-		_mbCategory.setName(name);
-	}
-
-	@Override
-	public void setNew(boolean n) {
-		_mbCategory.setNew(n);
+		model.setName(name);
 	}
 
 	/**
@@ -830,7 +750,7 @@ public class MBCategoryWrapper implements MBCategory, ModelWrapper<MBCategory> {
 	*/
 	@Override
 	public void setParentCategoryId(long parentCategoryId) {
-		_mbCategory.setParentCategoryId(parentCategoryId);
+		model.setParentCategoryId(parentCategoryId);
 	}
 
 	/**
@@ -840,7 +760,7 @@ public class MBCategoryWrapper implements MBCategory, ModelWrapper<MBCategory> {
 	*/
 	@Override
 	public void setParentContainerModelId(long parentContainerModelId) {
-		_mbCategory.setParentContainerModelId(parentContainerModelId);
+		model.setParentContainerModelId(parentContainerModelId);
 	}
 
 	/**
@@ -850,12 +770,7 @@ public class MBCategoryWrapper implements MBCategory, ModelWrapper<MBCategory> {
 	*/
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_mbCategory.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_mbCategory.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -865,7 +780,7 @@ public class MBCategoryWrapper implements MBCategory, ModelWrapper<MBCategory> {
 	*/
 	@Override
 	public void setStatus(int status) {
-		_mbCategory.setStatus(status);
+		model.setStatus(status);
 	}
 
 	/**
@@ -875,7 +790,7 @@ public class MBCategoryWrapper implements MBCategory, ModelWrapper<MBCategory> {
 	*/
 	@Override
 	public void setStatusByUserId(long statusByUserId) {
-		_mbCategory.setStatusByUserId(statusByUserId);
+		model.setStatusByUserId(statusByUserId);
 	}
 
 	/**
@@ -885,7 +800,7 @@ public class MBCategoryWrapper implements MBCategory, ModelWrapper<MBCategory> {
 	*/
 	@Override
 	public void setStatusByUserName(String statusByUserName) {
-		_mbCategory.setStatusByUserName(statusByUserName);
+		model.setStatusByUserName(statusByUserName);
 	}
 
 	/**
@@ -895,7 +810,7 @@ public class MBCategoryWrapper implements MBCategory, ModelWrapper<MBCategory> {
 	*/
 	@Override
 	public void setStatusByUserUuid(String statusByUserUuid) {
-		_mbCategory.setStatusByUserUuid(statusByUserUuid);
+		model.setStatusByUserUuid(statusByUserUuid);
 	}
 
 	/**
@@ -905,7 +820,7 @@ public class MBCategoryWrapper implements MBCategory, ModelWrapper<MBCategory> {
 	*/
 	@Override
 	public void setStatusDate(Date statusDate) {
-		_mbCategory.setStatusDate(statusDate);
+		model.setStatusDate(statusDate);
 	}
 
 	/**
@@ -915,7 +830,7 @@ public class MBCategoryWrapper implements MBCategory, ModelWrapper<MBCategory> {
 	*/
 	@Override
 	public void setThreadCount(int threadCount) {
-		_mbCategory.setThreadCount(threadCount);
+		model.setThreadCount(threadCount);
 	}
 
 	/**
@@ -925,7 +840,7 @@ public class MBCategoryWrapper implements MBCategory, ModelWrapper<MBCategory> {
 	*/
 	@Override
 	public void setUserId(long userId) {
-		_mbCategory.setUserId(userId);
+		model.setUserId(userId);
 	}
 
 	/**
@@ -935,7 +850,7 @@ public class MBCategoryWrapper implements MBCategory, ModelWrapper<MBCategory> {
 	*/
 	@Override
 	public void setUserName(String userName) {
-		_mbCategory.setUserName(userName);
+		model.setUserName(userName);
 	}
 
 	/**
@@ -945,7 +860,7 @@ public class MBCategoryWrapper implements MBCategory, ModelWrapper<MBCategory> {
 	*/
 	@Override
 	public void setUserUuid(String userUuid) {
-		_mbCategory.setUserUuid(userUuid);
+		model.setUserUuid(userUuid);
 	}
 
 	/**
@@ -955,77 +870,16 @@ public class MBCategoryWrapper implements MBCategory, ModelWrapper<MBCategory> {
 	*/
 	@Override
 	public void setUuid(String uuid) {
-		_mbCategory.setUuid(uuid);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<MBCategory> toCacheModel() {
-		return _mbCategory.toCacheModel();
-	}
-
-	@Override
-	public MBCategory toEscapedModel() {
-		return new MBCategoryWrapper(_mbCategory.toEscapedModel());
-	}
-
-	@Override
-	public String toString() {
-		return _mbCategory.toString();
-	}
-
-	@Override
-	public MBCategory toUnescapedModel() {
-		return new MBCategoryWrapper(_mbCategory.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _mbCategory.toXmlString();
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-
-		if (!(obj instanceof MBCategoryWrapper)) {
-			return false;
-		}
-
-		MBCategoryWrapper mbCategoryWrapper = (MBCategoryWrapper)obj;
-
-		if (Objects.equals(_mbCategory, mbCategoryWrapper._mbCategory)) {
-			return true;
-		}
-
-		return false;
+		model.setUuid(uuid);
 	}
 
 	@Override
 	public StagedModelType getStagedModelType() {
-		return _mbCategory.getStagedModelType();
+		return model.getStagedModelType();
 	}
 
 	@Override
-	public MBCategory getWrappedModel() {
-		return _mbCategory;
+	protected MBCategoryWrapper wrap(MBCategory mbCategory) {
+		return new MBCategoryWrapper(mbCategory);
 	}
-
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _mbCategory.isEntityCacheEnabled();
-	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _mbCategory.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_mbCategory.resetOriginalValues();
-	}
-
-	private final MBCategory _mbCategory;
 }

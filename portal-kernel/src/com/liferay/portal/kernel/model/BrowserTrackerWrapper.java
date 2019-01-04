@@ -16,15 +16,10 @@ package com.liferay.portal.kernel.model;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
-
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -36,20 +31,10 @@ import java.util.Objects;
  * @generated
  */
 @ProviderType
-public class BrowserTrackerWrapper implements BrowserTracker,
-	ModelWrapper<BrowserTracker> {
+public class BrowserTrackerWrapper extends BaseModelWrapper<BrowserTracker>
+	implements BrowserTracker, ModelWrapper<BrowserTracker> {
 	public BrowserTrackerWrapper(BrowserTracker browserTracker) {
-		_browserTracker = browserTracker;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return BrowserTracker.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return BrowserTracker.class.getName();
+		super(browserTracker);
 	}
 
 	@Override
@@ -98,16 +83,6 @@ public class BrowserTrackerWrapper implements BrowserTracker,
 		}
 	}
 
-	@Override
-	public Object clone() {
-		return new BrowserTrackerWrapper((BrowserTracker)_browserTracker.clone());
-	}
-
-	@Override
-	public int compareTo(BrowserTracker browserTracker) {
-		return _browserTracker.compareTo(browserTracker);
-	}
-
 	/**
 	* Returns the browser key of this browser tracker.
 	*
@@ -115,7 +90,7 @@ public class BrowserTrackerWrapper implements BrowserTracker,
 	*/
 	@Override
 	public long getBrowserKey() {
-		return _browserTracker.getBrowserKey();
+		return model.getBrowserKey();
 	}
 
 	/**
@@ -125,7 +100,7 @@ public class BrowserTrackerWrapper implements BrowserTracker,
 	*/
 	@Override
 	public long getBrowserTrackerId() {
-		return _browserTracker.getBrowserTrackerId();
+		return model.getBrowserTrackerId();
 	}
 
 	/**
@@ -135,12 +110,7 @@ public class BrowserTrackerWrapper implements BrowserTracker,
 	*/
 	@Override
 	public long getCompanyId() {
-		return _browserTracker.getCompanyId();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _browserTracker.getExpandoBridge();
+		return model.getCompanyId();
 	}
 
 	/**
@@ -150,7 +120,7 @@ public class BrowserTrackerWrapper implements BrowserTracker,
 	*/
 	@Override
 	public long getMvccVersion() {
-		return _browserTracker.getMvccVersion();
+		return model.getMvccVersion();
 	}
 
 	/**
@@ -160,12 +130,7 @@ public class BrowserTrackerWrapper implements BrowserTracker,
 	*/
 	@Override
 	public long getPrimaryKey() {
-		return _browserTracker.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _browserTracker.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	/**
@@ -175,7 +140,7 @@ public class BrowserTrackerWrapper implements BrowserTracker,
 	*/
 	@Override
 	public long getUserId() {
-		return _browserTracker.getUserId();
+		return model.getUserId();
 	}
 
 	/**
@@ -185,32 +150,12 @@ public class BrowserTrackerWrapper implements BrowserTracker,
 	*/
 	@Override
 	public String getUserUuid() {
-		return _browserTracker.getUserUuid();
-	}
-
-	@Override
-	public int hashCode() {
-		return _browserTracker.hashCode();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _browserTracker.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _browserTracker.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _browserTracker.isNew();
+		return model.getUserUuid();
 	}
 
 	@Override
 	public void persist() {
-		_browserTracker.persist();
+		model.persist();
 	}
 
 	/**
@@ -220,7 +165,7 @@ public class BrowserTrackerWrapper implements BrowserTracker,
 	*/
 	@Override
 	public void setBrowserKey(long browserKey) {
-		_browserTracker.setBrowserKey(browserKey);
+		model.setBrowserKey(browserKey);
 	}
 
 	/**
@@ -230,12 +175,7 @@ public class BrowserTrackerWrapper implements BrowserTracker,
 	*/
 	@Override
 	public void setBrowserTrackerId(long browserTrackerId) {
-		_browserTracker.setBrowserTrackerId(browserTrackerId);
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_browserTracker.setCachedModel(cachedModel);
+		model.setBrowserTrackerId(browserTrackerId);
 	}
 
 	/**
@@ -245,22 +185,7 @@ public class BrowserTrackerWrapper implements BrowserTracker,
 	*/
 	@Override
 	public void setCompanyId(long companyId) {
-		_browserTracker.setCompanyId(companyId);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(BaseModel<?> baseModel) {
-		_browserTracker.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_browserTracker.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_browserTracker.setExpandoBridgeAttributes(serviceContext);
+		model.setCompanyId(companyId);
 	}
 
 	/**
@@ -270,12 +195,7 @@ public class BrowserTrackerWrapper implements BrowserTracker,
 	*/
 	@Override
 	public void setMvccVersion(long mvccVersion) {
-		_browserTracker.setMvccVersion(mvccVersion);
-	}
-
-	@Override
-	public void setNew(boolean n) {
-		_browserTracker.setNew(n);
+		model.setMvccVersion(mvccVersion);
 	}
 
 	/**
@@ -285,12 +205,7 @@ public class BrowserTrackerWrapper implements BrowserTracker,
 	*/
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_browserTracker.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_browserTracker.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -300,7 +215,7 @@ public class BrowserTrackerWrapper implements BrowserTracker,
 	*/
 	@Override
 	public void setUserId(long userId) {
-		_browserTracker.setUserId(userId);
+		model.setUserId(userId);
 	}
 
 	/**
@@ -310,73 +225,11 @@ public class BrowserTrackerWrapper implements BrowserTracker,
 	*/
 	@Override
 	public void setUserUuid(String userUuid) {
-		_browserTracker.setUserUuid(userUuid);
+		model.setUserUuid(userUuid);
 	}
 
 	@Override
-	public CacheModel<BrowserTracker> toCacheModel() {
-		return _browserTracker.toCacheModel();
+	protected BrowserTrackerWrapper wrap(BrowserTracker browserTracker) {
+		return new BrowserTrackerWrapper(browserTracker);
 	}
-
-	@Override
-	public BrowserTracker toEscapedModel() {
-		return new BrowserTrackerWrapper(_browserTracker.toEscapedModel());
-	}
-
-	@Override
-	public String toString() {
-		return _browserTracker.toString();
-	}
-
-	@Override
-	public BrowserTracker toUnescapedModel() {
-		return new BrowserTrackerWrapper(_browserTracker.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _browserTracker.toXmlString();
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-
-		if (!(obj instanceof BrowserTrackerWrapper)) {
-			return false;
-		}
-
-		BrowserTrackerWrapper browserTrackerWrapper = (BrowserTrackerWrapper)obj;
-
-		if (Objects.equals(_browserTracker,
-					browserTrackerWrapper._browserTracker)) {
-			return true;
-		}
-
-		return false;
-	}
-
-	@Override
-	public BrowserTracker getWrappedModel() {
-		return _browserTracker;
-	}
-
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _browserTracker.isEntityCacheEnabled();
-	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _browserTracker.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_browserTracker.resetOriginalValues();
-	}
-
-	private final BrowserTracker _browserTracker;
 }

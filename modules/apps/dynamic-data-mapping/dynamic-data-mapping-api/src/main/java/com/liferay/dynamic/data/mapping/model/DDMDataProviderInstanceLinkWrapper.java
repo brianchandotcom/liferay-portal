@@ -16,16 +16,11 @@ package com.liferay.dynamic.data.mapping.model;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
-
 import com.liferay.portal.kernel.model.ModelWrapper;
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -37,22 +32,12 @@ import java.util.Objects;
  * @generated
  */
 @ProviderType
-public class DDMDataProviderInstanceLinkWrapper
+public class DDMDataProviderInstanceLinkWrapper extends BaseModelWrapper<DDMDataProviderInstanceLink>
 	implements DDMDataProviderInstanceLink,
 		ModelWrapper<DDMDataProviderInstanceLink> {
 	public DDMDataProviderInstanceLinkWrapper(
 		DDMDataProviderInstanceLink ddmDataProviderInstanceLink) {
-		_ddmDataProviderInstanceLink = ddmDataProviderInstanceLink;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return DDMDataProviderInstanceLink.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return DDMDataProviderInstanceLink.class.getName();
+		super(ddmDataProviderInstanceLink);
 	}
 
 	@Override
@@ -97,17 +82,6 @@ public class DDMDataProviderInstanceLinkWrapper
 		}
 	}
 
-	@Override
-	public Object clone() {
-		return new DDMDataProviderInstanceLinkWrapper((DDMDataProviderInstanceLink)_ddmDataProviderInstanceLink.clone());
-	}
-
-	@Override
-	public int compareTo(
-		DDMDataProviderInstanceLink ddmDataProviderInstanceLink) {
-		return _ddmDataProviderInstanceLink.compareTo(ddmDataProviderInstanceLink);
-	}
-
 	/**
 	* Returns the company ID of this ddm data provider instance link.
 	*
@@ -115,7 +89,7 @@ public class DDMDataProviderInstanceLinkWrapper
 	*/
 	@Override
 	public long getCompanyId() {
-		return _ddmDataProviderInstanceLink.getCompanyId();
+		return model.getCompanyId();
 	}
 
 	/**
@@ -125,7 +99,7 @@ public class DDMDataProviderInstanceLinkWrapper
 	*/
 	@Override
 	public long getDataProviderInstanceId() {
-		return _ddmDataProviderInstanceLink.getDataProviderInstanceId();
+		return model.getDataProviderInstanceId();
 	}
 
 	/**
@@ -135,12 +109,7 @@ public class DDMDataProviderInstanceLinkWrapper
 	*/
 	@Override
 	public long getDataProviderInstanceLinkId() {
-		return _ddmDataProviderInstanceLink.getDataProviderInstanceLinkId();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _ddmDataProviderInstanceLink.getExpandoBridge();
+		return model.getDataProviderInstanceLinkId();
 	}
 
 	/**
@@ -150,12 +119,7 @@ public class DDMDataProviderInstanceLinkWrapper
 	*/
 	@Override
 	public long getPrimaryKey() {
-		return _ddmDataProviderInstanceLink.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _ddmDataProviderInstanceLink.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	/**
@@ -165,37 +129,12 @@ public class DDMDataProviderInstanceLinkWrapper
 	*/
 	@Override
 	public long getStructureId() {
-		return _ddmDataProviderInstanceLink.getStructureId();
-	}
-
-	@Override
-	public int hashCode() {
-		return _ddmDataProviderInstanceLink.hashCode();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _ddmDataProviderInstanceLink.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _ddmDataProviderInstanceLink.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _ddmDataProviderInstanceLink.isNew();
+		return model.getStructureId();
 	}
 
 	@Override
 	public void persist() {
-		_ddmDataProviderInstanceLink.persist();
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_ddmDataProviderInstanceLink.setCachedModel(cachedModel);
+		model.persist();
 	}
 
 	/**
@@ -205,7 +144,7 @@ public class DDMDataProviderInstanceLinkWrapper
 	*/
 	@Override
 	public void setCompanyId(long companyId) {
-		_ddmDataProviderInstanceLink.setCompanyId(companyId);
+		model.setCompanyId(companyId);
 	}
 
 	/**
@@ -215,7 +154,7 @@ public class DDMDataProviderInstanceLinkWrapper
 	*/
 	@Override
 	public void setDataProviderInstanceId(long dataProviderInstanceId) {
-		_ddmDataProviderInstanceLink.setDataProviderInstanceId(dataProviderInstanceId);
+		model.setDataProviderInstanceId(dataProviderInstanceId);
 	}
 
 	/**
@@ -225,28 +164,7 @@ public class DDMDataProviderInstanceLinkWrapper
 	*/
 	@Override
 	public void setDataProviderInstanceLinkId(long dataProviderInstanceLinkId) {
-		_ddmDataProviderInstanceLink.setDataProviderInstanceLinkId(dataProviderInstanceLinkId);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-		_ddmDataProviderInstanceLink.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_ddmDataProviderInstanceLink.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_ddmDataProviderInstanceLink.setExpandoBridgeAttributes(serviceContext);
-	}
-
-	@Override
-	public void setNew(boolean n) {
-		_ddmDataProviderInstanceLink.setNew(n);
+		model.setDataProviderInstanceLinkId(dataProviderInstanceLinkId);
 	}
 
 	/**
@@ -256,12 +174,7 @@ public class DDMDataProviderInstanceLinkWrapper
 	*/
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_ddmDataProviderInstanceLink.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_ddmDataProviderInstanceLink.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -271,73 +184,12 @@ public class DDMDataProviderInstanceLinkWrapper
 	*/
 	@Override
 	public void setStructureId(long structureId) {
-		_ddmDataProviderInstanceLink.setStructureId(structureId);
+		model.setStructureId(structureId);
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.CacheModel<DDMDataProviderInstanceLink> toCacheModel() {
-		return _ddmDataProviderInstanceLink.toCacheModel();
+	protected DDMDataProviderInstanceLinkWrapper wrap(
+		DDMDataProviderInstanceLink ddmDataProviderInstanceLink) {
+		return new DDMDataProviderInstanceLinkWrapper(ddmDataProviderInstanceLink);
 	}
-
-	@Override
-	public DDMDataProviderInstanceLink toEscapedModel() {
-		return new DDMDataProviderInstanceLinkWrapper(_ddmDataProviderInstanceLink.toEscapedModel());
-	}
-
-	@Override
-	public String toString() {
-		return _ddmDataProviderInstanceLink.toString();
-	}
-
-	@Override
-	public DDMDataProviderInstanceLink toUnescapedModel() {
-		return new DDMDataProviderInstanceLinkWrapper(_ddmDataProviderInstanceLink.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _ddmDataProviderInstanceLink.toXmlString();
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-
-		if (!(obj instanceof DDMDataProviderInstanceLinkWrapper)) {
-			return false;
-		}
-
-		DDMDataProviderInstanceLinkWrapper ddmDataProviderInstanceLinkWrapper = (DDMDataProviderInstanceLinkWrapper)obj;
-
-		if (Objects.equals(_ddmDataProviderInstanceLink,
-					ddmDataProviderInstanceLinkWrapper._ddmDataProviderInstanceLink)) {
-			return true;
-		}
-
-		return false;
-	}
-
-	@Override
-	public DDMDataProviderInstanceLink getWrappedModel() {
-		return _ddmDataProviderInstanceLink;
-	}
-
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _ddmDataProviderInstanceLink.isEntityCacheEnabled();
-	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _ddmDataProviderInstanceLink.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_ddmDataProviderInstanceLink.resetOriginalValues();
-	}
-
-	private final DDMDataProviderInstanceLink _ddmDataProviderInstanceLink;
 }

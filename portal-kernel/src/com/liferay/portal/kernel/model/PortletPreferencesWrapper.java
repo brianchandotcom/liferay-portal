@@ -16,15 +16,10 @@ package com.liferay.portal.kernel.model;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
-
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -36,20 +31,10 @@ import java.util.Objects;
  * @generated
  */
 @ProviderType
-public class PortletPreferencesWrapper implements PortletPreferences,
-	ModelWrapper<PortletPreferences> {
+public class PortletPreferencesWrapper extends BaseModelWrapper<PortletPreferences>
+	implements PortletPreferences, ModelWrapper<PortletPreferences> {
 	public PortletPreferencesWrapper(PortletPreferences portletPreferences) {
-		_portletPreferences = portletPreferences;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return PortletPreferences.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return PortletPreferences.class.getName();
+		super(portletPreferences);
 	}
 
 	@Override
@@ -119,16 +104,6 @@ public class PortletPreferencesWrapper implements PortletPreferences,
 		}
 	}
 
-	@Override
-	public Object clone() {
-		return new PortletPreferencesWrapper((PortletPreferences)_portletPreferences.clone());
-	}
-
-	@Override
-	public int compareTo(PortletPreferences portletPreferences) {
-		return _portletPreferences.compareTo(portletPreferences);
-	}
-
 	/**
 	* Returns the company ID of this portlet preferences.
 	*
@@ -136,12 +111,7 @@ public class PortletPreferencesWrapper implements PortletPreferences,
 	*/
 	@Override
 	public long getCompanyId() {
-		return _portletPreferences.getCompanyId();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _portletPreferences.getExpandoBridge();
+		return model.getCompanyId();
 	}
 
 	/**
@@ -151,7 +121,7 @@ public class PortletPreferencesWrapper implements PortletPreferences,
 	*/
 	@Override
 	public long getMvccVersion() {
-		return _portletPreferences.getMvccVersion();
+		return model.getMvccVersion();
 	}
 
 	/**
@@ -161,7 +131,7 @@ public class PortletPreferencesWrapper implements PortletPreferences,
 	*/
 	@Override
 	public long getOwnerId() {
-		return _portletPreferences.getOwnerId();
+		return model.getOwnerId();
 	}
 
 	/**
@@ -171,7 +141,7 @@ public class PortletPreferencesWrapper implements PortletPreferences,
 	*/
 	@Override
 	public int getOwnerType() {
-		return _portletPreferences.getOwnerType();
+		return model.getOwnerType();
 	}
 
 	/**
@@ -181,7 +151,7 @@ public class PortletPreferencesWrapper implements PortletPreferences,
 	*/
 	@Override
 	public long getPlid() {
-		return _portletPreferences.getPlid();
+		return model.getPlid();
 	}
 
 	/**
@@ -191,7 +161,7 @@ public class PortletPreferencesWrapper implements PortletPreferences,
 	*/
 	@Override
 	public String getPortletId() {
-		return _portletPreferences.getPortletId();
+		return model.getPortletId();
 	}
 
 	/**
@@ -201,7 +171,7 @@ public class PortletPreferencesWrapper implements PortletPreferences,
 	*/
 	@Override
 	public long getPortletPreferencesId() {
-		return _portletPreferences.getPortletPreferencesId();
+		return model.getPortletPreferencesId();
 	}
 
 	/**
@@ -211,7 +181,7 @@ public class PortletPreferencesWrapper implements PortletPreferences,
 	*/
 	@Override
 	public String getPreferences() {
-		return _portletPreferences.getPreferences();
+		return model.getPreferences();
 	}
 
 	/**
@@ -221,42 +191,12 @@ public class PortletPreferencesWrapper implements PortletPreferences,
 	*/
 	@Override
 	public long getPrimaryKey() {
-		return _portletPreferences.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _portletPreferences.getPrimaryKeyObj();
-	}
-
-	@Override
-	public int hashCode() {
-		return _portletPreferences.hashCode();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _portletPreferences.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _portletPreferences.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _portletPreferences.isNew();
+		return model.getPrimaryKey();
 	}
 
 	@Override
 	public void persist() {
-		_portletPreferences.persist();
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_portletPreferences.setCachedModel(cachedModel);
+		model.persist();
 	}
 
 	/**
@@ -266,22 +206,7 @@ public class PortletPreferencesWrapper implements PortletPreferences,
 	*/
 	@Override
 	public void setCompanyId(long companyId) {
-		_portletPreferences.setCompanyId(companyId);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(BaseModel<?> baseModel) {
-		_portletPreferences.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_portletPreferences.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_portletPreferences.setExpandoBridgeAttributes(serviceContext);
+		model.setCompanyId(companyId);
 	}
 
 	/**
@@ -291,12 +216,7 @@ public class PortletPreferencesWrapper implements PortletPreferences,
 	*/
 	@Override
 	public void setMvccVersion(long mvccVersion) {
-		_portletPreferences.setMvccVersion(mvccVersion);
-	}
-
-	@Override
-	public void setNew(boolean n) {
-		_portletPreferences.setNew(n);
+		model.setMvccVersion(mvccVersion);
 	}
 
 	/**
@@ -306,7 +226,7 @@ public class PortletPreferencesWrapper implements PortletPreferences,
 	*/
 	@Override
 	public void setOwnerId(long ownerId) {
-		_portletPreferences.setOwnerId(ownerId);
+		model.setOwnerId(ownerId);
 	}
 
 	/**
@@ -316,7 +236,7 @@ public class PortletPreferencesWrapper implements PortletPreferences,
 	*/
 	@Override
 	public void setOwnerType(int ownerType) {
-		_portletPreferences.setOwnerType(ownerType);
+		model.setOwnerType(ownerType);
 	}
 
 	/**
@@ -326,7 +246,7 @@ public class PortletPreferencesWrapper implements PortletPreferences,
 	*/
 	@Override
 	public void setPlid(long plid) {
-		_portletPreferences.setPlid(plid);
+		model.setPlid(plid);
 	}
 
 	/**
@@ -336,7 +256,7 @@ public class PortletPreferencesWrapper implements PortletPreferences,
 	*/
 	@Override
 	public void setPortletId(String portletId) {
-		_portletPreferences.setPortletId(portletId);
+		model.setPortletId(portletId);
 	}
 
 	/**
@@ -346,7 +266,7 @@ public class PortletPreferencesWrapper implements PortletPreferences,
 	*/
 	@Override
 	public void setPortletPreferencesId(long portletPreferencesId) {
-		_portletPreferences.setPortletPreferencesId(portletPreferencesId);
+		model.setPortletPreferencesId(portletPreferencesId);
 	}
 
 	/**
@@ -356,7 +276,7 @@ public class PortletPreferencesWrapper implements PortletPreferences,
 	*/
 	@Override
 	public void setPreferences(String preferences) {
-		_portletPreferences.setPreferences(preferences);
+		model.setPreferences(preferences);
 	}
 
 	/**
@@ -366,78 +286,12 @@ public class PortletPreferencesWrapper implements PortletPreferences,
 	*/
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_portletPreferences.setPrimaryKey(primaryKey);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_portletPreferences.setPrimaryKeyObj(primaryKeyObj);
+	protected PortletPreferencesWrapper wrap(
+		PortletPreferences portletPreferences) {
+		return new PortletPreferencesWrapper(portletPreferences);
 	}
-
-	@Override
-	public CacheModel<PortletPreferences> toCacheModel() {
-		return _portletPreferences.toCacheModel();
-	}
-
-	@Override
-	public PortletPreferences toEscapedModel() {
-		return new PortletPreferencesWrapper(_portletPreferences.toEscapedModel());
-	}
-
-	@Override
-	public String toString() {
-		return _portletPreferences.toString();
-	}
-
-	@Override
-	public PortletPreferences toUnescapedModel() {
-		return new PortletPreferencesWrapper(_portletPreferences.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _portletPreferences.toXmlString();
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-
-		if (!(obj instanceof PortletPreferencesWrapper)) {
-			return false;
-		}
-
-		PortletPreferencesWrapper portletPreferencesWrapper = (PortletPreferencesWrapper)obj;
-
-		if (Objects.equals(_portletPreferences,
-					portletPreferencesWrapper._portletPreferences)) {
-			return true;
-		}
-
-		return false;
-	}
-
-	@Override
-	public PortletPreferences getWrappedModel() {
-		return _portletPreferences;
-	}
-
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _portletPreferences.isEntityCacheEnabled();
-	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _portletPreferences.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_portletPreferences.resetOriginalValues();
-	}
-
-	private final PortletPreferences _portletPreferences;
 }

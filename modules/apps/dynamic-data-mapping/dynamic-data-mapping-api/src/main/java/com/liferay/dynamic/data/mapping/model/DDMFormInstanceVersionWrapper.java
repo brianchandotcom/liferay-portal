@@ -16,17 +16,12 @@ package com.liferay.dynamic.data.mapping.model;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
-
 import com.liferay.portal.kernel.model.ModelWrapper;
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -38,21 +33,11 @@ import java.util.Objects;
  * @generated
  */
 @ProviderType
-public class DDMFormInstanceVersionWrapper implements DDMFormInstanceVersion,
-	ModelWrapper<DDMFormInstanceVersion> {
+public class DDMFormInstanceVersionWrapper extends BaseModelWrapper<DDMFormInstanceVersion>
+	implements DDMFormInstanceVersion, ModelWrapper<DDMFormInstanceVersion> {
 	public DDMFormInstanceVersionWrapper(
 		DDMFormInstanceVersion ddmFormInstanceVersion) {
-		_ddmFormInstanceVersion = ddmFormInstanceVersion;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return DDMFormInstanceVersion.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return DDMFormInstanceVersion.class.getName();
+		super(ddmFormInstanceVersion);
 	}
 
 	@Override
@@ -180,18 +165,8 @@ public class DDMFormInstanceVersionWrapper implements DDMFormInstanceVersion,
 	}
 
 	@Override
-	public Object clone() {
-		return new DDMFormInstanceVersionWrapper((DDMFormInstanceVersion)_ddmFormInstanceVersion.clone());
-	}
-
-	@Override
-	public int compareTo(DDMFormInstanceVersion ddmFormInstanceVersion) {
-		return _ddmFormInstanceVersion.compareTo(ddmFormInstanceVersion);
-	}
-
-	@Override
 	public String[] getAvailableLanguageIds() {
-		return _ddmFormInstanceVersion.getAvailableLanguageIds();
+		return model.getAvailableLanguageIds();
 	}
 
 	/**
@@ -201,7 +176,7 @@ public class DDMFormInstanceVersionWrapper implements DDMFormInstanceVersion,
 	*/
 	@Override
 	public long getCompanyId() {
-		return _ddmFormInstanceVersion.getCompanyId();
+		return model.getCompanyId();
 	}
 
 	/**
@@ -211,12 +186,12 @@ public class DDMFormInstanceVersionWrapper implements DDMFormInstanceVersion,
 	*/
 	@Override
 	public Date getCreateDate() {
-		return _ddmFormInstanceVersion.getCreateDate();
+		return model.getCreateDate();
 	}
 
 	@Override
 	public String getDefaultLanguageId() {
-		return _ddmFormInstanceVersion.getDefaultLanguageId();
+		return model.getDefaultLanguageId();
 	}
 
 	/**
@@ -226,7 +201,7 @@ public class DDMFormInstanceVersionWrapper implements DDMFormInstanceVersion,
 	*/
 	@Override
 	public String getDescription() {
-		return _ddmFormInstanceVersion.getDescription();
+		return model.getDescription();
 	}
 
 	/**
@@ -237,7 +212,7 @@ public class DDMFormInstanceVersionWrapper implements DDMFormInstanceVersion,
 	*/
 	@Override
 	public String getDescription(java.util.Locale locale) {
-		return _ddmFormInstanceVersion.getDescription(locale);
+		return model.getDescription(locale);
 	}
 
 	/**
@@ -249,7 +224,7 @@ public class DDMFormInstanceVersionWrapper implements DDMFormInstanceVersion,
 	*/
 	@Override
 	public String getDescription(java.util.Locale locale, boolean useDefault) {
-		return _ddmFormInstanceVersion.getDescription(locale, useDefault);
+		return model.getDescription(locale, useDefault);
 	}
 
 	/**
@@ -260,7 +235,7 @@ public class DDMFormInstanceVersionWrapper implements DDMFormInstanceVersion,
 	*/
 	@Override
 	public String getDescription(String languageId) {
-		return _ddmFormInstanceVersion.getDescription(languageId);
+		return model.getDescription(languageId);
 	}
 
 	/**
@@ -272,17 +247,17 @@ public class DDMFormInstanceVersionWrapper implements DDMFormInstanceVersion,
 	*/
 	@Override
 	public String getDescription(String languageId, boolean useDefault) {
-		return _ddmFormInstanceVersion.getDescription(languageId, useDefault);
+		return model.getDescription(languageId, useDefault);
 	}
 
 	@Override
 	public String getDescriptionCurrentLanguageId() {
-		return _ddmFormInstanceVersion.getDescriptionCurrentLanguageId();
+		return model.getDescriptionCurrentLanguageId();
 	}
 
 	@Override
 	public String getDescriptionCurrentValue() {
-		return _ddmFormInstanceVersion.getDescriptionCurrentValue();
+		return model.getDescriptionCurrentValue();
 	}
 
 	/**
@@ -292,18 +267,13 @@ public class DDMFormInstanceVersionWrapper implements DDMFormInstanceVersion,
 	*/
 	@Override
 	public Map<java.util.Locale, String> getDescriptionMap() {
-		return _ddmFormInstanceVersion.getDescriptionMap();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _ddmFormInstanceVersion.getExpandoBridge();
+		return model.getDescriptionMap();
 	}
 
 	@Override
 	public DDMFormInstance getFormInstance()
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _ddmFormInstanceVersion.getFormInstance();
+		return model.getFormInstance();
 	}
 
 	/**
@@ -313,7 +283,7 @@ public class DDMFormInstanceVersionWrapper implements DDMFormInstanceVersion,
 	*/
 	@Override
 	public long getFormInstanceId() {
-		return _ddmFormInstanceVersion.getFormInstanceId();
+		return model.getFormInstanceId();
 	}
 
 	/**
@@ -323,7 +293,7 @@ public class DDMFormInstanceVersionWrapper implements DDMFormInstanceVersion,
 	*/
 	@Override
 	public long getFormInstanceVersionId() {
-		return _ddmFormInstanceVersion.getFormInstanceVersionId();
+		return model.getFormInstanceVersionId();
 	}
 
 	/**
@@ -333,7 +303,7 @@ public class DDMFormInstanceVersionWrapper implements DDMFormInstanceVersion,
 	*/
 	@Override
 	public long getGroupId() {
-		return _ddmFormInstanceVersion.getGroupId();
+		return model.getGroupId();
 	}
 
 	/**
@@ -343,7 +313,7 @@ public class DDMFormInstanceVersionWrapper implements DDMFormInstanceVersion,
 	*/
 	@Override
 	public String getName() {
-		return _ddmFormInstanceVersion.getName();
+		return model.getName();
 	}
 
 	/**
@@ -354,7 +324,7 @@ public class DDMFormInstanceVersionWrapper implements DDMFormInstanceVersion,
 	*/
 	@Override
 	public String getName(java.util.Locale locale) {
-		return _ddmFormInstanceVersion.getName(locale);
+		return model.getName(locale);
 	}
 
 	/**
@@ -366,7 +336,7 @@ public class DDMFormInstanceVersionWrapper implements DDMFormInstanceVersion,
 	*/
 	@Override
 	public String getName(java.util.Locale locale, boolean useDefault) {
-		return _ddmFormInstanceVersion.getName(locale, useDefault);
+		return model.getName(locale, useDefault);
 	}
 
 	/**
@@ -377,7 +347,7 @@ public class DDMFormInstanceVersionWrapper implements DDMFormInstanceVersion,
 	*/
 	@Override
 	public String getName(String languageId) {
-		return _ddmFormInstanceVersion.getName(languageId);
+		return model.getName(languageId);
 	}
 
 	/**
@@ -389,17 +359,17 @@ public class DDMFormInstanceVersionWrapper implements DDMFormInstanceVersion,
 	*/
 	@Override
 	public String getName(String languageId, boolean useDefault) {
-		return _ddmFormInstanceVersion.getName(languageId, useDefault);
+		return model.getName(languageId, useDefault);
 	}
 
 	@Override
 	public String getNameCurrentLanguageId() {
-		return _ddmFormInstanceVersion.getNameCurrentLanguageId();
+		return model.getNameCurrentLanguageId();
 	}
 
 	@Override
 	public String getNameCurrentValue() {
-		return _ddmFormInstanceVersion.getNameCurrentValue();
+		return model.getNameCurrentValue();
 	}
 
 	/**
@@ -409,7 +379,7 @@ public class DDMFormInstanceVersionWrapper implements DDMFormInstanceVersion,
 	*/
 	@Override
 	public Map<java.util.Locale, String> getNameMap() {
-		return _ddmFormInstanceVersion.getNameMap();
+		return model.getNameMap();
 	}
 
 	/**
@@ -419,12 +389,7 @@ public class DDMFormInstanceVersionWrapper implements DDMFormInstanceVersion,
 	*/
 	@Override
 	public long getPrimaryKey() {
-		return _ddmFormInstanceVersion.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _ddmFormInstanceVersion.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	/**
@@ -434,7 +399,7 @@ public class DDMFormInstanceVersionWrapper implements DDMFormInstanceVersion,
 	*/
 	@Override
 	public String getSettings() {
-		return _ddmFormInstanceVersion.getSettings();
+		return model.getSettings();
 	}
 
 	/**
@@ -444,7 +409,7 @@ public class DDMFormInstanceVersionWrapper implements DDMFormInstanceVersion,
 	*/
 	@Override
 	public int getStatus() {
-		return _ddmFormInstanceVersion.getStatus();
+		return model.getStatus();
 	}
 
 	/**
@@ -454,7 +419,7 @@ public class DDMFormInstanceVersionWrapper implements DDMFormInstanceVersion,
 	*/
 	@Override
 	public long getStatusByUserId() {
-		return _ddmFormInstanceVersion.getStatusByUserId();
+		return model.getStatusByUserId();
 	}
 
 	/**
@@ -464,7 +429,7 @@ public class DDMFormInstanceVersionWrapper implements DDMFormInstanceVersion,
 	*/
 	@Override
 	public String getStatusByUserName() {
-		return _ddmFormInstanceVersion.getStatusByUserName();
+		return model.getStatusByUserName();
 	}
 
 	/**
@@ -474,7 +439,7 @@ public class DDMFormInstanceVersionWrapper implements DDMFormInstanceVersion,
 	*/
 	@Override
 	public String getStatusByUserUuid() {
-		return _ddmFormInstanceVersion.getStatusByUserUuid();
+		return model.getStatusByUserUuid();
 	}
 
 	/**
@@ -484,13 +449,13 @@ public class DDMFormInstanceVersionWrapper implements DDMFormInstanceVersion,
 	*/
 	@Override
 	public Date getStatusDate() {
-		return _ddmFormInstanceVersion.getStatusDate();
+		return model.getStatusDate();
 	}
 
 	@Override
 	public DDMStructureVersion getStructureVersion()
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _ddmFormInstanceVersion.getStructureVersion();
+		return model.getStructureVersion();
 	}
 
 	/**
@@ -500,7 +465,7 @@ public class DDMFormInstanceVersionWrapper implements DDMFormInstanceVersion,
 	*/
 	@Override
 	public long getStructureVersionId() {
-		return _ddmFormInstanceVersion.getStructureVersionId();
+		return model.getStructureVersionId();
 	}
 
 	/**
@@ -510,7 +475,7 @@ public class DDMFormInstanceVersionWrapper implements DDMFormInstanceVersion,
 	*/
 	@Override
 	public long getUserId() {
-		return _ddmFormInstanceVersion.getUserId();
+		return model.getUserId();
 	}
 
 	/**
@@ -520,7 +485,7 @@ public class DDMFormInstanceVersionWrapper implements DDMFormInstanceVersion,
 	*/
 	@Override
 	public String getUserName() {
-		return _ddmFormInstanceVersion.getUserName();
+		return model.getUserName();
 	}
 
 	/**
@@ -530,7 +495,7 @@ public class DDMFormInstanceVersionWrapper implements DDMFormInstanceVersion,
 	*/
 	@Override
 	public String getUserUuid() {
-		return _ddmFormInstanceVersion.getUserUuid();
+		return model.getUserUuid();
 	}
 
 	/**
@@ -540,12 +505,7 @@ public class DDMFormInstanceVersionWrapper implements DDMFormInstanceVersion,
 	*/
 	@Override
 	public String getVersion() {
-		return _ddmFormInstanceVersion.getVersion();
-	}
-
-	@Override
-	public int hashCode() {
-		return _ddmFormInstanceVersion.hashCode();
+		return model.getVersion();
 	}
 
 	/**
@@ -555,12 +515,7 @@ public class DDMFormInstanceVersionWrapper implements DDMFormInstanceVersion,
 	*/
 	@Override
 	public boolean isApproved() {
-		return _ddmFormInstanceVersion.isApproved();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _ddmFormInstanceVersion.isCachedModel();
+		return model.isApproved();
 	}
 
 	/**
@@ -570,7 +525,7 @@ public class DDMFormInstanceVersionWrapper implements DDMFormInstanceVersion,
 	*/
 	@Override
 	public boolean isDenied() {
-		return _ddmFormInstanceVersion.isDenied();
+		return model.isDenied();
 	}
 
 	/**
@@ -580,12 +535,7 @@ public class DDMFormInstanceVersionWrapper implements DDMFormInstanceVersion,
 	*/
 	@Override
 	public boolean isDraft() {
-		return _ddmFormInstanceVersion.isDraft();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _ddmFormInstanceVersion.isEscapedModel();
+		return model.isDraft();
 	}
 
 	/**
@@ -595,7 +545,7 @@ public class DDMFormInstanceVersionWrapper implements DDMFormInstanceVersion,
 	*/
 	@Override
 	public boolean isExpired() {
-		return _ddmFormInstanceVersion.isExpired();
+		return model.isExpired();
 	}
 
 	/**
@@ -605,7 +555,7 @@ public class DDMFormInstanceVersionWrapper implements DDMFormInstanceVersion,
 	*/
 	@Override
 	public boolean isInactive() {
-		return _ddmFormInstanceVersion.isInactive();
+		return model.isInactive();
 	}
 
 	/**
@@ -615,12 +565,7 @@ public class DDMFormInstanceVersionWrapper implements DDMFormInstanceVersion,
 	*/
 	@Override
 	public boolean isIncomplete() {
-		return _ddmFormInstanceVersion.isIncomplete();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _ddmFormInstanceVersion.isNew();
+		return model.isIncomplete();
 	}
 
 	/**
@@ -630,7 +575,7 @@ public class DDMFormInstanceVersionWrapper implements DDMFormInstanceVersion,
 	*/
 	@Override
 	public boolean isPending() {
-		return _ddmFormInstanceVersion.isPending();
+		return model.isPending();
 	}
 
 	/**
@@ -640,30 +585,25 @@ public class DDMFormInstanceVersionWrapper implements DDMFormInstanceVersion,
 	*/
 	@Override
 	public boolean isScheduled() {
-		return _ddmFormInstanceVersion.isScheduled();
+		return model.isScheduled();
 	}
 
 	@Override
 	public void persist() {
-		_ddmFormInstanceVersion.persist();
+		model.persist();
 	}
 
 	@Override
 	public void prepareLocalizedFieldsForImport()
 		throws com.liferay.portal.kernel.exception.LocaleException {
-		_ddmFormInstanceVersion.prepareLocalizedFieldsForImport();
+		model.prepareLocalizedFieldsForImport();
 	}
 
 	@Override
 	public void prepareLocalizedFieldsForImport(
 		java.util.Locale defaultImportLocale)
 		throws com.liferay.portal.kernel.exception.LocaleException {
-		_ddmFormInstanceVersion.prepareLocalizedFieldsForImport(defaultImportLocale);
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_ddmFormInstanceVersion.setCachedModel(cachedModel);
+		model.prepareLocalizedFieldsForImport(defaultImportLocale);
 	}
 
 	/**
@@ -673,7 +613,7 @@ public class DDMFormInstanceVersionWrapper implements DDMFormInstanceVersion,
 	*/
 	@Override
 	public void setCompanyId(long companyId) {
-		_ddmFormInstanceVersion.setCompanyId(companyId);
+		model.setCompanyId(companyId);
 	}
 
 	/**
@@ -683,7 +623,7 @@ public class DDMFormInstanceVersionWrapper implements DDMFormInstanceVersion,
 	*/
 	@Override
 	public void setCreateDate(Date createDate) {
-		_ddmFormInstanceVersion.setCreateDate(createDate);
+		model.setCreateDate(createDate);
 	}
 
 	/**
@@ -693,7 +633,7 @@ public class DDMFormInstanceVersionWrapper implements DDMFormInstanceVersion,
 	*/
 	@Override
 	public void setDescription(String description) {
-		_ddmFormInstanceVersion.setDescription(description);
+		model.setDescription(description);
 	}
 
 	/**
@@ -704,7 +644,7 @@ public class DDMFormInstanceVersionWrapper implements DDMFormInstanceVersion,
 	*/
 	@Override
 	public void setDescription(String description, java.util.Locale locale) {
-		_ddmFormInstanceVersion.setDescription(description, locale);
+		model.setDescription(description, locale);
 	}
 
 	/**
@@ -717,13 +657,12 @@ public class DDMFormInstanceVersionWrapper implements DDMFormInstanceVersion,
 	@Override
 	public void setDescription(String description, java.util.Locale locale,
 		java.util.Locale defaultLocale) {
-		_ddmFormInstanceVersion.setDescription(description, locale,
-			defaultLocale);
+		model.setDescription(description, locale, defaultLocale);
 	}
 
 	@Override
 	public void setDescriptionCurrentLanguageId(String languageId) {
-		_ddmFormInstanceVersion.setDescriptionCurrentLanguageId(languageId);
+		model.setDescriptionCurrentLanguageId(languageId);
 	}
 
 	/**
@@ -733,7 +672,7 @@ public class DDMFormInstanceVersionWrapper implements DDMFormInstanceVersion,
 	*/
 	@Override
 	public void setDescriptionMap(Map<java.util.Locale, String> descriptionMap) {
-		_ddmFormInstanceVersion.setDescriptionMap(descriptionMap);
+		model.setDescriptionMap(descriptionMap);
 	}
 
 	/**
@@ -746,23 +685,7 @@ public class DDMFormInstanceVersionWrapper implements DDMFormInstanceVersion,
 	public void setDescriptionMap(
 		Map<java.util.Locale, String> descriptionMap,
 		java.util.Locale defaultLocale) {
-		_ddmFormInstanceVersion.setDescriptionMap(descriptionMap, defaultLocale);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-		_ddmFormInstanceVersion.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_ddmFormInstanceVersion.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_ddmFormInstanceVersion.setExpandoBridgeAttributes(serviceContext);
+		model.setDescriptionMap(descriptionMap, defaultLocale);
 	}
 
 	/**
@@ -772,7 +695,7 @@ public class DDMFormInstanceVersionWrapper implements DDMFormInstanceVersion,
 	*/
 	@Override
 	public void setFormInstanceId(long formInstanceId) {
-		_ddmFormInstanceVersion.setFormInstanceId(formInstanceId);
+		model.setFormInstanceId(formInstanceId);
 	}
 
 	/**
@@ -782,7 +705,7 @@ public class DDMFormInstanceVersionWrapper implements DDMFormInstanceVersion,
 	*/
 	@Override
 	public void setFormInstanceVersionId(long formInstanceVersionId) {
-		_ddmFormInstanceVersion.setFormInstanceVersionId(formInstanceVersionId);
+		model.setFormInstanceVersionId(formInstanceVersionId);
 	}
 
 	/**
@@ -792,7 +715,7 @@ public class DDMFormInstanceVersionWrapper implements DDMFormInstanceVersion,
 	*/
 	@Override
 	public void setGroupId(long groupId) {
-		_ddmFormInstanceVersion.setGroupId(groupId);
+		model.setGroupId(groupId);
 	}
 
 	/**
@@ -802,7 +725,7 @@ public class DDMFormInstanceVersionWrapper implements DDMFormInstanceVersion,
 	*/
 	@Override
 	public void setName(String name) {
-		_ddmFormInstanceVersion.setName(name);
+		model.setName(name);
 	}
 
 	/**
@@ -813,7 +736,7 @@ public class DDMFormInstanceVersionWrapper implements DDMFormInstanceVersion,
 	*/
 	@Override
 	public void setName(String name, java.util.Locale locale) {
-		_ddmFormInstanceVersion.setName(name, locale);
+		model.setName(name, locale);
 	}
 
 	/**
@@ -826,12 +749,12 @@ public class DDMFormInstanceVersionWrapper implements DDMFormInstanceVersion,
 	@Override
 	public void setName(String name, java.util.Locale locale,
 		java.util.Locale defaultLocale) {
-		_ddmFormInstanceVersion.setName(name, locale, defaultLocale);
+		model.setName(name, locale, defaultLocale);
 	}
 
 	@Override
 	public void setNameCurrentLanguageId(String languageId) {
-		_ddmFormInstanceVersion.setNameCurrentLanguageId(languageId);
+		model.setNameCurrentLanguageId(languageId);
 	}
 
 	/**
@@ -841,7 +764,7 @@ public class DDMFormInstanceVersionWrapper implements DDMFormInstanceVersion,
 	*/
 	@Override
 	public void setNameMap(Map<java.util.Locale, String> nameMap) {
-		_ddmFormInstanceVersion.setNameMap(nameMap);
+		model.setNameMap(nameMap);
 	}
 
 	/**
@@ -853,12 +776,7 @@ public class DDMFormInstanceVersionWrapper implements DDMFormInstanceVersion,
 	@Override
 	public void setNameMap(Map<java.util.Locale, String> nameMap,
 		java.util.Locale defaultLocale) {
-		_ddmFormInstanceVersion.setNameMap(nameMap, defaultLocale);
-	}
-
-	@Override
-	public void setNew(boolean n) {
-		_ddmFormInstanceVersion.setNew(n);
+		model.setNameMap(nameMap, defaultLocale);
 	}
 
 	/**
@@ -868,12 +786,7 @@ public class DDMFormInstanceVersionWrapper implements DDMFormInstanceVersion,
 	*/
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_ddmFormInstanceVersion.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_ddmFormInstanceVersion.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -883,7 +796,7 @@ public class DDMFormInstanceVersionWrapper implements DDMFormInstanceVersion,
 	*/
 	@Override
 	public void setSettings(String settings) {
-		_ddmFormInstanceVersion.setSettings(settings);
+		model.setSettings(settings);
 	}
 
 	/**
@@ -893,7 +806,7 @@ public class DDMFormInstanceVersionWrapper implements DDMFormInstanceVersion,
 	*/
 	@Override
 	public void setStatus(int status) {
-		_ddmFormInstanceVersion.setStatus(status);
+		model.setStatus(status);
 	}
 
 	/**
@@ -903,7 +816,7 @@ public class DDMFormInstanceVersionWrapper implements DDMFormInstanceVersion,
 	*/
 	@Override
 	public void setStatusByUserId(long statusByUserId) {
-		_ddmFormInstanceVersion.setStatusByUserId(statusByUserId);
+		model.setStatusByUserId(statusByUserId);
 	}
 
 	/**
@@ -913,7 +826,7 @@ public class DDMFormInstanceVersionWrapper implements DDMFormInstanceVersion,
 	*/
 	@Override
 	public void setStatusByUserName(String statusByUserName) {
-		_ddmFormInstanceVersion.setStatusByUserName(statusByUserName);
+		model.setStatusByUserName(statusByUserName);
 	}
 
 	/**
@@ -923,7 +836,7 @@ public class DDMFormInstanceVersionWrapper implements DDMFormInstanceVersion,
 	*/
 	@Override
 	public void setStatusByUserUuid(String statusByUserUuid) {
-		_ddmFormInstanceVersion.setStatusByUserUuid(statusByUserUuid);
+		model.setStatusByUserUuid(statusByUserUuid);
 	}
 
 	/**
@@ -933,7 +846,7 @@ public class DDMFormInstanceVersionWrapper implements DDMFormInstanceVersion,
 	*/
 	@Override
 	public void setStatusDate(Date statusDate) {
-		_ddmFormInstanceVersion.setStatusDate(statusDate);
+		model.setStatusDate(statusDate);
 	}
 
 	/**
@@ -943,7 +856,7 @@ public class DDMFormInstanceVersionWrapper implements DDMFormInstanceVersion,
 	*/
 	@Override
 	public void setStructureVersionId(long structureVersionId) {
-		_ddmFormInstanceVersion.setStructureVersionId(structureVersionId);
+		model.setStructureVersionId(structureVersionId);
 	}
 
 	/**
@@ -953,7 +866,7 @@ public class DDMFormInstanceVersionWrapper implements DDMFormInstanceVersion,
 	*/
 	@Override
 	public void setUserId(long userId) {
-		_ddmFormInstanceVersion.setUserId(userId);
+		model.setUserId(userId);
 	}
 
 	/**
@@ -963,7 +876,7 @@ public class DDMFormInstanceVersionWrapper implements DDMFormInstanceVersion,
 	*/
 	@Override
 	public void setUserName(String userName) {
-		_ddmFormInstanceVersion.setUserName(userName);
+		model.setUserName(userName);
 	}
 
 	/**
@@ -973,7 +886,7 @@ public class DDMFormInstanceVersionWrapper implements DDMFormInstanceVersion,
 	*/
 	@Override
 	public void setUserUuid(String userUuid) {
-		_ddmFormInstanceVersion.setUserUuid(userUuid);
+		model.setUserUuid(userUuid);
 	}
 
 	/**
@@ -983,73 +896,12 @@ public class DDMFormInstanceVersionWrapper implements DDMFormInstanceVersion,
 	*/
 	@Override
 	public void setVersion(String version) {
-		_ddmFormInstanceVersion.setVersion(version);
+		model.setVersion(version);
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.CacheModel<DDMFormInstanceVersion> toCacheModel() {
-		return _ddmFormInstanceVersion.toCacheModel();
+	protected DDMFormInstanceVersionWrapper wrap(
+		DDMFormInstanceVersion ddmFormInstanceVersion) {
+		return new DDMFormInstanceVersionWrapper(ddmFormInstanceVersion);
 	}
-
-	@Override
-	public DDMFormInstanceVersion toEscapedModel() {
-		return new DDMFormInstanceVersionWrapper(_ddmFormInstanceVersion.toEscapedModel());
-	}
-
-	@Override
-	public String toString() {
-		return _ddmFormInstanceVersion.toString();
-	}
-
-	@Override
-	public DDMFormInstanceVersion toUnescapedModel() {
-		return new DDMFormInstanceVersionWrapper(_ddmFormInstanceVersion.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _ddmFormInstanceVersion.toXmlString();
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-
-		if (!(obj instanceof DDMFormInstanceVersionWrapper)) {
-			return false;
-		}
-
-		DDMFormInstanceVersionWrapper ddmFormInstanceVersionWrapper = (DDMFormInstanceVersionWrapper)obj;
-
-		if (Objects.equals(_ddmFormInstanceVersion,
-					ddmFormInstanceVersionWrapper._ddmFormInstanceVersion)) {
-			return true;
-		}
-
-		return false;
-	}
-
-	@Override
-	public DDMFormInstanceVersion getWrappedModel() {
-		return _ddmFormInstanceVersion;
-	}
-
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _ddmFormInstanceVersion.isEntityCacheEnabled();
-	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _ddmFormInstanceVersion.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_ddmFormInstanceVersion.resetOriginalValues();
-	}
-
-	private final DDMFormInstanceVersion _ddmFormInstanceVersion;
 }

@@ -16,19 +16,14 @@ package com.liferay.dynamic.data.mapping.model;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
-
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 
 import com.liferay.portal.kernel.model.ModelWrapper;
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -40,21 +35,11 @@ import java.util.Objects;
  * @generated
  */
 @ProviderType
-public class DDMDataProviderInstanceWrapper implements DDMDataProviderInstance,
-	ModelWrapper<DDMDataProviderInstance> {
+public class DDMDataProviderInstanceWrapper extends BaseModelWrapper<DDMDataProviderInstance>
+	implements DDMDataProviderInstance, ModelWrapper<DDMDataProviderInstance> {
 	public DDMDataProviderInstanceWrapper(
 		DDMDataProviderInstance ddmDataProviderInstance) {
-		_ddmDataProviderInstance = ddmDataProviderInstance;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return DDMDataProviderInstance.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return DDMDataProviderInstance.class.getName();
+		super(ddmDataProviderInstance);
 	}
 
 	@Override
@@ -154,18 +139,8 @@ public class DDMDataProviderInstanceWrapper implements DDMDataProviderInstance,
 	}
 
 	@Override
-	public Object clone() {
-		return new DDMDataProviderInstanceWrapper((DDMDataProviderInstance)_ddmDataProviderInstance.clone());
-	}
-
-	@Override
-	public int compareTo(DDMDataProviderInstance ddmDataProviderInstance) {
-		return _ddmDataProviderInstance.compareTo(ddmDataProviderInstance);
-	}
-
-	@Override
 	public String[] getAvailableLanguageIds() {
-		return _ddmDataProviderInstance.getAvailableLanguageIds();
+		return model.getAvailableLanguageIds();
 	}
 
 	/**
@@ -175,7 +150,7 @@ public class DDMDataProviderInstanceWrapper implements DDMDataProviderInstance,
 	*/
 	@Override
 	public long getCompanyId() {
-		return _ddmDataProviderInstance.getCompanyId();
+		return model.getCompanyId();
 	}
 
 	/**
@@ -185,7 +160,7 @@ public class DDMDataProviderInstanceWrapper implements DDMDataProviderInstance,
 	*/
 	@Override
 	public Date getCreateDate() {
-		return _ddmDataProviderInstance.getCreateDate();
+		return model.getCreateDate();
 	}
 
 	/**
@@ -195,12 +170,12 @@ public class DDMDataProviderInstanceWrapper implements DDMDataProviderInstance,
 	*/
 	@Override
 	public long getDataProviderInstanceId() {
-		return _ddmDataProviderInstance.getDataProviderInstanceId();
+		return model.getDataProviderInstanceId();
 	}
 
 	@Override
 	public String getDefaultLanguageId() {
-		return _ddmDataProviderInstance.getDefaultLanguageId();
+		return model.getDefaultLanguageId();
 	}
 
 	/**
@@ -210,7 +185,7 @@ public class DDMDataProviderInstanceWrapper implements DDMDataProviderInstance,
 	*/
 	@Override
 	public String getDefinition() {
-		return _ddmDataProviderInstance.getDefinition();
+		return model.getDefinition();
 	}
 
 	/**
@@ -220,7 +195,7 @@ public class DDMDataProviderInstanceWrapper implements DDMDataProviderInstance,
 	*/
 	@Override
 	public String getDescription() {
-		return _ddmDataProviderInstance.getDescription();
+		return model.getDescription();
 	}
 
 	/**
@@ -231,7 +206,7 @@ public class DDMDataProviderInstanceWrapper implements DDMDataProviderInstance,
 	*/
 	@Override
 	public String getDescription(java.util.Locale locale) {
-		return _ddmDataProviderInstance.getDescription(locale);
+		return model.getDescription(locale);
 	}
 
 	/**
@@ -243,7 +218,7 @@ public class DDMDataProviderInstanceWrapper implements DDMDataProviderInstance,
 	*/
 	@Override
 	public String getDescription(java.util.Locale locale, boolean useDefault) {
-		return _ddmDataProviderInstance.getDescription(locale, useDefault);
+		return model.getDescription(locale, useDefault);
 	}
 
 	/**
@@ -254,7 +229,7 @@ public class DDMDataProviderInstanceWrapper implements DDMDataProviderInstance,
 	*/
 	@Override
 	public String getDescription(String languageId) {
-		return _ddmDataProviderInstance.getDescription(languageId);
+		return model.getDescription(languageId);
 	}
 
 	/**
@@ -266,17 +241,17 @@ public class DDMDataProviderInstanceWrapper implements DDMDataProviderInstance,
 	*/
 	@Override
 	public String getDescription(String languageId, boolean useDefault) {
-		return _ddmDataProviderInstance.getDescription(languageId, useDefault);
+		return model.getDescription(languageId, useDefault);
 	}
 
 	@Override
 	public String getDescriptionCurrentLanguageId() {
-		return _ddmDataProviderInstance.getDescriptionCurrentLanguageId();
+		return model.getDescriptionCurrentLanguageId();
 	}
 
 	@Override
 	public String getDescriptionCurrentValue() {
-		return _ddmDataProviderInstance.getDescriptionCurrentValue();
+		return model.getDescriptionCurrentValue();
 	}
 
 	/**
@@ -286,12 +261,7 @@ public class DDMDataProviderInstanceWrapper implements DDMDataProviderInstance,
 	*/
 	@Override
 	public Map<java.util.Locale, String> getDescriptionMap() {
-		return _ddmDataProviderInstance.getDescriptionMap();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _ddmDataProviderInstance.getExpandoBridge();
+		return model.getDescriptionMap();
 	}
 
 	/**
@@ -301,7 +271,7 @@ public class DDMDataProviderInstanceWrapper implements DDMDataProviderInstance,
 	*/
 	@Override
 	public long getGroupId() {
-		return _ddmDataProviderInstance.getGroupId();
+		return model.getGroupId();
 	}
 
 	/**
@@ -311,7 +281,7 @@ public class DDMDataProviderInstanceWrapper implements DDMDataProviderInstance,
 	*/
 	@Override
 	public Date getModifiedDate() {
-		return _ddmDataProviderInstance.getModifiedDate();
+		return model.getModifiedDate();
 	}
 
 	/**
@@ -321,7 +291,7 @@ public class DDMDataProviderInstanceWrapper implements DDMDataProviderInstance,
 	*/
 	@Override
 	public String getName() {
-		return _ddmDataProviderInstance.getName();
+		return model.getName();
 	}
 
 	/**
@@ -332,7 +302,7 @@ public class DDMDataProviderInstanceWrapper implements DDMDataProviderInstance,
 	*/
 	@Override
 	public String getName(java.util.Locale locale) {
-		return _ddmDataProviderInstance.getName(locale);
+		return model.getName(locale);
 	}
 
 	/**
@@ -344,7 +314,7 @@ public class DDMDataProviderInstanceWrapper implements DDMDataProviderInstance,
 	*/
 	@Override
 	public String getName(java.util.Locale locale, boolean useDefault) {
-		return _ddmDataProviderInstance.getName(locale, useDefault);
+		return model.getName(locale, useDefault);
 	}
 
 	/**
@@ -355,7 +325,7 @@ public class DDMDataProviderInstanceWrapper implements DDMDataProviderInstance,
 	*/
 	@Override
 	public String getName(String languageId) {
-		return _ddmDataProviderInstance.getName(languageId);
+		return model.getName(languageId);
 	}
 
 	/**
@@ -367,17 +337,17 @@ public class DDMDataProviderInstanceWrapper implements DDMDataProviderInstance,
 	*/
 	@Override
 	public String getName(String languageId, boolean useDefault) {
-		return _ddmDataProviderInstance.getName(languageId, useDefault);
+		return model.getName(languageId, useDefault);
 	}
 
 	@Override
 	public String getNameCurrentLanguageId() {
-		return _ddmDataProviderInstance.getNameCurrentLanguageId();
+		return model.getNameCurrentLanguageId();
 	}
 
 	@Override
 	public String getNameCurrentValue() {
-		return _ddmDataProviderInstance.getNameCurrentValue();
+		return model.getNameCurrentValue();
 	}
 
 	/**
@@ -387,7 +357,7 @@ public class DDMDataProviderInstanceWrapper implements DDMDataProviderInstance,
 	*/
 	@Override
 	public Map<java.util.Locale, String> getNameMap() {
-		return _ddmDataProviderInstance.getNameMap();
+		return model.getNameMap();
 	}
 
 	/**
@@ -397,12 +367,7 @@ public class DDMDataProviderInstanceWrapper implements DDMDataProviderInstance,
 	*/
 	@Override
 	public long getPrimaryKey() {
-		return _ddmDataProviderInstance.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _ddmDataProviderInstance.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	/**
@@ -412,7 +377,7 @@ public class DDMDataProviderInstanceWrapper implements DDMDataProviderInstance,
 	*/
 	@Override
 	public String getType() {
-		return _ddmDataProviderInstance.getType();
+		return model.getType();
 	}
 
 	/**
@@ -422,7 +387,7 @@ public class DDMDataProviderInstanceWrapper implements DDMDataProviderInstance,
 	*/
 	@Override
 	public long getUserId() {
-		return _ddmDataProviderInstance.getUserId();
+		return model.getUserId();
 	}
 
 	/**
@@ -432,7 +397,7 @@ public class DDMDataProviderInstanceWrapper implements DDMDataProviderInstance,
 	*/
 	@Override
 	public String getUserName() {
-		return _ddmDataProviderInstance.getUserName();
+		return model.getUserName();
 	}
 
 	/**
@@ -442,7 +407,7 @@ public class DDMDataProviderInstanceWrapper implements DDMDataProviderInstance,
 	*/
 	@Override
 	public String getUserUuid() {
-		return _ddmDataProviderInstance.getUserUuid();
+		return model.getUserUuid();
 	}
 
 	/**
@@ -452,50 +417,25 @@ public class DDMDataProviderInstanceWrapper implements DDMDataProviderInstance,
 	*/
 	@Override
 	public String getUuid() {
-		return _ddmDataProviderInstance.getUuid();
-	}
-
-	@Override
-	public int hashCode() {
-		return _ddmDataProviderInstance.hashCode();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _ddmDataProviderInstance.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _ddmDataProviderInstance.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _ddmDataProviderInstance.isNew();
+		return model.getUuid();
 	}
 
 	@Override
 	public void persist() {
-		_ddmDataProviderInstance.persist();
+		model.persist();
 	}
 
 	@Override
 	public void prepareLocalizedFieldsForImport()
 		throws com.liferay.portal.kernel.exception.LocaleException {
-		_ddmDataProviderInstance.prepareLocalizedFieldsForImport();
+		model.prepareLocalizedFieldsForImport();
 	}
 
 	@Override
 	public void prepareLocalizedFieldsForImport(
 		java.util.Locale defaultImportLocale)
 		throws com.liferay.portal.kernel.exception.LocaleException {
-		_ddmDataProviderInstance.prepareLocalizedFieldsForImport(defaultImportLocale);
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_ddmDataProviderInstance.setCachedModel(cachedModel);
+		model.prepareLocalizedFieldsForImport(defaultImportLocale);
 	}
 
 	/**
@@ -505,7 +445,7 @@ public class DDMDataProviderInstanceWrapper implements DDMDataProviderInstance,
 	*/
 	@Override
 	public void setCompanyId(long companyId) {
-		_ddmDataProviderInstance.setCompanyId(companyId);
+		model.setCompanyId(companyId);
 	}
 
 	/**
@@ -515,7 +455,7 @@ public class DDMDataProviderInstanceWrapper implements DDMDataProviderInstance,
 	*/
 	@Override
 	public void setCreateDate(Date createDate) {
-		_ddmDataProviderInstance.setCreateDate(createDate);
+		model.setCreateDate(createDate);
 	}
 
 	/**
@@ -525,7 +465,7 @@ public class DDMDataProviderInstanceWrapper implements DDMDataProviderInstance,
 	*/
 	@Override
 	public void setDataProviderInstanceId(long dataProviderInstanceId) {
-		_ddmDataProviderInstance.setDataProviderInstanceId(dataProviderInstanceId);
+		model.setDataProviderInstanceId(dataProviderInstanceId);
 	}
 
 	/**
@@ -535,7 +475,7 @@ public class DDMDataProviderInstanceWrapper implements DDMDataProviderInstance,
 	*/
 	@Override
 	public void setDefinition(String definition) {
-		_ddmDataProviderInstance.setDefinition(definition);
+		model.setDefinition(definition);
 	}
 
 	/**
@@ -545,7 +485,7 @@ public class DDMDataProviderInstanceWrapper implements DDMDataProviderInstance,
 	*/
 	@Override
 	public void setDescription(String description) {
-		_ddmDataProviderInstance.setDescription(description);
+		model.setDescription(description);
 	}
 
 	/**
@@ -556,7 +496,7 @@ public class DDMDataProviderInstanceWrapper implements DDMDataProviderInstance,
 	*/
 	@Override
 	public void setDescription(String description, java.util.Locale locale) {
-		_ddmDataProviderInstance.setDescription(description, locale);
+		model.setDescription(description, locale);
 	}
 
 	/**
@@ -569,13 +509,12 @@ public class DDMDataProviderInstanceWrapper implements DDMDataProviderInstance,
 	@Override
 	public void setDescription(String description, java.util.Locale locale,
 		java.util.Locale defaultLocale) {
-		_ddmDataProviderInstance.setDescription(description, locale,
-			defaultLocale);
+		model.setDescription(description, locale, defaultLocale);
 	}
 
 	@Override
 	public void setDescriptionCurrentLanguageId(String languageId) {
-		_ddmDataProviderInstance.setDescriptionCurrentLanguageId(languageId);
+		model.setDescriptionCurrentLanguageId(languageId);
 	}
 
 	/**
@@ -585,7 +524,7 @@ public class DDMDataProviderInstanceWrapper implements DDMDataProviderInstance,
 	*/
 	@Override
 	public void setDescriptionMap(Map<java.util.Locale, String> descriptionMap) {
-		_ddmDataProviderInstance.setDescriptionMap(descriptionMap);
+		model.setDescriptionMap(descriptionMap);
 	}
 
 	/**
@@ -598,23 +537,7 @@ public class DDMDataProviderInstanceWrapper implements DDMDataProviderInstance,
 	public void setDescriptionMap(
 		Map<java.util.Locale, String> descriptionMap,
 		java.util.Locale defaultLocale) {
-		_ddmDataProviderInstance.setDescriptionMap(descriptionMap, defaultLocale);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-		_ddmDataProviderInstance.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_ddmDataProviderInstance.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_ddmDataProviderInstance.setExpandoBridgeAttributes(serviceContext);
+		model.setDescriptionMap(descriptionMap, defaultLocale);
 	}
 
 	/**
@@ -624,7 +547,7 @@ public class DDMDataProviderInstanceWrapper implements DDMDataProviderInstance,
 	*/
 	@Override
 	public void setGroupId(long groupId) {
-		_ddmDataProviderInstance.setGroupId(groupId);
+		model.setGroupId(groupId);
 	}
 
 	/**
@@ -634,7 +557,7 @@ public class DDMDataProviderInstanceWrapper implements DDMDataProviderInstance,
 	*/
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
-		_ddmDataProviderInstance.setModifiedDate(modifiedDate);
+		model.setModifiedDate(modifiedDate);
 	}
 
 	/**
@@ -644,7 +567,7 @@ public class DDMDataProviderInstanceWrapper implements DDMDataProviderInstance,
 	*/
 	@Override
 	public void setName(String name) {
-		_ddmDataProviderInstance.setName(name);
+		model.setName(name);
 	}
 
 	/**
@@ -655,7 +578,7 @@ public class DDMDataProviderInstanceWrapper implements DDMDataProviderInstance,
 	*/
 	@Override
 	public void setName(String name, java.util.Locale locale) {
-		_ddmDataProviderInstance.setName(name, locale);
+		model.setName(name, locale);
 	}
 
 	/**
@@ -668,12 +591,12 @@ public class DDMDataProviderInstanceWrapper implements DDMDataProviderInstance,
 	@Override
 	public void setName(String name, java.util.Locale locale,
 		java.util.Locale defaultLocale) {
-		_ddmDataProviderInstance.setName(name, locale, defaultLocale);
+		model.setName(name, locale, defaultLocale);
 	}
 
 	@Override
 	public void setNameCurrentLanguageId(String languageId) {
-		_ddmDataProviderInstance.setNameCurrentLanguageId(languageId);
+		model.setNameCurrentLanguageId(languageId);
 	}
 
 	/**
@@ -683,7 +606,7 @@ public class DDMDataProviderInstanceWrapper implements DDMDataProviderInstance,
 	*/
 	@Override
 	public void setNameMap(Map<java.util.Locale, String> nameMap) {
-		_ddmDataProviderInstance.setNameMap(nameMap);
+		model.setNameMap(nameMap);
 	}
 
 	/**
@@ -695,12 +618,7 @@ public class DDMDataProviderInstanceWrapper implements DDMDataProviderInstance,
 	@Override
 	public void setNameMap(Map<java.util.Locale, String> nameMap,
 		java.util.Locale defaultLocale) {
-		_ddmDataProviderInstance.setNameMap(nameMap, defaultLocale);
-	}
-
-	@Override
-	public void setNew(boolean n) {
-		_ddmDataProviderInstance.setNew(n);
+		model.setNameMap(nameMap, defaultLocale);
 	}
 
 	/**
@@ -710,12 +628,7 @@ public class DDMDataProviderInstanceWrapper implements DDMDataProviderInstance,
 	*/
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_ddmDataProviderInstance.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_ddmDataProviderInstance.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -725,7 +638,7 @@ public class DDMDataProviderInstanceWrapper implements DDMDataProviderInstance,
 	*/
 	@Override
 	public void setType(String type) {
-		_ddmDataProviderInstance.setType(type);
+		model.setType(type);
 	}
 
 	/**
@@ -735,7 +648,7 @@ public class DDMDataProviderInstanceWrapper implements DDMDataProviderInstance,
 	*/
 	@Override
 	public void setUserId(long userId) {
-		_ddmDataProviderInstance.setUserId(userId);
+		model.setUserId(userId);
 	}
 
 	/**
@@ -745,7 +658,7 @@ public class DDMDataProviderInstanceWrapper implements DDMDataProviderInstance,
 	*/
 	@Override
 	public void setUserName(String userName) {
-		_ddmDataProviderInstance.setUserName(userName);
+		model.setUserName(userName);
 	}
 
 	/**
@@ -755,7 +668,7 @@ public class DDMDataProviderInstanceWrapper implements DDMDataProviderInstance,
 	*/
 	@Override
 	public void setUserUuid(String userUuid) {
-		_ddmDataProviderInstance.setUserUuid(userUuid);
+		model.setUserUuid(userUuid);
 	}
 
 	/**
@@ -765,78 +678,17 @@ public class DDMDataProviderInstanceWrapper implements DDMDataProviderInstance,
 	*/
 	@Override
 	public void setUuid(String uuid) {
-		_ddmDataProviderInstance.setUuid(uuid);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<DDMDataProviderInstance> toCacheModel() {
-		return _ddmDataProviderInstance.toCacheModel();
-	}
-
-	@Override
-	public DDMDataProviderInstance toEscapedModel() {
-		return new DDMDataProviderInstanceWrapper(_ddmDataProviderInstance.toEscapedModel());
-	}
-
-	@Override
-	public String toString() {
-		return _ddmDataProviderInstance.toString();
-	}
-
-	@Override
-	public DDMDataProviderInstance toUnescapedModel() {
-		return new DDMDataProviderInstanceWrapper(_ddmDataProviderInstance.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _ddmDataProviderInstance.toXmlString();
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-
-		if (!(obj instanceof DDMDataProviderInstanceWrapper)) {
-			return false;
-		}
-
-		DDMDataProviderInstanceWrapper ddmDataProviderInstanceWrapper = (DDMDataProviderInstanceWrapper)obj;
-
-		if (Objects.equals(_ddmDataProviderInstance,
-					ddmDataProviderInstanceWrapper._ddmDataProviderInstance)) {
-			return true;
-		}
-
-		return false;
+		model.setUuid(uuid);
 	}
 
 	@Override
 	public StagedModelType getStagedModelType() {
-		return _ddmDataProviderInstance.getStagedModelType();
+		return model.getStagedModelType();
 	}
 
 	@Override
-	public DDMDataProviderInstance getWrappedModel() {
-		return _ddmDataProviderInstance;
+	protected DDMDataProviderInstanceWrapper wrap(
+		DDMDataProviderInstance ddmDataProviderInstance) {
+		return new DDMDataProviderInstanceWrapper(ddmDataProviderInstance);
 	}
-
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _ddmDataProviderInstance.isEntityCacheEnabled();
-	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _ddmDataProviderInstance.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_ddmDataProviderInstance.resetOriginalValues();
-	}
-
-	private final DDMDataProviderInstance _ddmDataProviderInstance;
 }

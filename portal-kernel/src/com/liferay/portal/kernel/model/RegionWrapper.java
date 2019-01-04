@@ -16,15 +16,10 @@ package com.liferay.portal.kernel.model;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
-
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -36,19 +31,10 @@ import java.util.Objects;
  * @generated
  */
 @ProviderType
-public class RegionWrapper implements Region, ModelWrapper<Region> {
+public class RegionWrapper extends BaseModelWrapper<Region> implements Region,
+	ModelWrapper<Region> {
 	public RegionWrapper(Region region) {
-		_region = region;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return Region.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return Region.class.getName();
+		super(region);
 	}
 
 	@Override
@@ -104,16 +90,6 @@ public class RegionWrapper implements Region, ModelWrapper<Region> {
 		}
 	}
 
-	@Override
-	public Object clone() {
-		return new RegionWrapper((Region)_region.clone());
-	}
-
-	@Override
-	public int compareTo(Region region) {
-		return _region.compareTo(region);
-	}
-
 	/**
 	* Returns the active of this region.
 	*
@@ -121,7 +97,7 @@ public class RegionWrapper implements Region, ModelWrapper<Region> {
 	*/
 	@Override
 	public boolean getActive() {
-		return _region.getActive();
+		return model.getActive();
 	}
 
 	/**
@@ -131,12 +107,7 @@ public class RegionWrapper implements Region, ModelWrapper<Region> {
 	*/
 	@Override
 	public long getCountryId() {
-		return _region.getCountryId();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _region.getExpandoBridge();
+		return model.getCountryId();
 	}
 
 	/**
@@ -146,7 +117,7 @@ public class RegionWrapper implements Region, ModelWrapper<Region> {
 	*/
 	@Override
 	public long getMvccVersion() {
-		return _region.getMvccVersion();
+		return model.getMvccVersion();
 	}
 
 	/**
@@ -156,7 +127,7 @@ public class RegionWrapper implements Region, ModelWrapper<Region> {
 	*/
 	@Override
 	public String getName() {
-		return _region.getName();
+		return model.getName();
 	}
 
 	/**
@@ -166,12 +137,7 @@ public class RegionWrapper implements Region, ModelWrapper<Region> {
 	*/
 	@Override
 	public long getPrimaryKey() {
-		return _region.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _region.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	/**
@@ -181,7 +147,7 @@ public class RegionWrapper implements Region, ModelWrapper<Region> {
 	*/
 	@Override
 	public String getRegionCode() {
-		return _region.getRegionCode();
+		return model.getRegionCode();
 	}
 
 	/**
@@ -191,12 +157,7 @@ public class RegionWrapper implements Region, ModelWrapper<Region> {
 	*/
 	@Override
 	public long getRegionId() {
-		return _region.getRegionId();
-	}
-
-	@Override
-	public int hashCode() {
-		return _region.hashCode();
+		return model.getRegionId();
 	}
 
 	/**
@@ -206,22 +167,7 @@ public class RegionWrapper implements Region, ModelWrapper<Region> {
 	*/
 	@Override
 	public boolean isActive() {
-		return _region.isActive();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _region.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _region.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _region.isNew();
+		return model.isActive();
 	}
 
 	/**
@@ -231,12 +177,7 @@ public class RegionWrapper implements Region, ModelWrapper<Region> {
 	*/
 	@Override
 	public void setActive(boolean active) {
-		_region.setActive(active);
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_region.setCachedModel(cachedModel);
+		model.setActive(active);
 	}
 
 	/**
@@ -246,22 +187,7 @@ public class RegionWrapper implements Region, ModelWrapper<Region> {
 	*/
 	@Override
 	public void setCountryId(long countryId) {
-		_region.setCountryId(countryId);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(BaseModel<?> baseModel) {
-		_region.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_region.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_region.setExpandoBridgeAttributes(serviceContext);
+		model.setCountryId(countryId);
 	}
 
 	/**
@@ -271,7 +197,7 @@ public class RegionWrapper implements Region, ModelWrapper<Region> {
 	*/
 	@Override
 	public void setMvccVersion(long mvccVersion) {
-		_region.setMvccVersion(mvccVersion);
+		model.setMvccVersion(mvccVersion);
 	}
 
 	/**
@@ -281,12 +207,7 @@ public class RegionWrapper implements Region, ModelWrapper<Region> {
 	*/
 	@Override
 	public void setName(String name) {
-		_region.setName(name);
-	}
-
-	@Override
-	public void setNew(boolean n) {
-		_region.setNew(n);
+		model.setName(name);
 	}
 
 	/**
@@ -296,12 +217,7 @@ public class RegionWrapper implements Region, ModelWrapper<Region> {
 	*/
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_region.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_region.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -311,7 +227,7 @@ public class RegionWrapper implements Region, ModelWrapper<Region> {
 	*/
 	@Override
 	public void setRegionCode(String regionCode) {
-		_region.setRegionCode(regionCode);
+		model.setRegionCode(regionCode);
 	}
 
 	/**
@@ -321,72 +237,11 @@ public class RegionWrapper implements Region, ModelWrapper<Region> {
 	*/
 	@Override
 	public void setRegionId(long regionId) {
-		_region.setRegionId(regionId);
+		model.setRegionId(regionId);
 	}
 
 	@Override
-	public CacheModel<Region> toCacheModel() {
-		return _region.toCacheModel();
+	protected RegionWrapper wrap(Region region) {
+		return new RegionWrapper(region);
 	}
-
-	@Override
-	public Region toEscapedModel() {
-		return new RegionWrapper(_region.toEscapedModel());
-	}
-
-	@Override
-	public String toString() {
-		return _region.toString();
-	}
-
-	@Override
-	public Region toUnescapedModel() {
-		return new RegionWrapper(_region.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _region.toXmlString();
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-
-		if (!(obj instanceof RegionWrapper)) {
-			return false;
-		}
-
-		RegionWrapper regionWrapper = (RegionWrapper)obj;
-
-		if (Objects.equals(_region, regionWrapper._region)) {
-			return true;
-		}
-
-		return false;
-	}
-
-	@Override
-	public Region getWrappedModel() {
-		return _region;
-	}
-
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _region.isEntityCacheEnabled();
-	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _region.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_region.resetOriginalValues();
-	}
-
-	private final Region _region;
 }

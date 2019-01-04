@@ -16,19 +16,14 @@ package com.liferay.wiki.model;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
-
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 
 import com.liferay.portal.kernel.model.ModelWrapper;
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -40,19 +35,10 @@ import java.util.Objects;
  * @generated
  */
 @ProviderType
-public class WikiNodeWrapper implements WikiNode, ModelWrapper<WikiNode> {
+public class WikiNodeWrapper extends BaseModelWrapper<WikiNode>
+	implements WikiNode, ModelWrapper<WikiNode> {
 	public WikiNodeWrapper(WikiNode wikiNode) {
-		_wikiNode = wikiNode;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return WikiNode.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return WikiNode.class.getName();
+		super(wikiNode);
 	}
 
 	@Override
@@ -181,22 +167,12 @@ public class WikiNodeWrapper implements WikiNode, ModelWrapper<WikiNode> {
 	@Override
 	public com.liferay.portal.kernel.repository.model.Folder addAttachmentsFolder()
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _wikiNode.addAttachmentsFolder();
-	}
-
-	@Override
-	public Object clone() {
-		return new WikiNodeWrapper((WikiNode)_wikiNode.clone());
-	}
-
-	@Override
-	public int compareTo(WikiNode wikiNode) {
-		return _wikiNode.compareTo(wikiNode);
+		return model.addAttachmentsFolder();
 	}
 
 	@Override
 	public long getAttachmentsFolderId() {
-		return _wikiNode.getAttachmentsFolderId();
+		return model.getAttachmentsFolderId();
 	}
 
 	/**
@@ -206,7 +182,7 @@ public class WikiNodeWrapper implements WikiNode, ModelWrapper<WikiNode> {
 	*/
 	@Override
 	public long getCompanyId() {
-		return _wikiNode.getCompanyId();
+		return model.getCompanyId();
 	}
 
 	/**
@@ -216,7 +192,7 @@ public class WikiNodeWrapper implements WikiNode, ModelWrapper<WikiNode> {
 	*/
 	@Override
 	public long getContainerModelId() {
-		return _wikiNode.getContainerModelId();
+		return model.getContainerModelId();
 	}
 
 	/**
@@ -226,7 +202,7 @@ public class WikiNodeWrapper implements WikiNode, ModelWrapper<WikiNode> {
 	*/
 	@Override
 	public String getContainerModelName() {
-		return _wikiNode.getContainerModelName();
+		return model.getContainerModelName();
 	}
 
 	/**
@@ -236,13 +212,13 @@ public class WikiNodeWrapper implements WikiNode, ModelWrapper<WikiNode> {
 	*/
 	@Override
 	public Date getCreateDate() {
-		return _wikiNode.getCreateDate();
+		return model.getCreateDate();
 	}
 
 	@Override
 	public java.util.List<com.liferay.portal.kernel.repository.model.FileEntry> getDeletedAttachmentsFiles()
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _wikiNode.getDeletedAttachmentsFiles();
+		return model.getDeletedAttachmentsFiles();
 	}
 
 	/**
@@ -252,12 +228,7 @@ public class WikiNodeWrapper implements WikiNode, ModelWrapper<WikiNode> {
 	*/
 	@Override
 	public String getDescription() {
-		return _wikiNode.getDescription();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _wikiNode.getExpandoBridge();
+		return model.getDescription();
 	}
 
 	/**
@@ -267,7 +238,7 @@ public class WikiNodeWrapper implements WikiNode, ModelWrapper<WikiNode> {
 	*/
 	@Override
 	public long getGroupId() {
-		return _wikiNode.getGroupId();
+		return model.getGroupId();
 	}
 
 	/**
@@ -277,7 +248,7 @@ public class WikiNodeWrapper implements WikiNode, ModelWrapper<WikiNode> {
 	*/
 	@Override
 	public Date getLastPostDate() {
-		return _wikiNode.getLastPostDate();
+		return model.getLastPostDate();
 	}
 
 	/**
@@ -287,7 +258,7 @@ public class WikiNodeWrapper implements WikiNode, ModelWrapper<WikiNode> {
 	*/
 	@Override
 	public Date getLastPublishDate() {
-		return _wikiNode.getLastPublishDate();
+		return model.getLastPublishDate();
 	}
 
 	/**
@@ -297,7 +268,7 @@ public class WikiNodeWrapper implements WikiNode, ModelWrapper<WikiNode> {
 	*/
 	@Override
 	public Date getModifiedDate() {
-		return _wikiNode.getModifiedDate();
+		return model.getModifiedDate();
 	}
 
 	/**
@@ -307,7 +278,7 @@ public class WikiNodeWrapper implements WikiNode, ModelWrapper<WikiNode> {
 	*/
 	@Override
 	public String getName() {
-		return _wikiNode.getName();
+		return model.getName();
 	}
 
 	/**
@@ -317,7 +288,7 @@ public class WikiNodeWrapper implements WikiNode, ModelWrapper<WikiNode> {
 	*/
 	@Override
 	public long getNodeId() {
-		return _wikiNode.getNodeId();
+		return model.getNodeId();
 	}
 
 	/**
@@ -327,7 +298,7 @@ public class WikiNodeWrapper implements WikiNode, ModelWrapper<WikiNode> {
 	*/
 	@Override
 	public long getParentContainerModelId() {
-		return _wikiNode.getParentContainerModelId();
+		return model.getParentContainerModelId();
 	}
 
 	/**
@@ -337,12 +308,7 @@ public class WikiNodeWrapper implements WikiNode, ModelWrapper<WikiNode> {
 	*/
 	@Override
 	public long getPrimaryKey() {
-		return _wikiNode.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _wikiNode.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	/**
@@ -352,7 +318,7 @@ public class WikiNodeWrapper implements WikiNode, ModelWrapper<WikiNode> {
 	*/
 	@Override
 	public int getStatus() {
-		return _wikiNode.getStatus();
+		return model.getStatus();
 	}
 
 	/**
@@ -362,7 +328,7 @@ public class WikiNodeWrapper implements WikiNode, ModelWrapper<WikiNode> {
 	*/
 	@Override
 	public long getStatusByUserId() {
-		return _wikiNode.getStatusByUserId();
+		return model.getStatusByUserId();
 	}
 
 	/**
@@ -372,7 +338,7 @@ public class WikiNodeWrapper implements WikiNode, ModelWrapper<WikiNode> {
 	*/
 	@Override
 	public String getStatusByUserName() {
-		return _wikiNode.getStatusByUserName();
+		return model.getStatusByUserName();
 	}
 
 	/**
@@ -382,7 +348,7 @@ public class WikiNodeWrapper implements WikiNode, ModelWrapper<WikiNode> {
 	*/
 	@Override
 	public String getStatusByUserUuid() {
-		return _wikiNode.getStatusByUserUuid();
+		return model.getStatusByUserUuid();
 	}
 
 	/**
@@ -392,7 +358,7 @@ public class WikiNodeWrapper implements WikiNode, ModelWrapper<WikiNode> {
 	*/
 	@Override
 	public Date getStatusDate() {
-		return _wikiNode.getStatusDate();
+		return model.getStatusDate();
 	}
 
 	/**
@@ -403,7 +369,7 @@ public class WikiNodeWrapper implements WikiNode, ModelWrapper<WikiNode> {
 	@Override
 	public com.liferay.trash.kernel.model.TrashEntry getTrashEntry()
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _wikiNode.getTrashEntry();
+		return model.getTrashEntry();
 	}
 
 	/**
@@ -413,7 +379,7 @@ public class WikiNodeWrapper implements WikiNode, ModelWrapper<WikiNode> {
 	*/
 	@Override
 	public long getTrashEntryClassPK() {
-		return _wikiNode.getTrashEntryClassPK();
+		return model.getTrashEntryClassPK();
 	}
 
 	/**
@@ -425,7 +391,7 @@ public class WikiNodeWrapper implements WikiNode, ModelWrapper<WikiNode> {
 	@Deprecated
 	@Override
 	public com.liferay.portal.kernel.trash.TrashHandler getTrashHandler() {
-		return _wikiNode.getTrashHandler();
+		return model.getTrashHandler();
 	}
 
 	/**
@@ -435,7 +401,7 @@ public class WikiNodeWrapper implements WikiNode, ModelWrapper<WikiNode> {
 	*/
 	@Override
 	public long getUserId() {
-		return _wikiNode.getUserId();
+		return model.getUserId();
 	}
 
 	/**
@@ -445,7 +411,7 @@ public class WikiNodeWrapper implements WikiNode, ModelWrapper<WikiNode> {
 	*/
 	@Override
 	public String getUserName() {
-		return _wikiNode.getUserName();
+		return model.getUserName();
 	}
 
 	/**
@@ -455,7 +421,7 @@ public class WikiNodeWrapper implements WikiNode, ModelWrapper<WikiNode> {
 	*/
 	@Override
 	public String getUserUuid() {
-		return _wikiNode.getUserUuid();
+		return model.getUserUuid();
 	}
 
 	/**
@@ -465,12 +431,7 @@ public class WikiNodeWrapper implements WikiNode, ModelWrapper<WikiNode> {
 	*/
 	@Override
 	public String getUuid() {
-		return _wikiNode.getUuid();
-	}
-
-	@Override
-	public int hashCode() {
-		return _wikiNode.hashCode();
+		return model.getUuid();
 	}
 
 	/**
@@ -480,12 +441,7 @@ public class WikiNodeWrapper implements WikiNode, ModelWrapper<WikiNode> {
 	*/
 	@Override
 	public boolean isApproved() {
-		return _wikiNode.isApproved();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _wikiNode.isCachedModel();
+		return model.isApproved();
 	}
 
 	/**
@@ -495,7 +451,7 @@ public class WikiNodeWrapper implements WikiNode, ModelWrapper<WikiNode> {
 	*/
 	@Override
 	public boolean isDenied() {
-		return _wikiNode.isDenied();
+		return model.isDenied();
 	}
 
 	/**
@@ -505,12 +461,7 @@ public class WikiNodeWrapper implements WikiNode, ModelWrapper<WikiNode> {
 	*/
 	@Override
 	public boolean isDraft() {
-		return _wikiNode.isDraft();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _wikiNode.isEscapedModel();
+		return model.isDraft();
 	}
 
 	/**
@@ -520,7 +471,7 @@ public class WikiNodeWrapper implements WikiNode, ModelWrapper<WikiNode> {
 	*/
 	@Override
 	public boolean isExpired() {
-		return _wikiNode.isExpired();
+		return model.isExpired();
 	}
 
 	/**
@@ -530,7 +481,7 @@ public class WikiNodeWrapper implements WikiNode, ModelWrapper<WikiNode> {
 	*/
 	@Override
 	public boolean isInactive() {
-		return _wikiNode.isInactive();
+		return model.isInactive();
 	}
 
 	/**
@@ -540,7 +491,7 @@ public class WikiNodeWrapper implements WikiNode, ModelWrapper<WikiNode> {
 	*/
 	@Override
 	public boolean isIncomplete() {
-		return _wikiNode.isIncomplete();
+		return model.isIncomplete();
 	}
 
 	/**
@@ -550,7 +501,7 @@ public class WikiNodeWrapper implements WikiNode, ModelWrapper<WikiNode> {
 	*/
 	@Override
 	public boolean isInTrash() {
-		return _wikiNode.isInTrash();
+		return model.isInTrash();
 	}
 
 	/**
@@ -560,22 +511,17 @@ public class WikiNodeWrapper implements WikiNode, ModelWrapper<WikiNode> {
 	*/
 	@Override
 	public boolean isInTrashContainer() {
-		return _wikiNode.isInTrashContainer();
+		return model.isInTrashContainer();
 	}
 
 	@Override
 	public boolean isInTrashExplicitly() {
-		return _wikiNode.isInTrashExplicitly();
+		return model.isInTrashExplicitly();
 	}
 
 	@Override
 	public boolean isInTrashImplicitly() {
-		return _wikiNode.isInTrashImplicitly();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _wikiNode.isNew();
+		return model.isInTrashImplicitly();
 	}
 
 	/**
@@ -585,7 +531,7 @@ public class WikiNodeWrapper implements WikiNode, ModelWrapper<WikiNode> {
 	*/
 	@Override
 	public boolean isPending() {
-		return _wikiNode.isPending();
+		return model.isPending();
 	}
 
 	/**
@@ -595,17 +541,12 @@ public class WikiNodeWrapper implements WikiNode, ModelWrapper<WikiNode> {
 	*/
 	@Override
 	public boolean isScheduled() {
-		return _wikiNode.isScheduled();
+		return model.isScheduled();
 	}
 
 	@Override
 	public void persist() {
-		_wikiNode.persist();
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_wikiNode.setCachedModel(cachedModel);
+		model.persist();
 	}
 
 	/**
@@ -615,7 +556,7 @@ public class WikiNodeWrapper implements WikiNode, ModelWrapper<WikiNode> {
 	*/
 	@Override
 	public void setCompanyId(long companyId) {
-		_wikiNode.setCompanyId(companyId);
+		model.setCompanyId(companyId);
 	}
 
 	/**
@@ -625,7 +566,7 @@ public class WikiNodeWrapper implements WikiNode, ModelWrapper<WikiNode> {
 	*/
 	@Override
 	public void setContainerModelId(long containerModelId) {
-		_wikiNode.setContainerModelId(containerModelId);
+		model.setContainerModelId(containerModelId);
 	}
 
 	/**
@@ -635,7 +576,7 @@ public class WikiNodeWrapper implements WikiNode, ModelWrapper<WikiNode> {
 	*/
 	@Override
 	public void setCreateDate(Date createDate) {
-		_wikiNode.setCreateDate(createDate);
+		model.setCreateDate(createDate);
 	}
 
 	/**
@@ -645,23 +586,7 @@ public class WikiNodeWrapper implements WikiNode, ModelWrapper<WikiNode> {
 	*/
 	@Override
 	public void setDescription(String description) {
-		_wikiNode.setDescription(description);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-		_wikiNode.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_wikiNode.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_wikiNode.setExpandoBridgeAttributes(serviceContext);
+		model.setDescription(description);
 	}
 
 	/**
@@ -671,7 +596,7 @@ public class WikiNodeWrapper implements WikiNode, ModelWrapper<WikiNode> {
 	*/
 	@Override
 	public void setGroupId(long groupId) {
-		_wikiNode.setGroupId(groupId);
+		model.setGroupId(groupId);
 	}
 
 	/**
@@ -681,7 +606,7 @@ public class WikiNodeWrapper implements WikiNode, ModelWrapper<WikiNode> {
 	*/
 	@Override
 	public void setLastPostDate(Date lastPostDate) {
-		_wikiNode.setLastPostDate(lastPostDate);
+		model.setLastPostDate(lastPostDate);
 	}
 
 	/**
@@ -691,7 +616,7 @@ public class WikiNodeWrapper implements WikiNode, ModelWrapper<WikiNode> {
 	*/
 	@Override
 	public void setLastPublishDate(Date lastPublishDate) {
-		_wikiNode.setLastPublishDate(lastPublishDate);
+		model.setLastPublishDate(lastPublishDate);
 	}
 
 	/**
@@ -701,7 +626,7 @@ public class WikiNodeWrapper implements WikiNode, ModelWrapper<WikiNode> {
 	*/
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
-		_wikiNode.setModifiedDate(modifiedDate);
+		model.setModifiedDate(modifiedDate);
 	}
 
 	/**
@@ -711,12 +636,7 @@ public class WikiNodeWrapper implements WikiNode, ModelWrapper<WikiNode> {
 	*/
 	@Override
 	public void setName(String name) {
-		_wikiNode.setName(name);
-	}
-
-	@Override
-	public void setNew(boolean n) {
-		_wikiNode.setNew(n);
+		model.setName(name);
 	}
 
 	/**
@@ -726,7 +646,7 @@ public class WikiNodeWrapper implements WikiNode, ModelWrapper<WikiNode> {
 	*/
 	@Override
 	public void setNodeId(long nodeId) {
-		_wikiNode.setNodeId(nodeId);
+		model.setNodeId(nodeId);
 	}
 
 	/**
@@ -736,7 +656,7 @@ public class WikiNodeWrapper implements WikiNode, ModelWrapper<WikiNode> {
 	*/
 	@Override
 	public void setParentContainerModelId(long parentContainerModelId) {
-		_wikiNode.setParentContainerModelId(parentContainerModelId);
+		model.setParentContainerModelId(parentContainerModelId);
 	}
 
 	/**
@@ -746,12 +666,7 @@ public class WikiNodeWrapper implements WikiNode, ModelWrapper<WikiNode> {
 	*/
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_wikiNode.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_wikiNode.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -761,7 +676,7 @@ public class WikiNodeWrapper implements WikiNode, ModelWrapper<WikiNode> {
 	*/
 	@Override
 	public void setStatus(int status) {
-		_wikiNode.setStatus(status);
+		model.setStatus(status);
 	}
 
 	/**
@@ -771,7 +686,7 @@ public class WikiNodeWrapper implements WikiNode, ModelWrapper<WikiNode> {
 	*/
 	@Override
 	public void setStatusByUserId(long statusByUserId) {
-		_wikiNode.setStatusByUserId(statusByUserId);
+		model.setStatusByUserId(statusByUserId);
 	}
 
 	/**
@@ -781,7 +696,7 @@ public class WikiNodeWrapper implements WikiNode, ModelWrapper<WikiNode> {
 	*/
 	@Override
 	public void setStatusByUserName(String statusByUserName) {
-		_wikiNode.setStatusByUserName(statusByUserName);
+		model.setStatusByUserName(statusByUserName);
 	}
 
 	/**
@@ -791,7 +706,7 @@ public class WikiNodeWrapper implements WikiNode, ModelWrapper<WikiNode> {
 	*/
 	@Override
 	public void setStatusByUserUuid(String statusByUserUuid) {
-		_wikiNode.setStatusByUserUuid(statusByUserUuid);
+		model.setStatusByUserUuid(statusByUserUuid);
 	}
 
 	/**
@@ -801,7 +716,7 @@ public class WikiNodeWrapper implements WikiNode, ModelWrapper<WikiNode> {
 	*/
 	@Override
 	public void setStatusDate(Date statusDate) {
-		_wikiNode.setStatusDate(statusDate);
+		model.setStatusDate(statusDate);
 	}
 
 	/**
@@ -811,7 +726,7 @@ public class WikiNodeWrapper implements WikiNode, ModelWrapper<WikiNode> {
 	*/
 	@Override
 	public void setUserId(long userId) {
-		_wikiNode.setUserId(userId);
+		model.setUserId(userId);
 	}
 
 	/**
@@ -821,7 +736,7 @@ public class WikiNodeWrapper implements WikiNode, ModelWrapper<WikiNode> {
 	*/
 	@Override
 	public void setUserName(String userName) {
-		_wikiNode.setUserName(userName);
+		model.setUserName(userName);
 	}
 
 	/**
@@ -831,7 +746,7 @@ public class WikiNodeWrapper implements WikiNode, ModelWrapper<WikiNode> {
 	*/
 	@Override
 	public void setUserUuid(String userUuid) {
-		_wikiNode.setUserUuid(userUuid);
+		model.setUserUuid(userUuid);
 	}
 
 	/**
@@ -841,77 +756,16 @@ public class WikiNodeWrapper implements WikiNode, ModelWrapper<WikiNode> {
 	*/
 	@Override
 	public void setUuid(String uuid) {
-		_wikiNode.setUuid(uuid);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<WikiNode> toCacheModel() {
-		return _wikiNode.toCacheModel();
-	}
-
-	@Override
-	public WikiNode toEscapedModel() {
-		return new WikiNodeWrapper(_wikiNode.toEscapedModel());
-	}
-
-	@Override
-	public String toString() {
-		return _wikiNode.toString();
-	}
-
-	@Override
-	public WikiNode toUnescapedModel() {
-		return new WikiNodeWrapper(_wikiNode.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _wikiNode.toXmlString();
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-
-		if (!(obj instanceof WikiNodeWrapper)) {
-			return false;
-		}
-
-		WikiNodeWrapper wikiNodeWrapper = (WikiNodeWrapper)obj;
-
-		if (Objects.equals(_wikiNode, wikiNodeWrapper._wikiNode)) {
-			return true;
-		}
-
-		return false;
+		model.setUuid(uuid);
 	}
 
 	@Override
 	public StagedModelType getStagedModelType() {
-		return _wikiNode.getStagedModelType();
+		return model.getStagedModelType();
 	}
 
 	@Override
-	public WikiNode getWrappedModel() {
-		return _wikiNode;
+	protected WikiNodeWrapper wrap(WikiNode wikiNode) {
+		return new WikiNodeWrapper(wikiNode);
 	}
-
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _wikiNode.isEntityCacheEnabled();
-	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _wikiNode.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_wikiNode.resetOriginalValues();
-	}
-
-	private final WikiNode _wikiNode;
 }

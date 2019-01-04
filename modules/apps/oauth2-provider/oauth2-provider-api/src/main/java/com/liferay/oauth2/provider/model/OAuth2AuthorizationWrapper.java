@@ -16,17 +16,12 @@ package com.liferay.oauth2.provider.model;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
-
 import com.liferay.portal.kernel.model.ModelWrapper;
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -38,20 +33,10 @@ import java.util.Objects;
  * @generated
  */
 @ProviderType
-public class OAuth2AuthorizationWrapper implements OAuth2Authorization,
-	ModelWrapper<OAuth2Authorization> {
+public class OAuth2AuthorizationWrapper extends BaseModelWrapper<OAuth2Authorization>
+	implements OAuth2Authorization, ModelWrapper<OAuth2Authorization> {
 	public OAuth2AuthorizationWrapper(OAuth2Authorization oAuth2Authorization) {
-		_oAuth2Authorization = oAuth2Authorization;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return OAuth2Authorization.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return OAuth2Authorization.class.getName();
+		super(oAuth2Authorization);
 	}
 
 	@Override
@@ -189,16 +174,6 @@ public class OAuth2AuthorizationWrapper implements OAuth2Authorization,
 		}
 	}
 
-	@Override
-	public Object clone() {
-		return new OAuth2AuthorizationWrapper((OAuth2Authorization)_oAuth2Authorization.clone());
-	}
-
-	@Override
-	public int compareTo(OAuth2Authorization oAuth2Authorization) {
-		return _oAuth2Authorization.compareTo(oAuth2Authorization);
-	}
-
 	/**
 	* Returns the access token content of this o auth2 authorization.
 	*
@@ -206,7 +181,7 @@ public class OAuth2AuthorizationWrapper implements OAuth2Authorization,
 	*/
 	@Override
 	public String getAccessTokenContent() {
-		return _oAuth2Authorization.getAccessTokenContent();
+		return model.getAccessTokenContent();
 	}
 
 	/**
@@ -216,7 +191,7 @@ public class OAuth2AuthorizationWrapper implements OAuth2Authorization,
 	*/
 	@Override
 	public long getAccessTokenContentHash() {
-		return _oAuth2Authorization.getAccessTokenContentHash();
+		return model.getAccessTokenContentHash();
 	}
 
 	/**
@@ -226,7 +201,7 @@ public class OAuth2AuthorizationWrapper implements OAuth2Authorization,
 	*/
 	@Override
 	public Date getAccessTokenCreateDate() {
-		return _oAuth2Authorization.getAccessTokenCreateDate();
+		return model.getAccessTokenCreateDate();
 	}
 
 	/**
@@ -236,7 +211,7 @@ public class OAuth2AuthorizationWrapper implements OAuth2Authorization,
 	*/
 	@Override
 	public Date getAccessTokenExpirationDate() {
-		return _oAuth2Authorization.getAccessTokenExpirationDate();
+		return model.getAccessTokenExpirationDate();
 	}
 
 	/**
@@ -246,7 +221,7 @@ public class OAuth2AuthorizationWrapper implements OAuth2Authorization,
 	*/
 	@Override
 	public long getCompanyId() {
-		return _oAuth2Authorization.getCompanyId();
+		return model.getCompanyId();
 	}
 
 	/**
@@ -256,12 +231,7 @@ public class OAuth2AuthorizationWrapper implements OAuth2Authorization,
 	*/
 	@Override
 	public Date getCreateDate() {
-		return _oAuth2Authorization.getCreateDate();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _oAuth2Authorization.getExpandoBridge();
+		return model.getCreateDate();
 	}
 
 	/**
@@ -271,7 +241,7 @@ public class OAuth2AuthorizationWrapper implements OAuth2Authorization,
 	*/
 	@Override
 	public long getOAuth2ApplicationId() {
-		return _oAuth2Authorization.getOAuth2ApplicationId();
+		return model.getOAuth2ApplicationId();
 	}
 
 	/**
@@ -281,7 +251,7 @@ public class OAuth2AuthorizationWrapper implements OAuth2Authorization,
 	*/
 	@Override
 	public long getOAuth2ApplicationScopeAliasesId() {
-		return _oAuth2Authorization.getOAuth2ApplicationScopeAliasesId();
+		return model.getOAuth2ApplicationScopeAliasesId();
 	}
 
 	/**
@@ -291,7 +261,7 @@ public class OAuth2AuthorizationWrapper implements OAuth2Authorization,
 	*/
 	@Override
 	public long getOAuth2AuthorizationId() {
-		return _oAuth2Authorization.getOAuth2AuthorizationId();
+		return model.getOAuth2AuthorizationId();
 	}
 
 	/**
@@ -301,12 +271,7 @@ public class OAuth2AuthorizationWrapper implements OAuth2Authorization,
 	*/
 	@Override
 	public long getPrimaryKey() {
-		return _oAuth2Authorization.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _oAuth2Authorization.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	/**
@@ -316,7 +281,7 @@ public class OAuth2AuthorizationWrapper implements OAuth2Authorization,
 	*/
 	@Override
 	public String getRefreshTokenContent() {
-		return _oAuth2Authorization.getRefreshTokenContent();
+		return model.getRefreshTokenContent();
 	}
 
 	/**
@@ -326,7 +291,7 @@ public class OAuth2AuthorizationWrapper implements OAuth2Authorization,
 	*/
 	@Override
 	public long getRefreshTokenContentHash() {
-		return _oAuth2Authorization.getRefreshTokenContentHash();
+		return model.getRefreshTokenContentHash();
 	}
 
 	/**
@@ -336,7 +301,7 @@ public class OAuth2AuthorizationWrapper implements OAuth2Authorization,
 	*/
 	@Override
 	public Date getRefreshTokenCreateDate() {
-		return _oAuth2Authorization.getRefreshTokenCreateDate();
+		return model.getRefreshTokenCreateDate();
 	}
 
 	/**
@@ -346,7 +311,7 @@ public class OAuth2AuthorizationWrapper implements OAuth2Authorization,
 	*/
 	@Override
 	public Date getRefreshTokenExpirationDate() {
-		return _oAuth2Authorization.getRefreshTokenExpirationDate();
+		return model.getRefreshTokenExpirationDate();
 	}
 
 	/**
@@ -356,7 +321,7 @@ public class OAuth2AuthorizationWrapper implements OAuth2Authorization,
 	*/
 	@Override
 	public String getRemoteIPInfo() {
-		return _oAuth2Authorization.getRemoteIPInfo();
+		return model.getRemoteIPInfo();
 	}
 
 	/**
@@ -366,7 +331,7 @@ public class OAuth2AuthorizationWrapper implements OAuth2Authorization,
 	*/
 	@Override
 	public long getUserId() {
-		return _oAuth2Authorization.getUserId();
+		return model.getUserId();
 	}
 
 	/**
@@ -376,7 +341,7 @@ public class OAuth2AuthorizationWrapper implements OAuth2Authorization,
 	*/
 	@Override
 	public String getUserName() {
-		return _oAuth2Authorization.getUserName();
+		return model.getUserName();
 	}
 
 	/**
@@ -386,32 +351,12 @@ public class OAuth2AuthorizationWrapper implements OAuth2Authorization,
 	*/
 	@Override
 	public String getUserUuid() {
-		return _oAuth2Authorization.getUserUuid();
-	}
-
-	@Override
-	public int hashCode() {
-		return _oAuth2Authorization.hashCode();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _oAuth2Authorization.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _oAuth2Authorization.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _oAuth2Authorization.isNew();
+		return model.getUserUuid();
 	}
 
 	@Override
 	public void persist() {
-		_oAuth2Authorization.persist();
+		model.persist();
 	}
 
 	/**
@@ -421,7 +366,7 @@ public class OAuth2AuthorizationWrapper implements OAuth2Authorization,
 	*/
 	@Override
 	public void setAccessTokenContent(String accessTokenContent) {
-		_oAuth2Authorization.setAccessTokenContent(accessTokenContent);
+		model.setAccessTokenContent(accessTokenContent);
 	}
 
 	/**
@@ -431,7 +376,7 @@ public class OAuth2AuthorizationWrapper implements OAuth2Authorization,
 	*/
 	@Override
 	public void setAccessTokenContentHash(long accessTokenContentHash) {
-		_oAuth2Authorization.setAccessTokenContentHash(accessTokenContentHash);
+		model.setAccessTokenContentHash(accessTokenContentHash);
 	}
 
 	/**
@@ -441,7 +386,7 @@ public class OAuth2AuthorizationWrapper implements OAuth2Authorization,
 	*/
 	@Override
 	public void setAccessTokenCreateDate(Date accessTokenCreateDate) {
-		_oAuth2Authorization.setAccessTokenCreateDate(accessTokenCreateDate);
+		model.setAccessTokenCreateDate(accessTokenCreateDate);
 	}
 
 	/**
@@ -451,12 +396,7 @@ public class OAuth2AuthorizationWrapper implements OAuth2Authorization,
 	*/
 	@Override
 	public void setAccessTokenExpirationDate(Date accessTokenExpirationDate) {
-		_oAuth2Authorization.setAccessTokenExpirationDate(accessTokenExpirationDate);
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_oAuth2Authorization.setCachedModel(cachedModel);
+		model.setAccessTokenExpirationDate(accessTokenExpirationDate);
 	}
 
 	/**
@@ -466,7 +406,7 @@ public class OAuth2AuthorizationWrapper implements OAuth2Authorization,
 	*/
 	@Override
 	public void setCompanyId(long companyId) {
-		_oAuth2Authorization.setCompanyId(companyId);
+		model.setCompanyId(companyId);
 	}
 
 	/**
@@ -476,28 +416,7 @@ public class OAuth2AuthorizationWrapper implements OAuth2Authorization,
 	*/
 	@Override
 	public void setCreateDate(Date createDate) {
-		_oAuth2Authorization.setCreateDate(createDate);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-		_oAuth2Authorization.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_oAuth2Authorization.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_oAuth2Authorization.setExpandoBridgeAttributes(serviceContext);
-	}
-
-	@Override
-	public void setNew(boolean n) {
-		_oAuth2Authorization.setNew(n);
+		model.setCreateDate(createDate);
 	}
 
 	/**
@@ -507,7 +426,7 @@ public class OAuth2AuthorizationWrapper implements OAuth2Authorization,
 	*/
 	@Override
 	public void setOAuth2ApplicationId(long oAuth2ApplicationId) {
-		_oAuth2Authorization.setOAuth2ApplicationId(oAuth2ApplicationId);
+		model.setOAuth2ApplicationId(oAuth2ApplicationId);
 	}
 
 	/**
@@ -518,7 +437,7 @@ public class OAuth2AuthorizationWrapper implements OAuth2Authorization,
 	@Override
 	public void setOAuth2ApplicationScopeAliasesId(
 		long oAuth2ApplicationScopeAliasesId) {
-		_oAuth2Authorization.setOAuth2ApplicationScopeAliasesId(oAuth2ApplicationScopeAliasesId);
+		model.setOAuth2ApplicationScopeAliasesId(oAuth2ApplicationScopeAliasesId);
 	}
 
 	/**
@@ -528,7 +447,7 @@ public class OAuth2AuthorizationWrapper implements OAuth2Authorization,
 	*/
 	@Override
 	public void setOAuth2AuthorizationId(long oAuth2AuthorizationId) {
-		_oAuth2Authorization.setOAuth2AuthorizationId(oAuth2AuthorizationId);
+		model.setOAuth2AuthorizationId(oAuth2AuthorizationId);
 	}
 
 	/**
@@ -538,12 +457,7 @@ public class OAuth2AuthorizationWrapper implements OAuth2Authorization,
 	*/
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_oAuth2Authorization.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_oAuth2Authorization.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -553,7 +467,7 @@ public class OAuth2AuthorizationWrapper implements OAuth2Authorization,
 	*/
 	@Override
 	public void setRefreshTokenContent(String refreshTokenContent) {
-		_oAuth2Authorization.setRefreshTokenContent(refreshTokenContent);
+		model.setRefreshTokenContent(refreshTokenContent);
 	}
 
 	/**
@@ -563,7 +477,7 @@ public class OAuth2AuthorizationWrapper implements OAuth2Authorization,
 	*/
 	@Override
 	public void setRefreshTokenContentHash(long refreshTokenContentHash) {
-		_oAuth2Authorization.setRefreshTokenContentHash(refreshTokenContentHash);
+		model.setRefreshTokenContentHash(refreshTokenContentHash);
 	}
 
 	/**
@@ -573,7 +487,7 @@ public class OAuth2AuthorizationWrapper implements OAuth2Authorization,
 	*/
 	@Override
 	public void setRefreshTokenCreateDate(Date refreshTokenCreateDate) {
-		_oAuth2Authorization.setRefreshTokenCreateDate(refreshTokenCreateDate);
+		model.setRefreshTokenCreateDate(refreshTokenCreateDate);
 	}
 
 	/**
@@ -583,7 +497,7 @@ public class OAuth2AuthorizationWrapper implements OAuth2Authorization,
 	*/
 	@Override
 	public void setRefreshTokenExpirationDate(Date refreshTokenExpirationDate) {
-		_oAuth2Authorization.setRefreshTokenExpirationDate(refreshTokenExpirationDate);
+		model.setRefreshTokenExpirationDate(refreshTokenExpirationDate);
 	}
 
 	/**
@@ -593,7 +507,7 @@ public class OAuth2AuthorizationWrapper implements OAuth2Authorization,
 	*/
 	@Override
 	public void setRemoteIPInfo(String remoteIPInfo) {
-		_oAuth2Authorization.setRemoteIPInfo(remoteIPInfo);
+		model.setRemoteIPInfo(remoteIPInfo);
 	}
 
 	/**
@@ -603,7 +517,7 @@ public class OAuth2AuthorizationWrapper implements OAuth2Authorization,
 	*/
 	@Override
 	public void setUserId(long userId) {
-		_oAuth2Authorization.setUserId(userId);
+		model.setUserId(userId);
 	}
 
 	/**
@@ -613,7 +527,7 @@ public class OAuth2AuthorizationWrapper implements OAuth2Authorization,
 	*/
 	@Override
 	public void setUserName(String userName) {
-		_oAuth2Authorization.setUserName(userName);
+		model.setUserName(userName);
 	}
 
 	/**
@@ -623,73 +537,12 @@ public class OAuth2AuthorizationWrapper implements OAuth2Authorization,
 	*/
 	@Override
 	public void setUserUuid(String userUuid) {
-		_oAuth2Authorization.setUserUuid(userUuid);
+		model.setUserUuid(userUuid);
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.CacheModel<OAuth2Authorization> toCacheModel() {
-		return _oAuth2Authorization.toCacheModel();
+	protected OAuth2AuthorizationWrapper wrap(
+		OAuth2Authorization oAuth2Authorization) {
+		return new OAuth2AuthorizationWrapper(oAuth2Authorization);
 	}
-
-	@Override
-	public OAuth2Authorization toEscapedModel() {
-		return new OAuth2AuthorizationWrapper(_oAuth2Authorization.toEscapedModel());
-	}
-
-	@Override
-	public String toString() {
-		return _oAuth2Authorization.toString();
-	}
-
-	@Override
-	public OAuth2Authorization toUnescapedModel() {
-		return new OAuth2AuthorizationWrapper(_oAuth2Authorization.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _oAuth2Authorization.toXmlString();
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-
-		if (!(obj instanceof OAuth2AuthorizationWrapper)) {
-			return false;
-		}
-
-		OAuth2AuthorizationWrapper oAuth2AuthorizationWrapper = (OAuth2AuthorizationWrapper)obj;
-
-		if (Objects.equals(_oAuth2Authorization,
-					oAuth2AuthorizationWrapper._oAuth2Authorization)) {
-			return true;
-		}
-
-		return false;
-	}
-
-	@Override
-	public OAuth2Authorization getWrappedModel() {
-		return _oAuth2Authorization;
-	}
-
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _oAuth2Authorization.isEntityCacheEnabled();
-	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _oAuth2Authorization.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_oAuth2Authorization.resetOriginalValues();
-	}
-
-	private final OAuth2Authorization _oAuth2Authorization;
 }

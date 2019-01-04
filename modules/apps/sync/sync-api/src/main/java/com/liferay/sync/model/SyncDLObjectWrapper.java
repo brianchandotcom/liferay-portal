@@ -16,17 +16,12 @@ package com.liferay.sync.model;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
-
 import com.liferay.portal.kernel.model.ModelWrapper;
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -38,20 +33,10 @@ import java.util.Objects;
  * @generated
  */
 @ProviderType
-public class SyncDLObjectWrapper implements SyncDLObject,
-	ModelWrapper<SyncDLObject> {
+public class SyncDLObjectWrapper extends BaseModelWrapper<SyncDLObject>
+	implements SyncDLObject, ModelWrapper<SyncDLObject> {
 	public SyncDLObjectWrapper(SyncDLObject syncDLObject) {
-		_syncDLObject = syncDLObject;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return SyncDLObject.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return SyncDLObject.class.getName();
+		super(syncDLObject);
 	}
 
 	@Override
@@ -264,17 +249,7 @@ public class SyncDLObjectWrapper implements SyncDLObject,
 
 	@Override
 	public String buildTreePath() {
-		return _syncDLObject.buildTreePath();
-	}
-
-	@Override
-	public Object clone() {
-		return new SyncDLObjectWrapper((SyncDLObject)_syncDLObject.clone());
-	}
-
-	@Override
-	public int compareTo(SyncDLObject syncDLObject) {
-		return _syncDLObject.compareTo(syncDLObject);
+		return model.buildTreePath();
 	}
 
 	/**
@@ -284,7 +259,7 @@ public class SyncDLObjectWrapper implements SyncDLObject,
 	*/
 	@Override
 	public String getChangeLog() {
-		return _syncDLObject.getChangeLog();
+		return model.getChangeLog();
 	}
 
 	/**
@@ -294,7 +269,7 @@ public class SyncDLObjectWrapper implements SyncDLObject,
 	*/
 	@Override
 	public String getChecksum() {
-		return _syncDLObject.getChecksum();
+		return model.getChecksum();
 	}
 
 	/**
@@ -304,7 +279,7 @@ public class SyncDLObjectWrapper implements SyncDLObject,
 	*/
 	@Override
 	public long getCompanyId() {
-		return _syncDLObject.getCompanyId();
+		return model.getCompanyId();
 	}
 
 	/**
@@ -314,7 +289,7 @@ public class SyncDLObjectWrapper implements SyncDLObject,
 	*/
 	@Override
 	public long getCreateTime() {
-		return _syncDLObject.getCreateTime();
+		return model.getCreateTime();
 	}
 
 	/**
@@ -324,7 +299,7 @@ public class SyncDLObjectWrapper implements SyncDLObject,
 	*/
 	@Override
 	public String getDescription() {
-		return _syncDLObject.getDescription();
+		return model.getDescription();
 	}
 
 	/**
@@ -334,12 +309,7 @@ public class SyncDLObjectWrapper implements SyncDLObject,
 	*/
 	@Override
 	public String getEvent() {
-		return _syncDLObject.getEvent();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _syncDLObject.getExpandoBridge();
+		return model.getEvent();
 	}
 
 	/**
@@ -349,7 +319,7 @@ public class SyncDLObjectWrapper implements SyncDLObject,
 	*/
 	@Override
 	public String getExtension() {
-		return _syncDLObject.getExtension();
+		return model.getExtension();
 	}
 
 	/**
@@ -359,7 +329,7 @@ public class SyncDLObjectWrapper implements SyncDLObject,
 	*/
 	@Override
 	public String getExtraSettings() {
-		return _syncDLObject.getExtraSettings();
+		return model.getExtraSettings();
 	}
 
 	/**
@@ -369,7 +339,7 @@ public class SyncDLObjectWrapper implements SyncDLObject,
 	*/
 	@Override
 	public String getLanTokenKey() {
-		return _syncDLObject.getLanTokenKey();
+		return model.getLanTokenKey();
 	}
 
 	/**
@@ -379,7 +349,7 @@ public class SyncDLObjectWrapper implements SyncDLObject,
 	*/
 	@Override
 	public Date getLastPermissionChangeDate() {
-		return _syncDLObject.getLastPermissionChangeDate();
+		return model.getLastPermissionChangeDate();
 	}
 
 	/**
@@ -389,7 +359,7 @@ public class SyncDLObjectWrapper implements SyncDLObject,
 	*/
 	@Override
 	public Date getLockExpirationDate() {
-		return _syncDLObject.getLockExpirationDate();
+		return model.getLockExpirationDate();
 	}
 
 	/**
@@ -399,7 +369,7 @@ public class SyncDLObjectWrapper implements SyncDLObject,
 	*/
 	@Override
 	public long getLockUserId() {
-		return _syncDLObject.getLockUserId();
+		return model.getLockUserId();
 	}
 
 	/**
@@ -409,7 +379,7 @@ public class SyncDLObjectWrapper implements SyncDLObject,
 	*/
 	@Override
 	public String getLockUserName() {
-		return _syncDLObject.getLockUserName();
+		return model.getLockUserName();
 	}
 
 	/**
@@ -419,7 +389,7 @@ public class SyncDLObjectWrapper implements SyncDLObject,
 	*/
 	@Override
 	public String getLockUserUuid() {
-		return _syncDLObject.getLockUserUuid();
+		return model.getLockUserUuid();
 	}
 
 	/**
@@ -429,7 +399,7 @@ public class SyncDLObjectWrapper implements SyncDLObject,
 	*/
 	@Override
 	public String getMimeType() {
-		return _syncDLObject.getMimeType();
+		return model.getMimeType();
 	}
 
 	/**
@@ -439,7 +409,7 @@ public class SyncDLObjectWrapper implements SyncDLObject,
 	*/
 	@Override
 	public long getModifiedTime() {
-		return _syncDLObject.getModifiedTime();
+		return model.getModifiedTime();
 	}
 
 	/**
@@ -449,7 +419,7 @@ public class SyncDLObjectWrapper implements SyncDLObject,
 	*/
 	@Override
 	public String getName() {
-		return _syncDLObject.getName();
+		return model.getName();
 	}
 
 	/**
@@ -459,7 +429,7 @@ public class SyncDLObjectWrapper implements SyncDLObject,
 	*/
 	@Override
 	public long getParentFolderId() {
-		return _syncDLObject.getParentFolderId();
+		return model.getParentFolderId();
 	}
 
 	/**
@@ -469,12 +439,7 @@ public class SyncDLObjectWrapper implements SyncDLObject,
 	*/
 	@Override
 	public long getPrimaryKey() {
-		return _syncDLObject.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _syncDLObject.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	/**
@@ -484,7 +449,7 @@ public class SyncDLObjectWrapper implements SyncDLObject,
 	*/
 	@Override
 	public long getRepositoryId() {
-		return _syncDLObject.getRepositoryId();
+		return model.getRepositoryId();
 	}
 
 	/**
@@ -494,7 +459,7 @@ public class SyncDLObjectWrapper implements SyncDLObject,
 	*/
 	@Override
 	public long getSize() {
-		return _syncDLObject.getSize();
+		return model.getSize();
 	}
 
 	/**
@@ -504,7 +469,7 @@ public class SyncDLObjectWrapper implements SyncDLObject,
 	*/
 	@Override
 	public long getSyncDLObjectId() {
-		return _syncDLObject.getSyncDLObjectId();
+		return model.getSyncDLObjectId();
 	}
 
 	/**
@@ -514,7 +479,7 @@ public class SyncDLObjectWrapper implements SyncDLObject,
 	*/
 	@Override
 	public String getTreePath() {
-		return _syncDLObject.getTreePath();
+		return model.getTreePath();
 	}
 
 	/**
@@ -524,7 +489,7 @@ public class SyncDLObjectWrapper implements SyncDLObject,
 	*/
 	@Override
 	public String getType() {
-		return _syncDLObject.getType();
+		return model.getType();
 	}
 
 	/**
@@ -534,7 +499,7 @@ public class SyncDLObjectWrapper implements SyncDLObject,
 	*/
 	@Override
 	public long getTypePK() {
-		return _syncDLObject.getTypePK();
+		return model.getTypePK();
 	}
 
 	/**
@@ -544,7 +509,7 @@ public class SyncDLObjectWrapper implements SyncDLObject,
 	*/
 	@Override
 	public String getTypeUuid() {
-		return _syncDLObject.getTypeUuid();
+		return model.getTypeUuid();
 	}
 
 	/**
@@ -554,7 +519,7 @@ public class SyncDLObjectWrapper implements SyncDLObject,
 	*/
 	@Override
 	public long getUserId() {
-		return _syncDLObject.getUserId();
+		return model.getUserId();
 	}
 
 	/**
@@ -564,7 +529,7 @@ public class SyncDLObjectWrapper implements SyncDLObject,
 	*/
 	@Override
 	public String getUserName() {
-		return _syncDLObject.getUserName();
+		return model.getUserName();
 	}
 
 	/**
@@ -574,7 +539,7 @@ public class SyncDLObjectWrapper implements SyncDLObject,
 	*/
 	@Override
 	public String getUserUuid() {
-		return _syncDLObject.getUserUuid();
+		return model.getUserUuid();
 	}
 
 	/**
@@ -584,7 +549,7 @@ public class SyncDLObjectWrapper implements SyncDLObject,
 	*/
 	@Override
 	public String getVersion() {
-		return _syncDLObject.getVersion();
+		return model.getVersion();
 	}
 
 	/**
@@ -594,37 +559,12 @@ public class SyncDLObjectWrapper implements SyncDLObject,
 	*/
 	@Override
 	public long getVersionId() {
-		return _syncDLObject.getVersionId();
-	}
-
-	@Override
-	public int hashCode() {
-		return _syncDLObject.hashCode();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _syncDLObject.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _syncDLObject.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _syncDLObject.isNew();
+		return model.getVersionId();
 	}
 
 	@Override
 	public void persist() {
-		_syncDLObject.persist();
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_syncDLObject.setCachedModel(cachedModel);
+		model.persist();
 	}
 
 	/**
@@ -634,7 +574,7 @@ public class SyncDLObjectWrapper implements SyncDLObject,
 	*/
 	@Override
 	public void setChangeLog(String changeLog) {
-		_syncDLObject.setChangeLog(changeLog);
+		model.setChangeLog(changeLog);
 	}
 
 	/**
@@ -644,7 +584,7 @@ public class SyncDLObjectWrapper implements SyncDLObject,
 	*/
 	@Override
 	public void setChecksum(String checksum) {
-		_syncDLObject.setChecksum(checksum);
+		model.setChecksum(checksum);
 	}
 
 	/**
@@ -654,12 +594,12 @@ public class SyncDLObjectWrapper implements SyncDLObject,
 	*/
 	@Override
 	public void setCompanyId(long companyId) {
-		_syncDLObject.setCompanyId(companyId);
+		model.setCompanyId(companyId);
 	}
 
 	@Override
 	public void setCreateDate(Date createDate) {
-		_syncDLObject.setCreateDate(createDate);
+		model.setCreateDate(createDate);
 	}
 
 	/**
@@ -669,7 +609,7 @@ public class SyncDLObjectWrapper implements SyncDLObject,
 	*/
 	@Override
 	public void setCreateTime(long createTime) {
-		_syncDLObject.setCreateTime(createTime);
+		model.setCreateTime(createTime);
 	}
 
 	/**
@@ -679,7 +619,7 @@ public class SyncDLObjectWrapper implements SyncDLObject,
 	*/
 	@Override
 	public void setDescription(String description) {
-		_syncDLObject.setDescription(description);
+		model.setDescription(description);
 	}
 
 	/**
@@ -689,23 +629,7 @@ public class SyncDLObjectWrapper implements SyncDLObject,
 	*/
 	@Override
 	public void setEvent(String event) {
-		_syncDLObject.setEvent(event);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-		_syncDLObject.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_syncDLObject.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_syncDLObject.setExpandoBridgeAttributes(serviceContext);
+		model.setEvent(event);
 	}
 
 	/**
@@ -715,7 +639,7 @@ public class SyncDLObjectWrapper implements SyncDLObject,
 	*/
 	@Override
 	public void setExtension(String extension) {
-		_syncDLObject.setExtension(extension);
+		model.setExtension(extension);
 	}
 
 	/**
@@ -725,7 +649,7 @@ public class SyncDLObjectWrapper implements SyncDLObject,
 	*/
 	@Override
 	public void setExtraSettings(String extraSettings) {
-		_syncDLObject.setExtraSettings(extraSettings);
+		model.setExtraSettings(extraSettings);
 	}
 
 	/**
@@ -735,7 +659,7 @@ public class SyncDLObjectWrapper implements SyncDLObject,
 	*/
 	@Override
 	public void setLanTokenKey(String lanTokenKey) {
-		_syncDLObject.setLanTokenKey(lanTokenKey);
+		model.setLanTokenKey(lanTokenKey);
 	}
 
 	/**
@@ -745,7 +669,7 @@ public class SyncDLObjectWrapper implements SyncDLObject,
 	*/
 	@Override
 	public void setLastPermissionChangeDate(Date lastPermissionChangeDate) {
-		_syncDLObject.setLastPermissionChangeDate(lastPermissionChangeDate);
+		model.setLastPermissionChangeDate(lastPermissionChangeDate);
 	}
 
 	/**
@@ -755,7 +679,7 @@ public class SyncDLObjectWrapper implements SyncDLObject,
 	*/
 	@Override
 	public void setLockExpirationDate(Date lockExpirationDate) {
-		_syncDLObject.setLockExpirationDate(lockExpirationDate);
+		model.setLockExpirationDate(lockExpirationDate);
 	}
 
 	/**
@@ -765,7 +689,7 @@ public class SyncDLObjectWrapper implements SyncDLObject,
 	*/
 	@Override
 	public void setLockUserId(long lockUserId) {
-		_syncDLObject.setLockUserId(lockUserId);
+		model.setLockUserId(lockUserId);
 	}
 
 	/**
@@ -775,7 +699,7 @@ public class SyncDLObjectWrapper implements SyncDLObject,
 	*/
 	@Override
 	public void setLockUserName(String lockUserName) {
-		_syncDLObject.setLockUserName(lockUserName);
+		model.setLockUserName(lockUserName);
 	}
 
 	/**
@@ -785,7 +709,7 @@ public class SyncDLObjectWrapper implements SyncDLObject,
 	*/
 	@Override
 	public void setLockUserUuid(String lockUserUuid) {
-		_syncDLObject.setLockUserUuid(lockUserUuid);
+		model.setLockUserUuid(lockUserUuid);
 	}
 
 	/**
@@ -795,12 +719,12 @@ public class SyncDLObjectWrapper implements SyncDLObject,
 	*/
 	@Override
 	public void setMimeType(String mimeType) {
-		_syncDLObject.setMimeType(mimeType);
+		model.setMimeType(mimeType);
 	}
 
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
-		_syncDLObject.setModifiedDate(modifiedDate);
+		model.setModifiedDate(modifiedDate);
 	}
 
 	/**
@@ -810,7 +734,7 @@ public class SyncDLObjectWrapper implements SyncDLObject,
 	*/
 	@Override
 	public void setModifiedTime(long modifiedTime) {
-		_syncDLObject.setModifiedTime(modifiedTime);
+		model.setModifiedTime(modifiedTime);
 	}
 
 	/**
@@ -820,12 +744,7 @@ public class SyncDLObjectWrapper implements SyncDLObject,
 	*/
 	@Override
 	public void setName(String name) {
-		_syncDLObject.setName(name);
-	}
-
-	@Override
-	public void setNew(boolean n) {
-		_syncDLObject.setNew(n);
+		model.setName(name);
 	}
 
 	/**
@@ -835,7 +754,7 @@ public class SyncDLObjectWrapper implements SyncDLObject,
 	*/
 	@Override
 	public void setParentFolderId(long parentFolderId) {
-		_syncDLObject.setParentFolderId(parentFolderId);
+		model.setParentFolderId(parentFolderId);
 	}
 
 	/**
@@ -845,12 +764,7 @@ public class SyncDLObjectWrapper implements SyncDLObject,
 	*/
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_syncDLObject.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_syncDLObject.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -860,7 +774,7 @@ public class SyncDLObjectWrapper implements SyncDLObject,
 	*/
 	@Override
 	public void setRepositoryId(long repositoryId) {
-		_syncDLObject.setRepositoryId(repositoryId);
+		model.setRepositoryId(repositoryId);
 	}
 
 	/**
@@ -870,7 +784,7 @@ public class SyncDLObjectWrapper implements SyncDLObject,
 	*/
 	@Override
 	public void setSize(long size) {
-		_syncDLObject.setSize(size);
+		model.setSize(size);
 	}
 
 	/**
@@ -880,7 +794,7 @@ public class SyncDLObjectWrapper implements SyncDLObject,
 	*/
 	@Override
 	public void setSyncDLObjectId(long syncDLObjectId) {
-		_syncDLObject.setSyncDLObjectId(syncDLObjectId);
+		model.setSyncDLObjectId(syncDLObjectId);
 	}
 
 	/**
@@ -890,7 +804,7 @@ public class SyncDLObjectWrapper implements SyncDLObject,
 	*/
 	@Override
 	public void setTreePath(String treePath) {
-		_syncDLObject.setTreePath(treePath);
+		model.setTreePath(treePath);
 	}
 
 	/**
@@ -900,7 +814,7 @@ public class SyncDLObjectWrapper implements SyncDLObject,
 	*/
 	@Override
 	public void setType(String type) {
-		_syncDLObject.setType(type);
+		model.setType(type);
 	}
 
 	/**
@@ -910,7 +824,7 @@ public class SyncDLObjectWrapper implements SyncDLObject,
 	*/
 	@Override
 	public void setTypePK(long typePK) {
-		_syncDLObject.setTypePK(typePK);
+		model.setTypePK(typePK);
 	}
 
 	/**
@@ -920,7 +834,7 @@ public class SyncDLObjectWrapper implements SyncDLObject,
 	*/
 	@Override
 	public void setTypeUuid(String typeUuid) {
-		_syncDLObject.setTypeUuid(typeUuid);
+		model.setTypeUuid(typeUuid);
 	}
 
 	/**
@@ -930,7 +844,7 @@ public class SyncDLObjectWrapper implements SyncDLObject,
 	*/
 	@Override
 	public void setUserId(long userId) {
-		_syncDLObject.setUserId(userId);
+		model.setUserId(userId);
 	}
 
 	/**
@@ -940,7 +854,7 @@ public class SyncDLObjectWrapper implements SyncDLObject,
 	*/
 	@Override
 	public void setUserName(String userName) {
-		_syncDLObject.setUserName(userName);
+		model.setUserName(userName);
 	}
 
 	/**
@@ -950,7 +864,7 @@ public class SyncDLObjectWrapper implements SyncDLObject,
 	*/
 	@Override
 	public void setUserUuid(String userUuid) {
-		_syncDLObject.setUserUuid(userUuid);
+		model.setUserUuid(userUuid);
 	}
 
 	/**
@@ -960,7 +874,7 @@ public class SyncDLObjectWrapper implements SyncDLObject,
 	*/
 	@Override
 	public void setVersion(String version) {
-		_syncDLObject.setVersion(version);
+		model.setVersion(version);
 	}
 
 	/**
@@ -970,77 +884,16 @@ public class SyncDLObjectWrapper implements SyncDLObject,
 	*/
 	@Override
 	public void setVersionId(long versionId) {
-		_syncDLObject.setVersionId(versionId);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<SyncDLObject> toCacheModel() {
-		return _syncDLObject.toCacheModel();
-	}
-
-	@Override
-	public SyncDLObject toEscapedModel() {
-		return new SyncDLObjectWrapper(_syncDLObject.toEscapedModel());
-	}
-
-	@Override
-	public String toString() {
-		return _syncDLObject.toString();
-	}
-
-	@Override
-	public SyncDLObject toUnescapedModel() {
-		return new SyncDLObjectWrapper(_syncDLObject.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _syncDLObject.toXmlString();
+		model.setVersionId(versionId);
 	}
 
 	@Override
 	public void updateTreePath(String treePath) {
-		_syncDLObject.updateTreePath(treePath);
+		model.updateTreePath(treePath);
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-
-		if (!(obj instanceof SyncDLObjectWrapper)) {
-			return false;
-		}
-
-		SyncDLObjectWrapper syncDLObjectWrapper = (SyncDLObjectWrapper)obj;
-
-		if (Objects.equals(_syncDLObject, syncDLObjectWrapper._syncDLObject)) {
-			return true;
-		}
-
-		return false;
+	protected SyncDLObjectWrapper wrap(SyncDLObject syncDLObject) {
+		return new SyncDLObjectWrapper(syncDLObject);
 	}
-
-	@Override
-	public SyncDLObject getWrappedModel() {
-		return _syncDLObject;
-	}
-
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _syncDLObject.isEntityCacheEnabled();
-	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _syncDLObject.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_syncDLObject.resetOriginalValues();
-	}
-
-	private final SyncDLObject _syncDLObject;
 }

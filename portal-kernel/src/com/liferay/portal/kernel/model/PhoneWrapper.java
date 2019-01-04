@@ -16,18 +16,13 @@ package com.liferay.portal.kernel.model;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
-
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -39,19 +34,10 @@ import java.util.Objects;
  * @generated
  */
 @ProviderType
-public class PhoneWrapper implements Phone, ModelWrapper<Phone> {
+public class PhoneWrapper extends BaseModelWrapper<Phone> implements Phone,
+	ModelWrapper<Phone> {
 	public PhoneWrapper(Phone phone) {
-		_phone = phone;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return Phone.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return Phone.class.getName();
+		super(phone);
 	}
 
 	@Override
@@ -163,16 +149,6 @@ public class PhoneWrapper implements Phone, ModelWrapper<Phone> {
 		}
 	}
 
-	@Override
-	public Object clone() {
-		return new PhoneWrapper((Phone)_phone.clone());
-	}
-
-	@Override
-	public int compareTo(Phone phone) {
-		return _phone.compareTo(phone);
-	}
-
 	/**
 	* Returns the fully qualified class name of this phone.
 	*
@@ -180,7 +156,7 @@ public class PhoneWrapper implements Phone, ModelWrapper<Phone> {
 	*/
 	@Override
 	public String getClassName() {
-		return _phone.getClassName();
+		return model.getClassName();
 	}
 
 	/**
@@ -190,7 +166,7 @@ public class PhoneWrapper implements Phone, ModelWrapper<Phone> {
 	*/
 	@Override
 	public long getClassNameId() {
-		return _phone.getClassNameId();
+		return model.getClassNameId();
 	}
 
 	/**
@@ -200,7 +176,7 @@ public class PhoneWrapper implements Phone, ModelWrapper<Phone> {
 	*/
 	@Override
 	public long getClassPK() {
-		return _phone.getClassPK();
+		return model.getClassPK();
 	}
 
 	/**
@@ -210,7 +186,7 @@ public class PhoneWrapper implements Phone, ModelWrapper<Phone> {
 	*/
 	@Override
 	public long getCompanyId() {
-		return _phone.getCompanyId();
+		return model.getCompanyId();
 	}
 
 	/**
@@ -220,12 +196,7 @@ public class PhoneWrapper implements Phone, ModelWrapper<Phone> {
 	*/
 	@Override
 	public Date getCreateDate() {
-		return _phone.getCreateDate();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _phone.getExpandoBridge();
+		return model.getCreateDate();
 	}
 
 	/**
@@ -235,7 +206,7 @@ public class PhoneWrapper implements Phone, ModelWrapper<Phone> {
 	*/
 	@Override
 	public String getExtension() {
-		return _phone.getExtension();
+		return model.getExtension();
 	}
 
 	/**
@@ -245,7 +216,7 @@ public class PhoneWrapper implements Phone, ModelWrapper<Phone> {
 	*/
 	@Override
 	public Date getModifiedDate() {
-		return _phone.getModifiedDate();
+		return model.getModifiedDate();
 	}
 
 	/**
@@ -255,7 +226,7 @@ public class PhoneWrapper implements Phone, ModelWrapper<Phone> {
 	*/
 	@Override
 	public long getMvccVersion() {
-		return _phone.getMvccVersion();
+		return model.getMvccVersion();
 	}
 
 	/**
@@ -265,7 +236,7 @@ public class PhoneWrapper implements Phone, ModelWrapper<Phone> {
 	*/
 	@Override
 	public String getNumber() {
-		return _phone.getNumber();
+		return model.getNumber();
 	}
 
 	/**
@@ -275,7 +246,7 @@ public class PhoneWrapper implements Phone, ModelWrapper<Phone> {
 	*/
 	@Override
 	public long getPhoneId() {
-		return _phone.getPhoneId();
+		return model.getPhoneId();
 	}
 
 	/**
@@ -285,7 +256,7 @@ public class PhoneWrapper implements Phone, ModelWrapper<Phone> {
 	*/
 	@Override
 	public boolean getPrimary() {
-		return _phone.getPrimary();
+		return model.getPrimary();
 	}
 
 	/**
@@ -295,18 +266,13 @@ public class PhoneWrapper implements Phone, ModelWrapper<Phone> {
 	*/
 	@Override
 	public long getPrimaryKey() {
-		return _phone.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _phone.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	@Override
 	public ListType getType()
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _phone.getType();
+		return model.getType();
 	}
 
 	/**
@@ -316,7 +282,7 @@ public class PhoneWrapper implements Phone, ModelWrapper<Phone> {
 	*/
 	@Override
 	public long getTypeId() {
-		return _phone.getTypeId();
+		return model.getTypeId();
 	}
 
 	/**
@@ -326,7 +292,7 @@ public class PhoneWrapper implements Phone, ModelWrapper<Phone> {
 	*/
 	@Override
 	public long getUserId() {
-		return _phone.getUserId();
+		return model.getUserId();
 	}
 
 	/**
@@ -336,7 +302,7 @@ public class PhoneWrapper implements Phone, ModelWrapper<Phone> {
 	*/
 	@Override
 	public String getUserName() {
-		return _phone.getUserName();
+		return model.getUserName();
 	}
 
 	/**
@@ -346,7 +312,7 @@ public class PhoneWrapper implements Phone, ModelWrapper<Phone> {
 	*/
 	@Override
 	public String getUserUuid() {
-		return _phone.getUserUuid();
+		return model.getUserUuid();
 	}
 
 	/**
@@ -356,27 +322,7 @@ public class PhoneWrapper implements Phone, ModelWrapper<Phone> {
 	*/
 	@Override
 	public String getUuid() {
-		return _phone.getUuid();
-	}
-
-	@Override
-	public int hashCode() {
-		return _phone.hashCode();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _phone.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _phone.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _phone.isNew();
+		return model.getUuid();
 	}
 
 	/**
@@ -386,22 +332,17 @@ public class PhoneWrapper implements Phone, ModelWrapper<Phone> {
 	*/
 	@Override
 	public boolean isPrimary() {
-		return _phone.isPrimary();
+		return model.isPrimary();
 	}
 
 	@Override
 	public void persist() {
-		_phone.persist();
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_phone.setCachedModel(cachedModel);
+		model.persist();
 	}
 
 	@Override
 	public void setClassName(String className) {
-		_phone.setClassName(className);
+		model.setClassName(className);
 	}
 
 	/**
@@ -411,7 +352,7 @@ public class PhoneWrapper implements Phone, ModelWrapper<Phone> {
 	*/
 	@Override
 	public void setClassNameId(long classNameId) {
-		_phone.setClassNameId(classNameId);
+		model.setClassNameId(classNameId);
 	}
 
 	/**
@@ -421,7 +362,7 @@ public class PhoneWrapper implements Phone, ModelWrapper<Phone> {
 	*/
 	@Override
 	public void setClassPK(long classPK) {
-		_phone.setClassPK(classPK);
+		model.setClassPK(classPK);
 	}
 
 	/**
@@ -431,7 +372,7 @@ public class PhoneWrapper implements Phone, ModelWrapper<Phone> {
 	*/
 	@Override
 	public void setCompanyId(long companyId) {
-		_phone.setCompanyId(companyId);
+		model.setCompanyId(companyId);
 	}
 
 	/**
@@ -441,22 +382,7 @@ public class PhoneWrapper implements Phone, ModelWrapper<Phone> {
 	*/
 	@Override
 	public void setCreateDate(Date createDate) {
-		_phone.setCreateDate(createDate);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(BaseModel<?> baseModel) {
-		_phone.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_phone.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_phone.setExpandoBridgeAttributes(serviceContext);
+		model.setCreateDate(createDate);
 	}
 
 	/**
@@ -466,7 +392,7 @@ public class PhoneWrapper implements Phone, ModelWrapper<Phone> {
 	*/
 	@Override
 	public void setExtension(String extension) {
-		_phone.setExtension(extension);
+		model.setExtension(extension);
 	}
 
 	/**
@@ -476,7 +402,7 @@ public class PhoneWrapper implements Phone, ModelWrapper<Phone> {
 	*/
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
-		_phone.setModifiedDate(modifiedDate);
+		model.setModifiedDate(modifiedDate);
 	}
 
 	/**
@@ -486,12 +412,7 @@ public class PhoneWrapper implements Phone, ModelWrapper<Phone> {
 	*/
 	@Override
 	public void setMvccVersion(long mvccVersion) {
-		_phone.setMvccVersion(mvccVersion);
-	}
-
-	@Override
-	public void setNew(boolean n) {
-		_phone.setNew(n);
+		model.setMvccVersion(mvccVersion);
 	}
 
 	/**
@@ -501,7 +422,7 @@ public class PhoneWrapper implements Phone, ModelWrapper<Phone> {
 	*/
 	@Override
 	public void setNumber(String number) {
-		_phone.setNumber(number);
+		model.setNumber(number);
 	}
 
 	/**
@@ -511,7 +432,7 @@ public class PhoneWrapper implements Phone, ModelWrapper<Phone> {
 	*/
 	@Override
 	public void setPhoneId(long phoneId) {
-		_phone.setPhoneId(phoneId);
+		model.setPhoneId(phoneId);
 	}
 
 	/**
@@ -521,7 +442,7 @@ public class PhoneWrapper implements Phone, ModelWrapper<Phone> {
 	*/
 	@Override
 	public void setPrimary(boolean primary) {
-		_phone.setPrimary(primary);
+		model.setPrimary(primary);
 	}
 
 	/**
@@ -531,12 +452,7 @@ public class PhoneWrapper implements Phone, ModelWrapper<Phone> {
 	*/
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_phone.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_phone.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -546,7 +462,7 @@ public class PhoneWrapper implements Phone, ModelWrapper<Phone> {
 	*/
 	@Override
 	public void setTypeId(long typeId) {
-		_phone.setTypeId(typeId);
+		model.setTypeId(typeId);
 	}
 
 	/**
@@ -556,7 +472,7 @@ public class PhoneWrapper implements Phone, ModelWrapper<Phone> {
 	*/
 	@Override
 	public void setUserId(long userId) {
-		_phone.setUserId(userId);
+		model.setUserId(userId);
 	}
 
 	/**
@@ -566,7 +482,7 @@ public class PhoneWrapper implements Phone, ModelWrapper<Phone> {
 	*/
 	@Override
 	public void setUserName(String userName) {
-		_phone.setUserName(userName);
+		model.setUserName(userName);
 	}
 
 	/**
@@ -576,7 +492,7 @@ public class PhoneWrapper implements Phone, ModelWrapper<Phone> {
 	*/
 	@Override
 	public void setUserUuid(String userUuid) {
-		_phone.setUserUuid(userUuid);
+		model.setUserUuid(userUuid);
 	}
 
 	/**
@@ -586,77 +502,16 @@ public class PhoneWrapper implements Phone, ModelWrapper<Phone> {
 	*/
 	@Override
 	public void setUuid(String uuid) {
-		_phone.setUuid(uuid);
-	}
-
-	@Override
-	public CacheModel<Phone> toCacheModel() {
-		return _phone.toCacheModel();
-	}
-
-	@Override
-	public Phone toEscapedModel() {
-		return new PhoneWrapper(_phone.toEscapedModel());
-	}
-
-	@Override
-	public String toString() {
-		return _phone.toString();
-	}
-
-	@Override
-	public Phone toUnescapedModel() {
-		return new PhoneWrapper(_phone.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _phone.toXmlString();
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-
-		if (!(obj instanceof PhoneWrapper)) {
-			return false;
-		}
-
-		PhoneWrapper phoneWrapper = (PhoneWrapper)obj;
-
-		if (Objects.equals(_phone, phoneWrapper._phone)) {
-			return true;
-		}
-
-		return false;
+		model.setUuid(uuid);
 	}
 
 	@Override
 	public StagedModelType getStagedModelType() {
-		return _phone.getStagedModelType();
+		return model.getStagedModelType();
 	}
 
 	@Override
-	public Phone getWrappedModel() {
-		return _phone;
+	protected PhoneWrapper wrap(Phone phone) {
+		return new PhoneWrapper(phone);
 	}
-
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _phone.isEntityCacheEnabled();
-	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _phone.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_phone.resetOriginalValues();
-	}
-
-	private final Phone _phone;
 }

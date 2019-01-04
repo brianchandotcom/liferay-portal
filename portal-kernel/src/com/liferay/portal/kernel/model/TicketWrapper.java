@@ -16,16 +16,11 @@ package com.liferay.portal.kernel.model;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
-
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -37,19 +32,10 @@ import java.util.Objects;
  * @generated
  */
 @ProviderType
-public class TicketWrapper implements Ticket, ModelWrapper<Ticket> {
+public class TicketWrapper extends BaseModelWrapper<Ticket> implements Ticket,
+	ModelWrapper<Ticket> {
 	public TicketWrapper(Ticket ticket) {
-		_ticket = ticket;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return Ticket.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return Ticket.class.getName();
+		super(ticket);
 	}
 
 	@Override
@@ -133,16 +119,6 @@ public class TicketWrapper implements Ticket, ModelWrapper<Ticket> {
 		}
 	}
 
-	@Override
-	public Object clone() {
-		return new TicketWrapper((Ticket)_ticket.clone());
-	}
-
-	@Override
-	public int compareTo(Ticket ticket) {
-		return _ticket.compareTo(ticket);
-	}
-
 	/**
 	* Returns the fully qualified class name of this ticket.
 	*
@@ -150,7 +126,7 @@ public class TicketWrapper implements Ticket, ModelWrapper<Ticket> {
 	*/
 	@Override
 	public String getClassName() {
-		return _ticket.getClassName();
+		return model.getClassName();
 	}
 
 	/**
@@ -160,7 +136,7 @@ public class TicketWrapper implements Ticket, ModelWrapper<Ticket> {
 	*/
 	@Override
 	public long getClassNameId() {
-		return _ticket.getClassNameId();
+		return model.getClassNameId();
 	}
 
 	/**
@@ -170,7 +146,7 @@ public class TicketWrapper implements Ticket, ModelWrapper<Ticket> {
 	*/
 	@Override
 	public long getClassPK() {
-		return _ticket.getClassPK();
+		return model.getClassPK();
 	}
 
 	/**
@@ -180,7 +156,7 @@ public class TicketWrapper implements Ticket, ModelWrapper<Ticket> {
 	*/
 	@Override
 	public long getCompanyId() {
-		return _ticket.getCompanyId();
+		return model.getCompanyId();
 	}
 
 	/**
@@ -190,12 +166,7 @@ public class TicketWrapper implements Ticket, ModelWrapper<Ticket> {
 	*/
 	@Override
 	public Date getCreateDate() {
-		return _ticket.getCreateDate();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _ticket.getExpandoBridge();
+		return model.getCreateDate();
 	}
 
 	/**
@@ -205,7 +176,7 @@ public class TicketWrapper implements Ticket, ModelWrapper<Ticket> {
 	*/
 	@Override
 	public Date getExpirationDate() {
-		return _ticket.getExpirationDate();
+		return model.getExpirationDate();
 	}
 
 	/**
@@ -215,7 +186,7 @@ public class TicketWrapper implements Ticket, ModelWrapper<Ticket> {
 	*/
 	@Override
 	public String getExtraInfo() {
-		return _ticket.getExtraInfo();
+		return model.getExtraInfo();
 	}
 
 	/**
@@ -225,7 +196,7 @@ public class TicketWrapper implements Ticket, ModelWrapper<Ticket> {
 	*/
 	@Override
 	public String getKey() {
-		return _ticket.getKey();
+		return model.getKey();
 	}
 
 	/**
@@ -235,7 +206,7 @@ public class TicketWrapper implements Ticket, ModelWrapper<Ticket> {
 	*/
 	@Override
 	public long getMvccVersion() {
-		return _ticket.getMvccVersion();
+		return model.getMvccVersion();
 	}
 
 	/**
@@ -245,12 +216,7 @@ public class TicketWrapper implements Ticket, ModelWrapper<Ticket> {
 	*/
 	@Override
 	public long getPrimaryKey() {
-		return _ticket.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _ticket.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	/**
@@ -260,7 +226,7 @@ public class TicketWrapper implements Ticket, ModelWrapper<Ticket> {
 	*/
 	@Override
 	public long getTicketId() {
-		return _ticket.getTicketId();
+		return model.getTicketId();
 	}
 
 	/**
@@ -270,47 +236,22 @@ public class TicketWrapper implements Ticket, ModelWrapper<Ticket> {
 	*/
 	@Override
 	public int getType() {
-		return _ticket.getType();
-	}
-
-	@Override
-	public int hashCode() {
-		return _ticket.hashCode();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _ticket.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _ticket.isEscapedModel();
+		return model.getType();
 	}
 
 	@Override
 	public boolean isExpired() {
-		return _ticket.isExpired();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _ticket.isNew();
+		return model.isExpired();
 	}
 
 	@Override
 	public void persist() {
-		_ticket.persist();
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_ticket.setCachedModel(cachedModel);
+		model.persist();
 	}
 
 	@Override
 	public void setClassName(String className) {
-		_ticket.setClassName(className);
+		model.setClassName(className);
 	}
 
 	/**
@@ -320,7 +261,7 @@ public class TicketWrapper implements Ticket, ModelWrapper<Ticket> {
 	*/
 	@Override
 	public void setClassNameId(long classNameId) {
-		_ticket.setClassNameId(classNameId);
+		model.setClassNameId(classNameId);
 	}
 
 	/**
@@ -330,7 +271,7 @@ public class TicketWrapper implements Ticket, ModelWrapper<Ticket> {
 	*/
 	@Override
 	public void setClassPK(long classPK) {
-		_ticket.setClassPK(classPK);
+		model.setClassPK(classPK);
 	}
 
 	/**
@@ -340,7 +281,7 @@ public class TicketWrapper implements Ticket, ModelWrapper<Ticket> {
 	*/
 	@Override
 	public void setCompanyId(long companyId) {
-		_ticket.setCompanyId(companyId);
+		model.setCompanyId(companyId);
 	}
 
 	/**
@@ -350,22 +291,7 @@ public class TicketWrapper implements Ticket, ModelWrapper<Ticket> {
 	*/
 	@Override
 	public void setCreateDate(Date createDate) {
-		_ticket.setCreateDate(createDate);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(BaseModel<?> baseModel) {
-		_ticket.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_ticket.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_ticket.setExpandoBridgeAttributes(serviceContext);
+		model.setCreateDate(createDate);
 	}
 
 	/**
@@ -375,7 +301,7 @@ public class TicketWrapper implements Ticket, ModelWrapper<Ticket> {
 	*/
 	@Override
 	public void setExpirationDate(Date expirationDate) {
-		_ticket.setExpirationDate(expirationDate);
+		model.setExpirationDate(expirationDate);
 	}
 
 	/**
@@ -385,7 +311,7 @@ public class TicketWrapper implements Ticket, ModelWrapper<Ticket> {
 	*/
 	@Override
 	public void setExtraInfo(String extraInfo) {
-		_ticket.setExtraInfo(extraInfo);
+		model.setExtraInfo(extraInfo);
 	}
 
 	/**
@@ -395,7 +321,7 @@ public class TicketWrapper implements Ticket, ModelWrapper<Ticket> {
 	*/
 	@Override
 	public void setKey(String key) {
-		_ticket.setKey(key);
+		model.setKey(key);
 	}
 
 	/**
@@ -405,12 +331,7 @@ public class TicketWrapper implements Ticket, ModelWrapper<Ticket> {
 	*/
 	@Override
 	public void setMvccVersion(long mvccVersion) {
-		_ticket.setMvccVersion(mvccVersion);
-	}
-
-	@Override
-	public void setNew(boolean n) {
-		_ticket.setNew(n);
+		model.setMvccVersion(mvccVersion);
 	}
 
 	/**
@@ -420,12 +341,7 @@ public class TicketWrapper implements Ticket, ModelWrapper<Ticket> {
 	*/
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_ticket.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_ticket.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -435,7 +351,7 @@ public class TicketWrapper implements Ticket, ModelWrapper<Ticket> {
 	*/
 	@Override
 	public void setTicketId(long ticketId) {
-		_ticket.setTicketId(ticketId);
+		model.setTicketId(ticketId);
 	}
 
 	/**
@@ -445,72 +361,11 @@ public class TicketWrapper implements Ticket, ModelWrapper<Ticket> {
 	*/
 	@Override
 	public void setType(int type) {
-		_ticket.setType(type);
+		model.setType(type);
 	}
 
 	@Override
-	public CacheModel<Ticket> toCacheModel() {
-		return _ticket.toCacheModel();
+	protected TicketWrapper wrap(Ticket ticket) {
+		return new TicketWrapper(ticket);
 	}
-
-	@Override
-	public Ticket toEscapedModel() {
-		return new TicketWrapper(_ticket.toEscapedModel());
-	}
-
-	@Override
-	public String toString() {
-		return _ticket.toString();
-	}
-
-	@Override
-	public Ticket toUnescapedModel() {
-		return new TicketWrapper(_ticket.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _ticket.toXmlString();
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-
-		if (!(obj instanceof TicketWrapper)) {
-			return false;
-		}
-
-		TicketWrapper ticketWrapper = (TicketWrapper)obj;
-
-		if (Objects.equals(_ticket, ticketWrapper._ticket)) {
-			return true;
-		}
-
-		return false;
-	}
-
-	@Override
-	public Ticket getWrappedModel() {
-		return _ticket;
-	}
-
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _ticket.isEntityCacheEnabled();
-	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _ticket.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_ticket.resetOriginalValues();
-	}
-
-	private final Ticket _ticket;
 }

@@ -16,16 +16,11 @@ package com.liferay.journal.model;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
-
 import com.liferay.portal.kernel.model.ModelWrapper;
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -37,22 +32,12 @@ import java.util.Objects;
  * @generated
  */
 @ProviderType
-public class JournalArticleLocalizationWrapper
+public class JournalArticleLocalizationWrapper extends BaseModelWrapper<JournalArticleLocalization>
 	implements JournalArticleLocalization,
 		ModelWrapper<JournalArticleLocalization> {
 	public JournalArticleLocalizationWrapper(
 		JournalArticleLocalization journalArticleLocalization) {
-		_journalArticleLocalization = journalArticleLocalization;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return JournalArticleLocalization.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return JournalArticleLocalization.class.getName();
+		super(journalArticleLocalization);
 	}
 
 	@Override
@@ -109,16 +94,6 @@ public class JournalArticleLocalizationWrapper
 		}
 	}
 
-	@Override
-	public Object clone() {
-		return new JournalArticleLocalizationWrapper((JournalArticleLocalization)_journalArticleLocalization.clone());
-	}
-
-	@Override
-	public int compareTo(JournalArticleLocalization journalArticleLocalization) {
-		return _journalArticleLocalization.compareTo(journalArticleLocalization);
-	}
-
 	/**
 	* Returns the article localization ID of this journal article localization.
 	*
@@ -126,7 +101,7 @@ public class JournalArticleLocalizationWrapper
 	*/
 	@Override
 	public long getArticleLocalizationId() {
-		return _journalArticleLocalization.getArticleLocalizationId();
+		return model.getArticleLocalizationId();
 	}
 
 	/**
@@ -136,7 +111,7 @@ public class JournalArticleLocalizationWrapper
 	*/
 	@Override
 	public long getArticlePK() {
-		return _journalArticleLocalization.getArticlePK();
+		return model.getArticlePK();
 	}
 
 	/**
@@ -146,7 +121,7 @@ public class JournalArticleLocalizationWrapper
 	*/
 	@Override
 	public long getCompanyId() {
-		return _journalArticleLocalization.getCompanyId();
+		return model.getCompanyId();
 	}
 
 	/**
@@ -156,12 +131,7 @@ public class JournalArticleLocalizationWrapper
 	*/
 	@Override
 	public String getDescription() {
-		return _journalArticleLocalization.getDescription();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _journalArticleLocalization.getExpandoBridge();
+		return model.getDescription();
 	}
 
 	/**
@@ -171,7 +141,7 @@ public class JournalArticleLocalizationWrapper
 	*/
 	@Override
 	public String getLanguageId() {
-		return _journalArticleLocalization.getLanguageId();
+		return model.getLanguageId();
 	}
 
 	/**
@@ -181,12 +151,7 @@ public class JournalArticleLocalizationWrapper
 	*/
 	@Override
 	public long getPrimaryKey() {
-		return _journalArticleLocalization.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _journalArticleLocalization.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	/**
@@ -196,27 +161,7 @@ public class JournalArticleLocalizationWrapper
 	*/
 	@Override
 	public String getTitle() {
-		return _journalArticleLocalization.getTitle();
-	}
-
-	@Override
-	public int hashCode() {
-		return _journalArticleLocalization.hashCode();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _journalArticleLocalization.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _journalArticleLocalization.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _journalArticleLocalization.isNew();
+		return model.getTitle();
 	}
 
 	/**
@@ -226,7 +171,7 @@ public class JournalArticleLocalizationWrapper
 	*/
 	@Override
 	public void setArticleLocalizationId(long articleLocalizationId) {
-		_journalArticleLocalization.setArticleLocalizationId(articleLocalizationId);
+		model.setArticleLocalizationId(articleLocalizationId);
 	}
 
 	/**
@@ -236,12 +181,7 @@ public class JournalArticleLocalizationWrapper
 	*/
 	@Override
 	public void setArticlePK(long articlePK) {
-		_journalArticleLocalization.setArticlePK(articlePK);
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_journalArticleLocalization.setCachedModel(cachedModel);
+		model.setArticlePK(articlePK);
 	}
 
 	/**
@@ -251,7 +191,7 @@ public class JournalArticleLocalizationWrapper
 	*/
 	@Override
 	public void setCompanyId(long companyId) {
-		_journalArticleLocalization.setCompanyId(companyId);
+		model.setCompanyId(companyId);
 	}
 
 	/**
@@ -261,23 +201,7 @@ public class JournalArticleLocalizationWrapper
 	*/
 	@Override
 	public void setDescription(String description) {
-		_journalArticleLocalization.setDescription(description);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-		_journalArticleLocalization.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_journalArticleLocalization.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_journalArticleLocalization.setExpandoBridgeAttributes(serviceContext);
+		model.setDescription(description);
 	}
 
 	/**
@@ -287,12 +211,7 @@ public class JournalArticleLocalizationWrapper
 	*/
 	@Override
 	public void setLanguageId(String languageId) {
-		_journalArticleLocalization.setLanguageId(languageId);
-	}
-
-	@Override
-	public void setNew(boolean n) {
-		_journalArticleLocalization.setNew(n);
+		model.setLanguageId(languageId);
 	}
 
 	/**
@@ -302,12 +221,7 @@ public class JournalArticleLocalizationWrapper
 	*/
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_journalArticleLocalization.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_journalArticleLocalization.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -317,73 +231,12 @@ public class JournalArticleLocalizationWrapper
 	*/
 	@Override
 	public void setTitle(String title) {
-		_journalArticleLocalization.setTitle(title);
+		model.setTitle(title);
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.CacheModel<JournalArticleLocalization> toCacheModel() {
-		return _journalArticleLocalization.toCacheModel();
+	protected JournalArticleLocalizationWrapper wrap(
+		JournalArticleLocalization journalArticleLocalization) {
+		return new JournalArticleLocalizationWrapper(journalArticleLocalization);
 	}
-
-	@Override
-	public JournalArticleLocalization toEscapedModel() {
-		return new JournalArticleLocalizationWrapper(_journalArticleLocalization.toEscapedModel());
-	}
-
-	@Override
-	public String toString() {
-		return _journalArticleLocalization.toString();
-	}
-
-	@Override
-	public JournalArticleLocalization toUnescapedModel() {
-		return new JournalArticleLocalizationWrapper(_journalArticleLocalization.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _journalArticleLocalization.toXmlString();
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-
-		if (!(obj instanceof JournalArticleLocalizationWrapper)) {
-			return false;
-		}
-
-		JournalArticleLocalizationWrapper journalArticleLocalizationWrapper = (JournalArticleLocalizationWrapper)obj;
-
-		if (Objects.equals(_journalArticleLocalization,
-					journalArticleLocalizationWrapper._journalArticleLocalization)) {
-			return true;
-		}
-
-		return false;
-	}
-
-	@Override
-	public JournalArticleLocalization getWrappedModel() {
-		return _journalArticleLocalization;
-	}
-
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _journalArticleLocalization.isEntityCacheEnabled();
-	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _journalArticleLocalization.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_journalArticleLocalization.resetOriginalValues();
-	}
-
-	private final JournalArticleLocalization _journalArticleLocalization;
 }

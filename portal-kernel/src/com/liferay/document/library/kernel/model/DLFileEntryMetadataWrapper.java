@@ -16,16 +16,11 @@ package com.liferay.document.library.kernel.model;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
-
 import com.liferay.portal.kernel.model.ModelWrapper;
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -37,20 +32,10 @@ import java.util.Objects;
  * @generated
  */
 @ProviderType
-public class DLFileEntryMetadataWrapper implements DLFileEntryMetadata,
-	ModelWrapper<DLFileEntryMetadata> {
+public class DLFileEntryMetadataWrapper extends BaseModelWrapper<DLFileEntryMetadata>
+	implements DLFileEntryMetadata, ModelWrapper<DLFileEntryMetadata> {
 	public DLFileEntryMetadataWrapper(DLFileEntryMetadata dlFileEntryMetadata) {
-		_dlFileEntryMetadata = dlFileEntryMetadata;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return DLFileEntryMetadata.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return DLFileEntryMetadata.class.getName();
+		super(dlFileEntryMetadata);
 	}
 
 	@Override
@@ -113,16 +98,6 @@ public class DLFileEntryMetadataWrapper implements DLFileEntryMetadata,
 		}
 	}
 
-	@Override
-	public Object clone() {
-		return new DLFileEntryMetadataWrapper((DLFileEntryMetadata)_dlFileEntryMetadata.clone());
-	}
-
-	@Override
-	public int compareTo(DLFileEntryMetadata dlFileEntryMetadata) {
-		return _dlFileEntryMetadata.compareTo(dlFileEntryMetadata);
-	}
-
 	/**
 	* Returns the company ID of this document library file entry metadata.
 	*
@@ -130,7 +105,7 @@ public class DLFileEntryMetadataWrapper implements DLFileEntryMetadata,
 	*/
 	@Override
 	public long getCompanyId() {
-		return _dlFileEntryMetadata.getCompanyId();
+		return model.getCompanyId();
 	}
 
 	/**
@@ -140,7 +115,7 @@ public class DLFileEntryMetadataWrapper implements DLFileEntryMetadata,
 	*/
 	@Override
 	public long getDDMStorageId() {
-		return _dlFileEntryMetadata.getDDMStorageId();
+		return model.getDDMStorageId();
 	}
 
 	/**
@@ -150,12 +125,7 @@ public class DLFileEntryMetadataWrapper implements DLFileEntryMetadata,
 	*/
 	@Override
 	public long getDDMStructureId() {
-		return _dlFileEntryMetadata.getDDMStructureId();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _dlFileEntryMetadata.getExpandoBridge();
+		return model.getDDMStructureId();
 	}
 
 	/**
@@ -165,7 +135,7 @@ public class DLFileEntryMetadataWrapper implements DLFileEntryMetadata,
 	*/
 	@Override
 	public long getFileEntryId() {
-		return _dlFileEntryMetadata.getFileEntryId();
+		return model.getFileEntryId();
 	}
 
 	/**
@@ -175,13 +145,13 @@ public class DLFileEntryMetadataWrapper implements DLFileEntryMetadata,
 	*/
 	@Override
 	public long getFileEntryMetadataId() {
-		return _dlFileEntryMetadata.getFileEntryMetadataId();
+		return model.getFileEntryMetadataId();
 	}
 
 	@Override
 	public DLFileVersion getFileVersion()
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _dlFileEntryMetadata.getFileVersion();
+		return model.getFileVersion();
 	}
 
 	/**
@@ -191,7 +161,7 @@ public class DLFileEntryMetadataWrapper implements DLFileEntryMetadata,
 	*/
 	@Override
 	public long getFileVersionId() {
-		return _dlFileEntryMetadata.getFileVersionId();
+		return model.getFileVersionId();
 	}
 
 	/**
@@ -201,12 +171,7 @@ public class DLFileEntryMetadataWrapper implements DLFileEntryMetadata,
 	*/
 	@Override
 	public long getPrimaryKey() {
-		return _dlFileEntryMetadata.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _dlFileEntryMetadata.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	/**
@@ -216,37 +181,12 @@ public class DLFileEntryMetadataWrapper implements DLFileEntryMetadata,
 	*/
 	@Override
 	public String getUuid() {
-		return _dlFileEntryMetadata.getUuid();
-	}
-
-	@Override
-	public int hashCode() {
-		return _dlFileEntryMetadata.hashCode();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _dlFileEntryMetadata.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _dlFileEntryMetadata.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _dlFileEntryMetadata.isNew();
+		return model.getUuid();
 	}
 
 	@Override
 	public void persist() {
-		_dlFileEntryMetadata.persist();
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_dlFileEntryMetadata.setCachedModel(cachedModel);
+		model.persist();
 	}
 
 	/**
@@ -256,7 +196,7 @@ public class DLFileEntryMetadataWrapper implements DLFileEntryMetadata,
 	*/
 	@Override
 	public void setCompanyId(long companyId) {
-		_dlFileEntryMetadata.setCompanyId(companyId);
+		model.setCompanyId(companyId);
 	}
 
 	/**
@@ -266,7 +206,7 @@ public class DLFileEntryMetadataWrapper implements DLFileEntryMetadata,
 	*/
 	@Override
 	public void setDDMStorageId(long DDMStorageId) {
-		_dlFileEntryMetadata.setDDMStorageId(DDMStorageId);
+		model.setDDMStorageId(DDMStorageId);
 	}
 
 	/**
@@ -276,23 +216,7 @@ public class DLFileEntryMetadataWrapper implements DLFileEntryMetadata,
 	*/
 	@Override
 	public void setDDMStructureId(long DDMStructureId) {
-		_dlFileEntryMetadata.setDDMStructureId(DDMStructureId);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-		_dlFileEntryMetadata.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_dlFileEntryMetadata.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_dlFileEntryMetadata.setExpandoBridgeAttributes(serviceContext);
+		model.setDDMStructureId(DDMStructureId);
 	}
 
 	/**
@@ -302,7 +226,7 @@ public class DLFileEntryMetadataWrapper implements DLFileEntryMetadata,
 	*/
 	@Override
 	public void setFileEntryId(long fileEntryId) {
-		_dlFileEntryMetadata.setFileEntryId(fileEntryId);
+		model.setFileEntryId(fileEntryId);
 	}
 
 	/**
@@ -312,7 +236,7 @@ public class DLFileEntryMetadataWrapper implements DLFileEntryMetadata,
 	*/
 	@Override
 	public void setFileEntryMetadataId(long fileEntryMetadataId) {
-		_dlFileEntryMetadata.setFileEntryMetadataId(fileEntryMetadataId);
+		model.setFileEntryMetadataId(fileEntryMetadataId);
 	}
 
 	/**
@@ -322,12 +246,7 @@ public class DLFileEntryMetadataWrapper implements DLFileEntryMetadata,
 	*/
 	@Override
 	public void setFileVersionId(long fileVersionId) {
-		_dlFileEntryMetadata.setFileVersionId(fileVersionId);
-	}
-
-	@Override
-	public void setNew(boolean n) {
-		_dlFileEntryMetadata.setNew(n);
+		model.setFileVersionId(fileVersionId);
 	}
 
 	/**
@@ -337,12 +256,7 @@ public class DLFileEntryMetadataWrapper implements DLFileEntryMetadata,
 	*/
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_dlFileEntryMetadata.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_dlFileEntryMetadata.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -352,73 +266,12 @@ public class DLFileEntryMetadataWrapper implements DLFileEntryMetadata,
 	*/
 	@Override
 	public void setUuid(String uuid) {
-		_dlFileEntryMetadata.setUuid(uuid);
+		model.setUuid(uuid);
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.CacheModel<DLFileEntryMetadata> toCacheModel() {
-		return _dlFileEntryMetadata.toCacheModel();
+	protected DLFileEntryMetadataWrapper wrap(
+		DLFileEntryMetadata dlFileEntryMetadata) {
+		return new DLFileEntryMetadataWrapper(dlFileEntryMetadata);
 	}
-
-	@Override
-	public DLFileEntryMetadata toEscapedModel() {
-		return new DLFileEntryMetadataWrapper(_dlFileEntryMetadata.toEscapedModel());
-	}
-
-	@Override
-	public String toString() {
-		return _dlFileEntryMetadata.toString();
-	}
-
-	@Override
-	public DLFileEntryMetadata toUnescapedModel() {
-		return new DLFileEntryMetadataWrapper(_dlFileEntryMetadata.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _dlFileEntryMetadata.toXmlString();
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-
-		if (!(obj instanceof DLFileEntryMetadataWrapper)) {
-			return false;
-		}
-
-		DLFileEntryMetadataWrapper dlFileEntryMetadataWrapper = (DLFileEntryMetadataWrapper)obj;
-
-		if (Objects.equals(_dlFileEntryMetadata,
-					dlFileEntryMetadataWrapper._dlFileEntryMetadata)) {
-			return true;
-		}
-
-		return false;
-	}
-
-	@Override
-	public DLFileEntryMetadata getWrappedModel() {
-		return _dlFileEntryMetadata;
-	}
-
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _dlFileEntryMetadata.isEntityCacheEnabled();
-	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _dlFileEntryMetadata.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_dlFileEntryMetadata.resetOriginalValues();
-	}
-
-	private final DLFileEntryMetadata _dlFileEntryMetadata;
 }

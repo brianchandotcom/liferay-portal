@@ -16,19 +16,14 @@ package com.liferay.layout.page.template.model;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
-
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 
 import com.liferay.portal.kernel.model.ModelWrapper;
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -40,22 +35,12 @@ import java.util.Objects;
  * @generated
  */
 @ProviderType
-public class LayoutPageTemplateStructureWrapper
+public class LayoutPageTemplateStructureWrapper extends BaseModelWrapper<LayoutPageTemplateStructure>
 	implements LayoutPageTemplateStructure,
 		ModelWrapper<LayoutPageTemplateStructure> {
 	public LayoutPageTemplateStructureWrapper(
 		LayoutPageTemplateStructure layoutPageTemplateStructure) {
-		_layoutPageTemplateStructure = layoutPageTemplateStructure;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return LayoutPageTemplateStructure.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return LayoutPageTemplateStructure.class.getName();
+		super(layoutPageTemplateStructure);
 	}
 
 	@Override
@@ -148,17 +133,6 @@ public class LayoutPageTemplateStructureWrapper
 		}
 	}
 
-	@Override
-	public Object clone() {
-		return new LayoutPageTemplateStructureWrapper((LayoutPageTemplateStructure)_layoutPageTemplateStructure.clone());
-	}
-
-	@Override
-	public int compareTo(
-		LayoutPageTemplateStructure layoutPageTemplateStructure) {
-		return _layoutPageTemplateStructure.compareTo(layoutPageTemplateStructure);
-	}
-
 	/**
 	* Returns the fully qualified class name of this layout page template structure.
 	*
@@ -166,7 +140,7 @@ public class LayoutPageTemplateStructureWrapper
 	*/
 	@Override
 	public String getClassName() {
-		return _layoutPageTemplateStructure.getClassName();
+		return model.getClassName();
 	}
 
 	/**
@@ -176,7 +150,7 @@ public class LayoutPageTemplateStructureWrapper
 	*/
 	@Override
 	public long getClassNameId() {
-		return _layoutPageTemplateStructure.getClassNameId();
+		return model.getClassNameId();
 	}
 
 	/**
@@ -186,7 +160,7 @@ public class LayoutPageTemplateStructureWrapper
 	*/
 	@Override
 	public long getClassPK() {
-		return _layoutPageTemplateStructure.getClassPK();
+		return model.getClassPK();
 	}
 
 	/**
@@ -196,7 +170,7 @@ public class LayoutPageTemplateStructureWrapper
 	*/
 	@Override
 	public long getCompanyId() {
-		return _layoutPageTemplateStructure.getCompanyId();
+		return model.getCompanyId();
 	}
 
 	/**
@@ -206,7 +180,7 @@ public class LayoutPageTemplateStructureWrapper
 	*/
 	@Override
 	public Date getCreateDate() {
-		return _layoutPageTemplateStructure.getCreateDate();
+		return model.getCreateDate();
 	}
 
 	/**
@@ -216,12 +190,7 @@ public class LayoutPageTemplateStructureWrapper
 	*/
 	@Override
 	public String getData() {
-		return _layoutPageTemplateStructure.getData();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _layoutPageTemplateStructure.getExpandoBridge();
+		return model.getData();
 	}
 
 	/**
@@ -231,7 +200,7 @@ public class LayoutPageTemplateStructureWrapper
 	*/
 	@Override
 	public long getGroupId() {
-		return _layoutPageTemplateStructure.getGroupId();
+		return model.getGroupId();
 	}
 
 	/**
@@ -241,7 +210,7 @@ public class LayoutPageTemplateStructureWrapper
 	*/
 	@Override
 	public long getLayoutPageTemplateStructureId() {
-		return _layoutPageTemplateStructure.getLayoutPageTemplateStructureId();
+		return model.getLayoutPageTemplateStructureId();
 	}
 
 	/**
@@ -251,7 +220,7 @@ public class LayoutPageTemplateStructureWrapper
 	*/
 	@Override
 	public Date getModifiedDate() {
-		return _layoutPageTemplateStructure.getModifiedDate();
+		return model.getModifiedDate();
 	}
 
 	/**
@@ -261,12 +230,7 @@ public class LayoutPageTemplateStructureWrapper
 	*/
 	@Override
 	public long getPrimaryKey() {
-		return _layoutPageTemplateStructure.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _layoutPageTemplateStructure.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	/**
@@ -276,7 +240,7 @@ public class LayoutPageTemplateStructureWrapper
 	*/
 	@Override
 	public long getUserId() {
-		return _layoutPageTemplateStructure.getUserId();
+		return model.getUserId();
 	}
 
 	/**
@@ -286,7 +250,7 @@ public class LayoutPageTemplateStructureWrapper
 	*/
 	@Override
 	public String getUserName() {
-		return _layoutPageTemplateStructure.getUserName();
+		return model.getUserName();
 	}
 
 	/**
@@ -296,7 +260,7 @@ public class LayoutPageTemplateStructureWrapper
 	*/
 	@Override
 	public String getUserUuid() {
-		return _layoutPageTemplateStructure.getUserUuid();
+		return model.getUserUuid();
 	}
 
 	/**
@@ -306,42 +270,17 @@ public class LayoutPageTemplateStructureWrapper
 	*/
 	@Override
 	public String getUuid() {
-		return _layoutPageTemplateStructure.getUuid();
-	}
-
-	@Override
-	public int hashCode() {
-		return _layoutPageTemplateStructure.hashCode();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _layoutPageTemplateStructure.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _layoutPageTemplateStructure.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _layoutPageTemplateStructure.isNew();
+		return model.getUuid();
 	}
 
 	@Override
 	public void persist() {
-		_layoutPageTemplateStructure.persist();
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_layoutPageTemplateStructure.setCachedModel(cachedModel);
+		model.persist();
 	}
 
 	@Override
 	public void setClassName(String className) {
-		_layoutPageTemplateStructure.setClassName(className);
+		model.setClassName(className);
 	}
 
 	/**
@@ -351,7 +290,7 @@ public class LayoutPageTemplateStructureWrapper
 	*/
 	@Override
 	public void setClassNameId(long classNameId) {
-		_layoutPageTemplateStructure.setClassNameId(classNameId);
+		model.setClassNameId(classNameId);
 	}
 
 	/**
@@ -361,7 +300,7 @@ public class LayoutPageTemplateStructureWrapper
 	*/
 	@Override
 	public void setClassPK(long classPK) {
-		_layoutPageTemplateStructure.setClassPK(classPK);
+		model.setClassPK(classPK);
 	}
 
 	/**
@@ -371,7 +310,7 @@ public class LayoutPageTemplateStructureWrapper
 	*/
 	@Override
 	public void setCompanyId(long companyId) {
-		_layoutPageTemplateStructure.setCompanyId(companyId);
+		model.setCompanyId(companyId);
 	}
 
 	/**
@@ -381,7 +320,7 @@ public class LayoutPageTemplateStructureWrapper
 	*/
 	@Override
 	public void setCreateDate(Date createDate) {
-		_layoutPageTemplateStructure.setCreateDate(createDate);
+		model.setCreateDate(createDate);
 	}
 
 	/**
@@ -391,23 +330,7 @@ public class LayoutPageTemplateStructureWrapper
 	*/
 	@Override
 	public void setData(String data) {
-		_layoutPageTemplateStructure.setData(data);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-		_layoutPageTemplateStructure.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_layoutPageTemplateStructure.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_layoutPageTemplateStructure.setExpandoBridgeAttributes(serviceContext);
+		model.setData(data);
 	}
 
 	/**
@@ -417,7 +340,7 @@ public class LayoutPageTemplateStructureWrapper
 	*/
 	@Override
 	public void setGroupId(long groupId) {
-		_layoutPageTemplateStructure.setGroupId(groupId);
+		model.setGroupId(groupId);
 	}
 
 	/**
@@ -428,7 +351,7 @@ public class LayoutPageTemplateStructureWrapper
 	@Override
 	public void setLayoutPageTemplateStructureId(
 		long layoutPageTemplateStructureId) {
-		_layoutPageTemplateStructure.setLayoutPageTemplateStructureId(layoutPageTemplateStructureId);
+		model.setLayoutPageTemplateStructureId(layoutPageTemplateStructureId);
 	}
 
 	/**
@@ -438,12 +361,7 @@ public class LayoutPageTemplateStructureWrapper
 	*/
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
-		_layoutPageTemplateStructure.setModifiedDate(modifiedDate);
-	}
-
-	@Override
-	public void setNew(boolean n) {
-		_layoutPageTemplateStructure.setNew(n);
+		model.setModifiedDate(modifiedDate);
 	}
 
 	/**
@@ -453,12 +371,7 @@ public class LayoutPageTemplateStructureWrapper
 	*/
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_layoutPageTemplateStructure.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_layoutPageTemplateStructure.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -468,7 +381,7 @@ public class LayoutPageTemplateStructureWrapper
 	*/
 	@Override
 	public void setUserId(long userId) {
-		_layoutPageTemplateStructure.setUserId(userId);
+		model.setUserId(userId);
 	}
 
 	/**
@@ -478,7 +391,7 @@ public class LayoutPageTemplateStructureWrapper
 	*/
 	@Override
 	public void setUserName(String userName) {
-		_layoutPageTemplateStructure.setUserName(userName);
+		model.setUserName(userName);
 	}
 
 	/**
@@ -488,7 +401,7 @@ public class LayoutPageTemplateStructureWrapper
 	*/
 	@Override
 	public void setUserUuid(String userUuid) {
-		_layoutPageTemplateStructure.setUserUuid(userUuid);
+		model.setUserUuid(userUuid);
 	}
 
 	/**
@@ -498,78 +411,17 @@ public class LayoutPageTemplateStructureWrapper
 	*/
 	@Override
 	public void setUuid(String uuid) {
-		_layoutPageTemplateStructure.setUuid(uuid);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<LayoutPageTemplateStructure> toCacheModel() {
-		return _layoutPageTemplateStructure.toCacheModel();
-	}
-
-	@Override
-	public LayoutPageTemplateStructure toEscapedModel() {
-		return new LayoutPageTemplateStructureWrapper(_layoutPageTemplateStructure.toEscapedModel());
-	}
-
-	@Override
-	public String toString() {
-		return _layoutPageTemplateStructure.toString();
-	}
-
-	@Override
-	public LayoutPageTemplateStructure toUnescapedModel() {
-		return new LayoutPageTemplateStructureWrapper(_layoutPageTemplateStructure.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _layoutPageTemplateStructure.toXmlString();
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-
-		if (!(obj instanceof LayoutPageTemplateStructureWrapper)) {
-			return false;
-		}
-
-		LayoutPageTemplateStructureWrapper layoutPageTemplateStructureWrapper = (LayoutPageTemplateStructureWrapper)obj;
-
-		if (Objects.equals(_layoutPageTemplateStructure,
-					layoutPageTemplateStructureWrapper._layoutPageTemplateStructure)) {
-			return true;
-		}
-
-		return false;
+		model.setUuid(uuid);
 	}
 
 	@Override
 	public StagedModelType getStagedModelType() {
-		return _layoutPageTemplateStructure.getStagedModelType();
+		return model.getStagedModelType();
 	}
 
 	@Override
-	public LayoutPageTemplateStructure getWrappedModel() {
-		return _layoutPageTemplateStructure;
+	protected LayoutPageTemplateStructureWrapper wrap(
+		LayoutPageTemplateStructure layoutPageTemplateStructure) {
+		return new LayoutPageTemplateStructureWrapper(layoutPageTemplateStructure);
 	}
-
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _layoutPageTemplateStructure.isEntityCacheEnabled();
-	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _layoutPageTemplateStructure.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_layoutPageTemplateStructure.resetOriginalValues();
-	}
-
-	private final LayoutPageTemplateStructure _layoutPageTemplateStructure;
 }

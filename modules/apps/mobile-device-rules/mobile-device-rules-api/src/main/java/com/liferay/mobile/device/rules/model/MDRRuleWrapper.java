@@ -16,19 +16,14 @@ package com.liferay.mobile.device.rules.model;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
-
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 
 import com.liferay.portal.kernel.model.ModelWrapper;
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -40,19 +35,10 @@ import java.util.Objects;
  * @generated
  */
 @ProviderType
-public class MDRRuleWrapper implements MDRRule, ModelWrapper<MDRRule> {
+public class MDRRuleWrapper extends BaseModelWrapper<MDRRule> implements MDRRule,
+	ModelWrapper<MDRRule> {
 	public MDRRuleWrapper(MDRRule mdrRule) {
-		_mdrRule = mdrRule;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return MDRRule.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return MDRRule.class.getName();
+		super(mdrRule);
 	}
 
 	@Override
@@ -165,18 +151,8 @@ public class MDRRuleWrapper implements MDRRule, ModelWrapper<MDRRule> {
 	}
 
 	@Override
-	public Object clone() {
-		return new MDRRuleWrapper((MDRRule)_mdrRule.clone());
-	}
-
-	@Override
-	public int compareTo(MDRRule mdrRule) {
-		return _mdrRule.compareTo(mdrRule);
-	}
-
-	@Override
 	public String[] getAvailableLanguageIds() {
-		return _mdrRule.getAvailableLanguageIds();
+		return model.getAvailableLanguageIds();
 	}
 
 	/**
@@ -186,7 +162,7 @@ public class MDRRuleWrapper implements MDRRule, ModelWrapper<MDRRule> {
 	*/
 	@Override
 	public long getCompanyId() {
-		return _mdrRule.getCompanyId();
+		return model.getCompanyId();
 	}
 
 	/**
@@ -196,12 +172,12 @@ public class MDRRuleWrapper implements MDRRule, ModelWrapper<MDRRule> {
 	*/
 	@Override
 	public Date getCreateDate() {
-		return _mdrRule.getCreateDate();
+		return model.getCreateDate();
 	}
 
 	@Override
 	public String getDefaultLanguageId() {
-		return _mdrRule.getDefaultLanguageId();
+		return model.getDefaultLanguageId();
 	}
 
 	/**
@@ -211,7 +187,7 @@ public class MDRRuleWrapper implements MDRRule, ModelWrapper<MDRRule> {
 	*/
 	@Override
 	public String getDescription() {
-		return _mdrRule.getDescription();
+		return model.getDescription();
 	}
 
 	/**
@@ -222,7 +198,7 @@ public class MDRRuleWrapper implements MDRRule, ModelWrapper<MDRRule> {
 	*/
 	@Override
 	public String getDescription(java.util.Locale locale) {
-		return _mdrRule.getDescription(locale);
+		return model.getDescription(locale);
 	}
 
 	/**
@@ -234,7 +210,7 @@ public class MDRRuleWrapper implements MDRRule, ModelWrapper<MDRRule> {
 	*/
 	@Override
 	public String getDescription(java.util.Locale locale, boolean useDefault) {
-		return _mdrRule.getDescription(locale, useDefault);
+		return model.getDescription(locale, useDefault);
 	}
 
 	/**
@@ -245,7 +221,7 @@ public class MDRRuleWrapper implements MDRRule, ModelWrapper<MDRRule> {
 	*/
 	@Override
 	public String getDescription(String languageId) {
-		return _mdrRule.getDescription(languageId);
+		return model.getDescription(languageId);
 	}
 
 	/**
@@ -257,17 +233,17 @@ public class MDRRuleWrapper implements MDRRule, ModelWrapper<MDRRule> {
 	*/
 	@Override
 	public String getDescription(String languageId, boolean useDefault) {
-		return _mdrRule.getDescription(languageId, useDefault);
+		return model.getDescription(languageId, useDefault);
 	}
 
 	@Override
 	public String getDescriptionCurrentLanguageId() {
-		return _mdrRule.getDescriptionCurrentLanguageId();
+		return model.getDescriptionCurrentLanguageId();
 	}
 
 	@Override
 	public String getDescriptionCurrentValue() {
-		return _mdrRule.getDescriptionCurrentValue();
+		return model.getDescriptionCurrentValue();
 	}
 
 	/**
@@ -277,12 +253,7 @@ public class MDRRuleWrapper implements MDRRule, ModelWrapper<MDRRule> {
 	*/
 	@Override
 	public Map<java.util.Locale, String> getDescriptionMap() {
-		return _mdrRule.getDescriptionMap();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _mdrRule.getExpandoBridge();
+		return model.getDescriptionMap();
 	}
 
 	/**
@@ -292,7 +263,7 @@ public class MDRRuleWrapper implements MDRRule, ModelWrapper<MDRRule> {
 	*/
 	@Override
 	public long getGroupId() {
-		return _mdrRule.getGroupId();
+		return model.getGroupId();
 	}
 
 	/**
@@ -302,7 +273,7 @@ public class MDRRuleWrapper implements MDRRule, ModelWrapper<MDRRule> {
 	*/
 	@Override
 	public Date getLastPublishDate() {
-		return _mdrRule.getLastPublishDate();
+		return model.getLastPublishDate();
 	}
 
 	/**
@@ -312,7 +283,7 @@ public class MDRRuleWrapper implements MDRRule, ModelWrapper<MDRRule> {
 	*/
 	@Override
 	public Date getModifiedDate() {
-		return _mdrRule.getModifiedDate();
+		return model.getModifiedDate();
 	}
 
 	/**
@@ -322,7 +293,7 @@ public class MDRRuleWrapper implements MDRRule, ModelWrapper<MDRRule> {
 	*/
 	@Override
 	public String getName() {
-		return _mdrRule.getName();
+		return model.getName();
 	}
 
 	/**
@@ -333,7 +304,7 @@ public class MDRRuleWrapper implements MDRRule, ModelWrapper<MDRRule> {
 	*/
 	@Override
 	public String getName(java.util.Locale locale) {
-		return _mdrRule.getName(locale);
+		return model.getName(locale);
 	}
 
 	/**
@@ -345,7 +316,7 @@ public class MDRRuleWrapper implements MDRRule, ModelWrapper<MDRRule> {
 	*/
 	@Override
 	public String getName(java.util.Locale locale, boolean useDefault) {
-		return _mdrRule.getName(locale, useDefault);
+		return model.getName(locale, useDefault);
 	}
 
 	/**
@@ -356,7 +327,7 @@ public class MDRRuleWrapper implements MDRRule, ModelWrapper<MDRRule> {
 	*/
 	@Override
 	public String getName(String languageId) {
-		return _mdrRule.getName(languageId);
+		return model.getName(languageId);
 	}
 
 	/**
@@ -368,17 +339,17 @@ public class MDRRuleWrapper implements MDRRule, ModelWrapper<MDRRule> {
 	*/
 	@Override
 	public String getName(String languageId, boolean useDefault) {
-		return _mdrRule.getName(languageId, useDefault);
+		return model.getName(languageId, useDefault);
 	}
 
 	@Override
 	public String getNameCurrentLanguageId() {
-		return _mdrRule.getNameCurrentLanguageId();
+		return model.getNameCurrentLanguageId();
 	}
 
 	@Override
 	public String getNameCurrentValue() {
-		return _mdrRule.getNameCurrentValue();
+		return model.getNameCurrentValue();
 	}
 
 	/**
@@ -388,7 +359,7 @@ public class MDRRuleWrapper implements MDRRule, ModelWrapper<MDRRule> {
 	*/
 	@Override
 	public Map<java.util.Locale, String> getNameMap() {
-		return _mdrRule.getNameMap();
+		return model.getNameMap();
 	}
 
 	/**
@@ -398,12 +369,7 @@ public class MDRRuleWrapper implements MDRRule, ModelWrapper<MDRRule> {
 	*/
 	@Override
 	public long getPrimaryKey() {
-		return _mdrRule.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _mdrRule.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	/**
@@ -413,7 +379,7 @@ public class MDRRuleWrapper implements MDRRule, ModelWrapper<MDRRule> {
 	*/
 	@Override
 	public long getRuleGroupId() {
-		return _mdrRule.getRuleGroupId();
+		return model.getRuleGroupId();
 	}
 
 	/**
@@ -423,7 +389,7 @@ public class MDRRuleWrapper implements MDRRule, ModelWrapper<MDRRule> {
 	*/
 	@Override
 	public long getRuleId() {
-		return _mdrRule.getRuleId();
+		return model.getRuleId();
 	}
 
 	/**
@@ -433,7 +399,7 @@ public class MDRRuleWrapper implements MDRRule, ModelWrapper<MDRRule> {
 	*/
 	@Override
 	public String getType() {
-		return _mdrRule.getType();
+		return model.getType();
 	}
 
 	/**
@@ -443,12 +409,12 @@ public class MDRRuleWrapper implements MDRRule, ModelWrapper<MDRRule> {
 	*/
 	@Override
 	public String getTypeSettings() {
-		return _mdrRule.getTypeSettings();
+		return model.getTypeSettings();
 	}
 
 	@Override
 	public com.liferay.portal.kernel.util.UnicodeProperties getTypeSettingsProperties() {
-		return _mdrRule.getTypeSettingsProperties();
+		return model.getTypeSettingsProperties();
 	}
 
 	/**
@@ -458,7 +424,7 @@ public class MDRRuleWrapper implements MDRRule, ModelWrapper<MDRRule> {
 	*/
 	@Override
 	public long getUserId() {
-		return _mdrRule.getUserId();
+		return model.getUserId();
 	}
 
 	/**
@@ -468,7 +434,7 @@ public class MDRRuleWrapper implements MDRRule, ModelWrapper<MDRRule> {
 	*/
 	@Override
 	public String getUserName() {
-		return _mdrRule.getUserName();
+		return model.getUserName();
 	}
 
 	/**
@@ -478,7 +444,7 @@ public class MDRRuleWrapper implements MDRRule, ModelWrapper<MDRRule> {
 	*/
 	@Override
 	public String getUserUuid() {
-		return _mdrRule.getUserUuid();
+		return model.getUserUuid();
 	}
 
 	/**
@@ -488,50 +454,25 @@ public class MDRRuleWrapper implements MDRRule, ModelWrapper<MDRRule> {
 	*/
 	@Override
 	public String getUuid() {
-		return _mdrRule.getUuid();
-	}
-
-	@Override
-	public int hashCode() {
-		return _mdrRule.hashCode();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _mdrRule.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _mdrRule.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _mdrRule.isNew();
+		return model.getUuid();
 	}
 
 	@Override
 	public void persist() {
-		_mdrRule.persist();
+		model.persist();
 	}
 
 	@Override
 	public void prepareLocalizedFieldsForImport()
 		throws com.liferay.portal.kernel.exception.LocaleException {
-		_mdrRule.prepareLocalizedFieldsForImport();
+		model.prepareLocalizedFieldsForImport();
 	}
 
 	@Override
 	public void prepareLocalizedFieldsForImport(
 		java.util.Locale defaultImportLocale)
 		throws com.liferay.portal.kernel.exception.LocaleException {
-		_mdrRule.prepareLocalizedFieldsForImport(defaultImportLocale);
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_mdrRule.setCachedModel(cachedModel);
+		model.prepareLocalizedFieldsForImport(defaultImportLocale);
 	}
 
 	/**
@@ -541,7 +482,7 @@ public class MDRRuleWrapper implements MDRRule, ModelWrapper<MDRRule> {
 	*/
 	@Override
 	public void setCompanyId(long companyId) {
-		_mdrRule.setCompanyId(companyId);
+		model.setCompanyId(companyId);
 	}
 
 	/**
@@ -551,7 +492,7 @@ public class MDRRuleWrapper implements MDRRule, ModelWrapper<MDRRule> {
 	*/
 	@Override
 	public void setCreateDate(Date createDate) {
-		_mdrRule.setCreateDate(createDate);
+		model.setCreateDate(createDate);
 	}
 
 	/**
@@ -561,7 +502,7 @@ public class MDRRuleWrapper implements MDRRule, ModelWrapper<MDRRule> {
 	*/
 	@Override
 	public void setDescription(String description) {
-		_mdrRule.setDescription(description);
+		model.setDescription(description);
 	}
 
 	/**
@@ -572,7 +513,7 @@ public class MDRRuleWrapper implements MDRRule, ModelWrapper<MDRRule> {
 	*/
 	@Override
 	public void setDescription(String description, java.util.Locale locale) {
-		_mdrRule.setDescription(description, locale);
+		model.setDescription(description, locale);
 	}
 
 	/**
@@ -585,12 +526,12 @@ public class MDRRuleWrapper implements MDRRule, ModelWrapper<MDRRule> {
 	@Override
 	public void setDescription(String description, java.util.Locale locale,
 		java.util.Locale defaultLocale) {
-		_mdrRule.setDescription(description, locale, defaultLocale);
+		model.setDescription(description, locale, defaultLocale);
 	}
 
 	@Override
 	public void setDescriptionCurrentLanguageId(String languageId) {
-		_mdrRule.setDescriptionCurrentLanguageId(languageId);
+		model.setDescriptionCurrentLanguageId(languageId);
 	}
 
 	/**
@@ -600,7 +541,7 @@ public class MDRRuleWrapper implements MDRRule, ModelWrapper<MDRRule> {
 	*/
 	@Override
 	public void setDescriptionMap(Map<java.util.Locale, String> descriptionMap) {
-		_mdrRule.setDescriptionMap(descriptionMap);
+		model.setDescriptionMap(descriptionMap);
 	}
 
 	/**
@@ -613,23 +554,7 @@ public class MDRRuleWrapper implements MDRRule, ModelWrapper<MDRRule> {
 	public void setDescriptionMap(
 		Map<java.util.Locale, String> descriptionMap,
 		java.util.Locale defaultLocale) {
-		_mdrRule.setDescriptionMap(descriptionMap, defaultLocale);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-		_mdrRule.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_mdrRule.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_mdrRule.setExpandoBridgeAttributes(serviceContext);
+		model.setDescriptionMap(descriptionMap, defaultLocale);
 	}
 
 	/**
@@ -639,7 +564,7 @@ public class MDRRuleWrapper implements MDRRule, ModelWrapper<MDRRule> {
 	*/
 	@Override
 	public void setGroupId(long groupId) {
-		_mdrRule.setGroupId(groupId);
+		model.setGroupId(groupId);
 	}
 
 	/**
@@ -649,7 +574,7 @@ public class MDRRuleWrapper implements MDRRule, ModelWrapper<MDRRule> {
 	*/
 	@Override
 	public void setLastPublishDate(Date lastPublishDate) {
-		_mdrRule.setLastPublishDate(lastPublishDate);
+		model.setLastPublishDate(lastPublishDate);
 	}
 
 	/**
@@ -659,7 +584,7 @@ public class MDRRuleWrapper implements MDRRule, ModelWrapper<MDRRule> {
 	*/
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
-		_mdrRule.setModifiedDate(modifiedDate);
+		model.setModifiedDate(modifiedDate);
 	}
 
 	/**
@@ -669,7 +594,7 @@ public class MDRRuleWrapper implements MDRRule, ModelWrapper<MDRRule> {
 	*/
 	@Override
 	public void setName(String name) {
-		_mdrRule.setName(name);
+		model.setName(name);
 	}
 
 	/**
@@ -680,7 +605,7 @@ public class MDRRuleWrapper implements MDRRule, ModelWrapper<MDRRule> {
 	*/
 	@Override
 	public void setName(String name, java.util.Locale locale) {
-		_mdrRule.setName(name, locale);
+		model.setName(name, locale);
 	}
 
 	/**
@@ -693,12 +618,12 @@ public class MDRRuleWrapper implements MDRRule, ModelWrapper<MDRRule> {
 	@Override
 	public void setName(String name, java.util.Locale locale,
 		java.util.Locale defaultLocale) {
-		_mdrRule.setName(name, locale, defaultLocale);
+		model.setName(name, locale, defaultLocale);
 	}
 
 	@Override
 	public void setNameCurrentLanguageId(String languageId) {
-		_mdrRule.setNameCurrentLanguageId(languageId);
+		model.setNameCurrentLanguageId(languageId);
 	}
 
 	/**
@@ -708,7 +633,7 @@ public class MDRRuleWrapper implements MDRRule, ModelWrapper<MDRRule> {
 	*/
 	@Override
 	public void setNameMap(Map<java.util.Locale, String> nameMap) {
-		_mdrRule.setNameMap(nameMap);
+		model.setNameMap(nameMap);
 	}
 
 	/**
@@ -720,12 +645,7 @@ public class MDRRuleWrapper implements MDRRule, ModelWrapper<MDRRule> {
 	@Override
 	public void setNameMap(Map<java.util.Locale, String> nameMap,
 		java.util.Locale defaultLocale) {
-		_mdrRule.setNameMap(nameMap, defaultLocale);
-	}
-
-	@Override
-	public void setNew(boolean n) {
-		_mdrRule.setNew(n);
+		model.setNameMap(nameMap, defaultLocale);
 	}
 
 	/**
@@ -735,12 +655,7 @@ public class MDRRuleWrapper implements MDRRule, ModelWrapper<MDRRule> {
 	*/
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_mdrRule.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_mdrRule.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -750,7 +665,7 @@ public class MDRRuleWrapper implements MDRRule, ModelWrapper<MDRRule> {
 	*/
 	@Override
 	public void setRuleGroupId(long ruleGroupId) {
-		_mdrRule.setRuleGroupId(ruleGroupId);
+		model.setRuleGroupId(ruleGroupId);
 	}
 
 	/**
@@ -760,7 +675,7 @@ public class MDRRuleWrapper implements MDRRule, ModelWrapper<MDRRule> {
 	*/
 	@Override
 	public void setRuleId(long ruleId) {
-		_mdrRule.setRuleId(ruleId);
+		model.setRuleId(ruleId);
 	}
 
 	/**
@@ -770,7 +685,7 @@ public class MDRRuleWrapper implements MDRRule, ModelWrapper<MDRRule> {
 	*/
 	@Override
 	public void setType(String type) {
-		_mdrRule.setType(type);
+		model.setType(type);
 	}
 
 	/**
@@ -780,13 +695,13 @@ public class MDRRuleWrapper implements MDRRule, ModelWrapper<MDRRule> {
 	*/
 	@Override
 	public void setTypeSettings(String typeSettings) {
-		_mdrRule.setTypeSettings(typeSettings);
+		model.setTypeSettings(typeSettings);
 	}
 
 	@Override
 	public void setTypeSettingsProperties(
 		com.liferay.portal.kernel.util.UnicodeProperties typeSettingsProperties) {
-		_mdrRule.setTypeSettingsProperties(typeSettingsProperties);
+		model.setTypeSettingsProperties(typeSettingsProperties);
 	}
 
 	/**
@@ -796,7 +711,7 @@ public class MDRRuleWrapper implements MDRRule, ModelWrapper<MDRRule> {
 	*/
 	@Override
 	public void setUserId(long userId) {
-		_mdrRule.setUserId(userId);
+		model.setUserId(userId);
 	}
 
 	/**
@@ -806,7 +721,7 @@ public class MDRRuleWrapper implements MDRRule, ModelWrapper<MDRRule> {
 	*/
 	@Override
 	public void setUserName(String userName) {
-		_mdrRule.setUserName(userName);
+		model.setUserName(userName);
 	}
 
 	/**
@@ -816,7 +731,7 @@ public class MDRRuleWrapper implements MDRRule, ModelWrapper<MDRRule> {
 	*/
 	@Override
 	public void setUserUuid(String userUuid) {
-		_mdrRule.setUserUuid(userUuid);
+		model.setUserUuid(userUuid);
 	}
 
 	/**
@@ -826,77 +741,16 @@ public class MDRRuleWrapper implements MDRRule, ModelWrapper<MDRRule> {
 	*/
 	@Override
 	public void setUuid(String uuid) {
-		_mdrRule.setUuid(uuid);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<MDRRule> toCacheModel() {
-		return _mdrRule.toCacheModel();
-	}
-
-	@Override
-	public MDRRule toEscapedModel() {
-		return new MDRRuleWrapper(_mdrRule.toEscapedModel());
-	}
-
-	@Override
-	public String toString() {
-		return _mdrRule.toString();
-	}
-
-	@Override
-	public MDRRule toUnescapedModel() {
-		return new MDRRuleWrapper(_mdrRule.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _mdrRule.toXmlString();
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-
-		if (!(obj instanceof MDRRuleWrapper)) {
-			return false;
-		}
-
-		MDRRuleWrapper mdrRuleWrapper = (MDRRuleWrapper)obj;
-
-		if (Objects.equals(_mdrRule, mdrRuleWrapper._mdrRule)) {
-			return true;
-		}
-
-		return false;
+		model.setUuid(uuid);
 	}
 
 	@Override
 	public StagedModelType getStagedModelType() {
-		return _mdrRule.getStagedModelType();
+		return model.getStagedModelType();
 	}
 
 	@Override
-	public MDRRule getWrappedModel() {
-		return _mdrRule;
+	protected MDRRuleWrapper wrap(MDRRule mdrRule) {
+		return new MDRRuleWrapper(mdrRule);
 	}
-
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _mdrRule.isEntityCacheEnabled();
-	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _mdrRule.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_mdrRule.resetOriginalValues();
-	}
-
-	private final MDRRule _mdrRule;
 }

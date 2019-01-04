@@ -21,14 +21,11 @@ import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 
 import com.liferay.portal.kernel.model.ModelWrapper;
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -40,20 +37,10 @@ import java.util.Objects;
  * @generated
  */
 @ProviderType
-public class DLFileVersionWrapper implements DLFileVersion,
-	ModelWrapper<DLFileVersion> {
+public class DLFileVersionWrapper extends BaseModelWrapper<DLFileVersion>
+	implements DLFileVersion, ModelWrapper<DLFileVersion> {
 	public DLFileVersionWrapper(DLFileVersion dlFileVersion) {
-		_dlFileVersion = dlFileVersion;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return DLFileVersion.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return DLFileVersion.class.getName();
+		super(dlFileVersion);
 	}
 
 	@Override
@@ -266,17 +253,7 @@ public class DLFileVersionWrapper implements DLFileVersion,
 	@Override
 	public String buildTreePath()
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _dlFileVersion.buildTreePath();
-	}
-
-	@Override
-	public Object clone() {
-		return new DLFileVersionWrapper((DLFileVersion)_dlFileVersion.clone());
-	}
-
-	@Override
-	public int compareTo(DLFileVersion dlFileVersion) {
-		return _dlFileVersion.compareTo(dlFileVersion);
+		return model.buildTreePath();
 	}
 
 	/**
@@ -286,7 +263,7 @@ public class DLFileVersionWrapper implements DLFileVersion,
 	*/
 	@Override
 	public String getChangeLog() {
-		return _dlFileVersion.getChangeLog();
+		return model.getChangeLog();
 	}
 
 	/**
@@ -296,7 +273,7 @@ public class DLFileVersionWrapper implements DLFileVersion,
 	*/
 	@Override
 	public String getChecksum() {
-		return _dlFileVersion.getChecksum();
+		return model.getChecksum();
 	}
 
 	/**
@@ -306,13 +283,13 @@ public class DLFileVersionWrapper implements DLFileVersion,
 	*/
 	@Override
 	public long getCompanyId() {
-		return _dlFileVersion.getCompanyId();
+		return model.getCompanyId();
 	}
 
 	@Override
 	public java.io.InputStream getContentStream(boolean incrementCounter)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _dlFileVersion.getContentStream(incrementCounter);
+		return model.getContentStream(incrementCounter);
 	}
 
 	/**
@@ -322,13 +299,13 @@ public class DLFileVersionWrapper implements DLFileVersion,
 	*/
 	@Override
 	public Date getCreateDate() {
-		return _dlFileVersion.getCreateDate();
+		return model.getCreateDate();
 	}
 
 	@Override
 	public java.util.List<com.liferay.dynamic.data.mapping.kernel.DDMStructure> getDDMStructures()
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _dlFileVersion.getDDMStructures();
+		return model.getDDMStructures();
 	}
 
 	/**
@@ -338,18 +315,18 @@ public class DLFileVersionWrapper implements DLFileVersion,
 	*/
 	@Override
 	public String getDescription() {
-		return _dlFileVersion.getDescription();
+		return model.getDescription();
 	}
 
 	@Override
 	public DLFileEntryType getDLFileEntryType()
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _dlFileVersion.getDLFileEntryType();
+		return model.getDLFileEntryType();
 	}
 
 	@Override
 	public ExpandoBridge getExpandoBridge() {
-		return _dlFileVersion.getExpandoBridge();
+		return model.getExpandoBridge();
 	}
 
 	/**
@@ -359,7 +336,7 @@ public class DLFileVersionWrapper implements DLFileVersion,
 	*/
 	@Override
 	public String getExtension() {
-		return _dlFileVersion.getExtension();
+		return model.getExtension();
 	}
 
 	/**
@@ -369,18 +346,18 @@ public class DLFileVersionWrapper implements DLFileVersion,
 	*/
 	@Override
 	public String getExtraSettings() {
-		return _dlFileVersion.getExtraSettings();
+		return model.getExtraSettings();
 	}
 
 	@Override
 	public com.liferay.portal.kernel.util.UnicodeProperties getExtraSettingsProperties() {
-		return _dlFileVersion.getExtraSettingsProperties();
+		return model.getExtraSettingsProperties();
 	}
 
 	@Override
 	public DLFileEntry getFileEntry()
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _dlFileVersion.getFileEntry();
+		return model.getFileEntry();
 	}
 
 	/**
@@ -390,7 +367,7 @@ public class DLFileVersionWrapper implements DLFileVersion,
 	*/
 	@Override
 	public long getFileEntryId() {
-		return _dlFileVersion.getFileEntryId();
+		return model.getFileEntryId();
 	}
 
 	/**
@@ -400,7 +377,7 @@ public class DLFileVersionWrapper implements DLFileVersion,
 	*/
 	@Override
 	public long getFileEntryTypeId() {
-		return _dlFileVersion.getFileEntryTypeId();
+		return model.getFileEntryTypeId();
 	}
 
 	/**
@@ -410,7 +387,7 @@ public class DLFileVersionWrapper implements DLFileVersion,
 	*/
 	@Override
 	public String getFileName() {
-		return _dlFileVersion.getFileName();
+		return model.getFileName();
 	}
 
 	/**
@@ -420,13 +397,13 @@ public class DLFileVersionWrapper implements DLFileVersion,
 	*/
 	@Override
 	public long getFileVersionId() {
-		return _dlFileVersion.getFileVersionId();
+		return model.getFileVersionId();
 	}
 
 	@Override
 	public DLFolder getFolder()
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _dlFileVersion.getFolder();
+		return model.getFolder();
 	}
 
 	/**
@@ -436,7 +413,7 @@ public class DLFileVersionWrapper implements DLFileVersion,
 	*/
 	@Override
 	public long getFolderId() {
-		return _dlFileVersion.getFolderId();
+		return model.getFolderId();
 	}
 
 	/**
@@ -446,12 +423,12 @@ public class DLFileVersionWrapper implements DLFileVersion,
 	*/
 	@Override
 	public long getGroupId() {
-		return _dlFileVersion.getGroupId();
+		return model.getGroupId();
 	}
 
 	@Override
 	public String getIcon() {
-		return _dlFileVersion.getIcon();
+		return model.getIcon();
 	}
 
 	/**
@@ -461,7 +438,7 @@ public class DLFileVersionWrapper implements DLFileVersion,
 	*/
 	@Override
 	public Date getLastPublishDate() {
-		return _dlFileVersion.getLastPublishDate();
+		return model.getLastPublishDate();
 	}
 
 	/**
@@ -471,7 +448,7 @@ public class DLFileVersionWrapper implements DLFileVersion,
 	*/
 	@Override
 	public String getMimeType() {
-		return _dlFileVersion.getMimeType();
+		return model.getMimeType();
 	}
 
 	/**
@@ -481,7 +458,7 @@ public class DLFileVersionWrapper implements DLFileVersion,
 	*/
 	@Override
 	public Date getModifiedDate() {
-		return _dlFileVersion.getModifiedDate();
+		return model.getModifiedDate();
 	}
 
 	/**
@@ -491,12 +468,7 @@ public class DLFileVersionWrapper implements DLFileVersion,
 	*/
 	@Override
 	public long getPrimaryKey() {
-		return _dlFileVersion.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _dlFileVersion.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	/**
@@ -506,7 +478,7 @@ public class DLFileVersionWrapper implements DLFileVersion,
 	*/
 	@Override
 	public long getRepositoryId() {
-		return _dlFileVersion.getRepositoryId();
+		return model.getRepositoryId();
 	}
 
 	/**
@@ -516,7 +488,7 @@ public class DLFileVersionWrapper implements DLFileVersion,
 	*/
 	@Override
 	public long getSize() {
-		return _dlFileVersion.getSize();
+		return model.getSize();
 	}
 
 	/**
@@ -526,7 +498,7 @@ public class DLFileVersionWrapper implements DLFileVersion,
 	*/
 	@Override
 	public int getStatus() {
-		return _dlFileVersion.getStatus();
+		return model.getStatus();
 	}
 
 	/**
@@ -536,7 +508,7 @@ public class DLFileVersionWrapper implements DLFileVersion,
 	*/
 	@Override
 	public long getStatusByUserId() {
-		return _dlFileVersion.getStatusByUserId();
+		return model.getStatusByUserId();
 	}
 
 	/**
@@ -546,7 +518,7 @@ public class DLFileVersionWrapper implements DLFileVersion,
 	*/
 	@Override
 	public String getStatusByUserName() {
-		return _dlFileVersion.getStatusByUserName();
+		return model.getStatusByUserName();
 	}
 
 	/**
@@ -556,7 +528,7 @@ public class DLFileVersionWrapper implements DLFileVersion,
 	*/
 	@Override
 	public String getStatusByUserUuid() {
-		return _dlFileVersion.getStatusByUserUuid();
+		return model.getStatusByUserUuid();
 	}
 
 	/**
@@ -566,7 +538,7 @@ public class DLFileVersionWrapper implements DLFileVersion,
 	*/
 	@Override
 	public Date getStatusDate() {
-		return _dlFileVersion.getStatusDate();
+		return model.getStatusDate();
 	}
 
 	/**
@@ -576,7 +548,7 @@ public class DLFileVersionWrapper implements DLFileVersion,
 	*/
 	@Override
 	public String getTitle() {
-		return _dlFileVersion.getTitle();
+		return model.getTitle();
 	}
 
 	/**
@@ -586,7 +558,7 @@ public class DLFileVersionWrapper implements DLFileVersion,
 	*/
 	@Override
 	public String getTreePath() {
-		return _dlFileVersion.getTreePath();
+		return model.getTreePath();
 	}
 
 	/**
@@ -596,7 +568,7 @@ public class DLFileVersionWrapper implements DLFileVersion,
 	*/
 	@Override
 	public long getUserId() {
-		return _dlFileVersion.getUserId();
+		return model.getUserId();
 	}
 
 	/**
@@ -606,7 +578,7 @@ public class DLFileVersionWrapper implements DLFileVersion,
 	*/
 	@Override
 	public String getUserName() {
-		return _dlFileVersion.getUserName();
+		return model.getUserName();
 	}
 
 	/**
@@ -616,7 +588,7 @@ public class DLFileVersionWrapper implements DLFileVersion,
 	*/
 	@Override
 	public String getUserUuid() {
-		return _dlFileVersion.getUserUuid();
+		return model.getUserUuid();
 	}
 
 	/**
@@ -626,7 +598,7 @@ public class DLFileVersionWrapper implements DLFileVersion,
 	*/
 	@Override
 	public String getUuid() {
-		return _dlFileVersion.getUuid();
+		return model.getUuid();
 	}
 
 	/**
@@ -636,12 +608,7 @@ public class DLFileVersionWrapper implements DLFileVersion,
 	*/
 	@Override
 	public String getVersion() {
-		return _dlFileVersion.getVersion();
-	}
-
-	@Override
-	public int hashCode() {
-		return _dlFileVersion.hashCode();
+		return model.getVersion();
 	}
 
 	/**
@@ -651,12 +618,7 @@ public class DLFileVersionWrapper implements DLFileVersion,
 	*/
 	@Override
 	public boolean isApproved() {
-		return _dlFileVersion.isApproved();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _dlFileVersion.isCachedModel();
+		return model.isApproved();
 	}
 
 	/**
@@ -666,7 +628,7 @@ public class DLFileVersionWrapper implements DLFileVersion,
 	*/
 	@Override
 	public boolean isDenied() {
-		return _dlFileVersion.isDenied();
+		return model.isDenied();
 	}
 
 	/**
@@ -676,12 +638,7 @@ public class DLFileVersionWrapper implements DLFileVersion,
 	*/
 	@Override
 	public boolean isDraft() {
-		return _dlFileVersion.isDraft();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _dlFileVersion.isEscapedModel();
+		return model.isDraft();
 	}
 
 	/**
@@ -691,7 +648,7 @@ public class DLFileVersionWrapper implements DLFileVersion,
 	*/
 	@Override
 	public boolean isExpired() {
-		return _dlFileVersion.isExpired();
+		return model.isExpired();
 	}
 
 	/**
@@ -701,7 +658,7 @@ public class DLFileVersionWrapper implements DLFileVersion,
 	*/
 	@Override
 	public boolean isInactive() {
-		return _dlFileVersion.isInactive();
+		return model.isInactive();
 	}
 
 	/**
@@ -711,12 +668,7 @@ public class DLFileVersionWrapper implements DLFileVersion,
 	*/
 	@Override
 	public boolean isIncomplete() {
-		return _dlFileVersion.isIncomplete();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _dlFileVersion.isNew();
+		return model.isIncomplete();
 	}
 
 	/**
@@ -726,7 +678,7 @@ public class DLFileVersionWrapper implements DLFileVersion,
 	*/
 	@Override
 	public boolean isPending() {
-		return _dlFileVersion.isPending();
+		return model.isPending();
 	}
 
 	/**
@@ -736,17 +688,12 @@ public class DLFileVersionWrapper implements DLFileVersion,
 	*/
 	@Override
 	public boolean isScheduled() {
-		return _dlFileVersion.isScheduled();
+		return model.isScheduled();
 	}
 
 	@Override
 	public void persist() {
-		_dlFileVersion.persist();
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_dlFileVersion.setCachedModel(cachedModel);
+		model.persist();
 	}
 
 	/**
@@ -756,7 +703,7 @@ public class DLFileVersionWrapper implements DLFileVersion,
 	*/
 	@Override
 	public void setChangeLog(String changeLog) {
-		_dlFileVersion.setChangeLog(changeLog);
+		model.setChangeLog(changeLog);
 	}
 
 	/**
@@ -766,7 +713,7 @@ public class DLFileVersionWrapper implements DLFileVersion,
 	*/
 	@Override
 	public void setChecksum(String checksum) {
-		_dlFileVersion.setChecksum(checksum);
+		model.setChecksum(checksum);
 	}
 
 	/**
@@ -776,7 +723,7 @@ public class DLFileVersionWrapper implements DLFileVersion,
 	*/
 	@Override
 	public void setCompanyId(long companyId) {
-		_dlFileVersion.setCompanyId(companyId);
+		model.setCompanyId(companyId);
 	}
 
 	/**
@@ -786,7 +733,7 @@ public class DLFileVersionWrapper implements DLFileVersion,
 	*/
 	@Override
 	public void setCreateDate(Date createDate) {
-		_dlFileVersion.setCreateDate(createDate);
+		model.setCreateDate(createDate);
 	}
 
 	/**
@@ -796,23 +743,7 @@ public class DLFileVersionWrapper implements DLFileVersion,
 	*/
 	@Override
 	public void setDescription(String description) {
-		_dlFileVersion.setDescription(description);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-		_dlFileVersion.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_dlFileVersion.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_dlFileVersion.setExpandoBridgeAttributes(serviceContext);
+		model.setDescription(description);
 	}
 
 	/**
@@ -822,7 +753,7 @@ public class DLFileVersionWrapper implements DLFileVersion,
 	*/
 	@Override
 	public void setExtension(String extension) {
-		_dlFileVersion.setExtension(extension);
+		model.setExtension(extension);
 	}
 
 	/**
@@ -832,13 +763,13 @@ public class DLFileVersionWrapper implements DLFileVersion,
 	*/
 	@Override
 	public void setExtraSettings(String extraSettings) {
-		_dlFileVersion.setExtraSettings(extraSettings);
+		model.setExtraSettings(extraSettings);
 	}
 
 	@Override
 	public void setExtraSettingsProperties(
 		com.liferay.portal.kernel.util.UnicodeProperties extraSettingsProperties) {
-		_dlFileVersion.setExtraSettingsProperties(extraSettingsProperties);
+		model.setExtraSettingsProperties(extraSettingsProperties);
 	}
 
 	/**
@@ -848,7 +779,7 @@ public class DLFileVersionWrapper implements DLFileVersion,
 	*/
 	@Override
 	public void setFileEntryId(long fileEntryId) {
-		_dlFileVersion.setFileEntryId(fileEntryId);
+		model.setFileEntryId(fileEntryId);
 	}
 
 	/**
@@ -858,7 +789,7 @@ public class DLFileVersionWrapper implements DLFileVersion,
 	*/
 	@Override
 	public void setFileEntryTypeId(long fileEntryTypeId) {
-		_dlFileVersion.setFileEntryTypeId(fileEntryTypeId);
+		model.setFileEntryTypeId(fileEntryTypeId);
 	}
 
 	/**
@@ -868,7 +799,7 @@ public class DLFileVersionWrapper implements DLFileVersion,
 	*/
 	@Override
 	public void setFileName(String fileName) {
-		_dlFileVersion.setFileName(fileName);
+		model.setFileName(fileName);
 	}
 
 	/**
@@ -878,7 +809,7 @@ public class DLFileVersionWrapper implements DLFileVersion,
 	*/
 	@Override
 	public void setFileVersionId(long fileVersionId) {
-		_dlFileVersion.setFileVersionId(fileVersionId);
+		model.setFileVersionId(fileVersionId);
 	}
 
 	/**
@@ -888,7 +819,7 @@ public class DLFileVersionWrapper implements DLFileVersion,
 	*/
 	@Override
 	public void setFolderId(long folderId) {
-		_dlFileVersion.setFolderId(folderId);
+		model.setFolderId(folderId);
 	}
 
 	/**
@@ -898,7 +829,7 @@ public class DLFileVersionWrapper implements DLFileVersion,
 	*/
 	@Override
 	public void setGroupId(long groupId) {
-		_dlFileVersion.setGroupId(groupId);
+		model.setGroupId(groupId);
 	}
 
 	/**
@@ -908,7 +839,7 @@ public class DLFileVersionWrapper implements DLFileVersion,
 	*/
 	@Override
 	public void setLastPublishDate(Date lastPublishDate) {
-		_dlFileVersion.setLastPublishDate(lastPublishDate);
+		model.setLastPublishDate(lastPublishDate);
 	}
 
 	/**
@@ -918,7 +849,7 @@ public class DLFileVersionWrapper implements DLFileVersion,
 	*/
 	@Override
 	public void setMimeType(String mimeType) {
-		_dlFileVersion.setMimeType(mimeType);
+		model.setMimeType(mimeType);
 	}
 
 	/**
@@ -928,12 +859,7 @@ public class DLFileVersionWrapper implements DLFileVersion,
 	*/
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
-		_dlFileVersion.setModifiedDate(modifiedDate);
-	}
-
-	@Override
-	public void setNew(boolean n) {
-		_dlFileVersion.setNew(n);
+		model.setModifiedDate(modifiedDate);
 	}
 
 	/**
@@ -943,12 +869,7 @@ public class DLFileVersionWrapper implements DLFileVersion,
 	*/
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_dlFileVersion.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_dlFileVersion.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -958,7 +879,7 @@ public class DLFileVersionWrapper implements DLFileVersion,
 	*/
 	@Override
 	public void setRepositoryId(long repositoryId) {
-		_dlFileVersion.setRepositoryId(repositoryId);
+		model.setRepositoryId(repositoryId);
 	}
 
 	/**
@@ -968,7 +889,7 @@ public class DLFileVersionWrapper implements DLFileVersion,
 	*/
 	@Override
 	public void setSize(long size) {
-		_dlFileVersion.setSize(size);
+		model.setSize(size);
 	}
 
 	/**
@@ -978,7 +899,7 @@ public class DLFileVersionWrapper implements DLFileVersion,
 	*/
 	@Override
 	public void setStatus(int status) {
-		_dlFileVersion.setStatus(status);
+		model.setStatus(status);
 	}
 
 	/**
@@ -988,7 +909,7 @@ public class DLFileVersionWrapper implements DLFileVersion,
 	*/
 	@Override
 	public void setStatusByUserId(long statusByUserId) {
-		_dlFileVersion.setStatusByUserId(statusByUserId);
+		model.setStatusByUserId(statusByUserId);
 	}
 
 	/**
@@ -998,7 +919,7 @@ public class DLFileVersionWrapper implements DLFileVersion,
 	*/
 	@Override
 	public void setStatusByUserName(String statusByUserName) {
-		_dlFileVersion.setStatusByUserName(statusByUserName);
+		model.setStatusByUserName(statusByUserName);
 	}
 
 	/**
@@ -1008,7 +929,7 @@ public class DLFileVersionWrapper implements DLFileVersion,
 	*/
 	@Override
 	public void setStatusByUserUuid(String statusByUserUuid) {
-		_dlFileVersion.setStatusByUserUuid(statusByUserUuid);
+		model.setStatusByUserUuid(statusByUserUuid);
 	}
 
 	/**
@@ -1018,7 +939,7 @@ public class DLFileVersionWrapper implements DLFileVersion,
 	*/
 	@Override
 	public void setStatusDate(Date statusDate) {
-		_dlFileVersion.setStatusDate(statusDate);
+		model.setStatusDate(statusDate);
 	}
 
 	/**
@@ -1028,7 +949,7 @@ public class DLFileVersionWrapper implements DLFileVersion,
 	*/
 	@Override
 	public void setTitle(String title) {
-		_dlFileVersion.setTitle(title);
+		model.setTitle(title);
 	}
 
 	/**
@@ -1038,7 +959,7 @@ public class DLFileVersionWrapper implements DLFileVersion,
 	*/
 	@Override
 	public void setTreePath(String treePath) {
-		_dlFileVersion.setTreePath(treePath);
+		model.setTreePath(treePath);
 	}
 
 	/**
@@ -1048,7 +969,7 @@ public class DLFileVersionWrapper implements DLFileVersion,
 	*/
 	@Override
 	public void setUserId(long userId) {
-		_dlFileVersion.setUserId(userId);
+		model.setUserId(userId);
 	}
 
 	/**
@@ -1058,7 +979,7 @@ public class DLFileVersionWrapper implements DLFileVersion,
 	*/
 	@Override
 	public void setUserName(String userName) {
-		_dlFileVersion.setUserName(userName);
+		model.setUserName(userName);
 	}
 
 	/**
@@ -1068,7 +989,7 @@ public class DLFileVersionWrapper implements DLFileVersion,
 	*/
 	@Override
 	public void setUserUuid(String userUuid) {
-		_dlFileVersion.setUserUuid(userUuid);
+		model.setUserUuid(userUuid);
 	}
 
 	/**
@@ -1078,7 +999,7 @@ public class DLFileVersionWrapper implements DLFileVersion,
 	*/
 	@Override
 	public void setUuid(String uuid) {
-		_dlFileVersion.setUuid(uuid);
+		model.setUuid(uuid);
 	}
 
 	/**
@@ -1088,82 +1009,21 @@ public class DLFileVersionWrapper implements DLFileVersion,
 	*/
 	@Override
 	public void setVersion(String version) {
-		_dlFileVersion.setVersion(version);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<DLFileVersion> toCacheModel() {
-		return _dlFileVersion.toCacheModel();
-	}
-
-	@Override
-	public DLFileVersion toEscapedModel() {
-		return new DLFileVersionWrapper(_dlFileVersion.toEscapedModel());
-	}
-
-	@Override
-	public String toString() {
-		return _dlFileVersion.toString();
-	}
-
-	@Override
-	public DLFileVersion toUnescapedModel() {
-		return new DLFileVersionWrapper(_dlFileVersion.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _dlFileVersion.toXmlString();
+		model.setVersion(version);
 	}
 
 	@Override
 	public void updateTreePath(String treePath) {
-		_dlFileVersion.updateTreePath(treePath);
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-
-		if (!(obj instanceof DLFileVersionWrapper)) {
-			return false;
-		}
-
-		DLFileVersionWrapper dlFileVersionWrapper = (DLFileVersionWrapper)obj;
-
-		if (Objects.equals(_dlFileVersion, dlFileVersionWrapper._dlFileVersion)) {
-			return true;
-		}
-
-		return false;
+		model.updateTreePath(treePath);
 	}
 
 	@Override
 	public StagedModelType getStagedModelType() {
-		return _dlFileVersion.getStagedModelType();
+		return model.getStagedModelType();
 	}
 
 	@Override
-	public DLFileVersion getWrappedModel() {
-		return _dlFileVersion;
+	protected DLFileVersionWrapper wrap(DLFileVersion dlFileVersion) {
+		return new DLFileVersionWrapper(dlFileVersion);
 	}
-
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _dlFileVersion.isEntityCacheEnabled();
-	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _dlFileVersion.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_dlFileVersion.resetOriginalValues();
-	}
-
-	private final DLFileVersion _dlFileVersion;
 }

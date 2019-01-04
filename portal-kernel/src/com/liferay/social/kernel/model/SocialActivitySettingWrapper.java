@@ -16,16 +16,11 @@ package com.liferay.social.kernel.model;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
-
 import com.liferay.portal.kernel.model.ModelWrapper;
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -37,21 +32,11 @@ import java.util.Objects;
  * @generated
  */
 @ProviderType
-public class SocialActivitySettingWrapper implements SocialActivitySetting,
-	ModelWrapper<SocialActivitySetting> {
+public class SocialActivitySettingWrapper extends BaseModelWrapper<SocialActivitySetting>
+	implements SocialActivitySetting, ModelWrapper<SocialActivitySetting> {
 	public SocialActivitySettingWrapper(
 		SocialActivitySetting socialActivitySetting) {
-		_socialActivitySetting = socialActivitySetting;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return SocialActivitySetting.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return SocialActivitySetting.class.getName();
+		super(socialActivitySetting);
 	}
 
 	@Override
@@ -114,16 +99,6 @@ public class SocialActivitySettingWrapper implements SocialActivitySetting,
 		}
 	}
 
-	@Override
-	public Object clone() {
-		return new SocialActivitySettingWrapper((SocialActivitySetting)_socialActivitySetting.clone());
-	}
-
-	@Override
-	public int compareTo(SocialActivitySetting socialActivitySetting) {
-		return _socialActivitySetting.compareTo(socialActivitySetting);
-	}
-
 	/**
 	* Returns the activity setting ID of this social activity setting.
 	*
@@ -131,7 +106,7 @@ public class SocialActivitySettingWrapper implements SocialActivitySetting,
 	*/
 	@Override
 	public long getActivitySettingId() {
-		return _socialActivitySetting.getActivitySettingId();
+		return model.getActivitySettingId();
 	}
 
 	/**
@@ -141,7 +116,7 @@ public class SocialActivitySettingWrapper implements SocialActivitySetting,
 	*/
 	@Override
 	public int getActivityType() {
-		return _socialActivitySetting.getActivityType();
+		return model.getActivityType();
 	}
 
 	/**
@@ -151,7 +126,7 @@ public class SocialActivitySettingWrapper implements SocialActivitySetting,
 	*/
 	@Override
 	public String getClassName() {
-		return _socialActivitySetting.getClassName();
+		return model.getClassName();
 	}
 
 	/**
@@ -161,7 +136,7 @@ public class SocialActivitySettingWrapper implements SocialActivitySetting,
 	*/
 	@Override
 	public long getClassNameId() {
-		return _socialActivitySetting.getClassNameId();
+		return model.getClassNameId();
 	}
 
 	/**
@@ -171,12 +146,7 @@ public class SocialActivitySettingWrapper implements SocialActivitySetting,
 	*/
 	@Override
 	public long getCompanyId() {
-		return _socialActivitySetting.getCompanyId();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _socialActivitySetting.getExpandoBridge();
+		return model.getCompanyId();
 	}
 
 	/**
@@ -186,7 +156,7 @@ public class SocialActivitySettingWrapper implements SocialActivitySetting,
 	*/
 	@Override
 	public long getGroupId() {
-		return _socialActivitySetting.getGroupId();
+		return model.getGroupId();
 	}
 
 	/**
@@ -196,7 +166,7 @@ public class SocialActivitySettingWrapper implements SocialActivitySetting,
 	*/
 	@Override
 	public String getName() {
-		return _socialActivitySetting.getName();
+		return model.getName();
 	}
 
 	/**
@@ -206,12 +176,7 @@ public class SocialActivitySettingWrapper implements SocialActivitySetting,
 	*/
 	@Override
 	public long getPrimaryKey() {
-		return _socialActivitySetting.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _socialActivitySetting.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	/**
@@ -221,32 +186,12 @@ public class SocialActivitySettingWrapper implements SocialActivitySetting,
 	*/
 	@Override
 	public String getValue() {
-		return _socialActivitySetting.getValue();
-	}
-
-	@Override
-	public int hashCode() {
-		return _socialActivitySetting.hashCode();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _socialActivitySetting.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _socialActivitySetting.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _socialActivitySetting.isNew();
+		return model.getValue();
 	}
 
 	@Override
 	public void persist() {
-		_socialActivitySetting.persist();
+		model.persist();
 	}
 
 	/**
@@ -256,7 +201,7 @@ public class SocialActivitySettingWrapper implements SocialActivitySetting,
 	*/
 	@Override
 	public void setActivitySettingId(long activitySettingId) {
-		_socialActivitySetting.setActivitySettingId(activitySettingId);
+		model.setActivitySettingId(activitySettingId);
 	}
 
 	/**
@@ -266,17 +211,12 @@ public class SocialActivitySettingWrapper implements SocialActivitySetting,
 	*/
 	@Override
 	public void setActivityType(int activityType) {
-		_socialActivitySetting.setActivityType(activityType);
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_socialActivitySetting.setCachedModel(cachedModel);
+		model.setActivityType(activityType);
 	}
 
 	@Override
 	public void setClassName(String className) {
-		_socialActivitySetting.setClassName(className);
+		model.setClassName(className);
 	}
 
 	/**
@@ -286,7 +226,7 @@ public class SocialActivitySettingWrapper implements SocialActivitySetting,
 	*/
 	@Override
 	public void setClassNameId(long classNameId) {
-		_socialActivitySetting.setClassNameId(classNameId);
+		model.setClassNameId(classNameId);
 	}
 
 	/**
@@ -296,23 +236,7 @@ public class SocialActivitySettingWrapper implements SocialActivitySetting,
 	*/
 	@Override
 	public void setCompanyId(long companyId) {
-		_socialActivitySetting.setCompanyId(companyId);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-		_socialActivitySetting.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_socialActivitySetting.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_socialActivitySetting.setExpandoBridgeAttributes(serviceContext);
+		model.setCompanyId(companyId);
 	}
 
 	/**
@@ -322,7 +246,7 @@ public class SocialActivitySettingWrapper implements SocialActivitySetting,
 	*/
 	@Override
 	public void setGroupId(long groupId) {
-		_socialActivitySetting.setGroupId(groupId);
+		model.setGroupId(groupId);
 	}
 
 	/**
@@ -332,12 +256,7 @@ public class SocialActivitySettingWrapper implements SocialActivitySetting,
 	*/
 	@Override
 	public void setName(String name) {
-		_socialActivitySetting.setName(name);
-	}
-
-	@Override
-	public void setNew(boolean n) {
-		_socialActivitySetting.setNew(n);
+		model.setName(name);
 	}
 
 	/**
@@ -347,12 +266,7 @@ public class SocialActivitySettingWrapper implements SocialActivitySetting,
 	*/
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_socialActivitySetting.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_socialActivitySetting.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -362,73 +276,12 @@ public class SocialActivitySettingWrapper implements SocialActivitySetting,
 	*/
 	@Override
 	public void setValue(String value) {
-		_socialActivitySetting.setValue(value);
+		model.setValue(value);
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.CacheModel<SocialActivitySetting> toCacheModel() {
-		return _socialActivitySetting.toCacheModel();
+	protected SocialActivitySettingWrapper wrap(
+		SocialActivitySetting socialActivitySetting) {
+		return new SocialActivitySettingWrapper(socialActivitySetting);
 	}
-
-	@Override
-	public SocialActivitySetting toEscapedModel() {
-		return new SocialActivitySettingWrapper(_socialActivitySetting.toEscapedModel());
-	}
-
-	@Override
-	public String toString() {
-		return _socialActivitySetting.toString();
-	}
-
-	@Override
-	public SocialActivitySetting toUnescapedModel() {
-		return new SocialActivitySettingWrapper(_socialActivitySetting.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _socialActivitySetting.toXmlString();
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-
-		if (!(obj instanceof SocialActivitySettingWrapper)) {
-			return false;
-		}
-
-		SocialActivitySettingWrapper socialActivitySettingWrapper = (SocialActivitySettingWrapper)obj;
-
-		if (Objects.equals(_socialActivitySetting,
-					socialActivitySettingWrapper._socialActivitySetting)) {
-			return true;
-		}
-
-		return false;
-	}
-
-	@Override
-	public SocialActivitySetting getWrappedModel() {
-		return _socialActivitySetting;
-	}
-
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _socialActivitySetting.isEntityCacheEnabled();
-	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _socialActivitySetting.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_socialActivitySetting.resetOriginalValues();
-	}
-
-	private final SocialActivitySetting _socialActivitySetting;
 }

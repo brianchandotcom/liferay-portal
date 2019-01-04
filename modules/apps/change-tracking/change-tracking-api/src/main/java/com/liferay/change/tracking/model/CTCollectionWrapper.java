@@ -16,17 +16,12 @@ package com.liferay.change.tracking.model;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
-
 import com.liferay.portal.kernel.model.ModelWrapper;
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -38,20 +33,10 @@ import java.util.Objects;
  * @generated
  */
 @ProviderType
-public class CTCollectionWrapper implements CTCollection,
-	ModelWrapper<CTCollection> {
+public class CTCollectionWrapper extends BaseModelWrapper<CTCollection>
+	implements CTCollection, ModelWrapper<CTCollection> {
 	public CTCollectionWrapper(CTCollection ctCollection) {
-		_ctCollection = ctCollection;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return CTCollection.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return CTCollection.class.getName();
+		super(ctCollection);
 	}
 
 	@Override
@@ -149,16 +134,6 @@ public class CTCollectionWrapper implements CTCollection,
 		}
 	}
 
-	@Override
-	public Object clone() {
-		return new CTCollectionWrapper((CTCollection)_ctCollection.clone());
-	}
-
-	@Override
-	public int compareTo(CTCollection ctCollection) {
-		return _ctCollection.compareTo(ctCollection);
-	}
-
 	/**
 	* Returns the company ID of this ct collection.
 	*
@@ -166,7 +141,7 @@ public class CTCollectionWrapper implements CTCollection,
 	*/
 	@Override
 	public long getCompanyId() {
-		return _ctCollection.getCompanyId();
+		return model.getCompanyId();
 	}
 
 	/**
@@ -176,7 +151,7 @@ public class CTCollectionWrapper implements CTCollection,
 	*/
 	@Override
 	public Date getCreateDate() {
-		return _ctCollection.getCreateDate();
+		return model.getCreateDate();
 	}
 
 	/**
@@ -186,7 +161,7 @@ public class CTCollectionWrapper implements CTCollection,
 	*/
 	@Override
 	public long getCtCollectionId() {
-		return _ctCollection.getCtCollectionId();
+		return model.getCtCollectionId();
 	}
 
 	/**
@@ -196,12 +171,7 @@ public class CTCollectionWrapper implements CTCollection,
 	*/
 	@Override
 	public String getDescription() {
-		return _ctCollection.getDescription();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _ctCollection.getExpandoBridge();
+		return model.getDescription();
 	}
 
 	/**
@@ -211,7 +181,7 @@ public class CTCollectionWrapper implements CTCollection,
 	*/
 	@Override
 	public Date getModifiedDate() {
-		return _ctCollection.getModifiedDate();
+		return model.getModifiedDate();
 	}
 
 	/**
@@ -221,7 +191,7 @@ public class CTCollectionWrapper implements CTCollection,
 	*/
 	@Override
 	public String getName() {
-		return _ctCollection.getName();
+		return model.getName();
 	}
 
 	/**
@@ -231,12 +201,7 @@ public class CTCollectionWrapper implements CTCollection,
 	*/
 	@Override
 	public long getPrimaryKey() {
-		return _ctCollection.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _ctCollection.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	/**
@@ -246,7 +211,7 @@ public class CTCollectionWrapper implements CTCollection,
 	*/
 	@Override
 	public int getStatus() {
-		return _ctCollection.getStatus();
+		return model.getStatus();
 	}
 
 	/**
@@ -256,7 +221,7 @@ public class CTCollectionWrapper implements CTCollection,
 	*/
 	@Override
 	public long getStatusByUserId() {
-		return _ctCollection.getStatusByUserId();
+		return model.getStatusByUserId();
 	}
 
 	/**
@@ -266,7 +231,7 @@ public class CTCollectionWrapper implements CTCollection,
 	*/
 	@Override
 	public String getStatusByUserName() {
-		return _ctCollection.getStatusByUserName();
+		return model.getStatusByUserName();
 	}
 
 	/**
@@ -276,7 +241,7 @@ public class CTCollectionWrapper implements CTCollection,
 	*/
 	@Override
 	public String getStatusByUserUuid() {
-		return _ctCollection.getStatusByUserUuid();
+		return model.getStatusByUserUuid();
 	}
 
 	/**
@@ -286,7 +251,7 @@ public class CTCollectionWrapper implements CTCollection,
 	*/
 	@Override
 	public Date getStatusDate() {
-		return _ctCollection.getStatusDate();
+		return model.getStatusDate();
 	}
 
 	/**
@@ -296,7 +261,7 @@ public class CTCollectionWrapper implements CTCollection,
 	*/
 	@Override
 	public long getUserId() {
-		return _ctCollection.getUserId();
+		return model.getUserId();
 	}
 
 	/**
@@ -306,7 +271,7 @@ public class CTCollectionWrapper implements CTCollection,
 	*/
 	@Override
 	public String getUserName() {
-		return _ctCollection.getUserName();
+		return model.getUserName();
 	}
 
 	/**
@@ -316,12 +281,7 @@ public class CTCollectionWrapper implements CTCollection,
 	*/
 	@Override
 	public String getUserUuid() {
-		return _ctCollection.getUserUuid();
-	}
-
-	@Override
-	public int hashCode() {
-		return _ctCollection.hashCode();
+		return model.getUserUuid();
 	}
 
 	/**
@@ -331,12 +291,7 @@ public class CTCollectionWrapper implements CTCollection,
 	*/
 	@Override
 	public boolean isApproved() {
-		return _ctCollection.isApproved();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _ctCollection.isCachedModel();
+		return model.isApproved();
 	}
 
 	/**
@@ -346,7 +301,7 @@ public class CTCollectionWrapper implements CTCollection,
 	*/
 	@Override
 	public boolean isDenied() {
-		return _ctCollection.isDenied();
+		return model.isDenied();
 	}
 
 	/**
@@ -356,12 +311,7 @@ public class CTCollectionWrapper implements CTCollection,
 	*/
 	@Override
 	public boolean isDraft() {
-		return _ctCollection.isDraft();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _ctCollection.isEscapedModel();
+		return model.isDraft();
 	}
 
 	/**
@@ -371,7 +321,7 @@ public class CTCollectionWrapper implements CTCollection,
 	*/
 	@Override
 	public boolean isExpired() {
-		return _ctCollection.isExpired();
+		return model.isExpired();
 	}
 
 	/**
@@ -381,7 +331,7 @@ public class CTCollectionWrapper implements CTCollection,
 	*/
 	@Override
 	public boolean isInactive() {
-		return _ctCollection.isInactive();
+		return model.isInactive();
 	}
 
 	/**
@@ -391,12 +341,7 @@ public class CTCollectionWrapper implements CTCollection,
 	*/
 	@Override
 	public boolean isIncomplete() {
-		return _ctCollection.isIncomplete();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _ctCollection.isNew();
+		return model.isIncomplete();
 	}
 
 	/**
@@ -406,7 +351,7 @@ public class CTCollectionWrapper implements CTCollection,
 	*/
 	@Override
 	public boolean isPending() {
-		return _ctCollection.isPending();
+		return model.isPending();
 	}
 
 	/**
@@ -416,17 +361,12 @@ public class CTCollectionWrapper implements CTCollection,
 	*/
 	@Override
 	public boolean isScheduled() {
-		return _ctCollection.isScheduled();
+		return model.isScheduled();
 	}
 
 	@Override
 	public void persist() {
-		_ctCollection.persist();
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_ctCollection.setCachedModel(cachedModel);
+		model.persist();
 	}
 
 	/**
@@ -436,7 +376,7 @@ public class CTCollectionWrapper implements CTCollection,
 	*/
 	@Override
 	public void setCompanyId(long companyId) {
-		_ctCollection.setCompanyId(companyId);
+		model.setCompanyId(companyId);
 	}
 
 	/**
@@ -446,7 +386,7 @@ public class CTCollectionWrapper implements CTCollection,
 	*/
 	@Override
 	public void setCreateDate(Date createDate) {
-		_ctCollection.setCreateDate(createDate);
+		model.setCreateDate(createDate);
 	}
 
 	/**
@@ -456,7 +396,7 @@ public class CTCollectionWrapper implements CTCollection,
 	*/
 	@Override
 	public void setCtCollectionId(long ctCollectionId) {
-		_ctCollection.setCtCollectionId(ctCollectionId);
+		model.setCtCollectionId(ctCollectionId);
 	}
 
 	/**
@@ -466,23 +406,7 @@ public class CTCollectionWrapper implements CTCollection,
 	*/
 	@Override
 	public void setDescription(String description) {
-		_ctCollection.setDescription(description);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-		_ctCollection.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_ctCollection.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_ctCollection.setExpandoBridgeAttributes(serviceContext);
+		model.setDescription(description);
 	}
 
 	/**
@@ -492,7 +416,7 @@ public class CTCollectionWrapper implements CTCollection,
 	*/
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
-		_ctCollection.setModifiedDate(modifiedDate);
+		model.setModifiedDate(modifiedDate);
 	}
 
 	/**
@@ -502,12 +426,7 @@ public class CTCollectionWrapper implements CTCollection,
 	*/
 	@Override
 	public void setName(String name) {
-		_ctCollection.setName(name);
-	}
-
-	@Override
-	public void setNew(boolean n) {
-		_ctCollection.setNew(n);
+		model.setName(name);
 	}
 
 	/**
@@ -517,12 +436,7 @@ public class CTCollectionWrapper implements CTCollection,
 	*/
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_ctCollection.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_ctCollection.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -532,7 +446,7 @@ public class CTCollectionWrapper implements CTCollection,
 	*/
 	@Override
 	public void setStatus(int status) {
-		_ctCollection.setStatus(status);
+		model.setStatus(status);
 	}
 
 	/**
@@ -542,7 +456,7 @@ public class CTCollectionWrapper implements CTCollection,
 	*/
 	@Override
 	public void setStatusByUserId(long statusByUserId) {
-		_ctCollection.setStatusByUserId(statusByUserId);
+		model.setStatusByUserId(statusByUserId);
 	}
 
 	/**
@@ -552,7 +466,7 @@ public class CTCollectionWrapper implements CTCollection,
 	*/
 	@Override
 	public void setStatusByUserName(String statusByUserName) {
-		_ctCollection.setStatusByUserName(statusByUserName);
+		model.setStatusByUserName(statusByUserName);
 	}
 
 	/**
@@ -562,7 +476,7 @@ public class CTCollectionWrapper implements CTCollection,
 	*/
 	@Override
 	public void setStatusByUserUuid(String statusByUserUuid) {
-		_ctCollection.setStatusByUserUuid(statusByUserUuid);
+		model.setStatusByUserUuid(statusByUserUuid);
 	}
 
 	/**
@@ -572,7 +486,7 @@ public class CTCollectionWrapper implements CTCollection,
 	*/
 	@Override
 	public void setStatusDate(Date statusDate) {
-		_ctCollection.setStatusDate(statusDate);
+		model.setStatusDate(statusDate);
 	}
 
 	/**
@@ -582,7 +496,7 @@ public class CTCollectionWrapper implements CTCollection,
 	*/
 	@Override
 	public void setUserId(long userId) {
-		_ctCollection.setUserId(userId);
+		model.setUserId(userId);
 	}
 
 	/**
@@ -592,7 +506,7 @@ public class CTCollectionWrapper implements CTCollection,
 	*/
 	@Override
 	public void setUserName(String userName) {
-		_ctCollection.setUserName(userName);
+		model.setUserName(userName);
 	}
 
 	/**
@@ -602,72 +516,11 @@ public class CTCollectionWrapper implements CTCollection,
 	*/
 	@Override
 	public void setUserUuid(String userUuid) {
-		_ctCollection.setUserUuid(userUuid);
+		model.setUserUuid(userUuid);
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.CacheModel<CTCollection> toCacheModel() {
-		return _ctCollection.toCacheModel();
+	protected CTCollectionWrapper wrap(CTCollection ctCollection) {
+		return new CTCollectionWrapper(ctCollection);
 	}
-
-	@Override
-	public CTCollection toEscapedModel() {
-		return new CTCollectionWrapper(_ctCollection.toEscapedModel());
-	}
-
-	@Override
-	public String toString() {
-		return _ctCollection.toString();
-	}
-
-	@Override
-	public CTCollection toUnescapedModel() {
-		return new CTCollectionWrapper(_ctCollection.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _ctCollection.toXmlString();
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-
-		if (!(obj instanceof CTCollectionWrapper)) {
-			return false;
-		}
-
-		CTCollectionWrapper ctCollectionWrapper = (CTCollectionWrapper)obj;
-
-		if (Objects.equals(_ctCollection, ctCollectionWrapper._ctCollection)) {
-			return true;
-		}
-
-		return false;
-	}
-
-	@Override
-	public CTCollection getWrappedModel() {
-		return _ctCollection;
-	}
-
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _ctCollection.isEntityCacheEnabled();
-	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _ctCollection.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_ctCollection.resetOriginalValues();
-	}
-
-	private final CTCollection _ctCollection;
 }

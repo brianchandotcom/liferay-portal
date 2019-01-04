@@ -16,17 +16,12 @@ package com.liferay.portal.lock.model;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
-
 import com.liferay.portal.kernel.model.ModelWrapper;
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -38,19 +33,10 @@ import java.util.Objects;
  * @generated
  */
 @ProviderType
-public class LockWrapper implements Lock, ModelWrapper<Lock> {
+public class LockWrapper extends BaseModelWrapper<Lock> implements Lock,
+	ModelWrapper<Lock> {
 	public LockWrapper(Lock lock) {
-		_lock = lock;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return Lock.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return Lock.class.getName();
+		super(lock);
 	}
 
 	@Override
@@ -148,16 +134,6 @@ public class LockWrapper implements Lock, ModelWrapper<Lock> {
 		}
 	}
 
-	@Override
-	public Object clone() {
-		return new LockWrapper((Lock)_lock.clone());
-	}
-
-	@Override
-	public int compareTo(Lock lock) {
-		return _lock.compareTo(lock);
-	}
-
 	/**
 	* Returns the class name of this lock.
 	*
@@ -165,7 +141,7 @@ public class LockWrapper implements Lock, ModelWrapper<Lock> {
 	*/
 	@Override
 	public String getClassName() {
-		return _lock.getClassName();
+		return model.getClassName();
 	}
 
 	/**
@@ -175,7 +151,7 @@ public class LockWrapper implements Lock, ModelWrapper<Lock> {
 	*/
 	@Override
 	public long getCompanyId() {
-		return _lock.getCompanyId();
+		return model.getCompanyId();
 	}
 
 	/**
@@ -185,12 +161,7 @@ public class LockWrapper implements Lock, ModelWrapper<Lock> {
 	*/
 	@Override
 	public Date getCreateDate() {
-		return _lock.getCreateDate();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _lock.getExpandoBridge();
+		return model.getCreateDate();
 	}
 
 	/**
@@ -200,12 +171,12 @@ public class LockWrapper implements Lock, ModelWrapper<Lock> {
 	*/
 	@Override
 	public Date getExpirationDate() {
-		return _lock.getExpirationDate();
+		return model.getExpirationDate();
 	}
 
 	@Override
 	public long getExpirationTime() {
-		return _lock.getExpirationTime();
+		return model.getExpirationTime();
 	}
 
 	/**
@@ -215,7 +186,7 @@ public class LockWrapper implements Lock, ModelWrapper<Lock> {
 	*/
 	@Override
 	public boolean getInheritable() {
-		return _lock.getInheritable();
+		return model.getInheritable();
 	}
 
 	/**
@@ -225,7 +196,7 @@ public class LockWrapper implements Lock, ModelWrapper<Lock> {
 	*/
 	@Override
 	public String getKey() {
-		return _lock.getKey();
+		return model.getKey();
 	}
 
 	/**
@@ -235,7 +206,7 @@ public class LockWrapper implements Lock, ModelWrapper<Lock> {
 	*/
 	@Override
 	public long getLockId() {
-		return _lock.getLockId();
+		return model.getLockId();
 	}
 
 	/**
@@ -245,7 +216,7 @@ public class LockWrapper implements Lock, ModelWrapper<Lock> {
 	*/
 	@Override
 	public long getMvccVersion() {
-		return _lock.getMvccVersion();
+		return model.getMvccVersion();
 	}
 
 	/**
@@ -255,7 +226,7 @@ public class LockWrapper implements Lock, ModelWrapper<Lock> {
 	*/
 	@Override
 	public String getOwner() {
-		return _lock.getOwner();
+		return model.getOwner();
 	}
 
 	/**
@@ -265,12 +236,7 @@ public class LockWrapper implements Lock, ModelWrapper<Lock> {
 	*/
 	@Override
 	public long getPrimaryKey() {
-		return _lock.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _lock.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	/**
@@ -280,7 +246,7 @@ public class LockWrapper implements Lock, ModelWrapper<Lock> {
 	*/
 	@Override
 	public long getUserId() {
-		return _lock.getUserId();
+		return model.getUserId();
 	}
 
 	/**
@@ -290,7 +256,7 @@ public class LockWrapper implements Lock, ModelWrapper<Lock> {
 	*/
 	@Override
 	public String getUserName() {
-		return _lock.getUserName();
+		return model.getUserName();
 	}
 
 	/**
@@ -300,7 +266,7 @@ public class LockWrapper implements Lock, ModelWrapper<Lock> {
 	*/
 	@Override
 	public String getUserUuid() {
-		return _lock.getUserUuid();
+		return model.getUserUuid();
 	}
 
 	/**
@@ -310,27 +276,12 @@ public class LockWrapper implements Lock, ModelWrapper<Lock> {
 	*/
 	@Override
 	public String getUuid() {
-		return _lock.getUuid();
-	}
-
-	@Override
-	public int hashCode() {
-		return _lock.hashCode();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _lock.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _lock.isEscapedModel();
+		return model.getUuid();
 	}
 
 	@Override
 	public boolean isExpired() {
-		return _lock.isExpired();
+		return model.isExpired();
 	}
 
 	/**
@@ -340,27 +291,17 @@ public class LockWrapper implements Lock, ModelWrapper<Lock> {
 	*/
 	@Override
 	public boolean isInheritable() {
-		return _lock.isInheritable();
+		return model.isInheritable();
 	}
 
 	@Override
 	public boolean isNeverExpires() {
-		return _lock.isNeverExpires();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _lock.isNew();
+		return model.isNeverExpires();
 	}
 
 	@Override
 	public void persist() {
-		_lock.persist();
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_lock.setCachedModel(cachedModel);
+		model.persist();
 	}
 
 	/**
@@ -370,7 +311,7 @@ public class LockWrapper implements Lock, ModelWrapper<Lock> {
 	*/
 	@Override
 	public void setClassName(String className) {
-		_lock.setClassName(className);
+		model.setClassName(className);
 	}
 
 	/**
@@ -380,7 +321,7 @@ public class LockWrapper implements Lock, ModelWrapper<Lock> {
 	*/
 	@Override
 	public void setCompanyId(long companyId) {
-		_lock.setCompanyId(companyId);
+		model.setCompanyId(companyId);
 	}
 
 	/**
@@ -390,23 +331,7 @@ public class LockWrapper implements Lock, ModelWrapper<Lock> {
 	*/
 	@Override
 	public void setCreateDate(Date createDate) {
-		_lock.setCreateDate(createDate);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-		_lock.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_lock.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_lock.setExpandoBridgeAttributes(serviceContext);
+		model.setCreateDate(createDate);
 	}
 
 	/**
@@ -416,7 +341,7 @@ public class LockWrapper implements Lock, ModelWrapper<Lock> {
 	*/
 	@Override
 	public void setExpirationDate(Date expirationDate) {
-		_lock.setExpirationDate(expirationDate);
+		model.setExpirationDate(expirationDate);
 	}
 
 	/**
@@ -426,7 +351,7 @@ public class LockWrapper implements Lock, ModelWrapper<Lock> {
 	*/
 	@Override
 	public void setInheritable(boolean inheritable) {
-		_lock.setInheritable(inheritable);
+		model.setInheritable(inheritable);
 	}
 
 	/**
@@ -436,7 +361,7 @@ public class LockWrapper implements Lock, ModelWrapper<Lock> {
 	*/
 	@Override
 	public void setKey(String key) {
-		_lock.setKey(key);
+		model.setKey(key);
 	}
 
 	/**
@@ -446,7 +371,7 @@ public class LockWrapper implements Lock, ModelWrapper<Lock> {
 	*/
 	@Override
 	public void setLockId(long lockId) {
-		_lock.setLockId(lockId);
+		model.setLockId(lockId);
 	}
 
 	/**
@@ -456,12 +381,7 @@ public class LockWrapper implements Lock, ModelWrapper<Lock> {
 	*/
 	@Override
 	public void setMvccVersion(long mvccVersion) {
-		_lock.setMvccVersion(mvccVersion);
-	}
-
-	@Override
-	public void setNew(boolean n) {
-		_lock.setNew(n);
+		model.setMvccVersion(mvccVersion);
 	}
 
 	/**
@@ -471,7 +391,7 @@ public class LockWrapper implements Lock, ModelWrapper<Lock> {
 	*/
 	@Override
 	public void setOwner(String owner) {
-		_lock.setOwner(owner);
+		model.setOwner(owner);
 	}
 
 	/**
@@ -481,12 +401,7 @@ public class LockWrapper implements Lock, ModelWrapper<Lock> {
 	*/
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_lock.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_lock.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -496,7 +411,7 @@ public class LockWrapper implements Lock, ModelWrapper<Lock> {
 	*/
 	@Override
 	public void setUserId(long userId) {
-		_lock.setUserId(userId);
+		model.setUserId(userId);
 	}
 
 	/**
@@ -506,7 +421,7 @@ public class LockWrapper implements Lock, ModelWrapper<Lock> {
 	*/
 	@Override
 	public void setUserName(String userName) {
-		_lock.setUserName(userName);
+		model.setUserName(userName);
 	}
 
 	/**
@@ -516,7 +431,7 @@ public class LockWrapper implements Lock, ModelWrapper<Lock> {
 	*/
 	@Override
 	public void setUserUuid(String userUuid) {
-		_lock.setUserUuid(userUuid);
+		model.setUserUuid(userUuid);
 	}
 
 	/**
@@ -526,72 +441,11 @@ public class LockWrapper implements Lock, ModelWrapper<Lock> {
 	*/
 	@Override
 	public void setUuid(String uuid) {
-		_lock.setUuid(uuid);
+		model.setUuid(uuid);
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.CacheModel<Lock> toCacheModel() {
-		return _lock.toCacheModel();
+	protected LockWrapper wrap(Lock lock) {
+		return new LockWrapper(lock);
 	}
-
-	@Override
-	public Lock toEscapedModel() {
-		return new LockWrapper(_lock.toEscapedModel());
-	}
-
-	@Override
-	public String toString() {
-		return _lock.toString();
-	}
-
-	@Override
-	public Lock toUnescapedModel() {
-		return new LockWrapper(_lock.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _lock.toXmlString();
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-
-		if (!(obj instanceof LockWrapper)) {
-			return false;
-		}
-
-		LockWrapper lockWrapper = (LockWrapper)obj;
-
-		if (Objects.equals(_lock, lockWrapper._lock)) {
-			return true;
-		}
-
-		return false;
-	}
-
-	@Override
-	public Lock getWrappedModel() {
-		return _lock;
-	}
-
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _lock.isEntityCacheEnabled();
-	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _lock.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_lock.resetOriginalValues();
-	}
-
-	private final Lock _lock;
 }

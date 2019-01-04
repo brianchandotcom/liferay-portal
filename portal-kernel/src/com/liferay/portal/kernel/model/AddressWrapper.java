@@ -16,18 +16,13 @@ package com.liferay.portal.kernel.model;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
-
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -39,19 +34,10 @@ import java.util.Objects;
  * @generated
  */
 @ProviderType
-public class AddressWrapper implements Address, ModelWrapper<Address> {
+public class AddressWrapper extends BaseModelWrapper<Address> implements Address,
+	ModelWrapper<Address> {
 	public AddressWrapper(Address address) {
-		_address = address;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return Address.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return Address.class.getName();
+		super(address);
 	}
 
 	@Override
@@ -205,16 +191,6 @@ public class AddressWrapper implements Address, ModelWrapper<Address> {
 		}
 	}
 
-	@Override
-	public Object clone() {
-		return new AddressWrapper((Address)_address.clone());
-	}
-
-	@Override
-	public int compareTo(Address address) {
-		return _address.compareTo(address);
-	}
-
 	/**
 	* Returns the address ID of this address.
 	*
@@ -222,7 +198,7 @@ public class AddressWrapper implements Address, ModelWrapper<Address> {
 	*/
 	@Override
 	public long getAddressId() {
-		return _address.getAddressId();
+		return model.getAddressId();
 	}
 
 	/**
@@ -232,7 +208,7 @@ public class AddressWrapper implements Address, ModelWrapper<Address> {
 	*/
 	@Override
 	public String getCity() {
-		return _address.getCity();
+		return model.getCity();
 	}
 
 	/**
@@ -242,7 +218,7 @@ public class AddressWrapper implements Address, ModelWrapper<Address> {
 	*/
 	@Override
 	public String getClassName() {
-		return _address.getClassName();
+		return model.getClassName();
 	}
 
 	/**
@@ -252,7 +228,7 @@ public class AddressWrapper implements Address, ModelWrapper<Address> {
 	*/
 	@Override
 	public long getClassNameId() {
-		return _address.getClassNameId();
+		return model.getClassNameId();
 	}
 
 	/**
@@ -262,7 +238,7 @@ public class AddressWrapper implements Address, ModelWrapper<Address> {
 	*/
 	@Override
 	public long getClassPK() {
-		return _address.getClassPK();
+		return model.getClassPK();
 	}
 
 	/**
@@ -272,12 +248,12 @@ public class AddressWrapper implements Address, ModelWrapper<Address> {
 	*/
 	@Override
 	public long getCompanyId() {
-		return _address.getCompanyId();
+		return model.getCompanyId();
 	}
 
 	@Override
 	public Country getCountry() {
-		return _address.getCountry();
+		return model.getCountry();
 	}
 
 	/**
@@ -287,7 +263,7 @@ public class AddressWrapper implements Address, ModelWrapper<Address> {
 	*/
 	@Override
 	public long getCountryId() {
-		return _address.getCountryId();
+		return model.getCountryId();
 	}
 
 	/**
@@ -297,12 +273,7 @@ public class AddressWrapper implements Address, ModelWrapper<Address> {
 	*/
 	@Override
 	public Date getCreateDate() {
-		return _address.getCreateDate();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _address.getExpandoBridge();
+		return model.getCreateDate();
 	}
 
 	/**
@@ -312,7 +283,7 @@ public class AddressWrapper implements Address, ModelWrapper<Address> {
 	*/
 	@Override
 	public boolean getMailing() {
-		return _address.getMailing();
+		return model.getMailing();
 	}
 
 	/**
@@ -322,7 +293,7 @@ public class AddressWrapper implements Address, ModelWrapper<Address> {
 	*/
 	@Override
 	public Date getModifiedDate() {
-		return _address.getModifiedDate();
+		return model.getModifiedDate();
 	}
 
 	/**
@@ -332,7 +303,7 @@ public class AddressWrapper implements Address, ModelWrapper<Address> {
 	*/
 	@Override
 	public long getMvccVersion() {
-		return _address.getMvccVersion();
+		return model.getMvccVersion();
 	}
 
 	/**
@@ -342,7 +313,7 @@ public class AddressWrapper implements Address, ModelWrapper<Address> {
 	*/
 	@Override
 	public boolean getPrimary() {
-		return _address.getPrimary();
+		return model.getPrimary();
 	}
 
 	/**
@@ -352,17 +323,12 @@ public class AddressWrapper implements Address, ModelWrapper<Address> {
 	*/
 	@Override
 	public long getPrimaryKey() {
-		return _address.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _address.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	@Override
 	public Region getRegion() {
-		return _address.getRegion();
+		return model.getRegion();
 	}
 
 	/**
@@ -372,7 +338,7 @@ public class AddressWrapper implements Address, ModelWrapper<Address> {
 	*/
 	@Override
 	public long getRegionId() {
-		return _address.getRegionId();
+		return model.getRegionId();
 	}
 
 	/**
@@ -382,7 +348,7 @@ public class AddressWrapper implements Address, ModelWrapper<Address> {
 	*/
 	@Override
 	public String getStreet1() {
-		return _address.getStreet1();
+		return model.getStreet1();
 	}
 
 	/**
@@ -392,7 +358,7 @@ public class AddressWrapper implements Address, ModelWrapper<Address> {
 	*/
 	@Override
 	public String getStreet2() {
-		return _address.getStreet2();
+		return model.getStreet2();
 	}
 
 	/**
@@ -402,12 +368,12 @@ public class AddressWrapper implements Address, ModelWrapper<Address> {
 	*/
 	@Override
 	public String getStreet3() {
-		return _address.getStreet3();
+		return model.getStreet3();
 	}
 
 	@Override
 	public ListType getType() {
-		return _address.getType();
+		return model.getType();
 	}
 
 	/**
@@ -417,7 +383,7 @@ public class AddressWrapper implements Address, ModelWrapper<Address> {
 	*/
 	@Override
 	public long getTypeId() {
-		return _address.getTypeId();
+		return model.getTypeId();
 	}
 
 	/**
@@ -427,7 +393,7 @@ public class AddressWrapper implements Address, ModelWrapper<Address> {
 	*/
 	@Override
 	public long getUserId() {
-		return _address.getUserId();
+		return model.getUserId();
 	}
 
 	/**
@@ -437,7 +403,7 @@ public class AddressWrapper implements Address, ModelWrapper<Address> {
 	*/
 	@Override
 	public String getUserName() {
-		return _address.getUserName();
+		return model.getUserName();
 	}
 
 	/**
@@ -447,7 +413,7 @@ public class AddressWrapper implements Address, ModelWrapper<Address> {
 	*/
 	@Override
 	public String getUserUuid() {
-		return _address.getUserUuid();
+		return model.getUserUuid();
 	}
 
 	/**
@@ -457,7 +423,7 @@ public class AddressWrapper implements Address, ModelWrapper<Address> {
 	*/
 	@Override
 	public String getUuid() {
-		return _address.getUuid();
+		return model.getUuid();
 	}
 
 	/**
@@ -467,22 +433,7 @@ public class AddressWrapper implements Address, ModelWrapper<Address> {
 	*/
 	@Override
 	public String getZip() {
-		return _address.getZip();
-	}
-
-	@Override
-	public int hashCode() {
-		return _address.hashCode();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _address.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _address.isEscapedModel();
+		return model.getZip();
 	}
 
 	/**
@@ -492,12 +443,7 @@ public class AddressWrapper implements Address, ModelWrapper<Address> {
 	*/
 	@Override
 	public boolean isMailing() {
-		return _address.isMailing();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _address.isNew();
+		return model.isMailing();
 	}
 
 	/**
@@ -507,12 +453,12 @@ public class AddressWrapper implements Address, ModelWrapper<Address> {
 	*/
 	@Override
 	public boolean isPrimary() {
-		return _address.isPrimary();
+		return model.isPrimary();
 	}
 
 	@Override
 	public void persist() {
-		_address.persist();
+		model.persist();
 	}
 
 	/**
@@ -522,12 +468,7 @@ public class AddressWrapper implements Address, ModelWrapper<Address> {
 	*/
 	@Override
 	public void setAddressId(long addressId) {
-		_address.setAddressId(addressId);
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_address.setCachedModel(cachedModel);
+		model.setAddressId(addressId);
 	}
 
 	/**
@@ -537,12 +478,12 @@ public class AddressWrapper implements Address, ModelWrapper<Address> {
 	*/
 	@Override
 	public void setCity(String city) {
-		_address.setCity(city);
+		model.setCity(city);
 	}
 
 	@Override
 	public void setClassName(String className) {
-		_address.setClassName(className);
+		model.setClassName(className);
 	}
 
 	/**
@@ -552,7 +493,7 @@ public class AddressWrapper implements Address, ModelWrapper<Address> {
 	*/
 	@Override
 	public void setClassNameId(long classNameId) {
-		_address.setClassNameId(classNameId);
+		model.setClassNameId(classNameId);
 	}
 
 	/**
@@ -562,7 +503,7 @@ public class AddressWrapper implements Address, ModelWrapper<Address> {
 	*/
 	@Override
 	public void setClassPK(long classPK) {
-		_address.setClassPK(classPK);
+		model.setClassPK(classPK);
 	}
 
 	/**
@@ -572,7 +513,7 @@ public class AddressWrapper implements Address, ModelWrapper<Address> {
 	*/
 	@Override
 	public void setCompanyId(long companyId) {
-		_address.setCompanyId(companyId);
+		model.setCompanyId(companyId);
 	}
 
 	/**
@@ -582,7 +523,7 @@ public class AddressWrapper implements Address, ModelWrapper<Address> {
 	*/
 	@Override
 	public void setCountryId(long countryId) {
-		_address.setCountryId(countryId);
+		model.setCountryId(countryId);
 	}
 
 	/**
@@ -592,22 +533,7 @@ public class AddressWrapper implements Address, ModelWrapper<Address> {
 	*/
 	@Override
 	public void setCreateDate(Date createDate) {
-		_address.setCreateDate(createDate);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(BaseModel<?> baseModel) {
-		_address.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_address.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_address.setExpandoBridgeAttributes(serviceContext);
+		model.setCreateDate(createDate);
 	}
 
 	/**
@@ -617,7 +543,7 @@ public class AddressWrapper implements Address, ModelWrapper<Address> {
 	*/
 	@Override
 	public void setMailing(boolean mailing) {
-		_address.setMailing(mailing);
+		model.setMailing(mailing);
 	}
 
 	/**
@@ -627,7 +553,7 @@ public class AddressWrapper implements Address, ModelWrapper<Address> {
 	*/
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
-		_address.setModifiedDate(modifiedDate);
+		model.setModifiedDate(modifiedDate);
 	}
 
 	/**
@@ -637,12 +563,7 @@ public class AddressWrapper implements Address, ModelWrapper<Address> {
 	*/
 	@Override
 	public void setMvccVersion(long mvccVersion) {
-		_address.setMvccVersion(mvccVersion);
-	}
-
-	@Override
-	public void setNew(boolean n) {
-		_address.setNew(n);
+		model.setMvccVersion(mvccVersion);
 	}
 
 	/**
@@ -652,7 +573,7 @@ public class AddressWrapper implements Address, ModelWrapper<Address> {
 	*/
 	@Override
 	public void setPrimary(boolean primary) {
-		_address.setPrimary(primary);
+		model.setPrimary(primary);
 	}
 
 	/**
@@ -662,12 +583,7 @@ public class AddressWrapper implements Address, ModelWrapper<Address> {
 	*/
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_address.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_address.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -677,7 +593,7 @@ public class AddressWrapper implements Address, ModelWrapper<Address> {
 	*/
 	@Override
 	public void setRegionId(long regionId) {
-		_address.setRegionId(regionId);
+		model.setRegionId(regionId);
 	}
 
 	/**
@@ -687,7 +603,7 @@ public class AddressWrapper implements Address, ModelWrapper<Address> {
 	*/
 	@Override
 	public void setStreet1(String street1) {
-		_address.setStreet1(street1);
+		model.setStreet1(street1);
 	}
 
 	/**
@@ -697,7 +613,7 @@ public class AddressWrapper implements Address, ModelWrapper<Address> {
 	*/
 	@Override
 	public void setStreet2(String street2) {
-		_address.setStreet2(street2);
+		model.setStreet2(street2);
 	}
 
 	/**
@@ -707,7 +623,7 @@ public class AddressWrapper implements Address, ModelWrapper<Address> {
 	*/
 	@Override
 	public void setStreet3(String street3) {
-		_address.setStreet3(street3);
+		model.setStreet3(street3);
 	}
 
 	/**
@@ -717,7 +633,7 @@ public class AddressWrapper implements Address, ModelWrapper<Address> {
 	*/
 	@Override
 	public void setTypeId(long typeId) {
-		_address.setTypeId(typeId);
+		model.setTypeId(typeId);
 	}
 
 	/**
@@ -727,7 +643,7 @@ public class AddressWrapper implements Address, ModelWrapper<Address> {
 	*/
 	@Override
 	public void setUserId(long userId) {
-		_address.setUserId(userId);
+		model.setUserId(userId);
 	}
 
 	/**
@@ -737,7 +653,7 @@ public class AddressWrapper implements Address, ModelWrapper<Address> {
 	*/
 	@Override
 	public void setUserName(String userName) {
-		_address.setUserName(userName);
+		model.setUserName(userName);
 	}
 
 	/**
@@ -747,7 +663,7 @@ public class AddressWrapper implements Address, ModelWrapper<Address> {
 	*/
 	@Override
 	public void setUserUuid(String userUuid) {
-		_address.setUserUuid(userUuid);
+		model.setUserUuid(userUuid);
 	}
 
 	/**
@@ -757,7 +673,7 @@ public class AddressWrapper implements Address, ModelWrapper<Address> {
 	*/
 	@Override
 	public void setUuid(String uuid) {
-		_address.setUuid(uuid);
+		model.setUuid(uuid);
 	}
 
 	/**
@@ -767,77 +683,16 @@ public class AddressWrapper implements Address, ModelWrapper<Address> {
 	*/
 	@Override
 	public void setZip(String zip) {
-		_address.setZip(zip);
-	}
-
-	@Override
-	public CacheModel<Address> toCacheModel() {
-		return _address.toCacheModel();
-	}
-
-	@Override
-	public Address toEscapedModel() {
-		return new AddressWrapper(_address.toEscapedModel());
-	}
-
-	@Override
-	public String toString() {
-		return _address.toString();
-	}
-
-	@Override
-	public Address toUnescapedModel() {
-		return new AddressWrapper(_address.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _address.toXmlString();
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-
-		if (!(obj instanceof AddressWrapper)) {
-			return false;
-		}
-
-		AddressWrapper addressWrapper = (AddressWrapper)obj;
-
-		if (Objects.equals(_address, addressWrapper._address)) {
-			return true;
-		}
-
-		return false;
+		model.setZip(zip);
 	}
 
 	@Override
 	public StagedModelType getStagedModelType() {
-		return _address.getStagedModelType();
+		return model.getStagedModelType();
 	}
 
 	@Override
-	public Address getWrappedModel() {
-		return _address;
+	protected AddressWrapper wrap(Address address) {
+		return new AddressWrapper(address);
 	}
-
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _address.isEntityCacheEnabled();
-	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _address.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_address.resetOriginalValues();
-	}
-
-	private final Address _address;
 }

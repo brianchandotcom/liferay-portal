@@ -16,19 +16,14 @@ package com.liferay.announcements.kernel.model;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
-
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 
 import com.liferay.portal.kernel.model.ModelWrapper;
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -40,20 +35,10 @@ import java.util.Objects;
  * @generated
  */
 @ProviderType
-public class AnnouncementsEntryWrapper implements AnnouncementsEntry,
-	ModelWrapper<AnnouncementsEntry> {
+public class AnnouncementsEntryWrapper extends BaseModelWrapper<AnnouncementsEntry>
+	implements AnnouncementsEntry, ModelWrapper<AnnouncementsEntry> {
 	public AnnouncementsEntryWrapper(AnnouncementsEntry announcementsEntry) {
-		_announcementsEntry = announcementsEntry;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return AnnouncementsEntry.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return AnnouncementsEntry.class.getName();
+		super(announcementsEntry);
 	}
 
 	@Override
@@ -186,16 +171,6 @@ public class AnnouncementsEntryWrapper implements AnnouncementsEntry,
 		}
 	}
 
-	@Override
-	public Object clone() {
-		return new AnnouncementsEntryWrapper((AnnouncementsEntry)_announcementsEntry.clone());
-	}
-
-	@Override
-	public int compareTo(AnnouncementsEntry announcementsEntry) {
-		return _announcementsEntry.compareTo(announcementsEntry);
-	}
-
 	/**
 	* Returns the alert of this announcements entry.
 	*
@@ -203,7 +178,7 @@ public class AnnouncementsEntryWrapper implements AnnouncementsEntry,
 	*/
 	@Override
 	public boolean getAlert() {
-		return _announcementsEntry.getAlert();
+		return model.getAlert();
 	}
 
 	/**
@@ -213,7 +188,7 @@ public class AnnouncementsEntryWrapper implements AnnouncementsEntry,
 	*/
 	@Override
 	public String getClassName() {
-		return _announcementsEntry.getClassName();
+		return model.getClassName();
 	}
 
 	/**
@@ -223,7 +198,7 @@ public class AnnouncementsEntryWrapper implements AnnouncementsEntry,
 	*/
 	@Override
 	public long getClassNameId() {
-		return _announcementsEntry.getClassNameId();
+		return model.getClassNameId();
 	}
 
 	/**
@@ -233,7 +208,7 @@ public class AnnouncementsEntryWrapper implements AnnouncementsEntry,
 	*/
 	@Override
 	public long getClassPK() {
-		return _announcementsEntry.getClassPK();
+		return model.getClassPK();
 	}
 
 	/**
@@ -243,7 +218,7 @@ public class AnnouncementsEntryWrapper implements AnnouncementsEntry,
 	*/
 	@Override
 	public long getCompanyId() {
-		return _announcementsEntry.getCompanyId();
+		return model.getCompanyId();
 	}
 
 	/**
@@ -253,7 +228,7 @@ public class AnnouncementsEntryWrapper implements AnnouncementsEntry,
 	*/
 	@Override
 	public String getContent() {
-		return _announcementsEntry.getContent();
+		return model.getContent();
 	}
 
 	/**
@@ -263,7 +238,7 @@ public class AnnouncementsEntryWrapper implements AnnouncementsEntry,
 	*/
 	@Override
 	public Date getCreateDate() {
-		return _announcementsEntry.getCreateDate();
+		return model.getCreateDate();
 	}
 
 	/**
@@ -273,7 +248,7 @@ public class AnnouncementsEntryWrapper implements AnnouncementsEntry,
 	*/
 	@Override
 	public Date getDisplayDate() {
-		return _announcementsEntry.getDisplayDate();
+		return model.getDisplayDate();
 	}
 
 	/**
@@ -283,12 +258,7 @@ public class AnnouncementsEntryWrapper implements AnnouncementsEntry,
 	*/
 	@Override
 	public long getEntryId() {
-		return _announcementsEntry.getEntryId();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _announcementsEntry.getExpandoBridge();
+		return model.getEntryId();
 	}
 
 	/**
@@ -298,13 +268,13 @@ public class AnnouncementsEntryWrapper implements AnnouncementsEntry,
 	*/
 	@Override
 	public Date getExpirationDate() {
-		return _announcementsEntry.getExpirationDate();
+		return model.getExpirationDate();
 	}
 
 	@Override
 	public long getGroupId()
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _announcementsEntry.getGroupId();
+		return model.getGroupId();
 	}
 
 	/**
@@ -314,7 +284,7 @@ public class AnnouncementsEntryWrapper implements AnnouncementsEntry,
 	*/
 	@Override
 	public Date getModifiedDate() {
-		return _announcementsEntry.getModifiedDate();
+		return model.getModifiedDate();
 	}
 
 	/**
@@ -324,12 +294,7 @@ public class AnnouncementsEntryWrapper implements AnnouncementsEntry,
 	*/
 	@Override
 	public long getPrimaryKey() {
-		return _announcementsEntry.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _announcementsEntry.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	/**
@@ -339,7 +304,7 @@ public class AnnouncementsEntryWrapper implements AnnouncementsEntry,
 	*/
 	@Override
 	public int getPriority() {
-		return _announcementsEntry.getPriority();
+		return model.getPriority();
 	}
 
 	/**
@@ -349,7 +314,7 @@ public class AnnouncementsEntryWrapper implements AnnouncementsEntry,
 	*/
 	@Override
 	public String getTitle() {
-		return _announcementsEntry.getTitle();
+		return model.getTitle();
 	}
 
 	/**
@@ -359,7 +324,7 @@ public class AnnouncementsEntryWrapper implements AnnouncementsEntry,
 	*/
 	@Override
 	public String getType() {
-		return _announcementsEntry.getType();
+		return model.getType();
 	}
 
 	/**
@@ -369,7 +334,7 @@ public class AnnouncementsEntryWrapper implements AnnouncementsEntry,
 	*/
 	@Override
 	public String getUrl() {
-		return _announcementsEntry.getUrl();
+		return model.getUrl();
 	}
 
 	/**
@@ -379,7 +344,7 @@ public class AnnouncementsEntryWrapper implements AnnouncementsEntry,
 	*/
 	@Override
 	public long getUserId() {
-		return _announcementsEntry.getUserId();
+		return model.getUserId();
 	}
 
 	/**
@@ -389,7 +354,7 @@ public class AnnouncementsEntryWrapper implements AnnouncementsEntry,
 	*/
 	@Override
 	public String getUserName() {
-		return _announcementsEntry.getUserName();
+		return model.getUserName();
 	}
 
 	/**
@@ -399,7 +364,7 @@ public class AnnouncementsEntryWrapper implements AnnouncementsEntry,
 	*/
 	@Override
 	public String getUserUuid() {
-		return _announcementsEntry.getUserUuid();
+		return model.getUserUuid();
 	}
 
 	/**
@@ -409,12 +374,7 @@ public class AnnouncementsEntryWrapper implements AnnouncementsEntry,
 	*/
 	@Override
 	public String getUuid() {
-		return _announcementsEntry.getUuid();
-	}
-
-	@Override
-	public int hashCode() {
-		return _announcementsEntry.hashCode();
+		return model.getUuid();
 	}
 
 	/**
@@ -424,27 +384,12 @@ public class AnnouncementsEntryWrapper implements AnnouncementsEntry,
 	*/
 	@Override
 	public boolean isAlert() {
-		return _announcementsEntry.isAlert();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _announcementsEntry.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _announcementsEntry.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _announcementsEntry.isNew();
+		return model.isAlert();
 	}
 
 	@Override
 	public void persist() {
-		_announcementsEntry.persist();
+		model.persist();
 	}
 
 	/**
@@ -454,17 +399,12 @@ public class AnnouncementsEntryWrapper implements AnnouncementsEntry,
 	*/
 	@Override
 	public void setAlert(boolean alert) {
-		_announcementsEntry.setAlert(alert);
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_announcementsEntry.setCachedModel(cachedModel);
+		model.setAlert(alert);
 	}
 
 	@Override
 	public void setClassName(String className) {
-		_announcementsEntry.setClassName(className);
+		model.setClassName(className);
 	}
 
 	/**
@@ -474,7 +414,7 @@ public class AnnouncementsEntryWrapper implements AnnouncementsEntry,
 	*/
 	@Override
 	public void setClassNameId(long classNameId) {
-		_announcementsEntry.setClassNameId(classNameId);
+		model.setClassNameId(classNameId);
 	}
 
 	/**
@@ -484,7 +424,7 @@ public class AnnouncementsEntryWrapper implements AnnouncementsEntry,
 	*/
 	@Override
 	public void setClassPK(long classPK) {
-		_announcementsEntry.setClassPK(classPK);
+		model.setClassPK(classPK);
 	}
 
 	/**
@@ -494,7 +434,7 @@ public class AnnouncementsEntryWrapper implements AnnouncementsEntry,
 	*/
 	@Override
 	public void setCompanyId(long companyId) {
-		_announcementsEntry.setCompanyId(companyId);
+		model.setCompanyId(companyId);
 	}
 
 	/**
@@ -504,7 +444,7 @@ public class AnnouncementsEntryWrapper implements AnnouncementsEntry,
 	*/
 	@Override
 	public void setContent(String content) {
-		_announcementsEntry.setContent(content);
+		model.setContent(content);
 	}
 
 	/**
@@ -514,7 +454,7 @@ public class AnnouncementsEntryWrapper implements AnnouncementsEntry,
 	*/
 	@Override
 	public void setCreateDate(Date createDate) {
-		_announcementsEntry.setCreateDate(createDate);
+		model.setCreateDate(createDate);
 	}
 
 	/**
@@ -524,7 +464,7 @@ public class AnnouncementsEntryWrapper implements AnnouncementsEntry,
 	*/
 	@Override
 	public void setDisplayDate(Date displayDate) {
-		_announcementsEntry.setDisplayDate(displayDate);
+		model.setDisplayDate(displayDate);
 	}
 
 	/**
@@ -534,23 +474,7 @@ public class AnnouncementsEntryWrapper implements AnnouncementsEntry,
 	*/
 	@Override
 	public void setEntryId(long entryId) {
-		_announcementsEntry.setEntryId(entryId);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-		_announcementsEntry.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_announcementsEntry.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_announcementsEntry.setExpandoBridgeAttributes(serviceContext);
+		model.setEntryId(entryId);
 	}
 
 	/**
@@ -560,7 +484,7 @@ public class AnnouncementsEntryWrapper implements AnnouncementsEntry,
 	*/
 	@Override
 	public void setExpirationDate(Date expirationDate) {
-		_announcementsEntry.setExpirationDate(expirationDate);
+		model.setExpirationDate(expirationDate);
 	}
 
 	/**
@@ -570,12 +494,7 @@ public class AnnouncementsEntryWrapper implements AnnouncementsEntry,
 	*/
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
-		_announcementsEntry.setModifiedDate(modifiedDate);
-	}
-
-	@Override
-	public void setNew(boolean n) {
-		_announcementsEntry.setNew(n);
+		model.setModifiedDate(modifiedDate);
 	}
 
 	/**
@@ -585,12 +504,7 @@ public class AnnouncementsEntryWrapper implements AnnouncementsEntry,
 	*/
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_announcementsEntry.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_announcementsEntry.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -600,7 +514,7 @@ public class AnnouncementsEntryWrapper implements AnnouncementsEntry,
 	*/
 	@Override
 	public void setPriority(int priority) {
-		_announcementsEntry.setPriority(priority);
+		model.setPriority(priority);
 	}
 
 	/**
@@ -610,7 +524,7 @@ public class AnnouncementsEntryWrapper implements AnnouncementsEntry,
 	*/
 	@Override
 	public void setTitle(String title) {
-		_announcementsEntry.setTitle(title);
+		model.setTitle(title);
 	}
 
 	/**
@@ -620,7 +534,7 @@ public class AnnouncementsEntryWrapper implements AnnouncementsEntry,
 	*/
 	@Override
 	public void setType(String type) {
-		_announcementsEntry.setType(type);
+		model.setType(type);
 	}
 
 	/**
@@ -630,7 +544,7 @@ public class AnnouncementsEntryWrapper implements AnnouncementsEntry,
 	*/
 	@Override
 	public void setUrl(String url) {
-		_announcementsEntry.setUrl(url);
+		model.setUrl(url);
 	}
 
 	/**
@@ -640,7 +554,7 @@ public class AnnouncementsEntryWrapper implements AnnouncementsEntry,
 	*/
 	@Override
 	public void setUserId(long userId) {
-		_announcementsEntry.setUserId(userId);
+		model.setUserId(userId);
 	}
 
 	/**
@@ -650,7 +564,7 @@ public class AnnouncementsEntryWrapper implements AnnouncementsEntry,
 	*/
 	@Override
 	public void setUserName(String userName) {
-		_announcementsEntry.setUserName(userName);
+		model.setUserName(userName);
 	}
 
 	/**
@@ -660,7 +574,7 @@ public class AnnouncementsEntryWrapper implements AnnouncementsEntry,
 	*/
 	@Override
 	public void setUserUuid(String userUuid) {
-		_announcementsEntry.setUserUuid(userUuid);
+		model.setUserUuid(userUuid);
 	}
 
 	/**
@@ -670,78 +584,17 @@ public class AnnouncementsEntryWrapper implements AnnouncementsEntry,
 	*/
 	@Override
 	public void setUuid(String uuid) {
-		_announcementsEntry.setUuid(uuid);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<AnnouncementsEntry> toCacheModel() {
-		return _announcementsEntry.toCacheModel();
-	}
-
-	@Override
-	public AnnouncementsEntry toEscapedModel() {
-		return new AnnouncementsEntryWrapper(_announcementsEntry.toEscapedModel());
-	}
-
-	@Override
-	public String toString() {
-		return _announcementsEntry.toString();
-	}
-
-	@Override
-	public AnnouncementsEntry toUnescapedModel() {
-		return new AnnouncementsEntryWrapper(_announcementsEntry.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _announcementsEntry.toXmlString();
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-
-		if (!(obj instanceof AnnouncementsEntryWrapper)) {
-			return false;
-		}
-
-		AnnouncementsEntryWrapper announcementsEntryWrapper = (AnnouncementsEntryWrapper)obj;
-
-		if (Objects.equals(_announcementsEntry,
-					announcementsEntryWrapper._announcementsEntry)) {
-			return true;
-		}
-
-		return false;
+		model.setUuid(uuid);
 	}
 
 	@Override
 	public StagedModelType getStagedModelType() {
-		return _announcementsEntry.getStagedModelType();
+		return model.getStagedModelType();
 	}
 
 	@Override
-	public AnnouncementsEntry getWrappedModel() {
-		return _announcementsEntry;
+	protected AnnouncementsEntryWrapper wrap(
+		AnnouncementsEntry announcementsEntry) {
+		return new AnnouncementsEntryWrapper(announcementsEntry);
 	}
-
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _announcementsEntry.isEntityCacheEnabled();
-	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _announcementsEntry.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_announcementsEntry.resetOriginalValues();
-	}
-
-	private final AnnouncementsEntry _announcementsEntry;
 }

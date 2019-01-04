@@ -16,15 +16,10 @@ package com.liferay.portal.kernel.model;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
-
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -36,20 +31,10 @@ import java.util.Objects;
  * @generated
  */
 @ProviderType
-public class PasswordPolicyRelWrapper implements PasswordPolicyRel,
-	ModelWrapper<PasswordPolicyRel> {
+public class PasswordPolicyRelWrapper extends BaseModelWrapper<PasswordPolicyRel>
+	implements PasswordPolicyRel, ModelWrapper<PasswordPolicyRel> {
 	public PasswordPolicyRelWrapper(PasswordPolicyRel passwordPolicyRel) {
-		_passwordPolicyRel = passwordPolicyRel;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return PasswordPolicyRel.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return PasswordPolicyRel.class.getName();
+		super(passwordPolicyRel);
 	}
 
 	@Override
@@ -105,16 +90,6 @@ public class PasswordPolicyRelWrapper implements PasswordPolicyRel,
 		}
 	}
 
-	@Override
-	public Object clone() {
-		return new PasswordPolicyRelWrapper((PasswordPolicyRel)_passwordPolicyRel.clone());
-	}
-
-	@Override
-	public int compareTo(PasswordPolicyRel passwordPolicyRel) {
-		return _passwordPolicyRel.compareTo(passwordPolicyRel);
-	}
-
 	/**
 	* Returns the fully qualified class name of this password policy rel.
 	*
@@ -122,7 +97,7 @@ public class PasswordPolicyRelWrapper implements PasswordPolicyRel,
 	*/
 	@Override
 	public String getClassName() {
-		return _passwordPolicyRel.getClassName();
+		return model.getClassName();
 	}
 
 	/**
@@ -132,7 +107,7 @@ public class PasswordPolicyRelWrapper implements PasswordPolicyRel,
 	*/
 	@Override
 	public long getClassNameId() {
-		return _passwordPolicyRel.getClassNameId();
+		return model.getClassNameId();
 	}
 
 	/**
@@ -142,7 +117,7 @@ public class PasswordPolicyRelWrapper implements PasswordPolicyRel,
 	*/
 	@Override
 	public long getClassPK() {
-		return _passwordPolicyRel.getClassPK();
+		return model.getClassPK();
 	}
 
 	/**
@@ -152,12 +127,7 @@ public class PasswordPolicyRelWrapper implements PasswordPolicyRel,
 	*/
 	@Override
 	public long getCompanyId() {
-		return _passwordPolicyRel.getCompanyId();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _passwordPolicyRel.getExpandoBridge();
+		return model.getCompanyId();
 	}
 
 	/**
@@ -167,7 +137,7 @@ public class PasswordPolicyRelWrapper implements PasswordPolicyRel,
 	*/
 	@Override
 	public long getMvccVersion() {
-		return _passwordPolicyRel.getMvccVersion();
+		return model.getMvccVersion();
 	}
 
 	/**
@@ -177,7 +147,7 @@ public class PasswordPolicyRelWrapper implements PasswordPolicyRel,
 	*/
 	@Override
 	public long getPasswordPolicyId() {
-		return _passwordPolicyRel.getPasswordPolicyId();
+		return model.getPasswordPolicyId();
 	}
 
 	/**
@@ -187,7 +157,7 @@ public class PasswordPolicyRelWrapper implements PasswordPolicyRel,
 	*/
 	@Override
 	public long getPasswordPolicyRelId() {
-		return _passwordPolicyRel.getPasswordPolicyRelId();
+		return model.getPasswordPolicyRelId();
 	}
 
 	/**
@@ -197,47 +167,17 @@ public class PasswordPolicyRelWrapper implements PasswordPolicyRel,
 	*/
 	@Override
 	public long getPrimaryKey() {
-		return _passwordPolicyRel.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _passwordPolicyRel.getPrimaryKeyObj();
-	}
-
-	@Override
-	public int hashCode() {
-		return _passwordPolicyRel.hashCode();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _passwordPolicyRel.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _passwordPolicyRel.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _passwordPolicyRel.isNew();
+		return model.getPrimaryKey();
 	}
 
 	@Override
 	public void persist() {
-		_passwordPolicyRel.persist();
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_passwordPolicyRel.setCachedModel(cachedModel);
+		model.persist();
 	}
 
 	@Override
 	public void setClassName(String className) {
-		_passwordPolicyRel.setClassName(className);
+		model.setClassName(className);
 	}
 
 	/**
@@ -247,7 +187,7 @@ public class PasswordPolicyRelWrapper implements PasswordPolicyRel,
 	*/
 	@Override
 	public void setClassNameId(long classNameId) {
-		_passwordPolicyRel.setClassNameId(classNameId);
+		model.setClassNameId(classNameId);
 	}
 
 	/**
@@ -257,7 +197,7 @@ public class PasswordPolicyRelWrapper implements PasswordPolicyRel,
 	*/
 	@Override
 	public void setClassPK(long classPK) {
-		_passwordPolicyRel.setClassPK(classPK);
+		model.setClassPK(classPK);
 	}
 
 	/**
@@ -267,22 +207,7 @@ public class PasswordPolicyRelWrapper implements PasswordPolicyRel,
 	*/
 	@Override
 	public void setCompanyId(long companyId) {
-		_passwordPolicyRel.setCompanyId(companyId);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(BaseModel<?> baseModel) {
-		_passwordPolicyRel.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_passwordPolicyRel.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_passwordPolicyRel.setExpandoBridgeAttributes(serviceContext);
+		model.setCompanyId(companyId);
 	}
 
 	/**
@@ -292,12 +217,7 @@ public class PasswordPolicyRelWrapper implements PasswordPolicyRel,
 	*/
 	@Override
 	public void setMvccVersion(long mvccVersion) {
-		_passwordPolicyRel.setMvccVersion(mvccVersion);
-	}
-
-	@Override
-	public void setNew(boolean n) {
-		_passwordPolicyRel.setNew(n);
+		model.setMvccVersion(mvccVersion);
 	}
 
 	/**
@@ -307,7 +227,7 @@ public class PasswordPolicyRelWrapper implements PasswordPolicyRel,
 	*/
 	@Override
 	public void setPasswordPolicyId(long passwordPolicyId) {
-		_passwordPolicyRel.setPasswordPolicyId(passwordPolicyId);
+		model.setPasswordPolicyId(passwordPolicyId);
 	}
 
 	/**
@@ -317,7 +237,7 @@ public class PasswordPolicyRelWrapper implements PasswordPolicyRel,
 	*/
 	@Override
 	public void setPasswordPolicyRelId(long passwordPolicyRelId) {
-		_passwordPolicyRel.setPasswordPolicyRelId(passwordPolicyRelId);
+		model.setPasswordPolicyRelId(passwordPolicyRelId);
 	}
 
 	/**
@@ -327,78 +247,11 @@ public class PasswordPolicyRelWrapper implements PasswordPolicyRel,
 	*/
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_passwordPolicyRel.setPrimaryKey(primaryKey);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_passwordPolicyRel.setPrimaryKeyObj(primaryKeyObj);
+	protected PasswordPolicyRelWrapper wrap(PasswordPolicyRel passwordPolicyRel) {
+		return new PasswordPolicyRelWrapper(passwordPolicyRel);
 	}
-
-	@Override
-	public CacheModel<PasswordPolicyRel> toCacheModel() {
-		return _passwordPolicyRel.toCacheModel();
-	}
-
-	@Override
-	public PasswordPolicyRel toEscapedModel() {
-		return new PasswordPolicyRelWrapper(_passwordPolicyRel.toEscapedModel());
-	}
-
-	@Override
-	public String toString() {
-		return _passwordPolicyRel.toString();
-	}
-
-	@Override
-	public PasswordPolicyRel toUnescapedModel() {
-		return new PasswordPolicyRelWrapper(_passwordPolicyRel.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _passwordPolicyRel.toXmlString();
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-
-		if (!(obj instanceof PasswordPolicyRelWrapper)) {
-			return false;
-		}
-
-		PasswordPolicyRelWrapper passwordPolicyRelWrapper = (PasswordPolicyRelWrapper)obj;
-
-		if (Objects.equals(_passwordPolicyRel,
-					passwordPolicyRelWrapper._passwordPolicyRel)) {
-			return true;
-		}
-
-		return false;
-	}
-
-	@Override
-	public PasswordPolicyRel getWrappedModel() {
-		return _passwordPolicyRel;
-	}
-
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _passwordPolicyRel.isEntityCacheEnabled();
-	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _passwordPolicyRel.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_passwordPolicyRel.resetOriginalValues();
-	}
-
-	private final PasswordPolicyRel _passwordPolicyRel;
 }

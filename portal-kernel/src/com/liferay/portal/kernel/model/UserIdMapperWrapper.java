@@ -16,15 +16,10 @@ package com.liferay.portal.kernel.model;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
-
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -36,20 +31,10 @@ import java.util.Objects;
  * @generated
  */
 @ProviderType
-public class UserIdMapperWrapper implements UserIdMapper,
-	ModelWrapper<UserIdMapper> {
+public class UserIdMapperWrapper extends BaseModelWrapper<UserIdMapper>
+	implements UserIdMapper, ModelWrapper<UserIdMapper> {
 	public UserIdMapperWrapper(UserIdMapper userIdMapper) {
-		_userIdMapper = userIdMapper;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return UserIdMapper.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return UserIdMapper.class.getName();
+		super(userIdMapper);
 	}
 
 	@Override
@@ -112,16 +97,6 @@ public class UserIdMapperWrapper implements UserIdMapper,
 		}
 	}
 
-	@Override
-	public Object clone() {
-		return new UserIdMapperWrapper((UserIdMapper)_userIdMapper.clone());
-	}
-
-	@Override
-	public int compareTo(UserIdMapper userIdMapper) {
-		return _userIdMapper.compareTo(userIdMapper);
-	}
-
 	/**
 	* Returns the company ID of this user ID mapper.
 	*
@@ -129,7 +104,7 @@ public class UserIdMapperWrapper implements UserIdMapper,
 	*/
 	@Override
 	public long getCompanyId() {
-		return _userIdMapper.getCompanyId();
+		return model.getCompanyId();
 	}
 
 	/**
@@ -139,12 +114,7 @@ public class UserIdMapperWrapper implements UserIdMapper,
 	*/
 	@Override
 	public String getDescription() {
-		return _userIdMapper.getDescription();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _userIdMapper.getExpandoBridge();
+		return model.getDescription();
 	}
 
 	/**
@@ -154,7 +124,7 @@ public class UserIdMapperWrapper implements UserIdMapper,
 	*/
 	@Override
 	public String getExternalUserId() {
-		return _userIdMapper.getExternalUserId();
+		return model.getExternalUserId();
 	}
 
 	/**
@@ -164,7 +134,7 @@ public class UserIdMapperWrapper implements UserIdMapper,
 	*/
 	@Override
 	public long getMvccVersion() {
-		return _userIdMapper.getMvccVersion();
+		return model.getMvccVersion();
 	}
 
 	/**
@@ -174,12 +144,7 @@ public class UserIdMapperWrapper implements UserIdMapper,
 	*/
 	@Override
 	public long getPrimaryKey() {
-		return _userIdMapper.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _userIdMapper.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	/**
@@ -189,7 +154,7 @@ public class UserIdMapperWrapper implements UserIdMapper,
 	*/
 	@Override
 	public String getType() {
-		return _userIdMapper.getType();
+		return model.getType();
 	}
 
 	/**
@@ -199,7 +164,7 @@ public class UserIdMapperWrapper implements UserIdMapper,
 	*/
 	@Override
 	public long getUserId() {
-		return _userIdMapper.getUserId();
+		return model.getUserId();
 	}
 
 	/**
@@ -209,7 +174,7 @@ public class UserIdMapperWrapper implements UserIdMapper,
 	*/
 	@Override
 	public long getUserIdMapperId() {
-		return _userIdMapper.getUserIdMapperId();
+		return model.getUserIdMapperId();
 	}
 
 	/**
@@ -219,37 +184,12 @@ public class UserIdMapperWrapper implements UserIdMapper,
 	*/
 	@Override
 	public String getUserUuid() {
-		return _userIdMapper.getUserUuid();
-	}
-
-	@Override
-	public int hashCode() {
-		return _userIdMapper.hashCode();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _userIdMapper.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _userIdMapper.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _userIdMapper.isNew();
+		return model.getUserUuid();
 	}
 
 	@Override
 	public void persist() {
-		_userIdMapper.persist();
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_userIdMapper.setCachedModel(cachedModel);
+		model.persist();
 	}
 
 	/**
@@ -259,7 +199,7 @@ public class UserIdMapperWrapper implements UserIdMapper,
 	*/
 	@Override
 	public void setCompanyId(long companyId) {
-		_userIdMapper.setCompanyId(companyId);
+		model.setCompanyId(companyId);
 	}
 
 	/**
@@ -269,22 +209,7 @@ public class UserIdMapperWrapper implements UserIdMapper,
 	*/
 	@Override
 	public void setDescription(String description) {
-		_userIdMapper.setDescription(description);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(BaseModel<?> baseModel) {
-		_userIdMapper.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_userIdMapper.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_userIdMapper.setExpandoBridgeAttributes(serviceContext);
+		model.setDescription(description);
 	}
 
 	/**
@@ -294,7 +219,7 @@ public class UserIdMapperWrapper implements UserIdMapper,
 	*/
 	@Override
 	public void setExternalUserId(String externalUserId) {
-		_userIdMapper.setExternalUserId(externalUserId);
+		model.setExternalUserId(externalUserId);
 	}
 
 	/**
@@ -304,12 +229,7 @@ public class UserIdMapperWrapper implements UserIdMapper,
 	*/
 	@Override
 	public void setMvccVersion(long mvccVersion) {
-		_userIdMapper.setMvccVersion(mvccVersion);
-	}
-
-	@Override
-	public void setNew(boolean n) {
-		_userIdMapper.setNew(n);
+		model.setMvccVersion(mvccVersion);
 	}
 
 	/**
@@ -319,12 +239,7 @@ public class UserIdMapperWrapper implements UserIdMapper,
 	*/
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_userIdMapper.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_userIdMapper.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -334,7 +249,7 @@ public class UserIdMapperWrapper implements UserIdMapper,
 	*/
 	@Override
 	public void setType(String type) {
-		_userIdMapper.setType(type);
+		model.setType(type);
 	}
 
 	/**
@@ -344,7 +259,7 @@ public class UserIdMapperWrapper implements UserIdMapper,
 	*/
 	@Override
 	public void setUserId(long userId) {
-		_userIdMapper.setUserId(userId);
+		model.setUserId(userId);
 	}
 
 	/**
@@ -354,7 +269,7 @@ public class UserIdMapperWrapper implements UserIdMapper,
 	*/
 	@Override
 	public void setUserIdMapperId(long userIdMapperId) {
-		_userIdMapper.setUserIdMapperId(userIdMapperId);
+		model.setUserIdMapperId(userIdMapperId);
 	}
 
 	/**
@@ -364,72 +279,11 @@ public class UserIdMapperWrapper implements UserIdMapper,
 	*/
 	@Override
 	public void setUserUuid(String userUuid) {
-		_userIdMapper.setUserUuid(userUuid);
+		model.setUserUuid(userUuid);
 	}
 
 	@Override
-	public CacheModel<UserIdMapper> toCacheModel() {
-		return _userIdMapper.toCacheModel();
+	protected UserIdMapperWrapper wrap(UserIdMapper userIdMapper) {
+		return new UserIdMapperWrapper(userIdMapper);
 	}
-
-	@Override
-	public UserIdMapper toEscapedModel() {
-		return new UserIdMapperWrapper(_userIdMapper.toEscapedModel());
-	}
-
-	@Override
-	public String toString() {
-		return _userIdMapper.toString();
-	}
-
-	@Override
-	public UserIdMapper toUnescapedModel() {
-		return new UserIdMapperWrapper(_userIdMapper.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _userIdMapper.toXmlString();
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-
-		if (!(obj instanceof UserIdMapperWrapper)) {
-			return false;
-		}
-
-		UserIdMapperWrapper userIdMapperWrapper = (UserIdMapperWrapper)obj;
-
-		if (Objects.equals(_userIdMapper, userIdMapperWrapper._userIdMapper)) {
-			return true;
-		}
-
-		return false;
-	}
-
-	@Override
-	public UserIdMapper getWrappedModel() {
-		return _userIdMapper;
-	}
-
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _userIdMapper.isEntityCacheEnabled();
-	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _userIdMapper.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_userIdMapper.resetOriginalValues();
-	}
-
-	private final UserIdMapper _userIdMapper;
 }

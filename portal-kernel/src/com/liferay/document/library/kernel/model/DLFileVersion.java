@@ -69,6 +69,8 @@ public interface DLFileVersion extends DLFileVersionModel, PersistedModel,
 	public DLFileEntryType getDLFileEntryType()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
+	public com.liferay.expando.kernel.model.ExpandoBridge getExpandoBridge();
+
 	public com.liferay.portal.kernel.util.UnicodeProperties getExtraSettingsProperties();
 
 	public DLFileEntry getFileEntry()

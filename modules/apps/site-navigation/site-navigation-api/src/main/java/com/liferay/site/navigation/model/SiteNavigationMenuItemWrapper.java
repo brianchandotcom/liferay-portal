@@ -16,19 +16,14 @@ package com.liferay.site.navigation.model;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
-
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 
 import com.liferay.portal.kernel.model.ModelWrapper;
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -40,21 +35,11 @@ import java.util.Objects;
  * @generated
  */
 @ProviderType
-public class SiteNavigationMenuItemWrapper implements SiteNavigationMenuItem,
-	ModelWrapper<SiteNavigationMenuItem> {
+public class SiteNavigationMenuItemWrapper extends BaseModelWrapper<SiteNavigationMenuItem>
+	implements SiteNavigationMenuItem, ModelWrapper<SiteNavigationMenuItem> {
 	public SiteNavigationMenuItemWrapper(
 		SiteNavigationMenuItem siteNavigationMenuItem) {
-		_siteNavigationMenuItem = siteNavigationMenuItem;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return SiteNavigationMenuItem.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return SiteNavigationMenuItem.class.getName();
+		super(siteNavigationMenuItem);
 	}
 
 	@Override
@@ -176,16 +161,6 @@ public class SiteNavigationMenuItemWrapper implements SiteNavigationMenuItem,
 		}
 	}
 
-	@Override
-	public Object clone() {
-		return new SiteNavigationMenuItemWrapper((SiteNavigationMenuItem)_siteNavigationMenuItem.clone());
-	}
-
-	@Override
-	public int compareTo(SiteNavigationMenuItem siteNavigationMenuItem) {
-		return _siteNavigationMenuItem.compareTo(siteNavigationMenuItem);
-	}
-
 	/**
 	* Returns the company ID of this site navigation menu item.
 	*
@@ -193,7 +168,7 @@ public class SiteNavigationMenuItemWrapper implements SiteNavigationMenuItem,
 	*/
 	@Override
 	public long getCompanyId() {
-		return _siteNavigationMenuItem.getCompanyId();
+		return model.getCompanyId();
 	}
 
 	/**
@@ -203,12 +178,7 @@ public class SiteNavigationMenuItemWrapper implements SiteNavigationMenuItem,
 	*/
 	@Override
 	public Date getCreateDate() {
-		return _siteNavigationMenuItem.getCreateDate();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _siteNavigationMenuItem.getExpandoBridge();
+		return model.getCreateDate();
 	}
 
 	/**
@@ -218,7 +188,7 @@ public class SiteNavigationMenuItemWrapper implements SiteNavigationMenuItem,
 	*/
 	@Override
 	public long getGroupId() {
-		return _siteNavigationMenuItem.getGroupId();
+		return model.getGroupId();
 	}
 
 	/**
@@ -228,7 +198,7 @@ public class SiteNavigationMenuItemWrapper implements SiteNavigationMenuItem,
 	*/
 	@Override
 	public Date getLastPublishDate() {
-		return _siteNavigationMenuItem.getLastPublishDate();
+		return model.getLastPublishDate();
 	}
 
 	/**
@@ -238,7 +208,7 @@ public class SiteNavigationMenuItemWrapper implements SiteNavigationMenuItem,
 	*/
 	@Override
 	public Date getModifiedDate() {
-		return _siteNavigationMenuItem.getModifiedDate();
+		return model.getModifiedDate();
 	}
 
 	/**
@@ -248,7 +218,7 @@ public class SiteNavigationMenuItemWrapper implements SiteNavigationMenuItem,
 	*/
 	@Override
 	public String getName() {
-		return _siteNavigationMenuItem.getName();
+		return model.getName();
 	}
 
 	/**
@@ -258,7 +228,7 @@ public class SiteNavigationMenuItemWrapper implements SiteNavigationMenuItem,
 	*/
 	@Override
 	public int getOrder() {
-		return _siteNavigationMenuItem.getOrder();
+		return model.getOrder();
 	}
 
 	/**
@@ -268,7 +238,7 @@ public class SiteNavigationMenuItemWrapper implements SiteNavigationMenuItem,
 	*/
 	@Override
 	public long getParentSiteNavigationMenuItemId() {
-		return _siteNavigationMenuItem.getParentSiteNavigationMenuItemId();
+		return model.getParentSiteNavigationMenuItemId();
 	}
 
 	/**
@@ -278,12 +248,7 @@ public class SiteNavigationMenuItemWrapper implements SiteNavigationMenuItem,
 	*/
 	@Override
 	public long getPrimaryKey() {
-		return _siteNavigationMenuItem.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _siteNavigationMenuItem.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	/**
@@ -293,7 +258,7 @@ public class SiteNavigationMenuItemWrapper implements SiteNavigationMenuItem,
 	*/
 	@Override
 	public long getSiteNavigationMenuId() {
-		return _siteNavigationMenuItem.getSiteNavigationMenuId();
+		return model.getSiteNavigationMenuId();
 	}
 
 	/**
@@ -303,7 +268,7 @@ public class SiteNavigationMenuItemWrapper implements SiteNavigationMenuItem,
 	*/
 	@Override
 	public long getSiteNavigationMenuItemId() {
-		return _siteNavigationMenuItem.getSiteNavigationMenuItemId();
+		return model.getSiteNavigationMenuItemId();
 	}
 
 	/**
@@ -313,7 +278,7 @@ public class SiteNavigationMenuItemWrapper implements SiteNavigationMenuItem,
 	*/
 	@Override
 	public String getType() {
-		return _siteNavigationMenuItem.getType();
+		return model.getType();
 	}
 
 	/**
@@ -323,7 +288,7 @@ public class SiteNavigationMenuItemWrapper implements SiteNavigationMenuItem,
 	*/
 	@Override
 	public String getTypeSettings() {
-		return _siteNavigationMenuItem.getTypeSettings();
+		return model.getTypeSettings();
 	}
 
 	/**
@@ -333,7 +298,7 @@ public class SiteNavigationMenuItemWrapper implements SiteNavigationMenuItem,
 	*/
 	@Override
 	public long getUserId() {
-		return _siteNavigationMenuItem.getUserId();
+		return model.getUserId();
 	}
 
 	/**
@@ -343,7 +308,7 @@ public class SiteNavigationMenuItemWrapper implements SiteNavigationMenuItem,
 	*/
 	@Override
 	public String getUserName() {
-		return _siteNavigationMenuItem.getUserName();
+		return model.getUserName();
 	}
 
 	/**
@@ -353,7 +318,7 @@ public class SiteNavigationMenuItemWrapper implements SiteNavigationMenuItem,
 	*/
 	@Override
 	public String getUserUuid() {
-		return _siteNavigationMenuItem.getUserUuid();
+		return model.getUserUuid();
 	}
 
 	/**
@@ -363,37 +328,12 @@ public class SiteNavigationMenuItemWrapper implements SiteNavigationMenuItem,
 	*/
 	@Override
 	public String getUuid() {
-		return _siteNavigationMenuItem.getUuid();
-	}
-
-	@Override
-	public int hashCode() {
-		return _siteNavigationMenuItem.hashCode();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _siteNavigationMenuItem.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _siteNavigationMenuItem.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _siteNavigationMenuItem.isNew();
+		return model.getUuid();
 	}
 
 	@Override
 	public void persist() {
-		_siteNavigationMenuItem.persist();
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_siteNavigationMenuItem.setCachedModel(cachedModel);
+		model.persist();
 	}
 
 	/**
@@ -403,7 +343,7 @@ public class SiteNavigationMenuItemWrapper implements SiteNavigationMenuItem,
 	*/
 	@Override
 	public void setCompanyId(long companyId) {
-		_siteNavigationMenuItem.setCompanyId(companyId);
+		model.setCompanyId(companyId);
 	}
 
 	/**
@@ -413,23 +353,7 @@ public class SiteNavigationMenuItemWrapper implements SiteNavigationMenuItem,
 	*/
 	@Override
 	public void setCreateDate(Date createDate) {
-		_siteNavigationMenuItem.setCreateDate(createDate);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-		_siteNavigationMenuItem.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_siteNavigationMenuItem.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_siteNavigationMenuItem.setExpandoBridgeAttributes(serviceContext);
+		model.setCreateDate(createDate);
 	}
 
 	/**
@@ -439,7 +363,7 @@ public class SiteNavigationMenuItemWrapper implements SiteNavigationMenuItem,
 	*/
 	@Override
 	public void setGroupId(long groupId) {
-		_siteNavigationMenuItem.setGroupId(groupId);
+		model.setGroupId(groupId);
 	}
 
 	/**
@@ -449,7 +373,7 @@ public class SiteNavigationMenuItemWrapper implements SiteNavigationMenuItem,
 	*/
 	@Override
 	public void setLastPublishDate(Date lastPublishDate) {
-		_siteNavigationMenuItem.setLastPublishDate(lastPublishDate);
+		model.setLastPublishDate(lastPublishDate);
 	}
 
 	/**
@@ -459,7 +383,7 @@ public class SiteNavigationMenuItemWrapper implements SiteNavigationMenuItem,
 	*/
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
-		_siteNavigationMenuItem.setModifiedDate(modifiedDate);
+		model.setModifiedDate(modifiedDate);
 	}
 
 	/**
@@ -469,12 +393,7 @@ public class SiteNavigationMenuItemWrapper implements SiteNavigationMenuItem,
 	*/
 	@Override
 	public void setName(String name) {
-		_siteNavigationMenuItem.setName(name);
-	}
-
-	@Override
-	public void setNew(boolean n) {
-		_siteNavigationMenuItem.setNew(n);
+		model.setName(name);
 	}
 
 	/**
@@ -484,7 +403,7 @@ public class SiteNavigationMenuItemWrapper implements SiteNavigationMenuItem,
 	*/
 	@Override
 	public void setOrder(int order) {
-		_siteNavigationMenuItem.setOrder(order);
+		model.setOrder(order);
 	}
 
 	/**
@@ -495,7 +414,7 @@ public class SiteNavigationMenuItemWrapper implements SiteNavigationMenuItem,
 	@Override
 	public void setParentSiteNavigationMenuItemId(
 		long parentSiteNavigationMenuItemId) {
-		_siteNavigationMenuItem.setParentSiteNavigationMenuItemId(parentSiteNavigationMenuItemId);
+		model.setParentSiteNavigationMenuItemId(parentSiteNavigationMenuItemId);
 	}
 
 	/**
@@ -505,12 +424,7 @@ public class SiteNavigationMenuItemWrapper implements SiteNavigationMenuItem,
 	*/
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_siteNavigationMenuItem.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_siteNavigationMenuItem.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -520,7 +434,7 @@ public class SiteNavigationMenuItemWrapper implements SiteNavigationMenuItem,
 	*/
 	@Override
 	public void setSiteNavigationMenuId(long siteNavigationMenuId) {
-		_siteNavigationMenuItem.setSiteNavigationMenuId(siteNavigationMenuId);
+		model.setSiteNavigationMenuId(siteNavigationMenuId);
 	}
 
 	/**
@@ -530,7 +444,7 @@ public class SiteNavigationMenuItemWrapper implements SiteNavigationMenuItem,
 	*/
 	@Override
 	public void setSiteNavigationMenuItemId(long siteNavigationMenuItemId) {
-		_siteNavigationMenuItem.setSiteNavigationMenuItemId(siteNavigationMenuItemId);
+		model.setSiteNavigationMenuItemId(siteNavigationMenuItemId);
 	}
 
 	/**
@@ -540,7 +454,7 @@ public class SiteNavigationMenuItemWrapper implements SiteNavigationMenuItem,
 	*/
 	@Override
 	public void setType(String type) {
-		_siteNavigationMenuItem.setType(type);
+		model.setType(type);
 	}
 
 	/**
@@ -550,7 +464,7 @@ public class SiteNavigationMenuItemWrapper implements SiteNavigationMenuItem,
 	*/
 	@Override
 	public void setTypeSettings(String typeSettings) {
-		_siteNavigationMenuItem.setTypeSettings(typeSettings);
+		model.setTypeSettings(typeSettings);
 	}
 
 	/**
@@ -560,7 +474,7 @@ public class SiteNavigationMenuItemWrapper implements SiteNavigationMenuItem,
 	*/
 	@Override
 	public void setUserId(long userId) {
-		_siteNavigationMenuItem.setUserId(userId);
+		model.setUserId(userId);
 	}
 
 	/**
@@ -570,7 +484,7 @@ public class SiteNavigationMenuItemWrapper implements SiteNavigationMenuItem,
 	*/
 	@Override
 	public void setUserName(String userName) {
-		_siteNavigationMenuItem.setUserName(userName);
+		model.setUserName(userName);
 	}
 
 	/**
@@ -580,7 +494,7 @@ public class SiteNavigationMenuItemWrapper implements SiteNavigationMenuItem,
 	*/
 	@Override
 	public void setUserUuid(String userUuid) {
-		_siteNavigationMenuItem.setUserUuid(userUuid);
+		model.setUserUuid(userUuid);
 	}
 
 	/**
@@ -590,78 +504,17 @@ public class SiteNavigationMenuItemWrapper implements SiteNavigationMenuItem,
 	*/
 	@Override
 	public void setUuid(String uuid) {
-		_siteNavigationMenuItem.setUuid(uuid);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<SiteNavigationMenuItem> toCacheModel() {
-		return _siteNavigationMenuItem.toCacheModel();
-	}
-
-	@Override
-	public SiteNavigationMenuItem toEscapedModel() {
-		return new SiteNavigationMenuItemWrapper(_siteNavigationMenuItem.toEscapedModel());
-	}
-
-	@Override
-	public String toString() {
-		return _siteNavigationMenuItem.toString();
-	}
-
-	@Override
-	public SiteNavigationMenuItem toUnescapedModel() {
-		return new SiteNavigationMenuItemWrapper(_siteNavigationMenuItem.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _siteNavigationMenuItem.toXmlString();
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-
-		if (!(obj instanceof SiteNavigationMenuItemWrapper)) {
-			return false;
-		}
-
-		SiteNavigationMenuItemWrapper siteNavigationMenuItemWrapper = (SiteNavigationMenuItemWrapper)obj;
-
-		if (Objects.equals(_siteNavigationMenuItem,
-					siteNavigationMenuItemWrapper._siteNavigationMenuItem)) {
-			return true;
-		}
-
-		return false;
+		model.setUuid(uuid);
 	}
 
 	@Override
 	public StagedModelType getStagedModelType() {
-		return _siteNavigationMenuItem.getStagedModelType();
+		return model.getStagedModelType();
 	}
 
 	@Override
-	public SiteNavigationMenuItem getWrappedModel() {
-		return _siteNavigationMenuItem;
+	protected SiteNavigationMenuItemWrapper wrap(
+		SiteNavigationMenuItem siteNavigationMenuItem) {
+		return new SiteNavigationMenuItemWrapper(siteNavigationMenuItem);
 	}
-
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _siteNavigationMenuItem.isEntityCacheEnabled();
-	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _siteNavigationMenuItem.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_siteNavigationMenuItem.resetOriginalValues();
-	}
-
-	private final SiteNavigationMenuItem _siteNavigationMenuItem;
 }

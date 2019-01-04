@@ -16,18 +16,13 @@ package com.liferay.portal.kernel.model;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
-
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -39,19 +34,10 @@ import java.util.Objects;
  * @generated
  */
 @ProviderType
-public class RoleWrapper implements Role, ModelWrapper<Role> {
+public class RoleWrapper extends BaseModelWrapper<Role> implements Role,
+	ModelWrapper<Role> {
 	public RoleWrapper(Role role) {
-		_role = role;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return Role.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return Role.class.getName();
+		super(role);
 	}
 
 	@Override
@@ -171,18 +157,8 @@ public class RoleWrapper implements Role, ModelWrapper<Role> {
 	}
 
 	@Override
-	public Object clone() {
-		return new RoleWrapper((Role)_role.clone());
-	}
-
-	@Override
-	public int compareTo(Role role) {
-		return _role.compareTo(role);
-	}
-
-	@Override
 	public String[] getAvailableLanguageIds() {
-		return _role.getAvailableLanguageIds();
+		return model.getAvailableLanguageIds();
 	}
 
 	/**
@@ -192,7 +168,7 @@ public class RoleWrapper implements Role, ModelWrapper<Role> {
 	*/
 	@Override
 	public String getClassName() {
-		return _role.getClassName();
+		return model.getClassName();
 	}
 
 	/**
@@ -202,7 +178,7 @@ public class RoleWrapper implements Role, ModelWrapper<Role> {
 	*/
 	@Override
 	public long getClassNameId() {
-		return _role.getClassNameId();
+		return model.getClassNameId();
 	}
 
 	/**
@@ -212,7 +188,7 @@ public class RoleWrapper implements Role, ModelWrapper<Role> {
 	*/
 	@Override
 	public long getClassPK() {
-		return _role.getClassPK();
+		return model.getClassPK();
 	}
 
 	/**
@@ -222,7 +198,7 @@ public class RoleWrapper implements Role, ModelWrapper<Role> {
 	*/
 	@Override
 	public long getCompanyId() {
-		return _role.getCompanyId();
+		return model.getCompanyId();
 	}
 
 	/**
@@ -232,12 +208,12 @@ public class RoleWrapper implements Role, ModelWrapper<Role> {
 	*/
 	@Override
 	public Date getCreateDate() {
-		return _role.getCreateDate();
+		return model.getCreateDate();
 	}
 
 	@Override
 	public String getDefaultLanguageId() {
-		return _role.getDefaultLanguageId();
+		return model.getDefaultLanguageId();
 	}
 
 	/**
@@ -247,7 +223,7 @@ public class RoleWrapper implements Role, ModelWrapper<Role> {
 	*/
 	@Override
 	public String getDescription() {
-		return _role.getDescription();
+		return model.getDescription();
 	}
 
 	/**
@@ -258,7 +234,7 @@ public class RoleWrapper implements Role, ModelWrapper<Role> {
 	*/
 	@Override
 	public String getDescription(java.util.Locale locale) {
-		return _role.getDescription(locale);
+		return model.getDescription(locale);
 	}
 
 	/**
@@ -270,7 +246,7 @@ public class RoleWrapper implements Role, ModelWrapper<Role> {
 	*/
 	@Override
 	public String getDescription(java.util.Locale locale, boolean useDefault) {
-		return _role.getDescription(locale, useDefault);
+		return model.getDescription(locale, useDefault);
 	}
 
 	/**
@@ -281,7 +257,7 @@ public class RoleWrapper implements Role, ModelWrapper<Role> {
 	*/
 	@Override
 	public String getDescription(String languageId) {
-		return _role.getDescription(languageId);
+		return model.getDescription(languageId);
 	}
 
 	/**
@@ -293,17 +269,17 @@ public class RoleWrapper implements Role, ModelWrapper<Role> {
 	*/
 	@Override
 	public String getDescription(String languageId, boolean useDefault) {
-		return _role.getDescription(languageId, useDefault);
+		return model.getDescription(languageId, useDefault);
 	}
 
 	@Override
 	public String getDescriptionCurrentLanguageId() {
-		return _role.getDescriptionCurrentLanguageId();
+		return model.getDescriptionCurrentLanguageId();
 	}
 
 	@Override
 	public String getDescriptionCurrentValue() {
-		return _role.getDescriptionCurrentValue();
+		return model.getDescriptionCurrentValue();
 	}
 
 	/**
@@ -313,18 +289,13 @@ public class RoleWrapper implements Role, ModelWrapper<Role> {
 	*/
 	@Override
 	public Map<java.util.Locale, String> getDescriptionMap() {
-		return _role.getDescriptionMap();
+		return model.getDescriptionMap();
 	}
 
 	@Override
 	public String getDescriptiveName()
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _role.getDescriptiveName();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _role.getExpandoBridge();
+		return model.getDescriptiveName();
 	}
 
 	/**
@@ -334,7 +305,7 @@ public class RoleWrapper implements Role, ModelWrapper<Role> {
 	*/
 	@Override
 	public Date getModifiedDate() {
-		return _role.getModifiedDate();
+		return model.getModifiedDate();
 	}
 
 	/**
@@ -344,7 +315,7 @@ public class RoleWrapper implements Role, ModelWrapper<Role> {
 	*/
 	@Override
 	public long getMvccVersion() {
-		return _role.getMvccVersion();
+		return model.getMvccVersion();
 	}
 
 	/**
@@ -354,7 +325,7 @@ public class RoleWrapper implements Role, ModelWrapper<Role> {
 	*/
 	@Override
 	public String getName() {
-		return _role.getName();
+		return model.getName();
 	}
 
 	/**
@@ -364,12 +335,7 @@ public class RoleWrapper implements Role, ModelWrapper<Role> {
 	*/
 	@Override
 	public long getPrimaryKey() {
-		return _role.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _role.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	/**
@@ -379,7 +345,7 @@ public class RoleWrapper implements Role, ModelWrapper<Role> {
 	*/
 	@Override
 	public long getRoleId() {
-		return _role.getRoleId();
+		return model.getRoleId();
 	}
 
 	/**
@@ -389,7 +355,7 @@ public class RoleWrapper implements Role, ModelWrapper<Role> {
 	*/
 	@Override
 	public String getSubtype() {
-		return _role.getSubtype();
+		return model.getSubtype();
 	}
 
 	/**
@@ -399,7 +365,7 @@ public class RoleWrapper implements Role, ModelWrapper<Role> {
 	*/
 	@Override
 	public String getTitle() {
-		return _role.getTitle();
+		return model.getTitle();
 	}
 
 	/**
@@ -410,7 +376,7 @@ public class RoleWrapper implements Role, ModelWrapper<Role> {
 	*/
 	@Override
 	public String getTitle(java.util.Locale locale) {
-		return _role.getTitle(locale);
+		return model.getTitle(locale);
 	}
 
 	/**
@@ -422,7 +388,7 @@ public class RoleWrapper implements Role, ModelWrapper<Role> {
 	*/
 	@Override
 	public String getTitle(java.util.Locale locale, boolean useDefault) {
-		return _role.getTitle(locale, useDefault);
+		return model.getTitle(locale, useDefault);
 	}
 
 	/**
@@ -433,7 +399,7 @@ public class RoleWrapper implements Role, ModelWrapper<Role> {
 	*/
 	@Override
 	public String getTitle(String languageId) {
-		return _role.getTitle(languageId);
+		return model.getTitle(languageId);
 	}
 
 	/**
@@ -445,17 +411,17 @@ public class RoleWrapper implements Role, ModelWrapper<Role> {
 	*/
 	@Override
 	public String getTitle(String languageId, boolean useDefault) {
-		return _role.getTitle(languageId, useDefault);
+		return model.getTitle(languageId, useDefault);
 	}
 
 	@Override
 	public String getTitleCurrentLanguageId() {
-		return _role.getTitleCurrentLanguageId();
+		return model.getTitleCurrentLanguageId();
 	}
 
 	@Override
 	public String getTitleCurrentValue() {
-		return _role.getTitleCurrentValue();
+		return model.getTitleCurrentValue();
 	}
 
 	/**
@@ -465,7 +431,7 @@ public class RoleWrapper implements Role, ModelWrapper<Role> {
 	*/
 	@Override
 	public Map<java.util.Locale, String> getTitleMap() {
-		return _role.getTitleMap();
+		return model.getTitleMap();
 	}
 
 	/**
@@ -475,12 +441,12 @@ public class RoleWrapper implements Role, ModelWrapper<Role> {
 	*/
 	@Override
 	public int getType() {
-		return _role.getType();
+		return model.getType();
 	}
 
 	@Override
 	public String getTypeLabel() {
-		return _role.getTypeLabel();
+		return model.getTypeLabel();
 	}
 
 	/**
@@ -490,7 +456,7 @@ public class RoleWrapper implements Role, ModelWrapper<Role> {
 	*/
 	@Override
 	public long getUserId() {
-		return _role.getUserId();
+		return model.getUserId();
 	}
 
 	/**
@@ -500,7 +466,7 @@ public class RoleWrapper implements Role, ModelWrapper<Role> {
 	*/
 	@Override
 	public String getUserName() {
-		return _role.getUserName();
+		return model.getUserName();
 	}
 
 	/**
@@ -510,7 +476,7 @@ public class RoleWrapper implements Role, ModelWrapper<Role> {
 	*/
 	@Override
 	public String getUserUuid() {
-		return _role.getUserUuid();
+		return model.getUserUuid();
 	}
 
 	/**
@@ -520,65 +486,40 @@ public class RoleWrapper implements Role, ModelWrapper<Role> {
 	*/
 	@Override
 	public String getUuid() {
-		return _role.getUuid();
-	}
-
-	@Override
-	public int hashCode() {
-		return _role.hashCode();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _role.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _role.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _role.isNew();
+		return model.getUuid();
 	}
 
 	@Override
 	public boolean isSystem() {
-		return _role.isSystem();
+		return model.isSystem();
 	}
 
 	@Override
 	public boolean isTeam() {
-		return _role.isTeam();
+		return model.isTeam();
 	}
 
 	@Override
 	public void persist() {
-		_role.persist();
+		model.persist();
 	}
 
 	@Override
 	public void prepareLocalizedFieldsForImport()
 		throws com.liferay.portal.kernel.exception.LocaleException {
-		_role.prepareLocalizedFieldsForImport();
+		model.prepareLocalizedFieldsForImport();
 	}
 
 	@Override
 	public void prepareLocalizedFieldsForImport(
 		java.util.Locale defaultImportLocale)
 		throws com.liferay.portal.kernel.exception.LocaleException {
-		_role.prepareLocalizedFieldsForImport(defaultImportLocale);
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_role.setCachedModel(cachedModel);
+		model.prepareLocalizedFieldsForImport(defaultImportLocale);
 	}
 
 	@Override
 	public void setClassName(String className) {
-		_role.setClassName(className);
+		model.setClassName(className);
 	}
 
 	/**
@@ -588,7 +529,7 @@ public class RoleWrapper implements Role, ModelWrapper<Role> {
 	*/
 	@Override
 	public void setClassNameId(long classNameId) {
-		_role.setClassNameId(classNameId);
+		model.setClassNameId(classNameId);
 	}
 
 	/**
@@ -598,7 +539,7 @@ public class RoleWrapper implements Role, ModelWrapper<Role> {
 	*/
 	@Override
 	public void setClassPK(long classPK) {
-		_role.setClassPK(classPK);
+		model.setClassPK(classPK);
 	}
 
 	/**
@@ -608,7 +549,7 @@ public class RoleWrapper implements Role, ModelWrapper<Role> {
 	*/
 	@Override
 	public void setCompanyId(long companyId) {
-		_role.setCompanyId(companyId);
+		model.setCompanyId(companyId);
 	}
 
 	/**
@@ -618,7 +559,7 @@ public class RoleWrapper implements Role, ModelWrapper<Role> {
 	*/
 	@Override
 	public void setCreateDate(Date createDate) {
-		_role.setCreateDate(createDate);
+		model.setCreateDate(createDate);
 	}
 
 	/**
@@ -628,7 +569,7 @@ public class RoleWrapper implements Role, ModelWrapper<Role> {
 	*/
 	@Override
 	public void setDescription(String description) {
-		_role.setDescription(description);
+		model.setDescription(description);
 	}
 
 	/**
@@ -639,7 +580,7 @@ public class RoleWrapper implements Role, ModelWrapper<Role> {
 	*/
 	@Override
 	public void setDescription(String description, java.util.Locale locale) {
-		_role.setDescription(description, locale);
+		model.setDescription(description, locale);
 	}
 
 	/**
@@ -652,12 +593,12 @@ public class RoleWrapper implements Role, ModelWrapper<Role> {
 	@Override
 	public void setDescription(String description, java.util.Locale locale,
 		java.util.Locale defaultLocale) {
-		_role.setDescription(description, locale, defaultLocale);
+		model.setDescription(description, locale, defaultLocale);
 	}
 
 	@Override
 	public void setDescriptionCurrentLanguageId(String languageId) {
-		_role.setDescriptionCurrentLanguageId(languageId);
+		model.setDescriptionCurrentLanguageId(languageId);
 	}
 
 	/**
@@ -667,7 +608,7 @@ public class RoleWrapper implements Role, ModelWrapper<Role> {
 	*/
 	@Override
 	public void setDescriptionMap(Map<java.util.Locale, String> descriptionMap) {
-		_role.setDescriptionMap(descriptionMap);
+		model.setDescriptionMap(descriptionMap);
 	}
 
 	/**
@@ -680,22 +621,7 @@ public class RoleWrapper implements Role, ModelWrapper<Role> {
 	public void setDescriptionMap(
 		Map<java.util.Locale, String> descriptionMap,
 		java.util.Locale defaultLocale) {
-		_role.setDescriptionMap(descriptionMap, defaultLocale);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(BaseModel<?> baseModel) {
-		_role.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_role.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_role.setExpandoBridgeAttributes(serviceContext);
+		model.setDescriptionMap(descriptionMap, defaultLocale);
 	}
 
 	/**
@@ -705,7 +631,7 @@ public class RoleWrapper implements Role, ModelWrapper<Role> {
 	*/
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
-		_role.setModifiedDate(modifiedDate);
+		model.setModifiedDate(modifiedDate);
 	}
 
 	/**
@@ -715,7 +641,7 @@ public class RoleWrapper implements Role, ModelWrapper<Role> {
 	*/
 	@Override
 	public void setMvccVersion(long mvccVersion) {
-		_role.setMvccVersion(mvccVersion);
+		model.setMvccVersion(mvccVersion);
 	}
 
 	/**
@@ -725,12 +651,7 @@ public class RoleWrapper implements Role, ModelWrapper<Role> {
 	*/
 	@Override
 	public void setName(String name) {
-		_role.setName(name);
-	}
-
-	@Override
-	public void setNew(boolean n) {
-		_role.setNew(n);
+		model.setName(name);
 	}
 
 	/**
@@ -740,12 +661,7 @@ public class RoleWrapper implements Role, ModelWrapper<Role> {
 	*/
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_role.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_role.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -755,7 +671,7 @@ public class RoleWrapper implements Role, ModelWrapper<Role> {
 	*/
 	@Override
 	public void setRoleId(long roleId) {
-		_role.setRoleId(roleId);
+		model.setRoleId(roleId);
 	}
 
 	/**
@@ -765,7 +681,7 @@ public class RoleWrapper implements Role, ModelWrapper<Role> {
 	*/
 	@Override
 	public void setSubtype(String subtype) {
-		_role.setSubtype(subtype);
+		model.setSubtype(subtype);
 	}
 
 	/**
@@ -775,7 +691,7 @@ public class RoleWrapper implements Role, ModelWrapper<Role> {
 	*/
 	@Override
 	public void setTitle(String title) {
-		_role.setTitle(title);
+		model.setTitle(title);
 	}
 
 	/**
@@ -786,7 +702,7 @@ public class RoleWrapper implements Role, ModelWrapper<Role> {
 	*/
 	@Override
 	public void setTitle(String title, java.util.Locale locale) {
-		_role.setTitle(title, locale);
+		model.setTitle(title, locale);
 	}
 
 	/**
@@ -799,12 +715,12 @@ public class RoleWrapper implements Role, ModelWrapper<Role> {
 	@Override
 	public void setTitle(String title, java.util.Locale locale,
 		java.util.Locale defaultLocale) {
-		_role.setTitle(title, locale, defaultLocale);
+		model.setTitle(title, locale, defaultLocale);
 	}
 
 	@Override
 	public void setTitleCurrentLanguageId(String languageId) {
-		_role.setTitleCurrentLanguageId(languageId);
+		model.setTitleCurrentLanguageId(languageId);
 	}
 
 	/**
@@ -814,7 +730,7 @@ public class RoleWrapper implements Role, ModelWrapper<Role> {
 	*/
 	@Override
 	public void setTitleMap(Map<java.util.Locale, String> titleMap) {
-		_role.setTitleMap(titleMap);
+		model.setTitleMap(titleMap);
 	}
 
 	/**
@@ -826,7 +742,7 @@ public class RoleWrapper implements Role, ModelWrapper<Role> {
 	@Override
 	public void setTitleMap(Map<java.util.Locale, String> titleMap,
 		java.util.Locale defaultLocale) {
-		_role.setTitleMap(titleMap, defaultLocale);
+		model.setTitleMap(titleMap, defaultLocale);
 	}
 
 	/**
@@ -836,7 +752,7 @@ public class RoleWrapper implements Role, ModelWrapper<Role> {
 	*/
 	@Override
 	public void setType(int type) {
-		_role.setType(type);
+		model.setType(type);
 	}
 
 	/**
@@ -846,7 +762,7 @@ public class RoleWrapper implements Role, ModelWrapper<Role> {
 	*/
 	@Override
 	public void setUserId(long userId) {
-		_role.setUserId(userId);
+		model.setUserId(userId);
 	}
 
 	/**
@@ -856,7 +772,7 @@ public class RoleWrapper implements Role, ModelWrapper<Role> {
 	*/
 	@Override
 	public void setUserName(String userName) {
-		_role.setUserName(userName);
+		model.setUserName(userName);
 	}
 
 	/**
@@ -866,7 +782,7 @@ public class RoleWrapper implements Role, ModelWrapper<Role> {
 	*/
 	@Override
 	public void setUserUuid(String userUuid) {
-		_role.setUserUuid(userUuid);
+		model.setUserUuid(userUuid);
 	}
 
 	/**
@@ -876,77 +792,16 @@ public class RoleWrapper implements Role, ModelWrapper<Role> {
 	*/
 	@Override
 	public void setUuid(String uuid) {
-		_role.setUuid(uuid);
-	}
-
-	@Override
-	public CacheModel<Role> toCacheModel() {
-		return _role.toCacheModel();
-	}
-
-	@Override
-	public Role toEscapedModel() {
-		return new RoleWrapper(_role.toEscapedModel());
-	}
-
-	@Override
-	public String toString() {
-		return _role.toString();
-	}
-
-	@Override
-	public Role toUnescapedModel() {
-		return new RoleWrapper(_role.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _role.toXmlString();
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-
-		if (!(obj instanceof RoleWrapper)) {
-			return false;
-		}
-
-		RoleWrapper roleWrapper = (RoleWrapper)obj;
-
-		if (Objects.equals(_role, roleWrapper._role)) {
-			return true;
-		}
-
-		return false;
+		model.setUuid(uuid);
 	}
 
 	@Override
 	public StagedModelType getStagedModelType() {
-		return _role.getStagedModelType();
+		return model.getStagedModelType();
 	}
 
 	@Override
-	public Role getWrappedModel() {
-		return _role;
+	protected RoleWrapper wrap(Role role) {
+		return new RoleWrapper(role);
 	}
-
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _role.isEntityCacheEnabled();
-	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _role.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_role.resetOriginalValues();
-	}
-
-	private final Role _role;
 }

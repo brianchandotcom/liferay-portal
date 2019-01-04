@@ -16,17 +16,12 @@ package com.liferay.portal.workflow.kaleo.model;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
-
 import com.liferay.portal.kernel.model.ModelWrapper;
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -38,19 +33,10 @@ import java.util.Objects;
  * @generated
  */
 @ProviderType
-public class KaleoLogWrapper implements KaleoLog, ModelWrapper<KaleoLog> {
+public class KaleoLogWrapper extends BaseModelWrapper<KaleoLog>
+	implements KaleoLog, ModelWrapper<KaleoLog> {
 	public KaleoLogWrapper(KaleoLog kaleoLog) {
-		_kaleoLog = kaleoLog;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return KaleoLog.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return KaleoLog.class.getName();
+		super(kaleoLog);
 	}
 
 	@Override
@@ -283,16 +269,6 @@ public class KaleoLogWrapper implements KaleoLog, ModelWrapper<KaleoLog> {
 		}
 	}
 
-	@Override
-	public Object clone() {
-		return new KaleoLogWrapper((KaleoLog)_kaleoLog.clone());
-	}
-
-	@Override
-	public int compareTo(KaleoLog kaleoLog) {
-		return _kaleoLog.compareTo(kaleoLog);
-	}
-
 	/**
 	* Returns the comment of this kaleo log.
 	*
@@ -300,7 +276,7 @@ public class KaleoLogWrapper implements KaleoLog, ModelWrapper<KaleoLog> {
 	*/
 	@Override
 	public String getComment() {
-		return _kaleoLog.getComment();
+		return model.getComment();
 	}
 
 	/**
@@ -310,7 +286,7 @@ public class KaleoLogWrapper implements KaleoLog, ModelWrapper<KaleoLog> {
 	*/
 	@Override
 	public long getCompanyId() {
-		return _kaleoLog.getCompanyId();
+		return model.getCompanyId();
 	}
 
 	/**
@@ -320,7 +296,7 @@ public class KaleoLogWrapper implements KaleoLog, ModelWrapper<KaleoLog> {
 	*/
 	@Override
 	public Date getCreateDate() {
-		return _kaleoLog.getCreateDate();
+		return model.getCreateDate();
 	}
 
 	/**
@@ -330,7 +306,7 @@ public class KaleoLogWrapper implements KaleoLog, ModelWrapper<KaleoLog> {
 	*/
 	@Override
 	public String getCurrentAssigneeClassName() {
-		return _kaleoLog.getCurrentAssigneeClassName();
+		return model.getCurrentAssigneeClassName();
 	}
 
 	/**
@@ -340,7 +316,7 @@ public class KaleoLogWrapper implements KaleoLog, ModelWrapper<KaleoLog> {
 	*/
 	@Override
 	public long getCurrentAssigneeClassPK() {
-		return _kaleoLog.getCurrentAssigneeClassPK();
+		return model.getCurrentAssigneeClassPK();
 	}
 
 	/**
@@ -350,7 +326,7 @@ public class KaleoLogWrapper implements KaleoLog, ModelWrapper<KaleoLog> {
 	*/
 	@Override
 	public long getDuration() {
-		return _kaleoLog.getDuration();
+		return model.getDuration();
 	}
 
 	/**
@@ -360,12 +336,7 @@ public class KaleoLogWrapper implements KaleoLog, ModelWrapper<KaleoLog> {
 	*/
 	@Override
 	public Date getEndDate() {
-		return _kaleoLog.getEndDate();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _kaleoLog.getExpandoBridge();
+		return model.getEndDate();
 	}
 
 	/**
@@ -375,7 +346,7 @@ public class KaleoLogWrapper implements KaleoLog, ModelWrapper<KaleoLog> {
 	*/
 	@Override
 	public long getGroupId() {
-		return _kaleoLog.getGroupId();
+		return model.getGroupId();
 	}
 
 	/**
@@ -385,7 +356,7 @@ public class KaleoLogWrapper implements KaleoLog, ModelWrapper<KaleoLog> {
 	*/
 	@Override
 	public String getKaleoActionDescription() {
-		return _kaleoLog.getKaleoActionDescription();
+		return model.getKaleoActionDescription();
 	}
 
 	/**
@@ -395,7 +366,7 @@ public class KaleoLogWrapper implements KaleoLog, ModelWrapper<KaleoLog> {
 	*/
 	@Override
 	public long getKaleoActionId() {
-		return _kaleoLog.getKaleoActionId();
+		return model.getKaleoActionId();
 	}
 
 	/**
@@ -405,7 +376,7 @@ public class KaleoLogWrapper implements KaleoLog, ModelWrapper<KaleoLog> {
 	*/
 	@Override
 	public String getKaleoActionName() {
-		return _kaleoLog.getKaleoActionName();
+		return model.getKaleoActionName();
 	}
 
 	/**
@@ -415,7 +386,7 @@ public class KaleoLogWrapper implements KaleoLog, ModelWrapper<KaleoLog> {
 	*/
 	@Override
 	public String getKaleoClassName() {
-		return _kaleoLog.getKaleoClassName();
+		return model.getKaleoClassName();
 	}
 
 	/**
@@ -425,7 +396,7 @@ public class KaleoLogWrapper implements KaleoLog, ModelWrapper<KaleoLog> {
 	*/
 	@Override
 	public long getKaleoClassPK() {
-		return _kaleoLog.getKaleoClassPK();
+		return model.getKaleoClassPK();
 	}
 
 	/**
@@ -435,7 +406,7 @@ public class KaleoLogWrapper implements KaleoLog, ModelWrapper<KaleoLog> {
 	*/
 	@Override
 	public long getKaleoDefinitionVersionId() {
-		return _kaleoLog.getKaleoDefinitionVersionId();
+		return model.getKaleoDefinitionVersionId();
 	}
 
 	/**
@@ -445,7 +416,7 @@ public class KaleoLogWrapper implements KaleoLog, ModelWrapper<KaleoLog> {
 	*/
 	@Override
 	public long getKaleoInstanceId() {
-		return _kaleoLog.getKaleoInstanceId();
+		return model.getKaleoInstanceId();
 	}
 
 	/**
@@ -455,7 +426,7 @@ public class KaleoLogWrapper implements KaleoLog, ModelWrapper<KaleoLog> {
 	*/
 	@Override
 	public long getKaleoInstanceTokenId() {
-		return _kaleoLog.getKaleoInstanceTokenId();
+		return model.getKaleoInstanceTokenId();
 	}
 
 	/**
@@ -465,7 +436,7 @@ public class KaleoLogWrapper implements KaleoLog, ModelWrapper<KaleoLog> {
 	*/
 	@Override
 	public long getKaleoLogId() {
-		return _kaleoLog.getKaleoLogId();
+		return model.getKaleoLogId();
 	}
 
 	/**
@@ -475,7 +446,7 @@ public class KaleoLogWrapper implements KaleoLog, ModelWrapper<KaleoLog> {
 	*/
 	@Override
 	public String getKaleoNodeName() {
-		return _kaleoLog.getKaleoNodeName();
+		return model.getKaleoNodeName();
 	}
 
 	/**
@@ -485,7 +456,7 @@ public class KaleoLogWrapper implements KaleoLog, ModelWrapper<KaleoLog> {
 	*/
 	@Override
 	public long getKaleoTaskInstanceTokenId() {
-		return _kaleoLog.getKaleoTaskInstanceTokenId();
+		return model.getKaleoTaskInstanceTokenId();
 	}
 
 	/**
@@ -495,7 +466,7 @@ public class KaleoLogWrapper implements KaleoLog, ModelWrapper<KaleoLog> {
 	*/
 	@Override
 	public Date getModifiedDate() {
-		return _kaleoLog.getModifiedDate();
+		return model.getModifiedDate();
 	}
 
 	/**
@@ -505,7 +476,7 @@ public class KaleoLogWrapper implements KaleoLog, ModelWrapper<KaleoLog> {
 	*/
 	@Override
 	public String getPreviousAssigneeClassName() {
-		return _kaleoLog.getPreviousAssigneeClassName();
+		return model.getPreviousAssigneeClassName();
 	}
 
 	/**
@@ -515,7 +486,7 @@ public class KaleoLogWrapper implements KaleoLog, ModelWrapper<KaleoLog> {
 	*/
 	@Override
 	public long getPreviousAssigneeClassPK() {
-		return _kaleoLog.getPreviousAssigneeClassPK();
+		return model.getPreviousAssigneeClassPK();
 	}
 
 	/**
@@ -525,7 +496,7 @@ public class KaleoLogWrapper implements KaleoLog, ModelWrapper<KaleoLog> {
 	*/
 	@Override
 	public long getPreviousKaleoNodeId() {
-		return _kaleoLog.getPreviousKaleoNodeId();
+		return model.getPreviousKaleoNodeId();
 	}
 
 	/**
@@ -535,7 +506,7 @@ public class KaleoLogWrapper implements KaleoLog, ModelWrapper<KaleoLog> {
 	*/
 	@Override
 	public String getPreviousKaleoNodeName() {
-		return _kaleoLog.getPreviousKaleoNodeName();
+		return model.getPreviousKaleoNodeName();
 	}
 
 	/**
@@ -545,12 +516,7 @@ public class KaleoLogWrapper implements KaleoLog, ModelWrapper<KaleoLog> {
 	*/
 	@Override
 	public long getPrimaryKey() {
-		return _kaleoLog.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _kaleoLog.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	/**
@@ -560,7 +526,7 @@ public class KaleoLogWrapper implements KaleoLog, ModelWrapper<KaleoLog> {
 	*/
 	@Override
 	public Date getStartDate() {
-		return _kaleoLog.getStartDate();
+		return model.getStartDate();
 	}
 
 	/**
@@ -570,7 +536,7 @@ public class KaleoLogWrapper implements KaleoLog, ModelWrapper<KaleoLog> {
 	*/
 	@Override
 	public boolean getTerminalKaleoNode() {
-		return _kaleoLog.getTerminalKaleoNode();
+		return model.getTerminalKaleoNode();
 	}
 
 	/**
@@ -580,7 +546,7 @@ public class KaleoLogWrapper implements KaleoLog, ModelWrapper<KaleoLog> {
 	*/
 	@Override
 	public String getType() {
-		return _kaleoLog.getType();
+		return model.getType();
 	}
 
 	/**
@@ -590,7 +556,7 @@ public class KaleoLogWrapper implements KaleoLog, ModelWrapper<KaleoLog> {
 	*/
 	@Override
 	public long getUserId() {
-		return _kaleoLog.getUserId();
+		return model.getUserId();
 	}
 
 	/**
@@ -600,7 +566,7 @@ public class KaleoLogWrapper implements KaleoLog, ModelWrapper<KaleoLog> {
 	*/
 	@Override
 	public String getUserName() {
-		return _kaleoLog.getUserName();
+		return model.getUserName();
 	}
 
 	/**
@@ -610,7 +576,7 @@ public class KaleoLogWrapper implements KaleoLog, ModelWrapper<KaleoLog> {
 	*/
 	@Override
 	public String getUserUuid() {
-		return _kaleoLog.getUserUuid();
+		return model.getUserUuid();
 	}
 
 	/**
@@ -620,27 +586,7 @@ public class KaleoLogWrapper implements KaleoLog, ModelWrapper<KaleoLog> {
 	*/
 	@Override
 	public String getWorkflowContext() {
-		return _kaleoLog.getWorkflowContext();
-	}
-
-	@Override
-	public int hashCode() {
-		return _kaleoLog.hashCode();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _kaleoLog.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _kaleoLog.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _kaleoLog.isNew();
+		return model.getWorkflowContext();
 	}
 
 	/**
@@ -650,17 +596,12 @@ public class KaleoLogWrapper implements KaleoLog, ModelWrapper<KaleoLog> {
 	*/
 	@Override
 	public boolean isTerminalKaleoNode() {
-		return _kaleoLog.isTerminalKaleoNode();
+		return model.isTerminalKaleoNode();
 	}
 
 	@Override
 	public void persist() {
-		_kaleoLog.persist();
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_kaleoLog.setCachedModel(cachedModel);
+		model.persist();
 	}
 
 	/**
@@ -670,7 +611,7 @@ public class KaleoLogWrapper implements KaleoLog, ModelWrapper<KaleoLog> {
 	*/
 	@Override
 	public void setComment(String comment) {
-		_kaleoLog.setComment(comment);
+		model.setComment(comment);
 	}
 
 	/**
@@ -680,7 +621,7 @@ public class KaleoLogWrapper implements KaleoLog, ModelWrapper<KaleoLog> {
 	*/
 	@Override
 	public void setCompanyId(long companyId) {
-		_kaleoLog.setCompanyId(companyId);
+		model.setCompanyId(companyId);
 	}
 
 	/**
@@ -690,7 +631,7 @@ public class KaleoLogWrapper implements KaleoLog, ModelWrapper<KaleoLog> {
 	*/
 	@Override
 	public void setCreateDate(Date createDate) {
-		_kaleoLog.setCreateDate(createDate);
+		model.setCreateDate(createDate);
 	}
 
 	/**
@@ -700,7 +641,7 @@ public class KaleoLogWrapper implements KaleoLog, ModelWrapper<KaleoLog> {
 	*/
 	@Override
 	public void setCurrentAssigneeClassName(String currentAssigneeClassName) {
-		_kaleoLog.setCurrentAssigneeClassName(currentAssigneeClassName);
+		model.setCurrentAssigneeClassName(currentAssigneeClassName);
 	}
 
 	/**
@@ -710,7 +651,7 @@ public class KaleoLogWrapper implements KaleoLog, ModelWrapper<KaleoLog> {
 	*/
 	@Override
 	public void setCurrentAssigneeClassPK(long currentAssigneeClassPK) {
-		_kaleoLog.setCurrentAssigneeClassPK(currentAssigneeClassPK);
+		model.setCurrentAssigneeClassPK(currentAssigneeClassPK);
 	}
 
 	/**
@@ -720,7 +661,7 @@ public class KaleoLogWrapper implements KaleoLog, ModelWrapper<KaleoLog> {
 	*/
 	@Override
 	public void setDuration(long duration) {
-		_kaleoLog.setDuration(duration);
+		model.setDuration(duration);
 	}
 
 	/**
@@ -730,23 +671,7 @@ public class KaleoLogWrapper implements KaleoLog, ModelWrapper<KaleoLog> {
 	*/
 	@Override
 	public void setEndDate(Date endDate) {
-		_kaleoLog.setEndDate(endDate);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-		_kaleoLog.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_kaleoLog.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_kaleoLog.setExpandoBridgeAttributes(serviceContext);
+		model.setEndDate(endDate);
 	}
 
 	/**
@@ -756,7 +681,7 @@ public class KaleoLogWrapper implements KaleoLog, ModelWrapper<KaleoLog> {
 	*/
 	@Override
 	public void setGroupId(long groupId) {
-		_kaleoLog.setGroupId(groupId);
+		model.setGroupId(groupId);
 	}
 
 	/**
@@ -766,7 +691,7 @@ public class KaleoLogWrapper implements KaleoLog, ModelWrapper<KaleoLog> {
 	*/
 	@Override
 	public void setKaleoActionDescription(String kaleoActionDescription) {
-		_kaleoLog.setKaleoActionDescription(kaleoActionDescription);
+		model.setKaleoActionDescription(kaleoActionDescription);
 	}
 
 	/**
@@ -776,7 +701,7 @@ public class KaleoLogWrapper implements KaleoLog, ModelWrapper<KaleoLog> {
 	*/
 	@Override
 	public void setKaleoActionId(long kaleoActionId) {
-		_kaleoLog.setKaleoActionId(kaleoActionId);
+		model.setKaleoActionId(kaleoActionId);
 	}
 
 	/**
@@ -786,7 +711,7 @@ public class KaleoLogWrapper implements KaleoLog, ModelWrapper<KaleoLog> {
 	*/
 	@Override
 	public void setKaleoActionName(String kaleoActionName) {
-		_kaleoLog.setKaleoActionName(kaleoActionName);
+		model.setKaleoActionName(kaleoActionName);
 	}
 
 	/**
@@ -796,7 +721,7 @@ public class KaleoLogWrapper implements KaleoLog, ModelWrapper<KaleoLog> {
 	*/
 	@Override
 	public void setKaleoClassName(String kaleoClassName) {
-		_kaleoLog.setKaleoClassName(kaleoClassName);
+		model.setKaleoClassName(kaleoClassName);
 	}
 
 	/**
@@ -806,7 +731,7 @@ public class KaleoLogWrapper implements KaleoLog, ModelWrapper<KaleoLog> {
 	*/
 	@Override
 	public void setKaleoClassPK(long kaleoClassPK) {
-		_kaleoLog.setKaleoClassPK(kaleoClassPK);
+		model.setKaleoClassPK(kaleoClassPK);
 	}
 
 	/**
@@ -816,7 +741,7 @@ public class KaleoLogWrapper implements KaleoLog, ModelWrapper<KaleoLog> {
 	*/
 	@Override
 	public void setKaleoDefinitionVersionId(long kaleoDefinitionVersionId) {
-		_kaleoLog.setKaleoDefinitionVersionId(kaleoDefinitionVersionId);
+		model.setKaleoDefinitionVersionId(kaleoDefinitionVersionId);
 	}
 
 	/**
@@ -826,7 +751,7 @@ public class KaleoLogWrapper implements KaleoLog, ModelWrapper<KaleoLog> {
 	*/
 	@Override
 	public void setKaleoInstanceId(long kaleoInstanceId) {
-		_kaleoLog.setKaleoInstanceId(kaleoInstanceId);
+		model.setKaleoInstanceId(kaleoInstanceId);
 	}
 
 	/**
@@ -836,7 +761,7 @@ public class KaleoLogWrapper implements KaleoLog, ModelWrapper<KaleoLog> {
 	*/
 	@Override
 	public void setKaleoInstanceTokenId(long kaleoInstanceTokenId) {
-		_kaleoLog.setKaleoInstanceTokenId(kaleoInstanceTokenId);
+		model.setKaleoInstanceTokenId(kaleoInstanceTokenId);
 	}
 
 	/**
@@ -846,7 +771,7 @@ public class KaleoLogWrapper implements KaleoLog, ModelWrapper<KaleoLog> {
 	*/
 	@Override
 	public void setKaleoLogId(long kaleoLogId) {
-		_kaleoLog.setKaleoLogId(kaleoLogId);
+		model.setKaleoLogId(kaleoLogId);
 	}
 
 	/**
@@ -856,7 +781,7 @@ public class KaleoLogWrapper implements KaleoLog, ModelWrapper<KaleoLog> {
 	*/
 	@Override
 	public void setKaleoNodeName(String kaleoNodeName) {
-		_kaleoLog.setKaleoNodeName(kaleoNodeName);
+		model.setKaleoNodeName(kaleoNodeName);
 	}
 
 	/**
@@ -866,7 +791,7 @@ public class KaleoLogWrapper implements KaleoLog, ModelWrapper<KaleoLog> {
 	*/
 	@Override
 	public void setKaleoTaskInstanceTokenId(long kaleoTaskInstanceTokenId) {
-		_kaleoLog.setKaleoTaskInstanceTokenId(kaleoTaskInstanceTokenId);
+		model.setKaleoTaskInstanceTokenId(kaleoTaskInstanceTokenId);
 	}
 
 	/**
@@ -876,12 +801,7 @@ public class KaleoLogWrapper implements KaleoLog, ModelWrapper<KaleoLog> {
 	*/
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
-		_kaleoLog.setModifiedDate(modifiedDate);
-	}
-
-	@Override
-	public void setNew(boolean n) {
-		_kaleoLog.setNew(n);
+		model.setModifiedDate(modifiedDate);
 	}
 
 	/**
@@ -891,7 +811,7 @@ public class KaleoLogWrapper implements KaleoLog, ModelWrapper<KaleoLog> {
 	*/
 	@Override
 	public void setPreviousAssigneeClassName(String previousAssigneeClassName) {
-		_kaleoLog.setPreviousAssigneeClassName(previousAssigneeClassName);
+		model.setPreviousAssigneeClassName(previousAssigneeClassName);
 	}
 
 	/**
@@ -901,7 +821,7 @@ public class KaleoLogWrapper implements KaleoLog, ModelWrapper<KaleoLog> {
 	*/
 	@Override
 	public void setPreviousAssigneeClassPK(long previousAssigneeClassPK) {
-		_kaleoLog.setPreviousAssigneeClassPK(previousAssigneeClassPK);
+		model.setPreviousAssigneeClassPK(previousAssigneeClassPK);
 	}
 
 	/**
@@ -911,7 +831,7 @@ public class KaleoLogWrapper implements KaleoLog, ModelWrapper<KaleoLog> {
 	*/
 	@Override
 	public void setPreviousKaleoNodeId(long previousKaleoNodeId) {
-		_kaleoLog.setPreviousKaleoNodeId(previousKaleoNodeId);
+		model.setPreviousKaleoNodeId(previousKaleoNodeId);
 	}
 
 	/**
@@ -921,7 +841,7 @@ public class KaleoLogWrapper implements KaleoLog, ModelWrapper<KaleoLog> {
 	*/
 	@Override
 	public void setPreviousKaleoNodeName(String previousKaleoNodeName) {
-		_kaleoLog.setPreviousKaleoNodeName(previousKaleoNodeName);
+		model.setPreviousKaleoNodeName(previousKaleoNodeName);
 	}
 
 	/**
@@ -931,12 +851,7 @@ public class KaleoLogWrapper implements KaleoLog, ModelWrapper<KaleoLog> {
 	*/
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_kaleoLog.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_kaleoLog.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -946,7 +861,7 @@ public class KaleoLogWrapper implements KaleoLog, ModelWrapper<KaleoLog> {
 	*/
 	@Override
 	public void setStartDate(Date startDate) {
-		_kaleoLog.setStartDate(startDate);
+		model.setStartDate(startDate);
 	}
 
 	/**
@@ -956,7 +871,7 @@ public class KaleoLogWrapper implements KaleoLog, ModelWrapper<KaleoLog> {
 	*/
 	@Override
 	public void setTerminalKaleoNode(boolean terminalKaleoNode) {
-		_kaleoLog.setTerminalKaleoNode(terminalKaleoNode);
+		model.setTerminalKaleoNode(terminalKaleoNode);
 	}
 
 	/**
@@ -966,7 +881,7 @@ public class KaleoLogWrapper implements KaleoLog, ModelWrapper<KaleoLog> {
 	*/
 	@Override
 	public void setType(String type) {
-		_kaleoLog.setType(type);
+		model.setType(type);
 	}
 
 	/**
@@ -976,7 +891,7 @@ public class KaleoLogWrapper implements KaleoLog, ModelWrapper<KaleoLog> {
 	*/
 	@Override
 	public void setUserId(long userId) {
-		_kaleoLog.setUserId(userId);
+		model.setUserId(userId);
 	}
 
 	/**
@@ -986,7 +901,7 @@ public class KaleoLogWrapper implements KaleoLog, ModelWrapper<KaleoLog> {
 	*/
 	@Override
 	public void setUserName(String userName) {
-		_kaleoLog.setUserName(userName);
+		model.setUserName(userName);
 	}
 
 	/**
@@ -996,7 +911,7 @@ public class KaleoLogWrapper implements KaleoLog, ModelWrapper<KaleoLog> {
 	*/
 	@Override
 	public void setUserUuid(String userUuid) {
-		_kaleoLog.setUserUuid(userUuid);
+		model.setUserUuid(userUuid);
 	}
 
 	/**
@@ -1006,72 +921,11 @@ public class KaleoLogWrapper implements KaleoLog, ModelWrapper<KaleoLog> {
 	*/
 	@Override
 	public void setWorkflowContext(String workflowContext) {
-		_kaleoLog.setWorkflowContext(workflowContext);
+		model.setWorkflowContext(workflowContext);
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.CacheModel<KaleoLog> toCacheModel() {
-		return _kaleoLog.toCacheModel();
+	protected KaleoLogWrapper wrap(KaleoLog kaleoLog) {
+		return new KaleoLogWrapper(kaleoLog);
 	}
-
-	@Override
-	public KaleoLog toEscapedModel() {
-		return new KaleoLogWrapper(_kaleoLog.toEscapedModel());
-	}
-
-	@Override
-	public String toString() {
-		return _kaleoLog.toString();
-	}
-
-	@Override
-	public KaleoLog toUnescapedModel() {
-		return new KaleoLogWrapper(_kaleoLog.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _kaleoLog.toXmlString();
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-
-		if (!(obj instanceof KaleoLogWrapper)) {
-			return false;
-		}
-
-		KaleoLogWrapper kaleoLogWrapper = (KaleoLogWrapper)obj;
-
-		if (Objects.equals(_kaleoLog, kaleoLogWrapper._kaleoLog)) {
-			return true;
-		}
-
-		return false;
-	}
-
-	@Override
-	public KaleoLog getWrappedModel() {
-		return _kaleoLog;
-	}
-
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _kaleoLog.isEntityCacheEnabled();
-	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _kaleoLog.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_kaleoLog.resetOriginalValues();
-	}
-
-	private final KaleoLog _kaleoLog;
 }

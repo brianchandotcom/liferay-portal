@@ -16,19 +16,14 @@ package com.liferay.knowledge.base.model;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
-
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 
 import com.liferay.portal.kernel.model.ModelWrapper;
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -40,19 +35,10 @@ import java.util.Objects;
  * @generated
  */
 @ProviderType
-public class KBFolderWrapper implements KBFolder, ModelWrapper<KBFolder> {
+public class KBFolderWrapper extends BaseModelWrapper<KBFolder>
+	implements KBFolder, ModelWrapper<KBFolder> {
 	public KBFolderWrapper(KBFolder kbFolder) {
-		_kbFolder = kbFolder;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return KBFolder.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return KBFolder.class.getName();
+		super(kbFolder);
 	}
 
 	@Override
@@ -158,24 +144,14 @@ public class KBFolderWrapper implements KBFolder, ModelWrapper<KBFolder> {
 	}
 
 	@Override
-	public Object clone() {
-		return new KBFolderWrapper((KBFolder)_kbFolder.clone());
-	}
-
-	@Override
-	public int compareTo(KBFolder kbFolder) {
-		return _kbFolder.compareTo(kbFolder);
-	}
-
-	@Override
 	public java.util.List<Long> getAncestorKBFolderIds()
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _kbFolder.getAncestorKBFolderIds();
+		return model.getAncestorKBFolderIds();
 	}
 
 	@Override
 	public long getClassNameId() {
-		return _kbFolder.getClassNameId();
+		return model.getClassNameId();
 	}
 
 	/**
@@ -185,7 +161,7 @@ public class KBFolderWrapper implements KBFolder, ModelWrapper<KBFolder> {
 	*/
 	@Override
 	public long getCompanyId() {
-		return _kbFolder.getCompanyId();
+		return model.getCompanyId();
 	}
 
 	/**
@@ -195,7 +171,7 @@ public class KBFolderWrapper implements KBFolder, ModelWrapper<KBFolder> {
 	*/
 	@Override
 	public Date getCreateDate() {
-		return _kbFolder.getCreateDate();
+		return model.getCreateDate();
 	}
 
 	/**
@@ -205,12 +181,7 @@ public class KBFolderWrapper implements KBFolder, ModelWrapper<KBFolder> {
 	*/
 	@Override
 	public String getDescription() {
-		return _kbFolder.getDescription();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _kbFolder.getExpandoBridge();
+		return model.getDescription();
 	}
 
 	/**
@@ -220,7 +191,7 @@ public class KBFolderWrapper implements KBFolder, ModelWrapper<KBFolder> {
 	*/
 	@Override
 	public long getGroupId() {
-		return _kbFolder.getGroupId();
+		return model.getGroupId();
 	}
 
 	/**
@@ -230,7 +201,7 @@ public class KBFolderWrapper implements KBFolder, ModelWrapper<KBFolder> {
 	*/
 	@Override
 	public long getKbFolderId() {
-		return _kbFolder.getKbFolderId();
+		return model.getKbFolderId();
 	}
 
 	/**
@@ -240,7 +211,7 @@ public class KBFolderWrapper implements KBFolder, ModelWrapper<KBFolder> {
 	*/
 	@Override
 	public Date getLastPublishDate() {
-		return _kbFolder.getLastPublishDate();
+		return model.getLastPublishDate();
 	}
 
 	/**
@@ -250,7 +221,7 @@ public class KBFolderWrapper implements KBFolder, ModelWrapper<KBFolder> {
 	*/
 	@Override
 	public Date getModifiedDate() {
-		return _kbFolder.getModifiedDate();
+		return model.getModifiedDate();
 	}
 
 	/**
@@ -260,13 +231,13 @@ public class KBFolderWrapper implements KBFolder, ModelWrapper<KBFolder> {
 	*/
 	@Override
 	public String getName() {
-		return _kbFolder.getName();
+		return model.getName();
 	}
 
 	@Override
 	public KBFolder getParentKBFolder()
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _kbFolder.getParentKBFolder();
+		return model.getParentKBFolder();
 	}
 
 	/**
@@ -276,13 +247,13 @@ public class KBFolderWrapper implements KBFolder, ModelWrapper<KBFolder> {
 	*/
 	@Override
 	public long getParentKBFolderId() {
-		return _kbFolder.getParentKBFolderId();
+		return model.getParentKBFolderId();
 	}
 
 	@Override
 	public String getParentTitle(java.util.Locale locale)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _kbFolder.getParentTitle(locale);
+		return model.getParentTitle(locale);
 	}
 
 	/**
@@ -292,12 +263,7 @@ public class KBFolderWrapper implements KBFolder, ModelWrapper<KBFolder> {
 	*/
 	@Override
 	public long getPrimaryKey() {
-		return _kbFolder.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _kbFolder.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	/**
@@ -307,7 +273,7 @@ public class KBFolderWrapper implements KBFolder, ModelWrapper<KBFolder> {
 	*/
 	@Override
 	public String getUrlTitle() {
-		return _kbFolder.getUrlTitle();
+		return model.getUrlTitle();
 	}
 
 	/**
@@ -317,7 +283,7 @@ public class KBFolderWrapper implements KBFolder, ModelWrapper<KBFolder> {
 	*/
 	@Override
 	public long getUserId() {
-		return _kbFolder.getUserId();
+		return model.getUserId();
 	}
 
 	/**
@@ -327,7 +293,7 @@ public class KBFolderWrapper implements KBFolder, ModelWrapper<KBFolder> {
 	*/
 	@Override
 	public String getUserName() {
-		return _kbFolder.getUserName();
+		return model.getUserName();
 	}
 
 	/**
@@ -337,7 +303,7 @@ public class KBFolderWrapper implements KBFolder, ModelWrapper<KBFolder> {
 	*/
 	@Override
 	public String getUserUuid() {
-		return _kbFolder.getUserUuid();
+		return model.getUserUuid();
 	}
 
 	/**
@@ -347,48 +313,23 @@ public class KBFolderWrapper implements KBFolder, ModelWrapper<KBFolder> {
 	*/
 	@Override
 	public String getUuid() {
-		return _kbFolder.getUuid();
-	}
-
-	@Override
-	public int hashCode() {
-		return _kbFolder.hashCode();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _kbFolder.isCachedModel();
+		return model.getUuid();
 	}
 
 	@Override
 	public boolean isEmpty()
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _kbFolder.isEmpty();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _kbFolder.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _kbFolder.isNew();
+		return model.isEmpty();
 	}
 
 	@Override
 	public boolean isRoot() {
-		return _kbFolder.isRoot();
+		return model.isRoot();
 	}
 
 	@Override
 	public void persist() {
-		_kbFolder.persist();
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_kbFolder.setCachedModel(cachedModel);
+		model.persist();
 	}
 
 	/**
@@ -398,7 +339,7 @@ public class KBFolderWrapper implements KBFolder, ModelWrapper<KBFolder> {
 	*/
 	@Override
 	public void setCompanyId(long companyId) {
-		_kbFolder.setCompanyId(companyId);
+		model.setCompanyId(companyId);
 	}
 
 	/**
@@ -408,7 +349,7 @@ public class KBFolderWrapper implements KBFolder, ModelWrapper<KBFolder> {
 	*/
 	@Override
 	public void setCreateDate(Date createDate) {
-		_kbFolder.setCreateDate(createDate);
+		model.setCreateDate(createDate);
 	}
 
 	/**
@@ -418,23 +359,7 @@ public class KBFolderWrapper implements KBFolder, ModelWrapper<KBFolder> {
 	*/
 	@Override
 	public void setDescription(String description) {
-		_kbFolder.setDescription(description);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-		_kbFolder.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_kbFolder.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_kbFolder.setExpandoBridgeAttributes(serviceContext);
+		model.setDescription(description);
 	}
 
 	/**
@@ -444,7 +369,7 @@ public class KBFolderWrapper implements KBFolder, ModelWrapper<KBFolder> {
 	*/
 	@Override
 	public void setGroupId(long groupId) {
-		_kbFolder.setGroupId(groupId);
+		model.setGroupId(groupId);
 	}
 
 	/**
@@ -454,7 +379,7 @@ public class KBFolderWrapper implements KBFolder, ModelWrapper<KBFolder> {
 	*/
 	@Override
 	public void setKbFolderId(long kbFolderId) {
-		_kbFolder.setKbFolderId(kbFolderId);
+		model.setKbFolderId(kbFolderId);
 	}
 
 	/**
@@ -464,7 +389,7 @@ public class KBFolderWrapper implements KBFolder, ModelWrapper<KBFolder> {
 	*/
 	@Override
 	public void setLastPublishDate(Date lastPublishDate) {
-		_kbFolder.setLastPublishDate(lastPublishDate);
+		model.setLastPublishDate(lastPublishDate);
 	}
 
 	/**
@@ -474,7 +399,7 @@ public class KBFolderWrapper implements KBFolder, ModelWrapper<KBFolder> {
 	*/
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
-		_kbFolder.setModifiedDate(modifiedDate);
+		model.setModifiedDate(modifiedDate);
 	}
 
 	/**
@@ -484,12 +409,7 @@ public class KBFolderWrapper implements KBFolder, ModelWrapper<KBFolder> {
 	*/
 	@Override
 	public void setName(String name) {
-		_kbFolder.setName(name);
-	}
-
-	@Override
-	public void setNew(boolean n) {
-		_kbFolder.setNew(n);
+		model.setName(name);
 	}
 
 	/**
@@ -499,7 +419,7 @@ public class KBFolderWrapper implements KBFolder, ModelWrapper<KBFolder> {
 	*/
 	@Override
 	public void setParentKBFolderId(long parentKBFolderId) {
-		_kbFolder.setParentKBFolderId(parentKBFolderId);
+		model.setParentKBFolderId(parentKBFolderId);
 	}
 
 	/**
@@ -509,12 +429,7 @@ public class KBFolderWrapper implements KBFolder, ModelWrapper<KBFolder> {
 	*/
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_kbFolder.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_kbFolder.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -524,7 +439,7 @@ public class KBFolderWrapper implements KBFolder, ModelWrapper<KBFolder> {
 	*/
 	@Override
 	public void setUrlTitle(String urlTitle) {
-		_kbFolder.setUrlTitle(urlTitle);
+		model.setUrlTitle(urlTitle);
 	}
 
 	/**
@@ -534,7 +449,7 @@ public class KBFolderWrapper implements KBFolder, ModelWrapper<KBFolder> {
 	*/
 	@Override
 	public void setUserId(long userId) {
-		_kbFolder.setUserId(userId);
+		model.setUserId(userId);
 	}
 
 	/**
@@ -544,7 +459,7 @@ public class KBFolderWrapper implements KBFolder, ModelWrapper<KBFolder> {
 	*/
 	@Override
 	public void setUserName(String userName) {
-		_kbFolder.setUserName(userName);
+		model.setUserName(userName);
 	}
 
 	/**
@@ -554,7 +469,7 @@ public class KBFolderWrapper implements KBFolder, ModelWrapper<KBFolder> {
 	*/
 	@Override
 	public void setUserUuid(String userUuid) {
-		_kbFolder.setUserUuid(userUuid);
+		model.setUserUuid(userUuid);
 	}
 
 	/**
@@ -564,77 +479,16 @@ public class KBFolderWrapper implements KBFolder, ModelWrapper<KBFolder> {
 	*/
 	@Override
 	public void setUuid(String uuid) {
-		_kbFolder.setUuid(uuid);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<KBFolder> toCacheModel() {
-		return _kbFolder.toCacheModel();
-	}
-
-	@Override
-	public KBFolder toEscapedModel() {
-		return new KBFolderWrapper(_kbFolder.toEscapedModel());
-	}
-
-	@Override
-	public String toString() {
-		return _kbFolder.toString();
-	}
-
-	@Override
-	public KBFolder toUnescapedModel() {
-		return new KBFolderWrapper(_kbFolder.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _kbFolder.toXmlString();
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-
-		if (!(obj instanceof KBFolderWrapper)) {
-			return false;
-		}
-
-		KBFolderWrapper kbFolderWrapper = (KBFolderWrapper)obj;
-
-		if (Objects.equals(_kbFolder, kbFolderWrapper._kbFolder)) {
-			return true;
-		}
-
-		return false;
+		model.setUuid(uuid);
 	}
 
 	@Override
 	public StagedModelType getStagedModelType() {
-		return _kbFolder.getStagedModelType();
+		return model.getStagedModelType();
 	}
 
 	@Override
-	public KBFolder getWrappedModel() {
-		return _kbFolder;
+	protected KBFolderWrapper wrap(KBFolder kbFolder) {
+		return new KBFolderWrapper(kbFolder);
 	}
-
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _kbFolder.isEntityCacheEnabled();
-	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _kbFolder.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_kbFolder.resetOriginalValues();
-	}
-
-	private final KBFolder _kbFolder;
 }

@@ -16,16 +16,11 @@ package com.liferay.portal.kernel.model;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
-
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -37,20 +32,10 @@ import java.util.Objects;
  * @generated
  */
 @ProviderType
-public class SystemEventWrapper implements SystemEvent,
-	ModelWrapper<SystemEvent> {
+public class SystemEventWrapper extends BaseModelWrapper<SystemEvent>
+	implements SystemEvent, ModelWrapper<SystemEvent> {
 	public SystemEventWrapper(SystemEvent systemEvent) {
-		_systemEvent = systemEvent;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return SystemEvent.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return SystemEvent.class.getName();
+		super(systemEvent);
 	}
 
 	@Override
@@ -169,16 +154,6 @@ public class SystemEventWrapper implements SystemEvent,
 		}
 	}
 
-	@Override
-	public Object clone() {
-		return new SystemEventWrapper((SystemEvent)_systemEvent.clone());
-	}
-
-	@Override
-	public int compareTo(SystemEvent systemEvent) {
-		return _systemEvent.compareTo(systemEvent);
-	}
-
 	/**
 	* Returns the fully qualified class name of this system event.
 	*
@@ -186,7 +161,7 @@ public class SystemEventWrapper implements SystemEvent,
 	*/
 	@Override
 	public String getClassName() {
-		return _systemEvent.getClassName();
+		return model.getClassName();
 	}
 
 	/**
@@ -196,7 +171,7 @@ public class SystemEventWrapper implements SystemEvent,
 	*/
 	@Override
 	public long getClassNameId() {
-		return _systemEvent.getClassNameId();
+		return model.getClassNameId();
 	}
 
 	/**
@@ -206,7 +181,7 @@ public class SystemEventWrapper implements SystemEvent,
 	*/
 	@Override
 	public long getClassPK() {
-		return _systemEvent.getClassPK();
+		return model.getClassPK();
 	}
 
 	/**
@@ -216,7 +191,7 @@ public class SystemEventWrapper implements SystemEvent,
 	*/
 	@Override
 	public String getClassUuid() {
-		return _systemEvent.getClassUuid();
+		return model.getClassUuid();
 	}
 
 	/**
@@ -226,7 +201,7 @@ public class SystemEventWrapper implements SystemEvent,
 	*/
 	@Override
 	public long getCompanyId() {
-		return _systemEvent.getCompanyId();
+		return model.getCompanyId();
 	}
 
 	/**
@@ -236,12 +211,7 @@ public class SystemEventWrapper implements SystemEvent,
 	*/
 	@Override
 	public Date getCreateDate() {
-		return _systemEvent.getCreateDate();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _systemEvent.getExpandoBridge();
+		return model.getCreateDate();
 	}
 
 	/**
@@ -251,7 +221,7 @@ public class SystemEventWrapper implements SystemEvent,
 	*/
 	@Override
 	public String getExtraData() {
-		return _systemEvent.getExtraData();
+		return model.getExtraData();
 	}
 
 	/**
@@ -261,7 +231,7 @@ public class SystemEventWrapper implements SystemEvent,
 	*/
 	@Override
 	public long getGroupId() {
-		return _systemEvent.getGroupId();
+		return model.getGroupId();
 	}
 
 	/**
@@ -271,7 +241,7 @@ public class SystemEventWrapper implements SystemEvent,
 	*/
 	@Override
 	public long getMvccVersion() {
-		return _systemEvent.getMvccVersion();
+		return model.getMvccVersion();
 	}
 
 	/**
@@ -281,7 +251,7 @@ public class SystemEventWrapper implements SystemEvent,
 	*/
 	@Override
 	public long getParentSystemEventId() {
-		return _systemEvent.getParentSystemEventId();
+		return model.getParentSystemEventId();
 	}
 
 	/**
@@ -291,17 +261,12 @@ public class SystemEventWrapper implements SystemEvent,
 	*/
 	@Override
 	public long getPrimaryKey() {
-		return _systemEvent.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _systemEvent.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	@Override
 	public String getReferrerClassName() {
-		return _systemEvent.getReferrerClassName();
+		return model.getReferrerClassName();
 	}
 
 	/**
@@ -311,7 +276,7 @@ public class SystemEventWrapper implements SystemEvent,
 	*/
 	@Override
 	public long getReferrerClassNameId() {
-		return _systemEvent.getReferrerClassNameId();
+		return model.getReferrerClassNameId();
 	}
 
 	/**
@@ -321,7 +286,7 @@ public class SystemEventWrapper implements SystemEvent,
 	*/
 	@Override
 	public long getSystemEventId() {
-		return _systemEvent.getSystemEventId();
+		return model.getSystemEventId();
 	}
 
 	/**
@@ -331,7 +296,7 @@ public class SystemEventWrapper implements SystemEvent,
 	*/
 	@Override
 	public long getSystemEventSetKey() {
-		return _systemEvent.getSystemEventSetKey();
+		return model.getSystemEventSetKey();
 	}
 
 	/**
@@ -341,7 +306,7 @@ public class SystemEventWrapper implements SystemEvent,
 	*/
 	@Override
 	public int getType() {
-		return _systemEvent.getType();
+		return model.getType();
 	}
 
 	/**
@@ -351,7 +316,7 @@ public class SystemEventWrapper implements SystemEvent,
 	*/
 	@Override
 	public long getUserId() {
-		return _systemEvent.getUserId();
+		return model.getUserId();
 	}
 
 	/**
@@ -361,7 +326,7 @@ public class SystemEventWrapper implements SystemEvent,
 	*/
 	@Override
 	public String getUserName() {
-		return _systemEvent.getUserName();
+		return model.getUserName();
 	}
 
 	/**
@@ -371,42 +336,17 @@ public class SystemEventWrapper implements SystemEvent,
 	*/
 	@Override
 	public String getUserUuid() {
-		return _systemEvent.getUserUuid();
-	}
-
-	@Override
-	public int hashCode() {
-		return _systemEvent.hashCode();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _systemEvent.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _systemEvent.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _systemEvent.isNew();
+		return model.getUserUuid();
 	}
 
 	@Override
 	public void persist() {
-		_systemEvent.persist();
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_systemEvent.setCachedModel(cachedModel);
+		model.persist();
 	}
 
 	@Override
 	public void setClassName(String className) {
-		_systemEvent.setClassName(className);
+		model.setClassName(className);
 	}
 
 	/**
@@ -416,7 +356,7 @@ public class SystemEventWrapper implements SystemEvent,
 	*/
 	@Override
 	public void setClassNameId(long classNameId) {
-		_systemEvent.setClassNameId(classNameId);
+		model.setClassNameId(classNameId);
 	}
 
 	/**
@@ -426,7 +366,7 @@ public class SystemEventWrapper implements SystemEvent,
 	*/
 	@Override
 	public void setClassPK(long classPK) {
-		_systemEvent.setClassPK(classPK);
+		model.setClassPK(classPK);
 	}
 
 	/**
@@ -436,7 +376,7 @@ public class SystemEventWrapper implements SystemEvent,
 	*/
 	@Override
 	public void setClassUuid(String classUuid) {
-		_systemEvent.setClassUuid(classUuid);
+		model.setClassUuid(classUuid);
 	}
 
 	/**
@@ -446,7 +386,7 @@ public class SystemEventWrapper implements SystemEvent,
 	*/
 	@Override
 	public void setCompanyId(long companyId) {
-		_systemEvent.setCompanyId(companyId);
+		model.setCompanyId(companyId);
 	}
 
 	/**
@@ -456,22 +396,7 @@ public class SystemEventWrapper implements SystemEvent,
 	*/
 	@Override
 	public void setCreateDate(Date createDate) {
-		_systemEvent.setCreateDate(createDate);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(BaseModel<?> baseModel) {
-		_systemEvent.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_systemEvent.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_systemEvent.setExpandoBridgeAttributes(serviceContext);
+		model.setCreateDate(createDate);
 	}
 
 	/**
@@ -481,7 +406,7 @@ public class SystemEventWrapper implements SystemEvent,
 	*/
 	@Override
 	public void setExtraData(String extraData) {
-		_systemEvent.setExtraData(extraData);
+		model.setExtraData(extraData);
 	}
 
 	/**
@@ -491,7 +416,7 @@ public class SystemEventWrapper implements SystemEvent,
 	*/
 	@Override
 	public void setGroupId(long groupId) {
-		_systemEvent.setGroupId(groupId);
+		model.setGroupId(groupId);
 	}
 
 	/**
@@ -501,12 +426,7 @@ public class SystemEventWrapper implements SystemEvent,
 	*/
 	@Override
 	public void setMvccVersion(long mvccVersion) {
-		_systemEvent.setMvccVersion(mvccVersion);
-	}
-
-	@Override
-	public void setNew(boolean n) {
-		_systemEvent.setNew(n);
+		model.setMvccVersion(mvccVersion);
 	}
 
 	/**
@@ -516,7 +436,7 @@ public class SystemEventWrapper implements SystemEvent,
 	*/
 	@Override
 	public void setParentSystemEventId(long parentSystemEventId) {
-		_systemEvent.setParentSystemEventId(parentSystemEventId);
+		model.setParentSystemEventId(parentSystemEventId);
 	}
 
 	/**
@@ -526,17 +446,12 @@ public class SystemEventWrapper implements SystemEvent,
 	*/
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_systemEvent.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_systemEvent.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	@Override
 	public void setReferrerClassName(String referrerClassName) {
-		_systemEvent.setReferrerClassName(referrerClassName);
+		model.setReferrerClassName(referrerClassName);
 	}
 
 	/**
@@ -546,7 +461,7 @@ public class SystemEventWrapper implements SystemEvent,
 	*/
 	@Override
 	public void setReferrerClassNameId(long referrerClassNameId) {
-		_systemEvent.setReferrerClassNameId(referrerClassNameId);
+		model.setReferrerClassNameId(referrerClassNameId);
 	}
 
 	/**
@@ -556,7 +471,7 @@ public class SystemEventWrapper implements SystemEvent,
 	*/
 	@Override
 	public void setSystemEventId(long systemEventId) {
-		_systemEvent.setSystemEventId(systemEventId);
+		model.setSystemEventId(systemEventId);
 	}
 
 	/**
@@ -566,7 +481,7 @@ public class SystemEventWrapper implements SystemEvent,
 	*/
 	@Override
 	public void setSystemEventSetKey(long systemEventSetKey) {
-		_systemEvent.setSystemEventSetKey(systemEventSetKey);
+		model.setSystemEventSetKey(systemEventSetKey);
 	}
 
 	/**
@@ -576,7 +491,7 @@ public class SystemEventWrapper implements SystemEvent,
 	*/
 	@Override
 	public void setType(int type) {
-		_systemEvent.setType(type);
+		model.setType(type);
 	}
 
 	/**
@@ -586,7 +501,7 @@ public class SystemEventWrapper implements SystemEvent,
 	*/
 	@Override
 	public void setUserId(long userId) {
-		_systemEvent.setUserId(userId);
+		model.setUserId(userId);
 	}
 
 	/**
@@ -596,7 +511,7 @@ public class SystemEventWrapper implements SystemEvent,
 	*/
 	@Override
 	public void setUserName(String userName) {
-		_systemEvent.setUserName(userName);
+		model.setUserName(userName);
 	}
 
 	/**
@@ -606,72 +521,11 @@ public class SystemEventWrapper implements SystemEvent,
 	*/
 	@Override
 	public void setUserUuid(String userUuid) {
-		_systemEvent.setUserUuid(userUuid);
+		model.setUserUuid(userUuid);
 	}
 
 	@Override
-	public CacheModel<SystemEvent> toCacheModel() {
-		return _systemEvent.toCacheModel();
+	protected SystemEventWrapper wrap(SystemEvent systemEvent) {
+		return new SystemEventWrapper(systemEvent);
 	}
-
-	@Override
-	public SystemEvent toEscapedModel() {
-		return new SystemEventWrapper(_systemEvent.toEscapedModel());
-	}
-
-	@Override
-	public String toString() {
-		return _systemEvent.toString();
-	}
-
-	@Override
-	public SystemEvent toUnescapedModel() {
-		return new SystemEventWrapper(_systemEvent.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _systemEvent.toXmlString();
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-
-		if (!(obj instanceof SystemEventWrapper)) {
-			return false;
-		}
-
-		SystemEventWrapper systemEventWrapper = (SystemEventWrapper)obj;
-
-		if (Objects.equals(_systemEvent, systemEventWrapper._systemEvent)) {
-			return true;
-		}
-
-		return false;
-	}
-
-	@Override
-	public SystemEvent getWrappedModel() {
-		return _systemEvent;
-	}
-
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _systemEvent.isEntityCacheEnabled();
-	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _systemEvent.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_systemEvent.resetOriginalValues();
-	}
-
-	private final SystemEvent _systemEvent;
 }

@@ -74,6 +74,8 @@ public interface DLFileEntry extends DLFileEntryModel, PersistedModel, TreeModel
 	public DLFileEntryType getDLFileEntryType()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
+	public com.liferay.expando.kernel.model.ExpandoBridge getExpandoBridge();
+
 	public com.liferay.portal.kernel.util.UnicodeProperties getExtraSettingsProperties();
 
 	public java.util.List<DLFileShortcut> getFileShortcuts();

@@ -16,17 +16,12 @@ package com.liferay.segments.model;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
-
 import com.liferay.portal.kernel.model.ModelWrapper;
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -38,20 +33,10 @@ import java.util.Objects;
  * @generated
  */
 @ProviderType
-public class SegmentsEntryWrapper implements SegmentsEntry,
-	ModelWrapper<SegmentsEntry> {
+public class SegmentsEntryWrapper extends BaseModelWrapper<SegmentsEntry>
+	implements SegmentsEntry, ModelWrapper<SegmentsEntry> {
 	public SegmentsEntryWrapper(SegmentsEntry segmentsEntry) {
-		_segmentsEntry = segmentsEntry;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return SegmentsEntry.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return SegmentsEntry.class.getName();
+		super(segmentsEntry);
 	}
 
 	@Override
@@ -163,16 +148,6 @@ public class SegmentsEntryWrapper implements SegmentsEntry,
 		}
 	}
 
-	@Override
-	public Object clone() {
-		return new SegmentsEntryWrapper((SegmentsEntry)_segmentsEntry.clone());
-	}
-
-	@Override
-	public int compareTo(SegmentsEntry segmentsEntry) {
-		return _segmentsEntry.compareTo(segmentsEntry);
-	}
-
 	/**
 	* Returns the active of this segments entry.
 	*
@@ -180,12 +155,12 @@ public class SegmentsEntryWrapper implements SegmentsEntry,
 	*/
 	@Override
 	public boolean getActive() {
-		return _segmentsEntry.getActive();
+		return model.getActive();
 	}
 
 	@Override
 	public String[] getAvailableLanguageIds() {
-		return _segmentsEntry.getAvailableLanguageIds();
+		return model.getAvailableLanguageIds();
 	}
 
 	/**
@@ -195,7 +170,7 @@ public class SegmentsEntryWrapper implements SegmentsEntry,
 	*/
 	@Override
 	public long getCompanyId() {
-		return _segmentsEntry.getCompanyId();
+		return model.getCompanyId();
 	}
 
 	/**
@@ -205,7 +180,7 @@ public class SegmentsEntryWrapper implements SegmentsEntry,
 	*/
 	@Override
 	public Date getCreateDate() {
-		return _segmentsEntry.getCreateDate();
+		return model.getCreateDate();
 	}
 
 	/**
@@ -215,17 +190,17 @@ public class SegmentsEntryWrapper implements SegmentsEntry,
 	*/
 	@Override
 	public String getCriteria() {
-		return _segmentsEntry.getCriteria();
+		return model.getCriteria();
 	}
 
 	@Override
 	public com.liferay.segments.criteria.Criteria getCriteriaObj() {
-		return _segmentsEntry.getCriteriaObj();
+		return model.getCriteriaObj();
 	}
 
 	@Override
 	public String getDefaultLanguageId() {
-		return _segmentsEntry.getDefaultLanguageId();
+		return model.getDefaultLanguageId();
 	}
 
 	/**
@@ -235,7 +210,7 @@ public class SegmentsEntryWrapper implements SegmentsEntry,
 	*/
 	@Override
 	public String getDescription() {
-		return _segmentsEntry.getDescription();
+		return model.getDescription();
 	}
 
 	/**
@@ -246,7 +221,7 @@ public class SegmentsEntryWrapper implements SegmentsEntry,
 	*/
 	@Override
 	public String getDescription(java.util.Locale locale) {
-		return _segmentsEntry.getDescription(locale);
+		return model.getDescription(locale);
 	}
 
 	/**
@@ -258,7 +233,7 @@ public class SegmentsEntryWrapper implements SegmentsEntry,
 	*/
 	@Override
 	public String getDescription(java.util.Locale locale, boolean useDefault) {
-		return _segmentsEntry.getDescription(locale, useDefault);
+		return model.getDescription(locale, useDefault);
 	}
 
 	/**
@@ -269,7 +244,7 @@ public class SegmentsEntryWrapper implements SegmentsEntry,
 	*/
 	@Override
 	public String getDescription(String languageId) {
-		return _segmentsEntry.getDescription(languageId);
+		return model.getDescription(languageId);
 	}
 
 	/**
@@ -281,17 +256,17 @@ public class SegmentsEntryWrapper implements SegmentsEntry,
 	*/
 	@Override
 	public String getDescription(String languageId, boolean useDefault) {
-		return _segmentsEntry.getDescription(languageId, useDefault);
+		return model.getDescription(languageId, useDefault);
 	}
 
 	@Override
 	public String getDescriptionCurrentLanguageId() {
-		return _segmentsEntry.getDescriptionCurrentLanguageId();
+		return model.getDescriptionCurrentLanguageId();
 	}
 
 	@Override
 	public String getDescriptionCurrentValue() {
-		return _segmentsEntry.getDescriptionCurrentValue();
+		return model.getDescriptionCurrentValue();
 	}
 
 	/**
@@ -301,12 +276,7 @@ public class SegmentsEntryWrapper implements SegmentsEntry,
 	*/
 	@Override
 	public Map<java.util.Locale, String> getDescriptionMap() {
-		return _segmentsEntry.getDescriptionMap();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _segmentsEntry.getExpandoBridge();
+		return model.getDescriptionMap();
 	}
 
 	/**
@@ -316,7 +286,7 @@ public class SegmentsEntryWrapper implements SegmentsEntry,
 	*/
 	@Override
 	public long getGroupId() {
-		return _segmentsEntry.getGroupId();
+		return model.getGroupId();
 	}
 
 	/**
@@ -326,7 +296,7 @@ public class SegmentsEntryWrapper implements SegmentsEntry,
 	*/
 	@Override
 	public String getKey() {
-		return _segmentsEntry.getKey();
+		return model.getKey();
 	}
 
 	/**
@@ -336,7 +306,7 @@ public class SegmentsEntryWrapper implements SegmentsEntry,
 	*/
 	@Override
 	public Date getModifiedDate() {
-		return _segmentsEntry.getModifiedDate();
+		return model.getModifiedDate();
 	}
 
 	/**
@@ -346,7 +316,7 @@ public class SegmentsEntryWrapper implements SegmentsEntry,
 	*/
 	@Override
 	public String getName() {
-		return _segmentsEntry.getName();
+		return model.getName();
 	}
 
 	/**
@@ -357,7 +327,7 @@ public class SegmentsEntryWrapper implements SegmentsEntry,
 	*/
 	@Override
 	public String getName(java.util.Locale locale) {
-		return _segmentsEntry.getName(locale);
+		return model.getName(locale);
 	}
 
 	/**
@@ -369,7 +339,7 @@ public class SegmentsEntryWrapper implements SegmentsEntry,
 	*/
 	@Override
 	public String getName(java.util.Locale locale, boolean useDefault) {
-		return _segmentsEntry.getName(locale, useDefault);
+		return model.getName(locale, useDefault);
 	}
 
 	/**
@@ -380,7 +350,7 @@ public class SegmentsEntryWrapper implements SegmentsEntry,
 	*/
 	@Override
 	public String getName(String languageId) {
-		return _segmentsEntry.getName(languageId);
+		return model.getName(languageId);
 	}
 
 	/**
@@ -392,17 +362,17 @@ public class SegmentsEntryWrapper implements SegmentsEntry,
 	*/
 	@Override
 	public String getName(String languageId, boolean useDefault) {
-		return _segmentsEntry.getName(languageId, useDefault);
+		return model.getName(languageId, useDefault);
 	}
 
 	@Override
 	public String getNameCurrentLanguageId() {
-		return _segmentsEntry.getNameCurrentLanguageId();
+		return model.getNameCurrentLanguageId();
 	}
 
 	@Override
 	public String getNameCurrentValue() {
-		return _segmentsEntry.getNameCurrentValue();
+		return model.getNameCurrentValue();
 	}
 
 	/**
@@ -412,7 +382,7 @@ public class SegmentsEntryWrapper implements SegmentsEntry,
 	*/
 	@Override
 	public Map<java.util.Locale, String> getNameMap() {
-		return _segmentsEntry.getNameMap();
+		return model.getNameMap();
 	}
 
 	/**
@@ -422,12 +392,7 @@ public class SegmentsEntryWrapper implements SegmentsEntry,
 	*/
 	@Override
 	public long getPrimaryKey() {
-		return _segmentsEntry.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _segmentsEntry.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	/**
@@ -437,7 +402,7 @@ public class SegmentsEntryWrapper implements SegmentsEntry,
 	*/
 	@Override
 	public long getSegmentsEntryId() {
-		return _segmentsEntry.getSegmentsEntryId();
+		return model.getSegmentsEntryId();
 	}
 
 	/**
@@ -447,7 +412,7 @@ public class SegmentsEntryWrapper implements SegmentsEntry,
 	*/
 	@Override
 	public String getSource() {
-		return _segmentsEntry.getSource();
+		return model.getSource();
 	}
 
 	/**
@@ -457,7 +422,7 @@ public class SegmentsEntryWrapper implements SegmentsEntry,
 	*/
 	@Override
 	public String getType() {
-		return _segmentsEntry.getType();
+		return model.getType();
 	}
 
 	/**
@@ -467,7 +432,7 @@ public class SegmentsEntryWrapper implements SegmentsEntry,
 	*/
 	@Override
 	public long getUserId() {
-		return _segmentsEntry.getUserId();
+		return model.getUserId();
 	}
 
 	/**
@@ -477,7 +442,7 @@ public class SegmentsEntryWrapper implements SegmentsEntry,
 	*/
 	@Override
 	public String getUserName() {
-		return _segmentsEntry.getUserName();
+		return model.getUserName();
 	}
 
 	/**
@@ -487,12 +452,7 @@ public class SegmentsEntryWrapper implements SegmentsEntry,
 	*/
 	@Override
 	public String getUserUuid() {
-		return _segmentsEntry.getUserUuid();
-	}
-
-	@Override
-	public int hashCode() {
-		return _segmentsEntry.hashCode();
+		return model.getUserUuid();
 	}
 
 	/**
@@ -502,40 +462,25 @@ public class SegmentsEntryWrapper implements SegmentsEntry,
 	*/
 	@Override
 	public boolean isActive() {
-		return _segmentsEntry.isActive();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _segmentsEntry.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _segmentsEntry.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _segmentsEntry.isNew();
+		return model.isActive();
 	}
 
 	@Override
 	public void persist() {
-		_segmentsEntry.persist();
+		model.persist();
 	}
 
 	@Override
 	public void prepareLocalizedFieldsForImport()
 		throws com.liferay.portal.kernel.exception.LocaleException {
-		_segmentsEntry.prepareLocalizedFieldsForImport();
+		model.prepareLocalizedFieldsForImport();
 	}
 
 	@Override
 	public void prepareLocalizedFieldsForImport(
 		java.util.Locale defaultImportLocale)
 		throws com.liferay.portal.kernel.exception.LocaleException {
-		_segmentsEntry.prepareLocalizedFieldsForImport(defaultImportLocale);
+		model.prepareLocalizedFieldsForImport(defaultImportLocale);
 	}
 
 	/**
@@ -545,12 +490,7 @@ public class SegmentsEntryWrapper implements SegmentsEntry,
 	*/
 	@Override
 	public void setActive(boolean active) {
-		_segmentsEntry.setActive(active);
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_segmentsEntry.setCachedModel(cachedModel);
+		model.setActive(active);
 	}
 
 	/**
@@ -560,7 +500,7 @@ public class SegmentsEntryWrapper implements SegmentsEntry,
 	*/
 	@Override
 	public void setCompanyId(long companyId) {
-		_segmentsEntry.setCompanyId(companyId);
+		model.setCompanyId(companyId);
 	}
 
 	/**
@@ -570,7 +510,7 @@ public class SegmentsEntryWrapper implements SegmentsEntry,
 	*/
 	@Override
 	public void setCreateDate(Date createDate) {
-		_segmentsEntry.setCreateDate(createDate);
+		model.setCreateDate(createDate);
 	}
 
 	/**
@@ -580,7 +520,7 @@ public class SegmentsEntryWrapper implements SegmentsEntry,
 	*/
 	@Override
 	public void setCriteria(String criteria) {
-		_segmentsEntry.setCriteria(criteria);
+		model.setCriteria(criteria);
 	}
 
 	/**
@@ -590,7 +530,7 @@ public class SegmentsEntryWrapper implements SegmentsEntry,
 	*/
 	@Override
 	public void setDescription(String description) {
-		_segmentsEntry.setDescription(description);
+		model.setDescription(description);
 	}
 
 	/**
@@ -601,7 +541,7 @@ public class SegmentsEntryWrapper implements SegmentsEntry,
 	*/
 	@Override
 	public void setDescription(String description, java.util.Locale locale) {
-		_segmentsEntry.setDescription(description, locale);
+		model.setDescription(description, locale);
 	}
 
 	/**
@@ -614,12 +554,12 @@ public class SegmentsEntryWrapper implements SegmentsEntry,
 	@Override
 	public void setDescription(String description, java.util.Locale locale,
 		java.util.Locale defaultLocale) {
-		_segmentsEntry.setDescription(description, locale, defaultLocale);
+		model.setDescription(description, locale, defaultLocale);
 	}
 
 	@Override
 	public void setDescriptionCurrentLanguageId(String languageId) {
-		_segmentsEntry.setDescriptionCurrentLanguageId(languageId);
+		model.setDescriptionCurrentLanguageId(languageId);
 	}
 
 	/**
@@ -629,7 +569,7 @@ public class SegmentsEntryWrapper implements SegmentsEntry,
 	*/
 	@Override
 	public void setDescriptionMap(Map<java.util.Locale, String> descriptionMap) {
-		_segmentsEntry.setDescriptionMap(descriptionMap);
+		model.setDescriptionMap(descriptionMap);
 	}
 
 	/**
@@ -642,23 +582,7 @@ public class SegmentsEntryWrapper implements SegmentsEntry,
 	public void setDescriptionMap(
 		Map<java.util.Locale, String> descriptionMap,
 		java.util.Locale defaultLocale) {
-		_segmentsEntry.setDescriptionMap(descriptionMap, defaultLocale);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-		_segmentsEntry.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_segmentsEntry.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_segmentsEntry.setExpandoBridgeAttributes(serviceContext);
+		model.setDescriptionMap(descriptionMap, defaultLocale);
 	}
 
 	/**
@@ -668,7 +592,7 @@ public class SegmentsEntryWrapper implements SegmentsEntry,
 	*/
 	@Override
 	public void setGroupId(long groupId) {
-		_segmentsEntry.setGroupId(groupId);
+		model.setGroupId(groupId);
 	}
 
 	/**
@@ -678,7 +602,7 @@ public class SegmentsEntryWrapper implements SegmentsEntry,
 	*/
 	@Override
 	public void setKey(String key) {
-		_segmentsEntry.setKey(key);
+		model.setKey(key);
 	}
 
 	/**
@@ -688,7 +612,7 @@ public class SegmentsEntryWrapper implements SegmentsEntry,
 	*/
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
-		_segmentsEntry.setModifiedDate(modifiedDate);
+		model.setModifiedDate(modifiedDate);
 	}
 
 	/**
@@ -698,7 +622,7 @@ public class SegmentsEntryWrapper implements SegmentsEntry,
 	*/
 	@Override
 	public void setName(String name) {
-		_segmentsEntry.setName(name);
+		model.setName(name);
 	}
 
 	/**
@@ -709,7 +633,7 @@ public class SegmentsEntryWrapper implements SegmentsEntry,
 	*/
 	@Override
 	public void setName(String name, java.util.Locale locale) {
-		_segmentsEntry.setName(name, locale);
+		model.setName(name, locale);
 	}
 
 	/**
@@ -722,12 +646,12 @@ public class SegmentsEntryWrapper implements SegmentsEntry,
 	@Override
 	public void setName(String name, java.util.Locale locale,
 		java.util.Locale defaultLocale) {
-		_segmentsEntry.setName(name, locale, defaultLocale);
+		model.setName(name, locale, defaultLocale);
 	}
 
 	@Override
 	public void setNameCurrentLanguageId(String languageId) {
-		_segmentsEntry.setNameCurrentLanguageId(languageId);
+		model.setNameCurrentLanguageId(languageId);
 	}
 
 	/**
@@ -737,7 +661,7 @@ public class SegmentsEntryWrapper implements SegmentsEntry,
 	*/
 	@Override
 	public void setNameMap(Map<java.util.Locale, String> nameMap) {
-		_segmentsEntry.setNameMap(nameMap);
+		model.setNameMap(nameMap);
 	}
 
 	/**
@@ -749,12 +673,7 @@ public class SegmentsEntryWrapper implements SegmentsEntry,
 	@Override
 	public void setNameMap(Map<java.util.Locale, String> nameMap,
 		java.util.Locale defaultLocale) {
-		_segmentsEntry.setNameMap(nameMap, defaultLocale);
-	}
-
-	@Override
-	public void setNew(boolean n) {
-		_segmentsEntry.setNew(n);
+		model.setNameMap(nameMap, defaultLocale);
 	}
 
 	/**
@@ -764,12 +683,7 @@ public class SegmentsEntryWrapper implements SegmentsEntry,
 	*/
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_segmentsEntry.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_segmentsEntry.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -779,7 +693,7 @@ public class SegmentsEntryWrapper implements SegmentsEntry,
 	*/
 	@Override
 	public void setSegmentsEntryId(long segmentsEntryId) {
-		_segmentsEntry.setSegmentsEntryId(segmentsEntryId);
+		model.setSegmentsEntryId(segmentsEntryId);
 	}
 
 	/**
@@ -789,7 +703,7 @@ public class SegmentsEntryWrapper implements SegmentsEntry,
 	*/
 	@Override
 	public void setSource(String source) {
-		_segmentsEntry.setSource(source);
+		model.setSource(source);
 	}
 
 	/**
@@ -799,7 +713,7 @@ public class SegmentsEntryWrapper implements SegmentsEntry,
 	*/
 	@Override
 	public void setType(String type) {
-		_segmentsEntry.setType(type);
+		model.setType(type);
 	}
 
 	/**
@@ -809,7 +723,7 @@ public class SegmentsEntryWrapper implements SegmentsEntry,
 	*/
 	@Override
 	public void setUserId(long userId) {
-		_segmentsEntry.setUserId(userId);
+		model.setUserId(userId);
 	}
 
 	/**
@@ -819,7 +733,7 @@ public class SegmentsEntryWrapper implements SegmentsEntry,
 	*/
 	@Override
 	public void setUserName(String userName) {
-		_segmentsEntry.setUserName(userName);
+		model.setUserName(userName);
 	}
 
 	/**
@@ -829,72 +743,11 @@ public class SegmentsEntryWrapper implements SegmentsEntry,
 	*/
 	@Override
 	public void setUserUuid(String userUuid) {
-		_segmentsEntry.setUserUuid(userUuid);
+		model.setUserUuid(userUuid);
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.CacheModel<SegmentsEntry> toCacheModel() {
-		return _segmentsEntry.toCacheModel();
+	protected SegmentsEntryWrapper wrap(SegmentsEntry segmentsEntry) {
+		return new SegmentsEntryWrapper(segmentsEntry);
 	}
-
-	@Override
-	public SegmentsEntry toEscapedModel() {
-		return new SegmentsEntryWrapper(_segmentsEntry.toEscapedModel());
-	}
-
-	@Override
-	public String toString() {
-		return _segmentsEntry.toString();
-	}
-
-	@Override
-	public SegmentsEntry toUnescapedModel() {
-		return new SegmentsEntryWrapper(_segmentsEntry.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _segmentsEntry.toXmlString();
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-
-		if (!(obj instanceof SegmentsEntryWrapper)) {
-			return false;
-		}
-
-		SegmentsEntryWrapper segmentsEntryWrapper = (SegmentsEntryWrapper)obj;
-
-		if (Objects.equals(_segmentsEntry, segmentsEntryWrapper._segmentsEntry)) {
-			return true;
-		}
-
-		return false;
-	}
-
-	@Override
-	public SegmentsEntry getWrappedModel() {
-		return _segmentsEntry;
-	}
-
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _segmentsEntry.isEntityCacheEnabled();
-	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _segmentsEntry.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_segmentsEntry.resetOriginalValues();
-	}
-
-	private final SegmentsEntry _segmentsEntry;
 }

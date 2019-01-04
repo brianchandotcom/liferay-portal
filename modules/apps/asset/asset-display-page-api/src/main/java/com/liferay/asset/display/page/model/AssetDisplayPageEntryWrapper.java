@@ -16,19 +16,14 @@ package com.liferay.asset.display.page.model;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
-
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 
 import com.liferay.portal.kernel.model.ModelWrapper;
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -40,21 +35,11 @@ import java.util.Objects;
  * @generated
  */
 @ProviderType
-public class AssetDisplayPageEntryWrapper implements AssetDisplayPageEntry,
-	ModelWrapper<AssetDisplayPageEntry> {
+public class AssetDisplayPageEntryWrapper extends BaseModelWrapper<AssetDisplayPageEntry>
+	implements AssetDisplayPageEntry, ModelWrapper<AssetDisplayPageEntry> {
 	public AssetDisplayPageEntryWrapper(
 		AssetDisplayPageEntry assetDisplayPageEntry) {
-		_assetDisplayPageEntry = assetDisplayPageEntry;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return AssetDisplayPageEntry.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return AssetDisplayPageEntry.class.getName();
+		super(assetDisplayPageEntry);
 	}
 
 	@Override
@@ -162,16 +147,6 @@ public class AssetDisplayPageEntryWrapper implements AssetDisplayPageEntry,
 		}
 	}
 
-	@Override
-	public Object clone() {
-		return new AssetDisplayPageEntryWrapper((AssetDisplayPageEntry)_assetDisplayPageEntry.clone());
-	}
-
-	@Override
-	public int compareTo(AssetDisplayPageEntry assetDisplayPageEntry) {
-		return _assetDisplayPageEntry.compareTo(assetDisplayPageEntry);
-	}
-
 	/**
 	* Returns the asset display page entry ID of this asset display page entry.
 	*
@@ -179,7 +154,7 @@ public class AssetDisplayPageEntryWrapper implements AssetDisplayPageEntry,
 	*/
 	@Override
 	public long getAssetDisplayPageEntryId() {
-		return _assetDisplayPageEntry.getAssetDisplayPageEntryId();
+		return model.getAssetDisplayPageEntryId();
 	}
 
 	/**
@@ -189,7 +164,7 @@ public class AssetDisplayPageEntryWrapper implements AssetDisplayPageEntry,
 	*/
 	@Override
 	public String getClassName() {
-		return _assetDisplayPageEntry.getClassName();
+		return model.getClassName();
 	}
 
 	/**
@@ -199,7 +174,7 @@ public class AssetDisplayPageEntryWrapper implements AssetDisplayPageEntry,
 	*/
 	@Override
 	public long getClassNameId() {
-		return _assetDisplayPageEntry.getClassNameId();
+		return model.getClassNameId();
 	}
 
 	/**
@@ -209,7 +184,7 @@ public class AssetDisplayPageEntryWrapper implements AssetDisplayPageEntry,
 	*/
 	@Override
 	public long getClassPK() {
-		return _assetDisplayPageEntry.getClassPK();
+		return model.getClassPK();
 	}
 
 	/**
@@ -219,7 +194,7 @@ public class AssetDisplayPageEntryWrapper implements AssetDisplayPageEntry,
 	*/
 	@Override
 	public long getCompanyId() {
-		return _assetDisplayPageEntry.getCompanyId();
+		return model.getCompanyId();
 	}
 
 	/**
@@ -229,12 +204,7 @@ public class AssetDisplayPageEntryWrapper implements AssetDisplayPageEntry,
 	*/
 	@Override
 	public Date getCreateDate() {
-		return _assetDisplayPageEntry.getCreateDate();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _assetDisplayPageEntry.getExpandoBridge();
+		return model.getCreateDate();
 	}
 
 	/**
@@ -244,7 +214,7 @@ public class AssetDisplayPageEntryWrapper implements AssetDisplayPageEntry,
 	*/
 	@Override
 	public long getGroupId() {
-		return _assetDisplayPageEntry.getGroupId();
+		return model.getGroupId();
 	}
 
 	/**
@@ -254,7 +224,7 @@ public class AssetDisplayPageEntryWrapper implements AssetDisplayPageEntry,
 	*/
 	@Override
 	public long getLayoutPageTemplateEntryId() {
-		return _assetDisplayPageEntry.getLayoutPageTemplateEntryId();
+		return model.getLayoutPageTemplateEntryId();
 	}
 
 	/**
@@ -264,7 +234,7 @@ public class AssetDisplayPageEntryWrapper implements AssetDisplayPageEntry,
 	*/
 	@Override
 	public Date getModifiedDate() {
-		return _assetDisplayPageEntry.getModifiedDate();
+		return model.getModifiedDate();
 	}
 
 	/**
@@ -274,7 +244,7 @@ public class AssetDisplayPageEntryWrapper implements AssetDisplayPageEntry,
 	*/
 	@Override
 	public long getPlid() {
-		return _assetDisplayPageEntry.getPlid();
+		return model.getPlid();
 	}
 
 	/**
@@ -284,12 +254,7 @@ public class AssetDisplayPageEntryWrapper implements AssetDisplayPageEntry,
 	*/
 	@Override
 	public long getPrimaryKey() {
-		return _assetDisplayPageEntry.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _assetDisplayPageEntry.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	/**
@@ -299,7 +264,7 @@ public class AssetDisplayPageEntryWrapper implements AssetDisplayPageEntry,
 	*/
 	@Override
 	public int getType() {
-		return _assetDisplayPageEntry.getType();
+		return model.getType();
 	}
 
 	/**
@@ -309,7 +274,7 @@ public class AssetDisplayPageEntryWrapper implements AssetDisplayPageEntry,
 	*/
 	@Override
 	public long getUserId() {
-		return _assetDisplayPageEntry.getUserId();
+		return model.getUserId();
 	}
 
 	/**
@@ -319,7 +284,7 @@ public class AssetDisplayPageEntryWrapper implements AssetDisplayPageEntry,
 	*/
 	@Override
 	public String getUserName() {
-		return _assetDisplayPageEntry.getUserName();
+		return model.getUserName();
 	}
 
 	/**
@@ -329,7 +294,7 @@ public class AssetDisplayPageEntryWrapper implements AssetDisplayPageEntry,
 	*/
 	@Override
 	public String getUserUuid() {
-		return _assetDisplayPageEntry.getUserUuid();
+		return model.getUserUuid();
 	}
 
 	/**
@@ -339,32 +304,12 @@ public class AssetDisplayPageEntryWrapper implements AssetDisplayPageEntry,
 	*/
 	@Override
 	public String getUuid() {
-		return _assetDisplayPageEntry.getUuid();
-	}
-
-	@Override
-	public int hashCode() {
-		return _assetDisplayPageEntry.hashCode();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _assetDisplayPageEntry.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _assetDisplayPageEntry.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _assetDisplayPageEntry.isNew();
+		return model.getUuid();
 	}
 
 	@Override
 	public void persist() {
-		_assetDisplayPageEntry.persist();
+		model.persist();
 	}
 
 	/**
@@ -374,17 +319,12 @@ public class AssetDisplayPageEntryWrapper implements AssetDisplayPageEntry,
 	*/
 	@Override
 	public void setAssetDisplayPageEntryId(long assetDisplayPageEntryId) {
-		_assetDisplayPageEntry.setAssetDisplayPageEntryId(assetDisplayPageEntryId);
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_assetDisplayPageEntry.setCachedModel(cachedModel);
+		model.setAssetDisplayPageEntryId(assetDisplayPageEntryId);
 	}
 
 	@Override
 	public void setClassName(String className) {
-		_assetDisplayPageEntry.setClassName(className);
+		model.setClassName(className);
 	}
 
 	/**
@@ -394,7 +334,7 @@ public class AssetDisplayPageEntryWrapper implements AssetDisplayPageEntry,
 	*/
 	@Override
 	public void setClassNameId(long classNameId) {
-		_assetDisplayPageEntry.setClassNameId(classNameId);
+		model.setClassNameId(classNameId);
 	}
 
 	/**
@@ -404,7 +344,7 @@ public class AssetDisplayPageEntryWrapper implements AssetDisplayPageEntry,
 	*/
 	@Override
 	public void setClassPK(long classPK) {
-		_assetDisplayPageEntry.setClassPK(classPK);
+		model.setClassPK(classPK);
 	}
 
 	/**
@@ -414,7 +354,7 @@ public class AssetDisplayPageEntryWrapper implements AssetDisplayPageEntry,
 	*/
 	@Override
 	public void setCompanyId(long companyId) {
-		_assetDisplayPageEntry.setCompanyId(companyId);
+		model.setCompanyId(companyId);
 	}
 
 	/**
@@ -424,23 +364,7 @@ public class AssetDisplayPageEntryWrapper implements AssetDisplayPageEntry,
 	*/
 	@Override
 	public void setCreateDate(Date createDate) {
-		_assetDisplayPageEntry.setCreateDate(createDate);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-		_assetDisplayPageEntry.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_assetDisplayPageEntry.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_assetDisplayPageEntry.setExpandoBridgeAttributes(serviceContext);
+		model.setCreateDate(createDate);
 	}
 
 	/**
@@ -450,7 +374,7 @@ public class AssetDisplayPageEntryWrapper implements AssetDisplayPageEntry,
 	*/
 	@Override
 	public void setGroupId(long groupId) {
-		_assetDisplayPageEntry.setGroupId(groupId);
+		model.setGroupId(groupId);
 	}
 
 	/**
@@ -460,7 +384,7 @@ public class AssetDisplayPageEntryWrapper implements AssetDisplayPageEntry,
 	*/
 	@Override
 	public void setLayoutPageTemplateEntryId(long layoutPageTemplateEntryId) {
-		_assetDisplayPageEntry.setLayoutPageTemplateEntryId(layoutPageTemplateEntryId);
+		model.setLayoutPageTemplateEntryId(layoutPageTemplateEntryId);
 	}
 
 	/**
@@ -470,12 +394,7 @@ public class AssetDisplayPageEntryWrapper implements AssetDisplayPageEntry,
 	*/
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
-		_assetDisplayPageEntry.setModifiedDate(modifiedDate);
-	}
-
-	@Override
-	public void setNew(boolean n) {
-		_assetDisplayPageEntry.setNew(n);
+		model.setModifiedDate(modifiedDate);
 	}
 
 	/**
@@ -485,7 +404,7 @@ public class AssetDisplayPageEntryWrapper implements AssetDisplayPageEntry,
 	*/
 	@Override
 	public void setPlid(long plid) {
-		_assetDisplayPageEntry.setPlid(plid);
+		model.setPlid(plid);
 	}
 
 	/**
@@ -495,12 +414,7 @@ public class AssetDisplayPageEntryWrapper implements AssetDisplayPageEntry,
 	*/
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_assetDisplayPageEntry.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_assetDisplayPageEntry.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -510,7 +424,7 @@ public class AssetDisplayPageEntryWrapper implements AssetDisplayPageEntry,
 	*/
 	@Override
 	public void setType(int type) {
-		_assetDisplayPageEntry.setType(type);
+		model.setType(type);
 	}
 
 	/**
@@ -520,7 +434,7 @@ public class AssetDisplayPageEntryWrapper implements AssetDisplayPageEntry,
 	*/
 	@Override
 	public void setUserId(long userId) {
-		_assetDisplayPageEntry.setUserId(userId);
+		model.setUserId(userId);
 	}
 
 	/**
@@ -530,7 +444,7 @@ public class AssetDisplayPageEntryWrapper implements AssetDisplayPageEntry,
 	*/
 	@Override
 	public void setUserName(String userName) {
-		_assetDisplayPageEntry.setUserName(userName);
+		model.setUserName(userName);
 	}
 
 	/**
@@ -540,7 +454,7 @@ public class AssetDisplayPageEntryWrapper implements AssetDisplayPageEntry,
 	*/
 	@Override
 	public void setUserUuid(String userUuid) {
-		_assetDisplayPageEntry.setUserUuid(userUuid);
+		model.setUserUuid(userUuid);
 	}
 
 	/**
@@ -550,78 +464,17 @@ public class AssetDisplayPageEntryWrapper implements AssetDisplayPageEntry,
 	*/
 	@Override
 	public void setUuid(String uuid) {
-		_assetDisplayPageEntry.setUuid(uuid);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<AssetDisplayPageEntry> toCacheModel() {
-		return _assetDisplayPageEntry.toCacheModel();
-	}
-
-	@Override
-	public AssetDisplayPageEntry toEscapedModel() {
-		return new AssetDisplayPageEntryWrapper(_assetDisplayPageEntry.toEscapedModel());
-	}
-
-	@Override
-	public String toString() {
-		return _assetDisplayPageEntry.toString();
-	}
-
-	@Override
-	public AssetDisplayPageEntry toUnescapedModel() {
-		return new AssetDisplayPageEntryWrapper(_assetDisplayPageEntry.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _assetDisplayPageEntry.toXmlString();
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-
-		if (!(obj instanceof AssetDisplayPageEntryWrapper)) {
-			return false;
-		}
-
-		AssetDisplayPageEntryWrapper assetDisplayPageEntryWrapper = (AssetDisplayPageEntryWrapper)obj;
-
-		if (Objects.equals(_assetDisplayPageEntry,
-					assetDisplayPageEntryWrapper._assetDisplayPageEntry)) {
-			return true;
-		}
-
-		return false;
+		model.setUuid(uuid);
 	}
 
 	@Override
 	public StagedModelType getStagedModelType() {
-		return _assetDisplayPageEntry.getStagedModelType();
+		return model.getStagedModelType();
 	}
 
 	@Override
-	public AssetDisplayPageEntry getWrappedModel() {
-		return _assetDisplayPageEntry;
+	protected AssetDisplayPageEntryWrapper wrap(
+		AssetDisplayPageEntry assetDisplayPageEntry) {
+		return new AssetDisplayPageEntryWrapper(assetDisplayPageEntry);
 	}
-
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _assetDisplayPageEntry.isEntityCacheEnabled();
-	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _assetDisplayPageEntry.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_assetDisplayPageEntry.resetOriginalValues();
-	}
-
-	private final AssetDisplayPageEntry _assetDisplayPageEntry;
 }

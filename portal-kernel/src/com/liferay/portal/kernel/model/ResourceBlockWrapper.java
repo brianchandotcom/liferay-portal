@@ -16,15 +16,10 @@ package com.liferay.portal.kernel.model;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
-
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -38,20 +33,10 @@ import java.util.Objects;
  */
 @Deprecated
 @ProviderType
-public class ResourceBlockWrapper implements ResourceBlock,
-	ModelWrapper<ResourceBlock> {
+public class ResourceBlockWrapper extends BaseModelWrapper<ResourceBlock>
+	implements ResourceBlock, ModelWrapper<ResourceBlock> {
 	public ResourceBlockWrapper(ResourceBlock resourceBlock) {
-		_resourceBlock = resourceBlock;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return ResourceBlock.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return ResourceBlock.class.getName();
+		super(resourceBlock);
 	}
 
 	@Override
@@ -114,16 +99,6 @@ public class ResourceBlockWrapper implements ResourceBlock,
 		}
 	}
 
-	@Override
-	public Object clone() {
-		return new ResourceBlockWrapper((ResourceBlock)_resourceBlock.clone());
-	}
-
-	@Override
-	public int compareTo(ResourceBlock resourceBlock) {
-		return _resourceBlock.compareTo(resourceBlock);
-	}
-
 	/**
 	* Returns the company ID of this resource block.
 	*
@@ -131,12 +106,7 @@ public class ResourceBlockWrapper implements ResourceBlock,
 	*/
 	@Override
 	public long getCompanyId() {
-		return _resourceBlock.getCompanyId();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _resourceBlock.getExpandoBridge();
+		return model.getCompanyId();
 	}
 
 	/**
@@ -146,7 +116,7 @@ public class ResourceBlockWrapper implements ResourceBlock,
 	*/
 	@Override
 	public long getGroupId() {
-		return _resourceBlock.getGroupId();
+		return model.getGroupId();
 	}
 
 	/**
@@ -156,7 +126,7 @@ public class ResourceBlockWrapper implements ResourceBlock,
 	*/
 	@Override
 	public long getMvccVersion() {
-		return _resourceBlock.getMvccVersion();
+		return model.getMvccVersion();
 	}
 
 	/**
@@ -166,7 +136,7 @@ public class ResourceBlockWrapper implements ResourceBlock,
 	*/
 	@Override
 	public String getName() {
-		return _resourceBlock.getName();
+		return model.getName();
 	}
 
 	/**
@@ -176,7 +146,7 @@ public class ResourceBlockWrapper implements ResourceBlock,
 	*/
 	@Override
 	public String getPermissionsHash() {
-		return _resourceBlock.getPermissionsHash();
+		return model.getPermissionsHash();
 	}
 
 	/**
@@ -186,12 +156,7 @@ public class ResourceBlockWrapper implements ResourceBlock,
 	*/
 	@Override
 	public long getPrimaryKey() {
-		return _resourceBlock.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _resourceBlock.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	/**
@@ -201,7 +166,7 @@ public class ResourceBlockWrapper implements ResourceBlock,
 	*/
 	@Override
 	public long getReferenceCount() {
-		return _resourceBlock.getReferenceCount();
+		return model.getReferenceCount();
 	}
 
 	/**
@@ -211,37 +176,12 @@ public class ResourceBlockWrapper implements ResourceBlock,
 	*/
 	@Override
 	public long getResourceBlockId() {
-		return _resourceBlock.getResourceBlockId();
-	}
-
-	@Override
-	public int hashCode() {
-		return _resourceBlock.hashCode();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _resourceBlock.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _resourceBlock.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _resourceBlock.isNew();
+		return model.getResourceBlockId();
 	}
 
 	@Override
 	public void persist() {
-		_resourceBlock.persist();
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_resourceBlock.setCachedModel(cachedModel);
+		model.persist();
 	}
 
 	/**
@@ -251,22 +191,7 @@ public class ResourceBlockWrapper implements ResourceBlock,
 	*/
 	@Override
 	public void setCompanyId(long companyId) {
-		_resourceBlock.setCompanyId(companyId);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(BaseModel<?> baseModel) {
-		_resourceBlock.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_resourceBlock.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_resourceBlock.setExpandoBridgeAttributes(serviceContext);
+		model.setCompanyId(companyId);
 	}
 
 	/**
@@ -276,7 +201,7 @@ public class ResourceBlockWrapper implements ResourceBlock,
 	*/
 	@Override
 	public void setGroupId(long groupId) {
-		_resourceBlock.setGroupId(groupId);
+		model.setGroupId(groupId);
 	}
 
 	/**
@@ -286,7 +211,7 @@ public class ResourceBlockWrapper implements ResourceBlock,
 	*/
 	@Override
 	public void setMvccVersion(long mvccVersion) {
-		_resourceBlock.setMvccVersion(mvccVersion);
+		model.setMvccVersion(mvccVersion);
 	}
 
 	/**
@@ -296,12 +221,7 @@ public class ResourceBlockWrapper implements ResourceBlock,
 	*/
 	@Override
 	public void setName(String name) {
-		_resourceBlock.setName(name);
-	}
-
-	@Override
-	public void setNew(boolean n) {
-		_resourceBlock.setNew(n);
+		model.setName(name);
 	}
 
 	/**
@@ -311,7 +231,7 @@ public class ResourceBlockWrapper implements ResourceBlock,
 	*/
 	@Override
 	public void setPermissionsHash(String permissionsHash) {
-		_resourceBlock.setPermissionsHash(permissionsHash);
+		model.setPermissionsHash(permissionsHash);
 	}
 
 	/**
@@ -321,12 +241,7 @@ public class ResourceBlockWrapper implements ResourceBlock,
 	*/
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_resourceBlock.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_resourceBlock.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -336,7 +251,7 @@ public class ResourceBlockWrapper implements ResourceBlock,
 	*/
 	@Override
 	public void setReferenceCount(long referenceCount) {
-		_resourceBlock.setReferenceCount(referenceCount);
+		model.setReferenceCount(referenceCount);
 	}
 
 	/**
@@ -346,72 +261,11 @@ public class ResourceBlockWrapper implements ResourceBlock,
 	*/
 	@Override
 	public void setResourceBlockId(long resourceBlockId) {
-		_resourceBlock.setResourceBlockId(resourceBlockId);
+		model.setResourceBlockId(resourceBlockId);
 	}
 
 	@Override
-	public CacheModel<ResourceBlock> toCacheModel() {
-		return _resourceBlock.toCacheModel();
+	protected ResourceBlockWrapper wrap(ResourceBlock resourceBlock) {
+		return new ResourceBlockWrapper(resourceBlock);
 	}
-
-	@Override
-	public ResourceBlock toEscapedModel() {
-		return new ResourceBlockWrapper(_resourceBlock.toEscapedModel());
-	}
-
-	@Override
-	public String toString() {
-		return _resourceBlock.toString();
-	}
-
-	@Override
-	public ResourceBlock toUnescapedModel() {
-		return new ResourceBlockWrapper(_resourceBlock.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _resourceBlock.toXmlString();
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-
-		if (!(obj instanceof ResourceBlockWrapper)) {
-			return false;
-		}
-
-		ResourceBlockWrapper resourceBlockWrapper = (ResourceBlockWrapper)obj;
-
-		if (Objects.equals(_resourceBlock, resourceBlockWrapper._resourceBlock)) {
-			return true;
-		}
-
-		return false;
-	}
-
-	@Override
-	public ResourceBlock getWrappedModel() {
-		return _resourceBlock;
-	}
-
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _resourceBlock.isEntityCacheEnabled();
-	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _resourceBlock.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_resourceBlock.resetOriginalValues();
-	}
-
-	private final ResourceBlock _resourceBlock;
 }

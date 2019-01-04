@@ -16,16 +16,11 @@ package com.liferay.social.kernel.model;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
-
 import com.liferay.portal.kernel.model.ModelWrapper;
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -37,22 +32,12 @@ import java.util.Objects;
  * @generated
  */
 @ProviderType
-public class SocialActivityAchievementWrapper
+public class SocialActivityAchievementWrapper extends BaseModelWrapper<SocialActivityAchievement>
 	implements SocialActivityAchievement,
 		ModelWrapper<SocialActivityAchievement> {
 	public SocialActivityAchievementWrapper(
 		SocialActivityAchievement socialActivityAchievement) {
-		_socialActivityAchievement = socialActivityAchievement;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return SocialActivityAchievement.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return SocialActivityAchievement.class.getName();
+		super(socialActivityAchievement);
 	}
 
 	@Override
@@ -116,16 +101,6 @@ public class SocialActivityAchievementWrapper
 		}
 	}
 
-	@Override
-	public Object clone() {
-		return new SocialActivityAchievementWrapper((SocialActivityAchievement)_socialActivityAchievement.clone());
-	}
-
-	@Override
-	public int compareTo(SocialActivityAchievement socialActivityAchievement) {
-		return _socialActivityAchievement.compareTo(socialActivityAchievement);
-	}
-
 	/**
 	* Returns the activity achievement ID of this social activity achievement.
 	*
@@ -133,7 +108,7 @@ public class SocialActivityAchievementWrapper
 	*/
 	@Override
 	public long getActivityAchievementId() {
-		return _socialActivityAchievement.getActivityAchievementId();
+		return model.getActivityAchievementId();
 	}
 
 	/**
@@ -143,7 +118,7 @@ public class SocialActivityAchievementWrapper
 	*/
 	@Override
 	public long getCompanyId() {
-		return _socialActivityAchievement.getCompanyId();
+		return model.getCompanyId();
 	}
 
 	/**
@@ -153,12 +128,7 @@ public class SocialActivityAchievementWrapper
 	*/
 	@Override
 	public long getCreateDate() {
-		return _socialActivityAchievement.getCreateDate();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _socialActivityAchievement.getExpandoBridge();
+		return model.getCreateDate();
 	}
 
 	/**
@@ -168,7 +138,7 @@ public class SocialActivityAchievementWrapper
 	*/
 	@Override
 	public boolean getFirstInGroup() {
-		return _socialActivityAchievement.getFirstInGroup();
+		return model.getFirstInGroup();
 	}
 
 	/**
@@ -178,7 +148,7 @@ public class SocialActivityAchievementWrapper
 	*/
 	@Override
 	public long getGroupId() {
-		return _socialActivityAchievement.getGroupId();
+		return model.getGroupId();
 	}
 
 	/**
@@ -188,7 +158,7 @@ public class SocialActivityAchievementWrapper
 	*/
 	@Override
 	public String getName() {
-		return _socialActivityAchievement.getName();
+		return model.getName();
 	}
 
 	/**
@@ -198,12 +168,7 @@ public class SocialActivityAchievementWrapper
 	*/
 	@Override
 	public long getPrimaryKey() {
-		return _socialActivityAchievement.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _socialActivityAchievement.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	/**
@@ -213,7 +178,7 @@ public class SocialActivityAchievementWrapper
 	*/
 	@Override
 	public long getUserId() {
-		return _socialActivityAchievement.getUserId();
+		return model.getUserId();
 	}
 
 	/**
@@ -223,22 +188,7 @@ public class SocialActivityAchievementWrapper
 	*/
 	@Override
 	public String getUserUuid() {
-		return _socialActivityAchievement.getUserUuid();
-	}
-
-	@Override
-	public int hashCode() {
-		return _socialActivityAchievement.hashCode();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _socialActivityAchievement.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _socialActivityAchievement.isEscapedModel();
+		return model.getUserUuid();
 	}
 
 	/**
@@ -248,17 +198,12 @@ public class SocialActivityAchievementWrapper
 	*/
 	@Override
 	public boolean isFirstInGroup() {
-		return _socialActivityAchievement.isFirstInGroup();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _socialActivityAchievement.isNew();
+		return model.isFirstInGroup();
 	}
 
 	@Override
 	public void persist() {
-		_socialActivityAchievement.persist();
+		model.persist();
 	}
 
 	/**
@@ -268,12 +213,7 @@ public class SocialActivityAchievementWrapper
 	*/
 	@Override
 	public void setActivityAchievementId(long activityAchievementId) {
-		_socialActivityAchievement.setActivityAchievementId(activityAchievementId);
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_socialActivityAchievement.setCachedModel(cachedModel);
+		model.setActivityAchievementId(activityAchievementId);
 	}
 
 	/**
@@ -283,7 +223,7 @@ public class SocialActivityAchievementWrapper
 	*/
 	@Override
 	public void setCompanyId(long companyId) {
-		_socialActivityAchievement.setCompanyId(companyId);
+		model.setCompanyId(companyId);
 	}
 
 	/**
@@ -293,23 +233,7 @@ public class SocialActivityAchievementWrapper
 	*/
 	@Override
 	public void setCreateDate(long createDate) {
-		_socialActivityAchievement.setCreateDate(createDate);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-		_socialActivityAchievement.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_socialActivityAchievement.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_socialActivityAchievement.setExpandoBridgeAttributes(serviceContext);
+		model.setCreateDate(createDate);
 	}
 
 	/**
@@ -319,7 +243,7 @@ public class SocialActivityAchievementWrapper
 	*/
 	@Override
 	public void setFirstInGroup(boolean firstInGroup) {
-		_socialActivityAchievement.setFirstInGroup(firstInGroup);
+		model.setFirstInGroup(firstInGroup);
 	}
 
 	/**
@@ -329,7 +253,7 @@ public class SocialActivityAchievementWrapper
 	*/
 	@Override
 	public void setGroupId(long groupId) {
-		_socialActivityAchievement.setGroupId(groupId);
+		model.setGroupId(groupId);
 	}
 
 	/**
@@ -339,12 +263,7 @@ public class SocialActivityAchievementWrapper
 	*/
 	@Override
 	public void setName(String name) {
-		_socialActivityAchievement.setName(name);
-	}
-
-	@Override
-	public void setNew(boolean n) {
-		_socialActivityAchievement.setNew(n);
+		model.setName(name);
 	}
 
 	/**
@@ -354,12 +273,7 @@ public class SocialActivityAchievementWrapper
 	*/
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_socialActivityAchievement.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_socialActivityAchievement.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -369,7 +283,7 @@ public class SocialActivityAchievementWrapper
 	*/
 	@Override
 	public void setUserId(long userId) {
-		_socialActivityAchievement.setUserId(userId);
+		model.setUserId(userId);
 	}
 
 	/**
@@ -379,73 +293,12 @@ public class SocialActivityAchievementWrapper
 	*/
 	@Override
 	public void setUserUuid(String userUuid) {
-		_socialActivityAchievement.setUserUuid(userUuid);
+		model.setUserUuid(userUuid);
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.CacheModel<SocialActivityAchievement> toCacheModel() {
-		return _socialActivityAchievement.toCacheModel();
+	protected SocialActivityAchievementWrapper wrap(
+		SocialActivityAchievement socialActivityAchievement) {
+		return new SocialActivityAchievementWrapper(socialActivityAchievement);
 	}
-
-	@Override
-	public SocialActivityAchievement toEscapedModel() {
-		return new SocialActivityAchievementWrapper(_socialActivityAchievement.toEscapedModel());
-	}
-
-	@Override
-	public String toString() {
-		return _socialActivityAchievement.toString();
-	}
-
-	@Override
-	public SocialActivityAchievement toUnescapedModel() {
-		return new SocialActivityAchievementWrapper(_socialActivityAchievement.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _socialActivityAchievement.toXmlString();
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-
-		if (!(obj instanceof SocialActivityAchievementWrapper)) {
-			return false;
-		}
-
-		SocialActivityAchievementWrapper socialActivityAchievementWrapper = (SocialActivityAchievementWrapper)obj;
-
-		if (Objects.equals(_socialActivityAchievement,
-					socialActivityAchievementWrapper._socialActivityAchievement)) {
-			return true;
-		}
-
-		return false;
-	}
-
-	@Override
-	public SocialActivityAchievement getWrappedModel() {
-		return _socialActivityAchievement;
-	}
-
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _socialActivityAchievement.isEntityCacheEnabled();
-	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _socialActivityAchievement.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_socialActivityAchievement.resetOriginalValues();
-	}
-
-	private final SocialActivityAchievement _socialActivityAchievement;
 }

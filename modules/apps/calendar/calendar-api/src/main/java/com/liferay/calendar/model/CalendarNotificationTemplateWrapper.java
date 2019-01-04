@@ -16,19 +16,14 @@ package com.liferay.calendar.model;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
-
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 
 import com.liferay.portal.kernel.model.ModelWrapper;
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -40,22 +35,12 @@ import java.util.Objects;
  * @generated
  */
 @ProviderType
-public class CalendarNotificationTemplateWrapper
+public class CalendarNotificationTemplateWrapper extends BaseModelWrapper<CalendarNotificationTemplate>
 	implements CalendarNotificationTemplate,
 		ModelWrapper<CalendarNotificationTemplate> {
 	public CalendarNotificationTemplateWrapper(
 		CalendarNotificationTemplate calendarNotificationTemplate) {
-		_calendarNotificationTemplate = calendarNotificationTemplate;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return CalendarNotificationTemplate.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return CalendarNotificationTemplate.class.getName();
+		super(calendarNotificationTemplate);
 	}
 
 	@Override
@@ -178,17 +163,6 @@ public class CalendarNotificationTemplateWrapper
 		}
 	}
 
-	@Override
-	public Object clone() {
-		return new CalendarNotificationTemplateWrapper((CalendarNotificationTemplate)_calendarNotificationTemplate.clone());
-	}
-
-	@Override
-	public int compareTo(
-		CalendarNotificationTemplate calendarNotificationTemplate) {
-		return _calendarNotificationTemplate.compareTo(calendarNotificationTemplate);
-	}
-
 	/**
 	* Returns the body of this calendar notification template.
 	*
@@ -196,7 +170,7 @@ public class CalendarNotificationTemplateWrapper
 	*/
 	@Override
 	public String getBody() {
-		return _calendarNotificationTemplate.getBody();
+		return model.getBody();
 	}
 
 	/**
@@ -206,7 +180,7 @@ public class CalendarNotificationTemplateWrapper
 	*/
 	@Override
 	public long getCalendarId() {
-		return _calendarNotificationTemplate.getCalendarId();
+		return model.getCalendarId();
 	}
 
 	/**
@@ -216,7 +190,7 @@ public class CalendarNotificationTemplateWrapper
 	*/
 	@Override
 	public long getCalendarNotificationTemplateId() {
-		return _calendarNotificationTemplate.getCalendarNotificationTemplateId();
+		return model.getCalendarNotificationTemplateId();
 	}
 
 	/**
@@ -226,7 +200,7 @@ public class CalendarNotificationTemplateWrapper
 	*/
 	@Override
 	public long getCompanyId() {
-		return _calendarNotificationTemplate.getCompanyId();
+		return model.getCompanyId();
 	}
 
 	/**
@@ -236,12 +210,7 @@ public class CalendarNotificationTemplateWrapper
 	*/
 	@Override
 	public Date getCreateDate() {
-		return _calendarNotificationTemplate.getCreateDate();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _calendarNotificationTemplate.getExpandoBridge();
+		return model.getCreateDate();
 	}
 
 	/**
@@ -251,7 +220,7 @@ public class CalendarNotificationTemplateWrapper
 	*/
 	@Override
 	public long getGroupId() {
-		return _calendarNotificationTemplate.getGroupId();
+		return model.getGroupId();
 	}
 
 	/**
@@ -261,7 +230,7 @@ public class CalendarNotificationTemplateWrapper
 	*/
 	@Override
 	public Date getLastPublishDate() {
-		return _calendarNotificationTemplate.getLastPublishDate();
+		return model.getLastPublishDate();
 	}
 
 	/**
@@ -271,7 +240,7 @@ public class CalendarNotificationTemplateWrapper
 	*/
 	@Override
 	public Date getModifiedDate() {
-		return _calendarNotificationTemplate.getModifiedDate();
+		return model.getModifiedDate();
 	}
 
 	/**
@@ -281,7 +250,7 @@ public class CalendarNotificationTemplateWrapper
 	*/
 	@Override
 	public String getNotificationTemplateType() {
-		return _calendarNotificationTemplate.getNotificationTemplateType();
+		return model.getNotificationTemplateType();
 	}
 
 	/**
@@ -291,7 +260,7 @@ public class CalendarNotificationTemplateWrapper
 	*/
 	@Override
 	public String getNotificationType() {
-		return _calendarNotificationTemplate.getNotificationType();
+		return model.getNotificationType();
 	}
 
 	/**
@@ -301,12 +270,12 @@ public class CalendarNotificationTemplateWrapper
 	*/
 	@Override
 	public String getNotificationTypeSettings() {
-		return _calendarNotificationTemplate.getNotificationTypeSettings();
+		return model.getNotificationTypeSettings();
 	}
 
 	@Override
 	public com.liferay.portal.kernel.util.UnicodeProperties getNotificationTypeSettingsProperties() {
-		return _calendarNotificationTemplate.getNotificationTypeSettingsProperties();
+		return model.getNotificationTypeSettingsProperties();
 	}
 
 	/**
@@ -316,12 +285,7 @@ public class CalendarNotificationTemplateWrapper
 	*/
 	@Override
 	public long getPrimaryKey() {
-		return _calendarNotificationTemplate.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _calendarNotificationTemplate.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	/**
@@ -331,7 +295,7 @@ public class CalendarNotificationTemplateWrapper
 	*/
 	@Override
 	public String getSubject() {
-		return _calendarNotificationTemplate.getSubject();
+		return model.getSubject();
 	}
 
 	/**
@@ -341,7 +305,7 @@ public class CalendarNotificationTemplateWrapper
 	*/
 	@Override
 	public long getUserId() {
-		return _calendarNotificationTemplate.getUserId();
+		return model.getUserId();
 	}
 
 	/**
@@ -351,7 +315,7 @@ public class CalendarNotificationTemplateWrapper
 	*/
 	@Override
 	public String getUserName() {
-		return _calendarNotificationTemplate.getUserName();
+		return model.getUserName();
 	}
 
 	/**
@@ -361,7 +325,7 @@ public class CalendarNotificationTemplateWrapper
 	*/
 	@Override
 	public String getUserUuid() {
-		return _calendarNotificationTemplate.getUserUuid();
+		return model.getUserUuid();
 	}
 
 	/**
@@ -371,32 +335,12 @@ public class CalendarNotificationTemplateWrapper
 	*/
 	@Override
 	public String getUuid() {
-		return _calendarNotificationTemplate.getUuid();
-	}
-
-	@Override
-	public int hashCode() {
-		return _calendarNotificationTemplate.hashCode();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _calendarNotificationTemplate.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _calendarNotificationTemplate.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _calendarNotificationTemplate.isNew();
+		return model.getUuid();
 	}
 
 	@Override
 	public void persist() {
-		_calendarNotificationTemplate.persist();
+		model.persist();
 	}
 
 	/**
@@ -406,12 +350,7 @@ public class CalendarNotificationTemplateWrapper
 	*/
 	@Override
 	public void setBody(String body) {
-		_calendarNotificationTemplate.setBody(body);
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_calendarNotificationTemplate.setCachedModel(cachedModel);
+		model.setBody(body);
 	}
 
 	/**
@@ -421,7 +360,7 @@ public class CalendarNotificationTemplateWrapper
 	*/
 	@Override
 	public void setCalendarId(long calendarId) {
-		_calendarNotificationTemplate.setCalendarId(calendarId);
+		model.setCalendarId(calendarId);
 	}
 
 	/**
@@ -432,7 +371,7 @@ public class CalendarNotificationTemplateWrapper
 	@Override
 	public void setCalendarNotificationTemplateId(
 		long calendarNotificationTemplateId) {
-		_calendarNotificationTemplate.setCalendarNotificationTemplateId(calendarNotificationTemplateId);
+		model.setCalendarNotificationTemplateId(calendarNotificationTemplateId);
 	}
 
 	/**
@@ -442,7 +381,7 @@ public class CalendarNotificationTemplateWrapper
 	*/
 	@Override
 	public void setCompanyId(long companyId) {
-		_calendarNotificationTemplate.setCompanyId(companyId);
+		model.setCompanyId(companyId);
 	}
 
 	/**
@@ -452,23 +391,7 @@ public class CalendarNotificationTemplateWrapper
 	*/
 	@Override
 	public void setCreateDate(Date createDate) {
-		_calendarNotificationTemplate.setCreateDate(createDate);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-		_calendarNotificationTemplate.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_calendarNotificationTemplate.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_calendarNotificationTemplate.setExpandoBridgeAttributes(serviceContext);
+		model.setCreateDate(createDate);
 	}
 
 	/**
@@ -478,7 +401,7 @@ public class CalendarNotificationTemplateWrapper
 	*/
 	@Override
 	public void setGroupId(long groupId) {
-		_calendarNotificationTemplate.setGroupId(groupId);
+		model.setGroupId(groupId);
 	}
 
 	/**
@@ -488,7 +411,7 @@ public class CalendarNotificationTemplateWrapper
 	*/
 	@Override
 	public void setLastPublishDate(Date lastPublishDate) {
-		_calendarNotificationTemplate.setLastPublishDate(lastPublishDate);
+		model.setLastPublishDate(lastPublishDate);
 	}
 
 	/**
@@ -498,12 +421,7 @@ public class CalendarNotificationTemplateWrapper
 	*/
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
-		_calendarNotificationTemplate.setModifiedDate(modifiedDate);
-	}
-
-	@Override
-	public void setNew(boolean n) {
-		_calendarNotificationTemplate.setNew(n);
+		model.setModifiedDate(modifiedDate);
 	}
 
 	/**
@@ -513,7 +431,7 @@ public class CalendarNotificationTemplateWrapper
 	*/
 	@Override
 	public void setNotificationTemplateType(String notificationTemplateType) {
-		_calendarNotificationTemplate.setNotificationTemplateType(notificationTemplateType);
+		model.setNotificationTemplateType(notificationTemplateType);
 	}
 
 	/**
@@ -523,7 +441,7 @@ public class CalendarNotificationTemplateWrapper
 	*/
 	@Override
 	public void setNotificationType(String notificationType) {
-		_calendarNotificationTemplate.setNotificationType(notificationType);
+		model.setNotificationType(notificationType);
 	}
 
 	/**
@@ -533,7 +451,7 @@ public class CalendarNotificationTemplateWrapper
 	*/
 	@Override
 	public void setNotificationTypeSettings(String notificationTypeSettings) {
-		_calendarNotificationTemplate.setNotificationTypeSettings(notificationTypeSettings);
+		model.setNotificationTypeSettings(notificationTypeSettings);
 	}
 
 	/**
@@ -543,12 +461,7 @@ public class CalendarNotificationTemplateWrapper
 	*/
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_calendarNotificationTemplate.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_calendarNotificationTemplate.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -558,13 +471,13 @@ public class CalendarNotificationTemplateWrapper
 	*/
 	@Override
 	public void setSubject(String subject) {
-		_calendarNotificationTemplate.setSubject(subject);
+		model.setSubject(subject);
 	}
 
 	@Override
 	public void setTypeSettingsProperties(
 		com.liferay.portal.kernel.util.UnicodeProperties notificationTypeSettingsProperties) {
-		_calendarNotificationTemplate.setTypeSettingsProperties(notificationTypeSettingsProperties);
+		model.setTypeSettingsProperties(notificationTypeSettingsProperties);
 	}
 
 	/**
@@ -574,7 +487,7 @@ public class CalendarNotificationTemplateWrapper
 	*/
 	@Override
 	public void setUserId(long userId) {
-		_calendarNotificationTemplate.setUserId(userId);
+		model.setUserId(userId);
 	}
 
 	/**
@@ -584,7 +497,7 @@ public class CalendarNotificationTemplateWrapper
 	*/
 	@Override
 	public void setUserName(String userName) {
-		_calendarNotificationTemplate.setUserName(userName);
+		model.setUserName(userName);
 	}
 
 	/**
@@ -594,7 +507,7 @@ public class CalendarNotificationTemplateWrapper
 	*/
 	@Override
 	public void setUserUuid(String userUuid) {
-		_calendarNotificationTemplate.setUserUuid(userUuid);
+		model.setUserUuid(userUuid);
 	}
 
 	/**
@@ -604,78 +517,17 @@ public class CalendarNotificationTemplateWrapper
 	*/
 	@Override
 	public void setUuid(String uuid) {
-		_calendarNotificationTemplate.setUuid(uuid);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<CalendarNotificationTemplate> toCacheModel() {
-		return _calendarNotificationTemplate.toCacheModel();
-	}
-
-	@Override
-	public CalendarNotificationTemplate toEscapedModel() {
-		return new CalendarNotificationTemplateWrapper(_calendarNotificationTemplate.toEscapedModel());
-	}
-
-	@Override
-	public String toString() {
-		return _calendarNotificationTemplate.toString();
-	}
-
-	@Override
-	public CalendarNotificationTemplate toUnescapedModel() {
-		return new CalendarNotificationTemplateWrapper(_calendarNotificationTemplate.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _calendarNotificationTemplate.toXmlString();
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-
-		if (!(obj instanceof CalendarNotificationTemplateWrapper)) {
-			return false;
-		}
-
-		CalendarNotificationTemplateWrapper calendarNotificationTemplateWrapper = (CalendarNotificationTemplateWrapper)obj;
-
-		if (Objects.equals(_calendarNotificationTemplate,
-					calendarNotificationTemplateWrapper._calendarNotificationTemplate)) {
-			return true;
-		}
-
-		return false;
+		model.setUuid(uuid);
 	}
 
 	@Override
 	public StagedModelType getStagedModelType() {
-		return _calendarNotificationTemplate.getStagedModelType();
+		return model.getStagedModelType();
 	}
 
 	@Override
-	public CalendarNotificationTemplate getWrappedModel() {
-		return _calendarNotificationTemplate;
+	protected CalendarNotificationTemplateWrapper wrap(
+		CalendarNotificationTemplate calendarNotificationTemplate) {
+		return new CalendarNotificationTemplateWrapper(calendarNotificationTemplate);
 	}
-
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _calendarNotificationTemplate.isEntityCacheEnabled();
-	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _calendarNotificationTemplate.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_calendarNotificationTemplate.resetOriginalValues();
-	}
-
-	private final CalendarNotificationTemplate _calendarNotificationTemplate;
 }

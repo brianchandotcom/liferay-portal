@@ -16,19 +16,14 @@ package com.liferay.asset.model;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
-
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 
 import com.liferay.portal.kernel.model.ModelWrapper;
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -40,20 +35,10 @@ import java.util.Objects;
  * @generated
  */
 @ProviderType
-public class AssetEntryUsageWrapper implements AssetEntryUsage,
-	ModelWrapper<AssetEntryUsage> {
+public class AssetEntryUsageWrapper extends BaseModelWrapper<AssetEntryUsage>
+	implements AssetEntryUsage, ModelWrapper<AssetEntryUsage> {
 	public AssetEntryUsageWrapper(AssetEntryUsage assetEntryUsage) {
-		_assetEntryUsage = assetEntryUsage;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return AssetEntryUsage.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return AssetEntryUsage.class.getName();
+		super(assetEntryUsage);
 	}
 
 	@Override
@@ -158,16 +143,6 @@ public class AssetEntryUsageWrapper implements AssetEntryUsage,
 		}
 	}
 
-	@Override
-	public Object clone() {
-		return new AssetEntryUsageWrapper((AssetEntryUsage)_assetEntryUsage.clone());
-	}
-
-	@Override
-	public int compareTo(AssetEntryUsage assetEntryUsage) {
-		return _assetEntryUsage.compareTo(assetEntryUsage);
-	}
-
 	/**
 	* Returns the asset entry ID of this asset entry usage.
 	*
@@ -175,7 +150,7 @@ public class AssetEntryUsageWrapper implements AssetEntryUsage,
 	*/
 	@Override
 	public long getAssetEntryId() {
-		return _assetEntryUsage.getAssetEntryId();
+		return model.getAssetEntryId();
 	}
 
 	/**
@@ -185,7 +160,7 @@ public class AssetEntryUsageWrapper implements AssetEntryUsage,
 	*/
 	@Override
 	public long getAssetEntryUsageId() {
-		return _assetEntryUsage.getAssetEntryUsageId();
+		return model.getAssetEntryUsageId();
 	}
 
 	/**
@@ -195,7 +170,7 @@ public class AssetEntryUsageWrapper implements AssetEntryUsage,
 	*/
 	@Override
 	public String getClassName() {
-		return _assetEntryUsage.getClassName();
+		return model.getClassName();
 	}
 
 	/**
@@ -205,7 +180,7 @@ public class AssetEntryUsageWrapper implements AssetEntryUsage,
 	*/
 	@Override
 	public long getClassNameId() {
-		return _assetEntryUsage.getClassNameId();
+		return model.getClassNameId();
 	}
 
 	/**
@@ -215,7 +190,7 @@ public class AssetEntryUsageWrapper implements AssetEntryUsage,
 	*/
 	@Override
 	public long getClassPK() {
-		return _assetEntryUsage.getClassPK();
+		return model.getClassPK();
 	}
 
 	/**
@@ -225,7 +200,7 @@ public class AssetEntryUsageWrapper implements AssetEntryUsage,
 	*/
 	@Override
 	public long getCompanyId() {
-		return _assetEntryUsage.getCompanyId();
+		return model.getCompanyId();
 	}
 
 	/**
@@ -235,12 +210,7 @@ public class AssetEntryUsageWrapper implements AssetEntryUsage,
 	*/
 	@Override
 	public Date getCreateDate() {
-		return _assetEntryUsage.getCreateDate();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _assetEntryUsage.getExpandoBridge();
+		return model.getCreateDate();
 	}
 
 	/**
@@ -250,7 +220,7 @@ public class AssetEntryUsageWrapper implements AssetEntryUsage,
 	*/
 	@Override
 	public long getGroupId() {
-		return _assetEntryUsage.getGroupId();
+		return model.getGroupId();
 	}
 
 	/**
@@ -260,7 +230,7 @@ public class AssetEntryUsageWrapper implements AssetEntryUsage,
 	*/
 	@Override
 	public Date getLastPublishDate() {
-		return _assetEntryUsage.getLastPublishDate();
+		return model.getLastPublishDate();
 	}
 
 	/**
@@ -270,7 +240,7 @@ public class AssetEntryUsageWrapper implements AssetEntryUsage,
 	*/
 	@Override
 	public Date getModifiedDate() {
-		return _assetEntryUsage.getModifiedDate();
+		return model.getModifiedDate();
 	}
 
 	/**
@@ -280,7 +250,7 @@ public class AssetEntryUsageWrapper implements AssetEntryUsage,
 	*/
 	@Override
 	public String getPortletId() {
-		return _assetEntryUsage.getPortletId();
+		return model.getPortletId();
 	}
 
 	/**
@@ -290,12 +260,7 @@ public class AssetEntryUsageWrapper implements AssetEntryUsage,
 	*/
 	@Override
 	public long getPrimaryKey() {
-		return _assetEntryUsage.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _assetEntryUsage.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	/**
@@ -305,7 +270,7 @@ public class AssetEntryUsageWrapper implements AssetEntryUsage,
 	*/
 	@Override
 	public long getUserId() {
-		return _assetEntryUsage.getUserId();
+		return model.getUserId();
 	}
 
 	/**
@@ -315,7 +280,7 @@ public class AssetEntryUsageWrapper implements AssetEntryUsage,
 	*/
 	@Override
 	public String getUserName() {
-		return _assetEntryUsage.getUserName();
+		return model.getUserName();
 	}
 
 	/**
@@ -325,7 +290,7 @@ public class AssetEntryUsageWrapper implements AssetEntryUsage,
 	*/
 	@Override
 	public String getUserUuid() {
-		return _assetEntryUsage.getUserUuid();
+		return model.getUserUuid();
 	}
 
 	/**
@@ -335,32 +300,12 @@ public class AssetEntryUsageWrapper implements AssetEntryUsage,
 	*/
 	@Override
 	public String getUuid() {
-		return _assetEntryUsage.getUuid();
-	}
-
-	@Override
-	public int hashCode() {
-		return _assetEntryUsage.hashCode();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _assetEntryUsage.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _assetEntryUsage.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _assetEntryUsage.isNew();
+		return model.getUuid();
 	}
 
 	@Override
 	public void persist() {
-		_assetEntryUsage.persist();
+		model.persist();
 	}
 
 	/**
@@ -370,7 +315,7 @@ public class AssetEntryUsageWrapper implements AssetEntryUsage,
 	*/
 	@Override
 	public void setAssetEntryId(long assetEntryId) {
-		_assetEntryUsage.setAssetEntryId(assetEntryId);
+		model.setAssetEntryId(assetEntryId);
 	}
 
 	/**
@@ -380,17 +325,12 @@ public class AssetEntryUsageWrapper implements AssetEntryUsage,
 	*/
 	@Override
 	public void setAssetEntryUsageId(long assetEntryUsageId) {
-		_assetEntryUsage.setAssetEntryUsageId(assetEntryUsageId);
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_assetEntryUsage.setCachedModel(cachedModel);
+		model.setAssetEntryUsageId(assetEntryUsageId);
 	}
 
 	@Override
 	public void setClassName(String className) {
-		_assetEntryUsage.setClassName(className);
+		model.setClassName(className);
 	}
 
 	/**
@@ -400,7 +340,7 @@ public class AssetEntryUsageWrapper implements AssetEntryUsage,
 	*/
 	@Override
 	public void setClassNameId(long classNameId) {
-		_assetEntryUsage.setClassNameId(classNameId);
+		model.setClassNameId(classNameId);
 	}
 
 	/**
@@ -410,7 +350,7 @@ public class AssetEntryUsageWrapper implements AssetEntryUsage,
 	*/
 	@Override
 	public void setClassPK(long classPK) {
-		_assetEntryUsage.setClassPK(classPK);
+		model.setClassPK(classPK);
 	}
 
 	/**
@@ -420,7 +360,7 @@ public class AssetEntryUsageWrapper implements AssetEntryUsage,
 	*/
 	@Override
 	public void setCompanyId(long companyId) {
-		_assetEntryUsage.setCompanyId(companyId);
+		model.setCompanyId(companyId);
 	}
 
 	/**
@@ -430,23 +370,7 @@ public class AssetEntryUsageWrapper implements AssetEntryUsage,
 	*/
 	@Override
 	public void setCreateDate(Date createDate) {
-		_assetEntryUsage.setCreateDate(createDate);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-		_assetEntryUsage.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_assetEntryUsage.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_assetEntryUsage.setExpandoBridgeAttributes(serviceContext);
+		model.setCreateDate(createDate);
 	}
 
 	/**
@@ -456,7 +380,7 @@ public class AssetEntryUsageWrapper implements AssetEntryUsage,
 	*/
 	@Override
 	public void setGroupId(long groupId) {
-		_assetEntryUsage.setGroupId(groupId);
+		model.setGroupId(groupId);
 	}
 
 	/**
@@ -466,7 +390,7 @@ public class AssetEntryUsageWrapper implements AssetEntryUsage,
 	*/
 	@Override
 	public void setLastPublishDate(Date lastPublishDate) {
-		_assetEntryUsage.setLastPublishDate(lastPublishDate);
+		model.setLastPublishDate(lastPublishDate);
 	}
 
 	/**
@@ -476,12 +400,7 @@ public class AssetEntryUsageWrapper implements AssetEntryUsage,
 	*/
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
-		_assetEntryUsage.setModifiedDate(modifiedDate);
-	}
-
-	@Override
-	public void setNew(boolean n) {
-		_assetEntryUsage.setNew(n);
+		model.setModifiedDate(modifiedDate);
 	}
 
 	/**
@@ -491,7 +410,7 @@ public class AssetEntryUsageWrapper implements AssetEntryUsage,
 	*/
 	@Override
 	public void setPortletId(String portletId) {
-		_assetEntryUsage.setPortletId(portletId);
+		model.setPortletId(portletId);
 	}
 
 	/**
@@ -501,12 +420,7 @@ public class AssetEntryUsageWrapper implements AssetEntryUsage,
 	*/
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_assetEntryUsage.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_assetEntryUsage.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -516,7 +430,7 @@ public class AssetEntryUsageWrapper implements AssetEntryUsage,
 	*/
 	@Override
 	public void setUserId(long userId) {
-		_assetEntryUsage.setUserId(userId);
+		model.setUserId(userId);
 	}
 
 	/**
@@ -526,7 +440,7 @@ public class AssetEntryUsageWrapper implements AssetEntryUsage,
 	*/
 	@Override
 	public void setUserName(String userName) {
-		_assetEntryUsage.setUserName(userName);
+		model.setUserName(userName);
 	}
 
 	/**
@@ -536,7 +450,7 @@ public class AssetEntryUsageWrapper implements AssetEntryUsage,
 	*/
 	@Override
 	public void setUserUuid(String userUuid) {
-		_assetEntryUsage.setUserUuid(userUuid);
+		model.setUserUuid(userUuid);
 	}
 
 	/**
@@ -546,78 +460,16 @@ public class AssetEntryUsageWrapper implements AssetEntryUsage,
 	*/
 	@Override
 	public void setUuid(String uuid) {
-		_assetEntryUsage.setUuid(uuid);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<AssetEntryUsage> toCacheModel() {
-		return _assetEntryUsage.toCacheModel();
-	}
-
-	@Override
-	public AssetEntryUsage toEscapedModel() {
-		return new AssetEntryUsageWrapper(_assetEntryUsage.toEscapedModel());
-	}
-
-	@Override
-	public String toString() {
-		return _assetEntryUsage.toString();
-	}
-
-	@Override
-	public AssetEntryUsage toUnescapedModel() {
-		return new AssetEntryUsageWrapper(_assetEntryUsage.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _assetEntryUsage.toXmlString();
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-
-		if (!(obj instanceof AssetEntryUsageWrapper)) {
-			return false;
-		}
-
-		AssetEntryUsageWrapper assetEntryUsageWrapper = (AssetEntryUsageWrapper)obj;
-
-		if (Objects.equals(_assetEntryUsage,
-					assetEntryUsageWrapper._assetEntryUsage)) {
-			return true;
-		}
-
-		return false;
+		model.setUuid(uuid);
 	}
 
 	@Override
 	public StagedModelType getStagedModelType() {
-		return _assetEntryUsage.getStagedModelType();
+		return model.getStagedModelType();
 	}
 
 	@Override
-	public AssetEntryUsage getWrappedModel() {
-		return _assetEntryUsage;
+	protected AssetEntryUsageWrapper wrap(AssetEntryUsage assetEntryUsage) {
+		return new AssetEntryUsageWrapper(assetEntryUsage);
 	}
-
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _assetEntryUsage.isEntityCacheEnabled();
-	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _assetEntryUsage.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_assetEntryUsage.resetOriginalValues();
-	}
-
-	private final AssetEntryUsage _assetEntryUsage;
 }

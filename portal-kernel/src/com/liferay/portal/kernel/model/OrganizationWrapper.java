@@ -16,18 +16,13 @@ package com.liferay.portal.kernel.model;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
-
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -39,20 +34,10 @@ import java.util.Objects;
  * @generated
  */
 @ProviderType
-public class OrganizationWrapper implements Organization,
-	ModelWrapper<Organization> {
+public class OrganizationWrapper extends BaseModelWrapper<Organization>
+	implements Organization, ModelWrapper<Organization> {
 	public OrganizationWrapper(Organization organization) {
-		_organization = organization;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return Organization.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return Organization.class.getName();
+		super(organization);
 	}
 
 	@Override
@@ -203,44 +188,34 @@ public class OrganizationWrapper implements Organization,
 	@Override
 	public String buildTreePath()
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _organization.buildTreePath();
-	}
-
-	@Override
-	public Object clone() {
-		return new OrganizationWrapper((Organization)_organization.clone());
-	}
-
-	@Override
-	public int compareTo(Organization organization) {
-		return _organization.compareTo(organization);
+		return model.buildTreePath();
 	}
 
 	@Override
 	public Address getAddress() {
-		return _organization.getAddress();
+		return model.getAddress();
 	}
 
 	@Override
 	public java.util.List<Address> getAddresses() {
-		return _organization.getAddresses();
+		return model.getAddresses();
 	}
 
 	@Override
 	public long[] getAncestorOrganizationIds()
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _organization.getAncestorOrganizationIds();
+		return model.getAncestorOrganizationIds();
 	}
 
 	@Override
 	public java.util.List<Organization> getAncestors()
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _organization.getAncestors();
+		return model.getAncestors();
 	}
 
 	@Override
 	public String[] getChildrenTypes() {
-		return _organization.getChildrenTypes();
+		return model.getChildrenTypes();
 	}
 
 	/**
@@ -250,7 +225,7 @@ public class OrganizationWrapper implements Organization,
 	*/
 	@Override
 	public String getComments() {
-		return _organization.getComments();
+		return model.getComments();
 	}
 
 	/**
@@ -260,7 +235,7 @@ public class OrganizationWrapper implements Organization,
 	*/
 	@Override
 	public long getCompanyId() {
-		return _organization.getCompanyId();
+		return model.getCompanyId();
 	}
 
 	/**
@@ -270,7 +245,7 @@ public class OrganizationWrapper implements Organization,
 	*/
 	@Override
 	public long getCountryId() {
-		return _organization.getCountryId();
+		return model.getCountryId();
 	}
 
 	/**
@@ -280,17 +255,12 @@ public class OrganizationWrapper implements Organization,
 	*/
 	@Override
 	public Date getCreateDate() {
-		return _organization.getCreateDate();
+		return model.getCreateDate();
 	}
 
 	@Override
 	public java.util.List<Organization> getDescendants() {
-		return _organization.getDescendants();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _organization.getExpandoBridge();
+		return model.getDescendants();
 	}
 
 	/**
@@ -300,17 +270,17 @@ public class OrganizationWrapper implements Organization,
 	*/
 	@Override
 	public String getExternalReferenceCode() {
-		return _organization.getExternalReferenceCode();
+		return model.getExternalReferenceCode();
 	}
 
 	@Override
 	public Group getGroup() {
-		return _organization.getGroup();
+		return model.getGroup();
 	}
 
 	@Override
 	public long getGroupId() {
-		return _organization.getGroupId();
+		return model.getGroupId();
 	}
 
 	/**
@@ -320,7 +290,7 @@ public class OrganizationWrapper implements Organization,
 	*/
 	@Override
 	public long getLogoId() {
-		return _organization.getLogoId();
+		return model.getLogoId();
 	}
 
 	/**
@@ -330,7 +300,7 @@ public class OrganizationWrapper implements Organization,
 	*/
 	@Override
 	public Date getModifiedDate() {
-		return _organization.getModifiedDate();
+		return model.getModifiedDate();
 	}
 
 	/**
@@ -340,7 +310,7 @@ public class OrganizationWrapper implements Organization,
 	*/
 	@Override
 	public long getMvccVersion() {
-		return _organization.getMvccVersion();
+		return model.getMvccVersion();
 	}
 
 	/**
@@ -350,7 +320,7 @@ public class OrganizationWrapper implements Organization,
 	*/
 	@Override
 	public String getName() {
-		return _organization.getName();
+		return model.getName();
 	}
 
 	/**
@@ -360,13 +330,13 @@ public class OrganizationWrapper implements Organization,
 	*/
 	@Override
 	public long getOrganizationId() {
-		return _organization.getOrganizationId();
+		return model.getOrganizationId();
 	}
 
 	@Override
 	public Organization getParentOrganization()
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _organization.getParentOrganization();
+		return model.getParentOrganization();
 	}
 
 	/**
@@ -376,17 +346,17 @@ public class OrganizationWrapper implements Organization,
 	*/
 	@Override
 	public long getParentOrganizationId() {
-		return _organization.getParentOrganizationId();
+		return model.getParentOrganizationId();
 	}
 
 	@Override
 	public String getParentOrganizationName() {
-		return _organization.getParentOrganizationName();
+		return model.getParentOrganizationName();
 	}
 
 	@Override
 	public javax.portlet.PortletPreferences getPreferences() {
-		return _organization.getPreferences();
+		return model.getPreferences();
 	}
 
 	/**
@@ -396,22 +366,17 @@ public class OrganizationWrapper implements Organization,
 	*/
 	@Override
 	public long getPrimaryKey() {
-		return _organization.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _organization.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	@Override
 	public int getPrivateLayoutsPageCount() {
-		return _organization.getPrivateLayoutsPageCount();
+		return model.getPrivateLayoutsPageCount();
 	}
 
 	@Override
 	public int getPublicLayoutsPageCount() {
-		return _organization.getPublicLayoutsPageCount();
+		return model.getPublicLayoutsPageCount();
 	}
 
 	/**
@@ -421,7 +386,7 @@ public class OrganizationWrapper implements Organization,
 	*/
 	@Override
 	public boolean getRecursable() {
-		return _organization.getRecursable();
+		return model.getRecursable();
 	}
 
 	/**
@@ -431,18 +396,18 @@ public class OrganizationWrapper implements Organization,
 	*/
 	@Override
 	public long getRegionId() {
-		return _organization.getRegionId();
+		return model.getRegionId();
 	}
 
 	@Override
 	public java.util.Set<String> getReminderQueryQuestions(
 		java.util.Locale locale) {
-		return _organization.getReminderQueryQuestions(locale);
+		return model.getReminderQueryQuestions(locale);
 	}
 
 	@Override
 	public java.util.Set<String> getReminderQueryQuestions(String languageId) {
-		return _organization.getReminderQueryQuestions(languageId);
+		return model.getReminderQueryQuestions(languageId);
 	}
 
 	/**
@@ -452,17 +417,17 @@ public class OrganizationWrapper implements Organization,
 	*/
 	@Override
 	public long getStatusId() {
-		return _organization.getStatusId();
+		return model.getStatusId();
 	}
 
 	@Override
 	public java.util.List<Organization> getSuborganizations() {
-		return _organization.getSuborganizations();
+		return model.getSuborganizations();
 	}
 
 	@Override
 	public int getSuborganizationsSize() {
-		return _organization.getSuborganizationsSize();
+		return model.getSuborganizationsSize();
 	}
 
 	/**
@@ -472,7 +437,7 @@ public class OrganizationWrapper implements Organization,
 	*/
 	@Override
 	public String getTreePath() {
-		return _organization.getTreePath();
+		return model.getTreePath();
 	}
 
 	/**
@@ -482,12 +447,12 @@ public class OrganizationWrapper implements Organization,
 	*/
 	@Override
 	public String getType() {
-		return _organization.getType();
+		return model.getType();
 	}
 
 	@Override
 	public int getTypeOrder() {
-		return _organization.getTypeOrder();
+		return model.getTypeOrder();
 	}
 
 	/**
@@ -497,7 +462,7 @@ public class OrganizationWrapper implements Organization,
 	*/
 	@Override
 	public long getUserId() {
-		return _organization.getUserId();
+		return model.getUserId();
 	}
 
 	/**
@@ -507,7 +472,7 @@ public class OrganizationWrapper implements Organization,
 	*/
 	@Override
 	public String getUserName() {
-		return _organization.getUserName();
+		return model.getUserName();
 	}
 
 	/**
@@ -517,7 +482,7 @@ public class OrganizationWrapper implements Organization,
 	*/
 	@Override
 	public String getUserUuid() {
-		return _organization.getUserUuid();
+		return model.getUserUuid();
 	}
 
 	/**
@@ -527,47 +492,27 @@ public class OrganizationWrapper implements Organization,
 	*/
 	@Override
 	public String getUuid() {
-		return _organization.getUuid();
-	}
-
-	@Override
-	public int hashCode() {
-		return _organization.hashCode();
+		return model.getUuid();
 	}
 
 	@Override
 	public boolean hasPrivateLayouts() {
-		return _organization.hasPrivateLayouts();
+		return model.hasPrivateLayouts();
 	}
 
 	@Override
 	public boolean hasPublicLayouts() {
-		return _organization.hasPublicLayouts();
+		return model.hasPublicLayouts();
 	}
 
 	@Override
 	public boolean hasSuborganizations() {
-		return _organization.hasSuborganizations();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _organization.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _organization.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _organization.isNew();
+		return model.hasSuborganizations();
 	}
 
 	@Override
 	public boolean isParentable() {
-		return _organization.isParentable();
+		return model.isParentable();
 	}
 
 	/**
@@ -577,22 +522,17 @@ public class OrganizationWrapper implements Organization,
 	*/
 	@Override
 	public boolean isRecursable() {
-		return _organization.isRecursable();
+		return model.isRecursable();
 	}
 
 	@Override
 	public boolean isRoot() {
-		return _organization.isRoot();
+		return model.isRoot();
 	}
 
 	@Override
 	public void persist() {
-		_organization.persist();
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_organization.setCachedModel(cachedModel);
+		model.persist();
 	}
 
 	/**
@@ -602,7 +542,7 @@ public class OrganizationWrapper implements Organization,
 	*/
 	@Override
 	public void setComments(String comments) {
-		_organization.setComments(comments);
+		model.setComments(comments);
 	}
 
 	/**
@@ -612,7 +552,7 @@ public class OrganizationWrapper implements Organization,
 	*/
 	@Override
 	public void setCompanyId(long companyId) {
-		_organization.setCompanyId(companyId);
+		model.setCompanyId(companyId);
 	}
 
 	/**
@@ -622,7 +562,7 @@ public class OrganizationWrapper implements Organization,
 	*/
 	@Override
 	public void setCountryId(long countryId) {
-		_organization.setCountryId(countryId);
+		model.setCountryId(countryId);
 	}
 
 	/**
@@ -632,22 +572,7 @@ public class OrganizationWrapper implements Organization,
 	*/
 	@Override
 	public void setCreateDate(Date createDate) {
-		_organization.setCreateDate(createDate);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(BaseModel<?> baseModel) {
-		_organization.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_organization.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_organization.setExpandoBridgeAttributes(serviceContext);
+		model.setCreateDate(createDate);
 	}
 
 	/**
@@ -657,7 +582,7 @@ public class OrganizationWrapper implements Organization,
 	*/
 	@Override
 	public void setExternalReferenceCode(String externalReferenceCode) {
-		_organization.setExternalReferenceCode(externalReferenceCode);
+		model.setExternalReferenceCode(externalReferenceCode);
 	}
 
 	/**
@@ -667,7 +592,7 @@ public class OrganizationWrapper implements Organization,
 	*/
 	@Override
 	public void setLogoId(long logoId) {
-		_organization.setLogoId(logoId);
+		model.setLogoId(logoId);
 	}
 
 	/**
@@ -677,7 +602,7 @@ public class OrganizationWrapper implements Organization,
 	*/
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
-		_organization.setModifiedDate(modifiedDate);
+		model.setModifiedDate(modifiedDate);
 	}
 
 	/**
@@ -687,7 +612,7 @@ public class OrganizationWrapper implements Organization,
 	*/
 	@Override
 	public void setMvccVersion(long mvccVersion) {
-		_organization.setMvccVersion(mvccVersion);
+		model.setMvccVersion(mvccVersion);
 	}
 
 	/**
@@ -697,12 +622,7 @@ public class OrganizationWrapper implements Organization,
 	*/
 	@Override
 	public void setName(String name) {
-		_organization.setName(name);
-	}
-
-	@Override
-	public void setNew(boolean n) {
-		_organization.setNew(n);
+		model.setName(name);
 	}
 
 	/**
@@ -712,7 +632,7 @@ public class OrganizationWrapper implements Organization,
 	*/
 	@Override
 	public void setOrganizationId(long organizationId) {
-		_organization.setOrganizationId(organizationId);
+		model.setOrganizationId(organizationId);
 	}
 
 	/**
@@ -722,7 +642,7 @@ public class OrganizationWrapper implements Organization,
 	*/
 	@Override
 	public void setParentOrganizationId(long parentOrganizationId) {
-		_organization.setParentOrganizationId(parentOrganizationId);
+		model.setParentOrganizationId(parentOrganizationId);
 	}
 
 	/**
@@ -732,12 +652,7 @@ public class OrganizationWrapper implements Organization,
 	*/
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_organization.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_organization.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -747,7 +662,7 @@ public class OrganizationWrapper implements Organization,
 	*/
 	@Override
 	public void setRecursable(boolean recursable) {
-		_organization.setRecursable(recursable);
+		model.setRecursable(recursable);
 	}
 
 	/**
@@ -757,7 +672,7 @@ public class OrganizationWrapper implements Organization,
 	*/
 	@Override
 	public void setRegionId(long regionId) {
-		_organization.setRegionId(regionId);
+		model.setRegionId(regionId);
 	}
 
 	/**
@@ -767,7 +682,7 @@ public class OrganizationWrapper implements Organization,
 	*/
 	@Override
 	public void setStatusId(long statusId) {
-		_organization.setStatusId(statusId);
+		model.setStatusId(statusId);
 	}
 
 	/**
@@ -777,7 +692,7 @@ public class OrganizationWrapper implements Organization,
 	*/
 	@Override
 	public void setTreePath(String treePath) {
-		_organization.setTreePath(treePath);
+		model.setTreePath(treePath);
 	}
 
 	/**
@@ -787,7 +702,7 @@ public class OrganizationWrapper implements Organization,
 	*/
 	@Override
 	public void setType(String type) {
-		_organization.setType(type);
+		model.setType(type);
 	}
 
 	/**
@@ -797,7 +712,7 @@ public class OrganizationWrapper implements Organization,
 	*/
 	@Override
 	public void setUserId(long userId) {
-		_organization.setUserId(userId);
+		model.setUserId(userId);
 	}
 
 	/**
@@ -807,7 +722,7 @@ public class OrganizationWrapper implements Organization,
 	*/
 	@Override
 	public void setUserName(String userName) {
-		_organization.setUserName(userName);
+		model.setUserName(userName);
 	}
 
 	/**
@@ -817,7 +732,7 @@ public class OrganizationWrapper implements Organization,
 	*/
 	@Override
 	public void setUserUuid(String userUuid) {
-		_organization.setUserUuid(userUuid);
+		model.setUserUuid(userUuid);
 	}
 
 	/**
@@ -827,82 +742,21 @@ public class OrganizationWrapper implements Organization,
 	*/
 	@Override
 	public void setUuid(String uuid) {
-		_organization.setUuid(uuid);
-	}
-
-	@Override
-	public CacheModel<Organization> toCacheModel() {
-		return _organization.toCacheModel();
-	}
-
-	@Override
-	public Organization toEscapedModel() {
-		return new OrganizationWrapper(_organization.toEscapedModel());
-	}
-
-	@Override
-	public String toString() {
-		return _organization.toString();
-	}
-
-	@Override
-	public Organization toUnescapedModel() {
-		return new OrganizationWrapper(_organization.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _organization.toXmlString();
+		model.setUuid(uuid);
 	}
 
 	@Override
 	public void updateTreePath(String treePath) {
-		_organization.updateTreePath(treePath);
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-
-		if (!(obj instanceof OrganizationWrapper)) {
-			return false;
-		}
-
-		OrganizationWrapper organizationWrapper = (OrganizationWrapper)obj;
-
-		if (Objects.equals(_organization, organizationWrapper._organization)) {
-			return true;
-		}
-
-		return false;
+		model.updateTreePath(treePath);
 	}
 
 	@Override
 	public StagedModelType getStagedModelType() {
-		return _organization.getStagedModelType();
+		return model.getStagedModelType();
 	}
 
 	@Override
-	public Organization getWrappedModel() {
-		return _organization;
+	protected OrganizationWrapper wrap(Organization organization) {
+		return new OrganizationWrapper(organization);
 	}
-
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _organization.isEntityCacheEnabled();
-	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _organization.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_organization.resetOriginalValues();
-	}
-
-	private final Organization _organization;
 }

@@ -16,19 +16,14 @@ package com.liferay.dynamic.data.lists.model;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
-
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 
 import com.liferay.portal.kernel.model.ModelWrapper;
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -40,20 +35,10 @@ import java.util.Objects;
  * @generated
  */
 @ProviderType
-public class DDLRecordSetWrapper implements DDLRecordSet,
-	ModelWrapper<DDLRecordSet> {
+public class DDLRecordSetWrapper extends BaseModelWrapper<DDLRecordSet>
+	implements DDLRecordSet, ModelWrapper<DDLRecordSet> {
 	public DDLRecordSetWrapper(DDLRecordSet ddlRecordSet) {
-		_ddlRecordSet = ddlRecordSet;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return DDLRecordSet.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return DDLRecordSet.class.getName();
+		super(ddlRecordSet);
 	}
 
 	@Override
@@ -208,18 +193,8 @@ public class DDLRecordSetWrapper implements DDLRecordSet,
 	}
 
 	@Override
-	public Object clone() {
-		return new DDLRecordSetWrapper((DDLRecordSet)_ddlRecordSet.clone());
-	}
-
-	@Override
-	public int compareTo(DDLRecordSet ddlRecordSet) {
-		return _ddlRecordSet.compareTo(ddlRecordSet);
-	}
-
-	@Override
 	public String[] getAvailableLanguageIds() {
-		return _ddlRecordSet.getAvailableLanguageIds();
+		return model.getAvailableLanguageIds();
 	}
 
 	/**
@@ -229,7 +204,7 @@ public class DDLRecordSetWrapper implements DDLRecordSet,
 	*/
 	@Override
 	public long getCompanyId() {
-		return _ddlRecordSet.getCompanyId();
+		return model.getCompanyId();
 	}
 
 	/**
@@ -239,20 +214,20 @@ public class DDLRecordSetWrapper implements DDLRecordSet,
 	*/
 	@Override
 	public Date getCreateDate() {
-		return _ddlRecordSet.getCreateDate();
+		return model.getCreateDate();
 	}
 
 	@Override
 	public com.liferay.dynamic.data.mapping.model.DDMStructure getDDMStructure()
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _ddlRecordSet.getDDMStructure();
+		return model.getDDMStructure();
 	}
 
 	@Override
 	public com.liferay.dynamic.data.mapping.model.DDMStructure getDDMStructure(
 		long formDDMTemplateId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _ddlRecordSet.getDDMStructure(formDDMTemplateId);
+		return model.getDDMStructure(formDDMTemplateId);
 	}
 
 	/**
@@ -262,12 +237,12 @@ public class DDLRecordSetWrapper implements DDLRecordSet,
 	*/
 	@Override
 	public long getDDMStructureId() {
-		return _ddlRecordSet.getDDMStructureId();
+		return model.getDDMStructureId();
 	}
 
 	@Override
 	public String getDefaultLanguageId() {
-		return _ddlRecordSet.getDefaultLanguageId();
+		return model.getDefaultLanguageId();
 	}
 
 	/**
@@ -277,7 +252,7 @@ public class DDLRecordSetWrapper implements DDLRecordSet,
 	*/
 	@Override
 	public String getDescription() {
-		return _ddlRecordSet.getDescription();
+		return model.getDescription();
 	}
 
 	/**
@@ -288,7 +263,7 @@ public class DDLRecordSetWrapper implements DDLRecordSet,
 	*/
 	@Override
 	public String getDescription(java.util.Locale locale) {
-		return _ddlRecordSet.getDescription(locale);
+		return model.getDescription(locale);
 	}
 
 	/**
@@ -300,7 +275,7 @@ public class DDLRecordSetWrapper implements DDLRecordSet,
 	*/
 	@Override
 	public String getDescription(java.util.Locale locale, boolean useDefault) {
-		return _ddlRecordSet.getDescription(locale, useDefault);
+		return model.getDescription(locale, useDefault);
 	}
 
 	/**
@@ -311,7 +286,7 @@ public class DDLRecordSetWrapper implements DDLRecordSet,
 	*/
 	@Override
 	public String getDescription(String languageId) {
-		return _ddlRecordSet.getDescription(languageId);
+		return model.getDescription(languageId);
 	}
 
 	/**
@@ -323,17 +298,17 @@ public class DDLRecordSetWrapper implements DDLRecordSet,
 	*/
 	@Override
 	public String getDescription(String languageId, boolean useDefault) {
-		return _ddlRecordSet.getDescription(languageId, useDefault);
+		return model.getDescription(languageId, useDefault);
 	}
 
 	@Override
 	public String getDescriptionCurrentLanguageId() {
-		return _ddlRecordSet.getDescriptionCurrentLanguageId();
+		return model.getDescriptionCurrentLanguageId();
 	}
 
 	@Override
 	public String getDescriptionCurrentValue() {
-		return _ddlRecordSet.getDescriptionCurrentValue();
+		return model.getDescriptionCurrentValue();
 	}
 
 	/**
@@ -343,12 +318,7 @@ public class DDLRecordSetWrapper implements DDLRecordSet,
 	*/
 	@Override
 	public Map<java.util.Locale, String> getDescriptionMap() {
-		return _ddlRecordSet.getDescriptionMap();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _ddlRecordSet.getExpandoBridge();
+		return model.getDescriptionMap();
 	}
 
 	/**
@@ -358,7 +328,7 @@ public class DDLRecordSetWrapper implements DDLRecordSet,
 	*/
 	@Override
 	public long getGroupId() {
-		return _ddlRecordSet.getGroupId();
+		return model.getGroupId();
 	}
 
 	/**
@@ -368,7 +338,7 @@ public class DDLRecordSetWrapper implements DDLRecordSet,
 	*/
 	@Override
 	public Date getLastPublishDate() {
-		return _ddlRecordSet.getLastPublishDate();
+		return model.getLastPublishDate();
 	}
 
 	/**
@@ -378,7 +348,7 @@ public class DDLRecordSetWrapper implements DDLRecordSet,
 	*/
 	@Override
 	public int getMinDisplayRows() {
-		return _ddlRecordSet.getMinDisplayRows();
+		return model.getMinDisplayRows();
 	}
 
 	/**
@@ -388,7 +358,7 @@ public class DDLRecordSetWrapper implements DDLRecordSet,
 	*/
 	@Override
 	public Date getModifiedDate() {
-		return _ddlRecordSet.getModifiedDate();
+		return model.getModifiedDate();
 	}
 
 	/**
@@ -398,7 +368,7 @@ public class DDLRecordSetWrapper implements DDLRecordSet,
 	*/
 	@Override
 	public long getMvccVersion() {
-		return _ddlRecordSet.getMvccVersion();
+		return model.getMvccVersion();
 	}
 
 	/**
@@ -408,7 +378,7 @@ public class DDLRecordSetWrapper implements DDLRecordSet,
 	*/
 	@Override
 	public String getName() {
-		return _ddlRecordSet.getName();
+		return model.getName();
 	}
 
 	/**
@@ -419,7 +389,7 @@ public class DDLRecordSetWrapper implements DDLRecordSet,
 	*/
 	@Override
 	public String getName(java.util.Locale locale) {
-		return _ddlRecordSet.getName(locale);
+		return model.getName(locale);
 	}
 
 	/**
@@ -431,7 +401,7 @@ public class DDLRecordSetWrapper implements DDLRecordSet,
 	*/
 	@Override
 	public String getName(java.util.Locale locale, boolean useDefault) {
-		return _ddlRecordSet.getName(locale, useDefault);
+		return model.getName(locale, useDefault);
 	}
 
 	/**
@@ -442,7 +412,7 @@ public class DDLRecordSetWrapper implements DDLRecordSet,
 	*/
 	@Override
 	public String getName(String languageId) {
-		return _ddlRecordSet.getName(languageId);
+		return model.getName(languageId);
 	}
 
 	/**
@@ -454,17 +424,17 @@ public class DDLRecordSetWrapper implements DDLRecordSet,
 	*/
 	@Override
 	public String getName(String languageId, boolean useDefault) {
-		return _ddlRecordSet.getName(languageId, useDefault);
+		return model.getName(languageId, useDefault);
 	}
 
 	@Override
 	public String getNameCurrentLanguageId() {
-		return _ddlRecordSet.getNameCurrentLanguageId();
+		return model.getNameCurrentLanguageId();
 	}
 
 	@Override
 	public String getNameCurrentValue() {
-		return _ddlRecordSet.getNameCurrentValue();
+		return model.getNameCurrentValue();
 	}
 
 	/**
@@ -474,7 +444,7 @@ public class DDLRecordSetWrapper implements DDLRecordSet,
 	*/
 	@Override
 	public Map<java.util.Locale, String> getNameMap() {
-		return _ddlRecordSet.getNameMap();
+		return model.getNameMap();
 	}
 
 	/**
@@ -484,17 +454,12 @@ public class DDLRecordSetWrapper implements DDLRecordSet,
 	*/
 	@Override
 	public long getPrimaryKey() {
-		return _ddlRecordSet.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _ddlRecordSet.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	@Override
 	public java.util.List<DDLRecord> getRecords() {
-		return _ddlRecordSet.getRecords();
+		return model.getRecords();
 	}
 
 	/**
@@ -504,7 +469,7 @@ public class DDLRecordSetWrapper implements DDLRecordSet,
 	*/
 	@Override
 	public long getRecordSetId() {
-		return _ddlRecordSet.getRecordSetId();
+		return model.getRecordSetId();
 	}
 
 	/**
@@ -514,19 +479,19 @@ public class DDLRecordSetWrapper implements DDLRecordSet,
 	*/
 	@Override
 	public String getRecordSetKey() {
-		return _ddlRecordSet.getRecordSetKey();
+		return model.getRecordSetKey();
 	}
 
 	@Override
 	public DDLRecordSetVersion getRecordSetVersion()
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _ddlRecordSet.getRecordSetVersion();
+		return model.getRecordSetVersion();
 	}
 
 	@Override
 	public DDLRecordSetVersion getRecordSetVersion(String version)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _ddlRecordSet.getRecordSetVersion(version);
+		return model.getRecordSetVersion(version);
 	}
 
 	/**
@@ -536,7 +501,7 @@ public class DDLRecordSetWrapper implements DDLRecordSet,
 	*/
 	@Override
 	public int getScope() {
-		return _ddlRecordSet.getScope();
+		return model.getScope();
 	}
 
 	/**
@@ -546,19 +511,19 @@ public class DDLRecordSetWrapper implements DDLRecordSet,
 	*/
 	@Override
 	public String getSettings() {
-		return _ddlRecordSet.getSettings();
+		return model.getSettings();
 	}
 
 	@Override
 	public com.liferay.dynamic.data.mapping.storage.DDMFormValues getSettingsDDMFormValues()
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _ddlRecordSet.getSettingsDDMFormValues();
+		return model.getSettingsDDMFormValues();
 	}
 
 	@Override
 	public DDLRecordSetSettings getSettingsModel()
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _ddlRecordSet.getSettingsModel();
+		return model.getSettingsModel();
 	}
 
 	/**
@@ -568,7 +533,7 @@ public class DDLRecordSetWrapper implements DDLRecordSet,
 	*/
 	@Override
 	public long getUserId() {
-		return _ddlRecordSet.getUserId();
+		return model.getUserId();
 	}
 
 	/**
@@ -578,7 +543,7 @@ public class DDLRecordSetWrapper implements DDLRecordSet,
 	*/
 	@Override
 	public String getUserName() {
-		return _ddlRecordSet.getUserName();
+		return model.getUserName();
 	}
 
 	/**
@@ -588,7 +553,7 @@ public class DDLRecordSetWrapper implements DDLRecordSet,
 	*/
 	@Override
 	public String getUserUuid() {
-		return _ddlRecordSet.getUserUuid();
+		return model.getUserUuid();
 	}
 
 	/**
@@ -598,7 +563,7 @@ public class DDLRecordSetWrapper implements DDLRecordSet,
 	*/
 	@Override
 	public String getUuid() {
-		return _ddlRecordSet.getUuid();
+		return model.getUuid();
 	}
 
 	/**
@@ -608,7 +573,7 @@ public class DDLRecordSetWrapper implements DDLRecordSet,
 	*/
 	@Override
 	public String getVersion() {
-		return _ddlRecordSet.getVersion();
+		return model.getVersion();
 	}
 
 	/**
@@ -618,7 +583,7 @@ public class DDLRecordSetWrapper implements DDLRecordSet,
 	*/
 	@Override
 	public long getVersionUserId() {
-		return _ddlRecordSet.getVersionUserId();
+		return model.getVersionUserId();
 	}
 
 	/**
@@ -628,7 +593,7 @@ public class DDLRecordSetWrapper implements DDLRecordSet,
 	*/
 	@Override
 	public String getVersionUserName() {
-		return _ddlRecordSet.getVersionUserName();
+		return model.getVersionUserName();
 	}
 
 	/**
@@ -638,50 +603,25 @@ public class DDLRecordSetWrapper implements DDLRecordSet,
 	*/
 	@Override
 	public String getVersionUserUuid() {
-		return _ddlRecordSet.getVersionUserUuid();
-	}
-
-	@Override
-	public int hashCode() {
-		return _ddlRecordSet.hashCode();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _ddlRecordSet.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _ddlRecordSet.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _ddlRecordSet.isNew();
+		return model.getVersionUserUuid();
 	}
 
 	@Override
 	public void persist() {
-		_ddlRecordSet.persist();
+		model.persist();
 	}
 
 	@Override
 	public void prepareLocalizedFieldsForImport()
 		throws com.liferay.portal.kernel.exception.LocaleException {
-		_ddlRecordSet.prepareLocalizedFieldsForImport();
+		model.prepareLocalizedFieldsForImport();
 	}
 
 	@Override
 	public void prepareLocalizedFieldsForImport(
 		java.util.Locale defaultImportLocale)
 		throws com.liferay.portal.kernel.exception.LocaleException {
-		_ddlRecordSet.prepareLocalizedFieldsForImport(defaultImportLocale);
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_ddlRecordSet.setCachedModel(cachedModel);
+		model.prepareLocalizedFieldsForImport(defaultImportLocale);
 	}
 
 	/**
@@ -691,7 +631,7 @@ public class DDLRecordSetWrapper implements DDLRecordSet,
 	*/
 	@Override
 	public void setCompanyId(long companyId) {
-		_ddlRecordSet.setCompanyId(companyId);
+		model.setCompanyId(companyId);
 	}
 
 	/**
@@ -701,7 +641,7 @@ public class DDLRecordSetWrapper implements DDLRecordSet,
 	*/
 	@Override
 	public void setCreateDate(Date createDate) {
-		_ddlRecordSet.setCreateDate(createDate);
+		model.setCreateDate(createDate);
 	}
 
 	/**
@@ -711,7 +651,7 @@ public class DDLRecordSetWrapper implements DDLRecordSet,
 	*/
 	@Override
 	public void setDDMStructureId(long DDMStructureId) {
-		_ddlRecordSet.setDDMStructureId(DDMStructureId);
+		model.setDDMStructureId(DDMStructureId);
 	}
 
 	/**
@@ -721,7 +661,7 @@ public class DDLRecordSetWrapper implements DDLRecordSet,
 	*/
 	@Override
 	public void setDescription(String description) {
-		_ddlRecordSet.setDescription(description);
+		model.setDescription(description);
 	}
 
 	/**
@@ -732,7 +672,7 @@ public class DDLRecordSetWrapper implements DDLRecordSet,
 	*/
 	@Override
 	public void setDescription(String description, java.util.Locale locale) {
-		_ddlRecordSet.setDescription(description, locale);
+		model.setDescription(description, locale);
 	}
 
 	/**
@@ -745,12 +685,12 @@ public class DDLRecordSetWrapper implements DDLRecordSet,
 	@Override
 	public void setDescription(String description, java.util.Locale locale,
 		java.util.Locale defaultLocale) {
-		_ddlRecordSet.setDescription(description, locale, defaultLocale);
+		model.setDescription(description, locale, defaultLocale);
 	}
 
 	@Override
 	public void setDescriptionCurrentLanguageId(String languageId) {
-		_ddlRecordSet.setDescriptionCurrentLanguageId(languageId);
+		model.setDescriptionCurrentLanguageId(languageId);
 	}
 
 	/**
@@ -760,7 +700,7 @@ public class DDLRecordSetWrapper implements DDLRecordSet,
 	*/
 	@Override
 	public void setDescriptionMap(Map<java.util.Locale, String> descriptionMap) {
-		_ddlRecordSet.setDescriptionMap(descriptionMap);
+		model.setDescriptionMap(descriptionMap);
 	}
 
 	/**
@@ -773,23 +713,7 @@ public class DDLRecordSetWrapper implements DDLRecordSet,
 	public void setDescriptionMap(
 		Map<java.util.Locale, String> descriptionMap,
 		java.util.Locale defaultLocale) {
-		_ddlRecordSet.setDescriptionMap(descriptionMap, defaultLocale);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-		_ddlRecordSet.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_ddlRecordSet.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_ddlRecordSet.setExpandoBridgeAttributes(serviceContext);
+		model.setDescriptionMap(descriptionMap, defaultLocale);
 	}
 
 	/**
@@ -799,7 +723,7 @@ public class DDLRecordSetWrapper implements DDLRecordSet,
 	*/
 	@Override
 	public void setGroupId(long groupId) {
-		_ddlRecordSet.setGroupId(groupId);
+		model.setGroupId(groupId);
 	}
 
 	/**
@@ -809,7 +733,7 @@ public class DDLRecordSetWrapper implements DDLRecordSet,
 	*/
 	@Override
 	public void setLastPublishDate(Date lastPublishDate) {
-		_ddlRecordSet.setLastPublishDate(lastPublishDate);
+		model.setLastPublishDate(lastPublishDate);
 	}
 
 	/**
@@ -819,7 +743,7 @@ public class DDLRecordSetWrapper implements DDLRecordSet,
 	*/
 	@Override
 	public void setMinDisplayRows(int minDisplayRows) {
-		_ddlRecordSet.setMinDisplayRows(minDisplayRows);
+		model.setMinDisplayRows(minDisplayRows);
 	}
 
 	/**
@@ -829,7 +753,7 @@ public class DDLRecordSetWrapper implements DDLRecordSet,
 	*/
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
-		_ddlRecordSet.setModifiedDate(modifiedDate);
+		model.setModifiedDate(modifiedDate);
 	}
 
 	/**
@@ -839,7 +763,7 @@ public class DDLRecordSetWrapper implements DDLRecordSet,
 	*/
 	@Override
 	public void setMvccVersion(long mvccVersion) {
-		_ddlRecordSet.setMvccVersion(mvccVersion);
+		model.setMvccVersion(mvccVersion);
 	}
 
 	/**
@@ -849,7 +773,7 @@ public class DDLRecordSetWrapper implements DDLRecordSet,
 	*/
 	@Override
 	public void setName(String name) {
-		_ddlRecordSet.setName(name);
+		model.setName(name);
 	}
 
 	/**
@@ -860,7 +784,7 @@ public class DDLRecordSetWrapper implements DDLRecordSet,
 	*/
 	@Override
 	public void setName(String name, java.util.Locale locale) {
-		_ddlRecordSet.setName(name, locale);
+		model.setName(name, locale);
 	}
 
 	/**
@@ -873,12 +797,12 @@ public class DDLRecordSetWrapper implements DDLRecordSet,
 	@Override
 	public void setName(String name, java.util.Locale locale,
 		java.util.Locale defaultLocale) {
-		_ddlRecordSet.setName(name, locale, defaultLocale);
+		model.setName(name, locale, defaultLocale);
 	}
 
 	@Override
 	public void setNameCurrentLanguageId(String languageId) {
-		_ddlRecordSet.setNameCurrentLanguageId(languageId);
+		model.setNameCurrentLanguageId(languageId);
 	}
 
 	/**
@@ -888,7 +812,7 @@ public class DDLRecordSetWrapper implements DDLRecordSet,
 	*/
 	@Override
 	public void setNameMap(Map<java.util.Locale, String> nameMap) {
-		_ddlRecordSet.setNameMap(nameMap);
+		model.setNameMap(nameMap);
 	}
 
 	/**
@@ -900,12 +824,7 @@ public class DDLRecordSetWrapper implements DDLRecordSet,
 	@Override
 	public void setNameMap(Map<java.util.Locale, String> nameMap,
 		java.util.Locale defaultLocale) {
-		_ddlRecordSet.setNameMap(nameMap, defaultLocale);
-	}
-
-	@Override
-	public void setNew(boolean n) {
-		_ddlRecordSet.setNew(n);
+		model.setNameMap(nameMap, defaultLocale);
 	}
 
 	/**
@@ -915,12 +834,7 @@ public class DDLRecordSetWrapper implements DDLRecordSet,
 	*/
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_ddlRecordSet.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_ddlRecordSet.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -930,7 +844,7 @@ public class DDLRecordSetWrapper implements DDLRecordSet,
 	*/
 	@Override
 	public void setRecordSetId(long recordSetId) {
-		_ddlRecordSet.setRecordSetId(recordSetId);
+		model.setRecordSetId(recordSetId);
 	}
 
 	/**
@@ -940,7 +854,7 @@ public class DDLRecordSetWrapper implements DDLRecordSet,
 	*/
 	@Override
 	public void setRecordSetKey(String recordSetKey) {
-		_ddlRecordSet.setRecordSetKey(recordSetKey);
+		model.setRecordSetKey(recordSetKey);
 	}
 
 	/**
@@ -950,7 +864,7 @@ public class DDLRecordSetWrapper implements DDLRecordSet,
 	*/
 	@Override
 	public void setScope(int scope) {
-		_ddlRecordSet.setScope(scope);
+		model.setScope(scope);
 	}
 
 	/**
@@ -960,7 +874,7 @@ public class DDLRecordSetWrapper implements DDLRecordSet,
 	*/
 	@Override
 	public void setSettings(String settings) {
-		_ddlRecordSet.setSettings(settings);
+		model.setSettings(settings);
 	}
 
 	/**
@@ -970,7 +884,7 @@ public class DDLRecordSetWrapper implements DDLRecordSet,
 	*/
 	@Override
 	public void setUserId(long userId) {
-		_ddlRecordSet.setUserId(userId);
+		model.setUserId(userId);
 	}
 
 	/**
@@ -980,7 +894,7 @@ public class DDLRecordSetWrapper implements DDLRecordSet,
 	*/
 	@Override
 	public void setUserName(String userName) {
-		_ddlRecordSet.setUserName(userName);
+		model.setUserName(userName);
 	}
 
 	/**
@@ -990,7 +904,7 @@ public class DDLRecordSetWrapper implements DDLRecordSet,
 	*/
 	@Override
 	public void setUserUuid(String userUuid) {
-		_ddlRecordSet.setUserUuid(userUuid);
+		model.setUserUuid(userUuid);
 	}
 
 	/**
@@ -1000,7 +914,7 @@ public class DDLRecordSetWrapper implements DDLRecordSet,
 	*/
 	@Override
 	public void setUuid(String uuid) {
-		_ddlRecordSet.setUuid(uuid);
+		model.setUuid(uuid);
 	}
 
 	/**
@@ -1010,7 +924,7 @@ public class DDLRecordSetWrapper implements DDLRecordSet,
 	*/
 	@Override
 	public void setVersion(String version) {
-		_ddlRecordSet.setVersion(version);
+		model.setVersion(version);
 	}
 
 	/**
@@ -1020,7 +934,7 @@ public class DDLRecordSetWrapper implements DDLRecordSet,
 	*/
 	@Override
 	public void setVersionUserId(long versionUserId) {
-		_ddlRecordSet.setVersionUserId(versionUserId);
+		model.setVersionUserId(versionUserId);
 	}
 
 	/**
@@ -1030,7 +944,7 @@ public class DDLRecordSetWrapper implements DDLRecordSet,
 	*/
 	@Override
 	public void setVersionUserName(String versionUserName) {
-		_ddlRecordSet.setVersionUserName(versionUserName);
+		model.setVersionUserName(versionUserName);
 	}
 
 	/**
@@ -1040,77 +954,16 @@ public class DDLRecordSetWrapper implements DDLRecordSet,
 	*/
 	@Override
 	public void setVersionUserUuid(String versionUserUuid) {
-		_ddlRecordSet.setVersionUserUuid(versionUserUuid);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<DDLRecordSet> toCacheModel() {
-		return _ddlRecordSet.toCacheModel();
-	}
-
-	@Override
-	public DDLRecordSet toEscapedModel() {
-		return new DDLRecordSetWrapper(_ddlRecordSet.toEscapedModel());
-	}
-
-	@Override
-	public String toString() {
-		return _ddlRecordSet.toString();
-	}
-
-	@Override
-	public DDLRecordSet toUnescapedModel() {
-		return new DDLRecordSetWrapper(_ddlRecordSet.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _ddlRecordSet.toXmlString();
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-
-		if (!(obj instanceof DDLRecordSetWrapper)) {
-			return false;
-		}
-
-		DDLRecordSetWrapper ddlRecordSetWrapper = (DDLRecordSetWrapper)obj;
-
-		if (Objects.equals(_ddlRecordSet, ddlRecordSetWrapper._ddlRecordSet)) {
-			return true;
-		}
-
-		return false;
+		model.setVersionUserUuid(versionUserUuid);
 	}
 
 	@Override
 	public StagedModelType getStagedModelType() {
-		return _ddlRecordSet.getStagedModelType();
+		return model.getStagedModelType();
 	}
 
 	@Override
-	public DDLRecordSet getWrappedModel() {
-		return _ddlRecordSet;
+	protected DDLRecordSetWrapper wrap(DDLRecordSet ddlRecordSet) {
+		return new DDLRecordSetWrapper(ddlRecordSet);
 	}
-
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _ddlRecordSet.isEntityCacheEnabled();
-	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _ddlRecordSet.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_ddlRecordSet.resetOriginalValues();
-	}
-
-	private final DDLRecordSet _ddlRecordSet;
 }

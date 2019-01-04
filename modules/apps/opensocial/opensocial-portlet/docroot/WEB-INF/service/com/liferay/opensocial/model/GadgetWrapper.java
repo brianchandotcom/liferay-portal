@@ -16,19 +16,14 @@ package com.liferay.opensocial.model;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
-
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 
 import com.liferay.portal.kernel.model.ModelWrapper;
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -40,19 +35,10 @@ import java.util.Objects;
  * @generated
  */
 @ProviderType
-public class GadgetWrapper implements Gadget, ModelWrapper<Gadget> {
+public class GadgetWrapper extends BaseModelWrapper<Gadget> implements Gadget,
+	ModelWrapper<Gadget> {
 	public GadgetWrapper(Gadget gadget) {
-		_gadget = gadget;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return Gadget.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return Gadget.class.getName();
+		super(gadget);
 	}
 
 	@Override
@@ -130,16 +116,6 @@ public class GadgetWrapper implements Gadget, ModelWrapper<Gadget> {
 		}
 	}
 
-	@Override
-	public Object clone() {
-		return new GadgetWrapper((Gadget)_gadget.clone());
-	}
-
-	@Override
-	public int compareTo(Gadget gadget) {
-		return _gadget.compareTo(gadget);
-	}
-
 	/**
 	* Returns the company ID of this gadget.
 	*
@@ -147,7 +123,7 @@ public class GadgetWrapper implements Gadget, ModelWrapper<Gadget> {
 	*/
 	@Override
 	public long getCompanyId() {
-		return _gadget.getCompanyId();
+		return model.getCompanyId();
 	}
 
 	/**
@@ -157,12 +133,7 @@ public class GadgetWrapper implements Gadget, ModelWrapper<Gadget> {
 	*/
 	@Override
 	public Date getCreateDate() {
-		return _gadget.getCreateDate();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _gadget.getExpandoBridge();
+		return model.getCreateDate();
 	}
 
 	/**
@@ -172,7 +143,7 @@ public class GadgetWrapper implements Gadget, ModelWrapper<Gadget> {
 	*/
 	@Override
 	public long getGadgetId() {
-		return _gadget.getGadgetId();
+		return model.getGadgetId();
 	}
 
 	/**
@@ -182,7 +153,7 @@ public class GadgetWrapper implements Gadget, ModelWrapper<Gadget> {
 	*/
 	@Override
 	public Date getLastPublishDate() {
-		return _gadget.getLastPublishDate();
+		return model.getLastPublishDate();
 	}
 
 	/**
@@ -192,7 +163,7 @@ public class GadgetWrapper implements Gadget, ModelWrapper<Gadget> {
 	*/
 	@Override
 	public Date getModifiedDate() {
-		return _gadget.getModifiedDate();
+		return model.getModifiedDate();
 	}
 
 	/**
@@ -202,7 +173,7 @@ public class GadgetWrapper implements Gadget, ModelWrapper<Gadget> {
 	*/
 	@Override
 	public String getName() {
-		return _gadget.getName();
+		return model.getName();
 	}
 
 	/**
@@ -212,7 +183,7 @@ public class GadgetWrapper implements Gadget, ModelWrapper<Gadget> {
 	*/
 	@Override
 	public String getPortletCategoryNames() {
-		return _gadget.getPortletCategoryNames();
+		return model.getPortletCategoryNames();
 	}
 
 	/**
@@ -222,12 +193,7 @@ public class GadgetWrapper implements Gadget, ModelWrapper<Gadget> {
 	*/
 	@Override
 	public long getPrimaryKey() {
-		return _gadget.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _gadget.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	/**
@@ -237,7 +203,7 @@ public class GadgetWrapper implements Gadget, ModelWrapper<Gadget> {
 	*/
 	@Override
 	public String getUrl() {
-		return _gadget.getUrl();
+		return model.getUrl();
 	}
 
 	/**
@@ -247,37 +213,12 @@ public class GadgetWrapper implements Gadget, ModelWrapper<Gadget> {
 	*/
 	@Override
 	public String getUuid() {
-		return _gadget.getUuid();
-	}
-
-	@Override
-	public int hashCode() {
-		return _gadget.hashCode();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _gadget.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _gadget.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _gadget.isNew();
+		return model.getUuid();
 	}
 
 	@Override
 	public void persist() {
-		_gadget.persist();
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_gadget.setCachedModel(cachedModel);
+		model.persist();
 	}
 
 	/**
@@ -287,7 +228,7 @@ public class GadgetWrapper implements Gadget, ModelWrapper<Gadget> {
 	*/
 	@Override
 	public void setCompanyId(long companyId) {
-		_gadget.setCompanyId(companyId);
+		model.setCompanyId(companyId);
 	}
 
 	/**
@@ -297,23 +238,7 @@ public class GadgetWrapper implements Gadget, ModelWrapper<Gadget> {
 	*/
 	@Override
 	public void setCreateDate(Date createDate) {
-		_gadget.setCreateDate(createDate);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-		_gadget.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_gadget.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_gadget.setExpandoBridgeAttributes(serviceContext);
+		model.setCreateDate(createDate);
 	}
 
 	/**
@@ -323,7 +248,7 @@ public class GadgetWrapper implements Gadget, ModelWrapper<Gadget> {
 	*/
 	@Override
 	public void setGadgetId(long gadgetId) {
-		_gadget.setGadgetId(gadgetId);
+		model.setGadgetId(gadgetId);
 	}
 
 	/**
@@ -333,7 +258,7 @@ public class GadgetWrapper implements Gadget, ModelWrapper<Gadget> {
 	*/
 	@Override
 	public void setLastPublishDate(Date lastPublishDate) {
-		_gadget.setLastPublishDate(lastPublishDate);
+		model.setLastPublishDate(lastPublishDate);
 	}
 
 	/**
@@ -343,7 +268,7 @@ public class GadgetWrapper implements Gadget, ModelWrapper<Gadget> {
 	*/
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
-		_gadget.setModifiedDate(modifiedDate);
+		model.setModifiedDate(modifiedDate);
 	}
 
 	/**
@@ -353,12 +278,7 @@ public class GadgetWrapper implements Gadget, ModelWrapper<Gadget> {
 	*/
 	@Override
 	public void setName(String name) {
-		_gadget.setName(name);
-	}
-
-	@Override
-	public void setNew(boolean n) {
-		_gadget.setNew(n);
+		model.setName(name);
 	}
 
 	/**
@@ -368,7 +288,7 @@ public class GadgetWrapper implements Gadget, ModelWrapper<Gadget> {
 	*/
 	@Override
 	public void setPortletCategoryNames(String portletCategoryNames) {
-		_gadget.setPortletCategoryNames(portletCategoryNames);
+		model.setPortletCategoryNames(portletCategoryNames);
 	}
 
 	/**
@@ -378,12 +298,7 @@ public class GadgetWrapper implements Gadget, ModelWrapper<Gadget> {
 	*/
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_gadget.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_gadget.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -393,7 +308,7 @@ public class GadgetWrapper implements Gadget, ModelWrapper<Gadget> {
 	*/
 	@Override
 	public void setUrl(String url) {
-		_gadget.setUrl(url);
+		model.setUrl(url);
 	}
 
 	/**
@@ -403,77 +318,16 @@ public class GadgetWrapper implements Gadget, ModelWrapper<Gadget> {
 	*/
 	@Override
 	public void setUuid(String uuid) {
-		_gadget.setUuid(uuid);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<Gadget> toCacheModel() {
-		return _gadget.toCacheModel();
-	}
-
-	@Override
-	public Gadget toEscapedModel() {
-		return new GadgetWrapper(_gadget.toEscapedModel());
-	}
-
-	@Override
-	public String toString() {
-		return _gadget.toString();
-	}
-
-	@Override
-	public Gadget toUnescapedModel() {
-		return new GadgetWrapper(_gadget.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _gadget.toXmlString();
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-
-		if (!(obj instanceof GadgetWrapper)) {
-			return false;
-		}
-
-		GadgetWrapper gadgetWrapper = (GadgetWrapper)obj;
-
-		if (Objects.equals(_gadget, gadgetWrapper._gadget)) {
-			return true;
-		}
-
-		return false;
+		model.setUuid(uuid);
 	}
 
 	@Override
 	public StagedModelType getStagedModelType() {
-		return _gadget.getStagedModelType();
+		return model.getStagedModelType();
 	}
 
 	@Override
-	public Gadget getWrappedModel() {
-		return _gadget;
+	protected GadgetWrapper wrap(Gadget gadget) {
+		return new GadgetWrapper(gadget);
 	}
-
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _gadget.isEntityCacheEnabled();
-	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _gadget.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_gadget.resetOriginalValues();
-	}
-
-	private final Gadget _gadget;
 }

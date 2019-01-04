@@ -16,16 +16,11 @@ package com.liferay.announcements.kernel.model;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
-
 import com.liferay.portal.kernel.model.ModelWrapper;
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -37,21 +32,11 @@ import java.util.Objects;
  * @generated
  */
 @ProviderType
-public class AnnouncementsDeliveryWrapper implements AnnouncementsDelivery,
-	ModelWrapper<AnnouncementsDelivery> {
+public class AnnouncementsDeliveryWrapper extends BaseModelWrapper<AnnouncementsDelivery>
+	implements AnnouncementsDelivery, ModelWrapper<AnnouncementsDelivery> {
 	public AnnouncementsDeliveryWrapper(
 		AnnouncementsDelivery announcementsDelivery) {
-		_announcementsDelivery = announcementsDelivery;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return AnnouncementsDelivery.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return AnnouncementsDelivery.class.getName();
+		super(announcementsDelivery);
 	}
 
 	@Override
@@ -114,16 +99,6 @@ public class AnnouncementsDeliveryWrapper implements AnnouncementsDelivery,
 		}
 	}
 
-	@Override
-	public Object clone() {
-		return new AnnouncementsDeliveryWrapper((AnnouncementsDelivery)_announcementsDelivery.clone());
-	}
-
-	@Override
-	public int compareTo(AnnouncementsDelivery announcementsDelivery) {
-		return _announcementsDelivery.compareTo(announcementsDelivery);
-	}
-
 	/**
 	* Returns the company ID of this announcements delivery.
 	*
@@ -131,7 +106,7 @@ public class AnnouncementsDeliveryWrapper implements AnnouncementsDelivery,
 	*/
 	@Override
 	public long getCompanyId() {
-		return _announcementsDelivery.getCompanyId();
+		return model.getCompanyId();
 	}
 
 	/**
@@ -141,7 +116,7 @@ public class AnnouncementsDeliveryWrapper implements AnnouncementsDelivery,
 	*/
 	@Override
 	public long getDeliveryId() {
-		return _announcementsDelivery.getDeliveryId();
+		return model.getDeliveryId();
 	}
 
 	/**
@@ -151,12 +126,7 @@ public class AnnouncementsDeliveryWrapper implements AnnouncementsDelivery,
 	*/
 	@Override
 	public boolean getEmail() {
-		return _announcementsDelivery.getEmail();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _announcementsDelivery.getExpandoBridge();
+		return model.getEmail();
 	}
 
 	/**
@@ -166,12 +136,7 @@ public class AnnouncementsDeliveryWrapper implements AnnouncementsDelivery,
 	*/
 	@Override
 	public long getPrimaryKey() {
-		return _announcementsDelivery.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _announcementsDelivery.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	/**
@@ -181,7 +146,7 @@ public class AnnouncementsDeliveryWrapper implements AnnouncementsDelivery,
 	*/
 	@Override
 	public boolean getSms() {
-		return _announcementsDelivery.getSms();
+		return model.getSms();
 	}
 
 	/**
@@ -191,7 +156,7 @@ public class AnnouncementsDeliveryWrapper implements AnnouncementsDelivery,
 	*/
 	@Override
 	public String getType() {
-		return _announcementsDelivery.getType();
+		return model.getType();
 	}
 
 	/**
@@ -201,7 +166,7 @@ public class AnnouncementsDeliveryWrapper implements AnnouncementsDelivery,
 	*/
 	@Override
 	public long getUserId() {
-		return _announcementsDelivery.getUserId();
+		return model.getUserId();
 	}
 
 	/**
@@ -211,7 +176,7 @@ public class AnnouncementsDeliveryWrapper implements AnnouncementsDelivery,
 	*/
 	@Override
 	public String getUserUuid() {
-		return _announcementsDelivery.getUserUuid();
+		return model.getUserUuid();
 	}
 
 	/**
@@ -221,17 +186,7 @@ public class AnnouncementsDeliveryWrapper implements AnnouncementsDelivery,
 	*/
 	@Override
 	public boolean getWebsite() {
-		return _announcementsDelivery.getWebsite();
-	}
-
-	@Override
-	public int hashCode() {
-		return _announcementsDelivery.hashCode();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _announcementsDelivery.isCachedModel();
+		return model.getWebsite();
 	}
 
 	/**
@@ -241,17 +196,7 @@ public class AnnouncementsDeliveryWrapper implements AnnouncementsDelivery,
 	*/
 	@Override
 	public boolean isEmail() {
-		return _announcementsDelivery.isEmail();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _announcementsDelivery.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _announcementsDelivery.isNew();
+		return model.isEmail();
 	}
 
 	/**
@@ -261,7 +206,7 @@ public class AnnouncementsDeliveryWrapper implements AnnouncementsDelivery,
 	*/
 	@Override
 	public boolean isSms() {
-		return _announcementsDelivery.isSms();
+		return model.isSms();
 	}
 
 	/**
@@ -271,17 +216,12 @@ public class AnnouncementsDeliveryWrapper implements AnnouncementsDelivery,
 	*/
 	@Override
 	public boolean isWebsite() {
-		return _announcementsDelivery.isWebsite();
+		return model.isWebsite();
 	}
 
 	@Override
 	public void persist() {
-		_announcementsDelivery.persist();
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_announcementsDelivery.setCachedModel(cachedModel);
+		model.persist();
 	}
 
 	/**
@@ -291,7 +231,7 @@ public class AnnouncementsDeliveryWrapper implements AnnouncementsDelivery,
 	*/
 	@Override
 	public void setCompanyId(long companyId) {
-		_announcementsDelivery.setCompanyId(companyId);
+		model.setCompanyId(companyId);
 	}
 
 	/**
@@ -301,7 +241,7 @@ public class AnnouncementsDeliveryWrapper implements AnnouncementsDelivery,
 	*/
 	@Override
 	public void setDeliveryId(long deliveryId) {
-		_announcementsDelivery.setDeliveryId(deliveryId);
+		model.setDeliveryId(deliveryId);
 	}
 
 	/**
@@ -311,28 +251,7 @@ public class AnnouncementsDeliveryWrapper implements AnnouncementsDelivery,
 	*/
 	@Override
 	public void setEmail(boolean email) {
-		_announcementsDelivery.setEmail(email);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-		_announcementsDelivery.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_announcementsDelivery.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_announcementsDelivery.setExpandoBridgeAttributes(serviceContext);
-	}
-
-	@Override
-	public void setNew(boolean n) {
-		_announcementsDelivery.setNew(n);
+		model.setEmail(email);
 	}
 
 	/**
@@ -342,12 +261,7 @@ public class AnnouncementsDeliveryWrapper implements AnnouncementsDelivery,
 	*/
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_announcementsDelivery.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_announcementsDelivery.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -357,7 +271,7 @@ public class AnnouncementsDeliveryWrapper implements AnnouncementsDelivery,
 	*/
 	@Override
 	public void setSms(boolean sms) {
-		_announcementsDelivery.setSms(sms);
+		model.setSms(sms);
 	}
 
 	/**
@@ -367,7 +281,7 @@ public class AnnouncementsDeliveryWrapper implements AnnouncementsDelivery,
 	*/
 	@Override
 	public void setType(String type) {
-		_announcementsDelivery.setType(type);
+		model.setType(type);
 	}
 
 	/**
@@ -377,7 +291,7 @@ public class AnnouncementsDeliveryWrapper implements AnnouncementsDelivery,
 	*/
 	@Override
 	public void setUserId(long userId) {
-		_announcementsDelivery.setUserId(userId);
+		model.setUserId(userId);
 	}
 
 	/**
@@ -387,7 +301,7 @@ public class AnnouncementsDeliveryWrapper implements AnnouncementsDelivery,
 	*/
 	@Override
 	public void setUserUuid(String userUuid) {
-		_announcementsDelivery.setUserUuid(userUuid);
+		model.setUserUuid(userUuid);
 	}
 
 	/**
@@ -397,73 +311,12 @@ public class AnnouncementsDeliveryWrapper implements AnnouncementsDelivery,
 	*/
 	@Override
 	public void setWebsite(boolean website) {
-		_announcementsDelivery.setWebsite(website);
+		model.setWebsite(website);
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.CacheModel<AnnouncementsDelivery> toCacheModel() {
-		return _announcementsDelivery.toCacheModel();
+	protected AnnouncementsDeliveryWrapper wrap(
+		AnnouncementsDelivery announcementsDelivery) {
+		return new AnnouncementsDeliveryWrapper(announcementsDelivery);
 	}
-
-	@Override
-	public AnnouncementsDelivery toEscapedModel() {
-		return new AnnouncementsDeliveryWrapper(_announcementsDelivery.toEscapedModel());
-	}
-
-	@Override
-	public String toString() {
-		return _announcementsDelivery.toString();
-	}
-
-	@Override
-	public AnnouncementsDelivery toUnescapedModel() {
-		return new AnnouncementsDeliveryWrapper(_announcementsDelivery.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _announcementsDelivery.toXmlString();
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-
-		if (!(obj instanceof AnnouncementsDeliveryWrapper)) {
-			return false;
-		}
-
-		AnnouncementsDeliveryWrapper announcementsDeliveryWrapper = (AnnouncementsDeliveryWrapper)obj;
-
-		if (Objects.equals(_announcementsDelivery,
-					announcementsDeliveryWrapper._announcementsDelivery)) {
-			return true;
-		}
-
-		return false;
-	}
-
-	@Override
-	public AnnouncementsDelivery getWrappedModel() {
-		return _announcementsDelivery;
-	}
-
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _announcementsDelivery.isEntityCacheEnabled();
-	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _announcementsDelivery.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_announcementsDelivery.resetOriginalValues();
-	}
-
-	private final AnnouncementsDelivery _announcementsDelivery;
 }

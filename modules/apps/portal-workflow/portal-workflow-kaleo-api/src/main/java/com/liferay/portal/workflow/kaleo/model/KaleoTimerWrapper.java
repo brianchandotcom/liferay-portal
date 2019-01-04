@@ -16,17 +16,12 @@ package com.liferay.portal.workflow.kaleo.model;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
-
 import com.liferay.portal.kernel.model.ModelWrapper;
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -38,19 +33,10 @@ import java.util.Objects;
  * @generated
  */
 @ProviderType
-public class KaleoTimerWrapper implements KaleoTimer, ModelWrapper<KaleoTimer> {
+public class KaleoTimerWrapper extends BaseModelWrapper<KaleoTimer>
+	implements KaleoTimer, ModelWrapper<KaleoTimer> {
 	public KaleoTimerWrapper(KaleoTimer kaleoTimer) {
-		_kaleoTimer = kaleoTimer;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return KaleoTimer.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return KaleoTimer.class.getName();
+		super(kaleoTimer);
 	}
 
 	@Override
@@ -184,16 +170,6 @@ public class KaleoTimerWrapper implements KaleoTimer, ModelWrapper<KaleoTimer> {
 		}
 	}
 
-	@Override
-	public Object clone() {
-		return new KaleoTimerWrapper((KaleoTimer)_kaleoTimer.clone());
-	}
-
-	@Override
-	public int compareTo(KaleoTimer kaleoTimer) {
-		return _kaleoTimer.compareTo(kaleoTimer);
-	}
-
 	/**
 	* Returns the blocking of this kaleo timer.
 	*
@@ -201,7 +177,7 @@ public class KaleoTimerWrapper implements KaleoTimer, ModelWrapper<KaleoTimer> {
 	*/
 	@Override
 	public boolean getBlocking() {
-		return _kaleoTimer.getBlocking();
+		return model.getBlocking();
 	}
 
 	/**
@@ -211,7 +187,7 @@ public class KaleoTimerWrapper implements KaleoTimer, ModelWrapper<KaleoTimer> {
 	*/
 	@Override
 	public long getCompanyId() {
-		return _kaleoTimer.getCompanyId();
+		return model.getCompanyId();
 	}
 
 	/**
@@ -221,7 +197,7 @@ public class KaleoTimerWrapper implements KaleoTimer, ModelWrapper<KaleoTimer> {
 	*/
 	@Override
 	public Date getCreateDate() {
-		return _kaleoTimer.getCreateDate();
+		return model.getCreateDate();
 	}
 
 	/**
@@ -231,7 +207,7 @@ public class KaleoTimerWrapper implements KaleoTimer, ModelWrapper<KaleoTimer> {
 	*/
 	@Override
 	public String getDescription() {
-		return _kaleoTimer.getDescription();
+		return model.getDescription();
 	}
 
 	/**
@@ -241,12 +217,7 @@ public class KaleoTimerWrapper implements KaleoTimer, ModelWrapper<KaleoTimer> {
 	*/
 	@Override
 	public double getDuration() {
-		return _kaleoTimer.getDuration();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _kaleoTimer.getExpandoBridge();
+		return model.getDuration();
 	}
 
 	/**
@@ -256,7 +227,7 @@ public class KaleoTimerWrapper implements KaleoTimer, ModelWrapper<KaleoTimer> {
 	*/
 	@Override
 	public long getGroupId() {
-		return _kaleoTimer.getGroupId();
+		return model.getGroupId();
 	}
 
 	/**
@@ -266,7 +237,7 @@ public class KaleoTimerWrapper implements KaleoTimer, ModelWrapper<KaleoTimer> {
 	*/
 	@Override
 	public String getKaleoClassName() {
-		return _kaleoTimer.getKaleoClassName();
+		return model.getKaleoClassName();
 	}
 
 	/**
@@ -276,7 +247,7 @@ public class KaleoTimerWrapper implements KaleoTimer, ModelWrapper<KaleoTimer> {
 	*/
 	@Override
 	public long getKaleoClassPK() {
-		return _kaleoTimer.getKaleoClassPK();
+		return model.getKaleoClassPK();
 	}
 
 	/**
@@ -286,12 +257,12 @@ public class KaleoTimerWrapper implements KaleoTimer, ModelWrapper<KaleoTimer> {
 	*/
 	@Override
 	public long getKaleoDefinitionVersionId() {
-		return _kaleoTimer.getKaleoDefinitionVersionId();
+		return model.getKaleoDefinitionVersionId();
 	}
 
 	@Override
 	public java.util.List<KaleoTaskAssignment> getKaleoTaskReassignments() {
-		return _kaleoTimer.getKaleoTaskReassignments();
+		return model.getKaleoTaskReassignments();
 	}
 
 	/**
@@ -301,7 +272,7 @@ public class KaleoTimerWrapper implements KaleoTimer, ModelWrapper<KaleoTimer> {
 	*/
 	@Override
 	public long getKaleoTimerId() {
-		return _kaleoTimer.getKaleoTimerId();
+		return model.getKaleoTimerId();
 	}
 
 	/**
@@ -311,7 +282,7 @@ public class KaleoTimerWrapper implements KaleoTimer, ModelWrapper<KaleoTimer> {
 	*/
 	@Override
 	public Date getModifiedDate() {
-		return _kaleoTimer.getModifiedDate();
+		return model.getModifiedDate();
 	}
 
 	/**
@@ -321,7 +292,7 @@ public class KaleoTimerWrapper implements KaleoTimer, ModelWrapper<KaleoTimer> {
 	*/
 	@Override
 	public String getName() {
-		return _kaleoTimer.getName();
+		return model.getName();
 	}
 
 	/**
@@ -331,12 +302,7 @@ public class KaleoTimerWrapper implements KaleoTimer, ModelWrapper<KaleoTimer> {
 	*/
 	@Override
 	public long getPrimaryKey() {
-		return _kaleoTimer.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _kaleoTimer.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	/**
@@ -346,7 +312,7 @@ public class KaleoTimerWrapper implements KaleoTimer, ModelWrapper<KaleoTimer> {
 	*/
 	@Override
 	public double getRecurrenceDuration() {
-		return _kaleoTimer.getRecurrenceDuration();
+		return model.getRecurrenceDuration();
 	}
 
 	/**
@@ -356,7 +322,7 @@ public class KaleoTimerWrapper implements KaleoTimer, ModelWrapper<KaleoTimer> {
 	*/
 	@Override
 	public String getRecurrenceScale() {
-		return _kaleoTimer.getRecurrenceScale();
+		return model.getRecurrenceScale();
 	}
 
 	/**
@@ -366,7 +332,7 @@ public class KaleoTimerWrapper implements KaleoTimer, ModelWrapper<KaleoTimer> {
 	*/
 	@Override
 	public String getScale() {
-		return _kaleoTimer.getScale();
+		return model.getScale();
 	}
 
 	/**
@@ -376,7 +342,7 @@ public class KaleoTimerWrapper implements KaleoTimer, ModelWrapper<KaleoTimer> {
 	*/
 	@Override
 	public long getUserId() {
-		return _kaleoTimer.getUserId();
+		return model.getUserId();
 	}
 
 	/**
@@ -386,7 +352,7 @@ public class KaleoTimerWrapper implements KaleoTimer, ModelWrapper<KaleoTimer> {
 	*/
 	@Override
 	public String getUserName() {
-		return _kaleoTimer.getUserName();
+		return model.getUserName();
 	}
 
 	/**
@@ -396,12 +362,7 @@ public class KaleoTimerWrapper implements KaleoTimer, ModelWrapper<KaleoTimer> {
 	*/
 	@Override
 	public String getUserUuid() {
-		return _kaleoTimer.getUserUuid();
-	}
-
-	@Override
-	public int hashCode() {
-		return _kaleoTimer.hashCode();
+		return model.getUserUuid();
 	}
 
 	/**
@@ -411,32 +372,17 @@ public class KaleoTimerWrapper implements KaleoTimer, ModelWrapper<KaleoTimer> {
 	*/
 	@Override
 	public boolean isBlocking() {
-		return _kaleoTimer.isBlocking();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _kaleoTimer.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _kaleoTimer.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _kaleoTimer.isNew();
+		return model.isBlocking();
 	}
 
 	@Override
 	public boolean isRecurring() {
-		return _kaleoTimer.isRecurring();
+		return model.isRecurring();
 	}
 
 	@Override
 	public void persist() {
-		_kaleoTimer.persist();
+		model.persist();
 	}
 
 	/**
@@ -446,12 +392,7 @@ public class KaleoTimerWrapper implements KaleoTimer, ModelWrapper<KaleoTimer> {
 	*/
 	@Override
 	public void setBlocking(boolean blocking) {
-		_kaleoTimer.setBlocking(blocking);
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_kaleoTimer.setCachedModel(cachedModel);
+		model.setBlocking(blocking);
 	}
 
 	/**
@@ -461,7 +402,7 @@ public class KaleoTimerWrapper implements KaleoTimer, ModelWrapper<KaleoTimer> {
 	*/
 	@Override
 	public void setCompanyId(long companyId) {
-		_kaleoTimer.setCompanyId(companyId);
+		model.setCompanyId(companyId);
 	}
 
 	/**
@@ -471,7 +412,7 @@ public class KaleoTimerWrapper implements KaleoTimer, ModelWrapper<KaleoTimer> {
 	*/
 	@Override
 	public void setCreateDate(Date createDate) {
-		_kaleoTimer.setCreateDate(createDate);
+		model.setCreateDate(createDate);
 	}
 
 	/**
@@ -481,7 +422,7 @@ public class KaleoTimerWrapper implements KaleoTimer, ModelWrapper<KaleoTimer> {
 	*/
 	@Override
 	public void setDescription(String description) {
-		_kaleoTimer.setDescription(description);
+		model.setDescription(description);
 	}
 
 	/**
@@ -491,23 +432,7 @@ public class KaleoTimerWrapper implements KaleoTimer, ModelWrapper<KaleoTimer> {
 	*/
 	@Override
 	public void setDuration(double duration) {
-		_kaleoTimer.setDuration(duration);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-		_kaleoTimer.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_kaleoTimer.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_kaleoTimer.setExpandoBridgeAttributes(serviceContext);
+		model.setDuration(duration);
 	}
 
 	/**
@@ -517,7 +442,7 @@ public class KaleoTimerWrapper implements KaleoTimer, ModelWrapper<KaleoTimer> {
 	*/
 	@Override
 	public void setGroupId(long groupId) {
-		_kaleoTimer.setGroupId(groupId);
+		model.setGroupId(groupId);
 	}
 
 	/**
@@ -527,7 +452,7 @@ public class KaleoTimerWrapper implements KaleoTimer, ModelWrapper<KaleoTimer> {
 	*/
 	@Override
 	public void setKaleoClassName(String kaleoClassName) {
-		_kaleoTimer.setKaleoClassName(kaleoClassName);
+		model.setKaleoClassName(kaleoClassName);
 	}
 
 	/**
@@ -537,7 +462,7 @@ public class KaleoTimerWrapper implements KaleoTimer, ModelWrapper<KaleoTimer> {
 	*/
 	@Override
 	public void setKaleoClassPK(long kaleoClassPK) {
-		_kaleoTimer.setKaleoClassPK(kaleoClassPK);
+		model.setKaleoClassPK(kaleoClassPK);
 	}
 
 	/**
@@ -547,7 +472,7 @@ public class KaleoTimerWrapper implements KaleoTimer, ModelWrapper<KaleoTimer> {
 	*/
 	@Override
 	public void setKaleoDefinitionVersionId(long kaleoDefinitionVersionId) {
-		_kaleoTimer.setKaleoDefinitionVersionId(kaleoDefinitionVersionId);
+		model.setKaleoDefinitionVersionId(kaleoDefinitionVersionId);
 	}
 
 	/**
@@ -557,7 +482,7 @@ public class KaleoTimerWrapper implements KaleoTimer, ModelWrapper<KaleoTimer> {
 	*/
 	@Override
 	public void setKaleoTimerId(long kaleoTimerId) {
-		_kaleoTimer.setKaleoTimerId(kaleoTimerId);
+		model.setKaleoTimerId(kaleoTimerId);
 	}
 
 	/**
@@ -567,7 +492,7 @@ public class KaleoTimerWrapper implements KaleoTimer, ModelWrapper<KaleoTimer> {
 	*/
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
-		_kaleoTimer.setModifiedDate(modifiedDate);
+		model.setModifiedDate(modifiedDate);
 	}
 
 	/**
@@ -577,12 +502,7 @@ public class KaleoTimerWrapper implements KaleoTimer, ModelWrapper<KaleoTimer> {
 	*/
 	@Override
 	public void setName(String name) {
-		_kaleoTimer.setName(name);
-	}
-
-	@Override
-	public void setNew(boolean n) {
-		_kaleoTimer.setNew(n);
+		model.setName(name);
 	}
 
 	/**
@@ -592,12 +512,7 @@ public class KaleoTimerWrapper implements KaleoTimer, ModelWrapper<KaleoTimer> {
 	*/
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_kaleoTimer.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_kaleoTimer.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -607,7 +522,7 @@ public class KaleoTimerWrapper implements KaleoTimer, ModelWrapper<KaleoTimer> {
 	*/
 	@Override
 	public void setRecurrenceDuration(double recurrenceDuration) {
-		_kaleoTimer.setRecurrenceDuration(recurrenceDuration);
+		model.setRecurrenceDuration(recurrenceDuration);
 	}
 
 	/**
@@ -617,7 +532,7 @@ public class KaleoTimerWrapper implements KaleoTimer, ModelWrapper<KaleoTimer> {
 	*/
 	@Override
 	public void setRecurrenceScale(String recurrenceScale) {
-		_kaleoTimer.setRecurrenceScale(recurrenceScale);
+		model.setRecurrenceScale(recurrenceScale);
 	}
 
 	/**
@@ -627,7 +542,7 @@ public class KaleoTimerWrapper implements KaleoTimer, ModelWrapper<KaleoTimer> {
 	*/
 	@Override
 	public void setScale(String scale) {
-		_kaleoTimer.setScale(scale);
+		model.setScale(scale);
 	}
 
 	/**
@@ -637,7 +552,7 @@ public class KaleoTimerWrapper implements KaleoTimer, ModelWrapper<KaleoTimer> {
 	*/
 	@Override
 	public void setUserId(long userId) {
-		_kaleoTimer.setUserId(userId);
+		model.setUserId(userId);
 	}
 
 	/**
@@ -647,7 +562,7 @@ public class KaleoTimerWrapper implements KaleoTimer, ModelWrapper<KaleoTimer> {
 	*/
 	@Override
 	public void setUserName(String userName) {
-		_kaleoTimer.setUserName(userName);
+		model.setUserName(userName);
 	}
 
 	/**
@@ -657,72 +572,11 @@ public class KaleoTimerWrapper implements KaleoTimer, ModelWrapper<KaleoTimer> {
 	*/
 	@Override
 	public void setUserUuid(String userUuid) {
-		_kaleoTimer.setUserUuid(userUuid);
+		model.setUserUuid(userUuid);
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.CacheModel<KaleoTimer> toCacheModel() {
-		return _kaleoTimer.toCacheModel();
+	protected KaleoTimerWrapper wrap(KaleoTimer kaleoTimer) {
+		return new KaleoTimerWrapper(kaleoTimer);
 	}
-
-	@Override
-	public KaleoTimer toEscapedModel() {
-		return new KaleoTimerWrapper(_kaleoTimer.toEscapedModel());
-	}
-
-	@Override
-	public String toString() {
-		return _kaleoTimer.toString();
-	}
-
-	@Override
-	public KaleoTimer toUnescapedModel() {
-		return new KaleoTimerWrapper(_kaleoTimer.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _kaleoTimer.toXmlString();
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-
-		if (!(obj instanceof KaleoTimerWrapper)) {
-			return false;
-		}
-
-		KaleoTimerWrapper kaleoTimerWrapper = (KaleoTimerWrapper)obj;
-
-		if (Objects.equals(_kaleoTimer, kaleoTimerWrapper._kaleoTimer)) {
-			return true;
-		}
-
-		return false;
-	}
-
-	@Override
-	public KaleoTimer getWrappedModel() {
-		return _kaleoTimer;
-	}
-
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _kaleoTimer.isEntityCacheEnabled();
-	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _kaleoTimer.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_kaleoTimer.resetOriginalValues();
-	}
-
-	private final KaleoTimer _kaleoTimer;
 }

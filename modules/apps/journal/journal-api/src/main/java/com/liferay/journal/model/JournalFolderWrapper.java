@@ -16,19 +16,14 @@ package com.liferay.journal.model;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
-
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 
 import com.liferay.portal.kernel.model.ModelWrapper;
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -40,20 +35,10 @@ import java.util.Objects;
  * @generated
  */
 @ProviderType
-public class JournalFolderWrapper implements JournalFolder,
-	ModelWrapper<JournalFolder> {
+public class JournalFolderWrapper extends BaseModelWrapper<JournalFolder>
+	implements JournalFolder, ModelWrapper<JournalFolder> {
 	public JournalFolderWrapper(JournalFolder journalFolder) {
-		_journalFolder = journalFolder;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return JournalFolder.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return JournalFolder.class.getName();
+		super(journalFolder);
 	}
 
 	@Override
@@ -196,29 +181,19 @@ public class JournalFolderWrapper implements JournalFolder,
 	@Override
 	public String buildTreePath()
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _journalFolder.buildTreePath();
-	}
-
-	@Override
-	public Object clone() {
-		return new JournalFolderWrapper((JournalFolder)_journalFolder.clone());
-	}
-
-	@Override
-	public int compareTo(JournalFolder journalFolder) {
-		return _journalFolder.compareTo(journalFolder);
+		return model.buildTreePath();
 	}
 
 	@Override
 	public java.util.List<Long> getAncestorFolderIds()
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _journalFolder.getAncestorFolderIds();
+		return model.getAncestorFolderIds();
 	}
 
 	@Override
 	public java.util.List<JournalFolder> getAncestors()
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _journalFolder.getAncestors();
+		return model.getAncestors();
 	}
 
 	/**
@@ -228,7 +203,7 @@ public class JournalFolderWrapper implements JournalFolder,
 	*/
 	@Override
 	public long getCompanyId() {
-		return _journalFolder.getCompanyId();
+		return model.getCompanyId();
 	}
 
 	/**
@@ -238,7 +213,7 @@ public class JournalFolderWrapper implements JournalFolder,
 	*/
 	@Override
 	public long getContainerModelId() {
-		return _journalFolder.getContainerModelId();
+		return model.getContainerModelId();
 	}
 
 	/**
@@ -248,7 +223,7 @@ public class JournalFolderWrapper implements JournalFolder,
 	*/
 	@Override
 	public String getContainerModelName() {
-		return _journalFolder.getContainerModelName();
+		return model.getContainerModelName();
 	}
 
 	/**
@@ -258,7 +233,7 @@ public class JournalFolderWrapper implements JournalFolder,
 	*/
 	@Override
 	public Date getCreateDate() {
-		return _journalFolder.getCreateDate();
+		return model.getCreateDate();
 	}
 
 	/**
@@ -268,12 +243,7 @@ public class JournalFolderWrapper implements JournalFolder,
 	*/
 	@Override
 	public String getDescription() {
-		return _journalFolder.getDescription();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _journalFolder.getExpandoBridge();
+		return model.getDescription();
 	}
 
 	/**
@@ -283,7 +253,7 @@ public class JournalFolderWrapper implements JournalFolder,
 	*/
 	@Override
 	public long getFolderId() {
-		return _journalFolder.getFolderId();
+		return model.getFolderId();
 	}
 
 	/**
@@ -293,7 +263,7 @@ public class JournalFolderWrapper implements JournalFolder,
 	*/
 	@Override
 	public long getGroupId() {
-		return _journalFolder.getGroupId();
+		return model.getGroupId();
 	}
 
 	/**
@@ -303,7 +273,7 @@ public class JournalFolderWrapper implements JournalFolder,
 	*/
 	@Override
 	public Date getLastPublishDate() {
-		return _journalFolder.getLastPublishDate();
+		return model.getLastPublishDate();
 	}
 
 	/**
@@ -313,7 +283,7 @@ public class JournalFolderWrapper implements JournalFolder,
 	*/
 	@Override
 	public Date getModifiedDate() {
-		return _journalFolder.getModifiedDate();
+		return model.getModifiedDate();
 	}
 
 	/**
@@ -323,7 +293,7 @@ public class JournalFolderWrapper implements JournalFolder,
 	*/
 	@Override
 	public String getName() {
-		return _journalFolder.getName();
+		return model.getName();
 	}
 
 	/**
@@ -333,13 +303,13 @@ public class JournalFolderWrapper implements JournalFolder,
 	*/
 	@Override
 	public long getParentContainerModelId() {
-		return _journalFolder.getParentContainerModelId();
+		return model.getParentContainerModelId();
 	}
 
 	@Override
 	public JournalFolder getParentFolder()
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _journalFolder.getParentFolder();
+		return model.getParentFolder();
 	}
 
 	/**
@@ -349,7 +319,7 @@ public class JournalFolderWrapper implements JournalFolder,
 	*/
 	@Override
 	public long getParentFolderId() {
-		return _journalFolder.getParentFolderId();
+		return model.getParentFolderId();
 	}
 
 	/**
@@ -359,12 +329,7 @@ public class JournalFolderWrapper implements JournalFolder,
 	*/
 	@Override
 	public long getPrimaryKey() {
-		return _journalFolder.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _journalFolder.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	/**
@@ -374,7 +339,7 @@ public class JournalFolderWrapper implements JournalFolder,
 	*/
 	@Override
 	public int getRestrictionType() {
-		return _journalFolder.getRestrictionType();
+		return model.getRestrictionType();
 	}
 
 	/**
@@ -384,7 +349,7 @@ public class JournalFolderWrapper implements JournalFolder,
 	*/
 	@Override
 	public int getStatus() {
-		return _journalFolder.getStatus();
+		return model.getStatus();
 	}
 
 	/**
@@ -394,7 +359,7 @@ public class JournalFolderWrapper implements JournalFolder,
 	*/
 	@Override
 	public long getStatusByUserId() {
-		return _journalFolder.getStatusByUserId();
+		return model.getStatusByUserId();
 	}
 
 	/**
@@ -404,7 +369,7 @@ public class JournalFolderWrapper implements JournalFolder,
 	*/
 	@Override
 	public String getStatusByUserName() {
-		return _journalFolder.getStatusByUserName();
+		return model.getStatusByUserName();
 	}
 
 	/**
@@ -414,7 +379,7 @@ public class JournalFolderWrapper implements JournalFolder,
 	*/
 	@Override
 	public String getStatusByUserUuid() {
-		return _journalFolder.getStatusByUserUuid();
+		return model.getStatusByUserUuid();
 	}
 
 	/**
@@ -424,7 +389,7 @@ public class JournalFolderWrapper implements JournalFolder,
 	*/
 	@Override
 	public Date getStatusDate() {
-		return _journalFolder.getStatusDate();
+		return model.getStatusDate();
 	}
 
 	/**
@@ -435,7 +400,7 @@ public class JournalFolderWrapper implements JournalFolder,
 	@Override
 	public com.liferay.trash.kernel.model.TrashEntry getTrashEntry()
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _journalFolder.getTrashEntry();
+		return model.getTrashEntry();
 	}
 
 	/**
@@ -445,7 +410,7 @@ public class JournalFolderWrapper implements JournalFolder,
 	*/
 	@Override
 	public long getTrashEntryClassPK() {
-		return _journalFolder.getTrashEntryClassPK();
+		return model.getTrashEntryClassPK();
 	}
 
 	/**
@@ -457,7 +422,7 @@ public class JournalFolderWrapper implements JournalFolder,
 	@Deprecated
 	@Override
 	public com.liferay.portal.kernel.trash.TrashHandler getTrashHandler() {
-		return _journalFolder.getTrashHandler();
+		return model.getTrashHandler();
 	}
 
 	/**
@@ -467,7 +432,7 @@ public class JournalFolderWrapper implements JournalFolder,
 	*/
 	@Override
 	public String getTreePath() {
-		return _journalFolder.getTreePath();
+		return model.getTreePath();
 	}
 
 	/**
@@ -477,7 +442,7 @@ public class JournalFolderWrapper implements JournalFolder,
 	*/
 	@Override
 	public long getUserId() {
-		return _journalFolder.getUserId();
+		return model.getUserId();
 	}
 
 	/**
@@ -487,7 +452,7 @@ public class JournalFolderWrapper implements JournalFolder,
 	*/
 	@Override
 	public String getUserName() {
-		return _journalFolder.getUserName();
+		return model.getUserName();
 	}
 
 	/**
@@ -497,7 +462,7 @@ public class JournalFolderWrapper implements JournalFolder,
 	*/
 	@Override
 	public String getUserUuid() {
-		return _journalFolder.getUserUuid();
+		return model.getUserUuid();
 	}
 
 	/**
@@ -507,12 +472,7 @@ public class JournalFolderWrapper implements JournalFolder,
 	*/
 	@Override
 	public String getUuid() {
-		return _journalFolder.getUuid();
-	}
-
-	@Override
-	public int hashCode() {
-		return _journalFolder.hashCode();
+		return model.getUuid();
 	}
 
 	/**
@@ -522,12 +482,7 @@ public class JournalFolderWrapper implements JournalFolder,
 	*/
 	@Override
 	public boolean isApproved() {
-		return _journalFolder.isApproved();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _journalFolder.isCachedModel();
+		return model.isApproved();
 	}
 
 	/**
@@ -537,7 +492,7 @@ public class JournalFolderWrapper implements JournalFolder,
 	*/
 	@Override
 	public boolean isDenied() {
-		return _journalFolder.isDenied();
+		return model.isDenied();
 	}
 
 	/**
@@ -547,12 +502,7 @@ public class JournalFolderWrapper implements JournalFolder,
 	*/
 	@Override
 	public boolean isDraft() {
-		return _journalFolder.isDraft();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _journalFolder.isEscapedModel();
+		return model.isDraft();
 	}
 
 	/**
@@ -562,7 +512,7 @@ public class JournalFolderWrapper implements JournalFolder,
 	*/
 	@Override
 	public boolean isExpired() {
-		return _journalFolder.isExpired();
+		return model.isExpired();
 	}
 
 	/**
@@ -572,7 +522,7 @@ public class JournalFolderWrapper implements JournalFolder,
 	*/
 	@Override
 	public boolean isInactive() {
-		return _journalFolder.isInactive();
+		return model.isInactive();
 	}
 
 	/**
@@ -582,7 +532,7 @@ public class JournalFolderWrapper implements JournalFolder,
 	*/
 	@Override
 	public boolean isIncomplete() {
-		return _journalFolder.isIncomplete();
+		return model.isIncomplete();
 	}
 
 	/**
@@ -592,7 +542,7 @@ public class JournalFolderWrapper implements JournalFolder,
 	*/
 	@Override
 	public boolean isInTrash() {
-		return _journalFolder.isInTrash();
+		return model.isInTrash();
 	}
 
 	/**
@@ -602,22 +552,17 @@ public class JournalFolderWrapper implements JournalFolder,
 	*/
 	@Override
 	public boolean isInTrashContainer() {
-		return _journalFolder.isInTrashContainer();
+		return model.isInTrashContainer();
 	}
 
 	@Override
 	public boolean isInTrashExplicitly() {
-		return _journalFolder.isInTrashExplicitly();
+		return model.isInTrashExplicitly();
 	}
 
 	@Override
 	public boolean isInTrashImplicitly() {
-		return _journalFolder.isInTrashImplicitly();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _journalFolder.isNew();
+		return model.isInTrashImplicitly();
 	}
 
 	/**
@@ -627,12 +572,12 @@ public class JournalFolderWrapper implements JournalFolder,
 	*/
 	@Override
 	public boolean isPending() {
-		return _journalFolder.isPending();
+		return model.isPending();
 	}
 
 	@Override
 	public boolean isRoot() {
-		return _journalFolder.isRoot();
+		return model.isRoot();
 	}
 
 	/**
@@ -642,17 +587,12 @@ public class JournalFolderWrapper implements JournalFolder,
 	*/
 	@Override
 	public boolean isScheduled() {
-		return _journalFolder.isScheduled();
+		return model.isScheduled();
 	}
 
 	@Override
 	public void persist() {
-		_journalFolder.persist();
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_journalFolder.setCachedModel(cachedModel);
+		model.persist();
 	}
 
 	/**
@@ -662,7 +602,7 @@ public class JournalFolderWrapper implements JournalFolder,
 	*/
 	@Override
 	public void setCompanyId(long companyId) {
-		_journalFolder.setCompanyId(companyId);
+		model.setCompanyId(companyId);
 	}
 
 	/**
@@ -672,7 +612,7 @@ public class JournalFolderWrapper implements JournalFolder,
 	*/
 	@Override
 	public void setContainerModelId(long containerModelId) {
-		_journalFolder.setContainerModelId(containerModelId);
+		model.setContainerModelId(containerModelId);
 	}
 
 	/**
@@ -682,7 +622,7 @@ public class JournalFolderWrapper implements JournalFolder,
 	*/
 	@Override
 	public void setCreateDate(Date createDate) {
-		_journalFolder.setCreateDate(createDate);
+		model.setCreateDate(createDate);
 	}
 
 	/**
@@ -692,23 +632,7 @@ public class JournalFolderWrapper implements JournalFolder,
 	*/
 	@Override
 	public void setDescription(String description) {
-		_journalFolder.setDescription(description);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-		_journalFolder.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_journalFolder.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_journalFolder.setExpandoBridgeAttributes(serviceContext);
+		model.setDescription(description);
 	}
 
 	/**
@@ -718,7 +642,7 @@ public class JournalFolderWrapper implements JournalFolder,
 	*/
 	@Override
 	public void setFolderId(long folderId) {
-		_journalFolder.setFolderId(folderId);
+		model.setFolderId(folderId);
 	}
 
 	/**
@@ -728,7 +652,7 @@ public class JournalFolderWrapper implements JournalFolder,
 	*/
 	@Override
 	public void setGroupId(long groupId) {
-		_journalFolder.setGroupId(groupId);
+		model.setGroupId(groupId);
 	}
 
 	/**
@@ -738,7 +662,7 @@ public class JournalFolderWrapper implements JournalFolder,
 	*/
 	@Override
 	public void setLastPublishDate(Date lastPublishDate) {
-		_journalFolder.setLastPublishDate(lastPublishDate);
+		model.setLastPublishDate(lastPublishDate);
 	}
 
 	/**
@@ -748,7 +672,7 @@ public class JournalFolderWrapper implements JournalFolder,
 	*/
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
-		_journalFolder.setModifiedDate(modifiedDate);
+		model.setModifiedDate(modifiedDate);
 	}
 
 	/**
@@ -758,12 +682,7 @@ public class JournalFolderWrapper implements JournalFolder,
 	*/
 	@Override
 	public void setName(String name) {
-		_journalFolder.setName(name);
-	}
-
-	@Override
-	public void setNew(boolean n) {
-		_journalFolder.setNew(n);
+		model.setName(name);
 	}
 
 	/**
@@ -773,7 +692,7 @@ public class JournalFolderWrapper implements JournalFolder,
 	*/
 	@Override
 	public void setParentContainerModelId(long parentContainerModelId) {
-		_journalFolder.setParentContainerModelId(parentContainerModelId);
+		model.setParentContainerModelId(parentContainerModelId);
 	}
 
 	/**
@@ -783,7 +702,7 @@ public class JournalFolderWrapper implements JournalFolder,
 	*/
 	@Override
 	public void setParentFolderId(long parentFolderId) {
-		_journalFolder.setParentFolderId(parentFolderId);
+		model.setParentFolderId(parentFolderId);
 	}
 
 	/**
@@ -793,12 +712,7 @@ public class JournalFolderWrapper implements JournalFolder,
 	*/
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_journalFolder.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_journalFolder.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -808,7 +722,7 @@ public class JournalFolderWrapper implements JournalFolder,
 	*/
 	@Override
 	public void setRestrictionType(int restrictionType) {
-		_journalFolder.setRestrictionType(restrictionType);
+		model.setRestrictionType(restrictionType);
 	}
 
 	/**
@@ -818,7 +732,7 @@ public class JournalFolderWrapper implements JournalFolder,
 	*/
 	@Override
 	public void setStatus(int status) {
-		_journalFolder.setStatus(status);
+		model.setStatus(status);
 	}
 
 	/**
@@ -828,7 +742,7 @@ public class JournalFolderWrapper implements JournalFolder,
 	*/
 	@Override
 	public void setStatusByUserId(long statusByUserId) {
-		_journalFolder.setStatusByUserId(statusByUserId);
+		model.setStatusByUserId(statusByUserId);
 	}
 
 	/**
@@ -838,7 +752,7 @@ public class JournalFolderWrapper implements JournalFolder,
 	*/
 	@Override
 	public void setStatusByUserName(String statusByUserName) {
-		_journalFolder.setStatusByUserName(statusByUserName);
+		model.setStatusByUserName(statusByUserName);
 	}
 
 	/**
@@ -848,7 +762,7 @@ public class JournalFolderWrapper implements JournalFolder,
 	*/
 	@Override
 	public void setStatusByUserUuid(String statusByUserUuid) {
-		_journalFolder.setStatusByUserUuid(statusByUserUuid);
+		model.setStatusByUserUuid(statusByUserUuid);
 	}
 
 	/**
@@ -858,7 +772,7 @@ public class JournalFolderWrapper implements JournalFolder,
 	*/
 	@Override
 	public void setStatusDate(Date statusDate) {
-		_journalFolder.setStatusDate(statusDate);
+		model.setStatusDate(statusDate);
 	}
 
 	/**
@@ -868,7 +782,7 @@ public class JournalFolderWrapper implements JournalFolder,
 	*/
 	@Override
 	public void setTreePath(String treePath) {
-		_journalFolder.setTreePath(treePath);
+		model.setTreePath(treePath);
 	}
 
 	/**
@@ -878,7 +792,7 @@ public class JournalFolderWrapper implements JournalFolder,
 	*/
 	@Override
 	public void setUserId(long userId) {
-		_journalFolder.setUserId(userId);
+		model.setUserId(userId);
 	}
 
 	/**
@@ -888,7 +802,7 @@ public class JournalFolderWrapper implements JournalFolder,
 	*/
 	@Override
 	public void setUserName(String userName) {
-		_journalFolder.setUserName(userName);
+		model.setUserName(userName);
 	}
 
 	/**
@@ -898,7 +812,7 @@ public class JournalFolderWrapper implements JournalFolder,
 	*/
 	@Override
 	public void setUserUuid(String userUuid) {
-		_journalFolder.setUserUuid(userUuid);
+		model.setUserUuid(userUuid);
 	}
 
 	/**
@@ -908,82 +822,21 @@ public class JournalFolderWrapper implements JournalFolder,
 	*/
 	@Override
 	public void setUuid(String uuid) {
-		_journalFolder.setUuid(uuid);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<JournalFolder> toCacheModel() {
-		return _journalFolder.toCacheModel();
-	}
-
-	@Override
-	public JournalFolder toEscapedModel() {
-		return new JournalFolderWrapper(_journalFolder.toEscapedModel());
-	}
-
-	@Override
-	public String toString() {
-		return _journalFolder.toString();
-	}
-
-	@Override
-	public JournalFolder toUnescapedModel() {
-		return new JournalFolderWrapper(_journalFolder.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _journalFolder.toXmlString();
+		model.setUuid(uuid);
 	}
 
 	@Override
 	public void updateTreePath(String treePath) {
-		_journalFolder.updateTreePath(treePath);
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-
-		if (!(obj instanceof JournalFolderWrapper)) {
-			return false;
-		}
-
-		JournalFolderWrapper journalFolderWrapper = (JournalFolderWrapper)obj;
-
-		if (Objects.equals(_journalFolder, journalFolderWrapper._journalFolder)) {
-			return true;
-		}
-
-		return false;
+		model.updateTreePath(treePath);
 	}
 
 	@Override
 	public StagedModelType getStagedModelType() {
-		return _journalFolder.getStagedModelType();
+		return model.getStagedModelType();
 	}
 
 	@Override
-	public JournalFolder getWrappedModel() {
-		return _journalFolder;
+	protected JournalFolderWrapper wrap(JournalFolder journalFolder) {
+		return new JournalFolderWrapper(journalFolder);
 	}
-
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _journalFolder.isEntityCacheEnabled();
-	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _journalFolder.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_journalFolder.resetOriginalValues();
-	}
-
-	private final JournalFolder _journalFolder;
 }

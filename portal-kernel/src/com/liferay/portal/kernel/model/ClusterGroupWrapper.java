@@ -16,15 +16,10 @@ package com.liferay.portal.kernel.model;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
-
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -36,20 +31,10 @@ import java.util.Objects;
  * @generated
  */
 @ProviderType
-public class ClusterGroupWrapper implements ClusterGroup,
-	ModelWrapper<ClusterGroup> {
+public class ClusterGroupWrapper extends BaseModelWrapper<ClusterGroup>
+	implements ClusterGroup, ModelWrapper<ClusterGroup> {
 	public ClusterGroupWrapper(ClusterGroup clusterGroup) {
-		_clusterGroup = clusterGroup;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return ClusterGroup.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return ClusterGroup.class.getName();
+		super(clusterGroup);
 	}
 
 	@Override
@@ -98,16 +83,6 @@ public class ClusterGroupWrapper implements ClusterGroup,
 		}
 	}
 
-	@Override
-	public Object clone() {
-		return new ClusterGroupWrapper((ClusterGroup)_clusterGroup.clone());
-	}
-
-	@Override
-	public int compareTo(ClusterGroup clusterGroup) {
-		return _clusterGroup.compareTo(clusterGroup);
-	}
-
 	/**
 	* Returns the cluster group ID of this cluster group.
 	*
@@ -115,7 +90,7 @@ public class ClusterGroupWrapper implements ClusterGroup,
 	*/
 	@Override
 	public long getClusterGroupId() {
-		return _clusterGroup.getClusterGroupId();
+		return model.getClusterGroupId();
 	}
 
 	/**
@@ -125,17 +100,12 @@ public class ClusterGroupWrapper implements ClusterGroup,
 	*/
 	@Override
 	public String getClusterNodeIds() {
-		return _clusterGroup.getClusterNodeIds();
+		return model.getClusterNodeIds();
 	}
 
 	@Override
 	public String[] getClusterNodeIdsArray() {
-		return _clusterGroup.getClusterNodeIdsArray();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _clusterGroup.getExpandoBridge();
+		return model.getClusterNodeIdsArray();
 	}
 
 	/**
@@ -145,7 +115,7 @@ public class ClusterGroupWrapper implements ClusterGroup,
 	*/
 	@Override
 	public long getMvccVersion() {
-		return _clusterGroup.getMvccVersion();
+		return model.getMvccVersion();
 	}
 
 	/**
@@ -155,7 +125,7 @@ public class ClusterGroupWrapper implements ClusterGroup,
 	*/
 	@Override
 	public String getName() {
-		return _clusterGroup.getName();
+		return model.getName();
 	}
 
 	/**
@@ -165,12 +135,7 @@ public class ClusterGroupWrapper implements ClusterGroup,
 	*/
 	@Override
 	public long getPrimaryKey() {
-		return _clusterGroup.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _clusterGroup.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	/**
@@ -180,27 +145,7 @@ public class ClusterGroupWrapper implements ClusterGroup,
 	*/
 	@Override
 	public boolean getWholeCluster() {
-		return _clusterGroup.getWholeCluster();
-	}
-
-	@Override
-	public int hashCode() {
-		return _clusterGroup.hashCode();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _clusterGroup.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _clusterGroup.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _clusterGroup.isNew();
+		return model.getWholeCluster();
 	}
 
 	/**
@@ -210,17 +155,12 @@ public class ClusterGroupWrapper implements ClusterGroup,
 	*/
 	@Override
 	public boolean isWholeCluster() {
-		return _clusterGroup.isWholeCluster();
+		return model.isWholeCluster();
 	}
 
 	@Override
 	public void persist() {
-		_clusterGroup.persist();
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_clusterGroup.setCachedModel(cachedModel);
+		model.persist();
 	}
 
 	/**
@@ -230,7 +170,7 @@ public class ClusterGroupWrapper implements ClusterGroup,
 	*/
 	@Override
 	public void setClusterGroupId(long clusterGroupId) {
-		_clusterGroup.setClusterGroupId(clusterGroupId);
+		model.setClusterGroupId(clusterGroupId);
 	}
 
 	/**
@@ -240,22 +180,7 @@ public class ClusterGroupWrapper implements ClusterGroup,
 	*/
 	@Override
 	public void setClusterNodeIds(String clusterNodeIds) {
-		_clusterGroup.setClusterNodeIds(clusterNodeIds);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(BaseModel<?> baseModel) {
-		_clusterGroup.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_clusterGroup.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_clusterGroup.setExpandoBridgeAttributes(serviceContext);
+		model.setClusterNodeIds(clusterNodeIds);
 	}
 
 	/**
@@ -265,7 +190,7 @@ public class ClusterGroupWrapper implements ClusterGroup,
 	*/
 	@Override
 	public void setMvccVersion(long mvccVersion) {
-		_clusterGroup.setMvccVersion(mvccVersion);
+		model.setMvccVersion(mvccVersion);
 	}
 
 	/**
@@ -275,12 +200,7 @@ public class ClusterGroupWrapper implements ClusterGroup,
 	*/
 	@Override
 	public void setName(String name) {
-		_clusterGroup.setName(name);
-	}
-
-	@Override
-	public void setNew(boolean n) {
-		_clusterGroup.setNew(n);
+		model.setName(name);
 	}
 
 	/**
@@ -290,12 +210,7 @@ public class ClusterGroupWrapper implements ClusterGroup,
 	*/
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_clusterGroup.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_clusterGroup.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -305,72 +220,11 @@ public class ClusterGroupWrapper implements ClusterGroup,
 	*/
 	@Override
 	public void setWholeCluster(boolean wholeCluster) {
-		_clusterGroup.setWholeCluster(wholeCluster);
+		model.setWholeCluster(wholeCluster);
 	}
 
 	@Override
-	public CacheModel<ClusterGroup> toCacheModel() {
-		return _clusterGroup.toCacheModel();
+	protected ClusterGroupWrapper wrap(ClusterGroup clusterGroup) {
+		return new ClusterGroupWrapper(clusterGroup);
 	}
-
-	@Override
-	public ClusterGroup toEscapedModel() {
-		return new ClusterGroupWrapper(_clusterGroup.toEscapedModel());
-	}
-
-	@Override
-	public String toString() {
-		return _clusterGroup.toString();
-	}
-
-	@Override
-	public ClusterGroup toUnescapedModel() {
-		return new ClusterGroupWrapper(_clusterGroup.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _clusterGroup.toXmlString();
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-
-		if (!(obj instanceof ClusterGroupWrapper)) {
-			return false;
-		}
-
-		ClusterGroupWrapper clusterGroupWrapper = (ClusterGroupWrapper)obj;
-
-		if (Objects.equals(_clusterGroup, clusterGroupWrapper._clusterGroup)) {
-			return true;
-		}
-
-		return false;
-	}
-
-	@Override
-	public ClusterGroup getWrappedModel() {
-		return _clusterGroup;
-	}
-
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _clusterGroup.isEntityCacheEnabled();
-	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _clusterGroup.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_clusterGroup.resetOriginalValues();
-	}
-
-	private final ClusterGroup _clusterGroup;
 }

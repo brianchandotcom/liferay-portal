@@ -16,17 +16,12 @@ package com.liferay.portal.security.wedeploy.auth.model;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
-
 import com.liferay.portal.kernel.model.ModelWrapper;
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -38,20 +33,10 @@ import java.util.Objects;
  * @generated
  */
 @ProviderType
-public class WeDeployAuthAppWrapper implements WeDeployAuthApp,
-	ModelWrapper<WeDeployAuthApp> {
+public class WeDeployAuthAppWrapper extends BaseModelWrapper<WeDeployAuthApp>
+	implements WeDeployAuthApp, ModelWrapper<WeDeployAuthApp> {
 	public WeDeployAuthAppWrapper(WeDeployAuthApp weDeployAuthApp) {
-		_weDeployAuthApp = weDeployAuthApp;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return WeDeployAuthApp.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return WeDeployAuthApp.class.getName();
+		super(weDeployAuthApp);
 	}
 
 	@Override
@@ -135,16 +120,6 @@ public class WeDeployAuthAppWrapper implements WeDeployAuthApp,
 		}
 	}
 
-	@Override
-	public Object clone() {
-		return new WeDeployAuthAppWrapper((WeDeployAuthApp)_weDeployAuthApp.clone());
-	}
-
-	@Override
-	public int compareTo(WeDeployAuthApp weDeployAuthApp) {
-		return _weDeployAuthApp.compareTo(weDeployAuthApp);
-	}
-
 	/**
 	* Returns the client ID of this we deploy auth app.
 	*
@@ -152,7 +127,7 @@ public class WeDeployAuthAppWrapper implements WeDeployAuthApp,
 	*/
 	@Override
 	public String getClientId() {
-		return _weDeployAuthApp.getClientId();
+		return model.getClientId();
 	}
 
 	/**
@@ -162,7 +137,7 @@ public class WeDeployAuthAppWrapper implements WeDeployAuthApp,
 	*/
 	@Override
 	public String getClientSecret() {
-		return _weDeployAuthApp.getClientSecret();
+		return model.getClientSecret();
 	}
 
 	/**
@@ -172,7 +147,7 @@ public class WeDeployAuthAppWrapper implements WeDeployAuthApp,
 	*/
 	@Override
 	public long getCompanyId() {
-		return _weDeployAuthApp.getCompanyId();
+		return model.getCompanyId();
 	}
 
 	/**
@@ -182,12 +157,7 @@ public class WeDeployAuthAppWrapper implements WeDeployAuthApp,
 	*/
 	@Override
 	public Date getCreateDate() {
-		return _weDeployAuthApp.getCreateDate();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _weDeployAuthApp.getExpandoBridge();
+		return model.getCreateDate();
 	}
 
 	/**
@@ -197,7 +167,7 @@ public class WeDeployAuthAppWrapper implements WeDeployAuthApp,
 	*/
 	@Override
 	public Date getModifiedDate() {
-		return _weDeployAuthApp.getModifiedDate();
+		return model.getModifiedDate();
 	}
 
 	/**
@@ -207,7 +177,7 @@ public class WeDeployAuthAppWrapper implements WeDeployAuthApp,
 	*/
 	@Override
 	public String getName() {
-		return _weDeployAuthApp.getName();
+		return model.getName();
 	}
 
 	/**
@@ -217,12 +187,7 @@ public class WeDeployAuthAppWrapper implements WeDeployAuthApp,
 	*/
 	@Override
 	public long getPrimaryKey() {
-		return _weDeployAuthApp.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _weDeployAuthApp.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	/**
@@ -232,7 +197,7 @@ public class WeDeployAuthAppWrapper implements WeDeployAuthApp,
 	*/
 	@Override
 	public String getRedirectURI() {
-		return _weDeployAuthApp.getRedirectURI();
+		return model.getRedirectURI();
 	}
 
 	/**
@@ -242,7 +207,7 @@ public class WeDeployAuthAppWrapper implements WeDeployAuthApp,
 	*/
 	@Override
 	public long getUserId() {
-		return _weDeployAuthApp.getUserId();
+		return model.getUserId();
 	}
 
 	/**
@@ -252,7 +217,7 @@ public class WeDeployAuthAppWrapper implements WeDeployAuthApp,
 	*/
 	@Override
 	public String getUserName() {
-		return _weDeployAuthApp.getUserName();
+		return model.getUserName();
 	}
 
 	/**
@@ -262,7 +227,7 @@ public class WeDeployAuthAppWrapper implements WeDeployAuthApp,
 	*/
 	@Override
 	public String getUserUuid() {
-		return _weDeployAuthApp.getUserUuid();
+		return model.getUserUuid();
 	}
 
 	/**
@@ -272,37 +237,12 @@ public class WeDeployAuthAppWrapper implements WeDeployAuthApp,
 	*/
 	@Override
 	public long getWeDeployAuthAppId() {
-		return _weDeployAuthApp.getWeDeployAuthAppId();
-	}
-
-	@Override
-	public int hashCode() {
-		return _weDeployAuthApp.hashCode();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _weDeployAuthApp.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _weDeployAuthApp.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _weDeployAuthApp.isNew();
+		return model.getWeDeployAuthAppId();
 	}
 
 	@Override
 	public void persist() {
-		_weDeployAuthApp.persist();
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_weDeployAuthApp.setCachedModel(cachedModel);
+		model.persist();
 	}
 
 	/**
@@ -312,7 +252,7 @@ public class WeDeployAuthAppWrapper implements WeDeployAuthApp,
 	*/
 	@Override
 	public void setClientId(String clientId) {
-		_weDeployAuthApp.setClientId(clientId);
+		model.setClientId(clientId);
 	}
 
 	/**
@@ -322,7 +262,7 @@ public class WeDeployAuthAppWrapper implements WeDeployAuthApp,
 	*/
 	@Override
 	public void setClientSecret(String clientSecret) {
-		_weDeployAuthApp.setClientSecret(clientSecret);
+		model.setClientSecret(clientSecret);
 	}
 
 	/**
@@ -332,7 +272,7 @@ public class WeDeployAuthAppWrapper implements WeDeployAuthApp,
 	*/
 	@Override
 	public void setCompanyId(long companyId) {
-		_weDeployAuthApp.setCompanyId(companyId);
+		model.setCompanyId(companyId);
 	}
 
 	/**
@@ -342,23 +282,7 @@ public class WeDeployAuthAppWrapper implements WeDeployAuthApp,
 	*/
 	@Override
 	public void setCreateDate(Date createDate) {
-		_weDeployAuthApp.setCreateDate(createDate);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-		_weDeployAuthApp.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_weDeployAuthApp.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_weDeployAuthApp.setExpandoBridgeAttributes(serviceContext);
+		model.setCreateDate(createDate);
 	}
 
 	/**
@@ -368,7 +292,7 @@ public class WeDeployAuthAppWrapper implements WeDeployAuthApp,
 	*/
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
-		_weDeployAuthApp.setModifiedDate(modifiedDate);
+		model.setModifiedDate(modifiedDate);
 	}
 
 	/**
@@ -378,12 +302,7 @@ public class WeDeployAuthAppWrapper implements WeDeployAuthApp,
 	*/
 	@Override
 	public void setName(String name) {
-		_weDeployAuthApp.setName(name);
-	}
-
-	@Override
-	public void setNew(boolean n) {
-		_weDeployAuthApp.setNew(n);
+		model.setName(name);
 	}
 
 	/**
@@ -393,12 +312,7 @@ public class WeDeployAuthAppWrapper implements WeDeployAuthApp,
 	*/
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_weDeployAuthApp.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_weDeployAuthApp.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -408,7 +322,7 @@ public class WeDeployAuthAppWrapper implements WeDeployAuthApp,
 	*/
 	@Override
 	public void setRedirectURI(String redirectURI) {
-		_weDeployAuthApp.setRedirectURI(redirectURI);
+		model.setRedirectURI(redirectURI);
 	}
 
 	/**
@@ -418,7 +332,7 @@ public class WeDeployAuthAppWrapper implements WeDeployAuthApp,
 	*/
 	@Override
 	public void setUserId(long userId) {
-		_weDeployAuthApp.setUserId(userId);
+		model.setUserId(userId);
 	}
 
 	/**
@@ -428,7 +342,7 @@ public class WeDeployAuthAppWrapper implements WeDeployAuthApp,
 	*/
 	@Override
 	public void setUserName(String userName) {
-		_weDeployAuthApp.setUserName(userName);
+		model.setUserName(userName);
 	}
 
 	/**
@@ -438,7 +352,7 @@ public class WeDeployAuthAppWrapper implements WeDeployAuthApp,
 	*/
 	@Override
 	public void setUserUuid(String userUuid) {
-		_weDeployAuthApp.setUserUuid(userUuid);
+		model.setUserUuid(userUuid);
 	}
 
 	/**
@@ -448,73 +362,11 @@ public class WeDeployAuthAppWrapper implements WeDeployAuthApp,
 	*/
 	@Override
 	public void setWeDeployAuthAppId(long weDeployAuthAppId) {
-		_weDeployAuthApp.setWeDeployAuthAppId(weDeployAuthAppId);
+		model.setWeDeployAuthAppId(weDeployAuthAppId);
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.CacheModel<WeDeployAuthApp> toCacheModel() {
-		return _weDeployAuthApp.toCacheModel();
+	protected WeDeployAuthAppWrapper wrap(WeDeployAuthApp weDeployAuthApp) {
+		return new WeDeployAuthAppWrapper(weDeployAuthApp);
 	}
-
-	@Override
-	public WeDeployAuthApp toEscapedModel() {
-		return new WeDeployAuthAppWrapper(_weDeployAuthApp.toEscapedModel());
-	}
-
-	@Override
-	public String toString() {
-		return _weDeployAuthApp.toString();
-	}
-
-	@Override
-	public WeDeployAuthApp toUnescapedModel() {
-		return new WeDeployAuthAppWrapper(_weDeployAuthApp.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _weDeployAuthApp.toXmlString();
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-
-		if (!(obj instanceof WeDeployAuthAppWrapper)) {
-			return false;
-		}
-
-		WeDeployAuthAppWrapper weDeployAuthAppWrapper = (WeDeployAuthAppWrapper)obj;
-
-		if (Objects.equals(_weDeployAuthApp,
-					weDeployAuthAppWrapper._weDeployAuthApp)) {
-			return true;
-		}
-
-		return false;
-	}
-
-	@Override
-	public WeDeployAuthApp getWrappedModel() {
-		return _weDeployAuthApp;
-	}
-
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _weDeployAuthApp.isEntityCacheEnabled();
-	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _weDeployAuthApp.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_weDeployAuthApp.resetOriginalValues();
-	}
-
-	private final WeDeployAuthApp _weDeployAuthApp;
 }

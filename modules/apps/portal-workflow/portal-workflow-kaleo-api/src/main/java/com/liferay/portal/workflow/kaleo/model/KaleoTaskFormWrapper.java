@@ -16,17 +16,12 @@ package com.liferay.portal.workflow.kaleo.model;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
-
 import com.liferay.portal.kernel.model.ModelWrapper;
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -38,20 +33,10 @@ import java.util.Objects;
  * @generated
  */
 @ProviderType
-public class KaleoTaskFormWrapper implements KaleoTaskForm,
-	ModelWrapper<KaleoTaskForm> {
+public class KaleoTaskFormWrapper extends BaseModelWrapper<KaleoTaskForm>
+	implements KaleoTaskForm, ModelWrapper<KaleoTaskForm> {
 	public KaleoTaskFormWrapper(KaleoTaskForm kaleoTaskForm) {
-		_kaleoTaskForm = kaleoTaskForm;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return KaleoTaskForm.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return KaleoTaskForm.class.getName();
+		super(kaleoTaskForm);
 	}
 
 	@Override
@@ -206,16 +191,6 @@ public class KaleoTaskFormWrapper implements KaleoTaskForm,
 		}
 	}
 
-	@Override
-	public Object clone() {
-		return new KaleoTaskFormWrapper((KaleoTaskForm)_kaleoTaskForm.clone());
-	}
-
-	@Override
-	public int compareTo(KaleoTaskForm kaleoTaskForm) {
-		return _kaleoTaskForm.compareTo(kaleoTaskForm);
-	}
-
 	/**
 	* Returns the company ID of this kaleo task form.
 	*
@@ -223,7 +198,7 @@ public class KaleoTaskFormWrapper implements KaleoTaskForm,
 	*/
 	@Override
 	public long getCompanyId() {
-		return _kaleoTaskForm.getCompanyId();
+		return model.getCompanyId();
 	}
 
 	/**
@@ -233,7 +208,7 @@ public class KaleoTaskFormWrapper implements KaleoTaskForm,
 	*/
 	@Override
 	public Date getCreateDate() {
-		return _kaleoTaskForm.getCreateDate();
+		return model.getCreateDate();
 	}
 
 	/**
@@ -243,12 +218,7 @@ public class KaleoTaskFormWrapper implements KaleoTaskForm,
 	*/
 	@Override
 	public String getDescription() {
-		return _kaleoTaskForm.getDescription();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _kaleoTaskForm.getExpandoBridge();
+		return model.getDescription();
 	}
 
 	/**
@@ -258,7 +228,7 @@ public class KaleoTaskFormWrapper implements KaleoTaskForm,
 	*/
 	@Override
 	public long getFormCompanyId() {
-		return _kaleoTaskForm.getFormCompanyId();
+		return model.getFormCompanyId();
 	}
 
 	/**
@@ -268,7 +238,7 @@ public class KaleoTaskFormWrapper implements KaleoTaskForm,
 	*/
 	@Override
 	public String getFormDefinition() {
-		return _kaleoTaskForm.getFormDefinition();
+		return model.getFormDefinition();
 	}
 
 	/**
@@ -278,7 +248,7 @@ public class KaleoTaskFormWrapper implements KaleoTaskForm,
 	*/
 	@Override
 	public long getFormGroupId() {
-		return _kaleoTaskForm.getFormGroupId();
+		return model.getFormGroupId();
 	}
 
 	/**
@@ -288,7 +258,7 @@ public class KaleoTaskFormWrapper implements KaleoTaskForm,
 	*/
 	@Override
 	public long getFormId() {
-		return _kaleoTaskForm.getFormId();
+		return model.getFormId();
 	}
 
 	/**
@@ -298,7 +268,7 @@ public class KaleoTaskFormWrapper implements KaleoTaskForm,
 	*/
 	@Override
 	public String getFormUuid() {
-		return _kaleoTaskForm.getFormUuid();
+		return model.getFormUuid();
 	}
 
 	/**
@@ -308,7 +278,7 @@ public class KaleoTaskFormWrapper implements KaleoTaskForm,
 	*/
 	@Override
 	public long getGroupId() {
-		return _kaleoTaskForm.getGroupId();
+		return model.getGroupId();
 	}
 
 	/**
@@ -318,7 +288,7 @@ public class KaleoTaskFormWrapper implements KaleoTaskForm,
 	*/
 	@Override
 	public long getKaleoDefinitionVersionId() {
-		return _kaleoTaskForm.getKaleoDefinitionVersionId();
+		return model.getKaleoDefinitionVersionId();
 	}
 
 	/**
@@ -328,7 +298,7 @@ public class KaleoTaskFormWrapper implements KaleoTaskForm,
 	*/
 	@Override
 	public long getKaleoNodeId() {
-		return _kaleoTaskForm.getKaleoNodeId();
+		return model.getKaleoNodeId();
 	}
 
 	/**
@@ -338,7 +308,7 @@ public class KaleoTaskFormWrapper implements KaleoTaskForm,
 	*/
 	@Override
 	public long getKaleoTaskFormId() {
-		return _kaleoTaskForm.getKaleoTaskFormId();
+		return model.getKaleoTaskFormId();
 	}
 
 	/**
@@ -348,7 +318,7 @@ public class KaleoTaskFormWrapper implements KaleoTaskForm,
 	*/
 	@Override
 	public long getKaleoTaskId() {
-		return _kaleoTaskForm.getKaleoTaskId();
+		return model.getKaleoTaskId();
 	}
 
 	/**
@@ -358,7 +328,7 @@ public class KaleoTaskFormWrapper implements KaleoTaskForm,
 	*/
 	@Override
 	public String getKaleoTaskName() {
-		return _kaleoTaskForm.getKaleoTaskName();
+		return model.getKaleoTaskName();
 	}
 
 	/**
@@ -368,7 +338,7 @@ public class KaleoTaskFormWrapper implements KaleoTaskForm,
 	*/
 	@Override
 	public String getMetadata() {
-		return _kaleoTaskForm.getMetadata();
+		return model.getMetadata();
 	}
 
 	/**
@@ -378,7 +348,7 @@ public class KaleoTaskFormWrapper implements KaleoTaskForm,
 	*/
 	@Override
 	public Date getModifiedDate() {
-		return _kaleoTaskForm.getModifiedDate();
+		return model.getModifiedDate();
 	}
 
 	/**
@@ -388,7 +358,7 @@ public class KaleoTaskFormWrapper implements KaleoTaskForm,
 	*/
 	@Override
 	public String getName() {
-		return _kaleoTaskForm.getName();
+		return model.getName();
 	}
 
 	/**
@@ -398,12 +368,7 @@ public class KaleoTaskFormWrapper implements KaleoTaskForm,
 	*/
 	@Override
 	public long getPrimaryKey() {
-		return _kaleoTaskForm.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _kaleoTaskForm.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	/**
@@ -413,7 +378,7 @@ public class KaleoTaskFormWrapper implements KaleoTaskForm,
 	*/
 	@Override
 	public int getPriority() {
-		return _kaleoTaskForm.getPriority();
+		return model.getPriority();
 	}
 
 	/**
@@ -423,7 +388,7 @@ public class KaleoTaskFormWrapper implements KaleoTaskForm,
 	*/
 	@Override
 	public long getUserId() {
-		return _kaleoTaskForm.getUserId();
+		return model.getUserId();
 	}
 
 	/**
@@ -433,7 +398,7 @@ public class KaleoTaskFormWrapper implements KaleoTaskForm,
 	*/
 	@Override
 	public String getUserName() {
-		return _kaleoTaskForm.getUserName();
+		return model.getUserName();
 	}
 
 	/**
@@ -443,37 +408,12 @@ public class KaleoTaskFormWrapper implements KaleoTaskForm,
 	*/
 	@Override
 	public String getUserUuid() {
-		return _kaleoTaskForm.getUserUuid();
-	}
-
-	@Override
-	public int hashCode() {
-		return _kaleoTaskForm.hashCode();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _kaleoTaskForm.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _kaleoTaskForm.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _kaleoTaskForm.isNew();
+		return model.getUserUuid();
 	}
 
 	@Override
 	public void persist() {
-		_kaleoTaskForm.persist();
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_kaleoTaskForm.setCachedModel(cachedModel);
+		model.persist();
 	}
 
 	/**
@@ -483,7 +423,7 @@ public class KaleoTaskFormWrapper implements KaleoTaskForm,
 	*/
 	@Override
 	public void setCompanyId(long companyId) {
-		_kaleoTaskForm.setCompanyId(companyId);
+		model.setCompanyId(companyId);
 	}
 
 	/**
@@ -493,7 +433,7 @@ public class KaleoTaskFormWrapper implements KaleoTaskForm,
 	*/
 	@Override
 	public void setCreateDate(Date createDate) {
-		_kaleoTaskForm.setCreateDate(createDate);
+		model.setCreateDate(createDate);
 	}
 
 	/**
@@ -503,23 +443,7 @@ public class KaleoTaskFormWrapper implements KaleoTaskForm,
 	*/
 	@Override
 	public void setDescription(String description) {
-		_kaleoTaskForm.setDescription(description);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-		_kaleoTaskForm.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_kaleoTaskForm.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_kaleoTaskForm.setExpandoBridgeAttributes(serviceContext);
+		model.setDescription(description);
 	}
 
 	/**
@@ -529,7 +453,7 @@ public class KaleoTaskFormWrapper implements KaleoTaskForm,
 	*/
 	@Override
 	public void setFormCompanyId(long formCompanyId) {
-		_kaleoTaskForm.setFormCompanyId(formCompanyId);
+		model.setFormCompanyId(formCompanyId);
 	}
 
 	/**
@@ -539,7 +463,7 @@ public class KaleoTaskFormWrapper implements KaleoTaskForm,
 	*/
 	@Override
 	public void setFormDefinition(String formDefinition) {
-		_kaleoTaskForm.setFormDefinition(formDefinition);
+		model.setFormDefinition(formDefinition);
 	}
 
 	/**
@@ -549,7 +473,7 @@ public class KaleoTaskFormWrapper implements KaleoTaskForm,
 	*/
 	@Override
 	public void setFormGroupId(long formGroupId) {
-		_kaleoTaskForm.setFormGroupId(formGroupId);
+		model.setFormGroupId(formGroupId);
 	}
 
 	/**
@@ -559,7 +483,7 @@ public class KaleoTaskFormWrapper implements KaleoTaskForm,
 	*/
 	@Override
 	public void setFormId(long formId) {
-		_kaleoTaskForm.setFormId(formId);
+		model.setFormId(formId);
 	}
 
 	/**
@@ -569,7 +493,7 @@ public class KaleoTaskFormWrapper implements KaleoTaskForm,
 	*/
 	@Override
 	public void setFormUuid(String formUuid) {
-		_kaleoTaskForm.setFormUuid(formUuid);
+		model.setFormUuid(formUuid);
 	}
 
 	/**
@@ -579,7 +503,7 @@ public class KaleoTaskFormWrapper implements KaleoTaskForm,
 	*/
 	@Override
 	public void setGroupId(long groupId) {
-		_kaleoTaskForm.setGroupId(groupId);
+		model.setGroupId(groupId);
 	}
 
 	/**
@@ -589,7 +513,7 @@ public class KaleoTaskFormWrapper implements KaleoTaskForm,
 	*/
 	@Override
 	public void setKaleoDefinitionVersionId(long kaleoDefinitionVersionId) {
-		_kaleoTaskForm.setKaleoDefinitionVersionId(kaleoDefinitionVersionId);
+		model.setKaleoDefinitionVersionId(kaleoDefinitionVersionId);
 	}
 
 	/**
@@ -599,7 +523,7 @@ public class KaleoTaskFormWrapper implements KaleoTaskForm,
 	*/
 	@Override
 	public void setKaleoNodeId(long kaleoNodeId) {
-		_kaleoTaskForm.setKaleoNodeId(kaleoNodeId);
+		model.setKaleoNodeId(kaleoNodeId);
 	}
 
 	/**
@@ -609,7 +533,7 @@ public class KaleoTaskFormWrapper implements KaleoTaskForm,
 	*/
 	@Override
 	public void setKaleoTaskFormId(long kaleoTaskFormId) {
-		_kaleoTaskForm.setKaleoTaskFormId(kaleoTaskFormId);
+		model.setKaleoTaskFormId(kaleoTaskFormId);
 	}
 
 	/**
@@ -619,7 +543,7 @@ public class KaleoTaskFormWrapper implements KaleoTaskForm,
 	*/
 	@Override
 	public void setKaleoTaskId(long kaleoTaskId) {
-		_kaleoTaskForm.setKaleoTaskId(kaleoTaskId);
+		model.setKaleoTaskId(kaleoTaskId);
 	}
 
 	/**
@@ -629,7 +553,7 @@ public class KaleoTaskFormWrapper implements KaleoTaskForm,
 	*/
 	@Override
 	public void setKaleoTaskName(String kaleoTaskName) {
-		_kaleoTaskForm.setKaleoTaskName(kaleoTaskName);
+		model.setKaleoTaskName(kaleoTaskName);
 	}
 
 	/**
@@ -639,7 +563,7 @@ public class KaleoTaskFormWrapper implements KaleoTaskForm,
 	*/
 	@Override
 	public void setMetadata(String metadata) {
-		_kaleoTaskForm.setMetadata(metadata);
+		model.setMetadata(metadata);
 	}
 
 	/**
@@ -649,7 +573,7 @@ public class KaleoTaskFormWrapper implements KaleoTaskForm,
 	*/
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
-		_kaleoTaskForm.setModifiedDate(modifiedDate);
+		model.setModifiedDate(modifiedDate);
 	}
 
 	/**
@@ -659,12 +583,7 @@ public class KaleoTaskFormWrapper implements KaleoTaskForm,
 	*/
 	@Override
 	public void setName(String name) {
-		_kaleoTaskForm.setName(name);
-	}
-
-	@Override
-	public void setNew(boolean n) {
-		_kaleoTaskForm.setNew(n);
+		model.setName(name);
 	}
 
 	/**
@@ -674,12 +593,7 @@ public class KaleoTaskFormWrapper implements KaleoTaskForm,
 	*/
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_kaleoTaskForm.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_kaleoTaskForm.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -689,7 +603,7 @@ public class KaleoTaskFormWrapper implements KaleoTaskForm,
 	*/
 	@Override
 	public void setPriority(int priority) {
-		_kaleoTaskForm.setPriority(priority);
+		model.setPriority(priority);
 	}
 
 	/**
@@ -699,7 +613,7 @@ public class KaleoTaskFormWrapper implements KaleoTaskForm,
 	*/
 	@Override
 	public void setUserId(long userId) {
-		_kaleoTaskForm.setUserId(userId);
+		model.setUserId(userId);
 	}
 
 	/**
@@ -709,7 +623,7 @@ public class KaleoTaskFormWrapper implements KaleoTaskForm,
 	*/
 	@Override
 	public void setUserName(String userName) {
-		_kaleoTaskForm.setUserName(userName);
+		model.setUserName(userName);
 	}
 
 	/**
@@ -719,72 +633,11 @@ public class KaleoTaskFormWrapper implements KaleoTaskForm,
 	*/
 	@Override
 	public void setUserUuid(String userUuid) {
-		_kaleoTaskForm.setUserUuid(userUuid);
+		model.setUserUuid(userUuid);
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.CacheModel<KaleoTaskForm> toCacheModel() {
-		return _kaleoTaskForm.toCacheModel();
+	protected KaleoTaskFormWrapper wrap(KaleoTaskForm kaleoTaskForm) {
+		return new KaleoTaskFormWrapper(kaleoTaskForm);
 	}
-
-	@Override
-	public KaleoTaskForm toEscapedModel() {
-		return new KaleoTaskFormWrapper(_kaleoTaskForm.toEscapedModel());
-	}
-
-	@Override
-	public String toString() {
-		return _kaleoTaskForm.toString();
-	}
-
-	@Override
-	public KaleoTaskForm toUnescapedModel() {
-		return new KaleoTaskFormWrapper(_kaleoTaskForm.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _kaleoTaskForm.toXmlString();
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-
-		if (!(obj instanceof KaleoTaskFormWrapper)) {
-			return false;
-		}
-
-		KaleoTaskFormWrapper kaleoTaskFormWrapper = (KaleoTaskFormWrapper)obj;
-
-		if (Objects.equals(_kaleoTaskForm, kaleoTaskFormWrapper._kaleoTaskForm)) {
-			return true;
-		}
-
-		return false;
-	}
-
-	@Override
-	public KaleoTaskForm getWrappedModel() {
-		return _kaleoTaskForm;
-	}
-
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _kaleoTaskForm.isEntityCacheEnabled();
-	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _kaleoTaskForm.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_kaleoTaskForm.resetOriginalValues();
-	}
-
-	private final KaleoTaskForm _kaleoTaskForm;
 }

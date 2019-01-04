@@ -16,18 +16,13 @@ package com.liferay.document.library.content.model;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
-
 import com.liferay.portal.kernel.model.ModelWrapper;
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.sql.Blob;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -39,19 +34,10 @@ import java.util.Objects;
  * @generated
  */
 @ProviderType
-public class DLContentWrapper implements DLContent, ModelWrapper<DLContent> {
+public class DLContentWrapper extends BaseModelWrapper<DLContent>
+	implements DLContent, ModelWrapper<DLContent> {
 	public DLContentWrapper(DLContent dlContent) {
-		_dlContent = dlContent;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return DLContent.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return DLContent.class.getName();
+		super(dlContent);
 	}
 
 	@Override
@@ -121,16 +107,6 @@ public class DLContentWrapper implements DLContent, ModelWrapper<DLContent> {
 		}
 	}
 
-	@Override
-	public Object clone() {
-		return new DLContentWrapper((DLContent)_dlContent.clone());
-	}
-
-	@Override
-	public int compareTo(DLContent dlContent) {
-		return _dlContent.compareTo(dlContent);
-	}
-
 	/**
 	* Returns the company ID of this document library content.
 	*
@@ -138,7 +114,7 @@ public class DLContentWrapper implements DLContent, ModelWrapper<DLContent> {
 	*/
 	@Override
 	public long getCompanyId() {
-		return _dlContent.getCompanyId();
+		return model.getCompanyId();
 	}
 
 	/**
@@ -148,7 +124,7 @@ public class DLContentWrapper implements DLContent, ModelWrapper<DLContent> {
 	*/
 	@Override
 	public long getContentId() {
-		return _dlContent.getContentId();
+		return model.getContentId();
 	}
 
 	/**
@@ -158,12 +134,7 @@ public class DLContentWrapper implements DLContent, ModelWrapper<DLContent> {
 	*/
 	@Override
 	public Blob getData() {
-		return _dlContent.getData();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _dlContent.getExpandoBridge();
+		return model.getData();
 	}
 
 	/**
@@ -173,7 +144,7 @@ public class DLContentWrapper implements DLContent, ModelWrapper<DLContent> {
 	*/
 	@Override
 	public long getGroupId() {
-		return _dlContent.getGroupId();
+		return model.getGroupId();
 	}
 
 	/**
@@ -183,7 +154,7 @@ public class DLContentWrapper implements DLContent, ModelWrapper<DLContent> {
 	*/
 	@Override
 	public String getPath() {
-		return _dlContent.getPath();
+		return model.getPath();
 	}
 
 	/**
@@ -193,12 +164,7 @@ public class DLContentWrapper implements DLContent, ModelWrapper<DLContent> {
 	*/
 	@Override
 	public long getPrimaryKey() {
-		return _dlContent.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _dlContent.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	/**
@@ -208,7 +174,7 @@ public class DLContentWrapper implements DLContent, ModelWrapper<DLContent> {
 	*/
 	@Override
 	public long getRepositoryId() {
-		return _dlContent.getRepositoryId();
+		return model.getRepositoryId();
 	}
 
 	/**
@@ -218,7 +184,7 @@ public class DLContentWrapper implements DLContent, ModelWrapper<DLContent> {
 	*/
 	@Override
 	public long getSize() {
-		return _dlContent.getSize();
+		return model.getSize();
 	}
 
 	/**
@@ -228,37 +194,12 @@ public class DLContentWrapper implements DLContent, ModelWrapper<DLContent> {
 	*/
 	@Override
 	public String getVersion() {
-		return _dlContent.getVersion();
-	}
-
-	@Override
-	public int hashCode() {
-		return _dlContent.hashCode();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _dlContent.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _dlContent.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _dlContent.isNew();
+		return model.getVersion();
 	}
 
 	@Override
 	public void persist() {
-		_dlContent.persist();
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_dlContent.setCachedModel(cachedModel);
+		model.persist();
 	}
 
 	/**
@@ -268,7 +209,7 @@ public class DLContentWrapper implements DLContent, ModelWrapper<DLContent> {
 	*/
 	@Override
 	public void setCompanyId(long companyId) {
-		_dlContent.setCompanyId(companyId);
+		model.setCompanyId(companyId);
 	}
 
 	/**
@@ -278,7 +219,7 @@ public class DLContentWrapper implements DLContent, ModelWrapper<DLContent> {
 	*/
 	@Override
 	public void setContentId(long contentId) {
-		_dlContent.setContentId(contentId);
+		model.setContentId(contentId);
 	}
 
 	/**
@@ -288,23 +229,7 @@ public class DLContentWrapper implements DLContent, ModelWrapper<DLContent> {
 	*/
 	@Override
 	public void setData(Blob data) {
-		_dlContent.setData(data);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-		_dlContent.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_dlContent.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_dlContent.setExpandoBridgeAttributes(serviceContext);
+		model.setData(data);
 	}
 
 	/**
@@ -314,12 +239,7 @@ public class DLContentWrapper implements DLContent, ModelWrapper<DLContent> {
 	*/
 	@Override
 	public void setGroupId(long groupId) {
-		_dlContent.setGroupId(groupId);
-	}
-
-	@Override
-	public void setNew(boolean n) {
-		_dlContent.setNew(n);
+		model.setGroupId(groupId);
 	}
 
 	/**
@@ -329,7 +249,7 @@ public class DLContentWrapper implements DLContent, ModelWrapper<DLContent> {
 	*/
 	@Override
 	public void setPath(String path) {
-		_dlContent.setPath(path);
+		model.setPath(path);
 	}
 
 	/**
@@ -339,12 +259,7 @@ public class DLContentWrapper implements DLContent, ModelWrapper<DLContent> {
 	*/
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_dlContent.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_dlContent.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -354,7 +269,7 @@ public class DLContentWrapper implements DLContent, ModelWrapper<DLContent> {
 	*/
 	@Override
 	public void setRepositoryId(long repositoryId) {
-		_dlContent.setRepositoryId(repositoryId);
+		model.setRepositoryId(repositoryId);
 	}
 
 	/**
@@ -364,7 +279,7 @@ public class DLContentWrapper implements DLContent, ModelWrapper<DLContent> {
 	*/
 	@Override
 	public void setSize(long size) {
-		_dlContent.setSize(size);
+		model.setSize(size);
 	}
 
 	/**
@@ -374,72 +289,11 @@ public class DLContentWrapper implements DLContent, ModelWrapper<DLContent> {
 	*/
 	@Override
 	public void setVersion(String version) {
-		_dlContent.setVersion(version);
+		model.setVersion(version);
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.CacheModel<DLContent> toCacheModel() {
-		return _dlContent.toCacheModel();
+	protected DLContentWrapper wrap(DLContent dlContent) {
+		return new DLContentWrapper(dlContent);
 	}
-
-	@Override
-	public DLContent toEscapedModel() {
-		return new DLContentWrapper(_dlContent.toEscapedModel());
-	}
-
-	@Override
-	public String toString() {
-		return _dlContent.toString();
-	}
-
-	@Override
-	public DLContent toUnescapedModel() {
-		return new DLContentWrapper(_dlContent.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _dlContent.toXmlString();
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-
-		if (!(obj instanceof DLContentWrapper)) {
-			return false;
-		}
-
-		DLContentWrapper dlContentWrapper = (DLContentWrapper)obj;
-
-		if (Objects.equals(_dlContent, dlContentWrapper._dlContent)) {
-			return true;
-		}
-
-		return false;
-	}
-
-	@Override
-	public DLContent getWrappedModel() {
-		return _dlContent;
-	}
-
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _dlContent.isEntityCacheEnabled();
-	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _dlContent.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_dlContent.resetOriginalValues();
-	}
-
-	private final DLContent _dlContent;
 }

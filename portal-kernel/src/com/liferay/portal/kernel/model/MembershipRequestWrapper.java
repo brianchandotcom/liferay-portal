@@ -16,16 +16,11 @@ package com.liferay.portal.kernel.model;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
-
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -37,20 +32,10 @@ import java.util.Objects;
  * @generated
  */
 @ProviderType
-public class MembershipRequestWrapper implements MembershipRequest,
-	ModelWrapper<MembershipRequest> {
+public class MembershipRequestWrapper extends BaseModelWrapper<MembershipRequest>
+	implements MembershipRequest, ModelWrapper<MembershipRequest> {
 	public MembershipRequestWrapper(MembershipRequest membershipRequest) {
-		_membershipRequest = membershipRequest;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return MembershipRequest.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return MembershipRequest.class.getName();
+		super(membershipRequest);
 	}
 
 	@Override
@@ -141,16 +126,6 @@ public class MembershipRequestWrapper implements MembershipRequest,
 		}
 	}
 
-	@Override
-	public Object clone() {
-		return new MembershipRequestWrapper((MembershipRequest)_membershipRequest.clone());
-	}
-
-	@Override
-	public int compareTo(MembershipRequest membershipRequest) {
-		return _membershipRequest.compareTo(membershipRequest);
-	}
-
 	/**
 	* Returns the comments of this membership request.
 	*
@@ -158,7 +133,7 @@ public class MembershipRequestWrapper implements MembershipRequest,
 	*/
 	@Override
 	public String getComments() {
-		return _membershipRequest.getComments();
+		return model.getComments();
 	}
 
 	/**
@@ -168,7 +143,7 @@ public class MembershipRequestWrapper implements MembershipRequest,
 	*/
 	@Override
 	public long getCompanyId() {
-		return _membershipRequest.getCompanyId();
+		return model.getCompanyId();
 	}
 
 	/**
@@ -178,12 +153,7 @@ public class MembershipRequestWrapper implements MembershipRequest,
 	*/
 	@Override
 	public Date getCreateDate() {
-		return _membershipRequest.getCreateDate();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _membershipRequest.getExpandoBridge();
+		return model.getCreateDate();
 	}
 
 	/**
@@ -193,7 +163,7 @@ public class MembershipRequestWrapper implements MembershipRequest,
 	*/
 	@Override
 	public long getGroupId() {
-		return _membershipRequest.getGroupId();
+		return model.getGroupId();
 	}
 
 	/**
@@ -203,7 +173,7 @@ public class MembershipRequestWrapper implements MembershipRequest,
 	*/
 	@Override
 	public long getMembershipRequestId() {
-		return _membershipRequest.getMembershipRequestId();
+		return model.getMembershipRequestId();
 	}
 
 	/**
@@ -213,7 +183,7 @@ public class MembershipRequestWrapper implements MembershipRequest,
 	*/
 	@Override
 	public long getMvccVersion() {
-		return _membershipRequest.getMvccVersion();
+		return model.getMvccVersion();
 	}
 
 	/**
@@ -223,12 +193,7 @@ public class MembershipRequestWrapper implements MembershipRequest,
 	*/
 	@Override
 	public long getPrimaryKey() {
-		return _membershipRequest.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _membershipRequest.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	/**
@@ -238,7 +203,7 @@ public class MembershipRequestWrapper implements MembershipRequest,
 	*/
 	@Override
 	public long getReplierUserId() {
-		return _membershipRequest.getReplierUserId();
+		return model.getReplierUserId();
 	}
 
 	/**
@@ -248,7 +213,7 @@ public class MembershipRequestWrapper implements MembershipRequest,
 	*/
 	@Override
 	public String getReplierUserUuid() {
-		return _membershipRequest.getReplierUserUuid();
+		return model.getReplierUserUuid();
 	}
 
 	/**
@@ -258,7 +223,7 @@ public class MembershipRequestWrapper implements MembershipRequest,
 	*/
 	@Override
 	public String getReplyComments() {
-		return _membershipRequest.getReplyComments();
+		return model.getReplyComments();
 	}
 
 	/**
@@ -268,7 +233,7 @@ public class MembershipRequestWrapper implements MembershipRequest,
 	*/
 	@Override
 	public Date getReplyDate() {
-		return _membershipRequest.getReplyDate();
+		return model.getReplyDate();
 	}
 
 	/**
@@ -278,7 +243,7 @@ public class MembershipRequestWrapper implements MembershipRequest,
 	*/
 	@Override
 	public long getStatusId() {
-		return _membershipRequest.getStatusId();
+		return model.getStatusId();
 	}
 
 	/**
@@ -288,7 +253,7 @@ public class MembershipRequestWrapper implements MembershipRequest,
 	*/
 	@Override
 	public long getUserId() {
-		return _membershipRequest.getUserId();
+		return model.getUserId();
 	}
 
 	/**
@@ -298,37 +263,12 @@ public class MembershipRequestWrapper implements MembershipRequest,
 	*/
 	@Override
 	public String getUserUuid() {
-		return _membershipRequest.getUserUuid();
-	}
-
-	@Override
-	public int hashCode() {
-		return _membershipRequest.hashCode();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _membershipRequest.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _membershipRequest.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _membershipRequest.isNew();
+		return model.getUserUuid();
 	}
 
 	@Override
 	public void persist() {
-		_membershipRequest.persist();
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_membershipRequest.setCachedModel(cachedModel);
+		model.persist();
 	}
 
 	/**
@@ -338,7 +278,7 @@ public class MembershipRequestWrapper implements MembershipRequest,
 	*/
 	@Override
 	public void setComments(String comments) {
-		_membershipRequest.setComments(comments);
+		model.setComments(comments);
 	}
 
 	/**
@@ -348,7 +288,7 @@ public class MembershipRequestWrapper implements MembershipRequest,
 	*/
 	@Override
 	public void setCompanyId(long companyId) {
-		_membershipRequest.setCompanyId(companyId);
+		model.setCompanyId(companyId);
 	}
 
 	/**
@@ -358,22 +298,7 @@ public class MembershipRequestWrapper implements MembershipRequest,
 	*/
 	@Override
 	public void setCreateDate(Date createDate) {
-		_membershipRequest.setCreateDate(createDate);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(BaseModel<?> baseModel) {
-		_membershipRequest.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_membershipRequest.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_membershipRequest.setExpandoBridgeAttributes(serviceContext);
+		model.setCreateDate(createDate);
 	}
 
 	/**
@@ -383,7 +308,7 @@ public class MembershipRequestWrapper implements MembershipRequest,
 	*/
 	@Override
 	public void setGroupId(long groupId) {
-		_membershipRequest.setGroupId(groupId);
+		model.setGroupId(groupId);
 	}
 
 	/**
@@ -393,7 +318,7 @@ public class MembershipRequestWrapper implements MembershipRequest,
 	*/
 	@Override
 	public void setMembershipRequestId(long membershipRequestId) {
-		_membershipRequest.setMembershipRequestId(membershipRequestId);
+		model.setMembershipRequestId(membershipRequestId);
 	}
 
 	/**
@@ -403,12 +328,7 @@ public class MembershipRequestWrapper implements MembershipRequest,
 	*/
 	@Override
 	public void setMvccVersion(long mvccVersion) {
-		_membershipRequest.setMvccVersion(mvccVersion);
-	}
-
-	@Override
-	public void setNew(boolean n) {
-		_membershipRequest.setNew(n);
+		model.setMvccVersion(mvccVersion);
 	}
 
 	/**
@@ -418,12 +338,7 @@ public class MembershipRequestWrapper implements MembershipRequest,
 	*/
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_membershipRequest.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_membershipRequest.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -433,7 +348,7 @@ public class MembershipRequestWrapper implements MembershipRequest,
 	*/
 	@Override
 	public void setReplierUserId(long replierUserId) {
-		_membershipRequest.setReplierUserId(replierUserId);
+		model.setReplierUserId(replierUserId);
 	}
 
 	/**
@@ -443,7 +358,7 @@ public class MembershipRequestWrapper implements MembershipRequest,
 	*/
 	@Override
 	public void setReplierUserUuid(String replierUserUuid) {
-		_membershipRequest.setReplierUserUuid(replierUserUuid);
+		model.setReplierUserUuid(replierUserUuid);
 	}
 
 	/**
@@ -453,7 +368,7 @@ public class MembershipRequestWrapper implements MembershipRequest,
 	*/
 	@Override
 	public void setReplyComments(String replyComments) {
-		_membershipRequest.setReplyComments(replyComments);
+		model.setReplyComments(replyComments);
 	}
 
 	/**
@@ -463,7 +378,7 @@ public class MembershipRequestWrapper implements MembershipRequest,
 	*/
 	@Override
 	public void setReplyDate(Date replyDate) {
-		_membershipRequest.setReplyDate(replyDate);
+		model.setReplyDate(replyDate);
 	}
 
 	/**
@@ -473,7 +388,7 @@ public class MembershipRequestWrapper implements MembershipRequest,
 	*/
 	@Override
 	public void setStatusId(long statusId) {
-		_membershipRequest.setStatusId(statusId);
+		model.setStatusId(statusId);
 	}
 
 	/**
@@ -483,7 +398,7 @@ public class MembershipRequestWrapper implements MembershipRequest,
 	*/
 	@Override
 	public void setUserId(long userId) {
-		_membershipRequest.setUserId(userId);
+		model.setUserId(userId);
 	}
 
 	/**
@@ -493,73 +408,11 @@ public class MembershipRequestWrapper implements MembershipRequest,
 	*/
 	@Override
 	public void setUserUuid(String userUuid) {
-		_membershipRequest.setUserUuid(userUuid);
+		model.setUserUuid(userUuid);
 	}
 
 	@Override
-	public CacheModel<MembershipRequest> toCacheModel() {
-		return _membershipRequest.toCacheModel();
+	protected MembershipRequestWrapper wrap(MembershipRequest membershipRequest) {
+		return new MembershipRequestWrapper(membershipRequest);
 	}
-
-	@Override
-	public MembershipRequest toEscapedModel() {
-		return new MembershipRequestWrapper(_membershipRequest.toEscapedModel());
-	}
-
-	@Override
-	public String toString() {
-		return _membershipRequest.toString();
-	}
-
-	@Override
-	public MembershipRequest toUnescapedModel() {
-		return new MembershipRequestWrapper(_membershipRequest.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _membershipRequest.toXmlString();
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-
-		if (!(obj instanceof MembershipRequestWrapper)) {
-			return false;
-		}
-
-		MembershipRequestWrapper membershipRequestWrapper = (MembershipRequestWrapper)obj;
-
-		if (Objects.equals(_membershipRequest,
-					membershipRequestWrapper._membershipRequest)) {
-			return true;
-		}
-
-		return false;
-	}
-
-	@Override
-	public MembershipRequest getWrappedModel() {
-		return _membershipRequest;
-	}
-
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _membershipRequest.isEntityCacheEnabled();
-	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _membershipRequest.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_membershipRequest.resetOriginalValues();
-	}
-
-	private final MembershipRequest _membershipRequest;
 }

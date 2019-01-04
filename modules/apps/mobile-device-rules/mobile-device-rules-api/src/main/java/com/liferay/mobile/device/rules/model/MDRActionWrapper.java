@@ -16,19 +16,14 @@ package com.liferay.mobile.device.rules.model;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
-
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 
 import com.liferay.portal.kernel.model.ModelWrapper;
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -40,19 +35,10 @@ import java.util.Objects;
  * @generated
  */
 @ProviderType
-public class MDRActionWrapper implements MDRAction, ModelWrapper<MDRAction> {
+public class MDRActionWrapper extends BaseModelWrapper<MDRAction>
+	implements MDRAction, ModelWrapper<MDRAction> {
 	public MDRActionWrapper(MDRAction mdrAction) {
-		_mdrAction = mdrAction;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return MDRAction.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return MDRAction.class.getName();
+		super(mdrAction);
 	}
 
 	@Override
@@ -178,16 +164,6 @@ public class MDRActionWrapper implements MDRAction, ModelWrapper<MDRAction> {
 		}
 	}
 
-	@Override
-	public Object clone() {
-		return new MDRActionWrapper((MDRAction)_mdrAction.clone());
-	}
-
-	@Override
-	public int compareTo(MDRAction mdrAction) {
-		return _mdrAction.compareTo(mdrAction);
-	}
-
 	/**
 	* Returns the action ID of this mdr action.
 	*
@@ -195,12 +171,12 @@ public class MDRActionWrapper implements MDRAction, ModelWrapper<MDRAction> {
 	*/
 	@Override
 	public long getActionId() {
-		return _mdrAction.getActionId();
+		return model.getActionId();
 	}
 
 	@Override
 	public String[] getAvailableLanguageIds() {
-		return _mdrAction.getAvailableLanguageIds();
+		return model.getAvailableLanguageIds();
 	}
 
 	/**
@@ -210,7 +186,7 @@ public class MDRActionWrapper implements MDRAction, ModelWrapper<MDRAction> {
 	*/
 	@Override
 	public String getClassName() {
-		return _mdrAction.getClassName();
+		return model.getClassName();
 	}
 
 	/**
@@ -220,7 +196,7 @@ public class MDRActionWrapper implements MDRAction, ModelWrapper<MDRAction> {
 	*/
 	@Override
 	public long getClassNameId() {
-		return _mdrAction.getClassNameId();
+		return model.getClassNameId();
 	}
 
 	/**
@@ -230,7 +206,7 @@ public class MDRActionWrapper implements MDRAction, ModelWrapper<MDRAction> {
 	*/
 	@Override
 	public long getClassPK() {
-		return _mdrAction.getClassPK();
+		return model.getClassPK();
 	}
 
 	/**
@@ -240,7 +216,7 @@ public class MDRActionWrapper implements MDRAction, ModelWrapper<MDRAction> {
 	*/
 	@Override
 	public long getCompanyId() {
-		return _mdrAction.getCompanyId();
+		return model.getCompanyId();
 	}
 
 	/**
@@ -250,12 +226,12 @@ public class MDRActionWrapper implements MDRAction, ModelWrapper<MDRAction> {
 	*/
 	@Override
 	public Date getCreateDate() {
-		return _mdrAction.getCreateDate();
+		return model.getCreateDate();
 	}
 
 	@Override
 	public String getDefaultLanguageId() {
-		return _mdrAction.getDefaultLanguageId();
+		return model.getDefaultLanguageId();
 	}
 
 	/**
@@ -265,7 +241,7 @@ public class MDRActionWrapper implements MDRAction, ModelWrapper<MDRAction> {
 	*/
 	@Override
 	public String getDescription() {
-		return _mdrAction.getDescription();
+		return model.getDescription();
 	}
 
 	/**
@@ -276,7 +252,7 @@ public class MDRActionWrapper implements MDRAction, ModelWrapper<MDRAction> {
 	*/
 	@Override
 	public String getDescription(java.util.Locale locale) {
-		return _mdrAction.getDescription(locale);
+		return model.getDescription(locale);
 	}
 
 	/**
@@ -288,7 +264,7 @@ public class MDRActionWrapper implements MDRAction, ModelWrapper<MDRAction> {
 	*/
 	@Override
 	public String getDescription(java.util.Locale locale, boolean useDefault) {
-		return _mdrAction.getDescription(locale, useDefault);
+		return model.getDescription(locale, useDefault);
 	}
 
 	/**
@@ -299,7 +275,7 @@ public class MDRActionWrapper implements MDRAction, ModelWrapper<MDRAction> {
 	*/
 	@Override
 	public String getDescription(String languageId) {
-		return _mdrAction.getDescription(languageId);
+		return model.getDescription(languageId);
 	}
 
 	/**
@@ -311,17 +287,17 @@ public class MDRActionWrapper implements MDRAction, ModelWrapper<MDRAction> {
 	*/
 	@Override
 	public String getDescription(String languageId, boolean useDefault) {
-		return _mdrAction.getDescription(languageId, useDefault);
+		return model.getDescription(languageId, useDefault);
 	}
 
 	@Override
 	public String getDescriptionCurrentLanguageId() {
-		return _mdrAction.getDescriptionCurrentLanguageId();
+		return model.getDescriptionCurrentLanguageId();
 	}
 
 	@Override
 	public String getDescriptionCurrentValue() {
-		return _mdrAction.getDescriptionCurrentValue();
+		return model.getDescriptionCurrentValue();
 	}
 
 	/**
@@ -331,12 +307,7 @@ public class MDRActionWrapper implements MDRAction, ModelWrapper<MDRAction> {
 	*/
 	@Override
 	public Map<java.util.Locale, String> getDescriptionMap() {
-		return _mdrAction.getDescriptionMap();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _mdrAction.getExpandoBridge();
+		return model.getDescriptionMap();
 	}
 
 	/**
@@ -346,7 +317,7 @@ public class MDRActionWrapper implements MDRAction, ModelWrapper<MDRAction> {
 	*/
 	@Override
 	public long getGroupId() {
-		return _mdrAction.getGroupId();
+		return model.getGroupId();
 	}
 
 	/**
@@ -356,7 +327,7 @@ public class MDRActionWrapper implements MDRAction, ModelWrapper<MDRAction> {
 	*/
 	@Override
 	public Date getLastPublishDate() {
-		return _mdrAction.getLastPublishDate();
+		return model.getLastPublishDate();
 	}
 
 	/**
@@ -366,7 +337,7 @@ public class MDRActionWrapper implements MDRAction, ModelWrapper<MDRAction> {
 	*/
 	@Override
 	public Date getModifiedDate() {
-		return _mdrAction.getModifiedDate();
+		return model.getModifiedDate();
 	}
 
 	/**
@@ -376,7 +347,7 @@ public class MDRActionWrapper implements MDRAction, ModelWrapper<MDRAction> {
 	*/
 	@Override
 	public String getName() {
-		return _mdrAction.getName();
+		return model.getName();
 	}
 
 	/**
@@ -387,7 +358,7 @@ public class MDRActionWrapper implements MDRAction, ModelWrapper<MDRAction> {
 	*/
 	@Override
 	public String getName(java.util.Locale locale) {
-		return _mdrAction.getName(locale);
+		return model.getName(locale);
 	}
 
 	/**
@@ -399,7 +370,7 @@ public class MDRActionWrapper implements MDRAction, ModelWrapper<MDRAction> {
 	*/
 	@Override
 	public String getName(java.util.Locale locale, boolean useDefault) {
-		return _mdrAction.getName(locale, useDefault);
+		return model.getName(locale, useDefault);
 	}
 
 	/**
@@ -410,7 +381,7 @@ public class MDRActionWrapper implements MDRAction, ModelWrapper<MDRAction> {
 	*/
 	@Override
 	public String getName(String languageId) {
-		return _mdrAction.getName(languageId);
+		return model.getName(languageId);
 	}
 
 	/**
@@ -422,17 +393,17 @@ public class MDRActionWrapper implements MDRAction, ModelWrapper<MDRAction> {
 	*/
 	@Override
 	public String getName(String languageId, boolean useDefault) {
-		return _mdrAction.getName(languageId, useDefault);
+		return model.getName(languageId, useDefault);
 	}
 
 	@Override
 	public String getNameCurrentLanguageId() {
-		return _mdrAction.getNameCurrentLanguageId();
+		return model.getNameCurrentLanguageId();
 	}
 
 	@Override
 	public String getNameCurrentValue() {
-		return _mdrAction.getNameCurrentValue();
+		return model.getNameCurrentValue();
 	}
 
 	/**
@@ -442,7 +413,7 @@ public class MDRActionWrapper implements MDRAction, ModelWrapper<MDRAction> {
 	*/
 	@Override
 	public Map<java.util.Locale, String> getNameMap() {
-		return _mdrAction.getNameMap();
+		return model.getNameMap();
 	}
 
 	/**
@@ -452,12 +423,7 @@ public class MDRActionWrapper implements MDRAction, ModelWrapper<MDRAction> {
 	*/
 	@Override
 	public long getPrimaryKey() {
-		return _mdrAction.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _mdrAction.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	/**
@@ -467,7 +433,7 @@ public class MDRActionWrapper implements MDRAction, ModelWrapper<MDRAction> {
 	*/
 	@Override
 	public long getRuleGroupInstanceId() {
-		return _mdrAction.getRuleGroupInstanceId();
+		return model.getRuleGroupInstanceId();
 	}
 
 	/**
@@ -477,7 +443,7 @@ public class MDRActionWrapper implements MDRAction, ModelWrapper<MDRAction> {
 	*/
 	@Override
 	public String getType() {
-		return _mdrAction.getType();
+		return model.getType();
 	}
 
 	/**
@@ -487,12 +453,12 @@ public class MDRActionWrapper implements MDRAction, ModelWrapper<MDRAction> {
 	*/
 	@Override
 	public String getTypeSettings() {
-		return _mdrAction.getTypeSettings();
+		return model.getTypeSettings();
 	}
 
 	@Override
 	public com.liferay.portal.kernel.util.UnicodeProperties getTypeSettingsProperties() {
-		return _mdrAction.getTypeSettingsProperties();
+		return model.getTypeSettingsProperties();
 	}
 
 	/**
@@ -502,7 +468,7 @@ public class MDRActionWrapper implements MDRAction, ModelWrapper<MDRAction> {
 	*/
 	@Override
 	public long getUserId() {
-		return _mdrAction.getUserId();
+		return model.getUserId();
 	}
 
 	/**
@@ -512,7 +478,7 @@ public class MDRActionWrapper implements MDRAction, ModelWrapper<MDRAction> {
 	*/
 	@Override
 	public String getUserName() {
-		return _mdrAction.getUserName();
+		return model.getUserName();
 	}
 
 	/**
@@ -522,7 +488,7 @@ public class MDRActionWrapper implements MDRAction, ModelWrapper<MDRAction> {
 	*/
 	@Override
 	public String getUserUuid() {
-		return _mdrAction.getUserUuid();
+		return model.getUserUuid();
 	}
 
 	/**
@@ -532,45 +498,25 @@ public class MDRActionWrapper implements MDRAction, ModelWrapper<MDRAction> {
 	*/
 	@Override
 	public String getUuid() {
-		return _mdrAction.getUuid();
-	}
-
-	@Override
-	public int hashCode() {
-		return _mdrAction.hashCode();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _mdrAction.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _mdrAction.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _mdrAction.isNew();
+		return model.getUuid();
 	}
 
 	@Override
 	public void persist() {
-		_mdrAction.persist();
+		model.persist();
 	}
 
 	@Override
 	public void prepareLocalizedFieldsForImport()
 		throws com.liferay.portal.kernel.exception.LocaleException {
-		_mdrAction.prepareLocalizedFieldsForImport();
+		model.prepareLocalizedFieldsForImport();
 	}
 
 	@Override
 	public void prepareLocalizedFieldsForImport(
 		java.util.Locale defaultImportLocale)
 		throws com.liferay.portal.kernel.exception.LocaleException {
-		_mdrAction.prepareLocalizedFieldsForImport(defaultImportLocale);
+		model.prepareLocalizedFieldsForImport(defaultImportLocale);
 	}
 
 	/**
@@ -580,17 +526,12 @@ public class MDRActionWrapper implements MDRAction, ModelWrapper<MDRAction> {
 	*/
 	@Override
 	public void setActionId(long actionId) {
-		_mdrAction.setActionId(actionId);
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_mdrAction.setCachedModel(cachedModel);
+		model.setActionId(actionId);
 	}
 
 	@Override
 	public void setClassName(String className) {
-		_mdrAction.setClassName(className);
+		model.setClassName(className);
 	}
 
 	/**
@@ -600,7 +541,7 @@ public class MDRActionWrapper implements MDRAction, ModelWrapper<MDRAction> {
 	*/
 	@Override
 	public void setClassNameId(long classNameId) {
-		_mdrAction.setClassNameId(classNameId);
+		model.setClassNameId(classNameId);
 	}
 
 	/**
@@ -610,7 +551,7 @@ public class MDRActionWrapper implements MDRAction, ModelWrapper<MDRAction> {
 	*/
 	@Override
 	public void setClassPK(long classPK) {
-		_mdrAction.setClassPK(classPK);
+		model.setClassPK(classPK);
 	}
 
 	/**
@@ -620,7 +561,7 @@ public class MDRActionWrapper implements MDRAction, ModelWrapper<MDRAction> {
 	*/
 	@Override
 	public void setCompanyId(long companyId) {
-		_mdrAction.setCompanyId(companyId);
+		model.setCompanyId(companyId);
 	}
 
 	/**
@@ -630,7 +571,7 @@ public class MDRActionWrapper implements MDRAction, ModelWrapper<MDRAction> {
 	*/
 	@Override
 	public void setCreateDate(Date createDate) {
-		_mdrAction.setCreateDate(createDate);
+		model.setCreateDate(createDate);
 	}
 
 	/**
@@ -640,7 +581,7 @@ public class MDRActionWrapper implements MDRAction, ModelWrapper<MDRAction> {
 	*/
 	@Override
 	public void setDescription(String description) {
-		_mdrAction.setDescription(description);
+		model.setDescription(description);
 	}
 
 	/**
@@ -651,7 +592,7 @@ public class MDRActionWrapper implements MDRAction, ModelWrapper<MDRAction> {
 	*/
 	@Override
 	public void setDescription(String description, java.util.Locale locale) {
-		_mdrAction.setDescription(description, locale);
+		model.setDescription(description, locale);
 	}
 
 	/**
@@ -664,12 +605,12 @@ public class MDRActionWrapper implements MDRAction, ModelWrapper<MDRAction> {
 	@Override
 	public void setDescription(String description, java.util.Locale locale,
 		java.util.Locale defaultLocale) {
-		_mdrAction.setDescription(description, locale, defaultLocale);
+		model.setDescription(description, locale, defaultLocale);
 	}
 
 	@Override
 	public void setDescriptionCurrentLanguageId(String languageId) {
-		_mdrAction.setDescriptionCurrentLanguageId(languageId);
+		model.setDescriptionCurrentLanguageId(languageId);
 	}
 
 	/**
@@ -679,7 +620,7 @@ public class MDRActionWrapper implements MDRAction, ModelWrapper<MDRAction> {
 	*/
 	@Override
 	public void setDescriptionMap(Map<java.util.Locale, String> descriptionMap) {
-		_mdrAction.setDescriptionMap(descriptionMap);
+		model.setDescriptionMap(descriptionMap);
 	}
 
 	/**
@@ -692,23 +633,7 @@ public class MDRActionWrapper implements MDRAction, ModelWrapper<MDRAction> {
 	public void setDescriptionMap(
 		Map<java.util.Locale, String> descriptionMap,
 		java.util.Locale defaultLocale) {
-		_mdrAction.setDescriptionMap(descriptionMap, defaultLocale);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-		_mdrAction.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_mdrAction.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_mdrAction.setExpandoBridgeAttributes(serviceContext);
+		model.setDescriptionMap(descriptionMap, defaultLocale);
 	}
 
 	/**
@@ -718,7 +643,7 @@ public class MDRActionWrapper implements MDRAction, ModelWrapper<MDRAction> {
 	*/
 	@Override
 	public void setGroupId(long groupId) {
-		_mdrAction.setGroupId(groupId);
+		model.setGroupId(groupId);
 	}
 
 	/**
@@ -728,7 +653,7 @@ public class MDRActionWrapper implements MDRAction, ModelWrapper<MDRAction> {
 	*/
 	@Override
 	public void setLastPublishDate(Date lastPublishDate) {
-		_mdrAction.setLastPublishDate(lastPublishDate);
+		model.setLastPublishDate(lastPublishDate);
 	}
 
 	/**
@@ -738,7 +663,7 @@ public class MDRActionWrapper implements MDRAction, ModelWrapper<MDRAction> {
 	*/
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
-		_mdrAction.setModifiedDate(modifiedDate);
+		model.setModifiedDate(modifiedDate);
 	}
 
 	/**
@@ -748,7 +673,7 @@ public class MDRActionWrapper implements MDRAction, ModelWrapper<MDRAction> {
 	*/
 	@Override
 	public void setName(String name) {
-		_mdrAction.setName(name);
+		model.setName(name);
 	}
 
 	/**
@@ -759,7 +684,7 @@ public class MDRActionWrapper implements MDRAction, ModelWrapper<MDRAction> {
 	*/
 	@Override
 	public void setName(String name, java.util.Locale locale) {
-		_mdrAction.setName(name, locale);
+		model.setName(name, locale);
 	}
 
 	/**
@@ -772,12 +697,12 @@ public class MDRActionWrapper implements MDRAction, ModelWrapper<MDRAction> {
 	@Override
 	public void setName(String name, java.util.Locale locale,
 		java.util.Locale defaultLocale) {
-		_mdrAction.setName(name, locale, defaultLocale);
+		model.setName(name, locale, defaultLocale);
 	}
 
 	@Override
 	public void setNameCurrentLanguageId(String languageId) {
-		_mdrAction.setNameCurrentLanguageId(languageId);
+		model.setNameCurrentLanguageId(languageId);
 	}
 
 	/**
@@ -787,7 +712,7 @@ public class MDRActionWrapper implements MDRAction, ModelWrapper<MDRAction> {
 	*/
 	@Override
 	public void setNameMap(Map<java.util.Locale, String> nameMap) {
-		_mdrAction.setNameMap(nameMap);
+		model.setNameMap(nameMap);
 	}
 
 	/**
@@ -799,12 +724,7 @@ public class MDRActionWrapper implements MDRAction, ModelWrapper<MDRAction> {
 	@Override
 	public void setNameMap(Map<java.util.Locale, String> nameMap,
 		java.util.Locale defaultLocale) {
-		_mdrAction.setNameMap(nameMap, defaultLocale);
-	}
-
-	@Override
-	public void setNew(boolean n) {
-		_mdrAction.setNew(n);
+		model.setNameMap(nameMap, defaultLocale);
 	}
 
 	/**
@@ -814,12 +734,7 @@ public class MDRActionWrapper implements MDRAction, ModelWrapper<MDRAction> {
 	*/
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_mdrAction.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_mdrAction.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -829,7 +744,7 @@ public class MDRActionWrapper implements MDRAction, ModelWrapper<MDRAction> {
 	*/
 	@Override
 	public void setRuleGroupInstanceId(long ruleGroupInstanceId) {
-		_mdrAction.setRuleGroupInstanceId(ruleGroupInstanceId);
+		model.setRuleGroupInstanceId(ruleGroupInstanceId);
 	}
 
 	/**
@@ -839,7 +754,7 @@ public class MDRActionWrapper implements MDRAction, ModelWrapper<MDRAction> {
 	*/
 	@Override
 	public void setType(String type) {
-		_mdrAction.setType(type);
+		model.setType(type);
 	}
 
 	/**
@@ -849,13 +764,13 @@ public class MDRActionWrapper implements MDRAction, ModelWrapper<MDRAction> {
 	*/
 	@Override
 	public void setTypeSettings(String typeSettings) {
-		_mdrAction.setTypeSettings(typeSettings);
+		model.setTypeSettings(typeSettings);
 	}
 
 	@Override
 	public void setTypeSettingsProperties(
 		com.liferay.portal.kernel.util.UnicodeProperties typeSettingsProperties) {
-		_mdrAction.setTypeSettingsProperties(typeSettingsProperties);
+		model.setTypeSettingsProperties(typeSettingsProperties);
 	}
 
 	/**
@@ -865,7 +780,7 @@ public class MDRActionWrapper implements MDRAction, ModelWrapper<MDRAction> {
 	*/
 	@Override
 	public void setUserId(long userId) {
-		_mdrAction.setUserId(userId);
+		model.setUserId(userId);
 	}
 
 	/**
@@ -875,7 +790,7 @@ public class MDRActionWrapper implements MDRAction, ModelWrapper<MDRAction> {
 	*/
 	@Override
 	public void setUserName(String userName) {
-		_mdrAction.setUserName(userName);
+		model.setUserName(userName);
 	}
 
 	/**
@@ -885,7 +800,7 @@ public class MDRActionWrapper implements MDRAction, ModelWrapper<MDRAction> {
 	*/
 	@Override
 	public void setUserUuid(String userUuid) {
-		_mdrAction.setUserUuid(userUuid);
+		model.setUserUuid(userUuid);
 	}
 
 	/**
@@ -895,77 +810,16 @@ public class MDRActionWrapper implements MDRAction, ModelWrapper<MDRAction> {
 	*/
 	@Override
 	public void setUuid(String uuid) {
-		_mdrAction.setUuid(uuid);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<MDRAction> toCacheModel() {
-		return _mdrAction.toCacheModel();
-	}
-
-	@Override
-	public MDRAction toEscapedModel() {
-		return new MDRActionWrapper(_mdrAction.toEscapedModel());
-	}
-
-	@Override
-	public String toString() {
-		return _mdrAction.toString();
-	}
-
-	@Override
-	public MDRAction toUnescapedModel() {
-		return new MDRActionWrapper(_mdrAction.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _mdrAction.toXmlString();
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-
-		if (!(obj instanceof MDRActionWrapper)) {
-			return false;
-		}
-
-		MDRActionWrapper mdrActionWrapper = (MDRActionWrapper)obj;
-
-		if (Objects.equals(_mdrAction, mdrActionWrapper._mdrAction)) {
-			return true;
-		}
-
-		return false;
+		model.setUuid(uuid);
 	}
 
 	@Override
 	public StagedModelType getStagedModelType() {
-		return _mdrAction.getStagedModelType();
+		return model.getStagedModelType();
 	}
 
 	@Override
-	public MDRAction getWrappedModel() {
-		return _mdrAction;
+	protected MDRActionWrapper wrap(MDRAction mdrAction) {
+		return new MDRActionWrapper(mdrAction);
 	}
-
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _mdrAction.isEntityCacheEnabled();
-	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _mdrAction.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_mdrAction.resetOriginalValues();
-	}
-
-	private final MDRAction _mdrAction;
 }

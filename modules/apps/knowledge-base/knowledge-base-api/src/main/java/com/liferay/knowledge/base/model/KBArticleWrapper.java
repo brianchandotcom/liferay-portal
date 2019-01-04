@@ -16,19 +16,14 @@ package com.liferay.knowledge.base.model;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
-
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 
 import com.liferay.portal.kernel.model.ModelWrapper;
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -40,19 +35,10 @@ import java.util.Objects;
  * @generated
  */
 @ProviderType
-public class KBArticleWrapper implements KBArticle, ModelWrapper<KBArticle> {
+public class KBArticleWrapper extends BaseModelWrapper<KBArticle>
+	implements KBArticle, ModelWrapper<KBArticle> {
 	public KBArticleWrapper(KBArticle kbArticle) {
-		_kbArticle = kbArticle;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return KBArticle.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return KBArticle.class.getName();
+		super(kbArticle);
 	}
 
 	@Override
@@ -273,41 +259,31 @@ public class KBArticleWrapper implements KBArticle, ModelWrapper<KBArticle> {
 	}
 
 	@Override
-	public Object clone() {
-		return new KBArticleWrapper((KBArticle)_kbArticle.clone());
-	}
-
-	@Override
-	public int compareTo(KBArticle kbArticle) {
-		return _kbArticle.compareTo(kbArticle);
-	}
-
-	@Override
 	public java.util.List<Long> getAncestorResourcePrimaryKeys()
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _kbArticle.getAncestorResourcePrimaryKeys();
+		return model.getAncestorResourcePrimaryKeys();
 	}
 
 	@Override
 	public java.util.List<com.liferay.portal.kernel.repository.model.FileEntry> getAttachmentsFileEntries()
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _kbArticle.getAttachmentsFileEntries();
+		return model.getAttachmentsFileEntries();
 	}
 
 	@Override
 	public long getAttachmentsFolderId()
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _kbArticle.getAttachmentsFolderId();
+		return model.getAttachmentsFolderId();
 	}
 
 	@Override
 	public long getClassNameId() {
-		return _kbArticle.getClassNameId();
+		return model.getClassNameId();
 	}
 
 	@Override
 	public long getClassPK() {
-		return _kbArticle.getClassPK();
+		return model.getClassPK();
 	}
 
 	/**
@@ -317,7 +293,7 @@ public class KBArticleWrapper implements KBArticle, ModelWrapper<KBArticle> {
 	*/
 	@Override
 	public long getCompanyId() {
-		return _kbArticle.getCompanyId();
+		return model.getCompanyId();
 	}
 
 	/**
@@ -327,7 +303,7 @@ public class KBArticleWrapper implements KBArticle, ModelWrapper<KBArticle> {
 	*/
 	@Override
 	public String getContent() {
-		return _kbArticle.getContent();
+		return model.getContent();
 	}
 
 	/**
@@ -337,7 +313,7 @@ public class KBArticleWrapper implements KBArticle, ModelWrapper<KBArticle> {
 	*/
 	@Override
 	public Date getCreateDate() {
-		return _kbArticle.getCreateDate();
+		return model.getCreateDate();
 	}
 
 	/**
@@ -347,12 +323,7 @@ public class KBArticleWrapper implements KBArticle, ModelWrapper<KBArticle> {
 	*/
 	@Override
 	public String getDescription() {
-		return _kbArticle.getDescription();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _kbArticle.getExpandoBridge();
+		return model.getDescription();
 	}
 
 	/**
@@ -362,7 +333,7 @@ public class KBArticleWrapper implements KBArticle, ModelWrapper<KBArticle> {
 	*/
 	@Override
 	public long getGroupId() {
-		return _kbArticle.getGroupId();
+		return model.getGroupId();
 	}
 
 	/**
@@ -372,7 +343,7 @@ public class KBArticleWrapper implements KBArticle, ModelWrapper<KBArticle> {
 	*/
 	@Override
 	public long getKbArticleId() {
-		return _kbArticle.getKbArticleId();
+		return model.getKbArticleId();
 	}
 
 	/**
@@ -382,7 +353,7 @@ public class KBArticleWrapper implements KBArticle, ModelWrapper<KBArticle> {
 	*/
 	@Override
 	public long getKbFolderId() {
-		return _kbArticle.getKbFolderId();
+		return model.getKbFolderId();
 	}
 
 	/**
@@ -392,7 +363,7 @@ public class KBArticleWrapper implements KBArticle, ModelWrapper<KBArticle> {
 	*/
 	@Override
 	public Date getLastPublishDate() {
-		return _kbArticle.getLastPublishDate();
+		return model.getLastPublishDate();
 	}
 
 	/**
@@ -402,7 +373,7 @@ public class KBArticleWrapper implements KBArticle, ModelWrapper<KBArticle> {
 	*/
 	@Override
 	public boolean getLatest() {
-		return _kbArticle.getLatest();
+		return model.getLatest();
 	}
 
 	/**
@@ -412,7 +383,7 @@ public class KBArticleWrapper implements KBArticle, ModelWrapper<KBArticle> {
 	*/
 	@Override
 	public boolean getMain() {
-		return _kbArticle.getMain();
+		return model.getMain();
 	}
 
 	/**
@@ -422,13 +393,13 @@ public class KBArticleWrapper implements KBArticle, ModelWrapper<KBArticle> {
 	*/
 	@Override
 	public Date getModifiedDate() {
-		return _kbArticle.getModifiedDate();
+		return model.getModifiedDate();
 	}
 
 	@Override
 	public KBArticle getParentKBArticle()
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _kbArticle.getParentKBArticle();
+		return model.getParentKBArticle();
 	}
 
 	/**
@@ -438,7 +409,7 @@ public class KBArticleWrapper implements KBArticle, ModelWrapper<KBArticle> {
 	*/
 	@Override
 	public long getParentResourceClassNameId() {
-		return _kbArticle.getParentResourceClassNameId();
+		return model.getParentResourceClassNameId();
 	}
 
 	/**
@@ -448,13 +419,13 @@ public class KBArticleWrapper implements KBArticle, ModelWrapper<KBArticle> {
 	*/
 	@Override
 	public long getParentResourcePrimKey() {
-		return _kbArticle.getParentResourcePrimKey();
+		return model.getParentResourcePrimKey();
 	}
 
 	@Override
 	public String getParentTitle(java.util.Locale locale, int status)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _kbArticle.getParentTitle(locale, status);
+		return model.getParentTitle(locale, status);
 	}
 
 	/**
@@ -464,12 +435,7 @@ public class KBArticleWrapper implements KBArticle, ModelWrapper<KBArticle> {
 	*/
 	@Override
 	public long getPrimaryKey() {
-		return _kbArticle.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _kbArticle.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	/**
@@ -479,7 +445,7 @@ public class KBArticleWrapper implements KBArticle, ModelWrapper<KBArticle> {
 	*/
 	@Override
 	public double getPriority() {
-		return _kbArticle.getPriority();
+		return model.getPriority();
 	}
 
 	/**
@@ -489,7 +455,7 @@ public class KBArticleWrapper implements KBArticle, ModelWrapper<KBArticle> {
 	*/
 	@Override
 	public long getResourcePrimKey() {
-		return _kbArticle.getResourcePrimKey();
+		return model.getResourcePrimKey();
 	}
 
 	/**
@@ -499,7 +465,7 @@ public class KBArticleWrapper implements KBArticle, ModelWrapper<KBArticle> {
 	*/
 	@Override
 	public long getRootResourcePrimKey() {
-		return _kbArticle.getRootResourcePrimKey();
+		return model.getRootResourcePrimKey();
 	}
 
 	/**
@@ -509,7 +475,7 @@ public class KBArticleWrapper implements KBArticle, ModelWrapper<KBArticle> {
 	*/
 	@Override
 	public String getSections() {
-		return _kbArticle.getSections();
+		return model.getSections();
 	}
 
 	/**
@@ -519,7 +485,7 @@ public class KBArticleWrapper implements KBArticle, ModelWrapper<KBArticle> {
 	*/
 	@Override
 	public String getSourceURL() {
-		return _kbArticle.getSourceURL();
+		return model.getSourceURL();
 	}
 
 	/**
@@ -529,7 +495,7 @@ public class KBArticleWrapper implements KBArticle, ModelWrapper<KBArticle> {
 	*/
 	@Override
 	public int getStatus() {
-		return _kbArticle.getStatus();
+		return model.getStatus();
 	}
 
 	/**
@@ -539,7 +505,7 @@ public class KBArticleWrapper implements KBArticle, ModelWrapper<KBArticle> {
 	*/
 	@Override
 	public long getStatusByUserId() {
-		return _kbArticle.getStatusByUserId();
+		return model.getStatusByUserId();
 	}
 
 	/**
@@ -549,7 +515,7 @@ public class KBArticleWrapper implements KBArticle, ModelWrapper<KBArticle> {
 	*/
 	@Override
 	public String getStatusByUserName() {
-		return _kbArticle.getStatusByUserName();
+		return model.getStatusByUserName();
 	}
 
 	/**
@@ -559,7 +525,7 @@ public class KBArticleWrapper implements KBArticle, ModelWrapper<KBArticle> {
 	*/
 	@Override
 	public String getStatusByUserUuid() {
-		return _kbArticle.getStatusByUserUuid();
+		return model.getStatusByUserUuid();
 	}
 
 	/**
@@ -569,7 +535,7 @@ public class KBArticleWrapper implements KBArticle, ModelWrapper<KBArticle> {
 	*/
 	@Override
 	public Date getStatusDate() {
-		return _kbArticle.getStatusDate();
+		return model.getStatusDate();
 	}
 
 	/**
@@ -579,7 +545,7 @@ public class KBArticleWrapper implements KBArticle, ModelWrapper<KBArticle> {
 	*/
 	@Override
 	public String getTitle() {
-		return _kbArticle.getTitle();
+		return model.getTitle();
 	}
 
 	/**
@@ -589,7 +555,7 @@ public class KBArticleWrapper implements KBArticle, ModelWrapper<KBArticle> {
 	*/
 	@Override
 	public String getUrlTitle() {
-		return _kbArticle.getUrlTitle();
+		return model.getUrlTitle();
 	}
 
 	/**
@@ -599,7 +565,7 @@ public class KBArticleWrapper implements KBArticle, ModelWrapper<KBArticle> {
 	*/
 	@Override
 	public long getUserId() {
-		return _kbArticle.getUserId();
+		return model.getUserId();
 	}
 
 	/**
@@ -609,7 +575,7 @@ public class KBArticleWrapper implements KBArticle, ModelWrapper<KBArticle> {
 	*/
 	@Override
 	public String getUserName() {
-		return _kbArticle.getUserName();
+		return model.getUserName();
 	}
 
 	/**
@@ -619,7 +585,7 @@ public class KBArticleWrapper implements KBArticle, ModelWrapper<KBArticle> {
 	*/
 	@Override
 	public String getUserUuid() {
-		return _kbArticle.getUserUuid();
+		return model.getUserUuid();
 	}
 
 	/**
@@ -629,7 +595,7 @@ public class KBArticleWrapper implements KBArticle, ModelWrapper<KBArticle> {
 	*/
 	@Override
 	public String getUuid() {
-		return _kbArticle.getUuid();
+		return model.getUuid();
 	}
 
 	/**
@@ -639,7 +605,7 @@ public class KBArticleWrapper implements KBArticle, ModelWrapper<KBArticle> {
 	*/
 	@Override
 	public int getVersion() {
-		return _kbArticle.getVersion();
+		return model.getVersion();
 	}
 
 	/**
@@ -649,12 +615,7 @@ public class KBArticleWrapper implements KBArticle, ModelWrapper<KBArticle> {
 	*/
 	@Override
 	public int getViewCount() {
-		return _kbArticle.getViewCount();
-	}
-
-	@Override
-	public int hashCode() {
-		return _kbArticle.hashCode();
+		return model.getViewCount();
 	}
 
 	/**
@@ -664,12 +625,7 @@ public class KBArticleWrapper implements KBArticle, ModelWrapper<KBArticle> {
 	*/
 	@Override
 	public boolean isApproved() {
-		return _kbArticle.isApproved();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _kbArticle.isCachedModel();
+		return model.isApproved();
 	}
 
 	/**
@@ -679,7 +635,7 @@ public class KBArticleWrapper implements KBArticle, ModelWrapper<KBArticle> {
 	*/
 	@Override
 	public boolean isDenied() {
-		return _kbArticle.isDenied();
+		return model.isDenied();
 	}
 
 	/**
@@ -689,12 +645,7 @@ public class KBArticleWrapper implements KBArticle, ModelWrapper<KBArticle> {
 	*/
 	@Override
 	public boolean isDraft() {
-		return _kbArticle.isDraft();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _kbArticle.isEscapedModel();
+		return model.isDraft();
 	}
 
 	/**
@@ -704,12 +655,12 @@ public class KBArticleWrapper implements KBArticle, ModelWrapper<KBArticle> {
 	*/
 	@Override
 	public boolean isExpired() {
-		return _kbArticle.isExpired();
+		return model.isExpired();
 	}
 
 	@Override
 	public boolean isFirstVersion() {
-		return _kbArticle.isFirstVersion();
+		return model.isFirstVersion();
 	}
 
 	/**
@@ -719,7 +670,7 @@ public class KBArticleWrapper implements KBArticle, ModelWrapper<KBArticle> {
 	*/
 	@Override
 	public boolean isInactive() {
-		return _kbArticle.isInactive();
+		return model.isInactive();
 	}
 
 	/**
@@ -729,7 +680,7 @@ public class KBArticleWrapper implements KBArticle, ModelWrapper<KBArticle> {
 	*/
 	@Override
 	public boolean isIncomplete() {
-		return _kbArticle.isIncomplete();
+		return model.isIncomplete();
 	}
 
 	/**
@@ -739,7 +690,7 @@ public class KBArticleWrapper implements KBArticle, ModelWrapper<KBArticle> {
 	*/
 	@Override
 	public boolean isLatest() {
-		return _kbArticle.isLatest();
+		return model.isLatest();
 	}
 
 	/**
@@ -749,12 +700,7 @@ public class KBArticleWrapper implements KBArticle, ModelWrapper<KBArticle> {
 	*/
 	@Override
 	public boolean isMain() {
-		return _kbArticle.isMain();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _kbArticle.isNew();
+		return model.isMain();
 	}
 
 	/**
@@ -764,17 +710,17 @@ public class KBArticleWrapper implements KBArticle, ModelWrapper<KBArticle> {
 	*/
 	@Override
 	public boolean isPending() {
-		return _kbArticle.isPending();
+		return model.isPending();
 	}
 
 	@Override
 	public boolean isResourceMain() {
-		return _kbArticle.isResourceMain();
+		return model.isResourceMain();
 	}
 
 	@Override
 	public boolean isRoot() {
-		return _kbArticle.isRoot();
+		return model.isRoot();
 	}
 
 	/**
@@ -784,17 +730,12 @@ public class KBArticleWrapper implements KBArticle, ModelWrapper<KBArticle> {
 	*/
 	@Override
 	public boolean isScheduled() {
-		return _kbArticle.isScheduled();
+		return model.isScheduled();
 	}
 
 	@Override
 	public void persist() {
-		_kbArticle.persist();
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_kbArticle.setCachedModel(cachedModel);
+		model.persist();
 	}
 
 	/**
@@ -804,7 +745,7 @@ public class KBArticleWrapper implements KBArticle, ModelWrapper<KBArticle> {
 	*/
 	@Override
 	public void setCompanyId(long companyId) {
-		_kbArticle.setCompanyId(companyId);
+		model.setCompanyId(companyId);
 	}
 
 	/**
@@ -814,7 +755,7 @@ public class KBArticleWrapper implements KBArticle, ModelWrapper<KBArticle> {
 	*/
 	@Override
 	public void setContent(String content) {
-		_kbArticle.setContent(content);
+		model.setContent(content);
 	}
 
 	/**
@@ -824,7 +765,7 @@ public class KBArticleWrapper implements KBArticle, ModelWrapper<KBArticle> {
 	*/
 	@Override
 	public void setCreateDate(Date createDate) {
-		_kbArticle.setCreateDate(createDate);
+		model.setCreateDate(createDate);
 	}
 
 	/**
@@ -834,23 +775,7 @@ public class KBArticleWrapper implements KBArticle, ModelWrapper<KBArticle> {
 	*/
 	@Override
 	public void setDescription(String description) {
-		_kbArticle.setDescription(description);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-		_kbArticle.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_kbArticle.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_kbArticle.setExpandoBridgeAttributes(serviceContext);
+		model.setDescription(description);
 	}
 
 	/**
@@ -860,7 +785,7 @@ public class KBArticleWrapper implements KBArticle, ModelWrapper<KBArticle> {
 	*/
 	@Override
 	public void setGroupId(long groupId) {
-		_kbArticle.setGroupId(groupId);
+		model.setGroupId(groupId);
 	}
 
 	/**
@@ -870,7 +795,7 @@ public class KBArticleWrapper implements KBArticle, ModelWrapper<KBArticle> {
 	*/
 	@Override
 	public void setKbArticleId(long kbArticleId) {
-		_kbArticle.setKbArticleId(kbArticleId);
+		model.setKbArticleId(kbArticleId);
 	}
 
 	/**
@@ -880,7 +805,7 @@ public class KBArticleWrapper implements KBArticle, ModelWrapper<KBArticle> {
 	*/
 	@Override
 	public void setKbFolderId(long kbFolderId) {
-		_kbArticle.setKbFolderId(kbFolderId);
+		model.setKbFolderId(kbFolderId);
 	}
 
 	/**
@@ -890,7 +815,7 @@ public class KBArticleWrapper implements KBArticle, ModelWrapper<KBArticle> {
 	*/
 	@Override
 	public void setLastPublishDate(Date lastPublishDate) {
-		_kbArticle.setLastPublishDate(lastPublishDate);
+		model.setLastPublishDate(lastPublishDate);
 	}
 
 	/**
@@ -900,7 +825,7 @@ public class KBArticleWrapper implements KBArticle, ModelWrapper<KBArticle> {
 	*/
 	@Override
 	public void setLatest(boolean latest) {
-		_kbArticle.setLatest(latest);
+		model.setLatest(latest);
 	}
 
 	/**
@@ -910,7 +835,7 @@ public class KBArticleWrapper implements KBArticle, ModelWrapper<KBArticle> {
 	*/
 	@Override
 	public void setMain(boolean main) {
-		_kbArticle.setMain(main);
+		model.setMain(main);
 	}
 
 	/**
@@ -920,12 +845,7 @@ public class KBArticleWrapper implements KBArticle, ModelWrapper<KBArticle> {
 	*/
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
-		_kbArticle.setModifiedDate(modifiedDate);
-	}
-
-	@Override
-	public void setNew(boolean n) {
-		_kbArticle.setNew(n);
+		model.setModifiedDate(modifiedDate);
 	}
 
 	/**
@@ -935,7 +855,7 @@ public class KBArticleWrapper implements KBArticle, ModelWrapper<KBArticle> {
 	*/
 	@Override
 	public void setParentResourceClassNameId(long parentResourceClassNameId) {
-		_kbArticle.setParentResourceClassNameId(parentResourceClassNameId);
+		model.setParentResourceClassNameId(parentResourceClassNameId);
 	}
 
 	/**
@@ -945,7 +865,7 @@ public class KBArticleWrapper implements KBArticle, ModelWrapper<KBArticle> {
 	*/
 	@Override
 	public void setParentResourcePrimKey(long parentResourcePrimKey) {
-		_kbArticle.setParentResourcePrimKey(parentResourcePrimKey);
+		model.setParentResourcePrimKey(parentResourcePrimKey);
 	}
 
 	/**
@@ -955,12 +875,7 @@ public class KBArticleWrapper implements KBArticle, ModelWrapper<KBArticle> {
 	*/
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_kbArticle.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_kbArticle.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -970,7 +885,7 @@ public class KBArticleWrapper implements KBArticle, ModelWrapper<KBArticle> {
 	*/
 	@Override
 	public void setPriority(double priority) {
-		_kbArticle.setPriority(priority);
+		model.setPriority(priority);
 	}
 
 	/**
@@ -980,7 +895,7 @@ public class KBArticleWrapper implements KBArticle, ModelWrapper<KBArticle> {
 	*/
 	@Override
 	public void setResourcePrimKey(long resourcePrimKey) {
-		_kbArticle.setResourcePrimKey(resourcePrimKey);
+		model.setResourcePrimKey(resourcePrimKey);
 	}
 
 	/**
@@ -990,7 +905,7 @@ public class KBArticleWrapper implements KBArticle, ModelWrapper<KBArticle> {
 	*/
 	@Override
 	public void setRootResourcePrimKey(long rootResourcePrimKey) {
-		_kbArticle.setRootResourcePrimKey(rootResourcePrimKey);
+		model.setRootResourcePrimKey(rootResourcePrimKey);
 	}
 
 	/**
@@ -1000,7 +915,7 @@ public class KBArticleWrapper implements KBArticle, ModelWrapper<KBArticle> {
 	*/
 	@Override
 	public void setSections(String sections) {
-		_kbArticle.setSections(sections);
+		model.setSections(sections);
 	}
 
 	/**
@@ -1010,7 +925,7 @@ public class KBArticleWrapper implements KBArticle, ModelWrapper<KBArticle> {
 	*/
 	@Override
 	public void setSourceURL(String sourceURL) {
-		_kbArticle.setSourceURL(sourceURL);
+		model.setSourceURL(sourceURL);
 	}
 
 	/**
@@ -1020,7 +935,7 @@ public class KBArticleWrapper implements KBArticle, ModelWrapper<KBArticle> {
 	*/
 	@Override
 	public void setStatus(int status) {
-		_kbArticle.setStatus(status);
+		model.setStatus(status);
 	}
 
 	/**
@@ -1030,7 +945,7 @@ public class KBArticleWrapper implements KBArticle, ModelWrapper<KBArticle> {
 	*/
 	@Override
 	public void setStatusByUserId(long statusByUserId) {
-		_kbArticle.setStatusByUserId(statusByUserId);
+		model.setStatusByUserId(statusByUserId);
 	}
 
 	/**
@@ -1040,7 +955,7 @@ public class KBArticleWrapper implements KBArticle, ModelWrapper<KBArticle> {
 	*/
 	@Override
 	public void setStatusByUserName(String statusByUserName) {
-		_kbArticle.setStatusByUserName(statusByUserName);
+		model.setStatusByUserName(statusByUserName);
 	}
 
 	/**
@@ -1050,7 +965,7 @@ public class KBArticleWrapper implements KBArticle, ModelWrapper<KBArticle> {
 	*/
 	@Override
 	public void setStatusByUserUuid(String statusByUserUuid) {
-		_kbArticle.setStatusByUserUuid(statusByUserUuid);
+		model.setStatusByUserUuid(statusByUserUuid);
 	}
 
 	/**
@@ -1060,7 +975,7 @@ public class KBArticleWrapper implements KBArticle, ModelWrapper<KBArticle> {
 	*/
 	@Override
 	public void setStatusDate(Date statusDate) {
-		_kbArticle.setStatusDate(statusDate);
+		model.setStatusDate(statusDate);
 	}
 
 	/**
@@ -1070,7 +985,7 @@ public class KBArticleWrapper implements KBArticle, ModelWrapper<KBArticle> {
 	*/
 	@Override
 	public void setTitle(String title) {
-		_kbArticle.setTitle(title);
+		model.setTitle(title);
 	}
 
 	/**
@@ -1080,7 +995,7 @@ public class KBArticleWrapper implements KBArticle, ModelWrapper<KBArticle> {
 	*/
 	@Override
 	public void setUrlTitle(String urlTitle) {
-		_kbArticle.setUrlTitle(urlTitle);
+		model.setUrlTitle(urlTitle);
 	}
 
 	/**
@@ -1090,7 +1005,7 @@ public class KBArticleWrapper implements KBArticle, ModelWrapper<KBArticle> {
 	*/
 	@Override
 	public void setUserId(long userId) {
-		_kbArticle.setUserId(userId);
+		model.setUserId(userId);
 	}
 
 	/**
@@ -1100,7 +1015,7 @@ public class KBArticleWrapper implements KBArticle, ModelWrapper<KBArticle> {
 	*/
 	@Override
 	public void setUserName(String userName) {
-		_kbArticle.setUserName(userName);
+		model.setUserName(userName);
 	}
 
 	/**
@@ -1110,7 +1025,7 @@ public class KBArticleWrapper implements KBArticle, ModelWrapper<KBArticle> {
 	*/
 	@Override
 	public void setUserUuid(String userUuid) {
-		_kbArticle.setUserUuid(userUuid);
+		model.setUserUuid(userUuid);
 	}
 
 	/**
@@ -1120,7 +1035,7 @@ public class KBArticleWrapper implements KBArticle, ModelWrapper<KBArticle> {
 	*/
 	@Override
 	public void setUuid(String uuid) {
-		_kbArticle.setUuid(uuid);
+		model.setUuid(uuid);
 	}
 
 	/**
@@ -1130,7 +1045,7 @@ public class KBArticleWrapper implements KBArticle, ModelWrapper<KBArticle> {
 	*/
 	@Override
 	public void setVersion(int version) {
-		_kbArticle.setVersion(version);
+		model.setVersion(version);
 	}
 
 	/**
@@ -1140,77 +1055,16 @@ public class KBArticleWrapper implements KBArticle, ModelWrapper<KBArticle> {
 	*/
 	@Override
 	public void setViewCount(int viewCount) {
-		_kbArticle.setViewCount(viewCount);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<KBArticle> toCacheModel() {
-		return _kbArticle.toCacheModel();
-	}
-
-	@Override
-	public KBArticle toEscapedModel() {
-		return new KBArticleWrapper(_kbArticle.toEscapedModel());
-	}
-
-	@Override
-	public String toString() {
-		return _kbArticle.toString();
-	}
-
-	@Override
-	public KBArticle toUnescapedModel() {
-		return new KBArticleWrapper(_kbArticle.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _kbArticle.toXmlString();
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-
-		if (!(obj instanceof KBArticleWrapper)) {
-			return false;
-		}
-
-		KBArticleWrapper kbArticleWrapper = (KBArticleWrapper)obj;
-
-		if (Objects.equals(_kbArticle, kbArticleWrapper._kbArticle)) {
-			return true;
-		}
-
-		return false;
+		model.setViewCount(viewCount);
 	}
 
 	@Override
 	public StagedModelType getStagedModelType() {
-		return _kbArticle.getStagedModelType();
+		return model.getStagedModelType();
 	}
 
 	@Override
-	public KBArticle getWrappedModel() {
-		return _kbArticle;
+	protected KBArticleWrapper wrap(KBArticle kbArticle) {
+		return new KBArticleWrapper(kbArticle);
 	}
-
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _kbArticle.isEntityCacheEnabled();
-	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _kbArticle.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_kbArticle.resetOriginalValues();
-	}
-
-	private final KBArticle _kbArticle;
 }

@@ -16,19 +16,14 @@ package com.liferay.dynamic.data.mapping.model;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
-
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 
 import com.liferay.portal.kernel.model.ModelWrapper;
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -40,20 +35,10 @@ import java.util.Objects;
  * @generated
  */
 @ProviderType
-public class DDMStructureWrapper implements DDMStructure,
-	ModelWrapper<DDMStructure> {
+public class DDMStructureWrapper extends BaseModelWrapper<DDMStructure>
+	implements DDMStructure, ModelWrapper<DDMStructure> {
 	public DDMStructureWrapper(DDMStructure ddmStructure) {
-		_ddmStructure = ddmStructure;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return DDMStructure.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return DDMStructure.class.getName();
+		super(ddmStructure);
 	}
 
 	@Override
@@ -208,30 +193,20 @@ public class DDMStructureWrapper implements DDMStructure,
 	}
 
 	@Override
-	public Object clone() {
-		return new DDMStructureWrapper((DDMStructure)_ddmStructure.clone());
-	}
-
-	@Override
-	public int compareTo(DDMStructure ddmStructure) {
-		return _ddmStructure.compareTo(ddmStructure);
-	}
-
-	@Override
 	public DDMForm createFullHierarchyDDMForm()
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _ddmStructure.createFullHierarchyDDMForm();
+		return model.createFullHierarchyDDMForm();
 	}
 
 	@Override
 	public String[] getAvailableLanguageIds() {
-		return _ddmStructure.getAvailableLanguageIds();
+		return model.getAvailableLanguageIds();
 	}
 
 	@Override
 	public java.util.List<String> getChildrenFieldNames(String fieldName)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _ddmStructure.getChildrenFieldNames(fieldName);
+		return model.getChildrenFieldNames(fieldName);
 	}
 
 	/**
@@ -241,7 +216,7 @@ public class DDMStructureWrapper implements DDMStructure,
 	*/
 	@Override
 	public String getClassName() {
-		return _ddmStructure.getClassName();
+		return model.getClassName();
 	}
 
 	/**
@@ -251,7 +226,7 @@ public class DDMStructureWrapper implements DDMStructure,
 	*/
 	@Override
 	public long getClassNameId() {
-		return _ddmStructure.getClassNameId();
+		return model.getClassNameId();
 	}
 
 	/**
@@ -261,7 +236,7 @@ public class DDMStructureWrapper implements DDMStructure,
 	*/
 	@Override
 	public long getCompanyId() {
-		return _ddmStructure.getCompanyId();
+		return model.getCompanyId();
 	}
 
 	/**
@@ -271,35 +246,35 @@ public class DDMStructureWrapper implements DDMStructure,
 	*/
 	@Override
 	public Date getCreateDate() {
-		return _ddmStructure.getCreateDate();
+		return model.getCreateDate();
 	}
 
 	@Override
 	public DDMForm getDDMForm() {
-		return _ddmStructure.getDDMForm();
+		return model.getDDMForm();
 	}
 
 	@Override
 	public DDMFormField getDDMFormField(String fieldName)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _ddmStructure.getDDMFormField(fieldName);
+		return model.getDDMFormField(fieldName);
 	}
 
 	@Override
 	public java.util.List<DDMFormField> getDDMFormFields(
 		boolean includeTransientFields) {
-		return _ddmStructure.getDDMFormFields(includeTransientFields);
+		return model.getDDMFormFields(includeTransientFields);
 	}
 
 	@Override
 	public DDMFormLayout getDDMFormLayout()
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _ddmStructure.getDDMFormLayout();
+		return model.getDDMFormLayout();
 	}
 
 	@Override
 	public String getDefaultLanguageId() {
-		return _ddmStructure.getDefaultLanguageId();
+		return model.getDefaultLanguageId();
 	}
 
 	/**
@@ -309,7 +284,7 @@ public class DDMStructureWrapper implements DDMStructure,
 	*/
 	@Override
 	public String getDefinition() {
-		return _ddmStructure.getDefinition();
+		return model.getDefinition();
 	}
 
 	/**
@@ -319,7 +294,7 @@ public class DDMStructureWrapper implements DDMStructure,
 	*/
 	@Override
 	public String getDescription() {
-		return _ddmStructure.getDescription();
+		return model.getDescription();
 	}
 
 	/**
@@ -330,7 +305,7 @@ public class DDMStructureWrapper implements DDMStructure,
 	*/
 	@Override
 	public String getDescription(java.util.Locale locale) {
-		return _ddmStructure.getDescription(locale);
+		return model.getDescription(locale);
 	}
 
 	/**
@@ -342,7 +317,7 @@ public class DDMStructureWrapper implements DDMStructure,
 	*/
 	@Override
 	public String getDescription(java.util.Locale locale, boolean useDefault) {
-		return _ddmStructure.getDescription(locale, useDefault);
+		return model.getDescription(locale, useDefault);
 	}
 
 	/**
@@ -353,7 +328,7 @@ public class DDMStructureWrapper implements DDMStructure,
 	*/
 	@Override
 	public String getDescription(String languageId) {
-		return _ddmStructure.getDescription(languageId);
+		return model.getDescription(languageId);
 	}
 
 	/**
@@ -365,17 +340,17 @@ public class DDMStructureWrapper implements DDMStructure,
 	*/
 	@Override
 	public String getDescription(String languageId, boolean useDefault) {
-		return _ddmStructure.getDescription(languageId, useDefault);
+		return model.getDescription(languageId, useDefault);
 	}
 
 	@Override
 	public String getDescriptionCurrentLanguageId() {
-		return _ddmStructure.getDescriptionCurrentLanguageId();
+		return model.getDescriptionCurrentLanguageId();
 	}
 
 	@Override
 	public String getDescriptionCurrentValue() {
-		return _ddmStructure.getDescriptionCurrentValue();
+		return model.getDescriptionCurrentValue();
 	}
 
 	/**
@@ -385,82 +360,77 @@ public class DDMStructureWrapper implements DDMStructure,
 	*/
 	@Override
 	public Map<java.util.Locale, String> getDescriptionMap() {
-		return _ddmStructure.getDescriptionMap();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _ddmStructure.getExpandoBridge();
+		return model.getDescriptionMap();
 	}
 
 	@Override
 	public String getFieldDataType(String fieldName)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _ddmStructure.getFieldDataType(fieldName);
+		return model.getFieldDataType(fieldName);
 	}
 
 	@Override
 	public String getFieldLabel(String fieldName, java.util.Locale locale)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _ddmStructure.getFieldLabel(fieldName, locale);
+		return model.getFieldLabel(fieldName, locale);
 	}
 
 	@Override
 	public String getFieldLabel(String fieldName, String locale)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _ddmStructure.getFieldLabel(fieldName, locale);
+		return model.getFieldLabel(fieldName, locale);
 	}
 
 	@Override
 	public java.util.Set<String> getFieldNames() {
-		return _ddmStructure.getFieldNames();
+		return model.getFieldNames();
 	}
 
 	@Override
 	public String getFieldProperty(String fieldName, String property)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _ddmStructure.getFieldProperty(fieldName, property);
+		return model.getFieldProperty(fieldName, property);
 	}
 
 	@Override
 	public boolean getFieldRepeatable(String fieldName)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _ddmStructure.getFieldRepeatable(fieldName);
+		return model.getFieldRepeatable(fieldName);
 	}
 
 	@Override
 	public boolean getFieldRequired(String fieldName)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _ddmStructure.getFieldRequired(fieldName);
+		return model.getFieldRequired(fieldName);
 	}
 
 	@Override
 	public String getFieldTip(String fieldName, java.util.Locale locale)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _ddmStructure.getFieldTip(fieldName, locale);
+		return model.getFieldTip(fieldName, locale);
 	}
 
 	@Override
 	public String getFieldTip(String fieldName, String locale)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _ddmStructure.getFieldTip(fieldName, locale);
+		return model.getFieldTip(fieldName, locale);
 	}
 
 	@Override
 	public String getFieldType(String fieldName)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _ddmStructure.getFieldType(fieldName);
+		return model.getFieldType(fieldName);
 	}
 
 	@Override
 	public DDMForm getFullHierarchyDDMForm() {
-		return _ddmStructure.getFullHierarchyDDMForm();
+		return model.getFullHierarchyDDMForm();
 	}
 
 	@Override
 	public Map<String, DDMFormField> getFullHierarchyDDMFormFieldsMap(
 		boolean includeNestedDDMFormFields) {
-		return _ddmStructure.getFullHierarchyDDMFormFieldsMap(includeNestedDDMFormFields);
+		return model.getFullHierarchyDDMFormFieldsMap(includeNestedDDMFormFields);
 	}
 
 	/**
@@ -470,7 +440,7 @@ public class DDMStructureWrapper implements DDMStructure,
 	*/
 	@Override
 	public long getGroupId() {
-		return _ddmStructure.getGroupId();
+		return model.getGroupId();
 	}
 
 	/**
@@ -480,13 +450,13 @@ public class DDMStructureWrapper implements DDMStructure,
 	*/
 	@Override
 	public Date getLastPublishDate() {
-		return _ddmStructure.getLastPublishDate();
+		return model.getLastPublishDate();
 	}
 
 	@Override
 	public DDMStructureVersion getLatestStructureVersion()
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _ddmStructure.getLatestStructureVersion();
+		return model.getLatestStructureVersion();
 	}
 
 	/**
@@ -496,7 +466,7 @@ public class DDMStructureWrapper implements DDMStructure,
 	*/
 	@Override
 	public Date getModifiedDate() {
-		return _ddmStructure.getModifiedDate();
+		return model.getModifiedDate();
 	}
 
 	/**
@@ -506,7 +476,7 @@ public class DDMStructureWrapper implements DDMStructure,
 	*/
 	@Override
 	public String getName() {
-		return _ddmStructure.getName();
+		return model.getName();
 	}
 
 	/**
@@ -517,7 +487,7 @@ public class DDMStructureWrapper implements DDMStructure,
 	*/
 	@Override
 	public String getName(java.util.Locale locale) {
-		return _ddmStructure.getName(locale);
+		return model.getName(locale);
 	}
 
 	/**
@@ -529,7 +499,7 @@ public class DDMStructureWrapper implements DDMStructure,
 	*/
 	@Override
 	public String getName(java.util.Locale locale, boolean useDefault) {
-		return _ddmStructure.getName(locale, useDefault);
+		return model.getName(locale, useDefault);
 	}
 
 	/**
@@ -540,7 +510,7 @@ public class DDMStructureWrapper implements DDMStructure,
 	*/
 	@Override
 	public String getName(String languageId) {
-		return _ddmStructure.getName(languageId);
+		return model.getName(languageId);
 	}
 
 	/**
@@ -552,17 +522,17 @@ public class DDMStructureWrapper implements DDMStructure,
 	*/
 	@Override
 	public String getName(String languageId, boolean useDefault) {
-		return _ddmStructure.getName(languageId, useDefault);
+		return model.getName(languageId, useDefault);
 	}
 
 	@Override
 	public String getNameCurrentLanguageId() {
-		return _ddmStructure.getNameCurrentLanguageId();
+		return model.getNameCurrentLanguageId();
 	}
 
 	@Override
 	public String getNameCurrentValue() {
-		return _ddmStructure.getNameCurrentValue();
+		return model.getNameCurrentValue();
 	}
 
 	/**
@@ -572,7 +542,7 @@ public class DDMStructureWrapper implements DDMStructure,
 	*/
 	@Override
 	public Map<java.util.Locale, String> getNameMap() {
-		return _ddmStructure.getNameMap();
+		return model.getNameMap();
 	}
 
 	/**
@@ -582,7 +552,7 @@ public class DDMStructureWrapper implements DDMStructure,
 	*/
 	@Override
 	public long getParentStructureId() {
-		return _ddmStructure.getParentStructureId();
+		return model.getParentStructureId();
 	}
 
 	/**
@@ -592,17 +562,12 @@ public class DDMStructureWrapper implements DDMStructure,
 	*/
 	@Override
 	public long getPrimaryKey() {
-		return _ddmStructure.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _ddmStructure.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	@Override
 	public java.util.List<String> getRootFieldNames() {
-		return _ddmStructure.getRootFieldNames();
+		return model.getRootFieldNames();
 	}
 
 	/**
@@ -612,7 +577,7 @@ public class DDMStructureWrapper implements DDMStructure,
 	*/
 	@Override
 	public String getStorageType() {
-		return _ddmStructure.getStorageType();
+		return model.getStorageType();
 	}
 
 	/**
@@ -622,7 +587,7 @@ public class DDMStructureWrapper implements DDMStructure,
 	*/
 	@Override
 	public long getStructureId() {
-		return _ddmStructure.getStructureId();
+		return model.getStructureId();
 	}
 
 	/**
@@ -632,18 +597,18 @@ public class DDMStructureWrapper implements DDMStructure,
 	*/
 	@Override
 	public String getStructureKey() {
-		return _ddmStructure.getStructureKey();
+		return model.getStructureKey();
 	}
 
 	@Override
 	public DDMStructureVersion getStructureVersion()
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _ddmStructure.getStructureVersion();
+		return model.getStructureVersion();
 	}
 
 	@Override
 	public java.util.List<DDMTemplate> getTemplates() {
-		return _ddmStructure.getTemplates();
+		return model.getTemplates();
 	}
 
 	/**
@@ -653,14 +618,14 @@ public class DDMStructureWrapper implements DDMStructure,
 	*/
 	@Override
 	public int getType() {
-		return _ddmStructure.getType();
+		return model.getType();
 	}
 
 	@Override
 	public String getUnambiguousName(java.util.List<DDMStructure> structures,
 		long groupId, java.util.Locale locale)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _ddmStructure.getUnambiguousName(structures, groupId, locale);
+		return model.getUnambiguousName(structures, groupId, locale);
 	}
 
 	/**
@@ -670,7 +635,7 @@ public class DDMStructureWrapper implements DDMStructure,
 	*/
 	@Override
 	public long getUserId() {
-		return _ddmStructure.getUserId();
+		return model.getUserId();
 	}
 
 	/**
@@ -680,7 +645,7 @@ public class DDMStructureWrapper implements DDMStructure,
 	*/
 	@Override
 	public String getUserName() {
-		return _ddmStructure.getUserName();
+		return model.getUserName();
 	}
 
 	/**
@@ -690,7 +655,7 @@ public class DDMStructureWrapper implements DDMStructure,
 	*/
 	@Override
 	public String getUserUuid() {
-		return _ddmStructure.getUserUuid();
+		return model.getUserUuid();
 	}
 
 	/**
@@ -700,7 +665,7 @@ public class DDMStructureWrapper implements DDMStructure,
 	*/
 	@Override
 	public String getUuid() {
-		return _ddmStructure.getUuid();
+		return model.getUuid();
 	}
 
 	/**
@@ -710,7 +675,7 @@ public class DDMStructureWrapper implements DDMStructure,
 	*/
 	@Override
 	public String getVersion() {
-		return _ddmStructure.getVersion();
+		return model.getVersion();
 	}
 
 	/**
@@ -720,7 +685,7 @@ public class DDMStructureWrapper implements DDMStructure,
 	*/
 	@Override
 	public long getVersionUserId() {
-		return _ddmStructure.getVersionUserId();
+		return model.getVersionUserId();
 	}
 
 	/**
@@ -730,7 +695,7 @@ public class DDMStructureWrapper implements DDMStructure,
 	*/
 	@Override
 	public String getVersionUserName() {
-		return _ddmStructure.getVersionUserName();
+		return model.getVersionUserName();
 	}
 
 	/**
@@ -740,7 +705,7 @@ public class DDMStructureWrapper implements DDMStructure,
 	*/
 	@Override
 	public String getVersionUserUuid() {
-		return _ddmStructure.getVersionUserUuid();
+		return model.getVersionUserUuid();
 	}
 
 	/**
@@ -756,72 +721,47 @@ public class DDMStructureWrapper implements DDMStructure,
 	public String getWebDavURL(
 		com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay,
 		String webDAVToken) {
-		return _ddmStructure.getWebDavURL(themeDisplay, webDAVToken);
+		return model.getWebDavURL(themeDisplay, webDAVToken);
 	}
 
 	@Override
 	public boolean hasField(String fieldName) {
-		return _ddmStructure.hasField(fieldName);
-	}
-
-	@Override
-	public int hashCode() {
-		return _ddmStructure.hashCode();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _ddmStructure.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _ddmStructure.isEscapedModel();
+		return model.hasField(fieldName);
 	}
 
 	@Override
 	public boolean isFieldRepeatable(String fieldName)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _ddmStructure.isFieldRepeatable(fieldName);
+		return model.isFieldRepeatable(fieldName);
 	}
 
 	@Override
 	public boolean isFieldTransient(String fieldName)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _ddmStructure.isFieldTransient(fieldName);
-	}
-
-	@Override
-	public boolean isNew() {
-		return _ddmStructure.isNew();
+		return model.isFieldTransient(fieldName);
 	}
 
 	@Override
 	public void persist() {
-		_ddmStructure.persist();
+		model.persist();
 	}
 
 	@Override
 	public void prepareLocalizedFieldsForImport()
 		throws com.liferay.portal.kernel.exception.LocaleException {
-		_ddmStructure.prepareLocalizedFieldsForImport();
+		model.prepareLocalizedFieldsForImport();
 	}
 
 	@Override
 	public void prepareLocalizedFieldsForImport(
 		java.util.Locale defaultImportLocale)
 		throws com.liferay.portal.kernel.exception.LocaleException {
-		_ddmStructure.prepareLocalizedFieldsForImport(defaultImportLocale);
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_ddmStructure.setCachedModel(cachedModel);
+		model.prepareLocalizedFieldsForImport(defaultImportLocale);
 	}
 
 	@Override
 	public void setClassName(String className) {
-		_ddmStructure.setClassName(className);
+		model.setClassName(className);
 	}
 
 	/**
@@ -831,7 +771,7 @@ public class DDMStructureWrapper implements DDMStructure,
 	*/
 	@Override
 	public void setClassNameId(long classNameId) {
-		_ddmStructure.setClassNameId(classNameId);
+		model.setClassNameId(classNameId);
 	}
 
 	/**
@@ -841,7 +781,7 @@ public class DDMStructureWrapper implements DDMStructure,
 	*/
 	@Override
 	public void setCompanyId(long companyId) {
-		_ddmStructure.setCompanyId(companyId);
+		model.setCompanyId(companyId);
 	}
 
 	/**
@@ -851,12 +791,12 @@ public class DDMStructureWrapper implements DDMStructure,
 	*/
 	@Override
 	public void setCreateDate(Date createDate) {
-		_ddmStructure.setCreateDate(createDate);
+		model.setCreateDate(createDate);
 	}
 
 	@Override
 	public void setDDMForm(DDMForm ddmForm) {
-		_ddmStructure.setDDMForm(ddmForm);
+		model.setDDMForm(ddmForm);
 	}
 
 	/**
@@ -866,7 +806,7 @@ public class DDMStructureWrapper implements DDMStructure,
 	*/
 	@Override
 	public void setDefinition(String definition) {
-		_ddmStructure.setDefinition(definition);
+		model.setDefinition(definition);
 	}
 
 	/**
@@ -876,7 +816,7 @@ public class DDMStructureWrapper implements DDMStructure,
 	*/
 	@Override
 	public void setDescription(String description) {
-		_ddmStructure.setDescription(description);
+		model.setDescription(description);
 	}
 
 	/**
@@ -887,7 +827,7 @@ public class DDMStructureWrapper implements DDMStructure,
 	*/
 	@Override
 	public void setDescription(String description, java.util.Locale locale) {
-		_ddmStructure.setDescription(description, locale);
+		model.setDescription(description, locale);
 	}
 
 	/**
@@ -900,12 +840,12 @@ public class DDMStructureWrapper implements DDMStructure,
 	@Override
 	public void setDescription(String description, java.util.Locale locale,
 		java.util.Locale defaultLocale) {
-		_ddmStructure.setDescription(description, locale, defaultLocale);
+		model.setDescription(description, locale, defaultLocale);
 	}
 
 	@Override
 	public void setDescriptionCurrentLanguageId(String languageId) {
-		_ddmStructure.setDescriptionCurrentLanguageId(languageId);
+		model.setDescriptionCurrentLanguageId(languageId);
 	}
 
 	/**
@@ -915,7 +855,7 @@ public class DDMStructureWrapper implements DDMStructure,
 	*/
 	@Override
 	public void setDescriptionMap(Map<java.util.Locale, String> descriptionMap) {
-		_ddmStructure.setDescriptionMap(descriptionMap);
+		model.setDescriptionMap(descriptionMap);
 	}
 
 	/**
@@ -928,23 +868,7 @@ public class DDMStructureWrapper implements DDMStructure,
 	public void setDescriptionMap(
 		Map<java.util.Locale, String> descriptionMap,
 		java.util.Locale defaultLocale) {
-		_ddmStructure.setDescriptionMap(descriptionMap, defaultLocale);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-		_ddmStructure.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_ddmStructure.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_ddmStructure.setExpandoBridgeAttributes(serviceContext);
+		model.setDescriptionMap(descriptionMap, defaultLocale);
 	}
 
 	/**
@@ -954,7 +878,7 @@ public class DDMStructureWrapper implements DDMStructure,
 	*/
 	@Override
 	public void setGroupId(long groupId) {
-		_ddmStructure.setGroupId(groupId);
+		model.setGroupId(groupId);
 	}
 
 	/**
@@ -964,7 +888,7 @@ public class DDMStructureWrapper implements DDMStructure,
 	*/
 	@Override
 	public void setLastPublishDate(Date lastPublishDate) {
-		_ddmStructure.setLastPublishDate(lastPublishDate);
+		model.setLastPublishDate(lastPublishDate);
 	}
 
 	/**
@@ -974,7 +898,7 @@ public class DDMStructureWrapper implements DDMStructure,
 	*/
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
-		_ddmStructure.setModifiedDate(modifiedDate);
+		model.setModifiedDate(modifiedDate);
 	}
 
 	/**
@@ -984,7 +908,7 @@ public class DDMStructureWrapper implements DDMStructure,
 	*/
 	@Override
 	public void setName(String name) {
-		_ddmStructure.setName(name);
+		model.setName(name);
 	}
 
 	/**
@@ -995,7 +919,7 @@ public class DDMStructureWrapper implements DDMStructure,
 	*/
 	@Override
 	public void setName(String name, java.util.Locale locale) {
-		_ddmStructure.setName(name, locale);
+		model.setName(name, locale);
 	}
 
 	/**
@@ -1008,12 +932,12 @@ public class DDMStructureWrapper implements DDMStructure,
 	@Override
 	public void setName(String name, java.util.Locale locale,
 		java.util.Locale defaultLocale) {
-		_ddmStructure.setName(name, locale, defaultLocale);
+		model.setName(name, locale, defaultLocale);
 	}
 
 	@Override
 	public void setNameCurrentLanguageId(String languageId) {
-		_ddmStructure.setNameCurrentLanguageId(languageId);
+		model.setNameCurrentLanguageId(languageId);
 	}
 
 	/**
@@ -1023,7 +947,7 @@ public class DDMStructureWrapper implements DDMStructure,
 	*/
 	@Override
 	public void setNameMap(Map<java.util.Locale, String> nameMap) {
-		_ddmStructure.setNameMap(nameMap);
+		model.setNameMap(nameMap);
 	}
 
 	/**
@@ -1035,12 +959,7 @@ public class DDMStructureWrapper implements DDMStructure,
 	@Override
 	public void setNameMap(Map<java.util.Locale, String> nameMap,
 		java.util.Locale defaultLocale) {
-		_ddmStructure.setNameMap(nameMap, defaultLocale);
-	}
-
-	@Override
-	public void setNew(boolean n) {
-		_ddmStructure.setNew(n);
+		model.setNameMap(nameMap, defaultLocale);
 	}
 
 	/**
@@ -1050,7 +969,7 @@ public class DDMStructureWrapper implements DDMStructure,
 	*/
 	@Override
 	public void setParentStructureId(long parentStructureId) {
-		_ddmStructure.setParentStructureId(parentStructureId);
+		model.setParentStructureId(parentStructureId);
 	}
 
 	/**
@@ -1060,12 +979,7 @@ public class DDMStructureWrapper implements DDMStructure,
 	*/
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_ddmStructure.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_ddmStructure.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -1075,7 +989,7 @@ public class DDMStructureWrapper implements DDMStructure,
 	*/
 	@Override
 	public void setStorageType(String storageType) {
-		_ddmStructure.setStorageType(storageType);
+		model.setStorageType(storageType);
 	}
 
 	/**
@@ -1085,7 +999,7 @@ public class DDMStructureWrapper implements DDMStructure,
 	*/
 	@Override
 	public void setStructureId(long structureId) {
-		_ddmStructure.setStructureId(structureId);
+		model.setStructureId(structureId);
 	}
 
 	/**
@@ -1095,7 +1009,7 @@ public class DDMStructureWrapper implements DDMStructure,
 	*/
 	@Override
 	public void setStructureKey(String structureKey) {
-		_ddmStructure.setStructureKey(structureKey);
+		model.setStructureKey(structureKey);
 	}
 
 	/**
@@ -1105,7 +1019,7 @@ public class DDMStructureWrapper implements DDMStructure,
 	*/
 	@Override
 	public void setType(int type) {
-		_ddmStructure.setType(type);
+		model.setType(type);
 	}
 
 	/**
@@ -1115,7 +1029,7 @@ public class DDMStructureWrapper implements DDMStructure,
 	*/
 	@Override
 	public void setUserId(long userId) {
-		_ddmStructure.setUserId(userId);
+		model.setUserId(userId);
 	}
 
 	/**
@@ -1125,7 +1039,7 @@ public class DDMStructureWrapper implements DDMStructure,
 	*/
 	@Override
 	public void setUserName(String userName) {
-		_ddmStructure.setUserName(userName);
+		model.setUserName(userName);
 	}
 
 	/**
@@ -1135,7 +1049,7 @@ public class DDMStructureWrapper implements DDMStructure,
 	*/
 	@Override
 	public void setUserUuid(String userUuid) {
-		_ddmStructure.setUserUuid(userUuid);
+		model.setUserUuid(userUuid);
 	}
 
 	/**
@@ -1145,7 +1059,7 @@ public class DDMStructureWrapper implements DDMStructure,
 	*/
 	@Override
 	public void setUuid(String uuid) {
-		_ddmStructure.setUuid(uuid);
+		model.setUuid(uuid);
 	}
 
 	/**
@@ -1155,7 +1069,7 @@ public class DDMStructureWrapper implements DDMStructure,
 	*/
 	@Override
 	public void setVersion(String version) {
-		_ddmStructure.setVersion(version);
+		model.setVersion(version);
 	}
 
 	/**
@@ -1165,7 +1079,7 @@ public class DDMStructureWrapper implements DDMStructure,
 	*/
 	@Override
 	public void setVersionUserId(long versionUserId) {
-		_ddmStructure.setVersionUserId(versionUserId);
+		model.setVersionUserId(versionUserId);
 	}
 
 	/**
@@ -1175,7 +1089,7 @@ public class DDMStructureWrapper implements DDMStructure,
 	*/
 	@Override
 	public void setVersionUserName(String versionUserName) {
-		_ddmStructure.setVersionUserName(versionUserName);
+		model.setVersionUserName(versionUserName);
 	}
 
 	/**
@@ -1185,77 +1099,16 @@ public class DDMStructureWrapper implements DDMStructure,
 	*/
 	@Override
 	public void setVersionUserUuid(String versionUserUuid) {
-		_ddmStructure.setVersionUserUuid(versionUserUuid);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<DDMStructure> toCacheModel() {
-		return _ddmStructure.toCacheModel();
-	}
-
-	@Override
-	public DDMStructure toEscapedModel() {
-		return new DDMStructureWrapper(_ddmStructure.toEscapedModel());
-	}
-
-	@Override
-	public String toString() {
-		return _ddmStructure.toString();
-	}
-
-	@Override
-	public DDMStructure toUnescapedModel() {
-		return new DDMStructureWrapper(_ddmStructure.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _ddmStructure.toXmlString();
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-
-		if (!(obj instanceof DDMStructureWrapper)) {
-			return false;
-		}
-
-		DDMStructureWrapper ddmStructureWrapper = (DDMStructureWrapper)obj;
-
-		if (Objects.equals(_ddmStructure, ddmStructureWrapper._ddmStructure)) {
-			return true;
-		}
-
-		return false;
+		model.setVersionUserUuid(versionUserUuid);
 	}
 
 	@Override
 	public StagedModelType getStagedModelType() {
-		return _ddmStructure.getStagedModelType();
+		return model.getStagedModelType();
 	}
 
 	@Override
-	public DDMStructure getWrappedModel() {
-		return _ddmStructure;
+	protected DDMStructureWrapper wrap(DDMStructure ddmStructure) {
+		return new DDMStructureWrapper(ddmStructure);
 	}
-
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _ddmStructure.isEntityCacheEnabled();
-	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _ddmStructure.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_ddmStructure.resetOriginalValues();
-	}
-
-	private final DDMStructure _ddmStructure;
 }

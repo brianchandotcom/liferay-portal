@@ -16,15 +16,10 @@ package com.liferay.portal.kernel.model;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
-
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -36,20 +31,10 @@ import java.util.Objects;
  * @generated
  */
 @ProviderType
-public class PluginSettingWrapper implements PluginSetting,
-	ModelWrapper<PluginSetting> {
+public class PluginSettingWrapper extends BaseModelWrapper<PluginSetting>
+	implements PluginSetting, ModelWrapper<PluginSetting> {
 	public PluginSettingWrapper(PluginSetting pluginSetting) {
-		_pluginSetting = pluginSetting;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return PluginSetting.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return PluginSetting.class.getName();
+		super(pluginSetting);
 	}
 
 	@Override
@@ -117,17 +102,7 @@ public class PluginSettingWrapper implements PluginSetting,
 	*/
 	@Override
 	public void addRole(String role) {
-		_pluginSetting.addRole(role);
-	}
-
-	@Override
-	public Object clone() {
-		return new PluginSettingWrapper((PluginSetting)_pluginSetting.clone());
-	}
-
-	@Override
-	public int compareTo(PluginSetting pluginSetting) {
-		return _pluginSetting.compareTo(pluginSetting);
+		model.addRole(role);
 	}
 
 	/**
@@ -137,7 +112,7 @@ public class PluginSettingWrapper implements PluginSetting,
 	*/
 	@Override
 	public boolean getActive() {
-		return _pluginSetting.getActive();
+		return model.getActive();
 	}
 
 	/**
@@ -147,12 +122,7 @@ public class PluginSettingWrapper implements PluginSetting,
 	*/
 	@Override
 	public long getCompanyId() {
-		return _pluginSetting.getCompanyId();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _pluginSetting.getExpandoBridge();
+		return model.getCompanyId();
 	}
 
 	/**
@@ -162,7 +132,7 @@ public class PluginSettingWrapper implements PluginSetting,
 	*/
 	@Override
 	public long getMvccVersion() {
-		return _pluginSetting.getMvccVersion();
+		return model.getMvccVersion();
 	}
 
 	/**
@@ -172,7 +142,7 @@ public class PluginSettingWrapper implements PluginSetting,
 	*/
 	@Override
 	public String getPluginId() {
-		return _pluginSetting.getPluginId();
+		return model.getPluginId();
 	}
 
 	/**
@@ -182,7 +152,7 @@ public class PluginSettingWrapper implements PluginSetting,
 	*/
 	@Override
 	public long getPluginSettingId() {
-		return _pluginSetting.getPluginSettingId();
+		return model.getPluginSettingId();
 	}
 
 	/**
@@ -192,7 +162,7 @@ public class PluginSettingWrapper implements PluginSetting,
 	*/
 	@Override
 	public String getPluginType() {
-		return _pluginSetting.getPluginType();
+		return model.getPluginType();
 	}
 
 	/**
@@ -202,12 +172,7 @@ public class PluginSettingWrapper implements PluginSetting,
 	*/
 	@Override
 	public long getPrimaryKey() {
-		return _pluginSetting.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _pluginSetting.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	/**
@@ -217,7 +182,7 @@ public class PluginSettingWrapper implements PluginSetting,
 	*/
 	@Override
 	public String getRoles() {
-		return _pluginSetting.getRoles();
+		return model.getRoles();
 	}
 
 	/**
@@ -227,12 +192,7 @@ public class PluginSettingWrapper implements PluginSetting,
 	*/
 	@Override
 	public String[] getRolesArray() {
-		return _pluginSetting.getRolesArray();
-	}
-
-	@Override
-	public int hashCode() {
-		return _pluginSetting.hashCode();
+		return model.getRolesArray();
 	}
 
 	/**
@@ -243,7 +203,7 @@ public class PluginSettingWrapper implements PluginSetting,
 	*/
 	@Override
 	public boolean hasPermission(long userId) {
-		return _pluginSetting.hasPermission(userId);
+		return model.hasPermission(userId);
 	}
 
 	/**
@@ -256,7 +216,7 @@ public class PluginSettingWrapper implements PluginSetting,
 	*/
 	@Override
 	public boolean hasRoleWithName(String roleName) {
-		return _pluginSetting.hasRoleWithName(roleName);
+		return model.hasRoleWithName(roleName);
 	}
 
 	/**
@@ -266,27 +226,12 @@ public class PluginSettingWrapper implements PluginSetting,
 	*/
 	@Override
 	public boolean isActive() {
-		return _pluginSetting.isActive();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _pluginSetting.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _pluginSetting.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _pluginSetting.isNew();
+		return model.isActive();
 	}
 
 	@Override
 	public void persist() {
-		_pluginSetting.persist();
+		model.persist();
 	}
 
 	/**
@@ -296,12 +241,7 @@ public class PluginSettingWrapper implements PluginSetting,
 	*/
 	@Override
 	public void setActive(boolean active) {
-		_pluginSetting.setActive(active);
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_pluginSetting.setCachedModel(cachedModel);
+		model.setActive(active);
 	}
 
 	/**
@@ -311,22 +251,7 @@ public class PluginSettingWrapper implements PluginSetting,
 	*/
 	@Override
 	public void setCompanyId(long companyId) {
-		_pluginSetting.setCompanyId(companyId);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(BaseModel<?> baseModel) {
-		_pluginSetting.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_pluginSetting.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_pluginSetting.setExpandoBridgeAttributes(serviceContext);
+		model.setCompanyId(companyId);
 	}
 
 	/**
@@ -336,12 +261,7 @@ public class PluginSettingWrapper implements PluginSetting,
 	*/
 	@Override
 	public void setMvccVersion(long mvccVersion) {
-		_pluginSetting.setMvccVersion(mvccVersion);
-	}
-
-	@Override
-	public void setNew(boolean n) {
-		_pluginSetting.setNew(n);
+		model.setMvccVersion(mvccVersion);
 	}
 
 	/**
@@ -351,7 +271,7 @@ public class PluginSettingWrapper implements PluginSetting,
 	*/
 	@Override
 	public void setPluginId(String pluginId) {
-		_pluginSetting.setPluginId(pluginId);
+		model.setPluginId(pluginId);
 	}
 
 	/**
@@ -361,7 +281,7 @@ public class PluginSettingWrapper implements PluginSetting,
 	*/
 	@Override
 	public void setPluginSettingId(long pluginSettingId) {
-		_pluginSetting.setPluginSettingId(pluginSettingId);
+		model.setPluginSettingId(pluginSettingId);
 	}
 
 	/**
@@ -371,7 +291,7 @@ public class PluginSettingWrapper implements PluginSetting,
 	*/
 	@Override
 	public void setPluginType(String pluginType) {
-		_pluginSetting.setPluginType(pluginType);
+		model.setPluginType(pluginType);
 	}
 
 	/**
@@ -381,12 +301,7 @@ public class PluginSettingWrapper implements PluginSetting,
 	*/
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_pluginSetting.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_pluginSetting.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -396,7 +311,7 @@ public class PluginSettingWrapper implements PluginSetting,
 	*/
 	@Override
 	public void setRoles(String roles) {
-		_pluginSetting.setRoles(roles);
+		model.setRoles(roles);
 	}
 
 	/**
@@ -404,72 +319,11 @@ public class PluginSettingWrapper implements PluginSetting,
 	*/
 	@Override
 	public void setRolesArray(String[] rolesArray) {
-		_pluginSetting.setRolesArray(rolesArray);
+		model.setRolesArray(rolesArray);
 	}
 
 	@Override
-	public CacheModel<PluginSetting> toCacheModel() {
-		return _pluginSetting.toCacheModel();
+	protected PluginSettingWrapper wrap(PluginSetting pluginSetting) {
+		return new PluginSettingWrapper(pluginSetting);
 	}
-
-	@Override
-	public PluginSetting toEscapedModel() {
-		return new PluginSettingWrapper(_pluginSetting.toEscapedModel());
-	}
-
-	@Override
-	public String toString() {
-		return _pluginSetting.toString();
-	}
-
-	@Override
-	public PluginSetting toUnescapedModel() {
-		return new PluginSettingWrapper(_pluginSetting.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _pluginSetting.toXmlString();
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-
-		if (!(obj instanceof PluginSettingWrapper)) {
-			return false;
-		}
-
-		PluginSettingWrapper pluginSettingWrapper = (PluginSettingWrapper)obj;
-
-		if (Objects.equals(_pluginSetting, pluginSettingWrapper._pluginSetting)) {
-			return true;
-		}
-
-		return false;
-	}
-
-	@Override
-	public PluginSetting getWrappedModel() {
-		return _pluginSetting;
-	}
-
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _pluginSetting.isEntityCacheEnabled();
-	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _pluginSetting.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_pluginSetting.resetOriginalValues();
-	}
-
-	private final PluginSetting _pluginSetting;
 }

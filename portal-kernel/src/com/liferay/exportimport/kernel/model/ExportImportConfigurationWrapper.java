@@ -16,17 +16,14 @@ package com.liferay.exportimport.kernel.model;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
-
 import com.liferay.portal.kernel.model.ModelWrapper;
-import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.io.Serializable;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -38,22 +35,12 @@ import java.util.Objects;
  * @generated
  */
 @ProviderType
-public class ExportImportConfigurationWrapper
+public class ExportImportConfigurationWrapper extends BaseModelWrapper<ExportImportConfiguration>
 	implements ExportImportConfiguration,
 		ModelWrapper<ExportImportConfiguration> {
 	public ExportImportConfigurationWrapper(
 		ExportImportConfiguration exportImportConfiguration) {
-		_exportImportConfiguration = exportImportConfiguration;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return ExportImportConfiguration.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return ExportImportConfiguration.class.getName();
+		super(exportImportConfiguration);
 	}
 
 	@Override
@@ -181,16 +168,6 @@ public class ExportImportConfigurationWrapper
 		}
 	}
 
-	@Override
-	public Object clone() {
-		return new ExportImportConfigurationWrapper((ExportImportConfiguration)_exportImportConfiguration.clone());
-	}
-
-	@Override
-	public int compareTo(ExportImportConfiguration exportImportConfiguration) {
-		return _exportImportConfiguration.compareTo(exportImportConfiguration);
-	}
-
 	/**
 	* Returns the company ID of this export import configuration.
 	*
@@ -198,7 +175,7 @@ public class ExportImportConfigurationWrapper
 	*/
 	@Override
 	public long getCompanyId() {
-		return _exportImportConfiguration.getCompanyId();
+		return model.getCompanyId();
 	}
 
 	/**
@@ -208,7 +185,7 @@ public class ExportImportConfigurationWrapper
 	*/
 	@Override
 	public Date getCreateDate() {
-		return _exportImportConfiguration.getCreateDate();
+		return model.getCreateDate();
 	}
 
 	/**
@@ -218,12 +195,7 @@ public class ExportImportConfigurationWrapper
 	*/
 	@Override
 	public String getDescription() {
-		return _exportImportConfiguration.getDescription();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _exportImportConfiguration.getExpandoBridge();
+		return model.getDescription();
 	}
 
 	/**
@@ -233,7 +205,7 @@ public class ExportImportConfigurationWrapper
 	*/
 	@Override
 	public long getExportImportConfigurationId() {
-		return _exportImportConfiguration.getExportImportConfigurationId();
+		return model.getExportImportConfigurationId();
 	}
 
 	/**
@@ -243,7 +215,7 @@ public class ExportImportConfigurationWrapper
 	*/
 	@Override
 	public long getGroupId() {
-		return _exportImportConfiguration.getGroupId();
+		return model.getGroupId();
 	}
 
 	/**
@@ -253,7 +225,7 @@ public class ExportImportConfigurationWrapper
 	*/
 	@Override
 	public Date getModifiedDate() {
-		return _exportImportConfiguration.getModifiedDate();
+		return model.getModifiedDate();
 	}
 
 	/**
@@ -263,7 +235,7 @@ public class ExportImportConfigurationWrapper
 	*/
 	@Override
 	public long getMvccVersion() {
-		return _exportImportConfiguration.getMvccVersion();
+		return model.getMvccVersion();
 	}
 
 	/**
@@ -273,7 +245,7 @@ public class ExportImportConfigurationWrapper
 	*/
 	@Override
 	public String getName() {
-		return _exportImportConfiguration.getName();
+		return model.getName();
 	}
 
 	/**
@@ -283,12 +255,7 @@ public class ExportImportConfigurationWrapper
 	*/
 	@Override
 	public long getPrimaryKey() {
-		return _exportImportConfiguration.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _exportImportConfiguration.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	/**
@@ -298,12 +265,12 @@ public class ExportImportConfigurationWrapper
 	*/
 	@Override
 	public String getSettings() {
-		return _exportImportConfiguration.getSettings();
+		return model.getSettings();
 	}
 
 	@Override
 	public Map<String, Serializable> getSettingsMap() {
-		return _exportImportConfiguration.getSettingsMap();
+		return model.getSettingsMap();
 	}
 
 	/**
@@ -313,7 +280,7 @@ public class ExportImportConfigurationWrapper
 	*/
 	@Override
 	public int getStatus() {
-		return _exportImportConfiguration.getStatus();
+		return model.getStatus();
 	}
 
 	/**
@@ -323,7 +290,7 @@ public class ExportImportConfigurationWrapper
 	*/
 	@Override
 	public long getStatusByUserId() {
-		return _exportImportConfiguration.getStatusByUserId();
+		return model.getStatusByUserId();
 	}
 
 	/**
@@ -333,7 +300,7 @@ public class ExportImportConfigurationWrapper
 	*/
 	@Override
 	public String getStatusByUserName() {
-		return _exportImportConfiguration.getStatusByUserName();
+		return model.getStatusByUserName();
 	}
 
 	/**
@@ -343,7 +310,7 @@ public class ExportImportConfigurationWrapper
 	*/
 	@Override
 	public String getStatusByUserUuid() {
-		return _exportImportConfiguration.getStatusByUserUuid();
+		return model.getStatusByUserUuid();
 	}
 
 	/**
@@ -353,7 +320,7 @@ public class ExportImportConfigurationWrapper
 	*/
 	@Override
 	public Date getStatusDate() {
-		return _exportImportConfiguration.getStatusDate();
+		return model.getStatusDate();
 	}
 
 	/**
@@ -364,7 +331,7 @@ public class ExportImportConfigurationWrapper
 	@Override
 	public com.liferay.trash.kernel.model.TrashEntry getTrashEntry()
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _exportImportConfiguration.getTrashEntry();
+		return model.getTrashEntry();
 	}
 
 	/**
@@ -374,7 +341,7 @@ public class ExportImportConfigurationWrapper
 	*/
 	@Override
 	public long getTrashEntryClassPK() {
-		return _exportImportConfiguration.getTrashEntryClassPK();
+		return model.getTrashEntryClassPK();
 	}
 
 	/**
@@ -386,7 +353,7 @@ public class ExportImportConfigurationWrapper
 	@Deprecated
 	@Override
 	public com.liferay.portal.kernel.trash.TrashHandler getTrashHandler() {
-		return _exportImportConfiguration.getTrashHandler();
+		return model.getTrashHandler();
 	}
 
 	/**
@@ -396,7 +363,7 @@ public class ExportImportConfigurationWrapper
 	*/
 	@Override
 	public int getType() {
-		return _exportImportConfiguration.getType();
+		return model.getType();
 	}
 
 	/**
@@ -406,7 +373,7 @@ public class ExportImportConfigurationWrapper
 	*/
 	@Override
 	public long getUserId() {
-		return _exportImportConfiguration.getUserId();
+		return model.getUserId();
 	}
 
 	/**
@@ -416,7 +383,7 @@ public class ExportImportConfigurationWrapper
 	*/
 	@Override
 	public String getUserName() {
-		return _exportImportConfiguration.getUserName();
+		return model.getUserName();
 	}
 
 	/**
@@ -426,12 +393,7 @@ public class ExportImportConfigurationWrapper
 	*/
 	@Override
 	public String getUserUuid() {
-		return _exportImportConfiguration.getUserUuid();
-	}
-
-	@Override
-	public int hashCode() {
-		return _exportImportConfiguration.hashCode();
+		return model.getUserUuid();
 	}
 
 	/**
@@ -441,12 +403,7 @@ public class ExportImportConfigurationWrapper
 	*/
 	@Override
 	public boolean isApproved() {
-		return _exportImportConfiguration.isApproved();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _exportImportConfiguration.isCachedModel();
+		return model.isApproved();
 	}
 
 	/**
@@ -456,7 +413,7 @@ public class ExportImportConfigurationWrapper
 	*/
 	@Override
 	public boolean isDenied() {
-		return _exportImportConfiguration.isDenied();
+		return model.isDenied();
 	}
 
 	/**
@@ -466,12 +423,7 @@ public class ExportImportConfigurationWrapper
 	*/
 	@Override
 	public boolean isDraft() {
-		return _exportImportConfiguration.isDraft();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _exportImportConfiguration.isEscapedModel();
+		return model.isDraft();
 	}
 
 	/**
@@ -481,7 +433,7 @@ public class ExportImportConfigurationWrapper
 	*/
 	@Override
 	public boolean isExpired() {
-		return _exportImportConfiguration.isExpired();
+		return model.isExpired();
 	}
 
 	/**
@@ -491,7 +443,7 @@ public class ExportImportConfigurationWrapper
 	*/
 	@Override
 	public boolean isInactive() {
-		return _exportImportConfiguration.isInactive();
+		return model.isInactive();
 	}
 
 	/**
@@ -501,7 +453,7 @@ public class ExportImportConfigurationWrapper
 	*/
 	@Override
 	public boolean isIncomplete() {
-		return _exportImportConfiguration.isIncomplete();
+		return model.isIncomplete();
 	}
 
 	/**
@@ -511,7 +463,7 @@ public class ExportImportConfigurationWrapper
 	*/
 	@Override
 	public boolean isInTrash() {
-		return _exportImportConfiguration.isInTrash();
+		return model.isInTrash();
 	}
 
 	/**
@@ -521,22 +473,17 @@ public class ExportImportConfigurationWrapper
 	*/
 	@Override
 	public boolean isInTrashContainer() {
-		return _exportImportConfiguration.isInTrashContainer();
+		return model.isInTrashContainer();
 	}
 
 	@Override
 	public boolean isInTrashExplicitly() {
-		return _exportImportConfiguration.isInTrashExplicitly();
+		return model.isInTrashExplicitly();
 	}
 
 	@Override
 	public boolean isInTrashImplicitly() {
-		return _exportImportConfiguration.isInTrashImplicitly();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _exportImportConfiguration.isNew();
+		return model.isInTrashImplicitly();
 	}
 
 	/**
@@ -546,7 +493,7 @@ public class ExportImportConfigurationWrapper
 	*/
 	@Override
 	public boolean isPending() {
-		return _exportImportConfiguration.isPending();
+		return model.isPending();
 	}
 
 	/**
@@ -556,17 +503,12 @@ public class ExportImportConfigurationWrapper
 	*/
 	@Override
 	public boolean isScheduled() {
-		return _exportImportConfiguration.isScheduled();
+		return model.isScheduled();
 	}
 
 	@Override
 	public void persist() {
-		_exportImportConfiguration.persist();
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_exportImportConfiguration.setCachedModel(cachedModel);
+		model.persist();
 	}
 
 	/**
@@ -576,7 +518,7 @@ public class ExportImportConfigurationWrapper
 	*/
 	@Override
 	public void setCompanyId(long companyId) {
-		_exportImportConfiguration.setCompanyId(companyId);
+		model.setCompanyId(companyId);
 	}
 
 	/**
@@ -586,7 +528,7 @@ public class ExportImportConfigurationWrapper
 	*/
 	@Override
 	public void setCreateDate(Date createDate) {
-		_exportImportConfiguration.setCreateDate(createDate);
+		model.setCreateDate(createDate);
 	}
 
 	/**
@@ -596,23 +538,7 @@ public class ExportImportConfigurationWrapper
 	*/
 	@Override
 	public void setDescription(String description) {
-		_exportImportConfiguration.setDescription(description);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-		_exportImportConfiguration.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_exportImportConfiguration.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_exportImportConfiguration.setExpandoBridgeAttributes(serviceContext);
+		model.setDescription(description);
 	}
 
 	/**
@@ -622,7 +548,7 @@ public class ExportImportConfigurationWrapper
 	*/
 	@Override
 	public void setExportImportConfigurationId(long exportImportConfigurationId) {
-		_exportImportConfiguration.setExportImportConfigurationId(exportImportConfigurationId);
+		model.setExportImportConfigurationId(exportImportConfigurationId);
 	}
 
 	/**
@@ -632,7 +558,7 @@ public class ExportImportConfigurationWrapper
 	*/
 	@Override
 	public void setGroupId(long groupId) {
-		_exportImportConfiguration.setGroupId(groupId);
+		model.setGroupId(groupId);
 	}
 
 	/**
@@ -642,7 +568,7 @@ public class ExportImportConfigurationWrapper
 	*/
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
-		_exportImportConfiguration.setModifiedDate(modifiedDate);
+		model.setModifiedDate(modifiedDate);
 	}
 
 	/**
@@ -652,7 +578,7 @@ public class ExportImportConfigurationWrapper
 	*/
 	@Override
 	public void setMvccVersion(long mvccVersion) {
-		_exportImportConfiguration.setMvccVersion(mvccVersion);
+		model.setMvccVersion(mvccVersion);
 	}
 
 	/**
@@ -662,12 +588,7 @@ public class ExportImportConfigurationWrapper
 	*/
 	@Override
 	public void setName(String name) {
-		_exportImportConfiguration.setName(name);
-	}
-
-	@Override
-	public void setNew(boolean n) {
-		_exportImportConfiguration.setNew(n);
+		model.setName(name);
 	}
 
 	/**
@@ -677,12 +598,7 @@ public class ExportImportConfigurationWrapper
 	*/
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_exportImportConfiguration.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_exportImportConfiguration.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -692,7 +608,7 @@ public class ExportImportConfigurationWrapper
 	*/
 	@Override
 	public void setSettings(String settings) {
-		_exportImportConfiguration.setSettings(settings);
+		model.setSettings(settings);
 	}
 
 	/**
@@ -702,7 +618,7 @@ public class ExportImportConfigurationWrapper
 	*/
 	@Override
 	public void setStatus(int status) {
-		_exportImportConfiguration.setStatus(status);
+		model.setStatus(status);
 	}
 
 	/**
@@ -712,7 +628,7 @@ public class ExportImportConfigurationWrapper
 	*/
 	@Override
 	public void setStatusByUserId(long statusByUserId) {
-		_exportImportConfiguration.setStatusByUserId(statusByUserId);
+		model.setStatusByUserId(statusByUserId);
 	}
 
 	/**
@@ -722,7 +638,7 @@ public class ExportImportConfigurationWrapper
 	*/
 	@Override
 	public void setStatusByUserName(String statusByUserName) {
-		_exportImportConfiguration.setStatusByUserName(statusByUserName);
+		model.setStatusByUserName(statusByUserName);
 	}
 
 	/**
@@ -732,7 +648,7 @@ public class ExportImportConfigurationWrapper
 	*/
 	@Override
 	public void setStatusByUserUuid(String statusByUserUuid) {
-		_exportImportConfiguration.setStatusByUserUuid(statusByUserUuid);
+		model.setStatusByUserUuid(statusByUserUuid);
 	}
 
 	/**
@@ -742,7 +658,7 @@ public class ExportImportConfigurationWrapper
 	*/
 	@Override
 	public void setStatusDate(Date statusDate) {
-		_exportImportConfiguration.setStatusDate(statusDate);
+		model.setStatusDate(statusDate);
 	}
 
 	/**
@@ -752,7 +668,7 @@ public class ExportImportConfigurationWrapper
 	*/
 	@Override
 	public void setType(int type) {
-		_exportImportConfiguration.setType(type);
+		model.setType(type);
 	}
 
 	/**
@@ -762,7 +678,7 @@ public class ExportImportConfigurationWrapper
 	*/
 	@Override
 	public void setUserId(long userId) {
-		_exportImportConfiguration.setUserId(userId);
+		model.setUserId(userId);
 	}
 
 	/**
@@ -772,7 +688,7 @@ public class ExportImportConfigurationWrapper
 	*/
 	@Override
 	public void setUserName(String userName) {
-		_exportImportConfiguration.setUserName(userName);
+		model.setUserName(userName);
 	}
 
 	/**
@@ -782,73 +698,12 @@ public class ExportImportConfigurationWrapper
 	*/
 	@Override
 	public void setUserUuid(String userUuid) {
-		_exportImportConfiguration.setUserUuid(userUuid);
+		model.setUserUuid(userUuid);
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.CacheModel<ExportImportConfiguration> toCacheModel() {
-		return _exportImportConfiguration.toCacheModel();
+	protected ExportImportConfigurationWrapper wrap(
+		ExportImportConfiguration exportImportConfiguration) {
+		return new ExportImportConfigurationWrapper(exportImportConfiguration);
 	}
-
-	@Override
-	public ExportImportConfiguration toEscapedModel() {
-		return new ExportImportConfigurationWrapper(_exportImportConfiguration.toEscapedModel());
-	}
-
-	@Override
-	public String toString() {
-		return _exportImportConfiguration.toString();
-	}
-
-	@Override
-	public ExportImportConfiguration toUnescapedModel() {
-		return new ExportImportConfigurationWrapper(_exportImportConfiguration.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _exportImportConfiguration.toXmlString();
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-
-		if (!(obj instanceof ExportImportConfigurationWrapper)) {
-			return false;
-		}
-
-		ExportImportConfigurationWrapper exportImportConfigurationWrapper = (ExportImportConfigurationWrapper)obj;
-
-		if (Objects.equals(_exportImportConfiguration,
-					exportImportConfigurationWrapper._exportImportConfiguration)) {
-			return true;
-		}
-
-		return false;
-	}
-
-	@Override
-	public ExportImportConfiguration getWrappedModel() {
-		return _exportImportConfiguration;
-	}
-
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _exportImportConfiguration.isEntityCacheEnabled();
-	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _exportImportConfiguration.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_exportImportConfiguration.resetOriginalValues();
-	}
-
-	private final ExportImportConfiguration _exportImportConfiguration;
 }

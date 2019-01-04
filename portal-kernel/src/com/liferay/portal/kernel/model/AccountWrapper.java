@@ -16,16 +16,11 @@ package com.liferay.portal.kernel.model;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
-
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -37,19 +32,10 @@ import java.util.Objects;
  * @generated
  */
 @ProviderType
-public class AccountWrapper implements Account, ModelWrapper<Account> {
+public class AccountWrapper extends BaseModelWrapper<Account> implements Account,
+	ModelWrapper<Account> {
 	public AccountWrapper(Account account) {
-		_account = account;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return Account.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return Account.class.getName();
+		super(account);
 	}
 
 	@Override
@@ -182,16 +168,6 @@ public class AccountWrapper implements Account, ModelWrapper<Account> {
 		}
 	}
 
-	@Override
-	public Object clone() {
-		return new AccountWrapper((Account)_account.clone());
-	}
-
-	@Override
-	public int compareTo(Account account) {
-		return _account.compareTo(account);
-	}
-
 	/**
 	* Returns the account ID of this account.
 	*
@@ -199,7 +175,7 @@ public class AccountWrapper implements Account, ModelWrapper<Account> {
 	*/
 	@Override
 	public long getAccountId() {
-		return _account.getAccountId();
+		return model.getAccountId();
 	}
 
 	/**
@@ -209,7 +185,7 @@ public class AccountWrapper implements Account, ModelWrapper<Account> {
 	*/
 	@Override
 	public long getCompanyId() {
-		return _account.getCompanyId();
+		return model.getCompanyId();
 	}
 
 	/**
@@ -219,12 +195,7 @@ public class AccountWrapper implements Account, ModelWrapper<Account> {
 	*/
 	@Override
 	public Date getCreateDate() {
-		return _account.getCreateDate();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _account.getExpandoBridge();
+		return model.getCreateDate();
 	}
 
 	/**
@@ -234,7 +205,7 @@ public class AccountWrapper implements Account, ModelWrapper<Account> {
 	*/
 	@Override
 	public String getIndustry() {
-		return _account.getIndustry();
+		return model.getIndustry();
 	}
 
 	/**
@@ -244,7 +215,7 @@ public class AccountWrapper implements Account, ModelWrapper<Account> {
 	*/
 	@Override
 	public String getLegalId() {
-		return _account.getLegalId();
+		return model.getLegalId();
 	}
 
 	/**
@@ -254,7 +225,7 @@ public class AccountWrapper implements Account, ModelWrapper<Account> {
 	*/
 	@Override
 	public String getLegalName() {
-		return _account.getLegalName();
+		return model.getLegalName();
 	}
 
 	/**
@@ -264,7 +235,7 @@ public class AccountWrapper implements Account, ModelWrapper<Account> {
 	*/
 	@Override
 	public String getLegalType() {
-		return _account.getLegalType();
+		return model.getLegalType();
 	}
 
 	/**
@@ -274,7 +245,7 @@ public class AccountWrapper implements Account, ModelWrapper<Account> {
 	*/
 	@Override
 	public Date getModifiedDate() {
-		return _account.getModifiedDate();
+		return model.getModifiedDate();
 	}
 
 	/**
@@ -284,7 +255,7 @@ public class AccountWrapper implements Account, ModelWrapper<Account> {
 	*/
 	@Override
 	public long getMvccVersion() {
-		return _account.getMvccVersion();
+		return model.getMvccVersion();
 	}
 
 	/**
@@ -294,7 +265,7 @@ public class AccountWrapper implements Account, ModelWrapper<Account> {
 	*/
 	@Override
 	public String getName() {
-		return _account.getName();
+		return model.getName();
 	}
 
 	/**
@@ -304,7 +275,7 @@ public class AccountWrapper implements Account, ModelWrapper<Account> {
 	*/
 	@Override
 	public long getParentAccountId() {
-		return _account.getParentAccountId();
+		return model.getParentAccountId();
 	}
 
 	/**
@@ -314,12 +285,7 @@ public class AccountWrapper implements Account, ModelWrapper<Account> {
 	*/
 	@Override
 	public long getPrimaryKey() {
-		return _account.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _account.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	/**
@@ -329,7 +295,7 @@ public class AccountWrapper implements Account, ModelWrapper<Account> {
 	*/
 	@Override
 	public String getSicCode() {
-		return _account.getSicCode();
+		return model.getSicCode();
 	}
 
 	/**
@@ -339,7 +305,7 @@ public class AccountWrapper implements Account, ModelWrapper<Account> {
 	*/
 	@Override
 	public String getSize() {
-		return _account.getSize();
+		return model.getSize();
 	}
 
 	/**
@@ -349,7 +315,7 @@ public class AccountWrapper implements Account, ModelWrapper<Account> {
 	*/
 	@Override
 	public String getTickerSymbol() {
-		return _account.getTickerSymbol();
+		return model.getTickerSymbol();
 	}
 
 	/**
@@ -359,7 +325,7 @@ public class AccountWrapper implements Account, ModelWrapper<Account> {
 	*/
 	@Override
 	public String getType() {
-		return _account.getType();
+		return model.getType();
 	}
 
 	/**
@@ -369,7 +335,7 @@ public class AccountWrapper implements Account, ModelWrapper<Account> {
 	*/
 	@Override
 	public long getUserId() {
-		return _account.getUserId();
+		return model.getUserId();
 	}
 
 	/**
@@ -379,7 +345,7 @@ public class AccountWrapper implements Account, ModelWrapper<Account> {
 	*/
 	@Override
 	public String getUserName() {
-		return _account.getUserName();
+		return model.getUserName();
 	}
 
 	/**
@@ -389,32 +355,12 @@ public class AccountWrapper implements Account, ModelWrapper<Account> {
 	*/
 	@Override
 	public String getUserUuid() {
-		return _account.getUserUuid();
-	}
-
-	@Override
-	public int hashCode() {
-		return _account.hashCode();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _account.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _account.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _account.isNew();
+		return model.getUserUuid();
 	}
 
 	@Override
 	public void persist() {
-		_account.persist();
+		model.persist();
 	}
 
 	/**
@@ -424,12 +370,7 @@ public class AccountWrapper implements Account, ModelWrapper<Account> {
 	*/
 	@Override
 	public void setAccountId(long accountId) {
-		_account.setAccountId(accountId);
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_account.setCachedModel(cachedModel);
+		model.setAccountId(accountId);
 	}
 
 	/**
@@ -439,7 +380,7 @@ public class AccountWrapper implements Account, ModelWrapper<Account> {
 	*/
 	@Override
 	public void setCompanyId(long companyId) {
-		_account.setCompanyId(companyId);
+		model.setCompanyId(companyId);
 	}
 
 	/**
@@ -449,22 +390,7 @@ public class AccountWrapper implements Account, ModelWrapper<Account> {
 	*/
 	@Override
 	public void setCreateDate(Date createDate) {
-		_account.setCreateDate(createDate);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(BaseModel<?> baseModel) {
-		_account.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_account.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_account.setExpandoBridgeAttributes(serviceContext);
+		model.setCreateDate(createDate);
 	}
 
 	/**
@@ -474,7 +400,7 @@ public class AccountWrapper implements Account, ModelWrapper<Account> {
 	*/
 	@Override
 	public void setIndustry(String industry) {
-		_account.setIndustry(industry);
+		model.setIndustry(industry);
 	}
 
 	/**
@@ -484,7 +410,7 @@ public class AccountWrapper implements Account, ModelWrapper<Account> {
 	*/
 	@Override
 	public void setLegalId(String legalId) {
-		_account.setLegalId(legalId);
+		model.setLegalId(legalId);
 	}
 
 	/**
@@ -494,7 +420,7 @@ public class AccountWrapper implements Account, ModelWrapper<Account> {
 	*/
 	@Override
 	public void setLegalName(String legalName) {
-		_account.setLegalName(legalName);
+		model.setLegalName(legalName);
 	}
 
 	/**
@@ -504,7 +430,7 @@ public class AccountWrapper implements Account, ModelWrapper<Account> {
 	*/
 	@Override
 	public void setLegalType(String legalType) {
-		_account.setLegalType(legalType);
+		model.setLegalType(legalType);
 	}
 
 	/**
@@ -514,7 +440,7 @@ public class AccountWrapper implements Account, ModelWrapper<Account> {
 	*/
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
-		_account.setModifiedDate(modifiedDate);
+		model.setModifiedDate(modifiedDate);
 	}
 
 	/**
@@ -524,7 +450,7 @@ public class AccountWrapper implements Account, ModelWrapper<Account> {
 	*/
 	@Override
 	public void setMvccVersion(long mvccVersion) {
-		_account.setMvccVersion(mvccVersion);
+		model.setMvccVersion(mvccVersion);
 	}
 
 	/**
@@ -534,12 +460,7 @@ public class AccountWrapper implements Account, ModelWrapper<Account> {
 	*/
 	@Override
 	public void setName(String name) {
-		_account.setName(name);
-	}
-
-	@Override
-	public void setNew(boolean n) {
-		_account.setNew(n);
+		model.setName(name);
 	}
 
 	/**
@@ -549,7 +470,7 @@ public class AccountWrapper implements Account, ModelWrapper<Account> {
 	*/
 	@Override
 	public void setParentAccountId(long parentAccountId) {
-		_account.setParentAccountId(parentAccountId);
+		model.setParentAccountId(parentAccountId);
 	}
 
 	/**
@@ -559,12 +480,7 @@ public class AccountWrapper implements Account, ModelWrapper<Account> {
 	*/
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_account.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_account.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -574,7 +490,7 @@ public class AccountWrapper implements Account, ModelWrapper<Account> {
 	*/
 	@Override
 	public void setSicCode(String sicCode) {
-		_account.setSicCode(sicCode);
+		model.setSicCode(sicCode);
 	}
 
 	/**
@@ -584,7 +500,7 @@ public class AccountWrapper implements Account, ModelWrapper<Account> {
 	*/
 	@Override
 	public void setSize(String size) {
-		_account.setSize(size);
+		model.setSize(size);
 	}
 
 	/**
@@ -594,7 +510,7 @@ public class AccountWrapper implements Account, ModelWrapper<Account> {
 	*/
 	@Override
 	public void setTickerSymbol(String tickerSymbol) {
-		_account.setTickerSymbol(tickerSymbol);
+		model.setTickerSymbol(tickerSymbol);
 	}
 
 	/**
@@ -604,7 +520,7 @@ public class AccountWrapper implements Account, ModelWrapper<Account> {
 	*/
 	@Override
 	public void setType(String type) {
-		_account.setType(type);
+		model.setType(type);
 	}
 
 	/**
@@ -614,7 +530,7 @@ public class AccountWrapper implements Account, ModelWrapper<Account> {
 	*/
 	@Override
 	public void setUserId(long userId) {
-		_account.setUserId(userId);
+		model.setUserId(userId);
 	}
 
 	/**
@@ -624,7 +540,7 @@ public class AccountWrapper implements Account, ModelWrapper<Account> {
 	*/
 	@Override
 	public void setUserName(String userName) {
-		_account.setUserName(userName);
+		model.setUserName(userName);
 	}
 
 	/**
@@ -634,72 +550,11 @@ public class AccountWrapper implements Account, ModelWrapper<Account> {
 	*/
 	@Override
 	public void setUserUuid(String userUuid) {
-		_account.setUserUuid(userUuid);
+		model.setUserUuid(userUuid);
 	}
 
 	@Override
-	public CacheModel<Account> toCacheModel() {
-		return _account.toCacheModel();
+	protected AccountWrapper wrap(Account account) {
+		return new AccountWrapper(account);
 	}
-
-	@Override
-	public Account toEscapedModel() {
-		return new AccountWrapper(_account.toEscapedModel());
-	}
-
-	@Override
-	public String toString() {
-		return _account.toString();
-	}
-
-	@Override
-	public Account toUnescapedModel() {
-		return new AccountWrapper(_account.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _account.toXmlString();
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-
-		if (!(obj instanceof AccountWrapper)) {
-			return false;
-		}
-
-		AccountWrapper accountWrapper = (AccountWrapper)obj;
-
-		if (Objects.equals(_account, accountWrapper._account)) {
-			return true;
-		}
-
-		return false;
-	}
-
-	@Override
-	public Account getWrappedModel() {
-		return _account;
-	}
-
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _account.isEntityCacheEnabled();
-	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _account.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_account.resetOriginalValues();
-	}
-
-	private final Account _account;
 }

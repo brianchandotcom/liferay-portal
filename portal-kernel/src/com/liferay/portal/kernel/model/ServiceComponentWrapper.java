@@ -16,15 +16,10 @@ package com.liferay.portal.kernel.model;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
-
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -36,20 +31,10 @@ import java.util.Objects;
  * @generated
  */
 @ProviderType
-public class ServiceComponentWrapper implements ServiceComponent,
-	ModelWrapper<ServiceComponent> {
+public class ServiceComponentWrapper extends BaseModelWrapper<ServiceComponent>
+	implements ServiceComponent, ModelWrapper<ServiceComponent> {
 	public ServiceComponentWrapper(ServiceComponent serviceComponent) {
-		_serviceComponent = serviceComponent;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return ServiceComponent.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return ServiceComponent.class.getName();
+		super(serviceComponent);
 	}
 
 	@Override
@@ -105,16 +90,6 @@ public class ServiceComponentWrapper implements ServiceComponent,
 		}
 	}
 
-	@Override
-	public Object clone() {
-		return new ServiceComponentWrapper((ServiceComponent)_serviceComponent.clone());
-	}
-
-	@Override
-	public int compareTo(ServiceComponent serviceComponent) {
-		return _serviceComponent.compareTo(serviceComponent);
-	}
-
 	/**
 	* Returns the build date of this service component.
 	*
@@ -122,7 +97,7 @@ public class ServiceComponentWrapper implements ServiceComponent,
 	*/
 	@Override
 	public long getBuildDate() {
-		return _serviceComponent.getBuildDate();
+		return model.getBuildDate();
 	}
 
 	/**
@@ -132,7 +107,7 @@ public class ServiceComponentWrapper implements ServiceComponent,
 	*/
 	@Override
 	public String getBuildNamespace() {
-		return _serviceComponent.getBuildNamespace();
+		return model.getBuildNamespace();
 	}
 
 	/**
@@ -142,7 +117,7 @@ public class ServiceComponentWrapper implements ServiceComponent,
 	*/
 	@Override
 	public long getBuildNumber() {
-		return _serviceComponent.getBuildNumber();
+		return model.getBuildNumber();
 	}
 
 	/**
@@ -152,17 +127,12 @@ public class ServiceComponentWrapper implements ServiceComponent,
 	*/
 	@Override
 	public String getData() {
-		return _serviceComponent.getData();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _serviceComponent.getExpandoBridge();
+		return model.getData();
 	}
 
 	@Override
 	public String getIndexesSQL() {
-		return _serviceComponent.getIndexesSQL();
+		return model.getIndexesSQL();
 	}
 
 	/**
@@ -172,7 +142,7 @@ public class ServiceComponentWrapper implements ServiceComponent,
 	*/
 	@Override
 	public long getMvccVersion() {
-		return _serviceComponent.getMvccVersion();
+		return model.getMvccVersion();
 	}
 
 	/**
@@ -182,17 +152,12 @@ public class ServiceComponentWrapper implements ServiceComponent,
 	*/
 	@Override
 	public long getPrimaryKey() {
-		return _serviceComponent.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _serviceComponent.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	@Override
 	public String getSequencesSQL() {
-		return _serviceComponent.getSequencesSQL();
+		return model.getSequencesSQL();
 	}
 
 	/**
@@ -202,37 +167,17 @@ public class ServiceComponentWrapper implements ServiceComponent,
 	*/
 	@Override
 	public long getServiceComponentId() {
-		return _serviceComponent.getServiceComponentId();
+		return model.getServiceComponentId();
 	}
 
 	@Override
 	public String getTablesSQL() {
-		return _serviceComponent.getTablesSQL();
-	}
-
-	@Override
-	public int hashCode() {
-		return _serviceComponent.hashCode();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _serviceComponent.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _serviceComponent.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _serviceComponent.isNew();
+		return model.getTablesSQL();
 	}
 
 	@Override
 	public void persist() {
-		_serviceComponent.persist();
+		model.persist();
 	}
 
 	/**
@@ -242,7 +187,7 @@ public class ServiceComponentWrapper implements ServiceComponent,
 	*/
 	@Override
 	public void setBuildDate(long buildDate) {
-		_serviceComponent.setBuildDate(buildDate);
+		model.setBuildDate(buildDate);
 	}
 
 	/**
@@ -252,7 +197,7 @@ public class ServiceComponentWrapper implements ServiceComponent,
 	*/
 	@Override
 	public void setBuildNamespace(String buildNamespace) {
-		_serviceComponent.setBuildNamespace(buildNamespace);
+		model.setBuildNamespace(buildNamespace);
 	}
 
 	/**
@@ -262,12 +207,7 @@ public class ServiceComponentWrapper implements ServiceComponent,
 	*/
 	@Override
 	public void setBuildNumber(long buildNumber) {
-		_serviceComponent.setBuildNumber(buildNumber);
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_serviceComponent.setCachedModel(cachedModel);
+		model.setBuildNumber(buildNumber);
 	}
 
 	/**
@@ -277,22 +217,7 @@ public class ServiceComponentWrapper implements ServiceComponent,
 	*/
 	@Override
 	public void setData(String data) {
-		_serviceComponent.setData(data);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(BaseModel<?> baseModel) {
-		_serviceComponent.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_serviceComponent.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_serviceComponent.setExpandoBridgeAttributes(serviceContext);
+		model.setData(data);
 	}
 
 	/**
@@ -302,12 +227,7 @@ public class ServiceComponentWrapper implements ServiceComponent,
 	*/
 	@Override
 	public void setMvccVersion(long mvccVersion) {
-		_serviceComponent.setMvccVersion(mvccVersion);
-	}
-
-	@Override
-	public void setNew(boolean n) {
-		_serviceComponent.setNew(n);
+		model.setMvccVersion(mvccVersion);
 	}
 
 	/**
@@ -317,12 +237,7 @@ public class ServiceComponentWrapper implements ServiceComponent,
 	*/
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_serviceComponent.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_serviceComponent.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -332,73 +247,11 @@ public class ServiceComponentWrapper implements ServiceComponent,
 	*/
 	@Override
 	public void setServiceComponentId(long serviceComponentId) {
-		_serviceComponent.setServiceComponentId(serviceComponentId);
+		model.setServiceComponentId(serviceComponentId);
 	}
 
 	@Override
-	public CacheModel<ServiceComponent> toCacheModel() {
-		return _serviceComponent.toCacheModel();
+	protected ServiceComponentWrapper wrap(ServiceComponent serviceComponent) {
+		return new ServiceComponentWrapper(serviceComponent);
 	}
-
-	@Override
-	public ServiceComponent toEscapedModel() {
-		return new ServiceComponentWrapper(_serviceComponent.toEscapedModel());
-	}
-
-	@Override
-	public String toString() {
-		return _serviceComponent.toString();
-	}
-
-	@Override
-	public ServiceComponent toUnescapedModel() {
-		return new ServiceComponentWrapper(_serviceComponent.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _serviceComponent.toXmlString();
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-
-		if (!(obj instanceof ServiceComponentWrapper)) {
-			return false;
-		}
-
-		ServiceComponentWrapper serviceComponentWrapper = (ServiceComponentWrapper)obj;
-
-		if (Objects.equals(_serviceComponent,
-					serviceComponentWrapper._serviceComponent)) {
-			return true;
-		}
-
-		return false;
-	}
-
-	@Override
-	public ServiceComponent getWrappedModel() {
-		return _serviceComponent;
-	}
-
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _serviceComponent.isEntityCacheEnabled();
-	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _serviceComponent.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_serviceComponent.resetOriginalValues();
-	}
-
-	private final ServiceComponent _serviceComponent;
 }

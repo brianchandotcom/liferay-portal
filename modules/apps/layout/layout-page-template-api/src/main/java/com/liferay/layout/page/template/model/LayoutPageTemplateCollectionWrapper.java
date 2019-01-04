@@ -16,19 +16,14 @@ package com.liferay.layout.page.template.model;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
-
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 
 import com.liferay.portal.kernel.model.ModelWrapper;
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -40,22 +35,12 @@ import java.util.Objects;
  * @generated
  */
 @ProviderType
-public class LayoutPageTemplateCollectionWrapper
+public class LayoutPageTemplateCollectionWrapper extends BaseModelWrapper<LayoutPageTemplateCollection>
 	implements LayoutPageTemplateCollection,
 		ModelWrapper<LayoutPageTemplateCollection> {
 	public LayoutPageTemplateCollectionWrapper(
 		LayoutPageTemplateCollection layoutPageTemplateCollection) {
-		_layoutPageTemplateCollection = layoutPageTemplateCollection;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return LayoutPageTemplateCollection.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return LayoutPageTemplateCollection.class.getName();
+		super(layoutPageTemplateCollection);
 	}
 
 	@Override
@@ -148,17 +133,6 @@ public class LayoutPageTemplateCollectionWrapper
 		}
 	}
 
-	@Override
-	public Object clone() {
-		return new LayoutPageTemplateCollectionWrapper((LayoutPageTemplateCollection)_layoutPageTemplateCollection.clone());
-	}
-
-	@Override
-	public int compareTo(
-		LayoutPageTemplateCollection layoutPageTemplateCollection) {
-		return _layoutPageTemplateCollection.compareTo(layoutPageTemplateCollection);
-	}
-
 	/**
 	* Returns the company ID of this layout page template collection.
 	*
@@ -166,7 +140,7 @@ public class LayoutPageTemplateCollectionWrapper
 	*/
 	@Override
 	public long getCompanyId() {
-		return _layoutPageTemplateCollection.getCompanyId();
+		return model.getCompanyId();
 	}
 
 	/**
@@ -176,7 +150,7 @@ public class LayoutPageTemplateCollectionWrapper
 	*/
 	@Override
 	public Date getCreateDate() {
-		return _layoutPageTemplateCollection.getCreateDate();
+		return model.getCreateDate();
 	}
 
 	/**
@@ -186,12 +160,7 @@ public class LayoutPageTemplateCollectionWrapper
 	*/
 	@Override
 	public String getDescription() {
-		return _layoutPageTemplateCollection.getDescription();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _layoutPageTemplateCollection.getExpandoBridge();
+		return model.getDescription();
 	}
 
 	/**
@@ -201,7 +170,7 @@ public class LayoutPageTemplateCollectionWrapper
 	*/
 	@Override
 	public long getGroupId() {
-		return _layoutPageTemplateCollection.getGroupId();
+		return model.getGroupId();
 	}
 
 	/**
@@ -211,7 +180,7 @@ public class LayoutPageTemplateCollectionWrapper
 	*/
 	@Override
 	public Date getLastPublishDate() {
-		return _layoutPageTemplateCollection.getLastPublishDate();
+		return model.getLastPublishDate();
 	}
 
 	/**
@@ -221,7 +190,7 @@ public class LayoutPageTemplateCollectionWrapper
 	*/
 	@Override
 	public long getLayoutPageTemplateCollectionId() {
-		return _layoutPageTemplateCollection.getLayoutPageTemplateCollectionId();
+		return model.getLayoutPageTemplateCollectionId();
 	}
 
 	/**
@@ -231,7 +200,7 @@ public class LayoutPageTemplateCollectionWrapper
 	*/
 	@Override
 	public Date getModifiedDate() {
-		return _layoutPageTemplateCollection.getModifiedDate();
+		return model.getModifiedDate();
 	}
 
 	/**
@@ -241,7 +210,7 @@ public class LayoutPageTemplateCollectionWrapper
 	*/
 	@Override
 	public String getName() {
-		return _layoutPageTemplateCollection.getName();
+		return model.getName();
 	}
 
 	/**
@@ -251,12 +220,7 @@ public class LayoutPageTemplateCollectionWrapper
 	*/
 	@Override
 	public long getPrimaryKey() {
-		return _layoutPageTemplateCollection.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _layoutPageTemplateCollection.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	/**
@@ -266,7 +230,7 @@ public class LayoutPageTemplateCollectionWrapper
 	*/
 	@Override
 	public long getUserId() {
-		return _layoutPageTemplateCollection.getUserId();
+		return model.getUserId();
 	}
 
 	/**
@@ -276,7 +240,7 @@ public class LayoutPageTemplateCollectionWrapper
 	*/
 	@Override
 	public String getUserName() {
-		return _layoutPageTemplateCollection.getUserName();
+		return model.getUserName();
 	}
 
 	/**
@@ -286,7 +250,7 @@ public class LayoutPageTemplateCollectionWrapper
 	*/
 	@Override
 	public String getUserUuid() {
-		return _layoutPageTemplateCollection.getUserUuid();
+		return model.getUserUuid();
 	}
 
 	/**
@@ -296,37 +260,12 @@ public class LayoutPageTemplateCollectionWrapper
 	*/
 	@Override
 	public String getUuid() {
-		return _layoutPageTemplateCollection.getUuid();
-	}
-
-	@Override
-	public int hashCode() {
-		return _layoutPageTemplateCollection.hashCode();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _layoutPageTemplateCollection.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _layoutPageTemplateCollection.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _layoutPageTemplateCollection.isNew();
+		return model.getUuid();
 	}
 
 	@Override
 	public void persist() {
-		_layoutPageTemplateCollection.persist();
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_layoutPageTemplateCollection.setCachedModel(cachedModel);
+		model.persist();
 	}
 
 	/**
@@ -336,7 +275,7 @@ public class LayoutPageTemplateCollectionWrapper
 	*/
 	@Override
 	public void setCompanyId(long companyId) {
-		_layoutPageTemplateCollection.setCompanyId(companyId);
+		model.setCompanyId(companyId);
 	}
 
 	/**
@@ -346,7 +285,7 @@ public class LayoutPageTemplateCollectionWrapper
 	*/
 	@Override
 	public void setCreateDate(Date createDate) {
-		_layoutPageTemplateCollection.setCreateDate(createDate);
+		model.setCreateDate(createDate);
 	}
 
 	/**
@@ -356,23 +295,7 @@ public class LayoutPageTemplateCollectionWrapper
 	*/
 	@Override
 	public void setDescription(String description) {
-		_layoutPageTemplateCollection.setDescription(description);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-		_layoutPageTemplateCollection.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_layoutPageTemplateCollection.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_layoutPageTemplateCollection.setExpandoBridgeAttributes(serviceContext);
+		model.setDescription(description);
 	}
 
 	/**
@@ -382,7 +305,7 @@ public class LayoutPageTemplateCollectionWrapper
 	*/
 	@Override
 	public void setGroupId(long groupId) {
-		_layoutPageTemplateCollection.setGroupId(groupId);
+		model.setGroupId(groupId);
 	}
 
 	/**
@@ -392,7 +315,7 @@ public class LayoutPageTemplateCollectionWrapper
 	*/
 	@Override
 	public void setLastPublishDate(Date lastPublishDate) {
-		_layoutPageTemplateCollection.setLastPublishDate(lastPublishDate);
+		model.setLastPublishDate(lastPublishDate);
 	}
 
 	/**
@@ -403,7 +326,7 @@ public class LayoutPageTemplateCollectionWrapper
 	@Override
 	public void setLayoutPageTemplateCollectionId(
 		long layoutPageTemplateCollectionId) {
-		_layoutPageTemplateCollection.setLayoutPageTemplateCollectionId(layoutPageTemplateCollectionId);
+		model.setLayoutPageTemplateCollectionId(layoutPageTemplateCollectionId);
 	}
 
 	/**
@@ -413,7 +336,7 @@ public class LayoutPageTemplateCollectionWrapper
 	*/
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
-		_layoutPageTemplateCollection.setModifiedDate(modifiedDate);
+		model.setModifiedDate(modifiedDate);
 	}
 
 	/**
@@ -423,12 +346,7 @@ public class LayoutPageTemplateCollectionWrapper
 	*/
 	@Override
 	public void setName(String name) {
-		_layoutPageTemplateCollection.setName(name);
-	}
-
-	@Override
-	public void setNew(boolean n) {
-		_layoutPageTemplateCollection.setNew(n);
+		model.setName(name);
 	}
 
 	/**
@@ -438,12 +356,7 @@ public class LayoutPageTemplateCollectionWrapper
 	*/
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_layoutPageTemplateCollection.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_layoutPageTemplateCollection.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -453,7 +366,7 @@ public class LayoutPageTemplateCollectionWrapper
 	*/
 	@Override
 	public void setUserId(long userId) {
-		_layoutPageTemplateCollection.setUserId(userId);
+		model.setUserId(userId);
 	}
 
 	/**
@@ -463,7 +376,7 @@ public class LayoutPageTemplateCollectionWrapper
 	*/
 	@Override
 	public void setUserName(String userName) {
-		_layoutPageTemplateCollection.setUserName(userName);
+		model.setUserName(userName);
 	}
 
 	/**
@@ -473,7 +386,7 @@ public class LayoutPageTemplateCollectionWrapper
 	*/
 	@Override
 	public void setUserUuid(String userUuid) {
-		_layoutPageTemplateCollection.setUserUuid(userUuid);
+		model.setUserUuid(userUuid);
 	}
 
 	/**
@@ -483,78 +396,17 @@ public class LayoutPageTemplateCollectionWrapper
 	*/
 	@Override
 	public void setUuid(String uuid) {
-		_layoutPageTemplateCollection.setUuid(uuid);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<LayoutPageTemplateCollection> toCacheModel() {
-		return _layoutPageTemplateCollection.toCacheModel();
-	}
-
-	@Override
-	public LayoutPageTemplateCollection toEscapedModel() {
-		return new LayoutPageTemplateCollectionWrapper(_layoutPageTemplateCollection.toEscapedModel());
-	}
-
-	@Override
-	public String toString() {
-		return _layoutPageTemplateCollection.toString();
-	}
-
-	@Override
-	public LayoutPageTemplateCollection toUnescapedModel() {
-		return new LayoutPageTemplateCollectionWrapper(_layoutPageTemplateCollection.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _layoutPageTemplateCollection.toXmlString();
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-
-		if (!(obj instanceof LayoutPageTemplateCollectionWrapper)) {
-			return false;
-		}
-
-		LayoutPageTemplateCollectionWrapper layoutPageTemplateCollectionWrapper = (LayoutPageTemplateCollectionWrapper)obj;
-
-		if (Objects.equals(_layoutPageTemplateCollection,
-					layoutPageTemplateCollectionWrapper._layoutPageTemplateCollection)) {
-			return true;
-		}
-
-		return false;
+		model.setUuid(uuid);
 	}
 
 	@Override
 	public StagedModelType getStagedModelType() {
-		return _layoutPageTemplateCollection.getStagedModelType();
+		return model.getStagedModelType();
 	}
 
 	@Override
-	public LayoutPageTemplateCollection getWrappedModel() {
-		return _layoutPageTemplateCollection;
+	protected LayoutPageTemplateCollectionWrapper wrap(
+		LayoutPageTemplateCollection layoutPageTemplateCollection) {
+		return new LayoutPageTemplateCollectionWrapper(layoutPageTemplateCollection);
 	}
-
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _layoutPageTemplateCollection.isEntityCacheEnabled();
-	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _layoutPageTemplateCollection.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_layoutPageTemplateCollection.resetOriginalValues();
-	}
-
-	private final LayoutPageTemplateCollection _layoutPageTemplateCollection;
 }

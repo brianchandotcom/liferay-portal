@@ -16,19 +16,14 @@ package com.liferay.dynamic.data.mapping.model;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
-
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 
 import com.liferay.portal.kernel.model.ModelWrapper;
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -40,20 +35,10 @@ import java.util.Objects;
  * @generated
  */
 @ProviderType
-public class DDMStructureLayoutWrapper implements DDMStructureLayout,
-	ModelWrapper<DDMStructureLayout> {
+public class DDMStructureLayoutWrapper extends BaseModelWrapper<DDMStructureLayout>
+	implements DDMStructureLayout, ModelWrapper<DDMStructureLayout> {
 	public DDMStructureLayoutWrapper(DDMStructureLayout ddmStructureLayout) {
-		_ddmStructureLayout = ddmStructureLayout;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return DDMStructureLayout.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return DDMStructureLayout.class.getName();
+		super(ddmStructureLayout);
 	}
 
 	@Override
@@ -137,16 +122,6 @@ public class DDMStructureLayoutWrapper implements DDMStructureLayout,
 		}
 	}
 
-	@Override
-	public Object clone() {
-		return new DDMStructureLayoutWrapper((DDMStructureLayout)_ddmStructureLayout.clone());
-	}
-
-	@Override
-	public int compareTo(DDMStructureLayout ddmStructureLayout) {
-		return _ddmStructureLayout.compareTo(ddmStructureLayout);
-	}
-
 	/**
 	* Returns the company ID of this ddm structure layout.
 	*
@@ -154,7 +129,7 @@ public class DDMStructureLayoutWrapper implements DDMStructureLayout,
 	*/
 	@Override
 	public long getCompanyId() {
-		return _ddmStructureLayout.getCompanyId();
+		return model.getCompanyId();
 	}
 
 	/**
@@ -164,12 +139,12 @@ public class DDMStructureLayoutWrapper implements DDMStructureLayout,
 	*/
 	@Override
 	public Date getCreateDate() {
-		return _ddmStructureLayout.getCreateDate();
+		return model.getCreateDate();
 	}
 
 	@Override
 	public DDMFormLayout getDDMFormLayout() {
-		return _ddmStructureLayout.getDDMFormLayout();
+		return model.getDDMFormLayout();
 	}
 
 	/**
@@ -179,12 +154,7 @@ public class DDMStructureLayoutWrapper implements DDMStructureLayout,
 	*/
 	@Override
 	public String getDefinition() {
-		return _ddmStructureLayout.getDefinition();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _ddmStructureLayout.getExpandoBridge();
+		return model.getDefinition();
 	}
 
 	/**
@@ -194,7 +164,7 @@ public class DDMStructureLayoutWrapper implements DDMStructureLayout,
 	*/
 	@Override
 	public long getGroupId() {
-		return _ddmStructureLayout.getGroupId();
+		return model.getGroupId();
 	}
 
 	/**
@@ -204,7 +174,7 @@ public class DDMStructureLayoutWrapper implements DDMStructureLayout,
 	*/
 	@Override
 	public Date getModifiedDate() {
-		return _ddmStructureLayout.getModifiedDate();
+		return model.getModifiedDate();
 	}
 
 	/**
@@ -214,12 +184,7 @@ public class DDMStructureLayoutWrapper implements DDMStructureLayout,
 	*/
 	@Override
 	public long getPrimaryKey() {
-		return _ddmStructureLayout.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _ddmStructureLayout.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	/**
@@ -229,7 +194,7 @@ public class DDMStructureLayoutWrapper implements DDMStructureLayout,
 	*/
 	@Override
 	public long getStructureLayoutId() {
-		return _ddmStructureLayout.getStructureLayoutId();
+		return model.getStructureLayoutId();
 	}
 
 	/**
@@ -239,7 +204,7 @@ public class DDMStructureLayoutWrapper implements DDMStructureLayout,
 	*/
 	@Override
 	public long getStructureVersionId() {
-		return _ddmStructureLayout.getStructureVersionId();
+		return model.getStructureVersionId();
 	}
 
 	/**
@@ -249,7 +214,7 @@ public class DDMStructureLayoutWrapper implements DDMStructureLayout,
 	*/
 	@Override
 	public long getUserId() {
-		return _ddmStructureLayout.getUserId();
+		return model.getUserId();
 	}
 
 	/**
@@ -259,7 +224,7 @@ public class DDMStructureLayoutWrapper implements DDMStructureLayout,
 	*/
 	@Override
 	public String getUserName() {
-		return _ddmStructureLayout.getUserName();
+		return model.getUserName();
 	}
 
 	/**
@@ -269,7 +234,7 @@ public class DDMStructureLayoutWrapper implements DDMStructureLayout,
 	*/
 	@Override
 	public String getUserUuid() {
-		return _ddmStructureLayout.getUserUuid();
+		return model.getUserUuid();
 	}
 
 	/**
@@ -279,37 +244,12 @@ public class DDMStructureLayoutWrapper implements DDMStructureLayout,
 	*/
 	@Override
 	public String getUuid() {
-		return _ddmStructureLayout.getUuid();
-	}
-
-	@Override
-	public int hashCode() {
-		return _ddmStructureLayout.hashCode();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _ddmStructureLayout.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _ddmStructureLayout.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _ddmStructureLayout.isNew();
+		return model.getUuid();
 	}
 
 	@Override
 	public void persist() {
-		_ddmStructureLayout.persist();
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_ddmStructureLayout.setCachedModel(cachedModel);
+		model.persist();
 	}
 
 	/**
@@ -319,7 +259,7 @@ public class DDMStructureLayoutWrapper implements DDMStructureLayout,
 	*/
 	@Override
 	public void setCompanyId(long companyId) {
-		_ddmStructureLayout.setCompanyId(companyId);
+		model.setCompanyId(companyId);
 	}
 
 	/**
@@ -329,7 +269,7 @@ public class DDMStructureLayoutWrapper implements DDMStructureLayout,
 	*/
 	@Override
 	public void setCreateDate(Date createDate) {
-		_ddmStructureLayout.setCreateDate(createDate);
+		model.setCreateDate(createDate);
 	}
 
 	/**
@@ -339,23 +279,7 @@ public class DDMStructureLayoutWrapper implements DDMStructureLayout,
 	*/
 	@Override
 	public void setDefinition(String definition) {
-		_ddmStructureLayout.setDefinition(definition);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-		_ddmStructureLayout.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_ddmStructureLayout.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_ddmStructureLayout.setExpandoBridgeAttributes(serviceContext);
+		model.setDefinition(definition);
 	}
 
 	/**
@@ -365,7 +289,7 @@ public class DDMStructureLayoutWrapper implements DDMStructureLayout,
 	*/
 	@Override
 	public void setGroupId(long groupId) {
-		_ddmStructureLayout.setGroupId(groupId);
+		model.setGroupId(groupId);
 	}
 
 	/**
@@ -375,12 +299,7 @@ public class DDMStructureLayoutWrapper implements DDMStructureLayout,
 	*/
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
-		_ddmStructureLayout.setModifiedDate(modifiedDate);
-	}
-
-	@Override
-	public void setNew(boolean n) {
-		_ddmStructureLayout.setNew(n);
+		model.setModifiedDate(modifiedDate);
 	}
 
 	/**
@@ -390,12 +309,7 @@ public class DDMStructureLayoutWrapper implements DDMStructureLayout,
 	*/
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_ddmStructureLayout.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_ddmStructureLayout.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -405,7 +319,7 @@ public class DDMStructureLayoutWrapper implements DDMStructureLayout,
 	*/
 	@Override
 	public void setStructureLayoutId(long structureLayoutId) {
-		_ddmStructureLayout.setStructureLayoutId(structureLayoutId);
+		model.setStructureLayoutId(structureLayoutId);
 	}
 
 	/**
@@ -415,7 +329,7 @@ public class DDMStructureLayoutWrapper implements DDMStructureLayout,
 	*/
 	@Override
 	public void setStructureVersionId(long structureVersionId) {
-		_ddmStructureLayout.setStructureVersionId(structureVersionId);
+		model.setStructureVersionId(structureVersionId);
 	}
 
 	/**
@@ -425,7 +339,7 @@ public class DDMStructureLayoutWrapper implements DDMStructureLayout,
 	*/
 	@Override
 	public void setUserId(long userId) {
-		_ddmStructureLayout.setUserId(userId);
+		model.setUserId(userId);
 	}
 
 	/**
@@ -435,7 +349,7 @@ public class DDMStructureLayoutWrapper implements DDMStructureLayout,
 	*/
 	@Override
 	public void setUserName(String userName) {
-		_ddmStructureLayout.setUserName(userName);
+		model.setUserName(userName);
 	}
 
 	/**
@@ -445,7 +359,7 @@ public class DDMStructureLayoutWrapper implements DDMStructureLayout,
 	*/
 	@Override
 	public void setUserUuid(String userUuid) {
-		_ddmStructureLayout.setUserUuid(userUuid);
+		model.setUserUuid(userUuid);
 	}
 
 	/**
@@ -455,78 +369,17 @@ public class DDMStructureLayoutWrapper implements DDMStructureLayout,
 	*/
 	@Override
 	public void setUuid(String uuid) {
-		_ddmStructureLayout.setUuid(uuid);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<DDMStructureLayout> toCacheModel() {
-		return _ddmStructureLayout.toCacheModel();
-	}
-
-	@Override
-	public DDMStructureLayout toEscapedModel() {
-		return new DDMStructureLayoutWrapper(_ddmStructureLayout.toEscapedModel());
-	}
-
-	@Override
-	public String toString() {
-		return _ddmStructureLayout.toString();
-	}
-
-	@Override
-	public DDMStructureLayout toUnescapedModel() {
-		return new DDMStructureLayoutWrapper(_ddmStructureLayout.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _ddmStructureLayout.toXmlString();
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-
-		if (!(obj instanceof DDMStructureLayoutWrapper)) {
-			return false;
-		}
-
-		DDMStructureLayoutWrapper ddmStructureLayoutWrapper = (DDMStructureLayoutWrapper)obj;
-
-		if (Objects.equals(_ddmStructureLayout,
-					ddmStructureLayoutWrapper._ddmStructureLayout)) {
-			return true;
-		}
-
-		return false;
+		model.setUuid(uuid);
 	}
 
 	@Override
 	public StagedModelType getStagedModelType() {
-		return _ddmStructureLayout.getStagedModelType();
+		return model.getStagedModelType();
 	}
 
 	@Override
-	public DDMStructureLayout getWrappedModel() {
-		return _ddmStructureLayout;
+	protected DDMStructureLayoutWrapper wrap(
+		DDMStructureLayout ddmStructureLayout) {
+		return new DDMStructureLayoutWrapper(ddmStructureLayout);
 	}
-
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _ddmStructureLayout.isEntityCacheEnabled();
-	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _ddmStructureLayout.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_ddmStructureLayout.resetOriginalValues();
-	}
-
-	private final DDMStructureLayout _ddmStructureLayout;
 }

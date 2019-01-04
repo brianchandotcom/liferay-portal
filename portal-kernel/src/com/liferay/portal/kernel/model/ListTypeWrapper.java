@@ -16,15 +16,10 @@ package com.liferay.portal.kernel.model;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
-
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -36,19 +31,10 @@ import java.util.Objects;
  * @generated
  */
 @ProviderType
-public class ListTypeWrapper implements ListType, ModelWrapper<ListType> {
+public class ListTypeWrapper extends BaseModelWrapper<ListType>
+	implements ListType, ModelWrapper<ListType> {
 	public ListTypeWrapper(ListType listType) {
-		_listType = listType;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return ListType.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return ListType.class.getName();
+		super(listType);
 	}
 
 	@Override
@@ -90,21 +76,6 @@ public class ListTypeWrapper implements ListType, ModelWrapper<ListType> {
 		}
 	}
 
-	@Override
-	public Object clone() {
-		return new ListTypeWrapper((ListType)_listType.clone());
-	}
-
-	@Override
-	public int compareTo(ListType listType) {
-		return _listType.compareTo(listType);
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _listType.getExpandoBridge();
-	}
-
 	/**
 	* Returns the list type ID of this list type.
 	*
@@ -112,7 +83,7 @@ public class ListTypeWrapper implements ListType, ModelWrapper<ListType> {
 	*/
 	@Override
 	public long getListTypeId() {
-		return _listType.getListTypeId();
+		return model.getListTypeId();
 	}
 
 	/**
@@ -122,7 +93,7 @@ public class ListTypeWrapper implements ListType, ModelWrapper<ListType> {
 	*/
 	@Override
 	public long getMvccVersion() {
-		return _listType.getMvccVersion();
+		return model.getMvccVersion();
 	}
 
 	/**
@@ -132,7 +103,7 @@ public class ListTypeWrapper implements ListType, ModelWrapper<ListType> {
 	*/
 	@Override
 	public String getName() {
-		return _listType.getName();
+		return model.getName();
 	}
 
 	/**
@@ -142,12 +113,7 @@ public class ListTypeWrapper implements ListType, ModelWrapper<ListType> {
 	*/
 	@Override
 	public long getPrimaryKey() {
-		return _listType.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _listType.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	/**
@@ -157,52 +123,12 @@ public class ListTypeWrapper implements ListType, ModelWrapper<ListType> {
 	*/
 	@Override
 	public String getType() {
-		return _listType.getType();
-	}
-
-	@Override
-	public int hashCode() {
-		return _listType.hashCode();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _listType.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _listType.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _listType.isNew();
+		return model.getType();
 	}
 
 	@Override
 	public void persist() {
-		_listType.persist();
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_listType.setCachedModel(cachedModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(BaseModel<?> baseModel) {
-		_listType.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_listType.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_listType.setExpandoBridgeAttributes(serviceContext);
+		model.persist();
 	}
 
 	/**
@@ -212,7 +138,7 @@ public class ListTypeWrapper implements ListType, ModelWrapper<ListType> {
 	*/
 	@Override
 	public void setListTypeId(long listTypeId) {
-		_listType.setListTypeId(listTypeId);
+		model.setListTypeId(listTypeId);
 	}
 
 	/**
@@ -222,7 +148,7 @@ public class ListTypeWrapper implements ListType, ModelWrapper<ListType> {
 	*/
 	@Override
 	public void setMvccVersion(long mvccVersion) {
-		_listType.setMvccVersion(mvccVersion);
+		model.setMvccVersion(mvccVersion);
 	}
 
 	/**
@@ -232,12 +158,7 @@ public class ListTypeWrapper implements ListType, ModelWrapper<ListType> {
 	*/
 	@Override
 	public void setName(String name) {
-		_listType.setName(name);
-	}
-
-	@Override
-	public void setNew(boolean n) {
-		_listType.setNew(n);
+		model.setName(name);
 	}
 
 	/**
@@ -247,12 +168,7 @@ public class ListTypeWrapper implements ListType, ModelWrapper<ListType> {
 	*/
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_listType.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_listType.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -262,72 +178,11 @@ public class ListTypeWrapper implements ListType, ModelWrapper<ListType> {
 	*/
 	@Override
 	public void setType(String type) {
-		_listType.setType(type);
+		model.setType(type);
 	}
 
 	@Override
-	public CacheModel<ListType> toCacheModel() {
-		return _listType.toCacheModel();
+	protected ListTypeWrapper wrap(ListType listType) {
+		return new ListTypeWrapper(listType);
 	}
-
-	@Override
-	public ListType toEscapedModel() {
-		return new ListTypeWrapper(_listType.toEscapedModel());
-	}
-
-	@Override
-	public String toString() {
-		return _listType.toString();
-	}
-
-	@Override
-	public ListType toUnescapedModel() {
-		return new ListTypeWrapper(_listType.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _listType.toXmlString();
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-
-		if (!(obj instanceof ListTypeWrapper)) {
-			return false;
-		}
-
-		ListTypeWrapper listTypeWrapper = (ListTypeWrapper)obj;
-
-		if (Objects.equals(_listType, listTypeWrapper._listType)) {
-			return true;
-		}
-
-		return false;
-	}
-
-	@Override
-	public ListType getWrappedModel() {
-		return _listType;
-	}
-
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _listType.isEntityCacheEnabled();
-	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _listType.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_listType.resetOriginalValues();
-	}
-
-	private final ListType _listType;
 }

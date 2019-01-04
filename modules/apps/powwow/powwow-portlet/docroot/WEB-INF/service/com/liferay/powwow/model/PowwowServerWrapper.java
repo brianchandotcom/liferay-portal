@@ -16,17 +16,12 @@ package com.liferay.powwow.model;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
-
 import com.liferay.portal.kernel.model.ModelWrapper;
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -38,20 +33,10 @@ import java.util.Objects;
  * @generated
  */
 @ProviderType
-public class PowwowServerWrapper implements PowwowServer,
-	ModelWrapper<PowwowServer> {
+public class PowwowServerWrapper extends BaseModelWrapper<PowwowServer>
+	implements PowwowServer, ModelWrapper<PowwowServer> {
 	public PowwowServerWrapper(PowwowServer powwowServer) {
-		_powwowServer = powwowServer;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return PowwowServer.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return PowwowServer.class.getName();
+		super(powwowServer);
 	}
 
 	@Override
@@ -149,16 +134,6 @@ public class PowwowServerWrapper implements PowwowServer,
 		}
 	}
 
-	@Override
-	public Object clone() {
-		return new PowwowServerWrapper((PowwowServer)_powwowServer.clone());
-	}
-
-	@Override
-	public int compareTo(PowwowServer powwowServer) {
-		return _powwowServer.compareTo(powwowServer);
-	}
-
 	/**
 	* Returns the active of this powwow server.
 	*
@@ -166,7 +141,7 @@ public class PowwowServerWrapper implements PowwowServer,
 	*/
 	@Override
 	public boolean getActive() {
-		return _powwowServer.getActive();
+		return model.getActive();
 	}
 
 	/**
@@ -176,7 +151,7 @@ public class PowwowServerWrapper implements PowwowServer,
 	*/
 	@Override
 	public String getApiKey() {
-		return _powwowServer.getApiKey();
+		return model.getApiKey();
 	}
 
 	/**
@@ -186,7 +161,7 @@ public class PowwowServerWrapper implements PowwowServer,
 	*/
 	@Override
 	public long getCompanyId() {
-		return _powwowServer.getCompanyId();
+		return model.getCompanyId();
 	}
 
 	/**
@@ -196,12 +171,7 @@ public class PowwowServerWrapper implements PowwowServer,
 	*/
 	@Override
 	public Date getCreateDate() {
-		return _powwowServer.getCreateDate();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _powwowServer.getExpandoBridge();
+		return model.getCreateDate();
 	}
 
 	/**
@@ -211,7 +181,7 @@ public class PowwowServerWrapper implements PowwowServer,
 	*/
 	@Override
 	public Date getModifiedDate() {
-		return _powwowServer.getModifiedDate();
+		return model.getModifiedDate();
 	}
 
 	/**
@@ -221,7 +191,7 @@ public class PowwowServerWrapper implements PowwowServer,
 	*/
 	@Override
 	public String getName() {
-		return _powwowServer.getName();
+		return model.getName();
 	}
 
 	/**
@@ -231,7 +201,7 @@ public class PowwowServerWrapper implements PowwowServer,
 	*/
 	@Override
 	public long getPowwowServerId() {
-		return _powwowServer.getPowwowServerId();
+		return model.getPowwowServerId();
 	}
 
 	/**
@@ -241,12 +211,7 @@ public class PowwowServerWrapper implements PowwowServer,
 	*/
 	@Override
 	public long getPrimaryKey() {
-		return _powwowServer.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _powwowServer.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	/**
@@ -256,7 +221,7 @@ public class PowwowServerWrapper implements PowwowServer,
 	*/
 	@Override
 	public String getProviderType() {
-		return _powwowServer.getProviderType();
+		return model.getProviderType();
 	}
 
 	/**
@@ -266,7 +231,7 @@ public class PowwowServerWrapper implements PowwowServer,
 	*/
 	@Override
 	public String getSecret() {
-		return _powwowServer.getSecret();
+		return model.getSecret();
 	}
 
 	/**
@@ -276,7 +241,7 @@ public class PowwowServerWrapper implements PowwowServer,
 	*/
 	@Override
 	public String getUrl() {
-		return _powwowServer.getUrl();
+		return model.getUrl();
 	}
 
 	/**
@@ -286,7 +251,7 @@ public class PowwowServerWrapper implements PowwowServer,
 	*/
 	@Override
 	public long getUserId() {
-		return _powwowServer.getUserId();
+		return model.getUserId();
 	}
 
 	/**
@@ -296,7 +261,7 @@ public class PowwowServerWrapper implements PowwowServer,
 	*/
 	@Override
 	public String getUserName() {
-		return _powwowServer.getUserName();
+		return model.getUserName();
 	}
 
 	/**
@@ -306,12 +271,7 @@ public class PowwowServerWrapper implements PowwowServer,
 	*/
 	@Override
 	public String getUserUuid() {
-		return _powwowServer.getUserUuid();
-	}
-
-	@Override
-	public int hashCode() {
-		return _powwowServer.hashCode();
+		return model.getUserUuid();
 	}
 
 	/**
@@ -321,27 +281,12 @@ public class PowwowServerWrapper implements PowwowServer,
 	*/
 	@Override
 	public boolean isActive() {
-		return _powwowServer.isActive();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _powwowServer.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _powwowServer.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _powwowServer.isNew();
+		return model.isActive();
 	}
 
 	@Override
 	public void persist() {
-		_powwowServer.persist();
+		model.persist();
 	}
 
 	/**
@@ -351,7 +296,7 @@ public class PowwowServerWrapper implements PowwowServer,
 	*/
 	@Override
 	public void setActive(boolean active) {
-		_powwowServer.setActive(active);
+		model.setActive(active);
 	}
 
 	/**
@@ -361,12 +306,7 @@ public class PowwowServerWrapper implements PowwowServer,
 	*/
 	@Override
 	public void setApiKey(String apiKey) {
-		_powwowServer.setApiKey(apiKey);
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_powwowServer.setCachedModel(cachedModel);
+		model.setApiKey(apiKey);
 	}
 
 	/**
@@ -376,7 +316,7 @@ public class PowwowServerWrapper implements PowwowServer,
 	*/
 	@Override
 	public void setCompanyId(long companyId) {
-		_powwowServer.setCompanyId(companyId);
+		model.setCompanyId(companyId);
 	}
 
 	/**
@@ -386,23 +326,7 @@ public class PowwowServerWrapper implements PowwowServer,
 	*/
 	@Override
 	public void setCreateDate(Date createDate) {
-		_powwowServer.setCreateDate(createDate);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-		_powwowServer.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_powwowServer.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_powwowServer.setExpandoBridgeAttributes(serviceContext);
+		model.setCreateDate(createDate);
 	}
 
 	/**
@@ -412,7 +336,7 @@ public class PowwowServerWrapper implements PowwowServer,
 	*/
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
-		_powwowServer.setModifiedDate(modifiedDate);
+		model.setModifiedDate(modifiedDate);
 	}
 
 	/**
@@ -422,12 +346,7 @@ public class PowwowServerWrapper implements PowwowServer,
 	*/
 	@Override
 	public void setName(String name) {
-		_powwowServer.setName(name);
-	}
-
-	@Override
-	public void setNew(boolean n) {
-		_powwowServer.setNew(n);
+		model.setName(name);
 	}
 
 	/**
@@ -437,7 +356,7 @@ public class PowwowServerWrapper implements PowwowServer,
 	*/
 	@Override
 	public void setPowwowServerId(long powwowServerId) {
-		_powwowServer.setPowwowServerId(powwowServerId);
+		model.setPowwowServerId(powwowServerId);
 	}
 
 	/**
@@ -447,12 +366,7 @@ public class PowwowServerWrapper implements PowwowServer,
 	*/
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_powwowServer.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_powwowServer.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -462,7 +376,7 @@ public class PowwowServerWrapper implements PowwowServer,
 	*/
 	@Override
 	public void setProviderType(String providerType) {
-		_powwowServer.setProviderType(providerType);
+		model.setProviderType(providerType);
 	}
 
 	/**
@@ -472,7 +386,7 @@ public class PowwowServerWrapper implements PowwowServer,
 	*/
 	@Override
 	public void setSecret(String secret) {
-		_powwowServer.setSecret(secret);
+		model.setSecret(secret);
 	}
 
 	/**
@@ -482,7 +396,7 @@ public class PowwowServerWrapper implements PowwowServer,
 	*/
 	@Override
 	public void setUrl(String url) {
-		_powwowServer.setUrl(url);
+		model.setUrl(url);
 	}
 
 	/**
@@ -492,7 +406,7 @@ public class PowwowServerWrapper implements PowwowServer,
 	*/
 	@Override
 	public void setUserId(long userId) {
-		_powwowServer.setUserId(userId);
+		model.setUserId(userId);
 	}
 
 	/**
@@ -502,7 +416,7 @@ public class PowwowServerWrapper implements PowwowServer,
 	*/
 	@Override
 	public void setUserName(String userName) {
-		_powwowServer.setUserName(userName);
+		model.setUserName(userName);
 	}
 
 	/**
@@ -512,72 +426,11 @@ public class PowwowServerWrapper implements PowwowServer,
 	*/
 	@Override
 	public void setUserUuid(String userUuid) {
-		_powwowServer.setUserUuid(userUuid);
+		model.setUserUuid(userUuid);
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.CacheModel<PowwowServer> toCacheModel() {
-		return _powwowServer.toCacheModel();
+	protected PowwowServerWrapper wrap(PowwowServer powwowServer) {
+		return new PowwowServerWrapper(powwowServer);
 	}
-
-	@Override
-	public PowwowServer toEscapedModel() {
-		return new PowwowServerWrapper(_powwowServer.toEscapedModel());
-	}
-
-	@Override
-	public String toString() {
-		return _powwowServer.toString();
-	}
-
-	@Override
-	public PowwowServer toUnescapedModel() {
-		return new PowwowServerWrapper(_powwowServer.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _powwowServer.toXmlString();
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-
-		if (!(obj instanceof PowwowServerWrapper)) {
-			return false;
-		}
-
-		PowwowServerWrapper powwowServerWrapper = (PowwowServerWrapper)obj;
-
-		if (Objects.equals(_powwowServer, powwowServerWrapper._powwowServer)) {
-			return true;
-		}
-
-		return false;
-	}
-
-	@Override
-	public PowwowServer getWrappedModel() {
-		return _powwowServer;
-	}
-
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _powwowServer.isEntityCacheEnabled();
-	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _powwowServer.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_powwowServer.resetOriginalValues();
-	}
-
-	private final PowwowServer _powwowServer;
 }

@@ -16,19 +16,14 @@ package com.liferay.asset.kernel.model;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
-
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 
 import com.liferay.portal.kernel.model.ModelWrapper;
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -40,20 +35,10 @@ import java.util.Objects;
  * @generated
  */
 @ProviderType
-public class AssetVocabularyWrapper implements AssetVocabulary,
-	ModelWrapper<AssetVocabulary> {
+public class AssetVocabularyWrapper extends BaseModelWrapper<AssetVocabulary>
+	implements AssetVocabulary, ModelWrapper<AssetVocabulary> {
 	public AssetVocabularyWrapper(AssetVocabulary assetVocabulary) {
-		_assetVocabulary = assetVocabulary;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return AssetVocabulary.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return AssetVocabulary.class.getName();
+		super(assetVocabulary);
 	}
 
 	@Override
@@ -167,28 +152,18 @@ public class AssetVocabularyWrapper implements AssetVocabulary,
 	}
 
 	@Override
-	public Object clone() {
-		return new AssetVocabularyWrapper((AssetVocabulary)_assetVocabulary.clone());
-	}
-
-	@Override
-	public int compareTo(AssetVocabulary assetVocabulary) {
-		return _assetVocabulary.compareTo(assetVocabulary);
-	}
-
-	@Override
 	public String[] getAvailableLanguageIds() {
-		return _assetVocabulary.getAvailableLanguageIds();
+		return model.getAvailableLanguageIds();
 	}
 
 	@Override
 	public java.util.List<AssetCategory> getCategories() {
-		return _assetVocabulary.getCategories();
+		return model.getCategories();
 	}
 
 	@Override
 	public int getCategoriesCount() {
-		return _assetVocabulary.getCategoriesCount();
+		return model.getCategoriesCount();
 	}
 
 	/**
@@ -198,7 +173,7 @@ public class AssetVocabularyWrapper implements AssetVocabulary,
 	*/
 	@Override
 	public long getCompanyId() {
-		return _assetVocabulary.getCompanyId();
+		return model.getCompanyId();
 	}
 
 	/**
@@ -208,12 +183,12 @@ public class AssetVocabularyWrapper implements AssetVocabulary,
 	*/
 	@Override
 	public Date getCreateDate() {
-		return _assetVocabulary.getCreateDate();
+		return model.getCreateDate();
 	}
 
 	@Override
 	public String getDefaultLanguageId() {
-		return _assetVocabulary.getDefaultLanguageId();
+		return model.getDefaultLanguageId();
 	}
 
 	/**
@@ -223,7 +198,7 @@ public class AssetVocabularyWrapper implements AssetVocabulary,
 	*/
 	@Override
 	public String getDescription() {
-		return _assetVocabulary.getDescription();
+		return model.getDescription();
 	}
 
 	/**
@@ -234,7 +209,7 @@ public class AssetVocabularyWrapper implements AssetVocabulary,
 	*/
 	@Override
 	public String getDescription(java.util.Locale locale) {
-		return _assetVocabulary.getDescription(locale);
+		return model.getDescription(locale);
 	}
 
 	/**
@@ -246,7 +221,7 @@ public class AssetVocabularyWrapper implements AssetVocabulary,
 	*/
 	@Override
 	public String getDescription(java.util.Locale locale, boolean useDefault) {
-		return _assetVocabulary.getDescription(locale, useDefault);
+		return model.getDescription(locale, useDefault);
 	}
 
 	/**
@@ -257,7 +232,7 @@ public class AssetVocabularyWrapper implements AssetVocabulary,
 	*/
 	@Override
 	public String getDescription(String languageId) {
-		return _assetVocabulary.getDescription(languageId);
+		return model.getDescription(languageId);
 	}
 
 	/**
@@ -269,17 +244,17 @@ public class AssetVocabularyWrapper implements AssetVocabulary,
 	*/
 	@Override
 	public String getDescription(String languageId, boolean useDefault) {
-		return _assetVocabulary.getDescription(languageId, useDefault);
+		return model.getDescription(languageId, useDefault);
 	}
 
 	@Override
 	public String getDescriptionCurrentLanguageId() {
-		return _assetVocabulary.getDescriptionCurrentLanguageId();
+		return model.getDescriptionCurrentLanguageId();
 	}
 
 	@Override
 	public String getDescriptionCurrentValue() {
-		return _assetVocabulary.getDescriptionCurrentValue();
+		return model.getDescriptionCurrentValue();
 	}
 
 	/**
@@ -289,12 +264,7 @@ public class AssetVocabularyWrapper implements AssetVocabulary,
 	*/
 	@Override
 	public Map<java.util.Locale, String> getDescriptionMap() {
-		return _assetVocabulary.getDescriptionMap();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _assetVocabulary.getExpandoBridge();
+		return model.getDescriptionMap();
 	}
 
 	/**
@@ -304,7 +274,7 @@ public class AssetVocabularyWrapper implements AssetVocabulary,
 	*/
 	@Override
 	public String getExternalReferenceCode() {
-		return _assetVocabulary.getExternalReferenceCode();
+		return model.getExternalReferenceCode();
 	}
 
 	/**
@@ -314,7 +284,7 @@ public class AssetVocabularyWrapper implements AssetVocabulary,
 	*/
 	@Override
 	public long getGroupId() {
-		return _assetVocabulary.getGroupId();
+		return model.getGroupId();
 	}
 
 	/**
@@ -324,7 +294,7 @@ public class AssetVocabularyWrapper implements AssetVocabulary,
 	*/
 	@Override
 	public Date getLastPublishDate() {
-		return _assetVocabulary.getLastPublishDate();
+		return model.getLastPublishDate();
 	}
 
 	/**
@@ -334,7 +304,7 @@ public class AssetVocabularyWrapper implements AssetVocabulary,
 	*/
 	@Override
 	public Date getModifiedDate() {
-		return _assetVocabulary.getModifiedDate();
+		return model.getModifiedDate();
 	}
 
 	/**
@@ -344,7 +314,7 @@ public class AssetVocabularyWrapper implements AssetVocabulary,
 	*/
 	@Override
 	public String getName() {
-		return _assetVocabulary.getName();
+		return model.getName();
 	}
 
 	/**
@@ -354,27 +324,22 @@ public class AssetVocabularyWrapper implements AssetVocabulary,
 	*/
 	@Override
 	public long getPrimaryKey() {
-		return _assetVocabulary.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _assetVocabulary.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	@Override
 	public long[] getRequiredClassNameIds() {
-		return _assetVocabulary.getRequiredClassNameIds();
+		return model.getRequiredClassNameIds();
 	}
 
 	@Override
 	public long[] getSelectedClassNameIds() {
-		return _assetVocabulary.getSelectedClassNameIds();
+		return model.getSelectedClassNameIds();
 	}
 
 	@Override
 	public long[] getSelectedClassTypePKs() {
-		return _assetVocabulary.getSelectedClassTypePKs();
+		return model.getSelectedClassTypePKs();
 	}
 
 	/**
@@ -384,7 +349,7 @@ public class AssetVocabularyWrapper implements AssetVocabulary,
 	*/
 	@Override
 	public String getSettings() {
-		return _assetVocabulary.getSettings();
+		return model.getSettings();
 	}
 
 	/**
@@ -393,7 +358,7 @@ public class AssetVocabularyWrapper implements AssetVocabulary,
 	@Deprecated
 	@Override
 	public com.liferay.portal.kernel.util.UnicodeProperties getSettingsProperties() {
-		return _assetVocabulary.getSettingsProperties();
+		return model.getSettingsProperties();
 	}
 
 	/**
@@ -403,7 +368,7 @@ public class AssetVocabularyWrapper implements AssetVocabulary,
 	*/
 	@Override
 	public String getTitle() {
-		return _assetVocabulary.getTitle();
+		return model.getTitle();
 	}
 
 	/**
@@ -414,7 +379,7 @@ public class AssetVocabularyWrapper implements AssetVocabulary,
 	*/
 	@Override
 	public String getTitle(java.util.Locale locale) {
-		return _assetVocabulary.getTitle(locale);
+		return model.getTitle(locale);
 	}
 
 	/**
@@ -426,7 +391,7 @@ public class AssetVocabularyWrapper implements AssetVocabulary,
 	*/
 	@Override
 	public String getTitle(java.util.Locale locale, boolean useDefault) {
-		return _assetVocabulary.getTitle(locale, useDefault);
+		return model.getTitle(locale, useDefault);
 	}
 
 	/**
@@ -437,7 +402,7 @@ public class AssetVocabularyWrapper implements AssetVocabulary,
 	*/
 	@Override
 	public String getTitle(String languageId) {
-		return _assetVocabulary.getTitle(languageId);
+		return model.getTitle(languageId);
 	}
 
 	/**
@@ -449,17 +414,17 @@ public class AssetVocabularyWrapper implements AssetVocabulary,
 	*/
 	@Override
 	public String getTitle(String languageId, boolean useDefault) {
-		return _assetVocabulary.getTitle(languageId, useDefault);
+		return model.getTitle(languageId, useDefault);
 	}
 
 	@Override
 	public String getTitleCurrentLanguageId() {
-		return _assetVocabulary.getTitleCurrentLanguageId();
+		return model.getTitleCurrentLanguageId();
 	}
 
 	@Override
 	public String getTitleCurrentValue() {
-		return _assetVocabulary.getTitleCurrentValue();
+		return model.getTitleCurrentValue();
 	}
 
 	/**
@@ -469,7 +434,7 @@ public class AssetVocabularyWrapper implements AssetVocabulary,
 	*/
 	@Override
 	public Map<java.util.Locale, String> getTitleMap() {
-		return _assetVocabulary.getTitleMap();
+		return model.getTitleMap();
 	}
 
 	@Override
@@ -477,8 +442,7 @@ public class AssetVocabularyWrapper implements AssetVocabulary,
 		java.util.List<AssetVocabulary> vocabularies, long groupId,
 		java.util.Locale locale)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _assetVocabulary.getUnambiguousTitle(vocabularies, groupId,
-			locale);
+		return model.getUnambiguousTitle(vocabularies, groupId, locale);
 	}
 
 	/**
@@ -488,7 +452,7 @@ public class AssetVocabularyWrapper implements AssetVocabulary,
 	*/
 	@Override
 	public long getUserId() {
-		return _assetVocabulary.getUserId();
+		return model.getUserId();
 	}
 
 	/**
@@ -498,7 +462,7 @@ public class AssetVocabularyWrapper implements AssetVocabulary,
 	*/
 	@Override
 	public String getUserName() {
-		return _assetVocabulary.getUserName();
+		return model.getUserName();
 	}
 
 	/**
@@ -508,7 +472,7 @@ public class AssetVocabularyWrapper implements AssetVocabulary,
 	*/
 	@Override
 	public String getUserUuid() {
-		return _assetVocabulary.getUserUuid();
+		return model.getUserUuid();
 	}
 
 	/**
@@ -518,7 +482,7 @@ public class AssetVocabularyWrapper implements AssetVocabulary,
 	*/
 	@Override
 	public String getUuid() {
-		return _assetVocabulary.getUuid();
+		return model.getUuid();
 	}
 
 	/**
@@ -528,56 +492,36 @@ public class AssetVocabularyWrapper implements AssetVocabulary,
 	*/
 	@Override
 	public long getVocabularyId() {
-		return _assetVocabulary.getVocabularyId();
-	}
-
-	@Override
-	public int hashCode() {
-		return _assetVocabulary.hashCode();
+		return model.getVocabularyId();
 	}
 
 	@Override
 	public boolean hasMoreThanOneCategorySelected(long[] categoryIds) {
-		return _assetVocabulary.hasMoreThanOneCategorySelected(categoryIds);
+		return model.hasMoreThanOneCategorySelected(categoryIds);
 	}
 
 	@Override
 	public boolean isAssociatedToClassNameId(long classNameId) {
-		return _assetVocabulary.isAssociatedToClassNameId(classNameId);
+		return model.isAssociatedToClassNameId(classNameId);
 	}
 
 	@Override
 	public boolean isAssociatedToClassNameIdAndClassTypePK(long classNameId,
 		long classTypePK) {
-		return _assetVocabulary.isAssociatedToClassNameIdAndClassTypePK(classNameId,
+		return model.isAssociatedToClassNameIdAndClassTypePK(classNameId,
 			classTypePK);
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _assetVocabulary.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _assetVocabulary.isEscapedModel();
 	}
 
 	@Override
 	public boolean isMissingRequiredCategory(long classNameId,
 		long classTypePK, long[] categoryIds) {
-		return _assetVocabulary.isMissingRequiredCategory(classNameId,
-			classTypePK, categoryIds);
+		return model.isMissingRequiredCategory(classNameId, classTypePK,
+			categoryIds);
 	}
 
 	@Override
 	public boolean isMultiValued() {
-		return _assetVocabulary.isMultiValued();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _assetVocabulary.isNew();
+		return model.isMultiValued();
 	}
 
 	/**
@@ -587,35 +531,30 @@ public class AssetVocabularyWrapper implements AssetVocabulary,
 	@Deprecated
 	@Override
 	public boolean isRequired(long classNameId) {
-		return _assetVocabulary.isRequired(classNameId);
+		return model.isRequired(classNameId);
 	}
 
 	@Override
 	public boolean isRequired(long classNameId, long classTypePK) {
-		return _assetVocabulary.isRequired(classNameId, classTypePK);
+		return model.isRequired(classNameId, classTypePK);
 	}
 
 	@Override
 	public void persist() {
-		_assetVocabulary.persist();
+		model.persist();
 	}
 
 	@Override
 	public void prepareLocalizedFieldsForImport()
 		throws com.liferay.portal.kernel.exception.LocaleException {
-		_assetVocabulary.prepareLocalizedFieldsForImport();
+		model.prepareLocalizedFieldsForImport();
 	}
 
 	@Override
 	public void prepareLocalizedFieldsForImport(
 		java.util.Locale defaultImportLocale)
 		throws com.liferay.portal.kernel.exception.LocaleException {
-		_assetVocabulary.prepareLocalizedFieldsForImport(defaultImportLocale);
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_assetVocabulary.setCachedModel(cachedModel);
+		model.prepareLocalizedFieldsForImport(defaultImportLocale);
 	}
 
 	/**
@@ -625,7 +564,7 @@ public class AssetVocabularyWrapper implements AssetVocabulary,
 	*/
 	@Override
 	public void setCompanyId(long companyId) {
-		_assetVocabulary.setCompanyId(companyId);
+		model.setCompanyId(companyId);
 	}
 
 	/**
@@ -635,7 +574,7 @@ public class AssetVocabularyWrapper implements AssetVocabulary,
 	*/
 	@Override
 	public void setCreateDate(Date createDate) {
-		_assetVocabulary.setCreateDate(createDate);
+		model.setCreateDate(createDate);
 	}
 
 	/**
@@ -645,7 +584,7 @@ public class AssetVocabularyWrapper implements AssetVocabulary,
 	*/
 	@Override
 	public void setDescription(String description) {
-		_assetVocabulary.setDescription(description);
+		model.setDescription(description);
 	}
 
 	/**
@@ -656,7 +595,7 @@ public class AssetVocabularyWrapper implements AssetVocabulary,
 	*/
 	@Override
 	public void setDescription(String description, java.util.Locale locale) {
-		_assetVocabulary.setDescription(description, locale);
+		model.setDescription(description, locale);
 	}
 
 	/**
@@ -669,12 +608,12 @@ public class AssetVocabularyWrapper implements AssetVocabulary,
 	@Override
 	public void setDescription(String description, java.util.Locale locale,
 		java.util.Locale defaultLocale) {
-		_assetVocabulary.setDescription(description, locale, defaultLocale);
+		model.setDescription(description, locale, defaultLocale);
 	}
 
 	@Override
 	public void setDescriptionCurrentLanguageId(String languageId) {
-		_assetVocabulary.setDescriptionCurrentLanguageId(languageId);
+		model.setDescriptionCurrentLanguageId(languageId);
 	}
 
 	/**
@@ -684,7 +623,7 @@ public class AssetVocabularyWrapper implements AssetVocabulary,
 	*/
 	@Override
 	public void setDescriptionMap(Map<java.util.Locale, String> descriptionMap) {
-		_assetVocabulary.setDescriptionMap(descriptionMap);
+		model.setDescriptionMap(descriptionMap);
 	}
 
 	/**
@@ -697,23 +636,7 @@ public class AssetVocabularyWrapper implements AssetVocabulary,
 	public void setDescriptionMap(
 		Map<java.util.Locale, String> descriptionMap,
 		java.util.Locale defaultLocale) {
-		_assetVocabulary.setDescriptionMap(descriptionMap, defaultLocale);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-		_assetVocabulary.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_assetVocabulary.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_assetVocabulary.setExpandoBridgeAttributes(serviceContext);
+		model.setDescriptionMap(descriptionMap, defaultLocale);
 	}
 
 	/**
@@ -723,7 +646,7 @@ public class AssetVocabularyWrapper implements AssetVocabulary,
 	*/
 	@Override
 	public void setExternalReferenceCode(String externalReferenceCode) {
-		_assetVocabulary.setExternalReferenceCode(externalReferenceCode);
+		model.setExternalReferenceCode(externalReferenceCode);
 	}
 
 	/**
@@ -733,7 +656,7 @@ public class AssetVocabularyWrapper implements AssetVocabulary,
 	*/
 	@Override
 	public void setGroupId(long groupId) {
-		_assetVocabulary.setGroupId(groupId);
+		model.setGroupId(groupId);
 	}
 
 	/**
@@ -743,7 +666,7 @@ public class AssetVocabularyWrapper implements AssetVocabulary,
 	*/
 	@Override
 	public void setLastPublishDate(Date lastPublishDate) {
-		_assetVocabulary.setLastPublishDate(lastPublishDate);
+		model.setLastPublishDate(lastPublishDate);
 	}
 
 	/**
@@ -753,7 +676,7 @@ public class AssetVocabularyWrapper implements AssetVocabulary,
 	*/
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
-		_assetVocabulary.setModifiedDate(modifiedDate);
+		model.setModifiedDate(modifiedDate);
 	}
 
 	/**
@@ -763,12 +686,7 @@ public class AssetVocabularyWrapper implements AssetVocabulary,
 	*/
 	@Override
 	public void setName(String name) {
-		_assetVocabulary.setName(name);
-	}
-
-	@Override
-	public void setNew(boolean n) {
-		_assetVocabulary.setNew(n);
+		model.setName(name);
 	}
 
 	/**
@@ -778,12 +696,7 @@ public class AssetVocabularyWrapper implements AssetVocabulary,
 	*/
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_assetVocabulary.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_assetVocabulary.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -793,7 +706,7 @@ public class AssetVocabularyWrapper implements AssetVocabulary,
 	*/
 	@Override
 	public void setSettings(String settings) {
-		_assetVocabulary.setSettings(settings);
+		model.setSettings(settings);
 	}
 
 	/**
@@ -803,7 +716,7 @@ public class AssetVocabularyWrapper implements AssetVocabulary,
 	@Override
 	public void setSettingsProperties(
 		com.liferay.portal.kernel.util.UnicodeProperties settingsProperties) {
-		_assetVocabulary.setSettingsProperties(settingsProperties);
+		model.setSettingsProperties(settingsProperties);
 	}
 
 	/**
@@ -813,7 +726,7 @@ public class AssetVocabularyWrapper implements AssetVocabulary,
 	*/
 	@Override
 	public void setTitle(String title) {
-		_assetVocabulary.setTitle(title);
+		model.setTitle(title);
 	}
 
 	/**
@@ -824,7 +737,7 @@ public class AssetVocabularyWrapper implements AssetVocabulary,
 	*/
 	@Override
 	public void setTitle(String title, java.util.Locale locale) {
-		_assetVocabulary.setTitle(title, locale);
+		model.setTitle(title, locale);
 	}
 
 	/**
@@ -837,12 +750,12 @@ public class AssetVocabularyWrapper implements AssetVocabulary,
 	@Override
 	public void setTitle(String title, java.util.Locale locale,
 		java.util.Locale defaultLocale) {
-		_assetVocabulary.setTitle(title, locale, defaultLocale);
+		model.setTitle(title, locale, defaultLocale);
 	}
 
 	@Override
 	public void setTitleCurrentLanguageId(String languageId) {
-		_assetVocabulary.setTitleCurrentLanguageId(languageId);
+		model.setTitleCurrentLanguageId(languageId);
 	}
 
 	/**
@@ -852,7 +765,7 @@ public class AssetVocabularyWrapper implements AssetVocabulary,
 	*/
 	@Override
 	public void setTitleMap(Map<java.util.Locale, String> titleMap) {
-		_assetVocabulary.setTitleMap(titleMap);
+		model.setTitleMap(titleMap);
 	}
 
 	/**
@@ -864,7 +777,7 @@ public class AssetVocabularyWrapper implements AssetVocabulary,
 	@Override
 	public void setTitleMap(Map<java.util.Locale, String> titleMap,
 		java.util.Locale defaultLocale) {
-		_assetVocabulary.setTitleMap(titleMap, defaultLocale);
+		model.setTitleMap(titleMap, defaultLocale);
 	}
 
 	/**
@@ -874,7 +787,7 @@ public class AssetVocabularyWrapper implements AssetVocabulary,
 	*/
 	@Override
 	public void setUserId(long userId) {
-		_assetVocabulary.setUserId(userId);
+		model.setUserId(userId);
 	}
 
 	/**
@@ -884,7 +797,7 @@ public class AssetVocabularyWrapper implements AssetVocabulary,
 	*/
 	@Override
 	public void setUserName(String userName) {
-		_assetVocabulary.setUserName(userName);
+		model.setUserName(userName);
 	}
 
 	/**
@@ -894,7 +807,7 @@ public class AssetVocabularyWrapper implements AssetVocabulary,
 	*/
 	@Override
 	public void setUserUuid(String userUuid) {
-		_assetVocabulary.setUserUuid(userUuid);
+		model.setUserUuid(userUuid);
 	}
 
 	/**
@@ -904,7 +817,7 @@ public class AssetVocabularyWrapper implements AssetVocabulary,
 	*/
 	@Override
 	public void setUuid(String uuid) {
-		_assetVocabulary.setUuid(uuid);
+		model.setUuid(uuid);
 	}
 
 	/**
@@ -914,78 +827,16 @@ public class AssetVocabularyWrapper implements AssetVocabulary,
 	*/
 	@Override
 	public void setVocabularyId(long vocabularyId) {
-		_assetVocabulary.setVocabularyId(vocabularyId);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<AssetVocabulary> toCacheModel() {
-		return _assetVocabulary.toCacheModel();
-	}
-
-	@Override
-	public AssetVocabulary toEscapedModel() {
-		return new AssetVocabularyWrapper(_assetVocabulary.toEscapedModel());
-	}
-
-	@Override
-	public String toString() {
-		return _assetVocabulary.toString();
-	}
-
-	@Override
-	public AssetVocabulary toUnescapedModel() {
-		return new AssetVocabularyWrapper(_assetVocabulary.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _assetVocabulary.toXmlString();
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-
-		if (!(obj instanceof AssetVocabularyWrapper)) {
-			return false;
-		}
-
-		AssetVocabularyWrapper assetVocabularyWrapper = (AssetVocabularyWrapper)obj;
-
-		if (Objects.equals(_assetVocabulary,
-					assetVocabularyWrapper._assetVocabulary)) {
-			return true;
-		}
-
-		return false;
+		model.setVocabularyId(vocabularyId);
 	}
 
 	@Override
 	public StagedModelType getStagedModelType() {
-		return _assetVocabulary.getStagedModelType();
+		return model.getStagedModelType();
 	}
 
 	@Override
-	public AssetVocabulary getWrappedModel() {
-		return _assetVocabulary;
+	protected AssetVocabularyWrapper wrap(AssetVocabulary assetVocabulary) {
+		return new AssetVocabularyWrapper(assetVocabulary);
 	}
-
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _assetVocabulary.isEntityCacheEnabled();
-	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _assetVocabulary.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_assetVocabulary.resetOriginalValues();
-	}
-
-	private final AssetVocabulary _assetVocabulary;
 }

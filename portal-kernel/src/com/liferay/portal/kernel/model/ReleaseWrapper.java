@@ -16,16 +16,11 @@ package com.liferay.portal.kernel.model;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
-
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -37,19 +32,10 @@ import java.util.Objects;
  * @generated
  */
 @ProviderType
-public class ReleaseWrapper implements Release, ModelWrapper<Release> {
+public class ReleaseWrapper extends BaseModelWrapper<Release> implements Release,
+	ModelWrapper<Release> {
 	public ReleaseWrapper(Release release) {
-		_release = release;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return Release.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return Release.class.getName();
+		super(release);
 	}
 
 	@Override
@@ -140,16 +126,6 @@ public class ReleaseWrapper implements Release, ModelWrapper<Release> {
 		}
 	}
 
-	@Override
-	public Object clone() {
-		return new ReleaseWrapper((Release)_release.clone());
-	}
-
-	@Override
-	public int compareTo(Release release) {
-		return _release.compareTo(release);
-	}
-
 	/**
 	* Returns the build date of this release.
 	*
@@ -157,7 +133,7 @@ public class ReleaseWrapper implements Release, ModelWrapper<Release> {
 	*/
 	@Override
 	public Date getBuildDate() {
-		return _release.getBuildDate();
+		return model.getBuildDate();
 	}
 
 	/**
@@ -167,12 +143,12 @@ public class ReleaseWrapper implements Release, ModelWrapper<Release> {
 	*/
 	@Override
 	public int getBuildNumber() {
-		return _release.getBuildNumber();
+		return model.getBuildNumber();
 	}
 
 	@Override
 	public String getBundleSymbolicName() {
-		return _release.getBundleSymbolicName();
+		return model.getBundleSymbolicName();
 	}
 
 	/**
@@ -182,12 +158,7 @@ public class ReleaseWrapper implements Release, ModelWrapper<Release> {
 	*/
 	@Override
 	public Date getCreateDate() {
-		return _release.getCreateDate();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _release.getExpandoBridge();
+		return model.getCreateDate();
 	}
 
 	/**
@@ -197,7 +168,7 @@ public class ReleaseWrapper implements Release, ModelWrapper<Release> {
 	*/
 	@Override
 	public Date getModifiedDate() {
-		return _release.getModifiedDate();
+		return model.getModifiedDate();
 	}
 
 	/**
@@ -207,7 +178,7 @@ public class ReleaseWrapper implements Release, ModelWrapper<Release> {
 	*/
 	@Override
 	public long getMvccVersion() {
-		return _release.getMvccVersion();
+		return model.getMvccVersion();
 	}
 
 	/**
@@ -217,12 +188,7 @@ public class ReleaseWrapper implements Release, ModelWrapper<Release> {
 	*/
 	@Override
 	public long getPrimaryKey() {
-		return _release.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _release.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	/**
@@ -232,7 +198,7 @@ public class ReleaseWrapper implements Release, ModelWrapper<Release> {
 	*/
 	@Override
 	public long getReleaseId() {
-		return _release.getReleaseId();
+		return model.getReleaseId();
 	}
 
 	/**
@@ -242,7 +208,7 @@ public class ReleaseWrapper implements Release, ModelWrapper<Release> {
 	*/
 	@Override
 	public String getSchemaVersion() {
-		return _release.getSchemaVersion();
+		return model.getSchemaVersion();
 	}
 
 	/**
@@ -252,7 +218,7 @@ public class ReleaseWrapper implements Release, ModelWrapper<Release> {
 	*/
 	@Override
 	public String getServletContextName() {
-		return _release.getServletContextName();
+		return model.getServletContextName();
 	}
 
 	/**
@@ -262,7 +228,7 @@ public class ReleaseWrapper implements Release, ModelWrapper<Release> {
 	*/
 	@Override
 	public int getState() {
-		return _release.getState();
+		return model.getState();
 	}
 
 	/**
@@ -272,7 +238,7 @@ public class ReleaseWrapper implements Release, ModelWrapper<Release> {
 	*/
 	@Override
 	public String getTestString() {
-		return _release.getTestString();
+		return model.getTestString();
 	}
 
 	/**
@@ -282,27 +248,7 @@ public class ReleaseWrapper implements Release, ModelWrapper<Release> {
 	*/
 	@Override
 	public boolean getVerified() {
-		return _release.getVerified();
-	}
-
-	@Override
-	public int hashCode() {
-		return _release.hashCode();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _release.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _release.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _release.isNew();
+		return model.getVerified();
 	}
 
 	/**
@@ -312,12 +258,12 @@ public class ReleaseWrapper implements Release, ModelWrapper<Release> {
 	*/
 	@Override
 	public boolean isVerified() {
-		return _release.isVerified();
+		return model.isVerified();
 	}
 
 	@Override
 	public void persist() {
-		_release.persist();
+		model.persist();
 	}
 
 	/**
@@ -327,7 +273,7 @@ public class ReleaseWrapper implements Release, ModelWrapper<Release> {
 	*/
 	@Override
 	public void setBuildDate(Date buildDate) {
-		_release.setBuildDate(buildDate);
+		model.setBuildDate(buildDate);
 	}
 
 	/**
@@ -337,12 +283,7 @@ public class ReleaseWrapper implements Release, ModelWrapper<Release> {
 	*/
 	@Override
 	public void setBuildNumber(int buildNumber) {
-		_release.setBuildNumber(buildNumber);
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_release.setCachedModel(cachedModel);
+		model.setBuildNumber(buildNumber);
 	}
 
 	/**
@@ -352,22 +293,7 @@ public class ReleaseWrapper implements Release, ModelWrapper<Release> {
 	*/
 	@Override
 	public void setCreateDate(Date createDate) {
-		_release.setCreateDate(createDate);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(BaseModel<?> baseModel) {
-		_release.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_release.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_release.setExpandoBridgeAttributes(serviceContext);
+		model.setCreateDate(createDate);
 	}
 
 	/**
@@ -377,7 +303,7 @@ public class ReleaseWrapper implements Release, ModelWrapper<Release> {
 	*/
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
-		_release.setModifiedDate(modifiedDate);
+		model.setModifiedDate(modifiedDate);
 	}
 
 	/**
@@ -387,12 +313,7 @@ public class ReleaseWrapper implements Release, ModelWrapper<Release> {
 	*/
 	@Override
 	public void setMvccVersion(long mvccVersion) {
-		_release.setMvccVersion(mvccVersion);
-	}
-
-	@Override
-	public void setNew(boolean n) {
-		_release.setNew(n);
+		model.setMvccVersion(mvccVersion);
 	}
 
 	/**
@@ -402,12 +323,7 @@ public class ReleaseWrapper implements Release, ModelWrapper<Release> {
 	*/
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_release.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_release.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -417,7 +333,7 @@ public class ReleaseWrapper implements Release, ModelWrapper<Release> {
 	*/
 	@Override
 	public void setReleaseId(long releaseId) {
-		_release.setReleaseId(releaseId);
+		model.setReleaseId(releaseId);
 	}
 
 	/**
@@ -427,7 +343,7 @@ public class ReleaseWrapper implements Release, ModelWrapper<Release> {
 	*/
 	@Override
 	public void setSchemaVersion(String schemaVersion) {
-		_release.setSchemaVersion(schemaVersion);
+		model.setSchemaVersion(schemaVersion);
 	}
 
 	/**
@@ -437,7 +353,7 @@ public class ReleaseWrapper implements Release, ModelWrapper<Release> {
 	*/
 	@Override
 	public void setServletContextName(String servletContextName) {
-		_release.setServletContextName(servletContextName);
+		model.setServletContextName(servletContextName);
 	}
 
 	/**
@@ -447,7 +363,7 @@ public class ReleaseWrapper implements Release, ModelWrapper<Release> {
 	*/
 	@Override
 	public void setState(int state) {
-		_release.setState(state);
+		model.setState(state);
 	}
 
 	/**
@@ -457,7 +373,7 @@ public class ReleaseWrapper implements Release, ModelWrapper<Release> {
 	*/
 	@Override
 	public void setTestString(String testString) {
-		_release.setTestString(testString);
+		model.setTestString(testString);
 	}
 
 	/**
@@ -467,72 +383,11 @@ public class ReleaseWrapper implements Release, ModelWrapper<Release> {
 	*/
 	@Override
 	public void setVerified(boolean verified) {
-		_release.setVerified(verified);
+		model.setVerified(verified);
 	}
 
 	@Override
-	public CacheModel<Release> toCacheModel() {
-		return _release.toCacheModel();
+	protected ReleaseWrapper wrap(Release release) {
+		return new ReleaseWrapper(release);
 	}
-
-	@Override
-	public Release toEscapedModel() {
-		return new ReleaseWrapper(_release.toEscapedModel());
-	}
-
-	@Override
-	public String toString() {
-		return _release.toString();
-	}
-
-	@Override
-	public Release toUnescapedModel() {
-		return new ReleaseWrapper(_release.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _release.toXmlString();
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-
-		if (!(obj instanceof ReleaseWrapper)) {
-			return false;
-		}
-
-		ReleaseWrapper releaseWrapper = (ReleaseWrapper)obj;
-
-		if (Objects.equals(_release, releaseWrapper._release)) {
-			return true;
-		}
-
-		return false;
-	}
-
-	@Override
-	public Release getWrappedModel() {
-		return _release;
-	}
-
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _release.isEntityCacheEnabled();
-	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _release.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_release.resetOriginalValues();
-	}
-
-	private final Release _release;
 }

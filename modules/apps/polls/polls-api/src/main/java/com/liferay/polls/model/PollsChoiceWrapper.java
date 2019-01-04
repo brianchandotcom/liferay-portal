@@ -16,19 +16,14 @@ package com.liferay.polls.model;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
-
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 
 import com.liferay.portal.kernel.model.ModelWrapper;
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -40,20 +35,10 @@ import java.util.Objects;
  * @generated
  */
 @ProviderType
-public class PollsChoiceWrapper implements PollsChoice,
-	ModelWrapper<PollsChoice> {
+public class PollsChoiceWrapper extends BaseModelWrapper<PollsChoice>
+	implements PollsChoice, ModelWrapper<PollsChoice> {
 	public PollsChoiceWrapper(PollsChoice pollsChoice) {
-		_pollsChoice = pollsChoice;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return PollsChoice.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return PollsChoice.class.getName();
+		super(pollsChoice);
 	}
 
 	@Override
@@ -152,18 +137,8 @@ public class PollsChoiceWrapper implements PollsChoice,
 	}
 
 	@Override
-	public Object clone() {
-		return new PollsChoiceWrapper((PollsChoice)_pollsChoice.clone());
-	}
-
-	@Override
-	public int compareTo(PollsChoice pollsChoice) {
-		return _pollsChoice.compareTo(pollsChoice);
-	}
-
-	@Override
 	public String[] getAvailableLanguageIds() {
-		return _pollsChoice.getAvailableLanguageIds();
+		return model.getAvailableLanguageIds();
 	}
 
 	/**
@@ -173,7 +148,7 @@ public class PollsChoiceWrapper implements PollsChoice,
 	*/
 	@Override
 	public long getChoiceId() {
-		return _pollsChoice.getChoiceId();
+		return model.getChoiceId();
 	}
 
 	/**
@@ -183,7 +158,7 @@ public class PollsChoiceWrapper implements PollsChoice,
 	*/
 	@Override
 	public long getCompanyId() {
-		return _pollsChoice.getCompanyId();
+		return model.getCompanyId();
 	}
 
 	/**
@@ -193,12 +168,12 @@ public class PollsChoiceWrapper implements PollsChoice,
 	*/
 	@Override
 	public Date getCreateDate() {
-		return _pollsChoice.getCreateDate();
+		return model.getCreateDate();
 	}
 
 	@Override
 	public String getDefaultLanguageId() {
-		return _pollsChoice.getDefaultLanguageId();
+		return model.getDefaultLanguageId();
 	}
 
 	/**
@@ -208,7 +183,7 @@ public class PollsChoiceWrapper implements PollsChoice,
 	*/
 	@Override
 	public String getDescription() {
-		return _pollsChoice.getDescription();
+		return model.getDescription();
 	}
 
 	/**
@@ -219,7 +194,7 @@ public class PollsChoiceWrapper implements PollsChoice,
 	*/
 	@Override
 	public String getDescription(java.util.Locale locale) {
-		return _pollsChoice.getDescription(locale);
+		return model.getDescription(locale);
 	}
 
 	/**
@@ -231,7 +206,7 @@ public class PollsChoiceWrapper implements PollsChoice,
 	*/
 	@Override
 	public String getDescription(java.util.Locale locale, boolean useDefault) {
-		return _pollsChoice.getDescription(locale, useDefault);
+		return model.getDescription(locale, useDefault);
 	}
 
 	/**
@@ -242,7 +217,7 @@ public class PollsChoiceWrapper implements PollsChoice,
 	*/
 	@Override
 	public String getDescription(String languageId) {
-		return _pollsChoice.getDescription(languageId);
+		return model.getDescription(languageId);
 	}
 
 	/**
@@ -254,17 +229,17 @@ public class PollsChoiceWrapper implements PollsChoice,
 	*/
 	@Override
 	public String getDescription(String languageId, boolean useDefault) {
-		return _pollsChoice.getDescription(languageId, useDefault);
+		return model.getDescription(languageId, useDefault);
 	}
 
 	@Override
 	public String getDescriptionCurrentLanguageId() {
-		return _pollsChoice.getDescriptionCurrentLanguageId();
+		return model.getDescriptionCurrentLanguageId();
 	}
 
 	@Override
 	public String getDescriptionCurrentValue() {
-		return _pollsChoice.getDescriptionCurrentValue();
+		return model.getDescriptionCurrentValue();
 	}
 
 	/**
@@ -274,12 +249,7 @@ public class PollsChoiceWrapper implements PollsChoice,
 	*/
 	@Override
 	public Map<java.util.Locale, String> getDescriptionMap() {
-		return _pollsChoice.getDescriptionMap();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _pollsChoice.getExpandoBridge();
+		return model.getDescriptionMap();
 	}
 
 	/**
@@ -289,7 +259,7 @@ public class PollsChoiceWrapper implements PollsChoice,
 	*/
 	@Override
 	public long getGroupId() {
-		return _pollsChoice.getGroupId();
+		return model.getGroupId();
 	}
 
 	/**
@@ -299,7 +269,7 @@ public class PollsChoiceWrapper implements PollsChoice,
 	*/
 	@Override
 	public Date getLastPublishDate() {
-		return _pollsChoice.getLastPublishDate();
+		return model.getLastPublishDate();
 	}
 
 	/**
@@ -309,7 +279,7 @@ public class PollsChoiceWrapper implements PollsChoice,
 	*/
 	@Override
 	public Date getModifiedDate() {
-		return _pollsChoice.getModifiedDate();
+		return model.getModifiedDate();
 	}
 
 	/**
@@ -319,7 +289,7 @@ public class PollsChoiceWrapper implements PollsChoice,
 	*/
 	@Override
 	public String getName() {
-		return _pollsChoice.getName();
+		return model.getName();
 	}
 
 	/**
@@ -329,12 +299,7 @@ public class PollsChoiceWrapper implements PollsChoice,
 	*/
 	@Override
 	public long getPrimaryKey() {
-		return _pollsChoice.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _pollsChoice.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	/**
@@ -344,7 +309,7 @@ public class PollsChoiceWrapper implements PollsChoice,
 	*/
 	@Override
 	public long getQuestionId() {
-		return _pollsChoice.getQuestionId();
+		return model.getQuestionId();
 	}
 
 	/**
@@ -354,7 +319,7 @@ public class PollsChoiceWrapper implements PollsChoice,
 	*/
 	@Override
 	public long getUserId() {
-		return _pollsChoice.getUserId();
+		return model.getUserId();
 	}
 
 	/**
@@ -364,7 +329,7 @@ public class PollsChoiceWrapper implements PollsChoice,
 	*/
 	@Override
 	public String getUserName() {
-		return _pollsChoice.getUserName();
+		return model.getUserName();
 	}
 
 	/**
@@ -374,7 +339,7 @@ public class PollsChoiceWrapper implements PollsChoice,
 	*/
 	@Override
 	public String getUserUuid() {
-		return _pollsChoice.getUserUuid();
+		return model.getUserUuid();
 	}
 
 	/**
@@ -384,55 +349,30 @@ public class PollsChoiceWrapper implements PollsChoice,
 	*/
 	@Override
 	public String getUuid() {
-		return _pollsChoice.getUuid();
+		return model.getUuid();
 	}
 
 	@Override
 	public int getVotesCount() {
-		return _pollsChoice.getVotesCount();
-	}
-
-	@Override
-	public int hashCode() {
-		return _pollsChoice.hashCode();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _pollsChoice.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _pollsChoice.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _pollsChoice.isNew();
+		return model.getVotesCount();
 	}
 
 	@Override
 	public void persist() {
-		_pollsChoice.persist();
+		model.persist();
 	}
 
 	@Override
 	public void prepareLocalizedFieldsForImport()
 		throws com.liferay.portal.kernel.exception.LocaleException {
-		_pollsChoice.prepareLocalizedFieldsForImport();
+		model.prepareLocalizedFieldsForImport();
 	}
 
 	@Override
 	public void prepareLocalizedFieldsForImport(
 		java.util.Locale defaultImportLocale)
 		throws com.liferay.portal.kernel.exception.LocaleException {
-		_pollsChoice.prepareLocalizedFieldsForImport(defaultImportLocale);
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_pollsChoice.setCachedModel(cachedModel);
+		model.prepareLocalizedFieldsForImport(defaultImportLocale);
 	}
 
 	/**
@@ -442,7 +382,7 @@ public class PollsChoiceWrapper implements PollsChoice,
 	*/
 	@Override
 	public void setChoiceId(long choiceId) {
-		_pollsChoice.setChoiceId(choiceId);
+		model.setChoiceId(choiceId);
 	}
 
 	/**
@@ -452,7 +392,7 @@ public class PollsChoiceWrapper implements PollsChoice,
 	*/
 	@Override
 	public void setCompanyId(long companyId) {
-		_pollsChoice.setCompanyId(companyId);
+		model.setCompanyId(companyId);
 	}
 
 	/**
@@ -462,7 +402,7 @@ public class PollsChoiceWrapper implements PollsChoice,
 	*/
 	@Override
 	public void setCreateDate(Date createDate) {
-		_pollsChoice.setCreateDate(createDate);
+		model.setCreateDate(createDate);
 	}
 
 	/**
@@ -472,7 +412,7 @@ public class PollsChoiceWrapper implements PollsChoice,
 	*/
 	@Override
 	public void setDescription(String description) {
-		_pollsChoice.setDescription(description);
+		model.setDescription(description);
 	}
 
 	/**
@@ -483,7 +423,7 @@ public class PollsChoiceWrapper implements PollsChoice,
 	*/
 	@Override
 	public void setDescription(String description, java.util.Locale locale) {
-		_pollsChoice.setDescription(description, locale);
+		model.setDescription(description, locale);
 	}
 
 	/**
@@ -496,12 +436,12 @@ public class PollsChoiceWrapper implements PollsChoice,
 	@Override
 	public void setDescription(String description, java.util.Locale locale,
 		java.util.Locale defaultLocale) {
-		_pollsChoice.setDescription(description, locale, defaultLocale);
+		model.setDescription(description, locale, defaultLocale);
 	}
 
 	@Override
 	public void setDescriptionCurrentLanguageId(String languageId) {
-		_pollsChoice.setDescriptionCurrentLanguageId(languageId);
+		model.setDescriptionCurrentLanguageId(languageId);
 	}
 
 	/**
@@ -511,7 +451,7 @@ public class PollsChoiceWrapper implements PollsChoice,
 	*/
 	@Override
 	public void setDescriptionMap(Map<java.util.Locale, String> descriptionMap) {
-		_pollsChoice.setDescriptionMap(descriptionMap);
+		model.setDescriptionMap(descriptionMap);
 	}
 
 	/**
@@ -524,23 +464,7 @@ public class PollsChoiceWrapper implements PollsChoice,
 	public void setDescriptionMap(
 		Map<java.util.Locale, String> descriptionMap,
 		java.util.Locale defaultLocale) {
-		_pollsChoice.setDescriptionMap(descriptionMap, defaultLocale);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-		_pollsChoice.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_pollsChoice.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_pollsChoice.setExpandoBridgeAttributes(serviceContext);
+		model.setDescriptionMap(descriptionMap, defaultLocale);
 	}
 
 	/**
@@ -550,7 +474,7 @@ public class PollsChoiceWrapper implements PollsChoice,
 	*/
 	@Override
 	public void setGroupId(long groupId) {
-		_pollsChoice.setGroupId(groupId);
+		model.setGroupId(groupId);
 	}
 
 	/**
@@ -560,7 +484,7 @@ public class PollsChoiceWrapper implements PollsChoice,
 	*/
 	@Override
 	public void setLastPublishDate(Date lastPublishDate) {
-		_pollsChoice.setLastPublishDate(lastPublishDate);
+		model.setLastPublishDate(lastPublishDate);
 	}
 
 	/**
@@ -570,7 +494,7 @@ public class PollsChoiceWrapper implements PollsChoice,
 	*/
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
-		_pollsChoice.setModifiedDate(modifiedDate);
+		model.setModifiedDate(modifiedDate);
 	}
 
 	/**
@@ -580,12 +504,7 @@ public class PollsChoiceWrapper implements PollsChoice,
 	*/
 	@Override
 	public void setName(String name) {
-		_pollsChoice.setName(name);
-	}
-
-	@Override
-	public void setNew(boolean n) {
-		_pollsChoice.setNew(n);
+		model.setName(name);
 	}
 
 	/**
@@ -595,12 +514,7 @@ public class PollsChoiceWrapper implements PollsChoice,
 	*/
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_pollsChoice.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_pollsChoice.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -610,7 +524,7 @@ public class PollsChoiceWrapper implements PollsChoice,
 	*/
 	@Override
 	public void setQuestionId(long questionId) {
-		_pollsChoice.setQuestionId(questionId);
+		model.setQuestionId(questionId);
 	}
 
 	/**
@@ -620,7 +534,7 @@ public class PollsChoiceWrapper implements PollsChoice,
 	*/
 	@Override
 	public void setUserId(long userId) {
-		_pollsChoice.setUserId(userId);
+		model.setUserId(userId);
 	}
 
 	/**
@@ -630,7 +544,7 @@ public class PollsChoiceWrapper implements PollsChoice,
 	*/
 	@Override
 	public void setUserName(String userName) {
-		_pollsChoice.setUserName(userName);
+		model.setUserName(userName);
 	}
 
 	/**
@@ -640,7 +554,7 @@ public class PollsChoiceWrapper implements PollsChoice,
 	*/
 	@Override
 	public void setUserUuid(String userUuid) {
-		_pollsChoice.setUserUuid(userUuid);
+		model.setUserUuid(userUuid);
 	}
 
 	/**
@@ -650,77 +564,16 @@ public class PollsChoiceWrapper implements PollsChoice,
 	*/
 	@Override
 	public void setUuid(String uuid) {
-		_pollsChoice.setUuid(uuid);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<PollsChoice> toCacheModel() {
-		return _pollsChoice.toCacheModel();
-	}
-
-	@Override
-	public PollsChoice toEscapedModel() {
-		return new PollsChoiceWrapper(_pollsChoice.toEscapedModel());
-	}
-
-	@Override
-	public String toString() {
-		return _pollsChoice.toString();
-	}
-
-	@Override
-	public PollsChoice toUnescapedModel() {
-		return new PollsChoiceWrapper(_pollsChoice.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _pollsChoice.toXmlString();
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-
-		if (!(obj instanceof PollsChoiceWrapper)) {
-			return false;
-		}
-
-		PollsChoiceWrapper pollsChoiceWrapper = (PollsChoiceWrapper)obj;
-
-		if (Objects.equals(_pollsChoice, pollsChoiceWrapper._pollsChoice)) {
-			return true;
-		}
-
-		return false;
+		model.setUuid(uuid);
 	}
 
 	@Override
 	public StagedModelType getStagedModelType() {
-		return _pollsChoice.getStagedModelType();
+		return model.getStagedModelType();
 	}
 
 	@Override
-	public PollsChoice getWrappedModel() {
-		return _pollsChoice;
+	protected PollsChoiceWrapper wrap(PollsChoice pollsChoice) {
+		return new PollsChoiceWrapper(pollsChoice);
 	}
-
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _pollsChoice.isEntityCacheEnabled();
-	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _pollsChoice.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_pollsChoice.resetOriginalValues();
-	}
-
-	private final PollsChoice _pollsChoice;
 }

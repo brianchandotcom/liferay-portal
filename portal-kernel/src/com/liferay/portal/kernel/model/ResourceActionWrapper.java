@@ -16,15 +16,10 @@ package com.liferay.portal.kernel.model;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
-
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -36,20 +31,10 @@ import java.util.Objects;
  * @generated
  */
 @ProviderType
-public class ResourceActionWrapper implements ResourceAction,
-	ModelWrapper<ResourceAction> {
+public class ResourceActionWrapper extends BaseModelWrapper<ResourceAction>
+	implements ResourceAction, ModelWrapper<ResourceAction> {
 	public ResourceActionWrapper(ResourceAction resourceAction) {
-		_resourceAction = resourceAction;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return ResourceAction.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return ResourceAction.class.getName();
+		super(resourceAction);
 	}
 
 	@Override
@@ -98,16 +83,6 @@ public class ResourceActionWrapper implements ResourceAction,
 		}
 	}
 
-	@Override
-	public Object clone() {
-		return new ResourceActionWrapper((ResourceAction)_resourceAction.clone());
-	}
-
-	@Override
-	public int compareTo(ResourceAction resourceAction) {
-		return _resourceAction.compareTo(resourceAction);
-	}
-
 	/**
 	* Returns the action ID of this resource action.
 	*
@@ -115,7 +90,7 @@ public class ResourceActionWrapper implements ResourceAction,
 	*/
 	@Override
 	public String getActionId() {
-		return _resourceAction.getActionId();
+		return model.getActionId();
 	}
 
 	/**
@@ -125,12 +100,7 @@ public class ResourceActionWrapper implements ResourceAction,
 	*/
 	@Override
 	public long getBitwiseValue() {
-		return _resourceAction.getBitwiseValue();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _resourceAction.getExpandoBridge();
+		return model.getBitwiseValue();
 	}
 
 	/**
@@ -140,7 +110,7 @@ public class ResourceActionWrapper implements ResourceAction,
 	*/
 	@Override
 	public long getMvccVersion() {
-		return _resourceAction.getMvccVersion();
+		return model.getMvccVersion();
 	}
 
 	/**
@@ -150,7 +120,7 @@ public class ResourceActionWrapper implements ResourceAction,
 	*/
 	@Override
 	public String getName() {
-		return _resourceAction.getName();
+		return model.getName();
 	}
 
 	/**
@@ -160,12 +130,7 @@ public class ResourceActionWrapper implements ResourceAction,
 	*/
 	@Override
 	public long getPrimaryKey() {
-		return _resourceAction.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _resourceAction.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	/**
@@ -175,32 +140,12 @@ public class ResourceActionWrapper implements ResourceAction,
 	*/
 	@Override
 	public long getResourceActionId() {
-		return _resourceAction.getResourceActionId();
-	}
-
-	@Override
-	public int hashCode() {
-		return _resourceAction.hashCode();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _resourceAction.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _resourceAction.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _resourceAction.isNew();
+		return model.getResourceActionId();
 	}
 
 	@Override
 	public void persist() {
-		_resourceAction.persist();
+		model.persist();
 	}
 
 	/**
@@ -210,7 +155,7 @@ public class ResourceActionWrapper implements ResourceAction,
 	*/
 	@Override
 	public void setActionId(String actionId) {
-		_resourceAction.setActionId(actionId);
+		model.setActionId(actionId);
 	}
 
 	/**
@@ -220,27 +165,7 @@ public class ResourceActionWrapper implements ResourceAction,
 	*/
 	@Override
 	public void setBitwiseValue(long bitwiseValue) {
-		_resourceAction.setBitwiseValue(bitwiseValue);
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_resourceAction.setCachedModel(cachedModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(BaseModel<?> baseModel) {
-		_resourceAction.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_resourceAction.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_resourceAction.setExpandoBridgeAttributes(serviceContext);
+		model.setBitwiseValue(bitwiseValue);
 	}
 
 	/**
@@ -250,7 +175,7 @@ public class ResourceActionWrapper implements ResourceAction,
 	*/
 	@Override
 	public void setMvccVersion(long mvccVersion) {
-		_resourceAction.setMvccVersion(mvccVersion);
+		model.setMvccVersion(mvccVersion);
 	}
 
 	/**
@@ -260,12 +185,7 @@ public class ResourceActionWrapper implements ResourceAction,
 	*/
 	@Override
 	public void setName(String name) {
-		_resourceAction.setName(name);
-	}
-
-	@Override
-	public void setNew(boolean n) {
-		_resourceAction.setNew(n);
+		model.setName(name);
 	}
 
 	/**
@@ -275,12 +195,7 @@ public class ResourceActionWrapper implements ResourceAction,
 	*/
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_resourceAction.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_resourceAction.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -290,73 +205,11 @@ public class ResourceActionWrapper implements ResourceAction,
 	*/
 	@Override
 	public void setResourceActionId(long resourceActionId) {
-		_resourceAction.setResourceActionId(resourceActionId);
+		model.setResourceActionId(resourceActionId);
 	}
 
 	@Override
-	public CacheModel<ResourceAction> toCacheModel() {
-		return _resourceAction.toCacheModel();
+	protected ResourceActionWrapper wrap(ResourceAction resourceAction) {
+		return new ResourceActionWrapper(resourceAction);
 	}
-
-	@Override
-	public ResourceAction toEscapedModel() {
-		return new ResourceActionWrapper(_resourceAction.toEscapedModel());
-	}
-
-	@Override
-	public String toString() {
-		return _resourceAction.toString();
-	}
-
-	@Override
-	public ResourceAction toUnescapedModel() {
-		return new ResourceActionWrapper(_resourceAction.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _resourceAction.toXmlString();
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-
-		if (!(obj instanceof ResourceActionWrapper)) {
-			return false;
-		}
-
-		ResourceActionWrapper resourceActionWrapper = (ResourceActionWrapper)obj;
-
-		if (Objects.equals(_resourceAction,
-					resourceActionWrapper._resourceAction)) {
-			return true;
-		}
-
-		return false;
-	}
-
-	@Override
-	public ResourceAction getWrappedModel() {
-		return _resourceAction;
-	}
-
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _resourceAction.isEntityCacheEnabled();
-	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _resourceAction.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_resourceAction.resetOriginalValues();
-	}
-
-	private final ResourceAction _resourceAction;
 }

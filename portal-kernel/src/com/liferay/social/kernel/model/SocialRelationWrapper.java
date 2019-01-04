@@ -16,16 +16,11 @@ package com.liferay.social.kernel.model;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
-
 import com.liferay.portal.kernel.model.ModelWrapper;
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -37,20 +32,10 @@ import java.util.Objects;
  * @generated
  */
 @ProviderType
-public class SocialRelationWrapper implements SocialRelation,
-	ModelWrapper<SocialRelation> {
+public class SocialRelationWrapper extends BaseModelWrapper<SocialRelation>
+	implements SocialRelation, ModelWrapper<SocialRelation> {
 	public SocialRelationWrapper(SocialRelation socialRelation) {
-		_socialRelation = socialRelation;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return SocialRelation.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return SocialRelation.class.getName();
+		super(socialRelation);
 	}
 
 	@Override
@@ -113,16 +98,6 @@ public class SocialRelationWrapper implements SocialRelation,
 		}
 	}
 
-	@Override
-	public Object clone() {
-		return new SocialRelationWrapper((SocialRelation)_socialRelation.clone());
-	}
-
-	@Override
-	public int compareTo(SocialRelation socialRelation) {
-		return _socialRelation.compareTo(socialRelation);
-	}
-
 	/**
 	* Returns the company ID of this social relation.
 	*
@@ -130,7 +105,7 @@ public class SocialRelationWrapper implements SocialRelation,
 	*/
 	@Override
 	public long getCompanyId() {
-		return _socialRelation.getCompanyId();
+		return model.getCompanyId();
 	}
 
 	/**
@@ -140,12 +115,7 @@ public class SocialRelationWrapper implements SocialRelation,
 	*/
 	@Override
 	public long getCreateDate() {
-		return _socialRelation.getCreateDate();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _socialRelation.getExpandoBridge();
+		return model.getCreateDate();
 	}
 
 	/**
@@ -155,12 +125,7 @@ public class SocialRelationWrapper implements SocialRelation,
 	*/
 	@Override
 	public long getPrimaryKey() {
-		return _socialRelation.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _socialRelation.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	/**
@@ -170,7 +135,7 @@ public class SocialRelationWrapper implements SocialRelation,
 	*/
 	@Override
 	public long getRelationId() {
-		return _socialRelation.getRelationId();
+		return model.getRelationId();
 	}
 
 	/**
@@ -180,7 +145,7 @@ public class SocialRelationWrapper implements SocialRelation,
 	*/
 	@Override
 	public int getType() {
-		return _socialRelation.getType();
+		return model.getType();
 	}
 
 	/**
@@ -190,7 +155,7 @@ public class SocialRelationWrapper implements SocialRelation,
 	*/
 	@Override
 	public long getUserId1() {
-		return _socialRelation.getUserId1();
+		return model.getUserId1();
 	}
 
 	/**
@@ -200,7 +165,7 @@ public class SocialRelationWrapper implements SocialRelation,
 	*/
 	@Override
 	public long getUserId2() {
-		return _socialRelation.getUserId2();
+		return model.getUserId2();
 	}
 
 	/**
@@ -210,37 +175,12 @@ public class SocialRelationWrapper implements SocialRelation,
 	*/
 	@Override
 	public String getUuid() {
-		return _socialRelation.getUuid();
-	}
-
-	@Override
-	public int hashCode() {
-		return _socialRelation.hashCode();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _socialRelation.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _socialRelation.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _socialRelation.isNew();
+		return model.getUuid();
 	}
 
 	@Override
 	public void persist() {
-		_socialRelation.persist();
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_socialRelation.setCachedModel(cachedModel);
+		model.persist();
 	}
 
 	/**
@@ -250,7 +190,7 @@ public class SocialRelationWrapper implements SocialRelation,
 	*/
 	@Override
 	public void setCompanyId(long companyId) {
-		_socialRelation.setCompanyId(companyId);
+		model.setCompanyId(companyId);
 	}
 
 	/**
@@ -260,28 +200,7 @@ public class SocialRelationWrapper implements SocialRelation,
 	*/
 	@Override
 	public void setCreateDate(long createDate) {
-		_socialRelation.setCreateDate(createDate);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-		_socialRelation.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_socialRelation.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_socialRelation.setExpandoBridgeAttributes(serviceContext);
-	}
-
-	@Override
-	public void setNew(boolean n) {
-		_socialRelation.setNew(n);
+		model.setCreateDate(createDate);
 	}
 
 	/**
@@ -291,12 +210,7 @@ public class SocialRelationWrapper implements SocialRelation,
 	*/
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_socialRelation.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_socialRelation.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -306,7 +220,7 @@ public class SocialRelationWrapper implements SocialRelation,
 	*/
 	@Override
 	public void setRelationId(long relationId) {
-		_socialRelation.setRelationId(relationId);
+		model.setRelationId(relationId);
 	}
 
 	/**
@@ -316,7 +230,7 @@ public class SocialRelationWrapper implements SocialRelation,
 	*/
 	@Override
 	public void setType(int type) {
-		_socialRelation.setType(type);
+		model.setType(type);
 	}
 
 	/**
@@ -326,7 +240,7 @@ public class SocialRelationWrapper implements SocialRelation,
 	*/
 	@Override
 	public void setUserId1(long userId1) {
-		_socialRelation.setUserId1(userId1);
+		model.setUserId1(userId1);
 	}
 
 	/**
@@ -336,7 +250,7 @@ public class SocialRelationWrapper implements SocialRelation,
 	*/
 	@Override
 	public void setUserId2(long userId2) {
-		_socialRelation.setUserId2(userId2);
+		model.setUserId2(userId2);
 	}
 
 	/**
@@ -346,73 +260,11 @@ public class SocialRelationWrapper implements SocialRelation,
 	*/
 	@Override
 	public void setUuid(String uuid) {
-		_socialRelation.setUuid(uuid);
+		model.setUuid(uuid);
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.CacheModel<SocialRelation> toCacheModel() {
-		return _socialRelation.toCacheModel();
+	protected SocialRelationWrapper wrap(SocialRelation socialRelation) {
+		return new SocialRelationWrapper(socialRelation);
 	}
-
-	@Override
-	public SocialRelation toEscapedModel() {
-		return new SocialRelationWrapper(_socialRelation.toEscapedModel());
-	}
-
-	@Override
-	public String toString() {
-		return _socialRelation.toString();
-	}
-
-	@Override
-	public SocialRelation toUnescapedModel() {
-		return new SocialRelationWrapper(_socialRelation.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _socialRelation.toXmlString();
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-
-		if (!(obj instanceof SocialRelationWrapper)) {
-			return false;
-		}
-
-		SocialRelationWrapper socialRelationWrapper = (SocialRelationWrapper)obj;
-
-		if (Objects.equals(_socialRelation,
-					socialRelationWrapper._socialRelation)) {
-			return true;
-		}
-
-		return false;
-	}
-
-	@Override
-	public SocialRelation getWrappedModel() {
-		return _socialRelation;
-	}
-
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _socialRelation.isEntityCacheEnabled();
-	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _socialRelation.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_socialRelation.resetOriginalValues();
-	}
-
-	private final SocialRelation _socialRelation;
 }

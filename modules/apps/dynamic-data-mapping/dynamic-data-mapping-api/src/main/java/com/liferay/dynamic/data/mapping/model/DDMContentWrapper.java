@@ -16,19 +16,14 @@ package com.liferay.dynamic.data.mapping.model;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
-
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 
 import com.liferay.portal.kernel.model.ModelWrapper;
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -40,19 +35,10 @@ import java.util.Objects;
  * @generated
  */
 @ProviderType
-public class DDMContentWrapper implements DDMContent, ModelWrapper<DDMContent> {
+public class DDMContentWrapper extends BaseModelWrapper<DDMContent>
+	implements DDMContent, ModelWrapper<DDMContent> {
 	public DDMContentWrapper(DDMContent ddmContent) {
-		_ddmContent = ddmContent;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return DDMContent.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return DDMContent.class.getName();
+		super(ddmContent);
 	}
 
 	@Override
@@ -144,18 +130,8 @@ public class DDMContentWrapper implements DDMContent, ModelWrapper<DDMContent> {
 	}
 
 	@Override
-	public Object clone() {
-		return new DDMContentWrapper((DDMContent)_ddmContent.clone());
-	}
-
-	@Override
-	public int compareTo(DDMContent ddmContent) {
-		return _ddmContent.compareTo(ddmContent);
-	}
-
-	@Override
 	public String[] getAvailableLanguageIds() {
-		return _ddmContent.getAvailableLanguageIds();
+		return model.getAvailableLanguageIds();
 	}
 
 	/**
@@ -165,7 +141,7 @@ public class DDMContentWrapper implements DDMContent, ModelWrapper<DDMContent> {
 	*/
 	@Override
 	public long getCompanyId() {
-		return _ddmContent.getCompanyId();
+		return model.getCompanyId();
 	}
 
 	/**
@@ -175,7 +151,7 @@ public class DDMContentWrapper implements DDMContent, ModelWrapper<DDMContent> {
 	*/
 	@Override
 	public long getContentId() {
-		return _ddmContent.getContentId();
+		return model.getContentId();
 	}
 
 	/**
@@ -185,7 +161,7 @@ public class DDMContentWrapper implements DDMContent, ModelWrapper<DDMContent> {
 	*/
 	@Override
 	public Date getCreateDate() {
-		return _ddmContent.getCreateDate();
+		return model.getCreateDate();
 	}
 
 	/**
@@ -195,12 +171,12 @@ public class DDMContentWrapper implements DDMContent, ModelWrapper<DDMContent> {
 	*/
 	@Override
 	public String getData() {
-		return _ddmContent.getData();
+		return model.getData();
 	}
 
 	@Override
 	public String getDefaultLanguageId() {
-		return _ddmContent.getDefaultLanguageId();
+		return model.getDefaultLanguageId();
 	}
 
 	/**
@@ -210,12 +186,7 @@ public class DDMContentWrapper implements DDMContent, ModelWrapper<DDMContent> {
 	*/
 	@Override
 	public String getDescription() {
-		return _ddmContent.getDescription();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _ddmContent.getExpandoBridge();
+		return model.getDescription();
 	}
 
 	/**
@@ -225,7 +196,7 @@ public class DDMContentWrapper implements DDMContent, ModelWrapper<DDMContent> {
 	*/
 	@Override
 	public long getGroupId() {
-		return _ddmContent.getGroupId();
+		return model.getGroupId();
 	}
 
 	/**
@@ -235,7 +206,7 @@ public class DDMContentWrapper implements DDMContent, ModelWrapper<DDMContent> {
 	*/
 	@Override
 	public Date getModifiedDate() {
-		return _ddmContent.getModifiedDate();
+		return model.getModifiedDate();
 	}
 
 	/**
@@ -245,7 +216,7 @@ public class DDMContentWrapper implements DDMContent, ModelWrapper<DDMContent> {
 	*/
 	@Override
 	public String getName() {
-		return _ddmContent.getName();
+		return model.getName();
 	}
 
 	/**
@@ -256,7 +227,7 @@ public class DDMContentWrapper implements DDMContent, ModelWrapper<DDMContent> {
 	*/
 	@Override
 	public String getName(java.util.Locale locale) {
-		return _ddmContent.getName(locale);
+		return model.getName(locale);
 	}
 
 	/**
@@ -268,7 +239,7 @@ public class DDMContentWrapper implements DDMContent, ModelWrapper<DDMContent> {
 	*/
 	@Override
 	public String getName(java.util.Locale locale, boolean useDefault) {
-		return _ddmContent.getName(locale, useDefault);
+		return model.getName(locale, useDefault);
 	}
 
 	/**
@@ -279,7 +250,7 @@ public class DDMContentWrapper implements DDMContent, ModelWrapper<DDMContent> {
 	*/
 	@Override
 	public String getName(String languageId) {
-		return _ddmContent.getName(languageId);
+		return model.getName(languageId);
 	}
 
 	/**
@@ -291,17 +262,17 @@ public class DDMContentWrapper implements DDMContent, ModelWrapper<DDMContent> {
 	*/
 	@Override
 	public String getName(String languageId, boolean useDefault) {
-		return _ddmContent.getName(languageId, useDefault);
+		return model.getName(languageId, useDefault);
 	}
 
 	@Override
 	public String getNameCurrentLanguageId() {
-		return _ddmContent.getNameCurrentLanguageId();
+		return model.getNameCurrentLanguageId();
 	}
 
 	@Override
 	public String getNameCurrentValue() {
-		return _ddmContent.getNameCurrentValue();
+		return model.getNameCurrentValue();
 	}
 
 	/**
@@ -311,7 +282,7 @@ public class DDMContentWrapper implements DDMContent, ModelWrapper<DDMContent> {
 	*/
 	@Override
 	public Map<java.util.Locale, String> getNameMap() {
-		return _ddmContent.getNameMap();
+		return model.getNameMap();
 	}
 
 	/**
@@ -321,12 +292,7 @@ public class DDMContentWrapper implements DDMContent, ModelWrapper<DDMContent> {
 	*/
 	@Override
 	public long getPrimaryKey() {
-		return _ddmContent.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _ddmContent.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	/**
@@ -336,7 +302,7 @@ public class DDMContentWrapper implements DDMContent, ModelWrapper<DDMContent> {
 	*/
 	@Override
 	public long getUserId() {
-		return _ddmContent.getUserId();
+		return model.getUserId();
 	}
 
 	/**
@@ -346,7 +312,7 @@ public class DDMContentWrapper implements DDMContent, ModelWrapper<DDMContent> {
 	*/
 	@Override
 	public String getUserName() {
-		return _ddmContent.getUserName();
+		return model.getUserName();
 	}
 
 	/**
@@ -356,7 +322,7 @@ public class DDMContentWrapper implements DDMContent, ModelWrapper<DDMContent> {
 	*/
 	@Override
 	public String getUserUuid() {
-		return _ddmContent.getUserUuid();
+		return model.getUserUuid();
 	}
 
 	/**
@@ -366,50 +332,25 @@ public class DDMContentWrapper implements DDMContent, ModelWrapper<DDMContent> {
 	*/
 	@Override
 	public String getUuid() {
-		return _ddmContent.getUuid();
-	}
-
-	@Override
-	public int hashCode() {
-		return _ddmContent.hashCode();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _ddmContent.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _ddmContent.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _ddmContent.isNew();
+		return model.getUuid();
 	}
 
 	@Override
 	public void persist() {
-		_ddmContent.persist();
+		model.persist();
 	}
 
 	@Override
 	public void prepareLocalizedFieldsForImport()
 		throws com.liferay.portal.kernel.exception.LocaleException {
-		_ddmContent.prepareLocalizedFieldsForImport();
+		model.prepareLocalizedFieldsForImport();
 	}
 
 	@Override
 	public void prepareLocalizedFieldsForImport(
 		java.util.Locale defaultImportLocale)
 		throws com.liferay.portal.kernel.exception.LocaleException {
-		_ddmContent.prepareLocalizedFieldsForImport(defaultImportLocale);
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_ddmContent.setCachedModel(cachedModel);
+		model.prepareLocalizedFieldsForImport(defaultImportLocale);
 	}
 
 	/**
@@ -419,7 +360,7 @@ public class DDMContentWrapper implements DDMContent, ModelWrapper<DDMContent> {
 	*/
 	@Override
 	public void setCompanyId(long companyId) {
-		_ddmContent.setCompanyId(companyId);
+		model.setCompanyId(companyId);
 	}
 
 	/**
@@ -429,7 +370,7 @@ public class DDMContentWrapper implements DDMContent, ModelWrapper<DDMContent> {
 	*/
 	@Override
 	public void setContentId(long contentId) {
-		_ddmContent.setContentId(contentId);
+		model.setContentId(contentId);
 	}
 
 	/**
@@ -439,7 +380,7 @@ public class DDMContentWrapper implements DDMContent, ModelWrapper<DDMContent> {
 	*/
 	@Override
 	public void setCreateDate(Date createDate) {
-		_ddmContent.setCreateDate(createDate);
+		model.setCreateDate(createDate);
 	}
 
 	/**
@@ -449,7 +390,7 @@ public class DDMContentWrapper implements DDMContent, ModelWrapper<DDMContent> {
 	*/
 	@Override
 	public void setData(String data) {
-		_ddmContent.setData(data);
+		model.setData(data);
 	}
 
 	/**
@@ -459,23 +400,7 @@ public class DDMContentWrapper implements DDMContent, ModelWrapper<DDMContent> {
 	*/
 	@Override
 	public void setDescription(String description) {
-		_ddmContent.setDescription(description);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-		_ddmContent.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_ddmContent.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_ddmContent.setExpandoBridgeAttributes(serviceContext);
+		model.setDescription(description);
 	}
 
 	/**
@@ -485,7 +410,7 @@ public class DDMContentWrapper implements DDMContent, ModelWrapper<DDMContent> {
 	*/
 	@Override
 	public void setGroupId(long groupId) {
-		_ddmContent.setGroupId(groupId);
+		model.setGroupId(groupId);
 	}
 
 	/**
@@ -495,7 +420,7 @@ public class DDMContentWrapper implements DDMContent, ModelWrapper<DDMContent> {
 	*/
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
-		_ddmContent.setModifiedDate(modifiedDate);
+		model.setModifiedDate(modifiedDate);
 	}
 
 	/**
@@ -505,7 +430,7 @@ public class DDMContentWrapper implements DDMContent, ModelWrapper<DDMContent> {
 	*/
 	@Override
 	public void setName(String name) {
-		_ddmContent.setName(name);
+		model.setName(name);
 	}
 
 	/**
@@ -516,7 +441,7 @@ public class DDMContentWrapper implements DDMContent, ModelWrapper<DDMContent> {
 	*/
 	@Override
 	public void setName(String name, java.util.Locale locale) {
-		_ddmContent.setName(name, locale);
+		model.setName(name, locale);
 	}
 
 	/**
@@ -529,12 +454,12 @@ public class DDMContentWrapper implements DDMContent, ModelWrapper<DDMContent> {
 	@Override
 	public void setName(String name, java.util.Locale locale,
 		java.util.Locale defaultLocale) {
-		_ddmContent.setName(name, locale, defaultLocale);
+		model.setName(name, locale, defaultLocale);
 	}
 
 	@Override
 	public void setNameCurrentLanguageId(String languageId) {
-		_ddmContent.setNameCurrentLanguageId(languageId);
+		model.setNameCurrentLanguageId(languageId);
 	}
 
 	/**
@@ -544,7 +469,7 @@ public class DDMContentWrapper implements DDMContent, ModelWrapper<DDMContent> {
 	*/
 	@Override
 	public void setNameMap(Map<java.util.Locale, String> nameMap) {
-		_ddmContent.setNameMap(nameMap);
+		model.setNameMap(nameMap);
 	}
 
 	/**
@@ -556,12 +481,7 @@ public class DDMContentWrapper implements DDMContent, ModelWrapper<DDMContent> {
 	@Override
 	public void setNameMap(Map<java.util.Locale, String> nameMap,
 		java.util.Locale defaultLocale) {
-		_ddmContent.setNameMap(nameMap, defaultLocale);
-	}
-
-	@Override
-	public void setNew(boolean n) {
-		_ddmContent.setNew(n);
+		model.setNameMap(nameMap, defaultLocale);
 	}
 
 	/**
@@ -571,12 +491,7 @@ public class DDMContentWrapper implements DDMContent, ModelWrapper<DDMContent> {
 	*/
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_ddmContent.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_ddmContent.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -586,7 +501,7 @@ public class DDMContentWrapper implements DDMContent, ModelWrapper<DDMContent> {
 	*/
 	@Override
 	public void setUserId(long userId) {
-		_ddmContent.setUserId(userId);
+		model.setUserId(userId);
 	}
 
 	/**
@@ -596,7 +511,7 @@ public class DDMContentWrapper implements DDMContent, ModelWrapper<DDMContent> {
 	*/
 	@Override
 	public void setUserName(String userName) {
-		_ddmContent.setUserName(userName);
+		model.setUserName(userName);
 	}
 
 	/**
@@ -606,7 +521,7 @@ public class DDMContentWrapper implements DDMContent, ModelWrapper<DDMContent> {
 	*/
 	@Override
 	public void setUserUuid(String userUuid) {
-		_ddmContent.setUserUuid(userUuid);
+		model.setUserUuid(userUuid);
 	}
 
 	/**
@@ -616,77 +531,16 @@ public class DDMContentWrapper implements DDMContent, ModelWrapper<DDMContent> {
 	*/
 	@Override
 	public void setUuid(String uuid) {
-		_ddmContent.setUuid(uuid);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<DDMContent> toCacheModel() {
-		return _ddmContent.toCacheModel();
-	}
-
-	@Override
-	public DDMContent toEscapedModel() {
-		return new DDMContentWrapper(_ddmContent.toEscapedModel());
-	}
-
-	@Override
-	public String toString() {
-		return _ddmContent.toString();
-	}
-
-	@Override
-	public DDMContent toUnescapedModel() {
-		return new DDMContentWrapper(_ddmContent.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _ddmContent.toXmlString();
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-
-		if (!(obj instanceof DDMContentWrapper)) {
-			return false;
-		}
-
-		DDMContentWrapper ddmContentWrapper = (DDMContentWrapper)obj;
-
-		if (Objects.equals(_ddmContent, ddmContentWrapper._ddmContent)) {
-			return true;
-		}
-
-		return false;
+		model.setUuid(uuid);
 	}
 
 	@Override
 	public StagedModelType getStagedModelType() {
-		return _ddmContent.getStagedModelType();
+		return model.getStagedModelType();
 	}
 
 	@Override
-	public DDMContent getWrappedModel() {
-		return _ddmContent;
+	protected DDMContentWrapper wrap(DDMContent ddmContent) {
+		return new DDMContentWrapper(ddmContent);
 	}
-
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _ddmContent.isEntityCacheEnabled();
-	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _ddmContent.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_ddmContent.resetOriginalValues();
-	}
-
-	private final DDMContent _ddmContent;
 }

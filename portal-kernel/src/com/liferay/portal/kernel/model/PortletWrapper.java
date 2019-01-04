@@ -16,15 +16,10 @@ package com.liferay.portal.kernel.model;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
-
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -36,19 +31,10 @@ import java.util.Objects;
  * @generated
  */
 @ProviderType
-public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
+public class PortletWrapper extends BaseModelWrapper<Portlet> implements Portlet,
+	ModelWrapper<Portlet> {
 	public PortletWrapper(Portlet portlet) {
-		_portlet = portlet;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return Portlet.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return Portlet.class.getName();
+		super(portlet);
 	}
 
 	@Override
@@ -112,7 +98,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	@Override
 	public void addApplicationType(
 		com.liferay.portal.kernel.application.type.ApplicationType applicationType) {
-		_portlet.addApplicationType(applicationType);
+		model.addApplicationType(applicationType);
 	}
 
 	/**
@@ -123,7 +109,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	@Override
 	public void addPortletDependency(
 		com.liferay.portal.kernel.model.portlet.PortletDependency portletDependency) {
-		_portlet.addPortletDependency(portletDependency);
+		model.addPortletDependency(portletDependency);
 	}
 
 	/**
@@ -132,7 +118,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	@Override
 	public void addProcessingEvent(
 		com.liferay.portal.kernel.xml.QName processingEvent) {
-		_portlet.addProcessingEvent(processingEvent);
+		model.addProcessingEvent(processingEvent);
 	}
 
 	/**
@@ -143,7 +129,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	@Override
 	public void addPublicRenderParameter(
 		PublicRenderParameter publicRenderParameter) {
-		_portlet.addPublicRenderParameter(publicRenderParameter);
+		model.addPublicRenderParameter(publicRenderParameter);
 	}
 
 	/**
@@ -152,7 +138,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	@Override
 	public void addPublishingEvent(
 		com.liferay.portal.kernel.xml.QName publishingEvent) {
-		_portlet.addPublishingEvent(publishingEvent);
+		model.addPublishingEvent(publishingEvent);
 	}
 
 	/**
@@ -161,17 +147,42 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	@Override
 	public void addSchedulerEntry(
 		com.liferay.portal.kernel.scheduler.SchedulerEntry schedulerEntry) {
-		_portlet.addSchedulerEntry(schedulerEntry);
+		model.addSchedulerEntry(schedulerEntry);
 	}
 
+	/**
+	* Creates and returns a copy of this object.
+	*
+	* @return a copy of this object
+	*/
 	@Override
 	public Object clone() {
-		return new PortletWrapper((Portlet)_portlet.clone());
+		return new PortletWrapper((Portlet)model.clone());
 	}
 
+	/**
+	* Compares this portlet to the specified object.
+	*
+	* @param portlet the portlet to compare this portlet against
+	* @return the value 0 if the argument portlet is equal to this portlet; a
+	value less than -1 if this portlet is less than the portlet
+	argument; and 1 if this portlet is greater than the portlet
+	argument
+	*/
 	@Override
 	public int compareTo(Portlet portlet) {
-		return _portlet.compareTo(portlet);
+		return model.compareTo(portlet);
+	}
+
+	/**
+	* Checks whether this portlet is equal to the specified object.
+	*
+	* @param obj the object to compare this portlet against
+	* @return <code>true</code> if the portlet is equal to the specified object
+	*/
+	@Override
+	public boolean equals(Object obj) {
+		return model.equals(obj);
 	}
 
 	/**
@@ -181,7 +192,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public int getActionTimeout() {
-		return _portlet.getActionTimeout();
+		return model.getActionTimeout();
 	}
 
 	/**
@@ -193,7 +204,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public boolean getActionURLRedirect() {
-		return _portlet.getActionURLRedirect();
+		return model.getActionURLRedirect();
 	}
 
 	/**
@@ -203,7 +214,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public boolean getActive() {
-		return _portlet.getActive();
+		return model.getActive();
 	}
 
 	/**
@@ -215,7 +226,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public boolean getAddDefaultResource() {
-		return _portlet.getAddDefaultResource();
+		return model.getAddDefaultResource();
 	}
 
 	/**
@@ -225,7 +236,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public boolean getAjaxable() {
-		return _portlet.getAjaxable();
+		return model.getAjaxable();
 	}
 
 	/**
@@ -235,7 +246,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public java.util.Set<String> getAllPortletModes() {
-		return _portlet.getAllPortletModes();
+		return model.getAllPortletModes();
 	}
 
 	/**
@@ -245,7 +256,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public java.util.Set<String> getAllWindowStates() {
-		return _portlet.getAllWindowStates();
+		return model.getAllWindowStates();
 	}
 
 	/**
@@ -255,7 +266,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public java.util.Set<com.liferay.portal.kernel.application.type.ApplicationType> getApplicationTypes() {
-		return _portlet.getApplicationTypes();
+		return model.getApplicationTypes();
 	}
 
 	/**
@@ -267,7 +278,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public java.util.List<String> getAssetRendererFactoryClasses() {
-		return _portlet.getAssetRendererFactoryClasses();
+		return model.getAssetRendererFactoryClasses();
 	}
 
 	/**
@@ -277,7 +288,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public java.util.List<com.liferay.asset.kernel.model.AssetRendererFactory<?>> getAssetRendererFactoryInstances() {
-		return _portlet.getAssetRendererFactoryInstances();
+		return model.getAssetRendererFactoryInstances();
 	}
 
 	/**
@@ -289,7 +300,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public java.util.List<String> getAtomCollectionAdapterClasses() {
-		return _portlet.getAtomCollectionAdapterClasses();
+		return model.getAtomCollectionAdapterClasses();
 	}
 
 	/**
@@ -299,7 +310,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public java.util.List<com.liferay.portal.kernel.atom.AtomCollectionAdapter<?>> getAtomCollectionAdapterInstances() {
-		return _portlet.getAtomCollectionAdapterInstances();
+		return model.getAtomCollectionAdapterInstances();
 	}
 
 	/**
@@ -311,7 +322,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public java.util.Set<String> getAutopropagatedParameters() {
-		return _portlet.getAutopropagatedParameters();
+		return model.getAutopropagatedParameters();
 	}
 
 	/**
@@ -322,7 +333,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public Portlet getClonedInstance(String portletId) {
-		return _portlet.getClonedInstance(portletId);
+		return model.getClonedInstance(portletId);
 	}
 
 	/**
@@ -332,7 +343,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public long getCompanyId() {
-		return _portlet.getCompanyId();
+		return model.getCompanyId();
 	}
 
 	/**
@@ -342,7 +353,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public String getConfigurationActionClass() {
-		return _portlet.getConfigurationActionClass();
+		return model.getConfigurationActionClass();
 	}
 
 	/**
@@ -352,7 +363,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public com.liferay.portal.kernel.portlet.ConfigurationAction getConfigurationActionInstance() {
-		return _portlet.getConfigurationActionInstance();
+		return model.getConfigurationActionInstance();
 	}
 
 	/**
@@ -362,7 +373,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public String getContextName() {
-		return _portlet.getContextName();
+		return model.getContextName();
 	}
 
 	/**
@@ -372,7 +383,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public String getContextPath() {
-		return _portlet.getContextPath();
+		return model.getContextPath();
 	}
 
 	/**
@@ -384,7 +395,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public String getControlPanelEntryCategory() {
-		return _portlet.getControlPanelEntryCategory();
+		return model.getControlPanelEntryCategory();
 	}
 
 	/**
@@ -396,7 +407,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public String getControlPanelEntryClass() {
-		return _portlet.getControlPanelEntryClass();
+		return model.getControlPanelEntryClass();
 	}
 
 	/**
@@ -408,7 +419,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public com.liferay.portal.kernel.portlet.ControlPanelEntry getControlPanelEntryInstance() {
-		return _portlet.getControlPanelEntryInstance();
+		return model.getControlPanelEntryInstance();
 	}
 
 	/**
@@ -420,7 +431,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public double getControlPanelEntryWeight() {
-		return _portlet.getControlPanelEntryWeight();
+		return model.getControlPanelEntryWeight();
 	}
 
 	/**
@@ -432,7 +443,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public String getCssClassWrapper() {
-		return _portlet.getCssClassWrapper();
+		return model.getCssClassWrapper();
 	}
 
 	/**
@@ -444,7 +455,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public java.util.List<String> getCustomAttributesDisplayClasses() {
-		return _portlet.getCustomAttributesDisplayClasses();
+		return model.getCustomAttributesDisplayClasses();
 	}
 
 	/**
@@ -454,7 +465,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public java.util.List<com.liferay.expando.kernel.model.CustomAttributesDisplay> getCustomAttributesDisplayInstances() {
-		return _portlet.getCustomAttributesDisplayInstances();
+		return model.getCustomAttributesDisplayInstances();
 	}
 
 	/**
@@ -464,7 +475,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public PluginSetting getDefaultPluginSetting() {
-		return _portlet.getDefaultPluginSetting();
+		return model.getDefaultPluginSetting();
 	}
 
 	/**
@@ -474,7 +485,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public String getDefaultPreferences() {
-		return _portlet.getDefaultPreferences();
+		return model.getDefaultPreferences();
 	}
 
 	/**
@@ -484,12 +495,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public String getDisplayName() {
-		return _portlet.getDisplayName();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _portlet.getExpandoBridge();
+		return model.getDisplayName();
 	}
 
 	/**
@@ -499,7 +505,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public Integer getExpCache() {
-		return _portlet.getExpCache();
+		return model.getExpCache();
 	}
 
 	/**
@@ -511,7 +517,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	@Deprecated
 	@Override
 	public String getFacebookIntegration() {
-		return _portlet.getFacebookIntegration();
+		return model.getFacebookIntegration();
 	}
 
 	/**
@@ -523,7 +529,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public java.util.List<String> getFooterPortalCss() {
-		return _portlet.getFooterPortalCss();
+		return model.getFooterPortalCss();
 	}
 
 	/**
@@ -535,7 +541,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public java.util.List<String> getFooterPortalJavaScript() {
-		return _portlet.getFooterPortalJavaScript();
+		return model.getFooterPortalJavaScript();
 	}
 
 	/**
@@ -547,7 +553,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public java.util.List<String> getFooterPortletCss() {
-		return _portlet.getFooterPortletCss();
+		return model.getFooterPortletCss();
 	}
 
 	/**
@@ -559,7 +565,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public java.util.List<String> getFooterPortletJavaScript() {
-		return _portlet.getFooterPortletJavaScript();
+		return model.getFooterPortletJavaScript();
 	}
 
 	/**
@@ -569,7 +575,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public String getFriendlyURLMapperClass() {
-		return _portlet.getFriendlyURLMapperClass();
+		return model.getFriendlyURLMapperClass();
 	}
 
 	/**
@@ -579,7 +585,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public com.liferay.portal.kernel.portlet.FriendlyURLMapper getFriendlyURLMapperInstance() {
-		return _portlet.getFriendlyURLMapperInstance();
+		return model.getFriendlyURLMapperInstance();
 	}
 
 	/**
@@ -589,7 +595,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public String getFriendlyURLMapping() {
-		return _portlet.getFriendlyURLMapping();
+		return model.getFriendlyURLMapping();
 	}
 
 	/**
@@ -601,7 +607,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public String getFriendlyURLRoutes() {
-		return _portlet.getFriendlyURLRoutes();
+		return model.getFriendlyURLRoutes();
 	}
 
 	/**
@@ -613,7 +619,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public java.util.List<String> getHeaderPortalCss() {
-		return _portlet.getHeaderPortalCss();
+		return model.getHeaderPortalCss();
 	}
 
 	/**
@@ -625,7 +631,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public java.util.List<String> getHeaderPortalJavaScript() {
-		return _portlet.getHeaderPortalJavaScript();
+		return model.getHeaderPortalJavaScript();
 	}
 
 	/**
@@ -637,7 +643,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public java.util.List<String> getHeaderPortletCss() {
-		return _portlet.getHeaderPortletCss();
+		return model.getHeaderPortletCss();
 	}
 
 	/**
@@ -649,7 +655,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public java.util.List<String> getHeaderPortletJavaScript() {
-		return _portlet.getHeaderPortletJavaScript();
+		return model.getHeaderPortletJavaScript();
 	}
 
 	/**
@@ -666,7 +672,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public java.util.List<String> getHeaderRequestAttributePrefixes() {
-		return _portlet.getHeaderRequestAttributePrefixes();
+		return model.getHeaderRequestAttributePrefixes();
 	}
 
 	/**
@@ -676,7 +682,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public int getHeaderTimeout() {
-		return _portlet.getHeaderTimeout();
+		return model.getHeaderTimeout();
 	}
 
 	/**
@@ -686,7 +692,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public String getIcon() {
-		return _portlet.getIcon();
+		return model.getIcon();
 	}
 
 	/**
@@ -696,7 +702,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public long getId() {
-		return _portlet.getId();
+		return model.getId();
 	}
 
 	/**
@@ -708,7 +714,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public boolean getInclude() {
-		return _portlet.getInclude();
+		return model.getInclude();
 	}
 
 	/**
@@ -720,7 +726,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public java.util.List<String> getIndexerClasses() {
-		return _portlet.getIndexerClasses();
+		return model.getIndexerClasses();
 	}
 
 	/**
@@ -730,7 +736,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public java.util.List<com.liferay.portal.kernel.search.Indexer<?>> getIndexerInstances() {
-		return _portlet.getIndexerInstances();
+		return model.getIndexerInstances();
 	}
 
 	/**
@@ -740,7 +746,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public Map<String, String> getInitParams() {
-		return _portlet.getInitParams();
+		return model.getInitParams();
 	}
 
 	/**
@@ -752,7 +758,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public boolean getInstanceable() {
-		return _portlet.getInstanceable();
+		return model.getInstanceable();
 	}
 
 	/**
@@ -762,7 +768,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public String getInstanceId() {
-		return _portlet.getInstanceId();
+		return model.getInstanceId();
 	}
 
 	/**
@@ -773,7 +779,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public boolean getLayoutCacheable() {
-		return _portlet.getLayoutCacheable();
+		return model.getLayoutCacheable();
 	}
 
 	/**
@@ -785,7 +791,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public boolean getMaximizeEdit() {
-		return _portlet.getMaximizeEdit();
+		return model.getMaximizeEdit();
 	}
 
 	/**
@@ -797,7 +803,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public boolean getMaximizeHelp() {
-		return _portlet.getMaximizeHelp();
+		return model.getMaximizeHelp();
 	}
 
 	/**
@@ -807,7 +813,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public int getMultipartFileSizeThreshold() {
-		return _portlet.getMultipartFileSizeThreshold();
+		return model.getMultipartFileSizeThreshold();
 	}
 
 	/**
@@ -817,7 +823,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public String getMultipartLocation() {
-		return _portlet.getMultipartLocation();
+		return model.getMultipartLocation();
 	}
 
 	/**
@@ -827,7 +833,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public long getMultipartMaxFileSize() {
-		return _portlet.getMultipartMaxFileSize();
+		return model.getMultipartMaxFileSize();
 	}
 
 	/**
@@ -837,7 +843,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public long getMultipartMaxRequestSize() {
-		return _portlet.getMultipartMaxRequestSize();
+		return model.getMultipartMaxRequestSize();
 	}
 
 	/**
@@ -847,7 +853,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public long getMvccVersion() {
-		return _portlet.getMvccVersion();
+		return model.getMvccVersion();
 	}
 
 	/**
@@ -857,7 +863,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public String getOpenSearchClass() {
-		return _portlet.getOpenSearchClass();
+		return model.getOpenSearchClass();
 	}
 
 	/**
@@ -867,7 +873,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public com.liferay.portal.kernel.search.OpenSearch getOpenSearchInstance() {
-		return _portlet.getOpenSearchInstance();
+		return model.getOpenSearchInstance();
 	}
 
 	/**
@@ -877,7 +883,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public String getParentStrutsPath() {
-		return _portlet.getParentStrutsPath();
+		return model.getParentStrutsPath();
 	}
 
 	/**
@@ -887,7 +893,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public String getPermissionPropagatorClass() {
-		return _portlet.getPermissionPropagatorClass();
+		return model.getPermissionPropagatorClass();
 	}
 
 	/**
@@ -897,7 +903,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public com.liferay.portal.kernel.security.permission.PermissionPropagator getPermissionPropagatorInstance() {
-		return _portlet.getPermissionPropagatorInstance();
+		return model.getPermissionPropagatorInstance();
 	}
 
 	/**
@@ -907,7 +913,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public String getPluginId() {
-		return _portlet.getPluginId();
+		return model.getPluginId();
 	}
 
 	/**
@@ -917,7 +923,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public com.liferay.portal.kernel.plugin.PluginPackage getPluginPackage() {
-		return _portlet.getPluginPackage();
+		return model.getPluginPackage();
 	}
 
 	/**
@@ -927,7 +933,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public String getPluginType() {
-		return _portlet.getPluginType();
+		return model.getPluginType();
 	}
 
 	/**
@@ -937,7 +943,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public String getPollerProcessorClass() {
-		return _portlet.getPollerProcessorClass();
+		return model.getPollerProcessorClass();
 	}
 
 	/**
@@ -947,7 +953,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public com.liferay.portal.kernel.poller.PollerProcessor getPollerProcessorInstance() {
-		return _portlet.getPollerProcessorInstance();
+		return model.getPollerProcessorInstance();
 	}
 
 	/**
@@ -957,7 +963,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public String getPopMessageListenerClass() {
-		return _portlet.getPopMessageListenerClass();
+		return model.getPopMessageListenerClass();
 	}
 
 	/**
@@ -967,7 +973,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public com.liferay.portal.kernel.pop.MessageListener getPopMessageListenerInstance() {
-		return _portlet.getPopMessageListenerInstance();
+		return model.getPopMessageListenerInstance();
 	}
 
 	/**
@@ -979,7 +985,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public boolean getPopUpPrint() {
-		return _portlet.getPopUpPrint();
+		return model.getPopUpPrint();
 	}
 
 	/**
@@ -989,7 +995,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public PortletApp getPortletApp() {
-		return _portlet.getPortletApp();
+		return model.getPortletApp();
 	}
 
 	/**
@@ -999,7 +1005,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public String getPortletClass() {
-		return _portlet.getPortletClass();
+		return model.getPortletClass();
 	}
 
 	/**
@@ -1009,7 +1015,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public String getPortletDataHandlerClass() {
-		return _portlet.getPortletDataHandlerClass();
+		return model.getPortletDataHandlerClass();
 	}
 
 	/**
@@ -1019,7 +1025,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public com.liferay.exportimport.kernel.lar.PortletDataHandler getPortletDataHandlerInstance() {
-		return _portlet.getPortletDataHandlerInstance();
+		return model.getPortletDataHandlerInstance();
 	}
 
 	/**
@@ -1029,7 +1035,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public java.util.List<com.liferay.portal.kernel.model.portlet.PortletDependency> getPortletDependencies() {
-		return _portlet.getPortletDependencies();
+		return model.getPortletDependencies();
 	}
 
 	/**
@@ -1039,7 +1045,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public Map<String, PortletFilter> getPortletFilters() {
-		return _portlet.getPortletFilters();
+		return model.getPortletFilters();
 	}
 
 	/**
@@ -1049,7 +1055,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public String getPortletId() {
-		return _portlet.getPortletId();
+		return model.getPortletId();
 	}
 
 	/**
@@ -1059,7 +1065,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public PortletInfo getPortletInfo() {
-		return _portlet.getPortletInfo();
+		return model.getPortletInfo();
 	}
 
 	/**
@@ -1069,7 +1075,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public String getPortletLayoutListenerClass() {
-		return _portlet.getPortletLayoutListenerClass();
+		return model.getPortletLayoutListenerClass();
 	}
 
 	/**
@@ -1079,7 +1085,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public com.liferay.portal.kernel.portlet.PortletLayoutListener getPortletLayoutListenerInstance() {
-		return _portlet.getPortletLayoutListenerInstance();
+		return model.getPortletLayoutListenerInstance();
 	}
 
 	/**
@@ -1089,7 +1095,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public Map<String, java.util.Set<String>> getPortletModes() {
-		return _portlet.getPortletModes();
+		return model.getPortletModes();
 	}
 
 	/**
@@ -1099,7 +1105,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public String getPortletName() {
-		return _portlet.getPortletName();
+		return model.getPortletName();
 	}
 
 	/**
@@ -1109,7 +1115,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public String getPortletURLClass() {
-		return _portlet.getPortletURLClass();
+		return model.getPortletURLClass();
 	}
 
 	/**
@@ -1121,7 +1127,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public boolean getPreferencesCompanyWide() {
-		return _portlet.getPreferencesCompanyWide();
+		return model.getPreferencesCompanyWide();
 	}
 
 	/**
@@ -1135,7 +1141,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public boolean getPreferencesOwnedByGroup() {
-		return _portlet.getPreferencesOwnedByGroup();
+		return model.getPreferencesOwnedByGroup();
 	}
 
 	/**
@@ -1145,7 +1151,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public boolean getPreferencesUniquePerLayout() {
-		return _portlet.getPreferencesUniquePerLayout();
+		return model.getPreferencesUniquePerLayout();
 	}
 
 	/**
@@ -1155,7 +1161,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public String getPreferencesValidator() {
-		return _portlet.getPreferencesValidator();
+		return model.getPreferencesValidator();
 	}
 
 	/**
@@ -1165,12 +1171,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public long getPrimaryKey() {
-		return _portlet.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _portlet.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	/**
@@ -1182,7 +1183,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public boolean getPrivateRequestAttributes() {
-		return _portlet.getPrivateRequestAttributes();
+		return model.getPrivateRequestAttributes();
 	}
 
 	/**
@@ -1194,7 +1195,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public boolean getPrivateSessionAttributes() {
-		return _portlet.getPrivateSessionAttributes();
+		return model.getPrivateSessionAttributes();
 	}
 
 	/**
@@ -1207,7 +1208,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	@Override
 	public com.liferay.portal.kernel.xml.QName getProcessingEvent(String uri,
 		String localPart) {
-		return _portlet.getProcessingEvent(uri, localPart);
+		return model.getProcessingEvent(uri, localPart);
 	}
 
 	/**
@@ -1217,7 +1218,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public java.util.Set<com.liferay.portal.kernel.xml.QName> getProcessingEvents() {
-		return _portlet.getProcessingEvents();
+		return model.getProcessingEvents();
 	}
 
 	/**
@@ -1228,7 +1229,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public PublicRenderParameter getPublicRenderParameter(String identifier) {
-		return _portlet.getPublicRenderParameter(identifier);
+		return model.getPublicRenderParameter(identifier);
 	}
 
 	/**
@@ -1243,7 +1244,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	@Override
 	public PublicRenderParameter getPublicRenderParameter(String uri,
 		String localPart) {
-		return _portlet.getPublicRenderParameter(uri, localPart);
+		return model.getPublicRenderParameter(uri, localPart);
 	}
 
 	/**
@@ -1253,7 +1254,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public java.util.Set<PublicRenderParameter> getPublicRenderParameters() {
-		return _portlet.getPublicRenderParameters();
+		return model.getPublicRenderParameters();
 	}
 
 	/**
@@ -1263,7 +1264,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public java.util.Set<com.liferay.portal.kernel.xml.QName> getPublishingEvents() {
-		return _portlet.getPublishingEvents();
+		return model.getPublishingEvents();
 	}
 
 	/**
@@ -1273,7 +1274,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public boolean getReady() {
-		return _portlet.getReady();
+		return model.getReady();
 	}
 
 	/**
@@ -1283,7 +1284,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public int getRenderTimeout() {
-		return _portlet.getRenderTimeout();
+		return model.getRenderTimeout();
 	}
 
 	/**
@@ -1293,7 +1294,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public int getRenderWeight() {
-		return _portlet.getRenderWeight();
+		return model.getRenderWeight();
 	}
 
 	/**
@@ -1303,7 +1304,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public String getResourceBundle() {
-		return _portlet.getResourceBundle();
+		return model.getResourceBundle();
 	}
 
 	/**
@@ -1315,7 +1316,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public boolean getRestoreCurrentView() {
-		return _portlet.getRestoreCurrentView();
+		return model.getRestoreCurrentView();
 	}
 
 	/**
@@ -1325,7 +1326,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public Map<String, String> getRoleMappers() {
-		return _portlet.getRoleMappers();
+		return model.getRoleMappers();
 	}
 
 	/**
@@ -1335,7 +1336,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public String getRoles() {
-		return _portlet.getRoles();
+		return model.getRoles();
 	}
 
 	/**
@@ -1345,7 +1346,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public String[] getRolesArray() {
-		return _portlet.getRolesArray();
+		return model.getRolesArray();
 	}
 
 	/**
@@ -1355,7 +1356,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public Portlet getRootPortlet() {
-		return _portlet.getRootPortlet();
+		return model.getRootPortlet();
 	}
 
 	/**
@@ -1365,7 +1366,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public String getRootPortletId() {
-		return _portlet.getRootPortletId();
+		return model.getRootPortletId();
 	}
 
 	/**
@@ -1375,7 +1376,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public java.util.List<com.liferay.portal.kernel.scheduler.SchedulerEntry> getSchedulerEntries() {
-		return _portlet.getSchedulerEntries();
+		return model.getSchedulerEntries();
 	}
 
 	/**
@@ -1385,7 +1386,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public boolean getScopeable() {
-		return _portlet.getScopeable();
+		return model.getScopeable();
 	}
 
 	/**
@@ -1397,7 +1398,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public boolean getShowPortletAccessDenied() {
-		return _portlet.getShowPortletAccessDenied();
+		return model.getShowPortletAccessDenied();
 	}
 
 	/**
@@ -1408,7 +1409,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public boolean getShowPortletInactive() {
-		return _portlet.getShowPortletInactive();
+		return model.getShowPortletInactive();
 	}
 
 	/**
@@ -1418,7 +1419,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public boolean getSinglePageApplication() {
-		return _portlet.getSinglePageApplication();
+		return model.getSinglePageApplication();
 	}
 
 	/**
@@ -1430,7 +1431,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public java.util.List<String> getSocialActivityInterpreterClasses() {
-		return _portlet.getSocialActivityInterpreterClasses();
+		return model.getSocialActivityInterpreterClasses();
 	}
 
 	/**
@@ -1440,7 +1441,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public java.util.List<com.liferay.social.kernel.model.SocialActivityInterpreter> getSocialActivityInterpreterInstances() {
-		return _portlet.getSocialActivityInterpreterInstances();
+		return model.getSocialActivityInterpreterInstances();
 	}
 
 	/**
@@ -1450,7 +1451,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public String getSocialRequestInterpreterClass() {
-		return _portlet.getSocialRequestInterpreterClass();
+		return model.getSocialRequestInterpreterClass();
 	}
 
 	/**
@@ -1462,7 +1463,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public com.liferay.social.kernel.model.SocialRequestInterpreter getSocialRequestInterpreterInstance() {
-		return _portlet.getSocialRequestInterpreterInstance();
+		return model.getSocialRequestInterpreterInstance();
 	}
 
 	/**
@@ -1474,7 +1475,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public java.util.List<String> getStagedModelDataHandlerClasses() {
-		return _portlet.getStagedModelDataHandlerClasses();
+		return model.getStagedModelDataHandlerClasses();
 	}
 
 	/**
@@ -1484,7 +1485,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public java.util.List<com.liferay.exportimport.kernel.lar.StagedModelDataHandler<?>> getStagedModelDataHandlerInstances() {
-		return _portlet.getStagedModelDataHandlerInstances();
+		return model.getStagedModelDataHandlerInstances();
 	}
 
 	/**
@@ -1496,7 +1497,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public boolean getStatic() {
-		return _portlet.getStatic();
+		return model.getStatic();
 	}
 
 	/**
@@ -1508,7 +1509,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public boolean getStaticEnd() {
-		return _portlet.getStaticEnd();
+		return model.getStaticEnd();
 	}
 
 	/**
@@ -1518,7 +1519,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public String getStaticResourcePath() {
-		return _portlet.getStaticResourcePath();
+		return model.getStaticResourcePath();
 	}
 
 	/**
@@ -1530,7 +1531,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public boolean getStaticStart() {
-		return _portlet.getStaticStart();
+		return model.getStaticStart();
 	}
 
 	/**
@@ -1540,7 +1541,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public String getStrutsPath() {
-		return _portlet.getStrutsPath();
+		return model.getStrutsPath();
 	}
 
 	/**
@@ -1550,7 +1551,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public java.util.Set<String> getSupportedLocales() {
-		return _portlet.getSupportedLocales();
+		return model.getSupportedLocales();
 	}
 
 	/**
@@ -1562,7 +1563,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public boolean getSystem() {
-		return _portlet.getSystem();
+		return model.getSystem();
 	}
 
 	/**
@@ -1572,7 +1573,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public String getTemplateHandlerClass() {
-		return _portlet.getTemplateHandlerClass();
+		return model.getTemplateHandlerClass();
 	}
 
 	/**
@@ -1582,7 +1583,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public com.liferay.portal.kernel.template.TemplateHandler getTemplateHandlerInstance() {
-		return _portlet.getTemplateHandlerInstance();
+		return model.getTemplateHandlerInstance();
 	}
 
 	/**
@@ -1592,7 +1593,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public long getTimestamp() {
-		return _portlet.getTimestamp();
+		return model.getTimestamp();
 	}
 
 	/**
@@ -1604,7 +1605,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public java.util.List<String> getTrashHandlerClasses() {
-		return _portlet.getTrashHandlerClasses();
+		return model.getTrashHandlerClasses();
 	}
 
 	/**
@@ -1614,7 +1615,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public java.util.List<com.liferay.portal.kernel.trash.TrashHandler> getTrashHandlerInstances() {
-		return _portlet.getTrashHandlerInstances();
+		return model.getTrashHandlerInstances();
 	}
 
 	/**
@@ -1625,7 +1626,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public boolean getUndeployedPortlet() {
-		return _portlet.getUndeployedPortlet();
+		return model.getUndeployedPortlet();
 	}
 
 	/**
@@ -1635,7 +1636,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public java.util.Set<String> getUnlinkedRoles() {
-		return _portlet.getUnlinkedRoles();
+		return model.getUnlinkedRoles();
 	}
 
 	/**
@@ -1645,7 +1646,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public String getURLEncoderClass() {
-		return _portlet.getURLEncoderClass();
+		return model.getURLEncoderClass();
 	}
 
 	/**
@@ -1655,7 +1656,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public com.liferay.portal.kernel.servlet.URLEncoder getURLEncoderInstance() {
-		return _portlet.getURLEncoderInstance();
+		return model.getURLEncoderInstance();
 	}
 
 	/**
@@ -1665,7 +1666,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public boolean getUseDefaultTemplate() {
-		return _portlet.getUseDefaultTemplate();
+		return model.getUseDefaultTemplate();
 	}
 
 	/**
@@ -1676,7 +1677,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public long getUserId() {
-		return _portlet.getUserId();
+		return model.getUserId();
 	}
 
 	/**
@@ -1688,7 +1689,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public String getUserNotificationDefinitions() {
-		return _portlet.getUserNotificationDefinitions();
+		return model.getUserNotificationDefinitions();
 	}
 
 	/**
@@ -1700,7 +1701,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public java.util.List<String> getUserNotificationHandlerClasses() {
-		return _portlet.getUserNotificationHandlerClasses();
+		return model.getUserNotificationHandlerClasses();
 	}
 
 	/**
@@ -1710,7 +1711,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public java.util.List<com.liferay.portal.kernel.notifications.UserNotificationHandler> getUserNotificationHandlerInstances() {
-		return _portlet.getUserNotificationHandlerInstances();
+		return model.getUserNotificationHandlerInstances();
 	}
 
 	/**
@@ -1720,7 +1721,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public String getUserPrincipalStrategy() {
-		return _portlet.getUserPrincipalStrategy();
+		return model.getUserPrincipalStrategy();
 	}
 
 	/**
@@ -1730,7 +1731,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public String getVirtualPath() {
-		return _portlet.getVirtualPath();
+		return model.getVirtualPath();
 	}
 
 	/**
@@ -1740,7 +1741,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public String getWebDAVStorageClass() {
-		return _portlet.getWebDAVStorageClass();
+		return model.getWebDAVStorageClass();
 	}
 
 	/**
@@ -1750,7 +1751,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public com.liferay.portal.kernel.webdav.WebDAVStorage getWebDAVStorageInstance() {
-		return _portlet.getWebDAVStorageInstance();
+		return model.getWebDAVStorageInstance();
 	}
 
 	/**
@@ -1760,7 +1761,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public String getWebDAVStorageToken() {
-		return _portlet.getWebDAVStorageToken();
+		return model.getWebDAVStorageToken();
 	}
 
 	/**
@@ -1770,7 +1771,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public Map<String, java.util.Set<String>> getWindowStates() {
-		return _portlet.getWindowStates();
+		return model.getWindowStates();
 	}
 
 	/**
@@ -1782,7 +1783,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public java.util.List<String> getWorkflowHandlerClasses() {
-		return _portlet.getWorkflowHandlerClasses();
+		return model.getWorkflowHandlerClasses();
 	}
 
 	/**
@@ -1792,7 +1793,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public java.util.List<com.liferay.portal.kernel.workflow.WorkflowHandler<?>> getWorkflowHandlerInstances() {
-		return _portlet.getWorkflowHandlerInstances();
+		return model.getWorkflowHandlerInstances();
 	}
 
 	/**
@@ -1802,7 +1803,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public String getXmlRpcMethodClass() {
-		return _portlet.getXmlRpcMethodClass();
+		return model.getXmlRpcMethodClass();
 	}
 
 	/**
@@ -1812,7 +1813,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public com.liferay.portal.kernel.xmlrpc.Method getXmlRpcMethodInstance() {
-		return _portlet.getXmlRpcMethodInstance();
+		return model.getXmlRpcMethodInstance();
 	}
 
 	/**
@@ -1825,52 +1826,52 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public boolean hasAddPortletPermission(long userId) {
-		return _portlet.hasAddPortletPermission(userId);
+		return model.hasAddPortletPermission(userId);
 	}
 
 	@Override
 	public boolean hasFooterPortalCss() {
-		return _portlet.hasFooterPortalCss();
+		return model.hasFooterPortalCss();
 	}
 
 	@Override
 	public boolean hasFooterPortalJavaScript() {
-		return _portlet.hasFooterPortalJavaScript();
+		return model.hasFooterPortalJavaScript();
 	}
 
 	@Override
 	public boolean hasFooterPortletCss() {
-		return _portlet.hasFooterPortletCss();
+		return model.hasFooterPortletCss();
 	}
 
 	@Override
 	public boolean hasFooterPortletJavaScript() {
-		return _portlet.hasFooterPortletJavaScript();
+		return model.hasFooterPortletJavaScript();
 	}
 
 	@Override
 	public int hashCode() {
-		return _portlet.hashCode();
+		return model.hashCode();
 	}
 
 	@Override
 	public boolean hasHeaderPortalCss() {
-		return _portlet.hasHeaderPortalCss();
+		return model.hasHeaderPortalCss();
 	}
 
 	@Override
 	public boolean hasHeaderPortalJavaScript() {
-		return _portlet.hasHeaderPortalJavaScript();
+		return model.hasHeaderPortalJavaScript();
 	}
 
 	@Override
 	public boolean hasHeaderPortletCss() {
-		return _portlet.hasHeaderPortletCss();
+		return model.hasHeaderPortletCss();
 	}
 
 	@Override
 	public boolean hasHeaderPortletJavaScript() {
-		return _portlet.hasHeaderPortletJavaScript();
+		return model.hasHeaderPortletJavaScript();
 	}
 
 	/**
@@ -1881,7 +1882,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public boolean hasMultipleMimeTypes() {
-		return _portlet.hasMultipleMimeTypes();
+		return model.hasMultipleMimeTypes();
 	}
 
 	/**
@@ -1896,7 +1897,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	@Override
 	public boolean hasPortletMode(String mimeType,
 		javax.portlet.PortletMode portletMode) {
-		return _portlet.hasPortletMode(mimeType, portletMode);
+		return model.hasPortletMode(mimeType, portletMode);
 	}
 
 	/**
@@ -1909,7 +1910,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public boolean hasRoleWithName(String roleName) {
-		return _portlet.hasRoleWithName(roleName);
+		return model.hasRoleWithName(roleName);
 	}
 
 	/**
@@ -1924,7 +1925,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	@Override
 	public boolean hasWindowState(String mimeType,
 		javax.portlet.WindowState windowState) {
-		return _portlet.hasWindowState(mimeType, windowState);
+		return model.hasWindowState(mimeType, windowState);
 	}
 
 	/**
@@ -1936,7 +1937,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public boolean isActionURLRedirect() {
-		return _portlet.isActionURLRedirect();
+		return model.isActionURLRedirect();
 	}
 
 	/**
@@ -1946,7 +1947,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public boolean isActive() {
-		return _portlet.isActive();
+		return model.isActive();
 	}
 
 	/**
@@ -1958,7 +1959,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public boolean isAddDefaultResource() {
-		return _portlet.isAddDefaultResource();
+		return model.isAddDefaultResource();
 	}
 
 	/**
@@ -1968,7 +1969,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public boolean isAjaxable() {
-		return _portlet.isAjaxable();
+		return model.isAjaxable();
 	}
 
 	/**
@@ -1980,22 +1981,12 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public boolean isAsyncSupported() {
-		return _portlet.isAsyncSupported();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _portlet.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _portlet.isEscapedModel();
+		return model.isAsyncSupported();
 	}
 
 	@Override
 	public boolean isFullPageDisplayable() {
-		return _portlet.isFullPageDisplayable();
+		return model.isFullPageDisplayable();
 	}
 
 	/**
@@ -2007,7 +1998,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public boolean isInclude() {
-		return _portlet.isInclude();
+		return model.isInclude();
 	}
 
 	/**
@@ -2019,7 +2010,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public boolean isInstanceable() {
-		return _portlet.isInstanceable();
+		return model.isInstanceable();
 	}
 
 	/**
@@ -2030,7 +2021,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public boolean isLayoutCacheable() {
-		return _portlet.isLayoutCacheable();
+		return model.isLayoutCacheable();
 	}
 
 	/**
@@ -2042,7 +2033,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public boolean isMaximizeEdit() {
-		return _portlet.isMaximizeEdit();
+		return model.isMaximizeEdit();
 	}
 
 	/**
@@ -2054,12 +2045,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public boolean isMaximizeHelp() {
-		return _portlet.isMaximizeHelp();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _portlet.isNew();
+		return model.isMaximizeHelp();
 	}
 
 	/**
@@ -2075,7 +2061,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public boolean isPartialActionServeResource() {
-		return _portlet.isPartialActionServeResource();
+		return model.isPartialActionServeResource();
 	}
 
 	/**
@@ -2087,7 +2073,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public boolean isPopUpPrint() {
-		return _portlet.isPopUpPrint();
+		return model.isPopUpPrint();
 	}
 
 	/**
@@ -2102,7 +2088,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public boolean isPortletDependencyCssEnabled() {
-		return _portlet.isPortletDependencyCssEnabled();
+		return model.isPortletDependencyCssEnabled();
 	}
 
 	/**
@@ -2118,7 +2104,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public boolean isPortletDependencyJavaScriptEnabled() {
-		return _portlet.isPortletDependencyJavaScriptEnabled();
+		return model.isPortletDependencyJavaScriptEnabled();
 	}
 
 	/**
@@ -2130,7 +2116,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public boolean isPreferencesCompanyWide() {
-		return _portlet.isPreferencesCompanyWide();
+		return model.isPreferencesCompanyWide();
 	}
 
 	/**
@@ -2144,7 +2130,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public boolean isPreferencesOwnedByGroup() {
-		return _portlet.isPreferencesOwnedByGroup();
+		return model.isPreferencesOwnedByGroup();
 	}
 
 	/**
@@ -2154,7 +2140,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public boolean isPreferencesUniquePerLayout() {
-		return _portlet.isPreferencesUniquePerLayout();
+		return model.isPreferencesUniquePerLayout();
 	}
 
 	/**
@@ -2166,7 +2152,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public boolean isPrivateRequestAttributes() {
-		return _portlet.isPrivateRequestAttributes();
+		return model.isPrivateRequestAttributes();
 	}
 
 	/**
@@ -2178,7 +2164,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public boolean isPrivateSessionAttributes() {
-		return _portlet.isPrivateSessionAttributes();
+		return model.isPrivateSessionAttributes();
 	}
 
 	/**
@@ -2188,7 +2174,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public boolean isReady() {
-		return _portlet.isReady();
+		return model.isReady();
 	}
 
 	/**
@@ -2200,7 +2186,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public boolean isRequiresNamespacedParameters() {
-		return _portlet.isRequiresNamespacedParameters();
+		return model.isRequiresNamespacedParameters();
 	}
 
 	/**
@@ -2212,7 +2198,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public boolean isRestoreCurrentView() {
-		return _portlet.isRestoreCurrentView();
+		return model.isRestoreCurrentView();
 	}
 
 	/**
@@ -2222,7 +2208,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public boolean isScopeable() {
-		return _portlet.isScopeable();
+		return model.isScopeable();
 	}
 
 	/**
@@ -2234,7 +2220,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public boolean isShowPortletAccessDenied() {
-		return _portlet.isShowPortletAccessDenied();
+		return model.isShowPortletAccessDenied();
 	}
 
 	/**
@@ -2245,7 +2231,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public boolean isShowPortletInactive() {
-		return _portlet.isShowPortletInactive();
+		return model.isShowPortletInactive();
 	}
 
 	/**
@@ -2255,7 +2241,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public boolean isSinglePageApplication() {
-		return _portlet.isSinglePageApplication();
+		return model.isSinglePageApplication();
 	}
 
 	/**
@@ -2267,7 +2253,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public boolean isStatic() {
-		return _portlet.isStatic();
+		return model.isStatic();
 	}
 
 	/**
@@ -2279,7 +2265,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public boolean isStaticEnd() {
-		return _portlet.isStaticEnd();
+		return model.isStaticEnd();
 	}
 
 	/**
@@ -2291,7 +2277,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public boolean isStaticStart() {
-		return _portlet.isStaticStart();
+		return model.isStaticStart();
 	}
 
 	/**
@@ -2303,7 +2289,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public boolean isSystem() {
-		return _portlet.isSystem();
+		return model.isSystem();
 	}
 
 	/**
@@ -2314,7 +2300,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public boolean isUndeployedPortlet() {
-		return _portlet.isUndeployedPortlet();
+		return model.isUndeployedPortlet();
 	}
 
 	/**
@@ -2324,7 +2310,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public boolean isUseDefaultTemplate() {
-		return _portlet.isUseDefaultTemplate();
+		return model.isUseDefaultTemplate();
 	}
 
 	/**
@@ -2333,12 +2319,12 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public void linkRoles() {
-		_portlet.linkRoles();
+		model.linkRoles();
 	}
 
 	@Override
 	public void persist() {
-		_portlet.persist();
+		model.persist();
 	}
 
 	/**
@@ -2348,7 +2334,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public void setActionTimeout(int actionTimeout) {
-		_portlet.setActionTimeout(actionTimeout);
+		model.setActionTimeout(actionTimeout);
 	}
 
 	/**
@@ -2360,7 +2346,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public void setActionURLRedirect(boolean actionURLRedirect) {
-		_portlet.setActionURLRedirect(actionURLRedirect);
+		model.setActionURLRedirect(actionURLRedirect);
 	}
 
 	/**
@@ -2370,7 +2356,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public void setActive(boolean active) {
-		_portlet.setActive(active);
+		model.setActive(active);
 	}
 
 	/**
@@ -2382,7 +2368,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public void setAddDefaultResource(boolean addDefaultResource) {
-		_portlet.setAddDefaultResource(addDefaultResource);
+		model.setAddDefaultResource(addDefaultResource);
 	}
 
 	/**
@@ -2393,7 +2379,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public void setAjaxable(boolean ajaxable) {
-		_portlet.setAjaxable(ajaxable);
+		model.setAjaxable(ajaxable);
 	}
 
 	/**
@@ -2404,7 +2390,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	@Override
 	public void setApplicationTypes(
 		java.util.Set<com.liferay.portal.kernel.application.type.ApplicationType> applicationTypes) {
-		_portlet.setApplicationTypes(applicationTypes);
+		model.setApplicationTypes(applicationTypes);
 	}
 
 	/**
@@ -2417,7 +2403,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	@Override
 	public void setAssetRendererFactoryClasses(
 		java.util.List<String> assetRendererFactoryClasses) {
-		_portlet.setAssetRendererFactoryClasses(assetRendererFactoryClasses);
+		model.setAssetRendererFactoryClasses(assetRendererFactoryClasses);
 	}
 
 	/**
@@ -2429,7 +2415,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public void setAsyncSupported(boolean asyncSupported) {
-		_portlet.setAsyncSupported(asyncSupported);
+		model.setAsyncSupported(asyncSupported);
 	}
 
 	/**
@@ -2442,7 +2428,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	@Override
 	public void setAtomCollectionAdapterClasses(
 		java.util.List<String> atomCollectionAdapterClasses) {
-		_portlet.setAtomCollectionAdapterClasses(atomCollectionAdapterClasses);
+		model.setAtomCollectionAdapterClasses(atomCollectionAdapterClasses);
 	}
 
 	/**
@@ -2455,12 +2441,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	@Override
 	public void setAutopropagatedParameters(
 		java.util.Set<String> autopropagatedParameters) {
-		_portlet.setAutopropagatedParameters(autopropagatedParameters);
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_portlet.setCachedModel(cachedModel);
+		model.setAutopropagatedParameters(autopropagatedParameters);
 	}
 
 	/**
@@ -2470,7 +2451,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public void setCompanyId(long companyId) {
-		_portlet.setCompanyId(companyId);
+		model.setCompanyId(companyId);
 	}
 
 	/**
@@ -2481,7 +2462,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public void setConfigurationActionClass(String configurationActionClass) {
-		_portlet.setConfigurationActionClass(configurationActionClass);
+		model.setConfigurationActionClass(configurationActionClass);
 	}
 
 	/**
@@ -2493,7 +2474,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public void setControlPanelEntryCategory(String controlPanelEntryCategory) {
-		_portlet.setControlPanelEntryCategory(controlPanelEntryCategory);
+		model.setControlPanelEntryCategory(controlPanelEntryCategory);
 	}
 
 	/**
@@ -2505,7 +2486,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public void setControlPanelEntryClass(String controlPanelEntryClass) {
-		_portlet.setControlPanelEntryClass(controlPanelEntryClass);
+		model.setControlPanelEntryClass(controlPanelEntryClass);
 	}
 
 	/**
@@ -2518,7 +2499,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public void setControlPanelEntryWeight(double controlPanelEntryWeight) {
-		_portlet.setControlPanelEntryWeight(controlPanelEntryWeight);
+		model.setControlPanelEntryWeight(controlPanelEntryWeight);
 	}
 
 	/**
@@ -2530,7 +2511,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public void setCssClassWrapper(String cssClassWrapper) {
-		_portlet.setCssClassWrapper(cssClassWrapper);
+		model.setCssClassWrapper(cssClassWrapper);
 	}
 
 	/**
@@ -2543,7 +2524,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	@Override
 	public void setCustomAttributesDisplayClasses(
 		java.util.List<String> customAttributesDisplayClasses) {
-		_portlet.setCustomAttributesDisplayClasses(customAttributesDisplayClasses);
+		model.setCustomAttributesDisplayClasses(customAttributesDisplayClasses);
 	}
 
 	/**
@@ -2553,7 +2534,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public void setDefaultPluginSetting(PluginSetting pluginSetting) {
-		_portlet.setDefaultPluginSetting(pluginSetting);
+		model.setDefaultPluginSetting(pluginSetting);
 	}
 
 	/**
@@ -2563,7 +2544,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public void setDefaultPreferences(String defaultPreferences) {
-		_portlet.setDefaultPreferences(defaultPreferences);
+		model.setDefaultPreferences(defaultPreferences);
 	}
 
 	/**
@@ -2573,22 +2554,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public void setDisplayName(String displayName) {
-		_portlet.setDisplayName(displayName);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(BaseModel<?> baseModel) {
-		_portlet.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_portlet.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_portlet.setExpandoBridgeAttributes(serviceContext);
+		model.setDisplayName(displayName);
 	}
 
 	/**
@@ -2598,7 +2564,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public void setExpCache(Integer expCache) {
-		_portlet.setExpCache(expCache);
+		model.setExpCache(expCache);
 	}
 
 	/**
@@ -2611,7 +2577,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	@Deprecated
 	@Override
 	public void setFacebookIntegration(String facebookIntegration) {
-		_portlet.setFacebookIntegration(facebookIntegration);
+		model.setFacebookIntegration(facebookIntegration);
 	}
 
 	/**
@@ -2623,7 +2589,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public void setFooterPortalCss(java.util.List<String> footerPortalCss) {
-		_portlet.setFooterPortalCss(footerPortalCss);
+		model.setFooterPortalCss(footerPortalCss);
 	}
 
 	/**
@@ -2637,7 +2603,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	@Override
 	public void setFooterPortalJavaScript(
 		java.util.List<String> footerPortalJavaScript) {
-		_portlet.setFooterPortalJavaScript(footerPortalJavaScript);
+		model.setFooterPortalJavaScript(footerPortalJavaScript);
 	}
 
 	/**
@@ -2649,7 +2615,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public void setFooterPortletCss(java.util.List<String> footerPortletCss) {
-		_portlet.setFooterPortletCss(footerPortletCss);
+		model.setFooterPortletCss(footerPortletCss);
 	}
 
 	/**
@@ -2663,7 +2629,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	@Override
 	public void setFooterPortletJavaScript(
 		java.util.List<String> footerPortletJavaScript) {
-		_portlet.setFooterPortletJavaScript(footerPortletJavaScript);
+		model.setFooterPortletJavaScript(footerPortletJavaScript);
 	}
 
 	/**
@@ -2674,7 +2640,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public void setFriendlyURLMapperClass(String friendlyURLMapperClass) {
-		_portlet.setFriendlyURLMapperClass(friendlyURLMapperClass);
+		model.setFriendlyURLMapperClass(friendlyURLMapperClass);
 	}
 
 	/**
@@ -2685,7 +2651,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public void setFriendlyURLMapping(String friendlyURLMapping) {
-		_portlet.setFriendlyURLMapping(friendlyURLMapping);
+		model.setFriendlyURLMapping(friendlyURLMapping);
 	}
 
 	/**
@@ -2697,7 +2663,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public void setFriendlyURLRoutes(String friendlyURLRoutes) {
-		_portlet.setFriendlyURLRoutes(friendlyURLRoutes);
+		model.setFriendlyURLRoutes(friendlyURLRoutes);
 	}
 
 	/**
@@ -2709,7 +2675,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public void setHeaderPortalCss(java.util.List<String> headerPortalCss) {
-		_portlet.setHeaderPortalCss(headerPortalCss);
+		model.setHeaderPortalCss(headerPortalCss);
 	}
 
 	/**
@@ -2723,7 +2689,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	@Override
 	public void setHeaderPortalJavaScript(
 		java.util.List<String> headerPortalJavaScript) {
-		_portlet.setHeaderPortalJavaScript(headerPortalJavaScript);
+		model.setHeaderPortalJavaScript(headerPortalJavaScript);
 	}
 
 	/**
@@ -2735,7 +2701,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public void setHeaderPortletCss(java.util.List<String> headerPortletCss) {
-		_portlet.setHeaderPortletCss(headerPortletCss);
+		model.setHeaderPortletCss(headerPortletCss);
 	}
 
 	/**
@@ -2749,7 +2715,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	@Override
 	public void setHeaderPortletJavaScript(
 		java.util.List<String> headerPortletJavaScript) {
-		_portlet.setHeaderPortletJavaScript(headerPortletJavaScript);
+		model.setHeaderPortletJavaScript(headerPortletJavaScript);
 	}
 
 	/**
@@ -2767,7 +2733,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	@Override
 	public void setHeaderRequestAttributePrefixes(
 		java.util.List<String> headerRequestAttributePrefixes) {
-		_portlet.setHeaderRequestAttributePrefixes(headerRequestAttributePrefixes);
+		model.setHeaderRequestAttributePrefixes(headerRequestAttributePrefixes);
 	}
 
 	/**
@@ -2777,7 +2743,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public void setHeaderTimeout(int headerTimeout) {
-		_portlet.setHeaderTimeout(headerTimeout);
+		model.setHeaderTimeout(headerTimeout);
 	}
 
 	/**
@@ -2787,7 +2753,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public void setIcon(String icon) {
-		_portlet.setIcon(icon);
+		model.setIcon(icon);
 	}
 
 	/**
@@ -2797,7 +2763,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public void setId(long id) {
-		_portlet.setId(id);
+		model.setId(id);
 	}
 
 	/**
@@ -2809,7 +2775,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public void setInclude(boolean include) {
-		_portlet.setInclude(include);
+		model.setInclude(include);
 	}
 
 	/**
@@ -2821,7 +2787,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public void setIndexerClasses(java.util.List<String> indexerClasses) {
-		_portlet.setIndexerClasses(indexerClasses);
+		model.setIndexerClasses(indexerClasses);
 	}
 
 	/**
@@ -2831,7 +2797,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public void setInitParams(Map<String, String> initParams) {
-		_portlet.setInitParams(initParams);
+		model.setInitParams(initParams);
 	}
 
 	/**
@@ -2843,7 +2809,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public void setInstanceable(boolean instanceable) {
-		_portlet.setInstanceable(instanceable);
+		model.setInstanceable(instanceable);
 	}
 
 	/**
@@ -2855,7 +2821,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public void setLayoutCacheable(boolean layoutCacheable) {
-		_portlet.setLayoutCacheable(layoutCacheable);
+		model.setLayoutCacheable(layoutCacheable);
 	}
 
 	/**
@@ -2867,7 +2833,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public void setMaximizeEdit(boolean maximizeEdit) {
-		_portlet.setMaximizeEdit(maximizeEdit);
+		model.setMaximizeEdit(maximizeEdit);
 	}
 
 	/**
@@ -2879,7 +2845,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public void setMaximizeHelp(boolean maximizeHelp) {
-		_portlet.setMaximizeHelp(maximizeHelp);
+		model.setMaximizeHelp(maximizeHelp);
 	}
 
 	/**
@@ -2890,7 +2856,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public void setMultipartFileSizeThreshold(int multipartFileSizeThreshold) {
-		_portlet.setMultipartFileSizeThreshold(multipartFileSizeThreshold);
+		model.setMultipartFileSizeThreshold(multipartFileSizeThreshold);
 	}
 
 	/**
@@ -2900,7 +2866,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public void setMultipartLocation(String multipartLocation) {
-		_portlet.setMultipartLocation(multipartLocation);
+		model.setMultipartLocation(multipartLocation);
 	}
 
 	/**
@@ -2911,7 +2877,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public void setMultipartMaxFileSize(long multipartMaxFileSize) {
-		_portlet.setMultipartMaxFileSize(multipartMaxFileSize);
+		model.setMultipartMaxFileSize(multipartMaxFileSize);
 	}
 
 	/**
@@ -2922,7 +2888,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public void setMultipartMaxRequestSize(long multipartMaxRequestSize) {
-		_portlet.setMultipartMaxRequestSize(multipartMaxRequestSize);
+		model.setMultipartMaxRequestSize(multipartMaxRequestSize);
 	}
 
 	/**
@@ -2932,12 +2898,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public void setMvccVersion(long mvccVersion) {
-		_portlet.setMvccVersion(mvccVersion);
-	}
-
-	@Override
-	public void setNew(boolean n) {
-		_portlet.setNew(n);
+		model.setMvccVersion(mvccVersion);
 	}
 
 	/**
@@ -2947,7 +2908,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public void setOpenSearchClass(String openSearchClass) {
-		_portlet.setOpenSearchClass(openSearchClass);
+		model.setOpenSearchClass(openSearchClass);
 	}
 
 	/**
@@ -2957,7 +2918,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public void setParentStrutsPath(String parentStrutsPath) {
-		_portlet.setParentStrutsPath(parentStrutsPath);
+		model.setParentStrutsPath(parentStrutsPath);
 	}
 
 	/**
@@ -2972,7 +2933,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	@Override
 	public void setPartialActionServeResource(
 		boolean partialActionServeResource) {
-		_portlet.setPartialActionServeResource(partialActionServeResource);
+		model.setPartialActionServeResource(partialActionServeResource);
 	}
 
 	/**
@@ -2980,7 +2941,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public void setPermissionPropagatorClass(String permissionPropagatorClass) {
-		_portlet.setPermissionPropagatorClass(permissionPropagatorClass);
+		model.setPermissionPropagatorClass(permissionPropagatorClass);
 	}
 
 	/**
@@ -2991,7 +2952,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	@Override
 	public void setPluginPackage(
 		com.liferay.portal.kernel.plugin.PluginPackage pluginPackage) {
-		_portlet.setPluginPackage(pluginPackage);
+		model.setPluginPackage(pluginPackage);
 	}
 
 	/**
@@ -3002,7 +2963,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public void setPollerProcessorClass(String pollerProcessorClass) {
-		_portlet.setPollerProcessorClass(pollerProcessorClass);
+		model.setPollerProcessorClass(pollerProcessorClass);
 	}
 
 	/**
@@ -3013,7 +2974,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public void setPopMessageListenerClass(String popMessageListenerClass) {
-		_portlet.setPopMessageListenerClass(popMessageListenerClass);
+		model.setPopMessageListenerClass(popMessageListenerClass);
 	}
 
 	/**
@@ -3025,7 +2986,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public void setPopUpPrint(boolean popUpPrint) {
-		_portlet.setPopUpPrint(popUpPrint);
+		model.setPopUpPrint(popUpPrint);
 	}
 
 	/**
@@ -3035,7 +2996,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public void setPortletApp(PortletApp portletApp) {
-		_portlet.setPortletApp(portletApp);
+		model.setPortletApp(portletApp);
 	}
 
 	/**
@@ -3045,7 +3006,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public void setPortletClass(String portletClass) {
-		_portlet.setPortletClass(portletClass);
+		model.setPortletClass(portletClass);
 	}
 
 	/**
@@ -3056,7 +3017,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public void setPortletDataHandlerClass(String portletDataHandlerClass) {
-		_portlet.setPortletDataHandlerClass(portletDataHandlerClass);
+		model.setPortletDataHandlerClass(portletDataHandlerClass);
 	}
 
 	/**
@@ -3072,7 +3033,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	@Override
 	public void setPortletDependencyCssEnabled(
 		boolean portletDependencyCssEnabled) {
-		_portlet.setPortletDependencyCssEnabled(portletDependencyCssEnabled);
+		model.setPortletDependencyCssEnabled(portletDependencyCssEnabled);
 	}
 
 	/**
@@ -3093,7 +3054,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	@Override
 	public void setPortletDependencyJavaScriptEnabled(
 		boolean portletDependencyJavaScriptEnabled) {
-		_portlet.setPortletDependencyJavaScriptEnabled(portletDependencyJavaScriptEnabled);
+		model.setPortletDependencyJavaScriptEnabled(portletDependencyJavaScriptEnabled);
 	}
 
 	/**
@@ -3103,7 +3064,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public void setPortletFilters(Map<String, PortletFilter> portletFilters) {
-		_portlet.setPortletFilters(portletFilters);
+		model.setPortletFilters(portletFilters);
 	}
 
 	/**
@@ -3113,7 +3074,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public void setPortletId(String portletId) {
-		_portlet.setPortletId(portletId);
+		model.setPortletId(portletId);
 	}
 
 	/**
@@ -3123,7 +3084,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public void setPortletInfo(PortletInfo portletInfo) {
-		_portlet.setPortletInfo(portletInfo);
+		model.setPortletInfo(portletInfo);
 	}
 
 	/**
@@ -3134,7 +3095,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public void setPortletLayoutListenerClass(String portletLayoutListenerClass) {
-		_portlet.setPortletLayoutListenerClass(portletLayoutListenerClass);
+		model.setPortletLayoutListenerClass(portletLayoutListenerClass);
 	}
 
 	/**
@@ -3144,7 +3105,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public void setPortletModes(Map<String, java.util.Set<String>> portletModes) {
-		_portlet.setPortletModes(portletModes);
+		model.setPortletModes(portletModes);
 	}
 
 	/**
@@ -3154,7 +3115,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public void setPortletName(String portletName) {
-		_portlet.setPortletName(portletName);
+		model.setPortletName(portletName);
 	}
 
 	/**
@@ -3164,7 +3125,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public void setPortletURLClass(String portletURLClass) {
-		_portlet.setPortletURLClass(portletURLClass);
+		model.setPortletURLClass(portletURLClass);
 	}
 
 	/**
@@ -3176,7 +3137,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public void setPreferencesCompanyWide(boolean preferencesCompanyWide) {
-		_portlet.setPreferencesCompanyWide(preferencesCompanyWide);
+		model.setPreferencesCompanyWide(preferencesCompanyWide);
 	}
 
 	/**
@@ -3190,7 +3151,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public void setPreferencesOwnedByGroup(boolean preferencesOwnedByGroup) {
-		_portlet.setPreferencesOwnedByGroup(preferencesOwnedByGroup);
+		model.setPreferencesOwnedByGroup(preferencesOwnedByGroup);
 	}
 
 	/**
@@ -3202,7 +3163,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	@Override
 	public void setPreferencesUniquePerLayout(
 		boolean preferencesUniquePerLayout) {
-		_portlet.setPreferencesUniquePerLayout(preferencesUniquePerLayout);
+		model.setPreferencesUniquePerLayout(preferencesUniquePerLayout);
 	}
 
 	/**
@@ -3213,7 +3174,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public void setPreferencesValidator(String preferencesValidator) {
-		_portlet.setPreferencesValidator(preferencesValidator);
+		model.setPreferencesValidator(preferencesValidator);
 	}
 
 	/**
@@ -3223,12 +3184,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_portlet.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_portlet.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -3241,7 +3197,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public void setPrivateRequestAttributes(boolean privateRequestAttributes) {
-		_portlet.setPrivateRequestAttributes(privateRequestAttributes);
+		model.setPrivateRequestAttributes(privateRequestAttributes);
 	}
 
 	/**
@@ -3253,7 +3209,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public void setPrivateSessionAttributes(boolean privateSessionAttributes) {
-		_portlet.setPrivateSessionAttributes(privateSessionAttributes);
+		model.setPrivateSessionAttributes(privateSessionAttributes);
 	}
 
 	/**
@@ -3264,7 +3220,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	@Override
 	public void setProcessingEvents(
 		java.util.Set<com.liferay.portal.kernel.xml.QName> processingEvents) {
-		_portlet.setProcessingEvents(processingEvents);
+		model.setProcessingEvents(processingEvents);
 	}
 
 	/**
@@ -3275,7 +3231,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	@Override
 	public void setPublicRenderParameters(
 		java.util.Set<PublicRenderParameter> publicRenderParameters) {
-		_portlet.setPublicRenderParameters(publicRenderParameters);
+		model.setPublicRenderParameters(publicRenderParameters);
 	}
 
 	/**
@@ -3286,7 +3242,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	@Override
 	public void setPublishingEvents(
 		java.util.Set<com.liferay.portal.kernel.xml.QName> publishingEvents) {
-		_portlet.setPublishingEvents(publishingEvents);
+		model.setPublishingEvents(publishingEvents);
 	}
 
 	/**
@@ -3296,7 +3252,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public void setReady(boolean ready) {
-		_portlet.setReady(ready);
+		model.setReady(ready);
 	}
 
 	/**
@@ -3306,7 +3262,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public void setRenderTimeout(int renderTimeout) {
-		_portlet.setRenderTimeout(renderTimeout);
+		model.setRenderTimeout(renderTimeout);
 	}
 
 	/**
@@ -3316,7 +3272,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public void setRenderWeight(int renderWeight) {
-		_portlet.setRenderWeight(renderWeight);
+		model.setRenderWeight(renderWeight);
 	}
 
 	/**
@@ -3329,7 +3285,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	@Override
 	public void setRequiresNamespacedParameters(
 		boolean requiresNamespacedParameters) {
-		_portlet.setRequiresNamespacedParameters(requiresNamespacedParameters);
+		model.setRequiresNamespacedParameters(requiresNamespacedParameters);
 	}
 
 	/**
@@ -3339,7 +3295,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public void setResourceBundle(String resourceBundle) {
-		_portlet.setResourceBundle(resourceBundle);
+		model.setResourceBundle(resourceBundle);
 	}
 
 	/**
@@ -3351,7 +3307,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public void setRestoreCurrentView(boolean restoreCurrentView) {
-		_portlet.setRestoreCurrentView(restoreCurrentView);
+		model.setRestoreCurrentView(restoreCurrentView);
 	}
 
 	/**
@@ -3361,7 +3317,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public void setRoleMappers(Map<String, String> roleMappers) {
-		_portlet.setRoleMappers(roleMappers);
+		model.setRoleMappers(roleMappers);
 	}
 
 	/**
@@ -3371,7 +3327,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public void setRoles(String roles) {
-		_portlet.setRoles(roles);
+		model.setRoles(roles);
 	}
 
 	/**
@@ -3381,7 +3337,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public void setRolesArray(String[] rolesArray) {
-		_portlet.setRolesArray(rolesArray);
+		model.setRolesArray(rolesArray);
 	}
 
 	/**
@@ -3392,7 +3348,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	@Override
 	public void setSchedulerEntries(
 		java.util.List<com.liferay.portal.kernel.scheduler.SchedulerEntry> schedulerEntries) {
-		_portlet.setSchedulerEntries(schedulerEntries);
+		model.setSchedulerEntries(schedulerEntries);
 	}
 
 	/**
@@ -3403,7 +3359,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public void setScopeable(boolean scopeable) {
-		_portlet.setScopeable(scopeable);
+		model.setScopeable(scopeable);
 	}
 
 	/**
@@ -3415,7 +3371,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public void setShowPortletAccessDenied(boolean showPortletAccessDenied) {
-		_portlet.setShowPortletAccessDenied(showPortletAccessDenied);
+		model.setShowPortletAccessDenied(showPortletAccessDenied);
 	}
 
 	/**
@@ -3426,7 +3382,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public void setShowPortletInactive(boolean showPortletInactive) {
-		_portlet.setShowPortletInactive(showPortletInactive);
+		model.setShowPortletInactive(showPortletInactive);
 	}
 
 	/**
@@ -3437,7 +3393,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public void setSinglePageApplication(boolean singlePageApplication) {
-		_portlet.setSinglePageApplication(singlePageApplication);
+		model.setSinglePageApplication(singlePageApplication);
 	}
 
 	/**
@@ -3450,7 +3406,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	@Override
 	public void setSocialActivityInterpreterClasses(
 		java.util.List<String> socialActivityInterpreterClasses) {
-		_portlet.setSocialActivityInterpreterClasses(socialActivityInterpreterClasses);
+		model.setSocialActivityInterpreterClasses(socialActivityInterpreterClasses);
 	}
 
 	/**
@@ -3462,7 +3418,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	@Override
 	public void setSocialRequestInterpreterClass(
 		String socialRequestInterpreterClass) {
-		_portlet.setSocialRequestInterpreterClass(socialRequestInterpreterClass);
+		model.setSocialRequestInterpreterClass(socialRequestInterpreterClass);
 	}
 
 	/**
@@ -3475,7 +3431,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	@Override
 	public void setStagedModelDataHandlerClasses(
 		java.util.List<String> stagedModelDataHandlerClasses) {
-		_portlet.setStagedModelDataHandlerClasses(stagedModelDataHandlerClasses);
+		model.setStagedModelDataHandlerClasses(stagedModelDataHandlerClasses);
 	}
 
 	/**
@@ -3487,7 +3443,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public void setStatic(boolean staticPortlet) {
-		_portlet.setStatic(staticPortlet);
+		model.setStatic(staticPortlet);
 	}
 
 	/**
@@ -3499,7 +3455,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public void setStaticStart(boolean staticPortletStart) {
-		_portlet.setStaticStart(staticPortletStart);
+		model.setStaticStart(staticPortletStart);
 	}
 
 	/**
@@ -3509,7 +3465,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public void setStrutsPath(String strutsPath) {
-		_portlet.setStrutsPath(strutsPath);
+		model.setStrutsPath(strutsPath);
 	}
 
 	/**
@@ -3519,7 +3475,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public void setSupportedLocales(java.util.Set<String> supportedLocales) {
-		_portlet.setSupportedLocales(supportedLocales);
+		model.setSupportedLocales(supportedLocales);
 	}
 
 	/**
@@ -3531,7 +3487,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public void setSystem(boolean system) {
-		_portlet.setSystem(system);
+		model.setSystem(system);
 	}
 
 	/**
@@ -3542,7 +3498,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public void setTemplateHandlerClass(String templateHandlerClass) {
-		_portlet.setTemplateHandlerClass(templateHandlerClass);
+		model.setTemplateHandlerClass(templateHandlerClass);
 	}
 
 	/**
@@ -3555,7 +3511,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	@Override
 	public void setTrashHandlerClasses(
 		java.util.List<String> trashHandlerClasses) {
-		_portlet.setTrashHandlerClasses(trashHandlerClasses);
+		model.setTrashHandlerClasses(trashHandlerClasses);
 	}
 
 	/**
@@ -3566,7 +3522,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public void setUndeployedPortlet(boolean undeployedPortlet) {
-		_portlet.setUndeployedPortlet(undeployedPortlet);
+		model.setUndeployedPortlet(undeployedPortlet);
 	}
 
 	/**
@@ -3576,7 +3532,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public void setUnlinkedRoles(java.util.Set<String> unlinkedRoles) {
-		_portlet.setUnlinkedRoles(unlinkedRoles);
+		model.setUnlinkedRoles(unlinkedRoles);
 	}
 
 	/**
@@ -3586,7 +3542,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public void setURLEncoderClass(String urlEncoderClass) {
-		_portlet.setURLEncoderClass(urlEncoderClass);
+		model.setURLEncoderClass(urlEncoderClass);
 	}
 
 	/**
@@ -3597,7 +3553,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public void setUseDefaultTemplate(boolean useDefaultTemplate) {
-		_portlet.setUseDefaultTemplate(useDefaultTemplate);
+		model.setUseDefaultTemplate(useDefaultTemplate);
 	}
 
 	/**
@@ -3610,7 +3566,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	@Override
 	public void setUserNotificationDefinitions(
 		String userNotificationDefinitions) {
-		_portlet.setUserNotificationDefinitions(userNotificationDefinitions);
+		model.setUserNotificationDefinitions(userNotificationDefinitions);
 	}
 
 	/**
@@ -3623,7 +3579,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	@Override
 	public void setUserNotificationHandlerClasses(
 		java.util.List<String> userNotificationHandlerClasses) {
-		_portlet.setUserNotificationHandlerClasses(userNotificationHandlerClasses);
+		model.setUserNotificationHandlerClasses(userNotificationHandlerClasses);
 	}
 
 	/**
@@ -3633,7 +3589,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public void setUserPrincipalStrategy(String userPrincipalStrategy) {
-		_portlet.setUserPrincipalStrategy(userPrincipalStrategy);
+		model.setUserPrincipalStrategy(userPrincipalStrategy);
 	}
 
 	/**
@@ -3643,7 +3599,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public void setVirtualPath(String virtualPath) {
-		_portlet.setVirtualPath(virtualPath);
+		model.setVirtualPath(virtualPath);
 	}
 
 	/**
@@ -3654,7 +3610,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public void setWebDAVStorageClass(String webDAVStorageClass) {
-		_portlet.setWebDAVStorageClass(webDAVStorageClass);
+		model.setWebDAVStorageClass(webDAVStorageClass);
 	}
 
 	/**
@@ -3665,7 +3621,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public void setWebDAVStorageToken(String webDAVStorageToken) {
-		_portlet.setWebDAVStorageToken(webDAVStorageToken);
+		model.setWebDAVStorageToken(webDAVStorageToken);
 	}
 
 	/**
@@ -3675,7 +3631,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public void setWindowStates(Map<String, java.util.Set<String>> windowStates) {
-		_portlet.setWindowStates(windowStates);
+		model.setWindowStates(windowStates);
 	}
 
 	/**
@@ -3688,7 +3644,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	@Override
 	public void setWorkflowHandlerClasses(
 		java.util.List<String> workflowHandlerClasses) {
-		_portlet.setWorkflowHandlerClasses(workflowHandlerClasses);
+		model.setWorkflowHandlerClasses(workflowHandlerClasses);
 	}
 
 	/**
@@ -3699,77 +3655,16 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*/
 	@Override
 	public void setXmlRpcMethodClass(String xmlRpcMethodClass) {
-		_portlet.setXmlRpcMethodClass(xmlRpcMethodClass);
-	}
-
-	@Override
-	public CacheModel<Portlet> toCacheModel() {
-		return _portlet.toCacheModel();
-	}
-
-	@Override
-	public Portlet toEscapedModel() {
-		return new PortletWrapper(_portlet.toEscapedModel());
-	}
-
-	@Override
-	public String toString() {
-		return _portlet.toString();
-	}
-
-	@Override
-	public Portlet toUnescapedModel() {
-		return new PortletWrapper(_portlet.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _portlet.toXmlString();
+		model.setXmlRpcMethodClass(xmlRpcMethodClass);
 	}
 
 	@Override
 	public void unsetReady() {
-		_portlet.unsetReady();
+		model.unsetReady();
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-
-		if (!(obj instanceof PortletWrapper)) {
-			return false;
-		}
-
-		PortletWrapper portletWrapper = (PortletWrapper)obj;
-
-		if (Objects.equals(_portlet, portletWrapper._portlet)) {
-			return true;
-		}
-
-		return false;
+	protected PortletWrapper wrap(Portlet portlet) {
+		return new PortletWrapper(portlet);
 	}
-
-	@Override
-	public Portlet getWrappedModel() {
-		return _portlet;
-	}
-
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _portlet.isEntityCacheEnabled();
-	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _portlet.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_portlet.resetOriginalValues();
-	}
-
-	private final Portlet _portlet;
 }

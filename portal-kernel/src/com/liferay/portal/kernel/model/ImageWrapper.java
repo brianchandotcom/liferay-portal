@@ -16,16 +16,11 @@ package com.liferay.portal.kernel.model;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
-
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -37,19 +32,10 @@ import java.util.Objects;
  * @generated
  */
 @ProviderType
-public class ImageWrapper implements Image, ModelWrapper<Image> {
+public class ImageWrapper extends BaseModelWrapper<Image> implements Image,
+	ModelWrapper<Image> {
 	public ImageWrapper(Image image) {
-		_image = image;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return Image.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return Image.class.getName();
+		super(image);
 	}
 
 	@Override
@@ -119,16 +105,6 @@ public class ImageWrapper implements Image, ModelWrapper<Image> {
 		}
 	}
 
-	@Override
-	public Object clone() {
-		return new ImageWrapper((Image)_image.clone());
-	}
-
-	@Override
-	public int compareTo(Image image) {
-		return _image.compareTo(image);
-	}
-
 	/**
 	* Returns the company ID of this image.
 	*
@@ -136,12 +112,7 @@ public class ImageWrapper implements Image, ModelWrapper<Image> {
 	*/
 	@Override
 	public long getCompanyId() {
-		return _image.getCompanyId();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _image.getExpandoBridge();
+		return model.getCompanyId();
 	}
 
 	/**
@@ -151,7 +122,7 @@ public class ImageWrapper implements Image, ModelWrapper<Image> {
 	*/
 	@Override
 	public int getHeight() {
-		return _image.getHeight();
+		return model.getHeight();
 	}
 
 	/**
@@ -161,7 +132,7 @@ public class ImageWrapper implements Image, ModelWrapper<Image> {
 	*/
 	@Override
 	public long getImageId() {
-		return _image.getImageId();
+		return model.getImageId();
 	}
 
 	/**
@@ -171,7 +142,7 @@ public class ImageWrapper implements Image, ModelWrapper<Image> {
 	*/
 	@Override
 	public Date getModifiedDate() {
-		return _image.getModifiedDate();
+		return model.getModifiedDate();
 	}
 
 	/**
@@ -181,7 +152,7 @@ public class ImageWrapper implements Image, ModelWrapper<Image> {
 	*/
 	@Override
 	public long getMvccVersion() {
-		return _image.getMvccVersion();
+		return model.getMvccVersion();
 	}
 
 	/**
@@ -191,12 +162,7 @@ public class ImageWrapper implements Image, ModelWrapper<Image> {
 	*/
 	@Override
 	public long getPrimaryKey() {
-		return _image.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _image.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	/**
@@ -206,12 +172,12 @@ public class ImageWrapper implements Image, ModelWrapper<Image> {
 	*/
 	@Override
 	public int getSize() {
-		return _image.getSize();
+		return model.getSize();
 	}
 
 	@Override
 	public byte[] getTextObj() {
-		return _image.getTextObj();
+		return model.getTextObj();
 	}
 
 	/**
@@ -221,7 +187,7 @@ public class ImageWrapper implements Image, ModelWrapper<Image> {
 	*/
 	@Override
 	public String getType() {
-		return _image.getType();
+		return model.getType();
 	}
 
 	/**
@@ -231,37 +197,12 @@ public class ImageWrapper implements Image, ModelWrapper<Image> {
 	*/
 	@Override
 	public int getWidth() {
-		return _image.getWidth();
-	}
-
-	@Override
-	public int hashCode() {
-		return _image.hashCode();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _image.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _image.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _image.isNew();
+		return model.getWidth();
 	}
 
 	@Override
 	public void persist() {
-		_image.persist();
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_image.setCachedModel(cachedModel);
+		model.persist();
 	}
 
 	/**
@@ -271,22 +212,7 @@ public class ImageWrapper implements Image, ModelWrapper<Image> {
 	*/
 	@Override
 	public void setCompanyId(long companyId) {
-		_image.setCompanyId(companyId);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(BaseModel<?> baseModel) {
-		_image.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_image.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_image.setExpandoBridgeAttributes(serviceContext);
+		model.setCompanyId(companyId);
 	}
 
 	/**
@@ -296,7 +222,7 @@ public class ImageWrapper implements Image, ModelWrapper<Image> {
 	*/
 	@Override
 	public void setHeight(int height) {
-		_image.setHeight(height);
+		model.setHeight(height);
 	}
 
 	/**
@@ -306,7 +232,7 @@ public class ImageWrapper implements Image, ModelWrapper<Image> {
 	*/
 	@Override
 	public void setImageId(long imageId) {
-		_image.setImageId(imageId);
+		model.setImageId(imageId);
 	}
 
 	/**
@@ -316,7 +242,7 @@ public class ImageWrapper implements Image, ModelWrapper<Image> {
 	*/
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
-		_image.setModifiedDate(modifiedDate);
+		model.setModifiedDate(modifiedDate);
 	}
 
 	/**
@@ -326,12 +252,7 @@ public class ImageWrapper implements Image, ModelWrapper<Image> {
 	*/
 	@Override
 	public void setMvccVersion(long mvccVersion) {
-		_image.setMvccVersion(mvccVersion);
-	}
-
-	@Override
-	public void setNew(boolean n) {
-		_image.setNew(n);
+		model.setMvccVersion(mvccVersion);
 	}
 
 	/**
@@ -341,12 +262,7 @@ public class ImageWrapper implements Image, ModelWrapper<Image> {
 	*/
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_image.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_image.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -356,12 +272,12 @@ public class ImageWrapper implements Image, ModelWrapper<Image> {
 	*/
 	@Override
 	public void setSize(int size) {
-		_image.setSize(size);
+		model.setSize(size);
 	}
 
 	@Override
 	public void setTextObj(byte[] textObj) {
-		_image.setTextObj(textObj);
+		model.setTextObj(textObj);
 	}
 
 	/**
@@ -371,7 +287,7 @@ public class ImageWrapper implements Image, ModelWrapper<Image> {
 	*/
 	@Override
 	public void setType(String type) {
-		_image.setType(type);
+		model.setType(type);
 	}
 
 	/**
@@ -381,72 +297,11 @@ public class ImageWrapper implements Image, ModelWrapper<Image> {
 	*/
 	@Override
 	public void setWidth(int width) {
-		_image.setWidth(width);
+		model.setWidth(width);
 	}
 
 	@Override
-	public CacheModel<Image> toCacheModel() {
-		return _image.toCacheModel();
+	protected ImageWrapper wrap(Image image) {
+		return new ImageWrapper(image);
 	}
-
-	@Override
-	public Image toEscapedModel() {
-		return new ImageWrapper(_image.toEscapedModel());
-	}
-
-	@Override
-	public String toString() {
-		return _image.toString();
-	}
-
-	@Override
-	public Image toUnescapedModel() {
-		return new ImageWrapper(_image.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _image.toXmlString();
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-
-		if (!(obj instanceof ImageWrapper)) {
-			return false;
-		}
-
-		ImageWrapper imageWrapper = (ImageWrapper)obj;
-
-		if (Objects.equals(_image, imageWrapper._image)) {
-			return true;
-		}
-
-		return false;
-	}
-
-	@Override
-	public Image getWrappedModel() {
-		return _image;
-	}
-
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _image.isEntityCacheEnabled();
-	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _image.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_image.resetOriginalValues();
-	}
-
-	private final Image _image;
 }

@@ -16,19 +16,14 @@ package com.liferay.asset.kernel.model;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
-
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 
 import com.liferay.portal.kernel.model.ModelWrapper;
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -40,19 +35,10 @@ import java.util.Objects;
  * @generated
  */
 @ProviderType
-public class AssetTagWrapper implements AssetTag, ModelWrapper<AssetTag> {
+public class AssetTagWrapper extends BaseModelWrapper<AssetTag>
+	implements AssetTag, ModelWrapper<AssetTag> {
 	public AssetTagWrapper(AssetTag assetTag) {
-		_assetTag = assetTag;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return AssetTag.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return AssetTag.class.getName();
+		super(assetTag);
 	}
 
 	@Override
@@ -143,16 +129,6 @@ public class AssetTagWrapper implements AssetTag, ModelWrapper<AssetTag> {
 		}
 	}
 
-	@Override
-	public Object clone() {
-		return new AssetTagWrapper((AssetTag)_assetTag.clone());
-	}
-
-	@Override
-	public int compareTo(AssetTag assetTag) {
-		return _assetTag.compareTo(assetTag);
-	}
-
 	/**
 	* Returns the asset count of this asset tag.
 	*
@@ -160,7 +136,7 @@ public class AssetTagWrapper implements AssetTag, ModelWrapper<AssetTag> {
 	*/
 	@Override
 	public int getAssetCount() {
-		return _assetTag.getAssetCount();
+		return model.getAssetCount();
 	}
 
 	/**
@@ -170,7 +146,7 @@ public class AssetTagWrapper implements AssetTag, ModelWrapper<AssetTag> {
 	*/
 	@Override
 	public long getCompanyId() {
-		return _assetTag.getCompanyId();
+		return model.getCompanyId();
 	}
 
 	/**
@@ -180,12 +156,7 @@ public class AssetTagWrapper implements AssetTag, ModelWrapper<AssetTag> {
 	*/
 	@Override
 	public Date getCreateDate() {
-		return _assetTag.getCreateDate();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _assetTag.getExpandoBridge();
+		return model.getCreateDate();
 	}
 
 	/**
@@ -195,7 +166,7 @@ public class AssetTagWrapper implements AssetTag, ModelWrapper<AssetTag> {
 	*/
 	@Override
 	public long getGroupId() {
-		return _assetTag.getGroupId();
+		return model.getGroupId();
 	}
 
 	/**
@@ -205,7 +176,7 @@ public class AssetTagWrapper implements AssetTag, ModelWrapper<AssetTag> {
 	*/
 	@Override
 	public Date getLastPublishDate() {
-		return _assetTag.getLastPublishDate();
+		return model.getLastPublishDate();
 	}
 
 	/**
@@ -215,7 +186,7 @@ public class AssetTagWrapper implements AssetTag, ModelWrapper<AssetTag> {
 	*/
 	@Override
 	public Date getModifiedDate() {
-		return _assetTag.getModifiedDate();
+		return model.getModifiedDate();
 	}
 
 	/**
@@ -225,7 +196,7 @@ public class AssetTagWrapper implements AssetTag, ModelWrapper<AssetTag> {
 	*/
 	@Override
 	public String getName() {
-		return _assetTag.getName();
+		return model.getName();
 	}
 
 	/**
@@ -235,12 +206,7 @@ public class AssetTagWrapper implements AssetTag, ModelWrapper<AssetTag> {
 	*/
 	@Override
 	public long getPrimaryKey() {
-		return _assetTag.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _assetTag.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	/**
@@ -250,7 +216,7 @@ public class AssetTagWrapper implements AssetTag, ModelWrapper<AssetTag> {
 	*/
 	@Override
 	public long getTagId() {
-		return _assetTag.getTagId();
+		return model.getTagId();
 	}
 
 	/**
@@ -260,7 +226,7 @@ public class AssetTagWrapper implements AssetTag, ModelWrapper<AssetTag> {
 	*/
 	@Override
 	public long getUserId() {
-		return _assetTag.getUserId();
+		return model.getUserId();
 	}
 
 	/**
@@ -270,7 +236,7 @@ public class AssetTagWrapper implements AssetTag, ModelWrapper<AssetTag> {
 	*/
 	@Override
 	public String getUserName() {
-		return _assetTag.getUserName();
+		return model.getUserName();
 	}
 
 	/**
@@ -280,7 +246,7 @@ public class AssetTagWrapper implements AssetTag, ModelWrapper<AssetTag> {
 	*/
 	@Override
 	public String getUserUuid() {
-		return _assetTag.getUserUuid();
+		return model.getUserUuid();
 	}
 
 	/**
@@ -290,32 +256,12 @@ public class AssetTagWrapper implements AssetTag, ModelWrapper<AssetTag> {
 	*/
 	@Override
 	public String getUuid() {
-		return _assetTag.getUuid();
-	}
-
-	@Override
-	public int hashCode() {
-		return _assetTag.hashCode();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _assetTag.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _assetTag.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _assetTag.isNew();
+		return model.getUuid();
 	}
 
 	@Override
 	public void persist() {
-		_assetTag.persist();
+		model.persist();
 	}
 
 	/**
@@ -325,12 +271,7 @@ public class AssetTagWrapper implements AssetTag, ModelWrapper<AssetTag> {
 	*/
 	@Override
 	public void setAssetCount(int assetCount) {
-		_assetTag.setAssetCount(assetCount);
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_assetTag.setCachedModel(cachedModel);
+		model.setAssetCount(assetCount);
 	}
 
 	/**
@@ -340,7 +281,7 @@ public class AssetTagWrapper implements AssetTag, ModelWrapper<AssetTag> {
 	*/
 	@Override
 	public void setCompanyId(long companyId) {
-		_assetTag.setCompanyId(companyId);
+		model.setCompanyId(companyId);
 	}
 
 	/**
@@ -350,23 +291,7 @@ public class AssetTagWrapper implements AssetTag, ModelWrapper<AssetTag> {
 	*/
 	@Override
 	public void setCreateDate(Date createDate) {
-		_assetTag.setCreateDate(createDate);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-		_assetTag.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_assetTag.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_assetTag.setExpandoBridgeAttributes(serviceContext);
+		model.setCreateDate(createDate);
 	}
 
 	/**
@@ -376,7 +301,7 @@ public class AssetTagWrapper implements AssetTag, ModelWrapper<AssetTag> {
 	*/
 	@Override
 	public void setGroupId(long groupId) {
-		_assetTag.setGroupId(groupId);
+		model.setGroupId(groupId);
 	}
 
 	/**
@@ -386,7 +311,7 @@ public class AssetTagWrapper implements AssetTag, ModelWrapper<AssetTag> {
 	*/
 	@Override
 	public void setLastPublishDate(Date lastPublishDate) {
-		_assetTag.setLastPublishDate(lastPublishDate);
+		model.setLastPublishDate(lastPublishDate);
 	}
 
 	/**
@@ -396,7 +321,7 @@ public class AssetTagWrapper implements AssetTag, ModelWrapper<AssetTag> {
 	*/
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
-		_assetTag.setModifiedDate(modifiedDate);
+		model.setModifiedDate(modifiedDate);
 	}
 
 	/**
@@ -406,12 +331,7 @@ public class AssetTagWrapper implements AssetTag, ModelWrapper<AssetTag> {
 	*/
 	@Override
 	public void setName(String name) {
-		_assetTag.setName(name);
-	}
-
-	@Override
-	public void setNew(boolean n) {
-		_assetTag.setNew(n);
+		model.setName(name);
 	}
 
 	/**
@@ -421,12 +341,7 @@ public class AssetTagWrapper implements AssetTag, ModelWrapper<AssetTag> {
 	*/
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_assetTag.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_assetTag.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -436,7 +351,7 @@ public class AssetTagWrapper implements AssetTag, ModelWrapper<AssetTag> {
 	*/
 	@Override
 	public void setTagId(long tagId) {
-		_assetTag.setTagId(tagId);
+		model.setTagId(tagId);
 	}
 
 	/**
@@ -446,7 +361,7 @@ public class AssetTagWrapper implements AssetTag, ModelWrapper<AssetTag> {
 	*/
 	@Override
 	public void setUserId(long userId) {
-		_assetTag.setUserId(userId);
+		model.setUserId(userId);
 	}
 
 	/**
@@ -456,7 +371,7 @@ public class AssetTagWrapper implements AssetTag, ModelWrapper<AssetTag> {
 	*/
 	@Override
 	public void setUserName(String userName) {
-		_assetTag.setUserName(userName);
+		model.setUserName(userName);
 	}
 
 	/**
@@ -466,7 +381,7 @@ public class AssetTagWrapper implements AssetTag, ModelWrapper<AssetTag> {
 	*/
 	@Override
 	public void setUserUuid(String userUuid) {
-		_assetTag.setUserUuid(userUuid);
+		model.setUserUuid(userUuid);
 	}
 
 	/**
@@ -476,77 +391,16 @@ public class AssetTagWrapper implements AssetTag, ModelWrapper<AssetTag> {
 	*/
 	@Override
 	public void setUuid(String uuid) {
-		_assetTag.setUuid(uuid);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<AssetTag> toCacheModel() {
-		return _assetTag.toCacheModel();
-	}
-
-	@Override
-	public AssetTag toEscapedModel() {
-		return new AssetTagWrapper(_assetTag.toEscapedModel());
-	}
-
-	@Override
-	public String toString() {
-		return _assetTag.toString();
-	}
-
-	@Override
-	public AssetTag toUnescapedModel() {
-		return new AssetTagWrapper(_assetTag.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _assetTag.toXmlString();
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-
-		if (!(obj instanceof AssetTagWrapper)) {
-			return false;
-		}
-
-		AssetTagWrapper assetTagWrapper = (AssetTagWrapper)obj;
-
-		if (Objects.equals(_assetTag, assetTagWrapper._assetTag)) {
-			return true;
-		}
-
-		return false;
+		model.setUuid(uuid);
 	}
 
 	@Override
 	public StagedModelType getStagedModelType() {
-		return _assetTag.getStagedModelType();
+		return model.getStagedModelType();
 	}
 
 	@Override
-	public AssetTag getWrappedModel() {
-		return _assetTag;
+	protected AssetTagWrapper wrap(AssetTag assetTag) {
+		return new AssetTagWrapper(assetTag);
 	}
-
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _assetTag.isEntityCacheEnabled();
-	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _assetTag.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_assetTag.resetOriginalValues();
-	}
-
-	private final AssetTag _assetTag;
 }

@@ -16,17 +16,12 @@ package com.liferay.announcements.kernel.model;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
-
 import com.liferay.portal.kernel.model.ModelWrapper;
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -38,20 +33,10 @@ import java.util.Objects;
  * @generated
  */
 @ProviderType
-public class AnnouncementsFlagWrapper implements AnnouncementsFlag,
-	ModelWrapper<AnnouncementsFlag> {
+public class AnnouncementsFlagWrapper extends BaseModelWrapper<AnnouncementsFlag>
+	implements AnnouncementsFlag, ModelWrapper<AnnouncementsFlag> {
 	public AnnouncementsFlagWrapper(AnnouncementsFlag announcementsFlag) {
-		_announcementsFlag = announcementsFlag;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return AnnouncementsFlag.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return AnnouncementsFlag.class.getName();
+		super(announcementsFlag);
 	}
 
 	@Override
@@ -107,16 +92,6 @@ public class AnnouncementsFlagWrapper implements AnnouncementsFlag,
 		}
 	}
 
-	@Override
-	public Object clone() {
-		return new AnnouncementsFlagWrapper((AnnouncementsFlag)_announcementsFlag.clone());
-	}
-
-	@Override
-	public int compareTo(AnnouncementsFlag announcementsFlag) {
-		return _announcementsFlag.compareTo(announcementsFlag);
-	}
-
 	/**
 	* Returns the company ID of this announcements flag.
 	*
@@ -124,7 +99,7 @@ public class AnnouncementsFlagWrapper implements AnnouncementsFlag,
 	*/
 	@Override
 	public long getCompanyId() {
-		return _announcementsFlag.getCompanyId();
+		return model.getCompanyId();
 	}
 
 	/**
@@ -134,7 +109,7 @@ public class AnnouncementsFlagWrapper implements AnnouncementsFlag,
 	*/
 	@Override
 	public Date getCreateDate() {
-		return _announcementsFlag.getCreateDate();
+		return model.getCreateDate();
 	}
 
 	/**
@@ -144,12 +119,7 @@ public class AnnouncementsFlagWrapper implements AnnouncementsFlag,
 	*/
 	@Override
 	public long getEntryId() {
-		return _announcementsFlag.getEntryId();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _announcementsFlag.getExpandoBridge();
+		return model.getEntryId();
 	}
 
 	/**
@@ -159,7 +129,7 @@ public class AnnouncementsFlagWrapper implements AnnouncementsFlag,
 	*/
 	@Override
 	public long getFlagId() {
-		return _announcementsFlag.getFlagId();
+		return model.getFlagId();
 	}
 
 	/**
@@ -169,12 +139,7 @@ public class AnnouncementsFlagWrapper implements AnnouncementsFlag,
 	*/
 	@Override
 	public long getPrimaryKey() {
-		return _announcementsFlag.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _announcementsFlag.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	/**
@@ -184,7 +149,7 @@ public class AnnouncementsFlagWrapper implements AnnouncementsFlag,
 	*/
 	@Override
 	public long getUserId() {
-		return _announcementsFlag.getUserId();
+		return model.getUserId();
 	}
 
 	/**
@@ -194,7 +159,7 @@ public class AnnouncementsFlagWrapper implements AnnouncementsFlag,
 	*/
 	@Override
 	public String getUserUuid() {
-		return _announcementsFlag.getUserUuid();
+		return model.getUserUuid();
 	}
 
 	/**
@@ -204,37 +169,12 @@ public class AnnouncementsFlagWrapper implements AnnouncementsFlag,
 	*/
 	@Override
 	public int getValue() {
-		return _announcementsFlag.getValue();
-	}
-
-	@Override
-	public int hashCode() {
-		return _announcementsFlag.hashCode();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _announcementsFlag.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _announcementsFlag.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _announcementsFlag.isNew();
+		return model.getValue();
 	}
 
 	@Override
 	public void persist() {
-		_announcementsFlag.persist();
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_announcementsFlag.setCachedModel(cachedModel);
+		model.persist();
 	}
 
 	/**
@@ -244,7 +184,7 @@ public class AnnouncementsFlagWrapper implements AnnouncementsFlag,
 	*/
 	@Override
 	public void setCompanyId(long companyId) {
-		_announcementsFlag.setCompanyId(companyId);
+		model.setCompanyId(companyId);
 	}
 
 	/**
@@ -254,7 +194,7 @@ public class AnnouncementsFlagWrapper implements AnnouncementsFlag,
 	*/
 	@Override
 	public void setCreateDate(Date createDate) {
-		_announcementsFlag.setCreateDate(createDate);
+		model.setCreateDate(createDate);
 	}
 
 	/**
@@ -264,23 +204,7 @@ public class AnnouncementsFlagWrapper implements AnnouncementsFlag,
 	*/
 	@Override
 	public void setEntryId(long entryId) {
-		_announcementsFlag.setEntryId(entryId);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-		_announcementsFlag.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_announcementsFlag.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_announcementsFlag.setExpandoBridgeAttributes(serviceContext);
+		model.setEntryId(entryId);
 	}
 
 	/**
@@ -290,12 +214,7 @@ public class AnnouncementsFlagWrapper implements AnnouncementsFlag,
 	*/
 	@Override
 	public void setFlagId(long flagId) {
-		_announcementsFlag.setFlagId(flagId);
-	}
-
-	@Override
-	public void setNew(boolean n) {
-		_announcementsFlag.setNew(n);
+		model.setFlagId(flagId);
 	}
 
 	/**
@@ -305,12 +224,7 @@ public class AnnouncementsFlagWrapper implements AnnouncementsFlag,
 	*/
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_announcementsFlag.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_announcementsFlag.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -320,7 +234,7 @@ public class AnnouncementsFlagWrapper implements AnnouncementsFlag,
 	*/
 	@Override
 	public void setUserId(long userId) {
-		_announcementsFlag.setUserId(userId);
+		model.setUserId(userId);
 	}
 
 	/**
@@ -330,7 +244,7 @@ public class AnnouncementsFlagWrapper implements AnnouncementsFlag,
 	*/
 	@Override
 	public void setUserUuid(String userUuid) {
-		_announcementsFlag.setUserUuid(userUuid);
+		model.setUserUuid(userUuid);
 	}
 
 	/**
@@ -340,73 +254,11 @@ public class AnnouncementsFlagWrapper implements AnnouncementsFlag,
 	*/
 	@Override
 	public void setValue(int value) {
-		_announcementsFlag.setValue(value);
+		model.setValue(value);
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.CacheModel<AnnouncementsFlag> toCacheModel() {
-		return _announcementsFlag.toCacheModel();
+	protected AnnouncementsFlagWrapper wrap(AnnouncementsFlag announcementsFlag) {
+		return new AnnouncementsFlagWrapper(announcementsFlag);
 	}
-
-	@Override
-	public AnnouncementsFlag toEscapedModel() {
-		return new AnnouncementsFlagWrapper(_announcementsFlag.toEscapedModel());
-	}
-
-	@Override
-	public String toString() {
-		return _announcementsFlag.toString();
-	}
-
-	@Override
-	public AnnouncementsFlag toUnescapedModel() {
-		return new AnnouncementsFlagWrapper(_announcementsFlag.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _announcementsFlag.toXmlString();
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-
-		if (!(obj instanceof AnnouncementsFlagWrapper)) {
-			return false;
-		}
-
-		AnnouncementsFlagWrapper announcementsFlagWrapper = (AnnouncementsFlagWrapper)obj;
-
-		if (Objects.equals(_announcementsFlag,
-					announcementsFlagWrapper._announcementsFlag)) {
-			return true;
-		}
-
-		return false;
-	}
-
-	@Override
-	public AnnouncementsFlag getWrappedModel() {
-		return _announcementsFlag;
-	}
-
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _announcementsFlag.isEntityCacheEnabled();
-	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _announcementsFlag.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_announcementsFlag.resetOriginalValues();
-	}
-
-	private final AnnouncementsFlag _announcementsFlag;
 }

@@ -30,6 +30,8 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * @author Peter Fellwock
@@ -62,6 +64,16 @@ public class TestGroup implements Group {
 
 	@Override
 	public List<Group> getAncestors() {
+		return null;
+	}
+
+	@Override
+	public Map<String, Function<Group, Object>> getAttributeGetters() {
+		return null;
+	}
+
+	@Override
+	public Map<String, BiConsumer<Group, Object>> getAttributeSetters() {
 		return null;
 	}
 

@@ -22,7 +22,11 @@ import com.liferay.portal.kernel.service.ServiceContext;
 
 import java.io.Serializable;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * @author Preston Crary
@@ -64,8 +68,40 @@ public abstract class BaseModelWrapper<T extends BaseModel<T>>
 	}
 
 	@Override
+	public Map<String, Function<T, Object>> getAttributeGetters() {
+		return model.getAttributeGetters();
+	}
+
+	@Override
+	public Map<String, BiConsumer<T, Object>> getAttributeSetters() {
+		return model.getAttributeSetters();
+	}
+
+	@Override
 	public ExpandoBridge getExpandoBridge() {
 		return model.getExpandoBridge();
+	}
+
+	@Override
+	public Map<String, Object> getModelAttributes() {
+		Map<String, Object> attributes = new HashMap<>();
+
+		Map<String, Function<T, Object>> attributeGetters =
+			getAttributeGetters();
+
+		for (Map.Entry<String, Function<T, Object>> entry :
+				attributeGetters.entrySet()) {
+
+			String attributeName = entry.getKey();
+			Function<T, Object> attributeFunction = entry.getValue();
+
+			attributes.put(attributeName, attributeFunction.apply((T)this));
+		}
+
+		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
+		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
+
+		return attributes;
 	}
 
 	@Override
@@ -141,6 +177,23 @@ public abstract class BaseModelWrapper<T extends BaseModel<T>>
 	@Override
 	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
 		model.setExpandoBridgeAttributes(serviceContext);
+	}
+
+	@Override
+	public void setModelAttributes(Map<String, Object> attributes) {
+		Map<String, BiConsumer<T, Object>> attributeSetters =
+			getAttributeSetters();
+
+		for (Map.Entry<String, Object> entry : attributes.entrySet()) {
+			String attributeName = entry.getKey();
+
+			BiConsumer<T, Object> attributeSetterBiConsumer =
+				attributeSetters.get(attributeName);
+
+			if (attributeSetterBiConsumer != null) {
+				attributeSetterBiConsumer.accept((T)this, entry.getValue());
+			}
+		}
 	}
 
 	@Override

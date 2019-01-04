@@ -40,6 +40,8 @@ import java.sql.Blob;
 import java.util.Date;
 import java.util.Locale;
 import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * The base model interface for the ${entity.name} service. Represents a row in the &quot;${entity.table}&quot; database table, with each column mapped to a property of this class.
@@ -480,6 +482,12 @@ public interface ${entity.name}Model extends ${entity.getModelBaseInterfaceNames
 	</#if>
 
 	<#if serviceBuilder.isVersionLTE_7_1_0()>
+
+		<#-- Generate these methods without override for older portal-kernel versions. -->
+
+		public Map<String, Function<${entity.name}, Object>> getAttributeGetters();
+
+		public Map<String, BiConsumer<${entity.name}, Object>> getAttributeSetters();
 
 		<#--
 		Copy methods from com.liferay.portal.kernel.model.BaseModel and java.lang.Object to

@@ -64,6 +64,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 import javax.sql.DataSource;
 
@@ -831,6 +833,18 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 
 		@Override
 		public int compareTo(NullModel nullModel) {
+			throw new UnsupportedOperationException();
+		}
+
+		@Override
+		public Map<String, Function<NullModel, Object>> getAttributeGetters() {
+			throw new UnsupportedOperationException();
+		}
+
+		@Override
+		public Map<String, BiConsumer<NullModel, Object>>
+			getAttributeSetters() {
+
 			throw new UnsupportedOperationException();
 		}
 

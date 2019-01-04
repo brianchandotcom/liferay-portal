@@ -213,6 +213,7 @@
 
 		<!-- References -->
 
+		<reference entity="FragmentCollection" package-path="com.liferay.fragment" />
 		<reference entity="FragmentEntry" package-path="com.liferay.fragment" />
 		<reference entity="User" package-path="com.liferay.portal" />
 	</entity>

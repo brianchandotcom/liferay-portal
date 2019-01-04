@@ -38,9 +38,12 @@ import java.io.Serializable;
 
 import java.sql.Types;
 
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.BiConsumer;
 import java.util.function.Function;
 
 /**
@@ -184,6 +187,126 @@ public class LVEntryModelImpl extends BaseModelImpl<LVEntry>
 		if (groupId != null) {
 			setGroupId(groupId);
 		}
+	}
+
+	public Map<String, Function<LVEntry, Object>> getAttributeGetterFunctions() {
+		return _attributeGetterFunctions;
+	}
+
+	public Map<String, BiConsumer<LVEntry, Object>> getAttributeSetterBiConsumers() {
+		return _attributeSetterBiConsumers;
+	}
+
+	private static final Map<String, Function<LVEntry, Object>> _attributeGetterFunctions;
+	private static final Map<String, BiConsumer<LVEntry, Object>> _attributeSetterBiConsumers;
+
+	static {
+		Map<String, Function<LVEntry, Object>> attributeGetterFunctions = new LinkedHashMap<String, Function<LVEntry, Object>>();
+		Map<String, BiConsumer<LVEntry, ?>> attributeSetterBiConsumers = new LinkedHashMap<String, BiConsumer<LVEntry, ?>>();
+
+		attributeGetterFunctions.put(
+			"mvccVersion",
+			new Function<LVEntry, Object>() {
+
+				@Override
+				public Object apply(LVEntry lvEntry) {
+					return lvEntry.getMvccVersion();
+				}
+
+			});
+		attributeSetterBiConsumers.put(
+			"mvccVersion",
+			new BiConsumer<LVEntry, Object>() {
+
+				@Override
+				public void accept(LVEntry lvEntry, Object mvccVersion) {
+					lvEntry.setMvccVersion((Long)mvccVersion);
+				}
+
+			});
+		attributeGetterFunctions.put(
+			"headId",
+			new Function<LVEntry, Object>() {
+
+				@Override
+				public Object apply(LVEntry lvEntry) {
+					return lvEntry.getHeadId();
+				}
+
+			});
+		attributeSetterBiConsumers.put(
+			"headId",
+			new BiConsumer<LVEntry, Object>() {
+
+				@Override
+				public void accept(LVEntry lvEntry, Object headId) {
+					lvEntry.setHeadId((Long)headId);
+				}
+
+			});
+		attributeGetterFunctions.put(
+			"defaultLanguageId",
+			new Function<LVEntry, Object>() {
+
+				@Override
+				public Object apply(LVEntry lvEntry) {
+					return lvEntry.getDefaultLanguageId();
+				}
+
+			});
+		attributeSetterBiConsumers.put(
+			"defaultLanguageId",
+			new BiConsumer<LVEntry, Object>() {
+
+				@Override
+				public void accept(LVEntry lvEntry, Object defaultLanguageId) {
+					lvEntry.setDefaultLanguageId((String)defaultLanguageId);
+				}
+
+			});
+		attributeGetterFunctions.put(
+			"lvEntryId",
+			new Function<LVEntry, Object>() {
+
+				@Override
+				public Object apply(LVEntry lvEntry) {
+					return lvEntry.getLvEntryId();
+				}
+
+			});
+		attributeSetterBiConsumers.put(
+			"lvEntryId",
+			new BiConsumer<LVEntry, Object>() {
+
+				@Override
+				public void accept(LVEntry lvEntry, Object lvEntryId) {
+					lvEntry.setLvEntryId((Long)lvEntryId);
+				}
+
+			});
+		attributeGetterFunctions.put(
+			"groupId",
+			new Function<LVEntry, Object>() {
+
+				@Override
+				public Object apply(LVEntry lvEntry) {
+					return lvEntry.getGroupId();
+				}
+
+			});
+		attributeSetterBiConsumers.put(
+			"groupId",
+			new BiConsumer<LVEntry, Object>() {
+
+				@Override
+				public void accept(LVEntry lvEntry, Object groupId) {
+					lvEntry.setGroupId((Long)groupId);
+				}
+
+			});
+
+		_attributeGetterFunctions = Collections.unmodifiableMap(attributeGetterFunctions);
+		_attributeSetterBiConsumers = Collections.unmodifiableMap((Map)attributeSetterBiConsumers);
 	}
 
 	@Override

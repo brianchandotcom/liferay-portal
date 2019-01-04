@@ -19,9 +19,6 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
-import java.util.HashMap;
-import java.util.Map;
-
 /**
  * <p>
  * This class is a wrapper for {@link DDMTemplateLink}.
@@ -36,52 +33,6 @@ public class DDMTemplateLinkWrapper extends BaseModelWrapper<DDMTemplateLink>
 	implements DDMTemplateLink, ModelWrapper<DDMTemplateLink> {
 	public DDMTemplateLinkWrapper(DDMTemplateLink ddmTemplateLink) {
 		super(ddmTemplateLink);
-	}
-
-	@Override
-	public Map<String, Object> getModelAttributes() {
-		Map<String, Object> attributes = new HashMap<String, Object>();
-
-		attributes.put("templateLinkId", getTemplateLinkId());
-		attributes.put("companyId", getCompanyId());
-		attributes.put("classNameId", getClassNameId());
-		attributes.put("classPK", getClassPK());
-		attributes.put("templateId", getTemplateId());
-
-		return attributes;
-	}
-
-	@Override
-	public void setModelAttributes(Map<String, Object> attributes) {
-		Long templateLinkId = (Long)attributes.get("templateLinkId");
-
-		if (templateLinkId != null) {
-			setTemplateLinkId(templateLinkId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
-		}
-
-		Long classNameId = (Long)attributes.get("classNameId");
-
-		if (classNameId != null) {
-			setClassNameId(classNameId);
-		}
-
-		Long classPK = (Long)attributes.get("classPK");
-
-		if (classPK != null) {
-			setClassPK(classPK);
-		}
-
-		Long templateId = (Long)attributes.get("templateId");
-
-		if (templateId != null) {
-			setTemplateId(templateId);
-		}
 	}
 
 	/**

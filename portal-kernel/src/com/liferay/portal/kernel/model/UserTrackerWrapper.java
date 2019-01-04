@@ -19,8 +19,6 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * <p>
@@ -36,80 +34,6 @@ public class UserTrackerWrapper extends BaseModelWrapper<UserTracker>
 	implements UserTracker, ModelWrapper<UserTracker> {
 	public UserTrackerWrapper(UserTracker userTracker) {
 		super(userTracker);
-	}
-
-	@Override
-	public Map<String, Object> getModelAttributes() {
-		Map<String, Object> attributes = new HashMap<String, Object>();
-
-		attributes.put("mvccVersion", getMvccVersion());
-		attributes.put("userTrackerId", getUserTrackerId());
-		attributes.put("companyId", getCompanyId());
-		attributes.put("userId", getUserId());
-		attributes.put("modifiedDate", getModifiedDate());
-		attributes.put("sessionId", getSessionId());
-		attributes.put("remoteAddr", getRemoteAddr());
-		attributes.put("remoteHost", getRemoteHost());
-		attributes.put("userAgent", getUserAgent());
-
-		return attributes;
-	}
-
-	@Override
-	public void setModelAttributes(Map<String, Object> attributes) {
-		Long mvccVersion = (Long)attributes.get("mvccVersion");
-
-		if (mvccVersion != null) {
-			setMvccVersion(mvccVersion);
-		}
-
-		Long userTrackerId = (Long)attributes.get("userTrackerId");
-
-		if (userTrackerId != null) {
-			setUserTrackerId(userTrackerId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
-		}
-
-		Long userId = (Long)attributes.get("userId");
-
-		if (userId != null) {
-			setUserId(userId);
-		}
-
-		Date modifiedDate = (Date)attributes.get("modifiedDate");
-
-		if (modifiedDate != null) {
-			setModifiedDate(modifiedDate);
-		}
-
-		String sessionId = (String)attributes.get("sessionId");
-
-		if (sessionId != null) {
-			setSessionId(sessionId);
-		}
-
-		String remoteAddr = (String)attributes.get("remoteAddr");
-
-		if (remoteAddr != null) {
-			setRemoteAddr(remoteAddr);
-		}
-
-		String remoteHost = (String)attributes.get("remoteHost");
-
-		if (remoteHost != null) {
-			setRemoteHost(remoteHost);
-		}
-
-		String userAgent = (String)attributes.get("userAgent");
-
-		if (userAgent != null) {
-			setUserAgent(userAgent);
-		}
 	}
 
 	@Override

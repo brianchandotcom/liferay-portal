@@ -26,6 +26,8 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * <p>
@@ -57,60 +59,33 @@ public class LVEntryLocalizationWrapper implements LVEntryLocalization,
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		attributes.put("mvccVersion", getMvccVersion());
-		attributes.put("headId", getHeadId());
-		attributes.put("lvEntryLocalizationId", getLvEntryLocalizationId());
-		attributes.put("lvEntryId", getLvEntryId());
-		attributes.put("languageId", getLanguageId());
-		attributes.put("title", getTitle());
-		attributes.put("content", getContent());
+		Map<String, Function<LVEntryLocalization, Object>> attributeGetterFunctions =
+			getAttributeGetterFunctions();
+
+		for (Map.Entry<String, Function<LVEntryLocalization, Object>> entry : attributeGetterFunctions.entrySet()) {
+			String attributeName = entry.getKey();
+			Function<LVEntryLocalization, Object> attributeGetterFunction = entry.getValue();
+
+			attributes.put(attributeName, attributeGetterFunction.apply(this));
+		}
+
+		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
+		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
 
 		return attributes;
 	}
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		Long mvccVersion = (Long)attributes.get("mvccVersion");
+		Map<String, BiConsumer<LVEntryLocalization, Object>> attributeSetterBiConsumers =
+			getAttributeSetterBiConsumers();
 
-		if (mvccVersion != null) {
-			setMvccVersion(mvccVersion);
-		}
+		for (Map.Entry<String, BiConsumer<LVEntryLocalization, Object>> entry : attributeSetterBiConsumers.entrySet()) {
+			String attributeName = entry.getKey();
+			BiConsumer<LVEntryLocalization, Object> attributeBiConsumer = entry.getValue();
 
-		Long headId = (Long)attributes.get("headId");
-
-		if (headId != null) {
-			setHeadId(headId);
-		}
-
-		Long lvEntryLocalizationId = (Long)attributes.get(
-				"lvEntryLocalizationId");
-
-		if (lvEntryLocalizationId != null) {
-			setLvEntryLocalizationId(lvEntryLocalizationId);
-		}
-
-		Long lvEntryId = (Long)attributes.get("lvEntryId");
-
-		if (lvEntryId != null) {
-			setLvEntryId(lvEntryId);
-		}
-
-		String languageId = (String)attributes.get("languageId");
-
-		if (languageId != null) {
-			setLanguageId(languageId);
-		}
-
-		String title = (String)attributes.get("title");
-
-		if (title != null) {
-			setTitle(title);
-		}
-
-		String content = (String)attributes.get("content");
-
-		if (content != null) {
-			setContent(content);
+			attributeBiConsumer.accept(this,
+				attributeSetterBiConsumers.get(attributeName));
 		}
 	}
 
@@ -122,6 +97,16 @@ public class LVEntryLocalizationWrapper implements LVEntryLocalization,
 	@Override
 	public int compareTo(LVEntryLocalization lvEntryLocalization) {
 		return _lvEntryLocalization.compareTo(lvEntryLocalization);
+	}
+
+	@Override
+	public Map<String, Function<LVEntryLocalization, Object>> getAttributeGetters() {
+		return _lvEntryLocalization.getAttributeGetters();
+	}
+
+	@Override
+	public Map<String, BiConsumer<LVEntryLocalization, Object>> getAttributeSetters() {
+		return _lvEntryLocalization.getAttributeSetters();
 	}
 
 	/**

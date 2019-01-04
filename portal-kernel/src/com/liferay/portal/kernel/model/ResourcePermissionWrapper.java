@@ -18,9 +18,6 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
-import java.util.HashMap;
-import java.util.Map;
-
 /**
  * <p>
  * This class is a wrapper for {@link ResourcePermission}.
@@ -35,94 +32,6 @@ public class ResourcePermissionWrapper extends BaseModelWrapper<ResourcePermissi
 	implements ResourcePermission, ModelWrapper<ResourcePermission> {
 	public ResourcePermissionWrapper(ResourcePermission resourcePermission) {
 		super(resourcePermission);
-	}
-
-	@Override
-	public Map<String, Object> getModelAttributes() {
-		Map<String, Object> attributes = new HashMap<String, Object>();
-
-		attributes.put("mvccVersion", getMvccVersion());
-		attributes.put("resourcePermissionId", getResourcePermissionId());
-		attributes.put("companyId", getCompanyId());
-		attributes.put("name", getName());
-		attributes.put("scope", getScope());
-		attributes.put("primKey", getPrimKey());
-		attributes.put("primKeyId", getPrimKeyId());
-		attributes.put("roleId", getRoleId());
-		attributes.put("ownerId", getOwnerId());
-		attributes.put("actionIds", getActionIds());
-		attributes.put("viewActionId", isViewActionId());
-
-		return attributes;
-	}
-
-	@Override
-	public void setModelAttributes(Map<String, Object> attributes) {
-		Long mvccVersion = (Long)attributes.get("mvccVersion");
-
-		if (mvccVersion != null) {
-			setMvccVersion(mvccVersion);
-		}
-
-		Long resourcePermissionId = (Long)attributes.get("resourcePermissionId");
-
-		if (resourcePermissionId != null) {
-			setResourcePermissionId(resourcePermissionId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
-		}
-
-		String name = (String)attributes.get("name");
-
-		if (name != null) {
-			setName(name);
-		}
-
-		Integer scope = (Integer)attributes.get("scope");
-
-		if (scope != null) {
-			setScope(scope);
-		}
-
-		String primKey = (String)attributes.get("primKey");
-
-		if (primKey != null) {
-			setPrimKey(primKey);
-		}
-
-		Long primKeyId = (Long)attributes.get("primKeyId");
-
-		if (primKeyId != null) {
-			setPrimKeyId(primKeyId);
-		}
-
-		Long roleId = (Long)attributes.get("roleId");
-
-		if (roleId != null) {
-			setRoleId(roleId);
-		}
-
-		Long ownerId = (Long)attributes.get("ownerId");
-
-		if (ownerId != null) {
-			setOwnerId(ownerId);
-		}
-
-		Long actionIds = (Long)attributes.get("actionIds");
-
-		if (actionIds != null) {
-			setActionIds(actionIds);
-		}
-
-		Boolean viewActionId = (Boolean)attributes.get("viewActionId");
-
-		if (viewActionId != null) {
-			setViewActionId(viewActionId);
-		}
 	}
 
 	@Override

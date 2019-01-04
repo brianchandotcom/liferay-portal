@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 import java.io.Serializable;
 
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -39,123 +38,6 @@ public class PowwowMeetingWrapper extends BaseModelWrapper<PowwowMeeting>
 	implements PowwowMeeting, ModelWrapper<PowwowMeeting> {
 	public PowwowMeetingWrapper(PowwowMeeting powwowMeeting) {
 		super(powwowMeeting);
-	}
-
-	@Override
-	public Map<String, Object> getModelAttributes() {
-		Map<String, Object> attributes = new HashMap<String, Object>();
-
-		attributes.put("powwowMeetingId", getPowwowMeetingId());
-		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
-		attributes.put("userId", getUserId());
-		attributes.put("userName", getUserName());
-		attributes.put("createDate", getCreateDate());
-		attributes.put("modifiedDate", getModifiedDate());
-		attributes.put("powwowServerId", getPowwowServerId());
-		attributes.put("name", getName());
-		attributes.put("description", getDescription());
-		attributes.put("providerType", getProviderType());
-		attributes.put("providerTypeMetadata", getProviderTypeMetadata());
-		attributes.put("languageId", getLanguageId());
-		attributes.put("calendarBookingId", getCalendarBookingId());
-		attributes.put("status", getStatus());
-
-		return attributes;
-	}
-
-	@Override
-	public void setModelAttributes(Map<String, Object> attributes) {
-		Long powwowMeetingId = (Long)attributes.get("powwowMeetingId");
-
-		if (powwowMeetingId != null) {
-			setPowwowMeetingId(powwowMeetingId);
-		}
-
-		Long groupId = (Long)attributes.get("groupId");
-
-		if (groupId != null) {
-			setGroupId(groupId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
-		}
-
-		Long userId = (Long)attributes.get("userId");
-
-		if (userId != null) {
-			setUserId(userId);
-		}
-
-		String userName = (String)attributes.get("userName");
-
-		if (userName != null) {
-			setUserName(userName);
-		}
-
-		Date createDate = (Date)attributes.get("createDate");
-
-		if (createDate != null) {
-			setCreateDate(createDate);
-		}
-
-		Date modifiedDate = (Date)attributes.get("modifiedDate");
-
-		if (modifiedDate != null) {
-			setModifiedDate(modifiedDate);
-		}
-
-		Long powwowServerId = (Long)attributes.get("powwowServerId");
-
-		if (powwowServerId != null) {
-			setPowwowServerId(powwowServerId);
-		}
-
-		String name = (String)attributes.get("name");
-
-		if (name != null) {
-			setName(name);
-		}
-
-		String description = (String)attributes.get("description");
-
-		if (description != null) {
-			setDescription(description);
-		}
-
-		String providerType = (String)attributes.get("providerType");
-
-		if (providerType != null) {
-			setProviderType(providerType);
-		}
-
-		String providerTypeMetadata = (String)attributes.get(
-				"providerTypeMetadata");
-
-		if (providerTypeMetadata != null) {
-			setProviderTypeMetadata(providerTypeMetadata);
-		}
-
-		String languageId = (String)attributes.get("languageId");
-
-		if (languageId != null) {
-			setLanguageId(languageId);
-		}
-
-		Long calendarBookingId = (Long)attributes.get("calendarBookingId");
-
-		if (calendarBookingId != null) {
-			setCalendarBookingId(calendarBookingId);
-		}
-
-		Integer status = (Integer)attributes.get("status");
-
-		if (status != null) {
-			setStatus(status);
-		}
 	}
 
 	/**

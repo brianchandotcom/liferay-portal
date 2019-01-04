@@ -18,9 +18,6 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
-import java.util.HashMap;
-import java.util.Map;
-
 /**
  * <p>
  * This class is a wrapper for {@link PortalPreferences}.
@@ -35,52 +32,6 @@ public class PortalPreferencesWrapper extends BaseModelWrapper<PortalPreferences
 	implements PortalPreferences, ModelWrapper<PortalPreferences> {
 	public PortalPreferencesWrapper(PortalPreferences portalPreferences) {
 		super(portalPreferences);
-	}
-
-	@Override
-	public Map<String, Object> getModelAttributes() {
-		Map<String, Object> attributes = new HashMap<String, Object>();
-
-		attributes.put("mvccVersion", getMvccVersion());
-		attributes.put("portalPreferencesId", getPortalPreferencesId());
-		attributes.put("ownerId", getOwnerId());
-		attributes.put("ownerType", getOwnerType());
-		attributes.put("preferences", getPreferences());
-
-		return attributes;
-	}
-
-	@Override
-	public void setModelAttributes(Map<String, Object> attributes) {
-		Long mvccVersion = (Long)attributes.get("mvccVersion");
-
-		if (mvccVersion != null) {
-			setMvccVersion(mvccVersion);
-		}
-
-		Long portalPreferencesId = (Long)attributes.get("portalPreferencesId");
-
-		if (portalPreferencesId != null) {
-			setPortalPreferencesId(portalPreferencesId);
-		}
-
-		Long ownerId = (Long)attributes.get("ownerId");
-
-		if (ownerId != null) {
-			setOwnerId(ownerId);
-		}
-
-		Integer ownerType = (Integer)attributes.get("ownerType");
-
-		if (ownerType != null) {
-			setOwnerType(ownerType);
-		}
-
-		String preferences = (String)attributes.get("preferences");
-
-		if (preferences != null) {
-			setPreferences(preferences);
-		}
 	}
 
 	/**

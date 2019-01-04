@@ -19,8 +19,6 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * <p>
@@ -36,59 +34,6 @@ public class UserTrackerPathWrapper extends BaseModelWrapper<UserTrackerPath>
 	implements UserTrackerPath, ModelWrapper<UserTrackerPath> {
 	public UserTrackerPathWrapper(UserTrackerPath userTrackerPath) {
 		super(userTrackerPath);
-	}
-
-	@Override
-	public Map<String, Object> getModelAttributes() {
-		Map<String, Object> attributes = new HashMap<String, Object>();
-
-		attributes.put("mvccVersion", getMvccVersion());
-		attributes.put("userTrackerPathId", getUserTrackerPathId());
-		attributes.put("companyId", getCompanyId());
-		attributes.put("userTrackerId", getUserTrackerId());
-		attributes.put("path", getPath());
-		attributes.put("pathDate", getPathDate());
-
-		return attributes;
-	}
-
-	@Override
-	public void setModelAttributes(Map<String, Object> attributes) {
-		Long mvccVersion = (Long)attributes.get("mvccVersion");
-
-		if (mvccVersion != null) {
-			setMvccVersion(mvccVersion);
-		}
-
-		Long userTrackerPathId = (Long)attributes.get("userTrackerPathId");
-
-		if (userTrackerPathId != null) {
-			setUserTrackerPathId(userTrackerPathId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
-		}
-
-		Long userTrackerId = (Long)attributes.get("userTrackerId");
-
-		if (userTrackerId != null) {
-			setUserTrackerId(userTrackerId);
-		}
-
-		String path = (String)attributes.get("path");
-
-		if (path != null) {
-			setPath(path);
-		}
-
-		Date pathDate = (Date)attributes.get("pathDate");
-
-		if (pathDate != null) {
-			setPathDate(pathDate);
-		}
 	}
 
 	/**

@@ -19,8 +19,6 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 
-import com.liferay.petra.string.StringBundler;
-
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.model.CacheModel;
@@ -40,9 +38,13 @@ import java.io.Serializable;
 import java.sql.Types;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * The base model implementation for the ClassName service. Represents a row in the &quot;ClassName_&quot; database table, with each column mapped to a property of this class.
@@ -176,38 +178,31 @@ public class ClassNameModelImpl extends BaseModelImpl<ClassName>
 	}
 
 	@Override
-	public Map<String, Object> getModelAttributes() {
-		Map<String, Object> attributes = new HashMap<String, Object>();
-
-		attributes.put("mvccVersion", getMvccVersion());
-		attributes.put("classNameId", getClassNameId());
-		attributes.put("value", getValue());
-
-		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
-		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
-
-		return attributes;
+	public Map<String, Function<ClassName, Object>> getAttributeGetterFunctions() {
+		return _attributeGetterFunctions;
 	}
 
 	@Override
-	public void setModelAttributes(Map<String, Object> attributes) {
-		Long mvccVersion = (Long)attributes.get("mvccVersion");
+	public Map<String, BiConsumer<ClassName, Object>> getAttributeSetterBiConsumers() {
+		return _attributeSetterBiConsumers;
+	}
 
-		if (mvccVersion != null) {
-			setMvccVersion(mvccVersion);
-		}
+	private static final Map<String, Function<ClassName, Object>> _attributeGetterFunctions;
+	private static final Map<String, BiConsumer<ClassName, Object>> _attributeSetterBiConsumers;
 
-		Long classNameId = (Long)attributes.get("classNameId");
+	static {
+		Map<String, Function<ClassName, Object>> attributeGetterFunctions = new LinkedHashMap<String, Function<ClassName, Object>>();
+		Map<String, BiConsumer<ClassName, ?>> attributeSetterBiConsumers = new LinkedHashMap<String, BiConsumer<ClassName, ?>>();
 
-		if (classNameId != null) {
-			setClassNameId(classNameId);
-		}
+		attributeGetterFunctions.put("mvccVersion", ClassName::getMvccVersion);
+		attributeSetterBiConsumers.put("mvccVersion", (BiConsumer<ClassName, Long>)ClassName::setMvccVersion);
+		attributeGetterFunctions.put("classNameId", ClassName::getClassNameId);
+		attributeSetterBiConsumers.put("classNameId", (BiConsumer<ClassName, Long>)ClassName::setClassNameId);
+		attributeGetterFunctions.put("value", ClassName::getValue);
+		attributeSetterBiConsumers.put("value", (BiConsumer<ClassName, String>)ClassName::setValue);
 
-		String value = (String)attributes.get("value");
-
-		if (value != null) {
-			setValue(value);
-		}
+		_attributeGetterFunctions = Collections.unmodifiableMap(attributeGetterFunctions);
+		_attributeSetterBiConsumers = Collections.unmodifiableMap((Map)attributeSetterBiConsumers);
 	}
 
 	@JSON
@@ -396,47 +391,6 @@ public class ClassNameModelImpl extends BaseModelImpl<ClassName>
 		}
 
 		return classNameCacheModel;
-	}
-
-	@Override
-	public String toString() {
-		StringBundler sb = new StringBundler(7);
-
-		sb.append("{mvccVersion=");
-		sb.append(getMvccVersion());
-		sb.append(", classNameId=");
-		sb.append(getClassNameId());
-		sb.append(", value=");
-		sb.append(getValue());
-		sb.append("}");
-
-		return sb.toString();
-	}
-
-	@Override
-	public String toXmlString() {
-		StringBundler sb = new StringBundler(13);
-
-		sb.append("<model><model-name>");
-		sb.append("com.liferay.portal.kernel.model.ClassName");
-		sb.append("</model-name>");
-
-		sb.append(
-			"<column><column-name>mvccVersion</column-name><column-value><![CDATA[");
-		sb.append(getMvccVersion());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>classNameId</column-name><column-value><![CDATA[");
-		sb.append(getClassNameId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>value</column-name><column-value><![CDATA[");
-		sb.append(getValue());
-		sb.append("]]></column-value></column>");
-
-		sb.append("</model>");
-
-		return sb.toString();
 	}
 
 	private static final ClassLoader _classLoader = ClassName.class.getClassLoader();

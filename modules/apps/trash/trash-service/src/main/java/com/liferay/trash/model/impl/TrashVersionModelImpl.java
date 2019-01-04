@@ -19,8 +19,6 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 
-import com.liferay.petra.string.StringBundler;
-
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.ModelWrapper;
@@ -38,8 +36,12 @@ import java.io.Serializable;
 
 import java.sql.Types;
 
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * The base model implementation for the TrashVersion service. Represents a row in the &quot;TrashVersion&quot; database table, with each column mapped to a property of this class.
@@ -141,66 +143,39 @@ public class TrashVersionModelImpl extends BaseModelImpl<TrashVersion>
 	}
 
 	@Override
-	public Map<String, Object> getModelAttributes() {
-		Map<String, Object> attributes = new HashMap<String, Object>();
-
-		attributes.put("versionId", getVersionId());
-		attributes.put("companyId", getCompanyId());
-		attributes.put("entryId", getEntryId());
-		attributes.put("classNameId", getClassNameId());
-		attributes.put("classPK", getClassPK());
-		attributes.put("typeSettings", getTypeSettings());
-		attributes.put("status", getStatus());
-
-		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
-		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
-
-		return attributes;
+	public Map<String, Function<TrashVersion, Object>> getAttributeGetterFunctions() {
+		return _attributeGetterFunctions;
 	}
 
 	@Override
-	public void setModelAttributes(Map<String, Object> attributes) {
-		Long versionId = (Long)attributes.get("versionId");
+	public Map<String, BiConsumer<TrashVersion, Object>> getAttributeSetterBiConsumers() {
+		return _attributeSetterBiConsumers;
+	}
 
-		if (versionId != null) {
-			setVersionId(versionId);
-		}
+	private static final Map<String, Function<TrashVersion, Object>> _attributeGetterFunctions;
+	private static final Map<String, BiConsumer<TrashVersion, Object>> _attributeSetterBiConsumers;
 
-		Long companyId = (Long)attributes.get("companyId");
+	static {
+		Map<String, Function<TrashVersion, Object>> attributeGetterFunctions = new LinkedHashMap<String, Function<TrashVersion, Object>>();
+		Map<String, BiConsumer<TrashVersion, ?>> attributeSetterBiConsumers = new LinkedHashMap<String, BiConsumer<TrashVersion, ?>>();
 
-		if (companyId != null) {
-			setCompanyId(companyId);
-		}
+		attributeGetterFunctions.put("versionId", TrashVersion::getVersionId);
+		attributeSetterBiConsumers.put("versionId", (BiConsumer<TrashVersion, Long>)TrashVersion::setVersionId);
+		attributeGetterFunctions.put("companyId", TrashVersion::getCompanyId);
+		attributeSetterBiConsumers.put("companyId", (BiConsumer<TrashVersion, Long>)TrashVersion::setCompanyId);
+		attributeGetterFunctions.put("entryId", TrashVersion::getEntryId);
+		attributeSetterBiConsumers.put("entryId", (BiConsumer<TrashVersion, Long>)TrashVersion::setEntryId);
+		attributeGetterFunctions.put("classNameId", TrashVersion::getClassNameId);
+		attributeSetterBiConsumers.put("classNameId", (BiConsumer<TrashVersion, Long>)TrashVersion::setClassNameId);
+		attributeGetterFunctions.put("classPK", TrashVersion::getClassPK);
+		attributeSetterBiConsumers.put("classPK", (BiConsumer<TrashVersion, Long>)TrashVersion::setClassPK);
+		attributeGetterFunctions.put("typeSettings", TrashVersion::getTypeSettings);
+		attributeSetterBiConsumers.put("typeSettings", (BiConsumer<TrashVersion, String>)TrashVersion::setTypeSettings);
+		attributeGetterFunctions.put("status", TrashVersion::getStatus);
+		attributeSetterBiConsumers.put("status", (BiConsumer<TrashVersion, Integer>)TrashVersion::setStatus);
 
-		Long entryId = (Long)attributes.get("entryId");
-
-		if (entryId != null) {
-			setEntryId(entryId);
-		}
-
-		Long classNameId = (Long)attributes.get("classNameId");
-
-		if (classNameId != null) {
-			setClassNameId(classNameId);
-		}
-
-		Long classPK = (Long)attributes.get("classPK");
-
-		if (classPK != null) {
-			setClassPK(classPK);
-		}
-
-		String typeSettings = (String)attributes.get("typeSettings");
-
-		if (typeSettings != null) {
-			setTypeSettings(typeSettings);
-		}
-
-		Integer status = (Integer)attributes.get("status");
-
-		if (status != null) {
-			setStatus(status);
-		}
+		_attributeGetterFunctions = Collections.unmodifiableMap(attributeGetterFunctions);
+		_attributeSetterBiConsumers = Collections.unmodifiableMap((Map)attributeSetterBiConsumers);
 	}
 
 	@Override
@@ -474,71 +449,6 @@ public class TrashVersionModelImpl extends BaseModelImpl<TrashVersion>
 		trashVersionCacheModel.status = getStatus();
 
 		return trashVersionCacheModel;
-	}
-
-	@Override
-	public String toString() {
-		StringBundler sb = new StringBundler(15);
-
-		sb.append("{versionId=");
-		sb.append(getVersionId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
-		sb.append(", entryId=");
-		sb.append(getEntryId());
-		sb.append(", classNameId=");
-		sb.append(getClassNameId());
-		sb.append(", classPK=");
-		sb.append(getClassPK());
-		sb.append(", typeSettings=");
-		sb.append(getTypeSettings());
-		sb.append(", status=");
-		sb.append(getStatus());
-		sb.append("}");
-
-		return sb.toString();
-	}
-
-	@Override
-	public String toXmlString() {
-		StringBundler sb = new StringBundler(25);
-
-		sb.append("<model><model-name>");
-		sb.append("com.liferay.trash.model.TrashVersion");
-		sb.append("</model-name>");
-
-		sb.append(
-			"<column><column-name>versionId</column-name><column-value><![CDATA[");
-		sb.append(getVersionId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>entryId</column-name><column-value><![CDATA[");
-		sb.append(getEntryId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>classNameId</column-name><column-value><![CDATA[");
-		sb.append(getClassNameId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>classPK</column-name><column-value><![CDATA[");
-		sb.append(getClassPK());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>typeSettings</column-name><column-value><![CDATA[");
-		sb.append(getTypeSettings());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>status</column-name><column-value><![CDATA[");
-		sb.append(getStatus());
-		sb.append("]]></column-value></column>");
-
-		sb.append("</model>");
-
-		return sb.toString();
 	}
 
 	private static final ClassLoader _classLoader = TrashVersion.class.getClassLoader();

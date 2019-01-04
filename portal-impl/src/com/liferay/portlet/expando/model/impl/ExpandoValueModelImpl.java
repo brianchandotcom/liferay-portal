@@ -20,8 +20,6 @@ import com.liferay.expando.kernel.model.ExpandoValue;
 import com.liferay.expando.kernel.model.ExpandoValueModel;
 import com.liferay.expando.kernel.model.ExpandoValueSoap;
 
-import com.liferay.petra.string.StringBundler;
-
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.model.CacheModel;
@@ -37,9 +35,13 @@ import java.io.Serializable;
 import java.sql.Types;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * The base model implementation for the ExpandoValue service. Represents a row in the &quot;ExpandoValue&quot; database table, with each column mapped to a property of this class.
@@ -192,73 +194,41 @@ public class ExpandoValueModelImpl extends BaseModelImpl<ExpandoValue>
 	}
 
 	@Override
-	public Map<String, Object> getModelAttributes() {
-		Map<String, Object> attributes = new HashMap<String, Object>();
-
-		attributes.put("valueId", getValueId());
-		attributes.put("companyId", getCompanyId());
-		attributes.put("tableId", getTableId());
-		attributes.put("columnId", getColumnId());
-		attributes.put("rowId", getRowId());
-		attributes.put("classNameId", getClassNameId());
-		attributes.put("classPK", getClassPK());
-		attributes.put("data", getData());
-
-		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
-		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
-
-		return attributes;
+	public Map<String, Function<ExpandoValue, Object>> getAttributeGetterFunctions() {
+		return _attributeGetterFunctions;
 	}
 
 	@Override
-	public void setModelAttributes(Map<String, Object> attributes) {
-		Long valueId = (Long)attributes.get("valueId");
+	public Map<String, BiConsumer<ExpandoValue, Object>> getAttributeSetterBiConsumers() {
+		return _attributeSetterBiConsumers;
+	}
 
-		if (valueId != null) {
-			setValueId(valueId);
-		}
+	private static final Map<String, Function<ExpandoValue, Object>> _attributeGetterFunctions;
+	private static final Map<String, BiConsumer<ExpandoValue, Object>> _attributeSetterBiConsumers;
 
-		Long companyId = (Long)attributes.get("companyId");
+	static {
+		Map<String, Function<ExpandoValue, Object>> attributeGetterFunctions = new LinkedHashMap<String, Function<ExpandoValue, Object>>();
+		Map<String, BiConsumer<ExpandoValue, ?>> attributeSetterBiConsumers = new LinkedHashMap<String, BiConsumer<ExpandoValue, ?>>();
 
-		if (companyId != null) {
-			setCompanyId(companyId);
-		}
+		attributeGetterFunctions.put("valueId", ExpandoValue::getValueId);
+		attributeSetterBiConsumers.put("valueId", (BiConsumer<ExpandoValue, Long>)ExpandoValue::setValueId);
+		attributeGetterFunctions.put("companyId", ExpandoValue::getCompanyId);
+		attributeSetterBiConsumers.put("companyId", (BiConsumer<ExpandoValue, Long>)ExpandoValue::setCompanyId);
+		attributeGetterFunctions.put("tableId", ExpandoValue::getTableId);
+		attributeSetterBiConsumers.put("tableId", (BiConsumer<ExpandoValue, Long>)ExpandoValue::setTableId);
+		attributeGetterFunctions.put("columnId", ExpandoValue::getColumnId);
+		attributeSetterBiConsumers.put("columnId", (BiConsumer<ExpandoValue, Long>)ExpandoValue::setColumnId);
+		attributeGetterFunctions.put("rowId", ExpandoValue::getRowId);
+		attributeSetterBiConsumers.put("rowId", (BiConsumer<ExpandoValue, Long>)ExpandoValue::setRowId);
+		attributeGetterFunctions.put("classNameId", ExpandoValue::getClassNameId);
+		attributeSetterBiConsumers.put("classNameId", (BiConsumer<ExpandoValue, Long>)ExpandoValue::setClassNameId);
+		attributeGetterFunctions.put("classPK", ExpandoValue::getClassPK);
+		attributeSetterBiConsumers.put("classPK", (BiConsumer<ExpandoValue, Long>)ExpandoValue::setClassPK);
+		attributeGetterFunctions.put("data", ExpandoValue::getData);
+		attributeSetterBiConsumers.put("data", (BiConsumer<ExpandoValue, String>)ExpandoValue::setData);
 
-		Long tableId = (Long)attributes.get("tableId");
-
-		if (tableId != null) {
-			setTableId(tableId);
-		}
-
-		Long columnId = (Long)attributes.get("columnId");
-
-		if (columnId != null) {
-			setColumnId(columnId);
-		}
-
-		Long rowId = (Long)attributes.get("rowId");
-
-		if (rowId != null) {
-			setRowId(rowId);
-		}
-
-		Long classNameId = (Long)attributes.get("classNameId");
-
-		if (classNameId != null) {
-			setClassNameId(classNameId);
-		}
-
-		Long classPK = (Long)attributes.get("classPK");
-
-		if (classPK != null) {
-			setClassPK(classPK);
-		}
-
-		String data = (String)attributes.get("data");
-
-		if (data != null) {
-			setData(data);
-		}
+		_attributeGetterFunctions = Collections.unmodifiableMap(attributeGetterFunctions);
+		_attributeSetterBiConsumers = Collections.unmodifiableMap((Map)attributeSetterBiConsumers);
 	}
 
 	@JSON
@@ -618,77 +588,6 @@ public class ExpandoValueModelImpl extends BaseModelImpl<ExpandoValue>
 		}
 
 		return expandoValueCacheModel;
-	}
-
-	@Override
-	public String toString() {
-		StringBundler sb = new StringBundler(17);
-
-		sb.append("{valueId=");
-		sb.append(getValueId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
-		sb.append(", tableId=");
-		sb.append(getTableId());
-		sb.append(", columnId=");
-		sb.append(getColumnId());
-		sb.append(", rowId=");
-		sb.append(getRowId());
-		sb.append(", classNameId=");
-		sb.append(getClassNameId());
-		sb.append(", classPK=");
-		sb.append(getClassPK());
-		sb.append(", data=");
-		sb.append(getData());
-		sb.append("}");
-
-		return sb.toString();
-	}
-
-	@Override
-	public String toXmlString() {
-		StringBundler sb = new StringBundler(28);
-
-		sb.append("<model><model-name>");
-		sb.append("com.liferay.expando.kernel.model.ExpandoValue");
-		sb.append("</model-name>");
-
-		sb.append(
-			"<column><column-name>valueId</column-name><column-value><![CDATA[");
-		sb.append(getValueId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>tableId</column-name><column-value><![CDATA[");
-		sb.append(getTableId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>columnId</column-name><column-value><![CDATA[");
-		sb.append(getColumnId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>rowId</column-name><column-value><![CDATA[");
-		sb.append(getRowId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>classNameId</column-name><column-value><![CDATA[");
-		sb.append(getClassNameId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>classPK</column-name><column-value><![CDATA[");
-		sb.append(getClassPK());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>data</column-name><column-value><![CDATA[");
-		sb.append(getData());
-		sb.append("]]></column-value></column>");
-
-		sb.append("</model>");
-
-		return sb.toString();
 	}
 
 	private static final ClassLoader _classLoader = ExpandoValue.class.getClassLoader();

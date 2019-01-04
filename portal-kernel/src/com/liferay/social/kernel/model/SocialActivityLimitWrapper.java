@@ -19,9 +19,6 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
-import java.util.HashMap;
-import java.util.Map;
-
 /**
  * <p>
  * This class is a wrapper for {@link SocialActivityLimit}.
@@ -36,81 +33,6 @@ public class SocialActivityLimitWrapper extends BaseModelWrapper<SocialActivityL
 	implements SocialActivityLimit, ModelWrapper<SocialActivityLimit> {
 	public SocialActivityLimitWrapper(SocialActivityLimit socialActivityLimit) {
 		super(socialActivityLimit);
-	}
-
-	@Override
-	public Map<String, Object> getModelAttributes() {
-		Map<String, Object> attributes = new HashMap<String, Object>();
-
-		attributes.put("activityLimitId", getActivityLimitId());
-		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
-		attributes.put("userId", getUserId());
-		attributes.put("classNameId", getClassNameId());
-		attributes.put("classPK", getClassPK());
-		attributes.put("activityType", getActivityType());
-		attributes.put("activityCounterName", getActivityCounterName());
-		attributes.put("value", getValue());
-
-		return attributes;
-	}
-
-	@Override
-	public void setModelAttributes(Map<String, Object> attributes) {
-		Long activityLimitId = (Long)attributes.get("activityLimitId");
-
-		if (activityLimitId != null) {
-			setActivityLimitId(activityLimitId);
-		}
-
-		Long groupId = (Long)attributes.get("groupId");
-
-		if (groupId != null) {
-			setGroupId(groupId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
-		}
-
-		Long userId = (Long)attributes.get("userId");
-
-		if (userId != null) {
-			setUserId(userId);
-		}
-
-		Long classNameId = (Long)attributes.get("classNameId");
-
-		if (classNameId != null) {
-			setClassNameId(classNameId);
-		}
-
-		Long classPK = (Long)attributes.get("classPK");
-
-		if (classPK != null) {
-			setClassPK(classPK);
-		}
-
-		Integer activityType = (Integer)attributes.get("activityType");
-
-		if (activityType != null) {
-			setActivityType(activityType);
-		}
-
-		String activityCounterName = (String)attributes.get(
-				"activityCounterName");
-
-		if (activityCounterName != null) {
-			setActivityCounterName(activityCounterName);
-		}
-
-		String value = (String)attributes.get("value");
-
-		if (value != null) {
-			setValue(value);
-		}
 	}
 
 	/**

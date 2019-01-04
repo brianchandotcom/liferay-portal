@@ -19,9 +19,6 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
-import java.util.HashMap;
-import java.util.Map;
-
 /**
  * <p>
  * This class is a wrapper for {@link FriendlyURLEntryMapping}.
@@ -37,54 +34,6 @@ public class FriendlyURLEntryMappingWrapper extends BaseModelWrapper<FriendlyURL
 	public FriendlyURLEntryMappingWrapper(
 		FriendlyURLEntryMapping friendlyURLEntryMapping) {
 		super(friendlyURLEntryMapping);
-	}
-
-	@Override
-	public Map<String, Object> getModelAttributes() {
-		Map<String, Object> attributes = new HashMap<String, Object>();
-
-		attributes.put("mvccVersion", getMvccVersion());
-		attributes.put("friendlyURLEntryMappingId",
-			getFriendlyURLEntryMappingId());
-		attributes.put("classNameId", getClassNameId());
-		attributes.put("classPK", getClassPK());
-		attributes.put("friendlyURLEntryId", getFriendlyURLEntryId());
-
-		return attributes;
-	}
-
-	@Override
-	public void setModelAttributes(Map<String, Object> attributes) {
-		Long mvccVersion = (Long)attributes.get("mvccVersion");
-
-		if (mvccVersion != null) {
-			setMvccVersion(mvccVersion);
-		}
-
-		Long friendlyURLEntryMappingId = (Long)attributes.get(
-				"friendlyURLEntryMappingId");
-
-		if (friendlyURLEntryMappingId != null) {
-			setFriendlyURLEntryMappingId(friendlyURLEntryMappingId);
-		}
-
-		Long classNameId = (Long)attributes.get("classNameId");
-
-		if (classNameId != null) {
-			setClassNameId(classNameId);
-		}
-
-		Long classPK = (Long)attributes.get("classPK");
-
-		if (classPK != null) {
-			setClassPK(classPK);
-		}
-
-		Long friendlyURLEntryId = (Long)attributes.get("friendlyURLEntryId");
-
-		if (friendlyURLEntryId != null) {
-			setFriendlyURLEntryId(friendlyURLEntryId);
-		}
 	}
 
 	/**

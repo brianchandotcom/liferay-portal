@@ -19,8 +19,6 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 
-import com.liferay.petra.string.StringBundler;
-
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.ClusterGroup;
@@ -35,8 +33,12 @@ import java.io.Serializable;
 
 import java.sql.Types;
 
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * The base model implementation for the ClusterGroup service. Represents a row in the &quot;ClusterGroup&quot; database table, with each column mapped to a property of this class.
@@ -128,52 +130,35 @@ public class ClusterGroupModelImpl extends BaseModelImpl<ClusterGroup>
 	}
 
 	@Override
-	public Map<String, Object> getModelAttributes() {
-		Map<String, Object> attributes = new HashMap<String, Object>();
-
-		attributes.put("mvccVersion", getMvccVersion());
-		attributes.put("clusterGroupId", getClusterGroupId());
-		attributes.put("name", getName());
-		attributes.put("clusterNodeIds", getClusterNodeIds());
-		attributes.put("wholeCluster", isWholeCluster());
-
-		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
-		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
-
-		return attributes;
+	public Map<String, Function<ClusterGroup, Object>> getAttributeGetterFunctions() {
+		return _attributeGetterFunctions;
 	}
 
 	@Override
-	public void setModelAttributes(Map<String, Object> attributes) {
-		Long mvccVersion = (Long)attributes.get("mvccVersion");
+	public Map<String, BiConsumer<ClusterGroup, Object>> getAttributeSetterBiConsumers() {
+		return _attributeSetterBiConsumers;
+	}
 
-		if (mvccVersion != null) {
-			setMvccVersion(mvccVersion);
-		}
+	private static final Map<String, Function<ClusterGroup, Object>> _attributeGetterFunctions;
+	private static final Map<String, BiConsumer<ClusterGroup, Object>> _attributeSetterBiConsumers;
 
-		Long clusterGroupId = (Long)attributes.get("clusterGroupId");
+	static {
+		Map<String, Function<ClusterGroup, Object>> attributeGetterFunctions = new LinkedHashMap<String, Function<ClusterGroup, Object>>();
+		Map<String, BiConsumer<ClusterGroup, ?>> attributeSetterBiConsumers = new LinkedHashMap<String, BiConsumer<ClusterGroup, ?>>();
 
-		if (clusterGroupId != null) {
-			setClusterGroupId(clusterGroupId);
-		}
+		attributeGetterFunctions.put("mvccVersion", ClusterGroup::getMvccVersion);
+		attributeSetterBiConsumers.put("mvccVersion", (BiConsumer<ClusterGroup, Long>)ClusterGroup::setMvccVersion);
+		attributeGetterFunctions.put("clusterGroupId", ClusterGroup::getClusterGroupId);
+		attributeSetterBiConsumers.put("clusterGroupId", (BiConsumer<ClusterGroup, Long>)ClusterGroup::setClusterGroupId);
+		attributeGetterFunctions.put("name", ClusterGroup::getName);
+		attributeSetterBiConsumers.put("name", (BiConsumer<ClusterGroup, String>)ClusterGroup::setName);
+		attributeGetterFunctions.put("clusterNodeIds", ClusterGroup::getClusterNodeIds);
+		attributeSetterBiConsumers.put("clusterNodeIds", (BiConsumer<ClusterGroup, String>)ClusterGroup::setClusterNodeIds);
+		attributeGetterFunctions.put("wholeCluster", ClusterGroup::getWholeCluster);
+		attributeSetterBiConsumers.put("wholeCluster", (BiConsumer<ClusterGroup, Boolean>)ClusterGroup::setWholeCluster);
 
-		String name = (String)attributes.get("name");
-
-		if (name != null) {
-			setName(name);
-		}
-
-		String clusterNodeIds = (String)attributes.get("clusterNodeIds");
-
-		if (clusterNodeIds != null) {
-			setClusterNodeIds(clusterNodeIds);
-		}
-
-		Boolean wholeCluster = (Boolean)attributes.get("wholeCluster");
-
-		if (wholeCluster != null) {
-			setWholeCluster(wholeCluster);
-		}
+		_attributeGetterFunctions = Collections.unmodifiableMap(attributeGetterFunctions);
+		_attributeSetterBiConsumers = Collections.unmodifiableMap((Map)attributeSetterBiConsumers);
 	}
 
 	@Override
@@ -362,59 +347,6 @@ public class ClusterGroupModelImpl extends BaseModelImpl<ClusterGroup>
 		clusterGroupCacheModel.wholeCluster = isWholeCluster();
 
 		return clusterGroupCacheModel;
-	}
-
-	@Override
-	public String toString() {
-		StringBundler sb = new StringBundler(11);
-
-		sb.append("{mvccVersion=");
-		sb.append(getMvccVersion());
-		sb.append(", clusterGroupId=");
-		sb.append(getClusterGroupId());
-		sb.append(", name=");
-		sb.append(getName());
-		sb.append(", clusterNodeIds=");
-		sb.append(getClusterNodeIds());
-		sb.append(", wholeCluster=");
-		sb.append(isWholeCluster());
-		sb.append("}");
-
-		return sb.toString();
-	}
-
-	@Override
-	public String toXmlString() {
-		StringBundler sb = new StringBundler(19);
-
-		sb.append("<model><model-name>");
-		sb.append("com.liferay.portal.kernel.model.ClusterGroup");
-		sb.append("</model-name>");
-
-		sb.append(
-			"<column><column-name>mvccVersion</column-name><column-value><![CDATA[");
-		sb.append(getMvccVersion());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>clusterGroupId</column-name><column-value><![CDATA[");
-		sb.append(getClusterGroupId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>name</column-name><column-value><![CDATA[");
-		sb.append(getName());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>clusterNodeIds</column-name><column-value><![CDATA[");
-		sb.append(getClusterNodeIds());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>wholeCluster</column-name><column-value><![CDATA[");
-		sb.append(isWholeCluster());
-		sb.append("]]></column-value></column>");
-
-		sb.append("</model>");
-
-		return sb.toString();
 	}
 
 	private static final ClassLoader _classLoader = ClusterGroup.class.getClassLoader();

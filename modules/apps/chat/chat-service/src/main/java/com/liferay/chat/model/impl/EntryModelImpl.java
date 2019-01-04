@@ -22,8 +22,6 @@ import com.liferay.chat.model.EntryModel;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 
-import com.liferay.petra.string.StringBundler;
-
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.CacheModel;
@@ -39,8 +37,12 @@ import java.io.Serializable;
 
 import java.sql.Types;
 
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * The base model implementation for the Entry service. Represents a row in the &quot;Chat_Entry&quot; database table, with each column mapped to a property of this class.
@@ -139,59 +141,37 @@ public class EntryModelImpl extends BaseModelImpl<Entry> implements EntryModel {
 	}
 
 	@Override
-	public Map<String, Object> getModelAttributes() {
-		Map<String, Object> attributes = new HashMap<String, Object>();
-
-		attributes.put("entryId", getEntryId());
-		attributes.put("createDate", getCreateDate());
-		attributes.put("fromUserId", getFromUserId());
-		attributes.put("toUserId", getToUserId());
-		attributes.put("content", getContent());
-		attributes.put("flag", getFlag());
-
-		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
-		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
-
-		return attributes;
+	public Map<String, Function<Entry, Object>> getAttributeGetterFunctions() {
+		return _attributeGetterFunctions;
 	}
 
 	@Override
-	public void setModelAttributes(Map<String, Object> attributes) {
-		Long entryId = (Long)attributes.get("entryId");
+	public Map<String, BiConsumer<Entry, Object>> getAttributeSetterBiConsumers() {
+		return _attributeSetterBiConsumers;
+	}
 
-		if (entryId != null) {
-			setEntryId(entryId);
-		}
+	private static final Map<String, Function<Entry, Object>> _attributeGetterFunctions;
+	private static final Map<String, BiConsumer<Entry, Object>> _attributeSetterBiConsumers;
 
-		Long createDate = (Long)attributes.get("createDate");
+	static {
+		Map<String, Function<Entry, Object>> attributeGetterFunctions = new LinkedHashMap<String, Function<Entry, Object>>();
+		Map<String, BiConsumer<Entry, ?>> attributeSetterBiConsumers = new LinkedHashMap<String, BiConsumer<Entry, ?>>();
 
-		if (createDate != null) {
-			setCreateDate(createDate);
-		}
+		attributeGetterFunctions.put("entryId", Entry::getEntryId);
+		attributeSetterBiConsumers.put("entryId", (BiConsumer<Entry, Long>)Entry::setEntryId);
+		attributeGetterFunctions.put("createDate", Entry::getCreateDate);
+		attributeSetterBiConsumers.put("createDate", (BiConsumer<Entry, Long>)Entry::setCreateDate);
+		attributeGetterFunctions.put("fromUserId", Entry::getFromUserId);
+		attributeSetterBiConsumers.put("fromUserId", (BiConsumer<Entry, Long>)Entry::setFromUserId);
+		attributeGetterFunctions.put("toUserId", Entry::getToUserId);
+		attributeSetterBiConsumers.put("toUserId", (BiConsumer<Entry, Long>)Entry::setToUserId);
+		attributeGetterFunctions.put("content", Entry::getContent);
+		attributeSetterBiConsumers.put("content", (BiConsumer<Entry, String>)Entry::setContent);
+		attributeGetterFunctions.put("flag", Entry::getFlag);
+		attributeSetterBiConsumers.put("flag", (BiConsumer<Entry, Integer>)Entry::setFlag);
 
-		Long fromUserId = (Long)attributes.get("fromUserId");
-
-		if (fromUserId != null) {
-			setFromUserId(fromUserId);
-		}
-
-		Long toUserId = (Long)attributes.get("toUserId");
-
-		if (toUserId != null) {
-			setToUserId(toUserId);
-		}
-
-		String content = (String)attributes.get("content");
-
-		if (content != null) {
-			setContent(content);
-		}
-
-		Integer flag = (Integer)attributes.get("flag");
-
-		if (flag != null) {
-			setFlag(flag);
-		}
+		_attributeGetterFunctions = Collections.unmodifiableMap(attributeGetterFunctions);
+		_attributeSetterBiConsumers = Collections.unmodifiableMap((Map)attributeSetterBiConsumers);
 	}
 
 	@Override
@@ -484,65 +464,6 @@ public class EntryModelImpl extends BaseModelImpl<Entry> implements EntryModel {
 		entryCacheModel.flag = getFlag();
 
 		return entryCacheModel;
-	}
-
-	@Override
-	public String toString() {
-		StringBundler sb = new StringBundler(13);
-
-		sb.append("{entryId=");
-		sb.append(getEntryId());
-		sb.append(", createDate=");
-		sb.append(getCreateDate());
-		sb.append(", fromUserId=");
-		sb.append(getFromUserId());
-		sb.append(", toUserId=");
-		sb.append(getToUserId());
-		sb.append(", content=");
-		sb.append(getContent());
-		sb.append(", flag=");
-		sb.append(getFlag());
-		sb.append("}");
-
-		return sb.toString();
-	}
-
-	@Override
-	public String toXmlString() {
-		StringBundler sb = new StringBundler(22);
-
-		sb.append("<model><model-name>");
-		sb.append("com.liferay.chat.model.Entry");
-		sb.append("</model-name>");
-
-		sb.append(
-			"<column><column-name>entryId</column-name><column-value><![CDATA[");
-		sb.append(getEntryId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>createDate</column-name><column-value><![CDATA[");
-		sb.append(getCreateDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>fromUserId</column-name><column-value><![CDATA[");
-		sb.append(getFromUserId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>toUserId</column-name><column-value><![CDATA[");
-		sb.append(getToUserId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>content</column-name><column-value><![CDATA[");
-		sb.append(getContent());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>flag</column-name><column-value><![CDATA[");
-		sb.append(getFlag());
-		sb.append("]]></column-value></column>");
-
-		sb.append("</model>");
-
-		return sb.toString();
 	}
 
 	private static final ClassLoader _classLoader = Entry.class.getClassLoader();

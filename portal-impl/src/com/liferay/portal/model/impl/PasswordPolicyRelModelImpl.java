@@ -19,8 +19,6 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 
-import com.liferay.petra.string.StringBundler;
-
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.ModelWrapper;
@@ -37,8 +35,12 @@ import java.io.Serializable;
 
 import java.sql.Types;
 
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * The base model implementation for the PasswordPolicyRel service. Represents a row in the &quot;PasswordPolicyRel&quot; database table, with each column mapped to a property of this class.
@@ -138,59 +140,39 @@ public class PasswordPolicyRelModelImpl extends BaseModelImpl<PasswordPolicyRel>
 	}
 
 	@Override
-	public Map<String, Object> getModelAttributes() {
-		Map<String, Object> attributes = new HashMap<String, Object>();
-
-		attributes.put("mvccVersion", getMvccVersion());
-		attributes.put("passwordPolicyRelId", getPasswordPolicyRelId());
-		attributes.put("companyId", getCompanyId());
-		attributes.put("passwordPolicyId", getPasswordPolicyId());
-		attributes.put("classNameId", getClassNameId());
-		attributes.put("classPK", getClassPK());
-
-		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
-		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
-
-		return attributes;
+	public Map<String, Function<PasswordPolicyRel, Object>> getAttributeGetterFunctions() {
+		return _attributeGetterFunctions;
 	}
 
 	@Override
-	public void setModelAttributes(Map<String, Object> attributes) {
-		Long mvccVersion = (Long)attributes.get("mvccVersion");
+	public Map<String, BiConsumer<PasswordPolicyRel, Object>> getAttributeSetterBiConsumers() {
+		return _attributeSetterBiConsumers;
+	}
 
-		if (mvccVersion != null) {
-			setMvccVersion(mvccVersion);
-		}
+	private static final Map<String, Function<PasswordPolicyRel, Object>> _attributeGetterFunctions;
+	private static final Map<String, BiConsumer<PasswordPolicyRel, Object>> _attributeSetterBiConsumers;
 
-		Long passwordPolicyRelId = (Long)attributes.get("passwordPolicyRelId");
+	static {
+		Map<String, Function<PasswordPolicyRel, Object>> attributeGetterFunctions =
+			new LinkedHashMap<String, Function<PasswordPolicyRel, Object>>();
+		Map<String, BiConsumer<PasswordPolicyRel, ?>> attributeSetterBiConsumers =
+			new LinkedHashMap<String, BiConsumer<PasswordPolicyRel, ?>>();
 
-		if (passwordPolicyRelId != null) {
-			setPasswordPolicyRelId(passwordPolicyRelId);
-		}
+		attributeGetterFunctions.put("mvccVersion", PasswordPolicyRel::getMvccVersion);
+		attributeSetterBiConsumers.put("mvccVersion", (BiConsumer<PasswordPolicyRel, Long>)PasswordPolicyRel::setMvccVersion);
+		attributeGetterFunctions.put("passwordPolicyRelId", PasswordPolicyRel::getPasswordPolicyRelId);
+		attributeSetterBiConsumers.put("passwordPolicyRelId", (BiConsumer<PasswordPolicyRel, Long>)PasswordPolicyRel::setPasswordPolicyRelId);
+		attributeGetterFunctions.put("companyId", PasswordPolicyRel::getCompanyId);
+		attributeSetterBiConsumers.put("companyId", (BiConsumer<PasswordPolicyRel, Long>)PasswordPolicyRel::setCompanyId);
+		attributeGetterFunctions.put("passwordPolicyId", PasswordPolicyRel::getPasswordPolicyId);
+		attributeSetterBiConsumers.put("passwordPolicyId", (BiConsumer<PasswordPolicyRel, Long>)PasswordPolicyRel::setPasswordPolicyId);
+		attributeGetterFunctions.put("classNameId", PasswordPolicyRel::getClassNameId);
+		attributeSetterBiConsumers.put("classNameId", (BiConsumer<PasswordPolicyRel, Long>)PasswordPolicyRel::setClassNameId);
+		attributeGetterFunctions.put("classPK", PasswordPolicyRel::getClassPK);
+		attributeSetterBiConsumers.put("classPK", (BiConsumer<PasswordPolicyRel, Long>)PasswordPolicyRel::setClassPK);
 
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
-		}
-
-		Long passwordPolicyId = (Long)attributes.get("passwordPolicyId");
-
-		if (passwordPolicyId != null) {
-			setPasswordPolicyId(passwordPolicyId);
-		}
-
-		Long classNameId = (Long)attributes.get("classNameId");
-
-		if (classNameId != null) {
-			setClassNameId(classNameId);
-		}
-
-		Long classPK = (Long)attributes.get("classPK");
-
-		if (classPK != null) {
-			setClassPK(classPK);
-		}
+		_attributeGetterFunctions = Collections.unmodifiableMap(attributeGetterFunctions);
+		_attributeSetterBiConsumers = Collections.unmodifiableMap((Map)attributeSetterBiConsumers);
 	}
 
 	@Override
@@ -440,65 +422,6 @@ public class PasswordPolicyRelModelImpl extends BaseModelImpl<PasswordPolicyRel>
 		passwordPolicyRelCacheModel.classPK = getClassPK();
 
 		return passwordPolicyRelCacheModel;
-	}
-
-	@Override
-	public String toString() {
-		StringBundler sb = new StringBundler(13);
-
-		sb.append("{mvccVersion=");
-		sb.append(getMvccVersion());
-		sb.append(", passwordPolicyRelId=");
-		sb.append(getPasswordPolicyRelId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
-		sb.append(", passwordPolicyId=");
-		sb.append(getPasswordPolicyId());
-		sb.append(", classNameId=");
-		sb.append(getClassNameId());
-		sb.append(", classPK=");
-		sb.append(getClassPK());
-		sb.append("}");
-
-		return sb.toString();
-	}
-
-	@Override
-	public String toXmlString() {
-		StringBundler sb = new StringBundler(22);
-
-		sb.append("<model><model-name>");
-		sb.append("com.liferay.portal.kernel.model.PasswordPolicyRel");
-		sb.append("</model-name>");
-
-		sb.append(
-			"<column><column-name>mvccVersion</column-name><column-value><![CDATA[");
-		sb.append(getMvccVersion());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>passwordPolicyRelId</column-name><column-value><![CDATA[");
-		sb.append(getPasswordPolicyRelId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>passwordPolicyId</column-name><column-value><![CDATA[");
-		sb.append(getPasswordPolicyId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>classNameId</column-name><column-value><![CDATA[");
-		sb.append(getClassNameId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>classPK</column-name><column-value><![CDATA[");
-		sb.append(getClassPK());
-		sb.append("]]></column-value></column>");
-
-		sb.append("</model>");
-
-		return sb.toString();
 	}
 
 	private static final ClassLoader _classLoader = PasswordPolicyRel.class.getClassLoader();

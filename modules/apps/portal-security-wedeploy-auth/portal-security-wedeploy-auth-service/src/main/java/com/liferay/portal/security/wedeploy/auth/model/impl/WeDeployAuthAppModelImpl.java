@@ -19,8 +19,6 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 
-import com.liferay.petra.string.StringBundler;
-
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSON;
@@ -41,10 +39,14 @@ import java.io.Serializable;
 import java.sql.Types;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * The base model implementation for the WeDeployAuthApp service. Represents a row in the &quot;WeDeployAuth_WeDeployAuthApp&quot; database table, with each column mapped to a property of this class.
@@ -202,87 +204,45 @@ public class WeDeployAuthAppModelImpl extends BaseModelImpl<WeDeployAuthApp>
 	}
 
 	@Override
-	public Map<String, Object> getModelAttributes() {
-		Map<String, Object> attributes = new HashMap<String, Object>();
-
-		attributes.put("weDeployAuthAppId", getWeDeployAuthAppId());
-		attributes.put("companyId", getCompanyId());
-		attributes.put("userId", getUserId());
-		attributes.put("userName", getUserName());
-		attributes.put("createDate", getCreateDate());
-		attributes.put("modifiedDate", getModifiedDate());
-		attributes.put("name", getName());
-		attributes.put("redirectURI", getRedirectURI());
-		attributes.put("clientId", getClientId());
-		attributes.put("clientSecret", getClientSecret());
-
-		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
-		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
-
-		return attributes;
+	public Map<String, Function<WeDeployAuthApp, Object>> getAttributeGetterFunctions() {
+		return _attributeGetterFunctions;
 	}
 
 	@Override
-	public void setModelAttributes(Map<String, Object> attributes) {
-		Long weDeployAuthAppId = (Long)attributes.get("weDeployAuthAppId");
+	public Map<String, BiConsumer<WeDeployAuthApp, Object>> getAttributeSetterBiConsumers() {
+		return _attributeSetterBiConsumers;
+	}
 
-		if (weDeployAuthAppId != null) {
-			setWeDeployAuthAppId(weDeployAuthAppId);
-		}
+	private static final Map<String, Function<WeDeployAuthApp, Object>> _attributeGetterFunctions;
+	private static final Map<String, BiConsumer<WeDeployAuthApp, Object>> _attributeSetterBiConsumers;
 
-		Long companyId = (Long)attributes.get("companyId");
+	static {
+		Map<String, Function<WeDeployAuthApp, Object>> attributeGetterFunctions = new LinkedHashMap<String, Function<WeDeployAuthApp, Object>>();
+		Map<String, BiConsumer<WeDeployAuthApp, ?>> attributeSetterBiConsumers = new LinkedHashMap<String, BiConsumer<WeDeployAuthApp, ?>>();
 
-		if (companyId != null) {
-			setCompanyId(companyId);
-		}
+		attributeGetterFunctions.put("weDeployAuthAppId", WeDeployAuthApp::getWeDeployAuthAppId);
+		attributeSetterBiConsumers.put("weDeployAuthAppId", (BiConsumer<WeDeployAuthApp, Long>)WeDeployAuthApp::setWeDeployAuthAppId);
+		attributeGetterFunctions.put("companyId", WeDeployAuthApp::getCompanyId);
+		attributeSetterBiConsumers.put("companyId", (BiConsumer<WeDeployAuthApp, Long>)WeDeployAuthApp::setCompanyId);
+		attributeGetterFunctions.put("userId", WeDeployAuthApp::getUserId);
+		attributeSetterBiConsumers.put("userId", (BiConsumer<WeDeployAuthApp, Long>)WeDeployAuthApp::setUserId);
+		attributeGetterFunctions.put("userName", WeDeployAuthApp::getUserName);
+		attributeSetterBiConsumers.put("userName", (BiConsumer<WeDeployAuthApp, String>)WeDeployAuthApp::setUserName);
+		attributeGetterFunctions.put("createDate", WeDeployAuthApp::getCreateDate);
+		attributeSetterBiConsumers.put("createDate", (BiConsumer<WeDeployAuthApp, Date>)WeDeployAuthApp::setCreateDate);
+		attributeGetterFunctions.put("modifiedDate", WeDeployAuthApp::getModifiedDate);
+		attributeSetterBiConsumers.put("modifiedDate", (BiConsumer<WeDeployAuthApp, Date>)WeDeployAuthApp::setModifiedDate);
+		attributeGetterFunctions.put("name", WeDeployAuthApp::getName);
+		attributeSetterBiConsumers.put("name", (BiConsumer<WeDeployAuthApp, String>)WeDeployAuthApp::setName);
+		attributeGetterFunctions.put("redirectURI", WeDeployAuthApp::getRedirectURI);
+		attributeSetterBiConsumers.put("redirectURI", (BiConsumer<WeDeployAuthApp, String>)WeDeployAuthApp::setRedirectURI);
+		attributeGetterFunctions.put("clientId", WeDeployAuthApp::getClientId);
+		attributeSetterBiConsumers.put("clientId", (BiConsumer<WeDeployAuthApp, String>)WeDeployAuthApp::setClientId);
+		attributeGetterFunctions.put("clientSecret", WeDeployAuthApp::getClientSecret);
+		attributeSetterBiConsumers.put("clientSecret", (BiConsumer<WeDeployAuthApp, String>)WeDeployAuthApp::setClientSecret);
 
-		Long userId = (Long)attributes.get("userId");
-
-		if (userId != null) {
-			setUserId(userId);
-		}
-
-		String userName = (String)attributes.get("userName");
-
-		if (userName != null) {
-			setUserName(userName);
-		}
-
-		Date createDate = (Date)attributes.get("createDate");
-
-		if (createDate != null) {
-			setCreateDate(createDate);
-		}
-
-		Date modifiedDate = (Date)attributes.get("modifiedDate");
-
-		if (modifiedDate != null) {
-			setModifiedDate(modifiedDate);
-		}
-
-		String name = (String)attributes.get("name");
-
-		if (name != null) {
-			setName(name);
-		}
-
-		String redirectURI = (String)attributes.get("redirectURI");
-
-		if (redirectURI != null) {
-			setRedirectURI(redirectURI);
-		}
-
-		String clientId = (String)attributes.get("clientId");
-
-		if (clientId != null) {
-			setClientId(clientId);
-		}
-
-		String clientSecret = (String)attributes.get("clientSecret");
-
-		if (clientSecret != null) {
-			setClientSecret(clientSecret);
-		}
+		_attributeGetterFunctions = Collections.unmodifiableMap(attributeGetterFunctions);
+		_attributeSetterBiConsumers = Collections.unmodifiableMap((Map)attributeSetterBiConsumers);
 	}
 
 	@JSON
@@ -655,90 +615,6 @@ public class WeDeployAuthAppModelImpl extends BaseModelImpl<WeDeployAuthApp>
 		}
 
 		return weDeployAuthAppCacheModel;
-	}
-
-	@Override
-	public String toString() {
-		StringBundler sb = new StringBundler(21);
-
-		sb.append("{weDeployAuthAppId=");
-		sb.append(getWeDeployAuthAppId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
-		sb.append(", userId=");
-		sb.append(getUserId());
-		sb.append(", userName=");
-		sb.append(getUserName());
-		sb.append(", createDate=");
-		sb.append(getCreateDate());
-		sb.append(", modifiedDate=");
-		sb.append(getModifiedDate());
-		sb.append(", name=");
-		sb.append(getName());
-		sb.append(", redirectURI=");
-		sb.append(getRedirectURI());
-		sb.append(", clientId=");
-		sb.append(getClientId());
-		sb.append(", clientSecret=");
-		sb.append(getClientSecret());
-		sb.append("}");
-
-		return sb.toString();
-	}
-
-	@Override
-	public String toXmlString() {
-		StringBundler sb = new StringBundler(34);
-
-		sb.append("<model><model-name>");
-		sb.append(
-			"com.liferay.portal.security.wedeploy.auth.model.WeDeployAuthApp");
-		sb.append("</model-name>");
-
-		sb.append(
-			"<column><column-name>weDeployAuthAppId</column-name><column-value><![CDATA[");
-		sb.append(getWeDeployAuthAppId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userId</column-name><column-value><![CDATA[");
-		sb.append(getUserId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userName</column-name><column-value><![CDATA[");
-		sb.append(getUserName());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>createDate</column-name><column-value><![CDATA[");
-		sb.append(getCreateDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>modifiedDate</column-name><column-value><![CDATA[");
-		sb.append(getModifiedDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>name</column-name><column-value><![CDATA[");
-		sb.append(getName());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>redirectURI</column-name><column-value><![CDATA[");
-		sb.append(getRedirectURI());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>clientId</column-name><column-value><![CDATA[");
-		sb.append(getClientId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>clientSecret</column-name><column-value><![CDATA[");
-		sb.append(getClientSecret());
-		sb.append("]]></column-value></column>");
-
-		sb.append("</model>");
-
-		return sb.toString();
 	}
 
 	private static final ClassLoader _classLoader = WeDeployAuthApp.class.getClassLoader();

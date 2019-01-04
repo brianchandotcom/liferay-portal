@@ -19,9 +19,6 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
-import java.util.HashMap;
-import java.util.Map;
-
 /**
  * <p>
  * This class is a wrapper for {@link SocialActivityAchievement}.
@@ -38,67 +35,6 @@ public class SocialActivityAchievementWrapper extends BaseModelWrapper<SocialAct
 	public SocialActivityAchievementWrapper(
 		SocialActivityAchievement socialActivityAchievement) {
 		super(socialActivityAchievement);
-	}
-
-	@Override
-	public Map<String, Object> getModelAttributes() {
-		Map<String, Object> attributes = new HashMap<String, Object>();
-
-		attributes.put("activityAchievementId", getActivityAchievementId());
-		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
-		attributes.put("userId", getUserId());
-		attributes.put("createDate", getCreateDate());
-		attributes.put("name", getName());
-		attributes.put("firstInGroup", isFirstInGroup());
-
-		return attributes;
-	}
-
-	@Override
-	public void setModelAttributes(Map<String, Object> attributes) {
-		Long activityAchievementId = (Long)attributes.get(
-				"activityAchievementId");
-
-		if (activityAchievementId != null) {
-			setActivityAchievementId(activityAchievementId);
-		}
-
-		Long groupId = (Long)attributes.get("groupId");
-
-		if (groupId != null) {
-			setGroupId(groupId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
-		}
-
-		Long userId = (Long)attributes.get("userId");
-
-		if (userId != null) {
-			setUserId(userId);
-		}
-
-		Long createDate = (Long)attributes.get("createDate");
-
-		if (createDate != null) {
-			setCreateDate(createDate);
-		}
-
-		String name = (String)attributes.get("name");
-
-		if (name != null) {
-			setName(name);
-		}
-
-		Boolean firstInGroup = (Boolean)attributes.get("firstInGroup");
-
-		if (firstInGroup != null) {
-			setFirstInGroup(firstInGroup);
-		}
 	}
 
 	/**

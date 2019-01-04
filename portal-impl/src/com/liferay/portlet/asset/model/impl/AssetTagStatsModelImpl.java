@@ -22,8 +22,6 @@ import com.liferay.asset.kernel.model.AssetTagStatsModel;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 
-import com.liferay.petra.string.StringBundler;
-
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.ModelWrapper;
@@ -38,8 +36,12 @@ import java.io.Serializable;
 
 import java.sql.Types;
 
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * The base model implementation for the AssetTagStats service. Represents a row in the &quot;AssetTagStats&quot; database table, with each column mapped to a property of this class.
@@ -139,52 +141,35 @@ public class AssetTagStatsModelImpl extends BaseModelImpl<AssetTagStats>
 	}
 
 	@Override
-	public Map<String, Object> getModelAttributes() {
-		Map<String, Object> attributes = new HashMap<String, Object>();
-
-		attributes.put("tagStatsId", getTagStatsId());
-		attributes.put("companyId", getCompanyId());
-		attributes.put("tagId", getTagId());
-		attributes.put("classNameId", getClassNameId());
-		attributes.put("assetCount", getAssetCount());
-
-		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
-		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
-
-		return attributes;
+	public Map<String, Function<AssetTagStats, Object>> getAttributeGetterFunctions() {
+		return _attributeGetterFunctions;
 	}
 
 	@Override
-	public void setModelAttributes(Map<String, Object> attributes) {
-		Long tagStatsId = (Long)attributes.get("tagStatsId");
+	public Map<String, BiConsumer<AssetTagStats, Object>> getAttributeSetterBiConsumers() {
+		return _attributeSetterBiConsumers;
+	}
 
-		if (tagStatsId != null) {
-			setTagStatsId(tagStatsId);
-		}
+	private static final Map<String, Function<AssetTagStats, Object>> _attributeGetterFunctions;
+	private static final Map<String, BiConsumer<AssetTagStats, Object>> _attributeSetterBiConsumers;
 
-		Long companyId = (Long)attributes.get("companyId");
+	static {
+		Map<String, Function<AssetTagStats, Object>> attributeGetterFunctions = new LinkedHashMap<String, Function<AssetTagStats, Object>>();
+		Map<String, BiConsumer<AssetTagStats, ?>> attributeSetterBiConsumers = new LinkedHashMap<String, BiConsumer<AssetTagStats, ?>>();
 
-		if (companyId != null) {
-			setCompanyId(companyId);
-		}
+		attributeGetterFunctions.put("tagStatsId", AssetTagStats::getTagStatsId);
+		attributeSetterBiConsumers.put("tagStatsId", (BiConsumer<AssetTagStats, Long>)AssetTagStats::setTagStatsId);
+		attributeGetterFunctions.put("companyId", AssetTagStats::getCompanyId);
+		attributeSetterBiConsumers.put("companyId", (BiConsumer<AssetTagStats, Long>)AssetTagStats::setCompanyId);
+		attributeGetterFunctions.put("tagId", AssetTagStats::getTagId);
+		attributeSetterBiConsumers.put("tagId", (BiConsumer<AssetTagStats, Long>)AssetTagStats::setTagId);
+		attributeGetterFunctions.put("classNameId", AssetTagStats::getClassNameId);
+		attributeSetterBiConsumers.put("classNameId", (BiConsumer<AssetTagStats, Long>)AssetTagStats::setClassNameId);
+		attributeGetterFunctions.put("assetCount", AssetTagStats::getAssetCount);
+		attributeSetterBiConsumers.put("assetCount", (BiConsumer<AssetTagStats, Integer>)AssetTagStats::setAssetCount);
 
-		Long tagId = (Long)attributes.get("tagId");
-
-		if (tagId != null) {
-			setTagId(tagId);
-		}
-
-		Long classNameId = (Long)attributes.get("classNameId");
-
-		if (classNameId != null) {
-			setClassNameId(classNameId);
-		}
-
-		Integer assetCount = (Integer)attributes.get("assetCount");
-
-		if (assetCount != null) {
-			setAssetCount(assetCount);
-		}
+		_attributeGetterFunctions = Collections.unmodifiableMap(attributeGetterFunctions);
+		_attributeSetterBiConsumers = Collections.unmodifiableMap((Map)attributeSetterBiConsumers);
 	}
 
 	@Override
@@ -415,59 +400,6 @@ public class AssetTagStatsModelImpl extends BaseModelImpl<AssetTagStats>
 		assetTagStatsCacheModel.assetCount = getAssetCount();
 
 		return assetTagStatsCacheModel;
-	}
-
-	@Override
-	public String toString() {
-		StringBundler sb = new StringBundler(11);
-
-		sb.append("{tagStatsId=");
-		sb.append(getTagStatsId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
-		sb.append(", tagId=");
-		sb.append(getTagId());
-		sb.append(", classNameId=");
-		sb.append(getClassNameId());
-		sb.append(", assetCount=");
-		sb.append(getAssetCount());
-		sb.append("}");
-
-		return sb.toString();
-	}
-
-	@Override
-	public String toXmlString() {
-		StringBundler sb = new StringBundler(19);
-
-		sb.append("<model><model-name>");
-		sb.append("com.liferay.asset.kernel.model.AssetTagStats");
-		sb.append("</model-name>");
-
-		sb.append(
-			"<column><column-name>tagStatsId</column-name><column-value><![CDATA[");
-		sb.append(getTagStatsId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>tagId</column-name><column-value><![CDATA[");
-		sb.append(getTagId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>classNameId</column-name><column-value><![CDATA[");
-		sb.append(getClassNameId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>assetCount</column-name><column-value><![CDATA[");
-		sb.append(getAssetCount());
-		sb.append("]]></column-value></column>");
-
-		sb.append("</model>");
-
-		return sb.toString();
 	}
 
 	private static final ClassLoader _classLoader = AssetTagStats.class.getClassLoader();

@@ -19,9 +19,6 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
-import java.util.HashMap;
-import java.util.Map;
-
 /**
  * <p>
  * This class is a wrapper for {@link DDMStorageLink}.
@@ -36,66 +33,6 @@ public class DDMStorageLinkWrapper extends BaseModelWrapper<DDMStorageLink>
 	implements DDMStorageLink, ModelWrapper<DDMStorageLink> {
 	public DDMStorageLinkWrapper(DDMStorageLink ddmStorageLink) {
 		super(ddmStorageLink);
-	}
-
-	@Override
-	public Map<String, Object> getModelAttributes() {
-		Map<String, Object> attributes = new HashMap<String, Object>();
-
-		attributes.put("uuid", getUuid());
-		attributes.put("storageLinkId", getStorageLinkId());
-		attributes.put("companyId", getCompanyId());
-		attributes.put("classNameId", getClassNameId());
-		attributes.put("classPK", getClassPK());
-		attributes.put("structureId", getStructureId());
-		attributes.put("structureVersionId", getStructureVersionId());
-
-		return attributes;
-	}
-
-	@Override
-	public void setModelAttributes(Map<String, Object> attributes) {
-		String uuid = (String)attributes.get("uuid");
-
-		if (uuid != null) {
-			setUuid(uuid);
-		}
-
-		Long storageLinkId = (Long)attributes.get("storageLinkId");
-
-		if (storageLinkId != null) {
-			setStorageLinkId(storageLinkId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
-		}
-
-		Long classNameId = (Long)attributes.get("classNameId");
-
-		if (classNameId != null) {
-			setClassNameId(classNameId);
-		}
-
-		Long classPK = (Long)attributes.get("classPK");
-
-		if (classPK != null) {
-			setClassPK(classPK);
-		}
-
-		Long structureId = (Long)attributes.get("structureId");
-
-		if (structureId != null) {
-			setStructureId(structureId);
-		}
-
-		Long structureVersionId = (Long)attributes.get("structureVersionId");
-
-		if (structureVersionId != null) {
-			setStructureVersionId(structureVersionId);
-		}
 	}
 
 	/**

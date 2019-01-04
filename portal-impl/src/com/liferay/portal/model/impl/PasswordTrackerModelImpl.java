@@ -19,8 +19,6 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 
-import com.liferay.petra.string.StringBundler;
-
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.CacheModel;
@@ -39,9 +37,13 @@ import java.io.Serializable;
 
 import java.sql.Types;
 
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * The base model implementation for the PasswordTracker service. Represents a row in the &quot;PasswordTracker&quot; database table, with each column mapped to a property of this class.
@@ -139,59 +141,37 @@ public class PasswordTrackerModelImpl extends BaseModelImpl<PasswordTracker>
 	}
 
 	@Override
-	public Map<String, Object> getModelAttributes() {
-		Map<String, Object> attributes = new HashMap<String, Object>();
-
-		attributes.put("mvccVersion", getMvccVersion());
-		attributes.put("passwordTrackerId", getPasswordTrackerId());
-		attributes.put("companyId", getCompanyId());
-		attributes.put("userId", getUserId());
-		attributes.put("createDate", getCreateDate());
-		attributes.put("password", getPassword());
-
-		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
-		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
-
-		return attributes;
+	public Map<String, Function<PasswordTracker, Object>> getAttributeGetterFunctions() {
+		return _attributeGetterFunctions;
 	}
 
 	@Override
-	public void setModelAttributes(Map<String, Object> attributes) {
-		Long mvccVersion = (Long)attributes.get("mvccVersion");
+	public Map<String, BiConsumer<PasswordTracker, Object>> getAttributeSetterBiConsumers() {
+		return _attributeSetterBiConsumers;
+	}
 
-		if (mvccVersion != null) {
-			setMvccVersion(mvccVersion);
-		}
+	private static final Map<String, Function<PasswordTracker, Object>> _attributeGetterFunctions;
+	private static final Map<String, BiConsumer<PasswordTracker, Object>> _attributeSetterBiConsumers;
 
-		Long passwordTrackerId = (Long)attributes.get("passwordTrackerId");
+	static {
+		Map<String, Function<PasswordTracker, Object>> attributeGetterFunctions = new LinkedHashMap<String, Function<PasswordTracker, Object>>();
+		Map<String, BiConsumer<PasswordTracker, ?>> attributeSetterBiConsumers = new LinkedHashMap<String, BiConsumer<PasswordTracker, ?>>();
 
-		if (passwordTrackerId != null) {
-			setPasswordTrackerId(passwordTrackerId);
-		}
+		attributeGetterFunctions.put("mvccVersion", PasswordTracker::getMvccVersion);
+		attributeSetterBiConsumers.put("mvccVersion", (BiConsumer<PasswordTracker, Long>)PasswordTracker::setMvccVersion);
+		attributeGetterFunctions.put("passwordTrackerId", PasswordTracker::getPasswordTrackerId);
+		attributeSetterBiConsumers.put("passwordTrackerId", (BiConsumer<PasswordTracker, Long>)PasswordTracker::setPasswordTrackerId);
+		attributeGetterFunctions.put("companyId", PasswordTracker::getCompanyId);
+		attributeSetterBiConsumers.put("companyId", (BiConsumer<PasswordTracker, Long>)PasswordTracker::setCompanyId);
+		attributeGetterFunctions.put("userId", PasswordTracker::getUserId);
+		attributeSetterBiConsumers.put("userId", (BiConsumer<PasswordTracker, Long>)PasswordTracker::setUserId);
+		attributeGetterFunctions.put("createDate", PasswordTracker::getCreateDate);
+		attributeSetterBiConsumers.put("createDate", (BiConsumer<PasswordTracker, Date>)PasswordTracker::setCreateDate);
+		attributeGetterFunctions.put("password", PasswordTracker::getPassword);
+		attributeSetterBiConsumers.put("password", (BiConsumer<PasswordTracker, String>)PasswordTracker::setPassword);
 
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
-		}
-
-		Long userId = (Long)attributes.get("userId");
-
-		if (userId != null) {
-			setUserId(userId);
-		}
-
-		Date createDate = (Date)attributes.get("createDate");
-
-		if (createDate != null) {
-			setCreateDate(createDate);
-		}
-
-		String password = (String)attributes.get("password");
-
-		if (password != null) {
-			setPassword(password);
-		}
+		_attributeGetterFunctions = Collections.unmodifiableMap(attributeGetterFunctions);
+		_attributeSetterBiConsumers = Collections.unmodifiableMap((Map)attributeSetterBiConsumers);
 	}
 
 	@Override
@@ -442,65 +422,6 @@ public class PasswordTrackerModelImpl extends BaseModelImpl<PasswordTracker>
 		}
 
 		return passwordTrackerCacheModel;
-	}
-
-	@Override
-	public String toString() {
-		StringBundler sb = new StringBundler(13);
-
-		sb.append("{mvccVersion=");
-		sb.append(getMvccVersion());
-		sb.append(", passwordTrackerId=");
-		sb.append(getPasswordTrackerId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
-		sb.append(", userId=");
-		sb.append(getUserId());
-		sb.append(", createDate=");
-		sb.append(getCreateDate());
-		sb.append(", password=");
-		sb.append(getPassword());
-		sb.append("}");
-
-		return sb.toString();
-	}
-
-	@Override
-	public String toXmlString() {
-		StringBundler sb = new StringBundler(22);
-
-		sb.append("<model><model-name>");
-		sb.append("com.liferay.portal.kernel.model.PasswordTracker");
-		sb.append("</model-name>");
-
-		sb.append(
-			"<column><column-name>mvccVersion</column-name><column-value><![CDATA[");
-		sb.append(getMvccVersion());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>passwordTrackerId</column-name><column-value><![CDATA[");
-		sb.append(getPasswordTrackerId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userId</column-name><column-value><![CDATA[");
-		sb.append(getUserId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>createDate</column-name><column-value><![CDATA[");
-		sb.append(getCreateDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>password</column-name><column-value><![CDATA[");
-		sb.append(getPassword());
-		sb.append("]]></column-value></column>");
-
-		sb.append("</model>");
-
-		return sb.toString();
 	}
 
 	private static final ClassLoader _classLoader = PasswordTracker.class.getClassLoader();

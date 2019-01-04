@@ -18,9 +18,6 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
-import java.util.HashMap;
-import java.util.Map;
-
 /**
  * <p>
  * This class is a wrapper for {@link UserNotificationEvent}.
@@ -36,109 +33,6 @@ public class UserNotificationEventWrapper extends BaseModelWrapper<UserNotificat
 	public UserNotificationEventWrapper(
 		UserNotificationEvent userNotificationEvent) {
 		super(userNotificationEvent);
-	}
-
-	@Override
-	public Map<String, Object> getModelAttributes() {
-		Map<String, Object> attributes = new HashMap<String, Object>();
-
-		attributes.put("mvccVersion", getMvccVersion());
-		attributes.put("uuid", getUuid());
-		attributes.put("userNotificationEventId", getUserNotificationEventId());
-		attributes.put("companyId", getCompanyId());
-		attributes.put("userId", getUserId());
-		attributes.put("type", getType());
-		attributes.put("timestamp", getTimestamp());
-		attributes.put("deliveryType", getDeliveryType());
-		attributes.put("deliverBy", getDeliverBy());
-		attributes.put("delivered", isDelivered());
-		attributes.put("payload", getPayload());
-		attributes.put("actionRequired", isActionRequired());
-		attributes.put("archived", isArchived());
-
-		return attributes;
-	}
-
-	@Override
-	public void setModelAttributes(Map<String, Object> attributes) {
-		Long mvccVersion = (Long)attributes.get("mvccVersion");
-
-		if (mvccVersion != null) {
-			setMvccVersion(mvccVersion);
-		}
-
-		String uuid = (String)attributes.get("uuid");
-
-		if (uuid != null) {
-			setUuid(uuid);
-		}
-
-		Long userNotificationEventId = (Long)attributes.get(
-				"userNotificationEventId");
-
-		if (userNotificationEventId != null) {
-			setUserNotificationEventId(userNotificationEventId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
-		}
-
-		Long userId = (Long)attributes.get("userId");
-
-		if (userId != null) {
-			setUserId(userId);
-		}
-
-		String type = (String)attributes.get("type");
-
-		if (type != null) {
-			setType(type);
-		}
-
-		Long timestamp = (Long)attributes.get("timestamp");
-
-		if (timestamp != null) {
-			setTimestamp(timestamp);
-		}
-
-		Integer deliveryType = (Integer)attributes.get("deliveryType");
-
-		if (deliveryType != null) {
-			setDeliveryType(deliveryType);
-		}
-
-		Long deliverBy = (Long)attributes.get("deliverBy");
-
-		if (deliverBy != null) {
-			setDeliverBy(deliverBy);
-		}
-
-		Boolean delivered = (Boolean)attributes.get("delivered");
-
-		if (delivered != null) {
-			setDelivered(delivered);
-		}
-
-		String payload = (String)attributes.get("payload");
-
-		if (payload != null) {
-			setPayload(payload);
-		}
-
-		Boolean actionRequired = (Boolean)attributes.get("actionRequired");
-
-		if (actionRequired != null) {
-			setActionRequired(actionRequired);
-		}
-
-		Boolean archived = (Boolean)attributes.get("archived");
-
-		if (archived != null) {
-			setArchived(archived);
-		}
 	}
 
 	/**

@@ -19,8 +19,6 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 
-import com.liferay.petra.string.StringBundler;
-
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.ModelWrapper;
@@ -35,8 +33,12 @@ import java.io.Serializable;
 
 import java.sql.Types;
 
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * The base model implementation for the ServiceComponent service. Represents a row in the &quot;ServiceComponent&quot; database table, with each column mapped to a property of this class.
@@ -134,59 +136,38 @@ public class ServiceComponentModelImpl extends BaseModelImpl<ServiceComponent>
 	}
 
 	@Override
-	public Map<String, Object> getModelAttributes() {
-		Map<String, Object> attributes = new HashMap<String, Object>();
-
-		attributes.put("mvccVersion", getMvccVersion());
-		attributes.put("serviceComponentId", getServiceComponentId());
-		attributes.put("buildNamespace", getBuildNamespace());
-		attributes.put("buildNumber", getBuildNumber());
-		attributes.put("buildDate", getBuildDate());
-		attributes.put("data", getData());
-
-		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
-		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
-
-		return attributes;
+	public Map<String, Function<ServiceComponent, Object>> getAttributeGetterFunctions() {
+		return _attributeGetterFunctions;
 	}
 
 	@Override
-	public void setModelAttributes(Map<String, Object> attributes) {
-		Long mvccVersion = (Long)attributes.get("mvccVersion");
+	public Map<String, BiConsumer<ServiceComponent, Object>> getAttributeSetterBiConsumers() {
+		return _attributeSetterBiConsumers;
+	}
 
-		if (mvccVersion != null) {
-			setMvccVersion(mvccVersion);
-		}
+	private static final Map<String, Function<ServiceComponent, Object>> _attributeGetterFunctions;
+	private static final Map<String, BiConsumer<ServiceComponent, Object>> _attributeSetterBiConsumers;
 
-		Long serviceComponentId = (Long)attributes.get("serviceComponentId");
+	static {
+		Map<String, Function<ServiceComponent, Object>> attributeGetterFunctions =
+			new LinkedHashMap<String, Function<ServiceComponent, Object>>();
+		Map<String, BiConsumer<ServiceComponent, ?>> attributeSetterBiConsumers = new LinkedHashMap<String, BiConsumer<ServiceComponent, ?>>();
 
-		if (serviceComponentId != null) {
-			setServiceComponentId(serviceComponentId);
-		}
+		attributeGetterFunctions.put("mvccVersion", ServiceComponent::getMvccVersion);
+		attributeSetterBiConsumers.put("mvccVersion", (BiConsumer<ServiceComponent, Long>)ServiceComponent::setMvccVersion);
+		attributeGetterFunctions.put("serviceComponentId", ServiceComponent::getServiceComponentId);
+		attributeSetterBiConsumers.put("serviceComponentId", (BiConsumer<ServiceComponent, Long>)ServiceComponent::setServiceComponentId);
+		attributeGetterFunctions.put("buildNamespace", ServiceComponent::getBuildNamespace);
+		attributeSetterBiConsumers.put("buildNamespace", (BiConsumer<ServiceComponent, String>)ServiceComponent::setBuildNamespace);
+		attributeGetterFunctions.put("buildNumber", ServiceComponent::getBuildNumber);
+		attributeSetterBiConsumers.put("buildNumber", (BiConsumer<ServiceComponent, Long>)ServiceComponent::setBuildNumber);
+		attributeGetterFunctions.put("buildDate", ServiceComponent::getBuildDate);
+		attributeSetterBiConsumers.put("buildDate", (BiConsumer<ServiceComponent, Long>)ServiceComponent::setBuildDate);
+		attributeGetterFunctions.put("data", ServiceComponent::getData);
+		attributeSetterBiConsumers.put("data", (BiConsumer<ServiceComponent, String>)ServiceComponent::setData);
 
-		String buildNamespace = (String)attributes.get("buildNamespace");
-
-		if (buildNamespace != null) {
-			setBuildNamespace(buildNamespace);
-		}
-
-		Long buildNumber = (Long)attributes.get("buildNumber");
-
-		if (buildNumber != null) {
-			setBuildNumber(buildNumber);
-		}
-
-		Long buildDate = (Long)attributes.get("buildDate");
-
-		if (buildDate != null) {
-			setBuildDate(buildDate);
-		}
-
-		String data = (String)attributes.get("data");
-
-		if (data != null) {
-			setData(data);
-		}
+		_attributeGetterFunctions = Collections.unmodifiableMap(attributeGetterFunctions);
+		_attributeSetterBiConsumers = Collections.unmodifiableMap((Map)attributeSetterBiConsumers);
 	}
 
 	@Override
@@ -435,65 +416,6 @@ public class ServiceComponentModelImpl extends BaseModelImpl<ServiceComponent>
 		}
 
 		return serviceComponentCacheModel;
-	}
-
-	@Override
-	public String toString() {
-		StringBundler sb = new StringBundler(13);
-
-		sb.append("{mvccVersion=");
-		sb.append(getMvccVersion());
-		sb.append(", serviceComponentId=");
-		sb.append(getServiceComponentId());
-		sb.append(", buildNamespace=");
-		sb.append(getBuildNamespace());
-		sb.append(", buildNumber=");
-		sb.append(getBuildNumber());
-		sb.append(", buildDate=");
-		sb.append(getBuildDate());
-		sb.append(", data=");
-		sb.append(getData());
-		sb.append("}");
-
-		return sb.toString();
-	}
-
-	@Override
-	public String toXmlString() {
-		StringBundler sb = new StringBundler(22);
-
-		sb.append("<model><model-name>");
-		sb.append("com.liferay.portal.kernel.model.ServiceComponent");
-		sb.append("</model-name>");
-
-		sb.append(
-			"<column><column-name>mvccVersion</column-name><column-value><![CDATA[");
-		sb.append(getMvccVersion());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>serviceComponentId</column-name><column-value><![CDATA[");
-		sb.append(getServiceComponentId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>buildNamespace</column-name><column-value><![CDATA[");
-		sb.append(getBuildNamespace());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>buildNumber</column-name><column-value><![CDATA[");
-		sb.append(getBuildNumber());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>buildDate</column-name><column-value><![CDATA[");
-		sb.append(getBuildDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>data</column-name><column-value><![CDATA[");
-		sb.append(getData());
-		sb.append("]]></column-value></column>");
-
-		sb.append("</model>");
-
-		return sb.toString();
 	}
 
 	private static final ClassLoader _classLoader = ServiceComponent.class.getClassLoader();

@@ -20,8 +20,6 @@ import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * <p>
@@ -38,61 +36,6 @@ public class PushNotificationsDeviceWrapper extends BaseModelWrapper<PushNotific
 	public PushNotificationsDeviceWrapper(
 		PushNotificationsDevice pushNotificationsDevice) {
 		super(pushNotificationsDevice);
-	}
-
-	@Override
-	public Map<String, Object> getModelAttributes() {
-		Map<String, Object> attributes = new HashMap<String, Object>();
-
-		attributes.put("pushNotificationsDeviceId",
-			getPushNotificationsDeviceId());
-		attributes.put("companyId", getCompanyId());
-		attributes.put("userId", getUserId());
-		attributes.put("createDate", getCreateDate());
-		attributes.put("platform", getPlatform());
-		attributes.put("token", getToken());
-
-		return attributes;
-	}
-
-	@Override
-	public void setModelAttributes(Map<String, Object> attributes) {
-		Long pushNotificationsDeviceId = (Long)attributes.get(
-				"pushNotificationsDeviceId");
-
-		if (pushNotificationsDeviceId != null) {
-			setPushNotificationsDeviceId(pushNotificationsDeviceId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
-		}
-
-		Long userId = (Long)attributes.get("userId");
-
-		if (userId != null) {
-			setUserId(userId);
-		}
-
-		Date createDate = (Date)attributes.get("createDate");
-
-		if (createDate != null) {
-			setCreateDate(createDate);
-		}
-
-		String platform = (String)attributes.get("platform");
-
-		if (platform != null) {
-			setPlatform(platform);
-		}
-
-		String token = (String)attributes.get("token");
-
-		if (token != null) {
-			setToken(token);
-		}
 	}
 
 	/**

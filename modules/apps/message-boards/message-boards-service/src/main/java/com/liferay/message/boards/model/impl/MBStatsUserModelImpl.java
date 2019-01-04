@@ -22,8 +22,6 @@ import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 import com.liferay.message.boards.model.MBStatsUser;
 import com.liferay.message.boards.model.MBStatsUserModel;
 
-import com.liferay.petra.string.StringBundler;
-
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.CacheModel;
@@ -39,9 +37,13 @@ import java.io.Serializable;
 
 import java.sql.Types;
 
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * The base model implementation for the MBStatsUser service. Represents a row in the &quot;MBStatsUser&quot; database table, with each column mapped to a property of this class.
@@ -140,59 +142,37 @@ public class MBStatsUserModelImpl extends BaseModelImpl<MBStatsUser>
 	}
 
 	@Override
-	public Map<String, Object> getModelAttributes() {
-		Map<String, Object> attributes = new HashMap<String, Object>();
-
-		attributes.put("statsUserId", getStatsUserId());
-		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
-		attributes.put("userId", getUserId());
-		attributes.put("messageCount", getMessageCount());
-		attributes.put("lastPostDate", getLastPostDate());
-
-		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
-		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
-
-		return attributes;
+	public Map<String, Function<MBStatsUser, Object>> getAttributeGetterFunctions() {
+		return _attributeGetterFunctions;
 	}
 
 	@Override
-	public void setModelAttributes(Map<String, Object> attributes) {
-		Long statsUserId = (Long)attributes.get("statsUserId");
+	public Map<String, BiConsumer<MBStatsUser, Object>> getAttributeSetterBiConsumers() {
+		return _attributeSetterBiConsumers;
+	}
 
-		if (statsUserId != null) {
-			setStatsUserId(statsUserId);
-		}
+	private static final Map<String, Function<MBStatsUser, Object>> _attributeGetterFunctions;
+	private static final Map<String, BiConsumer<MBStatsUser, Object>> _attributeSetterBiConsumers;
 
-		Long groupId = (Long)attributes.get("groupId");
+	static {
+		Map<String, Function<MBStatsUser, Object>> attributeGetterFunctions = new LinkedHashMap<String, Function<MBStatsUser, Object>>();
+		Map<String, BiConsumer<MBStatsUser, ?>> attributeSetterBiConsumers = new LinkedHashMap<String, BiConsumer<MBStatsUser, ?>>();
 
-		if (groupId != null) {
-			setGroupId(groupId);
-		}
+		attributeGetterFunctions.put("statsUserId", MBStatsUser::getStatsUserId);
+		attributeSetterBiConsumers.put("statsUserId", (BiConsumer<MBStatsUser, Long>)MBStatsUser::setStatsUserId);
+		attributeGetterFunctions.put("groupId", MBStatsUser::getGroupId);
+		attributeSetterBiConsumers.put("groupId", (BiConsumer<MBStatsUser, Long>)MBStatsUser::setGroupId);
+		attributeGetterFunctions.put("companyId", MBStatsUser::getCompanyId);
+		attributeSetterBiConsumers.put("companyId", (BiConsumer<MBStatsUser, Long>)MBStatsUser::setCompanyId);
+		attributeGetterFunctions.put("userId", MBStatsUser::getUserId);
+		attributeSetterBiConsumers.put("userId", (BiConsumer<MBStatsUser, Long>)MBStatsUser::setUserId);
+		attributeGetterFunctions.put("messageCount", MBStatsUser::getMessageCount);
+		attributeSetterBiConsumers.put("messageCount", (BiConsumer<MBStatsUser, Integer>)MBStatsUser::setMessageCount);
+		attributeGetterFunctions.put("lastPostDate", MBStatsUser::getLastPostDate);
+		attributeSetterBiConsumers.put("lastPostDate", (BiConsumer<MBStatsUser, Date>)MBStatsUser::setLastPostDate);
 
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
-		}
-
-		Long userId = (Long)attributes.get("userId");
-
-		if (userId != null) {
-			setUserId(userId);
-		}
-
-		Integer messageCount = (Integer)attributes.get("messageCount");
-
-		if (messageCount != null) {
-			setMessageCount(messageCount);
-		}
-
-		Date lastPostDate = (Date)attributes.get("lastPostDate");
-
-		if (lastPostDate != null) {
-			setLastPostDate(lastPostDate);
-		}
+		_attributeGetterFunctions = Collections.unmodifiableMap(attributeGetterFunctions);
+		_attributeSetterBiConsumers = Collections.unmodifiableMap((Map)attributeSetterBiConsumers);
 	}
 
 	@Override
@@ -469,65 +449,6 @@ public class MBStatsUserModelImpl extends BaseModelImpl<MBStatsUser>
 		}
 
 		return mbStatsUserCacheModel;
-	}
-
-	@Override
-	public String toString() {
-		StringBundler sb = new StringBundler(13);
-
-		sb.append("{statsUserId=");
-		sb.append(getStatsUserId());
-		sb.append(", groupId=");
-		sb.append(getGroupId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
-		sb.append(", userId=");
-		sb.append(getUserId());
-		sb.append(", messageCount=");
-		sb.append(getMessageCount());
-		sb.append(", lastPostDate=");
-		sb.append(getLastPostDate());
-		sb.append("}");
-
-		return sb.toString();
-	}
-
-	@Override
-	public String toXmlString() {
-		StringBundler sb = new StringBundler(22);
-
-		sb.append("<model><model-name>");
-		sb.append("com.liferay.message.boards.model.MBStatsUser");
-		sb.append("</model-name>");
-
-		sb.append(
-			"<column><column-name>statsUserId</column-name><column-value><![CDATA[");
-		sb.append(getStatsUserId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>groupId</column-name><column-value><![CDATA[");
-		sb.append(getGroupId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userId</column-name><column-value><![CDATA[");
-		sb.append(getUserId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>messageCount</column-name><column-value><![CDATA[");
-		sb.append(getMessageCount());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>lastPostDate</column-name><column-value><![CDATA[");
-		sb.append(getLastPostDate());
-		sb.append("]]></column-value></column>");
-
-		sb.append("</model>");
-
-		return sb.toString();
 	}
 
 	private static final ClassLoader _classLoader = MBStatsUser.class.getClassLoader();

@@ -19,8 +19,6 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 
-import com.liferay.petra.string.StringBundler;
-
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.ModelWrapper;
@@ -35,9 +33,13 @@ import java.io.Serializable;
 
 import java.sql.Types;
 
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * The base model implementation for the UserTrackerPath service. Represents a row in the &quot;UserTrackerPath&quot; database table, with each column mapped to a property of this class.
@@ -135,59 +137,37 @@ public class UserTrackerPathModelImpl extends BaseModelImpl<UserTrackerPath>
 	}
 
 	@Override
-	public Map<String, Object> getModelAttributes() {
-		Map<String, Object> attributes = new HashMap<String, Object>();
-
-		attributes.put("mvccVersion", getMvccVersion());
-		attributes.put("userTrackerPathId", getUserTrackerPathId());
-		attributes.put("companyId", getCompanyId());
-		attributes.put("userTrackerId", getUserTrackerId());
-		attributes.put("path", getPath());
-		attributes.put("pathDate", getPathDate());
-
-		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
-		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
-
-		return attributes;
+	public Map<String, Function<UserTrackerPath, Object>> getAttributeGetterFunctions() {
+		return _attributeGetterFunctions;
 	}
 
 	@Override
-	public void setModelAttributes(Map<String, Object> attributes) {
-		Long mvccVersion = (Long)attributes.get("mvccVersion");
+	public Map<String, BiConsumer<UserTrackerPath, Object>> getAttributeSetterBiConsumers() {
+		return _attributeSetterBiConsumers;
+	}
 
-		if (mvccVersion != null) {
-			setMvccVersion(mvccVersion);
-		}
+	private static final Map<String, Function<UserTrackerPath, Object>> _attributeGetterFunctions;
+	private static final Map<String, BiConsumer<UserTrackerPath, Object>> _attributeSetterBiConsumers;
 
-		Long userTrackerPathId = (Long)attributes.get("userTrackerPathId");
+	static {
+		Map<String, Function<UserTrackerPath, Object>> attributeGetterFunctions = new LinkedHashMap<String, Function<UserTrackerPath, Object>>();
+		Map<String, BiConsumer<UserTrackerPath, ?>> attributeSetterBiConsumers = new LinkedHashMap<String, BiConsumer<UserTrackerPath, ?>>();
 
-		if (userTrackerPathId != null) {
-			setUserTrackerPathId(userTrackerPathId);
-		}
+		attributeGetterFunctions.put("mvccVersion", UserTrackerPath::getMvccVersion);
+		attributeSetterBiConsumers.put("mvccVersion", (BiConsumer<UserTrackerPath, Long>)UserTrackerPath::setMvccVersion);
+		attributeGetterFunctions.put("userTrackerPathId", UserTrackerPath::getUserTrackerPathId);
+		attributeSetterBiConsumers.put("userTrackerPathId", (BiConsumer<UserTrackerPath, Long>)UserTrackerPath::setUserTrackerPathId);
+		attributeGetterFunctions.put("companyId", UserTrackerPath::getCompanyId);
+		attributeSetterBiConsumers.put("companyId", (BiConsumer<UserTrackerPath, Long>)UserTrackerPath::setCompanyId);
+		attributeGetterFunctions.put("userTrackerId", UserTrackerPath::getUserTrackerId);
+		attributeSetterBiConsumers.put("userTrackerId", (BiConsumer<UserTrackerPath, Long>)UserTrackerPath::setUserTrackerId);
+		attributeGetterFunctions.put("path", UserTrackerPath::getPath);
+		attributeSetterBiConsumers.put("path", (BiConsumer<UserTrackerPath, String>)UserTrackerPath::setPath);
+		attributeGetterFunctions.put("pathDate", UserTrackerPath::getPathDate);
+		attributeSetterBiConsumers.put("pathDate", (BiConsumer<UserTrackerPath, Date>)UserTrackerPath::setPathDate);
 
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
-		}
-
-		Long userTrackerId = (Long)attributes.get("userTrackerId");
-
-		if (userTrackerId != null) {
-			setUserTrackerId(userTrackerId);
-		}
-
-		String path = (String)attributes.get("path");
-
-		if (path != null) {
-			setPath(path);
-		}
-
-		Date pathDate = (Date)attributes.get("pathDate");
-
-		if (pathDate != null) {
-			setPathDate(pathDate);
-		}
+		_attributeGetterFunctions = Collections.unmodifiableMap(attributeGetterFunctions);
+		_attributeSetterBiConsumers = Collections.unmodifiableMap((Map)attributeSetterBiConsumers);
 	}
 
 	@Override
@@ -403,65 +383,6 @@ public class UserTrackerPathModelImpl extends BaseModelImpl<UserTrackerPath>
 		}
 
 		return userTrackerPathCacheModel;
-	}
-
-	@Override
-	public String toString() {
-		StringBundler sb = new StringBundler(13);
-
-		sb.append("{mvccVersion=");
-		sb.append(getMvccVersion());
-		sb.append(", userTrackerPathId=");
-		sb.append(getUserTrackerPathId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
-		sb.append(", userTrackerId=");
-		sb.append(getUserTrackerId());
-		sb.append(", path=");
-		sb.append(getPath());
-		sb.append(", pathDate=");
-		sb.append(getPathDate());
-		sb.append("}");
-
-		return sb.toString();
-	}
-
-	@Override
-	public String toXmlString() {
-		StringBundler sb = new StringBundler(22);
-
-		sb.append("<model><model-name>");
-		sb.append("com.liferay.portal.kernel.model.UserTrackerPath");
-		sb.append("</model-name>");
-
-		sb.append(
-			"<column><column-name>mvccVersion</column-name><column-value><![CDATA[");
-		sb.append(getMvccVersion());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userTrackerPathId</column-name><column-value><![CDATA[");
-		sb.append(getUserTrackerPathId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userTrackerId</column-name><column-value><![CDATA[");
-		sb.append(getUserTrackerId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>path</column-name><column-value><![CDATA[");
-		sb.append(getPath());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>pathDate</column-name><column-value><![CDATA[");
-		sb.append(getPathDate());
-		sb.append("]]></column-value></column>");
-
-		sb.append("</model>");
-
-		return sb.toString();
 	}
 
 	private static final ClassLoader _classLoader = UserTrackerPath.class.getClassLoader();

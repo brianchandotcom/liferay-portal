@@ -19,8 +19,6 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 
-import com.liferay.petra.string.StringBundler;
-
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.CacheModel;
@@ -38,9 +36,13 @@ import java.io.Serializable;
 
 import java.sql.Types;
 
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * The base model implementation for the UserTracker service. Represents a row in the &quot;UserTracker&quot; database table, with each column mapped to a property of this class.
@@ -146,80 +148,43 @@ public class UserTrackerModelImpl extends BaseModelImpl<UserTracker>
 	}
 
 	@Override
-	public Map<String, Object> getModelAttributes() {
-		Map<String, Object> attributes = new HashMap<String, Object>();
-
-		attributes.put("mvccVersion", getMvccVersion());
-		attributes.put("userTrackerId", getUserTrackerId());
-		attributes.put("companyId", getCompanyId());
-		attributes.put("userId", getUserId());
-		attributes.put("modifiedDate", getModifiedDate());
-		attributes.put("sessionId", getSessionId());
-		attributes.put("remoteAddr", getRemoteAddr());
-		attributes.put("remoteHost", getRemoteHost());
-		attributes.put("userAgent", getUserAgent());
-
-		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
-		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
-
-		return attributes;
+	public Map<String, Function<UserTracker, Object>> getAttributeGetterFunctions() {
+		return _attributeGetterFunctions;
 	}
 
 	@Override
-	public void setModelAttributes(Map<String, Object> attributes) {
-		Long mvccVersion = (Long)attributes.get("mvccVersion");
+	public Map<String, BiConsumer<UserTracker, Object>> getAttributeSetterBiConsumers() {
+		return _attributeSetterBiConsumers;
+	}
 
-		if (mvccVersion != null) {
-			setMvccVersion(mvccVersion);
-		}
+	private static final Map<String, Function<UserTracker, Object>> _attributeGetterFunctions;
+	private static final Map<String, BiConsumer<UserTracker, Object>> _attributeSetterBiConsumers;
 
-		Long userTrackerId = (Long)attributes.get("userTrackerId");
+	static {
+		Map<String, Function<UserTracker, Object>> attributeGetterFunctions = new LinkedHashMap<String, Function<UserTracker, Object>>();
+		Map<String, BiConsumer<UserTracker, ?>> attributeSetterBiConsumers = new LinkedHashMap<String, BiConsumer<UserTracker, ?>>();
 
-		if (userTrackerId != null) {
-			setUserTrackerId(userTrackerId);
-		}
+		attributeGetterFunctions.put("mvccVersion", UserTracker::getMvccVersion);
+		attributeSetterBiConsumers.put("mvccVersion", (BiConsumer<UserTracker, Long>)UserTracker::setMvccVersion);
+		attributeGetterFunctions.put("userTrackerId", UserTracker::getUserTrackerId);
+		attributeSetterBiConsumers.put("userTrackerId", (BiConsumer<UserTracker, Long>)UserTracker::setUserTrackerId);
+		attributeGetterFunctions.put("companyId", UserTracker::getCompanyId);
+		attributeSetterBiConsumers.put("companyId", (BiConsumer<UserTracker, Long>)UserTracker::setCompanyId);
+		attributeGetterFunctions.put("userId", UserTracker::getUserId);
+		attributeSetterBiConsumers.put("userId", (BiConsumer<UserTracker, Long>)UserTracker::setUserId);
+		attributeGetterFunctions.put("modifiedDate", UserTracker::getModifiedDate);
+		attributeSetterBiConsumers.put("modifiedDate", (BiConsumer<UserTracker, Date>)UserTracker::setModifiedDate);
+		attributeGetterFunctions.put("sessionId", UserTracker::getSessionId);
+		attributeSetterBiConsumers.put("sessionId", (BiConsumer<UserTracker, String>)UserTracker::setSessionId);
+		attributeGetterFunctions.put("remoteAddr", UserTracker::getRemoteAddr);
+		attributeSetterBiConsumers.put("remoteAddr", (BiConsumer<UserTracker, String>)UserTracker::setRemoteAddr);
+		attributeGetterFunctions.put("remoteHost", UserTracker::getRemoteHost);
+		attributeSetterBiConsumers.put("remoteHost", (BiConsumer<UserTracker, String>)UserTracker::setRemoteHost);
+		attributeGetterFunctions.put("userAgent", UserTracker::getUserAgent);
+		attributeSetterBiConsumers.put("userAgent", (BiConsumer<UserTracker, String>)UserTracker::setUserAgent);
 
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
-		}
-
-		Long userId = (Long)attributes.get("userId");
-
-		if (userId != null) {
-			setUserId(userId);
-		}
-
-		Date modifiedDate = (Date)attributes.get("modifiedDate");
-
-		if (modifiedDate != null) {
-			setModifiedDate(modifiedDate);
-		}
-
-		String sessionId = (String)attributes.get("sessionId");
-
-		if (sessionId != null) {
-			setSessionId(sessionId);
-		}
-
-		String remoteAddr = (String)attributes.get("remoteAddr");
-
-		if (remoteAddr != null) {
-			setRemoteAddr(remoteAddr);
-		}
-
-		String remoteHost = (String)attributes.get("remoteHost");
-
-		if (remoteHost != null) {
-			setRemoteHost(remoteHost);
-		}
-
-		String userAgent = (String)attributes.get("userAgent");
-
-		if (userAgent != null) {
-			setUserAgent(userAgent);
-		}
+		_attributeGetterFunctions = Collections.unmodifiableMap(attributeGetterFunctions);
+		_attributeSetterBiConsumers = Collections.unmodifiableMap((Map)attributeSetterBiConsumers);
 	}
 
 	@Override
@@ -551,83 +516,6 @@ public class UserTrackerModelImpl extends BaseModelImpl<UserTracker>
 		}
 
 		return userTrackerCacheModel;
-	}
-
-	@Override
-	public String toString() {
-		StringBundler sb = new StringBundler(19);
-
-		sb.append("{mvccVersion=");
-		sb.append(getMvccVersion());
-		sb.append(", userTrackerId=");
-		sb.append(getUserTrackerId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
-		sb.append(", userId=");
-		sb.append(getUserId());
-		sb.append(", modifiedDate=");
-		sb.append(getModifiedDate());
-		sb.append(", sessionId=");
-		sb.append(getSessionId());
-		sb.append(", remoteAddr=");
-		sb.append(getRemoteAddr());
-		sb.append(", remoteHost=");
-		sb.append(getRemoteHost());
-		sb.append(", userAgent=");
-		sb.append(getUserAgent());
-		sb.append("}");
-
-		return sb.toString();
-	}
-
-	@Override
-	public String toXmlString() {
-		StringBundler sb = new StringBundler(31);
-
-		sb.append("<model><model-name>");
-		sb.append("com.liferay.portal.kernel.model.UserTracker");
-		sb.append("</model-name>");
-
-		sb.append(
-			"<column><column-name>mvccVersion</column-name><column-value><![CDATA[");
-		sb.append(getMvccVersion());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userTrackerId</column-name><column-value><![CDATA[");
-		sb.append(getUserTrackerId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userId</column-name><column-value><![CDATA[");
-		sb.append(getUserId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>modifiedDate</column-name><column-value><![CDATA[");
-		sb.append(getModifiedDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>sessionId</column-name><column-value><![CDATA[");
-		sb.append(getSessionId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>remoteAddr</column-name><column-value><![CDATA[");
-		sb.append(getRemoteAddr());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>remoteHost</column-name><column-value><![CDATA[");
-		sb.append(getRemoteHost());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userAgent</column-name><column-value><![CDATA[");
-		sb.append(getUserAgent());
-		sb.append("]]></column-value></column>");
-
-		sb.append("</model>");
-
-		return sb.toString();
 	}
 
 	private static final ClassLoader _classLoader = UserTracker.class.getClassLoader();

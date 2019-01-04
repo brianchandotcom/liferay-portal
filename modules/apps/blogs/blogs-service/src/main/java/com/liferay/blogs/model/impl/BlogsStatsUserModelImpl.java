@@ -22,8 +22,6 @@ import com.liferay.blogs.model.BlogsStatsUserModel;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 
-import com.liferay.petra.string.StringBundler;
-
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.CacheModel;
@@ -39,9 +37,13 @@ import java.io.Serializable;
 
 import java.sql.Types;
 
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * The base model implementation for the BlogsStatsUser service. Represents a row in the &quot;BlogsStatsUser&quot; database table, with each column mapped to a property of this class.
@@ -148,82 +150,43 @@ public class BlogsStatsUserModelImpl extends BaseModelImpl<BlogsStatsUser>
 	}
 
 	@Override
-	public Map<String, Object> getModelAttributes() {
-		Map<String, Object> attributes = new HashMap<String, Object>();
-
-		attributes.put("statsUserId", getStatsUserId());
-		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
-		attributes.put("userId", getUserId());
-		attributes.put("entryCount", getEntryCount());
-		attributes.put("lastPostDate", getLastPostDate());
-		attributes.put("ratingsTotalEntries", getRatingsTotalEntries());
-		attributes.put("ratingsTotalScore", getRatingsTotalScore());
-		attributes.put("ratingsAverageScore", getRatingsAverageScore());
-
-		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
-		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
-
-		return attributes;
+	public Map<String, Function<BlogsStatsUser, Object>> getAttributeGetterFunctions() {
+		return _attributeGetterFunctions;
 	}
 
 	@Override
-	public void setModelAttributes(Map<String, Object> attributes) {
-		Long statsUserId = (Long)attributes.get("statsUserId");
+	public Map<String, BiConsumer<BlogsStatsUser, Object>> getAttributeSetterBiConsumers() {
+		return _attributeSetterBiConsumers;
+	}
 
-		if (statsUserId != null) {
-			setStatsUserId(statsUserId);
-		}
+	private static final Map<String, Function<BlogsStatsUser, Object>> _attributeGetterFunctions;
+	private static final Map<String, BiConsumer<BlogsStatsUser, Object>> _attributeSetterBiConsumers;
 
-		Long groupId = (Long)attributes.get("groupId");
+	static {
+		Map<String, Function<BlogsStatsUser, Object>> attributeGetterFunctions = new LinkedHashMap<String, Function<BlogsStatsUser, Object>>();
+		Map<String, BiConsumer<BlogsStatsUser, ?>> attributeSetterBiConsumers = new LinkedHashMap<String, BiConsumer<BlogsStatsUser, ?>>();
 
-		if (groupId != null) {
-			setGroupId(groupId);
-		}
+		attributeGetterFunctions.put("statsUserId", BlogsStatsUser::getStatsUserId);
+		attributeSetterBiConsumers.put("statsUserId", (BiConsumer<BlogsStatsUser, Long>)BlogsStatsUser::setStatsUserId);
+		attributeGetterFunctions.put("groupId", BlogsStatsUser::getGroupId);
+		attributeSetterBiConsumers.put("groupId", (BiConsumer<BlogsStatsUser, Long>)BlogsStatsUser::setGroupId);
+		attributeGetterFunctions.put("companyId", BlogsStatsUser::getCompanyId);
+		attributeSetterBiConsumers.put("companyId", (BiConsumer<BlogsStatsUser, Long>)BlogsStatsUser::setCompanyId);
+		attributeGetterFunctions.put("userId", BlogsStatsUser::getUserId);
+		attributeSetterBiConsumers.put("userId", (BiConsumer<BlogsStatsUser, Long>)BlogsStatsUser::setUserId);
+		attributeGetterFunctions.put("entryCount", BlogsStatsUser::getEntryCount);
+		attributeSetterBiConsumers.put("entryCount", (BiConsumer<BlogsStatsUser, Integer>)BlogsStatsUser::setEntryCount);
+		attributeGetterFunctions.put("lastPostDate", BlogsStatsUser::getLastPostDate);
+		attributeSetterBiConsumers.put("lastPostDate", (BiConsumer<BlogsStatsUser, Date>)BlogsStatsUser::setLastPostDate);
+		attributeGetterFunctions.put("ratingsTotalEntries", BlogsStatsUser::getRatingsTotalEntries);
+		attributeSetterBiConsumers.put("ratingsTotalEntries", (BiConsumer<BlogsStatsUser, Integer>)BlogsStatsUser::setRatingsTotalEntries);
+		attributeGetterFunctions.put("ratingsTotalScore", BlogsStatsUser::getRatingsTotalScore);
+		attributeSetterBiConsumers.put("ratingsTotalScore", (BiConsumer<BlogsStatsUser, Double>)BlogsStatsUser::setRatingsTotalScore);
+		attributeGetterFunctions.put("ratingsAverageScore", BlogsStatsUser::getRatingsAverageScore);
+		attributeSetterBiConsumers.put("ratingsAverageScore", (BiConsumer<BlogsStatsUser, Double>)BlogsStatsUser::setRatingsAverageScore);
 
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
-		}
-
-		Long userId = (Long)attributes.get("userId");
-
-		if (userId != null) {
-			setUserId(userId);
-		}
-
-		Integer entryCount = (Integer)attributes.get("entryCount");
-
-		if (entryCount != null) {
-			setEntryCount(entryCount);
-		}
-
-		Date lastPostDate = (Date)attributes.get("lastPostDate");
-
-		if (lastPostDate != null) {
-			setLastPostDate(lastPostDate);
-		}
-
-		Integer ratingsTotalEntries = (Integer)attributes.get(
-				"ratingsTotalEntries");
-
-		if (ratingsTotalEntries != null) {
-			setRatingsTotalEntries(ratingsTotalEntries);
-		}
-
-		Double ratingsTotalScore = (Double)attributes.get("ratingsTotalScore");
-
-		if (ratingsTotalScore != null) {
-			setRatingsTotalScore(ratingsTotalScore);
-		}
-
-		Double ratingsAverageScore = (Double)attributes.get(
-				"ratingsAverageScore");
-
-		if (ratingsAverageScore != null) {
-			setRatingsAverageScore(ratingsAverageScore);
-		}
+		_attributeGetterFunctions = Collections.unmodifiableMap(attributeGetterFunctions);
+		_attributeSetterBiConsumers = Collections.unmodifiableMap((Map)attributeSetterBiConsumers);
 	}
 
 	@Override
@@ -567,83 +530,6 @@ public class BlogsStatsUserModelImpl extends BaseModelImpl<BlogsStatsUser>
 		blogsStatsUserCacheModel.ratingsAverageScore = getRatingsAverageScore();
 
 		return blogsStatsUserCacheModel;
-	}
-
-	@Override
-	public String toString() {
-		StringBundler sb = new StringBundler(19);
-
-		sb.append("{statsUserId=");
-		sb.append(getStatsUserId());
-		sb.append(", groupId=");
-		sb.append(getGroupId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
-		sb.append(", userId=");
-		sb.append(getUserId());
-		sb.append(", entryCount=");
-		sb.append(getEntryCount());
-		sb.append(", lastPostDate=");
-		sb.append(getLastPostDate());
-		sb.append(", ratingsTotalEntries=");
-		sb.append(getRatingsTotalEntries());
-		sb.append(", ratingsTotalScore=");
-		sb.append(getRatingsTotalScore());
-		sb.append(", ratingsAverageScore=");
-		sb.append(getRatingsAverageScore());
-		sb.append("}");
-
-		return sb.toString();
-	}
-
-	@Override
-	public String toXmlString() {
-		StringBundler sb = new StringBundler(31);
-
-		sb.append("<model><model-name>");
-		sb.append("com.liferay.blogs.model.BlogsStatsUser");
-		sb.append("</model-name>");
-
-		sb.append(
-			"<column><column-name>statsUserId</column-name><column-value><![CDATA[");
-		sb.append(getStatsUserId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>groupId</column-name><column-value><![CDATA[");
-		sb.append(getGroupId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userId</column-name><column-value><![CDATA[");
-		sb.append(getUserId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>entryCount</column-name><column-value><![CDATA[");
-		sb.append(getEntryCount());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>lastPostDate</column-name><column-value><![CDATA[");
-		sb.append(getLastPostDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>ratingsTotalEntries</column-name><column-value><![CDATA[");
-		sb.append(getRatingsTotalEntries());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>ratingsTotalScore</column-name><column-value><![CDATA[");
-		sb.append(getRatingsTotalScore());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>ratingsAverageScore</column-name><column-value><![CDATA[");
-		sb.append(getRatingsAverageScore());
-		sb.append("]]></column-value></column>");
-
-		sb.append("</model>");
-
-		return sb.toString();
 	}
 
 	private static final ClassLoader _classLoader = BlogsStatsUser.class.getClassLoader();

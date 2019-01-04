@@ -19,8 +19,6 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 
-import com.liferay.petra.string.StringBundler;
-
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSON;
@@ -43,10 +41,14 @@ import java.io.Serializable;
 import java.sql.Types;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * The base model implementation for the TasksEntry service. Represents a row in the &quot;TMS_TasksEntry&quot; database table, with each column mapped to a property of this class.
@@ -219,115 +221,53 @@ public class TasksEntryModelImpl extends BaseModelImpl<TasksEntry>
 	}
 
 	@Override
-	public Map<String, Object> getModelAttributes() {
-		Map<String, Object> attributes = new HashMap<String, Object>();
-
-		attributes.put("tasksEntryId", getTasksEntryId());
-		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
-		attributes.put("userId", getUserId());
-		attributes.put("userName", getUserName());
-		attributes.put("createDate", getCreateDate());
-		attributes.put("modifiedDate", getModifiedDate());
-		attributes.put("title", getTitle());
-		attributes.put("priority", getPriority());
-		attributes.put("assigneeUserId", getAssigneeUserId());
-		attributes.put("resolverUserId", getResolverUserId());
-		attributes.put("dueDate", getDueDate());
-		attributes.put("finishDate", getFinishDate());
-		attributes.put("status", getStatus());
-
-		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
-		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
-
-		return attributes;
+	public Map<String, Function<TasksEntry, Object>> getAttributeGetterFunctions() {
+		return _attributeGetterFunctions;
 	}
 
 	@Override
-	public void setModelAttributes(Map<String, Object> attributes) {
-		Long tasksEntryId = (Long)attributes.get("tasksEntryId");
+	public Map<String, BiConsumer<TasksEntry, Object>> getAttributeSetterBiConsumers() {
+		return _attributeSetterBiConsumers;
+	}
 
-		if (tasksEntryId != null) {
-			setTasksEntryId(tasksEntryId);
-		}
+	private static final Map<String, Function<TasksEntry, Object>> _attributeGetterFunctions;
+	private static final Map<String, BiConsumer<TasksEntry, Object>> _attributeSetterBiConsumers;
 
-		Long groupId = (Long)attributes.get("groupId");
+	static {
+		Map<String, Function<TasksEntry, Object>> attributeGetterFunctions = new LinkedHashMap<String, Function<TasksEntry, Object>>();
+		Map<String, BiConsumer<TasksEntry, ?>> attributeSetterBiConsumers = new LinkedHashMap<String, BiConsumer<TasksEntry, ?>>();
 
-		if (groupId != null) {
-			setGroupId(groupId);
-		}
+		attributeGetterFunctions.put("tasksEntryId", TasksEntry::getTasksEntryId);
+		attributeSetterBiConsumers.put("tasksEntryId", (BiConsumer<TasksEntry, Long>)TasksEntry::setTasksEntryId);
+		attributeGetterFunctions.put("groupId", TasksEntry::getGroupId);
+		attributeSetterBiConsumers.put("groupId", (BiConsumer<TasksEntry, Long>)TasksEntry::setGroupId);
+		attributeGetterFunctions.put("companyId", TasksEntry::getCompanyId);
+		attributeSetterBiConsumers.put("companyId", (BiConsumer<TasksEntry, Long>)TasksEntry::setCompanyId);
+		attributeGetterFunctions.put("userId", TasksEntry::getUserId);
+		attributeSetterBiConsumers.put("userId", (BiConsumer<TasksEntry, Long>)TasksEntry::setUserId);
+		attributeGetterFunctions.put("userName", TasksEntry::getUserName);
+		attributeSetterBiConsumers.put("userName", (BiConsumer<TasksEntry, String>)TasksEntry::setUserName);
+		attributeGetterFunctions.put("createDate", TasksEntry::getCreateDate);
+		attributeSetterBiConsumers.put("createDate", (BiConsumer<TasksEntry, Date>)TasksEntry::setCreateDate);
+		attributeGetterFunctions.put("modifiedDate", TasksEntry::getModifiedDate);
+		attributeSetterBiConsumers.put("modifiedDate", (BiConsumer<TasksEntry, Date>)TasksEntry::setModifiedDate);
+		attributeGetterFunctions.put("title", TasksEntry::getTitle);
+		attributeSetterBiConsumers.put("title", (BiConsumer<TasksEntry, String>)TasksEntry::setTitle);
+		attributeGetterFunctions.put("priority", TasksEntry::getPriority);
+		attributeSetterBiConsumers.put("priority", (BiConsumer<TasksEntry, Integer>)TasksEntry::setPriority);
+		attributeGetterFunctions.put("assigneeUserId", TasksEntry::getAssigneeUserId);
+		attributeSetterBiConsumers.put("assigneeUserId", (BiConsumer<TasksEntry, Long>)TasksEntry::setAssigneeUserId);
+		attributeGetterFunctions.put("resolverUserId", TasksEntry::getResolverUserId);
+		attributeSetterBiConsumers.put("resolverUserId", (BiConsumer<TasksEntry, Long>)TasksEntry::setResolverUserId);
+		attributeGetterFunctions.put("dueDate", TasksEntry::getDueDate);
+		attributeSetterBiConsumers.put("dueDate", (BiConsumer<TasksEntry, Date>)TasksEntry::setDueDate);
+		attributeGetterFunctions.put("finishDate", TasksEntry::getFinishDate);
+		attributeSetterBiConsumers.put("finishDate", (BiConsumer<TasksEntry, Date>)TasksEntry::setFinishDate);
+		attributeGetterFunctions.put("status", TasksEntry::getStatus);
+		attributeSetterBiConsumers.put("status", (BiConsumer<TasksEntry, Integer>)TasksEntry::setStatus);
 
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
-		}
-
-		Long userId = (Long)attributes.get("userId");
-
-		if (userId != null) {
-			setUserId(userId);
-		}
-
-		String userName = (String)attributes.get("userName");
-
-		if (userName != null) {
-			setUserName(userName);
-		}
-
-		Date createDate = (Date)attributes.get("createDate");
-
-		if (createDate != null) {
-			setCreateDate(createDate);
-		}
-
-		Date modifiedDate = (Date)attributes.get("modifiedDate");
-
-		if (modifiedDate != null) {
-			setModifiedDate(modifiedDate);
-		}
-
-		String title = (String)attributes.get("title");
-
-		if (title != null) {
-			setTitle(title);
-		}
-
-		Integer priority = (Integer)attributes.get("priority");
-
-		if (priority != null) {
-			setPriority(priority);
-		}
-
-		Long assigneeUserId = (Long)attributes.get("assigneeUserId");
-
-		if (assigneeUserId != null) {
-			setAssigneeUserId(assigneeUserId);
-		}
-
-		Long resolverUserId = (Long)attributes.get("resolverUserId");
-
-		if (resolverUserId != null) {
-			setResolverUserId(resolverUserId);
-		}
-
-		Date dueDate = (Date)attributes.get("dueDate");
-
-		if (dueDate != null) {
-			setDueDate(dueDate);
-		}
-
-		Date finishDate = (Date)attributes.get("finishDate");
-
-		if (finishDate != null) {
-			setFinishDate(finishDate);
-		}
-
-		Integer status = (Integer)attributes.get("status");
-
-		if (status != null) {
-			setStatus(status);
-		}
+		_attributeGetterFunctions = Collections.unmodifiableMap(attributeGetterFunctions);
+		_attributeSetterBiConsumers = Collections.unmodifiableMap((Map)attributeSetterBiConsumers);
 	}
 
 	@JSON
@@ -837,113 +777,6 @@ public class TasksEntryModelImpl extends BaseModelImpl<TasksEntry>
 		tasksEntryCacheModel.status = getStatus();
 
 		return tasksEntryCacheModel;
-	}
-
-	@Override
-	public String toString() {
-		StringBundler sb = new StringBundler(29);
-
-		sb.append("{tasksEntryId=");
-		sb.append(getTasksEntryId());
-		sb.append(", groupId=");
-		sb.append(getGroupId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
-		sb.append(", userId=");
-		sb.append(getUserId());
-		sb.append(", userName=");
-		sb.append(getUserName());
-		sb.append(", createDate=");
-		sb.append(getCreateDate());
-		sb.append(", modifiedDate=");
-		sb.append(getModifiedDate());
-		sb.append(", title=");
-		sb.append(getTitle());
-		sb.append(", priority=");
-		sb.append(getPriority());
-		sb.append(", assigneeUserId=");
-		sb.append(getAssigneeUserId());
-		sb.append(", resolverUserId=");
-		sb.append(getResolverUserId());
-		sb.append(", dueDate=");
-		sb.append(getDueDate());
-		sb.append(", finishDate=");
-		sb.append(getFinishDate());
-		sb.append(", status=");
-		sb.append(getStatus());
-		sb.append("}");
-
-		return sb.toString();
-	}
-
-	@Override
-	public String toXmlString() {
-		StringBundler sb = new StringBundler(46);
-
-		sb.append("<model><model-name>");
-		sb.append("com.liferay.tasks.model.TasksEntry");
-		sb.append("</model-name>");
-
-		sb.append(
-			"<column><column-name>tasksEntryId</column-name><column-value><![CDATA[");
-		sb.append(getTasksEntryId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>groupId</column-name><column-value><![CDATA[");
-		sb.append(getGroupId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userId</column-name><column-value><![CDATA[");
-		sb.append(getUserId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userName</column-name><column-value><![CDATA[");
-		sb.append(getUserName());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>createDate</column-name><column-value><![CDATA[");
-		sb.append(getCreateDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>modifiedDate</column-name><column-value><![CDATA[");
-		sb.append(getModifiedDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>title</column-name><column-value><![CDATA[");
-		sb.append(getTitle());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>priority</column-name><column-value><![CDATA[");
-		sb.append(getPriority());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>assigneeUserId</column-name><column-value><![CDATA[");
-		sb.append(getAssigneeUserId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>resolverUserId</column-name><column-value><![CDATA[");
-		sb.append(getResolverUserId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>dueDate</column-name><column-value><![CDATA[");
-		sb.append(getDueDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>finishDate</column-name><column-value><![CDATA[");
-		sb.append(getFinishDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>status</column-name><column-value><![CDATA[");
-		sb.append(getStatus());
-		sb.append("]]></column-value></column>");
-
-		sb.append("</model>");
-
-		return sb.toString();
 	}
 
 	private static final ClassLoader _classLoader = TasksEntry.class.getClassLoader();

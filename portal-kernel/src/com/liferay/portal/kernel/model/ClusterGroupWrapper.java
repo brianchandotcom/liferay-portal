@@ -18,9 +18,6 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
-import java.util.HashMap;
-import java.util.Map;
-
 /**
  * <p>
  * This class is a wrapper for {@link ClusterGroup}.
@@ -35,52 +32,6 @@ public class ClusterGroupWrapper extends BaseModelWrapper<ClusterGroup>
 	implements ClusterGroup, ModelWrapper<ClusterGroup> {
 	public ClusterGroupWrapper(ClusterGroup clusterGroup) {
 		super(clusterGroup);
-	}
-
-	@Override
-	public Map<String, Object> getModelAttributes() {
-		Map<String, Object> attributes = new HashMap<String, Object>();
-
-		attributes.put("mvccVersion", getMvccVersion());
-		attributes.put("clusterGroupId", getClusterGroupId());
-		attributes.put("name", getName());
-		attributes.put("clusterNodeIds", getClusterNodeIds());
-		attributes.put("wholeCluster", isWholeCluster());
-
-		return attributes;
-	}
-
-	@Override
-	public void setModelAttributes(Map<String, Object> attributes) {
-		Long mvccVersion = (Long)attributes.get("mvccVersion");
-
-		if (mvccVersion != null) {
-			setMvccVersion(mvccVersion);
-		}
-
-		Long clusterGroupId = (Long)attributes.get("clusterGroupId");
-
-		if (clusterGroupId != null) {
-			setClusterGroupId(clusterGroupId);
-		}
-
-		String name = (String)attributes.get("name");
-
-		if (name != null) {
-			setName(name);
-		}
-
-		String clusterNodeIds = (String)attributes.get("clusterNodeIds");
-
-		if (clusterNodeIds != null) {
-			setClusterNodeIds(clusterNodeIds);
-		}
-
-		Boolean wholeCluster = (Boolean)attributes.get("wholeCluster");
-
-		if (wholeCluster != null) {
-			setWholeCluster(wholeCluster);
-		}
 	}
 
 	/**

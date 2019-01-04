@@ -19,9 +19,6 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
-import java.util.HashMap;
-import java.util.Map;
-
 /**
  * <p>
  * This class is a wrapper for {@link SocialActivitySetting}.
@@ -37,66 +34,6 @@ public class SocialActivitySettingWrapper extends BaseModelWrapper<SocialActivit
 	public SocialActivitySettingWrapper(
 		SocialActivitySetting socialActivitySetting) {
 		super(socialActivitySetting);
-	}
-
-	@Override
-	public Map<String, Object> getModelAttributes() {
-		Map<String, Object> attributes = new HashMap<String, Object>();
-
-		attributes.put("activitySettingId", getActivitySettingId());
-		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
-		attributes.put("classNameId", getClassNameId());
-		attributes.put("activityType", getActivityType());
-		attributes.put("name", getName());
-		attributes.put("value", getValue());
-
-		return attributes;
-	}
-
-	@Override
-	public void setModelAttributes(Map<String, Object> attributes) {
-		Long activitySettingId = (Long)attributes.get("activitySettingId");
-
-		if (activitySettingId != null) {
-			setActivitySettingId(activitySettingId);
-		}
-
-		Long groupId = (Long)attributes.get("groupId");
-
-		if (groupId != null) {
-			setGroupId(groupId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
-		}
-
-		Long classNameId = (Long)attributes.get("classNameId");
-
-		if (classNameId != null) {
-			setClassNameId(classNameId);
-		}
-
-		Integer activityType = (Integer)attributes.get("activityType");
-
-		if (activityType != null) {
-			setActivityType(activityType);
-		}
-
-		String name = (String)attributes.get("name");
-
-		if (name != null) {
-			setName(name);
-		}
-
-		String value = (String)attributes.get("value");
-
-		if (value != null) {
-			setValue(value);
-		}
 	}
 
 	/**

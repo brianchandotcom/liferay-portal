@@ -19,8 +19,6 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 
-import com.liferay.petra.string.StringBundler;
-
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.model.CacheModel;
@@ -38,9 +36,13 @@ import java.io.Serializable;
 import java.sql.Types;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * The base model implementation for the ListType service. Represents a row in the &quot;ListType&quot; database table, with each column mapped to a property of this class.
@@ -177,45 +179,33 @@ public class ListTypeModelImpl extends BaseModelImpl<ListType>
 	}
 
 	@Override
-	public Map<String, Object> getModelAttributes() {
-		Map<String, Object> attributes = new HashMap<String, Object>();
-
-		attributes.put("mvccVersion", getMvccVersion());
-		attributes.put("listTypeId", getListTypeId());
-		attributes.put("name", getName());
-		attributes.put("type", getType());
-
-		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
-		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
-
-		return attributes;
+	public Map<String, Function<ListType, Object>> getAttributeGetterFunctions() {
+		return _attributeGetterFunctions;
 	}
 
 	@Override
-	public void setModelAttributes(Map<String, Object> attributes) {
-		Long mvccVersion = (Long)attributes.get("mvccVersion");
+	public Map<String, BiConsumer<ListType, Object>> getAttributeSetterBiConsumers() {
+		return _attributeSetterBiConsumers;
+	}
 
-		if (mvccVersion != null) {
-			setMvccVersion(mvccVersion);
-		}
+	private static final Map<String, Function<ListType, Object>> _attributeGetterFunctions;
+	private static final Map<String, BiConsumer<ListType, Object>> _attributeSetterBiConsumers;
 
-		Long listTypeId = (Long)attributes.get("listTypeId");
+	static {
+		Map<String, Function<ListType, Object>> attributeGetterFunctions = new LinkedHashMap<String, Function<ListType, Object>>();
+		Map<String, BiConsumer<ListType, ?>> attributeSetterBiConsumers = new LinkedHashMap<String, BiConsumer<ListType, ?>>();
 
-		if (listTypeId != null) {
-			setListTypeId(listTypeId);
-		}
+		attributeGetterFunctions.put("mvccVersion", ListType::getMvccVersion);
+		attributeSetterBiConsumers.put("mvccVersion", (BiConsumer<ListType, Long>)ListType::setMvccVersion);
+		attributeGetterFunctions.put("listTypeId", ListType::getListTypeId);
+		attributeSetterBiConsumers.put("listTypeId", (BiConsumer<ListType, Long>)ListType::setListTypeId);
+		attributeGetterFunctions.put("name", ListType::getName);
+		attributeSetterBiConsumers.put("name", (BiConsumer<ListType, String>)ListType::setName);
+		attributeGetterFunctions.put("type", ListType::getType);
+		attributeSetterBiConsumers.put("type", (BiConsumer<ListType, String>)ListType::setType);
 
-		String name = (String)attributes.get("name");
-
-		if (name != null) {
-			setName(name);
-		}
-
-		String type = (String)attributes.get("type");
-
-		if (type != null) {
-			setType(type);
-		}
+		_attributeGetterFunctions = Collections.unmodifiableMap(attributeGetterFunctions);
+		_attributeSetterBiConsumers = Collections.unmodifiableMap((Map)attributeSetterBiConsumers);
 	}
 
 	@JSON
@@ -419,53 +409,6 @@ public class ListTypeModelImpl extends BaseModelImpl<ListType>
 		}
 
 		return listTypeCacheModel;
-	}
-
-	@Override
-	public String toString() {
-		StringBundler sb = new StringBundler(9);
-
-		sb.append("{mvccVersion=");
-		sb.append(getMvccVersion());
-		sb.append(", listTypeId=");
-		sb.append(getListTypeId());
-		sb.append(", name=");
-		sb.append(getName());
-		sb.append(", type=");
-		sb.append(getType());
-		sb.append("}");
-
-		return sb.toString();
-	}
-
-	@Override
-	public String toXmlString() {
-		StringBundler sb = new StringBundler(16);
-
-		sb.append("<model><model-name>");
-		sb.append("com.liferay.portal.kernel.model.ListType");
-		sb.append("</model-name>");
-
-		sb.append(
-			"<column><column-name>mvccVersion</column-name><column-value><![CDATA[");
-		sb.append(getMvccVersion());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>listTypeId</column-name><column-value><![CDATA[");
-		sb.append(getListTypeId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>name</column-name><column-value><![CDATA[");
-		sb.append(getName());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>type</column-name><column-value><![CDATA[");
-		sb.append(getType());
-		sb.append("]]></column-value></column>");
-
-		sb.append("</model>");
-
-		return sb.toString();
 	}
 
 	private static final ClassLoader _classLoader = ListType.class.getClassLoader();

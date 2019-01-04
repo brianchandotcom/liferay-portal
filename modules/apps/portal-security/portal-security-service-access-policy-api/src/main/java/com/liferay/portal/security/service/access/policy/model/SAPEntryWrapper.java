@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -39,102 +38,6 @@ public class SAPEntryWrapper extends BaseModelWrapper<SAPEntry>
 	implements SAPEntry, ModelWrapper<SAPEntry> {
 	public SAPEntryWrapper(SAPEntry sapEntry) {
 		super(sapEntry);
-	}
-
-	@Override
-	public Map<String, Object> getModelAttributes() {
-		Map<String, Object> attributes = new HashMap<String, Object>();
-
-		attributes.put("uuid", getUuid());
-		attributes.put("sapEntryId", getSapEntryId());
-		attributes.put("companyId", getCompanyId());
-		attributes.put("userId", getUserId());
-		attributes.put("userName", getUserName());
-		attributes.put("createDate", getCreateDate());
-		attributes.put("modifiedDate", getModifiedDate());
-		attributes.put("allowedServiceSignatures", getAllowedServiceSignatures());
-		attributes.put("defaultSAPEntry", isDefaultSAPEntry());
-		attributes.put("enabled", isEnabled());
-		attributes.put("name", getName());
-		attributes.put("title", getTitle());
-
-		return attributes;
-	}
-
-	@Override
-	public void setModelAttributes(Map<String, Object> attributes) {
-		String uuid = (String)attributes.get("uuid");
-
-		if (uuid != null) {
-			setUuid(uuid);
-		}
-
-		Long sapEntryId = (Long)attributes.get("sapEntryId");
-
-		if (sapEntryId != null) {
-			setSapEntryId(sapEntryId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
-		}
-
-		Long userId = (Long)attributes.get("userId");
-
-		if (userId != null) {
-			setUserId(userId);
-		}
-
-		String userName = (String)attributes.get("userName");
-
-		if (userName != null) {
-			setUserName(userName);
-		}
-
-		Date createDate = (Date)attributes.get("createDate");
-
-		if (createDate != null) {
-			setCreateDate(createDate);
-		}
-
-		Date modifiedDate = (Date)attributes.get("modifiedDate");
-
-		if (modifiedDate != null) {
-			setModifiedDate(modifiedDate);
-		}
-
-		String allowedServiceSignatures = (String)attributes.get(
-				"allowedServiceSignatures");
-
-		if (allowedServiceSignatures != null) {
-			setAllowedServiceSignatures(allowedServiceSignatures);
-		}
-
-		Boolean defaultSAPEntry = (Boolean)attributes.get("defaultSAPEntry");
-
-		if (defaultSAPEntry != null) {
-			setDefaultSAPEntry(defaultSAPEntry);
-		}
-
-		Boolean enabled = (Boolean)attributes.get("enabled");
-
-		if (enabled != null) {
-			setEnabled(enabled);
-		}
-
-		String name = (String)attributes.get("name");
-
-		if (name != null) {
-			setName(name);
-		}
-
-		String title = (String)attributes.get("title");
-
-		if (title != null) {
-			setTitle(title);
-		}
 	}
 
 	/**

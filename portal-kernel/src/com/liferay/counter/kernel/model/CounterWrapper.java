@@ -19,9 +19,6 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
-import java.util.HashMap;
-import java.util.Map;
-
 /**
  * <p>
  * This class is a wrapper for {@link Counter}.
@@ -36,31 +33,6 @@ public class CounterWrapper extends BaseModelWrapper<Counter> implements Counter
 	ModelWrapper<Counter> {
 	public CounterWrapper(Counter counter) {
 		super(counter);
-	}
-
-	@Override
-	public Map<String, Object> getModelAttributes() {
-		Map<String, Object> attributes = new HashMap<String, Object>();
-
-		attributes.put("name", getName());
-		attributes.put("currentId", getCurrentId());
-
-		return attributes;
-	}
-
-	@Override
-	public void setModelAttributes(Map<String, Object> attributes) {
-		String name = (String)attributes.get("name");
-
-		if (name != null) {
-			setName(name);
-		}
-
-		Long currentId = (Long)attributes.get("currentId");
-
-		if (currentId != null) {
-			setCurrentId(currentId);
-		}
 	}
 
 	/**

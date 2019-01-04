@@ -26,6 +26,8 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * <p>
@@ -59,54 +61,34 @@ public class LocalizedEntryLocalizationWrapper
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		attributes.put("mvccVersion", getMvccVersion());
-		attributes.put("localizedEntryLocalizationId",
-			getLocalizedEntryLocalizationId());
-		attributes.put("localizedEntryId", getLocalizedEntryId());
-		attributes.put("languageId", getLanguageId());
-		attributes.put("title", getTitle());
-		attributes.put("content", getContent());
+		Map<String, Function<LocalizedEntryLocalization, Object>> attributeGetterFunctions =
+			getAttributeGetterFunctions();
+
+		for (Map.Entry<String, Function<LocalizedEntryLocalization, Object>> entry : attributeGetterFunctions.entrySet()) {
+			String attributeName = entry.getKey();
+			Function<LocalizedEntryLocalization, Object> attributeGetterFunction =
+				entry.getValue();
+
+			attributes.put(attributeName, attributeGetterFunction.apply(this));
+		}
+
+		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
+		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
 
 		return attributes;
 	}
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		Long mvccVersion = (Long)attributes.get("mvccVersion");
+		Map<String, BiConsumer<LocalizedEntryLocalization, Object>> attributeSetterBiConsumers =
+			getAttributeSetterBiConsumers();
 
-		if (mvccVersion != null) {
-			setMvccVersion(mvccVersion);
-		}
+		for (Map.Entry<String, BiConsumer<LocalizedEntryLocalization, Object>> entry : attributeSetterBiConsumers.entrySet()) {
+			String attributeName = entry.getKey();
+			BiConsumer<LocalizedEntryLocalization, Object> attributeBiConsumer = entry.getValue();
 
-		Long localizedEntryLocalizationId = (Long)attributes.get(
-				"localizedEntryLocalizationId");
-
-		if (localizedEntryLocalizationId != null) {
-			setLocalizedEntryLocalizationId(localizedEntryLocalizationId);
-		}
-
-		Long localizedEntryId = (Long)attributes.get("localizedEntryId");
-
-		if (localizedEntryId != null) {
-			setLocalizedEntryId(localizedEntryId);
-		}
-
-		String languageId = (String)attributes.get("languageId");
-
-		if (languageId != null) {
-			setLanguageId(languageId);
-		}
-
-		String title = (String)attributes.get("title");
-
-		if (title != null) {
-			setTitle(title);
-		}
-
-		String content = (String)attributes.get("content");
-
-		if (content != null) {
-			setContent(content);
+			attributeBiConsumer.accept(this,
+				attributeSetterBiConsumers.get(attributeName));
 		}
 	}
 
@@ -118,6 +100,16 @@ public class LocalizedEntryLocalizationWrapper
 	@Override
 	public int compareTo(LocalizedEntryLocalization localizedEntryLocalization) {
 		return _localizedEntryLocalization.compareTo(localizedEntryLocalization);
+	}
+
+	@Override
+	public Map<String, Function<LocalizedEntryLocalization, Object>> getAttributeGetters() {
+		return _localizedEntryLocalization.getAttributeGetters();
+	}
+
+	@Override
+	public Map<String, BiConsumer<LocalizedEntryLocalization, Object>> getAttributeSetters() {
+		return _localizedEntryLocalization.getAttributeSetters();
 	}
 
 	/**

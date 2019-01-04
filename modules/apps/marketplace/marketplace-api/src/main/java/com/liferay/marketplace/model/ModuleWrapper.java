@@ -19,9 +19,6 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
-import java.util.HashMap;
-import java.util.Map;
-
 /**
  * <p>
  * This class is a wrapper for {@link Module}.
@@ -36,66 +33,6 @@ public class ModuleWrapper extends BaseModelWrapper<Module> implements Module,
 	ModelWrapper<Module> {
 	public ModuleWrapper(Module module) {
 		super(module);
-	}
-
-	@Override
-	public Map<String, Object> getModelAttributes() {
-		Map<String, Object> attributes = new HashMap<String, Object>();
-
-		attributes.put("uuid", getUuid());
-		attributes.put("moduleId", getModuleId());
-		attributes.put("companyId", getCompanyId());
-		attributes.put("appId", getAppId());
-		attributes.put("bundleSymbolicName", getBundleSymbolicName());
-		attributes.put("bundleVersion", getBundleVersion());
-		attributes.put("contextName", getContextName());
-
-		return attributes;
-	}
-
-	@Override
-	public void setModelAttributes(Map<String, Object> attributes) {
-		String uuid = (String)attributes.get("uuid");
-
-		if (uuid != null) {
-			setUuid(uuid);
-		}
-
-		Long moduleId = (Long)attributes.get("moduleId");
-
-		if (moduleId != null) {
-			setModuleId(moduleId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
-		}
-
-		Long appId = (Long)attributes.get("appId");
-
-		if (appId != null) {
-			setAppId(appId);
-		}
-
-		String bundleSymbolicName = (String)attributes.get("bundleSymbolicName");
-
-		if (bundleSymbolicName != null) {
-			setBundleSymbolicName(bundleSymbolicName);
-		}
-
-		String bundleVersion = (String)attributes.get("bundleVersion");
-
-		if (bundleVersion != null) {
-			setBundleVersion(bundleVersion);
-		}
-
-		String contextName = (String)attributes.get("contextName");
-
-		if (contextName != null) {
-			setContextName(contextName);
-		}
 	}
 
 	/**

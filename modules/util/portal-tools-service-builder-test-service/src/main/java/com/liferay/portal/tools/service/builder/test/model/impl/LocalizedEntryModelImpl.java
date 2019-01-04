@@ -37,9 +37,12 @@ import java.io.Serializable;
 
 import java.sql.Types;
 
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.BiConsumer;
 import java.util.function.Function;
 
 /**
@@ -151,6 +154,66 @@ public class LocalizedEntryModelImpl extends BaseModelImpl<LocalizedEntry>
 		if (localizedEntryId != null) {
 			setLocalizedEntryId(localizedEntryId);
 		}
+	}
+
+	public Map<String, Function<LocalizedEntry, Object>> getAttributeGetterFunctions() {
+		return _attributeGetterFunctions;
+	}
+
+	public Map<String, BiConsumer<LocalizedEntry, Object>> getAttributeSetterBiConsumers() {
+		return _attributeSetterBiConsumers;
+	}
+
+	private static final Map<String, Function<LocalizedEntry, Object>> _attributeGetterFunctions;
+	private static final Map<String, BiConsumer<LocalizedEntry, Object>> _attributeSetterBiConsumers;
+
+	static {
+		Map<String, Function<LocalizedEntry, Object>> attributeGetterFunctions = new LinkedHashMap<String, Function<LocalizedEntry, Object>>();
+		Map<String, BiConsumer<LocalizedEntry, ?>> attributeSetterBiConsumers = new LinkedHashMap<String, BiConsumer<LocalizedEntry, ?>>();
+
+		attributeGetterFunctions.put(
+			"defaultLanguageId",
+			new Function<LocalizedEntry, Object>() {
+
+				@Override
+				public Object apply(LocalizedEntry localizedEntry) {
+					return localizedEntry.getDefaultLanguageId();
+				}
+
+			});
+		attributeSetterBiConsumers.put(
+			"defaultLanguageId",
+			new BiConsumer<LocalizedEntry, Object>() {
+
+				@Override
+				public void accept(LocalizedEntry localizedEntry, Object defaultLanguageId) {
+					localizedEntry.setDefaultLanguageId((String)defaultLanguageId);
+				}
+
+			});
+		attributeGetterFunctions.put(
+			"localizedEntryId",
+			new Function<LocalizedEntry, Object>() {
+
+				@Override
+				public Object apply(LocalizedEntry localizedEntry) {
+					return localizedEntry.getLocalizedEntryId();
+				}
+
+			});
+		attributeSetterBiConsumers.put(
+			"localizedEntryId",
+			new BiConsumer<LocalizedEntry, Object>() {
+
+				@Override
+				public void accept(LocalizedEntry localizedEntry, Object localizedEntryId) {
+					localizedEntry.setLocalizedEntryId((Long)localizedEntryId);
+				}
+
+			});
+
+		_attributeGetterFunctions = Collections.unmodifiableMap(attributeGetterFunctions);
+		_attributeSetterBiConsumers = Collections.unmodifiableMap((Map)attributeSetterBiConsumers);
 	}
 
 	@Override

@@ -16,8 +16,6 @@ package com.liferay.portal.model.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.petra.string.StringBundler;
-
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.model.CacheModel;
@@ -35,9 +33,13 @@ import java.io.Serializable;
 import java.sql.Types;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * The base model implementation for the UserGroupGroupRole service. Represents a row in the &quot;UserGroupGroupRole&quot; database table, with each column mapped to a property of this class.
@@ -181,52 +183,37 @@ public class UserGroupGroupRoleModelImpl extends BaseModelImpl<UserGroupGroupRol
 	}
 
 	@Override
-	public Map<String, Object> getModelAttributes() {
-		Map<String, Object> attributes = new HashMap<String, Object>();
-
-		attributes.put("mvccVersion", getMvccVersion());
-		attributes.put("userGroupId", getUserGroupId());
-		attributes.put("groupId", getGroupId());
-		attributes.put("roleId", getRoleId());
-		attributes.put("companyId", getCompanyId());
-
-		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
-		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
-
-		return attributes;
+	public Map<String, Function<UserGroupGroupRole, Object>> getAttributeGetterFunctions() {
+		return _attributeGetterFunctions;
 	}
 
 	@Override
-	public void setModelAttributes(Map<String, Object> attributes) {
-		Long mvccVersion = (Long)attributes.get("mvccVersion");
+	public Map<String, BiConsumer<UserGroupGroupRole, Object>> getAttributeSetterBiConsumers() {
+		return _attributeSetterBiConsumers;
+	}
 
-		if (mvccVersion != null) {
-			setMvccVersion(mvccVersion);
-		}
+	private static final Map<String, Function<UserGroupGroupRole, Object>> _attributeGetterFunctions;
+	private static final Map<String, BiConsumer<UserGroupGroupRole, Object>> _attributeSetterBiConsumers;
 
-		Long userGroupId = (Long)attributes.get("userGroupId");
+	static {
+		Map<String, Function<UserGroupGroupRole, Object>> attributeGetterFunctions =
+			new LinkedHashMap<String, Function<UserGroupGroupRole, Object>>();
+		Map<String, BiConsumer<UserGroupGroupRole, ?>> attributeSetterBiConsumers =
+			new LinkedHashMap<String, BiConsumer<UserGroupGroupRole, ?>>();
 
-		if (userGroupId != null) {
-			setUserGroupId(userGroupId);
-		}
+		attributeGetterFunctions.put("mvccVersion", UserGroupGroupRole::getMvccVersion);
+		attributeSetterBiConsumers.put("mvccVersion", (BiConsumer<UserGroupGroupRole, Long>)UserGroupGroupRole::setMvccVersion);
+		attributeGetterFunctions.put("userGroupId", UserGroupGroupRole::getUserGroupId);
+		attributeSetterBiConsumers.put("userGroupId", (BiConsumer<UserGroupGroupRole, Long>)UserGroupGroupRole::setUserGroupId);
+		attributeGetterFunctions.put("groupId", UserGroupGroupRole::getGroupId);
+		attributeSetterBiConsumers.put("groupId", (BiConsumer<UserGroupGroupRole, Long>)UserGroupGroupRole::setGroupId);
+		attributeGetterFunctions.put("roleId", UserGroupGroupRole::getRoleId);
+		attributeSetterBiConsumers.put("roleId", (BiConsumer<UserGroupGroupRole, Long>)UserGroupGroupRole::setRoleId);
+		attributeGetterFunctions.put("companyId", UserGroupGroupRole::getCompanyId);
+		attributeSetterBiConsumers.put("companyId", (BiConsumer<UserGroupGroupRole, Long>)UserGroupGroupRole::setCompanyId);
 
-		Long groupId = (Long)attributes.get("groupId");
-
-		if (groupId != null) {
-			setGroupId(groupId);
-		}
-
-		Long roleId = (Long)attributes.get("roleId");
-
-		if (roleId != null) {
-			setRoleId(roleId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
-		}
+		_attributeGetterFunctions = Collections.unmodifiableMap(attributeGetterFunctions);
+		_attributeSetterBiConsumers = Collections.unmodifiableMap((Map)attributeSetterBiConsumers);
 	}
 
 	@JSON
@@ -429,59 +416,6 @@ public class UserGroupGroupRoleModelImpl extends BaseModelImpl<UserGroupGroupRol
 		userGroupGroupRoleCacheModel.companyId = getCompanyId();
 
 		return userGroupGroupRoleCacheModel;
-	}
-
-	@Override
-	public String toString() {
-		StringBundler sb = new StringBundler(11);
-
-		sb.append("{mvccVersion=");
-		sb.append(getMvccVersion());
-		sb.append(", userGroupId=");
-		sb.append(getUserGroupId());
-		sb.append(", groupId=");
-		sb.append(getGroupId());
-		sb.append(", roleId=");
-		sb.append(getRoleId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
-		sb.append("}");
-
-		return sb.toString();
-	}
-
-	@Override
-	public String toXmlString() {
-		StringBundler sb = new StringBundler(19);
-
-		sb.append("<model><model-name>");
-		sb.append("com.liferay.portal.kernel.model.UserGroupGroupRole");
-		sb.append("</model-name>");
-
-		sb.append(
-			"<column><column-name>mvccVersion</column-name><column-value><![CDATA[");
-		sb.append(getMvccVersion());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userGroupId</column-name><column-value><![CDATA[");
-		sb.append(getUserGroupId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>groupId</column-name><column-value><![CDATA[");
-		sb.append(getGroupId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>roleId</column-name><column-value><![CDATA[");
-		sb.append(getRoleId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
-		sb.append("]]></column-value></column>");
-
-		sb.append("</model>");
-
-		return sb.toString();
 	}
 
 	private static final ClassLoader _classLoader = UserGroupGroupRole.class.getClassLoader();

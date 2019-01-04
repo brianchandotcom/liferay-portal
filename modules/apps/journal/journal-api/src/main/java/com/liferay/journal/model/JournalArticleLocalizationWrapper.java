@@ -19,9 +19,6 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
-import java.util.HashMap;
-import java.util.Map;
-
 /**
  * <p>
  * This class is a wrapper for {@link JournalArticleLocalization}.
@@ -38,60 +35,6 @@ public class JournalArticleLocalizationWrapper extends BaseModelWrapper<JournalA
 	public JournalArticleLocalizationWrapper(
 		JournalArticleLocalization journalArticleLocalization) {
 		super(journalArticleLocalization);
-	}
-
-	@Override
-	public Map<String, Object> getModelAttributes() {
-		Map<String, Object> attributes = new HashMap<String, Object>();
-
-		attributes.put("articleLocalizationId", getArticleLocalizationId());
-		attributes.put("companyId", getCompanyId());
-		attributes.put("articlePK", getArticlePK());
-		attributes.put("title", getTitle());
-		attributes.put("description", getDescription());
-		attributes.put("languageId", getLanguageId());
-
-		return attributes;
-	}
-
-	@Override
-	public void setModelAttributes(Map<String, Object> attributes) {
-		Long articleLocalizationId = (Long)attributes.get(
-				"articleLocalizationId");
-
-		if (articleLocalizationId != null) {
-			setArticleLocalizationId(articleLocalizationId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
-		}
-
-		Long articlePK = (Long)attributes.get("articlePK");
-
-		if (articlePK != null) {
-			setArticlePK(articlePK);
-		}
-
-		String title = (String)attributes.get("title");
-
-		if (title != null) {
-			setTitle(title);
-		}
-
-		String description = (String)attributes.get("description");
-
-		if (description != null) {
-			setDescription(description);
-		}
-
-		String languageId = (String)attributes.get("languageId");
-
-		if (languageId != null) {
-			setLanguageId(languageId);
-		}
 	}
 
 	/**

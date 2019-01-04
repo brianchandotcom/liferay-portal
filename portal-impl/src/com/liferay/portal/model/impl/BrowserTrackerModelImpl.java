@@ -19,8 +19,6 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 
-import com.liferay.petra.string.StringBundler;
-
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.BrowserTracker;
@@ -38,8 +36,12 @@ import java.io.Serializable;
 
 import java.sql.Types;
 
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * The base model implementation for the BrowserTracker service. Represents a row in the &quot;BrowserTracker&quot; database table, with each column mapped to a property of this class.
@@ -135,52 +137,35 @@ public class BrowserTrackerModelImpl extends BaseModelImpl<BrowserTracker>
 	}
 
 	@Override
-	public Map<String, Object> getModelAttributes() {
-		Map<String, Object> attributes = new HashMap<String, Object>();
-
-		attributes.put("mvccVersion", getMvccVersion());
-		attributes.put("browserTrackerId", getBrowserTrackerId());
-		attributes.put("companyId", getCompanyId());
-		attributes.put("userId", getUserId());
-		attributes.put("browserKey", getBrowserKey());
-
-		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
-		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
-
-		return attributes;
+	public Map<String, Function<BrowserTracker, Object>> getAttributeGetterFunctions() {
+		return _attributeGetterFunctions;
 	}
 
 	@Override
-	public void setModelAttributes(Map<String, Object> attributes) {
-		Long mvccVersion = (Long)attributes.get("mvccVersion");
+	public Map<String, BiConsumer<BrowserTracker, Object>> getAttributeSetterBiConsumers() {
+		return _attributeSetterBiConsumers;
+	}
 
-		if (mvccVersion != null) {
-			setMvccVersion(mvccVersion);
-		}
+	private static final Map<String, Function<BrowserTracker, Object>> _attributeGetterFunctions;
+	private static final Map<String, BiConsumer<BrowserTracker, Object>> _attributeSetterBiConsumers;
 
-		Long browserTrackerId = (Long)attributes.get("browserTrackerId");
+	static {
+		Map<String, Function<BrowserTracker, Object>> attributeGetterFunctions = new LinkedHashMap<String, Function<BrowserTracker, Object>>();
+		Map<String, BiConsumer<BrowserTracker, ?>> attributeSetterBiConsumers = new LinkedHashMap<String, BiConsumer<BrowserTracker, ?>>();
 
-		if (browserTrackerId != null) {
-			setBrowserTrackerId(browserTrackerId);
-		}
+		attributeGetterFunctions.put("mvccVersion", BrowserTracker::getMvccVersion);
+		attributeSetterBiConsumers.put("mvccVersion", (BiConsumer<BrowserTracker, Long>)BrowserTracker::setMvccVersion);
+		attributeGetterFunctions.put("browserTrackerId", BrowserTracker::getBrowserTrackerId);
+		attributeSetterBiConsumers.put("browserTrackerId", (BiConsumer<BrowserTracker, Long>)BrowserTracker::setBrowserTrackerId);
+		attributeGetterFunctions.put("companyId", BrowserTracker::getCompanyId);
+		attributeSetterBiConsumers.put("companyId", (BiConsumer<BrowserTracker, Long>)BrowserTracker::setCompanyId);
+		attributeGetterFunctions.put("userId", BrowserTracker::getUserId);
+		attributeSetterBiConsumers.put("userId", (BiConsumer<BrowserTracker, Long>)BrowserTracker::setUserId);
+		attributeGetterFunctions.put("browserKey", BrowserTracker::getBrowserKey);
+		attributeSetterBiConsumers.put("browserKey", (BiConsumer<BrowserTracker, Long>)BrowserTracker::setBrowserKey);
 
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
-		}
-
-		Long userId = (Long)attributes.get("userId");
-
-		if (userId != null) {
-			setUserId(userId);
-		}
-
-		Long browserKey = (Long)attributes.get("browserKey");
-
-		if (browserKey != null) {
-			setBrowserKey(browserKey);
-		}
+		_attributeGetterFunctions = Collections.unmodifiableMap(attributeGetterFunctions);
+		_attributeSetterBiConsumers = Collections.unmodifiableMap((Map)attributeSetterBiConsumers);
 	}
 
 	@Override
@@ -381,59 +366,6 @@ public class BrowserTrackerModelImpl extends BaseModelImpl<BrowserTracker>
 		browserTrackerCacheModel.browserKey = getBrowserKey();
 
 		return browserTrackerCacheModel;
-	}
-
-	@Override
-	public String toString() {
-		StringBundler sb = new StringBundler(11);
-
-		sb.append("{mvccVersion=");
-		sb.append(getMvccVersion());
-		sb.append(", browserTrackerId=");
-		sb.append(getBrowserTrackerId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
-		sb.append(", userId=");
-		sb.append(getUserId());
-		sb.append(", browserKey=");
-		sb.append(getBrowserKey());
-		sb.append("}");
-
-		return sb.toString();
-	}
-
-	@Override
-	public String toXmlString() {
-		StringBundler sb = new StringBundler(19);
-
-		sb.append("<model><model-name>");
-		sb.append("com.liferay.portal.kernel.model.BrowserTracker");
-		sb.append("</model-name>");
-
-		sb.append(
-			"<column><column-name>mvccVersion</column-name><column-value><![CDATA[");
-		sb.append(getMvccVersion());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>browserTrackerId</column-name><column-value><![CDATA[");
-		sb.append(getBrowserTrackerId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userId</column-name><column-value><![CDATA[");
-		sb.append(getUserId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>browserKey</column-name><column-value><![CDATA[");
-		sb.append(getBrowserKey());
-		sb.append("]]></column-value></column>");
-
-		sb.append("</model>");
-
-		return sb.toString();
 	}
 
 	private static final ClassLoader _classLoader = BrowserTracker.class.getClassLoader();

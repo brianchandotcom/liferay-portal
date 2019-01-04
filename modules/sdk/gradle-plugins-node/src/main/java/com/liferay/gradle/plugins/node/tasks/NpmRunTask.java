@@ -274,7 +274,7 @@ public class NpmRunTask extends ExecuteNpmTask implements PatternFilterable {
 	};
 
 	private static final String[] _INCLUDES = {
-		"**/*.css", "**/*.js", "**/*.*rc"
+		"**/*.css", "**/*.js", "**/*.json", "**/*.jsx", "**/*.*rc"
 	};
 
 	private Object _nodeVersion;

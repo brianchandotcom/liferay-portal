@@ -24,23 +24,6 @@ definition {
 	}
 
 	@priority = "5"
-	test AddFormAfterUpgrade612 {
-		property data.archive.type = "data-archive-portal";
-		property database.types = "mariadb,mysql,postgresql";
-		property portal.version = "6.1.2";
-
-		Upgrade.addForm();
-	}
-
-	@priority = "5"
-	test AddFormAfterUpgrade6130 {
-		property data.archive.type = "data-archive-portal";
-		property portal.version = "6.1.30";
-
-		Upgrade.addForm();
-	}
-
-	@priority = "5"
 	test AddFormAfterUpgrade621015 {
 		property data.archive.type = "data-archive-portal";
 		property portal.version = "6.2.10.15";

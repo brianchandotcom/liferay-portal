@@ -24,24 +24,6 @@ definition {
 	}
 
 	@priority = "5"
-	test ViewAssetPublisherArchive612 {
-		property data.archive.type = "data-archive-asset-publisher";
-		property database.types = "mariadb,mysql,postgresql";
-		property portal.version = "6.1.2";
-
-		Upgrade.viewAssetPublisher();
-	}
-
-	@priority = "5"
-	test ViewAssetPublisherArchive6130 {
-		property data.archive.type = "data-archive-asset-publisher";
-		property database.types = "db2,mysql,oracle,sybase";
-		property portal.version = "6.1.30";
-
-		Upgrade.viewAssetPublisher();
-	}
-
-	@priority = "5"
 	test ViewAssetPublisherArchive621015 {
 		property data.archive.type = "data-archive-asset-publisher";
 		property portal.version = "6.2.10.15";

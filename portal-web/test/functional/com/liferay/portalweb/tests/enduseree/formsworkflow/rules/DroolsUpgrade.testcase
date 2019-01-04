@@ -24,25 +24,6 @@ definition {
 	}
 
 	@priority = "5"
-	test ViewDroolsInAppManagerAfterUpgrade612 {
-		property data.archive.type = "data-archive-portal";
-		property database.types = "mariadb,mysql,postgresql";
-		property osgi.modules.includes = "calevent";
-		property portal.version = "6.1.2";
-
-		Upgrade.ViewDroolsAppManager();
-	}
-
-	@priority = "5"
-	test ViewDroolsInAppManagerAfterUpgrade6130 {
-		property data.archive.type = "data-archive-portal";
-		property osgi.modules.includes = "calevent";
-		property portal.version = "6.1.30";
-
-		Upgrade.ViewDroolsAppManager();
-	}
-
-	@priority = "5"
 	test ViewDroolsInAppManagerAfterUpgrade621015 {
 		property data.archive.type = "data-archive-portal";
 		property portal.version = "6.2.10.15";

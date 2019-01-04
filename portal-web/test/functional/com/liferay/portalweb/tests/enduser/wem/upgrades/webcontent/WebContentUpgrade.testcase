@@ -70,27 +70,6 @@ definition {
 	}
 
 	@priority = "5"
-	test ViewWebContentArchive612 {
-		property data.archive.type = "data-archive-web-content-draft";
-		property database.types = "mariadb,mysql,postgresql";
-		property portal.version = "6.1.2";
-
-		Upgrade.addWCStructureAndTemplate();
-
-		Upgrade.publishWCDraft();
-	}
-
-	@priority = "5"
-	test ViewWebContentArchive6130 {
-		property data.archive.type = "data-archive-web-content-draft";
-		property portal.version = "6.1.30";
-
-		Upgrade.addWCStructureAndTemplate();
-
-		Upgrade.publishWCDraft();
-	}
-
-	@priority = "5"
 	test ViewWebContentArchive621015 {
 		property data.archive.type = "data-archive-web-content-draft";
 		property portal.version = "6.2.10.15";

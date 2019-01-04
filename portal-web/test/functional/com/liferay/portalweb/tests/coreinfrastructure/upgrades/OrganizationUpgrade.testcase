@@ -25,23 +25,6 @@ definition {
 	}
 
 	@priority = "5"
-	test AddOrganizationAfterUpgrade612 {
-		property data.archive.type = "data-archive-portal";
-		property database.types = "mariadb,mysql,postgresql";
-		property portal.version = "6.1.2";
-
-		Upgrade.addOrganization();
-	}
-
-	@priority = "5"
-	test AddOrganizationAfterUpgrade6130 {
-		property data.archive.type = "data-archive-portal";
-		property portal.version = "6.1.30";
-
-		Upgrade.addOrganization();
-	}
-
-	@priority = "5"
 	test AddOrganizationAfterUpgrade621015 {
 		property data.archive.type = "data-archive-portal";
 		property portal.version = "6.2.10.15";
@@ -81,24 +64,6 @@ definition {
 		property portal.version = "7.0.4";
 
 		Upgrade.addOrganization();
-	}
-
-	@priority = "5"
-	test AddUserandSuborganizationAfterUpgrade612 {
-		property data.archive.type = "data-archive-admin-org-with-user";
-		property database.types = "mysql";
-		property portal.version = "6.1.2";
-
-		Upgrade.addUserAndSuborganization();
-	}
-
-	@priority = "5"
-	test AddUserandSuborganizationAfterUpgrade6130 {
-		property data.archive.type = "data-archive-admin-org-with-user";
-		property database.types = "db2,mysql,oracle,sybase";
-		property portal.version = "6.1.30";
-
-		Upgrade.addUserAndSuborganization();
 	}
 
 	@priority = "5"

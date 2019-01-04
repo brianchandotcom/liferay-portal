@@ -24,23 +24,6 @@ definition {
 	}
 
 	@priority = "5"
-	test ViewNestedPortletsArchive612 {
-		property data.archive.type = "data-archive-nested-portlets";
-		property database.types = "mariadb,mysql,postgresql";
-		property portal.version = "6.1.2";
-
-		Upgrade.viewNestedPortlets();
-	}
-
-	@priority = "5"
-	test ViewNestedPortletsArchive6130 {
-		property data.archive.type = "data-archive-nested-portlets";
-		property portal.version = "6.1.30";
-
-		Upgrade.viewNestedPortlets();
-	}
-
-	@priority = "5"
 	test ViewNestedPortletsArchive621015 {
 		property data.archive.type = "data-archive-nested-portlets";
 		property portal.version = "6.2.10.15";

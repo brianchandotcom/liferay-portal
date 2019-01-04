@@ -23,15 +23,6 @@ definition {
 	}
 
 	@priority = "5"
-	test ViewPortletsPermissionsAfterUpgrade6130 {
-		property data.archive.type = "data-archive-portlets-permissions";
-		property database.types = "db2,mysql,oracle,sybase";
-		property portal.version = "6.1.30";
-
-		Upgrade.ViewPortletsPermissions();
-	}
-
-	@priority = "5"
 	test ViewPortletsPermissionsAfterUpgrade621015 {
 		property data.archive.type = "data-archive-portlets-permissions";
 		property database.types = "db2,mysql,oracle,sybase";

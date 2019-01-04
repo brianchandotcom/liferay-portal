@@ -24,25 +24,6 @@ definition {
 	}
 
 	@priority = "5"
-	test ViewCalendarArchive612 {
-		property data.archive.type = "data-archive-calendar";
-		property database.types = "mariadb,mysql,postgresql";
-		property osgi.modules.includes = "calevent";
-		property portal.version = "6.1.2";
-
-		Upgrade.viewCalendar();
-	}
-
-	@priority = "5"
-	test ViewCalendarArchive6130 {
-		property data.archive.type = "data-archive-calendar";
-		property osgi.modules.includes = "calevent";
-		property portal.version = "6.1.30";
-
-		Upgrade.viewCalendar();
-	}
-
-	@priority = "5"
 	test ViewCalendarArchive621015 {
 		property data.archive.type = "data-archive-calendar";
 		property portal.version = "6.2.10.15";

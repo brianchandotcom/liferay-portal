@@ -119,7 +119,7 @@ public class DialectDetector {
 			else if (dbName.startsWith("Microsoft") && (dbMajorVersion == 9)) {
 				dialect = new SQLServer2005Dialect();
 			}
-			else if (dbName.startsWith("Microsoft") && (dbMajorVersion == 10)) {
+			else if (dbName.startsWith("Microsoft") && (dbMajorVersion >= 10)) {
 				dialect = new SQLServer2008Dialect();
 			}
 			else if (dbName.startsWith("Oracle") && (dbMajorVersion >= 10)) {

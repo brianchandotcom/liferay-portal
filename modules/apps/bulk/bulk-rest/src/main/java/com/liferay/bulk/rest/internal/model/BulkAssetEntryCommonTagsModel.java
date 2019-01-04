@@ -50,7 +50,7 @@ public class BulkAssetEntryCommonTagsModel {
 	}
 
 	public List<String> getTagNames() {
-		return _tagNames;
+			return _tagNames;
 	}
 
 	public void setDescription(String description) {

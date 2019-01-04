@@ -69,12 +69,10 @@ class EditTags extends Component {
 			this.urlTags,
 			bodyData,
 			response => {
-				var responseData = response.bulkAssetEntryCommonTagsModel;
-
-				if (responseData) {
+				if (response) {
 					this.loading = false;
-					this.commonTags = responseData.tagNames;
-					this.description = responseData.description;
+					this.commonTags = response.tagNames;
+					this.description = response.description;
 				}
 			}
 		);

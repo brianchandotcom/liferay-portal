@@ -16,13 +16,8 @@ package com.liferay.portal.kernel.model;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
-
 import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.exception.LocaleException;
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
 
 import java.util.Date;
 import java.util.Locale;
@@ -445,39 +440,6 @@ public interface LayoutSetPrototypeModel extends BaseModel<LayoutSetPrototype>,
 	public void setActive(boolean active);
 
 	@Override
-	public boolean isNew();
-
-	@Override
-	public void setNew(boolean n);
-
-	@Override
-	public boolean isCachedModel();
-
-	@Override
-	public void setCachedModel(boolean cachedModel);
-
-	@Override
-	public boolean isEscapedModel();
-
-	@Override
-	public Serializable getPrimaryKeyObj();
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj);
-
-	@Override
-	public ExpandoBridge getExpandoBridge();
-
-	@Override
-	public void setExpandoBridgeAttributes(BaseModel<?> baseModel);
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge);
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext);
-
-	@Override
 	public String[] getAvailableLanguageIds();
 
 	@Override
@@ -489,28 +451,4 @@ public interface LayoutSetPrototypeModel extends BaseModel<LayoutSetPrototype>,
 	@Override
 	public void prepareLocalizedFieldsForImport(Locale defaultImportLocale)
 		throws LocaleException;
-
-	@Override
-	public Object clone();
-
-	@Override
-	public int compareTo(LayoutSetPrototype layoutSetPrototype);
-
-	@Override
-	public int hashCode();
-
-	@Override
-	public CacheModel<LayoutSetPrototype> toCacheModel();
-
-	@Override
-	public LayoutSetPrototype toEscapedModel();
-
-	@Override
-	public LayoutSetPrototype toUnescapedModel();
-
-	@Override
-	public String toString();
-
-	@Override
-	public String toXmlString();
 }

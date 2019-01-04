@@ -16,19 +16,14 @@ package com.liferay.fragment.model;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
-
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 
 import com.liferay.portal.kernel.model.ModelWrapper;
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -40,20 +35,10 @@ import java.util.Objects;
  * @generated
  */
 @ProviderType
-public class FragmentEntryLinkWrapper implements FragmentEntryLink,
-	ModelWrapper<FragmentEntryLink> {
+public class FragmentEntryLinkWrapper extends BaseModelWrapper<FragmentEntryLink>
+	implements FragmentEntryLink, ModelWrapper<FragmentEntryLink> {
 	public FragmentEntryLinkWrapper(FragmentEntryLink fragmentEntryLink) {
-		_fragmentEntryLink = fragmentEntryLink;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return FragmentEntryLink.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return FragmentEntryLink.class.getName();
+		super(fragmentEntryLink);
 	}
 
 	@Override
@@ -209,16 +194,6 @@ public class FragmentEntryLinkWrapper implements FragmentEntryLink,
 		}
 	}
 
-	@Override
-	public Object clone() {
-		return new FragmentEntryLinkWrapper((FragmentEntryLink)_fragmentEntryLink.clone());
-	}
-
-	@Override
-	public int compareTo(FragmentEntryLink fragmentEntryLink) {
-		return _fragmentEntryLink.compareTo(fragmentEntryLink);
-	}
-
 	/**
 	* Returns the fully qualified class name of this fragment entry link.
 	*
@@ -226,7 +201,7 @@ public class FragmentEntryLinkWrapper implements FragmentEntryLink,
 	*/
 	@Override
 	public String getClassName() {
-		return _fragmentEntryLink.getClassName();
+		return model.getClassName();
 	}
 
 	/**
@@ -236,7 +211,7 @@ public class FragmentEntryLinkWrapper implements FragmentEntryLink,
 	*/
 	@Override
 	public long getClassNameId() {
-		return _fragmentEntryLink.getClassNameId();
+		return model.getClassNameId();
 	}
 
 	/**
@@ -246,7 +221,7 @@ public class FragmentEntryLinkWrapper implements FragmentEntryLink,
 	*/
 	@Override
 	public long getClassPK() {
-		return _fragmentEntryLink.getClassPK();
+		return model.getClassPK();
 	}
 
 	/**
@@ -256,7 +231,7 @@ public class FragmentEntryLinkWrapper implements FragmentEntryLink,
 	*/
 	@Override
 	public long getCompanyId() {
-		return _fragmentEntryLink.getCompanyId();
+		return model.getCompanyId();
 	}
 
 	/**
@@ -266,7 +241,7 @@ public class FragmentEntryLinkWrapper implements FragmentEntryLink,
 	*/
 	@Override
 	public Date getCreateDate() {
-		return _fragmentEntryLink.getCreateDate();
+		return model.getCreateDate();
 	}
 
 	/**
@@ -276,7 +251,7 @@ public class FragmentEntryLinkWrapper implements FragmentEntryLink,
 	*/
 	@Override
 	public String getCss() {
-		return _fragmentEntryLink.getCss();
+		return model.getCss();
 	}
 
 	/**
@@ -286,12 +261,7 @@ public class FragmentEntryLinkWrapper implements FragmentEntryLink,
 	*/
 	@Override
 	public String getEditableValues() {
-		return _fragmentEntryLink.getEditableValues();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _fragmentEntryLink.getExpandoBridge();
+		return model.getEditableValues();
 	}
 
 	/**
@@ -301,7 +271,7 @@ public class FragmentEntryLinkWrapper implements FragmentEntryLink,
 	*/
 	@Override
 	public long getFragmentEntryId() {
-		return _fragmentEntryLink.getFragmentEntryId();
+		return model.getFragmentEntryId();
 	}
 
 	/**
@@ -311,7 +281,7 @@ public class FragmentEntryLinkWrapper implements FragmentEntryLink,
 	*/
 	@Override
 	public long getFragmentEntryLinkId() {
-		return _fragmentEntryLink.getFragmentEntryLinkId();
+		return model.getFragmentEntryLinkId();
 	}
 
 	/**
@@ -321,7 +291,7 @@ public class FragmentEntryLinkWrapper implements FragmentEntryLink,
 	*/
 	@Override
 	public long getGroupId() {
-		return _fragmentEntryLink.getGroupId();
+		return model.getGroupId();
 	}
 
 	/**
@@ -331,7 +301,7 @@ public class FragmentEntryLinkWrapper implements FragmentEntryLink,
 	*/
 	@Override
 	public String getHtml() {
-		return _fragmentEntryLink.getHtml();
+		return model.getHtml();
 	}
 
 	/**
@@ -341,7 +311,7 @@ public class FragmentEntryLinkWrapper implements FragmentEntryLink,
 	*/
 	@Override
 	public String getJs() {
-		return _fragmentEntryLink.getJs();
+		return model.getJs();
 	}
 
 	/**
@@ -351,7 +321,7 @@ public class FragmentEntryLinkWrapper implements FragmentEntryLink,
 	*/
 	@Override
 	public Date getLastPropagationDate() {
-		return _fragmentEntryLink.getLastPropagationDate();
+		return model.getLastPropagationDate();
 	}
 
 	/**
@@ -361,7 +331,7 @@ public class FragmentEntryLinkWrapper implements FragmentEntryLink,
 	*/
 	@Override
 	public Date getLastPublishDate() {
-		return _fragmentEntryLink.getLastPublishDate();
+		return model.getLastPublishDate();
 	}
 
 	/**
@@ -371,7 +341,7 @@ public class FragmentEntryLinkWrapper implements FragmentEntryLink,
 	*/
 	@Override
 	public Date getModifiedDate() {
-		return _fragmentEntryLink.getModifiedDate();
+		return model.getModifiedDate();
 	}
 
 	/**
@@ -381,7 +351,7 @@ public class FragmentEntryLinkWrapper implements FragmentEntryLink,
 	*/
 	@Override
 	public String getNamespace() {
-		return _fragmentEntryLink.getNamespace();
+		return model.getNamespace();
 	}
 
 	/**
@@ -391,7 +361,7 @@ public class FragmentEntryLinkWrapper implements FragmentEntryLink,
 	*/
 	@Override
 	public long getOriginalFragmentEntryLinkId() {
-		return _fragmentEntryLink.getOriginalFragmentEntryLinkId();
+		return model.getOriginalFragmentEntryLinkId();
 	}
 
 	/**
@@ -401,7 +371,7 @@ public class FragmentEntryLinkWrapper implements FragmentEntryLink,
 	*/
 	@Override
 	public int getPosition() {
-		return _fragmentEntryLink.getPosition();
+		return model.getPosition();
 	}
 
 	/**
@@ -411,12 +381,7 @@ public class FragmentEntryLinkWrapper implements FragmentEntryLink,
 	*/
 	@Override
 	public long getPrimaryKey() {
-		return _fragmentEntryLink.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _fragmentEntryLink.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	/**
@@ -426,7 +391,7 @@ public class FragmentEntryLinkWrapper implements FragmentEntryLink,
 	*/
 	@Override
 	public long getUserId() {
-		return _fragmentEntryLink.getUserId();
+		return model.getUserId();
 	}
 
 	/**
@@ -436,7 +401,7 @@ public class FragmentEntryLinkWrapper implements FragmentEntryLink,
 	*/
 	@Override
 	public String getUserName() {
-		return _fragmentEntryLink.getUserName();
+		return model.getUserName();
 	}
 
 	/**
@@ -446,7 +411,7 @@ public class FragmentEntryLinkWrapper implements FragmentEntryLink,
 	*/
 	@Override
 	public String getUserUuid() {
-		return _fragmentEntryLink.getUserUuid();
+		return model.getUserUuid();
 	}
 
 	/**
@@ -456,48 +421,23 @@ public class FragmentEntryLinkWrapper implements FragmentEntryLink,
 	*/
 	@Override
 	public String getUuid() {
-		return _fragmentEntryLink.getUuid();
-	}
-
-	@Override
-	public int hashCode() {
-		return _fragmentEntryLink.hashCode();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _fragmentEntryLink.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _fragmentEntryLink.isEscapedModel();
+		return model.getUuid();
 	}
 
 	@Override
 	public boolean isLatestVersion()
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _fragmentEntryLink.isLatestVersion();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _fragmentEntryLink.isNew();
+		return model.isLatestVersion();
 	}
 
 	@Override
 	public void persist() {
-		_fragmentEntryLink.persist();
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_fragmentEntryLink.setCachedModel(cachedModel);
+		model.persist();
 	}
 
 	@Override
 	public void setClassName(String className) {
-		_fragmentEntryLink.setClassName(className);
+		model.setClassName(className);
 	}
 
 	/**
@@ -507,7 +447,7 @@ public class FragmentEntryLinkWrapper implements FragmentEntryLink,
 	*/
 	@Override
 	public void setClassNameId(long classNameId) {
-		_fragmentEntryLink.setClassNameId(classNameId);
+		model.setClassNameId(classNameId);
 	}
 
 	/**
@@ -517,7 +457,7 @@ public class FragmentEntryLinkWrapper implements FragmentEntryLink,
 	*/
 	@Override
 	public void setClassPK(long classPK) {
-		_fragmentEntryLink.setClassPK(classPK);
+		model.setClassPK(classPK);
 	}
 
 	/**
@@ -527,7 +467,7 @@ public class FragmentEntryLinkWrapper implements FragmentEntryLink,
 	*/
 	@Override
 	public void setCompanyId(long companyId) {
-		_fragmentEntryLink.setCompanyId(companyId);
+		model.setCompanyId(companyId);
 	}
 
 	/**
@@ -537,7 +477,7 @@ public class FragmentEntryLinkWrapper implements FragmentEntryLink,
 	*/
 	@Override
 	public void setCreateDate(Date createDate) {
-		_fragmentEntryLink.setCreateDate(createDate);
+		model.setCreateDate(createDate);
 	}
 
 	/**
@@ -547,7 +487,7 @@ public class FragmentEntryLinkWrapper implements FragmentEntryLink,
 	*/
 	@Override
 	public void setCss(String css) {
-		_fragmentEntryLink.setCss(css);
+		model.setCss(css);
 	}
 
 	/**
@@ -557,23 +497,7 @@ public class FragmentEntryLinkWrapper implements FragmentEntryLink,
 	*/
 	@Override
 	public void setEditableValues(String editableValues) {
-		_fragmentEntryLink.setEditableValues(editableValues);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-		_fragmentEntryLink.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_fragmentEntryLink.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_fragmentEntryLink.setExpandoBridgeAttributes(serviceContext);
+		model.setEditableValues(editableValues);
 	}
 
 	/**
@@ -583,7 +507,7 @@ public class FragmentEntryLinkWrapper implements FragmentEntryLink,
 	*/
 	@Override
 	public void setFragmentEntryId(long fragmentEntryId) {
-		_fragmentEntryLink.setFragmentEntryId(fragmentEntryId);
+		model.setFragmentEntryId(fragmentEntryId);
 	}
 
 	/**
@@ -593,7 +517,7 @@ public class FragmentEntryLinkWrapper implements FragmentEntryLink,
 	*/
 	@Override
 	public void setFragmentEntryLinkId(long fragmentEntryLinkId) {
-		_fragmentEntryLink.setFragmentEntryLinkId(fragmentEntryLinkId);
+		model.setFragmentEntryLinkId(fragmentEntryLinkId);
 	}
 
 	/**
@@ -603,7 +527,7 @@ public class FragmentEntryLinkWrapper implements FragmentEntryLink,
 	*/
 	@Override
 	public void setGroupId(long groupId) {
-		_fragmentEntryLink.setGroupId(groupId);
+		model.setGroupId(groupId);
 	}
 
 	/**
@@ -613,7 +537,7 @@ public class FragmentEntryLinkWrapper implements FragmentEntryLink,
 	*/
 	@Override
 	public void setHtml(String html) {
-		_fragmentEntryLink.setHtml(html);
+		model.setHtml(html);
 	}
 
 	/**
@@ -623,7 +547,7 @@ public class FragmentEntryLinkWrapper implements FragmentEntryLink,
 	*/
 	@Override
 	public void setJs(String js) {
-		_fragmentEntryLink.setJs(js);
+		model.setJs(js);
 	}
 
 	/**
@@ -633,7 +557,7 @@ public class FragmentEntryLinkWrapper implements FragmentEntryLink,
 	*/
 	@Override
 	public void setLastPropagationDate(Date lastPropagationDate) {
-		_fragmentEntryLink.setLastPropagationDate(lastPropagationDate);
+		model.setLastPropagationDate(lastPropagationDate);
 	}
 
 	/**
@@ -643,7 +567,7 @@ public class FragmentEntryLinkWrapper implements FragmentEntryLink,
 	*/
 	@Override
 	public void setLastPublishDate(Date lastPublishDate) {
-		_fragmentEntryLink.setLastPublishDate(lastPublishDate);
+		model.setLastPublishDate(lastPublishDate);
 	}
 
 	/**
@@ -653,7 +577,7 @@ public class FragmentEntryLinkWrapper implements FragmentEntryLink,
 	*/
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
-		_fragmentEntryLink.setModifiedDate(modifiedDate);
+		model.setModifiedDate(modifiedDate);
 	}
 
 	/**
@@ -663,12 +587,7 @@ public class FragmentEntryLinkWrapper implements FragmentEntryLink,
 	*/
 	@Override
 	public void setNamespace(String namespace) {
-		_fragmentEntryLink.setNamespace(namespace);
-	}
-
-	@Override
-	public void setNew(boolean n) {
-		_fragmentEntryLink.setNew(n);
+		model.setNamespace(namespace);
 	}
 
 	/**
@@ -678,7 +597,7 @@ public class FragmentEntryLinkWrapper implements FragmentEntryLink,
 	*/
 	@Override
 	public void setOriginalFragmentEntryLinkId(long originalFragmentEntryLinkId) {
-		_fragmentEntryLink.setOriginalFragmentEntryLinkId(originalFragmentEntryLinkId);
+		model.setOriginalFragmentEntryLinkId(originalFragmentEntryLinkId);
 	}
 
 	/**
@@ -688,7 +607,7 @@ public class FragmentEntryLinkWrapper implements FragmentEntryLink,
 	*/
 	@Override
 	public void setPosition(int position) {
-		_fragmentEntryLink.setPosition(position);
+		model.setPosition(position);
 	}
 
 	/**
@@ -698,12 +617,7 @@ public class FragmentEntryLinkWrapper implements FragmentEntryLink,
 	*/
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_fragmentEntryLink.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_fragmentEntryLink.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -713,7 +627,7 @@ public class FragmentEntryLinkWrapper implements FragmentEntryLink,
 	*/
 	@Override
 	public void setUserId(long userId) {
-		_fragmentEntryLink.setUserId(userId);
+		model.setUserId(userId);
 	}
 
 	/**
@@ -723,7 +637,7 @@ public class FragmentEntryLinkWrapper implements FragmentEntryLink,
 	*/
 	@Override
 	public void setUserName(String userName) {
-		_fragmentEntryLink.setUserName(userName);
+		model.setUserName(userName);
 	}
 
 	/**
@@ -733,7 +647,7 @@ public class FragmentEntryLinkWrapper implements FragmentEntryLink,
 	*/
 	@Override
 	public void setUserUuid(String userUuid) {
-		_fragmentEntryLink.setUserUuid(userUuid);
+		model.setUserUuid(userUuid);
 	}
 
 	/**
@@ -743,78 +657,16 @@ public class FragmentEntryLinkWrapper implements FragmentEntryLink,
 	*/
 	@Override
 	public void setUuid(String uuid) {
-		_fragmentEntryLink.setUuid(uuid);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<FragmentEntryLink> toCacheModel() {
-		return _fragmentEntryLink.toCacheModel();
-	}
-
-	@Override
-	public FragmentEntryLink toEscapedModel() {
-		return new FragmentEntryLinkWrapper(_fragmentEntryLink.toEscapedModel());
-	}
-
-	@Override
-	public String toString() {
-		return _fragmentEntryLink.toString();
-	}
-
-	@Override
-	public FragmentEntryLink toUnescapedModel() {
-		return new FragmentEntryLinkWrapper(_fragmentEntryLink.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _fragmentEntryLink.toXmlString();
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-
-		if (!(obj instanceof FragmentEntryLinkWrapper)) {
-			return false;
-		}
-
-		FragmentEntryLinkWrapper fragmentEntryLinkWrapper = (FragmentEntryLinkWrapper)obj;
-
-		if (Objects.equals(_fragmentEntryLink,
-					fragmentEntryLinkWrapper._fragmentEntryLink)) {
-			return true;
-		}
-
-		return false;
+		model.setUuid(uuid);
 	}
 
 	@Override
 	public StagedModelType getStagedModelType() {
-		return _fragmentEntryLink.getStagedModelType();
+		return model.getStagedModelType();
 	}
 
 	@Override
-	public FragmentEntryLink getWrappedModel() {
-		return _fragmentEntryLink;
+	protected FragmentEntryLinkWrapper wrap(FragmentEntryLink fragmentEntryLink) {
+		return new FragmentEntryLinkWrapper(fragmentEntryLink);
 	}
-
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _fragmentEntryLink.isEntityCacheEnabled();
-	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _fragmentEntryLink.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_fragmentEntryLink.resetOriginalValues();
-	}
-
-	private final FragmentEntryLink _fragmentEntryLink;
 }

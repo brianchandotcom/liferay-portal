@@ -16,17 +16,12 @@ package com.liferay.portal.workflow.kaleo.model;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
-
 import com.liferay.portal.kernel.model.ModelWrapper;
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -38,19 +33,10 @@ import java.util.Objects;
  * @generated
  */
 @ProviderType
-public class KaleoNodeWrapper implements KaleoNode, ModelWrapper<KaleoNode> {
+public class KaleoNodeWrapper extends BaseModelWrapper<KaleoNode>
+	implements KaleoNode, ModelWrapper<KaleoNode> {
 	public KaleoNodeWrapper(KaleoNode kaleoNode) {
-		_kaleoNode = kaleoNode;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return KaleoNode.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return KaleoNode.class.getName();
+		super(kaleoNode);
 	}
 
 	@Override
@@ -163,16 +149,6 @@ public class KaleoNodeWrapper implements KaleoNode, ModelWrapper<KaleoNode> {
 		}
 	}
 
-	@Override
-	public Object clone() {
-		return new KaleoNodeWrapper((KaleoNode)_kaleoNode.clone());
-	}
-
-	@Override
-	public int compareTo(KaleoNode kaleoNode) {
-		return _kaleoNode.compareTo(kaleoNode);
-	}
-
 	/**
 	* Returns the company ID of this kaleo node.
 	*
@@ -180,7 +156,7 @@ public class KaleoNodeWrapper implements KaleoNode, ModelWrapper<KaleoNode> {
 	*/
 	@Override
 	public long getCompanyId() {
-		return _kaleoNode.getCompanyId();
+		return model.getCompanyId();
 	}
 
 	/**
@@ -190,13 +166,13 @@ public class KaleoNodeWrapper implements KaleoNode, ModelWrapper<KaleoNode> {
 	*/
 	@Override
 	public Date getCreateDate() {
-		return _kaleoNode.getCreateDate();
+		return model.getCreateDate();
 	}
 
 	@Override
 	public KaleoTransition getDefaultKaleoTransition()
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _kaleoNode.getDefaultKaleoTransition();
+		return model.getDefaultKaleoTransition();
 	}
 
 	/**
@@ -206,12 +182,7 @@ public class KaleoNodeWrapper implements KaleoNode, ModelWrapper<KaleoNode> {
 	*/
 	@Override
 	public String getDescription() {
-		return _kaleoNode.getDescription();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _kaleoNode.getExpandoBridge();
+		return model.getDescription();
 	}
 
 	/**
@@ -221,7 +192,7 @@ public class KaleoNodeWrapper implements KaleoNode, ModelWrapper<KaleoNode> {
 	*/
 	@Override
 	public long getGroupId() {
-		return _kaleoNode.getGroupId();
+		return model.getGroupId();
 	}
 
 	/**
@@ -231,7 +202,7 @@ public class KaleoNodeWrapper implements KaleoNode, ModelWrapper<KaleoNode> {
 	*/
 	@Override
 	public boolean getInitial() {
-		return _kaleoNode.getInitial();
+		return model.getInitial();
 	}
 
 	/**
@@ -241,7 +212,7 @@ public class KaleoNodeWrapper implements KaleoNode, ModelWrapper<KaleoNode> {
 	*/
 	@Override
 	public long getKaleoDefinitionVersionId() {
-		return _kaleoNode.getKaleoDefinitionVersionId();
+		return model.getKaleoDefinitionVersionId();
 	}
 
 	/**
@@ -251,18 +222,18 @@ public class KaleoNodeWrapper implements KaleoNode, ModelWrapper<KaleoNode> {
 	*/
 	@Override
 	public long getKaleoNodeId() {
-		return _kaleoNode.getKaleoNodeId();
+		return model.getKaleoNodeId();
 	}
 
 	@Override
 	public KaleoTransition getKaleoTransition(String name)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _kaleoNode.getKaleoTransition(name);
+		return model.getKaleoTransition(name);
 	}
 
 	@Override
 	public java.util.List<KaleoTransition> getKaleoTransitions() {
-		return _kaleoNode.getKaleoTransitions();
+		return model.getKaleoTransitions();
 	}
 
 	/**
@@ -272,7 +243,7 @@ public class KaleoNodeWrapper implements KaleoNode, ModelWrapper<KaleoNode> {
 	*/
 	@Override
 	public String getMetadata() {
-		return _kaleoNode.getMetadata();
+		return model.getMetadata();
 	}
 
 	/**
@@ -282,7 +253,7 @@ public class KaleoNodeWrapper implements KaleoNode, ModelWrapper<KaleoNode> {
 	*/
 	@Override
 	public Date getModifiedDate() {
-		return _kaleoNode.getModifiedDate();
+		return model.getModifiedDate();
 	}
 
 	/**
@@ -292,7 +263,7 @@ public class KaleoNodeWrapper implements KaleoNode, ModelWrapper<KaleoNode> {
 	*/
 	@Override
 	public String getName() {
-		return _kaleoNode.getName();
+		return model.getName();
 	}
 
 	/**
@@ -302,12 +273,7 @@ public class KaleoNodeWrapper implements KaleoNode, ModelWrapper<KaleoNode> {
 	*/
 	@Override
 	public long getPrimaryKey() {
-		return _kaleoNode.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _kaleoNode.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	/**
@@ -317,7 +283,7 @@ public class KaleoNodeWrapper implements KaleoNode, ModelWrapper<KaleoNode> {
 	*/
 	@Override
 	public boolean getTerminal() {
-		return _kaleoNode.getTerminal();
+		return model.getTerminal();
 	}
 
 	/**
@@ -327,7 +293,7 @@ public class KaleoNodeWrapper implements KaleoNode, ModelWrapper<KaleoNode> {
 	*/
 	@Override
 	public String getType() {
-		return _kaleoNode.getType();
+		return model.getType();
 	}
 
 	/**
@@ -337,7 +303,7 @@ public class KaleoNodeWrapper implements KaleoNode, ModelWrapper<KaleoNode> {
 	*/
 	@Override
 	public long getUserId() {
-		return _kaleoNode.getUserId();
+		return model.getUserId();
 	}
 
 	/**
@@ -347,7 +313,7 @@ public class KaleoNodeWrapper implements KaleoNode, ModelWrapper<KaleoNode> {
 	*/
 	@Override
 	public String getUserName() {
-		return _kaleoNode.getUserName();
+		return model.getUserName();
 	}
 
 	/**
@@ -357,27 +323,12 @@ public class KaleoNodeWrapper implements KaleoNode, ModelWrapper<KaleoNode> {
 	*/
 	@Override
 	public String getUserUuid() {
-		return _kaleoNode.getUserUuid();
-	}
-
-	@Override
-	public int hashCode() {
-		return _kaleoNode.hashCode();
+		return model.getUserUuid();
 	}
 
 	@Override
 	public boolean hasKaleoTransition() {
-		return _kaleoNode.hasKaleoTransition();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _kaleoNode.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _kaleoNode.isEscapedModel();
+		return model.hasKaleoTransition();
 	}
 
 	/**
@@ -387,12 +338,7 @@ public class KaleoNodeWrapper implements KaleoNode, ModelWrapper<KaleoNode> {
 	*/
 	@Override
 	public boolean isInitial() {
-		return _kaleoNode.isInitial();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _kaleoNode.isNew();
+		return model.isInitial();
 	}
 
 	/**
@@ -402,17 +348,12 @@ public class KaleoNodeWrapper implements KaleoNode, ModelWrapper<KaleoNode> {
 	*/
 	@Override
 	public boolean isTerminal() {
-		return _kaleoNode.isTerminal();
+		return model.isTerminal();
 	}
 
 	@Override
 	public void persist() {
-		_kaleoNode.persist();
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_kaleoNode.setCachedModel(cachedModel);
+		model.persist();
 	}
 
 	/**
@@ -422,7 +363,7 @@ public class KaleoNodeWrapper implements KaleoNode, ModelWrapper<KaleoNode> {
 	*/
 	@Override
 	public void setCompanyId(long companyId) {
-		_kaleoNode.setCompanyId(companyId);
+		model.setCompanyId(companyId);
 	}
 
 	/**
@@ -432,7 +373,7 @@ public class KaleoNodeWrapper implements KaleoNode, ModelWrapper<KaleoNode> {
 	*/
 	@Override
 	public void setCreateDate(Date createDate) {
-		_kaleoNode.setCreateDate(createDate);
+		model.setCreateDate(createDate);
 	}
 
 	/**
@@ -442,23 +383,7 @@ public class KaleoNodeWrapper implements KaleoNode, ModelWrapper<KaleoNode> {
 	*/
 	@Override
 	public void setDescription(String description) {
-		_kaleoNode.setDescription(description);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-		_kaleoNode.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_kaleoNode.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_kaleoNode.setExpandoBridgeAttributes(serviceContext);
+		model.setDescription(description);
 	}
 
 	/**
@@ -468,7 +393,7 @@ public class KaleoNodeWrapper implements KaleoNode, ModelWrapper<KaleoNode> {
 	*/
 	@Override
 	public void setGroupId(long groupId) {
-		_kaleoNode.setGroupId(groupId);
+		model.setGroupId(groupId);
 	}
 
 	/**
@@ -478,7 +403,7 @@ public class KaleoNodeWrapper implements KaleoNode, ModelWrapper<KaleoNode> {
 	*/
 	@Override
 	public void setInitial(boolean initial) {
-		_kaleoNode.setInitial(initial);
+		model.setInitial(initial);
 	}
 
 	/**
@@ -488,7 +413,7 @@ public class KaleoNodeWrapper implements KaleoNode, ModelWrapper<KaleoNode> {
 	*/
 	@Override
 	public void setKaleoDefinitionVersionId(long kaleoDefinitionVersionId) {
-		_kaleoNode.setKaleoDefinitionVersionId(kaleoDefinitionVersionId);
+		model.setKaleoDefinitionVersionId(kaleoDefinitionVersionId);
 	}
 
 	/**
@@ -498,7 +423,7 @@ public class KaleoNodeWrapper implements KaleoNode, ModelWrapper<KaleoNode> {
 	*/
 	@Override
 	public void setKaleoNodeId(long kaleoNodeId) {
-		_kaleoNode.setKaleoNodeId(kaleoNodeId);
+		model.setKaleoNodeId(kaleoNodeId);
 	}
 
 	/**
@@ -508,7 +433,7 @@ public class KaleoNodeWrapper implements KaleoNode, ModelWrapper<KaleoNode> {
 	*/
 	@Override
 	public void setMetadata(String metadata) {
-		_kaleoNode.setMetadata(metadata);
+		model.setMetadata(metadata);
 	}
 
 	/**
@@ -518,7 +443,7 @@ public class KaleoNodeWrapper implements KaleoNode, ModelWrapper<KaleoNode> {
 	*/
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
-		_kaleoNode.setModifiedDate(modifiedDate);
+		model.setModifiedDate(modifiedDate);
 	}
 
 	/**
@@ -528,12 +453,7 @@ public class KaleoNodeWrapper implements KaleoNode, ModelWrapper<KaleoNode> {
 	*/
 	@Override
 	public void setName(String name) {
-		_kaleoNode.setName(name);
-	}
-
-	@Override
-	public void setNew(boolean n) {
-		_kaleoNode.setNew(n);
+		model.setName(name);
 	}
 
 	/**
@@ -543,12 +463,7 @@ public class KaleoNodeWrapper implements KaleoNode, ModelWrapper<KaleoNode> {
 	*/
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_kaleoNode.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_kaleoNode.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -558,7 +473,7 @@ public class KaleoNodeWrapper implements KaleoNode, ModelWrapper<KaleoNode> {
 	*/
 	@Override
 	public void setTerminal(boolean terminal) {
-		_kaleoNode.setTerminal(terminal);
+		model.setTerminal(terminal);
 	}
 
 	/**
@@ -568,7 +483,7 @@ public class KaleoNodeWrapper implements KaleoNode, ModelWrapper<KaleoNode> {
 	*/
 	@Override
 	public void setType(String type) {
-		_kaleoNode.setType(type);
+		model.setType(type);
 	}
 
 	/**
@@ -578,7 +493,7 @@ public class KaleoNodeWrapper implements KaleoNode, ModelWrapper<KaleoNode> {
 	*/
 	@Override
 	public void setUserId(long userId) {
-		_kaleoNode.setUserId(userId);
+		model.setUserId(userId);
 	}
 
 	/**
@@ -588,7 +503,7 @@ public class KaleoNodeWrapper implements KaleoNode, ModelWrapper<KaleoNode> {
 	*/
 	@Override
 	public void setUserName(String userName) {
-		_kaleoNode.setUserName(userName);
+		model.setUserName(userName);
 	}
 
 	/**
@@ -598,72 +513,11 @@ public class KaleoNodeWrapper implements KaleoNode, ModelWrapper<KaleoNode> {
 	*/
 	@Override
 	public void setUserUuid(String userUuid) {
-		_kaleoNode.setUserUuid(userUuid);
+		model.setUserUuid(userUuid);
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.CacheModel<KaleoNode> toCacheModel() {
-		return _kaleoNode.toCacheModel();
+	protected KaleoNodeWrapper wrap(KaleoNode kaleoNode) {
+		return new KaleoNodeWrapper(kaleoNode);
 	}
-
-	@Override
-	public KaleoNode toEscapedModel() {
-		return new KaleoNodeWrapper(_kaleoNode.toEscapedModel());
-	}
-
-	@Override
-	public String toString() {
-		return _kaleoNode.toString();
-	}
-
-	@Override
-	public KaleoNode toUnescapedModel() {
-		return new KaleoNodeWrapper(_kaleoNode.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _kaleoNode.toXmlString();
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-
-		if (!(obj instanceof KaleoNodeWrapper)) {
-			return false;
-		}
-
-		KaleoNodeWrapper kaleoNodeWrapper = (KaleoNodeWrapper)obj;
-
-		if (Objects.equals(_kaleoNode, kaleoNodeWrapper._kaleoNode)) {
-			return true;
-		}
-
-		return false;
-	}
-
-	@Override
-	public KaleoNode getWrappedModel() {
-		return _kaleoNode;
-	}
-
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _kaleoNode.isEntityCacheEnabled();
-	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _kaleoNode.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_kaleoNode.resetOriginalValues();
-	}
-
-	private final KaleoNode _kaleoNode;
 }

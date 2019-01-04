@@ -16,16 +16,11 @@ package com.liferay.portal.kernel.model;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
-
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -37,20 +32,10 @@ import java.util.Objects;
  * @generated
  */
 @ProviderType
-public class PortletItemWrapper implements PortletItem,
-	ModelWrapper<PortletItem> {
+public class PortletItemWrapper extends BaseModelWrapper<PortletItem>
+	implements PortletItem, ModelWrapper<PortletItem> {
 	public PortletItemWrapper(PortletItem portletItem) {
-		_portletItem = portletItem;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return PortletItem.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return PortletItem.class.getName();
+		super(portletItem);
 	}
 
 	@Override
@@ -141,16 +126,6 @@ public class PortletItemWrapper implements PortletItem,
 		}
 	}
 
-	@Override
-	public Object clone() {
-		return new PortletItemWrapper((PortletItem)_portletItem.clone());
-	}
-
-	@Override
-	public int compareTo(PortletItem portletItem) {
-		return _portletItem.compareTo(portletItem);
-	}
-
 	/**
 	* Returns the fully qualified class name of this portlet item.
 	*
@@ -158,7 +133,7 @@ public class PortletItemWrapper implements PortletItem,
 	*/
 	@Override
 	public String getClassName() {
-		return _portletItem.getClassName();
+		return model.getClassName();
 	}
 
 	/**
@@ -168,7 +143,7 @@ public class PortletItemWrapper implements PortletItem,
 	*/
 	@Override
 	public long getClassNameId() {
-		return _portletItem.getClassNameId();
+		return model.getClassNameId();
 	}
 
 	/**
@@ -178,7 +153,7 @@ public class PortletItemWrapper implements PortletItem,
 	*/
 	@Override
 	public long getCompanyId() {
-		return _portletItem.getCompanyId();
+		return model.getCompanyId();
 	}
 
 	/**
@@ -188,12 +163,7 @@ public class PortletItemWrapper implements PortletItem,
 	*/
 	@Override
 	public Date getCreateDate() {
-		return _portletItem.getCreateDate();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _portletItem.getExpandoBridge();
+		return model.getCreateDate();
 	}
 
 	/**
@@ -203,7 +173,7 @@ public class PortletItemWrapper implements PortletItem,
 	*/
 	@Override
 	public long getGroupId() {
-		return _portletItem.getGroupId();
+		return model.getGroupId();
 	}
 
 	/**
@@ -213,7 +183,7 @@ public class PortletItemWrapper implements PortletItem,
 	*/
 	@Override
 	public Date getModifiedDate() {
-		return _portletItem.getModifiedDate();
+		return model.getModifiedDate();
 	}
 
 	/**
@@ -223,7 +193,7 @@ public class PortletItemWrapper implements PortletItem,
 	*/
 	@Override
 	public long getMvccVersion() {
-		return _portletItem.getMvccVersion();
+		return model.getMvccVersion();
 	}
 
 	/**
@@ -233,7 +203,7 @@ public class PortletItemWrapper implements PortletItem,
 	*/
 	@Override
 	public String getName() {
-		return _portletItem.getName();
+		return model.getName();
 	}
 
 	/**
@@ -243,7 +213,7 @@ public class PortletItemWrapper implements PortletItem,
 	*/
 	@Override
 	public String getPortletId() {
-		return _portletItem.getPortletId();
+		return model.getPortletId();
 	}
 
 	/**
@@ -253,7 +223,7 @@ public class PortletItemWrapper implements PortletItem,
 	*/
 	@Override
 	public long getPortletItemId() {
-		return _portletItem.getPortletItemId();
+		return model.getPortletItemId();
 	}
 
 	/**
@@ -263,12 +233,7 @@ public class PortletItemWrapper implements PortletItem,
 	*/
 	@Override
 	public long getPrimaryKey() {
-		return _portletItem.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _portletItem.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	/**
@@ -278,7 +243,7 @@ public class PortletItemWrapper implements PortletItem,
 	*/
 	@Override
 	public long getUserId() {
-		return _portletItem.getUserId();
+		return model.getUserId();
 	}
 
 	/**
@@ -288,7 +253,7 @@ public class PortletItemWrapper implements PortletItem,
 	*/
 	@Override
 	public String getUserName() {
-		return _portletItem.getUserName();
+		return model.getUserName();
 	}
 
 	/**
@@ -298,42 +263,17 @@ public class PortletItemWrapper implements PortletItem,
 	*/
 	@Override
 	public String getUserUuid() {
-		return _portletItem.getUserUuid();
-	}
-
-	@Override
-	public int hashCode() {
-		return _portletItem.hashCode();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _portletItem.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _portletItem.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _portletItem.isNew();
+		return model.getUserUuid();
 	}
 
 	@Override
 	public void persist() {
-		_portletItem.persist();
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_portletItem.setCachedModel(cachedModel);
+		model.persist();
 	}
 
 	@Override
 	public void setClassName(String className) {
-		_portletItem.setClassName(className);
+		model.setClassName(className);
 	}
 
 	/**
@@ -343,7 +283,7 @@ public class PortletItemWrapper implements PortletItem,
 	*/
 	@Override
 	public void setClassNameId(long classNameId) {
-		_portletItem.setClassNameId(classNameId);
+		model.setClassNameId(classNameId);
 	}
 
 	/**
@@ -353,7 +293,7 @@ public class PortletItemWrapper implements PortletItem,
 	*/
 	@Override
 	public void setCompanyId(long companyId) {
-		_portletItem.setCompanyId(companyId);
+		model.setCompanyId(companyId);
 	}
 
 	/**
@@ -363,22 +303,7 @@ public class PortletItemWrapper implements PortletItem,
 	*/
 	@Override
 	public void setCreateDate(Date createDate) {
-		_portletItem.setCreateDate(createDate);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(BaseModel<?> baseModel) {
-		_portletItem.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_portletItem.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_portletItem.setExpandoBridgeAttributes(serviceContext);
+		model.setCreateDate(createDate);
 	}
 
 	/**
@@ -388,7 +313,7 @@ public class PortletItemWrapper implements PortletItem,
 	*/
 	@Override
 	public void setGroupId(long groupId) {
-		_portletItem.setGroupId(groupId);
+		model.setGroupId(groupId);
 	}
 
 	/**
@@ -398,7 +323,7 @@ public class PortletItemWrapper implements PortletItem,
 	*/
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
-		_portletItem.setModifiedDate(modifiedDate);
+		model.setModifiedDate(modifiedDate);
 	}
 
 	/**
@@ -408,7 +333,7 @@ public class PortletItemWrapper implements PortletItem,
 	*/
 	@Override
 	public void setMvccVersion(long mvccVersion) {
-		_portletItem.setMvccVersion(mvccVersion);
+		model.setMvccVersion(mvccVersion);
 	}
 
 	/**
@@ -418,12 +343,7 @@ public class PortletItemWrapper implements PortletItem,
 	*/
 	@Override
 	public void setName(String name) {
-		_portletItem.setName(name);
-	}
-
-	@Override
-	public void setNew(boolean n) {
-		_portletItem.setNew(n);
+		model.setName(name);
 	}
 
 	/**
@@ -433,7 +353,7 @@ public class PortletItemWrapper implements PortletItem,
 	*/
 	@Override
 	public void setPortletId(String portletId) {
-		_portletItem.setPortletId(portletId);
+		model.setPortletId(portletId);
 	}
 
 	/**
@@ -443,7 +363,7 @@ public class PortletItemWrapper implements PortletItem,
 	*/
 	@Override
 	public void setPortletItemId(long portletItemId) {
-		_portletItem.setPortletItemId(portletItemId);
+		model.setPortletItemId(portletItemId);
 	}
 
 	/**
@@ -453,12 +373,7 @@ public class PortletItemWrapper implements PortletItem,
 	*/
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_portletItem.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_portletItem.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -468,7 +383,7 @@ public class PortletItemWrapper implements PortletItem,
 	*/
 	@Override
 	public void setUserId(long userId) {
-		_portletItem.setUserId(userId);
+		model.setUserId(userId);
 	}
 
 	/**
@@ -478,7 +393,7 @@ public class PortletItemWrapper implements PortletItem,
 	*/
 	@Override
 	public void setUserName(String userName) {
-		_portletItem.setUserName(userName);
+		model.setUserName(userName);
 	}
 
 	/**
@@ -488,72 +403,11 @@ public class PortletItemWrapper implements PortletItem,
 	*/
 	@Override
 	public void setUserUuid(String userUuid) {
-		_portletItem.setUserUuid(userUuid);
+		model.setUserUuid(userUuid);
 	}
 
 	@Override
-	public CacheModel<PortletItem> toCacheModel() {
-		return _portletItem.toCacheModel();
+	protected PortletItemWrapper wrap(PortletItem portletItem) {
+		return new PortletItemWrapper(portletItem);
 	}
-
-	@Override
-	public PortletItem toEscapedModel() {
-		return new PortletItemWrapper(_portletItem.toEscapedModel());
-	}
-
-	@Override
-	public String toString() {
-		return _portletItem.toString();
-	}
-
-	@Override
-	public PortletItem toUnescapedModel() {
-		return new PortletItemWrapper(_portletItem.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _portletItem.toXmlString();
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-
-		if (!(obj instanceof PortletItemWrapper)) {
-			return false;
-		}
-
-		PortletItemWrapper portletItemWrapper = (PortletItemWrapper)obj;
-
-		if (Objects.equals(_portletItem, portletItemWrapper._portletItem)) {
-			return true;
-		}
-
-		return false;
-	}
-
-	@Override
-	public PortletItem getWrappedModel() {
-		return _portletItem;
-	}
-
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _portletItem.isEntityCacheEnabled();
-	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _portletItem.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_portletItem.resetOriginalValues();
-	}
-
-	private final PortletItem _portletItem;
 }

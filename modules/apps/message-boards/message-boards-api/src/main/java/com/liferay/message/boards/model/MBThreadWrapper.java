@@ -16,19 +16,14 @@ package com.liferay.message.boards.model;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
-
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 
 import com.liferay.portal.kernel.model.ModelWrapper;
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -40,19 +35,10 @@ import java.util.Objects;
  * @generated
  */
 @ProviderType
-public class MBThreadWrapper implements MBThread, ModelWrapper<MBThread> {
+public class MBThreadWrapper extends BaseModelWrapper<MBThread>
+	implements MBThread, ModelWrapper<MBThread> {
 	public MBThreadWrapper(MBThread mbThread) {
-		_mbThread = mbThread;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return MBThread.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return MBThread.class.getName();
+		super(mbThread);
 	}
 
 	@Override
@@ -230,28 +216,18 @@ public class MBThreadWrapper implements MBThread, ModelWrapper<MBThread> {
 	@Override
 	public com.liferay.portal.kernel.repository.model.Folder addAttachmentsFolder()
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _mbThread.addAttachmentsFolder();
-	}
-
-	@Override
-	public Object clone() {
-		return new MBThreadWrapper((MBThread)_mbThread.clone());
-	}
-
-	@Override
-	public int compareTo(MBThread mbThread) {
-		return _mbThread.compareTo(mbThread);
+		return model.addAttachmentsFolder();
 	}
 
 	@Override
 	public long getAttachmentsFolderId() {
-		return _mbThread.getAttachmentsFolderId();
+		return model.getAttachmentsFolderId();
 	}
 
 	@Override
 	public MBCategory getCategory()
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _mbThread.getCategory();
+		return model.getCategory();
 	}
 
 	/**
@@ -261,7 +237,7 @@ public class MBThreadWrapper implements MBThread, ModelWrapper<MBThread> {
 	*/
 	@Override
 	public long getCategoryId() {
-		return _mbThread.getCategoryId();
+		return model.getCategoryId();
 	}
 
 	/**
@@ -271,7 +247,7 @@ public class MBThreadWrapper implements MBThread, ModelWrapper<MBThread> {
 	*/
 	@Override
 	public long getCompanyId() {
-		return _mbThread.getCompanyId();
+		return model.getCompanyId();
 	}
 
 	/**
@@ -281,7 +257,7 @@ public class MBThreadWrapper implements MBThread, ModelWrapper<MBThread> {
 	*/
 	@Override
 	public long getContainerModelId() {
-		return _mbThread.getContainerModelId();
+		return model.getContainerModelId();
 	}
 
 	/**
@@ -291,7 +267,7 @@ public class MBThreadWrapper implements MBThread, ModelWrapper<MBThread> {
 	*/
 	@Override
 	public String getContainerModelName() {
-		return _mbThread.getContainerModelName();
+		return model.getContainerModelName();
 	}
 
 	/**
@@ -301,12 +277,7 @@ public class MBThreadWrapper implements MBThread, ModelWrapper<MBThread> {
 	*/
 	@Override
 	public Date getCreateDate() {
-		return _mbThread.getCreateDate();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _mbThread.getExpandoBridge();
+		return model.getCreateDate();
 	}
 
 	/**
@@ -316,7 +287,7 @@ public class MBThreadWrapper implements MBThread, ModelWrapper<MBThread> {
 	*/
 	@Override
 	public long getGroupId() {
-		return _mbThread.getGroupId();
+		return model.getGroupId();
 	}
 
 	/**
@@ -326,7 +297,7 @@ public class MBThreadWrapper implements MBThread, ModelWrapper<MBThread> {
 	*/
 	@Override
 	public long getLastPostByUserId() {
-		return _mbThread.getLastPostByUserId();
+		return model.getLastPostByUserId();
 	}
 
 	/**
@@ -336,7 +307,7 @@ public class MBThreadWrapper implements MBThread, ModelWrapper<MBThread> {
 	*/
 	@Override
 	public String getLastPostByUserUuid() {
-		return _mbThread.getLastPostByUserUuid();
+		return model.getLastPostByUserUuid();
 	}
 
 	/**
@@ -346,7 +317,7 @@ public class MBThreadWrapper implements MBThread, ModelWrapper<MBThread> {
 	*/
 	@Override
 	public Date getLastPostDate() {
-		return _mbThread.getLastPostDate();
+		return model.getLastPostDate();
 	}
 
 	/**
@@ -356,12 +327,12 @@ public class MBThreadWrapper implements MBThread, ModelWrapper<MBThread> {
 	*/
 	@Override
 	public Date getLastPublishDate() {
-		return _mbThread.getLastPublishDate();
+		return model.getLastPublishDate();
 	}
 
 	@Override
 	public com.liferay.portal.kernel.lock.Lock getLock() {
-		return _mbThread.getLock();
+		return model.getLock();
 	}
 
 	/**
@@ -371,7 +342,7 @@ public class MBThreadWrapper implements MBThread, ModelWrapper<MBThread> {
 	*/
 	@Override
 	public int getMessageCount() {
-		return _mbThread.getMessageCount();
+		return model.getMessageCount();
 	}
 
 	/**
@@ -381,7 +352,7 @@ public class MBThreadWrapper implements MBThread, ModelWrapper<MBThread> {
 	*/
 	@Override
 	public Date getModifiedDate() {
-		return _mbThread.getModifiedDate();
+		return model.getModifiedDate();
 	}
 
 	/**
@@ -391,12 +362,12 @@ public class MBThreadWrapper implements MBThread, ModelWrapper<MBThread> {
 	*/
 	@Override
 	public long getParentContainerModelId() {
-		return _mbThread.getParentContainerModelId();
+		return model.getParentContainerModelId();
 	}
 
 	@Override
 	public long[] getParticipantUserIds() {
-		return _mbThread.getParticipantUserIds();
+		return model.getParticipantUserIds();
 	}
 
 	/**
@@ -406,12 +377,7 @@ public class MBThreadWrapper implements MBThread, ModelWrapper<MBThread> {
 	*/
 	@Override
 	public long getPrimaryKey() {
-		return _mbThread.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _mbThread.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	/**
@@ -421,7 +387,7 @@ public class MBThreadWrapper implements MBThread, ModelWrapper<MBThread> {
 	*/
 	@Override
 	public double getPriority() {
-		return _mbThread.getPriority();
+		return model.getPriority();
 	}
 
 	/**
@@ -431,7 +397,7 @@ public class MBThreadWrapper implements MBThread, ModelWrapper<MBThread> {
 	*/
 	@Override
 	public boolean getQuestion() {
-		return _mbThread.getQuestion();
+		return model.getQuestion();
 	}
 
 	/**
@@ -441,7 +407,7 @@ public class MBThreadWrapper implements MBThread, ModelWrapper<MBThread> {
 	*/
 	@Override
 	public long getRootMessageId() {
-		return _mbThread.getRootMessageId();
+		return model.getRootMessageId();
 	}
 
 	/**
@@ -451,7 +417,7 @@ public class MBThreadWrapper implements MBThread, ModelWrapper<MBThread> {
 	*/
 	@Override
 	public long getRootMessageUserId() {
-		return _mbThread.getRootMessageUserId();
+		return model.getRootMessageUserId();
 	}
 
 	/**
@@ -461,7 +427,7 @@ public class MBThreadWrapper implements MBThread, ModelWrapper<MBThread> {
 	*/
 	@Override
 	public String getRootMessageUserUuid() {
-		return _mbThread.getRootMessageUserUuid();
+		return model.getRootMessageUserUuid();
 	}
 
 	/**
@@ -471,7 +437,7 @@ public class MBThreadWrapper implements MBThread, ModelWrapper<MBThread> {
 	*/
 	@Override
 	public int getStatus() {
-		return _mbThread.getStatus();
+		return model.getStatus();
 	}
 
 	/**
@@ -481,7 +447,7 @@ public class MBThreadWrapper implements MBThread, ModelWrapper<MBThread> {
 	*/
 	@Override
 	public long getStatusByUserId() {
-		return _mbThread.getStatusByUserId();
+		return model.getStatusByUserId();
 	}
 
 	/**
@@ -491,7 +457,7 @@ public class MBThreadWrapper implements MBThread, ModelWrapper<MBThread> {
 	*/
 	@Override
 	public String getStatusByUserName() {
-		return _mbThread.getStatusByUserName();
+		return model.getStatusByUserName();
 	}
 
 	/**
@@ -501,7 +467,7 @@ public class MBThreadWrapper implements MBThread, ModelWrapper<MBThread> {
 	*/
 	@Override
 	public String getStatusByUserUuid() {
-		return _mbThread.getStatusByUserUuid();
+		return model.getStatusByUserUuid();
 	}
 
 	/**
@@ -511,7 +477,7 @@ public class MBThreadWrapper implements MBThread, ModelWrapper<MBThread> {
 	*/
 	@Override
 	public Date getStatusDate() {
-		return _mbThread.getStatusDate();
+		return model.getStatusDate();
 	}
 
 	/**
@@ -521,7 +487,7 @@ public class MBThreadWrapper implements MBThread, ModelWrapper<MBThread> {
 	*/
 	@Override
 	public long getThreadId() {
-		return _mbThread.getThreadId();
+		return model.getThreadId();
 	}
 
 	/**
@@ -531,7 +497,7 @@ public class MBThreadWrapper implements MBThread, ModelWrapper<MBThread> {
 	*/
 	@Override
 	public String getTitle() {
-		return _mbThread.getTitle();
+		return model.getTitle();
 	}
 
 	/**
@@ -542,7 +508,7 @@ public class MBThreadWrapper implements MBThread, ModelWrapper<MBThread> {
 	@Override
 	public com.liferay.trash.kernel.model.TrashEntry getTrashEntry()
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _mbThread.getTrashEntry();
+		return model.getTrashEntry();
 	}
 
 	/**
@@ -552,7 +518,7 @@ public class MBThreadWrapper implements MBThread, ModelWrapper<MBThread> {
 	*/
 	@Override
 	public long getTrashEntryClassPK() {
-		return _mbThread.getTrashEntryClassPK();
+		return model.getTrashEntryClassPK();
 	}
 
 	/**
@@ -564,7 +530,7 @@ public class MBThreadWrapper implements MBThread, ModelWrapper<MBThread> {
 	@Deprecated
 	@Override
 	public com.liferay.portal.kernel.trash.TrashHandler getTrashHandler() {
-		return _mbThread.getTrashHandler();
+		return model.getTrashHandler();
 	}
 
 	/**
@@ -574,7 +540,7 @@ public class MBThreadWrapper implements MBThread, ModelWrapper<MBThread> {
 	*/
 	@Override
 	public long getUserId() {
-		return _mbThread.getUserId();
+		return model.getUserId();
 	}
 
 	/**
@@ -584,7 +550,7 @@ public class MBThreadWrapper implements MBThread, ModelWrapper<MBThread> {
 	*/
 	@Override
 	public String getUserName() {
-		return _mbThread.getUserName();
+		return model.getUserName();
 	}
 
 	/**
@@ -594,7 +560,7 @@ public class MBThreadWrapper implements MBThread, ModelWrapper<MBThread> {
 	*/
 	@Override
 	public String getUserUuid() {
-		return _mbThread.getUserUuid();
+		return model.getUserUuid();
 	}
 
 	/**
@@ -604,7 +570,7 @@ public class MBThreadWrapper implements MBThread, ModelWrapper<MBThread> {
 	*/
 	@Override
 	public String getUuid() {
-		return _mbThread.getUuid();
+		return model.getUuid();
 	}
 
 	/**
@@ -614,17 +580,12 @@ public class MBThreadWrapper implements MBThread, ModelWrapper<MBThread> {
 	*/
 	@Override
 	public int getViewCount() {
-		return _mbThread.getViewCount();
-	}
-
-	@Override
-	public int hashCode() {
-		return _mbThread.hashCode();
+		return model.getViewCount();
 	}
 
 	@Override
 	public boolean hasLock(long userId) {
-		return _mbThread.hasLock(userId);
+		return model.hasLock(userId);
 	}
 
 	/**
@@ -634,12 +595,7 @@ public class MBThreadWrapper implements MBThread, ModelWrapper<MBThread> {
 	*/
 	@Override
 	public boolean isApproved() {
-		return _mbThread.isApproved();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _mbThread.isCachedModel();
+		return model.isApproved();
 	}
 
 	/**
@@ -649,7 +605,7 @@ public class MBThreadWrapper implements MBThread, ModelWrapper<MBThread> {
 	*/
 	@Override
 	public boolean isDenied() {
-		return _mbThread.isDenied();
+		return model.isDenied();
 	}
 
 	/**
@@ -659,12 +615,7 @@ public class MBThreadWrapper implements MBThread, ModelWrapper<MBThread> {
 	*/
 	@Override
 	public boolean isDraft() {
-		return _mbThread.isDraft();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _mbThread.isEscapedModel();
+		return model.isDraft();
 	}
 
 	/**
@@ -674,7 +625,7 @@ public class MBThreadWrapper implements MBThread, ModelWrapper<MBThread> {
 	*/
 	@Override
 	public boolean isExpired() {
-		return _mbThread.isExpired();
+		return model.isExpired();
 	}
 
 	/**
@@ -684,7 +635,7 @@ public class MBThreadWrapper implements MBThread, ModelWrapper<MBThread> {
 	*/
 	@Override
 	public boolean isInactive() {
-		return _mbThread.isInactive();
+		return model.isInactive();
 	}
 
 	/**
@@ -694,7 +645,7 @@ public class MBThreadWrapper implements MBThread, ModelWrapper<MBThread> {
 	*/
 	@Override
 	public boolean isIncomplete() {
-		return _mbThread.isIncomplete();
+		return model.isIncomplete();
 	}
 
 	/**
@@ -704,7 +655,7 @@ public class MBThreadWrapper implements MBThread, ModelWrapper<MBThread> {
 	*/
 	@Override
 	public boolean isInTrash() {
-		return _mbThread.isInTrash();
+		return model.isInTrash();
 	}
 
 	/**
@@ -714,27 +665,22 @@ public class MBThreadWrapper implements MBThread, ModelWrapper<MBThread> {
 	*/
 	@Override
 	public boolean isInTrashContainer() {
-		return _mbThread.isInTrashContainer();
+		return model.isInTrashContainer();
 	}
 
 	@Override
 	public boolean isInTrashExplicitly() {
-		return _mbThread.isInTrashExplicitly();
+		return model.isInTrashExplicitly();
 	}
 
 	@Override
 	public boolean isInTrashImplicitly() {
-		return _mbThread.isInTrashImplicitly();
+		return model.isInTrashImplicitly();
 	}
 
 	@Override
 	public boolean isLocked() {
-		return _mbThread.isLocked();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _mbThread.isNew();
+		return model.isLocked();
 	}
 
 	/**
@@ -744,7 +690,7 @@ public class MBThreadWrapper implements MBThread, ModelWrapper<MBThread> {
 	*/
 	@Override
 	public boolean isPending() {
-		return _mbThread.isPending();
+		return model.isPending();
 	}
 
 	/**
@@ -754,7 +700,7 @@ public class MBThreadWrapper implements MBThread, ModelWrapper<MBThread> {
 	*/
 	@Override
 	public boolean isQuestion() {
-		return _mbThread.isQuestion();
+		return model.isQuestion();
 	}
 
 	/**
@@ -764,17 +710,12 @@ public class MBThreadWrapper implements MBThread, ModelWrapper<MBThread> {
 	*/
 	@Override
 	public boolean isScheduled() {
-		return _mbThread.isScheduled();
+		return model.isScheduled();
 	}
 
 	@Override
 	public void persist() {
-		_mbThread.persist();
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_mbThread.setCachedModel(cachedModel);
+		model.persist();
 	}
 
 	/**
@@ -784,7 +725,7 @@ public class MBThreadWrapper implements MBThread, ModelWrapper<MBThread> {
 	*/
 	@Override
 	public void setCategoryId(long categoryId) {
-		_mbThread.setCategoryId(categoryId);
+		model.setCategoryId(categoryId);
 	}
 
 	/**
@@ -794,7 +735,7 @@ public class MBThreadWrapper implements MBThread, ModelWrapper<MBThread> {
 	*/
 	@Override
 	public void setCompanyId(long companyId) {
-		_mbThread.setCompanyId(companyId);
+		model.setCompanyId(companyId);
 	}
 
 	/**
@@ -804,7 +745,7 @@ public class MBThreadWrapper implements MBThread, ModelWrapper<MBThread> {
 	*/
 	@Override
 	public void setContainerModelId(long containerModelId) {
-		_mbThread.setContainerModelId(containerModelId);
+		model.setContainerModelId(containerModelId);
 	}
 
 	/**
@@ -814,23 +755,7 @@ public class MBThreadWrapper implements MBThread, ModelWrapper<MBThread> {
 	*/
 	@Override
 	public void setCreateDate(Date createDate) {
-		_mbThread.setCreateDate(createDate);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-		_mbThread.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_mbThread.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_mbThread.setExpandoBridgeAttributes(serviceContext);
+		model.setCreateDate(createDate);
 	}
 
 	/**
@@ -840,7 +765,7 @@ public class MBThreadWrapper implements MBThread, ModelWrapper<MBThread> {
 	*/
 	@Override
 	public void setGroupId(long groupId) {
-		_mbThread.setGroupId(groupId);
+		model.setGroupId(groupId);
 	}
 
 	/**
@@ -850,7 +775,7 @@ public class MBThreadWrapper implements MBThread, ModelWrapper<MBThread> {
 	*/
 	@Override
 	public void setLastPostByUserId(long lastPostByUserId) {
-		_mbThread.setLastPostByUserId(lastPostByUserId);
+		model.setLastPostByUserId(lastPostByUserId);
 	}
 
 	/**
@@ -860,7 +785,7 @@ public class MBThreadWrapper implements MBThread, ModelWrapper<MBThread> {
 	*/
 	@Override
 	public void setLastPostByUserUuid(String lastPostByUserUuid) {
-		_mbThread.setLastPostByUserUuid(lastPostByUserUuid);
+		model.setLastPostByUserUuid(lastPostByUserUuid);
 	}
 
 	/**
@@ -870,7 +795,7 @@ public class MBThreadWrapper implements MBThread, ModelWrapper<MBThread> {
 	*/
 	@Override
 	public void setLastPostDate(Date lastPostDate) {
-		_mbThread.setLastPostDate(lastPostDate);
+		model.setLastPostDate(lastPostDate);
 	}
 
 	/**
@@ -880,7 +805,7 @@ public class MBThreadWrapper implements MBThread, ModelWrapper<MBThread> {
 	*/
 	@Override
 	public void setLastPublishDate(Date lastPublishDate) {
-		_mbThread.setLastPublishDate(lastPublishDate);
+		model.setLastPublishDate(lastPublishDate);
 	}
 
 	/**
@@ -890,7 +815,7 @@ public class MBThreadWrapper implements MBThread, ModelWrapper<MBThread> {
 	*/
 	@Override
 	public void setMessageCount(int messageCount) {
-		_mbThread.setMessageCount(messageCount);
+		model.setMessageCount(messageCount);
 	}
 
 	/**
@@ -900,12 +825,7 @@ public class MBThreadWrapper implements MBThread, ModelWrapper<MBThread> {
 	*/
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
-		_mbThread.setModifiedDate(modifiedDate);
-	}
-
-	@Override
-	public void setNew(boolean n) {
-		_mbThread.setNew(n);
+		model.setModifiedDate(modifiedDate);
 	}
 
 	/**
@@ -915,7 +835,7 @@ public class MBThreadWrapper implements MBThread, ModelWrapper<MBThread> {
 	*/
 	@Override
 	public void setParentContainerModelId(long parentContainerModelId) {
-		_mbThread.setParentContainerModelId(parentContainerModelId);
+		model.setParentContainerModelId(parentContainerModelId);
 	}
 
 	/**
@@ -925,12 +845,7 @@ public class MBThreadWrapper implements MBThread, ModelWrapper<MBThread> {
 	*/
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_mbThread.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_mbThread.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -940,7 +855,7 @@ public class MBThreadWrapper implements MBThread, ModelWrapper<MBThread> {
 	*/
 	@Override
 	public void setPriority(double priority) {
-		_mbThread.setPriority(priority);
+		model.setPriority(priority);
 	}
 
 	/**
@@ -950,7 +865,7 @@ public class MBThreadWrapper implements MBThread, ModelWrapper<MBThread> {
 	*/
 	@Override
 	public void setQuestion(boolean question) {
-		_mbThread.setQuestion(question);
+		model.setQuestion(question);
 	}
 
 	/**
@@ -960,7 +875,7 @@ public class MBThreadWrapper implements MBThread, ModelWrapper<MBThread> {
 	*/
 	@Override
 	public void setRootMessageId(long rootMessageId) {
-		_mbThread.setRootMessageId(rootMessageId);
+		model.setRootMessageId(rootMessageId);
 	}
 
 	/**
@@ -970,7 +885,7 @@ public class MBThreadWrapper implements MBThread, ModelWrapper<MBThread> {
 	*/
 	@Override
 	public void setRootMessageUserId(long rootMessageUserId) {
-		_mbThread.setRootMessageUserId(rootMessageUserId);
+		model.setRootMessageUserId(rootMessageUserId);
 	}
 
 	/**
@@ -980,7 +895,7 @@ public class MBThreadWrapper implements MBThread, ModelWrapper<MBThread> {
 	*/
 	@Override
 	public void setRootMessageUserUuid(String rootMessageUserUuid) {
-		_mbThread.setRootMessageUserUuid(rootMessageUserUuid);
+		model.setRootMessageUserUuid(rootMessageUserUuid);
 	}
 
 	/**
@@ -990,7 +905,7 @@ public class MBThreadWrapper implements MBThread, ModelWrapper<MBThread> {
 	*/
 	@Override
 	public void setStatus(int status) {
-		_mbThread.setStatus(status);
+		model.setStatus(status);
 	}
 
 	/**
@@ -1000,7 +915,7 @@ public class MBThreadWrapper implements MBThread, ModelWrapper<MBThread> {
 	*/
 	@Override
 	public void setStatusByUserId(long statusByUserId) {
-		_mbThread.setStatusByUserId(statusByUserId);
+		model.setStatusByUserId(statusByUserId);
 	}
 
 	/**
@@ -1010,7 +925,7 @@ public class MBThreadWrapper implements MBThread, ModelWrapper<MBThread> {
 	*/
 	@Override
 	public void setStatusByUserName(String statusByUserName) {
-		_mbThread.setStatusByUserName(statusByUserName);
+		model.setStatusByUserName(statusByUserName);
 	}
 
 	/**
@@ -1020,7 +935,7 @@ public class MBThreadWrapper implements MBThread, ModelWrapper<MBThread> {
 	*/
 	@Override
 	public void setStatusByUserUuid(String statusByUserUuid) {
-		_mbThread.setStatusByUserUuid(statusByUserUuid);
+		model.setStatusByUserUuid(statusByUserUuid);
 	}
 
 	/**
@@ -1030,7 +945,7 @@ public class MBThreadWrapper implements MBThread, ModelWrapper<MBThread> {
 	*/
 	@Override
 	public void setStatusDate(Date statusDate) {
-		_mbThread.setStatusDate(statusDate);
+		model.setStatusDate(statusDate);
 	}
 
 	/**
@@ -1040,7 +955,7 @@ public class MBThreadWrapper implements MBThread, ModelWrapper<MBThread> {
 	*/
 	@Override
 	public void setThreadId(long threadId) {
-		_mbThread.setThreadId(threadId);
+		model.setThreadId(threadId);
 	}
 
 	/**
@@ -1050,7 +965,7 @@ public class MBThreadWrapper implements MBThread, ModelWrapper<MBThread> {
 	*/
 	@Override
 	public void setTitle(String title) {
-		_mbThread.setTitle(title);
+		model.setTitle(title);
 	}
 
 	/**
@@ -1060,7 +975,7 @@ public class MBThreadWrapper implements MBThread, ModelWrapper<MBThread> {
 	*/
 	@Override
 	public void setUserId(long userId) {
-		_mbThread.setUserId(userId);
+		model.setUserId(userId);
 	}
 
 	/**
@@ -1070,7 +985,7 @@ public class MBThreadWrapper implements MBThread, ModelWrapper<MBThread> {
 	*/
 	@Override
 	public void setUserName(String userName) {
-		_mbThread.setUserName(userName);
+		model.setUserName(userName);
 	}
 
 	/**
@@ -1080,7 +995,7 @@ public class MBThreadWrapper implements MBThread, ModelWrapper<MBThread> {
 	*/
 	@Override
 	public void setUserUuid(String userUuid) {
-		_mbThread.setUserUuid(userUuid);
+		model.setUserUuid(userUuid);
 	}
 
 	/**
@@ -1090,7 +1005,7 @@ public class MBThreadWrapper implements MBThread, ModelWrapper<MBThread> {
 	*/
 	@Override
 	public void setUuid(String uuid) {
-		_mbThread.setUuid(uuid);
+		model.setUuid(uuid);
 	}
 
 	/**
@@ -1100,77 +1015,16 @@ public class MBThreadWrapper implements MBThread, ModelWrapper<MBThread> {
 	*/
 	@Override
 	public void setViewCount(int viewCount) {
-		_mbThread.setViewCount(viewCount);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<MBThread> toCacheModel() {
-		return _mbThread.toCacheModel();
-	}
-
-	@Override
-	public MBThread toEscapedModel() {
-		return new MBThreadWrapper(_mbThread.toEscapedModel());
-	}
-
-	@Override
-	public String toString() {
-		return _mbThread.toString();
-	}
-
-	@Override
-	public MBThread toUnescapedModel() {
-		return new MBThreadWrapper(_mbThread.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _mbThread.toXmlString();
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-
-		if (!(obj instanceof MBThreadWrapper)) {
-			return false;
-		}
-
-		MBThreadWrapper mbThreadWrapper = (MBThreadWrapper)obj;
-
-		if (Objects.equals(_mbThread, mbThreadWrapper._mbThread)) {
-			return true;
-		}
-
-		return false;
+		model.setViewCount(viewCount);
 	}
 
 	@Override
 	public StagedModelType getStagedModelType() {
-		return _mbThread.getStagedModelType();
+		return model.getStagedModelType();
 	}
 
 	@Override
-	public MBThread getWrappedModel() {
-		return _mbThread;
+	protected MBThreadWrapper wrap(MBThread mbThread) {
+		return new MBThreadWrapper(mbThread);
 	}
-
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _mbThread.isEntityCacheEnabled();
-	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _mbThread.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_mbThread.resetOriginalValues();
-	}
-
-	private final MBThread _mbThread;
 }

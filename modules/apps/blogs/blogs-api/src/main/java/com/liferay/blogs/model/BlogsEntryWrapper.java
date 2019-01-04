@@ -16,19 +16,14 @@ package com.liferay.blogs.model;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
-
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 
 import com.liferay.portal.kernel.model.ModelWrapper;
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -40,19 +35,10 @@ import java.util.Objects;
  * @generated
  */
 @ProviderType
-public class BlogsEntryWrapper implements BlogsEntry, ModelWrapper<BlogsEntry> {
+public class BlogsEntryWrapper extends BaseModelWrapper<BlogsEntry>
+	implements BlogsEntry, ModelWrapper<BlogsEntry> {
 	public BlogsEntryWrapper(BlogsEntry blogsEntry) {
-		_blogsEntry = blogsEntry;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return BlogsEntry.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return BlogsEntry.class.getName();
+		super(blogsEntry);
 	}
 
 	@Override
@@ -271,16 +257,6 @@ public class BlogsEntryWrapper implements BlogsEntry, ModelWrapper<BlogsEntry> {
 		}
 	}
 
-	@Override
-	public Object clone() {
-		return new BlogsEntryWrapper((BlogsEntry)_blogsEntry.clone());
-	}
-
-	@Override
-	public int compareTo(BlogsEntry blogsEntry) {
-		return _blogsEntry.compareTo(blogsEntry);
-	}
-
 	/**
 	* Returns the allow pingbacks of this blogs entry.
 	*
@@ -288,7 +264,7 @@ public class BlogsEntryWrapper implements BlogsEntry, ModelWrapper<BlogsEntry> {
 	*/
 	@Override
 	public boolean getAllowPingbacks() {
-		return _blogsEntry.getAllowPingbacks();
+		return model.getAllowPingbacks();
 	}
 
 	/**
@@ -298,7 +274,7 @@ public class BlogsEntryWrapper implements BlogsEntry, ModelWrapper<BlogsEntry> {
 	*/
 	@Override
 	public boolean getAllowTrackbacks() {
-		return _blogsEntry.getAllowTrackbacks();
+		return model.getAllowTrackbacks();
 	}
 
 	/**
@@ -308,7 +284,7 @@ public class BlogsEntryWrapper implements BlogsEntry, ModelWrapper<BlogsEntry> {
 	*/
 	@Override
 	public long getCompanyId() {
-		return _blogsEntry.getCompanyId();
+		return model.getCompanyId();
 	}
 
 	/**
@@ -318,7 +294,7 @@ public class BlogsEntryWrapper implements BlogsEntry, ModelWrapper<BlogsEntry> {
 	*/
 	@Override
 	public String getContent() {
-		return _blogsEntry.getContent();
+		return model.getContent();
 	}
 
 	/**
@@ -328,7 +304,7 @@ public class BlogsEntryWrapper implements BlogsEntry, ModelWrapper<BlogsEntry> {
 	*/
 	@Override
 	public String getCoverImageCaption() {
-		return _blogsEntry.getCoverImageCaption();
+		return model.getCoverImageCaption();
 	}
 
 	/**
@@ -338,7 +314,7 @@ public class BlogsEntryWrapper implements BlogsEntry, ModelWrapper<BlogsEntry> {
 	*/
 	@Override
 	public long getCoverImageFileEntryId() {
-		return _blogsEntry.getCoverImageFileEntryId();
+		return model.getCoverImageFileEntryId();
 	}
 
 	/**
@@ -348,14 +324,14 @@ public class BlogsEntryWrapper implements BlogsEntry, ModelWrapper<BlogsEntry> {
 	*/
 	@Override
 	public String getCoverImageURL() {
-		return _blogsEntry.getCoverImageURL();
+		return model.getCoverImageURL();
 	}
 
 	@Override
 	public String getCoverImageURL(
 		com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _blogsEntry.getCoverImageURL(themeDisplay);
+		return model.getCoverImageURL(themeDisplay);
 	}
 
 	/**
@@ -365,7 +341,7 @@ public class BlogsEntryWrapper implements BlogsEntry, ModelWrapper<BlogsEntry> {
 	*/
 	@Override
 	public Date getCreateDate() {
-		return _blogsEntry.getCreateDate();
+		return model.getCreateDate();
 	}
 
 	/**
@@ -375,7 +351,7 @@ public class BlogsEntryWrapper implements BlogsEntry, ModelWrapper<BlogsEntry> {
 	*/
 	@Override
 	public String getDescription() {
-		return _blogsEntry.getDescription();
+		return model.getDescription();
 	}
 
 	/**
@@ -385,7 +361,7 @@ public class BlogsEntryWrapper implements BlogsEntry, ModelWrapper<BlogsEntry> {
 	*/
 	@Override
 	public Date getDisplayDate() {
-		return _blogsEntry.getDisplayDate();
+		return model.getDisplayDate();
 	}
 
 	/**
@@ -395,7 +371,7 @@ public class BlogsEntryWrapper implements BlogsEntry, ModelWrapper<BlogsEntry> {
 	*/
 	@Override
 	public long getEntryId() {
-		return _blogsEntry.getEntryId();
+		return model.getEntryId();
 	}
 
 	/**
@@ -406,12 +382,7 @@ public class BlogsEntryWrapper implements BlogsEntry, ModelWrapper<BlogsEntry> {
 	@Override
 	public String getEntryImageURL(
 		com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay) {
-		return _blogsEntry.getEntryImageURL(themeDisplay);
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _blogsEntry.getExpandoBridge();
+		return model.getEntryImageURL(themeDisplay);
 	}
 
 	/**
@@ -421,7 +392,7 @@ public class BlogsEntryWrapper implements BlogsEntry, ModelWrapper<BlogsEntry> {
 	*/
 	@Override
 	public long getGroupId() {
-		return _blogsEntry.getGroupId();
+		return model.getGroupId();
 	}
 
 	/**
@@ -431,7 +402,7 @@ public class BlogsEntryWrapper implements BlogsEntry, ModelWrapper<BlogsEntry> {
 	*/
 	@Override
 	public Date getLastPublishDate() {
-		return _blogsEntry.getLastPublishDate();
+		return model.getLastPublishDate();
 	}
 
 	/**
@@ -441,7 +412,7 @@ public class BlogsEntryWrapper implements BlogsEntry, ModelWrapper<BlogsEntry> {
 	*/
 	@Override
 	public Date getModifiedDate() {
-		return _blogsEntry.getModifiedDate();
+		return model.getModifiedDate();
 	}
 
 	/**
@@ -451,12 +422,7 @@ public class BlogsEntryWrapper implements BlogsEntry, ModelWrapper<BlogsEntry> {
 	*/
 	@Override
 	public long getPrimaryKey() {
-		return _blogsEntry.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _blogsEntry.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	/**
@@ -466,7 +432,7 @@ public class BlogsEntryWrapper implements BlogsEntry, ModelWrapper<BlogsEntry> {
 	*/
 	@Override
 	public boolean getSmallImage() {
-		return _blogsEntry.getSmallImage();
+		return model.getSmallImage();
 	}
 
 	/**
@@ -476,7 +442,7 @@ public class BlogsEntryWrapper implements BlogsEntry, ModelWrapper<BlogsEntry> {
 	*/
 	@Override
 	public long getSmallImageFileEntryId() {
-		return _blogsEntry.getSmallImageFileEntryId();
+		return model.getSmallImageFileEntryId();
 	}
 
 	/**
@@ -486,7 +452,7 @@ public class BlogsEntryWrapper implements BlogsEntry, ModelWrapper<BlogsEntry> {
 	*/
 	@Override
 	public long getSmallImageId() {
-		return _blogsEntry.getSmallImageId();
+		return model.getSmallImageId();
 	}
 
 	/**
@@ -496,7 +462,7 @@ public class BlogsEntryWrapper implements BlogsEntry, ModelWrapper<BlogsEntry> {
 	@Override
 	public String getSmallImageType()
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _blogsEntry.getSmallImageType();
+		return model.getSmallImageType();
 	}
 
 	/**
@@ -506,14 +472,14 @@ public class BlogsEntryWrapper implements BlogsEntry, ModelWrapper<BlogsEntry> {
 	*/
 	@Override
 	public String getSmallImageURL() {
-		return _blogsEntry.getSmallImageURL();
+		return model.getSmallImageURL();
 	}
 
 	@Override
 	public String getSmallImageURL(
 		com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _blogsEntry.getSmallImageURL(themeDisplay);
+		return model.getSmallImageURL(themeDisplay);
 	}
 
 	/**
@@ -523,7 +489,7 @@ public class BlogsEntryWrapper implements BlogsEntry, ModelWrapper<BlogsEntry> {
 	*/
 	@Override
 	public int getStatus() {
-		return _blogsEntry.getStatus();
+		return model.getStatus();
 	}
 
 	/**
@@ -533,7 +499,7 @@ public class BlogsEntryWrapper implements BlogsEntry, ModelWrapper<BlogsEntry> {
 	*/
 	@Override
 	public long getStatusByUserId() {
-		return _blogsEntry.getStatusByUserId();
+		return model.getStatusByUserId();
 	}
 
 	/**
@@ -543,7 +509,7 @@ public class BlogsEntryWrapper implements BlogsEntry, ModelWrapper<BlogsEntry> {
 	*/
 	@Override
 	public String getStatusByUserName() {
-		return _blogsEntry.getStatusByUserName();
+		return model.getStatusByUserName();
 	}
 
 	/**
@@ -553,7 +519,7 @@ public class BlogsEntryWrapper implements BlogsEntry, ModelWrapper<BlogsEntry> {
 	*/
 	@Override
 	public String getStatusByUserUuid() {
-		return _blogsEntry.getStatusByUserUuid();
+		return model.getStatusByUserUuid();
 	}
 
 	/**
@@ -563,7 +529,7 @@ public class BlogsEntryWrapper implements BlogsEntry, ModelWrapper<BlogsEntry> {
 	*/
 	@Override
 	public Date getStatusDate() {
-		return _blogsEntry.getStatusDate();
+		return model.getStatusDate();
 	}
 
 	/**
@@ -573,7 +539,7 @@ public class BlogsEntryWrapper implements BlogsEntry, ModelWrapper<BlogsEntry> {
 	*/
 	@Override
 	public String getSubtitle() {
-		return _blogsEntry.getSubtitle();
+		return model.getSubtitle();
 	}
 
 	/**
@@ -583,7 +549,7 @@ public class BlogsEntryWrapper implements BlogsEntry, ModelWrapper<BlogsEntry> {
 	*/
 	@Override
 	public String getTitle() {
-		return _blogsEntry.getTitle();
+		return model.getTitle();
 	}
 
 	/**
@@ -593,7 +559,7 @@ public class BlogsEntryWrapper implements BlogsEntry, ModelWrapper<BlogsEntry> {
 	*/
 	@Override
 	public String getTrackbacks() {
-		return _blogsEntry.getTrackbacks();
+		return model.getTrackbacks();
 	}
 
 	/**
@@ -604,7 +570,7 @@ public class BlogsEntryWrapper implements BlogsEntry, ModelWrapper<BlogsEntry> {
 	@Override
 	public com.liferay.trash.kernel.model.TrashEntry getTrashEntry()
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _blogsEntry.getTrashEntry();
+		return model.getTrashEntry();
 	}
 
 	/**
@@ -614,7 +580,7 @@ public class BlogsEntryWrapper implements BlogsEntry, ModelWrapper<BlogsEntry> {
 	*/
 	@Override
 	public long getTrashEntryClassPK() {
-		return _blogsEntry.getTrashEntryClassPK();
+		return model.getTrashEntryClassPK();
 	}
 
 	/**
@@ -626,7 +592,7 @@ public class BlogsEntryWrapper implements BlogsEntry, ModelWrapper<BlogsEntry> {
 	@Deprecated
 	@Override
 	public com.liferay.portal.kernel.trash.TrashHandler getTrashHandler() {
-		return _blogsEntry.getTrashHandler();
+		return model.getTrashHandler();
 	}
 
 	/**
@@ -636,7 +602,7 @@ public class BlogsEntryWrapper implements BlogsEntry, ModelWrapper<BlogsEntry> {
 	*/
 	@Override
 	public String getUrlTitle() {
-		return _blogsEntry.getUrlTitle();
+		return model.getUrlTitle();
 	}
 
 	/**
@@ -646,7 +612,7 @@ public class BlogsEntryWrapper implements BlogsEntry, ModelWrapper<BlogsEntry> {
 	*/
 	@Override
 	public long getUserId() {
-		return _blogsEntry.getUserId();
+		return model.getUserId();
 	}
 
 	/**
@@ -656,7 +622,7 @@ public class BlogsEntryWrapper implements BlogsEntry, ModelWrapper<BlogsEntry> {
 	*/
 	@Override
 	public String getUserName() {
-		return _blogsEntry.getUserName();
+		return model.getUserName();
 	}
 
 	/**
@@ -666,7 +632,7 @@ public class BlogsEntryWrapper implements BlogsEntry, ModelWrapper<BlogsEntry> {
 	*/
 	@Override
 	public String getUserUuid() {
-		return _blogsEntry.getUserUuid();
+		return model.getUserUuid();
 	}
 
 	/**
@@ -676,12 +642,7 @@ public class BlogsEntryWrapper implements BlogsEntry, ModelWrapper<BlogsEntry> {
 	*/
 	@Override
 	public String getUuid() {
-		return _blogsEntry.getUuid();
-	}
-
-	@Override
-	public int hashCode() {
-		return _blogsEntry.hashCode();
+		return model.getUuid();
 	}
 
 	/**
@@ -691,7 +652,7 @@ public class BlogsEntryWrapper implements BlogsEntry, ModelWrapper<BlogsEntry> {
 	*/
 	@Override
 	public boolean isAllowPingbacks() {
-		return _blogsEntry.isAllowPingbacks();
+		return model.isAllowPingbacks();
 	}
 
 	/**
@@ -701,7 +662,7 @@ public class BlogsEntryWrapper implements BlogsEntry, ModelWrapper<BlogsEntry> {
 	*/
 	@Override
 	public boolean isAllowTrackbacks() {
-		return _blogsEntry.isAllowTrackbacks();
+		return model.isAllowTrackbacks();
 	}
 
 	/**
@@ -711,12 +672,7 @@ public class BlogsEntryWrapper implements BlogsEntry, ModelWrapper<BlogsEntry> {
 	*/
 	@Override
 	public boolean isApproved() {
-		return _blogsEntry.isApproved();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _blogsEntry.isCachedModel();
+		return model.isApproved();
 	}
 
 	/**
@@ -726,7 +682,7 @@ public class BlogsEntryWrapper implements BlogsEntry, ModelWrapper<BlogsEntry> {
 	*/
 	@Override
 	public boolean isDenied() {
-		return _blogsEntry.isDenied();
+		return model.isDenied();
 	}
 
 	/**
@@ -736,12 +692,7 @@ public class BlogsEntryWrapper implements BlogsEntry, ModelWrapper<BlogsEntry> {
 	*/
 	@Override
 	public boolean isDraft() {
-		return _blogsEntry.isDraft();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _blogsEntry.isEscapedModel();
+		return model.isDraft();
 	}
 
 	/**
@@ -751,7 +702,7 @@ public class BlogsEntryWrapper implements BlogsEntry, ModelWrapper<BlogsEntry> {
 	*/
 	@Override
 	public boolean isExpired() {
-		return _blogsEntry.isExpired();
+		return model.isExpired();
 	}
 
 	/**
@@ -761,7 +712,7 @@ public class BlogsEntryWrapper implements BlogsEntry, ModelWrapper<BlogsEntry> {
 	*/
 	@Override
 	public boolean isInactive() {
-		return _blogsEntry.isInactive();
+		return model.isInactive();
 	}
 
 	/**
@@ -771,7 +722,7 @@ public class BlogsEntryWrapper implements BlogsEntry, ModelWrapper<BlogsEntry> {
 	*/
 	@Override
 	public boolean isIncomplete() {
-		return _blogsEntry.isIncomplete();
+		return model.isIncomplete();
 	}
 
 	/**
@@ -781,7 +732,7 @@ public class BlogsEntryWrapper implements BlogsEntry, ModelWrapper<BlogsEntry> {
 	*/
 	@Override
 	public boolean isInTrash() {
-		return _blogsEntry.isInTrash();
+		return model.isInTrash();
 	}
 
 	/**
@@ -791,22 +742,17 @@ public class BlogsEntryWrapper implements BlogsEntry, ModelWrapper<BlogsEntry> {
 	*/
 	@Override
 	public boolean isInTrashContainer() {
-		return _blogsEntry.isInTrashContainer();
+		return model.isInTrashContainer();
 	}
 
 	@Override
 	public boolean isInTrashExplicitly() {
-		return _blogsEntry.isInTrashExplicitly();
+		return model.isInTrashExplicitly();
 	}
 
 	@Override
 	public boolean isInTrashImplicitly() {
-		return _blogsEntry.isInTrashImplicitly();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _blogsEntry.isNew();
+		return model.isInTrashImplicitly();
 	}
 
 	/**
@@ -816,7 +762,7 @@ public class BlogsEntryWrapper implements BlogsEntry, ModelWrapper<BlogsEntry> {
 	*/
 	@Override
 	public boolean isPending() {
-		return _blogsEntry.isPending();
+		return model.isPending();
 	}
 
 	/**
@@ -826,7 +772,7 @@ public class BlogsEntryWrapper implements BlogsEntry, ModelWrapper<BlogsEntry> {
 	*/
 	@Override
 	public boolean isScheduled() {
-		return _blogsEntry.isScheduled();
+		return model.isScheduled();
 	}
 
 	/**
@@ -836,17 +782,17 @@ public class BlogsEntryWrapper implements BlogsEntry, ModelWrapper<BlogsEntry> {
 	*/
 	@Override
 	public boolean isSmallImage() {
-		return _blogsEntry.isSmallImage();
+		return model.isSmallImage();
 	}
 
 	@Override
 	public boolean isVisible() {
-		return _blogsEntry.isVisible();
+		return model.isVisible();
 	}
 
 	@Override
 	public void persist() {
-		_blogsEntry.persist();
+		model.persist();
 	}
 
 	/**
@@ -856,7 +802,7 @@ public class BlogsEntryWrapper implements BlogsEntry, ModelWrapper<BlogsEntry> {
 	*/
 	@Override
 	public void setAllowPingbacks(boolean allowPingbacks) {
-		_blogsEntry.setAllowPingbacks(allowPingbacks);
+		model.setAllowPingbacks(allowPingbacks);
 	}
 
 	/**
@@ -866,12 +812,7 @@ public class BlogsEntryWrapper implements BlogsEntry, ModelWrapper<BlogsEntry> {
 	*/
 	@Override
 	public void setAllowTrackbacks(boolean allowTrackbacks) {
-		_blogsEntry.setAllowTrackbacks(allowTrackbacks);
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_blogsEntry.setCachedModel(cachedModel);
+		model.setAllowTrackbacks(allowTrackbacks);
 	}
 
 	/**
@@ -881,7 +822,7 @@ public class BlogsEntryWrapper implements BlogsEntry, ModelWrapper<BlogsEntry> {
 	*/
 	@Override
 	public void setCompanyId(long companyId) {
-		_blogsEntry.setCompanyId(companyId);
+		model.setCompanyId(companyId);
 	}
 
 	/**
@@ -891,7 +832,7 @@ public class BlogsEntryWrapper implements BlogsEntry, ModelWrapper<BlogsEntry> {
 	*/
 	@Override
 	public void setContent(String content) {
-		_blogsEntry.setContent(content);
+		model.setContent(content);
 	}
 
 	/**
@@ -901,7 +842,7 @@ public class BlogsEntryWrapper implements BlogsEntry, ModelWrapper<BlogsEntry> {
 	*/
 	@Override
 	public void setCoverImageCaption(String coverImageCaption) {
-		_blogsEntry.setCoverImageCaption(coverImageCaption);
+		model.setCoverImageCaption(coverImageCaption);
 	}
 
 	/**
@@ -911,7 +852,7 @@ public class BlogsEntryWrapper implements BlogsEntry, ModelWrapper<BlogsEntry> {
 	*/
 	@Override
 	public void setCoverImageFileEntryId(long coverImageFileEntryId) {
-		_blogsEntry.setCoverImageFileEntryId(coverImageFileEntryId);
+		model.setCoverImageFileEntryId(coverImageFileEntryId);
 	}
 
 	/**
@@ -921,7 +862,7 @@ public class BlogsEntryWrapper implements BlogsEntry, ModelWrapper<BlogsEntry> {
 	*/
 	@Override
 	public void setCoverImageURL(String coverImageURL) {
-		_blogsEntry.setCoverImageURL(coverImageURL);
+		model.setCoverImageURL(coverImageURL);
 	}
 
 	/**
@@ -931,7 +872,7 @@ public class BlogsEntryWrapper implements BlogsEntry, ModelWrapper<BlogsEntry> {
 	*/
 	@Override
 	public void setCreateDate(Date createDate) {
-		_blogsEntry.setCreateDate(createDate);
+		model.setCreateDate(createDate);
 	}
 
 	/**
@@ -941,7 +882,7 @@ public class BlogsEntryWrapper implements BlogsEntry, ModelWrapper<BlogsEntry> {
 	*/
 	@Override
 	public void setDescription(String description) {
-		_blogsEntry.setDescription(description);
+		model.setDescription(description);
 	}
 
 	/**
@@ -951,7 +892,7 @@ public class BlogsEntryWrapper implements BlogsEntry, ModelWrapper<BlogsEntry> {
 	*/
 	@Override
 	public void setDisplayDate(Date displayDate) {
-		_blogsEntry.setDisplayDate(displayDate);
+		model.setDisplayDate(displayDate);
 	}
 
 	/**
@@ -961,23 +902,7 @@ public class BlogsEntryWrapper implements BlogsEntry, ModelWrapper<BlogsEntry> {
 	*/
 	@Override
 	public void setEntryId(long entryId) {
-		_blogsEntry.setEntryId(entryId);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-		_blogsEntry.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_blogsEntry.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_blogsEntry.setExpandoBridgeAttributes(serviceContext);
+		model.setEntryId(entryId);
 	}
 
 	/**
@@ -987,7 +912,7 @@ public class BlogsEntryWrapper implements BlogsEntry, ModelWrapper<BlogsEntry> {
 	*/
 	@Override
 	public void setGroupId(long groupId) {
-		_blogsEntry.setGroupId(groupId);
+		model.setGroupId(groupId);
 	}
 
 	/**
@@ -997,7 +922,7 @@ public class BlogsEntryWrapper implements BlogsEntry, ModelWrapper<BlogsEntry> {
 	*/
 	@Override
 	public void setLastPublishDate(Date lastPublishDate) {
-		_blogsEntry.setLastPublishDate(lastPublishDate);
+		model.setLastPublishDate(lastPublishDate);
 	}
 
 	/**
@@ -1007,12 +932,7 @@ public class BlogsEntryWrapper implements BlogsEntry, ModelWrapper<BlogsEntry> {
 	*/
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
-		_blogsEntry.setModifiedDate(modifiedDate);
-	}
-
-	@Override
-	public void setNew(boolean n) {
-		_blogsEntry.setNew(n);
+		model.setModifiedDate(modifiedDate);
 	}
 
 	/**
@@ -1022,12 +942,7 @@ public class BlogsEntryWrapper implements BlogsEntry, ModelWrapper<BlogsEntry> {
 	*/
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_blogsEntry.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_blogsEntry.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -1037,7 +952,7 @@ public class BlogsEntryWrapper implements BlogsEntry, ModelWrapper<BlogsEntry> {
 	*/
 	@Override
 	public void setSmallImage(boolean smallImage) {
-		_blogsEntry.setSmallImage(smallImage);
+		model.setSmallImage(smallImage);
 	}
 
 	/**
@@ -1047,7 +962,7 @@ public class BlogsEntryWrapper implements BlogsEntry, ModelWrapper<BlogsEntry> {
 	*/
 	@Override
 	public void setSmallImageFileEntryId(long smallImageFileEntryId) {
-		_blogsEntry.setSmallImageFileEntryId(smallImageFileEntryId);
+		model.setSmallImageFileEntryId(smallImageFileEntryId);
 	}
 
 	/**
@@ -1057,12 +972,12 @@ public class BlogsEntryWrapper implements BlogsEntry, ModelWrapper<BlogsEntry> {
 	*/
 	@Override
 	public void setSmallImageId(long smallImageId) {
-		_blogsEntry.setSmallImageId(smallImageId);
+		model.setSmallImageId(smallImageId);
 	}
 
 	@Override
 	public void setSmallImageType(String smallImageType) {
-		_blogsEntry.setSmallImageType(smallImageType);
+		model.setSmallImageType(smallImageType);
 	}
 
 	/**
@@ -1072,7 +987,7 @@ public class BlogsEntryWrapper implements BlogsEntry, ModelWrapper<BlogsEntry> {
 	*/
 	@Override
 	public void setSmallImageURL(String smallImageURL) {
-		_blogsEntry.setSmallImageURL(smallImageURL);
+		model.setSmallImageURL(smallImageURL);
 	}
 
 	/**
@@ -1082,7 +997,7 @@ public class BlogsEntryWrapper implements BlogsEntry, ModelWrapper<BlogsEntry> {
 	*/
 	@Override
 	public void setStatus(int status) {
-		_blogsEntry.setStatus(status);
+		model.setStatus(status);
 	}
 
 	/**
@@ -1092,7 +1007,7 @@ public class BlogsEntryWrapper implements BlogsEntry, ModelWrapper<BlogsEntry> {
 	*/
 	@Override
 	public void setStatusByUserId(long statusByUserId) {
-		_blogsEntry.setStatusByUserId(statusByUserId);
+		model.setStatusByUserId(statusByUserId);
 	}
 
 	/**
@@ -1102,7 +1017,7 @@ public class BlogsEntryWrapper implements BlogsEntry, ModelWrapper<BlogsEntry> {
 	*/
 	@Override
 	public void setStatusByUserName(String statusByUserName) {
-		_blogsEntry.setStatusByUserName(statusByUserName);
+		model.setStatusByUserName(statusByUserName);
 	}
 
 	/**
@@ -1112,7 +1027,7 @@ public class BlogsEntryWrapper implements BlogsEntry, ModelWrapper<BlogsEntry> {
 	*/
 	@Override
 	public void setStatusByUserUuid(String statusByUserUuid) {
-		_blogsEntry.setStatusByUserUuid(statusByUserUuid);
+		model.setStatusByUserUuid(statusByUserUuid);
 	}
 
 	/**
@@ -1122,7 +1037,7 @@ public class BlogsEntryWrapper implements BlogsEntry, ModelWrapper<BlogsEntry> {
 	*/
 	@Override
 	public void setStatusDate(Date statusDate) {
-		_blogsEntry.setStatusDate(statusDate);
+		model.setStatusDate(statusDate);
 	}
 
 	/**
@@ -1132,7 +1047,7 @@ public class BlogsEntryWrapper implements BlogsEntry, ModelWrapper<BlogsEntry> {
 	*/
 	@Override
 	public void setSubtitle(String subtitle) {
-		_blogsEntry.setSubtitle(subtitle);
+		model.setSubtitle(subtitle);
 	}
 
 	/**
@@ -1142,7 +1057,7 @@ public class BlogsEntryWrapper implements BlogsEntry, ModelWrapper<BlogsEntry> {
 	*/
 	@Override
 	public void setTitle(String title) {
-		_blogsEntry.setTitle(title);
+		model.setTitle(title);
 	}
 
 	/**
@@ -1152,7 +1067,7 @@ public class BlogsEntryWrapper implements BlogsEntry, ModelWrapper<BlogsEntry> {
 	*/
 	@Override
 	public void setTrackbacks(String trackbacks) {
-		_blogsEntry.setTrackbacks(trackbacks);
+		model.setTrackbacks(trackbacks);
 	}
 
 	/**
@@ -1162,7 +1077,7 @@ public class BlogsEntryWrapper implements BlogsEntry, ModelWrapper<BlogsEntry> {
 	*/
 	@Override
 	public void setUrlTitle(String urlTitle) {
-		_blogsEntry.setUrlTitle(urlTitle);
+		model.setUrlTitle(urlTitle);
 	}
 
 	/**
@@ -1172,7 +1087,7 @@ public class BlogsEntryWrapper implements BlogsEntry, ModelWrapper<BlogsEntry> {
 	*/
 	@Override
 	public void setUserId(long userId) {
-		_blogsEntry.setUserId(userId);
+		model.setUserId(userId);
 	}
 
 	/**
@@ -1182,7 +1097,7 @@ public class BlogsEntryWrapper implements BlogsEntry, ModelWrapper<BlogsEntry> {
 	*/
 	@Override
 	public void setUserName(String userName) {
-		_blogsEntry.setUserName(userName);
+		model.setUserName(userName);
 	}
 
 	/**
@@ -1192,7 +1107,7 @@ public class BlogsEntryWrapper implements BlogsEntry, ModelWrapper<BlogsEntry> {
 	*/
 	@Override
 	public void setUserUuid(String userUuid) {
-		_blogsEntry.setUserUuid(userUuid);
+		model.setUserUuid(userUuid);
 	}
 
 	/**
@@ -1202,77 +1117,16 @@ public class BlogsEntryWrapper implements BlogsEntry, ModelWrapper<BlogsEntry> {
 	*/
 	@Override
 	public void setUuid(String uuid) {
-		_blogsEntry.setUuid(uuid);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<BlogsEntry> toCacheModel() {
-		return _blogsEntry.toCacheModel();
-	}
-
-	@Override
-	public BlogsEntry toEscapedModel() {
-		return new BlogsEntryWrapper(_blogsEntry.toEscapedModel());
-	}
-
-	@Override
-	public String toString() {
-		return _blogsEntry.toString();
-	}
-
-	@Override
-	public BlogsEntry toUnescapedModel() {
-		return new BlogsEntryWrapper(_blogsEntry.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _blogsEntry.toXmlString();
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-
-		if (!(obj instanceof BlogsEntryWrapper)) {
-			return false;
-		}
-
-		BlogsEntryWrapper blogsEntryWrapper = (BlogsEntryWrapper)obj;
-
-		if (Objects.equals(_blogsEntry, blogsEntryWrapper._blogsEntry)) {
-			return true;
-		}
-
-		return false;
+		model.setUuid(uuid);
 	}
 
 	@Override
 	public StagedModelType getStagedModelType() {
-		return _blogsEntry.getStagedModelType();
+		return model.getStagedModelType();
 	}
 
 	@Override
-	public BlogsEntry getWrappedModel() {
-		return _blogsEntry;
+	protected BlogsEntryWrapper wrap(BlogsEntry blogsEntry) {
+		return new BlogsEntryWrapper(blogsEntry);
 	}
-
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _blogsEntry.isEntityCacheEnabled();
-	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _blogsEntry.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_blogsEntry.resetOriginalValues();
-	}
-
-	private final BlogsEntry _blogsEntry;
 }

@@ -16,17 +16,12 @@ package com.liferay.oauth2.provider.model;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
-
 import com.liferay.portal.kernel.model.ModelWrapper;
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -38,20 +33,10 @@ import java.util.Objects;
  * @generated
  */
 @ProviderType
-public class OAuth2ApplicationWrapper implements OAuth2Application,
-	ModelWrapper<OAuth2Application> {
+public class OAuth2ApplicationWrapper extends BaseModelWrapper<OAuth2Application>
+	implements OAuth2Application, ModelWrapper<OAuth2Application> {
 	public OAuth2ApplicationWrapper(OAuth2Application oAuth2Application) {
-		_oAuth2Application = oAuth2Application;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return OAuth2Application.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return OAuth2Application.class.getName();
+		super(oAuth2Application);
 	}
 
 	@Override
@@ -193,16 +178,6 @@ public class OAuth2ApplicationWrapper implements OAuth2Application,
 		}
 	}
 
-	@Override
-	public Object clone() {
-		return new OAuth2ApplicationWrapper((OAuth2Application)_oAuth2Application.clone());
-	}
-
-	@Override
-	public int compareTo(OAuth2Application oAuth2Application) {
-		return _oAuth2Application.compareTo(oAuth2Application);
-	}
-
 	/**
 	* Returns the allowed grant types of this o auth2 application.
 	*
@@ -210,12 +185,12 @@ public class OAuth2ApplicationWrapper implements OAuth2Application,
 	*/
 	@Override
 	public String getAllowedGrantTypes() {
-		return _oAuth2Application.getAllowedGrantTypes();
+		return model.getAllowedGrantTypes();
 	}
 
 	@Override
 	public java.util.List<com.liferay.oauth2.provider.constants.GrantType> getAllowedGrantTypesList() {
-		return _oAuth2Application.getAllowedGrantTypesList();
+		return model.getAllowedGrantTypesList();
 	}
 
 	/**
@@ -225,7 +200,7 @@ public class OAuth2ApplicationWrapper implements OAuth2Application,
 	*/
 	@Override
 	public String getClientId() {
-		return _oAuth2Application.getClientId();
+		return model.getClientId();
 	}
 
 	/**
@@ -235,7 +210,7 @@ public class OAuth2ApplicationWrapper implements OAuth2Application,
 	*/
 	@Override
 	public int getClientProfile() {
-		return _oAuth2Application.getClientProfile();
+		return model.getClientProfile();
 	}
 
 	/**
@@ -245,7 +220,7 @@ public class OAuth2ApplicationWrapper implements OAuth2Application,
 	*/
 	@Override
 	public String getClientSecret() {
-		return _oAuth2Application.getClientSecret();
+		return model.getClientSecret();
 	}
 
 	/**
@@ -255,7 +230,7 @@ public class OAuth2ApplicationWrapper implements OAuth2Application,
 	*/
 	@Override
 	public long getCompanyId() {
-		return _oAuth2Application.getCompanyId();
+		return model.getCompanyId();
 	}
 
 	/**
@@ -265,7 +240,7 @@ public class OAuth2ApplicationWrapper implements OAuth2Application,
 	*/
 	@Override
 	public Date getCreateDate() {
-		return _oAuth2Application.getCreateDate();
+		return model.getCreateDate();
 	}
 
 	/**
@@ -275,12 +250,7 @@ public class OAuth2ApplicationWrapper implements OAuth2Application,
 	*/
 	@Override
 	public String getDescription() {
-		return _oAuth2Application.getDescription();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _oAuth2Application.getExpandoBridge();
+		return model.getDescription();
 	}
 
 	/**
@@ -290,12 +260,12 @@ public class OAuth2ApplicationWrapper implements OAuth2Application,
 	*/
 	@Override
 	public String getFeatures() {
-		return _oAuth2Application.getFeatures();
+		return model.getFeatures();
 	}
 
 	@Override
 	public java.util.List<String> getFeaturesList() {
-		return _oAuth2Application.getFeaturesList();
+		return model.getFeaturesList();
 	}
 
 	/**
@@ -305,7 +275,7 @@ public class OAuth2ApplicationWrapper implements OAuth2Application,
 	*/
 	@Override
 	public String getHomePageURL() {
-		return _oAuth2Application.getHomePageURL();
+		return model.getHomePageURL();
 	}
 
 	/**
@@ -315,7 +285,7 @@ public class OAuth2ApplicationWrapper implements OAuth2Application,
 	*/
 	@Override
 	public long getIconFileEntryId() {
-		return _oAuth2Application.getIconFileEntryId();
+		return model.getIconFileEntryId();
 	}
 
 	/**
@@ -325,7 +295,7 @@ public class OAuth2ApplicationWrapper implements OAuth2Application,
 	*/
 	@Override
 	public Date getModifiedDate() {
-		return _oAuth2Application.getModifiedDate();
+		return model.getModifiedDate();
 	}
 
 	/**
@@ -335,7 +305,7 @@ public class OAuth2ApplicationWrapper implements OAuth2Application,
 	*/
 	@Override
 	public String getName() {
-		return _oAuth2Application.getName();
+		return model.getName();
 	}
 
 	/**
@@ -345,7 +315,7 @@ public class OAuth2ApplicationWrapper implements OAuth2Application,
 	*/
 	@Override
 	public long getOAuth2ApplicationId() {
-		return _oAuth2Application.getOAuth2ApplicationId();
+		return model.getOAuth2ApplicationId();
 	}
 
 	/**
@@ -355,7 +325,7 @@ public class OAuth2ApplicationWrapper implements OAuth2Application,
 	*/
 	@Override
 	public long getOAuth2ApplicationScopeAliasesId() {
-		return _oAuth2Application.getOAuth2ApplicationScopeAliasesId();
+		return model.getOAuth2ApplicationScopeAliasesId();
 	}
 
 	/**
@@ -365,12 +335,7 @@ public class OAuth2ApplicationWrapper implements OAuth2Application,
 	*/
 	@Override
 	public long getPrimaryKey() {
-		return _oAuth2Application.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _oAuth2Application.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	/**
@@ -380,7 +345,7 @@ public class OAuth2ApplicationWrapper implements OAuth2Application,
 	*/
 	@Override
 	public String getPrivacyPolicyURL() {
-		return _oAuth2Application.getPrivacyPolicyURL();
+		return model.getPrivacyPolicyURL();
 	}
 
 	/**
@@ -390,12 +355,12 @@ public class OAuth2ApplicationWrapper implements OAuth2Application,
 	*/
 	@Override
 	public String getRedirectURIs() {
-		return _oAuth2Application.getRedirectURIs();
+		return model.getRedirectURIs();
 	}
 
 	@Override
 	public java.util.List<String> getRedirectURIsList() {
-		return _oAuth2Application.getRedirectURIsList();
+		return model.getRedirectURIsList();
 	}
 
 	/**
@@ -405,7 +370,7 @@ public class OAuth2ApplicationWrapper implements OAuth2Application,
 	*/
 	@Override
 	public long getUserId() {
-		return _oAuth2Application.getUserId();
+		return model.getUserId();
 	}
 
 	/**
@@ -415,7 +380,7 @@ public class OAuth2ApplicationWrapper implements OAuth2Application,
 	*/
 	@Override
 	public String getUserName() {
-		return _oAuth2Application.getUserName();
+		return model.getUserName();
 	}
 
 	/**
@@ -425,32 +390,12 @@ public class OAuth2ApplicationWrapper implements OAuth2Application,
 	*/
 	@Override
 	public String getUserUuid() {
-		return _oAuth2Application.getUserUuid();
-	}
-
-	@Override
-	public int hashCode() {
-		return _oAuth2Application.hashCode();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _oAuth2Application.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _oAuth2Application.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _oAuth2Application.isNew();
+		return model.getUserUuid();
 	}
 
 	@Override
 	public void persist() {
-		_oAuth2Application.persist();
+		model.persist();
 	}
 
 	/**
@@ -460,18 +405,13 @@ public class OAuth2ApplicationWrapper implements OAuth2Application,
 	*/
 	@Override
 	public void setAllowedGrantTypes(String allowedGrantTypes) {
-		_oAuth2Application.setAllowedGrantTypes(allowedGrantTypes);
+		model.setAllowedGrantTypes(allowedGrantTypes);
 	}
 
 	@Override
 	public void setAllowedGrantTypesList(
 		java.util.List<com.liferay.oauth2.provider.constants.GrantType> allowedGrantTypesList) {
-		_oAuth2Application.setAllowedGrantTypesList(allowedGrantTypesList);
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_oAuth2Application.setCachedModel(cachedModel);
+		model.setAllowedGrantTypesList(allowedGrantTypesList);
 	}
 
 	/**
@@ -481,7 +421,7 @@ public class OAuth2ApplicationWrapper implements OAuth2Application,
 	*/
 	@Override
 	public void setClientId(String clientId) {
-		_oAuth2Application.setClientId(clientId);
+		model.setClientId(clientId);
 	}
 
 	/**
@@ -491,7 +431,7 @@ public class OAuth2ApplicationWrapper implements OAuth2Application,
 	*/
 	@Override
 	public void setClientProfile(int clientProfile) {
-		_oAuth2Application.setClientProfile(clientProfile);
+		model.setClientProfile(clientProfile);
 	}
 
 	/**
@@ -501,7 +441,7 @@ public class OAuth2ApplicationWrapper implements OAuth2Application,
 	*/
 	@Override
 	public void setClientSecret(String clientSecret) {
-		_oAuth2Application.setClientSecret(clientSecret);
+		model.setClientSecret(clientSecret);
 	}
 
 	/**
@@ -511,7 +451,7 @@ public class OAuth2ApplicationWrapper implements OAuth2Application,
 	*/
 	@Override
 	public void setCompanyId(long companyId) {
-		_oAuth2Application.setCompanyId(companyId);
+		model.setCompanyId(companyId);
 	}
 
 	/**
@@ -521,7 +461,7 @@ public class OAuth2ApplicationWrapper implements OAuth2Application,
 	*/
 	@Override
 	public void setCreateDate(Date createDate) {
-		_oAuth2Application.setCreateDate(createDate);
+		model.setCreateDate(createDate);
 	}
 
 	/**
@@ -531,23 +471,7 @@ public class OAuth2ApplicationWrapper implements OAuth2Application,
 	*/
 	@Override
 	public void setDescription(String description) {
-		_oAuth2Application.setDescription(description);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-		_oAuth2Application.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_oAuth2Application.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_oAuth2Application.setExpandoBridgeAttributes(serviceContext);
+		model.setDescription(description);
 	}
 
 	/**
@@ -557,12 +481,12 @@ public class OAuth2ApplicationWrapper implements OAuth2Application,
 	*/
 	@Override
 	public void setFeatures(String features) {
-		_oAuth2Application.setFeatures(features);
+		model.setFeatures(features);
 	}
 
 	@Override
 	public void setFeaturesList(java.util.List<String> featuresList) {
-		_oAuth2Application.setFeaturesList(featuresList);
+		model.setFeaturesList(featuresList);
 	}
 
 	/**
@@ -572,7 +496,7 @@ public class OAuth2ApplicationWrapper implements OAuth2Application,
 	*/
 	@Override
 	public void setHomePageURL(String homePageURL) {
-		_oAuth2Application.setHomePageURL(homePageURL);
+		model.setHomePageURL(homePageURL);
 	}
 
 	/**
@@ -582,7 +506,7 @@ public class OAuth2ApplicationWrapper implements OAuth2Application,
 	*/
 	@Override
 	public void setIconFileEntryId(long iconFileEntryId) {
-		_oAuth2Application.setIconFileEntryId(iconFileEntryId);
+		model.setIconFileEntryId(iconFileEntryId);
 	}
 
 	/**
@@ -592,7 +516,7 @@ public class OAuth2ApplicationWrapper implements OAuth2Application,
 	*/
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
-		_oAuth2Application.setModifiedDate(modifiedDate);
+		model.setModifiedDate(modifiedDate);
 	}
 
 	/**
@@ -602,12 +526,7 @@ public class OAuth2ApplicationWrapper implements OAuth2Application,
 	*/
 	@Override
 	public void setName(String name) {
-		_oAuth2Application.setName(name);
-	}
-
-	@Override
-	public void setNew(boolean n) {
-		_oAuth2Application.setNew(n);
+		model.setName(name);
 	}
 
 	/**
@@ -617,7 +536,7 @@ public class OAuth2ApplicationWrapper implements OAuth2Application,
 	*/
 	@Override
 	public void setOAuth2ApplicationId(long oAuth2ApplicationId) {
-		_oAuth2Application.setOAuth2ApplicationId(oAuth2ApplicationId);
+		model.setOAuth2ApplicationId(oAuth2ApplicationId);
 	}
 
 	/**
@@ -628,7 +547,7 @@ public class OAuth2ApplicationWrapper implements OAuth2Application,
 	@Override
 	public void setOAuth2ApplicationScopeAliasesId(
 		long oAuth2ApplicationScopeAliasesId) {
-		_oAuth2Application.setOAuth2ApplicationScopeAliasesId(oAuth2ApplicationScopeAliasesId);
+		model.setOAuth2ApplicationScopeAliasesId(oAuth2ApplicationScopeAliasesId);
 	}
 
 	/**
@@ -638,12 +557,7 @@ public class OAuth2ApplicationWrapper implements OAuth2Application,
 	*/
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_oAuth2Application.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_oAuth2Application.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -653,7 +567,7 @@ public class OAuth2ApplicationWrapper implements OAuth2Application,
 	*/
 	@Override
 	public void setPrivacyPolicyURL(String privacyPolicyURL) {
-		_oAuth2Application.setPrivacyPolicyURL(privacyPolicyURL);
+		model.setPrivacyPolicyURL(privacyPolicyURL);
 	}
 
 	/**
@@ -663,12 +577,12 @@ public class OAuth2ApplicationWrapper implements OAuth2Application,
 	*/
 	@Override
 	public void setRedirectURIs(String redirectURIs) {
-		_oAuth2Application.setRedirectURIs(redirectURIs);
+		model.setRedirectURIs(redirectURIs);
 	}
 
 	@Override
 	public void setRedirectURIsList(java.util.List<String> redirectURIsList) {
-		_oAuth2Application.setRedirectURIsList(redirectURIsList);
+		model.setRedirectURIsList(redirectURIsList);
 	}
 
 	/**
@@ -678,7 +592,7 @@ public class OAuth2ApplicationWrapper implements OAuth2Application,
 	*/
 	@Override
 	public void setUserId(long userId) {
-		_oAuth2Application.setUserId(userId);
+		model.setUserId(userId);
 	}
 
 	/**
@@ -688,7 +602,7 @@ public class OAuth2ApplicationWrapper implements OAuth2Application,
 	*/
 	@Override
 	public void setUserName(String userName) {
-		_oAuth2Application.setUserName(userName);
+		model.setUserName(userName);
 	}
 
 	/**
@@ -698,73 +612,11 @@ public class OAuth2ApplicationWrapper implements OAuth2Application,
 	*/
 	@Override
 	public void setUserUuid(String userUuid) {
-		_oAuth2Application.setUserUuid(userUuid);
+		model.setUserUuid(userUuid);
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.CacheModel<OAuth2Application> toCacheModel() {
-		return _oAuth2Application.toCacheModel();
+	protected OAuth2ApplicationWrapper wrap(OAuth2Application oAuth2Application) {
+		return new OAuth2ApplicationWrapper(oAuth2Application);
 	}
-
-	@Override
-	public OAuth2Application toEscapedModel() {
-		return new OAuth2ApplicationWrapper(_oAuth2Application.toEscapedModel());
-	}
-
-	@Override
-	public String toString() {
-		return _oAuth2Application.toString();
-	}
-
-	@Override
-	public OAuth2Application toUnescapedModel() {
-		return new OAuth2ApplicationWrapper(_oAuth2Application.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _oAuth2Application.toXmlString();
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-
-		if (!(obj instanceof OAuth2ApplicationWrapper)) {
-			return false;
-		}
-
-		OAuth2ApplicationWrapper oAuth2ApplicationWrapper = (OAuth2ApplicationWrapper)obj;
-
-		if (Objects.equals(_oAuth2Application,
-					oAuth2ApplicationWrapper._oAuth2Application)) {
-			return true;
-		}
-
-		return false;
-	}
-
-	@Override
-	public OAuth2Application getWrappedModel() {
-		return _oAuth2Application;
-	}
-
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _oAuth2Application.isEntityCacheEnabled();
-	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _oAuth2Application.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_oAuth2Application.resetOriginalValues();
-	}
-
-	private final OAuth2Application _oAuth2Application;
 }

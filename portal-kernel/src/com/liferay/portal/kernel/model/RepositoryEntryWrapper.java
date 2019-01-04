@@ -16,18 +16,13 @@ package com.liferay.portal.kernel.model;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
-
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -39,20 +34,10 @@ import java.util.Objects;
  * @generated
  */
 @ProviderType
-public class RepositoryEntryWrapper implements RepositoryEntry,
-	ModelWrapper<RepositoryEntry> {
+public class RepositoryEntryWrapper extends BaseModelWrapper<RepositoryEntry>
+	implements RepositoryEntry, ModelWrapper<RepositoryEntry> {
 	public RepositoryEntryWrapper(RepositoryEntry repositoryEntry) {
-		_repositoryEntry = repositoryEntry;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return RepositoryEntry.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return RepositoryEntry.class.getName();
+		super(repositoryEntry);
 	}
 
 	@Override
@@ -158,16 +143,6 @@ public class RepositoryEntryWrapper implements RepositoryEntry,
 		}
 	}
 
-	@Override
-	public Object clone() {
-		return new RepositoryEntryWrapper((RepositoryEntry)_repositoryEntry.clone());
-	}
-
-	@Override
-	public int compareTo(RepositoryEntry repositoryEntry) {
-		return _repositoryEntry.compareTo(repositoryEntry);
-	}
-
 	/**
 	* Returns the company ID of this repository entry.
 	*
@@ -175,7 +150,7 @@ public class RepositoryEntryWrapper implements RepositoryEntry,
 	*/
 	@Override
 	public long getCompanyId() {
-		return _repositoryEntry.getCompanyId();
+		return model.getCompanyId();
 	}
 
 	/**
@@ -185,12 +160,7 @@ public class RepositoryEntryWrapper implements RepositoryEntry,
 	*/
 	@Override
 	public Date getCreateDate() {
-		return _repositoryEntry.getCreateDate();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _repositoryEntry.getExpandoBridge();
+		return model.getCreateDate();
 	}
 
 	/**
@@ -200,7 +170,7 @@ public class RepositoryEntryWrapper implements RepositoryEntry,
 	*/
 	@Override
 	public long getGroupId() {
-		return _repositoryEntry.getGroupId();
+		return model.getGroupId();
 	}
 
 	/**
@@ -210,7 +180,7 @@ public class RepositoryEntryWrapper implements RepositoryEntry,
 	*/
 	@Override
 	public Date getLastPublishDate() {
-		return _repositoryEntry.getLastPublishDate();
+		return model.getLastPublishDate();
 	}
 
 	/**
@@ -220,7 +190,7 @@ public class RepositoryEntryWrapper implements RepositoryEntry,
 	*/
 	@Override
 	public boolean getManualCheckInRequired() {
-		return _repositoryEntry.getManualCheckInRequired();
+		return model.getManualCheckInRequired();
 	}
 
 	/**
@@ -230,7 +200,7 @@ public class RepositoryEntryWrapper implements RepositoryEntry,
 	*/
 	@Override
 	public String getMappedId() {
-		return _repositoryEntry.getMappedId();
+		return model.getMappedId();
 	}
 
 	/**
@@ -240,7 +210,7 @@ public class RepositoryEntryWrapper implements RepositoryEntry,
 	*/
 	@Override
 	public Date getModifiedDate() {
-		return _repositoryEntry.getModifiedDate();
+		return model.getModifiedDate();
 	}
 
 	/**
@@ -250,7 +220,7 @@ public class RepositoryEntryWrapper implements RepositoryEntry,
 	*/
 	@Override
 	public long getMvccVersion() {
-		return _repositoryEntry.getMvccVersion();
+		return model.getMvccVersion();
 	}
 
 	/**
@@ -260,12 +230,7 @@ public class RepositoryEntryWrapper implements RepositoryEntry,
 	*/
 	@Override
 	public long getPrimaryKey() {
-		return _repositoryEntry.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _repositoryEntry.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	/**
@@ -275,7 +240,7 @@ public class RepositoryEntryWrapper implements RepositoryEntry,
 	*/
 	@Override
 	public long getRepositoryEntryId() {
-		return _repositoryEntry.getRepositoryEntryId();
+		return model.getRepositoryEntryId();
 	}
 
 	/**
@@ -285,7 +250,7 @@ public class RepositoryEntryWrapper implements RepositoryEntry,
 	*/
 	@Override
 	public long getRepositoryId() {
-		return _repositoryEntry.getRepositoryId();
+		return model.getRepositoryId();
 	}
 
 	/**
@@ -295,7 +260,7 @@ public class RepositoryEntryWrapper implements RepositoryEntry,
 	*/
 	@Override
 	public long getUserId() {
-		return _repositoryEntry.getUserId();
+		return model.getUserId();
 	}
 
 	/**
@@ -305,7 +270,7 @@ public class RepositoryEntryWrapper implements RepositoryEntry,
 	*/
 	@Override
 	public String getUserName() {
-		return _repositoryEntry.getUserName();
+		return model.getUserName();
 	}
 
 	/**
@@ -315,7 +280,7 @@ public class RepositoryEntryWrapper implements RepositoryEntry,
 	*/
 	@Override
 	public String getUserUuid() {
-		return _repositoryEntry.getUserUuid();
+		return model.getUserUuid();
 	}
 
 	/**
@@ -325,22 +290,7 @@ public class RepositoryEntryWrapper implements RepositoryEntry,
 	*/
 	@Override
 	public String getUuid() {
-		return _repositoryEntry.getUuid();
-	}
-
-	@Override
-	public int hashCode() {
-		return _repositoryEntry.hashCode();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _repositoryEntry.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _repositoryEntry.isEscapedModel();
+		return model.getUuid();
 	}
 
 	/**
@@ -350,22 +300,12 @@ public class RepositoryEntryWrapper implements RepositoryEntry,
 	*/
 	@Override
 	public boolean isManualCheckInRequired() {
-		return _repositoryEntry.isManualCheckInRequired();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _repositoryEntry.isNew();
+		return model.isManualCheckInRequired();
 	}
 
 	@Override
 	public void persist() {
-		_repositoryEntry.persist();
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_repositoryEntry.setCachedModel(cachedModel);
+		model.persist();
 	}
 
 	/**
@@ -375,7 +315,7 @@ public class RepositoryEntryWrapper implements RepositoryEntry,
 	*/
 	@Override
 	public void setCompanyId(long companyId) {
-		_repositoryEntry.setCompanyId(companyId);
+		model.setCompanyId(companyId);
 	}
 
 	/**
@@ -385,22 +325,7 @@ public class RepositoryEntryWrapper implements RepositoryEntry,
 	*/
 	@Override
 	public void setCreateDate(Date createDate) {
-		_repositoryEntry.setCreateDate(createDate);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(BaseModel<?> baseModel) {
-		_repositoryEntry.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_repositoryEntry.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_repositoryEntry.setExpandoBridgeAttributes(serviceContext);
+		model.setCreateDate(createDate);
 	}
 
 	/**
@@ -410,7 +335,7 @@ public class RepositoryEntryWrapper implements RepositoryEntry,
 	*/
 	@Override
 	public void setGroupId(long groupId) {
-		_repositoryEntry.setGroupId(groupId);
+		model.setGroupId(groupId);
 	}
 
 	/**
@@ -420,7 +345,7 @@ public class RepositoryEntryWrapper implements RepositoryEntry,
 	*/
 	@Override
 	public void setLastPublishDate(Date lastPublishDate) {
-		_repositoryEntry.setLastPublishDate(lastPublishDate);
+		model.setLastPublishDate(lastPublishDate);
 	}
 
 	/**
@@ -430,7 +355,7 @@ public class RepositoryEntryWrapper implements RepositoryEntry,
 	*/
 	@Override
 	public void setManualCheckInRequired(boolean manualCheckInRequired) {
-		_repositoryEntry.setManualCheckInRequired(manualCheckInRequired);
+		model.setManualCheckInRequired(manualCheckInRequired);
 	}
 
 	/**
@@ -440,7 +365,7 @@ public class RepositoryEntryWrapper implements RepositoryEntry,
 	*/
 	@Override
 	public void setMappedId(String mappedId) {
-		_repositoryEntry.setMappedId(mappedId);
+		model.setMappedId(mappedId);
 	}
 
 	/**
@@ -450,7 +375,7 @@ public class RepositoryEntryWrapper implements RepositoryEntry,
 	*/
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
-		_repositoryEntry.setModifiedDate(modifiedDate);
+		model.setModifiedDate(modifiedDate);
 	}
 
 	/**
@@ -460,12 +385,7 @@ public class RepositoryEntryWrapper implements RepositoryEntry,
 	*/
 	@Override
 	public void setMvccVersion(long mvccVersion) {
-		_repositoryEntry.setMvccVersion(mvccVersion);
-	}
-
-	@Override
-	public void setNew(boolean n) {
-		_repositoryEntry.setNew(n);
+		model.setMvccVersion(mvccVersion);
 	}
 
 	/**
@@ -475,12 +395,7 @@ public class RepositoryEntryWrapper implements RepositoryEntry,
 	*/
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_repositoryEntry.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_repositoryEntry.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -490,7 +405,7 @@ public class RepositoryEntryWrapper implements RepositoryEntry,
 	*/
 	@Override
 	public void setRepositoryEntryId(long repositoryEntryId) {
-		_repositoryEntry.setRepositoryEntryId(repositoryEntryId);
+		model.setRepositoryEntryId(repositoryEntryId);
 	}
 
 	/**
@@ -500,7 +415,7 @@ public class RepositoryEntryWrapper implements RepositoryEntry,
 	*/
 	@Override
 	public void setRepositoryId(long repositoryId) {
-		_repositoryEntry.setRepositoryId(repositoryId);
+		model.setRepositoryId(repositoryId);
 	}
 
 	/**
@@ -510,7 +425,7 @@ public class RepositoryEntryWrapper implements RepositoryEntry,
 	*/
 	@Override
 	public void setUserId(long userId) {
-		_repositoryEntry.setUserId(userId);
+		model.setUserId(userId);
 	}
 
 	/**
@@ -520,7 +435,7 @@ public class RepositoryEntryWrapper implements RepositoryEntry,
 	*/
 	@Override
 	public void setUserName(String userName) {
-		_repositoryEntry.setUserName(userName);
+		model.setUserName(userName);
 	}
 
 	/**
@@ -530,7 +445,7 @@ public class RepositoryEntryWrapper implements RepositoryEntry,
 	*/
 	@Override
 	public void setUserUuid(String userUuid) {
-		_repositoryEntry.setUserUuid(userUuid);
+		model.setUserUuid(userUuid);
 	}
 
 	/**
@@ -540,78 +455,16 @@ public class RepositoryEntryWrapper implements RepositoryEntry,
 	*/
 	@Override
 	public void setUuid(String uuid) {
-		_repositoryEntry.setUuid(uuid);
-	}
-
-	@Override
-	public CacheModel<RepositoryEntry> toCacheModel() {
-		return _repositoryEntry.toCacheModel();
-	}
-
-	@Override
-	public RepositoryEntry toEscapedModel() {
-		return new RepositoryEntryWrapper(_repositoryEntry.toEscapedModel());
-	}
-
-	@Override
-	public String toString() {
-		return _repositoryEntry.toString();
-	}
-
-	@Override
-	public RepositoryEntry toUnescapedModel() {
-		return new RepositoryEntryWrapper(_repositoryEntry.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _repositoryEntry.toXmlString();
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-
-		if (!(obj instanceof RepositoryEntryWrapper)) {
-			return false;
-		}
-
-		RepositoryEntryWrapper repositoryEntryWrapper = (RepositoryEntryWrapper)obj;
-
-		if (Objects.equals(_repositoryEntry,
-					repositoryEntryWrapper._repositoryEntry)) {
-			return true;
-		}
-
-		return false;
+		model.setUuid(uuid);
 	}
 
 	@Override
 	public StagedModelType getStagedModelType() {
-		return _repositoryEntry.getStagedModelType();
+		return model.getStagedModelType();
 	}
 
 	@Override
-	public RepositoryEntry getWrappedModel() {
-		return _repositoryEntry;
+	protected RepositoryEntryWrapper wrap(RepositoryEntry repositoryEntry) {
+		return new RepositoryEntryWrapper(repositoryEntry);
 	}
-
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _repositoryEntry.isEntityCacheEnabled();
-	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _repositoryEntry.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_repositoryEntry.resetOriginalValues();
-	}
-
-	private final RepositoryEntry _repositoryEntry;
 }

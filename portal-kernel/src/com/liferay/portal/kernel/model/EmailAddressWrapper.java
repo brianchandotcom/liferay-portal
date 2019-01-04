@@ -16,18 +16,13 @@ package com.liferay.portal.kernel.model;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
-
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -39,20 +34,10 @@ import java.util.Objects;
  * @generated
  */
 @ProviderType
-public class EmailAddressWrapper implements EmailAddress,
-	ModelWrapper<EmailAddress> {
+public class EmailAddressWrapper extends BaseModelWrapper<EmailAddress>
+	implements EmailAddress, ModelWrapper<EmailAddress> {
 	public EmailAddressWrapper(EmailAddress emailAddress) {
-		_emailAddress = emailAddress;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return EmailAddress.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return EmailAddress.class.getName();
+		super(emailAddress);
 	}
 
 	@Override
@@ -157,16 +142,6 @@ public class EmailAddressWrapper implements EmailAddress,
 		}
 	}
 
-	@Override
-	public Object clone() {
-		return new EmailAddressWrapper((EmailAddress)_emailAddress.clone());
-	}
-
-	@Override
-	public int compareTo(EmailAddress emailAddress) {
-		return _emailAddress.compareTo(emailAddress);
-	}
-
 	/**
 	* Returns the address of this email address.
 	*
@@ -174,7 +149,7 @@ public class EmailAddressWrapper implements EmailAddress,
 	*/
 	@Override
 	public String getAddress() {
-		return _emailAddress.getAddress();
+		return model.getAddress();
 	}
 
 	/**
@@ -184,7 +159,7 @@ public class EmailAddressWrapper implements EmailAddress,
 	*/
 	@Override
 	public String getClassName() {
-		return _emailAddress.getClassName();
+		return model.getClassName();
 	}
 
 	/**
@@ -194,7 +169,7 @@ public class EmailAddressWrapper implements EmailAddress,
 	*/
 	@Override
 	public long getClassNameId() {
-		return _emailAddress.getClassNameId();
+		return model.getClassNameId();
 	}
 
 	/**
@@ -204,7 +179,7 @@ public class EmailAddressWrapper implements EmailAddress,
 	*/
 	@Override
 	public long getClassPK() {
-		return _emailAddress.getClassPK();
+		return model.getClassPK();
 	}
 
 	/**
@@ -214,7 +189,7 @@ public class EmailAddressWrapper implements EmailAddress,
 	*/
 	@Override
 	public long getCompanyId() {
-		return _emailAddress.getCompanyId();
+		return model.getCompanyId();
 	}
 
 	/**
@@ -224,7 +199,7 @@ public class EmailAddressWrapper implements EmailAddress,
 	*/
 	@Override
 	public Date getCreateDate() {
-		return _emailAddress.getCreateDate();
+		return model.getCreateDate();
 	}
 
 	/**
@@ -234,12 +209,7 @@ public class EmailAddressWrapper implements EmailAddress,
 	*/
 	@Override
 	public long getEmailAddressId() {
-		return _emailAddress.getEmailAddressId();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _emailAddress.getExpandoBridge();
+		return model.getEmailAddressId();
 	}
 
 	/**
@@ -249,7 +219,7 @@ public class EmailAddressWrapper implements EmailAddress,
 	*/
 	@Override
 	public Date getModifiedDate() {
-		return _emailAddress.getModifiedDate();
+		return model.getModifiedDate();
 	}
 
 	/**
@@ -259,7 +229,7 @@ public class EmailAddressWrapper implements EmailAddress,
 	*/
 	@Override
 	public long getMvccVersion() {
-		return _emailAddress.getMvccVersion();
+		return model.getMvccVersion();
 	}
 
 	/**
@@ -269,7 +239,7 @@ public class EmailAddressWrapper implements EmailAddress,
 	*/
 	@Override
 	public boolean getPrimary() {
-		return _emailAddress.getPrimary();
+		return model.getPrimary();
 	}
 
 	/**
@@ -279,18 +249,13 @@ public class EmailAddressWrapper implements EmailAddress,
 	*/
 	@Override
 	public long getPrimaryKey() {
-		return _emailAddress.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _emailAddress.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	@Override
 	public ListType getType()
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _emailAddress.getType();
+		return model.getType();
 	}
 
 	/**
@@ -300,7 +265,7 @@ public class EmailAddressWrapper implements EmailAddress,
 	*/
 	@Override
 	public long getTypeId() {
-		return _emailAddress.getTypeId();
+		return model.getTypeId();
 	}
 
 	/**
@@ -310,7 +275,7 @@ public class EmailAddressWrapper implements EmailAddress,
 	*/
 	@Override
 	public long getUserId() {
-		return _emailAddress.getUserId();
+		return model.getUserId();
 	}
 
 	/**
@@ -320,7 +285,7 @@ public class EmailAddressWrapper implements EmailAddress,
 	*/
 	@Override
 	public String getUserName() {
-		return _emailAddress.getUserName();
+		return model.getUserName();
 	}
 
 	/**
@@ -330,7 +295,7 @@ public class EmailAddressWrapper implements EmailAddress,
 	*/
 	@Override
 	public String getUserUuid() {
-		return _emailAddress.getUserUuid();
+		return model.getUserUuid();
 	}
 
 	/**
@@ -340,27 +305,7 @@ public class EmailAddressWrapper implements EmailAddress,
 	*/
 	@Override
 	public String getUuid() {
-		return _emailAddress.getUuid();
-	}
-
-	@Override
-	public int hashCode() {
-		return _emailAddress.hashCode();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _emailAddress.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _emailAddress.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _emailAddress.isNew();
+		return model.getUuid();
 	}
 
 	/**
@@ -370,12 +315,12 @@ public class EmailAddressWrapper implements EmailAddress,
 	*/
 	@Override
 	public boolean isPrimary() {
-		return _emailAddress.isPrimary();
+		return model.isPrimary();
 	}
 
 	@Override
 	public void persist() {
-		_emailAddress.persist();
+		model.persist();
 	}
 
 	/**
@@ -385,17 +330,12 @@ public class EmailAddressWrapper implements EmailAddress,
 	*/
 	@Override
 	public void setAddress(String address) {
-		_emailAddress.setAddress(address);
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_emailAddress.setCachedModel(cachedModel);
+		model.setAddress(address);
 	}
 
 	@Override
 	public void setClassName(String className) {
-		_emailAddress.setClassName(className);
+		model.setClassName(className);
 	}
 
 	/**
@@ -405,7 +345,7 @@ public class EmailAddressWrapper implements EmailAddress,
 	*/
 	@Override
 	public void setClassNameId(long classNameId) {
-		_emailAddress.setClassNameId(classNameId);
+		model.setClassNameId(classNameId);
 	}
 
 	/**
@@ -415,7 +355,7 @@ public class EmailAddressWrapper implements EmailAddress,
 	*/
 	@Override
 	public void setClassPK(long classPK) {
-		_emailAddress.setClassPK(classPK);
+		model.setClassPK(classPK);
 	}
 
 	/**
@@ -425,7 +365,7 @@ public class EmailAddressWrapper implements EmailAddress,
 	*/
 	@Override
 	public void setCompanyId(long companyId) {
-		_emailAddress.setCompanyId(companyId);
+		model.setCompanyId(companyId);
 	}
 
 	/**
@@ -435,7 +375,7 @@ public class EmailAddressWrapper implements EmailAddress,
 	*/
 	@Override
 	public void setCreateDate(Date createDate) {
-		_emailAddress.setCreateDate(createDate);
+		model.setCreateDate(createDate);
 	}
 
 	/**
@@ -445,22 +385,7 @@ public class EmailAddressWrapper implements EmailAddress,
 	*/
 	@Override
 	public void setEmailAddressId(long emailAddressId) {
-		_emailAddress.setEmailAddressId(emailAddressId);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(BaseModel<?> baseModel) {
-		_emailAddress.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_emailAddress.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_emailAddress.setExpandoBridgeAttributes(serviceContext);
+		model.setEmailAddressId(emailAddressId);
 	}
 
 	/**
@@ -470,7 +395,7 @@ public class EmailAddressWrapper implements EmailAddress,
 	*/
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
-		_emailAddress.setModifiedDate(modifiedDate);
+		model.setModifiedDate(modifiedDate);
 	}
 
 	/**
@@ -480,12 +405,7 @@ public class EmailAddressWrapper implements EmailAddress,
 	*/
 	@Override
 	public void setMvccVersion(long mvccVersion) {
-		_emailAddress.setMvccVersion(mvccVersion);
-	}
-
-	@Override
-	public void setNew(boolean n) {
-		_emailAddress.setNew(n);
+		model.setMvccVersion(mvccVersion);
 	}
 
 	/**
@@ -495,7 +415,7 @@ public class EmailAddressWrapper implements EmailAddress,
 	*/
 	@Override
 	public void setPrimary(boolean primary) {
-		_emailAddress.setPrimary(primary);
+		model.setPrimary(primary);
 	}
 
 	/**
@@ -505,12 +425,7 @@ public class EmailAddressWrapper implements EmailAddress,
 	*/
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_emailAddress.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_emailAddress.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -520,7 +435,7 @@ public class EmailAddressWrapper implements EmailAddress,
 	*/
 	@Override
 	public void setTypeId(long typeId) {
-		_emailAddress.setTypeId(typeId);
+		model.setTypeId(typeId);
 	}
 
 	/**
@@ -530,7 +445,7 @@ public class EmailAddressWrapper implements EmailAddress,
 	*/
 	@Override
 	public void setUserId(long userId) {
-		_emailAddress.setUserId(userId);
+		model.setUserId(userId);
 	}
 
 	/**
@@ -540,7 +455,7 @@ public class EmailAddressWrapper implements EmailAddress,
 	*/
 	@Override
 	public void setUserName(String userName) {
-		_emailAddress.setUserName(userName);
+		model.setUserName(userName);
 	}
 
 	/**
@@ -550,7 +465,7 @@ public class EmailAddressWrapper implements EmailAddress,
 	*/
 	@Override
 	public void setUserUuid(String userUuid) {
-		_emailAddress.setUserUuid(userUuid);
+		model.setUserUuid(userUuid);
 	}
 
 	/**
@@ -560,77 +475,16 @@ public class EmailAddressWrapper implements EmailAddress,
 	*/
 	@Override
 	public void setUuid(String uuid) {
-		_emailAddress.setUuid(uuid);
-	}
-
-	@Override
-	public CacheModel<EmailAddress> toCacheModel() {
-		return _emailAddress.toCacheModel();
-	}
-
-	@Override
-	public EmailAddress toEscapedModel() {
-		return new EmailAddressWrapper(_emailAddress.toEscapedModel());
-	}
-
-	@Override
-	public String toString() {
-		return _emailAddress.toString();
-	}
-
-	@Override
-	public EmailAddress toUnescapedModel() {
-		return new EmailAddressWrapper(_emailAddress.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _emailAddress.toXmlString();
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-
-		if (!(obj instanceof EmailAddressWrapper)) {
-			return false;
-		}
-
-		EmailAddressWrapper emailAddressWrapper = (EmailAddressWrapper)obj;
-
-		if (Objects.equals(_emailAddress, emailAddressWrapper._emailAddress)) {
-			return true;
-		}
-
-		return false;
+		model.setUuid(uuid);
 	}
 
 	@Override
 	public StagedModelType getStagedModelType() {
-		return _emailAddress.getStagedModelType();
+		return model.getStagedModelType();
 	}
 
 	@Override
-	public EmailAddress getWrappedModel() {
-		return _emailAddress;
+	protected EmailAddressWrapper wrap(EmailAddress emailAddress) {
+		return new EmailAddressWrapper(emailAddress);
 	}
-
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _emailAddress.isEntityCacheEnabled();
-	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _emailAddress.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_emailAddress.resetOriginalValues();
-	}
-
-	private final EmailAddress _emailAddress;
 }

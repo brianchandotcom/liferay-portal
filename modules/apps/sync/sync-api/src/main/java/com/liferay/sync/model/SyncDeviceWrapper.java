@@ -16,19 +16,14 @@ package com.liferay.sync.model;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
-
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 
 import com.liferay.portal.kernel.model.ModelWrapper;
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -40,19 +35,10 @@ import java.util.Objects;
  * @generated
  */
 @ProviderType
-public class SyncDeviceWrapper implements SyncDevice, ModelWrapper<SyncDevice> {
+public class SyncDeviceWrapper extends BaseModelWrapper<SyncDevice>
+	implements SyncDevice, ModelWrapper<SyncDevice> {
 	public SyncDeviceWrapper(SyncDevice syncDevice) {
-		_syncDevice = syncDevice;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return SyncDevice.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return SyncDevice.class.getName();
+		super(syncDevice);
 	}
 
 	@Override
@@ -153,17 +139,7 @@ public class SyncDeviceWrapper implements SyncDevice, ModelWrapper<SyncDevice> {
 	@Override
 	public void checkStatus()
 		throws com.liferay.portal.kernel.exception.PortalException {
-		_syncDevice.checkStatus();
-	}
-
-	@Override
-	public Object clone() {
-		return new SyncDeviceWrapper((SyncDevice)_syncDevice.clone());
-	}
-
-	@Override
-	public int compareTo(SyncDevice syncDevice) {
-		return _syncDevice.compareTo(syncDevice);
+		model.checkStatus();
 	}
 
 	/**
@@ -173,7 +149,7 @@ public class SyncDeviceWrapper implements SyncDevice, ModelWrapper<SyncDevice> {
 	*/
 	@Override
 	public long getBuildNumber() {
-		return _syncDevice.getBuildNumber();
+		return model.getBuildNumber();
 	}
 
 	/**
@@ -183,7 +159,7 @@ public class SyncDeviceWrapper implements SyncDevice, ModelWrapper<SyncDevice> {
 	*/
 	@Override
 	public long getCompanyId() {
-		return _syncDevice.getCompanyId();
+		return model.getCompanyId();
 	}
 
 	/**
@@ -193,12 +169,7 @@ public class SyncDeviceWrapper implements SyncDevice, ModelWrapper<SyncDevice> {
 	*/
 	@Override
 	public Date getCreateDate() {
-		return _syncDevice.getCreateDate();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _syncDevice.getExpandoBridge();
+		return model.getCreateDate();
 	}
 
 	/**
@@ -208,7 +179,7 @@ public class SyncDeviceWrapper implements SyncDevice, ModelWrapper<SyncDevice> {
 	*/
 	@Override
 	public int getFeatureSet() {
-		return _syncDevice.getFeatureSet();
+		return model.getFeatureSet();
 	}
 
 	/**
@@ -218,7 +189,7 @@ public class SyncDeviceWrapper implements SyncDevice, ModelWrapper<SyncDevice> {
 	*/
 	@Override
 	public String getHostname() {
-		return _syncDevice.getHostname();
+		return model.getHostname();
 	}
 
 	/**
@@ -228,7 +199,7 @@ public class SyncDeviceWrapper implements SyncDevice, ModelWrapper<SyncDevice> {
 	*/
 	@Override
 	public Date getModifiedDate() {
-		return _syncDevice.getModifiedDate();
+		return model.getModifiedDate();
 	}
 
 	/**
@@ -238,12 +209,7 @@ public class SyncDeviceWrapper implements SyncDevice, ModelWrapper<SyncDevice> {
 	*/
 	@Override
 	public long getPrimaryKey() {
-		return _syncDevice.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _syncDevice.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	/**
@@ -253,7 +219,7 @@ public class SyncDeviceWrapper implements SyncDevice, ModelWrapper<SyncDevice> {
 	*/
 	@Override
 	public int getStatus() {
-		return _syncDevice.getStatus();
+		return model.getStatus();
 	}
 
 	/**
@@ -263,7 +229,7 @@ public class SyncDeviceWrapper implements SyncDevice, ModelWrapper<SyncDevice> {
 	*/
 	@Override
 	public long getSyncDeviceId() {
-		return _syncDevice.getSyncDeviceId();
+		return model.getSyncDeviceId();
 	}
 
 	/**
@@ -273,7 +239,7 @@ public class SyncDeviceWrapper implements SyncDevice, ModelWrapper<SyncDevice> {
 	*/
 	@Override
 	public String getType() {
-		return _syncDevice.getType();
+		return model.getType();
 	}
 
 	/**
@@ -283,7 +249,7 @@ public class SyncDeviceWrapper implements SyncDevice, ModelWrapper<SyncDevice> {
 	*/
 	@Override
 	public long getUserId() {
-		return _syncDevice.getUserId();
+		return model.getUserId();
 	}
 
 	/**
@@ -293,7 +259,7 @@ public class SyncDeviceWrapper implements SyncDevice, ModelWrapper<SyncDevice> {
 	*/
 	@Override
 	public String getUserName() {
-		return _syncDevice.getUserName();
+		return model.getUserName();
 	}
 
 	/**
@@ -303,7 +269,7 @@ public class SyncDeviceWrapper implements SyncDevice, ModelWrapper<SyncDevice> {
 	*/
 	@Override
 	public String getUserUuid() {
-		return _syncDevice.getUserUuid();
+		return model.getUserUuid();
 	}
 
 	/**
@@ -313,42 +279,22 @@ public class SyncDeviceWrapper implements SyncDevice, ModelWrapper<SyncDevice> {
 	*/
 	@Override
 	public String getUuid() {
-		return _syncDevice.getUuid();
-	}
-
-	@Override
-	public int hashCode() {
-		return _syncDevice.hashCode();
+		return model.getUuid();
 	}
 
 	@Override
 	public boolean hasSetModifiedDate() {
-		return _syncDevice.hasSetModifiedDate();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _syncDevice.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _syncDevice.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _syncDevice.isNew();
+		return model.hasSetModifiedDate();
 	}
 
 	@Override
 	public boolean isSupported() {
-		return _syncDevice.isSupported();
+		return model.isSupported();
 	}
 
 	@Override
 	public void persist() {
-		_syncDevice.persist();
+		model.persist();
 	}
 
 	/**
@@ -358,12 +304,7 @@ public class SyncDeviceWrapper implements SyncDevice, ModelWrapper<SyncDevice> {
 	*/
 	@Override
 	public void setBuildNumber(long buildNumber) {
-		_syncDevice.setBuildNumber(buildNumber);
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_syncDevice.setCachedModel(cachedModel);
+		model.setBuildNumber(buildNumber);
 	}
 
 	/**
@@ -373,7 +314,7 @@ public class SyncDeviceWrapper implements SyncDevice, ModelWrapper<SyncDevice> {
 	*/
 	@Override
 	public void setCompanyId(long companyId) {
-		_syncDevice.setCompanyId(companyId);
+		model.setCompanyId(companyId);
 	}
 
 	/**
@@ -383,23 +324,7 @@ public class SyncDeviceWrapper implements SyncDevice, ModelWrapper<SyncDevice> {
 	*/
 	@Override
 	public void setCreateDate(Date createDate) {
-		_syncDevice.setCreateDate(createDate);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-		_syncDevice.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_syncDevice.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_syncDevice.setExpandoBridgeAttributes(serviceContext);
+		model.setCreateDate(createDate);
 	}
 
 	/**
@@ -409,7 +334,7 @@ public class SyncDeviceWrapper implements SyncDevice, ModelWrapper<SyncDevice> {
 	*/
 	@Override
 	public void setFeatureSet(int featureSet) {
-		_syncDevice.setFeatureSet(featureSet);
+		model.setFeatureSet(featureSet);
 	}
 
 	/**
@@ -419,7 +344,7 @@ public class SyncDeviceWrapper implements SyncDevice, ModelWrapper<SyncDevice> {
 	*/
 	@Override
 	public void setHostname(String hostname) {
-		_syncDevice.setHostname(hostname);
+		model.setHostname(hostname);
 	}
 
 	/**
@@ -429,12 +354,7 @@ public class SyncDeviceWrapper implements SyncDevice, ModelWrapper<SyncDevice> {
 	*/
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
-		_syncDevice.setModifiedDate(modifiedDate);
-	}
-
-	@Override
-	public void setNew(boolean n) {
-		_syncDevice.setNew(n);
+		model.setModifiedDate(modifiedDate);
 	}
 
 	/**
@@ -444,12 +364,7 @@ public class SyncDeviceWrapper implements SyncDevice, ModelWrapper<SyncDevice> {
 	*/
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_syncDevice.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_syncDevice.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -459,7 +374,7 @@ public class SyncDeviceWrapper implements SyncDevice, ModelWrapper<SyncDevice> {
 	*/
 	@Override
 	public void setStatus(int status) {
-		_syncDevice.setStatus(status);
+		model.setStatus(status);
 	}
 
 	/**
@@ -469,7 +384,7 @@ public class SyncDeviceWrapper implements SyncDevice, ModelWrapper<SyncDevice> {
 	*/
 	@Override
 	public void setSyncDeviceId(long syncDeviceId) {
-		_syncDevice.setSyncDeviceId(syncDeviceId);
+		model.setSyncDeviceId(syncDeviceId);
 	}
 
 	/**
@@ -479,7 +394,7 @@ public class SyncDeviceWrapper implements SyncDevice, ModelWrapper<SyncDevice> {
 	*/
 	@Override
 	public void setType(String type) {
-		_syncDevice.setType(type);
+		model.setType(type);
 	}
 
 	/**
@@ -489,7 +404,7 @@ public class SyncDeviceWrapper implements SyncDevice, ModelWrapper<SyncDevice> {
 	*/
 	@Override
 	public void setUserId(long userId) {
-		_syncDevice.setUserId(userId);
+		model.setUserId(userId);
 	}
 
 	/**
@@ -499,7 +414,7 @@ public class SyncDeviceWrapper implements SyncDevice, ModelWrapper<SyncDevice> {
 	*/
 	@Override
 	public void setUserName(String userName) {
-		_syncDevice.setUserName(userName);
+		model.setUserName(userName);
 	}
 
 	/**
@@ -509,7 +424,7 @@ public class SyncDeviceWrapper implements SyncDevice, ModelWrapper<SyncDevice> {
 	*/
 	@Override
 	public void setUserUuid(String userUuid) {
-		_syncDevice.setUserUuid(userUuid);
+		model.setUserUuid(userUuid);
 	}
 
 	/**
@@ -519,82 +434,21 @@ public class SyncDeviceWrapper implements SyncDevice, ModelWrapper<SyncDevice> {
 	*/
 	@Override
 	public void setUuid(String uuid) {
-		_syncDevice.setUuid(uuid);
+		model.setUuid(uuid);
 	}
 
 	@Override
 	public boolean supports(int featureSet) {
-		return _syncDevice.supports(featureSet);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<SyncDevice> toCacheModel() {
-		return _syncDevice.toCacheModel();
-	}
-
-	@Override
-	public SyncDevice toEscapedModel() {
-		return new SyncDeviceWrapper(_syncDevice.toEscapedModel());
-	}
-
-	@Override
-	public String toString() {
-		return _syncDevice.toString();
-	}
-
-	@Override
-	public SyncDevice toUnescapedModel() {
-		return new SyncDeviceWrapper(_syncDevice.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _syncDevice.toXmlString();
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-
-		if (!(obj instanceof SyncDeviceWrapper)) {
-			return false;
-		}
-
-		SyncDeviceWrapper syncDeviceWrapper = (SyncDeviceWrapper)obj;
-
-		if (Objects.equals(_syncDevice, syncDeviceWrapper._syncDevice)) {
-			return true;
-		}
-
-		return false;
+		return model.supports(featureSet);
 	}
 
 	@Override
 	public StagedModelType getStagedModelType() {
-		return _syncDevice.getStagedModelType();
+		return model.getStagedModelType();
 	}
 
 	@Override
-	public SyncDevice getWrappedModel() {
-		return _syncDevice;
+	protected SyncDeviceWrapper wrap(SyncDevice syncDevice) {
+		return new SyncDeviceWrapper(syncDevice);
 	}
-
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _syncDevice.isEntityCacheEnabled();
-	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _syncDevice.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_syncDevice.resetOriginalValues();
-	}
-
-	private final SyncDevice _syncDevice;
 }

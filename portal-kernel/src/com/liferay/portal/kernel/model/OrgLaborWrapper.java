@@ -16,15 +16,10 @@ package com.liferay.portal.kernel.model;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
-
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -36,19 +31,10 @@ import java.util.Objects;
  * @generated
  */
 @ProviderType
-public class OrgLaborWrapper implements OrgLabor, ModelWrapper<OrgLabor> {
+public class OrgLaborWrapper extends BaseModelWrapper<OrgLabor>
+	implements OrgLabor, ModelWrapper<OrgLabor> {
 	public OrgLaborWrapper(OrgLabor orgLabor) {
-		_orgLabor = orgLabor;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return OrgLabor.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return OrgLabor.class.getName();
+		super(orgLabor);
 	}
 
 	@Override
@@ -195,16 +181,6 @@ public class OrgLaborWrapper implements OrgLabor, ModelWrapper<OrgLabor> {
 		}
 	}
 
-	@Override
-	public Object clone() {
-		return new OrgLaborWrapper((OrgLabor)_orgLabor.clone());
-	}
-
-	@Override
-	public int compareTo(OrgLabor orgLabor) {
-		return _orgLabor.compareTo(orgLabor);
-	}
-
 	/**
 	* Returns the company ID of this org labor.
 	*
@@ -212,12 +188,7 @@ public class OrgLaborWrapper implements OrgLabor, ModelWrapper<OrgLabor> {
 	*/
 	@Override
 	public long getCompanyId() {
-		return _orgLabor.getCompanyId();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _orgLabor.getExpandoBridge();
+		return model.getCompanyId();
 	}
 
 	/**
@@ -227,7 +198,7 @@ public class OrgLaborWrapper implements OrgLabor, ModelWrapper<OrgLabor> {
 	*/
 	@Override
 	public int getFriClose() {
-		return _orgLabor.getFriClose();
+		return model.getFriClose();
 	}
 
 	/**
@@ -237,7 +208,7 @@ public class OrgLaborWrapper implements OrgLabor, ModelWrapper<OrgLabor> {
 	*/
 	@Override
 	public int getFriOpen() {
-		return _orgLabor.getFriOpen();
+		return model.getFriOpen();
 	}
 
 	/**
@@ -247,7 +218,7 @@ public class OrgLaborWrapper implements OrgLabor, ModelWrapper<OrgLabor> {
 	*/
 	@Override
 	public int getMonClose() {
-		return _orgLabor.getMonClose();
+		return model.getMonClose();
 	}
 
 	/**
@@ -257,7 +228,7 @@ public class OrgLaborWrapper implements OrgLabor, ModelWrapper<OrgLabor> {
 	*/
 	@Override
 	public int getMonOpen() {
-		return _orgLabor.getMonOpen();
+		return model.getMonOpen();
 	}
 
 	/**
@@ -267,7 +238,7 @@ public class OrgLaborWrapper implements OrgLabor, ModelWrapper<OrgLabor> {
 	*/
 	@Override
 	public long getMvccVersion() {
-		return _orgLabor.getMvccVersion();
+		return model.getMvccVersion();
 	}
 
 	/**
@@ -277,7 +248,7 @@ public class OrgLaborWrapper implements OrgLabor, ModelWrapper<OrgLabor> {
 	*/
 	@Override
 	public long getOrganizationId() {
-		return _orgLabor.getOrganizationId();
+		return model.getOrganizationId();
 	}
 
 	/**
@@ -287,7 +258,7 @@ public class OrgLaborWrapper implements OrgLabor, ModelWrapper<OrgLabor> {
 	*/
 	@Override
 	public long getOrgLaborId() {
-		return _orgLabor.getOrgLaborId();
+		return model.getOrgLaborId();
 	}
 
 	/**
@@ -297,12 +268,7 @@ public class OrgLaborWrapper implements OrgLabor, ModelWrapper<OrgLabor> {
 	*/
 	@Override
 	public long getPrimaryKey() {
-		return _orgLabor.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _orgLabor.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	/**
@@ -312,7 +278,7 @@ public class OrgLaborWrapper implements OrgLabor, ModelWrapper<OrgLabor> {
 	*/
 	@Override
 	public int getSatClose() {
-		return _orgLabor.getSatClose();
+		return model.getSatClose();
 	}
 
 	/**
@@ -322,7 +288,7 @@ public class OrgLaborWrapper implements OrgLabor, ModelWrapper<OrgLabor> {
 	*/
 	@Override
 	public int getSatOpen() {
-		return _orgLabor.getSatOpen();
+		return model.getSatOpen();
 	}
 
 	/**
@@ -332,7 +298,7 @@ public class OrgLaborWrapper implements OrgLabor, ModelWrapper<OrgLabor> {
 	*/
 	@Override
 	public int getSunClose() {
-		return _orgLabor.getSunClose();
+		return model.getSunClose();
 	}
 
 	/**
@@ -342,7 +308,7 @@ public class OrgLaborWrapper implements OrgLabor, ModelWrapper<OrgLabor> {
 	*/
 	@Override
 	public int getSunOpen() {
-		return _orgLabor.getSunOpen();
+		return model.getSunOpen();
 	}
 
 	/**
@@ -352,7 +318,7 @@ public class OrgLaborWrapper implements OrgLabor, ModelWrapper<OrgLabor> {
 	*/
 	@Override
 	public int getThuClose() {
-		return _orgLabor.getThuClose();
+		return model.getThuClose();
 	}
 
 	/**
@@ -362,7 +328,7 @@ public class OrgLaborWrapper implements OrgLabor, ModelWrapper<OrgLabor> {
 	*/
 	@Override
 	public int getThuOpen() {
-		return _orgLabor.getThuOpen();
+		return model.getThuOpen();
 	}
 
 	/**
@@ -372,7 +338,7 @@ public class OrgLaborWrapper implements OrgLabor, ModelWrapper<OrgLabor> {
 	*/
 	@Override
 	public int getTueClose() {
-		return _orgLabor.getTueClose();
+		return model.getTueClose();
 	}
 
 	/**
@@ -382,13 +348,13 @@ public class OrgLaborWrapper implements OrgLabor, ModelWrapper<OrgLabor> {
 	*/
 	@Override
 	public int getTueOpen() {
-		return _orgLabor.getTueOpen();
+		return model.getTueOpen();
 	}
 
 	@Override
 	public ListType getType()
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _orgLabor.getType();
+		return model.getType();
 	}
 
 	/**
@@ -398,7 +364,7 @@ public class OrgLaborWrapper implements OrgLabor, ModelWrapper<OrgLabor> {
 	*/
 	@Override
 	public long getTypeId() {
-		return _orgLabor.getTypeId();
+		return model.getTypeId();
 	}
 
 	/**
@@ -408,7 +374,7 @@ public class OrgLaborWrapper implements OrgLabor, ModelWrapper<OrgLabor> {
 	*/
 	@Override
 	public int getWedClose() {
-		return _orgLabor.getWedClose();
+		return model.getWedClose();
 	}
 
 	/**
@@ -418,37 +384,12 @@ public class OrgLaborWrapper implements OrgLabor, ModelWrapper<OrgLabor> {
 	*/
 	@Override
 	public int getWedOpen() {
-		return _orgLabor.getWedOpen();
-	}
-
-	@Override
-	public int hashCode() {
-		return _orgLabor.hashCode();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _orgLabor.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _orgLabor.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _orgLabor.isNew();
+		return model.getWedOpen();
 	}
 
 	@Override
 	public void persist() {
-		_orgLabor.persist();
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_orgLabor.setCachedModel(cachedModel);
+		model.persist();
 	}
 
 	/**
@@ -458,22 +399,7 @@ public class OrgLaborWrapper implements OrgLabor, ModelWrapper<OrgLabor> {
 	*/
 	@Override
 	public void setCompanyId(long companyId) {
-		_orgLabor.setCompanyId(companyId);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(BaseModel<?> baseModel) {
-		_orgLabor.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_orgLabor.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_orgLabor.setExpandoBridgeAttributes(serviceContext);
+		model.setCompanyId(companyId);
 	}
 
 	/**
@@ -483,7 +409,7 @@ public class OrgLaborWrapper implements OrgLabor, ModelWrapper<OrgLabor> {
 	*/
 	@Override
 	public void setFriClose(int friClose) {
-		_orgLabor.setFriClose(friClose);
+		model.setFriClose(friClose);
 	}
 
 	/**
@@ -493,7 +419,7 @@ public class OrgLaborWrapper implements OrgLabor, ModelWrapper<OrgLabor> {
 	*/
 	@Override
 	public void setFriOpen(int friOpen) {
-		_orgLabor.setFriOpen(friOpen);
+		model.setFriOpen(friOpen);
 	}
 
 	/**
@@ -503,7 +429,7 @@ public class OrgLaborWrapper implements OrgLabor, ModelWrapper<OrgLabor> {
 	*/
 	@Override
 	public void setMonClose(int monClose) {
-		_orgLabor.setMonClose(monClose);
+		model.setMonClose(monClose);
 	}
 
 	/**
@@ -513,7 +439,7 @@ public class OrgLaborWrapper implements OrgLabor, ModelWrapper<OrgLabor> {
 	*/
 	@Override
 	public void setMonOpen(int monOpen) {
-		_orgLabor.setMonOpen(monOpen);
+		model.setMonOpen(monOpen);
 	}
 
 	/**
@@ -523,12 +449,7 @@ public class OrgLaborWrapper implements OrgLabor, ModelWrapper<OrgLabor> {
 	*/
 	@Override
 	public void setMvccVersion(long mvccVersion) {
-		_orgLabor.setMvccVersion(mvccVersion);
-	}
-
-	@Override
-	public void setNew(boolean n) {
-		_orgLabor.setNew(n);
+		model.setMvccVersion(mvccVersion);
 	}
 
 	/**
@@ -538,7 +459,7 @@ public class OrgLaborWrapper implements OrgLabor, ModelWrapper<OrgLabor> {
 	*/
 	@Override
 	public void setOrganizationId(long organizationId) {
-		_orgLabor.setOrganizationId(organizationId);
+		model.setOrganizationId(organizationId);
 	}
 
 	/**
@@ -548,7 +469,7 @@ public class OrgLaborWrapper implements OrgLabor, ModelWrapper<OrgLabor> {
 	*/
 	@Override
 	public void setOrgLaborId(long orgLaborId) {
-		_orgLabor.setOrgLaborId(orgLaborId);
+		model.setOrgLaborId(orgLaborId);
 	}
 
 	/**
@@ -558,12 +479,7 @@ public class OrgLaborWrapper implements OrgLabor, ModelWrapper<OrgLabor> {
 	*/
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_orgLabor.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_orgLabor.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -573,7 +489,7 @@ public class OrgLaborWrapper implements OrgLabor, ModelWrapper<OrgLabor> {
 	*/
 	@Override
 	public void setSatClose(int satClose) {
-		_orgLabor.setSatClose(satClose);
+		model.setSatClose(satClose);
 	}
 
 	/**
@@ -583,7 +499,7 @@ public class OrgLaborWrapper implements OrgLabor, ModelWrapper<OrgLabor> {
 	*/
 	@Override
 	public void setSatOpen(int satOpen) {
-		_orgLabor.setSatOpen(satOpen);
+		model.setSatOpen(satOpen);
 	}
 
 	/**
@@ -593,7 +509,7 @@ public class OrgLaborWrapper implements OrgLabor, ModelWrapper<OrgLabor> {
 	*/
 	@Override
 	public void setSunClose(int sunClose) {
-		_orgLabor.setSunClose(sunClose);
+		model.setSunClose(sunClose);
 	}
 
 	/**
@@ -603,7 +519,7 @@ public class OrgLaborWrapper implements OrgLabor, ModelWrapper<OrgLabor> {
 	*/
 	@Override
 	public void setSunOpen(int sunOpen) {
-		_orgLabor.setSunOpen(sunOpen);
+		model.setSunOpen(sunOpen);
 	}
 
 	/**
@@ -613,7 +529,7 @@ public class OrgLaborWrapper implements OrgLabor, ModelWrapper<OrgLabor> {
 	*/
 	@Override
 	public void setThuClose(int thuClose) {
-		_orgLabor.setThuClose(thuClose);
+		model.setThuClose(thuClose);
 	}
 
 	/**
@@ -623,7 +539,7 @@ public class OrgLaborWrapper implements OrgLabor, ModelWrapper<OrgLabor> {
 	*/
 	@Override
 	public void setThuOpen(int thuOpen) {
-		_orgLabor.setThuOpen(thuOpen);
+		model.setThuOpen(thuOpen);
 	}
 
 	/**
@@ -633,7 +549,7 @@ public class OrgLaborWrapper implements OrgLabor, ModelWrapper<OrgLabor> {
 	*/
 	@Override
 	public void setTueClose(int tueClose) {
-		_orgLabor.setTueClose(tueClose);
+		model.setTueClose(tueClose);
 	}
 
 	/**
@@ -643,7 +559,7 @@ public class OrgLaborWrapper implements OrgLabor, ModelWrapper<OrgLabor> {
 	*/
 	@Override
 	public void setTueOpen(int tueOpen) {
-		_orgLabor.setTueOpen(tueOpen);
+		model.setTueOpen(tueOpen);
 	}
 
 	/**
@@ -653,7 +569,7 @@ public class OrgLaborWrapper implements OrgLabor, ModelWrapper<OrgLabor> {
 	*/
 	@Override
 	public void setTypeId(long typeId) {
-		_orgLabor.setTypeId(typeId);
+		model.setTypeId(typeId);
 	}
 
 	/**
@@ -663,7 +579,7 @@ public class OrgLaborWrapper implements OrgLabor, ModelWrapper<OrgLabor> {
 	*/
 	@Override
 	public void setWedClose(int wedClose) {
-		_orgLabor.setWedClose(wedClose);
+		model.setWedClose(wedClose);
 	}
 
 	/**
@@ -673,72 +589,11 @@ public class OrgLaborWrapper implements OrgLabor, ModelWrapper<OrgLabor> {
 	*/
 	@Override
 	public void setWedOpen(int wedOpen) {
-		_orgLabor.setWedOpen(wedOpen);
+		model.setWedOpen(wedOpen);
 	}
 
 	@Override
-	public CacheModel<OrgLabor> toCacheModel() {
-		return _orgLabor.toCacheModel();
+	protected OrgLaborWrapper wrap(OrgLabor orgLabor) {
+		return new OrgLaborWrapper(orgLabor);
 	}
-
-	@Override
-	public OrgLabor toEscapedModel() {
-		return new OrgLaborWrapper(_orgLabor.toEscapedModel());
-	}
-
-	@Override
-	public String toString() {
-		return _orgLabor.toString();
-	}
-
-	@Override
-	public OrgLabor toUnescapedModel() {
-		return new OrgLaborWrapper(_orgLabor.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _orgLabor.toXmlString();
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-
-		if (!(obj instanceof OrgLaborWrapper)) {
-			return false;
-		}
-
-		OrgLaborWrapper orgLaborWrapper = (OrgLaborWrapper)obj;
-
-		if (Objects.equals(_orgLabor, orgLaborWrapper._orgLabor)) {
-			return true;
-		}
-
-		return false;
-	}
-
-	@Override
-	public OrgLabor getWrappedModel() {
-		return _orgLabor;
-	}
-
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _orgLabor.isEntityCacheEnabled();
-	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _orgLabor.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_orgLabor.resetOriginalValues();
-	}
-
-	private final OrgLabor _orgLabor;
 }

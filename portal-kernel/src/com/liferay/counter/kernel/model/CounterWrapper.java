@@ -16,16 +16,11 @@ package com.liferay.counter.kernel.model;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
-
 import com.liferay.portal.kernel.model.ModelWrapper;
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -37,19 +32,10 @@ import java.util.Objects;
  * @generated
  */
 @ProviderType
-public class CounterWrapper implements Counter, ModelWrapper<Counter> {
+public class CounterWrapper extends BaseModelWrapper<Counter> implements Counter,
+	ModelWrapper<Counter> {
 	public CounterWrapper(Counter counter) {
-		_counter = counter;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return Counter.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return Counter.class.getName();
+		super(counter);
 	}
 
 	@Override
@@ -77,16 +63,6 @@ public class CounterWrapper implements Counter, ModelWrapper<Counter> {
 		}
 	}
 
-	@Override
-	public Object clone() {
-		return new CounterWrapper((Counter)_counter.clone());
-	}
-
-	@Override
-	public int compareTo(Counter counter) {
-		return _counter.compareTo(counter);
-	}
-
 	/**
 	* Returns the current ID of this counter.
 	*
@@ -94,12 +70,7 @@ public class CounterWrapper implements Counter, ModelWrapper<Counter> {
 	*/
 	@Override
 	public long getCurrentId() {
-		return _counter.getCurrentId();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _counter.getExpandoBridge();
+		return model.getCurrentId();
 	}
 
 	/**
@@ -109,7 +80,7 @@ public class CounterWrapper implements Counter, ModelWrapper<Counter> {
 	*/
 	@Override
 	public String getName() {
-		return _counter.getName();
+		return model.getName();
 	}
 
 	/**
@@ -119,37 +90,7 @@ public class CounterWrapper implements Counter, ModelWrapper<Counter> {
 	*/
 	@Override
 	public String getPrimaryKey() {
-		return _counter.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _counter.getPrimaryKeyObj();
-	}
-
-	@Override
-	public int hashCode() {
-		return _counter.hashCode();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _counter.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _counter.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _counter.isNew();
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_counter.setCachedModel(cachedModel);
+		return model.getPrimaryKey();
 	}
 
 	/**
@@ -159,23 +100,7 @@ public class CounterWrapper implements Counter, ModelWrapper<Counter> {
 	*/
 	@Override
 	public void setCurrentId(long currentId) {
-		_counter.setCurrentId(currentId);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-		_counter.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_counter.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_counter.setExpandoBridgeAttributes(serviceContext);
+		model.setCurrentId(currentId);
 	}
 
 	/**
@@ -185,12 +110,7 @@ public class CounterWrapper implements Counter, ModelWrapper<Counter> {
 	*/
 	@Override
 	public void setName(String name) {
-		_counter.setName(name);
-	}
-
-	@Override
-	public void setNew(boolean n) {
-		_counter.setNew(n);
+		model.setName(name);
 	}
 
 	/**
@@ -200,77 +120,11 @@ public class CounterWrapper implements Counter, ModelWrapper<Counter> {
 	*/
 	@Override
 	public void setPrimaryKey(String primaryKey) {
-		_counter.setPrimaryKey(primaryKey);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_counter.setPrimaryKeyObj(primaryKeyObj);
+	protected CounterWrapper wrap(Counter counter) {
+		return new CounterWrapper(counter);
 	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<Counter> toCacheModel() {
-		return _counter.toCacheModel();
-	}
-
-	@Override
-	public Counter toEscapedModel() {
-		return new CounterWrapper(_counter.toEscapedModel());
-	}
-
-	@Override
-	public String toString() {
-		return _counter.toString();
-	}
-
-	@Override
-	public Counter toUnescapedModel() {
-		return new CounterWrapper(_counter.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _counter.toXmlString();
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-
-		if (!(obj instanceof CounterWrapper)) {
-			return false;
-		}
-
-		CounterWrapper counterWrapper = (CounterWrapper)obj;
-
-		if (Objects.equals(_counter, counterWrapper._counter)) {
-			return true;
-		}
-
-		return false;
-	}
-
-	@Override
-	public Counter getWrappedModel() {
-		return _counter;
-	}
-
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _counter.isEntityCacheEnabled();
-	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _counter.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_counter.resetOriginalValues();
-	}
-
-	private final Counter _counter;
 }

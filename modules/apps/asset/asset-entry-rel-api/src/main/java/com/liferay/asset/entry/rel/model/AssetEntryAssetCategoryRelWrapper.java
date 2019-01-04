@@ -16,16 +16,11 @@ package com.liferay.asset.entry.rel.model;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
-
 import com.liferay.portal.kernel.model.ModelWrapper;
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -37,22 +32,12 @@ import java.util.Objects;
  * @generated
  */
 @ProviderType
-public class AssetEntryAssetCategoryRelWrapper
+public class AssetEntryAssetCategoryRelWrapper extends BaseModelWrapper<AssetEntryAssetCategoryRel>
 	implements AssetEntryAssetCategoryRel,
 		ModelWrapper<AssetEntryAssetCategoryRel> {
 	public AssetEntryAssetCategoryRelWrapper(
 		AssetEntryAssetCategoryRel assetEntryAssetCategoryRel) {
-		_assetEntryAssetCategoryRel = assetEntryAssetCategoryRel;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return AssetEntryAssetCategoryRel.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return AssetEntryAssetCategoryRel.class.getName();
+		super(assetEntryAssetCategoryRel);
 	}
 
 	@Override
@@ -96,16 +81,6 @@ public class AssetEntryAssetCategoryRelWrapper
 		}
 	}
 
-	@Override
-	public Object clone() {
-		return new AssetEntryAssetCategoryRelWrapper((AssetEntryAssetCategoryRel)_assetEntryAssetCategoryRel.clone());
-	}
-
-	@Override
-	public int compareTo(AssetEntryAssetCategoryRel assetEntryAssetCategoryRel) {
-		return _assetEntryAssetCategoryRel.compareTo(assetEntryAssetCategoryRel);
-	}
-
 	/**
 	* Returns the asset category ID of this asset entry asset category rel.
 	*
@@ -113,7 +88,7 @@ public class AssetEntryAssetCategoryRelWrapper
 	*/
 	@Override
 	public long getAssetCategoryId() {
-		return _assetEntryAssetCategoryRel.getAssetCategoryId();
+		return model.getAssetCategoryId();
 	}
 
 	/**
@@ -123,7 +98,7 @@ public class AssetEntryAssetCategoryRelWrapper
 	*/
 	@Override
 	public long getAssetEntryAssetCategoryRelId() {
-		return _assetEntryAssetCategoryRel.getAssetEntryAssetCategoryRelId();
+		return model.getAssetEntryAssetCategoryRelId();
 	}
 
 	/**
@@ -133,12 +108,7 @@ public class AssetEntryAssetCategoryRelWrapper
 	*/
 	@Override
 	public long getAssetEntryId() {
-		return _assetEntryAssetCategoryRel.getAssetEntryId();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _assetEntryAssetCategoryRel.getExpandoBridge();
+		return model.getAssetEntryId();
 	}
 
 	/**
@@ -148,12 +118,7 @@ public class AssetEntryAssetCategoryRelWrapper
 	*/
 	@Override
 	public long getPrimaryKey() {
-		return _assetEntryAssetCategoryRel.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _assetEntryAssetCategoryRel.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	/**
@@ -163,32 +128,12 @@ public class AssetEntryAssetCategoryRelWrapper
 	*/
 	@Override
 	public int getPriority() {
-		return _assetEntryAssetCategoryRel.getPriority();
-	}
-
-	@Override
-	public int hashCode() {
-		return _assetEntryAssetCategoryRel.hashCode();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _assetEntryAssetCategoryRel.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _assetEntryAssetCategoryRel.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _assetEntryAssetCategoryRel.isNew();
+		return model.getPriority();
 	}
 
 	@Override
 	public void persist() {
-		_assetEntryAssetCategoryRel.persist();
+		model.persist();
 	}
 
 	/**
@@ -198,7 +143,7 @@ public class AssetEntryAssetCategoryRelWrapper
 	*/
 	@Override
 	public void setAssetCategoryId(long assetCategoryId) {
-		_assetEntryAssetCategoryRel.setAssetCategoryId(assetCategoryId);
+		model.setAssetCategoryId(assetCategoryId);
 	}
 
 	/**
@@ -209,7 +154,7 @@ public class AssetEntryAssetCategoryRelWrapper
 	@Override
 	public void setAssetEntryAssetCategoryRelId(
 		long assetEntryAssetCategoryRelId) {
-		_assetEntryAssetCategoryRel.setAssetEntryAssetCategoryRelId(assetEntryAssetCategoryRelId);
+		model.setAssetEntryAssetCategoryRelId(assetEntryAssetCategoryRelId);
 	}
 
 	/**
@@ -219,33 +164,7 @@ public class AssetEntryAssetCategoryRelWrapper
 	*/
 	@Override
 	public void setAssetEntryId(long assetEntryId) {
-		_assetEntryAssetCategoryRel.setAssetEntryId(assetEntryId);
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_assetEntryAssetCategoryRel.setCachedModel(cachedModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-		_assetEntryAssetCategoryRel.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_assetEntryAssetCategoryRel.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_assetEntryAssetCategoryRel.setExpandoBridgeAttributes(serviceContext);
-	}
-
-	@Override
-	public void setNew(boolean n) {
-		_assetEntryAssetCategoryRel.setNew(n);
+		model.setAssetEntryId(assetEntryId);
 	}
 
 	/**
@@ -255,12 +174,7 @@ public class AssetEntryAssetCategoryRelWrapper
 	*/
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_assetEntryAssetCategoryRel.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_assetEntryAssetCategoryRel.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -270,73 +184,12 @@ public class AssetEntryAssetCategoryRelWrapper
 	*/
 	@Override
 	public void setPriority(int priority) {
-		_assetEntryAssetCategoryRel.setPriority(priority);
+		model.setPriority(priority);
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.CacheModel<AssetEntryAssetCategoryRel> toCacheModel() {
-		return _assetEntryAssetCategoryRel.toCacheModel();
+	protected AssetEntryAssetCategoryRelWrapper wrap(
+		AssetEntryAssetCategoryRel assetEntryAssetCategoryRel) {
+		return new AssetEntryAssetCategoryRelWrapper(assetEntryAssetCategoryRel);
 	}
-
-	@Override
-	public AssetEntryAssetCategoryRel toEscapedModel() {
-		return new AssetEntryAssetCategoryRelWrapper(_assetEntryAssetCategoryRel.toEscapedModel());
-	}
-
-	@Override
-	public String toString() {
-		return _assetEntryAssetCategoryRel.toString();
-	}
-
-	@Override
-	public AssetEntryAssetCategoryRel toUnescapedModel() {
-		return new AssetEntryAssetCategoryRelWrapper(_assetEntryAssetCategoryRel.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _assetEntryAssetCategoryRel.toXmlString();
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-
-		if (!(obj instanceof AssetEntryAssetCategoryRelWrapper)) {
-			return false;
-		}
-
-		AssetEntryAssetCategoryRelWrapper assetEntryAssetCategoryRelWrapper = (AssetEntryAssetCategoryRelWrapper)obj;
-
-		if (Objects.equals(_assetEntryAssetCategoryRel,
-					assetEntryAssetCategoryRelWrapper._assetEntryAssetCategoryRel)) {
-			return true;
-		}
-
-		return false;
-	}
-
-	@Override
-	public AssetEntryAssetCategoryRel getWrappedModel() {
-		return _assetEntryAssetCategoryRel;
-	}
-
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _assetEntryAssetCategoryRel.isEntityCacheEnabled();
-	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _assetEntryAssetCategoryRel.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_assetEntryAssetCategoryRel.resetOriginalValues();
-	}
-
-	private final AssetEntryAssetCategoryRel _assetEntryAssetCategoryRel;
 }

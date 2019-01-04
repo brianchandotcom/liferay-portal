@@ -16,19 +16,14 @@ package com.liferay.message.boards.model;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
-
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 
 import com.liferay.portal.kernel.model.ModelWrapper;
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -40,19 +35,10 @@ import java.util.Objects;
  * @generated
  */
 @ProviderType
-public class MBBanWrapper implements MBBan, ModelWrapper<MBBan> {
+public class MBBanWrapper extends BaseModelWrapper<MBBan> implements MBBan,
+	ModelWrapper<MBBan> {
 	public MBBanWrapper(MBBan mbBan) {
-		_mbBan = mbBan;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return MBBan.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return MBBan.class.getName();
+		super(mbBan);
 	}
 
 	@Override
@@ -136,16 +122,6 @@ public class MBBanWrapper implements MBBan, ModelWrapper<MBBan> {
 		}
 	}
 
-	@Override
-	public Object clone() {
-		return new MBBanWrapper((MBBan)_mbBan.clone());
-	}
-
-	@Override
-	public int compareTo(MBBan mbBan) {
-		return _mbBan.compareTo(mbBan);
-	}
-
 	/**
 	* Returns the ban ID of this message boards ban.
 	*
@@ -153,7 +129,7 @@ public class MBBanWrapper implements MBBan, ModelWrapper<MBBan> {
 	*/
 	@Override
 	public long getBanId() {
-		return _mbBan.getBanId();
+		return model.getBanId();
 	}
 
 	/**
@@ -163,7 +139,7 @@ public class MBBanWrapper implements MBBan, ModelWrapper<MBBan> {
 	*/
 	@Override
 	public long getBanUserId() {
-		return _mbBan.getBanUserId();
+		return model.getBanUserId();
 	}
 
 	/**
@@ -173,7 +149,7 @@ public class MBBanWrapper implements MBBan, ModelWrapper<MBBan> {
 	*/
 	@Override
 	public String getBanUserUuid() {
-		return _mbBan.getBanUserUuid();
+		return model.getBanUserUuid();
 	}
 
 	/**
@@ -183,7 +159,7 @@ public class MBBanWrapper implements MBBan, ModelWrapper<MBBan> {
 	*/
 	@Override
 	public long getCompanyId() {
-		return _mbBan.getCompanyId();
+		return model.getCompanyId();
 	}
 
 	/**
@@ -193,12 +169,7 @@ public class MBBanWrapper implements MBBan, ModelWrapper<MBBan> {
 	*/
 	@Override
 	public Date getCreateDate() {
-		return _mbBan.getCreateDate();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _mbBan.getExpandoBridge();
+		return model.getCreateDate();
 	}
 
 	/**
@@ -208,7 +179,7 @@ public class MBBanWrapper implements MBBan, ModelWrapper<MBBan> {
 	*/
 	@Override
 	public long getGroupId() {
-		return _mbBan.getGroupId();
+		return model.getGroupId();
 	}
 
 	/**
@@ -218,7 +189,7 @@ public class MBBanWrapper implements MBBan, ModelWrapper<MBBan> {
 	*/
 	@Override
 	public Date getLastPublishDate() {
-		return _mbBan.getLastPublishDate();
+		return model.getLastPublishDate();
 	}
 
 	/**
@@ -228,7 +199,7 @@ public class MBBanWrapper implements MBBan, ModelWrapper<MBBan> {
 	*/
 	@Override
 	public Date getModifiedDate() {
-		return _mbBan.getModifiedDate();
+		return model.getModifiedDate();
 	}
 
 	/**
@@ -238,12 +209,7 @@ public class MBBanWrapper implements MBBan, ModelWrapper<MBBan> {
 	*/
 	@Override
 	public long getPrimaryKey() {
-		return _mbBan.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _mbBan.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	/**
@@ -253,7 +219,7 @@ public class MBBanWrapper implements MBBan, ModelWrapper<MBBan> {
 	*/
 	@Override
 	public long getUserId() {
-		return _mbBan.getUserId();
+		return model.getUserId();
 	}
 
 	/**
@@ -263,7 +229,7 @@ public class MBBanWrapper implements MBBan, ModelWrapper<MBBan> {
 	*/
 	@Override
 	public String getUserName() {
-		return _mbBan.getUserName();
+		return model.getUserName();
 	}
 
 	/**
@@ -273,7 +239,7 @@ public class MBBanWrapper implements MBBan, ModelWrapper<MBBan> {
 	*/
 	@Override
 	public String getUserUuid() {
-		return _mbBan.getUserUuid();
+		return model.getUserUuid();
 	}
 
 	/**
@@ -283,32 +249,12 @@ public class MBBanWrapper implements MBBan, ModelWrapper<MBBan> {
 	*/
 	@Override
 	public String getUuid() {
-		return _mbBan.getUuid();
-	}
-
-	@Override
-	public int hashCode() {
-		return _mbBan.hashCode();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _mbBan.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _mbBan.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _mbBan.isNew();
+		return model.getUuid();
 	}
 
 	@Override
 	public void persist() {
-		_mbBan.persist();
+		model.persist();
 	}
 
 	/**
@@ -318,7 +264,7 @@ public class MBBanWrapper implements MBBan, ModelWrapper<MBBan> {
 	*/
 	@Override
 	public void setBanId(long banId) {
-		_mbBan.setBanId(banId);
+		model.setBanId(banId);
 	}
 
 	/**
@@ -328,7 +274,7 @@ public class MBBanWrapper implements MBBan, ModelWrapper<MBBan> {
 	*/
 	@Override
 	public void setBanUserId(long banUserId) {
-		_mbBan.setBanUserId(banUserId);
+		model.setBanUserId(banUserId);
 	}
 
 	/**
@@ -338,12 +284,7 @@ public class MBBanWrapper implements MBBan, ModelWrapper<MBBan> {
 	*/
 	@Override
 	public void setBanUserUuid(String banUserUuid) {
-		_mbBan.setBanUserUuid(banUserUuid);
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_mbBan.setCachedModel(cachedModel);
+		model.setBanUserUuid(banUserUuid);
 	}
 
 	/**
@@ -353,7 +294,7 @@ public class MBBanWrapper implements MBBan, ModelWrapper<MBBan> {
 	*/
 	@Override
 	public void setCompanyId(long companyId) {
-		_mbBan.setCompanyId(companyId);
+		model.setCompanyId(companyId);
 	}
 
 	/**
@@ -363,23 +304,7 @@ public class MBBanWrapper implements MBBan, ModelWrapper<MBBan> {
 	*/
 	@Override
 	public void setCreateDate(Date createDate) {
-		_mbBan.setCreateDate(createDate);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-		_mbBan.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_mbBan.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_mbBan.setExpandoBridgeAttributes(serviceContext);
+		model.setCreateDate(createDate);
 	}
 
 	/**
@@ -389,7 +314,7 @@ public class MBBanWrapper implements MBBan, ModelWrapper<MBBan> {
 	*/
 	@Override
 	public void setGroupId(long groupId) {
-		_mbBan.setGroupId(groupId);
+		model.setGroupId(groupId);
 	}
 
 	/**
@@ -399,7 +324,7 @@ public class MBBanWrapper implements MBBan, ModelWrapper<MBBan> {
 	*/
 	@Override
 	public void setLastPublishDate(Date lastPublishDate) {
-		_mbBan.setLastPublishDate(lastPublishDate);
+		model.setLastPublishDate(lastPublishDate);
 	}
 
 	/**
@@ -409,12 +334,7 @@ public class MBBanWrapper implements MBBan, ModelWrapper<MBBan> {
 	*/
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
-		_mbBan.setModifiedDate(modifiedDate);
-	}
-
-	@Override
-	public void setNew(boolean n) {
-		_mbBan.setNew(n);
+		model.setModifiedDate(modifiedDate);
 	}
 
 	/**
@@ -424,12 +344,7 @@ public class MBBanWrapper implements MBBan, ModelWrapper<MBBan> {
 	*/
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_mbBan.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_mbBan.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -439,7 +354,7 @@ public class MBBanWrapper implements MBBan, ModelWrapper<MBBan> {
 	*/
 	@Override
 	public void setUserId(long userId) {
-		_mbBan.setUserId(userId);
+		model.setUserId(userId);
 	}
 
 	/**
@@ -449,7 +364,7 @@ public class MBBanWrapper implements MBBan, ModelWrapper<MBBan> {
 	*/
 	@Override
 	public void setUserName(String userName) {
-		_mbBan.setUserName(userName);
+		model.setUserName(userName);
 	}
 
 	/**
@@ -459,7 +374,7 @@ public class MBBanWrapper implements MBBan, ModelWrapper<MBBan> {
 	*/
 	@Override
 	public void setUserUuid(String userUuid) {
-		_mbBan.setUserUuid(userUuid);
+		model.setUserUuid(userUuid);
 	}
 
 	/**
@@ -469,77 +384,16 @@ public class MBBanWrapper implements MBBan, ModelWrapper<MBBan> {
 	*/
 	@Override
 	public void setUuid(String uuid) {
-		_mbBan.setUuid(uuid);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<MBBan> toCacheModel() {
-		return _mbBan.toCacheModel();
-	}
-
-	@Override
-	public MBBan toEscapedModel() {
-		return new MBBanWrapper(_mbBan.toEscapedModel());
-	}
-
-	@Override
-	public String toString() {
-		return _mbBan.toString();
-	}
-
-	@Override
-	public MBBan toUnescapedModel() {
-		return new MBBanWrapper(_mbBan.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _mbBan.toXmlString();
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-
-		if (!(obj instanceof MBBanWrapper)) {
-			return false;
-		}
-
-		MBBanWrapper mbBanWrapper = (MBBanWrapper)obj;
-
-		if (Objects.equals(_mbBan, mbBanWrapper._mbBan)) {
-			return true;
-		}
-
-		return false;
+		model.setUuid(uuid);
 	}
 
 	@Override
 	public StagedModelType getStagedModelType() {
-		return _mbBan.getStagedModelType();
+		return model.getStagedModelType();
 	}
 
 	@Override
-	public MBBan getWrappedModel() {
-		return _mbBan;
+	protected MBBanWrapper wrap(MBBan mbBan) {
+		return new MBBanWrapper(mbBan);
 	}
-
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _mbBan.isEntityCacheEnabled();
-	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _mbBan.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_mbBan.resetOriginalValues();
-	}
-
-	private final MBBan _mbBan;
 }

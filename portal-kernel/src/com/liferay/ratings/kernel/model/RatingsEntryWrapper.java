@@ -16,19 +16,14 @@ package com.liferay.ratings.kernel.model;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
-
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 
 import com.liferay.portal.kernel.model.ModelWrapper;
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -40,20 +35,10 @@ import java.util.Objects;
  * @generated
  */
 @ProviderType
-public class RatingsEntryWrapper implements RatingsEntry,
-	ModelWrapper<RatingsEntry> {
+public class RatingsEntryWrapper extends BaseModelWrapper<RatingsEntry>
+	implements RatingsEntry, ModelWrapper<RatingsEntry> {
 	public RatingsEntryWrapper(RatingsEntry ratingsEntry) {
-		_ratingsEntry = ratingsEntry;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return RatingsEntry.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return RatingsEntry.class.getName();
+		super(ratingsEntry);
 	}
 
 	@Override
@@ -137,16 +122,6 @@ public class RatingsEntryWrapper implements RatingsEntry,
 		}
 	}
 
-	@Override
-	public Object clone() {
-		return new RatingsEntryWrapper((RatingsEntry)_ratingsEntry.clone());
-	}
-
-	@Override
-	public int compareTo(RatingsEntry ratingsEntry) {
-		return _ratingsEntry.compareTo(ratingsEntry);
-	}
-
 	/**
 	* Returns the fully qualified class name of this ratings entry.
 	*
@@ -154,7 +129,7 @@ public class RatingsEntryWrapper implements RatingsEntry,
 	*/
 	@Override
 	public String getClassName() {
-		return _ratingsEntry.getClassName();
+		return model.getClassName();
 	}
 
 	/**
@@ -164,7 +139,7 @@ public class RatingsEntryWrapper implements RatingsEntry,
 	*/
 	@Override
 	public long getClassNameId() {
-		return _ratingsEntry.getClassNameId();
+		return model.getClassNameId();
 	}
 
 	/**
@@ -174,7 +149,7 @@ public class RatingsEntryWrapper implements RatingsEntry,
 	*/
 	@Override
 	public long getClassPK() {
-		return _ratingsEntry.getClassPK();
+		return model.getClassPK();
 	}
 
 	/**
@@ -184,7 +159,7 @@ public class RatingsEntryWrapper implements RatingsEntry,
 	*/
 	@Override
 	public long getCompanyId() {
-		return _ratingsEntry.getCompanyId();
+		return model.getCompanyId();
 	}
 
 	/**
@@ -194,7 +169,7 @@ public class RatingsEntryWrapper implements RatingsEntry,
 	*/
 	@Override
 	public Date getCreateDate() {
-		return _ratingsEntry.getCreateDate();
+		return model.getCreateDate();
 	}
 
 	/**
@@ -204,12 +179,7 @@ public class RatingsEntryWrapper implements RatingsEntry,
 	*/
 	@Override
 	public long getEntryId() {
-		return _ratingsEntry.getEntryId();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _ratingsEntry.getExpandoBridge();
+		return model.getEntryId();
 	}
 
 	/**
@@ -219,7 +189,7 @@ public class RatingsEntryWrapper implements RatingsEntry,
 	*/
 	@Override
 	public Date getModifiedDate() {
-		return _ratingsEntry.getModifiedDate();
+		return model.getModifiedDate();
 	}
 
 	/**
@@ -229,12 +199,7 @@ public class RatingsEntryWrapper implements RatingsEntry,
 	*/
 	@Override
 	public long getPrimaryKey() {
-		return _ratingsEntry.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _ratingsEntry.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	/**
@@ -244,7 +209,7 @@ public class RatingsEntryWrapper implements RatingsEntry,
 	*/
 	@Override
 	public double getScore() {
-		return _ratingsEntry.getScore();
+		return model.getScore();
 	}
 
 	/**
@@ -254,7 +219,7 @@ public class RatingsEntryWrapper implements RatingsEntry,
 	*/
 	@Override
 	public long getUserId() {
-		return _ratingsEntry.getUserId();
+		return model.getUserId();
 	}
 
 	/**
@@ -264,7 +229,7 @@ public class RatingsEntryWrapper implements RatingsEntry,
 	*/
 	@Override
 	public String getUserName() {
-		return _ratingsEntry.getUserName();
+		return model.getUserName();
 	}
 
 	/**
@@ -274,7 +239,7 @@ public class RatingsEntryWrapper implements RatingsEntry,
 	*/
 	@Override
 	public String getUserUuid() {
-		return _ratingsEntry.getUserUuid();
+		return model.getUserUuid();
 	}
 
 	/**
@@ -284,42 +249,17 @@ public class RatingsEntryWrapper implements RatingsEntry,
 	*/
 	@Override
 	public String getUuid() {
-		return _ratingsEntry.getUuid();
-	}
-
-	@Override
-	public int hashCode() {
-		return _ratingsEntry.hashCode();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _ratingsEntry.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _ratingsEntry.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _ratingsEntry.isNew();
+		return model.getUuid();
 	}
 
 	@Override
 	public void persist() {
-		_ratingsEntry.persist();
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_ratingsEntry.setCachedModel(cachedModel);
+		model.persist();
 	}
 
 	@Override
 	public void setClassName(String className) {
-		_ratingsEntry.setClassName(className);
+		model.setClassName(className);
 	}
 
 	/**
@@ -329,7 +269,7 @@ public class RatingsEntryWrapper implements RatingsEntry,
 	*/
 	@Override
 	public void setClassNameId(long classNameId) {
-		_ratingsEntry.setClassNameId(classNameId);
+		model.setClassNameId(classNameId);
 	}
 
 	/**
@@ -339,7 +279,7 @@ public class RatingsEntryWrapper implements RatingsEntry,
 	*/
 	@Override
 	public void setClassPK(long classPK) {
-		_ratingsEntry.setClassPK(classPK);
+		model.setClassPK(classPK);
 	}
 
 	/**
@@ -349,7 +289,7 @@ public class RatingsEntryWrapper implements RatingsEntry,
 	*/
 	@Override
 	public void setCompanyId(long companyId) {
-		_ratingsEntry.setCompanyId(companyId);
+		model.setCompanyId(companyId);
 	}
 
 	/**
@@ -359,7 +299,7 @@ public class RatingsEntryWrapper implements RatingsEntry,
 	*/
 	@Override
 	public void setCreateDate(Date createDate) {
-		_ratingsEntry.setCreateDate(createDate);
+		model.setCreateDate(createDate);
 	}
 
 	/**
@@ -369,23 +309,7 @@ public class RatingsEntryWrapper implements RatingsEntry,
 	*/
 	@Override
 	public void setEntryId(long entryId) {
-		_ratingsEntry.setEntryId(entryId);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-		_ratingsEntry.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_ratingsEntry.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_ratingsEntry.setExpandoBridgeAttributes(serviceContext);
+		model.setEntryId(entryId);
 	}
 
 	/**
@@ -395,12 +319,7 @@ public class RatingsEntryWrapper implements RatingsEntry,
 	*/
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
-		_ratingsEntry.setModifiedDate(modifiedDate);
-	}
-
-	@Override
-	public void setNew(boolean n) {
-		_ratingsEntry.setNew(n);
+		model.setModifiedDate(modifiedDate);
 	}
 
 	/**
@@ -410,12 +329,7 @@ public class RatingsEntryWrapper implements RatingsEntry,
 	*/
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_ratingsEntry.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_ratingsEntry.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -425,7 +339,7 @@ public class RatingsEntryWrapper implements RatingsEntry,
 	*/
 	@Override
 	public void setScore(double score) {
-		_ratingsEntry.setScore(score);
+		model.setScore(score);
 	}
 
 	/**
@@ -435,7 +349,7 @@ public class RatingsEntryWrapper implements RatingsEntry,
 	*/
 	@Override
 	public void setUserId(long userId) {
-		_ratingsEntry.setUserId(userId);
+		model.setUserId(userId);
 	}
 
 	/**
@@ -445,7 +359,7 @@ public class RatingsEntryWrapper implements RatingsEntry,
 	*/
 	@Override
 	public void setUserName(String userName) {
-		_ratingsEntry.setUserName(userName);
+		model.setUserName(userName);
 	}
 
 	/**
@@ -455,7 +369,7 @@ public class RatingsEntryWrapper implements RatingsEntry,
 	*/
 	@Override
 	public void setUserUuid(String userUuid) {
-		_ratingsEntry.setUserUuid(userUuid);
+		model.setUserUuid(userUuid);
 	}
 
 	/**
@@ -465,77 +379,16 @@ public class RatingsEntryWrapper implements RatingsEntry,
 	*/
 	@Override
 	public void setUuid(String uuid) {
-		_ratingsEntry.setUuid(uuid);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<RatingsEntry> toCacheModel() {
-		return _ratingsEntry.toCacheModel();
-	}
-
-	@Override
-	public RatingsEntry toEscapedModel() {
-		return new RatingsEntryWrapper(_ratingsEntry.toEscapedModel());
-	}
-
-	@Override
-	public String toString() {
-		return _ratingsEntry.toString();
-	}
-
-	@Override
-	public RatingsEntry toUnescapedModel() {
-		return new RatingsEntryWrapper(_ratingsEntry.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _ratingsEntry.toXmlString();
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-
-		if (!(obj instanceof RatingsEntryWrapper)) {
-			return false;
-		}
-
-		RatingsEntryWrapper ratingsEntryWrapper = (RatingsEntryWrapper)obj;
-
-		if (Objects.equals(_ratingsEntry, ratingsEntryWrapper._ratingsEntry)) {
-			return true;
-		}
-
-		return false;
+		model.setUuid(uuid);
 	}
 
 	@Override
 	public StagedModelType getStagedModelType() {
-		return _ratingsEntry.getStagedModelType();
+		return model.getStagedModelType();
 	}
 
 	@Override
-	public RatingsEntry getWrappedModel() {
-		return _ratingsEntry;
+	protected RatingsEntryWrapper wrap(RatingsEntry ratingsEntry) {
+		return new RatingsEntryWrapper(ratingsEntry);
 	}
-
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _ratingsEntry.isEntityCacheEnabled();
-	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _ratingsEntry.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_ratingsEntry.resetOriginalValues();
-	}
-
-	private final RatingsEntry _ratingsEntry;
 }

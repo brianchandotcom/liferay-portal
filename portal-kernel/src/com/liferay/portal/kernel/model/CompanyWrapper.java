@@ -16,15 +16,10 @@ package com.liferay.portal.kernel.model;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
-
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -36,19 +31,10 @@ import java.util.Objects;
  * @generated
  */
 @ProviderType
-public class CompanyWrapper implements Company, ModelWrapper<Company> {
+public class CompanyWrapper extends BaseModelWrapper<Company> implements Company,
+	ModelWrapper<Company> {
 	public CompanyWrapper(Company company) {
-		_company = company;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return Company.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return Company.class.getName();
+		super(company);
 	}
 
 	@Override
@@ -140,19 +126,14 @@ public class CompanyWrapper implements Company, ModelWrapper<Company> {
 	}
 
 	@Override
-	public Object clone() {
-		return new CompanyWrapper((Company)_company.clone());
-	}
-
-	@Override
 	public int compareTo(Company company) {
-		return _company.compareTo(company);
+		return model.compareTo(company);
 	}
 
 	@Override
 	public Account getAccount()
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _company.getAccount();
+		return model.getAccount();
 	}
 
 	/**
@@ -162,7 +143,7 @@ public class CompanyWrapper implements Company, ModelWrapper<Company> {
 	*/
 	@Override
 	public long getAccountId() {
-		return _company.getAccountId();
+		return model.getAccountId();
 	}
 
 	/**
@@ -172,17 +153,17 @@ public class CompanyWrapper implements Company, ModelWrapper<Company> {
 	*/
 	@Override
 	public boolean getActive() {
-		return _company.getActive();
+		return model.getActive();
 	}
 
 	@Override
 	public String getAdminName() {
-		return _company.getAdminName();
+		return model.getAdminName();
 	}
 
 	@Override
 	public String getAuthType() {
-		return _company.getAuthType();
+		return model.getAuthType();
 	}
 
 	/**
@@ -192,40 +173,35 @@ public class CompanyWrapper implements Company, ModelWrapper<Company> {
 	*/
 	@Override
 	public long getCompanyId() {
-		return _company.getCompanyId();
+		return model.getCompanyId();
 	}
 
 	@Override
 	public User getDefaultUser()
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _company.getDefaultUser();
+		return model.getDefaultUser();
 	}
 
 	@Override
 	public String getDefaultWebId() {
-		return _company.getDefaultWebId();
+		return model.getDefaultWebId();
 	}
 
 	@Override
 	public String getEmailAddress() {
-		return _company.getEmailAddress();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _company.getExpandoBridge();
+		return model.getEmailAddress();
 	}
 
 	@Override
 	public Group getGroup()
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _company.getGroup();
+		return model.getGroup();
 	}
 
 	@Override
 	public long getGroupId()
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _company.getGroupId();
+		return model.getGroupId();
 	}
 
 	/**
@@ -235,7 +211,7 @@ public class CompanyWrapper implements Company, ModelWrapper<Company> {
 	*/
 	@Override
 	public String getHomeURL() {
-		return _company.getHomeURL();
+		return model.getHomeURL();
 	}
 
 	/**
@@ -245,18 +221,18 @@ public class CompanyWrapper implements Company, ModelWrapper<Company> {
 	*/
 	@Override
 	public String getKey() {
-		return _company.getKey();
+		return model.getKey();
 	}
 
 	@Override
 	public java.security.Key getKeyObj() {
-		return _company.getKeyObj();
+		return model.getKeyObj();
 	}
 
 	@Override
 	public java.util.Locale getLocale()
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _company.getLocale();
+		return model.getLocale();
 	}
 
 	/**
@@ -266,7 +242,7 @@ public class CompanyWrapper implements Company, ModelWrapper<Company> {
 	*/
 	@Override
 	public long getLogoId() {
-		return _company.getLogoId();
+		return model.getLogoId();
 	}
 
 	/**
@@ -276,7 +252,7 @@ public class CompanyWrapper implements Company, ModelWrapper<Company> {
 	*/
 	@Override
 	public int getMaxUsers() {
-		return _company.getMaxUsers();
+		return model.getMaxUsers();
 	}
 
 	/**
@@ -286,7 +262,7 @@ public class CompanyWrapper implements Company, ModelWrapper<Company> {
 	*/
 	@Override
 	public long getMvccVersion() {
-		return _company.getMvccVersion();
+		return model.getMvccVersion();
 	}
 
 	/**
@@ -296,19 +272,19 @@ public class CompanyWrapper implements Company, ModelWrapper<Company> {
 	*/
 	@Override
 	public String getMx() {
-		return _company.getMx();
+		return model.getMx();
 	}
 
 	@Override
 	public String getName()
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _company.getName();
+		return model.getName();
 	}
 
 	@Override
 	public String getPortalURL(long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _company.getPortalURL(groupId);
+		return model.getPortalURL(groupId);
 	}
 
 	/**
@@ -318,18 +294,13 @@ public class CompanyWrapper implements Company, ModelWrapper<Company> {
 	*/
 	@Override
 	public long getPrimaryKey() {
-		return _company.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _company.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	@Override
 	public String getShortName()
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _company.getShortName();
+		return model.getShortName();
 	}
 
 	/**
@@ -339,18 +310,18 @@ public class CompanyWrapper implements Company, ModelWrapper<Company> {
 	*/
 	@Override
 	public boolean getSystem() {
-		return _company.getSystem();
+		return model.getSystem();
 	}
 
 	@Override
 	public java.util.TimeZone getTimeZone()
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _company.getTimeZone();
+		return model.getTimeZone();
 	}
 
 	@Override
 	public String getVirtualHostname() {
-		return _company.getVirtualHostname();
+		return model.getVirtualHostname();
 	}
 
 	/**
@@ -360,17 +331,12 @@ public class CompanyWrapper implements Company, ModelWrapper<Company> {
 	*/
 	@Override
 	public String getWebId() {
-		return _company.getWebId();
+		return model.getWebId();
 	}
 
 	@Override
 	public boolean hasCompanyMx(String emailAddress) {
-		return _company.hasCompanyMx(emailAddress);
-	}
-
-	@Override
-	public int hashCode() {
-		return _company.hashCode();
+		return model.hasCompanyMx(emailAddress);
 	}
 
 	/**
@@ -380,57 +346,42 @@ public class CompanyWrapper implements Company, ModelWrapper<Company> {
 	*/
 	@Override
 	public boolean isActive() {
-		return _company.isActive();
+		return model.isActive();
 	}
 
 	@Override
 	public boolean isAutoLogin() {
-		return _company.isAutoLogin();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _company.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _company.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _company.isNew();
+		return model.isAutoLogin();
 	}
 
 	@Override
 	public boolean isSendPassword() {
-		return _company.isSendPassword();
+		return model.isSendPassword();
 	}
 
 	@Override
 	public boolean isSendPasswordResetLink() {
-		return _company.isSendPasswordResetLink();
+		return model.isSendPasswordResetLink();
 	}
 
 	@Override
 	public boolean isSiteLogo() {
-		return _company.isSiteLogo();
+		return model.isSiteLogo();
 	}
 
 	@Override
 	public boolean isStrangers() {
-		return _company.isStrangers();
+		return model.isStrangers();
 	}
 
 	@Override
 	public boolean isStrangersVerify() {
-		return _company.isStrangersVerify();
+		return model.isStrangersVerify();
 	}
 
 	@Override
 	public boolean isStrangersWithMx() {
-		return _company.isStrangersWithMx();
+		return model.isStrangersWithMx();
 	}
 
 	/**
@@ -440,12 +391,12 @@ public class CompanyWrapper implements Company, ModelWrapper<Company> {
 	*/
 	@Override
 	public boolean isSystem() {
-		return _company.isSystem();
+		return model.isSystem();
 	}
 
 	@Override
 	public void persist() {
-		_company.persist();
+		model.persist();
 	}
 
 	/**
@@ -455,7 +406,7 @@ public class CompanyWrapper implements Company, ModelWrapper<Company> {
 	*/
 	@Override
 	public void setAccountId(long accountId) {
-		_company.setAccountId(accountId);
+		model.setAccountId(accountId);
 	}
 
 	/**
@@ -465,12 +416,7 @@ public class CompanyWrapper implements Company, ModelWrapper<Company> {
 	*/
 	@Override
 	public void setActive(boolean active) {
-		_company.setActive(active);
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_company.setCachedModel(cachedModel);
+		model.setActive(active);
 	}
 
 	/**
@@ -480,22 +426,7 @@ public class CompanyWrapper implements Company, ModelWrapper<Company> {
 	*/
 	@Override
 	public void setCompanyId(long companyId) {
-		_company.setCompanyId(companyId);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(BaseModel<?> baseModel) {
-		_company.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_company.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_company.setExpandoBridgeAttributes(serviceContext);
+		model.setCompanyId(companyId);
 	}
 
 	/**
@@ -505,7 +436,7 @@ public class CompanyWrapper implements Company, ModelWrapper<Company> {
 	*/
 	@Override
 	public void setHomeURL(String homeURL) {
-		_company.setHomeURL(homeURL);
+		model.setHomeURL(homeURL);
 	}
 
 	/**
@@ -515,12 +446,12 @@ public class CompanyWrapper implements Company, ModelWrapper<Company> {
 	*/
 	@Override
 	public void setKey(String key) {
-		_company.setKey(key);
+		model.setKey(key);
 	}
 
 	@Override
 	public void setKeyObj(java.security.Key keyObj) {
-		_company.setKeyObj(keyObj);
+		model.setKeyObj(keyObj);
 	}
 
 	/**
@@ -530,7 +461,7 @@ public class CompanyWrapper implements Company, ModelWrapper<Company> {
 	*/
 	@Override
 	public void setLogoId(long logoId) {
-		_company.setLogoId(logoId);
+		model.setLogoId(logoId);
 	}
 
 	/**
@@ -540,7 +471,7 @@ public class CompanyWrapper implements Company, ModelWrapper<Company> {
 	*/
 	@Override
 	public void setMaxUsers(int maxUsers) {
-		_company.setMaxUsers(maxUsers);
+		model.setMaxUsers(maxUsers);
 	}
 
 	/**
@@ -550,7 +481,7 @@ public class CompanyWrapper implements Company, ModelWrapper<Company> {
 	*/
 	@Override
 	public void setMvccVersion(long mvccVersion) {
-		_company.setMvccVersion(mvccVersion);
+		model.setMvccVersion(mvccVersion);
 	}
 
 	/**
@@ -560,12 +491,7 @@ public class CompanyWrapper implements Company, ModelWrapper<Company> {
 	*/
 	@Override
 	public void setMx(String mx) {
-		_company.setMx(mx);
-	}
-
-	@Override
-	public void setNew(boolean n) {
-		_company.setNew(n);
+		model.setMx(mx);
 	}
 
 	/**
@@ -575,12 +501,7 @@ public class CompanyWrapper implements Company, ModelWrapper<Company> {
 	*/
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_company.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_company.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -590,12 +511,12 @@ public class CompanyWrapper implements Company, ModelWrapper<Company> {
 	*/
 	@Override
 	public void setSystem(boolean system) {
-		_company.setSystem(system);
+		model.setSystem(system);
 	}
 
 	@Override
 	public void setVirtualHostname(String virtualHostname) {
-		_company.setVirtualHostname(virtualHostname);
+		model.setVirtualHostname(virtualHostname);
 	}
 
 	/**
@@ -605,72 +526,11 @@ public class CompanyWrapper implements Company, ModelWrapper<Company> {
 	*/
 	@Override
 	public void setWebId(String webId) {
-		_company.setWebId(webId);
+		model.setWebId(webId);
 	}
 
 	@Override
-	public CacheModel<Company> toCacheModel() {
-		return _company.toCacheModel();
+	protected CompanyWrapper wrap(Company company) {
+		return new CompanyWrapper(company);
 	}
-
-	@Override
-	public Company toEscapedModel() {
-		return new CompanyWrapper(_company.toEscapedModel());
-	}
-
-	@Override
-	public String toString() {
-		return _company.toString();
-	}
-
-	@Override
-	public Company toUnescapedModel() {
-		return new CompanyWrapper(_company.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _company.toXmlString();
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-
-		if (!(obj instanceof CompanyWrapper)) {
-			return false;
-		}
-
-		CompanyWrapper companyWrapper = (CompanyWrapper)obj;
-
-		if (Objects.equals(_company, companyWrapper._company)) {
-			return true;
-		}
-
-		return false;
-	}
-
-	@Override
-	public Company getWrappedModel() {
-		return _company;
-	}
-
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _company.isEntityCacheEnabled();
-	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _company.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_company.resetOriginalValues();
-	}
-
-	private final Company _company;
 }

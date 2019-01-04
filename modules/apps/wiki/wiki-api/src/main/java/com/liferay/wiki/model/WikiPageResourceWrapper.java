@@ -16,16 +16,11 @@ package com.liferay.wiki.model;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
-
 import com.liferay.portal.kernel.model.ModelWrapper;
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -37,20 +32,10 @@ import java.util.Objects;
  * @generated
  */
 @ProviderType
-public class WikiPageResourceWrapper implements WikiPageResource,
-	ModelWrapper<WikiPageResource> {
+public class WikiPageResourceWrapper extends BaseModelWrapper<WikiPageResource>
+	implements WikiPageResource, ModelWrapper<WikiPageResource> {
 	public WikiPageResourceWrapper(WikiPageResource wikiPageResource) {
-		_wikiPageResource = wikiPageResource;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return WikiPageResource.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return WikiPageResource.class.getName();
+		super(wikiPageResource);
 	}
 
 	@Override
@@ -106,16 +91,6 @@ public class WikiPageResourceWrapper implements WikiPageResource,
 		}
 	}
 
-	@Override
-	public Object clone() {
-		return new WikiPageResourceWrapper((WikiPageResource)_wikiPageResource.clone());
-	}
-
-	@Override
-	public int compareTo(WikiPageResource wikiPageResource) {
-		return _wikiPageResource.compareTo(wikiPageResource);
-	}
-
 	/**
 	* Returns the company ID of this wiki page resource.
 	*
@@ -123,12 +98,7 @@ public class WikiPageResourceWrapper implements WikiPageResource,
 	*/
 	@Override
 	public long getCompanyId() {
-		return _wikiPageResource.getCompanyId();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _wikiPageResource.getExpandoBridge();
+		return model.getCompanyId();
 	}
 
 	/**
@@ -138,7 +108,7 @@ public class WikiPageResourceWrapper implements WikiPageResource,
 	*/
 	@Override
 	public long getGroupId() {
-		return _wikiPageResource.getGroupId();
+		return model.getGroupId();
 	}
 
 	/**
@@ -148,7 +118,7 @@ public class WikiPageResourceWrapper implements WikiPageResource,
 	*/
 	@Override
 	public long getNodeId() {
-		return _wikiPageResource.getNodeId();
+		return model.getNodeId();
 	}
 
 	/**
@@ -158,12 +128,7 @@ public class WikiPageResourceWrapper implements WikiPageResource,
 	*/
 	@Override
 	public long getPrimaryKey() {
-		return _wikiPageResource.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _wikiPageResource.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	/**
@@ -173,7 +138,7 @@ public class WikiPageResourceWrapper implements WikiPageResource,
 	*/
 	@Override
 	public long getResourcePrimKey() {
-		return _wikiPageResource.getResourcePrimKey();
+		return model.getResourcePrimKey();
 	}
 
 	/**
@@ -183,7 +148,7 @@ public class WikiPageResourceWrapper implements WikiPageResource,
 	*/
 	@Override
 	public String getTitle() {
-		return _wikiPageResource.getTitle();
+		return model.getTitle();
 	}
 
 	/**
@@ -193,37 +158,12 @@ public class WikiPageResourceWrapper implements WikiPageResource,
 	*/
 	@Override
 	public String getUuid() {
-		return _wikiPageResource.getUuid();
-	}
-
-	@Override
-	public int hashCode() {
-		return _wikiPageResource.hashCode();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _wikiPageResource.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _wikiPageResource.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _wikiPageResource.isNew();
+		return model.getUuid();
 	}
 
 	@Override
 	public void persist() {
-		_wikiPageResource.persist();
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_wikiPageResource.setCachedModel(cachedModel);
+		model.persist();
 	}
 
 	/**
@@ -233,23 +173,7 @@ public class WikiPageResourceWrapper implements WikiPageResource,
 	*/
 	@Override
 	public void setCompanyId(long companyId) {
-		_wikiPageResource.setCompanyId(companyId);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-		_wikiPageResource.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_wikiPageResource.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_wikiPageResource.setExpandoBridgeAttributes(serviceContext);
+		model.setCompanyId(companyId);
 	}
 
 	/**
@@ -259,12 +183,7 @@ public class WikiPageResourceWrapper implements WikiPageResource,
 	*/
 	@Override
 	public void setGroupId(long groupId) {
-		_wikiPageResource.setGroupId(groupId);
-	}
-
-	@Override
-	public void setNew(boolean n) {
-		_wikiPageResource.setNew(n);
+		model.setGroupId(groupId);
 	}
 
 	/**
@@ -274,7 +193,7 @@ public class WikiPageResourceWrapper implements WikiPageResource,
 	*/
 	@Override
 	public void setNodeId(long nodeId) {
-		_wikiPageResource.setNodeId(nodeId);
+		model.setNodeId(nodeId);
 	}
 
 	/**
@@ -284,12 +203,7 @@ public class WikiPageResourceWrapper implements WikiPageResource,
 	*/
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_wikiPageResource.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_wikiPageResource.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -299,7 +213,7 @@ public class WikiPageResourceWrapper implements WikiPageResource,
 	*/
 	@Override
 	public void setResourcePrimKey(long resourcePrimKey) {
-		_wikiPageResource.setResourcePrimKey(resourcePrimKey);
+		model.setResourcePrimKey(resourcePrimKey);
 	}
 
 	/**
@@ -309,7 +223,7 @@ public class WikiPageResourceWrapper implements WikiPageResource,
 	*/
 	@Override
 	public void setTitle(String title) {
-		_wikiPageResource.setTitle(title);
+		model.setTitle(title);
 	}
 
 	/**
@@ -319,73 +233,11 @@ public class WikiPageResourceWrapper implements WikiPageResource,
 	*/
 	@Override
 	public void setUuid(String uuid) {
-		_wikiPageResource.setUuid(uuid);
+		model.setUuid(uuid);
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.CacheModel<WikiPageResource> toCacheModel() {
-		return _wikiPageResource.toCacheModel();
+	protected WikiPageResourceWrapper wrap(WikiPageResource wikiPageResource) {
+		return new WikiPageResourceWrapper(wikiPageResource);
 	}
-
-	@Override
-	public WikiPageResource toEscapedModel() {
-		return new WikiPageResourceWrapper(_wikiPageResource.toEscapedModel());
-	}
-
-	@Override
-	public String toString() {
-		return _wikiPageResource.toString();
-	}
-
-	@Override
-	public WikiPageResource toUnescapedModel() {
-		return new WikiPageResourceWrapper(_wikiPageResource.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _wikiPageResource.toXmlString();
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-
-		if (!(obj instanceof WikiPageResourceWrapper)) {
-			return false;
-		}
-
-		WikiPageResourceWrapper wikiPageResourceWrapper = (WikiPageResourceWrapper)obj;
-
-		if (Objects.equals(_wikiPageResource,
-					wikiPageResourceWrapper._wikiPageResource)) {
-			return true;
-		}
-
-		return false;
-	}
-
-	@Override
-	public WikiPageResource getWrappedModel() {
-		return _wikiPageResource;
-	}
-
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _wikiPageResource.isEntityCacheEnabled();
-	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _wikiPageResource.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_wikiPageResource.resetOriginalValues();
-	}
-
-	private final WikiPageResource _wikiPageResource;
 }

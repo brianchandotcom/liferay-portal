@@ -16,17 +16,12 @@ package com.liferay.mail.reader.model;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
-
 import com.liferay.portal.kernel.model.ModelWrapper;
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -38,19 +33,10 @@ import java.util.Objects;
  * @generated
  */
 @ProviderType
-public class FolderWrapper implements Folder, ModelWrapper<Folder> {
+public class FolderWrapper extends BaseModelWrapper<Folder> implements Folder,
+	ModelWrapper<Folder> {
 	public FolderWrapper(Folder folder) {
-		_folder = folder;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return Folder.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return Folder.class.getName();
+		super(folder);
 	}
 
 	@Override
@@ -135,16 +121,6 @@ public class FolderWrapper implements Folder, ModelWrapper<Folder> {
 		}
 	}
 
-	@Override
-	public Object clone() {
-		return new FolderWrapper((Folder)_folder.clone());
-	}
-
-	@Override
-	public int compareTo(Folder folder) {
-		return _folder.compareTo(folder);
-	}
-
 	/**
 	* Returns the account ID of this folder.
 	*
@@ -152,7 +128,7 @@ public class FolderWrapper implements Folder, ModelWrapper<Folder> {
 	*/
 	@Override
 	public long getAccountId() {
-		return _folder.getAccountId();
+		return model.getAccountId();
 	}
 
 	/**
@@ -162,7 +138,7 @@ public class FolderWrapper implements Folder, ModelWrapper<Folder> {
 	*/
 	@Override
 	public long getCompanyId() {
-		return _folder.getCompanyId();
+		return model.getCompanyId();
 	}
 
 	/**
@@ -172,7 +148,7 @@ public class FolderWrapper implements Folder, ModelWrapper<Folder> {
 	*/
 	@Override
 	public Date getCreateDate() {
-		return _folder.getCreateDate();
+		return model.getCreateDate();
 	}
 
 	/**
@@ -182,12 +158,7 @@ public class FolderWrapper implements Folder, ModelWrapper<Folder> {
 	*/
 	@Override
 	public String getDisplayName() {
-		return _folder.getDisplayName();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _folder.getExpandoBridge();
+		return model.getDisplayName();
 	}
 
 	/**
@@ -197,7 +168,7 @@ public class FolderWrapper implements Folder, ModelWrapper<Folder> {
 	*/
 	@Override
 	public long getFolderId() {
-		return _folder.getFolderId();
+		return model.getFolderId();
 	}
 
 	/**
@@ -207,7 +178,7 @@ public class FolderWrapper implements Folder, ModelWrapper<Folder> {
 	*/
 	@Override
 	public String getFullName() {
-		return _folder.getFullName();
+		return model.getFullName();
 	}
 
 	/**
@@ -217,7 +188,7 @@ public class FolderWrapper implements Folder, ModelWrapper<Folder> {
 	*/
 	@Override
 	public Date getModifiedDate() {
-		return _folder.getModifiedDate();
+		return model.getModifiedDate();
 	}
 
 	/**
@@ -227,12 +198,7 @@ public class FolderWrapper implements Folder, ModelWrapper<Folder> {
 	*/
 	@Override
 	public long getPrimaryKey() {
-		return _folder.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _folder.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	/**
@@ -242,7 +208,7 @@ public class FolderWrapper implements Folder, ModelWrapper<Folder> {
 	*/
 	@Override
 	public int getRemoteMessageCount() {
-		return _folder.getRemoteMessageCount();
+		return model.getRemoteMessageCount();
 	}
 
 	/**
@@ -252,7 +218,7 @@ public class FolderWrapper implements Folder, ModelWrapper<Folder> {
 	*/
 	@Override
 	public long getUserId() {
-		return _folder.getUserId();
+		return model.getUserId();
 	}
 
 	/**
@@ -262,7 +228,7 @@ public class FolderWrapper implements Folder, ModelWrapper<Folder> {
 	*/
 	@Override
 	public String getUserName() {
-		return _folder.getUserName();
+		return model.getUserName();
 	}
 
 	/**
@@ -272,32 +238,12 @@ public class FolderWrapper implements Folder, ModelWrapper<Folder> {
 	*/
 	@Override
 	public String getUserUuid() {
-		return _folder.getUserUuid();
-	}
-
-	@Override
-	public int hashCode() {
-		return _folder.hashCode();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _folder.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _folder.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _folder.isNew();
+		return model.getUserUuid();
 	}
 
 	@Override
 	public void persist() {
-		_folder.persist();
+		model.persist();
 	}
 
 	/**
@@ -307,12 +253,7 @@ public class FolderWrapper implements Folder, ModelWrapper<Folder> {
 	*/
 	@Override
 	public void setAccountId(long accountId) {
-		_folder.setAccountId(accountId);
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_folder.setCachedModel(cachedModel);
+		model.setAccountId(accountId);
 	}
 
 	/**
@@ -322,7 +263,7 @@ public class FolderWrapper implements Folder, ModelWrapper<Folder> {
 	*/
 	@Override
 	public void setCompanyId(long companyId) {
-		_folder.setCompanyId(companyId);
+		model.setCompanyId(companyId);
 	}
 
 	/**
@@ -332,7 +273,7 @@ public class FolderWrapper implements Folder, ModelWrapper<Folder> {
 	*/
 	@Override
 	public void setCreateDate(Date createDate) {
-		_folder.setCreateDate(createDate);
+		model.setCreateDate(createDate);
 	}
 
 	/**
@@ -342,23 +283,7 @@ public class FolderWrapper implements Folder, ModelWrapper<Folder> {
 	*/
 	@Override
 	public void setDisplayName(String displayName) {
-		_folder.setDisplayName(displayName);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-		_folder.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_folder.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_folder.setExpandoBridgeAttributes(serviceContext);
+		model.setDisplayName(displayName);
 	}
 
 	/**
@@ -368,7 +293,7 @@ public class FolderWrapper implements Folder, ModelWrapper<Folder> {
 	*/
 	@Override
 	public void setFolderId(long folderId) {
-		_folder.setFolderId(folderId);
+		model.setFolderId(folderId);
 	}
 
 	/**
@@ -378,7 +303,7 @@ public class FolderWrapper implements Folder, ModelWrapper<Folder> {
 	*/
 	@Override
 	public void setFullName(String fullName) {
-		_folder.setFullName(fullName);
+		model.setFullName(fullName);
 	}
 
 	/**
@@ -388,12 +313,7 @@ public class FolderWrapper implements Folder, ModelWrapper<Folder> {
 	*/
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
-		_folder.setModifiedDate(modifiedDate);
-	}
-
-	@Override
-	public void setNew(boolean n) {
-		_folder.setNew(n);
+		model.setModifiedDate(modifiedDate);
 	}
 
 	/**
@@ -403,12 +323,7 @@ public class FolderWrapper implements Folder, ModelWrapper<Folder> {
 	*/
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_folder.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_folder.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -418,7 +333,7 @@ public class FolderWrapper implements Folder, ModelWrapper<Folder> {
 	*/
 	@Override
 	public void setRemoteMessageCount(int remoteMessageCount) {
-		_folder.setRemoteMessageCount(remoteMessageCount);
+		model.setRemoteMessageCount(remoteMessageCount);
 	}
 
 	/**
@@ -428,7 +343,7 @@ public class FolderWrapper implements Folder, ModelWrapper<Folder> {
 	*/
 	@Override
 	public void setUserId(long userId) {
-		_folder.setUserId(userId);
+		model.setUserId(userId);
 	}
 
 	/**
@@ -438,7 +353,7 @@ public class FolderWrapper implements Folder, ModelWrapper<Folder> {
 	*/
 	@Override
 	public void setUserName(String userName) {
-		_folder.setUserName(userName);
+		model.setUserName(userName);
 	}
 
 	/**
@@ -448,72 +363,11 @@ public class FolderWrapper implements Folder, ModelWrapper<Folder> {
 	*/
 	@Override
 	public void setUserUuid(String userUuid) {
-		_folder.setUserUuid(userUuid);
+		model.setUserUuid(userUuid);
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.CacheModel<Folder> toCacheModel() {
-		return _folder.toCacheModel();
+	protected FolderWrapper wrap(Folder folder) {
+		return new FolderWrapper(folder);
 	}
-
-	@Override
-	public Folder toEscapedModel() {
-		return new FolderWrapper(_folder.toEscapedModel());
-	}
-
-	@Override
-	public String toString() {
-		return _folder.toString();
-	}
-
-	@Override
-	public Folder toUnescapedModel() {
-		return new FolderWrapper(_folder.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _folder.toXmlString();
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-
-		if (!(obj instanceof FolderWrapper)) {
-			return false;
-		}
-
-		FolderWrapper folderWrapper = (FolderWrapper)obj;
-
-		if (Objects.equals(_folder, folderWrapper._folder)) {
-			return true;
-		}
-
-		return false;
-	}
-
-	@Override
-	public Folder getWrappedModel() {
-		return _folder;
-	}
-
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _folder.isEntityCacheEnabled();
-	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _folder.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_folder.resetOriginalValues();
-	}
-
-	private final Folder _folder;
 }

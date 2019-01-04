@@ -16,18 +16,13 @@ package com.liferay.portal.kernel.model;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
-
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -39,20 +34,10 @@ import java.util.Objects;
  * @generated
  */
 @ProviderType
-public class LayoutFriendlyURLWrapper implements LayoutFriendlyURL,
-	ModelWrapper<LayoutFriendlyURL> {
+public class LayoutFriendlyURLWrapper extends BaseModelWrapper<LayoutFriendlyURL>
+	implements LayoutFriendlyURL, ModelWrapper<LayoutFriendlyURL> {
 	public LayoutFriendlyURLWrapper(LayoutFriendlyURL layoutFriendlyURL) {
-		_layoutFriendlyURL = layoutFriendlyURL;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return LayoutFriendlyURL.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return LayoutFriendlyURL.class.getName();
+		super(layoutFriendlyURL);
 	}
 
 	@Override
@@ -164,16 +149,6 @@ public class LayoutFriendlyURLWrapper implements LayoutFriendlyURL,
 		}
 	}
 
-	@Override
-	public Object clone() {
-		return new LayoutFriendlyURLWrapper((LayoutFriendlyURL)_layoutFriendlyURL.clone());
-	}
-
-	@Override
-	public int compareTo(LayoutFriendlyURL layoutFriendlyURL) {
-		return _layoutFriendlyURL.compareTo(layoutFriendlyURL);
-	}
-
 	/**
 	* Returns the company ID of this layout friendly url.
 	*
@@ -181,7 +156,7 @@ public class LayoutFriendlyURLWrapper implements LayoutFriendlyURL,
 	*/
 	@Override
 	public long getCompanyId() {
-		return _layoutFriendlyURL.getCompanyId();
+		return model.getCompanyId();
 	}
 
 	/**
@@ -191,12 +166,7 @@ public class LayoutFriendlyURLWrapper implements LayoutFriendlyURL,
 	*/
 	@Override
 	public Date getCreateDate() {
-		return _layoutFriendlyURL.getCreateDate();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _layoutFriendlyURL.getExpandoBridge();
+		return model.getCreateDate();
 	}
 
 	/**
@@ -206,7 +176,7 @@ public class LayoutFriendlyURLWrapper implements LayoutFriendlyURL,
 	*/
 	@Override
 	public String getFriendlyURL() {
-		return _layoutFriendlyURL.getFriendlyURL();
+		return model.getFriendlyURL();
 	}
 
 	/**
@@ -216,7 +186,7 @@ public class LayoutFriendlyURLWrapper implements LayoutFriendlyURL,
 	*/
 	@Override
 	public long getGroupId() {
-		return _layoutFriendlyURL.getGroupId();
+		return model.getGroupId();
 	}
 
 	/**
@@ -226,7 +196,7 @@ public class LayoutFriendlyURLWrapper implements LayoutFriendlyURL,
 	*/
 	@Override
 	public String getLanguageId() {
-		return _layoutFriendlyURL.getLanguageId();
+		return model.getLanguageId();
 	}
 
 	/**
@@ -236,7 +206,7 @@ public class LayoutFriendlyURLWrapper implements LayoutFriendlyURL,
 	*/
 	@Override
 	public Date getLastPublishDate() {
-		return _layoutFriendlyURL.getLastPublishDate();
+		return model.getLastPublishDate();
 	}
 
 	/**
@@ -246,7 +216,7 @@ public class LayoutFriendlyURLWrapper implements LayoutFriendlyURL,
 	*/
 	@Override
 	public long getLayoutFriendlyURLId() {
-		return _layoutFriendlyURL.getLayoutFriendlyURLId();
+		return model.getLayoutFriendlyURLId();
 	}
 
 	/**
@@ -256,7 +226,7 @@ public class LayoutFriendlyURLWrapper implements LayoutFriendlyURL,
 	*/
 	@Override
 	public Date getModifiedDate() {
-		return _layoutFriendlyURL.getModifiedDate();
+		return model.getModifiedDate();
 	}
 
 	/**
@@ -266,7 +236,7 @@ public class LayoutFriendlyURLWrapper implements LayoutFriendlyURL,
 	*/
 	@Override
 	public long getMvccVersion() {
-		return _layoutFriendlyURL.getMvccVersion();
+		return model.getMvccVersion();
 	}
 
 	/**
@@ -276,7 +246,7 @@ public class LayoutFriendlyURLWrapper implements LayoutFriendlyURL,
 	*/
 	@Override
 	public long getPlid() {
-		return _layoutFriendlyURL.getPlid();
+		return model.getPlid();
 	}
 
 	/**
@@ -286,12 +256,7 @@ public class LayoutFriendlyURLWrapper implements LayoutFriendlyURL,
 	*/
 	@Override
 	public long getPrimaryKey() {
-		return _layoutFriendlyURL.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _layoutFriendlyURL.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	/**
@@ -301,7 +266,7 @@ public class LayoutFriendlyURLWrapper implements LayoutFriendlyURL,
 	*/
 	@Override
 	public boolean getPrivateLayout() {
-		return _layoutFriendlyURL.getPrivateLayout();
+		return model.getPrivateLayout();
 	}
 
 	/**
@@ -311,7 +276,7 @@ public class LayoutFriendlyURLWrapper implements LayoutFriendlyURL,
 	*/
 	@Override
 	public long getUserId() {
-		return _layoutFriendlyURL.getUserId();
+		return model.getUserId();
 	}
 
 	/**
@@ -321,7 +286,7 @@ public class LayoutFriendlyURLWrapper implements LayoutFriendlyURL,
 	*/
 	@Override
 	public String getUserName() {
-		return _layoutFriendlyURL.getUserName();
+		return model.getUserName();
 	}
 
 	/**
@@ -331,7 +296,7 @@ public class LayoutFriendlyURLWrapper implements LayoutFriendlyURL,
 	*/
 	@Override
 	public String getUserUuid() {
-		return _layoutFriendlyURL.getUserUuid();
+		return model.getUserUuid();
 	}
 
 	/**
@@ -341,27 +306,7 @@ public class LayoutFriendlyURLWrapper implements LayoutFriendlyURL,
 	*/
 	@Override
 	public String getUuid() {
-		return _layoutFriendlyURL.getUuid();
-	}
-
-	@Override
-	public int hashCode() {
-		return _layoutFriendlyURL.hashCode();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _layoutFriendlyURL.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _layoutFriendlyURL.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _layoutFriendlyURL.isNew();
+		return model.getUuid();
 	}
 
 	/**
@@ -371,17 +316,12 @@ public class LayoutFriendlyURLWrapper implements LayoutFriendlyURL,
 	*/
 	@Override
 	public boolean isPrivateLayout() {
-		return _layoutFriendlyURL.isPrivateLayout();
+		return model.isPrivateLayout();
 	}
 
 	@Override
 	public void persist() {
-		_layoutFriendlyURL.persist();
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_layoutFriendlyURL.setCachedModel(cachedModel);
+		model.persist();
 	}
 
 	/**
@@ -391,7 +331,7 @@ public class LayoutFriendlyURLWrapper implements LayoutFriendlyURL,
 	*/
 	@Override
 	public void setCompanyId(long companyId) {
-		_layoutFriendlyURL.setCompanyId(companyId);
+		model.setCompanyId(companyId);
 	}
 
 	/**
@@ -401,22 +341,7 @@ public class LayoutFriendlyURLWrapper implements LayoutFriendlyURL,
 	*/
 	@Override
 	public void setCreateDate(Date createDate) {
-		_layoutFriendlyURL.setCreateDate(createDate);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(BaseModel<?> baseModel) {
-		_layoutFriendlyURL.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_layoutFriendlyURL.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_layoutFriendlyURL.setExpandoBridgeAttributes(serviceContext);
+		model.setCreateDate(createDate);
 	}
 
 	/**
@@ -426,7 +351,7 @@ public class LayoutFriendlyURLWrapper implements LayoutFriendlyURL,
 	*/
 	@Override
 	public void setFriendlyURL(String friendlyURL) {
-		_layoutFriendlyURL.setFriendlyURL(friendlyURL);
+		model.setFriendlyURL(friendlyURL);
 	}
 
 	/**
@@ -436,7 +361,7 @@ public class LayoutFriendlyURLWrapper implements LayoutFriendlyURL,
 	*/
 	@Override
 	public void setGroupId(long groupId) {
-		_layoutFriendlyURL.setGroupId(groupId);
+		model.setGroupId(groupId);
 	}
 
 	/**
@@ -446,7 +371,7 @@ public class LayoutFriendlyURLWrapper implements LayoutFriendlyURL,
 	*/
 	@Override
 	public void setLanguageId(String languageId) {
-		_layoutFriendlyURL.setLanguageId(languageId);
+		model.setLanguageId(languageId);
 	}
 
 	/**
@@ -456,7 +381,7 @@ public class LayoutFriendlyURLWrapper implements LayoutFriendlyURL,
 	*/
 	@Override
 	public void setLastPublishDate(Date lastPublishDate) {
-		_layoutFriendlyURL.setLastPublishDate(lastPublishDate);
+		model.setLastPublishDate(lastPublishDate);
 	}
 
 	/**
@@ -466,7 +391,7 @@ public class LayoutFriendlyURLWrapper implements LayoutFriendlyURL,
 	*/
 	@Override
 	public void setLayoutFriendlyURLId(long layoutFriendlyURLId) {
-		_layoutFriendlyURL.setLayoutFriendlyURLId(layoutFriendlyURLId);
+		model.setLayoutFriendlyURLId(layoutFriendlyURLId);
 	}
 
 	/**
@@ -476,7 +401,7 @@ public class LayoutFriendlyURLWrapper implements LayoutFriendlyURL,
 	*/
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
-		_layoutFriendlyURL.setModifiedDate(modifiedDate);
+		model.setModifiedDate(modifiedDate);
 	}
 
 	/**
@@ -486,12 +411,7 @@ public class LayoutFriendlyURLWrapper implements LayoutFriendlyURL,
 	*/
 	@Override
 	public void setMvccVersion(long mvccVersion) {
-		_layoutFriendlyURL.setMvccVersion(mvccVersion);
-	}
-
-	@Override
-	public void setNew(boolean n) {
-		_layoutFriendlyURL.setNew(n);
+		model.setMvccVersion(mvccVersion);
 	}
 
 	/**
@@ -501,7 +421,7 @@ public class LayoutFriendlyURLWrapper implements LayoutFriendlyURL,
 	*/
 	@Override
 	public void setPlid(long plid) {
-		_layoutFriendlyURL.setPlid(plid);
+		model.setPlid(plid);
 	}
 
 	/**
@@ -511,12 +431,7 @@ public class LayoutFriendlyURLWrapper implements LayoutFriendlyURL,
 	*/
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_layoutFriendlyURL.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_layoutFriendlyURL.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -526,7 +441,7 @@ public class LayoutFriendlyURLWrapper implements LayoutFriendlyURL,
 	*/
 	@Override
 	public void setPrivateLayout(boolean privateLayout) {
-		_layoutFriendlyURL.setPrivateLayout(privateLayout);
+		model.setPrivateLayout(privateLayout);
 	}
 
 	/**
@@ -536,7 +451,7 @@ public class LayoutFriendlyURLWrapper implements LayoutFriendlyURL,
 	*/
 	@Override
 	public void setUserId(long userId) {
-		_layoutFriendlyURL.setUserId(userId);
+		model.setUserId(userId);
 	}
 
 	/**
@@ -546,7 +461,7 @@ public class LayoutFriendlyURLWrapper implements LayoutFriendlyURL,
 	*/
 	@Override
 	public void setUserName(String userName) {
-		_layoutFriendlyURL.setUserName(userName);
+		model.setUserName(userName);
 	}
 
 	/**
@@ -556,7 +471,7 @@ public class LayoutFriendlyURLWrapper implements LayoutFriendlyURL,
 	*/
 	@Override
 	public void setUserUuid(String userUuid) {
-		_layoutFriendlyURL.setUserUuid(userUuid);
+		model.setUserUuid(userUuid);
 	}
 
 	/**
@@ -566,78 +481,16 @@ public class LayoutFriendlyURLWrapper implements LayoutFriendlyURL,
 	*/
 	@Override
 	public void setUuid(String uuid) {
-		_layoutFriendlyURL.setUuid(uuid);
-	}
-
-	@Override
-	public CacheModel<LayoutFriendlyURL> toCacheModel() {
-		return _layoutFriendlyURL.toCacheModel();
-	}
-
-	@Override
-	public LayoutFriendlyURL toEscapedModel() {
-		return new LayoutFriendlyURLWrapper(_layoutFriendlyURL.toEscapedModel());
-	}
-
-	@Override
-	public String toString() {
-		return _layoutFriendlyURL.toString();
-	}
-
-	@Override
-	public LayoutFriendlyURL toUnescapedModel() {
-		return new LayoutFriendlyURLWrapper(_layoutFriendlyURL.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _layoutFriendlyURL.toXmlString();
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-
-		if (!(obj instanceof LayoutFriendlyURLWrapper)) {
-			return false;
-		}
-
-		LayoutFriendlyURLWrapper layoutFriendlyURLWrapper = (LayoutFriendlyURLWrapper)obj;
-
-		if (Objects.equals(_layoutFriendlyURL,
-					layoutFriendlyURLWrapper._layoutFriendlyURL)) {
-			return true;
-		}
-
-		return false;
+		model.setUuid(uuid);
 	}
 
 	@Override
 	public StagedModelType getStagedModelType() {
-		return _layoutFriendlyURL.getStagedModelType();
+		return model.getStagedModelType();
 	}
 
 	@Override
-	public LayoutFriendlyURL getWrappedModel() {
-		return _layoutFriendlyURL;
+	protected LayoutFriendlyURLWrapper wrap(LayoutFriendlyURL layoutFriendlyURL) {
+		return new LayoutFriendlyURLWrapper(layoutFriendlyURL);
 	}
-
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _layoutFriendlyURL.isEntityCacheEnabled();
-	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _layoutFriendlyURL.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_layoutFriendlyURL.resetOriginalValues();
-	}
-
-	private final LayoutFriendlyURL _layoutFriendlyURL;
 }

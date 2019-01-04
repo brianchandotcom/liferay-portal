@@ -16,17 +16,12 @@ package com.liferay.asset.kernel.model;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
-
 import com.liferay.portal.kernel.model.ModelWrapper;
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -38,19 +33,10 @@ import java.util.Objects;
  * @generated
  */
 @ProviderType
-public class AssetEntryWrapper implements AssetEntry, ModelWrapper<AssetEntry> {
+public class AssetEntryWrapper extends BaseModelWrapper<AssetEntry>
+	implements AssetEntry, ModelWrapper<AssetEntry> {
 	public AssetEntryWrapper(AssetEntry assetEntry) {
-		_assetEntry = assetEntry;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return AssetEntry.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return AssetEntry.class.getName();
+		super(assetEntry);
 	}
 
 	@Override
@@ -254,38 +240,28 @@ public class AssetEntryWrapper implements AssetEntry, ModelWrapper<AssetEntry> {
 	}
 
 	@Override
-	public Object clone() {
-		return new AssetEntryWrapper((AssetEntry)_assetEntry.clone());
-	}
-
-	@Override
-	public int compareTo(AssetEntry assetEntry) {
-		return _assetEntry.compareTo(assetEntry);
-	}
-
-	@Override
 	public AssetRenderer<?> getAssetRenderer() {
-		return _assetEntry.getAssetRenderer();
+		return model.getAssetRenderer();
 	}
 
 	@Override
 	public AssetRendererFactory<?> getAssetRendererFactory() {
-		return _assetEntry.getAssetRendererFactory();
+		return model.getAssetRendererFactory();
 	}
 
 	@Override
 	public String[] getAvailableLanguageIds() {
-		return _assetEntry.getAvailableLanguageIds();
+		return model.getAvailableLanguageIds();
 	}
 
 	@Override
 	public java.util.List<AssetCategory> getCategories() {
-		return _assetEntry.getCategories();
+		return model.getCategories();
 	}
 
 	@Override
 	public long[] getCategoryIds() {
-		return _assetEntry.getCategoryIds();
+		return model.getCategoryIds();
 	}
 
 	/**
@@ -295,7 +271,7 @@ public class AssetEntryWrapper implements AssetEntry, ModelWrapper<AssetEntry> {
 	*/
 	@Override
 	public String getClassName() {
-		return _assetEntry.getClassName();
+		return model.getClassName();
 	}
 
 	/**
@@ -305,7 +281,7 @@ public class AssetEntryWrapper implements AssetEntry, ModelWrapper<AssetEntry> {
 	*/
 	@Override
 	public long getClassNameId() {
-		return _assetEntry.getClassNameId();
+		return model.getClassNameId();
 	}
 
 	/**
@@ -315,7 +291,7 @@ public class AssetEntryWrapper implements AssetEntry, ModelWrapper<AssetEntry> {
 	*/
 	@Override
 	public long getClassPK() {
-		return _assetEntry.getClassPK();
+		return model.getClassPK();
 	}
 
 	/**
@@ -325,7 +301,7 @@ public class AssetEntryWrapper implements AssetEntry, ModelWrapper<AssetEntry> {
 	*/
 	@Override
 	public long getClassTypeId() {
-		return _assetEntry.getClassTypeId();
+		return model.getClassTypeId();
 	}
 
 	/**
@@ -335,7 +311,7 @@ public class AssetEntryWrapper implements AssetEntry, ModelWrapper<AssetEntry> {
 	*/
 	@Override
 	public String getClassUuid() {
-		return _assetEntry.getClassUuid();
+		return model.getClassUuid();
 	}
 
 	/**
@@ -345,7 +321,7 @@ public class AssetEntryWrapper implements AssetEntry, ModelWrapper<AssetEntry> {
 	*/
 	@Override
 	public long getCompanyId() {
-		return _assetEntry.getCompanyId();
+		return model.getCompanyId();
 	}
 
 	/**
@@ -355,12 +331,12 @@ public class AssetEntryWrapper implements AssetEntry, ModelWrapper<AssetEntry> {
 	*/
 	@Override
 	public Date getCreateDate() {
-		return _assetEntry.getCreateDate();
+		return model.getCreateDate();
 	}
 
 	@Override
 	public String getDefaultLanguageId() {
-		return _assetEntry.getDefaultLanguageId();
+		return model.getDefaultLanguageId();
 	}
 
 	/**
@@ -370,7 +346,7 @@ public class AssetEntryWrapper implements AssetEntry, ModelWrapper<AssetEntry> {
 	*/
 	@Override
 	public String getDescription() {
-		return _assetEntry.getDescription();
+		return model.getDescription();
 	}
 
 	/**
@@ -381,7 +357,7 @@ public class AssetEntryWrapper implements AssetEntry, ModelWrapper<AssetEntry> {
 	*/
 	@Override
 	public String getDescription(java.util.Locale locale) {
-		return _assetEntry.getDescription(locale);
+		return model.getDescription(locale);
 	}
 
 	/**
@@ -393,7 +369,7 @@ public class AssetEntryWrapper implements AssetEntry, ModelWrapper<AssetEntry> {
 	*/
 	@Override
 	public String getDescription(java.util.Locale locale, boolean useDefault) {
-		return _assetEntry.getDescription(locale, useDefault);
+		return model.getDescription(locale, useDefault);
 	}
 
 	/**
@@ -404,7 +380,7 @@ public class AssetEntryWrapper implements AssetEntry, ModelWrapper<AssetEntry> {
 	*/
 	@Override
 	public String getDescription(String languageId) {
-		return _assetEntry.getDescription(languageId);
+		return model.getDescription(languageId);
 	}
 
 	/**
@@ -416,17 +392,17 @@ public class AssetEntryWrapper implements AssetEntry, ModelWrapper<AssetEntry> {
 	*/
 	@Override
 	public String getDescription(String languageId, boolean useDefault) {
-		return _assetEntry.getDescription(languageId, useDefault);
+		return model.getDescription(languageId, useDefault);
 	}
 
 	@Override
 	public String getDescriptionCurrentLanguageId() {
-		return _assetEntry.getDescriptionCurrentLanguageId();
+		return model.getDescriptionCurrentLanguageId();
 	}
 
 	@Override
 	public String getDescriptionCurrentValue() {
-		return _assetEntry.getDescriptionCurrentValue();
+		return model.getDescriptionCurrentValue();
 	}
 
 	/**
@@ -436,7 +412,7 @@ public class AssetEntryWrapper implements AssetEntry, ModelWrapper<AssetEntry> {
 	*/
 	@Override
 	public Map<java.util.Locale, String> getDescriptionMap() {
-		return _assetEntry.getDescriptionMap();
+		return model.getDescriptionMap();
 	}
 
 	/**
@@ -446,7 +422,7 @@ public class AssetEntryWrapper implements AssetEntry, ModelWrapper<AssetEntry> {
 	*/
 	@Override
 	public Date getEndDate() {
-		return _assetEntry.getEndDate();
+		return model.getEndDate();
 	}
 
 	/**
@@ -456,12 +432,7 @@ public class AssetEntryWrapper implements AssetEntry, ModelWrapper<AssetEntry> {
 	*/
 	@Override
 	public long getEntryId() {
-		return _assetEntry.getEntryId();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _assetEntry.getExpandoBridge();
+		return model.getEntryId();
 	}
 
 	/**
@@ -471,7 +442,7 @@ public class AssetEntryWrapper implements AssetEntry, ModelWrapper<AssetEntry> {
 	*/
 	@Override
 	public Date getExpirationDate() {
-		return _assetEntry.getExpirationDate();
+		return model.getExpirationDate();
 	}
 
 	/**
@@ -481,7 +452,7 @@ public class AssetEntryWrapper implements AssetEntry, ModelWrapper<AssetEntry> {
 	*/
 	@Override
 	public long getGroupId() {
-		return _assetEntry.getGroupId();
+		return model.getGroupId();
 	}
 
 	/**
@@ -491,7 +462,7 @@ public class AssetEntryWrapper implements AssetEntry, ModelWrapper<AssetEntry> {
 	*/
 	@Override
 	public int getHeight() {
-		return _assetEntry.getHeight();
+		return model.getHeight();
 	}
 
 	/**
@@ -501,7 +472,7 @@ public class AssetEntryWrapper implements AssetEntry, ModelWrapper<AssetEntry> {
 	*/
 	@Override
 	public String getLayoutUuid() {
-		return _assetEntry.getLayoutUuid();
+		return model.getLayoutUuid();
 	}
 
 	/**
@@ -511,7 +482,7 @@ public class AssetEntryWrapper implements AssetEntry, ModelWrapper<AssetEntry> {
 	*/
 	@Override
 	public boolean getListable() {
-		return _assetEntry.getListable();
+		return model.getListable();
 	}
 
 	/**
@@ -521,7 +492,7 @@ public class AssetEntryWrapper implements AssetEntry, ModelWrapper<AssetEntry> {
 	*/
 	@Override
 	public String getMimeType() {
-		return _assetEntry.getMimeType();
+		return model.getMimeType();
 	}
 
 	/**
@@ -531,7 +502,7 @@ public class AssetEntryWrapper implements AssetEntry, ModelWrapper<AssetEntry> {
 	*/
 	@Override
 	public Date getModifiedDate() {
-		return _assetEntry.getModifiedDate();
+		return model.getModifiedDate();
 	}
 
 	/**
@@ -541,12 +512,7 @@ public class AssetEntryWrapper implements AssetEntry, ModelWrapper<AssetEntry> {
 	*/
 	@Override
 	public long getPrimaryKey() {
-		return _assetEntry.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _assetEntry.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	/**
@@ -556,7 +522,7 @@ public class AssetEntryWrapper implements AssetEntry, ModelWrapper<AssetEntry> {
 	*/
 	@Override
 	public double getPriority() {
-		return _assetEntry.getPriority();
+		return model.getPriority();
 	}
 
 	/**
@@ -566,7 +532,7 @@ public class AssetEntryWrapper implements AssetEntry, ModelWrapper<AssetEntry> {
 	*/
 	@Override
 	public Date getPublishDate() {
-		return _assetEntry.getPublishDate();
+		return model.getPublishDate();
 	}
 
 	/**
@@ -576,7 +542,7 @@ public class AssetEntryWrapper implements AssetEntry, ModelWrapper<AssetEntry> {
 	*/
 	@Override
 	public Date getStartDate() {
-		return _assetEntry.getStartDate();
+		return model.getStartDate();
 	}
 
 	/**
@@ -586,7 +552,7 @@ public class AssetEntryWrapper implements AssetEntry, ModelWrapper<AssetEntry> {
 	*/
 	@Override
 	public String getSummary() {
-		return _assetEntry.getSummary();
+		return model.getSummary();
 	}
 
 	/**
@@ -597,7 +563,7 @@ public class AssetEntryWrapper implements AssetEntry, ModelWrapper<AssetEntry> {
 	*/
 	@Override
 	public String getSummary(java.util.Locale locale) {
-		return _assetEntry.getSummary(locale);
+		return model.getSummary(locale);
 	}
 
 	/**
@@ -609,7 +575,7 @@ public class AssetEntryWrapper implements AssetEntry, ModelWrapper<AssetEntry> {
 	*/
 	@Override
 	public String getSummary(java.util.Locale locale, boolean useDefault) {
-		return _assetEntry.getSummary(locale, useDefault);
+		return model.getSummary(locale, useDefault);
 	}
 
 	/**
@@ -620,7 +586,7 @@ public class AssetEntryWrapper implements AssetEntry, ModelWrapper<AssetEntry> {
 	*/
 	@Override
 	public String getSummary(String languageId) {
-		return _assetEntry.getSummary(languageId);
+		return model.getSummary(languageId);
 	}
 
 	/**
@@ -632,17 +598,17 @@ public class AssetEntryWrapper implements AssetEntry, ModelWrapper<AssetEntry> {
 	*/
 	@Override
 	public String getSummary(String languageId, boolean useDefault) {
-		return _assetEntry.getSummary(languageId, useDefault);
+		return model.getSummary(languageId, useDefault);
 	}
 
 	@Override
 	public String getSummaryCurrentLanguageId() {
-		return _assetEntry.getSummaryCurrentLanguageId();
+		return model.getSummaryCurrentLanguageId();
 	}
 
 	@Override
 	public String getSummaryCurrentValue() {
-		return _assetEntry.getSummaryCurrentValue();
+		return model.getSummaryCurrentValue();
 	}
 
 	/**
@@ -652,17 +618,17 @@ public class AssetEntryWrapper implements AssetEntry, ModelWrapper<AssetEntry> {
 	*/
 	@Override
 	public Map<java.util.Locale, String> getSummaryMap() {
-		return _assetEntry.getSummaryMap();
+		return model.getSummaryMap();
 	}
 
 	@Override
 	public String[] getTagNames() {
-		return _assetEntry.getTagNames();
+		return model.getTagNames();
 	}
 
 	@Override
 	public java.util.List<AssetTag> getTags() {
-		return _assetEntry.getTags();
+		return model.getTags();
 	}
 
 	/**
@@ -672,7 +638,7 @@ public class AssetEntryWrapper implements AssetEntry, ModelWrapper<AssetEntry> {
 	*/
 	@Override
 	public String getTitle() {
-		return _assetEntry.getTitle();
+		return model.getTitle();
 	}
 
 	/**
@@ -683,7 +649,7 @@ public class AssetEntryWrapper implements AssetEntry, ModelWrapper<AssetEntry> {
 	*/
 	@Override
 	public String getTitle(java.util.Locale locale) {
-		return _assetEntry.getTitle(locale);
+		return model.getTitle(locale);
 	}
 
 	/**
@@ -695,7 +661,7 @@ public class AssetEntryWrapper implements AssetEntry, ModelWrapper<AssetEntry> {
 	*/
 	@Override
 	public String getTitle(java.util.Locale locale, boolean useDefault) {
-		return _assetEntry.getTitle(locale, useDefault);
+		return model.getTitle(locale, useDefault);
 	}
 
 	/**
@@ -706,7 +672,7 @@ public class AssetEntryWrapper implements AssetEntry, ModelWrapper<AssetEntry> {
 	*/
 	@Override
 	public String getTitle(String languageId) {
-		return _assetEntry.getTitle(languageId);
+		return model.getTitle(languageId);
 	}
 
 	/**
@@ -718,17 +684,17 @@ public class AssetEntryWrapper implements AssetEntry, ModelWrapper<AssetEntry> {
 	*/
 	@Override
 	public String getTitle(String languageId, boolean useDefault) {
-		return _assetEntry.getTitle(languageId, useDefault);
+		return model.getTitle(languageId, useDefault);
 	}
 
 	@Override
 	public String getTitleCurrentLanguageId() {
-		return _assetEntry.getTitleCurrentLanguageId();
+		return model.getTitleCurrentLanguageId();
 	}
 
 	@Override
 	public String getTitleCurrentValue() {
-		return _assetEntry.getTitleCurrentValue();
+		return model.getTitleCurrentValue();
 	}
 
 	/**
@@ -738,7 +704,7 @@ public class AssetEntryWrapper implements AssetEntry, ModelWrapper<AssetEntry> {
 	*/
 	@Override
 	public Map<java.util.Locale, String> getTitleMap() {
-		return _assetEntry.getTitleMap();
+		return model.getTitleMap();
 	}
 
 	/**
@@ -748,7 +714,7 @@ public class AssetEntryWrapper implements AssetEntry, ModelWrapper<AssetEntry> {
 	*/
 	@Override
 	public String getUrl() {
-		return _assetEntry.getUrl();
+		return model.getUrl();
 	}
 
 	/**
@@ -758,7 +724,7 @@ public class AssetEntryWrapper implements AssetEntry, ModelWrapper<AssetEntry> {
 	*/
 	@Override
 	public long getUserId() {
-		return _assetEntry.getUserId();
+		return model.getUserId();
 	}
 
 	/**
@@ -768,7 +734,7 @@ public class AssetEntryWrapper implements AssetEntry, ModelWrapper<AssetEntry> {
 	*/
 	@Override
 	public String getUserName() {
-		return _assetEntry.getUserName();
+		return model.getUserName();
 	}
 
 	/**
@@ -778,7 +744,7 @@ public class AssetEntryWrapper implements AssetEntry, ModelWrapper<AssetEntry> {
 	*/
 	@Override
 	public String getUserUuid() {
-		return _assetEntry.getUserUuid();
+		return model.getUserUuid();
 	}
 
 	/**
@@ -788,7 +754,7 @@ public class AssetEntryWrapper implements AssetEntry, ModelWrapper<AssetEntry> {
 	*/
 	@Override
 	public int getViewCount() {
-		return _assetEntry.getViewCount();
+		return model.getViewCount();
 	}
 
 	/**
@@ -798,7 +764,7 @@ public class AssetEntryWrapper implements AssetEntry, ModelWrapper<AssetEntry> {
 	*/
 	@Override
 	public boolean getVisible() {
-		return _assetEntry.getVisible();
+		return model.getVisible();
 	}
 
 	/**
@@ -808,22 +774,7 @@ public class AssetEntryWrapper implements AssetEntry, ModelWrapper<AssetEntry> {
 	*/
 	@Override
 	public int getWidth() {
-		return _assetEntry.getWidth();
-	}
-
-	@Override
-	public int hashCode() {
-		return _assetEntry.hashCode();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _assetEntry.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _assetEntry.isEscapedModel();
+		return model.getWidth();
 	}
 
 	/**
@@ -833,12 +784,7 @@ public class AssetEntryWrapper implements AssetEntry, ModelWrapper<AssetEntry> {
 	*/
 	@Override
 	public boolean isListable() {
-		return _assetEntry.isListable();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _assetEntry.isNew();
+		return model.isListable();
 	}
 
 	/**
@@ -848,35 +794,30 @@ public class AssetEntryWrapper implements AssetEntry, ModelWrapper<AssetEntry> {
 	*/
 	@Override
 	public boolean isVisible() {
-		return _assetEntry.isVisible();
+		return model.isVisible();
 	}
 
 	@Override
 	public void persist() {
-		_assetEntry.persist();
+		model.persist();
 	}
 
 	@Override
 	public void prepareLocalizedFieldsForImport()
 		throws com.liferay.portal.kernel.exception.LocaleException {
-		_assetEntry.prepareLocalizedFieldsForImport();
+		model.prepareLocalizedFieldsForImport();
 	}
 
 	@Override
 	public void prepareLocalizedFieldsForImport(
 		java.util.Locale defaultImportLocale)
 		throws com.liferay.portal.kernel.exception.LocaleException {
-		_assetEntry.prepareLocalizedFieldsForImport(defaultImportLocale);
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_assetEntry.setCachedModel(cachedModel);
+		model.prepareLocalizedFieldsForImport(defaultImportLocale);
 	}
 
 	@Override
 	public void setClassName(String className) {
-		_assetEntry.setClassName(className);
+		model.setClassName(className);
 	}
 
 	/**
@@ -886,7 +827,7 @@ public class AssetEntryWrapper implements AssetEntry, ModelWrapper<AssetEntry> {
 	*/
 	@Override
 	public void setClassNameId(long classNameId) {
-		_assetEntry.setClassNameId(classNameId);
+		model.setClassNameId(classNameId);
 	}
 
 	/**
@@ -896,7 +837,7 @@ public class AssetEntryWrapper implements AssetEntry, ModelWrapper<AssetEntry> {
 	*/
 	@Override
 	public void setClassPK(long classPK) {
-		_assetEntry.setClassPK(classPK);
+		model.setClassPK(classPK);
 	}
 
 	/**
@@ -906,7 +847,7 @@ public class AssetEntryWrapper implements AssetEntry, ModelWrapper<AssetEntry> {
 	*/
 	@Override
 	public void setClassTypeId(long classTypeId) {
-		_assetEntry.setClassTypeId(classTypeId);
+		model.setClassTypeId(classTypeId);
 	}
 
 	/**
@@ -916,7 +857,7 @@ public class AssetEntryWrapper implements AssetEntry, ModelWrapper<AssetEntry> {
 	*/
 	@Override
 	public void setClassUuid(String classUuid) {
-		_assetEntry.setClassUuid(classUuid);
+		model.setClassUuid(classUuid);
 	}
 
 	/**
@@ -926,7 +867,7 @@ public class AssetEntryWrapper implements AssetEntry, ModelWrapper<AssetEntry> {
 	*/
 	@Override
 	public void setCompanyId(long companyId) {
-		_assetEntry.setCompanyId(companyId);
+		model.setCompanyId(companyId);
 	}
 
 	/**
@@ -936,7 +877,7 @@ public class AssetEntryWrapper implements AssetEntry, ModelWrapper<AssetEntry> {
 	*/
 	@Override
 	public void setCreateDate(Date createDate) {
-		_assetEntry.setCreateDate(createDate);
+		model.setCreateDate(createDate);
 	}
 
 	/**
@@ -946,7 +887,7 @@ public class AssetEntryWrapper implements AssetEntry, ModelWrapper<AssetEntry> {
 	*/
 	@Override
 	public void setDescription(String description) {
-		_assetEntry.setDescription(description);
+		model.setDescription(description);
 	}
 
 	/**
@@ -957,7 +898,7 @@ public class AssetEntryWrapper implements AssetEntry, ModelWrapper<AssetEntry> {
 	*/
 	@Override
 	public void setDescription(String description, java.util.Locale locale) {
-		_assetEntry.setDescription(description, locale);
+		model.setDescription(description, locale);
 	}
 
 	/**
@@ -970,12 +911,12 @@ public class AssetEntryWrapper implements AssetEntry, ModelWrapper<AssetEntry> {
 	@Override
 	public void setDescription(String description, java.util.Locale locale,
 		java.util.Locale defaultLocale) {
-		_assetEntry.setDescription(description, locale, defaultLocale);
+		model.setDescription(description, locale, defaultLocale);
 	}
 
 	@Override
 	public void setDescriptionCurrentLanguageId(String languageId) {
-		_assetEntry.setDescriptionCurrentLanguageId(languageId);
+		model.setDescriptionCurrentLanguageId(languageId);
 	}
 
 	/**
@@ -985,7 +926,7 @@ public class AssetEntryWrapper implements AssetEntry, ModelWrapper<AssetEntry> {
 	*/
 	@Override
 	public void setDescriptionMap(Map<java.util.Locale, String> descriptionMap) {
-		_assetEntry.setDescriptionMap(descriptionMap);
+		model.setDescriptionMap(descriptionMap);
 	}
 
 	/**
@@ -998,7 +939,7 @@ public class AssetEntryWrapper implements AssetEntry, ModelWrapper<AssetEntry> {
 	public void setDescriptionMap(
 		Map<java.util.Locale, String> descriptionMap,
 		java.util.Locale defaultLocale) {
-		_assetEntry.setDescriptionMap(descriptionMap, defaultLocale);
+		model.setDescriptionMap(descriptionMap, defaultLocale);
 	}
 
 	/**
@@ -1008,7 +949,7 @@ public class AssetEntryWrapper implements AssetEntry, ModelWrapper<AssetEntry> {
 	*/
 	@Override
 	public void setEndDate(Date endDate) {
-		_assetEntry.setEndDate(endDate);
+		model.setEndDate(endDate);
 	}
 
 	/**
@@ -1018,23 +959,7 @@ public class AssetEntryWrapper implements AssetEntry, ModelWrapper<AssetEntry> {
 	*/
 	@Override
 	public void setEntryId(long entryId) {
-		_assetEntry.setEntryId(entryId);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-		_assetEntry.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_assetEntry.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_assetEntry.setExpandoBridgeAttributes(serviceContext);
+		model.setEntryId(entryId);
 	}
 
 	/**
@@ -1044,7 +969,7 @@ public class AssetEntryWrapper implements AssetEntry, ModelWrapper<AssetEntry> {
 	*/
 	@Override
 	public void setExpirationDate(Date expirationDate) {
-		_assetEntry.setExpirationDate(expirationDate);
+		model.setExpirationDate(expirationDate);
 	}
 
 	/**
@@ -1054,7 +979,7 @@ public class AssetEntryWrapper implements AssetEntry, ModelWrapper<AssetEntry> {
 	*/
 	@Override
 	public void setGroupId(long groupId) {
-		_assetEntry.setGroupId(groupId);
+		model.setGroupId(groupId);
 	}
 
 	/**
@@ -1064,7 +989,7 @@ public class AssetEntryWrapper implements AssetEntry, ModelWrapper<AssetEntry> {
 	*/
 	@Override
 	public void setHeight(int height) {
-		_assetEntry.setHeight(height);
+		model.setHeight(height);
 	}
 
 	/**
@@ -1074,7 +999,7 @@ public class AssetEntryWrapper implements AssetEntry, ModelWrapper<AssetEntry> {
 	*/
 	@Override
 	public void setLayoutUuid(String layoutUuid) {
-		_assetEntry.setLayoutUuid(layoutUuid);
+		model.setLayoutUuid(layoutUuid);
 	}
 
 	/**
@@ -1084,7 +1009,7 @@ public class AssetEntryWrapper implements AssetEntry, ModelWrapper<AssetEntry> {
 	*/
 	@Override
 	public void setListable(boolean listable) {
-		_assetEntry.setListable(listable);
+		model.setListable(listable);
 	}
 
 	/**
@@ -1094,7 +1019,7 @@ public class AssetEntryWrapper implements AssetEntry, ModelWrapper<AssetEntry> {
 	*/
 	@Override
 	public void setMimeType(String mimeType) {
-		_assetEntry.setMimeType(mimeType);
+		model.setMimeType(mimeType);
 	}
 
 	/**
@@ -1104,12 +1029,7 @@ public class AssetEntryWrapper implements AssetEntry, ModelWrapper<AssetEntry> {
 	*/
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
-		_assetEntry.setModifiedDate(modifiedDate);
-	}
-
-	@Override
-	public void setNew(boolean n) {
-		_assetEntry.setNew(n);
+		model.setModifiedDate(modifiedDate);
 	}
 
 	/**
@@ -1119,12 +1039,7 @@ public class AssetEntryWrapper implements AssetEntry, ModelWrapper<AssetEntry> {
 	*/
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_assetEntry.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_assetEntry.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -1134,7 +1049,7 @@ public class AssetEntryWrapper implements AssetEntry, ModelWrapper<AssetEntry> {
 	*/
 	@Override
 	public void setPriority(double priority) {
-		_assetEntry.setPriority(priority);
+		model.setPriority(priority);
 	}
 
 	/**
@@ -1144,7 +1059,7 @@ public class AssetEntryWrapper implements AssetEntry, ModelWrapper<AssetEntry> {
 	*/
 	@Override
 	public void setPublishDate(Date publishDate) {
-		_assetEntry.setPublishDate(publishDate);
+		model.setPublishDate(publishDate);
 	}
 
 	/**
@@ -1154,7 +1069,7 @@ public class AssetEntryWrapper implements AssetEntry, ModelWrapper<AssetEntry> {
 	*/
 	@Override
 	public void setStartDate(Date startDate) {
-		_assetEntry.setStartDate(startDate);
+		model.setStartDate(startDate);
 	}
 
 	/**
@@ -1164,7 +1079,7 @@ public class AssetEntryWrapper implements AssetEntry, ModelWrapper<AssetEntry> {
 	*/
 	@Override
 	public void setSummary(String summary) {
-		_assetEntry.setSummary(summary);
+		model.setSummary(summary);
 	}
 
 	/**
@@ -1175,7 +1090,7 @@ public class AssetEntryWrapper implements AssetEntry, ModelWrapper<AssetEntry> {
 	*/
 	@Override
 	public void setSummary(String summary, java.util.Locale locale) {
-		_assetEntry.setSummary(summary, locale);
+		model.setSummary(summary, locale);
 	}
 
 	/**
@@ -1188,12 +1103,12 @@ public class AssetEntryWrapper implements AssetEntry, ModelWrapper<AssetEntry> {
 	@Override
 	public void setSummary(String summary, java.util.Locale locale,
 		java.util.Locale defaultLocale) {
-		_assetEntry.setSummary(summary, locale, defaultLocale);
+		model.setSummary(summary, locale, defaultLocale);
 	}
 
 	@Override
 	public void setSummaryCurrentLanguageId(String languageId) {
-		_assetEntry.setSummaryCurrentLanguageId(languageId);
+		model.setSummaryCurrentLanguageId(languageId);
 	}
 
 	/**
@@ -1203,7 +1118,7 @@ public class AssetEntryWrapper implements AssetEntry, ModelWrapper<AssetEntry> {
 	*/
 	@Override
 	public void setSummaryMap(Map<java.util.Locale, String> summaryMap) {
-		_assetEntry.setSummaryMap(summaryMap);
+		model.setSummaryMap(summaryMap);
 	}
 
 	/**
@@ -1215,7 +1130,7 @@ public class AssetEntryWrapper implements AssetEntry, ModelWrapper<AssetEntry> {
 	@Override
 	public void setSummaryMap(Map<java.util.Locale, String> summaryMap,
 		java.util.Locale defaultLocale) {
-		_assetEntry.setSummaryMap(summaryMap, defaultLocale);
+		model.setSummaryMap(summaryMap, defaultLocale);
 	}
 
 	/**
@@ -1225,7 +1140,7 @@ public class AssetEntryWrapper implements AssetEntry, ModelWrapper<AssetEntry> {
 	*/
 	@Override
 	public void setTitle(String title) {
-		_assetEntry.setTitle(title);
+		model.setTitle(title);
 	}
 
 	/**
@@ -1236,7 +1151,7 @@ public class AssetEntryWrapper implements AssetEntry, ModelWrapper<AssetEntry> {
 	*/
 	@Override
 	public void setTitle(String title, java.util.Locale locale) {
-		_assetEntry.setTitle(title, locale);
+		model.setTitle(title, locale);
 	}
 
 	/**
@@ -1249,12 +1164,12 @@ public class AssetEntryWrapper implements AssetEntry, ModelWrapper<AssetEntry> {
 	@Override
 	public void setTitle(String title, java.util.Locale locale,
 		java.util.Locale defaultLocale) {
-		_assetEntry.setTitle(title, locale, defaultLocale);
+		model.setTitle(title, locale, defaultLocale);
 	}
 
 	@Override
 	public void setTitleCurrentLanguageId(String languageId) {
-		_assetEntry.setTitleCurrentLanguageId(languageId);
+		model.setTitleCurrentLanguageId(languageId);
 	}
 
 	/**
@@ -1264,7 +1179,7 @@ public class AssetEntryWrapper implements AssetEntry, ModelWrapper<AssetEntry> {
 	*/
 	@Override
 	public void setTitleMap(Map<java.util.Locale, String> titleMap) {
-		_assetEntry.setTitleMap(titleMap);
+		model.setTitleMap(titleMap);
 	}
 
 	/**
@@ -1276,7 +1191,7 @@ public class AssetEntryWrapper implements AssetEntry, ModelWrapper<AssetEntry> {
 	@Override
 	public void setTitleMap(Map<java.util.Locale, String> titleMap,
 		java.util.Locale defaultLocale) {
-		_assetEntry.setTitleMap(titleMap, defaultLocale);
+		model.setTitleMap(titleMap, defaultLocale);
 	}
 
 	/**
@@ -1286,7 +1201,7 @@ public class AssetEntryWrapper implements AssetEntry, ModelWrapper<AssetEntry> {
 	*/
 	@Override
 	public void setUrl(String url) {
-		_assetEntry.setUrl(url);
+		model.setUrl(url);
 	}
 
 	/**
@@ -1296,7 +1211,7 @@ public class AssetEntryWrapper implements AssetEntry, ModelWrapper<AssetEntry> {
 	*/
 	@Override
 	public void setUserId(long userId) {
-		_assetEntry.setUserId(userId);
+		model.setUserId(userId);
 	}
 
 	/**
@@ -1306,7 +1221,7 @@ public class AssetEntryWrapper implements AssetEntry, ModelWrapper<AssetEntry> {
 	*/
 	@Override
 	public void setUserName(String userName) {
-		_assetEntry.setUserName(userName);
+		model.setUserName(userName);
 	}
 
 	/**
@@ -1316,7 +1231,7 @@ public class AssetEntryWrapper implements AssetEntry, ModelWrapper<AssetEntry> {
 	*/
 	@Override
 	public void setUserUuid(String userUuid) {
-		_assetEntry.setUserUuid(userUuid);
+		model.setUserUuid(userUuid);
 	}
 
 	/**
@@ -1326,7 +1241,7 @@ public class AssetEntryWrapper implements AssetEntry, ModelWrapper<AssetEntry> {
 	*/
 	@Override
 	public void setViewCount(int viewCount) {
-		_assetEntry.setViewCount(viewCount);
+		model.setViewCount(viewCount);
 	}
 
 	/**
@@ -1336,7 +1251,7 @@ public class AssetEntryWrapper implements AssetEntry, ModelWrapper<AssetEntry> {
 	*/
 	@Override
 	public void setVisible(boolean visible) {
-		_assetEntry.setVisible(visible);
+		model.setVisible(visible);
 	}
 
 	/**
@@ -1346,72 +1261,11 @@ public class AssetEntryWrapper implements AssetEntry, ModelWrapper<AssetEntry> {
 	*/
 	@Override
 	public void setWidth(int width) {
-		_assetEntry.setWidth(width);
+		model.setWidth(width);
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.CacheModel<AssetEntry> toCacheModel() {
-		return _assetEntry.toCacheModel();
+	protected AssetEntryWrapper wrap(AssetEntry assetEntry) {
+		return new AssetEntryWrapper(assetEntry);
 	}
-
-	@Override
-	public AssetEntry toEscapedModel() {
-		return new AssetEntryWrapper(_assetEntry.toEscapedModel());
-	}
-
-	@Override
-	public String toString() {
-		return _assetEntry.toString();
-	}
-
-	@Override
-	public AssetEntry toUnescapedModel() {
-		return new AssetEntryWrapper(_assetEntry.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _assetEntry.toXmlString();
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-
-		if (!(obj instanceof AssetEntryWrapper)) {
-			return false;
-		}
-
-		AssetEntryWrapper assetEntryWrapper = (AssetEntryWrapper)obj;
-
-		if (Objects.equals(_assetEntry, assetEntryWrapper._assetEntry)) {
-			return true;
-		}
-
-		return false;
-	}
-
-	@Override
-	public AssetEntry getWrappedModel() {
-		return _assetEntry;
-	}
-
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _assetEntry.isEntityCacheEnabled();
-	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _assetEntry.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_assetEntry.resetOriginalValues();
-	}
-
-	private final AssetEntry _assetEntry;
 }

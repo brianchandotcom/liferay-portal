@@ -16,17 +16,12 @@ package com.liferay.portal.workflow.kaleo.model;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
-
 import com.liferay.portal.kernel.model.ModelWrapper;
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -38,19 +33,10 @@ import java.util.Objects;
  * @generated
  */
 @ProviderType
-public class KaleoTaskWrapper implements KaleoTask, ModelWrapper<KaleoTask> {
+public class KaleoTaskWrapper extends BaseModelWrapper<KaleoTask>
+	implements KaleoTask, ModelWrapper<KaleoTask> {
 	public KaleoTaskWrapper(KaleoTask kaleoTask) {
-		_kaleoTask = kaleoTask;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return KaleoTask.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return KaleoTask.class.getName();
+		super(kaleoTask);
 	}
 
 	@Override
@@ -142,16 +128,6 @@ public class KaleoTaskWrapper implements KaleoTask, ModelWrapper<KaleoTask> {
 		}
 	}
 
-	@Override
-	public Object clone() {
-		return new KaleoTaskWrapper((KaleoTask)_kaleoTask.clone());
-	}
-
-	@Override
-	public int compareTo(KaleoTask kaleoTask) {
-		return _kaleoTask.compareTo(kaleoTask);
-	}
-
 	/**
 	* Returns the company ID of this kaleo task.
 	*
@@ -159,7 +135,7 @@ public class KaleoTaskWrapper implements KaleoTask, ModelWrapper<KaleoTask> {
 	*/
 	@Override
 	public long getCompanyId() {
-		return _kaleoTask.getCompanyId();
+		return model.getCompanyId();
 	}
 
 	/**
@@ -169,7 +145,7 @@ public class KaleoTaskWrapper implements KaleoTask, ModelWrapper<KaleoTask> {
 	*/
 	@Override
 	public Date getCreateDate() {
-		return _kaleoTask.getCreateDate();
+		return model.getCreateDate();
 	}
 
 	/**
@@ -179,12 +155,7 @@ public class KaleoTaskWrapper implements KaleoTask, ModelWrapper<KaleoTask> {
 	*/
 	@Override
 	public String getDescription() {
-		return _kaleoTask.getDescription();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _kaleoTask.getExpandoBridge();
+		return model.getDescription();
 	}
 
 	/**
@@ -194,7 +165,7 @@ public class KaleoTaskWrapper implements KaleoTask, ModelWrapper<KaleoTask> {
 	*/
 	@Override
 	public long getGroupId() {
-		return _kaleoTask.getGroupId();
+		return model.getGroupId();
 	}
 
 	/**
@@ -204,13 +175,13 @@ public class KaleoTaskWrapper implements KaleoTask, ModelWrapper<KaleoTask> {
 	*/
 	@Override
 	public long getKaleoDefinitionVersionId() {
-		return _kaleoTask.getKaleoDefinitionVersionId();
+		return model.getKaleoDefinitionVersionId();
 	}
 
 	@Override
 	public KaleoNode getKaleoNode()
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _kaleoTask.getKaleoNode();
+		return model.getKaleoNode();
 	}
 
 	/**
@@ -220,12 +191,12 @@ public class KaleoTaskWrapper implements KaleoTask, ModelWrapper<KaleoTask> {
 	*/
 	@Override
 	public long getKaleoNodeId() {
-		return _kaleoTask.getKaleoNodeId();
+		return model.getKaleoNodeId();
 	}
 
 	@Override
 	public java.util.List<KaleoTaskAssignment> getKaleoTaskAssignments() {
-		return _kaleoTask.getKaleoTaskAssignments();
+		return model.getKaleoTaskAssignments();
 	}
 
 	/**
@@ -235,7 +206,7 @@ public class KaleoTaskWrapper implements KaleoTask, ModelWrapper<KaleoTask> {
 	*/
 	@Override
 	public long getKaleoTaskId() {
-		return _kaleoTask.getKaleoTaskId();
+		return model.getKaleoTaskId();
 	}
 
 	/**
@@ -245,7 +216,7 @@ public class KaleoTaskWrapper implements KaleoTask, ModelWrapper<KaleoTask> {
 	*/
 	@Override
 	public Date getModifiedDate() {
-		return _kaleoTask.getModifiedDate();
+		return model.getModifiedDate();
 	}
 
 	/**
@@ -255,7 +226,7 @@ public class KaleoTaskWrapper implements KaleoTask, ModelWrapper<KaleoTask> {
 	*/
 	@Override
 	public String getName() {
-		return _kaleoTask.getName();
+		return model.getName();
 	}
 
 	/**
@@ -265,12 +236,7 @@ public class KaleoTaskWrapper implements KaleoTask, ModelWrapper<KaleoTask> {
 	*/
 	@Override
 	public long getPrimaryKey() {
-		return _kaleoTask.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _kaleoTask.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	/**
@@ -280,7 +246,7 @@ public class KaleoTaskWrapper implements KaleoTask, ModelWrapper<KaleoTask> {
 	*/
 	@Override
 	public long getUserId() {
-		return _kaleoTask.getUserId();
+		return model.getUserId();
 	}
 
 	/**
@@ -290,7 +256,7 @@ public class KaleoTaskWrapper implements KaleoTask, ModelWrapper<KaleoTask> {
 	*/
 	@Override
 	public String getUserName() {
-		return _kaleoTask.getUserName();
+		return model.getUserName();
 	}
 
 	/**
@@ -300,37 +266,12 @@ public class KaleoTaskWrapper implements KaleoTask, ModelWrapper<KaleoTask> {
 	*/
 	@Override
 	public String getUserUuid() {
-		return _kaleoTask.getUserUuid();
-	}
-
-	@Override
-	public int hashCode() {
-		return _kaleoTask.hashCode();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _kaleoTask.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _kaleoTask.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _kaleoTask.isNew();
+		return model.getUserUuid();
 	}
 
 	@Override
 	public void persist() {
-		_kaleoTask.persist();
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_kaleoTask.setCachedModel(cachedModel);
+		model.persist();
 	}
 
 	/**
@@ -340,7 +281,7 @@ public class KaleoTaskWrapper implements KaleoTask, ModelWrapper<KaleoTask> {
 	*/
 	@Override
 	public void setCompanyId(long companyId) {
-		_kaleoTask.setCompanyId(companyId);
+		model.setCompanyId(companyId);
 	}
 
 	/**
@@ -350,7 +291,7 @@ public class KaleoTaskWrapper implements KaleoTask, ModelWrapper<KaleoTask> {
 	*/
 	@Override
 	public void setCreateDate(Date createDate) {
-		_kaleoTask.setCreateDate(createDate);
+		model.setCreateDate(createDate);
 	}
 
 	/**
@@ -360,23 +301,7 @@ public class KaleoTaskWrapper implements KaleoTask, ModelWrapper<KaleoTask> {
 	*/
 	@Override
 	public void setDescription(String description) {
-		_kaleoTask.setDescription(description);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-		_kaleoTask.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_kaleoTask.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_kaleoTask.setExpandoBridgeAttributes(serviceContext);
+		model.setDescription(description);
 	}
 
 	/**
@@ -386,7 +311,7 @@ public class KaleoTaskWrapper implements KaleoTask, ModelWrapper<KaleoTask> {
 	*/
 	@Override
 	public void setGroupId(long groupId) {
-		_kaleoTask.setGroupId(groupId);
+		model.setGroupId(groupId);
 	}
 
 	/**
@@ -396,7 +321,7 @@ public class KaleoTaskWrapper implements KaleoTask, ModelWrapper<KaleoTask> {
 	*/
 	@Override
 	public void setKaleoDefinitionVersionId(long kaleoDefinitionVersionId) {
-		_kaleoTask.setKaleoDefinitionVersionId(kaleoDefinitionVersionId);
+		model.setKaleoDefinitionVersionId(kaleoDefinitionVersionId);
 	}
 
 	/**
@@ -406,7 +331,7 @@ public class KaleoTaskWrapper implements KaleoTask, ModelWrapper<KaleoTask> {
 	*/
 	@Override
 	public void setKaleoNodeId(long kaleoNodeId) {
-		_kaleoTask.setKaleoNodeId(kaleoNodeId);
+		model.setKaleoNodeId(kaleoNodeId);
 	}
 
 	/**
@@ -416,7 +341,7 @@ public class KaleoTaskWrapper implements KaleoTask, ModelWrapper<KaleoTask> {
 	*/
 	@Override
 	public void setKaleoTaskId(long kaleoTaskId) {
-		_kaleoTask.setKaleoTaskId(kaleoTaskId);
+		model.setKaleoTaskId(kaleoTaskId);
 	}
 
 	/**
@@ -426,7 +351,7 @@ public class KaleoTaskWrapper implements KaleoTask, ModelWrapper<KaleoTask> {
 	*/
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
-		_kaleoTask.setModifiedDate(modifiedDate);
+		model.setModifiedDate(modifiedDate);
 	}
 
 	/**
@@ -436,12 +361,7 @@ public class KaleoTaskWrapper implements KaleoTask, ModelWrapper<KaleoTask> {
 	*/
 	@Override
 	public void setName(String name) {
-		_kaleoTask.setName(name);
-	}
-
-	@Override
-	public void setNew(boolean n) {
-		_kaleoTask.setNew(n);
+		model.setName(name);
 	}
 
 	/**
@@ -451,12 +371,7 @@ public class KaleoTaskWrapper implements KaleoTask, ModelWrapper<KaleoTask> {
 	*/
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_kaleoTask.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_kaleoTask.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -466,7 +381,7 @@ public class KaleoTaskWrapper implements KaleoTask, ModelWrapper<KaleoTask> {
 	*/
 	@Override
 	public void setUserId(long userId) {
-		_kaleoTask.setUserId(userId);
+		model.setUserId(userId);
 	}
 
 	/**
@@ -476,7 +391,7 @@ public class KaleoTaskWrapper implements KaleoTask, ModelWrapper<KaleoTask> {
 	*/
 	@Override
 	public void setUserName(String userName) {
-		_kaleoTask.setUserName(userName);
+		model.setUserName(userName);
 	}
 
 	/**
@@ -486,72 +401,11 @@ public class KaleoTaskWrapper implements KaleoTask, ModelWrapper<KaleoTask> {
 	*/
 	@Override
 	public void setUserUuid(String userUuid) {
-		_kaleoTask.setUserUuid(userUuid);
+		model.setUserUuid(userUuid);
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.CacheModel<KaleoTask> toCacheModel() {
-		return _kaleoTask.toCacheModel();
+	protected KaleoTaskWrapper wrap(KaleoTask kaleoTask) {
+		return new KaleoTaskWrapper(kaleoTask);
 	}
-
-	@Override
-	public KaleoTask toEscapedModel() {
-		return new KaleoTaskWrapper(_kaleoTask.toEscapedModel());
-	}
-
-	@Override
-	public String toString() {
-		return _kaleoTask.toString();
-	}
-
-	@Override
-	public KaleoTask toUnescapedModel() {
-		return new KaleoTaskWrapper(_kaleoTask.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _kaleoTask.toXmlString();
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-
-		if (!(obj instanceof KaleoTaskWrapper)) {
-			return false;
-		}
-
-		KaleoTaskWrapper kaleoTaskWrapper = (KaleoTaskWrapper)obj;
-
-		if (Objects.equals(_kaleoTask, kaleoTaskWrapper._kaleoTask)) {
-			return true;
-		}
-
-		return false;
-	}
-
-	@Override
-	public KaleoTask getWrappedModel() {
-		return _kaleoTask;
-	}
-
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _kaleoTask.isEntityCacheEnabled();
-	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _kaleoTask.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_kaleoTask.resetOriginalValues();
-	}
-
-	private final KaleoTask _kaleoTask;
 }

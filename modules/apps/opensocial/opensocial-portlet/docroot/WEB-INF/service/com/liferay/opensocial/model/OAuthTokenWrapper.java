@@ -16,17 +16,12 @@ package com.liferay.opensocial.model;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
-
 import com.liferay.portal.kernel.model.ModelWrapper;
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -38,19 +33,10 @@ import java.util.Objects;
  * @generated
  */
 @ProviderType
-public class OAuthTokenWrapper implements OAuthToken, ModelWrapper<OAuthToken> {
+public class OAuthTokenWrapper extends BaseModelWrapper<OAuthToken>
+	implements OAuthToken, ModelWrapper<OAuthToken> {
 	public OAuthTokenWrapper(OAuthToken oAuthToken) {
-		_oAuthToken = oAuthToken;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return OAuthToken.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return OAuthToken.class.getName();
+		super(oAuthToken);
 	}
 
 	@Override
@@ -162,16 +148,6 @@ public class OAuthTokenWrapper implements OAuthToken, ModelWrapper<OAuthToken> {
 		}
 	}
 
-	@Override
-	public Object clone() {
-		return new OAuthTokenWrapper((OAuthToken)_oAuthToken.clone());
-	}
-
-	@Override
-	public int compareTo(OAuthToken oAuthToken) {
-		return _oAuthToken.compareTo(oAuthToken);
-	}
-
 	/**
 	* Returns the access token of this o auth token.
 	*
@@ -179,7 +155,7 @@ public class OAuthTokenWrapper implements OAuthToken, ModelWrapper<OAuthToken> {
 	*/
 	@Override
 	public String getAccessToken() {
-		return _oAuthToken.getAccessToken();
+		return model.getAccessToken();
 	}
 
 	/**
@@ -189,7 +165,7 @@ public class OAuthTokenWrapper implements OAuthToken, ModelWrapper<OAuthToken> {
 	*/
 	@Override
 	public long getCompanyId() {
-		return _oAuthToken.getCompanyId();
+		return model.getCompanyId();
 	}
 
 	/**
@@ -199,12 +175,7 @@ public class OAuthTokenWrapper implements OAuthToken, ModelWrapper<OAuthToken> {
 	*/
 	@Override
 	public Date getCreateDate() {
-		return _oAuthToken.getCreateDate();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _oAuthToken.getExpandoBridge();
+		return model.getCreateDate();
 	}
 
 	/**
@@ -214,7 +185,7 @@ public class OAuthTokenWrapper implements OAuthToken, ModelWrapper<OAuthToken> {
 	*/
 	@Override
 	public long getExpiration() {
-		return _oAuthToken.getExpiration();
+		return model.getExpiration();
 	}
 
 	/**
@@ -224,7 +195,7 @@ public class OAuthTokenWrapper implements OAuthToken, ModelWrapper<OAuthToken> {
 	*/
 	@Override
 	public String getGadgetKey() {
-		return _oAuthToken.getGadgetKey();
+		return model.getGadgetKey();
 	}
 
 	/**
@@ -234,7 +205,7 @@ public class OAuthTokenWrapper implements OAuthToken, ModelWrapper<OAuthToken> {
 	*/
 	@Override
 	public Date getModifiedDate() {
-		return _oAuthToken.getModifiedDate();
+		return model.getModifiedDate();
 	}
 
 	/**
@@ -244,7 +215,7 @@ public class OAuthTokenWrapper implements OAuthToken, ModelWrapper<OAuthToken> {
 	*/
 	@Override
 	public long getModuleId() {
-		return _oAuthToken.getModuleId();
+		return model.getModuleId();
 	}
 
 	/**
@@ -254,7 +225,7 @@ public class OAuthTokenWrapper implements OAuthToken, ModelWrapper<OAuthToken> {
 	*/
 	@Override
 	public long getOAuthTokenId() {
-		return _oAuthToken.getOAuthTokenId();
+		return model.getOAuthTokenId();
 	}
 
 	/**
@@ -264,12 +235,7 @@ public class OAuthTokenWrapper implements OAuthToken, ModelWrapper<OAuthToken> {
 	*/
 	@Override
 	public long getPrimaryKey() {
-		return _oAuthToken.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _oAuthToken.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	/**
@@ -279,7 +245,7 @@ public class OAuthTokenWrapper implements OAuthToken, ModelWrapper<OAuthToken> {
 	*/
 	@Override
 	public String getServiceName() {
-		return _oAuthToken.getServiceName();
+		return model.getServiceName();
 	}
 
 	/**
@@ -289,7 +255,7 @@ public class OAuthTokenWrapper implements OAuthToken, ModelWrapper<OAuthToken> {
 	*/
 	@Override
 	public String getSessionHandle() {
-		return _oAuthToken.getSessionHandle();
+		return model.getSessionHandle();
 	}
 
 	/**
@@ -299,7 +265,7 @@ public class OAuthTokenWrapper implements OAuthToken, ModelWrapper<OAuthToken> {
 	*/
 	@Override
 	public String getTokenName() {
-		return _oAuthToken.getTokenName();
+		return model.getTokenName();
 	}
 
 	/**
@@ -309,7 +275,7 @@ public class OAuthTokenWrapper implements OAuthToken, ModelWrapper<OAuthToken> {
 	*/
 	@Override
 	public String getTokenSecret() {
-		return _oAuthToken.getTokenSecret();
+		return model.getTokenSecret();
 	}
 
 	/**
@@ -319,7 +285,7 @@ public class OAuthTokenWrapper implements OAuthToken, ModelWrapper<OAuthToken> {
 	*/
 	@Override
 	public long getUserId() {
-		return _oAuthToken.getUserId();
+		return model.getUserId();
 	}
 
 	/**
@@ -329,7 +295,7 @@ public class OAuthTokenWrapper implements OAuthToken, ModelWrapper<OAuthToken> {
 	*/
 	@Override
 	public String getUserName() {
-		return _oAuthToken.getUserName();
+		return model.getUserName();
 	}
 
 	/**
@@ -339,32 +305,12 @@ public class OAuthTokenWrapper implements OAuthToken, ModelWrapper<OAuthToken> {
 	*/
 	@Override
 	public String getUserUuid() {
-		return _oAuthToken.getUserUuid();
-	}
-
-	@Override
-	public int hashCode() {
-		return _oAuthToken.hashCode();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _oAuthToken.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _oAuthToken.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _oAuthToken.isNew();
+		return model.getUserUuid();
 	}
 
 	@Override
 	public void persist() {
-		_oAuthToken.persist();
+		model.persist();
 	}
 
 	/**
@@ -374,12 +320,7 @@ public class OAuthTokenWrapper implements OAuthToken, ModelWrapper<OAuthToken> {
 	*/
 	@Override
 	public void setAccessToken(String accessToken) {
-		_oAuthToken.setAccessToken(accessToken);
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_oAuthToken.setCachedModel(cachedModel);
+		model.setAccessToken(accessToken);
 	}
 
 	/**
@@ -389,7 +330,7 @@ public class OAuthTokenWrapper implements OAuthToken, ModelWrapper<OAuthToken> {
 	*/
 	@Override
 	public void setCompanyId(long companyId) {
-		_oAuthToken.setCompanyId(companyId);
+		model.setCompanyId(companyId);
 	}
 
 	/**
@@ -399,23 +340,7 @@ public class OAuthTokenWrapper implements OAuthToken, ModelWrapper<OAuthToken> {
 	*/
 	@Override
 	public void setCreateDate(Date createDate) {
-		_oAuthToken.setCreateDate(createDate);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-		_oAuthToken.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_oAuthToken.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_oAuthToken.setExpandoBridgeAttributes(serviceContext);
+		model.setCreateDate(createDate);
 	}
 
 	/**
@@ -425,7 +350,7 @@ public class OAuthTokenWrapper implements OAuthToken, ModelWrapper<OAuthToken> {
 	*/
 	@Override
 	public void setExpiration(long expiration) {
-		_oAuthToken.setExpiration(expiration);
+		model.setExpiration(expiration);
 	}
 
 	/**
@@ -435,7 +360,7 @@ public class OAuthTokenWrapper implements OAuthToken, ModelWrapper<OAuthToken> {
 	*/
 	@Override
 	public void setGadgetKey(String gadgetKey) {
-		_oAuthToken.setGadgetKey(gadgetKey);
+		model.setGadgetKey(gadgetKey);
 	}
 
 	/**
@@ -445,7 +370,7 @@ public class OAuthTokenWrapper implements OAuthToken, ModelWrapper<OAuthToken> {
 	*/
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
-		_oAuthToken.setModifiedDate(modifiedDate);
+		model.setModifiedDate(modifiedDate);
 	}
 
 	/**
@@ -455,12 +380,7 @@ public class OAuthTokenWrapper implements OAuthToken, ModelWrapper<OAuthToken> {
 	*/
 	@Override
 	public void setModuleId(long moduleId) {
-		_oAuthToken.setModuleId(moduleId);
-	}
-
-	@Override
-	public void setNew(boolean n) {
-		_oAuthToken.setNew(n);
+		model.setModuleId(moduleId);
 	}
 
 	/**
@@ -470,7 +390,7 @@ public class OAuthTokenWrapper implements OAuthToken, ModelWrapper<OAuthToken> {
 	*/
 	@Override
 	public void setOAuthTokenId(long oAuthTokenId) {
-		_oAuthToken.setOAuthTokenId(oAuthTokenId);
+		model.setOAuthTokenId(oAuthTokenId);
 	}
 
 	/**
@@ -480,12 +400,7 @@ public class OAuthTokenWrapper implements OAuthToken, ModelWrapper<OAuthToken> {
 	*/
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_oAuthToken.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_oAuthToken.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -495,7 +410,7 @@ public class OAuthTokenWrapper implements OAuthToken, ModelWrapper<OAuthToken> {
 	*/
 	@Override
 	public void setServiceName(String serviceName) {
-		_oAuthToken.setServiceName(serviceName);
+		model.setServiceName(serviceName);
 	}
 
 	/**
@@ -505,7 +420,7 @@ public class OAuthTokenWrapper implements OAuthToken, ModelWrapper<OAuthToken> {
 	*/
 	@Override
 	public void setSessionHandle(String sessionHandle) {
-		_oAuthToken.setSessionHandle(sessionHandle);
+		model.setSessionHandle(sessionHandle);
 	}
 
 	/**
@@ -515,7 +430,7 @@ public class OAuthTokenWrapper implements OAuthToken, ModelWrapper<OAuthToken> {
 	*/
 	@Override
 	public void setTokenName(String tokenName) {
-		_oAuthToken.setTokenName(tokenName);
+		model.setTokenName(tokenName);
 	}
 
 	/**
@@ -525,7 +440,7 @@ public class OAuthTokenWrapper implements OAuthToken, ModelWrapper<OAuthToken> {
 	*/
 	@Override
 	public void setTokenSecret(String tokenSecret) {
-		_oAuthToken.setTokenSecret(tokenSecret);
+		model.setTokenSecret(tokenSecret);
 	}
 
 	/**
@@ -535,7 +450,7 @@ public class OAuthTokenWrapper implements OAuthToken, ModelWrapper<OAuthToken> {
 	*/
 	@Override
 	public void setUserId(long userId) {
-		_oAuthToken.setUserId(userId);
+		model.setUserId(userId);
 	}
 
 	/**
@@ -545,7 +460,7 @@ public class OAuthTokenWrapper implements OAuthToken, ModelWrapper<OAuthToken> {
 	*/
 	@Override
 	public void setUserName(String userName) {
-		_oAuthToken.setUserName(userName);
+		model.setUserName(userName);
 	}
 
 	/**
@@ -555,72 +470,11 @@ public class OAuthTokenWrapper implements OAuthToken, ModelWrapper<OAuthToken> {
 	*/
 	@Override
 	public void setUserUuid(String userUuid) {
-		_oAuthToken.setUserUuid(userUuid);
+		model.setUserUuid(userUuid);
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.CacheModel<OAuthToken> toCacheModel() {
-		return _oAuthToken.toCacheModel();
+	protected OAuthTokenWrapper wrap(OAuthToken oAuthToken) {
+		return new OAuthTokenWrapper(oAuthToken);
 	}
-
-	@Override
-	public OAuthToken toEscapedModel() {
-		return new OAuthTokenWrapper(_oAuthToken.toEscapedModel());
-	}
-
-	@Override
-	public String toString() {
-		return _oAuthToken.toString();
-	}
-
-	@Override
-	public OAuthToken toUnescapedModel() {
-		return new OAuthTokenWrapper(_oAuthToken.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _oAuthToken.toXmlString();
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-
-		if (!(obj instanceof OAuthTokenWrapper)) {
-			return false;
-		}
-
-		OAuthTokenWrapper oAuthTokenWrapper = (OAuthTokenWrapper)obj;
-
-		if (Objects.equals(_oAuthToken, oAuthTokenWrapper._oAuthToken)) {
-			return true;
-		}
-
-		return false;
-	}
-
-	@Override
-	public OAuthToken getWrappedModel() {
-		return _oAuthToken;
-	}
-
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _oAuthToken.isEntityCacheEnabled();
-	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _oAuthToken.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_oAuthToken.resetOriginalValues();
-	}
-
-	private final OAuthToken _oAuthToken;
 }

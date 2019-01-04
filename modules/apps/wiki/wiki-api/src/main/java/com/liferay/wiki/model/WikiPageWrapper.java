@@ -16,19 +16,14 @@ package com.liferay.wiki.model;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
-
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 
 import com.liferay.portal.kernel.model.ModelWrapper;
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -40,19 +35,10 @@ import java.util.Objects;
  * @generated
  */
 @ProviderType
-public class WikiPageWrapper implements WikiPage, ModelWrapper<WikiPage> {
+public class WikiPageWrapper extends BaseModelWrapper<WikiPage>
+	implements WikiPage, ModelWrapper<WikiPage> {
 	public WikiPageWrapper(WikiPage wikiPage) {
-		_wikiPage = wikiPage;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return WikiPage.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return WikiPage.class.getName();
+		super(wikiPage);
 	}
 
 	@Override
@@ -237,47 +223,37 @@ public class WikiPageWrapper implements WikiPage, ModelWrapper<WikiPage> {
 	@Override
 	public com.liferay.portal.kernel.repository.model.Folder addAttachmentsFolder()
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _wikiPage.addAttachmentsFolder();
-	}
-
-	@Override
-	public Object clone() {
-		return new WikiPageWrapper((WikiPage)_wikiPage.clone());
-	}
-
-	@Override
-	public int compareTo(WikiPage wikiPage) {
-		return _wikiPage.compareTo(wikiPage);
+		return model.addAttachmentsFolder();
 	}
 
 	@Override
 	public WikiPage fetchParentPage() {
-		return _wikiPage.fetchParentPage();
+		return model.fetchParentPage();
 	}
 
 	@Override
 	public WikiPage fetchRedirectPage() {
-		return _wikiPage.fetchRedirectPage();
+		return model.fetchRedirectPage();
 	}
 
 	@Override
 	public java.util.List<com.liferay.portal.kernel.repository.model.FileEntry> getAttachmentsFileEntries()
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _wikiPage.getAttachmentsFileEntries();
+		return model.getAttachmentsFileEntries();
 	}
 
 	@Override
 	public java.util.List<com.liferay.portal.kernel.repository.model.FileEntry> getAttachmentsFileEntries(
 		int start, int end)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _wikiPage.getAttachmentsFileEntries(start, end);
+		return model.getAttachmentsFileEntries(start, end);
 	}
 
 	@Override
 	public java.util.List<com.liferay.portal.kernel.repository.model.FileEntry> getAttachmentsFileEntries(
 		int start, int end, com.liferay.portal.kernel.util.OrderByComparator obc)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _wikiPage.getAttachmentsFileEntries(start, end, obc);
+		return model.getAttachmentsFileEntries(start, end, obc);
 	}
 
 	@Override
@@ -285,29 +261,29 @@ public class WikiPageWrapper implements WikiPage, ModelWrapper<WikiPage> {
 		String[] mimeTypes, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.kernel.repository.model.FileEntry> obc)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _wikiPage.getAttachmentsFileEntries(mimeTypes, start, end, obc);
+		return model.getAttachmentsFileEntries(mimeTypes, start, end, obc);
 	}
 
 	@Override
 	public int getAttachmentsFileEntriesCount()
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _wikiPage.getAttachmentsFileEntriesCount();
+		return model.getAttachmentsFileEntriesCount();
 	}
 
 	@Override
 	public int getAttachmentsFileEntriesCount(String[] mimeTypes)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _wikiPage.getAttachmentsFileEntriesCount(mimeTypes);
+		return model.getAttachmentsFileEntriesCount(mimeTypes);
 	}
 
 	@Override
 	public long getAttachmentsFolderId() {
-		return _wikiPage.getAttachmentsFolderId();
+		return model.getAttachmentsFolderId();
 	}
 
 	@Override
 	public java.util.List<WikiPage> getChildPages() {
-		return _wikiPage.getChildPages();
+		return model.getChildPages();
 	}
 
 	/**
@@ -317,7 +293,7 @@ public class WikiPageWrapper implements WikiPage, ModelWrapper<WikiPage> {
 	*/
 	@Override
 	public long getCompanyId() {
-		return _wikiPage.getCompanyId();
+		return model.getCompanyId();
 	}
 
 	/**
@@ -327,7 +303,7 @@ public class WikiPageWrapper implements WikiPage, ModelWrapper<WikiPage> {
 	*/
 	@Override
 	public long getContainerModelId() {
-		return _wikiPage.getContainerModelId();
+		return model.getContainerModelId();
 	}
 
 	/**
@@ -337,7 +313,7 @@ public class WikiPageWrapper implements WikiPage, ModelWrapper<WikiPage> {
 	*/
 	@Override
 	public String getContainerModelName() {
-		return _wikiPage.getContainerModelName();
+		return model.getContainerModelName();
 	}
 
 	/**
@@ -347,7 +323,7 @@ public class WikiPageWrapper implements WikiPage, ModelWrapper<WikiPage> {
 	*/
 	@Override
 	public String getContent() {
-		return _wikiPage.getContent();
+		return model.getContent();
 	}
 
 	/**
@@ -357,31 +333,26 @@ public class WikiPageWrapper implements WikiPage, ModelWrapper<WikiPage> {
 	*/
 	@Override
 	public Date getCreateDate() {
-		return _wikiPage.getCreateDate();
+		return model.getCreateDate();
 	}
 
 	@Override
 	public java.util.List<com.liferay.portal.kernel.repository.model.FileEntry> getDeletedAttachmentsFileEntries()
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _wikiPage.getDeletedAttachmentsFileEntries();
+		return model.getDeletedAttachmentsFileEntries();
 	}
 
 	@Override
 	public java.util.List<com.liferay.portal.kernel.repository.model.FileEntry> getDeletedAttachmentsFileEntries(
 		int start, int end)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _wikiPage.getDeletedAttachmentsFileEntries(start, end);
+		return model.getDeletedAttachmentsFileEntries(start, end);
 	}
 
 	@Override
 	public int getDeletedAttachmentsFileEntriesCount()
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _wikiPage.getDeletedAttachmentsFileEntriesCount();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _wikiPage.getExpandoBridge();
+		return model.getDeletedAttachmentsFileEntriesCount();
 	}
 
 	/**
@@ -391,7 +362,7 @@ public class WikiPageWrapper implements WikiPage, ModelWrapper<WikiPage> {
 	*/
 	@Override
 	public String getFormat() {
-		return _wikiPage.getFormat();
+		return model.getFormat();
 	}
 
 	/**
@@ -401,7 +372,7 @@ public class WikiPageWrapper implements WikiPage, ModelWrapper<WikiPage> {
 	*/
 	@Override
 	public long getGroupId() {
-		return _wikiPage.getGroupId();
+		return model.getGroupId();
 	}
 
 	/**
@@ -411,7 +382,7 @@ public class WikiPageWrapper implements WikiPage, ModelWrapper<WikiPage> {
 	*/
 	@Override
 	public boolean getHead() {
-		return _wikiPage.getHead();
+		return model.getHead();
 	}
 
 	/**
@@ -421,7 +392,7 @@ public class WikiPageWrapper implements WikiPage, ModelWrapper<WikiPage> {
 	*/
 	@Override
 	public Date getLastPublishDate() {
-		return _wikiPage.getLastPublishDate();
+		return model.getLastPublishDate();
 	}
 
 	/**
@@ -431,7 +402,7 @@ public class WikiPageWrapper implements WikiPage, ModelWrapper<WikiPage> {
 	*/
 	@Override
 	public boolean getMinorEdit() {
-		return _wikiPage.getMinorEdit();
+		return model.getMinorEdit();
 	}
 
 	/**
@@ -441,17 +412,17 @@ public class WikiPageWrapper implements WikiPage, ModelWrapper<WikiPage> {
 	*/
 	@Override
 	public Date getModifiedDate() {
-		return _wikiPage.getModifiedDate();
+		return model.getModifiedDate();
 	}
 
 	@Override
 	public WikiNode getNode() {
-		return _wikiPage.getNode();
+		return model.getNode();
 	}
 
 	@Override
 	public long getNodeAttachmentsFolderId() {
-		return _wikiPage.getNodeAttachmentsFolderId();
+		return model.getNodeAttachmentsFolderId();
 	}
 
 	/**
@@ -461,7 +432,7 @@ public class WikiPageWrapper implements WikiPage, ModelWrapper<WikiPage> {
 	*/
 	@Override
 	public long getNodeId() {
-		return _wikiPage.getNodeId();
+		return model.getNodeId();
 	}
 
 	/**
@@ -471,7 +442,7 @@ public class WikiPageWrapper implements WikiPage, ModelWrapper<WikiPage> {
 	*/
 	@Override
 	public long getPageId() {
-		return _wikiPage.getPageId();
+		return model.getPageId();
 	}
 
 	/**
@@ -481,18 +452,18 @@ public class WikiPageWrapper implements WikiPage, ModelWrapper<WikiPage> {
 	*/
 	@Override
 	public long getParentContainerModelId() {
-		return _wikiPage.getParentContainerModelId();
+		return model.getParentContainerModelId();
 	}
 
 	@Override
 	public WikiPage getParentPage()
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _wikiPage.getParentPage();
+		return model.getParentPage();
 	}
 
 	@Override
 	public java.util.List<WikiPage> getParentPages() {
-		return _wikiPage.getParentPages();
+		return model.getParentPages();
 	}
 
 	/**
@@ -502,7 +473,7 @@ public class WikiPageWrapper implements WikiPage, ModelWrapper<WikiPage> {
 	*/
 	@Override
 	public String getParentTitle() {
-		return _wikiPage.getParentTitle();
+		return model.getParentTitle();
 	}
 
 	/**
@@ -512,18 +483,13 @@ public class WikiPageWrapper implements WikiPage, ModelWrapper<WikiPage> {
 	*/
 	@Override
 	public long getPrimaryKey() {
-		return _wikiPage.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _wikiPage.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	@Override
 	public WikiPage getRedirectPage()
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _wikiPage.getRedirectPage();
+		return model.getRedirectPage();
 	}
 
 	/**
@@ -533,7 +499,7 @@ public class WikiPageWrapper implements WikiPage, ModelWrapper<WikiPage> {
 	*/
 	@Override
 	public String getRedirectTitle() {
-		return _wikiPage.getRedirectTitle();
+		return model.getRedirectTitle();
 	}
 
 	/**
@@ -543,7 +509,7 @@ public class WikiPageWrapper implements WikiPage, ModelWrapper<WikiPage> {
 	*/
 	@Override
 	public long getResourcePrimKey() {
-		return _wikiPage.getResourcePrimKey();
+		return model.getResourcePrimKey();
 	}
 
 	/**
@@ -553,7 +519,7 @@ public class WikiPageWrapper implements WikiPage, ModelWrapper<WikiPage> {
 	*/
 	@Override
 	public int getStatus() {
-		return _wikiPage.getStatus();
+		return model.getStatus();
 	}
 
 	/**
@@ -563,7 +529,7 @@ public class WikiPageWrapper implements WikiPage, ModelWrapper<WikiPage> {
 	*/
 	@Override
 	public long getStatusByUserId() {
-		return _wikiPage.getStatusByUserId();
+		return model.getStatusByUserId();
 	}
 
 	/**
@@ -573,7 +539,7 @@ public class WikiPageWrapper implements WikiPage, ModelWrapper<WikiPage> {
 	*/
 	@Override
 	public String getStatusByUserName() {
-		return _wikiPage.getStatusByUserName();
+		return model.getStatusByUserName();
 	}
 
 	/**
@@ -583,7 +549,7 @@ public class WikiPageWrapper implements WikiPage, ModelWrapper<WikiPage> {
 	*/
 	@Override
 	public String getStatusByUserUuid() {
-		return _wikiPage.getStatusByUserUuid();
+		return model.getStatusByUserUuid();
 	}
 
 	/**
@@ -593,7 +559,7 @@ public class WikiPageWrapper implements WikiPage, ModelWrapper<WikiPage> {
 	*/
 	@Override
 	public Date getStatusDate() {
-		return _wikiPage.getStatusDate();
+		return model.getStatusDate();
 	}
 
 	/**
@@ -603,7 +569,7 @@ public class WikiPageWrapper implements WikiPage, ModelWrapper<WikiPage> {
 	*/
 	@Override
 	public String getSummary() {
-		return _wikiPage.getSummary();
+		return model.getSummary();
 	}
 
 	/**
@@ -613,7 +579,7 @@ public class WikiPageWrapper implements WikiPage, ModelWrapper<WikiPage> {
 	*/
 	@Override
 	public String getTitle() {
-		return _wikiPage.getTitle();
+		return model.getTitle();
 	}
 
 	/**
@@ -624,7 +590,7 @@ public class WikiPageWrapper implements WikiPage, ModelWrapper<WikiPage> {
 	@Override
 	public com.liferay.trash.kernel.model.TrashEntry getTrashEntry()
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _wikiPage.getTrashEntry();
+		return model.getTrashEntry();
 	}
 
 	/**
@@ -634,7 +600,7 @@ public class WikiPageWrapper implements WikiPage, ModelWrapper<WikiPage> {
 	*/
 	@Override
 	public long getTrashEntryClassPK() {
-		return _wikiPage.getTrashEntryClassPK();
+		return model.getTrashEntryClassPK();
 	}
 
 	/**
@@ -646,7 +612,7 @@ public class WikiPageWrapper implements WikiPage, ModelWrapper<WikiPage> {
 	@Deprecated
 	@Override
 	public com.liferay.portal.kernel.trash.TrashHandler getTrashHandler() {
-		return _wikiPage.getTrashHandler();
+		return model.getTrashHandler();
 	}
 
 	/**
@@ -656,7 +622,7 @@ public class WikiPageWrapper implements WikiPage, ModelWrapper<WikiPage> {
 	*/
 	@Override
 	public long getUserId() {
-		return _wikiPage.getUserId();
+		return model.getUserId();
 	}
 
 	/**
@@ -666,7 +632,7 @@ public class WikiPageWrapper implements WikiPage, ModelWrapper<WikiPage> {
 	*/
 	@Override
 	public String getUserName() {
-		return _wikiPage.getUserName();
+		return model.getUserName();
 	}
 
 	/**
@@ -676,7 +642,7 @@ public class WikiPageWrapper implements WikiPage, ModelWrapper<WikiPage> {
 	*/
 	@Override
 	public String getUserUuid() {
-		return _wikiPage.getUserUuid();
+		return model.getUserUuid();
 	}
 
 	/**
@@ -686,7 +652,7 @@ public class WikiPageWrapper implements WikiPage, ModelWrapper<WikiPage> {
 	*/
 	@Override
 	public String getUuid() {
-		return _wikiPage.getUuid();
+		return model.getUuid();
 	}
 
 	/**
@@ -696,27 +662,22 @@ public class WikiPageWrapper implements WikiPage, ModelWrapper<WikiPage> {
 	*/
 	@Override
 	public double getVersion() {
-		return _wikiPage.getVersion();
+		return model.getVersion();
 	}
 
 	@Override
 	public java.util.List<WikiPage> getViewableChildPages() {
-		return _wikiPage.getViewableChildPages();
+		return model.getViewableChildPages();
 	}
 
 	@Override
 	public WikiPage getViewableParentPage() {
-		return _wikiPage.getViewableParentPage();
+		return model.getViewableParentPage();
 	}
 
 	@Override
 	public java.util.List<WikiPage> getViewableParentPages() {
-		return _wikiPage.getViewableParentPages();
-	}
-
-	@Override
-	public int hashCode() {
-		return _wikiPage.hashCode();
+		return model.getViewableParentPages();
 	}
 
 	/**
@@ -726,12 +687,7 @@ public class WikiPageWrapper implements WikiPage, ModelWrapper<WikiPage> {
 	*/
 	@Override
 	public boolean isApproved() {
-		return _wikiPage.isApproved();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _wikiPage.isCachedModel();
+		return model.isApproved();
 	}
 
 	/**
@@ -741,7 +697,7 @@ public class WikiPageWrapper implements WikiPage, ModelWrapper<WikiPage> {
 	*/
 	@Override
 	public boolean isDenied() {
-		return _wikiPage.isDenied();
+		return model.isDenied();
 	}
 
 	/**
@@ -751,12 +707,7 @@ public class WikiPageWrapper implements WikiPage, ModelWrapper<WikiPage> {
 	*/
 	@Override
 	public boolean isDraft() {
-		return _wikiPage.isDraft();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _wikiPage.isEscapedModel();
+		return model.isDraft();
 	}
 
 	/**
@@ -766,7 +717,7 @@ public class WikiPageWrapper implements WikiPage, ModelWrapper<WikiPage> {
 	*/
 	@Override
 	public boolean isExpired() {
-		return _wikiPage.isExpired();
+		return model.isExpired();
 	}
 
 	/**
@@ -776,7 +727,7 @@ public class WikiPageWrapper implements WikiPage, ModelWrapper<WikiPage> {
 	*/
 	@Override
 	public boolean isHead() {
-		return _wikiPage.isHead();
+		return model.isHead();
 	}
 
 	/**
@@ -786,7 +737,7 @@ public class WikiPageWrapper implements WikiPage, ModelWrapper<WikiPage> {
 	*/
 	@Override
 	public boolean isInactive() {
-		return _wikiPage.isInactive();
+		return model.isInactive();
 	}
 
 	/**
@@ -796,7 +747,7 @@ public class WikiPageWrapper implements WikiPage, ModelWrapper<WikiPage> {
 	*/
 	@Override
 	public boolean isIncomplete() {
-		return _wikiPage.isIncomplete();
+		return model.isIncomplete();
 	}
 
 	/**
@@ -806,7 +757,7 @@ public class WikiPageWrapper implements WikiPage, ModelWrapper<WikiPage> {
 	*/
 	@Override
 	public boolean isInTrash() {
-		return _wikiPage.isInTrash();
+		return model.isInTrash();
 	}
 
 	/**
@@ -816,17 +767,17 @@ public class WikiPageWrapper implements WikiPage, ModelWrapper<WikiPage> {
 	*/
 	@Override
 	public boolean isInTrashContainer() {
-		return _wikiPage.isInTrashContainer();
+		return model.isInTrashContainer();
 	}
 
 	@Override
 	public boolean isInTrashExplicitly() {
-		return _wikiPage.isInTrashExplicitly();
+		return model.isInTrashExplicitly();
 	}
 
 	@Override
 	public boolean isInTrashImplicitly() {
-		return _wikiPage.isInTrashImplicitly();
+		return model.isInTrashImplicitly();
 	}
 
 	/**
@@ -836,12 +787,7 @@ public class WikiPageWrapper implements WikiPage, ModelWrapper<WikiPage> {
 	*/
 	@Override
 	public boolean isMinorEdit() {
-		return _wikiPage.isMinorEdit();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _wikiPage.isNew();
+		return model.isMinorEdit();
 	}
 
 	/**
@@ -851,12 +797,12 @@ public class WikiPageWrapper implements WikiPage, ModelWrapper<WikiPage> {
 	*/
 	@Override
 	public boolean isPending() {
-		return _wikiPage.isPending();
+		return model.isPending();
 	}
 
 	@Override
 	public boolean isResourceMain() {
-		return _wikiPage.isResourceMain();
+		return model.isResourceMain();
 	}
 
 	/**
@@ -866,22 +812,17 @@ public class WikiPageWrapper implements WikiPage, ModelWrapper<WikiPage> {
 	*/
 	@Override
 	public boolean isScheduled() {
-		return _wikiPage.isScheduled();
+		return model.isScheduled();
 	}
 
 	@Override
 	public void persist() {
-		_wikiPage.persist();
+		model.persist();
 	}
 
 	@Override
 	public void setAttachmentsFolderId(long attachmentsFolderId) {
-		_wikiPage.setAttachmentsFolderId(attachmentsFolderId);
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_wikiPage.setCachedModel(cachedModel);
+		model.setAttachmentsFolderId(attachmentsFolderId);
 	}
 
 	/**
@@ -891,7 +832,7 @@ public class WikiPageWrapper implements WikiPage, ModelWrapper<WikiPage> {
 	*/
 	@Override
 	public void setCompanyId(long companyId) {
-		_wikiPage.setCompanyId(companyId);
+		model.setCompanyId(companyId);
 	}
 
 	/**
@@ -901,7 +842,7 @@ public class WikiPageWrapper implements WikiPage, ModelWrapper<WikiPage> {
 	*/
 	@Override
 	public void setContainerModelId(long containerModelId) {
-		_wikiPage.setContainerModelId(containerModelId);
+		model.setContainerModelId(containerModelId);
 	}
 
 	/**
@@ -911,7 +852,7 @@ public class WikiPageWrapper implements WikiPage, ModelWrapper<WikiPage> {
 	*/
 	@Override
 	public void setContent(String content) {
-		_wikiPage.setContent(content);
+		model.setContent(content);
 	}
 
 	/**
@@ -921,23 +862,7 @@ public class WikiPageWrapper implements WikiPage, ModelWrapper<WikiPage> {
 	*/
 	@Override
 	public void setCreateDate(Date createDate) {
-		_wikiPage.setCreateDate(createDate);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-		_wikiPage.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_wikiPage.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_wikiPage.setExpandoBridgeAttributes(serviceContext);
+		model.setCreateDate(createDate);
 	}
 
 	/**
@@ -947,7 +872,7 @@ public class WikiPageWrapper implements WikiPage, ModelWrapper<WikiPage> {
 	*/
 	@Override
 	public void setFormat(String format) {
-		_wikiPage.setFormat(format);
+		model.setFormat(format);
 	}
 
 	/**
@@ -957,7 +882,7 @@ public class WikiPageWrapper implements WikiPage, ModelWrapper<WikiPage> {
 	*/
 	@Override
 	public void setGroupId(long groupId) {
-		_wikiPage.setGroupId(groupId);
+		model.setGroupId(groupId);
 	}
 
 	/**
@@ -967,7 +892,7 @@ public class WikiPageWrapper implements WikiPage, ModelWrapper<WikiPage> {
 	*/
 	@Override
 	public void setHead(boolean head) {
-		_wikiPage.setHead(head);
+		model.setHead(head);
 	}
 
 	/**
@@ -977,7 +902,7 @@ public class WikiPageWrapper implements WikiPage, ModelWrapper<WikiPage> {
 	*/
 	@Override
 	public void setLastPublishDate(Date lastPublishDate) {
-		_wikiPage.setLastPublishDate(lastPublishDate);
+		model.setLastPublishDate(lastPublishDate);
 	}
 
 	/**
@@ -987,7 +912,7 @@ public class WikiPageWrapper implements WikiPage, ModelWrapper<WikiPage> {
 	*/
 	@Override
 	public void setMinorEdit(boolean minorEdit) {
-		_wikiPage.setMinorEdit(minorEdit);
+		model.setMinorEdit(minorEdit);
 	}
 
 	/**
@@ -997,12 +922,7 @@ public class WikiPageWrapper implements WikiPage, ModelWrapper<WikiPage> {
 	*/
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
-		_wikiPage.setModifiedDate(modifiedDate);
-	}
-
-	@Override
-	public void setNew(boolean n) {
-		_wikiPage.setNew(n);
+		model.setModifiedDate(modifiedDate);
 	}
 
 	/**
@@ -1012,7 +932,7 @@ public class WikiPageWrapper implements WikiPage, ModelWrapper<WikiPage> {
 	*/
 	@Override
 	public void setNodeId(long nodeId) {
-		_wikiPage.setNodeId(nodeId);
+		model.setNodeId(nodeId);
 	}
 
 	/**
@@ -1022,7 +942,7 @@ public class WikiPageWrapper implements WikiPage, ModelWrapper<WikiPage> {
 	*/
 	@Override
 	public void setPageId(long pageId) {
-		_wikiPage.setPageId(pageId);
+		model.setPageId(pageId);
 	}
 
 	/**
@@ -1032,7 +952,7 @@ public class WikiPageWrapper implements WikiPage, ModelWrapper<WikiPage> {
 	*/
 	@Override
 	public void setParentContainerModelId(long parentContainerModelId) {
-		_wikiPage.setParentContainerModelId(parentContainerModelId);
+		model.setParentContainerModelId(parentContainerModelId);
 	}
 
 	/**
@@ -1042,7 +962,7 @@ public class WikiPageWrapper implements WikiPage, ModelWrapper<WikiPage> {
 	*/
 	@Override
 	public void setParentTitle(String parentTitle) {
-		_wikiPage.setParentTitle(parentTitle);
+		model.setParentTitle(parentTitle);
 	}
 
 	/**
@@ -1052,12 +972,7 @@ public class WikiPageWrapper implements WikiPage, ModelWrapper<WikiPage> {
 	*/
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_wikiPage.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_wikiPage.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -1067,7 +982,7 @@ public class WikiPageWrapper implements WikiPage, ModelWrapper<WikiPage> {
 	*/
 	@Override
 	public void setRedirectTitle(String redirectTitle) {
-		_wikiPage.setRedirectTitle(redirectTitle);
+		model.setRedirectTitle(redirectTitle);
 	}
 
 	/**
@@ -1077,7 +992,7 @@ public class WikiPageWrapper implements WikiPage, ModelWrapper<WikiPage> {
 	*/
 	@Override
 	public void setResourcePrimKey(long resourcePrimKey) {
-		_wikiPage.setResourcePrimKey(resourcePrimKey);
+		model.setResourcePrimKey(resourcePrimKey);
 	}
 
 	/**
@@ -1087,7 +1002,7 @@ public class WikiPageWrapper implements WikiPage, ModelWrapper<WikiPage> {
 	*/
 	@Override
 	public void setStatus(int status) {
-		_wikiPage.setStatus(status);
+		model.setStatus(status);
 	}
 
 	/**
@@ -1097,7 +1012,7 @@ public class WikiPageWrapper implements WikiPage, ModelWrapper<WikiPage> {
 	*/
 	@Override
 	public void setStatusByUserId(long statusByUserId) {
-		_wikiPage.setStatusByUserId(statusByUserId);
+		model.setStatusByUserId(statusByUserId);
 	}
 
 	/**
@@ -1107,7 +1022,7 @@ public class WikiPageWrapper implements WikiPage, ModelWrapper<WikiPage> {
 	*/
 	@Override
 	public void setStatusByUserName(String statusByUserName) {
-		_wikiPage.setStatusByUserName(statusByUserName);
+		model.setStatusByUserName(statusByUserName);
 	}
 
 	/**
@@ -1117,7 +1032,7 @@ public class WikiPageWrapper implements WikiPage, ModelWrapper<WikiPage> {
 	*/
 	@Override
 	public void setStatusByUserUuid(String statusByUserUuid) {
-		_wikiPage.setStatusByUserUuid(statusByUserUuid);
+		model.setStatusByUserUuid(statusByUserUuid);
 	}
 
 	/**
@@ -1127,7 +1042,7 @@ public class WikiPageWrapper implements WikiPage, ModelWrapper<WikiPage> {
 	*/
 	@Override
 	public void setStatusDate(Date statusDate) {
-		_wikiPage.setStatusDate(statusDate);
+		model.setStatusDate(statusDate);
 	}
 
 	/**
@@ -1137,7 +1052,7 @@ public class WikiPageWrapper implements WikiPage, ModelWrapper<WikiPage> {
 	*/
 	@Override
 	public void setSummary(String summary) {
-		_wikiPage.setSummary(summary);
+		model.setSummary(summary);
 	}
 
 	/**
@@ -1147,7 +1062,7 @@ public class WikiPageWrapper implements WikiPage, ModelWrapper<WikiPage> {
 	*/
 	@Override
 	public void setTitle(String title) {
-		_wikiPage.setTitle(title);
+		model.setTitle(title);
 	}
 
 	/**
@@ -1157,7 +1072,7 @@ public class WikiPageWrapper implements WikiPage, ModelWrapper<WikiPage> {
 	*/
 	@Override
 	public void setUserId(long userId) {
-		_wikiPage.setUserId(userId);
+		model.setUserId(userId);
 	}
 
 	/**
@@ -1167,7 +1082,7 @@ public class WikiPageWrapper implements WikiPage, ModelWrapper<WikiPage> {
 	*/
 	@Override
 	public void setUserName(String userName) {
-		_wikiPage.setUserName(userName);
+		model.setUserName(userName);
 	}
 
 	/**
@@ -1177,7 +1092,7 @@ public class WikiPageWrapper implements WikiPage, ModelWrapper<WikiPage> {
 	*/
 	@Override
 	public void setUserUuid(String userUuid) {
-		_wikiPage.setUserUuid(userUuid);
+		model.setUserUuid(userUuid);
 	}
 
 	/**
@@ -1187,7 +1102,7 @@ public class WikiPageWrapper implements WikiPage, ModelWrapper<WikiPage> {
 	*/
 	@Override
 	public void setUuid(String uuid) {
-		_wikiPage.setUuid(uuid);
+		model.setUuid(uuid);
 	}
 
 	/**
@@ -1197,77 +1112,16 @@ public class WikiPageWrapper implements WikiPage, ModelWrapper<WikiPage> {
 	*/
 	@Override
 	public void setVersion(double version) {
-		_wikiPage.setVersion(version);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<WikiPage> toCacheModel() {
-		return _wikiPage.toCacheModel();
-	}
-
-	@Override
-	public WikiPage toEscapedModel() {
-		return new WikiPageWrapper(_wikiPage.toEscapedModel());
-	}
-
-	@Override
-	public String toString() {
-		return _wikiPage.toString();
-	}
-
-	@Override
-	public WikiPage toUnescapedModel() {
-		return new WikiPageWrapper(_wikiPage.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _wikiPage.toXmlString();
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-
-		if (!(obj instanceof WikiPageWrapper)) {
-			return false;
-		}
-
-		WikiPageWrapper wikiPageWrapper = (WikiPageWrapper)obj;
-
-		if (Objects.equals(_wikiPage, wikiPageWrapper._wikiPage)) {
-			return true;
-		}
-
-		return false;
+		model.setVersion(version);
 	}
 
 	@Override
 	public StagedModelType getStagedModelType() {
-		return _wikiPage.getStagedModelType();
+		return model.getStagedModelType();
 	}
 
 	@Override
-	public WikiPage getWrappedModel() {
-		return _wikiPage;
+	protected WikiPageWrapper wrap(WikiPage wikiPage) {
+		return new WikiPageWrapper(wikiPage);
 	}
-
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _wikiPage.isEntityCacheEnabled();
-	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _wikiPage.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_wikiPage.resetOriginalValues();
-	}
-
-	private final WikiPage _wikiPage;
 }

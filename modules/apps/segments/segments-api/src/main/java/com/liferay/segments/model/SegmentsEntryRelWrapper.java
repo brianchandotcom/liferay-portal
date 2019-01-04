@@ -16,17 +16,12 @@ package com.liferay.segments.model;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
-
 import com.liferay.portal.kernel.model.ModelWrapper;
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -38,20 +33,10 @@ import java.util.Objects;
  * @generated
  */
 @ProviderType
-public class SegmentsEntryRelWrapper implements SegmentsEntryRel,
-	ModelWrapper<SegmentsEntryRel> {
+public class SegmentsEntryRelWrapper extends BaseModelWrapper<SegmentsEntryRel>
+	implements SegmentsEntryRel, ModelWrapper<SegmentsEntryRel> {
 	public SegmentsEntryRelWrapper(SegmentsEntryRel segmentsEntryRel) {
-		_segmentsEntryRel = segmentsEntryRel;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return SegmentsEntryRel.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return SegmentsEntryRel.class.getName();
+		super(segmentsEntryRel);
 	}
 
 	@Override
@@ -135,16 +120,6 @@ public class SegmentsEntryRelWrapper implements SegmentsEntryRel,
 		}
 	}
 
-	@Override
-	public Object clone() {
-		return new SegmentsEntryRelWrapper((SegmentsEntryRel)_segmentsEntryRel.clone());
-	}
-
-	@Override
-	public int compareTo(SegmentsEntryRel segmentsEntryRel) {
-		return _segmentsEntryRel.compareTo(segmentsEntryRel);
-	}
-
 	/**
 	* Returns the fully qualified class name of this segments entry rel.
 	*
@@ -152,7 +127,7 @@ public class SegmentsEntryRelWrapper implements SegmentsEntryRel,
 	*/
 	@Override
 	public String getClassName() {
-		return _segmentsEntryRel.getClassName();
+		return model.getClassName();
 	}
 
 	/**
@@ -162,7 +137,7 @@ public class SegmentsEntryRelWrapper implements SegmentsEntryRel,
 	*/
 	@Override
 	public long getClassNameId() {
-		return _segmentsEntryRel.getClassNameId();
+		return model.getClassNameId();
 	}
 
 	/**
@@ -172,7 +147,7 @@ public class SegmentsEntryRelWrapper implements SegmentsEntryRel,
 	*/
 	@Override
 	public long getClassPK() {
-		return _segmentsEntryRel.getClassPK();
+		return model.getClassPK();
 	}
 
 	/**
@@ -182,7 +157,7 @@ public class SegmentsEntryRelWrapper implements SegmentsEntryRel,
 	*/
 	@Override
 	public long getCompanyId() {
-		return _segmentsEntryRel.getCompanyId();
+		return model.getCompanyId();
 	}
 
 	/**
@@ -192,12 +167,7 @@ public class SegmentsEntryRelWrapper implements SegmentsEntryRel,
 	*/
 	@Override
 	public Date getCreateDate() {
-		return _segmentsEntryRel.getCreateDate();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _segmentsEntryRel.getExpandoBridge();
+		return model.getCreateDate();
 	}
 
 	/**
@@ -207,7 +177,7 @@ public class SegmentsEntryRelWrapper implements SegmentsEntryRel,
 	*/
 	@Override
 	public long getGroupId() {
-		return _segmentsEntryRel.getGroupId();
+		return model.getGroupId();
 	}
 
 	/**
@@ -217,7 +187,7 @@ public class SegmentsEntryRelWrapper implements SegmentsEntryRel,
 	*/
 	@Override
 	public Date getModifiedDate() {
-		return _segmentsEntryRel.getModifiedDate();
+		return model.getModifiedDate();
 	}
 
 	/**
@@ -227,12 +197,7 @@ public class SegmentsEntryRelWrapper implements SegmentsEntryRel,
 	*/
 	@Override
 	public long getPrimaryKey() {
-		return _segmentsEntryRel.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _segmentsEntryRel.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	/**
@@ -242,7 +207,7 @@ public class SegmentsEntryRelWrapper implements SegmentsEntryRel,
 	*/
 	@Override
 	public long getSegmentsEntryId() {
-		return _segmentsEntryRel.getSegmentsEntryId();
+		return model.getSegmentsEntryId();
 	}
 
 	/**
@@ -252,7 +217,7 @@ public class SegmentsEntryRelWrapper implements SegmentsEntryRel,
 	*/
 	@Override
 	public long getSegmentsEntryRelId() {
-		return _segmentsEntryRel.getSegmentsEntryRelId();
+		return model.getSegmentsEntryRelId();
 	}
 
 	/**
@@ -262,7 +227,7 @@ public class SegmentsEntryRelWrapper implements SegmentsEntryRel,
 	*/
 	@Override
 	public long getUserId() {
-		return _segmentsEntryRel.getUserId();
+		return model.getUserId();
 	}
 
 	/**
@@ -272,7 +237,7 @@ public class SegmentsEntryRelWrapper implements SegmentsEntryRel,
 	*/
 	@Override
 	public String getUserName() {
-		return _segmentsEntryRel.getUserName();
+		return model.getUserName();
 	}
 
 	/**
@@ -282,42 +247,17 @@ public class SegmentsEntryRelWrapper implements SegmentsEntryRel,
 	*/
 	@Override
 	public String getUserUuid() {
-		return _segmentsEntryRel.getUserUuid();
-	}
-
-	@Override
-	public int hashCode() {
-		return _segmentsEntryRel.hashCode();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _segmentsEntryRel.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _segmentsEntryRel.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _segmentsEntryRel.isNew();
+		return model.getUserUuid();
 	}
 
 	@Override
 	public void persist() {
-		_segmentsEntryRel.persist();
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_segmentsEntryRel.setCachedModel(cachedModel);
+		model.persist();
 	}
 
 	@Override
 	public void setClassName(String className) {
-		_segmentsEntryRel.setClassName(className);
+		model.setClassName(className);
 	}
 
 	/**
@@ -327,7 +267,7 @@ public class SegmentsEntryRelWrapper implements SegmentsEntryRel,
 	*/
 	@Override
 	public void setClassNameId(long classNameId) {
-		_segmentsEntryRel.setClassNameId(classNameId);
+		model.setClassNameId(classNameId);
 	}
 
 	/**
@@ -337,7 +277,7 @@ public class SegmentsEntryRelWrapper implements SegmentsEntryRel,
 	*/
 	@Override
 	public void setClassPK(long classPK) {
-		_segmentsEntryRel.setClassPK(classPK);
+		model.setClassPK(classPK);
 	}
 
 	/**
@@ -347,7 +287,7 @@ public class SegmentsEntryRelWrapper implements SegmentsEntryRel,
 	*/
 	@Override
 	public void setCompanyId(long companyId) {
-		_segmentsEntryRel.setCompanyId(companyId);
+		model.setCompanyId(companyId);
 	}
 
 	/**
@@ -357,23 +297,7 @@ public class SegmentsEntryRelWrapper implements SegmentsEntryRel,
 	*/
 	@Override
 	public void setCreateDate(Date createDate) {
-		_segmentsEntryRel.setCreateDate(createDate);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-		_segmentsEntryRel.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_segmentsEntryRel.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_segmentsEntryRel.setExpandoBridgeAttributes(serviceContext);
+		model.setCreateDate(createDate);
 	}
 
 	/**
@@ -383,7 +307,7 @@ public class SegmentsEntryRelWrapper implements SegmentsEntryRel,
 	*/
 	@Override
 	public void setGroupId(long groupId) {
-		_segmentsEntryRel.setGroupId(groupId);
+		model.setGroupId(groupId);
 	}
 
 	/**
@@ -393,12 +317,7 @@ public class SegmentsEntryRelWrapper implements SegmentsEntryRel,
 	*/
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
-		_segmentsEntryRel.setModifiedDate(modifiedDate);
-	}
-
-	@Override
-	public void setNew(boolean n) {
-		_segmentsEntryRel.setNew(n);
+		model.setModifiedDate(modifiedDate);
 	}
 
 	/**
@@ -408,12 +327,7 @@ public class SegmentsEntryRelWrapper implements SegmentsEntryRel,
 	*/
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_segmentsEntryRel.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_segmentsEntryRel.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -423,7 +337,7 @@ public class SegmentsEntryRelWrapper implements SegmentsEntryRel,
 	*/
 	@Override
 	public void setSegmentsEntryId(long segmentsEntryId) {
-		_segmentsEntryRel.setSegmentsEntryId(segmentsEntryId);
+		model.setSegmentsEntryId(segmentsEntryId);
 	}
 
 	/**
@@ -433,7 +347,7 @@ public class SegmentsEntryRelWrapper implements SegmentsEntryRel,
 	*/
 	@Override
 	public void setSegmentsEntryRelId(long segmentsEntryRelId) {
-		_segmentsEntryRel.setSegmentsEntryRelId(segmentsEntryRelId);
+		model.setSegmentsEntryRelId(segmentsEntryRelId);
 	}
 
 	/**
@@ -443,7 +357,7 @@ public class SegmentsEntryRelWrapper implements SegmentsEntryRel,
 	*/
 	@Override
 	public void setUserId(long userId) {
-		_segmentsEntryRel.setUserId(userId);
+		model.setUserId(userId);
 	}
 
 	/**
@@ -453,7 +367,7 @@ public class SegmentsEntryRelWrapper implements SegmentsEntryRel,
 	*/
 	@Override
 	public void setUserName(String userName) {
-		_segmentsEntryRel.setUserName(userName);
+		model.setUserName(userName);
 	}
 
 	/**
@@ -463,73 +377,11 @@ public class SegmentsEntryRelWrapper implements SegmentsEntryRel,
 	*/
 	@Override
 	public void setUserUuid(String userUuid) {
-		_segmentsEntryRel.setUserUuid(userUuid);
+		model.setUserUuid(userUuid);
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.CacheModel<SegmentsEntryRel> toCacheModel() {
-		return _segmentsEntryRel.toCacheModel();
+	protected SegmentsEntryRelWrapper wrap(SegmentsEntryRel segmentsEntryRel) {
+		return new SegmentsEntryRelWrapper(segmentsEntryRel);
 	}
-
-	@Override
-	public SegmentsEntryRel toEscapedModel() {
-		return new SegmentsEntryRelWrapper(_segmentsEntryRel.toEscapedModel());
-	}
-
-	@Override
-	public String toString() {
-		return _segmentsEntryRel.toString();
-	}
-
-	@Override
-	public SegmentsEntryRel toUnescapedModel() {
-		return new SegmentsEntryRelWrapper(_segmentsEntryRel.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _segmentsEntryRel.toXmlString();
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-
-		if (!(obj instanceof SegmentsEntryRelWrapper)) {
-			return false;
-		}
-
-		SegmentsEntryRelWrapper segmentsEntryRelWrapper = (SegmentsEntryRelWrapper)obj;
-
-		if (Objects.equals(_segmentsEntryRel,
-					segmentsEntryRelWrapper._segmentsEntryRel)) {
-			return true;
-		}
-
-		return false;
-	}
-
-	@Override
-	public SegmentsEntryRel getWrappedModel() {
-		return _segmentsEntryRel;
-	}
-
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _segmentsEntryRel.isEntityCacheEnabled();
-	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _segmentsEntryRel.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_segmentsEntryRel.resetOriginalValues();
-	}
-
-	private final SegmentsEntryRel _segmentsEntryRel;
 }

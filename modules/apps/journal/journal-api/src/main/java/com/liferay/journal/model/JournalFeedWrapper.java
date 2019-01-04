@@ -16,19 +16,14 @@ package com.liferay.journal.model;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
-
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 
 import com.liferay.portal.kernel.model.ModelWrapper;
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -40,20 +35,10 @@ import java.util.Objects;
  * @generated
  */
 @ProviderType
-public class JournalFeedWrapper implements JournalFeed,
-	ModelWrapper<JournalFeed> {
+public class JournalFeedWrapper extends BaseModelWrapper<JournalFeed>
+	implements JournalFeed, ModelWrapper<JournalFeed> {
 	public JournalFeedWrapper(JournalFeed journalFeed) {
-		_journalFeed = journalFeed;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return JournalFeed.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return JournalFeed.class.getName();
+		super(journalFeed);
 	}
 
 	@Override
@@ -230,16 +215,6 @@ public class JournalFeedWrapper implements JournalFeed,
 		}
 	}
 
-	@Override
-	public Object clone() {
-		return new JournalFeedWrapper((JournalFeed)_journalFeed.clone());
-	}
-
-	@Override
-	public int compareTo(JournalFeed journalFeed) {
-		return _journalFeed.compareTo(journalFeed);
-	}
-
 	/**
 	* Returns the company ID of this journal feed.
 	*
@@ -247,7 +222,7 @@ public class JournalFeedWrapper implements JournalFeed,
 	*/
 	@Override
 	public long getCompanyId() {
-		return _journalFeed.getCompanyId();
+		return model.getCompanyId();
 	}
 
 	/**
@@ -257,7 +232,7 @@ public class JournalFeedWrapper implements JournalFeed,
 	*/
 	@Override
 	public String getContentField() {
-		return _journalFeed.getContentField();
+		return model.getContentField();
 	}
 
 	/**
@@ -267,7 +242,7 @@ public class JournalFeedWrapper implements JournalFeed,
 	*/
 	@Override
 	public Date getCreateDate() {
-		return _journalFeed.getCreateDate();
+		return model.getCreateDate();
 	}
 
 	/**
@@ -277,7 +252,7 @@ public class JournalFeedWrapper implements JournalFeed,
 	*/
 	@Override
 	public String getDDMRendererTemplateKey() {
-		return _journalFeed.getDDMRendererTemplateKey();
+		return model.getDDMRendererTemplateKey();
 	}
 
 	/**
@@ -287,7 +262,7 @@ public class JournalFeedWrapper implements JournalFeed,
 	*/
 	@Override
 	public String getDDMStructureKey() {
-		return _journalFeed.getDDMStructureKey();
+		return model.getDDMStructureKey();
 	}
 
 	/**
@@ -297,7 +272,7 @@ public class JournalFeedWrapper implements JournalFeed,
 	*/
 	@Override
 	public String getDDMTemplateKey() {
-		return _journalFeed.getDDMTemplateKey();
+		return model.getDDMTemplateKey();
 	}
 
 	/**
@@ -307,7 +282,7 @@ public class JournalFeedWrapper implements JournalFeed,
 	*/
 	@Override
 	public int getDelta() {
-		return _journalFeed.getDelta();
+		return model.getDelta();
 	}
 
 	/**
@@ -317,12 +292,7 @@ public class JournalFeedWrapper implements JournalFeed,
 	*/
 	@Override
 	public String getDescription() {
-		return _journalFeed.getDescription();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _journalFeed.getExpandoBridge();
+		return model.getDescription();
 	}
 
 	/**
@@ -332,7 +302,7 @@ public class JournalFeedWrapper implements JournalFeed,
 	*/
 	@Override
 	public String getFeedFormat() {
-		return _journalFeed.getFeedFormat();
+		return model.getFeedFormat();
 	}
 
 	/**
@@ -342,7 +312,7 @@ public class JournalFeedWrapper implements JournalFeed,
 	*/
 	@Override
 	public String getFeedId() {
-		return _journalFeed.getFeedId();
+		return model.getFeedId();
 	}
 
 	/**
@@ -352,7 +322,7 @@ public class JournalFeedWrapper implements JournalFeed,
 	*/
 	@Override
 	public double getFeedVersion() {
-		return _journalFeed.getFeedVersion();
+		return model.getFeedVersion();
 	}
 
 	/**
@@ -362,7 +332,7 @@ public class JournalFeedWrapper implements JournalFeed,
 	*/
 	@Override
 	public long getGroupId() {
-		return _journalFeed.getGroupId();
+		return model.getGroupId();
 	}
 
 	/**
@@ -372,7 +342,7 @@ public class JournalFeedWrapper implements JournalFeed,
 	*/
 	@Override
 	public long getId() {
-		return _journalFeed.getId();
+		return model.getId();
 	}
 
 	/**
@@ -382,7 +352,7 @@ public class JournalFeedWrapper implements JournalFeed,
 	*/
 	@Override
 	public Date getLastPublishDate() {
-		return _journalFeed.getLastPublishDate();
+		return model.getLastPublishDate();
 	}
 
 	/**
@@ -392,7 +362,7 @@ public class JournalFeedWrapper implements JournalFeed,
 	*/
 	@Override
 	public Date getModifiedDate() {
-		return _journalFeed.getModifiedDate();
+		return model.getModifiedDate();
 	}
 
 	/**
@@ -402,7 +372,7 @@ public class JournalFeedWrapper implements JournalFeed,
 	*/
 	@Override
 	public String getName() {
-		return _journalFeed.getName();
+		return model.getName();
 	}
 
 	/**
@@ -412,7 +382,7 @@ public class JournalFeedWrapper implements JournalFeed,
 	*/
 	@Override
 	public String getOrderByCol() {
-		return _journalFeed.getOrderByCol();
+		return model.getOrderByCol();
 	}
 
 	/**
@@ -422,7 +392,7 @@ public class JournalFeedWrapper implements JournalFeed,
 	*/
 	@Override
 	public String getOrderByType() {
-		return _journalFeed.getOrderByType();
+		return model.getOrderByType();
 	}
 
 	/**
@@ -432,12 +402,7 @@ public class JournalFeedWrapper implements JournalFeed,
 	*/
 	@Override
 	public long getPrimaryKey() {
-		return _journalFeed.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _journalFeed.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	/**
@@ -447,7 +412,7 @@ public class JournalFeedWrapper implements JournalFeed,
 	@Deprecated
 	@Override
 	public String getRendererTemplateId() {
-		return _journalFeed.getRendererTemplateId();
+		return model.getRendererTemplateId();
 	}
 
 	/**
@@ -457,7 +422,7 @@ public class JournalFeedWrapper implements JournalFeed,
 	@Deprecated
 	@Override
 	public String getStructureId() {
-		return _journalFeed.getStructureId();
+		return model.getStructureId();
 	}
 
 	/**
@@ -467,7 +432,7 @@ public class JournalFeedWrapper implements JournalFeed,
 	*/
 	@Override
 	public String getTargetLayoutFriendlyUrl() {
-		return _journalFeed.getTargetLayoutFriendlyUrl();
+		return model.getTargetLayoutFriendlyUrl();
 	}
 
 	/**
@@ -477,7 +442,7 @@ public class JournalFeedWrapper implements JournalFeed,
 	*/
 	@Override
 	public String getTargetPortletId() {
-		return _journalFeed.getTargetPortletId();
+		return model.getTargetPortletId();
 	}
 
 	/**
@@ -487,7 +452,7 @@ public class JournalFeedWrapper implements JournalFeed,
 	@Deprecated
 	@Override
 	public String getTemplateId() {
-		return _journalFeed.getTemplateId();
+		return model.getTemplateId();
 	}
 
 	/**
@@ -497,7 +462,7 @@ public class JournalFeedWrapper implements JournalFeed,
 	*/
 	@Override
 	public long getUserId() {
-		return _journalFeed.getUserId();
+		return model.getUserId();
 	}
 
 	/**
@@ -507,7 +472,7 @@ public class JournalFeedWrapper implements JournalFeed,
 	*/
 	@Override
 	public String getUserName() {
-		return _journalFeed.getUserName();
+		return model.getUserName();
 	}
 
 	/**
@@ -517,7 +482,7 @@ public class JournalFeedWrapper implements JournalFeed,
 	*/
 	@Override
 	public String getUserUuid() {
-		return _journalFeed.getUserUuid();
+		return model.getUserUuid();
 	}
 
 	/**
@@ -527,37 +492,12 @@ public class JournalFeedWrapper implements JournalFeed,
 	*/
 	@Override
 	public String getUuid() {
-		return _journalFeed.getUuid();
-	}
-
-	@Override
-	public int hashCode() {
-		return _journalFeed.hashCode();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _journalFeed.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _journalFeed.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _journalFeed.isNew();
+		return model.getUuid();
 	}
 
 	@Override
 	public void persist() {
-		_journalFeed.persist();
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_journalFeed.setCachedModel(cachedModel);
+		model.persist();
 	}
 
 	/**
@@ -567,7 +507,7 @@ public class JournalFeedWrapper implements JournalFeed,
 	*/
 	@Override
 	public void setCompanyId(long companyId) {
-		_journalFeed.setCompanyId(companyId);
+		model.setCompanyId(companyId);
 	}
 
 	/**
@@ -577,7 +517,7 @@ public class JournalFeedWrapper implements JournalFeed,
 	*/
 	@Override
 	public void setContentField(String contentField) {
-		_journalFeed.setContentField(contentField);
+		model.setContentField(contentField);
 	}
 
 	/**
@@ -587,7 +527,7 @@ public class JournalFeedWrapper implements JournalFeed,
 	*/
 	@Override
 	public void setCreateDate(Date createDate) {
-		_journalFeed.setCreateDate(createDate);
+		model.setCreateDate(createDate);
 	}
 
 	/**
@@ -597,7 +537,7 @@ public class JournalFeedWrapper implements JournalFeed,
 	*/
 	@Override
 	public void setDDMRendererTemplateKey(String DDMRendererTemplateKey) {
-		_journalFeed.setDDMRendererTemplateKey(DDMRendererTemplateKey);
+		model.setDDMRendererTemplateKey(DDMRendererTemplateKey);
 	}
 
 	/**
@@ -607,7 +547,7 @@ public class JournalFeedWrapper implements JournalFeed,
 	*/
 	@Override
 	public void setDDMStructureKey(String DDMStructureKey) {
-		_journalFeed.setDDMStructureKey(DDMStructureKey);
+		model.setDDMStructureKey(DDMStructureKey);
 	}
 
 	/**
@@ -617,7 +557,7 @@ public class JournalFeedWrapper implements JournalFeed,
 	*/
 	@Override
 	public void setDDMTemplateKey(String DDMTemplateKey) {
-		_journalFeed.setDDMTemplateKey(DDMTemplateKey);
+		model.setDDMTemplateKey(DDMTemplateKey);
 	}
 
 	/**
@@ -627,7 +567,7 @@ public class JournalFeedWrapper implements JournalFeed,
 	*/
 	@Override
 	public void setDelta(int delta) {
-		_journalFeed.setDelta(delta);
+		model.setDelta(delta);
 	}
 
 	/**
@@ -637,23 +577,7 @@ public class JournalFeedWrapper implements JournalFeed,
 	*/
 	@Override
 	public void setDescription(String description) {
-		_journalFeed.setDescription(description);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-		_journalFeed.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_journalFeed.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_journalFeed.setExpandoBridgeAttributes(serviceContext);
+		model.setDescription(description);
 	}
 
 	/**
@@ -663,7 +587,7 @@ public class JournalFeedWrapper implements JournalFeed,
 	*/
 	@Override
 	public void setFeedFormat(String feedFormat) {
-		_journalFeed.setFeedFormat(feedFormat);
+		model.setFeedFormat(feedFormat);
 	}
 
 	/**
@@ -673,7 +597,7 @@ public class JournalFeedWrapper implements JournalFeed,
 	*/
 	@Override
 	public void setFeedId(String feedId) {
-		_journalFeed.setFeedId(feedId);
+		model.setFeedId(feedId);
 	}
 
 	/**
@@ -683,7 +607,7 @@ public class JournalFeedWrapper implements JournalFeed,
 	*/
 	@Override
 	public void setFeedVersion(double feedVersion) {
-		_journalFeed.setFeedVersion(feedVersion);
+		model.setFeedVersion(feedVersion);
 	}
 
 	/**
@@ -693,7 +617,7 @@ public class JournalFeedWrapper implements JournalFeed,
 	*/
 	@Override
 	public void setGroupId(long groupId) {
-		_journalFeed.setGroupId(groupId);
+		model.setGroupId(groupId);
 	}
 
 	/**
@@ -703,7 +627,7 @@ public class JournalFeedWrapper implements JournalFeed,
 	*/
 	@Override
 	public void setId(long id) {
-		_journalFeed.setId(id);
+		model.setId(id);
 	}
 
 	/**
@@ -713,7 +637,7 @@ public class JournalFeedWrapper implements JournalFeed,
 	*/
 	@Override
 	public void setLastPublishDate(Date lastPublishDate) {
-		_journalFeed.setLastPublishDate(lastPublishDate);
+		model.setLastPublishDate(lastPublishDate);
 	}
 
 	/**
@@ -723,7 +647,7 @@ public class JournalFeedWrapper implements JournalFeed,
 	*/
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
-		_journalFeed.setModifiedDate(modifiedDate);
+		model.setModifiedDate(modifiedDate);
 	}
 
 	/**
@@ -733,12 +657,7 @@ public class JournalFeedWrapper implements JournalFeed,
 	*/
 	@Override
 	public void setName(String name) {
-		_journalFeed.setName(name);
-	}
-
-	@Override
-	public void setNew(boolean n) {
-		_journalFeed.setNew(n);
+		model.setName(name);
 	}
 
 	/**
@@ -748,7 +667,7 @@ public class JournalFeedWrapper implements JournalFeed,
 	*/
 	@Override
 	public void setOrderByCol(String orderByCol) {
-		_journalFeed.setOrderByCol(orderByCol);
+		model.setOrderByCol(orderByCol);
 	}
 
 	/**
@@ -758,7 +677,7 @@ public class JournalFeedWrapper implements JournalFeed,
 	*/
 	@Override
 	public void setOrderByType(String orderByType) {
-		_journalFeed.setOrderByType(orderByType);
+		model.setOrderByType(orderByType);
 	}
 
 	/**
@@ -768,12 +687,7 @@ public class JournalFeedWrapper implements JournalFeed,
 	*/
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_journalFeed.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_journalFeed.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -783,7 +697,7 @@ public class JournalFeedWrapper implements JournalFeed,
 	@Deprecated
 	@Override
 	public void setRendererTemplateId(String rendererTemplateKey) {
-		_journalFeed.setRendererTemplateId(rendererTemplateKey);
+		model.setRendererTemplateId(rendererTemplateKey);
 	}
 
 	/**
@@ -793,7 +707,7 @@ public class JournalFeedWrapper implements JournalFeed,
 	@Deprecated
 	@Override
 	public void setStructureId(String structureKey) {
-		_journalFeed.setStructureId(structureKey);
+		model.setStructureId(structureKey);
 	}
 
 	/**
@@ -803,7 +717,7 @@ public class JournalFeedWrapper implements JournalFeed,
 	*/
 	@Override
 	public void setTargetLayoutFriendlyUrl(String targetLayoutFriendlyUrl) {
-		_journalFeed.setTargetLayoutFriendlyUrl(targetLayoutFriendlyUrl);
+		model.setTargetLayoutFriendlyUrl(targetLayoutFriendlyUrl);
 	}
 
 	/**
@@ -813,7 +727,7 @@ public class JournalFeedWrapper implements JournalFeed,
 	*/
 	@Override
 	public void setTargetPortletId(String targetPortletId) {
-		_journalFeed.setTargetPortletId(targetPortletId);
+		model.setTargetPortletId(targetPortletId);
 	}
 
 	/**
@@ -823,7 +737,7 @@ public class JournalFeedWrapper implements JournalFeed,
 	@Deprecated
 	@Override
 	public void setTemplateId(String templateKey) {
-		_journalFeed.setTemplateId(templateKey);
+		model.setTemplateId(templateKey);
 	}
 
 	/**
@@ -833,7 +747,7 @@ public class JournalFeedWrapper implements JournalFeed,
 	*/
 	@Override
 	public void setUserId(long userId) {
-		_journalFeed.setUserId(userId);
+		model.setUserId(userId);
 	}
 
 	/**
@@ -843,7 +757,7 @@ public class JournalFeedWrapper implements JournalFeed,
 	*/
 	@Override
 	public void setUserName(String userName) {
-		_journalFeed.setUserName(userName);
+		model.setUserName(userName);
 	}
 
 	/**
@@ -853,7 +767,7 @@ public class JournalFeedWrapper implements JournalFeed,
 	*/
 	@Override
 	public void setUserUuid(String userUuid) {
-		_journalFeed.setUserUuid(userUuid);
+		model.setUserUuid(userUuid);
 	}
 
 	/**
@@ -863,77 +777,16 @@ public class JournalFeedWrapper implements JournalFeed,
 	*/
 	@Override
 	public void setUuid(String uuid) {
-		_journalFeed.setUuid(uuid);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<JournalFeed> toCacheModel() {
-		return _journalFeed.toCacheModel();
-	}
-
-	@Override
-	public JournalFeed toEscapedModel() {
-		return new JournalFeedWrapper(_journalFeed.toEscapedModel());
-	}
-
-	@Override
-	public String toString() {
-		return _journalFeed.toString();
-	}
-
-	@Override
-	public JournalFeed toUnescapedModel() {
-		return new JournalFeedWrapper(_journalFeed.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _journalFeed.toXmlString();
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-
-		if (!(obj instanceof JournalFeedWrapper)) {
-			return false;
-		}
-
-		JournalFeedWrapper journalFeedWrapper = (JournalFeedWrapper)obj;
-
-		if (Objects.equals(_journalFeed, journalFeedWrapper._journalFeed)) {
-			return true;
-		}
-
-		return false;
+		model.setUuid(uuid);
 	}
 
 	@Override
 	public StagedModelType getStagedModelType() {
-		return _journalFeed.getStagedModelType();
+		return model.getStagedModelType();
 	}
 
 	@Override
-	public JournalFeed getWrappedModel() {
-		return _journalFeed;
+	protected JournalFeedWrapper wrap(JournalFeed journalFeed) {
+		return new JournalFeedWrapper(journalFeed);
 	}
-
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _journalFeed.isEntityCacheEnabled();
-	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _journalFeed.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_journalFeed.resetOriginalValues();
-	}
-
-	private final JournalFeed _journalFeed;
 }

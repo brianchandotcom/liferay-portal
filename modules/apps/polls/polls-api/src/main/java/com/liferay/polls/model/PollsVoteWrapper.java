@@ -16,19 +16,14 @@ package com.liferay.polls.model;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
-
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 
 import com.liferay.portal.kernel.model.ModelWrapper;
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -40,19 +35,10 @@ import java.util.Objects;
  * @generated
  */
 @ProviderType
-public class PollsVoteWrapper implements PollsVote, ModelWrapper<PollsVote> {
+public class PollsVoteWrapper extends BaseModelWrapper<PollsVote>
+	implements PollsVote, ModelWrapper<PollsVote> {
 	public PollsVoteWrapper(PollsVote pollsVote) {
-		_pollsVote = pollsVote;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return PollsVote.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return PollsVote.class.getName();
+		super(pollsVote);
 	}
 
 	@Override
@@ -151,19 +137,9 @@ public class PollsVoteWrapper implements PollsVote, ModelWrapper<PollsVote> {
 	}
 
 	@Override
-	public Object clone() {
-		return new PollsVoteWrapper((PollsVote)_pollsVote.clone());
-	}
-
-	@Override
-	public int compareTo(PollsVote pollsVote) {
-		return _pollsVote.compareTo(pollsVote);
-	}
-
-	@Override
 	public PollsChoice getChoice()
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _pollsVote.getChoice();
+		return model.getChoice();
 	}
 
 	/**
@@ -173,7 +149,7 @@ public class PollsVoteWrapper implements PollsVote, ModelWrapper<PollsVote> {
 	*/
 	@Override
 	public long getChoiceId() {
-		return _pollsVote.getChoiceId();
+		return model.getChoiceId();
 	}
 
 	/**
@@ -183,7 +159,7 @@ public class PollsVoteWrapper implements PollsVote, ModelWrapper<PollsVote> {
 	*/
 	@Override
 	public long getCompanyId() {
-		return _pollsVote.getCompanyId();
+		return model.getCompanyId();
 	}
 
 	/**
@@ -193,12 +169,7 @@ public class PollsVoteWrapper implements PollsVote, ModelWrapper<PollsVote> {
 	*/
 	@Override
 	public Date getCreateDate() {
-		return _pollsVote.getCreateDate();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _pollsVote.getExpandoBridge();
+		return model.getCreateDate();
 	}
 
 	/**
@@ -208,7 +179,7 @@ public class PollsVoteWrapper implements PollsVote, ModelWrapper<PollsVote> {
 	*/
 	@Override
 	public long getGroupId() {
-		return _pollsVote.getGroupId();
+		return model.getGroupId();
 	}
 
 	/**
@@ -218,7 +189,7 @@ public class PollsVoteWrapper implements PollsVote, ModelWrapper<PollsVote> {
 	*/
 	@Override
 	public Date getLastPublishDate() {
-		return _pollsVote.getLastPublishDate();
+		return model.getLastPublishDate();
 	}
 
 	/**
@@ -228,7 +199,7 @@ public class PollsVoteWrapper implements PollsVote, ModelWrapper<PollsVote> {
 	*/
 	@Override
 	public Date getModifiedDate() {
-		return _pollsVote.getModifiedDate();
+		return model.getModifiedDate();
 	}
 
 	/**
@@ -238,12 +209,7 @@ public class PollsVoteWrapper implements PollsVote, ModelWrapper<PollsVote> {
 	*/
 	@Override
 	public long getPrimaryKey() {
-		return _pollsVote.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _pollsVote.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	/**
@@ -253,7 +219,7 @@ public class PollsVoteWrapper implements PollsVote, ModelWrapper<PollsVote> {
 	*/
 	@Override
 	public long getQuestionId() {
-		return _pollsVote.getQuestionId();
+		return model.getQuestionId();
 	}
 
 	/**
@@ -263,7 +229,7 @@ public class PollsVoteWrapper implements PollsVote, ModelWrapper<PollsVote> {
 	*/
 	@Override
 	public long getUserId() {
-		return _pollsVote.getUserId();
+		return model.getUserId();
 	}
 
 	/**
@@ -273,7 +239,7 @@ public class PollsVoteWrapper implements PollsVote, ModelWrapper<PollsVote> {
 	*/
 	@Override
 	public String getUserName() {
-		return _pollsVote.getUserName();
+		return model.getUserName();
 	}
 
 	/**
@@ -283,7 +249,7 @@ public class PollsVoteWrapper implements PollsVote, ModelWrapper<PollsVote> {
 	*/
 	@Override
 	public String getUserUuid() {
-		return _pollsVote.getUserUuid();
+		return model.getUserUuid();
 	}
 
 	/**
@@ -293,7 +259,7 @@ public class PollsVoteWrapper implements PollsVote, ModelWrapper<PollsVote> {
 	*/
 	@Override
 	public String getUuid() {
-		return _pollsVote.getUuid();
+		return model.getUuid();
 	}
 
 	/**
@@ -303,7 +269,7 @@ public class PollsVoteWrapper implements PollsVote, ModelWrapper<PollsVote> {
 	*/
 	@Override
 	public Date getVoteDate() {
-		return _pollsVote.getVoteDate();
+		return model.getVoteDate();
 	}
 
 	/**
@@ -313,37 +279,12 @@ public class PollsVoteWrapper implements PollsVote, ModelWrapper<PollsVote> {
 	*/
 	@Override
 	public long getVoteId() {
-		return _pollsVote.getVoteId();
-	}
-
-	@Override
-	public int hashCode() {
-		return _pollsVote.hashCode();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _pollsVote.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _pollsVote.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _pollsVote.isNew();
+		return model.getVoteId();
 	}
 
 	@Override
 	public void persist() {
-		_pollsVote.persist();
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_pollsVote.setCachedModel(cachedModel);
+		model.persist();
 	}
 
 	/**
@@ -353,7 +294,7 @@ public class PollsVoteWrapper implements PollsVote, ModelWrapper<PollsVote> {
 	*/
 	@Override
 	public void setChoiceId(long choiceId) {
-		_pollsVote.setChoiceId(choiceId);
+		model.setChoiceId(choiceId);
 	}
 
 	/**
@@ -363,7 +304,7 @@ public class PollsVoteWrapper implements PollsVote, ModelWrapper<PollsVote> {
 	*/
 	@Override
 	public void setCompanyId(long companyId) {
-		_pollsVote.setCompanyId(companyId);
+		model.setCompanyId(companyId);
 	}
 
 	/**
@@ -373,23 +314,7 @@ public class PollsVoteWrapper implements PollsVote, ModelWrapper<PollsVote> {
 	*/
 	@Override
 	public void setCreateDate(Date createDate) {
-		_pollsVote.setCreateDate(createDate);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-		_pollsVote.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_pollsVote.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_pollsVote.setExpandoBridgeAttributes(serviceContext);
+		model.setCreateDate(createDate);
 	}
 
 	/**
@@ -399,7 +324,7 @@ public class PollsVoteWrapper implements PollsVote, ModelWrapper<PollsVote> {
 	*/
 	@Override
 	public void setGroupId(long groupId) {
-		_pollsVote.setGroupId(groupId);
+		model.setGroupId(groupId);
 	}
 
 	/**
@@ -409,7 +334,7 @@ public class PollsVoteWrapper implements PollsVote, ModelWrapper<PollsVote> {
 	*/
 	@Override
 	public void setLastPublishDate(Date lastPublishDate) {
-		_pollsVote.setLastPublishDate(lastPublishDate);
+		model.setLastPublishDate(lastPublishDate);
 	}
 
 	/**
@@ -419,12 +344,7 @@ public class PollsVoteWrapper implements PollsVote, ModelWrapper<PollsVote> {
 	*/
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
-		_pollsVote.setModifiedDate(modifiedDate);
-	}
-
-	@Override
-	public void setNew(boolean n) {
-		_pollsVote.setNew(n);
+		model.setModifiedDate(modifiedDate);
 	}
 
 	/**
@@ -434,12 +354,7 @@ public class PollsVoteWrapper implements PollsVote, ModelWrapper<PollsVote> {
 	*/
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_pollsVote.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_pollsVote.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -449,7 +364,7 @@ public class PollsVoteWrapper implements PollsVote, ModelWrapper<PollsVote> {
 	*/
 	@Override
 	public void setQuestionId(long questionId) {
-		_pollsVote.setQuestionId(questionId);
+		model.setQuestionId(questionId);
 	}
 
 	/**
@@ -459,7 +374,7 @@ public class PollsVoteWrapper implements PollsVote, ModelWrapper<PollsVote> {
 	*/
 	@Override
 	public void setUserId(long userId) {
-		_pollsVote.setUserId(userId);
+		model.setUserId(userId);
 	}
 
 	/**
@@ -469,7 +384,7 @@ public class PollsVoteWrapper implements PollsVote, ModelWrapper<PollsVote> {
 	*/
 	@Override
 	public void setUserName(String userName) {
-		_pollsVote.setUserName(userName);
+		model.setUserName(userName);
 	}
 
 	/**
@@ -479,7 +394,7 @@ public class PollsVoteWrapper implements PollsVote, ModelWrapper<PollsVote> {
 	*/
 	@Override
 	public void setUserUuid(String userUuid) {
-		_pollsVote.setUserUuid(userUuid);
+		model.setUserUuid(userUuid);
 	}
 
 	/**
@@ -489,7 +404,7 @@ public class PollsVoteWrapper implements PollsVote, ModelWrapper<PollsVote> {
 	*/
 	@Override
 	public void setUuid(String uuid) {
-		_pollsVote.setUuid(uuid);
+		model.setUuid(uuid);
 	}
 
 	/**
@@ -499,7 +414,7 @@ public class PollsVoteWrapper implements PollsVote, ModelWrapper<PollsVote> {
 	*/
 	@Override
 	public void setVoteDate(Date voteDate) {
-		_pollsVote.setVoteDate(voteDate);
+		model.setVoteDate(voteDate);
 	}
 
 	/**
@@ -509,77 +424,16 @@ public class PollsVoteWrapper implements PollsVote, ModelWrapper<PollsVote> {
 	*/
 	@Override
 	public void setVoteId(long voteId) {
-		_pollsVote.setVoteId(voteId);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<PollsVote> toCacheModel() {
-		return _pollsVote.toCacheModel();
-	}
-
-	@Override
-	public PollsVote toEscapedModel() {
-		return new PollsVoteWrapper(_pollsVote.toEscapedModel());
-	}
-
-	@Override
-	public String toString() {
-		return _pollsVote.toString();
-	}
-
-	@Override
-	public PollsVote toUnescapedModel() {
-		return new PollsVoteWrapper(_pollsVote.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _pollsVote.toXmlString();
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-
-		if (!(obj instanceof PollsVoteWrapper)) {
-			return false;
-		}
-
-		PollsVoteWrapper pollsVoteWrapper = (PollsVoteWrapper)obj;
-
-		if (Objects.equals(_pollsVote, pollsVoteWrapper._pollsVote)) {
-			return true;
-		}
-
-		return false;
+		model.setVoteId(voteId);
 	}
 
 	@Override
 	public StagedModelType getStagedModelType() {
-		return _pollsVote.getStagedModelType();
+		return model.getStagedModelType();
 	}
 
 	@Override
-	public PollsVote getWrappedModel() {
-		return _pollsVote;
+	protected PollsVoteWrapper wrap(PollsVote pollsVote) {
+		return new PollsVoteWrapper(pollsVote);
 	}
-
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _pollsVote.isEntityCacheEnabled();
-	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _pollsVote.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_pollsVote.resetOriginalValues();
-	}
-
-	private final PollsVote _pollsVote;
 }

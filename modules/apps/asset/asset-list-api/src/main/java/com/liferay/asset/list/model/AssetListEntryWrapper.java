@@ -16,19 +16,14 @@ package com.liferay.asset.list.model;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
-
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 
 import com.liferay.portal.kernel.model.ModelWrapper;
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -40,20 +35,10 @@ import java.util.Objects;
  * @generated
  */
 @ProviderType
-public class AssetListEntryWrapper implements AssetListEntry,
-	ModelWrapper<AssetListEntry> {
+public class AssetListEntryWrapper extends BaseModelWrapper<AssetListEntry>
+	implements AssetListEntry, ModelWrapper<AssetListEntry> {
 	public AssetListEntryWrapper(AssetListEntry assetListEntry) {
-		_assetListEntry = assetListEntry;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return AssetListEntry.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return AssetListEntry.class.getName();
+		super(assetListEntry);
 	}
 
 	@Override
@@ -152,34 +137,24 @@ public class AssetListEntryWrapper implements AssetListEntry,
 	}
 
 	@Override
-	public Object clone() {
-		return new AssetListEntryWrapper((AssetListEntry)_assetListEntry.clone());
-	}
-
-	@Override
-	public int compareTo(AssetListEntry assetListEntry) {
-		return _assetListEntry.compareTo(assetListEntry);
-	}
-
-	@Override
 	public java.util.List<com.liferay.asset.kernel.model.AssetEntry> getAssetEntries() {
-		return _assetListEntry.getAssetEntries();
+		return model.getAssetEntries();
 	}
 
 	@Override
 	public java.util.List<com.liferay.asset.kernel.model.AssetEntry> getAssetEntries(
 		int start, int end) {
-		return _assetListEntry.getAssetEntries(start, end);
+		return model.getAssetEntries(start, end);
 	}
 
 	@Override
 	public int getAssetEntriesCount() {
-		return _assetListEntry.getAssetEntriesCount();
+		return model.getAssetEntriesCount();
 	}
 
 	@Override
 	public com.liferay.asset.kernel.service.persistence.AssetEntryQuery getAssetEntryQuery() {
-		return _assetListEntry.getAssetEntryQuery();
+		return model.getAssetEntryQuery();
 	}
 
 	/**
@@ -189,7 +164,7 @@ public class AssetListEntryWrapper implements AssetListEntry,
 	*/
 	@Override
 	public long getAssetListEntryId() {
-		return _assetListEntry.getAssetListEntryId();
+		return model.getAssetListEntryId();
 	}
 
 	/**
@@ -199,7 +174,7 @@ public class AssetListEntryWrapper implements AssetListEntry,
 	*/
 	@Override
 	public long getCompanyId() {
-		return _assetListEntry.getCompanyId();
+		return model.getCompanyId();
 	}
 
 	/**
@@ -209,12 +184,7 @@ public class AssetListEntryWrapper implements AssetListEntry,
 	*/
 	@Override
 	public Date getCreateDate() {
-		return _assetListEntry.getCreateDate();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _assetListEntry.getExpandoBridge();
+		return model.getCreateDate();
 	}
 
 	/**
@@ -224,7 +194,7 @@ public class AssetListEntryWrapper implements AssetListEntry,
 	*/
 	@Override
 	public long getGroupId() {
-		return _assetListEntry.getGroupId();
+		return model.getGroupId();
 	}
 
 	/**
@@ -234,7 +204,7 @@ public class AssetListEntryWrapper implements AssetListEntry,
 	*/
 	@Override
 	public Date getLastPublishDate() {
-		return _assetListEntry.getLastPublishDate();
+		return model.getLastPublishDate();
 	}
 
 	/**
@@ -244,7 +214,7 @@ public class AssetListEntryWrapper implements AssetListEntry,
 	*/
 	@Override
 	public Date getModifiedDate() {
-		return _assetListEntry.getModifiedDate();
+		return model.getModifiedDate();
 	}
 
 	/**
@@ -254,12 +224,7 @@ public class AssetListEntryWrapper implements AssetListEntry,
 	*/
 	@Override
 	public long getPrimaryKey() {
-		return _assetListEntry.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _assetListEntry.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	/**
@@ -269,7 +234,7 @@ public class AssetListEntryWrapper implements AssetListEntry,
 	*/
 	@Override
 	public String getTitle() {
-		return _assetListEntry.getTitle();
+		return model.getTitle();
 	}
 
 	/**
@@ -279,12 +244,12 @@ public class AssetListEntryWrapper implements AssetListEntry,
 	*/
 	@Override
 	public int getType() {
-		return _assetListEntry.getType();
+		return model.getType();
 	}
 
 	@Override
 	public String getTypeLabel() {
-		return _assetListEntry.getTypeLabel();
+		return model.getTypeLabel();
 	}
 
 	/**
@@ -294,7 +259,7 @@ public class AssetListEntryWrapper implements AssetListEntry,
 	*/
 	@Override
 	public String getTypeSettings() {
-		return _assetListEntry.getTypeSettings();
+		return model.getTypeSettings();
 	}
 
 	/**
@@ -304,7 +269,7 @@ public class AssetListEntryWrapper implements AssetListEntry,
 	*/
 	@Override
 	public long getUserId() {
-		return _assetListEntry.getUserId();
+		return model.getUserId();
 	}
 
 	/**
@@ -314,7 +279,7 @@ public class AssetListEntryWrapper implements AssetListEntry,
 	*/
 	@Override
 	public String getUserName() {
-		return _assetListEntry.getUserName();
+		return model.getUserName();
 	}
 
 	/**
@@ -324,7 +289,7 @@ public class AssetListEntryWrapper implements AssetListEntry,
 	*/
 	@Override
 	public String getUserUuid() {
-		return _assetListEntry.getUserUuid();
+		return model.getUserUuid();
 	}
 
 	/**
@@ -334,32 +299,12 @@ public class AssetListEntryWrapper implements AssetListEntry,
 	*/
 	@Override
 	public String getUuid() {
-		return _assetListEntry.getUuid();
-	}
-
-	@Override
-	public int hashCode() {
-		return _assetListEntry.hashCode();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _assetListEntry.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _assetListEntry.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _assetListEntry.isNew();
+		return model.getUuid();
 	}
 
 	@Override
 	public void persist() {
-		_assetListEntry.persist();
+		model.persist();
 	}
 
 	/**
@@ -369,12 +314,7 @@ public class AssetListEntryWrapper implements AssetListEntry,
 	*/
 	@Override
 	public void setAssetListEntryId(long assetListEntryId) {
-		_assetListEntry.setAssetListEntryId(assetListEntryId);
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_assetListEntry.setCachedModel(cachedModel);
+		model.setAssetListEntryId(assetListEntryId);
 	}
 
 	/**
@@ -384,7 +324,7 @@ public class AssetListEntryWrapper implements AssetListEntry,
 	*/
 	@Override
 	public void setCompanyId(long companyId) {
-		_assetListEntry.setCompanyId(companyId);
+		model.setCompanyId(companyId);
 	}
 
 	/**
@@ -394,23 +334,7 @@ public class AssetListEntryWrapper implements AssetListEntry,
 	*/
 	@Override
 	public void setCreateDate(Date createDate) {
-		_assetListEntry.setCreateDate(createDate);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-		_assetListEntry.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_assetListEntry.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_assetListEntry.setExpandoBridgeAttributes(serviceContext);
+		model.setCreateDate(createDate);
 	}
 
 	/**
@@ -420,7 +344,7 @@ public class AssetListEntryWrapper implements AssetListEntry,
 	*/
 	@Override
 	public void setGroupId(long groupId) {
-		_assetListEntry.setGroupId(groupId);
+		model.setGroupId(groupId);
 	}
 
 	/**
@@ -430,7 +354,7 @@ public class AssetListEntryWrapper implements AssetListEntry,
 	*/
 	@Override
 	public void setLastPublishDate(Date lastPublishDate) {
-		_assetListEntry.setLastPublishDate(lastPublishDate);
+		model.setLastPublishDate(lastPublishDate);
 	}
 
 	/**
@@ -440,12 +364,7 @@ public class AssetListEntryWrapper implements AssetListEntry,
 	*/
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
-		_assetListEntry.setModifiedDate(modifiedDate);
-	}
-
-	@Override
-	public void setNew(boolean n) {
-		_assetListEntry.setNew(n);
+		model.setModifiedDate(modifiedDate);
 	}
 
 	/**
@@ -455,12 +374,7 @@ public class AssetListEntryWrapper implements AssetListEntry,
 	*/
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_assetListEntry.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_assetListEntry.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -470,7 +384,7 @@ public class AssetListEntryWrapper implements AssetListEntry,
 	*/
 	@Override
 	public void setTitle(String title) {
-		_assetListEntry.setTitle(title);
+		model.setTitle(title);
 	}
 
 	/**
@@ -480,7 +394,7 @@ public class AssetListEntryWrapper implements AssetListEntry,
 	*/
 	@Override
 	public void setType(int type) {
-		_assetListEntry.setType(type);
+		model.setType(type);
 	}
 
 	/**
@@ -490,7 +404,7 @@ public class AssetListEntryWrapper implements AssetListEntry,
 	*/
 	@Override
 	public void setTypeSettings(String typeSettings) {
-		_assetListEntry.setTypeSettings(typeSettings);
+		model.setTypeSettings(typeSettings);
 	}
 
 	/**
@@ -500,7 +414,7 @@ public class AssetListEntryWrapper implements AssetListEntry,
 	*/
 	@Override
 	public void setUserId(long userId) {
-		_assetListEntry.setUserId(userId);
+		model.setUserId(userId);
 	}
 
 	/**
@@ -510,7 +424,7 @@ public class AssetListEntryWrapper implements AssetListEntry,
 	*/
 	@Override
 	public void setUserName(String userName) {
-		_assetListEntry.setUserName(userName);
+		model.setUserName(userName);
 	}
 
 	/**
@@ -520,7 +434,7 @@ public class AssetListEntryWrapper implements AssetListEntry,
 	*/
 	@Override
 	public void setUserUuid(String userUuid) {
-		_assetListEntry.setUserUuid(userUuid);
+		model.setUserUuid(userUuid);
 	}
 
 	/**
@@ -530,78 +444,16 @@ public class AssetListEntryWrapper implements AssetListEntry,
 	*/
 	@Override
 	public void setUuid(String uuid) {
-		_assetListEntry.setUuid(uuid);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<AssetListEntry> toCacheModel() {
-		return _assetListEntry.toCacheModel();
-	}
-
-	@Override
-	public AssetListEntry toEscapedModel() {
-		return new AssetListEntryWrapper(_assetListEntry.toEscapedModel());
-	}
-
-	@Override
-	public String toString() {
-		return _assetListEntry.toString();
-	}
-
-	@Override
-	public AssetListEntry toUnescapedModel() {
-		return new AssetListEntryWrapper(_assetListEntry.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _assetListEntry.toXmlString();
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-
-		if (!(obj instanceof AssetListEntryWrapper)) {
-			return false;
-		}
-
-		AssetListEntryWrapper assetListEntryWrapper = (AssetListEntryWrapper)obj;
-
-		if (Objects.equals(_assetListEntry,
-					assetListEntryWrapper._assetListEntry)) {
-			return true;
-		}
-
-		return false;
+		model.setUuid(uuid);
 	}
 
 	@Override
 	public StagedModelType getStagedModelType() {
-		return _assetListEntry.getStagedModelType();
+		return model.getStagedModelType();
 	}
 
 	@Override
-	public AssetListEntry getWrappedModel() {
-		return _assetListEntry;
+	protected AssetListEntryWrapper wrap(AssetListEntry assetListEntry) {
+		return new AssetListEntryWrapper(assetListEntry);
 	}
-
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _assetListEntry.isEntityCacheEnabled();
-	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _assetListEntry.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_assetListEntry.resetOriginalValues();
-	}
-
-	private final AssetListEntry _assetListEntry;
 }

@@ -16,17 +16,12 @@ package com.liferay.portal.workflow.kaleo.model;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
-
 import com.liferay.portal.kernel.model.ModelWrapper;
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -38,21 +33,11 @@ import java.util.Objects;
  * @generated
  */
 @ProviderType
-public class KaleoDefinitionVersionWrapper implements KaleoDefinitionVersion,
-	ModelWrapper<KaleoDefinitionVersion> {
+public class KaleoDefinitionVersionWrapper extends BaseModelWrapper<KaleoDefinitionVersion>
+	implements KaleoDefinitionVersion, ModelWrapper<KaleoDefinitionVersion> {
 	public KaleoDefinitionVersionWrapper(
 		KaleoDefinitionVersion kaleoDefinitionVersion) {
-		_kaleoDefinitionVersion = kaleoDefinitionVersion;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return KaleoDefinitionVersion.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return KaleoDefinitionVersion.class.getName();
+		super(kaleoDefinitionVersion);
 	}
 
 	@Override
@@ -187,23 +172,13 @@ public class KaleoDefinitionVersionWrapper implements KaleoDefinitionVersion,
 	}
 
 	@Override
-	public Object clone() {
-		return new KaleoDefinitionVersionWrapper((KaleoDefinitionVersion)_kaleoDefinitionVersion.clone());
-	}
-
-	@Override
-	public int compareTo(KaleoDefinitionVersion kaleoDefinitionVersion) {
-		return _kaleoDefinitionVersion.compareTo(kaleoDefinitionVersion);
-	}
-
-	@Override
 	public KaleoDefinition fetchKaleoDefinition() {
-		return _kaleoDefinitionVersion.fetchKaleoDefinition();
+		return model.fetchKaleoDefinition();
 	}
 
 	@Override
 	public String[] getAvailableLanguageIds() {
-		return _kaleoDefinitionVersion.getAvailableLanguageIds();
+		return model.getAvailableLanguageIds();
 	}
 
 	/**
@@ -213,7 +188,7 @@ public class KaleoDefinitionVersionWrapper implements KaleoDefinitionVersion,
 	*/
 	@Override
 	public long getCompanyId() {
-		return _kaleoDefinitionVersion.getCompanyId();
+		return model.getCompanyId();
 	}
 
 	/**
@@ -223,7 +198,7 @@ public class KaleoDefinitionVersionWrapper implements KaleoDefinitionVersion,
 	*/
 	@Override
 	public String getContent() {
-		return _kaleoDefinitionVersion.getContent();
+		return model.getContent();
 	}
 
 	/**
@@ -233,12 +208,12 @@ public class KaleoDefinitionVersionWrapper implements KaleoDefinitionVersion,
 	*/
 	@Override
 	public Date getCreateDate() {
-		return _kaleoDefinitionVersion.getCreateDate();
+		return model.getCreateDate();
 	}
 
 	@Override
 	public String getDefaultLanguageId() {
-		return _kaleoDefinitionVersion.getDefaultLanguageId();
+		return model.getDefaultLanguageId();
 	}
 
 	/**
@@ -248,12 +223,7 @@ public class KaleoDefinitionVersionWrapper implements KaleoDefinitionVersion,
 	*/
 	@Override
 	public String getDescription() {
-		return _kaleoDefinitionVersion.getDescription();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _kaleoDefinitionVersion.getExpandoBridge();
+		return model.getDescription();
 	}
 
 	/**
@@ -263,13 +233,13 @@ public class KaleoDefinitionVersionWrapper implements KaleoDefinitionVersion,
 	*/
 	@Override
 	public long getGroupId() {
-		return _kaleoDefinitionVersion.getGroupId();
+		return model.getGroupId();
 	}
 
 	@Override
 	public KaleoDefinition getKaleoDefinition()
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _kaleoDefinitionVersion.getKaleoDefinition();
+		return model.getKaleoDefinition();
 	}
 
 	/**
@@ -279,13 +249,13 @@ public class KaleoDefinitionVersionWrapper implements KaleoDefinitionVersion,
 	*/
 	@Override
 	public long getKaleoDefinitionVersionId() {
-		return _kaleoDefinitionVersion.getKaleoDefinitionVersionId();
+		return model.getKaleoDefinitionVersionId();
 	}
 
 	@Override
 	public KaleoNode getKaleoStartNode()
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _kaleoDefinitionVersion.getKaleoStartNode();
+		return model.getKaleoStartNode();
 	}
 
 	/**
@@ -295,7 +265,7 @@ public class KaleoDefinitionVersionWrapper implements KaleoDefinitionVersion,
 	*/
 	@Override
 	public Date getModifiedDate() {
-		return _kaleoDefinitionVersion.getModifiedDate();
+		return model.getModifiedDate();
 	}
 
 	/**
@@ -305,7 +275,7 @@ public class KaleoDefinitionVersionWrapper implements KaleoDefinitionVersion,
 	*/
 	@Override
 	public String getName() {
-		return _kaleoDefinitionVersion.getName();
+		return model.getName();
 	}
 
 	/**
@@ -315,12 +285,7 @@ public class KaleoDefinitionVersionWrapper implements KaleoDefinitionVersion,
 	*/
 	@Override
 	public long getPrimaryKey() {
-		return _kaleoDefinitionVersion.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _kaleoDefinitionVersion.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	/**
@@ -330,7 +295,7 @@ public class KaleoDefinitionVersionWrapper implements KaleoDefinitionVersion,
 	*/
 	@Override
 	public long getStartKaleoNodeId() {
-		return _kaleoDefinitionVersion.getStartKaleoNodeId();
+		return model.getStartKaleoNodeId();
 	}
 
 	/**
@@ -340,7 +305,7 @@ public class KaleoDefinitionVersionWrapper implements KaleoDefinitionVersion,
 	*/
 	@Override
 	public int getStatus() {
-		return _kaleoDefinitionVersion.getStatus();
+		return model.getStatus();
 	}
 
 	/**
@@ -350,7 +315,7 @@ public class KaleoDefinitionVersionWrapper implements KaleoDefinitionVersion,
 	*/
 	@Override
 	public long getStatusByUserId() {
-		return _kaleoDefinitionVersion.getStatusByUserId();
+		return model.getStatusByUserId();
 	}
 
 	/**
@@ -360,7 +325,7 @@ public class KaleoDefinitionVersionWrapper implements KaleoDefinitionVersion,
 	*/
 	@Override
 	public String getStatusByUserName() {
-		return _kaleoDefinitionVersion.getStatusByUserName();
+		return model.getStatusByUserName();
 	}
 
 	/**
@@ -370,7 +335,7 @@ public class KaleoDefinitionVersionWrapper implements KaleoDefinitionVersion,
 	*/
 	@Override
 	public String getStatusByUserUuid() {
-		return _kaleoDefinitionVersion.getStatusByUserUuid();
+		return model.getStatusByUserUuid();
 	}
 
 	/**
@@ -380,7 +345,7 @@ public class KaleoDefinitionVersionWrapper implements KaleoDefinitionVersion,
 	*/
 	@Override
 	public Date getStatusDate() {
-		return _kaleoDefinitionVersion.getStatusDate();
+		return model.getStatusDate();
 	}
 
 	/**
@@ -390,7 +355,7 @@ public class KaleoDefinitionVersionWrapper implements KaleoDefinitionVersion,
 	*/
 	@Override
 	public String getTitle() {
-		return _kaleoDefinitionVersion.getTitle();
+		return model.getTitle();
 	}
 
 	/**
@@ -401,7 +366,7 @@ public class KaleoDefinitionVersionWrapper implements KaleoDefinitionVersion,
 	*/
 	@Override
 	public String getTitle(java.util.Locale locale) {
-		return _kaleoDefinitionVersion.getTitle(locale);
+		return model.getTitle(locale);
 	}
 
 	/**
@@ -413,7 +378,7 @@ public class KaleoDefinitionVersionWrapper implements KaleoDefinitionVersion,
 	*/
 	@Override
 	public String getTitle(java.util.Locale locale, boolean useDefault) {
-		return _kaleoDefinitionVersion.getTitle(locale, useDefault);
+		return model.getTitle(locale, useDefault);
 	}
 
 	/**
@@ -424,7 +389,7 @@ public class KaleoDefinitionVersionWrapper implements KaleoDefinitionVersion,
 	*/
 	@Override
 	public String getTitle(String languageId) {
-		return _kaleoDefinitionVersion.getTitle(languageId);
+		return model.getTitle(languageId);
 	}
 
 	/**
@@ -436,17 +401,17 @@ public class KaleoDefinitionVersionWrapper implements KaleoDefinitionVersion,
 	*/
 	@Override
 	public String getTitle(String languageId, boolean useDefault) {
-		return _kaleoDefinitionVersion.getTitle(languageId, useDefault);
+		return model.getTitle(languageId, useDefault);
 	}
 
 	@Override
 	public String getTitleCurrentLanguageId() {
-		return _kaleoDefinitionVersion.getTitleCurrentLanguageId();
+		return model.getTitleCurrentLanguageId();
 	}
 
 	@Override
 	public String getTitleCurrentValue() {
-		return _kaleoDefinitionVersion.getTitleCurrentValue();
+		return model.getTitleCurrentValue();
 	}
 
 	/**
@@ -456,7 +421,7 @@ public class KaleoDefinitionVersionWrapper implements KaleoDefinitionVersion,
 	*/
 	@Override
 	public Map<java.util.Locale, String> getTitleMap() {
-		return _kaleoDefinitionVersion.getTitleMap();
+		return model.getTitleMap();
 	}
 
 	/**
@@ -466,7 +431,7 @@ public class KaleoDefinitionVersionWrapper implements KaleoDefinitionVersion,
 	*/
 	@Override
 	public long getUserId() {
-		return _kaleoDefinitionVersion.getUserId();
+		return model.getUserId();
 	}
 
 	/**
@@ -476,7 +441,7 @@ public class KaleoDefinitionVersionWrapper implements KaleoDefinitionVersion,
 	*/
 	@Override
 	public String getUserName() {
-		return _kaleoDefinitionVersion.getUserName();
+		return model.getUserName();
 	}
 
 	/**
@@ -486,7 +451,7 @@ public class KaleoDefinitionVersionWrapper implements KaleoDefinitionVersion,
 	*/
 	@Override
 	public String getUserUuid() {
-		return _kaleoDefinitionVersion.getUserUuid();
+		return model.getUserUuid();
 	}
 
 	/**
@@ -496,17 +461,12 @@ public class KaleoDefinitionVersionWrapper implements KaleoDefinitionVersion,
 	*/
 	@Override
 	public String getVersion() {
-		return _kaleoDefinitionVersion.getVersion();
-	}
-
-	@Override
-	public int hashCode() {
-		return _kaleoDefinitionVersion.hashCode();
+		return model.getVersion();
 	}
 
 	@Override
 	public boolean hasIncompleteKaleoInstances() {
-		return _kaleoDefinitionVersion.hasIncompleteKaleoInstances();
+		return model.hasIncompleteKaleoInstances();
 	}
 
 	/**
@@ -516,12 +476,7 @@ public class KaleoDefinitionVersionWrapper implements KaleoDefinitionVersion,
 	*/
 	@Override
 	public boolean isApproved() {
-		return _kaleoDefinitionVersion.isApproved();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _kaleoDefinitionVersion.isCachedModel();
+		return model.isApproved();
 	}
 
 	/**
@@ -531,7 +486,7 @@ public class KaleoDefinitionVersionWrapper implements KaleoDefinitionVersion,
 	*/
 	@Override
 	public boolean isDenied() {
-		return _kaleoDefinitionVersion.isDenied();
+		return model.isDenied();
 	}
 
 	/**
@@ -541,12 +496,7 @@ public class KaleoDefinitionVersionWrapper implements KaleoDefinitionVersion,
 	*/
 	@Override
 	public boolean isDraft() {
-		return _kaleoDefinitionVersion.isDraft();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _kaleoDefinitionVersion.isEscapedModel();
+		return model.isDraft();
 	}
 
 	/**
@@ -556,7 +506,7 @@ public class KaleoDefinitionVersionWrapper implements KaleoDefinitionVersion,
 	*/
 	@Override
 	public boolean isExpired() {
-		return _kaleoDefinitionVersion.isExpired();
+		return model.isExpired();
 	}
 
 	/**
@@ -566,7 +516,7 @@ public class KaleoDefinitionVersionWrapper implements KaleoDefinitionVersion,
 	*/
 	@Override
 	public boolean isInactive() {
-		return _kaleoDefinitionVersion.isInactive();
+		return model.isInactive();
 	}
 
 	/**
@@ -576,12 +526,7 @@ public class KaleoDefinitionVersionWrapper implements KaleoDefinitionVersion,
 	*/
 	@Override
 	public boolean isIncomplete() {
-		return _kaleoDefinitionVersion.isIncomplete();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _kaleoDefinitionVersion.isNew();
+		return model.isIncomplete();
 	}
 
 	/**
@@ -591,7 +536,7 @@ public class KaleoDefinitionVersionWrapper implements KaleoDefinitionVersion,
 	*/
 	@Override
 	public boolean isPending() {
-		return _kaleoDefinitionVersion.isPending();
+		return model.isPending();
 	}
 
 	/**
@@ -601,30 +546,25 @@ public class KaleoDefinitionVersionWrapper implements KaleoDefinitionVersion,
 	*/
 	@Override
 	public boolean isScheduled() {
-		return _kaleoDefinitionVersion.isScheduled();
+		return model.isScheduled();
 	}
 
 	@Override
 	public void persist() {
-		_kaleoDefinitionVersion.persist();
+		model.persist();
 	}
 
 	@Override
 	public void prepareLocalizedFieldsForImport()
 		throws com.liferay.portal.kernel.exception.LocaleException {
-		_kaleoDefinitionVersion.prepareLocalizedFieldsForImport();
+		model.prepareLocalizedFieldsForImport();
 	}
 
 	@Override
 	public void prepareLocalizedFieldsForImport(
 		java.util.Locale defaultImportLocale)
 		throws com.liferay.portal.kernel.exception.LocaleException {
-		_kaleoDefinitionVersion.prepareLocalizedFieldsForImport(defaultImportLocale);
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_kaleoDefinitionVersion.setCachedModel(cachedModel);
+		model.prepareLocalizedFieldsForImport(defaultImportLocale);
 	}
 
 	/**
@@ -634,7 +574,7 @@ public class KaleoDefinitionVersionWrapper implements KaleoDefinitionVersion,
 	*/
 	@Override
 	public void setCompanyId(long companyId) {
-		_kaleoDefinitionVersion.setCompanyId(companyId);
+		model.setCompanyId(companyId);
 	}
 
 	/**
@@ -644,7 +584,7 @@ public class KaleoDefinitionVersionWrapper implements KaleoDefinitionVersion,
 	*/
 	@Override
 	public void setContent(String content) {
-		_kaleoDefinitionVersion.setContent(content);
+		model.setContent(content);
 	}
 
 	/**
@@ -654,7 +594,7 @@ public class KaleoDefinitionVersionWrapper implements KaleoDefinitionVersion,
 	*/
 	@Override
 	public void setCreateDate(Date createDate) {
-		_kaleoDefinitionVersion.setCreateDate(createDate);
+		model.setCreateDate(createDate);
 	}
 
 	/**
@@ -664,23 +604,7 @@ public class KaleoDefinitionVersionWrapper implements KaleoDefinitionVersion,
 	*/
 	@Override
 	public void setDescription(String description) {
-		_kaleoDefinitionVersion.setDescription(description);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-		_kaleoDefinitionVersion.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_kaleoDefinitionVersion.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_kaleoDefinitionVersion.setExpandoBridgeAttributes(serviceContext);
+		model.setDescription(description);
 	}
 
 	/**
@@ -690,7 +614,7 @@ public class KaleoDefinitionVersionWrapper implements KaleoDefinitionVersion,
 	*/
 	@Override
 	public void setGroupId(long groupId) {
-		_kaleoDefinitionVersion.setGroupId(groupId);
+		model.setGroupId(groupId);
 	}
 
 	/**
@@ -700,7 +624,7 @@ public class KaleoDefinitionVersionWrapper implements KaleoDefinitionVersion,
 	*/
 	@Override
 	public void setKaleoDefinitionVersionId(long kaleoDefinitionVersionId) {
-		_kaleoDefinitionVersion.setKaleoDefinitionVersionId(kaleoDefinitionVersionId);
+		model.setKaleoDefinitionVersionId(kaleoDefinitionVersionId);
 	}
 
 	/**
@@ -710,7 +634,7 @@ public class KaleoDefinitionVersionWrapper implements KaleoDefinitionVersion,
 	*/
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
-		_kaleoDefinitionVersion.setModifiedDate(modifiedDate);
+		model.setModifiedDate(modifiedDate);
 	}
 
 	/**
@@ -720,12 +644,7 @@ public class KaleoDefinitionVersionWrapper implements KaleoDefinitionVersion,
 	*/
 	@Override
 	public void setName(String name) {
-		_kaleoDefinitionVersion.setName(name);
-	}
-
-	@Override
-	public void setNew(boolean n) {
-		_kaleoDefinitionVersion.setNew(n);
+		model.setName(name);
 	}
 
 	/**
@@ -735,12 +654,7 @@ public class KaleoDefinitionVersionWrapper implements KaleoDefinitionVersion,
 	*/
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_kaleoDefinitionVersion.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_kaleoDefinitionVersion.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -750,7 +664,7 @@ public class KaleoDefinitionVersionWrapper implements KaleoDefinitionVersion,
 	*/
 	@Override
 	public void setStartKaleoNodeId(long startKaleoNodeId) {
-		_kaleoDefinitionVersion.setStartKaleoNodeId(startKaleoNodeId);
+		model.setStartKaleoNodeId(startKaleoNodeId);
 	}
 
 	/**
@@ -760,7 +674,7 @@ public class KaleoDefinitionVersionWrapper implements KaleoDefinitionVersion,
 	*/
 	@Override
 	public void setStatus(int status) {
-		_kaleoDefinitionVersion.setStatus(status);
+		model.setStatus(status);
 	}
 
 	/**
@@ -770,7 +684,7 @@ public class KaleoDefinitionVersionWrapper implements KaleoDefinitionVersion,
 	*/
 	@Override
 	public void setStatusByUserId(long statusByUserId) {
-		_kaleoDefinitionVersion.setStatusByUserId(statusByUserId);
+		model.setStatusByUserId(statusByUserId);
 	}
 
 	/**
@@ -780,7 +694,7 @@ public class KaleoDefinitionVersionWrapper implements KaleoDefinitionVersion,
 	*/
 	@Override
 	public void setStatusByUserName(String statusByUserName) {
-		_kaleoDefinitionVersion.setStatusByUserName(statusByUserName);
+		model.setStatusByUserName(statusByUserName);
 	}
 
 	/**
@@ -790,7 +704,7 @@ public class KaleoDefinitionVersionWrapper implements KaleoDefinitionVersion,
 	*/
 	@Override
 	public void setStatusByUserUuid(String statusByUserUuid) {
-		_kaleoDefinitionVersion.setStatusByUserUuid(statusByUserUuid);
+		model.setStatusByUserUuid(statusByUserUuid);
 	}
 
 	/**
@@ -800,7 +714,7 @@ public class KaleoDefinitionVersionWrapper implements KaleoDefinitionVersion,
 	*/
 	@Override
 	public void setStatusDate(Date statusDate) {
-		_kaleoDefinitionVersion.setStatusDate(statusDate);
+		model.setStatusDate(statusDate);
 	}
 
 	/**
@@ -810,7 +724,7 @@ public class KaleoDefinitionVersionWrapper implements KaleoDefinitionVersion,
 	*/
 	@Override
 	public void setTitle(String title) {
-		_kaleoDefinitionVersion.setTitle(title);
+		model.setTitle(title);
 	}
 
 	/**
@@ -821,7 +735,7 @@ public class KaleoDefinitionVersionWrapper implements KaleoDefinitionVersion,
 	*/
 	@Override
 	public void setTitle(String title, java.util.Locale locale) {
-		_kaleoDefinitionVersion.setTitle(title, locale);
+		model.setTitle(title, locale);
 	}
 
 	/**
@@ -834,12 +748,12 @@ public class KaleoDefinitionVersionWrapper implements KaleoDefinitionVersion,
 	@Override
 	public void setTitle(String title, java.util.Locale locale,
 		java.util.Locale defaultLocale) {
-		_kaleoDefinitionVersion.setTitle(title, locale, defaultLocale);
+		model.setTitle(title, locale, defaultLocale);
 	}
 
 	@Override
 	public void setTitleCurrentLanguageId(String languageId) {
-		_kaleoDefinitionVersion.setTitleCurrentLanguageId(languageId);
+		model.setTitleCurrentLanguageId(languageId);
 	}
 
 	/**
@@ -849,7 +763,7 @@ public class KaleoDefinitionVersionWrapper implements KaleoDefinitionVersion,
 	*/
 	@Override
 	public void setTitleMap(Map<java.util.Locale, String> titleMap) {
-		_kaleoDefinitionVersion.setTitleMap(titleMap);
+		model.setTitleMap(titleMap);
 	}
 
 	/**
@@ -861,7 +775,7 @@ public class KaleoDefinitionVersionWrapper implements KaleoDefinitionVersion,
 	@Override
 	public void setTitleMap(Map<java.util.Locale, String> titleMap,
 		java.util.Locale defaultLocale) {
-		_kaleoDefinitionVersion.setTitleMap(titleMap, defaultLocale);
+		model.setTitleMap(titleMap, defaultLocale);
 	}
 
 	/**
@@ -871,7 +785,7 @@ public class KaleoDefinitionVersionWrapper implements KaleoDefinitionVersion,
 	*/
 	@Override
 	public void setUserId(long userId) {
-		_kaleoDefinitionVersion.setUserId(userId);
+		model.setUserId(userId);
 	}
 
 	/**
@@ -881,7 +795,7 @@ public class KaleoDefinitionVersionWrapper implements KaleoDefinitionVersion,
 	*/
 	@Override
 	public void setUserName(String userName) {
-		_kaleoDefinitionVersion.setUserName(userName);
+		model.setUserName(userName);
 	}
 
 	/**
@@ -891,7 +805,7 @@ public class KaleoDefinitionVersionWrapper implements KaleoDefinitionVersion,
 	*/
 	@Override
 	public void setUserUuid(String userUuid) {
-		_kaleoDefinitionVersion.setUserUuid(userUuid);
+		model.setUserUuid(userUuid);
 	}
 
 	/**
@@ -901,73 +815,12 @@ public class KaleoDefinitionVersionWrapper implements KaleoDefinitionVersion,
 	*/
 	@Override
 	public void setVersion(String version) {
-		_kaleoDefinitionVersion.setVersion(version);
+		model.setVersion(version);
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.CacheModel<KaleoDefinitionVersion> toCacheModel() {
-		return _kaleoDefinitionVersion.toCacheModel();
+	protected KaleoDefinitionVersionWrapper wrap(
+		KaleoDefinitionVersion kaleoDefinitionVersion) {
+		return new KaleoDefinitionVersionWrapper(kaleoDefinitionVersion);
 	}
-
-	@Override
-	public KaleoDefinitionVersion toEscapedModel() {
-		return new KaleoDefinitionVersionWrapper(_kaleoDefinitionVersion.toEscapedModel());
-	}
-
-	@Override
-	public String toString() {
-		return _kaleoDefinitionVersion.toString();
-	}
-
-	@Override
-	public KaleoDefinitionVersion toUnescapedModel() {
-		return new KaleoDefinitionVersionWrapper(_kaleoDefinitionVersion.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _kaleoDefinitionVersion.toXmlString();
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-
-		if (!(obj instanceof KaleoDefinitionVersionWrapper)) {
-			return false;
-		}
-
-		KaleoDefinitionVersionWrapper kaleoDefinitionVersionWrapper = (KaleoDefinitionVersionWrapper)obj;
-
-		if (Objects.equals(_kaleoDefinitionVersion,
-					kaleoDefinitionVersionWrapper._kaleoDefinitionVersion)) {
-			return true;
-		}
-
-		return false;
-	}
-
-	@Override
-	public KaleoDefinitionVersion getWrappedModel() {
-		return _kaleoDefinitionVersion;
-	}
-
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _kaleoDefinitionVersion.isEntityCacheEnabled();
-	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _kaleoDefinitionVersion.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_kaleoDefinitionVersion.resetOriginalValues();
-	}
-
-	private final KaleoDefinitionVersion _kaleoDefinitionVersion;
 }

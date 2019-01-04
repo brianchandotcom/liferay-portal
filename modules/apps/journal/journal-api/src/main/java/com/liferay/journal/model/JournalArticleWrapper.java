@@ -16,19 +16,14 @@ package com.liferay.journal.model;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
-
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 
 import com.liferay.portal.kernel.model.ModelWrapper;
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -40,20 +35,10 @@ import java.util.Objects;
  * @generated
  */
 @ProviderType
-public class JournalArticleWrapper implements JournalArticle,
-	ModelWrapper<JournalArticle> {
+public class JournalArticleWrapper extends BaseModelWrapper<JournalArticle>
+	implements JournalArticle, ModelWrapper<JournalArticle> {
 	public JournalArticleWrapper(JournalArticle journalArticle) {
-		_journalArticle = journalArticle;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return JournalArticle.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return JournalArticle.class.getName();
+		super(journalArticle);
 	}
 
 	@Override
@@ -301,23 +286,18 @@ public class JournalArticleWrapper implements JournalArticle,
 	@Override
 	public com.liferay.portal.kernel.repository.model.Folder addImagesFolder()
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _journalArticle.addImagesFolder();
+		return model.addImagesFolder();
 	}
 
 	@Override
 	public String buildTreePath()
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _journalArticle.buildTreePath();
+		return model.buildTreePath();
 	}
 
 	@Override
 	public Object clone() {
-		return new JournalArticleWrapper((JournalArticle)_journalArticle.clone());
-	}
-
-	@Override
-	public int compareTo(JournalArticle journalArticle) {
-		return _journalArticle.compareTo(journalArticle);
+		return new JournalArticleWrapper((JournalArticle)model.clone());
 	}
 
 	/**
@@ -327,30 +307,30 @@ public class JournalArticleWrapper implements JournalArticle,
 	*/
 	@Override
 	public String getArticleId() {
-		return _journalArticle.getArticleId();
+		return model.getArticleId();
 	}
 
 	@Override
 	public String getArticleImageURL(
 		com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay) {
-		return _journalArticle.getArticleImageURL(themeDisplay);
+		return model.getArticleImageURL(themeDisplay);
 	}
 
 	@Override
 	public JournalArticleResource getArticleResource()
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _journalArticle.getArticleResource();
+		return model.getArticleResource();
 	}
 
 	@Override
 	public String getArticleResourceUuid()
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _journalArticle.getArticleResourceUuid();
+		return model.getArticleResourceUuid();
 	}
 
 	@Override
 	public String[] getAvailableLanguageIds() {
-		return _journalArticle.getAvailableLanguageIds();
+		return model.getAvailableLanguageIds();
 	}
 
 	/**
@@ -360,7 +340,7 @@ public class JournalArticleWrapper implements JournalArticle,
 	*/
 	@Override
 	public String getClassName() {
-		return _journalArticle.getClassName();
+		return model.getClassName();
 	}
 
 	/**
@@ -370,7 +350,7 @@ public class JournalArticleWrapper implements JournalArticle,
 	*/
 	@Override
 	public long getClassNameId() {
-		return _journalArticle.getClassNameId();
+		return model.getClassNameId();
 	}
 
 	/**
@@ -380,7 +360,7 @@ public class JournalArticleWrapper implements JournalArticle,
 	*/
 	@Override
 	public long getClassPK() {
-		return _journalArticle.getClassPK();
+		return model.getClassPK();
 	}
 
 	/**
@@ -390,7 +370,7 @@ public class JournalArticleWrapper implements JournalArticle,
 	*/
 	@Override
 	public long getCompanyId() {
-		return _journalArticle.getCompanyId();
+		return model.getCompanyId();
 	}
 
 	/**
@@ -400,12 +380,12 @@ public class JournalArticleWrapper implements JournalArticle,
 	*/
 	@Override
 	public String getContent() {
-		return _journalArticle.getContent();
+		return model.getContent();
 	}
 
 	@Override
 	public String getContentByLocale(String languageId) {
-		return _journalArticle.getContentByLocale(languageId);
+		return model.getContentByLocale(languageId);
 	}
 
 	/**
@@ -415,12 +395,12 @@ public class JournalArticleWrapper implements JournalArticle,
 	*/
 	@Override
 	public Date getCreateDate() {
-		return _journalArticle.getCreateDate();
+		return model.getCreateDate();
 	}
 
 	@Override
 	public com.liferay.dynamic.data.mapping.model.DDMStructure getDDMStructure() {
-		return _journalArticle.getDDMStructure();
+		return model.getDDMStructure();
 	}
 
 	/**
@@ -430,12 +410,12 @@ public class JournalArticleWrapper implements JournalArticle,
 	*/
 	@Override
 	public String getDDMStructureKey() {
-		return _journalArticle.getDDMStructureKey();
+		return model.getDDMStructureKey();
 	}
 
 	@Override
 	public com.liferay.dynamic.data.mapping.model.DDMTemplate getDDMTemplate() {
-		return _journalArticle.getDDMTemplate();
+		return model.getDDMTemplate();
 	}
 
 	/**
@@ -445,7 +425,7 @@ public class JournalArticleWrapper implements JournalArticle,
 	*/
 	@Override
 	public String getDDMTemplateKey() {
-		return _journalArticle.getDDMTemplateKey();
+		return model.getDDMTemplateKey();
 	}
 
 	/**
@@ -455,42 +435,42 @@ public class JournalArticleWrapper implements JournalArticle,
 	*/
 	@Override
 	public String getDefaultLanguageId() {
-		return _journalArticle.getDefaultLanguageId();
+		return model.getDefaultLanguageId();
 	}
 
 	@Override
 	public String getDescription() {
-		return _journalArticle.getDescription();
+		return model.getDescription();
 	}
 
 	@Override
 	public String getDescription(java.util.Locale locale) {
-		return _journalArticle.getDescription(locale);
+		return model.getDescription(locale);
 	}
 
 	@Override
 	public String getDescription(java.util.Locale locale, boolean useDefault) {
-		return _journalArticle.getDescription(locale, useDefault);
+		return model.getDescription(locale, useDefault);
 	}
 
 	@Override
 	public String getDescription(String languageId) {
-		return _journalArticle.getDescription(languageId);
+		return model.getDescription(languageId);
 	}
 
 	@Override
 	public String getDescription(String languageId, boolean useDefault) {
-		return _journalArticle.getDescription(languageId, useDefault);
+		return model.getDescription(languageId, useDefault);
 	}
 
 	@Override
 	public Map<java.util.Locale, String> getDescriptionMap() {
-		return _journalArticle.getDescriptionMap();
+		return model.getDescriptionMap();
 	}
 
 	@Override
 	public String getDescriptionMapAsXML() {
-		return _journalArticle.getDescriptionMapAsXML();
+		return model.getDescriptionMapAsXML();
 	}
 
 	/**
@@ -500,17 +480,12 @@ public class JournalArticleWrapper implements JournalArticle,
 	*/
 	@Override
 	public Date getDisplayDate() {
-		return _journalArticle.getDisplayDate();
+		return model.getDisplayDate();
 	}
 
 	@Override
 	public com.liferay.portal.kernel.xml.Document getDocument() {
-		return _journalArticle.getDocument();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _journalArticle.getExpandoBridge();
+		return model.getDocument();
 	}
 
 	/**
@@ -520,13 +495,13 @@ public class JournalArticleWrapper implements JournalArticle,
 	*/
 	@Override
 	public Date getExpirationDate() {
-		return _journalArticle.getExpirationDate();
+		return model.getExpirationDate();
 	}
 
 	@Override
 	public JournalFolder getFolder()
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _journalArticle.getFolder();
+		return model.getFolder();
 	}
 
 	/**
@@ -536,19 +511,19 @@ public class JournalArticleWrapper implements JournalArticle,
 	*/
 	@Override
 	public long getFolderId() {
-		return _journalArticle.getFolderId();
+		return model.getFolderId();
 	}
 
 	@Override
 	public Map<java.util.Locale, String> getFriendlyURLMap()
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _journalArticle.getFriendlyURLMap();
+		return model.getFriendlyURLMap();
 	}
 
 	@Override
 	public String getFriendlyURLsXML()
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _journalArticle.getFriendlyURLsXML();
+		return model.getFriendlyURLsXML();
 	}
 
 	/**
@@ -558,7 +533,7 @@ public class JournalArticleWrapper implements JournalArticle,
 	*/
 	@Override
 	public long getGroupId() {
-		return _journalArticle.getGroupId();
+		return model.getGroupId();
 	}
 
 	/**
@@ -568,38 +543,38 @@ public class JournalArticleWrapper implements JournalArticle,
 	*/
 	@Override
 	public long getId() {
-		return _journalArticle.getId();
+		return model.getId();
 	}
 
 	@Override
 	public java.util.List<com.liferay.portal.kernel.repository.model.FileEntry> getImagesFileEntries()
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _journalArticle.getImagesFileEntries();
+		return model.getImagesFileEntries();
 	}
 
 	@Override
 	public java.util.List<com.liferay.portal.kernel.repository.model.FileEntry> getImagesFileEntries(
 		int start, int end)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _journalArticle.getImagesFileEntries(start, end);
+		return model.getImagesFileEntries(start, end);
 	}
 
 	@Override
 	public java.util.List<com.liferay.portal.kernel.repository.model.FileEntry> getImagesFileEntries(
 		int start, int end, com.liferay.portal.kernel.util.OrderByComparator obc)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _journalArticle.getImagesFileEntries(start, end, obc);
+		return model.getImagesFileEntries(start, end, obc);
 	}
 
 	@Override
 	public int getImagesFileEntriesCount()
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _journalArticle.getImagesFileEntriesCount();
+		return model.getImagesFileEntriesCount();
 	}
 
 	@Override
 	public long getImagesFolderId() {
-		return _journalArticle.getImagesFolderId();
+		return model.getImagesFolderId();
 	}
 
 	/**
@@ -609,7 +584,7 @@ public class JournalArticleWrapper implements JournalArticle,
 	*/
 	@Override
 	public boolean getIndexable() {
-		return _journalArticle.getIndexable();
+		return model.getIndexable();
 	}
 
 	/**
@@ -619,12 +594,12 @@ public class JournalArticleWrapper implements JournalArticle,
 	*/
 	@Override
 	public Date getLastPublishDate() {
-		return _journalArticle.getLastPublishDate();
+		return model.getLastPublishDate();
 	}
 
 	@Override
 	public com.liferay.portal.kernel.model.Layout getLayout() {
-		return _journalArticle.getLayout();
+		return model.getLayout();
 	}
 
 	/**
@@ -634,7 +609,7 @@ public class JournalArticleWrapper implements JournalArticle,
 	*/
 	@Override
 	public String getLayoutUuid() {
-		return _journalArticle.getLayoutUuid();
+		return model.getLayoutUuid();
 	}
 
 	/**
@@ -643,7 +618,7 @@ public class JournalArticleWrapper implements JournalArticle,
 	@Deprecated
 	@Override
 	public String getLegacyDescription() {
-		return _journalArticle.getLegacyDescription();
+		return model.getLegacyDescription();
 	}
 
 	/**
@@ -652,7 +627,7 @@ public class JournalArticleWrapper implements JournalArticle,
 	@Deprecated
 	@Override
 	public String getLegacyTitle() {
-		return _journalArticle.getLegacyTitle();
+		return model.getLegacyTitle();
 	}
 
 	/**
@@ -662,7 +637,7 @@ public class JournalArticleWrapper implements JournalArticle,
 	*/
 	@Override
 	public Date getModifiedDate() {
-		return _journalArticle.getModifiedDate();
+		return model.getModifiedDate();
 	}
 
 	/**
@@ -672,12 +647,7 @@ public class JournalArticleWrapper implements JournalArticle,
 	*/
 	@Override
 	public long getPrimaryKey() {
-		return _journalArticle.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _journalArticle.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	/**
@@ -687,7 +657,7 @@ public class JournalArticleWrapper implements JournalArticle,
 	*/
 	@Override
 	public long getResourcePrimKey() {
-		return _journalArticle.getResourcePrimKey();
+		return model.getResourcePrimKey();
 	}
 
 	/**
@@ -697,7 +667,7 @@ public class JournalArticleWrapper implements JournalArticle,
 	*/
 	@Override
 	public Date getReviewDate() {
-		return _journalArticle.getReviewDate();
+		return model.getReviewDate();
 	}
 
 	/**
@@ -707,7 +677,7 @@ public class JournalArticleWrapper implements JournalArticle,
 	*/
 	@Override
 	public boolean getSmallImage() {
-		return _journalArticle.getSmallImage();
+		return model.getSmallImage();
 	}
 
 	/**
@@ -717,13 +687,13 @@ public class JournalArticleWrapper implements JournalArticle,
 	*/
 	@Override
 	public long getSmallImageId() {
-		return _journalArticle.getSmallImageId();
+		return model.getSmallImageId();
 	}
 
 	@Override
 	public String getSmallImageType()
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _journalArticle.getSmallImageType();
+		return model.getSmallImageType();
 	}
 
 	/**
@@ -733,7 +703,7 @@ public class JournalArticleWrapper implements JournalArticle,
 	*/
 	@Override
 	public String getSmallImageURL() {
-		return _journalArticle.getSmallImageURL();
+		return model.getSmallImageURL();
 	}
 
 	/**
@@ -743,7 +713,7 @@ public class JournalArticleWrapper implements JournalArticle,
 	*/
 	@Override
 	public int getStatus() {
-		return _journalArticle.getStatus();
+		return model.getStatus();
 	}
 
 	/**
@@ -753,7 +723,7 @@ public class JournalArticleWrapper implements JournalArticle,
 	*/
 	@Override
 	public long getStatusByUserId() {
-		return _journalArticle.getStatusByUserId();
+		return model.getStatusByUserId();
 	}
 
 	/**
@@ -763,7 +733,7 @@ public class JournalArticleWrapper implements JournalArticle,
 	*/
 	@Override
 	public String getStatusByUserName() {
-		return _journalArticle.getStatusByUserName();
+		return model.getStatusByUserName();
 	}
 
 	/**
@@ -773,7 +743,7 @@ public class JournalArticleWrapper implements JournalArticle,
 	*/
 	@Override
 	public String getStatusByUserUuid() {
-		return _journalArticle.getStatusByUserUuid();
+		return model.getStatusByUserUuid();
 	}
 
 	/**
@@ -783,7 +753,7 @@ public class JournalArticleWrapper implements JournalArticle,
 	*/
 	@Override
 	public Date getStatusDate() {
-		return _journalArticle.getStatusDate();
+		return model.getStatusDate();
 	}
 
 	/**
@@ -793,7 +763,7 @@ public class JournalArticleWrapper implements JournalArticle,
 	@Deprecated
 	@Override
 	public String getStructureId() {
-		return _journalArticle.getStructureId();
+		return model.getStructureId();
 	}
 
 	/**
@@ -803,47 +773,47 @@ public class JournalArticleWrapper implements JournalArticle,
 	@Deprecated
 	@Override
 	public String getTemplateId() {
-		return _journalArticle.getTemplateId();
+		return model.getTemplateId();
 	}
 
 	@Override
 	public String getTitle() {
-		return _journalArticle.getTitle();
+		return model.getTitle();
 	}
 
 	@Override
 	public String getTitle(java.util.Locale locale) {
-		return _journalArticle.getTitle(locale);
+		return model.getTitle(locale);
 	}
 
 	@Override
 	public String getTitle(java.util.Locale locale, boolean useDefault) {
-		return _journalArticle.getTitle(locale, useDefault);
+		return model.getTitle(locale, useDefault);
 	}
 
 	@Override
 	public String getTitle(String languageId) {
-		return _journalArticle.getTitle(languageId);
+		return model.getTitle(languageId);
 	}
 
 	@Override
 	public String getTitle(String languageId, boolean useDefault) {
-		return _journalArticle.getTitle(languageId, useDefault);
+		return model.getTitle(languageId, useDefault);
 	}
 
 	@Override
 	public String getTitleCurrentValue() {
-		return _journalArticle.getTitleCurrentValue();
+		return model.getTitleCurrentValue();
 	}
 
 	@Override
 	public Map<java.util.Locale, String> getTitleMap() {
-		return _journalArticle.getTitleMap();
+		return model.getTitleMap();
 	}
 
 	@Override
 	public String getTitleMapAsXML() {
-		return _journalArticle.getTitleMapAsXML();
+		return model.getTitleMapAsXML();
 	}
 
 	/**
@@ -854,7 +824,7 @@ public class JournalArticleWrapper implements JournalArticle,
 	@Override
 	public com.liferay.trash.kernel.model.TrashEntry getTrashEntry()
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _journalArticle.getTrashEntry();
+		return model.getTrashEntry();
 	}
 
 	/**
@@ -864,7 +834,7 @@ public class JournalArticleWrapper implements JournalArticle,
 	*/
 	@Override
 	public long getTrashEntryClassPK() {
-		return _journalArticle.getTrashEntryClassPK();
+		return model.getTrashEntryClassPK();
 	}
 
 	/**
@@ -876,7 +846,7 @@ public class JournalArticleWrapper implements JournalArticle,
 	@Deprecated
 	@Override
 	public com.liferay.portal.kernel.trash.TrashHandler getTrashHandler() {
-		return _journalArticle.getTrashHandler();
+		return model.getTrashHandler();
 	}
 
 	/**
@@ -886,7 +856,7 @@ public class JournalArticleWrapper implements JournalArticle,
 	*/
 	@Override
 	public String getTreePath() {
-		return _journalArticle.getTreePath();
+		return model.getTreePath();
 	}
 
 	/**
@@ -896,13 +866,13 @@ public class JournalArticleWrapper implements JournalArticle,
 	*/
 	@Override
 	public String getUrlTitle() {
-		return _journalArticle.getUrlTitle();
+		return model.getUrlTitle();
 	}
 
 	@Override
 	public String getUrlTitle(java.util.Locale locale)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _journalArticle.getUrlTitle(locale);
+		return model.getUrlTitle(locale);
 	}
 
 	/**
@@ -912,7 +882,7 @@ public class JournalArticleWrapper implements JournalArticle,
 	*/
 	@Override
 	public long getUserId() {
-		return _journalArticle.getUserId();
+		return model.getUserId();
 	}
 
 	/**
@@ -922,7 +892,7 @@ public class JournalArticleWrapper implements JournalArticle,
 	*/
 	@Override
 	public String getUserName() {
-		return _journalArticle.getUserName();
+		return model.getUserName();
 	}
 
 	/**
@@ -932,7 +902,7 @@ public class JournalArticleWrapper implements JournalArticle,
 	*/
 	@Override
 	public String getUserUuid() {
-		return _journalArticle.getUserUuid();
+		return model.getUserUuid();
 	}
 
 	/**
@@ -942,7 +912,7 @@ public class JournalArticleWrapper implements JournalArticle,
 	*/
 	@Override
 	public String getUuid() {
-		return _journalArticle.getUuid();
+		return model.getUuid();
 	}
 
 	/**
@@ -952,17 +922,12 @@ public class JournalArticleWrapper implements JournalArticle,
 	*/
 	@Override
 	public double getVersion() {
-		return _journalArticle.getVersion();
+		return model.getVersion();
 	}
 
 	@Override
 	public boolean hasApprovedVersion() {
-		return _journalArticle.hasApprovedVersion();
-	}
-
-	@Override
-	public int hashCode() {
-		return _journalArticle.hashCode();
+		return model.hasApprovedVersion();
 	}
 
 	/**
@@ -972,12 +937,7 @@ public class JournalArticleWrapper implements JournalArticle,
 	*/
 	@Override
 	public boolean isApproved() {
-		return _journalArticle.isApproved();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _journalArticle.isCachedModel();
+		return model.isApproved();
 	}
 
 	/**
@@ -987,7 +947,7 @@ public class JournalArticleWrapper implements JournalArticle,
 	*/
 	@Override
 	public boolean isDenied() {
-		return _journalArticle.isDenied();
+		return model.isDenied();
 	}
 
 	/**
@@ -997,12 +957,7 @@ public class JournalArticleWrapper implements JournalArticle,
 	*/
 	@Override
 	public boolean isDraft() {
-		return _journalArticle.isDraft();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _journalArticle.isEscapedModel();
+		return model.isDraft();
 	}
 
 	/**
@@ -1012,7 +967,7 @@ public class JournalArticleWrapper implements JournalArticle,
 	*/
 	@Override
 	public boolean isExpired() {
-		return _journalArticle.isExpired();
+		return model.isExpired();
 	}
 
 	/**
@@ -1022,7 +977,7 @@ public class JournalArticleWrapper implements JournalArticle,
 	*/
 	@Override
 	public boolean isInactive() {
-		return _journalArticle.isInactive();
+		return model.isInactive();
 	}
 
 	/**
@@ -1032,7 +987,7 @@ public class JournalArticleWrapper implements JournalArticle,
 	*/
 	@Override
 	public boolean isIncomplete() {
-		return _journalArticle.isIncomplete();
+		return model.isIncomplete();
 	}
 
 	/**
@@ -1042,7 +997,7 @@ public class JournalArticleWrapper implements JournalArticle,
 	*/
 	@Override
 	public boolean isIndexable() {
-		return _journalArticle.isIndexable();
+		return model.isIndexable();
 	}
 
 	/**
@@ -1052,7 +1007,7 @@ public class JournalArticleWrapper implements JournalArticle,
 	*/
 	@Override
 	public boolean isInTrash() {
-		return _journalArticle.isInTrash();
+		return model.isInTrash();
 	}
 
 	/**
@@ -1062,22 +1017,17 @@ public class JournalArticleWrapper implements JournalArticle,
 	*/
 	@Override
 	public boolean isInTrashContainer() {
-		return _journalArticle.isInTrashContainer();
+		return model.isInTrashContainer();
 	}
 
 	@Override
 	public boolean isInTrashExplicitly() {
-		return _journalArticle.isInTrashExplicitly();
+		return model.isInTrashExplicitly();
 	}
 
 	@Override
 	public boolean isInTrashImplicitly() {
-		return _journalArticle.isInTrashImplicitly();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _journalArticle.isNew();
+		return model.isInTrashImplicitly();
 	}
 
 	/**
@@ -1087,12 +1037,12 @@ public class JournalArticleWrapper implements JournalArticle,
 	*/
 	@Override
 	public boolean isPending() {
-		return _journalArticle.isPending();
+		return model.isPending();
 	}
 
 	@Override
 	public boolean isResourceMain() {
-		return _journalArticle.isResourceMain();
+		return model.isResourceMain();
 	}
 
 	/**
@@ -1102,7 +1052,7 @@ public class JournalArticleWrapper implements JournalArticle,
 	*/
 	@Override
 	public boolean isScheduled() {
-		return _journalArticle.isScheduled();
+		return model.isScheduled();
 	}
 
 	/**
@@ -1112,7 +1062,7 @@ public class JournalArticleWrapper implements JournalArticle,
 	*/
 	@Override
 	public boolean isSmallImage() {
-		return _journalArticle.isSmallImage();
+		return model.isSmallImage();
 	}
 
 	/**
@@ -1121,12 +1071,12 @@ public class JournalArticleWrapper implements JournalArticle,
 	@Deprecated
 	@Override
 	public boolean isTemplateDriven() {
-		return _journalArticle.isTemplateDriven();
+		return model.isTemplateDriven();
 	}
 
 	@Override
 	public void persist() {
-		_journalArticle.persist();
+		model.persist();
 	}
 
 	/**
@@ -1136,17 +1086,12 @@ public class JournalArticleWrapper implements JournalArticle,
 	*/
 	@Override
 	public void setArticleId(String articleId) {
-		_journalArticle.setArticleId(articleId);
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_journalArticle.setCachedModel(cachedModel);
+		model.setArticleId(articleId);
 	}
 
 	@Override
 	public void setClassName(String className) {
-		_journalArticle.setClassName(className);
+		model.setClassName(className);
 	}
 
 	/**
@@ -1156,7 +1101,7 @@ public class JournalArticleWrapper implements JournalArticle,
 	*/
 	@Override
 	public void setClassNameId(long classNameId) {
-		_journalArticle.setClassNameId(classNameId);
+		model.setClassNameId(classNameId);
 	}
 
 	/**
@@ -1166,7 +1111,7 @@ public class JournalArticleWrapper implements JournalArticle,
 	*/
 	@Override
 	public void setClassPK(long classPK) {
-		_journalArticle.setClassPK(classPK);
+		model.setClassPK(classPK);
 	}
 
 	/**
@@ -1176,7 +1121,7 @@ public class JournalArticleWrapper implements JournalArticle,
 	*/
 	@Override
 	public void setCompanyId(long companyId) {
-		_journalArticle.setCompanyId(companyId);
+		model.setCompanyId(companyId);
 	}
 
 	/**
@@ -1186,7 +1131,7 @@ public class JournalArticleWrapper implements JournalArticle,
 	*/
 	@Override
 	public void setContent(String content) {
-		_journalArticle.setContent(content);
+		model.setContent(content);
 	}
 
 	/**
@@ -1196,7 +1141,7 @@ public class JournalArticleWrapper implements JournalArticle,
 	*/
 	@Override
 	public void setCreateDate(Date createDate) {
-		_journalArticle.setCreateDate(createDate);
+		model.setCreateDate(createDate);
 	}
 
 	/**
@@ -1206,7 +1151,7 @@ public class JournalArticleWrapper implements JournalArticle,
 	*/
 	@Override
 	public void setDDMStructureKey(String DDMStructureKey) {
-		_journalArticle.setDDMStructureKey(DDMStructureKey);
+		model.setDDMStructureKey(DDMStructureKey);
 	}
 
 	/**
@@ -1216,7 +1161,7 @@ public class JournalArticleWrapper implements JournalArticle,
 	*/
 	@Override
 	public void setDDMTemplateKey(String DDMTemplateKey) {
-		_journalArticle.setDDMTemplateKey(DDMTemplateKey);
+		model.setDDMTemplateKey(DDMTemplateKey);
 	}
 
 	/**
@@ -1226,7 +1171,7 @@ public class JournalArticleWrapper implements JournalArticle,
 	*/
 	@Override
 	public void setDefaultLanguageId(String defaultLanguageId) {
-		_journalArticle.setDefaultLanguageId(defaultLanguageId);
+		model.setDefaultLanguageId(defaultLanguageId);
 	}
 
 	/**
@@ -1235,12 +1180,12 @@ public class JournalArticleWrapper implements JournalArticle,
 	@Deprecated
 	@Override
 	public void setDescription(String description) {
-		_journalArticle.setDescription(description);
+		model.setDescription(description);
 	}
 
 	@Override
 	public void setDescriptionMap(Map<java.util.Locale, String> descriptionMap) {
-		_journalArticle.setDescriptionMap(descriptionMap);
+		model.setDescriptionMap(descriptionMap);
 	}
 
 	/**
@@ -1250,28 +1195,12 @@ public class JournalArticleWrapper implements JournalArticle,
 	*/
 	@Override
 	public void setDisplayDate(Date displayDate) {
-		_journalArticle.setDisplayDate(displayDate);
+		model.setDisplayDate(displayDate);
 	}
 
 	@Override
 	public void setDocument(com.liferay.portal.kernel.xml.Document document) {
-		_journalArticle.setDocument(document);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-		_journalArticle.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_journalArticle.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_journalArticle.setExpandoBridgeAttributes(serviceContext);
+		model.setDocument(document);
 	}
 
 	/**
@@ -1281,7 +1210,7 @@ public class JournalArticleWrapper implements JournalArticle,
 	*/
 	@Override
 	public void setExpirationDate(Date expirationDate) {
-		_journalArticle.setExpirationDate(expirationDate);
+		model.setExpirationDate(expirationDate);
 	}
 
 	/**
@@ -1291,7 +1220,7 @@ public class JournalArticleWrapper implements JournalArticle,
 	*/
 	@Override
 	public void setFolderId(long folderId) {
-		_journalArticle.setFolderId(folderId);
+		model.setFolderId(folderId);
 	}
 
 	/**
@@ -1301,7 +1230,7 @@ public class JournalArticleWrapper implements JournalArticle,
 	*/
 	@Override
 	public void setGroupId(long groupId) {
-		_journalArticle.setGroupId(groupId);
+		model.setGroupId(groupId);
 	}
 
 	/**
@@ -1311,12 +1240,12 @@ public class JournalArticleWrapper implements JournalArticle,
 	*/
 	@Override
 	public void setId(long id) {
-		_journalArticle.setId(id);
+		model.setId(id);
 	}
 
 	@Override
 	public void setImagesFolderId(long imagesFolderId) {
-		_journalArticle.setImagesFolderId(imagesFolderId);
+		model.setImagesFolderId(imagesFolderId);
 	}
 
 	/**
@@ -1326,7 +1255,7 @@ public class JournalArticleWrapper implements JournalArticle,
 	*/
 	@Override
 	public void setIndexable(boolean indexable) {
-		_journalArticle.setIndexable(indexable);
+		model.setIndexable(indexable);
 	}
 
 	/**
@@ -1336,7 +1265,7 @@ public class JournalArticleWrapper implements JournalArticle,
 	*/
 	@Override
 	public void setLastPublishDate(Date lastPublishDate) {
-		_journalArticle.setLastPublishDate(lastPublishDate);
+		model.setLastPublishDate(lastPublishDate);
 	}
 
 	/**
@@ -1346,7 +1275,7 @@ public class JournalArticleWrapper implements JournalArticle,
 	*/
 	@Override
 	public void setLayoutUuid(String layoutUuid) {
-		_journalArticle.setLayoutUuid(layoutUuid);
+		model.setLayoutUuid(layoutUuid);
 	}
 
 	/**
@@ -1356,12 +1285,7 @@ public class JournalArticleWrapper implements JournalArticle,
 	*/
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
-		_journalArticle.setModifiedDate(modifiedDate);
-	}
-
-	@Override
-	public void setNew(boolean n) {
-		_journalArticle.setNew(n);
+		model.setModifiedDate(modifiedDate);
 	}
 
 	/**
@@ -1371,12 +1295,7 @@ public class JournalArticleWrapper implements JournalArticle,
 	*/
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_journalArticle.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_journalArticle.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -1386,7 +1305,7 @@ public class JournalArticleWrapper implements JournalArticle,
 	*/
 	@Override
 	public void setResourcePrimKey(long resourcePrimKey) {
-		_journalArticle.setResourcePrimKey(resourcePrimKey);
+		model.setResourcePrimKey(resourcePrimKey);
 	}
 
 	/**
@@ -1396,7 +1315,7 @@ public class JournalArticleWrapper implements JournalArticle,
 	*/
 	@Override
 	public void setReviewDate(Date reviewDate) {
-		_journalArticle.setReviewDate(reviewDate);
+		model.setReviewDate(reviewDate);
 	}
 
 	/**
@@ -1406,7 +1325,7 @@ public class JournalArticleWrapper implements JournalArticle,
 	*/
 	@Override
 	public void setSmallImage(boolean smallImage) {
-		_journalArticle.setSmallImage(smallImage);
+		model.setSmallImage(smallImage);
 	}
 
 	/**
@@ -1416,12 +1335,12 @@ public class JournalArticleWrapper implements JournalArticle,
 	*/
 	@Override
 	public void setSmallImageId(long smallImageId) {
-		_journalArticle.setSmallImageId(smallImageId);
+		model.setSmallImageId(smallImageId);
 	}
 
 	@Override
 	public void setSmallImageType(String smallImageType) {
-		_journalArticle.setSmallImageType(smallImageType);
+		model.setSmallImageType(smallImageType);
 	}
 
 	/**
@@ -1431,7 +1350,7 @@ public class JournalArticleWrapper implements JournalArticle,
 	*/
 	@Override
 	public void setSmallImageURL(String smallImageURL) {
-		_journalArticle.setSmallImageURL(smallImageURL);
+		model.setSmallImageURL(smallImageURL);
 	}
 
 	/**
@@ -1441,7 +1360,7 @@ public class JournalArticleWrapper implements JournalArticle,
 	*/
 	@Override
 	public void setStatus(int status) {
-		_journalArticle.setStatus(status);
+		model.setStatus(status);
 	}
 
 	/**
@@ -1451,7 +1370,7 @@ public class JournalArticleWrapper implements JournalArticle,
 	*/
 	@Override
 	public void setStatusByUserId(long statusByUserId) {
-		_journalArticle.setStatusByUserId(statusByUserId);
+		model.setStatusByUserId(statusByUserId);
 	}
 
 	/**
@@ -1461,7 +1380,7 @@ public class JournalArticleWrapper implements JournalArticle,
 	*/
 	@Override
 	public void setStatusByUserName(String statusByUserName) {
-		_journalArticle.setStatusByUserName(statusByUserName);
+		model.setStatusByUserName(statusByUserName);
 	}
 
 	/**
@@ -1471,7 +1390,7 @@ public class JournalArticleWrapper implements JournalArticle,
 	*/
 	@Override
 	public void setStatusByUserUuid(String statusByUserUuid) {
-		_journalArticle.setStatusByUserUuid(statusByUserUuid);
+		model.setStatusByUserUuid(statusByUserUuid);
 	}
 
 	/**
@@ -1481,7 +1400,7 @@ public class JournalArticleWrapper implements JournalArticle,
 	*/
 	@Override
 	public void setStatusDate(Date statusDate) {
-		_journalArticle.setStatusDate(statusDate);
+		model.setStatusDate(statusDate);
 	}
 
 	/**
@@ -1491,7 +1410,7 @@ public class JournalArticleWrapper implements JournalArticle,
 	@Deprecated
 	@Override
 	public void setStructureId(String ddmStructureKey) {
-		_journalArticle.setStructureId(ddmStructureKey);
+		model.setStructureId(ddmStructureKey);
 	}
 
 	/**
@@ -1501,7 +1420,7 @@ public class JournalArticleWrapper implements JournalArticle,
 	@Deprecated
 	@Override
 	public void setTemplateId(String ddmTemplateKey) {
-		_journalArticle.setTemplateId(ddmTemplateKey);
+		model.setTemplateId(ddmTemplateKey);
 	}
 
 	/**
@@ -1510,12 +1429,12 @@ public class JournalArticleWrapper implements JournalArticle,
 	@Deprecated
 	@Override
 	public void setTitle(String title) {
-		_journalArticle.setTitle(title);
+		model.setTitle(title);
 	}
 
 	@Override
 	public void setTitleMap(Map<java.util.Locale, String> titleMap) {
-		_journalArticle.setTitleMap(titleMap);
+		model.setTitleMap(titleMap);
 	}
 
 	/**
@@ -1525,7 +1444,7 @@ public class JournalArticleWrapper implements JournalArticle,
 	*/
 	@Override
 	public void setTreePath(String treePath) {
-		_journalArticle.setTreePath(treePath);
+		model.setTreePath(treePath);
 	}
 
 	/**
@@ -1535,7 +1454,7 @@ public class JournalArticleWrapper implements JournalArticle,
 	*/
 	@Override
 	public void setUrlTitle(String urlTitle) {
-		_journalArticle.setUrlTitle(urlTitle);
+		model.setUrlTitle(urlTitle);
 	}
 
 	/**
@@ -1545,7 +1464,7 @@ public class JournalArticleWrapper implements JournalArticle,
 	*/
 	@Override
 	public void setUserId(long userId) {
-		_journalArticle.setUserId(userId);
+		model.setUserId(userId);
 	}
 
 	/**
@@ -1555,7 +1474,7 @@ public class JournalArticleWrapper implements JournalArticle,
 	*/
 	@Override
 	public void setUserName(String userName) {
-		_journalArticle.setUserName(userName);
+		model.setUserName(userName);
 	}
 
 	/**
@@ -1565,7 +1484,7 @@ public class JournalArticleWrapper implements JournalArticle,
 	*/
 	@Override
 	public void setUserUuid(String userUuid) {
-		_journalArticle.setUserUuid(userUuid);
+		model.setUserUuid(userUuid);
 	}
 
 	/**
@@ -1575,7 +1494,7 @@ public class JournalArticleWrapper implements JournalArticle,
 	*/
 	@Override
 	public void setUuid(String uuid) {
-		_journalArticle.setUuid(uuid);
+		model.setUuid(uuid);
 	}
 
 	/**
@@ -1585,83 +1504,21 @@ public class JournalArticleWrapper implements JournalArticle,
 	*/
 	@Override
 	public void setVersion(double version) {
-		_journalArticle.setVersion(version);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<JournalArticle> toCacheModel() {
-		return _journalArticle.toCacheModel();
-	}
-
-	@Override
-	public JournalArticle toEscapedModel() {
-		return new JournalArticleWrapper(_journalArticle.toEscapedModel());
-	}
-
-	@Override
-	public String toString() {
-		return _journalArticle.toString();
-	}
-
-	@Override
-	public JournalArticle toUnescapedModel() {
-		return new JournalArticleWrapper(_journalArticle.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _journalArticle.toXmlString();
+		model.setVersion(version);
 	}
 
 	@Override
 	public void updateTreePath(String treePath) {
-		_journalArticle.updateTreePath(treePath);
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-
-		if (!(obj instanceof JournalArticleWrapper)) {
-			return false;
-		}
-
-		JournalArticleWrapper journalArticleWrapper = (JournalArticleWrapper)obj;
-
-		if (Objects.equals(_journalArticle,
-					journalArticleWrapper._journalArticle)) {
-			return true;
-		}
-
-		return false;
+		model.updateTreePath(treePath);
 	}
 
 	@Override
 	public StagedModelType getStagedModelType() {
-		return _journalArticle.getStagedModelType();
+		return model.getStagedModelType();
 	}
 
 	@Override
-	public JournalArticle getWrappedModel() {
-		return _journalArticle;
+	protected JournalArticleWrapper wrap(JournalArticle journalArticle) {
+		return new JournalArticleWrapper(journalArticle);
 	}
-
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _journalArticle.isEntityCacheEnabled();
-	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _journalArticle.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_journalArticle.resetOriginalValues();
-	}
-
-	private final JournalArticle _journalArticle;
 }

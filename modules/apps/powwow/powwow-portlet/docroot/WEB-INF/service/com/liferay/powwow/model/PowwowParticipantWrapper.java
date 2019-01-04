@@ -16,17 +16,12 @@ package com.liferay.powwow.model;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
-
 import com.liferay.portal.kernel.model.ModelWrapper;
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -38,20 +33,10 @@ import java.util.Objects;
  * @generated
  */
 @ProviderType
-public class PowwowParticipantWrapper implements PowwowParticipant,
-	ModelWrapper<PowwowParticipant> {
+public class PowwowParticipantWrapper extends BaseModelWrapper<PowwowParticipant>
+	implements PowwowParticipant, ModelWrapper<PowwowParticipant> {
 	public PowwowParticipantWrapper(PowwowParticipant powwowParticipant) {
-		_powwowParticipant = powwowParticipant;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return PowwowParticipant.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return PowwowParticipant.class.getName();
+		super(powwowParticipant);
 	}
 
 	@Override
@@ -156,16 +141,6 @@ public class PowwowParticipantWrapper implements PowwowParticipant,
 		}
 	}
 
-	@Override
-	public Object clone() {
-		return new PowwowParticipantWrapper((PowwowParticipant)_powwowParticipant.clone());
-	}
-
-	@Override
-	public int compareTo(PowwowParticipant powwowParticipant) {
-		return _powwowParticipant.compareTo(powwowParticipant);
-	}
-
 	/**
 	* Returns the company ID of this powwow participant.
 	*
@@ -173,7 +148,7 @@ public class PowwowParticipantWrapper implements PowwowParticipant,
 	*/
 	@Override
 	public long getCompanyId() {
-		return _powwowParticipant.getCompanyId();
+		return model.getCompanyId();
 	}
 
 	/**
@@ -183,7 +158,7 @@ public class PowwowParticipantWrapper implements PowwowParticipant,
 	*/
 	@Override
 	public Date getCreateDate() {
-		return _powwowParticipant.getCreateDate();
+		return model.getCreateDate();
 	}
 
 	/**
@@ -193,12 +168,7 @@ public class PowwowParticipantWrapper implements PowwowParticipant,
 	*/
 	@Override
 	public String getEmailAddress() {
-		return _powwowParticipant.getEmailAddress();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _powwowParticipant.getExpandoBridge();
+		return model.getEmailAddress();
 	}
 
 	/**
@@ -208,7 +178,7 @@ public class PowwowParticipantWrapper implements PowwowParticipant,
 	*/
 	@Override
 	public long getGroupId() {
-		return _powwowParticipant.getGroupId();
+		return model.getGroupId();
 	}
 
 	/**
@@ -218,7 +188,7 @@ public class PowwowParticipantWrapper implements PowwowParticipant,
 	*/
 	@Override
 	public Date getModifiedDate() {
-		return _powwowParticipant.getModifiedDate();
+		return model.getModifiedDate();
 	}
 
 	/**
@@ -228,7 +198,7 @@ public class PowwowParticipantWrapper implements PowwowParticipant,
 	*/
 	@Override
 	public String getName() {
-		return _powwowParticipant.getName();
+		return model.getName();
 	}
 
 	/**
@@ -238,7 +208,7 @@ public class PowwowParticipantWrapper implements PowwowParticipant,
 	*/
 	@Override
 	public long getParticipantUserId() {
-		return _powwowParticipant.getParticipantUserId();
+		return model.getParticipantUserId();
 	}
 
 	/**
@@ -248,7 +218,7 @@ public class PowwowParticipantWrapper implements PowwowParticipant,
 	*/
 	@Override
 	public String getParticipantUserUuid() {
-		return _powwowParticipant.getParticipantUserUuid();
+		return model.getParticipantUserUuid();
 	}
 
 	/**
@@ -258,7 +228,7 @@ public class PowwowParticipantWrapper implements PowwowParticipant,
 	*/
 	@Override
 	public long getPowwowMeetingId() {
-		return _powwowParticipant.getPowwowMeetingId();
+		return model.getPowwowMeetingId();
 	}
 
 	/**
@@ -268,7 +238,7 @@ public class PowwowParticipantWrapper implements PowwowParticipant,
 	*/
 	@Override
 	public long getPowwowParticipantId() {
-		return _powwowParticipant.getPowwowParticipantId();
+		return model.getPowwowParticipantId();
 	}
 
 	/**
@@ -278,12 +248,7 @@ public class PowwowParticipantWrapper implements PowwowParticipant,
 	*/
 	@Override
 	public long getPrimaryKey() {
-		return _powwowParticipant.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _powwowParticipant.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	/**
@@ -293,7 +258,7 @@ public class PowwowParticipantWrapper implements PowwowParticipant,
 	*/
 	@Override
 	public int getStatus() {
-		return _powwowParticipant.getStatus();
+		return model.getStatus();
 	}
 
 	/**
@@ -303,7 +268,7 @@ public class PowwowParticipantWrapper implements PowwowParticipant,
 	*/
 	@Override
 	public int getType() {
-		return _powwowParticipant.getType();
+		return model.getType();
 	}
 
 	/**
@@ -313,7 +278,7 @@ public class PowwowParticipantWrapper implements PowwowParticipant,
 	*/
 	@Override
 	public long getUserId() {
-		return _powwowParticipant.getUserId();
+		return model.getUserId();
 	}
 
 	/**
@@ -323,7 +288,7 @@ public class PowwowParticipantWrapper implements PowwowParticipant,
 	*/
 	@Override
 	public String getUserName() {
-		return _powwowParticipant.getUserName();
+		return model.getUserName();
 	}
 
 	/**
@@ -333,37 +298,12 @@ public class PowwowParticipantWrapper implements PowwowParticipant,
 	*/
 	@Override
 	public String getUserUuid() {
-		return _powwowParticipant.getUserUuid();
-	}
-
-	@Override
-	public int hashCode() {
-		return _powwowParticipant.hashCode();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _powwowParticipant.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _powwowParticipant.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _powwowParticipant.isNew();
+		return model.getUserUuid();
 	}
 
 	@Override
 	public void persist() {
-		_powwowParticipant.persist();
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_powwowParticipant.setCachedModel(cachedModel);
+		model.persist();
 	}
 
 	/**
@@ -373,7 +313,7 @@ public class PowwowParticipantWrapper implements PowwowParticipant,
 	*/
 	@Override
 	public void setCompanyId(long companyId) {
-		_powwowParticipant.setCompanyId(companyId);
+		model.setCompanyId(companyId);
 	}
 
 	/**
@@ -383,7 +323,7 @@ public class PowwowParticipantWrapper implements PowwowParticipant,
 	*/
 	@Override
 	public void setCreateDate(Date createDate) {
-		_powwowParticipant.setCreateDate(createDate);
+		model.setCreateDate(createDate);
 	}
 
 	/**
@@ -393,23 +333,7 @@ public class PowwowParticipantWrapper implements PowwowParticipant,
 	*/
 	@Override
 	public void setEmailAddress(String emailAddress) {
-		_powwowParticipant.setEmailAddress(emailAddress);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-		_powwowParticipant.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_powwowParticipant.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_powwowParticipant.setExpandoBridgeAttributes(serviceContext);
+		model.setEmailAddress(emailAddress);
 	}
 
 	/**
@@ -419,7 +343,7 @@ public class PowwowParticipantWrapper implements PowwowParticipant,
 	*/
 	@Override
 	public void setGroupId(long groupId) {
-		_powwowParticipant.setGroupId(groupId);
+		model.setGroupId(groupId);
 	}
 
 	/**
@@ -429,7 +353,7 @@ public class PowwowParticipantWrapper implements PowwowParticipant,
 	*/
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
-		_powwowParticipant.setModifiedDate(modifiedDate);
+		model.setModifiedDate(modifiedDate);
 	}
 
 	/**
@@ -439,12 +363,7 @@ public class PowwowParticipantWrapper implements PowwowParticipant,
 	*/
 	@Override
 	public void setName(String name) {
-		_powwowParticipant.setName(name);
-	}
-
-	@Override
-	public void setNew(boolean n) {
-		_powwowParticipant.setNew(n);
+		model.setName(name);
 	}
 
 	/**
@@ -454,7 +373,7 @@ public class PowwowParticipantWrapper implements PowwowParticipant,
 	*/
 	@Override
 	public void setParticipantUserId(long participantUserId) {
-		_powwowParticipant.setParticipantUserId(participantUserId);
+		model.setParticipantUserId(participantUserId);
 	}
 
 	/**
@@ -464,7 +383,7 @@ public class PowwowParticipantWrapper implements PowwowParticipant,
 	*/
 	@Override
 	public void setParticipantUserUuid(String participantUserUuid) {
-		_powwowParticipant.setParticipantUserUuid(participantUserUuid);
+		model.setParticipantUserUuid(participantUserUuid);
 	}
 
 	/**
@@ -474,7 +393,7 @@ public class PowwowParticipantWrapper implements PowwowParticipant,
 	*/
 	@Override
 	public void setPowwowMeetingId(long powwowMeetingId) {
-		_powwowParticipant.setPowwowMeetingId(powwowMeetingId);
+		model.setPowwowMeetingId(powwowMeetingId);
 	}
 
 	/**
@@ -484,7 +403,7 @@ public class PowwowParticipantWrapper implements PowwowParticipant,
 	*/
 	@Override
 	public void setPowwowParticipantId(long powwowParticipantId) {
-		_powwowParticipant.setPowwowParticipantId(powwowParticipantId);
+		model.setPowwowParticipantId(powwowParticipantId);
 	}
 
 	/**
@@ -494,12 +413,7 @@ public class PowwowParticipantWrapper implements PowwowParticipant,
 	*/
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_powwowParticipant.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_powwowParticipant.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -509,7 +423,7 @@ public class PowwowParticipantWrapper implements PowwowParticipant,
 	*/
 	@Override
 	public void setStatus(int status) {
-		_powwowParticipant.setStatus(status);
+		model.setStatus(status);
 	}
 
 	/**
@@ -519,7 +433,7 @@ public class PowwowParticipantWrapper implements PowwowParticipant,
 	*/
 	@Override
 	public void setType(int type) {
-		_powwowParticipant.setType(type);
+		model.setType(type);
 	}
 
 	/**
@@ -529,7 +443,7 @@ public class PowwowParticipantWrapper implements PowwowParticipant,
 	*/
 	@Override
 	public void setUserId(long userId) {
-		_powwowParticipant.setUserId(userId);
+		model.setUserId(userId);
 	}
 
 	/**
@@ -539,7 +453,7 @@ public class PowwowParticipantWrapper implements PowwowParticipant,
 	*/
 	@Override
 	public void setUserName(String userName) {
-		_powwowParticipant.setUserName(userName);
+		model.setUserName(userName);
 	}
 
 	/**
@@ -549,73 +463,11 @@ public class PowwowParticipantWrapper implements PowwowParticipant,
 	*/
 	@Override
 	public void setUserUuid(String userUuid) {
-		_powwowParticipant.setUserUuid(userUuid);
+		model.setUserUuid(userUuid);
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.CacheModel<PowwowParticipant> toCacheModel() {
-		return _powwowParticipant.toCacheModel();
+	protected PowwowParticipantWrapper wrap(PowwowParticipant powwowParticipant) {
+		return new PowwowParticipantWrapper(powwowParticipant);
 	}
-
-	@Override
-	public PowwowParticipant toEscapedModel() {
-		return new PowwowParticipantWrapper(_powwowParticipant.toEscapedModel());
-	}
-
-	@Override
-	public String toString() {
-		return _powwowParticipant.toString();
-	}
-
-	@Override
-	public PowwowParticipant toUnescapedModel() {
-		return new PowwowParticipantWrapper(_powwowParticipant.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _powwowParticipant.toXmlString();
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-
-		if (!(obj instanceof PowwowParticipantWrapper)) {
-			return false;
-		}
-
-		PowwowParticipantWrapper powwowParticipantWrapper = (PowwowParticipantWrapper)obj;
-
-		if (Objects.equals(_powwowParticipant,
-					powwowParticipantWrapper._powwowParticipant)) {
-			return true;
-		}
-
-		return false;
-	}
-
-	@Override
-	public PowwowParticipant getWrappedModel() {
-		return _powwowParticipant;
-	}
-
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _powwowParticipant.isEntityCacheEnabled();
-	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _powwowParticipant.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_powwowParticipant.resetOriginalValues();
-	}
-
-	private final PowwowParticipant _powwowParticipant;
 }

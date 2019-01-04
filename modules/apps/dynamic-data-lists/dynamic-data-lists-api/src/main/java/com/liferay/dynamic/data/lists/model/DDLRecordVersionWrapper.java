@@ -16,17 +16,12 @@ package com.liferay.dynamic.data.lists.model;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
-
 import com.liferay.portal.kernel.model.ModelWrapper;
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -38,20 +33,10 @@ import java.util.Objects;
  * @generated
  */
 @ProviderType
-public class DDLRecordVersionWrapper implements DDLRecordVersion,
-	ModelWrapper<DDLRecordVersion> {
+public class DDLRecordVersionWrapper extends BaseModelWrapper<DDLRecordVersion>
+	implements DDLRecordVersion, ModelWrapper<DDLRecordVersion> {
 	public DDLRecordVersionWrapper(DDLRecordVersion ddlRecordVersion) {
-		_ddlRecordVersion = ddlRecordVersion;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return DDLRecordVersion.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return DDLRecordVersion.class.getName();
+		super(ddlRecordVersion);
 	}
 
 	@Override
@@ -184,16 +169,6 @@ public class DDLRecordVersionWrapper implements DDLRecordVersion,
 		}
 	}
 
-	@Override
-	public Object clone() {
-		return new DDLRecordVersionWrapper((DDLRecordVersion)_ddlRecordVersion.clone());
-	}
-
-	@Override
-	public int compareTo(DDLRecordVersion ddlRecordVersion) {
-		return _ddlRecordVersion.compareTo(ddlRecordVersion);
-	}
-
 	/**
 	* Returns the company ID of this ddl record version.
 	*
@@ -201,7 +176,7 @@ public class DDLRecordVersionWrapper implements DDLRecordVersion,
 	*/
 	@Override
 	public long getCompanyId() {
-		return _ddlRecordVersion.getCompanyId();
+		return model.getCompanyId();
 	}
 
 	/**
@@ -211,13 +186,13 @@ public class DDLRecordVersionWrapper implements DDLRecordVersion,
 	*/
 	@Override
 	public Date getCreateDate() {
-		return _ddlRecordVersion.getCreateDate();
+		return model.getCreateDate();
 	}
 
 	@Override
 	public com.liferay.dynamic.data.mapping.storage.DDMFormValues getDDMFormValues()
 		throws com.liferay.dynamic.data.mapping.exception.StorageException {
-		return _ddlRecordVersion.getDDMFormValues();
+		return model.getDDMFormValues();
 	}
 
 	/**
@@ -227,7 +202,7 @@ public class DDLRecordVersionWrapper implements DDLRecordVersion,
 	*/
 	@Override
 	public long getDDMStorageId() {
-		return _ddlRecordVersion.getDDMStorageId();
+		return model.getDDMStorageId();
 	}
 
 	/**
@@ -237,12 +212,7 @@ public class DDLRecordVersionWrapper implements DDLRecordVersion,
 	*/
 	@Override
 	public int getDisplayIndex() {
-		return _ddlRecordVersion.getDisplayIndex();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _ddlRecordVersion.getExpandoBridge();
+		return model.getDisplayIndex();
 	}
 
 	/**
@@ -252,7 +222,7 @@ public class DDLRecordVersionWrapper implements DDLRecordVersion,
 	*/
 	@Override
 	public long getGroupId() {
-		return _ddlRecordVersion.getGroupId();
+		return model.getGroupId();
 	}
 
 	/**
@@ -262,7 +232,7 @@ public class DDLRecordVersionWrapper implements DDLRecordVersion,
 	*/
 	@Override
 	public long getMvccVersion() {
-		return _ddlRecordVersion.getMvccVersion();
+		return model.getMvccVersion();
 	}
 
 	/**
@@ -272,18 +242,13 @@ public class DDLRecordVersionWrapper implements DDLRecordVersion,
 	*/
 	@Override
 	public long getPrimaryKey() {
-		return _ddlRecordVersion.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _ddlRecordVersion.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	@Override
 	public DDLRecord getRecord()
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _ddlRecordVersion.getRecord();
+		return model.getRecord();
 	}
 
 	/**
@@ -293,13 +258,13 @@ public class DDLRecordVersionWrapper implements DDLRecordVersion,
 	*/
 	@Override
 	public long getRecordId() {
-		return _ddlRecordVersion.getRecordId();
+		return model.getRecordId();
 	}
 
 	@Override
 	public DDLRecordSet getRecordSet()
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _ddlRecordVersion.getRecordSet();
+		return model.getRecordSet();
 	}
 
 	/**
@@ -309,7 +274,7 @@ public class DDLRecordVersionWrapper implements DDLRecordVersion,
 	*/
 	@Override
 	public long getRecordSetId() {
-		return _ddlRecordVersion.getRecordSetId();
+		return model.getRecordSetId();
 	}
 
 	/**
@@ -319,7 +284,7 @@ public class DDLRecordVersionWrapper implements DDLRecordVersion,
 	*/
 	@Override
 	public String getRecordSetVersion() {
-		return _ddlRecordVersion.getRecordSetVersion();
+		return model.getRecordSetVersion();
 	}
 
 	/**
@@ -329,7 +294,7 @@ public class DDLRecordVersionWrapper implements DDLRecordVersion,
 	*/
 	@Override
 	public long getRecordVersionId() {
-		return _ddlRecordVersion.getRecordVersionId();
+		return model.getRecordVersionId();
 	}
 
 	/**
@@ -339,7 +304,7 @@ public class DDLRecordVersionWrapper implements DDLRecordVersion,
 	*/
 	@Override
 	public int getStatus() {
-		return _ddlRecordVersion.getStatus();
+		return model.getStatus();
 	}
 
 	/**
@@ -349,7 +314,7 @@ public class DDLRecordVersionWrapper implements DDLRecordVersion,
 	*/
 	@Override
 	public long getStatusByUserId() {
-		return _ddlRecordVersion.getStatusByUserId();
+		return model.getStatusByUserId();
 	}
 
 	/**
@@ -359,7 +324,7 @@ public class DDLRecordVersionWrapper implements DDLRecordVersion,
 	*/
 	@Override
 	public String getStatusByUserName() {
-		return _ddlRecordVersion.getStatusByUserName();
+		return model.getStatusByUserName();
 	}
 
 	/**
@@ -369,7 +334,7 @@ public class DDLRecordVersionWrapper implements DDLRecordVersion,
 	*/
 	@Override
 	public String getStatusByUserUuid() {
-		return _ddlRecordVersion.getStatusByUserUuid();
+		return model.getStatusByUserUuid();
 	}
 
 	/**
@@ -379,7 +344,7 @@ public class DDLRecordVersionWrapper implements DDLRecordVersion,
 	*/
 	@Override
 	public Date getStatusDate() {
-		return _ddlRecordVersion.getStatusDate();
+		return model.getStatusDate();
 	}
 
 	/**
@@ -389,7 +354,7 @@ public class DDLRecordVersionWrapper implements DDLRecordVersion,
 	*/
 	@Override
 	public long getUserId() {
-		return _ddlRecordVersion.getUserId();
+		return model.getUserId();
 	}
 
 	/**
@@ -399,7 +364,7 @@ public class DDLRecordVersionWrapper implements DDLRecordVersion,
 	*/
 	@Override
 	public String getUserName() {
-		return _ddlRecordVersion.getUserName();
+		return model.getUserName();
 	}
 
 	/**
@@ -409,7 +374,7 @@ public class DDLRecordVersionWrapper implements DDLRecordVersion,
 	*/
 	@Override
 	public String getUserUuid() {
-		return _ddlRecordVersion.getUserUuid();
+		return model.getUserUuid();
 	}
 
 	/**
@@ -419,12 +384,7 @@ public class DDLRecordVersionWrapper implements DDLRecordVersion,
 	*/
 	@Override
 	public String getVersion() {
-		return _ddlRecordVersion.getVersion();
-	}
-
-	@Override
-	public int hashCode() {
-		return _ddlRecordVersion.hashCode();
+		return model.getVersion();
 	}
 
 	/**
@@ -434,12 +394,7 @@ public class DDLRecordVersionWrapper implements DDLRecordVersion,
 	*/
 	@Override
 	public boolean isApproved() {
-		return _ddlRecordVersion.isApproved();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _ddlRecordVersion.isCachedModel();
+		return model.isApproved();
 	}
 
 	/**
@@ -449,7 +404,7 @@ public class DDLRecordVersionWrapper implements DDLRecordVersion,
 	*/
 	@Override
 	public boolean isDenied() {
-		return _ddlRecordVersion.isDenied();
+		return model.isDenied();
 	}
 
 	/**
@@ -459,12 +414,7 @@ public class DDLRecordVersionWrapper implements DDLRecordVersion,
 	*/
 	@Override
 	public boolean isDraft() {
-		return _ddlRecordVersion.isDraft();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _ddlRecordVersion.isEscapedModel();
+		return model.isDraft();
 	}
 
 	/**
@@ -474,7 +424,7 @@ public class DDLRecordVersionWrapper implements DDLRecordVersion,
 	*/
 	@Override
 	public boolean isExpired() {
-		return _ddlRecordVersion.isExpired();
+		return model.isExpired();
 	}
 
 	/**
@@ -484,7 +434,7 @@ public class DDLRecordVersionWrapper implements DDLRecordVersion,
 	*/
 	@Override
 	public boolean isInactive() {
-		return _ddlRecordVersion.isInactive();
+		return model.isInactive();
 	}
 
 	/**
@@ -494,12 +444,7 @@ public class DDLRecordVersionWrapper implements DDLRecordVersion,
 	*/
 	@Override
 	public boolean isIncomplete() {
-		return _ddlRecordVersion.isIncomplete();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _ddlRecordVersion.isNew();
+		return model.isIncomplete();
 	}
 
 	/**
@@ -509,7 +454,7 @@ public class DDLRecordVersionWrapper implements DDLRecordVersion,
 	*/
 	@Override
 	public boolean isPending() {
-		return _ddlRecordVersion.isPending();
+		return model.isPending();
 	}
 
 	/**
@@ -519,17 +464,12 @@ public class DDLRecordVersionWrapper implements DDLRecordVersion,
 	*/
 	@Override
 	public boolean isScheduled() {
-		return _ddlRecordVersion.isScheduled();
+		return model.isScheduled();
 	}
 
 	@Override
 	public void persist() {
-		_ddlRecordVersion.persist();
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_ddlRecordVersion.setCachedModel(cachedModel);
+		model.persist();
 	}
 
 	/**
@@ -539,7 +479,7 @@ public class DDLRecordVersionWrapper implements DDLRecordVersion,
 	*/
 	@Override
 	public void setCompanyId(long companyId) {
-		_ddlRecordVersion.setCompanyId(companyId);
+		model.setCompanyId(companyId);
 	}
 
 	/**
@@ -549,7 +489,7 @@ public class DDLRecordVersionWrapper implements DDLRecordVersion,
 	*/
 	@Override
 	public void setCreateDate(Date createDate) {
-		_ddlRecordVersion.setCreateDate(createDate);
+		model.setCreateDate(createDate);
 	}
 
 	/**
@@ -559,7 +499,7 @@ public class DDLRecordVersionWrapper implements DDLRecordVersion,
 	*/
 	@Override
 	public void setDDMStorageId(long DDMStorageId) {
-		_ddlRecordVersion.setDDMStorageId(DDMStorageId);
+		model.setDDMStorageId(DDMStorageId);
 	}
 
 	/**
@@ -569,23 +509,7 @@ public class DDLRecordVersionWrapper implements DDLRecordVersion,
 	*/
 	@Override
 	public void setDisplayIndex(int displayIndex) {
-		_ddlRecordVersion.setDisplayIndex(displayIndex);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-		_ddlRecordVersion.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_ddlRecordVersion.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_ddlRecordVersion.setExpandoBridgeAttributes(serviceContext);
+		model.setDisplayIndex(displayIndex);
 	}
 
 	/**
@@ -595,7 +519,7 @@ public class DDLRecordVersionWrapper implements DDLRecordVersion,
 	*/
 	@Override
 	public void setGroupId(long groupId) {
-		_ddlRecordVersion.setGroupId(groupId);
+		model.setGroupId(groupId);
 	}
 
 	/**
@@ -605,12 +529,7 @@ public class DDLRecordVersionWrapper implements DDLRecordVersion,
 	*/
 	@Override
 	public void setMvccVersion(long mvccVersion) {
-		_ddlRecordVersion.setMvccVersion(mvccVersion);
-	}
-
-	@Override
-	public void setNew(boolean n) {
-		_ddlRecordVersion.setNew(n);
+		model.setMvccVersion(mvccVersion);
 	}
 
 	/**
@@ -620,12 +539,7 @@ public class DDLRecordVersionWrapper implements DDLRecordVersion,
 	*/
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_ddlRecordVersion.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_ddlRecordVersion.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -635,7 +549,7 @@ public class DDLRecordVersionWrapper implements DDLRecordVersion,
 	*/
 	@Override
 	public void setRecordId(long recordId) {
-		_ddlRecordVersion.setRecordId(recordId);
+		model.setRecordId(recordId);
 	}
 
 	/**
@@ -645,7 +559,7 @@ public class DDLRecordVersionWrapper implements DDLRecordVersion,
 	*/
 	@Override
 	public void setRecordSetId(long recordSetId) {
-		_ddlRecordVersion.setRecordSetId(recordSetId);
+		model.setRecordSetId(recordSetId);
 	}
 
 	/**
@@ -655,7 +569,7 @@ public class DDLRecordVersionWrapper implements DDLRecordVersion,
 	*/
 	@Override
 	public void setRecordSetVersion(String recordSetVersion) {
-		_ddlRecordVersion.setRecordSetVersion(recordSetVersion);
+		model.setRecordSetVersion(recordSetVersion);
 	}
 
 	/**
@@ -665,7 +579,7 @@ public class DDLRecordVersionWrapper implements DDLRecordVersion,
 	*/
 	@Override
 	public void setRecordVersionId(long recordVersionId) {
-		_ddlRecordVersion.setRecordVersionId(recordVersionId);
+		model.setRecordVersionId(recordVersionId);
 	}
 
 	/**
@@ -675,7 +589,7 @@ public class DDLRecordVersionWrapper implements DDLRecordVersion,
 	*/
 	@Override
 	public void setStatus(int status) {
-		_ddlRecordVersion.setStatus(status);
+		model.setStatus(status);
 	}
 
 	/**
@@ -685,7 +599,7 @@ public class DDLRecordVersionWrapper implements DDLRecordVersion,
 	*/
 	@Override
 	public void setStatusByUserId(long statusByUserId) {
-		_ddlRecordVersion.setStatusByUserId(statusByUserId);
+		model.setStatusByUserId(statusByUserId);
 	}
 
 	/**
@@ -695,7 +609,7 @@ public class DDLRecordVersionWrapper implements DDLRecordVersion,
 	*/
 	@Override
 	public void setStatusByUserName(String statusByUserName) {
-		_ddlRecordVersion.setStatusByUserName(statusByUserName);
+		model.setStatusByUserName(statusByUserName);
 	}
 
 	/**
@@ -705,7 +619,7 @@ public class DDLRecordVersionWrapper implements DDLRecordVersion,
 	*/
 	@Override
 	public void setStatusByUserUuid(String statusByUserUuid) {
-		_ddlRecordVersion.setStatusByUserUuid(statusByUserUuid);
+		model.setStatusByUserUuid(statusByUserUuid);
 	}
 
 	/**
@@ -715,7 +629,7 @@ public class DDLRecordVersionWrapper implements DDLRecordVersion,
 	*/
 	@Override
 	public void setStatusDate(Date statusDate) {
-		_ddlRecordVersion.setStatusDate(statusDate);
+		model.setStatusDate(statusDate);
 	}
 
 	/**
@@ -725,7 +639,7 @@ public class DDLRecordVersionWrapper implements DDLRecordVersion,
 	*/
 	@Override
 	public void setUserId(long userId) {
-		_ddlRecordVersion.setUserId(userId);
+		model.setUserId(userId);
 	}
 
 	/**
@@ -735,7 +649,7 @@ public class DDLRecordVersionWrapper implements DDLRecordVersion,
 	*/
 	@Override
 	public void setUserName(String userName) {
-		_ddlRecordVersion.setUserName(userName);
+		model.setUserName(userName);
 	}
 
 	/**
@@ -745,7 +659,7 @@ public class DDLRecordVersionWrapper implements DDLRecordVersion,
 	*/
 	@Override
 	public void setUserUuid(String userUuid) {
-		_ddlRecordVersion.setUserUuid(userUuid);
+		model.setUserUuid(userUuid);
 	}
 
 	/**
@@ -755,73 +669,11 @@ public class DDLRecordVersionWrapper implements DDLRecordVersion,
 	*/
 	@Override
 	public void setVersion(String version) {
-		_ddlRecordVersion.setVersion(version);
+		model.setVersion(version);
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.CacheModel<DDLRecordVersion> toCacheModel() {
-		return _ddlRecordVersion.toCacheModel();
+	protected DDLRecordVersionWrapper wrap(DDLRecordVersion ddlRecordVersion) {
+		return new DDLRecordVersionWrapper(ddlRecordVersion);
 	}
-
-	@Override
-	public DDLRecordVersion toEscapedModel() {
-		return new DDLRecordVersionWrapper(_ddlRecordVersion.toEscapedModel());
-	}
-
-	@Override
-	public String toString() {
-		return _ddlRecordVersion.toString();
-	}
-
-	@Override
-	public DDLRecordVersion toUnescapedModel() {
-		return new DDLRecordVersionWrapper(_ddlRecordVersion.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _ddlRecordVersion.toXmlString();
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-
-		if (!(obj instanceof DDLRecordVersionWrapper)) {
-			return false;
-		}
-
-		DDLRecordVersionWrapper ddlRecordVersionWrapper = (DDLRecordVersionWrapper)obj;
-
-		if (Objects.equals(_ddlRecordVersion,
-					ddlRecordVersionWrapper._ddlRecordVersion)) {
-			return true;
-		}
-
-		return false;
-	}
-
-	@Override
-	public DDLRecordVersion getWrappedModel() {
-		return _ddlRecordVersion;
-	}
-
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _ddlRecordVersion.isEntityCacheEnabled();
-	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _ddlRecordVersion.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_ddlRecordVersion.resetOriginalValues();
-	}
-
-	private final DDLRecordVersion _ddlRecordVersion;
 }

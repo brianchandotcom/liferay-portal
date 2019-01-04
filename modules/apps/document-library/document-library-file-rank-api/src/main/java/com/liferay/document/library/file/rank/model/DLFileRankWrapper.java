@@ -16,17 +16,12 @@ package com.liferay.document.library.file.rank.model;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
-
 import com.liferay.portal.kernel.model.ModelWrapper;
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -38,19 +33,10 @@ import java.util.Objects;
  * @generated
  */
 @ProviderType
-public class DLFileRankWrapper implements DLFileRank, ModelWrapper<DLFileRank> {
+public class DLFileRankWrapper extends BaseModelWrapper<DLFileRank>
+	implements DLFileRank, ModelWrapper<DLFileRank> {
 	public DLFileRankWrapper(DLFileRank dlFileRank) {
-		_dlFileRank = dlFileRank;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return DLFileRank.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return DLFileRank.class.getName();
+		super(dlFileRank);
 	}
 
 	@Override
@@ -113,16 +99,6 @@ public class DLFileRankWrapper implements DLFileRank, ModelWrapper<DLFileRank> {
 		}
 	}
 
-	@Override
-	public Object clone() {
-		return new DLFileRankWrapper((DLFileRank)_dlFileRank.clone());
-	}
-
-	@Override
-	public int compareTo(DLFileRank dlFileRank) {
-		return _dlFileRank.compareTo(dlFileRank);
-	}
-
 	/**
 	* Returns the active of this document library file rank.
 	*
@@ -130,7 +106,7 @@ public class DLFileRankWrapper implements DLFileRank, ModelWrapper<DLFileRank> {
 	*/
 	@Override
 	public boolean getActive() {
-		return _dlFileRank.getActive();
+		return model.getActive();
 	}
 
 	/**
@@ -140,7 +116,7 @@ public class DLFileRankWrapper implements DLFileRank, ModelWrapper<DLFileRank> {
 	*/
 	@Override
 	public long getCompanyId() {
-		return _dlFileRank.getCompanyId();
+		return model.getCompanyId();
 	}
 
 	/**
@@ -150,12 +126,7 @@ public class DLFileRankWrapper implements DLFileRank, ModelWrapper<DLFileRank> {
 	*/
 	@Override
 	public Date getCreateDate() {
-		return _dlFileRank.getCreateDate();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _dlFileRank.getExpandoBridge();
+		return model.getCreateDate();
 	}
 
 	/**
@@ -165,7 +136,7 @@ public class DLFileRankWrapper implements DLFileRank, ModelWrapper<DLFileRank> {
 	*/
 	@Override
 	public long getFileEntryId() {
-		return _dlFileRank.getFileEntryId();
+		return model.getFileEntryId();
 	}
 
 	/**
@@ -175,7 +146,7 @@ public class DLFileRankWrapper implements DLFileRank, ModelWrapper<DLFileRank> {
 	*/
 	@Override
 	public long getFileRankId() {
-		return _dlFileRank.getFileRankId();
+		return model.getFileRankId();
 	}
 
 	/**
@@ -185,7 +156,7 @@ public class DLFileRankWrapper implements DLFileRank, ModelWrapper<DLFileRank> {
 	*/
 	@Override
 	public long getGroupId() {
-		return _dlFileRank.getGroupId();
+		return model.getGroupId();
 	}
 
 	/**
@@ -195,12 +166,7 @@ public class DLFileRankWrapper implements DLFileRank, ModelWrapper<DLFileRank> {
 	*/
 	@Override
 	public long getPrimaryKey() {
-		return _dlFileRank.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _dlFileRank.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	/**
@@ -210,7 +176,7 @@ public class DLFileRankWrapper implements DLFileRank, ModelWrapper<DLFileRank> {
 	*/
 	@Override
 	public long getUserId() {
-		return _dlFileRank.getUserId();
+		return model.getUserId();
 	}
 
 	/**
@@ -220,12 +186,7 @@ public class DLFileRankWrapper implements DLFileRank, ModelWrapper<DLFileRank> {
 	*/
 	@Override
 	public String getUserUuid() {
-		return _dlFileRank.getUserUuid();
-	}
-
-	@Override
-	public int hashCode() {
-		return _dlFileRank.hashCode();
+		return model.getUserUuid();
 	}
 
 	/**
@@ -235,27 +196,12 @@ public class DLFileRankWrapper implements DLFileRank, ModelWrapper<DLFileRank> {
 	*/
 	@Override
 	public boolean isActive() {
-		return _dlFileRank.isActive();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _dlFileRank.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _dlFileRank.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _dlFileRank.isNew();
+		return model.isActive();
 	}
 
 	@Override
 	public void persist() {
-		_dlFileRank.persist();
+		model.persist();
 	}
 
 	/**
@@ -265,12 +211,7 @@ public class DLFileRankWrapper implements DLFileRank, ModelWrapper<DLFileRank> {
 	*/
 	@Override
 	public void setActive(boolean active) {
-		_dlFileRank.setActive(active);
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_dlFileRank.setCachedModel(cachedModel);
+		model.setActive(active);
 	}
 
 	/**
@@ -280,7 +221,7 @@ public class DLFileRankWrapper implements DLFileRank, ModelWrapper<DLFileRank> {
 	*/
 	@Override
 	public void setCompanyId(long companyId) {
-		_dlFileRank.setCompanyId(companyId);
+		model.setCompanyId(companyId);
 	}
 
 	/**
@@ -290,23 +231,7 @@ public class DLFileRankWrapper implements DLFileRank, ModelWrapper<DLFileRank> {
 	*/
 	@Override
 	public void setCreateDate(Date createDate) {
-		_dlFileRank.setCreateDate(createDate);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-		_dlFileRank.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_dlFileRank.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_dlFileRank.setExpandoBridgeAttributes(serviceContext);
+		model.setCreateDate(createDate);
 	}
 
 	/**
@@ -316,7 +241,7 @@ public class DLFileRankWrapper implements DLFileRank, ModelWrapper<DLFileRank> {
 	*/
 	@Override
 	public void setFileEntryId(long fileEntryId) {
-		_dlFileRank.setFileEntryId(fileEntryId);
+		model.setFileEntryId(fileEntryId);
 	}
 
 	/**
@@ -326,7 +251,7 @@ public class DLFileRankWrapper implements DLFileRank, ModelWrapper<DLFileRank> {
 	*/
 	@Override
 	public void setFileRankId(long fileRankId) {
-		_dlFileRank.setFileRankId(fileRankId);
+		model.setFileRankId(fileRankId);
 	}
 
 	/**
@@ -336,12 +261,7 @@ public class DLFileRankWrapper implements DLFileRank, ModelWrapper<DLFileRank> {
 	*/
 	@Override
 	public void setGroupId(long groupId) {
-		_dlFileRank.setGroupId(groupId);
-	}
-
-	@Override
-	public void setNew(boolean n) {
-		_dlFileRank.setNew(n);
+		model.setGroupId(groupId);
 	}
 
 	/**
@@ -351,12 +271,7 @@ public class DLFileRankWrapper implements DLFileRank, ModelWrapper<DLFileRank> {
 	*/
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_dlFileRank.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_dlFileRank.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -366,7 +281,7 @@ public class DLFileRankWrapper implements DLFileRank, ModelWrapper<DLFileRank> {
 	*/
 	@Override
 	public void setUserId(long userId) {
-		_dlFileRank.setUserId(userId);
+		model.setUserId(userId);
 	}
 
 	/**
@@ -376,72 +291,11 @@ public class DLFileRankWrapper implements DLFileRank, ModelWrapper<DLFileRank> {
 	*/
 	@Override
 	public void setUserUuid(String userUuid) {
-		_dlFileRank.setUserUuid(userUuid);
+		model.setUserUuid(userUuid);
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.CacheModel<DLFileRank> toCacheModel() {
-		return _dlFileRank.toCacheModel();
+	protected DLFileRankWrapper wrap(DLFileRank dlFileRank) {
+		return new DLFileRankWrapper(dlFileRank);
 	}
-
-	@Override
-	public DLFileRank toEscapedModel() {
-		return new DLFileRankWrapper(_dlFileRank.toEscapedModel());
-	}
-
-	@Override
-	public String toString() {
-		return _dlFileRank.toString();
-	}
-
-	@Override
-	public DLFileRank toUnescapedModel() {
-		return new DLFileRankWrapper(_dlFileRank.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _dlFileRank.toXmlString();
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-
-		if (!(obj instanceof DLFileRankWrapper)) {
-			return false;
-		}
-
-		DLFileRankWrapper dlFileRankWrapper = (DLFileRankWrapper)obj;
-
-		if (Objects.equals(_dlFileRank, dlFileRankWrapper._dlFileRank)) {
-			return true;
-		}
-
-		return false;
-	}
-
-	@Override
-	public DLFileRank getWrappedModel() {
-		return _dlFileRank;
-	}
-
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _dlFileRank.isEntityCacheEnabled();
-	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _dlFileRank.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_dlFileRank.resetOriginalValues();
-	}
-
-	private final DLFileRank _dlFileRank;
 }

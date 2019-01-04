@@ -16,16 +16,11 @@ package com.liferay.portal.kernel.model;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
-
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -37,20 +32,10 @@ import java.util.Objects;
  * @generated
  */
 @ProviderType
-public class PasswordTrackerWrapper implements PasswordTracker,
-	ModelWrapper<PasswordTracker> {
+public class PasswordTrackerWrapper extends BaseModelWrapper<PasswordTracker>
+	implements PasswordTracker, ModelWrapper<PasswordTracker> {
 	public PasswordTrackerWrapper(PasswordTracker passwordTracker) {
-		_passwordTracker = passwordTracker;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return PasswordTracker.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return PasswordTracker.class.getName();
+		super(passwordTracker);
 	}
 
 	@Override
@@ -106,16 +91,6 @@ public class PasswordTrackerWrapper implements PasswordTracker,
 		}
 	}
 
-	@Override
-	public Object clone() {
-		return new PasswordTrackerWrapper((PasswordTracker)_passwordTracker.clone());
-	}
-
-	@Override
-	public int compareTo(PasswordTracker passwordTracker) {
-		return _passwordTracker.compareTo(passwordTracker);
-	}
-
 	/**
 	* Returns the company ID of this password tracker.
 	*
@@ -123,7 +98,7 @@ public class PasswordTrackerWrapper implements PasswordTracker,
 	*/
 	@Override
 	public long getCompanyId() {
-		return _passwordTracker.getCompanyId();
+		return model.getCompanyId();
 	}
 
 	/**
@@ -133,12 +108,7 @@ public class PasswordTrackerWrapper implements PasswordTracker,
 	*/
 	@Override
 	public Date getCreateDate() {
-		return _passwordTracker.getCreateDate();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _passwordTracker.getExpandoBridge();
+		return model.getCreateDate();
 	}
 
 	/**
@@ -148,7 +118,7 @@ public class PasswordTrackerWrapper implements PasswordTracker,
 	*/
 	@Override
 	public long getMvccVersion() {
-		return _passwordTracker.getMvccVersion();
+		return model.getMvccVersion();
 	}
 
 	/**
@@ -158,7 +128,7 @@ public class PasswordTrackerWrapper implements PasswordTracker,
 	*/
 	@Override
 	public String getPassword() {
-		return _passwordTracker.getPassword();
+		return model.getPassword();
 	}
 
 	/**
@@ -168,7 +138,7 @@ public class PasswordTrackerWrapper implements PasswordTracker,
 	*/
 	@Override
 	public long getPasswordTrackerId() {
-		return _passwordTracker.getPasswordTrackerId();
+		return model.getPasswordTrackerId();
 	}
 
 	/**
@@ -178,12 +148,7 @@ public class PasswordTrackerWrapper implements PasswordTracker,
 	*/
 	@Override
 	public long getPrimaryKey() {
-		return _passwordTracker.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _passwordTracker.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	/**
@@ -193,7 +158,7 @@ public class PasswordTrackerWrapper implements PasswordTracker,
 	*/
 	@Override
 	public long getUserId() {
-		return _passwordTracker.getUserId();
+		return model.getUserId();
 	}
 
 	/**
@@ -203,37 +168,12 @@ public class PasswordTrackerWrapper implements PasswordTracker,
 	*/
 	@Override
 	public String getUserUuid() {
-		return _passwordTracker.getUserUuid();
-	}
-
-	@Override
-	public int hashCode() {
-		return _passwordTracker.hashCode();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _passwordTracker.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _passwordTracker.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _passwordTracker.isNew();
+		return model.getUserUuid();
 	}
 
 	@Override
 	public void persist() {
-		_passwordTracker.persist();
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_passwordTracker.setCachedModel(cachedModel);
+		model.persist();
 	}
 
 	/**
@@ -243,7 +183,7 @@ public class PasswordTrackerWrapper implements PasswordTracker,
 	*/
 	@Override
 	public void setCompanyId(long companyId) {
-		_passwordTracker.setCompanyId(companyId);
+		model.setCompanyId(companyId);
 	}
 
 	/**
@@ -253,22 +193,7 @@ public class PasswordTrackerWrapper implements PasswordTracker,
 	*/
 	@Override
 	public void setCreateDate(Date createDate) {
-		_passwordTracker.setCreateDate(createDate);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(BaseModel<?> baseModel) {
-		_passwordTracker.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_passwordTracker.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_passwordTracker.setExpandoBridgeAttributes(serviceContext);
+		model.setCreateDate(createDate);
 	}
 
 	/**
@@ -278,12 +203,7 @@ public class PasswordTrackerWrapper implements PasswordTracker,
 	*/
 	@Override
 	public void setMvccVersion(long mvccVersion) {
-		_passwordTracker.setMvccVersion(mvccVersion);
-	}
-
-	@Override
-	public void setNew(boolean n) {
-		_passwordTracker.setNew(n);
+		model.setMvccVersion(mvccVersion);
 	}
 
 	/**
@@ -293,7 +213,7 @@ public class PasswordTrackerWrapper implements PasswordTracker,
 	*/
 	@Override
 	public void setPassword(String password) {
-		_passwordTracker.setPassword(password);
+		model.setPassword(password);
 	}
 
 	/**
@@ -303,7 +223,7 @@ public class PasswordTrackerWrapper implements PasswordTracker,
 	*/
 	@Override
 	public void setPasswordTrackerId(long passwordTrackerId) {
-		_passwordTracker.setPasswordTrackerId(passwordTrackerId);
+		model.setPasswordTrackerId(passwordTrackerId);
 	}
 
 	/**
@@ -313,12 +233,7 @@ public class PasswordTrackerWrapper implements PasswordTracker,
 	*/
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_passwordTracker.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_passwordTracker.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -328,7 +243,7 @@ public class PasswordTrackerWrapper implements PasswordTracker,
 	*/
 	@Override
 	public void setUserId(long userId) {
-		_passwordTracker.setUserId(userId);
+		model.setUserId(userId);
 	}
 
 	/**
@@ -338,73 +253,11 @@ public class PasswordTrackerWrapper implements PasswordTracker,
 	*/
 	@Override
 	public void setUserUuid(String userUuid) {
-		_passwordTracker.setUserUuid(userUuid);
+		model.setUserUuid(userUuid);
 	}
 
 	@Override
-	public CacheModel<PasswordTracker> toCacheModel() {
-		return _passwordTracker.toCacheModel();
+	protected PasswordTrackerWrapper wrap(PasswordTracker passwordTracker) {
+		return new PasswordTrackerWrapper(passwordTracker);
 	}
-
-	@Override
-	public PasswordTracker toEscapedModel() {
-		return new PasswordTrackerWrapper(_passwordTracker.toEscapedModel());
-	}
-
-	@Override
-	public String toString() {
-		return _passwordTracker.toString();
-	}
-
-	@Override
-	public PasswordTracker toUnescapedModel() {
-		return new PasswordTrackerWrapper(_passwordTracker.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _passwordTracker.toXmlString();
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-
-		if (!(obj instanceof PasswordTrackerWrapper)) {
-			return false;
-		}
-
-		PasswordTrackerWrapper passwordTrackerWrapper = (PasswordTrackerWrapper)obj;
-
-		if (Objects.equals(_passwordTracker,
-					passwordTrackerWrapper._passwordTracker)) {
-			return true;
-		}
-
-		return false;
-	}
-
-	@Override
-	public PasswordTracker getWrappedModel() {
-		return _passwordTracker;
-	}
-
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _passwordTracker.isEntityCacheEnabled();
-	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _passwordTracker.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_passwordTracker.resetOriginalValues();
-	}
-
-	private final PasswordTracker _passwordTracker;
 }

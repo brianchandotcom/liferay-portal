@@ -16,19 +16,14 @@ package com.liferay.message.boards.model;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
-
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 
 import com.liferay.portal.kernel.model.ModelWrapper;
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -40,19 +35,10 @@ import java.util.Objects;
  * @generated
  */
 @ProviderType
-public class MBMessageWrapper implements MBMessage, ModelWrapper<MBMessage> {
+public class MBMessageWrapper extends BaseModelWrapper<MBMessage>
+	implements MBMessage, ModelWrapper<MBMessage> {
 	public MBMessageWrapper(MBMessage mbMessage) {
-		_mbMessage = mbMessage;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return MBMessage.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return MBMessage.class.getName();
+		super(mbMessage);
 	}
 
 	@Override
@@ -251,17 +237,7 @@ public class MBMessageWrapper implements MBMessage, ModelWrapper<MBMessage> {
 	@Override
 	public com.liferay.portal.kernel.repository.model.Folder addAttachmentsFolder()
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _mbMessage.addAttachmentsFolder();
-	}
-
-	@Override
-	public Object clone() {
-		return new MBMessageWrapper((MBMessage)_mbMessage.clone());
-	}
-
-	@Override
-	public int compareTo(MBMessage mbMessage) {
-		return _mbMessage.compareTo(mbMessage);
+		return model.addAttachmentsFolder();
 	}
 
 	/**
@@ -271,7 +247,7 @@ public class MBMessageWrapper implements MBMessage, ModelWrapper<MBMessage> {
 	*/
 	@Override
 	public boolean getAllowPingbacks() {
-		return _mbMessage.getAllowPingbacks();
+		return model.getAllowPingbacks();
 	}
 
 	/**
@@ -281,7 +257,7 @@ public class MBMessageWrapper implements MBMessage, ModelWrapper<MBMessage> {
 	*/
 	@Override
 	public boolean getAnonymous() {
-		return _mbMessage.getAnonymous();
+		return model.getAnonymous();
 	}
 
 	/**
@@ -291,37 +267,37 @@ public class MBMessageWrapper implements MBMessage, ModelWrapper<MBMessage> {
 	*/
 	@Override
 	public boolean getAnswer() {
-		return _mbMessage.getAnswer();
+		return model.getAnswer();
 	}
 
 	@Override
 	public String[] getAssetTagNames() {
-		return _mbMessage.getAssetTagNames();
+		return model.getAssetTagNames();
 	}
 
 	@Override
 	public java.util.List<com.liferay.portal.kernel.repository.model.FileEntry> getAttachmentsFileEntries()
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _mbMessage.getAttachmentsFileEntries();
+		return model.getAttachmentsFileEntries();
 	}
 
 	@Override
 	public java.util.List<com.liferay.portal.kernel.repository.model.FileEntry> getAttachmentsFileEntries(
 		int start, int end)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _mbMessage.getAttachmentsFileEntries(start, end);
+		return model.getAttachmentsFileEntries(start, end);
 	}
 
 	@Override
 	public int getAttachmentsFileEntriesCount()
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _mbMessage.getAttachmentsFileEntriesCount();
+		return model.getAttachmentsFileEntriesCount();
 	}
 
 	@Override
 	public long getAttachmentsFolderId()
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _mbMessage.getAttachmentsFolderId();
+		return model.getAttachmentsFolderId();
 	}
 
 	/**
@@ -331,18 +307,18 @@ public class MBMessageWrapper implements MBMessage, ModelWrapper<MBMessage> {
 	*/
 	@Override
 	public String getBody() {
-		return _mbMessage.getBody();
+		return model.getBody();
 	}
 
 	@Override
 	public String getBody(boolean translate) {
-		return _mbMessage.getBody(translate);
+		return model.getBody(translate);
 	}
 
 	@Override
 	public MBCategory getCategory()
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _mbMessage.getCategory();
+		return model.getCategory();
 	}
 
 	/**
@@ -352,7 +328,7 @@ public class MBMessageWrapper implements MBMessage, ModelWrapper<MBMessage> {
 	*/
 	@Override
 	public long getCategoryId() {
-		return _mbMessage.getCategoryId();
+		return model.getCategoryId();
 	}
 
 	/**
@@ -362,7 +338,7 @@ public class MBMessageWrapper implements MBMessage, ModelWrapper<MBMessage> {
 	*/
 	@Override
 	public String getClassName() {
-		return _mbMessage.getClassName();
+		return model.getClassName();
 	}
 
 	/**
@@ -372,7 +348,7 @@ public class MBMessageWrapper implements MBMessage, ModelWrapper<MBMessage> {
 	*/
 	@Override
 	public long getClassNameId() {
-		return _mbMessage.getClassNameId();
+		return model.getClassNameId();
 	}
 
 	/**
@@ -382,7 +358,7 @@ public class MBMessageWrapper implements MBMessage, ModelWrapper<MBMessage> {
 	*/
 	@Override
 	public long getClassPK() {
-		return _mbMessage.getClassPK();
+		return model.getClassPK();
 	}
 
 	/**
@@ -392,7 +368,7 @@ public class MBMessageWrapper implements MBMessage, ModelWrapper<MBMessage> {
 	*/
 	@Override
 	public long getCompanyId() {
-		return _mbMessage.getCompanyId();
+		return model.getCompanyId();
 	}
 
 	/**
@@ -402,31 +378,26 @@ public class MBMessageWrapper implements MBMessage, ModelWrapper<MBMessage> {
 	*/
 	@Override
 	public Date getCreateDate() {
-		return _mbMessage.getCreateDate();
+		return model.getCreateDate();
 	}
 
 	@Override
 	public java.util.List<com.liferay.portal.kernel.repository.model.FileEntry> getDeletedAttachmentsFileEntries()
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _mbMessage.getDeletedAttachmentsFileEntries();
+		return model.getDeletedAttachmentsFileEntries();
 	}
 
 	@Override
 	public java.util.List<com.liferay.portal.kernel.repository.model.FileEntry> getDeletedAttachmentsFileEntries(
 		int start, int end)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _mbMessage.getDeletedAttachmentsFileEntries(start, end);
+		return model.getDeletedAttachmentsFileEntries(start, end);
 	}
 
 	@Override
 	public int getDeletedAttachmentsFileEntriesCount()
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _mbMessage.getDeletedAttachmentsFileEntriesCount();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _mbMessage.getExpandoBridge();
+		return model.getDeletedAttachmentsFileEntriesCount();
 	}
 
 	/**
@@ -436,7 +407,7 @@ public class MBMessageWrapper implements MBMessage, ModelWrapper<MBMessage> {
 	*/
 	@Override
 	public String getFormat() {
-		return _mbMessage.getFormat();
+		return model.getFormat();
 	}
 
 	/**
@@ -446,7 +417,7 @@ public class MBMessageWrapper implements MBMessage, ModelWrapper<MBMessage> {
 	*/
 	@Override
 	public long getGroupId() {
-		return _mbMessage.getGroupId();
+		return model.getGroupId();
 	}
 
 	/**
@@ -456,7 +427,7 @@ public class MBMessageWrapper implements MBMessage, ModelWrapper<MBMessage> {
 	*/
 	@Override
 	public Date getLastPublishDate() {
-		return _mbMessage.getLastPublishDate();
+		return model.getLastPublishDate();
 	}
 
 	/**
@@ -466,7 +437,7 @@ public class MBMessageWrapper implements MBMessage, ModelWrapper<MBMessage> {
 	*/
 	@Override
 	public long getMessageId() {
-		return _mbMessage.getMessageId();
+		return model.getMessageId();
 	}
 
 	/**
@@ -476,7 +447,7 @@ public class MBMessageWrapper implements MBMessage, ModelWrapper<MBMessage> {
 	*/
 	@Override
 	public Date getModifiedDate() {
-		return _mbMessage.getModifiedDate();
+		return model.getModifiedDate();
 	}
 
 	/**
@@ -486,7 +457,7 @@ public class MBMessageWrapper implements MBMessage, ModelWrapper<MBMessage> {
 	*/
 	@Override
 	public long getParentMessageId() {
-		return _mbMessage.getParentMessageId();
+		return model.getParentMessageId();
 	}
 
 	/**
@@ -496,12 +467,7 @@ public class MBMessageWrapper implements MBMessage, ModelWrapper<MBMessage> {
 	*/
 	@Override
 	public long getPrimaryKey() {
-		return _mbMessage.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _mbMessage.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	/**
@@ -511,7 +477,7 @@ public class MBMessageWrapper implements MBMessage, ModelWrapper<MBMessage> {
 	*/
 	@Override
 	public double getPriority() {
-		return _mbMessage.getPriority();
+		return model.getPriority();
 	}
 
 	/**
@@ -521,7 +487,7 @@ public class MBMessageWrapper implements MBMessage, ModelWrapper<MBMessage> {
 	*/
 	@Override
 	public long getRootMessageId() {
-		return _mbMessage.getRootMessageId();
+		return model.getRootMessageId();
 	}
 
 	/**
@@ -531,7 +497,7 @@ public class MBMessageWrapper implements MBMessage, ModelWrapper<MBMessage> {
 	*/
 	@Override
 	public int getStatus() {
-		return _mbMessage.getStatus();
+		return model.getStatus();
 	}
 
 	/**
@@ -541,7 +507,7 @@ public class MBMessageWrapper implements MBMessage, ModelWrapper<MBMessage> {
 	*/
 	@Override
 	public long getStatusByUserId() {
-		return _mbMessage.getStatusByUserId();
+		return model.getStatusByUserId();
 	}
 
 	/**
@@ -551,7 +517,7 @@ public class MBMessageWrapper implements MBMessage, ModelWrapper<MBMessage> {
 	*/
 	@Override
 	public String getStatusByUserName() {
-		return _mbMessage.getStatusByUserName();
+		return model.getStatusByUserName();
 	}
 
 	/**
@@ -561,7 +527,7 @@ public class MBMessageWrapper implements MBMessage, ModelWrapper<MBMessage> {
 	*/
 	@Override
 	public String getStatusByUserUuid() {
-		return _mbMessage.getStatusByUserUuid();
+		return model.getStatusByUserUuid();
 	}
 
 	/**
@@ -571,7 +537,7 @@ public class MBMessageWrapper implements MBMessage, ModelWrapper<MBMessage> {
 	*/
 	@Override
 	public Date getStatusDate() {
-		return _mbMessage.getStatusDate();
+		return model.getStatusDate();
 	}
 
 	/**
@@ -581,19 +547,19 @@ public class MBMessageWrapper implements MBMessage, ModelWrapper<MBMessage> {
 	*/
 	@Override
 	public String getSubject() {
-		return _mbMessage.getSubject();
+		return model.getSubject();
 	}
 
 	@Override
 	public MBThread getThread()
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _mbMessage.getThread();
+		return model.getThread();
 	}
 
 	@Override
 	public long getThreadAttachmentsFolderId()
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _mbMessage.getThreadAttachmentsFolderId();
+		return model.getThreadAttachmentsFolderId();
 	}
 
 	/**
@@ -603,7 +569,7 @@ public class MBMessageWrapper implements MBMessage, ModelWrapper<MBMessage> {
 	*/
 	@Override
 	public long getThreadId() {
-		return _mbMessage.getThreadId();
+		return model.getThreadId();
 	}
 
 	/**
@@ -614,7 +580,7 @@ public class MBMessageWrapper implements MBMessage, ModelWrapper<MBMessage> {
 	@Override
 	public com.liferay.trash.kernel.model.TrashEntry getTrashEntry()
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _mbMessage.getTrashEntry();
+		return model.getTrashEntry();
 	}
 
 	/**
@@ -624,7 +590,7 @@ public class MBMessageWrapper implements MBMessage, ModelWrapper<MBMessage> {
 	*/
 	@Override
 	public long getTrashEntryClassPK() {
-		return _mbMessage.getTrashEntryClassPK();
+		return model.getTrashEntryClassPK();
 	}
 
 	/**
@@ -636,7 +602,7 @@ public class MBMessageWrapper implements MBMessage, ModelWrapper<MBMessage> {
 	@Deprecated
 	@Override
 	public com.liferay.portal.kernel.trash.TrashHandler getTrashHandler() {
-		return _mbMessage.getTrashHandler();
+		return model.getTrashHandler();
 	}
 
 	/**
@@ -646,7 +612,7 @@ public class MBMessageWrapper implements MBMessage, ModelWrapper<MBMessage> {
 	*/
 	@Override
 	public long getUserId() {
-		return _mbMessage.getUserId();
+		return model.getUserId();
 	}
 
 	/**
@@ -656,7 +622,7 @@ public class MBMessageWrapper implements MBMessage, ModelWrapper<MBMessage> {
 	*/
 	@Override
 	public String getUserName() {
-		return _mbMessage.getUserName();
+		return model.getUserName();
 	}
 
 	/**
@@ -666,7 +632,7 @@ public class MBMessageWrapper implements MBMessage, ModelWrapper<MBMessage> {
 	*/
 	@Override
 	public String getUserUuid() {
-		return _mbMessage.getUserUuid();
+		return model.getUserUuid();
 	}
 
 	/**
@@ -676,17 +642,12 @@ public class MBMessageWrapper implements MBMessage, ModelWrapper<MBMessage> {
 	*/
 	@Override
 	public String getUuid() {
-		return _mbMessage.getUuid();
+		return model.getUuid();
 	}
 
 	@Override
 	public String getWorkflowClassName() {
-		return _mbMessage.getWorkflowClassName();
-	}
-
-	@Override
-	public int hashCode() {
-		return _mbMessage.hashCode();
+		return model.getWorkflowClassName();
 	}
 
 	/**
@@ -696,7 +657,7 @@ public class MBMessageWrapper implements MBMessage, ModelWrapper<MBMessage> {
 	*/
 	@Override
 	public boolean isAllowPingbacks() {
-		return _mbMessage.isAllowPingbacks();
+		return model.isAllowPingbacks();
 	}
 
 	/**
@@ -706,7 +667,7 @@ public class MBMessageWrapper implements MBMessage, ModelWrapper<MBMessage> {
 	*/
 	@Override
 	public boolean isAnonymous() {
-		return _mbMessage.isAnonymous();
+		return model.isAnonymous();
 	}
 
 	/**
@@ -716,7 +677,7 @@ public class MBMessageWrapper implements MBMessage, ModelWrapper<MBMessage> {
 	*/
 	@Override
 	public boolean isAnswer() {
-		return _mbMessage.isAnswer();
+		return model.isAnswer();
 	}
 
 	/**
@@ -726,12 +687,7 @@ public class MBMessageWrapper implements MBMessage, ModelWrapper<MBMessage> {
 	*/
 	@Override
 	public boolean isApproved() {
-		return _mbMessage.isApproved();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _mbMessage.isCachedModel();
+		return model.isApproved();
 	}
 
 	/**
@@ -741,12 +697,12 @@ public class MBMessageWrapper implements MBMessage, ModelWrapper<MBMessage> {
 	*/
 	@Override
 	public boolean isDenied() {
-		return _mbMessage.isDenied();
+		return model.isDenied();
 	}
 
 	@Override
 	public boolean isDiscussion() {
-		return _mbMessage.isDiscussion();
+		return model.isDiscussion();
 	}
 
 	/**
@@ -756,12 +712,7 @@ public class MBMessageWrapper implements MBMessage, ModelWrapper<MBMessage> {
 	*/
 	@Override
 	public boolean isDraft() {
-		return _mbMessage.isDraft();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _mbMessage.isEscapedModel();
+		return model.isDraft();
 	}
 
 	/**
@@ -771,12 +722,12 @@ public class MBMessageWrapper implements MBMessage, ModelWrapper<MBMessage> {
 	*/
 	@Override
 	public boolean isExpired() {
-		return _mbMessage.isExpired();
+		return model.isExpired();
 	}
 
 	@Override
 	public boolean isFormatBBCode() {
-		return _mbMessage.isFormatBBCode();
+		return model.isFormatBBCode();
 	}
 
 	/**
@@ -786,7 +737,7 @@ public class MBMessageWrapper implements MBMessage, ModelWrapper<MBMessage> {
 	*/
 	@Override
 	public boolean isInactive() {
-		return _mbMessage.isInactive();
+		return model.isInactive();
 	}
 
 	/**
@@ -796,7 +747,7 @@ public class MBMessageWrapper implements MBMessage, ModelWrapper<MBMessage> {
 	*/
 	@Override
 	public boolean isIncomplete() {
-		return _mbMessage.isIncomplete();
+		return model.isIncomplete();
 	}
 
 	/**
@@ -806,7 +757,7 @@ public class MBMessageWrapper implements MBMessage, ModelWrapper<MBMessage> {
 	*/
 	@Override
 	public boolean isInTrash() {
-		return _mbMessage.isInTrash();
+		return model.isInTrash();
 	}
 
 	/**
@@ -816,22 +767,17 @@ public class MBMessageWrapper implements MBMessage, ModelWrapper<MBMessage> {
 	*/
 	@Override
 	public boolean isInTrashContainer() {
-		return _mbMessage.isInTrashContainer();
+		return model.isInTrashContainer();
 	}
 
 	@Override
 	public boolean isInTrashExplicitly() {
-		return _mbMessage.isInTrashExplicitly();
+		return model.isInTrashExplicitly();
 	}
 
 	@Override
 	public boolean isInTrashImplicitly() {
-		return _mbMessage.isInTrashImplicitly();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _mbMessage.isNew();
+		return model.isInTrashImplicitly();
 	}
 
 	/**
@@ -841,17 +787,17 @@ public class MBMessageWrapper implements MBMessage, ModelWrapper<MBMessage> {
 	*/
 	@Override
 	public boolean isPending() {
-		return _mbMessage.isPending();
+		return model.isPending();
 	}
 
 	@Override
 	public boolean isReply() {
-		return _mbMessage.isReply();
+		return model.isReply();
 	}
 
 	@Override
 	public boolean isRoot() {
-		return _mbMessage.isRoot();
+		return model.isRoot();
 	}
 
 	/**
@@ -861,12 +807,12 @@ public class MBMessageWrapper implements MBMessage, ModelWrapper<MBMessage> {
 	*/
 	@Override
 	public boolean isScheduled() {
-		return _mbMessage.isScheduled();
+		return model.isScheduled();
 	}
 
 	@Override
 	public void persist() {
-		_mbMessage.persist();
+		model.persist();
 	}
 
 	/**
@@ -876,7 +822,7 @@ public class MBMessageWrapper implements MBMessage, ModelWrapper<MBMessage> {
 	*/
 	@Override
 	public void setAllowPingbacks(boolean allowPingbacks) {
-		_mbMessage.setAllowPingbacks(allowPingbacks);
+		model.setAllowPingbacks(allowPingbacks);
 	}
 
 	/**
@@ -886,7 +832,7 @@ public class MBMessageWrapper implements MBMessage, ModelWrapper<MBMessage> {
 	*/
 	@Override
 	public void setAnonymous(boolean anonymous) {
-		_mbMessage.setAnonymous(anonymous);
+		model.setAnonymous(anonymous);
 	}
 
 	/**
@@ -896,12 +842,12 @@ public class MBMessageWrapper implements MBMessage, ModelWrapper<MBMessage> {
 	*/
 	@Override
 	public void setAnswer(boolean answer) {
-		_mbMessage.setAnswer(answer);
+		model.setAnswer(answer);
 	}
 
 	@Override
 	public void setAttachmentsFolderId(long attachmentsFolderId) {
-		_mbMessage.setAttachmentsFolderId(attachmentsFolderId);
+		model.setAttachmentsFolderId(attachmentsFolderId);
 	}
 
 	/**
@@ -911,12 +857,7 @@ public class MBMessageWrapper implements MBMessage, ModelWrapper<MBMessage> {
 	*/
 	@Override
 	public void setBody(String body) {
-		_mbMessage.setBody(body);
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_mbMessage.setCachedModel(cachedModel);
+		model.setBody(body);
 	}
 
 	/**
@@ -926,12 +867,12 @@ public class MBMessageWrapper implements MBMessage, ModelWrapper<MBMessage> {
 	*/
 	@Override
 	public void setCategoryId(long categoryId) {
-		_mbMessage.setCategoryId(categoryId);
+		model.setCategoryId(categoryId);
 	}
 
 	@Override
 	public void setClassName(String className) {
-		_mbMessage.setClassName(className);
+		model.setClassName(className);
 	}
 
 	/**
@@ -941,7 +882,7 @@ public class MBMessageWrapper implements MBMessage, ModelWrapper<MBMessage> {
 	*/
 	@Override
 	public void setClassNameId(long classNameId) {
-		_mbMessage.setClassNameId(classNameId);
+		model.setClassNameId(classNameId);
 	}
 
 	/**
@@ -951,7 +892,7 @@ public class MBMessageWrapper implements MBMessage, ModelWrapper<MBMessage> {
 	*/
 	@Override
 	public void setClassPK(long classPK) {
-		_mbMessage.setClassPK(classPK);
+		model.setClassPK(classPK);
 	}
 
 	/**
@@ -961,7 +902,7 @@ public class MBMessageWrapper implements MBMessage, ModelWrapper<MBMessage> {
 	*/
 	@Override
 	public void setCompanyId(long companyId) {
-		_mbMessage.setCompanyId(companyId);
+		model.setCompanyId(companyId);
 	}
 
 	/**
@@ -971,23 +912,7 @@ public class MBMessageWrapper implements MBMessage, ModelWrapper<MBMessage> {
 	*/
 	@Override
 	public void setCreateDate(Date createDate) {
-		_mbMessage.setCreateDate(createDate);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-		_mbMessage.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_mbMessage.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_mbMessage.setExpandoBridgeAttributes(serviceContext);
+		model.setCreateDate(createDate);
 	}
 
 	/**
@@ -997,7 +922,7 @@ public class MBMessageWrapper implements MBMessage, ModelWrapper<MBMessage> {
 	*/
 	@Override
 	public void setFormat(String format) {
-		_mbMessage.setFormat(format);
+		model.setFormat(format);
 	}
 
 	/**
@@ -1007,7 +932,7 @@ public class MBMessageWrapper implements MBMessage, ModelWrapper<MBMessage> {
 	*/
 	@Override
 	public void setGroupId(long groupId) {
-		_mbMessage.setGroupId(groupId);
+		model.setGroupId(groupId);
 	}
 
 	/**
@@ -1017,7 +942,7 @@ public class MBMessageWrapper implements MBMessage, ModelWrapper<MBMessage> {
 	*/
 	@Override
 	public void setLastPublishDate(Date lastPublishDate) {
-		_mbMessage.setLastPublishDate(lastPublishDate);
+		model.setLastPublishDate(lastPublishDate);
 	}
 
 	/**
@@ -1027,7 +952,7 @@ public class MBMessageWrapper implements MBMessage, ModelWrapper<MBMessage> {
 	*/
 	@Override
 	public void setMessageId(long messageId) {
-		_mbMessage.setMessageId(messageId);
+		model.setMessageId(messageId);
 	}
 
 	/**
@@ -1037,12 +962,7 @@ public class MBMessageWrapper implements MBMessage, ModelWrapper<MBMessage> {
 	*/
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
-		_mbMessage.setModifiedDate(modifiedDate);
-	}
-
-	@Override
-	public void setNew(boolean n) {
-		_mbMessage.setNew(n);
+		model.setModifiedDate(modifiedDate);
 	}
 
 	/**
@@ -1052,7 +972,7 @@ public class MBMessageWrapper implements MBMessage, ModelWrapper<MBMessage> {
 	*/
 	@Override
 	public void setParentMessageId(long parentMessageId) {
-		_mbMessage.setParentMessageId(parentMessageId);
+		model.setParentMessageId(parentMessageId);
 	}
 
 	/**
@@ -1062,12 +982,7 @@ public class MBMessageWrapper implements MBMessage, ModelWrapper<MBMessage> {
 	*/
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_mbMessage.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_mbMessage.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -1077,7 +992,7 @@ public class MBMessageWrapper implements MBMessage, ModelWrapper<MBMessage> {
 	*/
 	@Override
 	public void setPriority(double priority) {
-		_mbMessage.setPriority(priority);
+		model.setPriority(priority);
 	}
 
 	/**
@@ -1087,7 +1002,7 @@ public class MBMessageWrapper implements MBMessage, ModelWrapper<MBMessage> {
 	*/
 	@Override
 	public void setRootMessageId(long rootMessageId) {
-		_mbMessage.setRootMessageId(rootMessageId);
+		model.setRootMessageId(rootMessageId);
 	}
 
 	/**
@@ -1097,7 +1012,7 @@ public class MBMessageWrapper implements MBMessage, ModelWrapper<MBMessage> {
 	*/
 	@Override
 	public void setStatus(int status) {
-		_mbMessage.setStatus(status);
+		model.setStatus(status);
 	}
 
 	/**
@@ -1107,7 +1022,7 @@ public class MBMessageWrapper implements MBMessage, ModelWrapper<MBMessage> {
 	*/
 	@Override
 	public void setStatusByUserId(long statusByUserId) {
-		_mbMessage.setStatusByUserId(statusByUserId);
+		model.setStatusByUserId(statusByUserId);
 	}
 
 	/**
@@ -1117,7 +1032,7 @@ public class MBMessageWrapper implements MBMessage, ModelWrapper<MBMessage> {
 	*/
 	@Override
 	public void setStatusByUserName(String statusByUserName) {
-		_mbMessage.setStatusByUserName(statusByUserName);
+		model.setStatusByUserName(statusByUserName);
 	}
 
 	/**
@@ -1127,7 +1042,7 @@ public class MBMessageWrapper implements MBMessage, ModelWrapper<MBMessage> {
 	*/
 	@Override
 	public void setStatusByUserUuid(String statusByUserUuid) {
-		_mbMessage.setStatusByUserUuid(statusByUserUuid);
+		model.setStatusByUserUuid(statusByUserUuid);
 	}
 
 	/**
@@ -1137,7 +1052,7 @@ public class MBMessageWrapper implements MBMessage, ModelWrapper<MBMessage> {
 	*/
 	@Override
 	public void setStatusDate(Date statusDate) {
-		_mbMessage.setStatusDate(statusDate);
+		model.setStatusDate(statusDate);
 	}
 
 	/**
@@ -1147,7 +1062,7 @@ public class MBMessageWrapper implements MBMessage, ModelWrapper<MBMessage> {
 	*/
 	@Override
 	public void setSubject(String subject) {
-		_mbMessage.setSubject(subject);
+		model.setSubject(subject);
 	}
 
 	/**
@@ -1157,7 +1072,7 @@ public class MBMessageWrapper implements MBMessage, ModelWrapper<MBMessage> {
 	*/
 	@Override
 	public void setThreadId(long threadId) {
-		_mbMessage.setThreadId(threadId);
+		model.setThreadId(threadId);
 	}
 
 	/**
@@ -1167,7 +1082,7 @@ public class MBMessageWrapper implements MBMessage, ModelWrapper<MBMessage> {
 	*/
 	@Override
 	public void setUserId(long userId) {
-		_mbMessage.setUserId(userId);
+		model.setUserId(userId);
 	}
 
 	/**
@@ -1177,7 +1092,7 @@ public class MBMessageWrapper implements MBMessage, ModelWrapper<MBMessage> {
 	*/
 	@Override
 	public void setUserName(String userName) {
-		_mbMessage.setUserName(userName);
+		model.setUserName(userName);
 	}
 
 	/**
@@ -1187,7 +1102,7 @@ public class MBMessageWrapper implements MBMessage, ModelWrapper<MBMessage> {
 	*/
 	@Override
 	public void setUserUuid(String userUuid) {
-		_mbMessage.setUserUuid(userUuid);
+		model.setUserUuid(userUuid);
 	}
 
 	/**
@@ -1197,77 +1112,16 @@ public class MBMessageWrapper implements MBMessage, ModelWrapper<MBMessage> {
 	*/
 	@Override
 	public void setUuid(String uuid) {
-		_mbMessage.setUuid(uuid);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<MBMessage> toCacheModel() {
-		return _mbMessage.toCacheModel();
-	}
-
-	@Override
-	public MBMessage toEscapedModel() {
-		return new MBMessageWrapper(_mbMessage.toEscapedModel());
-	}
-
-	@Override
-	public String toString() {
-		return _mbMessage.toString();
-	}
-
-	@Override
-	public MBMessage toUnescapedModel() {
-		return new MBMessageWrapper(_mbMessage.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _mbMessage.toXmlString();
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-
-		if (!(obj instanceof MBMessageWrapper)) {
-			return false;
-		}
-
-		MBMessageWrapper mbMessageWrapper = (MBMessageWrapper)obj;
-
-		if (Objects.equals(_mbMessage, mbMessageWrapper._mbMessage)) {
-			return true;
-		}
-
-		return false;
+		model.setUuid(uuid);
 	}
 
 	@Override
 	public StagedModelType getStagedModelType() {
-		return _mbMessage.getStagedModelType();
+		return model.getStagedModelType();
 	}
 
 	@Override
-	public MBMessage getWrappedModel() {
-		return _mbMessage;
+	protected MBMessageWrapper wrap(MBMessage mbMessage) {
+		return new MBMessageWrapper(mbMessage);
 	}
-
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _mbMessage.isEntityCacheEnabled();
-	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _mbMessage.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_mbMessage.resetOriginalValues();
-	}
-
-	private final MBMessage _mbMessage;
 }

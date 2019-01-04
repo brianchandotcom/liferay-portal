@@ -55,6 +55,8 @@ public interface UserTracker extends UserTrackerModel, PersistedModel {
 
 	public void addPath(UserTrackerPath path);
 
+	public int compareTo(UserTracker userTracker);
+
 	public String getEmailAddress();
 
 	public String getFullName();

@@ -16,19 +16,16 @@ package com.liferay.dynamic.data.lists.model;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
-
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 
 import com.liferay.portal.kernel.model.ModelWrapper;
-import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.io.Serializable;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -40,19 +37,10 @@ import java.util.Objects;
  * @generated
  */
 @ProviderType
-public class DDLRecordWrapper implements DDLRecord, ModelWrapper<DDLRecord> {
+public class DDLRecordWrapper extends BaseModelWrapper<DDLRecord>
+	implements DDLRecord, ModelWrapper<DDLRecord> {
 	public DDLRecordWrapper(DDLRecord ddlRecord) {
-		_ddlRecord = ddlRecord;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return DDLRecord.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return DDLRecord.class.getName();
+		super(ddlRecord);
 	}
 
 	@Override
@@ -185,16 +173,6 @@ public class DDLRecordWrapper implements DDLRecord, ModelWrapper<DDLRecord> {
 		}
 	}
 
-	@Override
-	public Object clone() {
-		return new DDLRecordWrapper((DDLRecord)_ddlRecord.clone());
-	}
-
-	@Override
-	public int compareTo(DDLRecord ddlRecord) {
-		return _ddlRecord.compareTo(ddlRecord);
-	}
-
 	/**
 	* Returns the company ID of this ddl record.
 	*
@@ -202,7 +180,7 @@ public class DDLRecordWrapper implements DDLRecord, ModelWrapper<DDLRecord> {
 	*/
 	@Override
 	public long getCompanyId() {
-		return _ddlRecord.getCompanyId();
+		return model.getCompanyId();
 	}
 
 	/**
@@ -212,20 +190,20 @@ public class DDLRecordWrapper implements DDLRecord, ModelWrapper<DDLRecord> {
 	*/
 	@Override
 	public Date getCreateDate() {
-		return _ddlRecord.getCreateDate();
+		return model.getCreateDate();
 	}
 
 	@Override
 	public java.util.List<com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue> getDDMFormFieldValues(
 		String fieldName)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _ddlRecord.getDDMFormFieldValues(fieldName);
+		return model.getDDMFormFieldValues(fieldName);
 	}
 
 	@Override
 	public com.liferay.dynamic.data.mapping.storage.DDMFormValues getDDMFormValues()
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _ddlRecord.getDDMFormValues();
+		return model.getDDMFormValues();
 	}
 
 	/**
@@ -235,7 +213,7 @@ public class DDLRecordWrapper implements DDLRecord, ModelWrapper<DDLRecord> {
 	*/
 	@Override
 	public long getDDMStorageId() {
-		return _ddlRecord.getDDMStorageId();
+		return model.getDDMStorageId();
 	}
 
 	/**
@@ -245,24 +223,19 @@ public class DDLRecordWrapper implements DDLRecord, ModelWrapper<DDLRecord> {
 	*/
 	@Override
 	public int getDisplayIndex() {
-		return _ddlRecord.getDisplayIndex();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _ddlRecord.getExpandoBridge();
+		return model.getDisplayIndex();
 	}
 
 	@Override
 	public Serializable getFieldDataType(String fieldName)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _ddlRecord.getFieldDataType(fieldName);
+		return model.getFieldDataType(fieldName);
 	}
 
 	@Override
 	public Serializable getFieldType(String fieldName)
 		throws Exception {
-		return _ddlRecord.getFieldType(fieldName);
+		return model.getFieldType(fieldName);
 	}
 
 	/**
@@ -272,7 +245,7 @@ public class DDLRecordWrapper implements DDLRecord, ModelWrapper<DDLRecord> {
 	*/
 	@Override
 	public long getGroupId() {
-		return _ddlRecord.getGroupId();
+		return model.getGroupId();
 	}
 
 	/**
@@ -282,13 +255,13 @@ public class DDLRecordWrapper implements DDLRecord, ModelWrapper<DDLRecord> {
 	*/
 	@Override
 	public Date getLastPublishDate() {
-		return _ddlRecord.getLastPublishDate();
+		return model.getLastPublishDate();
 	}
 
 	@Override
 	public DDLRecordVersion getLatestRecordVersion()
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _ddlRecord.getLatestRecordVersion();
+		return model.getLatestRecordVersion();
 	}
 
 	/**
@@ -298,7 +271,7 @@ public class DDLRecordWrapper implements DDLRecord, ModelWrapper<DDLRecord> {
 	*/
 	@Override
 	public Date getModifiedDate() {
-		return _ddlRecord.getModifiedDate();
+		return model.getModifiedDate();
 	}
 
 	/**
@@ -308,7 +281,7 @@ public class DDLRecordWrapper implements DDLRecord, ModelWrapper<DDLRecord> {
 	*/
 	@Override
 	public long getMvccVersion() {
-		return _ddlRecord.getMvccVersion();
+		return model.getMvccVersion();
 	}
 
 	/**
@@ -318,12 +291,7 @@ public class DDLRecordWrapper implements DDLRecord, ModelWrapper<DDLRecord> {
 	*/
 	@Override
 	public long getPrimaryKey() {
-		return _ddlRecord.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _ddlRecord.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	/**
@@ -333,13 +301,13 @@ public class DDLRecordWrapper implements DDLRecord, ModelWrapper<DDLRecord> {
 	*/
 	@Override
 	public long getRecordId() {
-		return _ddlRecord.getRecordId();
+		return model.getRecordId();
 	}
 
 	@Override
 	public DDLRecordSet getRecordSet()
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _ddlRecord.getRecordSet();
+		return model.getRecordSet();
 	}
 
 	/**
@@ -349,7 +317,7 @@ public class DDLRecordWrapper implements DDLRecord, ModelWrapper<DDLRecord> {
 	*/
 	@Override
 	public long getRecordSetId() {
-		return _ddlRecord.getRecordSetId();
+		return model.getRecordSetId();
 	}
 
 	/**
@@ -359,25 +327,25 @@ public class DDLRecordWrapper implements DDLRecord, ModelWrapper<DDLRecord> {
 	*/
 	@Override
 	public String getRecordSetVersion() {
-		return _ddlRecord.getRecordSetVersion();
+		return model.getRecordSetVersion();
 	}
 
 	@Override
 	public DDLRecordVersion getRecordVersion()
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _ddlRecord.getRecordVersion();
+		return model.getRecordVersion();
 	}
 
 	@Override
 	public DDLRecordVersion getRecordVersion(String version)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _ddlRecord.getRecordVersion(version);
+		return model.getRecordVersion(version);
 	}
 
 	@Override
 	public int getStatus()
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _ddlRecord.getStatus();
+		return model.getStatus();
 	}
 
 	/**
@@ -387,7 +355,7 @@ public class DDLRecordWrapper implements DDLRecord, ModelWrapper<DDLRecord> {
 	*/
 	@Override
 	public long getUserId() {
-		return _ddlRecord.getUserId();
+		return model.getUserId();
 	}
 
 	/**
@@ -397,7 +365,7 @@ public class DDLRecordWrapper implements DDLRecord, ModelWrapper<DDLRecord> {
 	*/
 	@Override
 	public String getUserName() {
-		return _ddlRecord.getUserName();
+		return model.getUserName();
 	}
 
 	/**
@@ -407,7 +375,7 @@ public class DDLRecordWrapper implements DDLRecord, ModelWrapper<DDLRecord> {
 	*/
 	@Override
 	public String getUserUuid() {
-		return _ddlRecord.getUserUuid();
+		return model.getUserUuid();
 	}
 
 	/**
@@ -417,7 +385,7 @@ public class DDLRecordWrapper implements DDLRecord, ModelWrapper<DDLRecord> {
 	*/
 	@Override
 	public String getUuid() {
-		return _ddlRecord.getUuid();
+		return model.getUuid();
 	}
 
 	/**
@@ -427,7 +395,7 @@ public class DDLRecordWrapper implements DDLRecord, ModelWrapper<DDLRecord> {
 	*/
 	@Override
 	public String getVersion() {
-		return _ddlRecord.getVersion();
+		return model.getVersion();
 	}
 
 	/**
@@ -437,7 +405,7 @@ public class DDLRecordWrapper implements DDLRecord, ModelWrapper<DDLRecord> {
 	*/
 	@Override
 	public long getVersionUserId() {
-		return _ddlRecord.getVersionUserId();
+		return model.getVersionUserId();
 	}
 
 	/**
@@ -447,7 +415,7 @@ public class DDLRecordWrapper implements DDLRecord, ModelWrapper<DDLRecord> {
 	*/
 	@Override
 	public String getVersionUserName() {
-		return _ddlRecord.getVersionUserName();
+		return model.getVersionUserName();
 	}
 
 	/**
@@ -457,37 +425,12 @@ public class DDLRecordWrapper implements DDLRecord, ModelWrapper<DDLRecord> {
 	*/
 	@Override
 	public String getVersionUserUuid() {
-		return _ddlRecord.getVersionUserUuid();
-	}
-
-	@Override
-	public int hashCode() {
-		return _ddlRecord.hashCode();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _ddlRecord.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _ddlRecord.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _ddlRecord.isNew();
+		return model.getVersionUserUuid();
 	}
 
 	@Override
 	public void persist() {
-		_ddlRecord.persist();
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_ddlRecord.setCachedModel(cachedModel);
+		model.persist();
 	}
 
 	/**
@@ -497,7 +440,7 @@ public class DDLRecordWrapper implements DDLRecord, ModelWrapper<DDLRecord> {
 	*/
 	@Override
 	public void setCompanyId(long companyId) {
-		_ddlRecord.setCompanyId(companyId);
+		model.setCompanyId(companyId);
 	}
 
 	/**
@@ -507,7 +450,7 @@ public class DDLRecordWrapper implements DDLRecord, ModelWrapper<DDLRecord> {
 	*/
 	@Override
 	public void setCreateDate(Date createDate) {
-		_ddlRecord.setCreateDate(createDate);
+		model.setCreateDate(createDate);
 	}
 
 	/**
@@ -517,7 +460,7 @@ public class DDLRecordWrapper implements DDLRecord, ModelWrapper<DDLRecord> {
 	*/
 	@Override
 	public void setDDMStorageId(long DDMStorageId) {
-		_ddlRecord.setDDMStorageId(DDMStorageId);
+		model.setDDMStorageId(DDMStorageId);
 	}
 
 	/**
@@ -527,23 +470,7 @@ public class DDLRecordWrapper implements DDLRecord, ModelWrapper<DDLRecord> {
 	*/
 	@Override
 	public void setDisplayIndex(int displayIndex) {
-		_ddlRecord.setDisplayIndex(displayIndex);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-		_ddlRecord.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_ddlRecord.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_ddlRecord.setExpandoBridgeAttributes(serviceContext);
+		model.setDisplayIndex(displayIndex);
 	}
 
 	/**
@@ -553,7 +480,7 @@ public class DDLRecordWrapper implements DDLRecord, ModelWrapper<DDLRecord> {
 	*/
 	@Override
 	public void setGroupId(long groupId) {
-		_ddlRecord.setGroupId(groupId);
+		model.setGroupId(groupId);
 	}
 
 	/**
@@ -563,7 +490,7 @@ public class DDLRecordWrapper implements DDLRecord, ModelWrapper<DDLRecord> {
 	*/
 	@Override
 	public void setLastPublishDate(Date lastPublishDate) {
-		_ddlRecord.setLastPublishDate(lastPublishDate);
+		model.setLastPublishDate(lastPublishDate);
 	}
 
 	/**
@@ -573,7 +500,7 @@ public class DDLRecordWrapper implements DDLRecord, ModelWrapper<DDLRecord> {
 	*/
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
-		_ddlRecord.setModifiedDate(modifiedDate);
+		model.setModifiedDate(modifiedDate);
 	}
 
 	/**
@@ -583,12 +510,7 @@ public class DDLRecordWrapper implements DDLRecord, ModelWrapper<DDLRecord> {
 	*/
 	@Override
 	public void setMvccVersion(long mvccVersion) {
-		_ddlRecord.setMvccVersion(mvccVersion);
-	}
-
-	@Override
-	public void setNew(boolean n) {
-		_ddlRecord.setNew(n);
+		model.setMvccVersion(mvccVersion);
 	}
 
 	/**
@@ -598,12 +520,7 @@ public class DDLRecordWrapper implements DDLRecord, ModelWrapper<DDLRecord> {
 	*/
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_ddlRecord.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_ddlRecord.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -613,7 +530,7 @@ public class DDLRecordWrapper implements DDLRecord, ModelWrapper<DDLRecord> {
 	*/
 	@Override
 	public void setRecordId(long recordId) {
-		_ddlRecord.setRecordId(recordId);
+		model.setRecordId(recordId);
 	}
 
 	/**
@@ -623,7 +540,7 @@ public class DDLRecordWrapper implements DDLRecord, ModelWrapper<DDLRecord> {
 	*/
 	@Override
 	public void setRecordSetId(long recordSetId) {
-		_ddlRecord.setRecordSetId(recordSetId);
+		model.setRecordSetId(recordSetId);
 	}
 
 	/**
@@ -633,7 +550,7 @@ public class DDLRecordWrapper implements DDLRecord, ModelWrapper<DDLRecord> {
 	*/
 	@Override
 	public void setRecordSetVersion(String recordSetVersion) {
-		_ddlRecord.setRecordSetVersion(recordSetVersion);
+		model.setRecordSetVersion(recordSetVersion);
 	}
 
 	/**
@@ -643,7 +560,7 @@ public class DDLRecordWrapper implements DDLRecord, ModelWrapper<DDLRecord> {
 	*/
 	@Override
 	public void setUserId(long userId) {
-		_ddlRecord.setUserId(userId);
+		model.setUserId(userId);
 	}
 
 	/**
@@ -653,7 +570,7 @@ public class DDLRecordWrapper implements DDLRecord, ModelWrapper<DDLRecord> {
 	*/
 	@Override
 	public void setUserName(String userName) {
-		_ddlRecord.setUserName(userName);
+		model.setUserName(userName);
 	}
 
 	/**
@@ -663,7 +580,7 @@ public class DDLRecordWrapper implements DDLRecord, ModelWrapper<DDLRecord> {
 	*/
 	@Override
 	public void setUserUuid(String userUuid) {
-		_ddlRecord.setUserUuid(userUuid);
+		model.setUserUuid(userUuid);
 	}
 
 	/**
@@ -673,7 +590,7 @@ public class DDLRecordWrapper implements DDLRecord, ModelWrapper<DDLRecord> {
 	*/
 	@Override
 	public void setUuid(String uuid) {
-		_ddlRecord.setUuid(uuid);
+		model.setUuid(uuid);
 	}
 
 	/**
@@ -683,7 +600,7 @@ public class DDLRecordWrapper implements DDLRecord, ModelWrapper<DDLRecord> {
 	*/
 	@Override
 	public void setVersion(String version) {
-		_ddlRecord.setVersion(version);
+		model.setVersion(version);
 	}
 
 	/**
@@ -693,7 +610,7 @@ public class DDLRecordWrapper implements DDLRecord, ModelWrapper<DDLRecord> {
 	*/
 	@Override
 	public void setVersionUserId(long versionUserId) {
-		_ddlRecord.setVersionUserId(versionUserId);
+		model.setVersionUserId(versionUserId);
 	}
 
 	/**
@@ -703,7 +620,7 @@ public class DDLRecordWrapper implements DDLRecord, ModelWrapper<DDLRecord> {
 	*/
 	@Override
 	public void setVersionUserName(String versionUserName) {
-		_ddlRecord.setVersionUserName(versionUserName);
+		model.setVersionUserName(versionUserName);
 	}
 
 	/**
@@ -713,77 +630,16 @@ public class DDLRecordWrapper implements DDLRecord, ModelWrapper<DDLRecord> {
 	*/
 	@Override
 	public void setVersionUserUuid(String versionUserUuid) {
-		_ddlRecord.setVersionUserUuid(versionUserUuid);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<DDLRecord> toCacheModel() {
-		return _ddlRecord.toCacheModel();
-	}
-
-	@Override
-	public DDLRecord toEscapedModel() {
-		return new DDLRecordWrapper(_ddlRecord.toEscapedModel());
-	}
-
-	@Override
-	public String toString() {
-		return _ddlRecord.toString();
-	}
-
-	@Override
-	public DDLRecord toUnescapedModel() {
-		return new DDLRecordWrapper(_ddlRecord.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _ddlRecord.toXmlString();
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-
-		if (!(obj instanceof DDLRecordWrapper)) {
-			return false;
-		}
-
-		DDLRecordWrapper ddlRecordWrapper = (DDLRecordWrapper)obj;
-
-		if (Objects.equals(_ddlRecord, ddlRecordWrapper._ddlRecord)) {
-			return true;
-		}
-
-		return false;
+		model.setVersionUserUuid(versionUserUuid);
 	}
 
 	@Override
 	public StagedModelType getStagedModelType() {
-		return _ddlRecord.getStagedModelType();
+		return model.getStagedModelType();
 	}
 
 	@Override
-	public DDLRecord getWrappedModel() {
-		return _ddlRecord;
+	protected DDLRecordWrapper wrap(DDLRecord ddlRecord) {
+		return new DDLRecordWrapper(ddlRecord);
 	}
-
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _ddlRecord.isEntityCacheEnabled();
-	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _ddlRecord.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_ddlRecord.resetOriginalValues();
-	}
-
-	private final DDLRecord _ddlRecord;
 }

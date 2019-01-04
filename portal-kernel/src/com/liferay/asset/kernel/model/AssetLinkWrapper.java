@@ -16,17 +16,12 @@ package com.liferay.asset.kernel.model;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
-
 import com.liferay.portal.kernel.model.ModelWrapper;
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -38,19 +33,10 @@ import java.util.Objects;
  * @generated
  */
 @ProviderType
-public class AssetLinkWrapper implements AssetLink, ModelWrapper<AssetLink> {
+public class AssetLinkWrapper extends BaseModelWrapper<AssetLink>
+	implements AssetLink, ModelWrapper<AssetLink> {
 	public AssetLinkWrapper(AssetLink assetLink) {
-		_assetLink = assetLink;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return AssetLink.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return AssetLink.class.getName();
+		super(assetLink);
 	}
 
 	@Override
@@ -127,16 +113,6 @@ public class AssetLinkWrapper implements AssetLink, ModelWrapper<AssetLink> {
 		}
 	}
 
-	@Override
-	public Object clone() {
-		return new AssetLinkWrapper((AssetLink)_assetLink.clone());
-	}
-
-	@Override
-	public int compareTo(AssetLink assetLink) {
-		return _assetLink.compareTo(assetLink);
-	}
-
 	/**
 	* Returns the company ID of this asset link.
 	*
@@ -144,7 +120,7 @@ public class AssetLinkWrapper implements AssetLink, ModelWrapper<AssetLink> {
 	*/
 	@Override
 	public long getCompanyId() {
-		return _assetLink.getCompanyId();
+		return model.getCompanyId();
 	}
 
 	/**
@@ -154,7 +130,7 @@ public class AssetLinkWrapper implements AssetLink, ModelWrapper<AssetLink> {
 	*/
 	@Override
 	public Date getCreateDate() {
-		return _assetLink.getCreateDate();
+		return model.getCreateDate();
 	}
 
 	/**
@@ -164,7 +140,7 @@ public class AssetLinkWrapper implements AssetLink, ModelWrapper<AssetLink> {
 	*/
 	@Override
 	public long getEntryId1() {
-		return _assetLink.getEntryId1();
+		return model.getEntryId1();
 	}
 
 	/**
@@ -174,12 +150,7 @@ public class AssetLinkWrapper implements AssetLink, ModelWrapper<AssetLink> {
 	*/
 	@Override
 	public long getEntryId2() {
-		return _assetLink.getEntryId2();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _assetLink.getExpandoBridge();
+		return model.getEntryId2();
 	}
 
 	/**
@@ -189,7 +160,7 @@ public class AssetLinkWrapper implements AssetLink, ModelWrapper<AssetLink> {
 	*/
 	@Override
 	public long getLinkId() {
-		return _assetLink.getLinkId();
+		return model.getLinkId();
 	}
 
 	/**
@@ -199,12 +170,7 @@ public class AssetLinkWrapper implements AssetLink, ModelWrapper<AssetLink> {
 	*/
 	@Override
 	public long getPrimaryKey() {
-		return _assetLink.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _assetLink.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	/**
@@ -214,7 +180,7 @@ public class AssetLinkWrapper implements AssetLink, ModelWrapper<AssetLink> {
 	*/
 	@Override
 	public int getType() {
-		return _assetLink.getType();
+		return model.getType();
 	}
 
 	/**
@@ -224,7 +190,7 @@ public class AssetLinkWrapper implements AssetLink, ModelWrapper<AssetLink> {
 	*/
 	@Override
 	public long getUserId() {
-		return _assetLink.getUserId();
+		return model.getUserId();
 	}
 
 	/**
@@ -234,7 +200,7 @@ public class AssetLinkWrapper implements AssetLink, ModelWrapper<AssetLink> {
 	*/
 	@Override
 	public String getUserName() {
-		return _assetLink.getUserName();
+		return model.getUserName();
 	}
 
 	/**
@@ -244,7 +210,7 @@ public class AssetLinkWrapper implements AssetLink, ModelWrapper<AssetLink> {
 	*/
 	@Override
 	public String getUserUuid() {
-		return _assetLink.getUserUuid();
+		return model.getUserUuid();
 	}
 
 	/**
@@ -254,37 +220,12 @@ public class AssetLinkWrapper implements AssetLink, ModelWrapper<AssetLink> {
 	*/
 	@Override
 	public int getWeight() {
-		return _assetLink.getWeight();
-	}
-
-	@Override
-	public int hashCode() {
-		return _assetLink.hashCode();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _assetLink.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _assetLink.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _assetLink.isNew();
+		return model.getWeight();
 	}
 
 	@Override
 	public void persist() {
-		_assetLink.persist();
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_assetLink.setCachedModel(cachedModel);
+		model.persist();
 	}
 
 	/**
@@ -294,7 +235,7 @@ public class AssetLinkWrapper implements AssetLink, ModelWrapper<AssetLink> {
 	*/
 	@Override
 	public void setCompanyId(long companyId) {
-		_assetLink.setCompanyId(companyId);
+		model.setCompanyId(companyId);
 	}
 
 	/**
@@ -304,7 +245,7 @@ public class AssetLinkWrapper implements AssetLink, ModelWrapper<AssetLink> {
 	*/
 	@Override
 	public void setCreateDate(Date createDate) {
-		_assetLink.setCreateDate(createDate);
+		model.setCreateDate(createDate);
 	}
 
 	/**
@@ -314,7 +255,7 @@ public class AssetLinkWrapper implements AssetLink, ModelWrapper<AssetLink> {
 	*/
 	@Override
 	public void setEntryId1(long entryId1) {
-		_assetLink.setEntryId1(entryId1);
+		model.setEntryId1(entryId1);
 	}
 
 	/**
@@ -324,23 +265,7 @@ public class AssetLinkWrapper implements AssetLink, ModelWrapper<AssetLink> {
 	*/
 	@Override
 	public void setEntryId2(long entryId2) {
-		_assetLink.setEntryId2(entryId2);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-		_assetLink.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_assetLink.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_assetLink.setExpandoBridgeAttributes(serviceContext);
+		model.setEntryId2(entryId2);
 	}
 
 	/**
@@ -350,12 +275,7 @@ public class AssetLinkWrapper implements AssetLink, ModelWrapper<AssetLink> {
 	*/
 	@Override
 	public void setLinkId(long linkId) {
-		_assetLink.setLinkId(linkId);
-	}
-
-	@Override
-	public void setNew(boolean n) {
-		_assetLink.setNew(n);
+		model.setLinkId(linkId);
 	}
 
 	/**
@@ -365,12 +285,7 @@ public class AssetLinkWrapper implements AssetLink, ModelWrapper<AssetLink> {
 	*/
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_assetLink.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_assetLink.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -380,7 +295,7 @@ public class AssetLinkWrapper implements AssetLink, ModelWrapper<AssetLink> {
 	*/
 	@Override
 	public void setType(int type) {
-		_assetLink.setType(type);
+		model.setType(type);
 	}
 
 	/**
@@ -390,7 +305,7 @@ public class AssetLinkWrapper implements AssetLink, ModelWrapper<AssetLink> {
 	*/
 	@Override
 	public void setUserId(long userId) {
-		_assetLink.setUserId(userId);
+		model.setUserId(userId);
 	}
 
 	/**
@@ -400,7 +315,7 @@ public class AssetLinkWrapper implements AssetLink, ModelWrapper<AssetLink> {
 	*/
 	@Override
 	public void setUserName(String userName) {
-		_assetLink.setUserName(userName);
+		model.setUserName(userName);
 	}
 
 	/**
@@ -410,7 +325,7 @@ public class AssetLinkWrapper implements AssetLink, ModelWrapper<AssetLink> {
 	*/
 	@Override
 	public void setUserUuid(String userUuid) {
-		_assetLink.setUserUuid(userUuid);
+		model.setUserUuid(userUuid);
 	}
 
 	/**
@@ -420,72 +335,11 @@ public class AssetLinkWrapper implements AssetLink, ModelWrapper<AssetLink> {
 	*/
 	@Override
 	public void setWeight(int weight) {
-		_assetLink.setWeight(weight);
+		model.setWeight(weight);
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.CacheModel<AssetLink> toCacheModel() {
-		return _assetLink.toCacheModel();
+	protected AssetLinkWrapper wrap(AssetLink assetLink) {
+		return new AssetLinkWrapper(assetLink);
 	}
-
-	@Override
-	public AssetLink toEscapedModel() {
-		return new AssetLinkWrapper(_assetLink.toEscapedModel());
-	}
-
-	@Override
-	public String toString() {
-		return _assetLink.toString();
-	}
-
-	@Override
-	public AssetLink toUnescapedModel() {
-		return new AssetLinkWrapper(_assetLink.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _assetLink.toXmlString();
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-
-		if (!(obj instanceof AssetLinkWrapper)) {
-			return false;
-		}
-
-		AssetLinkWrapper assetLinkWrapper = (AssetLinkWrapper)obj;
-
-		if (Objects.equals(_assetLink, assetLinkWrapper._assetLink)) {
-			return true;
-		}
-
-		return false;
-	}
-
-	@Override
-	public AssetLink getWrappedModel() {
-		return _assetLink;
-	}
-
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _assetLink.isEntityCacheEnabled();
-	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _assetLink.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_assetLink.resetOriginalValues();
-	}
-
-	private final AssetLink _assetLink;
 }

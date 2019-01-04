@@ -16,15 +16,10 @@ package com.liferay.portal.kernel.model;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
-
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -36,21 +31,11 @@ import java.util.Objects;
  * @generated
  */
 @ProviderType
-public class UserNotificationEventWrapper implements UserNotificationEvent,
-	ModelWrapper<UserNotificationEvent> {
+public class UserNotificationEventWrapper extends BaseModelWrapper<UserNotificationEvent>
+	implements UserNotificationEvent, ModelWrapper<UserNotificationEvent> {
 	public UserNotificationEventWrapper(
 		UserNotificationEvent userNotificationEvent) {
-		_userNotificationEvent = userNotificationEvent;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return UserNotificationEvent.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return UserNotificationEvent.class.getName();
+		super(userNotificationEvent);
 	}
 
 	@Override
@@ -156,16 +141,6 @@ public class UserNotificationEventWrapper implements UserNotificationEvent,
 		}
 	}
 
-	@Override
-	public Object clone() {
-		return new UserNotificationEventWrapper((UserNotificationEvent)_userNotificationEvent.clone());
-	}
-
-	@Override
-	public int compareTo(UserNotificationEvent userNotificationEvent) {
-		return _userNotificationEvent.compareTo(userNotificationEvent);
-	}
-
 	/**
 	* Returns the action required of this user notification event.
 	*
@@ -173,7 +148,7 @@ public class UserNotificationEventWrapper implements UserNotificationEvent,
 	*/
 	@Override
 	public boolean getActionRequired() {
-		return _userNotificationEvent.getActionRequired();
+		return model.getActionRequired();
 	}
 
 	/**
@@ -183,7 +158,7 @@ public class UserNotificationEventWrapper implements UserNotificationEvent,
 	*/
 	@Override
 	public boolean getArchived() {
-		return _userNotificationEvent.getArchived();
+		return model.getArchived();
 	}
 
 	/**
@@ -193,7 +168,7 @@ public class UserNotificationEventWrapper implements UserNotificationEvent,
 	*/
 	@Override
 	public long getCompanyId() {
-		return _userNotificationEvent.getCompanyId();
+		return model.getCompanyId();
 	}
 
 	/**
@@ -203,7 +178,7 @@ public class UserNotificationEventWrapper implements UserNotificationEvent,
 	*/
 	@Override
 	public long getDeliverBy() {
-		return _userNotificationEvent.getDeliverBy();
+		return model.getDeliverBy();
 	}
 
 	/**
@@ -213,7 +188,7 @@ public class UserNotificationEventWrapper implements UserNotificationEvent,
 	*/
 	@Override
 	public boolean getDelivered() {
-		return _userNotificationEvent.getDelivered();
+		return model.getDelivered();
 	}
 
 	/**
@@ -223,12 +198,7 @@ public class UserNotificationEventWrapper implements UserNotificationEvent,
 	*/
 	@Override
 	public int getDeliveryType() {
-		return _userNotificationEvent.getDeliveryType();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _userNotificationEvent.getExpandoBridge();
+		return model.getDeliveryType();
 	}
 
 	/**
@@ -238,7 +208,7 @@ public class UserNotificationEventWrapper implements UserNotificationEvent,
 	*/
 	@Override
 	public long getMvccVersion() {
-		return _userNotificationEvent.getMvccVersion();
+		return model.getMvccVersion();
 	}
 
 	/**
@@ -248,7 +218,7 @@ public class UserNotificationEventWrapper implements UserNotificationEvent,
 	*/
 	@Override
 	public String getPayload() {
-		return _userNotificationEvent.getPayload();
+		return model.getPayload();
 	}
 
 	/**
@@ -258,12 +228,7 @@ public class UserNotificationEventWrapper implements UserNotificationEvent,
 	*/
 	@Override
 	public long getPrimaryKey() {
-		return _userNotificationEvent.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _userNotificationEvent.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	/**
@@ -273,7 +238,7 @@ public class UserNotificationEventWrapper implements UserNotificationEvent,
 	*/
 	@Override
 	public long getTimestamp() {
-		return _userNotificationEvent.getTimestamp();
+		return model.getTimestamp();
 	}
 
 	/**
@@ -283,7 +248,7 @@ public class UserNotificationEventWrapper implements UserNotificationEvent,
 	*/
 	@Override
 	public String getType() {
-		return _userNotificationEvent.getType();
+		return model.getType();
 	}
 
 	/**
@@ -293,7 +258,7 @@ public class UserNotificationEventWrapper implements UserNotificationEvent,
 	*/
 	@Override
 	public long getUserId() {
-		return _userNotificationEvent.getUserId();
+		return model.getUserId();
 	}
 
 	/**
@@ -303,7 +268,7 @@ public class UserNotificationEventWrapper implements UserNotificationEvent,
 	*/
 	@Override
 	public long getUserNotificationEventId() {
-		return _userNotificationEvent.getUserNotificationEventId();
+		return model.getUserNotificationEventId();
 	}
 
 	/**
@@ -313,7 +278,7 @@ public class UserNotificationEventWrapper implements UserNotificationEvent,
 	*/
 	@Override
 	public String getUserUuid() {
-		return _userNotificationEvent.getUserUuid();
+		return model.getUserUuid();
 	}
 
 	/**
@@ -323,12 +288,7 @@ public class UserNotificationEventWrapper implements UserNotificationEvent,
 	*/
 	@Override
 	public String getUuid() {
-		return _userNotificationEvent.getUuid();
-	}
-
-	@Override
-	public int hashCode() {
-		return _userNotificationEvent.hashCode();
+		return model.getUuid();
 	}
 
 	/**
@@ -338,7 +298,7 @@ public class UserNotificationEventWrapper implements UserNotificationEvent,
 	*/
 	@Override
 	public boolean isActionRequired() {
-		return _userNotificationEvent.isActionRequired();
+		return model.isActionRequired();
 	}
 
 	/**
@@ -348,12 +308,7 @@ public class UserNotificationEventWrapper implements UserNotificationEvent,
 	*/
 	@Override
 	public boolean isArchived() {
-		return _userNotificationEvent.isArchived();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _userNotificationEvent.isCachedModel();
+		return model.isArchived();
 	}
 
 	/**
@@ -363,22 +318,12 @@ public class UserNotificationEventWrapper implements UserNotificationEvent,
 	*/
 	@Override
 	public boolean isDelivered() {
-		return _userNotificationEvent.isDelivered();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _userNotificationEvent.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _userNotificationEvent.isNew();
+		return model.isDelivered();
 	}
 
 	@Override
 	public void persist() {
-		_userNotificationEvent.persist();
+		model.persist();
 	}
 
 	/**
@@ -388,7 +333,7 @@ public class UserNotificationEventWrapper implements UserNotificationEvent,
 	*/
 	@Override
 	public void setActionRequired(boolean actionRequired) {
-		_userNotificationEvent.setActionRequired(actionRequired);
+		model.setActionRequired(actionRequired);
 	}
 
 	/**
@@ -398,12 +343,7 @@ public class UserNotificationEventWrapper implements UserNotificationEvent,
 	*/
 	@Override
 	public void setArchived(boolean archived) {
-		_userNotificationEvent.setArchived(archived);
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_userNotificationEvent.setCachedModel(cachedModel);
+		model.setArchived(archived);
 	}
 
 	/**
@@ -413,7 +353,7 @@ public class UserNotificationEventWrapper implements UserNotificationEvent,
 	*/
 	@Override
 	public void setCompanyId(long companyId) {
-		_userNotificationEvent.setCompanyId(companyId);
+		model.setCompanyId(companyId);
 	}
 
 	/**
@@ -423,7 +363,7 @@ public class UserNotificationEventWrapper implements UserNotificationEvent,
 	*/
 	@Override
 	public void setDeliverBy(long deliverBy) {
-		_userNotificationEvent.setDeliverBy(deliverBy);
+		model.setDeliverBy(deliverBy);
 	}
 
 	/**
@@ -433,7 +373,7 @@ public class UserNotificationEventWrapper implements UserNotificationEvent,
 	*/
 	@Override
 	public void setDelivered(boolean delivered) {
-		_userNotificationEvent.setDelivered(delivered);
+		model.setDelivered(delivered);
 	}
 
 	/**
@@ -443,22 +383,7 @@ public class UserNotificationEventWrapper implements UserNotificationEvent,
 	*/
 	@Override
 	public void setDeliveryType(int deliveryType) {
-		_userNotificationEvent.setDeliveryType(deliveryType);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(BaseModel<?> baseModel) {
-		_userNotificationEvent.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_userNotificationEvent.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_userNotificationEvent.setExpandoBridgeAttributes(serviceContext);
+		model.setDeliveryType(deliveryType);
 	}
 
 	/**
@@ -468,12 +393,7 @@ public class UserNotificationEventWrapper implements UserNotificationEvent,
 	*/
 	@Override
 	public void setMvccVersion(long mvccVersion) {
-		_userNotificationEvent.setMvccVersion(mvccVersion);
-	}
-
-	@Override
-	public void setNew(boolean n) {
-		_userNotificationEvent.setNew(n);
+		model.setMvccVersion(mvccVersion);
 	}
 
 	/**
@@ -483,7 +403,7 @@ public class UserNotificationEventWrapper implements UserNotificationEvent,
 	*/
 	@Override
 	public void setPayload(String payload) {
-		_userNotificationEvent.setPayload(payload);
+		model.setPayload(payload);
 	}
 
 	/**
@@ -493,12 +413,7 @@ public class UserNotificationEventWrapper implements UserNotificationEvent,
 	*/
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_userNotificationEvent.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_userNotificationEvent.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -508,7 +423,7 @@ public class UserNotificationEventWrapper implements UserNotificationEvent,
 	*/
 	@Override
 	public void setTimestamp(long timestamp) {
-		_userNotificationEvent.setTimestamp(timestamp);
+		model.setTimestamp(timestamp);
 	}
 
 	/**
@@ -518,7 +433,7 @@ public class UserNotificationEventWrapper implements UserNotificationEvent,
 	*/
 	@Override
 	public void setType(String type) {
-		_userNotificationEvent.setType(type);
+		model.setType(type);
 	}
 
 	/**
@@ -528,7 +443,7 @@ public class UserNotificationEventWrapper implements UserNotificationEvent,
 	*/
 	@Override
 	public void setUserId(long userId) {
-		_userNotificationEvent.setUserId(userId);
+		model.setUserId(userId);
 	}
 
 	/**
@@ -538,7 +453,7 @@ public class UserNotificationEventWrapper implements UserNotificationEvent,
 	*/
 	@Override
 	public void setUserNotificationEventId(long userNotificationEventId) {
-		_userNotificationEvent.setUserNotificationEventId(userNotificationEventId);
+		model.setUserNotificationEventId(userNotificationEventId);
 	}
 
 	/**
@@ -548,7 +463,7 @@ public class UserNotificationEventWrapper implements UserNotificationEvent,
 	*/
 	@Override
 	public void setUserUuid(String userUuid) {
-		_userNotificationEvent.setUserUuid(userUuid);
+		model.setUserUuid(userUuid);
 	}
 
 	/**
@@ -558,73 +473,12 @@ public class UserNotificationEventWrapper implements UserNotificationEvent,
 	*/
 	@Override
 	public void setUuid(String uuid) {
-		_userNotificationEvent.setUuid(uuid);
+		model.setUuid(uuid);
 	}
 
 	@Override
-	public CacheModel<UserNotificationEvent> toCacheModel() {
-		return _userNotificationEvent.toCacheModel();
+	protected UserNotificationEventWrapper wrap(
+		UserNotificationEvent userNotificationEvent) {
+		return new UserNotificationEventWrapper(userNotificationEvent);
 	}
-
-	@Override
-	public UserNotificationEvent toEscapedModel() {
-		return new UserNotificationEventWrapper(_userNotificationEvent.toEscapedModel());
-	}
-
-	@Override
-	public String toString() {
-		return _userNotificationEvent.toString();
-	}
-
-	@Override
-	public UserNotificationEvent toUnescapedModel() {
-		return new UserNotificationEventWrapper(_userNotificationEvent.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _userNotificationEvent.toXmlString();
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-
-		if (!(obj instanceof UserNotificationEventWrapper)) {
-			return false;
-		}
-
-		UserNotificationEventWrapper userNotificationEventWrapper = (UserNotificationEventWrapper)obj;
-
-		if (Objects.equals(_userNotificationEvent,
-					userNotificationEventWrapper._userNotificationEvent)) {
-			return true;
-		}
-
-		return false;
-	}
-
-	@Override
-	public UserNotificationEvent getWrappedModel() {
-		return _userNotificationEvent;
-	}
-
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _userNotificationEvent.isEntityCacheEnabled();
-	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _userNotificationEvent.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_userNotificationEvent.resetOriginalValues();
-	}
-
-	private final UserNotificationEvent _userNotificationEvent;
 }

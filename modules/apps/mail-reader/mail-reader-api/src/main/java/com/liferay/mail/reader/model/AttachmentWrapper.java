@@ -16,16 +16,11 @@ package com.liferay.mail.reader.model;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
-
 import com.liferay.portal.kernel.model.ModelWrapper;
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -37,19 +32,10 @@ import java.util.Objects;
  * @generated
  */
 @ProviderType
-public class AttachmentWrapper implements Attachment, ModelWrapper<Attachment> {
+public class AttachmentWrapper extends BaseModelWrapper<Attachment>
+	implements Attachment, ModelWrapper<Attachment> {
 	public AttachmentWrapper(Attachment attachment) {
-		_attachment = attachment;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return Attachment.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return Attachment.class.getName();
+		super(attachment);
 	}
 
 	@Override
@@ -126,16 +112,6 @@ public class AttachmentWrapper implements Attachment, ModelWrapper<Attachment> {
 		}
 	}
 
-	@Override
-	public Object clone() {
-		return new AttachmentWrapper((Attachment)_attachment.clone());
-	}
-
-	@Override
-	public int compareTo(Attachment attachment) {
-		return _attachment.compareTo(attachment);
-	}
-
 	/**
 	* Returns the account ID of this attachment.
 	*
@@ -143,7 +119,7 @@ public class AttachmentWrapper implements Attachment, ModelWrapper<Attachment> {
 	*/
 	@Override
 	public long getAccountId() {
-		return _attachment.getAccountId();
+		return model.getAccountId();
 	}
 
 	/**
@@ -153,7 +129,7 @@ public class AttachmentWrapper implements Attachment, ModelWrapper<Attachment> {
 	*/
 	@Override
 	public long getAttachmentId() {
-		return _attachment.getAttachmentId();
+		return model.getAttachmentId();
 	}
 
 	/**
@@ -163,7 +139,7 @@ public class AttachmentWrapper implements Attachment, ModelWrapper<Attachment> {
 	*/
 	@Override
 	public long getCompanyId() {
-		return _attachment.getCompanyId();
+		return model.getCompanyId();
 	}
 
 	/**
@@ -173,12 +149,7 @@ public class AttachmentWrapper implements Attachment, ModelWrapper<Attachment> {
 	*/
 	@Override
 	public String getContentPath() {
-		return _attachment.getContentPath();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _attachment.getExpandoBridge();
+		return model.getContentPath();
 	}
 
 	/**
@@ -188,7 +159,7 @@ public class AttachmentWrapper implements Attachment, ModelWrapper<Attachment> {
 	*/
 	@Override
 	public String getFileName() {
-		return _attachment.getFileName();
+		return model.getFileName();
 	}
 
 	/**
@@ -198,7 +169,7 @@ public class AttachmentWrapper implements Attachment, ModelWrapper<Attachment> {
 	*/
 	@Override
 	public long getFolderId() {
-		return _attachment.getFolderId();
+		return model.getFolderId();
 	}
 
 	/**
@@ -208,7 +179,7 @@ public class AttachmentWrapper implements Attachment, ModelWrapper<Attachment> {
 	*/
 	@Override
 	public long getMessageId() {
-		return _attachment.getMessageId();
+		return model.getMessageId();
 	}
 
 	/**
@@ -218,12 +189,7 @@ public class AttachmentWrapper implements Attachment, ModelWrapper<Attachment> {
 	*/
 	@Override
 	public long getPrimaryKey() {
-		return _attachment.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _attachment.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	/**
@@ -233,7 +199,7 @@ public class AttachmentWrapper implements Attachment, ModelWrapper<Attachment> {
 	*/
 	@Override
 	public long getSize() {
-		return _attachment.getSize();
+		return model.getSize();
 	}
 
 	/**
@@ -243,7 +209,7 @@ public class AttachmentWrapper implements Attachment, ModelWrapper<Attachment> {
 	*/
 	@Override
 	public long getUserId() {
-		return _attachment.getUserId();
+		return model.getUserId();
 	}
 
 	/**
@@ -253,32 +219,12 @@ public class AttachmentWrapper implements Attachment, ModelWrapper<Attachment> {
 	*/
 	@Override
 	public String getUserUuid() {
-		return _attachment.getUserUuid();
-	}
-
-	@Override
-	public int hashCode() {
-		return _attachment.hashCode();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _attachment.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _attachment.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _attachment.isNew();
+		return model.getUserUuid();
 	}
 
 	@Override
 	public void persist() {
-		_attachment.persist();
+		model.persist();
 	}
 
 	/**
@@ -288,7 +234,7 @@ public class AttachmentWrapper implements Attachment, ModelWrapper<Attachment> {
 	*/
 	@Override
 	public void setAccountId(long accountId) {
-		_attachment.setAccountId(accountId);
+		model.setAccountId(accountId);
 	}
 
 	/**
@@ -298,12 +244,7 @@ public class AttachmentWrapper implements Attachment, ModelWrapper<Attachment> {
 	*/
 	@Override
 	public void setAttachmentId(long attachmentId) {
-		_attachment.setAttachmentId(attachmentId);
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_attachment.setCachedModel(cachedModel);
+		model.setAttachmentId(attachmentId);
 	}
 
 	/**
@@ -313,7 +254,7 @@ public class AttachmentWrapper implements Attachment, ModelWrapper<Attachment> {
 	*/
 	@Override
 	public void setCompanyId(long companyId) {
-		_attachment.setCompanyId(companyId);
+		model.setCompanyId(companyId);
 	}
 
 	/**
@@ -323,23 +264,7 @@ public class AttachmentWrapper implements Attachment, ModelWrapper<Attachment> {
 	*/
 	@Override
 	public void setContentPath(String contentPath) {
-		_attachment.setContentPath(contentPath);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-		_attachment.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_attachment.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_attachment.setExpandoBridgeAttributes(serviceContext);
+		model.setContentPath(contentPath);
 	}
 
 	/**
@@ -349,7 +274,7 @@ public class AttachmentWrapper implements Attachment, ModelWrapper<Attachment> {
 	*/
 	@Override
 	public void setFileName(String fileName) {
-		_attachment.setFileName(fileName);
+		model.setFileName(fileName);
 	}
 
 	/**
@@ -359,7 +284,7 @@ public class AttachmentWrapper implements Attachment, ModelWrapper<Attachment> {
 	*/
 	@Override
 	public void setFolderId(long folderId) {
-		_attachment.setFolderId(folderId);
+		model.setFolderId(folderId);
 	}
 
 	/**
@@ -369,12 +294,7 @@ public class AttachmentWrapper implements Attachment, ModelWrapper<Attachment> {
 	*/
 	@Override
 	public void setMessageId(long messageId) {
-		_attachment.setMessageId(messageId);
-	}
-
-	@Override
-	public void setNew(boolean n) {
-		_attachment.setNew(n);
+		model.setMessageId(messageId);
 	}
 
 	/**
@@ -384,12 +304,7 @@ public class AttachmentWrapper implements Attachment, ModelWrapper<Attachment> {
 	*/
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_attachment.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_attachment.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -399,7 +314,7 @@ public class AttachmentWrapper implements Attachment, ModelWrapper<Attachment> {
 	*/
 	@Override
 	public void setSize(long size) {
-		_attachment.setSize(size);
+		model.setSize(size);
 	}
 
 	/**
@@ -409,7 +324,7 @@ public class AttachmentWrapper implements Attachment, ModelWrapper<Attachment> {
 	*/
 	@Override
 	public void setUserId(long userId) {
-		_attachment.setUserId(userId);
+		model.setUserId(userId);
 	}
 
 	/**
@@ -419,72 +334,11 @@ public class AttachmentWrapper implements Attachment, ModelWrapper<Attachment> {
 	*/
 	@Override
 	public void setUserUuid(String userUuid) {
-		_attachment.setUserUuid(userUuid);
+		model.setUserUuid(userUuid);
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.CacheModel<Attachment> toCacheModel() {
-		return _attachment.toCacheModel();
+	protected AttachmentWrapper wrap(Attachment attachment) {
+		return new AttachmentWrapper(attachment);
 	}
-
-	@Override
-	public Attachment toEscapedModel() {
-		return new AttachmentWrapper(_attachment.toEscapedModel());
-	}
-
-	@Override
-	public String toString() {
-		return _attachment.toString();
-	}
-
-	@Override
-	public Attachment toUnescapedModel() {
-		return new AttachmentWrapper(_attachment.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _attachment.toXmlString();
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-
-		if (!(obj instanceof AttachmentWrapper)) {
-			return false;
-		}
-
-		AttachmentWrapper attachmentWrapper = (AttachmentWrapper)obj;
-
-		if (Objects.equals(_attachment, attachmentWrapper._attachment)) {
-			return true;
-		}
-
-		return false;
-	}
-
-	@Override
-	public Attachment getWrappedModel() {
-		return _attachment;
-	}
-
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _attachment.isEntityCacheEnabled();
-	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _attachment.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_attachment.resetOriginalValues();
-	}
-
-	private final Attachment _attachment;
 }

@@ -17,13 +17,10 @@ package com.liferay.expando.kernel.model;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.model.ModelWrapper;
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -35,20 +32,10 @@ import java.util.Objects;
  * @generated
  */
 @ProviderType
-public class ExpandoTableWrapper implements ExpandoTable,
-	ModelWrapper<ExpandoTable> {
+public class ExpandoTableWrapper extends BaseModelWrapper<ExpandoTable>
+	implements ExpandoTable, ModelWrapper<ExpandoTable> {
 	public ExpandoTableWrapper(ExpandoTable expandoTable) {
-		_expandoTable = expandoTable;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return ExpandoTable.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return ExpandoTable.class.getName();
+		super(expandoTable);
 	}
 
 	@Override
@@ -90,16 +77,6 @@ public class ExpandoTableWrapper implements ExpandoTable,
 		}
 	}
 
-	@Override
-	public Object clone() {
-		return new ExpandoTableWrapper((ExpandoTable)_expandoTable.clone());
-	}
-
-	@Override
-	public int compareTo(ExpandoTable expandoTable) {
-		return _expandoTable.compareTo(expandoTable);
-	}
-
 	/**
 	* Returns the fully qualified class name of this expando table.
 	*
@@ -107,7 +84,7 @@ public class ExpandoTableWrapper implements ExpandoTable,
 	*/
 	@Override
 	public String getClassName() {
-		return _expandoTable.getClassName();
+		return model.getClassName();
 	}
 
 	/**
@@ -117,7 +94,7 @@ public class ExpandoTableWrapper implements ExpandoTable,
 	*/
 	@Override
 	public long getClassNameId() {
-		return _expandoTable.getClassNameId();
+		return model.getClassNameId();
 	}
 
 	/**
@@ -127,12 +104,7 @@ public class ExpandoTableWrapper implements ExpandoTable,
 	*/
 	@Override
 	public long getCompanyId() {
-		return _expandoTable.getCompanyId();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _expandoTable.getExpandoBridge();
+		return model.getCompanyId();
 	}
 
 	/**
@@ -142,7 +114,7 @@ public class ExpandoTableWrapper implements ExpandoTable,
 	*/
 	@Override
 	public String getName() {
-		return _expandoTable.getName();
+		return model.getName();
 	}
 
 	/**
@@ -152,12 +124,7 @@ public class ExpandoTableWrapper implements ExpandoTable,
 	*/
 	@Override
 	public long getPrimaryKey() {
-		return _expandoTable.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _expandoTable.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	/**
@@ -167,47 +134,22 @@ public class ExpandoTableWrapper implements ExpandoTable,
 	*/
 	@Override
 	public long getTableId() {
-		return _expandoTable.getTableId();
-	}
-
-	@Override
-	public int hashCode() {
-		return _expandoTable.hashCode();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _expandoTable.isCachedModel();
+		return model.getTableId();
 	}
 
 	@Override
 	public boolean isDefaultTable() {
-		return _expandoTable.isDefaultTable();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _expandoTable.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _expandoTable.isNew();
+		return model.isDefaultTable();
 	}
 
 	@Override
 	public void persist() {
-		_expandoTable.persist();
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_expandoTable.setCachedModel(cachedModel);
+		model.persist();
 	}
 
 	@Override
 	public void setClassName(String className) {
-		_expandoTable.setClassName(className);
+		model.setClassName(className);
 	}
 
 	/**
@@ -217,7 +159,7 @@ public class ExpandoTableWrapper implements ExpandoTable,
 	*/
 	@Override
 	public void setClassNameId(long classNameId) {
-		_expandoTable.setClassNameId(classNameId);
+		model.setClassNameId(classNameId);
 	}
 
 	/**
@@ -227,23 +169,7 @@ public class ExpandoTableWrapper implements ExpandoTable,
 	*/
 	@Override
 	public void setCompanyId(long companyId) {
-		_expandoTable.setCompanyId(companyId);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-		_expandoTable.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_expandoTable.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_expandoTable.setExpandoBridgeAttributes(serviceContext);
+		model.setCompanyId(companyId);
 	}
 
 	/**
@@ -253,12 +179,7 @@ public class ExpandoTableWrapper implements ExpandoTable,
 	*/
 	@Override
 	public void setName(String name) {
-		_expandoTable.setName(name);
-	}
-
-	@Override
-	public void setNew(boolean n) {
-		_expandoTable.setNew(n);
+		model.setName(name);
 	}
 
 	/**
@@ -268,12 +189,7 @@ public class ExpandoTableWrapper implements ExpandoTable,
 	*/
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_expandoTable.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_expandoTable.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -283,72 +199,11 @@ public class ExpandoTableWrapper implements ExpandoTable,
 	*/
 	@Override
 	public void setTableId(long tableId) {
-		_expandoTable.setTableId(tableId);
+		model.setTableId(tableId);
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.CacheModel<ExpandoTable> toCacheModel() {
-		return _expandoTable.toCacheModel();
+	protected ExpandoTableWrapper wrap(ExpandoTable expandoTable) {
+		return new ExpandoTableWrapper(expandoTable);
 	}
-
-	@Override
-	public ExpandoTable toEscapedModel() {
-		return new ExpandoTableWrapper(_expandoTable.toEscapedModel());
-	}
-
-	@Override
-	public String toString() {
-		return _expandoTable.toString();
-	}
-
-	@Override
-	public ExpandoTable toUnescapedModel() {
-		return new ExpandoTableWrapper(_expandoTable.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _expandoTable.toXmlString();
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-
-		if (!(obj instanceof ExpandoTableWrapper)) {
-			return false;
-		}
-
-		ExpandoTableWrapper expandoTableWrapper = (ExpandoTableWrapper)obj;
-
-		if (Objects.equals(_expandoTable, expandoTableWrapper._expandoTable)) {
-			return true;
-		}
-
-		return false;
-	}
-
-	@Override
-	public ExpandoTable getWrappedModel() {
-		return _expandoTable;
-	}
-
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _expandoTable.isEntityCacheEnabled();
-	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _expandoTable.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_expandoTable.resetOriginalValues();
-	}
-
-	private final ExpandoTable _expandoTable;
 }

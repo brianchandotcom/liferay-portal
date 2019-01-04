@@ -16,17 +16,12 @@ package com.liferay.document.library.opener.model;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
-
 import com.liferay.portal.kernel.model.ModelWrapper;
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -38,22 +33,12 @@ import java.util.Objects;
  * @generated
  */
 @ProviderType
-public class DLOpenerFileEntryReferenceWrapper
+public class DLOpenerFileEntryReferenceWrapper extends BaseModelWrapper<DLOpenerFileEntryReference>
 	implements DLOpenerFileEntryReference,
 		ModelWrapper<DLOpenerFileEntryReference> {
 	public DLOpenerFileEntryReferenceWrapper(
 		DLOpenerFileEntryReference dlOpenerFileEntryReference) {
-		_dlOpenerFileEntryReference = dlOpenerFileEntryReference;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return DLOpenerFileEntryReference.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return DLOpenerFileEntryReference.class.getName();
+		super(dlOpenerFileEntryReference);
 	}
 
 	@Override
@@ -139,16 +124,6 @@ public class DLOpenerFileEntryReferenceWrapper
 		}
 	}
 
-	@Override
-	public Object clone() {
-		return new DLOpenerFileEntryReferenceWrapper((DLOpenerFileEntryReference)_dlOpenerFileEntryReference.clone());
-	}
-
-	@Override
-	public int compareTo(DLOpenerFileEntryReference dlOpenerFileEntryReference) {
-		return _dlOpenerFileEntryReference.compareTo(dlOpenerFileEntryReference);
-	}
-
 	/**
 	* Returns the company ID of this dl opener file entry reference.
 	*
@@ -156,7 +131,7 @@ public class DLOpenerFileEntryReferenceWrapper
 	*/
 	@Override
 	public long getCompanyId() {
-		return _dlOpenerFileEntryReference.getCompanyId();
+		return model.getCompanyId();
 	}
 
 	/**
@@ -166,7 +141,7 @@ public class DLOpenerFileEntryReferenceWrapper
 	*/
 	@Override
 	public Date getCreateDate() {
-		return _dlOpenerFileEntryReference.getCreateDate();
+		return model.getCreateDate();
 	}
 
 	/**
@@ -176,12 +151,7 @@ public class DLOpenerFileEntryReferenceWrapper
 	*/
 	@Override
 	public long getDlOpenerFileEntryReferenceId() {
-		return _dlOpenerFileEntryReference.getDlOpenerFileEntryReferenceId();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _dlOpenerFileEntryReference.getExpandoBridge();
+		return model.getDlOpenerFileEntryReferenceId();
 	}
 
 	/**
@@ -191,7 +161,7 @@ public class DLOpenerFileEntryReferenceWrapper
 	*/
 	@Override
 	public long getFileEntryId() {
-		return _dlOpenerFileEntryReference.getFileEntryId();
+		return model.getFileEntryId();
 	}
 
 	/**
@@ -201,7 +171,7 @@ public class DLOpenerFileEntryReferenceWrapper
 	*/
 	@Override
 	public long getGroupId() {
-		return _dlOpenerFileEntryReference.getGroupId();
+		return model.getGroupId();
 	}
 
 	/**
@@ -211,7 +181,7 @@ public class DLOpenerFileEntryReferenceWrapper
 	*/
 	@Override
 	public Date getModifiedDate() {
-		return _dlOpenerFileEntryReference.getModifiedDate();
+		return model.getModifiedDate();
 	}
 
 	/**
@@ -221,12 +191,7 @@ public class DLOpenerFileEntryReferenceWrapper
 	*/
 	@Override
 	public long getPrimaryKey() {
-		return _dlOpenerFileEntryReference.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _dlOpenerFileEntryReference.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	/**
@@ -236,7 +201,7 @@ public class DLOpenerFileEntryReferenceWrapper
 	*/
 	@Override
 	public String getReferenceKey() {
-		return _dlOpenerFileEntryReference.getReferenceKey();
+		return model.getReferenceKey();
 	}
 
 	/**
@@ -246,7 +211,7 @@ public class DLOpenerFileEntryReferenceWrapper
 	*/
 	@Override
 	public int getType() {
-		return _dlOpenerFileEntryReference.getType();
+		return model.getType();
 	}
 
 	/**
@@ -256,7 +221,7 @@ public class DLOpenerFileEntryReferenceWrapper
 	*/
 	@Override
 	public long getUserId() {
-		return _dlOpenerFileEntryReference.getUserId();
+		return model.getUserId();
 	}
 
 	/**
@@ -266,7 +231,7 @@ public class DLOpenerFileEntryReferenceWrapper
 	*/
 	@Override
 	public String getUserName() {
-		return _dlOpenerFileEntryReference.getUserName();
+		return model.getUserName();
 	}
 
 	/**
@@ -276,37 +241,12 @@ public class DLOpenerFileEntryReferenceWrapper
 	*/
 	@Override
 	public String getUserUuid() {
-		return _dlOpenerFileEntryReference.getUserUuid();
-	}
-
-	@Override
-	public int hashCode() {
-		return _dlOpenerFileEntryReference.hashCode();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _dlOpenerFileEntryReference.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _dlOpenerFileEntryReference.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _dlOpenerFileEntryReference.isNew();
+		return model.getUserUuid();
 	}
 
 	@Override
 	public void persist() {
-		_dlOpenerFileEntryReference.persist();
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_dlOpenerFileEntryReference.setCachedModel(cachedModel);
+		model.persist();
 	}
 
 	/**
@@ -316,7 +256,7 @@ public class DLOpenerFileEntryReferenceWrapper
 	*/
 	@Override
 	public void setCompanyId(long companyId) {
-		_dlOpenerFileEntryReference.setCompanyId(companyId);
+		model.setCompanyId(companyId);
 	}
 
 	/**
@@ -326,7 +266,7 @@ public class DLOpenerFileEntryReferenceWrapper
 	*/
 	@Override
 	public void setCreateDate(Date createDate) {
-		_dlOpenerFileEntryReference.setCreateDate(createDate);
+		model.setCreateDate(createDate);
 	}
 
 	/**
@@ -337,23 +277,7 @@ public class DLOpenerFileEntryReferenceWrapper
 	@Override
 	public void setDlOpenerFileEntryReferenceId(
 		long dlOpenerFileEntryReferenceId) {
-		_dlOpenerFileEntryReference.setDlOpenerFileEntryReferenceId(dlOpenerFileEntryReferenceId);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-		_dlOpenerFileEntryReference.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_dlOpenerFileEntryReference.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_dlOpenerFileEntryReference.setExpandoBridgeAttributes(serviceContext);
+		model.setDlOpenerFileEntryReferenceId(dlOpenerFileEntryReferenceId);
 	}
 
 	/**
@@ -363,7 +287,7 @@ public class DLOpenerFileEntryReferenceWrapper
 	*/
 	@Override
 	public void setFileEntryId(long fileEntryId) {
-		_dlOpenerFileEntryReference.setFileEntryId(fileEntryId);
+		model.setFileEntryId(fileEntryId);
 	}
 
 	/**
@@ -373,7 +297,7 @@ public class DLOpenerFileEntryReferenceWrapper
 	*/
 	@Override
 	public void setGroupId(long groupId) {
-		_dlOpenerFileEntryReference.setGroupId(groupId);
+		model.setGroupId(groupId);
 	}
 
 	/**
@@ -383,12 +307,7 @@ public class DLOpenerFileEntryReferenceWrapper
 	*/
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
-		_dlOpenerFileEntryReference.setModifiedDate(modifiedDate);
-	}
-
-	@Override
-	public void setNew(boolean n) {
-		_dlOpenerFileEntryReference.setNew(n);
+		model.setModifiedDate(modifiedDate);
 	}
 
 	/**
@@ -398,12 +317,7 @@ public class DLOpenerFileEntryReferenceWrapper
 	*/
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_dlOpenerFileEntryReference.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_dlOpenerFileEntryReference.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -413,7 +327,7 @@ public class DLOpenerFileEntryReferenceWrapper
 	*/
 	@Override
 	public void setReferenceKey(String referenceKey) {
-		_dlOpenerFileEntryReference.setReferenceKey(referenceKey);
+		model.setReferenceKey(referenceKey);
 	}
 
 	/**
@@ -423,7 +337,7 @@ public class DLOpenerFileEntryReferenceWrapper
 	*/
 	@Override
 	public void setType(int type) {
-		_dlOpenerFileEntryReference.setType(type);
+		model.setType(type);
 	}
 
 	/**
@@ -433,7 +347,7 @@ public class DLOpenerFileEntryReferenceWrapper
 	*/
 	@Override
 	public void setUserId(long userId) {
-		_dlOpenerFileEntryReference.setUserId(userId);
+		model.setUserId(userId);
 	}
 
 	/**
@@ -443,7 +357,7 @@ public class DLOpenerFileEntryReferenceWrapper
 	*/
 	@Override
 	public void setUserName(String userName) {
-		_dlOpenerFileEntryReference.setUserName(userName);
+		model.setUserName(userName);
 	}
 
 	/**
@@ -453,73 +367,12 @@ public class DLOpenerFileEntryReferenceWrapper
 	*/
 	@Override
 	public void setUserUuid(String userUuid) {
-		_dlOpenerFileEntryReference.setUserUuid(userUuid);
+		model.setUserUuid(userUuid);
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.CacheModel<DLOpenerFileEntryReference> toCacheModel() {
-		return _dlOpenerFileEntryReference.toCacheModel();
+	protected DLOpenerFileEntryReferenceWrapper wrap(
+		DLOpenerFileEntryReference dlOpenerFileEntryReference) {
+		return new DLOpenerFileEntryReferenceWrapper(dlOpenerFileEntryReference);
 	}
-
-	@Override
-	public DLOpenerFileEntryReference toEscapedModel() {
-		return new DLOpenerFileEntryReferenceWrapper(_dlOpenerFileEntryReference.toEscapedModel());
-	}
-
-	@Override
-	public String toString() {
-		return _dlOpenerFileEntryReference.toString();
-	}
-
-	@Override
-	public DLOpenerFileEntryReference toUnescapedModel() {
-		return new DLOpenerFileEntryReferenceWrapper(_dlOpenerFileEntryReference.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _dlOpenerFileEntryReference.toXmlString();
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-
-		if (!(obj instanceof DLOpenerFileEntryReferenceWrapper)) {
-			return false;
-		}
-
-		DLOpenerFileEntryReferenceWrapper dlOpenerFileEntryReferenceWrapper = (DLOpenerFileEntryReferenceWrapper)obj;
-
-		if (Objects.equals(_dlOpenerFileEntryReference,
-					dlOpenerFileEntryReferenceWrapper._dlOpenerFileEntryReference)) {
-			return true;
-		}
-
-		return false;
-	}
-
-	@Override
-	public DLOpenerFileEntryReference getWrappedModel() {
-		return _dlOpenerFileEntryReference;
-	}
-
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _dlOpenerFileEntryReference.isEntityCacheEnabled();
-	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _dlOpenerFileEntryReference.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_dlOpenerFileEntryReference.resetOriginalValues();
-	}
-
-	private final DLOpenerFileEntryReference _dlOpenerFileEntryReference;
 }

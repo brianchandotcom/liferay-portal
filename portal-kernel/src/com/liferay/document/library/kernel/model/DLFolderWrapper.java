@@ -16,19 +16,14 @@ package com.liferay.document.library.kernel.model;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
-
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 
 import com.liferay.portal.kernel.model.ModelWrapper;
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -40,19 +35,10 @@ import java.util.Objects;
  * @generated
  */
 @ProviderType
-public class DLFolderWrapper implements DLFolder, ModelWrapper<DLFolder> {
+public class DLFolderWrapper extends BaseModelWrapper<DLFolder>
+	implements DLFolder, ModelWrapper<DLFolder> {
 	public DLFolderWrapper(DLFolder dlFolder) {
-		_dlFolder = dlFolder;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return DLFolder.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return DLFolder.class.getName();
+		super(dlFolder);
 	}
 
 	@Override
@@ -231,29 +217,19 @@ public class DLFolderWrapper implements DLFolder, ModelWrapper<DLFolder> {
 	@Override
 	public String buildTreePath()
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _dlFolder.buildTreePath();
-	}
-
-	@Override
-	public Object clone() {
-		return new DLFolderWrapper((DLFolder)_dlFolder.clone());
-	}
-
-	@Override
-	public int compareTo(DLFolder dlFolder) {
-		return _dlFolder.compareTo(dlFolder);
+		return model.buildTreePath();
 	}
 
 	@Override
 	public java.util.List<Long> getAncestorFolderIds()
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _dlFolder.getAncestorFolderIds();
+		return model.getAncestorFolderIds();
 	}
 
 	@Override
 	public java.util.List<DLFolder> getAncestors()
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _dlFolder.getAncestors();
+		return model.getAncestors();
 	}
 
 	/**
@@ -263,7 +239,7 @@ public class DLFolderWrapper implements DLFolder, ModelWrapper<DLFolder> {
 	*/
 	@Override
 	public long getCompanyId() {
-		return _dlFolder.getCompanyId();
+		return model.getCompanyId();
 	}
 
 	/**
@@ -273,7 +249,7 @@ public class DLFolderWrapper implements DLFolder, ModelWrapper<DLFolder> {
 	*/
 	@Override
 	public long getContainerModelId() {
-		return _dlFolder.getContainerModelId();
+		return model.getContainerModelId();
 	}
 
 	/**
@@ -283,7 +259,7 @@ public class DLFolderWrapper implements DLFolder, ModelWrapper<DLFolder> {
 	*/
 	@Override
 	public String getContainerModelName() {
-		return _dlFolder.getContainerModelName();
+		return model.getContainerModelName();
 	}
 
 	/**
@@ -293,7 +269,7 @@ public class DLFolderWrapper implements DLFolder, ModelWrapper<DLFolder> {
 	*/
 	@Override
 	public Date getCreateDate() {
-		return _dlFolder.getCreateDate();
+		return model.getCreateDate();
 	}
 
 	/**
@@ -303,7 +279,7 @@ public class DLFolderWrapper implements DLFolder, ModelWrapper<DLFolder> {
 	*/
 	@Override
 	public long getDefaultFileEntryTypeId() {
-		return _dlFolder.getDefaultFileEntryTypeId();
+		return model.getDefaultFileEntryTypeId();
 	}
 
 	/**
@@ -313,12 +289,7 @@ public class DLFolderWrapper implements DLFolder, ModelWrapper<DLFolder> {
 	*/
 	@Override
 	public String getDescription() {
-		return _dlFolder.getDescription();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _dlFolder.getExpandoBridge();
+		return model.getDescription();
 	}
 
 	/**
@@ -328,7 +299,7 @@ public class DLFolderWrapper implements DLFolder, ModelWrapper<DLFolder> {
 	*/
 	@Override
 	public long getFolderId() {
-		return _dlFolder.getFolderId();
+		return model.getFolderId();
 	}
 
 	/**
@@ -338,7 +309,7 @@ public class DLFolderWrapper implements DLFolder, ModelWrapper<DLFolder> {
 	*/
 	@Override
 	public long getGroupId() {
-		return _dlFolder.getGroupId();
+		return model.getGroupId();
 	}
 
 	/**
@@ -348,7 +319,7 @@ public class DLFolderWrapper implements DLFolder, ModelWrapper<DLFolder> {
 	*/
 	@Override
 	public boolean getHidden() {
-		return _dlFolder.getHidden();
+		return model.getHidden();
 	}
 
 	/**
@@ -358,7 +329,7 @@ public class DLFolderWrapper implements DLFolder, ModelWrapper<DLFolder> {
 	*/
 	@Override
 	public Date getLastPostDate() {
-		return _dlFolder.getLastPostDate();
+		return model.getLastPostDate();
 	}
 
 	/**
@@ -368,7 +339,7 @@ public class DLFolderWrapper implements DLFolder, ModelWrapper<DLFolder> {
 	*/
 	@Override
 	public Date getLastPublishDate() {
-		return _dlFolder.getLastPublishDate();
+		return model.getLastPublishDate();
 	}
 
 	/**
@@ -378,7 +349,7 @@ public class DLFolderWrapper implements DLFolder, ModelWrapper<DLFolder> {
 	*/
 	@Override
 	public Date getModifiedDate() {
-		return _dlFolder.getModifiedDate();
+		return model.getModifiedDate();
 	}
 
 	/**
@@ -388,7 +359,7 @@ public class DLFolderWrapper implements DLFolder, ModelWrapper<DLFolder> {
 	*/
 	@Override
 	public boolean getMountPoint() {
-		return _dlFolder.getMountPoint();
+		return model.getMountPoint();
 	}
 
 	/**
@@ -398,7 +369,7 @@ public class DLFolderWrapper implements DLFolder, ModelWrapper<DLFolder> {
 	*/
 	@Override
 	public String getName() {
-		return _dlFolder.getName();
+		return model.getName();
 	}
 
 	/**
@@ -408,13 +379,13 @@ public class DLFolderWrapper implements DLFolder, ModelWrapper<DLFolder> {
 	*/
 	@Override
 	public long getParentContainerModelId() {
-		return _dlFolder.getParentContainerModelId();
+		return model.getParentContainerModelId();
 	}
 
 	@Override
 	public DLFolder getParentFolder()
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _dlFolder.getParentFolder();
+		return model.getParentFolder();
 	}
 
 	/**
@@ -424,19 +395,19 @@ public class DLFolderWrapper implements DLFolder, ModelWrapper<DLFolder> {
 	*/
 	@Override
 	public long getParentFolderId() {
-		return _dlFolder.getParentFolderId();
+		return model.getParentFolderId();
 	}
 
 	@Override
 	public String getPath()
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _dlFolder.getPath();
+		return model.getPath();
 	}
 
 	@Override
 	public String[] getPathArray()
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _dlFolder.getPathArray();
+		return model.getPathArray();
 	}
 
 	/**
@@ -446,12 +417,7 @@ public class DLFolderWrapper implements DLFolder, ModelWrapper<DLFolder> {
 	*/
 	@Override
 	public long getPrimaryKey() {
-		return _dlFolder.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _dlFolder.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	/**
@@ -461,7 +427,7 @@ public class DLFolderWrapper implements DLFolder, ModelWrapper<DLFolder> {
 	*/
 	@Override
 	public long getRepositoryId() {
-		return _dlFolder.getRepositoryId();
+		return model.getRepositoryId();
 	}
 
 	/**
@@ -471,7 +437,7 @@ public class DLFolderWrapper implements DLFolder, ModelWrapper<DLFolder> {
 	*/
 	@Override
 	public int getRestrictionType() {
-		return _dlFolder.getRestrictionType();
+		return model.getRestrictionType();
 	}
 
 	/**
@@ -481,7 +447,7 @@ public class DLFolderWrapper implements DLFolder, ModelWrapper<DLFolder> {
 	*/
 	@Override
 	public int getStatus() {
-		return _dlFolder.getStatus();
+		return model.getStatus();
 	}
 
 	/**
@@ -491,7 +457,7 @@ public class DLFolderWrapper implements DLFolder, ModelWrapper<DLFolder> {
 	*/
 	@Override
 	public long getStatusByUserId() {
-		return _dlFolder.getStatusByUserId();
+		return model.getStatusByUserId();
 	}
 
 	/**
@@ -501,7 +467,7 @@ public class DLFolderWrapper implements DLFolder, ModelWrapper<DLFolder> {
 	*/
 	@Override
 	public String getStatusByUserName() {
-		return _dlFolder.getStatusByUserName();
+		return model.getStatusByUserName();
 	}
 
 	/**
@@ -511,7 +477,7 @@ public class DLFolderWrapper implements DLFolder, ModelWrapper<DLFolder> {
 	*/
 	@Override
 	public String getStatusByUserUuid() {
-		return _dlFolder.getStatusByUserUuid();
+		return model.getStatusByUserUuid();
 	}
 
 	/**
@@ -521,7 +487,7 @@ public class DLFolderWrapper implements DLFolder, ModelWrapper<DLFolder> {
 	*/
 	@Override
 	public Date getStatusDate() {
-		return _dlFolder.getStatusDate();
+		return model.getStatusDate();
 	}
 
 	/**
@@ -532,7 +498,7 @@ public class DLFolderWrapper implements DLFolder, ModelWrapper<DLFolder> {
 	@Override
 	public com.liferay.trash.kernel.model.TrashEntry getTrashEntry()
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _dlFolder.getTrashEntry();
+		return model.getTrashEntry();
 	}
 
 	/**
@@ -542,7 +508,7 @@ public class DLFolderWrapper implements DLFolder, ModelWrapper<DLFolder> {
 	*/
 	@Override
 	public long getTrashEntryClassPK() {
-		return _dlFolder.getTrashEntryClassPK();
+		return model.getTrashEntryClassPK();
 	}
 
 	/**
@@ -554,7 +520,7 @@ public class DLFolderWrapper implements DLFolder, ModelWrapper<DLFolder> {
 	@Deprecated
 	@Override
 	public com.liferay.portal.kernel.trash.TrashHandler getTrashHandler() {
-		return _dlFolder.getTrashHandler();
+		return model.getTrashHandler();
 	}
 
 	/**
@@ -564,7 +530,7 @@ public class DLFolderWrapper implements DLFolder, ModelWrapper<DLFolder> {
 	*/
 	@Override
 	public String getTreePath() {
-		return _dlFolder.getTreePath();
+		return model.getTreePath();
 	}
 
 	/**
@@ -574,7 +540,7 @@ public class DLFolderWrapper implements DLFolder, ModelWrapper<DLFolder> {
 	*/
 	@Override
 	public long getUserId() {
-		return _dlFolder.getUserId();
+		return model.getUserId();
 	}
 
 	/**
@@ -584,7 +550,7 @@ public class DLFolderWrapper implements DLFolder, ModelWrapper<DLFolder> {
 	*/
 	@Override
 	public String getUserName() {
-		return _dlFolder.getUserName();
+		return model.getUserName();
 	}
 
 	/**
@@ -594,7 +560,7 @@ public class DLFolderWrapper implements DLFolder, ModelWrapper<DLFolder> {
 	*/
 	@Override
 	public String getUserUuid() {
-		return _dlFolder.getUserUuid();
+		return model.getUserUuid();
 	}
 
 	/**
@@ -604,22 +570,17 @@ public class DLFolderWrapper implements DLFolder, ModelWrapper<DLFolder> {
 	*/
 	@Override
 	public String getUuid() {
-		return _dlFolder.getUuid();
-	}
-
-	@Override
-	public int hashCode() {
-		return _dlFolder.hashCode();
+		return model.getUuid();
 	}
 
 	@Override
 	public boolean hasInheritableLock() {
-		return _dlFolder.hasInheritableLock();
+		return model.hasInheritableLock();
 	}
 
 	@Override
 	public boolean hasLock() {
-		return _dlFolder.hasLock();
+		return model.hasLock();
 	}
 
 	/**
@@ -629,12 +590,7 @@ public class DLFolderWrapper implements DLFolder, ModelWrapper<DLFolder> {
 	*/
 	@Override
 	public boolean isApproved() {
-		return _dlFolder.isApproved();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _dlFolder.isCachedModel();
+		return model.isApproved();
 	}
 
 	/**
@@ -644,7 +600,7 @@ public class DLFolderWrapper implements DLFolder, ModelWrapper<DLFolder> {
 	*/
 	@Override
 	public boolean isDenied() {
-		return _dlFolder.isDenied();
+		return model.isDenied();
 	}
 
 	/**
@@ -654,12 +610,7 @@ public class DLFolderWrapper implements DLFolder, ModelWrapper<DLFolder> {
 	*/
 	@Override
 	public boolean isDraft() {
-		return _dlFolder.isDraft();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _dlFolder.isEscapedModel();
+		return model.isDraft();
 	}
 
 	/**
@@ -669,7 +620,7 @@ public class DLFolderWrapper implements DLFolder, ModelWrapper<DLFolder> {
 	*/
 	@Override
 	public boolean isExpired() {
-		return _dlFolder.isExpired();
+		return model.isExpired();
 	}
 
 	/**
@@ -679,7 +630,7 @@ public class DLFolderWrapper implements DLFolder, ModelWrapper<DLFolder> {
 	*/
 	@Override
 	public boolean isHidden() {
-		return _dlFolder.isHidden();
+		return model.isHidden();
 	}
 
 	/**
@@ -689,7 +640,7 @@ public class DLFolderWrapper implements DLFolder, ModelWrapper<DLFolder> {
 	*/
 	@Override
 	public boolean isInactive() {
-		return _dlFolder.isInactive();
+		return model.isInactive();
 	}
 
 	/**
@@ -699,12 +650,12 @@ public class DLFolderWrapper implements DLFolder, ModelWrapper<DLFolder> {
 	*/
 	@Override
 	public boolean isIncomplete() {
-		return _dlFolder.isIncomplete();
+		return model.isIncomplete();
 	}
 
 	@Override
 	public boolean isInHiddenFolder() {
-		return _dlFolder.isInHiddenFolder();
+		return model.isInHiddenFolder();
 	}
 
 	/**
@@ -714,7 +665,7 @@ public class DLFolderWrapper implements DLFolder, ModelWrapper<DLFolder> {
 	*/
 	@Override
 	public boolean isInTrash() {
-		return _dlFolder.isInTrash();
+		return model.isInTrash();
 	}
 
 	/**
@@ -724,22 +675,22 @@ public class DLFolderWrapper implements DLFolder, ModelWrapper<DLFolder> {
 	*/
 	@Override
 	public boolean isInTrashContainer() {
-		return _dlFolder.isInTrashContainer();
+		return model.isInTrashContainer();
 	}
 
 	@Override
 	public boolean isInTrashExplicitly() {
-		return _dlFolder.isInTrashExplicitly();
+		return model.isInTrashExplicitly();
 	}
 
 	@Override
 	public boolean isInTrashImplicitly() {
-		return _dlFolder.isInTrashImplicitly();
+		return model.isInTrashImplicitly();
 	}
 
 	@Override
 	public boolean isLocked() {
-		return _dlFolder.isLocked();
+		return model.isLocked();
 	}
 
 	/**
@@ -749,12 +700,7 @@ public class DLFolderWrapper implements DLFolder, ModelWrapper<DLFolder> {
 	*/
 	@Override
 	public boolean isMountPoint() {
-		return _dlFolder.isMountPoint();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _dlFolder.isNew();
+		return model.isMountPoint();
 	}
 
 	/**
@@ -764,12 +710,12 @@ public class DLFolderWrapper implements DLFolder, ModelWrapper<DLFolder> {
 	*/
 	@Override
 	public boolean isPending() {
-		return _dlFolder.isPending();
+		return model.isPending();
 	}
 
 	@Override
 	public boolean isRoot() {
-		return _dlFolder.isRoot();
+		return model.isRoot();
 	}
 
 	/**
@@ -779,17 +725,12 @@ public class DLFolderWrapper implements DLFolder, ModelWrapper<DLFolder> {
 	*/
 	@Override
 	public boolean isScheduled() {
-		return _dlFolder.isScheduled();
+		return model.isScheduled();
 	}
 
 	@Override
 	public void persist() {
-		_dlFolder.persist();
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_dlFolder.setCachedModel(cachedModel);
+		model.persist();
 	}
 
 	/**
@@ -799,7 +740,7 @@ public class DLFolderWrapper implements DLFolder, ModelWrapper<DLFolder> {
 	*/
 	@Override
 	public void setCompanyId(long companyId) {
-		_dlFolder.setCompanyId(companyId);
+		model.setCompanyId(companyId);
 	}
 
 	/**
@@ -809,7 +750,7 @@ public class DLFolderWrapper implements DLFolder, ModelWrapper<DLFolder> {
 	*/
 	@Override
 	public void setContainerModelId(long containerModelId) {
-		_dlFolder.setContainerModelId(containerModelId);
+		model.setContainerModelId(containerModelId);
 	}
 
 	/**
@@ -819,7 +760,7 @@ public class DLFolderWrapper implements DLFolder, ModelWrapper<DLFolder> {
 	*/
 	@Override
 	public void setCreateDate(Date createDate) {
-		_dlFolder.setCreateDate(createDate);
+		model.setCreateDate(createDate);
 	}
 
 	/**
@@ -829,7 +770,7 @@ public class DLFolderWrapper implements DLFolder, ModelWrapper<DLFolder> {
 	*/
 	@Override
 	public void setDefaultFileEntryTypeId(long defaultFileEntryTypeId) {
-		_dlFolder.setDefaultFileEntryTypeId(defaultFileEntryTypeId);
+		model.setDefaultFileEntryTypeId(defaultFileEntryTypeId);
 	}
 
 	/**
@@ -839,23 +780,7 @@ public class DLFolderWrapper implements DLFolder, ModelWrapper<DLFolder> {
 	*/
 	@Override
 	public void setDescription(String description) {
-		_dlFolder.setDescription(description);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-		_dlFolder.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_dlFolder.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_dlFolder.setExpandoBridgeAttributes(serviceContext);
+		model.setDescription(description);
 	}
 
 	/**
@@ -865,7 +790,7 @@ public class DLFolderWrapper implements DLFolder, ModelWrapper<DLFolder> {
 	*/
 	@Override
 	public void setFolderId(long folderId) {
-		_dlFolder.setFolderId(folderId);
+		model.setFolderId(folderId);
 	}
 
 	/**
@@ -875,7 +800,7 @@ public class DLFolderWrapper implements DLFolder, ModelWrapper<DLFolder> {
 	*/
 	@Override
 	public void setGroupId(long groupId) {
-		_dlFolder.setGroupId(groupId);
+		model.setGroupId(groupId);
 	}
 
 	/**
@@ -885,7 +810,7 @@ public class DLFolderWrapper implements DLFolder, ModelWrapper<DLFolder> {
 	*/
 	@Override
 	public void setHidden(boolean hidden) {
-		_dlFolder.setHidden(hidden);
+		model.setHidden(hidden);
 	}
 
 	/**
@@ -895,7 +820,7 @@ public class DLFolderWrapper implements DLFolder, ModelWrapper<DLFolder> {
 	*/
 	@Override
 	public void setLastPostDate(Date lastPostDate) {
-		_dlFolder.setLastPostDate(lastPostDate);
+		model.setLastPostDate(lastPostDate);
 	}
 
 	/**
@@ -905,7 +830,7 @@ public class DLFolderWrapper implements DLFolder, ModelWrapper<DLFolder> {
 	*/
 	@Override
 	public void setLastPublishDate(Date lastPublishDate) {
-		_dlFolder.setLastPublishDate(lastPublishDate);
+		model.setLastPublishDate(lastPublishDate);
 	}
 
 	/**
@@ -915,7 +840,7 @@ public class DLFolderWrapper implements DLFolder, ModelWrapper<DLFolder> {
 	*/
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
-		_dlFolder.setModifiedDate(modifiedDate);
+		model.setModifiedDate(modifiedDate);
 	}
 
 	/**
@@ -925,7 +850,7 @@ public class DLFolderWrapper implements DLFolder, ModelWrapper<DLFolder> {
 	*/
 	@Override
 	public void setMountPoint(boolean mountPoint) {
-		_dlFolder.setMountPoint(mountPoint);
+		model.setMountPoint(mountPoint);
 	}
 
 	/**
@@ -935,12 +860,7 @@ public class DLFolderWrapper implements DLFolder, ModelWrapper<DLFolder> {
 	*/
 	@Override
 	public void setName(String name) {
-		_dlFolder.setName(name);
-	}
-
-	@Override
-	public void setNew(boolean n) {
-		_dlFolder.setNew(n);
+		model.setName(name);
 	}
 
 	/**
@@ -950,7 +870,7 @@ public class DLFolderWrapper implements DLFolder, ModelWrapper<DLFolder> {
 	*/
 	@Override
 	public void setParentContainerModelId(long parentContainerModelId) {
-		_dlFolder.setParentContainerModelId(parentContainerModelId);
+		model.setParentContainerModelId(parentContainerModelId);
 	}
 
 	/**
@@ -960,7 +880,7 @@ public class DLFolderWrapper implements DLFolder, ModelWrapper<DLFolder> {
 	*/
 	@Override
 	public void setParentFolderId(long parentFolderId) {
-		_dlFolder.setParentFolderId(parentFolderId);
+		model.setParentFolderId(parentFolderId);
 	}
 
 	/**
@@ -970,12 +890,7 @@ public class DLFolderWrapper implements DLFolder, ModelWrapper<DLFolder> {
 	*/
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_dlFolder.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_dlFolder.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -985,7 +900,7 @@ public class DLFolderWrapper implements DLFolder, ModelWrapper<DLFolder> {
 	*/
 	@Override
 	public void setRepositoryId(long repositoryId) {
-		_dlFolder.setRepositoryId(repositoryId);
+		model.setRepositoryId(repositoryId);
 	}
 
 	/**
@@ -995,7 +910,7 @@ public class DLFolderWrapper implements DLFolder, ModelWrapper<DLFolder> {
 	*/
 	@Override
 	public void setRestrictionType(int restrictionType) {
-		_dlFolder.setRestrictionType(restrictionType);
+		model.setRestrictionType(restrictionType);
 	}
 
 	/**
@@ -1005,7 +920,7 @@ public class DLFolderWrapper implements DLFolder, ModelWrapper<DLFolder> {
 	*/
 	@Override
 	public void setStatus(int status) {
-		_dlFolder.setStatus(status);
+		model.setStatus(status);
 	}
 
 	/**
@@ -1015,7 +930,7 @@ public class DLFolderWrapper implements DLFolder, ModelWrapper<DLFolder> {
 	*/
 	@Override
 	public void setStatusByUserId(long statusByUserId) {
-		_dlFolder.setStatusByUserId(statusByUserId);
+		model.setStatusByUserId(statusByUserId);
 	}
 
 	/**
@@ -1025,7 +940,7 @@ public class DLFolderWrapper implements DLFolder, ModelWrapper<DLFolder> {
 	*/
 	@Override
 	public void setStatusByUserName(String statusByUserName) {
-		_dlFolder.setStatusByUserName(statusByUserName);
+		model.setStatusByUserName(statusByUserName);
 	}
 
 	/**
@@ -1035,7 +950,7 @@ public class DLFolderWrapper implements DLFolder, ModelWrapper<DLFolder> {
 	*/
 	@Override
 	public void setStatusByUserUuid(String statusByUserUuid) {
-		_dlFolder.setStatusByUserUuid(statusByUserUuid);
+		model.setStatusByUserUuid(statusByUserUuid);
 	}
 
 	/**
@@ -1045,7 +960,7 @@ public class DLFolderWrapper implements DLFolder, ModelWrapper<DLFolder> {
 	*/
 	@Override
 	public void setStatusDate(Date statusDate) {
-		_dlFolder.setStatusDate(statusDate);
+		model.setStatusDate(statusDate);
 	}
 
 	/**
@@ -1055,7 +970,7 @@ public class DLFolderWrapper implements DLFolder, ModelWrapper<DLFolder> {
 	*/
 	@Override
 	public void setTreePath(String treePath) {
-		_dlFolder.setTreePath(treePath);
+		model.setTreePath(treePath);
 	}
 
 	/**
@@ -1065,7 +980,7 @@ public class DLFolderWrapper implements DLFolder, ModelWrapper<DLFolder> {
 	*/
 	@Override
 	public void setUserId(long userId) {
-		_dlFolder.setUserId(userId);
+		model.setUserId(userId);
 	}
 
 	/**
@@ -1075,7 +990,7 @@ public class DLFolderWrapper implements DLFolder, ModelWrapper<DLFolder> {
 	*/
 	@Override
 	public void setUserName(String userName) {
-		_dlFolder.setUserName(userName);
+		model.setUserName(userName);
 	}
 
 	/**
@@ -1085,7 +1000,7 @@ public class DLFolderWrapper implements DLFolder, ModelWrapper<DLFolder> {
 	*/
 	@Override
 	public void setUserUuid(String userUuid) {
-		_dlFolder.setUserUuid(userUuid);
+		model.setUserUuid(userUuid);
 	}
 
 	/**
@@ -1095,82 +1010,21 @@ public class DLFolderWrapper implements DLFolder, ModelWrapper<DLFolder> {
 	*/
 	@Override
 	public void setUuid(String uuid) {
-		_dlFolder.setUuid(uuid);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<DLFolder> toCacheModel() {
-		return _dlFolder.toCacheModel();
-	}
-
-	@Override
-	public DLFolder toEscapedModel() {
-		return new DLFolderWrapper(_dlFolder.toEscapedModel());
-	}
-
-	@Override
-	public String toString() {
-		return _dlFolder.toString();
-	}
-
-	@Override
-	public DLFolder toUnescapedModel() {
-		return new DLFolderWrapper(_dlFolder.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _dlFolder.toXmlString();
+		model.setUuid(uuid);
 	}
 
 	@Override
 	public void updateTreePath(String treePath) {
-		_dlFolder.updateTreePath(treePath);
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-
-		if (!(obj instanceof DLFolderWrapper)) {
-			return false;
-		}
-
-		DLFolderWrapper dlFolderWrapper = (DLFolderWrapper)obj;
-
-		if (Objects.equals(_dlFolder, dlFolderWrapper._dlFolder)) {
-			return true;
-		}
-
-		return false;
+		model.updateTreePath(treePath);
 	}
 
 	@Override
 	public StagedModelType getStagedModelType() {
-		return _dlFolder.getStagedModelType();
+		return model.getStagedModelType();
 	}
 
 	@Override
-	public DLFolder getWrappedModel() {
-		return _dlFolder;
+	protected DLFolderWrapper wrap(DLFolder dlFolder) {
+		return new DLFolderWrapper(dlFolder);
 	}
-
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _dlFolder.isEntityCacheEnabled();
-	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _dlFolder.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_dlFolder.resetOriginalValues();
-	}
-
-	private final DLFolder _dlFolder;
 }

@@ -16,19 +16,14 @@ package com.liferay.site.model;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
-
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 
 import com.liferay.portal.kernel.model.ModelWrapper;
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -40,20 +35,10 @@ import java.util.Objects;
  * @generated
  */
 @ProviderType
-public class SiteFriendlyURLWrapper implements SiteFriendlyURL,
-	ModelWrapper<SiteFriendlyURL> {
+public class SiteFriendlyURLWrapper extends BaseModelWrapper<SiteFriendlyURL>
+	implements SiteFriendlyURL, ModelWrapper<SiteFriendlyURL> {
 	public SiteFriendlyURLWrapper(SiteFriendlyURL siteFriendlyURL) {
-		_siteFriendlyURL = siteFriendlyURL;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return SiteFriendlyURL.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return SiteFriendlyURL.class.getName();
+		super(siteFriendlyURL);
 	}
 
 	@Override
@@ -144,16 +129,6 @@ public class SiteFriendlyURLWrapper implements SiteFriendlyURL,
 		}
 	}
 
-	@Override
-	public Object clone() {
-		return new SiteFriendlyURLWrapper((SiteFriendlyURL)_siteFriendlyURL.clone());
-	}
-
-	@Override
-	public int compareTo(SiteFriendlyURL siteFriendlyURL) {
-		return _siteFriendlyURL.compareTo(siteFriendlyURL);
-	}
-
 	/**
 	* Returns the company ID of this site friendly url.
 	*
@@ -161,7 +136,7 @@ public class SiteFriendlyURLWrapper implements SiteFriendlyURL,
 	*/
 	@Override
 	public long getCompanyId() {
-		return _siteFriendlyURL.getCompanyId();
+		return model.getCompanyId();
 	}
 
 	/**
@@ -171,12 +146,7 @@ public class SiteFriendlyURLWrapper implements SiteFriendlyURL,
 	*/
 	@Override
 	public Date getCreateDate() {
-		return _siteFriendlyURL.getCreateDate();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _siteFriendlyURL.getExpandoBridge();
+		return model.getCreateDate();
 	}
 
 	/**
@@ -186,7 +156,7 @@ public class SiteFriendlyURLWrapper implements SiteFriendlyURL,
 	*/
 	@Override
 	public String getFriendlyURL() {
-		return _siteFriendlyURL.getFriendlyURL();
+		return model.getFriendlyURL();
 	}
 
 	/**
@@ -196,7 +166,7 @@ public class SiteFriendlyURLWrapper implements SiteFriendlyURL,
 	*/
 	@Override
 	public long getGroupId() {
-		return _siteFriendlyURL.getGroupId();
+		return model.getGroupId();
 	}
 
 	/**
@@ -206,7 +176,7 @@ public class SiteFriendlyURLWrapper implements SiteFriendlyURL,
 	*/
 	@Override
 	public String getLanguageId() {
-		return _siteFriendlyURL.getLanguageId();
+		return model.getLanguageId();
 	}
 
 	/**
@@ -216,7 +186,7 @@ public class SiteFriendlyURLWrapper implements SiteFriendlyURL,
 	*/
 	@Override
 	public Date getLastPublishDate() {
-		return _siteFriendlyURL.getLastPublishDate();
+		return model.getLastPublishDate();
 	}
 
 	/**
@@ -226,7 +196,7 @@ public class SiteFriendlyURLWrapper implements SiteFriendlyURL,
 	*/
 	@Override
 	public Date getModifiedDate() {
-		return _siteFriendlyURL.getModifiedDate();
+		return model.getModifiedDate();
 	}
 
 	/**
@@ -236,12 +206,7 @@ public class SiteFriendlyURLWrapper implements SiteFriendlyURL,
 	*/
 	@Override
 	public long getPrimaryKey() {
-		return _siteFriendlyURL.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _siteFriendlyURL.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	/**
@@ -251,7 +216,7 @@ public class SiteFriendlyURLWrapper implements SiteFriendlyURL,
 	*/
 	@Override
 	public long getSiteFriendlyURLId() {
-		return _siteFriendlyURL.getSiteFriendlyURLId();
+		return model.getSiteFriendlyURLId();
 	}
 
 	/**
@@ -261,7 +226,7 @@ public class SiteFriendlyURLWrapper implements SiteFriendlyURL,
 	*/
 	@Override
 	public long getUserId() {
-		return _siteFriendlyURL.getUserId();
+		return model.getUserId();
 	}
 
 	/**
@@ -271,7 +236,7 @@ public class SiteFriendlyURLWrapper implements SiteFriendlyURL,
 	*/
 	@Override
 	public String getUserName() {
-		return _siteFriendlyURL.getUserName();
+		return model.getUserName();
 	}
 
 	/**
@@ -281,7 +246,7 @@ public class SiteFriendlyURLWrapper implements SiteFriendlyURL,
 	*/
 	@Override
 	public String getUserUuid() {
-		return _siteFriendlyURL.getUserUuid();
+		return model.getUserUuid();
 	}
 
 	/**
@@ -291,37 +256,12 @@ public class SiteFriendlyURLWrapper implements SiteFriendlyURL,
 	*/
 	@Override
 	public String getUuid() {
-		return _siteFriendlyURL.getUuid();
-	}
-
-	@Override
-	public int hashCode() {
-		return _siteFriendlyURL.hashCode();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _siteFriendlyURL.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _siteFriendlyURL.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _siteFriendlyURL.isNew();
+		return model.getUuid();
 	}
 
 	@Override
 	public void persist() {
-		_siteFriendlyURL.persist();
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_siteFriendlyURL.setCachedModel(cachedModel);
+		model.persist();
 	}
 
 	/**
@@ -331,7 +271,7 @@ public class SiteFriendlyURLWrapper implements SiteFriendlyURL,
 	*/
 	@Override
 	public void setCompanyId(long companyId) {
-		_siteFriendlyURL.setCompanyId(companyId);
+		model.setCompanyId(companyId);
 	}
 
 	/**
@@ -341,23 +281,7 @@ public class SiteFriendlyURLWrapper implements SiteFriendlyURL,
 	*/
 	@Override
 	public void setCreateDate(Date createDate) {
-		_siteFriendlyURL.setCreateDate(createDate);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-		_siteFriendlyURL.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_siteFriendlyURL.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_siteFriendlyURL.setExpandoBridgeAttributes(serviceContext);
+		model.setCreateDate(createDate);
 	}
 
 	/**
@@ -367,7 +291,7 @@ public class SiteFriendlyURLWrapper implements SiteFriendlyURL,
 	*/
 	@Override
 	public void setFriendlyURL(String friendlyURL) {
-		_siteFriendlyURL.setFriendlyURL(friendlyURL);
+		model.setFriendlyURL(friendlyURL);
 	}
 
 	/**
@@ -377,7 +301,7 @@ public class SiteFriendlyURLWrapper implements SiteFriendlyURL,
 	*/
 	@Override
 	public void setGroupId(long groupId) {
-		_siteFriendlyURL.setGroupId(groupId);
+		model.setGroupId(groupId);
 	}
 
 	/**
@@ -387,7 +311,7 @@ public class SiteFriendlyURLWrapper implements SiteFriendlyURL,
 	*/
 	@Override
 	public void setLanguageId(String languageId) {
-		_siteFriendlyURL.setLanguageId(languageId);
+		model.setLanguageId(languageId);
 	}
 
 	/**
@@ -397,7 +321,7 @@ public class SiteFriendlyURLWrapper implements SiteFriendlyURL,
 	*/
 	@Override
 	public void setLastPublishDate(Date lastPublishDate) {
-		_siteFriendlyURL.setLastPublishDate(lastPublishDate);
+		model.setLastPublishDate(lastPublishDate);
 	}
 
 	/**
@@ -407,12 +331,7 @@ public class SiteFriendlyURLWrapper implements SiteFriendlyURL,
 	*/
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
-		_siteFriendlyURL.setModifiedDate(modifiedDate);
-	}
-
-	@Override
-	public void setNew(boolean n) {
-		_siteFriendlyURL.setNew(n);
+		model.setModifiedDate(modifiedDate);
 	}
 
 	/**
@@ -422,12 +341,7 @@ public class SiteFriendlyURLWrapper implements SiteFriendlyURL,
 	*/
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_siteFriendlyURL.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_siteFriendlyURL.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -437,7 +351,7 @@ public class SiteFriendlyURLWrapper implements SiteFriendlyURL,
 	*/
 	@Override
 	public void setSiteFriendlyURLId(long siteFriendlyURLId) {
-		_siteFriendlyURL.setSiteFriendlyURLId(siteFriendlyURLId);
+		model.setSiteFriendlyURLId(siteFriendlyURLId);
 	}
 
 	/**
@@ -447,7 +361,7 @@ public class SiteFriendlyURLWrapper implements SiteFriendlyURL,
 	*/
 	@Override
 	public void setUserId(long userId) {
-		_siteFriendlyURL.setUserId(userId);
+		model.setUserId(userId);
 	}
 
 	/**
@@ -457,7 +371,7 @@ public class SiteFriendlyURLWrapper implements SiteFriendlyURL,
 	*/
 	@Override
 	public void setUserName(String userName) {
-		_siteFriendlyURL.setUserName(userName);
+		model.setUserName(userName);
 	}
 
 	/**
@@ -467,7 +381,7 @@ public class SiteFriendlyURLWrapper implements SiteFriendlyURL,
 	*/
 	@Override
 	public void setUserUuid(String userUuid) {
-		_siteFriendlyURL.setUserUuid(userUuid);
+		model.setUserUuid(userUuid);
 	}
 
 	/**
@@ -477,78 +391,16 @@ public class SiteFriendlyURLWrapper implements SiteFriendlyURL,
 	*/
 	@Override
 	public void setUuid(String uuid) {
-		_siteFriendlyURL.setUuid(uuid);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<SiteFriendlyURL> toCacheModel() {
-		return _siteFriendlyURL.toCacheModel();
-	}
-
-	@Override
-	public SiteFriendlyURL toEscapedModel() {
-		return new SiteFriendlyURLWrapper(_siteFriendlyURL.toEscapedModel());
-	}
-
-	@Override
-	public String toString() {
-		return _siteFriendlyURL.toString();
-	}
-
-	@Override
-	public SiteFriendlyURL toUnescapedModel() {
-		return new SiteFriendlyURLWrapper(_siteFriendlyURL.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _siteFriendlyURL.toXmlString();
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-
-		if (!(obj instanceof SiteFriendlyURLWrapper)) {
-			return false;
-		}
-
-		SiteFriendlyURLWrapper siteFriendlyURLWrapper = (SiteFriendlyURLWrapper)obj;
-
-		if (Objects.equals(_siteFriendlyURL,
-					siteFriendlyURLWrapper._siteFriendlyURL)) {
-			return true;
-		}
-
-		return false;
+		model.setUuid(uuid);
 	}
 
 	@Override
 	public StagedModelType getStagedModelType() {
-		return _siteFriendlyURL.getStagedModelType();
+		return model.getStagedModelType();
 	}
 
 	@Override
-	public SiteFriendlyURL getWrappedModel() {
-		return _siteFriendlyURL;
+	protected SiteFriendlyURLWrapper wrap(SiteFriendlyURL siteFriendlyURL) {
+		return new SiteFriendlyURLWrapper(siteFriendlyURL);
 	}
-
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _siteFriendlyURL.isEntityCacheEnabled();
-	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _siteFriendlyURL.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_siteFriendlyURL.resetOriginalValues();
-	}
-
-	private final SiteFriendlyURL _siteFriendlyURL;
 }

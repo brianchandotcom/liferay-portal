@@ -16,18 +16,13 @@ package com.liferay.portal.kernel.model;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
-
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -39,20 +34,10 @@ import java.util.Objects;
  * @generated
  */
 @ProviderType
-public class PasswordPolicyWrapper implements PasswordPolicy,
-	ModelWrapper<PasswordPolicy> {
+public class PasswordPolicyWrapper extends BaseModelWrapper<PasswordPolicy>
+	implements PasswordPolicy, ModelWrapper<PasswordPolicy> {
 	public PasswordPolicyWrapper(PasswordPolicy passwordPolicy) {
-		_passwordPolicy = passwordPolicy;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return PasswordPolicy.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return PasswordPolicy.class.getName();
+		super(passwordPolicy);
 	}
 
 	@Override
@@ -312,16 +297,6 @@ public class PasswordPolicyWrapper implements PasswordPolicy,
 		}
 	}
 
-	@Override
-	public Object clone() {
-		return new PasswordPolicyWrapper((PasswordPolicy)_passwordPolicy.clone());
-	}
-
-	@Override
-	public int compareTo(PasswordPolicy passwordPolicy) {
-		return _passwordPolicy.compareTo(passwordPolicy);
-	}
-
 	/**
 	* Returns the allow dictionary words of this password policy.
 	*
@@ -329,7 +304,7 @@ public class PasswordPolicyWrapper implements PasswordPolicy,
 	*/
 	@Override
 	public boolean getAllowDictionaryWords() {
-		return _passwordPolicy.getAllowDictionaryWords();
+		return model.getAllowDictionaryWords();
 	}
 
 	/**
@@ -339,7 +314,7 @@ public class PasswordPolicyWrapper implements PasswordPolicy,
 	*/
 	@Override
 	public boolean getChangeable() {
-		return _passwordPolicy.getChangeable();
+		return model.getChangeable();
 	}
 
 	/**
@@ -349,7 +324,7 @@ public class PasswordPolicyWrapper implements PasswordPolicy,
 	*/
 	@Override
 	public boolean getChangeRequired() {
-		return _passwordPolicy.getChangeRequired();
+		return model.getChangeRequired();
 	}
 
 	/**
@@ -359,7 +334,7 @@ public class PasswordPolicyWrapper implements PasswordPolicy,
 	*/
 	@Override
 	public boolean getCheckSyntax() {
-		return _passwordPolicy.getCheckSyntax();
+		return model.getCheckSyntax();
 	}
 
 	/**
@@ -369,7 +344,7 @@ public class PasswordPolicyWrapper implements PasswordPolicy,
 	*/
 	@Override
 	public long getCompanyId() {
-		return _passwordPolicy.getCompanyId();
+		return model.getCompanyId();
 	}
 
 	/**
@@ -379,7 +354,7 @@ public class PasswordPolicyWrapper implements PasswordPolicy,
 	*/
 	@Override
 	public Date getCreateDate() {
-		return _passwordPolicy.getCreateDate();
+		return model.getCreateDate();
 	}
 
 	/**
@@ -389,7 +364,7 @@ public class PasswordPolicyWrapper implements PasswordPolicy,
 	*/
 	@Override
 	public boolean getDefaultPolicy() {
-		return _passwordPolicy.getDefaultPolicy();
+		return model.getDefaultPolicy();
 	}
 
 	/**
@@ -399,12 +374,7 @@ public class PasswordPolicyWrapper implements PasswordPolicy,
 	*/
 	@Override
 	public String getDescription() {
-		return _passwordPolicy.getDescription();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _passwordPolicy.getExpandoBridge();
+		return model.getDescription();
 	}
 
 	/**
@@ -414,7 +384,7 @@ public class PasswordPolicyWrapper implements PasswordPolicy,
 	*/
 	@Override
 	public boolean getExpireable() {
-		return _passwordPolicy.getExpireable();
+		return model.getExpireable();
 	}
 
 	/**
@@ -424,7 +394,7 @@ public class PasswordPolicyWrapper implements PasswordPolicy,
 	*/
 	@Override
 	public int getGraceLimit() {
-		return _passwordPolicy.getGraceLimit();
+		return model.getGraceLimit();
 	}
 
 	/**
@@ -434,7 +404,7 @@ public class PasswordPolicyWrapper implements PasswordPolicy,
 	*/
 	@Override
 	public boolean getHistory() {
-		return _passwordPolicy.getHistory();
+		return model.getHistory();
 	}
 
 	/**
@@ -444,7 +414,7 @@ public class PasswordPolicyWrapper implements PasswordPolicy,
 	*/
 	@Override
 	public int getHistoryCount() {
-		return _passwordPolicy.getHistoryCount();
+		return model.getHistoryCount();
 	}
 
 	/**
@@ -454,7 +424,7 @@ public class PasswordPolicyWrapper implements PasswordPolicy,
 	*/
 	@Override
 	public boolean getLockout() {
-		return _passwordPolicy.getLockout();
+		return model.getLockout();
 	}
 
 	/**
@@ -464,7 +434,7 @@ public class PasswordPolicyWrapper implements PasswordPolicy,
 	*/
 	@Override
 	public long getLockoutDuration() {
-		return _passwordPolicy.getLockoutDuration();
+		return model.getLockoutDuration();
 	}
 
 	/**
@@ -474,7 +444,7 @@ public class PasswordPolicyWrapper implements PasswordPolicy,
 	*/
 	@Override
 	public long getMaxAge() {
-		return _passwordPolicy.getMaxAge();
+		return model.getMaxAge();
 	}
 
 	/**
@@ -484,7 +454,7 @@ public class PasswordPolicyWrapper implements PasswordPolicy,
 	*/
 	@Override
 	public int getMaxFailure() {
-		return _passwordPolicy.getMaxFailure();
+		return model.getMaxFailure();
 	}
 
 	/**
@@ -494,7 +464,7 @@ public class PasswordPolicyWrapper implements PasswordPolicy,
 	*/
 	@Override
 	public long getMinAge() {
-		return _passwordPolicy.getMinAge();
+		return model.getMinAge();
 	}
 
 	/**
@@ -504,7 +474,7 @@ public class PasswordPolicyWrapper implements PasswordPolicy,
 	*/
 	@Override
 	public int getMinAlphanumeric() {
-		return _passwordPolicy.getMinAlphanumeric();
+		return model.getMinAlphanumeric();
 	}
 
 	/**
@@ -514,7 +484,7 @@ public class PasswordPolicyWrapper implements PasswordPolicy,
 	*/
 	@Override
 	public int getMinLength() {
-		return _passwordPolicy.getMinLength();
+		return model.getMinLength();
 	}
 
 	/**
@@ -524,7 +494,7 @@ public class PasswordPolicyWrapper implements PasswordPolicy,
 	*/
 	@Override
 	public int getMinLowerCase() {
-		return _passwordPolicy.getMinLowerCase();
+		return model.getMinLowerCase();
 	}
 
 	/**
@@ -534,7 +504,7 @@ public class PasswordPolicyWrapper implements PasswordPolicy,
 	*/
 	@Override
 	public int getMinNumbers() {
-		return _passwordPolicy.getMinNumbers();
+		return model.getMinNumbers();
 	}
 
 	/**
@@ -544,7 +514,7 @@ public class PasswordPolicyWrapper implements PasswordPolicy,
 	*/
 	@Override
 	public int getMinSymbols() {
-		return _passwordPolicy.getMinSymbols();
+		return model.getMinSymbols();
 	}
 
 	/**
@@ -554,7 +524,7 @@ public class PasswordPolicyWrapper implements PasswordPolicy,
 	*/
 	@Override
 	public int getMinUpperCase() {
-		return _passwordPolicy.getMinUpperCase();
+		return model.getMinUpperCase();
 	}
 
 	/**
@@ -564,7 +534,7 @@ public class PasswordPolicyWrapper implements PasswordPolicy,
 	*/
 	@Override
 	public Date getModifiedDate() {
-		return _passwordPolicy.getModifiedDate();
+		return model.getModifiedDate();
 	}
 
 	/**
@@ -574,7 +544,7 @@ public class PasswordPolicyWrapper implements PasswordPolicy,
 	*/
 	@Override
 	public long getMvccVersion() {
-		return _passwordPolicy.getMvccVersion();
+		return model.getMvccVersion();
 	}
 
 	/**
@@ -584,7 +554,7 @@ public class PasswordPolicyWrapper implements PasswordPolicy,
 	*/
 	@Override
 	public String getName() {
-		return _passwordPolicy.getName();
+		return model.getName();
 	}
 
 	/**
@@ -594,7 +564,7 @@ public class PasswordPolicyWrapper implements PasswordPolicy,
 	*/
 	@Override
 	public long getPasswordPolicyId() {
-		return _passwordPolicy.getPasswordPolicyId();
+		return model.getPasswordPolicyId();
 	}
 
 	/**
@@ -604,12 +574,7 @@ public class PasswordPolicyWrapper implements PasswordPolicy,
 	*/
 	@Override
 	public long getPrimaryKey() {
-		return _passwordPolicy.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _passwordPolicy.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	/**
@@ -619,7 +584,7 @@ public class PasswordPolicyWrapper implements PasswordPolicy,
 	*/
 	@Override
 	public String getRegex() {
-		return _passwordPolicy.getRegex();
+		return model.getRegex();
 	}
 
 	/**
@@ -629,7 +594,7 @@ public class PasswordPolicyWrapper implements PasswordPolicy,
 	*/
 	@Override
 	public boolean getRequireUnlock() {
-		return _passwordPolicy.getRequireUnlock();
+		return model.getRequireUnlock();
 	}
 
 	/**
@@ -639,7 +604,7 @@ public class PasswordPolicyWrapper implements PasswordPolicy,
 	*/
 	@Override
 	public long getResetFailureCount() {
-		return _passwordPolicy.getResetFailureCount();
+		return model.getResetFailureCount();
 	}
 
 	/**
@@ -649,7 +614,7 @@ public class PasswordPolicyWrapper implements PasswordPolicy,
 	*/
 	@Override
 	public long getResetTicketMaxAge() {
-		return _passwordPolicy.getResetTicketMaxAge();
+		return model.getResetTicketMaxAge();
 	}
 
 	/**
@@ -659,7 +624,7 @@ public class PasswordPolicyWrapper implements PasswordPolicy,
 	*/
 	@Override
 	public long getUserId() {
-		return _passwordPolicy.getUserId();
+		return model.getUserId();
 	}
 
 	/**
@@ -669,7 +634,7 @@ public class PasswordPolicyWrapper implements PasswordPolicy,
 	*/
 	@Override
 	public String getUserName() {
-		return _passwordPolicy.getUserName();
+		return model.getUserName();
 	}
 
 	/**
@@ -679,7 +644,7 @@ public class PasswordPolicyWrapper implements PasswordPolicy,
 	*/
 	@Override
 	public String getUserUuid() {
-		return _passwordPolicy.getUserUuid();
+		return model.getUserUuid();
 	}
 
 	/**
@@ -689,7 +654,7 @@ public class PasswordPolicyWrapper implements PasswordPolicy,
 	*/
 	@Override
 	public String getUuid() {
-		return _passwordPolicy.getUuid();
+		return model.getUuid();
 	}
 
 	/**
@@ -699,12 +664,7 @@ public class PasswordPolicyWrapper implements PasswordPolicy,
 	*/
 	@Override
 	public long getWarningTime() {
-		return _passwordPolicy.getWarningTime();
-	}
-
-	@Override
-	public int hashCode() {
-		return _passwordPolicy.hashCode();
+		return model.getWarningTime();
 	}
 
 	/**
@@ -714,12 +674,7 @@ public class PasswordPolicyWrapper implements PasswordPolicy,
 	*/
 	@Override
 	public boolean isAllowDictionaryWords() {
-		return _passwordPolicy.isAllowDictionaryWords();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _passwordPolicy.isCachedModel();
+		return model.isAllowDictionaryWords();
 	}
 
 	/**
@@ -729,7 +684,7 @@ public class PasswordPolicyWrapper implements PasswordPolicy,
 	*/
 	@Override
 	public boolean isChangeable() {
-		return _passwordPolicy.isChangeable();
+		return model.isChangeable();
 	}
 
 	/**
@@ -739,7 +694,7 @@ public class PasswordPolicyWrapper implements PasswordPolicy,
 	*/
 	@Override
 	public boolean isChangeRequired() {
-		return _passwordPolicy.isChangeRequired();
+		return model.isChangeRequired();
 	}
 
 	/**
@@ -749,7 +704,7 @@ public class PasswordPolicyWrapper implements PasswordPolicy,
 	*/
 	@Override
 	public boolean isCheckSyntax() {
-		return _passwordPolicy.isCheckSyntax();
+		return model.isCheckSyntax();
 	}
 
 	/**
@@ -759,12 +714,7 @@ public class PasswordPolicyWrapper implements PasswordPolicy,
 	*/
 	@Override
 	public boolean isDefaultPolicy() {
-		return _passwordPolicy.isDefaultPolicy();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _passwordPolicy.isEscapedModel();
+		return model.isDefaultPolicy();
 	}
 
 	/**
@@ -774,7 +724,7 @@ public class PasswordPolicyWrapper implements PasswordPolicy,
 	*/
 	@Override
 	public boolean isExpireable() {
-		return _passwordPolicy.isExpireable();
+		return model.isExpireable();
 	}
 
 	/**
@@ -784,7 +734,7 @@ public class PasswordPolicyWrapper implements PasswordPolicy,
 	*/
 	@Override
 	public boolean isHistory() {
-		return _passwordPolicy.isHistory();
+		return model.isHistory();
 	}
 
 	/**
@@ -794,12 +744,7 @@ public class PasswordPolicyWrapper implements PasswordPolicy,
 	*/
 	@Override
 	public boolean isLockout() {
-		return _passwordPolicy.isLockout();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _passwordPolicy.isNew();
+		return model.isLockout();
 	}
 
 	/**
@@ -809,12 +754,12 @@ public class PasswordPolicyWrapper implements PasswordPolicy,
 	*/
 	@Override
 	public boolean isRequireUnlock() {
-		return _passwordPolicy.isRequireUnlock();
+		return model.isRequireUnlock();
 	}
 
 	@Override
 	public void persist() {
-		_passwordPolicy.persist();
+		model.persist();
 	}
 
 	/**
@@ -824,12 +769,7 @@ public class PasswordPolicyWrapper implements PasswordPolicy,
 	*/
 	@Override
 	public void setAllowDictionaryWords(boolean allowDictionaryWords) {
-		_passwordPolicy.setAllowDictionaryWords(allowDictionaryWords);
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_passwordPolicy.setCachedModel(cachedModel);
+		model.setAllowDictionaryWords(allowDictionaryWords);
 	}
 
 	/**
@@ -839,7 +779,7 @@ public class PasswordPolicyWrapper implements PasswordPolicy,
 	*/
 	@Override
 	public void setChangeable(boolean changeable) {
-		_passwordPolicy.setChangeable(changeable);
+		model.setChangeable(changeable);
 	}
 
 	/**
@@ -849,7 +789,7 @@ public class PasswordPolicyWrapper implements PasswordPolicy,
 	*/
 	@Override
 	public void setChangeRequired(boolean changeRequired) {
-		_passwordPolicy.setChangeRequired(changeRequired);
+		model.setChangeRequired(changeRequired);
 	}
 
 	/**
@@ -859,7 +799,7 @@ public class PasswordPolicyWrapper implements PasswordPolicy,
 	*/
 	@Override
 	public void setCheckSyntax(boolean checkSyntax) {
-		_passwordPolicy.setCheckSyntax(checkSyntax);
+		model.setCheckSyntax(checkSyntax);
 	}
 
 	/**
@@ -869,7 +809,7 @@ public class PasswordPolicyWrapper implements PasswordPolicy,
 	*/
 	@Override
 	public void setCompanyId(long companyId) {
-		_passwordPolicy.setCompanyId(companyId);
+		model.setCompanyId(companyId);
 	}
 
 	/**
@@ -879,7 +819,7 @@ public class PasswordPolicyWrapper implements PasswordPolicy,
 	*/
 	@Override
 	public void setCreateDate(Date createDate) {
-		_passwordPolicy.setCreateDate(createDate);
+		model.setCreateDate(createDate);
 	}
 
 	/**
@@ -889,7 +829,7 @@ public class PasswordPolicyWrapper implements PasswordPolicy,
 	*/
 	@Override
 	public void setDefaultPolicy(boolean defaultPolicy) {
-		_passwordPolicy.setDefaultPolicy(defaultPolicy);
+		model.setDefaultPolicy(defaultPolicy);
 	}
 
 	/**
@@ -899,22 +839,7 @@ public class PasswordPolicyWrapper implements PasswordPolicy,
 	*/
 	@Override
 	public void setDescription(String description) {
-		_passwordPolicy.setDescription(description);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(BaseModel<?> baseModel) {
-		_passwordPolicy.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_passwordPolicy.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_passwordPolicy.setExpandoBridgeAttributes(serviceContext);
+		model.setDescription(description);
 	}
 
 	/**
@@ -924,7 +849,7 @@ public class PasswordPolicyWrapper implements PasswordPolicy,
 	*/
 	@Override
 	public void setExpireable(boolean expireable) {
-		_passwordPolicy.setExpireable(expireable);
+		model.setExpireable(expireable);
 	}
 
 	/**
@@ -934,7 +859,7 @@ public class PasswordPolicyWrapper implements PasswordPolicy,
 	*/
 	@Override
 	public void setGraceLimit(int graceLimit) {
-		_passwordPolicy.setGraceLimit(graceLimit);
+		model.setGraceLimit(graceLimit);
 	}
 
 	/**
@@ -944,7 +869,7 @@ public class PasswordPolicyWrapper implements PasswordPolicy,
 	*/
 	@Override
 	public void setHistory(boolean history) {
-		_passwordPolicy.setHistory(history);
+		model.setHistory(history);
 	}
 
 	/**
@@ -954,7 +879,7 @@ public class PasswordPolicyWrapper implements PasswordPolicy,
 	*/
 	@Override
 	public void setHistoryCount(int historyCount) {
-		_passwordPolicy.setHistoryCount(historyCount);
+		model.setHistoryCount(historyCount);
 	}
 
 	/**
@@ -964,7 +889,7 @@ public class PasswordPolicyWrapper implements PasswordPolicy,
 	*/
 	@Override
 	public void setLockout(boolean lockout) {
-		_passwordPolicy.setLockout(lockout);
+		model.setLockout(lockout);
 	}
 
 	/**
@@ -974,7 +899,7 @@ public class PasswordPolicyWrapper implements PasswordPolicy,
 	*/
 	@Override
 	public void setLockoutDuration(long lockoutDuration) {
-		_passwordPolicy.setLockoutDuration(lockoutDuration);
+		model.setLockoutDuration(lockoutDuration);
 	}
 
 	/**
@@ -984,7 +909,7 @@ public class PasswordPolicyWrapper implements PasswordPolicy,
 	*/
 	@Override
 	public void setMaxAge(long maxAge) {
-		_passwordPolicy.setMaxAge(maxAge);
+		model.setMaxAge(maxAge);
 	}
 
 	/**
@@ -994,7 +919,7 @@ public class PasswordPolicyWrapper implements PasswordPolicy,
 	*/
 	@Override
 	public void setMaxFailure(int maxFailure) {
-		_passwordPolicy.setMaxFailure(maxFailure);
+		model.setMaxFailure(maxFailure);
 	}
 
 	/**
@@ -1004,7 +929,7 @@ public class PasswordPolicyWrapper implements PasswordPolicy,
 	*/
 	@Override
 	public void setMinAge(long minAge) {
-		_passwordPolicy.setMinAge(minAge);
+		model.setMinAge(minAge);
 	}
 
 	/**
@@ -1014,7 +939,7 @@ public class PasswordPolicyWrapper implements PasswordPolicy,
 	*/
 	@Override
 	public void setMinAlphanumeric(int minAlphanumeric) {
-		_passwordPolicy.setMinAlphanumeric(minAlphanumeric);
+		model.setMinAlphanumeric(minAlphanumeric);
 	}
 
 	/**
@@ -1024,7 +949,7 @@ public class PasswordPolicyWrapper implements PasswordPolicy,
 	*/
 	@Override
 	public void setMinLength(int minLength) {
-		_passwordPolicy.setMinLength(minLength);
+		model.setMinLength(minLength);
 	}
 
 	/**
@@ -1034,7 +959,7 @@ public class PasswordPolicyWrapper implements PasswordPolicy,
 	*/
 	@Override
 	public void setMinLowerCase(int minLowerCase) {
-		_passwordPolicy.setMinLowerCase(minLowerCase);
+		model.setMinLowerCase(minLowerCase);
 	}
 
 	/**
@@ -1044,7 +969,7 @@ public class PasswordPolicyWrapper implements PasswordPolicy,
 	*/
 	@Override
 	public void setMinNumbers(int minNumbers) {
-		_passwordPolicy.setMinNumbers(minNumbers);
+		model.setMinNumbers(minNumbers);
 	}
 
 	/**
@@ -1054,7 +979,7 @@ public class PasswordPolicyWrapper implements PasswordPolicy,
 	*/
 	@Override
 	public void setMinSymbols(int minSymbols) {
-		_passwordPolicy.setMinSymbols(minSymbols);
+		model.setMinSymbols(minSymbols);
 	}
 
 	/**
@@ -1064,7 +989,7 @@ public class PasswordPolicyWrapper implements PasswordPolicy,
 	*/
 	@Override
 	public void setMinUpperCase(int minUpperCase) {
-		_passwordPolicy.setMinUpperCase(minUpperCase);
+		model.setMinUpperCase(minUpperCase);
 	}
 
 	/**
@@ -1074,7 +999,7 @@ public class PasswordPolicyWrapper implements PasswordPolicy,
 	*/
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
-		_passwordPolicy.setModifiedDate(modifiedDate);
+		model.setModifiedDate(modifiedDate);
 	}
 
 	/**
@@ -1084,7 +1009,7 @@ public class PasswordPolicyWrapper implements PasswordPolicy,
 	*/
 	@Override
 	public void setMvccVersion(long mvccVersion) {
-		_passwordPolicy.setMvccVersion(mvccVersion);
+		model.setMvccVersion(mvccVersion);
 	}
 
 	/**
@@ -1094,12 +1019,7 @@ public class PasswordPolicyWrapper implements PasswordPolicy,
 	*/
 	@Override
 	public void setName(String name) {
-		_passwordPolicy.setName(name);
-	}
-
-	@Override
-	public void setNew(boolean n) {
-		_passwordPolicy.setNew(n);
+		model.setName(name);
 	}
 
 	/**
@@ -1109,7 +1029,7 @@ public class PasswordPolicyWrapper implements PasswordPolicy,
 	*/
 	@Override
 	public void setPasswordPolicyId(long passwordPolicyId) {
-		_passwordPolicy.setPasswordPolicyId(passwordPolicyId);
+		model.setPasswordPolicyId(passwordPolicyId);
 	}
 
 	/**
@@ -1119,12 +1039,7 @@ public class PasswordPolicyWrapper implements PasswordPolicy,
 	*/
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_passwordPolicy.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_passwordPolicy.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -1134,7 +1049,7 @@ public class PasswordPolicyWrapper implements PasswordPolicy,
 	*/
 	@Override
 	public void setRegex(String regex) {
-		_passwordPolicy.setRegex(regex);
+		model.setRegex(regex);
 	}
 
 	/**
@@ -1144,7 +1059,7 @@ public class PasswordPolicyWrapper implements PasswordPolicy,
 	*/
 	@Override
 	public void setRequireUnlock(boolean requireUnlock) {
-		_passwordPolicy.setRequireUnlock(requireUnlock);
+		model.setRequireUnlock(requireUnlock);
 	}
 
 	/**
@@ -1154,7 +1069,7 @@ public class PasswordPolicyWrapper implements PasswordPolicy,
 	*/
 	@Override
 	public void setResetFailureCount(long resetFailureCount) {
-		_passwordPolicy.setResetFailureCount(resetFailureCount);
+		model.setResetFailureCount(resetFailureCount);
 	}
 
 	/**
@@ -1164,7 +1079,7 @@ public class PasswordPolicyWrapper implements PasswordPolicy,
 	*/
 	@Override
 	public void setResetTicketMaxAge(long resetTicketMaxAge) {
-		_passwordPolicy.setResetTicketMaxAge(resetTicketMaxAge);
+		model.setResetTicketMaxAge(resetTicketMaxAge);
 	}
 
 	/**
@@ -1174,7 +1089,7 @@ public class PasswordPolicyWrapper implements PasswordPolicy,
 	*/
 	@Override
 	public void setUserId(long userId) {
-		_passwordPolicy.setUserId(userId);
+		model.setUserId(userId);
 	}
 
 	/**
@@ -1184,7 +1099,7 @@ public class PasswordPolicyWrapper implements PasswordPolicy,
 	*/
 	@Override
 	public void setUserName(String userName) {
-		_passwordPolicy.setUserName(userName);
+		model.setUserName(userName);
 	}
 
 	/**
@@ -1194,7 +1109,7 @@ public class PasswordPolicyWrapper implements PasswordPolicy,
 	*/
 	@Override
 	public void setUserUuid(String userUuid) {
-		_passwordPolicy.setUserUuid(userUuid);
+		model.setUserUuid(userUuid);
 	}
 
 	/**
@@ -1204,7 +1119,7 @@ public class PasswordPolicyWrapper implements PasswordPolicy,
 	*/
 	@Override
 	public void setUuid(String uuid) {
-		_passwordPolicy.setUuid(uuid);
+		model.setUuid(uuid);
 	}
 
 	/**
@@ -1214,78 +1129,16 @@ public class PasswordPolicyWrapper implements PasswordPolicy,
 	*/
 	@Override
 	public void setWarningTime(long warningTime) {
-		_passwordPolicy.setWarningTime(warningTime);
-	}
-
-	@Override
-	public CacheModel<PasswordPolicy> toCacheModel() {
-		return _passwordPolicy.toCacheModel();
-	}
-
-	@Override
-	public PasswordPolicy toEscapedModel() {
-		return new PasswordPolicyWrapper(_passwordPolicy.toEscapedModel());
-	}
-
-	@Override
-	public String toString() {
-		return _passwordPolicy.toString();
-	}
-
-	@Override
-	public PasswordPolicy toUnescapedModel() {
-		return new PasswordPolicyWrapper(_passwordPolicy.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _passwordPolicy.toXmlString();
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-
-		if (!(obj instanceof PasswordPolicyWrapper)) {
-			return false;
-		}
-
-		PasswordPolicyWrapper passwordPolicyWrapper = (PasswordPolicyWrapper)obj;
-
-		if (Objects.equals(_passwordPolicy,
-					passwordPolicyWrapper._passwordPolicy)) {
-			return true;
-		}
-
-		return false;
+		model.setWarningTime(warningTime);
 	}
 
 	@Override
 	public StagedModelType getStagedModelType() {
-		return _passwordPolicy.getStagedModelType();
+		return model.getStagedModelType();
 	}
 
 	@Override
-	public PasswordPolicy getWrappedModel() {
-		return _passwordPolicy;
+	protected PasswordPolicyWrapper wrap(PasswordPolicy passwordPolicy) {
+		return new PasswordPolicyWrapper(passwordPolicy);
 	}
-
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _passwordPolicy.isEntityCacheEnabled();
-	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _passwordPolicy.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_passwordPolicy.resetOriginalValues();
-	}
-
-	private final PasswordPolicy _passwordPolicy;
 }

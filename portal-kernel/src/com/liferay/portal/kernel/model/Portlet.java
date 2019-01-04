@@ -113,6 +113,24 @@ public interface Portlet extends PortletModel, PersistedModel {
 		com.liferay.portal.kernel.scheduler.SchedulerEntry schedulerEntry);
 
 	/**
+	* Creates and returns a copy of this object.
+	*
+	* @return a copy of this object
+	*/
+	public Object clone();
+
+	/**
+	* Compares this portlet to the specified object.
+	*
+	* @param portlet the portlet to compare this portlet against
+	* @return the value 0 if the argument portlet is equal to this portlet; a
+	value less than -1 if this portlet is less than the portlet
+	argument; and 1 if this portlet is greater than the portlet
+	argument
+	*/
+	public int compareTo(Portlet portlet);
+
+	/**
 	* Checks whether this portlet is equal to the specified object.
 	*
 	* @param obj the object to compare this portlet against
@@ -1264,6 +1282,8 @@ public interface Portlet extends PortletModel, PersistedModel {
 	public boolean hasFooterPortletCss();
 
 	public boolean hasFooterPortletJavaScript();
+
+	public int hashCode();
 
 	public boolean hasHeaderPortalCss();
 

@@ -17,14 +17,11 @@ package com.liferay.expando.kernel.model;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.model.ModelWrapper;
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -36,19 +33,10 @@ import java.util.Objects;
  * @generated
  */
 @ProviderType
-public class ExpandoRowWrapper implements ExpandoRow, ModelWrapper<ExpandoRow> {
+public class ExpandoRowWrapper extends BaseModelWrapper<ExpandoRow>
+	implements ExpandoRow, ModelWrapper<ExpandoRow> {
 	public ExpandoRowWrapper(ExpandoRow expandoRow) {
-		_expandoRow = expandoRow;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return ExpandoRow.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return ExpandoRow.class.getName();
+		super(expandoRow);
 	}
 
 	@Override
@@ -97,16 +85,6 @@ public class ExpandoRowWrapper implements ExpandoRow, ModelWrapper<ExpandoRow> {
 		}
 	}
 
-	@Override
-	public Object clone() {
-		return new ExpandoRowWrapper((ExpandoRow)_expandoRow.clone());
-	}
-
-	@Override
-	public int compareTo(ExpandoRow expandoRow) {
-		return _expandoRow.compareTo(expandoRow);
-	}
-
 	/**
 	* Returns the class pk of this expando row.
 	*
@@ -114,7 +92,7 @@ public class ExpandoRowWrapper implements ExpandoRow, ModelWrapper<ExpandoRow> {
 	*/
 	@Override
 	public long getClassPK() {
-		return _expandoRow.getClassPK();
+		return model.getClassPK();
 	}
 
 	/**
@@ -124,12 +102,7 @@ public class ExpandoRowWrapper implements ExpandoRow, ModelWrapper<ExpandoRow> {
 	*/
 	@Override
 	public long getCompanyId() {
-		return _expandoRow.getCompanyId();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _expandoRow.getExpandoBridge();
+		return model.getCompanyId();
 	}
 
 	/**
@@ -139,7 +112,7 @@ public class ExpandoRowWrapper implements ExpandoRow, ModelWrapper<ExpandoRow> {
 	*/
 	@Override
 	public Date getModifiedDate() {
-		return _expandoRow.getModifiedDate();
+		return model.getModifiedDate();
 	}
 
 	/**
@@ -149,12 +122,7 @@ public class ExpandoRowWrapper implements ExpandoRow, ModelWrapper<ExpandoRow> {
 	*/
 	@Override
 	public long getPrimaryKey() {
-		return _expandoRow.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _expandoRow.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	/**
@@ -164,7 +132,7 @@ public class ExpandoRowWrapper implements ExpandoRow, ModelWrapper<ExpandoRow> {
 	*/
 	@Override
 	public long getRowId() {
-		return _expandoRow.getRowId();
+		return model.getRowId();
 	}
 
 	/**
@@ -174,37 +142,12 @@ public class ExpandoRowWrapper implements ExpandoRow, ModelWrapper<ExpandoRow> {
 	*/
 	@Override
 	public long getTableId() {
-		return _expandoRow.getTableId();
-	}
-
-	@Override
-	public int hashCode() {
-		return _expandoRow.hashCode();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _expandoRow.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _expandoRow.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _expandoRow.isNew();
+		return model.getTableId();
 	}
 
 	@Override
 	public void persist() {
-		_expandoRow.persist();
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_expandoRow.setCachedModel(cachedModel);
+		model.persist();
 	}
 
 	/**
@@ -214,7 +157,7 @@ public class ExpandoRowWrapper implements ExpandoRow, ModelWrapper<ExpandoRow> {
 	*/
 	@Override
 	public void setClassPK(long classPK) {
-		_expandoRow.setClassPK(classPK);
+		model.setClassPK(classPK);
 	}
 
 	/**
@@ -224,23 +167,7 @@ public class ExpandoRowWrapper implements ExpandoRow, ModelWrapper<ExpandoRow> {
 	*/
 	@Override
 	public void setCompanyId(long companyId) {
-		_expandoRow.setCompanyId(companyId);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-		_expandoRow.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_expandoRow.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_expandoRow.setExpandoBridgeAttributes(serviceContext);
+		model.setCompanyId(companyId);
 	}
 
 	/**
@@ -250,12 +177,7 @@ public class ExpandoRowWrapper implements ExpandoRow, ModelWrapper<ExpandoRow> {
 	*/
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
-		_expandoRow.setModifiedDate(modifiedDate);
-	}
-
-	@Override
-	public void setNew(boolean n) {
-		_expandoRow.setNew(n);
+		model.setModifiedDate(modifiedDate);
 	}
 
 	/**
@@ -265,12 +187,7 @@ public class ExpandoRowWrapper implements ExpandoRow, ModelWrapper<ExpandoRow> {
 	*/
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_expandoRow.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_expandoRow.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -280,7 +197,7 @@ public class ExpandoRowWrapper implements ExpandoRow, ModelWrapper<ExpandoRow> {
 	*/
 	@Override
 	public void setRowId(long rowId) {
-		_expandoRow.setRowId(rowId);
+		model.setRowId(rowId);
 	}
 
 	/**
@@ -290,72 +207,11 @@ public class ExpandoRowWrapper implements ExpandoRow, ModelWrapper<ExpandoRow> {
 	*/
 	@Override
 	public void setTableId(long tableId) {
-		_expandoRow.setTableId(tableId);
+		model.setTableId(tableId);
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.CacheModel<ExpandoRow> toCacheModel() {
-		return _expandoRow.toCacheModel();
+	protected ExpandoRowWrapper wrap(ExpandoRow expandoRow) {
+		return new ExpandoRowWrapper(expandoRow);
 	}
-
-	@Override
-	public ExpandoRow toEscapedModel() {
-		return new ExpandoRowWrapper(_expandoRow.toEscapedModel());
-	}
-
-	@Override
-	public String toString() {
-		return _expandoRow.toString();
-	}
-
-	@Override
-	public ExpandoRow toUnescapedModel() {
-		return new ExpandoRowWrapper(_expandoRow.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _expandoRow.toXmlString();
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-
-		if (!(obj instanceof ExpandoRowWrapper)) {
-			return false;
-		}
-
-		ExpandoRowWrapper expandoRowWrapper = (ExpandoRowWrapper)obj;
-
-		if (Objects.equals(_expandoRow, expandoRowWrapper._expandoRow)) {
-			return true;
-		}
-
-		return false;
-	}
-
-	@Override
-	public ExpandoRow getWrappedModel() {
-		return _expandoRow;
-	}
-
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _expandoRow.isEntityCacheEnabled();
-	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _expandoRow.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_expandoRow.resetOriginalValues();
-	}
-
-	private final ExpandoRow _expandoRow;
 }

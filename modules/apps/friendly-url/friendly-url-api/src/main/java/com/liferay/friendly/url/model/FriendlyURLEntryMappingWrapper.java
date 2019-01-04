@@ -16,16 +16,11 @@ package com.liferay.friendly.url.model;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
-
 import com.liferay.portal.kernel.model.ModelWrapper;
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -37,21 +32,11 @@ import java.util.Objects;
  * @generated
  */
 @ProviderType
-public class FriendlyURLEntryMappingWrapper implements FriendlyURLEntryMapping,
-	ModelWrapper<FriendlyURLEntryMapping> {
+public class FriendlyURLEntryMappingWrapper extends BaseModelWrapper<FriendlyURLEntryMapping>
+	implements FriendlyURLEntryMapping, ModelWrapper<FriendlyURLEntryMapping> {
 	public FriendlyURLEntryMappingWrapper(
 		FriendlyURLEntryMapping friendlyURLEntryMapping) {
-		_friendlyURLEntryMapping = friendlyURLEntryMapping;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return FriendlyURLEntryMapping.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return FriendlyURLEntryMapping.class.getName();
+		super(friendlyURLEntryMapping);
 	}
 
 	@Override
@@ -102,16 +87,6 @@ public class FriendlyURLEntryMappingWrapper implements FriendlyURLEntryMapping,
 		}
 	}
 
-	@Override
-	public Object clone() {
-		return new FriendlyURLEntryMappingWrapper((FriendlyURLEntryMapping)_friendlyURLEntryMapping.clone());
-	}
-
-	@Override
-	public int compareTo(FriendlyURLEntryMapping friendlyURLEntryMapping) {
-		return _friendlyURLEntryMapping.compareTo(friendlyURLEntryMapping);
-	}
-
 	/**
 	* Returns the fully qualified class name of this friendly url entry mapping.
 	*
@@ -119,7 +94,7 @@ public class FriendlyURLEntryMappingWrapper implements FriendlyURLEntryMapping,
 	*/
 	@Override
 	public String getClassName() {
-		return _friendlyURLEntryMapping.getClassName();
+		return model.getClassName();
 	}
 
 	/**
@@ -129,7 +104,7 @@ public class FriendlyURLEntryMappingWrapper implements FriendlyURLEntryMapping,
 	*/
 	@Override
 	public long getClassNameId() {
-		return _friendlyURLEntryMapping.getClassNameId();
+		return model.getClassNameId();
 	}
 
 	/**
@@ -139,12 +114,7 @@ public class FriendlyURLEntryMappingWrapper implements FriendlyURLEntryMapping,
 	*/
 	@Override
 	public long getClassPK() {
-		return _friendlyURLEntryMapping.getClassPK();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _friendlyURLEntryMapping.getExpandoBridge();
+		return model.getClassPK();
 	}
 
 	/**
@@ -154,7 +124,7 @@ public class FriendlyURLEntryMappingWrapper implements FriendlyURLEntryMapping,
 	*/
 	@Override
 	public long getFriendlyURLEntryId() {
-		return _friendlyURLEntryMapping.getFriendlyURLEntryId();
+		return model.getFriendlyURLEntryId();
 	}
 
 	/**
@@ -164,7 +134,7 @@ public class FriendlyURLEntryMappingWrapper implements FriendlyURLEntryMapping,
 	*/
 	@Override
 	public long getFriendlyURLEntryMappingId() {
-		return _friendlyURLEntryMapping.getFriendlyURLEntryMappingId();
+		return model.getFriendlyURLEntryMappingId();
 	}
 
 	/**
@@ -174,7 +144,7 @@ public class FriendlyURLEntryMappingWrapper implements FriendlyURLEntryMapping,
 	*/
 	@Override
 	public long getMvccVersion() {
-		return _friendlyURLEntryMapping.getMvccVersion();
+		return model.getMvccVersion();
 	}
 
 	/**
@@ -184,42 +154,12 @@ public class FriendlyURLEntryMappingWrapper implements FriendlyURLEntryMapping,
 	*/
 	@Override
 	public long getPrimaryKey() {
-		return _friendlyURLEntryMapping.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _friendlyURLEntryMapping.getPrimaryKeyObj();
-	}
-
-	@Override
-	public int hashCode() {
-		return _friendlyURLEntryMapping.hashCode();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _friendlyURLEntryMapping.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _friendlyURLEntryMapping.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _friendlyURLEntryMapping.isNew();
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_friendlyURLEntryMapping.setCachedModel(cachedModel);
+		return model.getPrimaryKey();
 	}
 
 	@Override
 	public void setClassName(String className) {
-		_friendlyURLEntryMapping.setClassName(className);
+		model.setClassName(className);
 	}
 
 	/**
@@ -229,7 +169,7 @@ public class FriendlyURLEntryMappingWrapper implements FriendlyURLEntryMapping,
 	*/
 	@Override
 	public void setClassNameId(long classNameId) {
-		_friendlyURLEntryMapping.setClassNameId(classNameId);
+		model.setClassNameId(classNameId);
 	}
 
 	/**
@@ -239,23 +179,7 @@ public class FriendlyURLEntryMappingWrapper implements FriendlyURLEntryMapping,
 	*/
 	@Override
 	public void setClassPK(long classPK) {
-		_friendlyURLEntryMapping.setClassPK(classPK);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-		_friendlyURLEntryMapping.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_friendlyURLEntryMapping.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_friendlyURLEntryMapping.setExpandoBridgeAttributes(serviceContext);
+		model.setClassPK(classPK);
 	}
 
 	/**
@@ -265,7 +189,7 @@ public class FriendlyURLEntryMappingWrapper implements FriendlyURLEntryMapping,
 	*/
 	@Override
 	public void setFriendlyURLEntryId(long friendlyURLEntryId) {
-		_friendlyURLEntryMapping.setFriendlyURLEntryId(friendlyURLEntryId);
+		model.setFriendlyURLEntryId(friendlyURLEntryId);
 	}
 
 	/**
@@ -275,7 +199,7 @@ public class FriendlyURLEntryMappingWrapper implements FriendlyURLEntryMapping,
 	*/
 	@Override
 	public void setFriendlyURLEntryMappingId(long friendlyURLEntryMappingId) {
-		_friendlyURLEntryMapping.setFriendlyURLEntryMappingId(friendlyURLEntryMappingId);
+		model.setFriendlyURLEntryMappingId(friendlyURLEntryMappingId);
 	}
 
 	/**
@@ -285,12 +209,7 @@ public class FriendlyURLEntryMappingWrapper implements FriendlyURLEntryMapping,
 	*/
 	@Override
 	public void setMvccVersion(long mvccVersion) {
-		_friendlyURLEntryMapping.setMvccVersion(mvccVersion);
-	}
-
-	@Override
-	public void setNew(boolean n) {
-		_friendlyURLEntryMapping.setNew(n);
+		model.setMvccVersion(mvccVersion);
 	}
 
 	/**
@@ -300,78 +219,12 @@ public class FriendlyURLEntryMappingWrapper implements FriendlyURLEntryMapping,
 	*/
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_friendlyURLEntryMapping.setPrimaryKey(primaryKey);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_friendlyURLEntryMapping.setPrimaryKeyObj(primaryKeyObj);
+	protected FriendlyURLEntryMappingWrapper wrap(
+		FriendlyURLEntryMapping friendlyURLEntryMapping) {
+		return new FriendlyURLEntryMappingWrapper(friendlyURLEntryMapping);
 	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<FriendlyURLEntryMapping> toCacheModel() {
-		return _friendlyURLEntryMapping.toCacheModel();
-	}
-
-	@Override
-	public FriendlyURLEntryMapping toEscapedModel() {
-		return new FriendlyURLEntryMappingWrapper(_friendlyURLEntryMapping.toEscapedModel());
-	}
-
-	@Override
-	public String toString() {
-		return _friendlyURLEntryMapping.toString();
-	}
-
-	@Override
-	public FriendlyURLEntryMapping toUnescapedModel() {
-		return new FriendlyURLEntryMappingWrapper(_friendlyURLEntryMapping.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _friendlyURLEntryMapping.toXmlString();
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-
-		if (!(obj instanceof FriendlyURLEntryMappingWrapper)) {
-			return false;
-		}
-
-		FriendlyURLEntryMappingWrapper friendlyURLEntryMappingWrapper = (FriendlyURLEntryMappingWrapper)obj;
-
-		if (Objects.equals(_friendlyURLEntryMapping,
-					friendlyURLEntryMappingWrapper._friendlyURLEntryMapping)) {
-			return true;
-		}
-
-		return false;
-	}
-
-	@Override
-	public FriendlyURLEntryMapping getWrappedModel() {
-		return _friendlyURLEntryMapping;
-	}
-
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _friendlyURLEntryMapping.isEntityCacheEnabled();
-	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _friendlyURLEntryMapping.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_friendlyURLEntryMapping.resetOriginalValues();
-	}
-
-	private final FriendlyURLEntryMapping _friendlyURLEntryMapping;
 }

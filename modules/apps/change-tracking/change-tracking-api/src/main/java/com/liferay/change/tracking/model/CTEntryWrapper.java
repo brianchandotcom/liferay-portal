@@ -16,17 +16,12 @@ package com.liferay.change.tracking.model;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
-
 import com.liferay.portal.kernel.model.ModelWrapper;
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -38,19 +33,10 @@ import java.util.Objects;
  * @generated
  */
 @ProviderType
-public class CTEntryWrapper implements CTEntry, ModelWrapper<CTEntry> {
+public class CTEntryWrapper extends BaseModelWrapper<CTEntry> implements CTEntry,
+	ModelWrapper<CTEntry> {
 	public CTEntryWrapper(CTEntry ctEntry) {
-		_ctEntry = ctEntry;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return CTEntry.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return CTEntry.class.getName();
+		super(ctEntry);
 	}
 
 	@Override
@@ -127,16 +113,6 @@ public class CTEntryWrapper implements CTEntry, ModelWrapper<CTEntry> {
 		}
 	}
 
-	@Override
-	public Object clone() {
-		return new CTEntryWrapper((CTEntry)_ctEntry.clone());
-	}
-
-	@Override
-	public int compareTo(CTEntry ctEntry) {
-		return _ctEntry.compareTo(ctEntry);
-	}
-
 	/**
 	* Returns the fully qualified class name of this ct entry.
 	*
@@ -144,7 +120,7 @@ public class CTEntryWrapper implements CTEntry, ModelWrapper<CTEntry> {
 	*/
 	@Override
 	public String getClassName() {
-		return _ctEntry.getClassName();
+		return model.getClassName();
 	}
 
 	/**
@@ -154,7 +130,7 @@ public class CTEntryWrapper implements CTEntry, ModelWrapper<CTEntry> {
 	*/
 	@Override
 	public long getClassNameId() {
-		return _ctEntry.getClassNameId();
+		return model.getClassNameId();
 	}
 
 	/**
@@ -164,7 +140,7 @@ public class CTEntryWrapper implements CTEntry, ModelWrapper<CTEntry> {
 	*/
 	@Override
 	public long getClassPK() {
-		return _ctEntry.getClassPK();
+		return model.getClassPK();
 	}
 
 	/**
@@ -174,7 +150,7 @@ public class CTEntryWrapper implements CTEntry, ModelWrapper<CTEntry> {
 	*/
 	@Override
 	public long getCompanyId() {
-		return _ctEntry.getCompanyId();
+		return model.getCompanyId();
 	}
 
 	/**
@@ -184,7 +160,7 @@ public class CTEntryWrapper implements CTEntry, ModelWrapper<CTEntry> {
 	*/
 	@Override
 	public Date getCreateDate() {
-		return _ctEntry.getCreateDate();
+		return model.getCreateDate();
 	}
 
 	/**
@@ -194,12 +170,7 @@ public class CTEntryWrapper implements CTEntry, ModelWrapper<CTEntry> {
 	*/
 	@Override
 	public long getCtEntryId() {
-		return _ctEntry.getCtEntryId();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _ctEntry.getExpandoBridge();
+		return model.getCtEntryId();
 	}
 
 	/**
@@ -209,7 +180,7 @@ public class CTEntryWrapper implements CTEntry, ModelWrapper<CTEntry> {
 	*/
 	@Override
 	public Date getModifiedDate() {
-		return _ctEntry.getModifiedDate();
+		return model.getModifiedDate();
 	}
 
 	/**
@@ -219,12 +190,7 @@ public class CTEntryWrapper implements CTEntry, ModelWrapper<CTEntry> {
 	*/
 	@Override
 	public long getPrimaryKey() {
-		return _ctEntry.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _ctEntry.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	/**
@@ -234,7 +200,7 @@ public class CTEntryWrapper implements CTEntry, ModelWrapper<CTEntry> {
 	*/
 	@Override
 	public long getResourcePrimKey() {
-		return _ctEntry.getResourcePrimKey();
+		return model.getResourcePrimKey();
 	}
 
 	/**
@@ -244,7 +210,7 @@ public class CTEntryWrapper implements CTEntry, ModelWrapper<CTEntry> {
 	*/
 	@Override
 	public long getUserId() {
-		return _ctEntry.getUserId();
+		return model.getUserId();
 	}
 
 	/**
@@ -254,7 +220,7 @@ public class CTEntryWrapper implements CTEntry, ModelWrapper<CTEntry> {
 	*/
 	@Override
 	public String getUserName() {
-		return _ctEntry.getUserName();
+		return model.getUserName();
 	}
 
 	/**
@@ -264,47 +230,22 @@ public class CTEntryWrapper implements CTEntry, ModelWrapper<CTEntry> {
 	*/
 	@Override
 	public String getUserUuid() {
-		return _ctEntry.getUserUuid();
-	}
-
-	@Override
-	public int hashCode() {
-		return _ctEntry.hashCode();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _ctEntry.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _ctEntry.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _ctEntry.isNew();
+		return model.getUserUuid();
 	}
 
 	@Override
 	public boolean isResourceMain() {
-		return _ctEntry.isResourceMain();
+		return model.isResourceMain();
 	}
 
 	@Override
 	public void persist() {
-		_ctEntry.persist();
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_ctEntry.setCachedModel(cachedModel);
+		model.persist();
 	}
 
 	@Override
 	public void setClassName(String className) {
-		_ctEntry.setClassName(className);
+		model.setClassName(className);
 	}
 
 	/**
@@ -314,7 +255,7 @@ public class CTEntryWrapper implements CTEntry, ModelWrapper<CTEntry> {
 	*/
 	@Override
 	public void setClassNameId(long classNameId) {
-		_ctEntry.setClassNameId(classNameId);
+		model.setClassNameId(classNameId);
 	}
 
 	/**
@@ -324,7 +265,7 @@ public class CTEntryWrapper implements CTEntry, ModelWrapper<CTEntry> {
 	*/
 	@Override
 	public void setClassPK(long classPK) {
-		_ctEntry.setClassPK(classPK);
+		model.setClassPK(classPK);
 	}
 
 	/**
@@ -334,7 +275,7 @@ public class CTEntryWrapper implements CTEntry, ModelWrapper<CTEntry> {
 	*/
 	@Override
 	public void setCompanyId(long companyId) {
-		_ctEntry.setCompanyId(companyId);
+		model.setCompanyId(companyId);
 	}
 
 	/**
@@ -344,7 +285,7 @@ public class CTEntryWrapper implements CTEntry, ModelWrapper<CTEntry> {
 	*/
 	@Override
 	public void setCreateDate(Date createDate) {
-		_ctEntry.setCreateDate(createDate);
+		model.setCreateDate(createDate);
 	}
 
 	/**
@@ -354,23 +295,7 @@ public class CTEntryWrapper implements CTEntry, ModelWrapper<CTEntry> {
 	*/
 	@Override
 	public void setCtEntryId(long ctEntryId) {
-		_ctEntry.setCtEntryId(ctEntryId);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-		_ctEntry.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_ctEntry.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_ctEntry.setExpandoBridgeAttributes(serviceContext);
+		model.setCtEntryId(ctEntryId);
 	}
 
 	/**
@@ -380,12 +305,7 @@ public class CTEntryWrapper implements CTEntry, ModelWrapper<CTEntry> {
 	*/
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
-		_ctEntry.setModifiedDate(modifiedDate);
-	}
-
-	@Override
-	public void setNew(boolean n) {
-		_ctEntry.setNew(n);
+		model.setModifiedDate(modifiedDate);
 	}
 
 	/**
@@ -395,12 +315,7 @@ public class CTEntryWrapper implements CTEntry, ModelWrapper<CTEntry> {
 	*/
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_ctEntry.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_ctEntry.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -410,7 +325,7 @@ public class CTEntryWrapper implements CTEntry, ModelWrapper<CTEntry> {
 	*/
 	@Override
 	public void setResourcePrimKey(long resourcePrimKey) {
-		_ctEntry.setResourcePrimKey(resourcePrimKey);
+		model.setResourcePrimKey(resourcePrimKey);
 	}
 
 	/**
@@ -420,7 +335,7 @@ public class CTEntryWrapper implements CTEntry, ModelWrapper<CTEntry> {
 	*/
 	@Override
 	public void setUserId(long userId) {
-		_ctEntry.setUserId(userId);
+		model.setUserId(userId);
 	}
 
 	/**
@@ -430,7 +345,7 @@ public class CTEntryWrapper implements CTEntry, ModelWrapper<CTEntry> {
 	*/
 	@Override
 	public void setUserName(String userName) {
-		_ctEntry.setUserName(userName);
+		model.setUserName(userName);
 	}
 
 	/**
@@ -440,72 +355,11 @@ public class CTEntryWrapper implements CTEntry, ModelWrapper<CTEntry> {
 	*/
 	@Override
 	public void setUserUuid(String userUuid) {
-		_ctEntry.setUserUuid(userUuid);
+		model.setUserUuid(userUuid);
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.CacheModel<CTEntry> toCacheModel() {
-		return _ctEntry.toCacheModel();
+	protected CTEntryWrapper wrap(CTEntry ctEntry) {
+		return new CTEntryWrapper(ctEntry);
 	}
-
-	@Override
-	public CTEntry toEscapedModel() {
-		return new CTEntryWrapper(_ctEntry.toEscapedModel());
-	}
-
-	@Override
-	public String toString() {
-		return _ctEntry.toString();
-	}
-
-	@Override
-	public CTEntry toUnescapedModel() {
-		return new CTEntryWrapper(_ctEntry.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _ctEntry.toXmlString();
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-
-		if (!(obj instanceof CTEntryWrapper)) {
-			return false;
-		}
-
-		CTEntryWrapper ctEntryWrapper = (CTEntryWrapper)obj;
-
-		if (Objects.equals(_ctEntry, ctEntryWrapper._ctEntry)) {
-			return true;
-		}
-
-		return false;
-	}
-
-	@Override
-	public CTEntry getWrappedModel() {
-		return _ctEntry;
-	}
-
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _ctEntry.isEntityCacheEnabled();
-	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _ctEntry.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_ctEntry.resetOriginalValues();
-	}
-
-	private final CTEntry _ctEntry;
 }

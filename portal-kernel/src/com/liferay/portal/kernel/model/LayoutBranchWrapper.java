@@ -16,15 +16,10 @@ package com.liferay.portal.kernel.model;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
-
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -36,20 +31,10 @@ import java.util.Objects;
  * @generated
  */
 @ProviderType
-public class LayoutBranchWrapper implements LayoutBranch,
-	ModelWrapper<LayoutBranch> {
+public class LayoutBranchWrapper extends BaseModelWrapper<LayoutBranch>
+	implements LayoutBranch, ModelWrapper<LayoutBranch> {
 	public LayoutBranchWrapper(LayoutBranch layoutBranch) {
-		_layoutBranch = layoutBranch;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return LayoutBranch.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return LayoutBranch.class.getName();
+		super(layoutBranch);
 	}
 
 	@Override
@@ -140,16 +125,6 @@ public class LayoutBranchWrapper implements LayoutBranch,
 		}
 	}
 
-	@Override
-	public Object clone() {
-		return new LayoutBranchWrapper((LayoutBranch)_layoutBranch.clone());
-	}
-
-	@Override
-	public int compareTo(LayoutBranch layoutBranch) {
-		return _layoutBranch.compareTo(layoutBranch);
-	}
-
 	/**
 	* Returns the company ID of this layout branch.
 	*
@@ -157,7 +132,7 @@ public class LayoutBranchWrapper implements LayoutBranch,
 	*/
 	@Override
 	public long getCompanyId() {
-		return _layoutBranch.getCompanyId();
+		return model.getCompanyId();
 	}
 
 	/**
@@ -167,12 +142,7 @@ public class LayoutBranchWrapper implements LayoutBranch,
 	*/
 	@Override
 	public String getDescription() {
-		return _layoutBranch.getDescription();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _layoutBranch.getExpandoBridge();
+		return model.getDescription();
 	}
 
 	/**
@@ -182,7 +152,7 @@ public class LayoutBranchWrapper implements LayoutBranch,
 	*/
 	@Override
 	public long getGroupId() {
-		return _layoutBranch.getGroupId();
+		return model.getGroupId();
 	}
 
 	/**
@@ -192,7 +162,7 @@ public class LayoutBranchWrapper implements LayoutBranch,
 	*/
 	@Override
 	public long getLayoutBranchId() {
-		return _layoutBranch.getLayoutBranchId();
+		return model.getLayoutBranchId();
 	}
 
 	/**
@@ -202,7 +172,7 @@ public class LayoutBranchWrapper implements LayoutBranch,
 	*/
 	@Override
 	public long getLayoutSetBranchId() {
-		return _layoutBranch.getLayoutSetBranchId();
+		return model.getLayoutSetBranchId();
 	}
 
 	/**
@@ -212,7 +182,7 @@ public class LayoutBranchWrapper implements LayoutBranch,
 	*/
 	@Override
 	public boolean getMaster() {
-		return _layoutBranch.getMaster();
+		return model.getMaster();
 	}
 
 	/**
@@ -222,7 +192,7 @@ public class LayoutBranchWrapper implements LayoutBranch,
 	*/
 	@Override
 	public long getMvccVersion() {
-		return _layoutBranch.getMvccVersion();
+		return model.getMvccVersion();
 	}
 
 	/**
@@ -232,7 +202,7 @@ public class LayoutBranchWrapper implements LayoutBranch,
 	*/
 	@Override
 	public String getName() {
-		return _layoutBranch.getName();
+		return model.getName();
 	}
 
 	/**
@@ -242,7 +212,7 @@ public class LayoutBranchWrapper implements LayoutBranch,
 	*/
 	@Override
 	public long getPlid() {
-		return _layoutBranch.getPlid();
+		return model.getPlid();
 	}
 
 	/**
@@ -252,12 +222,7 @@ public class LayoutBranchWrapper implements LayoutBranch,
 	*/
 	@Override
 	public long getPrimaryKey() {
-		return _layoutBranch.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _layoutBranch.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	/**
@@ -267,7 +232,7 @@ public class LayoutBranchWrapper implements LayoutBranch,
 	*/
 	@Override
 	public long getUserId() {
-		return _layoutBranch.getUserId();
+		return model.getUserId();
 	}
 
 	/**
@@ -277,7 +242,7 @@ public class LayoutBranchWrapper implements LayoutBranch,
 	*/
 	@Override
 	public String getUserName() {
-		return _layoutBranch.getUserName();
+		return model.getUserName();
 	}
 
 	/**
@@ -287,22 +252,7 @@ public class LayoutBranchWrapper implements LayoutBranch,
 	*/
 	@Override
 	public String getUserUuid() {
-		return _layoutBranch.getUserUuid();
-	}
-
-	@Override
-	public int hashCode() {
-		return _layoutBranch.hashCode();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _layoutBranch.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _layoutBranch.isEscapedModel();
+		return model.getUserUuid();
 	}
 
 	/**
@@ -312,22 +262,12 @@ public class LayoutBranchWrapper implements LayoutBranch,
 	*/
 	@Override
 	public boolean isMaster() {
-		return _layoutBranch.isMaster();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _layoutBranch.isNew();
+		return model.isMaster();
 	}
 
 	@Override
 	public void persist() {
-		_layoutBranch.persist();
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_layoutBranch.setCachedModel(cachedModel);
+		model.persist();
 	}
 
 	/**
@@ -337,7 +277,7 @@ public class LayoutBranchWrapper implements LayoutBranch,
 	*/
 	@Override
 	public void setCompanyId(long companyId) {
-		_layoutBranch.setCompanyId(companyId);
+		model.setCompanyId(companyId);
 	}
 
 	/**
@@ -347,22 +287,7 @@ public class LayoutBranchWrapper implements LayoutBranch,
 	*/
 	@Override
 	public void setDescription(String description) {
-		_layoutBranch.setDescription(description);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(BaseModel<?> baseModel) {
-		_layoutBranch.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_layoutBranch.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_layoutBranch.setExpandoBridgeAttributes(serviceContext);
+		model.setDescription(description);
 	}
 
 	/**
@@ -372,7 +297,7 @@ public class LayoutBranchWrapper implements LayoutBranch,
 	*/
 	@Override
 	public void setGroupId(long groupId) {
-		_layoutBranch.setGroupId(groupId);
+		model.setGroupId(groupId);
 	}
 
 	/**
@@ -382,7 +307,7 @@ public class LayoutBranchWrapper implements LayoutBranch,
 	*/
 	@Override
 	public void setLayoutBranchId(long layoutBranchId) {
-		_layoutBranch.setLayoutBranchId(layoutBranchId);
+		model.setLayoutBranchId(layoutBranchId);
 	}
 
 	/**
@@ -392,7 +317,7 @@ public class LayoutBranchWrapper implements LayoutBranch,
 	*/
 	@Override
 	public void setLayoutSetBranchId(long layoutSetBranchId) {
-		_layoutBranch.setLayoutSetBranchId(layoutSetBranchId);
+		model.setLayoutSetBranchId(layoutSetBranchId);
 	}
 
 	/**
@@ -402,7 +327,7 @@ public class LayoutBranchWrapper implements LayoutBranch,
 	*/
 	@Override
 	public void setMaster(boolean master) {
-		_layoutBranch.setMaster(master);
+		model.setMaster(master);
 	}
 
 	/**
@@ -412,7 +337,7 @@ public class LayoutBranchWrapper implements LayoutBranch,
 	*/
 	@Override
 	public void setMvccVersion(long mvccVersion) {
-		_layoutBranch.setMvccVersion(mvccVersion);
+		model.setMvccVersion(mvccVersion);
 	}
 
 	/**
@@ -422,12 +347,7 @@ public class LayoutBranchWrapper implements LayoutBranch,
 	*/
 	@Override
 	public void setName(String name) {
-		_layoutBranch.setName(name);
-	}
-
-	@Override
-	public void setNew(boolean n) {
-		_layoutBranch.setNew(n);
+		model.setName(name);
 	}
 
 	/**
@@ -437,7 +357,7 @@ public class LayoutBranchWrapper implements LayoutBranch,
 	*/
 	@Override
 	public void setPlid(long plid) {
-		_layoutBranch.setPlid(plid);
+		model.setPlid(plid);
 	}
 
 	/**
@@ -447,12 +367,7 @@ public class LayoutBranchWrapper implements LayoutBranch,
 	*/
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_layoutBranch.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_layoutBranch.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -462,7 +377,7 @@ public class LayoutBranchWrapper implements LayoutBranch,
 	*/
 	@Override
 	public void setUserId(long userId) {
-		_layoutBranch.setUserId(userId);
+		model.setUserId(userId);
 	}
 
 	/**
@@ -472,7 +387,7 @@ public class LayoutBranchWrapper implements LayoutBranch,
 	*/
 	@Override
 	public void setUserName(String userName) {
-		_layoutBranch.setUserName(userName);
+		model.setUserName(userName);
 	}
 
 	/**
@@ -482,72 +397,11 @@ public class LayoutBranchWrapper implements LayoutBranch,
 	*/
 	@Override
 	public void setUserUuid(String userUuid) {
-		_layoutBranch.setUserUuid(userUuid);
+		model.setUserUuid(userUuid);
 	}
 
 	@Override
-	public CacheModel<LayoutBranch> toCacheModel() {
-		return _layoutBranch.toCacheModel();
+	protected LayoutBranchWrapper wrap(LayoutBranch layoutBranch) {
+		return new LayoutBranchWrapper(layoutBranch);
 	}
-
-	@Override
-	public LayoutBranch toEscapedModel() {
-		return new LayoutBranchWrapper(_layoutBranch.toEscapedModel());
-	}
-
-	@Override
-	public String toString() {
-		return _layoutBranch.toString();
-	}
-
-	@Override
-	public LayoutBranch toUnescapedModel() {
-		return new LayoutBranchWrapper(_layoutBranch.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _layoutBranch.toXmlString();
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-
-		if (!(obj instanceof LayoutBranchWrapper)) {
-			return false;
-		}
-
-		LayoutBranchWrapper layoutBranchWrapper = (LayoutBranchWrapper)obj;
-
-		if (Objects.equals(_layoutBranch, layoutBranchWrapper._layoutBranch)) {
-			return true;
-		}
-
-		return false;
-	}
-
-	@Override
-	public LayoutBranch getWrappedModel() {
-		return _layoutBranch;
-	}
-
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _layoutBranch.isEntityCacheEnabled();
-	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _layoutBranch.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_layoutBranch.resetOriginalValues();
-	}
-
-	private final LayoutBranch _layoutBranch;
 }

@@ -16,17 +16,12 @@ package com.liferay.blogs.model;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
-
 import com.liferay.portal.kernel.model.ModelWrapper;
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -38,20 +33,10 @@ import java.util.Objects;
  * @generated
  */
 @ProviderType
-public class BlogsStatsUserWrapper implements BlogsStatsUser,
-	ModelWrapper<BlogsStatsUser> {
+public class BlogsStatsUserWrapper extends BaseModelWrapper<BlogsStatsUser>
+	implements BlogsStatsUser, ModelWrapper<BlogsStatsUser> {
 	public BlogsStatsUserWrapper(BlogsStatsUser blogsStatsUser) {
-		_blogsStatsUser = blogsStatsUser;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return BlogsStatsUser.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return BlogsStatsUser.class.getName();
+		super(blogsStatsUser);
 	}
 
 	@Override
@@ -130,16 +115,6 @@ public class BlogsStatsUserWrapper implements BlogsStatsUser,
 		}
 	}
 
-	@Override
-	public Object clone() {
-		return new BlogsStatsUserWrapper((BlogsStatsUser)_blogsStatsUser.clone());
-	}
-
-	@Override
-	public int compareTo(BlogsStatsUser blogsStatsUser) {
-		return _blogsStatsUser.compareTo(blogsStatsUser);
-	}
-
 	/**
 	* Returns the company ID of this blogs stats user.
 	*
@@ -147,7 +122,7 @@ public class BlogsStatsUserWrapper implements BlogsStatsUser,
 	*/
 	@Override
 	public long getCompanyId() {
-		return _blogsStatsUser.getCompanyId();
+		return model.getCompanyId();
 	}
 
 	/**
@@ -157,12 +132,7 @@ public class BlogsStatsUserWrapper implements BlogsStatsUser,
 	*/
 	@Override
 	public int getEntryCount() {
-		return _blogsStatsUser.getEntryCount();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _blogsStatsUser.getExpandoBridge();
+		return model.getEntryCount();
 	}
 
 	/**
@@ -172,7 +142,7 @@ public class BlogsStatsUserWrapper implements BlogsStatsUser,
 	*/
 	@Override
 	public long getGroupId() {
-		return _blogsStatsUser.getGroupId();
+		return model.getGroupId();
 	}
 
 	/**
@@ -182,7 +152,7 @@ public class BlogsStatsUserWrapper implements BlogsStatsUser,
 	*/
 	@Override
 	public Date getLastPostDate() {
-		return _blogsStatsUser.getLastPostDate();
+		return model.getLastPostDate();
 	}
 
 	/**
@@ -192,12 +162,7 @@ public class BlogsStatsUserWrapper implements BlogsStatsUser,
 	*/
 	@Override
 	public long getPrimaryKey() {
-		return _blogsStatsUser.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _blogsStatsUser.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	/**
@@ -207,7 +172,7 @@ public class BlogsStatsUserWrapper implements BlogsStatsUser,
 	*/
 	@Override
 	public double getRatingsAverageScore() {
-		return _blogsStatsUser.getRatingsAverageScore();
+		return model.getRatingsAverageScore();
 	}
 
 	/**
@@ -217,7 +182,7 @@ public class BlogsStatsUserWrapper implements BlogsStatsUser,
 	*/
 	@Override
 	public int getRatingsTotalEntries() {
-		return _blogsStatsUser.getRatingsTotalEntries();
+		return model.getRatingsTotalEntries();
 	}
 
 	/**
@@ -227,7 +192,7 @@ public class BlogsStatsUserWrapper implements BlogsStatsUser,
 	*/
 	@Override
 	public double getRatingsTotalScore() {
-		return _blogsStatsUser.getRatingsTotalScore();
+		return model.getRatingsTotalScore();
 	}
 
 	/**
@@ -237,7 +202,7 @@ public class BlogsStatsUserWrapper implements BlogsStatsUser,
 	*/
 	@Override
 	public long getStatsUserId() {
-		return _blogsStatsUser.getStatsUserId();
+		return model.getStatsUserId();
 	}
 
 	/**
@@ -247,7 +212,7 @@ public class BlogsStatsUserWrapper implements BlogsStatsUser,
 	*/
 	@Override
 	public String getStatsUserUuid() {
-		return _blogsStatsUser.getStatsUserUuid();
+		return model.getStatsUserUuid();
 	}
 
 	/**
@@ -257,7 +222,7 @@ public class BlogsStatsUserWrapper implements BlogsStatsUser,
 	*/
 	@Override
 	public long getUserId() {
-		return _blogsStatsUser.getUserId();
+		return model.getUserId();
 	}
 
 	/**
@@ -267,37 +232,12 @@ public class BlogsStatsUserWrapper implements BlogsStatsUser,
 	*/
 	@Override
 	public String getUserUuid() {
-		return _blogsStatsUser.getUserUuid();
-	}
-
-	@Override
-	public int hashCode() {
-		return _blogsStatsUser.hashCode();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _blogsStatsUser.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _blogsStatsUser.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _blogsStatsUser.isNew();
+		return model.getUserUuid();
 	}
 
 	@Override
 	public void persist() {
-		_blogsStatsUser.persist();
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_blogsStatsUser.setCachedModel(cachedModel);
+		model.persist();
 	}
 
 	/**
@@ -307,7 +247,7 @@ public class BlogsStatsUserWrapper implements BlogsStatsUser,
 	*/
 	@Override
 	public void setCompanyId(long companyId) {
-		_blogsStatsUser.setCompanyId(companyId);
+		model.setCompanyId(companyId);
 	}
 
 	/**
@@ -317,23 +257,7 @@ public class BlogsStatsUserWrapper implements BlogsStatsUser,
 	*/
 	@Override
 	public void setEntryCount(int entryCount) {
-		_blogsStatsUser.setEntryCount(entryCount);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-		_blogsStatsUser.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_blogsStatsUser.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_blogsStatsUser.setExpandoBridgeAttributes(serviceContext);
+		model.setEntryCount(entryCount);
 	}
 
 	/**
@@ -343,7 +267,7 @@ public class BlogsStatsUserWrapper implements BlogsStatsUser,
 	*/
 	@Override
 	public void setGroupId(long groupId) {
-		_blogsStatsUser.setGroupId(groupId);
+		model.setGroupId(groupId);
 	}
 
 	/**
@@ -353,12 +277,7 @@ public class BlogsStatsUserWrapper implements BlogsStatsUser,
 	*/
 	@Override
 	public void setLastPostDate(Date lastPostDate) {
-		_blogsStatsUser.setLastPostDate(lastPostDate);
-	}
-
-	@Override
-	public void setNew(boolean n) {
-		_blogsStatsUser.setNew(n);
+		model.setLastPostDate(lastPostDate);
 	}
 
 	/**
@@ -368,12 +287,7 @@ public class BlogsStatsUserWrapper implements BlogsStatsUser,
 	*/
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_blogsStatsUser.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_blogsStatsUser.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -383,7 +297,7 @@ public class BlogsStatsUserWrapper implements BlogsStatsUser,
 	*/
 	@Override
 	public void setRatingsAverageScore(double ratingsAverageScore) {
-		_blogsStatsUser.setRatingsAverageScore(ratingsAverageScore);
+		model.setRatingsAverageScore(ratingsAverageScore);
 	}
 
 	/**
@@ -393,7 +307,7 @@ public class BlogsStatsUserWrapper implements BlogsStatsUser,
 	*/
 	@Override
 	public void setRatingsTotalEntries(int ratingsTotalEntries) {
-		_blogsStatsUser.setRatingsTotalEntries(ratingsTotalEntries);
+		model.setRatingsTotalEntries(ratingsTotalEntries);
 	}
 
 	/**
@@ -403,7 +317,7 @@ public class BlogsStatsUserWrapper implements BlogsStatsUser,
 	*/
 	@Override
 	public void setRatingsTotalScore(double ratingsTotalScore) {
-		_blogsStatsUser.setRatingsTotalScore(ratingsTotalScore);
+		model.setRatingsTotalScore(ratingsTotalScore);
 	}
 
 	/**
@@ -413,7 +327,7 @@ public class BlogsStatsUserWrapper implements BlogsStatsUser,
 	*/
 	@Override
 	public void setStatsUserId(long statsUserId) {
-		_blogsStatsUser.setStatsUserId(statsUserId);
+		model.setStatsUserId(statsUserId);
 	}
 
 	/**
@@ -423,7 +337,7 @@ public class BlogsStatsUserWrapper implements BlogsStatsUser,
 	*/
 	@Override
 	public void setStatsUserUuid(String statsUserUuid) {
-		_blogsStatsUser.setStatsUserUuid(statsUserUuid);
+		model.setStatsUserUuid(statsUserUuid);
 	}
 
 	/**
@@ -433,7 +347,7 @@ public class BlogsStatsUserWrapper implements BlogsStatsUser,
 	*/
 	@Override
 	public void setUserId(long userId) {
-		_blogsStatsUser.setUserId(userId);
+		model.setUserId(userId);
 	}
 
 	/**
@@ -443,73 +357,11 @@ public class BlogsStatsUserWrapper implements BlogsStatsUser,
 	*/
 	@Override
 	public void setUserUuid(String userUuid) {
-		_blogsStatsUser.setUserUuid(userUuid);
+		model.setUserUuid(userUuid);
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.CacheModel<BlogsStatsUser> toCacheModel() {
-		return _blogsStatsUser.toCacheModel();
+	protected BlogsStatsUserWrapper wrap(BlogsStatsUser blogsStatsUser) {
+		return new BlogsStatsUserWrapper(blogsStatsUser);
 	}
-
-	@Override
-	public BlogsStatsUser toEscapedModel() {
-		return new BlogsStatsUserWrapper(_blogsStatsUser.toEscapedModel());
-	}
-
-	@Override
-	public String toString() {
-		return _blogsStatsUser.toString();
-	}
-
-	@Override
-	public BlogsStatsUser toUnescapedModel() {
-		return new BlogsStatsUserWrapper(_blogsStatsUser.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _blogsStatsUser.toXmlString();
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-
-		if (!(obj instanceof BlogsStatsUserWrapper)) {
-			return false;
-		}
-
-		BlogsStatsUserWrapper blogsStatsUserWrapper = (BlogsStatsUserWrapper)obj;
-
-		if (Objects.equals(_blogsStatsUser,
-					blogsStatsUserWrapper._blogsStatsUser)) {
-			return true;
-		}
-
-		return false;
-	}
-
-	@Override
-	public BlogsStatsUser getWrappedModel() {
-		return _blogsStatsUser;
-	}
-
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _blogsStatsUser.isEntityCacheEnabled();
-	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _blogsStatsUser.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_blogsStatsUser.resetOriginalValues();
-	}
-
-	private final BlogsStatsUser _blogsStatsUser;
 }

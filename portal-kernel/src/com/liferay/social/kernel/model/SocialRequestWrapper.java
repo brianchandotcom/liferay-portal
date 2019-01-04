@@ -16,16 +16,11 @@ package com.liferay.social.kernel.model;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
-
 import com.liferay.portal.kernel.model.ModelWrapper;
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -37,20 +32,10 @@ import java.util.Objects;
  * @generated
  */
 @ProviderType
-public class SocialRequestWrapper implements SocialRequest,
-	ModelWrapper<SocialRequest> {
+public class SocialRequestWrapper extends BaseModelWrapper<SocialRequest>
+	implements SocialRequest, ModelWrapper<SocialRequest> {
 	public SocialRequestWrapper(SocialRequest socialRequest) {
-		_socialRequest = socialRequest;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return SocialRequest.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return SocialRequest.class.getName();
+		super(socialRequest);
 	}
 
 	@Override
@@ -155,16 +140,6 @@ public class SocialRequestWrapper implements SocialRequest,
 		}
 	}
 
-	@Override
-	public Object clone() {
-		return new SocialRequestWrapper((SocialRequest)_socialRequest.clone());
-	}
-
-	@Override
-	public int compareTo(SocialRequest socialRequest) {
-		return _socialRequest.compareTo(socialRequest);
-	}
-
 	/**
 	* Returns the fully qualified class name of this social request.
 	*
@@ -172,7 +147,7 @@ public class SocialRequestWrapper implements SocialRequest,
 	*/
 	@Override
 	public String getClassName() {
-		return _socialRequest.getClassName();
+		return model.getClassName();
 	}
 
 	/**
@@ -182,7 +157,7 @@ public class SocialRequestWrapper implements SocialRequest,
 	*/
 	@Override
 	public long getClassNameId() {
-		return _socialRequest.getClassNameId();
+		return model.getClassNameId();
 	}
 
 	/**
@@ -192,7 +167,7 @@ public class SocialRequestWrapper implements SocialRequest,
 	*/
 	@Override
 	public long getClassPK() {
-		return _socialRequest.getClassPK();
+		return model.getClassPK();
 	}
 
 	/**
@@ -202,7 +177,7 @@ public class SocialRequestWrapper implements SocialRequest,
 	*/
 	@Override
 	public long getCompanyId() {
-		return _socialRequest.getCompanyId();
+		return model.getCompanyId();
 	}
 
 	/**
@@ -212,12 +187,7 @@ public class SocialRequestWrapper implements SocialRequest,
 	*/
 	@Override
 	public long getCreateDate() {
-		return _socialRequest.getCreateDate();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _socialRequest.getExpandoBridge();
+		return model.getCreateDate();
 	}
 
 	/**
@@ -227,7 +197,7 @@ public class SocialRequestWrapper implements SocialRequest,
 	*/
 	@Override
 	public String getExtraData() {
-		return _socialRequest.getExtraData();
+		return model.getExtraData();
 	}
 
 	/**
@@ -237,7 +207,7 @@ public class SocialRequestWrapper implements SocialRequest,
 	*/
 	@Override
 	public long getGroupId() {
-		return _socialRequest.getGroupId();
+		return model.getGroupId();
 	}
 
 	/**
@@ -247,7 +217,7 @@ public class SocialRequestWrapper implements SocialRequest,
 	*/
 	@Override
 	public long getModifiedDate() {
-		return _socialRequest.getModifiedDate();
+		return model.getModifiedDate();
 	}
 
 	/**
@@ -257,12 +227,7 @@ public class SocialRequestWrapper implements SocialRequest,
 	*/
 	@Override
 	public long getPrimaryKey() {
-		return _socialRequest.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _socialRequest.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	/**
@@ -272,7 +237,7 @@ public class SocialRequestWrapper implements SocialRequest,
 	*/
 	@Override
 	public long getReceiverUserId() {
-		return _socialRequest.getReceiverUserId();
+		return model.getReceiverUserId();
 	}
 
 	/**
@@ -282,7 +247,7 @@ public class SocialRequestWrapper implements SocialRequest,
 	*/
 	@Override
 	public String getReceiverUserUuid() {
-		return _socialRequest.getReceiverUserUuid();
+		return model.getReceiverUserUuid();
 	}
 
 	/**
@@ -292,7 +257,7 @@ public class SocialRequestWrapper implements SocialRequest,
 	*/
 	@Override
 	public long getRequestId() {
-		return _socialRequest.getRequestId();
+		return model.getRequestId();
 	}
 
 	/**
@@ -302,7 +267,7 @@ public class SocialRequestWrapper implements SocialRequest,
 	*/
 	@Override
 	public int getStatus() {
-		return _socialRequest.getStatus();
+		return model.getStatus();
 	}
 
 	/**
@@ -312,7 +277,7 @@ public class SocialRequestWrapper implements SocialRequest,
 	*/
 	@Override
 	public int getType() {
-		return _socialRequest.getType();
+		return model.getType();
 	}
 
 	/**
@@ -322,7 +287,7 @@ public class SocialRequestWrapper implements SocialRequest,
 	*/
 	@Override
 	public long getUserId() {
-		return _socialRequest.getUserId();
+		return model.getUserId();
 	}
 
 	/**
@@ -332,7 +297,7 @@ public class SocialRequestWrapper implements SocialRequest,
 	*/
 	@Override
 	public String getUserUuid() {
-		return _socialRequest.getUserUuid();
+		return model.getUserUuid();
 	}
 
 	/**
@@ -342,42 +307,17 @@ public class SocialRequestWrapper implements SocialRequest,
 	*/
 	@Override
 	public String getUuid() {
-		return _socialRequest.getUuid();
-	}
-
-	@Override
-	public int hashCode() {
-		return _socialRequest.hashCode();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _socialRequest.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _socialRequest.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _socialRequest.isNew();
+		return model.getUuid();
 	}
 
 	@Override
 	public void persist() {
-		_socialRequest.persist();
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_socialRequest.setCachedModel(cachedModel);
+		model.persist();
 	}
 
 	@Override
 	public void setClassName(String className) {
-		_socialRequest.setClassName(className);
+		model.setClassName(className);
 	}
 
 	/**
@@ -387,7 +327,7 @@ public class SocialRequestWrapper implements SocialRequest,
 	*/
 	@Override
 	public void setClassNameId(long classNameId) {
-		_socialRequest.setClassNameId(classNameId);
+		model.setClassNameId(classNameId);
 	}
 
 	/**
@@ -397,7 +337,7 @@ public class SocialRequestWrapper implements SocialRequest,
 	*/
 	@Override
 	public void setClassPK(long classPK) {
-		_socialRequest.setClassPK(classPK);
+		model.setClassPK(classPK);
 	}
 
 	/**
@@ -407,7 +347,7 @@ public class SocialRequestWrapper implements SocialRequest,
 	*/
 	@Override
 	public void setCompanyId(long companyId) {
-		_socialRequest.setCompanyId(companyId);
+		model.setCompanyId(companyId);
 	}
 
 	/**
@@ -417,23 +357,7 @@ public class SocialRequestWrapper implements SocialRequest,
 	*/
 	@Override
 	public void setCreateDate(long createDate) {
-		_socialRequest.setCreateDate(createDate);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-		_socialRequest.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_socialRequest.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_socialRequest.setExpandoBridgeAttributes(serviceContext);
+		model.setCreateDate(createDate);
 	}
 
 	/**
@@ -443,7 +367,7 @@ public class SocialRequestWrapper implements SocialRequest,
 	*/
 	@Override
 	public void setExtraData(String extraData) {
-		_socialRequest.setExtraData(extraData);
+		model.setExtraData(extraData);
 	}
 
 	/**
@@ -453,7 +377,7 @@ public class SocialRequestWrapper implements SocialRequest,
 	*/
 	@Override
 	public void setGroupId(long groupId) {
-		_socialRequest.setGroupId(groupId);
+		model.setGroupId(groupId);
 	}
 
 	/**
@@ -463,12 +387,7 @@ public class SocialRequestWrapper implements SocialRequest,
 	*/
 	@Override
 	public void setModifiedDate(long modifiedDate) {
-		_socialRequest.setModifiedDate(modifiedDate);
-	}
-
-	@Override
-	public void setNew(boolean n) {
-		_socialRequest.setNew(n);
+		model.setModifiedDate(modifiedDate);
 	}
 
 	/**
@@ -478,12 +397,7 @@ public class SocialRequestWrapper implements SocialRequest,
 	*/
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_socialRequest.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_socialRequest.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -493,7 +407,7 @@ public class SocialRequestWrapper implements SocialRequest,
 	*/
 	@Override
 	public void setReceiverUserId(long receiverUserId) {
-		_socialRequest.setReceiverUserId(receiverUserId);
+		model.setReceiverUserId(receiverUserId);
 	}
 
 	/**
@@ -503,7 +417,7 @@ public class SocialRequestWrapper implements SocialRequest,
 	*/
 	@Override
 	public void setReceiverUserUuid(String receiverUserUuid) {
-		_socialRequest.setReceiverUserUuid(receiverUserUuid);
+		model.setReceiverUserUuid(receiverUserUuid);
 	}
 
 	/**
@@ -513,7 +427,7 @@ public class SocialRequestWrapper implements SocialRequest,
 	*/
 	@Override
 	public void setRequestId(long requestId) {
-		_socialRequest.setRequestId(requestId);
+		model.setRequestId(requestId);
 	}
 
 	/**
@@ -523,7 +437,7 @@ public class SocialRequestWrapper implements SocialRequest,
 	*/
 	@Override
 	public void setStatus(int status) {
-		_socialRequest.setStatus(status);
+		model.setStatus(status);
 	}
 
 	/**
@@ -533,7 +447,7 @@ public class SocialRequestWrapper implements SocialRequest,
 	*/
 	@Override
 	public void setType(int type) {
-		_socialRequest.setType(type);
+		model.setType(type);
 	}
 
 	/**
@@ -543,7 +457,7 @@ public class SocialRequestWrapper implements SocialRequest,
 	*/
 	@Override
 	public void setUserId(long userId) {
-		_socialRequest.setUserId(userId);
+		model.setUserId(userId);
 	}
 
 	/**
@@ -553,7 +467,7 @@ public class SocialRequestWrapper implements SocialRequest,
 	*/
 	@Override
 	public void setUserUuid(String userUuid) {
-		_socialRequest.setUserUuid(userUuid);
+		model.setUserUuid(userUuid);
 	}
 
 	/**
@@ -563,72 +477,11 @@ public class SocialRequestWrapper implements SocialRequest,
 	*/
 	@Override
 	public void setUuid(String uuid) {
-		_socialRequest.setUuid(uuid);
+		model.setUuid(uuid);
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.CacheModel<SocialRequest> toCacheModel() {
-		return _socialRequest.toCacheModel();
+	protected SocialRequestWrapper wrap(SocialRequest socialRequest) {
+		return new SocialRequestWrapper(socialRequest);
 	}
-
-	@Override
-	public SocialRequest toEscapedModel() {
-		return new SocialRequestWrapper(_socialRequest.toEscapedModel());
-	}
-
-	@Override
-	public String toString() {
-		return _socialRequest.toString();
-	}
-
-	@Override
-	public SocialRequest toUnescapedModel() {
-		return new SocialRequestWrapper(_socialRequest.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _socialRequest.toXmlString();
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-
-		if (!(obj instanceof SocialRequestWrapper)) {
-			return false;
-		}
-
-		SocialRequestWrapper socialRequestWrapper = (SocialRequestWrapper)obj;
-
-		if (Objects.equals(_socialRequest, socialRequestWrapper._socialRequest)) {
-			return true;
-		}
-
-		return false;
-	}
-
-	@Override
-	public SocialRequest getWrappedModel() {
-		return _socialRequest;
-	}
-
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _socialRequest.isEntityCacheEnabled();
-	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _socialRequest.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_socialRequest.resetOriginalValues();
-	}
-
-	private final SocialRequest _socialRequest;
 }

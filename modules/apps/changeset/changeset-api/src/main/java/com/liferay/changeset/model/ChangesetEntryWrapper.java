@@ -16,17 +16,12 @@ package com.liferay.changeset.model;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
-
 import com.liferay.portal.kernel.model.ModelWrapper;
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -38,20 +33,10 @@ import java.util.Objects;
  * @generated
  */
 @ProviderType
-public class ChangesetEntryWrapper implements ChangesetEntry,
-	ModelWrapper<ChangesetEntry> {
+public class ChangesetEntryWrapper extends BaseModelWrapper<ChangesetEntry>
+	implements ChangesetEntry, ModelWrapper<ChangesetEntry> {
 	public ChangesetEntryWrapper(ChangesetEntry changesetEntry) {
-		_changesetEntry = changesetEntry;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return ChangesetEntry.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return ChangesetEntry.class.getName();
+		super(changesetEntry);
 	}
 
 	@Override
@@ -136,16 +121,6 @@ public class ChangesetEntryWrapper implements ChangesetEntry,
 		}
 	}
 
-	@Override
-	public Object clone() {
-		return new ChangesetEntryWrapper((ChangesetEntry)_changesetEntry.clone());
-	}
-
-	@Override
-	public int compareTo(ChangesetEntry changesetEntry) {
-		return _changesetEntry.compareTo(changesetEntry);
-	}
-
 	/**
 	* Returns the changeset collection ID of this changeset entry.
 	*
@@ -153,7 +128,7 @@ public class ChangesetEntryWrapper implements ChangesetEntry,
 	*/
 	@Override
 	public long getChangesetCollectionId() {
-		return _changesetEntry.getChangesetCollectionId();
+		return model.getChangesetCollectionId();
 	}
 
 	/**
@@ -163,7 +138,7 @@ public class ChangesetEntryWrapper implements ChangesetEntry,
 	*/
 	@Override
 	public long getChangesetEntryId() {
-		return _changesetEntry.getChangesetEntryId();
+		return model.getChangesetEntryId();
 	}
 
 	/**
@@ -173,7 +148,7 @@ public class ChangesetEntryWrapper implements ChangesetEntry,
 	*/
 	@Override
 	public String getClassName() {
-		return _changesetEntry.getClassName();
+		return model.getClassName();
 	}
 
 	/**
@@ -183,7 +158,7 @@ public class ChangesetEntryWrapper implements ChangesetEntry,
 	*/
 	@Override
 	public long getClassNameId() {
-		return _changesetEntry.getClassNameId();
+		return model.getClassNameId();
 	}
 
 	/**
@@ -193,7 +168,7 @@ public class ChangesetEntryWrapper implements ChangesetEntry,
 	*/
 	@Override
 	public long getClassPK() {
-		return _changesetEntry.getClassPK();
+		return model.getClassPK();
 	}
 
 	/**
@@ -203,7 +178,7 @@ public class ChangesetEntryWrapper implements ChangesetEntry,
 	*/
 	@Override
 	public long getCompanyId() {
-		return _changesetEntry.getCompanyId();
+		return model.getCompanyId();
 	}
 
 	/**
@@ -213,12 +188,7 @@ public class ChangesetEntryWrapper implements ChangesetEntry,
 	*/
 	@Override
 	public Date getCreateDate() {
-		return _changesetEntry.getCreateDate();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _changesetEntry.getExpandoBridge();
+		return model.getCreateDate();
 	}
 
 	/**
@@ -228,7 +198,7 @@ public class ChangesetEntryWrapper implements ChangesetEntry,
 	*/
 	@Override
 	public long getGroupId() {
-		return _changesetEntry.getGroupId();
+		return model.getGroupId();
 	}
 
 	/**
@@ -238,7 +208,7 @@ public class ChangesetEntryWrapper implements ChangesetEntry,
 	*/
 	@Override
 	public Date getModifiedDate() {
-		return _changesetEntry.getModifiedDate();
+		return model.getModifiedDate();
 	}
 
 	/**
@@ -248,12 +218,7 @@ public class ChangesetEntryWrapper implements ChangesetEntry,
 	*/
 	@Override
 	public long getPrimaryKey() {
-		return _changesetEntry.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _changesetEntry.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	/**
@@ -263,7 +228,7 @@ public class ChangesetEntryWrapper implements ChangesetEntry,
 	*/
 	@Override
 	public long getUserId() {
-		return _changesetEntry.getUserId();
+		return model.getUserId();
 	}
 
 	/**
@@ -273,7 +238,7 @@ public class ChangesetEntryWrapper implements ChangesetEntry,
 	*/
 	@Override
 	public String getUserName() {
-		return _changesetEntry.getUserName();
+		return model.getUserName();
 	}
 
 	/**
@@ -283,37 +248,12 @@ public class ChangesetEntryWrapper implements ChangesetEntry,
 	*/
 	@Override
 	public String getUserUuid() {
-		return _changesetEntry.getUserUuid();
-	}
-
-	@Override
-	public int hashCode() {
-		return _changesetEntry.hashCode();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _changesetEntry.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _changesetEntry.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _changesetEntry.isNew();
+		return model.getUserUuid();
 	}
 
 	@Override
 	public void persist() {
-		_changesetEntry.persist();
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_changesetEntry.setCachedModel(cachedModel);
+		model.persist();
 	}
 
 	/**
@@ -323,7 +263,7 @@ public class ChangesetEntryWrapper implements ChangesetEntry,
 	*/
 	@Override
 	public void setChangesetCollectionId(long changesetCollectionId) {
-		_changesetEntry.setChangesetCollectionId(changesetCollectionId);
+		model.setChangesetCollectionId(changesetCollectionId);
 	}
 
 	/**
@@ -333,12 +273,12 @@ public class ChangesetEntryWrapper implements ChangesetEntry,
 	*/
 	@Override
 	public void setChangesetEntryId(long changesetEntryId) {
-		_changesetEntry.setChangesetEntryId(changesetEntryId);
+		model.setChangesetEntryId(changesetEntryId);
 	}
 
 	@Override
 	public void setClassName(String className) {
-		_changesetEntry.setClassName(className);
+		model.setClassName(className);
 	}
 
 	/**
@@ -348,7 +288,7 @@ public class ChangesetEntryWrapper implements ChangesetEntry,
 	*/
 	@Override
 	public void setClassNameId(long classNameId) {
-		_changesetEntry.setClassNameId(classNameId);
+		model.setClassNameId(classNameId);
 	}
 
 	/**
@@ -358,7 +298,7 @@ public class ChangesetEntryWrapper implements ChangesetEntry,
 	*/
 	@Override
 	public void setClassPK(long classPK) {
-		_changesetEntry.setClassPK(classPK);
+		model.setClassPK(classPK);
 	}
 
 	/**
@@ -368,7 +308,7 @@ public class ChangesetEntryWrapper implements ChangesetEntry,
 	*/
 	@Override
 	public void setCompanyId(long companyId) {
-		_changesetEntry.setCompanyId(companyId);
+		model.setCompanyId(companyId);
 	}
 
 	/**
@@ -378,23 +318,7 @@ public class ChangesetEntryWrapper implements ChangesetEntry,
 	*/
 	@Override
 	public void setCreateDate(Date createDate) {
-		_changesetEntry.setCreateDate(createDate);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-		_changesetEntry.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_changesetEntry.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_changesetEntry.setExpandoBridgeAttributes(serviceContext);
+		model.setCreateDate(createDate);
 	}
 
 	/**
@@ -404,7 +328,7 @@ public class ChangesetEntryWrapper implements ChangesetEntry,
 	*/
 	@Override
 	public void setGroupId(long groupId) {
-		_changesetEntry.setGroupId(groupId);
+		model.setGroupId(groupId);
 	}
 
 	/**
@@ -414,12 +338,7 @@ public class ChangesetEntryWrapper implements ChangesetEntry,
 	*/
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
-		_changesetEntry.setModifiedDate(modifiedDate);
-	}
-
-	@Override
-	public void setNew(boolean n) {
-		_changesetEntry.setNew(n);
+		model.setModifiedDate(modifiedDate);
 	}
 
 	/**
@@ -429,12 +348,7 @@ public class ChangesetEntryWrapper implements ChangesetEntry,
 	*/
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_changesetEntry.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_changesetEntry.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -444,7 +358,7 @@ public class ChangesetEntryWrapper implements ChangesetEntry,
 	*/
 	@Override
 	public void setUserId(long userId) {
-		_changesetEntry.setUserId(userId);
+		model.setUserId(userId);
 	}
 
 	/**
@@ -454,7 +368,7 @@ public class ChangesetEntryWrapper implements ChangesetEntry,
 	*/
 	@Override
 	public void setUserName(String userName) {
-		_changesetEntry.setUserName(userName);
+		model.setUserName(userName);
 	}
 
 	/**
@@ -464,73 +378,11 @@ public class ChangesetEntryWrapper implements ChangesetEntry,
 	*/
 	@Override
 	public void setUserUuid(String userUuid) {
-		_changesetEntry.setUserUuid(userUuid);
+		model.setUserUuid(userUuid);
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.CacheModel<ChangesetEntry> toCacheModel() {
-		return _changesetEntry.toCacheModel();
+	protected ChangesetEntryWrapper wrap(ChangesetEntry changesetEntry) {
+		return new ChangesetEntryWrapper(changesetEntry);
 	}
-
-	@Override
-	public ChangesetEntry toEscapedModel() {
-		return new ChangesetEntryWrapper(_changesetEntry.toEscapedModel());
-	}
-
-	@Override
-	public String toString() {
-		return _changesetEntry.toString();
-	}
-
-	@Override
-	public ChangesetEntry toUnescapedModel() {
-		return new ChangesetEntryWrapper(_changesetEntry.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _changesetEntry.toXmlString();
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-
-		if (!(obj instanceof ChangesetEntryWrapper)) {
-			return false;
-		}
-
-		ChangesetEntryWrapper changesetEntryWrapper = (ChangesetEntryWrapper)obj;
-
-		if (Objects.equals(_changesetEntry,
-					changesetEntryWrapper._changesetEntry)) {
-			return true;
-		}
-
-		return false;
-	}
-
-	@Override
-	public ChangesetEntry getWrappedModel() {
-		return _changesetEntry;
-	}
-
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _changesetEntry.isEntityCacheEnabled();
-	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _changesetEntry.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_changesetEntry.resetOriginalValues();
-	}
-
-	private final ChangesetEntry _changesetEntry;
 }

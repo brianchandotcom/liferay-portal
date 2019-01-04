@@ -16,17 +16,14 @@ package com.liferay.portal.background.task.model;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
-
 import com.liferay.portal.kernel.model.ModelWrapper;
-import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.io.Serializable;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -38,20 +35,10 @@ import java.util.Objects;
  * @generated
  */
 @ProviderType
-public class BackgroundTaskWrapper implements BackgroundTask,
-	ModelWrapper<BackgroundTask> {
+public class BackgroundTaskWrapper extends BaseModelWrapper<BackgroundTask>
+	implements BackgroundTask, ModelWrapper<BackgroundTask> {
 	public BackgroundTaskWrapper(BackgroundTask backgroundTask) {
-		_backgroundTask = backgroundTask;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return BackgroundTask.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return BackgroundTask.class.getName();
+		super(backgroundTask);
 	}
 
 	@Override
@@ -183,54 +170,44 @@ public class BackgroundTaskWrapper implements BackgroundTask,
 	@Override
 	public void addAttachment(long userId, String fileName, java.io.File file)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		_backgroundTask.addAttachment(userId, fileName, file);
+		model.addAttachment(userId, fileName, file);
 	}
 
 	@Override
 	public void addAttachment(long userId, String fileName,
 		java.io.InputStream inputStream)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		_backgroundTask.addAttachment(userId, fileName, inputStream);
+		model.addAttachment(userId, fileName, inputStream);
 	}
 
 	@Override
 	public com.liferay.portal.kernel.repository.model.Folder addAttachmentsFolder()
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _backgroundTask.addAttachmentsFolder();
-	}
-
-	@Override
-	public Object clone() {
-		return new BackgroundTaskWrapper((BackgroundTask)_backgroundTask.clone());
-	}
-
-	@Override
-	public int compareTo(BackgroundTask backgroundTask) {
-		return _backgroundTask.compareTo(backgroundTask);
+		return model.addAttachmentsFolder();
 	}
 
 	@Override
 	public java.util.List<com.liferay.portal.kernel.repository.model.FileEntry> getAttachmentsFileEntries()
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _backgroundTask.getAttachmentsFileEntries();
+		return model.getAttachmentsFileEntries();
 	}
 
 	@Override
 	public java.util.List<com.liferay.portal.kernel.repository.model.FileEntry> getAttachmentsFileEntries(
 		int start, int end)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _backgroundTask.getAttachmentsFileEntries(start, end);
+		return model.getAttachmentsFileEntries(start, end);
 	}
 
 	@Override
 	public int getAttachmentsFileEntriesCount()
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _backgroundTask.getAttachmentsFileEntriesCount();
+		return model.getAttachmentsFileEntriesCount();
 	}
 
 	@Override
 	public long getAttachmentsFolderId() {
-		return _backgroundTask.getAttachmentsFolderId();
+		return model.getAttachmentsFolderId();
 	}
 
 	/**
@@ -240,7 +217,7 @@ public class BackgroundTaskWrapper implements BackgroundTask,
 	*/
 	@Override
 	public long getBackgroundTaskId() {
-		return _backgroundTask.getBackgroundTaskId();
+		return model.getBackgroundTaskId();
 	}
 
 	/**
@@ -250,7 +227,7 @@ public class BackgroundTaskWrapper implements BackgroundTask,
 	*/
 	@Override
 	public long getCompanyId() {
-		return _backgroundTask.getCompanyId();
+		return model.getCompanyId();
 	}
 
 	/**
@@ -260,7 +237,7 @@ public class BackgroundTaskWrapper implements BackgroundTask,
 	*/
 	@Override
 	public boolean getCompleted() {
-		return _backgroundTask.getCompleted();
+		return model.getCompleted();
 	}
 
 	/**
@@ -270,7 +247,7 @@ public class BackgroundTaskWrapper implements BackgroundTask,
 	*/
 	@Override
 	public Date getCompletionDate() {
-		return _backgroundTask.getCompletionDate();
+		return model.getCompletionDate();
 	}
 
 	/**
@@ -280,12 +257,7 @@ public class BackgroundTaskWrapper implements BackgroundTask,
 	*/
 	@Override
 	public Date getCreateDate() {
-		return _backgroundTask.getCreateDate();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _backgroundTask.getExpandoBridge();
+		return model.getCreateDate();
 	}
 
 	/**
@@ -295,7 +267,7 @@ public class BackgroundTaskWrapper implements BackgroundTask,
 	*/
 	@Override
 	public long getGroupId() {
-		return _backgroundTask.getGroupId();
+		return model.getGroupId();
 	}
 
 	/**
@@ -305,7 +277,7 @@ public class BackgroundTaskWrapper implements BackgroundTask,
 	*/
 	@Override
 	public Date getModifiedDate() {
-		return _backgroundTask.getModifiedDate();
+		return model.getModifiedDate();
 	}
 
 	/**
@@ -315,7 +287,7 @@ public class BackgroundTaskWrapper implements BackgroundTask,
 	*/
 	@Override
 	public long getMvccVersion() {
-		return _backgroundTask.getMvccVersion();
+		return model.getMvccVersion();
 	}
 
 	/**
@@ -325,7 +297,7 @@ public class BackgroundTaskWrapper implements BackgroundTask,
 	*/
 	@Override
 	public String getName() {
-		return _backgroundTask.getName();
+		return model.getName();
 	}
 
 	/**
@@ -335,12 +307,7 @@ public class BackgroundTaskWrapper implements BackgroundTask,
 	*/
 	@Override
 	public long getPrimaryKey() {
-		return _backgroundTask.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _backgroundTask.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	/**
@@ -350,7 +317,7 @@ public class BackgroundTaskWrapper implements BackgroundTask,
 	*/
 	@Override
 	public String getServletContextNames() {
-		return _backgroundTask.getServletContextNames();
+		return model.getServletContextNames();
 	}
 
 	/**
@@ -360,12 +327,12 @@ public class BackgroundTaskWrapper implements BackgroundTask,
 	*/
 	@Override
 	public int getStatus() {
-		return _backgroundTask.getStatus();
+		return model.getStatus();
 	}
 
 	@Override
 	public String getStatusLabel() {
-		return _backgroundTask.getStatusLabel();
+		return model.getStatusLabel();
 	}
 
 	/**
@@ -375,7 +342,7 @@ public class BackgroundTaskWrapper implements BackgroundTask,
 	*/
 	@Override
 	public String getStatusMessage() {
-		return _backgroundTask.getStatusMessage();
+		return model.getStatusMessage();
 	}
 
 	/**
@@ -385,7 +352,7 @@ public class BackgroundTaskWrapper implements BackgroundTask,
 	*/
 	@Override
 	public Map<String, Serializable> getTaskContextMap() {
-		return _backgroundTask.getTaskContextMap();
+		return model.getTaskContextMap();
 	}
 
 	/**
@@ -395,7 +362,7 @@ public class BackgroundTaskWrapper implements BackgroundTask,
 	*/
 	@Override
 	public String getTaskExecutorClassName() {
-		return _backgroundTask.getTaskExecutorClassName();
+		return model.getTaskExecutorClassName();
 	}
 
 	/**
@@ -405,7 +372,7 @@ public class BackgroundTaskWrapper implements BackgroundTask,
 	*/
 	@Override
 	public long getUserId() {
-		return _backgroundTask.getUserId();
+		return model.getUserId();
 	}
 
 	/**
@@ -415,7 +382,7 @@ public class BackgroundTaskWrapper implements BackgroundTask,
 	*/
 	@Override
 	public String getUserName() {
-		return _backgroundTask.getUserName();
+		return model.getUserName();
 	}
 
 	/**
@@ -425,17 +392,7 @@ public class BackgroundTaskWrapper implements BackgroundTask,
 	*/
 	@Override
 	public String getUserUuid() {
-		return _backgroundTask.getUserUuid();
-	}
-
-	@Override
-	public int hashCode() {
-		return _backgroundTask.hashCode();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _backgroundTask.isCachedModel();
+		return model.getUserUuid();
 	}
 
 	/**
@@ -445,27 +402,17 @@ public class BackgroundTaskWrapper implements BackgroundTask,
 	*/
 	@Override
 	public boolean isCompleted() {
-		return _backgroundTask.isCompleted();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _backgroundTask.isEscapedModel();
+		return model.isCompleted();
 	}
 
 	@Override
 	public boolean isInProgress() {
-		return _backgroundTask.isInProgress();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _backgroundTask.isNew();
+		return model.isInProgress();
 	}
 
 	@Override
 	public void persist() {
-		_backgroundTask.persist();
+		model.persist();
 	}
 
 	/**
@@ -475,12 +422,7 @@ public class BackgroundTaskWrapper implements BackgroundTask,
 	*/
 	@Override
 	public void setBackgroundTaskId(long backgroundTaskId) {
-		_backgroundTask.setBackgroundTaskId(backgroundTaskId);
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_backgroundTask.setCachedModel(cachedModel);
+		model.setBackgroundTaskId(backgroundTaskId);
 	}
 
 	/**
@@ -490,7 +432,7 @@ public class BackgroundTaskWrapper implements BackgroundTask,
 	*/
 	@Override
 	public void setCompanyId(long companyId) {
-		_backgroundTask.setCompanyId(companyId);
+		model.setCompanyId(companyId);
 	}
 
 	/**
@@ -500,7 +442,7 @@ public class BackgroundTaskWrapper implements BackgroundTask,
 	*/
 	@Override
 	public void setCompleted(boolean completed) {
-		_backgroundTask.setCompleted(completed);
+		model.setCompleted(completed);
 	}
 
 	/**
@@ -510,7 +452,7 @@ public class BackgroundTaskWrapper implements BackgroundTask,
 	*/
 	@Override
 	public void setCompletionDate(Date completionDate) {
-		_backgroundTask.setCompletionDate(completionDate);
+		model.setCompletionDate(completionDate);
 	}
 
 	/**
@@ -520,23 +462,7 @@ public class BackgroundTaskWrapper implements BackgroundTask,
 	*/
 	@Override
 	public void setCreateDate(Date createDate) {
-		_backgroundTask.setCreateDate(createDate);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-		_backgroundTask.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_backgroundTask.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_backgroundTask.setExpandoBridgeAttributes(serviceContext);
+		model.setCreateDate(createDate);
 	}
 
 	/**
@@ -546,7 +472,7 @@ public class BackgroundTaskWrapper implements BackgroundTask,
 	*/
 	@Override
 	public void setGroupId(long groupId) {
-		_backgroundTask.setGroupId(groupId);
+		model.setGroupId(groupId);
 	}
 
 	/**
@@ -556,7 +482,7 @@ public class BackgroundTaskWrapper implements BackgroundTask,
 	*/
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
-		_backgroundTask.setModifiedDate(modifiedDate);
+		model.setModifiedDate(modifiedDate);
 	}
 
 	/**
@@ -566,7 +492,7 @@ public class BackgroundTaskWrapper implements BackgroundTask,
 	*/
 	@Override
 	public void setMvccVersion(long mvccVersion) {
-		_backgroundTask.setMvccVersion(mvccVersion);
+		model.setMvccVersion(mvccVersion);
 	}
 
 	/**
@@ -576,12 +502,7 @@ public class BackgroundTaskWrapper implements BackgroundTask,
 	*/
 	@Override
 	public void setName(String name) {
-		_backgroundTask.setName(name);
-	}
-
-	@Override
-	public void setNew(boolean n) {
-		_backgroundTask.setNew(n);
+		model.setName(name);
 	}
 
 	/**
@@ -591,12 +512,7 @@ public class BackgroundTaskWrapper implements BackgroundTask,
 	*/
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_backgroundTask.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_backgroundTask.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -606,7 +522,7 @@ public class BackgroundTaskWrapper implements BackgroundTask,
 	*/
 	@Override
 	public void setServletContextNames(String servletContextNames) {
-		_backgroundTask.setServletContextNames(servletContextNames);
+		model.setServletContextNames(servletContextNames);
 	}
 
 	/**
@@ -616,7 +532,7 @@ public class BackgroundTaskWrapper implements BackgroundTask,
 	*/
 	@Override
 	public void setStatus(int status) {
-		_backgroundTask.setStatus(status);
+		model.setStatus(status);
 	}
 
 	/**
@@ -626,7 +542,7 @@ public class BackgroundTaskWrapper implements BackgroundTask,
 	*/
 	@Override
 	public void setStatusMessage(String statusMessage) {
-		_backgroundTask.setStatusMessage(statusMessage);
+		model.setStatusMessage(statusMessage);
 	}
 
 	/**
@@ -636,7 +552,7 @@ public class BackgroundTaskWrapper implements BackgroundTask,
 	*/
 	@Override
 	public void setTaskContextMap(Map<String, Serializable> taskContextMap) {
-		_backgroundTask.setTaskContextMap(taskContextMap);
+		model.setTaskContextMap(taskContextMap);
 	}
 
 	/**
@@ -646,7 +562,7 @@ public class BackgroundTaskWrapper implements BackgroundTask,
 	*/
 	@Override
 	public void setTaskExecutorClassName(String taskExecutorClassName) {
-		_backgroundTask.setTaskExecutorClassName(taskExecutorClassName);
+		model.setTaskExecutorClassName(taskExecutorClassName);
 	}
 
 	/**
@@ -656,7 +572,7 @@ public class BackgroundTaskWrapper implements BackgroundTask,
 	*/
 	@Override
 	public void setUserId(long userId) {
-		_backgroundTask.setUserId(userId);
+		model.setUserId(userId);
 	}
 
 	/**
@@ -666,7 +582,7 @@ public class BackgroundTaskWrapper implements BackgroundTask,
 	*/
 	@Override
 	public void setUserName(String userName) {
-		_backgroundTask.setUserName(userName);
+		model.setUserName(userName);
 	}
 
 	/**
@@ -676,73 +592,11 @@ public class BackgroundTaskWrapper implements BackgroundTask,
 	*/
 	@Override
 	public void setUserUuid(String userUuid) {
-		_backgroundTask.setUserUuid(userUuid);
+		model.setUserUuid(userUuid);
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.CacheModel<BackgroundTask> toCacheModel() {
-		return _backgroundTask.toCacheModel();
+	protected BackgroundTaskWrapper wrap(BackgroundTask backgroundTask) {
+		return new BackgroundTaskWrapper(backgroundTask);
 	}
-
-	@Override
-	public BackgroundTask toEscapedModel() {
-		return new BackgroundTaskWrapper(_backgroundTask.toEscapedModel());
-	}
-
-	@Override
-	public String toString() {
-		return _backgroundTask.toString();
-	}
-
-	@Override
-	public BackgroundTask toUnescapedModel() {
-		return new BackgroundTaskWrapper(_backgroundTask.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _backgroundTask.toXmlString();
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-
-		if (!(obj instanceof BackgroundTaskWrapper)) {
-			return false;
-		}
-
-		BackgroundTaskWrapper backgroundTaskWrapper = (BackgroundTaskWrapper)obj;
-
-		if (Objects.equals(_backgroundTask,
-					backgroundTaskWrapper._backgroundTask)) {
-			return true;
-		}
-
-		return false;
-	}
-
-	@Override
-	public BackgroundTask getWrappedModel() {
-		return _backgroundTask;
-	}
-
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _backgroundTask.isEntityCacheEnabled();
-	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _backgroundTask.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_backgroundTask.resetOriginalValues();
-	}
-
-	private final BackgroundTask _backgroundTask;
 }

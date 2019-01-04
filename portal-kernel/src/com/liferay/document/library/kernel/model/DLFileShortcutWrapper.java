@@ -16,19 +16,14 @@ package com.liferay.document.library.kernel.model;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
-
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 
 import com.liferay.portal.kernel.model.ModelWrapper;
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -40,20 +35,10 @@ import java.util.Objects;
  * @generated
  */
 @ProviderType
-public class DLFileShortcutWrapper implements DLFileShortcut,
-	ModelWrapper<DLFileShortcut> {
+public class DLFileShortcutWrapper extends BaseModelWrapper<DLFileShortcut>
+	implements DLFileShortcut, ModelWrapper<DLFileShortcut> {
 	public DLFileShortcutWrapper(DLFileShortcut dlFileShortcut) {
-		_dlFileShortcut = dlFileShortcut;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return DLFileShortcut.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return DLFileShortcut.class.getName();
+		super(dlFileShortcut);
 	}
 
 	@Override
@@ -196,17 +181,7 @@ public class DLFileShortcutWrapper implements DLFileShortcut,
 	@Override
 	public String buildTreePath()
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _dlFileShortcut.buildTreePath();
-	}
-
-	@Override
-	public Object clone() {
-		return new DLFileShortcutWrapper((DLFileShortcut)_dlFileShortcut.clone());
-	}
-
-	@Override
-	public int compareTo(DLFileShortcut dlFileShortcut) {
-		return _dlFileShortcut.compareTo(dlFileShortcut);
+		return model.buildTreePath();
 	}
 
 	/**
@@ -216,7 +191,7 @@ public class DLFileShortcutWrapper implements DLFileShortcut,
 	*/
 	@Override
 	public boolean getActive() {
-		return _dlFileShortcut.getActive();
+		return model.getActive();
 	}
 
 	/**
@@ -226,7 +201,7 @@ public class DLFileShortcutWrapper implements DLFileShortcut,
 	*/
 	@Override
 	public long getCompanyId() {
-		return _dlFileShortcut.getCompanyId();
+		return model.getCompanyId();
 	}
 
 	/**
@@ -236,18 +211,13 @@ public class DLFileShortcutWrapper implements DLFileShortcut,
 	*/
 	@Override
 	public Date getCreateDate() {
-		return _dlFileShortcut.getCreateDate();
+		return model.getCreateDate();
 	}
 
 	@Override
 	public DLFolder getDLFolder()
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _dlFileShortcut.getDLFolder();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _dlFileShortcut.getExpandoBridge();
+		return model.getDLFolder();
 	}
 
 	/**
@@ -257,19 +227,19 @@ public class DLFileShortcutWrapper implements DLFileShortcut,
 	*/
 	@Override
 	public long getFileShortcutId() {
-		return _dlFileShortcut.getFileShortcutId();
+		return model.getFileShortcutId();
 	}
 
 	@Override
 	public com.liferay.portal.kernel.repository.model.FileVersion getFileVersion()
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _dlFileShortcut.getFileVersion();
+		return model.getFileVersion();
 	}
 
 	@Override
 	public com.liferay.portal.kernel.repository.model.Folder getFolder()
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _dlFileShortcut.getFolder();
+		return model.getFolder();
 	}
 
 	/**
@@ -279,7 +249,7 @@ public class DLFileShortcutWrapper implements DLFileShortcut,
 	*/
 	@Override
 	public long getFolderId() {
-		return _dlFileShortcut.getFolderId();
+		return model.getFolderId();
 	}
 
 	/**
@@ -289,7 +259,7 @@ public class DLFileShortcutWrapper implements DLFileShortcut,
 	*/
 	@Override
 	public long getGroupId() {
-		return _dlFileShortcut.getGroupId();
+		return model.getGroupId();
 	}
 
 	/**
@@ -299,7 +269,7 @@ public class DLFileShortcutWrapper implements DLFileShortcut,
 	*/
 	@Override
 	public Date getLastPublishDate() {
-		return _dlFileShortcut.getLastPublishDate();
+		return model.getLastPublishDate();
 	}
 
 	/**
@@ -309,7 +279,7 @@ public class DLFileShortcutWrapper implements DLFileShortcut,
 	*/
 	@Override
 	public Date getModifiedDate() {
-		return _dlFileShortcut.getModifiedDate();
+		return model.getModifiedDate();
 	}
 
 	/**
@@ -319,12 +289,7 @@ public class DLFileShortcutWrapper implements DLFileShortcut,
 	*/
 	@Override
 	public long getPrimaryKey() {
-		return _dlFileShortcut.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _dlFileShortcut.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	/**
@@ -334,7 +299,7 @@ public class DLFileShortcutWrapper implements DLFileShortcut,
 	*/
 	@Override
 	public long getRepositoryId() {
-		return _dlFileShortcut.getRepositoryId();
+		return model.getRepositoryId();
 	}
 
 	/**
@@ -344,7 +309,7 @@ public class DLFileShortcutWrapper implements DLFileShortcut,
 	*/
 	@Override
 	public int getStatus() {
-		return _dlFileShortcut.getStatus();
+		return model.getStatus();
 	}
 
 	/**
@@ -354,7 +319,7 @@ public class DLFileShortcutWrapper implements DLFileShortcut,
 	*/
 	@Override
 	public long getStatusByUserId() {
-		return _dlFileShortcut.getStatusByUserId();
+		return model.getStatusByUserId();
 	}
 
 	/**
@@ -364,7 +329,7 @@ public class DLFileShortcutWrapper implements DLFileShortcut,
 	*/
 	@Override
 	public String getStatusByUserName() {
-		return _dlFileShortcut.getStatusByUserName();
+		return model.getStatusByUserName();
 	}
 
 	/**
@@ -374,7 +339,7 @@ public class DLFileShortcutWrapper implements DLFileShortcut,
 	*/
 	@Override
 	public String getStatusByUserUuid() {
-		return _dlFileShortcut.getStatusByUserUuid();
+		return model.getStatusByUserUuid();
 	}
 
 	/**
@@ -384,7 +349,7 @@ public class DLFileShortcutWrapper implements DLFileShortcut,
 	*/
 	@Override
 	public Date getStatusDate() {
-		return _dlFileShortcut.getStatusDate();
+		return model.getStatusDate();
 	}
 
 	/**
@@ -394,12 +359,12 @@ public class DLFileShortcutWrapper implements DLFileShortcut,
 	*/
 	@Override
 	public long getToFileEntryId() {
-		return _dlFileShortcut.getToFileEntryId();
+		return model.getToFileEntryId();
 	}
 
 	@Override
 	public String getToTitle() {
-		return _dlFileShortcut.getToTitle();
+		return model.getToTitle();
 	}
 
 	/**
@@ -410,7 +375,7 @@ public class DLFileShortcutWrapper implements DLFileShortcut,
 	@Override
 	public com.liferay.trash.kernel.model.TrashEntry getTrashEntry()
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _dlFileShortcut.getTrashEntry();
+		return model.getTrashEntry();
 	}
 
 	/**
@@ -420,7 +385,7 @@ public class DLFileShortcutWrapper implements DLFileShortcut,
 	*/
 	@Override
 	public long getTrashEntryClassPK() {
-		return _dlFileShortcut.getTrashEntryClassPK();
+		return model.getTrashEntryClassPK();
 	}
 
 	/**
@@ -432,7 +397,7 @@ public class DLFileShortcutWrapper implements DLFileShortcut,
 	@Deprecated
 	@Override
 	public com.liferay.portal.kernel.trash.TrashHandler getTrashHandler() {
-		return _dlFileShortcut.getTrashHandler();
+		return model.getTrashHandler();
 	}
 
 	/**
@@ -442,7 +407,7 @@ public class DLFileShortcutWrapper implements DLFileShortcut,
 	*/
 	@Override
 	public String getTreePath() {
-		return _dlFileShortcut.getTreePath();
+		return model.getTreePath();
 	}
 
 	/**
@@ -452,7 +417,7 @@ public class DLFileShortcutWrapper implements DLFileShortcut,
 	*/
 	@Override
 	public long getUserId() {
-		return _dlFileShortcut.getUserId();
+		return model.getUserId();
 	}
 
 	/**
@@ -462,7 +427,7 @@ public class DLFileShortcutWrapper implements DLFileShortcut,
 	*/
 	@Override
 	public String getUserName() {
-		return _dlFileShortcut.getUserName();
+		return model.getUserName();
 	}
 
 	/**
@@ -472,7 +437,7 @@ public class DLFileShortcutWrapper implements DLFileShortcut,
 	*/
 	@Override
 	public String getUserUuid() {
-		return _dlFileShortcut.getUserUuid();
+		return model.getUserUuid();
 	}
 
 	/**
@@ -482,12 +447,7 @@ public class DLFileShortcutWrapper implements DLFileShortcut,
 	*/
 	@Override
 	public String getUuid() {
-		return _dlFileShortcut.getUuid();
-	}
-
-	@Override
-	public int hashCode() {
-		return _dlFileShortcut.hashCode();
+		return model.getUuid();
 	}
 
 	/**
@@ -497,7 +457,7 @@ public class DLFileShortcutWrapper implements DLFileShortcut,
 	*/
 	@Override
 	public boolean isActive() {
-		return _dlFileShortcut.isActive();
+		return model.isActive();
 	}
 
 	/**
@@ -507,12 +467,7 @@ public class DLFileShortcutWrapper implements DLFileShortcut,
 	*/
 	@Override
 	public boolean isApproved() {
-		return _dlFileShortcut.isApproved();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _dlFileShortcut.isCachedModel();
+		return model.isApproved();
 	}
 
 	/**
@@ -522,7 +477,7 @@ public class DLFileShortcutWrapper implements DLFileShortcut,
 	*/
 	@Override
 	public boolean isDenied() {
-		return _dlFileShortcut.isDenied();
+		return model.isDenied();
 	}
 
 	/**
@@ -532,12 +487,7 @@ public class DLFileShortcutWrapper implements DLFileShortcut,
 	*/
 	@Override
 	public boolean isDraft() {
-		return _dlFileShortcut.isDraft();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _dlFileShortcut.isEscapedModel();
+		return model.isDraft();
 	}
 
 	/**
@@ -547,7 +497,7 @@ public class DLFileShortcutWrapper implements DLFileShortcut,
 	*/
 	@Override
 	public boolean isExpired() {
-		return _dlFileShortcut.isExpired();
+		return model.isExpired();
 	}
 
 	/**
@@ -557,7 +507,7 @@ public class DLFileShortcutWrapper implements DLFileShortcut,
 	*/
 	@Override
 	public boolean isInactive() {
-		return _dlFileShortcut.isInactive();
+		return model.isInactive();
 	}
 
 	/**
@@ -567,12 +517,12 @@ public class DLFileShortcutWrapper implements DLFileShortcut,
 	*/
 	@Override
 	public boolean isIncomplete() {
-		return _dlFileShortcut.isIncomplete();
+		return model.isIncomplete();
 	}
 
 	@Override
 	public boolean isInHiddenFolder() {
-		return _dlFileShortcut.isInHiddenFolder();
+		return model.isInHiddenFolder();
 	}
 
 	/**
@@ -582,7 +532,7 @@ public class DLFileShortcutWrapper implements DLFileShortcut,
 	*/
 	@Override
 	public boolean isInTrash() {
-		return _dlFileShortcut.isInTrash();
+		return model.isInTrash();
 	}
 
 	/**
@@ -592,22 +542,17 @@ public class DLFileShortcutWrapper implements DLFileShortcut,
 	*/
 	@Override
 	public boolean isInTrashContainer() {
-		return _dlFileShortcut.isInTrashContainer();
+		return model.isInTrashContainer();
 	}
 
 	@Override
 	public boolean isInTrashExplicitly() {
-		return _dlFileShortcut.isInTrashExplicitly();
+		return model.isInTrashExplicitly();
 	}
 
 	@Override
 	public boolean isInTrashImplicitly() {
-		return _dlFileShortcut.isInTrashImplicitly();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _dlFileShortcut.isNew();
+		return model.isInTrashImplicitly();
 	}
 
 	/**
@@ -617,7 +562,7 @@ public class DLFileShortcutWrapper implements DLFileShortcut,
 	*/
 	@Override
 	public boolean isPending() {
-		return _dlFileShortcut.isPending();
+		return model.isPending();
 	}
 
 	/**
@@ -627,12 +572,12 @@ public class DLFileShortcutWrapper implements DLFileShortcut,
 	*/
 	@Override
 	public boolean isScheduled() {
-		return _dlFileShortcut.isScheduled();
+		return model.isScheduled();
 	}
 
 	@Override
 	public void persist() {
-		_dlFileShortcut.persist();
+		model.persist();
 	}
 
 	/**
@@ -642,12 +587,7 @@ public class DLFileShortcutWrapper implements DLFileShortcut,
 	*/
 	@Override
 	public void setActive(boolean active) {
-		_dlFileShortcut.setActive(active);
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_dlFileShortcut.setCachedModel(cachedModel);
+		model.setActive(active);
 	}
 
 	/**
@@ -657,7 +597,7 @@ public class DLFileShortcutWrapper implements DLFileShortcut,
 	*/
 	@Override
 	public void setCompanyId(long companyId) {
-		_dlFileShortcut.setCompanyId(companyId);
+		model.setCompanyId(companyId);
 	}
 
 	/**
@@ -667,23 +607,7 @@ public class DLFileShortcutWrapper implements DLFileShortcut,
 	*/
 	@Override
 	public void setCreateDate(Date createDate) {
-		_dlFileShortcut.setCreateDate(createDate);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-		_dlFileShortcut.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_dlFileShortcut.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_dlFileShortcut.setExpandoBridgeAttributes(serviceContext);
+		model.setCreateDate(createDate);
 	}
 
 	/**
@@ -693,7 +617,7 @@ public class DLFileShortcutWrapper implements DLFileShortcut,
 	*/
 	@Override
 	public void setFileShortcutId(long fileShortcutId) {
-		_dlFileShortcut.setFileShortcutId(fileShortcutId);
+		model.setFileShortcutId(fileShortcutId);
 	}
 
 	/**
@@ -703,7 +627,7 @@ public class DLFileShortcutWrapper implements DLFileShortcut,
 	*/
 	@Override
 	public void setFolderId(long folderId) {
-		_dlFileShortcut.setFolderId(folderId);
+		model.setFolderId(folderId);
 	}
 
 	/**
@@ -713,7 +637,7 @@ public class DLFileShortcutWrapper implements DLFileShortcut,
 	*/
 	@Override
 	public void setGroupId(long groupId) {
-		_dlFileShortcut.setGroupId(groupId);
+		model.setGroupId(groupId);
 	}
 
 	/**
@@ -723,7 +647,7 @@ public class DLFileShortcutWrapper implements DLFileShortcut,
 	*/
 	@Override
 	public void setLastPublishDate(Date lastPublishDate) {
-		_dlFileShortcut.setLastPublishDate(lastPublishDate);
+		model.setLastPublishDate(lastPublishDate);
 	}
 
 	/**
@@ -733,12 +657,7 @@ public class DLFileShortcutWrapper implements DLFileShortcut,
 	*/
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
-		_dlFileShortcut.setModifiedDate(modifiedDate);
-	}
-
-	@Override
-	public void setNew(boolean n) {
-		_dlFileShortcut.setNew(n);
+		model.setModifiedDate(modifiedDate);
 	}
 
 	/**
@@ -748,12 +667,7 @@ public class DLFileShortcutWrapper implements DLFileShortcut,
 	*/
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_dlFileShortcut.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_dlFileShortcut.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -763,7 +677,7 @@ public class DLFileShortcutWrapper implements DLFileShortcut,
 	*/
 	@Override
 	public void setRepositoryId(long repositoryId) {
-		_dlFileShortcut.setRepositoryId(repositoryId);
+		model.setRepositoryId(repositoryId);
 	}
 
 	/**
@@ -773,7 +687,7 @@ public class DLFileShortcutWrapper implements DLFileShortcut,
 	*/
 	@Override
 	public void setStatus(int status) {
-		_dlFileShortcut.setStatus(status);
+		model.setStatus(status);
 	}
 
 	/**
@@ -783,7 +697,7 @@ public class DLFileShortcutWrapper implements DLFileShortcut,
 	*/
 	@Override
 	public void setStatusByUserId(long statusByUserId) {
-		_dlFileShortcut.setStatusByUserId(statusByUserId);
+		model.setStatusByUserId(statusByUserId);
 	}
 
 	/**
@@ -793,7 +707,7 @@ public class DLFileShortcutWrapper implements DLFileShortcut,
 	*/
 	@Override
 	public void setStatusByUserName(String statusByUserName) {
-		_dlFileShortcut.setStatusByUserName(statusByUserName);
+		model.setStatusByUserName(statusByUserName);
 	}
 
 	/**
@@ -803,7 +717,7 @@ public class DLFileShortcutWrapper implements DLFileShortcut,
 	*/
 	@Override
 	public void setStatusByUserUuid(String statusByUserUuid) {
-		_dlFileShortcut.setStatusByUserUuid(statusByUserUuid);
+		model.setStatusByUserUuid(statusByUserUuid);
 	}
 
 	/**
@@ -813,7 +727,7 @@ public class DLFileShortcutWrapper implements DLFileShortcut,
 	*/
 	@Override
 	public void setStatusDate(Date statusDate) {
-		_dlFileShortcut.setStatusDate(statusDate);
+		model.setStatusDate(statusDate);
 	}
 
 	/**
@@ -823,7 +737,7 @@ public class DLFileShortcutWrapper implements DLFileShortcut,
 	*/
 	@Override
 	public void setToFileEntryId(long toFileEntryId) {
-		_dlFileShortcut.setToFileEntryId(toFileEntryId);
+		model.setToFileEntryId(toFileEntryId);
 	}
 
 	/**
@@ -833,7 +747,7 @@ public class DLFileShortcutWrapper implements DLFileShortcut,
 	*/
 	@Override
 	public void setTreePath(String treePath) {
-		_dlFileShortcut.setTreePath(treePath);
+		model.setTreePath(treePath);
 	}
 
 	/**
@@ -843,7 +757,7 @@ public class DLFileShortcutWrapper implements DLFileShortcut,
 	*/
 	@Override
 	public void setUserId(long userId) {
-		_dlFileShortcut.setUserId(userId);
+		model.setUserId(userId);
 	}
 
 	/**
@@ -853,7 +767,7 @@ public class DLFileShortcutWrapper implements DLFileShortcut,
 	*/
 	@Override
 	public void setUserName(String userName) {
-		_dlFileShortcut.setUserName(userName);
+		model.setUserName(userName);
 	}
 
 	/**
@@ -863,7 +777,7 @@ public class DLFileShortcutWrapper implements DLFileShortcut,
 	*/
 	@Override
 	public void setUserUuid(String userUuid) {
-		_dlFileShortcut.setUserUuid(userUuid);
+		model.setUserUuid(userUuid);
 	}
 
 	/**
@@ -873,83 +787,21 @@ public class DLFileShortcutWrapper implements DLFileShortcut,
 	*/
 	@Override
 	public void setUuid(String uuid) {
-		_dlFileShortcut.setUuid(uuid);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<DLFileShortcut> toCacheModel() {
-		return _dlFileShortcut.toCacheModel();
-	}
-
-	@Override
-	public DLFileShortcut toEscapedModel() {
-		return new DLFileShortcutWrapper(_dlFileShortcut.toEscapedModel());
-	}
-
-	@Override
-	public String toString() {
-		return _dlFileShortcut.toString();
-	}
-
-	@Override
-	public DLFileShortcut toUnescapedModel() {
-		return new DLFileShortcutWrapper(_dlFileShortcut.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _dlFileShortcut.toXmlString();
+		model.setUuid(uuid);
 	}
 
 	@Override
 	public void updateTreePath(String treePath) {
-		_dlFileShortcut.updateTreePath(treePath);
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-
-		if (!(obj instanceof DLFileShortcutWrapper)) {
-			return false;
-		}
-
-		DLFileShortcutWrapper dlFileShortcutWrapper = (DLFileShortcutWrapper)obj;
-
-		if (Objects.equals(_dlFileShortcut,
-					dlFileShortcutWrapper._dlFileShortcut)) {
-			return true;
-		}
-
-		return false;
+		model.updateTreePath(treePath);
 	}
 
 	@Override
 	public StagedModelType getStagedModelType() {
-		return _dlFileShortcut.getStagedModelType();
+		return model.getStagedModelType();
 	}
 
 	@Override
-	public DLFileShortcut getWrappedModel() {
-		return _dlFileShortcut;
+	protected DLFileShortcutWrapper wrap(DLFileShortcut dlFileShortcut) {
+		return new DLFileShortcutWrapper(dlFileShortcut);
 	}
-
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _dlFileShortcut.isEntityCacheEnabled();
-	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _dlFileShortcut.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_dlFileShortcut.resetOriginalValues();
-	}
-
-	private final DLFileShortcut _dlFileShortcut;
 }

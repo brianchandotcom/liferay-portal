@@ -16,17 +16,12 @@ package com.liferay.tasks.model;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
-
 import com.liferay.portal.kernel.model.ModelWrapper;
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -38,19 +33,10 @@ import java.util.Objects;
  * @generated
  */
 @ProviderType
-public class TasksEntryWrapper implements TasksEntry, ModelWrapper<TasksEntry> {
+public class TasksEntryWrapper extends BaseModelWrapper<TasksEntry>
+	implements TasksEntry, ModelWrapper<TasksEntry> {
 	public TasksEntryWrapper(TasksEntry tasksEntry) {
-		_tasksEntry = tasksEntry;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return TasksEntry.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return TasksEntry.class.getName();
+		super(tasksEntry);
 	}
 
 	@Override
@@ -163,18 +149,8 @@ public class TasksEntryWrapper implements TasksEntry, ModelWrapper<TasksEntry> {
 	}
 
 	@Override
-	public Object clone() {
-		return new TasksEntryWrapper((TasksEntry)_tasksEntry.clone());
-	}
-
-	@Override
-	public int compareTo(TasksEntry tasksEntry) {
-		return _tasksEntry.compareTo(tasksEntry);
-	}
-
-	@Override
 	public String getAssigneeFullName() {
-		return _tasksEntry.getAssigneeFullName();
+		return model.getAssigneeFullName();
 	}
 
 	/**
@@ -184,7 +160,7 @@ public class TasksEntryWrapper implements TasksEntry, ModelWrapper<TasksEntry> {
 	*/
 	@Override
 	public long getAssigneeUserId() {
-		return _tasksEntry.getAssigneeUserId();
+		return model.getAssigneeUserId();
 	}
 
 	/**
@@ -194,7 +170,7 @@ public class TasksEntryWrapper implements TasksEntry, ModelWrapper<TasksEntry> {
 	*/
 	@Override
 	public String getAssigneeUserUuid() {
-		return _tasksEntry.getAssigneeUserUuid();
+		return model.getAssigneeUserUuid();
 	}
 
 	/**
@@ -204,7 +180,7 @@ public class TasksEntryWrapper implements TasksEntry, ModelWrapper<TasksEntry> {
 	*/
 	@Override
 	public long getCompanyId() {
-		return _tasksEntry.getCompanyId();
+		return model.getCompanyId();
 	}
 
 	/**
@@ -214,7 +190,7 @@ public class TasksEntryWrapper implements TasksEntry, ModelWrapper<TasksEntry> {
 	*/
 	@Override
 	public Date getCreateDate() {
-		return _tasksEntry.getCreateDate();
+		return model.getCreateDate();
 	}
 
 	/**
@@ -224,12 +200,7 @@ public class TasksEntryWrapper implements TasksEntry, ModelWrapper<TasksEntry> {
 	*/
 	@Override
 	public Date getDueDate() {
-		return _tasksEntry.getDueDate();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _tasksEntry.getExpandoBridge();
+		return model.getDueDate();
 	}
 
 	/**
@@ -239,7 +210,7 @@ public class TasksEntryWrapper implements TasksEntry, ModelWrapper<TasksEntry> {
 	*/
 	@Override
 	public Date getFinishDate() {
-		return _tasksEntry.getFinishDate();
+		return model.getFinishDate();
 	}
 
 	/**
@@ -249,7 +220,7 @@ public class TasksEntryWrapper implements TasksEntry, ModelWrapper<TasksEntry> {
 	*/
 	@Override
 	public long getGroupId() {
-		return _tasksEntry.getGroupId();
+		return model.getGroupId();
 	}
 
 	/**
@@ -259,7 +230,7 @@ public class TasksEntryWrapper implements TasksEntry, ModelWrapper<TasksEntry> {
 	*/
 	@Override
 	public Date getModifiedDate() {
-		return _tasksEntry.getModifiedDate();
+		return model.getModifiedDate();
 	}
 
 	/**
@@ -269,12 +240,7 @@ public class TasksEntryWrapper implements TasksEntry, ModelWrapper<TasksEntry> {
 	*/
 	@Override
 	public long getPrimaryKey() {
-		return _tasksEntry.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _tasksEntry.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	/**
@@ -284,17 +250,17 @@ public class TasksEntryWrapper implements TasksEntry, ModelWrapper<TasksEntry> {
 	*/
 	@Override
 	public int getPriority() {
-		return _tasksEntry.getPriority();
+		return model.getPriority();
 	}
 
 	@Override
 	public String getPriorityLabel() {
-		return _tasksEntry.getPriorityLabel();
+		return model.getPriorityLabel();
 	}
 
 	@Override
 	public String getReporterFullName() {
-		return _tasksEntry.getReporterFullName();
+		return model.getReporterFullName();
 	}
 
 	/**
@@ -304,7 +270,7 @@ public class TasksEntryWrapper implements TasksEntry, ModelWrapper<TasksEntry> {
 	*/
 	@Override
 	public long getResolverUserId() {
-		return _tasksEntry.getResolverUserId();
+		return model.getResolverUserId();
 	}
 
 	/**
@@ -314,7 +280,7 @@ public class TasksEntryWrapper implements TasksEntry, ModelWrapper<TasksEntry> {
 	*/
 	@Override
 	public String getResolverUserUuid() {
-		return _tasksEntry.getResolverUserUuid();
+		return model.getResolverUserUuid();
 	}
 
 	/**
@@ -324,12 +290,12 @@ public class TasksEntryWrapper implements TasksEntry, ModelWrapper<TasksEntry> {
 	*/
 	@Override
 	public int getStatus() {
-		return _tasksEntry.getStatus();
+		return model.getStatus();
 	}
 
 	@Override
 	public String getStatusLabel() {
-		return _tasksEntry.getStatusLabel();
+		return model.getStatusLabel();
 	}
 
 	/**
@@ -339,7 +305,7 @@ public class TasksEntryWrapper implements TasksEntry, ModelWrapper<TasksEntry> {
 	*/
 	@Override
 	public long getTasksEntryId() {
-		return _tasksEntry.getTasksEntryId();
+		return model.getTasksEntryId();
 	}
 
 	/**
@@ -349,7 +315,7 @@ public class TasksEntryWrapper implements TasksEntry, ModelWrapper<TasksEntry> {
 	*/
 	@Override
 	public String getTitle() {
-		return _tasksEntry.getTitle();
+		return model.getTitle();
 	}
 
 	/**
@@ -359,7 +325,7 @@ public class TasksEntryWrapper implements TasksEntry, ModelWrapper<TasksEntry> {
 	*/
 	@Override
 	public long getUserId() {
-		return _tasksEntry.getUserId();
+		return model.getUserId();
 	}
 
 	/**
@@ -369,7 +335,7 @@ public class TasksEntryWrapper implements TasksEntry, ModelWrapper<TasksEntry> {
 	*/
 	@Override
 	public String getUserName() {
-		return _tasksEntry.getUserName();
+		return model.getUserName();
 	}
 
 	/**
@@ -379,32 +345,12 @@ public class TasksEntryWrapper implements TasksEntry, ModelWrapper<TasksEntry> {
 	*/
 	@Override
 	public String getUserUuid() {
-		return _tasksEntry.getUserUuid();
-	}
-
-	@Override
-	public int hashCode() {
-		return _tasksEntry.hashCode();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _tasksEntry.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _tasksEntry.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _tasksEntry.isNew();
+		return model.getUserUuid();
 	}
 
 	@Override
 	public void persist() {
-		_tasksEntry.persist();
+		model.persist();
 	}
 
 	/**
@@ -414,7 +360,7 @@ public class TasksEntryWrapper implements TasksEntry, ModelWrapper<TasksEntry> {
 	*/
 	@Override
 	public void setAssigneeUserId(long assigneeUserId) {
-		_tasksEntry.setAssigneeUserId(assigneeUserId);
+		model.setAssigneeUserId(assigneeUserId);
 	}
 
 	/**
@@ -424,12 +370,7 @@ public class TasksEntryWrapper implements TasksEntry, ModelWrapper<TasksEntry> {
 	*/
 	@Override
 	public void setAssigneeUserUuid(String assigneeUserUuid) {
-		_tasksEntry.setAssigneeUserUuid(assigneeUserUuid);
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_tasksEntry.setCachedModel(cachedModel);
+		model.setAssigneeUserUuid(assigneeUserUuid);
 	}
 
 	/**
@@ -439,7 +380,7 @@ public class TasksEntryWrapper implements TasksEntry, ModelWrapper<TasksEntry> {
 	*/
 	@Override
 	public void setCompanyId(long companyId) {
-		_tasksEntry.setCompanyId(companyId);
+		model.setCompanyId(companyId);
 	}
 
 	/**
@@ -449,7 +390,7 @@ public class TasksEntryWrapper implements TasksEntry, ModelWrapper<TasksEntry> {
 	*/
 	@Override
 	public void setCreateDate(Date createDate) {
-		_tasksEntry.setCreateDate(createDate);
+		model.setCreateDate(createDate);
 	}
 
 	/**
@@ -459,23 +400,7 @@ public class TasksEntryWrapper implements TasksEntry, ModelWrapper<TasksEntry> {
 	*/
 	@Override
 	public void setDueDate(Date dueDate) {
-		_tasksEntry.setDueDate(dueDate);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-		_tasksEntry.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_tasksEntry.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_tasksEntry.setExpandoBridgeAttributes(serviceContext);
+		model.setDueDate(dueDate);
 	}
 
 	/**
@@ -485,7 +410,7 @@ public class TasksEntryWrapper implements TasksEntry, ModelWrapper<TasksEntry> {
 	*/
 	@Override
 	public void setFinishDate(Date finishDate) {
-		_tasksEntry.setFinishDate(finishDate);
+		model.setFinishDate(finishDate);
 	}
 
 	/**
@@ -495,7 +420,7 @@ public class TasksEntryWrapper implements TasksEntry, ModelWrapper<TasksEntry> {
 	*/
 	@Override
 	public void setGroupId(long groupId) {
-		_tasksEntry.setGroupId(groupId);
+		model.setGroupId(groupId);
 	}
 
 	/**
@@ -505,12 +430,7 @@ public class TasksEntryWrapper implements TasksEntry, ModelWrapper<TasksEntry> {
 	*/
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
-		_tasksEntry.setModifiedDate(modifiedDate);
-	}
-
-	@Override
-	public void setNew(boolean n) {
-		_tasksEntry.setNew(n);
+		model.setModifiedDate(modifiedDate);
 	}
 
 	/**
@@ -520,12 +440,7 @@ public class TasksEntryWrapper implements TasksEntry, ModelWrapper<TasksEntry> {
 	*/
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_tasksEntry.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_tasksEntry.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -535,7 +450,7 @@ public class TasksEntryWrapper implements TasksEntry, ModelWrapper<TasksEntry> {
 	*/
 	@Override
 	public void setPriority(int priority) {
-		_tasksEntry.setPriority(priority);
+		model.setPriority(priority);
 	}
 
 	/**
@@ -545,7 +460,7 @@ public class TasksEntryWrapper implements TasksEntry, ModelWrapper<TasksEntry> {
 	*/
 	@Override
 	public void setResolverUserId(long resolverUserId) {
-		_tasksEntry.setResolverUserId(resolverUserId);
+		model.setResolverUserId(resolverUserId);
 	}
 
 	/**
@@ -555,7 +470,7 @@ public class TasksEntryWrapper implements TasksEntry, ModelWrapper<TasksEntry> {
 	*/
 	@Override
 	public void setResolverUserUuid(String resolverUserUuid) {
-		_tasksEntry.setResolverUserUuid(resolverUserUuid);
+		model.setResolverUserUuid(resolverUserUuid);
 	}
 
 	/**
@@ -565,7 +480,7 @@ public class TasksEntryWrapper implements TasksEntry, ModelWrapper<TasksEntry> {
 	*/
 	@Override
 	public void setStatus(int status) {
-		_tasksEntry.setStatus(status);
+		model.setStatus(status);
 	}
 
 	/**
@@ -575,7 +490,7 @@ public class TasksEntryWrapper implements TasksEntry, ModelWrapper<TasksEntry> {
 	*/
 	@Override
 	public void setTasksEntryId(long tasksEntryId) {
-		_tasksEntry.setTasksEntryId(tasksEntryId);
+		model.setTasksEntryId(tasksEntryId);
 	}
 
 	/**
@@ -585,7 +500,7 @@ public class TasksEntryWrapper implements TasksEntry, ModelWrapper<TasksEntry> {
 	*/
 	@Override
 	public void setTitle(String title) {
-		_tasksEntry.setTitle(title);
+		model.setTitle(title);
 	}
 
 	/**
@@ -595,7 +510,7 @@ public class TasksEntryWrapper implements TasksEntry, ModelWrapper<TasksEntry> {
 	*/
 	@Override
 	public void setUserId(long userId) {
-		_tasksEntry.setUserId(userId);
+		model.setUserId(userId);
 	}
 
 	/**
@@ -605,7 +520,7 @@ public class TasksEntryWrapper implements TasksEntry, ModelWrapper<TasksEntry> {
 	*/
 	@Override
 	public void setUserName(String userName) {
-		_tasksEntry.setUserName(userName);
+		model.setUserName(userName);
 	}
 
 	/**
@@ -615,72 +530,11 @@ public class TasksEntryWrapper implements TasksEntry, ModelWrapper<TasksEntry> {
 	*/
 	@Override
 	public void setUserUuid(String userUuid) {
-		_tasksEntry.setUserUuid(userUuid);
+		model.setUserUuid(userUuid);
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.CacheModel<TasksEntry> toCacheModel() {
-		return _tasksEntry.toCacheModel();
+	protected TasksEntryWrapper wrap(TasksEntry tasksEntry) {
+		return new TasksEntryWrapper(tasksEntry);
 	}
-
-	@Override
-	public TasksEntry toEscapedModel() {
-		return new TasksEntryWrapper(_tasksEntry.toEscapedModel());
-	}
-
-	@Override
-	public String toString() {
-		return _tasksEntry.toString();
-	}
-
-	@Override
-	public TasksEntry toUnescapedModel() {
-		return new TasksEntryWrapper(_tasksEntry.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _tasksEntry.toXmlString();
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-
-		if (!(obj instanceof TasksEntryWrapper)) {
-			return false;
-		}
-
-		TasksEntryWrapper tasksEntryWrapper = (TasksEntryWrapper)obj;
-
-		if (Objects.equals(_tasksEntry, tasksEntryWrapper._tasksEntry)) {
-			return true;
-		}
-
-		return false;
-	}
-
-	@Override
-	public TasksEntry getWrappedModel() {
-		return _tasksEntry;
-	}
-
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _tasksEntry.isEntityCacheEnabled();
-	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _tasksEntry.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_tasksEntry.resetOriginalValues();
-	}
-
-	private final TasksEntry _tasksEntry;
 }

@@ -16,15 +16,10 @@ package com.liferay.portal.kernel.model;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
-
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -36,21 +31,11 @@ import java.util.Objects;
  * @generated
  */
 @ProviderType
-public class RecentLayoutRevisionWrapper implements RecentLayoutRevision,
-	ModelWrapper<RecentLayoutRevision> {
+public class RecentLayoutRevisionWrapper extends BaseModelWrapper<RecentLayoutRevision>
+	implements RecentLayoutRevision, ModelWrapper<RecentLayoutRevision> {
 	public RecentLayoutRevisionWrapper(
 		RecentLayoutRevision recentLayoutRevision) {
-		_recentLayoutRevision = recentLayoutRevision;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return RecentLayoutRevision.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return RecentLayoutRevision.class.getName();
+		super(recentLayoutRevision);
 	}
 
 	@Override
@@ -121,16 +106,6 @@ public class RecentLayoutRevisionWrapper implements RecentLayoutRevision,
 		}
 	}
 
-	@Override
-	public Object clone() {
-		return new RecentLayoutRevisionWrapper((RecentLayoutRevision)_recentLayoutRevision.clone());
-	}
-
-	@Override
-	public int compareTo(RecentLayoutRevision recentLayoutRevision) {
-		return _recentLayoutRevision.compareTo(recentLayoutRevision);
-	}
-
 	/**
 	* Returns the company ID of this recent layout revision.
 	*
@@ -138,12 +113,7 @@ public class RecentLayoutRevisionWrapper implements RecentLayoutRevision,
 	*/
 	@Override
 	public long getCompanyId() {
-		return _recentLayoutRevision.getCompanyId();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _recentLayoutRevision.getExpandoBridge();
+		return model.getCompanyId();
 	}
 
 	/**
@@ -153,7 +123,7 @@ public class RecentLayoutRevisionWrapper implements RecentLayoutRevision,
 	*/
 	@Override
 	public long getGroupId() {
-		return _recentLayoutRevision.getGroupId();
+		return model.getGroupId();
 	}
 
 	/**
@@ -163,7 +133,7 @@ public class RecentLayoutRevisionWrapper implements RecentLayoutRevision,
 	*/
 	@Override
 	public long getLayoutRevisionId() {
-		return _recentLayoutRevision.getLayoutRevisionId();
+		return model.getLayoutRevisionId();
 	}
 
 	/**
@@ -173,7 +143,7 @@ public class RecentLayoutRevisionWrapper implements RecentLayoutRevision,
 	*/
 	@Override
 	public long getLayoutSetBranchId() {
-		return _recentLayoutRevision.getLayoutSetBranchId();
+		return model.getLayoutSetBranchId();
 	}
 
 	/**
@@ -183,7 +153,7 @@ public class RecentLayoutRevisionWrapper implements RecentLayoutRevision,
 	*/
 	@Override
 	public long getMvccVersion() {
-		return _recentLayoutRevision.getMvccVersion();
+		return model.getMvccVersion();
 	}
 
 	/**
@@ -193,7 +163,7 @@ public class RecentLayoutRevisionWrapper implements RecentLayoutRevision,
 	*/
 	@Override
 	public long getPlid() {
-		return _recentLayoutRevision.getPlid();
+		return model.getPlid();
 	}
 
 	/**
@@ -203,12 +173,7 @@ public class RecentLayoutRevisionWrapper implements RecentLayoutRevision,
 	*/
 	@Override
 	public long getPrimaryKey() {
-		return _recentLayoutRevision.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _recentLayoutRevision.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	/**
@@ -218,7 +183,7 @@ public class RecentLayoutRevisionWrapper implements RecentLayoutRevision,
 	*/
 	@Override
 	public long getRecentLayoutRevisionId() {
-		return _recentLayoutRevision.getRecentLayoutRevisionId();
+		return model.getRecentLayoutRevisionId();
 	}
 
 	/**
@@ -228,7 +193,7 @@ public class RecentLayoutRevisionWrapper implements RecentLayoutRevision,
 	*/
 	@Override
 	public long getUserId() {
-		return _recentLayoutRevision.getUserId();
+		return model.getUserId();
 	}
 
 	/**
@@ -238,37 +203,12 @@ public class RecentLayoutRevisionWrapper implements RecentLayoutRevision,
 	*/
 	@Override
 	public String getUserUuid() {
-		return _recentLayoutRevision.getUserUuid();
-	}
-
-	@Override
-	public int hashCode() {
-		return _recentLayoutRevision.hashCode();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _recentLayoutRevision.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _recentLayoutRevision.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _recentLayoutRevision.isNew();
+		return model.getUserUuid();
 	}
 
 	@Override
 	public void persist() {
-		_recentLayoutRevision.persist();
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_recentLayoutRevision.setCachedModel(cachedModel);
+		model.persist();
 	}
 
 	/**
@@ -278,22 +218,7 @@ public class RecentLayoutRevisionWrapper implements RecentLayoutRevision,
 	*/
 	@Override
 	public void setCompanyId(long companyId) {
-		_recentLayoutRevision.setCompanyId(companyId);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(BaseModel<?> baseModel) {
-		_recentLayoutRevision.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_recentLayoutRevision.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_recentLayoutRevision.setExpandoBridgeAttributes(serviceContext);
+		model.setCompanyId(companyId);
 	}
 
 	/**
@@ -303,7 +228,7 @@ public class RecentLayoutRevisionWrapper implements RecentLayoutRevision,
 	*/
 	@Override
 	public void setGroupId(long groupId) {
-		_recentLayoutRevision.setGroupId(groupId);
+		model.setGroupId(groupId);
 	}
 
 	/**
@@ -313,7 +238,7 @@ public class RecentLayoutRevisionWrapper implements RecentLayoutRevision,
 	*/
 	@Override
 	public void setLayoutRevisionId(long layoutRevisionId) {
-		_recentLayoutRevision.setLayoutRevisionId(layoutRevisionId);
+		model.setLayoutRevisionId(layoutRevisionId);
 	}
 
 	/**
@@ -323,7 +248,7 @@ public class RecentLayoutRevisionWrapper implements RecentLayoutRevision,
 	*/
 	@Override
 	public void setLayoutSetBranchId(long layoutSetBranchId) {
-		_recentLayoutRevision.setLayoutSetBranchId(layoutSetBranchId);
+		model.setLayoutSetBranchId(layoutSetBranchId);
 	}
 
 	/**
@@ -333,12 +258,7 @@ public class RecentLayoutRevisionWrapper implements RecentLayoutRevision,
 	*/
 	@Override
 	public void setMvccVersion(long mvccVersion) {
-		_recentLayoutRevision.setMvccVersion(mvccVersion);
-	}
-
-	@Override
-	public void setNew(boolean n) {
-		_recentLayoutRevision.setNew(n);
+		model.setMvccVersion(mvccVersion);
 	}
 
 	/**
@@ -348,7 +268,7 @@ public class RecentLayoutRevisionWrapper implements RecentLayoutRevision,
 	*/
 	@Override
 	public void setPlid(long plid) {
-		_recentLayoutRevision.setPlid(plid);
+		model.setPlid(plid);
 	}
 
 	/**
@@ -358,12 +278,7 @@ public class RecentLayoutRevisionWrapper implements RecentLayoutRevision,
 	*/
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_recentLayoutRevision.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_recentLayoutRevision.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -373,7 +288,7 @@ public class RecentLayoutRevisionWrapper implements RecentLayoutRevision,
 	*/
 	@Override
 	public void setRecentLayoutRevisionId(long recentLayoutRevisionId) {
-		_recentLayoutRevision.setRecentLayoutRevisionId(recentLayoutRevisionId);
+		model.setRecentLayoutRevisionId(recentLayoutRevisionId);
 	}
 
 	/**
@@ -383,7 +298,7 @@ public class RecentLayoutRevisionWrapper implements RecentLayoutRevision,
 	*/
 	@Override
 	public void setUserId(long userId) {
-		_recentLayoutRevision.setUserId(userId);
+		model.setUserId(userId);
 	}
 
 	/**
@@ -393,73 +308,12 @@ public class RecentLayoutRevisionWrapper implements RecentLayoutRevision,
 	*/
 	@Override
 	public void setUserUuid(String userUuid) {
-		_recentLayoutRevision.setUserUuid(userUuid);
+		model.setUserUuid(userUuid);
 	}
 
 	@Override
-	public CacheModel<RecentLayoutRevision> toCacheModel() {
-		return _recentLayoutRevision.toCacheModel();
+	protected RecentLayoutRevisionWrapper wrap(
+		RecentLayoutRevision recentLayoutRevision) {
+		return new RecentLayoutRevisionWrapper(recentLayoutRevision);
 	}
-
-	@Override
-	public RecentLayoutRevision toEscapedModel() {
-		return new RecentLayoutRevisionWrapper(_recentLayoutRevision.toEscapedModel());
-	}
-
-	@Override
-	public String toString() {
-		return _recentLayoutRevision.toString();
-	}
-
-	@Override
-	public RecentLayoutRevision toUnescapedModel() {
-		return new RecentLayoutRevisionWrapper(_recentLayoutRevision.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _recentLayoutRevision.toXmlString();
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-
-		if (!(obj instanceof RecentLayoutRevisionWrapper)) {
-			return false;
-		}
-
-		RecentLayoutRevisionWrapper recentLayoutRevisionWrapper = (RecentLayoutRevisionWrapper)obj;
-
-		if (Objects.equals(_recentLayoutRevision,
-					recentLayoutRevisionWrapper._recentLayoutRevision)) {
-			return true;
-		}
-
-		return false;
-	}
-
-	@Override
-	public RecentLayoutRevision getWrappedModel() {
-		return _recentLayoutRevision;
-	}
-
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _recentLayoutRevision.isEntityCacheEnabled();
-	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _recentLayoutRevision.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_recentLayoutRevision.resetOriginalValues();
-	}
-
-	private final RecentLayoutRevision _recentLayoutRevision;
 }

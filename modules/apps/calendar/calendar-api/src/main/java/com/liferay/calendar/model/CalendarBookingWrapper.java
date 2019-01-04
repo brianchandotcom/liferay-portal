@@ -16,19 +16,14 @@ package com.liferay.calendar.model;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
-
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 
 import com.liferay.portal.kernel.model.ModelWrapper;
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -40,20 +35,10 @@ import java.util.Objects;
  * @generated
  */
 @ProviderType
-public class CalendarBookingWrapper implements CalendarBooking,
-	ModelWrapper<CalendarBooking> {
+public class CalendarBookingWrapper extends BaseModelWrapper<CalendarBooking>
+	implements CalendarBooking, ModelWrapper<CalendarBooking> {
 	public CalendarBookingWrapper(CalendarBooking calendarBooking) {
-		_calendarBooking = calendarBooking;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return CalendarBooking.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return CalendarBooking.class.getName();
+		super(calendarBooking);
 	}
 
 	@Override
@@ -273,16 +258,6 @@ public class CalendarBookingWrapper implements CalendarBooking,
 		}
 	}
 
-	@Override
-	public Object clone() {
-		return new CalendarBookingWrapper((CalendarBooking)_calendarBooking.clone());
-	}
-
-	@Override
-	public int compareTo(CalendarBooking calendarBooking) {
-		return _calendarBooking.compareTo(calendarBooking);
-	}
-
 	/**
 	* Returns the all day of this calendar booking.
 	*
@@ -290,18 +265,18 @@ public class CalendarBookingWrapper implements CalendarBooking,
 	*/
 	@Override
 	public boolean getAllDay() {
-		return _calendarBooking.getAllDay();
+		return model.getAllDay();
 	}
 
 	@Override
 	public String[] getAvailableLanguageIds() {
-		return _calendarBooking.getAvailableLanguageIds();
+		return model.getAvailableLanguageIds();
 	}
 
 	@Override
 	public Calendar getCalendar()
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _calendarBooking.getCalendar();
+		return model.getCalendar();
 	}
 
 	/**
@@ -311,7 +286,7 @@ public class CalendarBookingWrapper implements CalendarBooking,
 	*/
 	@Override
 	public long getCalendarBookingId() {
-		return _calendarBooking.getCalendarBookingId();
+		return model.getCalendarBookingId();
 	}
 
 	/**
@@ -321,13 +296,13 @@ public class CalendarBookingWrapper implements CalendarBooking,
 	*/
 	@Override
 	public long getCalendarId() {
-		return _calendarBooking.getCalendarId();
+		return model.getCalendarId();
 	}
 
 	@Override
 	public CalendarResource getCalendarResource()
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _calendarBooking.getCalendarResource();
+		return model.getCalendarResource();
 	}
 
 	/**
@@ -337,12 +312,12 @@ public class CalendarBookingWrapper implements CalendarBooking,
 	*/
 	@Override
 	public long getCalendarResourceId() {
-		return _calendarBooking.getCalendarResourceId();
+		return model.getCalendarResourceId();
 	}
 
 	@Override
 	public java.util.List<CalendarBooking> getChildCalendarBookings() {
-		return _calendarBooking.getChildCalendarBookings();
+		return model.getChildCalendarBookings();
 	}
 
 	/**
@@ -352,7 +327,7 @@ public class CalendarBookingWrapper implements CalendarBooking,
 	*/
 	@Override
 	public long getCompanyId() {
-		return _calendarBooking.getCompanyId();
+		return model.getCompanyId();
 	}
 
 	/**
@@ -362,12 +337,12 @@ public class CalendarBookingWrapper implements CalendarBooking,
 	*/
 	@Override
 	public Date getCreateDate() {
-		return _calendarBooking.getCreateDate();
+		return model.getCreateDate();
 	}
 
 	@Override
 	public String getDefaultLanguageId() {
-		return _calendarBooking.getDefaultLanguageId();
+		return model.getDefaultLanguageId();
 	}
 
 	/**
@@ -377,7 +352,7 @@ public class CalendarBookingWrapper implements CalendarBooking,
 	*/
 	@Override
 	public String getDescription() {
-		return _calendarBooking.getDescription();
+		return model.getDescription();
 	}
 
 	/**
@@ -388,7 +363,7 @@ public class CalendarBookingWrapper implements CalendarBooking,
 	*/
 	@Override
 	public String getDescription(java.util.Locale locale) {
-		return _calendarBooking.getDescription(locale);
+		return model.getDescription(locale);
 	}
 
 	/**
@@ -400,7 +375,7 @@ public class CalendarBookingWrapper implements CalendarBooking,
 	*/
 	@Override
 	public String getDescription(java.util.Locale locale, boolean useDefault) {
-		return _calendarBooking.getDescription(locale, useDefault);
+		return model.getDescription(locale, useDefault);
 	}
 
 	/**
@@ -411,7 +386,7 @@ public class CalendarBookingWrapper implements CalendarBooking,
 	*/
 	@Override
 	public String getDescription(String languageId) {
-		return _calendarBooking.getDescription(languageId);
+		return model.getDescription(languageId);
 	}
 
 	/**
@@ -423,17 +398,17 @@ public class CalendarBookingWrapper implements CalendarBooking,
 	*/
 	@Override
 	public String getDescription(String languageId, boolean useDefault) {
-		return _calendarBooking.getDescription(languageId, useDefault);
+		return model.getDescription(languageId, useDefault);
 	}
 
 	@Override
 	public String getDescriptionCurrentLanguageId() {
-		return _calendarBooking.getDescriptionCurrentLanguageId();
+		return model.getDescriptionCurrentLanguageId();
 	}
 
 	@Override
 	public String getDescriptionCurrentValue() {
-		return _calendarBooking.getDescriptionCurrentValue();
+		return model.getDescriptionCurrentValue();
 	}
 
 	/**
@@ -443,12 +418,12 @@ public class CalendarBookingWrapper implements CalendarBooking,
 	*/
 	@Override
 	public Map<java.util.Locale, String> getDescriptionMap() {
-		return _calendarBooking.getDescriptionMap();
+		return model.getDescriptionMap();
 	}
 
 	@Override
 	public long getDuration() {
-		return _calendarBooking.getDuration();
+		return model.getDuration();
 	}
 
 	/**
@@ -458,12 +433,7 @@ public class CalendarBookingWrapper implements CalendarBooking,
 	*/
 	@Override
 	public long getEndTime() {
-		return _calendarBooking.getEndTime();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _calendarBooking.getExpandoBridge();
+		return model.getEndTime();
 	}
 
 	/**
@@ -473,12 +443,12 @@ public class CalendarBookingWrapper implements CalendarBooking,
 	*/
 	@Override
 	public long getFirstReminder() {
-		return _calendarBooking.getFirstReminder();
+		return model.getFirstReminder();
 	}
 
 	@Override
 	public com.liferay.calendar.notification.NotificationType getFirstReminderNotificationType() {
-		return _calendarBooking.getFirstReminderNotificationType();
+		return model.getFirstReminderNotificationType();
 	}
 
 	/**
@@ -488,7 +458,7 @@ public class CalendarBookingWrapper implements CalendarBooking,
 	*/
 	@Override
 	public String getFirstReminderType() {
-		return _calendarBooking.getFirstReminderType();
+		return model.getFirstReminderType();
 	}
 
 	/**
@@ -498,12 +468,12 @@ public class CalendarBookingWrapper implements CalendarBooking,
 	*/
 	@Override
 	public long getGroupId() {
-		return _calendarBooking.getGroupId();
+		return model.getGroupId();
 	}
 
 	@Override
 	public int getInstanceIndex() {
-		return _calendarBooking.getInstanceIndex();
+		return model.getInstanceIndex();
 	}
 
 	/**
@@ -513,7 +483,7 @@ public class CalendarBookingWrapper implements CalendarBooking,
 	*/
 	@Override
 	public Date getLastPublishDate() {
-		return _calendarBooking.getLastPublishDate();
+		return model.getLastPublishDate();
 	}
 
 	/**
@@ -523,7 +493,7 @@ public class CalendarBookingWrapper implements CalendarBooking,
 	*/
 	@Override
 	public String getLocation() {
-		return _calendarBooking.getLocation();
+		return model.getLocation();
 	}
 
 	/**
@@ -533,13 +503,13 @@ public class CalendarBookingWrapper implements CalendarBooking,
 	*/
 	@Override
 	public Date getModifiedDate() {
-		return _calendarBooking.getModifiedDate();
+		return model.getModifiedDate();
 	}
 
 	@Override
 	public CalendarBooking getParentCalendarBooking()
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _calendarBooking.getParentCalendarBooking();
+		return model.getParentCalendarBooking();
 	}
 
 	/**
@@ -549,7 +519,7 @@ public class CalendarBookingWrapper implements CalendarBooking,
 	*/
 	@Override
 	public long getParentCalendarBookingId() {
-		return _calendarBooking.getParentCalendarBookingId();
+		return model.getParentCalendarBookingId();
 	}
 
 	/**
@@ -559,12 +529,7 @@ public class CalendarBookingWrapper implements CalendarBooking,
 	*/
 	@Override
 	public long getPrimaryKey() {
-		return _calendarBooking.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _calendarBooking.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	/**
@@ -574,12 +539,12 @@ public class CalendarBookingWrapper implements CalendarBooking,
 	*/
 	@Override
 	public String getRecurrence() {
-		return _calendarBooking.getRecurrence();
+		return model.getRecurrence();
 	}
 
 	@Override
 	public com.liferay.calendar.recurrence.Recurrence getRecurrenceObj() {
-		return _calendarBooking.getRecurrenceObj();
+		return model.getRecurrenceObj();
 	}
 
 	/**
@@ -589,7 +554,7 @@ public class CalendarBookingWrapper implements CalendarBooking,
 	*/
 	@Override
 	public long getRecurringCalendarBookingId() {
-		return _calendarBooking.getRecurringCalendarBookingId();
+		return model.getRecurringCalendarBookingId();
 	}
 
 	/**
@@ -599,12 +564,12 @@ public class CalendarBookingWrapper implements CalendarBooking,
 	*/
 	@Override
 	public long getSecondReminder() {
-		return _calendarBooking.getSecondReminder();
+		return model.getSecondReminder();
 	}
 
 	@Override
 	public com.liferay.calendar.notification.NotificationType getSecondReminderNotificationType() {
-		return _calendarBooking.getSecondReminderNotificationType();
+		return model.getSecondReminderNotificationType();
 	}
 
 	/**
@@ -614,7 +579,7 @@ public class CalendarBookingWrapper implements CalendarBooking,
 	*/
 	@Override
 	public String getSecondReminderType() {
-		return _calendarBooking.getSecondReminderType();
+		return model.getSecondReminderType();
 	}
 
 	/**
@@ -624,7 +589,7 @@ public class CalendarBookingWrapper implements CalendarBooking,
 	*/
 	@Override
 	public long getStartTime() {
-		return _calendarBooking.getStartTime();
+		return model.getStartTime();
 	}
 
 	/**
@@ -634,7 +599,7 @@ public class CalendarBookingWrapper implements CalendarBooking,
 	*/
 	@Override
 	public int getStatus() {
-		return _calendarBooking.getStatus();
+		return model.getStatus();
 	}
 
 	/**
@@ -644,7 +609,7 @@ public class CalendarBookingWrapper implements CalendarBooking,
 	*/
 	@Override
 	public long getStatusByUserId() {
-		return _calendarBooking.getStatusByUserId();
+		return model.getStatusByUserId();
 	}
 
 	/**
@@ -654,7 +619,7 @@ public class CalendarBookingWrapper implements CalendarBooking,
 	*/
 	@Override
 	public String getStatusByUserName() {
-		return _calendarBooking.getStatusByUserName();
+		return model.getStatusByUserName();
 	}
 
 	/**
@@ -664,7 +629,7 @@ public class CalendarBookingWrapper implements CalendarBooking,
 	*/
 	@Override
 	public String getStatusByUserUuid() {
-		return _calendarBooking.getStatusByUserUuid();
+		return model.getStatusByUserUuid();
 	}
 
 	/**
@@ -674,12 +639,12 @@ public class CalendarBookingWrapper implements CalendarBooking,
 	*/
 	@Override
 	public Date getStatusDate() {
-		return _calendarBooking.getStatusDate();
+		return model.getStatusDate();
 	}
 
 	@Override
 	public java.util.TimeZone getTimeZone() {
-		return _calendarBooking.getTimeZone();
+		return model.getTimeZone();
 	}
 
 	/**
@@ -689,7 +654,7 @@ public class CalendarBookingWrapper implements CalendarBooking,
 	*/
 	@Override
 	public String getTitle() {
-		return _calendarBooking.getTitle();
+		return model.getTitle();
 	}
 
 	/**
@@ -700,7 +665,7 @@ public class CalendarBookingWrapper implements CalendarBooking,
 	*/
 	@Override
 	public String getTitle(java.util.Locale locale) {
-		return _calendarBooking.getTitle(locale);
+		return model.getTitle(locale);
 	}
 
 	/**
@@ -712,7 +677,7 @@ public class CalendarBookingWrapper implements CalendarBooking,
 	*/
 	@Override
 	public String getTitle(java.util.Locale locale, boolean useDefault) {
-		return _calendarBooking.getTitle(locale, useDefault);
+		return model.getTitle(locale, useDefault);
 	}
 
 	/**
@@ -723,7 +688,7 @@ public class CalendarBookingWrapper implements CalendarBooking,
 	*/
 	@Override
 	public String getTitle(String languageId) {
-		return _calendarBooking.getTitle(languageId);
+		return model.getTitle(languageId);
 	}
 
 	/**
@@ -735,17 +700,17 @@ public class CalendarBookingWrapper implements CalendarBooking,
 	*/
 	@Override
 	public String getTitle(String languageId, boolean useDefault) {
-		return _calendarBooking.getTitle(languageId, useDefault);
+		return model.getTitle(languageId, useDefault);
 	}
 
 	@Override
 	public String getTitleCurrentLanguageId() {
-		return _calendarBooking.getTitleCurrentLanguageId();
+		return model.getTitleCurrentLanguageId();
 	}
 
 	@Override
 	public String getTitleCurrentValue() {
-		return _calendarBooking.getTitleCurrentValue();
+		return model.getTitleCurrentValue();
 	}
 
 	/**
@@ -755,7 +720,7 @@ public class CalendarBookingWrapper implements CalendarBooking,
 	*/
 	@Override
 	public Map<java.util.Locale, String> getTitleMap() {
-		return _calendarBooking.getTitleMap();
+		return model.getTitleMap();
 	}
 
 	/**
@@ -766,7 +731,7 @@ public class CalendarBookingWrapper implements CalendarBooking,
 	@Override
 	public com.liferay.trash.kernel.model.TrashEntry getTrashEntry()
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _calendarBooking.getTrashEntry();
+		return model.getTrashEntry();
 	}
 
 	/**
@@ -776,7 +741,7 @@ public class CalendarBookingWrapper implements CalendarBooking,
 	*/
 	@Override
 	public long getTrashEntryClassPK() {
-		return _calendarBooking.getTrashEntryClassPK();
+		return model.getTrashEntryClassPK();
 	}
 
 	/**
@@ -788,7 +753,7 @@ public class CalendarBookingWrapper implements CalendarBooking,
 	@Deprecated
 	@Override
 	public com.liferay.portal.kernel.trash.TrashHandler getTrashHandler() {
-		return _calendarBooking.getTrashHandler();
+		return model.getTrashHandler();
 	}
 
 	/**
@@ -798,7 +763,7 @@ public class CalendarBookingWrapper implements CalendarBooking,
 	*/
 	@Override
 	public long getUserId() {
-		return _calendarBooking.getUserId();
+		return model.getUserId();
 	}
 
 	/**
@@ -808,7 +773,7 @@ public class CalendarBookingWrapper implements CalendarBooking,
 	*/
 	@Override
 	public String getUserName() {
-		return _calendarBooking.getUserName();
+		return model.getUserName();
 	}
 
 	/**
@@ -818,7 +783,7 @@ public class CalendarBookingWrapper implements CalendarBooking,
 	*/
 	@Override
 	public String getUserUuid() {
-		return _calendarBooking.getUserUuid();
+		return model.getUserUuid();
 	}
 
 	/**
@@ -828,7 +793,7 @@ public class CalendarBookingWrapper implements CalendarBooking,
 	*/
 	@Override
 	public String getUuid() {
-		return _calendarBooking.getUuid();
+		return model.getUuid();
 	}
 
 	/**
@@ -838,12 +803,7 @@ public class CalendarBookingWrapper implements CalendarBooking,
 	*/
 	@Override
 	public String getVEventUid() {
-		return _calendarBooking.getVEventUid();
-	}
-
-	@Override
-	public int hashCode() {
-		return _calendarBooking.hashCode();
+		return model.getVEventUid();
 	}
 
 	/**
@@ -853,7 +813,7 @@ public class CalendarBookingWrapper implements CalendarBooking,
 	*/
 	@Override
 	public boolean isAllDay() {
-		return _calendarBooking.isAllDay();
+		return model.isAllDay();
 	}
 
 	/**
@@ -863,12 +823,7 @@ public class CalendarBookingWrapper implements CalendarBooking,
 	*/
 	@Override
 	public boolean isApproved() {
-		return _calendarBooking.isApproved();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _calendarBooking.isCachedModel();
+		return model.isApproved();
 	}
 
 	/**
@@ -878,7 +833,7 @@ public class CalendarBookingWrapper implements CalendarBooking,
 	*/
 	@Override
 	public boolean isDenied() {
-		return _calendarBooking.isDenied();
+		return model.isDenied();
 	}
 
 	/**
@@ -888,12 +843,7 @@ public class CalendarBookingWrapper implements CalendarBooking,
 	*/
 	@Override
 	public boolean isDraft() {
-		return _calendarBooking.isDraft();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _calendarBooking.isEscapedModel();
+		return model.isDraft();
 	}
 
 	/**
@@ -903,7 +853,7 @@ public class CalendarBookingWrapper implements CalendarBooking,
 	*/
 	@Override
 	public boolean isExpired() {
-		return _calendarBooking.isExpired();
+		return model.isExpired();
 	}
 
 	/**
@@ -913,7 +863,7 @@ public class CalendarBookingWrapper implements CalendarBooking,
 	*/
 	@Override
 	public boolean isInactive() {
-		return _calendarBooking.isInactive();
+		return model.isInactive();
 	}
 
 	/**
@@ -923,7 +873,7 @@ public class CalendarBookingWrapper implements CalendarBooking,
 	*/
 	@Override
 	public boolean isIncomplete() {
-		return _calendarBooking.isIncomplete();
+		return model.isIncomplete();
 	}
 
 	/**
@@ -933,7 +883,7 @@ public class CalendarBookingWrapper implements CalendarBooking,
 	*/
 	@Override
 	public boolean isInTrash() {
-		return _calendarBooking.isInTrash();
+		return model.isInTrash();
 	}
 
 	/**
@@ -943,32 +893,27 @@ public class CalendarBookingWrapper implements CalendarBooking,
 	*/
 	@Override
 	public boolean isInTrashContainer() {
-		return _calendarBooking.isInTrashContainer();
+		return model.isInTrashContainer();
 	}
 
 	@Override
 	public boolean isInTrashExplicitly() {
-		return _calendarBooking.isInTrashExplicitly();
+		return model.isInTrashExplicitly();
 	}
 
 	@Override
 	public boolean isInTrashImplicitly() {
-		return _calendarBooking.isInTrashImplicitly();
+		return model.isInTrashImplicitly();
 	}
 
 	@Override
 	public boolean isMasterBooking() {
-		return _calendarBooking.isMasterBooking();
+		return model.isMasterBooking();
 	}
 
 	@Override
 	public boolean isMasterRecurringBooking() {
-		return _calendarBooking.isMasterRecurringBooking();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _calendarBooking.isNew();
+		return model.isMasterRecurringBooking();
 	}
 
 	/**
@@ -978,12 +923,12 @@ public class CalendarBookingWrapper implements CalendarBooking,
 	*/
 	@Override
 	public boolean isPending() {
-		return _calendarBooking.isPending();
+		return model.isPending();
 	}
 
 	@Override
 	public boolean isRecurring() {
-		return _calendarBooking.isRecurring();
+		return model.isRecurring();
 	}
 
 	/**
@@ -993,25 +938,25 @@ public class CalendarBookingWrapper implements CalendarBooking,
 	*/
 	@Override
 	public boolean isScheduled() {
-		return _calendarBooking.isScheduled();
+		return model.isScheduled();
 	}
 
 	@Override
 	public void persist() {
-		_calendarBooking.persist();
+		model.persist();
 	}
 
 	@Override
 	public void prepareLocalizedFieldsForImport()
 		throws com.liferay.portal.kernel.exception.LocaleException {
-		_calendarBooking.prepareLocalizedFieldsForImport();
+		model.prepareLocalizedFieldsForImport();
 	}
 
 	@Override
 	public void prepareLocalizedFieldsForImport(
 		java.util.Locale defaultImportLocale)
 		throws com.liferay.portal.kernel.exception.LocaleException {
-		_calendarBooking.prepareLocalizedFieldsForImport(defaultImportLocale);
+		model.prepareLocalizedFieldsForImport(defaultImportLocale);
 	}
 
 	/**
@@ -1021,12 +966,7 @@ public class CalendarBookingWrapper implements CalendarBooking,
 	*/
 	@Override
 	public void setAllDay(boolean allDay) {
-		_calendarBooking.setAllDay(allDay);
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_calendarBooking.setCachedModel(cachedModel);
+		model.setAllDay(allDay);
 	}
 
 	/**
@@ -1036,7 +976,7 @@ public class CalendarBookingWrapper implements CalendarBooking,
 	*/
 	@Override
 	public void setCalendarBookingId(long calendarBookingId) {
-		_calendarBooking.setCalendarBookingId(calendarBookingId);
+		model.setCalendarBookingId(calendarBookingId);
 	}
 
 	/**
@@ -1046,7 +986,7 @@ public class CalendarBookingWrapper implements CalendarBooking,
 	*/
 	@Override
 	public void setCalendarId(long calendarId) {
-		_calendarBooking.setCalendarId(calendarId);
+		model.setCalendarId(calendarId);
 	}
 
 	/**
@@ -1056,7 +996,7 @@ public class CalendarBookingWrapper implements CalendarBooking,
 	*/
 	@Override
 	public void setCalendarResourceId(long calendarResourceId) {
-		_calendarBooking.setCalendarResourceId(calendarResourceId);
+		model.setCalendarResourceId(calendarResourceId);
 	}
 
 	/**
@@ -1066,7 +1006,7 @@ public class CalendarBookingWrapper implements CalendarBooking,
 	*/
 	@Override
 	public void setCompanyId(long companyId) {
-		_calendarBooking.setCompanyId(companyId);
+		model.setCompanyId(companyId);
 	}
 
 	/**
@@ -1076,7 +1016,7 @@ public class CalendarBookingWrapper implements CalendarBooking,
 	*/
 	@Override
 	public void setCreateDate(Date createDate) {
-		_calendarBooking.setCreateDate(createDate);
+		model.setCreateDate(createDate);
 	}
 
 	/**
@@ -1086,7 +1026,7 @@ public class CalendarBookingWrapper implements CalendarBooking,
 	*/
 	@Override
 	public void setDescription(String description) {
-		_calendarBooking.setDescription(description);
+		model.setDescription(description);
 	}
 
 	/**
@@ -1097,7 +1037,7 @@ public class CalendarBookingWrapper implements CalendarBooking,
 	*/
 	@Override
 	public void setDescription(String description, java.util.Locale locale) {
-		_calendarBooking.setDescription(description, locale);
+		model.setDescription(description, locale);
 	}
 
 	/**
@@ -1110,12 +1050,12 @@ public class CalendarBookingWrapper implements CalendarBooking,
 	@Override
 	public void setDescription(String description, java.util.Locale locale,
 		java.util.Locale defaultLocale) {
-		_calendarBooking.setDescription(description, locale, defaultLocale);
+		model.setDescription(description, locale, defaultLocale);
 	}
 
 	@Override
 	public void setDescriptionCurrentLanguageId(String languageId) {
-		_calendarBooking.setDescriptionCurrentLanguageId(languageId);
+		model.setDescriptionCurrentLanguageId(languageId);
 	}
 
 	/**
@@ -1125,7 +1065,7 @@ public class CalendarBookingWrapper implements CalendarBooking,
 	*/
 	@Override
 	public void setDescriptionMap(Map<java.util.Locale, String> descriptionMap) {
-		_calendarBooking.setDescriptionMap(descriptionMap);
+		model.setDescriptionMap(descriptionMap);
 	}
 
 	/**
@@ -1138,7 +1078,7 @@ public class CalendarBookingWrapper implements CalendarBooking,
 	public void setDescriptionMap(
 		Map<java.util.Locale, String> descriptionMap,
 		java.util.Locale defaultLocale) {
-		_calendarBooking.setDescriptionMap(descriptionMap, defaultLocale);
+		model.setDescriptionMap(descriptionMap, defaultLocale);
 	}
 
 	/**
@@ -1148,23 +1088,7 @@ public class CalendarBookingWrapper implements CalendarBooking,
 	*/
 	@Override
 	public void setEndTime(long endTime) {
-		_calendarBooking.setEndTime(endTime);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-		_calendarBooking.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_calendarBooking.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_calendarBooking.setExpandoBridgeAttributes(serviceContext);
+		model.setEndTime(endTime);
 	}
 
 	/**
@@ -1174,7 +1098,7 @@ public class CalendarBookingWrapper implements CalendarBooking,
 	*/
 	@Override
 	public void setFirstReminder(long firstReminder) {
-		_calendarBooking.setFirstReminder(firstReminder);
+		model.setFirstReminder(firstReminder);
 	}
 
 	/**
@@ -1184,7 +1108,7 @@ public class CalendarBookingWrapper implements CalendarBooking,
 	*/
 	@Override
 	public void setFirstReminderType(String firstReminderType) {
-		_calendarBooking.setFirstReminderType(firstReminderType);
+		model.setFirstReminderType(firstReminderType);
 	}
 
 	/**
@@ -1194,12 +1118,12 @@ public class CalendarBookingWrapper implements CalendarBooking,
 	*/
 	@Override
 	public void setGroupId(long groupId) {
-		_calendarBooking.setGroupId(groupId);
+		model.setGroupId(groupId);
 	}
 
 	@Override
 	public void setInstanceIndex(int instanceIndex) {
-		_calendarBooking.setInstanceIndex(instanceIndex);
+		model.setInstanceIndex(instanceIndex);
 	}
 
 	/**
@@ -1209,7 +1133,7 @@ public class CalendarBookingWrapper implements CalendarBooking,
 	*/
 	@Override
 	public void setLastPublishDate(Date lastPublishDate) {
-		_calendarBooking.setLastPublishDate(lastPublishDate);
+		model.setLastPublishDate(lastPublishDate);
 	}
 
 	/**
@@ -1219,7 +1143,7 @@ public class CalendarBookingWrapper implements CalendarBooking,
 	*/
 	@Override
 	public void setLocation(String location) {
-		_calendarBooking.setLocation(location);
+		model.setLocation(location);
 	}
 
 	/**
@@ -1229,12 +1153,7 @@ public class CalendarBookingWrapper implements CalendarBooking,
 	*/
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
-		_calendarBooking.setModifiedDate(modifiedDate);
-	}
-
-	@Override
-	public void setNew(boolean n) {
-		_calendarBooking.setNew(n);
+		model.setModifiedDate(modifiedDate);
 	}
 
 	/**
@@ -1244,7 +1163,7 @@ public class CalendarBookingWrapper implements CalendarBooking,
 	*/
 	@Override
 	public void setParentCalendarBookingId(long parentCalendarBookingId) {
-		_calendarBooking.setParentCalendarBookingId(parentCalendarBookingId);
+		model.setParentCalendarBookingId(parentCalendarBookingId);
 	}
 
 	/**
@@ -1254,12 +1173,7 @@ public class CalendarBookingWrapper implements CalendarBooking,
 	*/
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_calendarBooking.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_calendarBooking.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -1269,7 +1183,7 @@ public class CalendarBookingWrapper implements CalendarBooking,
 	*/
 	@Override
 	public void setRecurrence(String recurrence) {
-		_calendarBooking.setRecurrence(recurrence);
+		model.setRecurrence(recurrence);
 	}
 
 	/**
@@ -1279,7 +1193,7 @@ public class CalendarBookingWrapper implements CalendarBooking,
 	*/
 	@Override
 	public void setRecurringCalendarBookingId(long recurringCalendarBookingId) {
-		_calendarBooking.setRecurringCalendarBookingId(recurringCalendarBookingId);
+		model.setRecurringCalendarBookingId(recurringCalendarBookingId);
 	}
 
 	/**
@@ -1289,7 +1203,7 @@ public class CalendarBookingWrapper implements CalendarBooking,
 	*/
 	@Override
 	public void setSecondReminder(long secondReminder) {
-		_calendarBooking.setSecondReminder(secondReminder);
+		model.setSecondReminder(secondReminder);
 	}
 
 	/**
@@ -1299,7 +1213,7 @@ public class CalendarBookingWrapper implements CalendarBooking,
 	*/
 	@Override
 	public void setSecondReminderType(String secondReminderType) {
-		_calendarBooking.setSecondReminderType(secondReminderType);
+		model.setSecondReminderType(secondReminderType);
 	}
 
 	/**
@@ -1309,7 +1223,7 @@ public class CalendarBookingWrapper implements CalendarBooking,
 	*/
 	@Override
 	public void setStartTime(long startTime) {
-		_calendarBooking.setStartTime(startTime);
+		model.setStartTime(startTime);
 	}
 
 	/**
@@ -1319,7 +1233,7 @@ public class CalendarBookingWrapper implements CalendarBooking,
 	*/
 	@Override
 	public void setStatus(int status) {
-		_calendarBooking.setStatus(status);
+		model.setStatus(status);
 	}
 
 	/**
@@ -1329,7 +1243,7 @@ public class CalendarBookingWrapper implements CalendarBooking,
 	*/
 	@Override
 	public void setStatusByUserId(long statusByUserId) {
-		_calendarBooking.setStatusByUserId(statusByUserId);
+		model.setStatusByUserId(statusByUserId);
 	}
 
 	/**
@@ -1339,7 +1253,7 @@ public class CalendarBookingWrapper implements CalendarBooking,
 	*/
 	@Override
 	public void setStatusByUserName(String statusByUserName) {
-		_calendarBooking.setStatusByUserName(statusByUserName);
+		model.setStatusByUserName(statusByUserName);
 	}
 
 	/**
@@ -1349,7 +1263,7 @@ public class CalendarBookingWrapper implements CalendarBooking,
 	*/
 	@Override
 	public void setStatusByUserUuid(String statusByUserUuid) {
-		_calendarBooking.setStatusByUserUuid(statusByUserUuid);
+		model.setStatusByUserUuid(statusByUserUuid);
 	}
 
 	/**
@@ -1359,7 +1273,7 @@ public class CalendarBookingWrapper implements CalendarBooking,
 	*/
 	@Override
 	public void setStatusDate(Date statusDate) {
-		_calendarBooking.setStatusDate(statusDate);
+		model.setStatusDate(statusDate);
 	}
 
 	/**
@@ -1369,7 +1283,7 @@ public class CalendarBookingWrapper implements CalendarBooking,
 	*/
 	@Override
 	public void setTitle(String title) {
-		_calendarBooking.setTitle(title);
+		model.setTitle(title);
 	}
 
 	/**
@@ -1380,7 +1294,7 @@ public class CalendarBookingWrapper implements CalendarBooking,
 	*/
 	@Override
 	public void setTitle(String title, java.util.Locale locale) {
-		_calendarBooking.setTitle(title, locale);
+		model.setTitle(title, locale);
 	}
 
 	/**
@@ -1393,12 +1307,12 @@ public class CalendarBookingWrapper implements CalendarBooking,
 	@Override
 	public void setTitle(String title, java.util.Locale locale,
 		java.util.Locale defaultLocale) {
-		_calendarBooking.setTitle(title, locale, defaultLocale);
+		model.setTitle(title, locale, defaultLocale);
 	}
 
 	@Override
 	public void setTitleCurrentLanguageId(String languageId) {
-		_calendarBooking.setTitleCurrentLanguageId(languageId);
+		model.setTitleCurrentLanguageId(languageId);
 	}
 
 	/**
@@ -1408,7 +1322,7 @@ public class CalendarBookingWrapper implements CalendarBooking,
 	*/
 	@Override
 	public void setTitleMap(Map<java.util.Locale, String> titleMap) {
-		_calendarBooking.setTitleMap(titleMap);
+		model.setTitleMap(titleMap);
 	}
 
 	/**
@@ -1420,7 +1334,7 @@ public class CalendarBookingWrapper implements CalendarBooking,
 	@Override
 	public void setTitleMap(Map<java.util.Locale, String> titleMap,
 		java.util.Locale defaultLocale) {
-		_calendarBooking.setTitleMap(titleMap, defaultLocale);
+		model.setTitleMap(titleMap, defaultLocale);
 	}
 
 	/**
@@ -1430,7 +1344,7 @@ public class CalendarBookingWrapper implements CalendarBooking,
 	*/
 	@Override
 	public void setUserId(long userId) {
-		_calendarBooking.setUserId(userId);
+		model.setUserId(userId);
 	}
 
 	/**
@@ -1440,7 +1354,7 @@ public class CalendarBookingWrapper implements CalendarBooking,
 	*/
 	@Override
 	public void setUserName(String userName) {
-		_calendarBooking.setUserName(userName);
+		model.setUserName(userName);
 	}
 
 	/**
@@ -1450,7 +1364,7 @@ public class CalendarBookingWrapper implements CalendarBooking,
 	*/
 	@Override
 	public void setUserUuid(String userUuid) {
-		_calendarBooking.setUserUuid(userUuid);
+		model.setUserUuid(userUuid);
 	}
 
 	/**
@@ -1460,7 +1374,7 @@ public class CalendarBookingWrapper implements CalendarBooking,
 	*/
 	@Override
 	public void setUuid(String uuid) {
-		_calendarBooking.setUuid(uuid);
+		model.setUuid(uuid);
 	}
 
 	/**
@@ -1470,78 +1384,16 @@ public class CalendarBookingWrapper implements CalendarBooking,
 	*/
 	@Override
 	public void setVEventUid(String vEventUid) {
-		_calendarBooking.setVEventUid(vEventUid);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<CalendarBooking> toCacheModel() {
-		return _calendarBooking.toCacheModel();
-	}
-
-	@Override
-	public CalendarBooking toEscapedModel() {
-		return new CalendarBookingWrapper(_calendarBooking.toEscapedModel());
-	}
-
-	@Override
-	public String toString() {
-		return _calendarBooking.toString();
-	}
-
-	@Override
-	public CalendarBooking toUnescapedModel() {
-		return new CalendarBookingWrapper(_calendarBooking.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _calendarBooking.toXmlString();
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-
-		if (!(obj instanceof CalendarBookingWrapper)) {
-			return false;
-		}
-
-		CalendarBookingWrapper calendarBookingWrapper = (CalendarBookingWrapper)obj;
-
-		if (Objects.equals(_calendarBooking,
-					calendarBookingWrapper._calendarBooking)) {
-			return true;
-		}
-
-		return false;
+		model.setVEventUid(vEventUid);
 	}
 
 	@Override
 	public StagedModelType getStagedModelType() {
-		return _calendarBooking.getStagedModelType();
+		return model.getStagedModelType();
 	}
 
 	@Override
-	public CalendarBooking getWrappedModel() {
-		return _calendarBooking;
+	protected CalendarBookingWrapper wrap(CalendarBooking calendarBooking) {
+		return new CalendarBookingWrapper(calendarBooking);
 	}
-
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _calendarBooking.isEntityCacheEnabled();
-	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _calendarBooking.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_calendarBooking.resetOriginalValues();
-	}
-
-	private final CalendarBooking _calendarBooking;
 }

@@ -16,19 +16,14 @@ package com.liferay.calendar.model;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
-
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 
 import com.liferay.portal.kernel.model.ModelWrapper;
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -40,19 +35,10 @@ import java.util.Objects;
  * @generated
  */
 @ProviderType
-public class CalendarWrapper implements Calendar, ModelWrapper<Calendar> {
+public class CalendarWrapper extends BaseModelWrapper<Calendar>
+	implements Calendar, ModelWrapper<Calendar> {
 	public CalendarWrapper(Calendar calendar) {
-		_calendar = calendar;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return Calendar.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return Calendar.class.getName();
+		super(calendar);
 	}
 
 	@Override
@@ -186,18 +172,8 @@ public class CalendarWrapper implements Calendar, ModelWrapper<Calendar> {
 	}
 
 	@Override
-	public Object clone() {
-		return new CalendarWrapper((Calendar)_calendar.clone());
-	}
-
-	@Override
-	public int compareTo(Calendar calendar) {
-		return _calendar.compareTo(calendar);
-	}
-
-	@Override
 	public String[] getAvailableLanguageIds() {
-		return _calendar.getAvailableLanguageIds();
+		return model.getAvailableLanguageIds();
 	}
 
 	/**
@@ -207,13 +183,13 @@ public class CalendarWrapper implements Calendar, ModelWrapper<Calendar> {
 	*/
 	@Override
 	public long getCalendarId() {
-		return _calendar.getCalendarId();
+		return model.getCalendarId();
 	}
 
 	@Override
 	public CalendarResource getCalendarResource()
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _calendar.getCalendarResource();
+		return model.getCalendarResource();
 	}
 
 	/**
@@ -223,7 +199,7 @@ public class CalendarWrapper implements Calendar, ModelWrapper<Calendar> {
 	*/
 	@Override
 	public long getCalendarResourceId() {
-		return _calendar.getCalendarResourceId();
+		return model.getCalendarResourceId();
 	}
 
 	/**
@@ -233,7 +209,7 @@ public class CalendarWrapper implements Calendar, ModelWrapper<Calendar> {
 	*/
 	@Override
 	public int getColor() {
-		return _calendar.getColor();
+		return model.getColor();
 	}
 
 	/**
@@ -243,7 +219,7 @@ public class CalendarWrapper implements Calendar, ModelWrapper<Calendar> {
 	*/
 	@Override
 	public long getCompanyId() {
-		return _calendar.getCompanyId();
+		return model.getCompanyId();
 	}
 
 	/**
@@ -253,7 +229,7 @@ public class CalendarWrapper implements Calendar, ModelWrapper<Calendar> {
 	*/
 	@Override
 	public Date getCreateDate() {
-		return _calendar.getCreateDate();
+		return model.getCreateDate();
 	}
 
 	/**
@@ -263,12 +239,12 @@ public class CalendarWrapper implements Calendar, ModelWrapper<Calendar> {
 	*/
 	@Override
 	public boolean getDefaultCalendar() {
-		return _calendar.getDefaultCalendar();
+		return model.getDefaultCalendar();
 	}
 
 	@Override
 	public String getDefaultLanguageId() {
-		return _calendar.getDefaultLanguageId();
+		return model.getDefaultLanguageId();
 	}
 
 	/**
@@ -278,7 +254,7 @@ public class CalendarWrapper implements Calendar, ModelWrapper<Calendar> {
 	*/
 	@Override
 	public String getDescription() {
-		return _calendar.getDescription();
+		return model.getDescription();
 	}
 
 	/**
@@ -289,7 +265,7 @@ public class CalendarWrapper implements Calendar, ModelWrapper<Calendar> {
 	*/
 	@Override
 	public String getDescription(java.util.Locale locale) {
-		return _calendar.getDescription(locale);
+		return model.getDescription(locale);
 	}
 
 	/**
@@ -301,7 +277,7 @@ public class CalendarWrapper implements Calendar, ModelWrapper<Calendar> {
 	*/
 	@Override
 	public String getDescription(java.util.Locale locale, boolean useDefault) {
-		return _calendar.getDescription(locale, useDefault);
+		return model.getDescription(locale, useDefault);
 	}
 
 	/**
@@ -312,7 +288,7 @@ public class CalendarWrapper implements Calendar, ModelWrapper<Calendar> {
 	*/
 	@Override
 	public String getDescription(String languageId) {
-		return _calendar.getDescription(languageId);
+		return model.getDescription(languageId);
 	}
 
 	/**
@@ -324,17 +300,17 @@ public class CalendarWrapper implements Calendar, ModelWrapper<Calendar> {
 	*/
 	@Override
 	public String getDescription(String languageId, boolean useDefault) {
-		return _calendar.getDescription(languageId, useDefault);
+		return model.getDescription(languageId, useDefault);
 	}
 
 	@Override
 	public String getDescriptionCurrentLanguageId() {
-		return _calendar.getDescriptionCurrentLanguageId();
+		return model.getDescriptionCurrentLanguageId();
 	}
 
 	@Override
 	public String getDescriptionCurrentValue() {
-		return _calendar.getDescriptionCurrentValue();
+		return model.getDescriptionCurrentValue();
 	}
 
 	/**
@@ -344,7 +320,7 @@ public class CalendarWrapper implements Calendar, ModelWrapper<Calendar> {
 	*/
 	@Override
 	public Map<java.util.Locale, String> getDescriptionMap() {
-		return _calendar.getDescriptionMap();
+		return model.getDescriptionMap();
 	}
 
 	/**
@@ -354,7 +330,7 @@ public class CalendarWrapper implements Calendar, ModelWrapper<Calendar> {
 	*/
 	@Override
 	public boolean getEnableComments() {
-		return _calendar.getEnableComments();
+		return model.getEnableComments();
 	}
 
 	/**
@@ -364,12 +340,7 @@ public class CalendarWrapper implements Calendar, ModelWrapper<Calendar> {
 	*/
 	@Override
 	public boolean getEnableRatings() {
-		return _calendar.getEnableRatings();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _calendar.getExpandoBridge();
+		return model.getEnableRatings();
 	}
 
 	/**
@@ -379,7 +350,7 @@ public class CalendarWrapper implements Calendar, ModelWrapper<Calendar> {
 	*/
 	@Override
 	public long getGroupId() {
-		return _calendar.getGroupId();
+		return model.getGroupId();
 	}
 
 	/**
@@ -389,7 +360,7 @@ public class CalendarWrapper implements Calendar, ModelWrapper<Calendar> {
 	*/
 	@Override
 	public Date getLastPublishDate() {
-		return _calendar.getLastPublishDate();
+		return model.getLastPublishDate();
 	}
 
 	/**
@@ -399,7 +370,7 @@ public class CalendarWrapper implements Calendar, ModelWrapper<Calendar> {
 	*/
 	@Override
 	public Date getModifiedDate() {
-		return _calendar.getModifiedDate();
+		return model.getModifiedDate();
 	}
 
 	/**
@@ -409,7 +380,7 @@ public class CalendarWrapper implements Calendar, ModelWrapper<Calendar> {
 	*/
 	@Override
 	public String getName() {
-		return _calendar.getName();
+		return model.getName();
 	}
 
 	/**
@@ -420,7 +391,7 @@ public class CalendarWrapper implements Calendar, ModelWrapper<Calendar> {
 	*/
 	@Override
 	public String getName(java.util.Locale locale) {
-		return _calendar.getName(locale);
+		return model.getName(locale);
 	}
 
 	/**
@@ -432,7 +403,7 @@ public class CalendarWrapper implements Calendar, ModelWrapper<Calendar> {
 	*/
 	@Override
 	public String getName(java.util.Locale locale, boolean useDefault) {
-		return _calendar.getName(locale, useDefault);
+		return model.getName(locale, useDefault);
 	}
 
 	/**
@@ -443,7 +414,7 @@ public class CalendarWrapper implements Calendar, ModelWrapper<Calendar> {
 	*/
 	@Override
 	public String getName(String languageId) {
-		return _calendar.getName(languageId);
+		return model.getName(languageId);
 	}
 
 	/**
@@ -455,17 +426,17 @@ public class CalendarWrapper implements Calendar, ModelWrapper<Calendar> {
 	*/
 	@Override
 	public String getName(String languageId, boolean useDefault) {
-		return _calendar.getName(languageId, useDefault);
+		return model.getName(languageId, useDefault);
 	}
 
 	@Override
 	public String getNameCurrentLanguageId() {
-		return _calendar.getNameCurrentLanguageId();
+		return model.getNameCurrentLanguageId();
 	}
 
 	@Override
 	public String getNameCurrentValue() {
-		return _calendar.getNameCurrentValue();
+		return model.getNameCurrentValue();
 	}
 
 	/**
@@ -475,7 +446,7 @@ public class CalendarWrapper implements Calendar, ModelWrapper<Calendar> {
 	*/
 	@Override
 	public Map<java.util.Locale, String> getNameMap() {
-		return _calendar.getNameMap();
+		return model.getNameMap();
 	}
 
 	/**
@@ -485,17 +456,12 @@ public class CalendarWrapper implements Calendar, ModelWrapper<Calendar> {
 	*/
 	@Override
 	public long getPrimaryKey() {
-		return _calendar.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _calendar.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	@Override
 	public java.util.TimeZone getTimeZone() {
-		return _calendar.getTimeZone();
+		return model.getTimeZone();
 	}
 
 	/**
@@ -505,7 +471,7 @@ public class CalendarWrapper implements Calendar, ModelWrapper<Calendar> {
 	*/
 	@Override
 	public String getTimeZoneId() {
-		return _calendar.getTimeZoneId();
+		return model.getTimeZoneId();
 	}
 
 	/**
@@ -515,7 +481,7 @@ public class CalendarWrapper implements Calendar, ModelWrapper<Calendar> {
 	*/
 	@Override
 	public long getUserId() {
-		return _calendar.getUserId();
+		return model.getUserId();
 	}
 
 	/**
@@ -525,7 +491,7 @@ public class CalendarWrapper implements Calendar, ModelWrapper<Calendar> {
 	*/
 	@Override
 	public String getUserName() {
-		return _calendar.getUserName();
+		return model.getUserName();
 	}
 
 	/**
@@ -535,7 +501,7 @@ public class CalendarWrapper implements Calendar, ModelWrapper<Calendar> {
 	*/
 	@Override
 	public String getUserUuid() {
-		return _calendar.getUserUuid();
+		return model.getUserUuid();
 	}
 
 	/**
@@ -545,17 +511,7 @@ public class CalendarWrapper implements Calendar, ModelWrapper<Calendar> {
 	*/
 	@Override
 	public String getUuid() {
-		return _calendar.getUuid();
-	}
-
-	@Override
-	public int hashCode() {
-		return _calendar.hashCode();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _calendar.isCachedModel();
+		return model.getUuid();
 	}
 
 	/**
@@ -565,7 +521,7 @@ public class CalendarWrapper implements Calendar, ModelWrapper<Calendar> {
 	*/
 	@Override
 	public boolean isDefaultCalendar() {
-		return _calendar.isDefaultCalendar();
+		return model.isDefaultCalendar();
 	}
 
 	/**
@@ -575,7 +531,7 @@ public class CalendarWrapper implements Calendar, ModelWrapper<Calendar> {
 	*/
 	@Override
 	public boolean isEnableComments() {
-		return _calendar.isEnableComments();
+		return model.isEnableComments();
 	}
 
 	/**
@@ -585,40 +541,25 @@ public class CalendarWrapper implements Calendar, ModelWrapper<Calendar> {
 	*/
 	@Override
 	public boolean isEnableRatings() {
-		return _calendar.isEnableRatings();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _calendar.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _calendar.isNew();
+		return model.isEnableRatings();
 	}
 
 	@Override
 	public void persist() {
-		_calendar.persist();
+		model.persist();
 	}
 
 	@Override
 	public void prepareLocalizedFieldsForImport()
 		throws com.liferay.portal.kernel.exception.LocaleException {
-		_calendar.prepareLocalizedFieldsForImport();
+		model.prepareLocalizedFieldsForImport();
 	}
 
 	@Override
 	public void prepareLocalizedFieldsForImport(
 		java.util.Locale defaultImportLocale)
 		throws com.liferay.portal.kernel.exception.LocaleException {
-		_calendar.prepareLocalizedFieldsForImport(defaultImportLocale);
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_calendar.setCachedModel(cachedModel);
+		model.prepareLocalizedFieldsForImport(defaultImportLocale);
 	}
 
 	/**
@@ -628,7 +569,7 @@ public class CalendarWrapper implements Calendar, ModelWrapper<Calendar> {
 	*/
 	@Override
 	public void setCalendarId(long calendarId) {
-		_calendar.setCalendarId(calendarId);
+		model.setCalendarId(calendarId);
 	}
 
 	/**
@@ -638,7 +579,7 @@ public class CalendarWrapper implements Calendar, ModelWrapper<Calendar> {
 	*/
 	@Override
 	public void setCalendarResourceId(long calendarResourceId) {
-		_calendar.setCalendarResourceId(calendarResourceId);
+		model.setCalendarResourceId(calendarResourceId);
 	}
 
 	/**
@@ -648,7 +589,7 @@ public class CalendarWrapper implements Calendar, ModelWrapper<Calendar> {
 	*/
 	@Override
 	public void setColor(int color) {
-		_calendar.setColor(color);
+		model.setColor(color);
 	}
 
 	/**
@@ -658,7 +599,7 @@ public class CalendarWrapper implements Calendar, ModelWrapper<Calendar> {
 	*/
 	@Override
 	public void setCompanyId(long companyId) {
-		_calendar.setCompanyId(companyId);
+		model.setCompanyId(companyId);
 	}
 
 	/**
@@ -668,7 +609,7 @@ public class CalendarWrapper implements Calendar, ModelWrapper<Calendar> {
 	*/
 	@Override
 	public void setCreateDate(Date createDate) {
-		_calendar.setCreateDate(createDate);
+		model.setCreateDate(createDate);
 	}
 
 	/**
@@ -678,7 +619,7 @@ public class CalendarWrapper implements Calendar, ModelWrapper<Calendar> {
 	*/
 	@Override
 	public void setDefaultCalendar(boolean defaultCalendar) {
-		_calendar.setDefaultCalendar(defaultCalendar);
+		model.setDefaultCalendar(defaultCalendar);
 	}
 
 	/**
@@ -688,7 +629,7 @@ public class CalendarWrapper implements Calendar, ModelWrapper<Calendar> {
 	*/
 	@Override
 	public void setDescription(String description) {
-		_calendar.setDescription(description);
+		model.setDescription(description);
 	}
 
 	/**
@@ -699,7 +640,7 @@ public class CalendarWrapper implements Calendar, ModelWrapper<Calendar> {
 	*/
 	@Override
 	public void setDescription(String description, java.util.Locale locale) {
-		_calendar.setDescription(description, locale);
+		model.setDescription(description, locale);
 	}
 
 	/**
@@ -712,12 +653,12 @@ public class CalendarWrapper implements Calendar, ModelWrapper<Calendar> {
 	@Override
 	public void setDescription(String description, java.util.Locale locale,
 		java.util.Locale defaultLocale) {
-		_calendar.setDescription(description, locale, defaultLocale);
+		model.setDescription(description, locale, defaultLocale);
 	}
 
 	@Override
 	public void setDescriptionCurrentLanguageId(String languageId) {
-		_calendar.setDescriptionCurrentLanguageId(languageId);
+		model.setDescriptionCurrentLanguageId(languageId);
 	}
 
 	/**
@@ -727,7 +668,7 @@ public class CalendarWrapper implements Calendar, ModelWrapper<Calendar> {
 	*/
 	@Override
 	public void setDescriptionMap(Map<java.util.Locale, String> descriptionMap) {
-		_calendar.setDescriptionMap(descriptionMap);
+		model.setDescriptionMap(descriptionMap);
 	}
 
 	/**
@@ -740,7 +681,7 @@ public class CalendarWrapper implements Calendar, ModelWrapper<Calendar> {
 	public void setDescriptionMap(
 		Map<java.util.Locale, String> descriptionMap,
 		java.util.Locale defaultLocale) {
-		_calendar.setDescriptionMap(descriptionMap, defaultLocale);
+		model.setDescriptionMap(descriptionMap, defaultLocale);
 	}
 
 	/**
@@ -750,7 +691,7 @@ public class CalendarWrapper implements Calendar, ModelWrapper<Calendar> {
 	*/
 	@Override
 	public void setEnableComments(boolean enableComments) {
-		_calendar.setEnableComments(enableComments);
+		model.setEnableComments(enableComments);
 	}
 
 	/**
@@ -760,23 +701,7 @@ public class CalendarWrapper implements Calendar, ModelWrapper<Calendar> {
 	*/
 	@Override
 	public void setEnableRatings(boolean enableRatings) {
-		_calendar.setEnableRatings(enableRatings);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-		_calendar.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_calendar.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_calendar.setExpandoBridgeAttributes(serviceContext);
+		model.setEnableRatings(enableRatings);
 	}
 
 	/**
@@ -786,7 +711,7 @@ public class CalendarWrapper implements Calendar, ModelWrapper<Calendar> {
 	*/
 	@Override
 	public void setGroupId(long groupId) {
-		_calendar.setGroupId(groupId);
+		model.setGroupId(groupId);
 	}
 
 	/**
@@ -796,7 +721,7 @@ public class CalendarWrapper implements Calendar, ModelWrapper<Calendar> {
 	*/
 	@Override
 	public void setLastPublishDate(Date lastPublishDate) {
-		_calendar.setLastPublishDate(lastPublishDate);
+		model.setLastPublishDate(lastPublishDate);
 	}
 
 	/**
@@ -806,7 +731,7 @@ public class CalendarWrapper implements Calendar, ModelWrapper<Calendar> {
 	*/
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
-		_calendar.setModifiedDate(modifiedDate);
+		model.setModifiedDate(modifiedDate);
 	}
 
 	/**
@@ -816,7 +741,7 @@ public class CalendarWrapper implements Calendar, ModelWrapper<Calendar> {
 	*/
 	@Override
 	public void setName(String name) {
-		_calendar.setName(name);
+		model.setName(name);
 	}
 
 	/**
@@ -827,7 +752,7 @@ public class CalendarWrapper implements Calendar, ModelWrapper<Calendar> {
 	*/
 	@Override
 	public void setName(String name, java.util.Locale locale) {
-		_calendar.setName(name, locale);
+		model.setName(name, locale);
 	}
 
 	/**
@@ -840,12 +765,12 @@ public class CalendarWrapper implements Calendar, ModelWrapper<Calendar> {
 	@Override
 	public void setName(String name, java.util.Locale locale,
 		java.util.Locale defaultLocale) {
-		_calendar.setName(name, locale, defaultLocale);
+		model.setName(name, locale, defaultLocale);
 	}
 
 	@Override
 	public void setNameCurrentLanguageId(String languageId) {
-		_calendar.setNameCurrentLanguageId(languageId);
+		model.setNameCurrentLanguageId(languageId);
 	}
 
 	/**
@@ -855,7 +780,7 @@ public class CalendarWrapper implements Calendar, ModelWrapper<Calendar> {
 	*/
 	@Override
 	public void setNameMap(Map<java.util.Locale, String> nameMap) {
-		_calendar.setNameMap(nameMap);
+		model.setNameMap(nameMap);
 	}
 
 	/**
@@ -867,12 +792,7 @@ public class CalendarWrapper implements Calendar, ModelWrapper<Calendar> {
 	@Override
 	public void setNameMap(Map<java.util.Locale, String> nameMap,
 		java.util.Locale defaultLocale) {
-		_calendar.setNameMap(nameMap, defaultLocale);
-	}
-
-	@Override
-	public void setNew(boolean n) {
-		_calendar.setNew(n);
+		model.setNameMap(nameMap, defaultLocale);
 	}
 
 	/**
@@ -882,12 +802,7 @@ public class CalendarWrapper implements Calendar, ModelWrapper<Calendar> {
 	*/
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_calendar.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_calendar.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -897,7 +812,7 @@ public class CalendarWrapper implements Calendar, ModelWrapper<Calendar> {
 	*/
 	@Override
 	public void setTimeZoneId(String timeZoneId) {
-		_calendar.setTimeZoneId(timeZoneId);
+		model.setTimeZoneId(timeZoneId);
 	}
 
 	/**
@@ -907,7 +822,7 @@ public class CalendarWrapper implements Calendar, ModelWrapper<Calendar> {
 	*/
 	@Override
 	public void setUserId(long userId) {
-		_calendar.setUserId(userId);
+		model.setUserId(userId);
 	}
 
 	/**
@@ -917,7 +832,7 @@ public class CalendarWrapper implements Calendar, ModelWrapper<Calendar> {
 	*/
 	@Override
 	public void setUserName(String userName) {
-		_calendar.setUserName(userName);
+		model.setUserName(userName);
 	}
 
 	/**
@@ -927,7 +842,7 @@ public class CalendarWrapper implements Calendar, ModelWrapper<Calendar> {
 	*/
 	@Override
 	public void setUserUuid(String userUuid) {
-		_calendar.setUserUuid(userUuid);
+		model.setUserUuid(userUuid);
 	}
 
 	/**
@@ -937,77 +852,16 @@ public class CalendarWrapper implements Calendar, ModelWrapper<Calendar> {
 	*/
 	@Override
 	public void setUuid(String uuid) {
-		_calendar.setUuid(uuid);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<Calendar> toCacheModel() {
-		return _calendar.toCacheModel();
-	}
-
-	@Override
-	public Calendar toEscapedModel() {
-		return new CalendarWrapper(_calendar.toEscapedModel());
-	}
-
-	@Override
-	public String toString() {
-		return _calendar.toString();
-	}
-
-	@Override
-	public Calendar toUnescapedModel() {
-		return new CalendarWrapper(_calendar.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _calendar.toXmlString();
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-
-		if (!(obj instanceof CalendarWrapper)) {
-			return false;
-		}
-
-		CalendarWrapper calendarWrapper = (CalendarWrapper)obj;
-
-		if (Objects.equals(_calendar, calendarWrapper._calendar)) {
-			return true;
-		}
-
-		return false;
+		model.setUuid(uuid);
 	}
 
 	@Override
 	public StagedModelType getStagedModelType() {
-		return _calendar.getStagedModelType();
+		return model.getStagedModelType();
 	}
 
 	@Override
-	public Calendar getWrappedModel() {
-		return _calendar;
+	protected CalendarWrapper wrap(Calendar calendar) {
+		return new CalendarWrapper(calendar);
 	}
-
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _calendar.isEntityCacheEnabled();
-	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _calendar.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_calendar.resetOriginalValues();
-	}
-
-	private final Calendar _calendar;
 }

@@ -16,16 +16,11 @@ package com.liferay.portal.kernel.model;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
-
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -39,20 +34,10 @@ import java.util.Objects;
  */
 @Deprecated
 @ProviderType
-public class SubscriptionWrapper implements Subscription,
-	ModelWrapper<Subscription> {
+public class SubscriptionWrapper extends BaseModelWrapper<Subscription>
+	implements Subscription, ModelWrapper<Subscription> {
 	public SubscriptionWrapper(Subscription subscription) {
-		_subscription = subscription;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return Subscription.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return Subscription.class.getName();
+		super(subscription);
 	}
 
 	@Override
@@ -143,16 +128,6 @@ public class SubscriptionWrapper implements Subscription,
 		}
 	}
 
-	@Override
-	public Object clone() {
-		return new SubscriptionWrapper((Subscription)_subscription.clone());
-	}
-
-	@Override
-	public int compareTo(Subscription subscription) {
-		return _subscription.compareTo(subscription);
-	}
-
 	/**
 	* Returns the fully qualified class name of this subscription.
 	*
@@ -160,7 +135,7 @@ public class SubscriptionWrapper implements Subscription,
 	*/
 	@Override
 	public String getClassName() {
-		return _subscription.getClassName();
+		return model.getClassName();
 	}
 
 	/**
@@ -170,7 +145,7 @@ public class SubscriptionWrapper implements Subscription,
 	*/
 	@Override
 	public long getClassNameId() {
-		return _subscription.getClassNameId();
+		return model.getClassNameId();
 	}
 
 	/**
@@ -180,7 +155,7 @@ public class SubscriptionWrapper implements Subscription,
 	*/
 	@Override
 	public long getClassPK() {
-		return _subscription.getClassPK();
+		return model.getClassPK();
 	}
 
 	/**
@@ -190,7 +165,7 @@ public class SubscriptionWrapper implements Subscription,
 	*/
 	@Override
 	public long getCompanyId() {
-		return _subscription.getCompanyId();
+		return model.getCompanyId();
 	}
 
 	/**
@@ -200,12 +175,7 @@ public class SubscriptionWrapper implements Subscription,
 	*/
 	@Override
 	public Date getCreateDate() {
-		return _subscription.getCreateDate();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _subscription.getExpandoBridge();
+		return model.getCreateDate();
 	}
 
 	/**
@@ -215,7 +185,7 @@ public class SubscriptionWrapper implements Subscription,
 	*/
 	@Override
 	public String getFrequency() {
-		return _subscription.getFrequency();
+		return model.getFrequency();
 	}
 
 	/**
@@ -225,7 +195,7 @@ public class SubscriptionWrapper implements Subscription,
 	*/
 	@Override
 	public long getGroupId() {
-		return _subscription.getGroupId();
+		return model.getGroupId();
 	}
 
 	/**
@@ -235,7 +205,7 @@ public class SubscriptionWrapper implements Subscription,
 	*/
 	@Override
 	public Date getModifiedDate() {
-		return _subscription.getModifiedDate();
+		return model.getModifiedDate();
 	}
 
 	/**
@@ -245,7 +215,7 @@ public class SubscriptionWrapper implements Subscription,
 	*/
 	@Override
 	public long getMvccVersion() {
-		return _subscription.getMvccVersion();
+		return model.getMvccVersion();
 	}
 
 	/**
@@ -255,12 +225,7 @@ public class SubscriptionWrapper implements Subscription,
 	*/
 	@Override
 	public long getPrimaryKey() {
-		return _subscription.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _subscription.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	/**
@@ -270,7 +235,7 @@ public class SubscriptionWrapper implements Subscription,
 	*/
 	@Override
 	public long getSubscriptionId() {
-		return _subscription.getSubscriptionId();
+		return model.getSubscriptionId();
 	}
 
 	/**
@@ -280,7 +245,7 @@ public class SubscriptionWrapper implements Subscription,
 	*/
 	@Override
 	public long getUserId() {
-		return _subscription.getUserId();
+		return model.getUserId();
 	}
 
 	/**
@@ -290,7 +255,7 @@ public class SubscriptionWrapper implements Subscription,
 	*/
 	@Override
 	public String getUserName() {
-		return _subscription.getUserName();
+		return model.getUserName();
 	}
 
 	/**
@@ -300,42 +265,17 @@ public class SubscriptionWrapper implements Subscription,
 	*/
 	@Override
 	public String getUserUuid() {
-		return _subscription.getUserUuid();
-	}
-
-	@Override
-	public int hashCode() {
-		return _subscription.hashCode();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _subscription.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _subscription.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _subscription.isNew();
+		return model.getUserUuid();
 	}
 
 	@Override
 	public void persist() {
-		_subscription.persist();
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_subscription.setCachedModel(cachedModel);
+		model.persist();
 	}
 
 	@Override
 	public void setClassName(String className) {
-		_subscription.setClassName(className);
+		model.setClassName(className);
 	}
 
 	/**
@@ -345,7 +285,7 @@ public class SubscriptionWrapper implements Subscription,
 	*/
 	@Override
 	public void setClassNameId(long classNameId) {
-		_subscription.setClassNameId(classNameId);
+		model.setClassNameId(classNameId);
 	}
 
 	/**
@@ -355,7 +295,7 @@ public class SubscriptionWrapper implements Subscription,
 	*/
 	@Override
 	public void setClassPK(long classPK) {
-		_subscription.setClassPK(classPK);
+		model.setClassPK(classPK);
 	}
 
 	/**
@@ -365,7 +305,7 @@ public class SubscriptionWrapper implements Subscription,
 	*/
 	@Override
 	public void setCompanyId(long companyId) {
-		_subscription.setCompanyId(companyId);
+		model.setCompanyId(companyId);
 	}
 
 	/**
@@ -375,22 +315,7 @@ public class SubscriptionWrapper implements Subscription,
 	*/
 	@Override
 	public void setCreateDate(Date createDate) {
-		_subscription.setCreateDate(createDate);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(BaseModel<?> baseModel) {
-		_subscription.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_subscription.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_subscription.setExpandoBridgeAttributes(serviceContext);
+		model.setCreateDate(createDate);
 	}
 
 	/**
@@ -400,7 +325,7 @@ public class SubscriptionWrapper implements Subscription,
 	*/
 	@Override
 	public void setFrequency(String frequency) {
-		_subscription.setFrequency(frequency);
+		model.setFrequency(frequency);
 	}
 
 	/**
@@ -410,7 +335,7 @@ public class SubscriptionWrapper implements Subscription,
 	*/
 	@Override
 	public void setGroupId(long groupId) {
-		_subscription.setGroupId(groupId);
+		model.setGroupId(groupId);
 	}
 
 	/**
@@ -420,7 +345,7 @@ public class SubscriptionWrapper implements Subscription,
 	*/
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
-		_subscription.setModifiedDate(modifiedDate);
+		model.setModifiedDate(modifiedDate);
 	}
 
 	/**
@@ -430,12 +355,7 @@ public class SubscriptionWrapper implements Subscription,
 	*/
 	@Override
 	public void setMvccVersion(long mvccVersion) {
-		_subscription.setMvccVersion(mvccVersion);
-	}
-
-	@Override
-	public void setNew(boolean n) {
-		_subscription.setNew(n);
+		model.setMvccVersion(mvccVersion);
 	}
 
 	/**
@@ -445,12 +365,7 @@ public class SubscriptionWrapper implements Subscription,
 	*/
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_subscription.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_subscription.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -460,7 +375,7 @@ public class SubscriptionWrapper implements Subscription,
 	*/
 	@Override
 	public void setSubscriptionId(long subscriptionId) {
-		_subscription.setSubscriptionId(subscriptionId);
+		model.setSubscriptionId(subscriptionId);
 	}
 
 	/**
@@ -470,7 +385,7 @@ public class SubscriptionWrapper implements Subscription,
 	*/
 	@Override
 	public void setUserId(long userId) {
-		_subscription.setUserId(userId);
+		model.setUserId(userId);
 	}
 
 	/**
@@ -480,7 +395,7 @@ public class SubscriptionWrapper implements Subscription,
 	*/
 	@Override
 	public void setUserName(String userName) {
-		_subscription.setUserName(userName);
+		model.setUserName(userName);
 	}
 
 	/**
@@ -490,72 +405,11 @@ public class SubscriptionWrapper implements Subscription,
 	*/
 	@Override
 	public void setUserUuid(String userUuid) {
-		_subscription.setUserUuid(userUuid);
+		model.setUserUuid(userUuid);
 	}
 
 	@Override
-	public CacheModel<Subscription> toCacheModel() {
-		return _subscription.toCacheModel();
+	protected SubscriptionWrapper wrap(Subscription subscription) {
+		return new SubscriptionWrapper(subscription);
 	}
-
-	@Override
-	public Subscription toEscapedModel() {
-		return new SubscriptionWrapper(_subscription.toEscapedModel());
-	}
-
-	@Override
-	public String toString() {
-		return _subscription.toString();
-	}
-
-	@Override
-	public Subscription toUnescapedModel() {
-		return new SubscriptionWrapper(_subscription.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _subscription.toXmlString();
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-
-		if (!(obj instanceof SubscriptionWrapper)) {
-			return false;
-		}
-
-		SubscriptionWrapper subscriptionWrapper = (SubscriptionWrapper)obj;
-
-		if (Objects.equals(_subscription, subscriptionWrapper._subscription)) {
-			return true;
-		}
-
-		return false;
-	}
-
-	@Override
-	public Subscription getWrappedModel() {
-		return _subscription;
-	}
-
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _subscription.isEntityCacheEnabled();
-	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _subscription.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_subscription.resetOriginalValues();
-	}
-
-	private final Subscription _subscription;
 }

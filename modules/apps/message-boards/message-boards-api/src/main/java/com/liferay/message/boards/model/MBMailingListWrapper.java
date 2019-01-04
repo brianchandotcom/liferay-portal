@@ -16,19 +16,14 @@ package com.liferay.message.boards.model;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
-
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 
 import com.liferay.portal.kernel.model.ModelWrapper;
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -40,20 +35,10 @@ import java.util.Objects;
  * @generated
  */
 @ProviderType
-public class MBMailingListWrapper implements MBMailingList,
-	ModelWrapper<MBMailingList> {
+public class MBMailingListWrapper extends BaseModelWrapper<MBMailingList>
+	implements MBMailingList, ModelWrapper<MBMailingList> {
 	public MBMailingListWrapper(MBMailingList mbMailingList) {
-		_mbMailingList = mbMailingList;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return MBMailingList.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return MBMailingList.class.getName();
+		super(mbMailingList);
 	}
 
 	@Override
@@ -249,16 +234,6 @@ public class MBMailingListWrapper implements MBMailingList,
 		}
 	}
 
-	@Override
-	public Object clone() {
-		return new MBMailingListWrapper((MBMailingList)_mbMailingList.clone());
-	}
-
-	@Override
-	public int compareTo(MBMailingList mbMailingList) {
-		return _mbMailingList.compareTo(mbMailingList);
-	}
-
 	/**
 	* Returns the active of this message boards mailing list.
 	*
@@ -266,7 +241,7 @@ public class MBMailingListWrapper implements MBMailingList,
 	*/
 	@Override
 	public boolean getActive() {
-		return _mbMailingList.getActive();
+		return model.getActive();
 	}
 
 	/**
@@ -276,7 +251,7 @@ public class MBMailingListWrapper implements MBMailingList,
 	*/
 	@Override
 	public boolean getAllowAnonymous() {
-		return _mbMailingList.getAllowAnonymous();
+		return model.getAllowAnonymous();
 	}
 
 	/**
@@ -286,7 +261,7 @@ public class MBMailingListWrapper implements MBMailingList,
 	*/
 	@Override
 	public long getCategoryId() {
-		return _mbMailingList.getCategoryId();
+		return model.getCategoryId();
 	}
 
 	/**
@@ -296,7 +271,7 @@ public class MBMailingListWrapper implements MBMailingList,
 	*/
 	@Override
 	public long getCompanyId() {
-		return _mbMailingList.getCompanyId();
+		return model.getCompanyId();
 	}
 
 	/**
@@ -306,7 +281,7 @@ public class MBMailingListWrapper implements MBMailingList,
 	*/
 	@Override
 	public Date getCreateDate() {
-		return _mbMailingList.getCreateDate();
+		return model.getCreateDate();
 	}
 
 	/**
@@ -316,12 +291,7 @@ public class MBMailingListWrapper implements MBMailingList,
 	*/
 	@Override
 	public String getEmailAddress() {
-		return _mbMailingList.getEmailAddress();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _mbMailingList.getExpandoBridge();
+		return model.getEmailAddress();
 	}
 
 	/**
@@ -331,7 +301,7 @@ public class MBMailingListWrapper implements MBMailingList,
 	*/
 	@Override
 	public long getGroupId() {
-		return _mbMailingList.getGroupId();
+		return model.getGroupId();
 	}
 
 	/**
@@ -341,7 +311,7 @@ public class MBMailingListWrapper implements MBMailingList,
 	*/
 	@Override
 	public String getInPassword() {
-		return _mbMailingList.getInPassword();
+		return model.getInPassword();
 	}
 
 	/**
@@ -351,7 +321,7 @@ public class MBMailingListWrapper implements MBMailingList,
 	*/
 	@Override
 	public String getInProtocol() {
-		return _mbMailingList.getInProtocol();
+		return model.getInProtocol();
 	}
 
 	/**
@@ -361,7 +331,7 @@ public class MBMailingListWrapper implements MBMailingList,
 	*/
 	@Override
 	public int getInReadInterval() {
-		return _mbMailingList.getInReadInterval();
+		return model.getInReadInterval();
 	}
 
 	/**
@@ -371,7 +341,7 @@ public class MBMailingListWrapper implements MBMailingList,
 	*/
 	@Override
 	public String getInServerName() {
-		return _mbMailingList.getInServerName();
+		return model.getInServerName();
 	}
 
 	/**
@@ -381,7 +351,7 @@ public class MBMailingListWrapper implements MBMailingList,
 	*/
 	@Override
 	public int getInServerPort() {
-		return _mbMailingList.getInServerPort();
+		return model.getInServerPort();
 	}
 
 	/**
@@ -391,7 +361,7 @@ public class MBMailingListWrapper implements MBMailingList,
 	*/
 	@Override
 	public String getInUserName() {
-		return _mbMailingList.getInUserName();
+		return model.getInUserName();
 	}
 
 	/**
@@ -401,7 +371,7 @@ public class MBMailingListWrapper implements MBMailingList,
 	*/
 	@Override
 	public boolean getInUseSSL() {
-		return _mbMailingList.getInUseSSL();
+		return model.getInUseSSL();
 	}
 
 	/**
@@ -411,7 +381,7 @@ public class MBMailingListWrapper implements MBMailingList,
 	*/
 	@Override
 	public long getMailingListId() {
-		return _mbMailingList.getMailingListId();
+		return model.getMailingListId();
 	}
 
 	/**
@@ -421,7 +391,7 @@ public class MBMailingListWrapper implements MBMailingList,
 	*/
 	@Override
 	public Date getModifiedDate() {
-		return _mbMailingList.getModifiedDate();
+		return model.getModifiedDate();
 	}
 
 	/**
@@ -431,7 +401,7 @@ public class MBMailingListWrapper implements MBMailingList,
 	*/
 	@Override
 	public boolean getOutCustom() {
-		return _mbMailingList.getOutCustom();
+		return model.getOutCustom();
 	}
 
 	/**
@@ -441,7 +411,7 @@ public class MBMailingListWrapper implements MBMailingList,
 	*/
 	@Override
 	public String getOutEmailAddress() {
-		return _mbMailingList.getOutEmailAddress();
+		return model.getOutEmailAddress();
 	}
 
 	/**
@@ -451,7 +421,7 @@ public class MBMailingListWrapper implements MBMailingList,
 	*/
 	@Override
 	public String getOutPassword() {
-		return _mbMailingList.getOutPassword();
+		return model.getOutPassword();
 	}
 
 	/**
@@ -461,7 +431,7 @@ public class MBMailingListWrapper implements MBMailingList,
 	*/
 	@Override
 	public String getOutServerName() {
-		return _mbMailingList.getOutServerName();
+		return model.getOutServerName();
 	}
 
 	/**
@@ -471,7 +441,7 @@ public class MBMailingListWrapper implements MBMailingList,
 	*/
 	@Override
 	public int getOutServerPort() {
-		return _mbMailingList.getOutServerPort();
+		return model.getOutServerPort();
 	}
 
 	/**
@@ -481,7 +451,7 @@ public class MBMailingListWrapper implements MBMailingList,
 	*/
 	@Override
 	public String getOutUserName() {
-		return _mbMailingList.getOutUserName();
+		return model.getOutUserName();
 	}
 
 	/**
@@ -491,7 +461,7 @@ public class MBMailingListWrapper implements MBMailingList,
 	*/
 	@Override
 	public boolean getOutUseSSL() {
-		return _mbMailingList.getOutUseSSL();
+		return model.getOutUseSSL();
 	}
 
 	/**
@@ -501,12 +471,7 @@ public class MBMailingListWrapper implements MBMailingList,
 	*/
 	@Override
 	public long getPrimaryKey() {
-		return _mbMailingList.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _mbMailingList.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	/**
@@ -516,7 +481,7 @@ public class MBMailingListWrapper implements MBMailingList,
 	*/
 	@Override
 	public long getUserId() {
-		return _mbMailingList.getUserId();
+		return model.getUserId();
 	}
 
 	/**
@@ -526,7 +491,7 @@ public class MBMailingListWrapper implements MBMailingList,
 	*/
 	@Override
 	public String getUserName() {
-		return _mbMailingList.getUserName();
+		return model.getUserName();
 	}
 
 	/**
@@ -536,7 +501,7 @@ public class MBMailingListWrapper implements MBMailingList,
 	*/
 	@Override
 	public String getUserUuid() {
-		return _mbMailingList.getUserUuid();
+		return model.getUserUuid();
 	}
 
 	/**
@@ -546,12 +511,7 @@ public class MBMailingListWrapper implements MBMailingList,
 	*/
 	@Override
 	public String getUuid() {
-		return _mbMailingList.getUuid();
-	}
-
-	@Override
-	public int hashCode() {
-		return _mbMailingList.hashCode();
+		return model.getUuid();
 	}
 
 	/**
@@ -561,7 +521,7 @@ public class MBMailingListWrapper implements MBMailingList,
 	*/
 	@Override
 	public boolean isActive() {
-		return _mbMailingList.isActive();
+		return model.isActive();
 	}
 
 	/**
@@ -571,17 +531,7 @@ public class MBMailingListWrapper implements MBMailingList,
 	*/
 	@Override
 	public boolean isAllowAnonymous() {
-		return _mbMailingList.isAllowAnonymous();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _mbMailingList.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _mbMailingList.isEscapedModel();
+		return model.isAllowAnonymous();
 	}
 
 	/**
@@ -591,12 +541,7 @@ public class MBMailingListWrapper implements MBMailingList,
 	*/
 	@Override
 	public boolean isInUseSSL() {
-		return _mbMailingList.isInUseSSL();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _mbMailingList.isNew();
+		return model.isInUseSSL();
 	}
 
 	/**
@@ -606,7 +551,7 @@ public class MBMailingListWrapper implements MBMailingList,
 	*/
 	@Override
 	public boolean isOutCustom() {
-		return _mbMailingList.isOutCustom();
+		return model.isOutCustom();
 	}
 
 	/**
@@ -616,12 +561,12 @@ public class MBMailingListWrapper implements MBMailingList,
 	*/
 	@Override
 	public boolean isOutUseSSL() {
-		return _mbMailingList.isOutUseSSL();
+		return model.isOutUseSSL();
 	}
 
 	@Override
 	public void persist() {
-		_mbMailingList.persist();
+		model.persist();
 	}
 
 	/**
@@ -631,7 +576,7 @@ public class MBMailingListWrapper implements MBMailingList,
 	*/
 	@Override
 	public void setActive(boolean active) {
-		_mbMailingList.setActive(active);
+		model.setActive(active);
 	}
 
 	/**
@@ -641,12 +586,7 @@ public class MBMailingListWrapper implements MBMailingList,
 	*/
 	@Override
 	public void setAllowAnonymous(boolean allowAnonymous) {
-		_mbMailingList.setAllowAnonymous(allowAnonymous);
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_mbMailingList.setCachedModel(cachedModel);
+		model.setAllowAnonymous(allowAnonymous);
 	}
 
 	/**
@@ -656,7 +596,7 @@ public class MBMailingListWrapper implements MBMailingList,
 	*/
 	@Override
 	public void setCategoryId(long categoryId) {
-		_mbMailingList.setCategoryId(categoryId);
+		model.setCategoryId(categoryId);
 	}
 
 	/**
@@ -666,7 +606,7 @@ public class MBMailingListWrapper implements MBMailingList,
 	*/
 	@Override
 	public void setCompanyId(long companyId) {
-		_mbMailingList.setCompanyId(companyId);
+		model.setCompanyId(companyId);
 	}
 
 	/**
@@ -676,7 +616,7 @@ public class MBMailingListWrapper implements MBMailingList,
 	*/
 	@Override
 	public void setCreateDate(Date createDate) {
-		_mbMailingList.setCreateDate(createDate);
+		model.setCreateDate(createDate);
 	}
 
 	/**
@@ -686,23 +626,7 @@ public class MBMailingListWrapper implements MBMailingList,
 	*/
 	@Override
 	public void setEmailAddress(String emailAddress) {
-		_mbMailingList.setEmailAddress(emailAddress);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-		_mbMailingList.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_mbMailingList.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_mbMailingList.setExpandoBridgeAttributes(serviceContext);
+		model.setEmailAddress(emailAddress);
 	}
 
 	/**
@@ -712,7 +636,7 @@ public class MBMailingListWrapper implements MBMailingList,
 	*/
 	@Override
 	public void setGroupId(long groupId) {
-		_mbMailingList.setGroupId(groupId);
+		model.setGroupId(groupId);
 	}
 
 	/**
@@ -722,7 +646,7 @@ public class MBMailingListWrapper implements MBMailingList,
 	*/
 	@Override
 	public void setInPassword(String inPassword) {
-		_mbMailingList.setInPassword(inPassword);
+		model.setInPassword(inPassword);
 	}
 
 	/**
@@ -732,7 +656,7 @@ public class MBMailingListWrapper implements MBMailingList,
 	*/
 	@Override
 	public void setInProtocol(String inProtocol) {
-		_mbMailingList.setInProtocol(inProtocol);
+		model.setInProtocol(inProtocol);
 	}
 
 	/**
@@ -742,7 +666,7 @@ public class MBMailingListWrapper implements MBMailingList,
 	*/
 	@Override
 	public void setInReadInterval(int inReadInterval) {
-		_mbMailingList.setInReadInterval(inReadInterval);
+		model.setInReadInterval(inReadInterval);
 	}
 
 	/**
@@ -752,7 +676,7 @@ public class MBMailingListWrapper implements MBMailingList,
 	*/
 	@Override
 	public void setInServerName(String inServerName) {
-		_mbMailingList.setInServerName(inServerName);
+		model.setInServerName(inServerName);
 	}
 
 	/**
@@ -762,7 +686,7 @@ public class MBMailingListWrapper implements MBMailingList,
 	*/
 	@Override
 	public void setInServerPort(int inServerPort) {
-		_mbMailingList.setInServerPort(inServerPort);
+		model.setInServerPort(inServerPort);
 	}
 
 	/**
@@ -772,7 +696,7 @@ public class MBMailingListWrapper implements MBMailingList,
 	*/
 	@Override
 	public void setInUserName(String inUserName) {
-		_mbMailingList.setInUserName(inUserName);
+		model.setInUserName(inUserName);
 	}
 
 	/**
@@ -782,7 +706,7 @@ public class MBMailingListWrapper implements MBMailingList,
 	*/
 	@Override
 	public void setInUseSSL(boolean inUseSSL) {
-		_mbMailingList.setInUseSSL(inUseSSL);
+		model.setInUseSSL(inUseSSL);
 	}
 
 	/**
@@ -792,7 +716,7 @@ public class MBMailingListWrapper implements MBMailingList,
 	*/
 	@Override
 	public void setMailingListId(long mailingListId) {
-		_mbMailingList.setMailingListId(mailingListId);
+		model.setMailingListId(mailingListId);
 	}
 
 	/**
@@ -802,12 +726,7 @@ public class MBMailingListWrapper implements MBMailingList,
 	*/
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
-		_mbMailingList.setModifiedDate(modifiedDate);
-	}
-
-	@Override
-	public void setNew(boolean n) {
-		_mbMailingList.setNew(n);
+		model.setModifiedDate(modifiedDate);
 	}
 
 	/**
@@ -817,7 +736,7 @@ public class MBMailingListWrapper implements MBMailingList,
 	*/
 	@Override
 	public void setOutCustom(boolean outCustom) {
-		_mbMailingList.setOutCustom(outCustom);
+		model.setOutCustom(outCustom);
 	}
 
 	/**
@@ -827,7 +746,7 @@ public class MBMailingListWrapper implements MBMailingList,
 	*/
 	@Override
 	public void setOutEmailAddress(String outEmailAddress) {
-		_mbMailingList.setOutEmailAddress(outEmailAddress);
+		model.setOutEmailAddress(outEmailAddress);
 	}
 
 	/**
@@ -837,7 +756,7 @@ public class MBMailingListWrapper implements MBMailingList,
 	*/
 	@Override
 	public void setOutPassword(String outPassword) {
-		_mbMailingList.setOutPassword(outPassword);
+		model.setOutPassword(outPassword);
 	}
 
 	/**
@@ -847,7 +766,7 @@ public class MBMailingListWrapper implements MBMailingList,
 	*/
 	@Override
 	public void setOutServerName(String outServerName) {
-		_mbMailingList.setOutServerName(outServerName);
+		model.setOutServerName(outServerName);
 	}
 
 	/**
@@ -857,7 +776,7 @@ public class MBMailingListWrapper implements MBMailingList,
 	*/
 	@Override
 	public void setOutServerPort(int outServerPort) {
-		_mbMailingList.setOutServerPort(outServerPort);
+		model.setOutServerPort(outServerPort);
 	}
 
 	/**
@@ -867,7 +786,7 @@ public class MBMailingListWrapper implements MBMailingList,
 	*/
 	@Override
 	public void setOutUserName(String outUserName) {
-		_mbMailingList.setOutUserName(outUserName);
+		model.setOutUserName(outUserName);
 	}
 
 	/**
@@ -877,7 +796,7 @@ public class MBMailingListWrapper implements MBMailingList,
 	*/
 	@Override
 	public void setOutUseSSL(boolean outUseSSL) {
-		_mbMailingList.setOutUseSSL(outUseSSL);
+		model.setOutUseSSL(outUseSSL);
 	}
 
 	/**
@@ -887,12 +806,7 @@ public class MBMailingListWrapper implements MBMailingList,
 	*/
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_mbMailingList.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_mbMailingList.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -902,7 +816,7 @@ public class MBMailingListWrapper implements MBMailingList,
 	*/
 	@Override
 	public void setUserId(long userId) {
-		_mbMailingList.setUserId(userId);
+		model.setUserId(userId);
 	}
 
 	/**
@@ -912,7 +826,7 @@ public class MBMailingListWrapper implements MBMailingList,
 	*/
 	@Override
 	public void setUserName(String userName) {
-		_mbMailingList.setUserName(userName);
+		model.setUserName(userName);
 	}
 
 	/**
@@ -922,7 +836,7 @@ public class MBMailingListWrapper implements MBMailingList,
 	*/
 	@Override
 	public void setUserUuid(String userUuid) {
-		_mbMailingList.setUserUuid(userUuid);
+		model.setUserUuid(userUuid);
 	}
 
 	/**
@@ -932,77 +846,16 @@ public class MBMailingListWrapper implements MBMailingList,
 	*/
 	@Override
 	public void setUuid(String uuid) {
-		_mbMailingList.setUuid(uuid);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<MBMailingList> toCacheModel() {
-		return _mbMailingList.toCacheModel();
-	}
-
-	@Override
-	public MBMailingList toEscapedModel() {
-		return new MBMailingListWrapper(_mbMailingList.toEscapedModel());
-	}
-
-	@Override
-	public String toString() {
-		return _mbMailingList.toString();
-	}
-
-	@Override
-	public MBMailingList toUnescapedModel() {
-		return new MBMailingListWrapper(_mbMailingList.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _mbMailingList.toXmlString();
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-
-		if (!(obj instanceof MBMailingListWrapper)) {
-			return false;
-		}
-
-		MBMailingListWrapper mbMailingListWrapper = (MBMailingListWrapper)obj;
-
-		if (Objects.equals(_mbMailingList, mbMailingListWrapper._mbMailingList)) {
-			return true;
-		}
-
-		return false;
+		model.setUuid(uuid);
 	}
 
 	@Override
 	public StagedModelType getStagedModelType() {
-		return _mbMailingList.getStagedModelType();
+		return model.getStagedModelType();
 	}
 
 	@Override
-	public MBMailingList getWrappedModel() {
-		return _mbMailingList;
+	protected MBMailingListWrapper wrap(MBMailingList mbMailingList) {
+		return new MBMailingListWrapper(mbMailingList);
 	}
-
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _mbMailingList.isEntityCacheEnabled();
-	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _mbMailingList.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_mbMailingList.resetOriginalValues();
-	}
-
-	private final MBMailingList _mbMailingList;
 }

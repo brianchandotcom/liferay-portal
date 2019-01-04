@@ -16,19 +16,14 @@ package com.liferay.message.boards.model;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
-
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 
 import com.liferay.portal.kernel.model.ModelWrapper;
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -40,20 +35,10 @@ import java.util.Objects;
  * @generated
  */
 @ProviderType
-public class MBThreadFlagWrapper implements MBThreadFlag,
-	ModelWrapper<MBThreadFlag> {
+public class MBThreadFlagWrapper extends BaseModelWrapper<MBThreadFlag>
+	implements MBThreadFlag, ModelWrapper<MBThreadFlag> {
 	public MBThreadFlagWrapper(MBThreadFlag mbThreadFlag) {
-		_mbThreadFlag = mbThreadFlag;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return MBThreadFlag.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return MBThreadFlag.class.getName();
+		super(mbThreadFlag);
 	}
 
 	@Override
@@ -137,16 +122,6 @@ public class MBThreadFlagWrapper implements MBThreadFlag,
 		}
 	}
 
-	@Override
-	public Object clone() {
-		return new MBThreadFlagWrapper((MBThreadFlag)_mbThreadFlag.clone());
-	}
-
-	@Override
-	public int compareTo(MBThreadFlag mbThreadFlag) {
-		return _mbThreadFlag.compareTo(mbThreadFlag);
-	}
-
 	/**
 	* Returns the company ID of this message boards thread flag.
 	*
@@ -154,7 +129,7 @@ public class MBThreadFlagWrapper implements MBThreadFlag,
 	*/
 	@Override
 	public long getCompanyId() {
-		return _mbThreadFlag.getCompanyId();
+		return model.getCompanyId();
 	}
 
 	/**
@@ -164,12 +139,7 @@ public class MBThreadFlagWrapper implements MBThreadFlag,
 	*/
 	@Override
 	public Date getCreateDate() {
-		return _mbThreadFlag.getCreateDate();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _mbThreadFlag.getExpandoBridge();
+		return model.getCreateDate();
 	}
 
 	/**
@@ -179,7 +149,7 @@ public class MBThreadFlagWrapper implements MBThreadFlag,
 	*/
 	@Override
 	public long getGroupId() {
-		return _mbThreadFlag.getGroupId();
+		return model.getGroupId();
 	}
 
 	/**
@@ -189,7 +159,7 @@ public class MBThreadFlagWrapper implements MBThreadFlag,
 	*/
 	@Override
 	public Date getLastPublishDate() {
-		return _mbThreadFlag.getLastPublishDate();
+		return model.getLastPublishDate();
 	}
 
 	/**
@@ -199,7 +169,7 @@ public class MBThreadFlagWrapper implements MBThreadFlag,
 	*/
 	@Override
 	public Date getModifiedDate() {
-		return _mbThreadFlag.getModifiedDate();
+		return model.getModifiedDate();
 	}
 
 	/**
@@ -209,12 +179,7 @@ public class MBThreadFlagWrapper implements MBThreadFlag,
 	*/
 	@Override
 	public long getPrimaryKey() {
-		return _mbThreadFlag.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _mbThreadFlag.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	/**
@@ -224,7 +189,7 @@ public class MBThreadFlagWrapper implements MBThreadFlag,
 	*/
 	@Override
 	public long getThreadFlagId() {
-		return _mbThreadFlag.getThreadFlagId();
+		return model.getThreadFlagId();
 	}
 
 	/**
@@ -234,7 +199,7 @@ public class MBThreadFlagWrapper implements MBThreadFlag,
 	*/
 	@Override
 	public long getThreadId() {
-		return _mbThreadFlag.getThreadId();
+		return model.getThreadId();
 	}
 
 	/**
@@ -244,7 +209,7 @@ public class MBThreadFlagWrapper implements MBThreadFlag,
 	*/
 	@Override
 	public long getUserId() {
-		return _mbThreadFlag.getUserId();
+		return model.getUserId();
 	}
 
 	/**
@@ -254,7 +219,7 @@ public class MBThreadFlagWrapper implements MBThreadFlag,
 	*/
 	@Override
 	public String getUserName() {
-		return _mbThreadFlag.getUserName();
+		return model.getUserName();
 	}
 
 	/**
@@ -264,7 +229,7 @@ public class MBThreadFlagWrapper implements MBThreadFlag,
 	*/
 	@Override
 	public String getUserUuid() {
-		return _mbThreadFlag.getUserUuid();
+		return model.getUserUuid();
 	}
 
 	/**
@@ -274,37 +239,12 @@ public class MBThreadFlagWrapper implements MBThreadFlag,
 	*/
 	@Override
 	public String getUuid() {
-		return _mbThreadFlag.getUuid();
-	}
-
-	@Override
-	public int hashCode() {
-		return _mbThreadFlag.hashCode();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _mbThreadFlag.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _mbThreadFlag.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _mbThreadFlag.isNew();
+		return model.getUuid();
 	}
 
 	@Override
 	public void persist() {
-		_mbThreadFlag.persist();
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_mbThreadFlag.setCachedModel(cachedModel);
+		model.persist();
 	}
 
 	/**
@@ -314,7 +254,7 @@ public class MBThreadFlagWrapper implements MBThreadFlag,
 	*/
 	@Override
 	public void setCompanyId(long companyId) {
-		_mbThreadFlag.setCompanyId(companyId);
+		model.setCompanyId(companyId);
 	}
 
 	/**
@@ -324,23 +264,7 @@ public class MBThreadFlagWrapper implements MBThreadFlag,
 	*/
 	@Override
 	public void setCreateDate(Date createDate) {
-		_mbThreadFlag.setCreateDate(createDate);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-		_mbThreadFlag.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_mbThreadFlag.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_mbThreadFlag.setExpandoBridgeAttributes(serviceContext);
+		model.setCreateDate(createDate);
 	}
 
 	/**
@@ -350,7 +274,7 @@ public class MBThreadFlagWrapper implements MBThreadFlag,
 	*/
 	@Override
 	public void setGroupId(long groupId) {
-		_mbThreadFlag.setGroupId(groupId);
+		model.setGroupId(groupId);
 	}
 
 	/**
@@ -360,7 +284,7 @@ public class MBThreadFlagWrapper implements MBThreadFlag,
 	*/
 	@Override
 	public void setLastPublishDate(Date lastPublishDate) {
-		_mbThreadFlag.setLastPublishDate(lastPublishDate);
+		model.setLastPublishDate(lastPublishDate);
 	}
 
 	/**
@@ -370,12 +294,7 @@ public class MBThreadFlagWrapper implements MBThreadFlag,
 	*/
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
-		_mbThreadFlag.setModifiedDate(modifiedDate);
-	}
-
-	@Override
-	public void setNew(boolean n) {
-		_mbThreadFlag.setNew(n);
+		model.setModifiedDate(modifiedDate);
 	}
 
 	/**
@@ -385,12 +304,7 @@ public class MBThreadFlagWrapper implements MBThreadFlag,
 	*/
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_mbThreadFlag.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_mbThreadFlag.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -400,7 +314,7 @@ public class MBThreadFlagWrapper implements MBThreadFlag,
 	*/
 	@Override
 	public void setThreadFlagId(long threadFlagId) {
-		_mbThreadFlag.setThreadFlagId(threadFlagId);
+		model.setThreadFlagId(threadFlagId);
 	}
 
 	/**
@@ -410,7 +324,7 @@ public class MBThreadFlagWrapper implements MBThreadFlag,
 	*/
 	@Override
 	public void setThreadId(long threadId) {
-		_mbThreadFlag.setThreadId(threadId);
+		model.setThreadId(threadId);
 	}
 
 	/**
@@ -420,7 +334,7 @@ public class MBThreadFlagWrapper implements MBThreadFlag,
 	*/
 	@Override
 	public void setUserId(long userId) {
-		_mbThreadFlag.setUserId(userId);
+		model.setUserId(userId);
 	}
 
 	/**
@@ -430,7 +344,7 @@ public class MBThreadFlagWrapper implements MBThreadFlag,
 	*/
 	@Override
 	public void setUserName(String userName) {
-		_mbThreadFlag.setUserName(userName);
+		model.setUserName(userName);
 	}
 
 	/**
@@ -440,7 +354,7 @@ public class MBThreadFlagWrapper implements MBThreadFlag,
 	*/
 	@Override
 	public void setUserUuid(String userUuid) {
-		_mbThreadFlag.setUserUuid(userUuid);
+		model.setUserUuid(userUuid);
 	}
 
 	/**
@@ -450,77 +364,16 @@ public class MBThreadFlagWrapper implements MBThreadFlag,
 	*/
 	@Override
 	public void setUuid(String uuid) {
-		_mbThreadFlag.setUuid(uuid);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<MBThreadFlag> toCacheModel() {
-		return _mbThreadFlag.toCacheModel();
-	}
-
-	@Override
-	public MBThreadFlag toEscapedModel() {
-		return new MBThreadFlagWrapper(_mbThreadFlag.toEscapedModel());
-	}
-
-	@Override
-	public String toString() {
-		return _mbThreadFlag.toString();
-	}
-
-	@Override
-	public MBThreadFlag toUnescapedModel() {
-		return new MBThreadFlagWrapper(_mbThreadFlag.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _mbThreadFlag.toXmlString();
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-
-		if (!(obj instanceof MBThreadFlagWrapper)) {
-			return false;
-		}
-
-		MBThreadFlagWrapper mbThreadFlagWrapper = (MBThreadFlagWrapper)obj;
-
-		if (Objects.equals(_mbThreadFlag, mbThreadFlagWrapper._mbThreadFlag)) {
-			return true;
-		}
-
-		return false;
+		model.setUuid(uuid);
 	}
 
 	@Override
 	public StagedModelType getStagedModelType() {
-		return _mbThreadFlag.getStagedModelType();
+		return model.getStagedModelType();
 	}
 
 	@Override
-	public MBThreadFlag getWrappedModel() {
-		return _mbThreadFlag;
+	protected MBThreadFlagWrapper wrap(MBThreadFlag mbThreadFlag) {
+		return new MBThreadFlagWrapper(mbThreadFlag);
 	}
-
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _mbThreadFlag.isEntityCacheEnabled();
-	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _mbThreadFlag.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_mbThreadFlag.resetOriginalValues();
-	}
-
-	private final MBThreadFlag _mbThreadFlag;
 }

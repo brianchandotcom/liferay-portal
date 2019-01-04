@@ -16,18 +16,13 @@ package com.liferay.portal.kernel.model;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
-
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -39,19 +34,10 @@ import java.util.Objects;
  * @generated
  */
 @ProviderType
-public class TeamWrapper implements Team, ModelWrapper<Team> {
+public class TeamWrapper extends BaseModelWrapper<Team> implements Team,
+	ModelWrapper<Team> {
 	public TeamWrapper(Team team) {
-		_team = team;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return Team.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return Team.class.getName();
+		super(team);
 	}
 
 	@Override
@@ -149,16 +135,6 @@ public class TeamWrapper implements Team, ModelWrapper<Team> {
 		}
 	}
 
-	@Override
-	public Object clone() {
-		return new TeamWrapper((Team)_team.clone());
-	}
-
-	@Override
-	public int compareTo(Team team) {
-		return _team.compareTo(team);
-	}
-
 	/**
 	* Returns the company ID of this team.
 	*
@@ -166,7 +142,7 @@ public class TeamWrapper implements Team, ModelWrapper<Team> {
 	*/
 	@Override
 	public long getCompanyId() {
-		return _team.getCompanyId();
+		return model.getCompanyId();
 	}
 
 	/**
@@ -176,7 +152,7 @@ public class TeamWrapper implements Team, ModelWrapper<Team> {
 	*/
 	@Override
 	public Date getCreateDate() {
-		return _team.getCreateDate();
+		return model.getCreateDate();
 	}
 
 	/**
@@ -186,12 +162,7 @@ public class TeamWrapper implements Team, ModelWrapper<Team> {
 	*/
 	@Override
 	public String getDescription() {
-		return _team.getDescription();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _team.getExpandoBridge();
+		return model.getDescription();
 	}
 
 	/**
@@ -201,7 +172,7 @@ public class TeamWrapper implements Team, ModelWrapper<Team> {
 	*/
 	@Override
 	public long getGroupId() {
-		return _team.getGroupId();
+		return model.getGroupId();
 	}
 
 	/**
@@ -211,7 +182,7 @@ public class TeamWrapper implements Team, ModelWrapper<Team> {
 	*/
 	@Override
 	public Date getLastPublishDate() {
-		return _team.getLastPublishDate();
+		return model.getLastPublishDate();
 	}
 
 	/**
@@ -221,7 +192,7 @@ public class TeamWrapper implements Team, ModelWrapper<Team> {
 	*/
 	@Override
 	public Date getModifiedDate() {
-		return _team.getModifiedDate();
+		return model.getModifiedDate();
 	}
 
 	/**
@@ -231,7 +202,7 @@ public class TeamWrapper implements Team, ModelWrapper<Team> {
 	*/
 	@Override
 	public long getMvccVersion() {
-		return _team.getMvccVersion();
+		return model.getMvccVersion();
 	}
 
 	/**
@@ -241,7 +212,7 @@ public class TeamWrapper implements Team, ModelWrapper<Team> {
 	*/
 	@Override
 	public String getName() {
-		return _team.getName();
+		return model.getName();
 	}
 
 	/**
@@ -251,18 +222,13 @@ public class TeamWrapper implements Team, ModelWrapper<Team> {
 	*/
 	@Override
 	public long getPrimaryKey() {
-		return _team.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _team.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	@Override
 	public Role getRole()
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _team.getRole();
+		return model.getRole();
 	}
 
 	/**
@@ -272,7 +238,7 @@ public class TeamWrapper implements Team, ModelWrapper<Team> {
 	*/
 	@Override
 	public long getTeamId() {
-		return _team.getTeamId();
+		return model.getTeamId();
 	}
 
 	/**
@@ -282,7 +248,7 @@ public class TeamWrapper implements Team, ModelWrapper<Team> {
 	*/
 	@Override
 	public long getUserId() {
-		return _team.getUserId();
+		return model.getUserId();
 	}
 
 	/**
@@ -292,7 +258,7 @@ public class TeamWrapper implements Team, ModelWrapper<Team> {
 	*/
 	@Override
 	public String getUserName() {
-		return _team.getUserName();
+		return model.getUserName();
 	}
 
 	/**
@@ -302,7 +268,7 @@ public class TeamWrapper implements Team, ModelWrapper<Team> {
 	*/
 	@Override
 	public String getUserUuid() {
-		return _team.getUserUuid();
+		return model.getUserUuid();
 	}
 
 	/**
@@ -312,37 +278,12 @@ public class TeamWrapper implements Team, ModelWrapper<Team> {
 	*/
 	@Override
 	public String getUuid() {
-		return _team.getUuid();
-	}
-
-	@Override
-	public int hashCode() {
-		return _team.hashCode();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _team.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _team.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _team.isNew();
+		return model.getUuid();
 	}
 
 	@Override
 	public void persist() {
-		_team.persist();
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_team.setCachedModel(cachedModel);
+		model.persist();
 	}
 
 	/**
@@ -352,7 +293,7 @@ public class TeamWrapper implements Team, ModelWrapper<Team> {
 	*/
 	@Override
 	public void setCompanyId(long companyId) {
-		_team.setCompanyId(companyId);
+		model.setCompanyId(companyId);
 	}
 
 	/**
@@ -362,7 +303,7 @@ public class TeamWrapper implements Team, ModelWrapper<Team> {
 	*/
 	@Override
 	public void setCreateDate(Date createDate) {
-		_team.setCreateDate(createDate);
+		model.setCreateDate(createDate);
 	}
 
 	/**
@@ -372,22 +313,7 @@ public class TeamWrapper implements Team, ModelWrapper<Team> {
 	*/
 	@Override
 	public void setDescription(String description) {
-		_team.setDescription(description);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(BaseModel<?> baseModel) {
-		_team.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_team.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_team.setExpandoBridgeAttributes(serviceContext);
+		model.setDescription(description);
 	}
 
 	/**
@@ -397,7 +323,7 @@ public class TeamWrapper implements Team, ModelWrapper<Team> {
 	*/
 	@Override
 	public void setGroupId(long groupId) {
-		_team.setGroupId(groupId);
+		model.setGroupId(groupId);
 	}
 
 	/**
@@ -407,7 +333,7 @@ public class TeamWrapper implements Team, ModelWrapper<Team> {
 	*/
 	@Override
 	public void setLastPublishDate(Date lastPublishDate) {
-		_team.setLastPublishDate(lastPublishDate);
+		model.setLastPublishDate(lastPublishDate);
 	}
 
 	/**
@@ -417,7 +343,7 @@ public class TeamWrapper implements Team, ModelWrapper<Team> {
 	*/
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
-		_team.setModifiedDate(modifiedDate);
+		model.setModifiedDate(modifiedDate);
 	}
 
 	/**
@@ -427,7 +353,7 @@ public class TeamWrapper implements Team, ModelWrapper<Team> {
 	*/
 	@Override
 	public void setMvccVersion(long mvccVersion) {
-		_team.setMvccVersion(mvccVersion);
+		model.setMvccVersion(mvccVersion);
 	}
 
 	/**
@@ -437,12 +363,7 @@ public class TeamWrapper implements Team, ModelWrapper<Team> {
 	*/
 	@Override
 	public void setName(String name) {
-		_team.setName(name);
-	}
-
-	@Override
-	public void setNew(boolean n) {
-		_team.setNew(n);
+		model.setName(name);
 	}
 
 	/**
@@ -452,12 +373,7 @@ public class TeamWrapper implements Team, ModelWrapper<Team> {
 	*/
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_team.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_team.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -467,7 +383,7 @@ public class TeamWrapper implements Team, ModelWrapper<Team> {
 	*/
 	@Override
 	public void setTeamId(long teamId) {
-		_team.setTeamId(teamId);
+		model.setTeamId(teamId);
 	}
 
 	/**
@@ -477,7 +393,7 @@ public class TeamWrapper implements Team, ModelWrapper<Team> {
 	*/
 	@Override
 	public void setUserId(long userId) {
-		_team.setUserId(userId);
+		model.setUserId(userId);
 	}
 
 	/**
@@ -487,7 +403,7 @@ public class TeamWrapper implements Team, ModelWrapper<Team> {
 	*/
 	@Override
 	public void setUserName(String userName) {
-		_team.setUserName(userName);
+		model.setUserName(userName);
 	}
 
 	/**
@@ -497,7 +413,7 @@ public class TeamWrapper implements Team, ModelWrapper<Team> {
 	*/
 	@Override
 	public void setUserUuid(String userUuid) {
-		_team.setUserUuid(userUuid);
+		model.setUserUuid(userUuid);
 	}
 
 	/**
@@ -507,77 +423,16 @@ public class TeamWrapper implements Team, ModelWrapper<Team> {
 	*/
 	@Override
 	public void setUuid(String uuid) {
-		_team.setUuid(uuid);
-	}
-
-	@Override
-	public CacheModel<Team> toCacheModel() {
-		return _team.toCacheModel();
-	}
-
-	@Override
-	public Team toEscapedModel() {
-		return new TeamWrapper(_team.toEscapedModel());
-	}
-
-	@Override
-	public String toString() {
-		return _team.toString();
-	}
-
-	@Override
-	public Team toUnescapedModel() {
-		return new TeamWrapper(_team.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _team.toXmlString();
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-
-		if (!(obj instanceof TeamWrapper)) {
-			return false;
-		}
-
-		TeamWrapper teamWrapper = (TeamWrapper)obj;
-
-		if (Objects.equals(_team, teamWrapper._team)) {
-			return true;
-		}
-
-		return false;
+		model.setUuid(uuid);
 	}
 
 	@Override
 	public StagedModelType getStagedModelType() {
-		return _team.getStagedModelType();
+		return model.getStagedModelType();
 	}
 
 	@Override
-	public Team getWrappedModel() {
-		return _team;
+	protected TeamWrapper wrap(Team team) {
+		return new TeamWrapper(team);
 	}
-
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _team.isEntityCacheEnabled();
-	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _team.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_team.resetOriginalValues();
-	}
-
-	private final Team _team;
 }

@@ -16,15 +16,10 @@ package com.liferay.portal.kernel.model;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
-
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -36,20 +31,10 @@ import java.util.Objects;
  * @generated
  */
 @ProviderType
-public class ResourcePermissionWrapper implements ResourcePermission,
-	ModelWrapper<ResourcePermission> {
+public class ResourcePermissionWrapper extends BaseModelWrapper<ResourcePermission>
+	implements ResourcePermission, ModelWrapper<ResourcePermission> {
 	public ResourcePermissionWrapper(ResourcePermission resourcePermission) {
-		_resourcePermission = resourcePermission;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return ResourcePermission.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return ResourcePermission.class.getName();
+		super(resourcePermission);
 	}
 
 	@Override
@@ -143,17 +128,7 @@ public class ResourcePermissionWrapper implements ResourcePermission,
 	@Override
 	public void addResourceAction(String actionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		_resourcePermission.addResourceAction(actionId);
-	}
-
-	@Override
-	public Object clone() {
-		return new ResourcePermissionWrapper((ResourcePermission)_resourcePermission.clone());
-	}
-
-	@Override
-	public int compareTo(ResourcePermission resourcePermission) {
-		return _resourcePermission.compareTo(resourcePermission);
+		model.addResourceAction(actionId);
 	}
 
 	/**
@@ -163,7 +138,7 @@ public class ResourcePermissionWrapper implements ResourcePermission,
 	*/
 	@Override
 	public long getActionIds() {
-		return _resourcePermission.getActionIds();
+		return model.getActionIds();
 	}
 
 	/**
@@ -173,12 +148,7 @@ public class ResourcePermissionWrapper implements ResourcePermission,
 	*/
 	@Override
 	public long getCompanyId() {
-		return _resourcePermission.getCompanyId();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _resourcePermission.getExpandoBridge();
+		return model.getCompanyId();
 	}
 
 	/**
@@ -188,7 +158,7 @@ public class ResourcePermissionWrapper implements ResourcePermission,
 	*/
 	@Override
 	public long getMvccVersion() {
-		return _resourcePermission.getMvccVersion();
+		return model.getMvccVersion();
 	}
 
 	/**
@@ -198,7 +168,7 @@ public class ResourcePermissionWrapper implements ResourcePermission,
 	*/
 	@Override
 	public String getName() {
-		return _resourcePermission.getName();
+		return model.getName();
 	}
 
 	/**
@@ -208,7 +178,7 @@ public class ResourcePermissionWrapper implements ResourcePermission,
 	*/
 	@Override
 	public long getOwnerId() {
-		return _resourcePermission.getOwnerId();
+		return model.getOwnerId();
 	}
 
 	/**
@@ -218,12 +188,7 @@ public class ResourcePermissionWrapper implements ResourcePermission,
 	*/
 	@Override
 	public long getPrimaryKey() {
-		return _resourcePermission.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _resourcePermission.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	/**
@@ -233,7 +198,7 @@ public class ResourcePermissionWrapper implements ResourcePermission,
 	*/
 	@Override
 	public String getPrimKey() {
-		return _resourcePermission.getPrimKey();
+		return model.getPrimKey();
 	}
 
 	/**
@@ -243,7 +208,7 @@ public class ResourcePermissionWrapper implements ResourcePermission,
 	*/
 	@Override
 	public long getPrimKeyId() {
-		return _resourcePermission.getPrimKeyId();
+		return model.getPrimKeyId();
 	}
 
 	/**
@@ -253,7 +218,7 @@ public class ResourcePermissionWrapper implements ResourcePermission,
 	*/
 	@Override
 	public long getResourcePermissionId() {
-		return _resourcePermission.getResourcePermissionId();
+		return model.getResourcePermissionId();
 	}
 
 	/**
@@ -263,7 +228,7 @@ public class ResourcePermissionWrapper implements ResourcePermission,
 	*/
 	@Override
 	public long getRoleId() {
-		return _resourcePermission.getRoleId();
+		return model.getRoleId();
 	}
 
 	/**
@@ -273,7 +238,7 @@ public class ResourcePermissionWrapper implements ResourcePermission,
 	*/
 	@Override
 	public int getScope() {
-		return _resourcePermission.getScope();
+		return model.getScope();
 	}
 
 	/**
@@ -283,37 +248,17 @@ public class ResourcePermissionWrapper implements ResourcePermission,
 	*/
 	@Override
 	public boolean getViewActionId() {
-		return _resourcePermission.getViewActionId();
+		return model.getViewActionId();
 	}
 
 	@Override
 	public boolean hasAction(ResourceAction resourceAction) {
-		return _resourcePermission.hasAction(resourceAction);
+		return model.hasAction(resourceAction);
 	}
 
 	@Override
 	public boolean hasActionId(String actionId) {
-		return _resourcePermission.hasActionId(actionId);
-	}
-
-	@Override
-	public int hashCode() {
-		return _resourcePermission.hashCode();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _resourcePermission.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _resourcePermission.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _resourcePermission.isNew();
+		return model.hasActionId(actionId);
 	}
 
 	/**
@@ -323,18 +268,18 @@ public class ResourcePermissionWrapper implements ResourcePermission,
 	*/
 	@Override
 	public boolean isViewActionId() {
-		return _resourcePermission.isViewActionId();
+		return model.isViewActionId();
 	}
 
 	@Override
 	public void persist() {
-		_resourcePermission.persist();
+		model.persist();
 	}
 
 	@Override
 	public void removeResourceAction(String actionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		_resourcePermission.removeResourceAction(actionId);
+		model.removeResourceAction(actionId);
 	}
 
 	/**
@@ -344,12 +289,7 @@ public class ResourcePermissionWrapper implements ResourcePermission,
 	*/
 	@Override
 	public void setActionIds(long actionIds) {
-		_resourcePermission.setActionIds(actionIds);
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_resourcePermission.setCachedModel(cachedModel);
+		model.setActionIds(actionIds);
 	}
 
 	/**
@@ -359,22 +299,7 @@ public class ResourcePermissionWrapper implements ResourcePermission,
 	*/
 	@Override
 	public void setCompanyId(long companyId) {
-		_resourcePermission.setCompanyId(companyId);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(BaseModel<?> baseModel) {
-		_resourcePermission.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_resourcePermission.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_resourcePermission.setExpandoBridgeAttributes(serviceContext);
+		model.setCompanyId(companyId);
 	}
 
 	/**
@@ -384,7 +309,7 @@ public class ResourcePermissionWrapper implements ResourcePermission,
 	*/
 	@Override
 	public void setMvccVersion(long mvccVersion) {
-		_resourcePermission.setMvccVersion(mvccVersion);
+		model.setMvccVersion(mvccVersion);
 	}
 
 	/**
@@ -394,12 +319,7 @@ public class ResourcePermissionWrapper implements ResourcePermission,
 	*/
 	@Override
 	public void setName(String name) {
-		_resourcePermission.setName(name);
-	}
-
-	@Override
-	public void setNew(boolean n) {
-		_resourcePermission.setNew(n);
+		model.setName(name);
 	}
 
 	/**
@@ -409,7 +329,7 @@ public class ResourcePermissionWrapper implements ResourcePermission,
 	*/
 	@Override
 	public void setOwnerId(long ownerId) {
-		_resourcePermission.setOwnerId(ownerId);
+		model.setOwnerId(ownerId);
 	}
 
 	/**
@@ -419,12 +339,7 @@ public class ResourcePermissionWrapper implements ResourcePermission,
 	*/
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_resourcePermission.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_resourcePermission.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -434,7 +349,7 @@ public class ResourcePermissionWrapper implements ResourcePermission,
 	*/
 	@Override
 	public void setPrimKey(String primKey) {
-		_resourcePermission.setPrimKey(primKey);
+		model.setPrimKey(primKey);
 	}
 
 	/**
@@ -444,7 +359,7 @@ public class ResourcePermissionWrapper implements ResourcePermission,
 	*/
 	@Override
 	public void setPrimKeyId(long primKeyId) {
-		_resourcePermission.setPrimKeyId(primKeyId);
+		model.setPrimKeyId(primKeyId);
 	}
 
 	/**
@@ -454,7 +369,7 @@ public class ResourcePermissionWrapper implements ResourcePermission,
 	*/
 	@Override
 	public void setResourcePermissionId(long resourcePermissionId) {
-		_resourcePermission.setResourcePermissionId(resourcePermissionId);
+		model.setResourcePermissionId(resourcePermissionId);
 	}
 
 	/**
@@ -464,7 +379,7 @@ public class ResourcePermissionWrapper implements ResourcePermission,
 	*/
 	@Override
 	public void setRoleId(long roleId) {
-		_resourcePermission.setRoleId(roleId);
+		model.setRoleId(roleId);
 	}
 
 	/**
@@ -474,7 +389,7 @@ public class ResourcePermissionWrapper implements ResourcePermission,
 	*/
 	@Override
 	public void setScope(int scope) {
-		_resourcePermission.setScope(scope);
+		model.setScope(scope);
 	}
 
 	/**
@@ -484,73 +399,12 @@ public class ResourcePermissionWrapper implements ResourcePermission,
 	*/
 	@Override
 	public void setViewActionId(boolean viewActionId) {
-		_resourcePermission.setViewActionId(viewActionId);
+		model.setViewActionId(viewActionId);
 	}
 
 	@Override
-	public CacheModel<ResourcePermission> toCacheModel() {
-		return _resourcePermission.toCacheModel();
+	protected ResourcePermissionWrapper wrap(
+		ResourcePermission resourcePermission) {
+		return new ResourcePermissionWrapper(resourcePermission);
 	}
-
-	@Override
-	public ResourcePermission toEscapedModel() {
-		return new ResourcePermissionWrapper(_resourcePermission.toEscapedModel());
-	}
-
-	@Override
-	public String toString() {
-		return _resourcePermission.toString();
-	}
-
-	@Override
-	public ResourcePermission toUnescapedModel() {
-		return new ResourcePermissionWrapper(_resourcePermission.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _resourcePermission.toXmlString();
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-
-		if (!(obj instanceof ResourcePermissionWrapper)) {
-			return false;
-		}
-
-		ResourcePermissionWrapper resourcePermissionWrapper = (ResourcePermissionWrapper)obj;
-
-		if (Objects.equals(_resourcePermission,
-					resourcePermissionWrapper._resourcePermission)) {
-			return true;
-		}
-
-		return false;
-	}
-
-	@Override
-	public ResourcePermission getWrappedModel() {
-		return _resourcePermission;
-	}
-
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _resourcePermission.isEntityCacheEnabled();
-	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _resourcePermission.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_resourcePermission.resetOriginalValues();
-	}
-
-	private final ResourcePermission _resourcePermission;
 }

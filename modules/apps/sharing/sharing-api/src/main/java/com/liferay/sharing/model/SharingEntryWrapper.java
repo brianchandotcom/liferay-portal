@@ -16,19 +16,14 @@ package com.liferay.sharing.model;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
-
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 
 import com.liferay.portal.kernel.model.ModelWrapper;
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -40,20 +35,10 @@ import java.util.Objects;
  * @generated
  */
 @ProviderType
-public class SharingEntryWrapper implements SharingEntry,
-	ModelWrapper<SharingEntry> {
+public class SharingEntryWrapper extends BaseModelWrapper<SharingEntry>
+	implements SharingEntry, ModelWrapper<SharingEntry> {
 	public SharingEntryWrapper(SharingEntry sharingEntry) {
-		_sharingEntry = sharingEntry;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return SharingEntry.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return SharingEntry.class.getName();
+		super(sharingEntry);
 	}
 
 	@Override
@@ -158,16 +143,6 @@ public class SharingEntryWrapper implements SharingEntry,
 		}
 	}
 
-	@Override
-	public Object clone() {
-		return new SharingEntryWrapper((SharingEntry)_sharingEntry.clone());
-	}
-
-	@Override
-	public int compareTo(SharingEntry sharingEntry) {
-		return _sharingEntry.compareTo(sharingEntry);
-	}
-
 	/**
 	* Returns the action IDs of this sharing entry.
 	*
@@ -175,7 +150,7 @@ public class SharingEntryWrapper implements SharingEntry,
 	*/
 	@Override
 	public long getActionIds() {
-		return _sharingEntry.getActionIds();
+		return model.getActionIds();
 	}
 
 	/**
@@ -185,7 +160,7 @@ public class SharingEntryWrapper implements SharingEntry,
 	*/
 	@Override
 	public String getClassName() {
-		return _sharingEntry.getClassName();
+		return model.getClassName();
 	}
 
 	/**
@@ -195,7 +170,7 @@ public class SharingEntryWrapper implements SharingEntry,
 	*/
 	@Override
 	public long getClassNameId() {
-		return _sharingEntry.getClassNameId();
+		return model.getClassNameId();
 	}
 
 	/**
@@ -205,7 +180,7 @@ public class SharingEntryWrapper implements SharingEntry,
 	*/
 	@Override
 	public long getClassPK() {
-		return _sharingEntry.getClassPK();
+		return model.getClassPK();
 	}
 
 	/**
@@ -215,7 +190,7 @@ public class SharingEntryWrapper implements SharingEntry,
 	*/
 	@Override
 	public long getCompanyId() {
-		return _sharingEntry.getCompanyId();
+		return model.getCompanyId();
 	}
 
 	/**
@@ -225,12 +200,7 @@ public class SharingEntryWrapper implements SharingEntry,
 	*/
 	@Override
 	public Date getCreateDate() {
-		return _sharingEntry.getCreateDate();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _sharingEntry.getExpandoBridge();
+		return model.getCreateDate();
 	}
 
 	/**
@@ -240,7 +210,7 @@ public class SharingEntryWrapper implements SharingEntry,
 	*/
 	@Override
 	public Date getExpirationDate() {
-		return _sharingEntry.getExpirationDate();
+		return model.getExpirationDate();
 	}
 
 	/**
@@ -250,7 +220,7 @@ public class SharingEntryWrapper implements SharingEntry,
 	*/
 	@Override
 	public long getFromUserId() {
-		return _sharingEntry.getFromUserId();
+		return model.getFromUserId();
 	}
 
 	/**
@@ -260,7 +230,7 @@ public class SharingEntryWrapper implements SharingEntry,
 	*/
 	@Override
 	public String getFromUserUuid() {
-		return _sharingEntry.getFromUserUuid();
+		return model.getFromUserUuid();
 	}
 
 	/**
@@ -270,7 +240,7 @@ public class SharingEntryWrapper implements SharingEntry,
 	*/
 	@Override
 	public long getGroupId() {
-		return _sharingEntry.getGroupId();
+		return model.getGroupId();
 	}
 
 	/**
@@ -280,7 +250,7 @@ public class SharingEntryWrapper implements SharingEntry,
 	*/
 	@Override
 	public Date getModifiedDate() {
-		return _sharingEntry.getModifiedDate();
+		return model.getModifiedDate();
 	}
 
 	/**
@@ -290,12 +260,7 @@ public class SharingEntryWrapper implements SharingEntry,
 	*/
 	@Override
 	public long getPrimaryKey() {
-		return _sharingEntry.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _sharingEntry.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	/**
@@ -305,7 +270,7 @@ public class SharingEntryWrapper implements SharingEntry,
 	*/
 	@Override
 	public boolean getShareable() {
-		return _sharingEntry.getShareable();
+		return model.getShareable();
 	}
 
 	/**
@@ -315,7 +280,7 @@ public class SharingEntryWrapper implements SharingEntry,
 	*/
 	@Override
 	public long getSharingEntryId() {
-		return _sharingEntry.getSharingEntryId();
+		return model.getSharingEntryId();
 	}
 
 	/**
@@ -325,7 +290,7 @@ public class SharingEntryWrapper implements SharingEntry,
 	*/
 	@Override
 	public long getToUserId() {
-		return _sharingEntry.getToUserId();
+		return model.getToUserId();
 	}
 
 	/**
@@ -335,7 +300,7 @@ public class SharingEntryWrapper implements SharingEntry,
 	*/
 	@Override
 	public String getToUserUuid() {
-		return _sharingEntry.getToUserUuid();
+		return model.getToUserUuid();
 	}
 
 	/**
@@ -345,12 +310,7 @@ public class SharingEntryWrapper implements SharingEntry,
 	*/
 	@Override
 	public String getUuid() {
-		return _sharingEntry.getUuid();
-	}
-
-	@Override
-	public int hashCode() {
-		return _sharingEntry.hashCode();
+		return model.getUuid();
 	}
 
 	/**
@@ -364,22 +324,7 @@ public class SharingEntryWrapper implements SharingEntry,
 	@Override
 	public boolean hasSharingPermission(
 		com.liferay.sharing.security.permission.SharingEntryAction sharingEntryAction) {
-		return _sharingEntry.hasSharingPermission(sharingEntryAction);
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _sharingEntry.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _sharingEntry.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _sharingEntry.isNew();
+		return model.hasSharingPermission(sharingEntryAction);
 	}
 
 	/**
@@ -389,12 +334,12 @@ public class SharingEntryWrapper implements SharingEntry,
 	*/
 	@Override
 	public boolean isShareable() {
-		return _sharingEntry.isShareable();
+		return model.isShareable();
 	}
 
 	@Override
 	public void persist() {
-		_sharingEntry.persist();
+		model.persist();
 	}
 
 	/**
@@ -404,17 +349,12 @@ public class SharingEntryWrapper implements SharingEntry,
 	*/
 	@Override
 	public void setActionIds(long actionIds) {
-		_sharingEntry.setActionIds(actionIds);
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_sharingEntry.setCachedModel(cachedModel);
+		model.setActionIds(actionIds);
 	}
 
 	@Override
 	public void setClassName(String className) {
-		_sharingEntry.setClassName(className);
+		model.setClassName(className);
 	}
 
 	/**
@@ -424,7 +364,7 @@ public class SharingEntryWrapper implements SharingEntry,
 	*/
 	@Override
 	public void setClassNameId(long classNameId) {
-		_sharingEntry.setClassNameId(classNameId);
+		model.setClassNameId(classNameId);
 	}
 
 	/**
@@ -434,7 +374,7 @@ public class SharingEntryWrapper implements SharingEntry,
 	*/
 	@Override
 	public void setClassPK(long classPK) {
-		_sharingEntry.setClassPK(classPK);
+		model.setClassPK(classPK);
 	}
 
 	/**
@@ -444,7 +384,7 @@ public class SharingEntryWrapper implements SharingEntry,
 	*/
 	@Override
 	public void setCompanyId(long companyId) {
-		_sharingEntry.setCompanyId(companyId);
+		model.setCompanyId(companyId);
 	}
 
 	/**
@@ -454,23 +394,7 @@ public class SharingEntryWrapper implements SharingEntry,
 	*/
 	@Override
 	public void setCreateDate(Date createDate) {
-		_sharingEntry.setCreateDate(createDate);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-		_sharingEntry.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_sharingEntry.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_sharingEntry.setExpandoBridgeAttributes(serviceContext);
+		model.setCreateDate(createDate);
 	}
 
 	/**
@@ -480,7 +404,7 @@ public class SharingEntryWrapper implements SharingEntry,
 	*/
 	@Override
 	public void setExpirationDate(Date expirationDate) {
-		_sharingEntry.setExpirationDate(expirationDate);
+		model.setExpirationDate(expirationDate);
 	}
 
 	/**
@@ -490,7 +414,7 @@ public class SharingEntryWrapper implements SharingEntry,
 	*/
 	@Override
 	public void setFromUserId(long fromUserId) {
-		_sharingEntry.setFromUserId(fromUserId);
+		model.setFromUserId(fromUserId);
 	}
 
 	/**
@@ -500,7 +424,7 @@ public class SharingEntryWrapper implements SharingEntry,
 	*/
 	@Override
 	public void setFromUserUuid(String fromUserUuid) {
-		_sharingEntry.setFromUserUuid(fromUserUuid);
+		model.setFromUserUuid(fromUserUuid);
 	}
 
 	/**
@@ -510,7 +434,7 @@ public class SharingEntryWrapper implements SharingEntry,
 	*/
 	@Override
 	public void setGroupId(long groupId) {
-		_sharingEntry.setGroupId(groupId);
+		model.setGroupId(groupId);
 	}
 
 	/**
@@ -520,12 +444,7 @@ public class SharingEntryWrapper implements SharingEntry,
 	*/
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
-		_sharingEntry.setModifiedDate(modifiedDate);
-	}
-
-	@Override
-	public void setNew(boolean n) {
-		_sharingEntry.setNew(n);
+		model.setModifiedDate(modifiedDate);
 	}
 
 	/**
@@ -535,12 +454,7 @@ public class SharingEntryWrapper implements SharingEntry,
 	*/
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_sharingEntry.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_sharingEntry.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -550,7 +464,7 @@ public class SharingEntryWrapper implements SharingEntry,
 	*/
 	@Override
 	public void setShareable(boolean shareable) {
-		_sharingEntry.setShareable(shareable);
+		model.setShareable(shareable);
 	}
 
 	/**
@@ -560,7 +474,7 @@ public class SharingEntryWrapper implements SharingEntry,
 	*/
 	@Override
 	public void setSharingEntryId(long sharingEntryId) {
-		_sharingEntry.setSharingEntryId(sharingEntryId);
+		model.setSharingEntryId(sharingEntryId);
 	}
 
 	/**
@@ -570,7 +484,7 @@ public class SharingEntryWrapper implements SharingEntry,
 	*/
 	@Override
 	public void setToUserId(long toUserId) {
-		_sharingEntry.setToUserId(toUserId);
+		model.setToUserId(toUserId);
 	}
 
 	/**
@@ -580,7 +494,7 @@ public class SharingEntryWrapper implements SharingEntry,
 	*/
 	@Override
 	public void setToUserUuid(String toUserUuid) {
-		_sharingEntry.setToUserUuid(toUserUuid);
+		model.setToUserUuid(toUserUuid);
 	}
 
 	/**
@@ -590,77 +504,16 @@ public class SharingEntryWrapper implements SharingEntry,
 	*/
 	@Override
 	public void setUuid(String uuid) {
-		_sharingEntry.setUuid(uuid);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<SharingEntry> toCacheModel() {
-		return _sharingEntry.toCacheModel();
-	}
-
-	@Override
-	public SharingEntry toEscapedModel() {
-		return new SharingEntryWrapper(_sharingEntry.toEscapedModel());
-	}
-
-	@Override
-	public String toString() {
-		return _sharingEntry.toString();
-	}
-
-	@Override
-	public SharingEntry toUnescapedModel() {
-		return new SharingEntryWrapper(_sharingEntry.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _sharingEntry.toXmlString();
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-
-		if (!(obj instanceof SharingEntryWrapper)) {
-			return false;
-		}
-
-		SharingEntryWrapper sharingEntryWrapper = (SharingEntryWrapper)obj;
-
-		if (Objects.equals(_sharingEntry, sharingEntryWrapper._sharingEntry)) {
-			return true;
-		}
-
-		return false;
+		model.setUuid(uuid);
 	}
 
 	@Override
 	public StagedModelType getStagedModelType() {
-		return _sharingEntry.getStagedModelType();
+		return model.getStagedModelType();
 	}
 
 	@Override
-	public SharingEntry getWrappedModel() {
-		return _sharingEntry;
+	protected SharingEntryWrapper wrap(SharingEntry sharingEntry) {
+		return new SharingEntryWrapper(sharingEntry);
 	}
-
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _sharingEntry.isEntityCacheEnabled();
-	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _sharingEntry.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_sharingEntry.resetOriginalValues();
-	}
-
-	private final SharingEntry _sharingEntry;
 }

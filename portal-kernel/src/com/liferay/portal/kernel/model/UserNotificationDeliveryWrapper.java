@@ -16,15 +16,10 @@ package com.liferay.portal.kernel.model;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
-
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -36,21 +31,11 @@ import java.util.Objects;
  * @generated
  */
 @ProviderType
-public class UserNotificationDeliveryWrapper implements UserNotificationDelivery,
-	ModelWrapper<UserNotificationDelivery> {
+public class UserNotificationDeliveryWrapper extends BaseModelWrapper<UserNotificationDelivery>
+	implements UserNotificationDelivery, ModelWrapper<UserNotificationDelivery> {
 	public UserNotificationDeliveryWrapper(
 		UserNotificationDelivery userNotificationDelivery) {
-		_userNotificationDelivery = userNotificationDelivery;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return UserNotificationDelivery.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return UserNotificationDelivery.class.getName();
+		super(userNotificationDelivery);
 	}
 
 	@Override
@@ -129,16 +114,6 @@ public class UserNotificationDeliveryWrapper implements UserNotificationDelivery
 		}
 	}
 
-	@Override
-	public Object clone() {
-		return new UserNotificationDeliveryWrapper((UserNotificationDelivery)_userNotificationDelivery.clone());
-	}
-
-	@Override
-	public int compareTo(UserNotificationDelivery userNotificationDelivery) {
-		return _userNotificationDelivery.compareTo(userNotificationDelivery);
-	}
-
 	/**
 	* Returns the fully qualified class name of this user notification delivery.
 	*
@@ -146,7 +121,7 @@ public class UserNotificationDeliveryWrapper implements UserNotificationDelivery
 	*/
 	@Override
 	public String getClassName() {
-		return _userNotificationDelivery.getClassName();
+		return model.getClassName();
 	}
 
 	/**
@@ -156,7 +131,7 @@ public class UserNotificationDeliveryWrapper implements UserNotificationDelivery
 	*/
 	@Override
 	public long getClassNameId() {
-		return _userNotificationDelivery.getClassNameId();
+		return model.getClassNameId();
 	}
 
 	/**
@@ -166,7 +141,7 @@ public class UserNotificationDeliveryWrapper implements UserNotificationDelivery
 	*/
 	@Override
 	public long getCompanyId() {
-		return _userNotificationDelivery.getCompanyId();
+		return model.getCompanyId();
 	}
 
 	/**
@@ -176,7 +151,7 @@ public class UserNotificationDeliveryWrapper implements UserNotificationDelivery
 	*/
 	@Override
 	public boolean getDeliver() {
-		return _userNotificationDelivery.getDeliver();
+		return model.getDeliver();
 	}
 
 	/**
@@ -186,12 +161,7 @@ public class UserNotificationDeliveryWrapper implements UserNotificationDelivery
 	*/
 	@Override
 	public int getDeliveryType() {
-		return _userNotificationDelivery.getDeliveryType();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _userNotificationDelivery.getExpandoBridge();
+		return model.getDeliveryType();
 	}
 
 	/**
@@ -201,7 +171,7 @@ public class UserNotificationDeliveryWrapper implements UserNotificationDelivery
 	*/
 	@Override
 	public long getMvccVersion() {
-		return _userNotificationDelivery.getMvccVersion();
+		return model.getMvccVersion();
 	}
 
 	/**
@@ -211,7 +181,7 @@ public class UserNotificationDeliveryWrapper implements UserNotificationDelivery
 	*/
 	@Override
 	public int getNotificationType() {
-		return _userNotificationDelivery.getNotificationType();
+		return model.getNotificationType();
 	}
 
 	/**
@@ -221,7 +191,7 @@ public class UserNotificationDeliveryWrapper implements UserNotificationDelivery
 	*/
 	@Override
 	public String getPortletId() {
-		return _userNotificationDelivery.getPortletId();
+		return model.getPortletId();
 	}
 
 	/**
@@ -231,12 +201,7 @@ public class UserNotificationDeliveryWrapper implements UserNotificationDelivery
 	*/
 	@Override
 	public long getPrimaryKey() {
-		return _userNotificationDelivery.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _userNotificationDelivery.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	/**
@@ -246,7 +211,7 @@ public class UserNotificationDeliveryWrapper implements UserNotificationDelivery
 	*/
 	@Override
 	public long getUserId() {
-		return _userNotificationDelivery.getUserId();
+		return model.getUserId();
 	}
 
 	/**
@@ -256,7 +221,7 @@ public class UserNotificationDeliveryWrapper implements UserNotificationDelivery
 	*/
 	@Override
 	public long getUserNotificationDeliveryId() {
-		return _userNotificationDelivery.getUserNotificationDeliveryId();
+		return model.getUserNotificationDeliveryId();
 	}
 
 	/**
@@ -266,17 +231,7 @@ public class UserNotificationDeliveryWrapper implements UserNotificationDelivery
 	*/
 	@Override
 	public String getUserUuid() {
-		return _userNotificationDelivery.getUserUuid();
-	}
-
-	@Override
-	public int hashCode() {
-		return _userNotificationDelivery.hashCode();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _userNotificationDelivery.isCachedModel();
+		return model.getUserUuid();
 	}
 
 	/**
@@ -286,32 +241,17 @@ public class UserNotificationDeliveryWrapper implements UserNotificationDelivery
 	*/
 	@Override
 	public boolean isDeliver() {
-		return _userNotificationDelivery.isDeliver();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _userNotificationDelivery.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _userNotificationDelivery.isNew();
+		return model.isDeliver();
 	}
 
 	@Override
 	public void persist() {
-		_userNotificationDelivery.persist();
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_userNotificationDelivery.setCachedModel(cachedModel);
+		model.persist();
 	}
 
 	@Override
 	public void setClassName(String className) {
-		_userNotificationDelivery.setClassName(className);
+		model.setClassName(className);
 	}
 
 	/**
@@ -321,7 +261,7 @@ public class UserNotificationDeliveryWrapper implements UserNotificationDelivery
 	*/
 	@Override
 	public void setClassNameId(long classNameId) {
-		_userNotificationDelivery.setClassNameId(classNameId);
+		model.setClassNameId(classNameId);
 	}
 
 	/**
@@ -331,7 +271,7 @@ public class UserNotificationDeliveryWrapper implements UserNotificationDelivery
 	*/
 	@Override
 	public void setCompanyId(long companyId) {
-		_userNotificationDelivery.setCompanyId(companyId);
+		model.setCompanyId(companyId);
 	}
 
 	/**
@@ -341,7 +281,7 @@ public class UserNotificationDeliveryWrapper implements UserNotificationDelivery
 	*/
 	@Override
 	public void setDeliver(boolean deliver) {
-		_userNotificationDelivery.setDeliver(deliver);
+		model.setDeliver(deliver);
 	}
 
 	/**
@@ -351,22 +291,7 @@ public class UserNotificationDeliveryWrapper implements UserNotificationDelivery
 	*/
 	@Override
 	public void setDeliveryType(int deliveryType) {
-		_userNotificationDelivery.setDeliveryType(deliveryType);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(BaseModel<?> baseModel) {
-		_userNotificationDelivery.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_userNotificationDelivery.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_userNotificationDelivery.setExpandoBridgeAttributes(serviceContext);
+		model.setDeliveryType(deliveryType);
 	}
 
 	/**
@@ -376,12 +301,7 @@ public class UserNotificationDeliveryWrapper implements UserNotificationDelivery
 	*/
 	@Override
 	public void setMvccVersion(long mvccVersion) {
-		_userNotificationDelivery.setMvccVersion(mvccVersion);
-	}
-
-	@Override
-	public void setNew(boolean n) {
-		_userNotificationDelivery.setNew(n);
+		model.setMvccVersion(mvccVersion);
 	}
 
 	/**
@@ -391,7 +311,7 @@ public class UserNotificationDeliveryWrapper implements UserNotificationDelivery
 	*/
 	@Override
 	public void setNotificationType(int notificationType) {
-		_userNotificationDelivery.setNotificationType(notificationType);
+		model.setNotificationType(notificationType);
 	}
 
 	/**
@@ -401,7 +321,7 @@ public class UserNotificationDeliveryWrapper implements UserNotificationDelivery
 	*/
 	@Override
 	public void setPortletId(String portletId) {
-		_userNotificationDelivery.setPortletId(portletId);
+		model.setPortletId(portletId);
 	}
 
 	/**
@@ -411,12 +331,7 @@ public class UserNotificationDeliveryWrapper implements UserNotificationDelivery
 	*/
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_userNotificationDelivery.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_userNotificationDelivery.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -426,7 +341,7 @@ public class UserNotificationDeliveryWrapper implements UserNotificationDelivery
 	*/
 	@Override
 	public void setUserId(long userId) {
-		_userNotificationDelivery.setUserId(userId);
+		model.setUserId(userId);
 	}
 
 	/**
@@ -436,7 +351,7 @@ public class UserNotificationDeliveryWrapper implements UserNotificationDelivery
 	*/
 	@Override
 	public void setUserNotificationDeliveryId(long userNotificationDeliveryId) {
-		_userNotificationDelivery.setUserNotificationDeliveryId(userNotificationDeliveryId);
+		model.setUserNotificationDeliveryId(userNotificationDeliveryId);
 	}
 
 	/**
@@ -446,73 +361,12 @@ public class UserNotificationDeliveryWrapper implements UserNotificationDelivery
 	*/
 	@Override
 	public void setUserUuid(String userUuid) {
-		_userNotificationDelivery.setUserUuid(userUuid);
+		model.setUserUuid(userUuid);
 	}
 
 	@Override
-	public CacheModel<UserNotificationDelivery> toCacheModel() {
-		return _userNotificationDelivery.toCacheModel();
+	protected UserNotificationDeliveryWrapper wrap(
+		UserNotificationDelivery userNotificationDelivery) {
+		return new UserNotificationDeliveryWrapper(userNotificationDelivery);
 	}
-
-	@Override
-	public UserNotificationDelivery toEscapedModel() {
-		return new UserNotificationDeliveryWrapper(_userNotificationDelivery.toEscapedModel());
-	}
-
-	@Override
-	public String toString() {
-		return _userNotificationDelivery.toString();
-	}
-
-	@Override
-	public UserNotificationDelivery toUnescapedModel() {
-		return new UserNotificationDeliveryWrapper(_userNotificationDelivery.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _userNotificationDelivery.toXmlString();
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-
-		if (!(obj instanceof UserNotificationDeliveryWrapper)) {
-			return false;
-		}
-
-		UserNotificationDeliveryWrapper userNotificationDeliveryWrapper = (UserNotificationDeliveryWrapper)obj;
-
-		if (Objects.equals(_userNotificationDelivery,
-					userNotificationDeliveryWrapper._userNotificationDelivery)) {
-			return true;
-		}
-
-		return false;
-	}
-
-	@Override
-	public UserNotificationDelivery getWrappedModel() {
-		return _userNotificationDelivery;
-	}
-
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _userNotificationDelivery.isEntityCacheEnabled();
-	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _userNotificationDelivery.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_userNotificationDelivery.resetOriginalValues();
-	}
-
-	private final UserNotificationDelivery _userNotificationDelivery;
 }

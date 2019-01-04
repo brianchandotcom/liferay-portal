@@ -16,16 +16,11 @@ package com.liferay.portal.kernel.model;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
-
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -37,21 +32,11 @@ import java.util.Objects;
  * @generated
  */
 @ProviderType
-public class WorkflowInstanceLinkWrapper implements WorkflowInstanceLink,
-	ModelWrapper<WorkflowInstanceLink> {
+public class WorkflowInstanceLinkWrapper extends BaseModelWrapper<WorkflowInstanceLink>
+	implements WorkflowInstanceLink, ModelWrapper<WorkflowInstanceLink> {
 	public WorkflowInstanceLinkWrapper(
 		WorkflowInstanceLink workflowInstanceLink) {
-		_workflowInstanceLink = workflowInstanceLink;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return WorkflowInstanceLink.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return WorkflowInstanceLink.class.getName();
+		super(workflowInstanceLink);
 	}
 
 	@Override
@@ -143,16 +128,6 @@ public class WorkflowInstanceLinkWrapper implements WorkflowInstanceLink,
 		}
 	}
 
-	@Override
-	public Object clone() {
-		return new WorkflowInstanceLinkWrapper((WorkflowInstanceLink)_workflowInstanceLink.clone());
-	}
-
-	@Override
-	public int compareTo(WorkflowInstanceLink workflowInstanceLink) {
-		return _workflowInstanceLink.compareTo(workflowInstanceLink);
-	}
-
 	/**
 	* Returns the fully qualified class name of this workflow instance link.
 	*
@@ -160,7 +135,7 @@ public class WorkflowInstanceLinkWrapper implements WorkflowInstanceLink,
 	*/
 	@Override
 	public String getClassName() {
-		return _workflowInstanceLink.getClassName();
+		return model.getClassName();
 	}
 
 	/**
@@ -170,7 +145,7 @@ public class WorkflowInstanceLinkWrapper implements WorkflowInstanceLink,
 	*/
 	@Override
 	public long getClassNameId() {
-		return _workflowInstanceLink.getClassNameId();
+		return model.getClassNameId();
 	}
 
 	/**
@@ -180,7 +155,7 @@ public class WorkflowInstanceLinkWrapper implements WorkflowInstanceLink,
 	*/
 	@Override
 	public long getClassPK() {
-		return _workflowInstanceLink.getClassPK();
+		return model.getClassPK();
 	}
 
 	/**
@@ -190,7 +165,7 @@ public class WorkflowInstanceLinkWrapper implements WorkflowInstanceLink,
 	*/
 	@Override
 	public long getCompanyId() {
-		return _workflowInstanceLink.getCompanyId();
+		return model.getCompanyId();
 	}
 
 	/**
@@ -200,12 +175,7 @@ public class WorkflowInstanceLinkWrapper implements WorkflowInstanceLink,
 	*/
 	@Override
 	public Date getCreateDate() {
-		return _workflowInstanceLink.getCreateDate();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _workflowInstanceLink.getExpandoBridge();
+		return model.getCreateDate();
 	}
 
 	/**
@@ -215,7 +185,7 @@ public class WorkflowInstanceLinkWrapper implements WorkflowInstanceLink,
 	*/
 	@Override
 	public long getGroupId() {
-		return _workflowInstanceLink.getGroupId();
+		return model.getGroupId();
 	}
 
 	/**
@@ -225,7 +195,7 @@ public class WorkflowInstanceLinkWrapper implements WorkflowInstanceLink,
 	*/
 	@Override
 	public Date getModifiedDate() {
-		return _workflowInstanceLink.getModifiedDate();
+		return model.getModifiedDate();
 	}
 
 	/**
@@ -235,7 +205,7 @@ public class WorkflowInstanceLinkWrapper implements WorkflowInstanceLink,
 	*/
 	@Override
 	public long getMvccVersion() {
-		return _workflowInstanceLink.getMvccVersion();
+		return model.getMvccVersion();
 	}
 
 	/**
@@ -245,12 +215,7 @@ public class WorkflowInstanceLinkWrapper implements WorkflowInstanceLink,
 	*/
 	@Override
 	public long getPrimaryKey() {
-		return _workflowInstanceLink.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _workflowInstanceLink.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	/**
@@ -260,7 +225,7 @@ public class WorkflowInstanceLinkWrapper implements WorkflowInstanceLink,
 	*/
 	@Override
 	public long getUserId() {
-		return _workflowInstanceLink.getUserId();
+		return model.getUserId();
 	}
 
 	/**
@@ -270,7 +235,7 @@ public class WorkflowInstanceLinkWrapper implements WorkflowInstanceLink,
 	*/
 	@Override
 	public String getUserName() {
-		return _workflowInstanceLink.getUserName();
+		return model.getUserName();
 	}
 
 	/**
@@ -280,7 +245,7 @@ public class WorkflowInstanceLinkWrapper implements WorkflowInstanceLink,
 	*/
 	@Override
 	public String getUserUuid() {
-		return _workflowInstanceLink.getUserUuid();
+		return model.getUserUuid();
 	}
 
 	/**
@@ -290,7 +255,7 @@ public class WorkflowInstanceLinkWrapper implements WorkflowInstanceLink,
 	*/
 	@Override
 	public long getWorkflowInstanceId() {
-		return _workflowInstanceLink.getWorkflowInstanceId();
+		return model.getWorkflowInstanceId();
 	}
 
 	/**
@@ -300,42 +265,17 @@ public class WorkflowInstanceLinkWrapper implements WorkflowInstanceLink,
 	*/
 	@Override
 	public long getWorkflowInstanceLinkId() {
-		return _workflowInstanceLink.getWorkflowInstanceLinkId();
-	}
-
-	@Override
-	public int hashCode() {
-		return _workflowInstanceLink.hashCode();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _workflowInstanceLink.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _workflowInstanceLink.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _workflowInstanceLink.isNew();
+		return model.getWorkflowInstanceLinkId();
 	}
 
 	@Override
 	public void persist() {
-		_workflowInstanceLink.persist();
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_workflowInstanceLink.setCachedModel(cachedModel);
+		model.persist();
 	}
 
 	@Override
 	public void setClassName(String className) {
-		_workflowInstanceLink.setClassName(className);
+		model.setClassName(className);
 	}
 
 	/**
@@ -345,7 +285,7 @@ public class WorkflowInstanceLinkWrapper implements WorkflowInstanceLink,
 	*/
 	@Override
 	public void setClassNameId(long classNameId) {
-		_workflowInstanceLink.setClassNameId(classNameId);
+		model.setClassNameId(classNameId);
 	}
 
 	/**
@@ -355,7 +295,7 @@ public class WorkflowInstanceLinkWrapper implements WorkflowInstanceLink,
 	*/
 	@Override
 	public void setClassPK(long classPK) {
-		_workflowInstanceLink.setClassPK(classPK);
+		model.setClassPK(classPK);
 	}
 
 	/**
@@ -365,7 +305,7 @@ public class WorkflowInstanceLinkWrapper implements WorkflowInstanceLink,
 	*/
 	@Override
 	public void setCompanyId(long companyId) {
-		_workflowInstanceLink.setCompanyId(companyId);
+		model.setCompanyId(companyId);
 	}
 
 	/**
@@ -375,22 +315,7 @@ public class WorkflowInstanceLinkWrapper implements WorkflowInstanceLink,
 	*/
 	@Override
 	public void setCreateDate(Date createDate) {
-		_workflowInstanceLink.setCreateDate(createDate);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(BaseModel<?> baseModel) {
-		_workflowInstanceLink.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_workflowInstanceLink.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_workflowInstanceLink.setExpandoBridgeAttributes(serviceContext);
+		model.setCreateDate(createDate);
 	}
 
 	/**
@@ -400,7 +325,7 @@ public class WorkflowInstanceLinkWrapper implements WorkflowInstanceLink,
 	*/
 	@Override
 	public void setGroupId(long groupId) {
-		_workflowInstanceLink.setGroupId(groupId);
+		model.setGroupId(groupId);
 	}
 
 	/**
@@ -410,7 +335,7 @@ public class WorkflowInstanceLinkWrapper implements WorkflowInstanceLink,
 	*/
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
-		_workflowInstanceLink.setModifiedDate(modifiedDate);
+		model.setModifiedDate(modifiedDate);
 	}
 
 	/**
@@ -420,12 +345,7 @@ public class WorkflowInstanceLinkWrapper implements WorkflowInstanceLink,
 	*/
 	@Override
 	public void setMvccVersion(long mvccVersion) {
-		_workflowInstanceLink.setMvccVersion(mvccVersion);
-	}
-
-	@Override
-	public void setNew(boolean n) {
-		_workflowInstanceLink.setNew(n);
+		model.setMvccVersion(mvccVersion);
 	}
 
 	/**
@@ -435,12 +355,7 @@ public class WorkflowInstanceLinkWrapper implements WorkflowInstanceLink,
 	*/
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_workflowInstanceLink.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_workflowInstanceLink.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -450,7 +365,7 @@ public class WorkflowInstanceLinkWrapper implements WorkflowInstanceLink,
 	*/
 	@Override
 	public void setUserId(long userId) {
-		_workflowInstanceLink.setUserId(userId);
+		model.setUserId(userId);
 	}
 
 	/**
@@ -460,7 +375,7 @@ public class WorkflowInstanceLinkWrapper implements WorkflowInstanceLink,
 	*/
 	@Override
 	public void setUserName(String userName) {
-		_workflowInstanceLink.setUserName(userName);
+		model.setUserName(userName);
 	}
 
 	/**
@@ -470,7 +385,7 @@ public class WorkflowInstanceLinkWrapper implements WorkflowInstanceLink,
 	*/
 	@Override
 	public void setUserUuid(String userUuid) {
-		_workflowInstanceLink.setUserUuid(userUuid);
+		model.setUserUuid(userUuid);
 	}
 
 	/**
@@ -480,7 +395,7 @@ public class WorkflowInstanceLinkWrapper implements WorkflowInstanceLink,
 	*/
 	@Override
 	public void setWorkflowInstanceId(long workflowInstanceId) {
-		_workflowInstanceLink.setWorkflowInstanceId(workflowInstanceId);
+		model.setWorkflowInstanceId(workflowInstanceId);
 	}
 
 	/**
@@ -490,73 +405,12 @@ public class WorkflowInstanceLinkWrapper implements WorkflowInstanceLink,
 	*/
 	@Override
 	public void setWorkflowInstanceLinkId(long workflowInstanceLinkId) {
-		_workflowInstanceLink.setWorkflowInstanceLinkId(workflowInstanceLinkId);
+		model.setWorkflowInstanceLinkId(workflowInstanceLinkId);
 	}
 
 	@Override
-	public CacheModel<WorkflowInstanceLink> toCacheModel() {
-		return _workflowInstanceLink.toCacheModel();
+	protected WorkflowInstanceLinkWrapper wrap(
+		WorkflowInstanceLink workflowInstanceLink) {
+		return new WorkflowInstanceLinkWrapper(workflowInstanceLink);
 	}
-
-	@Override
-	public WorkflowInstanceLink toEscapedModel() {
-		return new WorkflowInstanceLinkWrapper(_workflowInstanceLink.toEscapedModel());
-	}
-
-	@Override
-	public String toString() {
-		return _workflowInstanceLink.toString();
-	}
-
-	@Override
-	public WorkflowInstanceLink toUnescapedModel() {
-		return new WorkflowInstanceLinkWrapper(_workflowInstanceLink.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _workflowInstanceLink.toXmlString();
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-
-		if (!(obj instanceof WorkflowInstanceLinkWrapper)) {
-			return false;
-		}
-
-		WorkflowInstanceLinkWrapper workflowInstanceLinkWrapper = (WorkflowInstanceLinkWrapper)obj;
-
-		if (Objects.equals(_workflowInstanceLink,
-					workflowInstanceLinkWrapper._workflowInstanceLink)) {
-			return true;
-		}
-
-		return false;
-	}
-
-	@Override
-	public WorkflowInstanceLink getWrappedModel() {
-		return _workflowInstanceLink;
-	}
-
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _workflowInstanceLink.isEntityCacheEnabled();
-	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _workflowInstanceLink.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_workflowInstanceLink.resetOriginalValues();
-	}
-
-	private final WorkflowInstanceLink _workflowInstanceLink;
 }

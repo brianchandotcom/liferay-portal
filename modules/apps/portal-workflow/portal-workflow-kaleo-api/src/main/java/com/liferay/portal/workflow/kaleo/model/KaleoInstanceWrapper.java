@@ -16,9 +16,8 @@ package com.liferay.portal.workflow.kaleo.model;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
-
 import com.liferay.portal.kernel.model.ModelWrapper;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 import com.liferay.portal.kernel.service.ServiceContext;
 
 import java.io.Serializable;
@@ -26,7 +25,6 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -38,20 +36,10 @@ import java.util.Objects;
  * @generated
  */
 @ProviderType
-public class KaleoInstanceWrapper implements KaleoInstance,
-	ModelWrapper<KaleoInstance> {
+public class KaleoInstanceWrapper extends BaseModelWrapper<KaleoInstance>
+	implements KaleoInstance, ModelWrapper<KaleoInstance> {
 	public KaleoInstanceWrapper(KaleoInstance kaleoInstance) {
-		_kaleoInstance = kaleoInstance;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return KaleoInstance.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return KaleoInstance.class.getName();
+		super(kaleoInstance);
 	}
 
 	@Override
@@ -181,16 +169,6 @@ public class KaleoInstanceWrapper implements KaleoInstance,
 		}
 	}
 
-	@Override
-	public Object clone() {
-		return new KaleoInstanceWrapper((KaleoInstance)_kaleoInstance.clone());
-	}
-
-	@Override
-	public int compareTo(KaleoInstance kaleoInstance) {
-		return _kaleoInstance.compareTo(kaleoInstance);
-	}
-
 	/**
 	* Returns the class name of this kaleo instance.
 	*
@@ -198,7 +176,7 @@ public class KaleoInstanceWrapper implements KaleoInstance,
 	*/
 	@Override
 	public String getClassName() {
-		return _kaleoInstance.getClassName();
+		return model.getClassName();
 	}
 
 	/**
@@ -208,7 +186,7 @@ public class KaleoInstanceWrapper implements KaleoInstance,
 	*/
 	@Override
 	public long getClassPK() {
-		return _kaleoInstance.getClassPK();
+		return model.getClassPK();
 	}
 
 	/**
@@ -218,7 +196,7 @@ public class KaleoInstanceWrapper implements KaleoInstance,
 	*/
 	@Override
 	public long getCompanyId() {
-		return _kaleoInstance.getCompanyId();
+		return model.getCompanyId();
 	}
 
 	/**
@@ -228,7 +206,7 @@ public class KaleoInstanceWrapper implements KaleoInstance,
 	*/
 	@Override
 	public boolean getCompleted() {
-		return _kaleoInstance.getCompleted();
+		return model.getCompleted();
 	}
 
 	/**
@@ -238,7 +216,7 @@ public class KaleoInstanceWrapper implements KaleoInstance,
 	*/
 	@Override
 	public Date getCompletionDate() {
-		return _kaleoInstance.getCompletionDate();
+		return model.getCompletionDate();
 	}
 
 	/**
@@ -248,12 +226,7 @@ public class KaleoInstanceWrapper implements KaleoInstance,
 	*/
 	@Override
 	public Date getCreateDate() {
-		return _kaleoInstance.getCreateDate();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _kaleoInstance.getExpandoBridge();
+		return model.getCreateDate();
 	}
 
 	/**
@@ -263,7 +236,7 @@ public class KaleoInstanceWrapper implements KaleoInstance,
 	*/
 	@Override
 	public long getGroupId() {
-		return _kaleoInstance.getGroupId();
+		return model.getGroupId();
 	}
 
 	/**
@@ -273,7 +246,7 @@ public class KaleoInstanceWrapper implements KaleoInstance,
 	*/
 	@Override
 	public String getKaleoDefinitionName() {
-		return _kaleoInstance.getKaleoDefinitionName();
+		return model.getKaleoDefinitionName();
 	}
 
 	/**
@@ -283,7 +256,7 @@ public class KaleoInstanceWrapper implements KaleoInstance,
 	*/
 	@Override
 	public int getKaleoDefinitionVersion() {
-		return _kaleoInstance.getKaleoDefinitionVersion();
+		return model.getKaleoDefinitionVersion();
 	}
 
 	/**
@@ -293,7 +266,7 @@ public class KaleoInstanceWrapper implements KaleoInstance,
 	*/
 	@Override
 	public long getKaleoDefinitionVersionId() {
-		return _kaleoInstance.getKaleoDefinitionVersionId();
+		return model.getKaleoDefinitionVersionId();
 	}
 
 	/**
@@ -303,7 +276,7 @@ public class KaleoInstanceWrapper implements KaleoInstance,
 	*/
 	@Override
 	public long getKaleoInstanceId() {
-		return _kaleoInstance.getKaleoInstanceId();
+		return model.getKaleoInstanceId();
 	}
 
 	/**
@@ -313,7 +286,7 @@ public class KaleoInstanceWrapper implements KaleoInstance,
 	*/
 	@Override
 	public Date getModifiedDate() {
-		return _kaleoInstance.getModifiedDate();
+		return model.getModifiedDate();
 	}
 
 	/**
@@ -323,27 +296,21 @@ public class KaleoInstanceWrapper implements KaleoInstance,
 	*/
 	@Override
 	public long getPrimaryKey() {
-		return _kaleoInstance.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _kaleoInstance.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	@Override
 	public KaleoInstanceToken getRootKaleoInstanceToken(
 		Map<String, Serializable> workflowContext, ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _kaleoInstance.getRootKaleoInstanceToken(workflowContext,
-			serviceContext);
+		return model.getRootKaleoInstanceToken(workflowContext, serviceContext);
 	}
 
 	@Override
 	public KaleoInstanceToken getRootKaleoInstanceToken(
 		ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _kaleoInstance.getRootKaleoInstanceToken(serviceContext);
+		return model.getRootKaleoInstanceToken(serviceContext);
 	}
 
 	/**
@@ -353,7 +320,7 @@ public class KaleoInstanceWrapper implements KaleoInstance,
 	*/
 	@Override
 	public long getRootKaleoInstanceTokenId() {
-		return _kaleoInstance.getRootKaleoInstanceTokenId();
+		return model.getRootKaleoInstanceTokenId();
 	}
 
 	/**
@@ -363,7 +330,7 @@ public class KaleoInstanceWrapper implements KaleoInstance,
 	*/
 	@Override
 	public long getUserId() {
-		return _kaleoInstance.getUserId();
+		return model.getUserId();
 	}
 
 	/**
@@ -373,7 +340,7 @@ public class KaleoInstanceWrapper implements KaleoInstance,
 	*/
 	@Override
 	public String getUserName() {
-		return _kaleoInstance.getUserName();
+		return model.getUserName();
 	}
 
 	/**
@@ -383,7 +350,7 @@ public class KaleoInstanceWrapper implements KaleoInstance,
 	*/
 	@Override
 	public String getUserUuid() {
-		return _kaleoInstance.getUserUuid();
+		return model.getUserUuid();
 	}
 
 	/**
@@ -393,17 +360,7 @@ public class KaleoInstanceWrapper implements KaleoInstance,
 	*/
 	@Override
 	public String getWorkflowContext() {
-		return _kaleoInstance.getWorkflowContext();
-	}
-
-	@Override
-	public int hashCode() {
-		return _kaleoInstance.hashCode();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _kaleoInstance.isCachedModel();
+		return model.getWorkflowContext();
 	}
 
 	/**
@@ -413,27 +370,12 @@ public class KaleoInstanceWrapper implements KaleoInstance,
 	*/
 	@Override
 	public boolean isCompleted() {
-		return _kaleoInstance.isCompleted();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _kaleoInstance.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _kaleoInstance.isNew();
+		return model.isCompleted();
 	}
 
 	@Override
 	public void persist() {
-		_kaleoInstance.persist();
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_kaleoInstance.setCachedModel(cachedModel);
+		model.persist();
 	}
 
 	/**
@@ -443,7 +385,7 @@ public class KaleoInstanceWrapper implements KaleoInstance,
 	*/
 	@Override
 	public void setClassName(String className) {
-		_kaleoInstance.setClassName(className);
+		model.setClassName(className);
 	}
 
 	/**
@@ -453,7 +395,7 @@ public class KaleoInstanceWrapper implements KaleoInstance,
 	*/
 	@Override
 	public void setClassPK(long classPK) {
-		_kaleoInstance.setClassPK(classPK);
+		model.setClassPK(classPK);
 	}
 
 	/**
@@ -463,7 +405,7 @@ public class KaleoInstanceWrapper implements KaleoInstance,
 	*/
 	@Override
 	public void setCompanyId(long companyId) {
-		_kaleoInstance.setCompanyId(companyId);
+		model.setCompanyId(companyId);
 	}
 
 	/**
@@ -473,7 +415,7 @@ public class KaleoInstanceWrapper implements KaleoInstance,
 	*/
 	@Override
 	public void setCompleted(boolean completed) {
-		_kaleoInstance.setCompleted(completed);
+		model.setCompleted(completed);
 	}
 
 	/**
@@ -483,7 +425,7 @@ public class KaleoInstanceWrapper implements KaleoInstance,
 	*/
 	@Override
 	public void setCompletionDate(Date completionDate) {
-		_kaleoInstance.setCompletionDate(completionDate);
+		model.setCompletionDate(completionDate);
 	}
 
 	/**
@@ -493,23 +435,7 @@ public class KaleoInstanceWrapper implements KaleoInstance,
 	*/
 	@Override
 	public void setCreateDate(Date createDate) {
-		_kaleoInstance.setCreateDate(createDate);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-		_kaleoInstance.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_kaleoInstance.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_kaleoInstance.setExpandoBridgeAttributes(serviceContext);
+		model.setCreateDate(createDate);
 	}
 
 	/**
@@ -519,7 +445,7 @@ public class KaleoInstanceWrapper implements KaleoInstance,
 	*/
 	@Override
 	public void setGroupId(long groupId) {
-		_kaleoInstance.setGroupId(groupId);
+		model.setGroupId(groupId);
 	}
 
 	/**
@@ -529,7 +455,7 @@ public class KaleoInstanceWrapper implements KaleoInstance,
 	*/
 	@Override
 	public void setKaleoDefinitionName(String kaleoDefinitionName) {
-		_kaleoInstance.setKaleoDefinitionName(kaleoDefinitionName);
+		model.setKaleoDefinitionName(kaleoDefinitionName);
 	}
 
 	/**
@@ -539,7 +465,7 @@ public class KaleoInstanceWrapper implements KaleoInstance,
 	*/
 	@Override
 	public void setKaleoDefinitionVersion(int kaleoDefinitionVersion) {
-		_kaleoInstance.setKaleoDefinitionVersion(kaleoDefinitionVersion);
+		model.setKaleoDefinitionVersion(kaleoDefinitionVersion);
 	}
 
 	/**
@@ -549,7 +475,7 @@ public class KaleoInstanceWrapper implements KaleoInstance,
 	*/
 	@Override
 	public void setKaleoDefinitionVersionId(long kaleoDefinitionVersionId) {
-		_kaleoInstance.setKaleoDefinitionVersionId(kaleoDefinitionVersionId);
+		model.setKaleoDefinitionVersionId(kaleoDefinitionVersionId);
 	}
 
 	/**
@@ -559,7 +485,7 @@ public class KaleoInstanceWrapper implements KaleoInstance,
 	*/
 	@Override
 	public void setKaleoInstanceId(long kaleoInstanceId) {
-		_kaleoInstance.setKaleoInstanceId(kaleoInstanceId);
+		model.setKaleoInstanceId(kaleoInstanceId);
 	}
 
 	/**
@@ -569,12 +495,7 @@ public class KaleoInstanceWrapper implements KaleoInstance,
 	*/
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
-		_kaleoInstance.setModifiedDate(modifiedDate);
-	}
-
-	@Override
-	public void setNew(boolean n) {
-		_kaleoInstance.setNew(n);
+		model.setModifiedDate(modifiedDate);
 	}
 
 	/**
@@ -584,12 +505,7 @@ public class KaleoInstanceWrapper implements KaleoInstance,
 	*/
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_kaleoInstance.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_kaleoInstance.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -599,7 +515,7 @@ public class KaleoInstanceWrapper implements KaleoInstance,
 	*/
 	@Override
 	public void setRootKaleoInstanceTokenId(long rootKaleoInstanceTokenId) {
-		_kaleoInstance.setRootKaleoInstanceTokenId(rootKaleoInstanceTokenId);
+		model.setRootKaleoInstanceTokenId(rootKaleoInstanceTokenId);
 	}
 
 	/**
@@ -609,7 +525,7 @@ public class KaleoInstanceWrapper implements KaleoInstance,
 	*/
 	@Override
 	public void setUserId(long userId) {
-		_kaleoInstance.setUserId(userId);
+		model.setUserId(userId);
 	}
 
 	/**
@@ -619,7 +535,7 @@ public class KaleoInstanceWrapper implements KaleoInstance,
 	*/
 	@Override
 	public void setUserName(String userName) {
-		_kaleoInstance.setUserName(userName);
+		model.setUserName(userName);
 	}
 
 	/**
@@ -629,7 +545,7 @@ public class KaleoInstanceWrapper implements KaleoInstance,
 	*/
 	@Override
 	public void setUserUuid(String userUuid) {
-		_kaleoInstance.setUserUuid(userUuid);
+		model.setUserUuid(userUuid);
 	}
 
 	/**
@@ -639,72 +555,11 @@ public class KaleoInstanceWrapper implements KaleoInstance,
 	*/
 	@Override
 	public void setWorkflowContext(String workflowContext) {
-		_kaleoInstance.setWorkflowContext(workflowContext);
+		model.setWorkflowContext(workflowContext);
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.CacheModel<KaleoInstance> toCacheModel() {
-		return _kaleoInstance.toCacheModel();
+	protected KaleoInstanceWrapper wrap(KaleoInstance kaleoInstance) {
+		return new KaleoInstanceWrapper(kaleoInstance);
 	}
-
-	@Override
-	public KaleoInstance toEscapedModel() {
-		return new KaleoInstanceWrapper(_kaleoInstance.toEscapedModel());
-	}
-
-	@Override
-	public String toString() {
-		return _kaleoInstance.toString();
-	}
-
-	@Override
-	public KaleoInstance toUnescapedModel() {
-		return new KaleoInstanceWrapper(_kaleoInstance.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _kaleoInstance.toXmlString();
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-
-		if (!(obj instanceof KaleoInstanceWrapper)) {
-			return false;
-		}
-
-		KaleoInstanceWrapper kaleoInstanceWrapper = (KaleoInstanceWrapper)obj;
-
-		if (Objects.equals(_kaleoInstance, kaleoInstanceWrapper._kaleoInstance)) {
-			return true;
-		}
-
-		return false;
-	}
-
-	@Override
-	public KaleoInstance getWrappedModel() {
-		return _kaleoInstance;
-	}
-
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _kaleoInstance.isEntityCacheEnabled();
-	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _kaleoInstance.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_kaleoInstance.resetOriginalValues();
-	}
-
-	private final KaleoInstance _kaleoInstance;
 }

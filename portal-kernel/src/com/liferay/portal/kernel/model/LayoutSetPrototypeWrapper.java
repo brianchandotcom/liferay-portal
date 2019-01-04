@@ -16,18 +16,13 @@ package com.liferay.portal.kernel.model;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
-
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -39,20 +34,10 @@ import java.util.Objects;
  * @generated
  */
 @ProviderType
-public class LayoutSetPrototypeWrapper implements LayoutSetPrototype,
-	ModelWrapper<LayoutSetPrototype> {
+public class LayoutSetPrototypeWrapper extends BaseModelWrapper<LayoutSetPrototype>
+	implements LayoutSetPrototype, ModelWrapper<LayoutSetPrototype> {
 	public LayoutSetPrototypeWrapper(LayoutSetPrototype layoutSetPrototype) {
-		_layoutSetPrototype = layoutSetPrototype;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return LayoutSetPrototype.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return LayoutSetPrototype.class.getName();
+		super(layoutSetPrototype);
 	}
 
 	@Override
@@ -150,16 +135,6 @@ public class LayoutSetPrototypeWrapper implements LayoutSetPrototype,
 		}
 	}
 
-	@Override
-	public Object clone() {
-		return new LayoutSetPrototypeWrapper((LayoutSetPrototype)_layoutSetPrototype.clone());
-	}
-
-	@Override
-	public int compareTo(LayoutSetPrototype layoutSetPrototype) {
-		return _layoutSetPrototype.compareTo(layoutSetPrototype);
-	}
-
 	/**
 	* Returns the active of this layout set prototype.
 	*
@@ -167,12 +142,12 @@ public class LayoutSetPrototypeWrapper implements LayoutSetPrototype,
 	*/
 	@Override
 	public boolean getActive() {
-		return _layoutSetPrototype.getActive();
+		return model.getActive();
 	}
 
 	@Override
 	public String[] getAvailableLanguageIds() {
-		return _layoutSetPrototype.getAvailableLanguageIds();
+		return model.getAvailableLanguageIds();
 	}
 
 	/**
@@ -182,7 +157,7 @@ public class LayoutSetPrototypeWrapper implements LayoutSetPrototype,
 	*/
 	@Override
 	public long getCompanyId() {
-		return _layoutSetPrototype.getCompanyId();
+		return model.getCompanyId();
 	}
 
 	/**
@@ -192,12 +167,12 @@ public class LayoutSetPrototypeWrapper implements LayoutSetPrototype,
 	*/
 	@Override
 	public Date getCreateDate() {
-		return _layoutSetPrototype.getCreateDate();
+		return model.getCreateDate();
 	}
 
 	@Override
 	public String getDefaultLanguageId() {
-		return _layoutSetPrototype.getDefaultLanguageId();
+		return model.getDefaultLanguageId();
 	}
 
 	/**
@@ -207,7 +182,7 @@ public class LayoutSetPrototypeWrapper implements LayoutSetPrototype,
 	*/
 	@Override
 	public String getDescription() {
-		return _layoutSetPrototype.getDescription();
+		return model.getDescription();
 	}
 
 	/**
@@ -218,7 +193,7 @@ public class LayoutSetPrototypeWrapper implements LayoutSetPrototype,
 	*/
 	@Override
 	public String getDescription(java.util.Locale locale) {
-		return _layoutSetPrototype.getDescription(locale);
+		return model.getDescription(locale);
 	}
 
 	/**
@@ -230,7 +205,7 @@ public class LayoutSetPrototypeWrapper implements LayoutSetPrototype,
 	*/
 	@Override
 	public String getDescription(java.util.Locale locale, boolean useDefault) {
-		return _layoutSetPrototype.getDescription(locale, useDefault);
+		return model.getDescription(locale, useDefault);
 	}
 
 	/**
@@ -241,7 +216,7 @@ public class LayoutSetPrototypeWrapper implements LayoutSetPrototype,
 	*/
 	@Override
 	public String getDescription(String languageId) {
-		return _layoutSetPrototype.getDescription(languageId);
+		return model.getDescription(languageId);
 	}
 
 	/**
@@ -253,17 +228,17 @@ public class LayoutSetPrototypeWrapper implements LayoutSetPrototype,
 	*/
 	@Override
 	public String getDescription(String languageId, boolean useDefault) {
-		return _layoutSetPrototype.getDescription(languageId, useDefault);
+		return model.getDescription(languageId, useDefault);
 	}
 
 	@Override
 	public String getDescriptionCurrentLanguageId() {
-		return _layoutSetPrototype.getDescriptionCurrentLanguageId();
+		return model.getDescriptionCurrentLanguageId();
 	}
 
 	@Override
 	public String getDescriptionCurrentValue() {
-		return _layoutSetPrototype.getDescriptionCurrentValue();
+		return model.getDescriptionCurrentValue();
 	}
 
 	/**
@@ -273,30 +248,25 @@ public class LayoutSetPrototypeWrapper implements LayoutSetPrototype,
 	*/
 	@Override
 	public Map<java.util.Locale, String> getDescriptionMap() {
-		return _layoutSetPrototype.getDescriptionMap();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _layoutSetPrototype.getExpandoBridge();
+		return model.getDescriptionMap();
 	}
 
 	@Override
 	public Group getGroup()
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _layoutSetPrototype.getGroup();
+		return model.getGroup();
 	}
 
 	@Override
 	public long getGroupId()
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _layoutSetPrototype.getGroupId();
+		return model.getGroupId();
 	}
 
 	@Override
 	public LayoutSet getLayoutSet()
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _layoutSetPrototype.getLayoutSet();
+		return model.getLayoutSet();
 	}
 
 	/**
@@ -306,7 +276,7 @@ public class LayoutSetPrototypeWrapper implements LayoutSetPrototype,
 	*/
 	@Override
 	public long getLayoutSetPrototypeId() {
-		return _layoutSetPrototype.getLayoutSetPrototypeId();
+		return model.getLayoutSetPrototypeId();
 	}
 
 	/**
@@ -316,7 +286,7 @@ public class LayoutSetPrototypeWrapper implements LayoutSetPrototype,
 	*/
 	@Override
 	public Date getModifiedDate() {
-		return _layoutSetPrototype.getModifiedDate();
+		return model.getModifiedDate();
 	}
 
 	/**
@@ -326,7 +296,7 @@ public class LayoutSetPrototypeWrapper implements LayoutSetPrototype,
 	*/
 	@Override
 	public long getMvccVersion() {
-		return _layoutSetPrototype.getMvccVersion();
+		return model.getMvccVersion();
 	}
 
 	/**
@@ -336,7 +306,7 @@ public class LayoutSetPrototypeWrapper implements LayoutSetPrototype,
 	*/
 	@Override
 	public String getName() {
-		return _layoutSetPrototype.getName();
+		return model.getName();
 	}
 
 	/**
@@ -347,7 +317,7 @@ public class LayoutSetPrototypeWrapper implements LayoutSetPrototype,
 	*/
 	@Override
 	public String getName(java.util.Locale locale) {
-		return _layoutSetPrototype.getName(locale);
+		return model.getName(locale);
 	}
 
 	/**
@@ -359,7 +329,7 @@ public class LayoutSetPrototypeWrapper implements LayoutSetPrototype,
 	*/
 	@Override
 	public String getName(java.util.Locale locale, boolean useDefault) {
-		return _layoutSetPrototype.getName(locale, useDefault);
+		return model.getName(locale, useDefault);
 	}
 
 	/**
@@ -370,7 +340,7 @@ public class LayoutSetPrototypeWrapper implements LayoutSetPrototype,
 	*/
 	@Override
 	public String getName(String languageId) {
-		return _layoutSetPrototype.getName(languageId);
+		return model.getName(languageId);
 	}
 
 	/**
@@ -382,17 +352,17 @@ public class LayoutSetPrototypeWrapper implements LayoutSetPrototype,
 	*/
 	@Override
 	public String getName(String languageId, boolean useDefault) {
-		return _layoutSetPrototype.getName(languageId, useDefault);
+		return model.getName(languageId, useDefault);
 	}
 
 	@Override
 	public String getNameCurrentLanguageId() {
-		return _layoutSetPrototype.getNameCurrentLanguageId();
+		return model.getNameCurrentLanguageId();
 	}
 
 	@Override
 	public String getNameCurrentValue() {
-		return _layoutSetPrototype.getNameCurrentValue();
+		return model.getNameCurrentValue();
 	}
 
 	/**
@@ -402,7 +372,7 @@ public class LayoutSetPrototypeWrapper implements LayoutSetPrototype,
 	*/
 	@Override
 	public Map<java.util.Locale, String> getNameMap() {
-		return _layoutSetPrototype.getNameMap();
+		return model.getNameMap();
 	}
 
 	/**
@@ -412,12 +382,7 @@ public class LayoutSetPrototypeWrapper implements LayoutSetPrototype,
 	*/
 	@Override
 	public long getPrimaryKey() {
-		return _layoutSetPrototype.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _layoutSetPrototype.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	/**
@@ -427,17 +392,17 @@ public class LayoutSetPrototypeWrapper implements LayoutSetPrototype,
 	*/
 	@Override
 	public String getSettings() {
-		return _layoutSetPrototype.getSettings();
+		return model.getSettings();
 	}
 
 	@Override
 	public com.liferay.portal.kernel.util.UnicodeProperties getSettingsProperties() {
-		return _layoutSetPrototype.getSettingsProperties();
+		return model.getSettingsProperties();
 	}
 
 	@Override
 	public String getSettingsProperty(String key) {
-		return _layoutSetPrototype.getSettingsProperty(key);
+		return model.getSettingsProperty(key);
 	}
 
 	/**
@@ -447,7 +412,7 @@ public class LayoutSetPrototypeWrapper implements LayoutSetPrototype,
 	*/
 	@Override
 	public long getUserId() {
-		return _layoutSetPrototype.getUserId();
+		return model.getUserId();
 	}
 
 	/**
@@ -457,7 +422,7 @@ public class LayoutSetPrototypeWrapper implements LayoutSetPrototype,
 	*/
 	@Override
 	public String getUserName() {
-		return _layoutSetPrototype.getUserName();
+		return model.getUserName();
 	}
 
 	/**
@@ -467,7 +432,7 @@ public class LayoutSetPrototypeWrapper implements LayoutSetPrototype,
 	*/
 	@Override
 	public String getUserUuid() {
-		return _layoutSetPrototype.getUserUuid();
+		return model.getUserUuid();
 	}
 
 	/**
@@ -477,17 +442,12 @@ public class LayoutSetPrototypeWrapper implements LayoutSetPrototype,
 	*/
 	@Override
 	public String getUuid() {
-		return _layoutSetPrototype.getUuid();
-	}
-
-	@Override
-	public int hashCode() {
-		return _layoutSetPrototype.hashCode();
+		return model.getUuid();
 	}
 
 	@Override
 	public boolean hasSetModifiedDate() {
-		return _layoutSetPrototype.hasSetModifiedDate();
+		return model.hasSetModifiedDate();
 	}
 
 	/**
@@ -497,40 +457,25 @@ public class LayoutSetPrototypeWrapper implements LayoutSetPrototype,
 	*/
 	@Override
 	public boolean isActive() {
-		return _layoutSetPrototype.isActive();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _layoutSetPrototype.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _layoutSetPrototype.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _layoutSetPrototype.isNew();
+		return model.isActive();
 	}
 
 	@Override
 	public void persist() {
-		_layoutSetPrototype.persist();
+		model.persist();
 	}
 
 	@Override
 	public void prepareLocalizedFieldsForImport()
 		throws com.liferay.portal.kernel.exception.LocaleException {
-		_layoutSetPrototype.prepareLocalizedFieldsForImport();
+		model.prepareLocalizedFieldsForImport();
 	}
 
 	@Override
 	public void prepareLocalizedFieldsForImport(
 		java.util.Locale defaultImportLocale)
 		throws com.liferay.portal.kernel.exception.LocaleException {
-		_layoutSetPrototype.prepareLocalizedFieldsForImport(defaultImportLocale);
+		model.prepareLocalizedFieldsForImport(defaultImportLocale);
 	}
 
 	/**
@@ -540,12 +485,7 @@ public class LayoutSetPrototypeWrapper implements LayoutSetPrototype,
 	*/
 	@Override
 	public void setActive(boolean active) {
-		_layoutSetPrototype.setActive(active);
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_layoutSetPrototype.setCachedModel(cachedModel);
+		model.setActive(active);
 	}
 
 	/**
@@ -555,7 +495,7 @@ public class LayoutSetPrototypeWrapper implements LayoutSetPrototype,
 	*/
 	@Override
 	public void setCompanyId(long companyId) {
-		_layoutSetPrototype.setCompanyId(companyId);
+		model.setCompanyId(companyId);
 	}
 
 	/**
@@ -565,7 +505,7 @@ public class LayoutSetPrototypeWrapper implements LayoutSetPrototype,
 	*/
 	@Override
 	public void setCreateDate(Date createDate) {
-		_layoutSetPrototype.setCreateDate(createDate);
+		model.setCreateDate(createDate);
 	}
 
 	/**
@@ -575,7 +515,7 @@ public class LayoutSetPrototypeWrapper implements LayoutSetPrototype,
 	*/
 	@Override
 	public void setDescription(String description) {
-		_layoutSetPrototype.setDescription(description);
+		model.setDescription(description);
 	}
 
 	/**
@@ -586,7 +526,7 @@ public class LayoutSetPrototypeWrapper implements LayoutSetPrototype,
 	*/
 	@Override
 	public void setDescription(String description, java.util.Locale locale) {
-		_layoutSetPrototype.setDescription(description, locale);
+		model.setDescription(description, locale);
 	}
 
 	/**
@@ -599,12 +539,12 @@ public class LayoutSetPrototypeWrapper implements LayoutSetPrototype,
 	@Override
 	public void setDescription(String description, java.util.Locale locale,
 		java.util.Locale defaultLocale) {
-		_layoutSetPrototype.setDescription(description, locale, defaultLocale);
+		model.setDescription(description, locale, defaultLocale);
 	}
 
 	@Override
 	public void setDescriptionCurrentLanguageId(String languageId) {
-		_layoutSetPrototype.setDescriptionCurrentLanguageId(languageId);
+		model.setDescriptionCurrentLanguageId(languageId);
 	}
 
 	/**
@@ -614,7 +554,7 @@ public class LayoutSetPrototypeWrapper implements LayoutSetPrototype,
 	*/
 	@Override
 	public void setDescriptionMap(Map<java.util.Locale, String> descriptionMap) {
-		_layoutSetPrototype.setDescriptionMap(descriptionMap);
+		model.setDescriptionMap(descriptionMap);
 	}
 
 	/**
@@ -627,22 +567,7 @@ public class LayoutSetPrototypeWrapper implements LayoutSetPrototype,
 	public void setDescriptionMap(
 		Map<java.util.Locale, String> descriptionMap,
 		java.util.Locale defaultLocale) {
-		_layoutSetPrototype.setDescriptionMap(descriptionMap, defaultLocale);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(BaseModel<?> baseModel) {
-		_layoutSetPrototype.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_layoutSetPrototype.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_layoutSetPrototype.setExpandoBridgeAttributes(serviceContext);
+		model.setDescriptionMap(descriptionMap, defaultLocale);
 	}
 
 	/**
@@ -652,7 +577,7 @@ public class LayoutSetPrototypeWrapper implements LayoutSetPrototype,
 	*/
 	@Override
 	public void setLayoutSetPrototypeId(long layoutSetPrototypeId) {
-		_layoutSetPrototype.setLayoutSetPrototypeId(layoutSetPrototypeId);
+		model.setLayoutSetPrototypeId(layoutSetPrototypeId);
 	}
 
 	/**
@@ -662,7 +587,7 @@ public class LayoutSetPrototypeWrapper implements LayoutSetPrototype,
 	*/
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
-		_layoutSetPrototype.setModifiedDate(modifiedDate);
+		model.setModifiedDate(modifiedDate);
 	}
 
 	/**
@@ -672,7 +597,7 @@ public class LayoutSetPrototypeWrapper implements LayoutSetPrototype,
 	*/
 	@Override
 	public void setMvccVersion(long mvccVersion) {
-		_layoutSetPrototype.setMvccVersion(mvccVersion);
+		model.setMvccVersion(mvccVersion);
 	}
 
 	/**
@@ -682,7 +607,7 @@ public class LayoutSetPrototypeWrapper implements LayoutSetPrototype,
 	*/
 	@Override
 	public void setName(String name) {
-		_layoutSetPrototype.setName(name);
+		model.setName(name);
 	}
 
 	/**
@@ -693,7 +618,7 @@ public class LayoutSetPrototypeWrapper implements LayoutSetPrototype,
 	*/
 	@Override
 	public void setName(String name, java.util.Locale locale) {
-		_layoutSetPrototype.setName(name, locale);
+		model.setName(name, locale);
 	}
 
 	/**
@@ -706,12 +631,12 @@ public class LayoutSetPrototypeWrapper implements LayoutSetPrototype,
 	@Override
 	public void setName(String name, java.util.Locale locale,
 		java.util.Locale defaultLocale) {
-		_layoutSetPrototype.setName(name, locale, defaultLocale);
+		model.setName(name, locale, defaultLocale);
 	}
 
 	@Override
 	public void setNameCurrentLanguageId(String languageId) {
-		_layoutSetPrototype.setNameCurrentLanguageId(languageId);
+		model.setNameCurrentLanguageId(languageId);
 	}
 
 	/**
@@ -721,7 +646,7 @@ public class LayoutSetPrototypeWrapper implements LayoutSetPrototype,
 	*/
 	@Override
 	public void setNameMap(Map<java.util.Locale, String> nameMap) {
-		_layoutSetPrototype.setNameMap(nameMap);
+		model.setNameMap(nameMap);
 	}
 
 	/**
@@ -733,12 +658,7 @@ public class LayoutSetPrototypeWrapper implements LayoutSetPrototype,
 	@Override
 	public void setNameMap(Map<java.util.Locale, String> nameMap,
 		java.util.Locale defaultLocale) {
-		_layoutSetPrototype.setNameMap(nameMap, defaultLocale);
-	}
-
-	@Override
-	public void setNew(boolean n) {
-		_layoutSetPrototype.setNew(n);
+		model.setNameMap(nameMap, defaultLocale);
 	}
 
 	/**
@@ -748,12 +668,7 @@ public class LayoutSetPrototypeWrapper implements LayoutSetPrototype,
 	*/
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_layoutSetPrototype.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_layoutSetPrototype.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -763,13 +678,13 @@ public class LayoutSetPrototypeWrapper implements LayoutSetPrototype,
 	*/
 	@Override
 	public void setSettings(String settings) {
-		_layoutSetPrototype.setSettings(settings);
+		model.setSettings(settings);
 	}
 
 	@Override
 	public void setSettingsProperties(
 		com.liferay.portal.kernel.util.UnicodeProperties settingsProperties) {
-		_layoutSetPrototype.setSettingsProperties(settingsProperties);
+		model.setSettingsProperties(settingsProperties);
 	}
 
 	/**
@@ -779,7 +694,7 @@ public class LayoutSetPrototypeWrapper implements LayoutSetPrototype,
 	*/
 	@Override
 	public void setUserId(long userId) {
-		_layoutSetPrototype.setUserId(userId);
+		model.setUserId(userId);
 	}
 
 	/**
@@ -789,7 +704,7 @@ public class LayoutSetPrototypeWrapper implements LayoutSetPrototype,
 	*/
 	@Override
 	public void setUserName(String userName) {
-		_layoutSetPrototype.setUserName(userName);
+		model.setUserName(userName);
 	}
 
 	/**
@@ -799,7 +714,7 @@ public class LayoutSetPrototypeWrapper implements LayoutSetPrototype,
 	*/
 	@Override
 	public void setUserUuid(String userUuid) {
-		_layoutSetPrototype.setUserUuid(userUuid);
+		model.setUserUuid(userUuid);
 	}
 
 	/**
@@ -809,78 +724,17 @@ public class LayoutSetPrototypeWrapper implements LayoutSetPrototype,
 	*/
 	@Override
 	public void setUuid(String uuid) {
-		_layoutSetPrototype.setUuid(uuid);
-	}
-
-	@Override
-	public CacheModel<LayoutSetPrototype> toCacheModel() {
-		return _layoutSetPrototype.toCacheModel();
-	}
-
-	@Override
-	public LayoutSetPrototype toEscapedModel() {
-		return new LayoutSetPrototypeWrapper(_layoutSetPrototype.toEscapedModel());
-	}
-
-	@Override
-	public String toString() {
-		return _layoutSetPrototype.toString();
-	}
-
-	@Override
-	public LayoutSetPrototype toUnescapedModel() {
-		return new LayoutSetPrototypeWrapper(_layoutSetPrototype.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _layoutSetPrototype.toXmlString();
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-
-		if (!(obj instanceof LayoutSetPrototypeWrapper)) {
-			return false;
-		}
-
-		LayoutSetPrototypeWrapper layoutSetPrototypeWrapper = (LayoutSetPrototypeWrapper)obj;
-
-		if (Objects.equals(_layoutSetPrototype,
-					layoutSetPrototypeWrapper._layoutSetPrototype)) {
-			return true;
-		}
-
-		return false;
+		model.setUuid(uuid);
 	}
 
 	@Override
 	public StagedModelType getStagedModelType() {
-		return _layoutSetPrototype.getStagedModelType();
+		return model.getStagedModelType();
 	}
 
 	@Override
-	public LayoutSetPrototype getWrappedModel() {
-		return _layoutSetPrototype;
+	protected LayoutSetPrototypeWrapper wrap(
+		LayoutSetPrototype layoutSetPrototype) {
+		return new LayoutSetPrototypeWrapper(layoutSetPrototype);
 	}
-
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _layoutSetPrototype.isEntityCacheEnabled();
-	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _layoutSetPrototype.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_layoutSetPrototype.resetOriginalValues();
-	}
-
-	private final LayoutSetPrototype _layoutSetPrototype;
 }

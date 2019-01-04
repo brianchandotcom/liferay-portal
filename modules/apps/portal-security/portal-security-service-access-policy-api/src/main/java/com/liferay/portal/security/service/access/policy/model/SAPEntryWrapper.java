@@ -16,19 +16,14 @@ package com.liferay.portal.security.service.access.policy.model;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
-
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 
 import com.liferay.portal.kernel.model.ModelWrapper;
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -40,19 +35,10 @@ import java.util.Objects;
  * @generated
  */
 @ProviderType
-public class SAPEntryWrapper implements SAPEntry, ModelWrapper<SAPEntry> {
+public class SAPEntryWrapper extends BaseModelWrapper<SAPEntry>
+	implements SAPEntry, ModelWrapper<SAPEntry> {
 	public SAPEntryWrapper(SAPEntry sapEntry) {
-		_sapEntry = sapEntry;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return SAPEntry.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return SAPEntry.class.getName();
+		super(sapEntry);
 	}
 
 	@Override
@@ -151,16 +137,6 @@ public class SAPEntryWrapper implements SAPEntry, ModelWrapper<SAPEntry> {
 		}
 	}
 
-	@Override
-	public Object clone() {
-		return new SAPEntryWrapper((SAPEntry)_sapEntry.clone());
-	}
-
-	@Override
-	public int compareTo(SAPEntry sapEntry) {
-		return _sapEntry.compareTo(sapEntry);
-	}
-
 	/**
 	* Returns the allowed service signatures of this sap entry.
 	*
@@ -168,17 +144,17 @@ public class SAPEntryWrapper implements SAPEntry, ModelWrapper<SAPEntry> {
 	*/
 	@Override
 	public String getAllowedServiceSignatures() {
-		return _sapEntry.getAllowedServiceSignatures();
+		return model.getAllowedServiceSignatures();
 	}
 
 	@Override
 	public java.util.List<String> getAllowedServiceSignaturesList() {
-		return _sapEntry.getAllowedServiceSignaturesList();
+		return model.getAllowedServiceSignaturesList();
 	}
 
 	@Override
 	public String[] getAvailableLanguageIds() {
-		return _sapEntry.getAvailableLanguageIds();
+		return model.getAvailableLanguageIds();
 	}
 
 	/**
@@ -188,7 +164,7 @@ public class SAPEntryWrapper implements SAPEntry, ModelWrapper<SAPEntry> {
 	*/
 	@Override
 	public long getCompanyId() {
-		return _sapEntry.getCompanyId();
+		return model.getCompanyId();
 	}
 
 	/**
@@ -198,12 +174,12 @@ public class SAPEntryWrapper implements SAPEntry, ModelWrapper<SAPEntry> {
 	*/
 	@Override
 	public Date getCreateDate() {
-		return _sapEntry.getCreateDate();
+		return model.getCreateDate();
 	}
 
 	@Override
 	public String getDefaultLanguageId() {
-		return _sapEntry.getDefaultLanguageId();
+		return model.getDefaultLanguageId();
 	}
 
 	/**
@@ -213,7 +189,7 @@ public class SAPEntryWrapper implements SAPEntry, ModelWrapper<SAPEntry> {
 	*/
 	@Override
 	public boolean getDefaultSAPEntry() {
-		return _sapEntry.getDefaultSAPEntry();
+		return model.getDefaultSAPEntry();
 	}
 
 	/**
@@ -223,12 +199,7 @@ public class SAPEntryWrapper implements SAPEntry, ModelWrapper<SAPEntry> {
 	*/
 	@Override
 	public boolean getEnabled() {
-		return _sapEntry.getEnabled();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _sapEntry.getExpandoBridge();
+		return model.getEnabled();
 	}
 
 	/**
@@ -238,7 +209,7 @@ public class SAPEntryWrapper implements SAPEntry, ModelWrapper<SAPEntry> {
 	*/
 	@Override
 	public Date getModifiedDate() {
-		return _sapEntry.getModifiedDate();
+		return model.getModifiedDate();
 	}
 
 	/**
@@ -248,7 +219,7 @@ public class SAPEntryWrapper implements SAPEntry, ModelWrapper<SAPEntry> {
 	*/
 	@Override
 	public String getName() {
-		return _sapEntry.getName();
+		return model.getName();
 	}
 
 	/**
@@ -258,12 +229,7 @@ public class SAPEntryWrapper implements SAPEntry, ModelWrapper<SAPEntry> {
 	*/
 	@Override
 	public long getPrimaryKey() {
-		return _sapEntry.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _sapEntry.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	/**
@@ -273,7 +239,7 @@ public class SAPEntryWrapper implements SAPEntry, ModelWrapper<SAPEntry> {
 	*/
 	@Override
 	public long getSapEntryId() {
-		return _sapEntry.getSapEntryId();
+		return model.getSapEntryId();
 	}
 
 	/**
@@ -283,7 +249,7 @@ public class SAPEntryWrapper implements SAPEntry, ModelWrapper<SAPEntry> {
 	*/
 	@Override
 	public String getTitle() {
-		return _sapEntry.getTitle();
+		return model.getTitle();
 	}
 
 	/**
@@ -294,7 +260,7 @@ public class SAPEntryWrapper implements SAPEntry, ModelWrapper<SAPEntry> {
 	*/
 	@Override
 	public String getTitle(java.util.Locale locale) {
-		return _sapEntry.getTitle(locale);
+		return model.getTitle(locale);
 	}
 
 	/**
@@ -306,7 +272,7 @@ public class SAPEntryWrapper implements SAPEntry, ModelWrapper<SAPEntry> {
 	*/
 	@Override
 	public String getTitle(java.util.Locale locale, boolean useDefault) {
-		return _sapEntry.getTitle(locale, useDefault);
+		return model.getTitle(locale, useDefault);
 	}
 
 	/**
@@ -317,7 +283,7 @@ public class SAPEntryWrapper implements SAPEntry, ModelWrapper<SAPEntry> {
 	*/
 	@Override
 	public String getTitle(String languageId) {
-		return _sapEntry.getTitle(languageId);
+		return model.getTitle(languageId);
 	}
 
 	/**
@@ -329,17 +295,17 @@ public class SAPEntryWrapper implements SAPEntry, ModelWrapper<SAPEntry> {
 	*/
 	@Override
 	public String getTitle(String languageId, boolean useDefault) {
-		return _sapEntry.getTitle(languageId, useDefault);
+		return model.getTitle(languageId, useDefault);
 	}
 
 	@Override
 	public String getTitleCurrentLanguageId() {
-		return _sapEntry.getTitleCurrentLanguageId();
+		return model.getTitleCurrentLanguageId();
 	}
 
 	@Override
 	public String getTitleCurrentValue() {
-		return _sapEntry.getTitleCurrentValue();
+		return model.getTitleCurrentValue();
 	}
 
 	/**
@@ -349,7 +315,7 @@ public class SAPEntryWrapper implements SAPEntry, ModelWrapper<SAPEntry> {
 	*/
 	@Override
 	public Map<java.util.Locale, String> getTitleMap() {
-		return _sapEntry.getTitleMap();
+		return model.getTitleMap();
 	}
 
 	/**
@@ -359,7 +325,7 @@ public class SAPEntryWrapper implements SAPEntry, ModelWrapper<SAPEntry> {
 	*/
 	@Override
 	public long getUserId() {
-		return _sapEntry.getUserId();
+		return model.getUserId();
 	}
 
 	/**
@@ -369,7 +335,7 @@ public class SAPEntryWrapper implements SAPEntry, ModelWrapper<SAPEntry> {
 	*/
 	@Override
 	public String getUserName() {
-		return _sapEntry.getUserName();
+		return model.getUserName();
 	}
 
 	/**
@@ -379,7 +345,7 @@ public class SAPEntryWrapper implements SAPEntry, ModelWrapper<SAPEntry> {
 	*/
 	@Override
 	public String getUserUuid() {
-		return _sapEntry.getUserUuid();
+		return model.getUserUuid();
 	}
 
 	/**
@@ -389,17 +355,7 @@ public class SAPEntryWrapper implements SAPEntry, ModelWrapper<SAPEntry> {
 	*/
 	@Override
 	public String getUuid() {
-		return _sapEntry.getUuid();
-	}
-
-	@Override
-	public int hashCode() {
-		return _sapEntry.hashCode();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _sapEntry.isCachedModel();
+		return model.getUuid();
 	}
 
 	/**
@@ -409,7 +365,7 @@ public class SAPEntryWrapper implements SAPEntry, ModelWrapper<SAPEntry> {
 	*/
 	@Override
 	public boolean isDefaultSAPEntry() {
-		return _sapEntry.isDefaultSAPEntry();
+		return model.isDefaultSAPEntry();
 	}
 
 	/**
@@ -419,41 +375,31 @@ public class SAPEntryWrapper implements SAPEntry, ModelWrapper<SAPEntry> {
 	*/
 	@Override
 	public boolean isEnabled() {
-		return _sapEntry.isEnabled();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _sapEntry.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _sapEntry.isNew();
+		return model.isEnabled();
 	}
 
 	@Override
 	public boolean isSystem()
 		throws com.liferay.portal.kernel.module.configuration.ConfigurationException {
-		return _sapEntry.isSystem();
+		return model.isSystem();
 	}
 
 	@Override
 	public void persist() {
-		_sapEntry.persist();
+		model.persist();
 	}
 
 	@Override
 	public void prepareLocalizedFieldsForImport()
 		throws com.liferay.portal.kernel.exception.LocaleException {
-		_sapEntry.prepareLocalizedFieldsForImport();
+		model.prepareLocalizedFieldsForImport();
 	}
 
 	@Override
 	public void prepareLocalizedFieldsForImport(
 		java.util.Locale defaultImportLocale)
 		throws com.liferay.portal.kernel.exception.LocaleException {
-		_sapEntry.prepareLocalizedFieldsForImport(defaultImportLocale);
+		model.prepareLocalizedFieldsForImport(defaultImportLocale);
 	}
 
 	/**
@@ -463,12 +409,7 @@ public class SAPEntryWrapper implements SAPEntry, ModelWrapper<SAPEntry> {
 	*/
 	@Override
 	public void setAllowedServiceSignatures(String allowedServiceSignatures) {
-		_sapEntry.setAllowedServiceSignatures(allowedServiceSignatures);
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_sapEntry.setCachedModel(cachedModel);
+		model.setAllowedServiceSignatures(allowedServiceSignatures);
 	}
 
 	/**
@@ -478,7 +419,7 @@ public class SAPEntryWrapper implements SAPEntry, ModelWrapper<SAPEntry> {
 	*/
 	@Override
 	public void setCompanyId(long companyId) {
-		_sapEntry.setCompanyId(companyId);
+		model.setCompanyId(companyId);
 	}
 
 	/**
@@ -488,7 +429,7 @@ public class SAPEntryWrapper implements SAPEntry, ModelWrapper<SAPEntry> {
 	*/
 	@Override
 	public void setCreateDate(Date createDate) {
-		_sapEntry.setCreateDate(createDate);
+		model.setCreateDate(createDate);
 	}
 
 	/**
@@ -498,7 +439,7 @@ public class SAPEntryWrapper implements SAPEntry, ModelWrapper<SAPEntry> {
 	*/
 	@Override
 	public void setDefaultSAPEntry(boolean defaultSAPEntry) {
-		_sapEntry.setDefaultSAPEntry(defaultSAPEntry);
+		model.setDefaultSAPEntry(defaultSAPEntry);
 	}
 
 	/**
@@ -508,23 +449,7 @@ public class SAPEntryWrapper implements SAPEntry, ModelWrapper<SAPEntry> {
 	*/
 	@Override
 	public void setEnabled(boolean enabled) {
-		_sapEntry.setEnabled(enabled);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-		_sapEntry.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_sapEntry.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_sapEntry.setExpandoBridgeAttributes(serviceContext);
+		model.setEnabled(enabled);
 	}
 
 	/**
@@ -534,7 +459,7 @@ public class SAPEntryWrapper implements SAPEntry, ModelWrapper<SAPEntry> {
 	*/
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
-		_sapEntry.setModifiedDate(modifiedDate);
+		model.setModifiedDate(modifiedDate);
 	}
 
 	/**
@@ -544,12 +469,7 @@ public class SAPEntryWrapper implements SAPEntry, ModelWrapper<SAPEntry> {
 	*/
 	@Override
 	public void setName(String name) {
-		_sapEntry.setName(name);
-	}
-
-	@Override
-	public void setNew(boolean n) {
-		_sapEntry.setNew(n);
+		model.setName(name);
 	}
 
 	/**
@@ -559,12 +479,7 @@ public class SAPEntryWrapper implements SAPEntry, ModelWrapper<SAPEntry> {
 	*/
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_sapEntry.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_sapEntry.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -574,7 +489,7 @@ public class SAPEntryWrapper implements SAPEntry, ModelWrapper<SAPEntry> {
 	*/
 	@Override
 	public void setSapEntryId(long sapEntryId) {
-		_sapEntry.setSapEntryId(sapEntryId);
+		model.setSapEntryId(sapEntryId);
 	}
 
 	/**
@@ -584,7 +499,7 @@ public class SAPEntryWrapper implements SAPEntry, ModelWrapper<SAPEntry> {
 	*/
 	@Override
 	public void setTitle(String title) {
-		_sapEntry.setTitle(title);
+		model.setTitle(title);
 	}
 
 	/**
@@ -595,7 +510,7 @@ public class SAPEntryWrapper implements SAPEntry, ModelWrapper<SAPEntry> {
 	*/
 	@Override
 	public void setTitle(String title, java.util.Locale locale) {
-		_sapEntry.setTitle(title, locale);
+		model.setTitle(title, locale);
 	}
 
 	/**
@@ -608,12 +523,12 @@ public class SAPEntryWrapper implements SAPEntry, ModelWrapper<SAPEntry> {
 	@Override
 	public void setTitle(String title, java.util.Locale locale,
 		java.util.Locale defaultLocale) {
-		_sapEntry.setTitle(title, locale, defaultLocale);
+		model.setTitle(title, locale, defaultLocale);
 	}
 
 	@Override
 	public void setTitleCurrentLanguageId(String languageId) {
-		_sapEntry.setTitleCurrentLanguageId(languageId);
+		model.setTitleCurrentLanguageId(languageId);
 	}
 
 	/**
@@ -623,7 +538,7 @@ public class SAPEntryWrapper implements SAPEntry, ModelWrapper<SAPEntry> {
 	*/
 	@Override
 	public void setTitleMap(Map<java.util.Locale, String> titleMap) {
-		_sapEntry.setTitleMap(titleMap);
+		model.setTitleMap(titleMap);
 	}
 
 	/**
@@ -635,7 +550,7 @@ public class SAPEntryWrapper implements SAPEntry, ModelWrapper<SAPEntry> {
 	@Override
 	public void setTitleMap(Map<java.util.Locale, String> titleMap,
 		java.util.Locale defaultLocale) {
-		_sapEntry.setTitleMap(titleMap, defaultLocale);
+		model.setTitleMap(titleMap, defaultLocale);
 	}
 
 	/**
@@ -645,7 +560,7 @@ public class SAPEntryWrapper implements SAPEntry, ModelWrapper<SAPEntry> {
 	*/
 	@Override
 	public void setUserId(long userId) {
-		_sapEntry.setUserId(userId);
+		model.setUserId(userId);
 	}
 
 	/**
@@ -655,7 +570,7 @@ public class SAPEntryWrapper implements SAPEntry, ModelWrapper<SAPEntry> {
 	*/
 	@Override
 	public void setUserName(String userName) {
-		_sapEntry.setUserName(userName);
+		model.setUserName(userName);
 	}
 
 	/**
@@ -665,7 +580,7 @@ public class SAPEntryWrapper implements SAPEntry, ModelWrapper<SAPEntry> {
 	*/
 	@Override
 	public void setUserUuid(String userUuid) {
-		_sapEntry.setUserUuid(userUuid);
+		model.setUserUuid(userUuid);
 	}
 
 	/**
@@ -675,77 +590,16 @@ public class SAPEntryWrapper implements SAPEntry, ModelWrapper<SAPEntry> {
 	*/
 	@Override
 	public void setUuid(String uuid) {
-		_sapEntry.setUuid(uuid);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<SAPEntry> toCacheModel() {
-		return _sapEntry.toCacheModel();
-	}
-
-	@Override
-	public SAPEntry toEscapedModel() {
-		return new SAPEntryWrapper(_sapEntry.toEscapedModel());
-	}
-
-	@Override
-	public String toString() {
-		return _sapEntry.toString();
-	}
-
-	@Override
-	public SAPEntry toUnescapedModel() {
-		return new SAPEntryWrapper(_sapEntry.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _sapEntry.toXmlString();
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-
-		if (!(obj instanceof SAPEntryWrapper)) {
-			return false;
-		}
-
-		SAPEntryWrapper sapEntryWrapper = (SAPEntryWrapper)obj;
-
-		if (Objects.equals(_sapEntry, sapEntryWrapper._sapEntry)) {
-			return true;
-		}
-
-		return false;
+		model.setUuid(uuid);
 	}
 
 	@Override
 	public StagedModelType getStagedModelType() {
-		return _sapEntry.getStagedModelType();
+		return model.getStagedModelType();
 	}
 
 	@Override
-	public SAPEntry getWrappedModel() {
-		return _sapEntry;
+	protected SAPEntryWrapper wrap(SAPEntry sapEntry) {
+		return new SAPEntryWrapper(sapEntry);
 	}
-
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _sapEntry.isEntityCacheEnabled();
-	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _sapEntry.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_sapEntry.resetOriginalValues();
-	}
-
-	private final SAPEntry _sapEntry;
 }

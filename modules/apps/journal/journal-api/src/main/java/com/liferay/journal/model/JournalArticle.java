@@ -80,6 +80,8 @@ public interface JournalArticle extends JournalArticleModel, PersistedModel,
 	public String buildTreePath()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
+	public Object clone();
+
 	public String getArticleImageURL(
 		com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay);
 

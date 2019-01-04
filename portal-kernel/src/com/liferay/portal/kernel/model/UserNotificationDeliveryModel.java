@@ -16,12 +16,7 @@ package com.liferay.portal.kernel.model;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
-
 import com.liferay.portal.kernel.bean.AutoEscape;
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
 
 /**
  * The base model interface for the UserNotificationDelivery service. Represents a row in the &quot;UserNotificationDelivery&quot; database table, with each column mapped to a property of this class.
@@ -222,61 +217,4 @@ public interface UserNotificationDeliveryModel extends BaseModel<UserNotificatio
 	 * @param deliver the deliver of this user notification delivery
 	 */
 	public void setDeliver(boolean deliver);
-
-	@Override
-	public boolean isNew();
-
-	@Override
-	public void setNew(boolean n);
-
-	@Override
-	public boolean isCachedModel();
-
-	@Override
-	public void setCachedModel(boolean cachedModel);
-
-	@Override
-	public boolean isEscapedModel();
-
-	@Override
-	public Serializable getPrimaryKeyObj();
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj);
-
-	@Override
-	public ExpandoBridge getExpandoBridge();
-
-	@Override
-	public void setExpandoBridgeAttributes(BaseModel<?> baseModel);
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge);
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext);
-
-	@Override
-	public Object clone();
-
-	@Override
-	public int compareTo(UserNotificationDelivery userNotificationDelivery);
-
-	@Override
-	public int hashCode();
-
-	@Override
-	public CacheModel<UserNotificationDelivery> toCacheModel();
-
-	@Override
-	public UserNotificationDelivery toEscapedModel();
-
-	@Override
-	public UserNotificationDelivery toUnescapedModel();
-
-	@Override
-	public String toString();
-
-	@Override
-	public String toXmlString();
 }

@@ -19,11 +19,8 @@ import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.ReleaseConstants;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.LoggingTimer;
-import com.liferay.portal.kernel.util.ReleaseInfo;
 import com.liferay.portal.kernel.util.StringBundler;
 
 import java.sql.PreparedStatement;
@@ -42,8 +39,6 @@ public class UpgradeOracle extends UpgradeProcess {
 					"user_tab_columns where data_type = 'VARCHAR2' and " +
 						"char_used = 'B'");
 			ResultSet rs = ps.executeQuery()) {
-
-			int buildNumber = getBuildNumber();
 
 			while (rs.next()) {
 				String tableName = rs.getString(1);
@@ -94,25 +89,6 @@ public class UpgradeOracle extends UpgradeProcess {
 
 		alterVarchar2Columns();
 	}
-
-	protected int getBuildNumber() throws Exception {
-		try (PreparedStatement ps = connection.prepareStatement(
-				"select buildNumber from Release_ where servletContextName = " +
-					"?")) {
-
-			ps.setString(1, ReleaseConstants.DEFAULT_SERVLET_CONTEXT_NAME);
-
-			try (ResultSet rs = ps.executeQuery()) {
-				rs.next();
-
-				return rs.getInt(1);
-			}
-		}
-	}
-
-	private static final int[] _ORIGINAL_DATA_LENGTH_VALUES = {
-		75, 100, 150, 200, 255, 500, 1000, 1024, 2000, 4000
-	};
 
 	private static final Log _log = LogFactoryUtil.getLog(UpgradeOracle.class);
 

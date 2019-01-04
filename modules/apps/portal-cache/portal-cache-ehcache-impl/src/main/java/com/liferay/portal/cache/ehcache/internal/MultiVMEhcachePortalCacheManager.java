@@ -57,8 +57,6 @@ public class MultiVMEhcachePortalCacheManager
 
 		initialize();
 
-		initPortalCacheConfiguratorSettingsServiceTracker();
-
 		if (_log.isDebugEnabled()) {
 			_log.debug("Activated " + PortalCacheManagerNames.MULTI_VM);
 		}

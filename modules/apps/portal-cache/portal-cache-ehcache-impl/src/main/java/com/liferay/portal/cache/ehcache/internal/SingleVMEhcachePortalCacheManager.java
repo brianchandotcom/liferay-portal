@@ -53,8 +53,6 @@ public class SingleVMEhcachePortalCacheManager<K extends Serializable, V>
 
 		initialize();
 
-		initPortalCacheConfiguratorSettingsServiceTracker();
-
 		if (_log.isDebugEnabled()) {
 			_log.debug("Activated " + PortalCacheManagerNames.SINGLE_VM);
 		}

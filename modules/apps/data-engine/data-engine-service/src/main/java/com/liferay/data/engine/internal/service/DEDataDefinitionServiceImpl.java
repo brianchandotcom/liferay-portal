@@ -16,11 +16,14 @@ package com.liferay.data.engine.internal.service;
 
 import com.liferay.data.engine.constants.DEActionKeys;
 import com.liferay.data.engine.exception.DEDataDefinitionException;
+import com.liferay.data.engine.internal.executor.DEDataDefinitionCountRequestExecutor;
 import com.liferay.data.engine.internal.executor.DEDataDefinitionDeleteRequestExecutor;
 import com.liferay.data.engine.internal.executor.DEDataDefinitionGetRequestExecutor;
 import com.liferay.data.engine.internal.executor.DEDataDefinitionSaveRequestExecutor;
 import com.liferay.data.engine.internal.security.permission.DEDataEnginePermissionSupport;
 import com.liferay.data.engine.model.DEDataDefinition;
+import com.liferay.data.engine.service.DEDataDefinitionCountRequest;
+import com.liferay.data.engine.service.DEDataDefinitionCountResponse;
 import com.liferay.data.engine.service.DEDataDefinitionDeleteRequest;
 import com.liferay.data.engine.service.DEDataDefinitionDeleteResponse;
 import com.liferay.data.engine.service.DEDataDefinitionGetRequest;
@@ -47,6 +50,27 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(immediate = true, service = DEDataDefinitionService.class)
 public class DEDataDefinitionServiceImpl implements DEDataDefinitionService {
+
+	@Override
+	public DEDataDefinitionCountResponse execute(
+			DEDataDefinitionCountRequest deDataDefinitionCountRequest)
+		throws DEDataDefinitionException {
+
+		try {
+			return deDataDefinitionCountRequestExecutor.execute(
+				deDataDefinitionCountRequest);
+		}
+		catch (DEDataDefinitionException dedde) {
+			_log.error(dedde, dedde);
+
+			throw dedde;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new DEDataDefinitionException(e);
+		}
+	}
 
 	@Override
 	public DEDataDefinitionDeleteResponse execute(
@@ -203,6 +227,10 @@ public class DEDataDefinitionServiceImpl implements DEDataDefinitionService {
 
 		_modelResourcePermission = modelResourcePermission;
 	}
+
+	@Reference
+	protected DEDataDefinitionCountRequestExecutor
+		deDataDefinitionCountRequestExecutor;
 
 	@Reference
 	protected DEDataDefinitionDeleteRequestExecutor

@@ -30,6 +30,8 @@ import java.io.Serializable;
 
 import java.util.Date;
 import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * @author Máté Thurzó
@@ -56,6 +58,16 @@ public class StagedAssetLinkImpl implements StagedAssetLink {
 	@Override
 	public int compareTo(AssetLink assetLink) {
 		return _assetLink.compareTo(assetLink);
+	}
+
+	@Override
+	public Map<String, Function<AssetLink, Object>> getAttributeGetters() {
+		return _assetLink.getAttributeGetters();
+	}
+
+	@Override
+	public Map<String, BiConsumer<AssetLink, Object>> getAttributeSetters() {
+		return _assetLink.getAttributeSetters();
 	}
 
 	@Override

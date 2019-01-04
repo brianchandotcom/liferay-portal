@@ -17,6 +17,7 @@ package com.liferay.frontend.taglib.soy.internal.util;
 import com.liferay.frontend.taglib.soy.servlet.taglib.util.ComponentDescriptor;
 import com.liferay.frontend.taglib.soy.servlet.taglib.util.SoyComponentRenderer;
 import com.liferay.frontend.taglib.soy.servlet.taglib.util.SoyRenderer;
+import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.servlet.taglib.aui.ScriptData;
@@ -102,6 +103,13 @@ public class SoyComponentRendererImpl implements SoyComponentRenderer {
 		return selector;
 	}
 
+	private String _getModuleName(ComponentDescriptor componentDescriptor) {
+		String moduleName = StringUtil.extractLast(
+			componentDescriptor.getModule(), CharPool.FORWARD_SLASH);
+
+		return StringUtil.strip(moduleName, _UNSAFE_MODULE_NAME_CHARS);
+	}
+
 	private String _getWrapperId(
 		ComponentDescriptor componentDescriptor, Map<String, ?> context) {
 
@@ -123,16 +131,17 @@ public class SoyComponentRendererImpl implements SoyComponentRenderer {
 			ComponentDescriptor componentDescriptor, Map<String, ?> context)
 		throws IOException {
 
+		String moduleName = _getModuleName(componentDescriptor);
+
 		String componentJavaScript = SoyJavaScriptRendererUtil.getJavaScript(
 			(Map)context, _getWrapperId(componentDescriptor, context),
-			componentDescriptor.getModuleName(),
-			componentDescriptor.isWrapper());
+			moduleName, componentDescriptor.isWrapper());
 
 		StringBundler sb = new StringBundler(4);
 
 		sb.append(componentDescriptor.getModule());
 		sb.append(" as ");
-		sb.append(componentDescriptor.getModuleName());
+		sb.append(moduleName);
 		sb.append(
 			String.join(
 				StringPool.COMMA, componentDescriptor.getDependencies()));
@@ -185,6 +194,10 @@ public class SoyComponentRendererImpl implements SoyComponentRenderer {
 			writer.append("</div>");
 		}
 	}
+
+	private static final char[] _UNSAFE_MODULE_NAME_CHARS = {
+		CharPool.PERIOD, CharPool.DASH
+	};
 
 	@Reference
 	private Portal _portal;

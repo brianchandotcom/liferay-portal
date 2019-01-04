@@ -106,7 +106,7 @@ public class MultiVMEhcachePortalCacheManager
 	}
 
 	private static final String _DEFAULT_CONFIG_FILE_NAME =
-		"/ehcache/liferay-multi-vm-clustered.xml";
+		"/ehcache/liferay-multi-vm.xml";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		MultiVMEhcachePortalCacheManager.class);

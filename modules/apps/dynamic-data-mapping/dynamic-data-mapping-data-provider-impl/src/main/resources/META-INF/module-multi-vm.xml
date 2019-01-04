@@ -1,7 +1,7 @@
 <ehcache
 	dynamicConfig="true"
 	monitoring="off"
-	name="liferay-multi-vm-clustered"
+	name="module-multi-vm"
 	updateCheck="false"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:noNamespaceSchemaLocation="http://www.ehcache.org/ehcache.xsd"

@@ -18,21 +18,25 @@ import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.segments.context.Context;
 import com.liferay.segments.criteria.Criteria;
 import com.liferay.segments.criteria.contributor.SegmentsCriteriaContributor;
 import com.liferay.segments.criteria.contributor.SegmentsCriteriaContributorRegistry;
 import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.model.SegmentsEntryRel;
+import com.liferay.segments.odata.matcher.ODataMatcher;
 import com.liferay.segments.odata.retriever.ODataRetriever;
 import com.liferay.segments.provider.SegmentsEntryProvider;
 import com.liferay.segments.service.SegmentsEntryLocalService;
 import com.liferay.segments.service.SegmentsEntryRelLocalService;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.stream.Stream;
@@ -136,8 +140,13 @@ public class SegmentsEntryProviderImpl implements SegmentsEntryProvider {
 	}
 
 	@Override
-	public long[] getSegmentsEntryIds(String className, long classPK)
-		throws PortalException {
+	public long[] getSegmentsEntryIds(String className, long classPK) {
+		return getSegmentsEntryIds(className, classPK, null);
+	}
+
+	@Override
+	public long[] getSegmentsEntryIds(
+		String className, long classPK, Context context) {
 
 		List<SegmentsEntry> segmentsEntries =
 			_segmentsEntryLocalService.getSegmentsEntries(
@@ -147,46 +156,26 @@ public class SegmentsEntryProviderImpl implements SegmentsEntryProvider {
 			return new long[0];
 		}
 
-		ODataRetriever oDataRetriever = _serviceTrackerMap.getService(
-			className);
+		Stream<SegmentsEntry> stream = segmentsEntries.stream();
 
-		List<SegmentsEntry> allSegmentsEntries = new ArrayList();
-
-		for (SegmentsEntry segmentsEntry : segmentsEntries) {
-			String filterString = _getFilterString(
-				segmentsEntry, Criteria.Type.MODEL);
-
-			if (Validator.isNotNull(filterString) && (oDataRetriever != null)) {
-				StringBundler sb = new StringBundler(5);
-
-				sb.append("(");
-				sb.append(filterString);
-				sb.append(") and (classPK eq '");
-				sb.append(classPK);
-				sb.append("')");
-
-				if (oDataRetriever.getResultsCount(
-						segmentsEntry.getCompanyId(), sb.toString(),
-						Locale.getDefault()) == 0) {
-
-					continue;
-				}
-			}
-			else if (!_segmentsEntryRelLocalService.hasSegmentsEntryRel(
-						segmentsEntry.getSegmentsEntryId(),
-						_portal.getClassNameId(className), classPK)) {
-
-				continue;
-			}
-
-			allSegmentsEntries.add(segmentsEntry);
-		}
-
-		Stream<SegmentsEntry> stream = allSegmentsEntries.stream();
-
-		return stream.mapToLong(
+		return stream.filter(
+			segmentsEntry ->
+				_isMember(className, classPK, context, segmentsEntry)
+		).mapToLong(
 			SegmentsEntry::getSegmentsEntryId
 		).toArray();
+	}
+
+	private Criteria.Conjunction _getConjunction(
+		SegmentsEntry segmentsEntry, Criteria.Type type) {
+
+		Criteria existingCriteria = segmentsEntry.getCriteriaObj();
+
+		if (existingCriteria == null) {
+			return Criteria.Conjunction.AND;
+		}
+
+		return existingCriteria.getTypeConjunction(type);
 	}
 
 	private String _getFilterString(
@@ -221,6 +210,108 @@ public class SegmentsEntryProviderImpl implements SegmentsEntryProvider {
 
 		return criteria.getFilterString(type);
 	}
+
+	private boolean _isMember(
+		String className, long classPK, Context context,
+		SegmentsEntry segmentsEntry) {
+
+		if (_segmentsEntryRelLocalService.hasSegmentsEntryRel(
+				segmentsEntry.getSegmentsEntryId(),
+				_portal.getClassNameId(className), classPK)) {
+
+			return true;
+		}
+
+		Criteria criteria = segmentsEntry.getCriteriaObj();
+
+		if ((criteria == null) || MapUtil.isEmpty(criteria.getCriterionMap())) {
+			return false;
+		}
+
+		Criteria.Conjunction contextConjunction = _getConjunction(
+			segmentsEntry, Criteria.Type.CONTEXT);
+		String contextFilterString = _getFilterString(
+			segmentsEntry, Criteria.Type.CONTEXT);
+
+		if ((context != null) && Validator.isNotNull(contextFilterString)) {
+			boolean matchesContext = false;
+
+			try {
+				matchesContext = _oDataMatcher.matches(
+					contextFilterString, context);
+			}
+			catch (PortalException pe) {
+				_log.error(pe, pe);
+			}
+
+			if (matchesContext &&
+				contextConjunction.equals(Criteria.Conjunction.OR)) {
+
+				return true;
+			}
+
+			if (!matchesContext &&
+				contextConjunction.equals(Criteria.Conjunction.AND)) {
+
+				return false;
+			}
+		}
+
+		Criteria.Conjunction modelConjunction = _getConjunction(
+			segmentsEntry, Criteria.Type.MODEL);
+		ODataRetriever oDataRetriever = _serviceTrackerMap.getService(
+			className);
+		String modelFilterString = _getFilterString(
+			segmentsEntry, Criteria.Type.MODEL);
+
+		if (Validator.isNotNull(modelFilterString) &&
+			(oDataRetriever != null)) {
+
+			StringBundler sb = new StringBundler(5);
+
+			sb.append("(");
+			sb.append(modelFilterString);
+			sb.append(") and (classPK eq '");
+			sb.append(classPK);
+			sb.append("')");
+
+			boolean matchesModel = false;
+
+			try {
+				if (oDataRetriever.getResultsCount(
+						segmentsEntry.getCompanyId(), sb.toString(),
+						Locale.getDefault()) > 0) {
+
+					matchesModel = true;
+				}
+			}
+			catch (PortalException pe) {
+				_log.error(pe, pe);
+			}
+
+			if (matchesModel &&
+				modelConjunction.equals(Criteria.Conjunction.OR)) {
+
+				return true;
+			}
+
+			if (!matchesModel &&
+				modelConjunction.equals(Criteria.Conjunction.AND)) {
+
+				return false;
+			}
+		}
+
+		return true;
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		SegmentsEntryProviderImpl.class);
+
+	@Reference(
+		target = "(target.class.name=com.liferay.segments.context.Context)"
+	)
+	private ODataMatcher _oDataMatcher;
 
 	@Reference
 	private Portal _portal;

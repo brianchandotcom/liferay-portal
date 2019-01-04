@@ -40,9 +40,13 @@ public interface SegmentsCriteriaContributor {
 	 * @param conjunction the conjunction of the criterion
 	 * @review
 	 */
-	public void contribute(
+	public default void contribute(
 		Criteria criteria, String filterString,
-		Criteria.Conjunction conjunction);
+		Criteria.Conjunction conjunction) {
+
+		criteria.addCriterion(getKey(), getType(), filterString, conjunction);
+		criteria.addFilter(getType(), filterString, conjunction);
+	}
 
 	/**
 	 * Returns the contributed criterion from a criteria.
@@ -79,5 +83,13 @@ public interface SegmentsCriteriaContributor {
 	 * @review
 	 */
 	public String getLabel(Locale locale);
+
+	/**
+	 * Returns the contributor's type. See {@link Criteria.Type}.
+	 *
+	 * @return the contributor's type
+	 * @review
+	 */
+	public Criteria.Type getType();
 
 }

@@ -72,7 +72,8 @@ public class SegmentsEntryProviderImpl implements SegmentsEntryProvider {
 			return new long[0];
 		}
 
-		String filterString = _getFilterString(segmentsEntry);
+		String filterString = _getFilterString(
+			segmentsEntry, Criteria.Type.MODEL);
 
 		if (Validator.isNull(filterString)) {
 			List<SegmentsEntryRel> segmentsEntryRels =
@@ -115,7 +116,8 @@ public class SegmentsEntryProviderImpl implements SegmentsEntryProvider {
 			return 0;
 		}
 
-		String filterString = _getFilterString(segmentsEntry);
+		String filterString = _getFilterString(
+			segmentsEntry, Criteria.Type.MODEL);
 
 		if (Validator.isNull(filterString)) {
 			return _segmentsEntryRelLocalService.getSegmentsEntryRelsCount(
@@ -151,7 +153,8 @@ public class SegmentsEntryProviderImpl implements SegmentsEntryProvider {
 		List<SegmentsEntry> allSegmentsEntries = new ArrayList();
 
 		for (SegmentsEntry segmentsEntry : segmentsEntries) {
-			String filterString = _getFilterString(segmentsEntry);
+			String filterString = _getFilterString(
+				segmentsEntry, Criteria.Type.MODEL);
 
 			if (Validator.isNotNull(filterString) && (oDataRetriever != null)) {
 				StringBundler sb = new StringBundler(5);
@@ -186,7 +189,9 @@ public class SegmentsEntryProviderImpl implements SegmentsEntryProvider {
 		).toArray();
 	}
 
-	private String _getFilterString(SegmentsEntry segmentsEntry) {
+	private String _getFilterString(
+		SegmentsEntry segmentsEntry, Criteria.Type type) {
+
 		Criteria existingCriteria = segmentsEntry.getCriteriaObj();
 
 		if (existingCriteria == null) {
@@ -197,7 +202,7 @@ public class SegmentsEntryProviderImpl implements SegmentsEntryProvider {
 
 		List<SegmentsCriteriaContributor> segmentsCriteriaContributors =
 			_segmentsCriteriaContributorRegistry.
-				getSegmentsCriteriaContributors(segmentsEntry.getType());
+				getSegmentsCriteriaContributors(segmentsEntry.getType(), type);
 
 		for (SegmentsCriteriaContributor segmentsCriteriaContributor :
 				segmentsCriteriaContributors) {
@@ -214,7 +219,7 @@ public class SegmentsEntryProviderImpl implements SegmentsEntryProvider {
 				Criteria.Conjunction.parse(criterion.getConjunction()));
 		}
 
-		return criteria.getFilterString();
+		return criteria.getFilterString(type);
 	}
 
 	@Reference

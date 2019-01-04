@@ -51,15 +51,6 @@ public class OrganizationSegmentsCriteriaContributor
 	public static final String KEY = "organization";
 
 	@Override
-	public void contribute(
-		Criteria criteria, String filterString,
-		Criteria.Conjunction conjunction) {
-
-		criteria.addCriterion(getKey(), filterString, conjunction);
-		criteria.addFilter(filterString, conjunction);
-	}
-
-	@Override
 	public List<Field> getFields(Locale locale) {
 		return _entityModelFieldMapper.getFields(_entityModel, locale);
 	}
@@ -75,6 +66,11 @@ public class OrganizationSegmentsCriteriaContributor
 			locale, getClass());
 
 		return LanguageUtil.get(resourceBundle, getKey());
+	}
+
+	@Override
+	public Criteria.Type getType() {
+		return Criteria.Type.MODEL;
 	}
 
 	@Reference(

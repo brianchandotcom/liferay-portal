@@ -16,6 +16,8 @@ package com.liferay.segments.criteria.contributor;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.segments.criteria.Criteria;
+
 import java.util.List;
 
 /**
@@ -30,5 +32,8 @@ public interface SegmentsCriteriaContributorRegistry {
 
 	public List<SegmentsCriteriaContributor> getSegmentsCriteriaContributors(
 		String className);
+
+	public List<SegmentsCriteriaContributor> getSegmentsCriteriaContributors(
+		String className, Criteria.Type type);
 
 }

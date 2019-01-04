@@ -128,7 +128,7 @@ public class SegmentsEntryDemoDataCreatorImpl
 			Criteria criteria = new Criteria();
 
 			criteria.addCriterion(
-				"user",
+				"user", Criteria.Type.MODEL,
 				StringUtil.read(clazz.getClassLoader(), contentPath, false),
 				Criteria.Conjunction.AND);
 

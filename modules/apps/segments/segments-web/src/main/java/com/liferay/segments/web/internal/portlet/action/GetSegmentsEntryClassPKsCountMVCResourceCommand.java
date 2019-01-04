@@ -94,7 +94,7 @@ public class GetSegmentsEntryClassPKsCountMVCResourceCommand
 
 		List<SegmentsCriteriaContributor> segmentsCriteriaContributors =
 			_segmentsCriteriaContributorRegistry.
-				getSegmentsCriteriaContributors(type);
+				getSegmentsCriteriaContributors(type, Criteria.Type.MODEL);
 
 		for (SegmentsCriteriaContributor segmentsCriteriaContributor :
 				segmentsCriteriaContributors) {
@@ -131,7 +131,7 @@ public class GetSegmentsEntryClassPKsCountMVCResourceCommand
 		}
 
 		return oDataRetriever.getResultsCount(
-			companyId, criteria.getFilterString(), locale);
+			companyId, criteria.getFilterString(Criteria.Type.MODEL), locale);
 	}
 
 	protected String getText(

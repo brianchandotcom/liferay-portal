@@ -64,7 +64,7 @@ public class UserOrganizationSegmentsCriteriaContributor
 		Criteria criteria, String filterString,
 		Criteria.Conjunction conjunction) {
 
-		criteria.addCriterion(getKey(), filterString, conjunction);
+		criteria.addCriterion(getKey(), getType(), filterString, conjunction);
 
 		long companyId = CompanyThreadLocal.getCompanyId();
 
@@ -87,7 +87,7 @@ public class UserOrganizationSegmentsCriteriaContributor
 				}
 			}
 
-			criteria.addFilter(sb.toString(), conjunction);
+			criteria.addFilter(getType(), sb.toString(), conjunction);
 		}
 		catch (PortalException pe) {
 			_log.error(
@@ -114,6 +114,11 @@ public class UserOrganizationSegmentsCriteriaContributor
 			locale, getClass());
 
 		return LanguageUtil.get(resourceBundle, getKey());
+	}
+
+	@Override
+	public Criteria.Type getType() {
+		return Criteria.Type.MODEL;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

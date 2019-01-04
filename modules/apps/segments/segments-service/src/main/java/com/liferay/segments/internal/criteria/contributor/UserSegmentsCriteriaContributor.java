@@ -51,15 +51,6 @@ public class UserSegmentsCriteriaContributor
 	public static final String KEY = "user";
 
 	@Override
-	public void contribute(
-		Criteria criteria, String filterString,
-		Criteria.Conjunction conjunction) {
-
-		criteria.addCriterion(getKey(), filterString, conjunction);
-		criteria.addFilter(filterString, conjunction);
-	}
-
-	@Override
 	public List<Field> getFields(Locale locale) {
 		return _entityModelFieldMapper.getFields(_entityModel, locale);
 	}
@@ -75,6 +66,11 @@ public class UserSegmentsCriteriaContributor
 			locale, getClass());
 
 		return LanguageUtil.get(resourceBundle, getKey());
+	}
+
+	@Override
+	public Criteria.Type getType() {
+		return Criteria.Type.MODEL;
 	}
 
 	@Reference(

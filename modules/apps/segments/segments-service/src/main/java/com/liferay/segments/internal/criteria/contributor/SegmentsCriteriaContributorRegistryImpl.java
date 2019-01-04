@@ -20,12 +20,15 @@ import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.segments.criteria.Criteria;
 import com.liferay.segments.criteria.contributor.SegmentsCriteriaContributor;
 import com.liferay.segments.criteria.contributor.SegmentsCriteriaContributorRegistry;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
@@ -69,6 +72,24 @@ public class SegmentsCriteriaContributorRegistryImpl
 		}
 
 		return segmentsCriteriaContributors;
+	}
+
+	@Override
+	public List<SegmentsCriteriaContributor> getSegmentsCriteriaContributors(
+		String className, Criteria.Type type) {
+
+		List<SegmentsCriteriaContributor> segmentsCriteriaContributors =
+			getSegmentsCriteriaContributors(className);
+
+		Stream<SegmentsCriteriaContributor> stream =
+			segmentsCriteriaContributors.stream();
+
+		return stream.filter(
+			segmentsCriteriaContributor ->
+				type.equals(segmentsCriteriaContributor.getType())
+		).collect(
+			Collectors.toList()
+		);
 	}
 
 	@Activate

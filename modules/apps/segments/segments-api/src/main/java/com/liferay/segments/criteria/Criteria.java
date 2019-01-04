@@ -20,8 +20,11 @@ import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
+import java.util.stream.Stream;
 
 /**
  * Represents a segment criteria as a composition of {@link Criterion} objects.
@@ -35,18 +38,22 @@ public final class Criteria implements Serializable {
 	}
 
 	public void addCriterion(
-		String key, String filterString, Conjunction conjunction) {
+		String key, Type type, String filterString, Conjunction conjunction) {
 
-		_criterionMap.put(key, new Criterion(filterString, conjunction));
+		_criterionMap.put(key, new Criterion(type, filterString, conjunction));
 	}
 
-	public void addFilter(String filterString, Conjunction conjunction) {
+	public void addFilter(
+		Type type, String filterString, Conjunction conjunction) {
+
 		if (Validator.isNull(filterString)) {
 			return;
 		}
 
-		if (Validator.isNull(_filterString)) {
-			_filterString = filterString;
+		String curFilterString = _filterStringMap.get(type.getValue());
+
+		if (Validator.isNull(curFilterString)) {
+			_filterStringMap.put(type.getValue(), filterString);
 
 			return;
 		}
@@ -54,7 +61,7 @@ public final class Criteria implements Serializable {
 		StringBundler sb = new StringBundler(9);
 
 		sb.append(StringPool.OPEN_PARENTHESIS);
-		sb.append(_filterString);
+		sb.append(curFilterString);
 		sb.append(StringPool.CLOSE_PARENTHESIS);
 		sb.append(StringPool.SPACE);
 		sb.append(conjunction.getValue());
@@ -63,7 +70,7 @@ public final class Criteria implements Serializable {
 		sb.append(filterString);
 		sb.append(StringPool.CLOSE_PARENTHESIS);
 
-		_filterString = sb.toString();
+		_filterStringMap.put(type.getValue(), sb.toString());
 	}
 
 	public Criterion getCriterion(String key) {
@@ -74,8 +81,23 @@ public final class Criteria implements Serializable {
 		return _criterionMap;
 	}
 
-	public String getFilterString() {
-		return _filterString;
+	public String getFilterString(Type type) {
+		return _filterStringMap.get(type.getValue());
+	}
+
+	public Conjunction getTypeConjunction(Type type) {
+		Collection<Criterion> criterionList = _criterionMap.values();
+
+		Stream<Criterion> stream = criterionList.stream();
+
+		return stream.filter(
+			criterion -> Objects.equals(type.getValue(), criterion.getType())
+		).map(
+			criterion -> Conjunction.parse(criterion.getConjunction())
+		).findFirst(
+		).orElse(
+			Conjunction.AND
+		);
 	}
 
 	public static final class Criterion implements Serializable {
@@ -83,7 +105,10 @@ public final class Criteria implements Serializable {
 		public Criterion() {
 		}
 
-		public Criterion(String filterString, Conjunction conjunction) {
+		public Criterion(
+			Type type, String filterString, Conjunction conjunction) {
+
+			_type = type.getValue();
 			_filterString = filterString;
 			_conjunction = conjunction.getValue();
 		}
@@ -96,8 +121,13 @@ public final class Criteria implements Serializable {
 			return _filterString;
 		}
 
+		public String getType() {
+			return _type;
+		}
+
 		private String _conjunction;
 		private String _filterString;
+		private String _type;
 
 	}
 
@@ -133,7 +163,39 @@ public final class Criteria implements Serializable {
 
 	}
 
+	public enum Type {
+
+		CONTEXT("context"), MODEL("model");
+
+		public static Type parse(String value) {
+			if (CONTEXT.getValue().equals(value)) {
+				return CONTEXT;
+			}
+			else if (MODEL.getValue().equals(value)) {
+				return MODEL;
+			}
+
+			throw new IllegalArgumentException("Invalid value " + value);
+		}
+
+		public String getValue() {
+			return _value;
+		}
+
+		@Override
+		public String toString() {
+			return _value;
+		}
+
+		private Type(String value) {
+			_value = value;
+		}
+
+		private final String _value;
+
+	}
+
 	private Map<String, Criterion> _criterionMap = new HashMap();
-	private String _filterString;
+	private Map<String, String> _filterStringMap = new HashMap();
 
 }

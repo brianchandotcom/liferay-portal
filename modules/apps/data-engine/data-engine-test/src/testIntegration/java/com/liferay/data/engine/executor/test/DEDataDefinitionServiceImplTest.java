@@ -16,9 +16,6 @@ package com.liferay.data.engine.executor.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.data.engine.exception.DEDataDefinitionException;
-import com.liferay.data.engine.internal.executor.DEDataDefinitionDeleteRequestExecutor;
-import com.liferay.data.engine.internal.executor.DEDataDefinitionGetRequestExecutor;
-import com.liferay.data.engine.internal.executor.DEDataDefinitionSaveRequestExecutor;
 import com.liferay.data.engine.model.DEDataDefinition;
 import com.liferay.data.engine.model.DEDataDefinitionField;
 import com.liferay.data.engine.service.DEDataDefinitionDeleteRequest;
@@ -27,6 +24,7 @@ import com.liferay.data.engine.service.DEDataDefinitionGetResponse;
 import com.liferay.data.engine.service.DEDataDefinitionRequestBuilder;
 import com.liferay.data.engine.service.DEDataDefinitionSaveRequest;
 import com.liferay.data.engine.service.DEDataDefinitionSaveResponse;
+import com.liferay.data.engine.service.DEDataDefinitionService;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.ResourcePermission;
@@ -62,7 +60,7 @@ import org.junit.runner.RunWith;
  * @author Jeyvison Nascimento
  */
 @RunWith(Arquillian.class)
-public class DEDataDefinitionRequestExecutorTest {
+public class DEDataDefinitionServiceImplTest {
 
 	@ClassRule
 	@Rule
@@ -112,8 +110,7 @@ public class DEDataDefinitionRequestExecutorTest {
 			ServiceContextThreadLocal.pushServiceContext(serviceContext);
 
 			DEDataDefinitionSaveResponse deDataDefinitionSaveResponse =
-				_deDataDefinitionSaveRequestExecutor.execute(
-					deDataDefinitionSaveRequest);
+				_deDataDefinitionService.execute(deDataDefinitionSaveRequest);
 
 			long deDataDefinitionId =
 				deDataDefinitionSaveResponse.getDEDataDefinitionId();
@@ -124,8 +121,7 @@ public class DEDataDefinitionRequestExecutorTest {
 					deDataDefinitionId
 				).build();
 
-			_deDataDefinitionDeleteRequestExecutor.execute(
-				deDataDefinitionDeleteRequest);
+			_deDataDefinitionService.execute(deDataDefinitionDeleteRequest);
 
 			DEDataDefinitionGetRequest deDataDefinitionGetRequest =
 				DEDataDefinitionRequestBuilder.getBuilder(
@@ -133,8 +129,7 @@ public class DEDataDefinitionRequestExecutorTest {
 					deDataDefinitionId
 				).build();
 
-			_deDataDefinitionGetRequestExecutor.execute(
-				deDataDefinitionGetRequest);
+			_deDataDefinitionService.execute(deDataDefinitionGetRequest);
 		}
 		finally {
 			ServiceContextThreadLocal.popServiceContext();
@@ -200,8 +195,7 @@ public class DEDataDefinitionRequestExecutorTest {
 			ServiceContextThreadLocal.pushServiceContext(serviceContext);
 
 			DEDataDefinitionSaveResponse deDataDefinitionSaveResponse =
-				_deDataDefinitionSaveRequestExecutor.execute(
-					deDataDefinitionSaveRequest);
+				_deDataDefinitionService.execute(deDataDefinitionSaveRequest);
 
 			long deDataDefinitionId =
 				deDataDefinitionSaveResponse.getDEDataDefinitionId();
@@ -215,8 +209,7 @@ public class DEDataDefinitionRequestExecutorTest {
 				).build();
 
 			DEDataDefinitionGetResponse deDataDefinitionGetResponse =
-				_deDataDefinitionGetRequestExecutor.execute(
-					deDataDefinitionGetRequest);
+				_deDataDefinitionService.execute(deDataDefinitionGetRequest);
 
 			Assert.assertEquals(
 				expectedDEDataDefinition,
@@ -228,8 +221,7 @@ public class DEDataDefinitionRequestExecutorTest {
 					deDataDefinitionId
 				).build();
 
-			_deDataDefinitionDeleteRequestExecutor.execute(
-				deDataDefinitionDeleteRequest);
+			_deDataDefinitionService.execute(deDataDefinitionDeleteRequest);
 		}
 		finally {
 			ServiceContextThreadLocal.popServiceContext();
@@ -291,8 +283,7 @@ public class DEDataDefinitionRequestExecutorTest {
 			ServiceContextThreadLocal.pushServiceContext(serviceContext);
 
 			DEDataDefinitionSaveResponse deDataDefinitionSaveResponse =
-				_deDataDefinitionSaveRequestExecutor.execute(
-					deDataDefinitionSaveRequest);
+				_deDataDefinitionService.execute(deDataDefinitionSaveRequest);
 
 			long deDataDefinitionId =
 				deDataDefinitionSaveResponse.getDEDataDefinitionId();
@@ -306,8 +297,7 @@ public class DEDataDefinitionRequestExecutorTest {
 				).build();
 
 			DEDataDefinitionGetResponse deDataDefinitionGetResponse =
-				_deDataDefinitionGetRequestExecutor.execute(
-					deDataDefinitionGetRequest);
+				_deDataDefinitionService.execute(deDataDefinitionGetRequest);
 
 			DEDataDefinition deDataDefinition =
 				deDataDefinitionGetResponse.getDeDataDefinition();
@@ -331,8 +321,7 @@ public class DEDataDefinitionRequestExecutorTest {
 					deDataDefinitionId
 				).build();
 
-			_deDataDefinitionDeleteRequestExecutor.execute(
-				deDataDefinitionDeleteRequest);
+			_deDataDefinitionService.execute(deDataDefinitionDeleteRequest);
 		}
 		finally {
 			ServiceContextThreadLocal.popServiceContext();
@@ -377,8 +366,7 @@ public class DEDataDefinitionRequestExecutorTest {
 			ServiceContextThreadLocal.pushServiceContext(serviceContext);
 
 			DEDataDefinitionSaveResponse deDataDefinitionSaveResponse =
-				_deDataDefinitionSaveRequestExecutor.execute(
-					deDataDefinitionSaveRequest);
+				_deDataDefinitionService.execute(deDataDefinitionSaveRequest);
 
 			long deDataDefinitionId =
 				deDataDefinitionSaveResponse.getDEDataDefinitionId();
@@ -415,8 +403,7 @@ public class DEDataDefinitionRequestExecutorTest {
 					_group.getGroupId()
 				).build();
 
-			_deDataDefinitionSaveRequestExecutor.execute(
-				deDataDefinitionSaveRequest);
+			_deDataDefinitionService.execute(deDataDefinitionSaveRequest);
 
 			DEDataDefinitionGetRequest deDataDefinitionGetRequest =
 				DEDataDefinitionRequestBuilder.getBuilder(
@@ -425,8 +412,7 @@ public class DEDataDefinitionRequestExecutorTest {
 				).build();
 
 			DEDataDefinitionGetResponse deDataDefinitionGetResponse =
-				_deDataDefinitionGetRequestExecutor.execute(
-					deDataDefinitionGetRequest);
+				_deDataDefinitionService.execute(deDataDefinitionGetRequest);
 
 			DEDataDefinition deDataDefinition =
 				deDataDefinitionGetResponse.getDeDataDefinition();
@@ -439,8 +425,7 @@ public class DEDataDefinitionRequestExecutorTest {
 					deDataDefinitionId
 				).build();
 
-			_deDataDefinitionDeleteRequestExecutor.execute(
-				deDataDefinitionDeleteRequest);
+			_deDataDefinitionService.execute(deDataDefinitionDeleteRequest);
 		}
 		finally {
 			ServiceContextThreadLocal.popServiceContext();
@@ -471,17 +456,8 @@ public class DEDataDefinitionRequestExecutorTest {
 		return serviceContext;
 	}
 
-	@Inject(type = DEDataDefinitionDeleteRequestExecutor.class)
-	private DEDataDefinitionDeleteRequestExecutor
-		_deDataDefinitionDeleteRequestExecutor;
-
-	@Inject(type = DEDataDefinitionGetRequestExecutor.class)
-	private DEDataDefinitionGetRequestExecutor
-		_deDataDefinitionGetRequestExecutor;
-
-	@Inject(type = DEDataDefinitionSaveRequestExecutor.class)
-	private DEDataDefinitionSaveRequestExecutor
-		_deDataDefinitionSaveRequestExecutor;
+	@Inject(type = DEDataDefinitionService.class)
+	private DEDataDefinitionService _deDataDefinitionService;
 
 	@DeleteAfterTestRun
 	private Group _group;

@@ -17,6 +17,8 @@ package com.liferay.portlet.documentlibrary.util;
 import com.liferay.document.library.kernel.document.conversion.DocumentConversionUtil;
 import com.liferay.document.library.kernel.exception.NoSuchFileEntryException;
 import com.liferay.document.library.kernel.model.DLProcessorConstants;
+import com.liferay.document.library.kernel.service.DLFileEntryPreviewHandlerUtil;
+import com.liferay.document.library.kernel.service.DLFileEntryPreviewHandler;
 import com.liferay.document.library.kernel.store.DLStoreUtil;
 import com.liferay.document.library.kernel.util.DLPreviewableProcessor;
 import com.liferay.document.library.kernel.util.DLUtil;
@@ -600,11 +602,17 @@ public class PDFProcessorImpl
 				errorMessage += " resulted in a canceled timeout for " + future;
 			}
 
+			DLFileEntryPreviewHandlerUtil.addFailDLFileEntryPreview(
+				fileVersion.getFileEntryId(), fileVersion.getFileVersionId());
+
 			_log.error(errorMessage);
 
 			throw te;
 		}
 		catch (Exception e) {
+			DLFileEntryPreviewHandlerUtil.addFailDLFileEntryPreview(
+				fileVersion.getFileEntryId(), fileVersion.getFileVersionId());
+
 			_log.error(e, e);
 
 			throw e;
@@ -633,6 +641,10 @@ public class PDFProcessorImpl
 						fileVersion.getCompanyId(), PREVIEW_PATH,
 						getPreviewFilePath(fileVersion, i + 1),
 						previewTempFile);
+
+					DLFileEntryPreviewHandlerUtil.addSuccessDLFileEntryPreview(
+						fileVersion.getFileEntryId(),
+						fileVersion.getFileVersionId());
 				}
 				finally {
 					FileUtil.delete(previewTempFile);
@@ -665,12 +677,24 @@ public class PDFProcessorImpl
 
 		File decryptedFile = getDecryptedTempFile(tempFileId);
 
+		long fileEntryPreviewId =
+			DLFileEntryPreviewHandlerUtil.getDLFileEntryPreviewId(
+				fileVersion.getFileEntryId(), fileVersion.getFileVersionId(),
+				DLFileEntryPreviewHandler.DLFileEntryPreviewType.FAIL);
+
+		if (fileEntryPreviewId > 0) {
+			return;
+		}
+
 		int previewFilesCount = _getPreviewFilesCount(file, decryptedFile);
 
 		if (previewFilesCount == 0) {
 			_log.error(
 				"Unable to decrypt PDF document for file version " +
 					fileVersion.getFileVersionId());
+
+			DLFileEntryPreviewHandlerUtil.addFailDLFileEntryPreview(
+				fileVersion.getFileEntryId(), fileVersion.getFileVersionId());
 
 			return;
 		}
@@ -775,10 +799,18 @@ public class PDFProcessorImpl
 
 				_log.error(errorMessage);
 
+				DLFileEntryPreviewHandlerUtil.addFailDLFileEntryPreview(
+					fileVersion.getFileEntryId(),
+					fileVersion.getFileVersionId());
+
 				throw te;
 			}
 			catch (Exception e) {
 				_log.error(e, e);
+
+				DLFileEntryPreviewHandlerUtil.addFailDLFileEntryPreview(
+					fileVersion.getFileEntryId(),
+					fileVersion.getFileVersionId());
 
 				throw e;
 			}
@@ -816,6 +848,10 @@ public class PDFProcessorImpl
 						fileVersion.getCompanyId(), PREVIEW_PATH,
 						getPreviewFilePath(fileVersion, index + 1),
 						previewFile);
+
+					DLFileEntryPreviewHandlerUtil.addSuccessDLFileEntryPreview(
+						fileVersion.getFileEntryId(),
+						fileVersion.getFileVersionId());
 				}
 				finally {
 					FileUtil.delete(previewFile);

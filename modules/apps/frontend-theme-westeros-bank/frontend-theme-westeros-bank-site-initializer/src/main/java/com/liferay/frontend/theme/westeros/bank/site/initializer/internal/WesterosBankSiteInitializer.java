@@ -360,12 +360,21 @@ public class WesterosBankSiteInitializer implements SiteInitializer {
 			String fragmentEntryName = StringUtil.upperCaseFirstLetter(
 				fragmentEntryId);
 
+			StringBundler sb = new StringBundler(4);
+
+			sb.append(filePath);
+			sb.append(StringPool.SLASH);
+			sb.append(fragmentEntryId);
+			sb.append(".css");
+
+			URL cssURL = _bundle.getEntry(sb.toString());
+
 			FragmentEntry fragmentEntry =
 				_fragmentEntryLocalService.addFragmentEntry(
 					serviceContext.getUserId(),
 					serviceContext.getScopeGroupId(),
 					fragmentCollection.getFragmentCollectionId(),
-					fragmentEntryName, StringPool.BLANK,
+					fragmentEntryName, StringUtil.read(cssURL.openStream()),
 					StringUtil.read(url.openStream()), StringPool.BLANK,
 					WorkflowConstants.STATUS_APPROVED, serviceContext);
 

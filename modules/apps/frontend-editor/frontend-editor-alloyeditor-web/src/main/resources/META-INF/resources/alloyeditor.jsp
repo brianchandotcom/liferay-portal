@@ -264,10 +264,6 @@ name = HtmlUtil.escapeJS(name);
 
 			if (!validDropTarget) {
 				event.preventDefault();
-
-				if (event._event && event._event.dataTransfer) {
-					event._event.dataTransfer.dropEffect = 'none';
-				}
 			}
 		}
 	);
@@ -289,7 +285,7 @@ name = HtmlUtil.escapeJS(name);
 							show: 0
 						},
 						duration: 500,
-						message: '<liferay-ui:message key="invalid-drag-and-drop-action" />',
+						message: '<liferay-ui:message key="this-is-an-invalid-drag-and-drop-action" />',
 						render: true,
 						title: '<liferay-ui:message key="warning" />',
 						type: 'warning'

@@ -106,14 +106,12 @@ if (addressId > 0L) {
 	function updateAdressZipRequired(required) {
 		if (required) {
 			addressZipRequiredWrapper.removeAttribute('hidden');
-
-			rules['<portlet:namespace />addressZip'] = {required: true};
 		}
 		else {
 			addressZipRequiredWrapper.setAttribute('hidden', true);
-
-			rules['<portlet:namespace />addressZip'] = null;
 		}
+
+		rules.<portlet:namespace />addressZip = {required: required};
 	}
 
 	function checkCountry(countryId) {

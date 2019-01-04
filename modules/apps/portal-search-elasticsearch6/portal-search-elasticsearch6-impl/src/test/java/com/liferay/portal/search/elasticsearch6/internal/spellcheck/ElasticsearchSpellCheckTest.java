@@ -27,10 +27,12 @@ public class ElasticsearchSpellCheckTest extends BaseSpellCheckTestCase {
 
 	@Override
 	protected IndexingFixture createIndexingFixture() {
-		return new ElasticsearchIndexingFixture(
-			new ElasticsearchFixture(
-				ElasticsearchSpellCheckTest.class.getSimpleName()),
-			BaseIndexingTestCase.COMPANY_ID);
+		return new ElasticsearchIndexingFixture() {
+			{
+				companyId = BaseIndexingTestCase.COMPANY_ID;
+				elasticsearchFixture = new ElasticsearchFixture(getClass());
+			}
+		};
 	}
 
 }

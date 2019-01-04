@@ -28,12 +28,16 @@ public class ElasticsearchSortTest extends BaseSortTestCase {
 
 	@Override
 	protected IndexingFixture createIndexingFixture() throws Exception {
-		ElasticsearchFixture elasticsearchFixture = new ElasticsearchFixture(
-			ElasticsearchSortTest.class.getSimpleName());
+		ElasticsearchFixture elasticsearchFixture1 = new ElasticsearchFixture(
+			getClass());
 
-		return new ElasticsearchIndexingFixture(
-			elasticsearchFixture, BaseIndexingTestCase.COMPANY_ID,
-			new LiferayIndexCreator(elasticsearchFixture));
+		return new ElasticsearchIndexingFixture() {
+			{
+				companyId = BaseIndexingTestCase.COMPANY_ID;
+				elasticsearchFixture = elasticsearchFixture1;
+				indexCreator = new LiferayIndexCreator(elasticsearchFixture1);
+			}
+		};
 	}
 
 }

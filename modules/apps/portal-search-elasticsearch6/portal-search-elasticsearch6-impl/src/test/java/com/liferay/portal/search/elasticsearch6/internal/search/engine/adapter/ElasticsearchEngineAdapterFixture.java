@@ -15,6 +15,8 @@
 package com.liferay.portal.search.elasticsearch6.internal.search.engine.adapter;
 
 import com.liferay.portal.search.elasticsearch6.internal.connection.ElasticsearchClientResolver;
+import com.liferay.portal.search.elasticsearch6.internal.document.DefaultElasticsearchDocumentFactory;
+import com.liferay.portal.search.elasticsearch6.internal.document.ElasticsearchDocumentFactory;
 import com.liferay.portal.search.elasticsearch6.internal.facet.FacetProcessor;
 import com.liferay.portal.search.elasticsearch6.internal.search.engine.adapter.cluster.ClusterRequestExecutorFixture;
 import com.liferay.portal.search.elasticsearch6.internal.search.engine.adapter.document.DocumentRequestExecutorFixture;
@@ -30,62 +32,97 @@ import org.elasticsearch.action.search.SearchRequestBuilder;
  */
 public class ElasticsearchEngineAdapterFixture {
 
-	public ElasticsearchEngineAdapterFixture(
-		ElasticsearchClientResolver elasticsearchClientResolver,
-		FacetProcessor<SearchRequestBuilder> facetProcessor) {
-
-		_searchEngineAdapter = createSearchEngineAdapter(
-			elasticsearchClientResolver, facetProcessor);
-	}
-
 	public SearchEngineAdapter getSearchEngineAdapter() {
 		return _searchEngineAdapter;
 	}
 
-	protected SearchEngineAdapter createSearchEngineAdapter(
-		ElasticsearchClientResolver elasticsearchClientResolver,
-		FacetProcessor<SearchRequestBuilder> facetProcessor) {
+	public void setUp() {
+		_searchEngineAdapter = createSearchEngineAdapter(
+			elasticsearchClientResolver, getElasticsearchDocumentFactory(),
+			facetProcessor);
+	}
+
+	protected static SearchEngineAdapter createSearchEngineAdapter(
+		ElasticsearchClientResolver elasticsearchClientResolver1,
+		ElasticsearchDocumentFactory elasticsearchDocumentFactory1,
+		FacetProcessor facetProcessor1) {
+
+		ClusterRequestExecutorFixture clusterRequestExecutorFixture =
+			new ClusterRequestExecutorFixture() {
+				{
+					elasticsearchClientResolver = elasticsearchClientResolver1;
+				}
+			};
+
+		DocumentRequestExecutorFixture documentRequestExecutorFixture =
+			new DocumentRequestExecutorFixture() {
+				{
+					elasticsearchClientResolver = elasticsearchClientResolver1;
+					elasticsearchDocumentFactory =
+						elasticsearchDocumentFactory1;
+				}
+			};
+
+		IndexRequestExecutorFixture indexRequestExecutorFixture =
+			new IndexRequestExecutorFixture() {
+				{
+					elasticsearchClientResolver = elasticsearchClientResolver1;
+				}
+			};
+
+		SearchRequestExecutorFixture searchRequestExecutorFixture =
+			new SearchRequestExecutorFixture() {
+				{
+					elasticsearchClientResolver = elasticsearchClientResolver1;
+					facetProcessor = facetProcessor1;
+				}
+			};
+
+		SnapshotRequestExecutorFixture snapshotRequestExecutorFixture =
+			new SnapshotRequestExecutorFixture() {
+				{
+					elasticsearchClientResolver = elasticsearchClientResolver1;
+				}
+			};
+
+		clusterRequestExecutorFixture.setUp();
+		documentRequestExecutorFixture.setUp();
+		indexRequestExecutorFixture.setUp();
+		searchRequestExecutorFixture.setUp();
+		snapshotRequestExecutorFixture.setUp();
 
 		return new ElasticsearchSearchEngineAdapterImpl() {
 			{
-				ClusterRequestExecutorFixture clusterRequestExecutorFixture =
-					new ClusterRequestExecutorFixture(
-						elasticsearchClientResolver);
-
 				clusterRequestExecutor =
-					clusterRequestExecutorFixture.createExecutor();
-
-				DocumentRequestExecutorFixture documentRequestExecutorFixture =
-					new DocumentRequestExecutorFixture(
-						elasticsearchClientResolver);
+					clusterRequestExecutorFixture.getClusterRequestExecutor();
 
 				documentRequestExecutor =
-					documentRequestExecutorFixture.createExecutor();
-
-				IndexRequestExecutorFixture indexRequestExecutorFixture =
-					new IndexRequestExecutorFixture(
-						elasticsearchClientResolver);
+					documentRequestExecutorFixture.getDocumentRequestExecutor();
 
 				indexRequestExecutor =
-					indexRequestExecutorFixture.createExecutor();
-
-				SearchRequestExecutorFixture searchRequestExecutorFixture =
-					new SearchRequestExecutorFixture(
-						elasticsearchClientResolver, facetProcessor);
+					indexRequestExecutorFixture.getIndexRequestExecutor();
 
 				searchRequestExecutor =
-					searchRequestExecutorFixture.createExecutor();
-
-				SnapshotRequestExecutorFixture snapshotRequestExecutorFixture =
-					new SnapshotRequestExecutorFixture(
-						elasticsearchClientResolver);
+					searchRequestExecutorFixture.getSearchRequestExecutor();
 
 				snapshotRequestExecutor =
-					snapshotRequestExecutorFixture.createExecutor();
+					snapshotRequestExecutorFixture.getSnapshotRequestExecutor();
 			}
 		};
 	}
 
-	private final SearchEngineAdapter _searchEngineAdapter;
+	protected ElasticsearchDocumentFactory getElasticsearchDocumentFactory() {
+		if (elasticsearchDocumentFactory != null) {
+			return elasticsearchDocumentFactory;
+		}
+
+		return new DefaultElasticsearchDocumentFactory();
+	}
+
+	protected ElasticsearchClientResolver elasticsearchClientResolver;
+	protected ElasticsearchDocumentFactory elasticsearchDocumentFactory;
+	protected FacetProcessor<SearchRequestBuilder> facetProcessor;
+
+	private SearchEngineAdapter _searchEngineAdapter;
 
 }

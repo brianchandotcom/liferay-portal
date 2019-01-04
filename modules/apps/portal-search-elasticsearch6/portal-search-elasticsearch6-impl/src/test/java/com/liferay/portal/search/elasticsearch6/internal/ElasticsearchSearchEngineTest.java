@@ -22,7 +22,6 @@ import com.liferay.portal.search.elasticsearch6.internal.connection.Elasticsearc
 import com.liferay.portal.search.elasticsearch6.internal.connection.ElasticsearchFixture;
 import com.liferay.portal.search.elasticsearch6.internal.connection.EmbeddedElasticsearchConnection;
 import com.liferay.portal.search.elasticsearch6.internal.connection.OperationMode;
-import com.liferay.portal.search.elasticsearch6.internal.facet.DefaultFacetProcessor;
 import com.liferay.portal.search.elasticsearch6.internal.index.CompanyIdIndexNameBuilder;
 import com.liferay.portal.search.elasticsearch6.internal.index.CompanyIndexFactory;
 import com.liferay.portal.search.elasticsearch6.internal.index.IndexNameBuilder;
@@ -63,8 +62,13 @@ public class ElasticsearchSearchEngineTest {
 		_elasticsearchConnectionManager.activate(OperationMode.EMBEDDED);
 
 		ElasticsearchEngineAdapterFixture elasticsearchEngineAdapterFixture =
-			new ElasticsearchEngineAdapterFixture(
-				_elasticsearchFixture, new DefaultFacetProcessor());
+			new ElasticsearchEngineAdapterFixture() {
+				{
+					elasticsearchClientResolver = _elasticsearchFixture;
+				}
+			};
+
+		elasticsearchEngineAdapterFixture.setUp();
 
 		_searchEngineAdapter =
 			elasticsearchEngineAdapterFixture.getSearchEngineAdapter();
@@ -162,11 +166,19 @@ public class ElasticsearchSearchEngineTest {
 		deleteSnapshotRequestBuilder.get();
 	}
 
-	protected CompanyIndexFactory createCompanyIndexFactory() {
+	protected static CompanyIndexFactory createCompanyIndexFactory() {
 		return new CompanyIndexFactory() {
 			{
 				indexNameBuilder = createIndexNameBuilder();
 				jsonFactory = new JSONFactoryImpl();
+			}
+		};
+	}
+
+	protected static IndexNameBuilder createIndexNameBuilder() {
+		return new CompanyIdIndexNameBuilder() {
+			{
+				setIndexNamePrefix(null);
 			}
 		};
 	}
@@ -195,14 +207,6 @@ public class ElasticsearchSearchEngineTest {
 				elasticsearchConnectionManager =
 					elasticsearchConnectionManager2;
 				searchEngineAdapter = searchEngineAdapter1;
-			}
-		};
-	}
-
-	protected IndexNameBuilder createIndexNameBuilder() {
-		return new CompanyIdIndexNameBuilder() {
-			{
-				setIndexNamePrefix(null);
 			}
 		};
 	}

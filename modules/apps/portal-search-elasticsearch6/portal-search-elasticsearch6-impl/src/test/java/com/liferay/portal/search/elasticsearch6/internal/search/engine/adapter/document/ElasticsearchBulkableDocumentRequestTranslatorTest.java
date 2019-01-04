@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.DocumentImpl;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.search.elasticsearch6.internal.connection.ElasticsearchClientResolver;
 import com.liferay.portal.search.elasticsearch6.internal.connection.ElasticsearchFixture;
 import com.liferay.portal.search.elasticsearch6.internal.document.DefaultElasticsearchDocumentFactory;
 import com.liferay.portal.search.elasticsearch6.internal.document.ElasticsearchDocumentFactory;
@@ -53,20 +54,26 @@ public class ElasticsearchBulkableDocumentRequestTranslatorTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_elasticsearchFixture = new ElasticsearchFixture(
-			ElasticsearchBulkableDocumentRequestTranslatorTest.class.
-				getSimpleName());
+		ElasticsearchFixture elasticsearchFixture = new ElasticsearchFixture(
+			getClass());
 
-		_elasticsearchFixture.setUp();
+		ElasticsearchDocumentFactory elasticsearchDocumentFactory =
+			createElasticsearchDocumentFactory();
 
-		_documentFixture.setUp();
+		ElasticsearchBulkableDocumentRequestTranslator
+			elasticsearchBulkableDocumentRequestTranslator =
+				createElasticsearchBulkableDocumentRequestTranslator(
+					elasticsearchFixture, elasticsearchDocumentFactory);
 
 		_elasticsearchBulkableDocumentRequestTranslator =
-			new ElasticsearchBulkableDocumentRequestTranslator() {
-				{
-					elasticsearchClientResolver = _elasticsearchFixture;
-				}
-			};
+			elasticsearchBulkableDocumentRequestTranslator;
+
+		_elasticsearchDocumentFactory = elasticsearchDocumentFactory;
+
+		_elasticsearchFixture = elasticsearchFixture;
+
+		_documentFixture.setUp();
+		_elasticsearchFixture.setUp();
 	}
 
 	@After
@@ -152,6 +159,25 @@ public class ElasticsearchBulkableDocumentRequestTranslatorTest {
 			null, true, WriteRequest.RefreshPolicy.IMMEDIATE);
 	}
 
+	protected static ElasticsearchBulkableDocumentRequestTranslator
+		createElasticsearchBulkableDocumentRequestTranslator(
+			ElasticsearchClientResolver elasticsearchClientResolver1,
+			ElasticsearchDocumentFactory elasticsearchDocumentFactory1) {
+
+		return new ElasticsearchBulkableDocumentRequestTranslator() {
+			{
+				elasticsearchClientResolver = elasticsearchClientResolver1;
+				elasticsearchDocumentFactory = elasticsearchDocumentFactory1;
+			}
+		};
+	}
+
+	protected static ElasticsearchDocumentFactory
+		createElasticsearchDocumentFactory() {
+
+		return new DefaultElasticsearchDocumentFactory();
+	}
+
 	protected void doTestDeleteDocumentRequestTranslation(
 		boolean refreshPolicy,
 		WriteRequest.RefreshPolicy expectedRefreshPolicy) {
@@ -214,14 +240,11 @@ public class ElasticsearchBulkableDocumentRequestTranslatorTest {
 		Assert.assertEquals(_MAPPING_NAME, indexRequest.type());
 		Assert.assertEquals(id, indexRequest.id());
 
-		ElasticsearchDocumentFactory elasticsearchDocumentFactory =
-			new DefaultElasticsearchDocumentFactory();
-
 		String source = XContentHelper.convertToJson(
 			indexRequest.source(), false, XContentType.JSON);
 
 		Assert.assertEquals(
-			elasticsearchDocumentFactory.getElasticsearchDocument(document),
+			_elasticsearchDocumentFactory.getElasticsearchDocument(document),
 			source);
 
 		Client client = _elasticsearchFixture.getClient();
@@ -261,16 +284,13 @@ public class ElasticsearchBulkableDocumentRequestTranslatorTest {
 		Assert.assertEquals(_INDEX_NAME, updateRequest.index());
 		Assert.assertEquals(id, updateRequest.id());
 
-		ElasticsearchDocumentFactory elasticsearchDocumentFactory =
-			new DefaultElasticsearchDocumentFactory();
-
 		IndexRequest indexRequest = updateRequest.doc();
 
 		String source = XContentHelper.convertToJson(
 			indexRequest.source(), false, XContentType.JSON);
 
 		Assert.assertEquals(
-			elasticsearchDocumentFactory.getElasticsearchDocument(document),
+			_elasticsearchDocumentFactory.getElasticsearchDocument(document),
 			source);
 
 		Client client = _elasticsearchFixture.getClient();
@@ -297,6 +317,7 @@ public class ElasticsearchBulkableDocumentRequestTranslatorTest {
 	private final DocumentFixture _documentFixture = new DocumentFixture();
 	private ElasticsearchBulkableDocumentRequestTranslator
 		_elasticsearchBulkableDocumentRequestTranslator;
+	private ElasticsearchDocumentFactory _elasticsearchDocumentFactory;
 	private ElasticsearchFixture _elasticsearchFixture;
 
 }

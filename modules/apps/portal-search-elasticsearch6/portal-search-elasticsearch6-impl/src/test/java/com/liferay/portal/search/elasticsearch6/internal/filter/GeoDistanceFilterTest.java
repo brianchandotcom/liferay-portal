@@ -106,12 +106,16 @@ public class GeoDistanceFilterTest extends BaseIndexingTestCase {
 
 	@Override
 	protected IndexingFixture createIndexingFixture() throws Exception {
-		ElasticsearchFixture elasticsearchFixture = new ElasticsearchFixture(
-			GeoDistanceFilterTest.class.getSimpleName());
+		ElasticsearchFixture elasticsearchFixture1 = new ElasticsearchFixture(
+			getClass());
 
-		return new ElasticsearchIndexingFixture(
-			elasticsearchFixture, BaseIndexingTestCase.COMPANY_ID,
-			new LiferayIndexCreator(elasticsearchFixture));
+		return new ElasticsearchIndexingFixture() {
+			{
+				companyId = BaseIndexingTestCase.COMPANY_ID;
+				elasticsearchFixture = elasticsearchFixture1;
+				indexCreator = new LiferayIndexCreator(elasticsearchFixture1);
+			}
+		};
 	}
 
 	protected void index(double latitude, double longitude) throws Exception {

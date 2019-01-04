@@ -27,9 +27,12 @@ public class StatisticsTest extends BaseStatisticsTestCase {
 
 	@Override
 	protected IndexingFixture createIndexingFixture() {
-		return new ElasticsearchIndexingFixture(
-			new ElasticsearchFixture(StatisticsTest.class.getSimpleName()),
-			BaseIndexingTestCase.COMPANY_ID);
+		return new ElasticsearchIndexingFixture() {
+			{
+				companyId = BaseIndexingTestCase.COMPANY_ID;
+				elasticsearchFixture = new ElasticsearchFixture(getClass());
+			}
+		};
 	}
 
 }

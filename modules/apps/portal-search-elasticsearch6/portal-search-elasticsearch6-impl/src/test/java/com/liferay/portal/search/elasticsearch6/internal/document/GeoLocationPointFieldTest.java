@@ -89,17 +89,22 @@ public class GeoLocationPointFieldTest extends BaseIndexingTestCase {
 
 	@Override
 	protected IndexingFixture createIndexingFixture() throws Exception {
-		ElasticsearchFixture elasticsearchFixture = new ElasticsearchFixture(
-			GeoLocationPointFieldTest.class.getSimpleName());
+		ElasticsearchFixture elasticsearchFixture1 = new ElasticsearchFixture(
+			getClass());
 
-		IndexCreator indexCreator = new IndexCreator(elasticsearchFixture);
-
-		indexCreator.setIndexCreationHelper(
-			new CustomFieldLiferayIndexCreationHelper(elasticsearchFixture));
-
-		return new ElasticsearchIndexingFixture(
-			elasticsearchFixture, BaseIndexingTestCase.COMPANY_ID,
-			indexCreator);
+		return new ElasticsearchIndexingFixture() {
+			{
+				companyId = BaseIndexingTestCase.COMPANY_ID;
+				elasticsearchFixture = elasticsearchFixture1;
+				indexCreator = new IndexCreator(elasticsearchFixture1) {
+					{
+						setIndexCreationHelper(
+							new CustomFieldLiferayIndexCreationHelper(
+								elasticsearchFixture1));
+					}
+				};
+			}
+		};
 	}
 
 	protected int randomLatitude() {

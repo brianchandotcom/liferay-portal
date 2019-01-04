@@ -29,14 +29,16 @@ public class AssetTagNamesQueryPreFilterContributorTest
 
 	@Override
 	protected IndexingFixture createIndexingFixture() throws Exception {
-		Class<?> testClass = getClass();
+		ElasticsearchFixture elasticsearchFixture1 = new ElasticsearchFixture(
+			getClass());
 
-		ElasticsearchFixture elasticsearchFixture = new ElasticsearchFixture(
-			testClass.getSimpleName());
-
-		return new ElasticsearchIndexingFixture(
-			elasticsearchFixture, BaseIndexingTestCase.COMPANY_ID,
-			new LiferayIndexCreator(elasticsearchFixture));
+		return new ElasticsearchIndexingFixture() {
+			{
+				companyId = BaseIndexingTestCase.COMPANY_ID;
+				elasticsearchFixture = elasticsearchFixture1;
+				indexCreator = new LiferayIndexCreator(elasticsearchFixture1);
+			}
+		};
 	}
 
 }

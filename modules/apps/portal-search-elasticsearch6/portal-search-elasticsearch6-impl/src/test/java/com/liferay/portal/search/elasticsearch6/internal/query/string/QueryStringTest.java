@@ -27,9 +27,12 @@ public class QueryStringTest extends BaseQueryStringTestCase {
 
 	@Override
 	protected IndexingFixture createIndexingFixture() throws Exception {
-		return new ElasticsearchIndexingFixture(
-			new ElasticsearchFixture(getClass()),
-			BaseIndexingTestCase.COMPANY_ID);
+		return new ElasticsearchIndexingFixture() {
+			{
+				companyId = BaseIndexingTestCase.COMPANY_ID;
+				elasticsearchFixture = new ElasticsearchFixture(getClass());
+			}
+		};
 	}
 
 	@Override

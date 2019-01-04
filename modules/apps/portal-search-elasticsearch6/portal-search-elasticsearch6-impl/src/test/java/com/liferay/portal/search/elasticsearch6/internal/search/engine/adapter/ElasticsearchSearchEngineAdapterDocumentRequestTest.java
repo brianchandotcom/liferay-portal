@@ -22,6 +22,8 @@ import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.elasticsearch6.internal.connection.ElasticsearchClientResolver;
 import com.liferay.portal.search.elasticsearch6.internal.connection.ElasticsearchFixture;
+import com.liferay.portal.search.elasticsearch6.internal.document.DefaultElasticsearchDocumentFactory;
+import com.liferay.portal.search.elasticsearch6.internal.document.ElasticsearchDocumentFactory;
 import com.liferay.portal.search.elasticsearch6.internal.search.engine.adapter.document.DocumentRequestExecutorFixture;
 import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
 import com.liferay.portal.search.engine.adapter.document.BulkDocumentItemResponse;
@@ -531,13 +533,36 @@ public class ElasticsearchSearchEngineAdapterDocumentRequestTest {
 		Assert.assertEquals(Boolean.FALSE.toString(), map2.get(_FIELD_NAME));
 	}
 
-	protected DocumentRequestExecutor createDocumentRequestExecutor(
-		ElasticsearchClientResolver elasticsearchClientResolver) {
+	protected static DocumentRequestExecutor createDocumentRequestExecutor(
+		ElasticsearchClientResolver elasticsearchClientResolver1,
+		ElasticsearchDocumentFactory elasticsearchDocumentFactory1) {
 
 		DocumentRequestExecutorFixture documentRequestExecutorFixture =
-			new DocumentRequestExecutorFixture(elasticsearchClientResolver);
+			new DocumentRequestExecutorFixture() {
+				{
+					elasticsearchClientResolver = elasticsearchClientResolver1;
+					elasticsearchDocumentFactory =
+						elasticsearchDocumentFactory1;
+				}
+			};
 
-		return documentRequestExecutorFixture.createExecutor();
+		documentRequestExecutorFixture.setUp();
+
+		return documentRequestExecutorFixture.getDocumentRequestExecutor();
+	}
+
+	protected static SearchEngineAdapter createSearchEngineAdapter(
+		ElasticsearchClientResolver elasticsearchClientResolver) {
+
+		ElasticsearchDocumentFactory elasticsearchDocumentFactory1 =
+			new DefaultElasticsearchDocumentFactory();
+
+		return new ElasticsearchSearchEngineAdapterImpl() {
+			{
+				documentRequestExecutor = createDocumentRequestExecutor(
+					elasticsearchClientResolver, elasticsearchDocumentFactory1);
+			}
+		};
 	}
 
 	protected void createIndex() {
@@ -552,17 +577,6 @@ public class ElasticsearchSearchEngineAdapterDocumentRequestTest {
 			_MAPPING_NAME, _MAPPING_SOURCE, XContentType.JSON);
 
 		createIndexRequestBuilder.get();
-	}
-
-	protected SearchEngineAdapter createSearchEngineAdapter(
-		ElasticsearchClientResolver elasticsearchClientResolver) {
-
-		return new ElasticsearchSearchEngineAdapterImpl() {
-			{
-				documentRequestExecutor = createDocumentRequestExecutor(
-					elasticsearchClientResolver);
-			}
-		};
 	}
 
 	protected void deleteIndex() {

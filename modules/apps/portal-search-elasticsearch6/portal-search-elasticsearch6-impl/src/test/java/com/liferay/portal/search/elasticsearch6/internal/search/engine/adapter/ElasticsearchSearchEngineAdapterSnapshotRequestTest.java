@@ -337,6 +337,32 @@ public class ElasticsearchSearchEngineAdapterSnapshotRequestTest {
 		deleteSnapshotRequestBuilder.get();
 	}
 
+	protected static SearchEngineAdapter createSearchEngineAdapter(
+		ElasticsearchClientResolver elasticsearchClientResolver) {
+
+		return new ElasticsearchSearchEngineAdapterImpl() {
+			{
+				snapshotRequestExecutor = createSnapshotRequestExecutor(
+					elasticsearchClientResolver);
+			}
+		};
+	}
+
+	protected static SnapshotRequestExecutor createSnapshotRequestExecutor(
+		ElasticsearchClientResolver elasticsearchClientResolver1) {
+
+		SnapshotRequestExecutorFixture snapshotRequestExecutorFixture =
+			new SnapshotRequestExecutorFixture() {
+				{
+					elasticsearchClientResolver = elasticsearchClientResolver1;
+				}
+			};
+
+		snapshotRequestExecutorFixture.setUp();
+
+		return snapshotRequestExecutorFixture.getSnapshotRequestExecutor();
+	}
+
 	protected void createIndex() {
 		CreateIndexRequestBuilder createIndexRequestBuilder =
 			_indicesAdminClient.prepareCreate(_INDEX_NAME);
@@ -361,26 +387,6 @@ public class ElasticsearchSearchEngineAdapterSnapshotRequestTest {
 			SnapshotRepositoryDetails.FS_REPOSITORY_TYPE);
 
 		putRepositoryRequestBuilder.get();
-	}
-
-	protected SearchEngineAdapter createSearchEngineAdapter(
-		ElasticsearchClientResolver elasticsearchClientResolver) {
-
-		return new ElasticsearchSearchEngineAdapterImpl() {
-			{
-				snapshotRequestExecutor = createSnapshotRequestExecutor(
-					elasticsearchClientResolver);
-			}
-		};
-	}
-
-	protected SnapshotRequestExecutor createSnapshotRequestExecutor(
-		ElasticsearchClientResolver elasticsearchClientResolver) {
-
-		SnapshotRequestExecutorFixture snapshotRequestExecutorFixture =
-			new SnapshotRequestExecutorFixture(elasticsearchClientResolver);
-
-		return snapshotRequestExecutorFixture.createExecutor();
 	}
 
 	protected void deleteIndex() {

@@ -14,9 +14,6 @@
 
 package com.liferay.frontend.taglib.soy.servlet.taglib.util;
 
-import com.liferay.petra.string.CharPool;
-import com.liferay.portal.kernel.util.StringUtil;
-
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
@@ -61,8 +58,6 @@ public class ComponentDescriptor {
 		_wrapper = wrapper;
 		_renderJavascript = renderJavascript;
 		_positionInLine = positionInLine;
-
-		_moduleName = _generateModuleName(_module);
 	}
 
 	public String getComponentId() {
@@ -75,10 +70,6 @@ public class ComponentDescriptor {
 
 	public String getModule() {
 		return _module;
-	}
-
-	public String getModuleName() {
-		return _moduleName;
 	}
 
 	public String getTemplateNamespace() {
@@ -97,21 +88,9 @@ public class ComponentDescriptor {
 		return _wrapper;
 	}
 
-	private String _generateModuleName(String module) {
-		String moduleName = StringUtil.extractLast(
-			module, CharPool.FORWARD_SLASH);
-
-		return StringUtil.strip(moduleName, _UNSAFE_MODULE_NAME_CHARS);
-	}
-
-	private static final char[] _UNSAFE_MODULE_NAME_CHARS = {
-		CharPool.PERIOD, CharPool.DASH
-	};
-
 	private String _componentId;
 	private Set<String> _dependencies = new HashSet<>();
 	private String _module;
-	private String _moduleName;
 	private boolean _positionInLine;
 	private boolean _renderJavascript;
 	private String _templateNamespace;

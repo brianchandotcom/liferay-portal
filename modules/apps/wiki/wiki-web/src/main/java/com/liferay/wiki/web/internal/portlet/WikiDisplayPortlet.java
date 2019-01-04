@@ -16,6 +16,7 @@ package com.liferay.wiki.web.internal.portlet;
 
 import com.liferay.asset.constants.AssetWebKeys;
 import com.liferay.asset.util.AssetHelper;
+import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
 import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.trash.TrashHelper;
@@ -73,6 +74,10 @@ public class WikiDisplayPortlet extends MVCPortlet {
 
 		renderRequest.setAttribute(TrashWebKeys.TRASH_HELPER, _trashHelper);
 
+		renderRequest.setAttribute(
+			WikiPortletKeys.RESOLVED_MODULE_NAME,
+			_npmResolver.resolveModuleName("wiki-web"));
+
 		super.render(renderRequest, renderResponse);
 	}
 
@@ -85,6 +90,9 @@ public class WikiDisplayPortlet extends MVCPortlet {
 
 	@Reference
 	private AssetHelper _assetHelper;
+
+	@Reference
+	private NPMResolver _npmResolver;
 
 	@Reference
 	private TrashHelper _trashHelper;

@@ -110,11 +110,11 @@ public class JSPImportsCheck extends BaseFileCheck {
 	private static final Pattern _incorrectTaglibPattern = Pattern.compile(
 		"(taglib )(prefix=\".+\") (uri=\".*\")");
 	private static final Pattern _jspImportPattern = Pattern.compile(
-		"(<%@\\s+(page|tag)\\s+import=\".+?\\s+%>\\s*)+");
+		"(<%@\\s*(page|tag)\\s+import=\".+?\\s*%>\\s*)+");
 	private static final Pattern _jspTaglibPattern = Pattern.compile(
-		"(<%@\\s+taglib\\s+uri=\".+?\\s+%>\\s*)+");
+		"(<%@\\s*taglib\\s+uri=\".+?\\s*%>\\s*)+");
 	private static final Pattern _taglibSingleLinePattern = Pattern.compile(
-		"(<%@)\\s+(page|tag|taglib)\\s+((import|uri)=.+?)\\s+(%>)\\s*");
+		"(<%@)\\s*(page|tag|taglib)\\s+((import|uri)=.+?)\\s*(%>)\\s*");
 	private static final Pattern _uncompressedJSPImportPattern =
 		Pattern.compile(
 			"(<.*(?:page|tag) import=\".*>\n*)+", Pattern.MULTILINE);

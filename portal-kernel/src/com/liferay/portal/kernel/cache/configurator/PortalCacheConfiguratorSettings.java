@@ -16,7 +16,9 @@ package com.liferay.portal.kernel.cache.configurator;
 
 /**
  * @author Tina Tian
+ * @deprecated As of Mueller (7.2.x), with no direct replacement
  */
+@Deprecated
 public class PortalCacheConfiguratorSettings {
 
 	public PortalCacheConfiguratorSettings(

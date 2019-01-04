@@ -14,6 +14,7 @@
 
 package com.liferay.asset.publisher.web.internal.display.context;
 
+import com.liferay.asset.publisher.util.AssetPublisherHelper;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -35,13 +36,13 @@ public class ParentSitesItemSelectorViewDisplayContext
 	extends BaseItemSelectorViewDisplayContext {
 
 	public ParentSitesItemSelectorViewDisplayContext(
-		HttpServletRequest request,
+		HttpServletRequest request, AssetPublisherHelper assetPublisherHelper,
 		SiteItemSelectorCriterion siteItemSelectorCriterion,
 		String itemSelectedEventName, PortletURL portletURL) {
 
 		super(
-			request, siteItemSelectorCriterion, itemSelectedEventName,
-			portletURL);
+			request, assetPublisherHelper, siteItemSelectorCriterion,
+			itemSelectedEventName, portletURL);
 	}
 
 	@Override

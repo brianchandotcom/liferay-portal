@@ -15,6 +15,7 @@
 package com.liferay.asset.publisher.web.internal;
 
 import com.liferay.asset.publisher.constants.AssetPublisherWebKeys;
+import com.liferay.asset.publisher.util.AssetPublisherHelper;
 import com.liferay.asset.publisher.web.internal.display.context.LayoutScopesItemSelectorViewDisplayContext;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorView;
@@ -98,8 +99,9 @@ public class LayoutScopesItemSelectorView
 		LayoutScopesItemSelectorViewDisplayContext
 			layoutScopesItemSelectorViewDisplayContext =
 				new LayoutScopesItemSelectorViewDisplayContext(
-					(HttpServletRequest)request, siteItemSelectorCriterion,
-					itemSelectedEventName, portletURL);
+					(HttpServletRequest)request, _assetPublisherHelper,
+					siteItemSelectorCriterion, itemSelectedEventName,
+					portletURL);
 
 		request.setAttribute(
 			AssetPublisherWebKeys.ITEM_SELECTOR_DISPLAY_CONTEXT,
@@ -130,6 +132,9 @@ public class LayoutScopesItemSelectorView
 				new ItemSelectorReturnType[] {
 					new SiteItemSelectorReturnType()
 				}));
+
+	@Reference
+	private AssetPublisherHelper _assetPublisherHelper;
 
 	private GroupLocalService _groupLocalService;
 

@@ -18,10 +18,9 @@ import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.publisher.constants.AssetPublisherWebKeys;
-import com.liferay.asset.publisher.web.display.context.AssetEntryResult;
+import com.liferay.asset.publisher.util.AssetEntryResult;
+import com.liferay.asset.publisher.util.AssetPublisherHelper;
 import com.liferay.asset.publisher.web.internal.display.context.AssetPublisherDisplayContext;
-import com.liferay.asset.publisher.web.util.AssetPublisherHelper;
-import com.liferay.asset.publisher.web.util.AssetPublisherUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
@@ -41,9 +40,12 @@ import com.liferay.rss.model.SyndFeed;
 import com.liferay.rss.model.SyndLink;
 import com.liferay.rss.util.RSSUtil;
 
+import java.io.Serializable;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
@@ -198,6 +200,10 @@ public class AssetRSSUtil {
 			PortletPreferences portletPreferences)
 		throws Exception {
 
+		AssetPublisherHelper assetPublisherHelper =
+			(AssetPublisherHelper)portletRequest.getAttribute(
+				AssetPublisherWebKeys.ASSET_PUBLISHER_HELPER);
+
 		List<AssetEntry> assetEntries = new ArrayList<>();
 
 		SearchContainer searchContainer = new SearchContainer();
@@ -213,10 +219,23 @@ public class AssetRSSUtil {
 
 		searchContainer.setDelta(assetPublisherDisplayContext.getRSSDelta());
 
+		Map<String, Serializable> attributes =
+			assetPublisherDisplayContext.getAttributes();
+
+		attributes.put("filterExpired", Boolean.TRUE);
+
 		List<AssetEntryResult> assetEntryResults =
-			AssetPublisherUtil.getAssetEntryResults(
-				assetPublisherDisplayContext, searchContainer,
-				portletPreferences);
+			assetPublisherHelper.getAssetEntryResults(
+				searchContainer,
+				assetPublisherDisplayContext.getAssetEntryQuery(),
+				assetPublisherDisplayContext.getLayout(), portletPreferences,
+				assetPublisherDisplayContext.getPortletName(),
+				assetPublisherDisplayContext.getLocale(),
+				assetPublisherDisplayContext.getTimeZone(),
+				assetPublisherDisplayContext.getCompanyId(),
+				assetPublisherDisplayContext.getScopeGroupId(),
+				assetPublisherDisplayContext.getUserId(),
+				assetPublisherDisplayContext.getClassNameIds(), attributes);
 
 		for (AssetEntryResult assetEntryResult : assetEntryResults) {
 			assetEntries.addAll(assetEntryResult.getAssetEntries());
@@ -293,7 +312,11 @@ public class AssetRSSUtil {
 			AssetEntry assetEntry)
 		throws Exception {
 
-		String assetViewURL = AssetPublisherHelper.getAssetViewURL(
+		AssetPublisherHelper assetPublisherHelper =
+			(AssetPublisherHelper)portletRequest.getAttribute(
+				AssetPublisherWebKeys.ASSET_PUBLISHER_HELPER);
+
+		String assetViewURL = assetPublisherHelper.getAssetViewURL(
 			PortalUtil.getLiferayPortletRequest(portletRequest),
 			PortalUtil.getLiferayPortletResponse(portletResponse), assetEntry,
 			true);

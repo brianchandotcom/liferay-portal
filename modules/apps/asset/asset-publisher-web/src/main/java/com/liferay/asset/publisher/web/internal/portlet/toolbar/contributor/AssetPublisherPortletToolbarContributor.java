@@ -16,6 +16,7 @@ package com.liferay.asset.publisher.web.internal.portlet.toolbar.contributor;
 
 import com.liferay.asset.publisher.constants.AssetPublisherPortletKeys;
 import com.liferay.asset.publisher.constants.AssetPublisherWebKeys;
+import com.liferay.asset.publisher.util.AssetPublisherHelper;
 import com.liferay.asset.publisher.web.internal.display.context.AssetPublisherDisplayContext;
 import com.liferay.asset.publisher.web.internal.util.AssetPublisherCustomizer;
 import com.liferay.asset.publisher.web.internal.util.AssetPublisherWebUtil;
@@ -86,8 +87,8 @@ public class AssetPublisherPortletToolbarContributor
 
 		AssetPublisherDisplayContext assetPublisherDisplayContext =
 			new AssetPublisherDisplayContext(
-				assetPublisherCustomizer, portletRequest, portletResponse,
-				portletRequest.getPreferences());
+				assetPublisherCustomizer, _assetPublisherHelper, portletRequest,
+				portletResponse, portletRequest.getPreferences());
 
 		if (!_isVisible(assetPublisherDisplayContext, portletRequest)) {
 			return;
@@ -299,6 +300,9 @@ public class AssetPublisherPortletToolbarContributor
 
 	@Reference
 	private AssetHelper _assetHelper;
+
+	@Reference
+	private AssetPublisherHelper _assetPublisherHelper;
 
 	@Reference
 	private AssetPublisherWebUtil _assetPublisherWebUtil;

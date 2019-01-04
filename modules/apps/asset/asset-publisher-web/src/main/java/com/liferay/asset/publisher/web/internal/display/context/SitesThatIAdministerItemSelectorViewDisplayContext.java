@@ -14,6 +14,7 @@
 
 package com.liferay.asset.publisher.web.internal.display.context;
 
+import com.liferay.asset.publisher.util.AssetPublisherHelper;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
@@ -43,13 +44,13 @@ public class SitesThatIAdministerItemSelectorViewDisplayContext
 	extends BaseItemSelectorViewDisplayContext {
 
 	public SitesThatIAdministerItemSelectorViewDisplayContext(
-		HttpServletRequest request,
+		HttpServletRequest request, AssetPublisherHelper assetPublisherHelper,
 		SiteItemSelectorCriterion siteItemSelectorCriterion,
 		String itemSelectedEventName, PortletURL portletURL) {
 
 		super(
-			request, siteItemSelectorCriterion, itemSelectedEventName,
-			portletURL);
+			request, assetPublisherHelper, siteItemSelectorCriterion,
+			itemSelectedEventName, portletURL);
 	}
 
 	@Override

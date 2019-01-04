@@ -98,21 +98,6 @@ if (addressId > 0L) {
 
 <aui:script use="liferay-form">
 	const addressCountry = document.getElementById('<portlet:namespace />addressCountryId');
-	const addressZipRequiredWrapper = document.getElementById('<portlet:namespace />addressZipRequiredWrapper');
-	const formValidator = Liferay.Form.get('<portlet:namespace />fm').formValidator;
-
-	const rules = formValidator._getAttr('rules');
-
-	function updateAddressZipRequired(required) {
-		if (required) {
-			addressZipRequiredWrapper.removeAttribute('hidden');
-		}
-		else {
-			addressZipRequiredWrapper.setAttribute('hidden', true);
-		}
-
-		rules.<portlet:namespace />addressZip = {required: required};
-	}
 
 	function checkCountry(countryId) {
 		Liferay.Service(
@@ -140,6 +125,22 @@ if (addressId > 0L) {
 		else {
 			updateAddressZipRequired(false);
 		}
+	}
+
+	function updateAddressZipRequired(required) {
+		const addressZipRequiredWrapper = document.getElementById('<portlet:namespace />addressZipRequiredWrapper');
+		const formValidator = Liferay.Form.get('<portlet:namespace />fm').formValidator;
+
+		const rules = formValidator._getAttr('rules');
+
+		if (required) {
+			addressZipRequiredWrapper.removeAttribute('hidden');
+		}
+		else {
+			addressZipRequiredWrapper.setAttribute('hidden', true);
+		}
+
+		rules.<portlet:namespace />addressZip = {required: required};
 	}
 
 	if (addressCountry) {

@@ -261,8 +261,6 @@ definition {
 
 	@priority = "5"
 	test DeleteBookmark {
-		property portal.acceptance = "true";
-
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
@@ -390,8 +388,6 @@ definition {
 
 	@priority = "5"
 	test EditFolder {
-		property portal.acceptance = "true";
-
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(

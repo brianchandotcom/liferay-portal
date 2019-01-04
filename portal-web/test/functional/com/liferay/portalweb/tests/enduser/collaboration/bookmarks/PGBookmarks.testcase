@@ -134,8 +134,6 @@ definition {
 
 	@priority = "5"
 	test DeleteFolder {
-		property portal.acceptance = "true";
-
 		Navigator.gotoPage(pageName = "Bookmarks Page");
 
 		BookmarksFolder.addPG(
@@ -179,8 +177,6 @@ definition {
 
 	@priority = "5"
 	test EditFolder {
-		property portal.acceptance = "true";
-
 		Navigator.gotoPage(pageName = "Bookmarks Page");
 
 		BookmarksFolder.addPG(

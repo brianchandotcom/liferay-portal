@@ -1860,6 +1860,12 @@
 		</attribute>
 		<attribute>
 			<description></description>
+			<name>displayContext</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description></description>
 			<name>items</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -1891,12 +1897,6 @@
 		<attribute>
 			<description></description>
 			<name>tableClasses</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		<attribute>
-			<description></description>
-			<name>tableDisplayContext</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>

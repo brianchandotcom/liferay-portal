@@ -41,8 +41,18 @@ public class TableTag extends BaseClayTag {
 		return super.doStartTag();
 	}
 
+	public TableDisplayContext getDisplayContext() {
+		return _tableDisplayContext;
+	}
+
 	public void setActionsMenuVariant(String actionsMenuVariant) {
 		putValue("actionsMenuVariant", actionsMenuVariant);
+	}
+
+	public void setDisplayContext(
+		TableDisplayContext tableDisplayContext) {
+
+		_tableDisplayContext = tableDisplayContext;
 	}
 
 	public void setItems(Collection<?> items) {
@@ -79,12 +89,6 @@ public class TableTag extends BaseClayTag {
 
 	public void setTableClasses(String tableClasses) {
 		putValue("tableClasses", tableClasses);
-	}
-
-	public void setTableDisplayContext(
-		TableDisplayContext tableDisplayContext) {
-
-		_tableDisplayContext = tableDisplayContext;
 	}
 
 	public void setUseDefaultClasses(Boolean useDefaultClasses) {

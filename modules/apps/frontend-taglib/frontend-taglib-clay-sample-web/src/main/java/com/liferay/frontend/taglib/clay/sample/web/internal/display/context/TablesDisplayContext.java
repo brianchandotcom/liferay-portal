@@ -25,8 +25,8 @@ import java.util.Collection;
 /**
  * @author Iván Zaera Avellón
  */
-public class ClaySampleTableDisplayContext
-	extends BaseTableDisplayContext<SampleFruit> {
+public class TablesDisplayContext
+	extends BaseTableDisplayContext<TablesDisplayContext.Item> {
 
 	@Override
 	public Boolean isSelectable() {
@@ -43,12 +43,44 @@ public class ClaySampleTableDisplayContext
 	}
 
 	@Override
-	protected Collection<SampleFruit> doGetItems() {
+	protected Collection<Item> doGetItems() {
 		return Arrays.asList(
-			new SampleFruit("Banana", 89, "yellow", false),
-			new SampleFruit("Apple", 52, "red", true),
-			new SampleFruit("Pear", 58, "green", true),
-			new SampleFruit("Pomegranate", 68, "yellowish", false));
+			new Item("Banana", 89, "yellow", false),
+			new Item("Apple", 52, "red", true),
+			new Item("Pear", 58, "green", true),
+			new Item("Pomegranate", 68, "yellowish", false));
+	}
+
+	public static class Item {
+		public Item(
+			String name, int calories, String color, boolean skinEdible) {
+
+			_name = name;
+			_calories = calories;
+			_color = color;
+			_skinEdible = skinEdible;
+		}
+
+		public int getCalories() {
+			return _calories;
+		}
+
+		public String getColor() {
+			return _color;
+		}
+
+		public String getName() {
+			return _name;
+		}
+
+		public boolean isSkinEdible() {
+			return _skinEdible;
+		}
+
+		private final int _calories;
+		private final String _color;
+		private final String _name;
+		private final boolean _skinEdible;
 	}
 
 }

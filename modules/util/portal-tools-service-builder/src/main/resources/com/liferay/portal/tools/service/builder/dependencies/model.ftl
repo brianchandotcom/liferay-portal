@@ -479,43 +479,46 @@ public interface ${entity.name}Model extends ${entity.getModelBaseInterfaceNames
 		</#if>
 	</#if>
 
-	<#--
-	Copy methods from com.liferay.portal.kernel.model.BaseModel and java.lang.Object to
-	correctly generate wrappers.
-	-->
+	<#if serviceBuilder.isVersionLTE_7_1_0()>
 
-	@Override
-	public boolean isNew();
+		<#--
+		Copy methods from com.liferay.portal.kernel.model.BaseModel and java.lang.Object to
+		correctly generate wrappers.
+		-->
 
-	@Override
-	public void setNew(boolean n);
+		@Override
+		public boolean isNew();
 
-	@Override
-	public boolean isCachedModel();
+		@Override
+		public void setNew(boolean n);
 
-	@Override
-	public void setCachedModel(boolean cachedModel);
+		@Override
+		public boolean isCachedModel();
 
-	@Override
-	public boolean isEscapedModel();
+		@Override
+		public void setCachedModel(boolean cachedModel);
 
-	@Override
-	public Serializable getPrimaryKeyObj();
+		@Override
+		public boolean isEscapedModel();
 
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj);
+		@Override
+		public Serializable getPrimaryKeyObj();
 
-	@Override
-	public ExpandoBridge getExpandoBridge();
+		@Override
+		public void setPrimaryKeyObj(Serializable primaryKeyObj);
 
-	@Override
-	public void setExpandoBridgeAttributes(BaseModel<?> baseModel);
+		@Override
+		public ExpandoBridge getExpandoBridge();
 
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge);
+		@Override
+		public void setExpandoBridgeAttributes(BaseModel<?> baseModel);
 
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext);
+		@Override
+		public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge);
+
+		@Override
+		public void setExpandoBridgeAttributes(ServiceContext serviceContext);
+	</#if>
 
 	<#if entity.isLocalizedModel()>
 		@Override
@@ -531,28 +534,30 @@ public interface ${entity.name}Model extends ${entity.getModelBaseInterfaceNames
 		public void prepareLocalizedFieldsForImport(Locale defaultImportLocale) throws LocaleException;
 	</#if>
 
-	@Override
-	public Object clone();
+	<#if serviceBuilder.isVersionLTE_7_1_0()>
+		@Override
+		public Object clone();
 
-	@Override
-	public int compareTo(${apiPackagePath}.model.${entity.name} ${entity.varName});
+		@Override
+		public int compareTo(${apiPackagePath}.model.${entity.name} ${entity.varName});
 
-	@Override
-	public int hashCode();
+		@Override
+		public int hashCode();
 
-	@Override
-	public CacheModel<${apiPackagePath}.model.${entity.name}> toCacheModel();
+		@Override
+		public CacheModel<${apiPackagePath}.model.${entity.name}> toCacheModel();
 
-	@Override
-	public ${apiPackagePath}.model.${entity.name} toEscapedModel();
+		@Override
+		public ${apiPackagePath}.model.${entity.name} toEscapedModel();
 
-	@Override
-	public ${apiPackagePath}.model.${entity.name} toUnescapedModel();
+		@Override
+		public ${apiPackagePath}.model.${entity.name} toUnescapedModel();
 
-	@Override
-	public String toString();
+		@Override
+		public String toString();
 
-	@Override
-	public String toXmlString();
+		@Override
+		public String toXmlString();
+	</#if>
 
 }

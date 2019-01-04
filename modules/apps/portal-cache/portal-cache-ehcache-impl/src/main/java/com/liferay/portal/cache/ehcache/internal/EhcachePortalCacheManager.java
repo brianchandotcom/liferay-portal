@@ -110,24 +110,6 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 		_defaultConfigFile = defaultConfigFile;
 	}
 
-	protected Ehcache createEhcache(
-		String portalCacheName, CacheConfiguration cacheConfiguration) {
-
-		if (_cacheManager.cacheExists(portalCacheName)) {
-			if (_log.isInfoEnabled()) {
-				_log.info("Overriding existing cache " + portalCacheName);
-			}
-
-			_cacheManager.removeCache(portalCacheName);
-		}
-
-		Cache cache = new Cache(cacheConfiguration);
-
-		_cacheManager.addCache(cache);
-
-		return cache;
-	}
-
 	@Override
 	protected PortalCache<K, V> createPortalCache(
 		PortalCacheConfiguration portalCacheConfiguration) {
@@ -312,8 +294,18 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 			String portalCacheName = cacheConfiguration.getName();
 
 			synchronized (_cacheManager) {
-				Ehcache ehcache = createEhcache(
-					portalCacheName, cacheConfiguration);
+				if (_cacheManager.cacheExists(portalCacheName)) {
+					if (_log.isInfoEnabled()) {
+						_log.info(
+							"Overriding existing cache " + portalCacheName);
+					}
+
+					_cacheManager.removeCache(portalCacheName);
+				}
+
+				Ehcache ehcache = new Cache(cacheConfiguration);
+
+				_cacheManager.addCache(ehcache);
 
 				PortalCache<K, V> portalCache = portalCaches.get(
 					portalCacheName);

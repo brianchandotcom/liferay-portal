@@ -14,16 +14,21 @@
 
 package com.liferay.fragment.service.impl;
 
+import com.liferay.document.library.kernel.util.DLUtil;
+import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.processor.FragmentEntryProcessorRegistry;
 import com.liferay.fragment.service.base.FragmentEntryLinkLocalServiceBaseImpl;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
@@ -39,6 +44,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @author Eudaldo Alonso
@@ -76,7 +83,11 @@ public class FragmentEntryLinkLocalServiceImpl
 		fragmentEntryLink.setClassNameId(classNameId);
 		fragmentEntryLink.setClassPK(classPK);
 		fragmentEntryLink.setCss(css);
+
+		html = _replaceResources(fragmentEntryId, html);
+
 		fragmentEntryLink.setHtml(html);
+
 		fragmentEntryLink.setJs(js);
 
 		if (Validator.isNull(editableValues)) {
@@ -373,6 +384,51 @@ public class FragmentEntryLinkLocalServiceImpl
 			fragmentEntryLinkPersistence.update(fragmentEntryLink);
 		}
 	}
+
+	private String _replaceResources(long fragmentEntryId, String html)
+		throws PortalException {
+
+		FragmentEntry fragmentEntry =
+			fragmentEntryLocalService.fetchFragmentEntry(fragmentEntryId);
+
+		if (fragmentEntry == null) {
+			return html;
+		}
+
+		FragmentCollection fragmentCollection =
+			fragmentCollectionLocalService.fetchFragmentCollection(
+				fragmentEntry.getFragmentCollectionId());
+
+		Matcher matcher = _pattern.matcher(html);
+
+		while (matcher.find()) {
+			String imagePath = matcher.group();
+
+			String[] paths = imagePath.split(StringPool.SLASH);
+
+			String fileName = paths[paths.length - 1];
+
+			FileEntry fileEntry =
+				PortletFileRepositoryUtil.fetchPortletFileEntry(
+					fragmentEntry.getGroupId(),
+					fragmentCollection.getResourcesFolderId(), fileName);
+
+			String fileEntryURL = StringPool.BLANK;
+
+			if (fileEntry != null) {
+				fileEntryURL = DLUtil.getPreviewURL(
+					fileEntry, fileEntry.getFileVersion(), null,
+					StringPool.BLANK, false, false);
+			}
+
+			html = html.replace(imagePath, fileEntryURL);
+		}
+
+		return html;
+	}
+
+	private static final Pattern _pattern = Pattern.compile(
+		"\\.\\./\\.\\./resources/.+\\.[a-zA-Z]+");
 
 	@ServiceReference(type = FragmentEntryProcessorRegistry.class)
 	private FragmentEntryProcessorRegistry _fragmentEntryProcessorRegistry;

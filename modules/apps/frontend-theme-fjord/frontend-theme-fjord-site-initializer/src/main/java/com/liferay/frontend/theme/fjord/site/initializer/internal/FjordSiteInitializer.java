@@ -225,15 +225,24 @@ public class FjordSiteInitializer implements SiteInitializer {
 
 			String shortFileName = FileUtil.getShortFileName(url.getPath());
 
+			StringBundler sb = new StringBundler(4);
+
+			sb.append(path);
+			sb.append(StringPool.SLASH);
+			sb.append(FileUtil.stripExtension(shortFileName));
+			sb.append(".css");
+
+			URL cssURL = _bundle.getEntry(sb.toString());
+
 			FragmentEntry fragmentEntry =
 				_fragmentEntryLocalService.addFragmentEntry(
 					serviceContext.getUserId(),
 					serviceContext.getScopeGroupId(), fragmentCollectionId,
 					StringUtil.upperCaseFirstLetter(
 						FileUtil.stripExtension(shortFileName)),
-					StringPool.BLANK, StringUtil.read(url.openStream()),
-					StringPool.BLANK, WorkflowConstants.STATUS_APPROVED,
-					serviceContext);
+					StringUtil.read(cssURL.openStream()),
+					StringUtil.read(url.openStream()), StringPool.BLANK,
+					WorkflowConstants.STATUS_APPROVED, serviceContext);
 
 			long fragmentEntryPreviewFileEntryId = _getPreviewFileEntryId(
 				FragmentPortletKeys.FRAGMENT, FragmentEntry.class.getName(),

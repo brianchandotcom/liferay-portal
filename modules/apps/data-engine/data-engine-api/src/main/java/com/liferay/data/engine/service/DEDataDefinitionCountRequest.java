@@ -14,29 +14,35 @@
 
 package com.liferay.data.engine.service;
 
-import com.liferay.data.engine.model.DEDataDefinition;
-
 /**
  * @author Jeyvison Nascimento
  */
-public class DEDataDefinitionRequestBuilder {
+public class DEDataDefinitionCountRequest {
 
-	public static DEDataDefinitionCountRequest.Builder countBuilder() {
-		return new DEDataDefinitionCountRequest.Builder();
+	public long getGroupId() {
+		return _groupId;
 	}
 
-	public static DEDataDefinitionDeleteRequest.Builder deleteBuilder() {
-		return new DEDataDefinitionDeleteRequest.Builder();
+	public static final class Builder {
+
+		public DEDataDefinitionCountRequest build() {
+			return _deDataDefinitionCountRequest;
+		}
+
+		public Builder inGroup(long groupId) {
+			_deDataDefinitionCountRequest._groupId = groupId;
+
+			return this;
+		}
+
+		private final DEDataDefinitionCountRequest
+			_deDataDefinitionCountRequest = new DEDataDefinitionCountRequest();
+
 	}
 
-	public static DEDataDefinitionGetRequest.Builder getBuilder() {
-		return new DEDataDefinitionGetRequest.Builder();
+	private DEDataDefinitionCountRequest() {
 	}
 
-	public static DEDataDefinitionSaveRequest.Builder saveBuilder(
-		DEDataDefinition deDataDefinition) {
-
-		return new DEDataDefinitionSaveRequest.Builder(deDataDefinition);
-	}
+	private long _groupId;
 
 }

@@ -49,9 +49,7 @@ public class ElasticsearchSearchEngineAdapterClusterRequestTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_elasticsearchFixture = new ElasticsearchFixture(
-			ElasticsearchSearchEngineAdapterClusterRequestTest.class.
-				getSimpleName());
+		_elasticsearchFixture = new ElasticsearchFixture(getClass());
 
 		_elasticsearchFixture.setUp();
 
@@ -141,13 +139,30 @@ public class ElasticsearchSearchEngineAdapterClusterRequestTest {
 		Assert.assertEquals("1", indicesJSONObject.getString("count"));
 	}
 
-	protected ClusterRequestExecutor createClusterRequestExecutor(
-		ElasticsearchClientResolver elasticsearchClientResolver) {
+	protected static ClusterRequestExecutor createClusterRequestExecutor(
+		ElasticsearchClientResolver elasticsearchClientResolver1) {
 
 		ClusterRequestExecutorFixture clusterRequestExecutorFixture =
-			new ClusterRequestExecutorFixture(elasticsearchClientResolver);
+			new ClusterRequestExecutorFixture() {
+				{
+					elasticsearchClientResolver = elasticsearchClientResolver1;
+				}
+			};
 
-		return clusterRequestExecutorFixture.createExecutor();
+		clusterRequestExecutorFixture.setUp();
+
+		return clusterRequestExecutorFixture.getClusterRequestExecutor();
+	}
+
+	protected static SearchEngineAdapter createSearchEngineAdapter(
+		ElasticsearchClientResolver elasticsearchClientResolver) {
+
+		return new ElasticsearchSearchEngineAdapterImpl() {
+			{
+				clusterRequestExecutor = createClusterRequestExecutor(
+					elasticsearchClientResolver);
+			}
+		};
 	}
 
 	protected void createIndex() {
@@ -161,17 +176,6 @@ public class ElasticsearchSearchEngineAdapterClusterRequestTest {
 			indicesAdminClient.prepareCreate(_INDEX_NAME);
 
 		createIndexRequestBuilder.get();
-	}
-
-	protected SearchEngineAdapter createSearchEngineAdapter(
-		ElasticsearchClientResolver elasticsearchClientResolver) {
-
-		return new ElasticsearchSearchEngineAdapterImpl() {
-			{
-				clusterRequestExecutor = createClusterRequestExecutor(
-					elasticsearchClientResolver);
-			}
-		};
 	}
 
 	protected void deleteIndex() {

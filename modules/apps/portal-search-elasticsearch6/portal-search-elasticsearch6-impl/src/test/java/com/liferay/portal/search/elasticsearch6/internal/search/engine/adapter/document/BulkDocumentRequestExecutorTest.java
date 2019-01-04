@@ -18,7 +18,10 @@ import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.DocumentImpl;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.search.elasticsearch6.internal.connection.ElasticsearchFixture;
+import com.liferay.portal.search.elasticsearch6.internal.document.DefaultElasticsearchDocumentFactory;
+import com.liferay.portal.search.elasticsearch6.internal.document.ElasticsearchDocumentFactory;
 import com.liferay.portal.search.engine.adapter.document.BulkDocumentRequest;
+import com.liferay.portal.search.engine.adapter.document.BulkableDocumentRequestTranslator;
 import com.liferay.portal.search.engine.adapter.document.DeleteDocumentRequest;
 import com.liferay.portal.search.engine.adapter.document.IndexDocumentRequest;
 import com.liferay.portal.search.engine.adapter.document.UpdateDocumentRequest;
@@ -38,29 +41,33 @@ public class BulkDocumentRequestExecutorTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_elasticsearchFixture = new ElasticsearchFixture(
-			DeleteByQueryDocumentRequestExecutorTest.class.getSimpleName());
+		ElasticsearchFixture elasticsearchFixture = new ElasticsearchFixture(
+			getClass());
 
-		_elasticsearchFixture.setUp();
+		ElasticsearchDocumentFactory elasticsearchDocumentFactory1 =
+			new DefaultElasticsearchDocumentFactory();
 
-		_documentFixture.setUp();
-
-		final ElasticsearchBulkableDocumentRequestTranslator
-			elasticsearchBulkableDocumentRequestTranslator =
-				new ElasticsearchBulkableDocumentRequestTranslator() {
-					{
-						elasticsearchClientResolver = _elasticsearchFixture;
-					}
-				};
+		BulkableDocumentRequestTranslator bulkableDocumentRequestTranslator1 =
+			new ElasticsearchBulkableDocumentRequestTranslator() {
+				{
+					elasticsearchClientResolver = elasticsearchFixture;
+					elasticsearchDocumentFactory =
+						elasticsearchDocumentFactory1;
+				}
+			};
 
 		_bulkDocumentRequestExecutor = new BulkDocumentRequestExecutorImpl() {
 			{
 				bulkableDocumentRequestTranslator =
-					elasticsearchBulkableDocumentRequestTranslator;
-
-				elasticsearchClientResolver = _elasticsearchFixture;
+					bulkableDocumentRequestTranslator1;
+				elasticsearchClientResolver = elasticsearchFixture;
 			}
 		};
+
+		_elasticsearchFixture = elasticsearchFixture;
+
+		_documentFixture.setUp();
+		_elasticsearchFixture.setUp();
 	}
 
 	@After

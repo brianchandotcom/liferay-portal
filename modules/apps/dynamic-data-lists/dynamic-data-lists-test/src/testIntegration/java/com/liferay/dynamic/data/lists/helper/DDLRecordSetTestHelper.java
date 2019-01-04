@@ -24,6 +24,7 @@ import com.liferay.dynamic.data.mapping.storage.StorageType;
 import com.liferay.dynamic.data.mapping.test.util.DDMStructureTestHelper;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
@@ -41,8 +42,13 @@ import java.util.Map;
  */
 public class DDLRecordSetTestHelper {
 
-	public DDLRecordSetTestHelper(Group group) throws Exception {
+	public DDLRecordSetTestHelper(Group group) throws PortalException {
+		this(group, TestPropsValues.getUser());
+	}
+
+	public DDLRecordSetTestHelper(Group group, User user) {
 		_group = group;
+		_user = user;
 	}
 
 	public DDLRecordSet addRecordSet(DDMForm ddmForm) throws Exception {
@@ -74,7 +80,7 @@ public class DDLRecordSetTestHelper {
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
 
 		return DDLRecordSetLocalServiceUtil.addRecordSet(
-			TestPropsValues.getUserId(), _group.getGroupId(),
+			_user.getUserId(), _group.getGroupId(),
 			ddmStructure.getStructureId(), null, nameMap, null,
 			DDLRecordSetConstants.MIN_DISPLAY_ROWS_DEFAULT, scope,
 			serviceContext);
@@ -105,5 +111,6 @@ public class DDLRecordSetTestHelper {
 	}
 
 	private final Group _group;
+	private final User _user;
 
 }

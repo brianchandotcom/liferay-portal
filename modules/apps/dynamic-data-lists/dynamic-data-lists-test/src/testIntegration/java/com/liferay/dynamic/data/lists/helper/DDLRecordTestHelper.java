@@ -26,6 +26,7 @@ import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormValuesTestUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -41,7 +42,14 @@ public class DDLRecordTestHelper {
 	public DDLRecordTestHelper(Group group, DDLRecordSet recordSet)
 		throws Exception {
 
+		this(group, TestPropsValues.getUser(), recordSet);
+	}
+
+	public DDLRecordTestHelper(Group group, User user, DDLRecordSet recordSet)
+		throws Exception {
+
 		_group = group;
+		_user = user;
 		_recordSet = recordSet;
 	}
 
@@ -76,8 +84,7 @@ public class DDLRecordTestHelper {
 			workflowAction);
 
 		return DDLRecordLocalServiceUtil.addRecord(
-			TestPropsValues.getUserId(), _group.getGroupId(),
-			_recordSet.getRecordSetId(),
+			_user.getUserId(), _group.getGroupId(), _recordSet.getRecordSetId(),
 			DDLRecordConstants.DISPLAY_INDEX_DEFAULT, ddmFormValues,
 			serviceContext);
 	}
@@ -99,7 +106,7 @@ public class DDLRecordTestHelper {
 			workflowAction);
 
 		return DDLRecordLocalServiceUtil.updateRecord(
-			TestPropsValues.getUserId(), recordId, majorVersion, displayIndex,
+			_user.getUserId(), recordId, majorVersion, displayIndex,
 			ddmFormValues, serviceContext);
 	}
 
@@ -125,5 +132,6 @@ public class DDLRecordTestHelper {
 
 	private final Group _group;
 	private final DDLRecordSet _recordSet;
+	private final User _user;
 
 }

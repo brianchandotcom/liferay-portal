@@ -214,10 +214,13 @@ public class SegmentsEntryProviderTest {
 
 		Assert.assertEquals(
 			segmentsEntryIds.toString(), 2, segmentsEntryIds.length);
-		ArrayUtil.contains(
-			segmentsEntryIds, segmentsEntry1.getSegmentsEntryId());
-		ArrayUtil.contains(
-			segmentsEntryIds, segmentsEntry2.getSegmentsEntryId());
+		Assert.assertTrue(
+			ArrayUtil.containsAll(
+				new long[] {
+					segmentsEntry1.getSegmentsEntryId(),
+					segmentsEntry2.getSegmentsEntryId()
+				},
+				segmentsEntryIds));
 	}
 
 	@Test
@@ -256,10 +259,13 @@ public class SegmentsEntryProviderTest {
 
 		Assert.assertEquals(
 			segmentsEntryIds.toString(), 2, segmentsEntryIds.length);
-		ArrayUtil.contains(
-			segmentsEntryIds, segmentsEntry1.getSegmentsEntryId());
-		ArrayUtil.contains(
-			segmentsEntryIds, segmentsEntry2.getSegmentsEntryId());
+		Assert.assertTrue(
+			ArrayUtil.containsAll(
+				new long[] {
+					segmentsEntry1.getSegmentsEntryId(),
+					segmentsEntry2.getSegmentsEntryId()
+				},
+				segmentsEntryIds));
 	}
 
 	@DeleteAfterTestRun

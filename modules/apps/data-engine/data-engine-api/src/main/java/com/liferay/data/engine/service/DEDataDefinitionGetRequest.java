@@ -14,22 +14,10 @@
 
 package com.liferay.data.engine.service;
 
-import com.liferay.data.engine.exception.DEDataDefinitionException;
-import com.liferay.data.engine.executor.DEGetRequest;
-import com.liferay.data.engine.executor.DEGetRequestExecutor;
-
 /**
  * @author Leonardo Barros
  */
-public final class DEDataDefinitionGetRequest implements DEGetRequest {
-
-	@Override
-	public DEDataDefinitionGetResponse accept(
-			DEGetRequestExecutor deGetRequestExecutor)
-		throws DEDataDefinitionException {
-
-		return deGetRequestExecutor.executeGetRequest(this);
-	}
+public final class DEDataDefinitionGetRequest {
 
 	public long getDEDataDefinitionId() {
 		return _deDataDefinitionId;

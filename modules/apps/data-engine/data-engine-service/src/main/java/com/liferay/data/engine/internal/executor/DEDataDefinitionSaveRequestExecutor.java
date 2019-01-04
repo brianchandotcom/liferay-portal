@@ -16,7 +16,6 @@ package com.liferay.data.engine.internal.executor;
 
 import com.liferay.data.engine.exception.DEDataDefinitionException;
 import com.liferay.data.engine.exception.DEDataDefinitionFieldsSerializerException;
-import com.liferay.data.engine.executor.DEDataDefinitionSaveRequestExecutor;
 import com.liferay.data.engine.internal.io.DEDataDefinitionFieldsSerializerTracker;
 import com.liferay.data.engine.io.DEDataDefinitionFieldsSerializer;
 import com.liferay.data.engine.io.DEDataDefinitionFieldsSerializerApplyRequest;
@@ -49,10 +48,8 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true, service = DEDataDefinitionSaveRequestExecutor.class
 )
-public class DEDataDefinitionSaveRequestExecutorImpl
-	implements DEDataDefinitionSaveRequestExecutor {
+public class DEDataDefinitionSaveRequestExecutor {
 
-	@Override
 	public DEDataDefinitionSaveResponse execute(
 			DEDataDefinitionSaveRequest deDataDefinitionSaveRequest)
 		throws DEDataDefinitionException {

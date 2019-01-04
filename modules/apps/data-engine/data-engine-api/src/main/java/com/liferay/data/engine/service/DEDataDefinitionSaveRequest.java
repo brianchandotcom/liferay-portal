@@ -14,23 +14,12 @@
 
 package com.liferay.data.engine.service;
 
-import com.liferay.data.engine.exception.DEDataDefinitionException;
-import com.liferay.data.engine.executor.DESaveRequest;
-import com.liferay.data.engine.executor.DESaveRequestExecutor;
 import com.liferay.data.engine.model.DEDataDefinition;
 
 /**
  * @author Leonardo Barros
  */
-public final class DEDataDefinitionSaveRequest implements DESaveRequest {
-
-	@Override
-	public DEDataDefinitionSaveResponse accept(
-			DESaveRequestExecutor deSaveRequestExecutor)
-		throws DEDataDefinitionException {
-
-		return deSaveRequestExecutor.executeSaveRequest(this);
-	}
+public final class DEDataDefinitionSaveRequest {
 
 	public DEDataDefinition getDEDataDefinition() {
 		return _deDataDefinition;

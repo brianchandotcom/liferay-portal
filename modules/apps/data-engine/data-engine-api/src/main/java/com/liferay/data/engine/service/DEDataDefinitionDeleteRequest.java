@@ -14,22 +14,10 @@
 
 package com.liferay.data.engine.service;
 
-import com.liferay.data.engine.executor.DEDeleteRequest;
-import com.liferay.data.engine.executor.DEDeleteRequestExecutor;
-import com.liferay.portal.kernel.exception.PortalException;
-
 /**
  * @author Leonardo Barros
  */
-public final class DEDataDefinitionDeleteRequest implements DEDeleteRequest {
-
-	@Override
-	public DEDataDefinitionDeleteResponse accept(
-			DEDeleteRequestExecutor deDeleteRequestExecutor)
-		throws PortalException {
-
-		return deDeleteRequestExecutor.executeDeleteRequest(this);
-	}
+public final class DEDataDefinitionDeleteRequest {
 
 	public long getDEDataDefinitionId() {
 		return _deDataDefinitionId;

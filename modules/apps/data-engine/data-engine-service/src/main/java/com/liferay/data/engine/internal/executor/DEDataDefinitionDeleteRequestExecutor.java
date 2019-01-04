@@ -15,7 +15,6 @@
 package com.liferay.data.engine.internal.executor;
 
 import com.liferay.data.engine.exception.DEDataDefinitionException;
-import com.liferay.data.engine.executor.DEDataDefinitionDeleteRequestExecutor;
 import com.liferay.data.engine.service.DEDataDefinitionDeleteRequest;
 import com.liferay.data.engine.service.DEDataDefinitionDeleteResponse;
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
@@ -35,10 +34,8 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true, service = DEDataDefinitionDeleteRequestExecutor.class
 )
-public class DEDataDefinitionDeleteRequestExecutorImpl
-	implements DEDataDefinitionDeleteRequestExecutor {
+public class DEDataDefinitionDeleteRequestExecutor {
 
-	@Override
 	public DEDataDefinitionDeleteResponse execute(
 			DEDataDefinitionDeleteRequest deDataDefinitionDeleteRequest)
 		throws DEDataDefinitionException {

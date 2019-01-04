@@ -14,10 +14,13 @@
 
 package com.liferay.document.library.preview.video.internal;
 
+import com.liferay.document.library.kernel.service.DLFileEntryPreviewHandler;
+import com.liferay.document.library.kernel.service.DLFileEntryPreviewHandlerUtil;
 import com.liferay.document.library.kernel.util.DLProcessorRegistryUtil;
 import com.liferay.document.library.kernel.util.VideoProcessorUtil;
 import com.liferay.document.library.preview.DLPreviewRenderer;
 import com.liferay.document.library.preview.DLPreviewRendererProvider;
+import com.liferay.document.library.preview.exception.DLFileEntryPreviewGenerationException;
 import com.liferay.document.library.preview.exception.DLPreviewGenerationInProcessException;
 import com.liferay.document.library.preview.exception.DLPreviewSizeException;
 import com.liferay.document.library.preview.video.internal.constants.DLPreviewVideoWebKeys;
@@ -62,15 +65,7 @@ public class VideoDLPreviewRendererProvider
 
 		return Optional.of(
 			(request, response) -> {
-				if (!VideoProcessorUtil.hasVideo(fileVersion)) {
-					if (!DLProcessorRegistryUtil.isPreviewableSize(
-							fileVersion)) {
-
-						throw new DLPreviewSizeException();
-					}
-
-					throw new DLPreviewGenerationInProcessException();
-				}
+				checkForPreviewGenerationExceptions(fileVersion);
 
 				RequestDispatcher requestDispatcher =
 					_servletContext.getRequestDispatcher("/preview/view.jsp");
@@ -97,6 +92,27 @@ public class VideoDLPreviewRendererProvider
 		FileVersion fileVersion) {
 
 		return Optional.empty();
+	}
+
+	protected void checkForPreviewGenerationExceptions(FileVersion fileVersion)
+		throws PortalException {
+
+		long fileEntryPreviewId =
+			DLFileEntryPreviewHandlerUtil.getDLFileEntryPreviewId(
+				fileVersion.getFileEntryId(), fileVersion.getFileVersionId(),
+				DLFileEntryPreviewHandler.DLFileEntryPreviewType.FAIL);
+
+		if (fileEntryPreviewId > 0) {
+			throw new DLFileEntryPreviewGenerationException();
+		}
+
+		if (!VideoProcessorUtil.hasVideo(fileVersion)) {
+			if (!DLProcessorRegistryUtil.isPreviewableSize(fileVersion)) {
+				throw new DLPreviewSizeException();
+			}
+
+			throw new DLPreviewGenerationInProcessException();
+		}
 	}
 
 	private List<String> _getPreviewFileURLs(
@@ -137,7 +153,11 @@ public class VideoDLPreviewRendererProvider
 				}
 
 				if (previewFileURLs.isEmpty()) {
-					throw new PortalException(
+					DLFileEntryPreviewHandlerUtil.addFailDLFileEntryPreview(
+						fileVersion.getFileEntryId(),
+						fileVersion.getFileVersionId());
+
+					throw new DLFileEntryPreviewGenerationException(
 						"No preview available for " + fileVersion.getTitle());
 				}
 

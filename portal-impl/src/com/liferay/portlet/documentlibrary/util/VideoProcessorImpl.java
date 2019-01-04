@@ -16,6 +16,7 @@ package com.liferay.portlet.documentlibrary.util;
 
 import com.liferay.document.library.kernel.exception.NoSuchFileEntryException;
 import com.liferay.document.library.kernel.model.DLProcessorConstants;
+import com.liferay.document.library.kernel.service.DLFileEntryPreviewHandlerUtil;
 import com.liferay.document.library.kernel.util.DLPreviewableProcessor;
 import com.liferay.document.library.kernel.util.DLUtil;
 import com.liferay.document.library.kernel.util.VideoProcessor;
@@ -28,6 +29,7 @@ import com.liferay.petra.process.ProcessExecutor;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.fabric.InputResource;
 import com.liferay.portal.fabric.OutputResource;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.image.ImageBag;
 import com.liferay.portal.kernel.image.ImageToolUtil;
@@ -436,6 +438,9 @@ public class VideoProcessorImpl
 						file = liferayFileVersion.getFile(false);
 					}
 					catch (UnsupportedOperationException uoe) {
+						DLFileEntryPreviewHandlerUtil.addFailDLFileEntryPreview(
+							destinationFileVersion.getFileEntryId(),
+							destinationFileVersion.getFileVersionId());
 					}
 				}
 
@@ -468,6 +473,10 @@ public class VideoProcessorImpl
 						destinationFileVersion, file, previewTempFiles);
 				}
 				catch (Exception e) {
+					DLFileEntryPreviewHandlerUtil.addFailDLFileEntryPreview(
+						destinationFileVersion.getFileEntryId(),
+						destinationFileVersion.getFileVersionId());
+
 					_log.error(e, e);
 				}
 			}
@@ -488,6 +497,10 @@ public class VideoProcessorImpl
 			if (_log.isDebugEnabled()) {
 				_log.debug(nsfee, nsfee);
 			}
+
+			DLFileEntryPreviewHandlerUtil.addFailDLFileEntryPreview(
+				destinationFileVersion.getFileEntryId(),
+				destinationFileVersion.getFileVersionId());
 		}
 		finally {
 			_fileVersionIds.remove(destinationFileVersion.getFileVersionId());
@@ -540,6 +553,10 @@ public class VideoProcessorImpl
 				futures.put(processIdentity, future);
 
 				future.get();
+
+				DLFileEntryPreviewHandlerUtil.addSuccessDLFileEntryPreview(
+					fileVersion.getFileEntryId(),
+					fileVersion.getFileVersionId());
 			}
 			else {
 				LiferayConverter liferayConverter = new LiferayVideoConverter(
@@ -550,6 +567,10 @@ public class VideoProcessorImpl
 					PropsUtil.getProperties(PropsKeys.XUGGLER_FFPRESET, true));
 
 				liferayConverter.convert();
+
+				DLFileEntryPreviewHandlerUtil.addSuccessDLFileEntryPreview(
+					fileVersion.getFileEntryId(),
+					fileVersion.getFileVersionId());
 			}
 		}
 		catch (Exception e) {
@@ -559,6 +580,9 @@ public class VideoProcessorImpl
 					String.valueOf(fileVersion.getFileVersionId()), " ",
 					fileVersion.getTitle(), "."),
 				e);
+
+			DLFileEntryPreviewHandlerUtil.addFailDLFileEntryPreview(
+				fileVersion.getFileEntryId(), fileVersion.getFileVersionId());
 		}
 
 		addFileToStore(
@@ -575,7 +599,8 @@ public class VideoProcessorImpl
 	}
 
 	private void _generateVideoXuggler(
-		FileVersion fileVersion, File sourceFile, File[] destinationFiles) {
+			FileVersion fileVersion, File sourceFile, File[] destinationFiles)
+		throws PortalException {
 
 		try {
 			for (int i = 0; i < destinationFiles.length; i++) {
@@ -592,9 +617,15 @@ public class VideoProcessorImpl
 						String.valueOf(fileVersion.getFileVersionId()), " ",
 						fileVersion.getTitle()));
 			}
+
+			DLFileEntryPreviewHandlerUtil.addFailDLFileEntryPreview(
+				fileVersion.getFileEntryId(), fileVersion.getFileVersionId());
 		}
 		catch (Exception e) {
 			_log.error(e, e);
+
+			DLFileEntryPreviewHandlerUtil.addFailDLFileEntryPreview(
+				fileVersion.getFileEntryId(), fileVersion.getFileVersionId());
 		}
 	}
 

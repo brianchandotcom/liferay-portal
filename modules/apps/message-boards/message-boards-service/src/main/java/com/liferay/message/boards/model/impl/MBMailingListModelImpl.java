@@ -24,8 +24,6 @@ import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.message.boards.model.MBMailingList;
 import com.liferay.message.boards.model.MBMailingListModel;
 
-import com.liferay.petra.string.StringBundler;
-
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.CacheModel;
@@ -42,9 +40,13 @@ import java.io.Serializable;
 
 import java.sql.Types;
 
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * The base model implementation for the MBMailingList service. Represents a row in the &quot;MBMailingList&quot; database table, with each column mapped to a property of this class.
@@ -186,199 +188,77 @@ public class MBMailingListModelImpl extends BaseModelImpl<MBMailingList>
 	}
 
 	@Override
-	public Map<String, Object> getModelAttributes() {
-		Map<String, Object> attributes = new HashMap<String, Object>();
-
-		attributes.put("uuid", getUuid());
-		attributes.put("mailingListId", getMailingListId());
-		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
-		attributes.put("userId", getUserId());
-		attributes.put("userName", getUserName());
-		attributes.put("createDate", getCreateDate());
-		attributes.put("modifiedDate", getModifiedDate());
-		attributes.put("categoryId", getCategoryId());
-		attributes.put("emailAddress", getEmailAddress());
-		attributes.put("inProtocol", getInProtocol());
-		attributes.put("inServerName", getInServerName());
-		attributes.put("inServerPort", getInServerPort());
-		attributes.put("inUseSSL", isInUseSSL());
-		attributes.put("inUserName", getInUserName());
-		attributes.put("inPassword", getInPassword());
-		attributes.put("inReadInterval", getInReadInterval());
-		attributes.put("outEmailAddress", getOutEmailAddress());
-		attributes.put("outCustom", isOutCustom());
-		attributes.put("outServerName", getOutServerName());
-		attributes.put("outServerPort", getOutServerPort());
-		attributes.put("outUseSSL", isOutUseSSL());
-		attributes.put("outUserName", getOutUserName());
-		attributes.put("outPassword", getOutPassword());
-		attributes.put("allowAnonymous", isAllowAnonymous());
-		attributes.put("active", isActive());
-
-		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
-		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
-
-		return attributes;
+	public Map<String, Function<MBMailingList, Object>> getAttributeGetterFunctions() {
+		return _attributeGetterFunctions;
 	}
 
 	@Override
-	public void setModelAttributes(Map<String, Object> attributes) {
-		String uuid = (String)attributes.get("uuid");
+	public Map<String, BiConsumer<MBMailingList, Object>> getAttributeSetterBiConsumers() {
+		return _attributeSetterBiConsumers;
+	}
 
-		if (uuid != null) {
-			setUuid(uuid);
-		}
+	private static final Map<String, Function<MBMailingList, Object>> _attributeGetterFunctions;
+	private static final Map<String, BiConsumer<MBMailingList, Object>> _attributeSetterBiConsumers;
 
-		Long mailingListId = (Long)attributes.get("mailingListId");
+	static {
+		Map<String, Function<MBMailingList, Object>> attributeGetterFunctions = new LinkedHashMap<String, Function<MBMailingList, Object>>();
+		Map<String, BiConsumer<MBMailingList, ?>> attributeSetterBiConsumers = new LinkedHashMap<String, BiConsumer<MBMailingList, ?>>();
 
-		if (mailingListId != null) {
-			setMailingListId(mailingListId);
-		}
+		attributeGetterFunctions.put("uuid", MBMailingList::getUuid);
+		attributeSetterBiConsumers.put("uuid", (BiConsumer<MBMailingList, String>)MBMailingList::setUuid);
+		attributeGetterFunctions.put("mailingListId", MBMailingList::getMailingListId);
+		attributeSetterBiConsumers.put("mailingListId", (BiConsumer<MBMailingList, Long>)MBMailingList::setMailingListId);
+		attributeGetterFunctions.put("groupId", MBMailingList::getGroupId);
+		attributeSetterBiConsumers.put("groupId", (BiConsumer<MBMailingList, Long>)MBMailingList::setGroupId);
+		attributeGetterFunctions.put("companyId", MBMailingList::getCompanyId);
+		attributeSetterBiConsumers.put("companyId", (BiConsumer<MBMailingList, Long>)MBMailingList::setCompanyId);
+		attributeGetterFunctions.put("userId", MBMailingList::getUserId);
+		attributeSetterBiConsumers.put("userId", (BiConsumer<MBMailingList, Long>)MBMailingList::setUserId);
+		attributeGetterFunctions.put("userName", MBMailingList::getUserName);
+		attributeSetterBiConsumers.put("userName", (BiConsumer<MBMailingList, String>)MBMailingList::setUserName);
+		attributeGetterFunctions.put("createDate", MBMailingList::getCreateDate);
+		attributeSetterBiConsumers.put("createDate", (BiConsumer<MBMailingList, Date>)MBMailingList::setCreateDate);
+		attributeGetterFunctions.put("modifiedDate", MBMailingList::getModifiedDate);
+		attributeSetterBiConsumers.put("modifiedDate", (BiConsumer<MBMailingList, Date>)MBMailingList::setModifiedDate);
+		attributeGetterFunctions.put("categoryId", MBMailingList::getCategoryId);
+		attributeSetterBiConsumers.put("categoryId", (BiConsumer<MBMailingList, Long>)MBMailingList::setCategoryId);
+		attributeGetterFunctions.put("emailAddress", MBMailingList::getEmailAddress);
+		attributeSetterBiConsumers.put("emailAddress", (BiConsumer<MBMailingList, String>)MBMailingList::setEmailAddress);
+		attributeGetterFunctions.put("inProtocol", MBMailingList::getInProtocol);
+		attributeSetterBiConsumers.put("inProtocol", (BiConsumer<MBMailingList, String>)MBMailingList::setInProtocol);
+		attributeGetterFunctions.put("inServerName", MBMailingList::getInServerName);
+		attributeSetterBiConsumers.put("inServerName", (BiConsumer<MBMailingList, String>)MBMailingList::setInServerName);
+		attributeGetterFunctions.put("inServerPort", MBMailingList::getInServerPort);
+		attributeSetterBiConsumers.put("inServerPort", (BiConsumer<MBMailingList, Integer>)MBMailingList::setInServerPort);
+		attributeGetterFunctions.put("inUseSSL", MBMailingList::getInUseSSL);
+		attributeSetterBiConsumers.put("inUseSSL", (BiConsumer<MBMailingList, Boolean>)MBMailingList::setInUseSSL);
+		attributeGetterFunctions.put("inUserName", MBMailingList::getInUserName);
+		attributeSetterBiConsumers.put("inUserName", (BiConsumer<MBMailingList, String>)MBMailingList::setInUserName);
+		attributeGetterFunctions.put("inPassword", MBMailingList::getInPassword);
+		attributeSetterBiConsumers.put("inPassword", (BiConsumer<MBMailingList, String>)MBMailingList::setInPassword);
+		attributeGetterFunctions.put("inReadInterval", MBMailingList::getInReadInterval);
+		attributeSetterBiConsumers.put("inReadInterval", (BiConsumer<MBMailingList, Integer>)MBMailingList::setInReadInterval);
+		attributeGetterFunctions.put("outEmailAddress", MBMailingList::getOutEmailAddress);
+		attributeSetterBiConsumers.put("outEmailAddress", (BiConsumer<MBMailingList, String>)MBMailingList::setOutEmailAddress);
+		attributeGetterFunctions.put("outCustom", MBMailingList::getOutCustom);
+		attributeSetterBiConsumers.put("outCustom", (BiConsumer<MBMailingList, Boolean>)MBMailingList::setOutCustom);
+		attributeGetterFunctions.put("outServerName", MBMailingList::getOutServerName);
+		attributeSetterBiConsumers.put("outServerName", (BiConsumer<MBMailingList, String>)MBMailingList::setOutServerName);
+		attributeGetterFunctions.put("outServerPort", MBMailingList::getOutServerPort);
+		attributeSetterBiConsumers.put("outServerPort", (BiConsumer<MBMailingList, Integer>)MBMailingList::setOutServerPort);
+		attributeGetterFunctions.put("outUseSSL", MBMailingList::getOutUseSSL);
+		attributeSetterBiConsumers.put("outUseSSL", (BiConsumer<MBMailingList, Boolean>)MBMailingList::setOutUseSSL);
+		attributeGetterFunctions.put("outUserName", MBMailingList::getOutUserName);
+		attributeSetterBiConsumers.put("outUserName", (BiConsumer<MBMailingList, String>)MBMailingList::setOutUserName);
+		attributeGetterFunctions.put("outPassword", MBMailingList::getOutPassword);
+		attributeSetterBiConsumers.put("outPassword", (BiConsumer<MBMailingList, String>)MBMailingList::setOutPassword);
+		attributeGetterFunctions.put("allowAnonymous", MBMailingList::getAllowAnonymous);
+		attributeSetterBiConsumers.put("allowAnonymous", (BiConsumer<MBMailingList, Boolean>)MBMailingList::setAllowAnonymous);
+		attributeGetterFunctions.put("active", MBMailingList::getActive);
+		attributeSetterBiConsumers.put("active", (BiConsumer<MBMailingList, Boolean>)MBMailingList::setActive);
 
-		Long groupId = (Long)attributes.get("groupId");
-
-		if (groupId != null) {
-			setGroupId(groupId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
-		}
-
-		Long userId = (Long)attributes.get("userId");
-
-		if (userId != null) {
-			setUserId(userId);
-		}
-
-		String userName = (String)attributes.get("userName");
-
-		if (userName != null) {
-			setUserName(userName);
-		}
-
-		Date createDate = (Date)attributes.get("createDate");
-
-		if (createDate != null) {
-			setCreateDate(createDate);
-		}
-
-		Date modifiedDate = (Date)attributes.get("modifiedDate");
-
-		if (modifiedDate != null) {
-			setModifiedDate(modifiedDate);
-		}
-
-		Long categoryId = (Long)attributes.get("categoryId");
-
-		if (categoryId != null) {
-			setCategoryId(categoryId);
-		}
-
-		String emailAddress = (String)attributes.get("emailAddress");
-
-		if (emailAddress != null) {
-			setEmailAddress(emailAddress);
-		}
-
-		String inProtocol = (String)attributes.get("inProtocol");
-
-		if (inProtocol != null) {
-			setInProtocol(inProtocol);
-		}
-
-		String inServerName = (String)attributes.get("inServerName");
-
-		if (inServerName != null) {
-			setInServerName(inServerName);
-		}
-
-		Integer inServerPort = (Integer)attributes.get("inServerPort");
-
-		if (inServerPort != null) {
-			setInServerPort(inServerPort);
-		}
-
-		Boolean inUseSSL = (Boolean)attributes.get("inUseSSL");
-
-		if (inUseSSL != null) {
-			setInUseSSL(inUseSSL);
-		}
-
-		String inUserName = (String)attributes.get("inUserName");
-
-		if (inUserName != null) {
-			setInUserName(inUserName);
-		}
-
-		String inPassword = (String)attributes.get("inPassword");
-
-		if (inPassword != null) {
-			setInPassword(inPassword);
-		}
-
-		Integer inReadInterval = (Integer)attributes.get("inReadInterval");
-
-		if (inReadInterval != null) {
-			setInReadInterval(inReadInterval);
-		}
-
-		String outEmailAddress = (String)attributes.get("outEmailAddress");
-
-		if (outEmailAddress != null) {
-			setOutEmailAddress(outEmailAddress);
-		}
-
-		Boolean outCustom = (Boolean)attributes.get("outCustom");
-
-		if (outCustom != null) {
-			setOutCustom(outCustom);
-		}
-
-		String outServerName = (String)attributes.get("outServerName");
-
-		if (outServerName != null) {
-			setOutServerName(outServerName);
-		}
-
-		Integer outServerPort = (Integer)attributes.get("outServerPort");
-
-		if (outServerPort != null) {
-			setOutServerPort(outServerPort);
-		}
-
-		Boolean outUseSSL = (Boolean)attributes.get("outUseSSL");
-
-		if (outUseSSL != null) {
-			setOutUseSSL(outUseSSL);
-		}
-
-		String outUserName = (String)attributes.get("outUserName");
-
-		if (outUserName != null) {
-			setOutUserName(outUserName);
-		}
-
-		String outPassword = (String)attributes.get("outPassword");
-
-		if (outPassword != null) {
-			setOutPassword(outPassword);
-		}
-
-		Boolean allowAnonymous = (Boolean)attributes.get("allowAnonymous");
-
-		if (allowAnonymous != null) {
-			setAllowAnonymous(allowAnonymous);
-		}
-
-		Boolean active = (Boolean)attributes.get("active");
-
-		if (active != null) {
-			setActive(active);
-		}
+		_attributeGetterFunctions = Collections.unmodifiableMap(attributeGetterFunctions);
+		_attributeSetterBiConsumers = Collections.unmodifiableMap((Map)attributeSetterBiConsumers);
 	}
 
 	@Override
@@ -1086,185 +966,6 @@ public class MBMailingListModelImpl extends BaseModelImpl<MBMailingList>
 		mbMailingListCacheModel.active = isActive();
 
 		return mbMailingListCacheModel;
-	}
-
-	@Override
-	public String toString() {
-		StringBundler sb = new StringBundler(53);
-
-		sb.append("{uuid=");
-		sb.append(getUuid());
-		sb.append(", mailingListId=");
-		sb.append(getMailingListId());
-		sb.append(", groupId=");
-		sb.append(getGroupId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
-		sb.append(", userId=");
-		sb.append(getUserId());
-		sb.append(", userName=");
-		sb.append(getUserName());
-		sb.append(", createDate=");
-		sb.append(getCreateDate());
-		sb.append(", modifiedDate=");
-		sb.append(getModifiedDate());
-		sb.append(", categoryId=");
-		sb.append(getCategoryId());
-		sb.append(", emailAddress=");
-		sb.append(getEmailAddress());
-		sb.append(", inProtocol=");
-		sb.append(getInProtocol());
-		sb.append(", inServerName=");
-		sb.append(getInServerName());
-		sb.append(", inServerPort=");
-		sb.append(getInServerPort());
-		sb.append(", inUseSSL=");
-		sb.append(isInUseSSL());
-		sb.append(", inUserName=");
-		sb.append(getInUserName());
-		sb.append(", inPassword=");
-		sb.append(getInPassword());
-		sb.append(", inReadInterval=");
-		sb.append(getInReadInterval());
-		sb.append(", outEmailAddress=");
-		sb.append(getOutEmailAddress());
-		sb.append(", outCustom=");
-		sb.append(isOutCustom());
-		sb.append(", outServerName=");
-		sb.append(getOutServerName());
-		sb.append(", outServerPort=");
-		sb.append(getOutServerPort());
-		sb.append(", outUseSSL=");
-		sb.append(isOutUseSSL());
-		sb.append(", outUserName=");
-		sb.append(getOutUserName());
-		sb.append(", outPassword=");
-		sb.append(getOutPassword());
-		sb.append(", allowAnonymous=");
-		sb.append(isAllowAnonymous());
-		sb.append(", active=");
-		sb.append(isActive());
-		sb.append("}");
-
-		return sb.toString();
-	}
-
-	@Override
-	public String toXmlString() {
-		StringBundler sb = new StringBundler(82);
-
-		sb.append("<model><model-name>");
-		sb.append("com.liferay.message.boards.model.MBMailingList");
-		sb.append("</model-name>");
-
-		sb.append(
-			"<column><column-name>uuid</column-name><column-value><![CDATA[");
-		sb.append(getUuid());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>mailingListId</column-name><column-value><![CDATA[");
-		sb.append(getMailingListId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>groupId</column-name><column-value><![CDATA[");
-		sb.append(getGroupId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userId</column-name><column-value><![CDATA[");
-		sb.append(getUserId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userName</column-name><column-value><![CDATA[");
-		sb.append(getUserName());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>createDate</column-name><column-value><![CDATA[");
-		sb.append(getCreateDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>modifiedDate</column-name><column-value><![CDATA[");
-		sb.append(getModifiedDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>categoryId</column-name><column-value><![CDATA[");
-		sb.append(getCategoryId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>emailAddress</column-name><column-value><![CDATA[");
-		sb.append(getEmailAddress());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>inProtocol</column-name><column-value><![CDATA[");
-		sb.append(getInProtocol());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>inServerName</column-name><column-value><![CDATA[");
-		sb.append(getInServerName());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>inServerPort</column-name><column-value><![CDATA[");
-		sb.append(getInServerPort());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>inUseSSL</column-name><column-value><![CDATA[");
-		sb.append(isInUseSSL());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>inUserName</column-name><column-value><![CDATA[");
-		sb.append(getInUserName());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>inPassword</column-name><column-value><![CDATA[");
-		sb.append(getInPassword());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>inReadInterval</column-name><column-value><![CDATA[");
-		sb.append(getInReadInterval());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>outEmailAddress</column-name><column-value><![CDATA[");
-		sb.append(getOutEmailAddress());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>outCustom</column-name><column-value><![CDATA[");
-		sb.append(isOutCustom());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>outServerName</column-name><column-value><![CDATA[");
-		sb.append(getOutServerName());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>outServerPort</column-name><column-value><![CDATA[");
-		sb.append(getOutServerPort());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>outUseSSL</column-name><column-value><![CDATA[");
-		sb.append(isOutUseSSL());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>outUserName</column-name><column-value><![CDATA[");
-		sb.append(getOutUserName());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>outPassword</column-name><column-value><![CDATA[");
-		sb.append(getOutPassword());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>allowAnonymous</column-name><column-value><![CDATA[");
-		sb.append(isAllowAnonymous());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>active</column-name><column-value><![CDATA[");
-		sb.append(isActive());
-		sb.append("]]></column-value></column>");
-
-		sb.append("</model>");
-
-		return sb.toString();
 	}
 
 	private static final ClassLoader _classLoader = MBMailingList.class.getClassLoader();

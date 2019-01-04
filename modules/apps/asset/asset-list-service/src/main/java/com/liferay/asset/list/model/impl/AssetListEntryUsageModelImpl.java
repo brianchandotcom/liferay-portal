@@ -24,8 +24,6 @@ import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 
-import com.liferay.petra.string.StringBundler;
-
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.CacheModel;
@@ -43,9 +41,13 @@ import java.io.Serializable;
 
 import java.sql.Types;
 
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * The base model implementation for the AssetListEntryUsage service. Represents a row in the &quot;AssetListEntryUsage&quot; database table, with each column mapped to a property of this class.
@@ -163,109 +165,53 @@ public class AssetListEntryUsageModelImpl extends BaseModelImpl<AssetListEntryUs
 	}
 
 	@Override
-	public Map<String, Object> getModelAttributes() {
-		Map<String, Object> attributes = new HashMap<String, Object>();
-
-		attributes.put("uuid", getUuid());
-		attributes.put("assetListEntryUsageId", getAssetListEntryUsageId());
-		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
-		attributes.put("userId", getUserId());
-		attributes.put("userName", getUserName());
-		attributes.put("createDate", getCreateDate());
-		attributes.put("modifiedDate", getModifiedDate());
-		attributes.put("assetListEntryId", getAssetListEntryId());
-		attributes.put("classNameId", getClassNameId());
-		attributes.put("classPK", getClassPK());
-		attributes.put("portletId", getPortletId());
-		attributes.put("lastPublishDate", getLastPublishDate());
-
-		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
-		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
-
-		return attributes;
+	public Map<String, Function<AssetListEntryUsage, Object>> getAttributeGetterFunctions() {
+		return _attributeGetterFunctions;
 	}
 
 	@Override
-	public void setModelAttributes(Map<String, Object> attributes) {
-		String uuid = (String)attributes.get("uuid");
+	public Map<String, BiConsumer<AssetListEntryUsage, Object>> getAttributeSetterBiConsumers() {
+		return _attributeSetterBiConsumers;
+	}
 
-		if (uuid != null) {
-			setUuid(uuid);
-		}
+	private static final Map<String, Function<AssetListEntryUsage, Object>> _attributeGetterFunctions;
+	private static final Map<String, BiConsumer<AssetListEntryUsage, Object>> _attributeSetterBiConsumers;
 
-		Long assetListEntryUsageId = (Long)attributes.get(
-				"assetListEntryUsageId");
+	static {
+		Map<String, Function<AssetListEntryUsage, Object>> attributeGetterFunctions =
+			new LinkedHashMap<String, Function<AssetListEntryUsage, Object>>();
+		Map<String, BiConsumer<AssetListEntryUsage, ?>> attributeSetterBiConsumers =
+			new LinkedHashMap<String, BiConsumer<AssetListEntryUsage, ?>>();
 
-		if (assetListEntryUsageId != null) {
-			setAssetListEntryUsageId(assetListEntryUsageId);
-		}
+		attributeGetterFunctions.put("uuid", AssetListEntryUsage::getUuid);
+		attributeSetterBiConsumers.put("uuid", (BiConsumer<AssetListEntryUsage, String>)AssetListEntryUsage::setUuid);
+		attributeGetterFunctions.put("assetListEntryUsageId", AssetListEntryUsage::getAssetListEntryUsageId);
+		attributeSetterBiConsumers.put("assetListEntryUsageId", (BiConsumer<AssetListEntryUsage, Long>)AssetListEntryUsage::setAssetListEntryUsageId);
+		attributeGetterFunctions.put("groupId", AssetListEntryUsage::getGroupId);
+		attributeSetterBiConsumers.put("groupId", (BiConsumer<AssetListEntryUsage, Long>)AssetListEntryUsage::setGroupId);
+		attributeGetterFunctions.put("companyId", AssetListEntryUsage::getCompanyId);
+		attributeSetterBiConsumers.put("companyId", (BiConsumer<AssetListEntryUsage, Long>)AssetListEntryUsage::setCompanyId);
+		attributeGetterFunctions.put("userId", AssetListEntryUsage::getUserId);
+		attributeSetterBiConsumers.put("userId", (BiConsumer<AssetListEntryUsage, Long>)AssetListEntryUsage::setUserId);
+		attributeGetterFunctions.put("userName", AssetListEntryUsage::getUserName);
+		attributeSetterBiConsumers.put("userName", (BiConsumer<AssetListEntryUsage, String>)AssetListEntryUsage::setUserName);
+		attributeGetterFunctions.put("createDate", AssetListEntryUsage::getCreateDate);
+		attributeSetterBiConsumers.put("createDate", (BiConsumer<AssetListEntryUsage, Date>)AssetListEntryUsage::setCreateDate);
+		attributeGetterFunctions.put("modifiedDate", AssetListEntryUsage::getModifiedDate);
+		attributeSetterBiConsumers.put("modifiedDate", (BiConsumer<AssetListEntryUsage, Date>)AssetListEntryUsage::setModifiedDate);
+		attributeGetterFunctions.put("assetListEntryId", AssetListEntryUsage::getAssetListEntryId);
+		attributeSetterBiConsumers.put("assetListEntryId", (BiConsumer<AssetListEntryUsage, Long>)AssetListEntryUsage::setAssetListEntryId);
+		attributeGetterFunctions.put("classNameId", AssetListEntryUsage::getClassNameId);
+		attributeSetterBiConsumers.put("classNameId", (BiConsumer<AssetListEntryUsage, Long>)AssetListEntryUsage::setClassNameId);
+		attributeGetterFunctions.put("classPK", AssetListEntryUsage::getClassPK);
+		attributeSetterBiConsumers.put("classPK", (BiConsumer<AssetListEntryUsage, Long>)AssetListEntryUsage::setClassPK);
+		attributeGetterFunctions.put("portletId", AssetListEntryUsage::getPortletId);
+		attributeSetterBiConsumers.put("portletId", (BiConsumer<AssetListEntryUsage, String>)AssetListEntryUsage::setPortletId);
+		attributeGetterFunctions.put("lastPublishDate", AssetListEntryUsage::getLastPublishDate);
+		attributeSetterBiConsumers.put("lastPublishDate", (BiConsumer<AssetListEntryUsage, Date>)AssetListEntryUsage::setLastPublishDate);
 
-		Long groupId = (Long)attributes.get("groupId");
-
-		if (groupId != null) {
-			setGroupId(groupId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
-		}
-
-		Long userId = (Long)attributes.get("userId");
-
-		if (userId != null) {
-			setUserId(userId);
-		}
-
-		String userName = (String)attributes.get("userName");
-
-		if (userName != null) {
-			setUserName(userName);
-		}
-
-		Date createDate = (Date)attributes.get("createDate");
-
-		if (createDate != null) {
-			setCreateDate(createDate);
-		}
-
-		Date modifiedDate = (Date)attributes.get("modifiedDate");
-
-		if (modifiedDate != null) {
-			setModifiedDate(modifiedDate);
-		}
-
-		Long assetListEntryId = (Long)attributes.get("assetListEntryId");
-
-		if (assetListEntryId != null) {
-			setAssetListEntryId(assetListEntryId);
-		}
-
-		Long classNameId = (Long)attributes.get("classNameId");
-
-		if (classNameId != null) {
-			setClassNameId(classNameId);
-		}
-
-		Long classPK = (Long)attributes.get("classPK");
-
-		if (classPK != null) {
-			setClassPK(classPK);
-		}
-
-		String portletId = (String)attributes.get("portletId");
-
-		if (portletId != null) {
-			setPortletId(portletId);
-		}
-
-		Date lastPublishDate = (Date)attributes.get("lastPublishDate");
-
-		if (lastPublishDate != null) {
-			setLastPublishDate(lastPublishDate);
-		}
+		_attributeGetterFunctions = Collections.unmodifiableMap(attributeGetterFunctions);
+		_attributeSetterBiConsumers = Collections.unmodifiableMap((Map)attributeSetterBiConsumers);
 	}
 
 	@Override
@@ -746,107 +692,6 @@ public class AssetListEntryUsageModelImpl extends BaseModelImpl<AssetListEntryUs
 		}
 
 		return assetListEntryUsageCacheModel;
-	}
-
-	@Override
-	public String toString() {
-		StringBundler sb = new StringBundler(27);
-
-		sb.append("{uuid=");
-		sb.append(getUuid());
-		sb.append(", assetListEntryUsageId=");
-		sb.append(getAssetListEntryUsageId());
-		sb.append(", groupId=");
-		sb.append(getGroupId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
-		sb.append(", userId=");
-		sb.append(getUserId());
-		sb.append(", userName=");
-		sb.append(getUserName());
-		sb.append(", createDate=");
-		sb.append(getCreateDate());
-		sb.append(", modifiedDate=");
-		sb.append(getModifiedDate());
-		sb.append(", assetListEntryId=");
-		sb.append(getAssetListEntryId());
-		sb.append(", classNameId=");
-		sb.append(getClassNameId());
-		sb.append(", classPK=");
-		sb.append(getClassPK());
-		sb.append(", portletId=");
-		sb.append(getPortletId());
-		sb.append(", lastPublishDate=");
-		sb.append(getLastPublishDate());
-		sb.append("}");
-
-		return sb.toString();
-	}
-
-	@Override
-	public String toXmlString() {
-		StringBundler sb = new StringBundler(43);
-
-		sb.append("<model><model-name>");
-		sb.append("com.liferay.asset.list.model.AssetListEntryUsage");
-		sb.append("</model-name>");
-
-		sb.append(
-			"<column><column-name>uuid</column-name><column-value><![CDATA[");
-		sb.append(getUuid());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>assetListEntryUsageId</column-name><column-value><![CDATA[");
-		sb.append(getAssetListEntryUsageId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>groupId</column-name><column-value><![CDATA[");
-		sb.append(getGroupId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userId</column-name><column-value><![CDATA[");
-		sb.append(getUserId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userName</column-name><column-value><![CDATA[");
-		sb.append(getUserName());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>createDate</column-name><column-value><![CDATA[");
-		sb.append(getCreateDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>modifiedDate</column-name><column-value><![CDATA[");
-		sb.append(getModifiedDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>assetListEntryId</column-name><column-value><![CDATA[");
-		sb.append(getAssetListEntryId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>classNameId</column-name><column-value><![CDATA[");
-		sb.append(getClassNameId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>classPK</column-name><column-value><![CDATA[");
-		sb.append(getClassPK());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>portletId</column-name><column-value><![CDATA[");
-		sb.append(getPortletId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>lastPublishDate</column-name><column-value><![CDATA[");
-		sb.append(getLastPublishDate());
-		sb.append("]]></column-value></column>");
-
-		sb.append("</model>");
-
-		return sb.toString();
 	}
 
 	private static final ClassLoader _classLoader = AssetListEntryUsage.class.getClassLoader();

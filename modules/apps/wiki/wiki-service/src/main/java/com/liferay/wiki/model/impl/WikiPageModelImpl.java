@@ -21,8 +21,6 @@ import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 
-import com.liferay.petra.string.StringBundler;
-
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.NoSuchModelException;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -50,10 +48,14 @@ import java.io.Serializable;
 import java.sql.Types;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * The base model implementation for the WikiPage service. Represents a row in the &quot;WikiPage&quot; database table, with each column mapped to a property of this class.
@@ -261,185 +263,73 @@ public class WikiPageModelImpl extends BaseModelImpl<WikiPage>
 	}
 
 	@Override
-	public Map<String, Object> getModelAttributes() {
-		Map<String, Object> attributes = new HashMap<String, Object>();
-
-		attributes.put("uuid", getUuid());
-		attributes.put("pageId", getPageId());
-		attributes.put("resourcePrimKey", getResourcePrimKey());
-		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
-		attributes.put("userId", getUserId());
-		attributes.put("userName", getUserName());
-		attributes.put("createDate", getCreateDate());
-		attributes.put("modifiedDate", getModifiedDate());
-		attributes.put("nodeId", getNodeId());
-		attributes.put("title", getTitle());
-		attributes.put("version", getVersion());
-		attributes.put("minorEdit", isMinorEdit());
-		attributes.put("content", getContent());
-		attributes.put("summary", getSummary());
-		attributes.put("format", getFormat());
-		attributes.put("head", isHead());
-		attributes.put("parentTitle", getParentTitle());
-		attributes.put("redirectTitle", getRedirectTitle());
-		attributes.put("lastPublishDate", getLastPublishDate());
-		attributes.put("status", getStatus());
-		attributes.put("statusByUserId", getStatusByUserId());
-		attributes.put("statusByUserName", getStatusByUserName());
-		attributes.put("statusDate", getStatusDate());
-
-		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
-		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
-
-		return attributes;
+	public Map<String, Function<WikiPage, Object>> getAttributeGetterFunctions() {
+		return _attributeGetterFunctions;
 	}
 
 	@Override
-	public void setModelAttributes(Map<String, Object> attributes) {
-		String uuid = (String)attributes.get("uuid");
+	public Map<String, BiConsumer<WikiPage, Object>> getAttributeSetterBiConsumers() {
+		return _attributeSetterBiConsumers;
+	}
 
-		if (uuid != null) {
-			setUuid(uuid);
-		}
+	private static final Map<String, Function<WikiPage, Object>> _attributeGetterFunctions;
+	private static final Map<String, BiConsumer<WikiPage, Object>> _attributeSetterBiConsumers;
 
-		Long pageId = (Long)attributes.get("pageId");
+	static {
+		Map<String, Function<WikiPage, Object>> attributeGetterFunctions = new LinkedHashMap<String, Function<WikiPage, Object>>();
+		Map<String, BiConsumer<WikiPage, ?>> attributeSetterBiConsumers = new LinkedHashMap<String, BiConsumer<WikiPage, ?>>();
 
-		if (pageId != null) {
-			setPageId(pageId);
-		}
+		attributeGetterFunctions.put("uuid", WikiPage::getUuid);
+		attributeSetterBiConsumers.put("uuid", (BiConsumer<WikiPage, String>)WikiPage::setUuid);
+		attributeGetterFunctions.put("pageId", WikiPage::getPageId);
+		attributeSetterBiConsumers.put("pageId", (BiConsumer<WikiPage, Long>)WikiPage::setPageId);
+		attributeGetterFunctions.put("resourcePrimKey", WikiPage::getResourcePrimKey);
+		attributeSetterBiConsumers.put("resourcePrimKey", (BiConsumer<WikiPage, Long>)WikiPage::setResourcePrimKey);
+		attributeGetterFunctions.put("groupId", WikiPage::getGroupId);
+		attributeSetterBiConsumers.put("groupId", (BiConsumer<WikiPage, Long>)WikiPage::setGroupId);
+		attributeGetterFunctions.put("companyId", WikiPage::getCompanyId);
+		attributeSetterBiConsumers.put("companyId", (BiConsumer<WikiPage, Long>)WikiPage::setCompanyId);
+		attributeGetterFunctions.put("userId", WikiPage::getUserId);
+		attributeSetterBiConsumers.put("userId", (BiConsumer<WikiPage, Long>)WikiPage::setUserId);
+		attributeGetterFunctions.put("userName", WikiPage::getUserName);
+		attributeSetterBiConsumers.put("userName", (BiConsumer<WikiPage, String>)WikiPage::setUserName);
+		attributeGetterFunctions.put("createDate", WikiPage::getCreateDate);
+		attributeSetterBiConsumers.put("createDate", (BiConsumer<WikiPage, Date>)WikiPage::setCreateDate);
+		attributeGetterFunctions.put("modifiedDate", WikiPage::getModifiedDate);
+		attributeSetterBiConsumers.put("modifiedDate", (BiConsumer<WikiPage, Date>)WikiPage::setModifiedDate);
+		attributeGetterFunctions.put("nodeId", WikiPage::getNodeId);
+		attributeSetterBiConsumers.put("nodeId", (BiConsumer<WikiPage, Long>)WikiPage::setNodeId);
+		attributeGetterFunctions.put("title", WikiPage::getTitle);
+		attributeSetterBiConsumers.put("title", (BiConsumer<WikiPage, String>)WikiPage::setTitle);
+		attributeGetterFunctions.put("version", WikiPage::getVersion);
+		attributeSetterBiConsumers.put("version", (BiConsumer<WikiPage, Double>)WikiPage::setVersion);
+		attributeGetterFunctions.put("minorEdit", WikiPage::getMinorEdit);
+		attributeSetterBiConsumers.put("minorEdit", (BiConsumer<WikiPage, Boolean>)WikiPage::setMinorEdit);
+		attributeGetterFunctions.put("content", WikiPage::getContent);
+		attributeSetterBiConsumers.put("content", (BiConsumer<WikiPage, String>)WikiPage::setContent);
+		attributeGetterFunctions.put("summary", WikiPage::getSummary);
+		attributeSetterBiConsumers.put("summary", (BiConsumer<WikiPage, String>)WikiPage::setSummary);
+		attributeGetterFunctions.put("format", WikiPage::getFormat);
+		attributeSetterBiConsumers.put("format", (BiConsumer<WikiPage, String>)WikiPage::setFormat);
+		attributeGetterFunctions.put("head", WikiPage::getHead);
+		attributeSetterBiConsumers.put("head", (BiConsumer<WikiPage, Boolean>)WikiPage::setHead);
+		attributeGetterFunctions.put("parentTitle", WikiPage::getParentTitle);
+		attributeSetterBiConsumers.put("parentTitle", (BiConsumer<WikiPage, String>)WikiPage::setParentTitle);
+		attributeGetterFunctions.put("redirectTitle", WikiPage::getRedirectTitle);
+		attributeSetterBiConsumers.put("redirectTitle", (BiConsumer<WikiPage, String>)WikiPage::setRedirectTitle);
+		attributeGetterFunctions.put("lastPublishDate", WikiPage::getLastPublishDate);
+		attributeSetterBiConsumers.put("lastPublishDate", (BiConsumer<WikiPage, Date>)WikiPage::setLastPublishDate);
+		attributeGetterFunctions.put("status", WikiPage::getStatus);
+		attributeSetterBiConsumers.put("status", (BiConsumer<WikiPage, Integer>)WikiPage::setStatus);
+		attributeGetterFunctions.put("statusByUserId", WikiPage::getStatusByUserId);
+		attributeSetterBiConsumers.put("statusByUserId", (BiConsumer<WikiPage, Long>)WikiPage::setStatusByUserId);
+		attributeGetterFunctions.put("statusByUserName", WikiPage::getStatusByUserName);
+		attributeSetterBiConsumers.put("statusByUserName", (BiConsumer<WikiPage, String>)WikiPage::setStatusByUserName);
+		attributeGetterFunctions.put("statusDate", WikiPage::getStatusDate);
+		attributeSetterBiConsumers.put("statusDate", (BiConsumer<WikiPage, Date>)WikiPage::setStatusDate);
 
-		Long resourcePrimKey = (Long)attributes.get("resourcePrimKey");
-
-		if (resourcePrimKey != null) {
-			setResourcePrimKey(resourcePrimKey);
-		}
-
-		Long groupId = (Long)attributes.get("groupId");
-
-		if (groupId != null) {
-			setGroupId(groupId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
-		}
-
-		Long userId = (Long)attributes.get("userId");
-
-		if (userId != null) {
-			setUserId(userId);
-		}
-
-		String userName = (String)attributes.get("userName");
-
-		if (userName != null) {
-			setUserName(userName);
-		}
-
-		Date createDate = (Date)attributes.get("createDate");
-
-		if (createDate != null) {
-			setCreateDate(createDate);
-		}
-
-		Date modifiedDate = (Date)attributes.get("modifiedDate");
-
-		if (modifiedDate != null) {
-			setModifiedDate(modifiedDate);
-		}
-
-		Long nodeId = (Long)attributes.get("nodeId");
-
-		if (nodeId != null) {
-			setNodeId(nodeId);
-		}
-
-		String title = (String)attributes.get("title");
-
-		if (title != null) {
-			setTitle(title);
-		}
-
-		Double version = (Double)attributes.get("version");
-
-		if (version != null) {
-			setVersion(version);
-		}
-
-		Boolean minorEdit = (Boolean)attributes.get("minorEdit");
-
-		if (minorEdit != null) {
-			setMinorEdit(minorEdit);
-		}
-
-		String content = (String)attributes.get("content");
-
-		if (content != null) {
-			setContent(content);
-		}
-
-		String summary = (String)attributes.get("summary");
-
-		if (summary != null) {
-			setSummary(summary);
-		}
-
-		String format = (String)attributes.get("format");
-
-		if (format != null) {
-			setFormat(format);
-		}
-
-		Boolean head = (Boolean)attributes.get("head");
-
-		if (head != null) {
-			setHead(head);
-		}
-
-		String parentTitle = (String)attributes.get("parentTitle");
-
-		if (parentTitle != null) {
-			setParentTitle(parentTitle);
-		}
-
-		String redirectTitle = (String)attributes.get("redirectTitle");
-
-		if (redirectTitle != null) {
-			setRedirectTitle(redirectTitle);
-		}
-
-		Date lastPublishDate = (Date)attributes.get("lastPublishDate");
-
-		if (lastPublishDate != null) {
-			setLastPublishDate(lastPublishDate);
-		}
-
-		Integer status = (Integer)attributes.get("status");
-
-		if (status != null) {
-			setStatus(status);
-		}
-
-		Long statusByUserId = (Long)attributes.get("statusByUserId");
-
-		if (statusByUserId != null) {
-			setStatusByUserId(statusByUserId);
-		}
-
-		String statusByUserName = (String)attributes.get("statusByUserName");
-
-		if (statusByUserName != null) {
-			setStatusByUserName(statusByUserName);
-		}
-
-		Date statusDate = (Date)attributes.get("statusDate");
-
-		if (statusDate != null) {
-			setStatusDate(statusDate);
-		}
+		_attributeGetterFunctions = Collections.unmodifiableMap(attributeGetterFunctions);
+		_attributeSetterBiConsumers = Collections.unmodifiableMap((Map)attributeSetterBiConsumers);
 	}
 
 	@JSON
@@ -1520,173 +1410,6 @@ public class WikiPageModelImpl extends BaseModelImpl<WikiPage>
 		}
 
 		return wikiPageCacheModel;
-	}
-
-	@Override
-	public String toString() {
-		StringBundler sb = new StringBundler(49);
-
-		sb.append("{uuid=");
-		sb.append(getUuid());
-		sb.append(", pageId=");
-		sb.append(getPageId());
-		sb.append(", resourcePrimKey=");
-		sb.append(getResourcePrimKey());
-		sb.append(", groupId=");
-		sb.append(getGroupId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
-		sb.append(", userId=");
-		sb.append(getUserId());
-		sb.append(", userName=");
-		sb.append(getUserName());
-		sb.append(", createDate=");
-		sb.append(getCreateDate());
-		sb.append(", modifiedDate=");
-		sb.append(getModifiedDate());
-		sb.append(", nodeId=");
-		sb.append(getNodeId());
-		sb.append(", title=");
-		sb.append(getTitle());
-		sb.append(", version=");
-		sb.append(getVersion());
-		sb.append(", minorEdit=");
-		sb.append(isMinorEdit());
-		sb.append(", content=");
-		sb.append(getContent());
-		sb.append(", summary=");
-		sb.append(getSummary());
-		sb.append(", format=");
-		sb.append(getFormat());
-		sb.append(", head=");
-		sb.append(isHead());
-		sb.append(", parentTitle=");
-		sb.append(getParentTitle());
-		sb.append(", redirectTitle=");
-		sb.append(getRedirectTitle());
-		sb.append(", lastPublishDate=");
-		sb.append(getLastPublishDate());
-		sb.append(", status=");
-		sb.append(getStatus());
-		sb.append(", statusByUserId=");
-		sb.append(getStatusByUserId());
-		sb.append(", statusByUserName=");
-		sb.append(getStatusByUserName());
-		sb.append(", statusDate=");
-		sb.append(getStatusDate());
-		sb.append("}");
-
-		return sb.toString();
-	}
-
-	@Override
-	public String toXmlString() {
-		StringBundler sb = new StringBundler(76);
-
-		sb.append("<model><model-name>");
-		sb.append("com.liferay.wiki.model.WikiPage");
-		sb.append("</model-name>");
-
-		sb.append(
-			"<column><column-name>uuid</column-name><column-value><![CDATA[");
-		sb.append(getUuid());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>pageId</column-name><column-value><![CDATA[");
-		sb.append(getPageId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>resourcePrimKey</column-name><column-value><![CDATA[");
-		sb.append(getResourcePrimKey());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>groupId</column-name><column-value><![CDATA[");
-		sb.append(getGroupId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userId</column-name><column-value><![CDATA[");
-		sb.append(getUserId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userName</column-name><column-value><![CDATA[");
-		sb.append(getUserName());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>createDate</column-name><column-value><![CDATA[");
-		sb.append(getCreateDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>modifiedDate</column-name><column-value><![CDATA[");
-		sb.append(getModifiedDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>nodeId</column-name><column-value><![CDATA[");
-		sb.append(getNodeId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>title</column-name><column-value><![CDATA[");
-		sb.append(getTitle());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>version</column-name><column-value><![CDATA[");
-		sb.append(getVersion());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>minorEdit</column-name><column-value><![CDATA[");
-		sb.append(isMinorEdit());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>content</column-name><column-value><![CDATA[");
-		sb.append(getContent());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>summary</column-name><column-value><![CDATA[");
-		sb.append(getSummary());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>format</column-name><column-value><![CDATA[");
-		sb.append(getFormat());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>head</column-name><column-value><![CDATA[");
-		sb.append(isHead());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>parentTitle</column-name><column-value><![CDATA[");
-		sb.append(getParentTitle());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>redirectTitle</column-name><column-value><![CDATA[");
-		sb.append(getRedirectTitle());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>lastPublishDate</column-name><column-value><![CDATA[");
-		sb.append(getLastPublishDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>status</column-name><column-value><![CDATA[");
-		sb.append(getStatus());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>statusByUserId</column-name><column-value><![CDATA[");
-		sb.append(getStatusByUserId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>statusByUserName</column-name><column-value><![CDATA[");
-		sb.append(getStatusByUserName());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>statusDate</column-name><column-value><![CDATA[");
-		sb.append(getStatusDate());
-		sb.append("]]></column-value></column>");
-
-		sb.append("</model>");
-
-		return sb.toString();
 	}
 
 	private static final ClassLoader _classLoader = WikiPage.class.getClassLoader();

@@ -18,9 +18,6 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
-import java.util.HashMap;
-import java.util.Map;
-
 /**
  * <p>
  * This class is a wrapper for {@link RecentLayoutSetBranch}.
@@ -36,67 +33,6 @@ public class RecentLayoutSetBranchWrapper extends BaseModelWrapper<RecentLayoutS
 	public RecentLayoutSetBranchWrapper(
 		RecentLayoutSetBranch recentLayoutSetBranch) {
 		super(recentLayoutSetBranch);
-	}
-
-	@Override
-	public Map<String, Object> getModelAttributes() {
-		Map<String, Object> attributes = new HashMap<String, Object>();
-
-		attributes.put("mvccVersion", getMvccVersion());
-		attributes.put("recentLayoutSetBranchId", getRecentLayoutSetBranchId());
-		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
-		attributes.put("userId", getUserId());
-		attributes.put("layoutSetBranchId", getLayoutSetBranchId());
-		attributes.put("layoutSetId", getLayoutSetId());
-
-		return attributes;
-	}
-
-	@Override
-	public void setModelAttributes(Map<String, Object> attributes) {
-		Long mvccVersion = (Long)attributes.get("mvccVersion");
-
-		if (mvccVersion != null) {
-			setMvccVersion(mvccVersion);
-		}
-
-		Long recentLayoutSetBranchId = (Long)attributes.get(
-				"recentLayoutSetBranchId");
-
-		if (recentLayoutSetBranchId != null) {
-			setRecentLayoutSetBranchId(recentLayoutSetBranchId);
-		}
-
-		Long groupId = (Long)attributes.get("groupId");
-
-		if (groupId != null) {
-			setGroupId(groupId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
-		}
-
-		Long userId = (Long)attributes.get("userId");
-
-		if (userId != null) {
-			setUserId(userId);
-		}
-
-		Long layoutSetBranchId = (Long)attributes.get("layoutSetBranchId");
-
-		if (layoutSetBranchId != null) {
-			setLayoutSetBranchId(layoutSetBranchId);
-		}
-
-		Long layoutSetId = (Long)attributes.get("layoutSetId");
-
-		if (layoutSetId != null) {
-			setLayoutSetId(layoutSetId);
-		}
 	}
 
 	/**

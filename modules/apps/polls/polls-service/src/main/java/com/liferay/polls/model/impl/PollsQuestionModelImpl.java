@@ -21,8 +21,6 @@ import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 
-import com.liferay.petra.string.StringBundler;
-
 import com.liferay.polls.model.PollsQuestion;
 import com.liferay.polls.model.PollsQuestionModel;
 import com.liferay.polls.model.PollsQuestionSoap;
@@ -50,13 +48,17 @@ import java.io.Serializable;
 import java.sql.Types;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * The base model implementation for the PollsQuestion service. Represents a row in the &quot;PollsQuestion&quot; database table, with each column mapped to a property of this class.
@@ -222,108 +224,51 @@ public class PollsQuestionModelImpl extends BaseModelImpl<PollsQuestion>
 	}
 
 	@Override
-	public Map<String, Object> getModelAttributes() {
-		Map<String, Object> attributes = new HashMap<String, Object>();
-
-		attributes.put("uuid", getUuid());
-		attributes.put("questionId", getQuestionId());
-		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
-		attributes.put("userId", getUserId());
-		attributes.put("userName", getUserName());
-		attributes.put("createDate", getCreateDate());
-		attributes.put("modifiedDate", getModifiedDate());
-		attributes.put("title", getTitle());
-		attributes.put("description", getDescription());
-		attributes.put("expirationDate", getExpirationDate());
-		attributes.put("lastPublishDate", getLastPublishDate());
-		attributes.put("lastVoteDate", getLastVoteDate());
-
-		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
-		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
-
-		return attributes;
+	public Map<String, Function<PollsQuestion, Object>> getAttributeGetterFunctions() {
+		return _attributeGetterFunctions;
 	}
 
 	@Override
-	public void setModelAttributes(Map<String, Object> attributes) {
-		String uuid = (String)attributes.get("uuid");
+	public Map<String, BiConsumer<PollsQuestion, Object>> getAttributeSetterBiConsumers() {
+		return _attributeSetterBiConsumers;
+	}
 
-		if (uuid != null) {
-			setUuid(uuid);
-		}
+	private static final Map<String, Function<PollsQuestion, Object>> _attributeGetterFunctions;
+	private static final Map<String, BiConsumer<PollsQuestion, Object>> _attributeSetterBiConsumers;
 
-		Long questionId = (Long)attributes.get("questionId");
+	static {
+		Map<String, Function<PollsQuestion, Object>> attributeGetterFunctions = new LinkedHashMap<String, Function<PollsQuestion, Object>>();
+		Map<String, BiConsumer<PollsQuestion, ?>> attributeSetterBiConsumers = new LinkedHashMap<String, BiConsumer<PollsQuestion, ?>>();
 
-		if (questionId != null) {
-			setQuestionId(questionId);
-		}
+		attributeGetterFunctions.put("uuid", PollsQuestion::getUuid);
+		attributeSetterBiConsumers.put("uuid", (BiConsumer<PollsQuestion, String>)PollsQuestion::setUuid);
+		attributeGetterFunctions.put("questionId", PollsQuestion::getQuestionId);
+		attributeSetterBiConsumers.put("questionId", (BiConsumer<PollsQuestion, Long>)PollsQuestion::setQuestionId);
+		attributeGetterFunctions.put("groupId", PollsQuestion::getGroupId);
+		attributeSetterBiConsumers.put("groupId", (BiConsumer<PollsQuestion, Long>)PollsQuestion::setGroupId);
+		attributeGetterFunctions.put("companyId", PollsQuestion::getCompanyId);
+		attributeSetterBiConsumers.put("companyId", (BiConsumer<PollsQuestion, Long>)PollsQuestion::setCompanyId);
+		attributeGetterFunctions.put("userId", PollsQuestion::getUserId);
+		attributeSetterBiConsumers.put("userId", (BiConsumer<PollsQuestion, Long>)PollsQuestion::setUserId);
+		attributeGetterFunctions.put("userName", PollsQuestion::getUserName);
+		attributeSetterBiConsumers.put("userName", (BiConsumer<PollsQuestion, String>)PollsQuestion::setUserName);
+		attributeGetterFunctions.put("createDate", PollsQuestion::getCreateDate);
+		attributeSetterBiConsumers.put("createDate", (BiConsumer<PollsQuestion, Date>)PollsQuestion::setCreateDate);
+		attributeGetterFunctions.put("modifiedDate", PollsQuestion::getModifiedDate);
+		attributeSetterBiConsumers.put("modifiedDate", (BiConsumer<PollsQuestion, Date>)PollsQuestion::setModifiedDate);
+		attributeGetterFunctions.put("title", PollsQuestion::getTitle);
+		attributeSetterBiConsumers.put("title", (BiConsumer<PollsQuestion, String>)PollsQuestion::setTitle);
+		attributeGetterFunctions.put("description", PollsQuestion::getDescription);
+		attributeSetterBiConsumers.put("description", (BiConsumer<PollsQuestion, String>)PollsQuestion::setDescription);
+		attributeGetterFunctions.put("expirationDate", PollsQuestion::getExpirationDate);
+		attributeSetterBiConsumers.put("expirationDate", (BiConsumer<PollsQuestion, Date>)PollsQuestion::setExpirationDate);
+		attributeGetterFunctions.put("lastPublishDate", PollsQuestion::getLastPublishDate);
+		attributeSetterBiConsumers.put("lastPublishDate", (BiConsumer<PollsQuestion, Date>)PollsQuestion::setLastPublishDate);
+		attributeGetterFunctions.put("lastVoteDate", PollsQuestion::getLastVoteDate);
+		attributeSetterBiConsumers.put("lastVoteDate", (BiConsumer<PollsQuestion, Date>)PollsQuestion::setLastVoteDate);
 
-		Long groupId = (Long)attributes.get("groupId");
-
-		if (groupId != null) {
-			setGroupId(groupId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
-		}
-
-		Long userId = (Long)attributes.get("userId");
-
-		if (userId != null) {
-			setUserId(userId);
-		}
-
-		String userName = (String)attributes.get("userName");
-
-		if (userName != null) {
-			setUserName(userName);
-		}
-
-		Date createDate = (Date)attributes.get("createDate");
-
-		if (createDate != null) {
-			setCreateDate(createDate);
-		}
-
-		Date modifiedDate = (Date)attributes.get("modifiedDate");
-
-		if (modifiedDate != null) {
-			setModifiedDate(modifiedDate);
-		}
-
-		String title = (String)attributes.get("title");
-
-		if (title != null) {
-			setTitle(title);
-		}
-
-		String description = (String)attributes.get("description");
-
-		if (description != null) {
-			setDescription(description);
-		}
-
-		Date expirationDate = (Date)attributes.get("expirationDate");
-
-		if (expirationDate != null) {
-			setExpirationDate(expirationDate);
-		}
-
-		Date lastPublishDate = (Date)attributes.get("lastPublishDate");
-
-		if (lastPublishDate != null) {
-			setLastPublishDate(lastPublishDate);
-		}
-
-		Date lastVoteDate = (Date)attributes.get("lastVoteDate");
-
-		if (lastVoteDate != null) {
-			setLastVoteDate(lastVoteDate);
-		}
+		_attributeGetterFunctions = Collections.unmodifiableMap(attributeGetterFunctions);
+		_attributeSetterBiConsumers = Collections.unmodifiableMap((Map)attributeSetterBiConsumers);
 	}
 
 	@JSON
@@ -1017,107 +962,6 @@ public class PollsQuestionModelImpl extends BaseModelImpl<PollsQuestion>
 		}
 
 		return pollsQuestionCacheModel;
-	}
-
-	@Override
-	public String toString() {
-		StringBundler sb = new StringBundler(27);
-
-		sb.append("{uuid=");
-		sb.append(getUuid());
-		sb.append(", questionId=");
-		sb.append(getQuestionId());
-		sb.append(", groupId=");
-		sb.append(getGroupId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
-		sb.append(", userId=");
-		sb.append(getUserId());
-		sb.append(", userName=");
-		sb.append(getUserName());
-		sb.append(", createDate=");
-		sb.append(getCreateDate());
-		sb.append(", modifiedDate=");
-		sb.append(getModifiedDate());
-		sb.append(", title=");
-		sb.append(getTitle());
-		sb.append(", description=");
-		sb.append(getDescription());
-		sb.append(", expirationDate=");
-		sb.append(getExpirationDate());
-		sb.append(", lastPublishDate=");
-		sb.append(getLastPublishDate());
-		sb.append(", lastVoteDate=");
-		sb.append(getLastVoteDate());
-		sb.append("}");
-
-		return sb.toString();
-	}
-
-	@Override
-	public String toXmlString() {
-		StringBundler sb = new StringBundler(43);
-
-		sb.append("<model><model-name>");
-		sb.append("com.liferay.polls.model.PollsQuestion");
-		sb.append("</model-name>");
-
-		sb.append(
-			"<column><column-name>uuid</column-name><column-value><![CDATA[");
-		sb.append(getUuid());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>questionId</column-name><column-value><![CDATA[");
-		sb.append(getQuestionId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>groupId</column-name><column-value><![CDATA[");
-		sb.append(getGroupId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userId</column-name><column-value><![CDATA[");
-		sb.append(getUserId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userName</column-name><column-value><![CDATA[");
-		sb.append(getUserName());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>createDate</column-name><column-value><![CDATA[");
-		sb.append(getCreateDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>modifiedDate</column-name><column-value><![CDATA[");
-		sb.append(getModifiedDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>title</column-name><column-value><![CDATA[");
-		sb.append(getTitle());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>description</column-name><column-value><![CDATA[");
-		sb.append(getDescription());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>expirationDate</column-name><column-value><![CDATA[");
-		sb.append(getExpirationDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>lastPublishDate</column-name><column-value><![CDATA[");
-		sb.append(getLastPublishDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>lastVoteDate</column-name><column-value><![CDATA[");
-		sb.append(getLastVoteDate());
-		sb.append("]]></column-value></column>");
-
-		sb.append("</model>");
-
-		return sb.toString();
 	}
 
 	private static final ClassLoader _classLoader = PollsQuestion.class.getClassLoader();

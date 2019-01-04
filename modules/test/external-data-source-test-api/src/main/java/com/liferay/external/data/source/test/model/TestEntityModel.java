@@ -25,6 +25,10 @@ import com.liferay.portal.kernel.service.ServiceContext;
 
 import java.io.Serializable;
 
+import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
+
 /**
  * The base model interface for the TestEntity service. Represents a row in the &quot;TestEntity&quot; database table, with each column mapped to a property of this class.
  *
@@ -88,6 +92,10 @@ public interface TestEntityModel extends BaseModel<TestEntity> {
 	 * @param data the data of this test entity
 	 */
 	public void setData(String data);
+
+	public Map<String, Function<TestEntity, Object>> getAttributeGetterFunctions();
+
+	public Map<String, BiConsumer<TestEntity, Object>> getAttributeSetterBiConsumers();
 
 	@Override
 	public boolean isNew();

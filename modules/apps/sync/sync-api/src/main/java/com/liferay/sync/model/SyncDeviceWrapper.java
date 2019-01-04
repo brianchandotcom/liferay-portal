@@ -22,8 +22,6 @@ import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * <p>
@@ -39,101 +37,6 @@ public class SyncDeviceWrapper extends BaseModelWrapper<SyncDevice>
 	implements SyncDevice, ModelWrapper<SyncDevice> {
 	public SyncDeviceWrapper(SyncDevice syncDevice) {
 		super(syncDevice);
-	}
-
-	@Override
-	public Map<String, Object> getModelAttributes() {
-		Map<String, Object> attributes = new HashMap<String, Object>();
-
-		attributes.put("uuid", getUuid());
-		attributes.put("syncDeviceId", getSyncDeviceId());
-		attributes.put("companyId", getCompanyId());
-		attributes.put("userId", getUserId());
-		attributes.put("userName", getUserName());
-		attributes.put("createDate", getCreateDate());
-		attributes.put("modifiedDate", getModifiedDate());
-		attributes.put("type", getType());
-		attributes.put("buildNumber", getBuildNumber());
-		attributes.put("featureSet", getFeatureSet());
-		attributes.put("hostname", getHostname());
-		attributes.put("status", getStatus());
-
-		return attributes;
-	}
-
-	@Override
-	public void setModelAttributes(Map<String, Object> attributes) {
-		String uuid = (String)attributes.get("uuid");
-
-		if (uuid != null) {
-			setUuid(uuid);
-		}
-
-		Long syncDeviceId = (Long)attributes.get("syncDeviceId");
-
-		if (syncDeviceId != null) {
-			setSyncDeviceId(syncDeviceId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
-		}
-
-		Long userId = (Long)attributes.get("userId");
-
-		if (userId != null) {
-			setUserId(userId);
-		}
-
-		String userName = (String)attributes.get("userName");
-
-		if (userName != null) {
-			setUserName(userName);
-		}
-
-		Date createDate = (Date)attributes.get("createDate");
-
-		if (createDate != null) {
-			setCreateDate(createDate);
-		}
-
-		Date modifiedDate = (Date)attributes.get("modifiedDate");
-
-		if (modifiedDate != null) {
-			setModifiedDate(modifiedDate);
-		}
-
-		String type = (String)attributes.get("type");
-
-		if (type != null) {
-			setType(type);
-		}
-
-		Long buildNumber = (Long)attributes.get("buildNumber");
-
-		if (buildNumber != null) {
-			setBuildNumber(buildNumber);
-		}
-
-		Integer featureSet = (Integer)attributes.get("featureSet");
-
-		if (featureSet != null) {
-			setFeatureSet(featureSet);
-		}
-
-		String hostname = (String)attributes.get("hostname");
-
-		if (hostname != null) {
-			setHostname(hostname);
-		}
-
-		Integer status = (Integer)attributes.get("status");
-
-		if (status != null) {
-			setStatus(status);
-		}
 	}
 
 	@Override

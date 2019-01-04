@@ -19,9 +19,6 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
-import java.util.HashMap;
-import java.util.Map;
-
 /**
  * <p>
  * This class is a wrapper for {@link AssetEntryAssetCategoryRel}.
@@ -38,47 +35,6 @@ public class AssetEntryAssetCategoryRelWrapper extends BaseModelWrapper<AssetEnt
 	public AssetEntryAssetCategoryRelWrapper(
 		AssetEntryAssetCategoryRel assetEntryAssetCategoryRel) {
 		super(assetEntryAssetCategoryRel);
-	}
-
-	@Override
-	public Map<String, Object> getModelAttributes() {
-		Map<String, Object> attributes = new HashMap<String, Object>();
-
-		attributes.put("assetEntryAssetCategoryRelId",
-			getAssetEntryAssetCategoryRelId());
-		attributes.put("assetEntryId", getAssetEntryId());
-		attributes.put("assetCategoryId", getAssetCategoryId());
-		attributes.put("priority", getPriority());
-
-		return attributes;
-	}
-
-	@Override
-	public void setModelAttributes(Map<String, Object> attributes) {
-		Long assetEntryAssetCategoryRelId = (Long)attributes.get(
-				"assetEntryAssetCategoryRelId");
-
-		if (assetEntryAssetCategoryRelId != null) {
-			setAssetEntryAssetCategoryRelId(assetEntryAssetCategoryRelId);
-		}
-
-		Long assetEntryId = (Long)attributes.get("assetEntryId");
-
-		if (assetEntryId != null) {
-			setAssetEntryId(assetEntryId);
-		}
-
-		Long assetCategoryId = (Long)attributes.get("assetCategoryId");
-
-		if (assetCategoryId != null) {
-			setAssetCategoryId(assetCategoryId);
-		}
-
-		Integer priority = (Integer)attributes.get("priority");
-
-		if (priority != null) {
-			setPriority(priority);
-		}
 	}
 
 	/**

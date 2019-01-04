@@ -25,8 +25,6 @@ import com.liferay.knowledge.base.model.KBComment;
 import com.liferay.knowledge.base.model.KBCommentModel;
 import com.liferay.knowledge.base.model.KBCommentSoap;
 
-import com.liferay.petra.string.StringBundler;
-
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSON;
@@ -47,10 +45,14 @@ import java.io.Serializable;
 import java.sql.Types;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * The base model implementation for the KBComment service. Represents a row in the &quot;KBComment&quot; database table, with each column mapped to a property of this class.
@@ -223,115 +225,53 @@ public class KBCommentModelImpl extends BaseModelImpl<KBComment>
 	}
 
 	@Override
-	public Map<String, Object> getModelAttributes() {
-		Map<String, Object> attributes = new HashMap<String, Object>();
-
-		attributes.put("uuid", getUuid());
-		attributes.put("kbCommentId", getKbCommentId());
-		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
-		attributes.put("userId", getUserId());
-		attributes.put("userName", getUserName());
-		attributes.put("createDate", getCreateDate());
-		attributes.put("modifiedDate", getModifiedDate());
-		attributes.put("classNameId", getClassNameId());
-		attributes.put("classPK", getClassPK());
-		attributes.put("content", getContent());
-		attributes.put("userRating", getUserRating());
-		attributes.put("lastPublishDate", getLastPublishDate());
-		attributes.put("status", getStatus());
-
-		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
-		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
-
-		return attributes;
+	public Map<String, Function<KBComment, Object>> getAttributeGetterFunctions() {
+		return _attributeGetterFunctions;
 	}
 
 	@Override
-	public void setModelAttributes(Map<String, Object> attributes) {
-		String uuid = (String)attributes.get("uuid");
+	public Map<String, BiConsumer<KBComment, Object>> getAttributeSetterBiConsumers() {
+		return _attributeSetterBiConsumers;
+	}
 
-		if (uuid != null) {
-			setUuid(uuid);
-		}
+	private static final Map<String, Function<KBComment, Object>> _attributeGetterFunctions;
+	private static final Map<String, BiConsumer<KBComment, Object>> _attributeSetterBiConsumers;
 
-		Long kbCommentId = (Long)attributes.get("kbCommentId");
+	static {
+		Map<String, Function<KBComment, Object>> attributeGetterFunctions = new LinkedHashMap<String, Function<KBComment, Object>>();
+		Map<String, BiConsumer<KBComment, ?>> attributeSetterBiConsumers = new LinkedHashMap<String, BiConsumer<KBComment, ?>>();
 
-		if (kbCommentId != null) {
-			setKbCommentId(kbCommentId);
-		}
+		attributeGetterFunctions.put("uuid", KBComment::getUuid);
+		attributeSetterBiConsumers.put("uuid", (BiConsumer<KBComment, String>)KBComment::setUuid);
+		attributeGetterFunctions.put("kbCommentId", KBComment::getKbCommentId);
+		attributeSetterBiConsumers.put("kbCommentId", (BiConsumer<KBComment, Long>)KBComment::setKbCommentId);
+		attributeGetterFunctions.put("groupId", KBComment::getGroupId);
+		attributeSetterBiConsumers.put("groupId", (BiConsumer<KBComment, Long>)KBComment::setGroupId);
+		attributeGetterFunctions.put("companyId", KBComment::getCompanyId);
+		attributeSetterBiConsumers.put("companyId", (BiConsumer<KBComment, Long>)KBComment::setCompanyId);
+		attributeGetterFunctions.put("userId", KBComment::getUserId);
+		attributeSetterBiConsumers.put("userId", (BiConsumer<KBComment, Long>)KBComment::setUserId);
+		attributeGetterFunctions.put("userName", KBComment::getUserName);
+		attributeSetterBiConsumers.put("userName", (BiConsumer<KBComment, String>)KBComment::setUserName);
+		attributeGetterFunctions.put("createDate", KBComment::getCreateDate);
+		attributeSetterBiConsumers.put("createDate", (BiConsumer<KBComment, Date>)KBComment::setCreateDate);
+		attributeGetterFunctions.put("modifiedDate", KBComment::getModifiedDate);
+		attributeSetterBiConsumers.put("modifiedDate", (BiConsumer<KBComment, Date>)KBComment::setModifiedDate);
+		attributeGetterFunctions.put("classNameId", KBComment::getClassNameId);
+		attributeSetterBiConsumers.put("classNameId", (BiConsumer<KBComment, Long>)KBComment::setClassNameId);
+		attributeGetterFunctions.put("classPK", KBComment::getClassPK);
+		attributeSetterBiConsumers.put("classPK", (BiConsumer<KBComment, Long>)KBComment::setClassPK);
+		attributeGetterFunctions.put("content", KBComment::getContent);
+		attributeSetterBiConsumers.put("content", (BiConsumer<KBComment, String>)KBComment::setContent);
+		attributeGetterFunctions.put("userRating", KBComment::getUserRating);
+		attributeSetterBiConsumers.put("userRating", (BiConsumer<KBComment, Integer>)KBComment::setUserRating);
+		attributeGetterFunctions.put("lastPublishDate", KBComment::getLastPublishDate);
+		attributeSetterBiConsumers.put("lastPublishDate", (BiConsumer<KBComment, Date>)KBComment::setLastPublishDate);
+		attributeGetterFunctions.put("status", KBComment::getStatus);
+		attributeSetterBiConsumers.put("status", (BiConsumer<KBComment, Integer>)KBComment::setStatus);
 
-		Long groupId = (Long)attributes.get("groupId");
-
-		if (groupId != null) {
-			setGroupId(groupId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
-		}
-
-		Long userId = (Long)attributes.get("userId");
-
-		if (userId != null) {
-			setUserId(userId);
-		}
-
-		String userName = (String)attributes.get("userName");
-
-		if (userName != null) {
-			setUserName(userName);
-		}
-
-		Date createDate = (Date)attributes.get("createDate");
-
-		if (createDate != null) {
-			setCreateDate(createDate);
-		}
-
-		Date modifiedDate = (Date)attributes.get("modifiedDate");
-
-		if (modifiedDate != null) {
-			setModifiedDate(modifiedDate);
-		}
-
-		Long classNameId = (Long)attributes.get("classNameId");
-
-		if (classNameId != null) {
-			setClassNameId(classNameId);
-		}
-
-		Long classPK = (Long)attributes.get("classPK");
-
-		if (classPK != null) {
-			setClassPK(classPK);
-		}
-
-		String content = (String)attributes.get("content");
-
-		if (content != null) {
-			setContent(content);
-		}
-
-		Integer userRating = (Integer)attributes.get("userRating");
-
-		if (userRating != null) {
-			setUserRating(userRating);
-		}
-
-		Date lastPublishDate = (Date)attributes.get("lastPublishDate");
-
-		if (lastPublishDate != null) {
-			setLastPublishDate(lastPublishDate);
-		}
-
-		Integer status = (Integer)attributes.get("status");
-
-		if (status != null) {
-			setStatus(status);
-		}
+		_attributeGetterFunctions = Collections.unmodifiableMap(attributeGetterFunctions);
+		_attributeSetterBiConsumers = Collections.unmodifiableMap((Map)attributeSetterBiConsumers);
 	}
 
 	@JSON
@@ -846,113 +786,6 @@ public class KBCommentModelImpl extends BaseModelImpl<KBComment>
 		kbCommentCacheModel.status = getStatus();
 
 		return kbCommentCacheModel;
-	}
-
-	@Override
-	public String toString() {
-		StringBundler sb = new StringBundler(29);
-
-		sb.append("{uuid=");
-		sb.append(getUuid());
-		sb.append(", kbCommentId=");
-		sb.append(getKbCommentId());
-		sb.append(", groupId=");
-		sb.append(getGroupId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
-		sb.append(", userId=");
-		sb.append(getUserId());
-		sb.append(", userName=");
-		sb.append(getUserName());
-		sb.append(", createDate=");
-		sb.append(getCreateDate());
-		sb.append(", modifiedDate=");
-		sb.append(getModifiedDate());
-		sb.append(", classNameId=");
-		sb.append(getClassNameId());
-		sb.append(", classPK=");
-		sb.append(getClassPK());
-		sb.append(", content=");
-		sb.append(getContent());
-		sb.append(", userRating=");
-		sb.append(getUserRating());
-		sb.append(", lastPublishDate=");
-		sb.append(getLastPublishDate());
-		sb.append(", status=");
-		sb.append(getStatus());
-		sb.append("}");
-
-		return sb.toString();
-	}
-
-	@Override
-	public String toXmlString() {
-		StringBundler sb = new StringBundler(46);
-
-		sb.append("<model><model-name>");
-		sb.append("com.liferay.knowledge.base.model.KBComment");
-		sb.append("</model-name>");
-
-		sb.append(
-			"<column><column-name>uuid</column-name><column-value><![CDATA[");
-		sb.append(getUuid());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>kbCommentId</column-name><column-value><![CDATA[");
-		sb.append(getKbCommentId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>groupId</column-name><column-value><![CDATA[");
-		sb.append(getGroupId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userId</column-name><column-value><![CDATA[");
-		sb.append(getUserId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userName</column-name><column-value><![CDATA[");
-		sb.append(getUserName());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>createDate</column-name><column-value><![CDATA[");
-		sb.append(getCreateDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>modifiedDate</column-name><column-value><![CDATA[");
-		sb.append(getModifiedDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>classNameId</column-name><column-value><![CDATA[");
-		sb.append(getClassNameId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>classPK</column-name><column-value><![CDATA[");
-		sb.append(getClassPK());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>content</column-name><column-value><![CDATA[");
-		sb.append(getContent());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userRating</column-name><column-value><![CDATA[");
-		sb.append(getUserRating());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>lastPublishDate</column-name><column-value><![CDATA[");
-		sb.append(getLastPublishDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>status</column-name><column-value><![CDATA[");
-		sb.append(getStatus());
-		sb.append("]]></column-value></column>");
-
-		sb.append("</model>");
-
-		return sb.toString();
 	}
 
 	private static final ClassLoader _classLoader = KBComment.class.getClassLoader();

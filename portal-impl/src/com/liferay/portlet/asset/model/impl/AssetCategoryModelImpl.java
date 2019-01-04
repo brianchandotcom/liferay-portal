@@ -25,8 +25,6 @@ import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 
-import com.liferay.petra.string.StringBundler;
-
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.LocaleException;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -49,13 +47,17 @@ import java.io.Serializable;
 import java.sql.Types;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * The base model implementation for the AssetCategory service. Represents a row in the &quot;AssetCategory&quot; database table, with each column mapped to a property of this class.
@@ -249,137 +251,59 @@ public class AssetCategoryModelImpl extends BaseModelImpl<AssetCategory>
 	}
 
 	@Override
-	public Map<String, Object> getModelAttributes() {
-		Map<String, Object> attributes = new HashMap<String, Object>();
-
-		attributes.put("uuid", getUuid());
-		attributes.put("externalReferenceCode", getExternalReferenceCode());
-		attributes.put("categoryId", getCategoryId());
-		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
-		attributes.put("userId", getUserId());
-		attributes.put("userName", getUserName());
-		attributes.put("createDate", getCreateDate());
-		attributes.put("modifiedDate", getModifiedDate());
-		attributes.put("parentCategoryId", getParentCategoryId());
-		attributes.put("leftCategoryId", getLeftCategoryId());
-		attributes.put("rightCategoryId", getRightCategoryId());
-		attributes.put("name", getName());
-		attributes.put("title", getTitle());
-		attributes.put("description", getDescription());
-		attributes.put("vocabularyId", getVocabularyId());
-		attributes.put("lastPublishDate", getLastPublishDate());
-
-		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
-		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
-
-		return attributes;
+	public Map<String, Function<AssetCategory, Object>> getAttributeGetterFunctions() {
+		return _attributeGetterFunctions;
 	}
 
 	@Override
-	public void setModelAttributes(Map<String, Object> attributes) {
-		String uuid = (String)attributes.get("uuid");
+	public Map<String, BiConsumer<AssetCategory, Object>> getAttributeSetterBiConsumers() {
+		return _attributeSetterBiConsumers;
+	}
 
-		if (uuid != null) {
-			setUuid(uuid);
-		}
+	private static final Map<String, Function<AssetCategory, Object>> _attributeGetterFunctions;
+	private static final Map<String, BiConsumer<AssetCategory, Object>> _attributeSetterBiConsumers;
 
-		String externalReferenceCode = (String)attributes.get(
-				"externalReferenceCode");
+	static {
+		Map<String, Function<AssetCategory, Object>> attributeGetterFunctions = new LinkedHashMap<String, Function<AssetCategory, Object>>();
+		Map<String, BiConsumer<AssetCategory, ?>> attributeSetterBiConsumers = new LinkedHashMap<String, BiConsumer<AssetCategory, ?>>();
 
-		if (externalReferenceCode != null) {
-			setExternalReferenceCode(externalReferenceCode);
-		}
+		attributeGetterFunctions.put("uuid", AssetCategory::getUuid);
+		attributeSetterBiConsumers.put("uuid", (BiConsumer<AssetCategory, String>)AssetCategory::setUuid);
+		attributeGetterFunctions.put("externalReferenceCode", AssetCategory::getExternalReferenceCode);
+		attributeSetterBiConsumers.put("externalReferenceCode", (BiConsumer<AssetCategory, String>)AssetCategory::setExternalReferenceCode);
+		attributeGetterFunctions.put("categoryId", AssetCategory::getCategoryId);
+		attributeSetterBiConsumers.put("categoryId", (BiConsumer<AssetCategory, Long>)AssetCategory::setCategoryId);
+		attributeGetterFunctions.put("groupId", AssetCategory::getGroupId);
+		attributeSetterBiConsumers.put("groupId", (BiConsumer<AssetCategory, Long>)AssetCategory::setGroupId);
+		attributeGetterFunctions.put("companyId", AssetCategory::getCompanyId);
+		attributeSetterBiConsumers.put("companyId", (BiConsumer<AssetCategory, Long>)AssetCategory::setCompanyId);
+		attributeGetterFunctions.put("userId", AssetCategory::getUserId);
+		attributeSetterBiConsumers.put("userId", (BiConsumer<AssetCategory, Long>)AssetCategory::setUserId);
+		attributeGetterFunctions.put("userName", AssetCategory::getUserName);
+		attributeSetterBiConsumers.put("userName", (BiConsumer<AssetCategory, String>)AssetCategory::setUserName);
+		attributeGetterFunctions.put("createDate", AssetCategory::getCreateDate);
+		attributeSetterBiConsumers.put("createDate", (BiConsumer<AssetCategory, Date>)AssetCategory::setCreateDate);
+		attributeGetterFunctions.put("modifiedDate", AssetCategory::getModifiedDate);
+		attributeSetterBiConsumers.put("modifiedDate", (BiConsumer<AssetCategory, Date>)AssetCategory::setModifiedDate);
+		attributeGetterFunctions.put("parentCategoryId", AssetCategory::getParentCategoryId);
+		attributeSetterBiConsumers.put("parentCategoryId", (BiConsumer<AssetCategory, Long>)AssetCategory::setParentCategoryId);
+		attributeGetterFunctions.put("leftCategoryId", AssetCategory::getLeftCategoryId);
+		attributeSetterBiConsumers.put("leftCategoryId", (BiConsumer<AssetCategory, Long>)AssetCategory::setLeftCategoryId);
+		attributeGetterFunctions.put("rightCategoryId", AssetCategory::getRightCategoryId);
+		attributeSetterBiConsumers.put("rightCategoryId", (BiConsumer<AssetCategory, Long>)AssetCategory::setRightCategoryId);
+		attributeGetterFunctions.put("name", AssetCategory::getName);
+		attributeSetterBiConsumers.put("name", (BiConsumer<AssetCategory, String>)AssetCategory::setName);
+		attributeGetterFunctions.put("title", AssetCategory::getTitle);
+		attributeSetterBiConsumers.put("title", (BiConsumer<AssetCategory, String>)AssetCategory::setTitle);
+		attributeGetterFunctions.put("description", AssetCategory::getDescription);
+		attributeSetterBiConsumers.put("description", (BiConsumer<AssetCategory, String>)AssetCategory::setDescription);
+		attributeGetterFunctions.put("vocabularyId", AssetCategory::getVocabularyId);
+		attributeSetterBiConsumers.put("vocabularyId", (BiConsumer<AssetCategory, Long>)AssetCategory::setVocabularyId);
+		attributeGetterFunctions.put("lastPublishDate", AssetCategory::getLastPublishDate);
+		attributeSetterBiConsumers.put("lastPublishDate", (BiConsumer<AssetCategory, Date>)AssetCategory::setLastPublishDate);
 
-		Long categoryId = (Long)attributes.get("categoryId");
-
-		if (categoryId != null) {
-			setCategoryId(categoryId);
-		}
-
-		Long groupId = (Long)attributes.get("groupId");
-
-		if (groupId != null) {
-			setGroupId(groupId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
-		}
-
-		Long userId = (Long)attributes.get("userId");
-
-		if (userId != null) {
-			setUserId(userId);
-		}
-
-		String userName = (String)attributes.get("userName");
-
-		if (userName != null) {
-			setUserName(userName);
-		}
-
-		Date createDate = (Date)attributes.get("createDate");
-
-		if (createDate != null) {
-			setCreateDate(createDate);
-		}
-
-		Date modifiedDate = (Date)attributes.get("modifiedDate");
-
-		if (modifiedDate != null) {
-			setModifiedDate(modifiedDate);
-		}
-
-		Long parentCategoryId = (Long)attributes.get("parentCategoryId");
-
-		if (parentCategoryId != null) {
-			setParentCategoryId(parentCategoryId);
-		}
-
-		Long leftCategoryId = (Long)attributes.get("leftCategoryId");
-
-		if (leftCategoryId != null) {
-			setLeftCategoryId(leftCategoryId);
-		}
-
-		Long rightCategoryId = (Long)attributes.get("rightCategoryId");
-
-		if (rightCategoryId != null) {
-			setRightCategoryId(rightCategoryId);
-		}
-
-		String name = (String)attributes.get("name");
-
-		if (name != null) {
-			setName(name);
-		}
-
-		String title = (String)attributes.get("title");
-
-		if (title != null) {
-			setTitle(title);
-		}
-
-		String description = (String)attributes.get("description");
-
-		if (description != null) {
-			setDescription(description);
-		}
-
-		Long vocabularyId = (Long)attributes.get("vocabularyId");
-
-		if (vocabularyId != null) {
-			setVocabularyId(vocabularyId);
-		}
-
-		Date lastPublishDate = (Date)attributes.get("lastPublishDate");
-
-		if (lastPublishDate != null) {
-			setLastPublishDate(lastPublishDate);
-		}
+		_attributeGetterFunctions = Collections.unmodifiableMap(attributeGetterFunctions);
+		_attributeSetterBiConsumers = Collections.unmodifiableMap((Map)attributeSetterBiConsumers);
 	}
 
 	@JSON
@@ -1209,131 +1133,6 @@ public class AssetCategoryModelImpl extends BaseModelImpl<AssetCategory>
 		}
 
 		return assetCategoryCacheModel;
-	}
-
-	@Override
-	public String toString() {
-		StringBundler sb = new StringBundler(35);
-
-		sb.append("{uuid=");
-		sb.append(getUuid());
-		sb.append(", externalReferenceCode=");
-		sb.append(getExternalReferenceCode());
-		sb.append(", categoryId=");
-		sb.append(getCategoryId());
-		sb.append(", groupId=");
-		sb.append(getGroupId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
-		sb.append(", userId=");
-		sb.append(getUserId());
-		sb.append(", userName=");
-		sb.append(getUserName());
-		sb.append(", createDate=");
-		sb.append(getCreateDate());
-		sb.append(", modifiedDate=");
-		sb.append(getModifiedDate());
-		sb.append(", parentCategoryId=");
-		sb.append(getParentCategoryId());
-		sb.append(", leftCategoryId=");
-		sb.append(getLeftCategoryId());
-		sb.append(", rightCategoryId=");
-		sb.append(getRightCategoryId());
-		sb.append(", name=");
-		sb.append(getName());
-		sb.append(", title=");
-		sb.append(getTitle());
-		sb.append(", description=");
-		sb.append(getDescription());
-		sb.append(", vocabularyId=");
-		sb.append(getVocabularyId());
-		sb.append(", lastPublishDate=");
-		sb.append(getLastPublishDate());
-		sb.append("}");
-
-		return sb.toString();
-	}
-
-	@Override
-	public String toXmlString() {
-		StringBundler sb = new StringBundler(55);
-
-		sb.append("<model><model-name>");
-		sb.append("com.liferay.asset.kernel.model.AssetCategory");
-		sb.append("</model-name>");
-
-		sb.append(
-			"<column><column-name>uuid</column-name><column-value><![CDATA[");
-		sb.append(getUuid());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>externalReferenceCode</column-name><column-value><![CDATA[");
-		sb.append(getExternalReferenceCode());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>categoryId</column-name><column-value><![CDATA[");
-		sb.append(getCategoryId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>groupId</column-name><column-value><![CDATA[");
-		sb.append(getGroupId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userId</column-name><column-value><![CDATA[");
-		sb.append(getUserId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userName</column-name><column-value><![CDATA[");
-		sb.append(getUserName());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>createDate</column-name><column-value><![CDATA[");
-		sb.append(getCreateDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>modifiedDate</column-name><column-value><![CDATA[");
-		sb.append(getModifiedDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>parentCategoryId</column-name><column-value><![CDATA[");
-		sb.append(getParentCategoryId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>leftCategoryId</column-name><column-value><![CDATA[");
-		sb.append(getLeftCategoryId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>rightCategoryId</column-name><column-value><![CDATA[");
-		sb.append(getRightCategoryId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>name</column-name><column-value><![CDATA[");
-		sb.append(getName());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>title</column-name><column-value><![CDATA[");
-		sb.append(getTitle());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>description</column-name><column-value><![CDATA[");
-		sb.append(getDescription());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>vocabularyId</column-name><column-value><![CDATA[");
-		sb.append(getVocabularyId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>lastPublishDate</column-name><column-value><![CDATA[");
-		sb.append(getLastPublishDate());
-		sb.append("]]></column-value></column>");
-
-		sb.append("</model>");
-
-		return sb.toString();
 	}
 
 	private static final ClassLoader _classLoader = AssetCategory.class.getClassLoader();

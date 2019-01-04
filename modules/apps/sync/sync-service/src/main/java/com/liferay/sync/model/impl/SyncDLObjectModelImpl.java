@@ -19,8 +19,6 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 
-import com.liferay.petra.string.StringBundler;
-
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSON;
@@ -42,10 +40,14 @@ import java.io.Serializable;
 import java.sql.Types;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * The base model implementation for the SyncDLObject service. Represents a row in the &quot;SyncDLObject&quot; database table, with each column mapped to a property of this class.
@@ -260,214 +262,81 @@ public class SyncDLObjectModelImpl extends BaseModelImpl<SyncDLObject>
 	}
 
 	@Override
-	public Map<String, Object> getModelAttributes() {
-		Map<String, Object> attributes = new HashMap<String, Object>();
-
-		attributes.put("syncDLObjectId", getSyncDLObjectId());
-		attributes.put("companyId", getCompanyId());
-		attributes.put("userId", getUserId());
-		attributes.put("userName", getUserName());
-		attributes.put("createTime", getCreateTime());
-		attributes.put("modifiedTime", getModifiedTime());
-		attributes.put("repositoryId", getRepositoryId());
-		attributes.put("parentFolderId", getParentFolderId());
-		attributes.put("treePath", getTreePath());
-		attributes.put("name", getName());
-		attributes.put("extension", getExtension());
-		attributes.put("mimeType", getMimeType());
-		attributes.put("description", getDescription());
-		attributes.put("changeLog", getChangeLog());
-		attributes.put("extraSettings", getExtraSettings());
-		attributes.put("version", getVersion());
-		attributes.put("versionId", getVersionId());
-		attributes.put("size", getSize());
-		attributes.put("checksum", getChecksum());
-		attributes.put("event", getEvent());
-		attributes.put("lanTokenKey", getLanTokenKey());
-		attributes.put("lastPermissionChangeDate", getLastPermissionChangeDate());
-		attributes.put("lockExpirationDate", getLockExpirationDate());
-		attributes.put("lockUserId", getLockUserId());
-		attributes.put("lockUserName", getLockUserName());
-		attributes.put("type", getType());
-		attributes.put("typePK", getTypePK());
-		attributes.put("typeUuid", getTypeUuid());
-
-		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
-		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
-
-		return attributes;
+	public Map<String, Function<SyncDLObject, Object>> getAttributeGetterFunctions() {
+		return _attributeGetterFunctions;
 	}
 
 	@Override
-	public void setModelAttributes(Map<String, Object> attributes) {
-		Long syncDLObjectId = (Long)attributes.get("syncDLObjectId");
+	public Map<String, BiConsumer<SyncDLObject, Object>> getAttributeSetterBiConsumers() {
+		return _attributeSetterBiConsumers;
+	}
 
-		if (syncDLObjectId != null) {
-			setSyncDLObjectId(syncDLObjectId);
-		}
+	private static final Map<String, Function<SyncDLObject, Object>> _attributeGetterFunctions;
+	private static final Map<String, BiConsumer<SyncDLObject, Object>> _attributeSetterBiConsumers;
 
-		Long companyId = (Long)attributes.get("companyId");
+	static {
+		Map<String, Function<SyncDLObject, Object>> attributeGetterFunctions = new LinkedHashMap<String, Function<SyncDLObject, Object>>();
+		Map<String, BiConsumer<SyncDLObject, ?>> attributeSetterBiConsumers = new LinkedHashMap<String, BiConsumer<SyncDLObject, ?>>();
 
-		if (companyId != null) {
-			setCompanyId(companyId);
-		}
+		attributeGetterFunctions.put("syncDLObjectId", SyncDLObject::getSyncDLObjectId);
+		attributeSetterBiConsumers.put("syncDLObjectId", (BiConsumer<SyncDLObject, Long>)SyncDLObject::setSyncDLObjectId);
+		attributeGetterFunctions.put("companyId", SyncDLObject::getCompanyId);
+		attributeSetterBiConsumers.put("companyId", (BiConsumer<SyncDLObject, Long>)SyncDLObject::setCompanyId);
+		attributeGetterFunctions.put("userId", SyncDLObject::getUserId);
+		attributeSetterBiConsumers.put("userId", (BiConsumer<SyncDLObject, Long>)SyncDLObject::setUserId);
+		attributeGetterFunctions.put("userName", SyncDLObject::getUserName);
+		attributeSetterBiConsumers.put("userName", (BiConsumer<SyncDLObject, String>)SyncDLObject::setUserName);
+		attributeGetterFunctions.put("createTime", SyncDLObject::getCreateTime);
+		attributeSetterBiConsumers.put("createTime", (BiConsumer<SyncDLObject, Long>)SyncDLObject::setCreateTime);
+		attributeGetterFunctions.put("modifiedTime", SyncDLObject::getModifiedTime);
+		attributeSetterBiConsumers.put("modifiedTime", (BiConsumer<SyncDLObject, Long>)SyncDLObject::setModifiedTime);
+		attributeGetterFunctions.put("repositoryId", SyncDLObject::getRepositoryId);
+		attributeSetterBiConsumers.put("repositoryId", (BiConsumer<SyncDLObject, Long>)SyncDLObject::setRepositoryId);
+		attributeGetterFunctions.put("parentFolderId", SyncDLObject::getParentFolderId);
+		attributeSetterBiConsumers.put("parentFolderId", (BiConsumer<SyncDLObject, Long>)SyncDLObject::setParentFolderId);
+		attributeGetterFunctions.put("treePath", SyncDLObject::getTreePath);
+		attributeSetterBiConsumers.put("treePath", (BiConsumer<SyncDLObject, String>)SyncDLObject::setTreePath);
+		attributeGetterFunctions.put("name", SyncDLObject::getName);
+		attributeSetterBiConsumers.put("name", (BiConsumer<SyncDLObject, String>)SyncDLObject::setName);
+		attributeGetterFunctions.put("extension", SyncDLObject::getExtension);
+		attributeSetterBiConsumers.put("extension", (BiConsumer<SyncDLObject, String>)SyncDLObject::setExtension);
+		attributeGetterFunctions.put("mimeType", SyncDLObject::getMimeType);
+		attributeSetterBiConsumers.put("mimeType", (BiConsumer<SyncDLObject, String>)SyncDLObject::setMimeType);
+		attributeGetterFunctions.put("description", SyncDLObject::getDescription);
+		attributeSetterBiConsumers.put("description", (BiConsumer<SyncDLObject, String>)SyncDLObject::setDescription);
+		attributeGetterFunctions.put("changeLog", SyncDLObject::getChangeLog);
+		attributeSetterBiConsumers.put("changeLog", (BiConsumer<SyncDLObject, String>)SyncDLObject::setChangeLog);
+		attributeGetterFunctions.put("extraSettings", SyncDLObject::getExtraSettings);
+		attributeSetterBiConsumers.put("extraSettings", (BiConsumer<SyncDLObject, String>)SyncDLObject::setExtraSettings);
+		attributeGetterFunctions.put("version", SyncDLObject::getVersion);
+		attributeSetterBiConsumers.put("version", (BiConsumer<SyncDLObject, String>)SyncDLObject::setVersion);
+		attributeGetterFunctions.put("versionId", SyncDLObject::getVersionId);
+		attributeSetterBiConsumers.put("versionId", (BiConsumer<SyncDLObject, Long>)SyncDLObject::setVersionId);
+		attributeGetterFunctions.put("size", SyncDLObject::getSize);
+		attributeSetterBiConsumers.put("size", (BiConsumer<SyncDLObject, Long>)SyncDLObject::setSize);
+		attributeGetterFunctions.put("checksum", SyncDLObject::getChecksum);
+		attributeSetterBiConsumers.put("checksum", (BiConsumer<SyncDLObject, String>)SyncDLObject::setChecksum);
+		attributeGetterFunctions.put("event", SyncDLObject::getEvent);
+		attributeSetterBiConsumers.put("event", (BiConsumer<SyncDLObject, String>)SyncDLObject::setEvent);
+		attributeGetterFunctions.put("lanTokenKey", SyncDLObject::getLanTokenKey);
+		attributeSetterBiConsumers.put("lanTokenKey", (BiConsumer<SyncDLObject, String>)SyncDLObject::setLanTokenKey);
+		attributeGetterFunctions.put("lastPermissionChangeDate", SyncDLObject::getLastPermissionChangeDate);
+		attributeSetterBiConsumers.put("lastPermissionChangeDate", (BiConsumer<SyncDLObject, Date>)SyncDLObject::setLastPermissionChangeDate);
+		attributeGetterFunctions.put("lockExpirationDate", SyncDLObject::getLockExpirationDate);
+		attributeSetterBiConsumers.put("lockExpirationDate", (BiConsumer<SyncDLObject, Date>)SyncDLObject::setLockExpirationDate);
+		attributeGetterFunctions.put("lockUserId", SyncDLObject::getLockUserId);
+		attributeSetterBiConsumers.put("lockUserId", (BiConsumer<SyncDLObject, Long>)SyncDLObject::setLockUserId);
+		attributeGetterFunctions.put("lockUserName", SyncDLObject::getLockUserName);
+		attributeSetterBiConsumers.put("lockUserName", (BiConsumer<SyncDLObject, String>)SyncDLObject::setLockUserName);
+		attributeGetterFunctions.put("type", SyncDLObject::getType);
+		attributeSetterBiConsumers.put("type", (BiConsumer<SyncDLObject, String>)SyncDLObject::setType);
+		attributeGetterFunctions.put("typePK", SyncDLObject::getTypePK);
+		attributeSetterBiConsumers.put("typePK", (BiConsumer<SyncDLObject, Long>)SyncDLObject::setTypePK);
+		attributeGetterFunctions.put("typeUuid", SyncDLObject::getTypeUuid);
+		attributeSetterBiConsumers.put("typeUuid", (BiConsumer<SyncDLObject, String>)SyncDLObject::setTypeUuid);
 
-		Long userId = (Long)attributes.get("userId");
-
-		if (userId != null) {
-			setUserId(userId);
-		}
-
-		String userName = (String)attributes.get("userName");
-
-		if (userName != null) {
-			setUserName(userName);
-		}
-
-		Long createTime = (Long)attributes.get("createTime");
-
-		if (createTime != null) {
-			setCreateTime(createTime);
-		}
-
-		Long modifiedTime = (Long)attributes.get("modifiedTime");
-
-		if (modifiedTime != null) {
-			setModifiedTime(modifiedTime);
-		}
-
-		Long repositoryId = (Long)attributes.get("repositoryId");
-
-		if (repositoryId != null) {
-			setRepositoryId(repositoryId);
-		}
-
-		Long parentFolderId = (Long)attributes.get("parentFolderId");
-
-		if (parentFolderId != null) {
-			setParentFolderId(parentFolderId);
-		}
-
-		String treePath = (String)attributes.get("treePath");
-
-		if (treePath != null) {
-			setTreePath(treePath);
-		}
-
-		String name = (String)attributes.get("name");
-
-		if (name != null) {
-			setName(name);
-		}
-
-		String extension = (String)attributes.get("extension");
-
-		if (extension != null) {
-			setExtension(extension);
-		}
-
-		String mimeType = (String)attributes.get("mimeType");
-
-		if (mimeType != null) {
-			setMimeType(mimeType);
-		}
-
-		String description = (String)attributes.get("description");
-
-		if (description != null) {
-			setDescription(description);
-		}
-
-		String changeLog = (String)attributes.get("changeLog");
-
-		if (changeLog != null) {
-			setChangeLog(changeLog);
-		}
-
-		String extraSettings = (String)attributes.get("extraSettings");
-
-		if (extraSettings != null) {
-			setExtraSettings(extraSettings);
-		}
-
-		String version = (String)attributes.get("version");
-
-		if (version != null) {
-			setVersion(version);
-		}
-
-		Long versionId = (Long)attributes.get("versionId");
-
-		if (versionId != null) {
-			setVersionId(versionId);
-		}
-
-		Long size = (Long)attributes.get("size");
-
-		if (size != null) {
-			setSize(size);
-		}
-
-		String checksum = (String)attributes.get("checksum");
-
-		if (checksum != null) {
-			setChecksum(checksum);
-		}
-
-		String event = (String)attributes.get("event");
-
-		if (event != null) {
-			setEvent(event);
-		}
-
-		String lanTokenKey = (String)attributes.get("lanTokenKey");
-
-		if (lanTokenKey != null) {
-			setLanTokenKey(lanTokenKey);
-		}
-
-		Date lastPermissionChangeDate = (Date)attributes.get(
-				"lastPermissionChangeDate");
-
-		if (lastPermissionChangeDate != null) {
-			setLastPermissionChangeDate(lastPermissionChangeDate);
-		}
-
-		Date lockExpirationDate = (Date)attributes.get("lockExpirationDate");
-
-		if (lockExpirationDate != null) {
-			setLockExpirationDate(lockExpirationDate);
-		}
-
-		Long lockUserId = (Long)attributes.get("lockUserId");
-
-		if (lockUserId != null) {
-			setLockUserId(lockUserId);
-		}
-
-		String lockUserName = (String)attributes.get("lockUserName");
-
-		if (lockUserName != null) {
-			setLockUserName(lockUserName);
-		}
-
-		String type = (String)attributes.get("type");
-
-		if (type != null) {
-			setType(type);
-		}
-
-		Long typePK = (Long)attributes.get("typePK");
-
-		if (typePK != null) {
-			setTypePK(typePK);
-		}
-
-		String typeUuid = (String)attributes.get("typeUuid");
-
-		if (typeUuid != null) {
-			setTypeUuid(typeUuid);
-		}
+		_attributeGetterFunctions = Collections.unmodifiableMap(attributeGetterFunctions);
+		_attributeSetterBiConsumers = Collections.unmodifiableMap((Map)attributeSetterBiConsumers);
 	}
 
 	@JSON
@@ -1306,197 +1175,6 @@ public class SyncDLObjectModelImpl extends BaseModelImpl<SyncDLObject>
 		}
 
 		return syncDLObjectCacheModel;
-	}
-
-	@Override
-	public String toString() {
-		StringBundler sb = new StringBundler(57);
-
-		sb.append("{syncDLObjectId=");
-		sb.append(getSyncDLObjectId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
-		sb.append(", userId=");
-		sb.append(getUserId());
-		sb.append(", userName=");
-		sb.append(getUserName());
-		sb.append(", createTime=");
-		sb.append(getCreateTime());
-		sb.append(", modifiedTime=");
-		sb.append(getModifiedTime());
-		sb.append(", repositoryId=");
-		sb.append(getRepositoryId());
-		sb.append(", parentFolderId=");
-		sb.append(getParentFolderId());
-		sb.append(", treePath=");
-		sb.append(getTreePath());
-		sb.append(", name=");
-		sb.append(getName());
-		sb.append(", extension=");
-		sb.append(getExtension());
-		sb.append(", mimeType=");
-		sb.append(getMimeType());
-		sb.append(", description=");
-		sb.append(getDescription());
-		sb.append(", changeLog=");
-		sb.append(getChangeLog());
-		sb.append(", extraSettings=");
-		sb.append(getExtraSettings());
-		sb.append(", version=");
-		sb.append(getVersion());
-		sb.append(", versionId=");
-		sb.append(getVersionId());
-		sb.append(", size=");
-		sb.append(getSize());
-		sb.append(", checksum=");
-		sb.append(getChecksum());
-		sb.append(", event=");
-		sb.append(getEvent());
-		sb.append(", lanTokenKey=");
-		sb.append(getLanTokenKey());
-		sb.append(", lastPermissionChangeDate=");
-		sb.append(getLastPermissionChangeDate());
-		sb.append(", lockExpirationDate=");
-		sb.append(getLockExpirationDate());
-		sb.append(", lockUserId=");
-		sb.append(getLockUserId());
-		sb.append(", lockUserName=");
-		sb.append(getLockUserName());
-		sb.append(", type=");
-		sb.append(getType());
-		sb.append(", typePK=");
-		sb.append(getTypePK());
-		sb.append(", typeUuid=");
-		sb.append(getTypeUuid());
-		sb.append("}");
-
-		return sb.toString();
-	}
-
-	@Override
-	public String toXmlString() {
-		StringBundler sb = new StringBundler(88);
-
-		sb.append("<model><model-name>");
-		sb.append("com.liferay.sync.model.SyncDLObject");
-		sb.append("</model-name>");
-
-		sb.append(
-			"<column><column-name>syncDLObjectId</column-name><column-value><![CDATA[");
-		sb.append(getSyncDLObjectId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userId</column-name><column-value><![CDATA[");
-		sb.append(getUserId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userName</column-name><column-value><![CDATA[");
-		sb.append(getUserName());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>createTime</column-name><column-value><![CDATA[");
-		sb.append(getCreateTime());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>modifiedTime</column-name><column-value><![CDATA[");
-		sb.append(getModifiedTime());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>repositoryId</column-name><column-value><![CDATA[");
-		sb.append(getRepositoryId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>parentFolderId</column-name><column-value><![CDATA[");
-		sb.append(getParentFolderId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>treePath</column-name><column-value><![CDATA[");
-		sb.append(getTreePath());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>name</column-name><column-value><![CDATA[");
-		sb.append(getName());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>extension</column-name><column-value><![CDATA[");
-		sb.append(getExtension());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>mimeType</column-name><column-value><![CDATA[");
-		sb.append(getMimeType());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>description</column-name><column-value><![CDATA[");
-		sb.append(getDescription());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>changeLog</column-name><column-value><![CDATA[");
-		sb.append(getChangeLog());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>extraSettings</column-name><column-value><![CDATA[");
-		sb.append(getExtraSettings());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>version</column-name><column-value><![CDATA[");
-		sb.append(getVersion());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>versionId</column-name><column-value><![CDATA[");
-		sb.append(getVersionId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>size</column-name><column-value><![CDATA[");
-		sb.append(getSize());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>checksum</column-name><column-value><![CDATA[");
-		sb.append(getChecksum());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>event</column-name><column-value><![CDATA[");
-		sb.append(getEvent());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>lanTokenKey</column-name><column-value><![CDATA[");
-		sb.append(getLanTokenKey());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>lastPermissionChangeDate</column-name><column-value><![CDATA[");
-		sb.append(getLastPermissionChangeDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>lockExpirationDate</column-name><column-value><![CDATA[");
-		sb.append(getLockExpirationDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>lockUserId</column-name><column-value><![CDATA[");
-		sb.append(getLockUserId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>lockUserName</column-name><column-value><![CDATA[");
-		sb.append(getLockUserName());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>type</column-name><column-value><![CDATA[");
-		sb.append(getType());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>typePK</column-name><column-value><![CDATA[");
-		sb.append(getTypePK());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>typeUuid</column-name><column-value><![CDATA[");
-		sb.append(getTypeUuid());
-		sb.append("]]></column-value></column>");
-
-		sb.append("</model>");
-
-		return sb.toString();
 	}
 
 	private static final ClassLoader _classLoader = SyncDLObject.class.getClassLoader();

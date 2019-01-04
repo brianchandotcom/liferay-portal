@@ -20,8 +20,6 @@ import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * <p>
@@ -37,108 +35,6 @@ public class PowwowParticipantWrapper extends BaseModelWrapper<PowwowParticipant
 	implements PowwowParticipant, ModelWrapper<PowwowParticipant> {
 	public PowwowParticipantWrapper(PowwowParticipant powwowParticipant) {
 		super(powwowParticipant);
-	}
-
-	@Override
-	public Map<String, Object> getModelAttributes() {
-		Map<String, Object> attributes = new HashMap<String, Object>();
-
-		attributes.put("powwowParticipantId", getPowwowParticipantId());
-		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
-		attributes.put("userId", getUserId());
-		attributes.put("userName", getUserName());
-		attributes.put("createDate", getCreateDate());
-		attributes.put("modifiedDate", getModifiedDate());
-		attributes.put("powwowMeetingId", getPowwowMeetingId());
-		attributes.put("name", getName());
-		attributes.put("participantUserId", getParticipantUserId());
-		attributes.put("emailAddress", getEmailAddress());
-		attributes.put("type", getType());
-		attributes.put("status", getStatus());
-
-		return attributes;
-	}
-
-	@Override
-	public void setModelAttributes(Map<String, Object> attributes) {
-		Long powwowParticipantId = (Long)attributes.get("powwowParticipantId");
-
-		if (powwowParticipantId != null) {
-			setPowwowParticipantId(powwowParticipantId);
-		}
-
-		Long groupId = (Long)attributes.get("groupId");
-
-		if (groupId != null) {
-			setGroupId(groupId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
-		}
-
-		Long userId = (Long)attributes.get("userId");
-
-		if (userId != null) {
-			setUserId(userId);
-		}
-
-		String userName = (String)attributes.get("userName");
-
-		if (userName != null) {
-			setUserName(userName);
-		}
-
-		Date createDate = (Date)attributes.get("createDate");
-
-		if (createDate != null) {
-			setCreateDate(createDate);
-		}
-
-		Date modifiedDate = (Date)attributes.get("modifiedDate");
-
-		if (modifiedDate != null) {
-			setModifiedDate(modifiedDate);
-		}
-
-		Long powwowMeetingId = (Long)attributes.get("powwowMeetingId");
-
-		if (powwowMeetingId != null) {
-			setPowwowMeetingId(powwowMeetingId);
-		}
-
-		String name = (String)attributes.get("name");
-
-		if (name != null) {
-			setName(name);
-		}
-
-		Long participantUserId = (Long)attributes.get("participantUserId");
-
-		if (participantUserId != null) {
-			setParticipantUserId(participantUserId);
-		}
-
-		String emailAddress = (String)attributes.get("emailAddress");
-
-		if (emailAddress != null) {
-			setEmailAddress(emailAddress);
-		}
-
-		Integer type = (Integer)attributes.get("type");
-
-		if (type != null) {
-			setType(type);
-		}
-
-		Integer status = (Integer)attributes.get("status");
-
-		if (status != null) {
-			setStatus(status);
-		}
 	}
 
 	/**

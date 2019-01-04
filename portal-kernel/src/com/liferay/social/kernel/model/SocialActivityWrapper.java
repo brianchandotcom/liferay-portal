@@ -19,9 +19,6 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
-import java.util.HashMap;
-import java.util.Map;
-
 /**
  * <p>
  * This class is a wrapper for {@link SocialActivity}.
@@ -36,115 +33,6 @@ public class SocialActivityWrapper extends BaseModelWrapper<SocialActivity>
 	implements SocialActivity, ModelWrapper<SocialActivity> {
 	public SocialActivityWrapper(SocialActivity socialActivity) {
 		super(socialActivity);
-	}
-
-	@Override
-	public Map<String, Object> getModelAttributes() {
-		Map<String, Object> attributes = new HashMap<String, Object>();
-
-		attributes.put("activityId", getActivityId());
-		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
-		attributes.put("userId", getUserId());
-		attributes.put("createDate", getCreateDate());
-		attributes.put("activitySetId", getActivitySetId());
-		attributes.put("mirrorActivityId", getMirrorActivityId());
-		attributes.put("classNameId", getClassNameId());
-		attributes.put("classPK", getClassPK());
-		attributes.put("parentClassNameId", getParentClassNameId());
-		attributes.put("parentClassPK", getParentClassPK());
-		attributes.put("type", getType());
-		attributes.put("extraData", getExtraData());
-		attributes.put("receiverUserId", getReceiverUserId());
-
-		return attributes;
-	}
-
-	@Override
-	public void setModelAttributes(Map<String, Object> attributes) {
-		Long activityId = (Long)attributes.get("activityId");
-
-		if (activityId != null) {
-			setActivityId(activityId);
-		}
-
-		Long groupId = (Long)attributes.get("groupId");
-
-		if (groupId != null) {
-			setGroupId(groupId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
-		}
-
-		Long userId = (Long)attributes.get("userId");
-
-		if (userId != null) {
-			setUserId(userId);
-		}
-
-		Long createDate = (Long)attributes.get("createDate");
-
-		if (createDate != null) {
-			setCreateDate(createDate);
-		}
-
-		Long activitySetId = (Long)attributes.get("activitySetId");
-
-		if (activitySetId != null) {
-			setActivitySetId(activitySetId);
-		}
-
-		Long mirrorActivityId = (Long)attributes.get("mirrorActivityId");
-
-		if (mirrorActivityId != null) {
-			setMirrorActivityId(mirrorActivityId);
-		}
-
-		Long classNameId = (Long)attributes.get("classNameId");
-
-		if (classNameId != null) {
-			setClassNameId(classNameId);
-		}
-
-		Long classPK = (Long)attributes.get("classPK");
-
-		if (classPK != null) {
-			setClassPK(classPK);
-		}
-
-		Long parentClassNameId = (Long)attributes.get("parentClassNameId");
-
-		if (parentClassNameId != null) {
-			setParentClassNameId(parentClassNameId);
-		}
-
-		Long parentClassPK = (Long)attributes.get("parentClassPK");
-
-		if (parentClassPK != null) {
-			setParentClassPK(parentClassPK);
-		}
-
-		Integer type = (Integer)attributes.get("type");
-
-		if (type != null) {
-			setType(type);
-		}
-
-		String extraData = (String)attributes.get("extraData");
-
-		if (extraData != null) {
-			setExtraData(extraData);
-		}
-
-		Long receiverUserId = (Long)attributes.get("receiverUserId");
-
-		if (receiverUserId != null) {
-			setReceiverUserId(receiverUserId);
-		}
 	}
 
 	/**

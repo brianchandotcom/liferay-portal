@@ -19,8 +19,6 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 
-import com.liferay.petra.string.StringBundler;
-
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.CacheModel;
@@ -40,9 +38,13 @@ import java.io.Serializable;
 
 import java.sql.Types;
 
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * The base model implementation for the Subscription service. Represents a row in the &quot;Subscription&quot; database table, with each column mapped to a property of this class.
@@ -156,94 +158,47 @@ public class SubscriptionModelImpl extends BaseModelImpl<Subscription>
 	}
 
 	@Override
-	public Map<String, Object> getModelAttributes() {
-		Map<String, Object> attributes = new HashMap<String, Object>();
-
-		attributes.put("mvccVersion", getMvccVersion());
-		attributes.put("subscriptionId", getSubscriptionId());
-		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
-		attributes.put("userId", getUserId());
-		attributes.put("userName", getUserName());
-		attributes.put("createDate", getCreateDate());
-		attributes.put("modifiedDate", getModifiedDate());
-		attributes.put("classNameId", getClassNameId());
-		attributes.put("classPK", getClassPK());
-		attributes.put("frequency", getFrequency());
-
-		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
-		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
-
-		return attributes;
+	public Map<String, Function<Subscription, Object>> getAttributeGetterFunctions() {
+		return _attributeGetterFunctions;
 	}
 
 	@Override
-	public void setModelAttributes(Map<String, Object> attributes) {
-		Long mvccVersion = (Long)attributes.get("mvccVersion");
+	public Map<String, BiConsumer<Subscription, Object>> getAttributeSetterBiConsumers() {
+		return _attributeSetterBiConsumers;
+	}
 
-		if (mvccVersion != null) {
-			setMvccVersion(mvccVersion);
-		}
+	private static final Map<String, Function<Subscription, Object>> _attributeGetterFunctions;
+	private static final Map<String, BiConsumer<Subscription, Object>> _attributeSetterBiConsumers;
 
-		Long subscriptionId = (Long)attributes.get("subscriptionId");
+	static {
+		Map<String, Function<Subscription, Object>> attributeGetterFunctions = new LinkedHashMap<String, Function<Subscription, Object>>();
+		Map<String, BiConsumer<Subscription, ?>> attributeSetterBiConsumers = new LinkedHashMap<String, BiConsumer<Subscription, ?>>();
 
-		if (subscriptionId != null) {
-			setSubscriptionId(subscriptionId);
-		}
+		attributeGetterFunctions.put("mvccVersion", Subscription::getMvccVersion);
+		attributeSetterBiConsumers.put("mvccVersion", (BiConsumer<Subscription, Long>)Subscription::setMvccVersion);
+		attributeGetterFunctions.put("subscriptionId", Subscription::getSubscriptionId);
+		attributeSetterBiConsumers.put("subscriptionId", (BiConsumer<Subscription, Long>)Subscription::setSubscriptionId);
+		attributeGetterFunctions.put("groupId", Subscription::getGroupId);
+		attributeSetterBiConsumers.put("groupId", (BiConsumer<Subscription, Long>)Subscription::setGroupId);
+		attributeGetterFunctions.put("companyId", Subscription::getCompanyId);
+		attributeSetterBiConsumers.put("companyId", (BiConsumer<Subscription, Long>)Subscription::setCompanyId);
+		attributeGetterFunctions.put("userId", Subscription::getUserId);
+		attributeSetterBiConsumers.put("userId", (BiConsumer<Subscription, Long>)Subscription::setUserId);
+		attributeGetterFunctions.put("userName", Subscription::getUserName);
+		attributeSetterBiConsumers.put("userName", (BiConsumer<Subscription, String>)Subscription::setUserName);
+		attributeGetterFunctions.put("createDate", Subscription::getCreateDate);
+		attributeSetterBiConsumers.put("createDate", (BiConsumer<Subscription, Date>)Subscription::setCreateDate);
+		attributeGetterFunctions.put("modifiedDate", Subscription::getModifiedDate);
+		attributeSetterBiConsumers.put("modifiedDate", (BiConsumer<Subscription, Date>)Subscription::setModifiedDate);
+		attributeGetterFunctions.put("classNameId", Subscription::getClassNameId);
+		attributeSetterBiConsumers.put("classNameId", (BiConsumer<Subscription, Long>)Subscription::setClassNameId);
+		attributeGetterFunctions.put("classPK", Subscription::getClassPK);
+		attributeSetterBiConsumers.put("classPK", (BiConsumer<Subscription, Long>)Subscription::setClassPK);
+		attributeGetterFunctions.put("frequency", Subscription::getFrequency);
+		attributeSetterBiConsumers.put("frequency", (BiConsumer<Subscription, String>)Subscription::setFrequency);
 
-		Long groupId = (Long)attributes.get("groupId");
-
-		if (groupId != null) {
-			setGroupId(groupId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
-		}
-
-		Long userId = (Long)attributes.get("userId");
-
-		if (userId != null) {
-			setUserId(userId);
-		}
-
-		String userName = (String)attributes.get("userName");
-
-		if (userName != null) {
-			setUserName(userName);
-		}
-
-		Date createDate = (Date)attributes.get("createDate");
-
-		if (createDate != null) {
-			setCreateDate(createDate);
-		}
-
-		Date modifiedDate = (Date)attributes.get("modifiedDate");
-
-		if (modifiedDate != null) {
-			setModifiedDate(modifiedDate);
-		}
-
-		Long classNameId = (Long)attributes.get("classNameId");
-
-		if (classNameId != null) {
-			setClassNameId(classNameId);
-		}
-
-		Long classPK = (Long)attributes.get("classPK");
-
-		if (classPK != null) {
-			setClassPK(classPK);
-		}
-
-		String frequency = (String)attributes.get("frequency");
-
-		if (frequency != null) {
-			setFrequency(frequency);
-		}
+		_attributeGetterFunctions = Collections.unmodifiableMap(attributeGetterFunctions);
+		_attributeSetterBiConsumers = Collections.unmodifiableMap((Map)attributeSetterBiConsumers);
 	}
 
 	@Override
@@ -650,95 +605,6 @@ public class SubscriptionModelImpl extends BaseModelImpl<Subscription>
 		}
 
 		return subscriptionCacheModel;
-	}
-
-	@Override
-	public String toString() {
-		StringBundler sb = new StringBundler(23);
-
-		sb.append("{mvccVersion=");
-		sb.append(getMvccVersion());
-		sb.append(", subscriptionId=");
-		sb.append(getSubscriptionId());
-		sb.append(", groupId=");
-		sb.append(getGroupId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
-		sb.append(", userId=");
-		sb.append(getUserId());
-		sb.append(", userName=");
-		sb.append(getUserName());
-		sb.append(", createDate=");
-		sb.append(getCreateDate());
-		sb.append(", modifiedDate=");
-		sb.append(getModifiedDate());
-		sb.append(", classNameId=");
-		sb.append(getClassNameId());
-		sb.append(", classPK=");
-		sb.append(getClassPK());
-		sb.append(", frequency=");
-		sb.append(getFrequency());
-		sb.append("}");
-
-		return sb.toString();
-	}
-
-	@Override
-	public String toXmlString() {
-		StringBundler sb = new StringBundler(37);
-
-		sb.append("<model><model-name>");
-		sb.append("com.liferay.portal.kernel.model.Subscription");
-		sb.append("</model-name>");
-
-		sb.append(
-			"<column><column-name>mvccVersion</column-name><column-value><![CDATA[");
-		sb.append(getMvccVersion());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>subscriptionId</column-name><column-value><![CDATA[");
-		sb.append(getSubscriptionId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>groupId</column-name><column-value><![CDATA[");
-		sb.append(getGroupId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userId</column-name><column-value><![CDATA[");
-		sb.append(getUserId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userName</column-name><column-value><![CDATA[");
-		sb.append(getUserName());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>createDate</column-name><column-value><![CDATA[");
-		sb.append(getCreateDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>modifiedDate</column-name><column-value><![CDATA[");
-		sb.append(getModifiedDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>classNameId</column-name><column-value><![CDATA[");
-		sb.append(getClassNameId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>classPK</column-name><column-value><![CDATA[");
-		sb.append(getClassPK());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>frequency</column-name><column-value><![CDATA[");
-		sb.append(getFrequency());
-		sb.append("]]></column-value></column>");
-
-		sb.append("</model>");
-
-		return sb.toString();
 	}
 
 	private static final ClassLoader _classLoader = Subscription.class.getClassLoader();

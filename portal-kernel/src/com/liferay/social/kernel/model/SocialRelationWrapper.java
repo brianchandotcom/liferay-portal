@@ -19,9 +19,6 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
-import java.util.HashMap;
-import java.util.Map;
-
 /**
  * <p>
  * This class is a wrapper for {@link SocialRelation}.
@@ -36,66 +33,6 @@ public class SocialRelationWrapper extends BaseModelWrapper<SocialRelation>
 	implements SocialRelation, ModelWrapper<SocialRelation> {
 	public SocialRelationWrapper(SocialRelation socialRelation) {
 		super(socialRelation);
-	}
-
-	@Override
-	public Map<String, Object> getModelAttributes() {
-		Map<String, Object> attributes = new HashMap<String, Object>();
-
-		attributes.put("uuid", getUuid());
-		attributes.put("relationId", getRelationId());
-		attributes.put("companyId", getCompanyId());
-		attributes.put("createDate", getCreateDate());
-		attributes.put("userId1", getUserId1());
-		attributes.put("userId2", getUserId2());
-		attributes.put("type", getType());
-
-		return attributes;
-	}
-
-	@Override
-	public void setModelAttributes(Map<String, Object> attributes) {
-		String uuid = (String)attributes.get("uuid");
-
-		if (uuid != null) {
-			setUuid(uuid);
-		}
-
-		Long relationId = (Long)attributes.get("relationId");
-
-		if (relationId != null) {
-			setRelationId(relationId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
-		}
-
-		Long createDate = (Long)attributes.get("createDate");
-
-		if (createDate != null) {
-			setCreateDate(createDate);
-		}
-
-		Long userId1 = (Long)attributes.get("userId1");
-
-		if (userId1 != null) {
-			setUserId1(userId1);
-		}
-
-		Long userId2 = (Long)attributes.get("userId2");
-
-		if (userId2 != null) {
-			setUserId2(userId2);
-		}
-
-		Integer type = (Integer)attributes.get("type");
-
-		if (type != null) {
-			setType(type);
-		}
 	}
 
 	/**

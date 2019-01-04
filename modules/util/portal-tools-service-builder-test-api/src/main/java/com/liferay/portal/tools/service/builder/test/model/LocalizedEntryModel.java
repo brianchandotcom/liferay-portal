@@ -26,6 +26,8 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import java.io.Serializable;
 
 import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * The base model interface for the LocalizedEntry service. Represents a row in the &quot;LocalizedEntry&quot; database table, with each column mapped to a property of this class.
@@ -112,6 +114,10 @@ public interface LocalizedEntryModel extends BaseModel<LocalizedEntry> {
 	public String getContentMapAsXML();
 
 	public Map<String, String> getLanguageIdToContentMap();
+
+	public Map<String, Function<LocalizedEntry, Object>> getAttributeGetterFunctions();
+
+	public Map<String, BiConsumer<LocalizedEntry, Object>> getAttributeSetterBiConsumers();
 
 	@Override
 	public boolean isNew();

@@ -18,9 +18,6 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
-import java.util.HashMap;
-import java.util.Map;
-
 /**
  * <p>
  * This class is a wrapper for {@link PasswordPolicyRel}.
@@ -35,59 +32,6 @@ public class PasswordPolicyRelWrapper extends BaseModelWrapper<PasswordPolicyRel
 	implements PasswordPolicyRel, ModelWrapper<PasswordPolicyRel> {
 	public PasswordPolicyRelWrapper(PasswordPolicyRel passwordPolicyRel) {
 		super(passwordPolicyRel);
-	}
-
-	@Override
-	public Map<String, Object> getModelAttributes() {
-		Map<String, Object> attributes = new HashMap<String, Object>();
-
-		attributes.put("mvccVersion", getMvccVersion());
-		attributes.put("passwordPolicyRelId", getPasswordPolicyRelId());
-		attributes.put("companyId", getCompanyId());
-		attributes.put("passwordPolicyId", getPasswordPolicyId());
-		attributes.put("classNameId", getClassNameId());
-		attributes.put("classPK", getClassPK());
-
-		return attributes;
-	}
-
-	@Override
-	public void setModelAttributes(Map<String, Object> attributes) {
-		Long mvccVersion = (Long)attributes.get("mvccVersion");
-
-		if (mvccVersion != null) {
-			setMvccVersion(mvccVersion);
-		}
-
-		Long passwordPolicyRelId = (Long)attributes.get("passwordPolicyRelId");
-
-		if (passwordPolicyRelId != null) {
-			setPasswordPolicyRelId(passwordPolicyRelId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
-		}
-
-		Long passwordPolicyId = (Long)attributes.get("passwordPolicyId");
-
-		if (passwordPolicyId != null) {
-			setPasswordPolicyId(passwordPolicyId);
-		}
-
-		Long classNameId = (Long)attributes.get("classNameId");
-
-		if (classNameId != null) {
-			setClassNameId(classNameId);
-		}
-
-		Long classPK = (Long)attributes.get("classPK");
-
-		if (classPK != null) {
-			setClassPK(classPK);
-		}
 	}
 
 	/**

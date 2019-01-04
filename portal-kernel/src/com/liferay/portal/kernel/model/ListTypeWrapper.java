@@ -18,9 +18,6 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
-import java.util.HashMap;
-import java.util.Map;
-
 /**
  * <p>
  * This class is a wrapper for {@link ListType}.
@@ -35,45 +32,6 @@ public class ListTypeWrapper extends BaseModelWrapper<ListType>
 	implements ListType, ModelWrapper<ListType> {
 	public ListTypeWrapper(ListType listType) {
 		super(listType);
-	}
-
-	@Override
-	public Map<String, Object> getModelAttributes() {
-		Map<String, Object> attributes = new HashMap<String, Object>();
-
-		attributes.put("mvccVersion", getMvccVersion());
-		attributes.put("listTypeId", getListTypeId());
-		attributes.put("name", getName());
-		attributes.put("type", getType());
-
-		return attributes;
-	}
-
-	@Override
-	public void setModelAttributes(Map<String, Object> attributes) {
-		Long mvccVersion = (Long)attributes.get("mvccVersion");
-
-		if (mvccVersion != null) {
-			setMvccVersion(mvccVersion);
-		}
-
-		Long listTypeId = (Long)attributes.get("listTypeId");
-
-		if (listTypeId != null) {
-			setListTypeId(listTypeId);
-		}
-
-		String name = (String)attributes.get("name");
-
-		if (name != null) {
-			setName(name);
-		}
-
-		String type = (String)attributes.get("type");
-
-		if (type != null) {
-			setType(type);
-		}
 	}
 
 	/**

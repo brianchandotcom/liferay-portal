@@ -32,8 +32,6 @@ import com.nimbusds.openid.connect.sdk.claims.UserInfo;
 import java.util.Calendar;
 import java.util.Locale;
 
-import javax.mail.internet.InternetAddress;
-
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -48,9 +46,7 @@ public class OpenIdConnectUserInfoProcessorImpl
 	public long processUserInfo(UserInfo userInfo, long companyId)
 		throws PortalException {
 
-		InternetAddress internetAddress = userInfo.getEmail();
-
-		String emailAddress = internetAddress.getAddress();
+		String emailAddress = userInfo.getEmailAddress();
 
 		User user = _userLocalService.fetchUserByEmailAddress(
 			companyId, emailAddress);

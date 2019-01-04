@@ -129,6 +129,12 @@ definition {
 		);
 	}
 
+	macro submitForPublication {
+		Button.clickSubmitForPublication();
+
+		Alert.viewSuccessMessage();
+	}
+
 	macro update {
 		Button.clickUpdate();
 

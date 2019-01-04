@@ -62,6 +62,154 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-86221. A user can preview a draft status web content article within its display page."
+	@priority = "5"
+	test PreviewDraftWebContent {
+		DisplayPagesAdmin.markDisplayPageAsDefault(rowEntry = "Display Page Name");
+
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		WebContentNavigator.gotoAddCP();
+
+		WebContent.addCP(
+			webContentContent = "Webcontent Content",
+			webContentTitle = "Webcontent Title"
+		);
+
+		PortletEntry.saveAsDraft();
+
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "Preview Draft",
+			rowEntry = "Webcontent Title"
+		);
+
+		AssertTextEquals(
+			locator1 = "WCPreview#PREVIEW_TITLE",
+			value1 = "Webcontent Title"
+		);
+
+		IFrame.selectModalFrame();
+
+		AssertVisible(
+			locator1 = "Fragment#FRAGMENT",
+			key_content = "Webcontent Title",
+			key_fragmentClass = "header",
+			key_position = "1"
+		);
+
+		AssertVisible(
+			locator1 = "Fragment#FRAGMENT",
+			key_content = "Webcontent Content",
+			key_fragmentClass = "rich-text",
+			key_position = "2"
+		);
+
+		IFrame.selectTopFrame();
+	}
+
+	@description = "This is a test for LPS-86221. A user can preview a pending status web content article within its display page."
+	@priority = "5"
+	test PreviewPendingWebContent {
+		DisplayPagesAdmin.markDisplayPageAsDefault(rowEntry = "Display Page Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Site Administration",
+			portlet = "Workflow"
+		);
+
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "Web Content Article"
+		);
+
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		WebContentNavigator.gotoAddCP();
+
+		WebContent.addCP(
+			webContentContent = "Webcontent Content",
+			webContentTitle = "Webcontent Title"
+		);
+
+		PortletEntry.submitForPublication();
+
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "Preview",
+			rowEntry = "Webcontent Title"
+		);
+
+		AssertTextEquals(
+			locator1 = "WCPreview#PREVIEW_TITLE",
+			value1 = "Webcontent Title"
+		);
+
+		IFrame.selectModalFrame();
+
+		AssertVisible(
+			locator1 = "Fragment#FRAGMENT",
+			key_content = "Webcontent Title",
+			key_fragmentClass = "header",
+			key_position = "1"
+		);
+
+		AssertVisible(
+			locator1 = "Fragment#FRAGMENT",
+			key_content = "Webcontent Content",
+			key_fragmentClass = "rich-text",
+			key_position = "2"
+		);
+
+		IFrame.selectTopFrame();
+	}
+
+	@description = "This is a test for LPS-86221. A user can preview a published web content article within its display page."
+	@priority = "5"
+	test PreviewPublishedWebContent {
+		DisplayPagesAdmin.markDisplayPageAsDefault(rowEntry = "Display Page Name");
+
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		WebContentNavigator.gotoAddCP();
+
+		WebContent.addCP(
+			webContentContent = "Webcontent Content",
+			webContentTitle = "Webcontent Title"
+		);
+
+		PortletEntry.publish();
+
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "Preview",
+			rowEntry = "Webcontent Title"
+		);
+
+		AssertTextEquals(
+			locator1 = "WCPreview#PREVIEW_TITLE",
+			value1 = "Webcontent Title"
+		);
+
+		IFrame.selectModalFrame();
+
+		AssertVisible(
+			locator1 = "Fragment#FRAGMENT",
+			key_content = "Webcontent Title",
+			key_fragmentClass = "header",
+			key_position = "1"
+		);
+
+		AssertVisible(
+			locator1 = "Fragment#FRAGMENT",
+			key_content = "Webcontent Content",
+			key_fragmentClass = "rich-text",
+			key_position = "2"
+		);
+
+		IFrame.selectTopFrame();
+	}
+
 	@description = "When a display page is marked as default, associated assets will be displayed through the display page by default without need for additional configuration."
 	@priority = "5"
 	test ViewDisplayPageMarkedAsDefault {

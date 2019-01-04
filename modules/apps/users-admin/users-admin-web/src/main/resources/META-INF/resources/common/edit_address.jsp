@@ -98,38 +98,12 @@ if (addressId > 0L) {
 
 <aui:script use="liferay-form">
 	const addressCountry = document.getElementById('<portlet:namespace />addressCountryId');
+	const addressZipRequiredWrapper = document.getElementById('addressZipRequiredWrapper');
+	const formValidator = Liferay.Form.get('<portlet:namespace />fm').formValidator;
 
-	if (addressCountry) {
-		addressCountry.addEventListener('change', function(event) {
-			if (addressCountry.value && (addressCountry.value !== '0')) {
-				Liferay.Service(
-					'/country/get-country',
-					{
-						countryId: addressCountry.value
-					},
-					function(response, err) {
-						if (err) {
-							console.error(err);
-						}
-						else {
-							updateAdressZipRequired(response.zipRequired);
-						}
-					}
-				);
-			}
-			else {
-				updateAdressZipRequired(false);
-			}
-		});
-	}
+	const rules = formValidator._getAttr('rules');
 
 	function updateAdressZipRequired(required) {
-		const addressZipRequiredWrapper = document.getElementById('addressZipRequiredWrapper');
-
-		const formValidator = Liferay.Form.get('<portlet:namespace />fm').formValidator;
-
-		const rules = formValidator._getAttr('rules');
-
 		if (required) {
 			addressZipRequiredWrapper.removeAttribute('hidden');
 
@@ -140,5 +114,41 @@ if (addressId > 0L) {
 
 			rules['<portlet:namespace />addressZip'] = null;
 		}
+	}
+
+	function checkCountry(countryId) {
+		Liferay.Service(
+			'/country/get-country',
+			{
+				countryId: countryId
+			},
+			function(response, err) {
+				if (err) {
+					console.error(err);
+				}
+				else {
+					updateAdressZipRequired(response.zipRequired);
+				}
+			}
+		);
+	}
+
+	function handleSelectChange(event) {
+		const value = Number(event.currentTarget.value);
+
+		if (value > 0) {
+			checkCountry(value);
+		}
+		else {
+			updateAdressZipRequired(false);
+		}
+	}
+
+	if (addressCountry) {
+		addressCountry.addEventListener('change', handleSelectChange);
+
+		<c:if test="<%= countryId > 0 %>">
+			checkCountry(<%= countryId %>);
+		</c:if>
 	}
 </aui:script>

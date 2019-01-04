@@ -14,17 +14,24 @@
 
 package com.liferay.portal.dao.orm.hibernate;
 
+import com.liferay.petra.concurrent.ConcurrentReferenceValueHashMap;
+import com.liferay.petra.memory.FinalizeManager;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.impl.BaseModelImpl;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TextFormatter;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Member;
 import java.lang.reflect.Method;
 
 import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 import org.hibernate.PropertyAccessException;
 import org.hibernate.PropertyNotFoundException;
@@ -43,6 +50,13 @@ public class LiferayPropertyAccessor extends BasicPropertyAccessor {
 	@SuppressWarnings("unchecked")
 	public Getter getGetter(Class clazz, String propertyName)
 		throws PropertyNotFoundException {
+
+		LiferayPropertyMutator liferayPropertyMutator =
+			_getLiferayPropertyMutator(clazz, propertyName);
+
+		if (liferayPropertyMutator != null) {
+			return liferayPropertyMutator;
+		}
 
 		String methodNameSuffix = TextFormatter.format(
 			propertyName, TextFormatter.G);
@@ -72,6 +86,13 @@ public class LiferayPropertyAccessor extends BasicPropertyAccessor {
 	public Setter getSetter(Class clazz, String propertyName)
 		throws PropertyNotFoundException {
 
+		LiferayPropertyMutator liferayPropertyMutator =
+			_getLiferayPropertyMutator(clazz, propertyName);
+
+		if (liferayPropertyMutator != null) {
+			return liferayPropertyMutator;
+		}
+
 		String methodNameSuffix = TextFormatter.format(
 			propertyName, TextFormatter.G);
 
@@ -99,8 +120,102 @@ public class LiferayPropertyAccessor extends BasicPropertyAccessor {
 		}
 	}
 
+	private LiferayPropertyMutator _getLiferayPropertyMutator(
+		Class clazz, String name) {
+
+		ModelMutators modelMutators = _modelMutators.computeIfAbsent(
+			clazz,
+			modelClass -> {
+				if (!BaseModelImpl.class.isAssignableFrom(modelClass)) {
+					return new ModelMutators(null, null);
+				}
+
+				Class<?> superClass = modelClass.getSuperclass();
+
+				while (BaseModelImpl.class != superClass) {
+					modelClass = superClass;
+
+					superClass = modelClass.getSuperclass();
+				}
+
+				Map<String, Function<Object, Object>> attributeGetters = null;
+				Map<String, BiConsumer<Object, Object>> attributeSetters = null;
+
+				try {
+					Field gettersField = modelClass.getDeclaredField(
+						"_attributeGetters");
+
+					gettersField.setAccessible(true);
+
+					attributeGetters =
+						(Map<String, Function<Object, Object>>)
+							gettersField.get(null);
+
+					Field settersField = modelClass.getDeclaredField(
+						"_attributeSetters");
+
+					settersField.setAccessible(true);
+
+					attributeSetters =
+						(Map<String, BiConsumer<Object, Object>>)
+							settersField.get(null);
+				}
+				catch (ReflectiveOperationException roe) {
+					if (_log.isDebugEnabled()) {
+						_log.debug(roe, roe);
+					}
+				}
+
+				return new ModelMutators(attributeGetters, attributeSetters);
+			});
+
+		Map<String, Function<Object, Object>> attributeGetters =
+			modelMutators._attributeGetters;
+
+		Map<String, BiConsumer<Object, Object>> attributeSetters =
+			modelMutators._attributeSetters;
+
+		if (attributeSetters == null) {
+			return null;
+		}
+
+		Function<Object, Object> getterFunction = attributeGetters.get(name);
+
+		if (getterFunction == null) {
+
+			// See CamelCasePropertyAccessor
+
+			for (Map.Entry<String, Function<Object, Object>> entry :
+					attributeGetters.entrySet()) {
+
+				String getterName = entry.getKey();
+
+				if (StringUtil.equalsIgnoreCase(name, getterName)) {
+					getterFunction = entry.getValue();
+
+					name = getterName;
+
+					break;
+				}
+			}
+		}
+
+		BiConsumer<Object, Object> setterBiConsumer = attributeSetters.get(
+			name);
+
+		if ((getterFunction == null) || (setterBiConsumer == null)) {
+			return null;
+		}
+
+		return new LiferayPropertyMutator(getterFunction, setterBiConsumer);
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		LiferayPropertyAccessor.class);
+
+	private static final Map<Class, ModelMutators> _modelMutators =
+		new ConcurrentReferenceValueHashMap<>(
+			FinalizeManager.WEAK_REFERENCE_FACTORY);
 
 	private static class LiferayPropertyGetter implements Getter {
 
@@ -157,6 +272,61 @@ public class LiferayPropertyAccessor extends BasicPropertyAccessor {
 
 	}
 
+	private static class LiferayPropertyMutator implements Getter, Setter {
+
+		@Override
+		public Object get(Object target) {
+			return _getterFunction.apply(target);
+		}
+
+		@Override
+		public Object getForInsert(
+			Object target, Map mergeMap,
+			SessionImplementor sessionImplementor) {
+
+			return _getterFunction.apply(target);
+		}
+
+		@Override
+		public Member getMember() {
+			return null;
+		}
+
+		@Override
+		public Method getMethod() {
+			return null;
+		}
+
+		@Override
+		public String getMethodName() {
+			return null;
+		}
+
+		@Override
+		public Class getReturnType() {
+			return null;
+		}
+
+		@Override
+		public void set(
+			Object target, Object value, SessionFactoryImplementor factory) {
+
+			_setterBiConsumer.accept(target, value);
+		}
+
+		private LiferayPropertyMutator(
+			Function<Object, Object> getterFunction,
+			BiConsumer<Object, Object> setterBiConsumer) {
+
+			_getterFunction = getterFunction;
+			_setterBiConsumer = setterBiConsumer;
+		}
+
+		private final Function<Object, Object> _getterFunction;
+		private final BiConsumer<Object, Object> _setterBiConsumer;
+
+	}
+
 	private static class LiferayPropertySetter implements Setter {
 
 		@Override
@@ -194,6 +364,21 @@ public class LiferayPropertyAccessor extends BasicPropertyAccessor {
 
 		private final Method _method;
 		private final String _propertyName;
+
+	}
+
+	private static class ModelMutators {
+
+		private ModelMutators(
+			Map<String, Function<Object, Object>> attributeGetters,
+			Map<String, BiConsumer<Object, Object>> attributeSetters) {
+
+			_attributeGetters = attributeGetters;
+			_attributeSetters = attributeSetters;
+		}
+
+		private final Map<String, Function<Object, Object>> _attributeGetters;
+		private final Map<String, BiConsumer<Object, Object>> _attributeSetters;
 
 	}
 

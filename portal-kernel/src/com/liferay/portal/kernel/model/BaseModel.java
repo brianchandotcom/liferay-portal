@@ -22,6 +22,8 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import java.io.Serializable;
 
 import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * The base interface for all model classes. This interface should never need to
@@ -40,6 +42,10 @@ public interface BaseModel<T>
 	 * @return the shallow clone of this model instance
 	 */
 	public Object clone();
+
+	public Map<String, Function<T, Object>> getAttributeGetters();
+
+	public Map<String, BiConsumer<T, Object>> getAttributeSetters();
 
 	/**
 	 * Returns the expando bridge for this model instance.

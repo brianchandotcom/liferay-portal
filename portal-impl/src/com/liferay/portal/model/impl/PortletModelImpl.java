@@ -19,8 +19,6 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 
-import com.liferay.petra.string.StringBundler;
-
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.model.CacheModel;
@@ -38,9 +36,13 @@ import java.io.Serializable;
 import java.sql.Types;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * The base model implementation for the Portlet service. Represents a row in the &quot;Portlet&quot; database table, with each column mapped to a property of this class.
@@ -184,59 +186,37 @@ public class PortletModelImpl extends BaseModelImpl<Portlet>
 	}
 
 	@Override
-	public Map<String, Object> getModelAttributes() {
-		Map<String, Object> attributes = new HashMap<String, Object>();
-
-		attributes.put("mvccVersion", getMvccVersion());
-		attributes.put("id", getId());
-		attributes.put("companyId", getCompanyId());
-		attributes.put("portletId", getPortletId());
-		attributes.put("roles", getRoles());
-		attributes.put("active", isActive());
-
-		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
-		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
-
-		return attributes;
+	public Map<String, Function<Portlet, Object>> getAttributeGetterFunctions() {
+		return _attributeGetterFunctions;
 	}
 
 	@Override
-	public void setModelAttributes(Map<String, Object> attributes) {
-		Long mvccVersion = (Long)attributes.get("mvccVersion");
+	public Map<String, BiConsumer<Portlet, Object>> getAttributeSetterBiConsumers() {
+		return _attributeSetterBiConsumers;
+	}
 
-		if (mvccVersion != null) {
-			setMvccVersion(mvccVersion);
-		}
+	private static final Map<String, Function<Portlet, Object>> _attributeGetterFunctions;
+	private static final Map<String, BiConsumer<Portlet, Object>> _attributeSetterBiConsumers;
 
-		Long id = (Long)attributes.get("id");
+	static {
+		Map<String, Function<Portlet, Object>> attributeGetterFunctions = new LinkedHashMap<String, Function<Portlet, Object>>();
+		Map<String, BiConsumer<Portlet, ?>> attributeSetterBiConsumers = new LinkedHashMap<String, BiConsumer<Portlet, ?>>();
 
-		if (id != null) {
-			setId(id);
-		}
+		attributeGetterFunctions.put("mvccVersion", Portlet::getMvccVersion);
+		attributeSetterBiConsumers.put("mvccVersion", (BiConsumer<Portlet, Long>)Portlet::setMvccVersion);
+		attributeGetterFunctions.put("id", Portlet::getId);
+		attributeSetterBiConsumers.put("id", (BiConsumer<Portlet, Long>)Portlet::setId);
+		attributeGetterFunctions.put("companyId", Portlet::getCompanyId);
+		attributeSetterBiConsumers.put("companyId", (BiConsumer<Portlet, Long>)Portlet::setCompanyId);
+		attributeGetterFunctions.put("portletId", Portlet::getPortletId);
+		attributeSetterBiConsumers.put("portletId", (BiConsumer<Portlet, String>)Portlet::setPortletId);
+		attributeGetterFunctions.put("roles", Portlet::getRoles);
+		attributeSetterBiConsumers.put("roles", (BiConsumer<Portlet, String>)Portlet::setRoles);
+		attributeGetterFunctions.put("active", Portlet::getActive);
+		attributeSetterBiConsumers.put("active", (BiConsumer<Portlet, Boolean>)Portlet::setActive);
 
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
-		}
-
-		String portletId = (String)attributes.get("portletId");
-
-		if (portletId != null) {
-			setPortletId(portletId);
-		}
-
-		String roles = (String)attributes.get("roles");
-
-		if (roles != null) {
-			setRoles(roles);
-		}
-
-		Boolean active = (Boolean)attributes.get("active");
-
-		if (active != null) {
-			setActive(active);
-		}
+		_attributeGetterFunctions = Collections.unmodifiableMap(attributeGetterFunctions);
+		_attributeSetterBiConsumers = Collections.unmodifiableMap((Map)attributeSetterBiConsumers);
 	}
 
 	@JSON
@@ -480,65 +460,6 @@ public class PortletModelImpl extends BaseModelImpl<Portlet>
 		portletCacheModel.active = isActive();
 
 		return portletCacheModel;
-	}
-
-	@Override
-	public String toString() {
-		StringBundler sb = new StringBundler(13);
-
-		sb.append("{mvccVersion=");
-		sb.append(getMvccVersion());
-		sb.append(", id=");
-		sb.append(getId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
-		sb.append(", portletId=");
-		sb.append(getPortletId());
-		sb.append(", roles=");
-		sb.append(getRoles());
-		sb.append(", active=");
-		sb.append(isActive());
-		sb.append("}");
-
-		return sb.toString();
-	}
-
-	@Override
-	public String toXmlString() {
-		StringBundler sb = new StringBundler(22);
-
-		sb.append("<model><model-name>");
-		sb.append("com.liferay.portal.kernel.model.Portlet");
-		sb.append("</model-name>");
-
-		sb.append(
-			"<column><column-name>mvccVersion</column-name><column-value><![CDATA[");
-		sb.append(getMvccVersion());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>id</column-name><column-value><![CDATA[");
-		sb.append(getId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>portletId</column-name><column-value><![CDATA[");
-		sb.append(getPortletId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>roles</column-name><column-value><![CDATA[");
-		sb.append(getRoles());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>active</column-name><column-value><![CDATA[");
-		sb.append(isActive());
-		sb.append("]]></column-value></column>");
-
-		sb.append("</model>");
-
-		return sb.toString();
 	}
 
 	private static final ClassLoader _classLoader = Portlet.class.getClassLoader();

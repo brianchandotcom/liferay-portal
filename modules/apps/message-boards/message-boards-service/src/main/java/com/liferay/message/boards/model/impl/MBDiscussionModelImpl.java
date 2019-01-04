@@ -24,8 +24,6 @@ import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.message.boards.model.MBDiscussion;
 import com.liferay.message.boards.model.MBDiscussionModel;
 
-import com.liferay.petra.string.StringBundler;
-
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.CacheModel;
@@ -43,9 +41,13 @@ import java.io.Serializable;
 
 import java.sql.Types;
 
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * The base model implementation for the MBDiscussion service. Represents a row in the &quot;MBDiscussion&quot; database table, with each column mapped to a property of this class.
@@ -160,101 +162,49 @@ public class MBDiscussionModelImpl extends BaseModelImpl<MBDiscussion>
 	}
 
 	@Override
-	public Map<String, Object> getModelAttributes() {
-		Map<String, Object> attributes = new HashMap<String, Object>();
-
-		attributes.put("uuid", getUuid());
-		attributes.put("discussionId", getDiscussionId());
-		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
-		attributes.put("userId", getUserId());
-		attributes.put("userName", getUserName());
-		attributes.put("createDate", getCreateDate());
-		attributes.put("modifiedDate", getModifiedDate());
-		attributes.put("classNameId", getClassNameId());
-		attributes.put("classPK", getClassPK());
-		attributes.put("threadId", getThreadId());
-		attributes.put("lastPublishDate", getLastPublishDate());
-
-		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
-		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
-
-		return attributes;
+	public Map<String, Function<MBDiscussion, Object>> getAttributeGetterFunctions() {
+		return _attributeGetterFunctions;
 	}
 
 	@Override
-	public void setModelAttributes(Map<String, Object> attributes) {
-		String uuid = (String)attributes.get("uuid");
+	public Map<String, BiConsumer<MBDiscussion, Object>> getAttributeSetterBiConsumers() {
+		return _attributeSetterBiConsumers;
+	}
 
-		if (uuid != null) {
-			setUuid(uuid);
-		}
+	private static final Map<String, Function<MBDiscussion, Object>> _attributeGetterFunctions;
+	private static final Map<String, BiConsumer<MBDiscussion, Object>> _attributeSetterBiConsumers;
 
-		Long discussionId = (Long)attributes.get("discussionId");
+	static {
+		Map<String, Function<MBDiscussion, Object>> attributeGetterFunctions = new LinkedHashMap<String, Function<MBDiscussion, Object>>();
+		Map<String, BiConsumer<MBDiscussion, ?>> attributeSetterBiConsumers = new LinkedHashMap<String, BiConsumer<MBDiscussion, ?>>();
 
-		if (discussionId != null) {
-			setDiscussionId(discussionId);
-		}
+		attributeGetterFunctions.put("uuid", MBDiscussion::getUuid);
+		attributeSetterBiConsumers.put("uuid", (BiConsumer<MBDiscussion, String>)MBDiscussion::setUuid);
+		attributeGetterFunctions.put("discussionId", MBDiscussion::getDiscussionId);
+		attributeSetterBiConsumers.put("discussionId", (BiConsumer<MBDiscussion, Long>)MBDiscussion::setDiscussionId);
+		attributeGetterFunctions.put("groupId", MBDiscussion::getGroupId);
+		attributeSetterBiConsumers.put("groupId", (BiConsumer<MBDiscussion, Long>)MBDiscussion::setGroupId);
+		attributeGetterFunctions.put("companyId", MBDiscussion::getCompanyId);
+		attributeSetterBiConsumers.put("companyId", (BiConsumer<MBDiscussion, Long>)MBDiscussion::setCompanyId);
+		attributeGetterFunctions.put("userId", MBDiscussion::getUserId);
+		attributeSetterBiConsumers.put("userId", (BiConsumer<MBDiscussion, Long>)MBDiscussion::setUserId);
+		attributeGetterFunctions.put("userName", MBDiscussion::getUserName);
+		attributeSetterBiConsumers.put("userName", (BiConsumer<MBDiscussion, String>)MBDiscussion::setUserName);
+		attributeGetterFunctions.put("createDate", MBDiscussion::getCreateDate);
+		attributeSetterBiConsumers.put("createDate", (BiConsumer<MBDiscussion, Date>)MBDiscussion::setCreateDate);
+		attributeGetterFunctions.put("modifiedDate", MBDiscussion::getModifiedDate);
+		attributeSetterBiConsumers.put("modifiedDate", (BiConsumer<MBDiscussion, Date>)MBDiscussion::setModifiedDate);
+		attributeGetterFunctions.put("classNameId", MBDiscussion::getClassNameId);
+		attributeSetterBiConsumers.put("classNameId", (BiConsumer<MBDiscussion, Long>)MBDiscussion::setClassNameId);
+		attributeGetterFunctions.put("classPK", MBDiscussion::getClassPK);
+		attributeSetterBiConsumers.put("classPK", (BiConsumer<MBDiscussion, Long>)MBDiscussion::setClassPK);
+		attributeGetterFunctions.put("threadId", MBDiscussion::getThreadId);
+		attributeSetterBiConsumers.put("threadId", (BiConsumer<MBDiscussion, Long>)MBDiscussion::setThreadId);
+		attributeGetterFunctions.put("lastPublishDate", MBDiscussion::getLastPublishDate);
+		attributeSetterBiConsumers.put("lastPublishDate", (BiConsumer<MBDiscussion, Date>)MBDiscussion::setLastPublishDate);
 
-		Long groupId = (Long)attributes.get("groupId");
-
-		if (groupId != null) {
-			setGroupId(groupId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
-		}
-
-		Long userId = (Long)attributes.get("userId");
-
-		if (userId != null) {
-			setUserId(userId);
-		}
-
-		String userName = (String)attributes.get("userName");
-
-		if (userName != null) {
-			setUserName(userName);
-		}
-
-		Date createDate = (Date)attributes.get("createDate");
-
-		if (createDate != null) {
-			setCreateDate(createDate);
-		}
-
-		Date modifiedDate = (Date)attributes.get("modifiedDate");
-
-		if (modifiedDate != null) {
-			setModifiedDate(modifiedDate);
-		}
-
-		Long classNameId = (Long)attributes.get("classNameId");
-
-		if (classNameId != null) {
-			setClassNameId(classNameId);
-		}
-
-		Long classPK = (Long)attributes.get("classPK");
-
-		if (classPK != null) {
-			setClassPK(classPK);
-		}
-
-		Long threadId = (Long)attributes.get("threadId");
-
-		if (threadId != null) {
-			setThreadId(threadId);
-		}
-
-		Date lastPublishDate = (Date)attributes.get("lastPublishDate");
-
-		if (lastPublishDate != null) {
-			setLastPublishDate(lastPublishDate);
-		}
+		_attributeGetterFunctions = Collections.unmodifiableMap(attributeGetterFunctions);
+		_attributeSetterBiConsumers = Collections.unmodifiableMap((Map)attributeSetterBiConsumers);
 	}
 
 	@Override
@@ -699,101 +649,6 @@ public class MBDiscussionModelImpl extends BaseModelImpl<MBDiscussion>
 		}
 
 		return mbDiscussionCacheModel;
-	}
-
-	@Override
-	public String toString() {
-		StringBundler sb = new StringBundler(25);
-
-		sb.append("{uuid=");
-		sb.append(getUuid());
-		sb.append(", discussionId=");
-		sb.append(getDiscussionId());
-		sb.append(", groupId=");
-		sb.append(getGroupId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
-		sb.append(", userId=");
-		sb.append(getUserId());
-		sb.append(", userName=");
-		sb.append(getUserName());
-		sb.append(", createDate=");
-		sb.append(getCreateDate());
-		sb.append(", modifiedDate=");
-		sb.append(getModifiedDate());
-		sb.append(", classNameId=");
-		sb.append(getClassNameId());
-		sb.append(", classPK=");
-		sb.append(getClassPK());
-		sb.append(", threadId=");
-		sb.append(getThreadId());
-		sb.append(", lastPublishDate=");
-		sb.append(getLastPublishDate());
-		sb.append("}");
-
-		return sb.toString();
-	}
-
-	@Override
-	public String toXmlString() {
-		StringBundler sb = new StringBundler(40);
-
-		sb.append("<model><model-name>");
-		sb.append("com.liferay.message.boards.model.MBDiscussion");
-		sb.append("</model-name>");
-
-		sb.append(
-			"<column><column-name>uuid</column-name><column-value><![CDATA[");
-		sb.append(getUuid());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>discussionId</column-name><column-value><![CDATA[");
-		sb.append(getDiscussionId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>groupId</column-name><column-value><![CDATA[");
-		sb.append(getGroupId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userId</column-name><column-value><![CDATA[");
-		sb.append(getUserId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userName</column-name><column-value><![CDATA[");
-		sb.append(getUserName());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>createDate</column-name><column-value><![CDATA[");
-		sb.append(getCreateDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>modifiedDate</column-name><column-value><![CDATA[");
-		sb.append(getModifiedDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>classNameId</column-name><column-value><![CDATA[");
-		sb.append(getClassNameId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>classPK</column-name><column-value><![CDATA[");
-		sb.append(getClassPK());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>threadId</column-name><column-value><![CDATA[");
-		sb.append(getThreadId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>lastPublishDate</column-name><column-value><![CDATA[");
-		sb.append(getLastPublishDate());
-		sb.append("]]></column-value></column>");
-
-		sb.append("</model>");
-
-		return sb.toString();
 	}
 
 	private static final ClassLoader _classLoader = MBDiscussion.class.getClassLoader();

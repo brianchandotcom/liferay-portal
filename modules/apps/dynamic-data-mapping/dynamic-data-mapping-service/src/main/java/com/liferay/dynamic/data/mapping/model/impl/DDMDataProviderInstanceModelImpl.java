@@ -25,8 +25,6 @@ import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 
-import com.liferay.petra.string.StringBundler;
-
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.LocaleException;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -49,13 +47,17 @@ import java.io.Serializable;
 import java.sql.Types;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * The base model implementation for the DDMDataProviderInstance service. Represents a row in the &quot;DDMDataProviderInstance&quot; database table, with each column mapped to a property of this class.
@@ -220,102 +222,51 @@ public class DDMDataProviderInstanceModelImpl extends BaseModelImpl<DDMDataProvi
 	}
 
 	@Override
-	public Map<String, Object> getModelAttributes() {
-		Map<String, Object> attributes = new HashMap<String, Object>();
-
-		attributes.put("uuid", getUuid());
-		attributes.put("dataProviderInstanceId", getDataProviderInstanceId());
-		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
-		attributes.put("userId", getUserId());
-		attributes.put("userName", getUserName());
-		attributes.put("createDate", getCreateDate());
-		attributes.put("modifiedDate", getModifiedDate());
-		attributes.put("name", getName());
-		attributes.put("description", getDescription());
-		attributes.put("definition", getDefinition());
-		attributes.put("type", getType());
-
-		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
-		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
-
-		return attributes;
+	public Map<String, Function<DDMDataProviderInstance, Object>> getAttributeGetterFunctions() {
+		return _attributeGetterFunctions;
 	}
 
 	@Override
-	public void setModelAttributes(Map<String, Object> attributes) {
-		String uuid = (String)attributes.get("uuid");
+	public Map<String, BiConsumer<DDMDataProviderInstance, Object>> getAttributeSetterBiConsumers() {
+		return _attributeSetterBiConsumers;
+	}
 
-		if (uuid != null) {
-			setUuid(uuid);
-		}
+	private static final Map<String, Function<DDMDataProviderInstance, Object>> _attributeGetterFunctions;
+	private static final Map<String, BiConsumer<DDMDataProviderInstance, Object>> _attributeSetterBiConsumers;
 
-		Long dataProviderInstanceId = (Long)attributes.get(
-				"dataProviderInstanceId");
+	static {
+		Map<String, Function<DDMDataProviderInstance, Object>> attributeGetterFunctions =
+			new LinkedHashMap<String, Function<DDMDataProviderInstance, Object>>();
+		Map<String, BiConsumer<DDMDataProviderInstance, ?>> attributeSetterBiConsumers =
+			new LinkedHashMap<String, BiConsumer<DDMDataProviderInstance, ?>>();
 
-		if (dataProviderInstanceId != null) {
-			setDataProviderInstanceId(dataProviderInstanceId);
-		}
+		attributeGetterFunctions.put("uuid", DDMDataProviderInstance::getUuid);
+		attributeSetterBiConsumers.put("uuid", (BiConsumer<DDMDataProviderInstance, String>)DDMDataProviderInstance::setUuid);
+		attributeGetterFunctions.put("dataProviderInstanceId", DDMDataProviderInstance::getDataProviderInstanceId);
+		attributeSetterBiConsumers.put("dataProviderInstanceId", (BiConsumer<DDMDataProviderInstance, Long>)DDMDataProviderInstance::setDataProviderInstanceId);
+		attributeGetterFunctions.put("groupId", DDMDataProviderInstance::getGroupId);
+		attributeSetterBiConsumers.put("groupId", (BiConsumer<DDMDataProviderInstance, Long>)DDMDataProviderInstance::setGroupId);
+		attributeGetterFunctions.put("companyId", DDMDataProviderInstance::getCompanyId);
+		attributeSetterBiConsumers.put("companyId", (BiConsumer<DDMDataProviderInstance, Long>)DDMDataProviderInstance::setCompanyId);
+		attributeGetterFunctions.put("userId", DDMDataProviderInstance::getUserId);
+		attributeSetterBiConsumers.put("userId", (BiConsumer<DDMDataProviderInstance, Long>)DDMDataProviderInstance::setUserId);
+		attributeGetterFunctions.put("userName", DDMDataProviderInstance::getUserName);
+		attributeSetterBiConsumers.put("userName", (BiConsumer<DDMDataProviderInstance, String>)DDMDataProviderInstance::setUserName);
+		attributeGetterFunctions.put("createDate", DDMDataProviderInstance::getCreateDate);
+		attributeSetterBiConsumers.put("createDate", (BiConsumer<DDMDataProviderInstance, Date>)DDMDataProviderInstance::setCreateDate);
+		attributeGetterFunctions.put("modifiedDate", DDMDataProviderInstance::getModifiedDate);
+		attributeSetterBiConsumers.put("modifiedDate", (BiConsumer<DDMDataProviderInstance, Date>)DDMDataProviderInstance::setModifiedDate);
+		attributeGetterFunctions.put("name", DDMDataProviderInstance::getName);
+		attributeSetterBiConsumers.put("name", (BiConsumer<DDMDataProviderInstance, String>)DDMDataProviderInstance::setName);
+		attributeGetterFunctions.put("description", DDMDataProviderInstance::getDescription);
+		attributeSetterBiConsumers.put("description", (BiConsumer<DDMDataProviderInstance, String>)DDMDataProviderInstance::setDescription);
+		attributeGetterFunctions.put("definition", DDMDataProviderInstance::getDefinition);
+		attributeSetterBiConsumers.put("definition", (BiConsumer<DDMDataProviderInstance, String>)DDMDataProviderInstance::setDefinition);
+		attributeGetterFunctions.put("type", DDMDataProviderInstance::getType);
+		attributeSetterBiConsumers.put("type", (BiConsumer<DDMDataProviderInstance, String>)DDMDataProviderInstance::setType);
 
-		Long groupId = (Long)attributes.get("groupId");
-
-		if (groupId != null) {
-			setGroupId(groupId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
-		}
-
-		Long userId = (Long)attributes.get("userId");
-
-		if (userId != null) {
-			setUserId(userId);
-		}
-
-		String userName = (String)attributes.get("userName");
-
-		if (userName != null) {
-			setUserName(userName);
-		}
-
-		Date createDate = (Date)attributes.get("createDate");
-
-		if (createDate != null) {
-			setCreateDate(createDate);
-		}
-
-		Date modifiedDate = (Date)attributes.get("modifiedDate");
-
-		if (modifiedDate != null) {
-			setModifiedDate(modifiedDate);
-		}
-
-		String name = (String)attributes.get("name");
-
-		if (name != null) {
-			setName(name);
-		}
-
-		String description = (String)attributes.get("description");
-
-		if (description != null) {
-			setDescription(description);
-		}
-
-		String definition = (String)attributes.get("definition");
-
-		if (definition != null) {
-			setDefinition(definition);
-		}
-
-		String type = (String)attributes.get("type");
-
-		if (type != null) {
-			setType(type);
-		}
+		_attributeGetterFunctions = Collections.unmodifiableMap(attributeGetterFunctions);
+		_attributeSetterBiConsumers = Collections.unmodifiableMap((Map)attributeSetterBiConsumers);
 	}
 
 	@JSON
@@ -993,102 +944,6 @@ public class DDMDataProviderInstanceModelImpl extends BaseModelImpl<DDMDataProvi
 		}
 
 		return ddmDataProviderInstanceCacheModel;
-	}
-
-	@Override
-	public String toString() {
-		StringBundler sb = new StringBundler(25);
-
-		sb.append("{uuid=");
-		sb.append(getUuid());
-		sb.append(", dataProviderInstanceId=");
-		sb.append(getDataProviderInstanceId());
-		sb.append(", groupId=");
-		sb.append(getGroupId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
-		sb.append(", userId=");
-		sb.append(getUserId());
-		sb.append(", userName=");
-		sb.append(getUserName());
-		sb.append(", createDate=");
-		sb.append(getCreateDate());
-		sb.append(", modifiedDate=");
-		sb.append(getModifiedDate());
-		sb.append(", name=");
-		sb.append(getName());
-		sb.append(", description=");
-		sb.append(getDescription());
-		sb.append(", definition=");
-		sb.append(getDefinition());
-		sb.append(", type=");
-		sb.append(getType());
-		sb.append("}");
-
-		return sb.toString();
-	}
-
-	@Override
-	public String toXmlString() {
-		StringBundler sb = new StringBundler(40);
-
-		sb.append("<model><model-name>");
-		sb.append(
-			"com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance");
-		sb.append("</model-name>");
-
-		sb.append(
-			"<column><column-name>uuid</column-name><column-value><![CDATA[");
-		sb.append(getUuid());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>dataProviderInstanceId</column-name><column-value><![CDATA[");
-		sb.append(getDataProviderInstanceId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>groupId</column-name><column-value><![CDATA[");
-		sb.append(getGroupId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userId</column-name><column-value><![CDATA[");
-		sb.append(getUserId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userName</column-name><column-value><![CDATA[");
-		sb.append(getUserName());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>createDate</column-name><column-value><![CDATA[");
-		sb.append(getCreateDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>modifiedDate</column-name><column-value><![CDATA[");
-		sb.append(getModifiedDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>name</column-name><column-value><![CDATA[");
-		sb.append(getName());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>description</column-name><column-value><![CDATA[");
-		sb.append(getDescription());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>definition</column-name><column-value><![CDATA[");
-		sb.append(getDefinition());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>type</column-name><column-value><![CDATA[");
-		sb.append(getType());
-		sb.append("]]></column-value></column>");
-
-		sb.append("</model>");
-
-		return sb.toString();
 	}
 
 	private static final ClassLoader _classLoader = DDMDataProviderInstance.class.getClassLoader();

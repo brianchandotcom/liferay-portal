@@ -22,8 +22,6 @@ import com.liferay.dynamic.data.mapping.model.DDMDataProviderInstanceLinkModel;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 
-import com.liferay.petra.string.StringBundler;
-
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.ModelWrapper;
@@ -36,8 +34,12 @@ import java.io.Serializable;
 
 import java.sql.Types;
 
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * The base model implementation for the DDMDataProviderInstanceLink service. Represents a row in the &quot;DDMDataProviderInstanceLink&quot; database table, with each column mapped to a property of this class.
@@ -132,48 +134,35 @@ public class DDMDataProviderInstanceLinkModelImpl extends BaseModelImpl<DDMDataP
 	}
 
 	@Override
-	public Map<String, Object> getModelAttributes() {
-		Map<String, Object> attributes = new HashMap<String, Object>();
-
-		attributes.put("dataProviderInstanceLinkId",
-			getDataProviderInstanceLinkId());
-		attributes.put("companyId", getCompanyId());
-		attributes.put("dataProviderInstanceId", getDataProviderInstanceId());
-		attributes.put("structureId", getStructureId());
-
-		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
-		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
-
-		return attributes;
+	public Map<String, Function<DDMDataProviderInstanceLink, Object>> getAttributeGetterFunctions() {
+		return _attributeGetterFunctions;
 	}
 
 	@Override
-	public void setModelAttributes(Map<String, Object> attributes) {
-		Long dataProviderInstanceLinkId = (Long)attributes.get(
-				"dataProviderInstanceLinkId");
+	public Map<String, BiConsumer<DDMDataProviderInstanceLink, Object>> getAttributeSetterBiConsumers() {
+		return _attributeSetterBiConsumers;
+	}
 
-		if (dataProviderInstanceLinkId != null) {
-			setDataProviderInstanceLinkId(dataProviderInstanceLinkId);
-		}
+	private static final Map<String, Function<DDMDataProviderInstanceLink, Object>> _attributeGetterFunctions;
+	private static final Map<String, BiConsumer<DDMDataProviderInstanceLink, Object>> _attributeSetterBiConsumers;
 
-		Long companyId = (Long)attributes.get("companyId");
+	static {
+		Map<String, Function<DDMDataProviderInstanceLink, Object>> attributeGetterFunctions =
+			new LinkedHashMap<String, Function<DDMDataProviderInstanceLink, Object>>();
+		Map<String, BiConsumer<DDMDataProviderInstanceLink, ?>> attributeSetterBiConsumers =
+			new LinkedHashMap<String, BiConsumer<DDMDataProviderInstanceLink, ?>>();
 
-		if (companyId != null) {
-			setCompanyId(companyId);
-		}
+		attributeGetterFunctions.put("dataProviderInstanceLinkId", DDMDataProviderInstanceLink::getDataProviderInstanceLinkId);
+		attributeSetterBiConsumers.put("dataProviderInstanceLinkId", (BiConsumer<DDMDataProviderInstanceLink, Long>)DDMDataProviderInstanceLink::setDataProviderInstanceLinkId);
+		attributeGetterFunctions.put("companyId", DDMDataProviderInstanceLink::getCompanyId);
+		attributeSetterBiConsumers.put("companyId", (BiConsumer<DDMDataProviderInstanceLink, Long>)DDMDataProviderInstanceLink::setCompanyId);
+		attributeGetterFunctions.put("dataProviderInstanceId", DDMDataProviderInstanceLink::getDataProviderInstanceId);
+		attributeSetterBiConsumers.put("dataProviderInstanceId", (BiConsumer<DDMDataProviderInstanceLink, Long>)DDMDataProviderInstanceLink::setDataProviderInstanceId);
+		attributeGetterFunctions.put("structureId", DDMDataProviderInstanceLink::getStructureId);
+		attributeSetterBiConsumers.put("structureId", (BiConsumer<DDMDataProviderInstanceLink, Long>)DDMDataProviderInstanceLink::setStructureId);
 
-		Long dataProviderInstanceId = (Long)attributes.get(
-				"dataProviderInstanceId");
-
-		if (dataProviderInstanceId != null) {
-			setDataProviderInstanceId(dataProviderInstanceId);
-		}
-
-		Long structureId = (Long)attributes.get("structureId");
-
-		if (structureId != null) {
-			setStructureId(structureId);
-		}
+		_attributeGetterFunctions = Collections.unmodifiableMap(attributeGetterFunctions);
+		_attributeSetterBiConsumers = Collections.unmodifiableMap((Map)attributeSetterBiConsumers);
 	}
 
 	@Override
@@ -364,54 +353,6 @@ public class DDMDataProviderInstanceLinkModelImpl extends BaseModelImpl<DDMDataP
 		ddmDataProviderInstanceLinkCacheModel.structureId = getStructureId();
 
 		return ddmDataProviderInstanceLinkCacheModel;
-	}
-
-	@Override
-	public String toString() {
-		StringBundler sb = new StringBundler(9);
-
-		sb.append("{dataProviderInstanceLinkId=");
-		sb.append(getDataProviderInstanceLinkId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
-		sb.append(", dataProviderInstanceId=");
-		sb.append(getDataProviderInstanceId());
-		sb.append(", structureId=");
-		sb.append(getStructureId());
-		sb.append("}");
-
-		return sb.toString();
-	}
-
-	@Override
-	public String toXmlString() {
-		StringBundler sb = new StringBundler(16);
-
-		sb.append("<model><model-name>");
-		sb.append(
-			"com.liferay.dynamic.data.mapping.model.DDMDataProviderInstanceLink");
-		sb.append("</model-name>");
-
-		sb.append(
-			"<column><column-name>dataProviderInstanceLinkId</column-name><column-value><![CDATA[");
-		sb.append(getDataProviderInstanceLinkId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>dataProviderInstanceId</column-name><column-value><![CDATA[");
-		sb.append(getDataProviderInstanceId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>structureId</column-name><column-value><![CDATA[");
-		sb.append(getStructureId());
-		sb.append("]]></column-value></column>");
-
-		sb.append("</model>");
-
-		return sb.toString();
 	}
 
 	private static final ClassLoader _classLoader = DDMDataProviderInstanceLink.class.getClassLoader();

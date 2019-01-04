@@ -23,8 +23,6 @@ import com.liferay.announcements.kernel.model.AnnouncementsDeliverySoap;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 
-import com.liferay.petra.string.StringBundler;
-
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSON;
@@ -42,9 +40,13 @@ import java.io.Serializable;
 import java.sql.Types;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * The base model implementation for the AnnouncementsDelivery service. Represents a row in the &quot;AnnouncementsDelivery&quot; database table, with each column mapped to a property of this class.
@@ -193,66 +195,41 @@ public class AnnouncementsDeliveryModelImpl extends BaseModelImpl<AnnouncementsD
 	}
 
 	@Override
-	public Map<String, Object> getModelAttributes() {
-		Map<String, Object> attributes = new HashMap<String, Object>();
-
-		attributes.put("deliveryId", getDeliveryId());
-		attributes.put("companyId", getCompanyId());
-		attributes.put("userId", getUserId());
-		attributes.put("type", getType());
-		attributes.put("email", isEmail());
-		attributes.put("sms", isSms());
-		attributes.put("website", isWebsite());
-
-		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
-		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
-
-		return attributes;
+	public Map<String, Function<AnnouncementsDelivery, Object>> getAttributeGetterFunctions() {
+		return _attributeGetterFunctions;
 	}
 
 	@Override
-	public void setModelAttributes(Map<String, Object> attributes) {
-		Long deliveryId = (Long)attributes.get("deliveryId");
+	public Map<String, BiConsumer<AnnouncementsDelivery, Object>> getAttributeSetterBiConsumers() {
+		return _attributeSetterBiConsumers;
+	}
 
-		if (deliveryId != null) {
-			setDeliveryId(deliveryId);
-		}
+	private static final Map<String, Function<AnnouncementsDelivery, Object>> _attributeGetterFunctions;
+	private static final Map<String, BiConsumer<AnnouncementsDelivery, Object>> _attributeSetterBiConsumers;
 
-		Long companyId = (Long)attributes.get("companyId");
+	static {
+		Map<String, Function<AnnouncementsDelivery, Object>> attributeGetterFunctions =
+			new LinkedHashMap<String, Function<AnnouncementsDelivery, Object>>();
+		Map<String, BiConsumer<AnnouncementsDelivery, ?>> attributeSetterBiConsumers =
+			new LinkedHashMap<String, BiConsumer<AnnouncementsDelivery, ?>>();
 
-		if (companyId != null) {
-			setCompanyId(companyId);
-		}
+		attributeGetterFunctions.put("deliveryId", AnnouncementsDelivery::getDeliveryId);
+		attributeSetterBiConsumers.put("deliveryId", (BiConsumer<AnnouncementsDelivery, Long>)AnnouncementsDelivery::setDeliveryId);
+		attributeGetterFunctions.put("companyId", AnnouncementsDelivery::getCompanyId);
+		attributeSetterBiConsumers.put("companyId", (BiConsumer<AnnouncementsDelivery, Long>)AnnouncementsDelivery::setCompanyId);
+		attributeGetterFunctions.put("userId", AnnouncementsDelivery::getUserId);
+		attributeSetterBiConsumers.put("userId", (BiConsumer<AnnouncementsDelivery, Long>)AnnouncementsDelivery::setUserId);
+		attributeGetterFunctions.put("type", AnnouncementsDelivery::getType);
+		attributeSetterBiConsumers.put("type", (BiConsumer<AnnouncementsDelivery, String>)AnnouncementsDelivery::setType);
+		attributeGetterFunctions.put("email", AnnouncementsDelivery::getEmail);
+		attributeSetterBiConsumers.put("email", (BiConsumer<AnnouncementsDelivery, Boolean>)AnnouncementsDelivery::setEmail);
+		attributeGetterFunctions.put("sms", AnnouncementsDelivery::getSms);
+		attributeSetterBiConsumers.put("sms", (BiConsumer<AnnouncementsDelivery, Boolean>)AnnouncementsDelivery::setSms);
+		attributeGetterFunctions.put("website", AnnouncementsDelivery::getWebsite);
+		attributeSetterBiConsumers.put("website", (BiConsumer<AnnouncementsDelivery, Boolean>)AnnouncementsDelivery::setWebsite);
 
-		Long userId = (Long)attributes.get("userId");
-
-		if (userId != null) {
-			setUserId(userId);
-		}
-
-		String type = (String)attributes.get("type");
-
-		if (type != null) {
-			setType(type);
-		}
-
-		Boolean email = (Boolean)attributes.get("email");
-
-		if (email != null) {
-			setEmail(email);
-		}
-
-		Boolean sms = (Boolean)attributes.get("sms");
-
-		if (sms != null) {
-			setSms(sms);
-		}
-
-		Boolean website = (Boolean)attributes.get("website");
-
-		if (website != null) {
-			setWebsite(website);
-		}
+		_attributeGetterFunctions = Collections.unmodifiableMap(attributeGetterFunctions);
+		_attributeSetterBiConsumers = Collections.unmodifiableMap((Map)attributeSetterBiConsumers);
 	}
 
 	@JSON
@@ -527,72 +504,6 @@ public class AnnouncementsDeliveryModelImpl extends BaseModelImpl<AnnouncementsD
 		announcementsDeliveryCacheModel.website = isWebsite();
 
 		return announcementsDeliveryCacheModel;
-	}
-
-	@Override
-	public String toString() {
-		StringBundler sb = new StringBundler(15);
-
-		sb.append("{deliveryId=");
-		sb.append(getDeliveryId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
-		sb.append(", userId=");
-		sb.append(getUserId());
-		sb.append(", type=");
-		sb.append(getType());
-		sb.append(", email=");
-		sb.append(isEmail());
-		sb.append(", sms=");
-		sb.append(isSms());
-		sb.append(", website=");
-		sb.append(isWebsite());
-		sb.append("}");
-
-		return sb.toString();
-	}
-
-	@Override
-	public String toXmlString() {
-		StringBundler sb = new StringBundler(25);
-
-		sb.append("<model><model-name>");
-		sb.append(
-			"com.liferay.announcements.kernel.model.AnnouncementsDelivery");
-		sb.append("</model-name>");
-
-		sb.append(
-			"<column><column-name>deliveryId</column-name><column-value><![CDATA[");
-		sb.append(getDeliveryId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userId</column-name><column-value><![CDATA[");
-		sb.append(getUserId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>type</column-name><column-value><![CDATA[");
-		sb.append(getType());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>email</column-name><column-value><![CDATA[");
-		sb.append(isEmail());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>sms</column-name><column-value><![CDATA[");
-		sb.append(isSms());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>website</column-name><column-value><![CDATA[");
-		sb.append(isWebsite());
-		sb.append("]]></column-value></column>");
-
-		sb.append("</model>");
-
-		return sb.toString();
 	}
 
 	private static final ClassLoader _classLoader = AnnouncementsDelivery.class.getClassLoader();

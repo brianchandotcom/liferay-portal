@@ -26,6 +26,10 @@ import com.liferay.portal.kernel.service.ServiceContext;
 
 import java.io.Serializable;
 
+import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
+
 /**
  * The base model interface for the LVEntryLocalizationVersion service. Represents a row in the &quot;LVEntryLocalizationVersion&quot; database table, with each column mapped to a property of this class.
  *
@@ -167,6 +171,10 @@ public interface LVEntryLocalizationVersionModel extends BaseModel<LVEntryLocali
 	 * @param content the content of this lv entry localization version
 	 */
 	public void setContent(String content);
+
+	public Map<String, Function<LVEntryLocalizationVersion, Object>> getAttributeGetterFunctions();
+
+	public Map<String, BiConsumer<LVEntryLocalizationVersion, Object>> getAttributeSetterBiConsumers();
 
 	@Override
 	public boolean isNew();

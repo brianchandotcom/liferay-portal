@@ -28,6 +28,8 @@ import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * <p>
@@ -59,25 +61,32 @@ public class BigDecimalEntryWrapper implements BigDecimalEntry,
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		attributes.put("bigDecimalEntryId", getBigDecimalEntryId());
-		attributes.put("bigDecimalValue", getBigDecimalValue());
+		Map<String, Function<BigDecimalEntry, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
+
+		for (Map.Entry<String, Function<BigDecimalEntry, Object>> entry : attributeGetterFunctions.entrySet()) {
+			String attributeName = entry.getKey();
+			Function<BigDecimalEntry, Object> attributeGetterFunction = entry.getValue();
+
+			attributes.put(attributeName, attributeGetterFunction.apply(this));
+		}
+
+		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
+		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
 
 		return attributes;
 	}
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		Long bigDecimalEntryId = (Long)attributes.get("bigDecimalEntryId");
+		Map<String, BiConsumer<BigDecimalEntry, Object>> attributeSetterBiConsumers =
+			getAttributeSetterBiConsumers();
 
-		if (bigDecimalEntryId != null) {
-			setBigDecimalEntryId(bigDecimalEntryId);
-		}
+		for (Map.Entry<String, BiConsumer<BigDecimalEntry, Object>> entry : attributeSetterBiConsumers.entrySet()) {
+			String attributeName = entry.getKey();
+			BiConsumer<BigDecimalEntry, Object> attributeBiConsumer = entry.getValue();
 
-		BigDecimal bigDecimalValue = (BigDecimal)attributes.get(
-				"bigDecimalValue");
-
-		if (bigDecimalValue != null) {
-			setBigDecimalValue(bigDecimalValue);
+			attributeBiConsumer.accept(this,
+				attributeSetterBiConsumers.get(attributeName));
 		}
 	}
 
@@ -89,6 +98,16 @@ public class BigDecimalEntryWrapper implements BigDecimalEntry,
 	@Override
 	public int compareTo(BigDecimalEntry bigDecimalEntry) {
 		return _bigDecimalEntry.compareTo(bigDecimalEntry);
+	}
+
+	@Override
+	public Map<String, Function<BigDecimalEntry, Object>> getAttributeGetterFunctions() {
+		return _bigDecimalEntry.getAttributeGetterFunctions();
+	}
+
+	@Override
+	public Map<String, BiConsumer<BigDecimalEntry, Object>> getAttributeSetterBiConsumers() {
+		return _bigDecimalEntry.getAttributeSetterBiConsumers();
 	}
 
 	/**

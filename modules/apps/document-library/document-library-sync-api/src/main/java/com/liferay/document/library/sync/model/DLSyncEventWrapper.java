@@ -19,9 +19,6 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
-import java.util.HashMap;
-import java.util.Map;
-
 /**
  * <p>
  * This class is a wrapper for {@link DLSyncEvent}.
@@ -36,59 +33,6 @@ public class DLSyncEventWrapper extends BaseModelWrapper<DLSyncEvent>
 	implements DLSyncEvent, ModelWrapper<DLSyncEvent> {
 	public DLSyncEventWrapper(DLSyncEvent dlSyncEvent) {
 		super(dlSyncEvent);
-	}
-
-	@Override
-	public Map<String, Object> getModelAttributes() {
-		Map<String, Object> attributes = new HashMap<String, Object>();
-
-		attributes.put("syncEventId", getSyncEventId());
-		attributes.put("companyId", getCompanyId());
-		attributes.put("modifiedTime", getModifiedTime());
-		attributes.put("event", getEvent());
-		attributes.put("type", getType());
-		attributes.put("typePK", getTypePK());
-
-		return attributes;
-	}
-
-	@Override
-	public void setModelAttributes(Map<String, Object> attributes) {
-		Long syncEventId = (Long)attributes.get("syncEventId");
-
-		if (syncEventId != null) {
-			setSyncEventId(syncEventId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
-		}
-
-		Long modifiedTime = (Long)attributes.get("modifiedTime");
-
-		if (modifiedTime != null) {
-			setModifiedTime(modifiedTime);
-		}
-
-		String event = (String)attributes.get("event");
-
-		if (event != null) {
-			setEvent(event);
-		}
-
-		String type = (String)attributes.get("type");
-
-		if (type != null) {
-			setType(type);
-		}
-
-		Long typePK = (Long)attributes.get("typePK");
-
-		if (typePK != null) {
-			setTypePK(typePK);
-		}
 	}
 
 	/**

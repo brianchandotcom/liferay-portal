@@ -22,8 +22,6 @@ import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 import com.liferay.mail.reader.model.Account;
 import com.liferay.mail.reader.model.AccountModel;
 
-import com.liferay.petra.string.StringBundler;
-
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.CacheModel;
@@ -39,9 +37,13 @@ import java.io.Serializable;
 
 import java.sql.Types;
 
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * The base model implementation for the Account service. Represents a row in the &quot;Mail_Account&quot; database table, with each column mapped to a property of this class.
@@ -179,199 +181,77 @@ public class AccountModelImpl extends BaseModelImpl<Account>
 	}
 
 	@Override
-	public Map<String, Object> getModelAttributes() {
-		Map<String, Object> attributes = new HashMap<String, Object>();
-
-		attributes.put("accountId", getAccountId());
-		attributes.put("companyId", getCompanyId());
-		attributes.put("userId", getUserId());
-		attributes.put("userName", getUserName());
-		attributes.put("createDate", getCreateDate());
-		attributes.put("modifiedDate", getModifiedDate());
-		attributes.put("address", getAddress());
-		attributes.put("personalName", getPersonalName());
-		attributes.put("protocol", getProtocol());
-		attributes.put("incomingHostName", getIncomingHostName());
-		attributes.put("incomingPort", getIncomingPort());
-		attributes.put("incomingSecure", isIncomingSecure());
-		attributes.put("outgoingHostName", getOutgoingHostName());
-		attributes.put("outgoingPort", getOutgoingPort());
-		attributes.put("outgoingSecure", isOutgoingSecure());
-		attributes.put("login", getLogin());
-		attributes.put("password", getPassword());
-		attributes.put("savePassword", isSavePassword());
-		attributes.put("signature", getSignature());
-		attributes.put("useSignature", isUseSignature());
-		attributes.put("folderPrefix", getFolderPrefix());
-		attributes.put("inboxFolderId", getInboxFolderId());
-		attributes.put("draftFolderId", getDraftFolderId());
-		attributes.put("sentFolderId", getSentFolderId());
-		attributes.put("trashFolderId", getTrashFolderId());
-		attributes.put("defaultSender", isDefaultSender());
-
-		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
-		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
-
-		return attributes;
+	public Map<String, Function<Account, Object>> getAttributeGetterFunctions() {
+		return _attributeGetterFunctions;
 	}
 
 	@Override
-	public void setModelAttributes(Map<String, Object> attributes) {
-		Long accountId = (Long)attributes.get("accountId");
+	public Map<String, BiConsumer<Account, Object>> getAttributeSetterBiConsumers() {
+		return _attributeSetterBiConsumers;
+	}
 
-		if (accountId != null) {
-			setAccountId(accountId);
-		}
+	private static final Map<String, Function<Account, Object>> _attributeGetterFunctions;
+	private static final Map<String, BiConsumer<Account, Object>> _attributeSetterBiConsumers;
 
-		Long companyId = (Long)attributes.get("companyId");
+	static {
+		Map<String, Function<Account, Object>> attributeGetterFunctions = new LinkedHashMap<String, Function<Account, Object>>();
+		Map<String, BiConsumer<Account, ?>> attributeSetterBiConsumers = new LinkedHashMap<String, BiConsumer<Account, ?>>();
 
-		if (companyId != null) {
-			setCompanyId(companyId);
-		}
+		attributeGetterFunctions.put("accountId", Account::getAccountId);
+		attributeSetterBiConsumers.put("accountId", (BiConsumer<Account, Long>)Account::setAccountId);
+		attributeGetterFunctions.put("companyId", Account::getCompanyId);
+		attributeSetterBiConsumers.put("companyId", (BiConsumer<Account, Long>)Account::setCompanyId);
+		attributeGetterFunctions.put("userId", Account::getUserId);
+		attributeSetterBiConsumers.put("userId", (BiConsumer<Account, Long>)Account::setUserId);
+		attributeGetterFunctions.put("userName", Account::getUserName);
+		attributeSetterBiConsumers.put("userName", (BiConsumer<Account, String>)Account::setUserName);
+		attributeGetterFunctions.put("createDate", Account::getCreateDate);
+		attributeSetterBiConsumers.put("createDate", (BiConsumer<Account, Date>)Account::setCreateDate);
+		attributeGetterFunctions.put("modifiedDate", Account::getModifiedDate);
+		attributeSetterBiConsumers.put("modifiedDate", (BiConsumer<Account, Date>)Account::setModifiedDate);
+		attributeGetterFunctions.put("address", Account::getAddress);
+		attributeSetterBiConsumers.put("address", (BiConsumer<Account, String>)Account::setAddress);
+		attributeGetterFunctions.put("personalName", Account::getPersonalName);
+		attributeSetterBiConsumers.put("personalName", (BiConsumer<Account, String>)Account::setPersonalName);
+		attributeGetterFunctions.put("protocol", Account::getProtocol);
+		attributeSetterBiConsumers.put("protocol", (BiConsumer<Account, String>)Account::setProtocol);
+		attributeGetterFunctions.put("incomingHostName", Account::getIncomingHostName);
+		attributeSetterBiConsumers.put("incomingHostName", (BiConsumer<Account, String>)Account::setIncomingHostName);
+		attributeGetterFunctions.put("incomingPort", Account::getIncomingPort);
+		attributeSetterBiConsumers.put("incomingPort", (BiConsumer<Account, Integer>)Account::setIncomingPort);
+		attributeGetterFunctions.put("incomingSecure", Account::getIncomingSecure);
+		attributeSetterBiConsumers.put("incomingSecure", (BiConsumer<Account, Boolean>)Account::setIncomingSecure);
+		attributeGetterFunctions.put("outgoingHostName", Account::getOutgoingHostName);
+		attributeSetterBiConsumers.put("outgoingHostName", (BiConsumer<Account, String>)Account::setOutgoingHostName);
+		attributeGetterFunctions.put("outgoingPort", Account::getOutgoingPort);
+		attributeSetterBiConsumers.put("outgoingPort", (BiConsumer<Account, Integer>)Account::setOutgoingPort);
+		attributeGetterFunctions.put("outgoingSecure", Account::getOutgoingSecure);
+		attributeSetterBiConsumers.put("outgoingSecure", (BiConsumer<Account, Boolean>)Account::setOutgoingSecure);
+		attributeGetterFunctions.put("login", Account::getLogin);
+		attributeSetterBiConsumers.put("login", (BiConsumer<Account, String>)Account::setLogin);
+		attributeGetterFunctions.put("password", Account::getPassword);
+		attributeSetterBiConsumers.put("password", (BiConsumer<Account, String>)Account::setPassword);
+		attributeGetterFunctions.put("savePassword", Account::getSavePassword);
+		attributeSetterBiConsumers.put("savePassword", (BiConsumer<Account, Boolean>)Account::setSavePassword);
+		attributeGetterFunctions.put("signature", Account::getSignature);
+		attributeSetterBiConsumers.put("signature", (BiConsumer<Account, String>)Account::setSignature);
+		attributeGetterFunctions.put("useSignature", Account::getUseSignature);
+		attributeSetterBiConsumers.put("useSignature", (BiConsumer<Account, Boolean>)Account::setUseSignature);
+		attributeGetterFunctions.put("folderPrefix", Account::getFolderPrefix);
+		attributeSetterBiConsumers.put("folderPrefix", (BiConsumer<Account, String>)Account::setFolderPrefix);
+		attributeGetterFunctions.put("inboxFolderId", Account::getInboxFolderId);
+		attributeSetterBiConsumers.put("inboxFolderId", (BiConsumer<Account, Long>)Account::setInboxFolderId);
+		attributeGetterFunctions.put("draftFolderId", Account::getDraftFolderId);
+		attributeSetterBiConsumers.put("draftFolderId", (BiConsumer<Account, Long>)Account::setDraftFolderId);
+		attributeGetterFunctions.put("sentFolderId", Account::getSentFolderId);
+		attributeSetterBiConsumers.put("sentFolderId", (BiConsumer<Account, Long>)Account::setSentFolderId);
+		attributeGetterFunctions.put("trashFolderId", Account::getTrashFolderId);
+		attributeSetterBiConsumers.put("trashFolderId", (BiConsumer<Account, Long>)Account::setTrashFolderId);
+		attributeGetterFunctions.put("defaultSender", Account::getDefaultSender);
+		attributeSetterBiConsumers.put("defaultSender", (BiConsumer<Account, Boolean>)Account::setDefaultSender);
 
-		Long userId = (Long)attributes.get("userId");
-
-		if (userId != null) {
-			setUserId(userId);
-		}
-
-		String userName = (String)attributes.get("userName");
-
-		if (userName != null) {
-			setUserName(userName);
-		}
-
-		Date createDate = (Date)attributes.get("createDate");
-
-		if (createDate != null) {
-			setCreateDate(createDate);
-		}
-
-		Date modifiedDate = (Date)attributes.get("modifiedDate");
-
-		if (modifiedDate != null) {
-			setModifiedDate(modifiedDate);
-		}
-
-		String address = (String)attributes.get("address");
-
-		if (address != null) {
-			setAddress(address);
-		}
-
-		String personalName = (String)attributes.get("personalName");
-
-		if (personalName != null) {
-			setPersonalName(personalName);
-		}
-
-		String protocol = (String)attributes.get("protocol");
-
-		if (protocol != null) {
-			setProtocol(protocol);
-		}
-
-		String incomingHostName = (String)attributes.get("incomingHostName");
-
-		if (incomingHostName != null) {
-			setIncomingHostName(incomingHostName);
-		}
-
-		Integer incomingPort = (Integer)attributes.get("incomingPort");
-
-		if (incomingPort != null) {
-			setIncomingPort(incomingPort);
-		}
-
-		Boolean incomingSecure = (Boolean)attributes.get("incomingSecure");
-
-		if (incomingSecure != null) {
-			setIncomingSecure(incomingSecure);
-		}
-
-		String outgoingHostName = (String)attributes.get("outgoingHostName");
-
-		if (outgoingHostName != null) {
-			setOutgoingHostName(outgoingHostName);
-		}
-
-		Integer outgoingPort = (Integer)attributes.get("outgoingPort");
-
-		if (outgoingPort != null) {
-			setOutgoingPort(outgoingPort);
-		}
-
-		Boolean outgoingSecure = (Boolean)attributes.get("outgoingSecure");
-
-		if (outgoingSecure != null) {
-			setOutgoingSecure(outgoingSecure);
-		}
-
-		String login = (String)attributes.get("login");
-
-		if (login != null) {
-			setLogin(login);
-		}
-
-		String password = (String)attributes.get("password");
-
-		if (password != null) {
-			setPassword(password);
-		}
-
-		Boolean savePassword = (Boolean)attributes.get("savePassword");
-
-		if (savePassword != null) {
-			setSavePassword(savePassword);
-		}
-
-		String signature = (String)attributes.get("signature");
-
-		if (signature != null) {
-			setSignature(signature);
-		}
-
-		Boolean useSignature = (Boolean)attributes.get("useSignature");
-
-		if (useSignature != null) {
-			setUseSignature(useSignature);
-		}
-
-		String folderPrefix = (String)attributes.get("folderPrefix");
-
-		if (folderPrefix != null) {
-			setFolderPrefix(folderPrefix);
-		}
-
-		Long inboxFolderId = (Long)attributes.get("inboxFolderId");
-
-		if (inboxFolderId != null) {
-			setInboxFolderId(inboxFolderId);
-		}
-
-		Long draftFolderId = (Long)attributes.get("draftFolderId");
-
-		if (draftFolderId != null) {
-			setDraftFolderId(draftFolderId);
-		}
-
-		Long sentFolderId = (Long)attributes.get("sentFolderId");
-
-		if (sentFolderId != null) {
-			setSentFolderId(sentFolderId);
-		}
-
-		Long trashFolderId = (Long)attributes.get("trashFolderId");
-
-		if (trashFolderId != null) {
-			setTrashFolderId(trashFolderId);
-		}
-
-		Boolean defaultSender = (Boolean)attributes.get("defaultSender");
-
-		if (defaultSender != null) {
-			setDefaultSender(defaultSender);
-		}
+		_attributeGetterFunctions = Collections.unmodifiableMap(attributeGetterFunctions);
+		_attributeSetterBiConsumers = Collections.unmodifiableMap((Map)attributeSetterBiConsumers);
 	}
 
 	@Override
@@ -1012,185 +892,6 @@ public class AccountModelImpl extends BaseModelImpl<Account>
 		accountCacheModel.defaultSender = isDefaultSender();
 
 		return accountCacheModel;
-	}
-
-	@Override
-	public String toString() {
-		StringBundler sb = new StringBundler(53);
-
-		sb.append("{accountId=");
-		sb.append(getAccountId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
-		sb.append(", userId=");
-		sb.append(getUserId());
-		sb.append(", userName=");
-		sb.append(getUserName());
-		sb.append(", createDate=");
-		sb.append(getCreateDate());
-		sb.append(", modifiedDate=");
-		sb.append(getModifiedDate());
-		sb.append(", address=");
-		sb.append(getAddress());
-		sb.append(", personalName=");
-		sb.append(getPersonalName());
-		sb.append(", protocol=");
-		sb.append(getProtocol());
-		sb.append(", incomingHostName=");
-		sb.append(getIncomingHostName());
-		sb.append(", incomingPort=");
-		sb.append(getIncomingPort());
-		sb.append(", incomingSecure=");
-		sb.append(isIncomingSecure());
-		sb.append(", outgoingHostName=");
-		sb.append(getOutgoingHostName());
-		sb.append(", outgoingPort=");
-		sb.append(getOutgoingPort());
-		sb.append(", outgoingSecure=");
-		sb.append(isOutgoingSecure());
-		sb.append(", login=");
-		sb.append(getLogin());
-		sb.append(", password=");
-		sb.append(getPassword());
-		sb.append(", savePassword=");
-		sb.append(isSavePassword());
-		sb.append(", signature=");
-		sb.append(getSignature());
-		sb.append(", useSignature=");
-		sb.append(isUseSignature());
-		sb.append(", folderPrefix=");
-		sb.append(getFolderPrefix());
-		sb.append(", inboxFolderId=");
-		sb.append(getInboxFolderId());
-		sb.append(", draftFolderId=");
-		sb.append(getDraftFolderId());
-		sb.append(", sentFolderId=");
-		sb.append(getSentFolderId());
-		sb.append(", trashFolderId=");
-		sb.append(getTrashFolderId());
-		sb.append(", defaultSender=");
-		sb.append(isDefaultSender());
-		sb.append("}");
-
-		return sb.toString();
-	}
-
-	@Override
-	public String toXmlString() {
-		StringBundler sb = new StringBundler(82);
-
-		sb.append("<model><model-name>");
-		sb.append("com.liferay.mail.reader.model.Account");
-		sb.append("</model-name>");
-
-		sb.append(
-			"<column><column-name>accountId</column-name><column-value><![CDATA[");
-		sb.append(getAccountId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userId</column-name><column-value><![CDATA[");
-		sb.append(getUserId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userName</column-name><column-value><![CDATA[");
-		sb.append(getUserName());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>createDate</column-name><column-value><![CDATA[");
-		sb.append(getCreateDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>modifiedDate</column-name><column-value><![CDATA[");
-		sb.append(getModifiedDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>address</column-name><column-value><![CDATA[");
-		sb.append(getAddress());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>personalName</column-name><column-value><![CDATA[");
-		sb.append(getPersonalName());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>protocol</column-name><column-value><![CDATA[");
-		sb.append(getProtocol());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>incomingHostName</column-name><column-value><![CDATA[");
-		sb.append(getIncomingHostName());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>incomingPort</column-name><column-value><![CDATA[");
-		sb.append(getIncomingPort());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>incomingSecure</column-name><column-value><![CDATA[");
-		sb.append(isIncomingSecure());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>outgoingHostName</column-name><column-value><![CDATA[");
-		sb.append(getOutgoingHostName());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>outgoingPort</column-name><column-value><![CDATA[");
-		sb.append(getOutgoingPort());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>outgoingSecure</column-name><column-value><![CDATA[");
-		sb.append(isOutgoingSecure());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>login</column-name><column-value><![CDATA[");
-		sb.append(getLogin());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>password</column-name><column-value><![CDATA[");
-		sb.append(getPassword());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>savePassword</column-name><column-value><![CDATA[");
-		sb.append(isSavePassword());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>signature</column-name><column-value><![CDATA[");
-		sb.append(getSignature());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>useSignature</column-name><column-value><![CDATA[");
-		sb.append(isUseSignature());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>folderPrefix</column-name><column-value><![CDATA[");
-		sb.append(getFolderPrefix());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>inboxFolderId</column-name><column-value><![CDATA[");
-		sb.append(getInboxFolderId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>draftFolderId</column-name><column-value><![CDATA[");
-		sb.append(getDraftFolderId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>sentFolderId</column-name><column-value><![CDATA[");
-		sb.append(getSentFolderId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>trashFolderId</column-name><column-value><![CDATA[");
-		sb.append(getTrashFolderId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>defaultSender</column-name><column-value><![CDATA[");
-		sb.append(isDefaultSender());
-		sb.append("]]></column-value></column>");
-
-		sb.append("</model>");
-
-		return sb.toString();
 	}
 
 	private static final ClassLoader _classLoader = Account.class.getClassLoader();

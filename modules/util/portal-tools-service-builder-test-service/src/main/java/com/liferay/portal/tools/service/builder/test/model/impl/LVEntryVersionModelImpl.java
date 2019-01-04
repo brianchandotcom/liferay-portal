@@ -38,8 +38,12 @@ import java.lang.reflect.Method;
 
 import java.sql.Types;
 
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * The base model implementation for the LVEntryVersion service. Represents a row in the &quot;LVEntryVersion&quot; database table, with each column mapped to a property of this class.
@@ -182,6 +186,126 @@ public class LVEntryVersionModelImpl extends BaseModelImpl<LVEntryVersion>
 		if (groupId != null) {
 			setGroupId(groupId);
 		}
+	}
+
+	public Map<String, Function<LVEntryVersion, Object>> getAttributeGetterFunctions() {
+		return _attributeGetterFunctions;
+	}
+
+	public Map<String, BiConsumer<LVEntryVersion, Object>> getAttributeSetterBiConsumers() {
+		return _attributeSetterBiConsumers;
+	}
+
+	private static final Map<String, Function<LVEntryVersion, Object>> _attributeGetterFunctions;
+	private static final Map<String, BiConsumer<LVEntryVersion, Object>> _attributeSetterBiConsumers;
+
+	static {
+		Map<String, Function<LVEntryVersion, Object>> attributeGetterFunctions = new LinkedHashMap<String, Function<LVEntryVersion, Object>>();
+		Map<String, BiConsumer<LVEntryVersion, ?>> attributeSetterBiConsumers = new LinkedHashMap<String, BiConsumer<LVEntryVersion, ?>>();
+
+		attributeGetterFunctions.put(
+			"lvEntryVersionId",
+			new Function<LVEntryVersion, Object>() {
+
+				@Override
+				public Object apply(LVEntryVersion lvEntryVersion) {
+					return lvEntryVersion.getLvEntryVersionId();
+				}
+
+			});
+		attributeSetterBiConsumers.put(
+			"lvEntryVersionId",
+			new BiConsumer<LVEntryVersion, Object>() {
+
+				@Override
+				public void accept(LVEntryVersion lvEntryVersion, Object lvEntryVersionId) {
+					lvEntryVersion.setLvEntryVersionId((Long)lvEntryVersionId);
+				}
+
+			});
+		attributeGetterFunctions.put(
+			"version",
+			new Function<LVEntryVersion, Object>() {
+
+				@Override
+				public Object apply(LVEntryVersion lvEntryVersion) {
+					return lvEntryVersion.getVersion();
+				}
+
+			});
+		attributeSetterBiConsumers.put(
+			"version",
+			new BiConsumer<LVEntryVersion, Object>() {
+
+				@Override
+				public void accept(LVEntryVersion lvEntryVersion, Object version) {
+					lvEntryVersion.setVersion((Integer)version);
+				}
+
+			});
+		attributeGetterFunctions.put(
+			"defaultLanguageId",
+			new Function<LVEntryVersion, Object>() {
+
+				@Override
+				public Object apply(LVEntryVersion lvEntryVersion) {
+					return lvEntryVersion.getDefaultLanguageId();
+				}
+
+			});
+		attributeSetterBiConsumers.put(
+			"defaultLanguageId",
+			new BiConsumer<LVEntryVersion, Object>() {
+
+				@Override
+				public void accept(LVEntryVersion lvEntryVersion, Object defaultLanguageId) {
+					lvEntryVersion.setDefaultLanguageId((String)defaultLanguageId);
+				}
+
+			});
+		attributeGetterFunctions.put(
+			"lvEntryId",
+			new Function<LVEntryVersion, Object>() {
+
+				@Override
+				public Object apply(LVEntryVersion lvEntryVersion) {
+					return lvEntryVersion.getLvEntryId();
+				}
+
+			});
+		attributeSetterBiConsumers.put(
+			"lvEntryId",
+			new BiConsumer<LVEntryVersion, Object>() {
+
+				@Override
+				public void accept(LVEntryVersion lvEntryVersion, Object lvEntryId) {
+					lvEntryVersion.setLvEntryId((Long)lvEntryId);
+				}
+
+			});
+		attributeGetterFunctions.put(
+			"groupId",
+			new Function<LVEntryVersion, Object>() {
+
+				@Override
+				public Object apply(LVEntryVersion lvEntryVersion) {
+					return lvEntryVersion.getGroupId();
+				}
+
+			});
+		attributeSetterBiConsumers.put(
+			"groupId",
+			new BiConsumer<LVEntryVersion, Object>() {
+
+				@Override
+				public void accept(LVEntryVersion lvEntryVersion, Object groupId) {
+					lvEntryVersion.setGroupId((Long)groupId);
+				}
+
+			});
+
+		_attributeGetterFunctions = Collections.unmodifiableMap(attributeGetterFunctions);
+		_attributeSetterBiConsumers = Collections.unmodifiableMap((Map)attributeSetterBiConsumers);
 	}
 
 	@Override

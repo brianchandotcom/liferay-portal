@@ -25,8 +25,6 @@ import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 
-import com.liferay.petra.string.StringBundler;
-
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.LocaleException;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -49,13 +47,17 @@ import java.io.Serializable;
 import java.sql.Types;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * The base model implementation for the DDMStructure service. Represents a row in the &quot;DDMStructure&quot; database table, with each column mapped to a property of this class.
@@ -247,157 +249,65 @@ public class DDMStructureModelImpl extends BaseModelImpl<DDMStructure>
 	}
 
 	@Override
-	public Map<String, Object> getModelAttributes() {
-		Map<String, Object> attributes = new HashMap<String, Object>();
-
-		attributes.put("uuid", getUuid());
-		attributes.put("structureId", getStructureId());
-		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
-		attributes.put("userId", getUserId());
-		attributes.put("userName", getUserName());
-		attributes.put("versionUserId", getVersionUserId());
-		attributes.put("versionUserName", getVersionUserName());
-		attributes.put("createDate", getCreateDate());
-		attributes.put("modifiedDate", getModifiedDate());
-		attributes.put("parentStructureId", getParentStructureId());
-		attributes.put("classNameId", getClassNameId());
-		attributes.put("structureKey", getStructureKey());
-		attributes.put("version", getVersion());
-		attributes.put("name", getName());
-		attributes.put("description", getDescription());
-		attributes.put("definition", getDefinition());
-		attributes.put("storageType", getStorageType());
-		attributes.put("type", getType());
-		attributes.put("lastPublishDate", getLastPublishDate());
-
-		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
-		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
-
-		return attributes;
+	public Map<String, Function<DDMStructure, Object>> getAttributeGetterFunctions() {
+		return _attributeGetterFunctions;
 	}
 
 	@Override
-	public void setModelAttributes(Map<String, Object> attributes) {
-		String uuid = (String)attributes.get("uuid");
+	public Map<String, BiConsumer<DDMStructure, Object>> getAttributeSetterBiConsumers() {
+		return _attributeSetterBiConsumers;
+	}
 
-		if (uuid != null) {
-			setUuid(uuid);
-		}
+	private static final Map<String, Function<DDMStructure, Object>> _attributeGetterFunctions;
+	private static final Map<String, BiConsumer<DDMStructure, Object>> _attributeSetterBiConsumers;
 
-		Long structureId = (Long)attributes.get("structureId");
+	static {
+		Map<String, Function<DDMStructure, Object>> attributeGetterFunctions = new LinkedHashMap<String, Function<DDMStructure, Object>>();
+		Map<String, BiConsumer<DDMStructure, ?>> attributeSetterBiConsumers = new LinkedHashMap<String, BiConsumer<DDMStructure, ?>>();
 
-		if (structureId != null) {
-			setStructureId(structureId);
-		}
+		attributeGetterFunctions.put("uuid", DDMStructure::getUuid);
+		attributeSetterBiConsumers.put("uuid", (BiConsumer<DDMStructure, String>)DDMStructure::setUuid);
+		attributeGetterFunctions.put("structureId", DDMStructure::getStructureId);
+		attributeSetterBiConsumers.put("structureId", (BiConsumer<DDMStructure, Long>)DDMStructure::setStructureId);
+		attributeGetterFunctions.put("groupId", DDMStructure::getGroupId);
+		attributeSetterBiConsumers.put("groupId", (BiConsumer<DDMStructure, Long>)DDMStructure::setGroupId);
+		attributeGetterFunctions.put("companyId", DDMStructure::getCompanyId);
+		attributeSetterBiConsumers.put("companyId", (BiConsumer<DDMStructure, Long>)DDMStructure::setCompanyId);
+		attributeGetterFunctions.put("userId", DDMStructure::getUserId);
+		attributeSetterBiConsumers.put("userId", (BiConsumer<DDMStructure, Long>)DDMStructure::setUserId);
+		attributeGetterFunctions.put("userName", DDMStructure::getUserName);
+		attributeSetterBiConsumers.put("userName", (BiConsumer<DDMStructure, String>)DDMStructure::setUserName);
+		attributeGetterFunctions.put("versionUserId", DDMStructure::getVersionUserId);
+		attributeSetterBiConsumers.put("versionUserId", (BiConsumer<DDMStructure, Long>)DDMStructure::setVersionUserId);
+		attributeGetterFunctions.put("versionUserName", DDMStructure::getVersionUserName);
+		attributeSetterBiConsumers.put("versionUserName", (BiConsumer<DDMStructure, String>)DDMStructure::setVersionUserName);
+		attributeGetterFunctions.put("createDate", DDMStructure::getCreateDate);
+		attributeSetterBiConsumers.put("createDate", (BiConsumer<DDMStructure, Date>)DDMStructure::setCreateDate);
+		attributeGetterFunctions.put("modifiedDate", DDMStructure::getModifiedDate);
+		attributeSetterBiConsumers.put("modifiedDate", (BiConsumer<DDMStructure, Date>)DDMStructure::setModifiedDate);
+		attributeGetterFunctions.put("parentStructureId", DDMStructure::getParentStructureId);
+		attributeSetterBiConsumers.put("parentStructureId", (BiConsumer<DDMStructure, Long>)DDMStructure::setParentStructureId);
+		attributeGetterFunctions.put("classNameId", DDMStructure::getClassNameId);
+		attributeSetterBiConsumers.put("classNameId", (BiConsumer<DDMStructure, Long>)DDMStructure::setClassNameId);
+		attributeGetterFunctions.put("structureKey", DDMStructure::getStructureKey);
+		attributeSetterBiConsumers.put("structureKey", (BiConsumer<DDMStructure, String>)DDMStructure::setStructureKey);
+		attributeGetterFunctions.put("version", DDMStructure::getVersion);
+		attributeSetterBiConsumers.put("version", (BiConsumer<DDMStructure, String>)DDMStructure::setVersion);
+		attributeGetterFunctions.put("name", DDMStructure::getName);
+		attributeSetterBiConsumers.put("name", (BiConsumer<DDMStructure, String>)DDMStructure::setName);
+		attributeGetterFunctions.put("description", DDMStructure::getDescription);
+		attributeSetterBiConsumers.put("description", (BiConsumer<DDMStructure, String>)DDMStructure::setDescription);
+		attributeGetterFunctions.put("definition", DDMStructure::getDefinition);
+		attributeSetterBiConsumers.put("definition", (BiConsumer<DDMStructure, String>)DDMStructure::setDefinition);
+		attributeGetterFunctions.put("storageType", DDMStructure::getStorageType);
+		attributeSetterBiConsumers.put("storageType", (BiConsumer<DDMStructure, String>)DDMStructure::setStorageType);
+		attributeGetterFunctions.put("type", DDMStructure::getType);
+		attributeSetterBiConsumers.put("type", (BiConsumer<DDMStructure, Integer>)DDMStructure::setType);
+		attributeGetterFunctions.put("lastPublishDate", DDMStructure::getLastPublishDate);
+		attributeSetterBiConsumers.put("lastPublishDate", (BiConsumer<DDMStructure, Date>)DDMStructure::setLastPublishDate);
 
-		Long groupId = (Long)attributes.get("groupId");
-
-		if (groupId != null) {
-			setGroupId(groupId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
-		}
-
-		Long userId = (Long)attributes.get("userId");
-
-		if (userId != null) {
-			setUserId(userId);
-		}
-
-		String userName = (String)attributes.get("userName");
-
-		if (userName != null) {
-			setUserName(userName);
-		}
-
-		Long versionUserId = (Long)attributes.get("versionUserId");
-
-		if (versionUserId != null) {
-			setVersionUserId(versionUserId);
-		}
-
-		String versionUserName = (String)attributes.get("versionUserName");
-
-		if (versionUserName != null) {
-			setVersionUserName(versionUserName);
-		}
-
-		Date createDate = (Date)attributes.get("createDate");
-
-		if (createDate != null) {
-			setCreateDate(createDate);
-		}
-
-		Date modifiedDate = (Date)attributes.get("modifiedDate");
-
-		if (modifiedDate != null) {
-			setModifiedDate(modifiedDate);
-		}
-
-		Long parentStructureId = (Long)attributes.get("parentStructureId");
-
-		if (parentStructureId != null) {
-			setParentStructureId(parentStructureId);
-		}
-
-		Long classNameId = (Long)attributes.get("classNameId");
-
-		if (classNameId != null) {
-			setClassNameId(classNameId);
-		}
-
-		String structureKey = (String)attributes.get("structureKey");
-
-		if (structureKey != null) {
-			setStructureKey(structureKey);
-		}
-
-		String version = (String)attributes.get("version");
-
-		if (version != null) {
-			setVersion(version);
-		}
-
-		String name = (String)attributes.get("name");
-
-		if (name != null) {
-			setName(name);
-		}
-
-		String description = (String)attributes.get("description");
-
-		if (description != null) {
-			setDescription(description);
-		}
-
-		String definition = (String)attributes.get("definition");
-
-		if (definition != null) {
-			setDefinition(definition);
-		}
-
-		String storageType = (String)attributes.get("storageType");
-
-		if (storageType != null) {
-			setStorageType(storageType);
-		}
-
-		Integer type = (Integer)attributes.get("type");
-
-		if (type != null) {
-			setType(type);
-		}
-
-		Date lastPublishDate = (Date)attributes.get("lastPublishDate");
-
-		if (lastPublishDate != null) {
-			setLastPublishDate(lastPublishDate);
-		}
+		_attributeGetterFunctions = Collections.unmodifiableMap(attributeGetterFunctions);
+		_attributeSetterBiConsumers = Collections.unmodifiableMap((Map)attributeSetterBiConsumers);
 	}
 
 	@JSON
@@ -1334,149 +1244,6 @@ public class DDMStructureModelImpl extends BaseModelImpl<DDMStructure>
 		ddmStructureCacheModel._ddmForm = getDDMForm();
 
 		return ddmStructureCacheModel;
-	}
-
-	@Override
-	public String toString() {
-		StringBundler sb = new StringBundler(41);
-
-		sb.append("{uuid=");
-		sb.append(getUuid());
-		sb.append(", structureId=");
-		sb.append(getStructureId());
-		sb.append(", groupId=");
-		sb.append(getGroupId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
-		sb.append(", userId=");
-		sb.append(getUserId());
-		sb.append(", userName=");
-		sb.append(getUserName());
-		sb.append(", versionUserId=");
-		sb.append(getVersionUserId());
-		sb.append(", versionUserName=");
-		sb.append(getVersionUserName());
-		sb.append(", createDate=");
-		sb.append(getCreateDate());
-		sb.append(", modifiedDate=");
-		sb.append(getModifiedDate());
-		sb.append(", parentStructureId=");
-		sb.append(getParentStructureId());
-		sb.append(", classNameId=");
-		sb.append(getClassNameId());
-		sb.append(", structureKey=");
-		sb.append(getStructureKey());
-		sb.append(", version=");
-		sb.append(getVersion());
-		sb.append(", name=");
-		sb.append(getName());
-		sb.append(", description=");
-		sb.append(getDescription());
-		sb.append(", definition=");
-		sb.append(getDefinition());
-		sb.append(", storageType=");
-		sb.append(getStorageType());
-		sb.append(", type=");
-		sb.append(getType());
-		sb.append(", lastPublishDate=");
-		sb.append(getLastPublishDate());
-		sb.append("}");
-
-		return sb.toString();
-	}
-
-	@Override
-	public String toXmlString() {
-		StringBundler sb = new StringBundler(64);
-
-		sb.append("<model><model-name>");
-		sb.append("com.liferay.dynamic.data.mapping.model.DDMStructure");
-		sb.append("</model-name>");
-
-		sb.append(
-			"<column><column-name>uuid</column-name><column-value><![CDATA[");
-		sb.append(getUuid());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>structureId</column-name><column-value><![CDATA[");
-		sb.append(getStructureId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>groupId</column-name><column-value><![CDATA[");
-		sb.append(getGroupId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userId</column-name><column-value><![CDATA[");
-		sb.append(getUserId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userName</column-name><column-value><![CDATA[");
-		sb.append(getUserName());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>versionUserId</column-name><column-value><![CDATA[");
-		sb.append(getVersionUserId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>versionUserName</column-name><column-value><![CDATA[");
-		sb.append(getVersionUserName());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>createDate</column-name><column-value><![CDATA[");
-		sb.append(getCreateDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>modifiedDate</column-name><column-value><![CDATA[");
-		sb.append(getModifiedDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>parentStructureId</column-name><column-value><![CDATA[");
-		sb.append(getParentStructureId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>classNameId</column-name><column-value><![CDATA[");
-		sb.append(getClassNameId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>structureKey</column-name><column-value><![CDATA[");
-		sb.append(getStructureKey());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>version</column-name><column-value><![CDATA[");
-		sb.append(getVersion());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>name</column-name><column-value><![CDATA[");
-		sb.append(getName());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>description</column-name><column-value><![CDATA[");
-		sb.append(getDescription());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>definition</column-name><column-value><![CDATA[");
-		sb.append(getDefinition());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>storageType</column-name><column-value><![CDATA[");
-		sb.append(getStorageType());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>type</column-name><column-value><![CDATA[");
-		sb.append(getType());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>lastPublishDate</column-name><column-value><![CDATA[");
-		sb.append(getLastPublishDate());
-		sb.append("]]></column-value></column>");
-
-		sb.append("</model>");
-
-		return sb.toString();
 	}
 
 	private static final ClassLoader _classLoader = DDMStructure.class.getClassLoader();

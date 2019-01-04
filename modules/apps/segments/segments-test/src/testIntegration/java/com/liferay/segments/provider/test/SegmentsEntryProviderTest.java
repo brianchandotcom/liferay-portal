@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.segments.context.Context;
 import com.liferay.segments.criteria.Criteria;
 import com.liferay.segments.criteria.CriteriaSerializer;
 import com.liferay.segments.criteria.contributor.SegmentsCriteriaContributor;
@@ -167,7 +168,63 @@ public class SegmentsEntryProviderTest {
 	}
 
 	@Test
-	public void testGetSegmentsEntryIdsWithMultipleCriterion()
+	public void testGetSegmentsEntryIdsWithContextCriterionAndModelCriterion()
+		throws Exception {
+
+		_user1 = UserTestUtil.addUser(_group.getGroupId());
+		_user2 = UserTestUtil.addUser(_group.getGroupId());
+
+		Criteria criteria1 = new Criteria();
+
+		_contextSegmentsCriteriaContributor.contribute(
+			criteria1, "(languageId eq 'en')", Criteria.Conjunction.AND);
+
+		_userSegmentsCriteriaContributor.contribute(
+			criteria1,
+			String.format("(firstName eq '%s')", _user1.getFirstName()),
+			Criteria.Conjunction.AND);
+
+		SegmentsEntry segmentsEntry1 = SegmentsTestUtil.addSegmentsEntry(
+			_group.getGroupId(), User.class.getName(), _user1.getUserId());
+		SegmentsEntry segmentsEntry2 = SegmentsTestUtil.addSegmentsEntry(
+			_group.getGroupId(), CriteriaSerializer.serialize(criteria1),
+			User.class.getName());
+
+		Criteria criteria2 = new Criteria();
+
+		_contextSegmentsCriteriaContributor.contribute(
+			criteria2, "(languageId eq 'en')", Criteria.Conjunction.OR);
+
+		_userSegmentsCriteriaContributor.contribute(
+			criteria2,
+			String.format("(firstName eq '%s')", _user2.getFirstName()),
+			Criteria.Conjunction.AND);
+
+		SegmentsEntry segmentsEntry3 = SegmentsTestUtil.addSegmentsEntry(
+			_group.getGroupId(), CriteriaSerializer.serialize(criteria2),
+			User.class.getName());
+
+		Context context = new Context();
+
+		context.put("languageId", "en");
+
+		long[] segmentsEntryIds = _segmentsEntryProvider.getSegmentsEntryIds(
+			User.class.getName(), _user1.getUserId(), context);
+
+		Assert.assertEquals(
+			segmentsEntryIds.toString(), 3, segmentsEntryIds.length);
+		Assert.assertTrue(
+			ArrayUtil.containsAll(
+				new long[] {
+					segmentsEntry1.getSegmentsEntryId(),
+					segmentsEntry2.getSegmentsEntryId(),
+					segmentsEntry3.getSegmentsEntryId()
+				},
+				segmentsEntryIds));
+	}
+
+	@Test
+	public void testGetSegmentsEntryIdsWithMultipleModelCriterion()
 		throws Exception {
 
 		Organization organization = OrganizationTestUtil.addOrganization();
@@ -224,7 +281,55 @@ public class SegmentsEntryProviderTest {
 	}
 
 	@Test
-	public void testGetSegmentsEntryIdsWithSingleCriterion() throws Exception {
+	public void testGetSegmentsEntryIdsWithSingleContextCriterion()
+		throws Exception {
+
+		_user1 = UserTestUtil.addUser(_group.getGroupId());
+		_user2 = UserTestUtil.addUser(_group.getGroupId());
+
+		Criteria criteria1 = new Criteria();
+
+		_contextSegmentsCriteriaContributor.contribute(
+			criteria1, "(languageId eq 'en')", Criteria.Conjunction.AND);
+
+		SegmentsEntry segmentsEntry1 = SegmentsTestUtil.addSegmentsEntry(
+			_group.getGroupId(), User.class.getName(), _user1.getUserId());
+		SegmentsEntry segmentsEntry2 = SegmentsTestUtil.addSegmentsEntry(
+			_group.getGroupId(), CriteriaSerializer.serialize(criteria1),
+			User.class.getName());
+
+		Criteria criteria2 = new Criteria();
+
+		_contextSegmentsCriteriaContributor.contribute(
+			criteria2, "(languageId eq 'fr')", Criteria.Conjunction.AND);
+
+		SegmentsTestUtil.addSegmentsEntry(
+			_group.getGroupId(), CriteriaSerializer.serialize(criteria2),
+			User.class.getName());
+
+		Context context = new Context();
+
+		context.put("languageId", "en");
+
+		long[] segmentsEntryIds = _segmentsEntryProvider.getSegmentsEntryIds(
+			User.class.getName(), _user1.getUserId(), context);
+
+		Assert.assertEquals(
+			segmentsEntryIds.toString(), 2, segmentsEntryIds.length);
+
+		Assert.assertTrue(
+			ArrayUtil.containsAll(
+				segmentsEntryIds,
+				new long[] {
+					segmentsEntry1.getSegmentsEntryId(),
+					segmentsEntry2.getSegmentsEntryId()
+				}));
+	}
+
+	@Test
+	public void testGetSegmentsEntryIdsWithSingleModelCriterion()
+		throws Exception {
+
 		_user1 = UserTestUtil.addUser(_group.getGroupId());
 		_user2 = UserTestUtil.addUser(_group.getGroupId());
 
@@ -267,6 +372,12 @@ public class SegmentsEntryProviderTest {
 				},
 				segmentsEntryIds));
 	}
+
+	@Inject(
+		filter = "segments.criteria.contributor.key=context",
+		type = SegmentsCriteriaContributor.class
+	)
+	private SegmentsCriteriaContributor _contextSegmentsCriteriaContributor;
 
 	@DeleteAfterTestRun
 	private Group _group;

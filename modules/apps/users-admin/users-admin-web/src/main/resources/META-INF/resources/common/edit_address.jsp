@@ -61,7 +61,7 @@ if (addressId > 0L) {
 		<label class="control-label" for="<portlet:namespace />addressZip">
 			<liferay-ui:message key="postal-code" />
 
-			<span hidden id="addressZipRequiredWrapper">
+			<span hidden id="<portlet:namespace />addressZipRequiredWrapper">
 				<aui:icon cssClass="reference-mark text-warning" image="asterisk" markupView="lexicon" />
 
 				<span class="hide-accessible"><liferay-ui:message key="required" /></span>
@@ -98,7 +98,7 @@ if (addressId > 0L) {
 
 <aui:script use="liferay-form">
 	const addressCountry = document.getElementById('<portlet:namespace />addressCountryId');
-	const addressZipRequiredWrapper = document.getElementById('addressZipRequiredWrapper');
+	const addressZipRequiredWrapper = document.getElementById('<portlet:namespace />addressZipRequiredWrapper');
 	const formValidator = Liferay.Form.get('<portlet:namespace />fm').formValidator;
 
 	const rules = formValidator._getAttr('rules');

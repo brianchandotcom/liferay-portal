@@ -33,7 +33,6 @@ import org.gradle.api.file.FileTree;
 import org.gradle.api.file.FileTreeElement;
 import org.gradle.api.specs.Spec;
 import org.gradle.api.tasks.Input;
-import org.gradle.api.tasks.InputFile;
 import org.gradle.api.tasks.InputFiles;
 import org.gradle.api.tasks.Optional;
 import org.gradle.api.tasks.OutputFile;
@@ -116,44 +115,9 @@ public class NpmRunTask extends ExecuteNpmTask implements PatternFilterable {
 		return GradleUtil.toString(_npmVersion);
 	}
 
-	@InputFile
-	public File getPackageJsonFile() {
-		Project project = getProject();
-
-		return project.file("package.json");
-	}
-
-	@InputFile
-	@Optional
-	public File getPackageLockJsonFile() {
-		Project project = getProject();
-
-		File file = project.file("package-lock.json");
-
-		if (!file.exists()) {
-			return null;
-		}
-
-		return file;
-	}
-
 	@Input
 	public String getScriptName() {
 		return GradleUtil.toString(_scriptName);
-	}
-
-	@InputFile
-	@Optional
-	public File getShrinkwrapJsonFile() {
-		Project project = getProject();
-
-		File file = project.file("npm-shrinkwrap.json");
-
-		if (!file.exists()) {
-			return null;
-		}
-
-		return file;
 	}
 
 	@OutputFile

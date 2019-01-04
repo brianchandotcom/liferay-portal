@@ -25,14 +25,12 @@ import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.model.CTEntry;
 import com.liferay.change.tracking.service.CTCollectionLocalService;
 import com.liferay.change.tracking.service.CTEntryLocalService;
-import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskManager;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.model.BaseModel;
-import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.ClassName;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.impl.BaseModelImpl;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
@@ -54,7 +52,6 @@ import java.io.Serializable;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 import org.junit.After;
@@ -780,7 +777,7 @@ public class CTEngineManagerTest {
 	@DeleteAfterTestRun
 	private User _user;
 
-	private class TestVersionClass implements BaseModel<TestVersionClass> {
+	private class TestVersionClass extends BaseModelImpl<TestVersionClass> {
 
 		@Override
 		public Object clone() {
@@ -790,16 +787,6 @@ public class CTEngineManagerTest {
 		@Override
 		public int compareTo(TestVersionClass testVersionClass) {
 			return 0;
-		}
-
-		@Override
-		public ExpandoBridge getExpandoBridge() {
-			return null;
-		}
-
-		@Override
-		public Map<String, Object> getModelAttributes() {
-			return null;
 		}
 
 		@Override
@@ -818,17 +805,7 @@ public class CTEngineManagerTest {
 		}
 
 		@Override
-		public boolean isCachedModel() {
-			return false;
-		}
-
-		@Override
 		public boolean isEntityCacheEnabled() {
-			return false;
-		}
-
-		@Override
-		public boolean isEscapedModel() {
 			return false;
 		}
 
@@ -838,60 +815,7 @@ public class CTEngineManagerTest {
 		}
 
 		@Override
-		public boolean isNew() {
-			return false;
-		}
-
-		@Override
-		public void resetOriginalValues() {
-		}
-
-		@Override
-		public void setCachedModel(boolean cachedModel) {
-		}
-
-		@Override
-		public void setExpandoBridgeAttributes(BaseModel baseModel) {
-		}
-
-		@Override
-		public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		}
-
-		@Override
-		public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		}
-
-		@Override
-		public void setModelAttributes(Map attributes) {
-		}
-
-		@Override
-		public void setNew(boolean n) {
-		}
-
-		@Override
 		public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		}
-
-		@Override
-		public CacheModel<TestVersionClass> toCacheModel() {
-			return null;
-		}
-
-		@Override
-		public TestVersionClass toEscapedModel() {
-			return null;
-		}
-
-		@Override
-		public TestVersionClass toUnescapedModel() {
-			return null;
-		}
-
-		@Override
-		public String toXmlString() {
-			return null;
 		}
 
 	}

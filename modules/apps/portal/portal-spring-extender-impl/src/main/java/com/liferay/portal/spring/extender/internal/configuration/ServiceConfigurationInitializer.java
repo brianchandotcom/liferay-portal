@@ -14,8 +14,6 @@
 
 package com.liferay.portal.spring.extender.internal.configuration;
 
-import com.liferay.portal.kernel.cache.PortalCacheManagerNames;
-import com.liferay.portal.kernel.cache.configurator.PortalCacheConfiguratorSettings;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -77,8 +75,6 @@ public class ServiceConfigurationInitializer {
 		BundleContext bundleContext = _bundle.getBundleContext();
 
 		if (_portletConfiguration != null) {
-			_reconfigureCaches();
-
 			_readResourceActions();
 
 			_registerConfiguration(
@@ -156,49 +152,6 @@ public class ServiceConfigurationInitializer {
 				"Unable to read resource actions config in " +
 					PropsKeys.RESOURCE_ACTIONS_CONFIGS,
 				e);
-		}
-	}
-
-	private void _reconfigureCaches() {
-		String singleVMConfigurationLocation = _portletConfiguration.get(
-			PropsKeys.EHCACHE_SINGLE_VM_CONFIG_LOCATION);
-		String multiVMConfigurationLocation = _portletConfiguration.get(
-			PropsKeys.EHCACHE_MULTI_VM_CONFIG_LOCATION);
-
-		if (Validator.isNull(singleVMConfigurationLocation) &&
-			Validator.isNull(multiVMConfigurationLocation)) {
-
-			return;
-		}
-
-		BundleContext bundleContext = _bundle.getBundleContext();
-
-		if (Validator.isNotNull(singleVMConfigurationLocation)) {
-			Dictionary<String, Object> properties = new HashMapDictionary<>();
-
-			properties.put(
-				"portal.cache.manager.name", PortalCacheManagerNames.SINGLE_VM);
-
-			_serviceRegistrations.add(
-				bundleContext.registerService(
-					PortalCacheConfiguratorSettings.class,
-					new PortalCacheConfiguratorSettings(
-						_classLoader, singleVMConfigurationLocation),
-					properties));
-		}
-
-		if (Validator.isNotNull(multiVMConfigurationLocation)) {
-			Dictionary<String, Object> properties = new HashMapDictionary<>();
-
-			properties.put(
-				"portal.cache.manager.name", PortalCacheManagerNames.MULTI_VM);
-
-			_serviceRegistrations.add(
-				bundleContext.registerService(
-					PortalCacheConfiguratorSettings.class,
-					new PortalCacheConfiguratorSettings(
-						_classLoader, multiVMConfigurationLocation),
-					properties));
 		}
 	}
 

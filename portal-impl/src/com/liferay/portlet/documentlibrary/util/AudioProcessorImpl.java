@@ -16,6 +16,7 @@ package com.liferay.portlet.documentlibrary.util;
 
 import com.liferay.document.library.kernel.exception.NoSuchFileEntryException;
 import com.liferay.document.library.kernel.model.DLProcessorConstants;
+import com.liferay.document.library.kernel.service.DLFileEntryPreviewHandlerUtil;
 import com.liferay.document.library.kernel.util.AudioProcessor;
 import com.liferay.document.library.kernel.util.DLPreviewableProcessor;
 import com.liferay.document.library.kernel.util.DLUtil;
@@ -305,6 +306,9 @@ public class AudioProcessorImpl
 						file = liferayFileVersion.getFile(false);
 					}
 					catch (UnsupportedOperationException uoe) {
+						DLFileEntryPreviewHandlerUtil.addFailDLFileEntryPreview(
+							destinationFileVersion.getFileEntryId(),
+							destinationFileVersion.getFileVersionId());
 					}
 				}
 
@@ -321,8 +325,16 @@ public class AudioProcessorImpl
 				try {
 					_generateAudioXuggler(
 						destinationFileVersion, file, previewTempFiles);
+
+					DLFileEntryPreviewHandlerUtil.addSuccessDLFileEntryPreview(
+						destinationFileVersion.getFileEntryId(),
+						destinationFileVersion.getFileVersionId());
 				}
 				catch (Exception e) {
+					DLFileEntryPreviewHandlerUtil.addFailDLFileEntryPreview(
+						destinationFileVersion.getFileEntryId(),
+						destinationFileVersion.getFileVersionId());
+
 					_log.error(e, e);
 				}
 			}
@@ -331,6 +343,10 @@ public class AudioProcessorImpl
 			if (_log.isDebugEnabled()) {
 				_log.debug(nsfee, nsfee);
 			}
+
+			DLFileEntryPreviewHandlerUtil.addFailDLFileEntryPreview(
+				destinationFileVersion.getFileEntryId(),
+				destinationFileVersion.getFileVersionId());
 		}
 		finally {
 			_fileVersionIds.remove(destinationFileVersion.getFileVersionId());

@@ -14,12 +14,16 @@
 
 package com.liferay.document.library.preview.image.internal;
 
+import com.liferay.document.library.kernel.service.DLFileEntryPreviewHandler;
+import com.liferay.document.library.kernel.service.DLFileEntryPreviewHandlerUtil;
 import com.liferay.document.library.kernel.util.DLProcessorRegistryUtil;
 import com.liferay.document.library.kernel.util.ImageProcessorUtil;
 import com.liferay.document.library.preview.DLPreviewRenderer;
 import com.liferay.document.library.preview.DLPreviewRendererProvider;
+import com.liferay.document.library.preview.exception.DLFileEntryPreviewGenerationException;
 import com.liferay.document.library.preview.exception.DLPreviewGenerationInProcessException;
 import com.liferay.document.library.preview.exception.DLPreviewSizeException;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -55,15 +59,7 @@ public class ImageDLPreviewRendererProvider
 
 		return Optional.of(
 			(request, response) -> {
-				if (!ImageProcessorUtil.hasImages(fileVersion)) {
-					if (!DLProcessorRegistryUtil.isPreviewableSize(
-							fileVersion)) {
-
-						throw new DLPreviewSizeException();
-					}
-
-					throw new DLPreviewGenerationInProcessException();
-				}
+				checkForPreviewGenerationExceptions(fileVersion);
 
 				RequestDispatcher requestDispatcher =
 					_servletContext.getRequestDispatcher("/preview/view.jsp");
@@ -93,6 +89,27 @@ public class ImageDLPreviewRendererProvider
 		_dlPreviewRendererProviderServiceRegistration =
 			bundleContext.registerService(
 				DLPreviewRendererProvider.class, this, properties);
+	}
+
+	protected void checkForPreviewGenerationExceptions(FileVersion fileVersion)
+		throws PortalException {
+
+		long fileEntryPreviewId =
+			DLFileEntryPreviewHandlerUtil.getDLFileEntryPreviewId(
+				fileVersion.getFileEntryId(), fileVersion.getFileVersionId(),
+				DLFileEntryPreviewHandler.DLFileEntryPreviewType.FAIL);
+
+		if (fileEntryPreviewId > 0) {
+			throw new DLFileEntryPreviewGenerationException();
+		}
+
+		if (!ImageProcessorUtil.hasImages(fileVersion)) {
+			if (!DLProcessorRegistryUtil.isPreviewableSize(fileVersion)) {
+				throw new DLPreviewSizeException();
+			}
+
+			throw new DLPreviewGenerationInProcessException();
+		}
 	}
 
 	@Deactivate

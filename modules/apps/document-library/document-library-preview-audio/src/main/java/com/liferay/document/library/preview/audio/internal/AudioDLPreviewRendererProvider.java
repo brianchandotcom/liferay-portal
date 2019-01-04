@@ -14,11 +14,14 @@
 
 package com.liferay.document.library.preview.audio.internal;
 
+import com.liferay.document.library.kernel.service.DLFileEntryPreviewHandler;
+import com.liferay.document.library.kernel.service.DLFileEntryPreviewHandlerUtil;
 import com.liferay.document.library.kernel.util.AudioProcessorUtil;
 import com.liferay.document.library.kernel.util.DLProcessorRegistryUtil;
 import com.liferay.document.library.preview.DLPreviewRenderer;
 import com.liferay.document.library.preview.DLPreviewRendererProvider;
 import com.liferay.document.library.preview.audio.internal.constants.DLPreviewAudioWebKeys;
+import com.liferay.document.library.preview.exception.DLFileEntryPreviewGenerationException;
 import com.liferay.document.library.preview.exception.DLPreviewGenerationInProcessException;
 import com.liferay.document.library.preview.exception.DLPreviewSizeException;
 import com.liferay.document.library.util.DLURLHelper;
@@ -61,15 +64,7 @@ public class AudioDLPreviewRendererProvider
 
 		return Optional.of(
 			(request, response) -> {
-				if (!AudioProcessorUtil.hasAudio(fileVersion)) {
-					if (!DLProcessorRegistryUtil.isPreviewableSize(
-							fileVersion)) {
-
-						throw new DLPreviewSizeException();
-					}
-
-					throw new DLPreviewGenerationInProcessException();
-				}
+				checkForPreviewGenerationExceptions(fileVersion);
 
 				RequestDispatcher requestDispatcher =
 					_servletContext.getRequestDispatcher("/preview/view.jsp");
@@ -90,6 +85,27 @@ public class AudioDLPreviewRendererProvider
 		FileVersion fileVersion) {
 
 		return Optional.empty();
+	}
+
+	protected void checkForPreviewGenerationExceptions(FileVersion fileVersion)
+		throws PortalException {
+
+		long fileEntryPreviewId =
+			DLFileEntryPreviewHandlerUtil.getDLFileEntryPreviewId(
+				fileVersion.getFileEntryId(), fileVersion.getFileVersionId(),
+				DLFileEntryPreviewHandler.DLFileEntryPreviewType.FAIL);
+
+		if (fileEntryPreviewId > 0) {
+			throw new DLFileEntryPreviewGenerationException();
+		}
+
+		if (!AudioProcessorUtil.hasAudio(fileVersion)) {
+			if (!DLProcessorRegistryUtil.isPreviewableSize(fileVersion)) {
+				throw new DLPreviewSizeException();
+			}
+
+			throw new DLPreviewGenerationInProcessException();
+		}
 	}
 
 	private List<String> _getPreviewFileURLs(

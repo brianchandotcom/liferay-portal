@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermi
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.SetUtil;
+import com.liferay.portlet.asset.util.AssetUtil;
 
 import java.io.Serializable;
 
@@ -94,6 +95,8 @@ public class EditTagsBulkSelectionActionImpl
 
 						currentTagNamesSet.removeAll(toRemoveTagNamesSet);
 						currentTagNamesSet.addAll(toAddTagNamesSet);
+						currentTagNamesSet.removeIf(
+							tagName -> !AssetUtil.isValidWord(tagName));
 
 						newTagNames = currentTagNamesSet.toArray(
 							new String[currentTagNamesSet.size()]);

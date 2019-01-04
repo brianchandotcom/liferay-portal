@@ -22,7 +22,9 @@ import org.osgi.service.component.annotations.Component;
 		"javax.portlet.init-param.view-template=/templates/view.ftl",
 		"javax.portlet.name=" + ${className}PortletKeys.${className},
 		"javax.portlet.resource-bundle=content.Language",
-		"javax.portlet.security-role-ref=power-user,user"
+		"javax.portlet.security-role-ref=power-user,user"#if (${liferayVersion.startsWith("7.1")}),
+		"javax.portlet.version=3.0"#end
+
 	},
 	service = Portlet.class
 )

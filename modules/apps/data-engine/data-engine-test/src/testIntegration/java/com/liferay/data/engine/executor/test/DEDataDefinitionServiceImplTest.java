@@ -18,6 +18,8 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.data.engine.exception.DEDataDefinitionException;
 import com.liferay.data.engine.model.DEDataDefinition;
 import com.liferay.data.engine.model.DEDataDefinitionField;
+import com.liferay.data.engine.service.DEDataDefinitionCountRequest;
+import com.liferay.data.engine.service.DEDataDefinitionCountResponse;
 import com.liferay.data.engine.service.DEDataDefinitionDeleteRequest;
 import com.liferay.data.engine.service.DEDataDefinitionGetRequest;
 import com.liferay.data.engine.service.DEDataDefinitionGetResponse;
@@ -32,6 +34,9 @@ import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.RoleConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -49,6 +54,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -72,9 +78,203 @@ public class DEDataDefinitionServiceImplTest {
 		_group = GroupTestUtil.addGroup();
 
 		_user = UserTestUtil.addGroupOwnerUser(_group);
+
+		_originalPermissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		PermissionThreadLocal.setPermissionChecker(
+			PermissionCheckerFactoryUtil.create(_user));
 	}
 
-	@Test(expected = DEDataDefinitionException.class)
+	@After
+	public void tearDown() {
+		PermissionThreadLocal.setPermissionChecker(_originalPermissionChecker);
+	}
+
+	@Test
+	public void testCount() throws Exception {
+		Map<String, String> field1Labels = new HashMap() {
+			{
+				put("en_US", "Field 1");
+			}
+		};
+
+		DEDataDefinitionField deDataDefinitionField1 =
+			new DEDataDefinitionField("field1", "string");
+
+		deDataDefinitionField1.addLabels(field1Labels);
+
+		DEDataDefinition deDataDefinition1 = new DEDataDefinition(
+			Arrays.asList(deDataDefinitionField1));
+
+		deDataDefinition1.addName(LocaleUtil.US, "Definition Test 1");
+		deDataDefinition1.setStorageType("json");
+
+		DEDataDefinitionSaveRequest deDataDefinitionSaveRequest1 =
+			DEDataDefinitionRequestBuilder.saveBuilder(
+				deDataDefinition1
+			).onBehalfOf(
+				_user.getUserId()
+			).inGroup(
+				_group.getGroupId()
+			).build();
+
+		Map<String, String> field2Labels = new HashMap() {
+			{
+				put("en_US", "Field 2");
+			}
+		};
+
+		DEDataDefinitionField deDataDefinitionField2 =
+			new DEDataDefinitionField("field2", "number");
+
+		deDataDefinitionField2.addLabels(field2Labels);
+
+		DEDataDefinition deDataDefinition2 = new DEDataDefinition(
+			Arrays.asList(deDataDefinitionField2));
+
+		deDataDefinition2.addName(LocaleUtil.US, "Definition Test 2");
+		deDataDefinition2.setStorageType("json");
+
+		DEDataDefinitionSaveRequest deDataDefinitionSaveRequest2 =
+			DEDataDefinitionRequestBuilder.saveBuilder(
+				deDataDefinition2
+			).onBehalfOf(
+				_user.getUserId()
+			).inGroup(
+				_group.getGroupId()
+			).build();
+
+		try {
+			ServiceContext serviceContext = createServiceContext(
+				_group, _user, createModelPermissions());
+
+			ServiceContextThreadLocal.pushServiceContext(serviceContext);
+
+			_deDataDefinitionService.execute(deDataDefinitionSaveRequest1);
+
+			_deDataDefinitionService.execute(deDataDefinitionSaveRequest2);
+
+			DEDataDefinitionCountRequest deDataDefinitionCountRequest =
+				DEDataDefinitionRequestBuilder.countBuilder(
+				).inGroup(
+					_group.getGroupId()
+				).build();
+
+			DEDataDefinitionCountResponse deDataDefinitionCountResponse =
+				_deDataDefinitionService.execute(deDataDefinitionCountRequest);
+
+			Assert.assertEquals(2, deDataDefinitionCountResponse.getTotal());
+		}
+		finally {
+			ServiceContextThreadLocal.popServiceContext();
+		}
+	}
+
+	@Test
+	public void testCountAfterDelete() throws Exception {
+		Map<String, String> field1Labels = new HashMap() {
+			{
+				put("en_US", "Field 1");
+			}
+		};
+
+		DEDataDefinitionField deDataDefinitionField1 =
+			new DEDataDefinitionField("field1", "string");
+
+		deDataDefinitionField1.addLabels(field1Labels);
+
+		DEDataDefinition deDataDefinition1 = new DEDataDefinition(
+			Arrays.asList(deDataDefinitionField1));
+
+		deDataDefinition1.addName(LocaleUtil.US, "Definition Test 1");
+		deDataDefinition1.setStorageType("json");
+
+		DEDataDefinitionSaveRequest deDataDefinitionSaveRequest1 =
+			DEDataDefinitionRequestBuilder.saveBuilder(
+				deDataDefinition1
+			).onBehalfOf(
+				_user.getUserId()
+			).inGroup(
+				_group.getGroupId()
+			).build();
+
+		try {
+			ServiceContext serviceContext = createServiceContext(
+				_group, _user, createModelPermissions());
+
+			ServiceContextThreadLocal.pushServiceContext(serviceContext);
+
+			DEDataDefinitionSaveResponse deDataDefinitionSaveResponse =
+				_deDataDefinitionService.execute(deDataDefinitionSaveRequest1);
+
+			long deDataDefinitionId =
+				deDataDefinitionSaveResponse.getDEDataDefinitionId();
+
+			DEDataDefinitionCountRequest deDataDefinitionCountRequest =
+				DEDataDefinitionRequestBuilder.countBuilder(
+				).inGroup(
+					_group.getGroupId()
+				).build();
+
+			DEDataDefinitionCountResponse deDataDefinitionCountResponse =
+				_deDataDefinitionService.execute(deDataDefinitionCountRequest);
+
+			Assert.assertEquals(1, deDataDefinitionCountResponse.getTotal());
+
+			DEDataDefinitionDeleteRequest deDataDefinitionDeleteRequest =
+				DEDataDefinitionRequestBuilder.deleteBuilder(
+				).byId(
+					deDataDefinitionId
+				).build();
+
+			_deDataDefinitionService.execute(deDataDefinitionDeleteRequest);
+
+			DEDataDefinitionCountRequest
+				deDataDefinitionCountRequestAfterDelete =
+					DEDataDefinitionRequestBuilder.countBuilder(
+					).inGroup(
+						_group.getGroupId()
+					).build();
+
+			DEDataDefinitionCountResponse
+				deDataDefinitionCountResponseAfterDelete =
+					_deDataDefinitionService.execute(
+						deDataDefinitionCountRequestAfterDelete);
+
+			Assert.assertEquals(
+				0, deDataDefinitionCountResponseAfterDelete.getTotal());
+		}
+		finally {
+			ServiceContextThreadLocal.popServiceContext();
+		}
+	}
+
+	@Test
+	public void testCountWithNoRecords() throws Exception {
+		try {
+			ServiceContext serviceContext = createServiceContext(
+				_group, _user, createModelPermissions());
+
+			ServiceContextThreadLocal.pushServiceContext(serviceContext);
+
+			DEDataDefinitionCountRequest deDataDefinitionCountRequest =
+				DEDataDefinitionRequestBuilder.countBuilder(
+				).inGroup(
+					_group.getGroupId()
+				).build();
+
+			DEDataDefinitionCountResponse deDataDefinitionCountResponse =
+				_deDataDefinitionService.execute(deDataDefinitionCountRequest);
+
+			Assert.assertEquals(0, deDataDefinitionCountResponse.getTotal());
+		}
+		finally {
+			ServiceContextThreadLocal.popServiceContext();
+		}
+	}
+
+	@Test(expected = DEDataDefinitionException.NoSuchDataDefinition.class)
 	public void testDelete() throws Exception {
 		Map<String, String> expectedNameLabels = new HashMap() {
 			{
@@ -461,6 +661,8 @@ public class DEDataDefinitionServiceImplTest {
 
 	@DeleteAfterTestRun
 	private Group _group;
+
+	private PermissionChecker _originalPermissionChecker;
 
 	@Inject(type = ResourcePermissionLocalService.class)
 	private ResourcePermissionLocalService _resourcePermissionLocalService;

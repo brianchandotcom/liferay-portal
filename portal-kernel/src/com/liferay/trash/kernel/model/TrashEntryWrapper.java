@@ -27,6 +27,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * <p>
@@ -142,6 +144,16 @@ public class TrashEntryWrapper implements TrashEntry, ModelWrapper<TrashEntry> {
 		if (status != null) {
 			setStatus(status);
 		}
+	}
+
+	@Override
+	public Map<String, Function<TrashEntry, Object>> getAttributeGetters() {
+		return _trashEntry.getAttributeGetters();
+	}
+
+	@Override
+	public Map<String, BiConsumer<TrashEntry, Object>> getAttributeSetters() {
+		return _trashEntry.getAttributeSetters();
 	}
 
 	@Override

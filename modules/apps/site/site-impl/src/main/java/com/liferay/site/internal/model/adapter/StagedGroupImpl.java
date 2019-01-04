@@ -36,6 +36,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * @author Daniel Kocsis
@@ -80,6 +82,16 @@ public class StagedGroupImpl implements StagedGroup {
 	@Override
 	public List<Group> getAncestors() {
 		return _group.getAncestors();
+	}
+
+	@Override
+	public Map<String, Function<Group, Object>> getAttributeGetters() {
+		return _group.getAttributeGetters();
+	}
+
+	@Override
+	public Map<String, BiConsumer<Group, Object>> getAttributeSetters() {
+		return _group.getAttributeSetters();
 	}
 
 	@Override

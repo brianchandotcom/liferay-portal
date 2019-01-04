@@ -26,6 +26,8 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * <p>
@@ -114,6 +116,16 @@ public class TrashVersionWrapper implements TrashVersion,
 		if (status != null) {
 			setStatus(status);
 		}
+	}
+
+	@Override
+	public Map<String, Function<TrashVersion, Object>> getAttributeGetters() {
+		return _trashVersion.getAttributeGetters();
+	}
+
+	@Override
+	public Map<String, BiConsumer<TrashVersion, Object>> getAttributeSetters() {
+		return _trashVersion.getAttributeSetters();
 	}
 
 	@Override

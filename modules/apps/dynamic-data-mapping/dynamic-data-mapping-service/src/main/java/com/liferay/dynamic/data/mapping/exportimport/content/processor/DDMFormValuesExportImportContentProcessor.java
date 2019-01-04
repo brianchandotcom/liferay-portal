@@ -513,8 +513,12 @@ public class DDMFormValuesExportImportContentProcessor
 					jsonObject.getLong("layoutId"));
 				boolean privateLayout = jsonObject.getBoolean("privateLayout");
 
-				Layout layout = _layoutLocalService.getLayout(
+				Layout layout = _layoutLocalService.fetchLayout(
 					groupId, privateLayout, layoutId);
+
+				if (layout == null) {
+					continue;
+				}
 
 				Element entityElement =
 					_portletDataContext.getExportDataElement(_stagedModel);

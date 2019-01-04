@@ -44,6 +44,8 @@ import java.util.Date;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * @author Máté Thurzó
@@ -116,6 +118,16 @@ public class StagedLayoutSetImpl implements StagedLayoutSet {
 	@Override
 	public int compareTo(LayoutSet layoutSet) {
 		return _layoutSet.compareTo(layoutSet);
+	}
+
+	@Override
+	public Map<String, Function<LayoutSet, Object>> getAttributeGetters() {
+		return _layoutSet.getAttributeGetters();
+	}
+
+	@Override
+	public Map<String, BiConsumer<LayoutSet, Object>> getAttributeSetters() {
+		return _layoutSet.getAttributeSetters();
 	}
 
 	@Override

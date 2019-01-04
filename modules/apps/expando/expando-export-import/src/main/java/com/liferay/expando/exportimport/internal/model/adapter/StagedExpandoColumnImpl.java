@@ -33,6 +33,8 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.Locale;
 import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * @author Akos Thurzo
@@ -70,6 +72,18 @@ public class StagedExpandoColumnImpl implements StagedExpandoColumn {
 	@Override
 	public int compareTo(ExpandoColumn expandoColumn) {
 		return _expandoColumn.compareTo(expandoColumn);
+	}
+
+	@Override
+	public Map<String, Function<ExpandoColumn, Object>> getAttributeGetters() {
+		return _expandoColumn.getAttributeGetters();
+	}
+
+	@Override
+	public Map<String, BiConsumer<ExpandoColumn, Object>>
+		getAttributeSetters() {
+
+		return _expandoColumn.getAttributeSetters();
 	}
 
 	@Override

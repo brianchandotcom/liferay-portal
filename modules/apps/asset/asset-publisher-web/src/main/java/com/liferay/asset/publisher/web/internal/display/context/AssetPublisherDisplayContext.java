@@ -36,12 +36,12 @@ import com.liferay.asset.list.model.AssetListEntry;
 import com.liferay.asset.list.service.AssetListEntryServiceUtil;
 import com.liferay.asset.publisher.constants.AssetPublisherPortletKeys;
 import com.liferay.asset.publisher.constants.AssetPublisherWebKeys;
+import com.liferay.asset.publisher.util.AssetPublisherHelper;
 import com.liferay.asset.publisher.web.internal.action.AssetEntryActionRegistry;
 import com.liferay.asset.publisher.web.internal.configuration.AssetPublisherPortletInstanceConfiguration;
 import com.liferay.asset.publisher.web.internal.configuration.AssetPublisherWebConfiguration;
 import com.liferay.asset.publisher.web.internal.util.AssetPublisherCustomizer;
 import com.liferay.asset.publisher.web.internal.util.AssetPublisherWebUtil;
-import com.liferay.asset.publisher.web.util.AssetPublisherUtil;
 import com.liferay.asset.util.AssetHelper;
 import com.liferay.asset.util.AssetPublisherAddItemHolder;
 import com.liferay.document.library.kernel.document.conversion.DocumentConversionUtil;
@@ -117,11 +117,13 @@ public class AssetPublisherDisplayContext {
 
 	public AssetPublisherDisplayContext(
 			AssetPublisherCustomizer assetPublisherCustomizer,
+            AssetPublisherHelper assetPublisherHelper,
 			PortletRequest portletRequest, PortletResponse portletResponse,
 			PortletPreferences portletPreferences)
 		throws ConfigurationException {
 
 		_assetPublisherCustomizer = assetPublisherCustomizer;
+		_assetPublisherHelper = assetPublisherHelper;
 		_portletRequest = portletRequest;
 		_portletResponse = portletResponse;
 		_portletPreferences = portletPreferences;
@@ -198,7 +200,7 @@ public class AssetPublisherDisplayContext {
 		String selectionStyle = getSelectionStyle();
 
 		if (selectionStyle.equals("dynamic")) {
-			_allAssetCategoryIds = AssetPublisherUtil.getAssetCategoryIds(
+			_allAssetCategoryIds = _assetPublisherHelper.getAssetCategoryIds(
 				_portletPreferences);
 		}
 
@@ -224,7 +226,7 @@ public class AssetPublisherDisplayContext {
 		String selectionStyle = getSelectionStyle();
 
 		if (selectionStyle.equals("dynamic")) {
-			_allAssetTagNames = AssetPublisherUtil.getAssetTagNames(
+			_allAssetTagNames = _assetPublisherHelper.getAssetTagNames(
 				_portletPreferences);
 		}
 
@@ -253,7 +255,7 @@ public class AssetPublisherDisplayContext {
 			ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-			return AssetPublisherUtil.getAssetEntries(
+			return _assetPublisherHelper.getAssetEntries(
 				_portletRequest, _portletPreferences,
 				themeDisplay.getPermissionChecker(), getGroupIds(),
 				getAllAssetCategoryIds(), getAllAssetTagNames(), false,
@@ -284,7 +286,7 @@ public class AssetPublisherDisplayContext {
 			_assetEntryQuery = assetListEntry.getAssetEntryQuery();
 		}
 		else {
-			_assetEntryQuery = AssetPublisherUtil.getAssetEntryQuery(
+			_assetEntryQuery = _assetPublisherHelper.getAssetEntryQuery(
 				_portletPreferences, themeDisplay.getScopeGroupId(),
 				themeDisplay.getLayout(), getAllAssetCategoryIds(),
 				getAllAssetTagNames());
@@ -522,7 +524,7 @@ public class AssetPublisherDisplayContext {
 			_classNameIds = assetEntryQuery.getClassNameIds();
 		}
 		else {
-			_classNameIds = AssetPublisherUtil.getClassNameIds(
+			_classNameIds = _assetPublisherHelper.getClassNameIds(
 				_portletPreferences, getAvailableClassNameIds());
 		}
 
@@ -672,7 +674,7 @@ public class AssetPublisherDisplayContext {
 		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		_groupIds = AssetPublisherUtil.getGroupIds(
+		_groupIds = _assetPublisherHelper.getGroupIds(
 			_portletPreferences, themeDisplay.getScopeGroupId(),
 			themeDisplay.getLayout());
 
@@ -1676,6 +1678,7 @@ public class AssetPublisherDisplayContext {
 	private String _assetLinkBehavior;
 	private AssetListEntry _assetListEntry;
 	private final AssetPublisherCustomizer _assetPublisherCustomizer;
+	private final AssetPublisherHelper _assetPublisherHelper;
 	private final AssetPublisherPortletInstanceConfiguration
 		_assetPublisherPortletInstanceConfiguration;
 	private final AssetPublisherWebConfiguration

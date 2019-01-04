@@ -19,9 +19,9 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.persistence.AssetEntryQuery;
 import com.liferay.asset.publisher.constants.AssetPublisherPortletKeys;
+import com.liferay.asset.publisher.util.AssetPublisherHelper;
 import com.liferay.asset.publisher.web.internal.configuration.AssetPublisherWebConfiguration;
 import com.liferay.asset.publisher.web.internal.util.AssetPublisherWebUtil;
-import com.liferay.asset.publisher.web.util.AssetPublisherUtil;
 import com.liferay.asset.util.AssetHelper;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
@@ -354,8 +354,9 @@ public class AssetEntriesCheckerUtil {
 			_configurationProvider.getCompanyConfiguration(
 				AssetPublisherWebConfiguration.class, layout.getCompanyId());
 
-		AssetEntryQuery assetEntryQuery = AssetPublisherUtil.getAssetEntryQuery(
-			portletPreferences, layout.getGroupId(), layout, null, null);
+		AssetEntryQuery assetEntryQuery =
+			_assetPublisherHelper.getAssetEntryQuery(
+				portletPreferences, layout.getGroupId(), layout, null, null);
 
 		assetEntryQuery.setEnd(
 			assetPublisherWebConfiguration.dynamicSubscriptionLimit());
@@ -412,7 +413,7 @@ public class AssetEntriesCheckerUtil {
 	private AssetHelper _assetHelper;
 
 	@Reference
-	private AssetPublisherUtil _assetPublisherUtil;
+	private AssetPublisherHelper _assetPublisherHelper;
 
 	@Reference
 	private ConfigurationProvider _configurationProvider;

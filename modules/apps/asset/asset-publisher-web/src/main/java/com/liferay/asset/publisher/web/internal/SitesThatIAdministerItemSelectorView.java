@@ -15,6 +15,7 @@
 package com.liferay.asset.publisher.web.internal;
 
 import com.liferay.asset.publisher.constants.AssetPublisherWebKeys;
+import com.liferay.asset.publisher.util.AssetPublisherHelper;
 import com.liferay.asset.publisher.web.internal.display.context.SitesThatIAdministerItemSelectorViewDisplayContext;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorView;
@@ -108,8 +109,9 @@ public class SitesThatIAdministerItemSelectorView
 		SitesThatIAdministerItemSelectorViewDisplayContext
 			sitesItemSelectorViewDisplayContext =
 				new SitesThatIAdministerItemSelectorViewDisplayContext(
-					(HttpServletRequest)request, siteItemSelectorCriterion,
-					itemSelectedEventName, portletURL);
+					(HttpServletRequest)request, _assetPublisherHelper,
+					siteItemSelectorCriterion, itemSelectedEventName,
+					portletURL);
 
 		request.setAttribute(
 			AssetPublisherWebKeys.ITEM_SELECTOR_DISPLAY_CONTEXT,
@@ -135,6 +137,9 @@ public class SitesThatIAdministerItemSelectorView
 				new ItemSelectorReturnType[] {
 					new SiteItemSelectorReturnType()
 				}));
+
+	@Reference
+	private AssetPublisherHelper _assetPublisherHelper;
 
 	@Reference
 	private Portal _portal;

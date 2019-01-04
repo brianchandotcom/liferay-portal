@@ -22,8 +22,6 @@ import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * <p>
@@ -39,108 +37,6 @@ public class SharingEntryWrapper extends BaseModelWrapper<SharingEntry>
 	implements SharingEntry, ModelWrapper<SharingEntry> {
 	public SharingEntryWrapper(SharingEntry sharingEntry) {
 		super(sharingEntry);
-	}
-
-	@Override
-	public Map<String, Object> getModelAttributes() {
-		Map<String, Object> attributes = new HashMap<String, Object>();
-
-		attributes.put("uuid", getUuid());
-		attributes.put("sharingEntryId", getSharingEntryId());
-		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
-		attributes.put("createDate", getCreateDate());
-		attributes.put("modifiedDate", getModifiedDate());
-		attributes.put("fromUserId", getFromUserId());
-		attributes.put("toUserId", getToUserId());
-		attributes.put("classNameId", getClassNameId());
-		attributes.put("classPK", getClassPK());
-		attributes.put("shareable", isShareable());
-		attributes.put("actionIds", getActionIds());
-		attributes.put("expirationDate", getExpirationDate());
-
-		return attributes;
-	}
-
-	@Override
-	public void setModelAttributes(Map<String, Object> attributes) {
-		String uuid = (String)attributes.get("uuid");
-
-		if (uuid != null) {
-			setUuid(uuid);
-		}
-
-		Long sharingEntryId = (Long)attributes.get("sharingEntryId");
-
-		if (sharingEntryId != null) {
-			setSharingEntryId(sharingEntryId);
-		}
-
-		Long groupId = (Long)attributes.get("groupId");
-
-		if (groupId != null) {
-			setGroupId(groupId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
-		}
-
-		Date createDate = (Date)attributes.get("createDate");
-
-		if (createDate != null) {
-			setCreateDate(createDate);
-		}
-
-		Date modifiedDate = (Date)attributes.get("modifiedDate");
-
-		if (modifiedDate != null) {
-			setModifiedDate(modifiedDate);
-		}
-
-		Long fromUserId = (Long)attributes.get("fromUserId");
-
-		if (fromUserId != null) {
-			setFromUserId(fromUserId);
-		}
-
-		Long toUserId = (Long)attributes.get("toUserId");
-
-		if (toUserId != null) {
-			setToUserId(toUserId);
-		}
-
-		Long classNameId = (Long)attributes.get("classNameId");
-
-		if (classNameId != null) {
-			setClassNameId(classNameId);
-		}
-
-		Long classPK = (Long)attributes.get("classPK");
-
-		if (classPK != null) {
-			setClassPK(classPK);
-		}
-
-		Boolean shareable = (Boolean)attributes.get("shareable");
-
-		if (shareable != null) {
-			setShareable(shareable);
-		}
-
-		Long actionIds = (Long)attributes.get("actionIds");
-
-		if (actionIds != null) {
-			setActionIds(actionIds);
-		}
-
-		Date expirationDate = (Date)attributes.get("expirationDate");
-
-		if (expirationDate != null) {
-			setExpirationDate(expirationDate);
-		}
 	}
 
 	/**

@@ -19,8 +19,6 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * <p>
@@ -36,87 +34,6 @@ public class TicketWrapper extends BaseModelWrapper<Ticket> implements Ticket,
 	ModelWrapper<Ticket> {
 	public TicketWrapper(Ticket ticket) {
 		super(ticket);
-	}
-
-	@Override
-	public Map<String, Object> getModelAttributes() {
-		Map<String, Object> attributes = new HashMap<String, Object>();
-
-		attributes.put("mvccVersion", getMvccVersion());
-		attributes.put("ticketId", getTicketId());
-		attributes.put("companyId", getCompanyId());
-		attributes.put("createDate", getCreateDate());
-		attributes.put("classNameId", getClassNameId());
-		attributes.put("classPK", getClassPK());
-		attributes.put("key", getKey());
-		attributes.put("type", getType());
-		attributes.put("extraInfo", getExtraInfo());
-		attributes.put("expirationDate", getExpirationDate());
-
-		return attributes;
-	}
-
-	@Override
-	public void setModelAttributes(Map<String, Object> attributes) {
-		Long mvccVersion = (Long)attributes.get("mvccVersion");
-
-		if (mvccVersion != null) {
-			setMvccVersion(mvccVersion);
-		}
-
-		Long ticketId = (Long)attributes.get("ticketId");
-
-		if (ticketId != null) {
-			setTicketId(ticketId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
-		}
-
-		Date createDate = (Date)attributes.get("createDate");
-
-		if (createDate != null) {
-			setCreateDate(createDate);
-		}
-
-		Long classNameId = (Long)attributes.get("classNameId");
-
-		if (classNameId != null) {
-			setClassNameId(classNameId);
-		}
-
-		Long classPK = (Long)attributes.get("classPK");
-
-		if (classPK != null) {
-			setClassPK(classPK);
-		}
-
-		String key = (String)attributes.get("key");
-
-		if (key != null) {
-			setKey(key);
-		}
-
-		Integer type = (Integer)attributes.get("type");
-
-		if (type != null) {
-			setType(type);
-		}
-
-		String extraInfo = (String)attributes.get("extraInfo");
-
-		if (extraInfo != null) {
-			setExtraInfo(extraInfo);
-		}
-
-		Date expirationDate = (Date)attributes.get("expirationDate");
-
-		if (expirationDate != null) {
-			setExpirationDate(expirationDate);
-		}
 	}
 
 	/**

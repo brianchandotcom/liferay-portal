@@ -18,9 +18,6 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
-import java.util.HashMap;
-import java.util.Map;
-
 /**
  * <p>
  * This class is a wrapper for {@link ServiceComponent}.
@@ -35,59 +32,6 @@ public class ServiceComponentWrapper extends BaseModelWrapper<ServiceComponent>
 	implements ServiceComponent, ModelWrapper<ServiceComponent> {
 	public ServiceComponentWrapper(ServiceComponent serviceComponent) {
 		super(serviceComponent);
-	}
-
-	@Override
-	public Map<String, Object> getModelAttributes() {
-		Map<String, Object> attributes = new HashMap<String, Object>();
-
-		attributes.put("mvccVersion", getMvccVersion());
-		attributes.put("serviceComponentId", getServiceComponentId());
-		attributes.put("buildNamespace", getBuildNamespace());
-		attributes.put("buildNumber", getBuildNumber());
-		attributes.put("buildDate", getBuildDate());
-		attributes.put("data", getData());
-
-		return attributes;
-	}
-
-	@Override
-	public void setModelAttributes(Map<String, Object> attributes) {
-		Long mvccVersion = (Long)attributes.get("mvccVersion");
-
-		if (mvccVersion != null) {
-			setMvccVersion(mvccVersion);
-		}
-
-		Long serviceComponentId = (Long)attributes.get("serviceComponentId");
-
-		if (serviceComponentId != null) {
-			setServiceComponentId(serviceComponentId);
-		}
-
-		String buildNamespace = (String)attributes.get("buildNamespace");
-
-		if (buildNamespace != null) {
-			setBuildNamespace(buildNamespace);
-		}
-
-		Long buildNumber = (Long)attributes.get("buildNumber");
-
-		if (buildNumber != null) {
-			setBuildNumber(buildNumber);
-		}
-
-		Long buildDate = (Long)attributes.get("buildDate");
-
-		if (buildDate != null) {
-			setBuildDate(buildDate);
-		}
-
-		String data = (String)attributes.get("data");
-
-		if (data != null) {
-			setData(data);
-		}
 	}
 
 	/**

@@ -22,8 +22,6 @@ import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 import com.liferay.oauth2.provider.model.OAuth2ScopeGrant;
 import com.liferay.oauth2.provider.model.OAuth2ScopeGrantModel;
 
-import com.liferay.petra.string.StringBundler;
-
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.ModelWrapper;
@@ -36,8 +34,12 @@ import java.io.Serializable;
 
 import java.sql.Types;
 
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * The base model implementation for the OAuth2ScopeGrant service. Represents a row in the &quot;OAuth2ScopeGrant&quot; database table, with each column mapped to a property of this class.
@@ -150,61 +152,37 @@ public class OAuth2ScopeGrantModelImpl extends BaseModelImpl<OAuth2ScopeGrant>
 	}
 
 	@Override
-	public Map<String, Object> getModelAttributes() {
-		Map<String, Object> attributes = new HashMap<String, Object>();
-
-		attributes.put("oAuth2ScopeGrantId", getOAuth2ScopeGrantId());
-		attributes.put("companyId", getCompanyId());
-		attributes.put("oAuth2ApplicationScopeAliasesId",
-			getOAuth2ApplicationScopeAliasesId());
-		attributes.put("applicationName", getApplicationName());
-		attributes.put("bundleSymbolicName", getBundleSymbolicName());
-		attributes.put("scope", getScope());
-
-		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
-		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
-
-		return attributes;
+	public Map<String, Function<OAuth2ScopeGrant, Object>> getAttributeGetters() {
+		return _attributeGetters;
 	}
 
 	@Override
-	public void setModelAttributes(Map<String, Object> attributes) {
-		Long oAuth2ScopeGrantId = (Long)attributes.get("oAuth2ScopeGrantId");
+	public Map<String, BiConsumer<OAuth2ScopeGrant, Object>> getAttributeSetters() {
+		return _attributeSetters;
+	}
 
-		if (oAuth2ScopeGrantId != null) {
-			setOAuth2ScopeGrantId(oAuth2ScopeGrantId);
-		}
+	private static final Map<String, Function<OAuth2ScopeGrant, Object>> _attributeGetters;
+	private static final Map<String, BiConsumer<OAuth2ScopeGrant, Object>> _attributeSetters;
 
-		Long companyId = (Long)attributes.get("companyId");
+	static {
+		Map<String, Function<OAuth2ScopeGrant, Object>> attributeGetters = new LinkedHashMap<String, Function<OAuth2ScopeGrant, Object>>();
+		Map<String, BiConsumer<OAuth2ScopeGrant, ?>> attributeSetters = new LinkedHashMap<String, BiConsumer<OAuth2ScopeGrant, ?>>();
 
-		if (companyId != null) {
-			setCompanyId(companyId);
-		}
+		attributeGetters.put("oAuth2ScopeGrantId", OAuth2ScopeGrant::getOAuth2ScopeGrantId);
+		attributeSetters.put("oAuth2ScopeGrantId", (BiConsumer<OAuth2ScopeGrant, Long>)OAuth2ScopeGrant::setOAuth2ScopeGrantId);
+		attributeGetters.put("companyId", OAuth2ScopeGrant::getCompanyId);
+		attributeSetters.put("companyId", (BiConsumer<OAuth2ScopeGrant, Long>)OAuth2ScopeGrant::setCompanyId);
+		attributeGetters.put("oAuth2ApplicationScopeAliasesId", OAuth2ScopeGrant::getOAuth2ApplicationScopeAliasesId);
+		attributeSetters.put("oAuth2ApplicationScopeAliasesId", (BiConsumer<OAuth2ScopeGrant, Long>)OAuth2ScopeGrant::setOAuth2ApplicationScopeAliasesId);
+		attributeGetters.put("applicationName", OAuth2ScopeGrant::getApplicationName);
+		attributeSetters.put("applicationName", (BiConsumer<OAuth2ScopeGrant, String>)OAuth2ScopeGrant::setApplicationName);
+		attributeGetters.put("bundleSymbolicName", OAuth2ScopeGrant::getBundleSymbolicName);
+		attributeSetters.put("bundleSymbolicName", (BiConsumer<OAuth2ScopeGrant, String>)OAuth2ScopeGrant::setBundleSymbolicName);
+		attributeGetters.put("scope", OAuth2ScopeGrant::getScope);
+		attributeSetters.put("scope", (BiConsumer<OAuth2ScopeGrant, String>)OAuth2ScopeGrant::setScope);
 
-		Long oAuth2ApplicationScopeAliasesId = (Long)attributes.get(
-				"oAuth2ApplicationScopeAliasesId");
-
-		if (oAuth2ApplicationScopeAliasesId != null) {
-			setOAuth2ApplicationScopeAliasesId(oAuth2ApplicationScopeAliasesId);
-		}
-
-		String applicationName = (String)attributes.get("applicationName");
-
-		if (applicationName != null) {
-			setApplicationName(applicationName);
-		}
-
-		String bundleSymbolicName = (String)attributes.get("bundleSymbolicName");
-
-		if (bundleSymbolicName != null) {
-			setBundleSymbolicName(bundleSymbolicName);
-		}
-
-		String scope = (String)attributes.get("scope");
-
-		if (scope != null) {
-			setScope(scope);
-		}
+		_attributeGetters = Collections.unmodifiableMap(attributeGetters);
+		_attributeSetters = Collections.unmodifiableMap((Map)attributeSetters);
 	}
 
 	@Override
@@ -488,65 +466,6 @@ public class OAuth2ScopeGrantModelImpl extends BaseModelImpl<OAuth2ScopeGrant>
 		}
 
 		return oAuth2ScopeGrantCacheModel;
-	}
-
-	@Override
-	public String toString() {
-		StringBundler sb = new StringBundler(13);
-
-		sb.append("{oAuth2ScopeGrantId=");
-		sb.append(getOAuth2ScopeGrantId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
-		sb.append(", oAuth2ApplicationScopeAliasesId=");
-		sb.append(getOAuth2ApplicationScopeAliasesId());
-		sb.append(", applicationName=");
-		sb.append(getApplicationName());
-		sb.append(", bundleSymbolicName=");
-		sb.append(getBundleSymbolicName());
-		sb.append(", scope=");
-		sb.append(getScope());
-		sb.append("}");
-
-		return sb.toString();
-	}
-
-	@Override
-	public String toXmlString() {
-		StringBundler sb = new StringBundler(22);
-
-		sb.append("<model><model-name>");
-		sb.append("com.liferay.oauth2.provider.model.OAuth2ScopeGrant");
-		sb.append("</model-name>");
-
-		sb.append(
-			"<column><column-name>oAuth2ScopeGrantId</column-name><column-value><![CDATA[");
-		sb.append(getOAuth2ScopeGrantId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>oAuth2ApplicationScopeAliasesId</column-name><column-value><![CDATA[");
-		sb.append(getOAuth2ApplicationScopeAliasesId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>applicationName</column-name><column-value><![CDATA[");
-		sb.append(getApplicationName());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>bundleSymbolicName</column-name><column-value><![CDATA[");
-		sb.append(getBundleSymbolicName());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>scope</column-name><column-value><![CDATA[");
-		sb.append(getScope());
-		sb.append("]]></column-value></column>");
-
-		sb.append("</model>");
-
-		return sb.toString();
 	}
 
 	private static final ClassLoader _classLoader = OAuth2ScopeGrant.class.getClassLoader();

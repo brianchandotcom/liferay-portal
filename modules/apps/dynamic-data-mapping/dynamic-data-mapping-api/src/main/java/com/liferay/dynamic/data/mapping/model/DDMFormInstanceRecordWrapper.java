@@ -22,8 +22,6 @@ import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * <p>
@@ -40,123 +38,6 @@ public class DDMFormInstanceRecordWrapper extends BaseModelWrapper<DDMFormInstan
 	public DDMFormInstanceRecordWrapper(
 		DDMFormInstanceRecord ddmFormInstanceRecord) {
 		super(ddmFormInstanceRecord);
-	}
-
-	@Override
-	public Map<String, Object> getModelAttributes() {
-		Map<String, Object> attributes = new HashMap<String, Object>();
-
-		attributes.put("uuid", getUuid());
-		attributes.put("formInstanceRecordId", getFormInstanceRecordId());
-		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
-		attributes.put("userId", getUserId());
-		attributes.put("userName", getUserName());
-		attributes.put("versionUserId", getVersionUserId());
-		attributes.put("versionUserName", getVersionUserName());
-		attributes.put("createDate", getCreateDate());
-		attributes.put("modifiedDate", getModifiedDate());
-		attributes.put("formInstanceId", getFormInstanceId());
-		attributes.put("formInstanceVersion", getFormInstanceVersion());
-		attributes.put("storageId", getStorageId());
-		attributes.put("version", getVersion());
-		attributes.put("lastPublishDate", getLastPublishDate());
-
-		return attributes;
-	}
-
-	@Override
-	public void setModelAttributes(Map<String, Object> attributes) {
-		String uuid = (String)attributes.get("uuid");
-
-		if (uuid != null) {
-			setUuid(uuid);
-		}
-
-		Long formInstanceRecordId = (Long)attributes.get("formInstanceRecordId");
-
-		if (formInstanceRecordId != null) {
-			setFormInstanceRecordId(formInstanceRecordId);
-		}
-
-		Long groupId = (Long)attributes.get("groupId");
-
-		if (groupId != null) {
-			setGroupId(groupId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
-		}
-
-		Long userId = (Long)attributes.get("userId");
-
-		if (userId != null) {
-			setUserId(userId);
-		}
-
-		String userName = (String)attributes.get("userName");
-
-		if (userName != null) {
-			setUserName(userName);
-		}
-
-		Long versionUserId = (Long)attributes.get("versionUserId");
-
-		if (versionUserId != null) {
-			setVersionUserId(versionUserId);
-		}
-
-		String versionUserName = (String)attributes.get("versionUserName");
-
-		if (versionUserName != null) {
-			setVersionUserName(versionUserName);
-		}
-
-		Date createDate = (Date)attributes.get("createDate");
-
-		if (createDate != null) {
-			setCreateDate(createDate);
-		}
-
-		Date modifiedDate = (Date)attributes.get("modifiedDate");
-
-		if (modifiedDate != null) {
-			setModifiedDate(modifiedDate);
-		}
-
-		Long formInstanceId = (Long)attributes.get("formInstanceId");
-
-		if (formInstanceId != null) {
-			setFormInstanceId(formInstanceId);
-		}
-
-		String formInstanceVersion = (String)attributes.get(
-				"formInstanceVersion");
-
-		if (formInstanceVersion != null) {
-			setFormInstanceVersion(formInstanceVersion);
-		}
-
-		Long storageId = (Long)attributes.get("storageId");
-
-		if (storageId != null) {
-			setStorageId(storageId);
-		}
-
-		String version = (String)attributes.get("version");
-
-		if (version != null) {
-			setVersion(version);
-		}
-
-		Date lastPublishDate = (Date)attributes.get("lastPublishDate");
-
-		if (lastPublishDate != null) {
-			setLastPublishDate(lastPublishDate);
-		}
 	}
 
 	/**

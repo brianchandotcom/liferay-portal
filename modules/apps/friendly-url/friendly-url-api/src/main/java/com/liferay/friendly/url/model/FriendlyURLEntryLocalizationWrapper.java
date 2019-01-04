@@ -19,9 +19,6 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
-import java.util.HashMap;
-import java.util.Map;
-
 /**
  * <p>
  * This class is a wrapper for {@link FriendlyURLEntryLocalization}.
@@ -38,82 +35,6 @@ public class FriendlyURLEntryLocalizationWrapper extends BaseModelWrapper<Friend
 	public FriendlyURLEntryLocalizationWrapper(
 		FriendlyURLEntryLocalization friendlyURLEntryLocalization) {
 		super(friendlyURLEntryLocalization);
-	}
-
-	@Override
-	public Map<String, Object> getModelAttributes() {
-		Map<String, Object> attributes = new HashMap<String, Object>();
-
-		attributes.put("mvccVersion", getMvccVersion());
-		attributes.put("friendlyURLEntryLocalizationId",
-			getFriendlyURLEntryLocalizationId());
-		attributes.put("companyId", getCompanyId());
-		attributes.put("friendlyURLEntryId", getFriendlyURLEntryId());
-		attributes.put("languageId", getLanguageId());
-		attributes.put("urlTitle", getUrlTitle());
-		attributes.put("groupId", getGroupId());
-		attributes.put("classNameId", getClassNameId());
-		attributes.put("classPK", getClassPK());
-
-		return attributes;
-	}
-
-	@Override
-	public void setModelAttributes(Map<String, Object> attributes) {
-		Long mvccVersion = (Long)attributes.get("mvccVersion");
-
-		if (mvccVersion != null) {
-			setMvccVersion(mvccVersion);
-		}
-
-		Long friendlyURLEntryLocalizationId = (Long)attributes.get(
-				"friendlyURLEntryLocalizationId");
-
-		if (friendlyURLEntryLocalizationId != null) {
-			setFriendlyURLEntryLocalizationId(friendlyURLEntryLocalizationId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
-		}
-
-		Long friendlyURLEntryId = (Long)attributes.get("friendlyURLEntryId");
-
-		if (friendlyURLEntryId != null) {
-			setFriendlyURLEntryId(friendlyURLEntryId);
-		}
-
-		String languageId = (String)attributes.get("languageId");
-
-		if (languageId != null) {
-			setLanguageId(languageId);
-		}
-
-		String urlTitle = (String)attributes.get("urlTitle");
-
-		if (urlTitle != null) {
-			setUrlTitle(urlTitle);
-		}
-
-		Long groupId = (Long)attributes.get("groupId");
-
-		if (groupId != null) {
-			setGroupId(groupId);
-		}
-
-		Long classNameId = (Long)attributes.get("classNameId");
-
-		if (classNameId != null) {
-			setClassNameId(classNameId);
-		}
-
-		Long classPK = (Long)attributes.get("classPK");
-
-		if (classPK != null) {
-			setClassPK(classPK);
-		}
 	}
 
 	/**

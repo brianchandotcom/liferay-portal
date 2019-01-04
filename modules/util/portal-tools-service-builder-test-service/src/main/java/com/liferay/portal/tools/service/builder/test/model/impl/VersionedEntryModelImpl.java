@@ -35,8 +35,12 @@ import java.io.Serializable;
 
 import java.sql.Types;
 
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * The base model implementation for the VersionedEntry service. Represents a row in the &quot;VersionedEntry&quot; database table, with each column mapped to a property of this class.
@@ -170,6 +174,106 @@ public class VersionedEntryModelImpl extends BaseModelImpl<VersionedEntry>
 		if (groupId != null) {
 			setGroupId(groupId);
 		}
+	}
+
+	public Map<String, Function<VersionedEntry, Object>> getAttributeGetters() {
+		return _attributeGetters;
+	}
+
+	public Map<String, BiConsumer<VersionedEntry, Object>> getAttributeSetters() {
+		return _attributeSetters;
+	}
+
+	private static final Map<String, Function<VersionedEntry, Object>> _attributeGetters;
+	private static final Map<String, BiConsumer<VersionedEntry, Object>> _attributeSetters;
+
+	static {
+		Map<String, Function<VersionedEntry, Object>> attributeGetters = new LinkedHashMap<String, Function<VersionedEntry, Object>>();
+		Map<String, BiConsumer<VersionedEntry, ?>> attributeSetters = new LinkedHashMap<String, BiConsumer<VersionedEntry, ?>>();
+
+		attributeGetters.put(
+			"mvccVersion",
+			new Function<VersionedEntry, Object>() {
+
+				@Override
+				public Object apply(VersionedEntry versionedEntry) {
+					return versionedEntry.getMvccVersion();
+				}
+
+			});
+		attributeSetters.put(
+			"mvccVersion",
+			new BiConsumer<VersionedEntry, Object>() {
+
+				@Override
+				public void accept(VersionedEntry versionedEntry, Object mvccVersion) {
+					versionedEntry.setMvccVersion((Long)mvccVersion);
+				}
+
+			});
+		attributeGetters.put(
+			"headId",
+			new Function<VersionedEntry, Object>() {
+
+				@Override
+				public Object apply(VersionedEntry versionedEntry) {
+					return versionedEntry.getHeadId();
+				}
+
+			});
+		attributeSetters.put(
+			"headId",
+			new BiConsumer<VersionedEntry, Object>() {
+
+				@Override
+				public void accept(VersionedEntry versionedEntry, Object headId) {
+					versionedEntry.setHeadId((Long)headId);
+				}
+
+			});
+		attributeGetters.put(
+			"versionedEntryId",
+			new Function<VersionedEntry, Object>() {
+
+				@Override
+				public Object apply(VersionedEntry versionedEntry) {
+					return versionedEntry.getVersionedEntryId();
+				}
+
+			});
+		attributeSetters.put(
+			"versionedEntryId",
+			new BiConsumer<VersionedEntry, Object>() {
+
+				@Override
+				public void accept(VersionedEntry versionedEntry, Object versionedEntryId) {
+					versionedEntry.setVersionedEntryId((Long)versionedEntryId);
+				}
+
+			});
+		attributeGetters.put(
+			"groupId",
+			new Function<VersionedEntry, Object>() {
+
+				@Override
+				public Object apply(VersionedEntry versionedEntry) {
+					return versionedEntry.getGroupId();
+				}
+
+			});
+		attributeSetters.put(
+			"groupId",
+			new BiConsumer<VersionedEntry, Object>() {
+
+				@Override
+				public void accept(VersionedEntry versionedEntry, Object groupId) {
+					versionedEntry.setGroupId((Long)groupId);
+				}
+
+			});
+
+		_attributeGetters = Collections.unmodifiableMap(attributeGetters);
+		_attributeSetters = Collections.unmodifiableMap((Map)attributeSetters);
 	}
 
 	@Override

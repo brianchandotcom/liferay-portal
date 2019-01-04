@@ -25,8 +25,6 @@ import com.liferay.message.boards.model.MBMessage;
 import com.liferay.message.boards.model.MBMessageModel;
 import com.liferay.message.boards.model.MBMessageSoap;
 
-import com.liferay.petra.string.StringBundler;
-
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.NoSuchModelException;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -51,10 +49,14 @@ import java.io.Serializable;
 import java.sql.Types;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * The base model implementation for the MBMessage service. Represents a row in the &quot;MBMessage&quot; database table, with each column mapped to a property of this class.
@@ -268,199 +270,77 @@ public class MBMessageModelImpl extends BaseModelImpl<MBMessage>
 	}
 
 	@Override
-	public Map<String, Object> getModelAttributes() {
-		Map<String, Object> attributes = new HashMap<String, Object>();
-
-		attributes.put("uuid", getUuid());
-		attributes.put("messageId", getMessageId());
-		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
-		attributes.put("userId", getUserId());
-		attributes.put("userName", getUserName());
-		attributes.put("createDate", getCreateDate());
-		attributes.put("modifiedDate", getModifiedDate());
-		attributes.put("classNameId", getClassNameId());
-		attributes.put("classPK", getClassPK());
-		attributes.put("categoryId", getCategoryId());
-		attributes.put("threadId", getThreadId());
-		attributes.put("rootMessageId", getRootMessageId());
-		attributes.put("parentMessageId", getParentMessageId());
-		attributes.put("subject", getSubject());
-		attributes.put("body", getBody());
-		attributes.put("format", getFormat());
-		attributes.put("anonymous", isAnonymous());
-		attributes.put("priority", getPriority());
-		attributes.put("allowPingbacks", isAllowPingbacks());
-		attributes.put("answer", isAnswer());
-		attributes.put("lastPublishDate", getLastPublishDate());
-		attributes.put("status", getStatus());
-		attributes.put("statusByUserId", getStatusByUserId());
-		attributes.put("statusByUserName", getStatusByUserName());
-		attributes.put("statusDate", getStatusDate());
-
-		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
-		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
-
-		return attributes;
+	public Map<String, Function<MBMessage, Object>> getAttributeGetters() {
+		return _attributeGetters;
 	}
 
 	@Override
-	public void setModelAttributes(Map<String, Object> attributes) {
-		String uuid = (String)attributes.get("uuid");
+	public Map<String, BiConsumer<MBMessage, Object>> getAttributeSetters() {
+		return _attributeSetters;
+	}
 
-		if (uuid != null) {
-			setUuid(uuid);
-		}
+	private static final Map<String, Function<MBMessage, Object>> _attributeGetters;
+	private static final Map<String, BiConsumer<MBMessage, Object>> _attributeSetters;
 
-		Long messageId = (Long)attributes.get("messageId");
+	static {
+		Map<String, Function<MBMessage, Object>> attributeGetters = new LinkedHashMap<String, Function<MBMessage, Object>>();
+		Map<String, BiConsumer<MBMessage, ?>> attributeSetters = new LinkedHashMap<String, BiConsumer<MBMessage, ?>>();
 
-		if (messageId != null) {
-			setMessageId(messageId);
-		}
+		attributeGetters.put("uuid", MBMessage::getUuid);
+		attributeSetters.put("uuid", (BiConsumer<MBMessage, String>)MBMessage::setUuid);
+		attributeGetters.put("messageId", MBMessage::getMessageId);
+		attributeSetters.put("messageId", (BiConsumer<MBMessage, Long>)MBMessage::setMessageId);
+		attributeGetters.put("groupId", MBMessage::getGroupId);
+		attributeSetters.put("groupId", (BiConsumer<MBMessage, Long>)MBMessage::setGroupId);
+		attributeGetters.put("companyId", MBMessage::getCompanyId);
+		attributeSetters.put("companyId", (BiConsumer<MBMessage, Long>)MBMessage::setCompanyId);
+		attributeGetters.put("userId", MBMessage::getUserId);
+		attributeSetters.put("userId", (BiConsumer<MBMessage, Long>)MBMessage::setUserId);
+		attributeGetters.put("userName", MBMessage::getUserName);
+		attributeSetters.put("userName", (BiConsumer<MBMessage, String>)MBMessage::setUserName);
+		attributeGetters.put("createDate", MBMessage::getCreateDate);
+		attributeSetters.put("createDate", (BiConsumer<MBMessage, Date>)MBMessage::setCreateDate);
+		attributeGetters.put("modifiedDate", MBMessage::getModifiedDate);
+		attributeSetters.put("modifiedDate", (BiConsumer<MBMessage, Date>)MBMessage::setModifiedDate);
+		attributeGetters.put("classNameId", MBMessage::getClassNameId);
+		attributeSetters.put("classNameId", (BiConsumer<MBMessage, Long>)MBMessage::setClassNameId);
+		attributeGetters.put("classPK", MBMessage::getClassPK);
+		attributeSetters.put("classPK", (BiConsumer<MBMessage, Long>)MBMessage::setClassPK);
+		attributeGetters.put("categoryId", MBMessage::getCategoryId);
+		attributeSetters.put("categoryId", (BiConsumer<MBMessage, Long>)MBMessage::setCategoryId);
+		attributeGetters.put("threadId", MBMessage::getThreadId);
+		attributeSetters.put("threadId", (BiConsumer<MBMessage, Long>)MBMessage::setThreadId);
+		attributeGetters.put("rootMessageId", MBMessage::getRootMessageId);
+		attributeSetters.put("rootMessageId", (BiConsumer<MBMessage, Long>)MBMessage::setRootMessageId);
+		attributeGetters.put("parentMessageId", MBMessage::getParentMessageId);
+		attributeSetters.put("parentMessageId", (BiConsumer<MBMessage, Long>)MBMessage::setParentMessageId);
+		attributeGetters.put("subject", MBMessage::getSubject);
+		attributeSetters.put("subject", (BiConsumer<MBMessage, String>)MBMessage::setSubject);
+		attributeGetters.put("body", MBMessage::getBody);
+		attributeSetters.put("body", (BiConsumer<MBMessage, String>)MBMessage::setBody);
+		attributeGetters.put("format", MBMessage::getFormat);
+		attributeSetters.put("format", (BiConsumer<MBMessage, String>)MBMessage::setFormat);
+		attributeGetters.put("anonymous", MBMessage::getAnonymous);
+		attributeSetters.put("anonymous", (BiConsumer<MBMessage, Boolean>)MBMessage::setAnonymous);
+		attributeGetters.put("priority", MBMessage::getPriority);
+		attributeSetters.put("priority", (BiConsumer<MBMessage, Double>)MBMessage::setPriority);
+		attributeGetters.put("allowPingbacks", MBMessage::getAllowPingbacks);
+		attributeSetters.put("allowPingbacks", (BiConsumer<MBMessage, Boolean>)MBMessage::setAllowPingbacks);
+		attributeGetters.put("answer", MBMessage::getAnswer);
+		attributeSetters.put("answer", (BiConsumer<MBMessage, Boolean>)MBMessage::setAnswer);
+		attributeGetters.put("lastPublishDate", MBMessage::getLastPublishDate);
+		attributeSetters.put("lastPublishDate", (BiConsumer<MBMessage, Date>)MBMessage::setLastPublishDate);
+		attributeGetters.put("status", MBMessage::getStatus);
+		attributeSetters.put("status", (BiConsumer<MBMessage, Integer>)MBMessage::setStatus);
+		attributeGetters.put("statusByUserId", MBMessage::getStatusByUserId);
+		attributeSetters.put("statusByUserId", (BiConsumer<MBMessage, Long>)MBMessage::setStatusByUserId);
+		attributeGetters.put("statusByUserName", MBMessage::getStatusByUserName);
+		attributeSetters.put("statusByUserName", (BiConsumer<MBMessage, String>)MBMessage::setStatusByUserName);
+		attributeGetters.put("statusDate", MBMessage::getStatusDate);
+		attributeSetters.put("statusDate", (BiConsumer<MBMessage, Date>)MBMessage::setStatusDate);
 
-		Long groupId = (Long)attributes.get("groupId");
-
-		if (groupId != null) {
-			setGroupId(groupId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
-		}
-
-		Long userId = (Long)attributes.get("userId");
-
-		if (userId != null) {
-			setUserId(userId);
-		}
-
-		String userName = (String)attributes.get("userName");
-
-		if (userName != null) {
-			setUserName(userName);
-		}
-
-		Date createDate = (Date)attributes.get("createDate");
-
-		if (createDate != null) {
-			setCreateDate(createDate);
-		}
-
-		Date modifiedDate = (Date)attributes.get("modifiedDate");
-
-		if (modifiedDate != null) {
-			setModifiedDate(modifiedDate);
-		}
-
-		Long classNameId = (Long)attributes.get("classNameId");
-
-		if (classNameId != null) {
-			setClassNameId(classNameId);
-		}
-
-		Long classPK = (Long)attributes.get("classPK");
-
-		if (classPK != null) {
-			setClassPK(classPK);
-		}
-
-		Long categoryId = (Long)attributes.get("categoryId");
-
-		if (categoryId != null) {
-			setCategoryId(categoryId);
-		}
-
-		Long threadId = (Long)attributes.get("threadId");
-
-		if (threadId != null) {
-			setThreadId(threadId);
-		}
-
-		Long rootMessageId = (Long)attributes.get("rootMessageId");
-
-		if (rootMessageId != null) {
-			setRootMessageId(rootMessageId);
-		}
-
-		Long parentMessageId = (Long)attributes.get("parentMessageId");
-
-		if (parentMessageId != null) {
-			setParentMessageId(parentMessageId);
-		}
-
-		String subject = (String)attributes.get("subject");
-
-		if (subject != null) {
-			setSubject(subject);
-		}
-
-		String body = (String)attributes.get("body");
-
-		if (body != null) {
-			setBody(body);
-		}
-
-		String format = (String)attributes.get("format");
-
-		if (format != null) {
-			setFormat(format);
-		}
-
-		Boolean anonymous = (Boolean)attributes.get("anonymous");
-
-		if (anonymous != null) {
-			setAnonymous(anonymous);
-		}
-
-		Double priority = (Double)attributes.get("priority");
-
-		if (priority != null) {
-			setPriority(priority);
-		}
-
-		Boolean allowPingbacks = (Boolean)attributes.get("allowPingbacks");
-
-		if (allowPingbacks != null) {
-			setAllowPingbacks(allowPingbacks);
-		}
-
-		Boolean answer = (Boolean)attributes.get("answer");
-
-		if (answer != null) {
-			setAnswer(answer);
-		}
-
-		Date lastPublishDate = (Date)attributes.get("lastPublishDate");
-
-		if (lastPublishDate != null) {
-			setLastPublishDate(lastPublishDate);
-		}
-
-		Integer status = (Integer)attributes.get("status");
-
-		if (status != null) {
-			setStatus(status);
-		}
-
-		Long statusByUserId = (Long)attributes.get("statusByUserId");
-
-		if (statusByUserId != null) {
-			setStatusByUserId(statusByUserId);
-		}
-
-		String statusByUserName = (String)attributes.get("statusByUserName");
-
-		if (statusByUserName != null) {
-			setStatusByUserName(statusByUserName);
-		}
-
-		Date statusDate = (Date)attributes.get("statusDate");
-
-		if (statusDate != null) {
-			setStatusDate(statusDate);
-		}
+		_attributeGetters = Collections.unmodifiableMap(attributeGetters);
+		_attributeSetters = Collections.unmodifiableMap((Map)attributeSetters);
 	}
 
 	@JSON
@@ -1503,185 +1383,6 @@ public class MBMessageModelImpl extends BaseModelImpl<MBMessage>
 		}
 
 		return mbMessageCacheModel;
-	}
-
-	@Override
-	public String toString() {
-		StringBundler sb = new StringBundler(53);
-
-		sb.append("{uuid=");
-		sb.append(getUuid());
-		sb.append(", messageId=");
-		sb.append(getMessageId());
-		sb.append(", groupId=");
-		sb.append(getGroupId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
-		sb.append(", userId=");
-		sb.append(getUserId());
-		sb.append(", userName=");
-		sb.append(getUserName());
-		sb.append(", createDate=");
-		sb.append(getCreateDate());
-		sb.append(", modifiedDate=");
-		sb.append(getModifiedDate());
-		sb.append(", classNameId=");
-		sb.append(getClassNameId());
-		sb.append(", classPK=");
-		sb.append(getClassPK());
-		sb.append(", categoryId=");
-		sb.append(getCategoryId());
-		sb.append(", threadId=");
-		sb.append(getThreadId());
-		sb.append(", rootMessageId=");
-		sb.append(getRootMessageId());
-		sb.append(", parentMessageId=");
-		sb.append(getParentMessageId());
-		sb.append(", subject=");
-		sb.append(getSubject());
-		sb.append(", body=");
-		sb.append(getBody());
-		sb.append(", format=");
-		sb.append(getFormat());
-		sb.append(", anonymous=");
-		sb.append(isAnonymous());
-		sb.append(", priority=");
-		sb.append(getPriority());
-		sb.append(", allowPingbacks=");
-		sb.append(isAllowPingbacks());
-		sb.append(", answer=");
-		sb.append(isAnswer());
-		sb.append(", lastPublishDate=");
-		sb.append(getLastPublishDate());
-		sb.append(", status=");
-		sb.append(getStatus());
-		sb.append(", statusByUserId=");
-		sb.append(getStatusByUserId());
-		sb.append(", statusByUserName=");
-		sb.append(getStatusByUserName());
-		sb.append(", statusDate=");
-		sb.append(getStatusDate());
-		sb.append("}");
-
-		return sb.toString();
-	}
-
-	@Override
-	public String toXmlString() {
-		StringBundler sb = new StringBundler(82);
-
-		sb.append("<model><model-name>");
-		sb.append("com.liferay.message.boards.model.MBMessage");
-		sb.append("</model-name>");
-
-		sb.append(
-			"<column><column-name>uuid</column-name><column-value><![CDATA[");
-		sb.append(getUuid());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>messageId</column-name><column-value><![CDATA[");
-		sb.append(getMessageId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>groupId</column-name><column-value><![CDATA[");
-		sb.append(getGroupId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userId</column-name><column-value><![CDATA[");
-		sb.append(getUserId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userName</column-name><column-value><![CDATA[");
-		sb.append(getUserName());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>createDate</column-name><column-value><![CDATA[");
-		sb.append(getCreateDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>modifiedDate</column-name><column-value><![CDATA[");
-		sb.append(getModifiedDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>classNameId</column-name><column-value><![CDATA[");
-		sb.append(getClassNameId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>classPK</column-name><column-value><![CDATA[");
-		sb.append(getClassPK());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>categoryId</column-name><column-value><![CDATA[");
-		sb.append(getCategoryId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>threadId</column-name><column-value><![CDATA[");
-		sb.append(getThreadId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>rootMessageId</column-name><column-value><![CDATA[");
-		sb.append(getRootMessageId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>parentMessageId</column-name><column-value><![CDATA[");
-		sb.append(getParentMessageId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>subject</column-name><column-value><![CDATA[");
-		sb.append(getSubject());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>body</column-name><column-value><![CDATA[");
-		sb.append(getBody());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>format</column-name><column-value><![CDATA[");
-		sb.append(getFormat());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>anonymous</column-name><column-value><![CDATA[");
-		sb.append(isAnonymous());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>priority</column-name><column-value><![CDATA[");
-		sb.append(getPriority());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>allowPingbacks</column-name><column-value><![CDATA[");
-		sb.append(isAllowPingbacks());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>answer</column-name><column-value><![CDATA[");
-		sb.append(isAnswer());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>lastPublishDate</column-name><column-value><![CDATA[");
-		sb.append(getLastPublishDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>status</column-name><column-value><![CDATA[");
-		sb.append(getStatus());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>statusByUserId</column-name><column-value><![CDATA[");
-		sb.append(getStatusByUserId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>statusByUserName</column-name><column-value><![CDATA[");
-		sb.append(getStatusByUserName());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>statusDate</column-name><column-value><![CDATA[");
-		sb.append(getStatusDate());
-		sb.append("]]></column-value></column>");
-
-		sb.append("</model>");
-
-		return sb.toString();
 	}
 
 	private static final ClassLoader _classLoader = MBMessage.class.getClassLoader();

@@ -19,8 +19,6 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.counter.kernel.model.Counter;
 import com.liferay.counter.kernel.model.CounterModel;
 
-import com.liferay.petra.string.StringBundler;
-
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.ModelWrapper;
@@ -32,8 +30,12 @@ import java.io.Serializable;
 
 import java.sql.Types;
 
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * The base model implementation for the Counter service. Represents a row in the &quot;Counter&quot; database table, with each column mapped to a property of this class.
@@ -119,31 +121,29 @@ public class CounterModelImpl extends BaseModelImpl<Counter>
 	}
 
 	@Override
-	public Map<String, Object> getModelAttributes() {
-		Map<String, Object> attributes = new HashMap<String, Object>();
-
-		attributes.put("name", getName());
-		attributes.put("currentId", getCurrentId());
-
-		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
-		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
-
-		return attributes;
+	public Map<String, Function<Counter, Object>> getAttributeGetters() {
+		return _attributeGetters;
 	}
 
 	@Override
-	public void setModelAttributes(Map<String, Object> attributes) {
-		String name = (String)attributes.get("name");
+	public Map<String, BiConsumer<Counter, Object>> getAttributeSetters() {
+		return _attributeSetters;
+	}
 
-		if (name != null) {
-			setName(name);
-		}
+	private static final Map<String, Function<Counter, Object>> _attributeGetters;
+	private static final Map<String, BiConsumer<Counter, Object>> _attributeSetters;
 
-		Long currentId = (Long)attributes.get("currentId");
+	static {
+		Map<String, Function<Counter, Object>> attributeGetters = new LinkedHashMap<String, Function<Counter, Object>>();
+		Map<String, BiConsumer<Counter, ?>> attributeSetters = new LinkedHashMap<String, BiConsumer<Counter, ?>>();
 
-		if (currentId != null) {
-			setCurrentId(currentId);
-		}
+		attributeGetters.put("name", Counter::getName);
+		attributeSetters.put("name", (BiConsumer<Counter, String>)Counter::setName);
+		attributeGetters.put("currentId", Counter::getCurrentId);
+		attributeSetters.put("currentId", (BiConsumer<Counter, Long>)Counter::setCurrentId);
+
+		_attributeGetters = Collections.unmodifiableMap(attributeGetters);
+		_attributeSetters = Collections.unmodifiableMap((Map)attributeSetters);
 	}
 
 	@Override
@@ -256,41 +256,6 @@ public class CounterModelImpl extends BaseModelImpl<Counter>
 		counterCacheModel.currentId = getCurrentId();
 
 		return counterCacheModel;
-	}
-
-	@Override
-	public String toString() {
-		StringBundler sb = new StringBundler(5);
-
-		sb.append("{name=");
-		sb.append(getName());
-		sb.append(", currentId=");
-		sb.append(getCurrentId());
-		sb.append("}");
-
-		return sb.toString();
-	}
-
-	@Override
-	public String toXmlString() {
-		StringBundler sb = new StringBundler(10);
-
-		sb.append("<model><model-name>");
-		sb.append("com.liferay.counter.kernel.model.Counter");
-		sb.append("</model-name>");
-
-		sb.append(
-			"<column><column-name>name</column-name><column-value><![CDATA[");
-		sb.append(getName());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>currentId</column-name><column-value><![CDATA[");
-		sb.append(getCurrentId());
-		sb.append("]]></column-value></column>");
-
-		sb.append("</model>");
-
-		return sb.toString();
 	}
 
 	private static final ClassLoader _classLoader = Counter.class.getClassLoader();

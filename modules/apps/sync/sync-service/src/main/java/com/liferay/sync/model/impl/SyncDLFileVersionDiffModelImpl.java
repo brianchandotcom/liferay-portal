@@ -19,8 +19,6 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 
-import com.liferay.petra.string.StringBundler;
-
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.ModelWrapper;
@@ -36,9 +34,13 @@ import java.io.Serializable;
 
 import java.sql.Types;
 
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * The base model implementation for the SyncDLFileVersionDiff service. Represents a row in the &quot;SyncDLFileVersionDiff&quot; database table, with each column mapped to a property of this class.
@@ -141,67 +143,39 @@ public class SyncDLFileVersionDiffModelImpl extends BaseModelImpl<SyncDLFileVers
 	}
 
 	@Override
-	public Map<String, Object> getModelAttributes() {
-		Map<String, Object> attributes = new HashMap<String, Object>();
-
-		attributes.put("syncDLFileVersionDiffId", getSyncDLFileVersionDiffId());
-		attributes.put("fileEntryId", getFileEntryId());
-		attributes.put("sourceFileVersionId", getSourceFileVersionId());
-		attributes.put("targetFileVersionId", getTargetFileVersionId());
-		attributes.put("dataFileEntryId", getDataFileEntryId());
-		attributes.put("size", getSize());
-		attributes.put("expirationDate", getExpirationDate());
-
-		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
-		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
-
-		return attributes;
+	public Map<String, Function<SyncDLFileVersionDiff, Object>> getAttributeGetters() {
+		return _attributeGetters;
 	}
 
 	@Override
-	public void setModelAttributes(Map<String, Object> attributes) {
-		Long syncDLFileVersionDiffId = (Long)attributes.get(
-				"syncDLFileVersionDiffId");
+	public Map<String, BiConsumer<SyncDLFileVersionDiff, Object>> getAttributeSetters() {
+		return _attributeSetters;
+	}
 
-		if (syncDLFileVersionDiffId != null) {
-			setSyncDLFileVersionDiffId(syncDLFileVersionDiffId);
-		}
+	private static final Map<String, Function<SyncDLFileVersionDiff, Object>> _attributeGetters;
+	private static final Map<String, BiConsumer<SyncDLFileVersionDiff, Object>> _attributeSetters;
 
-		Long fileEntryId = (Long)attributes.get("fileEntryId");
+	static {
+		Map<String, Function<SyncDLFileVersionDiff, Object>> attributeGetters = new LinkedHashMap<String, Function<SyncDLFileVersionDiff, Object>>();
+		Map<String, BiConsumer<SyncDLFileVersionDiff, ?>> attributeSetters = new LinkedHashMap<String, BiConsumer<SyncDLFileVersionDiff, ?>>();
 
-		if (fileEntryId != null) {
-			setFileEntryId(fileEntryId);
-		}
+		attributeGetters.put("syncDLFileVersionDiffId", SyncDLFileVersionDiff::getSyncDLFileVersionDiffId);
+		attributeSetters.put("syncDLFileVersionDiffId", (BiConsumer<SyncDLFileVersionDiff, Long>)SyncDLFileVersionDiff::setSyncDLFileVersionDiffId);
+		attributeGetters.put("fileEntryId", SyncDLFileVersionDiff::getFileEntryId);
+		attributeSetters.put("fileEntryId", (BiConsumer<SyncDLFileVersionDiff, Long>)SyncDLFileVersionDiff::setFileEntryId);
+		attributeGetters.put("sourceFileVersionId", SyncDLFileVersionDiff::getSourceFileVersionId);
+		attributeSetters.put("sourceFileVersionId", (BiConsumer<SyncDLFileVersionDiff, Long>)SyncDLFileVersionDiff::setSourceFileVersionId);
+		attributeGetters.put("targetFileVersionId", SyncDLFileVersionDiff::getTargetFileVersionId);
+		attributeSetters.put("targetFileVersionId", (BiConsumer<SyncDLFileVersionDiff, Long>)SyncDLFileVersionDiff::setTargetFileVersionId);
+		attributeGetters.put("dataFileEntryId", SyncDLFileVersionDiff::getDataFileEntryId);
+		attributeSetters.put("dataFileEntryId", (BiConsumer<SyncDLFileVersionDiff, Long>)SyncDLFileVersionDiff::setDataFileEntryId);
+		attributeGetters.put("size", SyncDLFileVersionDiff::getSize);
+		attributeSetters.put("size", (BiConsumer<SyncDLFileVersionDiff, Long>)SyncDLFileVersionDiff::setSize);
+		attributeGetters.put("expirationDate", SyncDLFileVersionDiff::getExpirationDate);
+		attributeSetters.put("expirationDate", (BiConsumer<SyncDLFileVersionDiff, Date>)SyncDLFileVersionDiff::setExpirationDate);
 
-		Long sourceFileVersionId = (Long)attributes.get("sourceFileVersionId");
-
-		if (sourceFileVersionId != null) {
-			setSourceFileVersionId(sourceFileVersionId);
-		}
-
-		Long targetFileVersionId = (Long)attributes.get("targetFileVersionId");
-
-		if (targetFileVersionId != null) {
-			setTargetFileVersionId(targetFileVersionId);
-		}
-
-		Long dataFileEntryId = (Long)attributes.get("dataFileEntryId");
-
-		if (dataFileEntryId != null) {
-			setDataFileEntryId(dataFileEntryId);
-		}
-
-		Long size = (Long)attributes.get("size");
-
-		if (size != null) {
-			setSize(size);
-		}
-
-		Date expirationDate = (Date)attributes.get("expirationDate");
-
-		if (expirationDate != null) {
-			setExpirationDate(expirationDate);
-		}
+		_attributeGetters = Collections.unmodifiableMap(attributeGetters);
+		_attributeSetters = Collections.unmodifiableMap((Map)attributeSetters);
 	}
 
 	@Override
@@ -463,71 +437,6 @@ public class SyncDLFileVersionDiffModelImpl extends BaseModelImpl<SyncDLFileVers
 		}
 
 		return syncDLFileVersionDiffCacheModel;
-	}
-
-	@Override
-	public String toString() {
-		StringBundler sb = new StringBundler(15);
-
-		sb.append("{syncDLFileVersionDiffId=");
-		sb.append(getSyncDLFileVersionDiffId());
-		sb.append(", fileEntryId=");
-		sb.append(getFileEntryId());
-		sb.append(", sourceFileVersionId=");
-		sb.append(getSourceFileVersionId());
-		sb.append(", targetFileVersionId=");
-		sb.append(getTargetFileVersionId());
-		sb.append(", dataFileEntryId=");
-		sb.append(getDataFileEntryId());
-		sb.append(", size=");
-		sb.append(getSize());
-		sb.append(", expirationDate=");
-		sb.append(getExpirationDate());
-		sb.append("}");
-
-		return sb.toString();
-	}
-
-	@Override
-	public String toXmlString() {
-		StringBundler sb = new StringBundler(25);
-
-		sb.append("<model><model-name>");
-		sb.append("com.liferay.sync.model.SyncDLFileVersionDiff");
-		sb.append("</model-name>");
-
-		sb.append(
-			"<column><column-name>syncDLFileVersionDiffId</column-name><column-value><![CDATA[");
-		sb.append(getSyncDLFileVersionDiffId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>fileEntryId</column-name><column-value><![CDATA[");
-		sb.append(getFileEntryId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>sourceFileVersionId</column-name><column-value><![CDATA[");
-		sb.append(getSourceFileVersionId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>targetFileVersionId</column-name><column-value><![CDATA[");
-		sb.append(getTargetFileVersionId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>dataFileEntryId</column-name><column-value><![CDATA[");
-		sb.append(getDataFileEntryId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>size</column-name><column-value><![CDATA[");
-		sb.append(getSize());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>expirationDate</column-name><column-value><![CDATA[");
-		sb.append(getExpirationDate());
-		sb.append("]]></column-value></column>");
-
-		sb.append("</model>");
-
-		return sb.toString();
 	}
 
 	private static final ClassLoader _classLoader = SyncDLFileVersionDiff.class.getClassLoader();

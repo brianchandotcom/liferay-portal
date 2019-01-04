@@ -20,8 +20,6 @@ import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * <p>
@@ -37,103 +35,6 @@ public class MicroblogsEntryWrapper extends BaseModelWrapper<MicroblogsEntry>
 	implements MicroblogsEntry, ModelWrapper<MicroblogsEntry> {
 	public MicroblogsEntryWrapper(MicroblogsEntry microblogsEntry) {
 		super(microblogsEntry);
-	}
-
-	@Override
-	public Map<String, Object> getModelAttributes() {
-		Map<String, Object> attributes = new HashMap<String, Object>();
-
-		attributes.put("microblogsEntryId", getMicroblogsEntryId());
-		attributes.put("companyId", getCompanyId());
-		attributes.put("userId", getUserId());
-		attributes.put("userName", getUserName());
-		attributes.put("createDate", getCreateDate());
-		attributes.put("modifiedDate", getModifiedDate());
-		attributes.put("creatorClassNameId", getCreatorClassNameId());
-		attributes.put("creatorClassPK", getCreatorClassPK());
-		attributes.put("content", getContent());
-		attributes.put("type", getType());
-		attributes.put("parentMicroblogsEntryId", getParentMicroblogsEntryId());
-		attributes.put("socialRelationType", getSocialRelationType());
-
-		return attributes;
-	}
-
-	@Override
-	public void setModelAttributes(Map<String, Object> attributes) {
-		Long microblogsEntryId = (Long)attributes.get("microblogsEntryId");
-
-		if (microblogsEntryId != null) {
-			setMicroblogsEntryId(microblogsEntryId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
-		}
-
-		Long userId = (Long)attributes.get("userId");
-
-		if (userId != null) {
-			setUserId(userId);
-		}
-
-		String userName = (String)attributes.get("userName");
-
-		if (userName != null) {
-			setUserName(userName);
-		}
-
-		Date createDate = (Date)attributes.get("createDate");
-
-		if (createDate != null) {
-			setCreateDate(createDate);
-		}
-
-		Date modifiedDate = (Date)attributes.get("modifiedDate");
-
-		if (modifiedDate != null) {
-			setModifiedDate(modifiedDate);
-		}
-
-		Long creatorClassNameId = (Long)attributes.get("creatorClassNameId");
-
-		if (creatorClassNameId != null) {
-			setCreatorClassNameId(creatorClassNameId);
-		}
-
-		Long creatorClassPK = (Long)attributes.get("creatorClassPK");
-
-		if (creatorClassPK != null) {
-			setCreatorClassPK(creatorClassPK);
-		}
-
-		String content = (String)attributes.get("content");
-
-		if (content != null) {
-			setContent(content);
-		}
-
-		Integer type = (Integer)attributes.get("type");
-
-		if (type != null) {
-			setType(type);
-		}
-
-		Long parentMicroblogsEntryId = (Long)attributes.get(
-				"parentMicroblogsEntryId");
-
-		if (parentMicroblogsEntryId != null) {
-			setParentMicroblogsEntryId(parentMicroblogsEntryId);
-		}
-
-		Integer socialRelationType = (Integer)attributes.get(
-				"socialRelationType");
-
-		if (socialRelationType != null) {
-			setSocialRelationType(socialRelationType);
-		}
 	}
 
 	@Override

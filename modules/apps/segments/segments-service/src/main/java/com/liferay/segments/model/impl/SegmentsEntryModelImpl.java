@@ -19,8 +19,6 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 
-import com.liferay.petra.string.StringBundler;
-
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.LocaleException;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -47,13 +45,17 @@ import java.io.Serializable;
 import java.sql.Types;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * The base model implementation for the SegmentsEntry service. Represents a row in the &quot;SegmentsEntry&quot; database table, with each column mapped to a property of this class.
@@ -224,115 +226,53 @@ public class SegmentsEntryModelImpl extends BaseModelImpl<SegmentsEntry>
 	}
 
 	@Override
-	public Map<String, Object> getModelAttributes() {
-		Map<String, Object> attributes = new HashMap<String, Object>();
-
-		attributes.put("segmentsEntryId", getSegmentsEntryId());
-		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
-		attributes.put("userId", getUserId());
-		attributes.put("userName", getUserName());
-		attributes.put("createDate", getCreateDate());
-		attributes.put("modifiedDate", getModifiedDate());
-		attributes.put("name", getName());
-		attributes.put("description", getDescription());
-		attributes.put("active", isActive());
-		attributes.put("criteria", getCriteria());
-		attributes.put("key", getKey());
-		attributes.put("source", getSource());
-		attributes.put("type", getType());
-
-		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
-		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
-
-		return attributes;
+	public Map<String, Function<SegmentsEntry, Object>> getAttributeGetters() {
+		return _attributeGetters;
 	}
 
 	@Override
-	public void setModelAttributes(Map<String, Object> attributes) {
-		Long segmentsEntryId = (Long)attributes.get("segmentsEntryId");
+	public Map<String, BiConsumer<SegmentsEntry, Object>> getAttributeSetters() {
+		return _attributeSetters;
+	}
 
-		if (segmentsEntryId != null) {
-			setSegmentsEntryId(segmentsEntryId);
-		}
+	private static final Map<String, Function<SegmentsEntry, Object>> _attributeGetters;
+	private static final Map<String, BiConsumer<SegmentsEntry, Object>> _attributeSetters;
 
-		Long groupId = (Long)attributes.get("groupId");
+	static {
+		Map<String, Function<SegmentsEntry, Object>> attributeGetters = new LinkedHashMap<String, Function<SegmentsEntry, Object>>();
+		Map<String, BiConsumer<SegmentsEntry, ?>> attributeSetters = new LinkedHashMap<String, BiConsumer<SegmentsEntry, ?>>();
 
-		if (groupId != null) {
-			setGroupId(groupId);
-		}
+		attributeGetters.put("segmentsEntryId", SegmentsEntry::getSegmentsEntryId);
+		attributeSetters.put("segmentsEntryId", (BiConsumer<SegmentsEntry, Long>)SegmentsEntry::setSegmentsEntryId);
+		attributeGetters.put("groupId", SegmentsEntry::getGroupId);
+		attributeSetters.put("groupId", (BiConsumer<SegmentsEntry, Long>)SegmentsEntry::setGroupId);
+		attributeGetters.put("companyId", SegmentsEntry::getCompanyId);
+		attributeSetters.put("companyId", (BiConsumer<SegmentsEntry, Long>)SegmentsEntry::setCompanyId);
+		attributeGetters.put("userId", SegmentsEntry::getUserId);
+		attributeSetters.put("userId", (BiConsumer<SegmentsEntry, Long>)SegmentsEntry::setUserId);
+		attributeGetters.put("userName", SegmentsEntry::getUserName);
+		attributeSetters.put("userName", (BiConsumer<SegmentsEntry, String>)SegmentsEntry::setUserName);
+		attributeGetters.put("createDate", SegmentsEntry::getCreateDate);
+		attributeSetters.put("createDate", (BiConsumer<SegmentsEntry, Date>)SegmentsEntry::setCreateDate);
+		attributeGetters.put("modifiedDate", SegmentsEntry::getModifiedDate);
+		attributeSetters.put("modifiedDate", (BiConsumer<SegmentsEntry, Date>)SegmentsEntry::setModifiedDate);
+		attributeGetters.put("name", SegmentsEntry::getName);
+		attributeSetters.put("name", (BiConsumer<SegmentsEntry, String>)SegmentsEntry::setName);
+		attributeGetters.put("description", SegmentsEntry::getDescription);
+		attributeSetters.put("description", (BiConsumer<SegmentsEntry, String>)SegmentsEntry::setDescription);
+		attributeGetters.put("active", SegmentsEntry::getActive);
+		attributeSetters.put("active", (BiConsumer<SegmentsEntry, Boolean>)SegmentsEntry::setActive);
+		attributeGetters.put("criteria", SegmentsEntry::getCriteria);
+		attributeSetters.put("criteria", (BiConsumer<SegmentsEntry, String>)SegmentsEntry::setCriteria);
+		attributeGetters.put("key", SegmentsEntry::getKey);
+		attributeSetters.put("key", (BiConsumer<SegmentsEntry, String>)SegmentsEntry::setKey);
+		attributeGetters.put("source", SegmentsEntry::getSource);
+		attributeSetters.put("source", (BiConsumer<SegmentsEntry, String>)SegmentsEntry::setSource);
+		attributeGetters.put("type", SegmentsEntry::getType);
+		attributeSetters.put("type", (BiConsumer<SegmentsEntry, String>)SegmentsEntry::setType);
 
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
-		}
-
-		Long userId = (Long)attributes.get("userId");
-
-		if (userId != null) {
-			setUserId(userId);
-		}
-
-		String userName = (String)attributes.get("userName");
-
-		if (userName != null) {
-			setUserName(userName);
-		}
-
-		Date createDate = (Date)attributes.get("createDate");
-
-		if (createDate != null) {
-			setCreateDate(createDate);
-		}
-
-		Date modifiedDate = (Date)attributes.get("modifiedDate");
-
-		if (modifiedDate != null) {
-			setModifiedDate(modifiedDate);
-		}
-
-		String name = (String)attributes.get("name");
-
-		if (name != null) {
-			setName(name);
-		}
-
-		String description = (String)attributes.get("description");
-
-		if (description != null) {
-			setDescription(description);
-		}
-
-		Boolean active = (Boolean)attributes.get("active");
-
-		if (active != null) {
-			setActive(active);
-		}
-
-		String criteria = (String)attributes.get("criteria");
-
-		if (criteria != null) {
-			setCriteria(criteria);
-		}
-
-		String key = (String)attributes.get("key");
-
-		if (key != null) {
-			setKey(key);
-		}
-
-		String source = (String)attributes.get("source");
-
-		if (source != null) {
-			setSource(source);
-		}
-
-		String type = (String)attributes.get("type");
-
-		if (type != null) {
-			setType(type);
-		}
+		_attributeGetters = Collections.unmodifiableMap(attributeGetters);
+		_attributeSetters = Collections.unmodifiableMap((Map)attributeSetters);
 	}
 
 	@JSON
@@ -1076,113 +1016,6 @@ public class SegmentsEntryModelImpl extends BaseModelImpl<SegmentsEntry>
 		}
 
 		return segmentsEntryCacheModel;
-	}
-
-	@Override
-	public String toString() {
-		StringBundler sb = new StringBundler(29);
-
-		sb.append("{segmentsEntryId=");
-		sb.append(getSegmentsEntryId());
-		sb.append(", groupId=");
-		sb.append(getGroupId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
-		sb.append(", userId=");
-		sb.append(getUserId());
-		sb.append(", userName=");
-		sb.append(getUserName());
-		sb.append(", createDate=");
-		sb.append(getCreateDate());
-		sb.append(", modifiedDate=");
-		sb.append(getModifiedDate());
-		sb.append(", name=");
-		sb.append(getName());
-		sb.append(", description=");
-		sb.append(getDescription());
-		sb.append(", active=");
-		sb.append(isActive());
-		sb.append(", criteria=");
-		sb.append(getCriteria());
-		sb.append(", key=");
-		sb.append(getKey());
-		sb.append(", source=");
-		sb.append(getSource());
-		sb.append(", type=");
-		sb.append(getType());
-		sb.append("}");
-
-		return sb.toString();
-	}
-
-	@Override
-	public String toXmlString() {
-		StringBundler sb = new StringBundler(46);
-
-		sb.append("<model><model-name>");
-		sb.append("com.liferay.segments.model.SegmentsEntry");
-		sb.append("</model-name>");
-
-		sb.append(
-			"<column><column-name>segmentsEntryId</column-name><column-value><![CDATA[");
-		sb.append(getSegmentsEntryId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>groupId</column-name><column-value><![CDATA[");
-		sb.append(getGroupId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userId</column-name><column-value><![CDATA[");
-		sb.append(getUserId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userName</column-name><column-value><![CDATA[");
-		sb.append(getUserName());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>createDate</column-name><column-value><![CDATA[");
-		sb.append(getCreateDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>modifiedDate</column-name><column-value><![CDATA[");
-		sb.append(getModifiedDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>name</column-name><column-value><![CDATA[");
-		sb.append(getName());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>description</column-name><column-value><![CDATA[");
-		sb.append(getDescription());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>active</column-name><column-value><![CDATA[");
-		sb.append(isActive());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>criteria</column-name><column-value><![CDATA[");
-		sb.append(getCriteria());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>key</column-name><column-value><![CDATA[");
-		sb.append(getKey());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>source</column-name><column-value><![CDATA[");
-		sb.append(getSource());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>type</column-name><column-value><![CDATA[");
-		sb.append(getType());
-		sb.append("]]></column-value></column>");
-
-		sb.append("</model>");
-
-		return sb.toString();
 	}
 
 	private static final ClassLoader _classLoader = SegmentsEntry.class.getClassLoader();

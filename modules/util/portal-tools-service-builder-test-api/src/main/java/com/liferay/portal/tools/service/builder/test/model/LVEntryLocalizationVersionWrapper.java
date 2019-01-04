@@ -26,6 +26,8 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * <p>
@@ -59,62 +61,32 @@ public class LVEntryLocalizationVersionWrapper
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		attributes.put("lvEntryLocalizationVersionId",
-			getLvEntryLocalizationVersionId());
-		attributes.put("version", getVersion());
-		attributes.put("lvEntryLocalizationId", getLvEntryLocalizationId());
-		attributes.put("lvEntryId", getLvEntryId());
-		attributes.put("languageId", getLanguageId());
-		attributes.put("title", getTitle());
-		attributes.put("content", getContent());
+		Map<String, Function<LVEntryLocalizationVersion, Object>> attributeGetters =
+			getAttributeGetters();
+
+		for (Map.Entry<String, Function<LVEntryLocalizationVersion, Object>> entry : attributeGetters.entrySet()) {
+			String attributeName = entry.getKey();
+			Function<LVEntryLocalizationVersion, Object> attributeFunction = entry.getValue();
+
+			attributes.put(attributeName, attributeFunction.apply(this));
+		}
+
+		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
+		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
 
 		return attributes;
 	}
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		Long lvEntryLocalizationVersionId = (Long)attributes.get(
-				"lvEntryLocalizationVersionId");
+		Map<String, BiConsumer<LVEntryLocalizationVersion, Object>> attributeSetters =
+			getAttributeSetters();
 
-		if (lvEntryLocalizationVersionId != null) {
-			setLvEntryLocalizationVersionId(lvEntryLocalizationVersionId);
-		}
+		for (Map.Entry<String, BiConsumer<LVEntryLocalizationVersion, Object>> entry : attributeSetters.entrySet()) {
+			String attributeName = entry.getKey();
+			BiConsumer<LVEntryLocalizationVersion, Object> attributeBiConsumer = entry.getValue();
 
-		Integer version = (Integer)attributes.get("version");
-
-		if (version != null) {
-			setVersion(version);
-		}
-
-		Long lvEntryLocalizationId = (Long)attributes.get(
-				"lvEntryLocalizationId");
-
-		if (lvEntryLocalizationId != null) {
-			setLvEntryLocalizationId(lvEntryLocalizationId);
-		}
-
-		Long lvEntryId = (Long)attributes.get("lvEntryId");
-
-		if (lvEntryId != null) {
-			setLvEntryId(lvEntryId);
-		}
-
-		String languageId = (String)attributes.get("languageId");
-
-		if (languageId != null) {
-			setLanguageId(languageId);
-		}
-
-		String title = (String)attributes.get("title");
-
-		if (title != null) {
-			setTitle(title);
-		}
-
-		String content = (String)attributes.get("content");
-
-		if (content != null) {
-			setContent(content);
+			attributeBiConsumer.accept(this, attributeSetters.get(attributeName));
 		}
 	}
 
@@ -126,6 +98,16 @@ public class LVEntryLocalizationVersionWrapper
 	@Override
 	public int compareTo(LVEntryLocalizationVersion lvEntryLocalizationVersion) {
 		return _lvEntryLocalizationVersion.compareTo(lvEntryLocalizationVersion);
+	}
+
+	@Override
+	public Map<String, Function<LVEntryLocalizationVersion, Object>> getAttributeGetters() {
+		return _lvEntryLocalizationVersion.getAttributeGetters();
+	}
+
+	@Override
+	public Map<String, BiConsumer<LVEntryLocalizationVersion, Object>> getAttributeSetters() {
+		return _lvEntryLocalizationVersion.getAttributeSetters();
 	}
 
 	/**

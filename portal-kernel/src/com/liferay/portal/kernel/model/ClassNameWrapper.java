@@ -18,9 +18,6 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
-import java.util.HashMap;
-import java.util.Map;
-
 /**
  * <p>
  * This class is a wrapper for {@link ClassName}.
@@ -35,38 +32,6 @@ public class ClassNameWrapper extends BaseModelWrapper<ClassName>
 	implements ClassName, ModelWrapper<ClassName> {
 	public ClassNameWrapper(ClassName className) {
 		super(className);
-	}
-
-	@Override
-	public Map<String, Object> getModelAttributes() {
-		Map<String, Object> attributes = new HashMap<String, Object>();
-
-		attributes.put("mvccVersion", getMvccVersion());
-		attributes.put("classNameId", getClassNameId());
-		attributes.put("value", getValue());
-
-		return attributes;
-	}
-
-	@Override
-	public void setModelAttributes(Map<String, Object> attributes) {
-		Long mvccVersion = (Long)attributes.get("mvccVersion");
-
-		if (mvccVersion != null) {
-			setMvccVersion(mvccVersion);
-		}
-
-		Long classNameId = (Long)attributes.get("classNameId");
-
-		if (classNameId != null) {
-			setClassNameId(classNameId);
-		}
-
-		String value = (String)attributes.get("value");
-
-		if (value != null) {
-			setValue(value);
-		}
 	}
 
 	/**

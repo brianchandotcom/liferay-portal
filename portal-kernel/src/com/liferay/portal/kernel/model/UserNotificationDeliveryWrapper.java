@@ -18,9 +18,6 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
-import java.util.HashMap;
-import java.util.Map;
-
 /**
  * <p>
  * This class is a wrapper for {@link UserNotificationDelivery}.
@@ -36,82 +33,6 @@ public class UserNotificationDeliveryWrapper extends BaseModelWrapper<UserNotifi
 	public UserNotificationDeliveryWrapper(
 		UserNotificationDelivery userNotificationDelivery) {
 		super(userNotificationDelivery);
-	}
-
-	@Override
-	public Map<String, Object> getModelAttributes() {
-		Map<String, Object> attributes = new HashMap<String, Object>();
-
-		attributes.put("mvccVersion", getMvccVersion());
-		attributes.put("userNotificationDeliveryId",
-			getUserNotificationDeliveryId());
-		attributes.put("companyId", getCompanyId());
-		attributes.put("userId", getUserId());
-		attributes.put("portletId", getPortletId());
-		attributes.put("classNameId", getClassNameId());
-		attributes.put("notificationType", getNotificationType());
-		attributes.put("deliveryType", getDeliveryType());
-		attributes.put("deliver", isDeliver());
-
-		return attributes;
-	}
-
-	@Override
-	public void setModelAttributes(Map<String, Object> attributes) {
-		Long mvccVersion = (Long)attributes.get("mvccVersion");
-
-		if (mvccVersion != null) {
-			setMvccVersion(mvccVersion);
-		}
-
-		Long userNotificationDeliveryId = (Long)attributes.get(
-				"userNotificationDeliveryId");
-
-		if (userNotificationDeliveryId != null) {
-			setUserNotificationDeliveryId(userNotificationDeliveryId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
-		}
-
-		Long userId = (Long)attributes.get("userId");
-
-		if (userId != null) {
-			setUserId(userId);
-		}
-
-		String portletId = (String)attributes.get("portletId");
-
-		if (portletId != null) {
-			setPortletId(portletId);
-		}
-
-		Long classNameId = (Long)attributes.get("classNameId");
-
-		if (classNameId != null) {
-			setClassNameId(classNameId);
-		}
-
-		Integer notificationType = (Integer)attributes.get("notificationType");
-
-		if (notificationType != null) {
-			setNotificationType(notificationType);
-		}
-
-		Integer deliveryType = (Integer)attributes.get("deliveryType");
-
-		if (deliveryType != null) {
-			setDeliveryType(deliveryType);
-		}
-
-		Boolean deliver = (Boolean)attributes.get("deliver");
-
-		if (deliver != null) {
-			setDeliver(deliver);
-		}
 	}
 
 	/**

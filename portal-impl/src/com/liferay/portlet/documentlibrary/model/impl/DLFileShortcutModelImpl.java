@@ -25,8 +25,6 @@ import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 
-import com.liferay.petra.string.StringBundler;
-
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.NoSuchModelException;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -50,10 +48,14 @@ import java.io.Serializable;
 import java.sql.Types;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * The base model implementation for the DLFileShortcut service. Represents a row in the &quot;DLFileShortcut&quot; database table, with each column mapped to a property of this class.
@@ -238,143 +240,61 @@ public class DLFileShortcutModelImpl extends BaseModelImpl<DLFileShortcut>
 	}
 
 	@Override
-	public Map<String, Object> getModelAttributes() {
-		Map<String, Object> attributes = new HashMap<String, Object>();
-
-		attributes.put("uuid", getUuid());
-		attributes.put("fileShortcutId", getFileShortcutId());
-		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
-		attributes.put("userId", getUserId());
-		attributes.put("userName", getUserName());
-		attributes.put("createDate", getCreateDate());
-		attributes.put("modifiedDate", getModifiedDate());
-		attributes.put("repositoryId", getRepositoryId());
-		attributes.put("folderId", getFolderId());
-		attributes.put("toFileEntryId", getToFileEntryId());
-		attributes.put("treePath", getTreePath());
-		attributes.put("active", isActive());
-		attributes.put("lastPublishDate", getLastPublishDate());
-		attributes.put("status", getStatus());
-		attributes.put("statusByUserId", getStatusByUserId());
-		attributes.put("statusByUserName", getStatusByUserName());
-		attributes.put("statusDate", getStatusDate());
-
-		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
-		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
-
-		return attributes;
+	public Map<String, Function<DLFileShortcut, Object>> getAttributeGetters() {
+		return _attributeGetters;
 	}
 
 	@Override
-	public void setModelAttributes(Map<String, Object> attributes) {
-		String uuid = (String)attributes.get("uuid");
+	public Map<String, BiConsumer<DLFileShortcut, Object>> getAttributeSetters() {
+		return _attributeSetters;
+	}
 
-		if (uuid != null) {
-			setUuid(uuid);
-		}
+	private static final Map<String, Function<DLFileShortcut, Object>> _attributeGetters;
+	private static final Map<String, BiConsumer<DLFileShortcut, Object>> _attributeSetters;
 
-		Long fileShortcutId = (Long)attributes.get("fileShortcutId");
+	static {
+		Map<String, Function<DLFileShortcut, Object>> attributeGetters = new LinkedHashMap<String, Function<DLFileShortcut, Object>>();
+		Map<String, BiConsumer<DLFileShortcut, ?>> attributeSetters = new LinkedHashMap<String, BiConsumer<DLFileShortcut, ?>>();
 
-		if (fileShortcutId != null) {
-			setFileShortcutId(fileShortcutId);
-		}
+		attributeGetters.put("uuid", DLFileShortcut::getUuid);
+		attributeSetters.put("uuid", (BiConsumer<DLFileShortcut, String>)DLFileShortcut::setUuid);
+		attributeGetters.put("fileShortcutId", DLFileShortcut::getFileShortcutId);
+		attributeSetters.put("fileShortcutId", (BiConsumer<DLFileShortcut, Long>)DLFileShortcut::setFileShortcutId);
+		attributeGetters.put("groupId", DLFileShortcut::getGroupId);
+		attributeSetters.put("groupId", (BiConsumer<DLFileShortcut, Long>)DLFileShortcut::setGroupId);
+		attributeGetters.put("companyId", DLFileShortcut::getCompanyId);
+		attributeSetters.put("companyId", (BiConsumer<DLFileShortcut, Long>)DLFileShortcut::setCompanyId);
+		attributeGetters.put("userId", DLFileShortcut::getUserId);
+		attributeSetters.put("userId", (BiConsumer<DLFileShortcut, Long>)DLFileShortcut::setUserId);
+		attributeGetters.put("userName", DLFileShortcut::getUserName);
+		attributeSetters.put("userName", (BiConsumer<DLFileShortcut, String>)DLFileShortcut::setUserName);
+		attributeGetters.put("createDate", DLFileShortcut::getCreateDate);
+		attributeSetters.put("createDate", (BiConsumer<DLFileShortcut, Date>)DLFileShortcut::setCreateDate);
+		attributeGetters.put("modifiedDate", DLFileShortcut::getModifiedDate);
+		attributeSetters.put("modifiedDate", (BiConsumer<DLFileShortcut, Date>)DLFileShortcut::setModifiedDate);
+		attributeGetters.put("repositoryId", DLFileShortcut::getRepositoryId);
+		attributeSetters.put("repositoryId", (BiConsumer<DLFileShortcut, Long>)DLFileShortcut::setRepositoryId);
+		attributeGetters.put("folderId", DLFileShortcut::getFolderId);
+		attributeSetters.put("folderId", (BiConsumer<DLFileShortcut, Long>)DLFileShortcut::setFolderId);
+		attributeGetters.put("toFileEntryId", DLFileShortcut::getToFileEntryId);
+		attributeSetters.put("toFileEntryId", (BiConsumer<DLFileShortcut, Long>)DLFileShortcut::setToFileEntryId);
+		attributeGetters.put("treePath", DLFileShortcut::getTreePath);
+		attributeSetters.put("treePath", (BiConsumer<DLFileShortcut, String>)DLFileShortcut::setTreePath);
+		attributeGetters.put("active", DLFileShortcut::getActive);
+		attributeSetters.put("active", (BiConsumer<DLFileShortcut, Boolean>)DLFileShortcut::setActive);
+		attributeGetters.put("lastPublishDate", DLFileShortcut::getLastPublishDate);
+		attributeSetters.put("lastPublishDate", (BiConsumer<DLFileShortcut, Date>)DLFileShortcut::setLastPublishDate);
+		attributeGetters.put("status", DLFileShortcut::getStatus);
+		attributeSetters.put("status", (BiConsumer<DLFileShortcut, Integer>)DLFileShortcut::setStatus);
+		attributeGetters.put("statusByUserId", DLFileShortcut::getStatusByUserId);
+		attributeSetters.put("statusByUserId", (BiConsumer<DLFileShortcut, Long>)DLFileShortcut::setStatusByUserId);
+		attributeGetters.put("statusByUserName", DLFileShortcut::getStatusByUserName);
+		attributeSetters.put("statusByUserName", (BiConsumer<DLFileShortcut, String>)DLFileShortcut::setStatusByUserName);
+		attributeGetters.put("statusDate", DLFileShortcut::getStatusDate);
+		attributeSetters.put("statusDate", (BiConsumer<DLFileShortcut, Date>)DLFileShortcut::setStatusDate);
 
-		Long groupId = (Long)attributes.get("groupId");
-
-		if (groupId != null) {
-			setGroupId(groupId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
-		}
-
-		Long userId = (Long)attributes.get("userId");
-
-		if (userId != null) {
-			setUserId(userId);
-		}
-
-		String userName = (String)attributes.get("userName");
-
-		if (userName != null) {
-			setUserName(userName);
-		}
-
-		Date createDate = (Date)attributes.get("createDate");
-
-		if (createDate != null) {
-			setCreateDate(createDate);
-		}
-
-		Date modifiedDate = (Date)attributes.get("modifiedDate");
-
-		if (modifiedDate != null) {
-			setModifiedDate(modifiedDate);
-		}
-
-		Long repositoryId = (Long)attributes.get("repositoryId");
-
-		if (repositoryId != null) {
-			setRepositoryId(repositoryId);
-		}
-
-		Long folderId = (Long)attributes.get("folderId");
-
-		if (folderId != null) {
-			setFolderId(folderId);
-		}
-
-		Long toFileEntryId = (Long)attributes.get("toFileEntryId");
-
-		if (toFileEntryId != null) {
-			setToFileEntryId(toFileEntryId);
-		}
-
-		String treePath = (String)attributes.get("treePath");
-
-		if (treePath != null) {
-			setTreePath(treePath);
-		}
-
-		Boolean active = (Boolean)attributes.get("active");
-
-		if (active != null) {
-			setActive(active);
-		}
-
-		Date lastPublishDate = (Date)attributes.get("lastPublishDate");
-
-		if (lastPublishDate != null) {
-			setLastPublishDate(lastPublishDate);
-		}
-
-		Integer status = (Integer)attributes.get("status");
-
-		if (status != null) {
-			setStatus(status);
-		}
-
-		Long statusByUserId = (Long)attributes.get("statusByUserId");
-
-		if (statusByUserId != null) {
-			setStatusByUserId(statusByUserId);
-		}
-
-		String statusByUserName = (String)attributes.get("statusByUserName");
-
-		if (statusByUserName != null) {
-			setStatusByUserName(statusByUserName);
-		}
-
-		Date statusDate = (Date)attributes.get("statusDate");
-
-		if (statusDate != null) {
-			setStatusDate(statusDate);
-		}
+		_attributeGetters = Collections.unmodifiableMap(attributeGetters);
+		_attributeSetters = Collections.unmodifiableMap((Map)attributeSetters);
 	}
 
 	@JSON
@@ -1171,137 +1091,6 @@ public class DLFileShortcutModelImpl extends BaseModelImpl<DLFileShortcut>
 		}
 
 		return dlFileShortcutCacheModel;
-	}
-
-	@Override
-	public String toString() {
-		StringBundler sb = new StringBundler(37);
-
-		sb.append("{uuid=");
-		sb.append(getUuid());
-		sb.append(", fileShortcutId=");
-		sb.append(getFileShortcutId());
-		sb.append(", groupId=");
-		sb.append(getGroupId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
-		sb.append(", userId=");
-		sb.append(getUserId());
-		sb.append(", userName=");
-		sb.append(getUserName());
-		sb.append(", createDate=");
-		sb.append(getCreateDate());
-		sb.append(", modifiedDate=");
-		sb.append(getModifiedDate());
-		sb.append(", repositoryId=");
-		sb.append(getRepositoryId());
-		sb.append(", folderId=");
-		sb.append(getFolderId());
-		sb.append(", toFileEntryId=");
-		sb.append(getToFileEntryId());
-		sb.append(", treePath=");
-		sb.append(getTreePath());
-		sb.append(", active=");
-		sb.append(isActive());
-		sb.append(", lastPublishDate=");
-		sb.append(getLastPublishDate());
-		sb.append(", status=");
-		sb.append(getStatus());
-		sb.append(", statusByUserId=");
-		sb.append(getStatusByUserId());
-		sb.append(", statusByUserName=");
-		sb.append(getStatusByUserName());
-		sb.append(", statusDate=");
-		sb.append(getStatusDate());
-		sb.append("}");
-
-		return sb.toString();
-	}
-
-	@Override
-	public String toXmlString() {
-		StringBundler sb = new StringBundler(58);
-
-		sb.append("<model><model-name>");
-		sb.append("com.liferay.document.library.kernel.model.DLFileShortcut");
-		sb.append("</model-name>");
-
-		sb.append(
-			"<column><column-name>uuid</column-name><column-value><![CDATA[");
-		sb.append(getUuid());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>fileShortcutId</column-name><column-value><![CDATA[");
-		sb.append(getFileShortcutId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>groupId</column-name><column-value><![CDATA[");
-		sb.append(getGroupId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userId</column-name><column-value><![CDATA[");
-		sb.append(getUserId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userName</column-name><column-value><![CDATA[");
-		sb.append(getUserName());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>createDate</column-name><column-value><![CDATA[");
-		sb.append(getCreateDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>modifiedDate</column-name><column-value><![CDATA[");
-		sb.append(getModifiedDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>repositoryId</column-name><column-value><![CDATA[");
-		sb.append(getRepositoryId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>folderId</column-name><column-value><![CDATA[");
-		sb.append(getFolderId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>toFileEntryId</column-name><column-value><![CDATA[");
-		sb.append(getToFileEntryId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>treePath</column-name><column-value><![CDATA[");
-		sb.append(getTreePath());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>active</column-name><column-value><![CDATA[");
-		sb.append(isActive());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>lastPublishDate</column-name><column-value><![CDATA[");
-		sb.append(getLastPublishDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>status</column-name><column-value><![CDATA[");
-		sb.append(getStatus());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>statusByUserId</column-name><column-value><![CDATA[");
-		sb.append(getStatusByUserId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>statusByUserName</column-name><column-value><![CDATA[");
-		sb.append(getStatusByUserName());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>statusDate</column-name><column-value><![CDATA[");
-		sb.append(getStatusDate());
-		sb.append("]]></column-value></column>");
-
-		sb.append("</model>");
-
-		return sb.toString();
 	}
 
 	private static final ClassLoader _classLoader = DLFileShortcut.class.getClassLoader();

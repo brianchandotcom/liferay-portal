@@ -22,8 +22,6 @@ import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * <p>
@@ -39,115 +37,6 @@ public class AppWrapper extends BaseModelWrapper<App> implements App,
 	ModelWrapper<App> {
 	public AppWrapper(App app) {
 		super(app);
-	}
-
-	@Override
-	public Map<String, Object> getModelAttributes() {
-		Map<String, Object> attributes = new HashMap<String, Object>();
-
-		attributes.put("uuid", getUuid());
-		attributes.put("appId", getAppId());
-		attributes.put("companyId", getCompanyId());
-		attributes.put("userId", getUserId());
-		attributes.put("userName", getUserName());
-		attributes.put("createDate", getCreateDate());
-		attributes.put("modifiedDate", getModifiedDate());
-		attributes.put("remoteAppId", getRemoteAppId());
-		attributes.put("title", getTitle());
-		attributes.put("description", getDescription());
-		attributes.put("category", getCategory());
-		attributes.put("iconURL", getIconURL());
-		attributes.put("version", getVersion());
-		attributes.put("required", isRequired());
-
-		return attributes;
-	}
-
-	@Override
-	public void setModelAttributes(Map<String, Object> attributes) {
-		String uuid = (String)attributes.get("uuid");
-
-		if (uuid != null) {
-			setUuid(uuid);
-		}
-
-		Long appId = (Long)attributes.get("appId");
-
-		if (appId != null) {
-			setAppId(appId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
-		}
-
-		Long userId = (Long)attributes.get("userId");
-
-		if (userId != null) {
-			setUserId(userId);
-		}
-
-		String userName = (String)attributes.get("userName");
-
-		if (userName != null) {
-			setUserName(userName);
-		}
-
-		Date createDate = (Date)attributes.get("createDate");
-
-		if (createDate != null) {
-			setCreateDate(createDate);
-		}
-
-		Date modifiedDate = (Date)attributes.get("modifiedDate");
-
-		if (modifiedDate != null) {
-			setModifiedDate(modifiedDate);
-		}
-
-		Long remoteAppId = (Long)attributes.get("remoteAppId");
-
-		if (remoteAppId != null) {
-			setRemoteAppId(remoteAppId);
-		}
-
-		String title = (String)attributes.get("title");
-
-		if (title != null) {
-			setTitle(title);
-		}
-
-		String description = (String)attributes.get("description");
-
-		if (description != null) {
-			setDescription(description);
-		}
-
-		String category = (String)attributes.get("category");
-
-		if (category != null) {
-			setCategory(category);
-		}
-
-		String iconURL = (String)attributes.get("iconURL");
-
-		if (iconURL != null) {
-			setIconURL(iconURL);
-		}
-
-		String version = (String)attributes.get("version");
-
-		if (version != null) {
-			setVersion(version);
-		}
-
-		Boolean required = (Boolean)attributes.get("required");
-
-		if (required != null) {
-			setRequired(required);
-		}
 	}
 
 	@Override

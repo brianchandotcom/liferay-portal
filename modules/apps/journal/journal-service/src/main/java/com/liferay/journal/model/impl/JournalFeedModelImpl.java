@@ -25,8 +25,6 @@ import com.liferay.journal.model.JournalFeed;
 import com.liferay.journal.model.JournalFeedModel;
 import com.liferay.journal.model.JournalFeedSoap;
 
-import com.liferay.petra.string.StringBundler;
-
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSON;
@@ -45,10 +43,14 @@ import java.io.Serializable;
 import java.sql.Types;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * The base model implementation for the JournalFeed service. Represents a row in the &quot;JournalFeed&quot; database table, with each column mapped to a property of this class.
@@ -244,180 +246,71 @@ public class JournalFeedModelImpl extends BaseModelImpl<JournalFeed>
 	}
 
 	@Override
-	public Map<String, Object> getModelAttributes() {
-		Map<String, Object> attributes = new HashMap<String, Object>();
-
-		attributes.put("uuid", getUuid());
-		attributes.put("id", getId());
-		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
-		attributes.put("userId", getUserId());
-		attributes.put("userName", getUserName());
-		attributes.put("createDate", getCreateDate());
-		attributes.put("modifiedDate", getModifiedDate());
-		attributes.put("feedId", getFeedId());
-		attributes.put("name", getName());
-		attributes.put("description", getDescription());
-		attributes.put("DDMStructureKey", getDDMStructureKey());
-		attributes.put("DDMTemplateKey", getDDMTemplateKey());
-		attributes.put("DDMRendererTemplateKey", getDDMRendererTemplateKey());
-		attributes.put("delta", getDelta());
-		attributes.put("orderByCol", getOrderByCol());
-		attributes.put("orderByType", getOrderByType());
-		attributes.put("targetLayoutFriendlyUrl", getTargetLayoutFriendlyUrl());
-		attributes.put("targetPortletId", getTargetPortletId());
-		attributes.put("contentField", getContentField());
-		attributes.put("feedFormat", getFeedFormat());
-		attributes.put("feedVersion", getFeedVersion());
-		attributes.put("lastPublishDate", getLastPublishDate());
-
-		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
-		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
-
-		return attributes;
+	public Map<String, Function<JournalFeed, Object>> getAttributeGetters() {
+		return _attributeGetters;
 	}
 
 	@Override
-	public void setModelAttributes(Map<String, Object> attributes) {
-		String uuid = (String)attributes.get("uuid");
+	public Map<String, BiConsumer<JournalFeed, Object>> getAttributeSetters() {
+		return _attributeSetters;
+	}
 
-		if (uuid != null) {
-			setUuid(uuid);
-		}
+	private static final Map<String, Function<JournalFeed, Object>> _attributeGetters;
+	private static final Map<String, BiConsumer<JournalFeed, Object>> _attributeSetters;
 
-		Long id = (Long)attributes.get("id");
+	static {
+		Map<String, Function<JournalFeed, Object>> attributeGetters = new LinkedHashMap<String, Function<JournalFeed, Object>>();
+		Map<String, BiConsumer<JournalFeed, ?>> attributeSetters = new LinkedHashMap<String, BiConsumer<JournalFeed, ?>>();
 
-		if (id != null) {
-			setId(id);
-		}
+		attributeGetters.put("uuid", JournalFeed::getUuid);
+		attributeSetters.put("uuid", (BiConsumer<JournalFeed, String>)JournalFeed::setUuid);
+		attributeGetters.put("id", JournalFeed::getId);
+		attributeSetters.put("id", (BiConsumer<JournalFeed, Long>)JournalFeed::setId);
+		attributeGetters.put("groupId", JournalFeed::getGroupId);
+		attributeSetters.put("groupId", (BiConsumer<JournalFeed, Long>)JournalFeed::setGroupId);
+		attributeGetters.put("companyId", JournalFeed::getCompanyId);
+		attributeSetters.put("companyId", (BiConsumer<JournalFeed, Long>)JournalFeed::setCompanyId);
+		attributeGetters.put("userId", JournalFeed::getUserId);
+		attributeSetters.put("userId", (BiConsumer<JournalFeed, Long>)JournalFeed::setUserId);
+		attributeGetters.put("userName", JournalFeed::getUserName);
+		attributeSetters.put("userName", (BiConsumer<JournalFeed, String>)JournalFeed::setUserName);
+		attributeGetters.put("createDate", JournalFeed::getCreateDate);
+		attributeSetters.put("createDate", (BiConsumer<JournalFeed, Date>)JournalFeed::setCreateDate);
+		attributeGetters.put("modifiedDate", JournalFeed::getModifiedDate);
+		attributeSetters.put("modifiedDate", (BiConsumer<JournalFeed, Date>)JournalFeed::setModifiedDate);
+		attributeGetters.put("feedId", JournalFeed::getFeedId);
+		attributeSetters.put("feedId", (BiConsumer<JournalFeed, String>)JournalFeed::setFeedId);
+		attributeGetters.put("name", JournalFeed::getName);
+		attributeSetters.put("name", (BiConsumer<JournalFeed, String>)JournalFeed::setName);
+		attributeGetters.put("description", JournalFeed::getDescription);
+		attributeSetters.put("description", (BiConsumer<JournalFeed, String>)JournalFeed::setDescription);
+		attributeGetters.put("DDMStructureKey", JournalFeed::getDDMStructureKey);
+		attributeSetters.put("DDMStructureKey", (BiConsumer<JournalFeed, String>)JournalFeed::setDDMStructureKey);
+		attributeGetters.put("DDMTemplateKey", JournalFeed::getDDMTemplateKey);
+		attributeSetters.put("DDMTemplateKey", (BiConsumer<JournalFeed, String>)JournalFeed::setDDMTemplateKey);
+		attributeGetters.put("DDMRendererTemplateKey", JournalFeed::getDDMRendererTemplateKey);
+		attributeSetters.put("DDMRendererTemplateKey", (BiConsumer<JournalFeed, String>)JournalFeed::setDDMRendererTemplateKey);
+		attributeGetters.put("delta", JournalFeed::getDelta);
+		attributeSetters.put("delta", (BiConsumer<JournalFeed, Integer>)JournalFeed::setDelta);
+		attributeGetters.put("orderByCol", JournalFeed::getOrderByCol);
+		attributeSetters.put("orderByCol", (BiConsumer<JournalFeed, String>)JournalFeed::setOrderByCol);
+		attributeGetters.put("orderByType", JournalFeed::getOrderByType);
+		attributeSetters.put("orderByType", (BiConsumer<JournalFeed, String>)JournalFeed::setOrderByType);
+		attributeGetters.put("targetLayoutFriendlyUrl", JournalFeed::getTargetLayoutFriendlyUrl);
+		attributeSetters.put("targetLayoutFriendlyUrl", (BiConsumer<JournalFeed, String>)JournalFeed::setTargetLayoutFriendlyUrl);
+		attributeGetters.put("targetPortletId", JournalFeed::getTargetPortletId);
+		attributeSetters.put("targetPortletId", (BiConsumer<JournalFeed, String>)JournalFeed::setTargetPortletId);
+		attributeGetters.put("contentField", JournalFeed::getContentField);
+		attributeSetters.put("contentField", (BiConsumer<JournalFeed, String>)JournalFeed::setContentField);
+		attributeGetters.put("feedFormat", JournalFeed::getFeedFormat);
+		attributeSetters.put("feedFormat", (BiConsumer<JournalFeed, String>)JournalFeed::setFeedFormat);
+		attributeGetters.put("feedVersion", JournalFeed::getFeedVersion);
+		attributeSetters.put("feedVersion", (BiConsumer<JournalFeed, Double>)JournalFeed::setFeedVersion);
+		attributeGetters.put("lastPublishDate", JournalFeed::getLastPublishDate);
+		attributeSetters.put("lastPublishDate", (BiConsumer<JournalFeed, Date>)JournalFeed::setLastPublishDate);
 
-		Long groupId = (Long)attributes.get("groupId");
-
-		if (groupId != null) {
-			setGroupId(groupId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
-		}
-
-		Long userId = (Long)attributes.get("userId");
-
-		if (userId != null) {
-			setUserId(userId);
-		}
-
-		String userName = (String)attributes.get("userName");
-
-		if (userName != null) {
-			setUserName(userName);
-		}
-
-		Date createDate = (Date)attributes.get("createDate");
-
-		if (createDate != null) {
-			setCreateDate(createDate);
-		}
-
-		Date modifiedDate = (Date)attributes.get("modifiedDate");
-
-		if (modifiedDate != null) {
-			setModifiedDate(modifiedDate);
-		}
-
-		String feedId = (String)attributes.get("feedId");
-
-		if (feedId != null) {
-			setFeedId(feedId);
-		}
-
-		String name = (String)attributes.get("name");
-
-		if (name != null) {
-			setName(name);
-		}
-
-		String description = (String)attributes.get("description");
-
-		if (description != null) {
-			setDescription(description);
-		}
-
-		String DDMStructureKey = (String)attributes.get("DDMStructureKey");
-
-		if (DDMStructureKey != null) {
-			setDDMStructureKey(DDMStructureKey);
-		}
-
-		String DDMTemplateKey = (String)attributes.get("DDMTemplateKey");
-
-		if (DDMTemplateKey != null) {
-			setDDMTemplateKey(DDMTemplateKey);
-		}
-
-		String DDMRendererTemplateKey = (String)attributes.get(
-				"DDMRendererTemplateKey");
-
-		if (DDMRendererTemplateKey != null) {
-			setDDMRendererTemplateKey(DDMRendererTemplateKey);
-		}
-
-		Integer delta = (Integer)attributes.get("delta");
-
-		if (delta != null) {
-			setDelta(delta);
-		}
-
-		String orderByCol = (String)attributes.get("orderByCol");
-
-		if (orderByCol != null) {
-			setOrderByCol(orderByCol);
-		}
-
-		String orderByType = (String)attributes.get("orderByType");
-
-		if (orderByType != null) {
-			setOrderByType(orderByType);
-		}
-
-		String targetLayoutFriendlyUrl = (String)attributes.get(
-				"targetLayoutFriendlyUrl");
-
-		if (targetLayoutFriendlyUrl != null) {
-			setTargetLayoutFriendlyUrl(targetLayoutFriendlyUrl);
-		}
-
-		String targetPortletId = (String)attributes.get("targetPortletId");
-
-		if (targetPortletId != null) {
-			setTargetPortletId(targetPortletId);
-		}
-
-		String contentField = (String)attributes.get("contentField");
-
-		if (contentField != null) {
-			setContentField(contentField);
-		}
-
-		String feedFormat = (String)attributes.get("feedFormat");
-
-		if (feedFormat != null) {
-			setFeedFormat(feedFormat);
-		}
-
-		Double feedVersion = (Double)attributes.get("feedVersion");
-
-		if (feedVersion != null) {
-			setFeedVersion(feedVersion);
-		}
-
-		Date lastPublishDate = (Date)attributes.get("lastPublishDate");
-
-		if (lastPublishDate != null) {
-			setLastPublishDate(lastPublishDate);
-		}
+		_attributeGetters = Collections.unmodifiableMap(attributeGetters);
+		_attributeSetters = Collections.unmodifiableMap((Map)attributeSetters);
 	}
 
 	@JSON
@@ -1102,167 +995,6 @@ public class JournalFeedModelImpl extends BaseModelImpl<JournalFeed>
 		}
 
 		return journalFeedCacheModel;
-	}
-
-	@Override
-	public String toString() {
-		StringBundler sb = new StringBundler(47);
-
-		sb.append("{uuid=");
-		sb.append(getUuid());
-		sb.append(", id=");
-		sb.append(getId());
-		sb.append(", groupId=");
-		sb.append(getGroupId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
-		sb.append(", userId=");
-		sb.append(getUserId());
-		sb.append(", userName=");
-		sb.append(getUserName());
-		sb.append(", createDate=");
-		sb.append(getCreateDate());
-		sb.append(", modifiedDate=");
-		sb.append(getModifiedDate());
-		sb.append(", feedId=");
-		sb.append(getFeedId());
-		sb.append(", name=");
-		sb.append(getName());
-		sb.append(", description=");
-		sb.append(getDescription());
-		sb.append(", DDMStructureKey=");
-		sb.append(getDDMStructureKey());
-		sb.append(", DDMTemplateKey=");
-		sb.append(getDDMTemplateKey());
-		sb.append(", DDMRendererTemplateKey=");
-		sb.append(getDDMRendererTemplateKey());
-		sb.append(", delta=");
-		sb.append(getDelta());
-		sb.append(", orderByCol=");
-		sb.append(getOrderByCol());
-		sb.append(", orderByType=");
-		sb.append(getOrderByType());
-		sb.append(", targetLayoutFriendlyUrl=");
-		sb.append(getTargetLayoutFriendlyUrl());
-		sb.append(", targetPortletId=");
-		sb.append(getTargetPortletId());
-		sb.append(", contentField=");
-		sb.append(getContentField());
-		sb.append(", feedFormat=");
-		sb.append(getFeedFormat());
-		sb.append(", feedVersion=");
-		sb.append(getFeedVersion());
-		sb.append(", lastPublishDate=");
-		sb.append(getLastPublishDate());
-		sb.append("}");
-
-		return sb.toString();
-	}
-
-	@Override
-	public String toXmlString() {
-		StringBundler sb = new StringBundler(73);
-
-		sb.append("<model><model-name>");
-		sb.append("com.liferay.journal.model.JournalFeed");
-		sb.append("</model-name>");
-
-		sb.append(
-			"<column><column-name>uuid</column-name><column-value><![CDATA[");
-		sb.append(getUuid());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>id</column-name><column-value><![CDATA[");
-		sb.append(getId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>groupId</column-name><column-value><![CDATA[");
-		sb.append(getGroupId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userId</column-name><column-value><![CDATA[");
-		sb.append(getUserId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userName</column-name><column-value><![CDATA[");
-		sb.append(getUserName());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>createDate</column-name><column-value><![CDATA[");
-		sb.append(getCreateDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>modifiedDate</column-name><column-value><![CDATA[");
-		sb.append(getModifiedDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>feedId</column-name><column-value><![CDATA[");
-		sb.append(getFeedId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>name</column-name><column-value><![CDATA[");
-		sb.append(getName());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>description</column-name><column-value><![CDATA[");
-		sb.append(getDescription());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>DDMStructureKey</column-name><column-value><![CDATA[");
-		sb.append(getDDMStructureKey());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>DDMTemplateKey</column-name><column-value><![CDATA[");
-		sb.append(getDDMTemplateKey());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>DDMRendererTemplateKey</column-name><column-value><![CDATA[");
-		sb.append(getDDMRendererTemplateKey());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>delta</column-name><column-value><![CDATA[");
-		sb.append(getDelta());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>orderByCol</column-name><column-value><![CDATA[");
-		sb.append(getOrderByCol());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>orderByType</column-name><column-value><![CDATA[");
-		sb.append(getOrderByType());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>targetLayoutFriendlyUrl</column-name><column-value><![CDATA[");
-		sb.append(getTargetLayoutFriendlyUrl());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>targetPortletId</column-name><column-value><![CDATA[");
-		sb.append(getTargetPortletId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>contentField</column-name><column-value><![CDATA[");
-		sb.append(getContentField());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>feedFormat</column-name><column-value><![CDATA[");
-		sb.append(getFeedFormat());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>feedVersion</column-name><column-value><![CDATA[");
-		sb.append(getFeedVersion());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>lastPublishDate</column-name><column-value><![CDATA[");
-		sb.append(getLastPublishDate());
-		sb.append("]]></column-value></column>");
-
-		sb.append("</model>");
-
-		return sb.toString();
 	}
 
 	private static final ClassLoader _classLoader = JournalFeed.class.getClassLoader();

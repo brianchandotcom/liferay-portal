@@ -19,8 +19,6 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 
-import com.liferay.petra.string.StringBundler;
-
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.CacheModel;
@@ -41,9 +39,13 @@ import java.io.Serializable;
 
 import java.sql.Types;
 
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * The base model implementation for the WorkflowInstanceLink service. Represents a row in the &quot;WorkflowInstanceLink&quot; database table, with each column mapped to a property of this class.
@@ -154,95 +156,47 @@ public class WorkflowInstanceLinkModelImpl extends BaseModelImpl<WorkflowInstanc
 	}
 
 	@Override
-	public Map<String, Object> getModelAttributes() {
-		Map<String, Object> attributes = new HashMap<String, Object>();
-
-		attributes.put("mvccVersion", getMvccVersion());
-		attributes.put("workflowInstanceLinkId", getWorkflowInstanceLinkId());
-		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
-		attributes.put("userId", getUserId());
-		attributes.put("userName", getUserName());
-		attributes.put("createDate", getCreateDate());
-		attributes.put("modifiedDate", getModifiedDate());
-		attributes.put("classNameId", getClassNameId());
-		attributes.put("classPK", getClassPK());
-		attributes.put("workflowInstanceId", getWorkflowInstanceId());
-
-		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
-		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
-
-		return attributes;
+	public Map<String, Function<WorkflowInstanceLink, Object>> getAttributeGetters() {
+		return _attributeGetters;
 	}
 
 	@Override
-	public void setModelAttributes(Map<String, Object> attributes) {
-		Long mvccVersion = (Long)attributes.get("mvccVersion");
+	public Map<String, BiConsumer<WorkflowInstanceLink, Object>> getAttributeSetters() {
+		return _attributeSetters;
+	}
 
-		if (mvccVersion != null) {
-			setMvccVersion(mvccVersion);
-		}
+	private static final Map<String, Function<WorkflowInstanceLink, Object>> _attributeGetters;
+	private static final Map<String, BiConsumer<WorkflowInstanceLink, Object>> _attributeSetters;
 
-		Long workflowInstanceLinkId = (Long)attributes.get(
-				"workflowInstanceLinkId");
+	static {
+		Map<String, Function<WorkflowInstanceLink, Object>> attributeGetters = new LinkedHashMap<String, Function<WorkflowInstanceLink, Object>>();
+		Map<String, BiConsumer<WorkflowInstanceLink, ?>> attributeSetters = new LinkedHashMap<String, BiConsumer<WorkflowInstanceLink, ?>>();
 
-		if (workflowInstanceLinkId != null) {
-			setWorkflowInstanceLinkId(workflowInstanceLinkId);
-		}
+		attributeGetters.put("mvccVersion", WorkflowInstanceLink::getMvccVersion);
+		attributeSetters.put("mvccVersion", (BiConsumer<WorkflowInstanceLink, Long>)WorkflowInstanceLink::setMvccVersion);
+		attributeGetters.put("workflowInstanceLinkId", WorkflowInstanceLink::getWorkflowInstanceLinkId);
+		attributeSetters.put("workflowInstanceLinkId", (BiConsumer<WorkflowInstanceLink, Long>)WorkflowInstanceLink::setWorkflowInstanceLinkId);
+		attributeGetters.put("groupId", WorkflowInstanceLink::getGroupId);
+		attributeSetters.put("groupId", (BiConsumer<WorkflowInstanceLink, Long>)WorkflowInstanceLink::setGroupId);
+		attributeGetters.put("companyId", WorkflowInstanceLink::getCompanyId);
+		attributeSetters.put("companyId", (BiConsumer<WorkflowInstanceLink, Long>)WorkflowInstanceLink::setCompanyId);
+		attributeGetters.put("userId", WorkflowInstanceLink::getUserId);
+		attributeSetters.put("userId", (BiConsumer<WorkflowInstanceLink, Long>)WorkflowInstanceLink::setUserId);
+		attributeGetters.put("userName", WorkflowInstanceLink::getUserName);
+		attributeSetters.put("userName", (BiConsumer<WorkflowInstanceLink, String>)WorkflowInstanceLink::setUserName);
+		attributeGetters.put("createDate", WorkflowInstanceLink::getCreateDate);
+		attributeSetters.put("createDate", (BiConsumer<WorkflowInstanceLink, Date>)WorkflowInstanceLink::setCreateDate);
+		attributeGetters.put("modifiedDate", WorkflowInstanceLink::getModifiedDate);
+		attributeSetters.put("modifiedDate", (BiConsumer<WorkflowInstanceLink, Date>)WorkflowInstanceLink::setModifiedDate);
+		attributeGetters.put("classNameId", WorkflowInstanceLink::getClassNameId);
+		attributeSetters.put("classNameId", (BiConsumer<WorkflowInstanceLink, Long>)WorkflowInstanceLink::setClassNameId);
+		attributeGetters.put("classPK", WorkflowInstanceLink::getClassPK);
+		attributeSetters.put("classPK", (BiConsumer<WorkflowInstanceLink, Long>)WorkflowInstanceLink::setClassPK);
+		attributeGetters.put("workflowInstanceId", WorkflowInstanceLink::getWorkflowInstanceId);
+		attributeSetters.put("workflowInstanceId", (BiConsumer<WorkflowInstanceLink, Long>)WorkflowInstanceLink::setWorkflowInstanceId);
 
-		Long groupId = (Long)attributes.get("groupId");
-
-		if (groupId != null) {
-			setGroupId(groupId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
-		}
-
-		Long userId = (Long)attributes.get("userId");
-
-		if (userId != null) {
-			setUserId(userId);
-		}
-
-		String userName = (String)attributes.get("userName");
-
-		if (userName != null) {
-			setUserName(userName);
-		}
-
-		Date createDate = (Date)attributes.get("createDate");
-
-		if (createDate != null) {
-			setCreateDate(createDate);
-		}
-
-		Date modifiedDate = (Date)attributes.get("modifiedDate");
-
-		if (modifiedDate != null) {
-			setModifiedDate(modifiedDate);
-		}
-
-		Long classNameId = (Long)attributes.get("classNameId");
-
-		if (classNameId != null) {
-			setClassNameId(classNameId);
-		}
-
-		Long classPK = (Long)attributes.get("classPK");
-
-		if (classPK != null) {
-			setClassPK(classPK);
-		}
-
-		Long workflowInstanceId = (Long)attributes.get("workflowInstanceId");
-
-		if (workflowInstanceId != null) {
-			setWorkflowInstanceId(workflowInstanceId);
-		}
+		_attributeGetters = Collections.unmodifiableMap(attributeGetters);
+		_attributeSetters = Collections.unmodifiableMap((Map)attributeSetters);
 	}
 
 	@Override
@@ -625,95 +579,6 @@ public class WorkflowInstanceLinkModelImpl extends BaseModelImpl<WorkflowInstanc
 		workflowInstanceLinkCacheModel.workflowInstanceId = getWorkflowInstanceId();
 
 		return workflowInstanceLinkCacheModel;
-	}
-
-	@Override
-	public String toString() {
-		StringBundler sb = new StringBundler(23);
-
-		sb.append("{mvccVersion=");
-		sb.append(getMvccVersion());
-		sb.append(", workflowInstanceLinkId=");
-		sb.append(getWorkflowInstanceLinkId());
-		sb.append(", groupId=");
-		sb.append(getGroupId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
-		sb.append(", userId=");
-		sb.append(getUserId());
-		sb.append(", userName=");
-		sb.append(getUserName());
-		sb.append(", createDate=");
-		sb.append(getCreateDate());
-		sb.append(", modifiedDate=");
-		sb.append(getModifiedDate());
-		sb.append(", classNameId=");
-		sb.append(getClassNameId());
-		sb.append(", classPK=");
-		sb.append(getClassPK());
-		sb.append(", workflowInstanceId=");
-		sb.append(getWorkflowInstanceId());
-		sb.append("}");
-
-		return sb.toString();
-	}
-
-	@Override
-	public String toXmlString() {
-		StringBundler sb = new StringBundler(37);
-
-		sb.append("<model><model-name>");
-		sb.append("com.liferay.portal.kernel.model.WorkflowInstanceLink");
-		sb.append("</model-name>");
-
-		sb.append(
-			"<column><column-name>mvccVersion</column-name><column-value><![CDATA[");
-		sb.append(getMvccVersion());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>workflowInstanceLinkId</column-name><column-value><![CDATA[");
-		sb.append(getWorkflowInstanceLinkId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>groupId</column-name><column-value><![CDATA[");
-		sb.append(getGroupId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userId</column-name><column-value><![CDATA[");
-		sb.append(getUserId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userName</column-name><column-value><![CDATA[");
-		sb.append(getUserName());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>createDate</column-name><column-value><![CDATA[");
-		sb.append(getCreateDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>modifiedDate</column-name><column-value><![CDATA[");
-		sb.append(getModifiedDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>classNameId</column-name><column-value><![CDATA[");
-		sb.append(getClassNameId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>classPK</column-name><column-value><![CDATA[");
-		sb.append(getClassPK());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>workflowInstanceId</column-name><column-value><![CDATA[");
-		sb.append(getWorkflowInstanceId());
-		sb.append("]]></column-value></column>");
-
-		sb.append("</model>");
-
-		return sb.toString();
 	}
 
 	private static final ClassLoader _classLoader = WorkflowInstanceLink.class.getClassLoader();

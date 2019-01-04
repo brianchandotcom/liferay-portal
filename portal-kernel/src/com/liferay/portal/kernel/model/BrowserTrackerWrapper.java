@@ -18,9 +18,6 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
-import java.util.HashMap;
-import java.util.Map;
-
 /**
  * <p>
  * This class is a wrapper for {@link BrowserTracker}.
@@ -35,52 +32,6 @@ public class BrowserTrackerWrapper extends BaseModelWrapper<BrowserTracker>
 	implements BrowserTracker, ModelWrapper<BrowserTracker> {
 	public BrowserTrackerWrapper(BrowserTracker browserTracker) {
 		super(browserTracker);
-	}
-
-	@Override
-	public Map<String, Object> getModelAttributes() {
-		Map<String, Object> attributes = new HashMap<String, Object>();
-
-		attributes.put("mvccVersion", getMvccVersion());
-		attributes.put("browserTrackerId", getBrowserTrackerId());
-		attributes.put("companyId", getCompanyId());
-		attributes.put("userId", getUserId());
-		attributes.put("browserKey", getBrowserKey());
-
-		return attributes;
-	}
-
-	@Override
-	public void setModelAttributes(Map<String, Object> attributes) {
-		Long mvccVersion = (Long)attributes.get("mvccVersion");
-
-		if (mvccVersion != null) {
-			setMvccVersion(mvccVersion);
-		}
-
-		Long browserTrackerId = (Long)attributes.get("browserTrackerId");
-
-		if (browserTrackerId != null) {
-			setBrowserTrackerId(browserTrackerId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
-		}
-
-		Long userId = (Long)attributes.get("userId");
-
-		if (userId != null) {
-			setUserId(userId);
-		}
-
-		Long browserKey = (Long)attributes.get("browserKey");
-
-		if (browserKey != null) {
-			setBrowserKey(browserKey);
-		}
 	}
 
 	/**

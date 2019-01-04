@@ -19,8 +19,6 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 
-import com.liferay.petra.string.StringBundler;
-
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSON;
@@ -45,10 +43,14 @@ import java.io.Serializable;
 import java.sql.Types;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * The base model implementation for the TrashEntry service. Represents a row in the &quot;TrashEntry&quot; database table, with each column mapped to a property of this class.
@@ -209,94 +211,47 @@ public class TrashEntryModelImpl extends BaseModelImpl<TrashEntry>
 	}
 
 	@Override
-	public Map<String, Object> getModelAttributes() {
-		Map<String, Object> attributes = new HashMap<String, Object>();
-
-		attributes.put("entryId", getEntryId());
-		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
-		attributes.put("userId", getUserId());
-		attributes.put("userName", getUserName());
-		attributes.put("createDate", getCreateDate());
-		attributes.put("classNameId", getClassNameId());
-		attributes.put("classPK", getClassPK());
-		attributes.put("systemEventSetKey", getSystemEventSetKey());
-		attributes.put("typeSettings", getTypeSettings());
-		attributes.put("status", getStatus());
-
-		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
-		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
-
-		return attributes;
+	public Map<String, Function<TrashEntry, Object>> getAttributeGetters() {
+		return _attributeGetters;
 	}
 
 	@Override
-	public void setModelAttributes(Map<String, Object> attributes) {
-		Long entryId = (Long)attributes.get("entryId");
+	public Map<String, BiConsumer<TrashEntry, Object>> getAttributeSetters() {
+		return _attributeSetters;
+	}
 
-		if (entryId != null) {
-			setEntryId(entryId);
-		}
+	private static final Map<String, Function<TrashEntry, Object>> _attributeGetters;
+	private static final Map<String, BiConsumer<TrashEntry, Object>> _attributeSetters;
 
-		Long groupId = (Long)attributes.get("groupId");
+	static {
+		Map<String, Function<TrashEntry, Object>> attributeGetters = new LinkedHashMap<String, Function<TrashEntry, Object>>();
+		Map<String, BiConsumer<TrashEntry, ?>> attributeSetters = new LinkedHashMap<String, BiConsumer<TrashEntry, ?>>();
 
-		if (groupId != null) {
-			setGroupId(groupId);
-		}
+		attributeGetters.put("entryId", TrashEntry::getEntryId);
+		attributeSetters.put("entryId", (BiConsumer<TrashEntry, Long>)TrashEntry::setEntryId);
+		attributeGetters.put("groupId", TrashEntry::getGroupId);
+		attributeSetters.put("groupId", (BiConsumer<TrashEntry, Long>)TrashEntry::setGroupId);
+		attributeGetters.put("companyId", TrashEntry::getCompanyId);
+		attributeSetters.put("companyId", (BiConsumer<TrashEntry, Long>)TrashEntry::setCompanyId);
+		attributeGetters.put("userId", TrashEntry::getUserId);
+		attributeSetters.put("userId", (BiConsumer<TrashEntry, Long>)TrashEntry::setUserId);
+		attributeGetters.put("userName", TrashEntry::getUserName);
+		attributeSetters.put("userName", (BiConsumer<TrashEntry, String>)TrashEntry::setUserName);
+		attributeGetters.put("createDate", TrashEntry::getCreateDate);
+		attributeSetters.put("createDate", (BiConsumer<TrashEntry, Date>)TrashEntry::setCreateDate);
+		attributeGetters.put("classNameId", TrashEntry::getClassNameId);
+		attributeSetters.put("classNameId", (BiConsumer<TrashEntry, Long>)TrashEntry::setClassNameId);
+		attributeGetters.put("classPK", TrashEntry::getClassPK);
+		attributeSetters.put("classPK", (BiConsumer<TrashEntry, Long>)TrashEntry::setClassPK);
+		attributeGetters.put("systemEventSetKey", TrashEntry::getSystemEventSetKey);
+		attributeSetters.put("systemEventSetKey", (BiConsumer<TrashEntry, Long>)TrashEntry::setSystemEventSetKey);
+		attributeGetters.put("typeSettings", TrashEntry::getTypeSettings);
+		attributeSetters.put("typeSettings", (BiConsumer<TrashEntry, String>)TrashEntry::setTypeSettings);
+		attributeGetters.put("status", TrashEntry::getStatus);
+		attributeSetters.put("status", (BiConsumer<TrashEntry, Integer>)TrashEntry::setStatus);
 
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
-		}
-
-		Long userId = (Long)attributes.get("userId");
-
-		if (userId != null) {
-			setUserId(userId);
-		}
-
-		String userName = (String)attributes.get("userName");
-
-		if (userName != null) {
-			setUserName(userName);
-		}
-
-		Date createDate = (Date)attributes.get("createDate");
-
-		if (createDate != null) {
-			setCreateDate(createDate);
-		}
-
-		Long classNameId = (Long)attributes.get("classNameId");
-
-		if (classNameId != null) {
-			setClassNameId(classNameId);
-		}
-
-		Long classPK = (Long)attributes.get("classPK");
-
-		if (classPK != null) {
-			setClassPK(classPK);
-		}
-
-		Long systemEventSetKey = (Long)attributes.get("systemEventSetKey");
-
-		if (systemEventSetKey != null) {
-			setSystemEventSetKey(systemEventSetKey);
-		}
-
-		String typeSettings = (String)attributes.get("typeSettings");
-
-		if (typeSettings != null) {
-			setTypeSettings(typeSettings);
-		}
-
-		Integer status = (Integer)attributes.get("status");
-
-		if (status != null) {
-			setStatus(status);
-		}
+		_attributeGetters = Collections.unmodifiableMap(attributeGetters);
+		_attributeSetters = Collections.unmodifiableMap((Map)attributeSetters);
 	}
 
 	@JSON
@@ -695,95 +650,6 @@ public class TrashEntryModelImpl extends BaseModelImpl<TrashEntry>
 		trashEntryCacheModel.status = getStatus();
 
 		return trashEntryCacheModel;
-	}
-
-	@Override
-	public String toString() {
-		StringBundler sb = new StringBundler(23);
-
-		sb.append("{entryId=");
-		sb.append(getEntryId());
-		sb.append(", groupId=");
-		sb.append(getGroupId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
-		sb.append(", userId=");
-		sb.append(getUserId());
-		sb.append(", userName=");
-		sb.append(getUserName());
-		sb.append(", createDate=");
-		sb.append(getCreateDate());
-		sb.append(", classNameId=");
-		sb.append(getClassNameId());
-		sb.append(", classPK=");
-		sb.append(getClassPK());
-		sb.append(", systemEventSetKey=");
-		sb.append(getSystemEventSetKey());
-		sb.append(", typeSettings=");
-		sb.append(getTypeSettings());
-		sb.append(", status=");
-		sb.append(getStatus());
-		sb.append("}");
-
-		return sb.toString();
-	}
-
-	@Override
-	public String toXmlString() {
-		StringBundler sb = new StringBundler(37);
-
-		sb.append("<model><model-name>");
-		sb.append("com.liferay.trash.model.TrashEntry");
-		sb.append("</model-name>");
-
-		sb.append(
-			"<column><column-name>entryId</column-name><column-value><![CDATA[");
-		sb.append(getEntryId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>groupId</column-name><column-value><![CDATA[");
-		sb.append(getGroupId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userId</column-name><column-value><![CDATA[");
-		sb.append(getUserId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userName</column-name><column-value><![CDATA[");
-		sb.append(getUserName());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>createDate</column-name><column-value><![CDATA[");
-		sb.append(getCreateDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>classNameId</column-name><column-value><![CDATA[");
-		sb.append(getClassNameId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>classPK</column-name><column-value><![CDATA[");
-		sb.append(getClassPK());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>systemEventSetKey</column-name><column-value><![CDATA[");
-		sb.append(getSystemEventSetKey());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>typeSettings</column-name><column-value><![CDATA[");
-		sb.append(getTypeSettings());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>status</column-name><column-value><![CDATA[");
-		sb.append(getStatus());
-		sb.append("]]></column-value></column>");
-
-		sb.append("</model>");
-
-		return sb.toString();
 	}
 
 	private static final ClassLoader _classLoader = TrashEntry.class.getClassLoader();

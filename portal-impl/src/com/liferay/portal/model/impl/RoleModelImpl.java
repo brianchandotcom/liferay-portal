@@ -21,8 +21,6 @@ import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 
-import com.liferay.petra.string.StringBundler;
-
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.LocaleException;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -48,13 +46,17 @@ import java.io.Serializable;
 import java.sql.Types;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * The base model implementation for the Role service. Represents a row in the &quot;Role_&quot; database table, with each column mapped to a property of this class.
@@ -246,122 +248,55 @@ public class RoleModelImpl extends BaseModelImpl<Role> implements RoleModel {
 	}
 
 	@Override
-	public Map<String, Object> getModelAttributes() {
-		Map<String, Object> attributes = new HashMap<String, Object>();
-
-		attributes.put("mvccVersion", getMvccVersion());
-		attributes.put("uuid", getUuid());
-		attributes.put("roleId", getRoleId());
-		attributes.put("companyId", getCompanyId());
-		attributes.put("userId", getUserId());
-		attributes.put("userName", getUserName());
-		attributes.put("createDate", getCreateDate());
-		attributes.put("modifiedDate", getModifiedDate());
-		attributes.put("classNameId", getClassNameId());
-		attributes.put("classPK", getClassPK());
-		attributes.put("name", getName());
-		attributes.put("title", getTitle());
-		attributes.put("description", getDescription());
-		attributes.put("type", getType());
-		attributes.put("subtype", getSubtype());
-
-		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
-		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
-
-		return attributes;
+	public Map<String, Function<Role, Object>> getAttributeGetters() {
+		return _attributeGetters;
 	}
 
 	@Override
-	public void setModelAttributes(Map<String, Object> attributes) {
-		Long mvccVersion = (Long)attributes.get("mvccVersion");
+	public Map<String, BiConsumer<Role, Object>> getAttributeSetters() {
+		return _attributeSetters;
+	}
 
-		if (mvccVersion != null) {
-			setMvccVersion(mvccVersion);
-		}
+	private static final Map<String, Function<Role, Object>> _attributeGetters;
+	private static final Map<String, BiConsumer<Role, Object>> _attributeSetters;
 
-		String uuid = (String)attributes.get("uuid");
+	static {
+		Map<String, Function<Role, Object>> attributeGetters = new LinkedHashMap<String, Function<Role, Object>>();
+		Map<String, BiConsumer<Role, ?>> attributeSetters = new LinkedHashMap<String, BiConsumer<Role, ?>>();
 
-		if (uuid != null) {
-			setUuid(uuid);
-		}
+		attributeGetters.put("mvccVersion", Role::getMvccVersion);
+		attributeSetters.put("mvccVersion", (BiConsumer<Role, Long>)Role::setMvccVersion);
+		attributeGetters.put("uuid", Role::getUuid);
+		attributeSetters.put("uuid", (BiConsumer<Role, String>)Role::setUuid);
+		attributeGetters.put("roleId", Role::getRoleId);
+		attributeSetters.put("roleId", (BiConsumer<Role, Long>)Role::setRoleId);
+		attributeGetters.put("companyId", Role::getCompanyId);
+		attributeSetters.put("companyId", (BiConsumer<Role, Long>)Role::setCompanyId);
+		attributeGetters.put("userId", Role::getUserId);
+		attributeSetters.put("userId", (BiConsumer<Role, Long>)Role::setUserId);
+		attributeGetters.put("userName", Role::getUserName);
+		attributeSetters.put("userName", (BiConsumer<Role, String>)Role::setUserName);
+		attributeGetters.put("createDate", Role::getCreateDate);
+		attributeSetters.put("createDate", (BiConsumer<Role, Date>)Role::setCreateDate);
+		attributeGetters.put("modifiedDate", Role::getModifiedDate);
+		attributeSetters.put("modifiedDate", (BiConsumer<Role, Date>)Role::setModifiedDate);
+		attributeGetters.put("classNameId", Role::getClassNameId);
+		attributeSetters.put("classNameId", (BiConsumer<Role, Long>)Role::setClassNameId);
+		attributeGetters.put("classPK", Role::getClassPK);
+		attributeSetters.put("classPK", (BiConsumer<Role, Long>)Role::setClassPK);
+		attributeGetters.put("name", Role::getName);
+		attributeSetters.put("name", (BiConsumer<Role, String>)Role::setName);
+		attributeGetters.put("title", Role::getTitle);
+		attributeSetters.put("title", (BiConsumer<Role, String>)Role::setTitle);
+		attributeGetters.put("description", Role::getDescription);
+		attributeSetters.put("description", (BiConsumer<Role, String>)Role::setDescription);
+		attributeGetters.put("type", Role::getType);
+		attributeSetters.put("type", (BiConsumer<Role, Integer>)Role::setType);
+		attributeGetters.put("subtype", Role::getSubtype);
+		attributeSetters.put("subtype", (BiConsumer<Role, String>)Role::setSubtype);
 
-		Long roleId = (Long)attributes.get("roleId");
-
-		if (roleId != null) {
-			setRoleId(roleId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
-		}
-
-		Long userId = (Long)attributes.get("userId");
-
-		if (userId != null) {
-			setUserId(userId);
-		}
-
-		String userName = (String)attributes.get("userName");
-
-		if (userName != null) {
-			setUserName(userName);
-		}
-
-		Date createDate = (Date)attributes.get("createDate");
-
-		if (createDate != null) {
-			setCreateDate(createDate);
-		}
-
-		Date modifiedDate = (Date)attributes.get("modifiedDate");
-
-		if (modifiedDate != null) {
-			setModifiedDate(modifiedDate);
-		}
-
-		Long classNameId = (Long)attributes.get("classNameId");
-
-		if (classNameId != null) {
-			setClassNameId(classNameId);
-		}
-
-		Long classPK = (Long)attributes.get("classPK");
-
-		if (classPK != null) {
-			setClassPK(classPK);
-		}
-
-		String name = (String)attributes.get("name");
-
-		if (name != null) {
-			setName(name);
-		}
-
-		String title = (String)attributes.get("title");
-
-		if (title != null) {
-			setTitle(title);
-		}
-
-		String description = (String)attributes.get("description");
-
-		if (description != null) {
-			setDescription(description);
-		}
-
-		Integer type = (Integer)attributes.get("type");
-
-		if (type != null) {
-			setType(type);
-		}
-
-		String subtype = (String)attributes.get("subtype");
-
-		if (subtype != null) {
-			setSubtype(subtype);
-		}
+		_attributeGetters = Collections.unmodifiableMap(attributeGetters);
+		_attributeSetters = Collections.unmodifiableMap((Map)attributeSetters);
 	}
 
 	@JSON
@@ -1153,119 +1088,6 @@ public class RoleModelImpl extends BaseModelImpl<Role> implements RoleModel {
 		}
 
 		return roleCacheModel;
-	}
-
-	@Override
-	public String toString() {
-		StringBundler sb = new StringBundler(31);
-
-		sb.append("{mvccVersion=");
-		sb.append(getMvccVersion());
-		sb.append(", uuid=");
-		sb.append(getUuid());
-		sb.append(", roleId=");
-		sb.append(getRoleId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
-		sb.append(", userId=");
-		sb.append(getUserId());
-		sb.append(", userName=");
-		sb.append(getUserName());
-		sb.append(", createDate=");
-		sb.append(getCreateDate());
-		sb.append(", modifiedDate=");
-		sb.append(getModifiedDate());
-		sb.append(", classNameId=");
-		sb.append(getClassNameId());
-		sb.append(", classPK=");
-		sb.append(getClassPK());
-		sb.append(", name=");
-		sb.append(getName());
-		sb.append(", title=");
-		sb.append(getTitle());
-		sb.append(", description=");
-		sb.append(getDescription());
-		sb.append(", type=");
-		sb.append(getType());
-		sb.append(", subtype=");
-		sb.append(getSubtype());
-		sb.append("}");
-
-		return sb.toString();
-	}
-
-	@Override
-	public String toXmlString() {
-		StringBundler sb = new StringBundler(49);
-
-		sb.append("<model><model-name>");
-		sb.append("com.liferay.portal.kernel.model.Role");
-		sb.append("</model-name>");
-
-		sb.append(
-			"<column><column-name>mvccVersion</column-name><column-value><![CDATA[");
-		sb.append(getMvccVersion());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>uuid</column-name><column-value><![CDATA[");
-		sb.append(getUuid());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>roleId</column-name><column-value><![CDATA[");
-		sb.append(getRoleId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userId</column-name><column-value><![CDATA[");
-		sb.append(getUserId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userName</column-name><column-value><![CDATA[");
-		sb.append(getUserName());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>createDate</column-name><column-value><![CDATA[");
-		sb.append(getCreateDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>modifiedDate</column-name><column-value><![CDATA[");
-		sb.append(getModifiedDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>classNameId</column-name><column-value><![CDATA[");
-		sb.append(getClassNameId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>classPK</column-name><column-value><![CDATA[");
-		sb.append(getClassPK());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>name</column-name><column-value><![CDATA[");
-		sb.append(getName());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>title</column-name><column-value><![CDATA[");
-		sb.append(getTitle());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>description</column-name><column-value><![CDATA[");
-		sb.append(getDescription());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>type</column-name><column-value><![CDATA[");
-		sb.append(getType());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>subtype</column-name><column-value><![CDATA[");
-		sb.append(getSubtype());
-		sb.append("]]></column-value></column>");
-
-		sb.append("</model>");
-
-		return sb.toString();
 	}
 
 	private static final ClassLoader _classLoader = Role.class.getClassLoader();

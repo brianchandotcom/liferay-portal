@@ -19,8 +19,6 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 
-import com.liferay.petra.string.StringBundler;
-
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.CacheModel;
@@ -39,9 +37,13 @@ import java.io.Serializable;
 
 import java.sql.Types;
 
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * The base model implementation for the PowwowServer service. Represents a row in the &quot;PowwowServer&quot; database table, with each column mapped to a property of this class.
@@ -152,101 +154,49 @@ public class PowwowServerModelImpl extends BaseModelImpl<PowwowServer>
 	}
 
 	@Override
-	public Map<String, Object> getModelAttributes() {
-		Map<String, Object> attributes = new HashMap<String, Object>();
-
-		attributes.put("powwowServerId", getPowwowServerId());
-		attributes.put("companyId", getCompanyId());
-		attributes.put("userId", getUserId());
-		attributes.put("userName", getUserName());
-		attributes.put("createDate", getCreateDate());
-		attributes.put("modifiedDate", getModifiedDate());
-		attributes.put("name", getName());
-		attributes.put("providerType", getProviderType());
-		attributes.put("url", getUrl());
-		attributes.put("apiKey", getApiKey());
-		attributes.put("secret", getSecret());
-		attributes.put("active", isActive());
-
-		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
-		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
-
-		return attributes;
+	public Map<String, Function<PowwowServer, Object>> getAttributeGetters() {
+		return _attributeGetters;
 	}
 
 	@Override
-	public void setModelAttributes(Map<String, Object> attributes) {
-		Long powwowServerId = (Long)attributes.get("powwowServerId");
+	public Map<String, BiConsumer<PowwowServer, Object>> getAttributeSetters() {
+		return _attributeSetters;
+	}
 
-		if (powwowServerId != null) {
-			setPowwowServerId(powwowServerId);
-		}
+	private static final Map<String, Function<PowwowServer, Object>> _attributeGetters;
+	private static final Map<String, BiConsumer<PowwowServer, Object>> _attributeSetters;
 
-		Long companyId = (Long)attributes.get("companyId");
+	static {
+		Map<String, Function<PowwowServer, Object>> attributeGetters = new LinkedHashMap<String, Function<PowwowServer, Object>>();
+		Map<String, BiConsumer<PowwowServer, ?>> attributeSetters = new LinkedHashMap<String, BiConsumer<PowwowServer, ?>>();
 
-		if (companyId != null) {
-			setCompanyId(companyId);
-		}
+		attributeGetters.put("powwowServerId", PowwowServer::getPowwowServerId);
+		attributeSetters.put("powwowServerId", (BiConsumer<PowwowServer, Long>)PowwowServer::setPowwowServerId);
+		attributeGetters.put("companyId", PowwowServer::getCompanyId);
+		attributeSetters.put("companyId", (BiConsumer<PowwowServer, Long>)PowwowServer::setCompanyId);
+		attributeGetters.put("userId", PowwowServer::getUserId);
+		attributeSetters.put("userId", (BiConsumer<PowwowServer, Long>)PowwowServer::setUserId);
+		attributeGetters.put("userName", PowwowServer::getUserName);
+		attributeSetters.put("userName", (BiConsumer<PowwowServer, String>)PowwowServer::setUserName);
+		attributeGetters.put("createDate", PowwowServer::getCreateDate);
+		attributeSetters.put("createDate", (BiConsumer<PowwowServer, Date>)PowwowServer::setCreateDate);
+		attributeGetters.put("modifiedDate", PowwowServer::getModifiedDate);
+		attributeSetters.put("modifiedDate", (BiConsumer<PowwowServer, Date>)PowwowServer::setModifiedDate);
+		attributeGetters.put("name", PowwowServer::getName);
+		attributeSetters.put("name", (BiConsumer<PowwowServer, String>)PowwowServer::setName);
+		attributeGetters.put("providerType", PowwowServer::getProviderType);
+		attributeSetters.put("providerType", (BiConsumer<PowwowServer, String>)PowwowServer::setProviderType);
+		attributeGetters.put("url", PowwowServer::getUrl);
+		attributeSetters.put("url", (BiConsumer<PowwowServer, String>)PowwowServer::setUrl);
+		attributeGetters.put("apiKey", PowwowServer::getApiKey);
+		attributeSetters.put("apiKey", (BiConsumer<PowwowServer, String>)PowwowServer::setApiKey);
+		attributeGetters.put("secret", PowwowServer::getSecret);
+		attributeSetters.put("secret", (BiConsumer<PowwowServer, String>)PowwowServer::setSecret);
+		attributeGetters.put("active", PowwowServer::getActive);
+		attributeSetters.put("active", (BiConsumer<PowwowServer, Boolean>)PowwowServer::setActive);
 
-		Long userId = (Long)attributes.get("userId");
-
-		if (userId != null) {
-			setUserId(userId);
-		}
-
-		String userName = (String)attributes.get("userName");
-
-		if (userName != null) {
-			setUserName(userName);
-		}
-
-		Date createDate = (Date)attributes.get("createDate");
-
-		if (createDate != null) {
-			setCreateDate(createDate);
-		}
-
-		Date modifiedDate = (Date)attributes.get("modifiedDate");
-
-		if (modifiedDate != null) {
-			setModifiedDate(modifiedDate);
-		}
-
-		String name = (String)attributes.get("name");
-
-		if (name != null) {
-			setName(name);
-		}
-
-		String providerType = (String)attributes.get("providerType");
-
-		if (providerType != null) {
-			setProviderType(providerType);
-		}
-
-		String url = (String)attributes.get("url");
-
-		if (url != null) {
-			setUrl(url);
-		}
-
-		String apiKey = (String)attributes.get("apiKey");
-
-		if (apiKey != null) {
-			setApiKey(apiKey);
-		}
-
-		String secret = (String)attributes.get("secret");
-
-		if (secret != null) {
-			setSecret(secret);
-		}
-
-		Boolean active = (Boolean)attributes.get("active");
-
-		if (active != null) {
-			setActive(active);
-		}
+		_attributeGetters = Collections.unmodifiableMap(attributeGetters);
+		_attributeSetters = Collections.unmodifiableMap((Map)attributeSetters);
 	}
 
 	@Override
@@ -643,101 +593,6 @@ public class PowwowServerModelImpl extends BaseModelImpl<PowwowServer>
 		powwowServerCacheModel.active = isActive();
 
 		return powwowServerCacheModel;
-	}
-
-	@Override
-	public String toString() {
-		StringBundler sb = new StringBundler(25);
-
-		sb.append("{powwowServerId=");
-		sb.append(getPowwowServerId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
-		sb.append(", userId=");
-		sb.append(getUserId());
-		sb.append(", userName=");
-		sb.append(getUserName());
-		sb.append(", createDate=");
-		sb.append(getCreateDate());
-		sb.append(", modifiedDate=");
-		sb.append(getModifiedDate());
-		sb.append(", name=");
-		sb.append(getName());
-		sb.append(", providerType=");
-		sb.append(getProviderType());
-		sb.append(", url=");
-		sb.append(getUrl());
-		sb.append(", apiKey=");
-		sb.append(getApiKey());
-		sb.append(", secret=");
-		sb.append(getSecret());
-		sb.append(", active=");
-		sb.append(isActive());
-		sb.append("}");
-
-		return sb.toString();
-	}
-
-	@Override
-	public String toXmlString() {
-		StringBundler sb = new StringBundler(40);
-
-		sb.append("<model><model-name>");
-		sb.append("com.liferay.powwow.model.PowwowServer");
-		sb.append("</model-name>");
-
-		sb.append(
-			"<column><column-name>powwowServerId</column-name><column-value><![CDATA[");
-		sb.append(getPowwowServerId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userId</column-name><column-value><![CDATA[");
-		sb.append(getUserId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userName</column-name><column-value><![CDATA[");
-		sb.append(getUserName());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>createDate</column-name><column-value><![CDATA[");
-		sb.append(getCreateDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>modifiedDate</column-name><column-value><![CDATA[");
-		sb.append(getModifiedDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>name</column-name><column-value><![CDATA[");
-		sb.append(getName());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>providerType</column-name><column-value><![CDATA[");
-		sb.append(getProviderType());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>url</column-name><column-value><![CDATA[");
-		sb.append(getUrl());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>apiKey</column-name><column-value><![CDATA[");
-		sb.append(getApiKey());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>secret</column-name><column-value><![CDATA[");
-		sb.append(getSecret());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>active</column-name><column-value><![CDATA[");
-		sb.append(isActive());
-		sb.append("]]></column-value></column>");
-
-		sb.append("</model>");
-
-		return sb.toString();
 	}
 
 	private static final ClassLoader _classLoader = PowwowServer.class.getClassLoader();

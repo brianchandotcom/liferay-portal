@@ -25,8 +25,6 @@ import com.liferay.message.boards.model.MBBan;
 import com.liferay.message.boards.model.MBBanModel;
 import com.liferay.message.boards.model.MBBanSoap;
 
-import com.liferay.petra.string.StringBundler;
-
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSON;
@@ -45,10 +43,14 @@ import java.io.Serializable;
 import java.sql.Types;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * The base model implementation for the MBBan service. Represents a row in the &quot;MBBan&quot; database table, with each column mapped to a property of this class.
@@ -206,87 +208,45 @@ public class MBBanModelImpl extends BaseModelImpl<MBBan> implements MBBanModel {
 	}
 
 	@Override
-	public Map<String, Object> getModelAttributes() {
-		Map<String, Object> attributes = new HashMap<String, Object>();
-
-		attributes.put("uuid", getUuid());
-		attributes.put("banId", getBanId());
-		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
-		attributes.put("userId", getUserId());
-		attributes.put("userName", getUserName());
-		attributes.put("createDate", getCreateDate());
-		attributes.put("modifiedDate", getModifiedDate());
-		attributes.put("banUserId", getBanUserId());
-		attributes.put("lastPublishDate", getLastPublishDate());
-
-		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
-		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
-
-		return attributes;
+	public Map<String, Function<MBBan, Object>> getAttributeGetters() {
+		return _attributeGetters;
 	}
 
 	@Override
-	public void setModelAttributes(Map<String, Object> attributes) {
-		String uuid = (String)attributes.get("uuid");
+	public Map<String, BiConsumer<MBBan, Object>> getAttributeSetters() {
+		return _attributeSetters;
+	}
 
-		if (uuid != null) {
-			setUuid(uuid);
-		}
+	private static final Map<String, Function<MBBan, Object>> _attributeGetters;
+	private static final Map<String, BiConsumer<MBBan, Object>> _attributeSetters;
 
-		Long banId = (Long)attributes.get("banId");
+	static {
+		Map<String, Function<MBBan, Object>> attributeGetters = new LinkedHashMap<String, Function<MBBan, Object>>();
+		Map<String, BiConsumer<MBBan, ?>> attributeSetters = new LinkedHashMap<String, BiConsumer<MBBan, ?>>();
 
-		if (banId != null) {
-			setBanId(banId);
-		}
+		attributeGetters.put("uuid", MBBan::getUuid);
+		attributeSetters.put("uuid", (BiConsumer<MBBan, String>)MBBan::setUuid);
+		attributeGetters.put("banId", MBBan::getBanId);
+		attributeSetters.put("banId", (BiConsumer<MBBan, Long>)MBBan::setBanId);
+		attributeGetters.put("groupId", MBBan::getGroupId);
+		attributeSetters.put("groupId", (BiConsumer<MBBan, Long>)MBBan::setGroupId);
+		attributeGetters.put("companyId", MBBan::getCompanyId);
+		attributeSetters.put("companyId", (BiConsumer<MBBan, Long>)MBBan::setCompanyId);
+		attributeGetters.put("userId", MBBan::getUserId);
+		attributeSetters.put("userId", (BiConsumer<MBBan, Long>)MBBan::setUserId);
+		attributeGetters.put("userName", MBBan::getUserName);
+		attributeSetters.put("userName", (BiConsumer<MBBan, String>)MBBan::setUserName);
+		attributeGetters.put("createDate", MBBan::getCreateDate);
+		attributeSetters.put("createDate", (BiConsumer<MBBan, Date>)MBBan::setCreateDate);
+		attributeGetters.put("modifiedDate", MBBan::getModifiedDate);
+		attributeSetters.put("modifiedDate", (BiConsumer<MBBan, Date>)MBBan::setModifiedDate);
+		attributeGetters.put("banUserId", MBBan::getBanUserId);
+		attributeSetters.put("banUserId", (BiConsumer<MBBan, Long>)MBBan::setBanUserId);
+		attributeGetters.put("lastPublishDate", MBBan::getLastPublishDate);
+		attributeSetters.put("lastPublishDate", (BiConsumer<MBBan, Date>)MBBan::setLastPublishDate);
 
-		Long groupId = (Long)attributes.get("groupId");
-
-		if (groupId != null) {
-			setGroupId(groupId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
-		}
-
-		Long userId = (Long)attributes.get("userId");
-
-		if (userId != null) {
-			setUserId(userId);
-		}
-
-		String userName = (String)attributes.get("userName");
-
-		if (userName != null) {
-			setUserName(userName);
-		}
-
-		Date createDate = (Date)attributes.get("createDate");
-
-		if (createDate != null) {
-			setCreateDate(createDate);
-		}
-
-		Date modifiedDate = (Date)attributes.get("modifiedDate");
-
-		if (modifiedDate != null) {
-			setModifiedDate(modifiedDate);
-		}
-
-		Long banUserId = (Long)attributes.get("banUserId");
-
-		if (banUserId != null) {
-			setBanUserId(banUserId);
-		}
-
-		Date lastPublishDate = (Date)attributes.get("lastPublishDate");
-
-		if (lastPublishDate != null) {
-			setLastPublishDate(lastPublishDate);
-		}
+		_attributeGetters = Collections.unmodifiableMap(attributeGetters);
+		_attributeSetters = Collections.unmodifiableMap((Map)attributeSetters);
 	}
 
 	@JSON
@@ -693,89 +653,6 @@ public class MBBanModelImpl extends BaseModelImpl<MBBan> implements MBBanModel {
 		}
 
 		return mbBanCacheModel;
-	}
-
-	@Override
-	public String toString() {
-		StringBundler sb = new StringBundler(21);
-
-		sb.append("{uuid=");
-		sb.append(getUuid());
-		sb.append(", banId=");
-		sb.append(getBanId());
-		sb.append(", groupId=");
-		sb.append(getGroupId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
-		sb.append(", userId=");
-		sb.append(getUserId());
-		sb.append(", userName=");
-		sb.append(getUserName());
-		sb.append(", createDate=");
-		sb.append(getCreateDate());
-		sb.append(", modifiedDate=");
-		sb.append(getModifiedDate());
-		sb.append(", banUserId=");
-		sb.append(getBanUserId());
-		sb.append(", lastPublishDate=");
-		sb.append(getLastPublishDate());
-		sb.append("}");
-
-		return sb.toString();
-	}
-
-	@Override
-	public String toXmlString() {
-		StringBundler sb = new StringBundler(34);
-
-		sb.append("<model><model-name>");
-		sb.append("com.liferay.message.boards.model.MBBan");
-		sb.append("</model-name>");
-
-		sb.append(
-			"<column><column-name>uuid</column-name><column-value><![CDATA[");
-		sb.append(getUuid());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>banId</column-name><column-value><![CDATA[");
-		sb.append(getBanId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>groupId</column-name><column-value><![CDATA[");
-		sb.append(getGroupId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userId</column-name><column-value><![CDATA[");
-		sb.append(getUserId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userName</column-name><column-value><![CDATA[");
-		sb.append(getUserName());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>createDate</column-name><column-value><![CDATA[");
-		sb.append(getCreateDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>modifiedDate</column-name><column-value><![CDATA[");
-		sb.append(getModifiedDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>banUserId</column-name><column-value><![CDATA[");
-		sb.append(getBanUserId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>lastPublishDate</column-name><column-value><![CDATA[");
-		sb.append(getLastPublishDate());
-		sb.append("]]></column-value></column>");
-
-		sb.append("</model>");
-
-		return sb.toString();
 	}
 
 	private static final ClassLoader _classLoader = MBBan.class.getClassLoader();

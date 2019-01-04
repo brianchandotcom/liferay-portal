@@ -19,8 +19,6 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 
-import com.liferay.petra.string.StringBundler;
-
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSON;
@@ -43,10 +41,14 @@ import java.io.Serializable;
 import java.sql.Types;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * The base model implementation for the Contact service. Represents a row in the &quot;Contact_&quot; database table, with each column mapped to a property of this class.
@@ -261,220 +263,83 @@ public class ContactModelImpl extends BaseModelImpl<Contact>
 	}
 
 	@Override
-	public Map<String, Object> getModelAttributes() {
-		Map<String, Object> attributes = new HashMap<String, Object>();
-
-		attributes.put("mvccVersion", getMvccVersion());
-		attributes.put("contactId", getContactId());
-		attributes.put("companyId", getCompanyId());
-		attributes.put("userId", getUserId());
-		attributes.put("userName", getUserName());
-		attributes.put("createDate", getCreateDate());
-		attributes.put("modifiedDate", getModifiedDate());
-		attributes.put("classNameId", getClassNameId());
-		attributes.put("classPK", getClassPK());
-		attributes.put("accountId", getAccountId());
-		attributes.put("parentContactId", getParentContactId());
-		attributes.put("emailAddress", getEmailAddress());
-		attributes.put("firstName", getFirstName());
-		attributes.put("middleName", getMiddleName());
-		attributes.put("lastName", getLastName());
-		attributes.put("prefixId", getPrefixId());
-		attributes.put("suffixId", getSuffixId());
-		attributes.put("male", isMale());
-		attributes.put("birthday", getBirthday());
-		attributes.put("smsSn", getSmsSn());
-		attributes.put("facebookSn", getFacebookSn());
-		attributes.put("jabberSn", getJabberSn());
-		attributes.put("skypeSn", getSkypeSn());
-		attributes.put("twitterSn", getTwitterSn());
-		attributes.put("employeeStatusId", getEmployeeStatusId());
-		attributes.put("employeeNumber", getEmployeeNumber());
-		attributes.put("jobTitle", getJobTitle());
-		attributes.put("jobClass", getJobClass());
-		attributes.put("hoursOfOperation", getHoursOfOperation());
-
-		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
-		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
-
-		return attributes;
+	public Map<String, Function<Contact, Object>> getAttributeGetters() {
+		return _attributeGetters;
 	}
 
 	@Override
-	public void setModelAttributes(Map<String, Object> attributes) {
-		Long mvccVersion = (Long)attributes.get("mvccVersion");
+	public Map<String, BiConsumer<Contact, Object>> getAttributeSetters() {
+		return _attributeSetters;
+	}
 
-		if (mvccVersion != null) {
-			setMvccVersion(mvccVersion);
-		}
+	private static final Map<String, Function<Contact, Object>> _attributeGetters;
+	private static final Map<String, BiConsumer<Contact, Object>> _attributeSetters;
 
-		Long contactId = (Long)attributes.get("contactId");
+	static {
+		Map<String, Function<Contact, Object>> attributeGetters = new LinkedHashMap<String, Function<Contact, Object>>();
+		Map<String, BiConsumer<Contact, ?>> attributeSetters = new LinkedHashMap<String, BiConsumer<Contact, ?>>();
 
-		if (contactId != null) {
-			setContactId(contactId);
-		}
+		attributeGetters.put("mvccVersion", Contact::getMvccVersion);
+		attributeSetters.put("mvccVersion", (BiConsumer<Contact, Long>)Contact::setMvccVersion);
+		attributeGetters.put("contactId", Contact::getContactId);
+		attributeSetters.put("contactId", (BiConsumer<Contact, Long>)Contact::setContactId);
+		attributeGetters.put("companyId", Contact::getCompanyId);
+		attributeSetters.put("companyId", (BiConsumer<Contact, Long>)Contact::setCompanyId);
+		attributeGetters.put("userId", Contact::getUserId);
+		attributeSetters.put("userId", (BiConsumer<Contact, Long>)Contact::setUserId);
+		attributeGetters.put("userName", Contact::getUserName);
+		attributeSetters.put("userName", (BiConsumer<Contact, String>)Contact::setUserName);
+		attributeGetters.put("createDate", Contact::getCreateDate);
+		attributeSetters.put("createDate", (BiConsumer<Contact, Date>)Contact::setCreateDate);
+		attributeGetters.put("modifiedDate", Contact::getModifiedDate);
+		attributeSetters.put("modifiedDate", (BiConsumer<Contact, Date>)Contact::setModifiedDate);
+		attributeGetters.put("classNameId", Contact::getClassNameId);
+		attributeSetters.put("classNameId", (BiConsumer<Contact, Long>)Contact::setClassNameId);
+		attributeGetters.put("classPK", Contact::getClassPK);
+		attributeSetters.put("classPK", (BiConsumer<Contact, Long>)Contact::setClassPK);
+		attributeGetters.put("accountId", Contact::getAccountId);
+		attributeSetters.put("accountId", (BiConsumer<Contact, Long>)Contact::setAccountId);
+		attributeGetters.put("parentContactId", Contact::getParentContactId);
+		attributeSetters.put("parentContactId", (BiConsumer<Contact, Long>)Contact::setParentContactId);
+		attributeGetters.put("emailAddress", Contact::getEmailAddress);
+		attributeSetters.put("emailAddress", (BiConsumer<Contact, String>)Contact::setEmailAddress);
+		attributeGetters.put("firstName", Contact::getFirstName);
+		attributeSetters.put("firstName", (BiConsumer<Contact, String>)Contact::setFirstName);
+		attributeGetters.put("middleName", Contact::getMiddleName);
+		attributeSetters.put("middleName", (BiConsumer<Contact, String>)Contact::setMiddleName);
+		attributeGetters.put("lastName", Contact::getLastName);
+		attributeSetters.put("lastName", (BiConsumer<Contact, String>)Contact::setLastName);
+		attributeGetters.put("prefixId", Contact::getPrefixId);
+		attributeSetters.put("prefixId", (BiConsumer<Contact, Long>)Contact::setPrefixId);
+		attributeGetters.put("suffixId", Contact::getSuffixId);
+		attributeSetters.put("suffixId", (BiConsumer<Contact, Long>)Contact::setSuffixId);
+		attributeGetters.put("male", Contact::getMale);
+		attributeSetters.put("male", (BiConsumer<Contact, Boolean>)Contact::setMale);
+		attributeGetters.put("birthday", Contact::getBirthday);
+		attributeSetters.put("birthday", (BiConsumer<Contact, Date>)Contact::setBirthday);
+		attributeGetters.put("smsSn", Contact::getSmsSn);
+		attributeSetters.put("smsSn", (BiConsumer<Contact, String>)Contact::setSmsSn);
+		attributeGetters.put("facebookSn", Contact::getFacebookSn);
+		attributeSetters.put("facebookSn", (BiConsumer<Contact, String>)Contact::setFacebookSn);
+		attributeGetters.put("jabberSn", Contact::getJabberSn);
+		attributeSetters.put("jabberSn", (BiConsumer<Contact, String>)Contact::setJabberSn);
+		attributeGetters.put("skypeSn", Contact::getSkypeSn);
+		attributeSetters.put("skypeSn", (BiConsumer<Contact, String>)Contact::setSkypeSn);
+		attributeGetters.put("twitterSn", Contact::getTwitterSn);
+		attributeSetters.put("twitterSn", (BiConsumer<Contact, String>)Contact::setTwitterSn);
+		attributeGetters.put("employeeStatusId", Contact::getEmployeeStatusId);
+		attributeSetters.put("employeeStatusId", (BiConsumer<Contact, String>)Contact::setEmployeeStatusId);
+		attributeGetters.put("employeeNumber", Contact::getEmployeeNumber);
+		attributeSetters.put("employeeNumber", (BiConsumer<Contact, String>)Contact::setEmployeeNumber);
+		attributeGetters.put("jobTitle", Contact::getJobTitle);
+		attributeSetters.put("jobTitle", (BiConsumer<Contact, String>)Contact::setJobTitle);
+		attributeGetters.put("jobClass", Contact::getJobClass);
+		attributeSetters.put("jobClass", (BiConsumer<Contact, String>)Contact::setJobClass);
+		attributeGetters.put("hoursOfOperation", Contact::getHoursOfOperation);
+		attributeSetters.put("hoursOfOperation", (BiConsumer<Contact, String>)Contact::setHoursOfOperation);
 
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
-		}
-
-		Long userId = (Long)attributes.get("userId");
-
-		if (userId != null) {
-			setUserId(userId);
-		}
-
-		String userName = (String)attributes.get("userName");
-
-		if (userName != null) {
-			setUserName(userName);
-		}
-
-		Date createDate = (Date)attributes.get("createDate");
-
-		if (createDate != null) {
-			setCreateDate(createDate);
-		}
-
-		Date modifiedDate = (Date)attributes.get("modifiedDate");
-
-		if (modifiedDate != null) {
-			setModifiedDate(modifiedDate);
-		}
-
-		Long classNameId = (Long)attributes.get("classNameId");
-
-		if (classNameId != null) {
-			setClassNameId(classNameId);
-		}
-
-		Long classPK = (Long)attributes.get("classPK");
-
-		if (classPK != null) {
-			setClassPK(classPK);
-		}
-
-		Long accountId = (Long)attributes.get("accountId");
-
-		if (accountId != null) {
-			setAccountId(accountId);
-		}
-
-		Long parentContactId = (Long)attributes.get("parentContactId");
-
-		if (parentContactId != null) {
-			setParentContactId(parentContactId);
-		}
-
-		String emailAddress = (String)attributes.get("emailAddress");
-
-		if (emailAddress != null) {
-			setEmailAddress(emailAddress);
-		}
-
-		String firstName = (String)attributes.get("firstName");
-
-		if (firstName != null) {
-			setFirstName(firstName);
-		}
-
-		String middleName = (String)attributes.get("middleName");
-
-		if (middleName != null) {
-			setMiddleName(middleName);
-		}
-
-		String lastName = (String)attributes.get("lastName");
-
-		if (lastName != null) {
-			setLastName(lastName);
-		}
-
-		Long prefixId = (Long)attributes.get("prefixId");
-
-		if (prefixId != null) {
-			setPrefixId(prefixId);
-		}
-
-		Long suffixId = (Long)attributes.get("suffixId");
-
-		if (suffixId != null) {
-			setSuffixId(suffixId);
-		}
-
-		Boolean male = (Boolean)attributes.get("male");
-
-		if (male != null) {
-			setMale(male);
-		}
-
-		Date birthday = (Date)attributes.get("birthday");
-
-		if (birthday != null) {
-			setBirthday(birthday);
-		}
-
-		String smsSn = (String)attributes.get("smsSn");
-
-		if (smsSn != null) {
-			setSmsSn(smsSn);
-		}
-
-		String facebookSn = (String)attributes.get("facebookSn");
-
-		if (facebookSn != null) {
-			setFacebookSn(facebookSn);
-		}
-
-		String jabberSn = (String)attributes.get("jabberSn");
-
-		if (jabberSn != null) {
-			setJabberSn(jabberSn);
-		}
-
-		String skypeSn = (String)attributes.get("skypeSn");
-
-		if (skypeSn != null) {
-			setSkypeSn(skypeSn);
-		}
-
-		String twitterSn = (String)attributes.get("twitterSn");
-
-		if (twitterSn != null) {
-			setTwitterSn(twitterSn);
-		}
-
-		String employeeStatusId = (String)attributes.get("employeeStatusId");
-
-		if (employeeStatusId != null) {
-			setEmployeeStatusId(employeeStatusId);
-		}
-
-		String employeeNumber = (String)attributes.get("employeeNumber");
-
-		if (employeeNumber != null) {
-			setEmployeeNumber(employeeNumber);
-		}
-
-		String jobTitle = (String)attributes.get("jobTitle");
-
-		if (jobTitle != null) {
-			setJobTitle(jobTitle);
-		}
-
-		String jobClass = (String)attributes.get("jobClass");
-
-		if (jobClass != null) {
-			setJobClass(jobClass);
-		}
-
-		String hoursOfOperation = (String)attributes.get("hoursOfOperation");
-
-		if (hoursOfOperation != null) {
-			setHoursOfOperation(hoursOfOperation);
-		}
+		_attributeGetters = Collections.unmodifiableMap(attributeGetters);
+		_attributeSetters = Collections.unmodifiableMap((Map)attributeSetters);
 	}
 
 	@JSON
@@ -1292,203 +1157,6 @@ public class ContactModelImpl extends BaseModelImpl<Contact>
 		}
 
 		return contactCacheModel;
-	}
-
-	@Override
-	public String toString() {
-		StringBundler sb = new StringBundler(59);
-
-		sb.append("{mvccVersion=");
-		sb.append(getMvccVersion());
-		sb.append(", contactId=");
-		sb.append(getContactId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
-		sb.append(", userId=");
-		sb.append(getUserId());
-		sb.append(", userName=");
-		sb.append(getUserName());
-		sb.append(", createDate=");
-		sb.append(getCreateDate());
-		sb.append(", modifiedDate=");
-		sb.append(getModifiedDate());
-		sb.append(", classNameId=");
-		sb.append(getClassNameId());
-		sb.append(", classPK=");
-		sb.append(getClassPK());
-		sb.append(", accountId=");
-		sb.append(getAccountId());
-		sb.append(", parentContactId=");
-		sb.append(getParentContactId());
-		sb.append(", emailAddress=");
-		sb.append(getEmailAddress());
-		sb.append(", firstName=");
-		sb.append(getFirstName());
-		sb.append(", middleName=");
-		sb.append(getMiddleName());
-		sb.append(", lastName=");
-		sb.append(getLastName());
-		sb.append(", prefixId=");
-		sb.append(getPrefixId());
-		sb.append(", suffixId=");
-		sb.append(getSuffixId());
-		sb.append(", male=");
-		sb.append(isMale());
-		sb.append(", birthday=");
-		sb.append(getBirthday());
-		sb.append(", smsSn=");
-		sb.append(getSmsSn());
-		sb.append(", facebookSn=");
-		sb.append(getFacebookSn());
-		sb.append(", jabberSn=");
-		sb.append(getJabberSn());
-		sb.append(", skypeSn=");
-		sb.append(getSkypeSn());
-		sb.append(", twitterSn=");
-		sb.append(getTwitterSn());
-		sb.append(", employeeStatusId=");
-		sb.append(getEmployeeStatusId());
-		sb.append(", employeeNumber=");
-		sb.append(getEmployeeNumber());
-		sb.append(", jobTitle=");
-		sb.append(getJobTitle());
-		sb.append(", jobClass=");
-		sb.append(getJobClass());
-		sb.append(", hoursOfOperation=");
-		sb.append(getHoursOfOperation());
-		sb.append("}");
-
-		return sb.toString();
-	}
-
-	@Override
-	public String toXmlString() {
-		StringBundler sb = new StringBundler(91);
-
-		sb.append("<model><model-name>");
-		sb.append("com.liferay.portal.kernel.model.Contact");
-		sb.append("</model-name>");
-
-		sb.append(
-			"<column><column-name>mvccVersion</column-name><column-value><![CDATA[");
-		sb.append(getMvccVersion());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>contactId</column-name><column-value><![CDATA[");
-		sb.append(getContactId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userId</column-name><column-value><![CDATA[");
-		sb.append(getUserId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userName</column-name><column-value><![CDATA[");
-		sb.append(getUserName());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>createDate</column-name><column-value><![CDATA[");
-		sb.append(getCreateDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>modifiedDate</column-name><column-value><![CDATA[");
-		sb.append(getModifiedDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>classNameId</column-name><column-value><![CDATA[");
-		sb.append(getClassNameId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>classPK</column-name><column-value><![CDATA[");
-		sb.append(getClassPK());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>accountId</column-name><column-value><![CDATA[");
-		sb.append(getAccountId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>parentContactId</column-name><column-value><![CDATA[");
-		sb.append(getParentContactId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>emailAddress</column-name><column-value><![CDATA[");
-		sb.append(getEmailAddress());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>firstName</column-name><column-value><![CDATA[");
-		sb.append(getFirstName());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>middleName</column-name><column-value><![CDATA[");
-		sb.append(getMiddleName());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>lastName</column-name><column-value><![CDATA[");
-		sb.append(getLastName());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>prefixId</column-name><column-value><![CDATA[");
-		sb.append(getPrefixId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>suffixId</column-name><column-value><![CDATA[");
-		sb.append(getSuffixId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>male</column-name><column-value><![CDATA[");
-		sb.append(isMale());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>birthday</column-name><column-value><![CDATA[");
-		sb.append(getBirthday());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>smsSn</column-name><column-value><![CDATA[");
-		sb.append(getSmsSn());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>facebookSn</column-name><column-value><![CDATA[");
-		sb.append(getFacebookSn());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>jabberSn</column-name><column-value><![CDATA[");
-		sb.append(getJabberSn());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>skypeSn</column-name><column-value><![CDATA[");
-		sb.append(getSkypeSn());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>twitterSn</column-name><column-value><![CDATA[");
-		sb.append(getTwitterSn());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>employeeStatusId</column-name><column-value><![CDATA[");
-		sb.append(getEmployeeStatusId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>employeeNumber</column-name><column-value><![CDATA[");
-		sb.append(getEmployeeNumber());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>jobTitle</column-name><column-value><![CDATA[");
-		sb.append(getJobTitle());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>jobClass</column-name><column-value><![CDATA[");
-		sb.append(getJobClass());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>hoursOfOperation</column-name><column-value><![CDATA[");
-		sb.append(getHoursOfOperation());
-		sb.append("]]></column-value></column>");
-
-		sb.append("</model>");
-
-		return sb.toString();
 	}
 
 	private static final ClassLoader _classLoader = Contact.class.getClassLoader();

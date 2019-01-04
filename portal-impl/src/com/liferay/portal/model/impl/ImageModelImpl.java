@@ -19,8 +19,6 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 
-import com.liferay.petra.string.StringBundler;
-
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.model.CacheModel;
@@ -38,10 +36,14 @@ import java.io.Serializable;
 import java.sql.Types;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * The base model implementation for the Image service. Represents a row in the &quot;Image&quot; database table, with each column mapped to a property of this class.
@@ -189,73 +191,41 @@ public class ImageModelImpl extends BaseModelImpl<Image> implements ImageModel {
 	}
 
 	@Override
-	public Map<String, Object> getModelAttributes() {
-		Map<String, Object> attributes = new HashMap<String, Object>();
-
-		attributes.put("mvccVersion", getMvccVersion());
-		attributes.put("imageId", getImageId());
-		attributes.put("companyId", getCompanyId());
-		attributes.put("modifiedDate", getModifiedDate());
-		attributes.put("type", getType());
-		attributes.put("height", getHeight());
-		attributes.put("width", getWidth());
-		attributes.put("size", getSize());
-
-		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
-		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
-
-		return attributes;
+	public Map<String, Function<Image, Object>> getAttributeGetters() {
+		return _attributeGetters;
 	}
 
 	@Override
-	public void setModelAttributes(Map<String, Object> attributes) {
-		Long mvccVersion = (Long)attributes.get("mvccVersion");
+	public Map<String, BiConsumer<Image, Object>> getAttributeSetters() {
+		return _attributeSetters;
+	}
 
-		if (mvccVersion != null) {
-			setMvccVersion(mvccVersion);
-		}
+	private static final Map<String, Function<Image, Object>> _attributeGetters;
+	private static final Map<String, BiConsumer<Image, Object>> _attributeSetters;
 
-		Long imageId = (Long)attributes.get("imageId");
+	static {
+		Map<String, Function<Image, Object>> attributeGetters = new LinkedHashMap<String, Function<Image, Object>>();
+		Map<String, BiConsumer<Image, ?>> attributeSetters = new LinkedHashMap<String, BiConsumer<Image, ?>>();
 
-		if (imageId != null) {
-			setImageId(imageId);
-		}
+		attributeGetters.put("mvccVersion", Image::getMvccVersion);
+		attributeSetters.put("mvccVersion", (BiConsumer<Image, Long>)Image::setMvccVersion);
+		attributeGetters.put("imageId", Image::getImageId);
+		attributeSetters.put("imageId", (BiConsumer<Image, Long>)Image::setImageId);
+		attributeGetters.put("companyId", Image::getCompanyId);
+		attributeSetters.put("companyId", (BiConsumer<Image, Long>)Image::setCompanyId);
+		attributeGetters.put("modifiedDate", Image::getModifiedDate);
+		attributeSetters.put("modifiedDate", (BiConsumer<Image, Date>)Image::setModifiedDate);
+		attributeGetters.put("type", Image::getType);
+		attributeSetters.put("type", (BiConsumer<Image, String>)Image::setType);
+		attributeGetters.put("height", Image::getHeight);
+		attributeSetters.put("height", (BiConsumer<Image, Integer>)Image::setHeight);
+		attributeGetters.put("width", Image::getWidth);
+		attributeSetters.put("width", (BiConsumer<Image, Integer>)Image::setWidth);
+		attributeGetters.put("size", Image::getSize);
+		attributeSetters.put("size", (BiConsumer<Image, Integer>)Image::setSize);
 
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
-		}
-
-		Date modifiedDate = (Date)attributes.get("modifiedDate");
-
-		if (modifiedDate != null) {
-			setModifiedDate(modifiedDate);
-		}
-
-		String type = (String)attributes.get("type");
-
-		if (type != null) {
-			setType(type);
-		}
-
-		Integer height = (Integer)attributes.get("height");
-
-		if (height != null) {
-			setHeight(height);
-		}
-
-		Integer width = (Integer)attributes.get("width");
-
-		if (width != null) {
-			setWidth(width);
-		}
-
-		Integer size = (Integer)attributes.get("size");
-
-		if (size != null) {
-			setSize(size);
-		}
+		_attributeGetters = Collections.unmodifiableMap(attributeGetters);
+		_attributeSetters = Collections.unmodifiableMap((Map)attributeSetters);
 	}
 
 	@JSON
@@ -513,77 +483,6 @@ public class ImageModelImpl extends BaseModelImpl<Image> implements ImageModel {
 		imageCacheModel.size = getSize();
 
 		return imageCacheModel;
-	}
-
-	@Override
-	public String toString() {
-		StringBundler sb = new StringBundler(17);
-
-		sb.append("{mvccVersion=");
-		sb.append(getMvccVersion());
-		sb.append(", imageId=");
-		sb.append(getImageId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
-		sb.append(", modifiedDate=");
-		sb.append(getModifiedDate());
-		sb.append(", type=");
-		sb.append(getType());
-		sb.append(", height=");
-		sb.append(getHeight());
-		sb.append(", width=");
-		sb.append(getWidth());
-		sb.append(", size=");
-		sb.append(getSize());
-		sb.append("}");
-
-		return sb.toString();
-	}
-
-	@Override
-	public String toXmlString() {
-		StringBundler sb = new StringBundler(28);
-
-		sb.append("<model><model-name>");
-		sb.append("com.liferay.portal.kernel.model.Image");
-		sb.append("</model-name>");
-
-		sb.append(
-			"<column><column-name>mvccVersion</column-name><column-value><![CDATA[");
-		sb.append(getMvccVersion());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>imageId</column-name><column-value><![CDATA[");
-		sb.append(getImageId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>modifiedDate</column-name><column-value><![CDATA[");
-		sb.append(getModifiedDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>type</column-name><column-value><![CDATA[");
-		sb.append(getType());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>height</column-name><column-value><![CDATA[");
-		sb.append(getHeight());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>width</column-name><column-value><![CDATA[");
-		sb.append(getWidth());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>size</column-name><column-value><![CDATA[");
-		sb.append(getSize());
-		sb.append("]]></column-value></column>");
-
-		sb.append("</model>");
-
-		return sb.toString();
 	}
 
 	private static final ClassLoader _classLoader = Image.class.getClassLoader();

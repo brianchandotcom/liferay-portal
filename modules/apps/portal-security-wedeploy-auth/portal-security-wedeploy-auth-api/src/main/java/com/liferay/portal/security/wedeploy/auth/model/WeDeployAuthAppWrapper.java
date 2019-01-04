@@ -20,8 +20,6 @@ import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * <p>
@@ -37,87 +35,6 @@ public class WeDeployAuthAppWrapper extends BaseModelWrapper<WeDeployAuthApp>
 	implements WeDeployAuthApp, ModelWrapper<WeDeployAuthApp> {
 	public WeDeployAuthAppWrapper(WeDeployAuthApp weDeployAuthApp) {
 		super(weDeployAuthApp);
-	}
-
-	@Override
-	public Map<String, Object> getModelAttributes() {
-		Map<String, Object> attributes = new HashMap<String, Object>();
-
-		attributes.put("weDeployAuthAppId", getWeDeployAuthAppId());
-		attributes.put("companyId", getCompanyId());
-		attributes.put("userId", getUserId());
-		attributes.put("userName", getUserName());
-		attributes.put("createDate", getCreateDate());
-		attributes.put("modifiedDate", getModifiedDate());
-		attributes.put("name", getName());
-		attributes.put("redirectURI", getRedirectURI());
-		attributes.put("clientId", getClientId());
-		attributes.put("clientSecret", getClientSecret());
-
-		return attributes;
-	}
-
-	@Override
-	public void setModelAttributes(Map<String, Object> attributes) {
-		Long weDeployAuthAppId = (Long)attributes.get("weDeployAuthAppId");
-
-		if (weDeployAuthAppId != null) {
-			setWeDeployAuthAppId(weDeployAuthAppId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
-		}
-
-		Long userId = (Long)attributes.get("userId");
-
-		if (userId != null) {
-			setUserId(userId);
-		}
-
-		String userName = (String)attributes.get("userName");
-
-		if (userName != null) {
-			setUserName(userName);
-		}
-
-		Date createDate = (Date)attributes.get("createDate");
-
-		if (createDate != null) {
-			setCreateDate(createDate);
-		}
-
-		Date modifiedDate = (Date)attributes.get("modifiedDate");
-
-		if (modifiedDate != null) {
-			setModifiedDate(modifiedDate);
-		}
-
-		String name = (String)attributes.get("name");
-
-		if (name != null) {
-			setName(name);
-		}
-
-		String redirectURI = (String)attributes.get("redirectURI");
-
-		if (redirectURI != null) {
-			setRedirectURI(redirectURI);
-		}
-
-		String clientId = (String)attributes.get("clientId");
-
-		if (clientId != null) {
-			setClientId(clientId);
-		}
-
-		String clientSecret = (String)attributes.get("clientSecret");
-
-		if (clientSecret != null) {
-			setClientSecret(clientSecret);
-		}
 	}
 
 	/**

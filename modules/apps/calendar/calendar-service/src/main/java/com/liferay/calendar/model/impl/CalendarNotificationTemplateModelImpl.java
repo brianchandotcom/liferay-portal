@@ -25,8 +25,6 @@ import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 
-import com.liferay.petra.string.StringBundler;
-
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSON;
@@ -45,10 +43,14 @@ import java.io.Serializable;
 import java.sql.Types;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * The base model implementation for the CalendarNotificationTemplate service. Represents a row in the &quot;CalendarNotificationTemplate&quot; database table, with each column mapped to a property of this class.
@@ -225,126 +227,57 @@ public class CalendarNotificationTemplateModelImpl extends BaseModelImpl<Calenda
 	}
 
 	@Override
-	public Map<String, Object> getModelAttributes() {
-		Map<String, Object> attributes = new HashMap<String, Object>();
-
-		attributes.put("uuid", getUuid());
-		attributes.put("calendarNotificationTemplateId",
-			getCalendarNotificationTemplateId());
-		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
-		attributes.put("userId", getUserId());
-		attributes.put("userName", getUserName());
-		attributes.put("createDate", getCreateDate());
-		attributes.put("modifiedDate", getModifiedDate());
-		attributes.put("calendarId", getCalendarId());
-		attributes.put("notificationType", getNotificationType());
-		attributes.put("notificationTypeSettings", getNotificationTypeSettings());
-		attributes.put("notificationTemplateType", getNotificationTemplateType());
-		attributes.put("subject", getSubject());
-		attributes.put("body", getBody());
-		attributes.put("lastPublishDate", getLastPublishDate());
-
-		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
-		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
-
-		return attributes;
+	public Map<String, Function<CalendarNotificationTemplate, Object>> getAttributeGetters() {
+		return _attributeGetters;
 	}
 
 	@Override
-	public void setModelAttributes(Map<String, Object> attributes) {
-		String uuid = (String)attributes.get("uuid");
+	public Map<String, BiConsumer<CalendarNotificationTemplate, Object>> getAttributeSetters() {
+		return _attributeSetters;
+	}
 
-		if (uuid != null) {
-			setUuid(uuid);
-		}
+	private static final Map<String, Function<CalendarNotificationTemplate, Object>> _attributeGetters;
+	private static final Map<String, BiConsumer<CalendarNotificationTemplate, Object>> _attributeSetters;
 
-		Long calendarNotificationTemplateId = (Long)attributes.get(
-				"calendarNotificationTemplateId");
+	static {
+		Map<String, Function<CalendarNotificationTemplate, Object>> attributeGetters =
+			new LinkedHashMap<String, Function<CalendarNotificationTemplate, Object>>();
+		Map<String, BiConsumer<CalendarNotificationTemplate, ?>> attributeSetters =
+			new LinkedHashMap<String, BiConsumer<CalendarNotificationTemplate, ?>>();
 
-		if (calendarNotificationTemplateId != null) {
-			setCalendarNotificationTemplateId(calendarNotificationTemplateId);
-		}
+		attributeGetters.put("uuid", CalendarNotificationTemplate::getUuid);
+		attributeSetters.put("uuid", (BiConsumer<CalendarNotificationTemplate, String>)CalendarNotificationTemplate::setUuid);
+		attributeGetters.put("calendarNotificationTemplateId", CalendarNotificationTemplate::getCalendarNotificationTemplateId);
+		attributeSetters.put("calendarNotificationTemplateId", (BiConsumer<CalendarNotificationTemplate, Long>)CalendarNotificationTemplate::setCalendarNotificationTemplateId);
+		attributeGetters.put("groupId", CalendarNotificationTemplate::getGroupId);
+		attributeSetters.put("groupId", (BiConsumer<CalendarNotificationTemplate, Long>)CalendarNotificationTemplate::setGroupId);
+		attributeGetters.put("companyId", CalendarNotificationTemplate::getCompanyId);
+		attributeSetters.put("companyId", (BiConsumer<CalendarNotificationTemplate, Long>)CalendarNotificationTemplate::setCompanyId);
+		attributeGetters.put("userId", CalendarNotificationTemplate::getUserId);
+		attributeSetters.put("userId", (BiConsumer<CalendarNotificationTemplate, Long>)CalendarNotificationTemplate::setUserId);
+		attributeGetters.put("userName", CalendarNotificationTemplate::getUserName);
+		attributeSetters.put("userName", (BiConsumer<CalendarNotificationTemplate, String>)CalendarNotificationTemplate::setUserName);
+		attributeGetters.put("createDate", CalendarNotificationTemplate::getCreateDate);
+		attributeSetters.put("createDate", (BiConsumer<CalendarNotificationTemplate, Date>)CalendarNotificationTemplate::setCreateDate);
+		attributeGetters.put("modifiedDate", CalendarNotificationTemplate::getModifiedDate);
+		attributeSetters.put("modifiedDate", (BiConsumer<CalendarNotificationTemplate, Date>)CalendarNotificationTemplate::setModifiedDate);
+		attributeGetters.put("calendarId", CalendarNotificationTemplate::getCalendarId);
+		attributeSetters.put("calendarId", (BiConsumer<CalendarNotificationTemplate, Long>)CalendarNotificationTemplate::setCalendarId);
+		attributeGetters.put("notificationType", CalendarNotificationTemplate::getNotificationType);
+		attributeSetters.put("notificationType", (BiConsumer<CalendarNotificationTemplate, String>)CalendarNotificationTemplate::setNotificationType);
+		attributeGetters.put("notificationTypeSettings", CalendarNotificationTemplate::getNotificationTypeSettings);
+		attributeSetters.put("notificationTypeSettings", (BiConsumer<CalendarNotificationTemplate, String>)CalendarNotificationTemplate::setNotificationTypeSettings);
+		attributeGetters.put("notificationTemplateType", CalendarNotificationTemplate::getNotificationTemplateType);
+		attributeSetters.put("notificationTemplateType", (BiConsumer<CalendarNotificationTemplate, String>)CalendarNotificationTemplate::setNotificationTemplateType);
+		attributeGetters.put("subject", CalendarNotificationTemplate::getSubject);
+		attributeSetters.put("subject", (BiConsumer<CalendarNotificationTemplate, String>)CalendarNotificationTemplate::setSubject);
+		attributeGetters.put("body", CalendarNotificationTemplate::getBody);
+		attributeSetters.put("body", (BiConsumer<CalendarNotificationTemplate, String>)CalendarNotificationTemplate::setBody);
+		attributeGetters.put("lastPublishDate", CalendarNotificationTemplate::getLastPublishDate);
+		attributeSetters.put("lastPublishDate", (BiConsumer<CalendarNotificationTemplate, Date>)CalendarNotificationTemplate::setLastPublishDate);
 
-		Long groupId = (Long)attributes.get("groupId");
-
-		if (groupId != null) {
-			setGroupId(groupId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
-		}
-
-		Long userId = (Long)attributes.get("userId");
-
-		if (userId != null) {
-			setUserId(userId);
-		}
-
-		String userName = (String)attributes.get("userName");
-
-		if (userName != null) {
-			setUserName(userName);
-		}
-
-		Date createDate = (Date)attributes.get("createDate");
-
-		if (createDate != null) {
-			setCreateDate(createDate);
-		}
-
-		Date modifiedDate = (Date)attributes.get("modifiedDate");
-
-		if (modifiedDate != null) {
-			setModifiedDate(modifiedDate);
-		}
-
-		Long calendarId = (Long)attributes.get("calendarId");
-
-		if (calendarId != null) {
-			setCalendarId(calendarId);
-		}
-
-		String notificationType = (String)attributes.get("notificationType");
-
-		if (notificationType != null) {
-			setNotificationType(notificationType);
-		}
-
-		String notificationTypeSettings = (String)attributes.get(
-				"notificationTypeSettings");
-
-		if (notificationTypeSettings != null) {
-			setNotificationTypeSettings(notificationTypeSettings);
-		}
-
-		String notificationTemplateType = (String)attributes.get(
-				"notificationTemplateType");
-
-		if (notificationTemplateType != null) {
-			setNotificationTemplateType(notificationTemplateType);
-		}
-
-		String subject = (String)attributes.get("subject");
-
-		if (subject != null) {
-			setSubject(subject);
-		}
-
-		String body = (String)attributes.get("body");
-
-		if (body != null) {
-			setBody(body);
-		}
-
-		Date lastPublishDate = (Date)attributes.get("lastPublishDate");
-
-		if (lastPublishDate != null) {
-			setLastPublishDate(lastPublishDate);
-		}
+		_attributeGetters = Collections.unmodifiableMap(attributeGetters);
+		_attributeSetters = Collections.unmodifiableMap((Map)attributeSetters);
 	}
 
 	@JSON
@@ -874,119 +807,6 @@ public class CalendarNotificationTemplateModelImpl extends BaseModelImpl<Calenda
 		}
 
 		return calendarNotificationTemplateCacheModel;
-	}
-
-	@Override
-	public String toString() {
-		StringBundler sb = new StringBundler(31);
-
-		sb.append("{uuid=");
-		sb.append(getUuid());
-		sb.append(", calendarNotificationTemplateId=");
-		sb.append(getCalendarNotificationTemplateId());
-		sb.append(", groupId=");
-		sb.append(getGroupId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
-		sb.append(", userId=");
-		sb.append(getUserId());
-		sb.append(", userName=");
-		sb.append(getUserName());
-		sb.append(", createDate=");
-		sb.append(getCreateDate());
-		sb.append(", modifiedDate=");
-		sb.append(getModifiedDate());
-		sb.append(", calendarId=");
-		sb.append(getCalendarId());
-		sb.append(", notificationType=");
-		sb.append(getNotificationType());
-		sb.append(", notificationTypeSettings=");
-		sb.append(getNotificationTypeSettings());
-		sb.append(", notificationTemplateType=");
-		sb.append(getNotificationTemplateType());
-		sb.append(", subject=");
-		sb.append(getSubject());
-		sb.append(", body=");
-		sb.append(getBody());
-		sb.append(", lastPublishDate=");
-		sb.append(getLastPublishDate());
-		sb.append("}");
-
-		return sb.toString();
-	}
-
-	@Override
-	public String toXmlString() {
-		StringBundler sb = new StringBundler(49);
-
-		sb.append("<model><model-name>");
-		sb.append("com.liferay.calendar.model.CalendarNotificationTemplate");
-		sb.append("</model-name>");
-
-		sb.append(
-			"<column><column-name>uuid</column-name><column-value><![CDATA[");
-		sb.append(getUuid());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>calendarNotificationTemplateId</column-name><column-value><![CDATA[");
-		sb.append(getCalendarNotificationTemplateId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>groupId</column-name><column-value><![CDATA[");
-		sb.append(getGroupId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userId</column-name><column-value><![CDATA[");
-		sb.append(getUserId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userName</column-name><column-value><![CDATA[");
-		sb.append(getUserName());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>createDate</column-name><column-value><![CDATA[");
-		sb.append(getCreateDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>modifiedDate</column-name><column-value><![CDATA[");
-		sb.append(getModifiedDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>calendarId</column-name><column-value><![CDATA[");
-		sb.append(getCalendarId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>notificationType</column-name><column-value><![CDATA[");
-		sb.append(getNotificationType());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>notificationTypeSettings</column-name><column-value><![CDATA[");
-		sb.append(getNotificationTypeSettings());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>notificationTemplateType</column-name><column-value><![CDATA[");
-		sb.append(getNotificationTemplateType());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>subject</column-name><column-value><![CDATA[");
-		sb.append(getSubject());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>body</column-name><column-value><![CDATA[");
-		sb.append(getBody());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>lastPublishDate</column-name><column-value><![CDATA[");
-		sb.append(getLastPublishDate());
-		sb.append("]]></column-value></column>");
-
-		sb.append("</model>");
-
-		return sb.toString();
 	}
 
 	private static final ClassLoader _classLoader = CalendarNotificationTemplate.class.getClassLoader();

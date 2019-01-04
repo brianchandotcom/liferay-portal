@@ -25,8 +25,6 @@ import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 
-import com.liferay.petra.string.StringBundler;
-
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.LocaleException;
 import com.liferay.portal.kernel.exception.NoSuchModelException;
@@ -53,13 +51,17 @@ import java.io.Serializable;
 import java.sql.Types;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * The base model implementation for the CalendarBooking service. Represents a row in the &quot;CalendarBooking&quot; database table, with each column mapped to a property of this class.
@@ -281,223 +283,83 @@ public class CalendarBookingModelImpl extends BaseModelImpl<CalendarBooking>
 	}
 
 	@Override
-	public Map<String, Object> getModelAttributes() {
-		Map<String, Object> attributes = new HashMap<String, Object>();
-
-		attributes.put("uuid", getUuid());
-		attributes.put("calendarBookingId", getCalendarBookingId());
-		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
-		attributes.put("userId", getUserId());
-		attributes.put("userName", getUserName());
-		attributes.put("createDate", getCreateDate());
-		attributes.put("modifiedDate", getModifiedDate());
-		attributes.put("calendarId", getCalendarId());
-		attributes.put("calendarResourceId", getCalendarResourceId());
-		attributes.put("parentCalendarBookingId", getParentCalendarBookingId());
-		attributes.put("recurringCalendarBookingId",
-			getRecurringCalendarBookingId());
-		attributes.put("vEventUid", getVEventUid());
-		attributes.put("title", getTitle());
-		attributes.put("description", getDescription());
-		attributes.put("location", getLocation());
-		attributes.put("startTime", getStartTime());
-		attributes.put("endTime", getEndTime());
-		attributes.put("allDay", isAllDay());
-		attributes.put("recurrence", getRecurrence());
-		attributes.put("firstReminder", getFirstReminder());
-		attributes.put("firstReminderType", getFirstReminderType());
-		attributes.put("secondReminder", getSecondReminder());
-		attributes.put("secondReminderType", getSecondReminderType());
-		attributes.put("lastPublishDate", getLastPublishDate());
-		attributes.put("status", getStatus());
-		attributes.put("statusByUserId", getStatusByUserId());
-		attributes.put("statusByUserName", getStatusByUserName());
-		attributes.put("statusDate", getStatusDate());
-
-		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
-		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
-
-		return attributes;
+	public Map<String, Function<CalendarBooking, Object>> getAttributeGetters() {
+		return _attributeGetters;
 	}
 
 	@Override
-	public void setModelAttributes(Map<String, Object> attributes) {
-		String uuid = (String)attributes.get("uuid");
+	public Map<String, BiConsumer<CalendarBooking, Object>> getAttributeSetters() {
+		return _attributeSetters;
+	}
 
-		if (uuid != null) {
-			setUuid(uuid);
-		}
+	private static final Map<String, Function<CalendarBooking, Object>> _attributeGetters;
+	private static final Map<String, BiConsumer<CalendarBooking, Object>> _attributeSetters;
 
-		Long calendarBookingId = (Long)attributes.get("calendarBookingId");
+	static {
+		Map<String, Function<CalendarBooking, Object>> attributeGetters = new LinkedHashMap<String, Function<CalendarBooking, Object>>();
+		Map<String, BiConsumer<CalendarBooking, ?>> attributeSetters = new LinkedHashMap<String, BiConsumer<CalendarBooking, ?>>();
 
-		if (calendarBookingId != null) {
-			setCalendarBookingId(calendarBookingId);
-		}
+		attributeGetters.put("uuid", CalendarBooking::getUuid);
+		attributeSetters.put("uuid", (BiConsumer<CalendarBooking, String>)CalendarBooking::setUuid);
+		attributeGetters.put("calendarBookingId", CalendarBooking::getCalendarBookingId);
+		attributeSetters.put("calendarBookingId", (BiConsumer<CalendarBooking, Long>)CalendarBooking::setCalendarBookingId);
+		attributeGetters.put("groupId", CalendarBooking::getGroupId);
+		attributeSetters.put("groupId", (BiConsumer<CalendarBooking, Long>)CalendarBooking::setGroupId);
+		attributeGetters.put("companyId", CalendarBooking::getCompanyId);
+		attributeSetters.put("companyId", (BiConsumer<CalendarBooking, Long>)CalendarBooking::setCompanyId);
+		attributeGetters.put("userId", CalendarBooking::getUserId);
+		attributeSetters.put("userId", (BiConsumer<CalendarBooking, Long>)CalendarBooking::setUserId);
+		attributeGetters.put("userName", CalendarBooking::getUserName);
+		attributeSetters.put("userName", (BiConsumer<CalendarBooking, String>)CalendarBooking::setUserName);
+		attributeGetters.put("createDate", CalendarBooking::getCreateDate);
+		attributeSetters.put("createDate", (BiConsumer<CalendarBooking, Date>)CalendarBooking::setCreateDate);
+		attributeGetters.put("modifiedDate", CalendarBooking::getModifiedDate);
+		attributeSetters.put("modifiedDate", (BiConsumer<CalendarBooking, Date>)CalendarBooking::setModifiedDate);
+		attributeGetters.put("calendarId", CalendarBooking::getCalendarId);
+		attributeSetters.put("calendarId", (BiConsumer<CalendarBooking, Long>)CalendarBooking::setCalendarId);
+		attributeGetters.put("calendarResourceId", CalendarBooking::getCalendarResourceId);
+		attributeSetters.put("calendarResourceId", (BiConsumer<CalendarBooking, Long>)CalendarBooking::setCalendarResourceId);
+		attributeGetters.put("parentCalendarBookingId", CalendarBooking::getParentCalendarBookingId);
+		attributeSetters.put("parentCalendarBookingId", (BiConsumer<CalendarBooking, Long>)CalendarBooking::setParentCalendarBookingId);
+		attributeGetters.put("recurringCalendarBookingId", CalendarBooking::getRecurringCalendarBookingId);
+		attributeSetters.put("recurringCalendarBookingId", (BiConsumer<CalendarBooking, Long>)CalendarBooking::setRecurringCalendarBookingId);
+		attributeGetters.put("vEventUid", CalendarBooking::getVEventUid);
+		attributeSetters.put("vEventUid", (BiConsumer<CalendarBooking, String>)CalendarBooking::setVEventUid);
+		attributeGetters.put("title", CalendarBooking::getTitle);
+		attributeSetters.put("title", (BiConsumer<CalendarBooking, String>)CalendarBooking::setTitle);
+		attributeGetters.put("description", CalendarBooking::getDescription);
+		attributeSetters.put("description", (BiConsumer<CalendarBooking, String>)CalendarBooking::setDescription);
+		attributeGetters.put("location", CalendarBooking::getLocation);
+		attributeSetters.put("location", (BiConsumer<CalendarBooking, String>)CalendarBooking::setLocation);
+		attributeGetters.put("startTime", CalendarBooking::getStartTime);
+		attributeSetters.put("startTime", (BiConsumer<CalendarBooking, Long>)CalendarBooking::setStartTime);
+		attributeGetters.put("endTime", CalendarBooking::getEndTime);
+		attributeSetters.put("endTime", (BiConsumer<CalendarBooking, Long>)CalendarBooking::setEndTime);
+		attributeGetters.put("allDay", CalendarBooking::getAllDay);
+		attributeSetters.put("allDay", (BiConsumer<CalendarBooking, Boolean>)CalendarBooking::setAllDay);
+		attributeGetters.put("recurrence", CalendarBooking::getRecurrence);
+		attributeSetters.put("recurrence", (BiConsumer<CalendarBooking, String>)CalendarBooking::setRecurrence);
+		attributeGetters.put("firstReminder", CalendarBooking::getFirstReminder);
+		attributeSetters.put("firstReminder", (BiConsumer<CalendarBooking, Long>)CalendarBooking::setFirstReminder);
+		attributeGetters.put("firstReminderType", CalendarBooking::getFirstReminderType);
+		attributeSetters.put("firstReminderType", (BiConsumer<CalendarBooking, String>)CalendarBooking::setFirstReminderType);
+		attributeGetters.put("secondReminder", CalendarBooking::getSecondReminder);
+		attributeSetters.put("secondReminder", (BiConsumer<CalendarBooking, Long>)CalendarBooking::setSecondReminder);
+		attributeGetters.put("secondReminderType", CalendarBooking::getSecondReminderType);
+		attributeSetters.put("secondReminderType", (BiConsumer<CalendarBooking, String>)CalendarBooking::setSecondReminderType);
+		attributeGetters.put("lastPublishDate", CalendarBooking::getLastPublishDate);
+		attributeSetters.put("lastPublishDate", (BiConsumer<CalendarBooking, Date>)CalendarBooking::setLastPublishDate);
+		attributeGetters.put("status", CalendarBooking::getStatus);
+		attributeSetters.put("status", (BiConsumer<CalendarBooking, Integer>)CalendarBooking::setStatus);
+		attributeGetters.put("statusByUserId", CalendarBooking::getStatusByUserId);
+		attributeSetters.put("statusByUserId", (BiConsumer<CalendarBooking, Long>)CalendarBooking::setStatusByUserId);
+		attributeGetters.put("statusByUserName", CalendarBooking::getStatusByUserName);
+		attributeSetters.put("statusByUserName", (BiConsumer<CalendarBooking, String>)CalendarBooking::setStatusByUserName);
+		attributeGetters.put("statusDate", CalendarBooking::getStatusDate);
+		attributeSetters.put("statusDate", (BiConsumer<CalendarBooking, Date>)CalendarBooking::setStatusDate);
 
-		Long groupId = (Long)attributes.get("groupId");
-
-		if (groupId != null) {
-			setGroupId(groupId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
-		}
-
-		Long userId = (Long)attributes.get("userId");
-
-		if (userId != null) {
-			setUserId(userId);
-		}
-
-		String userName = (String)attributes.get("userName");
-
-		if (userName != null) {
-			setUserName(userName);
-		}
-
-		Date createDate = (Date)attributes.get("createDate");
-
-		if (createDate != null) {
-			setCreateDate(createDate);
-		}
-
-		Date modifiedDate = (Date)attributes.get("modifiedDate");
-
-		if (modifiedDate != null) {
-			setModifiedDate(modifiedDate);
-		}
-
-		Long calendarId = (Long)attributes.get("calendarId");
-
-		if (calendarId != null) {
-			setCalendarId(calendarId);
-		}
-
-		Long calendarResourceId = (Long)attributes.get("calendarResourceId");
-
-		if (calendarResourceId != null) {
-			setCalendarResourceId(calendarResourceId);
-		}
-
-		Long parentCalendarBookingId = (Long)attributes.get(
-				"parentCalendarBookingId");
-
-		if (parentCalendarBookingId != null) {
-			setParentCalendarBookingId(parentCalendarBookingId);
-		}
-
-		Long recurringCalendarBookingId = (Long)attributes.get(
-				"recurringCalendarBookingId");
-
-		if (recurringCalendarBookingId != null) {
-			setRecurringCalendarBookingId(recurringCalendarBookingId);
-		}
-
-		String vEventUid = (String)attributes.get("vEventUid");
-
-		if (vEventUid != null) {
-			setVEventUid(vEventUid);
-		}
-
-		String title = (String)attributes.get("title");
-
-		if (title != null) {
-			setTitle(title);
-		}
-
-		String description = (String)attributes.get("description");
-
-		if (description != null) {
-			setDescription(description);
-		}
-
-		String location = (String)attributes.get("location");
-
-		if (location != null) {
-			setLocation(location);
-		}
-
-		Long startTime = (Long)attributes.get("startTime");
-
-		if (startTime != null) {
-			setStartTime(startTime);
-		}
-
-		Long endTime = (Long)attributes.get("endTime");
-
-		if (endTime != null) {
-			setEndTime(endTime);
-		}
-
-		Boolean allDay = (Boolean)attributes.get("allDay");
-
-		if (allDay != null) {
-			setAllDay(allDay);
-		}
-
-		String recurrence = (String)attributes.get("recurrence");
-
-		if (recurrence != null) {
-			setRecurrence(recurrence);
-		}
-
-		Long firstReminder = (Long)attributes.get("firstReminder");
-
-		if (firstReminder != null) {
-			setFirstReminder(firstReminder);
-		}
-
-		String firstReminderType = (String)attributes.get("firstReminderType");
-
-		if (firstReminderType != null) {
-			setFirstReminderType(firstReminderType);
-		}
-
-		Long secondReminder = (Long)attributes.get("secondReminder");
-
-		if (secondReminder != null) {
-			setSecondReminder(secondReminder);
-		}
-
-		String secondReminderType = (String)attributes.get("secondReminderType");
-
-		if (secondReminderType != null) {
-			setSecondReminderType(secondReminderType);
-		}
-
-		Date lastPublishDate = (Date)attributes.get("lastPublishDate");
-
-		if (lastPublishDate != null) {
-			setLastPublishDate(lastPublishDate);
-		}
-
-		Integer status = (Integer)attributes.get("status");
-
-		if (status != null) {
-			setStatus(status);
-		}
-
-		Long statusByUserId = (Long)attributes.get("statusByUserId");
-
-		if (statusByUserId != null) {
-			setStatusByUserId(statusByUserId);
-		}
-
-		String statusByUserName = (String)attributes.get("statusByUserName");
-
-		if (statusByUserName != null) {
-			setStatusByUserName(statusByUserName);
-		}
-
-		Date statusDate = (Date)attributes.get("statusDate");
-
-		if (statusDate != null) {
-			setStatusDate(statusDate);
-		}
+		_attributeGetters = Collections.unmodifiableMap(attributeGetters);
+		_attributeSetters = Collections.unmodifiableMap((Map)attributeSetters);
 	}
 
 	@JSON
@@ -1810,203 +1672,6 @@ public class CalendarBookingModelImpl extends BaseModelImpl<CalendarBooking>
 		}
 
 		return calendarBookingCacheModel;
-	}
-
-	@Override
-	public String toString() {
-		StringBundler sb = new StringBundler(59);
-
-		sb.append("{uuid=");
-		sb.append(getUuid());
-		sb.append(", calendarBookingId=");
-		sb.append(getCalendarBookingId());
-		sb.append(", groupId=");
-		sb.append(getGroupId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
-		sb.append(", userId=");
-		sb.append(getUserId());
-		sb.append(", userName=");
-		sb.append(getUserName());
-		sb.append(", createDate=");
-		sb.append(getCreateDate());
-		sb.append(", modifiedDate=");
-		sb.append(getModifiedDate());
-		sb.append(", calendarId=");
-		sb.append(getCalendarId());
-		sb.append(", calendarResourceId=");
-		sb.append(getCalendarResourceId());
-		sb.append(", parentCalendarBookingId=");
-		sb.append(getParentCalendarBookingId());
-		sb.append(", recurringCalendarBookingId=");
-		sb.append(getRecurringCalendarBookingId());
-		sb.append(", vEventUid=");
-		sb.append(getVEventUid());
-		sb.append(", title=");
-		sb.append(getTitle());
-		sb.append(", description=");
-		sb.append(getDescription());
-		sb.append(", location=");
-		sb.append(getLocation());
-		sb.append(", startTime=");
-		sb.append(getStartTime());
-		sb.append(", endTime=");
-		sb.append(getEndTime());
-		sb.append(", allDay=");
-		sb.append(isAllDay());
-		sb.append(", recurrence=");
-		sb.append(getRecurrence());
-		sb.append(", firstReminder=");
-		sb.append(getFirstReminder());
-		sb.append(", firstReminderType=");
-		sb.append(getFirstReminderType());
-		sb.append(", secondReminder=");
-		sb.append(getSecondReminder());
-		sb.append(", secondReminderType=");
-		sb.append(getSecondReminderType());
-		sb.append(", lastPublishDate=");
-		sb.append(getLastPublishDate());
-		sb.append(", status=");
-		sb.append(getStatus());
-		sb.append(", statusByUserId=");
-		sb.append(getStatusByUserId());
-		sb.append(", statusByUserName=");
-		sb.append(getStatusByUserName());
-		sb.append(", statusDate=");
-		sb.append(getStatusDate());
-		sb.append("}");
-
-		return sb.toString();
-	}
-
-	@Override
-	public String toXmlString() {
-		StringBundler sb = new StringBundler(91);
-
-		sb.append("<model><model-name>");
-		sb.append("com.liferay.calendar.model.CalendarBooking");
-		sb.append("</model-name>");
-
-		sb.append(
-			"<column><column-name>uuid</column-name><column-value><![CDATA[");
-		sb.append(getUuid());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>calendarBookingId</column-name><column-value><![CDATA[");
-		sb.append(getCalendarBookingId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>groupId</column-name><column-value><![CDATA[");
-		sb.append(getGroupId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userId</column-name><column-value><![CDATA[");
-		sb.append(getUserId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userName</column-name><column-value><![CDATA[");
-		sb.append(getUserName());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>createDate</column-name><column-value><![CDATA[");
-		sb.append(getCreateDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>modifiedDate</column-name><column-value><![CDATA[");
-		sb.append(getModifiedDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>calendarId</column-name><column-value><![CDATA[");
-		sb.append(getCalendarId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>calendarResourceId</column-name><column-value><![CDATA[");
-		sb.append(getCalendarResourceId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>parentCalendarBookingId</column-name><column-value><![CDATA[");
-		sb.append(getParentCalendarBookingId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>recurringCalendarBookingId</column-name><column-value><![CDATA[");
-		sb.append(getRecurringCalendarBookingId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>vEventUid</column-name><column-value><![CDATA[");
-		sb.append(getVEventUid());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>title</column-name><column-value><![CDATA[");
-		sb.append(getTitle());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>description</column-name><column-value><![CDATA[");
-		sb.append(getDescription());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>location</column-name><column-value><![CDATA[");
-		sb.append(getLocation());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>startTime</column-name><column-value><![CDATA[");
-		sb.append(getStartTime());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>endTime</column-name><column-value><![CDATA[");
-		sb.append(getEndTime());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>allDay</column-name><column-value><![CDATA[");
-		sb.append(isAllDay());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>recurrence</column-name><column-value><![CDATA[");
-		sb.append(getRecurrence());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>firstReminder</column-name><column-value><![CDATA[");
-		sb.append(getFirstReminder());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>firstReminderType</column-name><column-value><![CDATA[");
-		sb.append(getFirstReminderType());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>secondReminder</column-name><column-value><![CDATA[");
-		sb.append(getSecondReminder());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>secondReminderType</column-name><column-value><![CDATA[");
-		sb.append(getSecondReminderType());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>lastPublishDate</column-name><column-value><![CDATA[");
-		sb.append(getLastPublishDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>status</column-name><column-value><![CDATA[");
-		sb.append(getStatus());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>statusByUserId</column-name><column-value><![CDATA[");
-		sb.append(getStatusByUserId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>statusByUserName</column-name><column-value><![CDATA[");
-		sb.append(getStatusByUserName());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>statusDate</column-name><column-value><![CDATA[");
-		sb.append(getStatusDate());
-		sb.append("]]></column-value></column>");
-
-		sb.append("</model>");
-
-		return sb.toString();
 	}
 
 	private static final ClassLoader _classLoader = CalendarBooking.class.getClassLoader();

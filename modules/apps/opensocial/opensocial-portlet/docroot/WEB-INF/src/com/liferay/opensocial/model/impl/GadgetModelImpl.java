@@ -25,8 +25,6 @@ import com.liferay.opensocial.model.Gadget;
 import com.liferay.opensocial.model.GadgetModel;
 import com.liferay.opensocial.model.GadgetSoap;
 
-import com.liferay.petra.string.StringBundler;
-
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.model.CacheModel;
@@ -42,10 +40,14 @@ import java.io.Serializable;
 import java.sql.Types;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * The base model implementation for the Gadget service. Represents a row in the &quot;OpenSocial_Gadget&quot; database table, with each column mapped to a property of this class.
@@ -199,81 +201,43 @@ public class GadgetModelImpl extends BaseModelImpl<Gadget>
 	}
 
 	@Override
-	public Map<String, Object> getModelAttributes() {
-		Map<String, Object> attributes = new HashMap<String, Object>();
-
-		attributes.put("uuid", getUuid());
-		attributes.put("gadgetId", getGadgetId());
-		attributes.put("companyId", getCompanyId());
-		attributes.put("createDate", getCreateDate());
-		attributes.put("modifiedDate", getModifiedDate());
-		attributes.put("name", getName());
-		attributes.put("url", getUrl());
-		attributes.put("portletCategoryNames", getPortletCategoryNames());
-		attributes.put("lastPublishDate", getLastPublishDate());
-
-		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
-		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
-
-		return attributes;
+	public Map<String, Function<Gadget, Object>> getAttributeGetters() {
+		return _attributeGetters;
 	}
 
 	@Override
-	public void setModelAttributes(Map<String, Object> attributes) {
-		String uuid = (String)attributes.get("uuid");
+	public Map<String, BiConsumer<Gadget, Object>> getAttributeSetters() {
+		return _attributeSetters;
+	}
 
-		if (uuid != null) {
-			setUuid(uuid);
-		}
+	private static final Map<String, Function<Gadget, Object>> _attributeGetters;
+	private static final Map<String, BiConsumer<Gadget, Object>> _attributeSetters;
 
-		Long gadgetId = (Long)attributes.get("gadgetId");
+	static {
+		Map<String, Function<Gadget, Object>> attributeGetters = new LinkedHashMap<String, Function<Gadget, Object>>();
+		Map<String, BiConsumer<Gadget, ?>> attributeSetters = new LinkedHashMap<String, BiConsumer<Gadget, ?>>();
 
-		if (gadgetId != null) {
-			setGadgetId(gadgetId);
-		}
+		attributeGetters.put("uuid", Gadget::getUuid);
+		attributeSetters.put("uuid", (BiConsumer<Gadget, String>)Gadget::setUuid);
+		attributeGetters.put("gadgetId", Gadget::getGadgetId);
+		attributeSetters.put("gadgetId", (BiConsumer<Gadget, Long>)Gadget::setGadgetId);
+		attributeGetters.put("companyId", Gadget::getCompanyId);
+		attributeSetters.put("companyId", (BiConsumer<Gadget, Long>)Gadget::setCompanyId);
+		attributeGetters.put("createDate", Gadget::getCreateDate);
+		attributeSetters.put("createDate", (BiConsumer<Gadget, Date>)Gadget::setCreateDate);
+		attributeGetters.put("modifiedDate", Gadget::getModifiedDate);
+		attributeSetters.put("modifiedDate", (BiConsumer<Gadget, Date>)Gadget::setModifiedDate);
+		attributeGetters.put("name", Gadget::getName);
+		attributeSetters.put("name", (BiConsumer<Gadget, String>)Gadget::setName);
+		attributeGetters.put("url", Gadget::getUrl);
+		attributeSetters.put("url", (BiConsumer<Gadget, String>)Gadget::setUrl);
+		attributeGetters.put("portletCategoryNames", Gadget::getPortletCategoryNames);
+		attributeSetters.put("portletCategoryNames", (BiConsumer<Gadget, String>)Gadget::setPortletCategoryNames);
+		attributeGetters.put("lastPublishDate", Gadget::getLastPublishDate);
+		attributeSetters.put("lastPublishDate", (BiConsumer<Gadget, Date>)Gadget::setLastPublishDate);
 
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
-		}
-
-		Date createDate = (Date)attributes.get("createDate");
-
-		if (createDate != null) {
-			setCreateDate(createDate);
-		}
-
-		Date modifiedDate = (Date)attributes.get("modifiedDate");
-
-		if (modifiedDate != null) {
-			setModifiedDate(modifiedDate);
-		}
-
-		String name = (String)attributes.get("name");
-
-		if (name != null) {
-			setName(name);
-		}
-
-		String url = (String)attributes.get("url");
-
-		if (url != null) {
-			setUrl(url);
-		}
-
-		String portletCategoryNames = (String)attributes.get(
-				"portletCategoryNames");
-
-		if (portletCategoryNames != null) {
-			setPortletCategoryNames(portletCategoryNames);
-		}
-
-		Date lastPublishDate = (Date)attributes.get("lastPublishDate");
-
-		if (lastPublishDate != null) {
-			setLastPublishDate(lastPublishDate);
-		}
+		_attributeGetters = Collections.unmodifiableMap(attributeGetters);
+		_attributeSetters = Collections.unmodifiableMap((Map)attributeSetters);
 	}
 
 	@JSON
@@ -621,83 +585,6 @@ public class GadgetModelImpl extends BaseModelImpl<Gadget>
 		}
 
 		return gadgetCacheModel;
-	}
-
-	@Override
-	public String toString() {
-		StringBundler sb = new StringBundler(19);
-
-		sb.append("{uuid=");
-		sb.append(getUuid());
-		sb.append(", gadgetId=");
-		sb.append(getGadgetId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
-		sb.append(", createDate=");
-		sb.append(getCreateDate());
-		sb.append(", modifiedDate=");
-		sb.append(getModifiedDate());
-		sb.append(", name=");
-		sb.append(getName());
-		sb.append(", url=");
-		sb.append(getUrl());
-		sb.append(", portletCategoryNames=");
-		sb.append(getPortletCategoryNames());
-		sb.append(", lastPublishDate=");
-		sb.append(getLastPublishDate());
-		sb.append("}");
-
-		return sb.toString();
-	}
-
-	@Override
-	public String toXmlString() {
-		StringBundler sb = new StringBundler(31);
-
-		sb.append("<model><model-name>");
-		sb.append("com.liferay.opensocial.model.Gadget");
-		sb.append("</model-name>");
-
-		sb.append(
-			"<column><column-name>uuid</column-name><column-value><![CDATA[");
-		sb.append(getUuid());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>gadgetId</column-name><column-value><![CDATA[");
-		sb.append(getGadgetId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>createDate</column-name><column-value><![CDATA[");
-		sb.append(getCreateDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>modifiedDate</column-name><column-value><![CDATA[");
-		sb.append(getModifiedDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>name</column-name><column-value><![CDATA[");
-		sb.append(getName());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>url</column-name><column-value><![CDATA[");
-		sb.append(getUrl());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>portletCategoryNames</column-name><column-value><![CDATA[");
-		sb.append(getPortletCategoryNames());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>lastPublishDate</column-name><column-value><![CDATA[");
-		sb.append(getLastPublishDate());
-		sb.append("]]></column-value></column>");
-
-		sb.append("</model>");
-
-		return sb.toString();
 	}
 
 	private static final ClassLoader _classLoader = Gadget.class.getClassLoader();

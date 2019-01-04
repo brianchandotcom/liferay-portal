@@ -21,8 +21,6 @@ import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 
-import com.liferay.petra.string.StringBundler;
-
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSON;
@@ -46,10 +44,14 @@ import java.io.Serializable;
 import java.sql.Types;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * The base model implementation for the Website service. Represents a row in the &quot;Website&quot; database table, with each column mapped to a property of this class.
@@ -221,115 +223,53 @@ public class WebsiteModelImpl extends BaseModelImpl<Website>
 	}
 
 	@Override
-	public Map<String, Object> getModelAttributes() {
-		Map<String, Object> attributes = new HashMap<String, Object>();
-
-		attributes.put("mvccVersion", getMvccVersion());
-		attributes.put("uuid", getUuid());
-		attributes.put("websiteId", getWebsiteId());
-		attributes.put("companyId", getCompanyId());
-		attributes.put("userId", getUserId());
-		attributes.put("userName", getUserName());
-		attributes.put("createDate", getCreateDate());
-		attributes.put("modifiedDate", getModifiedDate());
-		attributes.put("classNameId", getClassNameId());
-		attributes.put("classPK", getClassPK());
-		attributes.put("url", getUrl());
-		attributes.put("typeId", getTypeId());
-		attributes.put("primary", isPrimary());
-		attributes.put("lastPublishDate", getLastPublishDate());
-
-		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
-		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
-
-		return attributes;
+	public Map<String, Function<Website, Object>> getAttributeGetters() {
+		return _attributeGetters;
 	}
 
 	@Override
-	public void setModelAttributes(Map<String, Object> attributes) {
-		Long mvccVersion = (Long)attributes.get("mvccVersion");
+	public Map<String, BiConsumer<Website, Object>> getAttributeSetters() {
+		return _attributeSetters;
+	}
 
-		if (mvccVersion != null) {
-			setMvccVersion(mvccVersion);
-		}
+	private static final Map<String, Function<Website, Object>> _attributeGetters;
+	private static final Map<String, BiConsumer<Website, Object>> _attributeSetters;
 
-		String uuid = (String)attributes.get("uuid");
+	static {
+		Map<String, Function<Website, Object>> attributeGetters = new LinkedHashMap<String, Function<Website, Object>>();
+		Map<String, BiConsumer<Website, ?>> attributeSetters = new LinkedHashMap<String, BiConsumer<Website, ?>>();
 
-		if (uuid != null) {
-			setUuid(uuid);
-		}
+		attributeGetters.put("mvccVersion", Website::getMvccVersion);
+		attributeSetters.put("mvccVersion", (BiConsumer<Website, Long>)Website::setMvccVersion);
+		attributeGetters.put("uuid", Website::getUuid);
+		attributeSetters.put("uuid", (BiConsumer<Website, String>)Website::setUuid);
+		attributeGetters.put("websiteId", Website::getWebsiteId);
+		attributeSetters.put("websiteId", (BiConsumer<Website, Long>)Website::setWebsiteId);
+		attributeGetters.put("companyId", Website::getCompanyId);
+		attributeSetters.put("companyId", (BiConsumer<Website, Long>)Website::setCompanyId);
+		attributeGetters.put("userId", Website::getUserId);
+		attributeSetters.put("userId", (BiConsumer<Website, Long>)Website::setUserId);
+		attributeGetters.put("userName", Website::getUserName);
+		attributeSetters.put("userName", (BiConsumer<Website, String>)Website::setUserName);
+		attributeGetters.put("createDate", Website::getCreateDate);
+		attributeSetters.put("createDate", (BiConsumer<Website, Date>)Website::setCreateDate);
+		attributeGetters.put("modifiedDate", Website::getModifiedDate);
+		attributeSetters.put("modifiedDate", (BiConsumer<Website, Date>)Website::setModifiedDate);
+		attributeGetters.put("classNameId", Website::getClassNameId);
+		attributeSetters.put("classNameId", (BiConsumer<Website, Long>)Website::setClassNameId);
+		attributeGetters.put("classPK", Website::getClassPK);
+		attributeSetters.put("classPK", (BiConsumer<Website, Long>)Website::setClassPK);
+		attributeGetters.put("url", Website::getUrl);
+		attributeSetters.put("url", (BiConsumer<Website, String>)Website::setUrl);
+		attributeGetters.put("typeId", Website::getTypeId);
+		attributeSetters.put("typeId", (BiConsumer<Website, Long>)Website::setTypeId);
+		attributeGetters.put("primary", Website::getPrimary);
+		attributeSetters.put("primary", (BiConsumer<Website, Boolean>)Website::setPrimary);
+		attributeGetters.put("lastPublishDate", Website::getLastPublishDate);
+		attributeSetters.put("lastPublishDate", (BiConsumer<Website, Date>)Website::setLastPublishDate);
 
-		Long websiteId = (Long)attributes.get("websiteId");
-
-		if (websiteId != null) {
-			setWebsiteId(websiteId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
-		}
-
-		Long userId = (Long)attributes.get("userId");
-
-		if (userId != null) {
-			setUserId(userId);
-		}
-
-		String userName = (String)attributes.get("userName");
-
-		if (userName != null) {
-			setUserName(userName);
-		}
-
-		Date createDate = (Date)attributes.get("createDate");
-
-		if (createDate != null) {
-			setCreateDate(createDate);
-		}
-
-		Date modifiedDate = (Date)attributes.get("modifiedDate");
-
-		if (modifiedDate != null) {
-			setModifiedDate(modifiedDate);
-		}
-
-		Long classNameId = (Long)attributes.get("classNameId");
-
-		if (classNameId != null) {
-			setClassNameId(classNameId);
-		}
-
-		Long classPK = (Long)attributes.get("classPK");
-
-		if (classPK != null) {
-			setClassPK(classPK);
-		}
-
-		String url = (String)attributes.get("url");
-
-		if (url != null) {
-			setUrl(url);
-		}
-
-		Long typeId = (Long)attributes.get("typeId");
-
-		if (typeId != null) {
-			setTypeId(typeId);
-		}
-
-		Boolean primary = (Boolean)attributes.get("primary");
-
-		if (primary != null) {
-			setPrimary(primary);
-		}
-
-		Date lastPublishDate = (Date)attributes.get("lastPublishDate");
-
-		if (lastPublishDate != null) {
-			setLastPublishDate(lastPublishDate);
-		}
+		_attributeGetters = Collections.unmodifiableMap(attributeGetters);
+		_attributeSetters = Collections.unmodifiableMap((Map)attributeSetters);
 	}
 
 	@JSON
@@ -829,113 +769,6 @@ public class WebsiteModelImpl extends BaseModelImpl<Website>
 		}
 
 		return websiteCacheModel;
-	}
-
-	@Override
-	public String toString() {
-		StringBundler sb = new StringBundler(29);
-
-		sb.append("{mvccVersion=");
-		sb.append(getMvccVersion());
-		sb.append(", uuid=");
-		sb.append(getUuid());
-		sb.append(", websiteId=");
-		sb.append(getWebsiteId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
-		sb.append(", userId=");
-		sb.append(getUserId());
-		sb.append(", userName=");
-		sb.append(getUserName());
-		sb.append(", createDate=");
-		sb.append(getCreateDate());
-		sb.append(", modifiedDate=");
-		sb.append(getModifiedDate());
-		sb.append(", classNameId=");
-		sb.append(getClassNameId());
-		sb.append(", classPK=");
-		sb.append(getClassPK());
-		sb.append(", url=");
-		sb.append(getUrl());
-		sb.append(", typeId=");
-		sb.append(getTypeId());
-		sb.append(", primary=");
-		sb.append(isPrimary());
-		sb.append(", lastPublishDate=");
-		sb.append(getLastPublishDate());
-		sb.append("}");
-
-		return sb.toString();
-	}
-
-	@Override
-	public String toXmlString() {
-		StringBundler sb = new StringBundler(46);
-
-		sb.append("<model><model-name>");
-		sb.append("com.liferay.portal.kernel.model.Website");
-		sb.append("</model-name>");
-
-		sb.append(
-			"<column><column-name>mvccVersion</column-name><column-value><![CDATA[");
-		sb.append(getMvccVersion());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>uuid</column-name><column-value><![CDATA[");
-		sb.append(getUuid());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>websiteId</column-name><column-value><![CDATA[");
-		sb.append(getWebsiteId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userId</column-name><column-value><![CDATA[");
-		sb.append(getUserId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userName</column-name><column-value><![CDATA[");
-		sb.append(getUserName());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>createDate</column-name><column-value><![CDATA[");
-		sb.append(getCreateDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>modifiedDate</column-name><column-value><![CDATA[");
-		sb.append(getModifiedDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>classNameId</column-name><column-value><![CDATA[");
-		sb.append(getClassNameId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>classPK</column-name><column-value><![CDATA[");
-		sb.append(getClassPK());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>url</column-name><column-value><![CDATA[");
-		sb.append(getUrl());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>typeId</column-name><column-value><![CDATA[");
-		sb.append(getTypeId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>primary</column-name><column-value><![CDATA[");
-		sb.append(isPrimary());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>lastPublishDate</column-name><column-value><![CDATA[");
-		sb.append(getLastPublishDate());
-		sb.append("]]></column-value></column>");
-
-		sb.append("</model>");
-
-		return sb.toString();
 	}
 
 	private static final ClassLoader _classLoader = Website.class.getClassLoader();

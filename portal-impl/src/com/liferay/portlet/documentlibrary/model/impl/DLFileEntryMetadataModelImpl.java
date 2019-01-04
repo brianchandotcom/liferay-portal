@@ -22,8 +22,6 @@ import com.liferay.document.library.kernel.model.DLFileEntryMetadataModel;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 
-import com.liferay.petra.string.StringBundler;
-
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.ModelWrapper;
@@ -36,8 +34,12 @@ import java.io.Serializable;
 
 import java.sql.Types;
 
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * The base model implementation for the DLFileEntryMetadata service. Represents a row in the &quot;DLFileEntryMetadata&quot; database table, with each column mapped to a property of this class.
@@ -141,66 +143,39 @@ public class DLFileEntryMetadataModelImpl extends BaseModelImpl<DLFileEntryMetad
 	}
 
 	@Override
-	public Map<String, Object> getModelAttributes() {
-		Map<String, Object> attributes = new HashMap<String, Object>();
-
-		attributes.put("uuid", getUuid());
-		attributes.put("fileEntryMetadataId", getFileEntryMetadataId());
-		attributes.put("companyId", getCompanyId());
-		attributes.put("DDMStorageId", getDDMStorageId());
-		attributes.put("DDMStructureId", getDDMStructureId());
-		attributes.put("fileEntryId", getFileEntryId());
-		attributes.put("fileVersionId", getFileVersionId());
-
-		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
-		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
-
-		return attributes;
+	public Map<String, Function<DLFileEntryMetadata, Object>> getAttributeGetters() {
+		return _attributeGetters;
 	}
 
 	@Override
-	public void setModelAttributes(Map<String, Object> attributes) {
-		String uuid = (String)attributes.get("uuid");
+	public Map<String, BiConsumer<DLFileEntryMetadata, Object>> getAttributeSetters() {
+		return _attributeSetters;
+	}
 
-		if (uuid != null) {
-			setUuid(uuid);
-		}
+	private static final Map<String, Function<DLFileEntryMetadata, Object>> _attributeGetters;
+	private static final Map<String, BiConsumer<DLFileEntryMetadata, Object>> _attributeSetters;
 
-		Long fileEntryMetadataId = (Long)attributes.get("fileEntryMetadataId");
+	static {
+		Map<String, Function<DLFileEntryMetadata, Object>> attributeGetters = new LinkedHashMap<String, Function<DLFileEntryMetadata, Object>>();
+		Map<String, BiConsumer<DLFileEntryMetadata, ?>> attributeSetters = new LinkedHashMap<String, BiConsumer<DLFileEntryMetadata, ?>>();
 
-		if (fileEntryMetadataId != null) {
-			setFileEntryMetadataId(fileEntryMetadataId);
-		}
+		attributeGetters.put("uuid", DLFileEntryMetadata::getUuid);
+		attributeSetters.put("uuid", (BiConsumer<DLFileEntryMetadata, String>)DLFileEntryMetadata::setUuid);
+		attributeGetters.put("fileEntryMetadataId", DLFileEntryMetadata::getFileEntryMetadataId);
+		attributeSetters.put("fileEntryMetadataId", (BiConsumer<DLFileEntryMetadata, Long>)DLFileEntryMetadata::setFileEntryMetadataId);
+		attributeGetters.put("companyId", DLFileEntryMetadata::getCompanyId);
+		attributeSetters.put("companyId", (BiConsumer<DLFileEntryMetadata, Long>)DLFileEntryMetadata::setCompanyId);
+		attributeGetters.put("DDMStorageId", DLFileEntryMetadata::getDDMStorageId);
+		attributeSetters.put("DDMStorageId", (BiConsumer<DLFileEntryMetadata, Long>)DLFileEntryMetadata::setDDMStorageId);
+		attributeGetters.put("DDMStructureId", DLFileEntryMetadata::getDDMStructureId);
+		attributeSetters.put("DDMStructureId", (BiConsumer<DLFileEntryMetadata, Long>)DLFileEntryMetadata::setDDMStructureId);
+		attributeGetters.put("fileEntryId", DLFileEntryMetadata::getFileEntryId);
+		attributeSetters.put("fileEntryId", (BiConsumer<DLFileEntryMetadata, Long>)DLFileEntryMetadata::setFileEntryId);
+		attributeGetters.put("fileVersionId", DLFileEntryMetadata::getFileVersionId);
+		attributeSetters.put("fileVersionId", (BiConsumer<DLFileEntryMetadata, Long>)DLFileEntryMetadata::setFileVersionId);
 
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
-		}
-
-		Long DDMStorageId = (Long)attributes.get("DDMStorageId");
-
-		if (DDMStorageId != null) {
-			setDDMStorageId(DDMStorageId);
-		}
-
-		Long DDMStructureId = (Long)attributes.get("DDMStructureId");
-
-		if (DDMStructureId != null) {
-			setDDMStructureId(DDMStructureId);
-		}
-
-		Long fileEntryId = (Long)attributes.get("fileEntryId");
-
-		if (fileEntryId != null) {
-			setFileEntryId(fileEntryId);
-		}
-
-		Long fileVersionId = (Long)attributes.get("fileVersionId");
-
-		if (fileVersionId != null) {
-			setFileVersionId(fileVersionId);
-		}
+		_attributeGetters = Collections.unmodifiableMap(attributeGetters);
+		_attributeSetters = Collections.unmodifiableMap((Map)attributeSetters);
 	}
 
 	@Override
@@ -480,72 +455,6 @@ public class DLFileEntryMetadataModelImpl extends BaseModelImpl<DLFileEntryMetad
 		dlFileEntryMetadataCacheModel.fileVersionId = getFileVersionId();
 
 		return dlFileEntryMetadataCacheModel;
-	}
-
-	@Override
-	public String toString() {
-		StringBundler sb = new StringBundler(15);
-
-		sb.append("{uuid=");
-		sb.append(getUuid());
-		sb.append(", fileEntryMetadataId=");
-		sb.append(getFileEntryMetadataId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
-		sb.append(", DDMStorageId=");
-		sb.append(getDDMStorageId());
-		sb.append(", DDMStructureId=");
-		sb.append(getDDMStructureId());
-		sb.append(", fileEntryId=");
-		sb.append(getFileEntryId());
-		sb.append(", fileVersionId=");
-		sb.append(getFileVersionId());
-		sb.append("}");
-
-		return sb.toString();
-	}
-
-	@Override
-	public String toXmlString() {
-		StringBundler sb = new StringBundler(25);
-
-		sb.append("<model><model-name>");
-		sb.append(
-			"com.liferay.document.library.kernel.model.DLFileEntryMetadata");
-		sb.append("</model-name>");
-
-		sb.append(
-			"<column><column-name>uuid</column-name><column-value><![CDATA[");
-		sb.append(getUuid());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>fileEntryMetadataId</column-name><column-value><![CDATA[");
-		sb.append(getFileEntryMetadataId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>DDMStorageId</column-name><column-value><![CDATA[");
-		sb.append(getDDMStorageId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>DDMStructureId</column-name><column-value><![CDATA[");
-		sb.append(getDDMStructureId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>fileEntryId</column-name><column-value><![CDATA[");
-		sb.append(getFileEntryId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>fileVersionId</column-name><column-value><![CDATA[");
-		sb.append(getFileVersionId());
-		sb.append("]]></column-value></column>");
-
-		sb.append("</model>");
-
-		return sb.toString();
 	}
 
 	private static final ClassLoader _classLoader = DLFileEntryMetadata.class.getClassLoader();

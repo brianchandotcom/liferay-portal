@@ -35,8 +35,12 @@ import java.io.Serializable;
 
 import java.sql.Types;
 
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * The base model implementation for the LVEntryLocalization service. Represents a row in the &quot;LVEntryLocalization&quot; database table, with each column mapped to a property of this class.
@@ -199,6 +203,166 @@ public class LVEntryLocalizationModelImpl extends BaseModelImpl<LVEntryLocalizat
 		if (content != null) {
 			setContent(content);
 		}
+	}
+
+	public Map<String, Function<LVEntryLocalization, Object>> getAttributeGetters() {
+		return _attributeGetters;
+	}
+
+	public Map<String, BiConsumer<LVEntryLocalization, Object>> getAttributeSetters() {
+		return _attributeSetters;
+	}
+
+	private static final Map<String, Function<LVEntryLocalization, Object>> _attributeGetters;
+	private static final Map<String, BiConsumer<LVEntryLocalization, Object>> _attributeSetters;
+
+	static {
+		Map<String, Function<LVEntryLocalization, Object>> attributeGetters = new LinkedHashMap<String, Function<LVEntryLocalization, Object>>();
+		Map<String, BiConsumer<LVEntryLocalization, ?>> attributeSetters = new LinkedHashMap<String, BiConsumer<LVEntryLocalization, ?>>();
+
+		attributeGetters.put(
+			"mvccVersion",
+			new Function<LVEntryLocalization, Object>() {
+
+				@Override
+				public Object apply(LVEntryLocalization lvEntryLocalization) {
+					return lvEntryLocalization.getMvccVersion();
+				}
+
+			});
+		attributeSetters.put(
+			"mvccVersion",
+			new BiConsumer<LVEntryLocalization, Object>() {
+
+				@Override
+				public void accept(LVEntryLocalization lvEntryLocalization, Object mvccVersion) {
+					lvEntryLocalization.setMvccVersion((Long)mvccVersion);
+				}
+
+			});
+		attributeGetters.put(
+			"headId",
+			new Function<LVEntryLocalization, Object>() {
+
+				@Override
+				public Object apply(LVEntryLocalization lvEntryLocalization) {
+					return lvEntryLocalization.getHeadId();
+				}
+
+			});
+		attributeSetters.put(
+			"headId",
+			new BiConsumer<LVEntryLocalization, Object>() {
+
+				@Override
+				public void accept(LVEntryLocalization lvEntryLocalization, Object headId) {
+					lvEntryLocalization.setHeadId((Long)headId);
+				}
+
+			});
+		attributeGetters.put(
+			"lvEntryLocalizationId",
+			new Function<LVEntryLocalization, Object>() {
+
+				@Override
+				public Object apply(LVEntryLocalization lvEntryLocalization) {
+					return lvEntryLocalization.getLvEntryLocalizationId();
+				}
+
+			});
+		attributeSetters.put(
+			"lvEntryLocalizationId",
+			new BiConsumer<LVEntryLocalization, Object>() {
+
+				@Override
+				public void accept(LVEntryLocalization lvEntryLocalization, Object lvEntryLocalizationId) {
+					lvEntryLocalization.setLvEntryLocalizationId((Long)lvEntryLocalizationId);
+				}
+
+			});
+		attributeGetters.put(
+			"lvEntryId",
+			new Function<LVEntryLocalization, Object>() {
+
+				@Override
+				public Object apply(LVEntryLocalization lvEntryLocalization) {
+					return lvEntryLocalization.getLvEntryId();
+				}
+
+			});
+		attributeSetters.put(
+			"lvEntryId",
+			new BiConsumer<LVEntryLocalization, Object>() {
+
+				@Override
+				public void accept(LVEntryLocalization lvEntryLocalization, Object lvEntryId) {
+					lvEntryLocalization.setLvEntryId((Long)lvEntryId);
+				}
+
+			});
+		attributeGetters.put(
+			"languageId",
+			new Function<LVEntryLocalization, Object>() {
+
+				@Override
+				public Object apply(LVEntryLocalization lvEntryLocalization) {
+					return lvEntryLocalization.getLanguageId();
+				}
+
+			});
+		attributeSetters.put(
+			"languageId",
+			new BiConsumer<LVEntryLocalization, Object>() {
+
+				@Override
+				public void accept(LVEntryLocalization lvEntryLocalization, Object languageId) {
+					lvEntryLocalization.setLanguageId((String)languageId);
+				}
+
+			});
+		attributeGetters.put(
+			"title",
+			new Function<LVEntryLocalization, Object>() {
+
+				@Override
+				public Object apply(LVEntryLocalization lvEntryLocalization) {
+					return lvEntryLocalization.getTitle();
+				}
+
+			});
+		attributeSetters.put(
+			"title",
+			new BiConsumer<LVEntryLocalization, Object>() {
+
+				@Override
+				public void accept(LVEntryLocalization lvEntryLocalization, Object title) {
+					lvEntryLocalization.setTitle((String)title);
+				}
+
+			});
+		attributeGetters.put(
+			"content",
+			new Function<LVEntryLocalization, Object>() {
+
+				@Override
+				public Object apply(LVEntryLocalization lvEntryLocalization) {
+					return lvEntryLocalization.getContent();
+				}
+
+			});
+		attributeSetters.put(
+			"content",
+			new BiConsumer<LVEntryLocalization, Object>() {
+
+				@Override
+				public void accept(LVEntryLocalization lvEntryLocalization, Object content) {
+					lvEntryLocalization.setContent((String)content);
+				}
+
+			});
+
+		_attributeGetters = Collections.unmodifiableMap(attributeGetters);
+		_attributeSetters = Collections.unmodifiableMap((Map)attributeSetters);
 	}
 
 	@Override

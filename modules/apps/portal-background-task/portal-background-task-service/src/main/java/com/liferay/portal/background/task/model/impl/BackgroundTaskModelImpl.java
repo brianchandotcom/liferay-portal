@@ -19,8 +19,6 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 
-import com.liferay.petra.string.StringBundler;
-
 import com.liferay.portal.background.task.model.BackgroundTask;
 import com.liferay.portal.background.task.model.BackgroundTaskModel;
 import com.liferay.portal.background.task.model.BackgroundTaskSoap;
@@ -42,10 +40,14 @@ import java.io.Serializable;
 import java.sql.Types;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * The base model implementation for the BackgroundTask service. Represents a row in the &quot;BackgroundTask&quot; database table, with each column mapped to a property of this class.
@@ -223,132 +225,57 @@ public class BackgroundTaskModelImpl extends BaseModelImpl<BackgroundTask>
 	}
 
 	@Override
-	public Map<String, Object> getModelAttributes() {
-		Map<String, Object> attributes = new HashMap<String, Object>();
-
-		attributes.put("mvccVersion", getMvccVersion());
-		attributes.put("backgroundTaskId", getBackgroundTaskId());
-		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
-		attributes.put("userId", getUserId());
-		attributes.put("userName", getUserName());
-		attributes.put("createDate", getCreateDate());
-		attributes.put("modifiedDate", getModifiedDate());
-		attributes.put("name", getName());
-		attributes.put("servletContextNames", getServletContextNames());
-		attributes.put("taskExecutorClassName", getTaskExecutorClassName());
-		attributes.put("taskContextMap", getTaskContextMap());
-		attributes.put("completed", isCompleted());
-		attributes.put("completionDate", getCompletionDate());
-		attributes.put("status", getStatus());
-		attributes.put("statusMessage", getStatusMessage());
-
-		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
-		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
-
-		return attributes;
+	public Map<String, Function<BackgroundTask, Object>> getAttributeGetters() {
+		return _attributeGetters;
 	}
 
 	@Override
-	public void setModelAttributes(Map<String, Object> attributes) {
-		Long mvccVersion = (Long)attributes.get("mvccVersion");
+	public Map<String, BiConsumer<BackgroundTask, Object>> getAttributeSetters() {
+		return _attributeSetters;
+	}
 
-		if (mvccVersion != null) {
-			setMvccVersion(mvccVersion);
-		}
+	private static final Map<String, Function<BackgroundTask, Object>> _attributeGetters;
+	private static final Map<String, BiConsumer<BackgroundTask, Object>> _attributeSetters;
 
-		Long backgroundTaskId = (Long)attributes.get("backgroundTaskId");
+	static {
+		Map<String, Function<BackgroundTask, Object>> attributeGetters = new LinkedHashMap<String, Function<BackgroundTask, Object>>();
+		Map<String, BiConsumer<BackgroundTask, ?>> attributeSetters = new LinkedHashMap<String, BiConsumer<BackgroundTask, ?>>();
 
-		if (backgroundTaskId != null) {
-			setBackgroundTaskId(backgroundTaskId);
-		}
+		attributeGetters.put("mvccVersion", BackgroundTask::getMvccVersion);
+		attributeSetters.put("mvccVersion", (BiConsumer<BackgroundTask, Long>)BackgroundTask::setMvccVersion);
+		attributeGetters.put("backgroundTaskId", BackgroundTask::getBackgroundTaskId);
+		attributeSetters.put("backgroundTaskId", (BiConsumer<BackgroundTask, Long>)BackgroundTask::setBackgroundTaskId);
+		attributeGetters.put("groupId", BackgroundTask::getGroupId);
+		attributeSetters.put("groupId", (BiConsumer<BackgroundTask, Long>)BackgroundTask::setGroupId);
+		attributeGetters.put("companyId", BackgroundTask::getCompanyId);
+		attributeSetters.put("companyId", (BiConsumer<BackgroundTask, Long>)BackgroundTask::setCompanyId);
+		attributeGetters.put("userId", BackgroundTask::getUserId);
+		attributeSetters.put("userId", (BiConsumer<BackgroundTask, Long>)BackgroundTask::setUserId);
+		attributeGetters.put("userName", BackgroundTask::getUserName);
+		attributeSetters.put("userName", (BiConsumer<BackgroundTask, String>)BackgroundTask::setUserName);
+		attributeGetters.put("createDate", BackgroundTask::getCreateDate);
+		attributeSetters.put("createDate", (BiConsumer<BackgroundTask, Date>)BackgroundTask::setCreateDate);
+		attributeGetters.put("modifiedDate", BackgroundTask::getModifiedDate);
+		attributeSetters.put("modifiedDate", (BiConsumer<BackgroundTask, Date>)BackgroundTask::setModifiedDate);
+		attributeGetters.put("name", BackgroundTask::getName);
+		attributeSetters.put("name", (BiConsumer<BackgroundTask, String>)BackgroundTask::setName);
+		attributeGetters.put("servletContextNames", BackgroundTask::getServletContextNames);
+		attributeSetters.put("servletContextNames", (BiConsumer<BackgroundTask, String>)BackgroundTask::setServletContextNames);
+		attributeGetters.put("taskExecutorClassName", BackgroundTask::getTaskExecutorClassName);
+		attributeSetters.put("taskExecutorClassName", (BiConsumer<BackgroundTask, String>)BackgroundTask::setTaskExecutorClassName);
+		attributeGetters.put("taskContextMap", BackgroundTask::getTaskContextMap);
+		attributeSetters.put("taskContextMap", (BiConsumer<BackgroundTask, Map<String, Serializable>>)BackgroundTask::setTaskContextMap);
+		attributeGetters.put("completed", BackgroundTask::getCompleted);
+		attributeSetters.put("completed", (BiConsumer<BackgroundTask, Boolean>)BackgroundTask::setCompleted);
+		attributeGetters.put("completionDate", BackgroundTask::getCompletionDate);
+		attributeSetters.put("completionDate", (BiConsumer<BackgroundTask, Date>)BackgroundTask::setCompletionDate);
+		attributeGetters.put("status", BackgroundTask::getStatus);
+		attributeSetters.put("status", (BiConsumer<BackgroundTask, Integer>)BackgroundTask::setStatus);
+		attributeGetters.put("statusMessage", BackgroundTask::getStatusMessage);
+		attributeSetters.put("statusMessage", (BiConsumer<BackgroundTask, String>)BackgroundTask::setStatusMessage);
 
-		Long groupId = (Long)attributes.get("groupId");
-
-		if (groupId != null) {
-			setGroupId(groupId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
-		}
-
-		Long userId = (Long)attributes.get("userId");
-
-		if (userId != null) {
-			setUserId(userId);
-		}
-
-		String userName = (String)attributes.get("userName");
-
-		if (userName != null) {
-			setUserName(userName);
-		}
-
-		Date createDate = (Date)attributes.get("createDate");
-
-		if (createDate != null) {
-			setCreateDate(createDate);
-		}
-
-		Date modifiedDate = (Date)attributes.get("modifiedDate");
-
-		if (modifiedDate != null) {
-			setModifiedDate(modifiedDate);
-		}
-
-		String name = (String)attributes.get("name");
-
-		if (name != null) {
-			setName(name);
-		}
-
-		String servletContextNames = (String)attributes.get(
-				"servletContextNames");
-
-		if (servletContextNames != null) {
-			setServletContextNames(servletContextNames);
-		}
-
-		String taskExecutorClassName = (String)attributes.get(
-				"taskExecutorClassName");
-
-		if (taskExecutorClassName != null) {
-			setTaskExecutorClassName(taskExecutorClassName);
-		}
-
-		Map<String, Serializable> taskContextMap = (Map<String, Serializable>)attributes.get(
-				"taskContextMap");
-
-		if (taskContextMap != null) {
-			setTaskContextMap(taskContextMap);
-		}
-
-		Boolean completed = (Boolean)attributes.get("completed");
-
-		if (completed != null) {
-			setCompleted(completed);
-		}
-
-		Date completionDate = (Date)attributes.get("completionDate");
-
-		if (completionDate != null) {
-			setCompletionDate(completionDate);
-		}
-
-		Integer status = (Integer)attributes.get("status");
-
-		if (status != null) {
-			setStatus(status);
-		}
-
-		String statusMessage = (String)attributes.get("statusMessage");
-
-		if (statusMessage != null) {
-			setStatusMessage(statusMessage);
-		}
+		_attributeGetters = Collections.unmodifiableMap(attributeGetters);
+		_attributeSetters = Collections.unmodifiableMap((Map)attributeSetters);
 	}
 
 	@JSON
@@ -873,125 +800,6 @@ public class BackgroundTaskModelImpl extends BaseModelImpl<BackgroundTask>
 		}
 
 		return backgroundTaskCacheModel;
-	}
-
-	@Override
-	public String toString() {
-		StringBundler sb = new StringBundler(33);
-
-		sb.append("{mvccVersion=");
-		sb.append(getMvccVersion());
-		sb.append(", backgroundTaskId=");
-		sb.append(getBackgroundTaskId());
-		sb.append(", groupId=");
-		sb.append(getGroupId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
-		sb.append(", userId=");
-		sb.append(getUserId());
-		sb.append(", userName=");
-		sb.append(getUserName());
-		sb.append(", createDate=");
-		sb.append(getCreateDate());
-		sb.append(", modifiedDate=");
-		sb.append(getModifiedDate());
-		sb.append(", name=");
-		sb.append(getName());
-		sb.append(", servletContextNames=");
-		sb.append(getServletContextNames());
-		sb.append(", taskExecutorClassName=");
-		sb.append(getTaskExecutorClassName());
-		sb.append(", taskContextMap=");
-		sb.append(getTaskContextMap());
-		sb.append(", completed=");
-		sb.append(isCompleted());
-		sb.append(", completionDate=");
-		sb.append(getCompletionDate());
-		sb.append(", status=");
-		sb.append(getStatus());
-		sb.append(", statusMessage=");
-		sb.append(getStatusMessage());
-		sb.append("}");
-
-		return sb.toString();
-	}
-
-	@Override
-	public String toXmlString() {
-		StringBundler sb = new StringBundler(52);
-
-		sb.append("<model><model-name>");
-		sb.append("com.liferay.portal.background.task.model.BackgroundTask");
-		sb.append("</model-name>");
-
-		sb.append(
-			"<column><column-name>mvccVersion</column-name><column-value><![CDATA[");
-		sb.append(getMvccVersion());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>backgroundTaskId</column-name><column-value><![CDATA[");
-		sb.append(getBackgroundTaskId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>groupId</column-name><column-value><![CDATA[");
-		sb.append(getGroupId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userId</column-name><column-value><![CDATA[");
-		sb.append(getUserId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userName</column-name><column-value><![CDATA[");
-		sb.append(getUserName());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>createDate</column-name><column-value><![CDATA[");
-		sb.append(getCreateDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>modifiedDate</column-name><column-value><![CDATA[");
-		sb.append(getModifiedDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>name</column-name><column-value><![CDATA[");
-		sb.append(getName());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>servletContextNames</column-name><column-value><![CDATA[");
-		sb.append(getServletContextNames());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>taskExecutorClassName</column-name><column-value><![CDATA[");
-		sb.append(getTaskExecutorClassName());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>taskContextMap</column-name><column-value><![CDATA[");
-		sb.append(getTaskContextMap());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>completed</column-name><column-value><![CDATA[");
-		sb.append(isCompleted());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>completionDate</column-name><column-value><![CDATA[");
-		sb.append(getCompletionDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>status</column-name><column-value><![CDATA[");
-		sb.append(getStatus());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>statusMessage</column-name><column-value><![CDATA[");
-		sb.append(getStatusMessage());
-		sb.append("]]></column-value></column>");
-
-		sb.append("</model>");
-
-		return sb.toString();
 	}
 
 	private static final ClassLoader _classLoader = BackgroundTask.class.getClassLoader();

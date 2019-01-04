@@ -39,8 +39,12 @@ import java.io.Serializable;
 import java.sql.Blob;
 import java.sql.Types;
 
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * The base model implementation for the DLContent service. Represents a row in the &quot;DLContent&quot; database table, with each column mapped to a property of this class.
@@ -144,73 +148,41 @@ public class DLContentModelImpl extends BaseModelImpl<DLContent>
 	}
 
 	@Override
-	public Map<String, Object> getModelAttributes() {
-		Map<String, Object> attributes = new HashMap<String, Object>();
-
-		attributes.put("contentId", getContentId());
-		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
-		attributes.put("repositoryId", getRepositoryId());
-		attributes.put("path", getPath());
-		attributes.put("version", getVersion());
-		attributes.put("data", getData());
-		attributes.put("size", getSize());
-
-		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
-		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
-
-		return attributes;
+	public Map<String, Function<DLContent, Object>> getAttributeGetters() {
+		return _attributeGetters;
 	}
 
 	@Override
-	public void setModelAttributes(Map<String, Object> attributes) {
-		Long contentId = (Long)attributes.get("contentId");
+	public Map<String, BiConsumer<DLContent, Object>> getAttributeSetters() {
+		return _attributeSetters;
+	}
 
-		if (contentId != null) {
-			setContentId(contentId);
-		}
+	private static final Map<String, Function<DLContent, Object>> _attributeGetters;
+	private static final Map<String, BiConsumer<DLContent, Object>> _attributeSetters;
 
-		Long groupId = (Long)attributes.get("groupId");
+	static {
+		Map<String, Function<DLContent, Object>> attributeGetters = new LinkedHashMap<String, Function<DLContent, Object>>();
+		Map<String, BiConsumer<DLContent, ?>> attributeSetters = new LinkedHashMap<String, BiConsumer<DLContent, ?>>();
 
-		if (groupId != null) {
-			setGroupId(groupId);
-		}
+		attributeGetters.put("contentId", DLContent::getContentId);
+		attributeSetters.put("contentId", (BiConsumer<DLContent, Long>)DLContent::setContentId);
+		attributeGetters.put("groupId", DLContent::getGroupId);
+		attributeSetters.put("groupId", (BiConsumer<DLContent, Long>)DLContent::setGroupId);
+		attributeGetters.put("companyId", DLContent::getCompanyId);
+		attributeSetters.put("companyId", (BiConsumer<DLContent, Long>)DLContent::setCompanyId);
+		attributeGetters.put("repositoryId", DLContent::getRepositoryId);
+		attributeSetters.put("repositoryId", (BiConsumer<DLContent, Long>)DLContent::setRepositoryId);
+		attributeGetters.put("path", DLContent::getPath);
+		attributeSetters.put("path", (BiConsumer<DLContent, String>)DLContent::setPath);
+		attributeGetters.put("version", DLContent::getVersion);
+		attributeSetters.put("version", (BiConsumer<DLContent, String>)DLContent::setVersion);
+		attributeGetters.put("data", DLContent::getData);
+		attributeSetters.put("data", (BiConsumer<DLContent, Blob>)DLContent::setData);
+		attributeGetters.put("size", DLContent::getSize);
+		attributeSetters.put("size", (BiConsumer<DLContent, Long>)DLContent::setSize);
 
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
-		}
-
-		Long repositoryId = (Long)attributes.get("repositoryId");
-
-		if (repositoryId != null) {
-			setRepositoryId(repositoryId);
-		}
-
-		String path = (String)attributes.get("path");
-
-		if (path != null) {
-			setPath(path);
-		}
-
-		String version = (String)attributes.get("version");
-
-		if (version != null) {
-			setVersion(version);
-		}
-
-		Blob data = (Blob)attributes.get("data");
-
-		if (data != null) {
-			setData(data);
-		}
-
-		Long size = (Long)attributes.get("size");
-
-		if (size != null) {
-			setSize(size);
-		}
+		_attributeGetters = Collections.unmodifiableMap(attributeGetters);
+		_attributeSetters = Collections.unmodifiableMap((Map)attributeSetters);
 	}
 
 	@Override

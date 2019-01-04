@@ -23,8 +23,6 @@ import com.liferay.asset.kernel.model.AssetCategoryPropertySoap;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 
-import com.liferay.petra.string.StringBundler;
-
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSON;
@@ -42,10 +40,14 @@ import java.io.Serializable;
 import java.sql.Types;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * The base model implementation for the AssetCategoryProperty service. Represents a row in the &quot;AssetCategoryProperty&quot; database table, with each column mapped to a property of this class.
@@ -202,80 +204,43 @@ public class AssetCategoryPropertyModelImpl extends BaseModelImpl<AssetCategoryP
 	}
 
 	@Override
-	public Map<String, Object> getModelAttributes() {
-		Map<String, Object> attributes = new HashMap<String, Object>();
-
-		attributes.put("categoryPropertyId", getCategoryPropertyId());
-		attributes.put("companyId", getCompanyId());
-		attributes.put("userId", getUserId());
-		attributes.put("userName", getUserName());
-		attributes.put("createDate", getCreateDate());
-		attributes.put("modifiedDate", getModifiedDate());
-		attributes.put("categoryId", getCategoryId());
-		attributes.put("key", getKey());
-		attributes.put("value", getValue());
-
-		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
-		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
-
-		return attributes;
+	public Map<String, Function<AssetCategoryProperty, Object>> getAttributeGetters() {
+		return _attributeGetters;
 	}
 
 	@Override
-	public void setModelAttributes(Map<String, Object> attributes) {
-		Long categoryPropertyId = (Long)attributes.get("categoryPropertyId");
+	public Map<String, BiConsumer<AssetCategoryProperty, Object>> getAttributeSetters() {
+		return _attributeSetters;
+	}
 
-		if (categoryPropertyId != null) {
-			setCategoryPropertyId(categoryPropertyId);
-		}
+	private static final Map<String, Function<AssetCategoryProperty, Object>> _attributeGetters;
+	private static final Map<String, BiConsumer<AssetCategoryProperty, Object>> _attributeSetters;
 
-		Long companyId = (Long)attributes.get("companyId");
+	static {
+		Map<String, Function<AssetCategoryProperty, Object>> attributeGetters = new LinkedHashMap<String, Function<AssetCategoryProperty, Object>>();
+		Map<String, BiConsumer<AssetCategoryProperty, ?>> attributeSetters = new LinkedHashMap<String, BiConsumer<AssetCategoryProperty, ?>>();
 
-		if (companyId != null) {
-			setCompanyId(companyId);
-		}
+		attributeGetters.put("categoryPropertyId", AssetCategoryProperty::getCategoryPropertyId);
+		attributeSetters.put("categoryPropertyId", (BiConsumer<AssetCategoryProperty, Long>)AssetCategoryProperty::setCategoryPropertyId);
+		attributeGetters.put("companyId", AssetCategoryProperty::getCompanyId);
+		attributeSetters.put("companyId", (BiConsumer<AssetCategoryProperty, Long>)AssetCategoryProperty::setCompanyId);
+		attributeGetters.put("userId", AssetCategoryProperty::getUserId);
+		attributeSetters.put("userId", (BiConsumer<AssetCategoryProperty, Long>)AssetCategoryProperty::setUserId);
+		attributeGetters.put("userName", AssetCategoryProperty::getUserName);
+		attributeSetters.put("userName", (BiConsumer<AssetCategoryProperty, String>)AssetCategoryProperty::setUserName);
+		attributeGetters.put("createDate", AssetCategoryProperty::getCreateDate);
+		attributeSetters.put("createDate", (BiConsumer<AssetCategoryProperty, Date>)AssetCategoryProperty::setCreateDate);
+		attributeGetters.put("modifiedDate", AssetCategoryProperty::getModifiedDate);
+		attributeSetters.put("modifiedDate", (BiConsumer<AssetCategoryProperty, Date>)AssetCategoryProperty::setModifiedDate);
+		attributeGetters.put("categoryId", AssetCategoryProperty::getCategoryId);
+		attributeSetters.put("categoryId", (BiConsumer<AssetCategoryProperty, Long>)AssetCategoryProperty::setCategoryId);
+		attributeGetters.put("key", AssetCategoryProperty::getKey);
+		attributeSetters.put("key", (BiConsumer<AssetCategoryProperty, String>)AssetCategoryProperty::setKey);
+		attributeGetters.put("value", AssetCategoryProperty::getValue);
+		attributeSetters.put("value", (BiConsumer<AssetCategoryProperty, String>)AssetCategoryProperty::setValue);
 
-		Long userId = (Long)attributes.get("userId");
-
-		if (userId != null) {
-			setUserId(userId);
-		}
-
-		String userName = (String)attributes.get("userName");
-
-		if (userName != null) {
-			setUserName(userName);
-		}
-
-		Date createDate = (Date)attributes.get("createDate");
-
-		if (createDate != null) {
-			setCreateDate(createDate);
-		}
-
-		Date modifiedDate = (Date)attributes.get("modifiedDate");
-
-		if (modifiedDate != null) {
-			setModifiedDate(modifiedDate);
-		}
-
-		Long categoryId = (Long)attributes.get("categoryId");
-
-		if (categoryId != null) {
-			setCategoryId(categoryId);
-		}
-
-		String key = (String)attributes.get("key");
-
-		if (key != null) {
-			setKey(key);
-		}
-
-		String value = (String)attributes.get("value");
-
-		if (value != null) {
-			setValue(value);
-		}
+		_attributeGetters = Collections.unmodifiableMap(attributeGetters);
+		_attributeSetters = Collections.unmodifiableMap((Map)attributeSetters);
 	}
 
 	@JSON
@@ -618,83 +583,6 @@ public class AssetCategoryPropertyModelImpl extends BaseModelImpl<AssetCategoryP
 		}
 
 		return assetCategoryPropertyCacheModel;
-	}
-
-	@Override
-	public String toString() {
-		StringBundler sb = new StringBundler(19);
-
-		sb.append("{categoryPropertyId=");
-		sb.append(getCategoryPropertyId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
-		sb.append(", userId=");
-		sb.append(getUserId());
-		sb.append(", userName=");
-		sb.append(getUserName());
-		sb.append(", createDate=");
-		sb.append(getCreateDate());
-		sb.append(", modifiedDate=");
-		sb.append(getModifiedDate());
-		sb.append(", categoryId=");
-		sb.append(getCategoryId());
-		sb.append(", key=");
-		sb.append(getKey());
-		sb.append(", value=");
-		sb.append(getValue());
-		sb.append("}");
-
-		return sb.toString();
-	}
-
-	@Override
-	public String toXmlString() {
-		StringBundler sb = new StringBundler(31);
-
-		sb.append("<model><model-name>");
-		sb.append("com.liferay.asset.kernel.model.AssetCategoryProperty");
-		sb.append("</model-name>");
-
-		sb.append(
-			"<column><column-name>categoryPropertyId</column-name><column-value><![CDATA[");
-		sb.append(getCategoryPropertyId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userId</column-name><column-value><![CDATA[");
-		sb.append(getUserId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userName</column-name><column-value><![CDATA[");
-		sb.append(getUserName());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>createDate</column-name><column-value><![CDATA[");
-		sb.append(getCreateDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>modifiedDate</column-name><column-value><![CDATA[");
-		sb.append(getModifiedDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>categoryId</column-name><column-value><![CDATA[");
-		sb.append(getCategoryId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>key</column-name><column-value><![CDATA[");
-		sb.append(getKey());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>value</column-name><column-value><![CDATA[");
-		sb.append(getValue());
-		sb.append("]]></column-value></column>");
-
-		sb.append("</model>");
-
-		return sb.toString();
 	}
 
 	private static final ClassLoader _classLoader = AssetCategoryProperty.class.getClassLoader();

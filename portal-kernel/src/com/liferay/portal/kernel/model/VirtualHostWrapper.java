@@ -18,9 +18,6 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
-import java.util.HashMap;
-import java.util.Map;
-
 /**
  * <p>
  * This class is a wrapper for {@link VirtualHost}.
@@ -35,52 +32,6 @@ public class VirtualHostWrapper extends BaseModelWrapper<VirtualHost>
 	implements VirtualHost, ModelWrapper<VirtualHost> {
 	public VirtualHostWrapper(VirtualHost virtualHost) {
 		super(virtualHost);
-	}
-
-	@Override
-	public Map<String, Object> getModelAttributes() {
-		Map<String, Object> attributes = new HashMap<String, Object>();
-
-		attributes.put("mvccVersion", getMvccVersion());
-		attributes.put("virtualHostId", getVirtualHostId());
-		attributes.put("companyId", getCompanyId());
-		attributes.put("layoutSetId", getLayoutSetId());
-		attributes.put("hostname", getHostname());
-
-		return attributes;
-	}
-
-	@Override
-	public void setModelAttributes(Map<String, Object> attributes) {
-		Long mvccVersion = (Long)attributes.get("mvccVersion");
-
-		if (mvccVersion != null) {
-			setMvccVersion(mvccVersion);
-		}
-
-		Long virtualHostId = (Long)attributes.get("virtualHostId");
-
-		if (virtualHostId != null) {
-			setVirtualHostId(virtualHostId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
-		}
-
-		Long layoutSetId = (Long)attributes.get("layoutSetId");
-
-		if (layoutSetId != null) {
-			setLayoutSetId(layoutSetId);
-		}
-
-		String hostname = (String)attributes.get("hostname");
-
-		if (hostname != null) {
-			setHostname(hostname);
-		}
 	}
 
 	/**

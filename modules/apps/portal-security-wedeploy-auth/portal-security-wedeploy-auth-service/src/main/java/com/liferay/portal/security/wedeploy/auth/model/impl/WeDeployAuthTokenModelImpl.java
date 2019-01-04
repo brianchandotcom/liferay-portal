@@ -19,8 +19,6 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 
-import com.liferay.petra.string.StringBundler;
-
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.CacheModel;
@@ -38,9 +36,13 @@ import java.io.Serializable;
 
 import java.sql.Types;
 
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * The base model implementation for the WeDeployAuthToken service. Represents a row in the &quot;WeDeployAuth_WeDeployAuthToken&quot; database table, with each column mapped to a property of this class.
@@ -146,80 +148,43 @@ public class WeDeployAuthTokenModelImpl extends BaseModelImpl<WeDeployAuthToken>
 	}
 
 	@Override
-	public Map<String, Object> getModelAttributes() {
-		Map<String, Object> attributes = new HashMap<String, Object>();
-
-		attributes.put("weDeployAuthTokenId", getWeDeployAuthTokenId());
-		attributes.put("companyId", getCompanyId());
-		attributes.put("userId", getUserId());
-		attributes.put("userName", getUserName());
-		attributes.put("createDate", getCreateDate());
-		attributes.put("modifiedDate", getModifiedDate());
-		attributes.put("clientId", getClientId());
-		attributes.put("token", getToken());
-		attributes.put("type", getType());
-
-		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
-		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
-
-		return attributes;
+	public Map<String, Function<WeDeployAuthToken, Object>> getAttributeGetters() {
+		return _attributeGetters;
 	}
 
 	@Override
-	public void setModelAttributes(Map<String, Object> attributes) {
-		Long weDeployAuthTokenId = (Long)attributes.get("weDeployAuthTokenId");
+	public Map<String, BiConsumer<WeDeployAuthToken, Object>> getAttributeSetters() {
+		return _attributeSetters;
+	}
 
-		if (weDeployAuthTokenId != null) {
-			setWeDeployAuthTokenId(weDeployAuthTokenId);
-		}
+	private static final Map<String, Function<WeDeployAuthToken, Object>> _attributeGetters;
+	private static final Map<String, BiConsumer<WeDeployAuthToken, Object>> _attributeSetters;
 
-		Long companyId = (Long)attributes.get("companyId");
+	static {
+		Map<String, Function<WeDeployAuthToken, Object>> attributeGetters = new LinkedHashMap<String, Function<WeDeployAuthToken, Object>>();
+		Map<String, BiConsumer<WeDeployAuthToken, ?>> attributeSetters = new LinkedHashMap<String, BiConsumer<WeDeployAuthToken, ?>>();
 
-		if (companyId != null) {
-			setCompanyId(companyId);
-		}
+		attributeGetters.put("weDeployAuthTokenId", WeDeployAuthToken::getWeDeployAuthTokenId);
+		attributeSetters.put("weDeployAuthTokenId", (BiConsumer<WeDeployAuthToken, Long>)WeDeployAuthToken::setWeDeployAuthTokenId);
+		attributeGetters.put("companyId", WeDeployAuthToken::getCompanyId);
+		attributeSetters.put("companyId", (BiConsumer<WeDeployAuthToken, Long>)WeDeployAuthToken::setCompanyId);
+		attributeGetters.put("userId", WeDeployAuthToken::getUserId);
+		attributeSetters.put("userId", (BiConsumer<WeDeployAuthToken, Long>)WeDeployAuthToken::setUserId);
+		attributeGetters.put("userName", WeDeployAuthToken::getUserName);
+		attributeSetters.put("userName", (BiConsumer<WeDeployAuthToken, String>)WeDeployAuthToken::setUserName);
+		attributeGetters.put("createDate", WeDeployAuthToken::getCreateDate);
+		attributeSetters.put("createDate", (BiConsumer<WeDeployAuthToken, Date>)WeDeployAuthToken::setCreateDate);
+		attributeGetters.put("modifiedDate", WeDeployAuthToken::getModifiedDate);
+		attributeSetters.put("modifiedDate", (BiConsumer<WeDeployAuthToken, Date>)WeDeployAuthToken::setModifiedDate);
+		attributeGetters.put("clientId", WeDeployAuthToken::getClientId);
+		attributeSetters.put("clientId", (BiConsumer<WeDeployAuthToken, String>)WeDeployAuthToken::setClientId);
+		attributeGetters.put("token", WeDeployAuthToken::getToken);
+		attributeSetters.put("token", (BiConsumer<WeDeployAuthToken, String>)WeDeployAuthToken::setToken);
+		attributeGetters.put("type", WeDeployAuthToken::getType);
+		attributeSetters.put("type", (BiConsumer<WeDeployAuthToken, Integer>)WeDeployAuthToken::setType);
 
-		Long userId = (Long)attributes.get("userId");
-
-		if (userId != null) {
-			setUserId(userId);
-		}
-
-		String userName = (String)attributes.get("userName");
-
-		if (userName != null) {
-			setUserName(userName);
-		}
-
-		Date createDate = (Date)attributes.get("createDate");
-
-		if (createDate != null) {
-			setCreateDate(createDate);
-		}
-
-		Date modifiedDate = (Date)attributes.get("modifiedDate");
-
-		if (modifiedDate != null) {
-			setModifiedDate(modifiedDate);
-		}
-
-		String clientId = (String)attributes.get("clientId");
-
-		if (clientId != null) {
-			setClientId(clientId);
-		}
-
-		String token = (String)attributes.get("token");
-
-		if (token != null) {
-			setToken(token);
-		}
-
-		Integer type = (Integer)attributes.get("type");
-
-		if (type != null) {
-			setType(type);
-		}
+		_attributeGetters = Collections.unmodifiableMap(attributeGetters);
+		_attributeSetters = Collections.unmodifiableMap((Map)attributeSetters);
 	}
 
 	@Override
@@ -551,84 +516,6 @@ public class WeDeployAuthTokenModelImpl extends BaseModelImpl<WeDeployAuthToken>
 		weDeployAuthTokenCacheModel.type = getType();
 
 		return weDeployAuthTokenCacheModel;
-	}
-
-	@Override
-	public String toString() {
-		StringBundler sb = new StringBundler(19);
-
-		sb.append("{weDeployAuthTokenId=");
-		sb.append(getWeDeployAuthTokenId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
-		sb.append(", userId=");
-		sb.append(getUserId());
-		sb.append(", userName=");
-		sb.append(getUserName());
-		sb.append(", createDate=");
-		sb.append(getCreateDate());
-		sb.append(", modifiedDate=");
-		sb.append(getModifiedDate());
-		sb.append(", clientId=");
-		sb.append(getClientId());
-		sb.append(", token=");
-		sb.append(getToken());
-		sb.append(", type=");
-		sb.append(getType());
-		sb.append("}");
-
-		return sb.toString();
-	}
-
-	@Override
-	public String toXmlString() {
-		StringBundler sb = new StringBundler(31);
-
-		sb.append("<model><model-name>");
-		sb.append(
-			"com.liferay.portal.security.wedeploy.auth.model.WeDeployAuthToken");
-		sb.append("</model-name>");
-
-		sb.append(
-			"<column><column-name>weDeployAuthTokenId</column-name><column-value><![CDATA[");
-		sb.append(getWeDeployAuthTokenId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userId</column-name><column-value><![CDATA[");
-		sb.append(getUserId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userName</column-name><column-value><![CDATA[");
-		sb.append(getUserName());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>createDate</column-name><column-value><![CDATA[");
-		sb.append(getCreateDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>modifiedDate</column-name><column-value><![CDATA[");
-		sb.append(getModifiedDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>clientId</column-name><column-value><![CDATA[");
-		sb.append(getClientId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>token</column-name><column-value><![CDATA[");
-		sb.append(getToken());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>type</column-name><column-value><![CDATA[");
-		sb.append(getType());
-		sb.append("]]></column-value></column>");
-
-		sb.append("</model>");
-
-		return sb.toString();
 	}
 
 	private static final ClassLoader _classLoader = WeDeployAuthToken.class.getClassLoader();

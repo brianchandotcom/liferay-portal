@@ -19,8 +19,6 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 
-import com.liferay.petra.string.StringBundler;
-
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.CacheModel;
@@ -38,9 +36,13 @@ import java.io.Serializable;
 
 import java.sql.Types;
 
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * The base model implementation for the KaleoTransition service. Represents a row in the &quot;KaleoTransition&quot; database table, with each column mapped to a property of this class.
@@ -162,132 +164,57 @@ public class KaleoTransitionModelImpl extends BaseModelImpl<KaleoTransition>
 	}
 
 	@Override
-	public Map<String, Object> getModelAttributes() {
-		Map<String, Object> attributes = new HashMap<String, Object>();
-
-		attributes.put("kaleoTransitionId", getKaleoTransitionId());
-		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
-		attributes.put("userId", getUserId());
-		attributes.put("userName", getUserName());
-		attributes.put("createDate", getCreateDate());
-		attributes.put("modifiedDate", getModifiedDate());
-		attributes.put("kaleoDefinitionVersionId", getKaleoDefinitionVersionId());
-		attributes.put("kaleoNodeId", getKaleoNodeId());
-		attributes.put("name", getName());
-		attributes.put("description", getDescription());
-		attributes.put("sourceKaleoNodeId", getSourceKaleoNodeId());
-		attributes.put("sourceKaleoNodeName", getSourceKaleoNodeName());
-		attributes.put("targetKaleoNodeId", getTargetKaleoNodeId());
-		attributes.put("targetKaleoNodeName", getTargetKaleoNodeName());
-		attributes.put("defaultTransition", isDefaultTransition());
-
-		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
-		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
-
-		return attributes;
+	public Map<String, Function<KaleoTransition, Object>> getAttributeGetters() {
+		return _attributeGetters;
 	}
 
 	@Override
-	public void setModelAttributes(Map<String, Object> attributes) {
-		Long kaleoTransitionId = (Long)attributes.get("kaleoTransitionId");
+	public Map<String, BiConsumer<KaleoTransition, Object>> getAttributeSetters() {
+		return _attributeSetters;
+	}
 
-		if (kaleoTransitionId != null) {
-			setKaleoTransitionId(kaleoTransitionId);
-		}
+	private static final Map<String, Function<KaleoTransition, Object>> _attributeGetters;
+	private static final Map<String, BiConsumer<KaleoTransition, Object>> _attributeSetters;
 
-		Long groupId = (Long)attributes.get("groupId");
+	static {
+		Map<String, Function<KaleoTransition, Object>> attributeGetters = new LinkedHashMap<String, Function<KaleoTransition, Object>>();
+		Map<String, BiConsumer<KaleoTransition, ?>> attributeSetters = new LinkedHashMap<String, BiConsumer<KaleoTransition, ?>>();
 
-		if (groupId != null) {
-			setGroupId(groupId);
-		}
+		attributeGetters.put("kaleoTransitionId", KaleoTransition::getKaleoTransitionId);
+		attributeSetters.put("kaleoTransitionId", (BiConsumer<KaleoTransition, Long>)KaleoTransition::setKaleoTransitionId);
+		attributeGetters.put("groupId", KaleoTransition::getGroupId);
+		attributeSetters.put("groupId", (BiConsumer<KaleoTransition, Long>)KaleoTransition::setGroupId);
+		attributeGetters.put("companyId", KaleoTransition::getCompanyId);
+		attributeSetters.put("companyId", (BiConsumer<KaleoTransition, Long>)KaleoTransition::setCompanyId);
+		attributeGetters.put("userId", KaleoTransition::getUserId);
+		attributeSetters.put("userId", (BiConsumer<KaleoTransition, Long>)KaleoTransition::setUserId);
+		attributeGetters.put("userName", KaleoTransition::getUserName);
+		attributeSetters.put("userName", (BiConsumer<KaleoTransition, String>)KaleoTransition::setUserName);
+		attributeGetters.put("createDate", KaleoTransition::getCreateDate);
+		attributeSetters.put("createDate", (BiConsumer<KaleoTransition, Date>)KaleoTransition::setCreateDate);
+		attributeGetters.put("modifiedDate", KaleoTransition::getModifiedDate);
+		attributeSetters.put("modifiedDate", (BiConsumer<KaleoTransition, Date>)KaleoTransition::setModifiedDate);
+		attributeGetters.put("kaleoDefinitionVersionId", KaleoTransition::getKaleoDefinitionVersionId);
+		attributeSetters.put("kaleoDefinitionVersionId", (BiConsumer<KaleoTransition, Long>)KaleoTransition::setKaleoDefinitionVersionId);
+		attributeGetters.put("kaleoNodeId", KaleoTransition::getKaleoNodeId);
+		attributeSetters.put("kaleoNodeId", (BiConsumer<KaleoTransition, Long>)KaleoTransition::setKaleoNodeId);
+		attributeGetters.put("name", KaleoTransition::getName);
+		attributeSetters.put("name", (BiConsumer<KaleoTransition, String>)KaleoTransition::setName);
+		attributeGetters.put("description", KaleoTransition::getDescription);
+		attributeSetters.put("description", (BiConsumer<KaleoTransition, String>)KaleoTransition::setDescription);
+		attributeGetters.put("sourceKaleoNodeId", KaleoTransition::getSourceKaleoNodeId);
+		attributeSetters.put("sourceKaleoNodeId", (BiConsumer<KaleoTransition, Long>)KaleoTransition::setSourceKaleoNodeId);
+		attributeGetters.put("sourceKaleoNodeName", KaleoTransition::getSourceKaleoNodeName);
+		attributeSetters.put("sourceKaleoNodeName", (BiConsumer<KaleoTransition, String>)KaleoTransition::setSourceKaleoNodeName);
+		attributeGetters.put("targetKaleoNodeId", KaleoTransition::getTargetKaleoNodeId);
+		attributeSetters.put("targetKaleoNodeId", (BiConsumer<KaleoTransition, Long>)KaleoTransition::setTargetKaleoNodeId);
+		attributeGetters.put("targetKaleoNodeName", KaleoTransition::getTargetKaleoNodeName);
+		attributeSetters.put("targetKaleoNodeName", (BiConsumer<KaleoTransition, String>)KaleoTransition::setTargetKaleoNodeName);
+		attributeGetters.put("defaultTransition", KaleoTransition::getDefaultTransition);
+		attributeSetters.put("defaultTransition", (BiConsumer<KaleoTransition, Boolean>)KaleoTransition::setDefaultTransition);
 
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
-		}
-
-		Long userId = (Long)attributes.get("userId");
-
-		if (userId != null) {
-			setUserId(userId);
-		}
-
-		String userName = (String)attributes.get("userName");
-
-		if (userName != null) {
-			setUserName(userName);
-		}
-
-		Date createDate = (Date)attributes.get("createDate");
-
-		if (createDate != null) {
-			setCreateDate(createDate);
-		}
-
-		Date modifiedDate = (Date)attributes.get("modifiedDate");
-
-		if (modifiedDate != null) {
-			setModifiedDate(modifiedDate);
-		}
-
-		Long kaleoDefinitionVersionId = (Long)attributes.get(
-				"kaleoDefinitionVersionId");
-
-		if (kaleoDefinitionVersionId != null) {
-			setKaleoDefinitionVersionId(kaleoDefinitionVersionId);
-		}
-
-		Long kaleoNodeId = (Long)attributes.get("kaleoNodeId");
-
-		if (kaleoNodeId != null) {
-			setKaleoNodeId(kaleoNodeId);
-		}
-
-		String name = (String)attributes.get("name");
-
-		if (name != null) {
-			setName(name);
-		}
-
-		String description = (String)attributes.get("description");
-
-		if (description != null) {
-			setDescription(description);
-		}
-
-		Long sourceKaleoNodeId = (Long)attributes.get("sourceKaleoNodeId");
-
-		if (sourceKaleoNodeId != null) {
-			setSourceKaleoNodeId(sourceKaleoNodeId);
-		}
-
-		String sourceKaleoNodeName = (String)attributes.get(
-				"sourceKaleoNodeName");
-
-		if (sourceKaleoNodeName != null) {
-			setSourceKaleoNodeName(sourceKaleoNodeName);
-		}
-
-		Long targetKaleoNodeId = (Long)attributes.get("targetKaleoNodeId");
-
-		if (targetKaleoNodeId != null) {
-			setTargetKaleoNodeId(targetKaleoNodeId);
-		}
-
-		String targetKaleoNodeName = (String)attributes.get(
-				"targetKaleoNodeName");
-
-		if (targetKaleoNodeName != null) {
-			setTargetKaleoNodeName(targetKaleoNodeName);
-		}
-
-		Boolean defaultTransition = (Boolean)attributes.get("defaultTransition");
-
-		if (defaultTransition != null) {
-			setDefaultTransition(defaultTransition);
-		}
+		_attributeGetters = Collections.unmodifiableMap(attributeGetters);
+		_attributeSetters = Collections.unmodifiableMap((Map)attributeSetters);
 	}
 
 	@Override
@@ -783,125 +710,6 @@ public class KaleoTransitionModelImpl extends BaseModelImpl<KaleoTransition>
 		kaleoTransitionCacheModel.defaultTransition = isDefaultTransition();
 
 		return kaleoTransitionCacheModel;
-	}
-
-	@Override
-	public String toString() {
-		StringBundler sb = new StringBundler(33);
-
-		sb.append("{kaleoTransitionId=");
-		sb.append(getKaleoTransitionId());
-		sb.append(", groupId=");
-		sb.append(getGroupId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
-		sb.append(", userId=");
-		sb.append(getUserId());
-		sb.append(", userName=");
-		sb.append(getUserName());
-		sb.append(", createDate=");
-		sb.append(getCreateDate());
-		sb.append(", modifiedDate=");
-		sb.append(getModifiedDate());
-		sb.append(", kaleoDefinitionVersionId=");
-		sb.append(getKaleoDefinitionVersionId());
-		sb.append(", kaleoNodeId=");
-		sb.append(getKaleoNodeId());
-		sb.append(", name=");
-		sb.append(getName());
-		sb.append(", description=");
-		sb.append(getDescription());
-		sb.append(", sourceKaleoNodeId=");
-		sb.append(getSourceKaleoNodeId());
-		sb.append(", sourceKaleoNodeName=");
-		sb.append(getSourceKaleoNodeName());
-		sb.append(", targetKaleoNodeId=");
-		sb.append(getTargetKaleoNodeId());
-		sb.append(", targetKaleoNodeName=");
-		sb.append(getTargetKaleoNodeName());
-		sb.append(", defaultTransition=");
-		sb.append(isDefaultTransition());
-		sb.append("}");
-
-		return sb.toString();
-	}
-
-	@Override
-	public String toXmlString() {
-		StringBundler sb = new StringBundler(52);
-
-		sb.append("<model><model-name>");
-		sb.append("com.liferay.portal.workflow.kaleo.model.KaleoTransition");
-		sb.append("</model-name>");
-
-		sb.append(
-			"<column><column-name>kaleoTransitionId</column-name><column-value><![CDATA[");
-		sb.append(getKaleoTransitionId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>groupId</column-name><column-value><![CDATA[");
-		sb.append(getGroupId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userId</column-name><column-value><![CDATA[");
-		sb.append(getUserId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userName</column-name><column-value><![CDATA[");
-		sb.append(getUserName());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>createDate</column-name><column-value><![CDATA[");
-		sb.append(getCreateDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>modifiedDate</column-name><column-value><![CDATA[");
-		sb.append(getModifiedDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>kaleoDefinitionVersionId</column-name><column-value><![CDATA[");
-		sb.append(getKaleoDefinitionVersionId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>kaleoNodeId</column-name><column-value><![CDATA[");
-		sb.append(getKaleoNodeId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>name</column-name><column-value><![CDATA[");
-		sb.append(getName());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>description</column-name><column-value><![CDATA[");
-		sb.append(getDescription());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>sourceKaleoNodeId</column-name><column-value><![CDATA[");
-		sb.append(getSourceKaleoNodeId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>sourceKaleoNodeName</column-name><column-value><![CDATA[");
-		sb.append(getSourceKaleoNodeName());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>targetKaleoNodeId</column-name><column-value><![CDATA[");
-		sb.append(getTargetKaleoNodeId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>targetKaleoNodeName</column-name><column-value><![CDATA[");
-		sb.append(getTargetKaleoNodeName());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>defaultTransition</column-name><column-value><![CDATA[");
-		sb.append(isDefaultTransition());
-		sb.append("]]></column-value></column>");
-
-		sb.append("</model>");
-
-		return sb.toString();
 	}
 
 	private static final ClassLoader _classLoader = KaleoTransition.class.getClassLoader();

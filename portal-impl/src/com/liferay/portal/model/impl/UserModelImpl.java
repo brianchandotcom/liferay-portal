@@ -21,8 +21,6 @@ import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 
-import com.liferay.petra.string.StringBundler;
-
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSON;
@@ -43,10 +41,14 @@ import java.io.Serializable;
 import java.sql.Types;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * The base model implementation for the User service. Represents a row in the &quot;User_&quot; database table, with each column mapped to a property of this class.
@@ -357,324 +359,111 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 	}
 
 	@Override
-	public Map<String, Object> getModelAttributes() {
-		Map<String, Object> attributes = new HashMap<String, Object>();
-
-		attributes.put("mvccVersion", getMvccVersion());
-		attributes.put("uuid", getUuid());
-		attributes.put("externalReferenceCode", getExternalReferenceCode());
-		attributes.put("userId", getUserId());
-		attributes.put("companyId", getCompanyId());
-		attributes.put("createDate", getCreateDate());
-		attributes.put("modifiedDate", getModifiedDate());
-		attributes.put("defaultUser", isDefaultUser());
-		attributes.put("contactId", getContactId());
-		attributes.put("password", getPassword());
-		attributes.put("passwordEncrypted", isPasswordEncrypted());
-		attributes.put("passwordReset", isPasswordReset());
-		attributes.put("passwordModifiedDate", getPasswordModifiedDate());
-		attributes.put("digest", getDigest());
-		attributes.put("reminderQueryQuestion", getReminderQueryQuestion());
-		attributes.put("reminderQueryAnswer", getReminderQueryAnswer());
-		attributes.put("graceLoginCount", getGraceLoginCount());
-		attributes.put("screenName", getScreenName());
-		attributes.put("emailAddress", getEmailAddress());
-		attributes.put("facebookId", getFacebookId());
-		attributes.put("googleUserId", getGoogleUserId());
-		attributes.put("ldapServerId", getLdapServerId());
-		attributes.put("openId", getOpenId());
-		attributes.put("portraitId", getPortraitId());
-		attributes.put("languageId", getLanguageId());
-		attributes.put("timeZoneId", getTimeZoneId());
-		attributes.put("greeting", getGreeting());
-		attributes.put("comments", getComments());
-		attributes.put("firstName", getFirstName());
-		attributes.put("middleName", getMiddleName());
-		attributes.put("lastName", getLastName());
-		attributes.put("jobTitle", getJobTitle());
-		attributes.put("loginDate", getLoginDate());
-		attributes.put("loginIP", getLoginIP());
-		attributes.put("lastLoginDate", getLastLoginDate());
-		attributes.put("lastLoginIP", getLastLoginIP());
-		attributes.put("lastFailedLoginDate", getLastFailedLoginDate());
-		attributes.put("failedLoginAttempts", getFailedLoginAttempts());
-		attributes.put("lockout", isLockout());
-		attributes.put("lockoutDate", getLockoutDate());
-		attributes.put("agreedToTermsOfUse", isAgreedToTermsOfUse());
-		attributes.put("emailAddressVerified", isEmailAddressVerified());
-		attributes.put("status", getStatus());
-
-		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
-		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
-
-		return attributes;
+	public Map<String, Function<User, Object>> getAttributeGetters() {
+		return _attributeGetters;
 	}
 
 	@Override
-	public void setModelAttributes(Map<String, Object> attributes) {
-		Long mvccVersion = (Long)attributes.get("mvccVersion");
-
-		if (mvccVersion != null) {
-			setMvccVersion(mvccVersion);
-		}
-
-		String uuid = (String)attributes.get("uuid");
-
-		if (uuid != null) {
-			setUuid(uuid);
-		}
-
-		String externalReferenceCode = (String)attributes.get(
-				"externalReferenceCode");
-
-		if (externalReferenceCode != null) {
-			setExternalReferenceCode(externalReferenceCode);
-		}
-
-		Long userId = (Long)attributes.get("userId");
-
-		if (userId != null) {
-			setUserId(userId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
-		}
-
-		Date createDate = (Date)attributes.get("createDate");
-
-		if (createDate != null) {
-			setCreateDate(createDate);
-		}
-
-		Date modifiedDate = (Date)attributes.get("modifiedDate");
-
-		if (modifiedDate != null) {
-			setModifiedDate(modifiedDate);
-		}
-
-		Boolean defaultUser = (Boolean)attributes.get("defaultUser");
-
-		if (defaultUser != null) {
-			setDefaultUser(defaultUser);
-		}
-
-		Long contactId = (Long)attributes.get("contactId");
-
-		if (contactId != null) {
-			setContactId(contactId);
-		}
-
-		String password = (String)attributes.get("password");
-
-		if (password != null) {
-			setPassword(password);
-		}
-
-		Boolean passwordEncrypted = (Boolean)attributes.get("passwordEncrypted");
-
-		if (passwordEncrypted != null) {
-			setPasswordEncrypted(passwordEncrypted);
-		}
-
-		Boolean passwordReset = (Boolean)attributes.get("passwordReset");
-
-		if (passwordReset != null) {
-			setPasswordReset(passwordReset);
-		}
-
-		Date passwordModifiedDate = (Date)attributes.get("passwordModifiedDate");
-
-		if (passwordModifiedDate != null) {
-			setPasswordModifiedDate(passwordModifiedDate);
-		}
-
-		String digest = (String)attributes.get("digest");
-
-		if (digest != null) {
-			setDigest(digest);
-		}
-
-		String reminderQueryQuestion = (String)attributes.get(
-				"reminderQueryQuestion");
-
-		if (reminderQueryQuestion != null) {
-			setReminderQueryQuestion(reminderQueryQuestion);
-		}
-
-		String reminderQueryAnswer = (String)attributes.get(
-				"reminderQueryAnswer");
-
-		if (reminderQueryAnswer != null) {
-			setReminderQueryAnswer(reminderQueryAnswer);
-		}
-
-		Integer graceLoginCount = (Integer)attributes.get("graceLoginCount");
-
-		if (graceLoginCount != null) {
-			setGraceLoginCount(graceLoginCount);
-		}
-
-		String screenName = (String)attributes.get("screenName");
-
-		if (screenName != null) {
-			setScreenName(screenName);
-		}
-
-		String emailAddress = (String)attributes.get("emailAddress");
-
-		if (emailAddress != null) {
-			setEmailAddress(emailAddress);
-		}
-
-		Long facebookId = (Long)attributes.get("facebookId");
-
-		if (facebookId != null) {
-			setFacebookId(facebookId);
-		}
-
-		String googleUserId = (String)attributes.get("googleUserId");
-
-		if (googleUserId != null) {
-			setGoogleUserId(googleUserId);
-		}
-
-		Long ldapServerId = (Long)attributes.get("ldapServerId");
-
-		if (ldapServerId != null) {
-			setLdapServerId(ldapServerId);
-		}
-
-		String openId = (String)attributes.get("openId");
-
-		if (openId != null) {
-			setOpenId(openId);
-		}
-
-		Long portraitId = (Long)attributes.get("portraitId");
-
-		if (portraitId != null) {
-			setPortraitId(portraitId);
-		}
-
-		String languageId = (String)attributes.get("languageId");
-
-		if (languageId != null) {
-			setLanguageId(languageId);
-		}
-
-		String timeZoneId = (String)attributes.get("timeZoneId");
-
-		if (timeZoneId != null) {
-			setTimeZoneId(timeZoneId);
-		}
-
-		String greeting = (String)attributes.get("greeting");
-
-		if (greeting != null) {
-			setGreeting(greeting);
-		}
-
-		String comments = (String)attributes.get("comments");
-
-		if (comments != null) {
-			setComments(comments);
-		}
-
-		String firstName = (String)attributes.get("firstName");
-
-		if (firstName != null) {
-			setFirstName(firstName);
-		}
-
-		String middleName = (String)attributes.get("middleName");
-
-		if (middleName != null) {
-			setMiddleName(middleName);
-		}
-
-		String lastName = (String)attributes.get("lastName");
-
-		if (lastName != null) {
-			setLastName(lastName);
-		}
-
-		String jobTitle = (String)attributes.get("jobTitle");
-
-		if (jobTitle != null) {
-			setJobTitle(jobTitle);
-		}
-
-		Date loginDate = (Date)attributes.get("loginDate");
-
-		if (loginDate != null) {
-			setLoginDate(loginDate);
-		}
-
-		String loginIP = (String)attributes.get("loginIP");
-
-		if (loginIP != null) {
-			setLoginIP(loginIP);
-		}
-
-		Date lastLoginDate = (Date)attributes.get("lastLoginDate");
-
-		if (lastLoginDate != null) {
-			setLastLoginDate(lastLoginDate);
-		}
-
-		String lastLoginIP = (String)attributes.get("lastLoginIP");
-
-		if (lastLoginIP != null) {
-			setLastLoginIP(lastLoginIP);
-		}
-
-		Date lastFailedLoginDate = (Date)attributes.get("lastFailedLoginDate");
-
-		if (lastFailedLoginDate != null) {
-			setLastFailedLoginDate(lastFailedLoginDate);
-		}
-
-		Integer failedLoginAttempts = (Integer)attributes.get(
-				"failedLoginAttempts");
-
-		if (failedLoginAttempts != null) {
-			setFailedLoginAttempts(failedLoginAttempts);
-		}
-
-		Boolean lockout = (Boolean)attributes.get("lockout");
-
-		if (lockout != null) {
-			setLockout(lockout);
-		}
-
-		Date lockoutDate = (Date)attributes.get("lockoutDate");
-
-		if (lockoutDate != null) {
-			setLockoutDate(lockoutDate);
-		}
-
-		Boolean agreedToTermsOfUse = (Boolean)attributes.get(
-				"agreedToTermsOfUse");
-
-		if (agreedToTermsOfUse != null) {
-			setAgreedToTermsOfUse(agreedToTermsOfUse);
-		}
-
-		Boolean emailAddressVerified = (Boolean)attributes.get(
-				"emailAddressVerified");
-
-		if (emailAddressVerified != null) {
-			setEmailAddressVerified(emailAddressVerified);
-		}
-
-		Integer status = (Integer)attributes.get("status");
-
-		if (status != null) {
-			setStatus(status);
-		}
+	public Map<String, BiConsumer<User, Object>> getAttributeSetters() {
+		return _attributeSetters;
+	}
+
+	private static final Map<String, Function<User, Object>> _attributeGetters;
+	private static final Map<String, BiConsumer<User, Object>> _attributeSetters;
+
+	static {
+		Map<String, Function<User, Object>> attributeGetters = new LinkedHashMap<String, Function<User, Object>>();
+		Map<String, BiConsumer<User, ?>> attributeSetters = new LinkedHashMap<String, BiConsumer<User, ?>>();
+
+		attributeGetters.put("mvccVersion", User::getMvccVersion);
+		attributeSetters.put("mvccVersion", (BiConsumer<User, Long>)User::setMvccVersion);
+		attributeGetters.put("uuid", User::getUuid);
+		attributeSetters.put("uuid", (BiConsumer<User, String>)User::setUuid);
+		attributeGetters.put("externalReferenceCode", User::getExternalReferenceCode);
+		attributeSetters.put("externalReferenceCode", (BiConsumer<User, String>)User::setExternalReferenceCode);
+		attributeGetters.put("userId", User::getUserId);
+		attributeSetters.put("userId", (BiConsumer<User, Long>)User::setUserId);
+		attributeGetters.put("companyId", User::getCompanyId);
+		attributeSetters.put("companyId", (BiConsumer<User, Long>)User::setCompanyId);
+		attributeGetters.put("createDate", User::getCreateDate);
+		attributeSetters.put("createDate", (BiConsumer<User, Date>)User::setCreateDate);
+		attributeGetters.put("modifiedDate", User::getModifiedDate);
+		attributeSetters.put("modifiedDate", (BiConsumer<User, Date>)User::setModifiedDate);
+		attributeGetters.put("defaultUser", User::getDefaultUser);
+		attributeSetters.put("defaultUser", (BiConsumer<User, Boolean>)User::setDefaultUser);
+		attributeGetters.put("contactId", User::getContactId);
+		attributeSetters.put("contactId", (BiConsumer<User, Long>)User::setContactId);
+		attributeGetters.put("password", User::getPassword);
+		attributeSetters.put("password", (BiConsumer<User, String>)User::setPassword);
+		attributeGetters.put("passwordEncrypted", User::getPasswordEncrypted);
+		attributeSetters.put("passwordEncrypted", (BiConsumer<User, Boolean>)User::setPasswordEncrypted);
+		attributeGetters.put("passwordReset", User::getPasswordReset);
+		attributeSetters.put("passwordReset", (BiConsumer<User, Boolean>)User::setPasswordReset);
+		attributeGetters.put("passwordModifiedDate", User::getPasswordModifiedDate);
+		attributeSetters.put("passwordModifiedDate", (BiConsumer<User, Date>)User::setPasswordModifiedDate);
+		attributeGetters.put("digest", User::getDigest);
+		attributeSetters.put("digest", (BiConsumer<User, String>)User::setDigest);
+		attributeGetters.put("reminderQueryQuestion", User::getReminderQueryQuestion);
+		attributeSetters.put("reminderQueryQuestion", (BiConsumer<User, String>)User::setReminderQueryQuestion);
+		attributeGetters.put("reminderQueryAnswer", User::getReminderQueryAnswer);
+		attributeSetters.put("reminderQueryAnswer", (BiConsumer<User, String>)User::setReminderQueryAnswer);
+		attributeGetters.put("graceLoginCount", User::getGraceLoginCount);
+		attributeSetters.put("graceLoginCount", (BiConsumer<User, Integer>)User::setGraceLoginCount);
+		attributeGetters.put("screenName", User::getScreenName);
+		attributeSetters.put("screenName", (BiConsumer<User, String>)User::setScreenName);
+		attributeGetters.put("emailAddress", User::getEmailAddress);
+		attributeSetters.put("emailAddress", (BiConsumer<User, String>)User::setEmailAddress);
+		attributeGetters.put("facebookId", User::getFacebookId);
+		attributeSetters.put("facebookId", (BiConsumer<User, Long>)User::setFacebookId);
+		attributeGetters.put("googleUserId", User::getGoogleUserId);
+		attributeSetters.put("googleUserId", (BiConsumer<User, String>)User::setGoogleUserId);
+		attributeGetters.put("ldapServerId", User::getLdapServerId);
+		attributeSetters.put("ldapServerId", (BiConsumer<User, Long>)User::setLdapServerId);
+		attributeGetters.put("openId", User::getOpenId);
+		attributeSetters.put("openId", (BiConsumer<User, String>)User::setOpenId);
+		attributeGetters.put("portraitId", User::getPortraitId);
+		attributeSetters.put("portraitId", (BiConsumer<User, Long>)User::setPortraitId);
+		attributeGetters.put("languageId", User::getLanguageId);
+		attributeSetters.put("languageId", (BiConsumer<User, String>)User::setLanguageId);
+		attributeGetters.put("timeZoneId", User::getTimeZoneId);
+		attributeSetters.put("timeZoneId", (BiConsumer<User, String>)User::setTimeZoneId);
+		attributeGetters.put("greeting", User::getGreeting);
+		attributeSetters.put("greeting", (BiConsumer<User, String>)User::setGreeting);
+		attributeGetters.put("comments", User::getComments);
+		attributeSetters.put("comments", (BiConsumer<User, String>)User::setComments);
+		attributeGetters.put("firstName", User::getFirstName);
+		attributeSetters.put("firstName", (BiConsumer<User, String>)User::setFirstName);
+		attributeGetters.put("middleName", User::getMiddleName);
+		attributeSetters.put("middleName", (BiConsumer<User, String>)User::setMiddleName);
+		attributeGetters.put("lastName", User::getLastName);
+		attributeSetters.put("lastName", (BiConsumer<User, String>)User::setLastName);
+		attributeGetters.put("jobTitle", User::getJobTitle);
+		attributeSetters.put("jobTitle", (BiConsumer<User, String>)User::setJobTitle);
+		attributeGetters.put("loginDate", User::getLoginDate);
+		attributeSetters.put("loginDate", (BiConsumer<User, Date>)User::setLoginDate);
+		attributeGetters.put("loginIP", User::getLoginIP);
+		attributeSetters.put("loginIP", (BiConsumer<User, String>)User::setLoginIP);
+		attributeGetters.put("lastLoginDate", User::getLastLoginDate);
+		attributeSetters.put("lastLoginDate", (BiConsumer<User, Date>)User::setLastLoginDate);
+		attributeGetters.put("lastLoginIP", User::getLastLoginIP);
+		attributeSetters.put("lastLoginIP", (BiConsumer<User, String>)User::setLastLoginIP);
+		attributeGetters.put("lastFailedLoginDate", User::getLastFailedLoginDate);
+		attributeSetters.put("lastFailedLoginDate", (BiConsumer<User, Date>)User::setLastFailedLoginDate);
+		attributeGetters.put("failedLoginAttempts", User::getFailedLoginAttempts);
+		attributeSetters.put("failedLoginAttempts", (BiConsumer<User, Integer>)User::setFailedLoginAttempts);
+		attributeGetters.put("lockout", User::getLockout);
+		attributeSetters.put("lockout", (BiConsumer<User, Boolean>)User::setLockout);
+		attributeGetters.put("lockoutDate", User::getLockoutDate);
+		attributeSetters.put("lockoutDate", (BiConsumer<User, Date>)User::setLockoutDate);
+		attributeGetters.put("agreedToTermsOfUse", User::getAgreedToTermsOfUse);
+		attributeSetters.put("agreedToTermsOfUse", (BiConsumer<User, Boolean>)User::setAgreedToTermsOfUse);
+		attributeGetters.put("emailAddressVerified", User::getEmailAddressVerified);
+		attributeSetters.put("emailAddressVerified", (BiConsumer<User, Boolean>)User::setEmailAddressVerified);
+		attributeGetters.put("status", User::getStatus);
+		attributeSetters.put("status", (BiConsumer<User, Integer>)User::setStatus);
+
+		_attributeGetters = Collections.unmodifiableMap(attributeGetters);
+		_attributeSetters = Collections.unmodifiableMap((Map)attributeSetters);
 	}
 
 	@JSON
@@ -1922,287 +1711,6 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 		userCacheModel.status = getStatus();
 
 		return userCacheModel;
-	}
-
-	@Override
-	public String toString() {
-		StringBundler sb = new StringBundler(87);
-
-		sb.append("{mvccVersion=");
-		sb.append(getMvccVersion());
-		sb.append(", uuid=");
-		sb.append(getUuid());
-		sb.append(", externalReferenceCode=");
-		sb.append(getExternalReferenceCode());
-		sb.append(", userId=");
-		sb.append(getUserId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
-		sb.append(", createDate=");
-		sb.append(getCreateDate());
-		sb.append(", modifiedDate=");
-		sb.append(getModifiedDate());
-		sb.append(", defaultUser=");
-		sb.append(isDefaultUser());
-		sb.append(", contactId=");
-		sb.append(getContactId());
-		sb.append(", password=");
-		sb.append(getPassword());
-		sb.append(", passwordEncrypted=");
-		sb.append(isPasswordEncrypted());
-		sb.append(", passwordReset=");
-		sb.append(isPasswordReset());
-		sb.append(", passwordModifiedDate=");
-		sb.append(getPasswordModifiedDate());
-		sb.append(", digest=");
-		sb.append(getDigest());
-		sb.append(", reminderQueryQuestion=");
-		sb.append(getReminderQueryQuestion());
-		sb.append(", reminderQueryAnswer=");
-		sb.append(getReminderQueryAnswer());
-		sb.append(", graceLoginCount=");
-		sb.append(getGraceLoginCount());
-		sb.append(", screenName=");
-		sb.append(getScreenName());
-		sb.append(", emailAddress=");
-		sb.append(getEmailAddress());
-		sb.append(", facebookId=");
-		sb.append(getFacebookId());
-		sb.append(", googleUserId=");
-		sb.append(getGoogleUserId());
-		sb.append(", ldapServerId=");
-		sb.append(getLdapServerId());
-		sb.append(", openId=");
-		sb.append(getOpenId());
-		sb.append(", portraitId=");
-		sb.append(getPortraitId());
-		sb.append(", languageId=");
-		sb.append(getLanguageId());
-		sb.append(", timeZoneId=");
-		sb.append(getTimeZoneId());
-		sb.append(", greeting=");
-		sb.append(getGreeting());
-		sb.append(", comments=");
-		sb.append(getComments());
-		sb.append(", firstName=");
-		sb.append(getFirstName());
-		sb.append(", middleName=");
-		sb.append(getMiddleName());
-		sb.append(", lastName=");
-		sb.append(getLastName());
-		sb.append(", jobTitle=");
-		sb.append(getJobTitle());
-		sb.append(", loginDate=");
-		sb.append(getLoginDate());
-		sb.append(", loginIP=");
-		sb.append(getLoginIP());
-		sb.append(", lastLoginDate=");
-		sb.append(getLastLoginDate());
-		sb.append(", lastLoginIP=");
-		sb.append(getLastLoginIP());
-		sb.append(", lastFailedLoginDate=");
-		sb.append(getLastFailedLoginDate());
-		sb.append(", failedLoginAttempts=");
-		sb.append(getFailedLoginAttempts());
-		sb.append(", lockout=");
-		sb.append(isLockout());
-		sb.append(", lockoutDate=");
-		sb.append(getLockoutDate());
-		sb.append(", agreedToTermsOfUse=");
-		sb.append(isAgreedToTermsOfUse());
-		sb.append(", emailAddressVerified=");
-		sb.append(isEmailAddressVerified());
-		sb.append(", status=");
-		sb.append(getStatus());
-		sb.append("}");
-
-		return sb.toString();
-	}
-
-	@Override
-	public String toXmlString() {
-		StringBundler sb = new StringBundler(133);
-
-		sb.append("<model><model-name>");
-		sb.append("com.liferay.portal.kernel.model.User");
-		sb.append("</model-name>");
-
-		sb.append(
-			"<column><column-name>mvccVersion</column-name><column-value><![CDATA[");
-		sb.append(getMvccVersion());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>uuid</column-name><column-value><![CDATA[");
-		sb.append(getUuid());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>externalReferenceCode</column-name><column-value><![CDATA[");
-		sb.append(getExternalReferenceCode());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userId</column-name><column-value><![CDATA[");
-		sb.append(getUserId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>createDate</column-name><column-value><![CDATA[");
-		sb.append(getCreateDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>modifiedDate</column-name><column-value><![CDATA[");
-		sb.append(getModifiedDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>defaultUser</column-name><column-value><![CDATA[");
-		sb.append(isDefaultUser());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>contactId</column-name><column-value><![CDATA[");
-		sb.append(getContactId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>password</column-name><column-value><![CDATA[");
-		sb.append(getPassword());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>passwordEncrypted</column-name><column-value><![CDATA[");
-		sb.append(isPasswordEncrypted());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>passwordReset</column-name><column-value><![CDATA[");
-		sb.append(isPasswordReset());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>passwordModifiedDate</column-name><column-value><![CDATA[");
-		sb.append(getPasswordModifiedDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>digest</column-name><column-value><![CDATA[");
-		sb.append(getDigest());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>reminderQueryQuestion</column-name><column-value><![CDATA[");
-		sb.append(getReminderQueryQuestion());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>reminderQueryAnswer</column-name><column-value><![CDATA[");
-		sb.append(getReminderQueryAnswer());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>graceLoginCount</column-name><column-value><![CDATA[");
-		sb.append(getGraceLoginCount());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>screenName</column-name><column-value><![CDATA[");
-		sb.append(getScreenName());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>emailAddress</column-name><column-value><![CDATA[");
-		sb.append(getEmailAddress());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>facebookId</column-name><column-value><![CDATA[");
-		sb.append(getFacebookId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>googleUserId</column-name><column-value><![CDATA[");
-		sb.append(getGoogleUserId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>ldapServerId</column-name><column-value><![CDATA[");
-		sb.append(getLdapServerId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>openId</column-name><column-value><![CDATA[");
-		sb.append(getOpenId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>portraitId</column-name><column-value><![CDATA[");
-		sb.append(getPortraitId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>languageId</column-name><column-value><![CDATA[");
-		sb.append(getLanguageId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>timeZoneId</column-name><column-value><![CDATA[");
-		sb.append(getTimeZoneId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>greeting</column-name><column-value><![CDATA[");
-		sb.append(getGreeting());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>comments</column-name><column-value><![CDATA[");
-		sb.append(getComments());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>firstName</column-name><column-value><![CDATA[");
-		sb.append(getFirstName());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>middleName</column-name><column-value><![CDATA[");
-		sb.append(getMiddleName());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>lastName</column-name><column-value><![CDATA[");
-		sb.append(getLastName());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>jobTitle</column-name><column-value><![CDATA[");
-		sb.append(getJobTitle());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>loginDate</column-name><column-value><![CDATA[");
-		sb.append(getLoginDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>loginIP</column-name><column-value><![CDATA[");
-		sb.append(getLoginIP());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>lastLoginDate</column-name><column-value><![CDATA[");
-		sb.append(getLastLoginDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>lastLoginIP</column-name><column-value><![CDATA[");
-		sb.append(getLastLoginIP());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>lastFailedLoginDate</column-name><column-value><![CDATA[");
-		sb.append(getLastFailedLoginDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>failedLoginAttempts</column-name><column-value><![CDATA[");
-		sb.append(getFailedLoginAttempts());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>lockout</column-name><column-value><![CDATA[");
-		sb.append(isLockout());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>lockoutDate</column-name><column-value><![CDATA[");
-		sb.append(getLockoutDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>agreedToTermsOfUse</column-name><column-value><![CDATA[");
-		sb.append(isAgreedToTermsOfUse());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>emailAddressVerified</column-name><column-value><![CDATA[");
-		sb.append(isEmailAddressVerified());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>status</column-name><column-value><![CDATA[");
-		sb.append(getStatus());
-		sb.append("]]></column-value></column>");
-
-		sb.append("</model>");
-
-		return sb.toString();
 	}
 
 	private static final ClassLoader _classLoader = User.class.getClassLoader();

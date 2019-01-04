@@ -21,8 +21,6 @@ import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 
-import com.liferay.petra.string.StringBundler;
-
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSON;
@@ -46,10 +44,14 @@ import java.io.Serializable;
 import java.sql.Types;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * The base model implementation for the RatingsEntry service. Represents a row in the &quot;RatingsEntry&quot; database table, with each column mapped to a property of this class.
@@ -209,87 +211,45 @@ public class RatingsEntryModelImpl extends BaseModelImpl<RatingsEntry>
 	}
 
 	@Override
-	public Map<String, Object> getModelAttributes() {
-		Map<String, Object> attributes = new HashMap<String, Object>();
-
-		attributes.put("uuid", getUuid());
-		attributes.put("entryId", getEntryId());
-		attributes.put("companyId", getCompanyId());
-		attributes.put("userId", getUserId());
-		attributes.put("userName", getUserName());
-		attributes.put("createDate", getCreateDate());
-		attributes.put("modifiedDate", getModifiedDate());
-		attributes.put("classNameId", getClassNameId());
-		attributes.put("classPK", getClassPK());
-		attributes.put("score", getScore());
-
-		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
-		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
-
-		return attributes;
+	public Map<String, Function<RatingsEntry, Object>> getAttributeGetters() {
+		return _attributeGetters;
 	}
 
 	@Override
-	public void setModelAttributes(Map<String, Object> attributes) {
-		String uuid = (String)attributes.get("uuid");
+	public Map<String, BiConsumer<RatingsEntry, Object>> getAttributeSetters() {
+		return _attributeSetters;
+	}
 
-		if (uuid != null) {
-			setUuid(uuid);
-		}
+	private static final Map<String, Function<RatingsEntry, Object>> _attributeGetters;
+	private static final Map<String, BiConsumer<RatingsEntry, Object>> _attributeSetters;
 
-		Long entryId = (Long)attributes.get("entryId");
+	static {
+		Map<String, Function<RatingsEntry, Object>> attributeGetters = new LinkedHashMap<String, Function<RatingsEntry, Object>>();
+		Map<String, BiConsumer<RatingsEntry, ?>> attributeSetters = new LinkedHashMap<String, BiConsumer<RatingsEntry, ?>>();
 
-		if (entryId != null) {
-			setEntryId(entryId);
-		}
+		attributeGetters.put("uuid", RatingsEntry::getUuid);
+		attributeSetters.put("uuid", (BiConsumer<RatingsEntry, String>)RatingsEntry::setUuid);
+		attributeGetters.put("entryId", RatingsEntry::getEntryId);
+		attributeSetters.put("entryId", (BiConsumer<RatingsEntry, Long>)RatingsEntry::setEntryId);
+		attributeGetters.put("companyId", RatingsEntry::getCompanyId);
+		attributeSetters.put("companyId", (BiConsumer<RatingsEntry, Long>)RatingsEntry::setCompanyId);
+		attributeGetters.put("userId", RatingsEntry::getUserId);
+		attributeSetters.put("userId", (BiConsumer<RatingsEntry, Long>)RatingsEntry::setUserId);
+		attributeGetters.put("userName", RatingsEntry::getUserName);
+		attributeSetters.put("userName", (BiConsumer<RatingsEntry, String>)RatingsEntry::setUserName);
+		attributeGetters.put("createDate", RatingsEntry::getCreateDate);
+		attributeSetters.put("createDate", (BiConsumer<RatingsEntry, Date>)RatingsEntry::setCreateDate);
+		attributeGetters.put("modifiedDate", RatingsEntry::getModifiedDate);
+		attributeSetters.put("modifiedDate", (BiConsumer<RatingsEntry, Date>)RatingsEntry::setModifiedDate);
+		attributeGetters.put("classNameId", RatingsEntry::getClassNameId);
+		attributeSetters.put("classNameId", (BiConsumer<RatingsEntry, Long>)RatingsEntry::setClassNameId);
+		attributeGetters.put("classPK", RatingsEntry::getClassPK);
+		attributeSetters.put("classPK", (BiConsumer<RatingsEntry, Long>)RatingsEntry::setClassPK);
+		attributeGetters.put("score", RatingsEntry::getScore);
+		attributeSetters.put("score", (BiConsumer<RatingsEntry, Double>)RatingsEntry::setScore);
 
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
-		}
-
-		Long userId = (Long)attributes.get("userId");
-
-		if (userId != null) {
-			setUserId(userId);
-		}
-
-		String userName = (String)attributes.get("userName");
-
-		if (userName != null) {
-			setUserName(userName);
-		}
-
-		Date createDate = (Date)attributes.get("createDate");
-
-		if (createDate != null) {
-			setCreateDate(createDate);
-		}
-
-		Date modifiedDate = (Date)attributes.get("modifiedDate");
-
-		if (modifiedDate != null) {
-			setModifiedDate(modifiedDate);
-		}
-
-		Long classNameId = (Long)attributes.get("classNameId");
-
-		if (classNameId != null) {
-			setClassNameId(classNameId);
-		}
-
-		Long classPK = (Long)attributes.get("classPK");
-
-		if (classPK != null) {
-			setClassPK(classPK);
-		}
-
-		Double score = (Double)attributes.get("score");
-
-		if (score != null) {
-			setScore(score);
-		}
+		_attributeGetters = Collections.unmodifiableMap(attributeGetters);
+		_attributeSetters = Collections.unmodifiableMap((Map)attributeSetters);
 	}
 
 	@JSON
@@ -709,89 +669,6 @@ public class RatingsEntryModelImpl extends BaseModelImpl<RatingsEntry>
 		ratingsEntryCacheModel.score = getScore();
 
 		return ratingsEntryCacheModel;
-	}
-
-	@Override
-	public String toString() {
-		StringBundler sb = new StringBundler(21);
-
-		sb.append("{uuid=");
-		sb.append(getUuid());
-		sb.append(", entryId=");
-		sb.append(getEntryId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
-		sb.append(", userId=");
-		sb.append(getUserId());
-		sb.append(", userName=");
-		sb.append(getUserName());
-		sb.append(", createDate=");
-		sb.append(getCreateDate());
-		sb.append(", modifiedDate=");
-		sb.append(getModifiedDate());
-		sb.append(", classNameId=");
-		sb.append(getClassNameId());
-		sb.append(", classPK=");
-		sb.append(getClassPK());
-		sb.append(", score=");
-		sb.append(getScore());
-		sb.append("}");
-
-		return sb.toString();
-	}
-
-	@Override
-	public String toXmlString() {
-		StringBundler sb = new StringBundler(34);
-
-		sb.append("<model><model-name>");
-		sb.append("com.liferay.ratings.kernel.model.RatingsEntry");
-		sb.append("</model-name>");
-
-		sb.append(
-			"<column><column-name>uuid</column-name><column-value><![CDATA[");
-		sb.append(getUuid());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>entryId</column-name><column-value><![CDATA[");
-		sb.append(getEntryId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userId</column-name><column-value><![CDATA[");
-		sb.append(getUserId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userName</column-name><column-value><![CDATA[");
-		sb.append(getUserName());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>createDate</column-name><column-value><![CDATA[");
-		sb.append(getCreateDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>modifiedDate</column-name><column-value><![CDATA[");
-		sb.append(getModifiedDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>classNameId</column-name><column-value><![CDATA[");
-		sb.append(getClassNameId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>classPK</column-name><column-value><![CDATA[");
-		sb.append(getClassPK());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>score</column-name><column-value><![CDATA[");
-		sb.append(getScore());
-		sb.append("]]></column-value></column>");
-
-		sb.append("</model>");
-
-		return sb.toString();
 	}
 
 	private static final ClassLoader _classLoader = RatingsEntry.class.getClassLoader();

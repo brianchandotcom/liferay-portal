@@ -19,8 +19,6 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 
-import com.liferay.petra.string.StringBundler;
-
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSON;
@@ -42,10 +40,14 @@ import java.io.Serializable;
 import java.sql.Types;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * The base model implementation for the AuditEvent service. Represents a row in the &quot;Audit_AuditEvent&quot; database table, with each column mapped to a property of this class.
@@ -215,122 +217,55 @@ public class AuditEventModelImpl extends BaseModelImpl<AuditEvent>
 	}
 
 	@Override
-	public Map<String, Object> getModelAttributes() {
-		Map<String, Object> attributes = new HashMap<String, Object>();
-
-		attributes.put("auditEventId", getAuditEventId());
-		attributes.put("companyId", getCompanyId());
-		attributes.put("userId", getUserId());
-		attributes.put("userName", getUserName());
-		attributes.put("createDate", getCreateDate());
-		attributes.put("eventType", getEventType());
-		attributes.put("className", getClassName());
-		attributes.put("classPK", getClassPK());
-		attributes.put("message", getMessage());
-		attributes.put("clientHost", getClientHost());
-		attributes.put("clientIP", getClientIP());
-		attributes.put("serverName", getServerName());
-		attributes.put("serverPort", getServerPort());
-		attributes.put("sessionID", getSessionID());
-		attributes.put("additionalInfo", getAdditionalInfo());
-
-		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
-		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
-
-		return attributes;
+	public Map<String, Function<AuditEvent, Object>> getAttributeGetters() {
+		return _attributeGetters;
 	}
 
 	@Override
-	public void setModelAttributes(Map<String, Object> attributes) {
-		Long auditEventId = (Long)attributes.get("auditEventId");
+	public Map<String, BiConsumer<AuditEvent, Object>> getAttributeSetters() {
+		return _attributeSetters;
+	}
 
-		if (auditEventId != null) {
-			setAuditEventId(auditEventId);
-		}
+	private static final Map<String, Function<AuditEvent, Object>> _attributeGetters;
+	private static final Map<String, BiConsumer<AuditEvent, Object>> _attributeSetters;
 
-		Long companyId = (Long)attributes.get("companyId");
+	static {
+		Map<String, Function<AuditEvent, Object>> attributeGetters = new LinkedHashMap<String, Function<AuditEvent, Object>>();
+		Map<String, BiConsumer<AuditEvent, ?>> attributeSetters = new LinkedHashMap<String, BiConsumer<AuditEvent, ?>>();
 
-		if (companyId != null) {
-			setCompanyId(companyId);
-		}
+		attributeGetters.put("auditEventId", AuditEvent::getAuditEventId);
+		attributeSetters.put("auditEventId", (BiConsumer<AuditEvent, Long>)AuditEvent::setAuditEventId);
+		attributeGetters.put("companyId", AuditEvent::getCompanyId);
+		attributeSetters.put("companyId", (BiConsumer<AuditEvent, Long>)AuditEvent::setCompanyId);
+		attributeGetters.put("userId", AuditEvent::getUserId);
+		attributeSetters.put("userId", (BiConsumer<AuditEvent, Long>)AuditEvent::setUserId);
+		attributeGetters.put("userName", AuditEvent::getUserName);
+		attributeSetters.put("userName", (BiConsumer<AuditEvent, String>)AuditEvent::setUserName);
+		attributeGetters.put("createDate", AuditEvent::getCreateDate);
+		attributeSetters.put("createDate", (BiConsumer<AuditEvent, Date>)AuditEvent::setCreateDate);
+		attributeGetters.put("eventType", AuditEvent::getEventType);
+		attributeSetters.put("eventType", (BiConsumer<AuditEvent, String>)AuditEvent::setEventType);
+		attributeGetters.put("className", AuditEvent::getClassName);
+		attributeSetters.put("className", (BiConsumer<AuditEvent, String>)AuditEvent::setClassName);
+		attributeGetters.put("classPK", AuditEvent::getClassPK);
+		attributeSetters.put("classPK", (BiConsumer<AuditEvent, String>)AuditEvent::setClassPK);
+		attributeGetters.put("message", AuditEvent::getMessage);
+		attributeSetters.put("message", (BiConsumer<AuditEvent, String>)AuditEvent::setMessage);
+		attributeGetters.put("clientHost", AuditEvent::getClientHost);
+		attributeSetters.put("clientHost", (BiConsumer<AuditEvent, String>)AuditEvent::setClientHost);
+		attributeGetters.put("clientIP", AuditEvent::getClientIP);
+		attributeSetters.put("clientIP", (BiConsumer<AuditEvent, String>)AuditEvent::setClientIP);
+		attributeGetters.put("serverName", AuditEvent::getServerName);
+		attributeSetters.put("serverName", (BiConsumer<AuditEvent, String>)AuditEvent::setServerName);
+		attributeGetters.put("serverPort", AuditEvent::getServerPort);
+		attributeSetters.put("serverPort", (BiConsumer<AuditEvent, Integer>)AuditEvent::setServerPort);
+		attributeGetters.put("sessionID", AuditEvent::getSessionID);
+		attributeSetters.put("sessionID", (BiConsumer<AuditEvent, String>)AuditEvent::setSessionID);
+		attributeGetters.put("additionalInfo", AuditEvent::getAdditionalInfo);
+		attributeSetters.put("additionalInfo", (BiConsumer<AuditEvent, String>)AuditEvent::setAdditionalInfo);
 
-		Long userId = (Long)attributes.get("userId");
-
-		if (userId != null) {
-			setUserId(userId);
-		}
-
-		String userName = (String)attributes.get("userName");
-
-		if (userName != null) {
-			setUserName(userName);
-		}
-
-		Date createDate = (Date)attributes.get("createDate");
-
-		if (createDate != null) {
-			setCreateDate(createDate);
-		}
-
-		String eventType = (String)attributes.get("eventType");
-
-		if (eventType != null) {
-			setEventType(eventType);
-		}
-
-		String className = (String)attributes.get("className");
-
-		if (className != null) {
-			setClassName(className);
-		}
-
-		String classPK = (String)attributes.get("classPK");
-
-		if (classPK != null) {
-			setClassPK(classPK);
-		}
-
-		String message = (String)attributes.get("message");
-
-		if (message != null) {
-			setMessage(message);
-		}
-
-		String clientHost = (String)attributes.get("clientHost");
-
-		if (clientHost != null) {
-			setClientHost(clientHost);
-		}
-
-		String clientIP = (String)attributes.get("clientIP");
-
-		if (clientIP != null) {
-			setClientIP(clientIP);
-		}
-
-		String serverName = (String)attributes.get("serverName");
-
-		if (serverName != null) {
-			setServerName(serverName);
-		}
-
-		Integer serverPort = (Integer)attributes.get("serverPort");
-
-		if (serverPort != null) {
-			setServerPort(serverPort);
-		}
-
-		String sessionID = (String)attributes.get("sessionID");
-
-		if (sessionID != null) {
-			setSessionID(sessionID);
-		}
-
-		String additionalInfo = (String)attributes.get("additionalInfo");
-
-		if (additionalInfo != null) {
-			setAdditionalInfo(additionalInfo);
-		}
+		_attributeGetters = Collections.unmodifiableMap(attributeGetters);
+		_attributeSetters = Collections.unmodifiableMap((Map)attributeSetters);
 	}
 
 	@JSON
@@ -795,119 +730,6 @@ public class AuditEventModelImpl extends BaseModelImpl<AuditEvent>
 		}
 
 		return auditEventCacheModel;
-	}
-
-	@Override
-	public String toString() {
-		StringBundler sb = new StringBundler(31);
-
-		sb.append("{auditEventId=");
-		sb.append(getAuditEventId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
-		sb.append(", userId=");
-		sb.append(getUserId());
-		sb.append(", userName=");
-		sb.append(getUserName());
-		sb.append(", createDate=");
-		sb.append(getCreateDate());
-		sb.append(", eventType=");
-		sb.append(getEventType());
-		sb.append(", className=");
-		sb.append(getClassName());
-		sb.append(", classPK=");
-		sb.append(getClassPK());
-		sb.append(", message=");
-		sb.append(getMessage());
-		sb.append(", clientHost=");
-		sb.append(getClientHost());
-		sb.append(", clientIP=");
-		sb.append(getClientIP());
-		sb.append(", serverName=");
-		sb.append(getServerName());
-		sb.append(", serverPort=");
-		sb.append(getServerPort());
-		sb.append(", sessionID=");
-		sb.append(getSessionID());
-		sb.append(", additionalInfo=");
-		sb.append(getAdditionalInfo());
-		sb.append("}");
-
-		return sb.toString();
-	}
-
-	@Override
-	public String toXmlString() {
-		StringBundler sb = new StringBundler(49);
-
-		sb.append("<model><model-name>");
-		sb.append("com.liferay.portal.security.audit.storage.model.AuditEvent");
-		sb.append("</model-name>");
-
-		sb.append(
-			"<column><column-name>auditEventId</column-name><column-value><![CDATA[");
-		sb.append(getAuditEventId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userId</column-name><column-value><![CDATA[");
-		sb.append(getUserId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userName</column-name><column-value><![CDATA[");
-		sb.append(getUserName());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>createDate</column-name><column-value><![CDATA[");
-		sb.append(getCreateDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>eventType</column-name><column-value><![CDATA[");
-		sb.append(getEventType());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>className</column-name><column-value><![CDATA[");
-		sb.append(getClassName());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>classPK</column-name><column-value><![CDATA[");
-		sb.append(getClassPK());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>message</column-name><column-value><![CDATA[");
-		sb.append(getMessage());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>clientHost</column-name><column-value><![CDATA[");
-		sb.append(getClientHost());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>clientIP</column-name><column-value><![CDATA[");
-		sb.append(getClientIP());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>serverName</column-name><column-value><![CDATA[");
-		sb.append(getServerName());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>serverPort</column-name><column-value><![CDATA[");
-		sb.append(getServerPort());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>sessionID</column-name><column-value><![CDATA[");
-		sb.append(getSessionID());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>additionalInfo</column-name><column-value><![CDATA[");
-		sb.append(getAdditionalInfo());
-		sb.append("]]></column-value></column>");
-
-		sb.append("</model>");
-
-		return sb.toString();
 	}
 
 	private static final ClassLoader _classLoader = AuditEvent.class.getClassLoader();

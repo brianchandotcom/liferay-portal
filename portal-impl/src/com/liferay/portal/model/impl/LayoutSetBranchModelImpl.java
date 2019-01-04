@@ -19,8 +19,6 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 
-import com.liferay.petra.string.StringBundler;
-
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSON;
@@ -41,10 +39,14 @@ import java.io.Serializable;
 import java.sql.Types;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * The base model implementation for the LayoutSetBranch service. Represents a row in the &quot;LayoutSetBranch&quot; database table, with each column mapped to a property of this class.
@@ -229,153 +231,63 @@ public class LayoutSetBranchModelImpl extends BaseModelImpl<LayoutSetBranch>
 	}
 
 	@Override
-	public Map<String, Object> getModelAttributes() {
-		Map<String, Object> attributes = new HashMap<String, Object>();
-
-		attributes.put("mvccVersion", getMvccVersion());
-		attributes.put("layoutSetBranchId", getLayoutSetBranchId());
-		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
-		attributes.put("userId", getUserId());
-		attributes.put("userName", getUserName());
-		attributes.put("createDate", getCreateDate());
-		attributes.put("modifiedDate", getModifiedDate());
-		attributes.put("privateLayout", isPrivateLayout());
-		attributes.put("name", getName());
-		attributes.put("description", getDescription());
-		attributes.put("master", isMaster());
-		attributes.put("logoId", getLogoId());
-		attributes.put("themeId", getThemeId());
-		attributes.put("colorSchemeId", getColorSchemeId());
-		attributes.put("css", getCss());
-		attributes.put("settings", getSettings());
-		attributes.put("layoutSetPrototypeUuid", getLayoutSetPrototypeUuid());
-		attributes.put("layoutSetPrototypeLinkEnabled",
-			isLayoutSetPrototypeLinkEnabled());
-
-		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
-		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
-
-		return attributes;
+	public Map<String, Function<LayoutSetBranch, Object>> getAttributeGetters() {
+		return _attributeGetters;
 	}
 
 	@Override
-	public void setModelAttributes(Map<String, Object> attributes) {
-		Long mvccVersion = (Long)attributes.get("mvccVersion");
+	public Map<String, BiConsumer<LayoutSetBranch, Object>> getAttributeSetters() {
+		return _attributeSetters;
+	}
 
-		if (mvccVersion != null) {
-			setMvccVersion(mvccVersion);
-		}
+	private static final Map<String, Function<LayoutSetBranch, Object>> _attributeGetters;
+	private static final Map<String, BiConsumer<LayoutSetBranch, Object>> _attributeSetters;
 
-		Long layoutSetBranchId = (Long)attributes.get("layoutSetBranchId");
+	static {
+		Map<String, Function<LayoutSetBranch, Object>> attributeGetters = new LinkedHashMap<String, Function<LayoutSetBranch, Object>>();
+		Map<String, BiConsumer<LayoutSetBranch, ?>> attributeSetters = new LinkedHashMap<String, BiConsumer<LayoutSetBranch, ?>>();
 
-		if (layoutSetBranchId != null) {
-			setLayoutSetBranchId(layoutSetBranchId);
-		}
+		attributeGetters.put("mvccVersion", LayoutSetBranch::getMvccVersion);
+		attributeSetters.put("mvccVersion", (BiConsumer<LayoutSetBranch, Long>)LayoutSetBranch::setMvccVersion);
+		attributeGetters.put("layoutSetBranchId", LayoutSetBranch::getLayoutSetBranchId);
+		attributeSetters.put("layoutSetBranchId", (BiConsumer<LayoutSetBranch, Long>)LayoutSetBranch::setLayoutSetBranchId);
+		attributeGetters.put("groupId", LayoutSetBranch::getGroupId);
+		attributeSetters.put("groupId", (BiConsumer<LayoutSetBranch, Long>)LayoutSetBranch::setGroupId);
+		attributeGetters.put("companyId", LayoutSetBranch::getCompanyId);
+		attributeSetters.put("companyId", (BiConsumer<LayoutSetBranch, Long>)LayoutSetBranch::setCompanyId);
+		attributeGetters.put("userId", LayoutSetBranch::getUserId);
+		attributeSetters.put("userId", (BiConsumer<LayoutSetBranch, Long>)LayoutSetBranch::setUserId);
+		attributeGetters.put("userName", LayoutSetBranch::getUserName);
+		attributeSetters.put("userName", (BiConsumer<LayoutSetBranch, String>)LayoutSetBranch::setUserName);
+		attributeGetters.put("createDate", LayoutSetBranch::getCreateDate);
+		attributeSetters.put("createDate", (BiConsumer<LayoutSetBranch, Date>)LayoutSetBranch::setCreateDate);
+		attributeGetters.put("modifiedDate", LayoutSetBranch::getModifiedDate);
+		attributeSetters.put("modifiedDate", (BiConsumer<LayoutSetBranch, Date>)LayoutSetBranch::setModifiedDate);
+		attributeGetters.put("privateLayout", LayoutSetBranch::getPrivateLayout);
+		attributeSetters.put("privateLayout", (BiConsumer<LayoutSetBranch, Boolean>)LayoutSetBranch::setPrivateLayout);
+		attributeGetters.put("name", LayoutSetBranch::getName);
+		attributeSetters.put("name", (BiConsumer<LayoutSetBranch, String>)LayoutSetBranch::setName);
+		attributeGetters.put("description", LayoutSetBranch::getDescription);
+		attributeSetters.put("description", (BiConsumer<LayoutSetBranch, String>)LayoutSetBranch::setDescription);
+		attributeGetters.put("master", LayoutSetBranch::getMaster);
+		attributeSetters.put("master", (BiConsumer<LayoutSetBranch, Boolean>)LayoutSetBranch::setMaster);
+		attributeGetters.put("logoId", LayoutSetBranch::getLogoId);
+		attributeSetters.put("logoId", (BiConsumer<LayoutSetBranch, Long>)LayoutSetBranch::setLogoId);
+		attributeGetters.put("themeId", LayoutSetBranch::getThemeId);
+		attributeSetters.put("themeId", (BiConsumer<LayoutSetBranch, String>)LayoutSetBranch::setThemeId);
+		attributeGetters.put("colorSchemeId", LayoutSetBranch::getColorSchemeId);
+		attributeSetters.put("colorSchemeId", (BiConsumer<LayoutSetBranch, String>)LayoutSetBranch::setColorSchemeId);
+		attributeGetters.put("css", LayoutSetBranch::getCss);
+		attributeSetters.put("css", (BiConsumer<LayoutSetBranch, String>)LayoutSetBranch::setCss);
+		attributeGetters.put("settings", LayoutSetBranch::getSettings);
+		attributeSetters.put("settings", (BiConsumer<LayoutSetBranch, String>)LayoutSetBranch::setSettings);
+		attributeGetters.put("layoutSetPrototypeUuid", LayoutSetBranch::getLayoutSetPrototypeUuid);
+		attributeSetters.put("layoutSetPrototypeUuid", (BiConsumer<LayoutSetBranch, String>)LayoutSetBranch::setLayoutSetPrototypeUuid);
+		attributeGetters.put("layoutSetPrototypeLinkEnabled", LayoutSetBranch::getLayoutSetPrototypeLinkEnabled);
+		attributeSetters.put("layoutSetPrototypeLinkEnabled", (BiConsumer<LayoutSetBranch, Boolean>)LayoutSetBranch::setLayoutSetPrototypeLinkEnabled);
 
-		Long groupId = (Long)attributes.get("groupId");
-
-		if (groupId != null) {
-			setGroupId(groupId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
-		}
-
-		Long userId = (Long)attributes.get("userId");
-
-		if (userId != null) {
-			setUserId(userId);
-		}
-
-		String userName = (String)attributes.get("userName");
-
-		if (userName != null) {
-			setUserName(userName);
-		}
-
-		Date createDate = (Date)attributes.get("createDate");
-
-		if (createDate != null) {
-			setCreateDate(createDate);
-		}
-
-		Date modifiedDate = (Date)attributes.get("modifiedDate");
-
-		if (modifiedDate != null) {
-			setModifiedDate(modifiedDate);
-		}
-
-		Boolean privateLayout = (Boolean)attributes.get("privateLayout");
-
-		if (privateLayout != null) {
-			setPrivateLayout(privateLayout);
-		}
-
-		String name = (String)attributes.get("name");
-
-		if (name != null) {
-			setName(name);
-		}
-
-		String description = (String)attributes.get("description");
-
-		if (description != null) {
-			setDescription(description);
-		}
-
-		Boolean master = (Boolean)attributes.get("master");
-
-		if (master != null) {
-			setMaster(master);
-		}
-
-		Long logoId = (Long)attributes.get("logoId");
-
-		if (logoId != null) {
-			setLogoId(logoId);
-		}
-
-		String themeId = (String)attributes.get("themeId");
-
-		if (themeId != null) {
-			setThemeId(themeId);
-		}
-
-		String colorSchemeId = (String)attributes.get("colorSchemeId");
-
-		if (colorSchemeId != null) {
-			setColorSchemeId(colorSchemeId);
-		}
-
-		String css = (String)attributes.get("css");
-
-		if (css != null) {
-			setCss(css);
-		}
-
-		String settings = (String)attributes.get("settings");
-
-		if (settings != null) {
-			setSettings(settings);
-		}
-
-		String layoutSetPrototypeUuid = (String)attributes.get(
-				"layoutSetPrototypeUuid");
-
-		if (layoutSetPrototypeUuid != null) {
-			setLayoutSetPrototypeUuid(layoutSetPrototypeUuid);
-		}
-
-		Boolean layoutSetPrototypeLinkEnabled = (Boolean)attributes.get(
-				"layoutSetPrototypeLinkEnabled");
-
-		if (layoutSetPrototypeLinkEnabled != null) {
-			setLayoutSetPrototypeLinkEnabled(layoutSetPrototypeLinkEnabled);
-		}
+		_attributeGetters = Collections.unmodifiableMap(attributeGetters);
+		_attributeSetters = Collections.unmodifiableMap((Map)attributeSetters);
 	}
 
 	@JSON
@@ -949,143 +861,6 @@ public class LayoutSetBranchModelImpl extends BaseModelImpl<LayoutSetBranch>
 		layoutSetBranchCacheModel.layoutSetPrototypeLinkEnabled = isLayoutSetPrototypeLinkEnabled();
 
 		return layoutSetBranchCacheModel;
-	}
-
-	@Override
-	public String toString() {
-		StringBundler sb = new StringBundler(39);
-
-		sb.append("{mvccVersion=");
-		sb.append(getMvccVersion());
-		sb.append(", layoutSetBranchId=");
-		sb.append(getLayoutSetBranchId());
-		sb.append(", groupId=");
-		sb.append(getGroupId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
-		sb.append(", userId=");
-		sb.append(getUserId());
-		sb.append(", userName=");
-		sb.append(getUserName());
-		sb.append(", createDate=");
-		sb.append(getCreateDate());
-		sb.append(", modifiedDate=");
-		sb.append(getModifiedDate());
-		sb.append(", privateLayout=");
-		sb.append(isPrivateLayout());
-		sb.append(", name=");
-		sb.append(getName());
-		sb.append(", description=");
-		sb.append(getDescription());
-		sb.append(", master=");
-		sb.append(isMaster());
-		sb.append(", logoId=");
-		sb.append(getLogoId());
-		sb.append(", themeId=");
-		sb.append(getThemeId());
-		sb.append(", colorSchemeId=");
-		sb.append(getColorSchemeId());
-		sb.append(", css=");
-		sb.append(getCss());
-		sb.append(", settings=");
-		sb.append(getSettings());
-		sb.append(", layoutSetPrototypeUuid=");
-		sb.append(getLayoutSetPrototypeUuid());
-		sb.append(", layoutSetPrototypeLinkEnabled=");
-		sb.append(isLayoutSetPrototypeLinkEnabled());
-		sb.append("}");
-
-		return sb.toString();
-	}
-
-	@Override
-	public String toXmlString() {
-		StringBundler sb = new StringBundler(61);
-
-		sb.append("<model><model-name>");
-		sb.append("com.liferay.portal.kernel.model.LayoutSetBranch");
-		sb.append("</model-name>");
-
-		sb.append(
-			"<column><column-name>mvccVersion</column-name><column-value><![CDATA[");
-		sb.append(getMvccVersion());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>layoutSetBranchId</column-name><column-value><![CDATA[");
-		sb.append(getLayoutSetBranchId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>groupId</column-name><column-value><![CDATA[");
-		sb.append(getGroupId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userId</column-name><column-value><![CDATA[");
-		sb.append(getUserId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userName</column-name><column-value><![CDATA[");
-		sb.append(getUserName());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>createDate</column-name><column-value><![CDATA[");
-		sb.append(getCreateDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>modifiedDate</column-name><column-value><![CDATA[");
-		sb.append(getModifiedDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>privateLayout</column-name><column-value><![CDATA[");
-		sb.append(isPrivateLayout());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>name</column-name><column-value><![CDATA[");
-		sb.append(getName());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>description</column-name><column-value><![CDATA[");
-		sb.append(getDescription());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>master</column-name><column-value><![CDATA[");
-		sb.append(isMaster());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>logoId</column-name><column-value><![CDATA[");
-		sb.append(getLogoId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>themeId</column-name><column-value><![CDATA[");
-		sb.append(getThemeId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>colorSchemeId</column-name><column-value><![CDATA[");
-		sb.append(getColorSchemeId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>css</column-name><column-value><![CDATA[");
-		sb.append(getCss());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>settings</column-name><column-value><![CDATA[");
-		sb.append(getSettings());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>layoutSetPrototypeUuid</column-name><column-value><![CDATA[");
-		sb.append(getLayoutSetPrototypeUuid());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>layoutSetPrototypeLinkEnabled</column-name><column-value><![CDATA[");
-		sb.append(isLayoutSetPrototypeLinkEnabled());
-		sb.append("]]></column-value></column>");
-
-		sb.append("</model>");
-
-		return sb.toString();
 	}
 
 	private static final ClassLoader _classLoader = LayoutSetBranch.class.getClassLoader();

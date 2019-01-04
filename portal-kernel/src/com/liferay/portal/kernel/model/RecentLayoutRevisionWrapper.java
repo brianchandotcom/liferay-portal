@@ -18,9 +18,6 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
-import java.util.HashMap;
-import java.util.Map;
-
 /**
  * <p>
  * This class is a wrapper for {@link RecentLayoutRevision}.
@@ -36,74 +33,6 @@ public class RecentLayoutRevisionWrapper extends BaseModelWrapper<RecentLayoutRe
 	public RecentLayoutRevisionWrapper(
 		RecentLayoutRevision recentLayoutRevision) {
 		super(recentLayoutRevision);
-	}
-
-	@Override
-	public Map<String, Object> getModelAttributes() {
-		Map<String, Object> attributes = new HashMap<String, Object>();
-
-		attributes.put("mvccVersion", getMvccVersion());
-		attributes.put("recentLayoutRevisionId", getRecentLayoutRevisionId());
-		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
-		attributes.put("userId", getUserId());
-		attributes.put("layoutRevisionId", getLayoutRevisionId());
-		attributes.put("layoutSetBranchId", getLayoutSetBranchId());
-		attributes.put("plid", getPlid());
-
-		return attributes;
-	}
-
-	@Override
-	public void setModelAttributes(Map<String, Object> attributes) {
-		Long mvccVersion = (Long)attributes.get("mvccVersion");
-
-		if (mvccVersion != null) {
-			setMvccVersion(mvccVersion);
-		}
-
-		Long recentLayoutRevisionId = (Long)attributes.get(
-				"recentLayoutRevisionId");
-
-		if (recentLayoutRevisionId != null) {
-			setRecentLayoutRevisionId(recentLayoutRevisionId);
-		}
-
-		Long groupId = (Long)attributes.get("groupId");
-
-		if (groupId != null) {
-			setGroupId(groupId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
-		}
-
-		Long userId = (Long)attributes.get("userId");
-
-		if (userId != null) {
-			setUserId(userId);
-		}
-
-		Long layoutRevisionId = (Long)attributes.get("layoutRevisionId");
-
-		if (layoutRevisionId != null) {
-			setLayoutRevisionId(layoutRevisionId);
-		}
-
-		Long layoutSetBranchId = (Long)attributes.get("layoutSetBranchId");
-
-		if (layoutSetBranchId != null) {
-			setLayoutSetBranchId(layoutSetBranchId);
-		}
-
-		Long plid = (Long)attributes.get("plid");
-
-		if (plid != null) {
-			setPlid(plid);
-		}
 	}
 
 	/**

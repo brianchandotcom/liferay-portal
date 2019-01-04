@@ -25,8 +25,6 @@ import com.liferay.mobile.device.rules.model.MDRAction;
 import com.liferay.mobile.device.rules.model.MDRActionModel;
 import com.liferay.mobile.device.rules.model.MDRActionSoap;
 
-import com.liferay.petra.string.StringBundler;
-
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.LocaleException;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -49,13 +47,17 @@ import java.io.Serializable;
 import java.sql.Types;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * The base model implementation for the MDRAction service. Represents a row in the &quot;MDRAction&quot; database table, with each column mapped to a property of this class.
@@ -231,129 +233,57 @@ public class MDRActionModelImpl extends BaseModelImpl<MDRAction>
 	}
 
 	@Override
-	public Map<String, Object> getModelAttributes() {
-		Map<String, Object> attributes = new HashMap<String, Object>();
-
-		attributes.put("uuid", getUuid());
-		attributes.put("actionId", getActionId());
-		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
-		attributes.put("userId", getUserId());
-		attributes.put("userName", getUserName());
-		attributes.put("createDate", getCreateDate());
-		attributes.put("modifiedDate", getModifiedDate());
-		attributes.put("classNameId", getClassNameId());
-		attributes.put("classPK", getClassPK());
-		attributes.put("ruleGroupInstanceId", getRuleGroupInstanceId());
-		attributes.put("name", getName());
-		attributes.put("description", getDescription());
-		attributes.put("type", getType());
-		attributes.put("typeSettings", getTypeSettings());
-		attributes.put("lastPublishDate", getLastPublishDate());
-
-		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
-		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
-
-		return attributes;
+	public Map<String, Function<MDRAction, Object>> getAttributeGetters() {
+		return _attributeGetters;
 	}
 
 	@Override
-	public void setModelAttributes(Map<String, Object> attributes) {
-		String uuid = (String)attributes.get("uuid");
+	public Map<String, BiConsumer<MDRAction, Object>> getAttributeSetters() {
+		return _attributeSetters;
+	}
 
-		if (uuid != null) {
-			setUuid(uuid);
-		}
+	private static final Map<String, Function<MDRAction, Object>> _attributeGetters;
+	private static final Map<String, BiConsumer<MDRAction, Object>> _attributeSetters;
 
-		Long actionId = (Long)attributes.get("actionId");
+	static {
+		Map<String, Function<MDRAction, Object>> attributeGetters = new LinkedHashMap<String, Function<MDRAction, Object>>();
+		Map<String, BiConsumer<MDRAction, ?>> attributeSetters = new LinkedHashMap<String, BiConsumer<MDRAction, ?>>();
 
-		if (actionId != null) {
-			setActionId(actionId);
-		}
+		attributeGetters.put("uuid", MDRAction::getUuid);
+		attributeSetters.put("uuid", (BiConsumer<MDRAction, String>)MDRAction::setUuid);
+		attributeGetters.put("actionId", MDRAction::getActionId);
+		attributeSetters.put("actionId", (BiConsumer<MDRAction, Long>)MDRAction::setActionId);
+		attributeGetters.put("groupId", MDRAction::getGroupId);
+		attributeSetters.put("groupId", (BiConsumer<MDRAction, Long>)MDRAction::setGroupId);
+		attributeGetters.put("companyId", MDRAction::getCompanyId);
+		attributeSetters.put("companyId", (BiConsumer<MDRAction, Long>)MDRAction::setCompanyId);
+		attributeGetters.put("userId", MDRAction::getUserId);
+		attributeSetters.put("userId", (BiConsumer<MDRAction, Long>)MDRAction::setUserId);
+		attributeGetters.put("userName", MDRAction::getUserName);
+		attributeSetters.put("userName", (BiConsumer<MDRAction, String>)MDRAction::setUserName);
+		attributeGetters.put("createDate", MDRAction::getCreateDate);
+		attributeSetters.put("createDate", (BiConsumer<MDRAction, Date>)MDRAction::setCreateDate);
+		attributeGetters.put("modifiedDate", MDRAction::getModifiedDate);
+		attributeSetters.put("modifiedDate", (BiConsumer<MDRAction, Date>)MDRAction::setModifiedDate);
+		attributeGetters.put("classNameId", MDRAction::getClassNameId);
+		attributeSetters.put("classNameId", (BiConsumer<MDRAction, Long>)MDRAction::setClassNameId);
+		attributeGetters.put("classPK", MDRAction::getClassPK);
+		attributeSetters.put("classPK", (BiConsumer<MDRAction, Long>)MDRAction::setClassPK);
+		attributeGetters.put("ruleGroupInstanceId", MDRAction::getRuleGroupInstanceId);
+		attributeSetters.put("ruleGroupInstanceId", (BiConsumer<MDRAction, Long>)MDRAction::setRuleGroupInstanceId);
+		attributeGetters.put("name", MDRAction::getName);
+		attributeSetters.put("name", (BiConsumer<MDRAction, String>)MDRAction::setName);
+		attributeGetters.put("description", MDRAction::getDescription);
+		attributeSetters.put("description", (BiConsumer<MDRAction, String>)MDRAction::setDescription);
+		attributeGetters.put("type", MDRAction::getType);
+		attributeSetters.put("type", (BiConsumer<MDRAction, String>)MDRAction::setType);
+		attributeGetters.put("typeSettings", MDRAction::getTypeSettings);
+		attributeSetters.put("typeSettings", (BiConsumer<MDRAction, String>)MDRAction::setTypeSettings);
+		attributeGetters.put("lastPublishDate", MDRAction::getLastPublishDate);
+		attributeSetters.put("lastPublishDate", (BiConsumer<MDRAction, Date>)MDRAction::setLastPublishDate);
 
-		Long groupId = (Long)attributes.get("groupId");
-
-		if (groupId != null) {
-			setGroupId(groupId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
-		}
-
-		Long userId = (Long)attributes.get("userId");
-
-		if (userId != null) {
-			setUserId(userId);
-		}
-
-		String userName = (String)attributes.get("userName");
-
-		if (userName != null) {
-			setUserName(userName);
-		}
-
-		Date createDate = (Date)attributes.get("createDate");
-
-		if (createDate != null) {
-			setCreateDate(createDate);
-		}
-
-		Date modifiedDate = (Date)attributes.get("modifiedDate");
-
-		if (modifiedDate != null) {
-			setModifiedDate(modifiedDate);
-		}
-
-		Long classNameId = (Long)attributes.get("classNameId");
-
-		if (classNameId != null) {
-			setClassNameId(classNameId);
-		}
-
-		Long classPK = (Long)attributes.get("classPK");
-
-		if (classPK != null) {
-			setClassPK(classPK);
-		}
-
-		Long ruleGroupInstanceId = (Long)attributes.get("ruleGroupInstanceId");
-
-		if (ruleGroupInstanceId != null) {
-			setRuleGroupInstanceId(ruleGroupInstanceId);
-		}
-
-		String name = (String)attributes.get("name");
-
-		if (name != null) {
-			setName(name);
-		}
-
-		String description = (String)attributes.get("description");
-
-		if (description != null) {
-			setDescription(description);
-		}
-
-		String type = (String)attributes.get("type");
-
-		if (type != null) {
-			setType(type);
-		}
-
-		String typeSettings = (String)attributes.get("typeSettings");
-
-		if (typeSettings != null) {
-			setTypeSettings(typeSettings);
-		}
-
-		Date lastPublishDate = (Date)attributes.get("lastPublishDate");
-
-		if (lastPublishDate != null) {
-			setLastPublishDate(lastPublishDate);
-		}
+		_attributeGetters = Collections.unmodifiableMap(attributeGetters);
+		_attributeSetters = Collections.unmodifiableMap((Map)attributeSetters);
 	}
 
 	@JSON
@@ -1128,125 +1058,6 @@ public class MDRActionModelImpl extends BaseModelImpl<MDRAction>
 		}
 
 		return mdrActionCacheModel;
-	}
-
-	@Override
-	public String toString() {
-		StringBundler sb = new StringBundler(33);
-
-		sb.append("{uuid=");
-		sb.append(getUuid());
-		sb.append(", actionId=");
-		sb.append(getActionId());
-		sb.append(", groupId=");
-		sb.append(getGroupId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
-		sb.append(", userId=");
-		sb.append(getUserId());
-		sb.append(", userName=");
-		sb.append(getUserName());
-		sb.append(", createDate=");
-		sb.append(getCreateDate());
-		sb.append(", modifiedDate=");
-		sb.append(getModifiedDate());
-		sb.append(", classNameId=");
-		sb.append(getClassNameId());
-		sb.append(", classPK=");
-		sb.append(getClassPK());
-		sb.append(", ruleGroupInstanceId=");
-		sb.append(getRuleGroupInstanceId());
-		sb.append(", name=");
-		sb.append(getName());
-		sb.append(", description=");
-		sb.append(getDescription());
-		sb.append(", type=");
-		sb.append(getType());
-		sb.append(", typeSettings=");
-		sb.append(getTypeSettings());
-		sb.append(", lastPublishDate=");
-		sb.append(getLastPublishDate());
-		sb.append("}");
-
-		return sb.toString();
-	}
-
-	@Override
-	public String toXmlString() {
-		StringBundler sb = new StringBundler(52);
-
-		sb.append("<model><model-name>");
-		sb.append("com.liferay.mobile.device.rules.model.MDRAction");
-		sb.append("</model-name>");
-
-		sb.append(
-			"<column><column-name>uuid</column-name><column-value><![CDATA[");
-		sb.append(getUuid());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>actionId</column-name><column-value><![CDATA[");
-		sb.append(getActionId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>groupId</column-name><column-value><![CDATA[");
-		sb.append(getGroupId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userId</column-name><column-value><![CDATA[");
-		sb.append(getUserId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userName</column-name><column-value><![CDATA[");
-		sb.append(getUserName());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>createDate</column-name><column-value><![CDATA[");
-		sb.append(getCreateDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>modifiedDate</column-name><column-value><![CDATA[");
-		sb.append(getModifiedDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>classNameId</column-name><column-value><![CDATA[");
-		sb.append(getClassNameId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>classPK</column-name><column-value><![CDATA[");
-		sb.append(getClassPK());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>ruleGroupInstanceId</column-name><column-value><![CDATA[");
-		sb.append(getRuleGroupInstanceId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>name</column-name><column-value><![CDATA[");
-		sb.append(getName());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>description</column-name><column-value><![CDATA[");
-		sb.append(getDescription());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>type</column-name><column-value><![CDATA[");
-		sb.append(getType());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>typeSettings</column-name><column-value><![CDATA[");
-		sb.append(getTypeSettings());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>lastPublishDate</column-name><column-value><![CDATA[");
-		sb.append(getLastPublishDate());
-		sb.append("]]></column-value></column>");
-
-		sb.append("</model>");
-
-		return sb.toString();
 	}
 
 	private static final ClassLoader _classLoader = MDRAction.class.getClassLoader();

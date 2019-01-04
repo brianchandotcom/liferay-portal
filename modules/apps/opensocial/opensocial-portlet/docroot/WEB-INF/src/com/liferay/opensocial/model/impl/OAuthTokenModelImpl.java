@@ -22,8 +22,6 @@ import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 import com.liferay.opensocial.model.OAuthToken;
 import com.liferay.opensocial.model.OAuthTokenModel;
 
-import com.liferay.petra.string.StringBundler;
-
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.CacheModel;
@@ -39,9 +37,13 @@ import java.io.Serializable;
 
 import java.sql.Types;
 
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * The base model implementation for the OAuthToken service. Represents a row in the &quot;OpenSocial_OAuthToken&quot; database table, with each column mapped to a property of this class.
@@ -159,115 +161,53 @@ public class OAuthTokenModelImpl extends BaseModelImpl<OAuthToken>
 	}
 
 	@Override
-	public Map<String, Object> getModelAttributes() {
-		Map<String, Object> attributes = new HashMap<String, Object>();
-
-		attributes.put("oAuthTokenId", getOAuthTokenId());
-		attributes.put("companyId", getCompanyId());
-		attributes.put("userId", getUserId());
-		attributes.put("userName", getUserName());
-		attributes.put("createDate", getCreateDate());
-		attributes.put("modifiedDate", getModifiedDate());
-		attributes.put("gadgetKey", getGadgetKey());
-		attributes.put("serviceName", getServiceName());
-		attributes.put("moduleId", getModuleId());
-		attributes.put("accessToken", getAccessToken());
-		attributes.put("tokenName", getTokenName());
-		attributes.put("tokenSecret", getTokenSecret());
-		attributes.put("sessionHandle", getSessionHandle());
-		attributes.put("expiration", getExpiration());
-
-		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
-		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
-
-		return attributes;
+	public Map<String, Function<OAuthToken, Object>> getAttributeGetters() {
+		return _attributeGetters;
 	}
 
 	@Override
-	public void setModelAttributes(Map<String, Object> attributes) {
-		Long oAuthTokenId = (Long)attributes.get("oAuthTokenId");
+	public Map<String, BiConsumer<OAuthToken, Object>> getAttributeSetters() {
+		return _attributeSetters;
+	}
 
-		if (oAuthTokenId != null) {
-			setOAuthTokenId(oAuthTokenId);
-		}
+	private static final Map<String, Function<OAuthToken, Object>> _attributeGetters;
+	private static final Map<String, BiConsumer<OAuthToken, Object>> _attributeSetters;
 
-		Long companyId = (Long)attributes.get("companyId");
+	static {
+		Map<String, Function<OAuthToken, Object>> attributeGetters = new LinkedHashMap<String, Function<OAuthToken, Object>>();
+		Map<String, BiConsumer<OAuthToken, ?>> attributeSetters = new LinkedHashMap<String, BiConsumer<OAuthToken, ?>>();
 
-		if (companyId != null) {
-			setCompanyId(companyId);
-		}
+		attributeGetters.put("oAuthTokenId", OAuthToken::getOAuthTokenId);
+		attributeSetters.put("oAuthTokenId", (BiConsumer<OAuthToken, Long>)OAuthToken::setOAuthTokenId);
+		attributeGetters.put("companyId", OAuthToken::getCompanyId);
+		attributeSetters.put("companyId", (BiConsumer<OAuthToken, Long>)OAuthToken::setCompanyId);
+		attributeGetters.put("userId", OAuthToken::getUserId);
+		attributeSetters.put("userId", (BiConsumer<OAuthToken, Long>)OAuthToken::setUserId);
+		attributeGetters.put("userName", OAuthToken::getUserName);
+		attributeSetters.put("userName", (BiConsumer<OAuthToken, String>)OAuthToken::setUserName);
+		attributeGetters.put("createDate", OAuthToken::getCreateDate);
+		attributeSetters.put("createDate", (BiConsumer<OAuthToken, Date>)OAuthToken::setCreateDate);
+		attributeGetters.put("modifiedDate", OAuthToken::getModifiedDate);
+		attributeSetters.put("modifiedDate", (BiConsumer<OAuthToken, Date>)OAuthToken::setModifiedDate);
+		attributeGetters.put("gadgetKey", OAuthToken::getGadgetKey);
+		attributeSetters.put("gadgetKey", (BiConsumer<OAuthToken, String>)OAuthToken::setGadgetKey);
+		attributeGetters.put("serviceName", OAuthToken::getServiceName);
+		attributeSetters.put("serviceName", (BiConsumer<OAuthToken, String>)OAuthToken::setServiceName);
+		attributeGetters.put("moduleId", OAuthToken::getModuleId);
+		attributeSetters.put("moduleId", (BiConsumer<OAuthToken, Long>)OAuthToken::setModuleId);
+		attributeGetters.put("accessToken", OAuthToken::getAccessToken);
+		attributeSetters.put("accessToken", (BiConsumer<OAuthToken, String>)OAuthToken::setAccessToken);
+		attributeGetters.put("tokenName", OAuthToken::getTokenName);
+		attributeSetters.put("tokenName", (BiConsumer<OAuthToken, String>)OAuthToken::setTokenName);
+		attributeGetters.put("tokenSecret", OAuthToken::getTokenSecret);
+		attributeSetters.put("tokenSecret", (BiConsumer<OAuthToken, String>)OAuthToken::setTokenSecret);
+		attributeGetters.put("sessionHandle", OAuthToken::getSessionHandle);
+		attributeSetters.put("sessionHandle", (BiConsumer<OAuthToken, String>)OAuthToken::setSessionHandle);
+		attributeGetters.put("expiration", OAuthToken::getExpiration);
+		attributeSetters.put("expiration", (BiConsumer<OAuthToken, Long>)OAuthToken::setExpiration);
 
-		Long userId = (Long)attributes.get("userId");
-
-		if (userId != null) {
-			setUserId(userId);
-		}
-
-		String userName = (String)attributes.get("userName");
-
-		if (userName != null) {
-			setUserName(userName);
-		}
-
-		Date createDate = (Date)attributes.get("createDate");
-
-		if (createDate != null) {
-			setCreateDate(createDate);
-		}
-
-		Date modifiedDate = (Date)attributes.get("modifiedDate");
-
-		if (modifiedDate != null) {
-			setModifiedDate(modifiedDate);
-		}
-
-		String gadgetKey = (String)attributes.get("gadgetKey");
-
-		if (gadgetKey != null) {
-			setGadgetKey(gadgetKey);
-		}
-
-		String serviceName = (String)attributes.get("serviceName");
-
-		if (serviceName != null) {
-			setServiceName(serviceName);
-		}
-
-		Long moduleId = (Long)attributes.get("moduleId");
-
-		if (moduleId != null) {
-			setModuleId(moduleId);
-		}
-
-		String accessToken = (String)attributes.get("accessToken");
-
-		if (accessToken != null) {
-			setAccessToken(accessToken);
-		}
-
-		String tokenName = (String)attributes.get("tokenName");
-
-		if (tokenName != null) {
-			setTokenName(tokenName);
-		}
-
-		String tokenSecret = (String)attributes.get("tokenSecret");
-
-		if (tokenSecret != null) {
-			setTokenSecret(tokenSecret);
-		}
-
-		String sessionHandle = (String)attributes.get("sessionHandle");
-
-		if (sessionHandle != null) {
-			setSessionHandle(sessionHandle);
-		}
-
-		Long expiration = (Long)attributes.get("expiration");
-
-		if (expiration != null) {
-			setExpiration(expiration);
-		}
+		_attributeGetters = Collections.unmodifiableMap(attributeGetters);
+		_attributeSetters = Collections.unmodifiableMap((Map)attributeSetters);
 	}
 
 	@Override
@@ -736,113 +676,6 @@ public class OAuthTokenModelImpl extends BaseModelImpl<OAuthToken>
 		oAuthTokenCacheModel.expiration = getExpiration();
 
 		return oAuthTokenCacheModel;
-	}
-
-	@Override
-	public String toString() {
-		StringBundler sb = new StringBundler(29);
-
-		sb.append("{oAuthTokenId=");
-		sb.append(getOAuthTokenId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
-		sb.append(", userId=");
-		sb.append(getUserId());
-		sb.append(", userName=");
-		sb.append(getUserName());
-		sb.append(", createDate=");
-		sb.append(getCreateDate());
-		sb.append(", modifiedDate=");
-		sb.append(getModifiedDate());
-		sb.append(", gadgetKey=");
-		sb.append(getGadgetKey());
-		sb.append(", serviceName=");
-		sb.append(getServiceName());
-		sb.append(", moduleId=");
-		sb.append(getModuleId());
-		sb.append(", accessToken=");
-		sb.append(getAccessToken());
-		sb.append(", tokenName=");
-		sb.append(getTokenName());
-		sb.append(", tokenSecret=");
-		sb.append(getTokenSecret());
-		sb.append(", sessionHandle=");
-		sb.append(getSessionHandle());
-		sb.append(", expiration=");
-		sb.append(getExpiration());
-		sb.append("}");
-
-		return sb.toString();
-	}
-
-	@Override
-	public String toXmlString() {
-		StringBundler sb = new StringBundler(46);
-
-		sb.append("<model><model-name>");
-		sb.append("com.liferay.opensocial.model.OAuthToken");
-		sb.append("</model-name>");
-
-		sb.append(
-			"<column><column-name>oAuthTokenId</column-name><column-value><![CDATA[");
-		sb.append(getOAuthTokenId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userId</column-name><column-value><![CDATA[");
-		sb.append(getUserId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userName</column-name><column-value><![CDATA[");
-		sb.append(getUserName());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>createDate</column-name><column-value><![CDATA[");
-		sb.append(getCreateDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>modifiedDate</column-name><column-value><![CDATA[");
-		sb.append(getModifiedDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>gadgetKey</column-name><column-value><![CDATA[");
-		sb.append(getGadgetKey());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>serviceName</column-name><column-value><![CDATA[");
-		sb.append(getServiceName());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>moduleId</column-name><column-value><![CDATA[");
-		sb.append(getModuleId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>accessToken</column-name><column-value><![CDATA[");
-		sb.append(getAccessToken());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>tokenName</column-name><column-value><![CDATA[");
-		sb.append(getTokenName());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>tokenSecret</column-name><column-value><![CDATA[");
-		sb.append(getTokenSecret());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>sessionHandle</column-name><column-value><![CDATA[");
-		sb.append(getSessionHandle());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>expiration</column-name><column-value><![CDATA[");
-		sb.append(getExpiration());
-		sb.append("]]></column-value></column>");
-
-		sb.append("</model>");
-
-		return sb.toString();
 	}
 
 	private static final ClassLoader _classLoader = OAuthToken.class.getClassLoader();

@@ -19,8 +19,6 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 
-import com.liferay.petra.string.StringBundler;
-
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.CacheModel;
@@ -38,8 +36,12 @@ import java.io.Serializable;
 
 import java.sql.Types;
 
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * The base model implementation for the RecentLayoutRevision service. Represents a row in the &quot;RecentLayoutRevision&quot; database table, with each column mapped to a property of this class.
@@ -145,74 +147,41 @@ public class RecentLayoutRevisionModelImpl extends BaseModelImpl<RecentLayoutRev
 	}
 
 	@Override
-	public Map<String, Object> getModelAttributes() {
-		Map<String, Object> attributes = new HashMap<String, Object>();
-
-		attributes.put("mvccVersion", getMvccVersion());
-		attributes.put("recentLayoutRevisionId", getRecentLayoutRevisionId());
-		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
-		attributes.put("userId", getUserId());
-		attributes.put("layoutRevisionId", getLayoutRevisionId());
-		attributes.put("layoutSetBranchId", getLayoutSetBranchId());
-		attributes.put("plid", getPlid());
-
-		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
-		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
-
-		return attributes;
+	public Map<String, Function<RecentLayoutRevision, Object>> getAttributeGetters() {
+		return _attributeGetters;
 	}
 
 	@Override
-	public void setModelAttributes(Map<String, Object> attributes) {
-		Long mvccVersion = (Long)attributes.get("mvccVersion");
+	public Map<String, BiConsumer<RecentLayoutRevision, Object>> getAttributeSetters() {
+		return _attributeSetters;
+	}
 
-		if (mvccVersion != null) {
-			setMvccVersion(mvccVersion);
-		}
+	private static final Map<String, Function<RecentLayoutRevision, Object>> _attributeGetters;
+	private static final Map<String, BiConsumer<RecentLayoutRevision, Object>> _attributeSetters;
 
-		Long recentLayoutRevisionId = (Long)attributes.get(
-				"recentLayoutRevisionId");
+	static {
+		Map<String, Function<RecentLayoutRevision, Object>> attributeGetters = new LinkedHashMap<String, Function<RecentLayoutRevision, Object>>();
+		Map<String, BiConsumer<RecentLayoutRevision, ?>> attributeSetters = new LinkedHashMap<String, BiConsumer<RecentLayoutRevision, ?>>();
 
-		if (recentLayoutRevisionId != null) {
-			setRecentLayoutRevisionId(recentLayoutRevisionId);
-		}
+		attributeGetters.put("mvccVersion", RecentLayoutRevision::getMvccVersion);
+		attributeSetters.put("mvccVersion", (BiConsumer<RecentLayoutRevision, Long>)RecentLayoutRevision::setMvccVersion);
+		attributeGetters.put("recentLayoutRevisionId", RecentLayoutRevision::getRecentLayoutRevisionId);
+		attributeSetters.put("recentLayoutRevisionId", (BiConsumer<RecentLayoutRevision, Long>)RecentLayoutRevision::setRecentLayoutRevisionId);
+		attributeGetters.put("groupId", RecentLayoutRevision::getGroupId);
+		attributeSetters.put("groupId", (BiConsumer<RecentLayoutRevision, Long>)RecentLayoutRevision::setGroupId);
+		attributeGetters.put("companyId", RecentLayoutRevision::getCompanyId);
+		attributeSetters.put("companyId", (BiConsumer<RecentLayoutRevision, Long>)RecentLayoutRevision::setCompanyId);
+		attributeGetters.put("userId", RecentLayoutRevision::getUserId);
+		attributeSetters.put("userId", (BiConsumer<RecentLayoutRevision, Long>)RecentLayoutRevision::setUserId);
+		attributeGetters.put("layoutRevisionId", RecentLayoutRevision::getLayoutRevisionId);
+		attributeSetters.put("layoutRevisionId", (BiConsumer<RecentLayoutRevision, Long>)RecentLayoutRevision::setLayoutRevisionId);
+		attributeGetters.put("layoutSetBranchId", RecentLayoutRevision::getLayoutSetBranchId);
+		attributeSetters.put("layoutSetBranchId", (BiConsumer<RecentLayoutRevision, Long>)RecentLayoutRevision::setLayoutSetBranchId);
+		attributeGetters.put("plid", RecentLayoutRevision::getPlid);
+		attributeSetters.put("plid", (BiConsumer<RecentLayoutRevision, Long>)RecentLayoutRevision::setPlid);
 
-		Long groupId = (Long)attributes.get("groupId");
-
-		if (groupId != null) {
-			setGroupId(groupId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
-		}
-
-		Long userId = (Long)attributes.get("userId");
-
-		if (userId != null) {
-			setUserId(userId);
-		}
-
-		Long layoutRevisionId = (Long)attributes.get("layoutRevisionId");
-
-		if (layoutRevisionId != null) {
-			setLayoutRevisionId(layoutRevisionId);
-		}
-
-		Long layoutSetBranchId = (Long)attributes.get("layoutSetBranchId");
-
-		if (layoutSetBranchId != null) {
-			setLayoutSetBranchId(layoutSetBranchId);
-		}
-
-		Long plid = (Long)attributes.get("plid");
-
-		if (plid != null) {
-			setPlid(plid);
-		}
+		_attributeGetters = Collections.unmodifiableMap(attributeGetters);
+		_attributeSetters = Collections.unmodifiableMap((Map)attributeSetters);
 	}
 
 	@Override
@@ -516,77 +485,6 @@ public class RecentLayoutRevisionModelImpl extends BaseModelImpl<RecentLayoutRev
 		recentLayoutRevisionCacheModel.plid = getPlid();
 
 		return recentLayoutRevisionCacheModel;
-	}
-
-	@Override
-	public String toString() {
-		StringBundler sb = new StringBundler(17);
-
-		sb.append("{mvccVersion=");
-		sb.append(getMvccVersion());
-		sb.append(", recentLayoutRevisionId=");
-		sb.append(getRecentLayoutRevisionId());
-		sb.append(", groupId=");
-		sb.append(getGroupId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
-		sb.append(", userId=");
-		sb.append(getUserId());
-		sb.append(", layoutRevisionId=");
-		sb.append(getLayoutRevisionId());
-		sb.append(", layoutSetBranchId=");
-		sb.append(getLayoutSetBranchId());
-		sb.append(", plid=");
-		sb.append(getPlid());
-		sb.append("}");
-
-		return sb.toString();
-	}
-
-	@Override
-	public String toXmlString() {
-		StringBundler sb = new StringBundler(28);
-
-		sb.append("<model><model-name>");
-		sb.append("com.liferay.portal.kernel.model.RecentLayoutRevision");
-		sb.append("</model-name>");
-
-		sb.append(
-			"<column><column-name>mvccVersion</column-name><column-value><![CDATA[");
-		sb.append(getMvccVersion());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>recentLayoutRevisionId</column-name><column-value><![CDATA[");
-		sb.append(getRecentLayoutRevisionId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>groupId</column-name><column-value><![CDATA[");
-		sb.append(getGroupId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userId</column-name><column-value><![CDATA[");
-		sb.append(getUserId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>layoutRevisionId</column-name><column-value><![CDATA[");
-		sb.append(getLayoutRevisionId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>layoutSetBranchId</column-name><column-value><![CDATA[");
-		sb.append(getLayoutSetBranchId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>plid</column-name><column-value><![CDATA[");
-		sb.append(getPlid());
-		sb.append("]]></column-value></column>");
-
-		sb.append("</model>");
-
-		return sb.toString();
 	}
 
 	private static final ClassLoader _classLoader = RecentLayoutRevision.class.getClassLoader();

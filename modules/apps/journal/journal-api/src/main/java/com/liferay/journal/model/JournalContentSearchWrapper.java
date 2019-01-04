@@ -19,9 +19,6 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
-import java.util.HashMap;
-import java.util.Map;
-
 /**
  * <p>
  * This class is a wrapper for {@link JournalContentSearch}.
@@ -37,66 +34,6 @@ public class JournalContentSearchWrapper extends BaseModelWrapper<JournalContent
 	public JournalContentSearchWrapper(
 		JournalContentSearch journalContentSearch) {
 		super(journalContentSearch);
-	}
-
-	@Override
-	public Map<String, Object> getModelAttributes() {
-		Map<String, Object> attributes = new HashMap<String, Object>();
-
-		attributes.put("contentSearchId", getContentSearchId());
-		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
-		attributes.put("privateLayout", isPrivateLayout());
-		attributes.put("layoutId", getLayoutId());
-		attributes.put("portletId", getPortletId());
-		attributes.put("articleId", getArticleId());
-
-		return attributes;
-	}
-
-	@Override
-	public void setModelAttributes(Map<String, Object> attributes) {
-		Long contentSearchId = (Long)attributes.get("contentSearchId");
-
-		if (contentSearchId != null) {
-			setContentSearchId(contentSearchId);
-		}
-
-		Long groupId = (Long)attributes.get("groupId");
-
-		if (groupId != null) {
-			setGroupId(groupId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
-		}
-
-		Boolean privateLayout = (Boolean)attributes.get("privateLayout");
-
-		if (privateLayout != null) {
-			setPrivateLayout(privateLayout);
-		}
-
-		Long layoutId = (Long)attributes.get("layoutId");
-
-		if (layoutId != null) {
-			setLayoutId(layoutId);
-		}
-
-		String portletId = (String)attributes.get("portletId");
-
-		if (portletId != null) {
-			setPortletId(portletId);
-		}
-
-		String articleId = (String)attributes.get("articleId");
-
-		if (articleId != null) {
-			setArticleId(articleId);
-		}
 	}
 
 	/**

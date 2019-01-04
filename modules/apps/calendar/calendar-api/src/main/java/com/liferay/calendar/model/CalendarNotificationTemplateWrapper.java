@@ -22,8 +22,6 @@ import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * <p>
@@ -41,126 +39,6 @@ public class CalendarNotificationTemplateWrapper extends BaseModelWrapper<Calend
 	public CalendarNotificationTemplateWrapper(
 		CalendarNotificationTemplate calendarNotificationTemplate) {
 		super(calendarNotificationTemplate);
-	}
-
-	@Override
-	public Map<String, Object> getModelAttributes() {
-		Map<String, Object> attributes = new HashMap<String, Object>();
-
-		attributes.put("uuid", getUuid());
-		attributes.put("calendarNotificationTemplateId",
-			getCalendarNotificationTemplateId());
-		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
-		attributes.put("userId", getUserId());
-		attributes.put("userName", getUserName());
-		attributes.put("createDate", getCreateDate());
-		attributes.put("modifiedDate", getModifiedDate());
-		attributes.put("calendarId", getCalendarId());
-		attributes.put("notificationType", getNotificationType());
-		attributes.put("notificationTypeSettings", getNotificationTypeSettings());
-		attributes.put("notificationTemplateType", getNotificationTemplateType());
-		attributes.put("subject", getSubject());
-		attributes.put("body", getBody());
-		attributes.put("lastPublishDate", getLastPublishDate());
-
-		return attributes;
-	}
-
-	@Override
-	public void setModelAttributes(Map<String, Object> attributes) {
-		String uuid = (String)attributes.get("uuid");
-
-		if (uuid != null) {
-			setUuid(uuid);
-		}
-
-		Long calendarNotificationTemplateId = (Long)attributes.get(
-				"calendarNotificationTemplateId");
-
-		if (calendarNotificationTemplateId != null) {
-			setCalendarNotificationTemplateId(calendarNotificationTemplateId);
-		}
-
-		Long groupId = (Long)attributes.get("groupId");
-
-		if (groupId != null) {
-			setGroupId(groupId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
-		}
-
-		Long userId = (Long)attributes.get("userId");
-
-		if (userId != null) {
-			setUserId(userId);
-		}
-
-		String userName = (String)attributes.get("userName");
-
-		if (userName != null) {
-			setUserName(userName);
-		}
-
-		Date createDate = (Date)attributes.get("createDate");
-
-		if (createDate != null) {
-			setCreateDate(createDate);
-		}
-
-		Date modifiedDate = (Date)attributes.get("modifiedDate");
-
-		if (modifiedDate != null) {
-			setModifiedDate(modifiedDate);
-		}
-
-		Long calendarId = (Long)attributes.get("calendarId");
-
-		if (calendarId != null) {
-			setCalendarId(calendarId);
-		}
-
-		String notificationType = (String)attributes.get("notificationType");
-
-		if (notificationType != null) {
-			setNotificationType(notificationType);
-		}
-
-		String notificationTypeSettings = (String)attributes.get(
-				"notificationTypeSettings");
-
-		if (notificationTypeSettings != null) {
-			setNotificationTypeSettings(notificationTypeSettings);
-		}
-
-		String notificationTemplateType = (String)attributes.get(
-				"notificationTemplateType");
-
-		if (notificationTemplateType != null) {
-			setNotificationTemplateType(notificationTemplateType);
-		}
-
-		String subject = (String)attributes.get("subject");
-
-		if (subject != null) {
-			setSubject(subject);
-		}
-
-		String body = (String)attributes.get("body");
-
-		if (body != null) {
-			setBody(body);
-		}
-
-		Date lastPublishDate = (Date)attributes.get("lastPublishDate");
-
-		if (lastPublishDate != null) {
-			setLastPublishDate(lastPublishDate);
-		}
 	}
 
 	/**

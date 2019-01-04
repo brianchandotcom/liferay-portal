@@ -21,8 +21,6 @@ import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 
-import com.liferay.petra.string.StringBundler;
-
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSON;
@@ -45,10 +43,14 @@ import java.io.Serializable;
 import java.sql.Types;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * The base model implementation for the SiteNavigationMenuItem service. Represents a row in the &quot;SiteNavigationMenuItem&quot; database table, with each column mapped to a property of this class.
@@ -225,125 +227,55 @@ public class SiteNavigationMenuItemModelImpl extends BaseModelImpl<SiteNavigatio
 	}
 
 	@Override
-	public Map<String, Object> getModelAttributes() {
-		Map<String, Object> attributes = new HashMap<String, Object>();
-
-		attributes.put("uuid", getUuid());
-		attributes.put("siteNavigationMenuItemId", getSiteNavigationMenuItemId());
-		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
-		attributes.put("userId", getUserId());
-		attributes.put("userName", getUserName());
-		attributes.put("createDate", getCreateDate());
-		attributes.put("modifiedDate", getModifiedDate());
-		attributes.put("siteNavigationMenuId", getSiteNavigationMenuId());
-		attributes.put("parentSiteNavigationMenuItemId",
-			getParentSiteNavigationMenuItemId());
-		attributes.put("name", getName());
-		attributes.put("type", getType());
-		attributes.put("typeSettings", getTypeSettings());
-		attributes.put("order", getOrder());
-		attributes.put("lastPublishDate", getLastPublishDate());
-
-		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
-		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
-
-		return attributes;
+	public Map<String, Function<SiteNavigationMenuItem, Object>> getAttributeGetters() {
+		return _attributeGetters;
 	}
 
 	@Override
-	public void setModelAttributes(Map<String, Object> attributes) {
-		String uuid = (String)attributes.get("uuid");
+	public Map<String, BiConsumer<SiteNavigationMenuItem, Object>> getAttributeSetters() {
+		return _attributeSetters;
+	}
 
-		if (uuid != null) {
-			setUuid(uuid);
-		}
+	private static final Map<String, Function<SiteNavigationMenuItem, Object>> _attributeGetters;
+	private static final Map<String, BiConsumer<SiteNavigationMenuItem, Object>> _attributeSetters;
 
-		Long siteNavigationMenuItemId = (Long)attributes.get(
-				"siteNavigationMenuItemId");
+	static {
+		Map<String, Function<SiteNavigationMenuItem, Object>> attributeGetters = new LinkedHashMap<String, Function<SiteNavigationMenuItem, Object>>();
+		Map<String, BiConsumer<SiteNavigationMenuItem, ?>> attributeSetters = new LinkedHashMap<String, BiConsumer<SiteNavigationMenuItem, ?>>();
 
-		if (siteNavigationMenuItemId != null) {
-			setSiteNavigationMenuItemId(siteNavigationMenuItemId);
-		}
+		attributeGetters.put("uuid", SiteNavigationMenuItem::getUuid);
+		attributeSetters.put("uuid", (BiConsumer<SiteNavigationMenuItem, String>)SiteNavigationMenuItem::setUuid);
+		attributeGetters.put("siteNavigationMenuItemId", SiteNavigationMenuItem::getSiteNavigationMenuItemId);
+		attributeSetters.put("siteNavigationMenuItemId", (BiConsumer<SiteNavigationMenuItem, Long>)SiteNavigationMenuItem::setSiteNavigationMenuItemId);
+		attributeGetters.put("groupId", SiteNavigationMenuItem::getGroupId);
+		attributeSetters.put("groupId", (BiConsumer<SiteNavigationMenuItem, Long>)SiteNavigationMenuItem::setGroupId);
+		attributeGetters.put("companyId", SiteNavigationMenuItem::getCompanyId);
+		attributeSetters.put("companyId", (BiConsumer<SiteNavigationMenuItem, Long>)SiteNavigationMenuItem::setCompanyId);
+		attributeGetters.put("userId", SiteNavigationMenuItem::getUserId);
+		attributeSetters.put("userId", (BiConsumer<SiteNavigationMenuItem, Long>)SiteNavigationMenuItem::setUserId);
+		attributeGetters.put("userName", SiteNavigationMenuItem::getUserName);
+		attributeSetters.put("userName", (BiConsumer<SiteNavigationMenuItem, String>)SiteNavigationMenuItem::setUserName);
+		attributeGetters.put("createDate", SiteNavigationMenuItem::getCreateDate);
+		attributeSetters.put("createDate", (BiConsumer<SiteNavigationMenuItem, Date>)SiteNavigationMenuItem::setCreateDate);
+		attributeGetters.put("modifiedDate", SiteNavigationMenuItem::getModifiedDate);
+		attributeSetters.put("modifiedDate", (BiConsumer<SiteNavigationMenuItem, Date>)SiteNavigationMenuItem::setModifiedDate);
+		attributeGetters.put("siteNavigationMenuId", SiteNavigationMenuItem::getSiteNavigationMenuId);
+		attributeSetters.put("siteNavigationMenuId", (BiConsumer<SiteNavigationMenuItem, Long>)SiteNavigationMenuItem::setSiteNavigationMenuId);
+		attributeGetters.put("parentSiteNavigationMenuItemId", SiteNavigationMenuItem::getParentSiteNavigationMenuItemId);
+		attributeSetters.put("parentSiteNavigationMenuItemId", (BiConsumer<SiteNavigationMenuItem, Long>)SiteNavigationMenuItem::setParentSiteNavigationMenuItemId);
+		attributeGetters.put("name", SiteNavigationMenuItem::getName);
+		attributeSetters.put("name", (BiConsumer<SiteNavigationMenuItem, String>)SiteNavigationMenuItem::setName);
+		attributeGetters.put("type", SiteNavigationMenuItem::getType);
+		attributeSetters.put("type", (BiConsumer<SiteNavigationMenuItem, String>)SiteNavigationMenuItem::setType);
+		attributeGetters.put("typeSettings", SiteNavigationMenuItem::getTypeSettings);
+		attributeSetters.put("typeSettings", (BiConsumer<SiteNavigationMenuItem, String>)SiteNavigationMenuItem::setTypeSettings);
+		attributeGetters.put("order", SiteNavigationMenuItem::getOrder);
+		attributeSetters.put("order", (BiConsumer<SiteNavigationMenuItem, Integer>)SiteNavigationMenuItem::setOrder);
+		attributeGetters.put("lastPublishDate", SiteNavigationMenuItem::getLastPublishDate);
+		attributeSetters.put("lastPublishDate", (BiConsumer<SiteNavigationMenuItem, Date>)SiteNavigationMenuItem::setLastPublishDate);
 
-		Long groupId = (Long)attributes.get("groupId");
-
-		if (groupId != null) {
-			setGroupId(groupId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
-		}
-
-		Long userId = (Long)attributes.get("userId");
-
-		if (userId != null) {
-			setUserId(userId);
-		}
-
-		String userName = (String)attributes.get("userName");
-
-		if (userName != null) {
-			setUserName(userName);
-		}
-
-		Date createDate = (Date)attributes.get("createDate");
-
-		if (createDate != null) {
-			setCreateDate(createDate);
-		}
-
-		Date modifiedDate = (Date)attributes.get("modifiedDate");
-
-		if (modifiedDate != null) {
-			setModifiedDate(modifiedDate);
-		}
-
-		Long siteNavigationMenuId = (Long)attributes.get("siteNavigationMenuId");
-
-		if (siteNavigationMenuId != null) {
-			setSiteNavigationMenuId(siteNavigationMenuId);
-		}
-
-		Long parentSiteNavigationMenuItemId = (Long)attributes.get(
-				"parentSiteNavigationMenuItemId");
-
-		if (parentSiteNavigationMenuItemId != null) {
-			setParentSiteNavigationMenuItemId(parentSiteNavigationMenuItemId);
-		}
-
-		String name = (String)attributes.get("name");
-
-		if (name != null) {
-			setName(name);
-		}
-
-		String type = (String)attributes.get("type");
-
-		if (type != null) {
-			setType(type);
-		}
-
-		String typeSettings = (String)attributes.get("typeSettings");
-
-		if (typeSettings != null) {
-			setTypeSettings(typeSettings);
-		}
-
-		Integer order = (Integer)attributes.get("order");
-
-		if (order != null) {
-			setOrder(order);
-		}
-
-		Date lastPublishDate = (Date)attributes.get("lastPublishDate");
-
-		if (lastPublishDate != null) {
-			setLastPublishDate(lastPublishDate);
-		}
+		_attributeGetters = Collections.unmodifiableMap(attributeGetters);
+		_attributeSetters = Collections.unmodifiableMap((Map)attributeSetters);
 	}
 
 	@JSON
@@ -850,119 +782,6 @@ public class SiteNavigationMenuItemModelImpl extends BaseModelImpl<SiteNavigatio
 		}
 
 		return siteNavigationMenuItemCacheModel;
-	}
-
-	@Override
-	public String toString() {
-		StringBundler sb = new StringBundler(31);
-
-		sb.append("{uuid=");
-		sb.append(getUuid());
-		sb.append(", siteNavigationMenuItemId=");
-		sb.append(getSiteNavigationMenuItemId());
-		sb.append(", groupId=");
-		sb.append(getGroupId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
-		sb.append(", userId=");
-		sb.append(getUserId());
-		sb.append(", userName=");
-		sb.append(getUserName());
-		sb.append(", createDate=");
-		sb.append(getCreateDate());
-		sb.append(", modifiedDate=");
-		sb.append(getModifiedDate());
-		sb.append(", siteNavigationMenuId=");
-		sb.append(getSiteNavigationMenuId());
-		sb.append(", parentSiteNavigationMenuItemId=");
-		sb.append(getParentSiteNavigationMenuItemId());
-		sb.append(", name=");
-		sb.append(getName());
-		sb.append(", type=");
-		sb.append(getType());
-		sb.append(", typeSettings=");
-		sb.append(getTypeSettings());
-		sb.append(", order=");
-		sb.append(getOrder());
-		sb.append(", lastPublishDate=");
-		sb.append(getLastPublishDate());
-		sb.append("}");
-
-		return sb.toString();
-	}
-
-	@Override
-	public String toXmlString() {
-		StringBundler sb = new StringBundler(49);
-
-		sb.append("<model><model-name>");
-		sb.append("com.liferay.site.navigation.model.SiteNavigationMenuItem");
-		sb.append("</model-name>");
-
-		sb.append(
-			"<column><column-name>uuid</column-name><column-value><![CDATA[");
-		sb.append(getUuid());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>siteNavigationMenuItemId</column-name><column-value><![CDATA[");
-		sb.append(getSiteNavigationMenuItemId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>groupId</column-name><column-value><![CDATA[");
-		sb.append(getGroupId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userId</column-name><column-value><![CDATA[");
-		sb.append(getUserId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userName</column-name><column-value><![CDATA[");
-		sb.append(getUserName());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>createDate</column-name><column-value><![CDATA[");
-		sb.append(getCreateDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>modifiedDate</column-name><column-value><![CDATA[");
-		sb.append(getModifiedDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>siteNavigationMenuId</column-name><column-value><![CDATA[");
-		sb.append(getSiteNavigationMenuId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>parentSiteNavigationMenuItemId</column-name><column-value><![CDATA[");
-		sb.append(getParentSiteNavigationMenuItemId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>name</column-name><column-value><![CDATA[");
-		sb.append(getName());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>type</column-name><column-value><![CDATA[");
-		sb.append(getType());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>typeSettings</column-name><column-value><![CDATA[");
-		sb.append(getTypeSettings());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>order</column-name><column-value><![CDATA[");
-		sb.append(getOrder());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>lastPublishDate</column-name><column-value><![CDATA[");
-		sb.append(getLastPublishDate());
-		sb.append("]]></column-value></column>");
-
-		sb.append("</model>");
-
-		return sb.toString();
 	}
 
 	private static final ClassLoader _classLoader = SiteNavigationMenuItem.class.getClassLoader();

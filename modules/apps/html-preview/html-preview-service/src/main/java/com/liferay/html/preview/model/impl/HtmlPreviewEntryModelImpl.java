@@ -22,8 +22,6 @@ import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 import com.liferay.html.preview.model.HtmlPreviewEntry;
 import com.liferay.html.preview.model.HtmlPreviewEntryModel;
 
-import com.liferay.petra.string.StringBundler;
-
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.CacheModel;
@@ -41,9 +39,13 @@ import java.io.Serializable;
 
 import java.sql.Types;
 
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * The base model implementation for the HtmlPreviewEntry service. Represents a row in the &quot;HtmlPreviewEntry&quot; database table, with each column mapped to a property of this class.
@@ -151,87 +153,45 @@ public class HtmlPreviewEntryModelImpl extends BaseModelImpl<HtmlPreviewEntry>
 	}
 
 	@Override
-	public Map<String, Object> getModelAttributes() {
-		Map<String, Object> attributes = new HashMap<String, Object>();
-
-		attributes.put("htmlPreviewEntryId", getHtmlPreviewEntryId());
-		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
-		attributes.put("userId", getUserId());
-		attributes.put("userName", getUserName());
-		attributes.put("createDate", getCreateDate());
-		attributes.put("modifiedDate", getModifiedDate());
-		attributes.put("classNameId", getClassNameId());
-		attributes.put("classPK", getClassPK());
-		attributes.put("fileEntryId", getFileEntryId());
-
-		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
-		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
-
-		return attributes;
+	public Map<String, Function<HtmlPreviewEntry, Object>> getAttributeGetters() {
+		return _attributeGetters;
 	}
 
 	@Override
-	public void setModelAttributes(Map<String, Object> attributes) {
-		Long htmlPreviewEntryId = (Long)attributes.get("htmlPreviewEntryId");
+	public Map<String, BiConsumer<HtmlPreviewEntry, Object>> getAttributeSetters() {
+		return _attributeSetters;
+	}
 
-		if (htmlPreviewEntryId != null) {
-			setHtmlPreviewEntryId(htmlPreviewEntryId);
-		}
+	private static final Map<String, Function<HtmlPreviewEntry, Object>> _attributeGetters;
+	private static final Map<String, BiConsumer<HtmlPreviewEntry, Object>> _attributeSetters;
 
-		Long groupId = (Long)attributes.get("groupId");
+	static {
+		Map<String, Function<HtmlPreviewEntry, Object>> attributeGetters = new LinkedHashMap<String, Function<HtmlPreviewEntry, Object>>();
+		Map<String, BiConsumer<HtmlPreviewEntry, ?>> attributeSetters = new LinkedHashMap<String, BiConsumer<HtmlPreviewEntry, ?>>();
 
-		if (groupId != null) {
-			setGroupId(groupId);
-		}
+		attributeGetters.put("htmlPreviewEntryId", HtmlPreviewEntry::getHtmlPreviewEntryId);
+		attributeSetters.put("htmlPreviewEntryId", (BiConsumer<HtmlPreviewEntry, Long>)HtmlPreviewEntry::setHtmlPreviewEntryId);
+		attributeGetters.put("groupId", HtmlPreviewEntry::getGroupId);
+		attributeSetters.put("groupId", (BiConsumer<HtmlPreviewEntry, Long>)HtmlPreviewEntry::setGroupId);
+		attributeGetters.put("companyId", HtmlPreviewEntry::getCompanyId);
+		attributeSetters.put("companyId", (BiConsumer<HtmlPreviewEntry, Long>)HtmlPreviewEntry::setCompanyId);
+		attributeGetters.put("userId", HtmlPreviewEntry::getUserId);
+		attributeSetters.put("userId", (BiConsumer<HtmlPreviewEntry, Long>)HtmlPreviewEntry::setUserId);
+		attributeGetters.put("userName", HtmlPreviewEntry::getUserName);
+		attributeSetters.put("userName", (BiConsumer<HtmlPreviewEntry, String>)HtmlPreviewEntry::setUserName);
+		attributeGetters.put("createDate", HtmlPreviewEntry::getCreateDate);
+		attributeSetters.put("createDate", (BiConsumer<HtmlPreviewEntry, Date>)HtmlPreviewEntry::setCreateDate);
+		attributeGetters.put("modifiedDate", HtmlPreviewEntry::getModifiedDate);
+		attributeSetters.put("modifiedDate", (BiConsumer<HtmlPreviewEntry, Date>)HtmlPreviewEntry::setModifiedDate);
+		attributeGetters.put("classNameId", HtmlPreviewEntry::getClassNameId);
+		attributeSetters.put("classNameId", (BiConsumer<HtmlPreviewEntry, Long>)HtmlPreviewEntry::setClassNameId);
+		attributeGetters.put("classPK", HtmlPreviewEntry::getClassPK);
+		attributeSetters.put("classPK", (BiConsumer<HtmlPreviewEntry, Long>)HtmlPreviewEntry::setClassPK);
+		attributeGetters.put("fileEntryId", HtmlPreviewEntry::getFileEntryId);
+		attributeSetters.put("fileEntryId", (BiConsumer<HtmlPreviewEntry, Long>)HtmlPreviewEntry::setFileEntryId);
 
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
-		}
-
-		Long userId = (Long)attributes.get("userId");
-
-		if (userId != null) {
-			setUserId(userId);
-		}
-
-		String userName = (String)attributes.get("userName");
-
-		if (userName != null) {
-			setUserName(userName);
-		}
-
-		Date createDate = (Date)attributes.get("createDate");
-
-		if (createDate != null) {
-			setCreateDate(createDate);
-		}
-
-		Date modifiedDate = (Date)attributes.get("modifiedDate");
-
-		if (modifiedDate != null) {
-			setModifiedDate(modifiedDate);
-		}
-
-		Long classNameId = (Long)attributes.get("classNameId");
-
-		if (classNameId != null) {
-			setClassNameId(classNameId);
-		}
-
-		Long classPK = (Long)attributes.get("classPK");
-
-		if (classPK != null) {
-			setClassPK(classPK);
-		}
-
-		Long fileEntryId = (Long)attributes.get("fileEntryId");
-
-		if (fileEntryId != null) {
-			setFileEntryId(fileEntryId);
-		}
+		_attributeGetters = Collections.unmodifiableMap(attributeGetters);
+		_attributeSetters = Collections.unmodifiableMap((Map)attributeSetters);
 	}
 
 	@Override
@@ -582,89 +542,6 @@ public class HtmlPreviewEntryModelImpl extends BaseModelImpl<HtmlPreviewEntry>
 		htmlPreviewEntryCacheModel.fileEntryId = getFileEntryId();
 
 		return htmlPreviewEntryCacheModel;
-	}
-
-	@Override
-	public String toString() {
-		StringBundler sb = new StringBundler(21);
-
-		sb.append("{htmlPreviewEntryId=");
-		sb.append(getHtmlPreviewEntryId());
-		sb.append(", groupId=");
-		sb.append(getGroupId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
-		sb.append(", userId=");
-		sb.append(getUserId());
-		sb.append(", userName=");
-		sb.append(getUserName());
-		sb.append(", createDate=");
-		sb.append(getCreateDate());
-		sb.append(", modifiedDate=");
-		sb.append(getModifiedDate());
-		sb.append(", classNameId=");
-		sb.append(getClassNameId());
-		sb.append(", classPK=");
-		sb.append(getClassPK());
-		sb.append(", fileEntryId=");
-		sb.append(getFileEntryId());
-		sb.append("}");
-
-		return sb.toString();
-	}
-
-	@Override
-	public String toXmlString() {
-		StringBundler sb = new StringBundler(34);
-
-		sb.append("<model><model-name>");
-		sb.append("com.liferay.html.preview.model.HtmlPreviewEntry");
-		sb.append("</model-name>");
-
-		sb.append(
-			"<column><column-name>htmlPreviewEntryId</column-name><column-value><![CDATA[");
-		sb.append(getHtmlPreviewEntryId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>groupId</column-name><column-value><![CDATA[");
-		sb.append(getGroupId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userId</column-name><column-value><![CDATA[");
-		sb.append(getUserId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userName</column-name><column-value><![CDATA[");
-		sb.append(getUserName());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>createDate</column-name><column-value><![CDATA[");
-		sb.append(getCreateDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>modifiedDate</column-name><column-value><![CDATA[");
-		sb.append(getModifiedDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>classNameId</column-name><column-value><![CDATA[");
-		sb.append(getClassNameId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>classPK</column-name><column-value><![CDATA[");
-		sb.append(getClassPK());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>fileEntryId</column-name><column-value><![CDATA[");
-		sb.append(getFileEntryId());
-		sb.append("]]></column-value></column>");
-
-		sb.append("</model>");
-
-		return sb.toString();
 	}
 
 	private static final ClassLoader _classLoader = HtmlPreviewEntry.class.getClassLoader();

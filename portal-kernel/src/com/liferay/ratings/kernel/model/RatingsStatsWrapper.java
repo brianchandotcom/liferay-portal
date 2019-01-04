@@ -19,9 +19,6 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
-import java.util.HashMap;
-import java.util.Map;
-
 /**
  * <p>
  * This class is a wrapper for {@link RatingsStats}.
@@ -36,66 +33,6 @@ public class RatingsStatsWrapper extends BaseModelWrapper<RatingsStats>
 	implements RatingsStats, ModelWrapper<RatingsStats> {
 	public RatingsStatsWrapper(RatingsStats ratingsStats) {
 		super(ratingsStats);
-	}
-
-	@Override
-	public Map<String, Object> getModelAttributes() {
-		Map<String, Object> attributes = new HashMap<String, Object>();
-
-		attributes.put("statsId", getStatsId());
-		attributes.put("companyId", getCompanyId());
-		attributes.put("classNameId", getClassNameId());
-		attributes.put("classPK", getClassPK());
-		attributes.put("totalEntries", getTotalEntries());
-		attributes.put("totalScore", getTotalScore());
-		attributes.put("averageScore", getAverageScore());
-
-		return attributes;
-	}
-
-	@Override
-	public void setModelAttributes(Map<String, Object> attributes) {
-		Long statsId = (Long)attributes.get("statsId");
-
-		if (statsId != null) {
-			setStatsId(statsId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
-		}
-
-		Long classNameId = (Long)attributes.get("classNameId");
-
-		if (classNameId != null) {
-			setClassNameId(classNameId);
-		}
-
-		Long classPK = (Long)attributes.get("classPK");
-
-		if (classPK != null) {
-			setClassPK(classPK);
-		}
-
-		Integer totalEntries = (Integer)attributes.get("totalEntries");
-
-		if (totalEntries != null) {
-			setTotalEntries(totalEntries);
-		}
-
-		Double totalScore = (Double)attributes.get("totalScore");
-
-		if (totalScore != null) {
-			setTotalScore(totalScore);
-		}
-
-		Double averageScore = (Double)attributes.get("averageScore");
-
-		if (averageScore != null) {
-			setAverageScore(averageScore);
-		}
 	}
 
 	/**

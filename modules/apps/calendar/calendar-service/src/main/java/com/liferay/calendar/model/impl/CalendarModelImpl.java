@@ -25,8 +25,6 @@ import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 
-import com.liferay.petra.string.StringBundler;
-
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.LocaleException;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -49,13 +47,17 @@ import java.io.Serializable;
 import java.sql.Types;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * The base model implementation for the Calendar service. Represents a row in the &quot;Calendar&quot; database table, with each column mapped to a property of this class.
@@ -235,136 +237,59 @@ public class CalendarModelImpl extends BaseModelImpl<Calendar>
 	}
 
 	@Override
-	public Map<String, Object> getModelAttributes() {
-		Map<String, Object> attributes = new HashMap<String, Object>();
-
-		attributes.put("uuid", getUuid());
-		attributes.put("calendarId", getCalendarId());
-		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
-		attributes.put("userId", getUserId());
-		attributes.put("userName", getUserName());
-		attributes.put("createDate", getCreateDate());
-		attributes.put("modifiedDate", getModifiedDate());
-		attributes.put("calendarResourceId", getCalendarResourceId());
-		attributes.put("name", getName());
-		attributes.put("description", getDescription());
-		attributes.put("timeZoneId", getTimeZoneId());
-		attributes.put("color", getColor());
-		attributes.put("defaultCalendar", isDefaultCalendar());
-		attributes.put("enableComments", isEnableComments());
-		attributes.put("enableRatings", isEnableRatings());
-		attributes.put("lastPublishDate", getLastPublishDate());
-
-		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
-		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
-
-		return attributes;
+	public Map<String, Function<Calendar, Object>> getAttributeGetters() {
+		return _attributeGetters;
 	}
 
 	@Override
-	public void setModelAttributes(Map<String, Object> attributes) {
-		String uuid = (String)attributes.get("uuid");
+	public Map<String, BiConsumer<Calendar, Object>> getAttributeSetters() {
+		return _attributeSetters;
+	}
 
-		if (uuid != null) {
-			setUuid(uuid);
-		}
+	private static final Map<String, Function<Calendar, Object>> _attributeGetters;
+	private static final Map<String, BiConsumer<Calendar, Object>> _attributeSetters;
 
-		Long calendarId = (Long)attributes.get("calendarId");
+	static {
+		Map<String, Function<Calendar, Object>> attributeGetters = new LinkedHashMap<String, Function<Calendar, Object>>();
+		Map<String, BiConsumer<Calendar, ?>> attributeSetters = new LinkedHashMap<String, BiConsumer<Calendar, ?>>();
 
-		if (calendarId != null) {
-			setCalendarId(calendarId);
-		}
+		attributeGetters.put("uuid", Calendar::getUuid);
+		attributeSetters.put("uuid", (BiConsumer<Calendar, String>)Calendar::setUuid);
+		attributeGetters.put("calendarId", Calendar::getCalendarId);
+		attributeSetters.put("calendarId", (BiConsumer<Calendar, Long>)Calendar::setCalendarId);
+		attributeGetters.put("groupId", Calendar::getGroupId);
+		attributeSetters.put("groupId", (BiConsumer<Calendar, Long>)Calendar::setGroupId);
+		attributeGetters.put("companyId", Calendar::getCompanyId);
+		attributeSetters.put("companyId", (BiConsumer<Calendar, Long>)Calendar::setCompanyId);
+		attributeGetters.put("userId", Calendar::getUserId);
+		attributeSetters.put("userId", (BiConsumer<Calendar, Long>)Calendar::setUserId);
+		attributeGetters.put("userName", Calendar::getUserName);
+		attributeSetters.put("userName", (BiConsumer<Calendar, String>)Calendar::setUserName);
+		attributeGetters.put("createDate", Calendar::getCreateDate);
+		attributeSetters.put("createDate", (BiConsumer<Calendar, Date>)Calendar::setCreateDate);
+		attributeGetters.put("modifiedDate", Calendar::getModifiedDate);
+		attributeSetters.put("modifiedDate", (BiConsumer<Calendar, Date>)Calendar::setModifiedDate);
+		attributeGetters.put("calendarResourceId", Calendar::getCalendarResourceId);
+		attributeSetters.put("calendarResourceId", (BiConsumer<Calendar, Long>)Calendar::setCalendarResourceId);
+		attributeGetters.put("name", Calendar::getName);
+		attributeSetters.put("name", (BiConsumer<Calendar, String>)Calendar::setName);
+		attributeGetters.put("description", Calendar::getDescription);
+		attributeSetters.put("description", (BiConsumer<Calendar, String>)Calendar::setDescription);
+		attributeGetters.put("timeZoneId", Calendar::getTimeZoneId);
+		attributeSetters.put("timeZoneId", (BiConsumer<Calendar, String>)Calendar::setTimeZoneId);
+		attributeGetters.put("color", Calendar::getColor);
+		attributeSetters.put("color", (BiConsumer<Calendar, Integer>)Calendar::setColor);
+		attributeGetters.put("defaultCalendar", Calendar::getDefaultCalendar);
+		attributeSetters.put("defaultCalendar", (BiConsumer<Calendar, Boolean>)Calendar::setDefaultCalendar);
+		attributeGetters.put("enableComments", Calendar::getEnableComments);
+		attributeSetters.put("enableComments", (BiConsumer<Calendar, Boolean>)Calendar::setEnableComments);
+		attributeGetters.put("enableRatings", Calendar::getEnableRatings);
+		attributeSetters.put("enableRatings", (BiConsumer<Calendar, Boolean>)Calendar::setEnableRatings);
+		attributeGetters.put("lastPublishDate", Calendar::getLastPublishDate);
+		attributeSetters.put("lastPublishDate", (BiConsumer<Calendar, Date>)Calendar::setLastPublishDate);
 
-		Long groupId = (Long)attributes.get("groupId");
-
-		if (groupId != null) {
-			setGroupId(groupId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
-		}
-
-		Long userId = (Long)attributes.get("userId");
-
-		if (userId != null) {
-			setUserId(userId);
-		}
-
-		String userName = (String)attributes.get("userName");
-
-		if (userName != null) {
-			setUserName(userName);
-		}
-
-		Date createDate = (Date)attributes.get("createDate");
-
-		if (createDate != null) {
-			setCreateDate(createDate);
-		}
-
-		Date modifiedDate = (Date)attributes.get("modifiedDate");
-
-		if (modifiedDate != null) {
-			setModifiedDate(modifiedDate);
-		}
-
-		Long calendarResourceId = (Long)attributes.get("calendarResourceId");
-
-		if (calendarResourceId != null) {
-			setCalendarResourceId(calendarResourceId);
-		}
-
-		String name = (String)attributes.get("name");
-
-		if (name != null) {
-			setName(name);
-		}
-
-		String description = (String)attributes.get("description");
-
-		if (description != null) {
-			setDescription(description);
-		}
-
-		String timeZoneId = (String)attributes.get("timeZoneId");
-
-		if (timeZoneId != null) {
-			setTimeZoneId(timeZoneId);
-		}
-
-		Integer color = (Integer)attributes.get("color");
-
-		if (color != null) {
-			setColor(color);
-		}
-
-		Boolean defaultCalendar = (Boolean)attributes.get("defaultCalendar");
-
-		if (defaultCalendar != null) {
-			setDefaultCalendar(defaultCalendar);
-		}
-
-		Boolean enableComments = (Boolean)attributes.get("enableComments");
-
-		if (enableComments != null) {
-			setEnableComments(enableComments);
-		}
-
-		Boolean enableRatings = (Boolean)attributes.get("enableRatings");
-
-		if (enableRatings != null) {
-			setEnableRatings(enableRatings);
-		}
-
-		Date lastPublishDate = (Date)attributes.get("lastPublishDate");
-
-		if (lastPublishDate != null) {
-			setLastPublishDate(lastPublishDate);
-		}
+		_attributeGetters = Collections.unmodifiableMap(attributeGetters);
+		_attributeSetters = Collections.unmodifiableMap((Map)attributeSetters);
 	}
 
 	@JSON
@@ -1156,131 +1081,6 @@ public class CalendarModelImpl extends BaseModelImpl<Calendar>
 		}
 
 		return calendarCacheModel;
-	}
-
-	@Override
-	public String toString() {
-		StringBundler sb = new StringBundler(35);
-
-		sb.append("{uuid=");
-		sb.append(getUuid());
-		sb.append(", calendarId=");
-		sb.append(getCalendarId());
-		sb.append(", groupId=");
-		sb.append(getGroupId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
-		sb.append(", userId=");
-		sb.append(getUserId());
-		sb.append(", userName=");
-		sb.append(getUserName());
-		sb.append(", createDate=");
-		sb.append(getCreateDate());
-		sb.append(", modifiedDate=");
-		sb.append(getModifiedDate());
-		sb.append(", calendarResourceId=");
-		sb.append(getCalendarResourceId());
-		sb.append(", name=");
-		sb.append(getName());
-		sb.append(", description=");
-		sb.append(getDescription());
-		sb.append(", timeZoneId=");
-		sb.append(getTimeZoneId());
-		sb.append(", color=");
-		sb.append(getColor());
-		sb.append(", defaultCalendar=");
-		sb.append(isDefaultCalendar());
-		sb.append(", enableComments=");
-		sb.append(isEnableComments());
-		sb.append(", enableRatings=");
-		sb.append(isEnableRatings());
-		sb.append(", lastPublishDate=");
-		sb.append(getLastPublishDate());
-		sb.append("}");
-
-		return sb.toString();
-	}
-
-	@Override
-	public String toXmlString() {
-		StringBundler sb = new StringBundler(55);
-
-		sb.append("<model><model-name>");
-		sb.append("com.liferay.calendar.model.Calendar");
-		sb.append("</model-name>");
-
-		sb.append(
-			"<column><column-name>uuid</column-name><column-value><![CDATA[");
-		sb.append(getUuid());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>calendarId</column-name><column-value><![CDATA[");
-		sb.append(getCalendarId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>groupId</column-name><column-value><![CDATA[");
-		sb.append(getGroupId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userId</column-name><column-value><![CDATA[");
-		sb.append(getUserId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userName</column-name><column-value><![CDATA[");
-		sb.append(getUserName());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>createDate</column-name><column-value><![CDATA[");
-		sb.append(getCreateDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>modifiedDate</column-name><column-value><![CDATA[");
-		sb.append(getModifiedDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>calendarResourceId</column-name><column-value><![CDATA[");
-		sb.append(getCalendarResourceId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>name</column-name><column-value><![CDATA[");
-		sb.append(getName());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>description</column-name><column-value><![CDATA[");
-		sb.append(getDescription());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>timeZoneId</column-name><column-value><![CDATA[");
-		sb.append(getTimeZoneId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>color</column-name><column-value><![CDATA[");
-		sb.append(getColor());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>defaultCalendar</column-name><column-value><![CDATA[");
-		sb.append(isDefaultCalendar());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>enableComments</column-name><column-value><![CDATA[");
-		sb.append(isEnableComments());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>enableRatings</column-name><column-value><![CDATA[");
-		sb.append(isEnableRatings());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>lastPublishDate</column-name><column-value><![CDATA[");
-		sb.append(getLastPublishDate());
-		sb.append("]]></column-value></column>");
-
-		sb.append("</model>");
-
-		return sb.toString();
 	}
 
 	private static final ClassLoader _classLoader = Calendar.class.getClassLoader();

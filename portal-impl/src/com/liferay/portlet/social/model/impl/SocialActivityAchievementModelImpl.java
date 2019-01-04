@@ -19,8 +19,6 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 
-import com.liferay.petra.string.StringBundler;
-
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.CacheModel;
@@ -39,8 +37,12 @@ import java.io.Serializable;
 
 import java.sql.Types;
 
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * The base model implementation for the SocialActivityAchievement service. Represents a row in the &quot;SocialActivityAchievement&quot; database table, with each column mapped to a property of this class.
@@ -143,67 +145,40 @@ public class SocialActivityAchievementModelImpl extends BaseModelImpl<SocialActi
 	}
 
 	@Override
-	public Map<String, Object> getModelAttributes() {
-		Map<String, Object> attributes = new HashMap<String, Object>();
-
-		attributes.put("activityAchievementId", getActivityAchievementId());
-		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
-		attributes.put("userId", getUserId());
-		attributes.put("createDate", getCreateDate());
-		attributes.put("name", getName());
-		attributes.put("firstInGroup", isFirstInGroup());
-
-		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
-		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
-
-		return attributes;
+	public Map<String, Function<SocialActivityAchievement, Object>> getAttributeGetters() {
+		return _attributeGetters;
 	}
 
 	@Override
-	public void setModelAttributes(Map<String, Object> attributes) {
-		Long activityAchievementId = (Long)attributes.get(
-				"activityAchievementId");
+	public Map<String, BiConsumer<SocialActivityAchievement, Object>> getAttributeSetters() {
+		return _attributeSetters;
+	}
 
-		if (activityAchievementId != null) {
-			setActivityAchievementId(activityAchievementId);
-		}
+	private static final Map<String, Function<SocialActivityAchievement, Object>> _attributeGetters;
+	private static final Map<String, BiConsumer<SocialActivityAchievement, Object>> _attributeSetters;
 
-		Long groupId = (Long)attributes.get("groupId");
+	static {
+		Map<String, Function<SocialActivityAchievement, Object>> attributeGetters =
+			new LinkedHashMap<String, Function<SocialActivityAchievement, Object>>();
+		Map<String, BiConsumer<SocialActivityAchievement, ?>> attributeSetters = new LinkedHashMap<String, BiConsumer<SocialActivityAchievement, ?>>();
 
-		if (groupId != null) {
-			setGroupId(groupId);
-		}
+		attributeGetters.put("activityAchievementId", SocialActivityAchievement::getActivityAchievementId);
+		attributeSetters.put("activityAchievementId", (BiConsumer<SocialActivityAchievement, Long>)SocialActivityAchievement::setActivityAchievementId);
+		attributeGetters.put("groupId", SocialActivityAchievement::getGroupId);
+		attributeSetters.put("groupId", (BiConsumer<SocialActivityAchievement, Long>)SocialActivityAchievement::setGroupId);
+		attributeGetters.put("companyId", SocialActivityAchievement::getCompanyId);
+		attributeSetters.put("companyId", (BiConsumer<SocialActivityAchievement, Long>)SocialActivityAchievement::setCompanyId);
+		attributeGetters.put("userId", SocialActivityAchievement::getUserId);
+		attributeSetters.put("userId", (BiConsumer<SocialActivityAchievement, Long>)SocialActivityAchievement::setUserId);
+		attributeGetters.put("createDate", SocialActivityAchievement::getCreateDate);
+		attributeSetters.put("createDate", (BiConsumer<SocialActivityAchievement, Long>)SocialActivityAchievement::setCreateDate);
+		attributeGetters.put("name", SocialActivityAchievement::getName);
+		attributeSetters.put("name", (BiConsumer<SocialActivityAchievement, String>)SocialActivityAchievement::setName);
+		attributeGetters.put("firstInGroup", SocialActivityAchievement::getFirstInGroup);
+		attributeSetters.put("firstInGroup", (BiConsumer<SocialActivityAchievement, Boolean>)SocialActivityAchievement::setFirstInGroup);
 
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
-		}
-
-		Long userId = (Long)attributes.get("userId");
-
-		if (userId != null) {
-			setUserId(userId);
-		}
-
-		Long createDate = (Long)attributes.get("createDate");
-
-		if (createDate != null) {
-			setCreateDate(createDate);
-		}
-
-		String name = (String)attributes.get("name");
-
-		if (name != null) {
-			setName(name);
-		}
-
-		Boolean firstInGroup = (Boolean)attributes.get("firstInGroup");
-
-		if (firstInGroup != null) {
-			setFirstInGroup(firstInGroup);
-		}
+		_attributeGetters = Collections.unmodifiableMap(attributeGetters);
+		_attributeSetters = Collections.unmodifiableMap((Map)attributeSetters);
 	}
 
 	@Override
@@ -490,71 +465,6 @@ public class SocialActivityAchievementModelImpl extends BaseModelImpl<SocialActi
 		socialActivityAchievementCacheModel.firstInGroup = isFirstInGroup();
 
 		return socialActivityAchievementCacheModel;
-	}
-
-	@Override
-	public String toString() {
-		StringBundler sb = new StringBundler(15);
-
-		sb.append("{activityAchievementId=");
-		sb.append(getActivityAchievementId());
-		sb.append(", groupId=");
-		sb.append(getGroupId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
-		sb.append(", userId=");
-		sb.append(getUserId());
-		sb.append(", createDate=");
-		sb.append(getCreateDate());
-		sb.append(", name=");
-		sb.append(getName());
-		sb.append(", firstInGroup=");
-		sb.append(isFirstInGroup());
-		sb.append("}");
-
-		return sb.toString();
-	}
-
-	@Override
-	public String toXmlString() {
-		StringBundler sb = new StringBundler(25);
-
-		sb.append("<model><model-name>");
-		sb.append("com.liferay.social.kernel.model.SocialActivityAchievement");
-		sb.append("</model-name>");
-
-		sb.append(
-			"<column><column-name>activityAchievementId</column-name><column-value><![CDATA[");
-		sb.append(getActivityAchievementId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>groupId</column-name><column-value><![CDATA[");
-		sb.append(getGroupId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userId</column-name><column-value><![CDATA[");
-		sb.append(getUserId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>createDate</column-name><column-value><![CDATA[");
-		sb.append(getCreateDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>name</column-name><column-value><![CDATA[");
-		sb.append(getName());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>firstInGroup</column-name><column-value><![CDATA[");
-		sb.append(isFirstInGroup());
-		sb.append("]]></column-value></column>");
-
-		sb.append("</model>");
-
-		return sb.toString();
 	}
 
 	private static final ClassLoader _classLoader = SocialActivityAchievement.class.getClassLoader();

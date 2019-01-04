@@ -22,8 +22,6 @@ import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 import com.liferay.opensocial.model.OAuthConsumer;
 import com.liferay.opensocial.model.OAuthConsumerModel;
 
-import com.liferay.petra.string.StringBundler;
-
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.ModelWrapper;
@@ -36,9 +34,13 @@ import java.io.Serializable;
 
 import java.sql.Types;
 
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * The base model implementation for the OAuthConsumer service. Represents a row in the &quot;OpenSocial_OAuthConsumer&quot; database table, with each column mapped to a property of this class.
@@ -142,80 +144,43 @@ public class OAuthConsumerModelImpl extends BaseModelImpl<OAuthConsumer>
 	}
 
 	@Override
-	public Map<String, Object> getModelAttributes() {
-		Map<String, Object> attributes = new HashMap<String, Object>();
-
-		attributes.put("oAuthConsumerId", getOAuthConsumerId());
-		attributes.put("companyId", getCompanyId());
-		attributes.put("createDate", getCreateDate());
-		attributes.put("modifiedDate", getModifiedDate());
-		attributes.put("gadgetKey", getGadgetKey());
-		attributes.put("serviceName", getServiceName());
-		attributes.put("consumerKey", getConsumerKey());
-		attributes.put("consumerSecret", getConsumerSecret());
-		attributes.put("keyType", getKeyType());
-
-		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
-		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
-
-		return attributes;
+	public Map<String, Function<OAuthConsumer, Object>> getAttributeGetters() {
+		return _attributeGetters;
 	}
 
 	@Override
-	public void setModelAttributes(Map<String, Object> attributes) {
-		Long oAuthConsumerId = (Long)attributes.get("oAuthConsumerId");
+	public Map<String, BiConsumer<OAuthConsumer, Object>> getAttributeSetters() {
+		return _attributeSetters;
+	}
 
-		if (oAuthConsumerId != null) {
-			setOAuthConsumerId(oAuthConsumerId);
-		}
+	private static final Map<String, Function<OAuthConsumer, Object>> _attributeGetters;
+	private static final Map<String, BiConsumer<OAuthConsumer, Object>> _attributeSetters;
 
-		Long companyId = (Long)attributes.get("companyId");
+	static {
+		Map<String, Function<OAuthConsumer, Object>> attributeGetters = new LinkedHashMap<String, Function<OAuthConsumer, Object>>();
+		Map<String, BiConsumer<OAuthConsumer, ?>> attributeSetters = new LinkedHashMap<String, BiConsumer<OAuthConsumer, ?>>();
 
-		if (companyId != null) {
-			setCompanyId(companyId);
-		}
+		attributeGetters.put("oAuthConsumerId", OAuthConsumer::getOAuthConsumerId);
+		attributeSetters.put("oAuthConsumerId", (BiConsumer<OAuthConsumer, Long>)OAuthConsumer::setOAuthConsumerId);
+		attributeGetters.put("companyId", OAuthConsumer::getCompanyId);
+		attributeSetters.put("companyId", (BiConsumer<OAuthConsumer, Long>)OAuthConsumer::setCompanyId);
+		attributeGetters.put("createDate", OAuthConsumer::getCreateDate);
+		attributeSetters.put("createDate", (BiConsumer<OAuthConsumer, Date>)OAuthConsumer::setCreateDate);
+		attributeGetters.put("modifiedDate", OAuthConsumer::getModifiedDate);
+		attributeSetters.put("modifiedDate", (BiConsumer<OAuthConsumer, Date>)OAuthConsumer::setModifiedDate);
+		attributeGetters.put("gadgetKey", OAuthConsumer::getGadgetKey);
+		attributeSetters.put("gadgetKey", (BiConsumer<OAuthConsumer, String>)OAuthConsumer::setGadgetKey);
+		attributeGetters.put("serviceName", OAuthConsumer::getServiceName);
+		attributeSetters.put("serviceName", (BiConsumer<OAuthConsumer, String>)OAuthConsumer::setServiceName);
+		attributeGetters.put("consumerKey", OAuthConsumer::getConsumerKey);
+		attributeSetters.put("consumerKey", (BiConsumer<OAuthConsumer, String>)OAuthConsumer::setConsumerKey);
+		attributeGetters.put("consumerSecret", OAuthConsumer::getConsumerSecret);
+		attributeSetters.put("consumerSecret", (BiConsumer<OAuthConsumer, String>)OAuthConsumer::setConsumerSecret);
+		attributeGetters.put("keyType", OAuthConsumer::getKeyType);
+		attributeSetters.put("keyType", (BiConsumer<OAuthConsumer, String>)OAuthConsumer::setKeyType);
 
-		Date createDate = (Date)attributes.get("createDate");
-
-		if (createDate != null) {
-			setCreateDate(createDate);
-		}
-
-		Date modifiedDate = (Date)attributes.get("modifiedDate");
-
-		if (modifiedDate != null) {
-			setModifiedDate(modifiedDate);
-		}
-
-		String gadgetKey = (String)attributes.get("gadgetKey");
-
-		if (gadgetKey != null) {
-			setGadgetKey(gadgetKey);
-		}
-
-		String serviceName = (String)attributes.get("serviceName");
-
-		if (serviceName != null) {
-			setServiceName(serviceName);
-		}
-
-		String consumerKey = (String)attributes.get("consumerKey");
-
-		if (consumerKey != null) {
-			setConsumerKey(consumerKey);
-		}
-
-		String consumerSecret = (String)attributes.get("consumerSecret");
-
-		if (consumerSecret != null) {
-			setConsumerSecret(consumerSecret);
-		}
-
-		String keyType = (String)attributes.get("keyType");
-
-		if (keyType != null) {
-			setKeyType(keyType);
-		}
+		_attributeGetters = Collections.unmodifiableMap(attributeGetters);
+		_attributeSetters = Collections.unmodifiableMap((Map)attributeSetters);
 	}
 
 	@Override
@@ -535,83 +500,6 @@ public class OAuthConsumerModelImpl extends BaseModelImpl<OAuthConsumer>
 		}
 
 		return oAuthConsumerCacheModel;
-	}
-
-	@Override
-	public String toString() {
-		StringBundler sb = new StringBundler(19);
-
-		sb.append("{oAuthConsumerId=");
-		sb.append(getOAuthConsumerId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
-		sb.append(", createDate=");
-		sb.append(getCreateDate());
-		sb.append(", modifiedDate=");
-		sb.append(getModifiedDate());
-		sb.append(", gadgetKey=");
-		sb.append(getGadgetKey());
-		sb.append(", serviceName=");
-		sb.append(getServiceName());
-		sb.append(", consumerKey=");
-		sb.append(getConsumerKey());
-		sb.append(", consumerSecret=");
-		sb.append(getConsumerSecret());
-		sb.append(", keyType=");
-		sb.append(getKeyType());
-		sb.append("}");
-
-		return sb.toString();
-	}
-
-	@Override
-	public String toXmlString() {
-		StringBundler sb = new StringBundler(31);
-
-		sb.append("<model><model-name>");
-		sb.append("com.liferay.opensocial.model.OAuthConsumer");
-		sb.append("</model-name>");
-
-		sb.append(
-			"<column><column-name>oAuthConsumerId</column-name><column-value><![CDATA[");
-		sb.append(getOAuthConsumerId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>createDate</column-name><column-value><![CDATA[");
-		sb.append(getCreateDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>modifiedDate</column-name><column-value><![CDATA[");
-		sb.append(getModifiedDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>gadgetKey</column-name><column-value><![CDATA[");
-		sb.append(getGadgetKey());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>serviceName</column-name><column-value><![CDATA[");
-		sb.append(getServiceName());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>consumerKey</column-name><column-value><![CDATA[");
-		sb.append(getConsumerKey());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>consumerSecret</column-name><column-value><![CDATA[");
-		sb.append(getConsumerSecret());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>keyType</column-name><column-value><![CDATA[");
-		sb.append(getKeyType());
-		sb.append("]]></column-value></column>");
-
-		sb.append("</model>");
-
-		return sb.toString();
 	}
 
 	private static final ClassLoader _classLoader = OAuthConsumer.class.getClassLoader();

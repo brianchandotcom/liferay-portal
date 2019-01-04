@@ -19,8 +19,6 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 
-import com.liferay.petra.string.StringBundler;
-
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSON;
@@ -42,10 +40,14 @@ import java.io.Serializable;
 import java.sql.Types;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * The base model implementation for the PowwowParticipant service. Represents a row in the &quot;PowwowParticipant&quot; database table, with each column mapped to a property of this class.
@@ -213,108 +215,51 @@ public class PowwowParticipantModelImpl extends BaseModelImpl<PowwowParticipant>
 	}
 
 	@Override
-	public Map<String, Object> getModelAttributes() {
-		Map<String, Object> attributes = new HashMap<String, Object>();
-
-		attributes.put("powwowParticipantId", getPowwowParticipantId());
-		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
-		attributes.put("userId", getUserId());
-		attributes.put("userName", getUserName());
-		attributes.put("createDate", getCreateDate());
-		attributes.put("modifiedDate", getModifiedDate());
-		attributes.put("powwowMeetingId", getPowwowMeetingId());
-		attributes.put("name", getName());
-		attributes.put("participantUserId", getParticipantUserId());
-		attributes.put("emailAddress", getEmailAddress());
-		attributes.put("type", getType());
-		attributes.put("status", getStatus());
-
-		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
-		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
-
-		return attributes;
+	public Map<String, Function<PowwowParticipant, Object>> getAttributeGetters() {
+		return _attributeGetters;
 	}
 
 	@Override
-	public void setModelAttributes(Map<String, Object> attributes) {
-		Long powwowParticipantId = (Long)attributes.get("powwowParticipantId");
+	public Map<String, BiConsumer<PowwowParticipant, Object>> getAttributeSetters() {
+		return _attributeSetters;
+	}
 
-		if (powwowParticipantId != null) {
-			setPowwowParticipantId(powwowParticipantId);
-		}
+	private static final Map<String, Function<PowwowParticipant, Object>> _attributeGetters;
+	private static final Map<String, BiConsumer<PowwowParticipant, Object>> _attributeSetters;
 
-		Long groupId = (Long)attributes.get("groupId");
+	static {
+		Map<String, Function<PowwowParticipant, Object>> attributeGetters = new LinkedHashMap<String, Function<PowwowParticipant, Object>>();
+		Map<String, BiConsumer<PowwowParticipant, ?>> attributeSetters = new LinkedHashMap<String, BiConsumer<PowwowParticipant, ?>>();
 
-		if (groupId != null) {
-			setGroupId(groupId);
-		}
+		attributeGetters.put("powwowParticipantId", PowwowParticipant::getPowwowParticipantId);
+		attributeSetters.put("powwowParticipantId", (BiConsumer<PowwowParticipant, Long>)PowwowParticipant::setPowwowParticipantId);
+		attributeGetters.put("groupId", PowwowParticipant::getGroupId);
+		attributeSetters.put("groupId", (BiConsumer<PowwowParticipant, Long>)PowwowParticipant::setGroupId);
+		attributeGetters.put("companyId", PowwowParticipant::getCompanyId);
+		attributeSetters.put("companyId", (BiConsumer<PowwowParticipant, Long>)PowwowParticipant::setCompanyId);
+		attributeGetters.put("userId", PowwowParticipant::getUserId);
+		attributeSetters.put("userId", (BiConsumer<PowwowParticipant, Long>)PowwowParticipant::setUserId);
+		attributeGetters.put("userName", PowwowParticipant::getUserName);
+		attributeSetters.put("userName", (BiConsumer<PowwowParticipant, String>)PowwowParticipant::setUserName);
+		attributeGetters.put("createDate", PowwowParticipant::getCreateDate);
+		attributeSetters.put("createDate", (BiConsumer<PowwowParticipant, Date>)PowwowParticipant::setCreateDate);
+		attributeGetters.put("modifiedDate", PowwowParticipant::getModifiedDate);
+		attributeSetters.put("modifiedDate", (BiConsumer<PowwowParticipant, Date>)PowwowParticipant::setModifiedDate);
+		attributeGetters.put("powwowMeetingId", PowwowParticipant::getPowwowMeetingId);
+		attributeSetters.put("powwowMeetingId", (BiConsumer<PowwowParticipant, Long>)PowwowParticipant::setPowwowMeetingId);
+		attributeGetters.put("name", PowwowParticipant::getName);
+		attributeSetters.put("name", (BiConsumer<PowwowParticipant, String>)PowwowParticipant::setName);
+		attributeGetters.put("participantUserId", PowwowParticipant::getParticipantUserId);
+		attributeSetters.put("participantUserId", (BiConsumer<PowwowParticipant, Long>)PowwowParticipant::setParticipantUserId);
+		attributeGetters.put("emailAddress", PowwowParticipant::getEmailAddress);
+		attributeSetters.put("emailAddress", (BiConsumer<PowwowParticipant, String>)PowwowParticipant::setEmailAddress);
+		attributeGetters.put("type", PowwowParticipant::getType);
+		attributeSetters.put("type", (BiConsumer<PowwowParticipant, Integer>)PowwowParticipant::setType);
+		attributeGetters.put("status", PowwowParticipant::getStatus);
+		attributeSetters.put("status", (BiConsumer<PowwowParticipant, Integer>)PowwowParticipant::setStatus);
 
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
-		}
-
-		Long userId = (Long)attributes.get("userId");
-
-		if (userId != null) {
-			setUserId(userId);
-		}
-
-		String userName = (String)attributes.get("userName");
-
-		if (userName != null) {
-			setUserName(userName);
-		}
-
-		Date createDate = (Date)attributes.get("createDate");
-
-		if (createDate != null) {
-			setCreateDate(createDate);
-		}
-
-		Date modifiedDate = (Date)attributes.get("modifiedDate");
-
-		if (modifiedDate != null) {
-			setModifiedDate(modifiedDate);
-		}
-
-		Long powwowMeetingId = (Long)attributes.get("powwowMeetingId");
-
-		if (powwowMeetingId != null) {
-			setPowwowMeetingId(powwowMeetingId);
-		}
-
-		String name = (String)attributes.get("name");
-
-		if (name != null) {
-			setName(name);
-		}
-
-		Long participantUserId = (Long)attributes.get("participantUserId");
-
-		if (participantUserId != null) {
-			setParticipantUserId(participantUserId);
-		}
-
-		String emailAddress = (String)attributes.get("emailAddress");
-
-		if (emailAddress != null) {
-			setEmailAddress(emailAddress);
-		}
-
-		Integer type = (Integer)attributes.get("type");
-
-		if (type != null) {
-			setType(type);
-		}
-
-		Integer status = (Integer)attributes.get("status");
-
-		if (status != null) {
-			setStatus(status);
-		}
+		_attributeGetters = Collections.unmodifiableMap(attributeGetters);
+		_attributeSetters = Collections.unmodifiableMap((Map)attributeSetters);
 	}
 
 	@JSON
@@ -747,107 +692,6 @@ public class PowwowParticipantModelImpl extends BaseModelImpl<PowwowParticipant>
 		powwowParticipantCacheModel.status = getStatus();
 
 		return powwowParticipantCacheModel;
-	}
-
-	@Override
-	public String toString() {
-		StringBundler sb = new StringBundler(27);
-
-		sb.append("{powwowParticipantId=");
-		sb.append(getPowwowParticipantId());
-		sb.append(", groupId=");
-		sb.append(getGroupId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
-		sb.append(", userId=");
-		sb.append(getUserId());
-		sb.append(", userName=");
-		sb.append(getUserName());
-		sb.append(", createDate=");
-		sb.append(getCreateDate());
-		sb.append(", modifiedDate=");
-		sb.append(getModifiedDate());
-		sb.append(", powwowMeetingId=");
-		sb.append(getPowwowMeetingId());
-		sb.append(", name=");
-		sb.append(getName());
-		sb.append(", participantUserId=");
-		sb.append(getParticipantUserId());
-		sb.append(", emailAddress=");
-		sb.append(getEmailAddress());
-		sb.append(", type=");
-		sb.append(getType());
-		sb.append(", status=");
-		sb.append(getStatus());
-		sb.append("}");
-
-		return sb.toString();
-	}
-
-	@Override
-	public String toXmlString() {
-		StringBundler sb = new StringBundler(43);
-
-		sb.append("<model><model-name>");
-		sb.append("com.liferay.powwow.model.PowwowParticipant");
-		sb.append("</model-name>");
-
-		sb.append(
-			"<column><column-name>powwowParticipantId</column-name><column-value><![CDATA[");
-		sb.append(getPowwowParticipantId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>groupId</column-name><column-value><![CDATA[");
-		sb.append(getGroupId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userId</column-name><column-value><![CDATA[");
-		sb.append(getUserId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userName</column-name><column-value><![CDATA[");
-		sb.append(getUserName());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>createDate</column-name><column-value><![CDATA[");
-		sb.append(getCreateDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>modifiedDate</column-name><column-value><![CDATA[");
-		sb.append(getModifiedDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>powwowMeetingId</column-name><column-value><![CDATA[");
-		sb.append(getPowwowMeetingId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>name</column-name><column-value><![CDATA[");
-		sb.append(getName());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>participantUserId</column-name><column-value><![CDATA[");
-		sb.append(getParticipantUserId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>emailAddress</column-name><column-value><![CDATA[");
-		sb.append(getEmailAddress());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>type</column-name><column-value><![CDATA[");
-		sb.append(getType());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>status</column-name><column-value><![CDATA[");
-		sb.append(getStatus());
-		sb.append("]]></column-value></column>");
-
-		sb.append("</model>");
-
-		return sb.toString();
 	}
 
 	private static final ClassLoader _classLoader = PowwowParticipant.class.getClassLoader();

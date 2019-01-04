@@ -19,9 +19,6 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
-import java.util.HashMap;
-import java.util.Map;
-
 /**
  * <p>
  * This class is a wrapper for {@link Attachment}.
@@ -36,80 +33,6 @@ public class AttachmentWrapper extends BaseModelWrapper<Attachment>
 	implements Attachment, ModelWrapper<Attachment> {
 	public AttachmentWrapper(Attachment attachment) {
 		super(attachment);
-	}
-
-	@Override
-	public Map<String, Object> getModelAttributes() {
-		Map<String, Object> attributes = new HashMap<String, Object>();
-
-		attributes.put("attachmentId", getAttachmentId());
-		attributes.put("companyId", getCompanyId());
-		attributes.put("userId", getUserId());
-		attributes.put("accountId", getAccountId());
-		attributes.put("folderId", getFolderId());
-		attributes.put("messageId", getMessageId());
-		attributes.put("contentPath", getContentPath());
-		attributes.put("fileName", getFileName());
-		attributes.put("size", getSize());
-
-		return attributes;
-	}
-
-	@Override
-	public void setModelAttributes(Map<String, Object> attributes) {
-		Long attachmentId = (Long)attributes.get("attachmentId");
-
-		if (attachmentId != null) {
-			setAttachmentId(attachmentId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
-		}
-
-		Long userId = (Long)attributes.get("userId");
-
-		if (userId != null) {
-			setUserId(userId);
-		}
-
-		Long accountId = (Long)attributes.get("accountId");
-
-		if (accountId != null) {
-			setAccountId(accountId);
-		}
-
-		Long folderId = (Long)attributes.get("folderId");
-
-		if (folderId != null) {
-			setFolderId(folderId);
-		}
-
-		Long messageId = (Long)attributes.get("messageId");
-
-		if (messageId != null) {
-			setMessageId(messageId);
-		}
-
-		String contentPath = (String)attributes.get("contentPath");
-
-		if (contentPath != null) {
-			setContentPath(contentPath);
-		}
-
-		String fileName = (String)attributes.get("fileName");
-
-		if (fileName != null) {
-			setFileName(fileName);
-		}
-
-		Long size = (Long)attributes.get("size");
-
-		if (size != null) {
-			setSize(size);
-		}
 	}
 
 	/**

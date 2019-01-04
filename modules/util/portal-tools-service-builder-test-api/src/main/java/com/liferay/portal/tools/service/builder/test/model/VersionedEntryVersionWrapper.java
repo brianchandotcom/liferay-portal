@@ -26,6 +26,8 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * <p>
@@ -58,39 +60,30 @@ public class VersionedEntryVersionWrapper implements VersionedEntryVersion,
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		attributes.put("versionedEntryVersionId", getVersionedEntryVersionId());
-		attributes.put("version", getVersion());
-		attributes.put("versionedEntryId", getVersionedEntryId());
-		attributes.put("groupId", getGroupId());
+		Map<String, Function<VersionedEntryVersion, Object>> attributeGetters = getAttributeGetters();
+
+		for (Map.Entry<String, Function<VersionedEntryVersion, Object>> entry : attributeGetters.entrySet()) {
+			String attributeName = entry.getKey();
+			Function<VersionedEntryVersion, Object> attributeFunction = entry.getValue();
+
+			attributes.put(attributeName, attributeFunction.apply(this));
+		}
+
+		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
+		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
 
 		return attributes;
 	}
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		Long versionedEntryVersionId = (Long)attributes.get(
-				"versionedEntryVersionId");
+		Map<String, BiConsumer<VersionedEntryVersion, Object>> attributeSetters = getAttributeSetters();
 
-		if (versionedEntryVersionId != null) {
-			setVersionedEntryVersionId(versionedEntryVersionId);
-		}
+		for (Map.Entry<String, BiConsumer<VersionedEntryVersion, Object>> entry : attributeSetters.entrySet()) {
+			String attributeName = entry.getKey();
+			BiConsumer<VersionedEntryVersion, Object> attributeBiConsumer = entry.getValue();
 
-		Integer version = (Integer)attributes.get("version");
-
-		if (version != null) {
-			setVersion(version);
-		}
-
-		Long versionedEntryId = (Long)attributes.get("versionedEntryId");
-
-		if (versionedEntryId != null) {
-			setVersionedEntryId(versionedEntryId);
-		}
-
-		Long groupId = (Long)attributes.get("groupId");
-
-		if (groupId != null) {
-			setGroupId(groupId);
+			attributeBiConsumer.accept(this, attributeSetters.get(attributeName));
 		}
 	}
 
@@ -102,6 +95,16 @@ public class VersionedEntryVersionWrapper implements VersionedEntryVersion,
 	@Override
 	public int compareTo(VersionedEntryVersion versionedEntryVersion) {
 		return _versionedEntryVersion.compareTo(versionedEntryVersion);
+	}
+
+	@Override
+	public Map<String, Function<VersionedEntryVersion, Object>> getAttributeGetters() {
+		return _versionedEntryVersion.getAttributeGetters();
+	}
+
+	@Override
+	public Map<String, BiConsumer<VersionedEntryVersion, Object>> getAttributeSetters() {
+		return _versionedEntryVersion.getAttributeSetters();
 	}
 
 	@Override

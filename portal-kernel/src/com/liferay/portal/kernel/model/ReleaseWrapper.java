@@ -19,8 +19,6 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * <p>
@@ -36,94 +34,6 @@ public class ReleaseWrapper extends BaseModelWrapper<Release> implements Release
 	ModelWrapper<Release> {
 	public ReleaseWrapper(Release release) {
 		super(release);
-	}
-
-	@Override
-	public Map<String, Object> getModelAttributes() {
-		Map<String, Object> attributes = new HashMap<String, Object>();
-
-		attributes.put("mvccVersion", getMvccVersion());
-		attributes.put("releaseId", getReleaseId());
-		attributes.put("createDate", getCreateDate());
-		attributes.put("modifiedDate", getModifiedDate());
-		attributes.put("servletContextName", getServletContextName());
-		attributes.put("schemaVersion", getSchemaVersion());
-		attributes.put("buildNumber", getBuildNumber());
-		attributes.put("buildDate", getBuildDate());
-		attributes.put("verified", isVerified());
-		attributes.put("state", getState());
-		attributes.put("testString", getTestString());
-
-		return attributes;
-	}
-
-	@Override
-	public void setModelAttributes(Map<String, Object> attributes) {
-		Long mvccVersion = (Long)attributes.get("mvccVersion");
-
-		if (mvccVersion != null) {
-			setMvccVersion(mvccVersion);
-		}
-
-		Long releaseId = (Long)attributes.get("releaseId");
-
-		if (releaseId != null) {
-			setReleaseId(releaseId);
-		}
-
-		Date createDate = (Date)attributes.get("createDate");
-
-		if (createDate != null) {
-			setCreateDate(createDate);
-		}
-
-		Date modifiedDate = (Date)attributes.get("modifiedDate");
-
-		if (modifiedDate != null) {
-			setModifiedDate(modifiedDate);
-		}
-
-		String servletContextName = (String)attributes.get("servletContextName");
-
-		if (servletContextName != null) {
-			setServletContextName(servletContextName);
-		}
-
-		String schemaVersion = (String)attributes.get("schemaVersion");
-
-		if (schemaVersion != null) {
-			setSchemaVersion(schemaVersion);
-		}
-
-		Integer buildNumber = (Integer)attributes.get("buildNumber");
-
-		if (buildNumber != null) {
-			setBuildNumber(buildNumber);
-		}
-
-		Date buildDate = (Date)attributes.get("buildDate");
-
-		if (buildDate != null) {
-			setBuildDate(buildDate);
-		}
-
-		Boolean verified = (Boolean)attributes.get("verified");
-
-		if (verified != null) {
-			setVerified(verified);
-		}
-
-		Integer state = (Integer)attributes.get("state");
-
-		if (state != null) {
-			setState(state);
-		}
-
-		String testString = (String)attributes.get("testString");
-
-		if (testString != null) {
-			setTestString(testString);
-		}
 	}
 
 	/**

@@ -20,8 +20,6 @@ import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * <p>
@@ -38,67 +36,6 @@ public class SyncDLFileVersionDiffWrapper extends BaseModelWrapper<SyncDLFileVer
 	public SyncDLFileVersionDiffWrapper(
 		SyncDLFileVersionDiff syncDLFileVersionDiff) {
 		super(syncDLFileVersionDiff);
-	}
-
-	@Override
-	public Map<String, Object> getModelAttributes() {
-		Map<String, Object> attributes = new HashMap<String, Object>();
-
-		attributes.put("syncDLFileVersionDiffId", getSyncDLFileVersionDiffId());
-		attributes.put("fileEntryId", getFileEntryId());
-		attributes.put("sourceFileVersionId", getSourceFileVersionId());
-		attributes.put("targetFileVersionId", getTargetFileVersionId());
-		attributes.put("dataFileEntryId", getDataFileEntryId());
-		attributes.put("size", getSize());
-		attributes.put("expirationDate", getExpirationDate());
-
-		return attributes;
-	}
-
-	@Override
-	public void setModelAttributes(Map<String, Object> attributes) {
-		Long syncDLFileVersionDiffId = (Long)attributes.get(
-				"syncDLFileVersionDiffId");
-
-		if (syncDLFileVersionDiffId != null) {
-			setSyncDLFileVersionDiffId(syncDLFileVersionDiffId);
-		}
-
-		Long fileEntryId = (Long)attributes.get("fileEntryId");
-
-		if (fileEntryId != null) {
-			setFileEntryId(fileEntryId);
-		}
-
-		Long sourceFileVersionId = (Long)attributes.get("sourceFileVersionId");
-
-		if (sourceFileVersionId != null) {
-			setSourceFileVersionId(sourceFileVersionId);
-		}
-
-		Long targetFileVersionId = (Long)attributes.get("targetFileVersionId");
-
-		if (targetFileVersionId != null) {
-			setTargetFileVersionId(targetFileVersionId);
-		}
-
-		Long dataFileEntryId = (Long)attributes.get("dataFileEntryId");
-
-		if (dataFileEntryId != null) {
-			setDataFileEntryId(dataFileEntryId);
-		}
-
-		Long size = (Long)attributes.get("size");
-
-		if (size != null) {
-			setSize(size);
-		}
-
-		Date expirationDate = (Date)attributes.get("expirationDate");
-
-		if (expirationDate != null) {
-			setExpirationDate(expirationDate);
-		}
 	}
 
 	/**

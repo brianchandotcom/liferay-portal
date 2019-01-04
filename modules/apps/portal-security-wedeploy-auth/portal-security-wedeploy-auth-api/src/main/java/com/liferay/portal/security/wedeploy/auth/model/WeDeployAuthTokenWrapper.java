@@ -20,8 +20,6 @@ import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * <p>
@@ -37,80 +35,6 @@ public class WeDeployAuthTokenWrapper extends BaseModelWrapper<WeDeployAuthToken
 	implements WeDeployAuthToken, ModelWrapper<WeDeployAuthToken> {
 	public WeDeployAuthTokenWrapper(WeDeployAuthToken weDeployAuthToken) {
 		super(weDeployAuthToken);
-	}
-
-	@Override
-	public Map<String, Object> getModelAttributes() {
-		Map<String, Object> attributes = new HashMap<String, Object>();
-
-		attributes.put("weDeployAuthTokenId", getWeDeployAuthTokenId());
-		attributes.put("companyId", getCompanyId());
-		attributes.put("userId", getUserId());
-		attributes.put("userName", getUserName());
-		attributes.put("createDate", getCreateDate());
-		attributes.put("modifiedDate", getModifiedDate());
-		attributes.put("clientId", getClientId());
-		attributes.put("token", getToken());
-		attributes.put("type", getType());
-
-		return attributes;
-	}
-
-	@Override
-	public void setModelAttributes(Map<String, Object> attributes) {
-		Long weDeployAuthTokenId = (Long)attributes.get("weDeployAuthTokenId");
-
-		if (weDeployAuthTokenId != null) {
-			setWeDeployAuthTokenId(weDeployAuthTokenId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
-		}
-
-		Long userId = (Long)attributes.get("userId");
-
-		if (userId != null) {
-			setUserId(userId);
-		}
-
-		String userName = (String)attributes.get("userName");
-
-		if (userName != null) {
-			setUserName(userName);
-		}
-
-		Date createDate = (Date)attributes.get("createDate");
-
-		if (createDate != null) {
-			setCreateDate(createDate);
-		}
-
-		Date modifiedDate = (Date)attributes.get("modifiedDate");
-
-		if (modifiedDate != null) {
-			setModifiedDate(modifiedDate);
-		}
-
-		String clientId = (String)attributes.get("clientId");
-
-		if (clientId != null) {
-			setClientId(clientId);
-		}
-
-		String token = (String)attributes.get("token");
-
-		if (token != null) {
-			setToken(token);
-		}
-
-		Integer type = (Integer)attributes.get("type");
-
-		if (type != null) {
-			setType(type);
-		}
 	}
 
 	/**

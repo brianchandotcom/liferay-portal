@@ -21,8 +21,6 @@ import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 
-import com.liferay.petra.string.StringBundler;
-
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSON;
@@ -44,10 +42,14 @@ import java.io.Serializable;
 import java.sql.Types;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * The base model implementation for the PasswordPolicy service. Represents a row in the &quot;PasswordPolicy&quot; database table, with each column mapped to a property of this class.
@@ -280,263 +282,95 @@ public class PasswordPolicyModelImpl extends BaseModelImpl<PasswordPolicy>
 	}
 
 	@Override
-	public Map<String, Object> getModelAttributes() {
-		Map<String, Object> attributes = new HashMap<String, Object>();
-
-		attributes.put("mvccVersion", getMvccVersion());
-		attributes.put("uuid", getUuid());
-		attributes.put("passwordPolicyId", getPasswordPolicyId());
-		attributes.put("companyId", getCompanyId());
-		attributes.put("userId", getUserId());
-		attributes.put("userName", getUserName());
-		attributes.put("createDate", getCreateDate());
-		attributes.put("modifiedDate", getModifiedDate());
-		attributes.put("defaultPolicy", isDefaultPolicy());
-		attributes.put("name", getName());
-		attributes.put("description", getDescription());
-		attributes.put("changeable", isChangeable());
-		attributes.put("changeRequired", isChangeRequired());
-		attributes.put("minAge", getMinAge());
-		attributes.put("checkSyntax", isCheckSyntax());
-		attributes.put("allowDictionaryWords", isAllowDictionaryWords());
-		attributes.put("minAlphanumeric", getMinAlphanumeric());
-		attributes.put("minLength", getMinLength());
-		attributes.put("minLowerCase", getMinLowerCase());
-		attributes.put("minNumbers", getMinNumbers());
-		attributes.put("minSymbols", getMinSymbols());
-		attributes.put("minUpperCase", getMinUpperCase());
-		attributes.put("regex", getRegex());
-		attributes.put("history", isHistory());
-		attributes.put("historyCount", getHistoryCount());
-		attributes.put("expireable", isExpireable());
-		attributes.put("maxAge", getMaxAge());
-		attributes.put("warningTime", getWarningTime());
-		attributes.put("graceLimit", getGraceLimit());
-		attributes.put("lockout", isLockout());
-		attributes.put("maxFailure", getMaxFailure());
-		attributes.put("lockoutDuration", getLockoutDuration());
-		attributes.put("requireUnlock", isRequireUnlock());
-		attributes.put("resetFailureCount", getResetFailureCount());
-		attributes.put("resetTicketMaxAge", getResetTicketMaxAge());
-
-		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
-		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
-
-		return attributes;
+	public Map<String, Function<PasswordPolicy, Object>> getAttributeGetters() {
+		return _attributeGetters;
 	}
 
 	@Override
-	public void setModelAttributes(Map<String, Object> attributes) {
-		Long mvccVersion = (Long)attributes.get("mvccVersion");
-
-		if (mvccVersion != null) {
-			setMvccVersion(mvccVersion);
-		}
-
-		String uuid = (String)attributes.get("uuid");
-
-		if (uuid != null) {
-			setUuid(uuid);
-		}
-
-		Long passwordPolicyId = (Long)attributes.get("passwordPolicyId");
-
-		if (passwordPolicyId != null) {
-			setPasswordPolicyId(passwordPolicyId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
-		}
-
-		Long userId = (Long)attributes.get("userId");
-
-		if (userId != null) {
-			setUserId(userId);
-		}
-
-		String userName = (String)attributes.get("userName");
-
-		if (userName != null) {
-			setUserName(userName);
-		}
-
-		Date createDate = (Date)attributes.get("createDate");
-
-		if (createDate != null) {
-			setCreateDate(createDate);
-		}
-
-		Date modifiedDate = (Date)attributes.get("modifiedDate");
-
-		if (modifiedDate != null) {
-			setModifiedDate(modifiedDate);
-		}
-
-		Boolean defaultPolicy = (Boolean)attributes.get("defaultPolicy");
-
-		if (defaultPolicy != null) {
-			setDefaultPolicy(defaultPolicy);
-		}
-
-		String name = (String)attributes.get("name");
-
-		if (name != null) {
-			setName(name);
-		}
-
-		String description = (String)attributes.get("description");
-
-		if (description != null) {
-			setDescription(description);
-		}
-
-		Boolean changeable = (Boolean)attributes.get("changeable");
-
-		if (changeable != null) {
-			setChangeable(changeable);
-		}
-
-		Boolean changeRequired = (Boolean)attributes.get("changeRequired");
-
-		if (changeRequired != null) {
-			setChangeRequired(changeRequired);
-		}
-
-		Long minAge = (Long)attributes.get("minAge");
-
-		if (minAge != null) {
-			setMinAge(minAge);
-		}
-
-		Boolean checkSyntax = (Boolean)attributes.get("checkSyntax");
-
-		if (checkSyntax != null) {
-			setCheckSyntax(checkSyntax);
-		}
-
-		Boolean allowDictionaryWords = (Boolean)attributes.get(
-				"allowDictionaryWords");
-
-		if (allowDictionaryWords != null) {
-			setAllowDictionaryWords(allowDictionaryWords);
-		}
-
-		Integer minAlphanumeric = (Integer)attributes.get("minAlphanumeric");
-
-		if (minAlphanumeric != null) {
-			setMinAlphanumeric(minAlphanumeric);
-		}
-
-		Integer minLength = (Integer)attributes.get("minLength");
-
-		if (minLength != null) {
-			setMinLength(minLength);
-		}
-
-		Integer minLowerCase = (Integer)attributes.get("minLowerCase");
-
-		if (minLowerCase != null) {
-			setMinLowerCase(minLowerCase);
-		}
-
-		Integer minNumbers = (Integer)attributes.get("minNumbers");
-
-		if (minNumbers != null) {
-			setMinNumbers(minNumbers);
-		}
-
-		Integer minSymbols = (Integer)attributes.get("minSymbols");
-
-		if (minSymbols != null) {
-			setMinSymbols(minSymbols);
-		}
-
-		Integer minUpperCase = (Integer)attributes.get("minUpperCase");
-
-		if (minUpperCase != null) {
-			setMinUpperCase(minUpperCase);
-		}
-
-		String regex = (String)attributes.get("regex");
-
-		if (regex != null) {
-			setRegex(regex);
-		}
-
-		Boolean history = (Boolean)attributes.get("history");
-
-		if (history != null) {
-			setHistory(history);
-		}
-
-		Integer historyCount = (Integer)attributes.get("historyCount");
-
-		if (historyCount != null) {
-			setHistoryCount(historyCount);
-		}
-
-		Boolean expireable = (Boolean)attributes.get("expireable");
-
-		if (expireable != null) {
-			setExpireable(expireable);
-		}
-
-		Long maxAge = (Long)attributes.get("maxAge");
-
-		if (maxAge != null) {
-			setMaxAge(maxAge);
-		}
-
-		Long warningTime = (Long)attributes.get("warningTime");
-
-		if (warningTime != null) {
-			setWarningTime(warningTime);
-		}
-
-		Integer graceLimit = (Integer)attributes.get("graceLimit");
-
-		if (graceLimit != null) {
-			setGraceLimit(graceLimit);
-		}
-
-		Boolean lockout = (Boolean)attributes.get("lockout");
-
-		if (lockout != null) {
-			setLockout(lockout);
-		}
-
-		Integer maxFailure = (Integer)attributes.get("maxFailure");
-
-		if (maxFailure != null) {
-			setMaxFailure(maxFailure);
-		}
-
-		Long lockoutDuration = (Long)attributes.get("lockoutDuration");
-
-		if (lockoutDuration != null) {
-			setLockoutDuration(lockoutDuration);
-		}
-
-		Boolean requireUnlock = (Boolean)attributes.get("requireUnlock");
-
-		if (requireUnlock != null) {
-			setRequireUnlock(requireUnlock);
-		}
-
-		Long resetFailureCount = (Long)attributes.get("resetFailureCount");
-
-		if (resetFailureCount != null) {
-			setResetFailureCount(resetFailureCount);
-		}
-
-		Long resetTicketMaxAge = (Long)attributes.get("resetTicketMaxAge");
-
-		if (resetTicketMaxAge != null) {
-			setResetTicketMaxAge(resetTicketMaxAge);
-		}
+	public Map<String, BiConsumer<PasswordPolicy, Object>> getAttributeSetters() {
+		return _attributeSetters;
+	}
+
+	private static final Map<String, Function<PasswordPolicy, Object>> _attributeGetters;
+	private static final Map<String, BiConsumer<PasswordPolicy, Object>> _attributeSetters;
+
+	static {
+		Map<String, Function<PasswordPolicy, Object>> attributeGetters = new LinkedHashMap<String, Function<PasswordPolicy, Object>>();
+		Map<String, BiConsumer<PasswordPolicy, ?>> attributeSetters = new LinkedHashMap<String, BiConsumer<PasswordPolicy, ?>>();
+
+		attributeGetters.put("mvccVersion", PasswordPolicy::getMvccVersion);
+		attributeSetters.put("mvccVersion", (BiConsumer<PasswordPolicy, Long>)PasswordPolicy::setMvccVersion);
+		attributeGetters.put("uuid", PasswordPolicy::getUuid);
+		attributeSetters.put("uuid", (BiConsumer<PasswordPolicy, String>)PasswordPolicy::setUuid);
+		attributeGetters.put("passwordPolicyId", PasswordPolicy::getPasswordPolicyId);
+		attributeSetters.put("passwordPolicyId", (BiConsumer<PasswordPolicy, Long>)PasswordPolicy::setPasswordPolicyId);
+		attributeGetters.put("companyId", PasswordPolicy::getCompanyId);
+		attributeSetters.put("companyId", (BiConsumer<PasswordPolicy, Long>)PasswordPolicy::setCompanyId);
+		attributeGetters.put("userId", PasswordPolicy::getUserId);
+		attributeSetters.put("userId", (BiConsumer<PasswordPolicy, Long>)PasswordPolicy::setUserId);
+		attributeGetters.put("userName", PasswordPolicy::getUserName);
+		attributeSetters.put("userName", (BiConsumer<PasswordPolicy, String>)PasswordPolicy::setUserName);
+		attributeGetters.put("createDate", PasswordPolicy::getCreateDate);
+		attributeSetters.put("createDate", (BiConsumer<PasswordPolicy, Date>)PasswordPolicy::setCreateDate);
+		attributeGetters.put("modifiedDate", PasswordPolicy::getModifiedDate);
+		attributeSetters.put("modifiedDate", (BiConsumer<PasswordPolicy, Date>)PasswordPolicy::setModifiedDate);
+		attributeGetters.put("defaultPolicy", PasswordPolicy::getDefaultPolicy);
+		attributeSetters.put("defaultPolicy", (BiConsumer<PasswordPolicy, Boolean>)PasswordPolicy::setDefaultPolicy);
+		attributeGetters.put("name", PasswordPolicy::getName);
+		attributeSetters.put("name", (BiConsumer<PasswordPolicy, String>)PasswordPolicy::setName);
+		attributeGetters.put("description", PasswordPolicy::getDescription);
+		attributeSetters.put("description", (BiConsumer<PasswordPolicy, String>)PasswordPolicy::setDescription);
+		attributeGetters.put("changeable", PasswordPolicy::getChangeable);
+		attributeSetters.put("changeable", (BiConsumer<PasswordPolicy, Boolean>)PasswordPolicy::setChangeable);
+		attributeGetters.put("changeRequired", PasswordPolicy::getChangeRequired);
+		attributeSetters.put("changeRequired", (BiConsumer<PasswordPolicy, Boolean>)PasswordPolicy::setChangeRequired);
+		attributeGetters.put("minAge", PasswordPolicy::getMinAge);
+		attributeSetters.put("minAge", (BiConsumer<PasswordPolicy, Long>)PasswordPolicy::setMinAge);
+		attributeGetters.put("checkSyntax", PasswordPolicy::getCheckSyntax);
+		attributeSetters.put("checkSyntax", (BiConsumer<PasswordPolicy, Boolean>)PasswordPolicy::setCheckSyntax);
+		attributeGetters.put("allowDictionaryWords", PasswordPolicy::getAllowDictionaryWords);
+		attributeSetters.put("allowDictionaryWords", (BiConsumer<PasswordPolicy, Boolean>)PasswordPolicy::setAllowDictionaryWords);
+		attributeGetters.put("minAlphanumeric", PasswordPolicy::getMinAlphanumeric);
+		attributeSetters.put("minAlphanumeric", (BiConsumer<PasswordPolicy, Integer>)PasswordPolicy::setMinAlphanumeric);
+		attributeGetters.put("minLength", PasswordPolicy::getMinLength);
+		attributeSetters.put("minLength", (BiConsumer<PasswordPolicy, Integer>)PasswordPolicy::setMinLength);
+		attributeGetters.put("minLowerCase", PasswordPolicy::getMinLowerCase);
+		attributeSetters.put("minLowerCase", (BiConsumer<PasswordPolicy, Integer>)PasswordPolicy::setMinLowerCase);
+		attributeGetters.put("minNumbers", PasswordPolicy::getMinNumbers);
+		attributeSetters.put("minNumbers", (BiConsumer<PasswordPolicy, Integer>)PasswordPolicy::setMinNumbers);
+		attributeGetters.put("minSymbols", PasswordPolicy::getMinSymbols);
+		attributeSetters.put("minSymbols", (BiConsumer<PasswordPolicy, Integer>)PasswordPolicy::setMinSymbols);
+		attributeGetters.put("minUpperCase", PasswordPolicy::getMinUpperCase);
+		attributeSetters.put("minUpperCase", (BiConsumer<PasswordPolicy, Integer>)PasswordPolicy::setMinUpperCase);
+		attributeGetters.put("regex", PasswordPolicy::getRegex);
+		attributeSetters.put("regex", (BiConsumer<PasswordPolicy, String>)PasswordPolicy::setRegex);
+		attributeGetters.put("history", PasswordPolicy::getHistory);
+		attributeSetters.put("history", (BiConsumer<PasswordPolicy, Boolean>)PasswordPolicy::setHistory);
+		attributeGetters.put("historyCount", PasswordPolicy::getHistoryCount);
+		attributeSetters.put("historyCount", (BiConsumer<PasswordPolicy, Integer>)PasswordPolicy::setHistoryCount);
+		attributeGetters.put("expireable", PasswordPolicy::getExpireable);
+		attributeSetters.put("expireable", (BiConsumer<PasswordPolicy, Boolean>)PasswordPolicy::setExpireable);
+		attributeGetters.put("maxAge", PasswordPolicy::getMaxAge);
+		attributeSetters.put("maxAge", (BiConsumer<PasswordPolicy, Long>)PasswordPolicy::setMaxAge);
+		attributeGetters.put("warningTime", PasswordPolicy::getWarningTime);
+		attributeSetters.put("warningTime", (BiConsumer<PasswordPolicy, Long>)PasswordPolicy::setWarningTime);
+		attributeGetters.put("graceLimit", PasswordPolicy::getGraceLimit);
+		attributeSetters.put("graceLimit", (BiConsumer<PasswordPolicy, Integer>)PasswordPolicy::setGraceLimit);
+		attributeGetters.put("lockout", PasswordPolicy::getLockout);
+		attributeSetters.put("lockout", (BiConsumer<PasswordPolicy, Boolean>)PasswordPolicy::setLockout);
+		attributeGetters.put("maxFailure", PasswordPolicy::getMaxFailure);
+		attributeSetters.put("maxFailure", (BiConsumer<PasswordPolicy, Integer>)PasswordPolicy::setMaxFailure);
+		attributeGetters.put("lockoutDuration", PasswordPolicy::getLockoutDuration);
+		attributeSetters.put("lockoutDuration", (BiConsumer<PasswordPolicy, Long>)PasswordPolicy::setLockoutDuration);
+		attributeGetters.put("requireUnlock", PasswordPolicy::getRequireUnlock);
+		attributeSetters.put("requireUnlock", (BiConsumer<PasswordPolicy, Boolean>)PasswordPolicy::setRequireUnlock);
+		attributeGetters.put("resetFailureCount", PasswordPolicy::getResetFailureCount);
+		attributeSetters.put("resetFailureCount", (BiConsumer<PasswordPolicy, Long>)PasswordPolicy::setResetFailureCount);
+		attributeGetters.put("resetTicketMaxAge", PasswordPolicy::getResetTicketMaxAge);
+		attributeSetters.put("resetTicketMaxAge", (BiConsumer<PasswordPolicy, Long>)PasswordPolicy::setResetTicketMaxAge);
+
+		_attributeGetters = Collections.unmodifiableMap(attributeGetters);
+		_attributeSetters = Collections.unmodifiableMap((Map)attributeSetters);
 	}
 
 	@JSON
@@ -1337,239 +1171,6 @@ public class PasswordPolicyModelImpl extends BaseModelImpl<PasswordPolicy>
 		passwordPolicyCacheModel.resetTicketMaxAge = getResetTicketMaxAge();
 
 		return passwordPolicyCacheModel;
-	}
-
-	@Override
-	public String toString() {
-		StringBundler sb = new StringBundler(71);
-
-		sb.append("{mvccVersion=");
-		sb.append(getMvccVersion());
-		sb.append(", uuid=");
-		sb.append(getUuid());
-		sb.append(", passwordPolicyId=");
-		sb.append(getPasswordPolicyId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
-		sb.append(", userId=");
-		sb.append(getUserId());
-		sb.append(", userName=");
-		sb.append(getUserName());
-		sb.append(", createDate=");
-		sb.append(getCreateDate());
-		sb.append(", modifiedDate=");
-		sb.append(getModifiedDate());
-		sb.append(", defaultPolicy=");
-		sb.append(isDefaultPolicy());
-		sb.append(", name=");
-		sb.append(getName());
-		sb.append(", description=");
-		sb.append(getDescription());
-		sb.append(", changeable=");
-		sb.append(isChangeable());
-		sb.append(", changeRequired=");
-		sb.append(isChangeRequired());
-		sb.append(", minAge=");
-		sb.append(getMinAge());
-		sb.append(", checkSyntax=");
-		sb.append(isCheckSyntax());
-		sb.append(", allowDictionaryWords=");
-		sb.append(isAllowDictionaryWords());
-		sb.append(", minAlphanumeric=");
-		sb.append(getMinAlphanumeric());
-		sb.append(", minLength=");
-		sb.append(getMinLength());
-		sb.append(", minLowerCase=");
-		sb.append(getMinLowerCase());
-		sb.append(", minNumbers=");
-		sb.append(getMinNumbers());
-		sb.append(", minSymbols=");
-		sb.append(getMinSymbols());
-		sb.append(", minUpperCase=");
-		sb.append(getMinUpperCase());
-		sb.append(", regex=");
-		sb.append(getRegex());
-		sb.append(", history=");
-		sb.append(isHistory());
-		sb.append(", historyCount=");
-		sb.append(getHistoryCount());
-		sb.append(", expireable=");
-		sb.append(isExpireable());
-		sb.append(", maxAge=");
-		sb.append(getMaxAge());
-		sb.append(", warningTime=");
-		sb.append(getWarningTime());
-		sb.append(", graceLimit=");
-		sb.append(getGraceLimit());
-		sb.append(", lockout=");
-		sb.append(isLockout());
-		sb.append(", maxFailure=");
-		sb.append(getMaxFailure());
-		sb.append(", lockoutDuration=");
-		sb.append(getLockoutDuration());
-		sb.append(", requireUnlock=");
-		sb.append(isRequireUnlock());
-		sb.append(", resetFailureCount=");
-		sb.append(getResetFailureCount());
-		sb.append(", resetTicketMaxAge=");
-		sb.append(getResetTicketMaxAge());
-		sb.append("}");
-
-		return sb.toString();
-	}
-
-	@Override
-	public String toXmlString() {
-		StringBundler sb = new StringBundler(109);
-
-		sb.append("<model><model-name>");
-		sb.append("com.liferay.portal.kernel.model.PasswordPolicy");
-		sb.append("</model-name>");
-
-		sb.append(
-			"<column><column-name>mvccVersion</column-name><column-value><![CDATA[");
-		sb.append(getMvccVersion());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>uuid</column-name><column-value><![CDATA[");
-		sb.append(getUuid());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>passwordPolicyId</column-name><column-value><![CDATA[");
-		sb.append(getPasswordPolicyId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userId</column-name><column-value><![CDATA[");
-		sb.append(getUserId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userName</column-name><column-value><![CDATA[");
-		sb.append(getUserName());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>createDate</column-name><column-value><![CDATA[");
-		sb.append(getCreateDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>modifiedDate</column-name><column-value><![CDATA[");
-		sb.append(getModifiedDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>defaultPolicy</column-name><column-value><![CDATA[");
-		sb.append(isDefaultPolicy());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>name</column-name><column-value><![CDATA[");
-		sb.append(getName());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>description</column-name><column-value><![CDATA[");
-		sb.append(getDescription());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>changeable</column-name><column-value><![CDATA[");
-		sb.append(isChangeable());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>changeRequired</column-name><column-value><![CDATA[");
-		sb.append(isChangeRequired());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>minAge</column-name><column-value><![CDATA[");
-		sb.append(getMinAge());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>checkSyntax</column-name><column-value><![CDATA[");
-		sb.append(isCheckSyntax());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>allowDictionaryWords</column-name><column-value><![CDATA[");
-		sb.append(isAllowDictionaryWords());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>minAlphanumeric</column-name><column-value><![CDATA[");
-		sb.append(getMinAlphanumeric());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>minLength</column-name><column-value><![CDATA[");
-		sb.append(getMinLength());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>minLowerCase</column-name><column-value><![CDATA[");
-		sb.append(getMinLowerCase());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>minNumbers</column-name><column-value><![CDATA[");
-		sb.append(getMinNumbers());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>minSymbols</column-name><column-value><![CDATA[");
-		sb.append(getMinSymbols());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>minUpperCase</column-name><column-value><![CDATA[");
-		sb.append(getMinUpperCase());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>regex</column-name><column-value><![CDATA[");
-		sb.append(getRegex());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>history</column-name><column-value><![CDATA[");
-		sb.append(isHistory());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>historyCount</column-name><column-value><![CDATA[");
-		sb.append(getHistoryCount());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>expireable</column-name><column-value><![CDATA[");
-		sb.append(isExpireable());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>maxAge</column-name><column-value><![CDATA[");
-		sb.append(getMaxAge());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>warningTime</column-name><column-value><![CDATA[");
-		sb.append(getWarningTime());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>graceLimit</column-name><column-value><![CDATA[");
-		sb.append(getGraceLimit());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>lockout</column-name><column-value><![CDATA[");
-		sb.append(isLockout());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>maxFailure</column-name><column-value><![CDATA[");
-		sb.append(getMaxFailure());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>lockoutDuration</column-name><column-value><![CDATA[");
-		sb.append(getLockoutDuration());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>requireUnlock</column-name><column-value><![CDATA[");
-		sb.append(isRequireUnlock());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>resetFailureCount</column-name><column-value><![CDATA[");
-		sb.append(getResetFailureCount());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>resetTicketMaxAge</column-name><column-value><![CDATA[");
-		sb.append(getResetTicketMaxAge());
-		sb.append("]]></column-value></column>");
-
-		sb.append("</model>");
-
-		return sb.toString();
 	}
 
 	private static final ClassLoader _classLoader = PasswordPolicy.class.getClassLoader();

@@ -25,8 +25,6 @@ import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 
-import com.liferay.petra.string.StringBundler;
-
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.NoSuchModelException;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -50,10 +48,14 @@ import java.io.Serializable;
 import java.sql.Types;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * The base model implementation for the BookmarksFolder service. Represents a row in the &quot;BookmarksFolder&quot; database table, with each column mapped to a property of this class.
@@ -235,136 +237,59 @@ public class BookmarksFolderModelImpl extends BaseModelImpl<BookmarksFolder>
 	}
 
 	@Override
-	public Map<String, Object> getModelAttributes() {
-		Map<String, Object> attributes = new HashMap<String, Object>();
-
-		attributes.put("uuid", getUuid());
-		attributes.put("folderId", getFolderId());
-		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
-		attributes.put("userId", getUserId());
-		attributes.put("userName", getUserName());
-		attributes.put("createDate", getCreateDate());
-		attributes.put("modifiedDate", getModifiedDate());
-		attributes.put("parentFolderId", getParentFolderId());
-		attributes.put("treePath", getTreePath());
-		attributes.put("name", getName());
-		attributes.put("description", getDescription());
-		attributes.put("lastPublishDate", getLastPublishDate());
-		attributes.put("status", getStatus());
-		attributes.put("statusByUserId", getStatusByUserId());
-		attributes.put("statusByUserName", getStatusByUserName());
-		attributes.put("statusDate", getStatusDate());
-
-		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
-		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
-
-		return attributes;
+	public Map<String, Function<BookmarksFolder, Object>> getAttributeGetters() {
+		return _attributeGetters;
 	}
 
 	@Override
-	public void setModelAttributes(Map<String, Object> attributes) {
-		String uuid = (String)attributes.get("uuid");
+	public Map<String, BiConsumer<BookmarksFolder, Object>> getAttributeSetters() {
+		return _attributeSetters;
+	}
 
-		if (uuid != null) {
-			setUuid(uuid);
-		}
+	private static final Map<String, Function<BookmarksFolder, Object>> _attributeGetters;
+	private static final Map<String, BiConsumer<BookmarksFolder, Object>> _attributeSetters;
 
-		Long folderId = (Long)attributes.get("folderId");
+	static {
+		Map<String, Function<BookmarksFolder, Object>> attributeGetters = new LinkedHashMap<String, Function<BookmarksFolder, Object>>();
+		Map<String, BiConsumer<BookmarksFolder, ?>> attributeSetters = new LinkedHashMap<String, BiConsumer<BookmarksFolder, ?>>();
 
-		if (folderId != null) {
-			setFolderId(folderId);
-		}
+		attributeGetters.put("uuid", BookmarksFolder::getUuid);
+		attributeSetters.put("uuid", (BiConsumer<BookmarksFolder, String>)BookmarksFolder::setUuid);
+		attributeGetters.put("folderId", BookmarksFolder::getFolderId);
+		attributeSetters.put("folderId", (BiConsumer<BookmarksFolder, Long>)BookmarksFolder::setFolderId);
+		attributeGetters.put("groupId", BookmarksFolder::getGroupId);
+		attributeSetters.put("groupId", (BiConsumer<BookmarksFolder, Long>)BookmarksFolder::setGroupId);
+		attributeGetters.put("companyId", BookmarksFolder::getCompanyId);
+		attributeSetters.put("companyId", (BiConsumer<BookmarksFolder, Long>)BookmarksFolder::setCompanyId);
+		attributeGetters.put("userId", BookmarksFolder::getUserId);
+		attributeSetters.put("userId", (BiConsumer<BookmarksFolder, Long>)BookmarksFolder::setUserId);
+		attributeGetters.put("userName", BookmarksFolder::getUserName);
+		attributeSetters.put("userName", (BiConsumer<BookmarksFolder, String>)BookmarksFolder::setUserName);
+		attributeGetters.put("createDate", BookmarksFolder::getCreateDate);
+		attributeSetters.put("createDate", (BiConsumer<BookmarksFolder, Date>)BookmarksFolder::setCreateDate);
+		attributeGetters.put("modifiedDate", BookmarksFolder::getModifiedDate);
+		attributeSetters.put("modifiedDate", (BiConsumer<BookmarksFolder, Date>)BookmarksFolder::setModifiedDate);
+		attributeGetters.put("parentFolderId", BookmarksFolder::getParentFolderId);
+		attributeSetters.put("parentFolderId", (BiConsumer<BookmarksFolder, Long>)BookmarksFolder::setParentFolderId);
+		attributeGetters.put("treePath", BookmarksFolder::getTreePath);
+		attributeSetters.put("treePath", (BiConsumer<BookmarksFolder, String>)BookmarksFolder::setTreePath);
+		attributeGetters.put("name", BookmarksFolder::getName);
+		attributeSetters.put("name", (BiConsumer<BookmarksFolder, String>)BookmarksFolder::setName);
+		attributeGetters.put("description", BookmarksFolder::getDescription);
+		attributeSetters.put("description", (BiConsumer<BookmarksFolder, String>)BookmarksFolder::setDescription);
+		attributeGetters.put("lastPublishDate", BookmarksFolder::getLastPublishDate);
+		attributeSetters.put("lastPublishDate", (BiConsumer<BookmarksFolder, Date>)BookmarksFolder::setLastPublishDate);
+		attributeGetters.put("status", BookmarksFolder::getStatus);
+		attributeSetters.put("status", (BiConsumer<BookmarksFolder, Integer>)BookmarksFolder::setStatus);
+		attributeGetters.put("statusByUserId", BookmarksFolder::getStatusByUserId);
+		attributeSetters.put("statusByUserId", (BiConsumer<BookmarksFolder, Long>)BookmarksFolder::setStatusByUserId);
+		attributeGetters.put("statusByUserName", BookmarksFolder::getStatusByUserName);
+		attributeSetters.put("statusByUserName", (BiConsumer<BookmarksFolder, String>)BookmarksFolder::setStatusByUserName);
+		attributeGetters.put("statusDate", BookmarksFolder::getStatusDate);
+		attributeSetters.put("statusDate", (BiConsumer<BookmarksFolder, Date>)BookmarksFolder::setStatusDate);
 
-		Long groupId = (Long)attributes.get("groupId");
-
-		if (groupId != null) {
-			setGroupId(groupId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
-		}
-
-		Long userId = (Long)attributes.get("userId");
-
-		if (userId != null) {
-			setUserId(userId);
-		}
-
-		String userName = (String)attributes.get("userName");
-
-		if (userName != null) {
-			setUserName(userName);
-		}
-
-		Date createDate = (Date)attributes.get("createDate");
-
-		if (createDate != null) {
-			setCreateDate(createDate);
-		}
-
-		Date modifiedDate = (Date)attributes.get("modifiedDate");
-
-		if (modifiedDate != null) {
-			setModifiedDate(modifiedDate);
-		}
-
-		Long parentFolderId = (Long)attributes.get("parentFolderId");
-
-		if (parentFolderId != null) {
-			setParentFolderId(parentFolderId);
-		}
-
-		String treePath = (String)attributes.get("treePath");
-
-		if (treePath != null) {
-			setTreePath(treePath);
-		}
-
-		String name = (String)attributes.get("name");
-
-		if (name != null) {
-			setName(name);
-		}
-
-		String description = (String)attributes.get("description");
-
-		if (description != null) {
-			setDescription(description);
-		}
-
-		Date lastPublishDate = (Date)attributes.get("lastPublishDate");
-
-		if (lastPublishDate != null) {
-			setLastPublishDate(lastPublishDate);
-		}
-
-		Integer status = (Integer)attributes.get("status");
-
-		if (status != null) {
-			setStatus(status);
-		}
-
-		Long statusByUserId = (Long)attributes.get("statusByUserId");
-
-		if (statusByUserId != null) {
-			setStatusByUserId(statusByUserId);
-		}
-
-		String statusByUserName = (String)attributes.get("statusByUserName");
-
-		if (statusByUserName != null) {
-			setStatusByUserName(statusByUserName);
-		}
-
-		Date statusDate = (Date)attributes.get("statusDate");
-
-		if (statusDate != null) {
-			setStatusDate(statusDate);
-		}
+		_attributeGetters = Collections.unmodifiableMap(attributeGetters);
+		_attributeSetters = Collections.unmodifiableMap((Map)attributeSetters);
 	}
 
 	@JSON
@@ -1186,131 +1111,6 @@ public class BookmarksFolderModelImpl extends BaseModelImpl<BookmarksFolder>
 		}
 
 		return bookmarksFolderCacheModel;
-	}
-
-	@Override
-	public String toString() {
-		StringBundler sb = new StringBundler(35);
-
-		sb.append("{uuid=");
-		sb.append(getUuid());
-		sb.append(", folderId=");
-		sb.append(getFolderId());
-		sb.append(", groupId=");
-		sb.append(getGroupId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
-		sb.append(", userId=");
-		sb.append(getUserId());
-		sb.append(", userName=");
-		sb.append(getUserName());
-		sb.append(", createDate=");
-		sb.append(getCreateDate());
-		sb.append(", modifiedDate=");
-		sb.append(getModifiedDate());
-		sb.append(", parentFolderId=");
-		sb.append(getParentFolderId());
-		sb.append(", treePath=");
-		sb.append(getTreePath());
-		sb.append(", name=");
-		sb.append(getName());
-		sb.append(", description=");
-		sb.append(getDescription());
-		sb.append(", lastPublishDate=");
-		sb.append(getLastPublishDate());
-		sb.append(", status=");
-		sb.append(getStatus());
-		sb.append(", statusByUserId=");
-		sb.append(getStatusByUserId());
-		sb.append(", statusByUserName=");
-		sb.append(getStatusByUserName());
-		sb.append(", statusDate=");
-		sb.append(getStatusDate());
-		sb.append("}");
-
-		return sb.toString();
-	}
-
-	@Override
-	public String toXmlString() {
-		StringBundler sb = new StringBundler(55);
-
-		sb.append("<model><model-name>");
-		sb.append("com.liferay.bookmarks.model.BookmarksFolder");
-		sb.append("</model-name>");
-
-		sb.append(
-			"<column><column-name>uuid</column-name><column-value><![CDATA[");
-		sb.append(getUuid());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>folderId</column-name><column-value><![CDATA[");
-		sb.append(getFolderId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>groupId</column-name><column-value><![CDATA[");
-		sb.append(getGroupId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userId</column-name><column-value><![CDATA[");
-		sb.append(getUserId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userName</column-name><column-value><![CDATA[");
-		sb.append(getUserName());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>createDate</column-name><column-value><![CDATA[");
-		sb.append(getCreateDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>modifiedDate</column-name><column-value><![CDATA[");
-		sb.append(getModifiedDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>parentFolderId</column-name><column-value><![CDATA[");
-		sb.append(getParentFolderId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>treePath</column-name><column-value><![CDATA[");
-		sb.append(getTreePath());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>name</column-name><column-value><![CDATA[");
-		sb.append(getName());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>description</column-name><column-value><![CDATA[");
-		sb.append(getDescription());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>lastPublishDate</column-name><column-value><![CDATA[");
-		sb.append(getLastPublishDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>status</column-name><column-value><![CDATA[");
-		sb.append(getStatus());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>statusByUserId</column-name><column-value><![CDATA[");
-		sb.append(getStatusByUserId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>statusByUserName</column-name><column-value><![CDATA[");
-		sb.append(getStatusByUserName());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>statusDate</column-name><column-value><![CDATA[");
-		sb.append(getStatusDate());
-		sb.append("]]></column-value></column>");
-
-		sb.append("</model>");
-
-		return sb.toString();
 	}
 
 	private static final ClassLoader _classLoader = BookmarksFolder.class.getClassLoader();

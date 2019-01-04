@@ -23,8 +23,6 @@ import com.liferay.dynamic.data.lists.model.DDLRecordVersionSoap;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 
-import com.liferay.petra.string.StringBundler;
-
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSON;
@@ -43,10 +41,14 @@ import java.io.Serializable;
 import java.sql.Types;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * The base model implementation for the DDLRecordVersion service. Represents a row in the &quot;DDLRecordVersion&quot; database table, with each column mapped to a property of this class.
@@ -228,136 +230,59 @@ public class DDLRecordVersionModelImpl extends BaseModelImpl<DDLRecordVersion>
 	}
 
 	@Override
-	public Map<String, Object> getModelAttributes() {
-		Map<String, Object> attributes = new HashMap<String, Object>();
-
-		attributes.put("mvccVersion", getMvccVersion());
-		attributes.put("recordVersionId", getRecordVersionId());
-		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
-		attributes.put("userId", getUserId());
-		attributes.put("userName", getUserName());
-		attributes.put("createDate", getCreateDate());
-		attributes.put("DDMStorageId", getDDMStorageId());
-		attributes.put("recordSetId", getRecordSetId());
-		attributes.put("recordSetVersion", getRecordSetVersion());
-		attributes.put("recordId", getRecordId());
-		attributes.put("version", getVersion());
-		attributes.put("displayIndex", getDisplayIndex());
-		attributes.put("status", getStatus());
-		attributes.put("statusByUserId", getStatusByUserId());
-		attributes.put("statusByUserName", getStatusByUserName());
-		attributes.put("statusDate", getStatusDate());
-
-		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
-		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
-
-		return attributes;
+	public Map<String, Function<DDLRecordVersion, Object>> getAttributeGetters() {
+		return _attributeGetters;
 	}
 
 	@Override
-	public void setModelAttributes(Map<String, Object> attributes) {
-		Long mvccVersion = (Long)attributes.get("mvccVersion");
+	public Map<String, BiConsumer<DDLRecordVersion, Object>> getAttributeSetters() {
+		return _attributeSetters;
+	}
 
-		if (mvccVersion != null) {
-			setMvccVersion(mvccVersion);
-		}
+	private static final Map<String, Function<DDLRecordVersion, Object>> _attributeGetters;
+	private static final Map<String, BiConsumer<DDLRecordVersion, Object>> _attributeSetters;
 
-		Long recordVersionId = (Long)attributes.get("recordVersionId");
+	static {
+		Map<String, Function<DDLRecordVersion, Object>> attributeGetters = new LinkedHashMap<String, Function<DDLRecordVersion, Object>>();
+		Map<String, BiConsumer<DDLRecordVersion, ?>> attributeSetters = new LinkedHashMap<String, BiConsumer<DDLRecordVersion, ?>>();
 
-		if (recordVersionId != null) {
-			setRecordVersionId(recordVersionId);
-		}
+		attributeGetters.put("mvccVersion", DDLRecordVersion::getMvccVersion);
+		attributeSetters.put("mvccVersion", (BiConsumer<DDLRecordVersion, Long>)DDLRecordVersion::setMvccVersion);
+		attributeGetters.put("recordVersionId", DDLRecordVersion::getRecordVersionId);
+		attributeSetters.put("recordVersionId", (BiConsumer<DDLRecordVersion, Long>)DDLRecordVersion::setRecordVersionId);
+		attributeGetters.put("groupId", DDLRecordVersion::getGroupId);
+		attributeSetters.put("groupId", (BiConsumer<DDLRecordVersion, Long>)DDLRecordVersion::setGroupId);
+		attributeGetters.put("companyId", DDLRecordVersion::getCompanyId);
+		attributeSetters.put("companyId", (BiConsumer<DDLRecordVersion, Long>)DDLRecordVersion::setCompanyId);
+		attributeGetters.put("userId", DDLRecordVersion::getUserId);
+		attributeSetters.put("userId", (BiConsumer<DDLRecordVersion, Long>)DDLRecordVersion::setUserId);
+		attributeGetters.put("userName", DDLRecordVersion::getUserName);
+		attributeSetters.put("userName", (BiConsumer<DDLRecordVersion, String>)DDLRecordVersion::setUserName);
+		attributeGetters.put("createDate", DDLRecordVersion::getCreateDate);
+		attributeSetters.put("createDate", (BiConsumer<DDLRecordVersion, Date>)DDLRecordVersion::setCreateDate);
+		attributeGetters.put("DDMStorageId", DDLRecordVersion::getDDMStorageId);
+		attributeSetters.put("DDMStorageId", (BiConsumer<DDLRecordVersion, Long>)DDLRecordVersion::setDDMStorageId);
+		attributeGetters.put("recordSetId", DDLRecordVersion::getRecordSetId);
+		attributeSetters.put("recordSetId", (BiConsumer<DDLRecordVersion, Long>)DDLRecordVersion::setRecordSetId);
+		attributeGetters.put("recordSetVersion", DDLRecordVersion::getRecordSetVersion);
+		attributeSetters.put("recordSetVersion", (BiConsumer<DDLRecordVersion, String>)DDLRecordVersion::setRecordSetVersion);
+		attributeGetters.put("recordId", DDLRecordVersion::getRecordId);
+		attributeSetters.put("recordId", (BiConsumer<DDLRecordVersion, Long>)DDLRecordVersion::setRecordId);
+		attributeGetters.put("version", DDLRecordVersion::getVersion);
+		attributeSetters.put("version", (BiConsumer<DDLRecordVersion, String>)DDLRecordVersion::setVersion);
+		attributeGetters.put("displayIndex", DDLRecordVersion::getDisplayIndex);
+		attributeSetters.put("displayIndex", (BiConsumer<DDLRecordVersion, Integer>)DDLRecordVersion::setDisplayIndex);
+		attributeGetters.put("status", DDLRecordVersion::getStatus);
+		attributeSetters.put("status", (BiConsumer<DDLRecordVersion, Integer>)DDLRecordVersion::setStatus);
+		attributeGetters.put("statusByUserId", DDLRecordVersion::getStatusByUserId);
+		attributeSetters.put("statusByUserId", (BiConsumer<DDLRecordVersion, Long>)DDLRecordVersion::setStatusByUserId);
+		attributeGetters.put("statusByUserName", DDLRecordVersion::getStatusByUserName);
+		attributeSetters.put("statusByUserName", (BiConsumer<DDLRecordVersion, String>)DDLRecordVersion::setStatusByUserName);
+		attributeGetters.put("statusDate", DDLRecordVersion::getStatusDate);
+		attributeSetters.put("statusDate", (BiConsumer<DDLRecordVersion, Date>)DDLRecordVersion::setStatusDate);
 
-		Long groupId = (Long)attributes.get("groupId");
-
-		if (groupId != null) {
-			setGroupId(groupId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
-		}
-
-		Long userId = (Long)attributes.get("userId");
-
-		if (userId != null) {
-			setUserId(userId);
-		}
-
-		String userName = (String)attributes.get("userName");
-
-		if (userName != null) {
-			setUserName(userName);
-		}
-
-		Date createDate = (Date)attributes.get("createDate");
-
-		if (createDate != null) {
-			setCreateDate(createDate);
-		}
-
-		Long DDMStorageId = (Long)attributes.get("DDMStorageId");
-
-		if (DDMStorageId != null) {
-			setDDMStorageId(DDMStorageId);
-		}
-
-		Long recordSetId = (Long)attributes.get("recordSetId");
-
-		if (recordSetId != null) {
-			setRecordSetId(recordSetId);
-		}
-
-		String recordSetVersion = (String)attributes.get("recordSetVersion");
-
-		if (recordSetVersion != null) {
-			setRecordSetVersion(recordSetVersion);
-		}
-
-		Long recordId = (Long)attributes.get("recordId");
-
-		if (recordId != null) {
-			setRecordId(recordId);
-		}
-
-		String version = (String)attributes.get("version");
-
-		if (version != null) {
-			setVersion(version);
-		}
-
-		Integer displayIndex = (Integer)attributes.get("displayIndex");
-
-		if (displayIndex != null) {
-			setDisplayIndex(displayIndex);
-		}
-
-		Integer status = (Integer)attributes.get("status");
-
-		if (status != null) {
-			setStatus(status);
-		}
-
-		Long statusByUserId = (Long)attributes.get("statusByUserId");
-
-		if (statusByUserId != null) {
-			setStatusByUserId(statusByUserId);
-		}
-
-		String statusByUserName = (String)attributes.get("statusByUserName");
-
-		if (statusByUserName != null) {
-			setStatusByUserName(statusByUserName);
-		}
-
-		Date statusDate = (Date)attributes.get("statusDate");
-
-		if (statusDate != null) {
-			setStatusDate(statusDate);
-		}
+		_attributeGetters = Collections.unmodifiableMap(attributeGetters);
+		_attributeSetters = Collections.unmodifiableMap((Map)attributeSetters);
 	}
 
 	@JSON
@@ -957,131 +882,6 @@ public class DDLRecordVersionModelImpl extends BaseModelImpl<DDLRecordVersion>
 		}
 
 		return ddlRecordVersionCacheModel;
-	}
-
-	@Override
-	public String toString() {
-		StringBundler sb = new StringBundler(35);
-
-		sb.append("{mvccVersion=");
-		sb.append(getMvccVersion());
-		sb.append(", recordVersionId=");
-		sb.append(getRecordVersionId());
-		sb.append(", groupId=");
-		sb.append(getGroupId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
-		sb.append(", userId=");
-		sb.append(getUserId());
-		sb.append(", userName=");
-		sb.append(getUserName());
-		sb.append(", createDate=");
-		sb.append(getCreateDate());
-		sb.append(", DDMStorageId=");
-		sb.append(getDDMStorageId());
-		sb.append(", recordSetId=");
-		sb.append(getRecordSetId());
-		sb.append(", recordSetVersion=");
-		sb.append(getRecordSetVersion());
-		sb.append(", recordId=");
-		sb.append(getRecordId());
-		sb.append(", version=");
-		sb.append(getVersion());
-		sb.append(", displayIndex=");
-		sb.append(getDisplayIndex());
-		sb.append(", status=");
-		sb.append(getStatus());
-		sb.append(", statusByUserId=");
-		sb.append(getStatusByUserId());
-		sb.append(", statusByUserName=");
-		sb.append(getStatusByUserName());
-		sb.append(", statusDate=");
-		sb.append(getStatusDate());
-		sb.append("}");
-
-		return sb.toString();
-	}
-
-	@Override
-	public String toXmlString() {
-		StringBundler sb = new StringBundler(55);
-
-		sb.append("<model><model-name>");
-		sb.append("com.liferay.dynamic.data.lists.model.DDLRecordVersion");
-		sb.append("</model-name>");
-
-		sb.append(
-			"<column><column-name>mvccVersion</column-name><column-value><![CDATA[");
-		sb.append(getMvccVersion());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>recordVersionId</column-name><column-value><![CDATA[");
-		sb.append(getRecordVersionId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>groupId</column-name><column-value><![CDATA[");
-		sb.append(getGroupId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userId</column-name><column-value><![CDATA[");
-		sb.append(getUserId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userName</column-name><column-value><![CDATA[");
-		sb.append(getUserName());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>createDate</column-name><column-value><![CDATA[");
-		sb.append(getCreateDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>DDMStorageId</column-name><column-value><![CDATA[");
-		sb.append(getDDMStorageId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>recordSetId</column-name><column-value><![CDATA[");
-		sb.append(getRecordSetId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>recordSetVersion</column-name><column-value><![CDATA[");
-		sb.append(getRecordSetVersion());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>recordId</column-name><column-value><![CDATA[");
-		sb.append(getRecordId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>version</column-name><column-value><![CDATA[");
-		sb.append(getVersion());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>displayIndex</column-name><column-value><![CDATA[");
-		sb.append(getDisplayIndex());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>status</column-name><column-value><![CDATA[");
-		sb.append(getStatus());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>statusByUserId</column-name><column-value><![CDATA[");
-		sb.append(getStatusByUserId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>statusByUserName</column-name><column-value><![CDATA[");
-		sb.append(getStatusByUserName());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>statusDate</column-name><column-value><![CDATA[");
-		sb.append(getStatusDate());
-		sb.append("]]></column-value></column>");
-
-		sb.append("</model>");
-
-		return sb.toString();
 	}
 
 	private static final ClassLoader _classLoader = DDLRecordVersion.class.getClassLoader();

@@ -16,8 +16,6 @@ package com.liferay.portal.model.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.petra.string.StringBundler;
-
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.ModelWrapper;
@@ -32,8 +30,12 @@ import java.io.Serializable;
 
 import java.sql.Types;
 
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * The base model implementation for the OrgGroupRole service. Represents a row in the &quot;OrgGroupRole&quot; database table, with each column mapped to a property of this class.
@@ -132,52 +134,35 @@ public class OrgGroupRoleModelImpl extends BaseModelImpl<OrgGroupRole>
 	}
 
 	@Override
-	public Map<String, Object> getModelAttributes() {
-		Map<String, Object> attributes = new HashMap<String, Object>();
-
-		attributes.put("mvccVersion", getMvccVersion());
-		attributes.put("organizationId", getOrganizationId());
-		attributes.put("groupId", getGroupId());
-		attributes.put("roleId", getRoleId());
-		attributes.put("companyId", getCompanyId());
-
-		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
-		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
-
-		return attributes;
+	public Map<String, Function<OrgGroupRole, Object>> getAttributeGetters() {
+		return _attributeGetters;
 	}
 
 	@Override
-	public void setModelAttributes(Map<String, Object> attributes) {
-		Long mvccVersion = (Long)attributes.get("mvccVersion");
+	public Map<String, BiConsumer<OrgGroupRole, Object>> getAttributeSetters() {
+		return _attributeSetters;
+	}
 
-		if (mvccVersion != null) {
-			setMvccVersion(mvccVersion);
-		}
+	private static final Map<String, Function<OrgGroupRole, Object>> _attributeGetters;
+	private static final Map<String, BiConsumer<OrgGroupRole, Object>> _attributeSetters;
 
-		Long organizationId = (Long)attributes.get("organizationId");
+	static {
+		Map<String, Function<OrgGroupRole, Object>> attributeGetters = new LinkedHashMap<String, Function<OrgGroupRole, Object>>();
+		Map<String, BiConsumer<OrgGroupRole, ?>> attributeSetters = new LinkedHashMap<String, BiConsumer<OrgGroupRole, ?>>();
 
-		if (organizationId != null) {
-			setOrganizationId(organizationId);
-		}
+		attributeGetters.put("mvccVersion", OrgGroupRole::getMvccVersion);
+		attributeSetters.put("mvccVersion", (BiConsumer<OrgGroupRole, Long>)OrgGroupRole::setMvccVersion);
+		attributeGetters.put("organizationId", OrgGroupRole::getOrganizationId);
+		attributeSetters.put("organizationId", (BiConsumer<OrgGroupRole, Long>)OrgGroupRole::setOrganizationId);
+		attributeGetters.put("groupId", OrgGroupRole::getGroupId);
+		attributeSetters.put("groupId", (BiConsumer<OrgGroupRole, Long>)OrgGroupRole::setGroupId);
+		attributeGetters.put("roleId", OrgGroupRole::getRoleId);
+		attributeSetters.put("roleId", (BiConsumer<OrgGroupRole, Long>)OrgGroupRole::setRoleId);
+		attributeGetters.put("companyId", OrgGroupRole::getCompanyId);
+		attributeSetters.put("companyId", (BiConsumer<OrgGroupRole, Long>)OrgGroupRole::setCompanyId);
 
-		Long groupId = (Long)attributes.get("groupId");
-
-		if (groupId != null) {
-			setGroupId(groupId);
-		}
-
-		Long roleId = (Long)attributes.get("roleId");
-
-		if (roleId != null) {
-			setRoleId(roleId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
-		}
+		_attributeGetters = Collections.unmodifiableMap(attributeGetters);
+		_attributeSetters = Collections.unmodifiableMap((Map)attributeSetters);
 	}
 
 	@Override
@@ -359,59 +344,6 @@ public class OrgGroupRoleModelImpl extends BaseModelImpl<OrgGroupRole>
 		orgGroupRoleCacheModel.companyId = getCompanyId();
 
 		return orgGroupRoleCacheModel;
-	}
-
-	@Override
-	public String toString() {
-		StringBundler sb = new StringBundler(11);
-
-		sb.append("{mvccVersion=");
-		sb.append(getMvccVersion());
-		sb.append(", organizationId=");
-		sb.append(getOrganizationId());
-		sb.append(", groupId=");
-		sb.append(getGroupId());
-		sb.append(", roleId=");
-		sb.append(getRoleId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
-		sb.append("}");
-
-		return sb.toString();
-	}
-
-	@Override
-	public String toXmlString() {
-		StringBundler sb = new StringBundler(19);
-
-		sb.append("<model><model-name>");
-		sb.append("com.liferay.portal.kernel.model.OrgGroupRole");
-		sb.append("</model-name>");
-
-		sb.append(
-			"<column><column-name>mvccVersion</column-name><column-value><![CDATA[");
-		sb.append(getMvccVersion());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>organizationId</column-name><column-value><![CDATA[");
-		sb.append(getOrganizationId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>groupId</column-name><column-value><![CDATA[");
-		sb.append(getGroupId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>roleId</column-name><column-value><![CDATA[");
-		sb.append(getRoleId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
-		sb.append("]]></column-value></column>");
-
-		sb.append("</model>");
-
-		return sb.toString();
 	}
 
 	private static final ClassLoader _classLoader = OrgGroupRole.class.getClassLoader();

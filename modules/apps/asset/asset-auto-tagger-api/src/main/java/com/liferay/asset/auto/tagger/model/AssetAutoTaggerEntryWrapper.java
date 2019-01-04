@@ -20,8 +20,6 @@ import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * <p>
@@ -38,67 +36,6 @@ public class AssetAutoTaggerEntryWrapper extends BaseModelWrapper<AssetAutoTagge
 	public AssetAutoTaggerEntryWrapper(
 		AssetAutoTaggerEntry assetAutoTaggerEntry) {
 		super(assetAutoTaggerEntry);
-	}
-
-	@Override
-	public Map<String, Object> getModelAttributes() {
-		Map<String, Object> attributes = new HashMap<String, Object>();
-
-		attributes.put("assetAutoTaggerEntryId", getAssetAutoTaggerEntryId());
-		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
-		attributes.put("createDate", getCreateDate());
-		attributes.put("modifiedDate", getModifiedDate());
-		attributes.put("assetEntryId", getAssetEntryId());
-		attributes.put("assetTagId", getAssetTagId());
-
-		return attributes;
-	}
-
-	@Override
-	public void setModelAttributes(Map<String, Object> attributes) {
-		Long assetAutoTaggerEntryId = (Long)attributes.get(
-				"assetAutoTaggerEntryId");
-
-		if (assetAutoTaggerEntryId != null) {
-			setAssetAutoTaggerEntryId(assetAutoTaggerEntryId);
-		}
-
-		Long groupId = (Long)attributes.get("groupId");
-
-		if (groupId != null) {
-			setGroupId(groupId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
-		}
-
-		Date createDate = (Date)attributes.get("createDate");
-
-		if (createDate != null) {
-			setCreateDate(createDate);
-		}
-
-		Date modifiedDate = (Date)attributes.get("modifiedDate");
-
-		if (modifiedDate != null) {
-			setModifiedDate(modifiedDate);
-		}
-
-		Long assetEntryId = (Long)attributes.get("assetEntryId");
-
-		if (assetEntryId != null) {
-			setAssetEntryId(assetEntryId);
-		}
-
-		Long assetTagId = (Long)attributes.get("assetTagId");
-
-		if (assetTagId != null) {
-			setAssetTagId(assetTagId);
-		}
 	}
 
 	/**

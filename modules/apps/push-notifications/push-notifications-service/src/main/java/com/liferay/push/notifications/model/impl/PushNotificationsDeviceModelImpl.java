@@ -19,8 +19,6 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 
-import com.liferay.petra.string.StringBundler;
-
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSON;
@@ -42,10 +40,14 @@ import java.io.Serializable;
 import java.sql.Types;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * The base model implementation for the PushNotificationsDevice service. Represents a row in the &quot;PushNotificationsDevice&quot; database table, with each column mapped to a property of this class.
@@ -192,61 +194,37 @@ public class PushNotificationsDeviceModelImpl extends BaseModelImpl<PushNotifica
 	}
 
 	@Override
-	public Map<String, Object> getModelAttributes() {
-		Map<String, Object> attributes = new HashMap<String, Object>();
-
-		attributes.put("pushNotificationsDeviceId",
-			getPushNotificationsDeviceId());
-		attributes.put("companyId", getCompanyId());
-		attributes.put("userId", getUserId());
-		attributes.put("createDate", getCreateDate());
-		attributes.put("platform", getPlatform());
-		attributes.put("token", getToken());
-
-		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
-		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
-
-		return attributes;
+	public Map<String, Function<PushNotificationsDevice, Object>> getAttributeGetters() {
+		return _attributeGetters;
 	}
 
 	@Override
-	public void setModelAttributes(Map<String, Object> attributes) {
-		Long pushNotificationsDeviceId = (Long)attributes.get(
-				"pushNotificationsDeviceId");
+	public Map<String, BiConsumer<PushNotificationsDevice, Object>> getAttributeSetters() {
+		return _attributeSetters;
+	}
 
-		if (pushNotificationsDeviceId != null) {
-			setPushNotificationsDeviceId(pushNotificationsDeviceId);
-		}
+	private static final Map<String, Function<PushNotificationsDevice, Object>> _attributeGetters;
+	private static final Map<String, BiConsumer<PushNotificationsDevice, Object>> _attributeSetters;
 
-		Long companyId = (Long)attributes.get("companyId");
+	static {
+		Map<String, Function<PushNotificationsDevice, Object>> attributeGetters = new LinkedHashMap<String, Function<PushNotificationsDevice, Object>>();
+		Map<String, BiConsumer<PushNotificationsDevice, ?>> attributeSetters = new LinkedHashMap<String, BiConsumer<PushNotificationsDevice, ?>>();
 
-		if (companyId != null) {
-			setCompanyId(companyId);
-		}
+		attributeGetters.put("pushNotificationsDeviceId", PushNotificationsDevice::getPushNotificationsDeviceId);
+		attributeSetters.put("pushNotificationsDeviceId", (BiConsumer<PushNotificationsDevice, Long>)PushNotificationsDevice::setPushNotificationsDeviceId);
+		attributeGetters.put("companyId", PushNotificationsDevice::getCompanyId);
+		attributeSetters.put("companyId", (BiConsumer<PushNotificationsDevice, Long>)PushNotificationsDevice::setCompanyId);
+		attributeGetters.put("userId", PushNotificationsDevice::getUserId);
+		attributeSetters.put("userId", (BiConsumer<PushNotificationsDevice, Long>)PushNotificationsDevice::setUserId);
+		attributeGetters.put("createDate", PushNotificationsDevice::getCreateDate);
+		attributeSetters.put("createDate", (BiConsumer<PushNotificationsDevice, Date>)PushNotificationsDevice::setCreateDate);
+		attributeGetters.put("platform", PushNotificationsDevice::getPlatform);
+		attributeSetters.put("platform", (BiConsumer<PushNotificationsDevice, String>)PushNotificationsDevice::setPlatform);
+		attributeGetters.put("token", PushNotificationsDevice::getToken);
+		attributeSetters.put("token", (BiConsumer<PushNotificationsDevice, String>)PushNotificationsDevice::setToken);
 
-		Long userId = (Long)attributes.get("userId");
-
-		if (userId != null) {
-			setUserId(userId);
-		}
-
-		Date createDate = (Date)attributes.get("createDate");
-
-		if (createDate != null) {
-			setCreateDate(createDate);
-		}
-
-		String platform = (String)attributes.get("platform");
-
-		if (platform != null) {
-			setPlatform(platform);
-		}
-
-		String token = (String)attributes.get("token");
-
-		if (token != null) {
-			setToken(token);
-		}
+		_attributeGetters = Collections.unmodifiableMap(attributeGetters);
+		_attributeSetters = Collections.unmodifiableMap((Map)attributeSetters);
 	}
 
 	@JSON
@@ -519,66 +497,6 @@ public class PushNotificationsDeviceModelImpl extends BaseModelImpl<PushNotifica
 		}
 
 		return pushNotificationsDeviceCacheModel;
-	}
-
-	@Override
-	public String toString() {
-		StringBundler sb = new StringBundler(13);
-
-		sb.append("{pushNotificationsDeviceId=");
-		sb.append(getPushNotificationsDeviceId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
-		sb.append(", userId=");
-		sb.append(getUserId());
-		sb.append(", createDate=");
-		sb.append(getCreateDate());
-		sb.append(", platform=");
-		sb.append(getPlatform());
-		sb.append(", token=");
-		sb.append(getToken());
-		sb.append("}");
-
-		return sb.toString();
-	}
-
-	@Override
-	public String toXmlString() {
-		StringBundler sb = new StringBundler(22);
-
-		sb.append("<model><model-name>");
-		sb.append(
-			"com.liferay.push.notifications.model.PushNotificationsDevice");
-		sb.append("</model-name>");
-
-		sb.append(
-			"<column><column-name>pushNotificationsDeviceId</column-name><column-value><![CDATA[");
-		sb.append(getPushNotificationsDeviceId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userId</column-name><column-value><![CDATA[");
-		sb.append(getUserId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>createDate</column-name><column-value><![CDATA[");
-		sb.append(getCreateDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>platform</column-name><column-value><![CDATA[");
-		sb.append(getPlatform());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>token</column-name><column-value><![CDATA[");
-		sb.append(getToken());
-		sb.append("]]></column-value></column>");
-
-		sb.append("</model>");
-
-		return sb.toString();
 	}
 
 	private static final ClassLoader _classLoader = PushNotificationsDevice.class.getClassLoader();

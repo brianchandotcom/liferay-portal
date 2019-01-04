@@ -22,8 +22,6 @@ import com.liferay.document.library.file.rank.model.DLFileRankModel;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 
-import com.liferay.petra.string.StringBundler;
-
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.CacheModel;
@@ -40,9 +38,13 @@ import java.io.Serializable;
 
 import java.sql.Types;
 
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * The base model implementation for the DLFileRank service. Represents a row in the &quot;DLFileRank&quot; database table, with each column mapped to a property of this class.
@@ -146,66 +148,39 @@ public class DLFileRankModelImpl extends BaseModelImpl<DLFileRank>
 	}
 
 	@Override
-	public Map<String, Object> getModelAttributes() {
-		Map<String, Object> attributes = new HashMap<String, Object>();
-
-		attributes.put("fileRankId", getFileRankId());
-		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
-		attributes.put("userId", getUserId());
-		attributes.put("createDate", getCreateDate());
-		attributes.put("fileEntryId", getFileEntryId());
-		attributes.put("active", isActive());
-
-		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
-		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
-
-		return attributes;
+	public Map<String, Function<DLFileRank, Object>> getAttributeGetters() {
+		return _attributeGetters;
 	}
 
 	@Override
-	public void setModelAttributes(Map<String, Object> attributes) {
-		Long fileRankId = (Long)attributes.get("fileRankId");
+	public Map<String, BiConsumer<DLFileRank, Object>> getAttributeSetters() {
+		return _attributeSetters;
+	}
 
-		if (fileRankId != null) {
-			setFileRankId(fileRankId);
-		}
+	private static final Map<String, Function<DLFileRank, Object>> _attributeGetters;
+	private static final Map<String, BiConsumer<DLFileRank, Object>> _attributeSetters;
 
-		Long groupId = (Long)attributes.get("groupId");
+	static {
+		Map<String, Function<DLFileRank, Object>> attributeGetters = new LinkedHashMap<String, Function<DLFileRank, Object>>();
+		Map<String, BiConsumer<DLFileRank, ?>> attributeSetters = new LinkedHashMap<String, BiConsumer<DLFileRank, ?>>();
 
-		if (groupId != null) {
-			setGroupId(groupId);
-		}
+		attributeGetters.put("fileRankId", DLFileRank::getFileRankId);
+		attributeSetters.put("fileRankId", (BiConsumer<DLFileRank, Long>)DLFileRank::setFileRankId);
+		attributeGetters.put("groupId", DLFileRank::getGroupId);
+		attributeSetters.put("groupId", (BiConsumer<DLFileRank, Long>)DLFileRank::setGroupId);
+		attributeGetters.put("companyId", DLFileRank::getCompanyId);
+		attributeSetters.put("companyId", (BiConsumer<DLFileRank, Long>)DLFileRank::setCompanyId);
+		attributeGetters.put("userId", DLFileRank::getUserId);
+		attributeSetters.put("userId", (BiConsumer<DLFileRank, Long>)DLFileRank::setUserId);
+		attributeGetters.put("createDate", DLFileRank::getCreateDate);
+		attributeSetters.put("createDate", (BiConsumer<DLFileRank, Date>)DLFileRank::setCreateDate);
+		attributeGetters.put("fileEntryId", DLFileRank::getFileEntryId);
+		attributeSetters.put("fileEntryId", (BiConsumer<DLFileRank, Long>)DLFileRank::setFileEntryId);
+		attributeGetters.put("active", DLFileRank::getActive);
+		attributeSetters.put("active", (BiConsumer<DLFileRank, Boolean>)DLFileRank::setActive);
 
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
-		}
-
-		Long userId = (Long)attributes.get("userId");
-
-		if (userId != null) {
-			setUserId(userId);
-		}
-
-		Date createDate = (Date)attributes.get("createDate");
-
-		if (createDate != null) {
-			setCreateDate(createDate);
-		}
-
-		Long fileEntryId = (Long)attributes.get("fileEntryId");
-
-		if (fileEntryId != null) {
-			setFileEntryId(fileEntryId);
-		}
-
-		Boolean active = (Boolean)attributes.get("active");
-
-		if (active != null) {
-			setActive(active);
-		}
+		_attributeGetters = Collections.unmodifiableMap(attributeGetters);
+		_attributeSetters = Collections.unmodifiableMap((Map)attributeSetters);
 	}
 
 	@Override
@@ -510,71 +485,6 @@ public class DLFileRankModelImpl extends BaseModelImpl<DLFileRank>
 		dlFileRankCacheModel.active = isActive();
 
 		return dlFileRankCacheModel;
-	}
-
-	@Override
-	public String toString() {
-		StringBundler sb = new StringBundler(15);
-
-		sb.append("{fileRankId=");
-		sb.append(getFileRankId());
-		sb.append(", groupId=");
-		sb.append(getGroupId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
-		sb.append(", userId=");
-		sb.append(getUserId());
-		sb.append(", createDate=");
-		sb.append(getCreateDate());
-		sb.append(", fileEntryId=");
-		sb.append(getFileEntryId());
-		sb.append(", active=");
-		sb.append(isActive());
-		sb.append("}");
-
-		return sb.toString();
-	}
-
-	@Override
-	public String toXmlString() {
-		StringBundler sb = new StringBundler(25);
-
-		sb.append("<model><model-name>");
-		sb.append("com.liferay.document.library.file.rank.model.DLFileRank");
-		sb.append("</model-name>");
-
-		sb.append(
-			"<column><column-name>fileRankId</column-name><column-value><![CDATA[");
-		sb.append(getFileRankId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>groupId</column-name><column-value><![CDATA[");
-		sb.append(getGroupId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userId</column-name><column-value><![CDATA[");
-		sb.append(getUserId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>createDate</column-name><column-value><![CDATA[");
-		sb.append(getCreateDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>fileEntryId</column-name><column-value><![CDATA[");
-		sb.append(getFileEntryId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>active</column-name><column-value><![CDATA[");
-		sb.append(isActive());
-		sb.append("]]></column-value></column>");
-
-		sb.append("</model>");
-
-		return sb.toString();
 	}
 
 	private static final ClassLoader _classLoader = DLFileRank.class.getClassLoader();

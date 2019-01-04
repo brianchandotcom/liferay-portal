@@ -36,8 +36,12 @@ import java.math.BigDecimal;
 
 import java.sql.Types;
 
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * The base model implementation for the BigDecimalEntry service. Represents a row in the &quot;BigDecimalEntry&quot; database table, with each column mapped to a property of this class.
@@ -152,6 +156,66 @@ public class BigDecimalEntryModelImpl extends BaseModelImpl<BigDecimalEntry>
 		if (bigDecimalValue != null) {
 			setBigDecimalValue(bigDecimalValue);
 		}
+	}
+
+	public Map<String, Function<BigDecimalEntry, Object>> getAttributeGetters() {
+		return _attributeGetters;
+	}
+
+	public Map<String, BiConsumer<BigDecimalEntry, Object>> getAttributeSetters() {
+		return _attributeSetters;
+	}
+
+	private static final Map<String, Function<BigDecimalEntry, Object>> _attributeGetters;
+	private static final Map<String, BiConsumer<BigDecimalEntry, Object>> _attributeSetters;
+
+	static {
+		Map<String, Function<BigDecimalEntry, Object>> attributeGetters = new LinkedHashMap<String, Function<BigDecimalEntry, Object>>();
+		Map<String, BiConsumer<BigDecimalEntry, ?>> attributeSetters = new LinkedHashMap<String, BiConsumer<BigDecimalEntry, ?>>();
+
+		attributeGetters.put(
+			"bigDecimalEntryId",
+			new Function<BigDecimalEntry, Object>() {
+
+				@Override
+				public Object apply(BigDecimalEntry bigDecimalEntry) {
+					return bigDecimalEntry.getBigDecimalEntryId();
+				}
+
+			});
+		attributeSetters.put(
+			"bigDecimalEntryId",
+			new BiConsumer<BigDecimalEntry, Object>() {
+
+				@Override
+				public void accept(BigDecimalEntry bigDecimalEntry, Object bigDecimalEntryId) {
+					bigDecimalEntry.setBigDecimalEntryId((Long)bigDecimalEntryId);
+				}
+
+			});
+		attributeGetters.put(
+			"bigDecimalValue",
+			new Function<BigDecimalEntry, Object>() {
+
+				@Override
+				public Object apply(BigDecimalEntry bigDecimalEntry) {
+					return bigDecimalEntry.getBigDecimalValue();
+				}
+
+			});
+		attributeSetters.put(
+			"bigDecimalValue",
+			new BiConsumer<BigDecimalEntry, Object>() {
+
+				@Override
+				public void accept(BigDecimalEntry bigDecimalEntry, Object bigDecimalValue) {
+					bigDecimalEntry.setBigDecimalValue((BigDecimal)bigDecimalValue);
+				}
+
+			});
+
+		_attributeGetters = Collections.unmodifiableMap(attributeGetters);
+		_attributeSetters = Collections.unmodifiableMap((Map)attributeSetters);
 	}
 
 	@Override

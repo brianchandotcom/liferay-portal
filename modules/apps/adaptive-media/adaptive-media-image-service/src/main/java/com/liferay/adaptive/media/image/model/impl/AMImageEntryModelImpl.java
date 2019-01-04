@@ -22,8 +22,6 @@ import com.liferay.adaptive.media.image.model.AMImageEntryModel;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 
-import com.liferay.petra.string.StringBundler;
-
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.ModelWrapper;
@@ -36,9 +34,13 @@ import java.io.Serializable;
 
 import java.sql.Types;
 
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * The base model implementation for the AMImageEntry service. Represents a row in the &quot;AMImageEntry&quot; database table, with each column mapped to a property of this class.
@@ -150,94 +152,47 @@ public class AMImageEntryModelImpl extends BaseModelImpl<AMImageEntry>
 	}
 
 	@Override
-	public Map<String, Object> getModelAttributes() {
-		Map<String, Object> attributes = new HashMap<String, Object>();
-
-		attributes.put("uuid", getUuid());
-		attributes.put("amImageEntryId", getAmImageEntryId());
-		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
-		attributes.put("createDate", getCreateDate());
-		attributes.put("configurationUuid", getConfigurationUuid());
-		attributes.put("fileVersionId", getFileVersionId());
-		attributes.put("mimeType", getMimeType());
-		attributes.put("height", getHeight());
-		attributes.put("width", getWidth());
-		attributes.put("size", getSize());
-
-		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
-		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
-
-		return attributes;
+	public Map<String, Function<AMImageEntry, Object>> getAttributeGetters() {
+		return _attributeGetters;
 	}
 
 	@Override
-	public void setModelAttributes(Map<String, Object> attributes) {
-		String uuid = (String)attributes.get("uuid");
+	public Map<String, BiConsumer<AMImageEntry, Object>> getAttributeSetters() {
+		return _attributeSetters;
+	}
 
-		if (uuid != null) {
-			setUuid(uuid);
-		}
+	private static final Map<String, Function<AMImageEntry, Object>> _attributeGetters;
+	private static final Map<String, BiConsumer<AMImageEntry, Object>> _attributeSetters;
 
-		Long amImageEntryId = (Long)attributes.get("amImageEntryId");
+	static {
+		Map<String, Function<AMImageEntry, Object>> attributeGetters = new LinkedHashMap<String, Function<AMImageEntry, Object>>();
+		Map<String, BiConsumer<AMImageEntry, ?>> attributeSetters = new LinkedHashMap<String, BiConsumer<AMImageEntry, ?>>();
 
-		if (amImageEntryId != null) {
-			setAmImageEntryId(amImageEntryId);
-		}
+		attributeGetters.put("uuid", AMImageEntry::getUuid);
+		attributeSetters.put("uuid", (BiConsumer<AMImageEntry, String>)AMImageEntry::setUuid);
+		attributeGetters.put("amImageEntryId", AMImageEntry::getAmImageEntryId);
+		attributeSetters.put("amImageEntryId", (BiConsumer<AMImageEntry, Long>)AMImageEntry::setAmImageEntryId);
+		attributeGetters.put("groupId", AMImageEntry::getGroupId);
+		attributeSetters.put("groupId", (BiConsumer<AMImageEntry, Long>)AMImageEntry::setGroupId);
+		attributeGetters.put("companyId", AMImageEntry::getCompanyId);
+		attributeSetters.put("companyId", (BiConsumer<AMImageEntry, Long>)AMImageEntry::setCompanyId);
+		attributeGetters.put("createDate", AMImageEntry::getCreateDate);
+		attributeSetters.put("createDate", (BiConsumer<AMImageEntry, Date>)AMImageEntry::setCreateDate);
+		attributeGetters.put("configurationUuid", AMImageEntry::getConfigurationUuid);
+		attributeSetters.put("configurationUuid", (BiConsumer<AMImageEntry, String>)AMImageEntry::setConfigurationUuid);
+		attributeGetters.put("fileVersionId", AMImageEntry::getFileVersionId);
+		attributeSetters.put("fileVersionId", (BiConsumer<AMImageEntry, Long>)AMImageEntry::setFileVersionId);
+		attributeGetters.put("mimeType", AMImageEntry::getMimeType);
+		attributeSetters.put("mimeType", (BiConsumer<AMImageEntry, String>)AMImageEntry::setMimeType);
+		attributeGetters.put("height", AMImageEntry::getHeight);
+		attributeSetters.put("height", (BiConsumer<AMImageEntry, Integer>)AMImageEntry::setHeight);
+		attributeGetters.put("width", AMImageEntry::getWidth);
+		attributeSetters.put("width", (BiConsumer<AMImageEntry, Integer>)AMImageEntry::setWidth);
+		attributeGetters.put("size", AMImageEntry::getSize);
+		attributeSetters.put("size", (BiConsumer<AMImageEntry, Long>)AMImageEntry::setSize);
 
-		Long groupId = (Long)attributes.get("groupId");
-
-		if (groupId != null) {
-			setGroupId(groupId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
-		}
-
-		Date createDate = (Date)attributes.get("createDate");
-
-		if (createDate != null) {
-			setCreateDate(createDate);
-		}
-
-		String configurationUuid = (String)attributes.get("configurationUuid");
-
-		if (configurationUuid != null) {
-			setConfigurationUuid(configurationUuid);
-		}
-
-		Long fileVersionId = (Long)attributes.get("fileVersionId");
-
-		if (fileVersionId != null) {
-			setFileVersionId(fileVersionId);
-		}
-
-		String mimeType = (String)attributes.get("mimeType");
-
-		if (mimeType != null) {
-			setMimeType(mimeType);
-		}
-
-		Integer height = (Integer)attributes.get("height");
-
-		if (height != null) {
-			setHeight(height);
-		}
-
-		Integer width = (Integer)attributes.get("width");
-
-		if (width != null) {
-			setWidth(width);
-		}
-
-		Long size = (Long)attributes.get("size");
-
-		if (size != null) {
-			setSize(size);
-		}
+		_attributeGetters = Collections.unmodifiableMap(attributeGetters);
+		_attributeSetters = Collections.unmodifiableMap((Map)attributeSetters);
 	}
 
 	@Override
@@ -594,95 +549,6 @@ public class AMImageEntryModelImpl extends BaseModelImpl<AMImageEntry>
 		amImageEntryCacheModel.size = getSize();
 
 		return amImageEntryCacheModel;
-	}
-
-	@Override
-	public String toString() {
-		StringBundler sb = new StringBundler(23);
-
-		sb.append("{uuid=");
-		sb.append(getUuid());
-		sb.append(", amImageEntryId=");
-		sb.append(getAmImageEntryId());
-		sb.append(", groupId=");
-		sb.append(getGroupId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
-		sb.append(", createDate=");
-		sb.append(getCreateDate());
-		sb.append(", configurationUuid=");
-		sb.append(getConfigurationUuid());
-		sb.append(", fileVersionId=");
-		sb.append(getFileVersionId());
-		sb.append(", mimeType=");
-		sb.append(getMimeType());
-		sb.append(", height=");
-		sb.append(getHeight());
-		sb.append(", width=");
-		sb.append(getWidth());
-		sb.append(", size=");
-		sb.append(getSize());
-		sb.append("}");
-
-		return sb.toString();
-	}
-
-	@Override
-	public String toXmlString() {
-		StringBundler sb = new StringBundler(37);
-
-		sb.append("<model><model-name>");
-		sb.append("com.liferay.adaptive.media.image.model.AMImageEntry");
-		sb.append("</model-name>");
-
-		sb.append(
-			"<column><column-name>uuid</column-name><column-value><![CDATA[");
-		sb.append(getUuid());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>amImageEntryId</column-name><column-value><![CDATA[");
-		sb.append(getAmImageEntryId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>groupId</column-name><column-value><![CDATA[");
-		sb.append(getGroupId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>createDate</column-name><column-value><![CDATA[");
-		sb.append(getCreateDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>configurationUuid</column-name><column-value><![CDATA[");
-		sb.append(getConfigurationUuid());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>fileVersionId</column-name><column-value><![CDATA[");
-		sb.append(getFileVersionId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>mimeType</column-name><column-value><![CDATA[");
-		sb.append(getMimeType());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>height</column-name><column-value><![CDATA[");
-		sb.append(getHeight());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>width</column-name><column-value><![CDATA[");
-		sb.append(getWidth());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>size</column-name><column-value><![CDATA[");
-		sb.append(getSize());
-		sb.append("]]></column-value></column>");
-
-		sb.append("</model>");
-
-		return sb.toString();
 	}
 
 	private static final ClassLoader _classLoader = AMImageEntry.class.getClassLoader();

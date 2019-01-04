@@ -26,6 +26,8 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * <p>
@@ -57,24 +59,30 @@ public class LocalizedEntryWrapper implements LocalizedEntry,
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		attributes.put("defaultLanguageId", getDefaultLanguageId());
-		attributes.put("localizedEntryId", getLocalizedEntryId());
+		Map<String, Function<LocalizedEntry, Object>> attributeGetters = getAttributeGetters();
+
+		for (Map.Entry<String, Function<LocalizedEntry, Object>> entry : attributeGetters.entrySet()) {
+			String attributeName = entry.getKey();
+			Function<LocalizedEntry, Object> attributeFunction = entry.getValue();
+
+			attributes.put(attributeName, attributeFunction.apply(this));
+		}
+
+		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
+		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
 
 		return attributes;
 	}
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		String defaultLanguageId = (String)attributes.get("defaultLanguageId");
+		Map<String, BiConsumer<LocalizedEntry, Object>> attributeSetters = getAttributeSetters();
 
-		if (defaultLanguageId != null) {
-			setDefaultLanguageId(defaultLanguageId);
-		}
+		for (Map.Entry<String, BiConsumer<LocalizedEntry, Object>> entry : attributeSetters.entrySet()) {
+			String attributeName = entry.getKey();
+			BiConsumer<LocalizedEntry, Object> attributeBiConsumer = entry.getValue();
 
-		Long localizedEntryId = (Long)attributes.get("localizedEntryId");
-
-		if (localizedEntryId != null) {
-			setLocalizedEntryId(localizedEntryId);
+			attributeBiConsumer.accept(this, attributeSetters.get(attributeName));
 		}
 	}
 
@@ -86,6 +94,16 @@ public class LocalizedEntryWrapper implements LocalizedEntry,
 	@Override
 	public int compareTo(LocalizedEntry localizedEntry) {
 		return _localizedEntry.compareTo(localizedEntry);
+	}
+
+	@Override
+	public Map<String, Function<LocalizedEntry, Object>> getAttributeGetters() {
+		return _localizedEntry.getAttributeGetters();
+	}
+
+	@Override
+	public Map<String, BiConsumer<LocalizedEntry, Object>> getAttributeSetters() {
+		return _localizedEntry.getAttributeSetters();
 	}
 
 	@Override

@@ -20,8 +20,6 @@ import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * <p>
@@ -37,59 +35,6 @@ public class AnnouncementsFlagWrapper extends BaseModelWrapper<AnnouncementsFlag
 	implements AnnouncementsFlag, ModelWrapper<AnnouncementsFlag> {
 	public AnnouncementsFlagWrapper(AnnouncementsFlag announcementsFlag) {
 		super(announcementsFlag);
-	}
-
-	@Override
-	public Map<String, Object> getModelAttributes() {
-		Map<String, Object> attributes = new HashMap<String, Object>();
-
-		attributes.put("flagId", getFlagId());
-		attributes.put("companyId", getCompanyId());
-		attributes.put("userId", getUserId());
-		attributes.put("createDate", getCreateDate());
-		attributes.put("entryId", getEntryId());
-		attributes.put("value", getValue());
-
-		return attributes;
-	}
-
-	@Override
-	public void setModelAttributes(Map<String, Object> attributes) {
-		Long flagId = (Long)attributes.get("flagId");
-
-		if (flagId != null) {
-			setFlagId(flagId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
-		}
-
-		Long userId = (Long)attributes.get("userId");
-
-		if (userId != null) {
-			setUserId(userId);
-		}
-
-		Date createDate = (Date)attributes.get("createDate");
-
-		if (createDate != null) {
-			setCreateDate(createDate);
-		}
-
-		Long entryId = (Long)attributes.get("entryId");
-
-		if (entryId != null) {
-			setEntryId(entryId);
-		}
-
-		Integer value = (Integer)attributes.get("value");
-
-		if (value != null) {
-			setValue(value);
-		}
 	}
 
 	/**

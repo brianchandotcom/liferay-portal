@@ -20,8 +20,6 @@ import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * <p>
@@ -39,89 +37,6 @@ public class DLOpenerFileEntryReferenceWrapper extends BaseModelWrapper<DLOpener
 	public DLOpenerFileEntryReferenceWrapper(
 		DLOpenerFileEntryReference dlOpenerFileEntryReference) {
 		super(dlOpenerFileEntryReference);
-	}
-
-	@Override
-	public Map<String, Object> getModelAttributes() {
-		Map<String, Object> attributes = new HashMap<String, Object>();
-
-		attributes.put("dlOpenerFileEntryReferenceId",
-			getDlOpenerFileEntryReferenceId());
-		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
-		attributes.put("userId", getUserId());
-		attributes.put("userName", getUserName());
-		attributes.put("createDate", getCreateDate());
-		attributes.put("modifiedDate", getModifiedDate());
-		attributes.put("referenceKey", getReferenceKey());
-		attributes.put("fileEntryId", getFileEntryId());
-		attributes.put("type", getType());
-
-		return attributes;
-	}
-
-	@Override
-	public void setModelAttributes(Map<String, Object> attributes) {
-		Long dlOpenerFileEntryReferenceId = (Long)attributes.get(
-				"dlOpenerFileEntryReferenceId");
-
-		if (dlOpenerFileEntryReferenceId != null) {
-			setDlOpenerFileEntryReferenceId(dlOpenerFileEntryReferenceId);
-		}
-
-		Long groupId = (Long)attributes.get("groupId");
-
-		if (groupId != null) {
-			setGroupId(groupId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
-		}
-
-		Long userId = (Long)attributes.get("userId");
-
-		if (userId != null) {
-			setUserId(userId);
-		}
-
-		String userName = (String)attributes.get("userName");
-
-		if (userName != null) {
-			setUserName(userName);
-		}
-
-		Date createDate = (Date)attributes.get("createDate");
-
-		if (createDate != null) {
-			setCreateDate(createDate);
-		}
-
-		Date modifiedDate = (Date)attributes.get("modifiedDate");
-
-		if (modifiedDate != null) {
-			setModifiedDate(modifiedDate);
-		}
-
-		String referenceKey = (String)attributes.get("referenceKey");
-
-		if (referenceKey != null) {
-			setReferenceKey(referenceKey);
-		}
-
-		Long fileEntryId = (Long)attributes.get("fileEntryId");
-
-		if (fileEntryId != null) {
-			setFileEntryId(fileEntryId);
-		}
-
-		Integer type = (Integer)attributes.get("type");
-
-		if (type != null) {
-			setType(type);
-		}
 	}
 
 	/**

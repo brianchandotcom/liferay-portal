@@ -18,9 +18,6 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
-import java.util.HashMap;
-import java.util.Map;
-
 /**
  * <p>
  * This class is a wrapper for {@link PortletPreferences}.
@@ -35,73 +32,6 @@ public class PortletPreferencesWrapper extends BaseModelWrapper<PortletPreferenc
 	implements PortletPreferences, ModelWrapper<PortletPreferences> {
 	public PortletPreferencesWrapper(PortletPreferences portletPreferences) {
 		super(portletPreferences);
-	}
-
-	@Override
-	public Map<String, Object> getModelAttributes() {
-		Map<String, Object> attributes = new HashMap<String, Object>();
-
-		attributes.put("mvccVersion", getMvccVersion());
-		attributes.put("portletPreferencesId", getPortletPreferencesId());
-		attributes.put("companyId", getCompanyId());
-		attributes.put("ownerId", getOwnerId());
-		attributes.put("ownerType", getOwnerType());
-		attributes.put("plid", getPlid());
-		attributes.put("portletId", getPortletId());
-		attributes.put("preferences", getPreferences());
-
-		return attributes;
-	}
-
-	@Override
-	public void setModelAttributes(Map<String, Object> attributes) {
-		Long mvccVersion = (Long)attributes.get("mvccVersion");
-
-		if (mvccVersion != null) {
-			setMvccVersion(mvccVersion);
-		}
-
-		Long portletPreferencesId = (Long)attributes.get("portletPreferencesId");
-
-		if (portletPreferencesId != null) {
-			setPortletPreferencesId(portletPreferencesId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
-		}
-
-		Long ownerId = (Long)attributes.get("ownerId");
-
-		if (ownerId != null) {
-			setOwnerId(ownerId);
-		}
-
-		Integer ownerType = (Integer)attributes.get("ownerType");
-
-		if (ownerType != null) {
-			setOwnerType(ownerType);
-		}
-
-		Long plid = (Long)attributes.get("plid");
-
-		if (plid != null) {
-			setPlid(plid);
-		}
-
-		String portletId = (String)attributes.get("portletId");
-
-		if (portletId != null) {
-			setPortletId(portletId);
-		}
-
-		String preferences = (String)attributes.get("preferences");
-
-		if (preferences != null) {
-			setPreferences(preferences);
-		}
 	}
 
 	/**

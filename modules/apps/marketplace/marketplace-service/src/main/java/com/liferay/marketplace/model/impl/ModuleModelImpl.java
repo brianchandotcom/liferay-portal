@@ -22,8 +22,6 @@ import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 import com.liferay.marketplace.model.Module;
 import com.liferay.marketplace.model.ModuleModel;
 
-import com.liferay.petra.string.StringBundler;
-
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.ModelWrapper;
@@ -36,8 +34,12 @@ import java.io.Serializable;
 
 import java.sql.Types;
 
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * The base model implementation for the Module service. Represents a row in the &quot;Marketplace_Module&quot; database table, with each column mapped to a property of this class.
@@ -142,66 +144,39 @@ public class ModuleModelImpl extends BaseModelImpl<Module>
 	}
 
 	@Override
-	public Map<String, Object> getModelAttributes() {
-		Map<String, Object> attributes = new HashMap<String, Object>();
-
-		attributes.put("uuid", getUuid());
-		attributes.put("moduleId", getModuleId());
-		attributes.put("companyId", getCompanyId());
-		attributes.put("appId", getAppId());
-		attributes.put("bundleSymbolicName", getBundleSymbolicName());
-		attributes.put("bundleVersion", getBundleVersion());
-		attributes.put("contextName", getContextName());
-
-		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
-		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
-
-		return attributes;
+	public Map<String, Function<Module, Object>> getAttributeGetters() {
+		return _attributeGetters;
 	}
 
 	@Override
-	public void setModelAttributes(Map<String, Object> attributes) {
-		String uuid = (String)attributes.get("uuid");
+	public Map<String, BiConsumer<Module, Object>> getAttributeSetters() {
+		return _attributeSetters;
+	}
 
-		if (uuid != null) {
-			setUuid(uuid);
-		}
+	private static final Map<String, Function<Module, Object>> _attributeGetters;
+	private static final Map<String, BiConsumer<Module, Object>> _attributeSetters;
 
-		Long moduleId = (Long)attributes.get("moduleId");
+	static {
+		Map<String, Function<Module, Object>> attributeGetters = new LinkedHashMap<String, Function<Module, Object>>();
+		Map<String, BiConsumer<Module, ?>> attributeSetters = new LinkedHashMap<String, BiConsumer<Module, ?>>();
 
-		if (moduleId != null) {
-			setModuleId(moduleId);
-		}
+		attributeGetters.put("uuid", Module::getUuid);
+		attributeSetters.put("uuid", (BiConsumer<Module, String>)Module::setUuid);
+		attributeGetters.put("moduleId", Module::getModuleId);
+		attributeSetters.put("moduleId", (BiConsumer<Module, Long>)Module::setModuleId);
+		attributeGetters.put("companyId", Module::getCompanyId);
+		attributeSetters.put("companyId", (BiConsumer<Module, Long>)Module::setCompanyId);
+		attributeGetters.put("appId", Module::getAppId);
+		attributeSetters.put("appId", (BiConsumer<Module, Long>)Module::setAppId);
+		attributeGetters.put("bundleSymbolicName", Module::getBundleSymbolicName);
+		attributeSetters.put("bundleSymbolicName", (BiConsumer<Module, String>)Module::setBundleSymbolicName);
+		attributeGetters.put("bundleVersion", Module::getBundleVersion);
+		attributeSetters.put("bundleVersion", (BiConsumer<Module, String>)Module::setBundleVersion);
+		attributeGetters.put("contextName", Module::getContextName);
+		attributeSetters.put("contextName", (BiConsumer<Module, String>)Module::setContextName);
 
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
-		}
-
-		Long appId = (Long)attributes.get("appId");
-
-		if (appId != null) {
-			setAppId(appId);
-		}
-
-		String bundleSymbolicName = (String)attributes.get("bundleSymbolicName");
-
-		if (bundleSymbolicName != null) {
-			setBundleSymbolicName(bundleSymbolicName);
-		}
-
-		String bundleVersion = (String)attributes.get("bundleVersion");
-
-		if (bundleVersion != null) {
-			setBundleVersion(bundleVersion);
-		}
-
-		String contextName = (String)attributes.get("contextName");
-
-		if (contextName != null) {
-			setContextName(contextName);
-		}
+		_attributeGetters = Collections.unmodifiableMap(attributeGetters);
+		_attributeSetters = Collections.unmodifiableMap((Map)attributeSetters);
 	}
 
 	@Override
@@ -518,71 +493,6 @@ public class ModuleModelImpl extends BaseModelImpl<Module>
 		}
 
 		return moduleCacheModel;
-	}
-
-	@Override
-	public String toString() {
-		StringBundler sb = new StringBundler(15);
-
-		sb.append("{uuid=");
-		sb.append(getUuid());
-		sb.append(", moduleId=");
-		sb.append(getModuleId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
-		sb.append(", appId=");
-		sb.append(getAppId());
-		sb.append(", bundleSymbolicName=");
-		sb.append(getBundleSymbolicName());
-		sb.append(", bundleVersion=");
-		sb.append(getBundleVersion());
-		sb.append(", contextName=");
-		sb.append(getContextName());
-		sb.append("}");
-
-		return sb.toString();
-	}
-
-	@Override
-	public String toXmlString() {
-		StringBundler sb = new StringBundler(25);
-
-		sb.append("<model><model-name>");
-		sb.append("com.liferay.marketplace.model.Module");
-		sb.append("</model-name>");
-
-		sb.append(
-			"<column><column-name>uuid</column-name><column-value><![CDATA[");
-		sb.append(getUuid());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>moduleId</column-name><column-value><![CDATA[");
-		sb.append(getModuleId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>appId</column-name><column-value><![CDATA[");
-		sb.append(getAppId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>bundleSymbolicName</column-name><column-value><![CDATA[");
-		sb.append(getBundleSymbolicName());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>bundleVersion</column-name><column-value><![CDATA[");
-		sb.append(getBundleVersion());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>contextName</column-name><column-value><![CDATA[");
-		sb.append(getContextName());
-		sb.append("]]></column-value></column>");
-
-		sb.append("</model>");
-
-		return sb.toString();
 	}
 
 	private static final ClassLoader _classLoader = Module.class.getClassLoader();

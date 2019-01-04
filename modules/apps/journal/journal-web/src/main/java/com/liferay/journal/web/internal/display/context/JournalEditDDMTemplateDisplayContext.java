@@ -295,7 +295,7 @@ public class JournalEditDDMTemplateDisplayContext {
 		}
 
 		_smallImage = BeanParamUtil.getBoolean(
-			getDDMTemplate(), _request, "smallImage", true);
+			getDDMTemplate(), _request, "smallImage");
 
 		return _smallImage;
 	}

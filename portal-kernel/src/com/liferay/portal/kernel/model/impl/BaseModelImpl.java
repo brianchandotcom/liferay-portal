@@ -17,14 +17,17 @@ package com.liferay.portal.kernel.model.impl;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.expando.kernel.model.ExpandoBridge;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.LocaleUtil;
 
-import java.util.Collections;
+import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * The base implementation for all model classes. This class should never need
@@ -42,13 +45,40 @@ public abstract class BaseModelImpl<T> implements BaseModel<T> {
 	public abstract Object clone();
 
 	@Override
+	public Map<String, Function<T, Object>> getAttributeGetters() {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public Map<String, BiConsumer<T, Object>> getAttributeSetters() {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
 	public ExpandoBridge getExpandoBridge() {
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public Map<String, Object> getModelAttributes() {
-		return Collections.emptyMap();
+		Map<String, Object> attributes = new HashMap<>();
+
+		Map<String, Function<T, Object>> attributeGetters =
+			getAttributeGetters();
+
+		for (Map.Entry<String, Function<T, Object>> entry :
+				attributeGetters.entrySet()) {
+
+			String attributeName = entry.getKey();
+			Function<T, Object> attributeFunction = entry.getValue();
+
+			attributes.put(attributeName, attributeFunction.apply((T)this));
+		}
+
+		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
+		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
+
+		return attributes;
 	}
 
 	@Override
@@ -98,6 +128,19 @@ public abstract class BaseModelImpl<T> implements BaseModel<T> {
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Map<String, BiConsumer<T, Object>> attributeSetters =
+			getAttributeSetters();
+
+		for (Map.Entry<String, Object> entry : attributes.entrySet()) {
+			String attributeName = entry.getKey();
+
+			BiConsumer<T, Object> attributeSetterBiConsumer =
+				attributeSetters.get(attributeName);
+
+			if (attributeSetterBiConsumer != null) {
+				attributeSetterBiConsumer.accept((T)this, entry.getValue());
+			}
+		}
 	}
 
 	@Override
@@ -116,8 +159,67 @@ public abstract class BaseModelImpl<T> implements BaseModel<T> {
 	}
 
 	@Override
+	public String toString() {
+		Map<String, Function<T, Object>> attributeGetters =
+			getAttributeGetters();
+
+		StringBundler sb = new StringBundler(4 * attributeGetters.size() + 2);
+
+		sb.append("{");
+
+		for (Map.Entry<String, Function<T, Object>> entry :
+				attributeGetters.entrySet()) {
+
+			String attributeName = entry.getKey();
+			Function<T, Object> attributeFunction = entry.getValue();
+
+			sb.append(attributeName);
+			sb.append("=");
+			sb.append(attributeFunction.apply((T)this));
+			sb.append(", ");
+		}
+
+		if (sb.index() > 1) {
+			sb.setIndex(sb.index() - 1);
+		}
+
+		sb.append("}");
+
+		return sb.toString();
+	}
+
+	@Override
 	public T toUnescapedModel() {
 		return (T)this;
+	}
+
+	@Override
+	public String toXmlString() {
+		Map<String, Function<T, Object>> attributeGetters =
+			getAttributeGetters();
+
+		StringBundler sb = new StringBundler(5 * attributeGetters.size() + 4);
+
+		sb.append("<model><model-name>");
+		sb.append(getModelClassName());
+		sb.append("</model-name>");
+
+		for (Map.Entry<String, Function<T, Object>> entry :
+				attributeGetters.entrySet()) {
+
+			String attributeName = entry.getKey();
+			Function<T, Object> attributeFunction = entry.getValue();
+
+			sb.append("<column><column-name>");
+			sb.append(attributeName);
+			sb.append("</column-name><column-value><![CDATA[");
+			sb.append(attributeFunction.apply((T)this));
+			sb.append("]]></column-value></column>");
+		}
+
+		sb.append("</model>");
+
+		return sb.toString();
 	}
 
 	protected Locale getLocale(String languageId) {

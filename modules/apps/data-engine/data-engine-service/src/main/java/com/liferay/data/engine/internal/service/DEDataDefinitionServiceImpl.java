@@ -83,13 +83,6 @@ public class DEDataDefinitionServiceImpl implements DEDataDefinitionService {
 			return deDataDefinitionDeleteRequestExecutor.execute(
 				deDataDefinitionDeleteRequest);
 		}
-		catch (DEDataDefinitionException dedde) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(dedde, dedde);
-			}
-
-			throw dedde;
-		}
 		catch (NoSuchStructureException nsse) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(nsse, nsse);
@@ -121,13 +114,6 @@ public class DEDataDefinitionServiceImpl implements DEDataDefinitionService {
 
 			return deDataDefinitionGetRequestExecutor.execute(
 				deDataDefinitionGetRequest);
-		}
-		catch (DEDataDefinitionException dedde) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(dedde.getMessage(), dedde);
-			}
-
-			throw dedde;
 		}
 		catch (NoSuchStructureException nsse) {
 			if (_log.isDebugEnabled()) {
@@ -289,15 +275,8 @@ public class DEDataDefinitionServiceImpl implements DEDataDefinitionService {
 	}
 
 	@Reference
-	protected DDMStructureService ddmStructureService;
-
-	@Reference
 	protected DEDataDefinitionDeleteRequestExecutor
 		deDataDefinitionDeleteRequestExecutor;
-
-	@Reference
-	protected DEDataDefinitionFieldsDeserializerTracker
-		deDataDefinitionFieldsDeserializerTracker;
 
 	@Reference
 	protected DEDataDefinitionGetRequestExecutor

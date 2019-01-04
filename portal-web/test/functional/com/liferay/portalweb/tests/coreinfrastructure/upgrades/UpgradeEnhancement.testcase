@@ -17,8 +17,26 @@ definition {
 		var liferayHome = PropsUtil.get("liferay.home.dir.name");
 		var fileContent = FileUtil.read("${liferayHome}/tools/portal-tools-db-upgrade-client/upgrade.log");
 
-		if (contains("${fileContent}", "You must first upgrade to Liferay Portal 6100")) {
-			echo("You must first upgrade to Liferay Portal 6100.");
+		if (contains("${fileContent}", "You must first upgrade to Liferay Portal 6200")) {
+			echo("You must first upgrade to Liferay Portal 6200.");
+		}
+		else {
+			fail("FAIL! Cannot find the warning message.");
+		}
+	}
+
+	@priority = "5"
+	test DirectUpgradeFromArchive6130 {
+		property data.archive.type = "data-archive-portal";
+		property portal.upgrades = "true";
+		property portal.version = "6.1.30";
+		property skip.start-app-server = "true";
+		property test.assert.warning.exceptions = "true";
+		var liferayHome = PropsUtil.get("liferay.home.dir.name");
+		var fileContent = FileUtil.read("${liferayHome}/tools/portal-tools-db-upgrade-client/upgrade.log");
+
+		if (contains("${fileContent}", "You must first upgrade to Liferay Portal 6200")) {
+			echo("You must first upgrade to Liferay Portal 6200.");
 		}
 		else {
 			fail("FAIL! Cannot find the warning message.");

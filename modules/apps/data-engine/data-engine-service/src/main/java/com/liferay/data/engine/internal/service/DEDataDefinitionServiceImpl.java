@@ -61,12 +61,16 @@ public class DEDataDefinitionServiceImpl implements DEDataDefinitionService {
 				deDataDefinitionCountRequest);
 		}
 		catch (DEDataDefinitionException dedde) {
-			_log.error(dedde, dedde);
+			if (_log.isDebugEnabled()) {
+				_log.debug(dedde, dedde);
+			}
 
 			throw dedde;
 		}
 		catch (Exception e) {
-			_log.error(e, e);
+			if (_log.isDebugEnabled()) {
+				_log.debug(e, e);
+			}
 
 			throw new DEDataDefinitionException(e);
 		}
@@ -88,18 +92,24 @@ public class DEDataDefinitionServiceImpl implements DEDataDefinitionService {
 				deDataDefinitionDeleteRequest);
 		}
 		catch (DEDataDefinitionException dedde) {
-			_log.error(dedde, dedde);
+			if (_log.isDebugEnabled()) {
+				_log.debug(dedde, dedde);
+			}
 
 			throw dedde;
 		}
 		catch (NoSuchStructureException nsse) {
-			_log.error(nsse, nsse);
+			if (_log.isDebugEnabled()) {
+				_log.debug(nsse, nsse);
+			}
 
 			throw new DEDataDefinitionException.NoSuchDataDefinition(
 				deDataDefinitionDeleteRequest.getDEDataDefinitionId(), nsse);
 		}
 		catch (Exception e) {
-			_log.error(e, e);
+			if (_log.isDebugEnabled()) {
+				_log.debug(e, e);
+			}
 
 			throw new DEDataDefinitionException(e);
 		}
@@ -121,18 +131,24 @@ public class DEDataDefinitionServiceImpl implements DEDataDefinitionService {
 				deDataDefinitionGetRequest);
 		}
 		catch (DEDataDefinitionException dedde) {
-			_log.error(dedde, dedde);
+			if (_log.isDebugEnabled()) {
+				_log.debug(dedde.getMessage(), dedde);
+			}
 
 			throw dedde;
 		}
 		catch (NoSuchStructureException nsse) {
-			_log.error(nsse, nsse);
+			if (_log.isDebugEnabled()) {
+				_log.debug(nsse.getMessage(), nsse);
+			}
 
 			throw new DEDataDefinitionException.NoSuchDataDefinition(
 				deDataDefinitionGetRequest.getDEDataDefinitionId(), nsse);
 		}
 		catch (Exception e) {
-			_log.error(e, e);
+			if (_log.isDebugEnabled()) {
+				_log.debug(e.getMessage(), e);
+			}
 
 			throw new DEDataDefinitionException(e);
 		}
@@ -168,12 +184,16 @@ public class DEDataDefinitionServiceImpl implements DEDataDefinitionService {
 				deDataDefinitionSaveResponse.getDEDataDefinitionId());
 		}
 		catch (DEDataDefinitionException dedde) {
-			_log.error(dedde, dedde);
+			if (_log.isDebugEnabled()) {
+				_log.debug(dedde, dedde);
+			}
 
 			throw dedde;
 		}
 		catch (NoSuchStructureException nsse) {
-			_log.error(nsse, nsse);
+			if (_log.isDebugEnabled()) {
+				_log.debug(nsse, nsse);
+			}
 
 			throw new DEDataDefinitionException.NoSuchDataDefinition(
 				deDataDefinition.getDEDataDefinitionId(), nsse);
@@ -183,7 +203,9 @@ public class DEDataDefinitionServiceImpl implements DEDataDefinitionService {
 				mhp.actionId, mhp);
 		}
 		catch (Exception e) {
-			_log.error(e, e);
+			if (_log.isDebugEnabled()) {
+				_log.debug(e, e);
+			}
 
 			throw new DEDataDefinitionException(e);
 		}

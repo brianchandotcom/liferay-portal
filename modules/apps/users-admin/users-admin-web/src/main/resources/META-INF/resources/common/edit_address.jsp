@@ -103,7 +103,7 @@ if (addressId > 0L) {
 
 	const rules = formValidator._getAttr('rules');
 
-	function updateAdressZipRequired(required) {
+	function updateAddressZipRequired(required) {
 		if (required) {
 			addressZipRequiredWrapper.removeAttribute('hidden');
 		}
@@ -125,7 +125,7 @@ if (addressId > 0L) {
 					console.error(err);
 				}
 				else {
-					updateAdressZipRequired(response.zipRequired);
+					updateAddressZipRequired(response.zipRequired);
 				}
 			}
 		);
@@ -138,7 +138,7 @@ if (addressId > 0L) {
 			checkCountry(value);
 		}
 		else {
-			updateAdressZipRequired(false);
+			updateAddressZipRequired(false);
 		}
 	}
 

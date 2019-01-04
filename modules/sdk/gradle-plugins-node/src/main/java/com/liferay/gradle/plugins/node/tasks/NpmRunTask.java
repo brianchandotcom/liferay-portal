@@ -230,6 +230,12 @@ public class NpmRunTask extends ExecuteNpmTask implements PatternFilterable {
 	private void _writeSourceDigestFile(byte[] bytes) throws Exception {
 		File file = getSourceDigestFile();
 
+		File dir = file.getParentFile();
+
+		if (dir != null) {
+			Files.createDirectories(dir.toPath());
+		}
+
 		Files.write(file.toPath(), bytes);
 	}
 

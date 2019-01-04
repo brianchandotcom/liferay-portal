@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.cache.PortalCacheManager;
 import com.liferay.portal.kernel.cache.PortalCacheManagerNames;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.AggregateClassLoader;
 import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsKeys;
 
@@ -56,24 +55,9 @@ public class MultiVMEhcachePortalCacheManager
 		setMpiOnly(true);
 		setPortalCacheManagerName(PortalCacheManagerNames.MULTI_VM);
 
-		Thread currentThread = Thread.currentThread();
+		initialize();
 
-		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
-
-		Class<?> clazz = getClass();
-
-		currentThread.setContextClassLoader(
-			AggregateClassLoader.getAggregateClassLoader(
-				contextClassLoader, clazz.getClassLoader()));
-
-		try {
-			initialize();
-
-			initPortalCacheConfiguratorSettingsServiceTracker();
-		}
-		finally {
-			currentThread.setContextClassLoader(contextClassLoader);
-		}
+		initPortalCacheConfiguratorSettingsServiceTracker();
 
 		if (_log.isDebugEnabled()) {
 			_log.debug("Activated " + PortalCacheManagerNames.MULTI_VM);

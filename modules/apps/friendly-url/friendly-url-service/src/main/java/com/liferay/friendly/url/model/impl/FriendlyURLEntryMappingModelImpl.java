@@ -22,8 +22,6 @@ import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 import com.liferay.friendly.url.model.FriendlyURLEntryMapping;
 import com.liferay.friendly.url.model.FriendlyURLEntryMappingModel;
 
-import com.liferay.petra.string.StringBundler;
-
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.ModelWrapper;
@@ -38,8 +36,12 @@ import java.io.Serializable;
 
 import java.sql.Types;
 
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * The base model implementation for the FriendlyURLEntryMapping service. Represents a row in the &quot;FriendlyURLEntryMapping&quot; database table, with each column mapped to a property of this class.
@@ -136,54 +138,37 @@ public class FriendlyURLEntryMappingModelImpl extends BaseModelImpl<FriendlyURLE
 	}
 
 	@Override
-	public Map<String, Object> getModelAttributes() {
-		Map<String, Object> attributes = new HashMap<String, Object>();
-
-		attributes.put("mvccVersion", getMvccVersion());
-		attributes.put("friendlyURLEntryMappingId",
-			getFriendlyURLEntryMappingId());
-		attributes.put("classNameId", getClassNameId());
-		attributes.put("classPK", getClassPK());
-		attributes.put("friendlyURLEntryId", getFriendlyURLEntryId());
-
-		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
-		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
-
-		return attributes;
+	public Map<String, Function<FriendlyURLEntryMapping, Object>> getAttributeGetterFunctions() {
+		return _attributeGetterFunctions;
 	}
 
 	@Override
-	public void setModelAttributes(Map<String, Object> attributes) {
-		Long mvccVersion = (Long)attributes.get("mvccVersion");
+	public Map<String, BiConsumer<FriendlyURLEntryMapping, Object>> getAttributeSetterBiConsumers() {
+		return _attributeSetterBiConsumers;
+	}
 
-		if (mvccVersion != null) {
-			setMvccVersion(mvccVersion);
-		}
+	private static final Map<String, Function<FriendlyURLEntryMapping, Object>> _attributeGetterFunctions;
+	private static final Map<String, BiConsumer<FriendlyURLEntryMapping, Object>> _attributeSetterBiConsumers;
 
-		Long friendlyURLEntryMappingId = (Long)attributes.get(
-				"friendlyURLEntryMappingId");
+	static {
+		Map<String, Function<FriendlyURLEntryMapping, Object>> attributeGetterFunctions =
+			new LinkedHashMap<String, Function<FriendlyURLEntryMapping, Object>>();
+		Map<String, BiConsumer<FriendlyURLEntryMapping, ?>> attributeSetterBiConsumers =
+			new LinkedHashMap<String, BiConsumer<FriendlyURLEntryMapping, ?>>();
 
-		if (friendlyURLEntryMappingId != null) {
-			setFriendlyURLEntryMappingId(friendlyURLEntryMappingId);
-		}
+		attributeGetterFunctions.put("mvccVersion", FriendlyURLEntryMapping::getMvccVersion);
+		attributeSetterBiConsumers.put("mvccVersion", (BiConsumer<FriendlyURLEntryMapping, Long>)FriendlyURLEntryMapping::setMvccVersion);
+		attributeGetterFunctions.put("friendlyURLEntryMappingId", FriendlyURLEntryMapping::getFriendlyURLEntryMappingId);
+		attributeSetterBiConsumers.put("friendlyURLEntryMappingId", (BiConsumer<FriendlyURLEntryMapping, Long>)FriendlyURLEntryMapping::setFriendlyURLEntryMappingId);
+		attributeGetterFunctions.put("classNameId", FriendlyURLEntryMapping::getClassNameId);
+		attributeSetterBiConsumers.put("classNameId", (BiConsumer<FriendlyURLEntryMapping, Long>)FriendlyURLEntryMapping::setClassNameId);
+		attributeGetterFunctions.put("classPK", FriendlyURLEntryMapping::getClassPK);
+		attributeSetterBiConsumers.put("classPK", (BiConsumer<FriendlyURLEntryMapping, Long>)FriendlyURLEntryMapping::setClassPK);
+		attributeGetterFunctions.put("friendlyURLEntryId", FriendlyURLEntryMapping::getFriendlyURLEntryId);
+		attributeSetterBiConsumers.put("friendlyURLEntryId", (BiConsumer<FriendlyURLEntryMapping, Long>)FriendlyURLEntryMapping::setFriendlyURLEntryId);
 
-		Long classNameId = (Long)attributes.get("classNameId");
-
-		if (classNameId != null) {
-			setClassNameId(classNameId);
-		}
-
-		Long classPK = (Long)attributes.get("classPK");
-
-		if (classPK != null) {
-			setClassPK(classPK);
-		}
-
-		Long friendlyURLEntryId = (Long)attributes.get("friendlyURLEntryId");
-
-		if (friendlyURLEntryId != null) {
-			setFriendlyURLEntryId(friendlyURLEntryId);
-		}
+		_attributeGetterFunctions = Collections.unmodifiableMap(attributeGetterFunctions);
+		_attributeSetterBiConsumers = Collections.unmodifiableMap((Map)attributeSetterBiConsumers);
 	}
 
 	@Override
@@ -404,59 +389,6 @@ public class FriendlyURLEntryMappingModelImpl extends BaseModelImpl<FriendlyURLE
 		friendlyURLEntryMappingCacheModel.friendlyURLEntryId = getFriendlyURLEntryId();
 
 		return friendlyURLEntryMappingCacheModel;
-	}
-
-	@Override
-	public String toString() {
-		StringBundler sb = new StringBundler(11);
-
-		sb.append("{mvccVersion=");
-		sb.append(getMvccVersion());
-		sb.append(", friendlyURLEntryMappingId=");
-		sb.append(getFriendlyURLEntryMappingId());
-		sb.append(", classNameId=");
-		sb.append(getClassNameId());
-		sb.append(", classPK=");
-		sb.append(getClassPK());
-		sb.append(", friendlyURLEntryId=");
-		sb.append(getFriendlyURLEntryId());
-		sb.append("}");
-
-		return sb.toString();
-	}
-
-	@Override
-	public String toXmlString() {
-		StringBundler sb = new StringBundler(19);
-
-		sb.append("<model><model-name>");
-		sb.append("com.liferay.friendly.url.model.FriendlyURLEntryMapping");
-		sb.append("</model-name>");
-
-		sb.append(
-			"<column><column-name>mvccVersion</column-name><column-value><![CDATA[");
-		sb.append(getMvccVersion());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>friendlyURLEntryMappingId</column-name><column-value><![CDATA[");
-		sb.append(getFriendlyURLEntryMappingId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>classNameId</column-name><column-value><![CDATA[");
-		sb.append(getClassNameId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>classPK</column-name><column-value><![CDATA[");
-		sb.append(getClassPK());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>friendlyURLEntryId</column-name><column-value><![CDATA[");
-		sb.append(getFriendlyURLEntryId());
-		sb.append("]]></column-value></column>");
-
-		sb.append("</model>");
-
-		return sb.toString();
 	}
 
 	private static final ClassLoader _classLoader = FriendlyURLEntryMapping.class.getClassLoader();

@@ -25,8 +25,6 @@ import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 
-import com.liferay.petra.string.StringBundler;
-
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.NoSuchModelException;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -51,10 +49,14 @@ import java.io.Serializable;
 import java.sql.Types;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * The base model implementation for the BlogsEntry service. Represents a row in the &quot;BlogsEntry&quot; database table, with each column mapped to a property of this class.
@@ -272,222 +274,83 @@ public class BlogsEntryModelImpl extends BaseModelImpl<BlogsEntry>
 	}
 
 	@Override
-	public Map<String, Object> getModelAttributes() {
-		Map<String, Object> attributes = new HashMap<String, Object>();
-
-		attributes.put("uuid", getUuid());
-		attributes.put("entryId", getEntryId());
-		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
-		attributes.put("userId", getUserId());
-		attributes.put("userName", getUserName());
-		attributes.put("createDate", getCreateDate());
-		attributes.put("modifiedDate", getModifiedDate());
-		attributes.put("title", getTitle());
-		attributes.put("subtitle", getSubtitle());
-		attributes.put("urlTitle", getUrlTitle());
-		attributes.put("description", getDescription());
-		attributes.put("content", getContent());
-		attributes.put("displayDate", getDisplayDate());
-		attributes.put("allowPingbacks", isAllowPingbacks());
-		attributes.put("allowTrackbacks", isAllowTrackbacks());
-		attributes.put("trackbacks", getTrackbacks());
-		attributes.put("coverImageCaption", getCoverImageCaption());
-		attributes.put("coverImageFileEntryId", getCoverImageFileEntryId());
-		attributes.put("coverImageURL", getCoverImageURL());
-		attributes.put("smallImage", isSmallImage());
-		attributes.put("smallImageFileEntryId", getSmallImageFileEntryId());
-		attributes.put("smallImageId", getSmallImageId());
-		attributes.put("smallImageURL", getSmallImageURL());
-		attributes.put("lastPublishDate", getLastPublishDate());
-		attributes.put("status", getStatus());
-		attributes.put("statusByUserId", getStatusByUserId());
-		attributes.put("statusByUserName", getStatusByUserName());
-		attributes.put("statusDate", getStatusDate());
-
-		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
-		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
-
-		return attributes;
+	public Map<String, Function<BlogsEntry, Object>> getAttributeGetterFunctions() {
+		return _attributeGetterFunctions;
 	}
 
 	@Override
-	public void setModelAttributes(Map<String, Object> attributes) {
-		String uuid = (String)attributes.get("uuid");
+	public Map<String, BiConsumer<BlogsEntry, Object>> getAttributeSetterBiConsumers() {
+		return _attributeSetterBiConsumers;
+	}
 
-		if (uuid != null) {
-			setUuid(uuid);
-		}
+	private static final Map<String, Function<BlogsEntry, Object>> _attributeGetterFunctions;
+	private static final Map<String, BiConsumer<BlogsEntry, Object>> _attributeSetterBiConsumers;
 
-		Long entryId = (Long)attributes.get("entryId");
+	static {
+		Map<String, Function<BlogsEntry, Object>> attributeGetterFunctions = new LinkedHashMap<String, Function<BlogsEntry, Object>>();
+		Map<String, BiConsumer<BlogsEntry, ?>> attributeSetterBiConsumers = new LinkedHashMap<String, BiConsumer<BlogsEntry, ?>>();
 
-		if (entryId != null) {
-			setEntryId(entryId);
-		}
+		attributeGetterFunctions.put("uuid", BlogsEntry::getUuid);
+		attributeSetterBiConsumers.put("uuid", (BiConsumer<BlogsEntry, String>)BlogsEntry::setUuid);
+		attributeGetterFunctions.put("entryId", BlogsEntry::getEntryId);
+		attributeSetterBiConsumers.put("entryId", (BiConsumer<BlogsEntry, Long>)BlogsEntry::setEntryId);
+		attributeGetterFunctions.put("groupId", BlogsEntry::getGroupId);
+		attributeSetterBiConsumers.put("groupId", (BiConsumer<BlogsEntry, Long>)BlogsEntry::setGroupId);
+		attributeGetterFunctions.put("companyId", BlogsEntry::getCompanyId);
+		attributeSetterBiConsumers.put("companyId", (BiConsumer<BlogsEntry, Long>)BlogsEntry::setCompanyId);
+		attributeGetterFunctions.put("userId", BlogsEntry::getUserId);
+		attributeSetterBiConsumers.put("userId", (BiConsumer<BlogsEntry, Long>)BlogsEntry::setUserId);
+		attributeGetterFunctions.put("userName", BlogsEntry::getUserName);
+		attributeSetterBiConsumers.put("userName", (BiConsumer<BlogsEntry, String>)BlogsEntry::setUserName);
+		attributeGetterFunctions.put("createDate", BlogsEntry::getCreateDate);
+		attributeSetterBiConsumers.put("createDate", (BiConsumer<BlogsEntry, Date>)BlogsEntry::setCreateDate);
+		attributeGetterFunctions.put("modifiedDate", BlogsEntry::getModifiedDate);
+		attributeSetterBiConsumers.put("modifiedDate", (BiConsumer<BlogsEntry, Date>)BlogsEntry::setModifiedDate);
+		attributeGetterFunctions.put("title", BlogsEntry::getTitle);
+		attributeSetterBiConsumers.put("title", (BiConsumer<BlogsEntry, String>)BlogsEntry::setTitle);
+		attributeGetterFunctions.put("subtitle", BlogsEntry::getSubtitle);
+		attributeSetterBiConsumers.put("subtitle", (BiConsumer<BlogsEntry, String>)BlogsEntry::setSubtitle);
+		attributeGetterFunctions.put("urlTitle", BlogsEntry::getUrlTitle);
+		attributeSetterBiConsumers.put("urlTitle", (BiConsumer<BlogsEntry, String>)BlogsEntry::setUrlTitle);
+		attributeGetterFunctions.put("description", BlogsEntry::getDescription);
+		attributeSetterBiConsumers.put("description", (BiConsumer<BlogsEntry, String>)BlogsEntry::setDescription);
+		attributeGetterFunctions.put("content", BlogsEntry::getContent);
+		attributeSetterBiConsumers.put("content", (BiConsumer<BlogsEntry, String>)BlogsEntry::setContent);
+		attributeGetterFunctions.put("displayDate", BlogsEntry::getDisplayDate);
+		attributeSetterBiConsumers.put("displayDate", (BiConsumer<BlogsEntry, Date>)BlogsEntry::setDisplayDate);
+		attributeGetterFunctions.put("allowPingbacks", BlogsEntry::getAllowPingbacks);
+		attributeSetterBiConsumers.put("allowPingbacks", (BiConsumer<BlogsEntry, Boolean>)BlogsEntry::setAllowPingbacks);
+		attributeGetterFunctions.put("allowTrackbacks", BlogsEntry::getAllowTrackbacks);
+		attributeSetterBiConsumers.put("allowTrackbacks", (BiConsumer<BlogsEntry, Boolean>)BlogsEntry::setAllowTrackbacks);
+		attributeGetterFunctions.put("trackbacks", BlogsEntry::getTrackbacks);
+		attributeSetterBiConsumers.put("trackbacks", (BiConsumer<BlogsEntry, String>)BlogsEntry::setTrackbacks);
+		attributeGetterFunctions.put("coverImageCaption", BlogsEntry::getCoverImageCaption);
+		attributeSetterBiConsumers.put("coverImageCaption", (BiConsumer<BlogsEntry, String>)BlogsEntry::setCoverImageCaption);
+		attributeGetterFunctions.put("coverImageFileEntryId", BlogsEntry::getCoverImageFileEntryId);
+		attributeSetterBiConsumers.put("coverImageFileEntryId", (BiConsumer<BlogsEntry, Long>)BlogsEntry::setCoverImageFileEntryId);
+		attributeGetterFunctions.put("coverImageURL", BlogsEntry::getCoverImageURL);
+		attributeSetterBiConsumers.put("coverImageURL", (BiConsumer<BlogsEntry, String>)BlogsEntry::setCoverImageURL);
+		attributeGetterFunctions.put("smallImage", BlogsEntry::getSmallImage);
+		attributeSetterBiConsumers.put("smallImage", (BiConsumer<BlogsEntry, Boolean>)BlogsEntry::setSmallImage);
+		attributeGetterFunctions.put("smallImageFileEntryId", BlogsEntry::getSmallImageFileEntryId);
+		attributeSetterBiConsumers.put("smallImageFileEntryId", (BiConsumer<BlogsEntry, Long>)BlogsEntry::setSmallImageFileEntryId);
+		attributeGetterFunctions.put("smallImageId", BlogsEntry::getSmallImageId);
+		attributeSetterBiConsumers.put("smallImageId", (BiConsumer<BlogsEntry, Long>)BlogsEntry::setSmallImageId);
+		attributeGetterFunctions.put("smallImageURL", BlogsEntry::getSmallImageURL);
+		attributeSetterBiConsumers.put("smallImageURL", (BiConsumer<BlogsEntry, String>)BlogsEntry::setSmallImageURL);
+		attributeGetterFunctions.put("lastPublishDate", BlogsEntry::getLastPublishDate);
+		attributeSetterBiConsumers.put("lastPublishDate", (BiConsumer<BlogsEntry, Date>)BlogsEntry::setLastPublishDate);
+		attributeGetterFunctions.put("status", BlogsEntry::getStatus);
+		attributeSetterBiConsumers.put("status", (BiConsumer<BlogsEntry, Integer>)BlogsEntry::setStatus);
+		attributeGetterFunctions.put("statusByUserId", BlogsEntry::getStatusByUserId);
+		attributeSetterBiConsumers.put("statusByUserId", (BiConsumer<BlogsEntry, Long>)BlogsEntry::setStatusByUserId);
+		attributeGetterFunctions.put("statusByUserName", BlogsEntry::getStatusByUserName);
+		attributeSetterBiConsumers.put("statusByUserName", (BiConsumer<BlogsEntry, String>)BlogsEntry::setStatusByUserName);
+		attributeGetterFunctions.put("statusDate", BlogsEntry::getStatusDate);
+		attributeSetterBiConsumers.put("statusDate", (BiConsumer<BlogsEntry, Date>)BlogsEntry::setStatusDate);
 
-		Long groupId = (Long)attributes.get("groupId");
-
-		if (groupId != null) {
-			setGroupId(groupId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
-		}
-
-		Long userId = (Long)attributes.get("userId");
-
-		if (userId != null) {
-			setUserId(userId);
-		}
-
-		String userName = (String)attributes.get("userName");
-
-		if (userName != null) {
-			setUserName(userName);
-		}
-
-		Date createDate = (Date)attributes.get("createDate");
-
-		if (createDate != null) {
-			setCreateDate(createDate);
-		}
-
-		Date modifiedDate = (Date)attributes.get("modifiedDate");
-
-		if (modifiedDate != null) {
-			setModifiedDate(modifiedDate);
-		}
-
-		String title = (String)attributes.get("title");
-
-		if (title != null) {
-			setTitle(title);
-		}
-
-		String subtitle = (String)attributes.get("subtitle");
-
-		if (subtitle != null) {
-			setSubtitle(subtitle);
-		}
-
-		String urlTitle = (String)attributes.get("urlTitle");
-
-		if (urlTitle != null) {
-			setUrlTitle(urlTitle);
-		}
-
-		String description = (String)attributes.get("description");
-
-		if (description != null) {
-			setDescription(description);
-		}
-
-		String content = (String)attributes.get("content");
-
-		if (content != null) {
-			setContent(content);
-		}
-
-		Date displayDate = (Date)attributes.get("displayDate");
-
-		if (displayDate != null) {
-			setDisplayDate(displayDate);
-		}
-
-		Boolean allowPingbacks = (Boolean)attributes.get("allowPingbacks");
-
-		if (allowPingbacks != null) {
-			setAllowPingbacks(allowPingbacks);
-		}
-
-		Boolean allowTrackbacks = (Boolean)attributes.get("allowTrackbacks");
-
-		if (allowTrackbacks != null) {
-			setAllowTrackbacks(allowTrackbacks);
-		}
-
-		String trackbacks = (String)attributes.get("trackbacks");
-
-		if (trackbacks != null) {
-			setTrackbacks(trackbacks);
-		}
-
-		String coverImageCaption = (String)attributes.get("coverImageCaption");
-
-		if (coverImageCaption != null) {
-			setCoverImageCaption(coverImageCaption);
-		}
-
-		Long coverImageFileEntryId = (Long)attributes.get(
-				"coverImageFileEntryId");
-
-		if (coverImageFileEntryId != null) {
-			setCoverImageFileEntryId(coverImageFileEntryId);
-		}
-
-		String coverImageURL = (String)attributes.get("coverImageURL");
-
-		if (coverImageURL != null) {
-			setCoverImageURL(coverImageURL);
-		}
-
-		Boolean smallImage = (Boolean)attributes.get("smallImage");
-
-		if (smallImage != null) {
-			setSmallImage(smallImage);
-		}
-
-		Long smallImageFileEntryId = (Long)attributes.get(
-				"smallImageFileEntryId");
-
-		if (smallImageFileEntryId != null) {
-			setSmallImageFileEntryId(smallImageFileEntryId);
-		}
-
-		Long smallImageId = (Long)attributes.get("smallImageId");
-
-		if (smallImageId != null) {
-			setSmallImageId(smallImageId);
-		}
-
-		String smallImageURL = (String)attributes.get("smallImageURL");
-
-		if (smallImageURL != null) {
-			setSmallImageURL(smallImageURL);
-		}
-
-		Date lastPublishDate = (Date)attributes.get("lastPublishDate");
-
-		if (lastPublishDate != null) {
-			setLastPublishDate(lastPublishDate);
-		}
-
-		Integer status = (Integer)attributes.get("status");
-
-		if (status != null) {
-			setStatus(status);
-		}
-
-		Long statusByUserId = (Long)attributes.get("statusByUserId");
-
-		if (statusByUserId != null) {
-			setStatusByUserId(statusByUserId);
-		}
-
-		String statusByUserName = (String)attributes.get("statusByUserName");
-
-		if (statusByUserName != null) {
-			setStatusByUserName(statusByUserName);
-		}
-
-		Date statusDate = (Date)attributes.get("statusDate");
-
-		if (statusDate != null) {
-			setStatusDate(statusDate);
-		}
+		_attributeGetterFunctions = Collections.unmodifiableMap(attributeGetterFunctions);
+		_attributeSetterBiConsumers = Collections.unmodifiableMap((Map)attributeSetterBiConsumers);
 	}
 
 	@JSON
@@ -1549,203 +1412,6 @@ public class BlogsEntryModelImpl extends BaseModelImpl<BlogsEntry>
 		}
 
 		return blogsEntryCacheModel;
-	}
-
-	@Override
-	public String toString() {
-		StringBundler sb = new StringBundler(59);
-
-		sb.append("{uuid=");
-		sb.append(getUuid());
-		sb.append(", entryId=");
-		sb.append(getEntryId());
-		sb.append(", groupId=");
-		sb.append(getGroupId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
-		sb.append(", userId=");
-		sb.append(getUserId());
-		sb.append(", userName=");
-		sb.append(getUserName());
-		sb.append(", createDate=");
-		sb.append(getCreateDate());
-		sb.append(", modifiedDate=");
-		sb.append(getModifiedDate());
-		sb.append(", title=");
-		sb.append(getTitle());
-		sb.append(", subtitle=");
-		sb.append(getSubtitle());
-		sb.append(", urlTitle=");
-		sb.append(getUrlTitle());
-		sb.append(", description=");
-		sb.append(getDescription());
-		sb.append(", content=");
-		sb.append(getContent());
-		sb.append(", displayDate=");
-		sb.append(getDisplayDate());
-		sb.append(", allowPingbacks=");
-		sb.append(isAllowPingbacks());
-		sb.append(", allowTrackbacks=");
-		sb.append(isAllowTrackbacks());
-		sb.append(", trackbacks=");
-		sb.append(getTrackbacks());
-		sb.append(", coverImageCaption=");
-		sb.append(getCoverImageCaption());
-		sb.append(", coverImageFileEntryId=");
-		sb.append(getCoverImageFileEntryId());
-		sb.append(", coverImageURL=");
-		sb.append(getCoverImageURL());
-		sb.append(", smallImage=");
-		sb.append(isSmallImage());
-		sb.append(", smallImageFileEntryId=");
-		sb.append(getSmallImageFileEntryId());
-		sb.append(", smallImageId=");
-		sb.append(getSmallImageId());
-		sb.append(", smallImageURL=");
-		sb.append(getSmallImageURL());
-		sb.append(", lastPublishDate=");
-		sb.append(getLastPublishDate());
-		sb.append(", status=");
-		sb.append(getStatus());
-		sb.append(", statusByUserId=");
-		sb.append(getStatusByUserId());
-		sb.append(", statusByUserName=");
-		sb.append(getStatusByUserName());
-		sb.append(", statusDate=");
-		sb.append(getStatusDate());
-		sb.append("}");
-
-		return sb.toString();
-	}
-
-	@Override
-	public String toXmlString() {
-		StringBundler sb = new StringBundler(91);
-
-		sb.append("<model><model-name>");
-		sb.append("com.liferay.blogs.model.BlogsEntry");
-		sb.append("</model-name>");
-
-		sb.append(
-			"<column><column-name>uuid</column-name><column-value><![CDATA[");
-		sb.append(getUuid());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>entryId</column-name><column-value><![CDATA[");
-		sb.append(getEntryId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>groupId</column-name><column-value><![CDATA[");
-		sb.append(getGroupId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userId</column-name><column-value><![CDATA[");
-		sb.append(getUserId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userName</column-name><column-value><![CDATA[");
-		sb.append(getUserName());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>createDate</column-name><column-value><![CDATA[");
-		sb.append(getCreateDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>modifiedDate</column-name><column-value><![CDATA[");
-		sb.append(getModifiedDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>title</column-name><column-value><![CDATA[");
-		sb.append(getTitle());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>subtitle</column-name><column-value><![CDATA[");
-		sb.append(getSubtitle());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>urlTitle</column-name><column-value><![CDATA[");
-		sb.append(getUrlTitle());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>description</column-name><column-value><![CDATA[");
-		sb.append(getDescription());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>content</column-name><column-value><![CDATA[");
-		sb.append(getContent());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>displayDate</column-name><column-value><![CDATA[");
-		sb.append(getDisplayDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>allowPingbacks</column-name><column-value><![CDATA[");
-		sb.append(isAllowPingbacks());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>allowTrackbacks</column-name><column-value><![CDATA[");
-		sb.append(isAllowTrackbacks());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>trackbacks</column-name><column-value><![CDATA[");
-		sb.append(getTrackbacks());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>coverImageCaption</column-name><column-value><![CDATA[");
-		sb.append(getCoverImageCaption());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>coverImageFileEntryId</column-name><column-value><![CDATA[");
-		sb.append(getCoverImageFileEntryId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>coverImageURL</column-name><column-value><![CDATA[");
-		sb.append(getCoverImageURL());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>smallImage</column-name><column-value><![CDATA[");
-		sb.append(isSmallImage());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>smallImageFileEntryId</column-name><column-value><![CDATA[");
-		sb.append(getSmallImageFileEntryId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>smallImageId</column-name><column-value><![CDATA[");
-		sb.append(getSmallImageId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>smallImageURL</column-name><column-value><![CDATA[");
-		sb.append(getSmallImageURL());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>lastPublishDate</column-name><column-value><![CDATA[");
-		sb.append(getLastPublishDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>status</column-name><column-value><![CDATA[");
-		sb.append(getStatus());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>statusByUserId</column-name><column-value><![CDATA[");
-		sb.append(getStatusByUserId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>statusByUserName</column-name><column-value><![CDATA[");
-		sb.append(getStatusByUserName());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>statusDate</column-name><column-value><![CDATA[");
-		sb.append(getStatusDate());
-		sb.append("]]></column-value></column>");
-
-		sb.append("</model>");
-
-		return sb.toString();
 	}
 
 	private static final ClassLoader _classLoader = BlogsEntry.class.getClassLoader();

@@ -21,8 +21,6 @@ import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 
-import com.liferay.petra.string.StringBundler;
-
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSON;
@@ -46,10 +44,14 @@ import java.io.Serializable;
 import java.sql.Types;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * The base model implementation for the SharingEntry service. Represents a row in the &quot;SharingEntry&quot; database table, with each column mapped to a property of this class.
@@ -220,108 +222,51 @@ public class SharingEntryModelImpl extends BaseModelImpl<SharingEntry>
 	}
 
 	@Override
-	public Map<String, Object> getModelAttributes() {
-		Map<String, Object> attributes = new HashMap<String, Object>();
-
-		attributes.put("uuid", getUuid());
-		attributes.put("sharingEntryId", getSharingEntryId());
-		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
-		attributes.put("createDate", getCreateDate());
-		attributes.put("modifiedDate", getModifiedDate());
-		attributes.put("fromUserId", getFromUserId());
-		attributes.put("toUserId", getToUserId());
-		attributes.put("classNameId", getClassNameId());
-		attributes.put("classPK", getClassPK());
-		attributes.put("shareable", isShareable());
-		attributes.put("actionIds", getActionIds());
-		attributes.put("expirationDate", getExpirationDate());
-
-		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
-		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
-
-		return attributes;
+	public Map<String, Function<SharingEntry, Object>> getAttributeGetterFunctions() {
+		return _attributeGetterFunctions;
 	}
 
 	@Override
-	public void setModelAttributes(Map<String, Object> attributes) {
-		String uuid = (String)attributes.get("uuid");
+	public Map<String, BiConsumer<SharingEntry, Object>> getAttributeSetterBiConsumers() {
+		return _attributeSetterBiConsumers;
+	}
 
-		if (uuid != null) {
-			setUuid(uuid);
-		}
+	private static final Map<String, Function<SharingEntry, Object>> _attributeGetterFunctions;
+	private static final Map<String, BiConsumer<SharingEntry, Object>> _attributeSetterBiConsumers;
 
-		Long sharingEntryId = (Long)attributes.get("sharingEntryId");
+	static {
+		Map<String, Function<SharingEntry, Object>> attributeGetterFunctions = new LinkedHashMap<String, Function<SharingEntry, Object>>();
+		Map<String, BiConsumer<SharingEntry, ?>> attributeSetterBiConsumers = new LinkedHashMap<String, BiConsumer<SharingEntry, ?>>();
 
-		if (sharingEntryId != null) {
-			setSharingEntryId(sharingEntryId);
-		}
+		attributeGetterFunctions.put("uuid", SharingEntry::getUuid);
+		attributeSetterBiConsumers.put("uuid", (BiConsumer<SharingEntry, String>)SharingEntry::setUuid);
+		attributeGetterFunctions.put("sharingEntryId", SharingEntry::getSharingEntryId);
+		attributeSetterBiConsumers.put("sharingEntryId", (BiConsumer<SharingEntry, Long>)SharingEntry::setSharingEntryId);
+		attributeGetterFunctions.put("groupId", SharingEntry::getGroupId);
+		attributeSetterBiConsumers.put("groupId", (BiConsumer<SharingEntry, Long>)SharingEntry::setGroupId);
+		attributeGetterFunctions.put("companyId", SharingEntry::getCompanyId);
+		attributeSetterBiConsumers.put("companyId", (BiConsumer<SharingEntry, Long>)SharingEntry::setCompanyId);
+		attributeGetterFunctions.put("createDate", SharingEntry::getCreateDate);
+		attributeSetterBiConsumers.put("createDate", (BiConsumer<SharingEntry, Date>)SharingEntry::setCreateDate);
+		attributeGetterFunctions.put("modifiedDate", SharingEntry::getModifiedDate);
+		attributeSetterBiConsumers.put("modifiedDate", (BiConsumer<SharingEntry, Date>)SharingEntry::setModifiedDate);
+		attributeGetterFunctions.put("fromUserId", SharingEntry::getFromUserId);
+		attributeSetterBiConsumers.put("fromUserId", (BiConsumer<SharingEntry, Long>)SharingEntry::setFromUserId);
+		attributeGetterFunctions.put("toUserId", SharingEntry::getToUserId);
+		attributeSetterBiConsumers.put("toUserId", (BiConsumer<SharingEntry, Long>)SharingEntry::setToUserId);
+		attributeGetterFunctions.put("classNameId", SharingEntry::getClassNameId);
+		attributeSetterBiConsumers.put("classNameId", (BiConsumer<SharingEntry, Long>)SharingEntry::setClassNameId);
+		attributeGetterFunctions.put("classPK", SharingEntry::getClassPK);
+		attributeSetterBiConsumers.put("classPK", (BiConsumer<SharingEntry, Long>)SharingEntry::setClassPK);
+		attributeGetterFunctions.put("shareable", SharingEntry::getShareable);
+		attributeSetterBiConsumers.put("shareable", (BiConsumer<SharingEntry, Boolean>)SharingEntry::setShareable);
+		attributeGetterFunctions.put("actionIds", SharingEntry::getActionIds);
+		attributeSetterBiConsumers.put("actionIds", (BiConsumer<SharingEntry, Long>)SharingEntry::setActionIds);
+		attributeGetterFunctions.put("expirationDate", SharingEntry::getExpirationDate);
+		attributeSetterBiConsumers.put("expirationDate", (BiConsumer<SharingEntry, Date>)SharingEntry::setExpirationDate);
 
-		Long groupId = (Long)attributes.get("groupId");
-
-		if (groupId != null) {
-			setGroupId(groupId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
-		}
-
-		Date createDate = (Date)attributes.get("createDate");
-
-		if (createDate != null) {
-			setCreateDate(createDate);
-		}
-
-		Date modifiedDate = (Date)attributes.get("modifiedDate");
-
-		if (modifiedDate != null) {
-			setModifiedDate(modifiedDate);
-		}
-
-		Long fromUserId = (Long)attributes.get("fromUserId");
-
-		if (fromUserId != null) {
-			setFromUserId(fromUserId);
-		}
-
-		Long toUserId = (Long)attributes.get("toUserId");
-
-		if (toUserId != null) {
-			setToUserId(toUserId);
-		}
-
-		Long classNameId = (Long)attributes.get("classNameId");
-
-		if (classNameId != null) {
-			setClassNameId(classNameId);
-		}
-
-		Long classPK = (Long)attributes.get("classPK");
-
-		if (classPK != null) {
-			setClassPK(classPK);
-		}
-
-		Boolean shareable = (Boolean)attributes.get("shareable");
-
-		if (shareable != null) {
-			setShareable(shareable);
-		}
-
-		Long actionIds = (Long)attributes.get("actionIds");
-
-		if (actionIds != null) {
-			setActionIds(actionIds);
-		}
-
-		Date expirationDate = (Date)attributes.get("expirationDate");
-
-		if (expirationDate != null) {
-			setExpirationDate(expirationDate);
-		}
+		_attributeGetterFunctions = Collections.unmodifiableMap(attributeGetterFunctions);
+		_attributeSetterBiConsumers = Collections.unmodifiableMap((Map)attributeSetterBiConsumers);
 	}
 
 	@JSON
@@ -831,107 +776,6 @@ public class SharingEntryModelImpl extends BaseModelImpl<SharingEntry>
 		}
 
 		return sharingEntryCacheModel;
-	}
-
-	@Override
-	public String toString() {
-		StringBundler sb = new StringBundler(27);
-
-		sb.append("{uuid=");
-		sb.append(getUuid());
-		sb.append(", sharingEntryId=");
-		sb.append(getSharingEntryId());
-		sb.append(", groupId=");
-		sb.append(getGroupId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
-		sb.append(", createDate=");
-		sb.append(getCreateDate());
-		sb.append(", modifiedDate=");
-		sb.append(getModifiedDate());
-		sb.append(", fromUserId=");
-		sb.append(getFromUserId());
-		sb.append(", toUserId=");
-		sb.append(getToUserId());
-		sb.append(", classNameId=");
-		sb.append(getClassNameId());
-		sb.append(", classPK=");
-		sb.append(getClassPK());
-		sb.append(", shareable=");
-		sb.append(isShareable());
-		sb.append(", actionIds=");
-		sb.append(getActionIds());
-		sb.append(", expirationDate=");
-		sb.append(getExpirationDate());
-		sb.append("}");
-
-		return sb.toString();
-	}
-
-	@Override
-	public String toXmlString() {
-		StringBundler sb = new StringBundler(43);
-
-		sb.append("<model><model-name>");
-		sb.append("com.liferay.sharing.model.SharingEntry");
-		sb.append("</model-name>");
-
-		sb.append(
-			"<column><column-name>uuid</column-name><column-value><![CDATA[");
-		sb.append(getUuid());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>sharingEntryId</column-name><column-value><![CDATA[");
-		sb.append(getSharingEntryId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>groupId</column-name><column-value><![CDATA[");
-		sb.append(getGroupId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>createDate</column-name><column-value><![CDATA[");
-		sb.append(getCreateDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>modifiedDate</column-name><column-value><![CDATA[");
-		sb.append(getModifiedDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>fromUserId</column-name><column-value><![CDATA[");
-		sb.append(getFromUserId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>toUserId</column-name><column-value><![CDATA[");
-		sb.append(getToUserId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>classNameId</column-name><column-value><![CDATA[");
-		sb.append(getClassNameId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>classPK</column-name><column-value><![CDATA[");
-		sb.append(getClassPK());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>shareable</column-name><column-value><![CDATA[");
-		sb.append(isShareable());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>actionIds</column-name><column-value><![CDATA[");
-		sb.append(getActionIds());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>expirationDate</column-name><column-value><![CDATA[");
-		sb.append(getExpirationDate());
-		sb.append("]]></column-value></column>");
-
-		sb.append("</model>");
-
-		return sb.toString();
 	}
 
 	private static final ClassLoader _classLoader = SharingEntry.class.getClassLoader();

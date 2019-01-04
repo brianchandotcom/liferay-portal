@@ -21,8 +21,6 @@ import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 
-import com.liferay.petra.string.StringBundler;
-
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.LocaleException;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -48,13 +46,17 @@ import java.io.Serializable;
 import java.sql.Types;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * The base model implementation for the LayoutSetPrototype service. Represents a row in the &quot;LayoutSetPrototype&quot; database table, with each column mapped to a property of this class.
@@ -218,101 +220,51 @@ public class LayoutSetPrototypeModelImpl extends BaseModelImpl<LayoutSetPrototyp
 	}
 
 	@Override
-	public Map<String, Object> getModelAttributes() {
-		Map<String, Object> attributes = new HashMap<String, Object>();
-
-		attributes.put("mvccVersion", getMvccVersion());
-		attributes.put("uuid", getUuid());
-		attributes.put("layoutSetPrototypeId", getLayoutSetPrototypeId());
-		attributes.put("companyId", getCompanyId());
-		attributes.put("userId", getUserId());
-		attributes.put("userName", getUserName());
-		attributes.put("createDate", getCreateDate());
-		attributes.put("modifiedDate", getModifiedDate());
-		attributes.put("name", getName());
-		attributes.put("description", getDescription());
-		attributes.put("settings", getSettings());
-		attributes.put("active", isActive());
-
-		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
-		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
-
-		return attributes;
+	public Map<String, Function<LayoutSetPrototype, Object>> getAttributeGetterFunctions() {
+		return _attributeGetterFunctions;
 	}
 
 	@Override
-	public void setModelAttributes(Map<String, Object> attributes) {
-		Long mvccVersion = (Long)attributes.get("mvccVersion");
+	public Map<String, BiConsumer<LayoutSetPrototype, Object>> getAttributeSetterBiConsumers() {
+		return _attributeSetterBiConsumers;
+	}
 
-		if (mvccVersion != null) {
-			setMvccVersion(mvccVersion);
-		}
+	private static final Map<String, Function<LayoutSetPrototype, Object>> _attributeGetterFunctions;
+	private static final Map<String, BiConsumer<LayoutSetPrototype, Object>> _attributeSetterBiConsumers;
 
-		String uuid = (String)attributes.get("uuid");
+	static {
+		Map<String, Function<LayoutSetPrototype, Object>> attributeGetterFunctions =
+			new LinkedHashMap<String, Function<LayoutSetPrototype, Object>>();
+		Map<String, BiConsumer<LayoutSetPrototype, ?>> attributeSetterBiConsumers =
+			new LinkedHashMap<String, BiConsumer<LayoutSetPrototype, ?>>();
 
-		if (uuid != null) {
-			setUuid(uuid);
-		}
+		attributeGetterFunctions.put("mvccVersion", LayoutSetPrototype::getMvccVersion);
+		attributeSetterBiConsumers.put("mvccVersion", (BiConsumer<LayoutSetPrototype, Long>)LayoutSetPrototype::setMvccVersion);
+		attributeGetterFunctions.put("uuid", LayoutSetPrototype::getUuid);
+		attributeSetterBiConsumers.put("uuid", (BiConsumer<LayoutSetPrototype, String>)LayoutSetPrototype::setUuid);
+		attributeGetterFunctions.put("layoutSetPrototypeId", LayoutSetPrototype::getLayoutSetPrototypeId);
+		attributeSetterBiConsumers.put("layoutSetPrototypeId", (BiConsumer<LayoutSetPrototype, Long>)LayoutSetPrototype::setLayoutSetPrototypeId);
+		attributeGetterFunctions.put("companyId", LayoutSetPrototype::getCompanyId);
+		attributeSetterBiConsumers.put("companyId", (BiConsumer<LayoutSetPrototype, Long>)LayoutSetPrototype::setCompanyId);
+		attributeGetterFunctions.put("userId", LayoutSetPrototype::getUserId);
+		attributeSetterBiConsumers.put("userId", (BiConsumer<LayoutSetPrototype, Long>)LayoutSetPrototype::setUserId);
+		attributeGetterFunctions.put("userName", LayoutSetPrototype::getUserName);
+		attributeSetterBiConsumers.put("userName", (BiConsumer<LayoutSetPrototype, String>)LayoutSetPrototype::setUserName);
+		attributeGetterFunctions.put("createDate", LayoutSetPrototype::getCreateDate);
+		attributeSetterBiConsumers.put("createDate", (BiConsumer<LayoutSetPrototype, Date>)LayoutSetPrototype::setCreateDate);
+		attributeGetterFunctions.put("modifiedDate", LayoutSetPrototype::getModifiedDate);
+		attributeSetterBiConsumers.put("modifiedDate", (BiConsumer<LayoutSetPrototype, Date>)LayoutSetPrototype::setModifiedDate);
+		attributeGetterFunctions.put("name", LayoutSetPrototype::getName);
+		attributeSetterBiConsumers.put("name", (BiConsumer<LayoutSetPrototype, String>)LayoutSetPrototype::setName);
+		attributeGetterFunctions.put("description", LayoutSetPrototype::getDescription);
+		attributeSetterBiConsumers.put("description", (BiConsumer<LayoutSetPrototype, String>)LayoutSetPrototype::setDescription);
+		attributeGetterFunctions.put("settings", LayoutSetPrototype::getSettings);
+		attributeSetterBiConsumers.put("settings", (BiConsumer<LayoutSetPrototype, String>)LayoutSetPrototype::setSettings);
+		attributeGetterFunctions.put("active", LayoutSetPrototype::getActive);
+		attributeSetterBiConsumers.put("active", (BiConsumer<LayoutSetPrototype, Boolean>)LayoutSetPrototype::setActive);
 
-		Long layoutSetPrototypeId = (Long)attributes.get("layoutSetPrototypeId");
-
-		if (layoutSetPrototypeId != null) {
-			setLayoutSetPrototypeId(layoutSetPrototypeId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
-		}
-
-		Long userId = (Long)attributes.get("userId");
-
-		if (userId != null) {
-			setUserId(userId);
-		}
-
-		String userName = (String)attributes.get("userName");
-
-		if (userName != null) {
-			setUserName(userName);
-		}
-
-		Date createDate = (Date)attributes.get("createDate");
-
-		if (createDate != null) {
-			setCreateDate(createDate);
-		}
-
-		Date modifiedDate = (Date)attributes.get("modifiedDate");
-
-		if (modifiedDate != null) {
-			setModifiedDate(modifiedDate);
-		}
-
-		String name = (String)attributes.get("name");
-
-		if (name != null) {
-			setName(name);
-		}
-
-		String description = (String)attributes.get("description");
-
-		if (description != null) {
-			setDescription(description);
-		}
-
-		String settings = (String)attributes.get("settings");
-
-		if (settings != null) {
-			setSettings(settings);
-		}
-
-		Boolean active = (Boolean)attributes.get("active");
-
-		if (active != null) {
-			setActive(active);
-		}
+		_attributeGetterFunctions = Collections.unmodifiableMap(attributeGetterFunctions);
+		_attributeSetterBiConsumers = Collections.unmodifiableMap((Map)attributeSetterBiConsumers);
 	}
 
 	@JSON
@@ -985,101 +937,6 @@ public class LayoutSetPrototypeModelImpl extends BaseModelImpl<LayoutSetPrototyp
 		layoutSetPrototypeCacheModel.active = isActive();
 
 		return layoutSetPrototypeCacheModel;
-	}
-
-	@Override
-	public String toString() {
-		StringBundler sb = new StringBundler(25);
-
-		sb.append("{mvccVersion=");
-		sb.append(getMvccVersion());
-		sb.append(", uuid=");
-		sb.append(getUuid());
-		sb.append(", layoutSetPrototypeId=");
-		sb.append(getLayoutSetPrototypeId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
-		sb.append(", userId=");
-		sb.append(getUserId());
-		sb.append(", userName=");
-		sb.append(getUserName());
-		sb.append(", createDate=");
-		sb.append(getCreateDate());
-		sb.append(", modifiedDate=");
-		sb.append(getModifiedDate());
-		sb.append(", name=");
-		sb.append(getName());
-		sb.append(", description=");
-		sb.append(getDescription());
-		sb.append(", settings=");
-		sb.append(getSettings());
-		sb.append(", active=");
-		sb.append(isActive());
-		sb.append("}");
-
-		return sb.toString();
-	}
-
-	@Override
-	public String toXmlString() {
-		StringBundler sb = new StringBundler(40);
-
-		sb.append("<model><model-name>");
-		sb.append("com.liferay.portal.kernel.model.LayoutSetPrototype");
-		sb.append("</model-name>");
-
-		sb.append(
-			"<column><column-name>mvccVersion</column-name><column-value><![CDATA[");
-		sb.append(getMvccVersion());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>uuid</column-name><column-value><![CDATA[");
-		sb.append(getUuid());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>layoutSetPrototypeId</column-name><column-value><![CDATA[");
-		sb.append(getLayoutSetPrototypeId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userId</column-name><column-value><![CDATA[");
-		sb.append(getUserId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userName</column-name><column-value><![CDATA[");
-		sb.append(getUserName());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>createDate</column-name><column-value><![CDATA[");
-		sb.append(getCreateDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>modifiedDate</column-name><column-value><![CDATA[");
-		sb.append(getModifiedDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>name</column-name><column-value><![CDATA[");
-		sb.append(getName());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>description</column-name><column-value><![CDATA[");
-		sb.append(getDescription());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>settings</column-name><column-value><![CDATA[");
-		sb.append(getSettings());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>active</column-name><column-value><![CDATA[");
-		sb.append(isActive());
-		sb.append("]]></column-value></column>");
-
-		sb.append("</model>");
-
-		return sb.toString();
 	}
 
 	private static final ClassLoader _classLoader = LayoutSetPrototype.class.getClassLoader();

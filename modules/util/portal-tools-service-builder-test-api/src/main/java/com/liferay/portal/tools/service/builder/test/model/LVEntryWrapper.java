@@ -26,6 +26,8 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * <p>
@@ -56,45 +58,31 @@ public class LVEntryWrapper implements LVEntry, ModelWrapper<LVEntry> {
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		attributes.put("mvccVersion", getMvccVersion());
-		attributes.put("headId", getHeadId());
-		attributes.put("defaultLanguageId", getDefaultLanguageId());
-		attributes.put("lvEntryId", getLvEntryId());
-		attributes.put("groupId", getGroupId());
+		Map<String, Function<LVEntry, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
+
+		for (Map.Entry<String, Function<LVEntry, Object>> entry : attributeGetterFunctions.entrySet()) {
+			String attributeName = entry.getKey();
+			Function<LVEntry, Object> attributeGetterFunction = entry.getValue();
+
+			attributes.put(attributeName, attributeGetterFunction.apply(this));
+		}
+
+		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
+		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
 
 		return attributes;
 	}
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		Long mvccVersion = (Long)attributes.get("mvccVersion");
+		Map<String, BiConsumer<LVEntry, Object>> attributeSetterBiConsumers = getAttributeSetterBiConsumers();
 
-		if (mvccVersion != null) {
-			setMvccVersion(mvccVersion);
-		}
+		for (Map.Entry<String, BiConsumer<LVEntry, Object>> entry : attributeSetterBiConsumers.entrySet()) {
+			String attributeName = entry.getKey();
+			BiConsumer<LVEntry, Object> attributeBiConsumer = entry.getValue();
 
-		Long headId = (Long)attributes.get("headId");
-
-		if (headId != null) {
-			setHeadId(headId);
-		}
-
-		String defaultLanguageId = (String)attributes.get("defaultLanguageId");
-
-		if (defaultLanguageId != null) {
-			setDefaultLanguageId(defaultLanguageId);
-		}
-
-		Long lvEntryId = (Long)attributes.get("lvEntryId");
-
-		if (lvEntryId != null) {
-			setLvEntryId(lvEntryId);
-		}
-
-		Long groupId = (Long)attributes.get("groupId");
-
-		if (groupId != null) {
-			setGroupId(groupId);
+			attributeBiConsumer.accept(this,
+				attributeSetterBiConsumers.get(attributeName));
 		}
 	}
 
@@ -106,6 +94,16 @@ public class LVEntryWrapper implements LVEntry, ModelWrapper<LVEntry> {
 	@Override
 	public int compareTo(LVEntry lvEntry) {
 		return _lvEntry.compareTo(lvEntry);
+	}
+
+	@Override
+	public Map<String, Function<LVEntry, Object>> getAttributeGetters() {
+		return _lvEntry.getAttributeGetters();
+	}
+
+	@Override
+	public Map<String, BiConsumer<LVEntry, Object>> getAttributeSetters() {
+		return _lvEntry.getAttributeSetters();
 	}
 
 	@Override

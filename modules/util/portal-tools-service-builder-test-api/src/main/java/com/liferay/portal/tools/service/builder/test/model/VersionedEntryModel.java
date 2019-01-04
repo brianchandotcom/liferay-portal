@@ -26,6 +26,10 @@ import com.liferay.portal.kernel.service.ServiceContext;
 
 import java.io.Serializable;
 
+import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
+
 /**
  * The base model interface for the VersionedEntry service. Represents a row in the &quot;VersionedEntry&quot; database table, with each column mapped to a property of this class.
  *
@@ -123,6 +127,10 @@ public interface VersionedEntryModel extends BaseModel<VersionedEntry>, MVCCMode
 	 * @param groupId the group ID of this versioned entry
 	 */
 	public void setGroupId(long groupId);
+
+	public Map<String, Function<VersionedEntry, Object>> getAttributeGetters();
+
+	public Map<String, BiConsumer<VersionedEntry, Object>> getAttributeSetters();
 
 	@Override
 	public boolean isNew();

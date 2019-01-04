@@ -18,9 +18,6 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
-import java.util.HashMap;
-import java.util.Map;
-
 /**
  * <p>
  * This class is a wrapper for {@link ResourceAction}.
@@ -35,52 +32,6 @@ public class ResourceActionWrapper extends BaseModelWrapper<ResourceAction>
 	implements ResourceAction, ModelWrapper<ResourceAction> {
 	public ResourceActionWrapper(ResourceAction resourceAction) {
 		super(resourceAction);
-	}
-
-	@Override
-	public Map<String, Object> getModelAttributes() {
-		Map<String, Object> attributes = new HashMap<String, Object>();
-
-		attributes.put("mvccVersion", getMvccVersion());
-		attributes.put("resourceActionId", getResourceActionId());
-		attributes.put("name", getName());
-		attributes.put("actionId", getActionId());
-		attributes.put("bitwiseValue", getBitwiseValue());
-
-		return attributes;
-	}
-
-	@Override
-	public void setModelAttributes(Map<String, Object> attributes) {
-		Long mvccVersion = (Long)attributes.get("mvccVersion");
-
-		if (mvccVersion != null) {
-			setMvccVersion(mvccVersion);
-		}
-
-		Long resourceActionId = (Long)attributes.get("resourceActionId");
-
-		if (resourceActionId != null) {
-			setResourceActionId(resourceActionId);
-		}
-
-		String name = (String)attributes.get("name");
-
-		if (name != null) {
-			setName(name);
-		}
-
-		String actionId = (String)attributes.get("actionId");
-
-		if (actionId != null) {
-			setActionId(actionId);
-		}
-
-		Long bitwiseValue = (Long)attributes.get("bitwiseValue");
-
-		if (bitwiseValue != null) {
-			setBitwiseValue(bitwiseValue);
-		}
 	}
 
 	/**

@@ -19,9 +19,6 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
-import java.util.HashMap;
-import java.util.Map;
-
 /**
  * <p>
  * This class is a wrapper for {@link Entry}.
@@ -36,59 +33,6 @@ public class EntryWrapper extends BaseModelWrapper<Entry> implements Entry,
 	ModelWrapper<Entry> {
 	public EntryWrapper(Entry entry) {
 		super(entry);
-	}
-
-	@Override
-	public Map<String, Object> getModelAttributes() {
-		Map<String, Object> attributes = new HashMap<String, Object>();
-
-		attributes.put("entryId", getEntryId());
-		attributes.put("createDate", getCreateDate());
-		attributes.put("fromUserId", getFromUserId());
-		attributes.put("toUserId", getToUserId());
-		attributes.put("content", getContent());
-		attributes.put("flag", getFlag());
-
-		return attributes;
-	}
-
-	@Override
-	public void setModelAttributes(Map<String, Object> attributes) {
-		Long entryId = (Long)attributes.get("entryId");
-
-		if (entryId != null) {
-			setEntryId(entryId);
-		}
-
-		Long createDate = (Long)attributes.get("createDate");
-
-		if (createDate != null) {
-			setCreateDate(createDate);
-		}
-
-		Long fromUserId = (Long)attributes.get("fromUserId");
-
-		if (fromUserId != null) {
-			setFromUserId(fromUserId);
-		}
-
-		Long toUserId = (Long)attributes.get("toUserId");
-
-		if (toUserId != null) {
-			setToUserId(toUserId);
-		}
-
-		String content = (String)attributes.get("content");
-
-		if (content != null) {
-			setContent(content);
-		}
-
-		Integer flag = (Integer)attributes.get("flag");
-
-		if (flag != null) {
-			setFlag(flag);
-		}
 	}
 
 	/**

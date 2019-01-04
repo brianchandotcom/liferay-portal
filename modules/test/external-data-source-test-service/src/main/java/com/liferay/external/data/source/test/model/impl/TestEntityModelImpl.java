@@ -35,8 +35,12 @@ import java.io.Serializable;
 
 import java.sql.Types;
 
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * The base model implementation for the TestEntity service. Represents a row in the &quot;TestEntity&quot; database table, with each column mapped to a property of this class.
@@ -147,6 +151,66 @@ public class TestEntityModelImpl extends BaseModelImpl<TestEntity>
 		if (data != null) {
 			setData(data);
 		}
+	}
+
+	public Map<String, Function<TestEntity, Object>> getAttributeGetterFunctions() {
+		return _attributeGetterFunctions;
+	}
+
+	public Map<String, BiConsumer<TestEntity, Object>> getAttributeSetterBiConsumers() {
+		return _attributeSetterBiConsumers;
+	}
+
+	private static final Map<String, Function<TestEntity, Object>> _attributeGetterFunctions;
+	private static final Map<String, BiConsumer<TestEntity, Object>> _attributeSetterBiConsumers;
+
+	static {
+		Map<String, Function<TestEntity, Object>> attributeGetterFunctions = new LinkedHashMap<String, Function<TestEntity, Object>>();
+		Map<String, BiConsumer<TestEntity, ?>> attributeSetterBiConsumers = new LinkedHashMap<String, BiConsumer<TestEntity, ?>>();
+
+		attributeGetterFunctions.put(
+			"id",
+			new Function<TestEntity, Object>() {
+
+				@Override
+				public Object apply(TestEntity testEntity) {
+					return testEntity.getId();
+				}
+
+			});
+		attributeSetterBiConsumers.put(
+			"id",
+			new BiConsumer<TestEntity, Object>() {
+
+				@Override
+				public void accept(TestEntity testEntity, Object id) {
+					testEntity.setId((Long)id);
+				}
+
+			});
+		attributeGetterFunctions.put(
+			"data",
+			new Function<TestEntity, Object>() {
+
+				@Override
+				public Object apply(TestEntity testEntity) {
+					return testEntity.getData();
+				}
+
+			});
+		attributeSetterBiConsumers.put(
+			"data",
+			new BiConsumer<TestEntity, Object>() {
+
+				@Override
+				public void accept(TestEntity testEntity, Object data) {
+					testEntity.setData((String)data);
+				}
+
+			});
+
+		_attributeGetterFunctions = Collections.unmodifiableMap(attributeGetterFunctions);
+		_attributeSetterBiConsumers = Collections.unmodifiableMap((Map)attributeSetterBiConsumers);
 	}
 
 	@Override

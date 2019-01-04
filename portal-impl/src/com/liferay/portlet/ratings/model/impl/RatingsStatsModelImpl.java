@@ -19,8 +19,6 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 
-import com.liferay.petra.string.StringBundler;
-
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.ModelWrapper;
@@ -38,8 +36,12 @@ import java.io.Serializable;
 
 import java.sql.Types;
 
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * The base model implementation for the RatingsStats service. Represents a row in the &quot;RatingsStats&quot; database table, with each column mapped to a property of this class.
@@ -140,66 +142,39 @@ public class RatingsStatsModelImpl extends BaseModelImpl<RatingsStats>
 	}
 
 	@Override
-	public Map<String, Object> getModelAttributes() {
-		Map<String, Object> attributes = new HashMap<String, Object>();
-
-		attributes.put("statsId", getStatsId());
-		attributes.put("companyId", getCompanyId());
-		attributes.put("classNameId", getClassNameId());
-		attributes.put("classPK", getClassPK());
-		attributes.put("totalEntries", getTotalEntries());
-		attributes.put("totalScore", getTotalScore());
-		attributes.put("averageScore", getAverageScore());
-
-		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
-		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
-
-		return attributes;
+	public Map<String, Function<RatingsStats, Object>> getAttributeGetterFunctions() {
+		return _attributeGetterFunctions;
 	}
 
 	@Override
-	public void setModelAttributes(Map<String, Object> attributes) {
-		Long statsId = (Long)attributes.get("statsId");
+	public Map<String, BiConsumer<RatingsStats, Object>> getAttributeSetterBiConsumers() {
+		return _attributeSetterBiConsumers;
+	}
 
-		if (statsId != null) {
-			setStatsId(statsId);
-		}
+	private static final Map<String, Function<RatingsStats, Object>> _attributeGetterFunctions;
+	private static final Map<String, BiConsumer<RatingsStats, Object>> _attributeSetterBiConsumers;
 
-		Long companyId = (Long)attributes.get("companyId");
+	static {
+		Map<String, Function<RatingsStats, Object>> attributeGetterFunctions = new LinkedHashMap<String, Function<RatingsStats, Object>>();
+		Map<String, BiConsumer<RatingsStats, ?>> attributeSetterBiConsumers = new LinkedHashMap<String, BiConsumer<RatingsStats, ?>>();
 
-		if (companyId != null) {
-			setCompanyId(companyId);
-		}
+		attributeGetterFunctions.put("statsId", RatingsStats::getStatsId);
+		attributeSetterBiConsumers.put("statsId", (BiConsumer<RatingsStats, Long>)RatingsStats::setStatsId);
+		attributeGetterFunctions.put("companyId", RatingsStats::getCompanyId);
+		attributeSetterBiConsumers.put("companyId", (BiConsumer<RatingsStats, Long>)RatingsStats::setCompanyId);
+		attributeGetterFunctions.put("classNameId", RatingsStats::getClassNameId);
+		attributeSetterBiConsumers.put("classNameId", (BiConsumer<RatingsStats, Long>)RatingsStats::setClassNameId);
+		attributeGetterFunctions.put("classPK", RatingsStats::getClassPK);
+		attributeSetterBiConsumers.put("classPK", (BiConsumer<RatingsStats, Long>)RatingsStats::setClassPK);
+		attributeGetterFunctions.put("totalEntries", RatingsStats::getTotalEntries);
+		attributeSetterBiConsumers.put("totalEntries", (BiConsumer<RatingsStats, Integer>)RatingsStats::setTotalEntries);
+		attributeGetterFunctions.put("totalScore", RatingsStats::getTotalScore);
+		attributeSetterBiConsumers.put("totalScore", (BiConsumer<RatingsStats, Double>)RatingsStats::setTotalScore);
+		attributeGetterFunctions.put("averageScore", RatingsStats::getAverageScore);
+		attributeSetterBiConsumers.put("averageScore", (BiConsumer<RatingsStats, Double>)RatingsStats::setAverageScore);
 
-		Long classNameId = (Long)attributes.get("classNameId");
-
-		if (classNameId != null) {
-			setClassNameId(classNameId);
-		}
-
-		Long classPK = (Long)attributes.get("classPK");
-
-		if (classPK != null) {
-			setClassPK(classPK);
-		}
-
-		Integer totalEntries = (Integer)attributes.get("totalEntries");
-
-		if (totalEntries != null) {
-			setTotalEntries(totalEntries);
-		}
-
-		Double totalScore = (Double)attributes.get("totalScore");
-
-		if (totalScore != null) {
-			setTotalScore(totalScore);
-		}
-
-		Double averageScore = (Double)attributes.get("averageScore");
-
-		if (averageScore != null) {
-			setAverageScore(averageScore);
-		}
+		_attributeGetterFunctions = Collections.unmodifiableMap(attributeGetterFunctions);
+		_attributeSetterBiConsumers = Collections.unmodifiableMap((Map)attributeSetterBiConsumers);
 	}
 
 	@Override
@@ -446,71 +421,6 @@ public class RatingsStatsModelImpl extends BaseModelImpl<RatingsStats>
 		ratingsStatsCacheModel.averageScore = getAverageScore();
 
 		return ratingsStatsCacheModel;
-	}
-
-	@Override
-	public String toString() {
-		StringBundler sb = new StringBundler(15);
-
-		sb.append("{statsId=");
-		sb.append(getStatsId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
-		sb.append(", classNameId=");
-		sb.append(getClassNameId());
-		sb.append(", classPK=");
-		sb.append(getClassPK());
-		sb.append(", totalEntries=");
-		sb.append(getTotalEntries());
-		sb.append(", totalScore=");
-		sb.append(getTotalScore());
-		sb.append(", averageScore=");
-		sb.append(getAverageScore());
-		sb.append("}");
-
-		return sb.toString();
-	}
-
-	@Override
-	public String toXmlString() {
-		StringBundler sb = new StringBundler(25);
-
-		sb.append("<model><model-name>");
-		sb.append("com.liferay.ratings.kernel.model.RatingsStats");
-		sb.append("</model-name>");
-
-		sb.append(
-			"<column><column-name>statsId</column-name><column-value><![CDATA[");
-		sb.append(getStatsId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>classNameId</column-name><column-value><![CDATA[");
-		sb.append(getClassNameId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>classPK</column-name><column-value><![CDATA[");
-		sb.append(getClassPK());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>totalEntries</column-name><column-value><![CDATA[");
-		sb.append(getTotalEntries());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>totalScore</column-name><column-value><![CDATA[");
-		sb.append(getTotalScore());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>averageScore</column-name><column-value><![CDATA[");
-		sb.append(getAverageScore());
-		sb.append("]]></column-value></column>");
-
-		sb.append("</model>");
-
-		return sb.toString();
 	}
 
 	private static final ClassLoader _classLoader = RatingsStats.class.getClassLoader();

@@ -26,6 +26,8 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * <p>
@@ -56,24 +58,31 @@ public class TestEntityWrapper implements TestEntity, ModelWrapper<TestEntity> {
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		attributes.put("id", getId());
-		attributes.put("data", getData());
+		Map<String, Function<TestEntity, Object>> attributeGetterFunctions = getAttributeGetterFunctions();
+
+		for (Map.Entry<String, Function<TestEntity, Object>> entry : attributeGetterFunctions.entrySet()) {
+			String attributeName = entry.getKey();
+			Function<TestEntity, Object> attributeGetterFunction = entry.getValue();
+
+			attributes.put(attributeName, attributeGetterFunction.apply(this));
+		}
+
+		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
+		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
 
 		return attributes;
 	}
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		Long id = (Long)attributes.get("id");
+		Map<String, BiConsumer<TestEntity, Object>> attributeSetterBiConsumers = getAttributeSetterBiConsumers();
 
-		if (id != null) {
-			setId(id);
-		}
+		for (Map.Entry<String, BiConsumer<TestEntity, Object>> entry : attributeSetterBiConsumers.entrySet()) {
+			String attributeName = entry.getKey();
+			BiConsumer<TestEntity, Object> attributeBiConsumer = entry.getValue();
 
-		String data = (String)attributes.get("data");
-
-		if (data != null) {
-			setData(data);
+			attributeBiConsumer.accept(this,
+				attributeSetterBiConsumers.get(attributeName));
 		}
 	}
 
@@ -85,6 +94,16 @@ public class TestEntityWrapper implements TestEntity, ModelWrapper<TestEntity> {
 	@Override
 	public int compareTo(TestEntity testEntity) {
 		return _testEntity.compareTo(testEntity);
+	}
+
+	@Override
+	public Map<String, Function<TestEntity, Object>> getAttributeGetters() {
+		return _testEntity.getAttributeGetters();
+	}
+
+	@Override
+	public Map<String, BiConsumer<TestEntity, Object>> getAttributeSetters() {
+		return _testEntity.getAttributeSetters();
 	}
 
 	/**

@@ -25,8 +25,6 @@ import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.model.FragmentCollectionModel;
 import com.liferay.fragment.model.FragmentCollectionSoap;
 
-import com.liferay.petra.string.StringBundler;
-
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSON;
@@ -45,10 +43,14 @@ import java.io.Serializable;
 import java.sql.Types;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * The base model implementation for the FragmentCollection service. Represents a row in the &quot;FragmentCollection&quot; database table, with each column mapped to a property of this class.
@@ -213,102 +215,51 @@ public class FragmentCollectionModelImpl extends BaseModelImpl<FragmentCollectio
 	}
 
 	@Override
-	public Map<String, Object> getModelAttributes() {
-		Map<String, Object> attributes = new HashMap<String, Object>();
-
-		attributes.put("uuid", getUuid());
-		attributes.put("fragmentCollectionId", getFragmentCollectionId());
-		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
-		attributes.put("userId", getUserId());
-		attributes.put("userName", getUserName());
-		attributes.put("createDate", getCreateDate());
-		attributes.put("modifiedDate", getModifiedDate());
-		attributes.put("fragmentCollectionKey", getFragmentCollectionKey());
-		attributes.put("name", getName());
-		attributes.put("description", getDescription());
-		attributes.put("lastPublishDate", getLastPublishDate());
-
-		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
-		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
-
-		return attributes;
+	public Map<String, Function<FragmentCollection, Object>> getAttributeGetterFunctions() {
+		return _attributeGetterFunctions;
 	}
 
 	@Override
-	public void setModelAttributes(Map<String, Object> attributes) {
-		String uuid = (String)attributes.get("uuid");
+	public Map<String, BiConsumer<FragmentCollection, Object>> getAttributeSetterBiConsumers() {
+		return _attributeSetterBiConsumers;
+	}
 
-		if (uuid != null) {
-			setUuid(uuid);
-		}
+	private static final Map<String, Function<FragmentCollection, Object>> _attributeGetterFunctions;
+	private static final Map<String, BiConsumer<FragmentCollection, Object>> _attributeSetterBiConsumers;
 
-		Long fragmentCollectionId = (Long)attributes.get("fragmentCollectionId");
+	static {
+		Map<String, Function<FragmentCollection, Object>> attributeGetterFunctions =
+			new LinkedHashMap<String, Function<FragmentCollection, Object>>();
+		Map<String, BiConsumer<FragmentCollection, ?>> attributeSetterBiConsumers =
+			new LinkedHashMap<String, BiConsumer<FragmentCollection, ?>>();
 
-		if (fragmentCollectionId != null) {
-			setFragmentCollectionId(fragmentCollectionId);
-		}
+		attributeGetterFunctions.put("uuid", FragmentCollection::getUuid);
+		attributeSetterBiConsumers.put("uuid", (BiConsumer<FragmentCollection, String>)FragmentCollection::setUuid);
+		attributeGetterFunctions.put("fragmentCollectionId", FragmentCollection::getFragmentCollectionId);
+		attributeSetterBiConsumers.put("fragmentCollectionId", (BiConsumer<FragmentCollection, Long>)FragmentCollection::setFragmentCollectionId);
+		attributeGetterFunctions.put("groupId", FragmentCollection::getGroupId);
+		attributeSetterBiConsumers.put("groupId", (BiConsumer<FragmentCollection, Long>)FragmentCollection::setGroupId);
+		attributeGetterFunctions.put("companyId", FragmentCollection::getCompanyId);
+		attributeSetterBiConsumers.put("companyId", (BiConsumer<FragmentCollection, Long>)FragmentCollection::setCompanyId);
+		attributeGetterFunctions.put("userId", FragmentCollection::getUserId);
+		attributeSetterBiConsumers.put("userId", (BiConsumer<FragmentCollection, Long>)FragmentCollection::setUserId);
+		attributeGetterFunctions.put("userName", FragmentCollection::getUserName);
+		attributeSetterBiConsumers.put("userName", (BiConsumer<FragmentCollection, String>)FragmentCollection::setUserName);
+		attributeGetterFunctions.put("createDate", FragmentCollection::getCreateDate);
+		attributeSetterBiConsumers.put("createDate", (BiConsumer<FragmentCollection, Date>)FragmentCollection::setCreateDate);
+		attributeGetterFunctions.put("modifiedDate", FragmentCollection::getModifiedDate);
+		attributeSetterBiConsumers.put("modifiedDate", (BiConsumer<FragmentCollection, Date>)FragmentCollection::setModifiedDate);
+		attributeGetterFunctions.put("fragmentCollectionKey", FragmentCollection::getFragmentCollectionKey);
+		attributeSetterBiConsumers.put("fragmentCollectionKey", (BiConsumer<FragmentCollection, String>)FragmentCollection::setFragmentCollectionKey);
+		attributeGetterFunctions.put("name", FragmentCollection::getName);
+		attributeSetterBiConsumers.put("name", (BiConsumer<FragmentCollection, String>)FragmentCollection::setName);
+		attributeGetterFunctions.put("description", FragmentCollection::getDescription);
+		attributeSetterBiConsumers.put("description", (BiConsumer<FragmentCollection, String>)FragmentCollection::setDescription);
+		attributeGetterFunctions.put("lastPublishDate", FragmentCollection::getLastPublishDate);
+		attributeSetterBiConsumers.put("lastPublishDate", (BiConsumer<FragmentCollection, Date>)FragmentCollection::setLastPublishDate);
 
-		Long groupId = (Long)attributes.get("groupId");
-
-		if (groupId != null) {
-			setGroupId(groupId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
-		}
-
-		Long userId = (Long)attributes.get("userId");
-
-		if (userId != null) {
-			setUserId(userId);
-		}
-
-		String userName = (String)attributes.get("userName");
-
-		if (userName != null) {
-			setUserName(userName);
-		}
-
-		Date createDate = (Date)attributes.get("createDate");
-
-		if (createDate != null) {
-			setCreateDate(createDate);
-		}
-
-		Date modifiedDate = (Date)attributes.get("modifiedDate");
-
-		if (modifiedDate != null) {
-			setModifiedDate(modifiedDate);
-		}
-
-		String fragmentCollectionKey = (String)attributes.get(
-				"fragmentCollectionKey");
-
-		if (fragmentCollectionKey != null) {
-			setFragmentCollectionKey(fragmentCollectionKey);
-		}
-
-		String name = (String)attributes.get("name");
-
-		if (name != null) {
-			setName(name);
-		}
-
-		String description = (String)attributes.get("description");
-
-		if (description != null) {
-			setDescription(description);
-		}
-
-		Date lastPublishDate = (Date)attributes.get("lastPublishDate");
-
-		if (lastPublishDate != null) {
-			setLastPublishDate(lastPublishDate);
-		}
+		_attributeGetterFunctions = Collections.unmodifiableMap(attributeGetterFunctions);
+		_attributeSetterBiConsumers = Collections.unmodifiableMap((Map)attributeSetterBiConsumers);
 	}
 
 	@JSON
@@ -753,101 +704,6 @@ public class FragmentCollectionModelImpl extends BaseModelImpl<FragmentCollectio
 		}
 
 		return fragmentCollectionCacheModel;
-	}
-
-	@Override
-	public String toString() {
-		StringBundler sb = new StringBundler(25);
-
-		sb.append("{uuid=");
-		sb.append(getUuid());
-		sb.append(", fragmentCollectionId=");
-		sb.append(getFragmentCollectionId());
-		sb.append(", groupId=");
-		sb.append(getGroupId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
-		sb.append(", userId=");
-		sb.append(getUserId());
-		sb.append(", userName=");
-		sb.append(getUserName());
-		sb.append(", createDate=");
-		sb.append(getCreateDate());
-		sb.append(", modifiedDate=");
-		sb.append(getModifiedDate());
-		sb.append(", fragmentCollectionKey=");
-		sb.append(getFragmentCollectionKey());
-		sb.append(", name=");
-		sb.append(getName());
-		sb.append(", description=");
-		sb.append(getDescription());
-		sb.append(", lastPublishDate=");
-		sb.append(getLastPublishDate());
-		sb.append("}");
-
-		return sb.toString();
-	}
-
-	@Override
-	public String toXmlString() {
-		StringBundler sb = new StringBundler(40);
-
-		sb.append("<model><model-name>");
-		sb.append("com.liferay.fragment.model.FragmentCollection");
-		sb.append("</model-name>");
-
-		sb.append(
-			"<column><column-name>uuid</column-name><column-value><![CDATA[");
-		sb.append(getUuid());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>fragmentCollectionId</column-name><column-value><![CDATA[");
-		sb.append(getFragmentCollectionId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>groupId</column-name><column-value><![CDATA[");
-		sb.append(getGroupId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userId</column-name><column-value><![CDATA[");
-		sb.append(getUserId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userName</column-name><column-value><![CDATA[");
-		sb.append(getUserName());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>createDate</column-name><column-value><![CDATA[");
-		sb.append(getCreateDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>modifiedDate</column-name><column-value><![CDATA[");
-		sb.append(getModifiedDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>fragmentCollectionKey</column-name><column-value><![CDATA[");
-		sb.append(getFragmentCollectionKey());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>name</column-name><column-value><![CDATA[");
-		sb.append(getName());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>description</column-name><column-value><![CDATA[");
-		sb.append(getDescription());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>lastPublishDate</column-name><column-value><![CDATA[");
-		sb.append(getLastPublishDate());
-		sb.append("]]></column-value></column>");
-
-		sb.append("</model>");
-
-		return sb.toString();
 	}
 
 	private static final ClassLoader _classLoader = FragmentCollection.class.getClassLoader();

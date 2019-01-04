@@ -19,9 +19,6 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
-import java.util.HashMap;
-import java.util.Map;
-
 /**
  * <p>
  * This class is a wrapper for {@link SocialActivitySet}.
@@ -36,94 +33,6 @@ public class SocialActivitySetWrapper extends BaseModelWrapper<SocialActivitySet
 	implements SocialActivitySet, ModelWrapper<SocialActivitySet> {
 	public SocialActivitySetWrapper(SocialActivitySet socialActivitySet) {
 		super(socialActivitySet);
-	}
-
-	@Override
-	public Map<String, Object> getModelAttributes() {
-		Map<String, Object> attributes = new HashMap<String, Object>();
-
-		attributes.put("activitySetId", getActivitySetId());
-		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
-		attributes.put("userId", getUserId());
-		attributes.put("createDate", getCreateDate());
-		attributes.put("modifiedDate", getModifiedDate());
-		attributes.put("classNameId", getClassNameId());
-		attributes.put("classPK", getClassPK());
-		attributes.put("type", getType());
-		attributes.put("extraData", getExtraData());
-		attributes.put("activityCount", getActivityCount());
-
-		return attributes;
-	}
-
-	@Override
-	public void setModelAttributes(Map<String, Object> attributes) {
-		Long activitySetId = (Long)attributes.get("activitySetId");
-
-		if (activitySetId != null) {
-			setActivitySetId(activitySetId);
-		}
-
-		Long groupId = (Long)attributes.get("groupId");
-
-		if (groupId != null) {
-			setGroupId(groupId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
-		}
-
-		Long userId = (Long)attributes.get("userId");
-
-		if (userId != null) {
-			setUserId(userId);
-		}
-
-		Long createDate = (Long)attributes.get("createDate");
-
-		if (createDate != null) {
-			setCreateDate(createDate);
-		}
-
-		Long modifiedDate = (Long)attributes.get("modifiedDate");
-
-		if (modifiedDate != null) {
-			setModifiedDate(modifiedDate);
-		}
-
-		Long classNameId = (Long)attributes.get("classNameId");
-
-		if (classNameId != null) {
-			setClassNameId(classNameId);
-		}
-
-		Long classPK = (Long)attributes.get("classPK");
-
-		if (classPK != null) {
-			setClassPK(classPK);
-		}
-
-		Integer type = (Integer)attributes.get("type");
-
-		if (type != null) {
-			setType(type);
-		}
-
-		String extraData = (String)attributes.get("extraData");
-
-		if (extraData != null) {
-			setExtraData(extraData);
-		}
-
-		Integer activityCount = (Integer)attributes.get("activityCount");
-
-		if (activityCount != null) {
-			setActivityCount(activityCount);
-		}
 	}
 
 	/**

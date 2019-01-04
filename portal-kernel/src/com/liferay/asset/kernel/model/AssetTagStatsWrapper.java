@@ -19,9 +19,6 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
-import java.util.HashMap;
-import java.util.Map;
-
 /**
  * <p>
  * This class is a wrapper for {@link AssetTagStats}.
@@ -39,52 +36,6 @@ public class AssetTagStatsWrapper extends BaseModelWrapper<AssetTagStats>
 	implements AssetTagStats, ModelWrapper<AssetTagStats> {
 	public AssetTagStatsWrapper(AssetTagStats assetTagStats) {
 		super(assetTagStats);
-	}
-
-	@Override
-	public Map<String, Object> getModelAttributes() {
-		Map<String, Object> attributes = new HashMap<String, Object>();
-
-		attributes.put("tagStatsId", getTagStatsId());
-		attributes.put("companyId", getCompanyId());
-		attributes.put("tagId", getTagId());
-		attributes.put("classNameId", getClassNameId());
-		attributes.put("assetCount", getAssetCount());
-
-		return attributes;
-	}
-
-	@Override
-	public void setModelAttributes(Map<String, Object> attributes) {
-		Long tagStatsId = (Long)attributes.get("tagStatsId");
-
-		if (tagStatsId != null) {
-			setTagStatsId(tagStatsId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
-		}
-
-		Long tagId = (Long)attributes.get("tagId");
-
-		if (tagId != null) {
-			setTagId(tagId);
-		}
-
-		Long classNameId = (Long)attributes.get("classNameId");
-
-		if (classNameId != null) {
-			setClassNameId(classNameId);
-		}
-
-		Integer assetCount = (Integer)attributes.get("assetCount");
-
-		if (assetCount != null) {
-			setAssetCount(assetCount);
-		}
 	}
 
 	/**

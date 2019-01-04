@@ -19,9 +19,6 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
-import java.util.HashMap;
-import java.util.Map;
-
 /**
  * <p>
  * This class is a wrapper for {@link DDMDataProviderInstanceLink}.
@@ -38,48 +35,6 @@ public class DDMDataProviderInstanceLinkWrapper extends BaseModelWrapper<DDMData
 	public DDMDataProviderInstanceLinkWrapper(
 		DDMDataProviderInstanceLink ddmDataProviderInstanceLink) {
 		super(ddmDataProviderInstanceLink);
-	}
-
-	@Override
-	public Map<String, Object> getModelAttributes() {
-		Map<String, Object> attributes = new HashMap<String, Object>();
-
-		attributes.put("dataProviderInstanceLinkId",
-			getDataProviderInstanceLinkId());
-		attributes.put("companyId", getCompanyId());
-		attributes.put("dataProviderInstanceId", getDataProviderInstanceId());
-		attributes.put("structureId", getStructureId());
-
-		return attributes;
-	}
-
-	@Override
-	public void setModelAttributes(Map<String, Object> attributes) {
-		Long dataProviderInstanceLinkId = (Long)attributes.get(
-				"dataProviderInstanceLinkId");
-
-		if (dataProviderInstanceLinkId != null) {
-			setDataProviderInstanceLinkId(dataProviderInstanceLinkId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
-		}
-
-		Long dataProviderInstanceId = (Long)attributes.get(
-				"dataProviderInstanceId");
-
-		if (dataProviderInstanceId != null) {
-			setDataProviderInstanceId(dataProviderInstanceId);
-		}
-
-		Long structureId = (Long)attributes.get("structureId");
-
-		if (structureId != null) {
-			setStructureId(structureId);
-		}
 	}
 
 	/**

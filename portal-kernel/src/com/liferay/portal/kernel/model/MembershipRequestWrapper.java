@@ -19,8 +19,6 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * <p>
@@ -36,94 +34,6 @@ public class MembershipRequestWrapper extends BaseModelWrapper<MembershipRequest
 	implements MembershipRequest, ModelWrapper<MembershipRequest> {
 	public MembershipRequestWrapper(MembershipRequest membershipRequest) {
 		super(membershipRequest);
-	}
-
-	@Override
-	public Map<String, Object> getModelAttributes() {
-		Map<String, Object> attributes = new HashMap<String, Object>();
-
-		attributes.put("mvccVersion", getMvccVersion());
-		attributes.put("membershipRequestId", getMembershipRequestId());
-		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
-		attributes.put("userId", getUserId());
-		attributes.put("createDate", getCreateDate());
-		attributes.put("comments", getComments());
-		attributes.put("replyComments", getReplyComments());
-		attributes.put("replyDate", getReplyDate());
-		attributes.put("replierUserId", getReplierUserId());
-		attributes.put("statusId", getStatusId());
-
-		return attributes;
-	}
-
-	@Override
-	public void setModelAttributes(Map<String, Object> attributes) {
-		Long mvccVersion = (Long)attributes.get("mvccVersion");
-
-		if (mvccVersion != null) {
-			setMvccVersion(mvccVersion);
-		}
-
-		Long membershipRequestId = (Long)attributes.get("membershipRequestId");
-
-		if (membershipRequestId != null) {
-			setMembershipRequestId(membershipRequestId);
-		}
-
-		Long groupId = (Long)attributes.get("groupId");
-
-		if (groupId != null) {
-			setGroupId(groupId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
-		}
-
-		Long userId = (Long)attributes.get("userId");
-
-		if (userId != null) {
-			setUserId(userId);
-		}
-
-		Date createDate = (Date)attributes.get("createDate");
-
-		if (createDate != null) {
-			setCreateDate(createDate);
-		}
-
-		String comments = (String)attributes.get("comments");
-
-		if (comments != null) {
-			setComments(comments);
-		}
-
-		String replyComments = (String)attributes.get("replyComments");
-
-		if (replyComments != null) {
-			setReplyComments(replyComments);
-		}
-
-		Date replyDate = (Date)attributes.get("replyDate");
-
-		if (replyDate != null) {
-			setReplyDate(replyDate);
-		}
-
-		Long replierUserId = (Long)attributes.get("replierUserId");
-
-		if (replierUserId != null) {
-			setReplierUserId(replierUserId);
-		}
-
-		Long statusId = (Long)attributes.get("statusId");
-
-		if (statusId != null) {
-			setStatusId(statusId);
-		}
 	}
 
 	/**

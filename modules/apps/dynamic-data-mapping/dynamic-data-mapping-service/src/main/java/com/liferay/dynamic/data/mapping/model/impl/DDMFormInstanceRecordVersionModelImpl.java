@@ -23,8 +23,6 @@ import com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecordVersionSoap;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 
-import com.liferay.petra.string.StringBundler;
-
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSON;
@@ -43,10 +41,14 @@ import java.io.Serializable;
 import java.sql.Types;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * The base model implementation for the DDMFormInstanceRecordVersion service. Represents a row in the &quot;DDMFormInstanceRecordVersion&quot; database table, with each column mapped to a property of this class.
@@ -223,125 +225,57 @@ public class DDMFormInstanceRecordVersionModelImpl extends BaseModelImpl<DDMForm
 	}
 
 	@Override
-	public Map<String, Object> getModelAttributes() {
-		Map<String, Object> attributes = new HashMap<String, Object>();
-
-		attributes.put("formInstanceRecordVersionId",
-			getFormInstanceRecordVersionId());
-		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
-		attributes.put("userId", getUserId());
-		attributes.put("userName", getUserName());
-		attributes.put("createDate", getCreateDate());
-		attributes.put("formInstanceId", getFormInstanceId());
-		attributes.put("formInstanceVersion", getFormInstanceVersion());
-		attributes.put("formInstanceRecordId", getFormInstanceRecordId());
-		attributes.put("version", getVersion());
-		attributes.put("status", getStatus());
-		attributes.put("statusByUserId", getStatusByUserId());
-		attributes.put("statusByUserName", getStatusByUserName());
-		attributes.put("statusDate", getStatusDate());
-		attributes.put("storageId", getStorageId());
-
-		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
-		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
-
-		return attributes;
+	public Map<String, Function<DDMFormInstanceRecordVersion, Object>> getAttributeGetterFunctions() {
+		return _attributeGetterFunctions;
 	}
 
 	@Override
-	public void setModelAttributes(Map<String, Object> attributes) {
-		Long formInstanceRecordVersionId = (Long)attributes.get(
-				"formInstanceRecordVersionId");
+	public Map<String, BiConsumer<DDMFormInstanceRecordVersion, Object>> getAttributeSetterBiConsumers() {
+		return _attributeSetterBiConsumers;
+	}
 
-		if (formInstanceRecordVersionId != null) {
-			setFormInstanceRecordVersionId(formInstanceRecordVersionId);
-		}
+	private static final Map<String, Function<DDMFormInstanceRecordVersion, Object>> _attributeGetterFunctions;
+	private static final Map<String, BiConsumer<DDMFormInstanceRecordVersion, Object>> _attributeSetterBiConsumers;
 
-		Long groupId = (Long)attributes.get("groupId");
+	static {
+		Map<String, Function<DDMFormInstanceRecordVersion, Object>> attributeGetterFunctions =
+			new LinkedHashMap<String, Function<DDMFormInstanceRecordVersion, Object>>();
+		Map<String, BiConsumer<DDMFormInstanceRecordVersion, ?>> attributeSetterBiConsumers =
+			new LinkedHashMap<String, BiConsumer<DDMFormInstanceRecordVersion, ?>>();
 
-		if (groupId != null) {
-			setGroupId(groupId);
-		}
+		attributeGetterFunctions.put("formInstanceRecordVersionId", DDMFormInstanceRecordVersion::getFormInstanceRecordVersionId);
+		attributeSetterBiConsumers.put("formInstanceRecordVersionId", (BiConsumer<DDMFormInstanceRecordVersion, Long>)DDMFormInstanceRecordVersion::setFormInstanceRecordVersionId);
+		attributeGetterFunctions.put("groupId", DDMFormInstanceRecordVersion::getGroupId);
+		attributeSetterBiConsumers.put("groupId", (BiConsumer<DDMFormInstanceRecordVersion, Long>)DDMFormInstanceRecordVersion::setGroupId);
+		attributeGetterFunctions.put("companyId", DDMFormInstanceRecordVersion::getCompanyId);
+		attributeSetterBiConsumers.put("companyId", (BiConsumer<DDMFormInstanceRecordVersion, Long>)DDMFormInstanceRecordVersion::setCompanyId);
+		attributeGetterFunctions.put("userId", DDMFormInstanceRecordVersion::getUserId);
+		attributeSetterBiConsumers.put("userId", (BiConsumer<DDMFormInstanceRecordVersion, Long>)DDMFormInstanceRecordVersion::setUserId);
+		attributeGetterFunctions.put("userName", DDMFormInstanceRecordVersion::getUserName);
+		attributeSetterBiConsumers.put("userName", (BiConsumer<DDMFormInstanceRecordVersion, String>)DDMFormInstanceRecordVersion::setUserName);
+		attributeGetterFunctions.put("createDate", DDMFormInstanceRecordVersion::getCreateDate);
+		attributeSetterBiConsumers.put("createDate", (BiConsumer<DDMFormInstanceRecordVersion, Date>)DDMFormInstanceRecordVersion::setCreateDate);
+		attributeGetterFunctions.put("formInstanceId", DDMFormInstanceRecordVersion::getFormInstanceId);
+		attributeSetterBiConsumers.put("formInstanceId", (BiConsumer<DDMFormInstanceRecordVersion, Long>)DDMFormInstanceRecordVersion::setFormInstanceId);
+		attributeGetterFunctions.put("formInstanceVersion", DDMFormInstanceRecordVersion::getFormInstanceVersion);
+		attributeSetterBiConsumers.put("formInstanceVersion", (BiConsumer<DDMFormInstanceRecordVersion, String>)DDMFormInstanceRecordVersion::setFormInstanceVersion);
+		attributeGetterFunctions.put("formInstanceRecordId", DDMFormInstanceRecordVersion::getFormInstanceRecordId);
+		attributeSetterBiConsumers.put("formInstanceRecordId", (BiConsumer<DDMFormInstanceRecordVersion, Long>)DDMFormInstanceRecordVersion::setFormInstanceRecordId);
+		attributeGetterFunctions.put("version", DDMFormInstanceRecordVersion::getVersion);
+		attributeSetterBiConsumers.put("version", (BiConsumer<DDMFormInstanceRecordVersion, String>)DDMFormInstanceRecordVersion::setVersion);
+		attributeGetterFunctions.put("status", DDMFormInstanceRecordVersion::getStatus);
+		attributeSetterBiConsumers.put("status", (BiConsumer<DDMFormInstanceRecordVersion, Integer>)DDMFormInstanceRecordVersion::setStatus);
+		attributeGetterFunctions.put("statusByUserId", DDMFormInstanceRecordVersion::getStatusByUserId);
+		attributeSetterBiConsumers.put("statusByUserId", (BiConsumer<DDMFormInstanceRecordVersion, Long>)DDMFormInstanceRecordVersion::setStatusByUserId);
+		attributeGetterFunctions.put("statusByUserName", DDMFormInstanceRecordVersion::getStatusByUserName);
+		attributeSetterBiConsumers.put("statusByUserName", (BiConsumer<DDMFormInstanceRecordVersion, String>)DDMFormInstanceRecordVersion::setStatusByUserName);
+		attributeGetterFunctions.put("statusDate", DDMFormInstanceRecordVersion::getStatusDate);
+		attributeSetterBiConsumers.put("statusDate", (BiConsumer<DDMFormInstanceRecordVersion, Date>)DDMFormInstanceRecordVersion::setStatusDate);
+		attributeGetterFunctions.put("storageId", DDMFormInstanceRecordVersion::getStorageId);
+		attributeSetterBiConsumers.put("storageId", (BiConsumer<DDMFormInstanceRecordVersion, Long>)DDMFormInstanceRecordVersion::setStorageId);
 
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
-		}
-
-		Long userId = (Long)attributes.get("userId");
-
-		if (userId != null) {
-			setUserId(userId);
-		}
-
-		String userName = (String)attributes.get("userName");
-
-		if (userName != null) {
-			setUserName(userName);
-		}
-
-		Date createDate = (Date)attributes.get("createDate");
-
-		if (createDate != null) {
-			setCreateDate(createDate);
-		}
-
-		Long formInstanceId = (Long)attributes.get("formInstanceId");
-
-		if (formInstanceId != null) {
-			setFormInstanceId(formInstanceId);
-		}
-
-		String formInstanceVersion = (String)attributes.get(
-				"formInstanceVersion");
-
-		if (formInstanceVersion != null) {
-			setFormInstanceVersion(formInstanceVersion);
-		}
-
-		Long formInstanceRecordId = (Long)attributes.get("formInstanceRecordId");
-
-		if (formInstanceRecordId != null) {
-			setFormInstanceRecordId(formInstanceRecordId);
-		}
-
-		String version = (String)attributes.get("version");
-
-		if (version != null) {
-			setVersion(version);
-		}
-
-		Integer status = (Integer)attributes.get("status");
-
-		if (status != null) {
-			setStatus(status);
-		}
-
-		Long statusByUserId = (Long)attributes.get("statusByUserId");
-
-		if (statusByUserId != null) {
-			setStatusByUserId(statusByUserId);
-		}
-
-		String statusByUserName = (String)attributes.get("statusByUserName");
-
-		if (statusByUserName != null) {
-			setStatusByUserName(statusByUserName);
-		}
-
-		Date statusDate = (Date)attributes.get("statusDate");
-
-		if (statusDate != null) {
-			setStatusDate(statusDate);
-		}
-
-		Long storageId = (Long)attributes.get("storageId");
-
-		if (storageId != null) {
-			setStorageId(storageId);
-		}
+		_attributeGetterFunctions = Collections.unmodifiableMap(attributeGetterFunctions);
+		_attributeSetterBiConsumers = Collections.unmodifiableMap((Map)attributeSetterBiConsumers);
 	}
 
 	@JSON
@@ -917,120 +851,6 @@ public class DDMFormInstanceRecordVersionModelImpl extends BaseModelImpl<DDMForm
 		ddmFormInstanceRecordVersionCacheModel.storageId = getStorageId();
 
 		return ddmFormInstanceRecordVersionCacheModel;
-	}
-
-	@Override
-	public String toString() {
-		StringBundler sb = new StringBundler(31);
-
-		sb.append("{formInstanceRecordVersionId=");
-		sb.append(getFormInstanceRecordVersionId());
-		sb.append(", groupId=");
-		sb.append(getGroupId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
-		sb.append(", userId=");
-		sb.append(getUserId());
-		sb.append(", userName=");
-		sb.append(getUserName());
-		sb.append(", createDate=");
-		sb.append(getCreateDate());
-		sb.append(", formInstanceId=");
-		sb.append(getFormInstanceId());
-		sb.append(", formInstanceVersion=");
-		sb.append(getFormInstanceVersion());
-		sb.append(", formInstanceRecordId=");
-		sb.append(getFormInstanceRecordId());
-		sb.append(", version=");
-		sb.append(getVersion());
-		sb.append(", status=");
-		sb.append(getStatus());
-		sb.append(", statusByUserId=");
-		sb.append(getStatusByUserId());
-		sb.append(", statusByUserName=");
-		sb.append(getStatusByUserName());
-		sb.append(", statusDate=");
-		sb.append(getStatusDate());
-		sb.append(", storageId=");
-		sb.append(getStorageId());
-		sb.append("}");
-
-		return sb.toString();
-	}
-
-	@Override
-	public String toXmlString() {
-		StringBundler sb = new StringBundler(49);
-
-		sb.append("<model><model-name>");
-		sb.append(
-			"com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecordVersion");
-		sb.append("</model-name>");
-
-		sb.append(
-			"<column><column-name>formInstanceRecordVersionId</column-name><column-value><![CDATA[");
-		sb.append(getFormInstanceRecordVersionId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>groupId</column-name><column-value><![CDATA[");
-		sb.append(getGroupId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userId</column-name><column-value><![CDATA[");
-		sb.append(getUserId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userName</column-name><column-value><![CDATA[");
-		sb.append(getUserName());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>createDate</column-name><column-value><![CDATA[");
-		sb.append(getCreateDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>formInstanceId</column-name><column-value><![CDATA[");
-		sb.append(getFormInstanceId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>formInstanceVersion</column-name><column-value><![CDATA[");
-		sb.append(getFormInstanceVersion());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>formInstanceRecordId</column-name><column-value><![CDATA[");
-		sb.append(getFormInstanceRecordId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>version</column-name><column-value><![CDATA[");
-		sb.append(getVersion());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>status</column-name><column-value><![CDATA[");
-		sb.append(getStatus());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>statusByUserId</column-name><column-value><![CDATA[");
-		sb.append(getStatusByUserId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>statusByUserName</column-name><column-value><![CDATA[");
-		sb.append(getStatusByUserName());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>statusDate</column-name><column-value><![CDATA[");
-		sb.append(getStatusDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>storageId</column-name><column-value><![CDATA[");
-		sb.append(getStorageId());
-		sb.append("]]></column-value></column>");
-
-		sb.append("</model>");
-
-		return sb.toString();
 	}
 
 	private static final ClassLoader _classLoader = DDMFormInstanceRecordVersion.class.getClassLoader();

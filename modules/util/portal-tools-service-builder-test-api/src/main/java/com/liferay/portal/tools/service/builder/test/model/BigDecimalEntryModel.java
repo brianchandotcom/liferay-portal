@@ -26,6 +26,10 @@ import java.io.Serializable;
 
 import java.math.BigDecimal;
 
+import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
+
 /**
  * The base model interface for the BigDecimalEntry service. Represents a row in the &quot;BigDecimalEntry&quot; database table, with each column mapped to a property of this class.
  *
@@ -88,6 +92,10 @@ public interface BigDecimalEntryModel extends BaseModel<BigDecimalEntry> {
 	 * @param bigDecimalValue the big decimal value of this big decimal entry
 	 */
 	public void setBigDecimalValue(BigDecimal bigDecimalValue);
+
+	public Map<String, Function<BigDecimalEntry, Object>> getAttributeGetters();
+
+	public Map<String, BiConsumer<BigDecimalEntry, Object>> getAttributeSetters();
 
 	@Override
 	public boolean isNew();

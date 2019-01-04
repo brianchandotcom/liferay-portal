@@ -19,9 +19,6 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
-import java.util.HashMap;
-import java.util.Map;
-
 /**
  * <p>
  * This class is a wrapper for {@link SocialActivityCounter}.
@@ -37,108 +34,6 @@ public class SocialActivityCounterWrapper extends BaseModelWrapper<SocialActivit
 	public SocialActivityCounterWrapper(
 		SocialActivityCounter socialActivityCounter) {
 		super(socialActivityCounter);
-	}
-
-	@Override
-	public Map<String, Object> getModelAttributes() {
-		Map<String, Object> attributes = new HashMap<String, Object>();
-
-		attributes.put("activityCounterId", getActivityCounterId());
-		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
-		attributes.put("classNameId", getClassNameId());
-		attributes.put("classPK", getClassPK());
-		attributes.put("name", getName());
-		attributes.put("ownerType", getOwnerType());
-		attributes.put("currentValue", getCurrentValue());
-		attributes.put("totalValue", getTotalValue());
-		attributes.put("graceValue", getGraceValue());
-		attributes.put("startPeriod", getStartPeriod());
-		attributes.put("endPeriod", getEndPeriod());
-		attributes.put("active", isActive());
-
-		return attributes;
-	}
-
-	@Override
-	public void setModelAttributes(Map<String, Object> attributes) {
-		Long activityCounterId = (Long)attributes.get("activityCounterId");
-
-		if (activityCounterId != null) {
-			setActivityCounterId(activityCounterId);
-		}
-
-		Long groupId = (Long)attributes.get("groupId");
-
-		if (groupId != null) {
-			setGroupId(groupId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
-		}
-
-		Long classNameId = (Long)attributes.get("classNameId");
-
-		if (classNameId != null) {
-			setClassNameId(classNameId);
-		}
-
-		Long classPK = (Long)attributes.get("classPK");
-
-		if (classPK != null) {
-			setClassPK(classPK);
-		}
-
-		String name = (String)attributes.get("name");
-
-		if (name != null) {
-			setName(name);
-		}
-
-		Integer ownerType = (Integer)attributes.get("ownerType");
-
-		if (ownerType != null) {
-			setOwnerType(ownerType);
-		}
-
-		Integer currentValue = (Integer)attributes.get("currentValue");
-
-		if (currentValue != null) {
-			setCurrentValue(currentValue);
-		}
-
-		Integer totalValue = (Integer)attributes.get("totalValue");
-
-		if (totalValue != null) {
-			setTotalValue(totalValue);
-		}
-
-		Integer graceValue = (Integer)attributes.get("graceValue");
-
-		if (graceValue != null) {
-			setGraceValue(graceValue);
-		}
-
-		Integer startPeriod = (Integer)attributes.get("startPeriod");
-
-		if (startPeriod != null) {
-			setStartPeriod(startPeriod);
-		}
-
-		Integer endPeriod = (Integer)attributes.get("endPeriod");
-
-		if (endPeriod != null) {
-			setEndPeriod(endPeriod);
-		}
-
-		Boolean active = (Boolean)attributes.get("active");
-
-		if (active != null) {
-			setActive(active);
-		}
 	}
 
 	/**

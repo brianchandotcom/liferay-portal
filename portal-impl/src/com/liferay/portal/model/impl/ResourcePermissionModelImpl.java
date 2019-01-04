@@ -19,8 +19,6 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 
-import com.liferay.petra.string.StringBundler;
-
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.model.CacheModel;
@@ -38,9 +36,13 @@ import java.io.Serializable;
 import java.sql.Types;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * The base model implementation for the ResourcePermission service. Represents a row in the &quot;ResourcePermission&quot; database table, with each column mapped to a property of this class.
@@ -205,94 +207,49 @@ public class ResourcePermissionModelImpl extends BaseModelImpl<ResourcePermissio
 	}
 
 	@Override
-	public Map<String, Object> getModelAttributes() {
-		Map<String, Object> attributes = new HashMap<String, Object>();
-
-		attributes.put("mvccVersion", getMvccVersion());
-		attributes.put("resourcePermissionId", getResourcePermissionId());
-		attributes.put("companyId", getCompanyId());
-		attributes.put("name", getName());
-		attributes.put("scope", getScope());
-		attributes.put("primKey", getPrimKey());
-		attributes.put("primKeyId", getPrimKeyId());
-		attributes.put("roleId", getRoleId());
-		attributes.put("ownerId", getOwnerId());
-		attributes.put("actionIds", getActionIds());
-		attributes.put("viewActionId", isViewActionId());
-
-		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
-		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
-
-		return attributes;
+	public Map<String, Function<ResourcePermission, Object>> getAttributeGetterFunctions() {
+		return _attributeGetterFunctions;
 	}
 
 	@Override
-	public void setModelAttributes(Map<String, Object> attributes) {
-		Long mvccVersion = (Long)attributes.get("mvccVersion");
+	public Map<String, BiConsumer<ResourcePermission, Object>> getAttributeSetterBiConsumers() {
+		return _attributeSetterBiConsumers;
+	}
 
-		if (mvccVersion != null) {
-			setMvccVersion(mvccVersion);
-		}
+	private static final Map<String, Function<ResourcePermission, Object>> _attributeGetterFunctions;
+	private static final Map<String, BiConsumer<ResourcePermission, Object>> _attributeSetterBiConsumers;
 
-		Long resourcePermissionId = (Long)attributes.get("resourcePermissionId");
+	static {
+		Map<String, Function<ResourcePermission, Object>> attributeGetterFunctions =
+			new LinkedHashMap<String, Function<ResourcePermission, Object>>();
+		Map<String, BiConsumer<ResourcePermission, ?>> attributeSetterBiConsumers =
+			new LinkedHashMap<String, BiConsumer<ResourcePermission, ?>>();
 
-		if (resourcePermissionId != null) {
-			setResourcePermissionId(resourcePermissionId);
-		}
+		attributeGetterFunctions.put("mvccVersion", ResourcePermission::getMvccVersion);
+		attributeSetterBiConsumers.put("mvccVersion", (BiConsumer<ResourcePermission, Long>)ResourcePermission::setMvccVersion);
+		attributeGetterFunctions.put("resourcePermissionId", ResourcePermission::getResourcePermissionId);
+		attributeSetterBiConsumers.put("resourcePermissionId", (BiConsumer<ResourcePermission, Long>)ResourcePermission::setResourcePermissionId);
+		attributeGetterFunctions.put("companyId", ResourcePermission::getCompanyId);
+		attributeSetterBiConsumers.put("companyId", (BiConsumer<ResourcePermission, Long>)ResourcePermission::setCompanyId);
+		attributeGetterFunctions.put("name", ResourcePermission::getName);
+		attributeSetterBiConsumers.put("name", (BiConsumer<ResourcePermission, String>)ResourcePermission::setName);
+		attributeGetterFunctions.put("scope", ResourcePermission::getScope);
+		attributeSetterBiConsumers.put("scope", (BiConsumer<ResourcePermission, Integer>)ResourcePermission::setScope);
+		attributeGetterFunctions.put("primKey", ResourcePermission::getPrimKey);
+		attributeSetterBiConsumers.put("primKey", (BiConsumer<ResourcePermission, String>)ResourcePermission::setPrimKey);
+		attributeGetterFunctions.put("primKeyId", ResourcePermission::getPrimKeyId);
+		attributeSetterBiConsumers.put("primKeyId", (BiConsumer<ResourcePermission, Long>)ResourcePermission::setPrimKeyId);
+		attributeGetterFunctions.put("roleId", ResourcePermission::getRoleId);
+		attributeSetterBiConsumers.put("roleId", (BiConsumer<ResourcePermission, Long>)ResourcePermission::setRoleId);
+		attributeGetterFunctions.put("ownerId", ResourcePermission::getOwnerId);
+		attributeSetterBiConsumers.put("ownerId", (BiConsumer<ResourcePermission, Long>)ResourcePermission::setOwnerId);
+		attributeGetterFunctions.put("actionIds", ResourcePermission::getActionIds);
+		attributeSetterBiConsumers.put("actionIds", (BiConsumer<ResourcePermission, Long>)ResourcePermission::setActionIds);
+		attributeGetterFunctions.put("viewActionId", ResourcePermission::getViewActionId);
+		attributeSetterBiConsumers.put("viewActionId", (BiConsumer<ResourcePermission, Boolean>)ResourcePermission::setViewActionId);
 
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
-		}
-
-		String name = (String)attributes.get("name");
-
-		if (name != null) {
-			setName(name);
-		}
-
-		Integer scope = (Integer)attributes.get("scope");
-
-		if (scope != null) {
-			setScope(scope);
-		}
-
-		String primKey = (String)attributes.get("primKey");
-
-		if (primKey != null) {
-			setPrimKey(primKey);
-		}
-
-		Long primKeyId = (Long)attributes.get("primKeyId");
-
-		if (primKeyId != null) {
-			setPrimKeyId(primKeyId);
-		}
-
-		Long roleId = (Long)attributes.get("roleId");
-
-		if (roleId != null) {
-			setRoleId(roleId);
-		}
-
-		Long ownerId = (Long)attributes.get("ownerId");
-
-		if (ownerId != null) {
-			setOwnerId(ownerId);
-		}
-
-		Long actionIds = (Long)attributes.get("actionIds");
-
-		if (actionIds != null) {
-			setActionIds(actionIds);
-		}
-
-		Boolean viewActionId = (Boolean)attributes.get("viewActionId");
-
-		if (viewActionId != null) {
-			setViewActionId(viewActionId);
-		}
+		_attributeGetterFunctions = Collections.unmodifiableMap(attributeGetterFunctions);
+		_attributeSetterBiConsumers = Collections.unmodifiableMap((Map)attributeSetterBiConsumers);
 	}
 
 	@JSON
@@ -682,95 +639,6 @@ public class ResourcePermissionModelImpl extends BaseModelImpl<ResourcePermissio
 		resourcePermissionCacheModel.viewActionId = isViewActionId();
 
 		return resourcePermissionCacheModel;
-	}
-
-	@Override
-	public String toString() {
-		StringBundler sb = new StringBundler(23);
-
-		sb.append("{mvccVersion=");
-		sb.append(getMvccVersion());
-		sb.append(", resourcePermissionId=");
-		sb.append(getResourcePermissionId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
-		sb.append(", name=");
-		sb.append(getName());
-		sb.append(", scope=");
-		sb.append(getScope());
-		sb.append(", primKey=");
-		sb.append(getPrimKey());
-		sb.append(", primKeyId=");
-		sb.append(getPrimKeyId());
-		sb.append(", roleId=");
-		sb.append(getRoleId());
-		sb.append(", ownerId=");
-		sb.append(getOwnerId());
-		sb.append(", actionIds=");
-		sb.append(getActionIds());
-		sb.append(", viewActionId=");
-		sb.append(isViewActionId());
-		sb.append("}");
-
-		return sb.toString();
-	}
-
-	@Override
-	public String toXmlString() {
-		StringBundler sb = new StringBundler(37);
-
-		sb.append("<model><model-name>");
-		sb.append("com.liferay.portal.kernel.model.ResourcePermission");
-		sb.append("</model-name>");
-
-		sb.append(
-			"<column><column-name>mvccVersion</column-name><column-value><![CDATA[");
-		sb.append(getMvccVersion());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>resourcePermissionId</column-name><column-value><![CDATA[");
-		sb.append(getResourcePermissionId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>name</column-name><column-value><![CDATA[");
-		sb.append(getName());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>scope</column-name><column-value><![CDATA[");
-		sb.append(getScope());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>primKey</column-name><column-value><![CDATA[");
-		sb.append(getPrimKey());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>primKeyId</column-name><column-value><![CDATA[");
-		sb.append(getPrimKeyId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>roleId</column-name><column-value><![CDATA[");
-		sb.append(getRoleId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>ownerId</column-name><column-value><![CDATA[");
-		sb.append(getOwnerId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>actionIds</column-name><column-value><![CDATA[");
-		sb.append(getActionIds());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>viewActionId</column-name><column-value><![CDATA[");
-		sb.append(isViewActionId());
-		sb.append("]]></column-value></column>");
-
-		sb.append("</model>");
-
-		return sb.toString();
 	}
 
 	private static final ClassLoader _classLoader = ResourcePermission.class.getClassLoader();

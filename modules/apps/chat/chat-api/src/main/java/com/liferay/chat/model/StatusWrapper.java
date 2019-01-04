@@ -19,9 +19,6 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
-import java.util.HashMap;
-import java.util.Map;
-
 /**
  * <p>
  * This class is a wrapper for {@link Status}.
@@ -36,73 +33,6 @@ public class StatusWrapper extends BaseModelWrapper<Status> implements Status,
 	ModelWrapper<Status> {
 	public StatusWrapper(Status status) {
 		super(status);
-	}
-
-	@Override
-	public Map<String, Object> getModelAttributes() {
-		Map<String, Object> attributes = new HashMap<String, Object>();
-
-		attributes.put("statusId", getStatusId());
-		attributes.put("userId", getUserId());
-		attributes.put("modifiedDate", getModifiedDate());
-		attributes.put("online", isOnline());
-		attributes.put("awake", isAwake());
-		attributes.put("activePanelIds", getActivePanelIds());
-		attributes.put("message", getMessage());
-		attributes.put("playSound", isPlaySound());
-
-		return attributes;
-	}
-
-	@Override
-	public void setModelAttributes(Map<String, Object> attributes) {
-		Long statusId = (Long)attributes.get("statusId");
-
-		if (statusId != null) {
-			setStatusId(statusId);
-		}
-
-		Long userId = (Long)attributes.get("userId");
-
-		if (userId != null) {
-			setUserId(userId);
-		}
-
-		Long modifiedDate = (Long)attributes.get("modifiedDate");
-
-		if (modifiedDate != null) {
-			setModifiedDate(modifiedDate);
-		}
-
-		Boolean online = (Boolean)attributes.get("online");
-
-		if (online != null) {
-			setOnline(online);
-		}
-
-		Boolean awake = (Boolean)attributes.get("awake");
-
-		if (awake != null) {
-			setAwake(awake);
-		}
-
-		String activePanelIds = (String)attributes.get("activePanelIds");
-
-		if (activePanelIds != null) {
-			setActivePanelIds(activePanelIds);
-		}
-
-		String message = (String)attributes.get("message");
-
-		if (message != null) {
-			setMessage(message);
-		}
-
-		Boolean playSound = (Boolean)attributes.get("playSound");
-
-		if (playSound != null) {
-			setPlaySound(playSound);
-		}
 	}
 
 	/**

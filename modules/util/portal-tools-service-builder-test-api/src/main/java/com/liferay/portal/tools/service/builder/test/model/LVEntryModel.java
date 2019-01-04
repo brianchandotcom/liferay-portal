@@ -28,6 +28,8 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import java.io.Serializable;
 
 import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * The base model interface for the LVEntry service. Represents a row in the &quot;LVEntry&quot; database table, with each column mapped to a property of this class.
@@ -163,6 +165,10 @@ public interface LVEntryModel extends BaseModel<LVEntry>, MVCCModel,
 	public String getContentMapAsXML();
 
 	public Map<String, String> getLanguageIdToContentMap();
+
+	public Map<String, Function<LVEntry, Object>> getAttributeGetters();
+
+	public Map<String, BiConsumer<LVEntry, Object>> getAttributeSetters();
 
 	@Override
 	public boolean isNew();

@@ -19,9 +19,6 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
-import java.util.HashMap;
-import java.util.Map;
-
 /**
  * <p>
  * This class is a wrapper for {@link DLFileEntryMetadata}.
@@ -36,66 +33,6 @@ public class DLFileEntryMetadataWrapper extends BaseModelWrapper<DLFileEntryMeta
 	implements DLFileEntryMetadata, ModelWrapper<DLFileEntryMetadata> {
 	public DLFileEntryMetadataWrapper(DLFileEntryMetadata dlFileEntryMetadata) {
 		super(dlFileEntryMetadata);
-	}
-
-	@Override
-	public Map<String, Object> getModelAttributes() {
-		Map<String, Object> attributes = new HashMap<String, Object>();
-
-		attributes.put("uuid", getUuid());
-		attributes.put("fileEntryMetadataId", getFileEntryMetadataId());
-		attributes.put("companyId", getCompanyId());
-		attributes.put("DDMStorageId", getDDMStorageId());
-		attributes.put("DDMStructureId", getDDMStructureId());
-		attributes.put("fileEntryId", getFileEntryId());
-		attributes.put("fileVersionId", getFileVersionId());
-
-		return attributes;
-	}
-
-	@Override
-	public void setModelAttributes(Map<String, Object> attributes) {
-		String uuid = (String)attributes.get("uuid");
-
-		if (uuid != null) {
-			setUuid(uuid);
-		}
-
-		Long fileEntryMetadataId = (Long)attributes.get("fileEntryMetadataId");
-
-		if (fileEntryMetadataId != null) {
-			setFileEntryMetadataId(fileEntryMetadataId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
-		}
-
-		Long DDMStorageId = (Long)attributes.get("DDMStorageId");
-
-		if (DDMStorageId != null) {
-			setDDMStorageId(DDMStorageId);
-		}
-
-		Long DDMStructureId = (Long)attributes.get("DDMStructureId");
-
-		if (DDMStructureId != null) {
-			setDDMStructureId(DDMStructureId);
-		}
-
-		Long fileEntryId = (Long)attributes.get("fileEntryId");
-
-		if (fileEntryId != null) {
-			setFileEntryId(fileEntryId);
-		}
-
-		Long fileVersionId = (Long)attributes.get("fileVersionId");
-
-		if (fileVersionId != null) {
-			setFileVersionId(fileVersionId);
-		}
 	}
 
 	/**

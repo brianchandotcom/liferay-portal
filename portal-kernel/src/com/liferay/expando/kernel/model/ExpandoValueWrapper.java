@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 import java.io.Serializable;
 
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -39,73 +38,6 @@ public class ExpandoValueWrapper extends BaseModelWrapper<ExpandoValue>
 	implements ExpandoValue, ModelWrapper<ExpandoValue> {
 	public ExpandoValueWrapper(ExpandoValue expandoValue) {
 		super(expandoValue);
-	}
-
-	@Override
-	public Map<String, Object> getModelAttributes() {
-		Map<String, Object> attributes = new HashMap<String, Object>();
-
-		attributes.put("valueId", getValueId());
-		attributes.put("companyId", getCompanyId());
-		attributes.put("tableId", getTableId());
-		attributes.put("columnId", getColumnId());
-		attributes.put("rowId", getRowId());
-		attributes.put("classNameId", getClassNameId());
-		attributes.put("classPK", getClassPK());
-		attributes.put("data", getData());
-
-		return attributes;
-	}
-
-	@Override
-	public void setModelAttributes(Map<String, Object> attributes) {
-		Long valueId = (Long)attributes.get("valueId");
-
-		if (valueId != null) {
-			setValueId(valueId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
-		}
-
-		Long tableId = (Long)attributes.get("tableId");
-
-		if (tableId != null) {
-			setTableId(tableId);
-		}
-
-		Long columnId = (Long)attributes.get("columnId");
-
-		if (columnId != null) {
-			setColumnId(columnId);
-		}
-
-		Long rowId = (Long)attributes.get("rowId");
-
-		if (rowId != null) {
-			setRowId(rowId);
-		}
-
-		Long classNameId = (Long)attributes.get("classNameId");
-
-		if (classNameId != null) {
-			setClassNameId(classNameId);
-		}
-
-		Long classPK = (Long)attributes.get("classPK");
-
-		if (classPK != null) {
-			setClassPK(classPK);
-		}
-
-		String data = (String)attributes.get("data");
-
-		if (data != null) {
-			setData(data);
-		}
 	}
 
 	@Override

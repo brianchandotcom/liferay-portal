@@ -19,8 +19,6 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 
-import com.liferay.petra.string.StringBundler;
-
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.CacheModel;
@@ -38,8 +36,12 @@ import java.io.Serializable;
 
 import java.sql.Types;
 
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * The base model implementation for the UserNotificationEvent service. Represents a row in the &quot;UserNotificationEvent&quot; database table, with each column mapped to a property of this class.
@@ -158,109 +160,53 @@ public class UserNotificationEventModelImpl extends BaseModelImpl<UserNotificati
 	}
 
 	@Override
-	public Map<String, Object> getModelAttributes() {
-		Map<String, Object> attributes = new HashMap<String, Object>();
-
-		attributes.put("mvccVersion", getMvccVersion());
-		attributes.put("uuid", getUuid());
-		attributes.put("userNotificationEventId", getUserNotificationEventId());
-		attributes.put("companyId", getCompanyId());
-		attributes.put("userId", getUserId());
-		attributes.put("type", getType());
-		attributes.put("timestamp", getTimestamp());
-		attributes.put("deliveryType", getDeliveryType());
-		attributes.put("deliverBy", getDeliverBy());
-		attributes.put("delivered", isDelivered());
-		attributes.put("payload", getPayload());
-		attributes.put("actionRequired", isActionRequired());
-		attributes.put("archived", isArchived());
-
-		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
-		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
-
-		return attributes;
+	public Map<String, Function<UserNotificationEvent, Object>> getAttributeGetterFunctions() {
+		return _attributeGetterFunctions;
 	}
 
 	@Override
-	public void setModelAttributes(Map<String, Object> attributes) {
-		Long mvccVersion = (Long)attributes.get("mvccVersion");
+	public Map<String, BiConsumer<UserNotificationEvent, Object>> getAttributeSetterBiConsumers() {
+		return _attributeSetterBiConsumers;
+	}
 
-		if (mvccVersion != null) {
-			setMvccVersion(mvccVersion);
-		}
+	private static final Map<String, Function<UserNotificationEvent, Object>> _attributeGetterFunctions;
+	private static final Map<String, BiConsumer<UserNotificationEvent, Object>> _attributeSetterBiConsumers;
 
-		String uuid = (String)attributes.get("uuid");
+	static {
+		Map<String, Function<UserNotificationEvent, Object>> attributeGetterFunctions =
+			new LinkedHashMap<String, Function<UserNotificationEvent, Object>>();
+		Map<String, BiConsumer<UserNotificationEvent, ?>> attributeSetterBiConsumers =
+			new LinkedHashMap<String, BiConsumer<UserNotificationEvent, ?>>();
 
-		if (uuid != null) {
-			setUuid(uuid);
-		}
+		attributeGetterFunctions.put("mvccVersion", UserNotificationEvent::getMvccVersion);
+		attributeSetterBiConsumers.put("mvccVersion", (BiConsumer<UserNotificationEvent, Long>)UserNotificationEvent::setMvccVersion);
+		attributeGetterFunctions.put("uuid", UserNotificationEvent::getUuid);
+		attributeSetterBiConsumers.put("uuid", (BiConsumer<UserNotificationEvent, String>)UserNotificationEvent::setUuid);
+		attributeGetterFunctions.put("userNotificationEventId", UserNotificationEvent::getUserNotificationEventId);
+		attributeSetterBiConsumers.put("userNotificationEventId", (BiConsumer<UserNotificationEvent, Long>)UserNotificationEvent::setUserNotificationEventId);
+		attributeGetterFunctions.put("companyId", UserNotificationEvent::getCompanyId);
+		attributeSetterBiConsumers.put("companyId", (BiConsumer<UserNotificationEvent, Long>)UserNotificationEvent::setCompanyId);
+		attributeGetterFunctions.put("userId", UserNotificationEvent::getUserId);
+		attributeSetterBiConsumers.put("userId", (BiConsumer<UserNotificationEvent, Long>)UserNotificationEvent::setUserId);
+		attributeGetterFunctions.put("type", UserNotificationEvent::getType);
+		attributeSetterBiConsumers.put("type", (BiConsumer<UserNotificationEvent, String>)UserNotificationEvent::setType);
+		attributeGetterFunctions.put("timestamp", UserNotificationEvent::getTimestamp);
+		attributeSetterBiConsumers.put("timestamp", (BiConsumer<UserNotificationEvent, Long>)UserNotificationEvent::setTimestamp);
+		attributeGetterFunctions.put("deliveryType", UserNotificationEvent::getDeliveryType);
+		attributeSetterBiConsumers.put("deliveryType", (BiConsumer<UserNotificationEvent, Integer>)UserNotificationEvent::setDeliveryType);
+		attributeGetterFunctions.put("deliverBy", UserNotificationEvent::getDeliverBy);
+		attributeSetterBiConsumers.put("deliverBy", (BiConsumer<UserNotificationEvent, Long>)UserNotificationEvent::setDeliverBy);
+		attributeGetterFunctions.put("delivered", UserNotificationEvent::getDelivered);
+		attributeSetterBiConsumers.put("delivered", (BiConsumer<UserNotificationEvent, Boolean>)UserNotificationEvent::setDelivered);
+		attributeGetterFunctions.put("payload", UserNotificationEvent::getPayload);
+		attributeSetterBiConsumers.put("payload", (BiConsumer<UserNotificationEvent, String>)UserNotificationEvent::setPayload);
+		attributeGetterFunctions.put("actionRequired", UserNotificationEvent::getActionRequired);
+		attributeSetterBiConsumers.put("actionRequired", (BiConsumer<UserNotificationEvent, Boolean>)UserNotificationEvent::setActionRequired);
+		attributeGetterFunctions.put("archived", UserNotificationEvent::getArchived);
+		attributeSetterBiConsumers.put("archived", (BiConsumer<UserNotificationEvent, Boolean>)UserNotificationEvent::setArchived);
 
-		Long userNotificationEventId = (Long)attributes.get(
-				"userNotificationEventId");
-
-		if (userNotificationEventId != null) {
-			setUserNotificationEventId(userNotificationEventId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
-		}
-
-		Long userId = (Long)attributes.get("userId");
-
-		if (userId != null) {
-			setUserId(userId);
-		}
-
-		String type = (String)attributes.get("type");
-
-		if (type != null) {
-			setType(type);
-		}
-
-		Long timestamp = (Long)attributes.get("timestamp");
-
-		if (timestamp != null) {
-			setTimestamp(timestamp);
-		}
-
-		Integer deliveryType = (Integer)attributes.get("deliveryType");
-
-		if (deliveryType != null) {
-			setDeliveryType(deliveryType);
-		}
-
-		Long deliverBy = (Long)attributes.get("deliverBy");
-
-		if (deliverBy != null) {
-			setDeliverBy(deliverBy);
-		}
-
-		Boolean delivered = (Boolean)attributes.get("delivered");
-
-		if (delivered != null) {
-			setDelivered(delivered);
-		}
-
-		String payload = (String)attributes.get("payload");
-
-		if (payload != null) {
-			setPayload(payload);
-		}
-
-		Boolean actionRequired = (Boolean)attributes.get("actionRequired");
-
-		if (actionRequired != null) {
-			setActionRequired(actionRequired);
-		}
-
-		Boolean archived = (Boolean)attributes.get("archived");
-
-		if (archived != null) {
-			setArchived(archived);
-		}
+		_attributeGetterFunctions = Collections.unmodifiableMap(attributeGetterFunctions);
+		_attributeSetterBiConsumers = Collections.unmodifiableMap((Map)attributeSetterBiConsumers);
 	}
 
 	@Override
@@ -727,107 +673,6 @@ public class UserNotificationEventModelImpl extends BaseModelImpl<UserNotificati
 		userNotificationEventCacheModel.archived = isArchived();
 
 		return userNotificationEventCacheModel;
-	}
-
-	@Override
-	public String toString() {
-		StringBundler sb = new StringBundler(27);
-
-		sb.append("{mvccVersion=");
-		sb.append(getMvccVersion());
-		sb.append(", uuid=");
-		sb.append(getUuid());
-		sb.append(", userNotificationEventId=");
-		sb.append(getUserNotificationEventId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
-		sb.append(", userId=");
-		sb.append(getUserId());
-		sb.append(", type=");
-		sb.append(getType());
-		sb.append(", timestamp=");
-		sb.append(getTimestamp());
-		sb.append(", deliveryType=");
-		sb.append(getDeliveryType());
-		sb.append(", deliverBy=");
-		sb.append(getDeliverBy());
-		sb.append(", delivered=");
-		sb.append(isDelivered());
-		sb.append(", payload=");
-		sb.append(getPayload());
-		sb.append(", actionRequired=");
-		sb.append(isActionRequired());
-		sb.append(", archived=");
-		sb.append(isArchived());
-		sb.append("}");
-
-		return sb.toString();
-	}
-
-	@Override
-	public String toXmlString() {
-		StringBundler sb = new StringBundler(43);
-
-		sb.append("<model><model-name>");
-		sb.append("com.liferay.portal.kernel.model.UserNotificationEvent");
-		sb.append("</model-name>");
-
-		sb.append(
-			"<column><column-name>mvccVersion</column-name><column-value><![CDATA[");
-		sb.append(getMvccVersion());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>uuid</column-name><column-value><![CDATA[");
-		sb.append(getUuid());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userNotificationEventId</column-name><column-value><![CDATA[");
-		sb.append(getUserNotificationEventId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>userId</column-name><column-value><![CDATA[");
-		sb.append(getUserId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>type</column-name><column-value><![CDATA[");
-		sb.append(getType());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>timestamp</column-name><column-value><![CDATA[");
-		sb.append(getTimestamp());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>deliveryType</column-name><column-value><![CDATA[");
-		sb.append(getDeliveryType());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>deliverBy</column-name><column-value><![CDATA[");
-		sb.append(getDeliverBy());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>delivered</column-name><column-value><![CDATA[");
-		sb.append(isDelivered());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>payload</column-name><column-value><![CDATA[");
-		sb.append(getPayload());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>actionRequired</column-name><column-value><![CDATA[");
-		sb.append(isActionRequired());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>archived</column-name><column-value><![CDATA[");
-		sb.append(isArchived());
-		sb.append("]]></column-value></column>");
-
-		sb.append("</model>");
-
-		return sb.toString();
 	}
 
 	private static final ClassLoader _classLoader = UserNotificationEvent.class.getClassLoader();

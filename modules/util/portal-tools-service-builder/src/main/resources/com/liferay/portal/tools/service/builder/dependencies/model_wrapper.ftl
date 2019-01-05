@@ -113,7 +113,7 @@ public class ${entity.name}Wrapper
 	<#list methods as method>
 		<#assign parameters = method.parameters />
 
-		<#if !method.isStatic() && method.isPublic() && !(stringUtil.equals(method.name, "equals") && (parameters?size == 1))>
+		<#if !method.isStatic() && method.isPublic() && !(serviceBuilder.isVersionLTE_7_1_0() && !stringUtil.equals(method.name, "equals") && (parameters?size == 1))>
 			<#if stringUtil.equals(method.name, "getStagedModelType")>
 				<#assign hasGetStagedModelTypeMethod = true />
 			</#if>

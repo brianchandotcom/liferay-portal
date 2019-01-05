@@ -175,6 +175,17 @@ public class PortletWrapper extends BaseModelWrapper<Portlet> implements Portlet
 	}
 
 	/**
+	* Checks whether this portlet is equal to the specified object.
+	*
+	* @param obj the object to compare this portlet against
+	* @return <code>true</code> if the portlet is equal to the specified object
+	*/
+	@Override
+	public boolean equals(Object obj) {
+		return model.equals(obj);
+	}
+
+	/**
 	* Returns the action timeout of the portlet.
 	*
 	* @return the action timeout of the portlet

@@ -87,7 +87,7 @@
 </tr>
 <tr>
 	<td>ENTRY_LIST_WORKFLOW_STATUS</td>
-	<td>//li[contains(@data-title,'${key_webContentTitle}')]//span[@class='workflow-status']/span</td>
+	<td>//li[contains(@data-title,'${key_webContentTitle}')]//span[contains(@class,'label')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -108,7 +108,7 @@
 </tr>
 <tr>
 	<td>ENTRY_TABLE_WORKFLOW_STATUS</td>
-	<td>//tr[contains(.,'${key_webContentTitle}')]//span[@class='workflow-status']/strong</td>
+	<td>//tr[contains(.,'${key_webContentTitle}')]//span[contains(@class,'label')]</td>
 	<td></td>
 </tr>
 <tr>

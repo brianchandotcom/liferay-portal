@@ -1932,7 +1932,7 @@ definition {
 
 	macro viewStructureWithWorkflowCP {
 		WebContentNavigator.gotoViewStatus(
-			webContentStatus = "Pending",
+			webContentStatus = "PENDING",
 			webContentTitle = "${webContentTitle}"
 		);
 
@@ -2094,7 +2094,7 @@ definition {
 
 	macro viewWithWorkflowCP {
 		WebContentNavigator.gotoViewStatus(
-			webContentStatus = "Pending",
+			webContentStatus = "PENDING",
 			webContentTitle = "${webContentTitle}"
 		);
 

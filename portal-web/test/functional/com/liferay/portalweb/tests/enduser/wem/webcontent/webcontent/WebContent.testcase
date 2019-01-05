@@ -39,7 +39,7 @@ definition {
 		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		WebContentNavigator.gotoViewStatus(
-			webContentStatus = "Draft",
+			webContentStatus = "DRAFT",
 			webContentTitle = "WC WebContent Title"
 		);
 
@@ -707,7 +707,7 @@ definition {
 		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		WebContentNavigator.gotoViewStatus(
-			webContentStatus = "Draft",
+			webContentStatus = "DRAFT",
 			webContentTitle = "WC WebContent Title"
 		);
 

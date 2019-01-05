@@ -653,7 +653,7 @@ definition {
 		);
 
 		WebContentNavigator.gotoViewStatus(
-			webContentStatus = "Draft",
+			webContentStatus = "DRAFT",
 			webContentTitle = "Web Content Draft Title"
 		);
 
@@ -670,7 +670,7 @@ definition {
 		);
 
 		WebContentNavigator.gotoViewStatus(
-			webContentStatus = "Approved",
+			webContentStatus = "APPROVED",
 			webContentTitle = "Web Content Title"
 		);
 

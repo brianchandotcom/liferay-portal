@@ -601,7 +601,7 @@ definition {
 		);
 
 		WebContentNavigator.gotoViewStatus(
-			webContentStatus = "Draft",
+			webContentStatus = "DRAFT",
 			webContentTitle = "WC Webcontent Title"
 		);
 

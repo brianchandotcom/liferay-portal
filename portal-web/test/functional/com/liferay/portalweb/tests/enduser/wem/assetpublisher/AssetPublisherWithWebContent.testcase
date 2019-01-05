@@ -145,7 +145,6 @@ definition {
 		);
 
 		WebContent.deleteCP(
-			siteScopeName = "Global",
 			siteURLKey = "global",
 			webContentTitle = "WC WebContent Title Edit"
 		);
@@ -272,7 +271,6 @@ definition {
 		);
 
 		WebContent.deleteCP(
-			siteScopeName = "Global",
 			siteURLKey = "global",
 			webContentTitle = "WC WebContent Title Edit"
 		);

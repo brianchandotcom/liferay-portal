@@ -137,10 +137,8 @@ public class RebaseErrorTopLevelBuild extends TopLevelBuild {
 
 		tokens.add("tag: " + element.getName() + " text: " + element.getText());
 
-		List<?> elementObjects = element.elements();
-
-		for (Object childElementObject : elementObjects) {
-			tokens.addAll(getCommentTokens((Element)childElementObject));
+		for (Element childElement : element.elements()) {
+			tokens.addAll(getCommentTokens(childElement));
 		}
 
 		List<?> attributeObjects = element.attributes();

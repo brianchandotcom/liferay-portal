@@ -48,9 +48,7 @@ public class Dom4JUtil {
 
 		List<Element> elements = new ArrayList<>();
 
-		for (Object object : rootElement.elements()) {
-			Element childElement = (Element)object;
-
+		for (Element childElement : rootElement.elements()) {
 			rootElement.remove(childElement);
 
 			element.add(childElement);
@@ -246,16 +244,6 @@ public class Dom4JUtil {
 			"pre", null,
 			getNewElement(
 				"code", null, JenkinsResultsParserUtil.redact(content)));
-	}
-
-	public static List<Element> toElementList(List<?> objects) {
-		List<Element> elements = new ArrayList<>(objects.size());
-
-		for (Object object : objects) {
-			elements.add((Element)object);
-		}
-
-		return elements;
 	}
 
 }

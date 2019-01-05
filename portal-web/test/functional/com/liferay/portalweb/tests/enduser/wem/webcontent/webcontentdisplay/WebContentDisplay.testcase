@@ -1415,7 +1415,10 @@ definition {
 			portlet = "Web Content"
 		);
 
-		WebContent.deleteCP(webContentTitle = "WC WebContent Title");
+		WebContent.deleteCP(
+			siteURLKey = "test-site-name",
+			webContentTitle = "WC WebContent Title"
+		);
 
 		Navigator.gotoSitePage(
 			pageName = "Web Content Display Page",

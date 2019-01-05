@@ -1896,6 +1896,7 @@ definition {
 		);
 
 		WebContent.deleteCP(
+			siteURLKey = "guest",
 			webContentContent = "WC WebContent Content",
 			webContentTitle = "WC WebContent Title"
 		);

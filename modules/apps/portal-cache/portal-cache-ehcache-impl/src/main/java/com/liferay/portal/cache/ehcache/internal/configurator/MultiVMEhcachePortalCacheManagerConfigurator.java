@@ -168,11 +168,12 @@ public class MultiVMEhcachePortalCacheManagerConfigurator
 
 	@Override
 	protected PortalCacheConfiguration parseCacheListenerConfigurations(
-		CacheConfiguration cacheConfiguration, boolean usingDefault) {
+		CacheConfiguration cacheConfiguration, ClassLoader classLoader,
+		boolean usingDefault) {
 
 		PortalCacheConfiguration portalCacheConfiguration =
 			super.parseCacheListenerConfigurations(
-				cacheConfiguration, usingDefault);
+				cacheConfiguration, classLoader, usingDefault);
 
 		if (!clusterEnabled) {
 			return portalCacheConfiguration;

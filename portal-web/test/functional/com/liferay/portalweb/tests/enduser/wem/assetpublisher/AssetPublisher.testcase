@@ -20,6 +20,10 @@ definition {
 		Navigator.gotoPage(pageName = "Asset Publisher Page");
 
 		Portlet.addPG(portletName = "Asset Publisher");
+
+		AssetPublisherPortlet.configureAssetLinkBehaviorPG(
+			assetLinkBehavior = "Show Full Content"
+		);
 	}
 
 	tearDown {

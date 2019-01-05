@@ -991,6 +991,10 @@ definition {
 	macro viewAssetPublisher {
 		Navigator.gotoPage(pageName = "Asset Publisher");
 
+		AssetPublisherPortlet.configureAssetLinkBehaviorPG(
+			assetLinkBehavior = "Show Full Content"
+		);
+
 		AssertTextEquals.assertTextCaseInsensitive(
 			locator1 = "Portlet#TITLE",
 			value1 = "Asset Publisher",

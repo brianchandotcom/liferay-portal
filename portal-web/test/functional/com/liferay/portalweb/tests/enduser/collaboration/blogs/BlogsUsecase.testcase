@@ -1212,6 +1212,10 @@ definition {
 
 		Portlet.addPG(portletName = "Asset Publisher");
 
+		AssetPublisherPortlet.configureAssetLinkBehaviorPG(
+			assetLinkBehavior = "Show Full Content"
+		);
+
 		Navigator.gotoPage(pageName = "Blogs Page");
 
 		Portlet.addPG(portletName = "Blogs");
@@ -1326,6 +1330,10 @@ definition {
 		Navigator.gotoPage(pageName = "Asset Publisher Page");
 
 		Portlet.addPG(portletName = "Asset Publisher");
+
+		AssetPublisherPortlet.configureAssetLinkBehaviorPG(
+			assetLinkBehavior = "Show Full Content"
+		);
 
 		Navigator.gotoPage(pageName = "Asset Publisher Page");
 
@@ -2121,6 +2129,10 @@ definition {
 		Navigator.gotoPage(pageName = "Asset Publisher Page");
 
 		Portlet.addPG(portletName = "Asset Publisher");
+
+		AssetPublisherPortlet.configureAssetLinkBehaviorPG(
+			assetLinkBehavior = "Show Full Content"
+		);
 
 		Navigator.gotoPage(pageName = "Blogs Page");
 

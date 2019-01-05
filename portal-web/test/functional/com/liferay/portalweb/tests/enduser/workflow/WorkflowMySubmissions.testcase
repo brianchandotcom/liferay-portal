@@ -94,7 +94,7 @@ definition {
 		);
 
 		WebContentNavigator.gotoViewStatus(
-			webContentStatus = "Draft",
+			webContentStatus = "DRAFT",
 			webContentTitle = "WC WebContent Title"
 		);
 
@@ -165,7 +165,7 @@ definition {
 		);
 
 		WebContentNavigator.gotoViewStatus(
-			webContentStatus = "Draft",
+			webContentStatus = "DRAFT",
 			webContentTitle = "WC WebContent Title"
 		);
 
@@ -220,7 +220,7 @@ definition {
 		);
 
 		WebContentNavigator.gotoViewStatus(
-			webContentStatus = "Draft",
+			webContentStatus = "DRAFT",
 			webContentTitle = "WC WebContent Title"
 		);
 
@@ -276,7 +276,7 @@ definition {
 		);
 
 		WebContentNavigator.gotoViewStatus(
-			webContentStatus = "Draft",
+			webContentStatus = "DRAFT",
 			webContentTitle = "WC WebContent Title"
 		);
 

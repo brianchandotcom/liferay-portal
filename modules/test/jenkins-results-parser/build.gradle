@@ -8,9 +8,9 @@ dependencies {
 	compile group: "com.google.guava", name: "guava", version: "16.0.1"
 	compile group: "commons-codec", name: "commons-codec", version: "1.9"
 	compile group: "commons-lang", name: "commons-lang", version: "2.6"
-	compile group: "dom4j", name: "dom4j", version: "1.6.1"
 	compile group: "junit", name: "junit", version: "4.12"
 	compile group: "org.apache.ant", name: "ant", version: "1.9.4"
+	compile group: "org.dom4j", name: "dom4j", version: "2.0.2"
 	compile group: "org.json", name: "json", version: "20140107"
 }
 

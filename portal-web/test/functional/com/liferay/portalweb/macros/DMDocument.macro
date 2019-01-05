@@ -1201,6 +1201,8 @@ definition {
 
 		Button.clickShare();
 
+		SelectFrame(value1 = "relative=top");
+
 		Alert.viewSuccessMessageText(
 			successMessage = "The item was shared successfully."
 		);

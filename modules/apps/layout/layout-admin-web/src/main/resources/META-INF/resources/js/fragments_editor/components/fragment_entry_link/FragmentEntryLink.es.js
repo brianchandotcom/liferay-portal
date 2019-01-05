@@ -32,9 +32,10 @@ class FragmentEntryLink extends Component {
 
 	/**
 	 * Callback executed when a fragment is clicked
+	 * @param {object} event
 	 * @private
 	 */
-	_handleFragmentClick() {
+	_handleFragmentClick(event) {
 		event.stopPropagation();
 
 		this.store.dispatchAction(
@@ -101,9 +102,10 @@ class FragmentEntryLink extends Component {
 
 	/**
 	 * Callback executed when the fragment remove button is clicked.
+	 * @param {object} event
 	 * @private
 	 */
-	_handleFragmentRemoveButtonClick() {
+	_handleFragmentRemoveButtonClick(event) {
 		event.stopPropagation();
 
 		this.store

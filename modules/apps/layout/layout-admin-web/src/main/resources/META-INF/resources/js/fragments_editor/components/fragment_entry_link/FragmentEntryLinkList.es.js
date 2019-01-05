@@ -433,9 +433,10 @@ class FragmentEntryLinkList extends Component {
 
 	/**
 	 * Callback executed when the remove section button is clicked
+	 * @param {object} event
 	 * @private
 	 */
-	_handleSectionRemoveButtonClick() {
+	_handleSectionRemoveButtonClick(event) {
 		event.stopPropagation();
 
 		this.store

@@ -14,7 +14,6 @@
 
 package com.liferay.document.library.kernel.service;
 
-
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
@@ -25,13 +24,19 @@ import com.liferay.registry.ServiceTracker;
  */
 public class DLFileEntryPreviewHandlerUtil {
 
-	public static void addSuccessDLFileEntryPreview(
-			long fileEntryId, long fileVersionId)
+	public static void addDLFileEntryPreview(
+			long fileEntryId, long fileVersionId,
+			DLFileEntryPreviewHandler.DLFileEntryPreviewType
+				fileEntryPreviewType)
 		throws PortalException {
 
-		addDLFileEntryPreview(
-			fileEntryId, fileVersionId,
-			DLFileEntryPreviewHandler.DLFileEntryPreviewType.SUCCESS);
+		DLFileEntryPreviewHandler dlFileEntryPreviewHandler =
+			getDLFileEntryPreviewHandler();
+
+		if (dlFileEntryPreviewHandler != null) {
+			dlFileEntryPreviewHandler.addDLFileEntryPreview(
+				fileEntryId, fileVersionId, fileEntryPreviewType);
+		}
 	}
 
 	public static void addFailDLFileEntryPreview(
@@ -44,25 +49,21 @@ public class DLFileEntryPreviewHandlerUtil {
 	}
 
 	public static void addNotGeneratedDLFileEntryPreview(
-		long fileEntryId, long fileVersionId) throws PortalException {
+			long fileEntryId, long fileVersionId)
+		throws PortalException {
 
 		addDLFileEntryPreview(
 			fileEntryId, fileVersionId,
 			DLFileEntryPreviewHandler.DLFileEntryPreviewType.NOT_GENERATED);
 	}
 
-	public static void addDLFileEntryPreview(
-			long fileEntryId, long fileVersionId,
-			DLFileEntryPreviewHandler.DLFileEntryPreviewType fileEntryPreviewType)
+	public static void addSuccessDLFileEntryPreview(
+			long fileEntryId, long fileVersionId)
 		throws PortalException {
 
-		DLFileEntryPreviewHandler dlFileEntryPreviewHandler =
-			getDLFileEntryPreviewHandler();
-
-		if (dlFileEntryPreviewHandler != null) {
-			dlFileEntryPreviewHandler.addDLFileEntryPreview(
-				fileEntryId, fileVersionId, fileEntryPreviewType);
-		}
+		addDLFileEntryPreview(
+			fileEntryId, fileVersionId,
+			DLFileEntryPreviewHandler.DLFileEntryPreviewType.SUCCESS);
 	}
 
 	public static void deleteDLFileEntryPreviews(long fileEntryId)
@@ -93,7 +94,8 @@ public class DLFileEntryPreviewHandlerUtil {
 
 	public static long getDLFileEntryPreviewId(
 			long fileEntryId, long fileVersionId,
-			DLFileEntryPreviewHandler.DLFileEntryPreviewType fileEntryPreviewType)
+			DLFileEntryPreviewHandler.DLFileEntryPreviewType
+				fileEntryPreviewType)
 		throws PortalException {
 
 		DLFileEntryPreviewHandler dlFileEntryPreviewHandler =
@@ -107,9 +109,33 @@ public class DLFileEntryPreviewHandlerUtil {
 		return 0;
 	}
 
+	public static int getDLFileEntryPreviewType(
+		DLFileEntryPreviewHandler.DLFileEntryPreviewType fileEntryPreviewType) {
+
+		if (fileEntryPreviewType ==
+				DLFileEntryPreviewHandler.DLFileEntryPreviewType.FAIL) {
+
+			return -1;
+		}
+		else if (fileEntryPreviewType ==
+					DLFileEntryPreviewHandler.
+						DLFileEntryPreviewType.NOT_GENERATED) {
+
+			return 0;
+		}
+		else if (fileEntryPreviewType ==
+					DLFileEntryPreviewHandler.DLFileEntryPreviewType.SUCCESS) {
+
+			return 1;
+		}
+
+		return 0;
+	}
+
 	public static void updateDLFileEntryPreview(
 			long dlFileEntryPreviewId,
-			DLFileEntryPreviewHandler.DLFileEntryPreviewType fileEntryPreviewType)
+			DLFileEntryPreviewHandler.DLFileEntryPreviewType
+				fileEntryPreviewType)
 		throws PortalException {
 
 		DLFileEntryPreviewHandler dlFileEntryPreviewHandler =
@@ -119,28 +145,6 @@ public class DLFileEntryPreviewHandlerUtil {
 			dlFileEntryPreviewHandler.updateDLFileEntryPreview(
 				dlFileEntryPreviewId, fileEntryPreviewType);
 		}
-	}
-
-	public static int getDLFileEntryPreviewType(
-		DLFileEntryPreviewHandler.DLFileEntryPreviewType fileEntryPreviewType) {
-
-		if (fileEntryPreviewType ==
-			DLFileEntryPreviewHandler.DLFileEntryPreviewType.FAIL) {
-
-			return -1;
-		}
-		else if (fileEntryPreviewType ==
-				 DLFileEntryPreviewHandler.DLFileEntryPreviewType.NOT_GENERATED) {
-
-			return 0;
-		}
-		else if (fileEntryPreviewType ==
-				 DLFileEntryPreviewHandler.DLFileEntryPreviewType.SUCCESS) {
-
-			return 1;
-		}
-
-		return 0;
 	}
 
 	protected static DLFileEntryPreviewHandler getDLFileEntryPreviewHandler() {
@@ -159,6 +163,7 @@ public class DLFileEntryPreviewHandlerUtil {
 	private static final DLFileEntryPreviewHandlerUtil _instance =
 		new DLFileEntryPreviewHandlerUtil();
 
-	private final ServiceTracker<
-		DLFileEntryPreviewHandler, DLFileEntryPreviewHandler> _serviceTracker;
+	private final ServiceTracker
+		<DLFileEntryPreviewHandler, DLFileEntryPreviewHandler> _serviceTracker;
+
 }

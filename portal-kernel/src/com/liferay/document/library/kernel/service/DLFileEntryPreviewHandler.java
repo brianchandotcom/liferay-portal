@@ -32,15 +32,15 @@ public interface DLFileEntryPreviewHandler {
 	public long getDLFileEntryPreviewId(long fileEntryId, long fileVersionId)
 		throws PortalException;
 
+	public long getDLFileEntryPreviewId(
+			long fileEntryId, long fileVersionId,
+			DLFileEntryPreviewType fileEntryPreviewType)
+		throws PortalException;
+
 	public void updateDLFileEntryPreview(
 			long dlFileEntryPreviewId,
 			DLFileEntryPreviewType fileEntryPreviewType)
 		throws PortalException;
-
-	public long getDLFileEntryPreviewId(
-		long fileEntryId, long fileVersionId,
-		DLFileEntryPreviewType fileEntryPreviewType)
-			throws PortalException;
 
 	public enum DLFileEntryPreviewType {
 

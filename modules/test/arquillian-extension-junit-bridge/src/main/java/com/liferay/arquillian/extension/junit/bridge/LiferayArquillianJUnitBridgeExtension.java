@@ -46,11 +46,8 @@ public class LiferayArquillianJUnitBridgeExtension
 			"/arquillian.remote.marker");
 
 		if (url == null) {
-			extensionBuilder.override(
-				ApplicationArchiveProcessor.class,
-				com.liferay.arquillian.container.osgi.remote.processor.
-					OSGiAllInProcessor.class,
-				OSGiAllInProcessor.class);
+			extensionBuilder.service(
+				ApplicationArchiveProcessor.class, OSGiAllInProcessor.class);
 			extensionBuilder.override(
 				ApplicationArchiveProcessor.class,
 				OSGiApplicationArchiveProcessor.class,

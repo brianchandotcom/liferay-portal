@@ -93,6 +93,10 @@ public abstract class BaseFormApioTestBundleActivator
 		bundleContext.ungetService(_portalServiceReference);
 	}
 
+	protected DDMForm createDDMForm() {
+		return DDMFormFactory.create(getFormDefinitionClass());
+	}
+
 	protected abstract Class<?> getFormDefinitionClass();
 
 	protected abstract String getSiteName();
@@ -156,7 +160,7 @@ public abstract class BaseFormApioTestBundleActivator
 				FriendlyURLNormalizerUtil.normalize(siteName),
 			true, true, ServiceContextTestUtil.getServiceContext());
 
-		DDMForm ddmForm = DDMFormFactory.create(getFormDefinitionClass());
+		DDMForm ddmForm = createDDMForm();
 
 		DDMStructure ddmStructure = _addDDMStructure(_group, ddmForm);
 

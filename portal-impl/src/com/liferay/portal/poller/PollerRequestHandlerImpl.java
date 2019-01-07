@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.poller.PollerResponse;
 import com.liferay.portal.kernel.service.BrowserTrackerLocalServiceUtil;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -91,7 +92,9 @@ public class PollerRequestHandlerImpl
 			return null;
 		}
 
-		boolean receiveRequest = isReceiveRequest(request.getPathInfo());
+		String normalizedPath = HttpUtil.normalizePath(request.getPathInfo());
+
+		boolean receiveRequest = isReceiveRequest(normalizedPath);
 
 		String pollerSessionId = getPollerSessionId(pollerHeader);
 

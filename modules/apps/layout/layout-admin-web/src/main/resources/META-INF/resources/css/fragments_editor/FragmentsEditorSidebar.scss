@@ -24,7 +24,8 @@
 	&-section {
 		border-left: $sidebarLeftBorderWidth solid $sidebarLeftBorderColor;
 		height: 100vh;
-		position: fixed;
+		overflow-x: hidden;
+		overflow-y: scroll;
 		right: $sidebarButtonsWidth;
 		transform: translateX(0);
 		transition: transform ease $productMenuTransitionDuration;

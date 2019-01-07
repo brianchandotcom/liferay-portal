@@ -24,7 +24,7 @@ gradleTest {
 	dependsOn copyGradleTestDependencies
 	dependsOn jar
 
-	versions "4.10.2"
+	versions gradleVersion
 }
 
 pluginBundle {

@@ -84,5 +84,5 @@ gradleTest {
 
 	gradleArguments "--project-prop", "app.server.parent.dir=" + FileUtil.getAbsolutePath(copyBundle.destinationDir)
 
-	versions "4.10.2"
+	versions gradleVersion
 }

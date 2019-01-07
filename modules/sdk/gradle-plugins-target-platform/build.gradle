@@ -36,5 +36,5 @@ gradleTest {
 
 	deprecationMessagesAreFailures = false
 
-	versions "4.10.2"
+	versions gradleVersion
 }

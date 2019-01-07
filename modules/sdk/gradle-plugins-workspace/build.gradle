@@ -82,5 +82,5 @@ gradleTest {
 	gradleArguments "--project-prop", "liferay.workspace.bundle.url=${bundleUrl}"
 	gradleArguments "--project-prop", "pluginClasspathDir=${uri(jar.destinationDir)}"
 
-	versions "4.10.2"
+	versions gradleVersion
 }

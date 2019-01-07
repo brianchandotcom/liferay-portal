@@ -26,6 +26,7 @@ import java.util.List;
 import org.jboss.arquillian.core.api.annotation.Observes;
 import org.jboss.arquillian.core.spi.EventContext;
 import org.jboss.arquillian.test.spi.TestClass;
+import org.jboss.arquillian.test.spi.event.suite.SuiteEvent;
 import org.jboss.arquillian.test.spi.event.suite.Test;
 
 import org.junit.After;
@@ -118,6 +119,26 @@ public class JUnitBridgeObserver {
 		evaluateWithClassRule(
 			statement, junitTestClass, target,
 			Description.createSuiteDescription(clazz), firstMethod, lastMethod);
+	}
+
+	public void suiteEvent(@Observes EventContext<SuiteEvent> context) {
+		Thread currentThread = Thread.currentThread();
+
+		ClassLoader ctxLoader = currentThread.getContextClassLoader();
+
+		SuiteEvent suiteEvent = context.getEvent();
+
+		Class<? extends SuiteEvent> suiteEventClass = suiteEvent.getClass();
+
+		try {
+			currentThread.setContextClassLoader(
+				suiteEventClass.getClassLoader());
+
+			context.proceed();
+		}
+		finally {
+			currentThread.setContextClassLoader(ctxLoader);
+		}
 	}
 
 	protected void evaluateWithClassRule(

@@ -113,10 +113,9 @@ public class JSModulesContextResolver {
 
 				dependenciesMap.put(dependency, mappedModuleName);
 
-				if (!context.getResolvedModules().contains(mappedModuleName)) {
-
+				if (!context.processedModule(mappedModuleName)) {
+					context.addProcessedModule(mappedModuleName);
 					_processModule(mappedModuleName, context);
-
 					context.addResolvedModule(mappedModuleName);
 				}
 			}

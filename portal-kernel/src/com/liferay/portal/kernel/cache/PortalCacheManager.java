@@ -58,8 +58,17 @@ public interface PortalCacheManager<K extends Serializable, V> {
 
 	public boolean isClusterAware();
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 *             #reconfigurePortalCaches(URL, ClassLoader)}
+	 */
+	@Deprecated
 	@Proxy
 	public void reconfigurePortalCaches(URL configurationURL);
+
+	@Proxy
+	public void reconfigurePortalCaches(
+		URL configurationURL, ClassLoader classLoader);
 
 	public boolean registerPortalCacheManagerListener(
 		PortalCacheManagerListener portalCacheManagerListener);

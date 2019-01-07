@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.cache.PortalCacheManager;
 import com.liferay.portal.kernel.cache.configurator.PortalCacheConfiguratorSettings;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.AggregateClassLoader;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
@@ -77,14 +76,26 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 		return _cacheManager;
 	}
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 *             #reconfigurePortalCaches(URL, ClassLoader)}
+	 */
+	@Deprecated
 	@Override
 	public void reconfigurePortalCaches(URL configurationURL) {
+		reconfigurePortalCaches(configurationURL, null);
+	}
+
+	@Override
+	public void reconfigurePortalCaches(
+		URL configurationURL, ClassLoader classLoader) {
+
 		ObjectValuePair<Configuration, PortalCacheManagerConfiguration>
 			configurationObjectValuePair =
 				baseEhcachePortalCacheManagerConfigurator.
 					getConfigurationObjectValuePair(
 						getPortalCacheManagerName(), configurationURL,
-						_usingDefault);
+						classLoader, _usingDefault);
 
 		reconfigEhcache(configurationObjectValuePair.getKey());
 
@@ -346,28 +357,15 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 			return false;
 		}
 
-		Thread currentThread = Thread.currentThread();
-
-		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
-
-		currentThread.setContextClassLoader(
-			AggregateClassLoader.getAggregateClassLoader(
-				PortalClassLoaderUtil.getClassLoader(),
-				portalCacheConfiguratorSettings.getClassLoader()));
-
-		try {
-			if (_log.isInfoEnabled()) {
-				_log.info(
-					StringBundler.concat(
-						"Reconfiguring caches in cache manager ",
-						getPortalCacheManagerName(), " using ", url));
-			}
-
-			reconfigurePortalCaches(url);
+		if (_log.isInfoEnabled()) {
+			_log.info(
+				StringBundler.concat(
+					"Reconfiguring caches in cache manager ",
+					getPortalCacheManagerName(), " using ", url));
 		}
-		finally {
-			currentThread.setContextClassLoader(contextClassLoader);
-		}
+
+		reconfigurePortalCaches(
+			url, portalCacheConfiguratorSettings.getClassLoader());
 
 		return true;
 	}

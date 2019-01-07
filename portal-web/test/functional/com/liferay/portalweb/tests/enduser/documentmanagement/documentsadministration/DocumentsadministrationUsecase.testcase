@@ -828,6 +828,18 @@ definition {
 			portlet = "Server Administration"
 		);
 
+		ServerAdministration.configureExternalServices(installXuggler = "true");
+
+		Portlet.shutdownServer();
+
+		Portlet.startServer(deleteLiferayHome = "false");
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Server Administration"
+		);
+
 		ServerAdministration.configureExternalServices(enableXuggler = "true");
 
 		ProductMenu.gotoPortlet(

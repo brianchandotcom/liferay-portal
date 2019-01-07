@@ -49,6 +49,14 @@ definition {
 
 		ServerAdministration.configureExternalServices(enableXuggler = "true");
 
+		Portlet.shutdownServer();
+
+		Portlet.startServer(deleteLiferayHome = "false");
+
+		ServerAdministration.openServerAdmin();
+
+		ServerAdministration.configureExternalServices(enableXuggler = "true");
+
 		DMDocument.openDocumentsAndMediaAdmin(siteURLKey = "test-site-name");
 
 		DMDocument.addCP(
@@ -269,6 +277,14 @@ definition {
 		property dummy.socket.proxy.disabled = "true";
 		property test.name.skip.portal.instance = "WebContentDisplay#AddVideoViaWebContent";
 		property testray.component.names = "Web Content Administration";
+
+		ServerAdministration.openServerAdmin();
+
+		ServerAdministration.configureExternalServices(enableXuggler = "true");
+
+		Portlet.shutdownServer();
+
+		Portlet.startServer(deleteLiferayHome = "false");
 
 		ServerAdministration.openServerAdmin();
 

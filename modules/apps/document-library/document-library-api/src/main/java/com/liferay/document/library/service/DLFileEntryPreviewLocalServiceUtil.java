@@ -254,8 +254,7 @@ public class DLFileEntryPreviewLocalServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.document.library.model.DLFileEntryPreview> getDLFileEntryPreviews(
-		long fileEntryId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		long fileEntryId) {
 		return getService().getDLFileEntryPreviews(fileEntryId);
 	}
 

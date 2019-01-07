@@ -268,8 +268,7 @@ public class DLFileEntryPreviewLocalServiceWrapper
 
 	@Override
 	public java.util.List<com.liferay.document.library.model.DLFileEntryPreview> getDLFileEntryPreviews(
-		long fileEntryId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		long fileEntryId) {
 		return _dlFileEntryPreviewLocalService.getDLFileEntryPreviews(fileEntryId);
 	}
 

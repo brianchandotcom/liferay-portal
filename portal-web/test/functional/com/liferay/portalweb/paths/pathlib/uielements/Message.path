@@ -35,7 +35,7 @@
 </tr>
 <tr>
 	<td>EMPTY_INFO</td>
-	<td>//div[@class=' main-content-body']/div[contains(@class,'sheet')]/div[contains(@class,'sheet-text')]</td>
+	<td>//div[contains(@class,'main-content-body')]/div[contains(@class,'sheet')]/div[contains(@class,'sheet-text')]</td>
 	<td></td>
 </tr>
 <tr>

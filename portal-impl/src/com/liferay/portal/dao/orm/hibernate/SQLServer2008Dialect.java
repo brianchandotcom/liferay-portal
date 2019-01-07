@@ -16,6 +16,8 @@ package com.liferay.portal.dao.orm.hibernate;
 
 import java.sql.Types;
 
+import org.hibernate.type.StandardBasicTypes;
+
 /**
  * @author Minhchau Dang
  */
@@ -23,7 +25,8 @@ public class SQLServer2008Dialect
 	extends org.hibernate.dialect.SQLServer2008Dialect {
 
 	public SQLServer2008Dialect() {
-		registerHibernateType(Types.NVARCHAR, "string" );
+		registerHibernateType(
+			Types.NVARCHAR, StandardBasicTypes.STRING.getName());
 	}
 
 	@Override

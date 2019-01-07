@@ -15,9 +15,14 @@
 package com.liferay.arquillian.extension.junit.bridge.container.remote;
 
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
-import org.jboss.arquillian.container.osgi.karaf.remote.KarafRemoteDeployableContainer;
+import javax.management.MBeanServerConnection;
+import javax.management.ObjectName;
+
+import org.jboss.arquillian.container.osgi.jmx.JMXDeployableContainer;
 import org.jboss.arquillian.container.spi.client.container.DeploymentException;
+import org.jboss.arquillian.container.spi.client.container.LifecycleException;
 import org.jboss.arquillian.container.spi.client.protocol.metadata.HTTPContext;
 import org.jboss.arquillian.container.spi.client.protocol.metadata.ProtocolMetaData;
 import org.jboss.arquillian.core.api.Instance;
@@ -26,12 +31,16 @@ import org.jboss.arquillian.core.api.annotation.ApplicationScoped;
 import org.jboss.arquillian.core.api.annotation.Inject;
 import org.jboss.shrinkwrap.api.Archive;
 
+import org.osgi.jmx.framework.BundleStateMBean;
+import org.osgi.jmx.framework.FrameworkMBean;
+import org.osgi.jmx.framework.ServiceStateMBean;
+
 /**
  * @author Preston Crary
  */
 public class LiferayRemoteDeployableContainer
 	<T extends LiferayRemoteContainerConfiguration>
-		extends KarafRemoteDeployableContainer<T> {
+		extends JMXDeployableContainer<T> {
 
 	@Override
 	public ProtocolMetaData deploy(Archive<?> archive)
@@ -61,6 +70,54 @@ public class LiferayRemoteDeployableContainer
 		configurationInstanceProducer.set(config);
 
 		super.setup(config);
+	}
+
+	@Override
+	public void start() throws LifecycleException {
+		MBeanServerConnection mBeanServer = null;
+
+		try {
+			mBeanServer = getMBeanServerConnection(30, TimeUnit.SECONDS);
+
+			mbeanServerInstance.set(mBeanServer);
+		}
+		catch (TimeoutException te) {
+			throw new LifecycleException(
+				"Error connecting to Karaf MBeanServer: ", te);
+		}
+
+		try {
+			ObjectName objectName = new ObjectName(
+				"osgi.core:type=framework,*");
+
+			frameworkMBean = getMBeanProxy(
+				mBeanServer, objectName, FrameworkMBean.class, 30,
+				TimeUnit.SECONDS);
+
+			objectName = new ObjectName("osgi.core:type=bundleState,*");
+
+			bundleStateMBean = getMBeanProxy(
+				mBeanServer, objectName, BundleStateMBean.class, 30,
+				TimeUnit.SECONDS);
+
+			objectName = new ObjectName("osgi.core:type=serviceState,*");
+
+			serviceStateMBean = getMBeanProxy(
+				mBeanServer, objectName, ServiceStateMBean.class, 30,
+				TimeUnit.SECONDS);
+
+			installArquillianBundle();
+
+			awaitArquillianBundleActive(30, TimeUnit.SECONDS);
+
+			awaitBootstrapCompleteServices();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new LifecycleException("Cannot start Karaf container", e);
+		}
 	}
 
 	@Override

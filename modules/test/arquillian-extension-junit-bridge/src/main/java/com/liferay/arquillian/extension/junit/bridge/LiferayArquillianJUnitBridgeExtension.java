@@ -29,7 +29,6 @@ import java.net.URL;
 
 import org.jboss.arquillian.container.osgi.DeploymentObserver;
 import org.jboss.arquillian.container.osgi.OSGiApplicationArchiveProcessor;
-import org.jboss.arquillian.container.osgi.karaf.remote.KarafRemoteDeployableContainer;
 import org.jboss.arquillian.container.spi.client.container.DeployableContainer;
 import org.jboss.arquillian.container.test.spi.RemoteLoadableExtension;
 import org.jboss.arquillian.container.test.spi.client.deployment.ApplicationArchiveProcessor;
@@ -78,8 +77,8 @@ public class LiferayArquillianJUnitBridgeExtension
 				BundleActivatorsManagerImpl.class);
 			extensionBuilder.service(
 				CommandService.class, JMXCommandService.class);
-			extensionBuilder.override(
-				DeployableContainer.class, KarafRemoteDeployableContainer.class,
+			extensionBuilder.service(
+				DeployableContainer.class,
 				LiferayRemoteDeployableContainer.class);
 			extensionBuilder.service(
 				DeploymentScenarioGenerator.class,

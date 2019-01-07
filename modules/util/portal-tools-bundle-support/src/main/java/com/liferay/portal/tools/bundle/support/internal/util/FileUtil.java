@@ -371,15 +371,17 @@ public class FileUtil {
 			SevenZArchiveEntry sevenZArchiveEntry = null;
 
 			while ((sevenZArchiveEntry = sevenZFile.getNextEntry()) != null) {
-				if (sevenZArchiveEntry.isDirectory()) {
-					continue;
-				}
-
 				Path destinationPath = Paths.get(sevenZArchiveEntry.getName());
 
 				destinationPath = destinationDirPath.resolve(
 					destinationPath.subpath(
 						stripComponents, destinationPath.getNameCount()));
+
+				if (sevenZArchiveEntry.isDirectory()) {
+					Files.createDirectories(destinationPath);
+
+					continue;
+				}
 
 				Files.createDirectories(destinationPath.getParent());
 
@@ -413,15 +415,17 @@ public class FileUtil {
 			while ((tarArchiveEntry =
 						tarArchiveInputStream.getNextTarEntry()) != null) {
 
-				if (tarArchiveEntry.isDirectory()) {
-					continue;
-				}
-
 				Path destinationPath = Paths.get(tarArchiveEntry.getName());
 
 				destinationPath = destinationDirPath.resolve(
 					destinationPath.subpath(
 						stripComponents, destinationPath.getNameCount()));
+
+				if (tarArchiveEntry.isDirectory()) {
+					Files.createDirectories(destinationPath);
+
+					continue;
+				}
 
 				Files.createDirectories(destinationPath.getParent());
 
@@ -445,6 +449,30 @@ public class FileUtil {
 			Files.walkFileTree(
 				fileSystem.getPath("/"),
 				new SimpleFileVisitor<Path>() {
+
+					@Override
+					public FileVisitResult preVisitDirectory(
+							Path path, BasicFileAttributes basicFileAttributes)
+						throws IOException {
+
+						if (path.getNameCount() == 0) {
+							return FileVisitResult.CONTINUE;
+						}
+
+						Path relativePath = path;
+
+						if (stripComponents < path.getNameCount()) {
+							relativePath = path.subpath(
+								stripComponents, path.getNameCount());
+						}
+
+						Path destinationPath = destinationDirPath.resolve(
+							relativePath.toString());
+
+						Files.createDirectories(destinationPath);
+
+						return FileVisitResult.CONTINUE;
+					}
 
 					@Override
 					public FileVisitResult visitFile(

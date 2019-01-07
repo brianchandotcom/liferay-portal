@@ -14,7 +14,7 @@
 
 package com.liferay.journal.terms.of.use.internal;
 
-import com.liferay.portal.kernel.util.TermsOfUseContentProvider;
+import com.liferay.portal.kernel.term.TermsOfUseContentProvider;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;

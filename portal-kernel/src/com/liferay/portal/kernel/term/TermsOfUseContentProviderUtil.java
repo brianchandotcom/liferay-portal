@@ -12,9 +12,11 @@
  * details.
  */
 
-package com.liferay.portal.kernel.util;
+package com.liferay.portal.kernel.term;
 
 import aQute.bnd.annotation.ProviderType;
+
+import com.liferay.portal.kernel.util.ServiceProxyFactory;
 
 /**
  * @author Eduardo García
@@ -28,7 +30,8 @@ public class TermsOfUseContentProviderUtil {
 
 	private static volatile TermsOfUseContentProvider
 		_termsOfUseContentProvider =
-			ServiceProxyFactory.newServiceTrackedInstance(TermsOfUseContentProvider.class,
+			ServiceProxyFactory.newServiceTrackedInstance(
+				TermsOfUseContentProvider.class,
 				TermsOfUseContentProviderUtil.class,
 				"_termsOfUseContentProvider", false, true);
 

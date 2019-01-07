@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.kernel.util;
+package com.liferay.portal.kernel.term;
 
 import aQute.bnd.annotation.ProviderType;
 

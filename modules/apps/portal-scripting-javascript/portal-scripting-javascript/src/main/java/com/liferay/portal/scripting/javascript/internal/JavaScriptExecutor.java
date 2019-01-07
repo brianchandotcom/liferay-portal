@@ -41,7 +41,8 @@ import org.osgi.service.component.annotations.Modified;
  * @deprecated As of Judson (7.1.x), with no direct replacement
  */
 @Component(
-	immediate = true,
+	configurationPid = "com.liferay.portal.scripting.javascript.configuration.JavaScriptExecutorConfiguration",
+	configurationPolicy = ConfigurationPolicy.OPTIONAL, immediate = true,
 	property = "scripting.language=" + JavaScriptExecutor.LANGUAGE,
 	service = ScriptingExecutor.class
 )

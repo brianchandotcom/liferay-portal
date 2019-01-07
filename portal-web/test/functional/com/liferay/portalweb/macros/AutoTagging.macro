@@ -10,15 +10,90 @@ definition {
 	}
 
 	macro disableAutoTagging {
-		Check(locator1 = "Checkbox#ENABLE_AUTO_TAGGING");
+		if ("${disableAutoTaggingFor}" == "System Settings") {
+			ProductMenu.gotoPortlet(
+				category = "Configuration",
+				panel = "Control Panel",
+				portlet = "System Settings"
+			);
+
+			SystemSettings.gotoConfiguration(
+				configurationCategory = "Assets",
+				configurationName = "Asset Auto Tagging",
+				configurationScope = "System Scope"
+			);
+
+			FormFields.disableCheckbox(fieldName = "enabled");
+
+		}
+
+		else if ("${disableAutoTaggingFor}" == "Instance Settings") {
+			ProductMenu.gotoPortlet(
+				category = "Configuration",
+				panel = "Control Panel",
+				portlet = "Instance Settings"
+			);
+
+			Navigator.gotoNavTab(navTab = "Asset Auto Tagging");
+			
+			Uncheck(locator1 = "Checkbox#ENABLE_AUTO_TAGGING");
+		}
+
+		else if ("${disableAutoTaggingFor}" == "Site Settings") {
+			ProductMenu.gotoPortlet(
+				category = "Configuration",
+				panel = "Site Administration",
+				portlet = "Site Settings"
+			);
+
+			Panel.expandPanel(panel = "Asset Auto Tagging");
+
+			Uncheck.uncheckToggleSwitch(locator1 = "Checkbox#ENABLE_AUTO_TAGGING");
+		}
 
 		PortletEntry.update();
-
-		Alert.viewSuccessMessage();
 	}
 
 	macro enableAutoTagging {
-		FormFields.enableCheckbox(fieldName = "enabled");
+		if ("${enableAutoTaggingFor}" == "System Settings") {
+			ProductMenu.gotoPortlet(
+				category = "Configuration",
+				panel = "Control Panel",
+				portlet = "System Settings"
+			);
+
+			SystemSettings.gotoConfiguration(
+				configurationCategory = "Assets",
+				configurationName = "Asset Auto Tagging",
+				configurationScope = "System Scope"
+			);
+
+			FormFields.enableCheckbox(fieldName = "enabled");
+		}
+		
+		else if ("${enableAutoTaggingFor}" == "Instance Settings") {
+			ProductMenu.gotoPortlet(
+				category = "Configuration",
+				panel = "Control Panel",
+				portlet = "Instance Settings"
+			);
+
+			Navigator.gotoNavTab(navTab = "Asset Auto Tagging");
+
+			Check(locator1 = "Checkbox#ENABLE_AUTO_TAGGING");
+		}
+
+		else if ("${enableAutoTaggingFor}" == "Site Settings") {
+			ProductMenu.gotoPortlet(
+				category = "Configuration",
+				panel = "Site Administration",
+				portlet = "Site Settings"
+			);
+
+			Panel.expandPanel(panel = "Asset Auto Tagging");
+
+			Check.checkToggleSwitch(locator1 = "Checkbox#ENABLE_AUTO_TAGGING");
+		}
 
 		PortletEntry.save();
 	}

@@ -9,19 +9,9 @@ definition {
 
 		User.firstLoginPG();
 
-		ProductMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "System Settings"
+		AutoTagging.enableAutoTagging(
+			enableAutoTaggingFor = "System Settings"
 		);
-
-		SystemSettings.gotoConfiguration(
-			configurationCategory = "Assets",
-			configurationName = "Asset Auto Tagging",
-			configurationScope = "System Scope"
-		);
-
-		AutoTagging.enableAutoTagging();
 	}
 
 	tearDown {
@@ -59,15 +49,7 @@ definition {
 
 		Site.addBlankCP(siteName = "Site Disabled");
 
-		ProductMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Instance Settings"
-		);
-
-		Navigator.gotoNavTab(navTab = "Asset Auto Tagging");
-
-		AutoTagging.disableAutoTagging();
+		AutoTagging.disableAutoTagging(disableAutoTaggingFor = "Site Settings");
 
 		Navigator.openSiteURL(siteName = "Site Enabled");
 

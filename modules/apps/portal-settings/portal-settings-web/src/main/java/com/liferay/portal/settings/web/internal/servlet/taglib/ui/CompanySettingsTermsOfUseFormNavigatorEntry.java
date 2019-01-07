@@ -16,8 +16,14 @@ package com.liferay.portal.settings.web.internal.servlet.taglib.ui;
 
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorConstants;
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorEntry;
+import com.liferay.portal.kernel.term.TermsOfUseContentProvider;
+import com.liferay.portal.settings.web.internal.constants.PortalSettingsWebKeys;
+
+import java.io.IOException;
 
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -45,6 +51,18 @@ public class CompanySettingsTermsOfUseFormNavigatorEntry
 	}
 
 	@Override
+	public void include(
+			HttpServletRequest request, HttpServletResponse response)
+		throws IOException {
+
+		request.setAttribute(
+			PortalSettingsWebKeys.TERMS_OF_USE_CONTENT_PROVIDER,
+			_termsOfUseContentProvider);
+
+		super.include(request, response);
+	}
+
+	@Override
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.portal.settings.web)",
 		unbind = "-"
@@ -57,5 +75,8 @@ public class CompanySettingsTermsOfUseFormNavigatorEntry
 	protected String getJspPath() {
 		return "/terms_of_use.jsp";
 	}
+
+	@Reference
+	private TermsOfUseContentProvider _termsOfUseContentProvider;
 
 }

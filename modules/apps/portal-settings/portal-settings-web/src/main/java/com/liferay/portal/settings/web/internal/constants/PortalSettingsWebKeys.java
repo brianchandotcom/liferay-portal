@@ -25,4 +25,7 @@ public interface PortalSettingsWebKeys {
 	public static final String AUTHENTICATION_TABS_NAMES =
 		"AUTHENTICATION_TABS_NAMES";
 
+	public static final String TERMS_OF_USE_CONTENT_PROVIDER =
+		"TERMS_OF_USE_CONTENT_PROVIDER";
+
 }

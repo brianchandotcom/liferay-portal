@@ -1,7 +1,23 @@
 import java.util.jar.Attributes
 import java.util.jar.JarFile
 
+import org.gradle.util.VersionNumber
+
 task writeReleases
+
+baseline {
+	onlyIf {
+		Properties properties = new Properties()
+
+		File bndBndFile = project.file("bnd.bnd")
+
+		bndBndFile.withInputStream {
+			properties.load it
+		}
+
+		return VersionNumber.parse(properties["Bundle-Version"]) > VersionNumber.parse("2.0.0")
+	}
+}
 
 classes {
 	dependsOn writeReleases

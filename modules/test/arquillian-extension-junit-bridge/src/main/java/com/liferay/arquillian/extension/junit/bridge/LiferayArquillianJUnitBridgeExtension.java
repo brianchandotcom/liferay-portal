@@ -27,6 +27,7 @@ import com.liferay.arquillian.extension.junit.bridge.remote.processor.OSGiAllInP
 
 import java.net.URL;
 
+import org.jboss.arquillian.container.osgi.DeploymentObserver;
 import org.jboss.arquillian.container.osgi.OSGiApplicationArchiveProcessor;
 import org.jboss.arquillian.container.osgi.karaf.remote.KarafRemoteDeployableContainer;
 import org.jboss.arquillian.container.spi.client.container.DeployableContainer;
@@ -65,6 +66,10 @@ public class LiferayArquillianJUnitBridgeExtension
 			extensionBuilder.service(
 				AuxiliaryArchiveAppender.class,
 				CommandServiceAuxiliaryAppender.class);
+			extensionBuilder.observer(DeploymentObserver.class);
+			extensionBuilder.service(
+				ApplicationArchiveProcessor.class,
+				OSGiApplicationArchiveProcessor.class);
 			extensionBuilder.override(
 				AuxiliaryArchiveAppender.class, JUnitDeploymentAppender.class,
 				JUnitBridgeAuxiliaryArchiveAppender.class);

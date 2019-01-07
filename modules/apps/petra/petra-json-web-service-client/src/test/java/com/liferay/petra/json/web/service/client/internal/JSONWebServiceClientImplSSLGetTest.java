@@ -130,6 +130,7 @@ public class JSONWebServiceClientImplSSLGetTest
 
 		KeyStore keyStore = keyStoreLoader.getKeystore(
 			"localhost.jks", "liferay");
+		System.setProperty("https.protocols", "TLSv1.1");
 
 		properties.put("keyStore", keyStore);
 

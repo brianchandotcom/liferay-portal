@@ -510,7 +510,10 @@ public class SourceFormatter {
 			return;
 		}
 
-		File file = new File(_getPortalDir(), "working.dir.properties");
+		File file = new File(
+			SourceFormatterUtil.getPortalDir(
+				_sourceFormatterArgs.getBaseDirName()),
+			"working.dir.properties");
 
 		if (!file.exists()) {
 			return;
@@ -609,18 +612,6 @@ public class SourceFormatter {
 		}
 
 		return pluginsInsideModulesDirectoryNames;
-	}
-
-	private File _getPortalDir() {
-		File portalImplDir = SourceFormatterUtil.getFile(
-			_sourceFormatterArgs.getBaseDirName(), "portal-impl",
-			ToolsUtil.PORTAL_MAX_DIR_LEVEL);
-
-		if (portalImplDir == null) {
-			return null;
-		}
-
-		return portalImplDir.getParentFile();
 	}
 
 	private String _getProjectPathPrefix() throws IOException {

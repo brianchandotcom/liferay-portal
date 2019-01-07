@@ -231,6 +231,17 @@ public class SourceFormatterUtil {
 		return null;
 	}
 
+	public static File getPortalDir(String baseDirName) {
+		File portalImplDir = getFile(
+			baseDirName, "portal-impl", ToolsUtil.PORTAL_MAX_DIR_LEVEL);
+
+		if (portalImplDir == null) {
+			return null;
+		}
+
+		return portalImplDir.getParentFile();
+	}
+
 	public static String getPropertyValue(
 		String attributeName, CheckType checkType, String checkName,
 		Map<String, Properties> propertiesMap) {

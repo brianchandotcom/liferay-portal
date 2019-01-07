@@ -147,7 +147,6 @@ definition {
 			dmDocumentTitle = "DM Document Title"
 		);
 
-
 		Navigator.gotoSitePage(
 			pageName = "Asset Publisher Page",
 			siteName = "Test Site Name"
@@ -668,7 +667,6 @@ definition {
 		AssetPublisherPortlet.configureAPSelectMoreThanOnePG(
 			selectContent = "Bookmarks Entry"
 		);
-
 
 		Navigator.gotoSitePage(
 			pageName = "Asset Publisher Page",

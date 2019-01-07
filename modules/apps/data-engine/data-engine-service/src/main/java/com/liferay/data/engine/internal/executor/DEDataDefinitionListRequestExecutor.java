@@ -14,7 +14,6 @@
 
 package com.liferay.data.engine.internal.executor;
 
-import com.liferay.data.engine.exception.DEDataDefinitionException;
 import com.liferay.data.engine.exception.DEDataDefinitionFieldsDeserializerException;
 import com.liferay.data.engine.internal.io.DEDataDefinitionFieldsDeserializerTracker;
 import com.liferay.data.engine.io.DEDataDefinitionFieldsDeserializer;
@@ -43,7 +42,7 @@ public class DEDataDefinitionListRequestExecutor {
 
 	public DEDataDefinitionListResponse execute(
 			DEDataDefinitionListRequest deDataDefinitionListRequest)
-		throws DEDataDefinitionException {
+		throws Exception {
 
 		List<DDMStructure> ddmStructures =
 			ddmStructureLocalService.getStructures(
@@ -51,16 +50,11 @@ public class DEDataDefinitionListRequestExecutor {
 
 		List<DEDataDefinition> deDataDefinitions = new ArrayList<>();
 
-		try {
-			for (DDMStructure ddmStructure : ddmStructures) {
-				deDataDefinitions.add(map(ddmStructure));
-			}
+		for (DDMStructure ddmStructure : ddmStructures) {
+			deDataDefinitions.add(map(ddmStructure));
+		}
 
-			return DEDataDefinitionListResponse.Builder.of(deDataDefinitions);
-		}
-		catch (Exception e) {
-			throw new DEDataDefinitionException(e);
-		}
+		return DEDataDefinitionListResponse.Builder.of(deDataDefinitions);
 	}
 
 	protected List<DEDataDefinitionField> deserialize(String content)

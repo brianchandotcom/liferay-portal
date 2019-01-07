@@ -14,12 +14,10 @@
 
 package com.liferay.data.engine.internal.executor;
 
-import com.liferay.data.engine.exception.DEDataDefinitionException;
 import com.liferay.data.engine.service.DEDataDefinitionDeleteRequest;
 import com.liferay.data.engine.service.DEDataDefinitionDeleteResponse;
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
 import com.liferay.dynamic.data.lists.service.DDLRecordSetLocalService;
-import com.liferay.dynamic.data.mapping.exception.NoSuchStructureException;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
@@ -38,26 +36,16 @@ public class DEDataDefinitionDeleteRequestExecutor {
 
 	public DEDataDefinitionDeleteResponse execute(
 			DEDataDefinitionDeleteRequest deDataDefinitionDeleteRequest)
-		throws DEDataDefinitionException {
+		throws Exception {
 
-		try {
-			long deDataDefinitionId =
-				deDataDefinitionDeleteRequest.getDEDataDefinitionId();
+		long deDataDefinitionId =
+			deDataDefinitionDeleteRequest.getDEDataDefinitionId();
 
-			deleteDDLRecordSet(deDataDefinitionId);
+		deleteDDLRecordSet(deDataDefinitionId);
 
-			ddmStructureLocalService.deleteDDMStructure(deDataDefinitionId);
+		ddmStructureLocalService.deleteDDMStructure(deDataDefinitionId);
 
-			return DEDataDefinitionDeleteResponse.Builder.of(
-				deDataDefinitionId);
-		}
-		catch (NoSuchStructureException nsse) {
-			throw new DEDataDefinitionException.NoSuchDataDefinition(
-				deDataDefinitionDeleteRequest.getDEDataDefinitionId(), nsse);
-		}
-		catch (Exception e) {
-			throw new DEDataDefinitionException(e);
-		}
+		return DEDataDefinitionDeleteResponse.Builder.of(deDataDefinitionId);
 	}
 
 	protected void deleteDDLRecordSet(long deDataDefinitionId) {

@@ -56,27 +56,10 @@ public class DEDataDefinitionServiceImpl implements DEDataDefinitionService {
 
 	@Override
 	public DEDataDefinitionCountResponse execute(
-			DEDataDefinitionCountRequest deDataDefinitionCountRequest)
-		throws DEDataDefinitionException {
+		DEDataDefinitionCountRequest deDataDefinitionCountRequest) {
 
-		try {
-			return deDataDefinitionCountRequestExecutor.execute(
-				deDataDefinitionCountRequest);
-		}
-		catch (DEDataDefinitionException dedde) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(dedde, dedde);
-			}
-
-			throw dedde;
-		}
-		catch (Exception e) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(e, e);
-			}
-
-			throw new DEDataDefinitionException(e);
-		}
+		return deDataDefinitionCountRequestExecutor.execute(
+			deDataDefinitionCountRequest);
 	}
 
 	@Override

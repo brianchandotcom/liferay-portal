@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.journal.change.tracking;
+package com.liferay.journal.change.tracking.configuration;
 
 import com.liferay.change.tracking.configuration.CTConfigurationRegistrar;
 import com.liferay.change.tracking.configuration.builder.CTConfigurationBuilder;

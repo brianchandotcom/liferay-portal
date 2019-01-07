@@ -35,6 +35,10 @@ public interface DEDataDefinitionService {
 			DEDataDefinitionGetRequest deDataDefinitionGetRequest)
 		throws DEDataDefinitionException;
 
+	public DEDataDefinitionListResponse execute(
+			DEDataDefinitionListRequest deDataDefinitionListRequest)
+		throws DEDataDefinitionException;
+
 	public DEDataDefinitionSaveResponse execute(
 			DEDataDefinitionSaveRequest deDataDefinitionSaveRequest)
 		throws DEDataDefinitionException;

@@ -30,6 +30,7 @@ import com.liferay.gradle.plugins.workspace.internal.configurators.TargetPlatfor
 import com.liferay.gradle.plugins.workspace.internal.util.FileUtil;
 import com.liferay.gradle.plugins.workspace.internal.util.GradleUtil;
 import com.liferay.gradle.plugins.workspace.tasks.CreateTokenTask;
+import com.liferay.gradle.plugins.workspace.tasks.InitBundleTask;
 import com.liferay.gradle.util.OSDetector;
 import com.liferay.gradle.util.Validator;
 import com.liferay.gradle.util.copy.StripPathSegmentsAction;
@@ -63,6 +64,7 @@ import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.Task;
 import org.gradle.api.artifacts.Configuration;
+import org.gradle.api.artifacts.DependencySet;
 import org.gradle.api.file.CopySpec;
 import org.gradle.api.file.DuplicatesStrategy;
 import org.gradle.api.file.FileCollection;
@@ -92,6 +94,9 @@ public class RootProjectConfigurator implements Plugin<Project> {
 	public static final String BUNDLE_CONFIGURATION_NAME = "bundle";
 
 	public static final String BUNDLE_GROUP = "bundle";
+
+	public static final String BUNDLE_SUPPORT_CONFIGURATION_NAME =
+		"bundleSupport";
 
 	public static final String CLEAN_TASK_NAME =
 		LifecycleBasePlugin.CLEAN_TASK_NAME;
@@ -161,6 +166,9 @@ public class RootProjectConfigurator implements Plugin<Project> {
 			GradleUtil.addDefaultRepositories(project);
 		}
 
+		Configuration bundleSupportConfiguration =
+			_addConfigurationBundleSupport(project);
+
 		final Configuration providedModulesConfiguration =
 			_addConfigurationProvidedModules(project);
 
@@ -189,7 +197,7 @@ public class RootProjectConfigurator implements Plugin<Project> {
 
 		_addTaskInitBundle(
 			project, downloadBundleTask, workspaceExtension,
-			providedModulesConfiguration);
+			providedModulesConfiguration, bundleSupportConfiguration);
 
 		Dockerfile dockerfile = _addTaskCreateDockerfile(
 			project, workspaceExtension);
@@ -214,6 +222,29 @@ public class RootProjectConfigurator implements Plugin<Project> {
 		_defaultRepositoryEnabled = defaultRepositoryEnabled;
 	}
 
+	private Configuration _addConfigurationBundleSupport(
+		final Project project) {
+
+		Configuration configuration = GradleUtil.addConfiguration(
+			project, BUNDLE_SUPPORT_CONFIGURATION_NAME);
+
+		configuration.defaultDependencies(
+			new Action<DependencySet>() {
+
+				@Override
+				public void execute(DependencySet dependencySet) {
+					_addDependenciesBundleSupport(project);
+				}
+
+			});
+
+		configuration.setDescription(
+			"Configures Liferay Bundle Support for this project.");
+		configuration.setVisible(false);
+
+		return configuration;
+	}
+
 	private Configuration _addConfigurationProvidedModules(Project project) {
 		Configuration configuration = GradleUtil.addConfiguration(
 			project, PROVIDED_MODULES_CONFIGURATION_NAME);
@@ -224,6 +255,12 @@ public class RootProjectConfigurator implements Plugin<Project> {
 		configuration.setVisible(true);
 
 		return configuration;
+	}
+
+	private void _addDependenciesBundleSupport(Project project) {
+		GradleUtil.addDependency(
+			project, BUNDLE_SUPPORT_CONFIGURATION_NAME, "com.liferay",
+			"com.liferay.portal.tools.bundle.support", "latest.release");
 	}
 
 	private DockerBuildImage _addTaskBuildDockerImage(
@@ -723,16 +760,48 @@ public class RootProjectConfigurator implements Plugin<Project> {
 		return download;
 	}
 
-	private Copy _addTaskInitBundle(
+	private InitBundleTask _addTaskInitBundle(
 		Project project, Download downloadBundleTask,
 		final WorkspaceExtension workspaceExtension,
-		Configuration configurationOsgiModules) {
+		Configuration configurationOsgiModules,
+		Configuration configurationBundleSupport) {
 
-		Copy copy = _addTaskCopyBundle(
-			project, INIT_BUNDLE_TASK_NAME, downloadBundleTask,
-			workspaceExtension, configurationOsgiModules);
+		InitBundleTask initBundleTask = GradleUtil.addTask(
+			project, INIT_BUNDLE_TASK_NAME, InitBundleTask.class);
 
-		copy.into(
+		initBundleTask.dependsOn(downloadBundleTask);
+
+		initBundleTask.setConfigsDir(
+			new Callable<File>() {
+
+				@Override
+				public File call() throws Exception {
+					return workspaceExtension.getConfigsDir();
+				}
+
+			});
+		initBundleTask.setDescription("Downloads and unzips the bundle.");
+		initBundleTask.setClasspath(configurationBundleSupport);
+		initBundleTask.setConfigEnvironment(
+			new Callable<String>() {
+
+				@Override
+				public String call() throws Exception {
+					return workspaceExtension.getEnvironment();
+				}
+
+			});
+		initBundleTask.setFile(
+			new Callable<File>() {
+
+				@Override
+				public File call() throws Exception {
+					return _getDownloadFile(downloadBundleTask);
+				}
+
+			});
+		initBundleTask.setGroup(BUNDLE_GROUP);
+		initBundleTask.setHomeDir(
 			new Callable<File>() {
 
 				@Override
@@ -741,11 +810,9 @@ public class RootProjectConfigurator implements Plugin<Project> {
 				}
 
 			});
+		initBundleTask.setProvidedModules(configurationOsgiModules);
 
-		copy.setDescription("Downloads and unzips the bundle.");
-		copy.setGroup(BUNDLE_GROUP);
-
-		return copy;
+		return initBundleTask;
 	}
 
 	private DockerLogsContainer _addTaskLogsDockerContainer(Project project) {
@@ -915,16 +982,9 @@ public class RootProjectConfigurator implements Plugin<Project> {
 
 				@Override
 				public FileCollection call() throws Exception {
-					File dir = download.getDest();
+					File file = _getDownloadFile(download);
 
-					URL url = (URL)download.getSrc();
-
-					String fileName = url.toString();
-
-					fileName = fileName.substring(
-						fileName.lastIndexOf('/') + 1);
-
-					File file = new File(dir, fileName);
+					String fileName = file.getName();
 
 					if (fileName.endsWith(".tar.gz")) {
 						return project.tarTree(file);
@@ -1022,6 +1082,20 @@ public class RootProjectConfigurator implements Plugin<Project> {
 				}
 
 			});
+	}
+
+	private File _getDownloadFile(Download download) {
+		File dir = download.getDest();
+
+		URL url = (URL)download.getSrc();
+
+		String fileName = url.toString();
+
+		fileName = fileName.substring(fileName.lastIndexOf('/') + 1);
+
+		File file = new File(dir, fileName);
+
+		return file;
 	}
 
 	private List<?> _getSrcList(Download download) {

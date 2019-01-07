@@ -48,7 +48,7 @@ public class IndexDocumentRequestExecutorImpl
 		RestStatus restStatus = indexResponse.status();
 
 		IndexDocumentResponse indexDocumentResponse = new IndexDocumentResponse(
-			restStatus.getStatus());
+			restStatus.getStatus(), indexResponse.getId());
 
 		return indexDocumentResponse;
 	}

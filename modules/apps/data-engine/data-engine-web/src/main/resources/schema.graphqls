@@ -23,6 +23,17 @@ input LocalizedValueInput {
 	value: String!
 }
 
+input SaveDataDefinitionModelPermissionsInput {
+	companyId: ID!
+	dataDefinitionId: ID!
+	delete: Boolean
+	groupId: ID
+	scopedGroupId: ID!
+	update: Boolean
+	userId: ID
+	view: Boolean
+}
+
 schema {
 	mutation: MutationType
 	query: QueryType
@@ -69,9 +80,14 @@ type LocalizedValueType {
 	value: String
 }
 
+type SaveModelPermissionsDataDefinitionType {
+	dataDefinitionId: ID
+}
+
 type MutationType {
 	deleteDataDefinition(dataDefinitionId: ID!, languageId: String!): DeleteDataDefinitionType
 	saveDataDefinition(userId: ID!, groupId: ID!, dataDefinition: DataDefinitionInput!, languageId: String!): SaveDataDefinitionType
+	saveDataDefinitionModelPermissions(saveDataDefinitionModelPermissionsInput: SaveDataDefinitionModelPermissionsInput!, languageId: String!): SaveModelPermissionsDataDefinitionType
 }
 
 type QueryType {

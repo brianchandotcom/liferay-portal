@@ -370,7 +370,7 @@ public abstract class BaseSourceCheck implements SourceCheck {
 		return _pluginsInsideModulesDirectoryNames;
 	}
 
-	protected String getPortalBranchName() {
+	private String _getPortalBranchName() {
 		String value = SourceFormatterUtil.getPropertyValue(
 			SourceFormatterUtil.GIT_LIFERAY_PORTAL_BRANCH, _propertiesMap);
 
@@ -396,7 +396,7 @@ public abstract class BaseSourceCheck implements SourceCheck {
 		throws IOException {
 
 		return getPortalContent(
-			fileName, getPortalBranchName(), forceRetrieveFromGit);
+			fileName, _getPortalBranchName(), forceRetrieveFromGit);
 	}
 
 	protected String getPortalContent(String fileName, String portalBranchName)
@@ -495,7 +495,7 @@ public abstract class BaseSourceCheck implements SourceCheck {
 	protected InputStream getPortalInputStream(String fileName)
 		throws IOException {
 
-		return getPortalInputStream(fileName, getPortalBranchName());
+		return getPortalInputStream(fileName, _getPortalBranchName());
 	}
 
 	protected InputStream getPortalInputStream(

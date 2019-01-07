@@ -34,6 +34,14 @@ input SaveDataDefinitionModelPermissionsInput {
 	view: Boolean
 }
 
+input SaveDataDefinitionPermissionsInput {
+	addDataDefinition: Boolean
+	companyId: ID!
+	definePermissions: Boolean
+	roleNames: [String]!
+	scopedGroupId: ID!
+}
+
 schema {
 	mutation: MutationType
 	query: QueryType
@@ -84,10 +92,15 @@ type SaveModelPermissionsDataDefinitionType {
 	dataDefinitionId: ID
 }
 
+type SavePermissionsDataDefinitionType {
+	roleNames: [String]
+}
+
 type MutationType {
 	deleteDataDefinition(dataDefinitionId: ID!, languageId: String!): DeleteDataDefinitionType
 	saveDataDefinition(userId: ID!, groupId: ID!, dataDefinition: DataDefinitionInput!, languageId: String!): SaveDataDefinitionType
 	saveDataDefinitionModelPermissions(saveDataDefinitionModelPermissionsInput: SaveDataDefinitionModelPermissionsInput!, languageId: String!): SaveModelPermissionsDataDefinitionType
+	saveDataDefinitionPermissions(saveDataDefinitionPermissionsInput: SaveDataDefinitionPermissionsInput!, languageId: String!): SavePermissionsDataDefinitionType
 }
 
 type QueryType {

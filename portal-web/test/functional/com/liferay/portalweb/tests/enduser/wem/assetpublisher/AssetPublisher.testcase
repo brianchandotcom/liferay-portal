@@ -504,13 +504,7 @@ definition {
 	test ConfigureAPPortletScopeMultipleSites {
 		property testray.component.names = "Asset Publisher,Training";
 
-		ProductMenu.gotoPortlet(
-			category = "Sites",
-			panel = "Control Panel",
-			portlet = "Sites"
-		);
-
-		Site.addBlankCP(siteName = "Site Name 2");
+		JSONGroup.addGroup(groupName = "Site Name 2");
 
 		Navigator.gotoSitePage(
 			pageName = "Asset Publisher Page",
@@ -817,13 +811,7 @@ definition {
 	test FindSiteAPViaSearchScopeSelector {
 		property testray.component.names = "Asset Publisher";
 
-		ProductMenu.gotoPortlet(
-			category = "Sites",
-			panel = "Control Panel",
-			portlet = "Sites"
-		);
-
-		Site.addBlankCP(siteName = "Site Name 2");
+		JSONGroup.addGroup(groupName = "Site Name 2");
 
 		Navigator.gotoSitePage(
 			pageName = "Asset Publisher Page",

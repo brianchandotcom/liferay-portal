@@ -15,16 +15,19 @@
 package com.liferay.portal.lpkg.deployer.independence.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.util.PropsValues;
 
 import java.io.File;
+import java.io.InputStream;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.List;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipFile;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -33,7 +36,7 @@ import org.junit.runner.RunWith;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
-import org.osgi.framework.ServiceReference;
+import org.osgi.framework.wiring.FrameworkWiring;
 
 /**
  * @author Matthew Tambara
@@ -47,24 +50,82 @@ public class LPKGIndependenceTest {
 
 		BundleContext bundleContext = bundle.getBundleContext();
 
-		ServiceReference serviceReference = bundleContext.getServiceReference(
-			"com.liferay.portal.lpkg.deployer.internal.LPKGIndexValidator");
-
-		Object service = bundleContext.getService(serviceReference);
-
 		Path tempPath = Paths.get(
 			PropsValues.MODULE_FRAMEWORK_MARKETPLACE_DIR, "temp");
 
 		File tempFile = tempPath.toFile();
 
-		for (File lpkgDir : tempFile.listFiles()) {
-			List<File> files = Arrays.asList(lpkgDir.listFiles());
+		Bundle systemBundle = bundleContext.getBundle(0);
 
-			Assert.assertTrue(
-				"Unable to validate " + files,
-				(Boolean)ReflectionTestUtil.invoke(
-					service, "validate", new Class<?>[] {List.class}, files));
+		FrameworkWiring frameworkWiring = systemBundle.adapt(
+			FrameworkWiring.class);
+
+		for (File lpkgDir : tempFile.listFiles()) {
+			List<Bundle> bundles = new ArrayList<>();
+
+			try {
+				File[] lpkgFiles = lpkgDir.listFiles();
+
+				for (File lpkgFile : lpkgFiles) {
+					bundles.addAll(
+						_installBundlesFromFile(bundleContext, lpkgFile));
+				}
+
+				_assertBundlesResolve(frameworkWiring, bundles);
+			}
+			finally {
+				for (Bundle installedBundle : bundles) {
+					installedBundle.uninstall();
+				}
+			}
 		}
+	}
+
+	private void _assertBundlesResolve(
+		FrameworkWiring frameworkWiring, List<Bundle> bundles) {
+
+		List<Bundle> unresolvedBundles = new ArrayList<>();
+
+		if (!frameworkWiring.resolveBundles(bundles)) {
+			for (Bundle bundle : bundles) {
+				if (bundle.getState() != Bundle.RESOLVED) {
+					unresolvedBundles.add(bundle);
+				}
+			}
+		}
+
+		Assert.assertTrue(
+			"Unable to resolve " + unresolvedBundles,
+			unresolvedBundles.isEmpty());
+	}
+
+	private List<Bundle> _installBundlesFromFile(
+			BundleContext bundleContext, File lpkgFile)
+		throws Exception {
+
+		List<Bundle> bundles = new ArrayList<>();
+
+		try (ZipFile zipFile = new ZipFile(lpkgFile)) {
+			Enumeration<? extends ZipEntry> entries = zipFile.entries();
+
+			while (entries.hasMoreElements()) {
+				ZipEntry zipEntry = entries.nextElement();
+
+				String name = zipEntry.getName();
+
+				if (name.endsWith(".jar")) {
+					try (InputStream inputStream =
+							zipFile.getInputStream(zipEntry)) {
+
+						bundles.add(
+							bundleContext.installBundle(
+								zipEntry.getName(), inputStream));
+					}
+				}
+			}
+		}
+
+		return bundles;
 	}
 
 }

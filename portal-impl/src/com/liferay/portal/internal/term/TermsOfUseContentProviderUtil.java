@@ -12,16 +12,14 @@
  * details.
  */
 
-package com.liferay.portal.kernel.term;
+package com.liferay.portal.internal.term;
 
-import aQute.bnd.annotation.ProviderType;
-
+import com.liferay.portal.kernel.term.TermsOfUseContentProvider;
 import com.liferay.portal.kernel.util.ServiceProxyFactory;
 
 /**
  * @author Eduardo García
  */
-@ProviderType
 public class TermsOfUseContentProviderUtil {
 
 	public static TermsOfUseContentProvider getTermsOfUseContentProvider() {

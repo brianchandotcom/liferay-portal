@@ -306,10 +306,9 @@ public class ImageProcessorImpl
 							bytes, imageBag.getType());
 
 					if (future == null) {
-						DLFileEntryPreviewHandlerUtil.
-							addFailDLFileEntryPreview(
-								destinationFileVersion.getFileEntryId(),
-								destinationFileVersion.getFileVersionId());
+						DLFileEntryPreviewHandlerUtil.addFailDLFileEntryPreview(
+							destinationFileVersion.getFileEntryId(),
+							destinationFileVersion.getFileVersionId());
 
 						return;
 					}
@@ -344,10 +343,9 @@ public class ImageProcessorImpl
 				_log.debug(nsfee, nsfee);
 			}
 
-			DLFileEntryPreviewHandlerUtil.
-				addFailDLFileEntryPreview(
-					destinationFileVersion.getFileEntryId(),
-					destinationFileVersion.getFileVersionId());
+			DLFileEntryPreviewHandlerUtil.addFailDLFileEntryPreview(
+				destinationFileVersion.getFileEntryId(),
+				destinationFileVersion.getFileVersionId());
 		}
 		finally {
 			_fileVersionIds.remove(destinationFileVersion.getFileVersionId());

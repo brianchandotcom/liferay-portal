@@ -22,6 +22,7 @@ import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
 import com.liferay.data.engine.web.internal.servlet.data.fetcher.DECountDataDefinitionDataFetcher;
 import com.liferay.data.engine.web.internal.servlet.data.fetcher.DEDeleteDataDefinitionDataFetcher;
 import com.liferay.data.engine.web.internal.servlet.data.fetcher.DEGetDataDefinitionDataFetcher;
+import com.liferay.data.engine.web.internal.servlet.data.fetcher.DEListDataDefinitionDataFetcher;
 import com.liferay.data.engine.web.internal.servlet.data.fetcher.DESaveDataDefinitionDataFetcher;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
@@ -160,6 +161,11 @@ public class DEGraphQLServlet extends HttpServlet {
 			"QueryType",
 			typeWiring -> typeWiring.dataFetcher(
 				"getDataDefinition", _deGetDataDefinitionDataFetcher));
+
+		runtimeWiringBuilder.type(
+			"QueryType",
+			typeWiring -> typeWiring.dataFetcher(
+				"listDataDefinition", _deListDataDefinitionDataFetcher));
 
 		runtimeWiringBuilder.type(
 			"MutationType",
@@ -327,6 +333,9 @@ public class DEGraphQLServlet extends HttpServlet {
 
 	@Reference
 	private DEGetDataDefinitionDataFetcher _deGetDataDefinitionDataFetcher;
+
+	@Reference
+	private DEListDataDefinitionDataFetcher _deListDataDefinitionDataFetcher;
 
 	@Reference
 	private DESaveDataDefinitionDataFetcher _deSaveDataDefinitionDataFetcher;

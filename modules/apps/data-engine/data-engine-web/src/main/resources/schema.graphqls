@@ -60,6 +60,10 @@ type GetDataDefinitionType {
 	dataDefinition: DataDefinition
 }
 
+type ListDataDefinitionType {
+	dataDefinitions: [DataDefinition]
+}
+
 type LocalizedValueType {
 	key: String
 	value: String
@@ -73,6 +77,7 @@ type MutationType {
 type QueryType {
 	countDataDefinition(groupId: ID!, languageId: String!): CountDataDefinitionType
 	getDataDefinition(dataDefinitionId: ID!, languageId: String!): GetDataDefinitionType
+	listDataDefinition(groupId: ID!, languageId: String!): ListDataDefinitionType
 
 }
 

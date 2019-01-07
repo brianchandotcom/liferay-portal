@@ -782,7 +782,7 @@ public class SourceFormatter {
 
 		int pos = propertiesFileLocation.lastIndexOf(StringPool.SLASH);
 
-		propertiesFileLocation = propertiesFileLocation.substring(0, pos + 1);
+		propertiesFileLocation = propertiesFileLocation.substring(0, pos);
 
 		String value = properties.getProperty("source.formatter.excludes");
 

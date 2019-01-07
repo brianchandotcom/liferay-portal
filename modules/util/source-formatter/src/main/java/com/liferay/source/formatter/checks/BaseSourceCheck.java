@@ -378,22 +378,15 @@ public abstract class BaseSourceCheck implements SourceCheck {
 			String fileName, boolean forceRetrieveFromGit)
 		throws IOException {
 
-		return getPortalContent(
-			fileName, _getPortalBranchName(), forceRetrieveFromGit);
+		String portalBranchName = _getPortalBranchName(!forceRetrieveFromGit);
+
+		return getPortalContent(fileName, portalBranchName);
 	}
 
 	protected String getPortalContent(String fileName, String portalBranchName)
 		throws IOException {
 
-		return getPortalContent(fileName, portalBranchName, false);
-	}
-
-	protected String getPortalContent(
-			String fileName, String portalBranchName,
-			boolean forceRetrieveFromGit)
-		throws IOException {
-
-		if (!forceRetrieveFromGit) {
+		if (Validator.isNull(portalBranchName)) {
 			String content = getContent(
 				fileName, ToolsUtil.PORTAL_MAX_DIR_LEVEL);
 
@@ -478,7 +471,7 @@ public abstract class BaseSourceCheck implements SourceCheck {
 	protected InputStream getPortalInputStream(String fileName)
 		throws IOException {
 
-		return getPortalInputStream(fileName, _getPortalBranchName());
+		return getPortalInputStream(fileName, _getPortalBranchName(true));
 	}
 
 	protected InputStream getPortalInputStream(
@@ -754,9 +747,19 @@ public abstract class BaseSourceCheck implements SourceCheck {
 	protected static final String RUN_OUTSIDE_PORTAL_EXCLUDES =
 		"run.outside.portal.excludes";
 
-	private String _getPortalBranchName() {
+	private String _getPortalBranchName(
+		boolean excludePortalRootPropertiesFile) {
+
+		String portalRootLocation = null;
+
+		if (_portalSource && excludePortalRootPropertiesFile) {
+			portalRootLocation = SourceUtil.getAbsolutePath(
+				SourceFormatterUtil.getPortalDir(_baseDirName));
+		}
+
 		String value = SourceFormatterUtil.getPropertyValue(
-			SourceFormatterUtil.GIT_LIFERAY_PORTAL_BRANCH, _propertiesMap);
+			SourceFormatterUtil.GIT_LIFERAY_PORTAL_BRANCH, _propertiesMap,
+			portalRootLocation);
 
 		if (Validator.isNull(value)) {
 			return StringPool.BLANK;

@@ -15,7 +15,6 @@
 package com.liferay.arquillian.extension.junit.bridge.remote.processor;
 
 import com.liferay.arquillian.container.osgi.remote.activator.ArquillianBundleActivator;
-import com.liferay.arquillian.container.osgi.remote.processor.service.BundleActivatorsManager;
 import com.liferay.petra.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
@@ -52,8 +51,6 @@ import org.jboss.shrinkwrap.api.asset.ByteArrayAsset;
 import org.jboss.shrinkwrap.api.exporter.ZipExporter;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
 
-import org.osgi.framework.BundleActivator;
-
 /**
  * @author Matthew Tambara
  */
@@ -82,9 +79,6 @@ public class OSGiAllInProcessor implements ApplicationArchiveProcessor {
 
 			Attributes mainAttributes = manifest.getMainAttributes();
 
-			String bundleActivator = mainAttributes.getValue(
-				_bundleActivatorName);
-
 			mainAttributes.put(
 				_bundleActivatorName,
 				ArquillianBundleActivator.class.getCanonicalName());
@@ -92,10 +86,6 @@ public class OSGiAllInProcessor implements ApplicationArchiveProcessor {
 			_setManifest(javaArchive, manifest);
 
 			javaArchive.addClass(ArquillianBundleActivator.class);
-
-			if (bundleActivator != null) {
-				_addBundleActivator(javaArchive, bundleActivator);
-			}
 		}
 		catch (IOException ioe) {
 			throw new IllegalArgumentException(
@@ -105,23 +95,6 @@ public class OSGiAllInProcessor implements ApplicationArchiveProcessor {
 
 	private void _addArquillianDependencies(JavaArchive javaArchive) {
 		javaArchive.addPackage(JMXTestRunner.class.getPackage());
-	}
-
-	private void _addBundleActivator(
-			JavaArchive javaArchive, String bundleActivatorValue)
-		throws IOException {
-
-		BundleActivatorsManager bundleActivatorsManager =
-			_bundleActivatorsManagerInstance.get();
-
-		List<String> bundleActivators =
-			bundleActivatorsManager.getBundleActivators(
-				javaArchive, _ACTIVATORS_FILE);
-
-		bundleActivators.add(bundleActivatorValue);
-
-		bundleActivatorsManager.replaceBundleActivatorsFile(
-			javaArchive, _ACTIVATORS_FILE, bundleActivators);
 	}
 
 	private void _addTestClass(JavaArchive javaArchive, TestClass testClass) {
@@ -255,15 +228,6 @@ public class OSGiAllInProcessor implements ApplicationArchiveProcessor {
 
 				importPackages.put(importPackage, newImportPackage);
 			}
-
-			String bundleActivatorValue = mainAttributes.getValue(
-				_bundleActivatorName);
-
-			if ((bundleActivatorValue != null) &&
-				!bundleActivatorValue.isEmpty()) {
-
-				_addBundleActivator(javaArchive, bundleActivatorValue);
-			}
 		}
 
 		_setManifestValues(manifest, _bundleClassPathName, bundleClassPaths);
@@ -304,9 +268,6 @@ public class OSGiAllInProcessor implements ApplicationArchiveProcessor {
 		mainAttributes.put(attributeName, sb.toString());
 	}
 
-	private static final String _ACTIVATORS_FILE =
-		"/META-INF/services/" + BundleActivator.class.getCanonicalName();
-
 	private static final String[] _OSGI_IMPORTS_PACKAGES = {
 		"org.osgi.framework", "javax.management", "javax.management.*",
 		"javax.naming", "javax.naming.*", "org.osgi.service.packageadmin",
@@ -319,9 +280,6 @@ public class OSGiAllInProcessor implements ApplicationArchiveProcessor {
 		new Attributes.Name("Bundle-ClassPath");
 	private static final Attributes.Name _importPackageName =
 		new Attributes.Name("Import-Package");
-
-	@Inject
-	private Instance<BundleActivatorsManager> _bundleActivatorsManagerInstance;
 
 	@Inject
 	private Instance<ServiceLoader> _serviceLoaderInstance;

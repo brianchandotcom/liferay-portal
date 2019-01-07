@@ -29,4 +29,5 @@ LayoutItemSelectorViewDisplayContext layoutItemSelectorViewDisplayContext = (Lay
 	namespace="<%= liferayPortletResponse.getNamespace() %>"
 	pathThemeImages="<%= themeDisplay.getPathThemeImages() %>"
 	privateLayout="<%= layoutItemSelectorViewDisplayContext.isPrivateLayout() %>"
+	showHiddenLayouts="<%= true %>"
 />

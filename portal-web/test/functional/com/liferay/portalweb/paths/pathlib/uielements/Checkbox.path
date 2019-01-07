@@ -438,6 +438,11 @@
 	<td>//input[contains(@id,'twitter')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>ENABLE_EXPERIMENTAL_INTERFACE</td>
+	<td>//label[contains(@for,'enableExperimentalInterface')]/span</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

@@ -64,4 +64,22 @@ definition {
 			SignIn.signInPortalInstanceSetUp();
 		}
 	}
+
+	macro enableMetal{
+
+		SystemSettings.openSystemSettingsAdmin();
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Forms",
+			configurationName = "Forms",
+			configurationScope = "Site Scope"
+		);
+
+		SystemSettings.resetConfiguration();
+
+        Click(locator1 = "Checkbox#ENABLE_EXPERIMENTAL_INTERFACE");
+
+		SystemSettings.saveConfiguration();
+
+	}
 }

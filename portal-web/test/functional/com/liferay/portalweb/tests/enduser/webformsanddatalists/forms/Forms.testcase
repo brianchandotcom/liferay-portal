@@ -9,6 +9,9 @@ definition {
 		TestCase.setUpPortalInstance();
 
 		User.firstLoginPG();
+
+		// TestCase.enableMetal();
+
 	}
 
 	tearDown {

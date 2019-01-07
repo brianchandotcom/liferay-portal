@@ -218,7 +218,7 @@
 </tr>
 <tr>
 	<td>SIDEBAR_ELEMENTS_TAB</td>
-	<td>//a[contains(@class,'tab') and .='Elements']</td>
+	<td>//a[contains(@class,'tab') and .='Elements'] | //a[contains(@class,'nav-link active') and .='Elements']</td>
 	<td></td>
 </tr>
 <tr>

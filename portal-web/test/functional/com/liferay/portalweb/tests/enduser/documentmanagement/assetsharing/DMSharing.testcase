@@ -409,6 +409,8 @@ definition {
 
 		DMDocument.sharePG(userEmailAddress = "userea@liferay.com,userea2@liferay.com");
 
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
 		DMDocument.viewPG(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentTitle = "DM Document Title"

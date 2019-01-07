@@ -8,6 +8,20 @@ definition {
 		TestCase.setUpPortalInstance();
 
 		User.firstLoginPG();
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "System Settings"
+		);
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Assets",
+			configurationName = "Asset Auto Tagging",
+			configurationScope = "System Scope"
+		);
+
+		AutoTagging.enableAutoTagging();
 	}
 
 	tearDown {
@@ -28,20 +42,6 @@ definition {
 	@priority = "4"
 	test ConfigureAutoTaggingPerSite {
 		property test.name.skip.portal.instance = "DMAutoTagging#ConfigureAutoTaggingPerSite";
-
-		ProductMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "System Settings"
-		);
-
-		SystemSettings.gotoConfiguration(
-			configurationCategory = "Assets",
-			configurationName = "Asset Auto Tagging",
-			configurationScope = "System Scope"
-		);
-
-		AutoTagging.enableAutoTagging();
 
 		ProductMenu.gotoPortlet(
 			category = "Sites",
@@ -126,20 +126,6 @@ definition {
 	test Smoke {
 		property portal.acceptance = "false";
 		property test.name.skip.portal.instance = "DMAutoTagging#Smoke";
-
-		ProductMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "System Settings"
-		);
-
-		SystemSettings.gotoConfiguration(
-			configurationCategory = "Assets",
-			configurationName = "Asset Auto Tagging",
-			configurationScope = "System Scope"
-		);
-
-		AutoTagging.enableAutoTagging();
 
 		ProductMenu.gotoPortlet(
 			category = "Content",

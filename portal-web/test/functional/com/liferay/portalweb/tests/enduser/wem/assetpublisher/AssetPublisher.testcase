@@ -35,6 +35,8 @@ definition {
 			PortalInstances.tearDownCP();
 		}
 		else {
+			User.firstLoginPG();
+
 			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
 
 			Site.tearDownCP();

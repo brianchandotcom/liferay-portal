@@ -20,7 +20,7 @@ import aQute.bnd.annotation.ProviderType;
  * @author Eduardo García
  */
 @ProviderType
-public class TermsOfUseContentProviderRegistryUtil {
+public class TermsOfUseContentProviderUtil {
 
 	public static TermsOfUseContentProvider getTermsOfUseContentProvider() {
 		return _termsOfUseContentProvider;
@@ -28,9 +28,8 @@ public class TermsOfUseContentProviderRegistryUtil {
 
 	private static volatile TermsOfUseContentProvider
 		_termsOfUseContentProvider =
-			ServiceProxyFactory.newServiceTrackedInstance(
-				TermsOfUseContentProvider.class,
-				TermsOfUseContentProviderRegistryUtil.class,
+			ServiceProxyFactory.newServiceTrackedInstance(TermsOfUseContentProvider.class,
+				TermsOfUseContentProviderUtil.class,
 				"_termsOfUseContentProvider", false, true);
 
 }

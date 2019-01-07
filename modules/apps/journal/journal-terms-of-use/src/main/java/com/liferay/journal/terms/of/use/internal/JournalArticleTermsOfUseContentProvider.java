@@ -14,7 +14,6 @@
 
 package com.liferay.journal.terms.of.use.internal;
 
-import com.liferay.journal.model.JournalArticle;
 import com.liferay.portal.kernel.util.TermsOfUseContentProvider;
 
 import javax.servlet.RequestDispatcher;
@@ -28,18 +27,9 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Eduardo García
  */
-@Component(
-	immediate = true,
-	property = "model.class.name=com.liferay.journal.model.JournalArticle",
-	service = TermsOfUseContentProvider.class
-)
+@Component(immediate = true, service = TermsOfUseContentProvider.class)
 public class JournalArticleTermsOfUseContentProvider
 	implements TermsOfUseContentProvider {
-
-	@Override
-	public String getClassName() {
-		return JournalArticle.class.getName();
-	}
 
 	@Override
 	public void includeConfig(

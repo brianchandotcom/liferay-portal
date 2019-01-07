@@ -25,8 +25,6 @@ import javax.servlet.http.HttpServletResponse;
 @ProviderType
 public interface TermsOfUseContentProvider {
 
-	public String getClassName();
-
 	public void includeConfig(
 			HttpServletRequest request, HttpServletResponse response)
 		throws Exception;

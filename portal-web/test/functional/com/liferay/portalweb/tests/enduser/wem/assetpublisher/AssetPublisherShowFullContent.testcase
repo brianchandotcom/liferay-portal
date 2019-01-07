@@ -1227,21 +1227,4 @@ definition {
 			configurationName = "AP Manual Display"
 		);
 	}
-
-	@description = "This is a test for LPS-86192. The default asset link behavior should be 'View in Context'."
-	@priority = "4"
-	test ViewDefaultAssetLinkBehavior {
-		echo("## Navigate to Asset Publisher widget display settings.");
-
-		AssetPublisherPortlet.gotoConfigurationPG();
-
-		Navigator.gotoNavTab(navTab = "Display Settings");
-
-		echo("## Assert the default asset link behavior is 'View in Context'.");
-
-		AssertSelectedLabel(
-			locator1 = "APConfigurationDisplaysettings#ASSET_LINK_BEHAVIOR_SELECT",
-			value1 = "View in Context"
-		);
-	}
 }

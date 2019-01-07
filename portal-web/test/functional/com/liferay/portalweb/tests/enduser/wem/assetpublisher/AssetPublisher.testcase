@@ -508,21 +508,21 @@ definition {
 
 		Navigator.gotoSitePage(
 			pageName = "Asset Publisher Page",
-			siteName = "Site Name 2"
+			siteName = "Test Site Name"
 		);
 
 		Portlet.addDuplicatePG(portletName = "Asset Publisher");
 
 		Navigator.gotoSitePage(
 			pageName = "Asset Publisher Page",
-			siteName = "Site Name 2"
+			siteName = "Test Site Name"
 		);
 
-		AssetPublisherPortlet.configureAddSiteScopes(otherSite = "Test Site Name");
+		AssetPublisherPortlet.configureAddSiteScopes(otherSite = "Site Name 2");
 
 		Navigator.gotoSitePage(
 			pageName = "Asset Publisher Page",
-			siteName = "Site Name 2"
+			siteName = "Test Site Name"
 		);
 
 		AssetPublisherPortlet.viewMultipleSiteScopesAddDropdowns(

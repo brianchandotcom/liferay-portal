@@ -208,7 +208,7 @@ public class Dom4JUtil {
 			attribute.setValue(text.replace(targetText, replacementText));
 		}
 
-		Iterator<? extends Node> nodeIterator = element.nodeIterator();
+		Iterator<Node> nodeIterator = element.nodeIterator();
 
 		while (nodeIterator.hasNext()) {
 			Node node = nodeIterator.next();
@@ -223,8 +223,11 @@ public class Dom4JUtil {
 
 					textNode.setText(text);
 				}
+
+				continue;
 			}
-			else if (node instanceof Element && cascade) {
+
+			if (node instanceof Element && cascade) {
 				replace((Element)node, cascade, replacementText, targetText);
 			}
 		}

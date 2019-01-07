@@ -17,6 +17,7 @@ package com.liferay.portal.search.elasticsearch6.internal.search.engine.adapter.
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.DocumentImpl;
 import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.elasticsearch6.internal.connection.ElasticsearchFixture;
 import com.liferay.portal.search.elasticsearch6.internal.document.DefaultElasticsearchDocumentFactory;
 import com.liferay.portal.search.elasticsearch6.internal.document.ElasticsearchDocumentFactory;
@@ -92,7 +93,15 @@ public class ElasticsearchBulkableDocumentRequestTranslatorTest {
 		throws IOException {
 
 		doTestIndexDocumentRequestTranslation(
-			false, WriteRequest.RefreshPolicy.NONE);
+			"1", false, WriteRequest.RefreshPolicy.NONE);
+	}
+
+	@Test
+	public void testIndexDocumentRequestTranslationWithNoRefreshNoId()
+		throws IOException {
+
+		doTestIndexDocumentRequestTranslation(
+			null, false, WriteRequest.RefreshPolicy.NONE);
 	}
 
 	@Test
@@ -100,7 +109,15 @@ public class ElasticsearchBulkableDocumentRequestTranslatorTest {
 		throws IOException {
 
 		doTestIndexDocumentRequestTranslation(
-			true, WriteRequest.RefreshPolicy.IMMEDIATE);
+			"1", true, WriteRequest.RefreshPolicy.IMMEDIATE);
+	}
+
+	@Test
+	public void testIndexDocumentRequestTranslationWithRefreshNoId()
+		throws IOException {
+
+		doTestIndexDocumentRequestTranslation(
+			null, true, WriteRequest.RefreshPolicy.IMMEDIATE);
 	}
 
 	@Test
@@ -108,7 +125,15 @@ public class ElasticsearchBulkableDocumentRequestTranslatorTest {
 		throws IOException {
 
 		doTestUpdateDocumentRequestTranslation(
-			false, WriteRequest.RefreshPolicy.NONE);
+			"1", false, WriteRequest.RefreshPolicy.NONE);
+	}
+
+	@Test
+	public void testUpdateDocumentRequestTranslationWithNoRefreshNoId()
+		throws IOException {
+
+		doTestUpdateDocumentRequestTranslation(
+			null, false, WriteRequest.RefreshPolicy.NONE);
 	}
 
 	@Test
@@ -116,7 +141,15 @@ public class ElasticsearchBulkableDocumentRequestTranslatorTest {
 		throws IOException {
 
 		doTestUpdateDocumentRequestTranslation(
-			true, WriteRequest.RefreshPolicy.IMMEDIATE);
+			"1", true, WriteRequest.RefreshPolicy.IMMEDIATE);
+	}
+
+	@Test
+	public void testUpdateDocumentRequestTranslationWithRefreshNoId()
+		throws IOException {
+
+		doTestUpdateDocumentRequestTranslation(
+			null, true, WriteRequest.RefreshPolicy.IMMEDIATE);
 	}
 
 	protected void doTestDeleteDocumentRequestTranslation(
@@ -155,15 +188,13 @@ public class ElasticsearchBulkableDocumentRequestTranslatorTest {
 	}
 
 	protected void doTestIndexDocumentRequestTranslation(
-			boolean refreshPolicy,
+			String id, boolean refreshPolicy,
 			WriteRequest.RefreshPolicy expectedRefreshPolicy)
 		throws IOException {
 
-		String id = "1";
-
 		Document document = new DocumentImpl();
 
-		document.addKeyword(Field.UID, id);
+		_setUid(document, id);
 
 		IndexDocumentRequest indexDocumentRequest = new IndexDocumentRequest(
 			_INDEX_NAME, document);
@@ -205,15 +236,13 @@ public class ElasticsearchBulkableDocumentRequestTranslatorTest {
 	}
 
 	protected void doTestUpdateDocumentRequestTranslation(
-			boolean refreshPolicy,
+			String id, boolean refreshPolicy,
 			WriteRequest.RefreshPolicy expectedRefreshPolicy)
 		throws IOException {
 
-		String id = "1";
-
 		Document document = new DocumentImpl();
 
-		document.addKeyword(Field.UID, id);
+		_setUid(document, id);
 
 		UpdateDocumentRequest updateDocumentRequest = new UpdateDocumentRequest(
 			_INDEX_NAME, id, document);
@@ -253,6 +282,12 @@ public class ElasticsearchBulkableDocumentRequestTranslatorTest {
 			updateDocumentRequest, bulkRequestBuilder);
 
 		Assert.assertEquals(1, bulkRequestBuilder.numberOfActions());
+	}
+
+	private void _setUid(Document document, String uid) {
+		if (!Validator.isBlank(uid)) {
+			document.addKeyword(Field.UID, uid);
+		}
 	}
 
 	private static final String _INDEX_NAME = "test_request_index";

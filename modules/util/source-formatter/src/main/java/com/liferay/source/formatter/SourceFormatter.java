@@ -45,13 +45,14 @@ import java.io.IOException;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Properties;
 import java.util.Set;
+import java.util.TreeMap;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ConcurrentSkipListSet;
@@ -505,15 +506,14 @@ public class SourceFormatter {
 		_sourceFormatterArgs.addRecentChangesFileNames(dependentFileNames);
 	}
 
-	private void _excludeWorkingDirCheckoutPrivateApps() throws IOException {
+	private void _excludeWorkingDirCheckoutPrivateApps(File portalDir)
+		throws IOException {
+
 		if (!_isPortalSource()) {
 			return;
 		}
 
-		File file = new File(
-			SourceFormatterUtil.getPortalDir(
-				_sourceFormatterArgs.getBaseDirName()),
-			"working.dir.properties");
+		File file = new File(portalDir, "working.dir.properties");
 
 		if (!file.exists()) {
 			return;
@@ -655,7 +655,35 @@ public class SourceFormatter {
 		_sourceFormatterExcludes = new SourceFormatterExcludes(
 			SetUtil.fromArray(DEFAULT_EXCLUDE_SYNTAX_PATTERNS));
 
-		_excludeWorkingDirCheckoutPrivateApps();
+		File portalDir = SourceFormatterUtil.getPortalDir(
+			_sourceFormatterArgs.getBaseDirName());
+
+		_excludeWorkingDirCheckoutPrivateApps(portalDir);
+
+		String portalRootLocation = SourceUtil.getAbsolutePath(portalDir);
+
+		// The comparator ensures that the properties file in the portal root
+		// directory comes last. As a result, the value of
+		// 'git.liferay.portal.branch' in a properties file that is not located
+		// in the root directory will be applied, if present.
+
+		_propertiesMap = new TreeMap<>(
+			new Comparator<String>() {
+
+				@Override
+				public int compare(String s1, String s2) {
+					if (s1.equals(portalRootLocation)) {
+						return 1;
+					}
+
+					if (s2.equals(portalRootLocation)) {
+						return -1;
+					}
+
+					return s1.compareTo(s2);
+				}
+
+			});
 
 		// Find properties file in any parent directory
 
@@ -949,7 +977,7 @@ public class SourceFormatter {
 	};
 
 	private String _projectPathPrefix;
-	private Map<String, Properties> _propertiesMap = new HashMap<>();
+	private Map<String, Properties> _propertiesMap;
 	private final SourceFormatterArgs _sourceFormatterArgs;
 	private SourceFormatterConfiguration _sourceFormatterConfiguration;
 	private SourceFormatterExcludes _sourceFormatterExcludes;

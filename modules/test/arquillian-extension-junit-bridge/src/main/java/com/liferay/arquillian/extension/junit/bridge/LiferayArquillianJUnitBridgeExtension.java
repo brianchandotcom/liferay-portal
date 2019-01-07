@@ -15,7 +15,6 @@
 package com.liferay.arquillian.extension.junit.bridge;
 
 import com.liferay.arquillian.container.osgi.remote.bundleclasspath.BundleClassPathAuxiliaryAppender;
-import com.liferay.arquillian.container.osgi.remote.commandservice.CommandServiceAuxiliaryAppender;
 import com.liferay.arquillian.extension.junit.bridge.container.remote.LiferayRemoteDeployableContainer;
 import com.liferay.arquillian.extension.junit.bridge.deployment.BndDeploymentScenarioGenerator;
 import com.liferay.arquillian.extension.junit.bridge.deployment.JUnitBridgeAuxiliaryArchiveAppender;
@@ -60,15 +59,10 @@ public class LiferayArquillianJUnitBridgeExtension
 			extensionBuilder.service(
 				AuxiliaryArchiveAppender.class,
 				BundleClassPathAuxiliaryAppender.class);
-			extensionBuilder.service(
-				AuxiliaryArchiveAppender.class,
-				CommandServiceAuxiliaryAppender.class);
 			extensionBuilder.observer(DeploymentObserver.class);
 			extensionBuilder.override(
 				AuxiliaryArchiveAppender.class, JUnitDeploymentAppender.class,
 				JUnitBridgeAuxiliaryArchiveAppender.class);
-			extensionBuilder.service(
-				CommandService.class, JMXCommandService.class);
 			extensionBuilder.service(
 				DeployableContainer.class,
 				LiferayRemoteDeployableContainer.class);
@@ -79,6 +73,8 @@ public class LiferayArquillianJUnitBridgeExtension
 		else {
 			extensionBuilder.observer(JUnitBridgeObserver.class);
 		}
+
+		extensionBuilder.service(CommandService.class, JMXCommandService.class);
 	}
 
 }

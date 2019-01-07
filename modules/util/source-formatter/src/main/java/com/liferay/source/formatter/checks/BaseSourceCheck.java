@@ -370,23 +370,6 @@ public abstract class BaseSourceCheck implements SourceCheck {
 		return _pluginsInsideModulesDirectoryNames;
 	}
 
-	private String _getPortalBranchName() {
-		String value = SourceFormatterUtil.getPropertyValue(
-			SourceFormatterUtil.GIT_LIFERAY_PORTAL_BRANCH, _propertiesMap);
-
-		if (Validator.isNull(value)) {
-			return StringPool.BLANK;
-		}
-
-		if (!value.contains(StringPool.COMMA)) {
-			return value;
-		}
-
-		String[] portalBranchNames = StringUtil.split(value);
-
-		return portalBranchNames[0];
-	}
-
 	protected String getPortalContent(String fileName) throws IOException {
 		return getPortalContent(fileName, false);
 	}
@@ -770,6 +753,23 @@ public abstract class BaseSourceCheck implements SourceCheck {
 
 	protected static final String RUN_OUTSIDE_PORTAL_EXCLUDES =
 		"run.outside.portal.excludes";
+
+	private String _getPortalBranchName() {
+		String value = SourceFormatterUtil.getPropertyValue(
+			SourceFormatterUtil.GIT_LIFERAY_PORTAL_BRANCH, _propertiesMap);
+
+		if (Validator.isNull(value)) {
+			return StringPool.BLANK;
+		}
+
+		if (!value.contains(StringPool.COMMA)) {
+			return value;
+		}
+
+		String[] portalBranchNames = StringUtil.split(value);
+
+		return portalBranchNames[0];
+	}
 
 	private URL _getPortalGitURL(String fileName, String portalBranchName) {
 		if (Validator.isNull(portalBranchName)) {

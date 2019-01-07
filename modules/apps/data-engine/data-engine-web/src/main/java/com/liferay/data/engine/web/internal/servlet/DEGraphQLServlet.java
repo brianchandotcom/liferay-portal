@@ -19,6 +19,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
 
+import com.liferay.data.engine.web.internal.servlet.data.fetcher.DECountDataDefinitionDataFetcher;
 import com.liferay.data.engine.web.internal.servlet.data.fetcher.DEDeleteDataDefinitionDataFetcher;
 import com.liferay.data.engine.web.internal.servlet.data.fetcher.DEGetDataDefinitionDataFetcher;
 import com.liferay.data.engine.web.internal.servlet.data.fetcher.DESaveDataDefinitionDataFetcher;
@@ -144,6 +145,11 @@ public class DEGraphQLServlet extends HttpServlet {
 	protected RuntimeWiring createRuntimeWiring() {
 		RuntimeWiring.Builder runtimeWiringBuilder =
 			RuntimeWiring.newRuntimeWiring();
+
+		runtimeWiringBuilder.type(
+			"QueryType",
+			typeWiring -> typeWiring.dataFetcher(
+				"countDataDefinition", _deCountDataDefinitionDataFetcher));
 
 		runtimeWiringBuilder.type(
 			"MutationType",
@@ -311,6 +317,9 @@ public class DEGraphQLServlet extends HttpServlet {
 	}
 
 	private static final Module _JDK8_MODULE = new Jdk8Module();
+
+	@Reference
+	private DECountDataDefinitionDataFetcher _deCountDataDefinitionDataFetcher;
 
 	@Reference
 	private DEDeleteDataDefinitionDataFetcher

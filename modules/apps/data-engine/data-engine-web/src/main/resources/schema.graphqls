@@ -28,6 +28,10 @@ schema {
 	query: QueryType
 }
 
+type CountDataDefinitionType {
+	total: Int
+}
+
 type DataDefinitionFieldType {
 	defaultValue: String
 	indexable: Boolean
@@ -67,7 +71,9 @@ type MutationType {
 }
 
 type QueryType {
+	countDataDefinition(groupId: ID!, languageId: String!): CountDataDefinitionType
 	getDataDefinition(dataDefinitionId: ID!, languageId: String!): GetDataDefinitionType
+
 }
 
 type SaveDataDefinitionType {

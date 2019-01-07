@@ -46,6 +46,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -655,35 +656,42 @@ public class SourceFormatter {
 		_sourceFormatterExcludes = new SourceFormatterExcludes(
 			SetUtil.fromArray(DEFAULT_EXCLUDE_SYNTAX_PATTERNS));
 
-		File portalDir = SourceFormatterUtil.getPortalDir(
-			_sourceFormatterArgs.getBaseDirName());
+		_portalSource = _isPortalSource();
 
-		_excludeWorkingDirCheckoutPrivateApps(portalDir);
+		if (_portalSource) {
+			File portalDir = SourceFormatterUtil.getPortalDir(
+				_sourceFormatterArgs.getBaseDirName());
 
-		String portalRootLocation = SourceUtil.getAbsolutePath(portalDir);
+			_excludeWorkingDirCheckoutPrivateApps(portalDir);
 
-		// The comparator ensures that the properties file in the portal root
-		// directory comes last. As a result, the value of
-		// 'git.liferay.portal.branch' in a properties file that is not located
-		// in the root directory will be applied, if present.
+			String portalRootLocation = SourceUtil.getAbsolutePath(portalDir);
 
-		_propertiesMap = new TreeMap<>(
-			new Comparator<String>() {
+			// The comparator ensures that the properties file in the portal
+			// root directory comes last. As a result, the value of
+			// 'git.liferay.portal.branch' in a properties file that is not
+			// located in the root directory will be applied, if present.
 
-				@Override
-				public int compare(String s1, String s2) {
-					if (s1.equals(portalRootLocation)) {
-						return 1;
+			_propertiesMap = new TreeMap<>(
+				new Comparator<String>() {
+
+					@Override
+					public int compare(String s1, String s2) {
+						if (s1.equals(portalRootLocation)) {
+							return 1;
+						}
+
+						if (s2.equals(portalRootLocation)) {
+							return -1;
+						}
+
+						return s1.compareTo(s2);
 					}
 
-					if (s2.equals(portalRootLocation)) {
-						return -1;
-					}
-
-					return s1.compareTo(s2);
-				}
-
-			});
+				});
+		}
+		else {
+			_propertiesMap = new HashMap<>();
+		}
 
 		// Find properties file in any parent directory
 

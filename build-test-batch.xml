@@ -1516,13 +1516,6 @@ app.server.type=@{app.server.type}]]></echo>
 								<try>
 									<antcall inheritall="false" target="start-app-server" />
 
-									<gradle-execute dir="modules/apps/static/portal-lpkg-deployer/portal-lpkg-deployer-test" task="test">
-										<arg value="test" />
-										<arg value="--tests" />
-										<arg value="*.LPKGIndexValidatorLogScannerTest" />
-										<arg value="-Dliferay.home=${liferay.home}" />
-									</gradle-execute>
-
 									<gradle-execute dir="modules/apps/static/portal-lpkg-deployer/portal-lpkg-deployer-test" task="testIntegration">
 										<arg value="testIntegration" />
 										<arg value="--tests" />
@@ -2036,13 +2029,6 @@ log.sanitizer.enabled=false</echo>
 								<try>
 									<antcall inheritall="false" target="start-app-server" />
 
-									<gradle-execute dir="modules/apps/static/portal-lpkg-deployer/portal-lpkg-deployer-test" task="test">
-										<arg value="test" />
-										<arg value="--tests" />
-										<arg value="*.LPKGIndexValidatorLogScannerTest" />
-										<arg value="-Dliferay.home=${liferay.home}" />
-									</gradle-execute>
-
 									<gradle-execute dir="modules/apps/static/portal-lpkg-deployer/portal-lpkg-deployer-test" task="testIntegration">
 										<arg value="testIntegration" />
 										<arg value="--tests" />
@@ -2093,13 +2079,6 @@ log.sanitizer.enabled=false</echo>
 							<trycatch>
 								<try>
 									<antcall inheritall="false" target="start-app-server" />
-
-									<gradle-execute dir="modules/apps/static/portal-lpkg-deployer/portal-lpkg-deployer-test" task="test">
-										<arg value="test" />
-										<arg value="--tests" />
-										<arg value="*.LPKGIndexValidatorLogScannerTest" />
-										<arg value="-Dliferay.home=${liferay.home}" />
-									</gradle-execute>
 
 									<gradle-execute dir="modules/apps/static/portal-lpkg-deployer/portal-lpkg-deployer-test" task="testIntegration">
 										<arg value="testIntegration" />

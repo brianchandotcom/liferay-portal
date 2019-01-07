@@ -229,8 +229,7 @@ public interface DLFileEntryPreviewLocalService extends BaseLocalService,
 	public List<DLFileEntryPreview> getDLFileEntryPreviews(int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<DLFileEntryPreview> getDLFileEntryPreviews(long fileEntryId)
-		throws PortalException;
+	public List<DLFileEntryPreview> getDLFileEntryPreviews(long fileEntryId);
 
 	/**
 	* Returns the number of dl file entry previews.

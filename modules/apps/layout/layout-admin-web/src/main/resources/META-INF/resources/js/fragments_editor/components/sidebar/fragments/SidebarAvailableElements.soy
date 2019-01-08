@@ -18,16 +18,51 @@
 	{@param? store: ?}
 
 	<div class="sidebar-fragment-collections">
+		{let $panelClasses kind="text"}
+			fragments-editor-sidebar-section__panel
+			{sp}fragments-editor-sidebar-section__elements-panel
+			{sp}panel
+		{/let}
+
+		<div aria-orientation="vertical" class="panel-group panel-group-flush" role="tablist">
+			<div class="{$panelClasses}">
+				<a
+					aria-controls="structure-collection"
+					aria-expanded="false"
+					class="collapse-icon collapsed sheet-subtitle"
+					data-toggle="collapse"
+					href="#structure-collection"
+					role="tab"
+				>
+					<span>{msg desc=""}structure{/msg}</span>
+					<span class="collapse-icon-closed">
+						<svg class="lexicon-icon lexicon-icon-angle-right">
+							<use xlink:href="{$spritemap}#angle-right"></use>
+						</svg>
+					</span>
+					<span class="collapse-icon-open">
+						<svg class="lexicon-icon lexicon-icon-angle-down">
+							<use xlink:href="{$spritemap}#angle-down"></use>
+						</svg>
+					</span>
+				</a>
+
+				<div
+					class="panel-collapse collapse"
+					id="structure-collection"
+					role="tabpanel"
+				>
+					{call com.liferay.layout.admin.web.SidebarLayoutsPanel.render}
+						{param store: $store /}
+					{/call}
+				</div>
+			</div>
+		</div>
+
 		{if $elements}
 			{foreach $fragmentCollection in $elements}
 				{let $collapseId kind="text"}
 					fragment-collection-{$fragmentCollection.fragmentCollectionId}
-				{/let}
-
-				{let $panelClasses kind="text"}
-					fragments-editor-sidebar-section__panel
-					{sp}fragments-editor-sidebar-section__elements-panel
-					{sp}panel
 				{/let}
 
 				<div aria-orientation="vertical" class="panel-group panel-group-flush" role="tablist">

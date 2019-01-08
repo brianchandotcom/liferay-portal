@@ -47,33 +47,44 @@ public class ResourcesFragmentEntryProcessor implements FragmentEntryProcessor {
 			Locale locale)
 		throws PortalException {
 
+		return _processResources(fragmentEntryLink, html);
+	}
+
+	@Override
+	public void validateFragmentEntryHTML(String html) {
+	}
+
+	private String _processResources(
+			FragmentEntryLink fragmentEntryLink, String code)
+		throws PortalException {
+
 		FragmentEntry fragmentEntry = _fragmentEntryService.fetchFragmentEntry(
 			fragmentEntryLink.getFragmentEntryId());
 
 		if (fragmentEntry == null) {
-			return html;
+			return code;
 		}
 
 		FragmentCollection fragmentCollection =
 			_fragmentCollectionService.fetchFragmentCollection(
 				fragmentEntry.getFragmentCollectionId());
 
-		while (html.contains(_RESOURCES_PATH)) {
-			int index = html.indexOf(_RESOURCES_PATH);
+		while (code.contains(_RESOURCES_PATH)) {
+			int index = code.indexOf(_RESOURCES_PATH);
 
-			String delimiter = html.substring(index - 1, index);
+			String delimiter = code.substring(index - 1, index);
 
 			if (Objects.equals(delimiter, StringPool.OPEN_PARENTHESIS)) {
 				delimiter = StringPool.CLOSE_PARENTHESIS;
 			}
 
-			int lastIndex = html.indexOf(delimiter, index);
+			int lastIndex = code.indexOf(delimiter, index);
 
 			if (lastIndex < 0) {
 				break;
 			}
 
-			String fileName = html.substring(
+			String fileName = code.substring(
 				index + _RESOURCES_PATH.length(), lastIndex);
 
 			FileEntry fileEntry =
@@ -89,14 +100,10 @@ public class ResourcesFragmentEntryProcessor implements FragmentEntryProcessor {
 					StringPool.BLANK, false, false);
 			}
 
-			html = html.replaceAll(_RESOURCES_PATH + fileName, fileEntryURL);
+			code = code.replaceAll(_RESOURCES_PATH + fileName, fileEntryURL);
 		}
 
-		return html;
-	}
-
-	@Override
-	public void validateFragmentEntryHTML(String html) {
+		return code;
 	}
 
 	private static final String _RESOURCES_PATH = "../../resources/";

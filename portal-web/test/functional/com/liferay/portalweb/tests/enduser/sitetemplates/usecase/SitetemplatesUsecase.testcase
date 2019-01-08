@@ -641,6 +641,104 @@ definition {
 		User.firstLoginPG(password = "test", userEmailAddress = "test@liferay.com");
 	}
 
+	@description = "This is a use case for LPS-74081."
+	@priority = "4"
+	test ViewImportedSitePageWithNumericFriendlyURL {
+		var portalURL = PropsUtil.get("portal.url");
+
+		ProductMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Sites"
+		);
+
+		Site.addCP(siteName = "Export", siteType = "Blank");
+
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.addPublicPage(pageName = "1");
+
+		SitePages.gotoPageMenuItem(menuItem = "Configure", pageName = "1");
+
+		AssertTextEquals(locator1 = "TextInput#FRIENDLY_URL", value1 = "/1");
+
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.addPublicPage(pageName = "2");
+
+		SitePages.gotoPageMenuItem(menuItem = "Configure", pageName = "2");
+
+		AssertTextEquals(locator1 = "TextInput#FRIENDLY_URL", value1 = "/2");
+
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.addPublicPage(pageName = "Hello");
+
+		SitePages.gotoPageMenuItem(menuItem = "Configure", pageName = "Hello");
+
+		AssertTextEquals(locator1 = "TextInput#FRIENDLY_URL", value1 = "/hello");
+
+		ProductMenu.gotoPortlet(
+			category = "Publishing",
+			panel = "Site Administration",
+			portlet = "Export"
+		);
+
+		LAR.exportSiteCP(larFileName = "Export");
+
+		LAR.downloadLar();
+
+		ProductMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Site Templates"
+		);
+
+		Refresh();
+
+		SiteTemplates.addCP(siteTemplateName = "Template Site");
+
+		ProductMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Sites"
+		);
+
+		Site.addCP(siteName = "New Site", siteType = "Template");
+
+		LAR.importSiteCP(
+			larFileName = "Export",
+			siteName = "New Site"
+		);
+
+		Refresh();
+
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		Page.viewPagesOrder(
+			pageName1 = "Home",
+			pageName2 = "1",
+			pageName3 = "2",
+			pageName4 = "Hello"
+		);
+	}
+
 	@priority = "3"
 	test ViewInlineGuestPermissionsInSiteTemplatesViaWCD {
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");

@@ -1,0 +1,37 @@
+definition {
+	test AddUser {
+		Refresh()	 ;
+
+		com.liferay.poshi.runner.util.JSONCurlUtil.delete("${curl}")	
+			  ;
+	}
+
+	test AddBlogsEntries {
+		task ("Add a blogs entry called	;  'Blogs Entry2 Title() 	 ; ' with content 'Blogs Entry1 Content'") {
+			ProductMenu.gotoPortlet(
+				category = "Content",
+				panel = "Site Administration",
+				portlet = "Blogs"
+			)
+
+ 	;
+   		  
+
+			Blogs.addEntry(
+				entryContent = "Blogs Entry1 Content",
+				entryTitle = "Blogs Entry1 Title"
+			)  ;
+		}
+
+		task ("You can call 'Blogs Entry2 Title()	; ' with content 'Blogs Entry2 Content() ; and you will find something'") {
+			Navigator.correctLine();
+
+			ProductMenu.correctLine();
+
+			Blogs.correctLine(
+				entryContent = "Blogs Entry2 Content",
+				entryTitle = "Blogs Entry2 Title"
+			);
+		}
+	}
+}

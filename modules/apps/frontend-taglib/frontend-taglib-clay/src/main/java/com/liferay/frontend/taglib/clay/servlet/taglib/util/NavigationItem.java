@@ -14,6 +14,7 @@
 
 package com.liferay.frontend.taglib.clay.servlet.taglib.util;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.HashMap;
@@ -25,6 +26,10 @@ import javax.portlet.PortletURL;
  * @author Chema Balsas
  */
 public class NavigationItem extends HashMap<String, Object> {
+
+	public NavigationItem() {
+		setHref(StringPool.BLANK);
+	}
 
 	public void putData(String key, String value) {
 		Map<String, Object> data = (Map<String, Object>)get("data");

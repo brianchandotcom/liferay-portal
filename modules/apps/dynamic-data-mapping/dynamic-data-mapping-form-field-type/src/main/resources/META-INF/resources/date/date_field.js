@@ -3,32 +3,6 @@ AUI.add(
 	function(A) {
 		var isArray = Array.isArray;
 
-		var languageId = Liferay.ThemeDisplay.getLanguageId().replace('_', '-');
-		var dateFormat;
-		var customDateFormat = A.Intl.get('datatype-date-format', 'x', languageId);
-
-		if (customDateFormat) {
-			dateFormat = customDateFormat;
-		}
-		else {
-			dateFormat = Liferay.AUI.getDateFormat();
-		}
-
-		var dateDelimiter = '/';
-		var endDelimiter = false;
-
-		if (dateFormat.indexOf('.') != -1) {
-			dateDelimiter = '.';
-
-			if (dateFormat.lastIndexOf('.') == dateFormat.length - 1) {
-				endDelimiter = true;
-			}
-		}
-
-		if (dateFormat.indexOf('-') != -1) {
-			dateDelimiter = '-';
-		}
-
 		var DateField = A.Component.create(
 			{
 				ATTRS: {
@@ -37,7 +11,35 @@ AUI.add(
 					},
 
 					mask: {
-						value: dateFormat
+						valueFn: function(val) {
+							var instance = this;
+
+							var dateFormat = Liferay.AUI.getDateFormat();
+							var languageId = Liferay.ThemeDisplay.getLanguageId().replace('_', '-');
+
+							var customDateFormat = A.Intl.get('datatype-date-format', 'x', languageId);
+
+							if (customDateFormat) {
+								dateFormat = customDateFormat;
+							}
+
+							instance._dateDelimiter = '/';
+							instance._endDelimiter = false;
+
+							if (dateFormat.indexOf('.') != -1) {
+								instance._dateDelimiter = '.';
+
+								if (dateFormat.lastIndexOf('.') == dateFormat.length - 1) {
+									instance._endDelimiter = true;
+								}
+							}
+
+							if (dateFormat.indexOf('-') != -1) {
+								instance._dateDelimiter = '-';
+							}
+
+							return dateFormat;
+						}
 					},
 
 					predefinedValue: {
@@ -108,7 +110,7 @@ AUI.add(
 
 						var dateMask = [];
 
-						var items = mask.split(dateDelimiter);
+						var items = mask.split(instance._dateDelimiter);
 
 						items.forEach(
 							function(item, index) {
@@ -120,13 +122,13 @@ AUI.add(
 								}
 
 								if (index < 2) {
-									dateMask.push(dateDelimiter);
+									dateMask.push(instance._dateDelimiter);
 								}
 							}
 						);
 
-						if (endDelimiter) {
-							dateMask.push(dateDelimiter);
+						if (instance._endDelimiter) {
+							dateMask.push(instance._dateDelimiter);
 						}
 
 						return dateMask;

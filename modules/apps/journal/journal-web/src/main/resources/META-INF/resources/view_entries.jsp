@@ -159,6 +159,7 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 								<c:when test="<%= Validator.isNotNull(articleImageURL) %>">
 									<clay:image-card
 										actionDropdownItems="<%= journalDisplayContext.getArticleActionDropdownItems(curArticle) %>"
+										defaultEventHandler="journalElementsDefaultEventHandler"
 										disabled="<%= rowChecker.isDisabled(curArticle) %>"
 										href="<%= editURL %>"
 										imageSrc="<%= HtmlUtil.escape(articleImageURL) %>"
@@ -174,6 +175,7 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 								<c:otherwise>
 									<clay:file-card
 										actionDropdownItems="<%= journalDisplayContext.getArticleActionDropdownItems(curArticle) %>"
+										defaultEventHandler="journalElementsDefaultEventHandler"
 										disabled="<%= rowChecker.isDisabled(curArticle) %>"
 										href="<%= editURL %>"
 										icon="web-content"
@@ -337,6 +339,7 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 						>
 							<clay:horizontal-card
 								actionDropdownItems="<%= journalDisplayContext.getFolderActionDropdownItems(curFolder) %>"
+								defaultEventHandler="journalElementsDefaultEventHandler"
 								disabled="<%= rowChecker.isDisabled(curFolder) %>"
 								href="<%= rowURL.toString() %>"
 								icon="folder"
@@ -416,3 +419,13 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 		searchContainer="<%= articleSearchContainer %>"
 	/>
 </liferay-ui:search-container>
+
+<aui:script require='<%= npmResolvedPackageName + "/js/ElementsDefaultEventHandler.es as ElementsDefaultEventHandler" %>'>
+	Liferay.component(
+		'journalElementsDefaultEventHandler',
+		new ElementsDefaultEventHandler.default({
+			isTrashEnabled: <%= trashHelper.isTrashEnabled(scopeGroupId) %>,
+			namespace: '<%= renderResponse.getNamespace() %>'
+		})
+	);
+</aui:script>

@@ -14,8 +14,10 @@
 
 package com.liferay.frontend.js.loader.modules.extender.internal.npm;
 
+import com.liferay.frontend.js.loader.modules.extender.internal.npm.flat.FlatNPMBundleProcessor;
 import com.liferay.frontend.js.loader.modules.extender.npm.JSPackage;
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
+import com.liferay.petra.string.StringBundler;
 
 import org.osgi.framework.Bundle;
 
@@ -51,8 +53,9 @@ public class NullNPMResolverImpl implements NPMResolver {
 
 	private void _throwIllegalStateException() {
 		throw new IllegalStateException(
-			"Unable to find META-INF/resources/package.json file in bundle " +
-				_bundle.getSymbolicName());
+			StringBundler.concat(
+				"Unable to find ", FlatNPMBundleProcessor.PACKAGE_JSON_PATH,
+				" file in bundle ", _bundle.getSymbolicName()));
 	}
 
 	private final Bundle _bundle;

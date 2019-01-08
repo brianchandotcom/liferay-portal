@@ -14,14 +14,16 @@
 
 package com.liferay.dynamic.data.mapping.template;
 
+import com.liferay.petra.lang.ClassLoaderPool;
 import com.liferay.petra.string.CharPool;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
-import com.liferay.portal.kernel.template.ClassLoaderTemplateResource;
 import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.template.TemplateManagerUtil;
 import com.liferay.portal.kernel.template.TemplateResource;
+import com.liferay.portal.kernel.template.TemplateResourceLoaderUtil;
 import com.liferay.portal.kernel.template.TemplateVariableCodeHandler;
 import com.liferay.portal.kernel.template.TemplateVariableDefinition;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -68,8 +70,12 @@ public class DDMTemplateVariableCodeHandler
 	}
 
 	protected Template getTemplate(String templateId) throws Exception {
-		TemplateResource templateResource = new ClassLoaderTemplateResource(
-			_classLoader, templateId);
+		TemplateResource templateResource =
+			TemplateResourceLoaderUtil.getTemplateResource(
+				TemplateConstants.LANG_TYPE_FTL,
+				StringBundler.concat(
+					ClassLoaderPool.getContextName(_classLoader),
+					TemplateConstants.CLASS_LOADER_SEPARATOR, templateId));
 
 		return TemplateManagerUtil.getTemplate(
 			TemplateConstants.LANG_TYPE_FTL, templateResource, false);

@@ -66,16 +66,6 @@ public class WikiAttachmentImageHTMLEditorConfigContributorTest
 
 		languageUtil.setLanguage(new LanguageImpl());
 
-		_requestBackedPortletURLFactory = mock(
-			RequestBackedPortletURLFactory.class);
-
-		when(
-			_requestBackedPortletURLFactory.createActionURL(
-				WikiPortletKeys.WIKI)
-		).thenReturn(
-			ProxyFactory.newDummyInstance(LiferayPortletURL.class)
-		);
-
 		_inputEditorTaglibAttributes.put(
 			"liferay-ui:input-editor:name", "testEditor");
 	}
@@ -119,8 +109,7 @@ public class WikiAttachmentImageHTMLEditorConfigContributorTest
 			_itemSelector);
 
 		wikiAttachmentImageHTMLEditorConfigContributor.populateConfigJSONObject(
-			jsonObject, _inputEditorTaglibAttributes, null,
-			_requestBackedPortletURLFactory);
+			jsonObject, _inputEditorTaglibAttributes, null, null);
 
 		JSONObject expectedJSONObject = JSONFactoryUtil.createJSONObject();
 
@@ -164,6 +153,15 @@ public class WikiAttachmentImageHTMLEditorConfigContributorTest
 			itemSelectorPortletURL
 		);
 
+		RequestBackedPortletURLFactory requestBackedPortletURLFactory = mock(
+			RequestBackedPortletURLFactory.class);
+
+		when(
+			requestBackedPortletURLFactory.createActionURL(WikiPortletKeys.WIKI)
+		).thenReturn(
+			ProxyFactory.newDummyInstance(LiferayPortletURL.class)
+		);
+
 		JSONObject jsonObject = getJSONObjectWithDefaultItemSelectorURL();
 
 		WikiAttachmentImageHTMLEditorConfigContributor
@@ -175,7 +173,7 @@ public class WikiAttachmentImageHTMLEditorConfigContributorTest
 
 		wikiAttachmentImageHTMLEditorConfigContributor.populateConfigJSONObject(
 			jsonObject, _inputEditorTaglibAttributes, new ThemeDisplay(),
-			_requestBackedPortletURLFactory);
+			requestBackedPortletURLFactory);
 
 		JSONObject expectedJSONObject = JSONFactoryUtil.createJSONObject();
 
@@ -212,8 +210,7 @@ public class WikiAttachmentImageHTMLEditorConfigContributorTest
 			_itemSelector);
 
 		wikiAttachmentImageHTMLEditorConfigContributor.populateConfigJSONObject(
-			jsonObject, _inputEditorTaglibAttributes, null,
-			_requestBackedPortletURLFactory);
+			jsonObject, _inputEditorTaglibAttributes, null, null);
 
 		JSONObject expectedJSONObject = JSONFactoryUtil.createJSONObject(
 			originalJSONObject.toJSONString());
@@ -245,8 +242,7 @@ public class WikiAttachmentImageHTMLEditorConfigContributorTest
 			_itemSelector);
 
 		wikiAttachmentImageHTMLEditorConfigContributor.populateConfigJSONObject(
-			jsonObject, _inputEditorTaglibAttributes, null,
-			_requestBackedPortletURLFactory);
+			jsonObject, _inputEditorTaglibAttributes, null, null);
 
 		JSONObject expectedJSONObject = JSONFactoryUtil.createJSONObject(
 			originalJSONObject.toJSONString());
@@ -292,7 +288,5 @@ public class WikiAttachmentImageHTMLEditorConfigContributorTest
 
 	@Mock
 	private ItemSelector _itemSelector;
-
-	private RequestBackedPortletURLFactory _requestBackedPortletURLFactory;
 
 }

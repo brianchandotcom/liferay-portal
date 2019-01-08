@@ -16,17 +16,12 @@ package com.liferay.portal.reports.engine.console.model;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
-
 import com.liferay.portal.kernel.model.ModelWrapper;
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -38,19 +33,10 @@ import java.util.Objects;
  * @generated
  */
 @ProviderType
-public class EntryWrapper implements Entry, ModelWrapper<Entry> {
+public class EntryWrapper extends BaseModelWrapper<Entry> implements Entry,
+	ModelWrapper<Entry> {
 	public EntryWrapper(Entry entry) {
-		_entry = entry;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return Entry.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return Entry.class.getName();
+		super(entry);
 	}
 
 	@Override
@@ -212,24 +198,14 @@ public class EntryWrapper implements Entry, ModelWrapper<Entry> {
 	}
 
 	@Override
-	public Object clone() {
-		return new EntryWrapper((Entry)_entry.clone());
-	}
-
-	@Override
-	public int compareTo(Entry entry) {
-		return _entry.compareTo(entry);
-	}
-
-	@Override
 	public String getAttachmentsDir() {
-		return _entry.getAttachmentsDir();
+		return model.getAttachmentsDir();
 	}
 
 	@Override
 	public String[] getAttachmentsFiles()
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _entry.getAttachmentsFiles();
+		return model.getAttachmentsFiles();
 	}
 
 	/**
@@ -239,7 +215,7 @@ public class EntryWrapper implements Entry, ModelWrapper<Entry> {
 	*/
 	@Override
 	public long getCompanyId() {
-		return _entry.getCompanyId();
+		return model.getCompanyId();
 	}
 
 	/**
@@ -249,7 +225,7 @@ public class EntryWrapper implements Entry, ModelWrapper<Entry> {
 	*/
 	@Override
 	public Date getCreateDate() {
-		return _entry.getCreateDate();
+		return model.getCreateDate();
 	}
 
 	/**
@@ -259,7 +235,7 @@ public class EntryWrapper implements Entry, ModelWrapper<Entry> {
 	*/
 	@Override
 	public long getDefinitionId() {
-		return _entry.getDefinitionId();
+		return model.getDefinitionId();
 	}
 
 	/**
@@ -269,7 +245,7 @@ public class EntryWrapper implements Entry, ModelWrapper<Entry> {
 	*/
 	@Override
 	public String getEmailDelivery() {
-		return _entry.getEmailDelivery();
+		return model.getEmailDelivery();
 	}
 
 	/**
@@ -279,7 +255,7 @@ public class EntryWrapper implements Entry, ModelWrapper<Entry> {
 	*/
 	@Override
 	public String getEmailNotifications() {
-		return _entry.getEmailNotifications();
+		return model.getEmailNotifications();
 	}
 
 	/**
@@ -289,7 +265,7 @@ public class EntryWrapper implements Entry, ModelWrapper<Entry> {
 	*/
 	@Override
 	public Date getEndDate() {
-		return _entry.getEndDate();
+		return model.getEndDate();
 	}
 
 	/**
@@ -299,7 +275,7 @@ public class EntryWrapper implements Entry, ModelWrapper<Entry> {
 	*/
 	@Override
 	public long getEntryId() {
-		return _entry.getEntryId();
+		return model.getEntryId();
 	}
 
 	/**
@@ -309,12 +285,7 @@ public class EntryWrapper implements Entry, ModelWrapper<Entry> {
 	*/
 	@Override
 	public String getErrorMessage() {
-		return _entry.getErrorMessage();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _entry.getExpandoBridge();
+		return model.getErrorMessage();
 	}
 
 	/**
@@ -324,7 +295,7 @@ public class EntryWrapper implements Entry, ModelWrapper<Entry> {
 	*/
 	@Override
 	public String getFormat() {
-		return _entry.getFormat();
+		return model.getFormat();
 	}
 
 	/**
@@ -334,12 +305,12 @@ public class EntryWrapper implements Entry, ModelWrapper<Entry> {
 	*/
 	@Override
 	public long getGroupId() {
-		return _entry.getGroupId();
+		return model.getGroupId();
 	}
 
 	@Override
 	public String getJobName() {
-		return _entry.getJobName();
+		return model.getJobName();
 	}
 
 	/**
@@ -349,7 +320,7 @@ public class EntryWrapper implements Entry, ModelWrapper<Entry> {
 	*/
 	@Override
 	public Date getModifiedDate() {
-		return _entry.getModifiedDate();
+		return model.getModifiedDate();
 	}
 
 	/**
@@ -359,7 +330,7 @@ public class EntryWrapper implements Entry, ModelWrapper<Entry> {
 	*/
 	@Override
 	public String getPageURL() {
-		return _entry.getPageURL();
+		return model.getPageURL();
 	}
 
 	/**
@@ -369,7 +340,7 @@ public class EntryWrapper implements Entry, ModelWrapper<Entry> {
 	*/
 	@Override
 	public String getPortletId() {
-		return _entry.getPortletId();
+		return model.getPortletId();
 	}
 
 	/**
@@ -379,12 +350,7 @@ public class EntryWrapper implements Entry, ModelWrapper<Entry> {
 	*/
 	@Override
 	public long getPrimaryKey() {
-		return _entry.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _entry.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	/**
@@ -394,12 +360,12 @@ public class EntryWrapper implements Entry, ModelWrapper<Entry> {
 	*/
 	@Override
 	public String getRecurrence() {
-		return _entry.getRecurrence();
+		return model.getRecurrence();
 	}
 
 	@Override
 	public com.liferay.portal.kernel.cal.TZSRecurrence getRecurrenceObj() {
-		return _entry.getRecurrenceObj();
+		return model.getRecurrenceObj();
 	}
 
 	/**
@@ -409,7 +375,7 @@ public class EntryWrapper implements Entry, ModelWrapper<Entry> {
 	*/
 	@Override
 	public boolean getRepeating() {
-		return _entry.getRepeating();
+		return model.getRepeating();
 	}
 
 	/**
@@ -419,7 +385,7 @@ public class EntryWrapper implements Entry, ModelWrapper<Entry> {
 	*/
 	@Override
 	public String getReportParameters() {
-		return _entry.getReportParameters();
+		return model.getReportParameters();
 	}
 
 	/**
@@ -429,12 +395,12 @@ public class EntryWrapper implements Entry, ModelWrapper<Entry> {
 	*/
 	@Override
 	public boolean getScheduleRequest() {
-		return _entry.getScheduleRequest();
+		return model.getScheduleRequest();
 	}
 
 	@Override
 	public String getSchedulerRequestName() {
-		return _entry.getSchedulerRequestName();
+		return model.getSchedulerRequestName();
 	}
 
 	/**
@@ -444,7 +410,7 @@ public class EntryWrapper implements Entry, ModelWrapper<Entry> {
 	*/
 	@Override
 	public Date getStartDate() {
-		return _entry.getStartDate();
+		return model.getStartDate();
 	}
 
 	/**
@@ -454,7 +420,7 @@ public class EntryWrapper implements Entry, ModelWrapper<Entry> {
 	*/
 	@Override
 	public String getStatus() {
-		return _entry.getStatus();
+		return model.getStatus();
 	}
 
 	/**
@@ -464,7 +430,7 @@ public class EntryWrapper implements Entry, ModelWrapper<Entry> {
 	*/
 	@Override
 	public long getUserId() {
-		return _entry.getUserId();
+		return model.getUserId();
 	}
 
 	/**
@@ -474,7 +440,7 @@ public class EntryWrapper implements Entry, ModelWrapper<Entry> {
 	*/
 	@Override
 	public String getUserName() {
-		return _entry.getUserName();
+		return model.getUserName();
 	}
 
 	/**
@@ -484,27 +450,7 @@ public class EntryWrapper implements Entry, ModelWrapper<Entry> {
 	*/
 	@Override
 	public String getUserUuid() {
-		return _entry.getUserUuid();
-	}
-
-	@Override
-	public int hashCode() {
-		return _entry.hashCode();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _entry.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _entry.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _entry.isNew();
+		return model.getUserUuid();
 	}
 
 	/**
@@ -514,7 +460,7 @@ public class EntryWrapper implements Entry, ModelWrapper<Entry> {
 	*/
 	@Override
 	public boolean isRepeating() {
-		return _entry.isRepeating();
+		return model.isRepeating();
 	}
 
 	/**
@@ -524,17 +470,12 @@ public class EntryWrapper implements Entry, ModelWrapper<Entry> {
 	*/
 	@Override
 	public boolean isScheduleRequest() {
-		return _entry.isScheduleRequest();
+		return model.isScheduleRequest();
 	}
 
 	@Override
 	public void persist() {
-		_entry.persist();
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_entry.setCachedModel(cachedModel);
+		model.persist();
 	}
 
 	/**
@@ -544,7 +485,7 @@ public class EntryWrapper implements Entry, ModelWrapper<Entry> {
 	*/
 	@Override
 	public void setCompanyId(long companyId) {
-		_entry.setCompanyId(companyId);
+		model.setCompanyId(companyId);
 	}
 
 	/**
@@ -554,7 +495,7 @@ public class EntryWrapper implements Entry, ModelWrapper<Entry> {
 	*/
 	@Override
 	public void setCreateDate(Date createDate) {
-		_entry.setCreateDate(createDate);
+		model.setCreateDate(createDate);
 	}
 
 	/**
@@ -564,7 +505,7 @@ public class EntryWrapper implements Entry, ModelWrapper<Entry> {
 	*/
 	@Override
 	public void setDefinitionId(long definitionId) {
-		_entry.setDefinitionId(definitionId);
+		model.setDefinitionId(definitionId);
 	}
 
 	/**
@@ -574,7 +515,7 @@ public class EntryWrapper implements Entry, ModelWrapper<Entry> {
 	*/
 	@Override
 	public void setEmailDelivery(String emailDelivery) {
-		_entry.setEmailDelivery(emailDelivery);
+		model.setEmailDelivery(emailDelivery);
 	}
 
 	/**
@@ -584,7 +525,7 @@ public class EntryWrapper implements Entry, ModelWrapper<Entry> {
 	*/
 	@Override
 	public void setEmailNotifications(String emailNotifications) {
-		_entry.setEmailNotifications(emailNotifications);
+		model.setEmailNotifications(emailNotifications);
 	}
 
 	/**
@@ -594,7 +535,7 @@ public class EntryWrapper implements Entry, ModelWrapper<Entry> {
 	*/
 	@Override
 	public void setEndDate(Date endDate) {
-		_entry.setEndDate(endDate);
+		model.setEndDate(endDate);
 	}
 
 	/**
@@ -604,7 +545,7 @@ public class EntryWrapper implements Entry, ModelWrapper<Entry> {
 	*/
 	@Override
 	public void setEntryId(long entryId) {
-		_entry.setEntryId(entryId);
+		model.setEntryId(entryId);
 	}
 
 	/**
@@ -614,23 +555,7 @@ public class EntryWrapper implements Entry, ModelWrapper<Entry> {
 	*/
 	@Override
 	public void setErrorMessage(String errorMessage) {
-		_entry.setErrorMessage(errorMessage);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-		_entry.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_entry.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_entry.setExpandoBridgeAttributes(serviceContext);
+		model.setErrorMessage(errorMessage);
 	}
 
 	/**
@@ -640,7 +565,7 @@ public class EntryWrapper implements Entry, ModelWrapper<Entry> {
 	*/
 	@Override
 	public void setFormat(String format) {
-		_entry.setFormat(format);
+		model.setFormat(format);
 	}
 
 	/**
@@ -650,7 +575,7 @@ public class EntryWrapper implements Entry, ModelWrapper<Entry> {
 	*/
 	@Override
 	public void setGroupId(long groupId) {
-		_entry.setGroupId(groupId);
+		model.setGroupId(groupId);
 	}
 
 	/**
@@ -660,12 +585,7 @@ public class EntryWrapper implements Entry, ModelWrapper<Entry> {
 	*/
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
-		_entry.setModifiedDate(modifiedDate);
-	}
-
-	@Override
-	public void setNew(boolean n) {
-		_entry.setNew(n);
+		model.setModifiedDate(modifiedDate);
 	}
 
 	/**
@@ -675,7 +595,7 @@ public class EntryWrapper implements Entry, ModelWrapper<Entry> {
 	*/
 	@Override
 	public void setPageURL(String pageURL) {
-		_entry.setPageURL(pageURL);
+		model.setPageURL(pageURL);
 	}
 
 	/**
@@ -685,7 +605,7 @@ public class EntryWrapper implements Entry, ModelWrapper<Entry> {
 	*/
 	@Override
 	public void setPortletId(String portletId) {
-		_entry.setPortletId(portletId);
+		model.setPortletId(portletId);
 	}
 
 	/**
@@ -695,12 +615,7 @@ public class EntryWrapper implements Entry, ModelWrapper<Entry> {
 	*/
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_entry.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_entry.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -710,7 +625,7 @@ public class EntryWrapper implements Entry, ModelWrapper<Entry> {
 	*/
 	@Override
 	public void setRecurrence(String recurrence) {
-		_entry.setRecurrence(recurrence);
+		model.setRecurrence(recurrence);
 	}
 
 	/**
@@ -720,7 +635,7 @@ public class EntryWrapper implements Entry, ModelWrapper<Entry> {
 	*/
 	@Override
 	public void setRepeating(boolean repeating) {
-		_entry.setRepeating(repeating);
+		model.setRepeating(repeating);
 	}
 
 	/**
@@ -730,7 +645,7 @@ public class EntryWrapper implements Entry, ModelWrapper<Entry> {
 	*/
 	@Override
 	public void setReportParameters(String reportParameters) {
-		_entry.setReportParameters(reportParameters);
+		model.setReportParameters(reportParameters);
 	}
 
 	/**
@@ -740,7 +655,7 @@ public class EntryWrapper implements Entry, ModelWrapper<Entry> {
 	*/
 	@Override
 	public void setScheduleRequest(boolean scheduleRequest) {
-		_entry.setScheduleRequest(scheduleRequest);
+		model.setScheduleRequest(scheduleRequest);
 	}
 
 	/**
@@ -750,7 +665,7 @@ public class EntryWrapper implements Entry, ModelWrapper<Entry> {
 	*/
 	@Override
 	public void setStartDate(Date startDate) {
-		_entry.setStartDate(startDate);
+		model.setStartDate(startDate);
 	}
 
 	/**
@@ -760,7 +675,7 @@ public class EntryWrapper implements Entry, ModelWrapper<Entry> {
 	*/
 	@Override
 	public void setStatus(String status) {
-		_entry.setStatus(status);
+		model.setStatus(status);
 	}
 
 	/**
@@ -770,7 +685,7 @@ public class EntryWrapper implements Entry, ModelWrapper<Entry> {
 	*/
 	@Override
 	public void setUserId(long userId) {
-		_entry.setUserId(userId);
+		model.setUserId(userId);
 	}
 
 	/**
@@ -780,7 +695,7 @@ public class EntryWrapper implements Entry, ModelWrapper<Entry> {
 	*/
 	@Override
 	public void setUserName(String userName) {
-		_entry.setUserName(userName);
+		model.setUserName(userName);
 	}
 
 	/**
@@ -790,72 +705,11 @@ public class EntryWrapper implements Entry, ModelWrapper<Entry> {
 	*/
 	@Override
 	public void setUserUuid(String userUuid) {
-		_entry.setUserUuid(userUuid);
+		model.setUserUuid(userUuid);
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.CacheModel<Entry> toCacheModel() {
-		return _entry.toCacheModel();
+	protected EntryWrapper wrap(Entry entry) {
+		return new EntryWrapper(entry);
 	}
-
-	@Override
-	public Entry toEscapedModel() {
-		return new EntryWrapper(_entry.toEscapedModel());
-	}
-
-	@Override
-	public String toString() {
-		return _entry.toString();
-	}
-
-	@Override
-	public Entry toUnescapedModel() {
-		return new EntryWrapper(_entry.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _entry.toXmlString();
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-
-		if (!(obj instanceof EntryWrapper)) {
-			return false;
-		}
-
-		EntryWrapper entryWrapper = (EntryWrapper)obj;
-
-		if (Objects.equals(_entry, entryWrapper._entry)) {
-			return true;
-		}
-
-		return false;
-	}
-
-	@Override
-	public Entry getWrappedModel() {
-		return _entry;
-	}
-
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _entry.isEntityCacheEnabled();
-	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _entry.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_entry.resetOriginalValues();
-	}
-
-	private final Entry _entry;
 }

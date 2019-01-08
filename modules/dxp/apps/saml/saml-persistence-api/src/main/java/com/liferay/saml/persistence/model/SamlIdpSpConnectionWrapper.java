@@ -16,17 +16,12 @@ package com.liferay.saml.persistence.model;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
-
 import com.liferay.portal.kernel.model.ModelWrapper;
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -38,20 +33,10 @@ import java.util.Objects;
  * @generated
  */
 @ProviderType
-public class SamlIdpSpConnectionWrapper implements SamlIdpSpConnection,
-	ModelWrapper<SamlIdpSpConnection> {
+public class SamlIdpSpConnectionWrapper extends BaseModelWrapper<SamlIdpSpConnection>
+	implements SamlIdpSpConnection, ModelWrapper<SamlIdpSpConnection> {
 	public SamlIdpSpConnectionWrapper(SamlIdpSpConnection samlIdpSpConnection) {
-		_samlIdpSpConnection = samlIdpSpConnection;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return SamlIdpSpConnection.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return SamlIdpSpConnection.class.getName();
+		super(samlIdpSpConnection);
 	}
 
 	@Override
@@ -194,16 +179,6 @@ public class SamlIdpSpConnectionWrapper implements SamlIdpSpConnection,
 		}
 	}
 
-	@Override
-	public Object clone() {
-		return new SamlIdpSpConnectionWrapper((SamlIdpSpConnection)_samlIdpSpConnection.clone());
-	}
-
-	@Override
-	public int compareTo(SamlIdpSpConnection samlIdpSpConnection) {
-		return _samlIdpSpConnection.compareTo(samlIdpSpConnection);
-	}
-
 	/**
 	* Returns the assertion lifetime of this saml idp sp connection.
 	*
@@ -211,7 +186,7 @@ public class SamlIdpSpConnectionWrapper implements SamlIdpSpConnection,
 	*/
 	@Override
 	public int getAssertionLifetime() {
-		return _samlIdpSpConnection.getAssertionLifetime();
+		return model.getAssertionLifetime();
 	}
 
 	/**
@@ -221,7 +196,7 @@ public class SamlIdpSpConnectionWrapper implements SamlIdpSpConnection,
 	*/
 	@Override
 	public String getAttributeNames() {
-		return _samlIdpSpConnection.getAttributeNames();
+		return model.getAttributeNames();
 	}
 
 	/**
@@ -231,7 +206,7 @@ public class SamlIdpSpConnectionWrapper implements SamlIdpSpConnection,
 	*/
 	@Override
 	public boolean getAttributesEnabled() {
-		return _samlIdpSpConnection.getAttributesEnabled();
+		return model.getAttributesEnabled();
 	}
 
 	/**
@@ -241,7 +216,7 @@ public class SamlIdpSpConnectionWrapper implements SamlIdpSpConnection,
 	*/
 	@Override
 	public boolean getAttributesNamespaceEnabled() {
-		return _samlIdpSpConnection.getAttributesNamespaceEnabled();
+		return model.getAttributesNamespaceEnabled();
 	}
 
 	/**
@@ -251,7 +226,7 @@ public class SamlIdpSpConnectionWrapper implements SamlIdpSpConnection,
 	*/
 	@Override
 	public long getCompanyId() {
-		return _samlIdpSpConnection.getCompanyId();
+		return model.getCompanyId();
 	}
 
 	/**
@@ -261,7 +236,7 @@ public class SamlIdpSpConnectionWrapper implements SamlIdpSpConnection,
 	*/
 	@Override
 	public Date getCreateDate() {
-		return _samlIdpSpConnection.getCreateDate();
+		return model.getCreateDate();
 	}
 
 	/**
@@ -271,12 +246,7 @@ public class SamlIdpSpConnectionWrapper implements SamlIdpSpConnection,
 	*/
 	@Override
 	public boolean getEnabled() {
-		return _samlIdpSpConnection.getEnabled();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _samlIdpSpConnection.getExpandoBridge();
+		return model.getEnabled();
 	}
 
 	/**
@@ -286,7 +256,7 @@ public class SamlIdpSpConnectionWrapper implements SamlIdpSpConnection,
 	*/
 	@Override
 	public Date getMetadataUpdatedDate() {
-		return _samlIdpSpConnection.getMetadataUpdatedDate();
+		return model.getMetadataUpdatedDate();
 	}
 
 	/**
@@ -296,7 +266,7 @@ public class SamlIdpSpConnectionWrapper implements SamlIdpSpConnection,
 	*/
 	@Override
 	public String getMetadataUrl() {
-		return _samlIdpSpConnection.getMetadataUrl();
+		return model.getMetadataUrl();
 	}
 
 	/**
@@ -306,7 +276,7 @@ public class SamlIdpSpConnectionWrapper implements SamlIdpSpConnection,
 	*/
 	@Override
 	public String getMetadataXml() {
-		return _samlIdpSpConnection.getMetadataXml();
+		return model.getMetadataXml();
 	}
 
 	/**
@@ -316,7 +286,7 @@ public class SamlIdpSpConnectionWrapper implements SamlIdpSpConnection,
 	*/
 	@Override
 	public Date getModifiedDate() {
-		return _samlIdpSpConnection.getModifiedDate();
+		return model.getModifiedDate();
 	}
 
 	/**
@@ -326,7 +296,7 @@ public class SamlIdpSpConnectionWrapper implements SamlIdpSpConnection,
 	*/
 	@Override
 	public String getName() {
-		return _samlIdpSpConnection.getName();
+		return model.getName();
 	}
 
 	/**
@@ -336,7 +306,7 @@ public class SamlIdpSpConnectionWrapper implements SamlIdpSpConnection,
 	*/
 	@Override
 	public String getNameIdAttribute() {
-		return _samlIdpSpConnection.getNameIdAttribute();
+		return model.getNameIdAttribute();
 	}
 
 	/**
@@ -346,7 +316,7 @@ public class SamlIdpSpConnectionWrapper implements SamlIdpSpConnection,
 	*/
 	@Override
 	public String getNameIdFormat() {
-		return _samlIdpSpConnection.getNameIdFormat();
+		return model.getNameIdFormat();
 	}
 
 	/**
@@ -356,12 +326,7 @@ public class SamlIdpSpConnectionWrapper implements SamlIdpSpConnection,
 	*/
 	@Override
 	public long getPrimaryKey() {
-		return _samlIdpSpConnection.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _samlIdpSpConnection.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	/**
@@ -371,7 +336,7 @@ public class SamlIdpSpConnectionWrapper implements SamlIdpSpConnection,
 	*/
 	@Override
 	public long getSamlIdpSpConnectionId() {
-		return _samlIdpSpConnection.getSamlIdpSpConnectionId();
+		return model.getSamlIdpSpConnectionId();
 	}
 
 	/**
@@ -381,7 +346,7 @@ public class SamlIdpSpConnectionWrapper implements SamlIdpSpConnection,
 	*/
 	@Override
 	public String getSamlSpEntityId() {
-		return _samlIdpSpConnection.getSamlSpEntityId();
+		return model.getSamlSpEntityId();
 	}
 
 	/**
@@ -391,7 +356,7 @@ public class SamlIdpSpConnectionWrapper implements SamlIdpSpConnection,
 	*/
 	@Override
 	public long getUserId() {
-		return _samlIdpSpConnection.getUserId();
+		return model.getUserId();
 	}
 
 	/**
@@ -401,7 +366,7 @@ public class SamlIdpSpConnectionWrapper implements SamlIdpSpConnection,
 	*/
 	@Override
 	public String getUserName() {
-		return _samlIdpSpConnection.getUserName();
+		return model.getUserName();
 	}
 
 	/**
@@ -411,12 +376,7 @@ public class SamlIdpSpConnectionWrapper implements SamlIdpSpConnection,
 	*/
 	@Override
 	public String getUserUuid() {
-		return _samlIdpSpConnection.getUserUuid();
-	}
-
-	@Override
-	public int hashCode() {
-		return _samlIdpSpConnection.hashCode();
+		return model.getUserUuid();
 	}
 
 	/**
@@ -426,7 +386,7 @@ public class SamlIdpSpConnectionWrapper implements SamlIdpSpConnection,
 	*/
 	@Override
 	public boolean isAttributesEnabled() {
-		return _samlIdpSpConnection.isAttributesEnabled();
+		return model.isAttributesEnabled();
 	}
 
 	/**
@@ -436,12 +396,7 @@ public class SamlIdpSpConnectionWrapper implements SamlIdpSpConnection,
 	*/
 	@Override
 	public boolean isAttributesNamespaceEnabled() {
-		return _samlIdpSpConnection.isAttributesNamespaceEnabled();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _samlIdpSpConnection.isCachedModel();
+		return model.isAttributesNamespaceEnabled();
 	}
 
 	/**
@@ -451,22 +406,12 @@ public class SamlIdpSpConnectionWrapper implements SamlIdpSpConnection,
 	*/
 	@Override
 	public boolean isEnabled() {
-		return _samlIdpSpConnection.isEnabled();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _samlIdpSpConnection.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _samlIdpSpConnection.isNew();
+		return model.isEnabled();
 	}
 
 	@Override
 	public void persist() {
-		_samlIdpSpConnection.persist();
+		model.persist();
 	}
 
 	/**
@@ -476,7 +421,7 @@ public class SamlIdpSpConnectionWrapper implements SamlIdpSpConnection,
 	*/
 	@Override
 	public void setAssertionLifetime(int assertionLifetime) {
-		_samlIdpSpConnection.setAssertionLifetime(assertionLifetime);
+		model.setAssertionLifetime(assertionLifetime);
 	}
 
 	/**
@@ -486,7 +431,7 @@ public class SamlIdpSpConnectionWrapper implements SamlIdpSpConnection,
 	*/
 	@Override
 	public void setAttributeNames(String attributeNames) {
-		_samlIdpSpConnection.setAttributeNames(attributeNames);
+		model.setAttributeNames(attributeNames);
 	}
 
 	/**
@@ -496,7 +441,7 @@ public class SamlIdpSpConnectionWrapper implements SamlIdpSpConnection,
 	*/
 	@Override
 	public void setAttributesEnabled(boolean attributesEnabled) {
-		_samlIdpSpConnection.setAttributesEnabled(attributesEnabled);
+		model.setAttributesEnabled(attributesEnabled);
 	}
 
 	/**
@@ -507,12 +452,7 @@ public class SamlIdpSpConnectionWrapper implements SamlIdpSpConnection,
 	@Override
 	public void setAttributesNamespaceEnabled(
 		boolean attributesNamespaceEnabled) {
-		_samlIdpSpConnection.setAttributesNamespaceEnabled(attributesNamespaceEnabled);
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_samlIdpSpConnection.setCachedModel(cachedModel);
+		model.setAttributesNamespaceEnabled(attributesNamespaceEnabled);
 	}
 
 	/**
@@ -522,7 +462,7 @@ public class SamlIdpSpConnectionWrapper implements SamlIdpSpConnection,
 	*/
 	@Override
 	public void setCompanyId(long companyId) {
-		_samlIdpSpConnection.setCompanyId(companyId);
+		model.setCompanyId(companyId);
 	}
 
 	/**
@@ -532,7 +472,7 @@ public class SamlIdpSpConnectionWrapper implements SamlIdpSpConnection,
 	*/
 	@Override
 	public void setCreateDate(Date createDate) {
-		_samlIdpSpConnection.setCreateDate(createDate);
+		model.setCreateDate(createDate);
 	}
 
 	/**
@@ -542,23 +482,7 @@ public class SamlIdpSpConnectionWrapper implements SamlIdpSpConnection,
 	*/
 	@Override
 	public void setEnabled(boolean enabled) {
-		_samlIdpSpConnection.setEnabled(enabled);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-		_samlIdpSpConnection.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_samlIdpSpConnection.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_samlIdpSpConnection.setExpandoBridgeAttributes(serviceContext);
+		model.setEnabled(enabled);
 	}
 
 	/**
@@ -568,7 +492,7 @@ public class SamlIdpSpConnectionWrapper implements SamlIdpSpConnection,
 	*/
 	@Override
 	public void setMetadataUpdatedDate(Date metadataUpdatedDate) {
-		_samlIdpSpConnection.setMetadataUpdatedDate(metadataUpdatedDate);
+		model.setMetadataUpdatedDate(metadataUpdatedDate);
 	}
 
 	/**
@@ -578,7 +502,7 @@ public class SamlIdpSpConnectionWrapper implements SamlIdpSpConnection,
 	*/
 	@Override
 	public void setMetadataUrl(String metadataUrl) {
-		_samlIdpSpConnection.setMetadataUrl(metadataUrl);
+		model.setMetadataUrl(metadataUrl);
 	}
 
 	/**
@@ -588,7 +512,7 @@ public class SamlIdpSpConnectionWrapper implements SamlIdpSpConnection,
 	*/
 	@Override
 	public void setMetadataXml(String metadataXml) {
-		_samlIdpSpConnection.setMetadataXml(metadataXml);
+		model.setMetadataXml(metadataXml);
 	}
 
 	/**
@@ -598,7 +522,7 @@ public class SamlIdpSpConnectionWrapper implements SamlIdpSpConnection,
 	*/
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
-		_samlIdpSpConnection.setModifiedDate(modifiedDate);
+		model.setModifiedDate(modifiedDate);
 	}
 
 	/**
@@ -608,7 +532,7 @@ public class SamlIdpSpConnectionWrapper implements SamlIdpSpConnection,
 	*/
 	@Override
 	public void setName(String name) {
-		_samlIdpSpConnection.setName(name);
+		model.setName(name);
 	}
 
 	/**
@@ -618,7 +542,7 @@ public class SamlIdpSpConnectionWrapper implements SamlIdpSpConnection,
 	*/
 	@Override
 	public void setNameIdAttribute(String nameIdAttribute) {
-		_samlIdpSpConnection.setNameIdAttribute(nameIdAttribute);
+		model.setNameIdAttribute(nameIdAttribute);
 	}
 
 	/**
@@ -628,12 +552,7 @@ public class SamlIdpSpConnectionWrapper implements SamlIdpSpConnection,
 	*/
 	@Override
 	public void setNameIdFormat(String nameIdFormat) {
-		_samlIdpSpConnection.setNameIdFormat(nameIdFormat);
-	}
-
-	@Override
-	public void setNew(boolean n) {
-		_samlIdpSpConnection.setNew(n);
+		model.setNameIdFormat(nameIdFormat);
 	}
 
 	/**
@@ -643,12 +562,7 @@ public class SamlIdpSpConnectionWrapper implements SamlIdpSpConnection,
 	*/
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_samlIdpSpConnection.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_samlIdpSpConnection.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -658,7 +572,7 @@ public class SamlIdpSpConnectionWrapper implements SamlIdpSpConnection,
 	*/
 	@Override
 	public void setSamlIdpSpConnectionId(long samlIdpSpConnectionId) {
-		_samlIdpSpConnection.setSamlIdpSpConnectionId(samlIdpSpConnectionId);
+		model.setSamlIdpSpConnectionId(samlIdpSpConnectionId);
 	}
 
 	/**
@@ -668,7 +582,7 @@ public class SamlIdpSpConnectionWrapper implements SamlIdpSpConnection,
 	*/
 	@Override
 	public void setSamlSpEntityId(String samlSpEntityId) {
-		_samlIdpSpConnection.setSamlSpEntityId(samlSpEntityId);
+		model.setSamlSpEntityId(samlSpEntityId);
 	}
 
 	/**
@@ -678,7 +592,7 @@ public class SamlIdpSpConnectionWrapper implements SamlIdpSpConnection,
 	*/
 	@Override
 	public void setUserId(long userId) {
-		_samlIdpSpConnection.setUserId(userId);
+		model.setUserId(userId);
 	}
 
 	/**
@@ -688,7 +602,7 @@ public class SamlIdpSpConnectionWrapper implements SamlIdpSpConnection,
 	*/
 	@Override
 	public void setUserName(String userName) {
-		_samlIdpSpConnection.setUserName(userName);
+		model.setUserName(userName);
 	}
 
 	/**
@@ -698,73 +612,12 @@ public class SamlIdpSpConnectionWrapper implements SamlIdpSpConnection,
 	*/
 	@Override
 	public void setUserUuid(String userUuid) {
-		_samlIdpSpConnection.setUserUuid(userUuid);
+		model.setUserUuid(userUuid);
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.CacheModel<SamlIdpSpConnection> toCacheModel() {
-		return _samlIdpSpConnection.toCacheModel();
+	protected SamlIdpSpConnectionWrapper wrap(
+		SamlIdpSpConnection samlIdpSpConnection) {
+		return new SamlIdpSpConnectionWrapper(samlIdpSpConnection);
 	}
-
-	@Override
-	public SamlIdpSpConnection toEscapedModel() {
-		return new SamlIdpSpConnectionWrapper(_samlIdpSpConnection.toEscapedModel());
-	}
-
-	@Override
-	public String toString() {
-		return _samlIdpSpConnection.toString();
-	}
-
-	@Override
-	public SamlIdpSpConnection toUnescapedModel() {
-		return new SamlIdpSpConnectionWrapper(_samlIdpSpConnection.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _samlIdpSpConnection.toXmlString();
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-
-		if (!(obj instanceof SamlIdpSpConnectionWrapper)) {
-			return false;
-		}
-
-		SamlIdpSpConnectionWrapper samlIdpSpConnectionWrapper = (SamlIdpSpConnectionWrapper)obj;
-
-		if (Objects.equals(_samlIdpSpConnection,
-					samlIdpSpConnectionWrapper._samlIdpSpConnection)) {
-			return true;
-		}
-
-		return false;
-	}
-
-	@Override
-	public SamlIdpSpConnection getWrappedModel() {
-		return _samlIdpSpConnection;
-	}
-
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _samlIdpSpConnection.isEntityCacheEnabled();
-	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _samlIdpSpConnection.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_samlIdpSpConnection.resetOriginalValues();
-	}
-
-	private final SamlIdpSpConnection _samlIdpSpConnection;
 }

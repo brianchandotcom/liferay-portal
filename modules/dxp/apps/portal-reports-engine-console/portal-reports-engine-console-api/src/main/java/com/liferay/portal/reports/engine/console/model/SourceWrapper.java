@@ -16,19 +16,14 @@ package com.liferay.portal.reports.engine.console.model;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
-
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 
 import com.liferay.portal.kernel.model.ModelWrapper;
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -40,19 +35,10 @@ import java.util.Objects;
  * @generated
  */
 @ProviderType
-public class SourceWrapper implements Source, ModelWrapper<Source> {
+public class SourceWrapper extends BaseModelWrapper<Source> implements Source,
+	ModelWrapper<Source> {
 	public SourceWrapper(Source source) {
-		_source = source;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return Source.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return Source.class.getName();
+		super(source);
 	}
 
 	@Override
@@ -165,29 +151,19 @@ public class SourceWrapper implements Source, ModelWrapper<Source> {
 	}
 
 	@Override
-	public Object clone() {
-		return new SourceWrapper((Source)_source.clone());
-	}
-
-	@Override
-	public int compareTo(Source source) {
-		return _source.compareTo(source);
-	}
-
-	@Override
 	public String getAttachmentsDir() {
-		return _source.getAttachmentsDir();
+		return model.getAttachmentsDir();
 	}
 
 	@Override
 	public String[] getAttachmentsFiles()
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _source.getAttachmentsFiles();
+		return model.getAttachmentsFiles();
 	}
 
 	@Override
 	public String[] getAvailableLanguageIds() {
-		return _source.getAvailableLanguageIds();
+		return model.getAvailableLanguageIds();
 	}
 
 	/**
@@ -197,7 +173,7 @@ public class SourceWrapper implements Source, ModelWrapper<Source> {
 	*/
 	@Override
 	public long getCompanyId() {
-		return _source.getCompanyId();
+		return model.getCompanyId();
 	}
 
 	/**
@@ -207,12 +183,12 @@ public class SourceWrapper implements Source, ModelWrapper<Source> {
 	*/
 	@Override
 	public Date getCreateDate() {
-		return _source.getCreateDate();
+		return model.getCreateDate();
 	}
 
 	@Override
 	public String getDefaultLanguageId() {
-		return _source.getDefaultLanguageId();
+		return model.getDefaultLanguageId();
 	}
 
 	/**
@@ -222,7 +198,7 @@ public class SourceWrapper implements Source, ModelWrapper<Source> {
 	*/
 	@Override
 	public String getDriverClassName() {
-		return _source.getDriverClassName();
+		return model.getDriverClassName();
 	}
 
 	/**
@@ -232,7 +208,7 @@ public class SourceWrapper implements Source, ModelWrapper<Source> {
 	*/
 	@Override
 	public String getDriverPassword() {
-		return _source.getDriverPassword();
+		return model.getDriverPassword();
 	}
 
 	/**
@@ -242,7 +218,7 @@ public class SourceWrapper implements Source, ModelWrapper<Source> {
 	*/
 	@Override
 	public String getDriverUrl() {
-		return _source.getDriverUrl();
+		return model.getDriverUrl();
 	}
 
 	/**
@@ -252,12 +228,7 @@ public class SourceWrapper implements Source, ModelWrapper<Source> {
 	*/
 	@Override
 	public String getDriverUserName() {
-		return _source.getDriverUserName();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _source.getExpandoBridge();
+		return model.getDriverUserName();
 	}
 
 	/**
@@ -267,7 +238,7 @@ public class SourceWrapper implements Source, ModelWrapper<Source> {
 	*/
 	@Override
 	public long getGroupId() {
-		return _source.getGroupId();
+		return model.getGroupId();
 	}
 
 	/**
@@ -277,7 +248,7 @@ public class SourceWrapper implements Source, ModelWrapper<Source> {
 	*/
 	@Override
 	public Date getLastPublishDate() {
-		return _source.getLastPublishDate();
+		return model.getLastPublishDate();
 	}
 
 	/**
@@ -287,7 +258,7 @@ public class SourceWrapper implements Source, ModelWrapper<Source> {
 	*/
 	@Override
 	public Date getModifiedDate() {
-		return _source.getModifiedDate();
+		return model.getModifiedDate();
 	}
 
 	/**
@@ -297,7 +268,7 @@ public class SourceWrapper implements Source, ModelWrapper<Source> {
 	*/
 	@Override
 	public String getName() {
-		return _source.getName();
+		return model.getName();
 	}
 
 	/**
@@ -308,7 +279,7 @@ public class SourceWrapper implements Source, ModelWrapper<Source> {
 	*/
 	@Override
 	public String getName(java.util.Locale locale) {
-		return _source.getName(locale);
+		return model.getName(locale);
 	}
 
 	/**
@@ -320,7 +291,7 @@ public class SourceWrapper implements Source, ModelWrapper<Source> {
 	*/
 	@Override
 	public String getName(java.util.Locale locale, boolean useDefault) {
-		return _source.getName(locale, useDefault);
+		return model.getName(locale, useDefault);
 	}
 
 	/**
@@ -331,7 +302,7 @@ public class SourceWrapper implements Source, ModelWrapper<Source> {
 	*/
 	@Override
 	public String getName(String languageId) {
-		return _source.getName(languageId);
+		return model.getName(languageId);
 	}
 
 	/**
@@ -343,17 +314,17 @@ public class SourceWrapper implements Source, ModelWrapper<Source> {
 	*/
 	@Override
 	public String getName(String languageId, boolean useDefault) {
-		return _source.getName(languageId, useDefault);
+		return model.getName(languageId, useDefault);
 	}
 
 	@Override
 	public String getNameCurrentLanguageId() {
-		return _source.getNameCurrentLanguageId();
+		return model.getNameCurrentLanguageId();
 	}
 
 	@Override
 	public String getNameCurrentValue() {
-		return _source.getNameCurrentValue();
+		return model.getNameCurrentValue();
 	}
 
 	/**
@@ -363,7 +334,7 @@ public class SourceWrapper implements Source, ModelWrapper<Source> {
 	*/
 	@Override
 	public Map<java.util.Locale, String> getNameMap() {
-		return _source.getNameMap();
+		return model.getNameMap();
 	}
 
 	/**
@@ -373,12 +344,7 @@ public class SourceWrapper implements Source, ModelWrapper<Source> {
 	*/
 	@Override
 	public long getPrimaryKey() {
-		return _source.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _source.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	/**
@@ -388,7 +354,7 @@ public class SourceWrapper implements Source, ModelWrapper<Source> {
 	*/
 	@Override
 	public long getSourceId() {
-		return _source.getSourceId();
+		return model.getSourceId();
 	}
 
 	/**
@@ -398,7 +364,7 @@ public class SourceWrapper implements Source, ModelWrapper<Source> {
 	*/
 	@Override
 	public long getUserId() {
-		return _source.getUserId();
+		return model.getUserId();
 	}
 
 	/**
@@ -408,7 +374,7 @@ public class SourceWrapper implements Source, ModelWrapper<Source> {
 	*/
 	@Override
 	public String getUserName() {
-		return _source.getUserName();
+		return model.getUserName();
 	}
 
 	/**
@@ -418,7 +384,7 @@ public class SourceWrapper implements Source, ModelWrapper<Source> {
 	*/
 	@Override
 	public String getUserUuid() {
-		return _source.getUserUuid();
+		return model.getUserUuid();
 	}
 
 	/**
@@ -428,50 +394,25 @@ public class SourceWrapper implements Source, ModelWrapper<Source> {
 	*/
 	@Override
 	public String getUuid() {
-		return _source.getUuid();
-	}
-
-	@Override
-	public int hashCode() {
-		return _source.hashCode();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _source.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _source.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _source.isNew();
+		return model.getUuid();
 	}
 
 	@Override
 	public void persist() {
-		_source.persist();
+		model.persist();
 	}
 
 	@Override
 	public void prepareLocalizedFieldsForImport()
 		throws com.liferay.portal.kernel.exception.LocaleException {
-		_source.prepareLocalizedFieldsForImport();
+		model.prepareLocalizedFieldsForImport();
 	}
 
 	@Override
 	public void prepareLocalizedFieldsForImport(
 		java.util.Locale defaultImportLocale)
 		throws com.liferay.portal.kernel.exception.LocaleException {
-		_source.prepareLocalizedFieldsForImport(defaultImportLocale);
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_source.setCachedModel(cachedModel);
+		model.prepareLocalizedFieldsForImport(defaultImportLocale);
 	}
 
 	/**
@@ -481,7 +422,7 @@ public class SourceWrapper implements Source, ModelWrapper<Source> {
 	*/
 	@Override
 	public void setCompanyId(long companyId) {
-		_source.setCompanyId(companyId);
+		model.setCompanyId(companyId);
 	}
 
 	/**
@@ -491,7 +432,7 @@ public class SourceWrapper implements Source, ModelWrapper<Source> {
 	*/
 	@Override
 	public void setCreateDate(Date createDate) {
-		_source.setCreateDate(createDate);
+		model.setCreateDate(createDate);
 	}
 
 	/**
@@ -501,7 +442,7 @@ public class SourceWrapper implements Source, ModelWrapper<Source> {
 	*/
 	@Override
 	public void setDriverClassName(String driverClassName) {
-		_source.setDriverClassName(driverClassName);
+		model.setDriverClassName(driverClassName);
 	}
 
 	/**
@@ -511,7 +452,7 @@ public class SourceWrapper implements Source, ModelWrapper<Source> {
 	*/
 	@Override
 	public void setDriverPassword(String driverPassword) {
-		_source.setDriverPassword(driverPassword);
+		model.setDriverPassword(driverPassword);
 	}
 
 	/**
@@ -521,7 +462,7 @@ public class SourceWrapper implements Source, ModelWrapper<Source> {
 	*/
 	@Override
 	public void setDriverUrl(String driverUrl) {
-		_source.setDriverUrl(driverUrl);
+		model.setDriverUrl(driverUrl);
 	}
 
 	/**
@@ -531,23 +472,7 @@ public class SourceWrapper implements Source, ModelWrapper<Source> {
 	*/
 	@Override
 	public void setDriverUserName(String driverUserName) {
-		_source.setDriverUserName(driverUserName);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-		_source.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_source.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_source.setExpandoBridgeAttributes(serviceContext);
+		model.setDriverUserName(driverUserName);
 	}
 
 	/**
@@ -557,7 +482,7 @@ public class SourceWrapper implements Source, ModelWrapper<Source> {
 	*/
 	@Override
 	public void setGroupId(long groupId) {
-		_source.setGroupId(groupId);
+		model.setGroupId(groupId);
 	}
 
 	/**
@@ -567,7 +492,7 @@ public class SourceWrapper implements Source, ModelWrapper<Source> {
 	*/
 	@Override
 	public void setLastPublishDate(Date lastPublishDate) {
-		_source.setLastPublishDate(lastPublishDate);
+		model.setLastPublishDate(lastPublishDate);
 	}
 
 	/**
@@ -577,7 +502,7 @@ public class SourceWrapper implements Source, ModelWrapper<Source> {
 	*/
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
-		_source.setModifiedDate(modifiedDate);
+		model.setModifiedDate(modifiedDate);
 	}
 
 	/**
@@ -587,7 +512,7 @@ public class SourceWrapper implements Source, ModelWrapper<Source> {
 	*/
 	@Override
 	public void setName(String name) {
-		_source.setName(name);
+		model.setName(name);
 	}
 
 	/**
@@ -598,7 +523,7 @@ public class SourceWrapper implements Source, ModelWrapper<Source> {
 	*/
 	@Override
 	public void setName(String name, java.util.Locale locale) {
-		_source.setName(name, locale);
+		model.setName(name, locale);
 	}
 
 	/**
@@ -611,12 +536,12 @@ public class SourceWrapper implements Source, ModelWrapper<Source> {
 	@Override
 	public void setName(String name, java.util.Locale locale,
 		java.util.Locale defaultLocale) {
-		_source.setName(name, locale, defaultLocale);
+		model.setName(name, locale, defaultLocale);
 	}
 
 	@Override
 	public void setNameCurrentLanguageId(String languageId) {
-		_source.setNameCurrentLanguageId(languageId);
+		model.setNameCurrentLanguageId(languageId);
 	}
 
 	/**
@@ -626,7 +551,7 @@ public class SourceWrapper implements Source, ModelWrapper<Source> {
 	*/
 	@Override
 	public void setNameMap(Map<java.util.Locale, String> nameMap) {
-		_source.setNameMap(nameMap);
+		model.setNameMap(nameMap);
 	}
 
 	/**
@@ -638,12 +563,7 @@ public class SourceWrapper implements Source, ModelWrapper<Source> {
 	@Override
 	public void setNameMap(Map<java.util.Locale, String> nameMap,
 		java.util.Locale defaultLocale) {
-		_source.setNameMap(nameMap, defaultLocale);
-	}
-
-	@Override
-	public void setNew(boolean n) {
-		_source.setNew(n);
+		model.setNameMap(nameMap, defaultLocale);
 	}
 
 	/**
@@ -653,12 +573,7 @@ public class SourceWrapper implements Source, ModelWrapper<Source> {
 	*/
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_source.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_source.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -668,7 +583,7 @@ public class SourceWrapper implements Source, ModelWrapper<Source> {
 	*/
 	@Override
 	public void setSourceId(long sourceId) {
-		_source.setSourceId(sourceId);
+		model.setSourceId(sourceId);
 	}
 
 	/**
@@ -678,7 +593,7 @@ public class SourceWrapper implements Source, ModelWrapper<Source> {
 	*/
 	@Override
 	public void setUserId(long userId) {
-		_source.setUserId(userId);
+		model.setUserId(userId);
 	}
 
 	/**
@@ -688,7 +603,7 @@ public class SourceWrapper implements Source, ModelWrapper<Source> {
 	*/
 	@Override
 	public void setUserName(String userName) {
-		_source.setUserName(userName);
+		model.setUserName(userName);
 	}
 
 	/**
@@ -698,7 +613,7 @@ public class SourceWrapper implements Source, ModelWrapper<Source> {
 	*/
 	@Override
 	public void setUserUuid(String userUuid) {
-		_source.setUserUuid(userUuid);
+		model.setUserUuid(userUuid);
 	}
 
 	/**
@@ -708,77 +623,16 @@ public class SourceWrapper implements Source, ModelWrapper<Source> {
 	*/
 	@Override
 	public void setUuid(String uuid) {
-		_source.setUuid(uuid);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<Source> toCacheModel() {
-		return _source.toCacheModel();
-	}
-
-	@Override
-	public Source toEscapedModel() {
-		return new SourceWrapper(_source.toEscapedModel());
-	}
-
-	@Override
-	public String toString() {
-		return _source.toString();
-	}
-
-	@Override
-	public Source toUnescapedModel() {
-		return new SourceWrapper(_source.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _source.toXmlString();
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-
-		if (!(obj instanceof SourceWrapper)) {
-			return false;
-		}
-
-		SourceWrapper sourceWrapper = (SourceWrapper)obj;
-
-		if (Objects.equals(_source, sourceWrapper._source)) {
-			return true;
-		}
-
-		return false;
+		model.setUuid(uuid);
 	}
 
 	@Override
 	public StagedModelType getStagedModelType() {
-		return _source.getStagedModelType();
+		return model.getStagedModelType();
 	}
 
 	@Override
-	public Source getWrappedModel() {
-		return _source;
+	protected SourceWrapper wrap(Source source) {
+		return new SourceWrapper(source);
 	}
-
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _source.isEntityCacheEnabled();
-	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _source.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_source.resetOriginalValues();
-	}
-
-	private final Source _source;
 }

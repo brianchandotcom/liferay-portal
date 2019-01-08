@@ -16,17 +16,12 @@ package com.liferay.oauth.model;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
-
 import com.liferay.portal.kernel.model.ModelWrapper;
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -38,19 +33,10 @@ import java.util.Objects;
  * @generated
  */
 @ProviderType
-public class OAuthUserWrapper implements OAuthUser, ModelWrapper<OAuthUser> {
+public class OAuthUserWrapper extends BaseModelWrapper<OAuthUser>
+	implements OAuthUser, ModelWrapper<OAuthUser> {
 	public OAuthUserWrapper(OAuthUser oAuthUser) {
-		_oAuthUser = oAuthUser;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return OAuthUser.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return OAuthUser.class.getName();
+		super(oAuthUser);
 	}
 
 	@Override
@@ -127,16 +113,6 @@ public class OAuthUserWrapper implements OAuthUser, ModelWrapper<OAuthUser> {
 		}
 	}
 
-	@Override
-	public Object clone() {
-		return new OAuthUserWrapper((OAuthUser)_oAuthUser.clone());
-	}
-
-	@Override
-	public int compareTo(OAuthUser oAuthUser) {
-		return _oAuthUser.compareTo(oAuthUser);
-	}
-
 	/**
 	* Returns the access secret of this o auth user.
 	*
@@ -144,7 +120,7 @@ public class OAuthUserWrapper implements OAuthUser, ModelWrapper<OAuthUser> {
 	*/
 	@Override
 	public String getAccessSecret() {
-		return _oAuthUser.getAccessSecret();
+		return model.getAccessSecret();
 	}
 
 	/**
@@ -154,7 +130,7 @@ public class OAuthUserWrapper implements OAuthUser, ModelWrapper<OAuthUser> {
 	*/
 	@Override
 	public String getAccessToken() {
-		return _oAuthUser.getAccessToken();
+		return model.getAccessToken();
 	}
 
 	/**
@@ -164,7 +140,7 @@ public class OAuthUserWrapper implements OAuthUser, ModelWrapper<OAuthUser> {
 	*/
 	@Override
 	public long getCompanyId() {
-		return _oAuthUser.getCompanyId();
+		return model.getCompanyId();
 	}
 
 	/**
@@ -174,12 +150,7 @@ public class OAuthUserWrapper implements OAuthUser, ModelWrapper<OAuthUser> {
 	*/
 	@Override
 	public Date getCreateDate() {
-		return _oAuthUser.getCreateDate();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _oAuthUser.getExpandoBridge();
+		return model.getCreateDate();
 	}
 
 	/**
@@ -189,7 +160,7 @@ public class OAuthUserWrapper implements OAuthUser, ModelWrapper<OAuthUser> {
 	*/
 	@Override
 	public Date getModifiedDate() {
-		return _oAuthUser.getModifiedDate();
+		return model.getModifiedDate();
 	}
 
 	/**
@@ -199,7 +170,7 @@ public class OAuthUserWrapper implements OAuthUser, ModelWrapper<OAuthUser> {
 	*/
 	@Override
 	public long getOAuthApplicationId() {
-		return _oAuthUser.getOAuthApplicationId();
+		return model.getOAuthApplicationId();
 	}
 
 	/**
@@ -209,7 +180,7 @@ public class OAuthUserWrapper implements OAuthUser, ModelWrapper<OAuthUser> {
 	*/
 	@Override
 	public long getOAuthUserId() {
-		return _oAuthUser.getOAuthUserId();
+		return model.getOAuthUserId();
 	}
 
 	/**
@@ -219,7 +190,7 @@ public class OAuthUserWrapper implements OAuthUser, ModelWrapper<OAuthUser> {
 	*/
 	@Override
 	public String getOAuthUserUuid() {
-		return _oAuthUser.getOAuthUserUuid();
+		return model.getOAuthUserUuid();
 	}
 
 	/**
@@ -229,12 +200,7 @@ public class OAuthUserWrapper implements OAuthUser, ModelWrapper<OAuthUser> {
 	*/
 	@Override
 	public long getPrimaryKey() {
-		return _oAuthUser.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _oAuthUser.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	/**
@@ -244,7 +210,7 @@ public class OAuthUserWrapper implements OAuthUser, ModelWrapper<OAuthUser> {
 	*/
 	@Override
 	public long getUserId() {
-		return _oAuthUser.getUserId();
+		return model.getUserId();
 	}
 
 	/**
@@ -254,7 +220,7 @@ public class OAuthUserWrapper implements OAuthUser, ModelWrapper<OAuthUser> {
 	*/
 	@Override
 	public String getUserName() {
-		return _oAuthUser.getUserName();
+		return model.getUserName();
 	}
 
 	/**
@@ -264,32 +230,12 @@ public class OAuthUserWrapper implements OAuthUser, ModelWrapper<OAuthUser> {
 	*/
 	@Override
 	public String getUserUuid() {
-		return _oAuthUser.getUserUuid();
-	}
-
-	@Override
-	public int hashCode() {
-		return _oAuthUser.hashCode();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _oAuthUser.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _oAuthUser.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _oAuthUser.isNew();
+		return model.getUserUuid();
 	}
 
 	@Override
 	public void persist() {
-		_oAuthUser.persist();
+		model.persist();
 	}
 
 	/**
@@ -299,7 +245,7 @@ public class OAuthUserWrapper implements OAuthUser, ModelWrapper<OAuthUser> {
 	*/
 	@Override
 	public void setAccessSecret(String accessSecret) {
-		_oAuthUser.setAccessSecret(accessSecret);
+		model.setAccessSecret(accessSecret);
 	}
 
 	/**
@@ -309,12 +255,7 @@ public class OAuthUserWrapper implements OAuthUser, ModelWrapper<OAuthUser> {
 	*/
 	@Override
 	public void setAccessToken(String accessToken) {
-		_oAuthUser.setAccessToken(accessToken);
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_oAuthUser.setCachedModel(cachedModel);
+		model.setAccessToken(accessToken);
 	}
 
 	/**
@@ -324,7 +265,7 @@ public class OAuthUserWrapper implements OAuthUser, ModelWrapper<OAuthUser> {
 	*/
 	@Override
 	public void setCompanyId(long companyId) {
-		_oAuthUser.setCompanyId(companyId);
+		model.setCompanyId(companyId);
 	}
 
 	/**
@@ -334,23 +275,7 @@ public class OAuthUserWrapper implements OAuthUser, ModelWrapper<OAuthUser> {
 	*/
 	@Override
 	public void setCreateDate(Date createDate) {
-		_oAuthUser.setCreateDate(createDate);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-		_oAuthUser.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_oAuthUser.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_oAuthUser.setExpandoBridgeAttributes(serviceContext);
+		model.setCreateDate(createDate);
 	}
 
 	/**
@@ -360,12 +285,7 @@ public class OAuthUserWrapper implements OAuthUser, ModelWrapper<OAuthUser> {
 	*/
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
-		_oAuthUser.setModifiedDate(modifiedDate);
-	}
-
-	@Override
-	public void setNew(boolean n) {
-		_oAuthUser.setNew(n);
+		model.setModifiedDate(modifiedDate);
 	}
 
 	/**
@@ -375,7 +295,7 @@ public class OAuthUserWrapper implements OAuthUser, ModelWrapper<OAuthUser> {
 	*/
 	@Override
 	public void setOAuthApplicationId(long oAuthApplicationId) {
-		_oAuthUser.setOAuthApplicationId(oAuthApplicationId);
+		model.setOAuthApplicationId(oAuthApplicationId);
 	}
 
 	/**
@@ -385,7 +305,7 @@ public class OAuthUserWrapper implements OAuthUser, ModelWrapper<OAuthUser> {
 	*/
 	@Override
 	public void setOAuthUserId(long oAuthUserId) {
-		_oAuthUser.setOAuthUserId(oAuthUserId);
+		model.setOAuthUserId(oAuthUserId);
 	}
 
 	/**
@@ -395,7 +315,7 @@ public class OAuthUserWrapper implements OAuthUser, ModelWrapper<OAuthUser> {
 	*/
 	@Override
 	public void setOAuthUserUuid(String oAuthUserUuid) {
-		_oAuthUser.setOAuthUserUuid(oAuthUserUuid);
+		model.setOAuthUserUuid(oAuthUserUuid);
 	}
 
 	/**
@@ -405,12 +325,7 @@ public class OAuthUserWrapper implements OAuthUser, ModelWrapper<OAuthUser> {
 	*/
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_oAuthUser.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_oAuthUser.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -420,7 +335,7 @@ public class OAuthUserWrapper implements OAuthUser, ModelWrapper<OAuthUser> {
 	*/
 	@Override
 	public void setUserId(long userId) {
-		_oAuthUser.setUserId(userId);
+		model.setUserId(userId);
 	}
 
 	/**
@@ -430,7 +345,7 @@ public class OAuthUserWrapper implements OAuthUser, ModelWrapper<OAuthUser> {
 	*/
 	@Override
 	public void setUserName(String userName) {
-		_oAuthUser.setUserName(userName);
+		model.setUserName(userName);
 	}
 
 	/**
@@ -440,72 +355,11 @@ public class OAuthUserWrapper implements OAuthUser, ModelWrapper<OAuthUser> {
 	*/
 	@Override
 	public void setUserUuid(String userUuid) {
-		_oAuthUser.setUserUuid(userUuid);
+		model.setUserUuid(userUuid);
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.CacheModel<OAuthUser> toCacheModel() {
-		return _oAuthUser.toCacheModel();
+	protected OAuthUserWrapper wrap(OAuthUser oAuthUser) {
+		return new OAuthUserWrapper(oAuthUser);
 	}
-
-	@Override
-	public OAuthUser toEscapedModel() {
-		return new OAuthUserWrapper(_oAuthUser.toEscapedModel());
-	}
-
-	@Override
-	public String toString() {
-		return _oAuthUser.toString();
-	}
-
-	@Override
-	public OAuthUser toUnescapedModel() {
-		return new OAuthUserWrapper(_oAuthUser.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _oAuthUser.toXmlString();
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-
-		if (!(obj instanceof OAuthUserWrapper)) {
-			return false;
-		}
-
-		OAuthUserWrapper oAuthUserWrapper = (OAuthUserWrapper)obj;
-
-		if (Objects.equals(_oAuthUser, oAuthUserWrapper._oAuthUser)) {
-			return true;
-		}
-
-		return false;
-	}
-
-	@Override
-	public OAuthUser getWrappedModel() {
-		return _oAuthUser;
-	}
-
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _oAuthUser.isEntityCacheEnabled();
-	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _oAuthUser.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_oAuthUser.resetOriginalValues();
-	}
-
-	private final OAuthUser _oAuthUser;
 }

@@ -16,17 +16,12 @@ package com.liferay.portal.resiliency.spi.model;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
-
 import com.liferay.portal.kernel.model.ModelWrapper;
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -38,20 +33,10 @@ import java.util.Objects;
  * @generated
  */
 @ProviderType
-public class SPIDefinitionWrapper implements SPIDefinition,
-	ModelWrapper<SPIDefinition> {
+public class SPIDefinitionWrapper extends BaseModelWrapper<SPIDefinition>
+	implements SPIDefinition, ModelWrapper<SPIDefinition> {
 	public SPIDefinitionWrapper(SPIDefinition spiDefinition) {
-		_spiDefinition = spiDefinition;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return SPIDefinition.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return SPIDefinition.class.getName();
+		super(spiDefinition);
 	}
 
 	@Override
@@ -179,28 +164,18 @@ public class SPIDefinitionWrapper implements SPIDefinition,
 	}
 
 	@Override
-	public Object clone() {
-		return new SPIDefinitionWrapper((SPIDefinition)_spiDefinition.clone());
-	}
-
-	@Override
-	public int compareTo(SPIDefinition spiDefinition) {
-		return _spiDefinition.compareTo(spiDefinition);
-	}
-
-	@Override
 	public void deleteBaseDir() {
-		_spiDefinition.deleteBaseDir();
+		model.deleteBaseDir();
 	}
 
 	@Override
 	public String getAgentClassName() {
-		return _spiDefinition.getAgentClassName();
+		return model.getAgentClassName();
 	}
 
 	@Override
 	public String getBaseDir() {
-		return _spiDefinition.getBaseDir();
+		return model.getBaseDir();
 	}
 
 	/**
@@ -210,7 +185,7 @@ public class SPIDefinitionWrapper implements SPIDefinition,
 	*/
 	@Override
 	public long getCompanyId() {
-		return _spiDefinition.getCompanyId();
+		return model.getCompanyId();
 	}
 
 	/**
@@ -220,7 +195,7 @@ public class SPIDefinitionWrapper implements SPIDefinition,
 	*/
 	@Override
 	public String getConnectorAddress() {
-		return _spiDefinition.getConnectorAddress();
+		return model.getConnectorAddress();
 	}
 
 	/**
@@ -230,7 +205,7 @@ public class SPIDefinitionWrapper implements SPIDefinition,
 	*/
 	@Override
 	public int getConnectorPort() {
-		return _spiDefinition.getConnectorPort();
+		return model.getConnectorPort();
 	}
 
 	/**
@@ -240,7 +215,7 @@ public class SPIDefinitionWrapper implements SPIDefinition,
 	*/
 	@Override
 	public Date getCreateDate() {
-		return _spiDefinition.getCreateDate();
+		return model.getCreateDate();
 	}
 
 	/**
@@ -250,17 +225,12 @@ public class SPIDefinitionWrapper implements SPIDefinition,
 	*/
 	@Override
 	public String getDescription() {
-		return _spiDefinition.getDescription();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _spiDefinition.getExpandoBridge();
+		return model.getDescription();
 	}
 
 	@Override
 	public String getJavaExecutable() {
-		return _spiDefinition.getJavaExecutable();
+		return model.getJavaExecutable();
 	}
 
 	/**
@@ -270,22 +240,22 @@ public class SPIDefinitionWrapper implements SPIDefinition,
 	*/
 	@Override
 	public String getJvmArguments() {
-		return _spiDefinition.getJvmArguments();
+		return model.getJvmArguments();
 	}
 
 	@Override
 	public int getMaxRestartAttempts() {
-		return _spiDefinition.getMaxRestartAttempts();
+		return model.getMaxRestartAttempts();
 	}
 
 	@Override
 	public int getMaxThreads() {
-		return _spiDefinition.getMaxThreads();
+		return model.getMaxThreads();
 	}
 
 	@Override
 	public int getMinThreads() {
-		return _spiDefinition.getMinThreads();
+		return model.getMinThreads();
 	}
 
 	/**
@@ -295,7 +265,7 @@ public class SPIDefinitionWrapper implements SPIDefinition,
 	*/
 	@Override
 	public Date getModifiedDate() {
-		return _spiDefinition.getModifiedDate();
+		return model.getModifiedDate();
 	}
 
 	/**
@@ -305,22 +275,22 @@ public class SPIDefinitionWrapper implements SPIDefinition,
 	*/
 	@Override
 	public String getName() {
-		return _spiDefinition.getName();
+		return model.getName();
 	}
 
 	@Override
 	public String getNotificationRecipients() {
-		return _spiDefinition.getNotificationRecipients();
+		return model.getNotificationRecipients();
 	}
 
 	@Override
 	public long getPingInterval() {
-		return _spiDefinition.getPingInterval();
+		return model.getPingInterval();
 	}
 
 	@Override
 	public String getPortalProperties() {
-		return _spiDefinition.getPortalProperties();
+		return model.getPortalProperties();
 	}
 
 	/**
@@ -330,7 +300,7 @@ public class SPIDefinitionWrapper implements SPIDefinition,
 	*/
 	@Override
 	public String getPortletIds() {
-		return _spiDefinition.getPortletIds();
+		return model.getPortletIds();
 	}
 
 	/**
@@ -340,22 +310,17 @@ public class SPIDefinitionWrapper implements SPIDefinition,
 	*/
 	@Override
 	public long getPrimaryKey() {
-		return _spiDefinition.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _spiDefinition.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	@Override
 	public long getRegisterTimeout() {
-		return _spiDefinition.getRegisterTimeout();
+		return model.getRegisterTimeout();
 	}
 
 	@Override
 	public int getRestartAttempts() {
-		return _spiDefinition.getRestartAttempts();
+		return model.getRestartAttempts();
 	}
 
 	/**
@@ -365,17 +330,17 @@ public class SPIDefinitionWrapper implements SPIDefinition,
 	*/
 	@Override
 	public String getServletContextNames() {
-		return _spiDefinition.getServletContextNames();
+		return model.getServletContextNames();
 	}
 
 	@Override
 	public long getShutdownTimeout() {
-		return _spiDefinition.getShutdownTimeout();
+		return model.getShutdownTimeout();
 	}
 
 	@Override
 	public com.liferay.portal.kernel.resiliency.spi.SPI getSPI() {
-		return _spiDefinition.getSPI();
+		return model.getSPI();
 	}
 
 	/**
@@ -385,7 +350,7 @@ public class SPIDefinitionWrapper implements SPIDefinition,
 	*/
 	@Override
 	public long getSpiDefinitionId() {
-		return _spiDefinition.getSpiDefinitionId();
+		return model.getSpiDefinitionId();
 	}
 
 	/**
@@ -395,12 +360,12 @@ public class SPIDefinitionWrapper implements SPIDefinition,
 	*/
 	@Override
 	public int getStatus() {
-		return _spiDefinition.getStatus();
+		return model.getStatus();
 	}
 
 	@Override
 	public String getStatusLabel() {
-		return _spiDefinition.getStatusLabel();
+		return model.getStatusLabel();
 	}
 
 	/**
@@ -410,7 +375,7 @@ public class SPIDefinitionWrapper implements SPIDefinition,
 	*/
 	@Override
 	public String getStatusMessage() {
-		return _spiDefinition.getStatusMessage();
+		return model.getStatusMessage();
 	}
 
 	/**
@@ -420,22 +385,22 @@ public class SPIDefinitionWrapper implements SPIDefinition,
 	*/
 	@Override
 	public String getTypeSettings() {
-		return _spiDefinition.getTypeSettings();
+		return model.getTypeSettings();
 	}
 
 	@Override
 	public com.liferay.portal.kernel.util.UnicodeProperties getTypeSettingsProperties() {
-		return _spiDefinition.getTypeSettingsProperties();
+		return model.getTypeSettingsProperties();
 	}
 
 	@Override
 	public String getTypeSettingsProperty(String key) {
-		return _spiDefinition.getTypeSettingsProperty(key);
+		return model.getTypeSettingsProperty(key);
 	}
 
 	@Override
 	public String getTypeSettingsProperty(String key, String defaultValue) {
-		return _spiDefinition.getTypeSettingsProperty(key, defaultValue);
+		return model.getTypeSettingsProperty(key, defaultValue);
 	}
 
 	/**
@@ -445,7 +410,7 @@ public class SPIDefinitionWrapper implements SPIDefinition,
 	*/
 	@Override
 	public long getUserId() {
-		return _spiDefinition.getUserId();
+		return model.getUserId();
 	}
 
 	/**
@@ -455,7 +420,7 @@ public class SPIDefinitionWrapper implements SPIDefinition,
 	*/
 	@Override
 	public String getUserName() {
-		return _spiDefinition.getUserName();
+		return model.getUserName();
 	}
 
 	/**
@@ -465,42 +430,17 @@ public class SPIDefinitionWrapper implements SPIDefinition,
 	*/
 	@Override
 	public String getUserUuid() {
-		return _spiDefinition.getUserUuid();
-	}
-
-	@Override
-	public int hashCode() {
-		return _spiDefinition.hashCode();
+		return model.getUserUuid();
 	}
 
 	@Override
 	public boolean isAlive() {
-		return _spiDefinition.isAlive();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _spiDefinition.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _spiDefinition.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _spiDefinition.isNew();
+		return model.isAlive();
 	}
 
 	@Override
 	public void persist() {
-		_spiDefinition.persist();
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_spiDefinition.setCachedModel(cachedModel);
+		model.persist();
 	}
 
 	/**
@@ -510,7 +450,7 @@ public class SPIDefinitionWrapper implements SPIDefinition,
 	*/
 	@Override
 	public void setCompanyId(long companyId) {
-		_spiDefinition.setCompanyId(companyId);
+		model.setCompanyId(companyId);
 	}
 
 	/**
@@ -520,7 +460,7 @@ public class SPIDefinitionWrapper implements SPIDefinition,
 	*/
 	@Override
 	public void setConnectorAddress(String connectorAddress) {
-		_spiDefinition.setConnectorAddress(connectorAddress);
+		model.setConnectorAddress(connectorAddress);
 	}
 
 	/**
@@ -530,7 +470,7 @@ public class SPIDefinitionWrapper implements SPIDefinition,
 	*/
 	@Override
 	public void setConnectorPort(int connectorPort) {
-		_spiDefinition.setConnectorPort(connectorPort);
+		model.setConnectorPort(connectorPort);
 	}
 
 	/**
@@ -540,7 +480,7 @@ public class SPIDefinitionWrapper implements SPIDefinition,
 	*/
 	@Override
 	public void setCreateDate(Date createDate) {
-		_spiDefinition.setCreateDate(createDate);
+		model.setCreateDate(createDate);
 	}
 
 	/**
@@ -550,23 +490,7 @@ public class SPIDefinitionWrapper implements SPIDefinition,
 	*/
 	@Override
 	public void setDescription(String description) {
-		_spiDefinition.setDescription(description);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-		_spiDefinition.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_spiDefinition.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_spiDefinition.setExpandoBridgeAttributes(serviceContext);
+		model.setDescription(description);
 	}
 
 	/**
@@ -576,12 +500,12 @@ public class SPIDefinitionWrapper implements SPIDefinition,
 	*/
 	@Override
 	public void setJvmArguments(String jvmArguments) {
-		_spiDefinition.setJvmArguments(jvmArguments);
+		model.setJvmArguments(jvmArguments);
 	}
 
 	@Override
 	public void setMaxRestartAttempts(int maxRestartAttempts) {
-		_spiDefinition.setMaxRestartAttempts(maxRestartAttempts);
+		model.setMaxRestartAttempts(maxRestartAttempts);
 	}
 
 	/**
@@ -591,7 +515,7 @@ public class SPIDefinitionWrapper implements SPIDefinition,
 	*/
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
-		_spiDefinition.setModifiedDate(modifiedDate);
+		model.setModifiedDate(modifiedDate);
 	}
 
 	/**
@@ -601,22 +525,17 @@ public class SPIDefinitionWrapper implements SPIDefinition,
 	*/
 	@Override
 	public void setName(String name) {
-		_spiDefinition.setName(name);
-	}
-
-	@Override
-	public void setNew(boolean n) {
-		_spiDefinition.setNew(n);
+		model.setName(name);
 	}
 
 	@Override
 	public void setNotificationRecipients(String notificationRecipients) {
-		_spiDefinition.setNotificationRecipients(notificationRecipients);
+		model.setNotificationRecipients(notificationRecipients);
 	}
 
 	@Override
 	public void setPortalProperties(String portalProperties) {
-		_spiDefinition.setPortalProperties(portalProperties);
+		model.setPortalProperties(portalProperties);
 	}
 
 	/**
@@ -626,7 +545,7 @@ public class SPIDefinitionWrapper implements SPIDefinition,
 	*/
 	@Override
 	public void setPortletIds(String portletIds) {
-		_spiDefinition.setPortletIds(portletIds);
+		model.setPortletIds(portletIds);
 	}
 
 	/**
@@ -636,17 +555,12 @@ public class SPIDefinitionWrapper implements SPIDefinition,
 	*/
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_spiDefinition.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_spiDefinition.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	@Override
 	public void setRestartAttempts(int restartAttempts) {
-		_spiDefinition.setRestartAttempts(restartAttempts);
+		model.setRestartAttempts(restartAttempts);
 	}
 
 	/**
@@ -656,7 +570,7 @@ public class SPIDefinitionWrapper implements SPIDefinition,
 	*/
 	@Override
 	public void setServletContextNames(String servletContextNames) {
-		_spiDefinition.setServletContextNames(servletContextNames);
+		model.setServletContextNames(servletContextNames);
 	}
 
 	/**
@@ -666,7 +580,7 @@ public class SPIDefinitionWrapper implements SPIDefinition,
 	*/
 	@Override
 	public void setSpiDefinitionId(long spiDefinitionId) {
-		_spiDefinition.setSpiDefinitionId(spiDefinitionId);
+		model.setSpiDefinitionId(spiDefinitionId);
 	}
 
 	/**
@@ -676,7 +590,7 @@ public class SPIDefinitionWrapper implements SPIDefinition,
 	*/
 	@Override
 	public void setStatus(int status) {
-		_spiDefinition.setStatus(status);
+		model.setStatus(status);
 	}
 
 	/**
@@ -686,7 +600,7 @@ public class SPIDefinitionWrapper implements SPIDefinition,
 	*/
 	@Override
 	public void setStatusMessage(String statusMessage) {
-		_spiDefinition.setStatusMessage(statusMessage);
+		model.setStatusMessage(statusMessage);
 	}
 
 	/**
@@ -696,13 +610,13 @@ public class SPIDefinitionWrapper implements SPIDefinition,
 	*/
 	@Override
 	public void setTypeSettings(String typeSettings) {
-		_spiDefinition.setTypeSettings(typeSettings);
+		model.setTypeSettings(typeSettings);
 	}
 
 	@Override
 	public void setTypeSettingsProperties(
 		com.liferay.portal.kernel.util.UnicodeProperties typeSettingsProperties) {
-		_spiDefinition.setTypeSettingsProperties(typeSettingsProperties);
+		model.setTypeSettingsProperties(typeSettingsProperties);
 	}
 
 	/**
@@ -712,7 +626,7 @@ public class SPIDefinitionWrapper implements SPIDefinition,
 	*/
 	@Override
 	public void setUserId(long userId) {
-		_spiDefinition.setUserId(userId);
+		model.setUserId(userId);
 	}
 
 	/**
@@ -722,7 +636,7 @@ public class SPIDefinitionWrapper implements SPIDefinition,
 	*/
 	@Override
 	public void setUserName(String userName) {
-		_spiDefinition.setUserName(userName);
+		model.setUserName(userName);
 	}
 
 	/**
@@ -732,72 +646,11 @@ public class SPIDefinitionWrapper implements SPIDefinition,
 	*/
 	@Override
 	public void setUserUuid(String userUuid) {
-		_spiDefinition.setUserUuid(userUuid);
+		model.setUserUuid(userUuid);
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.CacheModel<SPIDefinition> toCacheModel() {
-		return _spiDefinition.toCacheModel();
+	protected SPIDefinitionWrapper wrap(SPIDefinition spiDefinition) {
+		return new SPIDefinitionWrapper(spiDefinition);
 	}
-
-	@Override
-	public SPIDefinition toEscapedModel() {
-		return new SPIDefinitionWrapper(_spiDefinition.toEscapedModel());
-	}
-
-	@Override
-	public String toString() {
-		return _spiDefinition.toString();
-	}
-
-	@Override
-	public SPIDefinition toUnescapedModel() {
-		return new SPIDefinitionWrapper(_spiDefinition.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _spiDefinition.toXmlString();
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-
-		if (!(obj instanceof SPIDefinitionWrapper)) {
-			return false;
-		}
-
-		SPIDefinitionWrapper spiDefinitionWrapper = (SPIDefinitionWrapper)obj;
-
-		if (Objects.equals(_spiDefinition, spiDefinitionWrapper._spiDefinition)) {
-			return true;
-		}
-
-		return false;
-	}
-
-	@Override
-	public SPIDefinition getWrappedModel() {
-		return _spiDefinition;
-	}
-
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _spiDefinition.isEntityCacheEnabled();
-	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _spiDefinition.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_spiDefinition.resetOriginalValues();
-	}
-
-	private final SPIDefinition _spiDefinition;
 }

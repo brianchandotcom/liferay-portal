@@ -16,17 +16,12 @@ package com.liferay.saml.persistence.model;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
-
 import com.liferay.portal.kernel.model.ModelWrapper;
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -38,20 +33,10 @@ import java.util.Objects;
  * @generated
  */
 @ProviderType
-public class SamlSpMessageWrapper implements SamlSpMessage,
-	ModelWrapper<SamlSpMessage> {
+public class SamlSpMessageWrapper extends BaseModelWrapper<SamlSpMessage>
+	implements SamlSpMessage, ModelWrapper<SamlSpMessage> {
 	public SamlSpMessageWrapper(SamlSpMessage samlSpMessage) {
-		_samlSpMessage = samlSpMessage;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return SamlSpMessage.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return SamlSpMessage.class.getName();
+		super(samlSpMessage);
 	}
 
 	@Override
@@ -107,16 +92,6 @@ public class SamlSpMessageWrapper implements SamlSpMessage,
 		}
 	}
 
-	@Override
-	public Object clone() {
-		return new SamlSpMessageWrapper((SamlSpMessage)_samlSpMessage.clone());
-	}
-
-	@Override
-	public int compareTo(SamlSpMessage samlSpMessage) {
-		return _samlSpMessage.compareTo(samlSpMessage);
-	}
-
 	/**
 	* Returns the company ID of this saml sp message.
 	*
@@ -124,7 +99,7 @@ public class SamlSpMessageWrapper implements SamlSpMessage,
 	*/
 	@Override
 	public long getCompanyId() {
-		return _samlSpMessage.getCompanyId();
+		return model.getCompanyId();
 	}
 
 	/**
@@ -134,12 +109,7 @@ public class SamlSpMessageWrapper implements SamlSpMessage,
 	*/
 	@Override
 	public Date getCreateDate() {
-		return _samlSpMessage.getCreateDate();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _samlSpMessage.getExpandoBridge();
+		return model.getCreateDate();
 	}
 
 	/**
@@ -149,7 +119,7 @@ public class SamlSpMessageWrapper implements SamlSpMessage,
 	*/
 	@Override
 	public Date getExpirationDate() {
-		return _samlSpMessage.getExpirationDate();
+		return model.getExpirationDate();
 	}
 
 	/**
@@ -159,12 +129,7 @@ public class SamlSpMessageWrapper implements SamlSpMessage,
 	*/
 	@Override
 	public long getPrimaryKey() {
-		return _samlSpMessage.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _samlSpMessage.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	/**
@@ -174,7 +139,7 @@ public class SamlSpMessageWrapper implements SamlSpMessage,
 	*/
 	@Override
 	public String getSamlIdpEntityId() {
-		return _samlSpMessage.getSamlIdpEntityId();
+		return model.getSamlIdpEntityId();
 	}
 
 	/**
@@ -184,7 +149,7 @@ public class SamlSpMessageWrapper implements SamlSpMessage,
 	*/
 	@Override
 	public String getSamlIdpResponseKey() {
-		return _samlSpMessage.getSamlIdpResponseKey();
+		return model.getSamlIdpResponseKey();
 	}
 
 	/**
@@ -194,42 +159,17 @@ public class SamlSpMessageWrapper implements SamlSpMessage,
 	*/
 	@Override
 	public long getSamlSpMessageId() {
-		return _samlSpMessage.getSamlSpMessageId();
-	}
-
-	@Override
-	public int hashCode() {
-		return _samlSpMessage.hashCode();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _samlSpMessage.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _samlSpMessage.isEscapedModel();
+		return model.getSamlSpMessageId();
 	}
 
 	@Override
 	public boolean isExpired() {
-		return _samlSpMessage.isExpired();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _samlSpMessage.isNew();
+		return model.isExpired();
 	}
 
 	@Override
 	public void persist() {
-		_samlSpMessage.persist();
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_samlSpMessage.setCachedModel(cachedModel);
+		model.persist();
 	}
 
 	/**
@@ -239,7 +179,7 @@ public class SamlSpMessageWrapper implements SamlSpMessage,
 	*/
 	@Override
 	public void setCompanyId(long companyId) {
-		_samlSpMessage.setCompanyId(companyId);
+		model.setCompanyId(companyId);
 	}
 
 	/**
@@ -249,23 +189,7 @@ public class SamlSpMessageWrapper implements SamlSpMessage,
 	*/
 	@Override
 	public void setCreateDate(Date createDate) {
-		_samlSpMessage.setCreateDate(createDate);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-		_samlSpMessage.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_samlSpMessage.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_samlSpMessage.setExpandoBridgeAttributes(serviceContext);
+		model.setCreateDate(createDate);
 	}
 
 	/**
@@ -275,12 +199,7 @@ public class SamlSpMessageWrapper implements SamlSpMessage,
 	*/
 	@Override
 	public void setExpirationDate(Date expirationDate) {
-		_samlSpMessage.setExpirationDate(expirationDate);
-	}
-
-	@Override
-	public void setNew(boolean n) {
-		_samlSpMessage.setNew(n);
+		model.setExpirationDate(expirationDate);
 	}
 
 	/**
@@ -290,12 +209,7 @@ public class SamlSpMessageWrapper implements SamlSpMessage,
 	*/
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_samlSpMessage.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_samlSpMessage.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -305,7 +219,7 @@ public class SamlSpMessageWrapper implements SamlSpMessage,
 	*/
 	@Override
 	public void setSamlIdpEntityId(String samlIdpEntityId) {
-		_samlSpMessage.setSamlIdpEntityId(samlIdpEntityId);
+		model.setSamlIdpEntityId(samlIdpEntityId);
 	}
 
 	/**
@@ -315,7 +229,7 @@ public class SamlSpMessageWrapper implements SamlSpMessage,
 	*/
 	@Override
 	public void setSamlIdpResponseKey(String samlIdpResponseKey) {
-		_samlSpMessage.setSamlIdpResponseKey(samlIdpResponseKey);
+		model.setSamlIdpResponseKey(samlIdpResponseKey);
 	}
 
 	/**
@@ -325,72 +239,11 @@ public class SamlSpMessageWrapper implements SamlSpMessage,
 	*/
 	@Override
 	public void setSamlSpMessageId(long samlSpMessageId) {
-		_samlSpMessage.setSamlSpMessageId(samlSpMessageId);
+		model.setSamlSpMessageId(samlSpMessageId);
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.CacheModel<SamlSpMessage> toCacheModel() {
-		return _samlSpMessage.toCacheModel();
+	protected SamlSpMessageWrapper wrap(SamlSpMessage samlSpMessage) {
+		return new SamlSpMessageWrapper(samlSpMessage);
 	}
-
-	@Override
-	public SamlSpMessage toEscapedModel() {
-		return new SamlSpMessageWrapper(_samlSpMessage.toEscapedModel());
-	}
-
-	@Override
-	public String toString() {
-		return _samlSpMessage.toString();
-	}
-
-	@Override
-	public SamlSpMessage toUnescapedModel() {
-		return new SamlSpMessageWrapper(_samlSpMessage.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _samlSpMessage.toXmlString();
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-
-		if (!(obj instanceof SamlSpMessageWrapper)) {
-			return false;
-		}
-
-		SamlSpMessageWrapper samlSpMessageWrapper = (SamlSpMessageWrapper)obj;
-
-		if (Objects.equals(_samlSpMessage, samlSpMessageWrapper._samlSpMessage)) {
-			return true;
-		}
-
-		return false;
-	}
-
-	@Override
-	public SamlSpMessage getWrappedModel() {
-		return _samlSpMessage;
-	}
-
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _samlSpMessage.isEntityCacheEnabled();
-	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _samlSpMessage.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_samlSpMessage.resetOriginalValues();
-	}
-
-	private final SamlSpMessage _samlSpMessage;
 }

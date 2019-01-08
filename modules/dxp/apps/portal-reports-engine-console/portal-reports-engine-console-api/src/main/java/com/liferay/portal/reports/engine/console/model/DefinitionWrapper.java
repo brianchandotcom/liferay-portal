@@ -16,19 +16,14 @@ package com.liferay.portal.reports.engine.console.model;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
-
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 
 import com.liferay.portal.kernel.model.ModelWrapper;
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -40,19 +35,10 @@ import java.util.Objects;
  * @generated
  */
 @ProviderType
-public class DefinitionWrapper implements Definition, ModelWrapper<Definition> {
+public class DefinitionWrapper extends BaseModelWrapper<Definition>
+	implements Definition, ModelWrapper<Definition> {
 	public DefinitionWrapper(Definition definition) {
-		_definition = definition;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return Definition.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return Definition.class.getName();
+		super(definition);
 	}
 
 	@Override
@@ -165,29 +151,19 @@ public class DefinitionWrapper implements Definition, ModelWrapper<Definition> {
 	}
 
 	@Override
-	public Object clone() {
-		return new DefinitionWrapper((Definition)_definition.clone());
-	}
-
-	@Override
-	public int compareTo(Definition definition) {
-		return _definition.compareTo(definition);
-	}
-
-	@Override
 	public String getAttachmentsDir() {
-		return _definition.getAttachmentsDir();
+		return model.getAttachmentsDir();
 	}
 
 	@Override
 	public String[] getAttachmentsFiles()
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _definition.getAttachmentsFiles();
+		return model.getAttachmentsFiles();
 	}
 
 	@Override
 	public String[] getAvailableLanguageIds() {
-		return _definition.getAvailableLanguageIds();
+		return model.getAvailableLanguageIds();
 	}
 
 	/**
@@ -197,7 +173,7 @@ public class DefinitionWrapper implements Definition, ModelWrapper<Definition> {
 	*/
 	@Override
 	public long getCompanyId() {
-		return _definition.getCompanyId();
+		return model.getCompanyId();
 	}
 
 	/**
@@ -207,12 +183,12 @@ public class DefinitionWrapper implements Definition, ModelWrapper<Definition> {
 	*/
 	@Override
 	public Date getCreateDate() {
-		return _definition.getCreateDate();
+		return model.getCreateDate();
 	}
 
 	@Override
 	public String getDefaultLanguageId() {
-		return _definition.getDefaultLanguageId();
+		return model.getDefaultLanguageId();
 	}
 
 	/**
@@ -222,7 +198,7 @@ public class DefinitionWrapper implements Definition, ModelWrapper<Definition> {
 	*/
 	@Override
 	public long getDefinitionId() {
-		return _definition.getDefinitionId();
+		return model.getDefinitionId();
 	}
 
 	/**
@@ -232,7 +208,7 @@ public class DefinitionWrapper implements Definition, ModelWrapper<Definition> {
 	*/
 	@Override
 	public String getDescription() {
-		return _definition.getDescription();
+		return model.getDescription();
 	}
 
 	/**
@@ -243,7 +219,7 @@ public class DefinitionWrapper implements Definition, ModelWrapper<Definition> {
 	*/
 	@Override
 	public String getDescription(java.util.Locale locale) {
-		return _definition.getDescription(locale);
+		return model.getDescription(locale);
 	}
 
 	/**
@@ -255,7 +231,7 @@ public class DefinitionWrapper implements Definition, ModelWrapper<Definition> {
 	*/
 	@Override
 	public String getDescription(java.util.Locale locale, boolean useDefault) {
-		return _definition.getDescription(locale, useDefault);
+		return model.getDescription(locale, useDefault);
 	}
 
 	/**
@@ -266,7 +242,7 @@ public class DefinitionWrapper implements Definition, ModelWrapper<Definition> {
 	*/
 	@Override
 	public String getDescription(String languageId) {
-		return _definition.getDescription(languageId);
+		return model.getDescription(languageId);
 	}
 
 	/**
@@ -278,17 +254,17 @@ public class DefinitionWrapper implements Definition, ModelWrapper<Definition> {
 	*/
 	@Override
 	public String getDescription(String languageId, boolean useDefault) {
-		return _definition.getDescription(languageId, useDefault);
+		return model.getDescription(languageId, useDefault);
 	}
 
 	@Override
 	public String getDescriptionCurrentLanguageId() {
-		return _definition.getDescriptionCurrentLanguageId();
+		return model.getDescriptionCurrentLanguageId();
 	}
 
 	@Override
 	public String getDescriptionCurrentValue() {
-		return _definition.getDescriptionCurrentValue();
+		return model.getDescriptionCurrentValue();
 	}
 
 	/**
@@ -298,12 +274,7 @@ public class DefinitionWrapper implements Definition, ModelWrapper<Definition> {
 	*/
 	@Override
 	public Map<java.util.Locale, String> getDescriptionMap() {
-		return _definition.getDescriptionMap();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _definition.getExpandoBridge();
+		return model.getDescriptionMap();
 	}
 
 	/**
@@ -313,7 +284,7 @@ public class DefinitionWrapper implements Definition, ModelWrapper<Definition> {
 	*/
 	@Override
 	public long getGroupId() {
-		return _definition.getGroupId();
+		return model.getGroupId();
 	}
 
 	/**
@@ -323,7 +294,7 @@ public class DefinitionWrapper implements Definition, ModelWrapper<Definition> {
 	*/
 	@Override
 	public Date getLastPublishDate() {
-		return _definition.getLastPublishDate();
+		return model.getLastPublishDate();
 	}
 
 	/**
@@ -333,7 +304,7 @@ public class DefinitionWrapper implements Definition, ModelWrapper<Definition> {
 	*/
 	@Override
 	public Date getModifiedDate() {
-		return _definition.getModifiedDate();
+		return model.getModifiedDate();
 	}
 
 	/**
@@ -343,7 +314,7 @@ public class DefinitionWrapper implements Definition, ModelWrapper<Definition> {
 	*/
 	@Override
 	public String getName() {
-		return _definition.getName();
+		return model.getName();
 	}
 
 	/**
@@ -354,7 +325,7 @@ public class DefinitionWrapper implements Definition, ModelWrapper<Definition> {
 	*/
 	@Override
 	public String getName(java.util.Locale locale) {
-		return _definition.getName(locale);
+		return model.getName(locale);
 	}
 
 	/**
@@ -366,7 +337,7 @@ public class DefinitionWrapper implements Definition, ModelWrapper<Definition> {
 	*/
 	@Override
 	public String getName(java.util.Locale locale, boolean useDefault) {
-		return _definition.getName(locale, useDefault);
+		return model.getName(locale, useDefault);
 	}
 
 	/**
@@ -377,7 +348,7 @@ public class DefinitionWrapper implements Definition, ModelWrapper<Definition> {
 	*/
 	@Override
 	public String getName(String languageId) {
-		return _definition.getName(languageId);
+		return model.getName(languageId);
 	}
 
 	/**
@@ -389,17 +360,17 @@ public class DefinitionWrapper implements Definition, ModelWrapper<Definition> {
 	*/
 	@Override
 	public String getName(String languageId, boolean useDefault) {
-		return _definition.getName(languageId, useDefault);
+		return model.getName(languageId, useDefault);
 	}
 
 	@Override
 	public String getNameCurrentLanguageId() {
-		return _definition.getNameCurrentLanguageId();
+		return model.getNameCurrentLanguageId();
 	}
 
 	@Override
 	public String getNameCurrentValue() {
-		return _definition.getNameCurrentValue();
+		return model.getNameCurrentValue();
 	}
 
 	/**
@@ -409,7 +380,7 @@ public class DefinitionWrapper implements Definition, ModelWrapper<Definition> {
 	*/
 	@Override
 	public Map<java.util.Locale, String> getNameMap() {
-		return _definition.getNameMap();
+		return model.getNameMap();
 	}
 
 	/**
@@ -419,12 +390,7 @@ public class DefinitionWrapper implements Definition, ModelWrapper<Definition> {
 	*/
 	@Override
 	public long getPrimaryKey() {
-		return _definition.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _definition.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	/**
@@ -434,7 +400,7 @@ public class DefinitionWrapper implements Definition, ModelWrapper<Definition> {
 	*/
 	@Override
 	public String getReportName() {
-		return _definition.getReportName();
+		return model.getReportName();
 	}
 
 	/**
@@ -444,7 +410,7 @@ public class DefinitionWrapper implements Definition, ModelWrapper<Definition> {
 	*/
 	@Override
 	public String getReportParameters() {
-		return _definition.getReportParameters();
+		return model.getReportParameters();
 	}
 
 	/**
@@ -454,7 +420,7 @@ public class DefinitionWrapper implements Definition, ModelWrapper<Definition> {
 	*/
 	@Override
 	public long getSourceId() {
-		return _definition.getSourceId();
+		return model.getSourceId();
 	}
 
 	/**
@@ -464,7 +430,7 @@ public class DefinitionWrapper implements Definition, ModelWrapper<Definition> {
 	*/
 	@Override
 	public long getUserId() {
-		return _definition.getUserId();
+		return model.getUserId();
 	}
 
 	/**
@@ -474,7 +440,7 @@ public class DefinitionWrapper implements Definition, ModelWrapper<Definition> {
 	*/
 	@Override
 	public String getUserName() {
-		return _definition.getUserName();
+		return model.getUserName();
 	}
 
 	/**
@@ -484,7 +450,7 @@ public class DefinitionWrapper implements Definition, ModelWrapper<Definition> {
 	*/
 	@Override
 	public String getUserUuid() {
-		return _definition.getUserUuid();
+		return model.getUserUuid();
 	}
 
 	/**
@@ -494,50 +460,25 @@ public class DefinitionWrapper implements Definition, ModelWrapper<Definition> {
 	*/
 	@Override
 	public String getUuid() {
-		return _definition.getUuid();
-	}
-
-	@Override
-	public int hashCode() {
-		return _definition.hashCode();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _definition.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _definition.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _definition.isNew();
+		return model.getUuid();
 	}
 
 	@Override
 	public void persist() {
-		_definition.persist();
+		model.persist();
 	}
 
 	@Override
 	public void prepareLocalizedFieldsForImport()
 		throws com.liferay.portal.kernel.exception.LocaleException {
-		_definition.prepareLocalizedFieldsForImport();
+		model.prepareLocalizedFieldsForImport();
 	}
 
 	@Override
 	public void prepareLocalizedFieldsForImport(
 		java.util.Locale defaultImportLocale)
 		throws com.liferay.portal.kernel.exception.LocaleException {
-		_definition.prepareLocalizedFieldsForImport(defaultImportLocale);
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_definition.setCachedModel(cachedModel);
+		model.prepareLocalizedFieldsForImport(defaultImportLocale);
 	}
 
 	/**
@@ -547,7 +488,7 @@ public class DefinitionWrapper implements Definition, ModelWrapper<Definition> {
 	*/
 	@Override
 	public void setCompanyId(long companyId) {
-		_definition.setCompanyId(companyId);
+		model.setCompanyId(companyId);
 	}
 
 	/**
@@ -557,7 +498,7 @@ public class DefinitionWrapper implements Definition, ModelWrapper<Definition> {
 	*/
 	@Override
 	public void setCreateDate(Date createDate) {
-		_definition.setCreateDate(createDate);
+		model.setCreateDate(createDate);
 	}
 
 	/**
@@ -567,7 +508,7 @@ public class DefinitionWrapper implements Definition, ModelWrapper<Definition> {
 	*/
 	@Override
 	public void setDefinitionId(long definitionId) {
-		_definition.setDefinitionId(definitionId);
+		model.setDefinitionId(definitionId);
 	}
 
 	/**
@@ -577,7 +518,7 @@ public class DefinitionWrapper implements Definition, ModelWrapper<Definition> {
 	*/
 	@Override
 	public void setDescription(String description) {
-		_definition.setDescription(description);
+		model.setDescription(description);
 	}
 
 	/**
@@ -588,7 +529,7 @@ public class DefinitionWrapper implements Definition, ModelWrapper<Definition> {
 	*/
 	@Override
 	public void setDescription(String description, java.util.Locale locale) {
-		_definition.setDescription(description, locale);
+		model.setDescription(description, locale);
 	}
 
 	/**
@@ -601,12 +542,12 @@ public class DefinitionWrapper implements Definition, ModelWrapper<Definition> {
 	@Override
 	public void setDescription(String description, java.util.Locale locale,
 		java.util.Locale defaultLocale) {
-		_definition.setDescription(description, locale, defaultLocale);
+		model.setDescription(description, locale, defaultLocale);
 	}
 
 	@Override
 	public void setDescriptionCurrentLanguageId(String languageId) {
-		_definition.setDescriptionCurrentLanguageId(languageId);
+		model.setDescriptionCurrentLanguageId(languageId);
 	}
 
 	/**
@@ -616,7 +557,7 @@ public class DefinitionWrapper implements Definition, ModelWrapper<Definition> {
 	*/
 	@Override
 	public void setDescriptionMap(Map<java.util.Locale, String> descriptionMap) {
-		_definition.setDescriptionMap(descriptionMap);
+		model.setDescriptionMap(descriptionMap);
 	}
 
 	/**
@@ -629,23 +570,7 @@ public class DefinitionWrapper implements Definition, ModelWrapper<Definition> {
 	public void setDescriptionMap(
 		Map<java.util.Locale, String> descriptionMap,
 		java.util.Locale defaultLocale) {
-		_definition.setDescriptionMap(descriptionMap, defaultLocale);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-		_definition.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_definition.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_definition.setExpandoBridgeAttributes(serviceContext);
+		model.setDescriptionMap(descriptionMap, defaultLocale);
 	}
 
 	/**
@@ -655,7 +580,7 @@ public class DefinitionWrapper implements Definition, ModelWrapper<Definition> {
 	*/
 	@Override
 	public void setGroupId(long groupId) {
-		_definition.setGroupId(groupId);
+		model.setGroupId(groupId);
 	}
 
 	/**
@@ -665,7 +590,7 @@ public class DefinitionWrapper implements Definition, ModelWrapper<Definition> {
 	*/
 	@Override
 	public void setLastPublishDate(Date lastPublishDate) {
-		_definition.setLastPublishDate(lastPublishDate);
+		model.setLastPublishDate(lastPublishDate);
 	}
 
 	/**
@@ -675,7 +600,7 @@ public class DefinitionWrapper implements Definition, ModelWrapper<Definition> {
 	*/
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
-		_definition.setModifiedDate(modifiedDate);
+		model.setModifiedDate(modifiedDate);
 	}
 
 	/**
@@ -685,7 +610,7 @@ public class DefinitionWrapper implements Definition, ModelWrapper<Definition> {
 	*/
 	@Override
 	public void setName(String name) {
-		_definition.setName(name);
+		model.setName(name);
 	}
 
 	/**
@@ -696,7 +621,7 @@ public class DefinitionWrapper implements Definition, ModelWrapper<Definition> {
 	*/
 	@Override
 	public void setName(String name, java.util.Locale locale) {
-		_definition.setName(name, locale);
+		model.setName(name, locale);
 	}
 
 	/**
@@ -709,12 +634,12 @@ public class DefinitionWrapper implements Definition, ModelWrapper<Definition> {
 	@Override
 	public void setName(String name, java.util.Locale locale,
 		java.util.Locale defaultLocale) {
-		_definition.setName(name, locale, defaultLocale);
+		model.setName(name, locale, defaultLocale);
 	}
 
 	@Override
 	public void setNameCurrentLanguageId(String languageId) {
-		_definition.setNameCurrentLanguageId(languageId);
+		model.setNameCurrentLanguageId(languageId);
 	}
 
 	/**
@@ -724,7 +649,7 @@ public class DefinitionWrapper implements Definition, ModelWrapper<Definition> {
 	*/
 	@Override
 	public void setNameMap(Map<java.util.Locale, String> nameMap) {
-		_definition.setNameMap(nameMap);
+		model.setNameMap(nameMap);
 	}
 
 	/**
@@ -736,12 +661,7 @@ public class DefinitionWrapper implements Definition, ModelWrapper<Definition> {
 	@Override
 	public void setNameMap(Map<java.util.Locale, String> nameMap,
 		java.util.Locale defaultLocale) {
-		_definition.setNameMap(nameMap, defaultLocale);
-	}
-
-	@Override
-	public void setNew(boolean n) {
-		_definition.setNew(n);
+		model.setNameMap(nameMap, defaultLocale);
 	}
 
 	/**
@@ -751,12 +671,7 @@ public class DefinitionWrapper implements Definition, ModelWrapper<Definition> {
 	*/
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_definition.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_definition.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -766,7 +681,7 @@ public class DefinitionWrapper implements Definition, ModelWrapper<Definition> {
 	*/
 	@Override
 	public void setReportName(String reportName) {
-		_definition.setReportName(reportName);
+		model.setReportName(reportName);
 	}
 
 	/**
@@ -776,7 +691,7 @@ public class DefinitionWrapper implements Definition, ModelWrapper<Definition> {
 	*/
 	@Override
 	public void setReportParameters(String reportParameters) {
-		_definition.setReportParameters(reportParameters);
+		model.setReportParameters(reportParameters);
 	}
 
 	/**
@@ -786,7 +701,7 @@ public class DefinitionWrapper implements Definition, ModelWrapper<Definition> {
 	*/
 	@Override
 	public void setSourceId(long sourceId) {
-		_definition.setSourceId(sourceId);
+		model.setSourceId(sourceId);
 	}
 
 	/**
@@ -796,7 +711,7 @@ public class DefinitionWrapper implements Definition, ModelWrapper<Definition> {
 	*/
 	@Override
 	public void setUserId(long userId) {
-		_definition.setUserId(userId);
+		model.setUserId(userId);
 	}
 
 	/**
@@ -806,7 +721,7 @@ public class DefinitionWrapper implements Definition, ModelWrapper<Definition> {
 	*/
 	@Override
 	public void setUserName(String userName) {
-		_definition.setUserName(userName);
+		model.setUserName(userName);
 	}
 
 	/**
@@ -816,7 +731,7 @@ public class DefinitionWrapper implements Definition, ModelWrapper<Definition> {
 	*/
 	@Override
 	public void setUserUuid(String userUuid) {
-		_definition.setUserUuid(userUuid);
+		model.setUserUuid(userUuid);
 	}
 
 	/**
@@ -826,77 +741,16 @@ public class DefinitionWrapper implements Definition, ModelWrapper<Definition> {
 	*/
 	@Override
 	public void setUuid(String uuid) {
-		_definition.setUuid(uuid);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<Definition> toCacheModel() {
-		return _definition.toCacheModel();
-	}
-
-	@Override
-	public Definition toEscapedModel() {
-		return new DefinitionWrapper(_definition.toEscapedModel());
-	}
-
-	@Override
-	public String toString() {
-		return _definition.toString();
-	}
-
-	@Override
-	public Definition toUnescapedModel() {
-		return new DefinitionWrapper(_definition.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _definition.toXmlString();
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-
-		if (!(obj instanceof DefinitionWrapper)) {
-			return false;
-		}
-
-		DefinitionWrapper definitionWrapper = (DefinitionWrapper)obj;
-
-		if (Objects.equals(_definition, definitionWrapper._definition)) {
-			return true;
-		}
-
-		return false;
+		model.setUuid(uuid);
 	}
 
 	@Override
 	public StagedModelType getStagedModelType() {
-		return _definition.getStagedModelType();
+		return model.getStagedModelType();
 	}
 
 	@Override
-	public Definition getWrappedModel() {
-		return _definition;
+	protected DefinitionWrapper wrap(Definition definition) {
+		return new DefinitionWrapper(definition);
 	}
-
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _definition.isEntityCacheEnabled();
-	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _definition.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_definition.resetOriginalValues();
-	}
-
-	private final Definition _definition;
 }

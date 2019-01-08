@@ -16,17 +16,12 @@ package com.liferay.oauth.model;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
-
 import com.liferay.portal.kernel.model.ModelWrapper;
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -38,20 +33,10 @@ import java.util.Objects;
  * @generated
  */
 @ProviderType
-public class OAuthApplicationWrapper implements OAuthApplication,
-	ModelWrapper<OAuthApplication> {
+public class OAuthApplicationWrapper extends BaseModelWrapper<OAuthApplication>
+	implements OAuthApplication, ModelWrapper<OAuthApplication> {
 	public OAuthApplicationWrapper(OAuthApplication oAuthApplication) {
-		_oAuthApplication = oAuthApplication;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return OAuthApplication.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return OAuthApplication.class.getName();
+		super(oAuthApplication);
 	}
 
 	@Override
@@ -171,16 +156,6 @@ public class OAuthApplicationWrapper implements OAuthApplication,
 		}
 	}
 
-	@Override
-	public Object clone() {
-		return new OAuthApplicationWrapper((OAuthApplication)_oAuthApplication.clone());
-	}
-
-	@Override
-	public int compareTo(OAuthApplication oAuthApplication) {
-		return _oAuthApplication.compareTo(oAuthApplication);
-	}
-
 	/**
 	* Returns the access level of this o auth application.
 	*
@@ -188,12 +163,12 @@ public class OAuthApplicationWrapper implements OAuthApplication,
 	*/
 	@Override
 	public int getAccessLevel() {
-		return _oAuthApplication.getAccessLevel();
+		return model.getAccessLevel();
 	}
 
 	@Override
 	public String getAccessLevelLabel() {
-		return _oAuthApplication.getAccessLevelLabel();
+		return model.getAccessLevelLabel();
 	}
 
 	/**
@@ -203,7 +178,7 @@ public class OAuthApplicationWrapper implements OAuthApplication,
 	*/
 	@Override
 	public String getCallbackURI() {
-		return _oAuthApplication.getCallbackURI();
+		return model.getCallbackURI();
 	}
 
 	/**
@@ -213,7 +188,7 @@ public class OAuthApplicationWrapper implements OAuthApplication,
 	*/
 	@Override
 	public long getCompanyId() {
-		return _oAuthApplication.getCompanyId();
+		return model.getCompanyId();
 	}
 
 	/**
@@ -223,7 +198,7 @@ public class OAuthApplicationWrapper implements OAuthApplication,
 	*/
 	@Override
 	public String getConsumerKey() {
-		return _oAuthApplication.getConsumerKey();
+		return model.getConsumerKey();
 	}
 
 	/**
@@ -233,7 +208,7 @@ public class OAuthApplicationWrapper implements OAuthApplication,
 	*/
 	@Override
 	public String getConsumerSecret() {
-		return _oAuthApplication.getConsumerSecret();
+		return model.getConsumerSecret();
 	}
 
 	/**
@@ -243,7 +218,7 @@ public class OAuthApplicationWrapper implements OAuthApplication,
 	*/
 	@Override
 	public Date getCreateDate() {
-		return _oAuthApplication.getCreateDate();
+		return model.getCreateDate();
 	}
 
 	/**
@@ -253,12 +228,7 @@ public class OAuthApplicationWrapper implements OAuthApplication,
 	*/
 	@Override
 	public String getDescription() {
-		return _oAuthApplication.getDescription();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _oAuthApplication.getExpandoBridge();
+		return model.getDescription();
 	}
 
 	/**
@@ -268,7 +238,7 @@ public class OAuthApplicationWrapper implements OAuthApplication,
 	*/
 	@Override
 	public long getLogoId() {
-		return _oAuthApplication.getLogoId();
+		return model.getLogoId();
 	}
 
 	/**
@@ -278,7 +248,7 @@ public class OAuthApplicationWrapper implements OAuthApplication,
 	*/
 	@Override
 	public Date getModifiedDate() {
-		return _oAuthApplication.getModifiedDate();
+		return model.getModifiedDate();
 	}
 
 	/**
@@ -288,7 +258,7 @@ public class OAuthApplicationWrapper implements OAuthApplication,
 	*/
 	@Override
 	public String getName() {
-		return _oAuthApplication.getName();
+		return model.getName();
 	}
 
 	/**
@@ -298,7 +268,7 @@ public class OAuthApplicationWrapper implements OAuthApplication,
 	*/
 	@Override
 	public long getOAuthApplicationId() {
-		return _oAuthApplication.getOAuthApplicationId();
+		return model.getOAuthApplicationId();
 	}
 
 	/**
@@ -308,12 +278,7 @@ public class OAuthApplicationWrapper implements OAuthApplication,
 	*/
 	@Override
 	public long getPrimaryKey() {
-		return _oAuthApplication.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _oAuthApplication.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	/**
@@ -323,7 +288,7 @@ public class OAuthApplicationWrapper implements OAuthApplication,
 	*/
 	@Override
 	public boolean getShareableAccessToken() {
-		return _oAuthApplication.getShareableAccessToken();
+		return model.getShareableAccessToken();
 	}
 
 	/**
@@ -333,7 +298,7 @@ public class OAuthApplicationWrapper implements OAuthApplication,
 	*/
 	@Override
 	public long getUserId() {
-		return _oAuthApplication.getUserId();
+		return model.getUserId();
 	}
 
 	/**
@@ -343,7 +308,7 @@ public class OAuthApplicationWrapper implements OAuthApplication,
 	*/
 	@Override
 	public String getUserName() {
-		return _oAuthApplication.getUserName();
+		return model.getUserName();
 	}
 
 	/**
@@ -353,7 +318,7 @@ public class OAuthApplicationWrapper implements OAuthApplication,
 	*/
 	@Override
 	public String getUserUuid() {
-		return _oAuthApplication.getUserUuid();
+		return model.getUserUuid();
 	}
 
 	/**
@@ -363,27 +328,7 @@ public class OAuthApplicationWrapper implements OAuthApplication,
 	*/
 	@Override
 	public String getWebsiteURL() {
-		return _oAuthApplication.getWebsiteURL();
-	}
-
-	@Override
-	public int hashCode() {
-		return _oAuthApplication.hashCode();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _oAuthApplication.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _oAuthApplication.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _oAuthApplication.isNew();
+		return model.getWebsiteURL();
 	}
 
 	/**
@@ -393,12 +338,12 @@ public class OAuthApplicationWrapper implements OAuthApplication,
 	*/
 	@Override
 	public boolean isShareableAccessToken() {
-		return _oAuthApplication.isShareableAccessToken();
+		return model.isShareableAccessToken();
 	}
 
 	@Override
 	public void persist() {
-		_oAuthApplication.persist();
+		model.persist();
 	}
 
 	/**
@@ -408,12 +353,7 @@ public class OAuthApplicationWrapper implements OAuthApplication,
 	*/
 	@Override
 	public void setAccessLevel(int accessLevel) {
-		_oAuthApplication.setAccessLevel(accessLevel);
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_oAuthApplication.setCachedModel(cachedModel);
+		model.setAccessLevel(accessLevel);
 	}
 
 	/**
@@ -423,7 +363,7 @@ public class OAuthApplicationWrapper implements OAuthApplication,
 	*/
 	@Override
 	public void setCallbackURI(String callbackURI) {
-		_oAuthApplication.setCallbackURI(callbackURI);
+		model.setCallbackURI(callbackURI);
 	}
 
 	/**
@@ -433,7 +373,7 @@ public class OAuthApplicationWrapper implements OAuthApplication,
 	*/
 	@Override
 	public void setCompanyId(long companyId) {
-		_oAuthApplication.setCompanyId(companyId);
+		model.setCompanyId(companyId);
 	}
 
 	/**
@@ -443,7 +383,7 @@ public class OAuthApplicationWrapper implements OAuthApplication,
 	*/
 	@Override
 	public void setConsumerKey(String consumerKey) {
-		_oAuthApplication.setConsumerKey(consumerKey);
+		model.setConsumerKey(consumerKey);
 	}
 
 	/**
@@ -453,7 +393,7 @@ public class OAuthApplicationWrapper implements OAuthApplication,
 	*/
 	@Override
 	public void setConsumerSecret(String consumerSecret) {
-		_oAuthApplication.setConsumerSecret(consumerSecret);
+		model.setConsumerSecret(consumerSecret);
 	}
 
 	/**
@@ -463,7 +403,7 @@ public class OAuthApplicationWrapper implements OAuthApplication,
 	*/
 	@Override
 	public void setCreateDate(Date createDate) {
-		_oAuthApplication.setCreateDate(createDate);
+		model.setCreateDate(createDate);
 	}
 
 	/**
@@ -473,23 +413,7 @@ public class OAuthApplicationWrapper implements OAuthApplication,
 	*/
 	@Override
 	public void setDescription(String description) {
-		_oAuthApplication.setDescription(description);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-		_oAuthApplication.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_oAuthApplication.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_oAuthApplication.setExpandoBridgeAttributes(serviceContext);
+		model.setDescription(description);
 	}
 
 	/**
@@ -499,7 +423,7 @@ public class OAuthApplicationWrapper implements OAuthApplication,
 	*/
 	@Override
 	public void setLogoId(long logoId) {
-		_oAuthApplication.setLogoId(logoId);
+		model.setLogoId(logoId);
 	}
 
 	/**
@@ -509,7 +433,7 @@ public class OAuthApplicationWrapper implements OAuthApplication,
 	*/
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
-		_oAuthApplication.setModifiedDate(modifiedDate);
+		model.setModifiedDate(modifiedDate);
 	}
 
 	/**
@@ -519,12 +443,7 @@ public class OAuthApplicationWrapper implements OAuthApplication,
 	*/
 	@Override
 	public void setName(String name) {
-		_oAuthApplication.setName(name);
-	}
-
-	@Override
-	public void setNew(boolean n) {
-		_oAuthApplication.setNew(n);
+		model.setName(name);
 	}
 
 	/**
@@ -534,7 +453,7 @@ public class OAuthApplicationWrapper implements OAuthApplication,
 	*/
 	@Override
 	public void setOAuthApplicationId(long oAuthApplicationId) {
-		_oAuthApplication.setOAuthApplicationId(oAuthApplicationId);
+		model.setOAuthApplicationId(oAuthApplicationId);
 	}
 
 	/**
@@ -544,12 +463,7 @@ public class OAuthApplicationWrapper implements OAuthApplication,
 	*/
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_oAuthApplication.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_oAuthApplication.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -559,7 +473,7 @@ public class OAuthApplicationWrapper implements OAuthApplication,
 	*/
 	@Override
 	public void setShareableAccessToken(boolean shareableAccessToken) {
-		_oAuthApplication.setShareableAccessToken(shareableAccessToken);
+		model.setShareableAccessToken(shareableAccessToken);
 	}
 
 	/**
@@ -569,7 +483,7 @@ public class OAuthApplicationWrapper implements OAuthApplication,
 	*/
 	@Override
 	public void setUserId(long userId) {
-		_oAuthApplication.setUserId(userId);
+		model.setUserId(userId);
 	}
 
 	/**
@@ -579,7 +493,7 @@ public class OAuthApplicationWrapper implements OAuthApplication,
 	*/
 	@Override
 	public void setUserName(String userName) {
-		_oAuthApplication.setUserName(userName);
+		model.setUserName(userName);
 	}
 
 	/**
@@ -589,7 +503,7 @@ public class OAuthApplicationWrapper implements OAuthApplication,
 	*/
 	@Override
 	public void setUserUuid(String userUuid) {
-		_oAuthApplication.setUserUuid(userUuid);
+		model.setUserUuid(userUuid);
 	}
 
 	/**
@@ -599,73 +513,11 @@ public class OAuthApplicationWrapper implements OAuthApplication,
 	*/
 	@Override
 	public void setWebsiteURL(String websiteURL) {
-		_oAuthApplication.setWebsiteURL(websiteURL);
+		model.setWebsiteURL(websiteURL);
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.CacheModel<OAuthApplication> toCacheModel() {
-		return _oAuthApplication.toCacheModel();
+	protected OAuthApplicationWrapper wrap(OAuthApplication oAuthApplication) {
+		return new OAuthApplicationWrapper(oAuthApplication);
 	}
-
-	@Override
-	public OAuthApplication toEscapedModel() {
-		return new OAuthApplicationWrapper(_oAuthApplication.toEscapedModel());
-	}
-
-	@Override
-	public String toString() {
-		return _oAuthApplication.toString();
-	}
-
-	@Override
-	public OAuthApplication toUnescapedModel() {
-		return new OAuthApplicationWrapper(_oAuthApplication.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _oAuthApplication.toXmlString();
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-
-		if (!(obj instanceof OAuthApplicationWrapper)) {
-			return false;
-		}
-
-		OAuthApplicationWrapper oAuthApplicationWrapper = (OAuthApplicationWrapper)obj;
-
-		if (Objects.equals(_oAuthApplication,
-					oAuthApplicationWrapper._oAuthApplication)) {
-			return true;
-		}
-
-		return false;
-	}
-
-	@Override
-	public OAuthApplication getWrappedModel() {
-		return _oAuthApplication;
-	}
-
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _oAuthApplication.isEntityCacheEnabled();
-	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _oAuthApplication.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_oAuthApplication.resetOriginalValues();
-	}
-
-	private final OAuthApplication _oAuthApplication;
 }

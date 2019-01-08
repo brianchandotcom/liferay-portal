@@ -16,17 +16,12 @@ package com.liferay.sharepoint.rest.oauth2.model;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
-
 import com.liferay.portal.kernel.model.ModelWrapper;
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -38,22 +33,12 @@ import java.util.Objects;
  * @generated
  */
 @ProviderType
-public class SharepointOAuth2TokenEntryWrapper
+public class SharepointOAuth2TokenEntryWrapper extends BaseModelWrapper<SharepointOAuth2TokenEntry>
 	implements SharepointOAuth2TokenEntry,
 		ModelWrapper<SharepointOAuth2TokenEntry> {
 	public SharepointOAuth2TokenEntryWrapper(
 		SharepointOAuth2TokenEntry sharepointOAuth2TokenEntry) {
-		_sharepointOAuth2TokenEntry = sharepointOAuth2TokenEntry;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return SharepointOAuth2TokenEntry.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return SharepointOAuth2TokenEntry.class.getName();
+		super(sharepointOAuth2TokenEntry);
 	}
 
 	@Override
@@ -125,16 +110,6 @@ public class SharepointOAuth2TokenEntryWrapper
 		}
 	}
 
-	@Override
-	public Object clone() {
-		return new SharepointOAuth2TokenEntryWrapper((SharepointOAuth2TokenEntry)_sharepointOAuth2TokenEntry.clone());
-	}
-
-	@Override
-	public int compareTo(SharepointOAuth2TokenEntry sharepointOAuth2TokenEntry) {
-		return _sharepointOAuth2TokenEntry.compareTo(sharepointOAuth2TokenEntry);
-	}
-
 	/**
 	* Returns the access token of this sharepoint o auth2 token entry.
 	*
@@ -142,7 +117,7 @@ public class SharepointOAuth2TokenEntryWrapper
 	*/
 	@Override
 	public String getAccessToken() {
-		return _sharepointOAuth2TokenEntry.getAccessToken();
+		return model.getAccessToken();
 	}
 
 	/**
@@ -152,7 +127,7 @@ public class SharepointOAuth2TokenEntryWrapper
 	*/
 	@Override
 	public String getConfigurationPid() {
-		return _sharepointOAuth2TokenEntry.getConfigurationPid();
+		return model.getConfigurationPid();
 	}
 
 	/**
@@ -162,12 +137,7 @@ public class SharepointOAuth2TokenEntryWrapper
 	*/
 	@Override
 	public Date getCreateDate() {
-		return _sharepointOAuth2TokenEntry.getCreateDate();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _sharepointOAuth2TokenEntry.getExpandoBridge();
+		return model.getCreateDate();
 	}
 
 	/**
@@ -177,7 +147,7 @@ public class SharepointOAuth2TokenEntryWrapper
 	*/
 	@Override
 	public Date getExpirationDate() {
-		return _sharepointOAuth2TokenEntry.getExpirationDate();
+		return model.getExpirationDate();
 	}
 
 	/**
@@ -187,12 +157,7 @@ public class SharepointOAuth2TokenEntryWrapper
 	*/
 	@Override
 	public long getPrimaryKey() {
-		return _sharepointOAuth2TokenEntry.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _sharepointOAuth2TokenEntry.getPrimaryKeyObj();
+		return model.getPrimaryKey();
 	}
 
 	/**
@@ -202,7 +167,7 @@ public class SharepointOAuth2TokenEntryWrapper
 	*/
 	@Override
 	public String getRefreshToken() {
-		return _sharepointOAuth2TokenEntry.getRefreshToken();
+		return model.getRefreshToken();
 	}
 
 	/**
@@ -212,7 +177,7 @@ public class SharepointOAuth2TokenEntryWrapper
 	*/
 	@Override
 	public long getSharepointOAuth2TokenEntryId() {
-		return _sharepointOAuth2TokenEntry.getSharepointOAuth2TokenEntryId();
+		return model.getSharepointOAuth2TokenEntryId();
 	}
 
 	/**
@@ -222,7 +187,7 @@ public class SharepointOAuth2TokenEntryWrapper
 	*/
 	@Override
 	public long getUserId() {
-		return _sharepointOAuth2TokenEntry.getUserId();
+		return model.getUserId();
 	}
 
 	/**
@@ -232,7 +197,7 @@ public class SharepointOAuth2TokenEntryWrapper
 	*/
 	@Override
 	public String getUserName() {
-		return _sharepointOAuth2TokenEntry.getUserName();
+		return model.getUserName();
 	}
 
 	/**
@@ -242,32 +207,12 @@ public class SharepointOAuth2TokenEntryWrapper
 	*/
 	@Override
 	public String getUserUuid() {
-		return _sharepointOAuth2TokenEntry.getUserUuid();
-	}
-
-	@Override
-	public int hashCode() {
-		return _sharepointOAuth2TokenEntry.hashCode();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _sharepointOAuth2TokenEntry.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _sharepointOAuth2TokenEntry.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _sharepointOAuth2TokenEntry.isNew();
+		return model.getUserUuid();
 	}
 
 	@Override
 	public void persist() {
-		_sharepointOAuth2TokenEntry.persist();
+		model.persist();
 	}
 
 	/**
@@ -277,12 +222,7 @@ public class SharepointOAuth2TokenEntryWrapper
 	*/
 	@Override
 	public void setAccessToken(String accessToken) {
-		_sharepointOAuth2TokenEntry.setAccessToken(accessToken);
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_sharepointOAuth2TokenEntry.setCachedModel(cachedModel);
+		model.setAccessToken(accessToken);
 	}
 
 	/**
@@ -292,7 +232,7 @@ public class SharepointOAuth2TokenEntryWrapper
 	*/
 	@Override
 	public void setConfigurationPid(String configurationPid) {
-		_sharepointOAuth2TokenEntry.setConfigurationPid(configurationPid);
+		model.setConfigurationPid(configurationPid);
 	}
 
 	/**
@@ -302,23 +242,7 @@ public class SharepointOAuth2TokenEntryWrapper
 	*/
 	@Override
 	public void setCreateDate(Date createDate) {
-		_sharepointOAuth2TokenEntry.setCreateDate(createDate);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-		_sharepointOAuth2TokenEntry.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_sharepointOAuth2TokenEntry.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_sharepointOAuth2TokenEntry.setExpandoBridgeAttributes(serviceContext);
+		model.setCreateDate(createDate);
 	}
 
 	/**
@@ -328,12 +252,7 @@ public class SharepointOAuth2TokenEntryWrapper
 	*/
 	@Override
 	public void setExpirationDate(Date expirationDate) {
-		_sharepointOAuth2TokenEntry.setExpirationDate(expirationDate);
-	}
-
-	@Override
-	public void setNew(boolean n) {
-		_sharepointOAuth2TokenEntry.setNew(n);
+		model.setExpirationDate(expirationDate);
 	}
 
 	/**
@@ -343,12 +262,7 @@ public class SharepointOAuth2TokenEntryWrapper
 	*/
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_sharepointOAuth2TokenEntry.setPrimaryKey(primaryKey);
-	}
-
-	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_sharepointOAuth2TokenEntry.setPrimaryKeyObj(primaryKeyObj);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	/**
@@ -358,7 +272,7 @@ public class SharepointOAuth2TokenEntryWrapper
 	*/
 	@Override
 	public void setRefreshToken(String refreshToken) {
-		_sharepointOAuth2TokenEntry.setRefreshToken(refreshToken);
+		model.setRefreshToken(refreshToken);
 	}
 
 	/**
@@ -369,7 +283,7 @@ public class SharepointOAuth2TokenEntryWrapper
 	@Override
 	public void setSharepointOAuth2TokenEntryId(
 		long sharepointOAuth2TokenEntryId) {
-		_sharepointOAuth2TokenEntry.setSharepointOAuth2TokenEntryId(sharepointOAuth2TokenEntryId);
+		model.setSharepointOAuth2TokenEntryId(sharepointOAuth2TokenEntryId);
 	}
 
 	/**
@@ -379,7 +293,7 @@ public class SharepointOAuth2TokenEntryWrapper
 	*/
 	@Override
 	public void setUserId(long userId) {
-		_sharepointOAuth2TokenEntry.setUserId(userId);
+		model.setUserId(userId);
 	}
 
 	/**
@@ -389,7 +303,7 @@ public class SharepointOAuth2TokenEntryWrapper
 	*/
 	@Override
 	public void setUserName(String userName) {
-		_sharepointOAuth2TokenEntry.setUserName(userName);
+		model.setUserName(userName);
 	}
 
 	/**
@@ -399,73 +313,12 @@ public class SharepointOAuth2TokenEntryWrapper
 	*/
 	@Override
 	public void setUserUuid(String userUuid) {
-		_sharepointOAuth2TokenEntry.setUserUuid(userUuid);
+		model.setUserUuid(userUuid);
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.CacheModel<SharepointOAuth2TokenEntry> toCacheModel() {
-		return _sharepointOAuth2TokenEntry.toCacheModel();
+	protected SharepointOAuth2TokenEntryWrapper wrap(
+		SharepointOAuth2TokenEntry sharepointOAuth2TokenEntry) {
+		return new SharepointOAuth2TokenEntryWrapper(sharepointOAuth2TokenEntry);
 	}
-
-	@Override
-	public SharepointOAuth2TokenEntry toEscapedModel() {
-		return new SharepointOAuth2TokenEntryWrapper(_sharepointOAuth2TokenEntry.toEscapedModel());
-	}
-
-	@Override
-	public String toString() {
-		return _sharepointOAuth2TokenEntry.toString();
-	}
-
-	@Override
-	public SharepointOAuth2TokenEntry toUnescapedModel() {
-		return new SharepointOAuth2TokenEntryWrapper(_sharepointOAuth2TokenEntry.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _sharepointOAuth2TokenEntry.toXmlString();
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-
-		if (!(obj instanceof SharepointOAuth2TokenEntryWrapper)) {
-			return false;
-		}
-
-		SharepointOAuth2TokenEntryWrapper sharepointOAuth2TokenEntryWrapper = (SharepointOAuth2TokenEntryWrapper)obj;
-
-		if (Objects.equals(_sharepointOAuth2TokenEntry,
-					sharepointOAuth2TokenEntryWrapper._sharepointOAuth2TokenEntry)) {
-			return true;
-		}
-
-		return false;
-	}
-
-	@Override
-	public SharepointOAuth2TokenEntry getWrappedModel() {
-		return _sharepointOAuth2TokenEntry;
-	}
-
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _sharepointOAuth2TokenEntry.isEntityCacheEnabled();
-	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _sharepointOAuth2TokenEntry.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_sharepointOAuth2TokenEntry.resetOriginalValues();
-	}
-
-	private final SharepointOAuth2TokenEntry _sharepointOAuth2TokenEntry;
 }

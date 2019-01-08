@@ -45,6 +45,7 @@ import java.util.Optional;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Ignore;
 import org.junit.Rule;
@@ -67,16 +68,26 @@ public class CTEngineManagerTest {
 		ServiceTestUtil.setUser(TestPropsValues.getUser());
 
 		_user = UserTestUtil.addUser();
+
+		// If test environment has it enabled disable for the first run
+
+		if (_ctEngineManager.isChangeTrackingEnabled(
+			TestPropsValues.getCompanyId())) {
+
+			_ctEngineManager.disableChangeTracking(
+				TestPropsValues.getCompanyId());
+		}
 	}
 
 	@After
 	public void tearDown() throws Exception {
-		_ctEngineManager.disableChangeTracking(TestPropsValues.getUserId());
+		_ctEngineManager.disableChangeTracking(TestPropsValues.getCompanyId());
 	}
 
 	@Test
 	public void testCheckoutCTCollection() throws Exception {
-		_ctEngineManager.enableChangeTracking(TestPropsValues.getUserId());
+		_ctEngineManager.enableChangeTracking(
+			TestPropsValues.getCompanyId(), TestPropsValues.getUserId());
 
 		CTCollection ctCollection = _ctCollectionLocalService.addCTCollection(
 			TestPropsValues.getUserId(), "Test Change Tracking Collection",
@@ -143,7 +154,8 @@ public class CTEngineManagerTest {
 
 	@Test
 	public void testCreateCTCollection() throws Exception {
-		_ctEngineManager.enableChangeTracking(TestPropsValues.getUserId());
+		_ctEngineManager.enableChangeTracking(
+			TestPropsValues.getCompanyId(), TestPropsValues.getUserId());
 
 		String name = RandomTestUtil.randomString();
 		String description = RandomTestUtil.randomString();
@@ -180,7 +192,8 @@ public class CTEngineManagerTest {
 
 	@Test
 	public void testDeleteCTCollection() throws Exception {
-		_ctEngineManager.enableChangeTracking(TestPropsValues.getUserId());
+		_ctEngineManager.enableChangeTracking(
+			TestPropsValues.getCompanyId(), TestPropsValues.getUserId());
 
 		Optional<CTCollection> ctCollectionOptional =
 			_ctEngineManager.createCTCollection(
@@ -208,7 +221,8 @@ public class CTEngineManagerTest {
 
 	@Test
 	public void testDisableChangeTracking() throws PortalException {
-		_ctEngineManager.enableChangeTracking(TestPropsValues.getUserId());
+		_ctEngineManager.enableChangeTracking(
+			TestPropsValues.getCompanyId(), TestPropsValues.getUserId());
 
 		List<CTCollection> ctCollections =
 			_ctCollectionLocalService.getCTCollections(
@@ -218,7 +232,7 @@ public class CTEngineManagerTest {
 			"Change tracking collections must have one entry", 1,
 			ctCollections.size());
 
-		_ctEngineManager.disableChangeTracking(TestPropsValues.getUserId());
+		_ctEngineManager.disableChangeTracking(TestPropsValues.getCompanyId());
 
 		ctCollections = _ctCollectionLocalService.getCTCollections(
 			TestPropsValues.getCompanyId());
@@ -236,7 +250,7 @@ public class CTEngineManagerTest {
 			_ctEngineManager.isChangeTrackingEnabled(
 				TestPropsValues.getCompanyId()));
 
-		_ctEngineManager.disableChangeTracking(TestPropsValues.getUserId());
+		_ctEngineManager.disableChangeTracking(TestPropsValues.getCompanyId());
 
 		Assert.assertFalse(
 			_ctEngineManager.isChangeTrackingEnabled(
@@ -252,7 +266,8 @@ public class CTEngineManagerTest {
 			"Change tracking collection number must be zero", 0,
 			ctCollectionsCount);
 
-		_ctEngineManager.enableChangeTracking(TestPropsValues.getUserId());
+		_ctEngineManager.enableChangeTracking(
+			TestPropsValues.getCompanyId(), TestPropsValues.getUserId());
 
 		List<CTCollection> ctCollections =
 			_ctCollectionLocalService.getCTCollections(
@@ -272,13 +287,15 @@ public class CTEngineManagerTest {
 	public void testEnableChangeTrackingWhenChangeTrackingIsEnabled()
 		throws PortalException {
 
-		_ctEngineManager.enableChangeTracking(TestPropsValues.getUserId());
+		_ctEngineManager.enableChangeTracking(
+			TestPropsValues.getCompanyId(), TestPropsValues.getUserId());
 
 		Assert.assertTrue(
 			_ctEngineManager.isChangeTrackingEnabled(
 				TestPropsValues.getCompanyId()));
 
-		_ctEngineManager.enableChangeTracking(TestPropsValues.getUserId());
+		_ctEngineManager.enableChangeTracking(
+			TestPropsValues.getCompanyId(), TestPropsValues.getUserId());
 
 		Assert.assertTrue(
 			_ctEngineManager.isChangeTrackingEnabled(
@@ -287,7 +304,8 @@ public class CTEngineManagerTest {
 
 	@Test
 	public void testGetActiveCTCollectionOptional() throws Exception {
-		_ctEngineManager.enableChangeTracking(TestPropsValues.getUserId());
+		_ctEngineManager.enableChangeTracking(
+			TestPropsValues.getCompanyId(), TestPropsValues.getUserId());
 
 		Optional<CTCollection> ctCollectionOptional =
 			_ctEngineManager.createCTCollection(
@@ -342,7 +360,8 @@ public class CTEngineManagerTest {
 
 	@Test
 	public void testGetCTCollectionOptional() throws Exception {
-		_ctEngineManager.enableChangeTracking(TestPropsValues.getUserId());
+		_ctEngineManager.enableChangeTracking(
+			TestPropsValues.getCompanyId(), TestPropsValues.getUserId());
 
 		Optional<CTCollection> ctCollectionOptional1 =
 			_ctEngineManager.createCTCollection(
@@ -366,7 +385,8 @@ public class CTEngineManagerTest {
 
 	@Test
 	public void testGetCTCollections() throws Exception {
-		_ctEngineManager.enableChangeTracking(TestPropsValues.getUserId());
+		_ctEngineManager.enableChangeTracking(
+			TestPropsValues.getCompanyId(), TestPropsValues.getUserId());
 
 		Optional<CTCollection> ctCollectionOptional =
 			_ctEngineManager.createCTCollection(
@@ -411,7 +431,8 @@ public class CTEngineManagerTest {
 
 	@Test
 	public void testGetCTEntries() throws Exception {
-		_ctEngineManager.enableChangeTracking(TestPropsValues.getUserId());
+		_ctEngineManager.enableChangeTracking(
+			TestPropsValues.getCompanyId(), TestPropsValues.getUserId());
 
 		Optional<CTCollection> ctCollectionOptional =
 			_ctEngineManager.createCTCollection(
@@ -445,7 +466,8 @@ public class CTEngineManagerTest {
 
 	@Test
 	public void testGetProductionCTCollectionOptional() throws Exception {
-		_ctEngineManager.enableChangeTracking(TestPropsValues.getUserId());
+		_ctEngineManager.enableChangeTracking(
+			TestPropsValues.getCompanyId(), TestPropsValues.getUserId());
 
 		Optional<CTCollection> productionCTCollectionOptional =
 			_ctEngineManager.getProductionCTCollectionOptional(
@@ -484,7 +506,8 @@ public class CTEngineManagerTest {
 			_ctEngineManager.isChangeTrackingEnabled(
 				TestPropsValues.getCompanyId()));
 
-		_ctEngineManager.enableChangeTracking(TestPropsValues.getUserId());
+		_ctEngineManager.enableChangeTracking(
+			TestPropsValues.getCompanyId(), TestPropsValues.getUserId());
 
 		Assert.assertTrue(
 			_ctEngineManager.isChangeTrackingEnabled(
@@ -495,13 +518,15 @@ public class CTEngineManagerTest {
 	public void testIsChangeTrackingEnabledWhenChangeTrackingIsEnabled()
 		throws Exception {
 
-		_ctEngineManager.enableChangeTracking(TestPropsValues.getUserId());
+		_ctEngineManager.enableChangeTracking(
+			TestPropsValues.getCompanyId(), TestPropsValues.getUserId());
 
 		Assert.assertTrue(
 			_ctEngineManager.isChangeTrackingEnabled(
 				TestPropsValues.getCompanyId()));
 
-		_ctEngineManager.enableChangeTracking(TestPropsValues.getUserId());
+		_ctEngineManager.enableChangeTracking(
+			TestPropsValues.getCompanyId(), TestPropsValues.getUserId());
 
 		Assert.assertTrue(
 			_ctEngineManager.isChangeTrackingEnabled(
@@ -515,7 +540,8 @@ public class CTEngineManagerTest {
 
 	@Test
 	public void testPublishCTCollection() throws Exception {
-		_ctEngineManager.enableChangeTracking(TestPropsValues.getUserId());
+		_ctEngineManager.enableChangeTracking(
+			TestPropsValues.getCompanyId(), TestPropsValues.getUserId());
 
 		Optional<CTCollection> ctCollectionOptional =
 			_ctEngineManager.createCTCollection(

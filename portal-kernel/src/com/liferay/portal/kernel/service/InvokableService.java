@@ -16,7 +16,9 @@ package com.liferay.portal.kernel.service;
 
 /**
  * @author Brian Wing Shun Chan
+ * @deprecated As of Mueller (7.2.x), with no direct replacement
  */
+@Deprecated
 public interface InvokableService {
 
 	public Object invokeMethod(

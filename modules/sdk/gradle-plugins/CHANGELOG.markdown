@@ -6312,6 +6312,12 @@ version 2.2.6.
 - [LPS-41848]: Update the [Liferay Portal Tools Service Builder] dependency to
 version 1.0.255.
 
+## 3.13.51 - 2019-01-07
+
+### Removed
+- [LPS-87479]: The `npmInstall` task's up-to-date check is no longer needed. The
+task's inputs have been updated to improve performance.
+
 [Gradle Bundle Plugin]: https://github.com/TomDmitriev/gradle-bundle-plugin
 [Liferay Alloy Taglib]: https://github.com/liferay/alloy-taglibs
 [Liferay Ant BND]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/ant-bnd
@@ -6787,6 +6793,7 @@ version 1.0.255.
 [LPS-87465]: https://issues.liferay.com/browse/LPS-87465
 [LPS-87466]: https://issues.liferay.com/browse/LPS-87466
 [LPS-87471]: https://issues.liferay.com/browse/LPS-87471
+[LPS-87479]: https://issues.liferay.com/browse/LPS-87479
 [LPS-87488]: https://issues.liferay.com/browse/LPS-87488
 [LPS-87503]: https://issues.liferay.com/browse/LPS-87503
 [LPS-87590]: https://issues.liferay.com/browse/LPS-87590

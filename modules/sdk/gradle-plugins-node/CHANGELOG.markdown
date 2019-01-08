@@ -276,6 +276,16 @@ for Node.js versions 5.5.0 - 6.2.0.
 are not installed when running `npm install` without any arguments and sets
 `NODE_ENV=production` for lifecycle scripts.
 
+## 4.6.0 - 2019-01-07
+
+### Changed
+- [LPS-87479]: Update the [Liferay Gradle Util] dependency to version 1.0.33.
+- [LPS-87479]: Add inputs and outputs for tasks of type `NpmRunTask` to skip
+rerunning the task if none of the inputs or outputs have changed.
+- [LPS-87479]: Update the inputs for tasks of type `NpmInstallTask` to use the
+`nodeModulesDigestFile` instead of the `node_modules` directory as an input.
+
+[Liferay Gradle Util]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-util
 [LPS-66906]: https://issues.liferay.com/browse/LPS-66906
 [LPS-67023]: https://issues.liferay.com/browse/LPS-67023
 [LPS-67573]: https://issues.liferay.com/browse/LPS-67573
@@ -306,3 +316,4 @@ are not installed when running `npm install` without any arguments and sets
 [LPS-85959]: https://issues.liferay.com/browse/LPS-85959
 [LPS-86576]: https://issues.liferay.com/browse/LPS-86576
 [LPS-87465]: https://issues.liferay.com/browse/LPS-87465
+[LPS-87479]: https://issues.liferay.com/browse/LPS-87479

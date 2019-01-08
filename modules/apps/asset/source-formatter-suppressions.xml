@@ -3,7 +3,7 @@
 <suppressions>
 	<checkstyle>
 		<suppress checks="IndentationCheck" files="modules/apps/asset/asset-publisher-web/src/main/java/com/liferay/asset/publisher/web/internal/messaging/AssetEntriesCheckerUtil\.jav" />
-		<suppress checks="PersistenceCallCheck" files="modules/apps/asset/asset-publisher-web/src/main/java/com/liferay/asset/publisher/web/display/context/AssetPublisherDisplayContext\.java" />
+		<suppress checks="PersistenceCallCheck" files="modules/apps/asset/asset-publisher-web/src/main/java/com/liferay/asset/publisher/web/internal/display/context/AssetPublisherDisplayContext\.java" />
 		<suppress checks="PersistenceCallCheck" files="modules/apps/asset/asset-test/src/testIntegration/java/com/liferay/asset/service/test/AssetTagFinderTest\.java" />
 		<suppress checks="StaticVariableNameCheck" files="modules/apps/asset/asset-publisher-web/src/main/java/com/liferay/asset/publisher/web/internal/configuration/AssetPublisherWebConfigurationValues\.java" />
 	</checkstyle>

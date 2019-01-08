@@ -8,8 +8,9 @@
 	{@param? description: string}
 	{@param? multiple: bool}
 	{@param? _handleAddTag: any}
-	{@param? _handleSaveBtnClick: any}
+	{@param? _handleRadioChange: any}
 	{@param? _handleRemoveTag: any}
+	{@param? _handleSaveBtnClick: any}
 
 	{call liferay.frontend.Modal.render}
 		{param body kind="html"}
@@ -24,6 +25,7 @@
 					{param multiple: $multiple /}
 					{param spritemap: $spritemap /}
 					{param _handleAddTag: $_handleAddTag /}
+					{param _handleRadioChange: $_handleRadioChange /}
 					{param _handleRemoveTag: $_handleRemoveTag /}
 				{/call}
 			{/if}
@@ -61,25 +63,35 @@
 	{@param? description: string}
 	{@param? multiple: bool}
 	{@param? _handleAddTag: any}
+	{@param? _handleRadioChange: any}
 	{@param? _handleRemoveTag: any}
 
-	<p>{$description}</p>
+	<p>{$description} {if $multiple} {msg desc=""}select-append-or-replace-current-tags{/msg} {/if}</p>
 
 	{if $multiple}
 		{call ClayRadio.render}
 			{param checked: true /}
-			{param label: 'Add' /}
+			{param events: [
+				'change': $_handleRadioChange,
+			] /}
+			{param label kind="text"} {msg desc=""}add{/msg} {/param}
 			{param name: 'add-replace' /}
+			{param value: 'add' /}
 		{/call}
 
 		{call ClayRadio.render}
-			{param label: 'Replace' /}
+			{param events: [
+				'change': $_handleRadioChange,
+			] /}
+			{param label kind="text"} {msg desc=""}replace{/msg} {/param}
 			{param name: 'add-replace' /}
+			{param value: 'replace' /}
 		{/call}
 	{/if}
 
 	{call ClayMultiSelect.render}
 		{param dataSource: $dataSource /}
+		{param elementClasses: 'tag-selector' /}
 		{param events: [
 			'itemAdded': $_handleAddTag,
 			'itemRemoved': $_handleRemoveTag

@@ -9,6 +9,7 @@ import templates from './EditTags.soy';
 
 class EditTags extends Component {
 	created() {
+		this.append = true;
 		this.dataSource = [];
 	}
 
@@ -73,17 +74,35 @@ class EditTags extends Component {
 					this.loading = false;
 					this.commonTags = response.tagNames;
 					this.description = response.description;
+					this.multiple = this.fileEntries.length > 1;
 				}
 			}
 		);
 	}
 
+	/**
+	 * Sync the input radio with the state
+	 * @param {!Event} event
+	 * @private
+	 * @review
+	 */
+	_handleRadioChange(event) {
+		this.append = event.target.value === 'add';
+	}
+
 	_handleSaveBtnClick() {
 		let finalTags = this.commonTags.map(tag => tag.label);
 
-		let addedTags = finalTags.filter(
-			tag => this._initialTags.indexOf(tag) == -1
-		);
+		let addedTags = [];
+
+		if (!this.append) {
+			addedTags = finalTags;
+		}
+		else {
+			addedTags = finalTags.filter(
+				tag => this._initialTags.indexOf(tag) == -1
+			);
+		}
 
 		let removedTags = this._initialTags.filter(
 			tag => finalTags.indexOf(tag) == -1
@@ -91,7 +110,7 @@ class EditTags extends Component {
 
 		let bodyData = {
 			"bulkAssetEntryUpdateTagsActionModel": {
-				append: true,
+				append: this.append,
 				repositoryId: this.repositoryId,
 				selection: this.fileEntries,
 				toAddTagNames: addedTags,

@@ -81,7 +81,7 @@ public abstract class BaseQueryExecutor {
 
 		if (_log.isDebugEnabled()) {
 			_log.debug(
-				"searchRequestString = " +
+				"Search request string: " +
 					searchSearchResponse.getSearchRequestString());
 		}
 
@@ -106,7 +106,7 @@ public abstract class BaseQueryExecutor {
 
 		if (_log.isDebugEnabled()) {
 			_log.debug(
-				"searchRequestString = " +
+				"Search request string: " +
 					searchSearchResponse.getSearchRequestString());
 		}
 
@@ -130,7 +130,7 @@ public abstract class BaseQueryExecutor {
 
 		if (_log.isDebugEnabled()) {
 			_log.debug(
-				"searchRequestString = " +
+				"Search request string: " +
 					searchSearchResponse.getSearchRequestString());
 		}
 
@@ -148,7 +148,7 @@ public abstract class BaseQueryExecutor {
 
 		if (_log.isDebugEnabled()) {
 			_log.debug(
-				"searchRequestString = " +
+				"Search request string: " +
 					countSearchResponse.getSearchRequestString());
 		}
 
@@ -170,7 +170,7 @@ public abstract class BaseQueryExecutor {
 
 		if (_log.isDebugEnabled()) {
 			_log.debug(
-				"searchRequestString = " +
+				"Search request string: " +
 					searchSearchResponse.getSearchRequestString());
 		}
 

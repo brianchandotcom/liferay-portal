@@ -77,10 +77,8 @@ public class WorkflowInstanceQueryExecutor extends BaseQueryExecutor {
 
 		booleanFilter.addRequiredTerm(
 			WorkflowIndexerFieldNames.COMPANY_ID, companyId);
-
 		booleanFilter.addRequiredTerm(
 			WorkflowIndexerFieldNames.COMPLETED, false);
-
 		booleanFilter.addRequiredTerm(WorkflowIndexerFieldNames.DELETED, false);
 
 		return booleanFilter;

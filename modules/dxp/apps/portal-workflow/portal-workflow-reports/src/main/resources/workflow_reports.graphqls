@@ -24,8 +24,8 @@ type WorkflowProcess {
 }
 
 type WorkflowProcessBag {
-	workflowProcesses: [WorkflowProcess]
 	total: Long
+	workflowProcesses: [WorkflowProcess]
 }
 
 type WorkflowTask {

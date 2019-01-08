@@ -52,20 +52,18 @@ public class WorkflowProcessManager {
 			new ArrayList<>(map.values()), start, start + size);
 
 		for (Hits hits : hitsList) {
+			WorkflowProcess workflowProcess = new WorkflowProcess();
+
 			Document[] documents = hits.getDocs();
 
 			Document document = documents[0];
 
-			List<Long> processIds =
-				_workflowProcessQueryExecutor.getWorkflowProcessIds(
-					companyId, document.get(WorkflowIndexerFieldNames.NAME));
-
-			WorkflowProcess workflowProcess = new WorkflowProcess();
-
 			workflowProcess.setInstancesCount(
 				_workflowInstanceManager.getWorkflowInstancesCount(
-					companyId, processIds));
-
+					companyId,
+					_workflowProcessQueryExecutor.getWorkflowProcessIds(
+						companyId,
+						document.get(WorkflowIndexerFieldNames.NAME))));
 			workflowProcess.setName(
 				document.get(WorkflowIndexerFieldNames.NAME));
 			workflowProcess.setTitle(

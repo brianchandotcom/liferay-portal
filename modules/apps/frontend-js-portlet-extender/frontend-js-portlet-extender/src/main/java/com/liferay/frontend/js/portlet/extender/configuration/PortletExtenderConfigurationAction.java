@@ -138,8 +138,8 @@ public class PortletExtenderConfigurationAction
       String ddmFormRendered = _ddmFormRenderer.render(ddmForm, ddmFormFieldRenderingContext)
           .trim();
 
-      generateConfigurationFormFieldsByJson(portletDisplay, ddmFormObjectKeys,
-          jsonValues, portletDisplay.getNamespace(),
+      generateConfigurationFormFieldsByJson(ddmFormObjectKeys,
+           portletDisplay.getNamespace(),
           response.getWriter(),
           getActionURL(request, portletDisplay),
           ddmFormRendered);
@@ -158,12 +158,6 @@ public class PortletExtenderConfigurationAction
       ActionResponse actionResponse)
       throws Exception {
 
-    String configuration =
-        ParamUtil.getString(actionRequest, _CONFIGURATION);
-
-    JSONArray jsonObject = JSONFactoryUtil
-        .createJSONArray(configuration.substring(1, configuration.length() - 1));
-
     Map<String, String[]> parameterValues = actionRequest.getParameterMap();
     Iterator<Entry<String, String[]>> iterator = parameterValues.entrySet().iterator();
 
@@ -171,22 +165,6 @@ public class PortletExtenderConfigurationAction
       Map.Entry<String, String[]> pair = iterator.next();
       setPreference(actionRequest, pair.getKey(), pair.getValue());
     }
-
-//    for (int i = 0; i < jsonObject.length(); i++) {
-//      String type = JSONFactoryUtil.createJSONObject(jsonObject.getString(i)).getString("type", "text");
-//      String key = JSONFactoryUtil.createJSONObject(jsonObject.getString(i)).getString("name", "text");
-//
-//      if ("select".equals(type) || "radio".equals(type) ||
-//          "checkbox".equals(type)) {
-//        String[] parameterValues =
-//            ParamUtil.getParameterValues(actionRequest, key);
-//        setPreference(actionRequest, key, parameterValues);
-//      } else {
-//        setPreference(
-//            actionRequest, key,
-//            ParamUtil.getString(actionRequest, key));
-//      }
-//    }
 
     super.processAction(portletConfig, actionRequest, actionResponse);
   }
@@ -202,26 +180,12 @@ public class PortletExtenderConfigurationAction
     return super.getNextPossiblePortletModes(request);
   }
 
-  private static String _loadTemplate(String name) {
-    InputStream inputStream = JSPortlet.class.getResourceAsStream(
-        "dependencies/" + name);
-
-    try {
-      return StringUtil.read(inputStream);
-    } catch (Exception e) {
-      _log.error("Unable to read template " + name, e);
-    }
-
-    return StringPool.BLANK;
-  }
-
   private String appendPortletName(String portletName, String whatToAppend) {
     return portletName + whatToAppend;
   }
 
-  private void generateConfigurationFormFieldsByJson(
-      PortletDisplay portletDisplay, JSONArray jsonObject,
-      JSONObject jsonValues, String portletName, PrintWriter printWriter,
+  private void generateConfigurationFormFieldsByJson(JSONArray jsonObject,
+      String portletName, PrintWriter printWriter,
       String urlConfiguration, String ddmFormRendered) {
     printWriter.println(String.format(
         "<form class='form container container-no-gutters-sm-down container-view' "
@@ -258,17 +222,6 @@ public class PortletExtenderConfigurationAction
 
     printWriter.println(ddmFormRendered);
 
-//    printWriter.println(
-//        StringUtil.replace(
-//            _CONFIGURATION_TPL,
-//            new String[]{
-//                "$PORTLET_ID", "$OBJECT_CONFIGURATION", "$OBJECT_VALUES",
-//                "$INSTANCE", "$URL_CONFIGURATION"},
-//            new String[]{
-//                portletName, jsonObject.toJSONString(),
-//                jsonValues.toJSONString(),
-//                portletDisplay.getPortletResource(), urlConfiguration}));
-
     printWriter.println(String.format(" <div class=\"button-holder dialog-footer\">\n"
         + "        <button class=\"btn btn-primary btn-default\" id=\"form-button-submit\" type=\"submit\">\n"
         + "         <span class=\"lfr-btn-label\">Save</span>\n"
@@ -300,13 +253,8 @@ public class PortletExtenderConfigurationAction
     return actionURL.toString();
   }
 
-  static {
-    _CONFIGURATION_TPL = _loadTemplate("configuration.html.tpl");
-  }
 
   private static final String _CONFIGURATION = "configurationObject";
-
-  private static final String _CONFIGURATION_TPL;
 
   private static final String _FORM_DATA = "formDate";
 

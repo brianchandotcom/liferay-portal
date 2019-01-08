@@ -41,6 +41,11 @@ public class ClassLoaderResourceParser extends URLResourceParser {
 		_classLoader = clazz.getClassLoader();
 	}
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 * 			#ClassLoaderResourceParser()}
+	 */
+	@Deprecated
 	public ClassLoaderResourceParser(ClassLoader classLoader) {
 		_classLoader = classLoader;
 	}

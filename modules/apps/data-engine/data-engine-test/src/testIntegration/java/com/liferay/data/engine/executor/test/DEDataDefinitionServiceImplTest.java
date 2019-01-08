@@ -597,6 +597,189 @@ public class DEDataDefinitionServiceImplTest {
 	}
 
 	@Test
+	public void testListPaginatedMiddleInsideRange() throws Exception {
+		int dataDefinitionTotal = 5;
+
+		List<DEDataDefinition> deDataDefinitionsExpected = new ArrayList<>();
+
+		List<DEDataDefinitionSaveRequest> dataDefinitionSaveRequests =
+			new ArrayList<>();
+
+		for (int i = 0; i < dataDefinitionTotal; i++) {
+			DEDataDefinition dataDefinition = createDataDefinitionDefault(i);
+
+			DEDataDefinitionSaveRequest deDataDefinitionSaveRequest =
+				DEDataDefinitionRequestBuilder.saveBuilder(
+					dataDefinition
+				).onBehalfOf(
+					_user.getUserId()
+				).inGroup(
+					_group.getGroupId()
+				).build();
+
+			deDataDefinitionsExpected.add(dataDefinition);
+
+			dataDefinitionSaveRequests.add(deDataDefinitionSaveRequest);
+		}
+
+		try {
+			ServiceContext serviceContext = createServiceContext(
+				_group, _user, createModelPermissions());
+
+			ServiceContextThreadLocal.pushServiceContext(serviceContext);
+
+			for (DEDataDefinitionSaveRequest deDataDefinitionSaveRequest :
+					dataDefinitionSaveRequests) {
+
+				_deDataDefinitionService.execute(deDataDefinitionSaveRequest);
+			}
+
+			DEDataDefinitionListRequest deDataDefinitionListRequest =
+				DEDataDefinitionRequestBuilder.listBuilder(
+				).startingAt(
+					2
+				).endingAt(
+					4
+				).inCompany(
+					_group.getCompanyId()
+				).inGroup(
+					_group.getGroupId()
+				).build();
+
+			DEDataDefinitionListResponse deDataDefinitionListResponse =
+				_deDataDefinitionService.execute(deDataDefinitionListRequest);
+
+			Assert.assertEquals(
+				2, deDataDefinitionListResponse.getDEDataDefinitions().size());
+		}
+		finally {
+			ServiceContextThreadLocal.popServiceContext();
+		}
+	}
+
+	@Test
+	public void testListPaginatedMiddleOutOfRange() throws Exception {
+		int dataDefinitionTotal = 5;
+
+		List<DEDataDefinition> deDataDefinitionsExpected = new ArrayList<>();
+
+		List<DEDataDefinitionSaveRequest> dataDefinitionSaveRequests =
+			new ArrayList<>();
+
+		for (int i = 0; i < dataDefinitionTotal; i++) {
+			DEDataDefinition dataDefinition = createDataDefinitionDefault(i);
+
+			DEDataDefinitionSaveRequest deDataDefinitionSaveRequest =
+				DEDataDefinitionRequestBuilder.saveBuilder(
+					dataDefinition
+				).onBehalfOf(
+					_user.getUserId()
+				).inGroup(
+					_group.getGroupId()
+				).build();
+
+			deDataDefinitionsExpected.add(dataDefinition);
+
+			dataDefinitionSaveRequests.add(deDataDefinitionSaveRequest);
+		}
+
+		try {
+			ServiceContext serviceContext = createServiceContext(
+				_group, _user, createModelPermissions());
+
+			ServiceContextThreadLocal.pushServiceContext(serviceContext);
+
+			for (DEDataDefinitionSaveRequest deDataDefinitionSaveRequest :
+					dataDefinitionSaveRequests) {
+
+				_deDataDefinitionService.execute(deDataDefinitionSaveRequest);
+			}
+
+			DEDataDefinitionListRequest deDataDefinitionListRequest =
+				DEDataDefinitionRequestBuilder.listBuilder(
+				).startingAt(
+					3
+				).endingAt(
+					7
+				).inCompany(
+					_group.getCompanyId()
+				).inGroup(
+					_group.getGroupId()
+				).build();
+
+			DEDataDefinitionListResponse deDataDefinitionListResponse =
+				_deDataDefinitionService.execute(deDataDefinitionListRequest);
+
+			Assert.assertEquals(
+				2, deDataDefinitionListResponse.getDEDataDefinitions().size());
+		}
+		finally {
+			ServiceContextThreadLocal.popServiceContext();
+		}
+	}
+
+	@Test
+	public void testListPaginatedOutOfRange() throws Exception {
+		int dataDefinitionTotal = 5;
+
+		List<DEDataDefinition> deDataDefinitionsExpected = new ArrayList<>();
+
+		List<DEDataDefinitionSaveRequest> dataDefinitionSaveRequests =
+			new ArrayList<>();
+
+		for (int i = 0; i < dataDefinitionTotal; i++) {
+			DEDataDefinition dataDefinition = createDataDefinitionDefault(i);
+
+			DEDataDefinitionSaveRequest deDataDefinitionSaveRequest =
+				DEDataDefinitionRequestBuilder.saveBuilder(
+					dataDefinition
+				).onBehalfOf(
+					_user.getUserId()
+				).inGroup(
+					_group.getGroupId()
+				).build();
+
+			deDataDefinitionsExpected.add(dataDefinition);
+
+			dataDefinitionSaveRequests.add(deDataDefinitionSaveRequest);
+		}
+
+		try {
+			ServiceContext serviceContext = createServiceContext(
+				_group, _user, createModelPermissions());
+
+			ServiceContextThreadLocal.pushServiceContext(serviceContext);
+
+			for (DEDataDefinitionSaveRequest deDataDefinitionSaveRequest :
+					dataDefinitionSaveRequests) {
+
+				_deDataDefinitionService.execute(deDataDefinitionSaveRequest);
+			}
+
+			DEDataDefinitionListRequest deDataDefinitionListRequest =
+				DEDataDefinitionRequestBuilder.listBuilder(
+				).startingAt(
+					7
+				).endingAt(
+					10
+				).inCompany(
+					_group.getCompanyId()
+				).inGroup(
+					_group.getGroupId()
+				).build();
+
+			DEDataDefinitionListResponse deDataDefinitionListResponse =
+				_deDataDefinitionService.execute(deDataDefinitionListRequest);
+
+			Assert.assertEquals(
+				0, deDataDefinitionListResponse.getDEDataDefinitions().size());
+		}
+		finally {
+			ServiceContextThreadLocal.popServiceContext();
+		}
+	}
+
+	@Test
 	public void testListWithNoRecords() throws Exception {
 		try {
 			ServiceContext serviceContext = createServiceContext(
@@ -606,6 +789,8 @@ public class DEDataDefinitionServiceImplTest {
 
 			DEDataDefinitionListRequest deDataDefinitionListRequest =
 				DEDataDefinitionRequestBuilder.listBuilder(
+				).inCompany(
+					_group.getCompanyId()
 				).inGroup(
 					_group.getGroupId()
 				).build();
@@ -690,6 +875,8 @@ public class DEDataDefinitionServiceImplTest {
 
 			DEDataDefinitionListRequest deDataDefinitionListRequest =
 				DEDataDefinitionRequestBuilder.listBuilder(
+				).inCompany(
+					_group.getCompanyId()
 				).inGroup(
 					_group.getGroupId()
 				).build();
@@ -698,8 +885,7 @@ public class DEDataDefinitionServiceImplTest {
 				_deDataDefinitionService.execute(deDataDefinitionListRequest);
 
 			Assert.assertEquals(
-				deDataDefinitionsExpected,
-				deDataDefinitionListResponse.getDEDataDefinitions());
+				3, deDataDefinitionListResponse.getDEDataDefinitions().size());
 
 			DEDataDefinitionDeleteRequest deDataDefinitionDeleteRequestContact =
 				DEDataDefinitionRequestBuilder.deleteBuilder(
@@ -879,6 +1065,27 @@ public class DEDataDefinitionServiceImplTest {
 		deDataDefinition3.setStorageType("json");
 
 		return deDataDefinition3;
+	}
+
+	protected DEDataDefinition createDataDefinitionDefault(int instance) {
+		Map<String, String> field1Labels = new HashMap() {
+			{
+				put("en_US", "Field Default");
+			}
+		};
+
+		DEDataDefinitionField deDataDefinitionField = new DEDataDefinitionField(
+			"fieldDefault", "string");
+
+		deDataDefinitionField.addLabels(field1Labels);
+
+		DEDataDefinition deDataDefinition = new DEDataDefinition(
+			Arrays.asList(deDataDefinitionField));
+
+		deDataDefinition.addName(LocaleUtil.US, "Default" + instance);
+		deDataDefinition.setStorageType("json");
+
+		return deDataDefinition;
 	}
 
 	protected DEDataDefinition createDataDefinitionOrder() {

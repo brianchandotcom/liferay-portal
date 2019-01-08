@@ -24,7 +24,8 @@ import com.liferay.data.engine.model.DEDataDefinitionField;
 import com.liferay.data.engine.service.DEDataDefinitionListRequest;
 import com.liferay.data.engine.service.DEDataDefinitionListResponse;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
-import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
+import com.liferay.dynamic.data.mapping.service.DDMStructureService;
+import com.liferay.portal.kernel.util.Portal;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,9 +45,12 @@ public class DEDataDefinitionListRequestExecutor {
 			DEDataDefinitionListRequest deDataDefinitionListRequest)
 		throws Exception {
 
-		List<DDMStructure> ddmStructures =
-			ddmStructureLocalService.getStructures(
-				deDataDefinitionListRequest.getGroupId());
+		List<DDMStructure> ddmStructures = ddmStructureService.getStructures(
+			deDataDefinitionListRequest.getCompanyId(),
+			new long[] {deDataDefinitionListRequest.getGroupId()},
+			portal.getClassNameId(DEDataDefinition.class),
+			deDataDefinitionListRequest.getStart(),
+			deDataDefinitionListRequest.getEnd(), null);
 
 		List<DEDataDefinition> deDataDefinitions = new ArrayList<>();
 
@@ -101,10 +105,13 @@ public class DEDataDefinitionListRequestExecutor {
 	}
 
 	@Reference
-	protected DDMStructureLocalService ddmStructureLocalService;
+	protected DDMStructureService ddmStructureService;
 
 	@Reference
 	protected DEDataDefinitionFieldsDeserializerTracker
 		deDataDefinitionFieldsDeserializerTracker;
+
+	@Reference
+	protected Portal portal;
 
 }

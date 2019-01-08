@@ -49,11 +49,21 @@ public class DEListDataDefinitionDataFetcher
 		String errorMessage = null;
 
 		long groupId = GetterUtil.getLong(environment.getArgument("groupId"));
+		long companyId = GetterUtil.getLong(
+			environment.getArgument("companyId"));
+		int start = environment.getArgument("start");
+		int end = environment.getArgument("end");
 
 		DEDataDefinitionListRequest deDataDefinitionListRequest =
 			DEDataDefinitionRequestBuilder.listBuilder(
+			).inCompany(
+				companyId
 			).inGroup(
 				groupId
+			).startingAt(
+				start
+			).endingAt(
+				end
 			).build();
 
 		try {

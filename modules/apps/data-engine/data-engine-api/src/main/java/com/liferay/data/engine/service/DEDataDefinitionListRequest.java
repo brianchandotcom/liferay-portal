@@ -14,13 +14,27 @@
 
 package com.liferay.data.engine.service;
 
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
+
 /**
  * @author Jeyvison Nascimento
  */
 public class DEDataDefinitionListRequest {
 
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	public int getEnd() {
+		return _end;
+	}
+
 	public long getGroupId() {
 		return _groupId;
+	}
+
+	public int getStart() {
+		return _start;
 	}
 
 	public static final class Builder {
@@ -29,8 +43,26 @@ public class DEDataDefinitionListRequest {
 			return _deDataDefinitionListRequest;
 		}
 
+		public Builder endingAt(int end) {
+			_deDataDefinitionListRequest._end = end;
+
+			return this;
+		}
+
+		public Builder inCompany(long companyId) {
+			_deDataDefinitionListRequest._companyId = companyId;
+
+			return this;
+		}
+
 		public Builder inGroup(long groupId) {
 			_deDataDefinitionListRequest._groupId = groupId;
+
+			return this;
+		}
+
+		public Builder startingAt(int start) {
+			_deDataDefinitionListRequest._start = start;
 
 			return this;
 		}
@@ -43,6 +75,9 @@ public class DEDataDefinitionListRequest {
 	private DEDataDefinitionListRequest() {
 	}
 
+	private long _companyId;
+	private int _end = QueryUtil.ALL_POS;
 	private long _groupId;
+	private int _start = QueryUtil.ALL_POS;
 
 }

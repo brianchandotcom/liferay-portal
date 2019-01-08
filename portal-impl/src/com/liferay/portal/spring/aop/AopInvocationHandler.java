@@ -28,7 +28,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * @author Shuyang Zhou
  * @author Preston Crary
  */
-public class ServiceBeanAopInvocationHandler implements InvocationHandler {
+public class AopInvocationHandler implements InvocationHandler {
 
 	public Object getTarget() {
 		return _target;
@@ -50,7 +50,7 @@ public class ServiceBeanAopInvocationHandler implements InvocationHandler {
 		_serviceBeanMethodInvocations.clear();
 	}
 
-	protected ServiceBeanAopInvocationHandler(
+	protected AopInvocationHandler(
 		Object target, ChainableMethodAdvice[] chainableMethodAdvices) {
 
 		_target = target;

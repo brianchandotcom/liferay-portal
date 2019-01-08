@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiServic
 import com.liferay.portal.kernel.service.ServiceWrapper;
 import com.liferay.portal.kernel.util.AggregateClassLoader;
 import com.liferay.portal.kernel.util.ProxyUtil;
-import com.liferay.portal.spring.aop.ServiceBeanAopInvocationHandler;
+import com.liferay.portal.spring.aop.AopInvocationHandler;
 
 import java.lang.reflect.InvocationHandler;
 
@@ -29,11 +29,10 @@ import java.lang.reflect.InvocationHandler;
 public class ServiceBag<V> {
 
 	public ServiceBag(
-		ClassLoader classLoader,
-		ServiceBeanAopInvocationHandler serviceBeanAopInvocationHandler,
+		ClassLoader classLoader, AopInvocationHandler aopInvocationHandler,
 		Class<?> serviceTypeClass, final ServiceWrapper<V> serviceWrapper) {
 
-		_serviceBeanAopInvocationHandler = serviceBeanAopInvocationHandler;
+		_aopInvocationHandler = aopInvocationHandler;
 
 		Object previousService = serviceWrapper.getWrappedService();
 
@@ -69,14 +68,14 @@ public class ServiceBag<V> {
 			},
 			new ClassLoaderBeanHandler(serviceWrapper, classLoader));
 
-		_serviceBeanAopInvocationHandler.setTarget(nextTarget);
+		_aopInvocationHandler.setTarget(nextTarget);
 
 		_serviceWrapper = (ServiceWrapper<?>)nextTarget;
 	}
 
 	@SuppressWarnings("unchecked")
 	public <T> void replace() throws Exception {
-		Object currentService = _serviceBeanAopInvocationHandler.getTarget();
+		Object currentService = _aopInvocationHandler.getTarget();
 
 		ServiceWrapper<T> previousService = null;
 
@@ -111,7 +110,7 @@ public class ServiceBag<V> {
 						}
 					}
 
-					_serviceBeanAopInvocationHandler.setTarget(wrappedService);
+					_aopInvocationHandler.setTarget(wrappedService);
 				}
 				else {
 
@@ -140,8 +139,7 @@ public class ServiceBag<V> {
 		}
 	}
 
-	private final ServiceBeanAopInvocationHandler
-		_serviceBeanAopInvocationHandler;
+	private final AopInvocationHandler _aopInvocationHandler;
 	private final ServiceWrapper<?> _serviceWrapper;
 
 }

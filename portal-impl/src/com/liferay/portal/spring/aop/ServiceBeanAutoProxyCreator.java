@@ -48,10 +48,10 @@ public class ServiceBeanAutoProxyCreator
 	}
 
 	public void destroy() {
-		for (ServiceBeanAopInvocationHandler serviceBeanAopInvocationHandler :
-				_serviceBeanAopInvocationHandlers) {
+		for (AopInvocationHandler aopInvocationHandler :
+				_aopInvocationHandlers) {
 
-			AopCacheManager.destroy(serviceBeanAopInvocationHandler);
+			AopCacheManager.destroy(aopInvocationHandler);
 		}
 	}
 
@@ -121,23 +121,23 @@ public class ServiceBeanAutoProxyCreator
 	}
 
 	private Object _createProxy(Object bean) {
-		ServiceBeanAopInvocationHandler serviceBeanAopInvocationHandler =
-			AopCacheManager.create(bean, _chainableMethodAdvices);
+		AopInvocationHandler aopInvocationHandler = AopCacheManager.create(
+			bean, _chainableMethodAdvices);
 
-		_serviceBeanAopInvocationHandlers.add(serviceBeanAopInvocationHandler);
+		_aopInvocationHandlers.add(aopInvocationHandler);
 
 		return ProxyUtil.newProxyInstance(
 			_classLoader, ReflectionUtil.getInterfaces(bean),
-			serviceBeanAopInvocationHandler);
+			aopInvocationHandler);
 	}
 
+	private final List<AopInvocationHandler> _aopInvocationHandlers =
+		new ArrayList<>();
 	private final BeanMatcher _beanMatcher;
 	private final ChainableMethodAdvice[] _chainableMethodAdvices;
 	private final ClassLoader _classLoader;
 	private final Set<CacheKey> _earlyProxyReferences =
 		Collections.newSetFromMap(new ConcurrentHashMap<>());
-	private final List<ServiceBeanAopInvocationHandler>
-		_serviceBeanAopInvocationHandlers = new ArrayList<>();
 
 	private static class CacheKey {
 

@@ -45,15 +45,15 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class AopCacheManager {
 
-	public static ServiceBeanAopInvocationHandler create(
+	public static AopInvocationHandler create(
 		Object target, ChainableMethodAdvice[] chainableMethodAdvices) {
 
-		ServiceBeanAopInvocationHandler serviceBeanAopCacheManager =
-			new ServiceBeanAopInvocationHandler(target, chainableMethodAdvices);
+		AopInvocationHandler aopInvocationHandler = new AopInvocationHandler(
+			target, chainableMethodAdvices);
 
-		_serviceBeanAopInvocationHandlers.add(serviceBeanAopCacheManager);
+		_aopInvocationHandlers.add(aopInvocationHandler);
 
-		return serviceBeanAopCacheManager;
+		return aopInvocationHandler;
 	}
 
 	public static ChainableMethodAdvice[] createChainableMethodAdvices(
@@ -122,26 +122,22 @@ public class AopCacheManager {
 			new ChainableMethodAdvice[chainableMethodAdvices.size()]);
 	}
 
-	public static void destroy(
-		ServiceBeanAopInvocationHandler serviceBeanAopInvocationHandler) {
-
-		_serviceBeanAopInvocationHandlers.remove(
-			serviceBeanAopInvocationHandler);
+	public static void destroy(AopInvocationHandler aopInvocationHandler) {
+		_aopInvocationHandlers.remove(aopInvocationHandler);
 	}
 
 	public static void reset() {
-		for (ServiceBeanAopInvocationHandler serviceBeanAopInvocationHandler :
-				_serviceBeanAopInvocationHandlers) {
+		for (AopInvocationHandler aopInvocationHandler :
+				_aopInvocationHandlers) {
 
-			serviceBeanAopInvocationHandler.reset();
+			aopInvocationHandler.reset();
 		}
 	}
 
 	private AopCacheManager() {
 	}
 
-	private static final Set<ServiceBeanAopInvocationHandler>
-		_serviceBeanAopInvocationHandlers = Collections.newSetFromMap(
-			new ConcurrentHashMap<>());
+	private static final Set<AopInvocationHandler> _aopInvocationHandlers =
+		Collections.newSetFromMap(new ConcurrentHashMap<>());
 
 }

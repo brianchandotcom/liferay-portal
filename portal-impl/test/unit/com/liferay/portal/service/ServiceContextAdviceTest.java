@@ -18,8 +18,8 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
+import com.liferay.portal.spring.aop.AopInvocationHandler;
 import com.liferay.portal.spring.aop.ChainableMethodAdvice;
-import com.liferay.portal.spring.aop.ServiceBeanAopInvocationHandler;
 import com.liferay.portal.spring.aop.ServiceBeanMethodInvocation;
 
 import java.lang.reflect.Constructor;
@@ -41,13 +41,13 @@ public class ServiceContextAdviceTest {
 
 	@Before
 	public void setUp() throws Exception {
-		Constructor<ServiceBeanAopInvocationHandler> constructor =
-			ServiceBeanAopInvocationHandler.class.getDeclaredConstructor(
+		Constructor<AopInvocationHandler> constructor =
+			AopInvocationHandler.class.getDeclaredConstructor(
 				Object.class, ChainableMethodAdvice[].class);
 
 		constructor.setAccessible(true);
 
-		_serviceBeanAopInvocationHandler = constructor.newInstance(
+		_aopInvocationHandler = constructor.newInstance(
 			_testInterceptedClass,
 			new ChainableMethodAdvice[] {new ServiceContextAdvice()});
 	}
@@ -79,8 +79,7 @@ public class ServiceContextAdviceTest {
 
 		ServiceBeanMethodInvocation serviceBeanMethodInvocation =
 			ReflectionTestUtil.invoke(
-				_serviceBeanAopInvocationHandler,
-				"_getServiceBeanMethodInvocation",
+				_aopInvocationHandler, "_getServiceBeanMethodInvocation",
 				new Class<?>[] {Method.class}, method);
 
 		Assert.assertNull(
@@ -116,8 +115,7 @@ public class ServiceContextAdviceTest {
 
 		ServiceBeanMethodInvocation serviceBeanMethodInvocation =
 			ReflectionTestUtil.invoke(
-				_serviceBeanAopInvocationHandler,
-				"_getServiceBeanMethodInvocation",
+				_aopInvocationHandler, "_getServiceBeanMethodInvocation",
 				new Class<?>[] {Method.class}, method);
 
 		Assert.assertNull(
@@ -153,11 +151,11 @@ public class ServiceContextAdviceTest {
 		Method method) {
 
 		return ReflectionTestUtil.invoke(
-			_serviceBeanAopInvocationHandler, "_getServiceBeanMethodInvocation",
+			_aopInvocationHandler, "_getServiceBeanMethodInvocation",
 			new Class<?>[] {Method.class}, method);
 	}
 
-	private ServiceBeanAopInvocationHandler _serviceBeanAopInvocationHandler;
+	private AopInvocationHandler _aopInvocationHandler;
 	private final TestInterceptedClass _testInterceptedClass =
 		new TestInterceptedClass();
 

@@ -21,8 +21,8 @@ import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.ProxyUtil;
+import com.liferay.portal.spring.aop.AopInvocationHandler;
 import com.liferay.portal.spring.aop.ChainableMethodAdvice;
-import com.liferay.portal.spring.aop.ServiceBeanAopInvocationHandler;
 import com.liferay.portal.spring.aop.ServiceBeanMethodInvocation;
 
 import java.lang.reflect.Constructor;
@@ -80,13 +80,13 @@ public class DynamicDataSourceAdviceTest {
 		dynamicDataSourceAdvice.setDynamicDataSourceTargetSource(
 			_dynamicDataSourceTargetSource);
 
-		Constructor<ServiceBeanAopInvocationHandler> constructor =
-			ServiceBeanAopInvocationHandler.class.getDeclaredConstructor(
+		Constructor<AopInvocationHandler> constructor =
+			AopInvocationHandler.class.getDeclaredConstructor(
 				Object.class, ChainableMethodAdvice[].class);
 
 		constructor.setAccessible(true);
 
-		_serviceBeanAopInvocationHandler = constructor.newInstance(
+		_aopInvocationHandler = constructor.newInstance(
 			_testClass, new ChainableMethodAdvice[] {dynamicDataSourceAdvice});
 	}
 
@@ -107,14 +107,14 @@ public class DynamicDataSourceAdviceTest {
 		throws Exception {
 
 		return ReflectionTestUtil.invoke(
-			_serviceBeanAopInvocationHandler, "_getServiceBeanMethodInvocation",
+			_aopInvocationHandler, "_getServiceBeanMethodInvocation",
 			new Class<?>[] {Method.class},
 			TestClass.class.getMethod(methodName));
 	}
 
+	private AopInvocationHandler _aopInvocationHandler;
 	private DynamicDataSourceTargetSource _dynamicDataSourceTargetSource;
 	private DataSource _readDataSource;
-	private ServiceBeanAopInvocationHandler _serviceBeanAopInvocationHandler;
 	private final TestClass _testClass = new TestClass();
 	private DataSource _writeDataSource;
 

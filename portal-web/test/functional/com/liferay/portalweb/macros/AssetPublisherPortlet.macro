@@ -1419,7 +1419,11 @@ definition {
 	}
 
 	macro viewManualNoAssetsMessagePG {
-		AssertTextEquals(locator1 = "Message#INFO", value1 = "There are no results.");
+		AssertTextEquals(
+			locator1 = "Message#INFO_SPECIFIC",
+			value1 = "There are no results.",
+			key_infoMessage = "There are no results."
+		);
 	}
 
 	macro viewMultipleAssetOrderPGViaAP {

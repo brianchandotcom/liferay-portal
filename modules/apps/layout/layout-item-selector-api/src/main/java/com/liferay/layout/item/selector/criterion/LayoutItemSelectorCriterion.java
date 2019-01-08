@@ -46,6 +46,10 @@ public class LayoutItemSelectorCriterion extends BaseItemSelectorCriterion {
 		return _showActionsMenu;
 	}
 
+	public boolean isShowHiddenPages() {
+		return _showHiddenPages;
+	}
+
 	public boolean isShowPrivatePages() {
 		return _showPrivatePages;
 	}
@@ -74,6 +78,10 @@ public class LayoutItemSelectorCriterion extends BaseItemSelectorCriterion {
 		_showActionsMenu = showActionsMenu;
 	}
 
+	public void setShowHiddenPages(boolean showHiddenPages) {
+		_showHiddenPages = showHiddenPages;
+	}
+
 	public void setShowPrivatePages(boolean showPrivatePages) {
 		_showPrivatePages = showPrivatePages;
 	}
@@ -87,6 +95,7 @@ public class LayoutItemSelectorCriterion extends BaseItemSelectorCriterion {
 	private boolean _followURLOnTitleClick;
 	private boolean _multiSelection;
 	private boolean _showActionsMenu;
+	private boolean _showHiddenPages;
 	private boolean _showPrivatePages;
 	private boolean _showPublicPages;
 

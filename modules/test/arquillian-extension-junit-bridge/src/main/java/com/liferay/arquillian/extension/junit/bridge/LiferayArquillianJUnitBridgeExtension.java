@@ -66,9 +66,6 @@ public class LiferayArquillianJUnitBridgeExtension
 				AuxiliaryArchiveAppender.class,
 				CommandServiceAuxiliaryAppender.class);
 			extensionBuilder.observer(DeploymentObserver.class);
-			extensionBuilder.service(
-				ApplicationArchiveProcessor.class,
-				OSGiApplicationArchiveProcessor.class);
 			extensionBuilder.override(
 				AuxiliaryArchiveAppender.class, JUnitDeploymentAppender.class,
 				JUnitBridgeAuxiliaryArchiveAppender.class);

@@ -1456,9 +1456,9 @@ definition {
 
 	macro viewManualNoAssetsMessagePG {
 		AssertTextEquals(
-			locator1 = "Message#INFO_SPECIFIC",
+			locator1 = "Message#INFO_SPECIFIC_WIDGET",
 			value1 = "There are no results.",
-			key_infoMessage = "There are no results."
+			key_widgetName = "Asset Publisher"
 		);
 	}
 

@@ -189,6 +189,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>INFO_SPECIFIC_WIDGET</td>
+	<td>//section[contains(.,'${key_widgetName}')]//div[contains(@class,'alert alert-info') and not(contains(@class,'hide'))]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>INFO_LINK</td>
 	<td>//div[contains(@class,'alert') and contains(@class,'alert-info')]/a</td>
 	<td></td>

@@ -63,8 +63,9 @@ definition {
 		);
 
 		AssertTextEquals(
-			locator1 = "Message#INFO",
-			value1 = "There are no related assets available. This application will show all assets related to the main asset of the current page."
+			locator1 = "Message#INFO_SPECIFIC_WIDGET",
+			value1 = "There are no related assets available. This application will show all assets related to the main asset of the current page.",
+			key_widgetName = "Related Assets"
 		);
 	}
 

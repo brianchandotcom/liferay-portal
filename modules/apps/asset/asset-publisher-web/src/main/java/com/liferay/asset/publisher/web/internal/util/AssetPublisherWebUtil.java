@@ -402,8 +402,12 @@ public class AssetPublisherWebUtil {
 
 		com.liferay.portal.kernel.model.PortletPreferences
 			portletPreferencesModel =
-				_portletPreferencesLocalService.getPortletPreferences(
+				_portletPreferencesLocalService.fetchPortletPreferences(
 					ownerId, ownerType, plid, portletId);
+
+		if (portletPreferencesModel == null) {
+			return 0;
+		}
 
 		return portletPreferencesModel.getPortletPreferencesId();
 	}

@@ -55,4 +55,4 @@ public class DDMFormRendererBottomDynamicInclude extends BaseDynamicInclude {
 	private DDMFormFieldTypesDynamicIncludeHelper
 		_ddmFormFieldTypesDynamicIncludeHelper;
 
-	}
+}

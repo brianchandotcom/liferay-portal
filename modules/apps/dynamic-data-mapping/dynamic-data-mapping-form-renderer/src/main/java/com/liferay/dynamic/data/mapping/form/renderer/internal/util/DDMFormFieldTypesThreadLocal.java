@@ -17,6 +17,7 @@ package com.liferay.dynamic.data.mapping.form.renderer.internal.util;
 import com.liferay.portal.kernel.cache.thread.local.Lifecycle;
 import com.liferay.portal.kernel.cache.thread.local.ThreadLocalCache;
 import com.liferay.portal.kernel.cache.thread.local.ThreadLocalCacheManager;
+import com.liferay.portal.kernel.util.GetterUtil;
 
 /**
  * @author Bruno Basto
@@ -24,11 +25,8 @@ import com.liferay.portal.kernel.cache.thread.local.ThreadLocalCacheManager;
 public class DDMFormFieldTypesThreadLocal {
 
 	public static boolean isFieldTypesRequested() {
-		if (_threadLocalCache.get("fieldTypesRequested") == Boolean.TRUE) {
-			return true;
-		}
-
-		return false;
+		return GetterUtil.getBoolean(
+			_threadLocalCache.get("fieldTypesRequested"));
 	}
 
 	public static void removeAll() {

@@ -1,0 +1,69 @@
+$dark: #393A4A;
+$color-default: #CDCED9;
+$color-hover: #FFFFFF;
+$color-disabled: #A7A9BC;
+
+.preview-file {
+	.preview-toolbar {
+		background: $dark;
+		border-radius: .25rem;
+		padding: 0 .25rem;
+
+		.toolbar-input-wrapper {
+			margin: 0.25rem;
+			position: absolute;
+			width: 100%;
+			z-index: 4;
+		}
+
+		.btn {
+			&.btn-unstyled {
+				color: $color-default;
+				font-size: 1rem;
+				font-weight: 600;
+				line-height: 1.5;
+				padding: 0.4375rem 0.9375rem;
+				text-align: center;
+				vertical-align: middle;
+				white-space: nowrap;
+			}
+
+			&.btn-monospaced {
+				line-height: 1;
+				padding-bottom: 0.25rem;
+				padding-left: 0;
+				padding-right: 0;
+				padding-top: 0.25rem;
+				text-align: center;
+				white-space: normal;
+			}
+
+			&.btn-text {
+				font-size: .875rem;
+			}
+
+			&.active,
+			&:hover {
+				color: $color-hover;
+			}
+
+			&:disabled,
+			&.disabled {
+				color: $color-disabled;
+			}
+		}
+
+		.btn-separator {
+
+			background: #272833;
+			margin: 0 .5rem;
+			min-height: 100%;
+			width: 1px;
+		}
+	}
+
+	.preview-toolbar-container {
+		margin: 2rem auto;
+		text-align: center;
+	}
+}

@@ -52,7 +52,7 @@
 	{@param? showPageInput: bool}
 
 	{let $baseButtonsToolbar:[
-		'elementClasses': 'btn-dark',
+		'elementClasses': 'btn-unstyled',
 		'events': [ 'click': $_handleClickToolbar],
 		'spritemap': $spritemap,
 		'style': false
@@ -62,6 +62,7 @@
 		<div class="btn-group preview-toolbar" role="group">
 			<div class="btn-group">
 				{call ClayButton.render data="$baseButtonsToolbar"}
+					{param elementClasses: 'btn-unstyled btn-text' /}
 					{param label kind="text"}
 						{msg desc=""}page{/msg} {$currentPage} / {$totalPages}
 					{/param}

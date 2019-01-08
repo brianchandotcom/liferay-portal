@@ -20,23 +20,6 @@
 		margin: 2rem auto;
 		text-align: center;
 	}
-
-	.preview-toolbar {
-		.btn:disabled {
-			opacity: 1;
-
-			> * {
-				opacity: 0.26;
-			}
-		}
-
-		.toolbar-input-wrapper {
-			margin: 0.25rem;
-			position: absolute;
-			width: 100%;
-			z-index: 4;
-		}
-	}
 }
 
 .preview-file {

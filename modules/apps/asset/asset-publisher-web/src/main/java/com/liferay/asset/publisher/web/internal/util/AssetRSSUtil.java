@@ -21,6 +21,7 @@ import com.liferay.asset.publisher.constants.AssetPublisherWebKeys;
 import com.liferay.asset.publisher.util.AssetEntryResult;
 import com.liferay.asset.publisher.util.AssetPublisherHelper;
 import com.liferay.asset.publisher.web.internal.display.context.AssetPublisherDisplayContext;
+import com.liferay.asset.util.AssetHelper;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
@@ -31,13 +32,14 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.rss.export.RSSExporter;
 import com.liferay.rss.model.SyndContent;
 import com.liferay.rss.model.SyndEntry;
 import com.liferay.rss.model.SyndFeed;
 import com.liferay.rss.model.SyndLink;
+import com.liferay.rss.model.SyndModelFactory;
 import com.liferay.rss.util.RSSUtil;
 
 import java.io.Serializable;
@@ -53,13 +55,17 @@ import javax.portlet.PortletResponse;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Brian Wing Shun Chan
  * @author Julio Camarero
  */
+@Component(immediate = true, service = AssetRSSUtil.class)
 public class AssetRSSUtil {
 
-	public static byte[] getRSS(
+	public byte[] getRSS(
 			ResourceRequest portletRequest, ResourceResponse portletResponse)
 		throws Exception {
 
@@ -84,7 +90,7 @@ public class AssetRSSUtil {
 		double version = RSSUtil.getFeedTypeVersion(rssFeedType);
 
 		String rss = exportToRSS(
-			portletRequest, portletResponse, rssName, null, format, version,
+			portletRequest, portletResponse, rssName, format, version,
 			rssDisplayStyle, assetLinkBehavior,
 			getAssetEntries(
 				portletRequest, portletResponse, portletPreferences));
@@ -92,32 +98,31 @@ public class AssetRSSUtil {
 		return rss.getBytes(StringPool.UTF8);
 	}
 
-	protected static String exportToRSS(
+	protected String exportToRSS(
 			PortletRequest portletRequest, PortletResponse portletResponse,
-			String name, String description, String format, double version,
-			String displayStyle, String linkBehavior,
-			List<AssetEntry> assetEntries)
+			String name, String format, double version, String displayStyle,
+			String linkBehavior, List<AssetEntry> assetEntries)
 		throws Exception {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		SyndFeed syndFeed = SyndModelFactoryUtil.createSyndFeed();
+		SyndFeed syndFeed = _syndModelFactory.createSyndFeed();
 
-		syndFeed.setDescription(GetterUtil.getString(description, name));
+		syndFeed.setDescription(name);
 
 		List<SyndEntry> syndEntries = new ArrayList<>();
 
 		syndFeed.setEntries(syndEntries);
 
 		for (AssetEntry assetEntry : assetEntries) {
-			SyndEntry syndEntry = SyndModelFactoryUtil.createSyndEntry();
+			SyndEntry syndEntry = _syndModelFactory.createSyndEntry();
 
-			String author = PortalUtil.getUserName(assetEntry);
+			String author = _portal.getUserName(assetEntry);
 
 			syndEntry.setAuthor(author);
 
-			SyndContent syndContent = SyndModelFactoryUtil.createSyndContent();
+			SyndContent syndContent = _syndModelFactory.createSyndContent();
 
 			syndContent.setType(RSSUtil.ENTRY_TYPE_DEFAULT);
 
@@ -155,7 +160,7 @@ public class AssetRSSUtil {
 
 		syndFeed.setLinks(syndLinks);
 
-		SyndLink selfSyndLink = SyndModelFactoryUtil.createSyndLink();
+		SyndLink selfSyndLink = _syndModelFactory.createSyndLink();
 
 		syndLinks.add(selfSyndLink);
 
@@ -165,18 +170,18 @@ public class AssetRSSUtil {
 
 		selfSyndLink.setRel("self");
 
-		SyndLink alternateSyndLink = SyndModelFactoryUtil.createSyndLink();
+		SyndLink alternateSyndLink = _syndModelFactory.createSyndLink();
 
 		syndLinks.add(alternateSyndLink);
 
-		alternateSyndLink.setHref(PortalUtil.getLayoutFullURL(themeDisplay));
+		alternateSyndLink.setHref(_portal.getLayoutFullURL(themeDisplay));
 		alternateSyndLink.setRel("alternate");
 
 		syndFeed.setPublishedDate(new Date());
 		syndFeed.setTitle(name);
 		syndFeed.setUri(feedURL);
 
-		return RSSExporterUtil.export(syndFeed);
+		return _rssExporter.export(syndFeed);
 	}
 
 	/**
@@ -185,7 +190,7 @@ public class AssetRSSUtil {
 	 *             PortletPreferences)}
 	 */
 	@Deprecated
-	protected static List<AssetEntry> getAssetEntries(
+	protected List<AssetEntry> getAssetEntries(
 			PortletRequest portletRequest,
 			PortletPreferences portletPreferences)
 		throws Exception {
@@ -195,14 +200,10 @@ public class AssetRSSUtil {
 				"PortletRequest, PortletResponse, PortletPreferences)");
 	}
 
-	protected static List<AssetEntry> getAssetEntries(
+	protected List<AssetEntry> getAssetEntries(
 			PortletRequest portletRequest, PortletResponse portletResponse,
 			PortletPreferences portletPreferences)
 		throws Exception {
-
-		AssetPublisherHelper assetPublisherHelper =
-			(AssetPublisherHelper)portletRequest.getAttribute(
-				AssetPublisherWebKeys.ASSET_PUBLISHER_HELPER);
 
 		List<AssetEntry> assetEntries = new ArrayList<>();
 
@@ -214,8 +215,8 @@ public class AssetRSSUtil {
 
 		AssetPublisherDisplayContext assetPublisherDisplayContext =
 			new AssetPublisherDisplayContext(
-				assetPublisherCustomizer, portletRequest, portletResponse,
-				portletPreferences);
+				assetPublisherCustomizer, _assetPublisherHelper, portletRequest,
+				portletResponse, portletPreferences);
 
 		searchContainer.setDelta(assetPublisherDisplayContext.getRSSDelta());
 
@@ -225,7 +226,7 @@ public class AssetRSSUtil {
 		attributes.put("filterExpired", Boolean.TRUE);
 
 		List<AssetEntryResult> assetEntryResults =
-			assetPublisherHelper.getAssetEntryResults(
+			_assetPublisherHelper.getAssetEntryResults(
 				searchContainer,
 				assetPublisherDisplayContext.getAssetEntryQuery(),
 				assetPublisherDisplayContext.getLayout(), portletPreferences,
@@ -244,7 +245,7 @@ public class AssetRSSUtil {
 		return assetEntries;
 	}
 
-	protected static String getAssetPublisherURL(PortletRequest portletRequest)
+	protected String getAssetPublisherURL(PortletRequest portletRequest)
 		throws Exception {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
@@ -257,7 +258,7 @@ public class AssetRSSUtil {
 		StringBundler sb = new StringBundler(6);
 
 		String layoutFriendlyURL = GetterUtil.getString(
-			PortalUtil.getLayoutFriendlyURL(layout, themeDisplay));
+			_portal.getLayoutFriendlyURL(layout, themeDisplay));
 
 		if (!layoutFriendlyURL.startsWith(Http.HTTP_WITH_SLASH) &&
 			!layoutFriendlyURL.startsWith(Http.HTTPS_WITH_SLASH)) {
@@ -274,7 +275,7 @@ public class AssetRSSUtil {
 		return sb.toString();
 	}
 
-	protected static String getEntryURL(
+	protected String getEntryURL(
 			PortletRequest portletRequest, PortletResponse portletResponse,
 			String linkBehavior, AssetEntry assetEntry)
 		throws Exception {
@@ -284,13 +285,11 @@ public class AssetRSSUtil {
 				portletRequest, portletResponse, assetEntry);
 		}
 
-		return getEntryURLAssetPublisher(
-			portletRequest, portletResponse, assetEntry);
+		return getEntryURLAssetPublisher(portletRequest, assetEntry);
 	}
 
-	protected static String getEntryURLAssetPublisher(
-			PortletRequest portletRequest, PortletResponse portletResponse,
-			AssetEntry assetEntry)
+	protected String getEntryURLAssetPublisher(
+			PortletRequest portletRequest, AssetEntry assetEntry)
 		throws Exception {
 
 		AssetRendererFactory<?> assetRendererFactory =
@@ -307,18 +306,13 @@ public class AssetRSSUtil {
 		return sb.toString();
 	}
 
-	protected static String getEntryURLViewInContext(
-			PortletRequest portletRequest, PortletResponse portletResponse,
-			AssetEntry assetEntry)
-		throws Exception {
+	protected String getEntryURLViewInContext(
+		PortletRequest portletRequest, PortletResponse portletResponse,
+		AssetEntry assetEntry) {
 
-		AssetPublisherHelper assetPublisherHelper =
-			(AssetPublisherHelper)portletRequest.getAttribute(
-				AssetPublisherWebKeys.ASSET_PUBLISHER_HELPER);
-
-		String assetViewURL = assetPublisherHelper.getAssetViewURL(
-			PortalUtil.getLiferayPortletRequest(portletRequest),
-			PortalUtil.getLiferayPortletResponse(portletResponse), assetEntry,
+		String assetViewURL = _assetPublisherHelper.getAssetViewURL(
+			_portal.getLiferayPortletRequest(portletRequest),
+			_portal.getLiferayPortletResponse(portletResponse), assetEntry,
 			true);
 
 		if (Validator.isNotNull(assetViewURL) &&
@@ -335,12 +329,27 @@ public class AssetRSSUtil {
 		return assetViewURL;
 	}
 
-	protected static String getFeedURL(PortletRequest portletRequest)
+	protected String getFeedURL(PortletRequest portletRequest)
 		throws Exception {
 
 		String feedURL = getAssetPublisherURL(portletRequest);
 
 		return feedURL.concat("rss");
 	}
+
+	@Reference
+	private AssetHelper _assetHelper;
+
+	@Reference
+	private AssetPublisherHelper _assetPublisherHelper;
+
+	@Reference
+	private Portal _portal;
+
+	@Reference
+	private RSSExporter _rssExporter;
+
+	@Reference
+	private SyndModelFactory _syndModelFactory;
 
 }

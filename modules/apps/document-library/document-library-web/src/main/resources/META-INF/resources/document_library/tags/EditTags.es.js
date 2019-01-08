@@ -8,17 +8,17 @@ import 'frontend-js-web/liferay/compat/modal/Modal.es';
 import templates from './EditTags.soy';
 
 class EditTags extends Component {
-	created() {
-		this.append = true;
-		this.dataSource = [];
-	}
-
 	attached() {
 		this._getCommonTags();
 	}
 
 	close() {
 		this.refs.modal.visible = false;
+	}
+
+	created() {
+		this.append = true;
+		this.dataSource = [];
 	}
 
 	open() {

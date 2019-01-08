@@ -22,8 +22,10 @@ import io.restassured.specification.PreemptiveAuthSpec;
 
 import java.io.File;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -48,12 +50,12 @@ public class ApioClientBuilder {
 			Authentication authentication, Map<String, String> headers,
 			Body body) {
 
-			this(authentication, headers, body, Multipart.EMPTY);
+			this(authentication, headers, body, Collections.emptyList());
 		}
 
 		public RequestSpecification(
 			Authentication authentication, Map<String, String> headers,
-			Body body, Multipart multipart) {
+			Body body, List<Multipart> multipart) {
 
 			_authentication = authentication;
 
@@ -72,16 +74,16 @@ public class ApioClientBuilder {
 			}
 
 			if (multipart == null) {
-				_multipart = Multipart.EMPTY;
+				_multiparts = Collections.emptyList();
 			}
 			else {
-				_multipart = multipart;
+				_multiparts = multipart;
 			}
 		}
 
 		public RequestSpecification(
 			Authentication authentication, Map<String, String> headers,
-			Multipart multipart) {
+			List<Multipart> multipart) {
 
 			this(authentication, headers, Body.EMPTY, multipart);
 		}
@@ -104,9 +106,13 @@ public class ApioClientBuilder {
 			return new RequestSpecification(_authentication, headers, _body);
 		}
 
-		public RequestSpecification multipart(String key, File file) {
+		public RequestSpecification multipart(String key, Object value) {
+			List<Multipart> multiparts = new ArrayList<>(_multiparts);
+
+			multiparts.add(new MultipartImpl(key, value));
+
 			return new RequestSpecification(
-				_authentication, _headers, new MultipartImpl(key, file));
+				_authentication, _headers, multiparts);
 		}
 
 		public Response when() {
@@ -116,9 +122,15 @@ public class ApioClientBuilder {
 		protected io.restassured.specification.RequestSpecification
 			getRestAssuredRequestSpecification() {
 
+			io.restassured.specification.RequestSpecification given =
+				RestAssured.given();
+
+			for (Multipart multipart : _multiparts) {
+				multipart.multipart(given);
+			}
+
 			io.restassured.specification.RequestSpecification
-				requestSpecification = _multipart.multipart(
-					_body.body(_authentication.auth(RestAssured.given())));
+				requestSpecification = _body.body(_authentication.auth(given));
 
 			return requestSpecification.headers(_headers);
 		}
@@ -126,7 +138,7 @@ public class ApioClientBuilder {
 		private final Authentication _authentication;
 		private final Body _body;
 		private final Map<String, String> _headers;
-		private final Multipart _multipart;
+		private final List<Multipart> _multiparts;
 
 	}
 
@@ -283,16 +295,23 @@ public class ApioClientBuilder {
 			io.restassured.specification.RequestSpecification
 				requestSpecification) {
 
-			return requestSpecification.multiPart(_key, _file);
+			if (_value instanceof File) {
+				return requestSpecification.multiPart(_key, (File)_value);
+			}
+			else if (_value instanceof String) {
+				return requestSpecification.multiPart(_key, (String)_value);
+			}
+
+			return requestSpecification.multiPart(_key, _value);
 		}
 
-		protected MultipartImpl(String key, File file) {
+		protected MultipartImpl(String key, Object value) {
 			_key = key;
-			_file = file;
+			_value = value;
 		}
 
-		private final File _file;
 		private final String _key;
+		private final Object _value;
 
 	}
 

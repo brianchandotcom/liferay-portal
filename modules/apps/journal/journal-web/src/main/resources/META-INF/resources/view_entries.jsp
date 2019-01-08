@@ -423,9 +423,15 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 <aui:script require='<%= npmResolvedPackageName + "/js/ElementsDefaultEventHandler.es as ElementsDefaultEventHandler" %>'>
 	Liferay.component(
 		'journalElementsDefaultEventHandler',
-		new ElementsDefaultEventHandler.default({
-			isTrashEnabled: <%= trashHelper.isTrashEnabled(scopeGroupId) %>,
-			namespace: '<%= renderResponse.getNamespace() %>'
-		})
+		new ElementsDefaultEventHandler.default(
+			{
+				namespace: '<%= renderResponse.getNamespace() %>',
+				trashEnabled: <%= trashHelper.isTrashEnabled(scopeGroupId) %>
+			}
+		),
+		{
+			destroyOnNavigate: true,
+			portletId: '<%= HtmlUtil.escapeJS(portletDisplay.getId()) %>'
+		}
 	);
 </aui:script>

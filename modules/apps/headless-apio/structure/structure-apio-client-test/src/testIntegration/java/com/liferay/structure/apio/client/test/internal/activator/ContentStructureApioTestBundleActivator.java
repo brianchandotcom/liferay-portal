@@ -21,7 +21,6 @@ import com.liferay.dynamic.data.mapping.io.DDMFormDeserializerTracker;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMStructureConstants;
-import com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.storage.StorageType;
 import com.liferay.dynamic.data.mapping.test.util.DDMStructureTestHelper;
 import com.liferay.petra.string.StringPool;
@@ -31,7 +30,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
@@ -42,14 +41,13 @@ import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.InputStream;
 
-import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceReference;
 
 /**
  * @author Rubén Pulido
@@ -62,11 +60,17 @@ public class ContentStructureApioTestBundleActivator
 
 	@Override
 	public void start(BundleContext bundleContext) {
-		_autoCloseables = new ArrayList<>();
+		_ddmFormDeserializerTrackerServiceReference =
+			bundleContext.getServiceReference(DDMFormDeserializerTracker.class);
 
 		_ddmFormDeserializerTracker = bundleContext.getService(
-			bundleContext.getServiceReference(
-				DDMFormDeserializerTracker.class));
+			_ddmFormDeserializerTrackerServiceReference);
+
+		_groupLocalServiceServiceReference = bundleContext.getServiceReference(
+			GroupLocalService.class);
+
+		_groupLocalService = bundleContext.getService(
+			_groupLocalServiceServiceReference);
 
 		try {
 			AuthConfigurationTestUtil.deployOAuthConfiguration(bundleContext);
@@ -74,15 +78,21 @@ public class ContentStructureApioTestBundleActivator
 			_prepareTest();
 		}
 		catch (Exception e) {
-			_cleanUp();
-
-			throw new RuntimeException(e);
+			_log.error(e, e);
 		}
 	}
 
 	@Override
 	public void stop(BundleContext bundleContext) {
-		_cleanUp();
+		try {
+			_groupLocalService.deleteGroup(_group);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+		}
+
+		bundleContext.ungetService(_ddmFormDeserializerTrackerServiceReference);
+		bundleContext.ungetService(_groupLocalServiceServiceReference);
 	}
 
 	protected DDMForm deserialize(String content) {
@@ -116,25 +126,12 @@ public class ContentStructureApioTestBundleActivator
 			DDMStructureConstants.TYPE_DEFAULT);
 	}
 
-	private void _cleanUp() {
-		Collections.reverse(_autoCloseables);
-
-		for (AutoCloseable autoCloseable : _autoCloseables) {
-			try {
-				autoCloseable.close();
-			}
-			catch (Exception e) {
-				_log.error(e, e);
-			}
-		}
-	}
-
 	private void _prepareTest() throws Exception {
 		User user = UserTestUtil.getAdminUser(TestPropsValues.getCompanyId());
 		Map<Locale, String> nameMap = Collections.singletonMap(
-			LocaleUtil.getDefault(), SITE_NAME);
+			LocaleUtil.US, SITE_NAME);
 
-		Group group = GroupLocalServiceUtil.addGroup(
+		_group = _groupLocalService.addGroup(
 			user.getUserId(), GroupConstants.DEFAULT_PARENT_GROUP_ID, null, 0,
 			GroupConstants.DEFAULT_LIVE_GROUP_ID, nameMap, nameMap,
 			GroupConstants.TYPE_SITE_OPEN, true,
@@ -142,13 +139,7 @@ public class ContentStructureApioTestBundleActivator
 			StringPool.SLASH + FriendlyURLNormalizerUtil.normalize(SITE_NAME),
 			true, true, ServiceContextTestUtil.getServiceContext());
 
-		_autoCloseables.add(() -> GroupLocalServiceUtil.deleteGroup(group));
-
-		DDMStructure ddmStructure = _addDDMStructure(
-			group, "test-structure.json");
-
-		_autoCloseables.add(
-			() -> DDMStructureLocalServiceUtil.deleteStructure(ddmStructure));
+		_addDDMStructure(_group, "test-structure.json");
 	}
 
 	private String _read(String fileName) throws Exception {
@@ -166,7 +157,12 @@ public class ContentStructureApioTestBundleActivator
 	private static final Log _log = LogFactoryUtil.getLog(
 		ContentStructureApioTestBundleActivator.class);
 
-	private List<AutoCloseable> _autoCloseables;
 	private DDMFormDeserializerTracker _ddmFormDeserializerTracker;
+	private ServiceReference<DDMFormDeserializerTracker>
+		_ddmFormDeserializerTrackerServiceReference;
+	private Group _group;
+	private GroupLocalService _groupLocalService;
+	private ServiceReference<GroupLocalService>
+		_groupLocalServiceServiceReference;
 
 }

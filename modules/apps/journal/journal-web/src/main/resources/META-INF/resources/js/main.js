@@ -156,22 +156,14 @@ AUI.add(
 					},
 
 					_onLocaleChange: function(event) {
+						var defaultLanguageId = themeDisplay.getDefaultLanguageId();
 						var instance = this;
+						var selectedLanguageId = event.source && event.source.getSelectedLanguageId();
 
-						var descriptionInput = Liferay.component(instance.ns('descriptionMapAsXML'));
-						var titleInput = Liferay.component(instance.ns('titleMapAsXML'));
+						if (selectedLanguageId) {
+							instance._updateLocalizableInput('descriptionMapAsXML', defaultLanguageId, selectedLanguageId);
 
-						var description = descriptionInput.getValue(event.source.getSelectedLanguageId());
-						var title = titleInput.getValue(event.source.getSelectedLanguageId());
-
-						if (description === '') {
-							descriptionInput.updateInputLanguage(descriptionInput.getValue(themeDisplay.getDefaultLanguageId()));
-							descriptionInput.selectFlag(event.source.getSelectedLanguageId());
-						}
-
-						if (title === '') {
-							titleInput.updateInputLanguage(titleInput.getValue(themeDisplay.getDefaultLanguageId()));
-							titleInput.selectFlag(event.source.getSelectedLanguageId());
+							instance._updateLocalizableInput('titleMapAsXML', defaultLanguageId, selectedLanguageId);
 						}
 					},
 
@@ -235,6 +227,23 @@ AUI.add(
 						}
 
 						submitForm(form);
+					},
+
+					_updateLocalizableInput: function(componentId, defaultLanguageId, selectedLanguageId) {
+						var instance = this;
+
+						var inputComponent = Liferay.component(instance.ns(componentId));
+
+						if (inputComponent) {
+							var inputSelectedValue = inputComponent.getValue(selectedLanguageId);
+
+							if (inputSelectedValue === '') {
+								var inputDefaultValue = inputComponent.getValue(defaultLanguageId);
+
+								inputComponent.updateInputLanguage(inputDefaultValue);
+								inputComponent.selectFlag(selectedLanguageId);
+							}
+						}
 					},
 
 					_updateStructureDefaultValues: function() {

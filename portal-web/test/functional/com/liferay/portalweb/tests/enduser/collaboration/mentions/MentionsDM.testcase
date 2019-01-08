@@ -196,9 +196,12 @@ definition {
 			dmDocumentTitle = "DM Document Title"
 		);
 
-		var key_entryComment = "Comment mentioning";
-
-		AssertClick(locator1 = "Comments#REPLY_TO_COMMENT", value1 = "Reply");
+		AssertClick(
+			locator1 = "Comments#ANY_BUTTON_IN_COMMENT",
+			value1 = "Reply",
+			key_entryComment = "Comment mentioning",
+			key_text = "Reply"
+		);
 
 		Mentions.addMentionViaComments(
 			entryComment = "Comment reply mentioning",

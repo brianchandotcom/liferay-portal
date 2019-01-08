@@ -26,6 +26,7 @@
 		height: 100vh;
 		overflow-x: hidden;
 		overflow-y: scroll;
+		position: fixed;
 		right: $sidebarButtonsWidth;
 		transform: translateX(0);
 		transition: transform ease $productMenuTransitionDuration;

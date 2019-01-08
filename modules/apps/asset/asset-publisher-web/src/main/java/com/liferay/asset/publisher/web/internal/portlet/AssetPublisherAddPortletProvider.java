@@ -94,15 +94,6 @@ public class AssetPublisherAddPortletProvider
 			assetEntry.getClassName());
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x)
-	 */
-	@Deprecated
-	@Override
-	protected long getPlid(ThemeDisplay themeDisplay) {
-		return themeDisplay.getPlid();
-	}
-
 	@Reference
 	private AssetEntryLocalService _assetEntryLocalService;
 

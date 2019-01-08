@@ -184,22 +184,6 @@ public class AssetRSSUtil {
 		return _rssExporter.export(syndFeed);
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             #getAssetEntries(PortletRequest, PortletResponse,
-	 *             PortletPreferences)}
-	 */
-	@Deprecated
-	protected List<AssetEntry> getAssetEntries(
-			PortletRequest portletRequest,
-			PortletPreferences portletPreferences)
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method is deprecated and replaced by #getAssetEntries(" +
-				"PortletRequest, PortletResponse, PortletPreferences)");
-	}
-
 	protected List<AssetEntry> getAssetEntries(
 			PortletRequest portletRequest, PortletResponse portletResponse,
 			PortletPreferences portletPreferences)

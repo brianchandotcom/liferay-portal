@@ -219,43 +219,6 @@ definition {
 			value1 = "Website"
 		);
 
-		var key_contentType = "Microblogs";
-
-		AssertClick.assertTextClickCaseInsensitive(
-			locator1 = "Notifications#NOTIFICATION_DELIVERY_PANEL",
-			value1 = "Microblogs"
-		);
-
-		AssertTextEquals(
-			locator1 = "Notifications#NOTIFICATION_DELIVERY_TEXT_1",
-			value1 = "Comments on a microblog you commented on."
-		);
-
-		AssertTextEquals(
-			locator1 = "Notifications#NOTIFICATION_DELIVERY_TEXT_2",
-			value1 = "Comments on a microblog you are tagged in."
-		);
-
-		AssertTextEquals(
-			locator1 = "Notifications#NOTIFICATION_DELIVERY_TEXT_3",
-			value1 = "Comments on your microblog."
-		);
-
-		AssertTextEquals(
-			locator1 = "Notifications#NOTIFICATION_DELIVERY_TEXT_4",
-			value1 = "Tags you in a microblog."
-		);
-
-		AssertTextEquals(
-			locator1 = "Notifications#NOTIFICATION_DELIVERY_MOBILE_OPTION",
-			value1 = "Mobile"
-		);
-
-		AssertTextEquals(
-			locator1 = "Notifications#NOTIFICATION_DELIVERY_WEBSITE_OPTION",
-			value1 = "Website"
-		);
-
 		var key_contentType = "Web Content";
 
 		AssertClick.assertTextClickCaseInsensitive(

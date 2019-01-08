@@ -34,6 +34,8 @@ definition {
 	}
 
 	macro selectAsset {
+		Panel.expandPanel(panel = "Related Assets");
+
 		RelatedAssets._selectAssetType(assetType = "${assetType}");
 
 		SelectFrame(value1 = "relative=top");

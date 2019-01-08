@@ -79,8 +79,6 @@ definition {
 	macro addExistingRelatedAssetCP {
 		var key_webContentTitle = "${webContentTitle}";
 
-		Panel.expandPanel(panel = "Related Assets");
-
 		RelatedAssets.selectAsset(
 			assetTitle = "${assetTitle}",
 			assetType = "${assetType}"

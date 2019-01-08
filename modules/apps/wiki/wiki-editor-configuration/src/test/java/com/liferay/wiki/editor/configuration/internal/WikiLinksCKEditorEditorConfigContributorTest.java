@@ -26,8 +26,6 @@ import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.portlet.PortletURL;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -58,31 +56,20 @@ public class WikiLinksCKEditorEditorConfigContributorTest extends PowerMockito {
 		_inputEditorTaglibAttributes.put(
 			"liferay-ui:input-editor:name", "testEditor");
 
-		PortletURL oneTabItemSelectorPortletURL = new PortletURLWrapper(null) {
-
-			@Override
-			public String toString() {
-				return "oneTabItemSelectorPortletURL";
-			}
-
-		};
-
 		when(
 			_itemSelector.getItemSelectorURL(
 				Matchers.any(RequestBackedPortletURLFactory.class),
 				Matchers.anyString(), Matchers.any(ItemSelectorCriterion.class))
 		).thenReturn(
-			oneTabItemSelectorPortletURL
-		);
+			new PortletURLWrapper(null) {
 
-		PortletURL twoTabsItemSelectorPortletURL = new PortletURLWrapper(null) {
+				@Override
+				public String toString() {
+					return "oneTabItemSelectorPortletURL";
+				}
 
-			@Override
-			public String toString() {
-				return "twoTabsItemSelectorPortletURL";
 			}
-
-		};
+		);
 
 		when(
 			_itemSelector.getItemSelectorURL(
@@ -90,7 +77,14 @@ public class WikiLinksCKEditorEditorConfigContributorTest extends PowerMockito {
 				Matchers.anyString(), Matchers.any(ItemSelectorCriterion.class),
 				Matchers.any(ItemSelectorCriterion.class))
 		).thenReturn(
-			twoTabsItemSelectorPortletURL
+			new PortletURLWrapper(null) {
+
+				@Override
+				public String toString() {
+					return "twoTabsItemSelectorPortletURL";
+				}
+
+			}
 		);
 
 		_wikiLinksCKEditorEditorConfigContributor =

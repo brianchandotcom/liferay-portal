@@ -33,8 +33,6 @@ import com.liferay.wiki.constants.WikiPortletKeys;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.portlet.PortletURL;
-
 import org.junit.Before;
 import org.junit.Test;
 
@@ -77,22 +75,20 @@ public class WikiAttachmentImageHTMLEditorConfigContributorTest
 		setAllowBrowseDocuments(true);
 		setWikiPageResourcePrimKey(0);
 
-		PortletURL itemSelectorPortletURL = new PortletURLWrapper(null) {
-
-			@Override
-			public String toString() {
-				return "itemSelectorPortletURLWithImageUrlSelectionViews";
-			}
-
-		};
-
 		when(
 			_itemSelector.getItemSelectorURL(
 				Mockito.any(RequestBackedPortletURLFactory.class),
 				Mockito.anyString(), Mockito.any(ItemSelectorCriterion.class),
 				Mockito.any(ItemSelectorCriterion.class))
 		).thenReturn(
-			itemSelectorPortletURL
+			new PortletURLWrapper(null) {
+
+				@Override
+				public String toString() {
+					return "itemSelectorPortletURLWithImageUrlSelectionViews";
+				}
+
+			}
 		);
 
 		JSONObject originalJSONObject =
@@ -132,16 +128,6 @@ public class WikiAttachmentImageHTMLEditorConfigContributorTest
 		setAllowBrowseDocuments(true);
 		setWikiPageResourcePrimKey(1);
 
-		PortletURL itemSelectorPortletURL = new PortletURLWrapper(null) {
-
-			@Override
-			public String toString() {
-				return "itemSelectorPortletURLWithWikiImageUrl" +
-					"AndUploadSelectionViews";
-			}
-
-		};
-
 		when(
 			_itemSelector.getItemSelectorURL(
 				Mockito.any(RequestBackedPortletURLFactory.class),
@@ -150,7 +136,15 @@ public class WikiAttachmentImageHTMLEditorConfigContributorTest
 				Mockito.any(ItemSelectorCriterion.class),
 				Mockito.any(ItemSelectorCriterion.class))
 		).thenReturn(
-			itemSelectorPortletURL
+			new PortletURLWrapper(null) {
+
+				@Override
+				public String toString() {
+					return "itemSelectorPortletURLWithWikiImageUrl" +
+						"AndUploadSelectionViews";
+				}
+
+			}
 		);
 
 		RequestBackedPortletURLFactory requestBackedPortletURLFactory = mock(

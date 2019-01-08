@@ -19,11 +19,8 @@ import com.liferay.item.selector.ItemSelectorCriterion;
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.portlet.PortletURLWrapper;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
-import com.liferay.portal.kernel.util.ProxyFactory;
-import com.liferay.wiki.constants.WikiPortletKeys;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -58,16 +55,6 @@ public class WikiLinksCKEditorCreoleEditorConfigContributorTest
 		JSONFactoryUtil jsonFactoryUtil = new JSONFactoryUtil();
 
 		jsonFactoryUtil.setJSONFactory(new JSONFactoryImpl());
-
-		_requestBackedPortletURLFactory = mock(
-			RequestBackedPortletURLFactory.class);
-
-		when(
-			_requestBackedPortletURLFactory.createActionURL(
-				WikiPortletKeys.WIKI)
-		).thenReturn(
-			ProxyFactory.newDummyInstance(LiferayPortletURL.class)
-		);
 
 		_inputEditorTaglibAttributes.put(
 			"liferay-ui:input-editor:name", "testEditor");
@@ -129,8 +116,7 @@ public class WikiLinksCKEditorCreoleEditorConfigContributorTest
 
 		_wikiLinksCKEditorCreoleEditorConfigContributor.
 			populateConfigJSONObject(
-				jsonObject, _inputEditorTaglibAttributes, null,
-				_requestBackedPortletURLFactory);
+				jsonObject, _inputEditorTaglibAttributes, null, null);
 
 		JSONObject expectedJSONObject = JSONFactoryUtil.createJSONObject();
 
@@ -154,8 +140,7 @@ public class WikiLinksCKEditorCreoleEditorConfigContributorTest
 
 		_wikiLinksCKEditorCreoleEditorConfigContributor.
 			populateConfigJSONObject(
-				jsonObject, _inputEditorTaglibAttributes, null,
-				_requestBackedPortletURLFactory);
+				jsonObject, _inputEditorTaglibAttributes, null, null);
 
 		JSONObject expectedJSONObject = JSONFactoryUtil.createJSONObject();
 
@@ -181,8 +166,7 @@ public class WikiLinksCKEditorCreoleEditorConfigContributorTest
 
 		_wikiLinksCKEditorCreoleEditorConfigContributor.
 			populateConfigJSONObject(
-				jsonObject, _inputEditorTaglibAttributes, null,
-				_requestBackedPortletURLFactory);
+				jsonObject, _inputEditorTaglibAttributes, null, null);
 
 		JSONObject expectedJSONObject = JSONFactoryUtil.createJSONObject();
 
@@ -225,7 +209,6 @@ public class WikiLinksCKEditorCreoleEditorConfigContributorTest
 	@Mock
 	private ItemSelector _itemSelector;
 
-	private RequestBackedPortletURLFactory _requestBackedPortletURLFactory;
 	private WikiLinksCKEditorCreoleEditorConfigContributor
 		_wikiLinksCKEditorCreoleEditorConfigContributor;
 

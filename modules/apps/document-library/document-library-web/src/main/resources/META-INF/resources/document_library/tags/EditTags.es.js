@@ -7,25 +7,50 @@ import Soy from 'metal-soy';
 import 'frontend-js-web/liferay/compat/modal/Modal.es';
 import templates from './EditTags.soy';
 
+/**
+ * Handles the tags of the selected
+ * fileEntries inside a modal.
+ */
 class EditTags extends Component {
+
+	/**
+	 * @inheritDoc
+	 */
 	attached() {
 		this._getCommonTags();
 	}
 
+	/**
+	 * Close the modal.
+	 */
 	close() {
 		this.refs.modal.visible = false;
 	}
 
+	/**
+	 * @inheritDoc
+	 */
 	created() {
 		this.append = true;
 		this.dataSource = [];
 	}
 
+	/**
+	 * Open the modal and get the
+	 * commont tags.
+	 */
 	open() {
 		this.refs.modal.visible = true;
 		this._getCommonTags();
 	}
 
+	/**
+	 * Creates the ajax request.
+	 *
+	 * @param {String} url Url of the request
+	 * @param {Object} bodyData The body of the request
+	 * @param {Function} callback Callback function
+	 */
 	_fetchTagsRequest(url, bodyData, callback) {
 		let body = JSON.stringify(bodyData);
 
@@ -56,6 +81,13 @@ class EditTags extends Component {
 			);
 	}
 
+	/**
+	 * Gets the common tags for the selected
+	 * file entries and updates the state.
+	 *
+	 * @private
+	 * @review
+	 */
 	_getCommonTags() {
 		this.loading = true;
 
@@ -90,6 +122,13 @@ class EditTags extends Component {
 		this.append = event.target.value === 'add';
 	}
 
+	/**
+	 * Sends request to backend services
+	 * to update the tags.
+	 *
+	 * @private
+	 * @review
+	 */
 	_handleSaveBtnClick() {
 		let finalTags = this.commonTags.map(tag => tag.label);
 
@@ -157,9 +196,14 @@ class EditTags extends Component {
 
 		return commonTagsObjList;
 	}
-
 }
 
+/**
+ * State definition.
+ * @ignore
+ * @static
+ * @type {!Object}
+ */
 EditTags.STATE = {
 	/**
 	 * Tags that want to be edited.
@@ -182,7 +226,9 @@ EditTags.STATE = {
 	fileEntries: Config.array().required(),
 
 	/**
-	 * TODO
+	 * Flag that indicate if loading icon must
+	 * be shown.
+	 *
 	 * @type {Boolean}
 	 */
 	loading: Config.bool().value(false).internal(),

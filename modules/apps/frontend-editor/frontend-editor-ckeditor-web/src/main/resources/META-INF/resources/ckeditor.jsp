@@ -181,7 +181,7 @@ name = HtmlUtil.escapeJS(name);
 							show: 0
 						},
 						duration: 500,
-						message: '<liferay-ui:message key="invalid-drag-and-drop-action" />',
+						message: '<liferay-ui:message key="this-is-an-invalid-drag-and-drop-action" />',
 						render: true,
 						title: '<liferay-ui:message key="warning" />',
 						type: 'warning'

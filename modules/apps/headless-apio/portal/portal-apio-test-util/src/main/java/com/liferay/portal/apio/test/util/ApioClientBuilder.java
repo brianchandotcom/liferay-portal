@@ -122,15 +122,13 @@ public class ApioClientBuilder {
 		protected io.restassured.specification.RequestSpecification
 			getRestAssuredRequestSpecification() {
 
-			io.restassured.specification.RequestSpecification given =
-				RestAssured.given();
+			io.restassured.specification.RequestSpecification
+				requestSpecification = _body.body(
+				_authentication.auth(RestAssured.given()));
 
 			for (Multipart multipart : _multiparts) {
-				multipart.multipart(given);
+				multipart.multipart(requestSpecification);
 			}
-
-			io.restassured.specification.RequestSpecification
-				requestSpecification = _body.body(_authentication.auth(given));
 
 			return requestSpecification.headers(_headers);
 		}

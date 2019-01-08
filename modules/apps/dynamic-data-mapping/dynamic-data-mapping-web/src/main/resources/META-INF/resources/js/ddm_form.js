@@ -3252,6 +3252,12 @@ AUI.add(
 							repeatableInstance.add(fieldContainer);
 						}
 
+						var fieldAttributes = fieldContainer._node.attributes;
+
+						if (fieldAttributes.draggable) {
+							fieldAttributes.removeNamedItem('draggable');
+						}
+
 						var drag = A.DD.DDM.getDrag(fieldContainer);
 
 						drag.addInvalid('.alloy-editor');

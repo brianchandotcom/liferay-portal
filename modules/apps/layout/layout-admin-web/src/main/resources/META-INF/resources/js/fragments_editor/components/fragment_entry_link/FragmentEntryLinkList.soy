@@ -53,10 +53,8 @@
 	{@param? store: ?}
 
 	{let $entryLinksClasses kind="text"}
-		container-fluid
-		fragment-entry-link-drop-target
 		fragment-entry-link-list
-		layouts-drop-target
+		{sp}fragments-editor__drop-target
 
 		{if $fragmentsEditorSidebarVisible}
 			{sp}fragment-entry-link-list--padded
@@ -159,15 +157,15 @@
 	{@param? store: ?}
 
 	{let $sectionClasses kind="text"}
-		drag-section
+		container-fluid
+		{sp}drag-section
 		{sp}fragments-editor__draggable-item
-		{sp}fragment-entry-link-list__row-section
-		{sp}fragment-entry-link-drop-target
+		{sp}fragments-editor__drop-target
 		{sp}fragments-editor__topper-wrapper
-		{sp}layouts-drop-target
+		{sp}fragment-entry-link-list__container
 
 		{if $empty}
-			{sp}fragment-entry-link-list__row-section--empty
+			{sp}fragment-entry-link-list__container--empty
 		{/if}
 
 		{if $dropTargetItemId == $rowId and $dropTargetItemType == $dropTargetItemTypes.section}
@@ -175,7 +173,7 @@
 		{/if}
 
 		{if $hoveredItemId == $rowId and $hoveredItemType == $dropTargetItemTypes.section}
-			{sp}fragment-entry-link-list__row-section--hovered
+			{sp}fragment-entry-link-list__container--hovered
 			{sp}fragments-editor__topper-wrapper--hovered
 		{/if}
 	{/let}
@@ -192,7 +190,7 @@
 	>
 		<nav class="fragments-editor__topper tbar">
 			<ul class="tbar-nav">
-				<li class="drag-handler fragments-editor__topper__item tbar-item tbar-item-expand">
+				<li class="fragments-editor__drag-handler fragments-editor__topper__item tbar-item tbar-item-expand">
 					{msg desc=""}section{/msg}
 				</li>
 				<li class="fragments-editor__topper__item tbar-item">
@@ -208,34 +206,32 @@
 			</ul>
 		</nav>
 
-		<div class="container-fluid row-container">
-			<div class="row">
-				{foreach $column in $columns}
-					{call .column}
-						{param _handleFragmentMove: $_handleFragmentMove /}
-						{param columnId: $column.columnId /}
-						{param defaultEditorConfigurations: $defaultEditorConfigurations /}
-						{param defaultLanguageId: $defaultLanguageId /}
-						{param dropTargetItemTypes: $dropTargetItemTypes /}
-						{param fragmentEntryLinkIds: $column.fragmentEntryLinkIds /}
-						{param fragmentEntryLinks: $fragmentEntryLinks /}
-						{param dropTargetBorder: $dropTargetBorder /}
-						{param dropTargetItemId: $dropTargetItemId /}
-						{param dropTargetItemType: $dropTargetItemType /}
-						{param hoveredItemId: $hoveredItemId /}
-						{param hoveredItemType: $hoveredItemType /}
-						{param imageSelectorURL: $imageSelectorURL /}
-						{param key: $column.columnId /}
-						{param languageId: $languageId /}
-						{param mappingFieldsURL: $mappingFieldsURL /}
-						{param portletNamespace: $portletNamespace /}
-						{param selectedMappingTypes: $selectedMappingTypes /}
-						{param size: $column.size /}
-						{param spritemap: $spritemap /}
-						{param store: $store /}
-					{/call}
-				{/foreach}
-			</div>
+		<div class="fragment-entry-link-list__row row">
+			{foreach $column in $columns}
+				{call .column}
+					{param _handleFragmentMove: $_handleFragmentMove /}
+					{param columnId: $column.columnId /}
+					{param defaultEditorConfigurations: $defaultEditorConfigurations /}
+					{param defaultLanguageId: $defaultLanguageId /}
+					{param dropTargetItemTypes: $dropTargetItemTypes /}
+					{param fragmentEntryLinkIds: $column.fragmentEntryLinkIds /}
+					{param fragmentEntryLinks: $fragmentEntryLinks /}
+					{param dropTargetBorder: $dropTargetBorder /}
+					{param dropTargetItemId: $dropTargetItemId /}
+					{param dropTargetItemType: $dropTargetItemType /}
+					{param hoveredItemId: $hoveredItemId /}
+					{param hoveredItemType: $hoveredItemType /}
+					{param imageSelectorURL: $imageSelectorURL /}
+					{param key: $column.columnId /}
+					{param languageId: $languageId /}
+					{param mappingFieldsURL: $mappingFieldsURL /}
+					{param portletNamespace: $portletNamespace /}
+					{param selectedMappingTypes: $selectedMappingTypes /}
+					{param size: $column.size /}
+					{param spritemap: $spritemap /}
+					{param store: $store /}
+				{/call}
+			{/foreach}
 		</div>
 	</section>
 {/template}
@@ -252,7 +248,6 @@
 	{@param imageSelectorURL: string}
 	{@param languageId: string}
 	{@param portletNamespace: string}
-	{@param size: string}
 	{@param spritemap: string}
 	{@param? _handleFragmentMove: any}
 	{@param? dropTargetItemTypes: ?}
@@ -272,13 +267,17 @@
 			label: string
 		]
 	]}
+	{@param? size: string}
 	{@param? store: ?}
 
 	{let $columnClasses kind="text"}
 		col
-		{sp}col-{$size}
+		{sp}fragments-editor__drop-target
 		{sp}fragment-entry-link-list__col
-		{sp}fragment-entry-link-drop-target
+
+		{if $size}
+			{sp}col-{$size}
+		{/if}
 	{/let}
 
 	<div class="{$columnClasses}" data-column-id="{$columnId}">
@@ -379,8 +378,7 @@
 	{@param? fragmentsEditorSidebarVisible: bool}
 
 	{let $emptyListClasses kind="text"}
-		fragment-entry-link-drop-target
-		{sp}layouts-drop-target
+		fragments-editor__drop-target
 		{sp}no-fragments-message
 		{sp}taglib-empty-result-message
 

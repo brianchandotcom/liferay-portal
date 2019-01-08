@@ -51,7 +51,11 @@ JournalManagementToolbarDisplayContext journalManagementToolbarlDisplayContext =
 				trashEnabled: <%= trashHelper.isTrashEnabled(scopeGroupId) %>,
 				viewDDMStructureArticlesURL: '<%= viewDDMStructureArticlesURL %>'
 			}
-		)
+		),
+		{
+			destroyOnNavigate: true,
+			portletId: '<%= HtmlUtil.escapeJS(portletDisplay.getId()) %>'
+		}
 	);
 </aui:script>
 

@@ -14,9 +14,8 @@
 
 package com.liferay.forms.apio.internal.architect.locale;
 
-import com.liferay.portal.kernel.util.Supplier;
-
 import java.util.Locale;
+import java.util.function.Supplier;
 
 /**
  * @author Alejandro Hernández

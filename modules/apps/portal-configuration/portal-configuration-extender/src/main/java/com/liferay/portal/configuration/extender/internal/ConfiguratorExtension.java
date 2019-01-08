@@ -17,12 +17,12 @@ package com.liferay.portal.configuration.extender.internal;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.Supplier;
 
 import java.io.IOException;
 
 import java.util.Collection;
 import java.util.Dictionary;
+import java.util.function.Supplier;
 
 import org.apache.felix.utils.extender.Extension;
 import org.apache.felix.utils.log.Logger;

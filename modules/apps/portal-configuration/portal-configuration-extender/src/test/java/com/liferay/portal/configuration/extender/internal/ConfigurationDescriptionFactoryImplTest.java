@@ -14,14 +14,13 @@
 
 package com.liferay.portal.configuration.extender.internal;
 
-import com.liferay.portal.kernel.util.Supplier;
-
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 
 import java.nio.charset.Charset;
 
 import java.util.Dictionary;
+import java.util.function.Supplier;
 
 import org.junit.Assert;
 import org.junit.Test;

@@ -15,9 +15,9 @@
 package com.liferay.portal.configuration.extender.internal;
 
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.util.Supplier;
 
 import java.util.Dictionary;
+import java.util.function.Supplier;
 
 /**
  * @author Carlos Sierra Andrés

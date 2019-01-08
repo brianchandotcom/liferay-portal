@@ -25,6 +25,7 @@ import java.text.ParsePosition;
 
 import java.util.Date;
 import java.util.Locale;
+import java.util.function.Supplier;
 
 /**
  * Provides utility methods for reading values as various types.

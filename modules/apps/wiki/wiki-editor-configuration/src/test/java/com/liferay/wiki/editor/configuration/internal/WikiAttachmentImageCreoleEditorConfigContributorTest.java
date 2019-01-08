@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
+import com.liferay.portal.kernel.portlet.PortletURLWrapper;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ProxyFactory;
@@ -86,13 +87,14 @@ public class WikiAttachmentImageCreoleEditorConfigContributorTest
 		setAllowBrowseDocuments(true);
 		setWikiPageResourcePrimKey(0);
 
-		PortletURL itemSelectorPortletURL = mock(PortletURL.class);
+		PortletURL itemSelectorPortletURL = new PortletURLWrapper(null) {
 
-		when(
-			itemSelectorPortletURL.toString()
-		).thenReturn(
-			"itemSelectorPortletURLWithUrlSelectionViews"
-		);
+			@Override
+			public String toString() {
+				return "itemSelectorPortletURLWithUrlSelectionViews";
+			}
+
+		};
 
 		when(
 			_itemSelector.getItemSelectorURL(
@@ -141,13 +143,15 @@ public class WikiAttachmentImageCreoleEditorConfigContributorTest
 		setAllowBrowseDocuments(true);
 		setWikiPageResourcePrimKey(1);
 
-		PortletURL itemSelectorPortletURL = mock(PortletURL.class);
+		PortletURL itemSelectorPortletURL = new PortletURLWrapper(null) {
 
-		when(
-			itemSelectorPortletURL.toString()
-		).thenReturn(
-			"itemSelectorPortletURLWithWikiUrlAndUploadSelectionViews"
-		);
+			@Override
+			public String toString() {
+				return
+					"itemSelectorPortletURLWithWikiUrlAndUploadSelectionViews";
+			}
+
+		};
 
 		when(
 			_itemSelector.getItemSelectorURL(

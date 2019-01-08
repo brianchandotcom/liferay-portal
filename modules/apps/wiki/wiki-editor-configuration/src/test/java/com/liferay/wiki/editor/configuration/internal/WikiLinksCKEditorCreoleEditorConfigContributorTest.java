@@ -20,6 +20,7 @@ import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
+import com.liferay.portal.kernel.portlet.PortletURLWrapper;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.util.ProxyFactory;
 import com.liferay.wiki.constants.WikiPortletKeys;
@@ -71,13 +72,14 @@ public class WikiLinksCKEditorCreoleEditorConfigContributorTest
 		_inputEditorTaglibAttributes.put(
 			"liferay-ui:input-editor:name", "testEditor");
 
-		PortletURL oneTabItemSelectorPortletURL = mock(PortletURL.class);
+		PortletURL oneTabItemSelectorPortletURL = new PortletURLWrapper(null) {
 
-		when(
-			oneTabItemSelectorPortletURL.toString()
-		).thenReturn(
-			"oneTabItemSelectorPortletURL"
-		);
+			@Override
+			public String toString() {
+				return "oneTabItemSelectorPortletURL";
+			}
+
+		};
 
 		when(
 			_itemSelector.getItemSelectorURL(
@@ -87,13 +89,14 @@ public class WikiLinksCKEditorCreoleEditorConfigContributorTest
 			oneTabItemSelectorPortletURL
 		);
 
-		PortletURL twoTabsItemSelectorPortletURL = mock(PortletURL.class);
+		PortletURL twoTabsItemSelectorPortletURL = new PortletURLWrapper(null) {
 
-		when(
-			twoTabsItemSelectorPortletURL.toString()
-		).thenReturn(
-			"twoTabsItemSelectorPortletURL"
-		);
+			@Override
+			public String toString() {
+				return "twoTabsItemSelectorPortletURL";
+			}
+
+		};
 
 		when(
 			_itemSelector.getItemSelectorURL(

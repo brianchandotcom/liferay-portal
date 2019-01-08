@@ -161,6 +161,8 @@ public class DEDataDefinitionServiceImplTest {
 
 			DEDataDefinitionCountRequest deDataDefinitionCountRequest =
 				DEDataDefinitionRequestBuilder.countBuilder(
+				).inCompany(
+					_group.getCompanyId()
 				).inGroup(
 					_group.getGroupId()
 				).build();
@@ -217,6 +219,8 @@ public class DEDataDefinitionServiceImplTest {
 
 			DEDataDefinitionCountRequest deDataDefinitionCountRequest =
 				DEDataDefinitionRequestBuilder.countBuilder(
+				).inCompany(
+					_group.getCompanyId()
 				).inGroup(
 					_group.getGroupId()
 				).build();
@@ -237,6 +241,8 @@ public class DEDataDefinitionServiceImplTest {
 			DEDataDefinitionCountRequest
 				deDataDefinitionCountRequestAfterDelete =
 					DEDataDefinitionRequestBuilder.countBuilder(
+					).inCompany(
+						_group.getCompanyId()
 					).inGroup(
 						_group.getGroupId()
 					).build();
@@ -264,8 +270,66 @@ public class DEDataDefinitionServiceImplTest {
 
 			DEDataDefinitionCountRequest deDataDefinitionCountRequest =
 				DEDataDefinitionRequestBuilder.countBuilder(
+				).inCompany(
+					_group.getCompanyId()
 				).inGroup(
 					_group.getGroupId()
+				).build();
+
+			DEDataDefinitionCountResponse deDataDefinitionCountResponse =
+				_deDataDefinitionService.execute(deDataDefinitionCountRequest);
+
+			Assert.assertEquals(0, deDataDefinitionCountResponse.getTotal());
+		}
+		finally {
+			ServiceContextThreadLocal.popServiceContext();
+		}
+	}
+
+	@Test
+	public void testCountWithoutPermission() throws Exception {
+		try {
+			ServiceContext serviceContext = createServiceContext(
+				_group, _user, createModelPermissions());
+
+			ServiceContextThreadLocal.pushServiceContext(serviceContext);
+
+			Map<String, String> field1Labels = new HashMap() {
+				{
+					put("en_US", "Field 1");
+				}
+			};
+
+			DEDataDefinitionField deDataDefinitionField1 =
+				new DEDataDefinitionField("field1", "string");
+
+			deDataDefinitionField1.addLabels(field1Labels);
+
+			DEDataDefinition deDataDefinition1 = new DEDataDefinition(
+				Arrays.asList(deDataDefinitionField1));
+
+			deDataDefinition1.addName(LocaleUtil.US, "Definition Test 1");
+			deDataDefinition1.setStorageType("json");
+
+			DEDataDefinitionSaveRequest deDataDefinitionSaveRequest =
+				DEDataDefinitionRequestBuilder.saveBuilder(
+					deDataDefinition1
+				).onBehalfOf(
+					_user.getUserId()
+				).inGroup(
+					_group.getGroupId()
+				).build();
+
+			_deDataDefinitionService.execute(deDataDefinitionSaveRequest);
+
+			Group otherGroup = GroupTestUtil.addGroup();
+
+			DEDataDefinitionCountRequest deDataDefinitionCountRequest =
+				DEDataDefinitionRequestBuilder.countBuilder(
+				).inCompany(
+					otherGroup.getCompanyId()
+				).inGroup(
+					otherGroup.getGroupId()
 				).build();
 
 			DEDataDefinitionCountResponse deDataDefinitionCountResponse =

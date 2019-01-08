@@ -14,9 +14,11 @@
 
 package com.liferay.data.engine.internal.executor;
 
+import com.liferay.data.engine.model.DEDataDefinition;
 import com.liferay.data.engine.service.DEDataDefinitionCountRequest;
 import com.liferay.data.engine.service.DEDataDefinitionCountResponse;
-import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
+import com.liferay.dynamic.data.mapping.service.DDMStructureService;
+import com.liferay.portal.kernel.util.Portal;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -32,16 +34,18 @@ public class DEDataDefinitionCountRequestExecutor {
 	public DEDataDefinitionCountResponse execute(
 		DEDataDefinitionCountRequest deDataDefinitionCountRequest) {
 
-		long deDataDefinitionGroupId =
-			deDataDefinitionCountRequest.getGroupId();
+		int structuresCount = ddmStructureService.getStructuresCount(
+			deDataDefinitionCountRequest.getCompanyId(),
+			new long[] {deDataDefinitionCountRequest.getGroupId()},
+			portal.getClassNameId(DEDataDefinition.class));
 
-		int deDataDefinitionTotal = ddmStructureLocalService.getStructuresCount(
-			deDataDefinitionGroupId);
-
-		return DEDataDefinitionCountResponse.Builder.of(deDataDefinitionTotal);
+		return DEDataDefinitionCountResponse.Builder.of(structuresCount);
 	}
 
 	@Reference
-	protected DDMStructureLocalService ddmStructureLocalService;
+	protected DDMStructureService ddmStructureService;
+
+	@Reference
+	protected Portal portal;
 
 }

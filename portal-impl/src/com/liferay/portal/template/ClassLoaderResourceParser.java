@@ -14,6 +14,7 @@
 
 package com.liferay.portal.template;
 
+import com.liferay.petra.lang.ClassLoaderPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
@@ -59,7 +60,19 @@ public class ClassLoaderResourceParser extends URLResourceParser {
 			_log.debug("Loading " + templateId);
 		}
 
-		return _classLoader.getResource(templateId);
+		ClassLoader classLoader = _classLoader;
+
+		int pos = templateId.indexOf(TemplateConstants.CLASS_LOADER_SEPARATOR);
+
+		if (pos >= 0) {
+			classLoader = ClassLoaderPool.getClassLoader(
+				templateId.substring(0, pos));
+
+			templateId = templateId.substring(
+				pos + TemplateConstants.CLASS_LOADER_SEPARATOR.length());
+		}
+
+		return classLoader.getResource(templateId);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

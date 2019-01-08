@@ -24,8 +24,8 @@ import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.spring.aop.AopMethodInvocation;
 import com.liferay.portal.spring.aop.ChainableMethodAdvice;
-import com.liferay.portal.spring.aop.ServiceBeanMethodInvocation;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
@@ -39,8 +39,8 @@ public class IndexableAdvice extends ChainableMethodAdvice {
 
 	@Override
 	public void afterReturning(
-			ServiceBeanMethodInvocation serviceBeanMethodInvocation,
-			Object[] arguments, Object result)
+			AopMethodInvocation aopMethodInvocation, Object[] arguments,
+			Object result)
 		throws Throwable {
 
 		if (result == null) {
@@ -64,7 +64,7 @@ public class IndexableAdvice extends ChainableMethodAdvice {
 		}
 
 		IndexableContext indexableContext =
-			serviceBeanMethodInvocation.getAdviceMethodContext();
+			aopMethodInvocation.getAdviceMethodContext();
 
 		String name = indexableContext._name;
 

@@ -31,7 +31,7 @@ import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.spring.aop.AopInvocationHandler;
-import com.liferay.portal.spring.aop.ServiceBeanMethodInvocation;
+import com.liferay.portal.spring.aop.AopMethodInvocation;
 import com.liferay.portal.spring.transaction.DefaultTransactionExecutor;
 import com.liferay.portal.spring.transaction.TransactionAttributeAdapter;
 import com.liferay.portal.spring.transaction.TransactionInterceptor;
@@ -82,16 +82,15 @@ public class PortalPreferencesImplTest {
 				_originalPortalPreferencesLocalService,
 				AopInvocationHandler.class);
 
-		ServiceBeanMethodInvocation serviceBeanMethodInvocation =
-			ReflectionTestUtil.invoke(
-				aopInvocationHandler, "_getServiceBeanMethodInvocation",
-				new Class<?>[] {Method.class}, _updatePreferencesMethod);
+		AopMethodInvocation aopMethodInvocation = ReflectionTestUtil.invoke(
+			aopInvocationHandler, "_getAopMethodInvocation",
+			new Class<?>[] {Method.class}, _updatePreferencesMethod);
 
-		serviceBeanMethodInvocation = ReflectionTestUtil.getFieldValue(
-			serviceBeanMethodInvocation, "_nextServiceBeanMethodInvocation");
+		aopMethodInvocation = ReflectionTestUtil.getFieldValue(
+			aopMethodInvocation, "_nextAopMethodInvocation");
 
 		_transactionInterceptor = ReflectionTestUtil.getFieldValue(
-			serviceBeanMethodInvocation, "_nextChainableMethodAdvice");
+			aopMethodInvocation, "_nextChainableMethodAdvice");
 
 		_originalTransactionExecutor = ReflectionTestUtil.getFieldValue(
 			_transactionInterceptor, "transactionExecutor");

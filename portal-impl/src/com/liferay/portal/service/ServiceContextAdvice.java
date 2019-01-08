@@ -17,7 +17,7 @@ package com.liferay.portal.service;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.spring.aop.ChainableMethodAdvice;
-import com.liferay.portal.spring.aop.ServiceBeanMethodInvocation;
+import com.liferay.portal.spring.aop.AopMethodInvocation;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
@@ -30,11 +30,11 @@ public class ServiceContextAdvice extends ChainableMethodAdvice {
 
 	@Override
 	public Object invoke(
-			ServiceBeanMethodInvocation serviceBeanMethodInvocation,
+			AopMethodInvocation aopMethodInvocation,
 			Object[] arguments)
 		throws Throwable {
 
-		int index = serviceBeanMethodInvocation.getAdviceMethodContext();
+		int index = aopMethodInvocation.getAdviceMethodContext();
 
 		ServiceContext serviceContext = (ServiceContext)arguments[index];
 
@@ -43,7 +43,7 @@ public class ServiceContextAdvice extends ChainableMethodAdvice {
 		}
 
 		try {
-			return serviceBeanMethodInvocation.proceed(arguments);
+			return aopMethodInvocation.proceed(arguments);
 		}
 		finally {
 			if (serviceContext != null) {

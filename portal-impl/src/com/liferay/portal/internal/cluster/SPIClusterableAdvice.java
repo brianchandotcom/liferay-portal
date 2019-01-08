@@ -19,8 +19,8 @@ import com.liferay.portal.kernel.cluster.ClusterableInvokerUtil;
 import com.liferay.portal.kernel.nio.intraband.rpc.IntrabandRPCUtil;
 import com.liferay.portal.kernel.resiliency.spi.SPI;
 import com.liferay.portal.kernel.resiliency.spi.SPIUtil;
+import com.liferay.portal.spring.aop.AopMethodInvocation;
 import com.liferay.portal.spring.aop.ChainableMethodAdvice;
-import com.liferay.portal.spring.aop.ServiceBeanMethodInvocation;
 
 import java.io.Serializable;
 
@@ -37,12 +37,11 @@ public class SPIClusterableAdvice extends ChainableMethodAdvice {
 
 	@Override
 	public void afterReturning(
-			ServiceBeanMethodInvocation serviceBeanMethodInvocation,
-			Object[] arguments, Object result)
+			AopMethodInvocation aopMethodInvocation, Object[] arguments,
+			Object result)
 		throws Throwable {
 
-		Clusterable clusterable =
-			serviceBeanMethodInvocation.getAdviceMethodContext();
+		Clusterable clusterable = aopMethodInvocation.getAdviceMethodContext();
 
 		SPI spi = SPIUtil.getSPI();
 
@@ -50,19 +49,16 @@ public class SPIClusterableAdvice extends ChainableMethodAdvice {
 			spi.getRegistrationReference(),
 			new MethodHandlerProcessCallable<Serializable>(
 				ClusterableInvokerUtil.createMethodHandler(
-					clusterable.acceptor(),
-					serviceBeanMethodInvocation.getThis(),
-					serviceBeanMethodInvocation.getMethod(), arguments)));
+					clusterable.acceptor(), aopMethodInvocation.getThis(),
+					aopMethodInvocation.getMethod(), arguments)));
 	}
 
 	@Override
 	public Object before(
-			ServiceBeanMethodInvocation serviceBeanMethodInvocation,
-			Object[] arguments)
+			AopMethodInvocation aopMethodInvocation, Object[] arguments)
 		throws Throwable {
 
-		Clusterable clusterable =
-			serviceBeanMethodInvocation.getAdviceMethodContext();
+		Clusterable clusterable = aopMethodInvocation.getAdviceMethodContext();
 
 		if (!clusterable.onMaster()) {
 			return null;
@@ -74,13 +70,12 @@ public class SPIClusterableAdvice extends ChainableMethodAdvice {
 			spi.getRegistrationReference(),
 			new MethodHandlerProcessCallable<Serializable>(
 				ClusterableInvokerUtil.createMethodHandler(
-					clusterable.acceptor(),
-					serviceBeanMethodInvocation.getThis(),
-					serviceBeanMethodInvocation.getMethod(), arguments)));
+					clusterable.acceptor(), aopMethodInvocation.getThis(),
+					aopMethodInvocation.getMethod(), arguments)));
 
 		Object result = futureResult.get();
 
-		Method method = serviceBeanMethodInvocation.getMethod();
+		Method method = aopMethodInvocation.getMethod();
 
 		Class<?> returnType = method.getReturnType();
 

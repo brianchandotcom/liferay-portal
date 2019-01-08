@@ -22,8 +22,8 @@ import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.spring.aop.AopInvocationHandler;
+import com.liferay.portal.spring.aop.AopMethodInvocation;
 import com.liferay.portal.spring.aop.ChainableMethodAdvice;
-import com.liferay.portal.spring.aop.ServiceBeanMethodInvocation;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationHandler;
@@ -93,21 +93,20 @@ public class DynamicDataSourceAdviceTest {
 	@Test
 	public void testDynamicDataSourceAdvice() throws Throwable {
 		for (int i = 1; i <= 6; i++) {
-			ServiceBeanMethodInvocation serviceBeanMethodInvocation =
-				createMethodInvocation("method" + i);
+			AopMethodInvocation aopMethodInvocation = createMethodInvocation(
+				"method" + i);
 
-			serviceBeanMethodInvocation.proceed(null);
+			aopMethodInvocation.proceed(null);
 		}
 
 		_testClass.assertExecutions();
 	}
 
-	protected ServiceBeanMethodInvocation createMethodInvocation(
-			String methodName)
+	protected AopMethodInvocation createMethodInvocation(String methodName)
 		throws Exception {
 
 		return ReflectionTestUtil.invoke(
-			_aopInvocationHandler, "_getServiceBeanMethodInvocation",
+			_aopInvocationHandler, "_getAopMethodInvocation",
 			new Class<?>[] {Method.class},
 			TestClass.class.getMethod(methodName));
 	}
@@ -197,21 +196,21 @@ public class DynamicDataSourceAdviceTest {
 
 		@Transactional(readOnly = true)
 		public void method6() throws Throwable {
-			ServiceBeanMethodInvocation serviceBeanMethodInvocation =
-				createMethodInvocation("method3");
+			AopMethodInvocation aopMethodInvocation = createMethodInvocation(
+				"method3");
 
-			serviceBeanMethodInvocation.proceed(null);
+			aopMethodInvocation.proceed(null);
 
 			Assert.assertEquals(
 				Operation.READ, _dynamicDataSourceTargetSource.getOperation());
 			Assert.assertSame(
 				_readDataSource, _dynamicDataSourceTargetSource.getTarget());
 
-			serviceBeanMethodInvocation = createMethodInvocation("method1");
+			aopMethodInvocation = createMethodInvocation("method1");
 
 			_callerOperation.set(Operation.READ);
 
-			serviceBeanMethodInvocation.proceed(null);
+			aopMethodInvocation.proceed(null);
 
 			_callerOperation.remove();
 
@@ -220,18 +219,18 @@ public class DynamicDataSourceAdviceTest {
 			Assert.assertSame(
 				_readDataSource, _dynamicDataSourceTargetSource.getTarget());
 
-			serviceBeanMethodInvocation = createMethodInvocation("method2");
+			aopMethodInvocation = createMethodInvocation("method2");
 
-			serviceBeanMethodInvocation.proceed(null);
+			aopMethodInvocation.proceed(null);
 
 			Assert.assertEquals(
 				Operation.READ, _dynamicDataSourceTargetSource.getOperation());
 			Assert.assertSame(
 				_readDataSource, _dynamicDataSourceTargetSource.getTarget());
 
-			serviceBeanMethodInvocation = createMethodInvocation("method4");
+			aopMethodInvocation = createMethodInvocation("method4");
 
-			serviceBeanMethodInvocation.proceed(null);
+			aopMethodInvocation.proceed(null);
 
 			Assert.assertEquals(
 				Operation.READ, _dynamicDataSourceTargetSource.getOperation());

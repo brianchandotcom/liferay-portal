@@ -38,16 +38,16 @@ public class AopInvocationHandler implements InvocationHandler {
 	public Object invoke(Object proxy, Method method, Object[] arguments)
 		throws Throwable {
 
-		ServiceBeanMethodInvocation serviceBeanMethodInvocation =
-			_getServiceBeanMethodInvocation(method);
+		AopMethodInvocation aopMethodInvocation = _getAopMethodInvocation(
+			method);
 
-		return serviceBeanMethodInvocation.proceed(arguments);
+		return aopMethodInvocation.proceed(arguments);
 	}
 
 	public void setTarget(Object target) {
 		_target = target;
 
-		_serviceBeanMethodInvocations.clear();
+		_aopMethodInvocations.clear();
 	}
 
 	protected AopInvocationHandler(
@@ -58,13 +58,11 @@ public class AopInvocationHandler implements InvocationHandler {
 	}
 
 	protected void reset() {
-		_serviceBeanMethodInvocations.clear();
+		_aopMethodInvocations.clear();
 	}
 
-	private ServiceBeanMethodInvocation _createServiceBeanMethodInvocation(
-		Method method) {
-
-		ServiceBeanMethodInvocation serviceBeanMethodInvocation = null;
+	private AopMethodInvocation _createAopMethodInvocation(Method method) {
+		AopMethodInvocation aopMethodInvocation = null;
 
 		ChainableMethodAdvice nextChainableMethodAdvice = null;
 
@@ -83,34 +81,31 @@ public class AopInvocationHandler implements InvocationHandler {
 				targetClass, method, annotations);
 
 			if (methodContext != null) {
-				serviceBeanMethodInvocation = new ServiceBeanMethodInvocation(
+				aopMethodInvocation = new AopMethodInvocation(
 					target, method, methodContext, nextChainableMethodAdvice,
-					serviceBeanMethodInvocation);
+					aopMethodInvocation);
 
 				nextChainableMethodAdvice = chainableMethodAdvice;
 			}
 		}
 
-		return new ServiceBeanMethodInvocation(
+		return new AopMethodInvocation(
 			target, method, null, nextChainableMethodAdvice,
-			serviceBeanMethodInvocation);
+			aopMethodInvocation);
 	}
 
-	private ServiceBeanMethodInvocation _getServiceBeanMethodInvocation(
-		Method method) {
-
+	private AopMethodInvocation _getAopMethodInvocation(Method method) {
 		if (TransactionsUtil.isEnabled()) {
-			return _serviceBeanMethodInvocations.computeIfAbsent(
-				method, this::_createServiceBeanMethodInvocation);
+			return _aopMethodInvocations.computeIfAbsent(
+				method, this::_createAopMethodInvocation);
 		}
 
-		return new ServiceBeanMethodInvocation(
-			_target, method, null, null, null);
+		return new AopMethodInvocation(_target, method, null, null, null);
 	}
 
+	private final Map<Method, AopMethodInvocation> _aopMethodInvocations =
+		new ConcurrentHashMap<>();
 	private final ChainableMethodAdvice[] _chainableMethodAdvices;
-	private final Map<Method, ServiceBeanMethodInvocation>
-		_serviceBeanMethodInvocations = new ConcurrentHashMap<>();
 	private volatile Object _target;
 
 }

@@ -21,8 +21,8 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.MessageBusUtil;
 import com.liferay.portal.kernel.messaging.async.Async;
 import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
+import com.liferay.portal.spring.aop.AopMethodInvocation;
 import com.liferay.portal.spring.aop.ChainableMethodAdvice;
-import com.liferay.portal.spring.aop.ServiceBeanMethodInvocation;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
@@ -37,22 +37,20 @@ public class AsyncAdvice extends ChainableMethodAdvice {
 
 	@Override
 	public Object before(
-		ServiceBeanMethodInvocation serviceBeanMethodInvocation,
-		Object[] arguments) {
+		AopMethodInvocation aopMethodInvocation, Object[] arguments) {
 
 		if (AsyncInvokeThreadLocal.isEnabled()) {
 			return null;
 		}
 
 		String callbackDestinationName =
-			serviceBeanMethodInvocation.getAdviceMethodContext();
+			aopMethodInvocation.getAdviceMethodContext();
 
 		TransactionCommitCallbackUtil.registerCallback(
 			() -> {
 				MessageBusUtil.sendMessage(
 					callbackDestinationName,
-					new AsyncProcessCallable(
-						serviceBeanMethodInvocation, arguments));
+					new AsyncProcessCallable(aopMethodInvocation, arguments));
 
 				return null;
 			});

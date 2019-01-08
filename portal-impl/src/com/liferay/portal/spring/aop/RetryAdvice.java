@@ -72,12 +72,11 @@ public class RetryAdvice extends ChainableMethodAdvice {
 
 	@Override
 	public Object invoke(
-			ServiceBeanMethodInvocation serviceBeanMethodInvocation,
-			Object[] arguments)
+			AopMethodInvocation aopMethodInvocation, Object[] arguments)
 		throws Throwable {
 
 		RetryContext retryContext =
-			serviceBeanMethodInvocation.getAdviceMethodContext();
+			aopMethodInvocation.getAdviceMethodContext();
 
 		RetryAcceptor retryAcceptor = retryContext._retryAcceptor;
 		Map<String, String> properties = retryContext._properties;
@@ -95,7 +94,7 @@ public class RetryAdvice extends ChainableMethodAdvice {
 
 		while ((retries < 0) || (retries-- > 0)) {
 			try {
-				returnValue = serviceBeanMethodInvocation.proceed(arguments);
+				returnValue = aopMethodInvocation.proceed(arguments);
 
 				if (!retryAcceptor.acceptResult(returnValue, properties)) {
 					return returnValue;
@@ -110,8 +109,7 @@ public class RetryAdvice extends ChainableMethodAdvice {
 
 					_log.warn(
 						StringBundler.concat(
-							"Retry on ",
-							String.valueOf(serviceBeanMethodInvocation),
+							"Retry on ", String.valueOf(aopMethodInvocation),
 							" for ", number, " more times due to result ",
 							String.valueOf(returnValue)));
 				}
@@ -132,8 +130,7 @@ public class RetryAdvice extends ChainableMethodAdvice {
 
 					_log.warn(
 						StringBundler.concat(
-							"Retry on ",
-							String.valueOf(serviceBeanMethodInvocation),
+							"Retry on ", String.valueOf(aopMethodInvocation),
 							" for ", number, " more times due to exception ",
 							String.valueOf(throwable)),
 						throwable);
@@ -146,7 +143,7 @@ public class RetryAdvice extends ChainableMethodAdvice {
 				_log.warn(
 					StringBundler.concat(
 						"Give up retrying on ",
-						String.valueOf(serviceBeanMethodInvocation), " after ",
+						String.valueOf(aopMethodInvocation), " after ",
 						String.valueOf(totalRetries),
 						" retries and rethrow last retry's exception ",
 						String.valueOf(throwable)),
@@ -159,9 +156,8 @@ public class RetryAdvice extends ChainableMethodAdvice {
 		if (_log.isWarnEnabled()) {
 			_log.warn(
 				StringBundler.concat(
-					"Give up retrying on ",
-					String.valueOf(serviceBeanMethodInvocation), " after ",
-					String.valueOf(totalRetries),
+					"Give up retrying on ", String.valueOf(aopMethodInvocation),
+					" after ", String.valueOf(totalRetries),
 					" retries and returning the last retry's result ",
 					String.valueOf(returnValue)));
 		}

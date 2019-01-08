@@ -18,8 +18,8 @@ import com.liferay.portal.kernel.cluster.ClusterInvokeThreadLocal;
 import com.liferay.portal.kernel.cluster.ClusterMasterExecutorUtil;
 import com.liferay.portal.kernel.cluster.Clusterable;
 import com.liferay.portal.kernel.cluster.ClusterableInvokerUtil;
+import com.liferay.portal.spring.aop.AopMethodInvocation;
 import com.liferay.portal.spring.aop.ChainableMethodAdvice;
-import com.liferay.portal.spring.aop.ServiceBeanMethodInvocation;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
@@ -33,34 +33,31 @@ public class ClusterableAdvice extends ChainableMethodAdvice {
 
 	@Override
 	public void afterReturning(
-			ServiceBeanMethodInvocation serviceBeanMethodInvocation,
-			Object[] arguments, Object result)
+			AopMethodInvocation aopMethodInvocation, Object[] arguments,
+			Object result)
 		throws Throwable {
 
 		if (!ClusterInvokeThreadLocal.isEnabled()) {
 			return;
 		}
 
-		Clusterable clusterable =
-			serviceBeanMethodInvocation.getAdviceMethodContext();
+		Clusterable clusterable = aopMethodInvocation.getAdviceMethodContext();
 
 		ClusterableInvokerUtil.invokeOnCluster(
-			clusterable.acceptor(), serviceBeanMethodInvocation.getThis(),
-			serviceBeanMethodInvocation.getMethod(), arguments);
+			clusterable.acceptor(), aopMethodInvocation.getThis(),
+			aopMethodInvocation.getMethod(), arguments);
 	}
 
 	@Override
 	public Object before(
-			ServiceBeanMethodInvocation serviceBeanMethodInvocation,
-			Object[] arguments)
+			AopMethodInvocation aopMethodInvocation, Object[] arguments)
 		throws Throwable {
 
 		if (!ClusterInvokeThreadLocal.isEnabled()) {
 			return null;
 		}
 
-		Clusterable clusterable =
-			serviceBeanMethodInvocation.getAdviceMethodContext();
+		Clusterable clusterable = aopMethodInvocation.getAdviceMethodContext();
 
 		if (!clusterable.onMaster()) {
 			return null;
@@ -69,15 +66,15 @@ public class ClusterableAdvice extends ChainableMethodAdvice {
 		Object result = null;
 
 		if (ClusterMasterExecutorUtil.isMaster()) {
-			result = serviceBeanMethodInvocation.proceed(arguments);
+			result = aopMethodInvocation.proceed(arguments);
 		}
 		else {
 			result = ClusterableInvokerUtil.invokeOnMaster(
-				clusterable.acceptor(), serviceBeanMethodInvocation.getThis(),
-				serviceBeanMethodInvocation.getMethod(), arguments);
+				clusterable.acceptor(), aopMethodInvocation.getThis(),
+				aopMethodInvocation.getMethod(), arguments);
 		}
 
-		Method method = serviceBeanMethodInvocation.getMethod();
+		Method method = aopMethodInvocation.getMethod();
 
 		Class<?> returnType = method.getReturnType();
 

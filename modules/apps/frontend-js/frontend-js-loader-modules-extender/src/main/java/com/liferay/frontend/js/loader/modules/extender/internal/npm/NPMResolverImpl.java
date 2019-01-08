@@ -14,6 +14,7 @@
 
 package com.liferay.frontend.js.loader.modules.extender.internal.npm;
 
+import com.liferay.frontend.js.loader.modules.extender.internal.npm.flat.FlatNPMBundleProcessor;
 import com.liferay.frontend.js.loader.modules.extender.npm.JSPackage;
 import com.liferay.frontend.js.loader.modules.extender.npm.JSPackageDependency;
 import com.liferay.frontend.js.loader.modules.extender.npm.ModuleNameUtil;
@@ -149,7 +150,8 @@ public class NPMResolverImpl implements NPMResolver {
 			sb.append(bundle.getBundleId());
 			sb.append(StringPool.SLASH);
 
-			URL url = bundle.getResource("META-INF/resources/package.json");
+			URL url = bundle.getResource(
+				FlatNPMBundleProcessor.PACKAGE_JSON_PATH);
 
 			String content = StringUtil.read(url.openStream());
 

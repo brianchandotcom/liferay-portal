@@ -25,7 +25,7 @@
 		border-left: $sidebarLeftBorderWidth solid $sidebarLeftBorderColor;
 		height: 100vh;
 		overflow-x: hidden;
-		overflow-y: scroll;
+		overflow-y: auto;
 		position: fixed;
 		right: $sidebarButtonsWidth;
 		transform: translateX(0);

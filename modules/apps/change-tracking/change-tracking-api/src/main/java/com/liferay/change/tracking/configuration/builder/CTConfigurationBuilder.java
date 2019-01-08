@@ -25,12 +25,25 @@ import java.util.function.Function;
  */
 public interface CTConfigurationBuilder<T, U> {
 
-	public ResourceEntityByResourceEntityIdStep<T, U> setEntityClasses(
-		Class<T> resourceEntityClass, Class<U> versionEntityClass);
+	public ContentTypeLanguageKeyStep<T, U> setContentType(String contentType);
 
 	public interface BuildStep {
 
 		public CTConfiguration build();
+
+	}
+
+	public interface ContentTypeLanguageKeyStep<T, U> {
+
+		public EntityClassesStep<T, U> setContentTypeLanguageKey(
+			String contentTypeLanguageKey);
+
+	}
+
+	public interface EntityClassesStep<T, U> {
+
+		public ResourceEntityByResourceEntityIdStep<T, U> setEntityClasses(
+			Class<T> resourceEntityClass, Class<U> versionEntityClass);
 
 	}
 

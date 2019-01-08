@@ -41,13 +41,10 @@ public class CTConfigurationBuilderImpl<T, U>
 	}
 
 	@Override
-	public ResourceEntityByResourceEntityIdStep<T, U> setEntityClasses(
-		Class<T> resourceEntityClass, Class<U> versionEntityClass) {
+	public ContentTypeLanguageKeyStep<T, U> setContentType(String contentType) {
+		_ctConfiguration.setContentType(contentType);
 
-		_ctConfiguration.setResourceEntityClass(resourceEntityClass);
-		_ctConfiguration.setVersionEntityClass(versionEntityClass);
-
-		return new ResourceEntityByResourceEntityIdStepImpl();
+		return new ContentTypeLanguageKeyStepImpl();
 	}
 
 	public class BuildStepImpl implements BuildStep {
@@ -59,8 +56,26 @@ public class CTConfigurationBuilderImpl<T, U>
 
 	}
 
+	public class ContentTypeLanguageKeyStepImpl
+		implements ContentTypeLanguageKeyStep<T, U> {
+
+		@Override
+		public EntityClassesStep<T, U> setContentTypeLanguageKey(
+			String contentTypeLanguageKey) {
+
+			_ctConfiguration.setContentTypeLanguageKey(contentTypeLanguageKey);
+
+			return new EntityClassesStepImpl();
+		}
+
+	}
+
 	public interface CTConfigurationExtended<T, U>
 		extends CTConfiguration<T, U> {
+
+		public void setContentType(String contentType);
+
+		public void setContentTypeLanguageKey(String contentTypeLanguageKey);
 
 		public void setResourceEntityByResourceEntityIdFunction(
 			Function<Long, T> resourceEntityByResourceEntityIdFunction);
@@ -91,6 +106,20 @@ public class CTConfigurationBuilderImpl<T, U>
 
 		public void setVersionEntityStatusFunction(
 			Function<U, Integer> versionEntityStatusFunction);
+
+	}
+
+	public class EntityClassesStepImpl implements EntityClassesStep<T, U> {
+
+		@Override
+		public ResourceEntityByResourceEntityIdStep<T, U> setEntityClasses(
+			Class<T> resourceEntityClass, Class<U> versionEntityClass) {
+
+			_ctConfiguration.setResourceEntityClass(resourceEntityClass);
+			_ctConfiguration.setVersionEntityClass(versionEntityClass);
+
+			return new ResourceEntityByResourceEntityIdStepImpl();
+		}
 
 	}
 

@@ -35,6 +35,16 @@ public class CTConfigurationImpl<T, U>
 	}
 
 	@Override
+	public String getContentType() {
+		return _contentType;
+	}
+
+	@Override
+	public String getContentTypeLanguageKey() {
+		return _contentTypeLanguageKey;
+	}
+
+	@Override
 	public Function<Long, T> getResourceEntityByResourceEntityIdFunction() {
 		return _resouceEntityInformation.getEntityFunction();
 	}
@@ -90,6 +100,16 @@ public class CTConfigurationImpl<T, U>
 	@Override
 	public Function<U, Integer> getVersionEntityStatusFunction() {
 		return _versionEntityInformation.getStatusFunction();
+	}
+
+	@Override
+	public void setContentType(String contentType) {
+		_contentType = contentType;
+	}
+
+	@Override
+	public void setContentTypeLanguageKey(String contentTypeLanguageKey) {
+		_contentTypeLanguageKey = contentTypeLanguageKey;
 	}
 
 	@Override
@@ -163,6 +183,8 @@ public class CTConfigurationImpl<T, U>
 			versionEntityStatusFunction);
 	}
 
+	private String _contentType;
+	private String _contentTypeLanguageKey;
 	private final EntityInformation<T> _resouceEntityInformation;
 	private final EntityInformation<U> _versionEntityInformation;
 

@@ -116,7 +116,7 @@ public class WikiAttachmentImageCreoleEditorConfigContributorTest
 
 		wikiAttachmentImageCreoleEditorConfigContributor.
 			populateConfigJSONObject(
-				jsonObject, _inputEditorTaglibAttributes, _themeDisplay,
+				jsonObject, _inputEditorTaglibAttributes, null,
 				_requestBackedPortletURLFactory);
 
 		JSONObject expectedJSONObject = JSONFactoryUtil.createJSONObject();
@@ -169,7 +169,7 @@ public class WikiAttachmentImageCreoleEditorConfigContributorTest
 
 		wikiAttachmentImageCreoleEditorConfigContributor.
 			populateConfigJSONObject(
-				jsonObject, _inputEditorTaglibAttributes, _themeDisplay,
+				jsonObject, _inputEditorTaglibAttributes, new ThemeDisplay(),
 				_requestBackedPortletURLFactory);
 
 		JSONObject expectedJSONObject = JSONFactoryUtil.createJSONObject();
@@ -208,7 +208,7 @@ public class WikiAttachmentImageCreoleEditorConfigContributorTest
 
 		wikiAttachmentImageCreoleEditorConfigContributor.
 			populateConfigJSONObject(
-				jsonObject, _inputEditorTaglibAttributes, _themeDisplay,
+				jsonObject, _inputEditorTaglibAttributes, null,
 				_requestBackedPortletURLFactory);
 
 		JSONObject expectedJSONObject = JSONFactoryUtil.createJSONObject(
@@ -242,7 +242,7 @@ public class WikiAttachmentImageCreoleEditorConfigContributorTest
 
 		wikiAttachmentImageCreoleEditorConfigContributor.
 			populateConfigJSONObject(
-				jsonObject, _inputEditorTaglibAttributes, _themeDisplay,
+				jsonObject, _inputEditorTaglibAttributes, null,
 				_requestBackedPortletURLFactory);
 
 		JSONObject expectedJSONObject = JSONFactoryUtil.createJSONObject(
@@ -291,8 +291,5 @@ public class WikiAttachmentImageCreoleEditorConfigContributorTest
 	private ItemSelector _itemSelector;
 
 	private RequestBackedPortletURLFactory _requestBackedPortletURLFactory;
-
-	@Mock
-	private ThemeDisplay _themeDisplay;
 
 }

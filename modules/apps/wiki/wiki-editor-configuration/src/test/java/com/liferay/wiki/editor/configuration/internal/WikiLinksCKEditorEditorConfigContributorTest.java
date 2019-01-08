@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.wiki.constants.WikiPortletKeys;
 
 import java.util.HashMap;
@@ -124,7 +123,7 @@ public class WikiLinksCKEditorEditorConfigContributorTest extends PowerMockito {
 			originalJSONObject.toJSONString());
 
 		_wikiLinksCKEditorEditorConfigContributor.populateConfigJSONObject(
-			jsonObject, _inputEditorTaglibAttributes, _themeDisplay,
+			jsonObject, _inputEditorTaglibAttributes, null,
 			_requestBackedPortletURLFactory);
 
 		JSONObject expectedJSONObject = JSONFactoryUtil.createJSONObject();
@@ -148,7 +147,7 @@ public class WikiLinksCKEditorEditorConfigContributorTest extends PowerMockito {
 			originalJSONObject.toJSONString());
 
 		_wikiLinksCKEditorEditorConfigContributor.populateConfigJSONObject(
-			jsonObject, _inputEditorTaglibAttributes, _themeDisplay,
+			jsonObject, _inputEditorTaglibAttributes, null,
 			_requestBackedPortletURLFactory);
 
 		JSONObject expectedJSONObject = JSONFactoryUtil.createJSONObject();
@@ -174,7 +173,7 @@ public class WikiLinksCKEditorEditorConfigContributorTest extends PowerMockito {
 			originalJSONObject.toJSONString());
 
 		_wikiLinksCKEditorEditorConfigContributor.populateConfigJSONObject(
-			jsonObject, _inputEditorTaglibAttributes, _themeDisplay,
+			jsonObject, _inputEditorTaglibAttributes, null,
 			_requestBackedPortletURLFactory);
 
 		JSONObject expectedJSONObject = JSONFactoryUtil.createJSONObject();
@@ -219,10 +218,6 @@ public class WikiLinksCKEditorEditorConfigContributorTest extends PowerMockito {
 	private ItemSelector _itemSelector;
 
 	private RequestBackedPortletURLFactory _requestBackedPortletURLFactory;
-
-	@Mock
-	private ThemeDisplay _themeDisplay;
-
 	private WikiLinksCKEditorConfigContributor
 		_wikiLinksCKEditorEditorConfigContributor;
 

@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.wiki.constants.WikiPortletKeys;
 
 import java.util.HashMap;
@@ -126,7 +125,7 @@ public class WikiLinksCKEditorCreoleEditorConfigContributorTest
 
 		_wikiLinksCKEditorCreoleEditorConfigContributor.
 			populateConfigJSONObject(
-				jsonObject, _inputEditorTaglibAttributes, _themeDisplay,
+				jsonObject, _inputEditorTaglibAttributes, null,
 				_requestBackedPortletURLFactory);
 
 		JSONObject expectedJSONObject = JSONFactoryUtil.createJSONObject();
@@ -151,7 +150,7 @@ public class WikiLinksCKEditorCreoleEditorConfigContributorTest
 
 		_wikiLinksCKEditorCreoleEditorConfigContributor.
 			populateConfigJSONObject(
-				jsonObject, _inputEditorTaglibAttributes, _themeDisplay,
+				jsonObject, _inputEditorTaglibAttributes, null,
 				_requestBackedPortletURLFactory);
 
 		JSONObject expectedJSONObject = JSONFactoryUtil.createJSONObject();
@@ -178,7 +177,7 @@ public class WikiLinksCKEditorCreoleEditorConfigContributorTest
 
 		_wikiLinksCKEditorCreoleEditorConfigContributor.
 			populateConfigJSONObject(
-				jsonObject, _inputEditorTaglibAttributes, _themeDisplay,
+				jsonObject, _inputEditorTaglibAttributes, null,
 				_requestBackedPortletURLFactory);
 
 		JSONObject expectedJSONObject = JSONFactoryUtil.createJSONObject();
@@ -223,10 +222,6 @@ public class WikiLinksCKEditorCreoleEditorConfigContributorTest
 	private ItemSelector _itemSelector;
 
 	private RequestBackedPortletURLFactory _requestBackedPortletURLFactory;
-
-	@Mock
-	private ThemeDisplay _themeDisplay;
-
 	private WikiLinksCKEditorCreoleEditorConfigContributor
 		_wikiLinksCKEditorCreoleEditorConfigContributor;
 

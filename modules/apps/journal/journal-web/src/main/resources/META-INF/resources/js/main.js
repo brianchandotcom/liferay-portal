@@ -79,6 +79,8 @@ AUI.add(
 							eventHandles.push(buttonRow.delegate(STR_CLICK, instance._onButtonClick, 'button', instance));
 						}
 
+						eventHandles.push(Liferay.on('inputLocalized:localeChanged', instance._onLocaleChange.bind(instance)));
+
 						instance._eventHandles = eventHandles;
 					},
 
@@ -151,6 +153,26 @@ AUI.add(
 						var actionName = instance.one(SELECTOR_ACTION_NAME, form).val();
 
 						instance._saveArticle(actionName);
+					},
+
+					_onLocaleChange: function(event) {
+						var instance = this;
+
+						var descriptionInput = Liferay.component(instance.ns('descriptionMapAsXML'));
+						var titleInput = Liferay.component(instance.ns('titleMapAsXML'));
+
+						var description = descriptionInput.getValue(event.source.getSelectedLanguageId());
+						var title = titleInput.getValue(event.source.getSelectedLanguageId());
+
+						if (description === '') {
+							descriptionInput.updateInputLanguage(descriptionInput.getValue(themeDisplay.getDefaultLanguageId()));
+							descriptionInput.selectFlag(event.source.getSelectedLanguageId());
+						}
+
+						if (title === '') {
+							titleInput.updateInputLanguage(titleInput.getValue(themeDisplay.getDefaultLanguageId()));
+							titleInput.selectFlag(event.source.getSelectedLanguageId());
+						}
 					},
 
 					_previewArticle: function(event) {

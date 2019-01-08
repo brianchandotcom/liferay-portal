@@ -201,9 +201,23 @@ public class DLFileEntryModelResourcePermissionRegistrar {
 				}
 			}
 			else if (fileVersion.isPending()) {
-				return _workflowPermission.hasPermission(
+				Boolean hasPermission = _workflowPermission.hasPermission(
 					permissionChecker, fileVersion.getGroupId(), name,
 					fileVersion.getFileVersionId(), actionId);
+
+				if (hasPermission != null) {
+					return hasPermission.booleanValue();
+				}
+
+				boolean hasOwnerPermission =
+					permissionChecker.hasOwnerPermission(
+						dlFileEntry.getCompanyId(), name,
+						dlFileEntry.getFileEntryId(), dlFileEntry.getUserId(),
+						actionId);
+
+				if (!hasOwnerPermission) {
+					return false;
+				}
 			}
 
 			return null;

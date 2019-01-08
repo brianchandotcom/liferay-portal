@@ -265,8 +265,7 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 
 		List<FrameworkFactory> frameworkFactories = ServiceLoader.load(
 			new URLClassLoader(_getClassPathURLs(), null),
-			currentThread.getContextClassLoader(), FrameworkFactory.class,
-			null);
+			currentThread.getContextClassLoader(), FrameworkFactory.class);
 
 		FrameworkFactory frameworkFactory = frameworkFactories.get(0);
 

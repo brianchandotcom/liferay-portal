@@ -14,20 +14,14 @@
 
 package com.liferay.structure.apio.client.test;
 
-import com.jayway.jsonpath.JsonPath;
-
 import com.liferay.oauth2.provider.test.util.OAuth2ProviderTestUtil;
-import com.liferay.petra.json.web.service.client.JSONWebServiceClient;
-import com.liferay.petra.json.web.service.client.internal.JSONWebServiceClientImpl;
+import com.liferay.portal.apio.test.util.ApioClientBuilder;
 import com.liferay.structure.apio.client.test.internal.activator.ContentStructureApioTestBundleActivator;
 
 import java.net.MalformedURLException;
 import java.net.URL;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import org.hamcrest.Matchers;
 
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.container.test.api.RunAsClient;
@@ -35,7 +29,6 @@ import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.arquillian.test.api.ArquillianResource;
 import org.jboss.shrinkwrap.api.Archive;
 
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -55,134 +48,52 @@ public class ContentStructureContentApioTest {
 
 	@Before
 	public void setUp() throws MalformedURLException {
-		_rootEndpointURL = new URL(_url, "/o/api");
+		URL rootEndpointURL = new URL(_url, "/o/api");
+
+		_contentStructureEndpointURL = new URL(
+			ApioClientBuilder.given(
+			).basicAuth(
+				"test@liferay.com", "test"
+			).header(
+				"Accept", "application/hal+json"
+			).when(
+			).get(
+				rootEndpointURL.toExternalForm()
+			).follow(
+				"_links.content-space.href"
+			).then(
+			).extract(
+			).path(
+				"_embedded.ContentSpace.find {it.name == '" +
+					ContentStructureApioTestBundleActivator.SITE_NAME +
+						"'}._links.contentStructures.href"
+			));
 	}
 
 	@Test
-	public void testBooleanFieldDataTypeIsDisplayed() throws Exception {
-		List<String> hrefs = JsonPath.read(
-			_toStringAsAdmin(
-				JsonPath.read(
-					_toStringAsAdmin(_rootEndpointURL.toExternalForm()),
-					"$._links.content-space.href")),
-			"$._embedded.ContentSpace[?(@.name == '" +
-				ContentStructureApioTestBundleActivator.SITE_NAME +
-					"')]._links.contentStructures.href");
-
-		Map<String, String> headers = _getHeaders();
-
-		headers.put("Accept-Language", "en-US");
-
-		List<String> dataTypes = JsonPath.read(
-			_toStringAsGuest(hrefs.get(0), headers),
-			"$._embedded.Structure[0]._embedded.formPages._embedded[0]." +
-				"_embedded.fields._embedded[?(@.name=='MyBoolean')].dataType");
-
-		Assert.assertEquals(dataTypes.toString(), 1, dataTypes.size());
-		Assert.assertTrue(dataTypes.contains("boolean"));
+	public void testGetContentStructure() {
+		ApioClientBuilder.given(
+		).basicAuth(
+			"test@liferay.com", "test"
+		).header(
+			"Accept", "application/hal+json"
+		).when(
+		).get(
+			_contentStructureEndpointURL.toExternalForm()
+		).then(
+		).statusCode(
+			200
+		).root(
+			"_embedded.Structure[0]._embedded.formPages._embedded[0]." +
+				"_embedded.fields._embedded.find {it.name = 'MyBoolean'}"
+		).body(
+			"dataType", Matchers.equalTo("boolean")
+		).body(
+			"inputControl", Matchers.equalTo("checkbox")
+		);
 	}
 
-	@Test
-	public void testBooleanFieldInputControlIsDisplayed() throws Exception {
-		List<String> hrefs = JsonPath.read(
-			_toStringAsAdmin(
-				JsonPath.read(
-					_toStringAsAdmin(_rootEndpointURL.toExternalForm()),
-					"$._links.content-space.href")),
-			"$._embedded.ContentSpace[?(@.name == '" +
-				ContentStructureApioTestBundleActivator.SITE_NAME +
-					"')]._links.contentStructures.href");
-
-		Map<String, String> headers = _getHeaders();
-
-		headers.put("Accept-Language", "en-US");
-
-		List<String> inputControls = JsonPath.read(
-			_toStringAsGuest(hrefs.get(0), headers),
-			"$._embedded.Structure[0]._embedded.formPages._embedded[0]." +
-				"_embedded.fields._embedded[?(@.name=='MyBoolean')]." +
-					"inputControl");
-
-		Assert.assertEquals(inputControls.toString(), 1, inputControls.size());
-		Assert.assertTrue(inputControls.contains("checkbox"));
-	}
-
-	private JSONWebServiceClient _getGuestJSONWebServiceClient() {
-		JSONWebServiceClient jsonWebServiceClient =
-			new JSONWebServiceClientImpl();
-
-		jsonWebServiceClient.setHostName(_rootEndpointURL.getHost());
-		jsonWebServiceClient.setHostPort(_rootEndpointURL.getPort());
-		jsonWebServiceClient.setProtocol(_rootEndpointURL.getProtocol());
-
-		return jsonWebServiceClient;
-	}
-
-	private Map<String, String> _getHeaders() {
-		return new HashMap<String, String>() {
-			{
-				put("Accept", "application/hal+json");
-			}
-		};
-	}
-
-	private JSONWebServiceClient _getJSONWebServiceClient(
-		String login, String password) {
-
-		JSONWebServiceClient jsonWebServiceClient =
-			_jsonWebServiceClientMap.get(login);
-
-		if (jsonWebServiceClient == null) {
-			jsonWebServiceClient = _getGuestJSONWebServiceClient();
-
-			jsonWebServiceClient.setLogin(login);
-			jsonWebServiceClient.setPassword(password);
-
-			_jsonWebServiceClientMap.put(login, jsonWebServiceClient);
-		}
-
-		return jsonWebServiceClient;
-	}
-
-	private String _toString(
-			JSONWebServiceClient jsonWebServiceClient, String url)
-		throws Exception {
-
-		return _toString(
-			jsonWebServiceClient, url,
-			Collections.singletonMap("Accept", "application/hal+json"));
-	}
-
-	private String _toString(
-			JSONWebServiceClient jsonWebServiceClient, String url,
-			Map<String, String> headers)
-		throws Exception {
-
-		return jsonWebServiceClient.doGet(url, Collections.emptyMap(), headers);
-	}
-
-	private String _toStringAsAdmin(String url) throws Exception {
-		return _toStringAsUser(url, "test@liferay.com", "test");
-	}
-
-	private String _toStringAsGuest(String url, Map<String, String> headers)
-		throws Exception {
-
-		return _toString(_getGuestJSONWebServiceClient(), url, headers);
-	}
-
-	private String _toStringAsUser(String url, String login, String password)
-		throws Exception {
-
-		JSONWebServiceClient jsonWebServiceClient = _getJSONWebServiceClient(
-			login, password);
-
-		return _toString(jsonWebServiceClient, url);
-	}
-
-	private final Map<String, JSONWebServiceClient> _jsonWebServiceClientMap =
-		new HashMap<>();
-	private URL _rootEndpointURL;
+	private URL _contentStructureEndpointURL;
 
 	@ArquillianResource
 	private URL _url;

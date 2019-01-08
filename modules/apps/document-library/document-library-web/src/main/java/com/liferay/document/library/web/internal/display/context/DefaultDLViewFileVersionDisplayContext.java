@@ -23,6 +23,7 @@ import com.liferay.document.library.kernel.service.DLFileEntryMetadataLocalServi
 import com.liferay.document.library.kernel.versioning.VersioningStrategy;
 import com.liferay.document.library.preview.DLPreviewRenderer;
 import com.liferay.document.library.preview.DLPreviewRendererProvider;
+import com.liferay.document.library.preview.exception.DLPreviewGenerationInProcessException;
 import com.liferay.document.library.web.internal.constants.DLWebKeys;
 import com.liferay.document.library.web.internal.display.context.logic.DLPortletInstanceSettingsHelper;
 import com.liferay.document.library.web.internal.display.context.logic.FileEntryDisplayContextHelper;
@@ -385,10 +386,12 @@ public class DefaultDLViewFileVersionDisplayContext
 				dlPreviewRenderer.render(request, response);
 			}
 			catch (Exception e) {
-				_log.error(
-					"Unable to render preview for file version: " +
-						_fileVersion.getTitle(),
-					e);
+				if (!(e instanceof DLPreviewGenerationInProcessException)) {
+					_log.error(
+						"Unable to render preview for file version: " +
+							_fileVersion.getTitle(),
+						e);
+				}
 
 				JSPRenderer jspRenderer = new JSPRenderer(
 					"/document_library/view_file_entry_preview_error.jsp");

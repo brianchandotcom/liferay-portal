@@ -286,15 +286,15 @@ definition {
 
 		ProductMenu.gotoSite(site = "Global");
 
+		LAR.importSiteCP(
+			larFileName = "college-and-department-page-templates.lar",
+			uploadFrom = "dependencies"
+		);
+
 		ProductMenu.gotoPortlet(
 			category = "Build",
 			panel = "Site Administration",
 			portlet = "Pages"
-		);
-
-		LAR.importPortlet(
-			larFileName = "college-and-department-page-templates.lar",
-			uploadFrom = "dependencies"
 		);
 
 		PageTemplatesAdminGlobalSite.viewCP(pageTemplateName = "College Landing Page");

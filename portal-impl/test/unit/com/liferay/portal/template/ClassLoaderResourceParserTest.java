@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.test.CaptureHandler;
 import com.liferay.portal.kernel.test.JDKLoggerTestUtil;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
 
+import java.net.MalformedURLException;
 import java.net.URL;
 
 import java.util.List;
@@ -42,7 +43,7 @@ public class ClassLoaderResourceParserTest {
 
 	@SuppressWarnings("deprecation")
 	@Test
-	public void testGetURL() throws Exception {
+	public void testGetURL() throws MalformedURLException {
 		ClassLoaderResourceParser classLoaderResourceParser =
 			new ClassLoaderResourceParser();
 
@@ -87,9 +88,8 @@ public class ClassLoaderResourceParserTest {
 			contextName,
 			new ClassLoader() {
 
+				@Override
 				public URL getResource(String name) {
-					System.out.println("####" + name);
-
 					if (name.equals(templateId)) {
 						return dummyURL;
 					}

@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.portlet.PortletURLWrapper;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -34,7 +35,6 @@ import org.junit.runner.RunWith;
 import org.mockito.Matchers;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.mockito.internal.util.reflection.Whitebox;
 
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.modules.junit4.PowerMockRunner;
@@ -96,7 +96,7 @@ public class WikiLinksCKEditorEditorConfigContributorTest extends PowerMockito {
 		_wikiLinksCKEditorEditorConfigContributor =
 			new WikiLinksCKEditorConfigContributor();
 
-		Whitebox.setInternalState(
+		ReflectionTestUtil.setFieldValue(
 			_wikiLinksCKEditorEditorConfigContributor, "itemSelector",
 			_itemSelector);
 	}

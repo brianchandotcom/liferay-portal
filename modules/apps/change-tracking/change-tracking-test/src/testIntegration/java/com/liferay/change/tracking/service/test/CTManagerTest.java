@@ -67,7 +67,8 @@ public class CTManagerTest {
 
 		_user = UserTestUtil.addUser();
 
-		_ctEngineManager.enableChangeTracking(TestPropsValues.getUserId());
+		_ctEngineManager.enableChangeTracking(
+			TestPropsValues.getCompanyId(), TestPropsValues.getUserId());
 
 		_testVersionClassClassName = _classNameLocalService.addClassName(
 			Object.class.getName());
@@ -98,7 +99,7 @@ public class CTManagerTest {
 			_ctConfigurationRegistrar.unregister(_ctConfiguration);
 		}
 
-		_ctEngineManager.disableChangeTracking(TestPropsValues.getUserId());
+		_ctEngineManager.disableChangeTracking(TestPropsValues.getCompanyId());
 	}
 
 	@Test
@@ -149,7 +150,7 @@ public class CTManagerTest {
 			RandomTestUtil.nextLong(), _TEST_RESOURCE_CLASS_ENTITY_ID,
 			ctCollectionId, new ServiceContext());
 
-		_ctEngineManager.disableChangeTracking(TestPropsValues.getUserId());
+		_ctEngineManager.disableChangeTracking(TestPropsValues.getCompanyId());
 
 		Optional<CTEntry> ctEntryOptional =
 			_ctManager.getLatestModelChangeCTEntryOptional(
@@ -212,7 +213,7 @@ public class CTManagerTest {
 			RandomTestUtil.nextLong(), _TEST_RESOURCE_CLASS_ENTITY_ID,
 			ctCollectionId, new ServiceContext());
 
-		_ctEngineManager.disableChangeTracking(TestPropsValues.getUserId());
+		_ctEngineManager.disableChangeTracking(TestPropsValues.getCompanyId());
 
 		List<CTEntry> ctEntries = _ctManager.getModelChangeCTEntries(
 			_user.getUserId(), _TEST_RESOURCE_CLASS_ENTITY_ID);
@@ -264,7 +265,7 @@ public class CTManagerTest {
 			_TEST_VERSION_CLASS_ENTITY_ID, _TEST_RESOURCE_CLASS_ENTITY_ID,
 			ctCollectionId, new ServiceContext());
 
-		_ctEngineManager.disableChangeTracking(TestPropsValues.getUserId());
+		_ctEngineManager.disableChangeTracking(TestPropsValues.getCompanyId());
 
 		Optional<CTEntry> ctEntryOptional =
 			_ctManager.getModelChangeCTEntryOptional(
@@ -299,7 +300,7 @@ public class CTManagerTest {
 	public void testRegisterModelChangeWhenChangeTrackingIsDisabled()
 		throws Exception {
 
-		_ctEngineManager.disableChangeTracking(TestPropsValues.getUserId());
+		_ctEngineManager.disableChangeTracking(TestPropsValues.getCompanyId());
 
 		Optional<CTEntry> ctEntryOptional = _ctManager.registerModelChange(
 			_user.getUserId(), _testVersionClassClassName.getClassNameId(),

@@ -1,3 +1,5 @@
+@import "./mixins/lfr_drag_indicator";
+
 @import "variables";
 
 @keyframes fragmentsEditorDraggableItem {
@@ -9,46 +11,61 @@
 	}
 }
 
-.fragments-editor__draggable-item.dragging {
-	background: transparent;
-	border: none;
-	box-shadow: none;
-	height: auto;
-	margin: 0;
-	opacity: 1;
-	outline: none;
-	padding: 0;
-	width: auto;
-	z-index: $draggableItemZIndex;
-
-	& > * {
-		display: none;
+.fragments-editor__draggable-item {
+	&.targetOver,
+	&.drag-bottom {
+		@include lfr-drag-indicator("bottom");
 	}
 
-	&:after {
-		animation: fragmentsEditorDraggableItem ease 0.2s;
-		animation-fill-mode: forwards;
-		background-color: fade_out($draggableItemBackgroundColor, 1);
-		border-radius: 4px;
+	&.drag-top {
+		@include lfr-drag-indicator("top");
+	}
+
+	&.dragging {
+		background: transparent;
+		border: none;
 		box-shadow: none;
-		color: $draggableItemColor;
-		content: attr(data-draggable-item-label);
-		cursor: grabbing;
-		display: block;
-		font-size: 12px;
-		font-weight: 600;
-		height: 64px;
-		opacity: 0;
-		overflow: hidden;
-		padding: 8px;
-		text-align: center;
-		text-overflow: ellipsis;
-		transform: scale(0.6);
-		white-space: nowrap;
-		width: 116px;
+		height: auto;
+		margin: 0;
+		opacity: 1;
+		outline: none;
+		padding: 0;
+		width: auto;
+		z-index: $draggableItemZIndex;
+
+		& > * {
+			display: none;
+		}
+
+		&:after {
+			animation: fragmentsEditorDraggableItem ease 0.2s;
+			animation-fill-mode: forwards;
+			background-color: fade_out($draggableItemBackgroundColor, 1);
+			border-radius: 4px;
+			box-shadow: none;
+			color: $draggableItemColor;
+			content: attr(data-draggable-item-label);
+			cursor: grabbing;
+			display: block;
+			font-size: 12px;
+			font-weight: 600;
+			height: 64px;
+			opacity: 0;
+			overflow: hidden;
+			padding: 8px;
+			text-align: center;
+			text-overflow: ellipsis;
+			transform: scale(0.6);
+			white-space: nowrap;
+			width: 116px;
+		}
+
+		& ~ .shim {
+			cursor: grabbing;
+		}
 	}
 
-	& ~ .shim {
-		cursor: grabbing;
+	.fragments-editor__drag-handler {
+		cursor: move;
 	}
 }

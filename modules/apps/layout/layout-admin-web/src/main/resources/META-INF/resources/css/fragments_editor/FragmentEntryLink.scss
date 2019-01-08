@@ -2,23 +2,9 @@
 
 @import "mixins";
 
-@import "./mixins/lfr_drag_indicator";
-
 @import "variables";
 
-.drag-handler {
-	cursor: move;
-}
-
 .fragment-entry-link-wrapper {
-	&.drag-bottom {
-		@include lfr-drag-indicator("bottom");
-	}
-
-	&.drag-top {
-		@include lfr-drag-indicator("top");
-	}
-
 	.portlet {
 		> .portlet-topper {
 			background-color: rgba(255, 255, 255, 0.95);

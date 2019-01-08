@@ -209,9 +209,9 @@ class SidebarAvailableSections extends Component {
 			{
 				autoScroll: true,
 				dragPlaceholder: Drag.Placeholder.CLONE,
-				handles: '.drag-handler',
+				handles: '.fragments-editor__drag-handler',
 				sources: '.drag-card',
-				targets: '.fragment-entry-link-drop-target'
+				targets: '.fragments-editor__drop-target'
 			}
 		);
 

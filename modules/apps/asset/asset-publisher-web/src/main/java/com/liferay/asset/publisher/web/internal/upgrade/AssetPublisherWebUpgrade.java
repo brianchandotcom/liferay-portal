@@ -57,27 +57,13 @@ public class AssetPublisherWebUpgrade implements UpgradeStepRegistrator {
 				UpgradePortletPreferences());
 	}
 
-	@Reference(unbind = "-")
-	protected void setDDMStructureLinkLocalService(
-		DDMStructureLinkLocalService ddmStructureLinkLocalService) {
-
-		_ddmStructureLinkLocalService = ddmStructureLinkLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setDDMStructureLocalService(
-		DDMStructureLocalService ddmStructureLocalService) {
-
-		_ddmStructureLocalService = ddmStructureLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setSAXReader(SAXReader saxReader) {
-		_saxReader = saxReader;
-	}
-
+	@Reference
 	private DDMStructureLinkLocalService _ddmStructureLinkLocalService;
+
+	@Reference
 	private DDMStructureLocalService _ddmStructureLocalService;
+
+	@Reference
 	private SAXReader _saxReader;
 
 }

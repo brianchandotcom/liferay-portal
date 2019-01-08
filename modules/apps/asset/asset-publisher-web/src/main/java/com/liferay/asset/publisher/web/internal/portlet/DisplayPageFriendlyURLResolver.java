@@ -191,27 +191,6 @@ public class DisplayPageFriendlyURLResolver implements FriendlyURLResolver {
 			journalArticle.getLayoutUuid(), groupId, privateLayout);
 	}
 
-	@Reference(unbind = "-")
-	protected void setAssetTagLocalService(
-		AssetTagLocalService assetTagLocalService) {
-
-		_assetTagLocalService = assetTagLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setJournalArticleLocalService(
-		JournalArticleLocalService journalArticleLocalService) {
-
-		_journalArticleLocalService = journalArticleLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setLayoutLocalService(
-		LayoutLocalService layoutLocalService) {
-
-		_layoutLocalService = layoutLocalService;
-	}
-
 	private Layout _getAssetDisplayPageEntryLayout(
 			long groupId, AssetEntry assetEntry)
 		throws PortalException {
@@ -399,6 +378,7 @@ public class DisplayPageFriendlyURLResolver implements FriendlyURLResolver {
 	@Reference
 	private AssetHelper _assetHelper;
 
+	@Reference
 	private AssetTagLocalService _assetTagLocalService;
 
 	@Reference
@@ -410,7 +390,10 @@ public class DisplayPageFriendlyURLResolver implements FriendlyURLResolver {
 	@Reference
 	private Http _http;
 
+	@Reference
 	private JournalArticleLocalService _journalArticleLocalService;
+
+	@Reference
 	private LayoutLocalService _layoutLocalService;
 
 	@Reference

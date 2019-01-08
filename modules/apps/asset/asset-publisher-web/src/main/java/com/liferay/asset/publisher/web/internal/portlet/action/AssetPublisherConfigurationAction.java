@@ -597,37 +597,6 @@ public class AssetPublisherConfigurationAction
 			portal.getPortletId(actionRequest));
 	}
 
-	@Reference(unbind = "-")
-	protected void setAssetTagLocalService(
-		AssetTagLocalService assetTagLocalService) {
-
-		this.assetTagLocalService = assetTagLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setGroupLocalService(GroupLocalService groupLocalService) {
-		this.groupLocalService = groupLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setItemSelector(ItemSelector itemSelector) {
-		this.itemSelector = itemSelector;
-	}
-
-	@Reference(unbind = "-")
-	protected void setLayoutLocalService(
-		LayoutLocalService layoutLocalService) {
-
-		this.layoutLocalService = layoutLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setLayoutRevisionLocalService(
-		LayoutRevisionLocalService layoutRevisionLocalService) {
-
-		this.layoutRevisionLocalService = layoutRevisionLocalService;
-	}
-
 	protected void setScopes(
 			ActionRequest actionRequest, PortletPreferences preferences)
 		throws Exception {
@@ -858,10 +827,19 @@ public class AssetPublisherConfigurationAction
 	@Reference
 	protected AssetPublisherWebUtil assetPublisherWebUtil;
 
+	@Reference
 	protected AssetTagLocalService assetTagLocalService;
+
+	@Reference
 	protected GroupLocalService groupLocalService;
+
+	@Reference
 	protected ItemSelector itemSelector;
+
+	@Reference
 	protected LayoutLocalService layoutLocalService;
+
+	@Reference
 	protected LayoutRevisionLocalService layoutRevisionLocalService;
 
 	@Reference

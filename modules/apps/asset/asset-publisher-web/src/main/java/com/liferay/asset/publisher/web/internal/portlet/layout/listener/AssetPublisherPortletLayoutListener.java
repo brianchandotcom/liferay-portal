@@ -153,27 +153,6 @@ public class AssetPublisherPortletLayoutListener
 		}
 	}
 
-	@Reference(unbind = "-")
-	protected void setJournalArticleLocalService(
-		JournalArticleLocalService journalArticleLocalService) {
-
-		_journalArticleLocalService = journalArticleLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setLayoutLocalService(
-		LayoutLocalService layoutLocalService) {
-
-		_layoutLocalService = layoutLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setSubscriptionLocalService(
-		SubscriptionLocalService subscriptionLocalService) {
-
-		_subscriptionLocalService = subscriptionLocalService;
-	}
-
 	private void _addAssetListEntryUsage(
 		long assetListEntryId, long plid, String portletId) {
 
@@ -232,6 +211,7 @@ public class AssetPublisherPortletLayoutListener
 	@Reference
 	private AssetPublisherWebUtil _assetPublisherWebUtil;
 
+	@Reference
 	private JournalArticleLocalService _journalArticleLocalService;
 
 	@Reference
@@ -240,6 +220,7 @@ public class AssetPublisherPortletLayoutListener
 	@Reference
 	private Portal _portal;
 
+	@Reference
 	private SubscriptionLocalService _subscriptionLocalService;
 
 }

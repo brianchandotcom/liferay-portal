@@ -105,39 +105,6 @@ public class AssetEntriesCheckerUtil {
 		actionableDynamicQuery.performActions();
 	}
 
-	@Reference(unbind = "-")
-	protected void setAssetPublisherWebUtil(
-		AssetPublisherWebUtil assetPublisherWebUtil) {
-
-		_assetPublisherWebUtil = assetPublisherWebUtil;
-	}
-
-	@Reference(unbind = "-")
-	protected void setLayoutLocalService(
-		LayoutLocalService layoutLocalService) {
-
-		_layoutLocalService = layoutLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setPortletPreferencesLocalService(
-		PortletPreferencesLocalService portletPreferencesLocalService) {
-
-		_portletPreferencesLocalService = portletPreferencesLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setSubscriptionLocalService(
-		SubscriptionLocalService subscriptionLocalService) {
-
-		_subscriptionLocalService = subscriptionLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setUserLocalService(UserLocalService userLocalService) {
-		_userLocalService = userLocalService;
-	}
-
 	private void _checkAssetEntries(
 			com.liferay.portal.kernel.model.PortletPreferences
 				portletPreferencesModel)
@@ -407,14 +374,22 @@ public class AssetEntriesCheckerUtil {
 	@Reference
 	private AssetPublisherHelper _assetPublisherHelper;
 
+	@Reference
 	private AssetPublisherWebUtil _assetPublisherWebUtil;
 
 	@Reference
 	private ConfigurationProvider _configurationProvider;
 
+	@Reference
 	private LayoutLocalService _layoutLocalService;
+
+	@Reference
 	private PortletPreferencesLocalService _portletPreferencesLocalService;
+
+	@Reference
 	private SubscriptionLocalService _subscriptionLocalService;
+
+	@Reference
 	private UserLocalService _userLocalService;
 
 }

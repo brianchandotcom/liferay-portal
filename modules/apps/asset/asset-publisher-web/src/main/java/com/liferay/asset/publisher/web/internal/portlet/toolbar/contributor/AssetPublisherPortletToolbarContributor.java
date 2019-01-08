@@ -188,11 +188,6 @@ public class AssetPublisherPortletToolbarContributor
 		return menuItems;
 	}
 
-	@Reference(unbind = "-")
-	protected void setGroupLocalService(GroupLocalService groupLocalService) {
-		_groupLocalService = groupLocalService;
-	}
-
 	private URLMenuItem _getPortletTitleAddAssetEntryMenuItem(
 		ThemeDisplay themeDisplay,
 		AssetPublisherDisplayContext assetPublisherDisplayContext, long groupId,
@@ -307,6 +302,7 @@ public class AssetPublisherPortletToolbarContributor
 	@Reference
 	private AssetPublisherWebUtil _assetPublisherWebUtil;
 
+	@Reference
 	private GroupLocalService _groupLocalService;
 
 	@Reference

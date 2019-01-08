@@ -278,10 +278,10 @@ version 1.1.2.
 ### Changed
 - [LPS-86549]: Update the [Liferay Gradle Plugins] dependency to version 3.13.8.
 
-## 1.10.13 - 2018-11-30
+## 1.10.14 - 2018-11-30
 
 ### Added
-- [LPS-77897]: Adds support for Docker. The following tasks are now available:
+- [LPS-77897]: Add support for Docker. The following tasks are now available:
 	- `buildDockerImage`
 	- `createDockerContainer`
 	- `createDockerfile`

@@ -19,6 +19,7 @@ import com.liferay.document.library.kernel.util.PDFProcessorUtil;
 import com.liferay.document.library.preview.DLPreviewRenderer;
 import com.liferay.document.library.preview.DLPreviewRendererProvider;
 import com.liferay.document.library.preview.exception.DLPreviewGenerationInProcessException;
+import com.liferay.document.library.preview.exception.DLPreviewSizeException;
 import com.liferay.document.library.preview.pdf.internal.constants.PDFDLPreviewWebKeys;
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
 import com.liferay.portal.kernel.repository.model.FileVersion;
@@ -60,7 +61,7 @@ public class PDFDLPreviewRendererProvider implements DLPreviewRendererProvider {
 					if (!DLProcessorRegistryUtil.isPreviewableSize(
 							fileVersion)) {
 
-						throw new DLPreviewGenerationInProcessException();
+						throw new DLPreviewSizeException();
 					}
 
 					throw new DLPreviewGenerationInProcessException();

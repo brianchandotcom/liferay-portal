@@ -2,6 +2,11 @@ definition {
 	macro expandPanel {
 		var key_panel = "${panel}";
 
+		AssertVisible(
+			locator1 = "Panel#PANEL",
+			key_panel = "${panel}"
+		);
+
 		if ((IsElementPresent(locator1 = "Panel#PANEL_COLLAPSED")) && (IsVisible(locator1 = "Panel#PANEL_COLLAPSED"))) {
 			AssertClick.assertTextClickCaseInsensitive(
 				locator1 = "Panel#PANEL_COLLAPSED",

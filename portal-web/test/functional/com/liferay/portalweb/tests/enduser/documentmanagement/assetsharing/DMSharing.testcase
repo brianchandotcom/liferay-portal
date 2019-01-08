@@ -139,6 +139,111 @@ definition {
 		);
 	}
 
+	@description = "This test asserts only one entry displays in a user's Shared with Me app when multiple users share the same document to him."
+	@priority = "4"
+	test AssertSingleEntry {
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		User.assignRegularRoleCP(roleTitle = "Administrator", userScreenName = "usersn");
+
+		JSONUser.addUser(
+			userEmailAddress = "userea2@liferay.com",
+			userFirstName = "userfn2",
+			userLastName = "userln2",
+			userScreenName = "usersn2"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		User.editPasswordCP(
+			userEmailAddress = "userea2@liferay.com",
+			userScreenName = "usersn2"
+		);
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMDocument.addPG(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentFile = "Document_1.doc",
+			dmDocumentTitle = "DM Document Title",
+			viewableBy = "Owner"
+		);
+
+		DMNavigator.gotoDocumentPermissionsCP(dmDocumentTitle = "DM Document Title");
+
+		Role.removePermissionPG(
+			permissionDefinitionKey = "INLINE_PERMISSIONS_ADD_DISCUSSION_CHECKBOX",
+			roleTitle = "Guest"
+		);
+
+		IFrame.closeFrame();
+
+		Pause(locator1 = "5000");
+
+		DMNavigator.gotoShare(dmDocumentTitle = "DM Document Title");
+
+		DMDocument.sharePG(userEmailAddress = "userea2@liferay.com");
+
+		User.logoutPG();
+
+		User.loginUserPG(password = "test", userEmailAddress = "userea@liferay.com");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMNavigator.gotoShare(dmDocumentTitle = "DM Document Title");
+
+		DMDocument.sharePG(userEmailAddress = "userea2@liferay.com");
+
+		User.logoutPG();
+
+		User.loginUserPG(password = "test", userEmailAddress = "userea2@liferay.com");
+
+		Notifications.viewBadgeCount(notificationCount = "2");
+
+		Notifications.gotoNotifications();
+
+		Notifications.viewNewSharedDocument(
+			assetSharingPermission = "viewing",
+			dmDocumentTitle = "DM Document Title",
+			openNotification = "true",
+			ownerName = "Test Test"
+		);
+
+		Navigator.openURL();
+
+		Notifications.viewBadgeCount(notificationCount = "1");
+
+		Notifications.gotoNotifications();
+
+		Notifications.viewNewSharedDocument(
+			assetSharingPermission = "viewing",
+			dmDocumentTitle = "DM Document Title",
+			openNotification = "true",
+			ownerName = "userfn userln"
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "My Account",
+			panel = "User",
+			portlet = "Shared With Me"
+		);
+
+		var key_dmDocumentTitle = "DM Document Title";
+
+		AssertTextEquals(locator1 = "DocumentsAndMediaShare#SHARED_WITH_ME_DOCUMENT_TITLE", value1 = "DM Document Title");
+		AssertElementNotPresent(locator1 = "//tbody/tr[2]/td[contains(@class,'table-cell-content')]/a[contains(.,'DM Document Title')]");
+	}
+
 	@description = "This test ensures that users receive a notification in portal when a document is shared to them, and that clicking on that notification navigates them to the Shared With Me app."
 	@priority = "4"
 	test GoToSharedWithMeViaNotifications {

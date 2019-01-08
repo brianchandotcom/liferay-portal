@@ -245,6 +245,23 @@ public class WebSsoProfileIntegrationTest extends BaseSamlTestCase {
 	}
 
 	@Test
+	public void testAssertionSignatureDefaultAlgorithmIsNotSha1()
+		throws Exception {
+
+		Assertion assertion = OpenSamlUtil.buildAssertion();
+
+		Credential credential = getCredential(IDP_ENTITY_ID);
+
+		OpenSamlUtil.signObject(assertion, credential, null);
+
+		Signature signature = assertion.getSignature();
+
+		Assert.assertNotEquals(
+			"http://www.w3.org/2000/09/xmldsig#rsa-sha1",
+			signature.getSignatureAlgorithm());
+	}
+
+	@Test
 	public void testDecodeAuthnRequestIdpInitiatedSso() throws Exception {
 		prepareIdentityProvider(IDP_ENTITY_ID);
 

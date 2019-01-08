@@ -355,7 +355,7 @@ definition {
 		}
 
 		if (isSet(dmDocumentRelatedAsset)) {
-			DMDocument.addRelatedAssetPG(
+			RelatedAssets.selectAsset(
 				assetTitle = "${assetTitle}",
 				assetType = "${assetType}"
 			);

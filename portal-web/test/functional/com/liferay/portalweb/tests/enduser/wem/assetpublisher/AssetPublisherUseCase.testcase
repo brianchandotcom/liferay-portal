@@ -1793,9 +1793,7 @@ definition {
 			entryTitle = "Blogs Entry2 Title"
 		);
 
-		Panel.expandPanel(panel = "Related Assets");
-
-		BlogsEntry.addRelatedAsset(
+		RelatedAssets.selectAsset(
 			assetTitle = "Blogs Entry1 Title",
 			assetType = "Blogs Entry"
 		);
@@ -1968,7 +1966,7 @@ definition {
 
 		Panel.expandPanel(panel = "Related Assets");
 
-		BlogsEntry.addRelatedAsset(
+		RelatedAssets.selectAsset(
 			assetTitle = "WC WebContent Title",
 			assetType = "Basic Web Content"
 		);

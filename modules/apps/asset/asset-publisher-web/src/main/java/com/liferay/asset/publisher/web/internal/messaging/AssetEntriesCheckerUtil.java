@@ -320,7 +320,7 @@ public class AssetEntriesCheckerUtil {
 
 			List<User> users = assetEntriesToUsersMap.get(filteredAssetEntries);
 
-			if (users == null) {
+			if (ListUtil.isEmpty(users)) {
 				users = new LinkedList<>();
 
 				assetEntriesToUsersMap.put(filteredAssetEntries, users);

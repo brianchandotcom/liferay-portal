@@ -1,10 +1,11 @@
 $layoutDraggingHeight: 48px;
 $layoutDraggingWidth: 240px;
 $layoutPreviewBackgroundColor: #FFF;
-$layoutPreviewBorderColor: #AAA;
+$layoutPreviewBorderColor: #6B6C7E;
+$layoutPreviewBorderRadius: 2px;
 $layoutPreviewColumnColor: #DDD;
-$layoutPreviewHeight: 3em;
-$layoutPreviewSpacing: 4px;
+$layoutPreviewHeight: 2.5em;
+$layoutPreviewSpacing: 2px;
 
 .sidebar-layouts-section {
 	display: flex;
@@ -13,27 +14,30 @@ $layoutPreviewSpacing: 4px;
 
 	&__layout-preview {
 		background: $layoutPreviewBackgroundColor;
-		border-radius: $layoutPreviewSpacing;
+		border-radius: $layoutPreviewBorderRadius;
 		flex-basis: calc(50% - #{$layoutPreviewSpacing});
 		height: $layoutPreviewHeight;
 		margin: $layoutPreviewSpacing 0;
 		padding: 0;
 
 		&__row {
-			border: solid $layoutPreviewBorderColor thin;
-			border-radius: $layoutPreviewSpacing;
+			border: solid 2px $layoutPreviewBorderColor;
+			border-radius: $layoutPreviewBorderRadius;
 			flex-wrap: nowrap;
 			height: 100%;
 			margin: 0;
-			padding: $layoutPreviewSpacing / 2;
+			padding: $layoutPreviewSpacing;
 		}
 
 		&__column {
-			background-color: $layoutPreviewColumnColor;
-			border: solid ($layoutPreviewSpacing / 2) $layoutPreviewBackgroundColor;
-			border-radius: $layoutPreviewSpacing;
-			margin: 0;
+			border: solid 1px $layoutPreviewBorderColor;
+			flex: 1;
+			margin: 2px;
 			padding: 0;
 		}
+	}
+
+	.card-body {
+		padding: 8px;
 	}
 }

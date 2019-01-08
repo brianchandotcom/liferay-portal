@@ -14,8 +14,14 @@
 
 package com.liferay.frontend.js.portlet.extender;
 
+import com.liferay.dynamic.data.mapping.model.DDMForm;
+import com.liferay.dynamic.data.mapping.render.DDMFormFieldRenderingContext;
+import com.liferay.dynamic.data.mapping.render.DDMFormRenderer;
+import com.liferay.dynamic.data.mapping.render.DDMFormRendererUtil;
+import com.liferay.dynamic.data.mapping.util.DDMUtil;
 import com.liferay.frontend.js.portlet.extender.configuration.PortletExtenderConfigurationAction;
 import com.liferay.frontend.js.portlet.extender.internal.portlet.JSPortlet;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -23,6 +29,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.ConfigurationAction;
 import com.liferay.portal.kernel.util.StringUtil;
+import java.io.IOException;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.BundleEvent;
@@ -103,7 +110,7 @@ public class JSPortletExtender {
 										jsonObject, name, version);
 
 						if (configurationJSON != null) {
-							registerConfigurationActionService(bundleContext, name);
+							registerConfigurationActionService(bundleContext, name, configurationJSON);
 						}
 
 						return serviceRegistration;
@@ -208,19 +215,30 @@ public class JSPortletExtender {
 	}
 
 	private void registerConfigurationActionService(
-			BundleContext bundleContext, String name) {
+			BundleContext bundleContext, String name, URL configurationJson) {
 		Dictionary<String, Object> propertiesConfiguration =
 				new Hashtable<>();
 
-		propertiesConfiguration.put("javax.portlet.name", name);
+		DDMForm ddmForm = null;
+		try (InputStream inputStream = configurationJson.openStream()) {
+			String configurationString = StringUtil.read(inputStream);
+			ddmForm = DDMUtil.getDDMForm(configurationString);
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (PortalException e) {
+      e.printStackTrace();
+    }
+
+    propertiesConfiguration.put("javax.portlet.name", name);
 
 		bundleContext.registerService(
 				new String[]{
 						ManagedService.class.getName(),
 						ConfigurationAction.class.getName()
 				},
-				new PortletExtenderConfigurationAction(name),
-				propertiesConfiguration
+				new PortletExtenderConfigurationAction(name, ddmForm),
+        propertiesConfiguration
 		);
 	}
 

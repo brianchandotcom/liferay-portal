@@ -22,10 +22,7 @@ import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.render.DDMFormFieldRenderingContext;
 import com.liferay.dynamic.data.mapping.render.DDMFormRenderer;
 import com.liferay.dynamic.data.mapping.render.DDMFormRendererUtil;
-import com.liferay.dynamic.data.mapping.storage.Field;
 import com.liferay.dynamic.data.mapping.util.DDMUtil;
-import com.liferay.frontend.js.portlet.extender.internal.portlet.JSPortlet;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -38,7 +35,6 @@ import com.liferay.portal.kernel.security.auth.AuthTokenUtil;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
-import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import java.io.InputStream;
@@ -68,8 +64,9 @@ public class PortletExtenderConfigurationAction
     extends DefaultConfigurationAction
     implements ManagedService {
 
-  public PortletExtenderConfigurationAction(String name) {
+  public PortletExtenderConfigurationAction(String name, DDMForm ddmForm) {
     _name = name;
+    _ddmForm = ddmForm;
   }
 
   @Override
@@ -82,9 +79,6 @@ public class PortletExtenderConfigurationAction
         (ThemeDisplay) request.getAttribute(WebKeys.THEME_DISPLAY);
     PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
-    DDMFormRenderingContext ddmFormRenderingContext = new DDMFormRenderingContext();
-    ddmFormRenderingContext.setShowSubmitButton(true);
-
     DDMFormFieldRenderingContext ddmFormFieldRenderingContext = new DDMFormFieldRenderingContext();
     ddmFormFieldRenderingContext.setHttpServletRequest(request);
     ddmFormFieldRenderingContext.setHttpServletResponse(response);
@@ -92,6 +86,7 @@ public class PortletExtenderConfigurationAction
     ddmFormFieldRenderingContext.setReadOnly(false);
     ddmFormFieldRenderingContext.setMode("edit");
     ddmFormFieldRenderingContext.setShowEmptyFieldLabel(true);
+    ddmFormFieldRenderingContext.setViewMode(true);
 
     JSONObject jsonValues = JSONFactoryUtil.createJSONObject();
 
@@ -100,7 +95,6 @@ public class PortletExtenderConfigurationAction
 
       String configurationString = StringUtil.read(configurationStreamNew);
       DDMFormRenderer _ddmFormRenderer = DDMFormRendererUtil.getDDMFormRenderer();
-      DDMForm ddmForm = DDMUtil.getDDMForm(configurationString);
 
       JSONArray ddmFormObjectKeys =
           JSONFactoryUtil.createJSONArray(
@@ -116,15 +110,19 @@ public class PortletExtenderConfigurationAction
                   portletDisplay.getPortletResource());
 
       portletPreferences.getMap().forEach((key, value) -> {
-        for (DDMFormField ddmFormField : ddmForm.getDDMFormFields()) {
+        for (DDMFormField ddmFormField : _ddmForm.getDDMFormFields()) {
+          LocalizedValue defaultValue = new LocalizedValue();
+          defaultValue.setDefaultLocale(themeDisplay.getLocale());
 
           if (key.contains(ddmFormField.getName())) {
-            if (!("select").equals(ddmFormField.getType())
-                && !("radio").equals(ddmFormField.getType())
-                && !("ddm-date").equals(ddmFormField.getType())) {
-              LocalizedValue defaultValue = new LocalizedValue();
-              defaultValue.setDefaultLocale(themeDisplay.getLocale());
+            if ("select".equals(ddmFormField.getType())) {
+              defaultValue.addString(themeDisplay.getLocale(), "[\"" + value[0]+ "\"]");
+              ddmFormField.setProperty("predefinedValue", defaultValue);
+              ddmFormField.setPredefinedValue(defaultValue);
+            }
+            else {
               defaultValue.addString(themeDisplay.getLocale(), value[0]);
+              ddmFormField.setProperty("predefinedValue", defaultValue);
               ddmFormField.setPredefinedValue(defaultValue);
             }
           }
@@ -135,11 +133,11 @@ public class PortletExtenderConfigurationAction
 
       });
 
-      String ddmFormRendered = _ddmFormRenderer.render(ddmForm, ddmFormFieldRenderingContext)
+      String ddmFormRendered = _ddmFormRenderer.render(_ddmForm, ddmFormFieldRenderingContext)
           .trim();
 
       generateConfigurationFormFieldsByJson(ddmFormObjectKeys,
-           portletDisplay.getNamespace(),
+          portletDisplay.getNamespace(),
           response.getWriter(),
           getActionURL(request, portletDisplay),
           ddmFormRendered);
@@ -163,7 +161,10 @@ public class PortletExtenderConfigurationAction
 
     while (iterator.hasNext()) {
       Map.Entry<String, String[]> pair = iterator.next();
-      setPreference(actionRequest, pair.getKey(), pair.getValue());
+      if (!pair.getKey().contains("Day") && !pair.getKey().contains("Month") && !pair.getKey().contains("Year")) {
+        String key = pair.getKey().split("_INSTANCE")[0];
+        setPreference(actionRequest, key, pair.getValue()[0]);
+      }
     }
 
     super.processAction(portletConfig, actionRequest, actionResponse);
@@ -262,5 +263,8 @@ public class PortletExtenderConfigurationAction
       LogFactoryUtil.getLog(PortletExtenderConfigurationAction.class);
 
   private final String _name;
+  private final DDMForm _ddmForm;
+
+
 
 }

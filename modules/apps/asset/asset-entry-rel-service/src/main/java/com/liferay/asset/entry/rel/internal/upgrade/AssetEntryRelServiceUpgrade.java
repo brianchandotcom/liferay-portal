@@ -15,7 +15,6 @@
 package com.liferay.asset.entry.rel.internal.upgrade;
 
 import com.liferay.asset.entry.rel.internal.upgrade.v1_0_0.UpgradeAssetEntryAssetCategoryRel;
-import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
 import org.osgi.service.component.annotations.Component;
@@ -23,15 +22,11 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Eudaldo Alonso
  */
-@Component(
-	enabled = false, immediate = true, service = UpgradeStepRegistrator.class
-)
+@Component(immediate = true, service = UpgradeStepRegistrator.class)
 public class AssetEntryRelServiceUpgrade implements UpgradeStepRegistrator {
 
 	@Override
 	public void register(Registry registry) {
-		registry.register("0.0.0", "1.0.0", new DummyUpgradeStep());
-
 		registry.register(
 			"0.0.1", "1.0.0", new UpgradeAssetEntryAssetCategoryRel());
 	}

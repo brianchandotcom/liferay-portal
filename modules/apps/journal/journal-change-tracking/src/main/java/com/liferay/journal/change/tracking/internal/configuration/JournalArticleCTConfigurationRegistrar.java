@@ -36,7 +36,11 @@ public class JournalArticleCTConfigurationRegistrar {
 	@Activate
 	public void activate() {
 		_ctConfigurationRegistrar.register(
-			_builder.setEntityClasses(
+			_builder.setContentType(
+				"Web Content"
+			).setContentTypeLanguageKey(
+				"journal"
+			).setEntityClasses(
 				JournalArticleResource.class, JournalArticle.class
 			).setResourceEntityByResourceEntityIdFunction(
 				JournalArticleResourceUtil::fetchByPrimaryKey

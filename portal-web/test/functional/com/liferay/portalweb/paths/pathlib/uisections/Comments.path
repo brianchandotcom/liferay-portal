@@ -15,7 +15,7 @@
 </tr>
 <tr>
 	<td>COMMENT_ACTIONS</td>
-	<td>//div[contains(@class,'card-row') and contains(.,'${key_entryComment}')]//div[contains(@class,'card-col-field')]//a[span/*[name()='svg'][contains(@class,'icon-ellipsis-v')]]</td>
+	<td>//div[contains(@class,'comment')]/div[contains(.,'${key_entryComment}')]/..//a[span/*[name()='svg'][contains(@class,'icon-ellipsis')]]</td>
 	<td></td>
 </tr>
 <tr>
@@ -49,8 +49,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>REPLY_TO_COMMENT</td>
-	<td>//div[@class='lfr-discussion-body' and contains(.,'${key_entryComment}')]//span[contains(.,'Reply')]</td>
+	<td>ANY_BUTTON_IN_COMMENT</td>
+	<td>//article[contains(@class,'discussion')]/div[contains(.,'${key_entryComment}')]//*[normalize-space(text())='${key_text}']</td>
 	<td></td>
 </tr>
 <tr>

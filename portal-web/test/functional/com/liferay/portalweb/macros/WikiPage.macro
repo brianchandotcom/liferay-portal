@@ -639,15 +639,9 @@ definition {
 	macro editComment {
 		var key_entryComment = "${entryComment}";
 
-		AssertTextEquals(
-			locator1 = "Comments#COMMENT_BODY_SPECIFIC",
-			value1 = "${entryComment}"
-		);
+		MouseOver(locator1 = "Comments#COMMENT_BODY_SPECIFIC");
 
-		Click.waitForMenuToggleJSClick(
-			locator1 = "Comments#COMMENT_ACTIONS",
-			key_entryComment = "${entryComment}"
-		);
+		Click(locator1 = "Comments#COMMENT_ACTIONS");
 
 		MenuItem.click(menuItem = "Edit");
 
@@ -656,7 +650,13 @@ definition {
 			value1 = "${entryCommentEdit}"
 		);
 
-		PortletEntry.publish();
+		AssertClick(
+			locator1 = "Comments#ANY_BUTTON_IN_COMMENT",
+			value1 = "Save",
+			key_text = "Save"
+		);
+
+		Alert.viewSuccessMessage();
 	}
 
 	macro editFrontPagePG {

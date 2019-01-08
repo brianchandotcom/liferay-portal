@@ -245,7 +245,7 @@ public class WebSsoProfileIntegrationTest extends BaseSamlTestCase {
 	}
 
 	@Test
-	public void testAssertionSignatureDefaultAlgorithmIsNotSha1()
+	public void testAssertionSignatureDefaultAlgorithmIsNotSHA1()
 		throws Exception {
 
 		Assertion assertion = OpenSamlUtil.buildAssertion();

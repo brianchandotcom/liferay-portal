@@ -281,7 +281,7 @@ public class TemplateRendererTag extends ParamAndPropertyAncestorTagImpl {
 
 		boolean wrapper = isWrapper();
 
-		if (!wrapper && !context.containsKey("id")) {
+		if (!wrapper && Validator.isNull(context.get("id"))) {
 			context.put("id", getWrapperId());
 		}
 

@@ -14,19 +14,9 @@
 
 package com.liferay.arquillian.extension.junit.bridge.remote.activator;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-
 import java.lang.management.ManagementFactory;
 
-import java.net.URL;
-
-import java.util.Enumeration;
-import java.util.LinkedHashSet;
 import java.util.List;
-import java.util.Set;
 
 import javax.management.MBeanServer;
 import javax.management.MBeanServerFactory;
@@ -57,14 +47,6 @@ public class ArquillianBundleActivator implements BundleActivator {
 
 			};
 
-		// Execute all activators
-
-		_bundleActivators = _loadActivators();
-
-		for (BundleActivator bundleActivator : _bundleActivators) {
-			bundleActivator.start(context);
-		}
-
 		// Register the JMXTestRunner
 
 		MBeanServer mBeanServer = _findOrCreateMBeanServer();
@@ -87,79 +69,11 @@ public class ArquillianBundleActivator implements BundleActivator {
 	@Override
 	public void stop(BundleContext context) throws Exception {
 
-		// Execute all activators
-
-		for (BundleActivator bundleActivator : _bundleActivators) {
-			bundleActivator.stop(context);
-		}
-
 		// Unregister the JMXTestRunner
 
 		MBeanServer mBeanServer = _findOrCreateMBeanServer();
 
 		_testRunner.unregisterMBean(mBeanServer);
-	}
-
-	private void _addBundleActivatorToActivatorsListFromStringLine(
-		Set<BundleActivator> activators, String line) {
-
-		if (line.startsWith("!")) {
-			return;
-		}
-
-		ClassLoader classLoader = getClass().getClassLoader();
-
-		try {
-			Class<?> aClass = classLoader.loadClass(line);
-
-			Class<? extends BundleActivator> bundleActivatorClass =
-				aClass.asSubclass(BundleActivator.class);
-
-			activators.add(bundleActivatorClass.newInstance());
-		}
-		catch (ClassNotFoundException cnfe) {
-			throw new IllegalStateException(
-				"Activator " + line + " class not found", cnfe);
-		}
-		catch (ClassCastException cce) {
-			throw new IllegalStateException(
-				"Activator " + line + " does not implement expected type " +
-					BundleActivator.class.getCanonicalName(),
-				cce);
-		}
-		catch (Exception e) {
-			throw new IllegalStateException(
-				"Activator " + line + " cannot be created ", e);
-		}
-	}
-
-	private void _addBundleActivatorToActivatorsListFromURL(
-			Set<BundleActivator> activators, URL url)
-		throws IOException {
-
-		final InputStream is = url.openStream();
-
-		BufferedReader reader = null;
-
-		try {
-			reader = new BufferedReader(new InputStreamReader(is, "UTF-8"));
-
-			String line = reader.readLine();
-
-			while (null != line) {
-				line = _skipCommentAndTrim(line);
-
-				_addBundleActivatorToActivatorsListFromStringLine(
-					activators, line);
-
-				line = reader.readLine();
-			}
-		}
-		finally {
-			if (reader != null) {
-				reader.close();
-			}
-		}
 	}
 
 	private MBeanServer _findOrCreateMBeanServer() {
@@ -178,45 +92,6 @@ public class ArquillianBundleActivator implements BundleActivator {
 		return mBeanServer;
 	}
 
-	private Set<BundleActivator> _loadActivators() {
-		String serviceFile =
-			_SERVICES + "/" + BundleActivator.class.getCanonicalName();
-
-		Set<BundleActivator> activators = new LinkedHashSet<>();
-
-		ClassLoader classLoader = getClass().getClassLoader();
-
-		try {
-			Enumeration<URL> enumeration = classLoader.getResources(
-				serviceFile);
-
-			while (enumeration.hasMoreElements()) {
-				_addBundleActivatorToActivatorsListFromURL(
-					activators, enumeration.nextElement());
-			}
-		}
-		catch (Exception e) {
-			throw new RuntimeException("Could not load bundle activators", e);
-		}
-
-		return activators;
-	}
-
-	private String _skipCommentAndTrim(String line) {
-		final int comment = line.indexOf('#');
-
-		String lineWithoutComment = line;
-
-		if (comment > -1) {
-			lineWithoutComment = line.substring(0, comment);
-		}
-
-		return lineWithoutComment.trim();
-	}
-
-	private static final String _SERVICES = "/META-INF/services";
-
-	private Set<BundleActivator> _bundleActivators;
 	private JMXTestRunner _testRunner;
 
 }

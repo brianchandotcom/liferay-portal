@@ -14,6 +14,7 @@
 
 package com.liferay.frontend.taglib.servlet.taglib;
 
+import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolverHelperUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
@@ -80,6 +81,10 @@ public class DefineObjectsTag extends TagSupport {
 				"resourceBundle",
 				TagResourceBundleUtil.getResourceBundle(request, locale));
 		}
+
+		pageContext.setAttribute(
+			"npmResolvedPackageName",
+			NPMResolverHelperUtil.getNpmResolvedPackageName(request));
 
 		return SKIP_BODY;
 	}

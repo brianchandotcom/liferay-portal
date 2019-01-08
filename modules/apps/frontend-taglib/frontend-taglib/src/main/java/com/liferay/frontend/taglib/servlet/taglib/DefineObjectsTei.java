@@ -43,6 +43,9 @@ public class DefineObjectsTei extends TagExtraInfo {
 				"currentURLObj", PortletURL.class.getName(), true,
 				VariableInfo.AT_END),
 			new VariableInfo(
+				"npmResolvedPackageName", String.class.getName(), true,
+				VariableInfo.AT_END),
+			new VariableInfo(
 				"resourceBundle", ResourceBundle.class.getName(), true,
 				VariableInfo.AT_END),
 			new VariableInfo(

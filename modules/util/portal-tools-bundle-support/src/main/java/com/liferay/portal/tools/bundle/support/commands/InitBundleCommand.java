@@ -46,9 +46,6 @@ import java.util.Set;
 )
 public class InitBundleCommand extends DownloadCommand {
 
-	public InitBundleCommand() {
-	}
-
 	@Override
 	public void execute() throws Exception {
 		_deleteBundle();

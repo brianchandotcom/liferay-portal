@@ -2081,7 +2081,7 @@ definition {
 			dmDocumentSize = "12KB",
 			dmDocumentTitle = "DM Document Title Edit",
 			dmDocumentUploader = "Test Test",
-			dmDocumentVersionNumber = "1.1",
+			dmDocumentVersionNumber = "2.0",
 			portletName = "Documents and Media",
 			searchTerm = "DM Document Title",
 			workflow = "APPROVED"

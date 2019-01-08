@@ -15,9 +15,12 @@
 package com.liferay.asset.list.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.list.exception.AssetListEntryTitleException;
 import com.liferay.asset.list.exception.DuplicateAssetListEntryTitleException;
+import com.liferay.asset.list.exception.InvalidAssetEntryPositionException;
 import com.liferay.asset.list.model.AssetListEntry;
+import com.liferay.asset.list.service.AssetListEntryAssetEntryRelLocalServiceUtil;
 import com.liferay.asset.list.service.AssetListEntryServiceUtil;
 import com.liferay.asset.list.util.comparator.AssetListEntryCreateDateComparator;
 import com.liferay.asset.list.util.comparator.AssetListEntryTitleComparator;
@@ -34,6 +37,7 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerTestRule;
+import com.liferay.portlet.asset.util.test.AssetTestUtil;
 
 import java.util.List;
 
@@ -71,6 +75,30 @@ public class AssetListEntryServiceTest {
 				assetListEntry.getAssetListEntryId()));
 
 		Assert.assertEquals("Asset List Title", assetListEntry.getTitle());
+	}
+
+	@Test(expected = InvalidAssetEntryPositionException.class)
+	public void testAddAssetListEntryAssetEntryRelWrongPosition()
+		throws Exception {
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId());
+
+		AssetListEntry assetListEntry = _addAssetListEntry("Asset List Title");
+
+		AssetEntry assetEntry = AssetTestUtil.addAssetEntry(
+			_group.getGroupId());
+
+		AssetListEntryAssetEntryRelLocalServiceUtil.
+			addAssetListEntryAssetEntryRel(
+				assetListEntry.getAssetListEntryId(), assetEntry.getEntryId(),
+				1, serviceContext);
+
+		AssetListEntryAssetEntryRelLocalServiceUtil.
+			addAssetListEntryAssetEntryRel(
+				assetListEntry.getAssetListEntryId(), assetEntry.getEntryId(),
+				serviceContext);
 	}
 
 	@Test(expected = AssetListEntryTitleException.class)

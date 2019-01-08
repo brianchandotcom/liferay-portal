@@ -579,7 +579,7 @@ definition {
 			portlet = "Blogs"
 		);
 
-		if (IsElementPresent(locator1 = "Message#EMPTY_INFO", value1 = "No entries were found.")) {
+		if (IsVisible(locator1 = "Message#EMPTY_INFO", value1 = "No entries were found.")) {
 			Blogs.viewNoEntryCP();
 		}
 		else {

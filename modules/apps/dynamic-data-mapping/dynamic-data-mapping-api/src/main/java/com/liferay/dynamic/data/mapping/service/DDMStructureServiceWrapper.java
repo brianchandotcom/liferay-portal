@@ -362,6 +362,13 @@ public class DDMStructureServiceWrapper implements DDMStructureService,
 	}
 
 	@Override
+	public int getStructuresCount(long companyId, long[] groupIds,
+		long classNameId) {
+		return _ddmStructureService.getStructuresCount(companyId, groupIds,
+			classNameId);
+	}
+
+	@Override
 	public void revertStructure(long structureId, String version,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {

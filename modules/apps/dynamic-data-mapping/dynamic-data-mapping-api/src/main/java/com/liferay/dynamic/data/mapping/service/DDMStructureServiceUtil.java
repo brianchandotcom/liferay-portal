@@ -360,6 +360,11 @@ public class DDMStructureServiceUtil {
 			start, end, orderByComparator);
 	}
 
+	public static int getStructuresCount(long companyId, long[] groupIds,
+		long classNameId) {
+		return getService().getStructuresCount(companyId, groupIds, classNameId);
+	}
+
 	public static void revertStructure(long structureId, String version,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {

@@ -559,6 +559,21 @@ public class DDMStructureServiceSoap {
 		}
 	}
 
+	public static int getStructuresCount(long companyId, long[] groupIds,
+		long classNameId) throws RemoteException {
+		try {
+			int returnValue = DDMStructureServiceUtil.getStructuresCount(companyId,
+					groupIds, classNameId);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static void revertStructure(long structureId, String version,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {

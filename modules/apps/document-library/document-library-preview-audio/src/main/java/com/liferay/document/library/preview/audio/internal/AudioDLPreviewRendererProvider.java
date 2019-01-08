@@ -15,11 +15,13 @@
 package com.liferay.document.library.preview.audio.internal;
 
 import com.liferay.document.library.kernel.util.AudioProcessorUtil;
+import com.liferay.document.library.kernel.util.DLProcessorRegistryUtil;
 import com.liferay.document.library.kernel.util.DLUtil;
 import com.liferay.document.library.preview.DLPreviewRenderer;
 import com.liferay.document.library.preview.DLPreviewRendererProvider;
 import com.liferay.document.library.preview.audio.internal.constants.DLPreviewAudioWebKeys;
 import com.liferay.document.library.preview.exception.DLPreviewGenerationInProcessException;
+import com.liferay.document.library.preview.exception.DLPreviewSizeException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -57,6 +59,12 @@ public class AudioDLPreviewRendererProvider
 		return Optional.of(
 			(request, response) -> {
 				if (!AudioProcessorUtil.hasAudio(fileVersion)) {
+					if (!DLProcessorRegistryUtil.isPreviewableSize(
+							fileVersion)) {
+
+						throw new DLPreviewSizeException();
+					}
+
 					throw new DLPreviewGenerationInProcessException();
 				}
 

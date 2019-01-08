@@ -568,7 +568,6 @@ definition {
 		AssertAlertNotPresent();
 	}
 
-	@ignore = "true"
 	@priority = "5"
 	test ViewWiki {
 		Navigator.openURL();

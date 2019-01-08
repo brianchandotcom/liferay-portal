@@ -21,7 +21,6 @@ definition {
 		}
 	}
 
-	@ignore = "true"
 	@priority = "4"
 	test SearchByAssetAndModifiedRangeFacets {
 		ProductMenu.gotoPortlet(

@@ -19,8 +19,11 @@ import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
 import com.liferay.asset.model.AssetEntryUsage;
 import com.liferay.asset.service.AssetEntryUsageLocalServiceUtil;
+import com.liferay.asset.util.AssetEntryUsageActionMenuContributor;
+import com.liferay.asset.util.AssetEntryUsageActionMenuContributorRegistryUtil;
 import com.liferay.asset.util.comparator.AssetEntryUsageModifiedDateComparator;
 import com.liferay.fragment.model.FragmentEntryLink;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServiceUtil;
 import com.liferay.petra.string.StringPool;
@@ -35,6 +38,7 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -85,6 +89,32 @@ public class AssetEntryUsagesDisplayContext {
 		}
 
 		return _assetEntryTitle;
+	}
+
+	public List<DropdownItem> getAssetEntryUsageActionDropdownItems(
+		AssetEntryUsage assetEntryUsage) {
+
+		AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(
+			getAssetEntryId());
+
+		if (assetEntry == null) {
+			return Collections.emptyList();
+		}
+
+		AssetEntryUsageActionMenuContributor
+			assetEntryUsageActionMenuContributor =
+				AssetEntryUsageActionMenuContributorRegistryUtil.
+					getAssetEntryUsageActionMenuContributor(
+						assetEntry.getClassName());
+
+		if (assetEntryUsageActionMenuContributor == null) {
+			return Collections.emptyList();
+		}
+
+		return assetEntryUsageActionMenuContributor.
+			getAssetEntryUsageActionMenu(
+				assetEntryUsage,
+				PortalUtil.getHttpServletRequest(_renderRequest));
 	}
 
 	public String getAssetEntryUsageName(AssetEntryUsage assetEntryUsage) {

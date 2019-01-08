@@ -170,6 +170,19 @@ renderResponse.setTitle(assetEntryUsagesDisplayContext.getAssetEntryTitle());
 							name="modified-date"
 							value="<%= assetEntryUsage.getModifiedDate() %>"
 						/>
+
+						<%
+						List<DropdownItem> dropdownItems = assetEntryUsagesDisplayContext.getAssetEntryUsageActionDropdownItems(assetEntryUsage);
+						%>
+
+						<c:if test="<%= ListUtil.isNotEmpty(dropdownItems) %>">
+							<liferay-ui:search-container-column-text>
+								<clay:dropdown-actions
+									componentId='<%= renderResponse.getNamespace() + "actionsComponent" %>'
+									dropdownItems="<%= dropdownItems %>"
+								/>
+							</liferay-ui:search-container-column-text>
+						</c:if>
 					</liferay-ui:search-container-row>
 
 					<liferay-ui:search-iterator

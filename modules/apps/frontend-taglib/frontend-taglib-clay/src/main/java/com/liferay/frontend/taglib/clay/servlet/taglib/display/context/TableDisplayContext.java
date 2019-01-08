@@ -61,7 +61,7 @@ public interface TableDisplayContext {
 	}
 
 	public default Boolean isSelectable() {
-		return null;
+		return true;
 	}
 
 	public default Boolean isShowActionsMenu() {
@@ -69,11 +69,11 @@ public interface TableDisplayContext {
 	}
 
 	public default Boolean isUseDefaultClasses() {
-		return null;
+		return true;
 	}
 
 	public default Boolean isWrapTable() {
-		return null;
+		return false;
 	}
 
 }

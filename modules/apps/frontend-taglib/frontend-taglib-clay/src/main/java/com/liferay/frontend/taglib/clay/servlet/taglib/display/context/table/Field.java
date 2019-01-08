@@ -14,6 +14,8 @@
 
 package com.liferay.frontend.taglib.clay.servlet.taglib.display.context.table;
 
+import com.liferay.petra.string.StringPool;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -22,23 +24,29 @@ import java.util.Map;
  */
 public class Field {
 
-	public Field(String contentRenderer, String fieldName, String label) {
-		_contentRenderer = contentRenderer;
-		_fieldName = fieldName;
-		_label = label;
-		_sortable = false;
-		_sortingOrder = null;
+	public Field(String fieldName, String label) {
+		this(fieldName, label, StringPool.BLANK);
+	}
+
+	public Field(String fieldName, String label, String contentRenderer) {
+		this(fieldName, label, contentRenderer, null);
 	}
 
 	public Field(
-		String contentRenderer, String fieldName, String label,
+		String fieldName, String label, String contentRenderer,
 		SortingOrder sortingOrder) {
 
-		_contentRenderer = contentRenderer;
 		_fieldName = fieldName;
 		_label = label;
-		_sortable = true;
+		_contentRenderer = contentRenderer;
 		_sortingOrder = sortingOrder;
+
+		if (contentRenderer != null) {
+			_sortable = true;
+		}
+		else {
+			_sortable = false;
+		}
 	}
 
 	public void addContentRendererMapping(String type, String contentRenderer) {

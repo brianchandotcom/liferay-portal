@@ -85,8 +85,6 @@ public class LiferayRemoteDeployableContainer
 			serviceStateMBean = getMBeanProxy(
 				mBeanServer, _serviceStateObjectName, ServiceStateMBean.class,
 				30, TimeUnit.SECONDS);
-
-			awaitBootstrapCompleteServices();
 		}
 		catch (TimeoutException te) {
 			throw new LifecycleException("JMX timeout", te);

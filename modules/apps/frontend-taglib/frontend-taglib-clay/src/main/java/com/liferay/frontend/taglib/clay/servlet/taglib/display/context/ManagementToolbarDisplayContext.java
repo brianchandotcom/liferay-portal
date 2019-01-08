@@ -54,6 +54,10 @@ public interface ManagementToolbarDisplayContext {
 		return null;
 	}
 
+	public default String getDefaultEventHandler() {
+		return null;
+	}
+
 	public default String getElementClasses() {
 		return null;
 	}

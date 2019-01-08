@@ -68,7 +68,6 @@ definition {
 		Navigator.gotoPage(pageName = "Announcements Page");
 
 		AnnouncementsEntry.viewPG(
-			announcementType = "General",
 			distributionScope = "General",
 			entryContent = "Announcements Entry Content",
 			entryTitle = "Announcements Entry Title"
@@ -108,7 +107,6 @@ definition {
 		Portlet.addPG(portletName = "Announcements");
 
 		AnnouncementsEntry.viewPG(
-			announcementType = "General",
 			distributionScope = "General",
 			entryContent = "Announcements Entry Content",
 			entryTitle = "Announcements Entry Title"
@@ -133,7 +131,6 @@ definition {
 		Navigator.gotoPage(pageName = "Announcements Page");
 
 		AnnouncementsEntry.viewPG(
-			announcementType = "General",
 			distributionScope = "${siteName}",
 			entryContent = "Announcements Entry2 Scoped Content",
 			entryTitle = "Announcements Entry2 Scoped Title"
@@ -182,7 +179,6 @@ definition {
 			Navigator.gotoPage(pageName = "Announcements Page");
 
 			AnnouncementsEntry.addPG(
-				announcementType = "General",
 				distributionScope = "General",
 				entryContent = "Announcements Entry Content ${entryCount}",
 				entryTitle = "Announcements Entry Title ${entryCount}",

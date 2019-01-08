@@ -66,7 +66,6 @@ definition {
 		Navigator.gotoPage(pageName = "Announcements Page");
 
 		AnnouncementsEntry.viewPG(
-			announcementType = "General",
 			distributionScope = "General",
 			entryContent = "Announcements Entry Content",
 			entryTitle = "Announcements Entry Title",
@@ -99,7 +98,6 @@ definition {
 		Navigator.gotoPage(pageName = "Announcements Page");
 
 		AnnouncementsEntry.viewPG(
-			announcementType = "General",
 			distributionScope = "General",
 			entryContent = "Announcements Entry Content",
 			entryTitle = "Announcements Entry Title",
@@ -151,7 +149,6 @@ definition {
 		Navigator.gotoPage(pageName = "Announcements Page");
 
 		AnnouncementsEntry.viewPG(
-			announcementType = "General",
 			distributionScope = "General",
 			entryContent = "Announcements Entry Content",
 			entryTitle = "Announcements Entry Title"
@@ -200,7 +197,6 @@ definition {
 		Navigator.gotoSitePage(pageName = "Announcements Page", siteName = "Site Name");
 
 		AnnouncementsEntry.viewPG(
-			announcementType = "General",
 			distributionScope = "General",
 			entryContent = "Announcements Entry Content",
 			entryTitle = "Announcements Entry Title"
@@ -263,7 +259,6 @@ definition {
 		Navigator.gotoPage(pageName = "Announcements Page");
 
 		AnnouncementsEntry.viewPG(
-			announcementType = "General",
 			distributionScope = "General",
 			entryContent = "Announcements Entry Content Edit",
 			entryTitle = "Announcements Entry Title Edit"
@@ -292,7 +287,6 @@ definition {
 		);
 
 		AnnouncementsEntry.viewReadPG(
-			announcementType = "General",
 			distributionScope = "General",
 			entryContent = "Announcements Entry Content",
 			entryTitle = "Announcements Entry Title"

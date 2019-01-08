@@ -380,8 +380,13 @@ public class ScriptData implements Mergeable<ScriptData>, Serializable {
 					}
 				}
 				else {
-					_es6CallbackSB.append("(function() {");
+					_es6CallbackSB.append("(function() {\n");
+					_es6CallbackSB.append("try {\n");
 					_es6CallbackSB.append(content);
+					_es6CallbackSB.append("\n}\n");
+					_es6CallbackSB.append("catch (err) {\n");
+					_es6CallbackSB.append("console.error(err);\n");
+					_es6CallbackSB.append("}\n");
 					_es6CallbackSB.append("})();");
 
 					for (String module : modulesArray) {

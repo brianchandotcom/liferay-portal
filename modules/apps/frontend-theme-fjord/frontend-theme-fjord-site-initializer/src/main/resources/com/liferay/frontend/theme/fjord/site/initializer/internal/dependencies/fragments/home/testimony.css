@@ -1,2 +1,6 @@
 .fjord-testimony {
 }
+
+.fjord-testimony .main-background-image {
+background-image: url('../../resources/background_4.jpg');
+}

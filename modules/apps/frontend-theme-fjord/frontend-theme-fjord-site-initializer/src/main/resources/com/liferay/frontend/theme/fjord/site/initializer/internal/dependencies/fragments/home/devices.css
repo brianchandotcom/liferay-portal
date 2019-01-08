@@ -1,2 +1,6 @@
 .fjord-devices {
 }
+
+.fjord-devices .tertiary-background-image {
+background-image: url(../../resources/background_2.jpg);
+}

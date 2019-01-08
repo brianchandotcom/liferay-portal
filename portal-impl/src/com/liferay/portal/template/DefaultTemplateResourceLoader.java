@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.cache.PortalCacheListenerScope;
 import com.liferay.portal.kernel.cache.SingleVMPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.template.ClassLoaderTemplateResource;
 import com.liferay.portal.kernel.template.TemplateException;
 import com.liferay.portal.kernel.template.TemplateResource;
 import com.liferay.portal.kernel.template.TemplateResourceLoader;
@@ -35,7 +34,6 @@ import java.io.ObjectInput;
 import java.io.ObjectOutput;
 import java.io.Reader;
 
-import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -172,44 +170,6 @@ public class DefaultTemplateResourceLoader implements TemplateResourceLoader {
 		return false;
 	}
 
-	private TemplateResource _getTemplateResource() {
-		TemplateResource templateResource =
-			TemplateResourceThreadLocal.getTemplateResource(_name);
-
-		if (templateResource instanceof CacheTemplateResource) {
-			CacheTemplateResource cacheTemplateResource =
-				(CacheTemplateResource)templateResource;
-
-			return cacheTemplateResource.getInnerTemplateResource();
-		}
-
-		return templateResource;
-	}
-
-	private Set<TemplateResourceParser> _getTemplateResourceParsers() {
-		TemplateResource templateResource = _getTemplateResource();
-
-		if ((templateResource != null) &&
-			(templateResource instanceof ClassLoaderTemplateResource)) {
-
-			ClassLoaderTemplateResource classLoaderTemplateResource =
-				(ClassLoaderTemplateResource)templateResource;
-
-			ClassLoaderResourceParser classLoaderResourceParser =
-				new ClassLoaderResourceParser(
-					classLoaderTemplateResource.getClassLoader());
-
-			Set<TemplateResourceParser> templateResourceParsers = new HashSet<>(
-				_templateResourceParsers);
-
-			templateResourceParsers.add(classLoaderResourceParser);
-
-			return templateResourceParsers;
-		}
-
-		return new HashSet<>(_templateResourceParsers);
-	}
-
 	private TemplateResource _loadFromCache(
 		PortalCache<String, TemplateResource> portalCache, String templateId) {
 
@@ -276,11 +236,8 @@ public class DefaultTemplateResourceLoader implements TemplateResourceLoader {
 	}
 
 	private TemplateResource _loadFromParser(String templateId) {
-		Set<TemplateResourceParser> templateResourceParsers =
-			_getTemplateResourceParsers();
-
 		for (TemplateResourceParser templateResourceParser :
-				templateResourceParsers) {
+				_templateResourceParsers) {
 
 			try {
 				if (!templateResourceParser.isTemplateResourceValid(

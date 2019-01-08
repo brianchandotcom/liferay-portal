@@ -64,6 +64,40 @@ public class AopConfigurableApplicationContextConfigurator
 				configurableApplicationContext.getClassLoader()));
 	}
 
+	public static class ServiceBeanMatcher implements BeanMatcher {
+
+		@Override
+		public boolean match(Class<?> beanClass, String beanName) {
+			if (_counterMatcher) {
+				return beanName.equals(_COUNTER_SERVICE_BEAN_NAME);
+			}
+
+			if (!beanName.equals(_COUNTER_SERVICE_BEAN_NAME) &&
+				beanName.endsWith(_SERVICE_SUFFIX)) {
+
+				return true;
+			}
+
+			return false;
+		}
+
+		private ServiceBeanMatcher() {
+			this(false);
+		}
+
+		private ServiceBeanMatcher(boolean counterMatcher) {
+			_counterMatcher = counterMatcher;
+		}
+
+		private static final String _COUNTER_SERVICE_BEAN_NAME =
+			"com.liferay.counter.kernel.service.CounterLocalService";
+
+		private static final String _SERVICE_SUFFIX = "Service";
+
+		private final boolean _counterMatcher;
+
+	}
+
 	private static class AopBeanFactoryPostProcessor
 		implements BeanFactoryPostProcessor {
 

@@ -33,7 +33,6 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ContentTypes;
-import com.liferay.portal.kernel.util.Function;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.registry.Registry;
@@ -41,6 +40,7 @@ import com.liferay.registry.RegistryUtil;
 
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.function.Function;
 
 import org.junit.Assert;
 import org.junit.Before;

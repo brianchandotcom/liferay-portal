@@ -14,9 +14,8 @@
 
 package com.liferay.structured.content.apio.internal.model;
 
-import com.liferay.portal.kernel.util.Function;
-
 import java.util.Locale;
+import java.util.function.Function;
 
 /**
  * @author Eduardo Pérez

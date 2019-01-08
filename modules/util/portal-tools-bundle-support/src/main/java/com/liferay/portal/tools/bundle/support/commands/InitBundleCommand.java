@@ -16,6 +16,7 @@ package com.liferay.portal.tools.bundle.support.commands;
 
 import com.beust.jcommander.Parameter;
 import com.beust.jcommander.Parameters;
+import com.beust.jcommander.converters.FileConverter;
 
 import com.liferay.portal.tools.bundle.support.constants.BundleSupportConstants;
 import com.liferay.portal.tools.bundle.support.internal.util.FileUtil;
@@ -31,6 +32,8 @@ import java.nio.file.attribute.BasicFileAttributes;
 import java.nio.file.attribute.PosixFilePermission;
 import java.nio.file.attribute.PosixFilePermissions;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -42,6 +45,9 @@ import java.util.Set;
 	commandNames = "initBundle"
 )
 public class InitBundleCommand extends DownloadCommand {
+
+	public InitBundleCommand() {
+	}
 
 	@Override
 	public void execute() throws Exception {
@@ -55,6 +61,7 @@ public class InitBundleCommand extends DownloadCommand {
 			getDownloadPath(), liferayHomeDir.toPath(), _stripComponents);
 
 		_copyConfigs();
+		_copyProvidedModules();
 		_fixPosixFilePermissions();
 	}
 
@@ -64,6 +71,10 @@ public class InitBundleCommand extends DownloadCommand {
 
 	public String getEnvironment() {
 		return _environment;
+	}
+
+	public List<File> getProvidedModules() {
+		return _providedModules;
 	}
 
 	public int getStripComponents() {
@@ -76,6 +87,10 @@ public class InitBundleCommand extends DownloadCommand {
 
 	public void setEnvironment(String environment) {
 		_environment = environment;
+	}
+
+	public void setProvidedModules(List<File> providedModules) {
+		_providedModules = providedModules;
 	}
 
 	public void setStripComponents(int stripComponents) {
@@ -104,6 +119,20 @@ public class InitBundleCommand extends DownloadCommand {
 		if (Files.exists(configsEnvironmentDirPath)) {
 			FileUtil.copyDirectory(
 				configsEnvironmentDirPath, liferayHomeDirPath);
+		}
+	}
+
+	private void _copyProvidedModules() throws IOException {
+		File liferayHomeDir = getLiferayHomeDir();
+
+		Path liferayHomeDirPath = liferayHomeDir.toPath();
+
+		Path modulesPath = liferayHomeDirPath.resolve("osgi/modules");
+
+		for (File file : getProvidedModules()) {
+			Path destinationPath = modulesPath.resolve(file.getName());
+
+			FileUtil.copyFile(file.toPath(), destinationPath);
 		}
 	}
 
@@ -158,6 +187,13 @@ public class InitBundleCommand extends DownloadCommand {
 		names = "--environment"
 	)
 	private String _environment = BundleSupportConstants.DEFAULT_ENVIRONMENT;
+
+	@Parameter(
+		converter = FileConverter.class,
+		description = "A list of jars ti deploy to 'osgi/modules'.",
+		names = "--provided-modules"
+	)
+	private List<File> _providedModules = new ArrayList<>();
 
 	@Parameter(
 		description = "The number of directories to strip when expanding your bundle.",

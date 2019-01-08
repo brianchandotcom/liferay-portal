@@ -148,21 +148,6 @@ public class AssetPublisherDisplayContext {
 		_request = PortalUtil.getHttpServletRequest(portletRequest);
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             #AssetPublisherDisplayContext(AssetPublisherCustomizer,
-	 *             PortletRequest, PortletResponse, PortletPreferences)}
-	 */
-	@Deprecated
-	public AssetPublisherDisplayContext(
-		PortletRequest portletRequest, PortletPreferences portletPreferences) {
-
-		throw new UnsupportedOperationException(
-			"This constructor is deprecated and replaced by " +
-				"#AssetPublisherDisplayContext(PortletRequest, " +
-					"PortletResponse, PortletPreferences)");
-	}
-
 	public AssetListEntry fetchAssetListEntry() throws PortalException {
 		if (_assetListEntry != null) {
 			return _assetListEntry;
@@ -882,60 +867,6 @@ public class AssetPublisherDisplayContext {
 		return _rssName;
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             #getScopeAssetPublisherAddItemHolders(int)}
-	 */
-	@Deprecated
-	public Map<Long, Map<String, PortletURL>> getScopeAddPortletURLs(int max)
-		throws Exception {
-
-		long[] groupIds = getGroupIds();
-
-		if (groupIds.length == 0) {
-			return Collections.emptyMap();
-		}
-
-		Map<Long, Map<String, PortletURL>> scopeAddPortletURLs =
-			new HashMap<>();
-
-		LiferayPortletRequest liferayPortletRequest =
-			PortalUtil.getLiferayPortletRequest(_portletRequest);
-		LiferayPortletResponse liferayPortletResponse =
-			PortalUtil.getLiferayPortletResponse(_portletResponse);
-
-		String redirect = _getScopeAssetPortletRedirect(
-			liferayPortletRequest, liferayPortletResponse);
-
-		for (long groupId : groupIds) {
-			List<AssetPublisherAddItemHolder> assetPublisherAddItemHolders =
-				_assetHelper.getAssetPublisherAddItemHolders(
-					liferayPortletRequest, liferayPortletResponse, groupId,
-					getClassNameIds(), getClassTypeIds(),
-					getAllAssetCategoryIds(), getAllAssetTagNames(), redirect);
-
-			if (ListUtil.isNotEmpty(assetPublisherAddItemHolders)) {
-				Map<String, PortletURL> addPortletURLs = new HashMap<>();
-
-				for (AssetPublisherAddItemHolder assetPublisherAddItemHolder :
-						assetPublisherAddItemHolders) {
-
-					addPortletURLs.put(
-						assetPublisherAddItemHolder.getName(),
-						assetPublisherAddItemHolder.getPortletURL());
-				}
-
-				scopeAddPortletURLs.put(groupId, addPortletURLs);
-			}
-
-			if (scopeAddPortletURLs.size() > max) {
-				break;
-			}
-		}
-
-		return scopeAddPortletURLs;
-	}
-
 	public Map<Long, List<AssetPublisherAddItemHolder>>
 			getScopeAssetPublisherAddItemHolders(int max)
 		throws Exception {
@@ -1003,14 +934,6 @@ public class AssetPublisherDisplayContext {
 			_portletPreferences.getValue("selectionStyle", null), "dynamic");
 
 		return _selectionStyle;
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	public String getSocialBookmarksDisplayPosition() {
-		return "bottom";
 	}
 
 	public String getSocialBookmarksDisplayStyle() {
@@ -1257,14 +1180,6 @@ public class AssetPublisherDisplayContext {
 		}
 
 		return false;
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	public boolean isEnableSocialBookmarks() {
-		return true;
 	}
 
 	public boolean isEnableTagBasedNavigation() {

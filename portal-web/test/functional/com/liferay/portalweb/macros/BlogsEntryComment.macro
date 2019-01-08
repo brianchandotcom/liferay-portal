@@ -74,13 +74,23 @@ definition {
 
 		MouseOver(locator1 = "Comments#COMMENT_BODY_SPECIFIC");
 
-		LexiconEntry.gotoEllipsisMenuItem(menuItem = "Edit");
+		Click(locator1 = "Comments#COMMENT_ACTIONS");
+
+		AssertClick(
+			locator1 = "MenuItem#ANY_MENU_ITEM",
+			value1 = "Edit",
+			key_menuItem = "Edit"
+		);
 
 		Click.clickAt(locator1 = "Comments#EDIT_COMMENT_FIELD");
 
 		Type(locator1 = "Comments#EDIT_COMMENT_FIELD", value1 = "${entryCommentEdit}");
 
-		Button.clickSave();
+		AssertClick(
+			locator1 = "Comments#ANY_BUTTON_IN_COMMENT",
+			value1 = "Save",
+			key_text = "Save"
+		);
 
 		var key_entryComment = "${entryCommentEdit}";
 

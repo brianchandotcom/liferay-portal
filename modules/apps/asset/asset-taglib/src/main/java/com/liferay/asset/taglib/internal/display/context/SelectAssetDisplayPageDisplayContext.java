@@ -150,6 +150,7 @@ public class SelectAssetDisplayPageDisplayContext {
 				new LayoutItemSelectorCriterion();
 
 			layoutItemSelectorCriterion.setCheckDisplayPage(true);
+			layoutItemSelectorCriterion.setShowHiddenPages(true);
 
 			List<ItemSelectorReturnType> desiredItemSelectorReturnTypes =
 				new ArrayList<>();

@@ -254,6 +254,11 @@ public class JournalManagementToolbarDisplayContext
 	}
 
 	@Override
+	public String getDefaultEventHandler() {
+		return "journalManagementToolbarDefaultEventHandler";
+	}
+
+	@Override
 	public List<DropdownItem> getFilterDropdownItems() {
 		return new DropdownItemList() {
 			{

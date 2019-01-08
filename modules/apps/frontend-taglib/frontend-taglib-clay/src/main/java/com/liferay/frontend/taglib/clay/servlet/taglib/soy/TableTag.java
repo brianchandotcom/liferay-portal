@@ -49,9 +49,7 @@ public class TableTag extends BaseClayTag {
 		putValue("actionsMenuVariant", actionsMenuVariant);
 	}
 
-	public void setDisplayContext(
-		TableDisplayContext tableDisplayContext) {
-
+	public void setDisplayContext(TableDisplayContext tableDisplayContext) {
 		_tableDisplayContext = tableDisplayContext;
 	}
 

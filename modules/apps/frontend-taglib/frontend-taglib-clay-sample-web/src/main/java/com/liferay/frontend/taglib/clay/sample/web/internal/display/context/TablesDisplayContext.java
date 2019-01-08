@@ -17,7 +17,6 @@ package com.liferay.frontend.taglib.clay.sample.web.internal.display.context;
 import com.liferay.frontend.taglib.clay.servlet.taglib.display.context.BaseTableDisplayContext;
 import com.liferay.frontend.taglib.clay.servlet.taglib.display.context.table.Field;
 import com.liferay.frontend.taglib.clay.servlet.taglib.display.context.table.Schema;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -29,17 +28,11 @@ public class TablesDisplayContext
 	extends BaseTableDisplayContext<TablesDisplayContext.Item> {
 
 	@Override
-	public Boolean isSelectable() {
-		return true;
-	}
-
-	@Override
 	protected void configureSchema(Schema schema) {
-		schema.addField(new Field("main", "name", "Name"));
-		schema.addField(new Field("number", "calories", "Calories/portion"));
-		schema.addField(new Field(StringPool.BLANK, "color", "Color"));
-		schema.addField(
-			new Field(StringPool.BLANK, "skinEdible", "Skin Edible"));
+		schema.addField(new Field("name", "Name"));
+		schema.addField(new Field("calories", "Calories/portion", "number"));
+		schema.addField(new Field("color", "Color"));
+		schema.addField(new Field("skinEdible", "Skin Edible"));
 	}
 
 	@Override

@@ -91,7 +91,8 @@ public abstract class ModulesBatchTestClassGroup extends BatchTestClassGroup {
 			if (testRelevantChanges) {
 				moduleDirsList.addAll(
 					getRequiredModuleDirs(
-						portalGitWorkingDirectory.getModifiedModuleDirsList()));
+						portalGitWorkingDirectory.getModifiedModuleDirsList(
+							excludesPathMatchers, includesPathMatchers)));
 			}
 
 			setTestClasses();

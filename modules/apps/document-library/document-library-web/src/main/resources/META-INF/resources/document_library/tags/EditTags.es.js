@@ -78,11 +78,6 @@ class EditTags extends Component {
 		);
 	}
 
-	_handleAddTag(event) {
-		event.target.selectedItems.push({label: event.data.label, value: event.data.label});
-		event.target.selectedItems = event.target.selectedItems;
-	}
-
 	_handleSaveBtnClick() {
 		let finalTags = this.commonTags.map(tag => tag.label);
 
@@ -114,11 +109,6 @@ class EditTags extends Component {
 			}
 		);
 
-	}
-
-	_handleRemoveTag(event) {
-		event.target.selectedItems.splice(event.data.index, 1);
-		event.target.selectedItems = event.target.selectedItems;
 	}
 
 	/**

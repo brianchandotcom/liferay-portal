@@ -239,11 +239,7 @@ public class AssetPublisherPortlet extends MVCPortlet {
 				AssetPublisherWebKeys.ASSET_PUBLISHER_CUSTOMIZER,
 				assetPublisherCustomizer);
 
-			resourceRequest.setAttribute(
-				AssetPublisherWebKeys.ASSET_PUBLISHER_WEB_UTIL,
-				assetPublisherWebUtil);
-
-			byte[] bytes = AssetRSSUtil.getRSS(
+			byte[] bytes = assetRSSUtil.getRSS(
 				resourceRequest, resourceResponse);
 
 			outputStream.write(bytes);
@@ -407,6 +403,9 @@ public class AssetPublisherPortlet extends MVCPortlet {
 
 	@Reference
 	protected AssetPublisherWebUtil assetPublisherWebUtil;
+
+	@Reference
+	protected AssetRSSUtil assetRSSUtil;
 
 	@Reference
 	protected Portal portal;

@@ -28,6 +28,7 @@
 		overflow-y: auto;
 		position: fixed;
 		right: $sidebarButtonsWidth;
+		top: 0;
 		transform: translateX(0);
 		transition: transform ease $productMenuTransitionDuration;
 		width: $sidebarWidth - $sidebarButtonsWidth;
@@ -43,7 +44,8 @@
 		transform: translateX(calc(100% + #{$sidebarButtonsWidth + $sidebarLeftBorderWidth}));
 	}
 
-	body.has-control-menu & {
+	body.has-control-menu &,
+	body.has-control-menu &-section {
 		height: calc(100vh - #{$controlMenuHeight});
 		top: $controlMenuHeight;
 

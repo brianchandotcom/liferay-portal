@@ -520,15 +520,13 @@ public class NodePlugin implements Plugin<Project> {
 		}
 	}
 
-	private void _configureTaskNpmRunBuildForJavaPlugin(
-		ExecuteNpmTask executeNpmTask) {
-
-		executeNpmTask.mustRunAfter(JavaPlugin.PROCESS_RESOURCES_TASK_NAME);
+	private void _configureTaskNpmRunBuildForJavaPlugin(NpmRunTask npmRunTask) {
+		npmRunTask.mustRunAfter(JavaPlugin.PROCESS_RESOURCES_TASK_NAME);
 
 		Task classesTask = GradleUtil.getTask(
-			executeNpmTask.getProject(), JavaPlugin.CLASSES_TASK_NAME);
+			npmRunTask.getProject(), JavaPlugin.CLASSES_TASK_NAME);
 
-		classesTask.dependsOn(executeNpmTask);
+		classesTask.dependsOn(npmRunTask);
 	}
 
 	private void _configureTaskNpmRunTestForLifecycleBasePlugin(

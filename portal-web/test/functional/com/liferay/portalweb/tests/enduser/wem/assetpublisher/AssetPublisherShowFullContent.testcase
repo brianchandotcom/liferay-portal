@@ -113,7 +113,10 @@ definition {
 			entryTitle = "Blogs Entry Title"
 		);
 
-		Navigator.gotoPage(pageName = "Asset Publisher Page");
+		Navigator.gotoSitePage(
+			pageName = "Asset Publisher Page",
+			siteName = "Test Site Name"
+		);
 
 		BlogsEntry.viewEntryViaAPPG(
 			assetTitle = "Blogs Entry Title",
@@ -249,7 +252,10 @@ definition {
 		);
 
 		for (var portletName : list "Blogs,Calendar,Documents and Media,Dynamic Data Lists Display,Knowledge Base Article,Web Content Display") {
-			Navigator.gotoPage(pageName = "Asset Publisher Page");
+			Navigator.gotoSitePage(
+				pageName = "Asset Publisher Page",
+				siteName = "Test Site Name"
+			);
 
 			Portlet.addPG(portletName = "${portletName}");
 		}
@@ -901,7 +907,10 @@ definition {
 	test OrderWCByModifiedDateViaAP {
 		property testray.component.names = "Asset Publisher";
 
-		Navigator.gotoPage(pageName = "Asset Publisher Page");
+		Navigator.gotoSitePage(
+			pageName = "Asset Publisher Page",
+			siteName = "Test Site Name"
+		);
 
 		AssetPublisherPortlet.configureAssetTypePG(
 			assetSubtype = "Any",

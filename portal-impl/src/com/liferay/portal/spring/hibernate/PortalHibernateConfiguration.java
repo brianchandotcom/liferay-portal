@@ -23,14 +23,11 @@ import com.liferay.portal.dao.orm.hibernate.event.NestableAutoFlushEventListener
 import com.liferay.portal.dao.orm.hibernate.event.NestableFlushEventListener;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.DBType;
-import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.Converter;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.PreloadClassLoader;
 import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
@@ -92,12 +89,6 @@ public class PortalHibernateConfiguration extends LocalSessionFactoryBean {
 		setBeanClassLoader(null);
 
 		super.destroy();
-	}
-
-	public void setHibernateConfigurationConverter(
-		Converter<String> hibernateConfigurationConverter) {
-
-		_hibernateConfigurationConverter = hibernateConfigurationConverter;
 	}
 
 	public void setMvccEnabled(boolean mvccEnabled) {
@@ -275,16 +266,6 @@ public class PortalHibernateConfiguration extends LocalSessionFactoryBean {
 			return;
 		}
 
-		if (_hibernateConfigurationConverter != null) {
-			String configurationString = StringUtil.read(inputStream);
-
-			configurationString = _hibernateConfigurationConverter.convert(
-				configurationString);
-
-			inputStream = new UnsyncByteArrayInputStream(
-				configurationString.getBytes());
-		}
-
 		configuration.addInputStream(inputStream);
 
 		inputStream.close();
@@ -387,7 +368,6 @@ public class PortalHibernateConfiguration extends LocalSessionFactoryBean {
 			};
 	}
 
-	private Converter<String> _hibernateConfigurationConverter;
 	private boolean _mvccEnabled = true;
 
 	private static class NoPatternSessionFactoryDelegate {

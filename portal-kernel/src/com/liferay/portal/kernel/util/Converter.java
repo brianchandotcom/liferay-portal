@@ -16,7 +16,9 @@ package com.liferay.portal.kernel.util;
 
 /**
  * @author Brian Wing Shun Chan
+ *  @deprecated As of Judson (7.1.x), with no direct replacement
  */
+@Deprecated
 public interface Converter<T> {
 
 	public T convert(T input);

@@ -103,13 +103,7 @@ public class AssetPublisherAddPortletProvider
 		return themeDisplay.getPlid();
 	}
 
-	@Reference(unbind = "-")
-	protected void setAssetEntryLocalService(
-		AssetEntryLocalService assetEntryLocalService) {
-
-		_assetEntryLocalService = assetEntryLocalService;
-	}
-
+	@Reference
 	private AssetEntryLocalService _assetEntryLocalService;
 
 	@Reference

@@ -125,11 +125,6 @@ public class ParentSitesItemSelectorView
 		_servletContext = servletContext;
 	}
 
-	@Reference(unbind = "-")
-	protected void setGroupLocalService(GroupLocalService groupLocalService) {
-		_groupLocalService = groupLocalService;
-	}
-
 	private static final List<ItemSelectorReturnType>
 		_supportedItemSelectorReturnTypes = Collections.unmodifiableList(
 			ListUtil.fromArray(
@@ -140,6 +135,7 @@ public class ParentSitesItemSelectorView
 	@Reference
 	private AssetPublisherHelper _assetPublisherHelper;
 
+	@Reference
 	private GroupLocalService _groupLocalService;
 
 	@Reference

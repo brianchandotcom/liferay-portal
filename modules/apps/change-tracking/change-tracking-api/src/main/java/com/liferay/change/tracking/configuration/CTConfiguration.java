@@ -27,6 +27,27 @@ import java.util.function.Function;
 public interface CTConfiguration<T, U> {
 
 	/**
+	 * Returns the content type human readable text for this configuration. It
+	 * is a group name of the entities handled in this configuration, such as
+	 * JournalArticle, JournalResource has the content type Web Content.
+	 *
+	 * @return the content type handled in this configuration
+	 * @review
+	 */
+	public String getContentType();
+
+	/**
+	 * Returns the language key for the content type. The content type might be
+	 * written in a language, but the application set to a different one. The
+	 * language key would provide the language agnostic display of the content
+	 * type.
+	 *
+	 * @return the language key for the content type
+	 * @review
+	 */
+	public String getContentTypeLanguageKey();
+
+	/**
 	 * Returns the function from the configuration that retrieves the resource
 	 * entity by it's primary key
 	 *

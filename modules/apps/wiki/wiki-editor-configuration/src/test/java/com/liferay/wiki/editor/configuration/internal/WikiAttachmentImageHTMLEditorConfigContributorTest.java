@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ProxyFactory;
 import com.liferay.portal.language.LanguageImpl;
 import com.liferay.registry.BasicRegistryImpl;
 import com.liferay.registry.RegistryUtil;
@@ -71,7 +72,7 @@ public class WikiAttachmentImageHTMLEditorConfigContributorTest
 			_requestBackedPortletURLFactory.createActionURL(
 				WikiPortletKeys.WIKI)
 		).thenReturn(
-			mock(LiferayPortletURL.class)
+			ProxyFactory.newDummyInstance(LiferayPortletURL.class)
 		);
 
 		_inputEditorTaglibAttributes.put(

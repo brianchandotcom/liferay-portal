@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
+import com.liferay.portal.kernel.util.ProxyFactory;
 import com.liferay.wiki.constants.WikiPortletKeys;
 
 import java.util.HashMap;
@@ -64,7 +65,7 @@ public class WikiLinksCKEditorCreoleEditorConfigContributorTest
 			_requestBackedPortletURLFactory.createActionURL(
 				WikiPortletKeys.WIKI)
 		).thenReturn(
-			mock(LiferayPortletURL.class)
+			ProxyFactory.newDummyInstance(LiferayPortletURL.class)
 		);
 
 		_inputEditorTaglibAttributes.put(

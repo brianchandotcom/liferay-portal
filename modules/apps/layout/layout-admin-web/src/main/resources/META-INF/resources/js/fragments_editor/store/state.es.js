@@ -264,7 +264,7 @@ const INITIAL_STATE = {
 										fragmentEntryLinkIds: Config.arrayOf(
 											Config.string()
 										),
-										size: Config.string()
+										size: Config.string().value('')
 									}
 								)
 							),

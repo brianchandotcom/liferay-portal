@@ -67,7 +67,8 @@ public class CTManagerTest {
 
 		_user = UserTestUtil.addUser();
 
-		_ctEngineManager.enableChangeTracking(TestPropsValues.getUserId());
+		_ctEngineManager.enableChangeTracking(
+			TestPropsValues.getCompanyId(), TestPropsValues.getUserId());
 
 		_testVersionClassClassName = _classNameLocalService.addClassName(
 			Object.class.getName());

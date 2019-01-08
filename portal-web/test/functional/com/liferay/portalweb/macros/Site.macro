@@ -1086,6 +1086,10 @@ definition {
 
 		Search.searchCP(searchTerm = "Name");
 
+		AssertVisible(
+			locator1 = "Link#CLEAR"
+		);
+
 		if (IsElementNotPresent(locator1 = "Message#EMPTY_INFO")) {
 			PortletEntry.selectAll();
 

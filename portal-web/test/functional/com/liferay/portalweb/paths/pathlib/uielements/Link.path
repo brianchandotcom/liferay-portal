@@ -24,6 +24,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CLEAR</td>
+	<td>//a[contains(.,'Clear')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CONFIGURE_TWITTER</td>
 	<td>//a[contains(.,'Please configure your Twitter screen name.')]</td>
 	<td></td>

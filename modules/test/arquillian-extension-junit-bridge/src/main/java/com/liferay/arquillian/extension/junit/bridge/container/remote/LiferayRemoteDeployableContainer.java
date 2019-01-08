@@ -18,6 +18,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
 import javax.management.MBeanServerConnection;
+import javax.management.MalformedObjectNameException;
 import javax.management.ObjectName;
 
 import org.jboss.arquillian.container.osgi.jmx.JMXDeployableContainer;
@@ -67,42 +68,47 @@ public class LiferayRemoteDeployableContainer
 
 	@Override
 	public void start() throws LifecycleException {
-		MBeanServerConnection mBeanServer = null;
-
 		try {
-			mBeanServer = getMBeanServerConnection(30, TimeUnit.SECONDS);
+			MBeanServerConnection mBeanServer = getMBeanServerConnection(
+				30, TimeUnit.SECONDS);
 
 			mbeanServerInstance.set(mBeanServer);
-		}
-		catch (TimeoutException te) {
-			throw new LifecycleException(
-				"Error connecting to Karaf MBeanServer: ", te);
-		}
-
-		try {
-			ObjectName objectName = new ObjectName(
-				"osgi.core:type=framework,*");
 
 			frameworkMBean = getMBeanProxy(
-				mBeanServer, objectName, FrameworkMBean.class, 30,
+				mBeanServer, _frameworkObjectName, FrameworkMBean.class, 30,
 				TimeUnit.SECONDS);
-
-			objectName = new ObjectName("osgi.core:type=bundleState,*");
 
 			bundleStateMBean = getMBeanProxy(
-				mBeanServer, objectName, BundleStateMBean.class, 30,
+				mBeanServer, _bundleStateObjectName, BundleStateMBean.class, 30,
 				TimeUnit.SECONDS);
-
-			objectName = new ObjectName("osgi.core:type=serviceState,*");
 
 			serviceStateMBean = getMBeanProxy(
-				mBeanServer, objectName, ServiceStateMBean.class, 30,
-				TimeUnit.SECONDS);
+				mBeanServer, _serviceStateObjectName, ServiceStateMBean.class,
+				30, TimeUnit.SECONDS);
 
 			awaitBootstrapCompleteServices();
 		}
-		catch (Exception e) {
-			throw new LifecycleException("Cannot start Karaf container", e);
+		catch (TimeoutException te) {
+			throw new LifecycleException("JMX timeout", te);
+		}
+	}
+
+	private static final ObjectName _bundleStateObjectName;
+	private static final ObjectName _frameworkObjectName;
+	private static final ObjectName _serviceStateObjectName;
+
+	static {
+		try {
+			_bundleStateObjectName = new ObjectName(
+				"osgi.core:type=bundleState,*");
+
+			_frameworkObjectName = new ObjectName("osgi.core:type=framework,*");
+
+			_serviceStateObjectName = new ObjectName(
+				"osgi.core:type=serviceState,*");
+		}
+		catch (MalformedObjectNameException mone) {
+			throw new ExceptionInInitializerError(mone);
 		}
 	}
 

@@ -79,13 +79,6 @@ public class WorkflowPermissionImpl implements WorkflowPermission {
 				permissionChecker, workflowInstance);
 
 			if (!hasPermission && actionId.equals(ActionKeys.VIEW)) {
-				if (!permissionChecker.hasOwnerPermission(
-						permissionChecker.getCompanyId(), className, classPK,
-						permissionChecker.getUserId(), actionId)) {
-
-					return false;
-				}
-
 				return null;
 			}
 

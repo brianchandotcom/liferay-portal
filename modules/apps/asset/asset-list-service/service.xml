@@ -149,5 +149,6 @@
 	<exceptions>
 		<exception>AssetListEntryTitle</exception>
 		<exception>DuplicateAssetListEntryTitle</exception>
+		<exception>InvalidAssetEntryPosition</exception>
 	</exceptions>
 </service-builder>

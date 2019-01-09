@@ -138,6 +138,13 @@ public class DisplayPageFriendlyURLResolver implements FriendlyURLResolver {
 				groupId, assetEntry, mainPath, requestContext);
 		}
 
+		HttpServletRequest request = (HttpServletRequest)requestContext.get(
+			"request");
+
+		Locale locale = _portal.getLocale(request);
+
+		urlTitle = journalArticle.getUrlTitle(locale);
+
 		return _getBasicLayoutURL(
 			groupId, privateLayout, mainPath, friendlyURL, params,
 			requestContext, urlTitle, journalArticle);
@@ -325,11 +332,9 @@ public class DisplayPageFriendlyURLResolver implements FriendlyURLResolver {
 		actualParams.put(
 			namespace + "type", new String[] {assetRendererFactory.getType()});
 
-		actualParams.put(
-			namespace + "urlTitle",
-			new String[] {journalArticle.getUrlTitle()});
-
 		Locale locale = _portal.getLocale(request);
+
+		actualParams.put(namespace + "urlTitle", new String[] {urlTitle});
 
 		FriendlyURLEntryLocalization friendlyURLEntryLocalization =
 			_friendlyURLEntryLocalService.fetchFriendlyURLEntryLocalization(

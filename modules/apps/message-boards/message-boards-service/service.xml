@@ -338,7 +338,7 @@
 			<finder-column name="parentMessageId" />
 			<finder-column name="status" />
 		</finder>
-		<finder name="G_U_S" return-type="Collection" where="categoryId != -1">
+		<finder name="G_U_S" return-type="Collection" where="categoryId != -1 AND (anonymous = [$FALSE$])">
 			<finder-column name="groupId" />
 			<finder-column name="userId" />
 			<finder-column name="status" />

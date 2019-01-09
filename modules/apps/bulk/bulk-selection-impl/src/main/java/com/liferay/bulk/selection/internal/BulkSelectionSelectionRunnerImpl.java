@@ -20,6 +20,8 @@ import com.liferay.bulk.selection.BulkSelectionFactory;
 import com.liferay.bulk.selection.BulkSelectionRunner;
 import com.liferay.bulk.selection.internal.constants.BulkSelectionBackgroundTaskConstants;
 import com.liferay.portal.background.task.constants.BackgroundTaskContextMapConstants;
+import com.liferay.portal.kernel.backgroundtask.BackgroundTask;
+import com.liferay.portal.kernel.backgroundtask.BackgroundTaskConstants;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskManager;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.CompanyConstants;
@@ -29,7 +31,9 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import java.io.Serializable;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -39,6 +43,24 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(immediate = true, service = BulkSelectionRunner.class)
 public class BulkSelectionSelectionRunnerImpl implements BulkSelectionRunner {
+
+	@Override
+	public boolean isBusy(long userId) {
+		List<BackgroundTask> backgroundTasks =
+			_backgroundTaskManager.getBackgroundTasks(
+				BulkSelectionBackgroundTaskExecutor.class.getName(),
+				BackgroundTaskConstants.STATUS_IN_PROGRESS);
+
+		Stream<BackgroundTask> backgroundTaskStream = backgroundTasks.stream();
+
+		if (backgroundTaskStream.anyMatch(
+				backgroundTask -> backgroundTask.getUserId() == userId)) {
+
+			return true;
+		}
+
+		return false;
+	}
 
 	@Override
 	public <T> void run(

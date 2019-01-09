@@ -18,7 +18,11 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.bulk.selection.BulkSelectionRunner;
 import com.liferay.bulk.selection.test.util.TestBulkSelectionAction;
 import com.liferay.bulk.selection.test.util.TestBulkSelectionFactory;
+import com.liferay.bulk.selection.test.util.TestBusyBulkSelectionAction;
+import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.rule.Sync;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
@@ -42,6 +46,30 @@ public class BulkSelectionRunnerTest {
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
+
+	@Sync
+	@Test
+	public void testIsBusyWhenActionsAreRunning() throws Exception {
+		long userId = TestPropsValues.getUserId();
+
+		PrincipalThreadLocal.setName(userId);
+
+		Assert.assertFalse(
+			"bulkSelectionRunner is not busy",
+			_bulkSelectionRunner.isBusy(userId));
+
+		HashMap<String, Serializable> inputMap = new HashMap<>();
+
+		inputMap.put("userId", userId);
+
+		_bulkSelectionRunner.run(
+			_testBulkSelectionFactory.create(new HashMap<>()),
+			_testBusyBulkSelectionAction, inputMap);
+
+		Assert.assertFalse(
+			"bulkSelectionRunner is not busy",
+			_bulkSelectionRunner.isBusy(userId));
+	}
 
 	@Test
 	public void testRunsABulkSelectionAction() throws Exception {
@@ -69,5 +97,8 @@ public class BulkSelectionRunnerTest {
 
 	@Inject
 	private TestBulkSelectionFactory _testBulkSelectionFactory;
+
+	@Inject
+	private TestBusyBulkSelectionAction _testBusyBulkSelectionAction;
 
 }

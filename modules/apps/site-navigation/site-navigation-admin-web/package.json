@@ -18,19 +18,13 @@
 		"metal-state": "^2.13.2"
 	},
 	"devDependencies": {
-		"babel-cli": "^6.26.0",
-		"babel-preset-env": "^1.7.0",
-		"check-source-formatting": "^2.0.10",
-		"cross-env": "^5.2.0",
-		"liferay-npm-bundler": "^2.6.1",
-		"liferay-npm-bundler-preset-liferay-dev": "^1.1.0"
+		"liferay-npm-scripts": "^1.0.0"
 	},
 	"name": "site-navigation-admin-web",
 	"scripts": {
-		"build": "cross-env NODE_ENV=production babel --source-maps -d classes/META-INF/resources src/main/resources/META-INF/resources && liferay-npm-bundler",
-		"checkFormat": "npm run csf",
-		"csf": "csf src/**/*.es.js src/**/*.scss src/**/*.jsp",
-		"format": "npm run csf -- -i"
+		"build": "liferay-npm-scripts build --bundler",
+		"csf": "liferay-npm-scripts lint",
+		"format": "liferay-npm-scripts format"
 	},
 	"version": "2.0.0"
 }

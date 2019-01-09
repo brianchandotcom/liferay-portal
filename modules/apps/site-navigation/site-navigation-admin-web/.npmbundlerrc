@@ -1,6 +1,3 @@
 {
-    "ignore": [
-        "**/config.js"
-    ],
-    "preset": "liferay-npm-bundler-preset-liferay-dev"
+	"ignore": ["**/config.js"]
 }

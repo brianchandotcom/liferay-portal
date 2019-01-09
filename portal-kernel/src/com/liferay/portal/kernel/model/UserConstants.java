@@ -95,11 +95,12 @@ public class UserConstants {
 
 		sb.append(imagePath);
 
-		if (PrefsPropsUtil.getBoolean(
-				CompanyThreadLocal.getCompanyId(),
-				PropsKeys.
-					FIELD_ENABLE_COM_LIFERAY_PORTAL_KERNEL_MODEL_CONTACT_MALE)) {
+		boolean contactMaleEnabled = PrefsPropsUtil.getBoolean(
+			CompanyThreadLocal.getCompanyId(),
+			PropsKeys.
+				FIELD_ENABLE_COM_LIFERAY_PORTAL_KERNEL_MODEL_CONTACT_MALE);
 
+		if (contactMaleEnabled) {
 			if (male) {
 				sb.append("/user_male_portrait");
 			}

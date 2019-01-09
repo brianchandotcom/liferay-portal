@@ -44,6 +44,7 @@ import org.mockito.Matchers;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 
+import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
@@ -73,26 +74,26 @@ public class SearchResultUtilTest extends BaseSearchResultUtilTestCase {
 
 	@Test
 	public void testSummaryFromAssetRenderer() throws Exception {
-		when(
+		Mockito.when(
 			_assetRenderer.getSearchSummary((Locale)Matchers.any())
 		).thenReturn(
 			SearchTestUtil.SUMMARY_CONTENT
 		);
 
-		when(
+		Mockito.when(
 			_assetRenderer.getTitle((Locale)Matchers.any())
 		).thenReturn(
 			SearchTestUtil.SUMMARY_TITLE
 		);
 
-		when(
+		Mockito.when(
 			_assetRendererFactory.getAssetRenderer(Matchers.anyLong())
 		).thenReturn(
 			_assetRenderer
 		);
 
-		stub(
-			method(
+		PowerMockito.stub(
+			PowerMockito.method(
 				AssetRendererFactoryRegistryUtil.class,
 				"getAssetRendererFactoryByClassName", String.class)
 		).toReturn(

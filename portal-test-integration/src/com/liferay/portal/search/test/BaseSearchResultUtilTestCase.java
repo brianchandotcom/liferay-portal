@@ -40,19 +40,13 @@ import java.util.List;
 import org.junit.Assert;
 import org.junit.Before;
 
-import org.mockito.MockitoAnnotations;
-
-import org.powermock.api.mockito.PowerMockito;
-
 /**
  * @author André de Oliveira
  */
-public abstract class BaseSearchResultUtilTestCase extends PowerMockito {
+public abstract class BaseSearchResultUtilTestCase {
 
 	@Before
 	public void setUp() throws Exception {
-		MockitoAnnotations.initMocks(this);
-
 		setUpRegistryUtil();
 
 		setUpClassNameLocalService();

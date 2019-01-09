@@ -60,6 +60,7 @@ import org.mockito.Matchers;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 
+import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
@@ -85,7 +86,7 @@ public class SearchResultUtilDLFileEntryTest
 
 		Assert.assertNull(searchResult.getSummary());
 
-		verifyZeroInteractions(_dlAppLocalService);
+		PowerMockito.verifyZeroInteractions(_dlAppLocalService);
 
 		assertEmptyCommentRelatedSearchResults(searchResult);
 		assertEmptyVersions(searchResult);
@@ -105,8 +106,8 @@ public class SearchResultUtilDLFileEntryTest
 			SearchTestUtil.SUMMARY_TITLE
 		);
 
-		replace(
-			method(
+		PowerMockito.replace(
+			PowerMockito.method(
 				AssetRendererFactoryRegistryUtil.class,
 				"getAssetRendererFactoryByClassName", String.class)
 		).with(
@@ -231,7 +232,7 @@ public class SearchResultUtilDLFileEntryTest
 
 	@Test
 	public void testDLFileEntryMissing() throws Exception {
-		when(
+		Mockito.when(
 			_dlAppLocalService.getFileEntry(SearchTestUtil.ENTRY_CLASS_PK)
 		).thenReturn(
 			null
@@ -263,7 +264,7 @@ public class SearchResultUtilDLFileEntryTest
 			SearchTestUtil.ATTACHMENT_OWNER_CLASS_NAME
 		);
 
-		verifyStatic(Mockito.atLeastOnce());
+		PowerMockito.verifyStatic(Mockito.atLeastOnce());
 
 		AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
 			SearchTestUtil.ATTACHMENT_OWNER_CLASS_NAME);

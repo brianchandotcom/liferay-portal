@@ -56,31 +56,31 @@ public class SearchResultUtilMBMessageTest
 	public void setUp() throws Exception {
 		super.setUp();
 
-		when(
+		Mockito.when(
 			_commentManager.fetchComment(Mockito.anyLong())
 		).thenReturn(
 			_comment
 		);
 
-		when(
+		Mockito.when(
 			_comment.getCommentId()
 		).thenReturn(
 			SearchTestUtil.ENTRY_CLASS_PK
 		);
 
-		when(
+		Mockito.when(
 			_mbMessage.getMessageId()
 		).thenReturn(
 			SearchTestUtil.ENTRY_CLASS_PK
 		);
 
-		when(
+		Mockito.when(
 			_mbMessageLocalService.getMessage(SearchTestUtil.ENTRY_CLASS_PK)
 		).thenReturn(
 			_mbMessage
 		);
 
-		when(
+		Mockito.when(
 			_mbMessageLocalService.getMessage(SearchTestUtil.ENTRY_CLASS_PK + 1)
 		).thenReturn(
 			_mbMessage
@@ -104,7 +104,7 @@ public class SearchResultUtilMBMessageTest
 			commentRelatedSearchResults.toString(),
 			commentRelatedSearchResults.isEmpty());
 
-		verifyZeroInteractions(_mbMessageLocalService);
+		Mockito.verifyZeroInteractions(_mbMessageLocalService);
 
 		Assert.assertNull(searchResult.getSummary());
 

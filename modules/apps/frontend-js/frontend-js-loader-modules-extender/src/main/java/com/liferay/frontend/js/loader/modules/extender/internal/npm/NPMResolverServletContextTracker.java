@@ -61,13 +61,8 @@ public class NPMResolverServletContextTracker
 		ServletContext servletContext = _bundleContext.getService(
 			serviceReference);
 
-		String npmResolvedPackageName = _getNpmResolvedPackageName(bundle);
-
-		if (npmResolvedPackageName != null) {
-			servletContext.setAttribute(
-				NPMResolvedPackageNameUtil.NPM_RESOLVED_PACKAGE_NAME,
-				npmResolvedPackageName);
-		}
+		NPMResolvedPackageNameUtil.set(
+			servletContext, _getNpmResolvedPackageName(bundle));
 
 		_bundleContext.ungetService(serviceReference);
 

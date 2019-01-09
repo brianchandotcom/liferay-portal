@@ -73,7 +73,7 @@ public class DefineObjectsTag extends TagSupport {
 
 		pageContext.setAttribute(
 			"npmResolvedPackageName",
-			NPMResolvedPackageNameUtil.getNpmResolvedPackageName(request));
+			NPMResolvedPackageNameUtil.get(request.getServletContext()));
 
 		if (_overrideResourceBundle != null) {
 			pageContext.setAttribute("resourceBundle", _overrideResourceBundle);

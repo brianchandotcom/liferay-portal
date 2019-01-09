@@ -22,13 +22,19 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class NPMResolvedPackageNameUtil {
 
-	public static final String NPM_RESOLVED_PACKAGE_NAME =
-		"com.liferay.npm.resolved.package.name";
+	public static String get(ServletContext servletContext) {
+		return (String)servletContext.getAttribute(
+			NPMResolvedPackageNameUtil.class.getName());
+	}
 
-	public static String getNpmResolvedPackageName(HttpServletRequest request) {
-		ServletContext servletContext = request.getServletContext();
+	public static void set(
+		ServletContext servletContext, String npmResolvedPackageName) {
 
-		return (String)servletContext.getAttribute(NPM_RESOLVED_PACKAGE_NAME);
+		if (npmResolvedPackageName != null) {
+			servletContext.setAttribute(
+				NPMResolvedPackageNameUtil.class.getName(),
+				npmResolvedPackageName);
+		}
 	}
 
 }

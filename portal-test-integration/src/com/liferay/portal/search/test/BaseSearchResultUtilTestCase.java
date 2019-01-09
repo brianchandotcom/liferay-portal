@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.test.util.PropsTestUtil;
 import com.liferay.portal.kernel.util.FastDateFormatFactory;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
+import com.liferay.portal.kernel.util.ProxyFactory;
 import com.liferay.registry.BasicRegistryImpl;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
@@ -121,7 +122,7 @@ public abstract class BaseSearchResultUtilTestCase extends PowerMockito {
 			new FastDateFormatFactoryUtil();
 
 		fastDateFormatFactoryUtil.setFastDateFormatFactory(
-			mock(FastDateFormatFactory.class));
+			ProxyFactory.newDummyInstance(FastDateFormatFactory.class));
 	}
 
 	protected void setUpIndexerRegistry() {

@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
 import com.liferay.portal.kernel.test.rule.NewEnv;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.PredicateFilter;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.test.aspects.ReflectionUtilAdvice;
 import com.liferay.portal.test.rule.AdviseWith;
@@ -317,21 +316,16 @@ public class ASMWrapperUtilTest {
 
 		methods = ArrayUtil.<Method>filter(
 			methods,
-			new PredicateFilter<Method>() {
+			method -> {
+				String name = method.getName();
 
-				@Override
-				public boolean filter(Method method) {
-					String name = method.getName();
+				if (name.equals("equals") || name.equals("hashCode") ||
+					name.equals("toString")) {
 
-					if (name.equals("equals") || name.equals("hashCode") ||
-						name.equals("toString")) {
-
-						return false;
-					}
-
-					return true;
+					return false;
 				}
 
+				return true;
 			});
 
 		Arrays.sort(

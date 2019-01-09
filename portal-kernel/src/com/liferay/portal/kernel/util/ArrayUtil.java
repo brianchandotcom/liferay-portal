@@ -35,6 +35,7 @@ import java.util.Locale;
 import java.util.Objects;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.function.Predicate;
 
 /**
  * @author Brian Wing Shun Chan
@@ -831,7 +832,7 @@ public class ArrayUtil {
 		return true;
 	}
 
-	public static <T> int count(T[] array, PredicateFilter<T> predicateFilter) {
+	public static <T> int count(T[] array, Predicate<T> predicate) {
 		if (isEmpty(array)) {
 			return 0;
 		}
@@ -839,7 +840,7 @@ public class ArrayUtil {
 		int count = 0;
 
 		for (T t : array) {
-			if (predicateFilter.filter(t)) {
+			if (predicate.test(t)) {
 				count++;
 			}
 		}
@@ -874,15 +875,13 @@ public class ArrayUtil {
 		return set.toArray(new String[set.size()]);
 	}
 
-	public static <T> boolean exists(
-		T[] array, PredicateFilter<T> predicateFilter) {
-
+	public static <T> boolean exists(T[] array, Predicate<T> predicate) {
 		if (isEmpty(array)) {
 			return false;
 		}
 
 		for (T t : array) {
-			if (predicateFilter.filter(t)) {
+			if (predicate.test(t)) {
 				return true;
 			}
 		}
@@ -891,7 +890,7 @@ public class ArrayUtil {
 	}
 
 	public static boolean[] filter(
-		boolean[] array, PredicateFilter<Boolean> predicateFilter) {
+		boolean[] array, Predicate<Boolean> predicate) {
 
 		if (isEmpty(array)) {
 			return array;
@@ -900,7 +899,7 @@ public class ArrayUtil {
 		List<Boolean> filteredList = new ArrayList<>();
 
 		for (boolean b : array) {
-			if (predicateFilter.filter(b)) {
+			if (predicate.test(b)) {
 				filteredList.add(b);
 			}
 		}
@@ -908,9 +907,7 @@ public class ArrayUtil {
 		return toArray(filteredList.toArray(new Boolean[filteredList.size()]));
 	}
 
-	public static byte[] filter(
-		byte[] array, PredicateFilter<Byte> predicateFilter) {
-
+	public static byte[] filter(byte[] array, Predicate<Byte> predicate) {
 		if (isEmpty(array)) {
 			return array;
 		}
@@ -918,7 +915,7 @@ public class ArrayUtil {
 		List<Byte> filteredList = new ArrayList<>();
 
 		for (byte b : array) {
-			if (predicateFilter.filter(b)) {
+			if (predicate.test(b)) {
 				filteredList.add(b);
 			}
 		}
@@ -926,9 +923,7 @@ public class ArrayUtil {
 		return toArray(filteredList.toArray(new Byte[filteredList.size()]));
 	}
 
-	public static char[] filter(
-		char[] array, PredicateFilter<Character> predicateFilter) {
-
+	public static char[] filter(char[] array, Predicate<Character> predicate) {
 		if (isEmpty(array)) {
 			return array;
 		}
@@ -936,7 +931,7 @@ public class ArrayUtil {
 		List<Character> filteredList = new ArrayList<>();
 
 		for (char c : array) {
-			if (predicateFilter.filter(c)) {
+			if (predicate.test(c)) {
 				filteredList.add(c);
 			}
 		}
@@ -945,9 +940,7 @@ public class ArrayUtil {
 			filteredList.toArray(new Character[filteredList.size()]));
 	}
 
-	public static double[] filter(
-		double[] array, PredicateFilter<Double> predicateFilter) {
-
+	public static double[] filter(double[] array, Predicate<Double> predicate) {
 		if (isEmpty(array)) {
 			return array;
 		}
@@ -955,7 +948,7 @@ public class ArrayUtil {
 		List<Double> filteredList = new ArrayList<>();
 
 		for (double d : array) {
-			if (predicateFilter.filter(d)) {
+			if (predicate.test(d)) {
 				filteredList.add(d);
 			}
 		}
@@ -963,9 +956,7 @@ public class ArrayUtil {
 		return toArray(filteredList.toArray(new Double[filteredList.size()]));
 	}
 
-	public static float[] filter(
-		float[] array, PredicateFilter<Float> predicateFilter) {
-
+	public static float[] filter(float[] array, Predicate<Float> predicate) {
 		if (isEmpty(array)) {
 			return array;
 		}
@@ -973,7 +964,7 @@ public class ArrayUtil {
 		List<Float> filteredList = new ArrayList<>();
 
 		for (float f : array) {
-			if (predicateFilter.filter(f)) {
+			if (predicate.test(f)) {
 				filteredList.add(f);
 			}
 		}
@@ -981,9 +972,7 @@ public class ArrayUtil {
 		return toArray(filteredList.toArray(new Float[filteredList.size()]));
 	}
 
-	public static int[] filter(
-		int[] array, PredicateFilter<Integer> predicateFilter) {
-
+	public static int[] filter(int[] array, Predicate<Integer> predicate) {
 		if (isEmpty(array)) {
 			return array;
 		}
@@ -991,7 +980,7 @@ public class ArrayUtil {
 		List<Integer> filteredList = new ArrayList<>();
 
 		for (int i : array) {
-			if (predicateFilter.filter(i)) {
+			if (predicate.test(i)) {
 				filteredList.add(i);
 			}
 		}
@@ -999,9 +988,7 @@ public class ArrayUtil {
 		return toArray(filteredList.toArray(new Integer[filteredList.size()]));
 	}
 
-	public static long[] filter(
-		long[] array, PredicateFilter<Long> predicateFilter) {
-
+	public static long[] filter(long[] array, Predicate<Long> predicate) {
 		if (isEmpty(array)) {
 			return array;
 		}
@@ -1009,7 +996,7 @@ public class ArrayUtil {
 		List<Long> filteredList = new ArrayList<>();
 
 		for (long l : array) {
-			if (predicateFilter.filter(l)) {
+			if (predicate.test(l)) {
 				filteredList.add(l);
 			}
 		}
@@ -1017,9 +1004,7 @@ public class ArrayUtil {
 		return toArray(filteredList.toArray(new Long[filteredList.size()]));
 	}
 
-	public static short[] filter(
-		short[] array, PredicateFilter<Short> predicateFilter) {
-
+	public static short[] filter(short[] array, Predicate<Short> predicate) {
 		if (isEmpty(array)) {
 			return array;
 		}
@@ -1027,7 +1012,7 @@ public class ArrayUtil {
 		List<Short> filteredList = new ArrayList<>();
 
 		for (short s : array) {
-			if (predicateFilter.filter(s)) {
+			if (predicate.test(s)) {
 				filteredList.add(s);
 			}
 		}
@@ -1035,9 +1020,7 @@ public class ArrayUtil {
 		return toArray(filteredList.toArray(new Short[filteredList.size()]));
 	}
 
-	public static <T> T[] filter(
-		T[] array, PredicateFilter<T> filterPredicate) {
-
+	public static <T> T[] filter(T[] array, Predicate<T> filterPredicate) {
 		if (isEmpty(array)) {
 			return array;
 		}
@@ -1045,7 +1028,7 @@ public class ArrayUtil {
 		List<T> filteredList = new ArrayList<>();
 
 		for (T t : array) {
-			if (filterPredicate.filter(t)) {
+			if (filterPredicate.test(t)) {
 				filteredList.add(t);
 			}
 		}

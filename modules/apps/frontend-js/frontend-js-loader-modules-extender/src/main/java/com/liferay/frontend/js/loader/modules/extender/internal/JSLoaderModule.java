@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.PredicateFilter;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -220,19 +219,12 @@ public class JSLoaderModule {
 				continue;
 			}
 
-			final String submoduleName = submodulePath.substring(0, y);
-
-			PredicateFilter<String> wildcardPredicateFilter =
-				new PredicateFilter<String>() {
-
-					public boolean filter(String item) {
-						return _matchesWildcard(submoduleName, item);
-					}
-
-				};
+			String submoduleName = submodulePath.substring(0, y);
 
 			if (exportAll ||
-				ArrayUtil.exists(jsSubmodulesExport, wildcardPredicateFilter)) {
+				ArrayUtil.exists(
+					jsSubmodulesExport,
+					item -> _matchesWildcard(submoduleName, item))) {
 
 				mapsConfigurationJSONObject.put(
 					submoduleName, moduleRootPath.concat(submoduleName));

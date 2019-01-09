@@ -70,7 +70,6 @@ import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.PredicateFilter;
 import com.liferay.portal.kernel.util.PrefsParamUtil;
 import com.liferay.portal.kernel.util.StringComparator;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -662,14 +661,7 @@ public class AssetPublisherDisplayContext {
 
 		return ArrayUtil.filter(
 			getExtensions(),
-			new PredicateFilter<String>() {
-
-				@Override
-				public boolean filter(String extension) {
-					return ArrayUtil.contains(supportedConversions, extension);
-				}
-
-			});
+			extension -> ArrayUtil.contains(supportedConversions, extension));
 	}
 
 	public long[] getGroupIds() {

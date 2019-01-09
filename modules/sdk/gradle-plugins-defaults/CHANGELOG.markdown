@@ -5335,6 +5335,14 @@ version 2.0.8.
 - [LPS-88859]: Remove the logic that sets the `baseline.onlyIf` property to `false`
 when there is no previous published version for the project.
 
+## 5.5.163 - 2019-01-08
+
+### Changed
+- [LPS-88903]: Update the [Liferay Gradle Plugins] dependency to version
+3.13.53.
+- [LPS-88903]: Update the [Liferay Gradle Plugins Baseline] dependency to
+version 2.0.9.
+
 [Find Security Bugs]: https://github.com/liferay/liferay-portal/tree/master/modules/third-party/com-h3xstream-findsecbugs
 [Gradle Dependency Management]: https://github.com/spring-gradle-plugins/dependency-management-plugin
 [Gradle License Report]: https://github.com/jk1/Gradle-License-Report
@@ -5877,6 +5885,7 @@ when there is no previous published version for the project.
 [LPS-88588]: https://issues.liferay.com/browse/LPS-88588
 [LPS-88823]: https://issues.liferay.com/browse/LPS-88823
 [LPS-88859]: https://issues.liferay.com/browse/LPS-88859
+[LPS-88903]: https://issues.liferay.com/browse/LPS-88903
 [LRDOCS-2594]: https://issues.liferay.com/browse/LRDOCS-2594
 [LRDOCS-2841]: https://issues.liferay.com/browse/LRDOCS-2841
 [LRDOCS-2981]: https://issues.liferay.com/browse/LRDOCS-2981

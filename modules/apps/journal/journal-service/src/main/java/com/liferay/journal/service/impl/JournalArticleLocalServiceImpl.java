@@ -6982,15 +6982,15 @@ public class JournalArticleLocalServiceImpl
 
 		actionableDynamicQuery.setAddCriteriaMethod(
 			dynamicQuery -> {
-				Property statusProperty = PropertyFactoryUtil.forName("status");
-
-				dynamicQuery.add(
-					statusProperty.eq(WorkflowConstants.STATUS_SCHEDULED));
-
 				Property displayDateProperty = PropertyFactoryUtil.forName(
 					"displayDate");
 
 				dynamicQuery.add(displayDateProperty.lt(displayDate));
+
+				Property statusProperty = PropertyFactoryUtil.forName("status");
+
+				dynamicQuery.add(
+					statusProperty.eq(WorkflowConstants.STATUS_SCHEDULED));
 			});
 		actionableDynamicQuery.setInterval(_INTERVAL);
 		actionableDynamicQuery.setPerformActionMethod(

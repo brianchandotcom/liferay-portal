@@ -23,16 +23,18 @@ import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Jeyvison Nascimento
  */
-@Component(
-	immediate = true, service = DEDataDefinitionDeleteRequestExecutor.class
-)
 public class DEDataDefinitionDeleteRequestExecutor {
+
+	public DEDataDefinitionDeleteRequestExecutor(
+		DDLRecordSetLocalService ddlRecordSetLocalService,
+		DDMStructureLocalService ddmStructureLocalService) {
+
+		_ddlRecordSetLocalService = ddlRecordSetLocalService;
+		_ddmStructureLocalService = ddmStructureLocalService;
+	}
 
 	public DEDataDefinitionDeleteResponse execute(
 			DEDataDefinitionDeleteRequest deDataDefinitionDeleteRequest)
@@ -43,14 +45,14 @@ public class DEDataDefinitionDeleteRequestExecutor {
 
 		deleteDDLRecordSet(deDataDefinitionId);
 
-		ddmStructureLocalService.deleteDDMStructure(deDataDefinitionId);
+		_ddmStructureLocalService.deleteDDMStructure(deDataDefinitionId);
 
 		return DEDataDefinitionDeleteResponse.Builder.of(deDataDefinitionId);
 	}
 
 	protected void deleteDDLRecordSet(long deDataDefinitionId) {
 		ActionableDynamicQuery actionableDynamicQuery =
-			ddlRecordSetLocalService.getActionableDynamicQuery();
+			_ddlRecordSetLocalService.getActionableDynamicQuery();
 
 		actionableDynamicQuery.setAddCriteriaMethod(
 			dynamicQuery -> {
@@ -61,13 +63,10 @@ public class DEDataDefinitionDeleteRequestExecutor {
 			});
 		actionableDynamicQuery.setPerformActionMethod(
 			(DDLRecordSet ddlRecordSet) ->
-				ddlRecordSetLocalService.deleteDDLRecordSet(ddlRecordSet));
+				_ddlRecordSetLocalService.deleteDDLRecordSet(ddlRecordSet));
 	}
 
-	@Reference
-	protected DDLRecordSetLocalService ddlRecordSetLocalService;
-
-	@Reference
-	protected DDMStructureLocalService ddmStructureLocalService;
+	private final DDLRecordSetLocalService _ddlRecordSetLocalService;
+	private final DDMStructureLocalService _ddmStructureLocalService;
 
 }

@@ -24,17 +24,16 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Leonardo Barros
  */
-@Component(
-	immediate = true,
-	service = DEDataDefinitionSaveModelPermissionsRequestExecutor.class
-)
 public class DEDataDefinitionSaveModelPermissionsRequestExecutor {
+
+	public DEDataDefinitionSaveModelPermissionsRequestExecutor(
+		ResourcePermissionLocalService resourcePermissionLocalService) {
+
+		_resourcePermissionLocalService = resourcePermissionLocalService;
+	}
 
 	public DEDataDefinitionSaveModelPermissionsResponse execute(
 			DEDataDefinitionSaveModelPermissionsRequest
@@ -78,7 +77,7 @@ public class DEDataDefinitionSaveModelPermissionsRequestExecutor {
 		long deDataDefinitionId =
 			deDataDefinitionSaveModelPermissionsRequest.getDEDataDefinitionId();
 
-		resourcePermissionLocalService.addModelResourcePermissions(
+		_resourcePermissionLocalService.addModelResourcePermissions(
 			deDataDefinitionSaveModelPermissionsRequest.getCompanyId(), groupId,
 			userId, DEDataDefinitionConstants.MODEL_RESOURCE_NAME,
 			String.valueOf(deDataDefinitionId),
@@ -89,7 +88,7 @@ public class DEDataDefinitionSaveModelPermissionsRequestExecutor {
 			deDataDefinitionId);
 	}
 
-	@Reference
-	protected ResourcePermissionLocalService resourcePermissionLocalService;
+	private final ResourcePermissionLocalService
+		_resourcePermissionLocalService;
 
 }

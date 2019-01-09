@@ -28,14 +28,20 @@ import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 
 import java.util.List;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Jeyvison Nascimento
  */
-@Component(immediate = true, service = DEDataDefinitionGetRequestExecutor.class)
 public class DEDataDefinitionGetRequestExecutor {
+
+	public DEDataDefinitionGetRequestExecutor(
+		DDMStructureLocalService ddmStructureLocalService,
+		DEDataDefinitionFieldsDeserializerTracker
+			deDataDefinitionFieldsDeserializerTracker) {
+
+		_ddmStructureLocalService = ddmStructureLocalService;
+		_deDataDefinitionFieldsDeserializerTracker =
+			deDataDefinitionFieldsDeserializerTracker;
+	}
 
 	public DEDataDefinitionGetResponse execute(
 			DEDataDefinitionGetRequest deDataDefinitionGetRequest)
@@ -44,7 +50,7 @@ public class DEDataDefinitionGetRequestExecutor {
 		long deDataDefinitionId =
 			deDataDefinitionGetRequest.getDEDataDefinitionId();
 
-		DDMStructure ddmStructure = ddmStructureLocalService.getStructure(
+		DDMStructure ddmStructure = _ddmStructureLocalService.getStructure(
 			deDataDefinitionId);
 
 		return DEDataDefinitionGetResponse.Builder.of(map(ddmStructure));
@@ -54,7 +60,7 @@ public class DEDataDefinitionGetRequestExecutor {
 		throws DEDataDefinitionFieldsDeserializerException {
 
 		DEDataDefinitionFieldsDeserializer deDataDefinitionFieldsDeserializer =
-			deDataDefinitionFieldsDeserializerTracker.
+			_deDataDefinitionFieldsDeserializerTracker.
 				getDEDataDefinitionFieldsDeserializer("json");
 
 		DEDataDefinitionFieldsDeserializerApplyRequest
@@ -92,11 +98,8 @@ public class DEDataDefinitionGetRequestExecutor {
 		return deDataDefinition;
 	}
 
-	@Reference
-	protected DDMStructureLocalService ddmStructureLocalService;
-
-	@Reference
-	protected DEDataDefinitionFieldsDeserializerTracker
-		deDataDefinitionFieldsDeserializerTracker;
+	private final DDMStructureLocalService _ddmStructureLocalService;
+	private final DEDataDefinitionFieldsDeserializerTracker
+		_deDataDefinitionFieldsDeserializerTracker;
 
 }

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.frontend.taglib.soy.servlet.taglib.util;
+package com.liferay.portal.template.soy.renderer;
 
 import com.liferay.portal.kernel.template.TemplateException;
 
@@ -27,16 +27,16 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * @author Iván Zaera Avellón
  */
-public interface SoyComponentRenderer {
+public interface SoyRenderer {
 
-	public void renderSoyComponent(
+	public void renderSoy(
 			HttpServletRequest request, HttpServletResponse response,
-			ComponentDescriptor componentDescriptor, Map<String, ?> context)
+			String templateNamespace, Map<String, ?> context)
 		throws IOException, TemplateException;
 
-	public void renderSoyComponent(
-			HttpServletRequest request, Writer writer,
-			ComponentDescriptor componentDescriptor, Map<String, ?> context)
-		throws IOException, TemplateException;
+	public void renderSoy(
+			HttpServletRequest request, Writer writer, String templateNamespace,
+			Map<String, ?> context)
+		throws TemplateException;
 
 }

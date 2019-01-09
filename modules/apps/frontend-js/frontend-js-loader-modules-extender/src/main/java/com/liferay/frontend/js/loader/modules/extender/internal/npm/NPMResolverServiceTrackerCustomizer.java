@@ -43,7 +43,7 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
  * @author Iván Zaera Avellón
  */
 @Component(immediate = true, service = ServiceTrackerCustomizer.class)
-public class NPMResolverServletContextTracker
+public class NPMResolverServiceTrackerCustomizer
 	implements ServiceTrackerCustomizer<ServletContext, ServletContext> {
 
 	@Override
@@ -124,7 +124,7 @@ public class NPMResolverServletContextTracker
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		NPMResolverServletContextTracker.class);
+		NPMResolverServiceTrackerCustomizer.class);
 
 	private BundleContext _bundleContext;
 

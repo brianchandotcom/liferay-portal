@@ -7026,10 +7026,10 @@ public class JournalArticleLocalServiceImpl
 	protected void checkArticlesByExpirationDate(Date expirationDate)
 		throws PortalException {
 
-		long checkInterval = getArticleCheckInterval();
-
 		ActionableDynamicQuery actionableDynamicQuery =
 			getActionableDynamicQuery();
+
+		long checkInterval = getArticleCheckInterval();
 
 		actionableDynamicQuery.setAddCriteriaMethod(
 			dynamicQuery -> {
@@ -7052,6 +7052,7 @@ public class JournalArticleLocalServiceImpl
 					expirationDateProperty.le(
 						new Date(expirationDate.getTime() + checkInterval)));
 			});
+
 		actionableDynamicQuery.setInterval(_INTERVAL);
 		actionableDynamicQuery.setPerformActionMethod(
 			(JournalArticle article) -> {

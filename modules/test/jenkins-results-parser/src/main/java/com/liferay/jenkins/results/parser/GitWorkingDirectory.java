@@ -487,26 +487,33 @@ public class GitWorkingDirectory {
 		LocalGitBranch localGitBranch, boolean noTags,
 		RemoteGitBranch remoteGitBranch) {
 
-		if (remoteGitBranch == null) {
+		return fetch(localGitBranch, noTags, remoteGitBranch);
+	}
+
+	public LocalGitBranch fetch(
+		LocalGitBranch localGitBranch, boolean noTags,
+		RemoteGitRef remoteGitRef) {
+
+		if (remoteGitRef == null) {
 			throw new IllegalArgumentException("Remote Git branch is null");
 		}
 
-		String remoteGitBranchSHA = remoteGitBranch.getSHA();
+		String remoteGitRefSHA = remoteGitRef.getSHA();
 
-		if (localSHAExists(remoteGitBranchSHA)) {
+		if (localSHAExists(remoteGitRefSHA)) {
 			System.out.println(
-				remoteGitBranchSHA + " already exists in Git repository");
+				remoteGitRefSHA + " already exists in Git repository");
 
 			if (localGitBranch != null) {
 				return createLocalGitBranch(
-					localGitBranch.getName(), true, remoteGitBranchSHA);
+					localGitBranch.getName(), true, remoteGitRefSHA);
 			}
 
 			return null;
 		}
 
 		RemoteGitRepository remoteGitRepository =
-			remoteGitBranch.getRemoteGitRepository();
+			remoteGitRef.getRemoteGitRepository();
 
 		String remoteURL = remoteGitRepository.getRemoteURL();
 
@@ -522,16 +529,16 @@ public class GitWorkingDirectory {
 					"github.com:liferay/", "github-dev.liferay.com:liferay/");
 
 				RemoteGitBranch gitHubDevRemoteGitBranch = getRemoteGitBranch(
-					remoteGitBranch.getName(), gitHubDevRemoteURL);
+					remoteGitRef.getName(), gitHubDevRemoteURL);
 
 				if (gitHubDevRemoteGitBranch != null) {
 					fetch(null, noTags, gitHubDevRemoteGitBranch);
 
-					if (localSHAExists(remoteGitBranchSHA)) {
+					if (localSHAExists(remoteGitRefSHA)) {
 						if (localGitBranch != null) {
 							return createLocalGitBranch(
 								localGitBranch.getName(), true,
-								remoteGitBranchSHA);
+								remoteGitRefSHA);
 						}
 
 						return null;
@@ -550,11 +557,11 @@ public class GitWorkingDirectory {
 
 		sb.append(remoteURL);
 
-		String remoteGitBranchName = remoteGitBranch.getName();
+		String remoteGitRefName = remoteGitRef.getName();
 
-		if ((remoteGitBranchName != null) && !remoteGitBranchName.isEmpty()) {
+		if ((remoteGitRefName != null) && !remoteGitRefName.isEmpty()) {
 			sb.append(" ");
-			sb.append(remoteGitBranchName);
+			sb.append(remoteGitRefName);
 
 			if (localGitBranch != null) {
 				sb.append(":");
@@ -570,7 +577,7 @@ public class GitWorkingDirectory {
 		if (executionResult.getExitValue() != 0) {
 			throw new RuntimeException(
 				JenkinsResultsParserUtil.combine(
-					"Unable to fetch remote branch ", remoteGitBranchName, "\n",
+					"Unable to fetch remote branch ", remoteGitRefName, "\n",
 					executionResult.getStandardError()));
 		}
 
@@ -579,9 +586,9 @@ public class GitWorkingDirectory {
 				JenkinsResultsParserUtil.toDurationString(
 					System.currentTimeMillis() - start));
 
-		if (localSHAExists(remoteGitBranchSHA) && (localGitBranch != null)) {
+		if (localSHAExists(remoteGitRefSHA) && (localGitBranch != null)) {
 			return createLocalGitBranch(
-				localGitBranch.getName(), true, remoteGitBranchSHA);
+				localGitBranch.getName(), true, remoteGitRefSHA);
 		}
 
 		return null;

@@ -160,17 +160,9 @@ public class DEDataDefinitionServiceImpl implements DEDataDefinitionService {
 				deDataDefinitionListRequest);
 		}
 		catch (DEDataDefinitionException dedde) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(dedde, dedde);
-			}
-
 			throw dedde;
 		}
 		catch (Exception e) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(e, e);
-			}
-
 			throw new DEDataDefinitionException(e);
 		}
 	}

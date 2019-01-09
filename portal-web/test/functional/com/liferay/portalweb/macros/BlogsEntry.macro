@@ -337,7 +337,7 @@ definition {
 
 		Select(locator1 = "ReportContent#REASON_SELECT", value1 = "${flagReason}");
 
-		AssertClick(locator1 = "Button#REPORT", value1 = "Report");
+		AssertClick(locator1 = "ReportContent#REPORT_BUTTON", value1 = "Report");
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "ReportContent#SUCCESS_MESSAGE",

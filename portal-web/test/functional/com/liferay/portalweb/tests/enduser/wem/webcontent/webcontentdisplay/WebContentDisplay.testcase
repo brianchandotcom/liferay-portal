@@ -47,7 +47,7 @@ definition {
 
 		ServerAdministration.openServerAdmin();
 
-		ServerAdministration.configureExternalServices(enableXuggler = "true");
+		ServerAdministration.configureExternalServices(installXuggler  = "true");
 
 		Portlet.shutdownServer();
 
@@ -280,7 +280,7 @@ definition {
 
 		ServerAdministration.openServerAdmin();
 
-		ServerAdministration.configureExternalServices(enableXuggler = "true");
+		ServerAdministration.configureExternalServices(installXuggler  = "true");
 
 		Portlet.shutdownServer();
 

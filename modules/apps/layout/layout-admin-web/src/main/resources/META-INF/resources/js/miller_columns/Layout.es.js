@@ -92,7 +92,7 @@ class Layout extends Component {
 	 * @inheritDoc
 	 * @review
 	 */
-	dispose() {
+	disposed() {
 		this._layoutDragDrop.dispose();
 		this._removeLayoutColumnsScrollListener();
 	}

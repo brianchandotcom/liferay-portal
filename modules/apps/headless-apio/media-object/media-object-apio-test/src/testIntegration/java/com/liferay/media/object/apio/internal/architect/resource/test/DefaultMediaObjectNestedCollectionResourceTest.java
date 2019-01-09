@@ -14,8 +14,9 @@
 
 package com.liferay.media.object.apio.internal.architect.resource.test;
 
-import static java.nio.charset.StandardCharsets.UTF_8;
-
+import com.liferay.adaptive.media.AMAttribute;
+import com.liferay.adaptive.media.AdaptiveMedia;
+import com.liferay.adaptive.media.image.processor.AMImageProcessor;
 import com.liferay.apio.architect.file.BinaryFile;
 import com.liferay.apio.architect.pagination.PageItems;
 import com.liferay.apio.architect.resource.NestedCollectionResource;
@@ -26,8 +27,11 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerTestRule;
 
@@ -35,11 +39,17 @@ import java.io.ByteArrayInputStream;
 
 import java.lang.reflect.Method;
 
+import java.net.URL;
+
+import java.nio.charset.StandardCharsets;
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+
+import org.apache.commons.io.IOUtils;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -75,8 +85,9 @@ public class DefaultMediaObjectNestedCollectionResourceTest
 			_group.getGroupId(),
 			new MediaObjectImpl(
 				new BinaryFile(
-					new ByteArrayInputStream(content.getBytes(UTF_8)), 0L,
-					"application/octet-stream"),
+					new ByteArrayInputStream(
+						content.getBytes(StandardCharsets.UTF_8)),
+					0L, "application/octet-stream"),
 				"My media object testAddMediaObject",
 				"My media object description", null, null));
 
@@ -91,22 +102,91 @@ public class DefaultMediaObjectNestedCollectionResourceTest
 			"My media object testAddMediaObject", fileEntry.getTitle());
 	}
 
+	@Sync
 	@Test
-	public void testGetFileEntryPreviewURL() throws Exception {
-		String content = RandomTestUtil.randomString(10);
+	public void testGetAdaptiveMedias() throws Exception {
+		String fileName = "image.png";
+
+		byte[] bytes = FileUtil.getBytes(
+			getClass(),
+			"/com/liferay/media/object/apio/internal/architect/resource/test/" +
+				fileName);
+
+		BinaryFile binaryFile = new BinaryFile(
+			new ByteArrayInputStream(bytes), (long)bytes.length, "image/jpeg",
+			fileName);
 
 		FileEntry fileEntry = _addFileEntry(
 			_group.getGroupId(),
 			new MediaObjectImpl(
-				new BinaryFile(
-					new ByteArrayInputStream(content.getBytes(UTF_8)), 0L,
-					"application/octet-stream"),
-				"My media object testGetFileEntryPreviewURL", null, null,
+				binaryFile, "My media object testGetAdaptiveMedia", null, null,
 				null));
+
+		List<AdaptiveMedia<AMImageProcessor>> adaptiveMediaList =
+			_getAdaptiveMedias(fileEntry);
+
+		Assert.assertEquals(
+			adaptiveMediaList.toString(), 2, adaptiveMediaList.size());
+
+		AdaptiveMedia<AMImageProcessor> adaptiveMedia1 = adaptiveMediaList.get(
+			0);
+
+		URL url1 = new URL(
+			TestPropsValues.PORTAL_URL + adaptiveMedia1.getURI());
+
+		byte[] contentBytes1 = IOUtils.toByteArray(url1.openStream());
+
+		Assert.assertTrue(contentBytes1.length > 0);
+
+		Assert.assertEquals(
+			"Preview-1000x0",
+			adaptiveMedia1.getValueOptional(
+				AMAttribute.getConfigurationUuidAMAttribute()).get());
+
+		AdaptiveMedia<AMImageProcessor> adaptiveMedia2 = adaptiveMediaList.get(
+			1);
+
+		URL url2 = new URL(
+			TestPropsValues.PORTAL_URL + adaptiveMedia2.getURI());
+
+		byte[] contentBytes2 = IOUtils.toByteArray(url2.openStream());
+
+		Assert.assertTrue(contentBytes2.length > 0);
+
+		Assert.assertEquals(
+			"Thumbnail-300x300",
+			adaptiveMedia2.getValueOptional(
+				AMAttribute.getConfigurationUuidAMAttribute()).get());
+	}
+
+	@Test
+	public void testGetFileEntryPreviewURL() throws Exception {
+		String fileName = "image.png";
+
+		byte[] bytes = FileUtil.getBytes(
+			getClass(),
+			"/com/liferay/media/object/apio/internal/architect/resource/test/" +
+				fileName);
+
+		BinaryFile binaryFile = new BinaryFile(
+			new ByteArrayInputStream(bytes), (long)bytes.length, "image/jpeg",
+			fileName);
+
+		FileEntry fileEntry = _addFileEntry(
+			_group.getGroupId(),
+			new MediaObjectImpl(
+				binaryFile, "My media object testGetFileEntryPreviewURL", null,
+				null, null));
 
 		String fileEntryPreview = _getFileEntryPreviewURL(fileEntry);
 
 		Assert.assertNotNull(fileEntryPreview);
+
+		byte[] contentBytes = IOUtils.toByteArray(
+			new URL(
+				TestPropsValues.PORTAL_URL + fileEntryPreview).openStream());
+
+		Assert.assertArrayEquals(bytes, contentBytes);
 	}
 
 	@Test
@@ -119,8 +199,9 @@ public class DefaultMediaObjectNestedCollectionResourceTest
 			_group.getGroupId(),
 			new MediaObjectImpl(
 				new BinaryFile(
-					new ByteArrayInputStream(content.getBytes(UTF_8)), 0L,
-					"application/octet-stream"),
+					new ByteArrayInputStream(
+						content.getBytes(StandardCharsets.UTF_8)),
+					0L, "application/octet-stream"),
 				"My media object testAddMediaObject", null, keywords, null));
 
 		List<String> mediaObjectAssetTags = _getMediaObjectAssetTags(fileEntry);
@@ -141,8 +222,9 @@ public class DefaultMediaObjectNestedCollectionResourceTest
 			_group.getGroupId(),
 			new MediaObjectImpl(
 				new BinaryFile(
-					new ByteArrayInputStream(content.getBytes(UTF_8)), 0L,
-					"application/octet-stream"),
+					new ByteArrayInputStream(
+						content.getBytes(StandardCharsets.UTF_8)),
+					0L, "application/octet-stream"),
 				"My media object testGetPageItems",
 				"My media object description", null, null));
 
@@ -178,6 +260,24 @@ public class DefaultMediaObjectNestedCollectionResourceTest
 
 		return (FileEntry)method.invoke(
 			getNestedCollectionResource(), groupId, mediaObject);
+	}
+
+	private List<AdaptiveMedia<AMImageProcessor>> _getAdaptiveMedias(
+			FileEntry fileEntry)
+		throws Exception {
+
+		NestedCollectionResource nestedCollectionResource =
+			getNestedCollectionResource();
+
+		Class<?> clazz = nestedCollectionResource.getClass();
+
+		Method method = clazz.getDeclaredMethod(
+			"_getAdaptiveMedias", FileEntry.class);
+
+		method.setAccessible(true);
+
+		return (List<AdaptiveMedia<AMImageProcessor>>)method.invoke(
+			getNestedCollectionResource(), fileEntry);
 	}
 
 	private String _getFileEntryPreviewURL(FileEntry fileEntry)

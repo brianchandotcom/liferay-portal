@@ -1261,6 +1261,21 @@ public class JenkinsResultsParserUtil {
 		return null;
 	}
 
+	public static String getRandomGitHubCacheHostname() {
+		try {
+			Properties buildProperties = getBuildProperties();
+
+			String gitCacheHostnames = buildProperties.getProperty(
+				"github.cache.hostnames");
+
+			return getRandomString(
+				Lists.newArrayList(gitCacheHostnames.split(",")));
+		}
+		catch (IOException ioe) {
+			throw new RuntimeException(ioe);
+		}
+	}
+
 	public static List<String> getRandomList(List<String> list, int size) {
 		if (list.size() < size) {
 			throw new IllegalStateException(

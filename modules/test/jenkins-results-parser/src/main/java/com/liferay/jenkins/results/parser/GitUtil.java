@@ -100,11 +100,18 @@ public class GitUtil {
 
 		if (remoteGitBranchName != null) {
 			command = JenkinsResultsParserUtil.combine(
-				"git ls-remote -h ", remoteURL, " ", remoteGitBranchName);
+				"git ls-remote -h ",
+				remoteURL.replace(
+					"github-dev.liferay.com",
+					JenkinsResultsParserUtil.getRandomGitHubCacheHostname()),
+				" ", remoteGitBranchName);
 		}
 		else {
 			command = JenkinsResultsParserUtil.combine(
-				"git ls-remote -h ", remoteURL);
+				"git ls-remote -h ",
+				remoteURL.replace(
+					"github-dev.liferay.com",
+					JenkinsResultsParserUtil.getRandomGitHubCacheHostname()));
 		}
 
 		ExecutionResult executionResult = executeBashCommands(

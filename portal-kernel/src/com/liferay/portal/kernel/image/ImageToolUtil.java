@@ -157,6 +157,10 @@ public class ImageToolUtil {
 		return getImageTool().getDefaultUserMalePortrait();
 	}
 
+	public static Image getDefaultUserPortrait() {
+		return getImageTool().getDefaultUserPortrait();
+	}
+
 	public static Image getImage(byte[] bytes)
 		throws ImageResolutionException, IOException {
 

@@ -205,6 +205,22 @@ public class ImageToolImpl implements ImageTool {
 				"Unable to configure the default user male portrait: " +
 					e.getMessage());
 		}
+
+		try {
+			InputStream is = classLoader.getResourceAsStream(
+				PropsUtil.get(PropsKeys.IMAGE_DEFAULT_USER_PORTRAIT));
+
+			if (is == null) {
+				_log.error("Default user portrait is not available");
+			}
+
+			_defaultUserPortrait = getImage(is);
+		}
+		catch (Exception e) {
+			_log.error(
+				"Unable to configure the default user portrait: " +
+					e.getMessage());
+		}
 	}
 
 	@Override
@@ -469,6 +485,11 @@ public class ImageToolImpl implements ImageTool {
 	@Override
 	public Image getDefaultUserMalePortrait() {
 		return _defaultUserMalePortrait;
+	}
+
+	@Override
+	public Image getDefaultUserPortrait() {
+		return _defaultUserPortrait;
 	}
 
 	@Override
@@ -941,5 +962,6 @@ public class ImageToolImpl implements ImageTool {
 	private Image _defaultSpacer;
 	private Image _defaultUserFemalePortrait;
 	private Image _defaultUserMalePortrait;
+	private Image _defaultUserPortrait;
 
 }

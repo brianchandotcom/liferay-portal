@@ -98,6 +98,8 @@ public interface ImageTool {
 
 	public Image getDefaultUserMalePortrait();
 
+	public Image getDefaultUserPortrait();
+
 	public Image getImage(byte[] bytes)
 		throws ImageResolutionException, IOException;
 

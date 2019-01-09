@@ -26,8 +26,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.IOException;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.Collections;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -49,8 +48,6 @@ public class DDMFormFieldTypesDynamicIncludeHelper {
 
 		ScriptData scriptData = new ScriptData();
 
-		Map<String, String> values = new HashMap<>();
-
 		DDMFormFieldTypesSerializer ddmFormFieldTypesSerializer =
 			_ddmFormFieldTypesSerializerTracker.getDDMFormFieldTypesSerializer(
 				"json");
@@ -63,14 +60,13 @@ public class DDMFormFieldTypesDynamicIncludeHelper {
 			ddmFormFieldTypesSerializerSerializeResponse =
 				ddmFormFieldTypesSerializer.serialize(builder.build());
 
-		values.put(
-			"fieldTypes",
-			ddmFormFieldTypesSerializerSerializeResponse.getContent());
-
 		scriptData.append(
 			null,
 			StringUtil.replaceToStringBundler(
-				_TMPL_CONTENT, StringPool.POUND, StringPool.POUND, values),
+				_TMPL_CONTENT, StringPool.POUND, StringPool.POUND,
+				Collections.singletonMap(
+					"fieldTypes",
+					ddmFormFieldTypesSerializerSerializeResponse.getContent())),
 			_MODULES, ScriptData.ModulesType.AUI);
 
 		scriptData.writeTo(response.getWriter());

@@ -42,9 +42,7 @@ public class PoshiWhitespaceCheck extends WhitespaceCheck {
 		Matcher matcher = _incorrectWhitespacePattern.matcher(content);
 
 		while (matcher.find()) {
-			int x = matcher.start(1);
-
-			if (!ToolsUtil.isInsideQuotes(content, x)) {
+			if (!ToolsUtil.isInsideQuotes(content, matcher.start(1))) {
 				return StringUtil.replaceFirst(
 					content, matcher.group(1), StringPool.BLANK,
 					matcher.start());

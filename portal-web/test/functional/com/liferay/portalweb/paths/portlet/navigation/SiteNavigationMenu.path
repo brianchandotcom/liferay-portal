@@ -20,7 +20,7 @@
 </tr>
 <tr>
 	<td>ITEM_ENTRY_N</td>
-	<td>xpath=(//div[contains(@class,'navigation-menu-item')])[${key_index}]</td>
+	<td>xpath=(//div[contains(@class,'navigation-menu-item__content')])[${key_index}]</td>
 	<td></td>
 </tr>
 <tr>

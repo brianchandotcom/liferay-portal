@@ -19,8 +19,10 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.DigesterUtil;
+import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ServiceProxyFactory;
@@ -89,19 +91,27 @@ public class UserConstants {
 	public static String getPortraitURL(
 		String imagePath, boolean male, long portraitId, String userUuid) {
 
-		StringBundler sb = new StringBundler(9);
+		StringBundler sb = new StringBundler(8);
 
 		sb.append(imagePath);
-		sb.append("/user_");
 
-		if (male) {
-			sb.append("male");
+		if (PrefsPropsUtil.getBoolean(
+				CompanyThreadLocal.getCompanyId(),
+				PropsKeys.
+					FIELD_ENABLE_COM_LIFERAY_PORTAL_KERNEL_MODEL_CONTACT_MALE)) {
+
+			if (male) {
+				sb.append("/user_male_portrait");
+			}
+			else {
+				sb.append("/user_female_portrait");
+			}
 		}
 		else {
-			sb.append("female");
+			sb.append("/user_portrait");
 		}
 
-		sb.append("_portrait?img_id=");
+		sb.append("?img_id=");
 		sb.append(portraitId);
 
 		if (_userFileUploadsSettings.isImageCheckToken()) {

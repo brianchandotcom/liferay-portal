@@ -318,7 +318,10 @@ definition {
 			dmDocumentTitleEdit = "DM Document Title Edit"
 		);
 
-		DMDocument.viewEditCP(dmDocumentTitleEdit = "DM Document Title Edit");
+		DMDocument.viewEditCP(
+			dmDocumentTitleEdit = "DM Document Title Edit",
+			dmDocumentVersionNumber = "1.1"
+		);
 	}
 
 	@priority = "5"

@@ -19,9 +19,7 @@ import com.liferay.portal.kernel.util.PropertiesUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.source.formatter.util.FileUtil;
 
-import java.io.File;
 import java.io.IOException;
 
 import java.util.Arrays;
@@ -54,12 +52,8 @@ public class XMLWebFileCheck extends BaseFileCheck {
 	private String _formatWebXML(String content) throws IOException {
 		Properties properties = new Properties();
 
-		File propertiesFile = new File(
-			getBaseDirName(), "portal-impl/src/portal.properties");
-
-		String propertiesContent = FileUtil.read(propertiesFile);
-
-		PropertiesUtil.load(properties, propertiesContent);
+		PropertiesUtil.load(
+			properties, getPortalContent("portal-impl/src/portal.properties"));
 
 		String[] locales = StringUtil.split(
 			properties.getProperty(PropsKeys.LOCALES));

@@ -537,7 +537,10 @@ public class AssetPublisherHelperImpl implements AssetPublisherHelper {
 
 		viewFullContentURL.setParameter("type", assetRendererFactory.getType());
 
-		if (Validator.isNotNull(assetRenderer.getUrlTitle())) {
+		String urlTitle = assetRenderer.getUrlTitle(
+			liferayPortletRequest.getLocale());
+
+		if (Validator.isNotNull(urlTitle)) {
 			ThemeDisplay themeDisplay =
 				(ThemeDisplay)liferayPortletRequest.getAttribute(
 					WebKeys.THEME_DISPLAY);
@@ -547,8 +550,7 @@ public class AssetPublisherHelperImpl implements AssetPublisherHelper {
 					"groupId", String.valueOf(assetRenderer.getGroupId()));
 			}
 
-			viewFullContentURL.setParameter(
-				"urlTitle", assetRenderer.getUrlTitle());
+			viewFullContentURL.setParameter("urlTitle", urlTitle);
 		}
 
 		String viewURL = null;

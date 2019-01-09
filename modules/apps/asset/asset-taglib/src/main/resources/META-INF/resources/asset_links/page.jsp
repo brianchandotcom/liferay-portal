@@ -87,12 +87,14 @@ boolean viewInContext = GetterUtil.getBoolean(request.getAttribute("liferay-asse
 				viewAssetURL.setParameter("assetEntryId", String.valueOf(assetLinkEntry.getEntryId()));
 				viewAssetURL.setParameter("type", assetRendererFactory.getType());
 
-				if (Validator.isNotNull(assetRenderer.getUrlTitle())) {
+				String urlTitle = assetRenderer.getUrlTitle(locale);
+
+				if (Validator.isNotNull(urlTitle)) {
 					if (assetRenderer.getGroupId() != themeDisplay.getSiteGroupId()) {
 						viewAssetURL.setParameter("groupId", String.valueOf(assetRenderer.getGroupId()));
 					}
 
-					viewAssetURL.setParameter("urlTitle", assetRenderer.getUrlTitle());
+					viewAssetURL.setParameter("urlTitle", urlTitle);
 				}
 
 				String viewURL = null;

@@ -402,7 +402,7 @@ public class JournalArticleAssetRenderer
 				themeDisplay,
 				groupFriendlyURL.concat(
 					JournalArticleConstants.CANONICAL_URL_SEPARATOR).concat(
-						_article.getUrlTitle()));
+						_article.getUrlTitle(themeDisplay.getLocale())));
 		}
 
 		String hitLayoutURL = getHitLayoutURL(

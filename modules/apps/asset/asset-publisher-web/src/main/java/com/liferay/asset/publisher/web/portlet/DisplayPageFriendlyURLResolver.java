@@ -55,7 +55,6 @@ import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.InheritableMap;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;

@@ -162,12 +162,12 @@
 		${printURL.setParameter("viewMode", "print")}
 		${printURL.setParameter("type", entry.getAssetRendererFactory().getType())}
 
-		<#if assetRenderer.getUrlTitle()?? && validator.isNotNull(assetRenderer.getUrlTitle())>
+		<#if assetRenderer.getUrlTitle(locale)?? && validator.isNotNull(assetRenderer.getUrlTitle(locale))>
 			<#if assetRenderer.getGroupId() != themeDisplay.getScopeGroupId()>
 				${printURL.setParameter("groupId", assetRenderer.getGroupId()?string)}
 			</#if>
 
-			${printURL.setParameter("urlTitle", assetRenderer.getUrlTitle())}
+			${printURL.setParameter("urlTitle", assetRenderer.getUrlTitle(locale))}
 		</#if>
 
 		${printURL.setWindowState("pop_up")}

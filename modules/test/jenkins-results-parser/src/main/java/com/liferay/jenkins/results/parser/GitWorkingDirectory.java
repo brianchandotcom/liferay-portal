@@ -487,7 +487,7 @@ public class GitWorkingDirectory {
 		LocalGitBranch localGitBranch, boolean noTags,
 		RemoteGitBranch remoteGitBranch) {
 
-		return fetch(localGitBranch, noTags, remoteGitBranch);
+		return fetch(localGitBranch, noTags, (RemoteGitRef)remoteGitBranch);
 	}
 
 	public LocalGitBranch fetch(

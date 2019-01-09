@@ -51,7 +51,7 @@ public class NullNPMResolverImpl implements NPMResolver {
 
 	private void _throwIllegalStateException() {
 		throw new IllegalStateException(
-			"Unable to find META-INF/resources/package.json file in bundle " +
+			"Unable to find META-INF/resources/package.json in " +
 				_bundle.getSymbolicName());
 	}
 

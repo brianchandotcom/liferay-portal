@@ -52,7 +52,7 @@ public class NPMResolverServletContextTracker
 
 		Bundle bundle = serviceReference.getBundle();
 
-		URL url = bundle.getResource(FlatNPMBundleProcessor.PACKAGE_JSON_PATH);
+		URL url = bundle.getResource("META-INF/resources/package.json");
 
 		if (url == null) {
 			return null;
@@ -103,8 +103,7 @@ public class NPMResolverServletContextTracker
 			NPMResolver npmResolver = new NPMResolverImpl(
 				bundle, _jsonFactory, _npmRegistry);
 
-			URL url = bundle.getResource(
-				FlatNPMBundleProcessor.PACKAGE_JSON_PATH);
+			URL url = bundle.getResource("META-INF/resources/package.json");
 
 			String json = StringUtil.read(url.openStream());
 
@@ -116,9 +115,8 @@ public class NPMResolverServletContextTracker
 		}
 		catch (Exception e) {
 			_log.error(
-				StringBundler.concat(
-					"Unable to read ", FlatNPMBundleProcessor.PACKAGE_JSON_PATH,
-					" file from bundle ", bundle.getSymbolicName()),
+				"Unable to read META-INF/resources/package.json in " +
+					bundle.getSymbolicName(),
 				e);
 		}
 

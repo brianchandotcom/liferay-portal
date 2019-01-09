@@ -25,13 +25,6 @@ String redirect = ParamUtil.getString(request, "redirect");
 		<aui:fieldset>
 
 			<%
-			PortletURL redirectURL = renderResponse.createRenderURL();
-
-			redirectURL.setParameter("hideDefaultSuccessMessage", Boolean.TRUE.toString());
-			redirectURL.setParameter("mvcPath", "/add_asset_redirect.jsp");
-			redirectURL.setParameter("redirect", redirect);
-			redirectURL.setWindowState(LiferayWindowState.POP_UP);
-
 			long[] groupIds = assetPublisherDisplayContext.getGroupIds();
 
 			Map<Long, List<AssetPublisherAddItemHolder>> scopeAssetPublisherAddItemHolders = assetPublisherDisplayContext.getScopeAssetPublisherAddItemHolders(groupIds.length);

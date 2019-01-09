@@ -7,14 +7,11 @@
 	{@param spritemap: string}
 	{@param? description: string}
 	{@param? multiple: bool}
-	{@param? _handleAddTag: any}
 	{@param? _handleRadioChange: any}
-	{@param? _handleRemoveTag: any}
 	{@param? _handleSaveBtnClick: any}
 
 	{call liferay.frontend.Modal.render}
 		{param body kind="html"}
-
 			{if $loading}
 				{call .loading /}
 			{else}
@@ -24,9 +21,7 @@
 					{param dataSource: $dataSource /}
 					{param multiple: $multiple /}
 					{param spritemap: $spritemap /}
-					{param _handleAddTag: $_handleAddTag /}
 					{param _handleRadioChange: $_handleRadioChange /}
-					{param _handleRemoveTag: $_handleRemoveTag /}
 				{/call}
 			{/if}
 		{/param}
@@ -62,9 +57,7 @@
 	{@param spritemap: string}
 	{@param? description: string}
 	{@param? multiple: bool}
-	{@param? _handleAddTag: any}
 	{@param? _handleRadioChange: any}
-	{@param? _handleRemoveTag: any}
 
 	<p>{$description} {if $multiple} {msg desc=""}select-append-or-replace-current-tags{/msg} {/if}</p>
 
@@ -92,13 +85,8 @@
 	{call ClayMultiSelect.render}
 		{param dataSource: $dataSource /}
 		{param elementClasses: 'tag-selector' /}
-		{param events: [
-			'itemAdded': $_handleAddTag,
-			'itemRemoved': $_handleRemoveTag
-		] /}
 		{param helpText: '' /}
 		{param label kind="text"} {msg desc=""}tags{/msg} {/param}
-		{param ref: 'tagselector' /}
 		{param selectedItems: $commonTags /}
 		{param spritemap: $spritemap /}
 	{/call}

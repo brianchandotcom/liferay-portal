@@ -17,9 +17,12 @@ package com.liferay.change.tracking.rest.internal.resource;
 import com.liferay.change.tracking.CTEngineManager;
 import com.liferay.change.tracking.rest.internal.model.configuration.CTConfigurationModel;
 import com.liferay.change.tracking.rest.internal.model.configuration.CTConfigurationUpdateModel;
+import com.liferay.change.tracking.configuration.CTConfiguration;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.CompanyLocalService;
+
+import java.util.Set;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -76,6 +79,14 @@ public class CTConfigurationResource {
 		return _getCTConfigurationModel(companyId);
 	}
 
+	@Reference(
+		cardinality = ReferenceCardinality.MULTIPLE,
+		policy = ReferencePolicy.DYNAMIC, unbind = "_removeCTConfiguration"
+	)
+	private void _addCTConfiguration(CTConfiguration<?, ?> ctConfiguration) {
+		_ctConfigurations.add(ctConfiguration);
+	}
+
 	private CTConfigurationModel _getCTConfigurationModel(long companyId)
 		throws PortalException {
 
@@ -85,6 +96,10 @@ public class CTConfigurationResource {
 		return builder.setChangeTrackingEnabled(
 			_ctEngineManager.isChangeTrackingEnabled(companyId)
 		).build();
+	}
+
+	private void _removeCTConfiguration(CTConfiguration<?, ?> ctConfiguration) {
+		_ctConfigurations.remove(ctConfiguration);
 	}
 
 	private void _updateChangeTrackingEnabled(
@@ -106,6 +121,9 @@ public class CTConfigurationResource {
 
 	@Reference
 	private CompanyLocalService _companyLocalService;
+
+	private final Set<CTConfiguration<?, ?>> _ctConfigurations =
+		new HashSet<>();
 
 	@Reference
 	private CTEngineManager _ctEngineManager;

@@ -29,6 +29,6 @@ context.put("pathThemeImages", themeDisplay.getPathThemeImages());
 
 <soy:component-renderer
 	context="<%= context %>"
-	module='<%= journalDisplayContext.getResolvedModuleName() + "/js/SelectFolder.es" %>'
+	module='<%= npmResolvedPackageName + "/js/SelectFolder.es" %>'
 	templateNamespace="com.liferay.journal.web.SelectFolder.render"
 />

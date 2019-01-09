@@ -23,7 +23,4 @@ public class PortletConfigurationCSSPortletKeys {
 		"com_liferay_portlet_configuration_css_web_portlet_" +
 			"PortletConfigurationCSSPortlet";
 
-	public static final String RESOLVED_MODULE_NAME =
-		"com_liferay_portlet_configuration_css_web_portlet_ResolvedModuleName";
-
 }

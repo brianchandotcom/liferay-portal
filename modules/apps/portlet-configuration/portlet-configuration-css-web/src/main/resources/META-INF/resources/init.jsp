@@ -28,7 +28,6 @@ taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 <%@ page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.model.PortletDecorator" %><%@
 page import="com.liferay.portal.kernel.util.LocaleUtil" %><%@
-page import="com.liferay.portal.kernel.util.PortalUtil" %><%@
 page import="com.liferay.portlet.configuration.css.web.internal.constants.PortletConfigurationCSSConstants" %><%@
 page import="com.liferay.portlet.configuration.css.web.internal.display.context.PortletConfigurationCSSPortletDisplayContext" %>
 
@@ -38,13 +37,13 @@ page import="com.liferay.portlet.configuration.css.web.internal.display.context.
 page import="java.util.Map" %><%@
 page import="java.util.Objects" %>
 
+<liferay-frontend:defineObjects />
+
 <liferay-theme:defineObjects />
 
 <portlet:defineObjects />
 
 <%
-String currentURL = PortalUtil.getCurrentURL(request);
-
 PortletConfigurationCSSPortletDisplayContext portletConfigurationCSSPortletDisplayContext = new PortletConfigurationCSSPortletDisplayContext(renderRequest);
 %>
 

@@ -86,8 +86,6 @@ public class FragmentDisplayContext {
 				FragmentPortletConfiguration.class.getName());
 		_itemSelector = (ItemSelector)_request.getAttribute(
 			FragmentWebKeys.ITEM_SELECTOR);
-		_resolvedModuleName = (String)_request.getAttribute(
-			FragmentWebKeys.RESOLVED_MODULE_NAME);
 		_themeDisplay = (ThemeDisplay)_request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 	}
@@ -443,10 +441,6 @@ public class FragmentDisplayContext {
 		return _jsContent;
 	}
 
-	public String getModuleName() {
-		return _resolvedModuleName;
-	}
-
 	public String getName() {
 		if (Validator.isNotNull(_name)) {
 			return _name;
@@ -624,7 +618,6 @@ public class FragmentDisplayContext {
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
 	private final HttpServletRequest _request;
-	private final String _resolvedModuleName;
 	private final ThemeDisplay _themeDisplay;
 	private Boolean _viewResources;
 

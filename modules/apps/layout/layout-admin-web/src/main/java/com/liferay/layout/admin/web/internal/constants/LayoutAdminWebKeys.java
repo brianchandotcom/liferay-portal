@@ -29,6 +29,4 @@ public class LayoutAdminWebKeys {
 
 	public static final String LAYOUT_PROTOTYPE = "LAYOUT_PROTOTYPE";
 
-	public static final String RESOLVED_MODULE_NAME = "RESOLVED_MODULE_NAME";
-
 }

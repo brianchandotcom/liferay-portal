@@ -64,8 +64,7 @@ public class SiteNavigationAdminDisplayContext {
 		HttpServletRequest request,
 		SiteNavigationMenuItemTypeRegistry siteNavigationMenuItemTypeRegistry,
 		SiteNavigationMenuLocalService siteNavigationMenuLocalService,
-		SiteNavigationMenuService siteNavigationMenuService,
-		String moduleName) {
+		SiteNavigationMenuService siteNavigationMenuService) {
 
 		_liferayPortletRequest = liferayPortletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
@@ -74,7 +73,6 @@ public class SiteNavigationAdminDisplayContext {
 			siteNavigationMenuItemTypeRegistry;
 		_siteNavigationMenuLocalService = siteNavigationMenuLocalService;
 		_siteNavigationMenuService = siteNavigationMenuService;
-		_moduleName = moduleName;
 	}
 
 	public List<DropdownItem> getActionDropdownItems() {
@@ -168,10 +166,6 @@ public class SiteNavigationAdminDisplayContext {
 		_keywords = ParamUtil.getString(_request, "keywords");
 
 		return _keywords;
-	}
-
-	public String getModuleName() {
-		return _moduleName;
 	}
 
 	public String getOrderByCol() {
@@ -470,7 +464,6 @@ public class SiteNavigationAdminDisplayContext {
 	private String _keywords;
 	private final LiferayPortletRequest _liferayPortletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;
-	private final String _moduleName;
 	private String _orderByCol;
 	private String _orderByType;
 	private final HttpServletRequest _request;

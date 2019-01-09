@@ -34,7 +34,6 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portlet.configuration.css.web.internal.constants.PortletConfigurationCSSPortletKeys;
 
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
@@ -79,9 +78,6 @@ public class PortletConfigurationCSSPortletDisplayContext {
 		_portletResource = portletResource;
 		_portletSetup = portletSetup;
 		_portletSetupJSONObject = portletSetupJSONObject;
-
-		_resolvedModuleName = (String)_renderRequest.getAttribute(
-			PortletConfigurationCSSPortletKeys.RESOLVED_MODULE_NAME);
 	}
 
 	public String getBackgroundColor() {
@@ -247,10 +243,6 @@ public class PortletConfigurationCSSPortletDisplayContext {
 		return _portletResource;
 	}
 
-	public String getResolvedModuleName() {
-		return _resolvedModuleName;
-	}
-
 	public String getTextDataProperty(String property) {
 		JSONObject textDataJSONObject = _portletSetupJSONObject.getJSONObject(
 			"textData");
@@ -354,7 +346,6 @@ public class PortletConfigurationCSSPortletDisplayContext {
 	private final PortletPreferences _portletSetup;
 	private final JSONObject _portletSetupJSONObject;
 	private final RenderRequest _renderRequest;
-	private final String _resolvedModuleName;
 	private Boolean _useCustomTitle;
 
 }

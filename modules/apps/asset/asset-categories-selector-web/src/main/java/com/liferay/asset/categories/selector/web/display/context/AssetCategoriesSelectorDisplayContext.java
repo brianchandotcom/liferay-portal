@@ -14,7 +14,6 @@
 
 package com.liferay.asset.categories.selector.web.display.context;
 
-import com.liferay.asset.categories.selector.web.contants.AssetCategoriesSelectorPortletKeys;
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetCategoryServiceUtil;
@@ -55,9 +54,6 @@ public class AssetCategoriesSelectorDisplayContext {
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
 		_request = request;
-
-		_resolvedModuleName = (String)_request.getAttribute(
-			AssetCategoriesSelectorPortletKeys.RESOLVED_MODULE_NAME);
 	}
 
 	public JSONArray getCategoriesJSONArray() throws Exception {
@@ -103,10 +99,6 @@ public class AssetCategoriesSelectorDisplayContext {
 			_renderResponse.getNamespace() + "selectCategory");
 
 		return _eventName;
-	}
-
-	public String getModuleName() {
-		return _resolvedModuleName;
 	}
 
 	public String getSelectedCategories() {
@@ -271,7 +263,6 @@ public class AssetCategoriesSelectorDisplayContext {
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
 	private final HttpServletRequest _request;
-	private final String _resolvedModuleName;
 	private String _selectedCategories;
 	private Boolean _singleSelect;
 	private String _type;

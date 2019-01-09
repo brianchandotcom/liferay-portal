@@ -84,7 +84,7 @@ for (int i = 0; i < segmentsCriteriaContributors.size(); i++) {
 
 	<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="getSegmentsEntryClassPKsCount" var="getSegmentsEntryClassPKsCountURL" />
 
-	<aui:script require='<%= renderRequest.getAttribute(SegmentsWebKeys.RESOLVED_MODULE_NAME) + "/js/index.es as SegmentEdit" %>'>
+	<aui:script require='<%= npmResolvedPackageName + "/js/index.es as SegmentEdit" %>'>
 		SegmentEdit.default(
 			'<%= segmentEditRootElementId %>',
 			{

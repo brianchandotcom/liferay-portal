@@ -18,7 +18,6 @@ import com.liferay.asset.categories.selector.web.contants.AssetCategoriesSelecto
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetCategoryConstants;
 import com.liferay.asset.kernel.service.AssetCategoryService;
-import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -36,8 +35,6 @@ import java.util.List;
 import javax.portlet.Portlet;
 import javax.portlet.PortletException;
 import javax.portlet.PortletRequest;
-import javax.portlet.RenderRequest;
-import javax.portlet.RenderResponse;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 
@@ -115,18 +112,6 @@ public class AssetCategoriesSelectorPortlet extends MVCPortlet {
 		}
 	}
 
-	@Override
-	protected void doDispatch(
-			RenderRequest renderRequest, RenderResponse renderResponse)
-		throws IOException, PortletException {
-
-		renderRequest.setAttribute(
-			AssetCategoriesSelectorPortletKeys.RESOLVED_MODULE_NAME,
-			_npmResolver.resolveModuleName("asset-categories-selector-web"));
-
-		super.doDispatch(renderRequest, renderResponse);
-	}
-
 	protected List<AssetCategory> getCategories(PortletRequest portletRequest)
 		throws PortalException {
 
@@ -163,8 +148,5 @@ public class AssetCategoriesSelectorPortlet extends MVCPortlet {
 	}
 
 	private AssetCategoryService _assetCategoryService;
-
-	@Reference
-	private NPMResolver _npmResolver;
 
 }

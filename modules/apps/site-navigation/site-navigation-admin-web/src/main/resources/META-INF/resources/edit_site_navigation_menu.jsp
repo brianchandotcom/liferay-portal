@@ -138,9 +138,9 @@ renderResponse.setTitle(siteNavigationAdminDisplayContext.getSiteNavigationMenuN
 <%
 StringBundler sb = new StringBundler(4);
 
-sb.append(siteNavigationAdminDisplayContext.getModuleName());
+sb.append(npmResolvedPackageName);
 sb.append("/js/SiteNavigationMenuEditor.es as siteNavigationMenuEditorModule, ");
-sb.append(siteNavigationAdminDisplayContext.getModuleName());
+sb.append(npmResolvedPackageName);
 sb.append("/js/SiteNavigationMenuItemDOMHandler.es as siteNavigationMenuItemDOMHandlerModule");
 %>
 

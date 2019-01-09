@@ -7179,25 +7179,25 @@ public class JournalArticleLocalServiceImpl
 
 		actionableDynamicQuery.performActions();
 
-		for (JournalArticle journalArticle : latestArticles) {
+		for (JournalArticle latestArticle : latestArticles) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
 					"Sending review notification for article " +
-						journalArticle.getId());
+						latestArticle.getId());
 			}
 
 			String portletId = PortletProviderUtil.getPortletId(
 				JournalArticle.class.getName(), PortletProvider.Action.EDIT);
 
 			String articleURL = PortalUtil.getControlPanelFullURL(
-				journalArticle.getGroupId(), portletId, null);
+				latestArticle.getGroupId(), portletId, null);
 
 			articleURL = buildArticleURL(
-				articleURL, journalArticle.getGroupId(),
-				journalArticle.getFolderId(), journalArticle.getArticleId());
+				articleURL, latestArticle.getGroupId(),
+				latestArticle.getFolderId(), latestArticle.getArticleId());
 
 			sendEmail(
-				journalArticle, articleURL, "review", new ServiceContext());
+				latestArticle, articleURL, "review", new ServiceContext());
 		}
 	}
 

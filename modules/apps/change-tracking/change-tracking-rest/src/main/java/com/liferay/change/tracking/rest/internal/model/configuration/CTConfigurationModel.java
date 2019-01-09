@@ -16,6 +16,8 @@ package com.liferay.change.tracking.rest.internal.model.configuration;
 
 import javax.xml.bind.annotation.XmlElement;
 
+import java.util.Set;
+
 /**
  * @author Máté Thurzó
  */
@@ -28,6 +30,16 @@ public class CTConfigurationModel {
 	@XmlElement
 	public long getCompanyId() {
 		return _companyId;
+	}
+
+	@XmlElement
+	public Set<String> getSupportedContentTypeLanguageKeys() {
+		return _supportedContentTypeLanguageKeys;
+	}
+
+	@XmlElement
+	public Set<String> getSupportedContentTypes() {
+		return _supportedContentTypes;
 	}
 
 	@XmlElement
@@ -48,6 +60,24 @@ public class CTConfigurationModel {
 			return this;
 		}
 
+		public Builder setSupportedContentTypeLanguageKeys(
+			Set<String> supportedContentTypeLanguageKeys) {
+
+			_ctConfigurationResponseDTO._supportedContentTypeLanguageKeys =
+				supportedContentTypeLanguageKeys;
+
+			return this;
+		}
+
+		public Builder setSupportedContentTypes(
+			Set<String> supportedContentTypes) {
+
+			_ctConfigurationResponseDTO._supportedContentTypes =
+				supportedContentTypes;
+
+			return this;
+		}
+
 		private Builder(long companyId) {
 			_ctConfigurationModel = new CTConfigurationModel();
 
@@ -63,5 +93,9 @@ public class CTConfigurationModel {
 
 	private boolean _changeTrackingEnabled;
 	private long _companyId;
+
+	private Set<String> _supportedContentTypeLanguageKeys;
+
+	private Set<String> _supportedContentTypes;
 
 }

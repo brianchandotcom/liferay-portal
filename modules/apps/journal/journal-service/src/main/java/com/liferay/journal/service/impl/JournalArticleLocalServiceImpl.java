@@ -7100,15 +7100,15 @@ public class JournalArticleLocalServiceImpl
 
 				dynamicQuery.add(articleIdProperty.eq(article.getArticleId()));
 
-				Property expirationDateProperty = PropertyFactoryUtil.forName(
-					"expirationDate");
-
-				dynamicQuery.add(expirationDateProperty.isNotNull());
-
 				Property versionProperty = PropertyFactoryUtil.forName(
 					"version");
 
 				dynamicQuery.add(versionProperty.lt(article.getVersion()));
+
+				Property expirationDateProperty = PropertyFactoryUtil.forName(
+					"expirationDate");
+
+				dynamicQuery.add(expirationDateProperty.isNotNull());
 
 				Order order = OrderFactoryUtil.asc("modifiedDate");
 

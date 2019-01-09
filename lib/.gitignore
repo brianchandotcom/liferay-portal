@@ -85,7 +85,11 @@
 /portal/antlr2.jar
 /portal/antlr3-runtime.jar
 /portal/antlr3.jar
-/portal/asm-debug-all.jar
+/portal/asm-analysis.jar
+/portal/asm-commons.jar
+/portal/asm-tree.jar
+/portal/asm-util.jar
+/portal/asm.jar
 /portal/aspectj-rt.jar
 /portal/aspectj-weaver.jar
 /portal/axiom-api.jar

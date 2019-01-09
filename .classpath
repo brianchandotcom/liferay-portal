@@ -122,7 +122,11 @@
 	<classpathentry kind="lib" path="lib/portal/antlr2.jar"/>
 	<classpathentry kind="lib" path="lib/portal/antlr3.jar"/>
 	<classpathentry kind="lib" path="lib/portal/antlr3-runtime.jar"/>
-	<classpathentry kind="lib" path="lib/portal/asm-debug-all.jar"/>
+	<classpathentry kind="lib" path="lib/portal/asm-analysis.jar"/>
+	<classpathentry kind="lib" path="lib/portal/asm-commons.jar"/>
+	<classpathentry kind="lib" path="lib/portal/asm-tree.jar"/>
+	<classpathentry kind="lib" path="lib/portal/asm-util.jar"/>
+	<classpathentry kind="lib" path="lib/portal/asm.jar"/>
 	<classpathentry kind="lib" path="lib/portal/aspectj-rt.jar"/>
 	<classpathentry kind="lib" path="lib/portal/aspectj-weaver.jar"/>
 	<classpathentry kind="lib" path="lib/portal/axis.jar"/>

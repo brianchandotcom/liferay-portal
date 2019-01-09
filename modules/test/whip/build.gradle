@@ -1,5 +1,6 @@
 dependencies {
-	compile group: "org.ow2.asm", name: "asm-debug-all", version: "5.0.1"
+	compile group: "org.ow2.asm", name: "asm", version: "7.0"
+	compile group: "org.ow2.asm", name: "asm-tree", version: "7.0"
 }
 
 liferay {

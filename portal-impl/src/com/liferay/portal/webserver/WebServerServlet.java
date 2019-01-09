@@ -410,7 +410,7 @@ public class WebServerServlet extends HttpServlet {
 			return ImageToolUtil.getDefaultUserMalePortrait();
 		}
 		else if (path.startsWith("/user_portrait")) {
-			return ImageToolUtil.getDefaultUserMalePortrait();
+			return ImageToolUtil.getDefaultUserPortrait();
 		}
 
 		return null;

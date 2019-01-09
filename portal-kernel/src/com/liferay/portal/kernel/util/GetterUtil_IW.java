@@ -426,9 +426,19 @@ public class GetterUtil_IW {
 		return GetterUtil.getStringValues(value, defaultValue);
 	}
 
+	public java.lang.String[] getStringValues(java.lang.Object value,
+		java.util.function.Supplier<java.lang.String[]> defaultValueSupplier) {
+		return GetterUtil.getStringValues(value, defaultValueSupplier);
+	}
+
 	public java.lang.String[] getStringValues(java.lang.Object[] values,
 		java.lang.String[] defaultValue) {
 		return GetterUtil.getStringValues(values, defaultValue);
+	}
+
+	public java.lang.String[] getStringValues(java.lang.Object[] values,
+		java.util.function.Supplier<java.lang.String[]> defaultValueSupplier) {
+		return GetterUtil.getStringValues(values, defaultValueSupplier);
 	}
 
 	public java.lang.String[] getStringValues(java.lang.String[] values) {

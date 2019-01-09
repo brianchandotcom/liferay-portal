@@ -269,9 +269,8 @@ public class ArrayUtil_IW {
 		return ArrayUtil.containsAll(array1, array2);
 	}
 
-	public <T> int count(T[] array,
-		com.liferay.portal.kernel.util.PredicateFilter<T> predicateFilter) {
-		return ArrayUtil.count(array, predicateFilter);
+	public <T> int count(T[] array, java.util.function.Predicate<T> predicate) {
+		return ArrayUtil.count(array, predicate);
 	}
 
 	public java.lang.String[] distinct(java.lang.String[] array) {
@@ -284,52 +283,52 @@ public class ArrayUtil_IW {
 	}
 
 	public <T> boolean exists(T[] array,
-		com.liferay.portal.kernel.util.PredicateFilter<T> predicateFilter) {
-		return ArrayUtil.exists(array, predicateFilter);
+		java.util.function.Predicate<T> predicate) {
+		return ArrayUtil.exists(array, predicate);
 	}
 
 	public boolean[] filter(boolean[] array,
-		com.liferay.portal.kernel.util.PredicateFilter<java.lang.Boolean> predicateFilter) {
-		return ArrayUtil.filter(array, predicateFilter);
+		java.util.function.Predicate<java.lang.Boolean> predicate) {
+		return ArrayUtil.filter(array, predicate);
 	}
 
 	public byte[] filter(byte[] array,
-		com.liferay.portal.kernel.util.PredicateFilter<java.lang.Byte> predicateFilter) {
-		return ArrayUtil.filter(array, predicateFilter);
+		java.util.function.Predicate<java.lang.Byte> predicate) {
+		return ArrayUtil.filter(array, predicate);
 	}
 
 	public char[] filter(char[] array,
-		com.liferay.portal.kernel.util.PredicateFilter<java.lang.Character> predicateFilter) {
-		return ArrayUtil.filter(array, predicateFilter);
+		java.util.function.Predicate<java.lang.Character> predicate) {
+		return ArrayUtil.filter(array, predicate);
 	}
 
 	public double[] filter(double[] array,
-		com.liferay.portal.kernel.util.PredicateFilter<java.lang.Double> predicateFilter) {
-		return ArrayUtil.filter(array, predicateFilter);
+		java.util.function.Predicate<java.lang.Double> predicate) {
+		return ArrayUtil.filter(array, predicate);
 	}
 
 	public float[] filter(float[] array,
-		com.liferay.portal.kernel.util.PredicateFilter<java.lang.Float> predicateFilter) {
-		return ArrayUtil.filter(array, predicateFilter);
+		java.util.function.Predicate<java.lang.Float> predicate) {
+		return ArrayUtil.filter(array, predicate);
 	}
 
 	public int[] filter(int[] array,
-		com.liferay.portal.kernel.util.PredicateFilter<java.lang.Integer> predicateFilter) {
-		return ArrayUtil.filter(array, predicateFilter);
+		java.util.function.Predicate<java.lang.Integer> predicate) {
+		return ArrayUtil.filter(array, predicate);
 	}
 
 	public long[] filter(long[] array,
-		com.liferay.portal.kernel.util.PredicateFilter<java.lang.Long> predicateFilter) {
-		return ArrayUtil.filter(array, predicateFilter);
+		java.util.function.Predicate<java.lang.Long> predicate) {
+		return ArrayUtil.filter(array, predicate);
 	}
 
 	public short[] filter(short[] array,
-		com.liferay.portal.kernel.util.PredicateFilter<java.lang.Short> predicateFilter) {
-		return ArrayUtil.filter(array, predicateFilter);
+		java.util.function.Predicate<java.lang.Short> predicate) {
+		return ArrayUtil.filter(array, predicate);
 	}
 
 	public <T> T[] filter(T[] array,
-		com.liferay.portal.kernel.util.PredicateFilter<T> filterPredicate) {
+		java.util.function.Predicate<T> filterPredicate) {
 		return ArrayUtil.filter(array, filterPredicate);
 	}
 

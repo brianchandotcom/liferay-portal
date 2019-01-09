@@ -32,17 +32,17 @@ import javax.ws.rs.core.MediaType;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ServiceScope;
 
 /**
  * @author Máté Thurzó
  */
 @Component(
-	immediate = true,
 	property = {
 		"osgi.jaxrs.application.select=(osgi.jaxrs.name=change-tracking-application)",
 		"osgi.jaxrs.resource=true"
 	},
-	service = CTConfigurationResource.class
+	scope = ServiceScope.PROTOTYPE, service = CTConfigurationResource.class
 )
 @Path("/configurations")
 public class CTConfigurationResource {

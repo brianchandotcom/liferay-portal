@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.frontend.taglib.soy.internal.util;
+package com.liferay.portal.template.soy.renderer.internal;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;

@@ -12,10 +12,8 @@
  * details.
  */
 
-package com.liferay.frontend.taglib.soy.internal.util;
+package com.liferay.portal.template.soy.renderer.internal;
 
-import com.liferay.frontend.taglib.soy.servlet.taglib.util.ComponentDescriptor;
-import com.liferay.frontend.taglib.soy.servlet.taglib.util.SoyRenderer;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -27,6 +25,8 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.template.soy.renderer.ComponentDescriptor;
+import com.liferay.portal.template.soy.renderer.SoyRenderer;
 
 import java.io.IOException;
 import java.io.Writer;

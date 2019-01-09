@@ -343,13 +343,6 @@ public class DisplayPageFriendlyURLResolver implements FriendlyURLResolver {
 				urlTitle);
 
 		if (friendlyURLEntryLocalization != null) {
-			locale = LocaleUtil.fromLanguageId(
-				friendlyURLEntryLocalization.getLanguageId());
-
-			request.setAttribute(
-				WebKeys.I18N_LANGUAGE_ID,
-				friendlyURLEntryLocalization.getLanguageId());
-
 			actualParams.put(
 				namespace + "languageId",
 				new String[] {friendlyURLEntryLocalization.getLanguageId()});

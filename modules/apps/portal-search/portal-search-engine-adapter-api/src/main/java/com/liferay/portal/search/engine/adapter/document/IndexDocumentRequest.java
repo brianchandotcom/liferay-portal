@@ -29,7 +29,14 @@ public class IndexDocumentRequest
 			   DocumentRequest<IndexDocumentResponse> {
 
 	public IndexDocumentRequest(String indexName, Document document) {
+		this(indexName, null, document);
+	}
+
+	public IndexDocumentRequest(
+		String indexName, String uid, Document document) {
+
 		_indexName = indexName;
+		_uid = uid;
 		_document = document;
 	}
 
@@ -57,6 +64,10 @@ public class IndexDocumentRequest
 		return _type;
 	}
 
+	public String getUid() {
+		return _uid;
+	}
+
 	public boolean isRefresh() {
 		return _refresh;
 	}
@@ -73,5 +84,6 @@ public class IndexDocumentRequest
 	private final String _indexName;
 	private boolean _refresh;
 	private String _type;
+	private final String _uid;
 
 }

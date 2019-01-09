@@ -22,14 +22,20 @@ import aQute.bnd.annotation.ProviderType;
 @ProviderType
 public class IndexDocumentResponse implements DocumentResponse {
 
-	public IndexDocumentResponse(int status) {
+	public IndexDocumentResponse(int status, String uid) {
 		_status = status;
+		_uid = uid;
 	}
 
 	public int getStatus() {
 		return _status;
 	}
 
+	public String getUid() {
+		return _uid;
+	}
+
 	private final int _status;
+	private final String _uid;
 
 }

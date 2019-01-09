@@ -211,7 +211,7 @@ class SidebarAvailableElements extends Component {
 				dragPlaceholder: Drag.Placeholder.CLONE,
 				handles: '.fragments-editor__drag-handler',
 				sources: '.drag-card',
-				targets: '.fragments-editor__drop-target'
+				targets: '.fragments-editor__drop-target--fragment'
 			}
 		);
 

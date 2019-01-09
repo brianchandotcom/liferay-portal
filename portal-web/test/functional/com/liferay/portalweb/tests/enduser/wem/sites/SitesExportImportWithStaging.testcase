@@ -66,8 +66,6 @@ definition {
 
 		ContentPages.addPage(pageName = "Test Regular Content Page");
 
-		PageEditor.expandContentPageFragmentSidebar();
-
 		PageEditor.addFragment(
 			collectionName = "Collection Name",
 			fragmentName = "Title"

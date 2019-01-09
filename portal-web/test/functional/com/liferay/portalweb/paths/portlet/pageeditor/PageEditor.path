@@ -61,11 +61,6 @@
 </tr>
 <!--CONTENT_PAGE-->
 <tr>
-	<td>CONTENT_PAGE_FRAGMENT_SIDEBAR</td>
-	<td>//div[contains(@class,'fragments-editor-sidebar-section')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>CONTENT_PAGE_DISABLED_HEADER</td>
 	<td>//header[@class='lfr-edit-mode__disabled-area']</td>
 	<td></td>

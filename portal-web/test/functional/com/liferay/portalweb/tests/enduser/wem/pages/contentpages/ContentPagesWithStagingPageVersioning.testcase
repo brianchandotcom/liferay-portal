@@ -28,8 +28,6 @@ definition {
 
 		ContentPages.addPage(pageName = "Test Content Page Name");
 
-		PageEditor.expandContentPageFragmentSidebar();
-
 		PageEditor.addFragment(
 			collectionName = "Collection Name",
 			fragmentName = "Title"

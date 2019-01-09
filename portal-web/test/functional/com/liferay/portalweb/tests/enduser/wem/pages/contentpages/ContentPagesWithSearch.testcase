@@ -30,8 +30,6 @@ definition {
 		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
 		ContentPages.addPage(pageName = "Test Content Page Name");
-
-		PageEditor.expandContentPageFragmentSidebar();
 	}
 
 	tearDown {

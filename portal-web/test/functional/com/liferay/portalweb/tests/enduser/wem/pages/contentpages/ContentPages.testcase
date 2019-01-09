@@ -39,8 +39,6 @@ definition {
 
 		ContentPages.addPage(pageName = "Test Content Page Name");
 
-		PageEditor.expandContentPageFragmentSidebar();
-
 		PageEditor.addFragment(
 			collectionName = "Collection Name",
 			fragmentName = "Title"
@@ -139,8 +137,6 @@ definition {
 
 		ContentPages.addPage(pageName = "Test Content Page Name");
 
-		PageEditor.expandContentPageFragmentSidebar();
-
 		PageEditor.addFragment(
 			collectionName = "Collection Name",
 			fragmentName = "Content"
@@ -194,8 +190,6 @@ definition {
 
 		ContentPages.addPage(pageName = "Test Content Page Name");
 
-		PageEditor.expandContentPageFragmentSidebar();
-
 		PageEditor.addFragment(
 			collectionName = "Collection Name",
 			fragmentName = "Title"
@@ -211,8 +205,6 @@ definition {
 		);
 
 		ContentPages.gotoEditMode();
-
-		PageEditor.expandContentPageFragmentSidebar();
 
 		PageEditor.addFragment(
 			collectionName = "Collection Name",

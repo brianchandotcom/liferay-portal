@@ -242,9 +242,7 @@ else {
 		<%
 		PortletURL viewUsagesURL = PortletProviderUtil.getPortletURL(request, AssetEntryUsage.class.getName(), PortletProvider.Action.VIEW);
 
-		long classPK = JournalArticleAssetRenderer.getClassPK(article);
-
-		AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(JournalArticle.class.getName(), classPK);
+		AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(JournalArticle.class.getName(), article.getResourcePrimKey());
 
 		viewUsagesURL.setParameter("assetEntryId", String.valueOf(assetEntry.getEntryId()));
 		%>

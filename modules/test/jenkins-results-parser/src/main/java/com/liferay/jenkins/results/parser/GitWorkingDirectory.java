@@ -488,7 +488,7 @@ public class GitWorkingDirectory {
 		RemoteGitRef remoteGitRef) {
 
 		if (remoteGitRef == null) {
-			throw new IllegalArgumentException("Remote Git branch is null");
+			throw new IllegalArgumentException("Remote Git reference is null");
 		}
 
 		String remoteGitRefSHA = remoteGitRef.getSHA();

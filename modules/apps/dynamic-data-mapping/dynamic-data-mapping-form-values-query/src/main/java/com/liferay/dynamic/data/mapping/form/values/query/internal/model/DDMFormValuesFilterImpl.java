@@ -17,7 +17,6 @@ package com.liferay.dynamic.data.mapping.form.values.query.internal.model;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.PredicateFilter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,7 +43,9 @@ public class DDMFormValuesFilterImpl implements DDMFormValuesFilter {
 		}
 
 		return ListUtil.filter(
-			ddmFormFieldValues, new DDMFormFieldValuePredicateFilter());
+			ddmFormFieldValues,
+			ddmFormFieldValue -> _ddmFormFieldValueMatcher.matches(
+				ddmFormFieldValue));
 	}
 
 	@Override
@@ -105,15 +106,5 @@ public class DDMFormValuesFilterImpl implements DDMFormValuesFilter {
 
 	private DDMFormFieldValueMatcher _ddmFormFieldValueMatcher;
 	private boolean _greedy;
-
-	private class DDMFormFieldValuePredicateFilter
-		implements PredicateFilter<DDMFormFieldValue> {
-
-		@Override
-		public boolean filter(DDMFormFieldValue ddmFormFieldValue) {
-			return _ddmFormFieldValueMatcher.matches(ddmFormFieldValue);
-		}
-
-	}
 
 }

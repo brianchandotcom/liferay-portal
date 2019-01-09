@@ -65,6 +65,18 @@ String navigation = ParamUtil.getString(request, "navigation");
 
 		<liferay-util:include page="/document_library/toolbar.jsp" servletContext="<%= application %>" />
 
+		<div id="<portlet:namespace />bulkStatusContainer"></div>
+
+		<aui:script require="document-library-web/document_library/bulk/BulkStatus.es as BulkStatus">
+			var component = Liferay.component(
+				'<portlet:namespace />BulkStatus',
+				new BulkStatus.default(
+					{},
+					<portlet:namespace />bulkStatusContainer
+				)
+			);
+		</aui:script>
+
 		<div id="<portlet:namespace />documentLibraryContainer">
 
 			<%

@@ -17,7 +17,7 @@ package com.liferay.asset.web.internal.portlet;
 import com.liferay.asset.constants.AssetPortletKeys;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
-import com.liferay.asset.util.AssetEntryUsageHelper;
+import com.liferay.asset.util.AssetEntryUsageCheckUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -70,7 +70,7 @@ public class AssetPortlet extends MVCPortlet {
 
 		try {
 			if (assetEntry != null) {
-				_assetEntryUsageHelper.checkAssetEntryUsages(assetEntry);
+				_assetEntryUsageCheckUtil.checkAssetEntryUsages(assetEntry);
 			}
 		}
 		catch (PortalException pe) {
@@ -91,6 +91,6 @@ public class AssetPortlet extends MVCPortlet {
 	private AssetEntryLocalService _assetEntryLocalService;
 
 	@Reference
-	private AssetEntryUsageHelper _assetEntryUsageHelper;
+	private AssetEntryUsageCheckUtil _assetEntryUsageCheckUtil;
 
 }

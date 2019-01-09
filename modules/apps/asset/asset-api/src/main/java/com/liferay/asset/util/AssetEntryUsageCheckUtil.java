@@ -20,7 +20,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 /**
  * @author Pavel Savinov
  */
-public interface AssetEntryUsageHelper {
+public interface AssetEntryUsageCheckUtil {
 
 	public void checkAssetEntryUsages(AssetEntry assetEntry)
 		throws PortalException;

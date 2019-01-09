@@ -15,8 +15,8 @@
 package com.liferay.asset.internal.util;
 
 import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.asset.util.AssetEntryUsageCheckUtil;
 import com.liferay.asset.util.AssetEntryUsageChecker;
-import com.liferay.asset.util.AssetEntryUsageHelper;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -31,8 +31,8 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Pavel Savinov
  */
-@Component(immediate = true, service = AssetEntryUsageHelper.class)
-public class AssetEntryUsageHelperImpl implements AssetEntryUsageHelper {
+@Component(immediate = true, service = AssetEntryUsageCheckUtil.class)
+public class AssetEntryUsageCheckUtilImpl implements AssetEntryUsageCheckUtil {
 
 	@Override
 	public void checkAssetEntryUsages(AssetEntry assetEntry)

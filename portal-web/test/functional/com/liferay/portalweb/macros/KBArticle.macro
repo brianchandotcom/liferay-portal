@@ -1071,29 +1071,6 @@ definition {
 		SelectFrame(value1 = "relative=top");
 	}
 
-	macro selectRelatedAssetCP {
-		AssertClick(
-			locator1 = "AssetRelatedAssets#RELATED_ASSETS_SELECT",
-			value1 = "Select"
-		);
-
-		AssertClick(
-			locator1 = "KnowledgeBaseArticle#EDIT_SELECT_RELATED_ASSETS",
-			value1 = "${kbArticleRelatedAssetType}",
-			key_kbArticleRelatedAssetType = "${kbArticleRelatedAssetType}"
-		);
-
-		SelectFrame(locator1 = "AssetRelatedAssets#SELECT_ASSET_IFRAME");
-
-		AssertClick(
-			locator1 = "AssetRelatedAssets#KB_ASSET_TABLE_TITLE_LINK",
-			value1 = "${kbArticleRelatedAssetTitle}",
-			key_kbArticleRelatedAssetTitle = "${kbArticleRelatedAssetTitle}"
-		);
-
-		SelectFrame(value1 = "relative=top");
-	}
-
 	macro selectScopePG {
 		SelectFrame(locator1 = "KnowledgeBaseConfiguration#IFRAME");
 

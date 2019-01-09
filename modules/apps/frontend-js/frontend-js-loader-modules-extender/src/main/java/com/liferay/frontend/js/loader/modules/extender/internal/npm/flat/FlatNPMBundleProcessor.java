@@ -61,12 +61,9 @@ import org.osgi.service.component.annotations.Reference;
 @Component(immediate = true, service = JSBundleProcessor.class)
 public class FlatNPMBundleProcessor implements JSBundleProcessor {
 
-	public static final String PACKAGE_JSON_PATH =
-		"META-INF/resources/package.json";
-
 	@Override
 	public JSBundle process(Bundle bundle) {
-		URL url = bundle.getResource(PACKAGE_JSON_PATH);
+		URL url = bundle.getResource("META-INF/resources/package.json");
 
 		if (url == null) {
 			return null;
@@ -441,7 +438,7 @@ public class FlatNPMBundleProcessor implements JSBundleProcessor {
 
 			String path = url.getPath();
 
-			if (path.equals(PACKAGE_JSON_PATH)) {
+			if (path.equals("/META-INF/resources/package.json")) {
 				continue;
 			}
 

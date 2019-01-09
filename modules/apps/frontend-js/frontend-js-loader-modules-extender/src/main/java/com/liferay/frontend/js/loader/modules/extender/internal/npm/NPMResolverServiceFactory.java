@@ -14,7 +14,6 @@
 
 package com.liferay.frontend.js.loader.modules.extender.internal.npm;
 
-import com.liferay.frontend.js.loader.modules.extender.internal.npm.flat.FlatNPMBundleProcessor;
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMRegistry;
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -55,7 +54,7 @@ public class NPMResolverServiceFactory implements ServiceFactory<NPMResolver> {
 	public NPMResolver getService(
 		Bundle bundle, ServiceRegistration<NPMResolver> serviceRegistration) {
 
-		URL url = bundle.getResource(FlatNPMBundleProcessor.PACKAGE_JSON_PATH);
+		URL url = bundle.getResource("META-INF/resources/package.json");
 
 		if (url == null) {
 			return new NullNPMResolverImpl(bundle);

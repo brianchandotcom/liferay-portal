@@ -22,6 +22,19 @@ import org.junit.Test;
 public class PoshiSourceProcessorTest extends BaseSourceProcessorTestCase {
 
 	@Test
+	public void testIncorrectLineBreak() throws Exception {
+		test(
+			"IncorrectLineBreak.testmacro",
+			new String[] {
+				"There should be a line break after ';'",
+				"There should be a line break after ';'",
+				"There should be a line break after ';'",
+				"There should be a line break after ';'"
+			},
+			new Integer[] {2, 3, 18, 19});
+	}
+
+	@Test
 	public void testIncorrectWhitespace() throws Exception {
 		test("IncorrectWhitespace.testmacro");
 	}

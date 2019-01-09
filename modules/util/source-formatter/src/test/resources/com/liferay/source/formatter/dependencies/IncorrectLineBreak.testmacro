@@ -1,0 +1,24 @@
+definition {
+	property incorrectline.portal.release.a = "true"; 	property portal.upstream = "true";
+	property incorrectline.portal.release.b = "true";property portal.upstream = "true";
+	property correctlin.testray.main.component.name = "Smoke";
+
+	@description = "This is correct line; 	 Ensure that a user can add multiple Blogs Entries."
+	test AddBlogsEntries {
+		task ("Add a blogs entry called 'Blogs; Entry1 Title'; with content 'Blogs Entry1 Content'") {
+			Navigator.correctLine();
+
+			ProductMenu.correctLine(
+				category = "Content",
+				panel = "Site Administration",
+				portlet = "Blogs"
+			);
+		}
+
+		property testray.component.names = "Blogs";		property testray.main.component.name = "Blogs";		property testray.main.component.name = "Blogs";
+			Navigator.openURL();ProductMenu.gotoPortlet(
+				portlet = "Blogs"
+			);
+		}
+	}
+}

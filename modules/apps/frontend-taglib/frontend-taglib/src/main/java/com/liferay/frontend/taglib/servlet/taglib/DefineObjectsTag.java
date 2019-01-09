@@ -71,6 +71,10 @@ public class DefineObjectsTag extends TagSupport {
 				"windowState", liferayPortletRequest.getWindowState());
 		}
 
+		pageContext.setAttribute(
+			"npmResolvedPackageName",
+			NPMResolverHelperUtil.getNpmResolvedPackageName(request));
+
 		if (_overrideResourceBundle != null) {
 			pageContext.setAttribute("resourceBundle", _overrideResourceBundle);
 		}
@@ -81,10 +85,6 @@ public class DefineObjectsTag extends TagSupport {
 				"resourceBundle",
 				TagResourceBundleUtil.getResourceBundle(request, locale));
 		}
-
-		pageContext.setAttribute(
-			"npmResolvedPackageName",
-			NPMResolverHelperUtil.getNpmResolvedPackageName(request));
 
 		return SKIP_BODY;
 	}

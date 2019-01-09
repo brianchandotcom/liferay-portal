@@ -1664,7 +1664,10 @@ public class AssetPublisherDisplayContext {
 		PortletURL currentURLObj = PortletURLUtil.getCurrent(
 			liferayPortletRequest, liferayPortletResponse);
 
-		redirectURL.setParameter("redirect", currentURLObj.toString());
+		String redirect = ParamUtil.getString(
+			liferayPortletRequest, "redirect", currentURLObj.toString());
+
+		redirectURL.setParameter("redirect", redirect);
 
 		redirectURL.setWindowState(LiferayWindowState.POP_UP);
 

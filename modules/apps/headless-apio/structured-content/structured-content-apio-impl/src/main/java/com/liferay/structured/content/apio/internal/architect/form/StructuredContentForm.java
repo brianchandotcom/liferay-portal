@@ -29,41 +29,41 @@ import java.util.List;
  *
  * @author Alejandro Hernández
  */
-public class StructuredContentCreatorForm implements StructuredContent {
+public class StructuredContentForm implements StructuredContent {
 
 	/**
-	 * Builds a {@code Form} that generates a {@code
-	 * StructuredContentCreatorForm} that depends on the HTTP body.
+	 * Builds a {@code Form} that generates a {@code StructuredContentForm} that
+	 * depends on the HTTP body.
 	 *
 	 * @param  formBuilder the form builder
 	 * @return the form
 	 */
-	public static Form<StructuredContentCreatorForm> buildForm(
-		Form.Builder<StructuredContentCreatorForm> formBuilder) {
+	public static Form<StructuredContentForm> buildForm(
+		Form.Builder<StructuredContentForm> formBuilder) {
 
 		return formBuilder.title(
 			__ -> "The structured content creator form"
 		).description(
 			__ -> "This form can be used to create a structured content"
 		).constructor(
-			StructuredContentCreatorForm::new
+			StructuredContentForm::new
 		).addOptionalDate(
-			"datePublished", StructuredContentCreatorForm::setPublishedDate
+			"datePublished", StructuredContentForm::setPublishedDate
 		).addOptionalLinkedModelList(
 			"category", CategoryIdentifier.class,
-			StructuredContentCreatorForm::setCategories
+			StructuredContentForm::setCategories
 		).addOptionalNestedModelList(
 			"values", StructuredContentValueForm::buildForm,
-			StructuredContentCreatorForm::setStructuredContentValues
+			StructuredContentForm::setStructuredContentValues
 		).addOptionalString(
-			"description", StructuredContentCreatorForm::setDescription
+			"description", StructuredContentForm::setDescription
 		).addOptionalStringList(
-			"keywords", StructuredContentCreatorForm::setKeywords
+			"keywords", StructuredContentForm::setKeywords
 		).addRequiredLinkedModel(
 			"contentStructure", ContentStructureIdentifier.class,
-			StructuredContentCreatorForm::setContentStructureId
+			StructuredContentForm::setContentStructureId
 		).addRequiredString(
-			"title", StructuredContentCreatorForm::setTitle
+			"title", StructuredContentForm::setTitle
 		).build();
 	}
 

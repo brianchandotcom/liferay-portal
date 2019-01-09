@@ -99,8 +99,7 @@ import com.liferay.structured.content.apio.architect.model.StructuredContent;
 import com.liferay.structured.content.apio.architect.resource.StructuredContentField;
 import com.liferay.structured.content.apio.architect.util.StructuredContentUtil;
 import com.liferay.structured.content.apio.internal.architect.filter.StructuredContentEntityModel;
-import com.liferay.structured.content.apio.internal.architect.form.StructuredContentCreatorForm;
-import com.liferay.structured.content.apio.internal.architect.form.StructuredContentUpdaterForm;
+import com.liferay.structured.content.apio.internal.architect.form.StructuredContentForm;
 import com.liferay.structured.content.apio.internal.model.JournalArticleWrapper;
 import com.liferay.structured.content.apio.internal.model.RenderedJournalArticle;
 import com.liferay.structured.content.apio.internal.util.JournalArticleContentHelper;
@@ -161,7 +160,7 @@ public class StructuredContentNestedCollectionResource
 		).addCreator(
 			this::_addJournalArticle, AcceptLanguage.class, ThemeDisplay.class,
 			_hasPermission.forAddingIn(ContentSpace.class),
-			StructuredContentCreatorForm::buildForm
+			StructuredContentForm::buildForm
 		).build();
 	}
 
@@ -205,7 +204,7 @@ public class StructuredContentNestedCollectionResource
 		).addUpdater(
 			this::_updateJournalArticle, AcceptLanguage.class,
 			ThemeDisplay.class, _hasPermission::forUpdating,
-			StructuredContentUpdaterForm::buildForm
+			StructuredContentForm::buildForm
 		).build();
 	}
 

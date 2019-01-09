@@ -532,7 +532,7 @@ public class IntrabandProxyUtil {
 
 		methodNodes.addAll(templateMethodNodes);
 
-		Type stubType = Type.getType(classNode.name);
+		Type stubType = Type.getObjectType(classNode.name);
 
 		// Id methods
 

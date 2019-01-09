@@ -1292,7 +1292,7 @@ public class IntrabandProxyUtilTest {
 		Method method, int index, String skeletonId, String stubInternalName) {
 
 		MethodNode proxyMethodNode = IntrabandProxyUtil.createProxyMethodNode(
-			method, index, skeletonId, Type.getType(stubInternalName));
+			method, index, skeletonId, Type.getObjectType(stubInternalName));
 
 		_assertMethodNodeSignature(
 			proxyMethodNode, method.getModifiers() & ~Modifier.ABSTRACT,

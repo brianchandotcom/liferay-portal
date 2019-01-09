@@ -14,7 +14,6 @@
 
 package com.liferay.message.boards.comment.internal.search;
 
-import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.message.boards.model.MBMessage;
 import com.liferay.message.boards.service.MBMessageLocalService;
 import com.liferay.portal.kernel.comment.Comment;
@@ -43,13 +42,11 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 
-import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
 /**
  * @author André de Oliveira
  */
-@PrepareForTest(AssetRendererFactoryRegistryUtil.class)
 @RunWith(PowerMockRunner.class)
 public class SearchResultUtilMBMessageTest
 	extends BaseSearchResultUtilTestCase {

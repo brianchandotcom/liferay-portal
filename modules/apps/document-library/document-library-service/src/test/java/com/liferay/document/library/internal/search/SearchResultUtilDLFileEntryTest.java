@@ -15,6 +15,7 @@
 package com.liferay.document.library.internal.search;
 
 import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
+import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
@@ -93,13 +94,13 @@ public class SearchResultUtilDLFileEntryTest
 	@Test
 	public void testDLFileEntryAttachment() throws Exception {
 		Mockito.when(
-			assetRenderer.getSearchSummary((Locale)Matchers.any())
+			_assetRenderer.getSearchSummary((Locale)Matchers.any())
 		).thenReturn(
 			SearchTestUtil.SUMMARY_CONTENT
 		);
 
 		Mockito.when(
-			assetRenderer.getTitle((Locale)Matchers.any())
+			_assetRenderer.getTitle((Locale)Matchers.any())
 		).thenReturn(
 			SearchTestUtil.SUMMARY_TITLE
 		);
@@ -125,7 +126,7 @@ public class SearchResultUtilDLFileEntryTest
 					if (SearchTestUtil.ATTACHMENT_OWNER_CLASS_NAME.equals(
 							className)) {
 
-						return assetRendererFactory;
+						return _assetRendererFactory;
 					}
 
 					throw new IllegalArgumentException();
@@ -135,9 +136,9 @@ public class SearchResultUtilDLFileEntryTest
 		);
 
 		Mockito.doReturn(
-			assetRenderer
+			_assetRenderer
 		).when(
-			assetRendererFactory
+			_assetRendererFactory
 		).getAssetRenderer(
 			SearchTestUtil.ATTACHMENT_OWNER_CLASS_PK
 		);
@@ -402,6 +403,13 @@ public class SearchResultUtilDLFileEntryTest
 
 	private static final String _DL_FILE_ENTRY_CLASS_NAME =
 		DLFileEntry.class.getName();
+
+	@Mock
+	@SuppressWarnings("rawtypes")
+	private AssetRenderer _assetRenderer;
+
+	@Mock
+	private AssetRendererFactory<?> _assetRendererFactory;
 
 	@Mock
 	private DLAppLocalService _dlAppLocalService;

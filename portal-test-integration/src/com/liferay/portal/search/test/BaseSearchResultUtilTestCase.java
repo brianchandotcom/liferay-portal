@@ -15,8 +15,6 @@
 package com.liferay.portal.search.test;
 
 import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
-import com.liferay.asset.kernel.model.AssetRenderer;
-import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.portal.kernel.comment.Comment;
 import com.liferay.portal.kernel.model.ClassName;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -148,13 +146,6 @@ public abstract class BaseSearchResultUtilTestCase extends PowerMockito {
 	protected void setUpSearchResultTranslator() {
 		searchResultTranslator = createSearchResultTranslator();
 	}
-
-	@Mock
-	@SuppressWarnings("rawtypes")
-	protected AssetRenderer assetRenderer;
-
-	@Mock
-	protected AssetRendererFactory<?> assetRendererFactory;
 
 	@Mock
 	protected ClassNameLocalService classNameLocalService;

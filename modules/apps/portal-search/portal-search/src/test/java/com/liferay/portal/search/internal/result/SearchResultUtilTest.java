@@ -15,6 +15,8 @@
 package com.liferay.portal.search.internal.result;
 
 import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
+import com.liferay.asset.kernel.model.AssetRenderer;
+import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.DocumentImpl;
@@ -72,21 +74,21 @@ public class SearchResultUtilTest extends BaseSearchResultUtilTestCase {
 	@Test
 	public void testSummaryFromAssetRenderer() throws Exception {
 		when(
-			assetRenderer.getSearchSummary((Locale)Matchers.any())
+			_assetRenderer.getSearchSummary((Locale)Matchers.any())
 		).thenReturn(
 			SearchTestUtil.SUMMARY_CONTENT
 		);
 
 		when(
-			assetRenderer.getTitle((Locale)Matchers.any())
+			_assetRenderer.getTitle((Locale)Matchers.any())
 		).thenReturn(
 			SearchTestUtil.SUMMARY_TITLE
 		);
 
 		when(
-			assetRendererFactory.getAssetRenderer(Matchers.anyLong())
+			_assetRendererFactory.getAssetRenderer(Matchers.anyLong())
 		).thenReturn(
-			assetRenderer
+			_assetRenderer
 		);
 
 		stub(
@@ -94,7 +96,7 @@ public class SearchResultUtilTest extends BaseSearchResultUtilTestCase {
 				AssetRendererFactoryRegistryUtil.class,
 				"getAssetRendererFactoryByClassName", String.class)
 		).toReturn(
-			assetRendererFactory
+			_assetRendererFactory
 		);
 
 		SearchResult searchResult = assertOneSearchResult(new DocumentImpl());
@@ -194,6 +196,13 @@ public class SearchResultUtilTest extends BaseSearchResultUtilTestCase {
 
 		return summaryFactoryImpl;
 	}
+
+	@Mock
+	@SuppressWarnings("rawtypes")
+	private AssetRenderer _assetRenderer;
+
+	@Mock
+	private AssetRendererFactory<?> _assetRendererFactory;
 
 	@Mock
 	private Indexer<Object> _indexer;

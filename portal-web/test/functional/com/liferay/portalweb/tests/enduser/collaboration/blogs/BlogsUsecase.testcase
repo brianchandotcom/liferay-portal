@@ -1024,7 +1024,7 @@ definition {
 		Staging.gotoPublishToLive();
 
 		Staging.configurePublishToLive(
-			checkContentNameList = "Blogs,Navigation Menus",
+			checkContentNameList = "Blogs",
 			checkPageName = "Blogs Page 2",
 			contentDateRange = "All"
 		);

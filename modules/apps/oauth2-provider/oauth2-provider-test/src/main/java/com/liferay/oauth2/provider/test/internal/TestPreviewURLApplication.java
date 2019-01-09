@@ -21,7 +21,7 @@ import javax.ws.rs.GET;
 import javax.ws.rs.core.Application;
 
 /**
- * @author Víctor Galán Grande
+ * @author Víctor Galán
  */
 public class TestPreviewURLApplication extends Application {
 

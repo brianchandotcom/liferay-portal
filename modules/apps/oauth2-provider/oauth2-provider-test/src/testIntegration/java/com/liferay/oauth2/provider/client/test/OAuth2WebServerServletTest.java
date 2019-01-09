@@ -51,7 +51,7 @@ import org.junit.runner.RunWith;
 import org.osgi.framework.ServiceReference;
 
 /**
- * @author Víctor Galán Grande
+ * @author Víctor Galán
  */
 @RunAsClient
 @RunWith(Arquillian.class)

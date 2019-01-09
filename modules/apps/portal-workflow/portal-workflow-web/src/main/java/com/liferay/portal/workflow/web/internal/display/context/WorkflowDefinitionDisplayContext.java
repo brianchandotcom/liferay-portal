@@ -360,8 +360,6 @@ public class WorkflowDefinitionDisplayContext {
 				workflowDefinitionSearch.getEnd());
 		}
 
-		workflowDefinitionSearch.setTotal(workflowDefinitions.size());
-
 		workflowDefinitionSearch.setResults(workflowDefinitions);
 
 		return workflowDefinitionSearch;

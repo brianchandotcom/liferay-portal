@@ -120,8 +120,14 @@ public class JournalContentPortlet extends MVCPortlet {
 				JournalContentWebKeys.JOURNAL_CONTENT_DISPLAY_CONTEXT);
 
 		if (journalContentDisplayContext != null) {
-			article = journalContentDisplayContext.getArticle();
-			articleDisplay = journalContentDisplayContext.getArticleDisplay();
+			try {
+				article = journalContentDisplayContext.getArticle();
+				articleDisplay =
+					journalContentDisplayContext.getArticleDisplay();
+			}
+			catch (PortalException pe) {
+				_log.error("Unable to get journal article", pe);
+			}
 		}
 		else if ((articleGroupId > 0) && Validator.isNotNull(articleId)) {
 			String viewMode = ParamUtil.getString(renderRequest, "viewMode");

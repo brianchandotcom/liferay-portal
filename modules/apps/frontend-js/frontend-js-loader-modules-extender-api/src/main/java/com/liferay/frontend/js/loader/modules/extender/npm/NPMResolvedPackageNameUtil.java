@@ -15,7 +15,6 @@
 package com.liferay.frontend.js.loader.modules.extender.npm;
 
 import javax.servlet.ServletContext;
-import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Iván Zaera Avellón

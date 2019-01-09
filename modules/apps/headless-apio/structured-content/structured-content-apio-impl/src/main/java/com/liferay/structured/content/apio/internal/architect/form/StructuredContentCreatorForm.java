@@ -21,13 +21,8 @@ import com.liferay.structured.content.apio.architect.model.StructuredContent;
 import com.liferay.structured.content.apio.architect.model.StructuredContentValue;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-import java.util.Optional;
 
 /**
  * Represents the values extracted from a structured content form.
@@ -83,10 +78,8 @@ public class StructuredContentCreatorForm implements StructuredContent {
 	}
 
 	@Override
-	public Optional<Map<Locale, String>> getDescriptionMapOptional(
-		Locale locale) {
-
-		return _getStringMapOptional(locale, _description);
+	public String getDescription() {
+		return _description;
 	}
 
 	@Override
@@ -95,28 +88,8 @@ public class StructuredContentCreatorForm implements StructuredContent {
 	}
 
 	@Override
-	public Optional<Integer> getPublishedDateDayOptional() {
-		return Optional.ofNullable(_publishedDateDay);
-	}
-
-	@Override
-	public Optional<Integer> getPublishedDateHourOptional() {
-		return Optional.ofNullable(_publishedDateHour);
-	}
-
-	@Override
-	public Optional<Integer> getPublishedDateMinuteOptional() {
-		return Optional.ofNullable(_publishedDateMinute);
-	}
-
-	@Override
-	public Optional<Integer> getPublishedDateMonthOptional() {
-		return Optional.ofNullable(_publishedDateMonth);
-	}
-
-	@Override
-	public Optional<Integer> getPublishedDateYearOptional() {
-		return Optional.ofNullable(_publishedDateYear);
+	public Date getPublishedDate() {
+		return _publishedDate;
 	}
 
 	@Override
@@ -125,12 +98,8 @@ public class StructuredContentCreatorForm implements StructuredContent {
 	}
 
 	@Override
-	public Map<Locale, String> getTitleMap(Locale locale) {
-		Map<Locale, String> titleMap = new HashMap<>();
-
-		titleMap.put(locale, _title);
-
-		return titleMap;
+	public String getTitle() {
+		return _title;
 	}
 
 	public void setCategories(List<Long> categories) {
@@ -150,15 +119,7 @@ public class StructuredContentCreatorForm implements StructuredContent {
 	}
 
 	public void setPublishedDate(Date publishedDate) {
-		Calendar calendar = Calendar.getInstance();
-
-		calendar.setTime(publishedDate);
-
-		_publishedDateDay = calendar.get(Calendar.DATE);
-		_publishedDateHour = calendar.get(Calendar.HOUR);
-		_publishedDateMinute = calendar.get(Calendar.MINUTE);
-		_publishedDateMonth = calendar.get(Calendar.MONTH);
-		_publishedDateYear = calendar.get(Calendar.YEAR);
+		_publishedDate = publishedDate;
 	}
 
 	public void setStructuredContentValues(
@@ -171,31 +132,11 @@ public class StructuredContentCreatorForm implements StructuredContent {
 		_title = title;
 	}
 
-	private Optional<Map<Locale, String>> _getStringMapOptional(
-		Locale locale, String value) {
-
-		return Optional.ofNullable(
-			value
-		).map(
-			description -> {
-				Map<Locale, String> map = new HashMap<>();
-
-				map.put(locale, value);
-
-				return map;
-			}
-		);
-	}
-
 	private List<Long> _categories;
 	private Long _contentStructureId;
 	private String _description;
 	private List<String> _keywords;
-	private Integer _publishedDateDay;
-	private Integer _publishedDateHour;
-	private Integer _publishedDateMinute;
-	private Integer _publishedDateMonth;
-	private Integer _publishedDateYear;
+	private Date _publishedDate;
 	private List<? extends StructuredContentValue> _structuredContentValues =
 		new ArrayList<>();
 	private String _title;

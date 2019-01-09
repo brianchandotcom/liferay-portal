@@ -64,7 +64,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Optional;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -1230,10 +1229,8 @@ public class DefaultStructuredContentNestedCollectionResourceTest
 			}
 
 			@Override
-			public Optional<Map<Locale, String>> getDescriptionMapOptional(
-				Locale locale) {
-
-				return Optional.empty();
+			public String getDescription() {
+				return null;
 			}
 
 			@Override
@@ -1242,28 +1239,8 @@ public class DefaultStructuredContentNestedCollectionResourceTest
 			}
 
 			@Override
-			public Optional<Integer> getPublishedDateDayOptional() {
-				return Optional.empty();
-			}
-
-			@Override
-			public Optional<Integer> getPublishedDateHourOptional() {
-				return Optional.empty();
-			}
-
-			@Override
-			public Optional<Integer> getPublishedDateMinuteOptional() {
-				return Optional.empty();
-			}
-
-			@Override
-			public Optional<Integer> getPublishedDateMonthOptional() {
-				return Optional.empty();
-			}
-
-			@Override
-			public Optional<Integer> getPublishedDateYearOptional() {
-				return Optional.empty();
+			public Date getPublishedDate() {
+				return null;
 			}
 
 			@Override
@@ -1274,12 +1251,8 @@ public class DefaultStructuredContentNestedCollectionResourceTest
 			}
 
 			@Override
-			public Map<Locale, String> getTitleMap(Locale locale) {
-				return new HashMap<Locale, String>() {
-					{
-						put(locale, title);
-					}
-				};
+			public String getTitle() {
+				return title;
 			}
 
 		};

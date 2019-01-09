@@ -14,10 +14,8 @@
 
 package com.liferay.structured.content.apio.architect.model;
 
+import java.util.Date;
 import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-import java.util.Optional;
 
 /**
  * Represents a structured content exposed through the API.
@@ -45,13 +43,12 @@ public interface StructuredContent {
 	public Long getContentStructureId();
 
 	/**
-	 * Returns the structured content's description map for the supplied locale.
+	 * Returns the structured content's description.
 	 *
-	 * @return the description map
+	 * @return the description
 	 * @review
 	 */
-	public Optional<Map<Locale, String>> getDescriptionMapOptional(
-		Locale locale);
+	public String getDescription();
 
 	/**
 	 * Returns the structured content's keywords.
@@ -62,44 +59,12 @@ public interface StructuredContent {
 	public List<String> getKeywords();
 
 	/**
-	 * Returns the day from the structured content's publication date.
+	 * Returns the structured content's publication date.
 	 *
-	 * @return the publication date's day
+	 * @return the publication date
 	 * @review
 	 */
-	public Optional<Integer> getPublishedDateDayOptional();
-
-	/**
-	 * Returns the hour from the structured content's publication date.
-	 *
-	 * @return the publication date's hour
-	 * @review
-	 */
-	public Optional<Integer> getPublishedDateHourOptional();
-
-	/**
-	 * Returns the minute from the structured content's publication date.
-	 *
-	 * @return the publication date's minute
-	 * @review
-	 */
-	public Optional<Integer> getPublishedDateMinuteOptional();
-
-	/**
-	 * Returns the month from the structured content's publication date.
-	 *
-	 * @return the publication date's month
-	 * @review
-	 */
-	public Optional<Integer> getPublishedDateMonthOptional();
-
-	/**
-	 * Returns the year from the structured content's publication date.
-	 *
-	 * @return the publication date's year
-	 * @review
-	 */
-	public Optional<Integer> getPublishedDateYearOptional();
+	public Date getPublishedDate();
 
 	/**
 	 * Returns the structured content's structured content values.
@@ -110,11 +75,11 @@ public interface StructuredContent {
 	public List<? extends StructuredContentValue> getStructuredContentValues();
 
 	/**
-	 * Returns the structured content's title map.
+	 * Returns the structured content's title.
 	 *
-	 * @return the title map
+	 * @return the title
 	 * @review
 	 */
-	public Map<Locale, String> getTitleMap(Locale locale);
+	public String getTitle();
 
 }

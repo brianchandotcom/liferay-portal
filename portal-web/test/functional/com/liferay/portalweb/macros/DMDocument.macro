@@ -637,7 +637,10 @@ definition {
 		);
 
 		if ("${dmRepositoryName}" == "true") {
-			AssertElementNotPresent(locator1 = "Message#CHECKOUT_SUCCESS");
+			AssertTextEquals.assertPartialText(
+				locator1 = "Message#CHECKOUT_SUCCESS",
+				value1 = "You now have an indefinite lock on this document. No one else can edit this document until you unlock it. This lock will never expire."
+			);
 		}
 		else {
 			AssertTextEquals.assertPartialText(

@@ -15,27 +15,9 @@
 --%>
 
 <%
-List<AssetRendererFactory<?>> availableAssetRendererFactories = ListUtil.filter(
-	AssetRendererFactoryRegistryUtil.getAssetRendererFactories(company.getCompanyId()),
-	new PredicateFilter<AssetRendererFactory<?>>() {
+List<AssetRendererFactory<?>> availableAssetRendererFactories = ListUtil.filter(AssetRendererFactoryRegistryUtil.getAssetRendererFactories(company.getCompanyId()), AssetRendererFactory::isCategorizable);
 
-		@Override
-		public boolean filter(AssetRendererFactory<?> assetRendererFactory) {
-			return assetRendererFactory.isCategorizable();
-		}
-
-	});
-
-List<AssetRendererFactory<?>> classTypedAssetRendererFactories = ListUtil.filter(
-	availableAssetRendererFactories,
-	new PredicateFilter<AssetRendererFactory<?>>() {
-
-		@Override
-		public boolean filter(AssetRendererFactory<?> assetRendererFactory) {
-			return assetRendererFactory.isSupportsClassTypes();
-		}
-
-	});
+List<AssetRendererFactory<?>> classTypedAssetRendererFactories = ListUtil.filter(availableAssetRendererFactories, AssetRendererFactory::isSupportsClassTypes);
 
 long[] selectedClassNameIds = AssetVocabularySettingsHelper.DEFAULT_SELECTED_CLASSNAME_IDS;
 long[] selectedClassTypePKs = AssetVocabularySettingsHelper.DEFAULT_SELECTED_CLASSTYPE_PKS;
@@ -74,20 +56,7 @@ if (vocabulary != null) {
 			List<ClassType> classTypes = classTypeReader.getAvailableClassTypes(new long[] {themeDisplay.getCompanyGroupId(), scopeGroupId}, themeDisplay.getLocale());
 
 			if (!classTypes.isEmpty()) {
-				exist = ListUtil.exists(
-					classTypes,
-					new PredicateFilter<ClassType>() {
-
-						@Override
-						public boolean filter(ClassType classType) {
-							if (classType.getClassTypeId() == classTypePK) {
-								return true;
-							}
-
-							return false;
-						}
-
-					});
+				exist = ListUtil.exists(classTypes, classType -> classType.getClassTypeId() == classTypePK);
 			}
 		}
 	%>

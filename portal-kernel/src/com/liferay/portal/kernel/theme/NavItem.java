@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.PredicateFilter;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -186,15 +185,7 @@ public class NavItem implements Serializable {
 			List<NavItem> children = getChildren();
 
 			_browsableChildren = ListUtil.filter(
-				children,
-				new PredicateFilter<NavItem>() {
-
-					@Override
-					public boolean filter(NavItem navItem) {
-						return navItem.isBrowsable();
-					}
-
-				});
+				children, NavItem::isBrowsable);
 		}
 
 		return _browsableChildren;

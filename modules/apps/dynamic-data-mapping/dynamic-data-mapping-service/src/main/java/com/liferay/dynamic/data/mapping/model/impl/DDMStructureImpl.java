@@ -41,7 +41,6 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.PredicateFilter;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.PropsValues;
@@ -314,23 +313,18 @@ public class DDMStructureImpl extends DDMStructureBaseImpl {
 
 		boolean hasAmbiguousName = ListUtil.exists(
 			structures,
-			new PredicateFilter<DDMStructure>() {
-
-				@Override
-				public boolean filter(DDMStructure structure) {
-					if (structure.getStructureId() == getStructureId()) {
-						return false;
-					}
-
-					String name = structure.getName(locale);
-
-					if (name.equals(getName(locale))) {
-						return true;
-					}
-
+			structure -> {
+				if (structure.getStructureId() == getStructureId()) {
 					return false;
 				}
 
+				String name = structure.getName(locale);
+
+				if (name.equals(getName(locale))) {
+					return true;
+				}
+
+				return false;
 			});
 
 		if (hasAmbiguousName) {
@@ -449,21 +443,9 @@ public class DDMStructureImpl extends DDMStructureBaseImpl {
 	protected List<DDMFormField> filterTransientDDMFormFields(
 		List<DDMFormField> ddmFormFields) {
 
-		PredicateFilter<DDMFormField> predicateFilter =
-			new PredicateFilter<DDMFormField>() {
-
-				@Override
-				public boolean filter(DDMFormField ddmFormField) {
-					if (Validator.isNull(ddmFormField.getDataType())) {
-						return false;
-					}
-
-					return true;
-				}
-
-			};
-
-		return ListUtil.filter(ddmFormFields, predicateFilter);
+		return ListUtil.filter(
+			ddmFormFields,
+			ddmFormField -> Validator.isNotNull(ddmFormField.getDataType()));
 	}
 
 	protected List<String> getDDMFormFieldNames(

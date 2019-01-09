@@ -70,7 +70,6 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.PredicateFilter;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -239,23 +238,15 @@ public class AssetUtil {
 
 	public static List<AssetVocabulary> filterVocabularies(
 		List<AssetVocabulary> vocabularies, String className,
-		final long classTypePK) {
+		long classTypePK) {
 
-		final long classNameId = PortalUtil.getClassNameId(className);
+		long classNameId = PortalUtil.getClassNameId(className);
 
-		PredicateFilter<AssetVocabulary> predicateFilter =
-			new PredicateFilter<AssetVocabulary>() {
-
-				@Override
-				public boolean filter(AssetVocabulary assetVocabulary) {
-					return assetVocabulary.
-						isAssociatedToClassNameIdAndClassTypePK(
-							classNameId, classTypePK);
-				}
-
-			};
-
-		return ListUtil.filter(vocabularies, predicateFilter);
+		return ListUtil.filter(
+			vocabularies,
+			assetVocabulary ->
+				assetVocabulary.isAssociatedToClassNameIdAndClassTypePK(
+					classNameId, classTypePK));
 	}
 
 	public static long[] filterVocabularyIds(

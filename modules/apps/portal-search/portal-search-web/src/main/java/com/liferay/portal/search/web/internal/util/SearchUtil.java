@@ -36,7 +36,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.PredicateFilter;
 import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -128,14 +127,7 @@ public class SearchUtil {
 
 		List<OpenSearch> openSearchInstances = ListUtil.filter(
 			OpenSearchRegistryUtil.getOpenSearchInstances(),
-			new PredicateFilter<OpenSearch>() {
-
-				@Override
-				public boolean filter(OpenSearch openSearch) {
-					return openSearch.isEnabled();
-				}
-
-			});
+			OpenSearch::isEnabled);
 
 		if (Validator.isNotNull(primarySearch)) {
 			for (int i = 0; i < openSearchInstances.size(); i++) {

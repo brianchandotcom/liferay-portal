@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.impl.BaseLayoutTypeControllerImpl;
 import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.PredicateFilter;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.taglib.servlet.PipingServletResponse;
 
@@ -110,16 +109,7 @@ public class FullPageApplicationLayoutTypeController
 			return;
 		}
 
-		portlets = ListUtil.filter(
-			portlets,
-			new PredicateFilter<Portlet>() {
-
-				@Override
-				public boolean filter(Portlet portlet) {
-					return portlet.isFullPageDisplayable();
-				}
-
-			});
+		portlets = ListUtil.filter(portlets, Portlet::isFullPageDisplayable);
 
 		request.setAttribute(
 			FullPageApplicationLayoutTypeControllerWebKeys.

@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.PredicateFilter;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.taglib.util.IncludeTag;
@@ -241,21 +240,16 @@ public class AssetCategoriesSelectorTag extends IncludeTag {
 
 		return ListUtil.filter(
 			vocabularies,
-			new PredicateFilter<AssetVocabulary>() {
+			vocabulary -> {
+				int vocabularyCategoriesCount =
+					AssetCategoryServiceUtil.getVocabularyCategoriesCount(
+						vocabulary.getGroupId(), vocabulary.getVocabularyId());
 
-				public boolean filter(AssetVocabulary vocabulary) {
-					int vocabularyCategoriesCount =
-						AssetCategoryServiceUtil.getVocabularyCategoriesCount(
-							vocabulary.getGroupId(),
-							vocabulary.getVocabularyId());
-
-					if (vocabularyCategoriesCount > 0) {
-						return true;
-					}
-
-					return false;
+				if (vocabularyCategoriesCount > 0) {
+					return true;
 				}
 
+				return false;
 			});
 	}
 

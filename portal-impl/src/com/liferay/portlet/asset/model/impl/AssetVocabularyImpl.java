@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.PredicateFilter;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portlet.asset.util.AssetVocabularySettingsHelper;
@@ -133,21 +132,16 @@ public class AssetVocabularyImpl extends AssetVocabularyBaseImpl {
 
 		boolean hasAmbiguousTitle = ListUtil.exists(
 			vocabularies,
-			new PredicateFilter<AssetVocabulary>() {
+			vocabulary -> {
+				String title = vocabulary.getTitle(locale);
 
-				@Override
-				public boolean filter(AssetVocabulary vocabulary) {
-					String title = vocabulary.getTitle(locale);
+				if (title.equals(getTitle(locale)) &&
+					(vocabulary.getVocabularyId() != getVocabularyId())) {
 
-					if (title.equals(getTitle(locale)) &&
-						(vocabulary.getVocabularyId() != getVocabularyId())) {
-
-						return true;
-					}
-
-					return false;
+					return true;
 				}
 
+				return false;
 			});
 
 		if (hasAmbiguousTitle) {
@@ -161,18 +155,11 @@ public class AssetVocabularyImpl extends AssetVocabularyBaseImpl {
 
 	@Override
 	public boolean hasMoreThanOneCategorySelected(final long[] categoryIds) {
-		PredicateFilter<AssetCategory> predicateFilter =
-			new PredicateFilter<AssetCategory>() {
+		if (ListUtil.count(
+				getCategories(),
+				assetCategory -> ArrayUtil.contains(
+					categoryIds, assetCategory.getCategoryId())) > 1) {
 
-				@Override
-				public boolean filter(AssetCategory assetCategory) {
-					return ArrayUtil.contains(
-						categoryIds, assetCategory.getCategoryId());
-				}
-
-			};
-
-		if (ListUtil.count(getCategories(), predicateFilter) > 1) {
 			return true;
 		}
 
@@ -204,18 +191,10 @@ public class AssetVocabularyImpl extends AssetVocabularyBaseImpl {
 			return false;
 		}
 
-		PredicateFilter<AssetCategory> predicateFilter =
-			new PredicateFilter<AssetCategory>() {
-
-				@Override
-				public boolean filter(AssetCategory assetCategory) {
-					return ArrayUtil.contains(
-						categoryIds, assetCategory.getCategoryId());
-				}
-
-			};
-
-		return !ListUtil.exists(getCategories(), predicateFilter);
+		return !ListUtil.exists(
+			getCategories(),
+			assetCategory -> ArrayUtil.contains(
+				categoryIds, assetCategory.getCategoryId()));
 	}
 
 	@Override

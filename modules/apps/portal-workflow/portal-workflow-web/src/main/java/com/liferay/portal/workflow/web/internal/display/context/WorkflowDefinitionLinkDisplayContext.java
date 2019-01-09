@@ -38,7 +38,6 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.PredicateFilter;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.SessionClicks;
 import com.liferay.portal.kernel.util.Validator;
@@ -635,17 +634,7 @@ public class WorkflowDefinitionLinkDisplayContext {
 				WorkflowHandlerRegistryUtil.getScopeableWorkflowHandlers();
 		}
 
-		PredicateFilter<WorkflowHandler<?>> predicateFilter =
-			new PredicateFilter<WorkflowHandler<?>>() {
-
-				@Override
-				public boolean filter(WorkflowHandler<?> workflowHandler) {
-					return workflowHandler.isVisible();
-				}
-
-			};
-
-		return ListUtil.filter(workflowHandlers, predicateFilter);
+		return ListUtil.filter(workflowHandlers, WorkflowHandler::isVisible);
 	}
 
 	protected boolean isControlPanelPortlet() {

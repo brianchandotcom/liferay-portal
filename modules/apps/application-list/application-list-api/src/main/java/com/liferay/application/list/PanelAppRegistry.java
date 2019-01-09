@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.PredicateFilter;
 import com.liferay.portal.kernel.util.PrefsProps;
 
 import java.io.Serializable;
@@ -112,20 +111,15 @@ public class PanelAppRegistry {
 
 		return ListUtil.filter(
 			panelApps,
-			new PredicateFilter<PanelApp>() {
-
-				@Override
-				public boolean filter(PanelApp panelApp) {
-					try {
-						return panelApp.isShow(permissionChecker, group);
-					}
-					catch (PortalException pe) {
-						_log.error(pe, pe);
-					}
-
-					return false;
+			panelApp -> {
+				try {
+					return panelApp.isShow(permissionChecker, group);
+				}
+				catch (PortalException pe) {
+					_log.error(pe, pe);
 				}
 
+				return false;
 			});
 	}
 

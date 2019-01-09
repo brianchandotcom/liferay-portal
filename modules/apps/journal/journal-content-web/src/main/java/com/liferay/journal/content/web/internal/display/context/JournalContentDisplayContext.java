@@ -61,7 +61,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.PredicateFilter;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -413,17 +412,7 @@ public class JournalContentDisplayContext {
 		List<ContentMetadataAssetAddonEntry> contentMetadataAssetAddonEntries =
 			ListUtil.filter(
 				new ArrayList<>(_contentMetadataAssetAddonEntryMap.values()),
-				new PredicateFilter<ContentMetadataAssetAddonEntry>() {
-
-					@Override
-					public boolean filter(
-						ContentMetadataAssetAddonEntry
-							contentMetadataAssetAddonEntry) {
-
-						return contentMetadataAssetAddonEntry.isEnabled();
-					}
-
-				});
+				ContentMetadataAssetAddonEntry::isEnabled);
 
 		return ListUtil.sort(
 			contentMetadataAssetAddonEntries, _assetAddonEntryComparator);
@@ -433,16 +422,7 @@ public class JournalContentDisplayContext {
 		List<UserToolAssetAddonEntry> userToolAssetAddonEntries =
 			ListUtil.filter(
 				new ArrayList<>(_userToolAssetAddonEntryMap.values()),
-				new PredicateFilter<UserToolAssetAddonEntry>() {
-
-					@Override
-					public boolean filter(
-						UserToolAssetAddonEntry userToolAssetAddonEntry) {
-
-						return userToolAssetAddonEntry.isEnabled();
-					}
-
-				});
+				UserToolAssetAddonEntry::isEnabled);
 
 		return ListUtil.sort(
 			userToolAssetAddonEntries, _assetAddonEntryComparator);

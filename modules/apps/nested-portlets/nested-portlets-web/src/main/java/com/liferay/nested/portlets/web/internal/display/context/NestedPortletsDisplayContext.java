@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.servlet.PersistentHttpServletRequestWrapper;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.PredicateFilter;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.plugin.PluginUtil;
@@ -141,15 +140,8 @@ public class NestedPortletsDisplayContext {
 
 		return ListUtil.filter(
 			layoutTemplates,
-			new PredicateFilter<LayoutTemplate>() {
-
-				@Override
-				public boolean filter(LayoutTemplate layoutTemplate) {
-					return !unSupportedLayoutTemplateIds.contains(
-						layoutTemplate.getLayoutTemplateId());
-				}
-
-			});
+			layoutTemplate -> !unSupportedLayoutTemplateIds.contains(
+				layoutTemplate.getLayoutTemplateId()));
 	}
 
 	protected List<String> getUnsupportedLayoutTemplateIds() {

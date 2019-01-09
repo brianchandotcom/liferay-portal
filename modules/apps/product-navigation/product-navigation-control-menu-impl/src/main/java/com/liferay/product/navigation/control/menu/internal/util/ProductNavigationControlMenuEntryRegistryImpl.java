@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.PredicateFilter;
 import com.liferay.product.navigation.control.menu.ProductNavigationControlMenuCategory;
 import com.liferay.product.navigation.control.menu.ProductNavigationControlMenuEntry;
 import com.liferay.product.navigation.control.menu.util.ProductNavigationControlMenuEntryRegistry;
@@ -81,24 +80,15 @@ public class ProductNavigationControlMenuEntryRegistryImpl
 
 		return ListUtil.filter(
 			productNavigationControlMenuEntries,
-			new PredicateFilter<ProductNavigationControlMenuEntry>() {
-
-				@Override
-				public boolean filter(
-					ProductNavigationControlMenuEntry
-						productNavigationControlMenuEntry) {
-
-					try {
-						return productNavigationControlMenuEntry.isShow(
-							request);
-					}
-					catch (PortalException pe) {
-						_log.error(pe, pe);
-					}
-
-					return false;
+			productNavigationControlMenuEntry -> {
+				try {
+					return productNavigationControlMenuEntry.isShow(request);
+				}
+				catch (PortalException pe) {
+					_log.error(pe, pe);
 				}
 
+				return false;
 			});
 	}
 

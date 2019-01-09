@@ -24,6 +24,7 @@ import com.liferay.dynamic.data.mapping.storage.Fields;
 import com.liferay.dynamic.data.mapping.util.DDM;
 import com.liferay.dynamic.data.mapping.util.DDMFieldsCounter;
 import com.liferay.dynamic.data.mapping.util.FieldsToDDMFormValuesConverter;
+import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.journal.exception.ArticleContentException;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleLocalService;
@@ -561,10 +562,13 @@ public class JournalConverterImpl implements JournalConverter {
 				JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
 					dynamicContentElement.getText());
 
-				String uuid = jsonObject.getString("uuid");
-				long groupId = jsonObject.getLong("groupId");
+				if (!ExportImportThreadLocal.isImportInProcess()) {
+					String uuid = jsonObject.getString("uuid");
+					long groupId = jsonObject.getLong("groupId");
 
-				_dlAppLocalService.getFileEntryByUuidAndGroupId(uuid, groupId);
+					_dlAppLocalService.getFileEntryByUuidAndGroupId(
+						uuid, groupId);
+				}
 
 				serializable = jsonObject.toString();
 			}

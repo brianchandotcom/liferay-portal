@@ -25,6 +25,9 @@ public class AssetPublisherWebKeys {
 	public static final String ASSET_PUBLISHER_CUSTOMIZER =
 		"ASSET_PUBLISHER_CUSTOMIZER";
 
+	public static final String ASSET_PUBLISHER_DISPLAY_CONTEXT =
+		"ASSET_PUBLISHER_DISPLAY_CONTEXT";
+
 	public static final String ASSET_PUBLISHER_HELPER =
 		"ASSET_PUBLISHER_HELPER";
 

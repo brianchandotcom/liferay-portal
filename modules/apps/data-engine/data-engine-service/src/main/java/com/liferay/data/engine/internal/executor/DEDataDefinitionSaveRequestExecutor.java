@@ -38,16 +38,25 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Jeyvison Nascimento
  */
-@Component(
-	immediate = true, service = DEDataDefinitionSaveRequestExecutor.class
-)
 public class DEDataDefinitionSaveRequestExecutor {
+
+	public DEDataDefinitionSaveRequestExecutor(
+		DDLRecordSetLocalService ddlRecordSetLocalService,
+		DDMStructureLocalService ddmStructureLocalService,
+		DEDataDefinitionFieldsSerializerTracker
+			deDataDefinitionFieldsSerializerTracker,
+		Portal portal, ResourceLocalService resourceLocalService) {
+
+		_ddlRecordSetLocalService = ddlRecordSetLocalService;
+		_ddmStructureLocalService = ddmStructureLocalService;
+		_deDataDefinitionFieldsSerializerTracker =
+			deDataDefinitionFieldsSerializerTracker;
+		_portal = portal;
+		_resourceLocalService = resourceLocalService;
+	}
 
 	public DEDataDefinitionSaveResponse execute(
 			DEDataDefinitionSaveRequest deDataDefinitionSaveRequest)
@@ -65,19 +74,19 @@ public class DEDataDefinitionSaveRequestExecutor {
 			DDMStructure ddmStructure = createDDMStructure(
 				deDataDefinitionSaveRequest.getUserId(),
 				deDataDefinitionSaveRequest.getGroupId(),
-				portal.getClassNameId(DEDataDefinition.class), deDataDefinition,
-				serviceContext);
+				_portal.getClassNameId(DEDataDefinition.class),
+				deDataDefinition, serviceContext);
 
 			deDataDefinitionId = ddmStructure.getStructureId();
 
-			resourceLocalService.addModelResources(
+			_resourceLocalService.addModelResources(
 				ddmStructure.getCompanyId(),
 				deDataDefinitionSaveRequest.getGroupId(),
 				deDataDefinitionSaveRequest.getUserId(),
 				DEDataDefinition.class.getName(), deDataDefinitionId,
 				serviceContext.getModelPermissions());
 
-			ddlRecordSetLocalService.addRecordSet(
+			_ddlRecordSetLocalService.addRecordSet(
 				deDataDefinitionSaveRequest.getUserId(),
 				deDataDefinitionSaveRequest.getGroupId(), deDataDefinitionId,
 				String.valueOf(deDataDefinitionId), ddmStructure.getNameMap(),
@@ -103,7 +112,7 @@ public class DEDataDefinitionSaveRequestExecutor {
 		Map<Locale, String> descriptionMap = createLocalizedMap(
 			deDataDefinition.getDescription());
 
-		return ddmStructureLocalService.addStructure(
+		return _ddmStructureLocalService.addStructure(
 			userId, groupId, DDMStructureConstants.DEFAULT_PARENT_STRUCTURE_ID,
 			classNameId, null, nameMap, descriptionMap,
 			serialize(deDataDefinition), deDataDefinition.getStorageType(),
@@ -125,7 +134,7 @@ public class DEDataDefinitionSaveRequestExecutor {
 		throws DEDataDefinitionFieldsSerializerException {
 
 		DEDataDefinitionFieldsSerializer deDataDefinitionFieldsSerializer =
-			deDataDefinitionFieldsSerializerTracker.
+			_deDataDefinitionFieldsSerializerTracker.
 				getDEDataDefinitionFieldsSerializer("json");
 
 		DEDataDefinitionFieldsSerializerApplyRequest
@@ -151,26 +160,17 @@ public class DEDataDefinitionSaveRequestExecutor {
 		Map<Locale, String> descriptionMap = createLocalizedMap(
 			deDataDefinition.getDescription());
 
-		ddmStructureLocalService.updateStructure(
+		_ddmStructureLocalService.updateStructure(
 			userId, deDataDefinition.getDEDataDefinitionId(),
 			DDMStructureConstants.DEFAULT_PARENT_STRUCTURE_ID, nameMap,
 			descriptionMap, serialize(deDataDefinition), serviceContext);
 	}
 
-	@Reference
-	protected DDLRecordSetLocalService ddlRecordSetLocalService;
-
-	@Reference
-	protected DDMStructureLocalService ddmStructureLocalService;
-
-	@Reference
-	protected DEDataDefinitionFieldsSerializerTracker
-		deDataDefinitionFieldsSerializerTracker;
-
-	@Reference
-	protected Portal portal;
-
-	@Reference
-	protected ResourceLocalService resourceLocalService;
+	private final DDLRecordSetLocalService _ddlRecordSetLocalService;
+	private final DDMStructureLocalService _ddmStructureLocalService;
+	private final DEDataDefinitionFieldsSerializerTracker
+		_deDataDefinitionFieldsSerializerTracker;
+	private final Portal _portal;
+	private final ResourceLocalService _resourceLocalService;
 
 }

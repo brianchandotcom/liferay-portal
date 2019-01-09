@@ -24,6 +24,7 @@ import com.liferay.data.engine.internal.executor.DEDataDefinitionSaveModelPermis
 import com.liferay.data.engine.internal.executor.DEDataDefinitionSavePermissionsRequestExecutor;
 import com.liferay.data.engine.internal.executor.DEDataDefinitionSaveRequestExecutor;
 import com.liferay.data.engine.internal.io.DEDataDefinitionFieldsDeserializerTracker;
+import com.liferay.data.engine.internal.io.DEDataDefinitionFieldsSerializerTracker;
 import com.liferay.data.engine.internal.security.permission.DEDataEnginePermissionSupport;
 import com.liferay.data.engine.model.DEDataDefinition;
 import com.liferay.data.engine.service.DEDataDefinitionCountRequest;
@@ -41,14 +42,18 @@ import com.liferay.data.engine.service.DEDataDefinitionSavePermissionsResponse;
 import com.liferay.data.engine.service.DEDataDefinitionSaveRequest;
 import com.liferay.data.engine.service.DEDataDefinitionSaveResponse;
 import com.liferay.data.engine.service.DEDataDefinitionService;
+import com.liferay.dynamic.data.lists.service.DDLRecordSetLocalService;
 import com.liferay.dynamic.data.mapping.exception.NoSuchStructureException;
-import com.liferay.dynamic.data.mapping.service.DDMStructureService;
+import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.service.ResourceLocalService;
+import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
+import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.util.Portal;
 
 import org.osgi.service.component.annotations.Component;
@@ -84,6 +89,10 @@ public class DEDataDefinitionServiceImpl implements DEDataDefinitionService {
 			_modelResourcePermission.check(
 				getPermissionChecker(), deDataDefinitionId, ActionKeys.DELETE);
 
+			DEDataDefinitionDeleteRequestExecutor
+				deDataDefinitionDeleteRequestExecutor =
+					getDEDataDefinitionDeleteRequestExecutor();
+
 			return deDataDefinitionDeleteRequestExecutor.execute(
 				deDataDefinitionDeleteRequest);
 		}
@@ -111,6 +120,10 @@ public class DEDataDefinitionServiceImpl implements DEDataDefinitionService {
 
 			_modelResourcePermission.check(
 				getPermissionChecker(), deDataDefinitionId, ActionKeys.VIEW);
+
+			DEDataDefinitionGetRequestExecutor
+				deDataDefinitionGetRequestExecutor =
+					getDEDataDefinitionGetRequestExecutor();
 
 			return deDataDefinitionGetRequestExecutor.execute(
 				deDataDefinitionGetRequest);
@@ -160,6 +173,10 @@ public class DEDataDefinitionServiceImpl implements DEDataDefinitionService {
 				deDataDefinitionSaveModelPermissionsRequest.getScopedGroupId(),
 				ActionKeys.DEFINE_PERMISSIONS, getPermissionChecker());
 
+			DEDataDefinitionSaveModelPermissionsRequestExecutor
+				deDataDefinitionSaveModelPermissionsRequestExecutor =
+					getDEDataDefinitionSaveModelPermissionsRequestExecutor();
+
 			return deDataDefinitionSaveModelPermissionsRequestExecutor.execute(
 				deDataDefinitionSaveModelPermissionsRequest);
 		}
@@ -182,6 +199,10 @@ public class DEDataDefinitionServiceImpl implements DEDataDefinitionService {
 			checkPermission(
 				deDataDefinitionSavePermissionsRequest.getScopedGroupId(),
 				ActionKeys.DEFINE_PERMISSIONS, getPermissionChecker());
+
+			DEDataDefinitionSavePermissionsRequestExecutor
+				deDataDefinitionSavePermissionsRequestExecutor =
+					getDEDataDefinitionSavePermissionsRequestExecutor();
 
 			return deDataDefinitionSavePermissionsRequestExecutor.execute(
 				deDataDefinitionSavePermissionsRequest);
@@ -220,6 +241,10 @@ public class DEDataDefinitionServiceImpl implements DEDataDefinitionService {
 					getPermissionChecker(), deDataDefinitionId,
 					ActionKeys.UPDATE);
 			}
+
+			DEDataDefinitionSaveRequestExecutor
+				deDataDefinitionSaveRequestExecutor =
+					getDEDataDefinitionSaveRequestExecutor();
 
 			DEDataDefinitionSaveResponse deDataDefinitionSaveResponse =
 				deDataDefinitionSaveRequestExecutor.execute(
@@ -267,6 +292,70 @@ public class DEDataDefinitionServiceImpl implements DEDataDefinitionService {
 		}
 
 		return _deDataDefinitionListRequestExecutor;
+
+	}
+
+	public DEDataDefinitionDeleteRequestExecutor
+		getDEDataDefinitionDeleteRequestExecutor() {
+
+		if (_deDataDefinitionDeleteRequestExecutor == null) {
+			_deDataDefinitionDeleteRequestExecutor =
+				new DEDataDefinitionDeleteRequestExecutor(
+					ddlRecordSetLocalService, ddmStructureLocalService);
+		}
+
+		return _deDataDefinitionDeleteRequestExecutor;
+	}
+
+	public DEDataDefinitionGetRequestExecutor
+		getDEDataDefinitionGetRequestExecutor() {
+
+		if (_deDataDefinitionGetRequestExecutor == null) {
+			_deDataDefinitionGetRequestExecutor =
+				new DEDataDefinitionGetRequestExecutor(
+					ddmStructureLocalService,
+					deDataDefinitionFieldsDeserializerTracker);
+		}
+
+		return _deDataDefinitionGetRequestExecutor;
+	}
+
+	public DEDataDefinitionSaveModelPermissionsRequestExecutor
+		getDEDataDefinitionSaveModelPermissionsRequestExecutor() {
+
+		if (_deDataDefinitionSaveModelPermissionsRequestExecutor == null) {
+			_deDataDefinitionSaveModelPermissionsRequestExecutor =
+				new DEDataDefinitionSaveModelPermissionsRequestExecutor(
+					resourcePermissionLocalService);
+		}
+
+		return _deDataDefinitionSaveModelPermissionsRequestExecutor;
+	}
+
+	public DEDataDefinitionSavePermissionsRequestExecutor
+		getDEDataDefinitionSavePermissionsRequestExecutor() {
+
+		if (_deDataDefinitionSavePermissionsRequestExecutor == null) {
+			_deDataDefinitionSavePermissionsRequestExecutor =
+				new DEDataDefinitionSavePermissionsRequestExecutor(
+					resourcePermissionLocalService, roleLocalService);
+		}
+
+		return _deDataDefinitionSavePermissionsRequestExecutor;
+	}
+
+	public DEDataDefinitionSaveRequestExecutor
+		getDEDataDefinitionSaveRequestExecutor() {
+
+		if (_deDataDefinitionSaveRequestExecutor == null) {
+			_deDataDefinitionSaveRequestExecutor =
+				new DEDataDefinitionSaveRequestExecutor(
+					ddlRecordSetLocalService, ddmStructureLocalService,
+					deDataDefinitionFieldsSerializerTracker, portal,
+					resourceLocalService);
+		}
+
+		return _deDataDefinitionSaveRequestExecutor;
 	}
 
 	protected void checkPermission(
@@ -308,24 +397,18 @@ public class DEDataDefinitionServiceImpl implements DEDataDefinitionService {
 	}
 
 	@Reference
-	protected DEDataDefinitionDeleteRequestExecutor
-		deDataDefinitionDeleteRequestExecutor;
+	protected DDLRecordSetLocalService ddlRecordSetLocalService;
 
 	@Reference
-	protected DEDataDefinitionGetRequestExecutor
-		deDataDefinitionGetRequestExecutor;
+	protected DDMStructureLocalService ddmStructureLocalService;
 
 	@Reference
-	protected DEDataDefinitionSaveModelPermissionsRequestExecutor
-		deDataDefinitionSaveModelPermissionsRequestExecutor;
+	protected DEDataDefinitionFieldsDeserializerTracker
+		deDataDefinitionFieldsDeserializerTracker;
 
 	@Reference
-	protected DEDataDefinitionSavePermissionsRequestExecutor
-		deDataDefinitionSavePermissionsRequestExecutor;
-
-	@Reference
-	protected DEDataDefinitionSaveRequestExecutor
-		deDataDefinitionSaveRequestExecutor;
+	protected DEDataDefinitionFieldsSerializerTracker
+		deDataDefinitionFieldsSerializerTracker;
 
 	@Reference
 	protected DEDataEnginePermissionSupport deDataEnginePermissionSupport;
@@ -337,6 +420,25 @@ public class DEDataDefinitionServiceImpl implements DEDataDefinitionService {
 		_deDataDefinitionCountRequestExecutor;
 	private DEDataDefinitionListRequestExecutor
 		_deDataDefinitionListRequestExecutor;
+	@Reference
+	protected ResourceLocalService resourceLocalService;
+
+	@Reference
+	protected ResourcePermissionLocalService resourcePermissionLocalService;
+
+	@Reference
+	protected RoleLocalService roleLocalService;
+
+	private DEDataDefinitionDeleteRequestExecutor
+		_deDataDefinitionDeleteRequestExecutor;
+	private DEDataDefinitionGetRequestExecutor
+		_deDataDefinitionGetRequestExecutor;
+	private DEDataDefinitionSaveModelPermissionsRequestExecutor
+		_deDataDefinitionSaveModelPermissionsRequestExecutor;
+	private DEDataDefinitionSavePermissionsRequestExecutor
+		_deDataDefinitionSavePermissionsRequestExecutor;
+	private DEDataDefinitionSaveRequestExecutor
+		_deDataDefinitionSaveRequestExecutor;
 	private ModelResourcePermission<DEDataDefinition> _modelResourcePermission;
 
 }

@@ -28,17 +28,18 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Marcela Cunha
  */
-@Component(
-	immediate = true,
-	service = DEDataDefinitionSavePermissionsRequestExecutor.class
-)
 public class DEDataDefinitionSavePermissionsRequestExecutor {
+
+	public DEDataDefinitionSavePermissionsRequestExecutor(
+		ResourcePermissionLocalService resourcePermissionLocalService,
+		RoleLocalService roleLocalService) {
+
+		_resourcePermissionLocalService = resourcePermissionLocalService;
+		_roleLocalService = roleLocalService;
+	}
 
 	public DEDataDefinitionSavePermissionsResponse execute(
 			DEDataDefinitionSavePermissionsRequest
@@ -65,7 +66,7 @@ public class DEDataDefinitionSavePermissionsRequestExecutor {
 
 		for (String roleName : roleNames) {
 			try {
-				roles.add(roleLocalService.getRole(companyId, roleName));
+				roles.add(_roleLocalService.getRole(companyId, roleName));
 			}
 			catch (NoSuchRoleException nsre) {
 				rolesNotFound.add(roleName);
@@ -78,7 +79,7 @@ public class DEDataDefinitionSavePermissionsRequestExecutor {
 		}
 
 		for (Role role : roles) {
-			resourcePermissionLocalService.setResourcePermissions(
+			_resourcePermissionLocalService.setResourcePermissions(
 				companyId, "com.liferay.data.engine",
 				ResourceConstants.SCOPE_COMPANY, String.valueOf(companyId),
 				role.getRoleId(), ArrayUtil.toStringArray(actionIds));
@@ -88,10 +89,8 @@ public class DEDataDefinitionSavePermissionsRequestExecutor {
 			ArrayUtil.toStringArray(roleNames));
 	}
 
-	@Reference
-	protected ResourcePermissionLocalService resourcePermissionLocalService;
-
-	@Reference
-	protected RoleLocalService roleLocalService;
+	private final ResourcePermissionLocalService
+		_resourcePermissionLocalService;
+	private final RoleLocalService _roleLocalService;
 
 }

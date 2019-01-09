@@ -15,10 +15,8 @@
 package com.liferay.asset.publisher.web.internal.portlet.toolbar.contributor;
 
 import com.liferay.asset.publisher.constants.AssetPublisherPortletKeys;
-import com.liferay.asset.publisher.constants.AssetPublisherWebKeys;
 import com.liferay.asset.publisher.util.AssetPublisherHelper;
 import com.liferay.asset.publisher.web.internal.display.context.AssetPublisherDisplayContext;
-import com.liferay.asset.publisher.web.internal.util.AssetPublisherCustomizer;
 import com.liferay.asset.publisher.web.internal.util.AssetPublisherWebUtil;
 import com.liferay.asset.util.AssetHelper;
 import com.liferay.asset.util.AssetPublisherAddItemHolder;
@@ -81,14 +79,11 @@ public class AssetPublisherPortletToolbarContributor
 			PortletResponse portletResponse)
 		throws Exception {
 
-		AssetPublisherCustomizer assetPublisherCustomizer =
-			(AssetPublisherCustomizer)portletRequest.getAttribute(
-				AssetPublisherWebKeys.ASSET_PUBLISHER_CUSTOMIZER);
-
 		AssetPublisherDisplayContext assetPublisherDisplayContext =
 			new AssetPublisherDisplayContext(
-				assetPublisherCustomizer, _assetPublisherHelper, portletRequest,
-				portletResponse, portletRequest.getPreferences());
+				null, _assetHelper, null, _assetPublisherHelper, null, null,
+				portletRequest, portletResponse,
+				portletRequest.getPreferences());
 
 		if (!_isVisible(assetPublisherDisplayContext, portletRequest)) {
 			return;

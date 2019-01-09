@@ -22,13 +22,16 @@ import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.asset.publisher.constants.AssetPublisherPortletKeys;
 import com.liferay.asset.publisher.constants.AssetPublisherWebKeys;
 import com.liferay.asset.publisher.util.AssetPublisherHelper;
+import com.liferay.asset.publisher.web.internal.action.AssetEntryActionRegistry;
 import com.liferay.asset.publisher.web.internal.configuration.AssetPublisherPortletInstanceConfiguration;
 import com.liferay.asset.publisher.web.internal.configuration.AssetPublisherWebConfiguration;
+import com.liferay.asset.publisher.web.internal.display.context.AssetPublisherDisplayContext;
 import com.liferay.asset.publisher.web.internal.util.AssetPublisherCustomizer;
 import com.liferay.asset.publisher.web.internal.util.AssetPublisherCustomizerRegistry;
 import com.liferay.asset.publisher.web.internal.util.AssetPublisherWebUtil;
 import com.liferay.asset.publisher.web.internal.util.AssetQueryRule;
 import com.liferay.asset.service.AssetEntryUsageLocalService;
+import com.liferay.asset.util.AssetHelper;
 import com.liferay.exportimport.kernel.staging.LayoutStagingUtil;
 import com.liferay.exportimport.kernel.staging.Staging;
 import com.liferay.item.selector.ItemSelector;
@@ -59,6 +62,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -78,6 +82,8 @@ import javax.portlet.ActionResponse;
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -128,13 +134,21 @@ public class AssetPublisherConfigurationAction
 			assetPublisherCustomizerRegistry.getAssetPublisherCustomizer(
 				rootPortletId);
 
-		request.setAttribute(
-			AssetPublisherWebKeys.ASSET_PUBLISHER_CUSTOMIZER,
-			assetPublisherCustomizer);
+		RenderRequest renderRequest = (RenderRequest)request.getAttribute(
+			JavaConstants.JAVAX_PORTLET_REQUEST);
+		RenderResponse renderResponse = (RenderResponse)request.getAttribute(
+			JavaConstants.JAVAX_PORTLET_RESPONSE);
+
+		AssetPublisherDisplayContext assetPublisherDisplayContext =
+			new AssetPublisherDisplayContext(
+				assetEntryActionRegistry, assetHelper, assetPublisherCustomizer,
+				assetPublisherHelper, assetPublisherWebConfiguration,
+				assetPublisherWebUtil, renderRequest, renderResponse,
+				renderRequest.getPreferences());
 
 		request.setAttribute(
-			AssetPublisherWebKeys.ASSET_PUBLISHER_WEB_CONFIGURATION,
-			assetPublisherWebConfiguration);
+			AssetPublisherWebKeys.ASSET_PUBLISHER_DISPLAY_CONTEXT,
+			assetPublisherDisplayContext);
 
 		request.setAttribute(
 			AssetPublisherWebKeys.ASSET_PUBLISHER_HELPER, assetPublisherHelper);
@@ -144,11 +158,6 @@ public class AssetPublisherConfigurationAction
 			assetPublisherWebUtil);
 
 		request.setAttribute(AssetPublisherWebKeys.ITEM_SELECTOR, itemSelector);
-
-		request.setAttribute(
-			AssetPublisherWebKeys.
-				ASSET_PUBLISHER_PORTLET_INSTANCE_CONFIGURATION,
-			_getAssetPublisherPortletInstanceConfiguration(request));
 
 		super.include(portletConfig, request, response);
 	}
@@ -817,7 +826,13 @@ public class AssetPublisherConfigurationAction
 	}
 
 	@Reference
+	protected AssetEntryActionRegistry assetEntryActionRegistry;
+
+	@Reference
 	protected AssetEntryUsageLocalService assetEntryUsageLocalService;
+
+	@Reference
+	protected AssetHelper assetHelper;
 
 	@Reference
 	protected AssetPublisherCustomizerRegistry assetPublisherCustomizerRegistry;

@@ -19,8 +19,8 @@ import com.liferay.asset.publisher.constants.AssetPublisherPortletKeys;
 import com.liferay.asset.publisher.constants.AssetPublisherWebKeys;
 import com.liferay.asset.publisher.util.AssetPublisherHelper;
 import com.liferay.asset.publisher.web.internal.action.AssetEntryActionRegistry;
-import com.liferay.asset.publisher.web.internal.configuration.AssetPublisherPortletInstanceConfiguration;
 import com.liferay.asset.publisher.web.internal.configuration.AssetPublisherWebConfiguration;
+import com.liferay.asset.publisher.web.internal.display.context.AssetPublisherDisplayContext;
 import com.liferay.asset.publisher.web.internal.util.AssetPublisherCustomizer;
 import com.liferay.asset.publisher.web.internal.util.AssetPublisherCustomizerRegistry;
 import com.liferay.asset.publisher.web.internal.util.AssetPublisherWebUtil;
@@ -43,7 +43,6 @@ import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.SessionErrors;
-import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
@@ -236,9 +235,17 @@ public class AssetPublisherPortlet extends MVCPortlet {
 				assetPublisherCustomizerRegistry.getAssetPublisherCustomizer(
 					rootPortletId);
 
+			AssetPublisherDisplayContext assetPublisherDisplayContext =
+				new AssetPublisherDisplayContext(
+					assetEntryActionRegistry, assetHelper,
+					assetPublisherCustomizer, assetPublisherHelper,
+					assetPublisherWebConfiguration, assetPublisherWebUtil,
+					resourceRequest, resourceResponse,
+					resourceRequest.getPreferences());
+
 			resourceRequest.setAttribute(
-				AssetPublisherWebKeys.ASSET_PUBLISHER_CUSTOMIZER,
-				assetPublisherCustomizer);
+				AssetPublisherWebKeys.ASSET_PUBLISHER_DISPLAY_CONTEXT,
+				assetPublisherDisplayContext);
 
 			byte[] bytes = assetRSSUtil.getRSS(
 				resourceRequest, resourceResponse);
@@ -318,10 +325,6 @@ public class AssetPublisherPortlet extends MVCPortlet {
 		throws IOException, PortletException {
 
 		try {
-			renderRequest.setAttribute(
-				AssetPublisherWebKeys.ASSET_ENTRY_ACTION_REGISTRY,
-				assetEntryActionRegistry);
-
 			renderRequest.setAttribute(AssetWebKeys.ASSET_HELPER, assetHelper);
 
 			String rootPortletId = PortletIdCodec.decodePortletName(
@@ -331,32 +334,21 @@ public class AssetPublisherPortlet extends MVCPortlet {
 				assetPublisherCustomizerRegistry.getAssetPublisherCustomizer(
 					rootPortletId);
 
+			AssetPublisherDisplayContext assetPublisherDisplayContext =
+				new AssetPublisherDisplayContext(
+					assetEntryActionRegistry, assetHelper,
+					assetPublisherCustomizer, assetPublisherHelper,
+					assetPublisherWebConfiguration, assetPublisherWebUtil,
+					renderRequest, renderResponse,
+					renderRequest.getPreferences());
+
 			renderRequest.setAttribute(
-				AssetPublisherWebKeys.ASSET_PUBLISHER_CUSTOMIZER,
-				assetPublisherCustomizer);
+				AssetPublisherWebKeys.ASSET_PUBLISHER_DISPLAY_CONTEXT,
+				assetPublisherDisplayContext);
 
 			renderRequest.setAttribute(
 				AssetPublisherWebKeys.ASSET_PUBLISHER_HELPER,
 				assetPublisherHelper);
-
-			renderRequest.setAttribute(
-				AssetPublisherWebKeys.ASSET_PUBLISHER_WEB_CONFIGURATION,
-				assetPublisherWebConfiguration);
-
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)renderRequest.getAttribute(WebKeys.THEME_DISPLAY);
-
-			PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
-
-			AssetPublisherPortletInstanceConfiguration
-				assetPublisherPortletInstanceConfiguration =
-					portletDisplay.getPortletInstanceConfiguration(
-						AssetPublisherPortletInstanceConfiguration.class);
-
-			renderRequest.setAttribute(
-				AssetPublisherWebKeys.
-					ASSET_PUBLISHER_PORTLET_INSTANCE_CONFIGURATION,
-				assetPublisherPortletInstanceConfiguration);
 
 			renderRequest.setAttribute(
 				WebKeys.SINGLE_PAGE_APPLICATION_CLEAR_CACHE, Boolean.TRUE);

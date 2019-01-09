@@ -171,13 +171,15 @@ definition {
 			urlAppend = "web/test-site-name/test-content-page-name"
 		);
 
+		AssertElementNotPresent(locator1 = "PageEditor#FRAGMENT_SIDEBAR");
+
 		ContentPages.gotoEditMode();
 
-		AssertVisible(locator1 = "ControlMenu#ADD");
+		AssertVisible(locator1 = "PageEditor#FRAGMENT_SIDEBAR");
 
 		ContentPages.gotoViewMode();
 
-		AssertElementNotPresent(locator1 = "ControlMenu#ADD");
+		AssertElementNotPresent(locator1 = "PageEditor#FRAGMENT_SIDEBAR");
 	}
 
 	@description = "Edit an existing content page that has fragments. This testcase covers the bug found in LPS-85872."

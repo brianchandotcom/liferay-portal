@@ -65,6 +65,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -218,6 +219,8 @@ public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
 			String alias = StringUtil.replace(
 				htmlTagName, "lfr-widget-", StringPool.BLANK);
 
+			String id = element.id();
+
 			if (Validator.isNull(_portletRegistry.getPortletName(alias))) {
 				throw new FragmentEntryContentException(
 					LanguageUtil.format(
@@ -225,14 +228,32 @@ public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
 						"there-is-no-widget-available-for-alias-x", alias));
 			}
 
-			if (Validator.isNotNull(element.id()) &&
-				!Validator.isAlphanumericName(element.id())) {
-
+			if (Validator.isNotNull(id) && !Validator.isAlphanumericName(id)) {
 				throw new FragmentEntryContentException(
 					LanguageUtil.format(
 						_resourceBundle,
 						"widget-id-must-contain-only-alphanumeric-characters",
 						alias));
+			}
+
+			if (Validator.isNotNull(id)) {
+				Elements elements = document.select("#" + id);
+
+				if (elements.size() > 1) {
+					throw new FragmentEntryContentException(
+						LanguageUtil.get(
+							_resourceBundle, "widget-id-must-be-unique"));
+				}
+			}
+
+			Elements widgets = document.select(htmlTagName);
+
+			if ((widgets.size() > 1) && Validator.isNull(id)) {
+				throw new FragmentEntryContentException(
+					LanguageUtil.get(
+						_resourceBundle,
+						"non-unique-widgets-within-the-same-fragment-must-" +
+							"have-an-id"));
 			}
 		}
 	}

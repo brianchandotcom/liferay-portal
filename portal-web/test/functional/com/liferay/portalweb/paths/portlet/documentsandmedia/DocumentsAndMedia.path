@@ -10,7 +10,7 @@
 <tbody>
 <tr>
 	<td>BREADCRUMB_HOME</td>
-	<td>//div[contains(@id,'breadcrumbContainer')]//ul/li[1]</td>
+	<td>//div[contains(@id,'breadcrumbContainer')]//ol/li[1]</td>
 	<td></td>
 </tr>
 <tr>

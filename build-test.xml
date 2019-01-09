@@ -434,15 +434,9 @@ jdbc.counter.connectionProperties=oracle.jdbc.ReadTimeout=0;oracle.net.CONNECT_T
 		<sequential>
 			<local name="test.batch.name" />
 
-			<if>
+			<condition else="@{test.batch.name}" property="test.batch.name" value="${env.TEST_BATCH_NAME}">
 				<contains string="@{test.batch.name}" substring="{test.batch.name}" />
-				<then>
-					<property name="test.batch.name" value="${env.TEST_BATCH_NAME}" />
-				</then>
-				<else>
-					<property name="test.batch.name" value="@{test.batch.name}" />
-				</else>
-			</if>
+			</condition>
 
 			<var name="java.jdk.bundle.version" unset="true" />
 

@@ -19,7 +19,6 @@ import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.PrefixPredicateFilter;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
@@ -242,11 +241,12 @@ public class AssetVocabularySettingsHelper {
 		}
 
 		if (classTypePK == AssetCategoryConstants.ALL_CLASS_TYPE_PK) {
-			PrefixPredicateFilter prefixPredicateFilter =
-				new PrefixPredicateFilter(classNameId + StringPool.COLON, true);
+			String prefix = classNameId + StringPool.COLON;
 
 			return ArrayUtil.exists(
-				classNameIdsAndClassTypePKs, prefixPredicateFilter);
+				classNameIdsAndClassTypePKs,
+				classNameIdsAndClassTypePK ->
+					classNameIdsAndClassTypePK.startsWith(prefix));
 		}
 		else {
 			String classNameIdAndClassTypePK = getClassNameIdAndClassTypePK(

@@ -17,7 +17,6 @@ package com.liferay.portal.kernel.map;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.PredicateFilter;
-import com.liferay.portal.kernel.util.PrefixPredicateFilter;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -137,7 +136,7 @@ public class MapUtilWhenFilteringByPredicateFilterTest {
 		inputMap.put("x5", "five");
 
 		Map<String, String> outputMap = MapUtil.filterByKeys(
-			inputMap, new PrefixPredicateFilter("x"));
+			inputMap, key -> !key.startsWith("x"));
 
 		Assert.assertEquals(outputMap.toString(), 2, outputMap.size());
 		Assert.assertEquals("two", outputMap.get("2"));

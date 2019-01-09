@@ -20,72 +20,71 @@ import org.junit.Assert;
 import org.junit.Test;
 
 /**
- * @author Adam Brandizzi
+ * @author Leonardo Barros
  */
-public class WorkflowDefinitionDescriptionPredicateFilterTest {
+public class WorkflowDefinitionTitlePredicateTest {
 
 	@Test
 	public void testFilterWithoutSpace1() {
-		WorkflowDefinitionDescriptionPredicate filter =
-			new WorkflowDefinitionDescriptionPredicate("Default");
+		WorkflowDefinitionTitlePredicate predicate =
+			new WorkflowDefinitionTitlePredicate("Single");
 
 		WorkflowDefinition workflowDefinition = new WorkflowDefinitionImpl(
-			null, "Single Approver", "Default Single Approver");
+			null, "Single Approver");
 
-		boolean result = filter.filter(workflowDefinition);
+		boolean result = predicate.test(workflowDefinition);
 
 		Assert.assertTrue(result);
 	}
 
 	@Test
 	public void testFilterWithoutSpace2() {
-		WorkflowDefinitionDescriptionPredicate filter =
-			new WorkflowDefinitionDescriptionPredicate("Def");
+		WorkflowDefinitionTitlePredicate predicate =
+			new WorkflowDefinitionTitlePredicate("Appr");
 
 		WorkflowDefinition workflowDefinition = new WorkflowDefinitionImpl(
-			null, "Single Approver", "Default Single Approver");
+			null, "Single Approver");
 
-		boolean result = filter.filter(workflowDefinition);
+		boolean result = predicate.test(workflowDefinition);
 
 		Assert.assertTrue(result);
 	}
 
 	@Test
 	public void testFilterWithoutSpace3() {
-		WorkflowDefinitionDescriptionPredicate filter =
-			new WorkflowDefinitionDescriptionPredicate("Approver");
+		WorkflowDefinitionTitlePredicate predicate =
+			new WorkflowDefinitionTitlePredicate("Approver");
 
 		WorkflowDefinition workflowDefinition = new WorkflowDefinitionImpl(
-			null, "A Different Definition", "Not that one");
+			null, "A Different Definition");
 
-		boolean result = filter.filter(workflowDefinition);
+		boolean result = predicate.test(workflowDefinition);
 
 		Assert.assertFalse(result);
 	}
 
 	@Test
 	public void testFilterWithSpace1() {
-		WorkflowDefinitionDescriptionPredicate filter =
-			new WorkflowDefinitionDescriptionPredicate("Single Approver");
+		WorkflowDefinitionTitlePredicate predicate =
+			new WorkflowDefinitionTitlePredicate("Single Approver");
 
 		WorkflowDefinition workflowDefinition = new WorkflowDefinitionImpl(
-			null, "Single Approver Definition",
-			"Single Approver by Default Default ");
+			null, "Single Approver Definition");
 
-		boolean result = filter.filter(workflowDefinition);
+		boolean result = predicate.test(workflowDefinition);
 
 		Assert.assertTrue(result);
 	}
 
 	@Test
 	public void testFilterWithSpace2() {
-		WorkflowDefinitionDescriptionPredicate filter =
-			new WorkflowDefinitionDescriptionPredicate("Single Approver");
+		WorkflowDefinitionTitlePredicate predicate =
+			new WorkflowDefinitionTitlePredicate("Single Approver");
 
 		WorkflowDefinition workflowDefinition = new WorkflowDefinitionImpl(
-			null, "A Different Definition", "Not that one");
+			null, "A Different Definition");
 
-		boolean result = filter.filter(workflowDefinition);
+		boolean result = predicate.test(workflowDefinition);
 
 		Assert.assertFalse(result);
 	}

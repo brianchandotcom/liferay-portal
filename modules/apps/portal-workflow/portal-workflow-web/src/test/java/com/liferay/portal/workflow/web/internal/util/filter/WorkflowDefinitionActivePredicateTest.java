@@ -23,88 +23,88 @@ import org.junit.Test;
 /**
  * @author Adam Brandizzi
  */
-public class WorkflowDefinitionActivePredicateFilterTest {
+public class WorkflowDefinitionActivePredicateTest {
 
 	@Test
 	public void testFilterAllIncludeActive() {
-		WorkflowDefinitionActivePredicate filter =
+		WorkflowDefinitionActivePredicate predicate =
 			new WorkflowDefinitionActivePredicate(
 				WorkflowDefinitionConstants.STATUS_ALL);
 
 		WorkflowDefinition workflowDefinition = new WorkflowDefinitionImpl(
 			true);
 
-		boolean result = filter.filter(workflowDefinition);
+		boolean result = predicate.test(workflowDefinition);
 
 		Assert.assertTrue(result);
 	}
 
 	@Test
 	public void testFilterAllIncludeInactive() {
-		WorkflowDefinitionActivePredicate filter =
+		WorkflowDefinitionActivePredicate predicate =
 			new WorkflowDefinitionActivePredicate(
 				WorkflowDefinitionConstants.STATUS_ALL);
 
 		WorkflowDefinition workflowDefinition = new WorkflowDefinitionImpl(
 			false);
 
-		boolean result = filter.filter(workflowDefinition);
+		boolean result = predicate.test(workflowDefinition);
 
 		Assert.assertTrue(result);
 	}
 
 	@Test
 	public void testFilterNotPublishedExcludeActive() {
-		WorkflowDefinitionActivePredicate filter =
+		WorkflowDefinitionActivePredicate predicate =
 			new WorkflowDefinitionActivePredicate(
 				WorkflowDefinitionConstants.STATUS_NOT_PUBLISHED);
 
 		WorkflowDefinition workflowDefinition = new WorkflowDefinitionImpl(
 			true);
 
-		boolean result = filter.filter(workflowDefinition);
+		boolean result = predicate.test(workflowDefinition);
 
 		Assert.assertFalse(result);
 	}
 
 	@Test
 	public void testFilterNotPublishedIncludeInactive() {
-		WorkflowDefinitionActivePredicate filter =
+		WorkflowDefinitionActivePredicate predicate =
 			new WorkflowDefinitionActivePredicate(
 				WorkflowDefinitionConstants.STATUS_NOT_PUBLISHED);
 
 		WorkflowDefinition workflowDefinition = new WorkflowDefinitionImpl(
 			false);
 
-		boolean result = filter.filter(workflowDefinition);
+		boolean result = predicate.test(workflowDefinition);
 
 		Assert.assertTrue(result);
 	}
 
 	@Test
 	public void testFilterPublishedExcludeInactive() {
-		WorkflowDefinitionActivePredicate filter =
+		WorkflowDefinitionActivePredicate predicate =
 			new WorkflowDefinitionActivePredicate(
 				WorkflowDefinitionConstants.STATUS_PUBLISHED);
 
 		WorkflowDefinition workflowDefinition = new WorkflowDefinitionImpl(
 			false);
 
-		boolean result = filter.filter(workflowDefinition);
+		boolean result = predicate.test(workflowDefinition);
 
 		Assert.assertFalse(result);
 	}
 
 	@Test
 	public void testFilterPublishedIncludeActive() {
-		WorkflowDefinitionActivePredicate filter =
+		WorkflowDefinitionActivePredicate predicate =
 			new WorkflowDefinitionActivePredicate(
 				WorkflowDefinitionConstants.STATUS_PUBLISHED);
 
 		WorkflowDefinition workflowDefinition = new WorkflowDefinitionImpl(
 			true);
 
-		boolean result = filter.filter(workflowDefinition);
+		boolean result = predicate.test(workflowDefinition);
 
 		Assert.assertTrue(result);
 	}

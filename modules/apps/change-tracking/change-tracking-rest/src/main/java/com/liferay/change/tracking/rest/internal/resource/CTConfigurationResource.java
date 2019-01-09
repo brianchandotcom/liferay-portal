@@ -22,7 +22,9 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 
+import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Stream;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -90,11 +92,27 @@ public class CTConfigurationResource {
 	private CTConfigurationModel _getCTConfigurationModel(long companyId)
 		throws PortalException {
 
+		Set<String> supportedContentTypeLanguageKeys = new HashSet<>();
+		Set<String> supportedContentTypes = new HashSet<>();
+
+		Stream<CTConfiguration<?, ?>> stream = _ctConfigurations.stream();
+
+		stream.forEach(
+			ctConfiguration -> {
+				supportedContentTypeLanguageKeys.add(
+					ctConfiguration.getContentTypeLanguageKey());
+				supportedContentTypes.add(ctConfiguration.getContentType());
+			});
+
 		CTConfigurationModel.Builder builder = CTConfigurationModel.forCompany(
 			companyId);
 
 		return builder.setChangeTrackingEnabled(
 			_ctEngineManager.isChangeTrackingEnabled(companyId)
+		).setSupportedContentTypeLanguageKeys(
+			supportedContentTypeLanguageKeys
+		).setSupportedContentTypes(
+			supportedContentTypes
 		).build();
 	}
 

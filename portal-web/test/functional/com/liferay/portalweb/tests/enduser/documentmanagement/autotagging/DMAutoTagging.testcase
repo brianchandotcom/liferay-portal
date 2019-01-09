@@ -39,7 +39,15 @@ definition {
 			portlet = "Sites"
 		);
 
-		Site.addBlankCP(siteName = "Site Enabled");
+		Site.addBlankCP(siteName = "Site AutoTag Enabled");
+
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.addPublicPage(pageName = "AutoTag Enabled Site Page");
 
 		ProductMenu.gotoPortlet(
 			category = "Sites",
@@ -47,11 +55,19 @@ definition {
 			portlet = "Sites"
 		);
 
-		Site.addBlankCP(siteName = "Site Disabled");
+		Site.addBlankCP(siteName = "Site AutoTag Disabled");
+
+			ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.addPublicPage(pageName = "AutoTag Disabled Site Page");
 
 		AutoTagging.disableAutoTagging(disableAutoTaggingFor = "Site Settings");
 
-		Navigator.openSiteURL(siteName = "Site Enabled");
+		Navigator.openSiteURL(siteName = "Site AutoTag Enabled");
 
 		ProductMenu.gotoPortlet(
 			category = "Content",
@@ -75,9 +91,9 @@ definition {
 
 		DMDocument.viewCP(dmDocumentTitle = "DM Document JPG");
 
-		AutoTagging.assertAutoTagPresent();
+		AutoTagging.assertAutoTagPresent(tagName = "carton");
 
-		Navigator.openSiteURL(siteName = "Site Disabled");
+		Navigator.openSiteURL(siteName = "Site AutoTag Disabled");
 
 		ProductMenu.gotoPortlet(
 			category = "Content",

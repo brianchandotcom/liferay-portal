@@ -30,16 +30,22 @@ import com.liferay.portal.kernel.util.Portal;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Jeyvison Nascimento
  */
-@Component(
-	immediate = true, service = DEDataDefinitionListRequestExecutor.class
-)
 public class DEDataDefinitionListRequestExecutor {
+
+	public DEDataDefinitionListRequestExecutor(
+		DDMStructureService ddmStructureService,
+		DEDataDefinitionFieldsDeserializerTracker
+			deDataDefinitionFieldsDeserializerTracker,
+		Portal portal) {
+
+		this.ddmStructureService = ddmStructureService;
+		this.deDataDefinitionFieldsDeserializerTracker =
+			deDataDefinitionFieldsDeserializerTracker;
+		this.portal = portal;
+	}
 
 	public DEDataDefinitionListResponse execute(
 			DEDataDefinitionListRequest deDataDefinitionListRequest)
@@ -104,14 +110,9 @@ public class DEDataDefinitionListRequestExecutor {
 		return deDataDefinition;
 	}
 
-	@Reference
 	protected DDMStructureService ddmStructureService;
-
-	@Reference
 	protected DEDataDefinitionFieldsDeserializerTracker
 		deDataDefinitionFieldsDeserializerTracker;
-
-	@Reference
 	protected Portal portal;
 
 }

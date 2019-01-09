@@ -21,6 +21,7 @@ import com.liferay.data.engine.internal.executor.DEDataDefinitionDeleteRequestEx
 import com.liferay.data.engine.internal.executor.DEDataDefinitionGetRequestExecutor;
 import com.liferay.data.engine.internal.executor.DEDataDefinitionListRequestExecutor;
 import com.liferay.data.engine.internal.executor.DEDataDefinitionSaveRequestExecutor;
+import com.liferay.data.engine.internal.io.DEDataDefinitionFieldsDeserializerTracker;
 import com.liferay.data.engine.internal.security.permission.DEDataEnginePermissionSupport;
 import com.liferay.data.engine.model.DEDataDefinition;
 import com.liferay.data.engine.service.DEDataDefinitionCountRequest;
@@ -35,6 +36,7 @@ import com.liferay.data.engine.service.DEDataDefinitionSaveRequest;
 import com.liferay.data.engine.service.DEDataDefinitionSaveResponse;
 import com.liferay.data.engine.service.DEDataDefinitionService;
 import com.liferay.dynamic.data.mapping.exception.NoSuchStructureException;
+import com.liferay.dynamic.data.mapping.service.DDMStructureService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -57,6 +59,10 @@ public class DEDataDefinitionServiceImpl implements DEDataDefinitionService {
 	@Override
 	public DEDataDefinitionCountResponse execute(
 		DEDataDefinitionCountRequest deDataDefinitionCountRequest) {
+
+		DEDataDefinitionCountRequestExecutor
+			deDataDefinitionCountRequestExecutor =
+				getDEDataDefinitionCountRequestExecutor();
 
 		return deDataDefinitionCountRequestExecutor.execute(
 			deDataDefinitionCountRequest);
@@ -145,6 +151,10 @@ public class DEDataDefinitionServiceImpl implements DEDataDefinitionService {
 			DEDataDefinitionListRequest deDataDefinitionListRequest)
 		throws DEDataDefinitionException {
 
+		DEDataDefinitionListRequestExecutor
+			deDataDefinitionListRequestExecutor =
+				getDEDataDefinitionListRequestExecutor();
+
 		try {
 			return deDataDefinitionListRequestExecutor.execute(
 				deDataDefinitionListRequest);
@@ -222,6 +232,31 @@ public class DEDataDefinitionServiceImpl implements DEDataDefinitionService {
 		}
 	}
 
+	public DEDataDefinitionCountRequestExecutor
+		getDEDataDefinitionCountRequestExecutor() {
+
+		if (_deDataDefinitionCountRequestExecutor == null) {
+			_deDataDefinitionCountRequestExecutor =
+				new DEDataDefinitionCountRequestExecutor(
+					ddmStructureService, portal);
+		}
+
+		return _deDataDefinitionCountRequestExecutor;
+	}
+
+	public DEDataDefinitionListRequestExecutor
+		getDEDataDefinitionListRequestExecutor() {
+
+		if (_deDataDefinitionListRequestExecutor == null) {
+			_deDataDefinitionListRequestExecutor =
+				new DEDataDefinitionListRequestExecutor(
+					ddmStructureService,
+					deDataDefinitionFieldsDeserializerTracker, portal);
+		}
+
+		return _deDataDefinitionListRequestExecutor;
+	}
+
 	protected void checkCreateDataDefinitionPermission(
 			long groupId, PermissionChecker permissionChecker)
 		throws PortalException {
@@ -262,20 +297,19 @@ public class DEDataDefinitionServiceImpl implements DEDataDefinitionService {
 	}
 
 	@Reference
-	protected DEDataDefinitionCountRequestExecutor
-		deDataDefinitionCountRequestExecutor;
+	protected DDMStructureService ddmStructureService;
 
 	@Reference
 	protected DEDataDefinitionDeleteRequestExecutor
 		deDataDefinitionDeleteRequestExecutor;
 
 	@Reference
-	protected DEDataDefinitionGetRequestExecutor
-		deDataDefinitionGetRequestExecutor;
+	protected DEDataDefinitionFieldsDeserializerTracker
+		deDataDefinitionFieldsDeserializerTracker;
 
 	@Reference
-	protected DEDataDefinitionListRequestExecutor
-		deDataDefinitionListRequestExecutor;
+	protected DEDataDefinitionGetRequestExecutor
+		deDataDefinitionGetRequestExecutor;
 
 	@Reference
 	protected DEDataDefinitionSaveRequestExecutor
@@ -290,6 +324,10 @@ public class DEDataDefinitionServiceImpl implements DEDataDefinitionService {
 	private static final Log _log = LogFactoryUtil.getLog(
 		DEDataDefinitionServiceImpl.class);
 
+	private DEDataDefinitionCountRequestExecutor
+		_deDataDefinitionCountRequestExecutor;
+	private DEDataDefinitionListRequestExecutor
+		_deDataDefinitionListRequestExecutor;
 	private ModelResourcePermission<DEDataDefinition> _modelResourcePermission;
 
 }

@@ -20,16 +20,17 @@ import com.liferay.data.engine.service.DEDataDefinitionCountResponse;
 import com.liferay.dynamic.data.mapping.service.DDMStructureService;
 import com.liferay.portal.kernel.util.Portal;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Jeyvison Nascimento
  */
-@Component(
-	immediate = true, service = DEDataDefinitionCountRequestExecutor.class
-)
 public class DEDataDefinitionCountRequestExecutor {
+
+	public DEDataDefinitionCountRequestExecutor(
+		DDMStructureService ddmStructureService, Portal portal) {
+
+		this.ddmStructureService = ddmStructureService;
+		this.portal = portal;
+	}
 
 	public DEDataDefinitionCountResponse execute(
 		DEDataDefinitionCountRequest deDataDefinitionCountRequest) {
@@ -42,10 +43,7 @@ public class DEDataDefinitionCountRequestExecutor {
 		return DEDataDefinitionCountResponse.Builder.of(structuresCount);
 	}
 
-	@Reference
 	protected DDMStructureService ddmStructureService;
-
-	@Reference
 	protected Portal portal;
 
 }

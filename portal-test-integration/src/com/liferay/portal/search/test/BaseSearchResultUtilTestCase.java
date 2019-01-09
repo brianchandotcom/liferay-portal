@@ -15,7 +15,9 @@
 package com.liferay.portal.search.test;
 
 import com.liferay.portal.kernel.comment.Comment;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.ClassName;
+import com.liferay.portal.kernel.model.ClassNameWrapper;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.IndexerRegistry;
@@ -23,6 +25,7 @@ import com.liferay.portal.kernel.search.RelatedSearchResult;
 import com.liferay.portal.kernel.search.SearchResult;
 import com.liferay.portal.kernel.search.result.SearchResultTranslator;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
+import com.liferay.portal.kernel.service.ClassNameLocalServiceWrapper;
 import com.liferay.portal.kernel.test.util.PropsTestUtil;
 import com.liferay.portal.kernel.util.FastDateFormatFactory;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
@@ -37,8 +40,6 @@ import java.util.List;
 import org.junit.Assert;
 import org.junit.Before;
 
-import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
 import org.powermock.api.mockito.PowerMockito;
@@ -101,20 +102,31 @@ public abstract class BaseSearchResultUtilTestCase extends PowerMockito {
 	protected abstract SearchResultTranslator createSearchResultTranslator();
 
 	protected void setUpClassNameLocalService() throws Exception {
-		ClassName className = Mockito.mock(ClassName.class);
+		ClassName className = new ClassNameWrapper(null) {
 
-		when(
-			classNameLocalService.getClassName(
-				SearchTestUtil.ATTACHMENT_OWNER_CLASS_NAME_ID)
-		).thenReturn(
-			className
-		);
+			@Override
+			public String getClassName() {
+				return SearchTestUtil.ATTACHMENT_OWNER_CLASS_NAME;
+			}
 
-		when(
-			className.getClassName()
-		).thenReturn(
-			SearchTestUtil.ATTACHMENT_OWNER_CLASS_NAME
-		);
+		};
+
+		classNameLocalService = new ClassNameLocalServiceWrapper(null) {
+
+			@Override
+			public ClassName getClassName(long classNameId)
+				throws PortalException {
+
+				if (classNameId ==
+						SearchTestUtil.ATTACHMENT_OWNER_CLASS_NAME_ID) {
+
+					return className;
+				}
+
+				return null;
+			}
+
+		};
 	}
 
 	protected void setUpFastDateFormatFactoryUtil() {
@@ -144,9 +156,7 @@ public abstract class BaseSearchResultUtilTestCase extends PowerMockito {
 		searchResultTranslator = createSearchResultTranslator();
 	}
 
-	@Mock
 	protected ClassNameLocalService classNameLocalService;
-
 	protected SearchResultTranslator searchResultTranslator;
 
 }

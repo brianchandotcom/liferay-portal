@@ -18,7 +18,10 @@
 
 	<%
 	PortletResourceAccessor[] portletResourceAccessors = {PortletResourceAccessor.HEADER_PORTAL_JAVASCRIPT, PortletResourceAccessor.HEADER_PORTLET_JAVASCRIPT};
-	PredicateFilter<String> predicateFilter = new JavaScriptPortletResourcePredicateFilter(themeDisplay);
+
+	final ThemeDisplay finalThemeDisplay = themeDisplay;
+
+	PredicateFilter<String> predicateFilter = resource -> !finalThemeDisplay.isIncludedJs(resource);
 	boolean useComboServletStaticURLGenerator = themeDisplay.isThemeJsFastLoad();
 	%>
 

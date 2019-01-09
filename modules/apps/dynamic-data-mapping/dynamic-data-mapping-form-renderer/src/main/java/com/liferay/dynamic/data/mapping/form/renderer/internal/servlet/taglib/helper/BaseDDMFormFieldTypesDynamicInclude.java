@@ -21,6 +21,7 @@ import com.liferay.dynamic.data.mapping.io.DDMFormFieldTypesSerializerSerializeR
 import com.liferay.dynamic.data.mapping.io.DDMFormFieldTypesSerializerSerializeResponse;
 import com.liferay.dynamic.data.mapping.io.DDMFormFieldTypesSerializerTracker;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.servlet.taglib.BaseDynamicInclude;
 import com.liferay.portal.kernel.servlet.taglib.aui.ScriptData;
 import com.liferay.portal.kernel.util.StringUtil;
 
@@ -28,33 +29,26 @@ import java.io.IOException;
 
 import java.util.Collections;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Bruno Basto
  */
-@Component(
-	immediate = true, service = DDMFormFieldTypesDynamicIncludeHelper.class
-)
-public class DDMFormFieldTypesDynamicIncludeHelper {
+public abstract class BaseDDMFormFieldTypesDynamicInclude
+	extends BaseDynamicInclude {
 
-	public void include(
-			HttpServletRequest request, HttpServletResponse response)
-		throws IOException {
-
+	protected void include(HttpServletResponse response) throws IOException {
 		ScriptData scriptData = new ScriptData();
 
 		DDMFormFieldTypesSerializer ddmFormFieldTypesSerializer =
-			_ddmFormFieldTypesSerializerTracker.getDDMFormFieldTypesSerializer(
+			ddmFormFieldTypesSerializerTracker.getDDMFormFieldTypesSerializer(
 				"json");
 
 		DDMFormFieldTypesSerializerSerializeRequest.Builder builder =
 			DDMFormFieldTypesSerializerSerializeRequest.Builder.newBuilder(
-				_ddmFormFieldTypeServicesTracker.getDDMFormFieldTypes());
+				ddmFormFieldTypeServicesTracker.getDDMFormFieldTypes());
 
 		DDMFormFieldTypesSerializerSerializeResponse
 			ddmFormFieldTypesSerializerSerializeResponse =
@@ -72,18 +66,18 @@ public class DDMFormFieldTypesDynamicIncludeHelper {
 		scriptData.writeTo(response.getWriter());
 	}
 
+	@Reference
+	protected DDMFormFieldTypeServicesTracker ddmFormFieldTypeServicesTracker;
+
+	@Reference
+	protected DDMFormFieldTypesSerializerTracker
+		ddmFormFieldTypesSerializerTracker;
+
 	private static final String _MODULES =
 		"liferay-ddm-form-renderer-types,liferay-ddm-soy-template-util";
 
 	private static final String _TMPL_CONTENT = StringUtil.read(
 		DDMFormFieldTypesDynamicInclude.class,
 		"/META-INF/resources/dynamic_include/field_types.tmpl");
-
-	@Reference
-	private DDMFormFieldTypeServicesTracker _ddmFormFieldTypeServicesTracker;
-
-	@Reference
-	private DDMFormFieldTypesSerializerTracker
-		_ddmFormFieldTypesSerializerTracker;
 
 }

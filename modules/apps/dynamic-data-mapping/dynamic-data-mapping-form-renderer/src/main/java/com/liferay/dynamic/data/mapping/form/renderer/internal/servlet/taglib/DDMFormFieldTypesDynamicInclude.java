@@ -14,9 +14,8 @@
 
 package com.liferay.dynamic.data.mapping.form.renderer.internal.servlet.taglib;
 
-import com.liferay.dynamic.data.mapping.form.renderer.internal.servlet.taglib.helper.DDMFormFieldTypesDynamicIncludeHelper;
+import com.liferay.dynamic.data.mapping.form.renderer.internal.servlet.taglib.helper.BaseDDMFormFieldTypesDynamicInclude;
 import com.liferay.dynamic.data.mapping.form.renderer.internal.util.DDMFormFieldTypesThreadLocal;
-import com.liferay.portal.kernel.servlet.taglib.BaseDynamicInclude;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -27,13 +26,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Bruno Basto
  */
 @Component(immediate = true, service = DynamicInclude.class)
-public class DDMFormFieldTypesDynamicInclude extends BaseDynamicInclude {
+public class DDMFormFieldTypesDynamicInclude
+	extends BaseDDMFormFieldTypesDynamicInclude {
 
 	@Override
 	public void include(
@@ -45,7 +44,7 @@ public class DDMFormFieldTypesDynamicInclude extends BaseDynamicInclude {
 			WebKeys.THEME_DISPLAY);
 
 		if (themeDisplay.isAjax()) {
-			_ddmFormFieldTypesDynamicIncludeHelper.include(request, response);
+			include(response);
 
 			DDMFormFieldTypesThreadLocal.removeAll();
 		}
@@ -59,9 +58,5 @@ public class DDMFormFieldTypesDynamicInclude extends BaseDynamicInclude {
 		dynamicIncludeRegistry.register(
 			DDMFormFieldTypesDynamicInclude.class.getName());
 	}
-
-	@Reference
-	private DDMFormFieldTypesDynamicIncludeHelper
-		_ddmFormFieldTypesDynamicIncludeHelper;
 
 }

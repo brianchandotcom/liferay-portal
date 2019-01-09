@@ -7,3 +7,4 @@ Provide-Capability:\
 		resource.bundle.aggregate:String="(bundle.symbolic.name=com.liferay.dynamic.data.mapping.lang)";\
 		resource.bundle.base.name="content.Language"
 Web-ContextPath: /dynamic-data-mapping-form-renderer
+-dsannotations-options: inherit

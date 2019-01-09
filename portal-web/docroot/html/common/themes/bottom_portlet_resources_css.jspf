@@ -18,7 +18,7 @@
 
 	<%
 	PortletResourceAccessor[] portletResourceAccessors = {PortletResourceAccessor.FOOTER_PORTAL_CSS, PortletResourceAccessor.FOOTER_PORTLET_CSS};
-	PredicateFilter<String> predicateFilter = PredicateFilter.ALL;
+	Predicate<String> predicate = s -> true;
 	boolean useComboServletStaticURLGenerator = themeDisplay.isThemeCssFastLoad();
 	%>
 

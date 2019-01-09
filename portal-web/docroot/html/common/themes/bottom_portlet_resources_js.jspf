@@ -21,7 +21,7 @@
 
 	final ThemeDisplay finalThemeDisplay = themeDisplay;
 
-	PredicateFilter<String> predicateFilter = resource -> !finalThemeDisplay.isIncludedJs(resource);
+	Predicate<String> predicate = resource -> !finalThemeDisplay.isIncludedJs(resource);
 	boolean useComboServletStaticURLGenerator = themeDisplay.isThemeJsFastLoad();
 	%>
 

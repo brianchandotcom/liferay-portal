@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
-import com.liferay.portal.kernel.util.PredicateFilter;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.model.impl.PortletAppImpl;
@@ -293,13 +292,13 @@ public class ComboServletStaticURLGeneratorTest {
 	}
 
 	@Test
-	public void testGenerateWithPredicateFilter() {
+	public void testGenerateWithPredicate() {
 		ComboServletStaticURLGenerator comboServletStaticURLGenerator =
 			new ComboServletStaticURLGenerator();
 
 		comboServletStaticURLGenerator.setPortletResourceAccessors(
 			PortletResourceAccessor.HEADER_PORTAL_CSS);
-		comboServletStaticURLGenerator.setPredicateFilter(PredicateFilter.NONE);
+		comboServletStaticURLGenerator.setPredicate(s -> false);
 		comboServletStaticURLGenerator.setURLPrefix(_URL_PREFIX);
 		comboServletStaticURLGenerator.setVisitedURLs(new HashSet<String>());
 

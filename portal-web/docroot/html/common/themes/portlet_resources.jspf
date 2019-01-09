@@ -33,7 +33,7 @@ List<String> urls = new ArrayList<String>();
 		ComboServletStaticURLGenerator comboServletStaticURLGenerator = new ComboServletStaticURLGenerator();
 
 		comboServletStaticURLGenerator.setPortletResourceAccessors(portletResourceAccessors);
-		comboServletStaticURLGenerator.setPredicateFilter(predicateFilter);
+		comboServletStaticURLGenerator.setPredicate(predicate);
 		comboServletStaticURLGenerator.setTimestamp(theme.getTimestamp());
 		comboServletStaticURLGenerator.setURLPrefix(PortalUtil.getStaticResourceURL(request, themeDisplay.getCDNDynamicResourcesHost() + themeDisplay.getPathContext() + "/combo", "minifierType=&themeId=" + themeDisplay.getThemeId(), -1));
 		comboServletStaticURLGenerator.setVisitedURLs(portletResourceStaticURLs);

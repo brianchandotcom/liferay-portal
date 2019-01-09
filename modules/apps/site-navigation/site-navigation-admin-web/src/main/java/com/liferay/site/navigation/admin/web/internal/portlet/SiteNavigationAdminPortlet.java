@@ -14,7 +14,6 @@
 
 package com.liferay.site.navigation.admin.web.internal.portlet;
 
-import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
@@ -83,8 +82,7 @@ public class SiteNavigationAdminPortlet extends MVCPortlet {
 			new SiteNavigationAdminDisplayContext(
 				liferayPortletRequest, liferayPortletResponse, request,
 				_siteNavigationMenuItemTypeRegistry,
-				_siteNavigationMenuLocalService, _siteNavigationMenuService,
-				_npmResolver.resolveModuleName("site-navigation-admin-web"));
+				_siteNavigationMenuLocalService, _siteNavigationMenuService);
 
 		renderRequest.setAttribute(
 			SiteNavigationAdminWebKeys.
@@ -93,9 +91,6 @@ public class SiteNavigationAdminPortlet extends MVCPortlet {
 
 		super.doDispatch(renderRequest, renderResponse);
 	}
-
-	@Reference
-	private NPMResolver _npmResolver;
 
 	@Reference
 	private Portal _portal;

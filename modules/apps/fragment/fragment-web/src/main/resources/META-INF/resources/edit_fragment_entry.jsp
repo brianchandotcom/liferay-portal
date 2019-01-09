@@ -33,6 +33,6 @@ renderResponse.setTitle(title);
 
 <soy:component-renderer
 	context="<%= fragmentDisplayContext.getFragmentEditorDisplayContext() %>"
-	module='<%= fragmentDisplayContext.getModuleName() + "/js/FragmentEditor.es" %>'
+	module='<%= npmResolvedPackageName + "/js/FragmentEditor.es" %>'
 	templateNamespace="com.liferay.fragment.web.FragmentEditor.render"
 />

@@ -14,7 +14,6 @@
 
 package com.liferay.portlet.configuration.css.web.internal.portlet;
 
-import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -38,8 +37,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portlet.configuration.css.web.internal.constants.PortletConfigurationCSSPortletKeys;
 
-import java.io.IOException;
-
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
@@ -48,10 +45,7 @@ import java.util.Set;
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.Portlet;
-import javax.portlet.PortletException;
 import javax.portlet.PortletPreferences;
-import javax.portlet.RenderRequest;
-import javax.portlet.RenderResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -79,18 +73,6 @@ import org.osgi.service.component.annotations.Reference;
 	service = Portlet.class
 )
 public class PortletConfigurationCSSPortlet extends MVCPortlet {
-
-	@Override
-	public void render(
-			RenderRequest renderRequest, RenderResponse renderResponse)
-		throws IOException, PortletException {
-
-		renderRequest.setAttribute(
-			PortletConfigurationCSSPortletKeys.RESOLVED_MODULE_NAME,
-			_npmResolver.resolveModuleName("portlet-configuration-css-web"));
-
-		super.render(renderRequest, renderResponse);
-	}
 
 	public void updateLookAndFeel(
 			ActionRequest actionRequest, ActionResponse actionResponse)
@@ -573,9 +555,6 @@ public class PortletConfigurationCSSPortlet extends MVCPortlet {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		PortletConfigurationCSSPortlet.class);
-
-	@Reference
-	private NPMResolver _npmResolver;
 
 	@Reference
 	private Portal _portal;

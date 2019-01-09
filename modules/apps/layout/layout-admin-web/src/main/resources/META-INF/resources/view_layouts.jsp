@@ -68,7 +68,7 @@
 
 					<soy:component-renderer
 						context="<%= context %>"
-						module='<%= layoutsAdminDisplayContext.getModuleName() + "/js/miller_columns/Layout.es" %>'
+						module='<%= npmResolvedPackageName + "/js/miller_columns/Layout.es" %>'
 						templateNamespace="com.liferay.layout.admin.web.Layout.render"
 					/>
 				</c:otherwise>

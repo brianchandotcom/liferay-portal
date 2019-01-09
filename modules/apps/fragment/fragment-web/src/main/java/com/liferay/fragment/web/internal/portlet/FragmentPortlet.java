@@ -20,7 +20,6 @@ import com.liferay.fragment.processor.FragmentEntryProcessorRegistry;
 import com.liferay.fragment.service.FragmentCollectionService;
 import com.liferay.fragment.web.internal.configuration.FragmentPortletConfiguration;
 import com.liferay.fragment.web.internal.constants.FragmentWebKeys;
-import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
@@ -100,9 +99,6 @@ public class FragmentPortlet extends MVCPortlet {
 			_fragmentEntryProcessorRegistry);
 		renderRequest.setAttribute(
 			FragmentWebKeys.ITEM_SELECTOR, _itemSelector);
-		renderRequest.setAttribute(
-			FragmentWebKeys.RESOLVED_MODULE_NAME,
-			_npmResolver.resolveModuleName("fragment-web"));
 
 		super.doDispatch(renderRequest, renderResponse);
 	}
@@ -117,8 +113,5 @@ public class FragmentPortlet extends MVCPortlet {
 
 	@Reference
 	private ItemSelector _itemSelector;
-
-	@Reference
-	private NPMResolver _npmResolver;
 
 }

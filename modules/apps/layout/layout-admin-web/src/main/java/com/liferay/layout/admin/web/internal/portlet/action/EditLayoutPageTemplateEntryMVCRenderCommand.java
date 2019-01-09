@@ -14,16 +14,13 @@
 
 package com.liferay.layout.admin.web.internal.portlet.action;
 
-import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
-import com.liferay.layout.admin.web.internal.constants.LayoutAdminWebKeys;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eudaldo Alonso
@@ -43,14 +40,7 @@ public class EditLayoutPageTemplateEntryMVCRenderCommand
 	public String render(
 		RenderRequest renderRequest, RenderResponse renderResponse) {
 
-		renderRequest.setAttribute(
-			LayoutAdminWebKeys.RESOLVED_MODULE_NAME,
-			_npmResolver.resolveModuleName("layout-admin-web"));
-
 		return "/edit_layout_page_template_entry.jsp";
 	}
-
-	@Reference
-	private NPMResolver _npmResolver;
 
 }

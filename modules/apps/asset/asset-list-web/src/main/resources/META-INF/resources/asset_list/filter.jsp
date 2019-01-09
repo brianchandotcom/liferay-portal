@@ -69,7 +69,7 @@
 
 				<soy:component-renderer
 					context="<%= context %>"
-					module='<%= editAssetListDisplayContext.getModuleName() + "/js/AutoField.es" %>'
+					module='<%= npmResolvedPackageName + "/js/AutoField.es" %>'
 					templateNamespace="com.liferay.asset.list.web.AutoField.render"
 				/>
 			</liferay-frontend:fieldset>

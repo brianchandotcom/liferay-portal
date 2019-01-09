@@ -683,7 +683,7 @@ public class BundleSupportCommandsTest {
 		_initBundle(configsDir, liferayHomeDir, password, url, userName);
 
 		_assertExists(liferayHomeDir, "README.markdown");
-		_assertExists(liferayHomeDir, "emptyfolder");
+		_assertExists(liferayHomeDir, "empty-folder");
 		_assertExists(liferayHomeDir, localPropertiesFile.getName());
 		_assertNotExists(liferayHomeDir, prodPropertiesFile.getName());
 		_assertPosixFilePermissions(

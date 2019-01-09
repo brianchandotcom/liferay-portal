@@ -7530,14 +7530,19 @@ public class JournalArticleLocalServiceImpl
 		throws PortalException {
 	}
 
-	protected long getArticleCheckInterval() throws PortalException {
-		long companyId = CompanyThreadLocal.getCompanyId();
+	protected long getArticleCheckInterval() {
+		try {
+			long companyId = CompanyThreadLocal.getCompanyId();
 
-		JournalServiceConfiguration journalServiceConfiguration =
-			configurationProvider.getCompanyConfiguration(
-				JournalServiceConfiguration.class, companyId);
+			JournalServiceConfiguration journalServiceConfiguration =
+				configurationProvider.getCompanyConfiguration(
+					JournalServiceConfiguration.class, companyId);
 
-		return journalServiceConfiguration.checkInterval() * Time.MINUTE;
+			return journalServiceConfiguration.checkInterval() * Time.MINUTE;
+		}
+		catch (PortalException pe) {
+			throw new RuntimeException(pe);
+		}
 	}
 
 	protected Locale getArticleDefaultLocale(String content) {

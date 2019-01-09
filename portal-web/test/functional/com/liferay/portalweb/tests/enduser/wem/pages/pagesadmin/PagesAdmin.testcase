@@ -26,103 +26,105 @@ definition {
 	@description = "This is a test for LPS-76825. A user can search for a page from pages admin."
 	@priority = "5"
 	test SearchPages {
-		echo("# Add two pages to root and add one child page.");
+		task ("Add two pages to root and add one child page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Page One"
+			);
 
-		JSONLayout.addPublicLayout(
-			groupName = "Test Site Name",
-			layoutName = "Page One"
-		);
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Page Two"
+			);
 
-		JSONLayout.addPublicLayout(
-			groupName = "Test Site Name",
-			layoutName = "Page Two"
-		);
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Page Three",
+				parentLayoutName = "Page One"
+			);
+		}
 
-		JSONLayout.addPublicLayout(
-			groupName = "Test Site Name",
-			layoutName = "Page Three",
-			parentLayoutName = "Page One"
-		);
+		task ("Navigate to pages administration") {
+			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+		}
 
-		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+		task ("Search for all three pages and assert they all appear") {
+			Search.searchCP(searchTerm = "page");
 
-		echo("# Search for all three pages and assert they all appear.");
+			AssertTextEquals(
+				locator1 = "//tr[1]/td[2]",
+				value1 = "Page One"
+			);
 
-		Search.searchCP(searchTerm = "page");
+			AssertTextEquals(
+				locator1 = "//tr[1]/td[3]",
+				value1 = "Page One"
+			);
 
-		AssertTextEquals(
-			locator1 = "//tr[1]/td[2]",
-			value1 = "Page One"
-		);
+			AssertTextEquals(
+				locator1 = "//tr[2]/td[2]",
+				value1 = "Page Two"
+			);
 
-		AssertTextEquals(
-			locator1 = "//tr[1]/td[3]",
-			value1 = "Page One"
-		);
+			AssertTextEquals(
+				locator1 = "//tr[2]/td[3]",
+				value1 = "Page Two"
+			);
 
-		AssertTextEquals(
-			locator1 = "//tr[2]/td[2]",
-			value1 = "Page Two"
-		);
+			AssertTextEquals(
+				locator1 = "//tr[3]/td[2]",
+				value1 = "Page Three"
+			);
 
-		AssertTextEquals(
-			locator1 = "//tr[2]/td[3]",
-			value1 = "Page Two"
-		);
+			AssertTextEquals(
+				locator1 = "//tr[3]/td[3]",
+				value1 = "Page One Page Three"
+			);
+		}
 
-		AssertTextEquals(
-			locator1 = "//tr[3]/td[2]",
-			value1 = "Page Three"
-		);
+		task ("Search for one page and assert only that page appears") {
+			Search.searchCP(searchTerm = "one");
 
-		AssertTextEquals(
-			locator1 = "//tr[3]/td[3]",
-			value1 = "Page One Page Three"
-		);
+			AssertTextEquals(
+				locator1 = "//tr[1]/td[2]",
+				value1 = "Page One"
+			);
 
-		echo("# Search for one page and assert only that page appears.");
+			AssertTextEquals(
+				locator1 = "//tr[1]/td[3]",
+				value1 = "Page One"
+			);
 
-		Search.searchCP(searchTerm = "one");
+			AssertElementNotPresent(
+				locator1 = "//tr/td[2][contains(.,'Page Two')]"
+			);
 
-		AssertTextEquals(
-			locator1 = "//tr[1]/td[2]",
-			value1 = "Page One"
-		);
+			AssertElementNotPresent(
+				locator1 = "//tr/td[2][contains(.,'Page Three')]"
+			);
+		}
 
-		AssertTextEquals(
-			locator1 = "//tr[1]/td[3]",
-			value1 = "Page One"
-		);
+		task ("Search for child page and assert that page appears") {
+			Search.searchCP(searchTerm = "three");
 
-		AssertElementNotPresent(
-			locator1 = "//tr/td[2][contains(.,'Page Two')]"
-		);
+			AssertTextEquals(
+				locator1 = "//tr[1]/td[2]",
+				value1 = "Page Three"
+			);
 
-		AssertElementNotPresent(
-			locator1 = "//tr/td[2][contains(.,'Page Three')]"
-		);
+			AssertTextEquals(
+				locator1 = "//tr[1]/td[3]",
+				value1 = "Page One Page Three"
+			);
 
-		echo("# Search for child page and assert that page appears.");
+			AssertElementNotPresent(
+				locator1 = "//tr/td[2][contains(.,'Page One')]"
+			);
 
-		Search.searchCP(searchTerm = "three");
-
-		AssertTextEquals(
-			locator1 = "//tr[1]/td[2]",
-			value1 = "Page Three"
-		);
-
-		AssertTextEquals(
-			locator1 = "//tr[1]/td[3]",
-			value1 = "Page One Page Three"
-		);
-
-		AssertElementNotPresent(
-			locator1 = "//tr/td[2][contains(.,'Page One')]"
-		);
-
-		AssertElementNotPresent(
-			locator1 = "//tr/td[2][contains(.,'Page Two')]"
-		);
+			AssertElementNotPresent(
+				locator1 = "//tr/td[2][contains(.,'Page Two')]"
+			);
+		}
 	}
 
 	@description = "This is a test for LPS-86218. A user can change the display style to table, which is a flat table view of all pages. Pages should display in an order that follows the page hierarchy."

@@ -301,8 +301,6 @@ definition {
 
 		DMFolder.viewCP(dmFolderName = "DM Folder3 Name");
 
-		DMNavigator.gotoFolder(dmFolderName = "DM Folder3 Name");
-
 		DMDocument.addCP(
 			dmDocumentFile = "Document_2.doc",
 			dmDocumentTitle = "Document_2.doc"

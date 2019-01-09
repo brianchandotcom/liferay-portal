@@ -1,21 +1,70 @@
+import 'clay-dropdown';
 import Component from 'metal-component';
 import {Config} from 'metal-state';
 import Soy from 'metal-soy';
 
-import OpenSimpleInputModal from 'frontend-js-web/liferay/modal/commands/OpenSimpleInputModal.es';
+import LAYOUT_COLUMN_ITEM_DROPDOWN_ITEMS from './utils/LayoutColumnItemDropdownItems.es';
 import templates from './LayoutColumn.soy';
 
 /**
  * LayoutColumn
  */
-
 class LayoutColumn extends Component {
+
+	/**
+	 * Get layout column item dropdown options
+	 * @param {object} layoutColumnItem
+	 * @return {object[]} Dropdown options
+	 * @review
+	 */
+	static _getLayoutColumnItemDropDownItems(layoutColumnItem) {
+		const {actionURLs} = layoutColumnItem;
+
+		const dropdownItems = LAYOUT_COLUMN_ITEM_DROPDOWN_ITEMS
+			.filter(
+				dropdownItem => actionURLs[dropdownItem.name]
+			)
+			.map(
+				dropdownItem => ({
+					handleClick: dropdownItem.handleClick || null,
+					href: actionURLs[dropdownItem.name],
+					label: dropdownItem.label,
+					layoutColumnItem
+				})
+			);
+
+		return dropdownItems;
+	}
+
+	/**
+	 * @param {object} state
+	 * @inheritdoc
+	 */
+	prepareStateForRender(state) {
+		const layoutColumn = this.layoutColumn.map(
+			layoutColumnItem => Object.assign(
+				{},
+				layoutColumnItem,
+				{
+					dropdownItems: LayoutColumn._getLayoutColumnItemDropDownItems(
+						layoutColumnItem
+					)
+				}
+			)
+		);
+
+		return Object.assign(
+			state,
+			{
+				layoutColumn
+			}
+		);
+	}
 
 	/**
 	 * @inheritDoc
 	 * @review
 	 */
-
 	rendered() {
 		if (this.refs.active) {
 			this.refs.active.scrollIntoView();
@@ -23,89 +72,15 @@ class LayoutColumn extends Component {
 	}
 
 	/**
-     * Handle copy layout click in order to show simple input modal.
-     * @param {Event} event
-     * @private
-     */
-
-	_handleCopyLayoutClick(event) {
-		event.preventDefault();
-
-		const config = {
-			dialogTitle: Liferay.Language.get('copy-page'),
-			formSubmitURL: event.delegateTarget.href,
-			mainFieldLabel: Liferay.Language.get('name'),
-			mainFieldName: 'name',
-			namespace: this.portletNamespace,
-			spritemap: this.pathThemeImages + '/lexicon/icons.svg'
-		};
-
-		if (this.siteNavigationMenuNames !== '') {
-			config.checkboxFieldLabel = Liferay.Util.sub(Liferay.Language.get('add-this-page-to-the-following-menus-x'), this.siteNavigationMenuNames);
-			config.checkboxFieldName = 'TypeSettingsProperties--addToAutoMenus--';
-			config.checkboxFieldValue = true;
-		}
-
-		new OpenSimpleInputModal(config);
-	}
-
-	/**
-	 * Handle mark as home page layout click in order to set a layout as home
-	 * page.
+	 * Handle column item dropdown item click event.
 	 * @param {Event} event
-	 * @private
 	 */
-
-	_handleMarkAsHomePageLayoutClick(event) {
-		let confirmMessage = Liferay.Util.sub(
-			Liferay.Language.get('do-you-want-to-replace-x-for-x-as-the-home-page'),
-			event.delegateTarget.dataset.homePageTitle,
-			event.delegateTarget.dataset.title
-		);
-
-		if (!confirm(confirmMessage)) {
-			event.preventDefault();
+	_handleLayoutColumnItemDropdownItemClick(event) {
+		if (event.data && event.data.item && event.data.item.handleClick) {
+			event.data.item.handleClick(event, this);
 		}
 	}
 
-	/**
-	 * Handle permission item click in order to open the target href
-	 * in a dialog.
-	 * @param {Event} event
-	 * @private
-	 */
-
-	_handlePermissionLinkClick(event) {
-		Liferay.Util.openInDialog(
-			event,
-			{
-				dialog: {
-					destroyOnHide: true
-				},
-				dialogIframe: {
-					bodyCssClass: 'dialog-with-footer'
-				},
-				uri: event.delegateTarget.href
-			}
-		);
-	}
-
-	/**
-	 * Handle delete item click in order to show a previous confirmation
-	 * alert.
-	 * @param {Event} event
-	 * @private
-	 */
-
-	_handleDeleteItemClick(event) {
-		if (
-			!confirm(
-				Liferay.Language.get('are-you-sure-you-want-to-delete-this')
-			)
-		) {
-			event.preventDefault();
-		}
-	}
 }
 
 /**

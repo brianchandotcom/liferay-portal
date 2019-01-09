@@ -9,6 +9,7 @@
 		active: bool,
 		checked: bool,
 		description: string,
+		dropdownItems: list<?>,
 		hasChild: bool,
 		homePage: bool,
 		homePageTitle: string,
@@ -22,6 +23,7 @@
 	{@param handleLayoutColumnItemClick: any}
 	{@param pathThemeImages: string}
 	{@param portletNamespace: string}
+	{@param? _handleLayoutColumnItemDropdownItemClick: any}
 	{@param? draggingItem: [
 		actionURLs: map<string, string>,
 		active: bool,
@@ -71,6 +73,7 @@
 			{/let}
 
 			{call .layoutColumnItem}
+				{param _handleLayoutColumnItemDropdownItemClick: $_handleLayoutColumnItemDropdownItemClick /}
 				{param key: $layoutColumnItem.plid /}
 				{param layoutColumnIndex: $layoutColumnIndex /}
 				{param layoutColumnItem: $layoutColumnItem /}
@@ -107,6 +110,7 @@
 		active: bool,
 		checked: bool,
 		description: string,
+		dropdownItems: list<?>,
 		hasChild: bool,
 		homePage: bool,
 		homePageTitle: string,
@@ -119,6 +123,7 @@
 	{@param handleLayoutColumnItemClick: any}
 	{@param pathThemeImages: string}
 	{@param portletNamespace: string}
+	{@param? _handleLayoutColumnItemDropdownItemClick: any}
 	{@param? styleModifier: string}
 
 	{let $listGroupItemClasses kind="text"}
@@ -266,106 +271,20 @@
 					{/if}
 
 					<div class="flex-col">
-						<div
-							aria-expanded="false"
-							aria-haspopup="true"
-							class="dropdown dropdown-action mt-0"
-						>
-							<button
-								class="component-action dropdown-toggle"
-								data-toggle="dropdown"
-								type="button"
-								title="{msg desc=""}show-actions{/msg}"
-							>
-								{call .lexiconIcon}
-									{param name: 'ellipsis-v' /}
-									{param pathThemeImages: $pathThemeImages /}
-								{/call}
-							</button>
+						{let $dropdownTriggerTitle kind="text"}
+							{msg desc=""}show-actions{/msg}
+						{/let}
 
-							<div class="dropdown-menu">
-								{if $layoutColumnItem.actionURLs['viewLayoutURL']}
-									<a
-										class="dropdown-item"
-										href="{$layoutColumnItem.actionURLs['viewLayoutURL']}"
-									>
-										{msg desc=""}view{/msg}
-									</a>
-								{/if}
-
-								{if $layoutColumnItem.actionURLs['editLayoutURL']}
-									<a
-										class="dropdown-item"
-										href="{$layoutColumnItem.actionURLs['editLayoutURL']}"
-									>
-										{msg desc=""}edit{/msg}
-									</a>
-								{/if}
-
-								{if $layoutColumnItem.actionURLs['configureURL']}
-									<a
-										class="dropdown-item"
-										href="{$layoutColumnItem.actionURLs['configureURL']}"
-									>
-										{msg desc=""}configure{/msg}
-									</a>
-								{/if}
-
-								{if $layoutColumnItem.actionURLs['markAsHomePageLayoutURL']}
-									<a
-										class="dropdown-item"
-										data-home-page-title="{$layoutColumnItem.homePageTitle}"
-										data-onclick="_handleMarkAsHomePageLayoutClick"
-										data-title="{$layoutColumnItem.title}"
-										href="{$layoutColumnItem.actionURLs['markAsHomePageLayoutURL']}"
-									>
-										{msg desc=""}mark-as-home-page{/msg}
-									</a>
-								{/if}
-
-								{if $layoutColumnItem.actionURLs['copyLayoutURL']}
-									<a
-										class="dropdown-item"
-										data-onclick="_handleCopyLayoutClick"
-										href="{$layoutColumnItem.actionURLs['copyLayoutURL']}"
-									>
-										{msg desc=""}copy-page{/msg}
-									</a>
-								{/if}
-
-								{let $permissionLinkAttributes kind="attributes"}
-									class="dropdown-item layout-permissions-link lfr-icon-item"
-									data-onclick="_handlePermissionLinkClick"
-									href="{$layoutColumnItem.actionURLs['permissionsURL']}"
-									id="{$portletNamespace}{$layoutColumnItem.plid}_permissions"
-								{/let}
-
-								{if $layoutColumnItem.actionURLs['permissionsURL']}
-									<a {$permissionLinkAttributes}>
-										{msg desc=""}permissions{/msg}
-									</a>
-								{/if}
-
-								{if $layoutColumnItem.actionURLs['orphanPortletsURL']}
-									<a
-										class="dropdown-item"
-										href="{$layoutColumnItem.actionURLs['orphanPortletsURL']}"
-									>
-										{msg desc=""}orphan-widgets{/msg}
-									</a>
-								{/if}
-
-								{if $layoutColumnItem.actionURLs['deleteURL']}
-									<a
-										class="dropdown-item"
-										data-onclick="_handleDeleteItemClick"
-										href="{$layoutColumnItem.actionURLs['deleteURL']}"
-									>
-										{msg desc=""}delete{/msg}
-									</a>
-								{/if}
-							</div>
-						</div>
+						{call ClayDropdown.render}
+							{param events: [
+								'itemClicked': $_handleLayoutColumnItemDropdownItemClick
+							] /}
+							{param items: $layoutColumnItem.dropdownItems /}
+							{param icon: 'ellipsis-v' /}
+							{param spritemap: $pathThemeImages + '/lexicon/icons.svg' /}
+							{param triggerClasses: 'component-action' /}
+							{param triggerTitle: $dropdownTriggerTitle /}
+						{/call}
 					</div>
 				{/if}
 

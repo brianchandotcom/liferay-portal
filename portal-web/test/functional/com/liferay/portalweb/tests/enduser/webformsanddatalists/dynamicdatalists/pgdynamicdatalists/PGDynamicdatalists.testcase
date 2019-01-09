@@ -1244,10 +1244,10 @@ definition {
 			field = "Date",
 			fieldFieldLabel = "Date",
 			fieldName = "Date",
-			fieldPredefinedValue = "09/01/2017",
+			fieldPredefinedValue = "09/01/2018",
 			fieldPredefinedValueDay = "1",
 			fieldPredefinedValueMonth = "September",
-			fieldPredefinedValueYear = "2017"
+			fieldPredefinedValueYear = "2018"
 		);
 
 		DDLDataDefinition.save();
@@ -1273,14 +1273,14 @@ definition {
 			field = "Date",
 			fieldFieldLabel = "Date",
 			fieldName = "Date",
-			fieldPredefinedValue = "09/01/2017"
+			fieldPredefinedValue = "09/01/2018"
 		);
 
 		PortletEntry.publish();
 
 		DDLRecord.viewViaDDLDisplayPG(
 			ddlListName = "List Name",
-			ddlRecordFieldData = "9/1/17",
+			ddlRecordFieldData = "9/1/18",
 			field = "Date",
 			fieldFieldLabel = "Date"
 		);
@@ -1296,7 +1296,7 @@ definition {
 			field = "Date",
 			fieldFieldLabel = "Date",
 			fieldName = "Date",
-			fieldPredefinedValue = "09/01/2017"
+			fieldPredefinedValue = "09/01/2018"
 		);
 
 		DDLRecord.populateFieldDate(

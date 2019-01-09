@@ -26,6 +26,14 @@
 		}
 	}
 
+	.clay-multi-select {
+		margin-top: 1em;
+
+		.input-group-item-shrink {
+			display: none;
+		}
+	}
+
 	.document-container {
 		&:after {
 			clear: both;
@@ -200,10 +208,6 @@
 		left: 0;
 		position: absolute;
 		right: 0;
-	}
-
-	.tag-selector {
-		margin-top: 1em;
 	}
 
 	.taglib-webdav {

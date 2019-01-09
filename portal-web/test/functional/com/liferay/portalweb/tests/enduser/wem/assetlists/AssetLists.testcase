@@ -85,7 +85,7 @@ definition {
 
 			PortletEntry.inputText(
 				fieldLabel = "Title",
-				text = "Asset List Test"
+				text = "Manual Asset List Test"
 			);
 
 			Button.clickSave();

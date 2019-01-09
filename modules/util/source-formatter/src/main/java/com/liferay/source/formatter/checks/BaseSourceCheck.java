@@ -397,11 +397,16 @@ public abstract class BaseSourceCheck implements SourceCheck {
 
 		URL url = _getPortalGitURL(fileName, portalBranchName);
 
-		if (url != null) {
-			return StringUtil.read(url.openStream());
+		if (url == null) {
+			return null;
 		}
 
-		return null;
+		try {
+			return StringUtil.read(url.openStream());
+		}
+		catch (IOException ioe) {
+			return null;
+		}
 	}
 
 	protected synchronized Document getPortalCustomSQLDocument()

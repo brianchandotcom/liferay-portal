@@ -83,7 +83,9 @@
 	<source-processor name="GradleSourceProcessor">
 		<check name="GradleBlockOrderCheck" />
 		<check name="GradleBodyCheck" />
-		<check name="GradleDependenciesCheck" />
+		<check name="GradleDependenciesCheck">
+			<property name="checkPetraDependencies" value="false" />
+		</check>
 		<check name="GradleDependencyConfigurationCheck" />
 		<check name="GradleDependencyVersionCheck" />
 		<check name="GradleExportedPackageDependenciesCheck" />

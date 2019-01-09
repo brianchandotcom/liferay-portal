@@ -39,7 +39,7 @@ definition {
 
 	@priority = "5"
 	test AddAudioViaWebContent {
-		property custom.properties = "editor.wysiwyg.portal-impl.portlet.ddm.text_html.ftl=ckeditor";
+		property custom.properties = "editor.wysiwyg.portal-impl.portlet.ddm.text_html.ftl=ckeditor${line.separator}xuggler.enabled=true";
 		property dummy.socket.proxy.disabled = "true";
 		property portal.acceptance = "false";
 		property test.name.skip.portal.instance = "WebContentDisplay#AddAudioViaWebContent";
@@ -273,7 +273,7 @@ definition {
 
 	@priority = "4"
 	test AddVideoViaWebContent {
-		property custom.properties = "editor.wysiwyg.portal-impl.portlet.ddm.text_html.ftl=ckeditor";
+		property custom.properties = "editor.wysiwyg.portal-impl.portlet.ddm.text_html.ftl=ckeditor${line.separator}xuggler.enabled=true";
 		property dummy.socket.proxy.disabled = "true";
 		property test.name.skip.portal.instance = "WebContentDisplay#AddVideoViaWebContent";
 		property testray.component.names = "Web Content Administration";

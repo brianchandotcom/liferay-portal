@@ -36,7 +36,6 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.spring.extender.service.ServiceReference;
-import jdk.nashorn.internal.ir.annotations.Reference;
 
 import java.util.Collections;
 import java.util.List;
@@ -475,11 +474,21 @@ public class DDMStructureServiceImpl extends DDMStructureServiceBaseImpl {
 	}
 
 	@Override
+	public List<DDMStructure> getStructures(
+		long companyId, long[] groupIds, long classNameId, int start, int end,
+		OrderByComparator<DDMStructure> orderByComparator) {
+
+		return ddmStructureFinder.filterFindByC_G_C_S(
+			companyId, groupIds, classNameId, WorkflowConstants.STATUS_ANY,
+			start, end, orderByComparator);
+	}
+
+	@Override
 	public int getStructuresCount(
 		long companyId, long[] groupIds, long classNameId) {
 
-		return _ddmStructureFinder.countByC_G_C_S(companyId, groupIds,
-			classNameId, WorkflowConstants.STATUS_ANY);
+		return _ddmStructureFinder.countByC_G_C_S(
+			companyId, groupIds, classNameId, WorkflowConstants.STATUS_ANY);
 	}
 
 	@Override

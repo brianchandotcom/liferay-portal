@@ -17,7 +17,7 @@ package com.liferay.frontend.js.loader.modules.extender.internal.npm;
 import com.liferay.frontend.js.loader.modules.extender.internal.npm.flat.FlatNPMBundleProcessor;
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMRegistry;
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
-import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolverHelperUtil;
+import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolvedPackageNameUtil;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
@@ -65,7 +65,7 @@ public class NPMResolverServletContextTracker
 
 		if (npmResolvedPackageName != null) {
 			servletContext.setAttribute(
-				NPMResolverHelperUtil.NPM_RESOLVED_PACKAGE_NAME,
+				NPMResolvedPackageNameUtil.NPM_RESOLVED_PACKAGE_NAME,
 				npmResolvedPackageName);
 		}
 

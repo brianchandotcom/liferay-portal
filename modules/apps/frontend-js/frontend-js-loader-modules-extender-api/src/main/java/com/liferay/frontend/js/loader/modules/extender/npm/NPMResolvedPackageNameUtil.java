@@ -20,7 +20,7 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Iván Zaera Avellón
  */
-public class NPMResolverHelperUtil {
+public class NPMResolvedPackageNameUtil {
 
 	public static final String NPM_RESOLVED_PACKAGE_NAME =
 		"com.liferay.npm.resolved.package.name";

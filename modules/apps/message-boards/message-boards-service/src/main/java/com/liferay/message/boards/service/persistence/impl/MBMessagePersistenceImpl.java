@@ -13185,7 +13185,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 
 	private static final String _FINDER_COLUMN_G_U_S_GROUPID_2 = "mbMessage.groupId = ? AND ";
 	private static final String _FINDER_COLUMN_G_U_S_USERID_2 = "mbMessage.userId = ? AND ";
-	private static final String _FINDER_COLUMN_G_U_S_STATUS_2 = "mbMessage.status = ? AND mbMessage.categoryId != -1";
+	private static final String _FINDER_COLUMN_G_U_S_STATUS_2 = "mbMessage.status = ? AND mbMessage.categoryId != -1 AND (mbMessage.anonymous = [$FALSE$])";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_G_C_T = new FinderPath(MBMessageModelImpl.ENTITY_CACHE_ENABLED,
 			MBMessageModelImpl.FINDER_CACHE_ENABLED, MBMessageImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_C_T",

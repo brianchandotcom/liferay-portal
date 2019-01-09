@@ -50,57 +50,78 @@ definition {
 
 		Search.searchCP(searchTerm = "page");
 
-		AssertVisible(
-			locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME",
-			key_rowEntry = "Page One"
+		AssertTextEquals(
+			locator1 = "//tr[1]/td[2]",
+			value1 = "Page One"
 		);
 
-		AssertVisible(
-			locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME",
-			key_rowEntry = "Page Two"
+		AssertTextEquals(
+			locator1 = "//tr[1]/td[3]",
+			value1 = "Page One"
 		);
 
-		AssertVisible(
-			locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME",
-			key_rowEntry = "Page Three"
+		AssertTextEquals(
+			locator1 = "//tr[2]/td[2]",
+			value1 = "Page Two"
+		);
+
+		AssertTextEquals(
+			locator1 = "//tr[2]/td[3]",
+			value1 = "Page Two"
+		);
+
+		AssertTextEquals(
+			locator1 = "//tr[3]/td[2]",
+			value1 = "Page Three"
+		);
+
+		AssertTextEquals(
+			locator1 = "//tr[3]/td[3]",
+			value1 = "Page One Page Three"
 		);
 
 		echo("# Search for one page and assert only that page appears.");
 
 		Search.searchCP(searchTerm = "one");
 
-		AssertVisible(
-			locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME",
-			key_rowEntry = "Page One"
+		AssertTextEquals(
+			locator1 = "//tr[1]/td[2]",
+			value1 = "Page One"
+		);
+
+		AssertTextEquals(
+			locator1 = "//tr[1]/td[3]",
+			value1 = "Page One"
 		);
 
 		AssertElementNotPresent(
-			locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME",
-			key_rowEntry = "Page Two"
+			locator1 = "//tr/td[2][contains(.,'Page Two')]"
 		);
 
 		AssertElementNotPresent(
-			locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME",
-			key_rowEntry = "Page Three"
+			locator1 = "//tr/td[2][contains(.,'Page Three')]"
 		);
 
 		echo("# Search for child page and assert that page appears.");
 
 		Search.searchCP(searchTerm = "three");
 
-		AssertElementNotPresent(
-			locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME",
-			key_rowEntry = "Page One"
+		AssertTextEquals(
+			locator1 = "//tr[1]/td[2]",
+			value1 = "Page Three"
+		);
+
+		AssertTextEquals(
+			locator1 = "//tr[1]/td[3]",
+			value1 = "Page One Page Three"
 		);
 
 		AssertElementNotPresent(
-			locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME",
-			key_rowEntry = "Page Two"
+			locator1 = "//tr/td[2][contains(.,'Page One')]"
 		);
 
-		AssertVisible(
-			locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME",
-			key_rowEntry = "Page Three"
+		AssertElementNotPresent(
+			locator1 = "//tr/td[2][contains(.,'Page Two')]"
 		);
 	}
 

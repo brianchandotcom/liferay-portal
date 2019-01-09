@@ -1667,6 +1667,10 @@ definition {
 			locator1 = "DocumentsAndMediaDocument#DOCUMENT_INFO_TITLE",
 			value1 = "${dmDocumentTitleEdit}"
 		);
+
+		if (isSet(dmDocumentVersionNumber)) {
+			DMDocument.viewDocumentVersionNumberCmdPG(dmDocumentVersionNumber = "${dmDocumentVersionNumber}");
+		}
 	}
 
 	macro viewIconLockedCP {

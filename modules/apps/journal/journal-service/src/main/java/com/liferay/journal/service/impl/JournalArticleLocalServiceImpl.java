@@ -7056,51 +7056,7 @@ public class JournalArticleLocalServiceImpl
 		actionableDynamicQuery.setPerformActionMethod(
 			(JournalArticle article) -> {
 				if (isExpireAllArticleVersions(article.getCompanyId())) {
-					final ActionableDynamicQuery actionableDynamicQueryByG_A =
-						getActionableDynamicQuery();
-
-					actionableDynamicQueryByG_A.setAddCriteriaMethod(
-						dynamicQuery -> {
-							Property groupIdProperty =
-								PropertyFactoryUtil.forName("groupId");
-
-							dynamicQuery.add(
-								groupIdProperty.eq(article.getGroupId()));
-
-							Property articleIdProperty =
-								PropertyFactoryUtil.forName("articleId");
-
-							dynamicQuery.add(
-								articleIdProperty.eq(article.getArticleId()));
-
-							Property expirationDateProperty =
-								PropertyFactoryUtil.forName("expirationDate");
-
-							dynamicQuery.add(
-								expirationDateProperty.isNotNull());
-
-							Property versionProperty =
-								PropertyFactoryUtil.forName("version");
-
-							dynamicQuery.add(
-								versionProperty.lt(article.getVersion()));
-
-							Order order = OrderFactoryUtil.asc("modifiedDate");
-
-							dynamicQuery.addOrder(order);
-						});
-
-					actionableDynamicQueryByG_A.setPerformActionMethod(
-						(JournalArticle currentArticle) -> {
-							currentArticle.setExpirationDate(
-								article.getExpirationDate());
-							currentArticle.setStatus(
-								WorkflowConstants.STATUS_EXPIRED);
-
-							journalArticlePersistence.update(currentArticle);
-						});
-
-					actionableDynamicQueryByG_A.performActions();
+					checkArticlesByExpirationDate(article);
 				}
 
 				article.setStatus(WorkflowConstants.STATUS_EXPIRED);
@@ -7124,6 +7080,49 @@ public class JournalArticleLocalServiceImpl
 			_previousCheckDate = new Date(
 				expirationDate.getTime() - getArticleCheckInterval());
 		}
+	}
+
+	protected void checkArticlesByExpirationDate(JournalArticle article)
+		throws PortalException {
+
+		ActionableDynamicQuery actionableDynamicQuery =
+			getActionableDynamicQuery();
+
+		actionableDynamicQuery.setAddCriteriaMethod(
+			dynamicQuery -> {
+				Property groupIdProperty = PropertyFactoryUtil.forName(
+					"groupId");
+
+				dynamicQuery.add(groupIdProperty.eq(article.getGroupId()));
+
+				Property articleIdProperty = PropertyFactoryUtil.forName(
+					"articleId");
+
+				dynamicQuery.add(articleIdProperty.eq(article.getArticleId()));
+
+				Property expirationDateProperty = PropertyFactoryUtil.forName(
+					"expirationDate");
+
+				dynamicQuery.add(expirationDateProperty.isNotNull());
+
+				Property versionProperty = PropertyFactoryUtil.forName(
+					"version");
+
+				dynamicQuery.add(versionProperty.lt(article.getVersion()));
+
+				Order order = OrderFactoryUtil.asc("modifiedDate");
+
+				dynamicQuery.addOrder(order);
+			});
+		actionableDynamicQuery.setPerformActionMethod(
+			(JournalArticle currentArticle) -> {
+				currentArticle.setExpirationDate(article.getExpirationDate());
+				currentArticle.setStatus(WorkflowConstants.STATUS_EXPIRED);
+
+				journalArticlePersistence.update(currentArticle);
+			});
+
+		actionableDynamicQuery.performActions();
 	}
 
 	protected void checkArticlesByReviewDate(Date reviewDate)

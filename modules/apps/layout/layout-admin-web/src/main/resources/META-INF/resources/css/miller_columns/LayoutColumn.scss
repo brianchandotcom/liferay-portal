@@ -82,10 +82,25 @@
 }
 
 .list-group-item.layout-item {
-	cursor: pointer;
 	height: 68px;
 	max-height: 68px;
+	position: relative;
 	transition: box-shadow 0s ease-out 32ms;
+
+	.layout-column-item-title {
+		pointer-events: none;
+	}
+
+	.layout-column-item-click-mask {
+		background: transparent;
+		border: none;
+		cursor: pointer;
+		height: 100%;
+		left: 0;
+		position: absolute;
+		top: 0;
+		width: 100%;
+	}
 }
 
 .list-group-item.layout-item:last-child {

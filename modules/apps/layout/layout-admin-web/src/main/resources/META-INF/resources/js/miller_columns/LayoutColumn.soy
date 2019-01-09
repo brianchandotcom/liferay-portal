@@ -148,12 +148,6 @@
 
 	{let $listGroupItemAttributes kind="attributes"}
 		class="{$listGroupItemClasses}"
-		data-layout-column-item-plid="{$layoutColumnItem.plid}"
-		data-onclick="{$handleLayoutColumnItemClick}"
-
-		{if $layoutColumnIndex == 0}
-			data-layout-column-item-url="{$layoutColumnItem.url}"
-		{/if}
 
 		{if $layoutColumnItem.active}
 			ref="active"
@@ -161,6 +155,20 @@
 	{/let}
 
 	<li {$listGroupItemAttributes}>
+		{let $listGroupItemMaskAttributes kind="attributes"}
+			class="layout-column-item-click-mask"
+			data-layout-column-item-plid="{$layoutColumnItem.plid}"
+			data-onclick="{$handleLayoutColumnItemClick}"
+			tabindex="0"
+			type="button"
+
+			{if $layoutColumnIndex == 0}
+				data-layout-column-item-url="{$layoutColumnItem.url}"
+			{/if}
+		{/let}
+
+		<button {$listGroupItemMaskAttributes}></button>
+
 		<div class="autofit-row autofit-row-center">
 			{if $layoutColumnItem.plid != '0'}
 				<div class="layout-drag-handler">
@@ -196,7 +204,7 @@
 				</div>
 			{/if}
 
-			<div class="autofit-col flex-col flex-col-expand">
+			<div class="autofit-col flex-col flex-col-expand layout-column-item-title">
 				<h4 class="list-group-title">
 					<span class="text-truncate">
 						{$layoutColumnItem.title}
@@ -222,16 +230,17 @@
 					{if $layoutColumnItem.actionURLs['addURL']}
 						<div class="flex-col">
 							<div class="quick-action-menu">
-								<a
+								<button
 									class="component-action"
 									href="{$layoutColumnItem.actionURLs['addURL']}"
 									title="{msg desc=""}add-page{/msg}"
+									type="button"
 								>
 									{call .lexiconIcon}
 										{param name: 'plus' /}
 										{param pathThemeImages: $pathThemeImages /}
 									{/call}
-								</a>
+								</button>
 							</div>
 						</div>
 					{/if}

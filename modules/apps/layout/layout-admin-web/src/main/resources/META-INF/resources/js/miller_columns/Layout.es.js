@@ -394,24 +394,19 @@ class Layout extends Component {
 	 * @review
 	 */
 	_handleLayoutColumnItemClick(event) {
-		const targetIsA = event.target.tagName === 'A';
-		const targetIsButton = event.target.tagName === 'BUTTON';
+		const itemUrl = event.delegateTarget.dataset.layoutColumnItemUrl;
 
-		if (!targetIsA && !targetIsButton) {
-			const itemUrl = event.delegateTarget.dataset.layoutColumnItemUrl;
+		if (itemUrl) {
+			navigate(itemUrl);
+		}
+		else {
+			const itemPlid = event.delegateTarget.dataset.layoutColumnItemPlid;
 
-			if (itemUrl) {
-				navigate(itemUrl);
-			}
-			else {
-				const itemPlid = event.delegateTarget.dataset.layoutColumnItemPlid;
+			const item = getItem(this.layoutColumns, itemPlid);
 
-				const item = getItem(this.layoutColumns, itemPlid);
+			this.layoutColumns = setActiveItem(this.layoutColumns, itemPlid);
 
-				this.layoutColumns = setActiveItem(this.layoutColumns, itemPlid);
-
-				navigate(item.url);
-			}
+			navigate(item.url);
 		}
 	}
 

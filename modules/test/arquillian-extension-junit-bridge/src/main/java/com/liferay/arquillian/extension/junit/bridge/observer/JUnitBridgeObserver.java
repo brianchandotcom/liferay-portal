@@ -121,12 +121,12 @@ public class JUnitBridgeObserver {
 			Description.createSuiteDescription(clazz), firstMethod, lastMethod);
 	}
 
-	public void suiteEvent(@Observes EventContext<SuiteEvent> context) {
+	public void suiteEvent(@Observes EventContext<SuiteEvent> eventContext) {
 		Thread currentThread = Thread.currentThread();
 
-		ClassLoader ctxLoader = currentThread.getContextClassLoader();
+		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
 
-		SuiteEvent suiteEvent = context.getEvent();
+		SuiteEvent suiteEvent = eventContext.getEvent();
 
 		Class<? extends SuiteEvent> suiteEventClass = suiteEvent.getClass();
 
@@ -134,10 +134,10 @@ public class JUnitBridgeObserver {
 			currentThread.setContextClassLoader(
 				suiteEventClass.getClassLoader());
 
-			context.proceed();
+			eventContext.proceed();
 		}
 		finally {
-			currentThread.setContextClassLoader(ctxLoader);
+			currentThread.setContextClassLoader(contextClassLoader);
 		}
 	}
 

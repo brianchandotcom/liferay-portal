@@ -18,6 +18,7 @@ import java.lang.management.ManagementFactory;
 
 import java.util.List;
 
+import javax.management.JMException;
 import javax.management.MBeanServer;
 import javax.management.MBeanServerFactory;
 
@@ -25,6 +26,7 @@ import org.jboss.arquillian.protocol.jmx.JMXTestRunner;
 import org.jboss.arquillian.testenricher.osgi.BundleAssociation;
 import org.jboss.arquillian.testenricher.osgi.BundleContextAssociation;
 
+import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
 
@@ -34,29 +36,18 @@ import org.osgi.framework.BundleContext;
 public class ArquillianBundleActivator implements BundleActivator {
 
 	@Override
-	public void start(final BundleContext context) throws Exception {
-		final JMXTestRunner.TestClassLoader testClassLoader =
-			new JMXTestRunner.TestClassLoader() {
-
-				@Override
-				public Class<?> loadTestClass(String className)
-					throws ClassNotFoundException {
-
-					return context.getBundle().loadClass(className);
-				}
-
-			};
-
-		// Register the JMXTestRunner
+	public void start(BundleContext bundleContext) throws JMException {
+		Bundle bundle = bundleContext.getBundle();
 
 		MBeanServer mBeanServer = _findOrCreateMBeanServer();
 
-		_testRunner = new JMXTestRunner(testClassLoader) {
+		_testRunner = new JMXTestRunner(bundle::loadClass) {
 
 			@Override
 			public byte[] runTestMethod(String className, String methodName) {
-				BundleAssociation.setBundle(context.getBundle());
-				BundleContextAssociation.setBundleContext(context);
+				BundleAssociation.setBundle(bundle);
+
+				BundleContextAssociation.setBundleContext(bundleContext);
 
 				return super.runTestMethod(className, methodName);
 			}
@@ -67,10 +58,7 @@ public class ArquillianBundleActivator implements BundleActivator {
 	}
 
 	@Override
-	public void stop(BundleContext context) throws Exception {
-
-		// Unregister the JMXTestRunner
-
+	public void stop(BundleContext context) throws JMException {
 		MBeanServer mBeanServer = _findOrCreateMBeanServer();
 
 		_testRunner.unregisterMBean(mBeanServer);
@@ -79,10 +67,11 @@ public class ArquillianBundleActivator implements BundleActivator {
 	private MBeanServer _findOrCreateMBeanServer() {
 		MBeanServer mBeanServer = null;
 
-		List<MBeanServer> serverArr = MBeanServerFactory.findMBeanServer(null);
+		List<MBeanServer> mBeanServers = MBeanServerFactory.findMBeanServer(
+			null);
 
-		if (!serverArr.isEmpty()) {
-			mBeanServer = serverArr.get(0);
+		if (!mBeanServers.isEmpty()) {
+			mBeanServer = mBeanServers.get(0);
 		}
 
 		if (mBeanServer == null) {

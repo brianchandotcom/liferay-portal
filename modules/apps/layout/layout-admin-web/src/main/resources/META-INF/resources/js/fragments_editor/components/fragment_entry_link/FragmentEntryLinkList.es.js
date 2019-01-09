@@ -463,7 +463,7 @@ class FragmentEntryLinkList extends Component {
 				autoScroll: true,
 				dragPlaceholder: Drag.Placeholder.CLONE,
 				handles: '.fragments-editor__drag-handler',
-				sources: '.drag-fragment, .drag-section',
+				sources: '.fragments-editor__drag-source--fragment',
 				targets: '.fragments-editor__drop-target--fragment'
 			}
 		);

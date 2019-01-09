@@ -210,7 +210,7 @@ class SidebarAvailableElements extends Component {
 				autoScroll: true,
 				dragPlaceholder: Drag.Placeholder.CLONE,
 				handles: '.fragments-editor__drag-handler',
-				sources: '.drag-card',
+				sources: '.fragments-editor__drag-source--sidebar-fragment',
 				targets: '.fragments-editor__drop-target--fragment'
 			}
 		);

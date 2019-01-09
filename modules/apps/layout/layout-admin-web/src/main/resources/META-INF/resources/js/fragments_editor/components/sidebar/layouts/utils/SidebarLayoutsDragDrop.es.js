@@ -99,7 +99,7 @@ class SidebarLayoutsDragDrop extends State {
 			{
 				autoScroll: true,
 				dragPlaceholder: Drag.Placeholder.CLONE,
-				sources: '.layouts-drag-section',
+				sources: '.fragments-editor__drag-source--layout',
 				targets: '.fragments-editor__drop-target--layout'
 			}
 		);

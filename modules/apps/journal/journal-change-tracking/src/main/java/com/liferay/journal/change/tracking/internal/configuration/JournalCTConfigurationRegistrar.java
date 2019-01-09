@@ -31,7 +31,7 @@ import org.osgi.service.component.annotations.ReferenceScope;
  * @author Gergely Mathe
  */
 @Component(immediate = true, service = {})
-public class JournalArticleCTConfigurationRegistrar {
+public class JournalCTConfigurationRegistrar {
 
 	@Activate
 	public void activate() {

@@ -328,6 +328,18 @@ public class JournalArticleAssetRenderer
 	}
 
 	@Override
+	public String getUrlTitle(Locale locale) {
+		try {
+			return _article.getUrlTitle(locale);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+		}
+
+		return getUrlTitle();
+	}
+
+	@Override
 	public PortletURL getURLViewDiffs(
 			LiferayPortletRequest liferayPortletRequest,
 			LiferayPortletResponse liferayPortletResponse)

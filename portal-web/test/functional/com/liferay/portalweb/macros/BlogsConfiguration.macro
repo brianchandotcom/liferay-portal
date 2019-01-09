@@ -7,7 +7,7 @@ definition {
 
 		SelectFrame(locator1 = "IFrame#CONFIGURATION");
 
-		Navigator.gotoNavItem(key_navItem = "Scope");
+		Navigator.gotoNavItem(navItem = "Scope");
 
 		Select(locator1 = "Select#SCOPE", value1 = "${scopeSelection}");
 

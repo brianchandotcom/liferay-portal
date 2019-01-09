@@ -5323,6 +5323,12 @@ version 2.0.8.
 - [LPS-87479]: Update the [Liferay Gradle Plugins JSDoc] dependency to version
 2.0.13.
 
+## 5.5.161 - 2019-01-08
+
+### Changed
+- [LPS-88823]: Update the [Liferay Gradle Plugins] dependency to version
+3.13.52.
+
 [Find Security Bugs]: https://github.com/liferay/liferay-portal/tree/master/modules/third-party/com-h3xstream-findsecbugs
 [Gradle Dependency Management]: https://github.com/spring-gradle-plugins/dependency-management-plugin
 [Gradle License Report]: https://github.com/jk1/Gradle-License-Report
@@ -5863,6 +5869,7 @@ version 2.0.8.
 [LPS-88382]: https://issues.liferay.com/browse/LPS-88382
 [LPS-88552]: https://issues.liferay.com/browse/LPS-88552
 [LPS-88588]: https://issues.liferay.com/browse/LPS-88588
+[LPS-88823]: https://issues.liferay.com/browse/LPS-88823
 [LRDOCS-2594]: https://issues.liferay.com/browse/LRDOCS-2594
 [LRDOCS-2841]: https://issues.liferay.com/browse/LRDOCS-2841
 [LRDOCS-2981]: https://issues.liferay.com/browse/LRDOCS-2981

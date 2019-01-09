@@ -148,7 +148,7 @@ class PdfPreviewer extends Component {
 	 */
 	_handleBlurPageInput(event) {
 		this.currentPage = event.delegateTarget.value;
-		this.showPageInput = false;
+		this._hidePageInput(false);
 	}
 
 	/**
@@ -184,13 +184,28 @@ class PdfPreviewer extends Component {
 
 		if (code === KEY_CODE_ENTER) {
 			this.currentPage = event.delegateTarget.value;
-			this.showPageInput = false;
+			this._hidePageInput();
 		}
 		else if (code === KEY_CODE_ESC) {
-			this.showPageInput = false;
+			this._hidePageInput();
 		}
 		else if (VALID_KEY_CODES.indexOf(code) === -1) {
 			event.preventDefault();
+		}
+	}
+
+	/**
+	 * Hide PageInput and return focus to parent button
+	 * Saves the current value.
+	 * @param {Boolean} [returnFocus=true] - flag to determine if return the focus
+	 * @private
+	 * @review
+	 */
+	_hidePageInput(returnFocus = true) {
+		this.showPageInput = false;
+
+		if (returnFocus) {
+			setTimeout(() => this.refs.showPageInputBtn.element.focus(), 100);
 		}
 	}
 

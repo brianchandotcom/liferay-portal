@@ -52,17 +52,17 @@
 	{@param? showPageInput: bool}
 
 	{let $baseButtonsToolbar:[
-		'elementClasses': 'btn-unstyled',
+		'elementClasses': 'btn-floating-bar',
 		'events': [ 'click': $_handleClickToolbar],
 		'spritemap': $spritemap,
 		'style': false
 	] /}
 
 	<div class="preview-toolbar-container">
-		<div class="btn-group preview-toolbar" role="group">
+		<div class="btn-group floating-bar" role="group">
 			<div class="btn-group">
 				{call ClayButton.render data="$baseButtonsToolbar"}
-					{param elementClasses: 'btn-unstyled btn-text' /}
+					{param elementClasses: $baseButtonsToolbar.elementClasses + ' btn-floating-bar-text' /}
 					{param label kind="text"}
 						{msg desc=""}page{/msg} {$currentPage} / {$totalPages}
 					{/param}
@@ -78,9 +78,9 @@
 					{/param}
 				{/call}
 				{if $showPageInput}
-					<div class="toolbar-input-wrapper">
+					<div class="floating-bar-input-wrapper">
 						<input
-							class="form-control form-control-sm"
+							class="form-control form-control-sm floating-bar-input"
 							data-onblur="{$_handleBlurPageInput}"
 							data-onkeydown="{$_handleKeyDownPageInput}"
 							max="{$totalPages}"

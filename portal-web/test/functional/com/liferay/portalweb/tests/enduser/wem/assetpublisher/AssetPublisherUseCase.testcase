@@ -1533,6 +1533,7 @@ definition {
 		property testray.component.names = "Training";
 
 		AssetPublisherPortlet.configureAssetLinkBehaviorPG(
+			assetLinkBehavior = "View in Context",
 			disableConfiguration = "Show Add Content Button"
 		);
 

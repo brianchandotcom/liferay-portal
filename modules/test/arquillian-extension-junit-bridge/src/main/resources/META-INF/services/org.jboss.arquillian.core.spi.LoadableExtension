@@ -1,2 +1,1 @@
 com.liferay.arquillian.extension.junit.bridge.LiferayArquillianJUnitBridgeExtension
-org.jboss.arquillian.testenricher.osgi.OSGiEnricherExtension

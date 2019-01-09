@@ -7,7 +7,6 @@ dependencies {
 	compile group: "org.jboss.arquillian.container", name: "arquillian-container-test-spi", version: "1.1.10.Final"
 	compile group: "org.jboss.arquillian.junit", name: "arquillian-junit-container", version: "1.1.10.Final"
 	compile group: "org.jboss.arquillian.protocol", name: "arquillian-protocol-osgi", version: "2.1.0.Final"
-	compile group: "org.jboss.arquillian.testenricher", name: "arquillian-testenricher-osgi", version: "2.1.0.Final"
 	compile group: "org.jboss.osgi.metadata", name: "jbosgi-metadata", version: "4.0.0.CR1"
 	compile group: "org.osgi", name: "org.osgi.core", version: "5.0.0"
 	compile group: "org.osgi", name: "org.osgi.enterprise", version: "5.0.0"

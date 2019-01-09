@@ -23,8 +23,6 @@ import javax.management.MBeanServer;
 import javax.management.MBeanServerFactory;
 
 import org.jboss.arquillian.protocol.jmx.JMXTestRunner;
-import org.jboss.arquillian.testenricher.osgi.BundleAssociation;
-import org.jboss.arquillian.testenricher.osgi.BundleContextAssociation;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleActivator;
@@ -41,18 +39,7 @@ public class ArquillianBundleActivator implements BundleActivator {
 
 		MBeanServer mBeanServer = _findOrCreateMBeanServer();
 
-		_jmxTestRunner = new JMXTestRunner(bundle::loadClass) {
-
-			@Override
-			public byte[] runTestMethod(String className, String methodName) {
-				BundleAssociation.setBundle(bundle);
-
-				BundleContextAssociation.setBundleContext(bundleContext);
-
-				return super.runTestMethod(className, methodName);
-			}
-
-		};
+		_jmxTestRunner = new JMXTestRunner(bundle::loadClass);
 
 		_jmxTestRunner.registerMBean(mBeanServer);
 	}

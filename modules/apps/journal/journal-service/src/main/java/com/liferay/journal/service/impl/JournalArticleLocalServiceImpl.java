@@ -6995,7 +6995,7 @@ public class JournalArticleLocalServiceImpl
 
 				dynamicQuery.add(displayDateProperty.lt(displayDate));
 			});
-
+		actionableDynamicQuery.setInterval(_INTERVAL);
 		actionableDynamicQuery.setPerformActionMethod(
 			(JournalArticle article) -> {
 				long userId = PortalUtil.getValidUserId(
@@ -7016,11 +7016,8 @@ public class JournalArticleLocalServiceImpl
 					userId, article, WorkflowConstants.STATUS_APPROVED, null,
 					serviceContext, new HashMap<String, Serializable>());
 			});
-
 		actionableDynamicQuery.setTransactionConfig(
 			DefaultActionableDynamicQuery.REQUIRES_NEW_TRANSACTION_CONFIG);
-
-		actionableDynamicQuery.setInterval(_INTERVAL);
 
 		actionableDynamicQuery.performActions();
 	}
@@ -7054,7 +7051,7 @@ public class JournalArticleLocalServiceImpl
 					expirationDateProperty.le(
 						new Date(expirationDate.getTime() + checkInterval)));
 			});
-
+		actionableDynamicQuery.setInterval(_INTERVAL);
 		actionableDynamicQuery.setPerformActionMethod(
 			(JournalArticle article) -> {
 				if (isExpireAllArticleVersions(article.getCompanyId())) {
@@ -7117,11 +7114,8 @@ public class JournalArticleLocalServiceImpl
 
 				indexer.reindex(article);
 			});
-
 		actionableDynamicQuery.setTransactionConfig(
 			DefaultActionableDynamicQuery.REQUIRES_NEW_TRANSACTION_CONFIG);
-
-		actionableDynamicQuery.setInterval(_INTERVAL);
 
 		actionableDynamicQuery.performActions();
 

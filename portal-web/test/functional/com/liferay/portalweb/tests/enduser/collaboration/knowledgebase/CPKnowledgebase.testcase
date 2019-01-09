@@ -264,9 +264,9 @@ definition {
 		);
 
 		KBArticle.addCP(
+			assetTitle = "Blogs Entry Title",
+			assetType = "Blogs Entry",
 			kbArticleContent = "Knowledge Base Article Content",
-			kbArticleRelatedAssetTitle = "Blogs Entry Title",
-			kbArticleRelatedAssetType = "Blogs Entry",
 			kbArticleTitle = "Knowledge Base Article Title"
 		);
 

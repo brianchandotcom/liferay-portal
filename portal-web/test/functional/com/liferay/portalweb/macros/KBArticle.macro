@@ -151,14 +151,10 @@ definition {
 			);
 		}
 
-		if (isSet(kbArticleRelatedAssetType)) {
-			if (IsElementNotPresent(locator1 = "AssetRelatedAssets#HEADER_EXPANDED")) {
-				Click(locator1 = "AssetRelatedAssets#HEADER_COLLAPSED");
-			}
-
-			KBArticle.selectRelatedAssetCP(
-				kbArticleRelatedAssetTitle = "${kbArticleRelatedAssetTitle}",
-				kbArticleRelatedAssetType = "${kbArticleRelatedAssetType}"
+		if (isSet(assetType)) {
+			RelatedAssets.selectAsset(
+				assetTitle = "${assetTitle}",
+				assetType = "${assetType}"
 			);
 		}
 

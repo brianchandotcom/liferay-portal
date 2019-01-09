@@ -16,7 +16,6 @@ package com.liferay.portal.kernel.map;
 
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
-import com.liferay.portal.kernel.util.PredicateFilter;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -29,7 +28,7 @@ import org.junit.Test;
  * @author Manuel de la Peña
  * @author Péter Borkuti
  */
-public class MapUtilWhenFilteringByPredicateFilterTest {
+public class MapUtilWhenFilteringByPredicateTest {
 
 	@Test
 	public void testShouldAllowFilterBySuperType() {
@@ -42,19 +41,7 @@ public class MapUtilWhenFilteringByPredicateFilterTest {
 		inputMap.put("5", 5);
 
 		Map<String, Integer> outputMap = MapUtil.filterByValues(
-			inputMap,
-			new PredicateFilter<Number>() {
-
-				@Override
-				public boolean filter(Number number) {
-					if ((number.intValue() % 2) == 0) {
-						return true;
-					}
-
-					return false;
-				}
-
-			});
+			inputMap, number -> number.intValue() % 2 == 0);
 
 		Assert.assertEquals(outputMap.toString(), 2, outputMap.size());
 		Assert.assertEquals((Integer)2, outputMap.get("2"));
@@ -74,19 +61,7 @@ public class MapUtilWhenFilteringByPredicateFilterTest {
 		HashMap<String, Number> outputMap = new HashMap<>();
 
 		MapUtil.filter(
-			inputMap, outputMap,
-			new PredicateFilter<Map.Entry<?, Number>>() {
-
-				@Override
-				public boolean filter(Map.Entry<?, Number> entry) {
-					if ((entry.getValue().intValue() % 2) == 0) {
-						return true;
-					}
-
-					return false;
-				}
-
-			});
+			inputMap, outputMap, entry -> entry.getValue().intValue() % 2 == 0);
 
 		Assert.assertEquals(outputMap.toString(), 2, outputMap.size());
 		Assert.assertEquals(2, outputMap.get("2"));
@@ -104,21 +79,7 @@ public class MapUtilWhenFilteringByPredicateFilterTest {
 		inputMap.put("5", "five");
 
 		Map<String, String> outputMap = MapUtil.filter(
-			inputMap,
-			new PredicateFilter<Map.Entry<String, ?>>() {
-
-				@Override
-				public boolean filter(Map.Entry<String, ?> entry) {
-					int value = GetterUtil.getInteger(entry.getKey());
-
-					if ((value % 2) == 0) {
-						return true;
-					}
-
-					return false;
-				}
-
-			});
+			inputMap, entry -> GetterUtil.getInteger(entry.getKey()) % 2 == 0);
 
 		Assert.assertEquals(outputMap.toString(), 2, outputMap.size());
 		Assert.assertEquals("two", outputMap.get("2"));

@@ -25,6 +25,8 @@ import java.util.Map;
  */
 public interface BulkSelectionRunner {
 
+	public boolean isBusy(long userId);
+
 	public <T> void run(
 			BulkSelection<T> bulkSelection,
 			BulkSelectionAction<T> bulkSelectionAction,

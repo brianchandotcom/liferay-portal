@@ -26,7 +26,7 @@
 
 		&-no-preview {
 			background-color: $sidebarCardNoPreviewBackgroundColor;
-			color: $sidebarCardTitleColor;
+			color: $sidebarCardNoPreviewIconColor;
 			font-size: 24px;
 			height: 80px;
 			line-height: 80px;
@@ -76,6 +76,7 @@
 		background-color: transparent;
 
 		& a {
+			border-color: $sidebarCollapsiblePanelLineColor;
 			font-size: 12px;
 			margin-bottom: $sidebarCardMarginBottom;
 		}
@@ -84,7 +85,7 @@
 	&__title {
 		font-size: 18px;
 		font-weight: bold;
-		margin: 24px 0;
+		margin: 32px 0;
 	}
 
 	.fragments-editor__drag-handler {

@@ -27,7 +27,7 @@ import com.liferay.screens.service.base.ScreensRatingsEntryServiceBaseImpl;
 import java.util.List;
 
 /**
- * @author Alejandro Hernández Malillos
+ * @author Alejandro Hernández
  */
 public class ScreensRatingsEntryServiceImpl
 	extends ScreensRatingsEntryServiceBaseImpl {

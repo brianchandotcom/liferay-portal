@@ -37,7 +37,7 @@ import java.util.Date;
 import java.util.function.Function;
 
 /**
- * @author Alejandro Hernández Malillos
+ * @author Alejandro Hernández
  */
 public class ScreensCommentServiceImpl extends ScreensCommentServiceBaseImpl {
 

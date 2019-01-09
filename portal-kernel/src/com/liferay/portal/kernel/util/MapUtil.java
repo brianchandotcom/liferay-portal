@@ -38,32 +38,6 @@ public class MapUtil {
 		merge(master, copy);
 	}
 
-	public static <K> PredicateFilter<Map.Entry<K, ?>> entryKeyPredicateFilter(
-		final PredicateFilter<K> predicateFilter) {
-
-		return new PredicateFilter<Map.Entry<K, ?>>() {
-
-			@Override
-			public boolean filter(Map.Entry<K, ?> entry) {
-				return predicateFilter.filter(entry.getKey());
-			}
-
-		};
-	}
-
-	public static <V> PredicateFilter<Map.Entry<?, V>>
-		entryValuePredicateFilter(final PredicateFilter<V> predicateFilter) {
-
-		return new PredicateFilter<Map.Entry<?, V>>() {
-
-			@Override
-			public boolean filter(Map.Entry<?, V> entry) {
-				return predicateFilter.filter(entry.getValue());
-			}
-
-		};
-	}
-
 	public static <K1, V1, K2 extends K1, V2 extends V1> void filter(
 		Map<? extends K2, ? extends V2> inputMap,
 		Map<? super K2, ? super V2> outputMap,
@@ -95,13 +69,15 @@ public class MapUtil {
 		PredicateFilter<? super K> keyPredicateFilter) {
 
 		filter(
-			inputMap, outputMap, entryKeyPredicateFilter(keyPredicateFilter));
+			inputMap, outputMap,
+			entry -> keyPredicateFilter.filter(entry.getKey()));
 	}
 
 	public static <K, V> Map<K, V> filterByKeys(
 		Map<K, V> inputMap, PredicateFilter<? super K> keyPredicateFilter) {
 
-		return filter(inputMap, entryKeyPredicateFilter(keyPredicateFilter));
+		return filter(
+			inputMap, entry -> keyPredicateFilter.filter(entry.getKey()));
 	}
 
 	public static <K, V> void filterByValues(
@@ -111,13 +87,14 @@ public class MapUtil {
 
 		filter(
 			inputMap, outputMap,
-			entryValuePredicateFilter(valuePredicateFilter));
+			entry -> valuePredicateFilter.filter(entry.getValue()));
 	}
 
 	public static <K, V> Map<K, V> filterByValues(
-		Map<K, V> inputMap, PredicateFilter<? super V> keyPredicateFilter) {
+		Map<K, V> inputMap, PredicateFilter<? super V> valuePredicateFilter) {
 
-		return filter(inputMap, entryValuePredicateFilter(keyPredicateFilter));
+		return filter(
+			inputMap, entry -> valuePredicateFilter.filter(entry.getValue()));
 	}
 
 	public static <T> Map<T, T> fromArray(T... array) {

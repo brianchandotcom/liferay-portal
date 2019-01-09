@@ -15,25 +15,24 @@
 package com.liferay.portal.workflow.web.internal.util.filter;
 
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.util.PredicateFilter;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.workflow.web.internal.search.WorkflowDefinitionLinkSearchEntry;
 
+import java.util.function.Predicate;
+
 /**
  * @author Marcellus Tavares
  */
-public class WorkflowDefinitionLinkSearchEntryResourcePredicateFilter
-	implements PredicateFilter<WorkflowDefinitionLinkSearchEntry> {
+public class WorkflowDefinitionLinkSearchEntryLabelPredicate
+	implements Predicate<WorkflowDefinitionLinkSearchEntry> {
 
-	public WorkflowDefinitionLinkSearchEntryResourcePredicateFilter(
-		String keywords) {
-
+	public WorkflowDefinitionLinkSearchEntryLabelPredicate(String keywords) {
 		_keywords = keywords;
 	}
 
 	@Override
-	public boolean filter(
+	public boolean test(
 		WorkflowDefinitionLinkSearchEntry workflowDefinitionLinkSearchEntry) {
 
 		if (Validator.isNull(_keywords)) {
@@ -47,8 +46,8 @@ public class WorkflowDefinitionLinkSearchEntryResourcePredicateFilter
 		}
 
 		return StringUtil.containsIgnoreCase(
-			workflowDefinitionLinkSearchEntry.getResource(), _keywords,
-			delimiter);
+			workflowDefinitionLinkSearchEntry.getWorkflowDefinitionLabel(),
+			_keywords, delimiter);
 	}
 
 	private final String _keywords;

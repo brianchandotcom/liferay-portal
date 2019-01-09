@@ -33,7 +33,6 @@ import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.AggregatePredicateFilter;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -57,8 +56,8 @@ import com.liferay.portal.workflow.web.internal.search.WorkflowDefinitionLinkSea
 import com.liferay.portal.workflow.web.internal.search.WorkflowDefinitionLinkSearchEntry;
 import com.liferay.portal.workflow.web.internal.search.WorkflowDefinitionLinkSearchTerms;
 import com.liferay.portal.workflow.web.internal.util.WorkflowDefinitionLinkPortletUtil;
-import com.liferay.portal.workflow.web.internal.util.filter.WorkflowDefinitionLinkSearchEntryLabelPredicateFilter;
-import com.liferay.portal.workflow.web.internal.util.filter.WorkflowDefinitionLinkSearchEntryResourcePredicateFilter;
+import com.liferay.portal.workflow.web.internal.util.filter.WorkflowDefinitionLinkSearchEntryLabelPredicate;
+import com.liferay.portal.workflow.web.internal.util.filter.WorkflowDefinitionLinkSearchEntryResourcePredicate;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -68,6 +67,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.ResourceBundle;
 import java.util.function.Consumer;
+import java.util.function.Predicate;
 
 import javax.portlet.PortletException;
 import javax.portlet.PortletURL;
@@ -493,28 +493,24 @@ public class WorkflowDefinitionLinkDisplayContext {
 		return false;
 	}
 
-	protected PredicateFilter<WorkflowDefinitionLinkSearchEntry>
-		createPredicateFilter(
-			String resource, String workflowDefinitionLabel,
-			boolean andOperator) {
+	protected Predicate<WorkflowDefinitionLinkSearchEntry> createPredicate(
+		String resource, String workflowDefinitionLabel, boolean andOperator) {
 
-		AggregatePredicateFilter<WorkflowDefinitionLinkSearchEntry>
-			aggregatePredicateFilter = new AggregatePredicateFilter<>(
-				new WorkflowDefinitionLinkSearchEntryResourcePredicateFilter(
-					resource));
+		Predicate<WorkflowDefinitionLinkSearchEntry> predicate =
+			new WorkflowDefinitionLinkSearchEntryResourcePredicate(resource);
 
 		if (andOperator) {
-			aggregatePredicateFilter.and(
-				new WorkflowDefinitionLinkSearchEntryLabelPredicateFilter(
+			predicate = predicate.and(
+				new WorkflowDefinitionLinkSearchEntryLabelPredicate(
 					workflowDefinitionLabel));
 		}
 		else {
-			aggregatePredicateFilter.or(
-				new WorkflowDefinitionLinkSearchEntryLabelPredicateFilter(
+			predicate = predicate.or(
+				new WorkflowDefinitionLinkSearchEntryLabelPredicate(
 					workflowDefinitionLabel));
 		}
 
-		return aggregatePredicateFilter;
+		return predicate;
 	}
 
 	protected WorkflowDefinitionLinkSearchEntry
@@ -563,12 +559,13 @@ public class WorkflowDefinitionLinkDisplayContext {
 			return workflowDefinitionLinkSearchEntries;
 		}
 
-		PredicateFilter<WorkflowDefinitionLinkSearchEntry> predicateFilter =
-			createPredicateFilter(
-				resource, workflowDefinitionLabel, andOperator);
+		Predicate<WorkflowDefinitionLinkSearchEntry> predicate =
+			createPredicate(resource, workflowDefinitionLabel, andOperator);
 
 		return ListUtil.filter(
-			workflowDefinitionLinkSearchEntries, predicateFilter);
+			workflowDefinitionLinkSearchEntries,
+			workflowDefinitionLinkSearchEntry -> predicate.test(
+				workflowDefinitionLinkSearchEntry));
 	}
 
 	protected String getPortletName() {

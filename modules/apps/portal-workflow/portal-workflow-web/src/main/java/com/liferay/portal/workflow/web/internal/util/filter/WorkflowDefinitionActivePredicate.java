@@ -14,38 +14,33 @@
 
 package com.liferay.portal.workflow.web.internal.util.filter;
 
-import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.util.PredicateFilter;
-import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowDefinition;
+import com.liferay.portal.workflow.web.internal.constants.WorkflowDefinitionConstants;
+
+import java.util.function.Predicate;
 
 /**
  * @author Adam Brandizzi
  */
-public class WorkflowDefinitionDescriptionPredicateFilter
-	implements PredicateFilter<WorkflowDefinition> {
+public class WorkflowDefinitionActivePredicate
+	implements Predicate<WorkflowDefinition> {
 
-	public WorkflowDefinitionDescriptionPredicateFilter(String keywords) {
-		_keywords = keywords;
+	public WorkflowDefinitionActivePredicate(int status) {
+		_status = status;
 	}
 
 	@Override
-	public boolean filter(WorkflowDefinition workflowDefinition) {
-		if (Validator.isNull(_keywords)) {
+	public boolean test(WorkflowDefinition workflowDefinition) {
+		if (_status == WorkflowDefinitionConstants.STATUS_ALL) {
 			return true;
 		}
-
-		String delimiter = StringPool.SPACE;
-
-		if (!StringUtil.contains(_keywords, StringPool.SPACE)) {
-			delimiter = StringPool.BLANK;
+		else if (_status == WorkflowDefinitionConstants.STATUS_PUBLISHED) {
+			return workflowDefinition.isActive();
 		}
 
-		return StringUtil.containsIgnoreCase(
-			workflowDefinition.getDescription(), _keywords, delimiter);
+		return !workflowDefinition.isActive();
 	}
 
-	private final String _keywords;
+	private final int _status;
 
 }

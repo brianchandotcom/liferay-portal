@@ -26,8 +26,8 @@ public class WorkflowDefinitionDescriptionPredicateFilterTest {
 
 	@Test
 	public void testFilterWithoutSpace1() {
-		WorkflowDefinitionDescriptionPredicateFilter filter =
-			new WorkflowDefinitionDescriptionPredicateFilter("Default");
+		WorkflowDefinitionDescriptionPredicate filter =
+			new WorkflowDefinitionDescriptionPredicate("Default");
 
 		WorkflowDefinition workflowDefinition = new WorkflowDefinitionImpl(
 			null, "Single Approver", "Default Single Approver");
@@ -39,8 +39,8 @@ public class WorkflowDefinitionDescriptionPredicateFilterTest {
 
 	@Test
 	public void testFilterWithoutSpace2() {
-		WorkflowDefinitionDescriptionPredicateFilter filter =
-			new WorkflowDefinitionDescriptionPredicateFilter("Def");
+		WorkflowDefinitionDescriptionPredicate filter =
+			new WorkflowDefinitionDescriptionPredicate("Def");
 
 		WorkflowDefinition workflowDefinition = new WorkflowDefinitionImpl(
 			null, "Single Approver", "Default Single Approver");
@@ -52,8 +52,8 @@ public class WorkflowDefinitionDescriptionPredicateFilterTest {
 
 	@Test
 	public void testFilterWithoutSpace3() {
-		WorkflowDefinitionDescriptionPredicateFilter filter =
-			new WorkflowDefinitionDescriptionPredicateFilter("Approver");
+		WorkflowDefinitionDescriptionPredicate filter =
+			new WorkflowDefinitionDescriptionPredicate("Approver");
 
 		WorkflowDefinition workflowDefinition = new WorkflowDefinitionImpl(
 			null, "A Different Definition", "Not that one");
@@ -65,8 +65,8 @@ public class WorkflowDefinitionDescriptionPredicateFilterTest {
 
 	@Test
 	public void testFilterWithSpace1() {
-		WorkflowDefinitionDescriptionPredicateFilter filter =
-			new WorkflowDefinitionDescriptionPredicateFilter("Single Approver");
+		WorkflowDefinitionDescriptionPredicate filter =
+			new WorkflowDefinitionDescriptionPredicate("Single Approver");
 
 		WorkflowDefinition workflowDefinition = new WorkflowDefinitionImpl(
 			null, "Single Approver Definition",
@@ -79,8 +79,8 @@ public class WorkflowDefinitionDescriptionPredicateFilterTest {
 
 	@Test
 	public void testFilterWithSpace2() {
-		WorkflowDefinitionDescriptionPredicateFilter filter =
-			new WorkflowDefinitionDescriptionPredicateFilter("Single Approver");
+		WorkflowDefinitionDescriptionPredicate filter =
+			new WorkflowDefinitionDescriptionPredicate("Single Approver");
 
 		WorkflowDefinition workflowDefinition = new WorkflowDefinitionImpl(
 			null, "A Different Definition", "Not that one");

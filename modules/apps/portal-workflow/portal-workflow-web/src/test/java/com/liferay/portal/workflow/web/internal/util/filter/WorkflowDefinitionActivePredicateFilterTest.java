@@ -27,8 +27,8 @@ public class WorkflowDefinitionActivePredicateFilterTest {
 
 	@Test
 	public void testFilterAllIncludeActive() {
-		WorkflowDefinitionActivePredicateFilter filter =
-			new WorkflowDefinitionActivePredicateFilter(
+		WorkflowDefinitionActivePredicate filter =
+			new WorkflowDefinitionActivePredicate(
 				WorkflowDefinitionConstants.STATUS_ALL);
 
 		WorkflowDefinition workflowDefinition = new WorkflowDefinitionImpl(
@@ -41,8 +41,8 @@ public class WorkflowDefinitionActivePredicateFilterTest {
 
 	@Test
 	public void testFilterAllIncludeInactive() {
-		WorkflowDefinitionActivePredicateFilter filter =
-			new WorkflowDefinitionActivePredicateFilter(
+		WorkflowDefinitionActivePredicate filter =
+			new WorkflowDefinitionActivePredicate(
 				WorkflowDefinitionConstants.STATUS_ALL);
 
 		WorkflowDefinition workflowDefinition = new WorkflowDefinitionImpl(
@@ -55,8 +55,8 @@ public class WorkflowDefinitionActivePredicateFilterTest {
 
 	@Test
 	public void testFilterNotPublishedExcludeActive() {
-		WorkflowDefinitionActivePredicateFilter filter =
-			new WorkflowDefinitionActivePredicateFilter(
+		WorkflowDefinitionActivePredicate filter =
+			new WorkflowDefinitionActivePredicate(
 				WorkflowDefinitionConstants.STATUS_NOT_PUBLISHED);
 
 		WorkflowDefinition workflowDefinition = new WorkflowDefinitionImpl(
@@ -69,8 +69,8 @@ public class WorkflowDefinitionActivePredicateFilterTest {
 
 	@Test
 	public void testFilterNotPublishedIncludeInactive() {
-		WorkflowDefinitionActivePredicateFilter filter =
-			new WorkflowDefinitionActivePredicateFilter(
+		WorkflowDefinitionActivePredicate filter =
+			new WorkflowDefinitionActivePredicate(
 				WorkflowDefinitionConstants.STATUS_NOT_PUBLISHED);
 
 		WorkflowDefinition workflowDefinition = new WorkflowDefinitionImpl(
@@ -83,8 +83,8 @@ public class WorkflowDefinitionActivePredicateFilterTest {
 
 	@Test
 	public void testFilterPublishedExcludeInactive() {
-		WorkflowDefinitionActivePredicateFilter filter =
-			new WorkflowDefinitionActivePredicateFilter(
+		WorkflowDefinitionActivePredicate filter =
+			new WorkflowDefinitionActivePredicate(
 				WorkflowDefinitionConstants.STATUS_PUBLISHED);
 
 		WorkflowDefinition workflowDefinition = new WorkflowDefinitionImpl(
@@ -97,8 +97,8 @@ public class WorkflowDefinitionActivePredicateFilterTest {
 
 	@Test
 	public void testFilterPublishedIncludeActive() {
-		WorkflowDefinitionActivePredicateFilter filter =
-			new WorkflowDefinitionActivePredicateFilter(
+		WorkflowDefinitionActivePredicate filter =
+			new WorkflowDefinitionActivePredicate(
 				WorkflowDefinitionConstants.STATUS_PUBLISHED);
 
 		WorkflowDefinition workflowDefinition = new WorkflowDefinitionImpl(

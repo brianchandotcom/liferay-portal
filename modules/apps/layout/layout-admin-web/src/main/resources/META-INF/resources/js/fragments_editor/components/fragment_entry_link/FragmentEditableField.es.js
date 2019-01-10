@@ -63,6 +63,7 @@ class FragmentEditableField extends Component {
 	 */
 	created() {
 		this._handleBeforeNavigate = this._handleBeforeNavigate.bind(this);
+		this._handleBeforeUnload = this._handleBeforeUnload.bind(this);
 		this._handleEditableChanged = this._handleEditableChanged.bind(this);
 		this._handleEditableDestroyed = this._handleEditableDestroyed.bind(this);
 
@@ -70,6 +71,8 @@ class FragmentEditableField extends Component {
 			'beforeNavigate',
 			this._handleBeforeNavigate
 		);
+
+		window.addEventListener('beforeunload', this._handleBeforeUnload);
 	}
 
 	/**
@@ -80,6 +83,8 @@ class FragmentEditableField extends Component {
 		clearTimeout(this._saveChangesTimeout);
 
 		this._destroyProcessors();
+
+		window.removeEventListener('beforeunload', this._handleBeforeUnload);
 	}
 
 	/**
@@ -209,13 +214,38 @@ class FragmentEditableField extends Component {
 	 * @private
 	 * @review
 	 */
-	_handleBeforeNavigate() {
-		if (this._beforeNavigateHandler) {
-			this._beforeNavigateHandler.detach();
-			this._beforeNavigateHandler = null;
+	_handleBeforeNavigate(event) {
+		if (this._unsavedChanges) {
+			const msg = Liferay.Language.get('do-you-want-to-leave-this-site');
+
+			if (!confirm(msg)) {
+				event.originalEvent.preventDefault();
+			}
+		}
+		else {
+			if (this._beforeNavigateHandler) {
+				this._beforeNavigateHandler.detach();
+				this._beforeNavigateHandler = null;
+			}
+
+			this._destroyProcessors();
+		}
+	}
+
+	/**
+	 * Handle beforeunload event and show confirmation dialog
+	 * if there are unsaved changes
+	 * @private
+	 * @review
+	 */
+	_handleBeforeUnload(event) {
+		const confirmationMessage = '';
+
+		if (this._unsavedChanges) {
+			event.returnValue = confirmationMessage;
 		}
 
-		this._destroyProcessors();
+		return confirmationMessage;
 	}
 
 	/**

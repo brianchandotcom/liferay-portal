@@ -1290,7 +1290,7 @@ definition {
 		DMDocument.viewAllPG(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentTitle = "DM Document Title",
-			dmDocumentVersionNumber = "2.0"
+			dmDocumentVersionNumber = "3.0"
 		);
 	}
 

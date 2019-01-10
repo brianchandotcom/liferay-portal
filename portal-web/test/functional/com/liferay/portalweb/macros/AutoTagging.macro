@@ -35,7 +35,7 @@ definition {
 			);
 
 			Navigator.gotoNavTab(navTab = "Asset Auto Tagging");
-			
+
 			Uncheck(locator1 = "Checkbox#ENABLE_AUTO_TAGGING");
 		}
 
@@ -76,7 +76,7 @@ definition {
 
 			FormFields.enableCheckbox(fieldName = "enabled");
 		}
-		
+
 		else if ("${enableAutoTaggingFor}" == "Instance Settings") {
 			ProductMenu.gotoPortlet(
 				category = "Configuration",

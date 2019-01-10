@@ -57,7 +57,7 @@ definition {
 
 		Site.addBlankCP(siteName = "Site AutoTag Disabled");
 
-			ProductMenu.gotoPortlet(
+		ProductMenu.gotoPortlet(
 			category = "Build",
 			panel = "Site Administration",
 			portlet = "Pages"

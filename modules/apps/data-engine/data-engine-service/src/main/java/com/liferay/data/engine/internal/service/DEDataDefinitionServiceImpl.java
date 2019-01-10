@@ -172,6 +172,9 @@ public class DEDataDefinitionServiceImpl implements DEDataDefinitionService {
 			throw new DEDataDefinitionException.MustHavePermission(
 				mhp.actionId, mhp);
 		}
+		catch (PrincipalException pe) {
+			throw new DEDataDefinitionException.PrincipalException(pe);
+		}
 		catch (DEDataDefinitionException dedde) {
 			throw dedde;
 		}

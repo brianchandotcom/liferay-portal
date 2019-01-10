@@ -167,9 +167,17 @@ public class JournalEditDDMStructuresDisplayContext {
 			return _parentDDMStructureId;
 		}
 
-		_parentDDMStructureId = BeanParamUtil.getLong(
-			getDDMStructure(), _request, "parentDDMStructureId",
-			DDMStructureConstants.DEFAULT_PARENT_STRUCTURE_ID);
+		long defaultParentDDMStructureId =
+			DDMStructureConstants.DEFAULT_PARENT_STRUCTURE_ID;
+
+		DDMStructure ddmStructure = getDDMStructure();
+
+		if (ddmStructure != null) {
+			defaultParentDDMStructureId = ddmStructure.getParentStructureId();
+		}
+
+		_parentDDMStructureId = ParamUtil.getLong(
+			_request, "parentDDMStructureId", defaultParentDDMStructureId);
 
 		return _parentDDMStructureId;
 	}

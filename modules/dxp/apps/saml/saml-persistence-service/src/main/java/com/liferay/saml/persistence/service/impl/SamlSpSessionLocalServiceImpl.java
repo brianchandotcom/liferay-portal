@@ -33,10 +33,11 @@ public class SamlSpSessionLocalServiceImpl
 
 	@Override
 	public SamlSpSession addSamlSpSession(
-			String samlSpSessionKey, String assertionXml, String jSessionId,
-			String nameIdFormat, String nameIdNameQualifier,
-			String nameIdSPNameQualifier, String nameIdValue,
-			String sessionIndex, ServiceContext serviceContext)
+			String samlSpSessionKey, String samlIdpEntityId,
+			String assertionXml, String jSessionId, String nameIdFormat,
+			String nameIdNameQualifier, String nameIdSPNameQualifier,
+			String nameIdValue, String sessionIndex,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		User user = userLocalService.getUserById(serviceContext.getUserId());
@@ -54,6 +55,7 @@ public class SamlSpSessionLocalServiceImpl
 		samlSpSession.setCreateDate(now);
 		samlSpSession.setModifiedDate(now);
 		samlSpSession.setSamlSpSessionKey(samlSpSessionKey);
+		samlSpSession.setSamlIdpEntityId(samlIdpEntityId);
 		samlSpSession.setAssertionXml(assertionXml);
 		samlSpSession.setJSessionId(jSessionId);
 		samlSpSession.setNameIdFormat(nameIdFormat);
@@ -140,8 +142,9 @@ public class SamlSpSessionLocalServiceImpl
 
 	@Override
 	public SamlSpSession updateSamlSpSession(
-			long samlSpSessionId, String samlSpSessionKey, String assertionXml,
-			String jSessionId, String nameIdFormat, String nameIdNameQualifier,
+			long samlSpSessionId, String samlSpSessionKey,
+			String samlIdpEntityId, String assertionXml, String jSessionId,
+			String nameIdFormat, String nameIdNameQualifier,
 			String nameIdSPNameQualifier, String nameIdValue,
 			String sessionIndex, ServiceContext serviceContext)
 		throws PortalException {
@@ -156,6 +159,7 @@ public class SamlSpSessionLocalServiceImpl
 		samlSpSession.setUserName(user.getFullName());
 		samlSpSession.setModifiedDate(new Date());
 		samlSpSession.setSamlSpSessionKey(samlSpSessionKey);
+		samlSpSession.setSamlIdpEntityId(samlIdpEntityId);
 		samlSpSession.setAssertionXml(assertionXml);
 		samlSpSession.setJSessionId(jSessionId);
 		samlSpSession.setNameIdFormat(nameIdFormat);

@@ -265,11 +265,6 @@
 	<td>//a[@data-title='Select ${key_assetType}']</td>
 	<td></td>
 </tr>
-<tr>
-	<td>ASSET_SELECTION_MANUAL_ASSET_ENTRIES_SELECT_CONTENT_LINK</td>
-	<td>//a[@data-assettitle='${key_assetTitle}']</td>
-	<td></td>
-</tr>
 </tbody>
 </table>
 </body>

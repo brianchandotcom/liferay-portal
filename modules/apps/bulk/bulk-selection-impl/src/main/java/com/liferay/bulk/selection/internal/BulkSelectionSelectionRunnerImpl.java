@@ -25,7 +25,7 @@ import com.liferay.portal.kernel.backgroundtask.BackgroundTaskConstants;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskManager;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.CompanyConstants;
-import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 
 import java.io.Serializable;
@@ -45,13 +45,15 @@ import org.osgi.service.component.annotations.Reference;
 public class BulkSelectionSelectionRunnerImpl implements BulkSelectionRunner {
 
 	@Override
-	public boolean isBusy(long userId) {
+	public boolean isBusy(User user) {
 		List<BackgroundTask> backgroundTasks =
 			_backgroundTaskManager.getBackgroundTasks(
 				BulkSelectionBackgroundTaskExecutor.class.getName(),
 				BackgroundTaskConstants.STATUS_IN_PROGRESS);
 
 		Stream<BackgroundTask> stream = backgroundTasks.stream();
+
+		long userId = user.getUserId();
 
 		if (stream.anyMatch(
 				backgroundTask -> backgroundTask.getUserId() == userId)) {
@@ -64,7 +66,7 @@ public class BulkSelectionSelectionRunnerImpl implements BulkSelectionRunner {
 
 	@Override
 	public <T> void run(
-			BulkSelection<T> bulkSelection,
+			User user, BulkSelection<T> bulkSelection,
 			BulkSelectionAction<T> bulkSelectionAction,
 			Map<String, Serializable> inputMap)
 		throws PortalException {
@@ -99,7 +101,7 @@ public class BulkSelectionSelectionRunnerImpl implements BulkSelectionRunner {
 			BackgroundTaskContextMapConstants.DELETE_ON_SUCCESS, true);
 
 		_backgroundTaskManager.addBackgroundTask(
-			PrincipalThreadLocal.getUserId(), CompanyConstants.SYSTEM,
+			user.getUserId(), CompanyConstants.SYSTEM,
 			bulkSelectionActionClass.getName(),
 			BulkSelectionBackgroundTaskExecutor.class.getName(), taskContextMap,
 			new ServiceContext());

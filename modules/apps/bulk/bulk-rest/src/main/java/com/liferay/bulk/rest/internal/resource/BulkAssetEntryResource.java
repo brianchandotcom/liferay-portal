@@ -131,7 +131,7 @@ public class BulkAssetEntryResource {
 			bulkAssetEntryUpdateTagsActionModel.getParameterMap());
 
 		_bulkSelectionRunner.run(
-			bulkSelection, _editTagsBulkSelectionAction,
+			user, bulkSelection, _editTagsBulkSelectionAction,
 			new HashMap<String, Serializable>() {
 				{
 					put(
@@ -144,7 +144,6 @@ public class BulkAssetEntryResource {
 						"toRemoveTagNames",
 						bulkAssetEntryUpdateTagsActionModel.
 							getToRemoveTagNames());
-					put("userId", user.getUserId());
 				}
 			});
 

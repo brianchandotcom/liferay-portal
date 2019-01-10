@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.backgroundtask.BaseBackgroundTaskExecutor;
 import com.liferay.portal.kernel.backgroundtask.display.BackgroundTaskDisplay;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.service.UserLocalService;
 
 import java.io.Serializable;
 
@@ -38,6 +39,7 @@ import org.osgi.framework.InvalidSyntaxException;
 import org.osgi.framework.ServiceReference;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Adolfo Pérez
@@ -97,6 +99,8 @@ public class BulkSelectionBackgroundTaskExecutor
 										BULK_SELECTION_ACTION_INPUT_MAP);
 
 							bulkSelectionAction.execute(
+								_userLocalService.getUser(
+									backgroundTask.getUserId()),
 								bulkSelectionFactory.create(parameterMap),
 								inputMap);
 						}
@@ -147,5 +151,8 @@ public class BulkSelectionBackgroundTaskExecutor
 		BulkSelectionBackgroundTaskExecutor.class);
 
 	private BundleContext _bundleContext;
+
+	@Reference
+	private UserLocalService _userLocalService;
 
 }

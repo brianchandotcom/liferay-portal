@@ -17,6 +17,7 @@ package com.liferay.bulk.selection.test.util;
 import com.liferay.bulk.selection.BulkSelection;
 import com.liferay.bulk.selection.BulkSelectionAction;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.util.MapUtil;
 
 import java.io.Serializable;
@@ -38,7 +39,7 @@ public class TestBulkSelectionAction implements BulkSelectionAction<Integer> {
 
 	@Override
 	public void execute(
-			BulkSelection<Integer> bulkSelection,
+			User user, BulkSelection<Integer> bulkSelection,
 			Map<String, Serializable> inputMap)
 		throws PortalException {
 

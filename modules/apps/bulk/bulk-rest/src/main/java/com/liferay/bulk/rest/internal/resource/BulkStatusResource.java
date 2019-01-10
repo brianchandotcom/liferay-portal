@@ -44,8 +44,7 @@ public class BulkStatusResource {
 	@Path("/status")
 	@Produces(ContentTypes.APPLICATION_JSON)
 	public BulkStatusModel getBulkStatusModel(@Context User user) {
-		return new BulkStatusModel(
-			_bulkSelectionRunner.isBusy(user.getUserId()));
+		return new BulkStatusModel(_bulkSelectionRunner.isBusy(user));
 	}
 
 	@Reference

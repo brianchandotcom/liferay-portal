@@ -17,7 +17,7 @@ package com.liferay.bulk.selection.test.util;
 import com.liferay.bulk.selection.BulkSelection;
 import com.liferay.bulk.selection.BulkSelectionAction;
 import com.liferay.bulk.selection.BulkSelectionRunner;
-import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.model.User;
 
 import java.io.Serializable;
 
@@ -39,11 +39,10 @@ public class TestBusyBulkSelectionAction
 
 	@Override
 	public void execute(
-		BulkSelection<Integer> bulkSelection,
+		User user, BulkSelection<Integer> bulkSelection,
 		Map<String, Serializable> inputMap) {
 
-		Assert.assertTrue(
-			_bulkSelectionRunner.isBusy(MapUtil.getLong(inputMap, "userId")));
+		Assert.assertTrue(_bulkSelectionRunner.isBusy(user));
 	}
 
 	@Reference

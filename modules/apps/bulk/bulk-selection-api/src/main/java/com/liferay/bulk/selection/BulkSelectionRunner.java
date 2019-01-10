@@ -15,6 +15,7 @@
 package com.liferay.bulk.selection;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.User;
 
 import java.io.Serializable;
 
@@ -25,10 +26,10 @@ import java.util.Map;
  */
 public interface BulkSelectionRunner {
 
-	public boolean isBusy(long userId);
+	public boolean isBusy(User user);
 
 	public <T> void run(
-			BulkSelection<T> bulkSelection,
+			User user, BulkSelection<T> bulkSelection,
 			BulkSelectionAction<T> bulkSelectionAction,
 			Map<String, Serializable> inputMap)
 		throws PortalException;

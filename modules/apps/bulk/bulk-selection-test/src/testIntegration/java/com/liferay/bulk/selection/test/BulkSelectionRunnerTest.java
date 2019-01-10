@@ -19,7 +19,7 @@ import com.liferay.bulk.selection.BulkSelectionRunner;
 import com.liferay.bulk.selection.test.util.TestBulkSelectionAction;
 import com.liferay.bulk.selection.test.util.TestBulkSelectionFactory;
 import com.liferay.bulk.selection.test.util.TestBusyBulkSelectionAction;
-import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -50,21 +50,15 @@ public class BulkSelectionRunnerTest {
 	@Sync
 	@Test
 	public void testIsBusyWhenActionsAreRunning() throws Exception {
-		long userId = TestPropsValues.getUserId();
+		User user = TestPropsValues.getUser();
 
-		PrincipalThreadLocal.setName(userId);
-
-		Assert.assertFalse(_bulkSelectionRunner.isBusy(userId));
-
-		HashMap<String, Serializable> inputMap = new HashMap<>();
-
-		inputMap.put("userId", userId);
+		Assert.assertFalse(_bulkSelectionRunner.isBusy(user));
 
 		_bulkSelectionRunner.run(
-			_testBulkSelectionFactory.create(new HashMap<>()),
-			_testBusyBulkSelectionAction, inputMap);
+			user, _testBulkSelectionFactory.create(new HashMap<>()),
+			_testBusyBulkSelectionAction, new HashMap<>());
 
-		Assert.assertFalse(_bulkSelectionRunner.isBusy(userId));
+		Assert.assertFalse(_bulkSelectionRunner.isBusy(user));
 	}
 
 	@Test
@@ -78,6 +72,7 @@ public class BulkSelectionRunnerTest {
 		inputMap.put("integer", 10);
 
 		_bulkSelectionRunner.run(
+			TestPropsValues.getUser(),
 			_testBulkSelectionFactory.create(parameterMap),
 			_testBulkSelectionAction, inputMap);
 

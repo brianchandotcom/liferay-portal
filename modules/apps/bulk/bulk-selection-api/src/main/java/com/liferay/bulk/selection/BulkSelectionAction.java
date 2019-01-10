@@ -14,6 +14,8 @@
 
 package com.liferay.bulk.selection;
 
+import com.liferay.portal.kernel.model.User;
+
 import java.io.Serializable;
 
 import java.util.Map;
@@ -24,7 +26,8 @@ import java.util.Map;
 public interface BulkSelectionAction<T> {
 
 	public void execute(
-			BulkSelection<T> bulkSelection, Map<String, Serializable> inputMap)
+			User user, BulkSelection<T> bulkSelection,
+			Map<String, Serializable> inputMap)
 		throws Exception;
 
 }

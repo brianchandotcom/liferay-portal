@@ -16,7 +16,6 @@ package com.liferay.document.library.preview.video.internal;
 
 import com.liferay.document.library.kernel.util.VideoProcessorUtil;
 import com.liferay.document.library.preview.DLPreviewRendererProvider;
-import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 
 import java.util.Dictionary;
@@ -51,7 +50,7 @@ public class VideoDLPreviewRendererProviderFactory {
 			bundleContext.registerService(
 				DLPreviewRendererProvider.class,
 				new VideoDLPreviewRendererProvider(
-					_npmResolver, _servletContext),
+					_servletContext),
 				properties);
 	}
 
@@ -62,9 +61,6 @@ public class VideoDLPreviewRendererProviderFactory {
 
 	private ServiceRegistration<DLPreviewRendererProvider>
 		_dlPreviewRendererProviderServiceRegistration;
-
-	@Reference
-	private NPMResolver _npmResolver;
 
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.document.library.preview.video)"

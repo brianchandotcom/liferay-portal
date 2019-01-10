@@ -47,7 +47,7 @@ if (fragmentEntryLink == null) {
 
 				<soy:component-renderer
 					context="<%= fragmentEntryDisplayContext.getSoyContext() %>"
-					module="fragment-display-web/js/FragmentEntryDisplay.es"
+					module='<%= npmResolvedPackageName + "/js/FragmentEntryDisplay.es" %>'
 					templateNamespace="com.liferay.fragment.display.web.FragmentEntryDisplay.render"
 				/>
 			</c:when>

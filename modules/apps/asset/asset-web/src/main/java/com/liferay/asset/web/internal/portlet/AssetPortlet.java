@@ -17,14 +17,19 @@ package com.liferay.asset.web.internal.portlet;
 import com.liferay.asset.constants.AssetPortletKeys;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
-import com.liferay.asset.util.AssetEntryUsageHelper;
+import com.liferay.asset.util.AssetEntryUsageChecker;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.io.IOException;
+
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 import javax.portlet.Portlet;
 import javax.portlet.PortletException;
@@ -33,6 +38,9 @@ import javax.portlet.RenderResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferenceCardinality;
+import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Jürgen Kappler
@@ -69,8 +77,11 @@ public class AssetPortlet extends MVCPortlet {
 			assetEntryId);
 
 		try {
-			if (assetEntry != null) {
-				_assetEntryUsageHelper.checkAssetEntryUsages(assetEntry);
+			AssetEntryUsageChecker assetEntryUsageChecker =
+				_assetEntryUsageCheckers.get(assetEntry.getClassName());
+
+			if (assetEntryUsageChecker != null) {
+				assetEntryUsageChecker.checkAssetEntryUsages(assetEntry);
 			}
 		}
 		catch (PortalException pe) {
@@ -85,12 +96,45 @@ public class AssetPortlet extends MVCPortlet {
 		super.render(renderRequest, renderResponse);
 	}
 
+	@Reference(
+		cardinality = ReferenceCardinality.MULTIPLE,
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY
+	)
+	protected void addAssetEntryUsageChecker(
+		AssetEntryUsageChecker assetEntryUsageChecker,
+		Map<String, Object> properties) {
+
+		String modelClassName = GetterUtil.getString(
+			properties.get("model.class.name"));
+
+		if (Validator.isNull(modelClassName)) {
+			return;
+		}
+
+		_assetEntryUsageCheckers.put(modelClassName, assetEntryUsageChecker);
+	}
+
+	protected void removeAssetEntryUsageChecker(
+		AssetEntryUsageChecker assetEntryUsageChecker,
+		Map<String, Object> properties) {
+
+		String modelClassName = GetterUtil.getString(
+			properties.get("model.class.name"));
+
+		if (Validator.isNull(modelClassName)) {
+			return;
+		}
+
+		_assetEntryUsageCheckers.remove(modelClassName);
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(AssetPortlet.class);
 
 	@Reference
 	private AssetEntryLocalService _assetEntryLocalService;
 
-	@Reference
-	private AssetEntryUsageHelper _assetEntryUsageHelper;
+	private final Map<String, AssetEntryUsageChecker> _assetEntryUsageCheckers =
+		new ConcurrentHashMap<>();
 
 }

@@ -92,9 +92,8 @@ public class PollerRequestHandlerImpl
 			return null;
 		}
 
-		String normalizedPath = HttpUtil.normalizePath(request.getPathInfo());
-
-		boolean receiveRequest = isReceiveRequest(normalizedPath);
+		boolean receiveRequest = isReceiveRequest(
+			HttpUtil.normalizePath(request.getPathInfo()));
 
 		String pollerSessionId = getPollerSessionId(pollerHeader);
 

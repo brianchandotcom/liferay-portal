@@ -417,15 +417,6 @@ public class FragmentsEditorDisplayContext {
 
 		availableSoyContext = SoyContextFactoryUtil.createSoyContext();
 
-		availableSoyContext.put("icon", "page-template");
-		availableSoyContext.put(
-			"label", LanguageUtil.get(_themeDisplay.getLocale(), "layouts"));
-		availableSoyContext.put("panelId", "layouts");
-
-		soyContexts.add(availableSoyContext);
-
-		availableSoyContext = SoyContextFactoryUtil.createSoyContext();
-
 		availableSoyContext.put("icon", "pages-tree");
 		availableSoyContext.put(
 			"label", LanguageUtil.get(_themeDisplay.getLocale(), "structure"));

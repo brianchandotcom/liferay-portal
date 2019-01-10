@@ -69,7 +69,7 @@ public class LiferayJSONDeserializationWhitelist {
 
 					return counter;
 				});
-		};
+		}
 
 		return new Closeable() {
 

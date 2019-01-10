@@ -2074,7 +2074,7 @@ public class CalendarBookingLocalServiceImpl
 
 		if (stagingGroup == null) {
 			return false;
-		};
+		}
 
 		return stagingGroup.isInStagingPortlet(CalendarPortletKeys.CALENDAR);
 	}

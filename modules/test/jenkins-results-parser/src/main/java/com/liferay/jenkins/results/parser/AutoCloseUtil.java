@@ -415,7 +415,7 @@ public class AutoCloseUtil {
 				sb.append("<li>");
 				sb.append(jenkinsJobFailureURL);
 				sb.append("</li>");
-			};
+			}
 
 			sb.append("</ul><p>These test failures are a part of a ");
 			sb.append("'module group'/'subrepository' that was changed in ");

@@ -172,7 +172,7 @@ public class SearchBarPortlet extends MVCPortlet {
 					SearchContextAttributes.ATTRIBUTE_KEY_EMPTY_SEARCH))) {
 
 			return true;
-		};
+		}
 
 		return false;
 	}

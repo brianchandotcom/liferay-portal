@@ -164,6 +164,13 @@ class EditTags extends Component {
 			bodyData,
 			response => {
 				instance.close();
+
+				let bulkStatusComponent = Liferay.component(
+					instance.portletNamespace + 'BulkStatus');
+
+				if (bulkStatusComponent) {
+					bulkStatusComponent.startWatch();
+				}
 			}
 		);
 
@@ -240,6 +247,8 @@ EditTags.STATE = {
 	 * @type {Boolean}
 	 */
 	multiple: Config.bool().value(false),
+
+	portletNamespace: Config.string().required(),
 
 	/**
 	 * RepositoryId

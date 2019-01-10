@@ -161,7 +161,7 @@ definition {
 		DMDocument.viewPG(
 			dmDocumentDescription = "Auto Tagged Image Description",
 			dmDocumentTitle = "Auto Tagged Image",
-			tagName = "carton"
+			tagNameList = "carton"
 		);
 
 		DMDocument.removeTag(removeTag = "carton");

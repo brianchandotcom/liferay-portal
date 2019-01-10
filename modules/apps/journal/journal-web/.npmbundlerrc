@@ -3,6 +3,5 @@
         "**/config.js",
         "**/navigation.js",
         "**/main.js"
-    ],
-    "preset": "liferay-npm-bundler-preset-liferay-dev"
+    ]
 }

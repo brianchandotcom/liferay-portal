@@ -3,8 +3,5 @@
         "**/config.js",
         "**/navigation.js",
         "**/main.js"
-    ],
-    "presets": [
-        "env"
     ]
 }

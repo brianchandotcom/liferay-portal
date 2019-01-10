@@ -1120,11 +1120,11 @@ definition {
 	}
 
 	macro removeTag {
-		var key_removeTag = "${removeTag}";
-
 		Click(locator1 = "Button#EDIT");
 
 		Panel.expandPanel(panel = "Categorization");
+
+		var key_removeTag = "${removeTag}";
 
 		Click(locator1 = "Icon#REMOVE_TAG", value1="${removeTag}");
 	}

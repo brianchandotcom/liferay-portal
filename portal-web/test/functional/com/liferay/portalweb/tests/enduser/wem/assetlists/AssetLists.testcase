@@ -123,6 +123,10 @@ definition {
 		}
 
 		task ("Delete both asset lists") {
+			AssetListsAdmin.openAssetListsAdmin(
+				siteURLKey = "test-site-name"
+			);
+
 			LexiconEntry.delete(
 				rowEntry = "Manual Asset List Test"
 			);

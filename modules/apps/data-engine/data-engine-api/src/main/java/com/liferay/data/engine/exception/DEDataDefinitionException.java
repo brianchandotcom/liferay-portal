@@ -82,4 +82,12 @@ public class DEDataDefinitionException extends PortalException {
 
 	}
 
+	public static class PrincipalException extends DEDataDefinitionException {
+
+		public PrincipalException(Throwable cause) {
+			super(cause);
+		}
+
+	}
+
 }

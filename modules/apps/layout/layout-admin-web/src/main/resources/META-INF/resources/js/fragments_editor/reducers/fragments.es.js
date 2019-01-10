@@ -4,7 +4,7 @@ import {
 	REMOVE_FRAGMENT_ENTRY_LINK,
 	UPDATE_EDITABLE_VALUE
 } from '../actions/actions.es';
-import {DROP_TARGET_BORDERS, DROP_TARGET_ITEM_TYPES} from './placeholders.es';
+import {FRAGMENTS_EDITOR_ITEM_BORDERS, DROP_TARGET_ITEM_TYPES} from './placeholders.es';
 import {
 	EDITABLE_FRAGMENT_ENTRY_PROCESSOR
 } from '../components/fragment_entry_link/FragmentEntryLinkContent.es';
@@ -442,7 +442,7 @@ function _addFragmentEntryLink(
 /**
  * @param {string[]} fragmentEntryLinkIds
  * @param {string} targetFragmentEntryLinkId
- * @param {DROP_TARGET_BORDERS} targetBorder
+ * @param {FRAGMENTS_EDITOR_ITEM_BORDERS} targetBorder
  * @return {number}
  * @review
  */
@@ -458,7 +458,7 @@ function _getDropFragmentPosition(
 	);
 
 	if (targetPosition > -1 && targetBorder) {
-		if (targetBorder === DROP_TARGET_BORDERS.top) {
+		if (targetBorder === FRAGMENTS_EDITOR_ITEM_BORDERS.top) {
 			position = targetPosition;
 		}
 		else {

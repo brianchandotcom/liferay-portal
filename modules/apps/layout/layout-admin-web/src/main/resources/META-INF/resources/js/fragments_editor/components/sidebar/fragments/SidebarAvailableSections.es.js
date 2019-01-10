@@ -13,7 +13,7 @@ import {
 	UPDATE_SAVING_CHANGES_STATUS
 } from '../../../actions/actions.es';
 import {
-	DROP_TARGET_BORDERS,
+	FRAGMENTS_EDITOR_ITEM_BORDERS,
 	DROP_TARGET_ITEM_TYPES
 } from '../../../reducers/placeholders.es';
 import {getConnectedComponent} from '../../../store/ConnectedComponent.es';
@@ -61,13 +61,13 @@ class SidebarAvailableSections extends Component {
 			const mouseY = eventData.originalEvent.clientY;
 			const targetItemRegion = position.getRegion(targetItem);
 
-			let nearestBorder = DROP_TARGET_BORDERS.bottom;
+			let nearestBorder = FRAGMENTS_EDITOR_ITEM_BORDERS.bottom;
 
 			if (
 				Math.abs(mouseY - targetItemRegion.top) <=
 				Math.abs(mouseY - targetItemRegion.bottom)
 			) {
-				nearestBorder = DROP_TARGET_BORDERS.top;
+				nearestBorder = FRAGMENTS_EDITOR_ITEM_BORDERS.top;
 			}
 
 			let dropTargetItemId = null;

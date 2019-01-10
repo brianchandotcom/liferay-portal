@@ -59,17 +59,17 @@
 }
 
 .fragments-editor__drop-target {
-	&.drag-bottom:after,
-	&.drag-top:after {
+	&.border-bottom:after,
+	&.border-top:after {
 		content: '';
 		display: block;
 	}
 
-	&.drag-bottom:after {
+	&.border-bottom:after {
 		@include lfr-drag-indicator("bottom");
 	}
 
-	&.drag-top:after {
+	&.border-top:after {
 		@include lfr-drag-indicator("top");
 	}
 }

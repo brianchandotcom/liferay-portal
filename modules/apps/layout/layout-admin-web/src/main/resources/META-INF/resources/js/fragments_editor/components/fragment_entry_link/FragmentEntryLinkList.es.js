@@ -19,7 +19,7 @@ import {
 	UPDATE_HOVERED_ITEM
 } from '../../actions/actions.es';
 import {
-	DROP_TARGET_BORDERS,
+	FRAGMENTS_EDITOR_ITEM_BORDERS,
 	DROP_TARGET_ITEM_TYPES
 } from '../../reducers/placeholders.es';
 import {
@@ -242,13 +242,13 @@ class FragmentEntryLinkList extends Component {
 				targetItem.dataset
 			);
 
-			let targetBorder = DROP_TARGET_BORDERS.bottom;
+			let targetBorder = FRAGMENTS_EDITOR_ITEM_BORDERS.bottom;
 
 			if (
 				Math.abs(mouseY - targetItemRegion.top) <=
 				Math.abs(mouseY - targetItemRegion.bottom)
 			) {
-				targetBorder = DROP_TARGET_BORDERS.top;
+				targetBorder = FRAGMENTS_EDITOR_ITEM_BORDERS.top;
 			}
 
 			this.store.dispatchAction(

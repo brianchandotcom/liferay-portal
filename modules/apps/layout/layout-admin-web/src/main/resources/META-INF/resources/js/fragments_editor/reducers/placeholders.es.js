@@ -9,13 +9,13 @@ import {
 } from '../actions/actions.es';
 
 /**
- * Available drag positions
+ * Fragments Editor item borders
  * @review
  * @type {!object}
  */
-const DROP_TARGET_BORDERS = {
-	bottom: 'drag-bottom',
-	top: 'drag-top'
+const FRAGMENTS_EDITOR_ITEM_BORDERS = {
+	bottom: 'border-bottom',
+	top: 'border-top'
 };
 
 /**
@@ -139,7 +139,7 @@ function updateHoveredItemReducer(state, actionType, payload) {
 }
 
 export {
-	DROP_TARGET_BORDERS,
+	FRAGMENTS_EDITOR_ITEM_BORDERS,
 	DROP_TARGET_ITEM_TYPES,
 	updateActiveItemReducer,
 	updateDropTargetReducer,

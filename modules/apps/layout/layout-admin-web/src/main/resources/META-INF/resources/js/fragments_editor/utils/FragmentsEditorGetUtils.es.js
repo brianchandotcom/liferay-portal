@@ -1,4 +1,4 @@
-import {DROP_TARGET_BORDERS} from '../reducers/placeholders.es';
+import {FRAGMENTS_EDITOR_ITEM_BORDERS} from '../reducers/placeholders.es';
 
 const ARROW_DOWN_KEYCODE = 40;
 
@@ -45,7 +45,7 @@ function getDropSectionPosition(
 	);
 
 	if (targetPosition > -1 && targetBorder) {
-		if (targetBorder === DROP_TARGET_BORDERS.top) {
+		if (targetBorder === FRAGMENTS_EDITOR_ITEM_BORDERS.top) {
 			position = targetPosition;
 		}
 		else {
@@ -153,17 +153,17 @@ function getSectionIndex(structure, sectionId) {
 /**
  * Get target item border from the direction the item is moving in
  * @param {!string} direction
- * @return {DROP_TARGET_BORDERS}
+ * @return {FRAGMENTS_EDITOR_ITEM_BORDERS}
  * @review
  */
 function getTargetBorder(direction) {
 	let targetBorder = null;
 
 	if (direction === MOVE_ITEM_DIRECTIONS.UP) {
-		targetBorder = DROP_TARGET_BORDERS.top;
+		targetBorder = FRAGMENTS_EDITOR_ITEM_BORDERS.top;
 	}
 	else if (direction === MOVE_ITEM_DIRECTIONS.DOWN) {
-		targetBorder = DROP_TARGET_BORDERS.bottom;
+		targetBorder = FRAGMENTS_EDITOR_ITEM_BORDERS.bottom;
 	}
 
 	return targetBorder;

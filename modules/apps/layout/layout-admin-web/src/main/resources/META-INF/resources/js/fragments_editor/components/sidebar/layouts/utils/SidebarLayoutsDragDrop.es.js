@@ -2,7 +2,7 @@ import position from 'metal-position';
 import {Drag, DragDrop} from 'metal-drag-drop';
 import State from 'metal-state';
 
-import {DROP_TARGET_BORDERS} from '../../../../reducers/placeholders.es';
+import {FRAGMENTS_EDITOR_ITEM_BORDERS} from '../../../../reducers/placeholders.es';
 
 /**
  * SidebarLayoutsDragDrop
@@ -41,13 +41,13 @@ class SidebarLayoutsDragDrop extends State {
 			const mouseY = data.originalEvent.clientY;
 			const targetItemRegion = position.getRegion(targetItem);
 
-			let nearestBorder = DROP_TARGET_BORDERS.bottom;
+			let nearestBorder = FRAGMENTS_EDITOR_ITEM_BORDERS.bottom;
 
 			if (
 				Math.abs(mouseY - targetItemRegion.top) <=
 				Math.abs(mouseY - targetItemRegion.bottom)
 			) {
-				nearestBorder = DROP_TARGET_BORDERS.top;
+				nearestBorder = FRAGMENTS_EDITOR_ITEM_BORDERS.top;
 			}
 
 			this.emit(

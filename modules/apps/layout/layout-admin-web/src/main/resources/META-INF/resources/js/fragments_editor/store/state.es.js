@@ -1,6 +1,6 @@
 import {Config} from 'metal-state';
 
-import {DROP_TARGET_BORDERS} from '../reducers/placeholders.es';
+import {FRAGMENTS_EDITOR_ITEM_BORDERS} from '../reducers/placeholders.es';
 
 /**
  * Initial state
@@ -180,7 +180,7 @@ const INITIAL_STATE = {
 	 * @type {string}
 	 */
 	dropTargetBorder: Config
-		.oneOf(Object.values(DROP_TARGET_BORDERS))
+		.oneOf(Object.values(FRAGMENTS_EDITOR_ITEM_BORDERS))
 		.value(null),
 
 	/**

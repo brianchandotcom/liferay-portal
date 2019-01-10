@@ -29,6 +29,8 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.segments.constants.SegmentsConstants;
 import com.liferay.segments.internal.asah.client.AsahFaroBackendClient;
+import com.liferay.segments.internal.asah.client.AsahFaroBackendClientImpl;
+import com.liferay.segments.internal.asah.client.JSONWebServiceClient;
 import com.liferay.segments.internal.asah.client.model.Individual;
 import com.liferay.segments.internal.asah.client.model.IndividualSegment;
 import com.liferay.segments.internal.asah.client.model.Results;
@@ -38,18 +40,14 @@ import com.liferay.segments.service.SegmentsEntryLocalService;
 import com.liferay.segments.service.SegmentsEntryRelLocalService;
 
 import java.util.Collections;
-import java.util.Dictionary;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
-import java.util.Properties;
 import java.util.Set;
 
-import org.osgi.service.component.ComponentFactory;
-import org.osgi.service.component.ComponentInstance;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -91,27 +89,9 @@ public class AsahFaroBackendIndividualSegmentsCheckerUtil {
 			return;
 		}
 
-		Properties properties = new Properties();
-
-		properties.setProperty(
-			"asahFaroBackendDataSourceId", asahFaroBackendDataSourceId);
-		properties.setProperty(
-			"asahFaroBackendSecuritySignature",
-			asahFaroBackendSecuritySignature);
-		properties.setProperty("asahFaroBackendURL", asahFaroBackendURL);
-
-		ComponentInstance componentInstance = _componentFactory.newInstance(
-			(Dictionary)properties);
-
-		_asahFaroBackendClient =
-			(AsahFaroBackendClient)componentInstance.getInstance();
-	}
-
-	@Reference(
-		target = "(component.factory=AsahFaroBackendClient)", unbind = "-"
-	)
-	protected void setComponentFactory(ComponentFactory componentFactory) {
-		_componentFactory = componentFactory;
+		_asahFaroBackendClient = new AsahFaroBackendClientImpl(
+			_jsonWebServiceClient, asahFaroBackendDataSourceId,
+			asahFaroBackendSecuritySignature, asahFaroBackendURL);
 	}
 
 	private void _addSegmentsEntry(
@@ -341,7 +321,8 @@ public class AsahFaroBackendIndividualSegmentsCheckerUtil {
 	@Reference
 	private CompanyLocalService _companyLocalService;
 
-	private ComponentFactory _componentFactory;
+	@Reference
+	private JSONWebServiceClient _jsonWebServiceClient;
 
 	@Reference
 	private Portal _portal;

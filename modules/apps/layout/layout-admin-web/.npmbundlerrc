@@ -2,7 +2,5 @@
     "ignore": [
       "**/config.js",
       "**/layout_customization_settings.js"
-    ],
-	"output": "classes/META-INF/resources",
-    "preset": "liferay-npm-bundler-preset-liferay-dev"
+    ]
 }

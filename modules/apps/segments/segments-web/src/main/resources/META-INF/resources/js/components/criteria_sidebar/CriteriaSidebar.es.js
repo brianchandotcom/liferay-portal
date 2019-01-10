@@ -3,6 +3,18 @@ import PropTypes from 'prop-types';
 import CriteriaSidebarSearchBar from './CriteriaSidebarSearchBar.es';
 import CriteriaSidebarItem from './CriteriaSidebarItem.es';
 
+function getDefaultValue(property) {
+	const {options, type} = property;
+	let result = '';
+	if (type === 'string' && options && options.length) {
+		result = options[0].value;
+	}
+	else if (type === 'date') {
+		result = (new Date()).getTime();
+	}
+	return result;
+}
+
 class CriteriaSidebar extends Component {
 	static propTypes = {
 		propertyKey: PropTypes.string,
@@ -58,16 +70,26 @@ class CriteriaSidebar extends Component {
 				<ul className="properties-list">
 					{filteredProperties.length ?
 						filteredProperties.map(
-							({label, name, options, type}, index) => (
-								<CriteriaSidebarItem
-									className={`color--${propertyKey}`}
-									defaultValue={options && options.length ? options[0].value : ''}
-									key={index}
-									label={label}
-									name={name}
-									type={type}
-								/>
-							)
+							({label, name, options, type}, index) => {
+								const defaultValue = getDefaultValue(
+									{
+										label,
+										name,
+										options,
+										type
+									}
+								);
+								return (
+									<CriteriaSidebarItem
+										className={`color--${propertyKey}`}
+										defaultValue={defaultValue}
+										key={index}
+										label={label}
+										name={name}
+										type={type}
+									/>
+								);
+							}
 						) :
 						<li className="empty-message">
 							{Liferay.Language.get('no-results-were-found')}

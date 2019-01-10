@@ -10,7 +10,7 @@ const altProps = {
 		{
 			conjunctionId: '',
 			conjunctionInputId: '_com_liferay_segments_web_internal_portlet_SegmentsPortlet_criterionConjunctionuser',
-			initialQuery: '',
+			initialQuery: '(dateModified le 1546951348000 and segmentationTeamMembers ne \'david\')',
 			inputId: '_com_liferay_segments_web_internal_portlet_SegmentsPortlet_criterionFilteruser',
 			propertyKey: 'user'
 		},
@@ -54,6 +54,16 @@ const altProps = {
 				value: 'andres'
 			}],
 			type: 'string'
+		},
+		{
+			label: 'Accepted Privacy',
+			name: 'acceptedPrivacy',
+			type: 'boolean'
+		},
+		{
+			label: 'People',
+			name: 'people',
+			type: 'number'
 		},
 		{
 			label: 'Class PK',

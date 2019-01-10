@@ -24,7 +24,12 @@ class CriteriaSidebarItem extends Component {
 	static propTypes = {
 		className: PropTypes.string,
 		connectDragSource: PropTypes.func,
-		defaultValue: PropTypes.string,
+		defaultValue: PropTypes.oneOfType(
+			[
+				PropTypes.string,
+				PropTypes.number
+			]
+		),
 		dragging: PropTypes.bool,
 		label: PropTypes.string,
 		name: PropTypes.string,

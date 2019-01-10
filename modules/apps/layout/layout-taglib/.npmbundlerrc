@@ -2,6 +2,5 @@
     "ignore": [
       "**/config.js",
       "**/layouts_tree/**/*.js"
-    ],
-    "preset": "liferay-npm-bundler-preset-liferay-dev"
+    ]
 }

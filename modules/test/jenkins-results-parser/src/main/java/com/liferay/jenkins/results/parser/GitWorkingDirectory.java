@@ -167,11 +167,22 @@ public class GitWorkingDirectory {
 	}
 
 	public void checkoutUpstreamLocalGitBranch() {
-		String currentBranchName = getCurrentBranchName();
+		LocalGitBranch currentLocalGitBranch = getCurrentLocalGitBranch();
+
+		String currentBranchName = currentLocalGitBranch.getName();
 
 		if (!currentBranchName.equals(getUpstreamBranchName())) {
 			LocalGitBranch upstreamLocalGitBranch = getLocalGitBranch(
 				getUpstreamBranchName());
+
+			if (upstreamLocalGitBranch == null) {
+				upstreamLocalGitBranch = createLocalGitBranch(
+					getUpstreamBranchName(), true,
+					currentLocalGitBranch.getSHA());
+
+				upstreamLocalGitBranch = fetch(
+					upstreamLocalGitBranch, getUpstreamRemoteGitBranch());
+			}
 
 			checkoutLocalGitBranch(upstreamLocalGitBranch);
 		}

@@ -31,7 +31,7 @@ AUI.add(
 					},
 
 					sortableList: {
-						valueFn: '_valueSortableList'
+						valueFn: '_sortableListValueFn'
 					},
 
 					strings: {
@@ -735,6 +735,21 @@ AUI.add(
 						instance.set('value', value);
 					},
 
+					_sortableListValueFn: function() {
+						var instance = this;
+
+						return new A.SortableList(
+							{
+								dd: {
+									handles: ['.drag-handle']
+								},
+								helper: A.Node.create(TPL_DRAG_HELPER),
+								placeholder: A.Node.create(TPL_DRAG_PLACEHOLDER),
+								sortCondition: A.bind('_canSortNode', instance)
+							}
+						);
+					},
+
 					_syncOptionsKeys: function(defaultLanguageOptions, editingLanguageOptions) {
 						var instance = this;
 
@@ -769,21 +784,6 @@ AUI.add(
 
 							sortableList.add(container);
 						}
-					},
-
-					_valueSortableList: function() {
-						var instance = this;
-
-						return new A.SortableList(
-							{
-								dd: {
-									handles: ['.drag-handle']
-								},
-								helper: A.Node.create(TPL_DRAG_HELPER),
-								placeholder: A.Node.create(TPL_DRAG_PLACEHOLDER),
-								sortCondition: A.bind('_canSortNode', instance)
-							}
-						);
 					}
 				}
 			}

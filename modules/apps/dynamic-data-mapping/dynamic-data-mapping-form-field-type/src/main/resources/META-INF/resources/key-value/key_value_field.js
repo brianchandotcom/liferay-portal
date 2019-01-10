@@ -9,7 +9,7 @@ AUI.add(
 					},
 
 					key: {
-						valueFn: '_valueKey'
+						valueFn: '_keyValueFn'
 					},
 
 					maxKeyInputSize: {
@@ -121,7 +121,7 @@ AUI.add(
 						var key = instance.get('key');
 
 						if (!key) {
-							instance.set('key', instance._valueKey());
+							instance.set('key', instance._keyValueFn());
 						}
 
 						KeyValueField.superclass.render.apply(instance, arguments);
@@ -197,6 +197,12 @@ AUI.add(
 						return size + 1;
 					},
 
+					_keyValueFn: function() {
+						var instance = this;
+
+						return instance.normalizeKey(instance.get('value'));
+					},
+
 					_onBlurKeyInput: function(event) {
 						var instance = this;
 
@@ -257,12 +263,6 @@ AUI.add(
 						var instance = this;
 
 						return instance.get('key') !== instance.normalizeKey(instance.get('value'));
-					},
-
-					_valueKey: function() {
-						var instance = this;
-
-						return instance.normalizeKey(instance.get('value'));
 					}
 				}
 			}

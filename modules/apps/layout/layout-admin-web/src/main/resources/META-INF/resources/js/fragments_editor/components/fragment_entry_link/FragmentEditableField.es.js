@@ -293,6 +293,8 @@ class FragmentEditableField extends Component {
 	 * @private
 	 */
 	_handleEditableChanged(newValue) {
+		this._unsavedChanges = true;
+
 		clearTimeout(this._saveChangesTimeout);
 
 		this._saveChangesTimeout = setTimeout(
@@ -348,6 +350,8 @@ class FragmentEditableField extends Component {
 	 * @param {string} newValue
 	 */
 	_saveChanges(newValue) {
+		this._unsavedChanges = false;
+
 		this.store
 			.dispatchAction(
 				UPDATE_SAVING_CHANGES_STATUS,
@@ -598,7 +602,21 @@ FragmentEditableField.STATE = {
 	_tooltipLabel: Config
 		.internal()
 		.string()
-		.value('')
+		.value(''),
+
+	/**
+	 * Flag indicating if there are unsaved changes
+	 * @default false
+	 * @instance
+	 * @memberOf FragmentEditableField
+	 * @private
+	 * @review
+	 * @type {boolean}
+	 */
+	_unsavedChanges: Config
+		.internal()
+		.bool()
+		.value(false)
 };
 
 Soy.register(FragmentEditableField, templates);

@@ -16,6 +16,9 @@ package com.liferay.portal.template.soy.renderer.internal;
 
 import com.liferay.portal.kernel.template.TemplateException;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.template.soy.renderer.ComponentDescriptor;
+import com.liferay.portal.template.soy.renderer.SoyComponentRenderer;
+import com.liferay.portal.template.soy.renderer.SoyRenderer;
 
 import java.io.IOException;
 import java.io.Writer;
@@ -25,9 +28,6 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.liferay.portal.template.soy.renderer.ComponentDescriptor;
-import com.liferay.portal.template.soy.renderer.SoyComponentRenderer;
-import com.liferay.portal.template.soy.renderer.SoyRenderer;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -38,8 +38,8 @@ import org.osgi.service.component.annotations.Reference;
 public class SoyComponentRendererImpl implements SoyComponentRenderer {
 
 	public void renderSoyComponent(
-		HttpServletRequest request, HttpServletResponse response,
-		ComponentDescriptor componentDescriptor, Map<String, ?> context)
+			HttpServletRequest request, HttpServletResponse response,
+			ComponentDescriptor componentDescriptor, Map<String, ?> context)
 		throws IOException, TemplateException {
 
 		renderSoyComponent(

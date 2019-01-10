@@ -299,9 +299,23 @@ definition {
 
 		DisplayPagesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
 
-		LexiconEntry.delete(
-			failure = "Error:You cannot delete asset display pages that are used by one or more assets.",
+		LexiconEntry.gotoEntryMenuItemNoError(
+			menuItem = "Delete",
 			rowEntry = "Display Page Name"
 		);
+
+		Confirm();
+
+		AssertTextEquals(
+			locator1 = "Message#ERROR",
+			value1 = "Error:One or more entries could not be deleted."
+		);
+
+		AssertTextEquals(
+			locator1 = "Message#ERROR_2",
+			value1 = "Error:You cannot delete asset display pages that are used by one or more assets."
+		);
+
+		LexiconEntry.viewEntryName(rowEntry = "Display Page Name");
 	}
 }

@@ -24,11 +24,21 @@ public class SemiColonCheck extends BaseCheck {
 
 	@Override
 	public int[] getDefaultTokens() {
-		return new int[] {TokenTypes.SEMI};
+		return new int[] {TokenTypes.EMPTY_STAT, TokenTypes.SEMI};
 	}
 
 	@Override
 	protected void doVisitToken(DetailAST detailAST) {
+		if (detailAST.getType() == TokenTypes.EMPTY_STAT) {
+			DetailAST parentDetailAST = detailAST.getParent();
+
+			if (parentDetailAST.getType() != TokenTypes.LITERAL_WHILE) {
+				log(detailAST, _MSG_UNNECESSARY_SEMI_COLON);
+			}
+
+			return;
+		}
+
 		DetailAST previousSiblingDetailAST = detailAST.getPreviousSibling();
 
 		if (previousSiblingDetailAST == null) {

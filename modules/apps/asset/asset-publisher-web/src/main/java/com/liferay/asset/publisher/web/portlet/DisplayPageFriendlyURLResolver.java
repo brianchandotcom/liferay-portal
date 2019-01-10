@@ -55,6 +55,7 @@ import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.InheritableMap;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
@@ -342,6 +343,9 @@ public class DisplayPageFriendlyURLResolver implements FriendlyURLResolver {
 				urlTitle);
 
 		if (friendlyURLEntryLocalization != null) {
+			locale = LocaleUtil.fromLanguageId(
+				friendlyURLEntryLocalization.getLanguageId());
+
 			actualParams.put(
 				namespace + "languageId",
 				new String[] {friendlyURLEntryLocalization.getLanguageId()});

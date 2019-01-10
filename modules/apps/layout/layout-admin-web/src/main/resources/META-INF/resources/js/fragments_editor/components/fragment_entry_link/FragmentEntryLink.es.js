@@ -13,7 +13,7 @@ import {
 	UPDATE_LAST_SAVE_DATE,
 	UPDATE_SAVING_CHANGES_STATUS
 } from '../../actions/actions.es';
-import {DROP_TARGET_ITEM_TYPES} from '../../reducers/placeholders.es';
+import {FRAGMENTS_EDITOR_ITEM_TYPES} from '../../reducers/placeholders.es';
 import {getItemMoveDirection} from '../../utils/FragmentsEditorGetUtils.es';
 import {shouldUpdatePureComponent} from '../../utils/FragmentsEditorComponentUtils.es';
 import templates from './FragmentEntryLink.soy';
@@ -64,7 +64,7 @@ class FragmentEntryLink extends Component {
 			UPDATE_ACTIVE_ITEM,
 			{
 				activeItemId: this.fragmentEntryLinkId,
-				activeItemType: DROP_TARGET_ITEM_TYPES.fragment
+				activeItemType: FRAGMENTS_EDITOR_ITEM_TYPES.fragment
 			}
 		);
 	}
@@ -82,7 +82,7 @@ class FragmentEntryLink extends Component {
 				UPDATE_HOVERED_ITEM,
 				{
 					hoveredItemId: this.fragmentEntryLinkId,
-					hoveredItemType: DROP_TARGET_ITEM_TYPES.fragment
+					hoveredItemType: FRAGMENTS_EDITOR_ITEM_TYPES.fragment
 				}
 			);
 		}

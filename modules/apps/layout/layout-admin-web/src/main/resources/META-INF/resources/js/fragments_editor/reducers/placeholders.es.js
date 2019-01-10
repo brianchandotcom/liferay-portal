@@ -19,11 +19,11 @@ const FRAGMENTS_EDITOR_ITEM_BORDERS = {
 };
 
 /**
- * Possible drop target types
+ * Fragments Editor item types
  * @review
  * @type {!object}
  */
-const DROP_TARGET_ITEM_TYPES = {
+const FRAGMENTS_EDITOR_ITEM_TYPES = {
 	column: 'layout-column',
 	fragment: 'fragment-entry-link',
 	fragmentList: 'fragment-entry-link-list',
@@ -140,7 +140,7 @@ function updateHoveredItemReducer(state, actionType, payload) {
 
 export {
 	FRAGMENTS_EDITOR_ITEM_BORDERS,
-	DROP_TARGET_ITEM_TYPES,
+	FRAGMENTS_EDITOR_ITEM_TYPES,
 	updateActiveItemReducer,
 	updateDropTargetReducer,
 	updateHighlightMappingReducer,

@@ -14,7 +14,7 @@ import {
 } from '../../../actions/actions.es';
 import {
 	FRAGMENTS_EDITOR_ITEM_BORDERS,
-	DROP_TARGET_ITEM_TYPES
+	FRAGMENTS_EDITOR_ITEM_TYPES
 } from '../../../reducers/placeholders.es';
 import {getConnectedComponent} from '../../../store/ConnectedComponent.es';
 import templates from './SidebarAvailableSections.soy';
@@ -75,15 +75,15 @@ class SidebarAvailableSections extends Component {
 
 			if (targetIsColumn) {
 				dropTargetItemId = data.columnId;
-				dropTargetItemType = DROP_TARGET_ITEM_TYPES.column;
+				dropTargetItemType = FRAGMENTS_EDITOR_ITEM_TYPES.column;
 			}
 			else if (targetIsFragment) {
 				dropTargetItemId = data.fragmentEntryLinkId;
-				dropTargetItemType = DROP_TARGET_ITEM_TYPES.fragment;
+				dropTargetItemType = FRAGMENTS_EDITOR_ITEM_TYPES.fragment;
 			}
 			else if (targetIsSection) {
 				dropTargetItemId = data.layoutSectionId;
-				dropTargetItemType = DROP_TARGET_ITEM_TYPES.section;
+				dropTargetItemType = FRAGMENTS_EDITOR_ITEM_TYPES.section;
 			}
 
 			this.store.dispatchAction(

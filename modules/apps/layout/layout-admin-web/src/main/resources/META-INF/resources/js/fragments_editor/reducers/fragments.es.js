@@ -4,7 +4,7 @@ import {
 	REMOVE_FRAGMENT_ENTRY_LINK,
 	UPDATE_EDITABLE_VALUE
 } from '../actions/actions.es';
-import {FRAGMENTS_EDITOR_ITEM_BORDERS, DROP_TARGET_ITEM_TYPES} from './placeholders.es';
+import {FRAGMENTS_EDITOR_ITEM_BORDERS, FRAGMENTS_EDITOR_ITEM_TYPES} from './placeholders.es';
 import {
 	EDITABLE_FRAGMENT_ENTRY_PROCESSOR
 } from '../components/fragment_entry_link/FragmentEntryLinkContent.es';
@@ -330,7 +330,7 @@ function _addFragment(
 ) {
 	let nextData = layoutData;
 
-	if (dropTargetItemType === DROP_TARGET_ITEM_TYPES.column) {
+	if (dropTargetItemType === FRAGMENTS_EDITOR_ITEM_TYPES.column) {
 		const fragmentColumn = getColumn(
 			layoutData.structure,
 			dropTargetItemId
@@ -343,7 +343,7 @@ function _addFragment(
 			fragmentColumn.fragmentEntryLinkIds.length
 		);
 	}
-	else if (dropTargetItemType === DROP_TARGET_ITEM_TYPES.fragment) {
+	else if (dropTargetItemType === FRAGMENTS_EDITOR_ITEM_TYPES.fragment) {
 		const fragmentColumn = getFragmentColumn(
 			layoutData.structure,
 			dropTargetItemId
@@ -362,7 +362,7 @@ function _addFragment(
 			position
 		);
 	}
-	else if (dropTargetItemType === DROP_TARGET_ITEM_TYPES.section) {
+	else if (dropTargetItemType === FRAGMENTS_EDITOR_ITEM_TYPES.section) {
 		const position = getDropSectionPosition(
 			layoutData.structure,
 			dropTargetItemId,

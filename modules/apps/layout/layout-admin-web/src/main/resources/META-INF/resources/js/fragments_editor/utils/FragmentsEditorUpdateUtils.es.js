@@ -4,7 +4,7 @@ import {
 	UPDATE_LAST_SAVE_DATE,
 	UPDATE_SAVING_CHANGES_STATUS
 } from '../actions/actions.es';
-import {DROP_TARGET_ITEM_TYPES} from '../reducers/placeholders.es';
+import {FRAGMENTS_EDITOR_ITEM_TYPES} from '../reducers/placeholders.es';
 
 /**
  * Inserts an element in the given position of a given array and returns
@@ -24,16 +24,16 @@ function add(array, element, position) {
 
 /**
  * @param {string} itemId
- * @param {DROP_TARGET_ITEM_TYPES} itemType
+ * @param {FRAGMENTS_EDITOR_ITEM_TYPES} itemType
  * @review
  */
 function focusItem(itemId, itemType) {
 	let attr = '';
 
-	if (itemType === DROP_TARGET_ITEM_TYPES.section) {
+	if (itemType === FRAGMENTS_EDITOR_ITEM_TYPES.section) {
 		attr = 'data-layout-section-id';
 	}
-	else if (itemType === DROP_TARGET_ITEM_TYPES.fragment) {
+	else if (itemType === FRAGMENTS_EDITOR_ITEM_TYPES.fragment) {
 		attr = 'data-fragment-entry-link-id';
 	}
 

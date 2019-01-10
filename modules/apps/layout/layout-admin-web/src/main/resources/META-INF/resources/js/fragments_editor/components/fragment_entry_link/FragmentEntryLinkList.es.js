@@ -20,7 +20,7 @@ import {
 } from '../../actions/actions.es';
 import {
 	FRAGMENTS_EDITOR_ITEM_BORDERS,
-	DROP_TARGET_ITEM_TYPES
+	FRAGMENTS_EDITOR_ITEM_TYPES
 } from '../../reducers/placeholders.es';
 import {
 	getFragmentColumn,
@@ -51,7 +51,7 @@ class FragmentEntryLinkList extends Component {
 	 * @static
 	 */
 	static _addDropTargetItemTypesToState(_state) {
-		return setIn(_state, ['dropTargetItemTypes'], DROP_TARGET_ITEM_TYPES);
+		return setIn(_state, ['dropTargetItemTypes'], FRAGMENTS_EDITOR_ITEM_TYPES);
 	}
 
 	/**
@@ -71,13 +71,13 @@ class FragmentEntryLinkList extends Component {
 
 		let dropValid = false;
 
-		if (sourceItemData.itemType === DROP_TARGET_ITEM_TYPES.section) {
+		if (sourceItemData.itemType === FRAGMENTS_EDITOR_ITEM_TYPES.section) {
 			dropValid = (
-				(targetItemData.itemType === DROP_TARGET_ITEM_TYPES.section) &&
+				(targetItemData.itemType === FRAGMENTS_EDITOR_ITEM_TYPES.section) &&
 				(sourceItemData.itemId !== targetItemData.itemId)
 			);
 		}
-		else if (sourceItemData.itemType === DROP_TARGET_ITEM_TYPES.fragment) {
+		else if (sourceItemData.itemType === FRAGMENTS_EDITOR_ITEM_TYPES.fragment) {
 			dropValid = (
 				(targetItemData.itemType) &&
 				(sourceItemData.itemId !== targetItemData.itemId)
@@ -101,18 +101,18 @@ class FragmentEntryLinkList extends Component {
 		if (itemDataset) {
 			if ('columnId' in itemDataset) {
 				itemId = itemDataset.columnId;
-				itemType = DROP_TARGET_ITEM_TYPES.column;
+				itemType = FRAGMENTS_EDITOR_ITEM_TYPES.column;
 			}
 			else if ('fragmentEntryLinkId' in itemDataset) {
 				itemId = itemDataset.fragmentEntryLinkId;
-				itemType = DROP_TARGET_ITEM_TYPES.fragment;
+				itemType = FRAGMENTS_EDITOR_ITEM_TYPES.fragment;
 			}
 			else if ('layoutSectionId' in itemDataset) {
 				itemId = itemDataset.layoutSectionId;
-				itemType = DROP_TARGET_ITEM_TYPES.section;
+				itemType = FRAGMENTS_EDITOR_ITEM_TYPES.section;
 			}
 			else if ('fragmentEmptyList' in itemDataset) {
-				itemType = DROP_TARGET_ITEM_TYPES.fragmentList;
+				itemType = FRAGMENTS_EDITOR_ITEM_TYPES.fragmentList;
 			}
 		}
 
@@ -297,7 +297,7 @@ class FragmentEntryLinkList extends Component {
 			let moveItemAction = null;
 			let moveItemPayload = null;
 
-			if (itemData.itemType === DROP_TARGET_ITEM_TYPES.section) {
+			if (itemData.itemType === FRAGMENTS_EDITOR_ITEM_TYPES.section) {
 				moveItemAction = MOVE_SECTION;
 				moveItemPayload = {
 					sectionId: itemData.itemId,
@@ -305,7 +305,7 @@ class FragmentEntryLinkList extends Component {
 					targetItemId: this.dropTargetItemId
 				};
 			}
-			else if (itemData.itemType === DROP_TARGET_ITEM_TYPES.fragment) {
+			else if (itemData.itemType === FRAGMENTS_EDITOR_ITEM_TYPES.fragment) {
 				moveItemAction = MOVE_FRAGMENT_ENTRY_LINK;
 				moveItemPayload = {
 					fragmentEntryLinkId: itemData.itemId,
@@ -353,14 +353,14 @@ class FragmentEntryLinkList extends Component {
 				fragmentEntryLinkId,
 				targetBorder: getTargetBorder(event.direction),
 				targetItemId: targetFragmentEntryLinkId,
-				targetItemType: DROP_TARGET_ITEM_TYPES.fragment
+				targetItemType: FRAGMENTS_EDITOR_ITEM_TYPES.fragment
 			};
 
 			this.store.dispatchAction(
 				UPDATE_ACTIVE_ITEM,
 				{
 					activeItemId: fragmentEntryLinkId,
-					activeItemType: DROP_TARGET_ITEM_TYPES.fragment
+					activeItemType: FRAGMENTS_EDITOR_ITEM_TYPES.fragment
 				}
 			);
 
@@ -399,7 +399,7 @@ class FragmentEntryLinkList extends Component {
 			UPDATE_ACTIVE_ITEM,
 			{
 				activeItemId: event.delegateTarget.dataset.layoutSectionId,
-				activeItemType: DROP_TARGET_ITEM_TYPES.section
+				activeItemType: FRAGMENTS_EDITOR_ITEM_TYPES.section
 			}
 		);
 	}
@@ -415,7 +415,7 @@ class FragmentEntryLinkList extends Component {
 				UPDATE_HOVERED_ITEM,
 				{
 					hoveredItemId: event.delegateTarget.dataset.layoutSectionId,
-					hoveredItemType: DROP_TARGET_ITEM_TYPES.section
+					hoveredItemType: FRAGMENTS_EDITOR_ITEM_TYPES.section
 				}
 			);
 		}
@@ -448,7 +448,7 @@ class FragmentEntryLinkList extends Component {
 				UPDATE_ACTIVE_ITEM,
 				{
 					activeItemId: sectionId,
-					activeItemType: DROP_TARGET_ITEM_TYPES.section
+					activeItemType: FRAGMENTS_EDITOR_ITEM_TYPES.section
 				}
 			);
 

@@ -1,4 +1,0 @@
-Bundle-Name: Liferay Portal Template Soy Renderer
-Bundle-SymbolicName: com.liferay.portal.template.soy.renderer
-Bundle-Version: 2.0.0
-Export-Package: com.liferay.portal.template.soy.renderer

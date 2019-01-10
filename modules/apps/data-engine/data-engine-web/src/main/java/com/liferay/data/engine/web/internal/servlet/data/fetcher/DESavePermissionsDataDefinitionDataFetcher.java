@@ -90,6 +90,11 @@ public class DESavePermissionsDataDefinitionDataFetcher
 				languageId, "the-user-must-have-data-definition-permission",
 				getActionMessage(languageId, mhp.getActionId()));
 		}
+		catch (DEDataDefinitionException.PrincipalException deddepe) {
+			errorMessage = getMessage(
+				languageId,
+				"this-role-does-not-support-this-type-of-permission");
+		}
 		catch (DEDataDefinitionException.NoSuchRoles nsr) {
 			errorMessage = getMessage(
 				languageId, "no-roles-exists-with-names-x",

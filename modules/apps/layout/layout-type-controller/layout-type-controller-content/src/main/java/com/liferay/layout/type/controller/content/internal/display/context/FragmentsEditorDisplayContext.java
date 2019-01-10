@@ -424,6 +424,15 @@ public class FragmentsEditorDisplayContext {
 
 		soyContexts.add(availableSoyContext);
 
+		availableSoyContext = SoyContextFactoryUtil.createSoyContext();
+
+		availableSoyContext.put("icon", "chip");
+		availableSoyContext.put(
+			"label", LanguageUtil.get(_themeDisplay.getLocale(), "widgets"));
+		availableSoyContext.put("panelId", "widgets");
+
+		soyContexts.add(availableSoyContext);
+
 		_panelSoyContexts = soyContexts;
 
 		return _panelSoyContexts;

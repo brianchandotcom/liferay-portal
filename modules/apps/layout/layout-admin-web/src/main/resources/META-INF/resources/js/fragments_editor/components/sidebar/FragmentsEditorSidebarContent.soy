@@ -34,6 +34,10 @@
 				{call com.liferay.layout.admin.web.SidebarStructurePanel.render}
 					{param store: $store /}
 				{/call}
+			{elseif $_panelId == 'widgets'}
+				{call com.liferay.layout.admin.web.SidebarWidgetsPanel.render}
+					{param store: $store /}
+				{/call}
 			{/if}
 		</div>
 

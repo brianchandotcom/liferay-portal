@@ -7,6 +7,7 @@ import './fragments/SidebarSectionsPanel.es';
 import './layouts/SidebarLayoutsPanel.es';
 import './mapping/SidebarMappingPanel.es';
 import './structure/SidebarStructurePanel.es';
+import './widgets/SidebarWidgetsPanel.es';
 import {getConnectedComponent} from '../../store/ConnectedComponent.es';
 import {HIDE_SIDEBAR, TOGGLE_SIDEBAR} from '../../actions/actions.es';
 import templates from './FragmentsEditorSidebarContent.soy';

@@ -1,6 +1,29 @@
 .preview-file {
-	.preview-toolbar-container {
-		margin: 2rem auto;
+	margin: 1.5rem auto;
+	position: relative;
+
+	.preview-file-container {
+		overflow: auto;
+		position: relative;
 		text-align: center;
+
+		&.preview-file-max-height {
+			height: 624px;
+		}
+	}
+
+	.preview-file-loader {
+		left: 50%;
+		position: absolute;
+		top: 50%;
+		transform: translate(-50%, -50);
+	}
+
+	.preview-toolbar-container {
+		bottom: 0;
+		margin-bottom: 1.5rem;
+		position: absolute;
+		text-align: center;
+		width: 100%;
 	}
 }

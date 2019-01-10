@@ -1,23 +1,4 @@
 .preview-file {
-	.preview-file-container {
-		overflow: auto;
-		position: relative;
-		text-align: center;
-
-		&.preview-file-max-height {
-			height: 480px;
-		}
-
-		.preview-file-loader {
-			left: 50%;
-			position: absolute;
-			top: 50%;
-			transform: translate(-50%, -50);
-		}
-	}
-}
-
-.preview-file {
 	.preview-file-pdf {
 		max-width: 100%;
 	}

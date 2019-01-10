@@ -42,7 +42,7 @@
 <!--LIST_GROUP_ITEM-->
 <tr>
 	<td>LIST_GROUP_ITEM</td>
-	<td>//li[contains(@class,'list-group-item')]//div[h4[normalize-space()='${key_itemName}']]</td>
+	<td>//li[contains(@class,'list-group-item')][contains(.,'${key_itemName}')]/button</td>
 	<td></td>
 </tr>
 <tr>

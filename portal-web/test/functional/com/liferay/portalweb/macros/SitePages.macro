@@ -338,8 +338,8 @@ definition {
 
 	macro togglePrivacy {
 		Click(
-			locator1 = "SitePages#LIST_GROUP_ITEM_CARET_ICON_SPECIFIC",
-			key_pageName = "${privacy}"
+			locator1 = "SitePages#LIST_GROUP_ITEM",
+			key_itemName = "${privacy}"
 		);
 	}
 }

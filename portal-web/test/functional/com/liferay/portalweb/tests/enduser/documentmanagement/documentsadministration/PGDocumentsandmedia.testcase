@@ -968,6 +968,7 @@ definition {
 		);
 	}
 
+	@description = "This test edits a document inside a folder. It also asserts a major version increment since the change involved changing the actual file."
 	@priority = "4"
 	test EditFolderDocumentFile {
 		Navigator.gotoPage(pageName = "Documents and Media Page");

@@ -51,6 +51,6 @@ context.put("videoPosterURL", (String)request.getAttribute(DLPreviewVideoWebKeys
 <soy:component-renderer
 	componentId='<%= renderResponse.getNamespace() + randomNamespace + "previewVideo" %>'
 	context="<%= context %>"
-	module="<%= (String)request.getAttribute(DLPreviewVideoWebKeys.MODULE_PATH) %>"
+	module='<%= npmResolvedPackageName + "/preview/js/VideoPreviewer.es" %>'
 	templateNamespace="com.liferay.document.library.preview.VideoPreviewer.render"
 />

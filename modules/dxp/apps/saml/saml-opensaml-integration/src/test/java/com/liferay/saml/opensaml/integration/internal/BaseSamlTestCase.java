@@ -156,12 +156,11 @@ public abstract class BaseSamlTestCase extends PowerMockito {
 		if (entityId.equals(samlProviderConfiguration.entityId())) {
 			return credentialResolver.resolveSingle(criteriaSet);
 		}
-		else {
-			KeyStoreCredentialResolver keyStoreCredentialResolver =
-				getKeyStoreCredentialResolver(entityId);
 
-			return keyStoreCredentialResolver.resolveSingle(criteriaSet);
-		}
+		KeyStoreCredentialResolver keyStoreCredentialResolver =
+			getKeyStoreCredentialResolver(entityId);
+
+		return keyStoreCredentialResolver.resolveSingle(criteriaSet);
 	}
 
 	protected KeyStoreCredentialResolver getKeyStoreCredentialResolver(

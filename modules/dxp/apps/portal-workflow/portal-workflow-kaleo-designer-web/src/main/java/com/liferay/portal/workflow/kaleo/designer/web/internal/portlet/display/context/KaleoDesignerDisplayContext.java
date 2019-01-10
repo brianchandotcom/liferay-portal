@@ -318,17 +318,14 @@ public class KaleoDesignerDisplayContext {
 				getConfigureAssignementLink(request)
 			};
 		}
-		else {
-			int moreAssetsCount = workflowDefinitionLinks.size() - 2;
 
-			return new Object[] {
-				getLocalizedAssetName(
-					firstWorkflowDefinitionLink.getClassName()),
-				getLocalizedAssetName(
-					secondWorkflowDefinitionLink.getClassName()),
-				moreAssetsCount, getConfigureAssignementLink(request)
-			};
-		}
+		int moreAssetsCount = workflowDefinitionLinks.size() - 2;
+
+		return new Object[] {
+			getLocalizedAssetName(firstWorkflowDefinitionLink.getClassName()),
+			getLocalizedAssetName(secondWorkflowDefinitionLink.getClassName()),
+			moreAssetsCount, getConfigureAssignementLink(request)
+		};
 	}
 
 	public String getMessageKey(

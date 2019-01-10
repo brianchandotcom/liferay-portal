@@ -82,11 +82,9 @@ public class DQLParameterValueUtil {
 
 			return "DATE('".concat(value).concat("', 'yyyy/mm/dd hh:mi:ss')");
 		}
-		else {
-			if (wildcard) {
-				value = StringUtil.replace(
-					value, CharPool.STAR, CharPool.PERCENT);
-			}
+
+		if (wildcard) {
+			value = StringUtil.replace(value, CharPool.STAR, CharPool.PERCENT);
 		}
 
 		return value;

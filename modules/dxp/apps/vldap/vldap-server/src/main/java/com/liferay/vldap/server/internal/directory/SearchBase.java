@@ -108,13 +108,12 @@ public class SearchBase {
 		if (_company == null) {
 			return CompanyLocalServiceUtil.getCompanies();
 		}
-		else {
-			List<Company> companies = new ArrayList<>(1);
 
-			companies.add(_company);
+		List<Company> companies = new ArrayList<>(1);
 
-			return companies;
-		}
+		companies.add(_company);
+
+		return companies;
 	}
 
 	public Company getCompany() {

@@ -192,9 +192,8 @@ public class ServicesDropDownMetaTypeProvider
 						}
 					};
 				}
-				else {
-					return new AttributeDefinition[0];
-				}
+
+				return new AttributeDefinition[0];
 			}
 
 			@Override

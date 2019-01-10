@@ -480,9 +480,8 @@ public class SharepointWSRepository
 				if (extRepositoryObjectType == ExtRepositoryObjectType.FOLDER) {
 					throw new NoSuchFolderException(extRepositoryObjectKey);
 				}
-				else {
-					throw new NoSuchFileEntryException(extRepositoryObjectKey);
-				}
+
+				throw new NoSuchFileEntryException(extRepositoryObjectKey);
 			}
 
 			return toExtRepositoryObject(
@@ -974,9 +973,8 @@ public class SharepointWSRepository
 			if (folder) {
 				throw new DuplicateFolderNameException(name);
 			}
-			else {
-				throw new DuplicateFileException(name);
-			}
+
+			throw new DuplicateFileException(name);
 		}
 		catch (SharepointException se) {
 
@@ -1000,16 +998,15 @@ public class SharepointWSRepository
 
 			return (T)new SharepointWSFileEntry(sharepointObject);
 		}
-		else {
-			if (extRepositoryObjectType == ExtRepositoryObjectType.FILE) {
-				throw new NoSuchFileEntryException(
-					"Invalid external repository object type " +
-						extRepositoryObjectType + " for Sharepoint object " +
-							sharepointObject);
-			}
 
-			return (T)new SharepointWSFolder(sharepointObject);
+		if (extRepositoryObjectType == ExtRepositoryObjectType.FILE) {
+			throw new NoSuchFileEntryException(
+				"Invalid external repository object type " +
+					extRepositoryObjectType + " for Sharepoint object " +
+						sharepointObject);
 		}
+
+		return (T)new SharepointWSFolder(sharepointObject);
 	}
 
 	protected SharepointConnection.ObjectTypeFilter toObjectTypeFilter(

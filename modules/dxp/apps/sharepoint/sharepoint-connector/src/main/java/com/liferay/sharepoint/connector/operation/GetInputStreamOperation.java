@@ -101,10 +101,9 @@ public class GetInputStreamOperation extends BaseOperation {
 
 				return new ByteArrayInputStream(bytes);
 			}
-			else {
-				throw new SharepointException(
-					"Downloading " + url + " failed with status " + status);
-			}
+
+			throw new SharepointException(
+				"Downloading " + url + " failed with status " + status);
 		}
 		catch (IOException ioe) {
 			throw new SharepointException(

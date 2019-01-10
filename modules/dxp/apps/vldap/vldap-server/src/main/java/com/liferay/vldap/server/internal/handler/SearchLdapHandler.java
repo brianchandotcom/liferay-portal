@@ -198,11 +198,10 @@ public class SearchLdapHandler extends BaseLdapHandler {
 
 			return isMatchLeafNode(directory, leafNode);
 		}
-		else {
-			BranchNode branchNode = (BranchNode)exprNode;
 
-			return isMatchBranchNode(directory, branchNode);
-		}
+		BranchNode branchNode = (BranchNode)exprNode;
+
+		return isMatchBranchNode(directory, branchNode);
 	}
 
 	protected boolean isMatchBranchNode(

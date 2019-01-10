@@ -2,6 +2,15 @@ import PortletBase from 'frontend-js-web/liferay/PortletBase.es';
 import {Config} from 'metal-state';
 
 class ManagementToolbarDefaultEventHandler extends PortletBase {
+	created() {
+		Liferay.on(
+			this.ns('selectAddMenuItem'),
+			function(event) {
+				location.href = Liferay.Util.addParams(this.ns('ddmStructureKey') + '=' + event.ddmStructureKey, this.addArticleURL);
+			}
+		);
+	}
+
 	callAction(event) {
 		var itemData = event.data.item.data;
 
@@ -80,6 +89,7 @@ class ManagementToolbarDefaultEventHandler extends PortletBase {
 }
 
 ManagementToolbarDefaultEventHandler.STATE = {
+	addArticleURL: Config.string(),
 	folderId: Config.string(),
 	namespace: Config.string(),
 	openViewMoreStructuresURL: Config.string(),

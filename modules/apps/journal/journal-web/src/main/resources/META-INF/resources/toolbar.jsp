@@ -25,6 +25,13 @@ JournalManagementToolbarDisplayContext journalManagementToolbarlDisplayContext =
 />
 
 <aui:script require='<%= npmResolvedPackageName + "/js/ManagementToolbarDefaultEventHandler.es as ManagementToolbarDefaultEventHandler" %>'>
+	<portlet:renderURL var="addArticleURL">
+		<portlet:param name="mvcPath" value="/edit_article.jsp" />
+		<portlet:param name="redirect" value="<%= currentURL %>" />
+		<portlet:param name="groupId" value="<%= String.valueOf(scopeGroupId) %>" />
+		<portlet:param name="folderId" value="<%= String.valueOf(journalDisplayContext.getFolderId()) %>" />
+	</portlet:renderURL>
+
 	<portlet:renderURL var="openViewMoreStructuresURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 		<portlet:param name="mvcPath" value="/view_more_menu_items.jsp" />
 		<portlet:param name="folderId" value="<%= String.valueOf(journalDisplayContext.getFolderId()) %>" />
@@ -44,6 +51,7 @@ JournalManagementToolbarDisplayContext journalManagementToolbarlDisplayContext =
 		'<%= journalManagementToolbarlDisplayContext.getDefaultEventHandler() %>',
 		new ManagementToolbarDefaultEventHandler.default(
 			{
+				addArticleURL: '<%= addArticleURL %>',
 				folderId: '<%= String.valueOf(JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) %>',
 				namespace: '<%= renderResponse.getNamespace() %>',
 				openViewMoreStructuresURL: '<%= openViewMoreStructuresURL %>',
@@ -55,26 +63,6 @@ JournalManagementToolbarDisplayContext journalManagementToolbarlDisplayContext =
 		{
 			destroyOnNavigate: true,
 			portletId: '<%= HtmlUtil.escapeJS(portletDisplay.getId()) %>'
-		}
-	);
-</aui:script>
-
-<aui:script sandbox="<%= true %>">
-	<portlet:renderURL var="addArticleURL">
-		<portlet:param name="mvcPath" value="/edit_article.jsp" />
-		<portlet:param name="redirect" value="<%= currentURL %>" />
-		<portlet:param name="groupId" value="<%= String.valueOf(scopeGroupId) %>" />
-		<portlet:param name="folderId" value="<%= String.valueOf(journalDisplayContext.getFolderId()) %>" />
-	</portlet:renderURL>
-
-	Liferay.on(
-		'<portlet:namespace />selectAddMenuItem',
-		function(event) {
-			var uri = '<%= addArticleURL %>';
-
-			uri = Liferay.Util.addParams('<portlet:namespace />ddmStructureKey=' + event.ddmStructureKey, uri);
-
-			location.href = uri;
 		}
 	);
 </aui:script>

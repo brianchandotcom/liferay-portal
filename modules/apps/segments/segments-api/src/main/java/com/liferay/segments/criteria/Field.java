@@ -62,21 +62,21 @@ public final class Field implements Comparable<Field>, Serializable {
 		public Option() {
 		}
 
-		public Option(String name, String label) {
-			_name = name;
+		public Option(String label, String value) {
 			_label = label;
+			_value = value;
 		}
 
 		public String getLabel() {
 			return _label;
 		}
 
-		public String getName() {
-			return _name;
+		public String getValue() {
+			return _value;
 		}
 
 		private String _label;
-		private String _name;
+		private String _value;
 
 	}
 

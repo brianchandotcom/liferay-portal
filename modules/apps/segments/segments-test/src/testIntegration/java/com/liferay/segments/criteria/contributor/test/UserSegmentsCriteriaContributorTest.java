@@ -180,13 +180,13 @@ public class UserSegmentsCriteriaContributorTest {
 
 		Stream<Field.Option> optionStream = options.stream();
 
-		List<String> optionNames = optionStream.map(
-			Field.Option::getName
+		List<String> optionValues = optionStream.map(
+			Field.Option::getValue
 		).collect(
 			Collectors.toList()
 		);
 
-		Assert.assertEquals(Arrays.asList(defaultValue), optionNames);
+		Assert.assertEquals(Arrays.asList(defaultValue), optionValues);
 	}
 
 	private ExpandoColumn _addExpandoColumn(

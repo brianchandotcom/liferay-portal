@@ -38,15 +38,26 @@ import java.util.Map;
 import javax.ws.rs.core.MultivaluedHashMap;
 import javax.ws.rs.core.MultivaluedMap;
 
-import org.osgi.service.component.annotations.Activate;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author David Arques
  */
-@Component(factory = "AsahFaroBackendClient", service = {})
 public class AsahFaroBackendClientImpl implements AsahFaroBackendClient {
+
+	public AsahFaroBackendClientImpl(
+		JSONWebServiceClient jsonWebServiceClient,
+		String asahFaroBackendDataSourceId,
+		String asahFaroBackendSecuritySignature, String asahFaroBackendURL) {
+
+		_jsonWebServiceClient = jsonWebServiceClient;
+
+		_dataSourceId = asahFaroBackendDataSourceId;
+
+		_headers.put(
+			"OSB-Asah-Faro-Backend-Security-Signature",
+			asahFaroBackendSecuritySignature);
+
+		_jsonWebServiceClient.setBaseURI(asahFaroBackendURL);
+	}
 
 	@Override
 	public String getDataSourceId() {
@@ -115,18 +126,6 @@ public class AsahFaroBackendClientImpl implements AsahFaroBackendClient {
 		}
 	}
 
-	@Activate
-	protected void activate(Map<String, Object> properties) {
-		_dataSourceId = _getString(properties, "asahFaroBackendDataSourceId");
-
-		_headers.put(
-			"OSB-Asah-Faro-Backend-Security-Signature",
-			_getString(properties, "asahFaroBackendSecuritySignature"));
-
-		_jsonWebServiceClient.setBaseURI(
-			_getString(properties, "asahFaroBackendUrl"));
-	}
-
 	private MultivaluedMap<String, Object> _getParameters(
 		FilterBuilder filterBuilder, String fieldNameContext, int cur,
 		int delta, List<OrderByField> orderByFields) {
@@ -137,14 +136,6 @@ public class AsahFaroBackendClientImpl implements AsahFaroBackendClient {
 		uriVariables.putSingle("filter", filterBuilder.build());
 
 		return uriVariables;
-	}
-
-	private String _getString(Map<String, Object> properties, String key) {
-		if (!properties.containsKey(key)) {
-			return null;
-		}
-
-		return String.valueOf(properties.get(key));
 	}
 
 	private MultivaluedMap<String, Object> _getUriVariables(
@@ -185,10 +176,8 @@ public class AsahFaroBackendClientImpl implements AsahFaroBackendClient {
 		_individualSegmentJSONObjectMapper =
 			new IndividualSegmentJSONObjectMapper();
 
-	private String _dataSourceId;
-	private final Map<String, String> _headers = new HashMap();
-
-	@Reference
-	private JSONWebServiceClient _jsonWebServiceClient;
+	private final String _dataSourceId;
+	private final Map<String, String> _headers = new HashMap<>();
+	private final JSONWebServiceClient _jsonWebServiceClient;
 
 }

@@ -1,0 +1,5 @@
+{
+	"build": {
+		"dependencies": ["com.liferay.hello.soy.web"]
+	}
+}

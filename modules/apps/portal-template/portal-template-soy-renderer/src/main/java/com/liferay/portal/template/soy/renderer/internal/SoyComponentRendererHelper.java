@@ -114,7 +114,9 @@ public class SoyComponentRendererHelper {
 				"portletId", _request.getAttribute(WebKeys.PORTLET_ID));
 		}
 
-		if (!_componentDescriptor.isWrapper() && !_context.containsKey("id")) {
+		if (!_componentDescriptor.isWrapper() &&
+			Validator.isNull(_context.get("id"))) {
+
 			_context.put("id", _wrapperId);
 		}
 

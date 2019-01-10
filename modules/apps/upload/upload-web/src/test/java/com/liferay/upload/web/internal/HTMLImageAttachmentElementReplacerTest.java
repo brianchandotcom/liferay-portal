@@ -17,6 +17,7 @@ package com.liferay.upload.web.internal;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepository;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.repository.model.FileEntryWrapper;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -36,13 +37,14 @@ public class HTMLImageAttachmentElementReplacerTest extends PowerMockito {
 
 	@Before
 	public void setUp() {
-		_fileEntry = mock(FileEntry.class);
+		_fileEntry = new FileEntryWrapper(null) {
 
-		when(
-			_fileEntry.getFileEntryId()
-		).thenReturn(
-			_IMAGE_FILE_ENTRY_ID
-		);
+			@Override
+			public long getFileEntryId() {
+				return _IMAGE_FILE_ENTRY_ID;
+			}
+
+		};
 
 		_portletFileRepository = mock(PortletFileRepository.class);
 

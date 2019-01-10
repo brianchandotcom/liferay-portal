@@ -37,7 +37,7 @@ definition {
 		property database.types = "db2,mysql,oracle,postgresql,sybase";
 		property portal.version = "6.2.10.21";
 
-		Upgrade.viewAssetPublisher();
+		Upgrade.viewAssetPublisher(categoryName = "Category Name");
 	}
 
 	@priority = "5"
@@ -55,6 +55,6 @@ definition {
 		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
 		property portal.version = "7.0.10.6";
 
-		Upgrade.viewAssetPublisher();
+		Upgrade.viewAssetPublisher(categoryName = "Category Name");
 	}
 }

@@ -987,8 +987,7 @@ definition {
 
 		DMDocument.editPG(
 			dmDocumentFileEdit = "Document_2.doc",
-			dmDocumentTitle = "DM Document Title",
-			dmDocumentVersionNumber = "1.1"
+			dmDocumentTitle = "DM Document Title"
 		);
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
@@ -1257,8 +1256,7 @@ definition {
 
 		DMDocument.editPG(
 			dmDocumentFileEdit = "Document_2.doc",
-			dmDocumentTitle = "DM Document Title",
-			dmDocumentVersionNumber = "1.1"
+			dmDocumentTitle = "DM Document Title"
 		);
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");

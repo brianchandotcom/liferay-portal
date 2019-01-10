@@ -997,7 +997,7 @@ definition {
 		DMDocument.viewAllPG(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentTitle = "DM Document Title",
-			dmDocumentVersionNumber = "1.1"
+			dmDocumentVersionNumber = "2.0"
 		);
 	}
 
@@ -1266,7 +1266,7 @@ definition {
 		DMDocument.viewAllPG(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentTitle = "DM Document Title",
-			dmDocumentVersionNumber = "1.1"
+			dmDocumentVersionNumber = "2.0"
 		);
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");

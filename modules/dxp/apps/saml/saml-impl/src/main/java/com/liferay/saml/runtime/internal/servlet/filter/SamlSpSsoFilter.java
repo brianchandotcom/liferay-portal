@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.saml.constants.SamlWebKeys;
 import com.liferay.saml.persistence.model.SamlSpSession;
+import com.liferay.saml.runtime.configuration.SamlProviderConfiguration;
 import com.liferay.saml.runtime.configuration.SamlProviderConfigurationHelper;
 import com.liferay.saml.runtime.profile.SingleLogoutProfile;
 import com.liferay.saml.runtime.profile.WebSsoProfile;
@@ -154,6 +155,18 @@ public class SamlSpSsoFilter extends BaseSamlPortalFilter {
 						_log.info(
 							"Failed to send Authn request: " + pe.getMessage());
 					}
+				}
+			}
+			else {
+				SamlProviderConfiguration samlProviderConfiguration =
+					_samlProviderConfigurationHelper.
+						getSamlProviderConfiguration();
+
+				if ((request.getAttribute(SamlWebKeys.SAML_SSO_LOGIN_CONTEXT) ==
+						null) &&
+					samlProviderConfiguration.allowShowingTheLoginPortlet()) {
+
+					filterChain.doFilter(request, response);
 				}
 			}
 		}

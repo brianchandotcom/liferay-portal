@@ -88,6 +88,9 @@ public interface PortletPropsKeys {
 
 	public static final String SAML_SIGN_METADATA = "saml.sign.metadata";
 
+	public static final String SAML_SP_ALLOW_SHOWING_THE_LOGIN_PORTLET =
+		"saml.sp.allow.showing.the.login.portlet";
+
 	public static final String SAML_SP_ASSERTION_SIGNATURE_REQUIRED =
 		"saml.sp.assertion.signature.required";
 

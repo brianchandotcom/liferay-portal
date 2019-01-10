@@ -33,6 +33,8 @@
 		<aui:input helpMessage="saml-sign-metadata-description" label="saml-sign-metadata" name='<%= "settings--" + PortletPropsKeys.SAML_SIGN_METADATA + "--" %>' type="checkbox" value="<%= samlProviderConfiguration.signMetadata() %>" />
 
 		<aui:input helpMessage="saml-ssl-required-description" label="saml-ssl-required" name='<%= "settings--" + PortletPropsKeys.SAML_SSL_REQUIRED + "--" %>' type="checkbox" value="<%= samlProviderConfiguration.sslRequired() %>" />
+
+		<aui:input helpMessage="saml-sp-allow-showing-the-login-portlet-description" label="saml-sp-allow-showing-the-login-portlet" name='<%= "settings--" + PortletPropsKeys.SAML_SP_ALLOW_SHOWING_THE_LOGIN_PORTLET + "--" %>' type="checkbox" value="<%= samlProviderConfiguration.allowShowingTheLoginPortlet() %>" />
 	</aui:fieldset>
 
 	<aui:button-row>

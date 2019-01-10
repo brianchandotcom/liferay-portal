@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.saml.constants.SamlWebKeys;
 import com.liferay.saml.persistence.model.SamlSpIdpConnection;
 import com.liferay.saml.persistence.service.SamlSpIdpConnectionLocalService;
+import com.liferay.saml.runtime.configuration.SamlProviderConfiguration;
 import com.liferay.saml.runtime.configuration.SamlProviderConfigurationHelper;
 import com.liferay.saml.util.JspUtil;
 
@@ -95,7 +96,15 @@ public class SamlLoginAction extends BaseSamlStrutsAction {
 			Collectors.toList()
 		);
 
-		if (samlSpIdpConnections.size() == 1) {
+		if (samlSpIdpConnections.isEmpty()) {
+			SamlProviderConfiguration samlProviderConfiguration =
+				samlProviderConfigurationHelper.getSamlProviderConfiguration();
+
+			if (samlProviderConfiguration.allowShowingTheLoginPortlet()) {
+				return null;
+			}
+		}
+		else if (samlSpIdpConnections.size() == 1) {
 			request.setAttribute(
 				SamlWebKeys.SAML_SP_IDP_CONNECTION,
 				samlSpIdpConnections.get(0));

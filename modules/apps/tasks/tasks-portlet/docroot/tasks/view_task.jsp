@@ -173,7 +173,7 @@ TasksEntry tasksEntry = TasksEntryLocalServiceUtil.fetchTasksEntry(tasksEntryId)
 					<liferay-ui:message key="tags" />
 				</td>
 				<td>
-					<liferay-ui:asset-tags-summary
+					<liferay-asset:asset-tags-summary
 						className="<%= TasksEntry.class.getName() %>"
 						classPK="<%= tasksEntry.getTasksEntryId() %>"
 					/>

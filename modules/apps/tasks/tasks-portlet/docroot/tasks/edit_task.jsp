@@ -55,7 +55,7 @@ String dueDateWrapperCssClass = dueDateControlGroupCssClass + StringPool.SPACE +
 			<aui:input name="userId" type="hidden" value="<%= user.getUserId() %>" />
 			<aui:input name="resolverUserId" type="hidden" value="<%= user.getUserId() %>" />
 
-			<liferay-ui:asset-tags-error />
+			<liferay-asset:asset-tags-error />
 
 			<aui:model-context bean="<%= tasksEntry %>" model="<%= TasksEntry.class %>" />
 

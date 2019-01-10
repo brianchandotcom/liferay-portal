@@ -11,6 +11,8 @@
 	</info>
 
 	<dependencies defaultconf="default">
+		<dependency name="com.liferay.asset.taglib" org="com.liferay" rev="3.0.15" />
+		<dependency name="com.liferay.comment.taglib" org="com.liferay" rev="1.0.7" />
 		<dependency name="com.liferay.portal.dao.orm.custom.sql.api" org="com.liferay" rev="1.0.0-20180412.172333-1" />
 		<dependency name="com.liferay.portal.spring.extender" org="com.liferay" rev="2.0.0" />
 	</dependencies>

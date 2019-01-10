@@ -17,7 +17,7 @@
  */
 --%>
 
-<liferay-ui:discussion
+<liferay-comment:discussion
 	className="<%= TasksEntry.class.getName() %>"
 	classPK="<%= tasksEntry.getTasksEntryId() %>"
 	formName="fm2"

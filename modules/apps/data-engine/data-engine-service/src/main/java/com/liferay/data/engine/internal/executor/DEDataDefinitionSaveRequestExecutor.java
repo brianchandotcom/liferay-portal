@@ -14,9 +14,7 @@
 
 package com.liferay.data.engine.internal.executor;
 
-import com.liferay.data.engine.exception.DEDataDefinitionException;
 import com.liferay.data.engine.exception.DEDataDefinitionFieldsSerializerException;
-import com.liferay.data.engine.executor.DEDataDefinitionSaveRequestExecutor;
 import com.liferay.data.engine.internal.io.DEDataDefinitionFieldsSerializerTracker;
 import com.liferay.data.engine.io.DEDataDefinitionFieldsSerializer;
 import com.liferay.data.engine.io.DEDataDefinitionFieldsSerializerApplyRequest;
@@ -40,66 +38,68 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Jeyvison Nascimento
  */
-@Component(
-	immediate = true, service = DEDataDefinitionSaveRequestExecutor.class
-)
-public class DEDataDefinitionSaveRequestExecutorImpl
-	implements DEDataDefinitionSaveRequestExecutor {
+public class DEDataDefinitionSaveRequestExecutor {
 
-	@Override
+	public DEDataDefinitionSaveRequestExecutor(
+		DDLRecordSetLocalService ddlRecordSetLocalService,
+		DDMStructureLocalService ddmStructureLocalService,
+		DEDataDefinitionFieldsSerializerTracker
+			deDataDefinitionFieldsSerializerTracker,
+		Portal portal, ResourceLocalService resourceLocalService) {
+
+		_ddlRecordSetLocalService = ddlRecordSetLocalService;
+		_ddmStructureLocalService = ddmStructureLocalService;
+		_deDataDefinitionFieldsSerializerTracker =
+			deDataDefinitionFieldsSerializerTracker;
+		_portal = portal;
+		_resourceLocalService = resourceLocalService;
+	}
+
 	public DEDataDefinitionSaveResponse execute(
 			DEDataDefinitionSaveRequest deDataDefinitionSaveRequest)
-		throws DEDataDefinitionException {
+		throws Exception {
 
-		try {
-			DEDataDefinition deDataDefinition =
-				deDataDefinitionSaveRequest.getDEDataDefinition();
+		DEDataDefinition deDataDefinition =
+			deDataDefinitionSaveRequest.getDEDataDefinition();
 
-			long deDataDefinitionId = deDataDefinition.getDEDataDefinitionId();
+		long deDataDefinitionId = deDataDefinition.getDEDataDefinitionId();
 
-			ServiceContext serviceContext =
-				ServiceContextThreadLocal.getServiceContext();
+		ServiceContext serviceContext =
+			ServiceContextThreadLocal.getServiceContext();
 
-			if (deDataDefinitionId == 0) {
-				DDMStructure ddmStructure = createDDMStructure(
-					deDataDefinitionSaveRequest.getUserId(),
-					deDataDefinitionSaveRequest.getGroupId(),
-					portal.getClassNameId(DEDataDefinition.class),
-					deDataDefinition, serviceContext);
+		if (deDataDefinitionId == 0) {
+			DDMStructure ddmStructure = createDDMStructure(
+				deDataDefinitionSaveRequest.getUserId(),
+				deDataDefinitionSaveRequest.getGroupId(),
+				_portal.getClassNameId(DEDataDefinition.class),
+				deDataDefinition, serviceContext);
 
-				deDataDefinitionId = ddmStructure.getStructureId();
+			deDataDefinitionId = ddmStructure.getStructureId();
 
-				resourceLocalService.addModelResources(
-					ddmStructure.getCompanyId(),
-					deDataDefinitionSaveRequest.getGroupId(),
-					deDataDefinitionSaveRequest.getUserId(),
-					DEDataDefinition.class.getName(), deDataDefinitionId,
-					serviceContext.getModelPermissions());
+			_resourceLocalService.addModelResources(
+				ddmStructure.getCompanyId(),
+				deDataDefinitionSaveRequest.getGroupId(),
+				deDataDefinitionSaveRequest.getUserId(),
+				DEDataDefinition.class.getName(), deDataDefinitionId,
+				serviceContext.getModelPermissions());
 
-				ddlRecordSetLocalService.addRecordSet(
-					deDataDefinitionSaveRequest.getUserId(),
-					deDataDefinitionSaveRequest.getGroupId(),
-					deDataDefinitionId, String.valueOf(deDataDefinitionId),
-					ddmStructure.getNameMap(), ddmStructure.getDescriptionMap(),
-					0, DDLRecordSetConstants.SCOPE_DATA_ENGINE, serviceContext);
-			}
-			else {
-				updateDDMStructure(
-					deDataDefinitionSaveRequest.getUserId(), deDataDefinition,
-					serviceContext);
-			}
-
-			return DEDataDefinitionSaveResponse.Builder.of(deDataDefinitionId);
+			_ddlRecordSetLocalService.addRecordSet(
+				deDataDefinitionSaveRequest.getUserId(),
+				deDataDefinitionSaveRequest.getGroupId(), deDataDefinitionId,
+				String.valueOf(deDataDefinitionId), ddmStructure.getNameMap(),
+				ddmStructure.getDescriptionMap(), 0,
+				DDLRecordSetConstants.SCOPE_DATA_ENGINE, serviceContext);
 		}
-		catch (Exception e) {
-			throw new DEDataDefinitionException(e);
+		else {
+			updateDDMStructure(
+				deDataDefinitionSaveRequest.getUserId(), deDataDefinition,
+				serviceContext);
 		}
+
+		return DEDataDefinitionSaveResponse.Builder.of(deDataDefinitionId);
 	}
 
 	protected DDMStructure createDDMStructure(
@@ -112,7 +112,7 @@ public class DEDataDefinitionSaveRequestExecutorImpl
 		Map<Locale, String> descriptionMap = createLocalizedMap(
 			deDataDefinition.getDescription());
 
-		return ddmStructureLocalService.addStructure(
+		return _ddmStructureLocalService.addStructure(
 			userId, groupId, DDMStructureConstants.DEFAULT_PARENT_STRUCTURE_ID,
 			classNameId, null, nameMap, descriptionMap,
 			serialize(deDataDefinition), deDataDefinition.getStorageType(),
@@ -134,7 +134,7 @@ public class DEDataDefinitionSaveRequestExecutorImpl
 		throws DEDataDefinitionFieldsSerializerException {
 
 		DEDataDefinitionFieldsSerializer deDataDefinitionFieldsSerializer =
-			deDataDefinitionFieldsSerializerTracker.
+			_deDataDefinitionFieldsSerializerTracker.
 				getDEDataDefinitionFieldsSerializer("json");
 
 		DEDataDefinitionFieldsSerializerApplyRequest
@@ -160,26 +160,17 @@ public class DEDataDefinitionSaveRequestExecutorImpl
 		Map<Locale, String> descriptionMap = createLocalizedMap(
 			deDataDefinition.getDescription());
 
-		ddmStructureLocalService.updateStructure(
+		_ddmStructureLocalService.updateStructure(
 			userId, deDataDefinition.getDEDataDefinitionId(),
 			DDMStructureConstants.DEFAULT_PARENT_STRUCTURE_ID, nameMap,
 			descriptionMap, serialize(deDataDefinition), serviceContext);
 	}
 
-	@Reference
-	protected DDLRecordSetLocalService ddlRecordSetLocalService;
-
-	@Reference
-	protected DDMStructureLocalService ddmStructureLocalService;
-
-	@Reference
-	protected DEDataDefinitionFieldsSerializerTracker
-		deDataDefinitionFieldsSerializerTracker;
-
-	@Reference
-	protected Portal portal;
-
-	@Reference
-	protected ResourceLocalService resourceLocalService;
+	private final DDLRecordSetLocalService _ddlRecordSetLocalService;
+	private final DDMStructureLocalService _ddmStructureLocalService;
+	private final DEDataDefinitionFieldsSerializerTracker
+		_deDataDefinitionFieldsSerializerTracker;
+	private final Portal _portal;
+	private final ResourceLocalService _resourceLocalService;
 
 }

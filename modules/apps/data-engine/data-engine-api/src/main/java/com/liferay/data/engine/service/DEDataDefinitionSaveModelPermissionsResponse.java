@@ -17,7 +17,7 @@ package com.liferay.data.engine.service;
 /**
  * @author Leonardo Barros
  */
-public final class DEDataDefinitionGetRequest {
+public final class DEDataDefinitionSaveModelPermissionsResponse {
 
 	public long getDEDataDefinitionId() {
 		return _deDataDefinitionId;
@@ -25,23 +25,34 @@ public final class DEDataDefinitionGetRequest {
 
 	public static final class Builder {
 
-		public DEDataDefinitionGetRequest build() {
-			return _deDataDefinitionGetRequest;
+		public static Builder newBuilder(long deDataDefinitionId) {
+			return new Builder(deDataDefinitionId);
 		}
 
-		public Builder byId(long deDataDefinitionId) {
-			_deDataDefinitionGetRequest._deDataDefinitionId =
+		public static DEDataDefinitionSaveModelPermissionsResponse of(
+			long deDataDefinitionId) {
+
+			return newBuilder(
+				deDataDefinitionId
+			).build();
+		}
+
+		public DEDataDefinitionSaveModelPermissionsResponse build() {
+			return _deDataDefinitionSaveModelPermissionsResponse;
+		}
+
+		private Builder(long deDataDefinitionId) {
+			_deDataDefinitionSaveModelPermissionsResponse._deDataDefinitionId =
 				deDataDefinitionId;
-
-			return this;
 		}
 
-		private final DEDataDefinitionGetRequest _deDataDefinitionGetRequest =
-			new DEDataDefinitionGetRequest();
+		private final DEDataDefinitionSaveModelPermissionsResponse
+			_deDataDefinitionSaveModelPermissionsResponse =
+				new DEDataDefinitionSaveModelPermissionsResponse();
 
 	}
 
-	private DEDataDefinitionGetRequest() {
+	private DEDataDefinitionSaveModelPermissionsResponse() {
 	}
 
 	private long _deDataDefinitionId;

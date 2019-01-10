@@ -12,10 +12,21 @@
  * details.
  */
 
-package com.liferay.data.engine.executor;
+package com.liferay.data.engine.web.internal.graphql.model;
 
 /**
- * @author Jeyvison Nascimento
+ * @author Leonardo Barros
  */
-public interface DESaveResponse {
+public class SaveModelPermissionsDataDefinitionType {
+
+	public String getDataDefinitionId() {
+		return _dataDefinitionId;
+	}
+
+	public void setDataDefinitionId(String dataDefinitionId) {
+		_dataDefinitionId = dataDefinitionId;
+	}
+
+	private String _dataDefinitionId;
+
 }

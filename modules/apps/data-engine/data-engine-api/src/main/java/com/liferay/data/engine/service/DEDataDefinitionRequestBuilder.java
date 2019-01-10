@@ -35,4 +35,20 @@ public class DEDataDefinitionRequestBuilder {
 		return new DEDataDefinitionSaveRequest.Builder(deDataDefinition);
 	}
 
+	public static DEDataDefinitionSaveModelPermissionsRequest.Builder
+		saveModelPermissionsBuilder(
+			long companyId, long scopedGroupId, long deDataDefinitionId) {
+
+		return new DEDataDefinitionSaveModelPermissionsRequest.Builder(
+			companyId, scopedGroupId, deDataDefinitionId);
+	}
+
+	public static DEDataDefinitionSavePermissionsRequest.Builder
+		savePermissionsBuilder(
+			long companyId, long scopedGroupId, String... roleNames) {
+
+		return new DEDataDefinitionSavePermissionsRequest.Builder(
+			companyId, scopedGroupId, roleNames);
+	}
+
 }

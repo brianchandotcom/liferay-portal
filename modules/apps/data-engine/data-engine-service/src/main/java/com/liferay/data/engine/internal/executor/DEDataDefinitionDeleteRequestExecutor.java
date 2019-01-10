@@ -14,58 +14,45 @@
 
 package com.liferay.data.engine.internal.executor;
 
-import com.liferay.data.engine.exception.DEDataDefinitionException;
-import com.liferay.data.engine.executor.DEDataDefinitionDeleteRequestExecutor;
 import com.liferay.data.engine.service.DEDataDefinitionDeleteRequest;
 import com.liferay.data.engine.service.DEDataDefinitionDeleteResponse;
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
 import com.liferay.dynamic.data.lists.service.DDLRecordSetLocalService;
-import com.liferay.dynamic.data.mapping.exception.NoSuchStructureException;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Jeyvison Nascimento
  */
-@Component(
-	immediate = true, service = DEDataDefinitionDeleteRequestExecutor.class
-)
-public class DEDataDefinitionDeleteRequestExecutorImpl
-	implements DEDataDefinitionDeleteRequestExecutor {
+public class DEDataDefinitionDeleteRequestExecutor {
 
-	@Override
+	public DEDataDefinitionDeleteRequestExecutor(
+		DDLRecordSetLocalService ddlRecordSetLocalService,
+		DDMStructureLocalService ddmStructureLocalService) {
+
+		_ddlRecordSetLocalService = ddlRecordSetLocalService;
+		_ddmStructureLocalService = ddmStructureLocalService;
+	}
+
 	public DEDataDefinitionDeleteResponse execute(
 			DEDataDefinitionDeleteRequest deDataDefinitionDeleteRequest)
-		throws DEDataDefinitionException {
+		throws Exception {
 
-		try {
-			long deDataDefinitionId =
-				deDataDefinitionDeleteRequest.getDEDataDefinitionId();
+		long deDataDefinitionId =
+			deDataDefinitionDeleteRequest.getDEDataDefinitionId();
 
-			deleteDDLRecordSet(deDataDefinitionId);
+		deleteDDLRecordSet(deDataDefinitionId);
 
-			ddmStructureLocalService.deleteDDMStructure(deDataDefinitionId);
+		_ddmStructureLocalService.deleteDDMStructure(deDataDefinitionId);
 
-			return DEDataDefinitionDeleteResponse.Builder.of(
-				deDataDefinitionId);
-		}
-		catch (NoSuchStructureException nsse) {
-			throw new DEDataDefinitionException.NoSuchDataDefinition(
-				deDataDefinitionDeleteRequest.getDEDataDefinitionId(), nsse);
-		}
-		catch (Exception e) {
-			throw new DEDataDefinitionException(e);
-		}
+		return DEDataDefinitionDeleteResponse.Builder.of(deDataDefinitionId);
 	}
 
 	protected void deleteDDLRecordSet(long deDataDefinitionId) {
 		ActionableDynamicQuery actionableDynamicQuery =
-			ddlRecordSetLocalService.getActionableDynamicQuery();
+			_ddlRecordSetLocalService.getActionableDynamicQuery();
 
 		actionableDynamicQuery.setAddCriteriaMethod(
 			dynamicQuery -> {
@@ -76,13 +63,10 @@ public class DEDataDefinitionDeleteRequestExecutorImpl
 			});
 		actionableDynamicQuery.setPerformActionMethod(
 			(DDLRecordSet ddlRecordSet) ->
-				ddlRecordSetLocalService.deleteDDLRecordSet(ddlRecordSet));
+				_ddlRecordSetLocalService.deleteDDLRecordSet(ddlRecordSet));
 	}
 
-	@Reference
-	protected DDLRecordSetLocalService ddlRecordSetLocalService;
-
-	@Reference
-	protected DDMStructureLocalService ddmStructureLocalService;
+	private final DDLRecordSetLocalService _ddlRecordSetLocalService;
+	private final DDMStructureLocalService _ddmStructureLocalService;
 
 }

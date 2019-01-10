@@ -12,19 +12,23 @@
  * details.
  */
 
-package com.liferay.data.engine.executor;
+package com.liferay.data.engine.web.internal.graphql.model;
 
-import com.liferay.data.engine.exception.DEDataDefinitionException;
-import com.liferay.data.engine.service.DEDataDefinitionDeleteRequest;
-import com.liferay.data.engine.service.DEDataDefinitionDeleteResponse;
+import java.util.List;
 
 /**
- * @author Jeyvison Nascimento
+ * @author Marcela Cunha
  */
-public interface DEDataDefinitionDeleteRequestExecutor {
+public class SavePermissionsDataDefinitionType {
 
-	public DEDataDefinitionDeleteResponse execute(
-			DEDataDefinitionDeleteRequest deDataDefinitionDeleteRequest)
-		throws DEDataDefinitionException;
+	public List<String> getRoleNames() {
+		return _roleNames;
+	}
+
+	public void setRoleNames(List<String> roleNames) {
+		_roleNames = roleNames;
+	}
+
+	private List<String> _roleNames;
 
 }

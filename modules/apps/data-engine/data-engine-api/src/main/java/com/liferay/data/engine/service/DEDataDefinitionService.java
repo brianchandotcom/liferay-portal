@@ -32,6 +32,16 @@ public interface DEDataDefinitionService {
 			DEDataDefinitionGetRequest deDataDefinitionGetRequest)
 		throws DEDataDefinitionException;
 
+	public DEDataDefinitionSaveModelPermissionsResponse execute(
+			DEDataDefinitionSaveModelPermissionsRequest
+				deDataDefinitionSaveModelPermissionsRequest)
+		throws DEDataDefinitionException;
+
+	public DEDataDefinitionSavePermissionsResponse execute(
+			DEDataDefinitionSavePermissionsRequest
+				deDataDefinitionSavePermissionsRequest)
+		throws DEDataDefinitionException;
+
 	public DEDataDefinitionSaveResponse execute(
 			DEDataDefinitionSaveRequest deDataDefinitionSaveRequest)
 		throws DEDataDefinitionException;

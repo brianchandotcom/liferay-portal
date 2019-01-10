@@ -22,6 +22,8 @@ import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
 import com.liferay.data.engine.web.internal.servlet.data.fetcher.DEDeleteDataDefinitionDataFetcher;
 import com.liferay.data.engine.web.internal.servlet.data.fetcher.DEGetDataDefinitionDataFetcher;
 import com.liferay.data.engine.web.internal.servlet.data.fetcher.DESaveDataDefinitionDataFetcher;
+import com.liferay.data.engine.web.internal.servlet.data.fetcher.DESaveModelPermissionsDataDefinitionDataFetcher;
+import com.liferay.data.engine.web.internal.servlet.data.fetcher.DESavePermissionsDataDefinitionDataFetcher;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
@@ -159,6 +161,18 @@ public class DEGraphQLServlet extends HttpServlet {
 			"MutationType",
 			typeWiring -> typeWiring.dataFetcher(
 				"saveDataDefinition", _deSaveDataDefinitionDataFetcher));
+
+		runtimeWiringBuilder.type(
+			"MutationType",
+			typeWiring -> typeWiring.dataFetcher(
+				"saveDataDefinitionModelPermissions",
+				_deSaveModelPermissionsDataDefinitionDataFetcher));
+
+		runtimeWiringBuilder.type(
+			"MutationType",
+			typeWiring -> typeWiring.dataFetcher(
+				"saveDataDefinitionPermissions",
+				_deSavePermissionsDataDefinitionDataFetcher));
 
 		return runtimeWiringBuilder.build();
 	}
@@ -321,6 +335,14 @@ public class DEGraphQLServlet extends HttpServlet {
 
 	@Reference
 	private DESaveDataDefinitionDataFetcher _deSaveDataDefinitionDataFetcher;
+
+	@Reference
+	private DESaveModelPermissionsDataDefinitionDataFetcher
+		_deSaveModelPermissionsDataDefinitionDataFetcher;
+
+	@Reference
+	private DESavePermissionsDataDefinitionDataFetcher
+		_deSavePermissionsDataDefinitionDataFetcher;
 
 	private transient GraphQL _graphQL;
 	private final ObjectMapper _objectMapper = new ObjectMapper() {

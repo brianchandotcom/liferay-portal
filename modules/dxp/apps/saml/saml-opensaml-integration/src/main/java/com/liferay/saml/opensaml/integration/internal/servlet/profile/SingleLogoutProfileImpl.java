@@ -120,10 +120,16 @@ public class SingleLogoutProfileImpl
 	@Override
 	public boolean isSingleLogoutSupported(HttpServletRequest request) {
 		try {
+			SamlSpSession samlSpSession = getSamlSpSession(request);
+
+			if (samlSpSession == null) {
+				return false;
+			}
+
 			MetadataResolver metadataResolver =
 				metadataManager.getMetadataResolver();
 
-			String entityId = metadataManager.getDefaultIdpEntityId();
+			String entityId = samlSpSession.getSamlIdpEntityId();
 
 			EntityDescriptor entityDescriptor = metadataResolver.resolveSingle(
 				new CriteriaSet(new EntityIdCriterion(entityId)));
@@ -1163,7 +1169,7 @@ public class SingleLogoutProfileImpl
 
 		LogoutRequest logoutRequest = OpenSamlUtil.buildLogoutRequest();
 
-		String entityId = metadataManager.getDefaultIdpEntityId();
+		String entityId = getSamlSpSession(request).getSamlIdpEntityId();
 
 		MessageContext<?> messageContext = getMessageContext(
 			request, response, entityId);

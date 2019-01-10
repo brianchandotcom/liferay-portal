@@ -21,14 +21,18 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.taglib.BaseDynamicInclude;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.CookieKeys;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.saml.addon.keep.alive.web.internal.constants.SamlKeepAliveConstants;
+import com.liferay.saml.constants.SamlWebKeys;
 import com.liferay.saml.persistence.model.SamlSpIdpConnection;
+import com.liferay.saml.persistence.model.SamlSpSession;
 import com.liferay.saml.persistence.service.SamlSpIdpConnectionLocalService;
+import com.liferay.saml.persistence.service.SamlSpSessionLocalService;
 import com.liferay.saml.runtime.configuration.SamlProviderConfiguration;
 import com.liferay.saml.runtime.configuration.SamlProviderConfigurationHelper;
 import com.liferay.saml.util.PortletPropsKeys;
@@ -39,6 +43,7 @@ import java.io.PrintWriter;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -62,7 +67,7 @@ public class KeepAliveSPPortalDynamicInclude extends BaseDynamicInclude {
 			return;
 		}
 
-		String keepAliveURL = getConfiguredKeepAliveURL(themeDisplay);
+		String keepAliveURL = getConfiguredKeepAliveURL(request, themeDisplay);
 
 		if (Validator.isBlank(keepAliveURL)) {
 			return;
@@ -91,17 +96,19 @@ public class KeepAliveSPPortalDynamicInclude extends BaseDynamicInclude {
 		dynamicIncludeRegistry.register("/html/common/themes/bottom.jsp#post");
 	}
 
-	protected String getConfiguredKeepAliveURL(ThemeDisplay themeDisplay) {
+	protected String getConfiguredKeepAliveURL(
+		HttpServletRequest request, ThemeDisplay themeDisplay) {
+
 		String keepAliveURL = null;
 
 		try {
-			SamlProviderConfiguration samlProviderConfiguration =
-				_samlProviderConfigurationHelper.getSamlProviderConfiguration();
+			SamlSpSession samlSpSession = getSamlSpSession(
+				request, _samlSpSessionLocalService);
 
 			SamlSpIdpConnection samlSpIdpConnection =
 				_samlSpIdpConnectionLocalService.getSamlSpIdpConnection(
 					themeDisplay.getCompanyId(),
-					samlProviderConfiguration.defaultIdPEntityId());
+					samlSpSession.getSamlIdpEntityId());
 
 			ExpandoBridge expandoBridge =
 				samlSpIdpConnection.getExpandoBridge();
@@ -132,6 +139,45 @@ public class KeepAliveSPPortalDynamicInclude extends BaseDynamicInclude {
 		return keepAliveURL;
 	}
 
+	protected SamlSpSession getSamlSpSession(
+		HttpServletRequest request,
+		SamlSpSessionLocalService samlSpSessionLocalService) {
+
+		String samlSpSessionKey = getSamlSpSessionKey(request);
+
+		if (Validator.isNotNull(samlSpSessionKey)) {
+			SamlSpSession samlSpSession =
+				samlSpSessionLocalService.fetchSamlSpSessionBySamlSpSessionKey(
+					samlSpSessionKey);
+
+			if (samlSpSession != null) {
+				return samlSpSession;
+			}
+		}
+
+		HttpSession session = request.getSession();
+
+		SamlSpSession samlSpSession =
+			samlSpSessionLocalService.fetchSamlSpSessionByJSessionId(
+				session.getId());
+
+		return samlSpSession;
+	}
+
+	protected String getSamlSpSessionKey(HttpServletRequest request) {
+		HttpSession session = request.getSession();
+
+		String samlSpSessionKey = (String)session.getAttribute(
+			SamlWebKeys.SAML_SP_SESSION_KEY);
+
+		if (Validator.isNull(samlSpSessionKey)) {
+			samlSpSessionKey = CookieKeys.getCookie(
+				request, SamlWebKeys.SAML_SP_SESSION_KEY);
+		}
+
+		return samlSpSessionKey;
+	}
+
 	protected boolean isEnabled(ThemeDisplay themeDisplay) {
 		if (!_samlProviderConfigurationHelper.isEnabled()) {
 			return false;
@@ -159,6 +205,9 @@ public class KeepAliveSPPortalDynamicInclude extends BaseDynamicInclude {
 
 	@Reference
 	private SamlSpIdpConnectionLocalService _samlSpIdpConnectionLocalService;
+
+	@Reference
+	private SamlSpSessionLocalService _samlSpSessionLocalService;
 
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.saml.addon.keep.alive.web)"

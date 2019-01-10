@@ -15,27 +15,22 @@
 package com.liferay.saml.addon.keep.alive.web.internal.servlet.taglib;
 
 import com.liferay.expando.kernel.model.ExpandoBridge;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.taglib.BaseDynamicInclude;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.saml.addon.keep.alive.web.internal.constants.SamlKeepAliveConstants;
 import com.liferay.saml.constants.SamlWebKeys;
-import com.liferay.saml.persistence.exception.NoSuchSpIdpConnectionException;
 import com.liferay.saml.persistence.model.SamlIdpSpConnection;
 import com.liferay.saml.persistence.model.SamlSpIdpConnection;
 import com.liferay.saml.persistence.service.SamlIdpSpConnectionLocalService;
 import com.liferay.saml.persistence.service.SamlSpIdpConnectionLocalService;
-import com.liferay.saml.runtime.configuration.SamlProviderConfiguration;
-import com.liferay.saml.runtime.configuration.SamlProviderConfigurationHelper;
+import com.liferay.saml.persistence.service.SamlSpSessionLocalService;
 import com.liferay.saml.util.PortletPropsKeys;
 
 import java.io.IOException;
@@ -116,51 +111,22 @@ public class KeepAliveSamlWebDynamicInclude extends BaseDynamicInclude {
 	}
 
 	protected String getSpIdpKeepAliveUrl(HttpServletRequest request) {
+		SamlSpIdpConnection samlSpIdpConnection =
+			(SamlSpIdpConnection)request.getAttribute(
+				SamlWebKeys.SAML_SP_IDP_CONNECTION);
+
+		if (samlSpIdpConnection == null) {
+			return StringPool.BLANK;
+		}
+
 		String keepAliveURL = StringPool.BLANK;
 
-		SamlProviderConfiguration samlProviderConfiguration =
-			_samlProviderConfigurationHelper.getSamlProviderConfiguration();
+		if (samlSpIdpConnection != null) {
+			ExpandoBridge expandoBridge =
+				samlSpIdpConnection.getExpandoBridge();
 
-		String defaultEntityId = samlProviderConfiguration.defaultIdPEntityId();
-
-		if (!Validator.isBlank(defaultEntityId)) {
-			try {
-				ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-					WebKeys.THEME_DISPLAY);
-
-				SamlSpIdpConnection samlSpIdpConnection =
-					_samlSpIdpConnectionLocalService.getSamlSpIdpConnection(
-						themeDisplay.getCompanyId(), defaultEntityId);
-
-				ExpandoBridge expandoBridge =
-					samlSpIdpConnection.getExpandoBridge();
-
-				keepAliveURL = (String)expandoBridge.getAttribute(
-					SamlKeepAliveConstants.EXPANDO_COLUMN_NAME_KEEP_ALIVE_URL);
-			}
-			catch (NoSuchSpIdpConnectionException nssice) {
-				String message = StringBundler.concat(
-					"No SP IdP connection for default entity ", defaultEntityId,
-					" configured: ", nssice.getMessage());
-
-				if (_log.isDebugEnabled()) {
-					_log.debug(message, nssice);
-				}
-				else if (_log.isWarnEnabled()) {
-					_log.warn(message);
-				}
-			}
-			catch (PortalException pe) {
-				String message =
-					"Unable to get IdP keep alive URL: " + pe.getMessage();
-
-				if (_log.isDebugEnabled()) {
-					_log.debug(message, pe);
-				}
-				else if (_log.isWarnEnabled()) {
-					_log.warn(message);
-				}
-			}
+			keepAliveURL = (String)expandoBridge.getAttribute(
+				SamlKeepAliveConstants.EXPANDO_COLUMN_NAME_KEEP_ALIVE_URL);
 		}
 
 		if ((keepAliveURL == null) ||
@@ -204,10 +170,10 @@ public class KeepAliveSamlWebDynamicInclude extends BaseDynamicInclude {
 	private SamlIdpSpConnectionLocalService _samlIdpSpConnectionLocalService;
 
 	@Reference
-	private SamlProviderConfigurationHelper _samlProviderConfigurationHelper;
+	private SamlSpIdpConnectionLocalService _samlSpIdpConnectionLocalService;
 
 	@Reference
-	private SamlSpIdpConnectionLocalService _samlSpIdpConnectionLocalService;
+	private SamlSpSessionLocalService _samlSpSessionLocalService;
 
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.saml.addon.keep.alive.web)"

@@ -14,7 +14,7 @@
 
 package com.liferay.change.tracking.rest.internal.exception.mapper;
 
-import com.liferay.change.tracking.rest.internal.dto.GenericErrorResponseDTO;
+import com.liferay.change.tracking.rest.internal.model.GenericErrorModel;
 import com.liferay.portal.kernel.exception.SystemException;
 
 import javax.ws.rs.core.Response;
@@ -47,7 +47,7 @@ public class CTApplicationExceptionMapper
 		return Response.status(
 			status
 		).entity(
-			new GenericErrorResponseDTO(exception.getMessage())
+			new GenericErrorModel(exception.getMessage())
 		).build();
 	}
 

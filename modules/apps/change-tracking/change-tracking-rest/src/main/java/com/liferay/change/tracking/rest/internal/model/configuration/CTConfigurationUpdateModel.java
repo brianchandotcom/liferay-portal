@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.change.tracking.rest.internal.dto.configuration;
+package com.liferay.change.tracking.rest.internal.model.configuration;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonRootName;
@@ -21,52 +21,31 @@ import com.fasterxml.jackson.annotation.JsonRootName;
  * @author Máté Thurzó
  */
 @JsonRootName("configuration")
-public class CTConfigurationResponseDTO {
+public class CTConfigurationUpdateModel {
 
-	public static CTConfigurationResponseDTO.Builder forCompany(
-		long companyId) {
-
-		return new Builder(companyId);
+	public CTConfigurationUpdateModel() {
 	}
 
-	public long getCompanyId() {
-		return _companyId;
+	public long getUserId() {
+		return _userId;
 	}
 
 	public boolean isChangeTrackingEnabled() {
 		return _changeTrackingEnabled;
 	}
 
-	public static class Builder {
-
-		public CTConfigurationResponseDTO build() {
-			return _ctConfigurationResponseDTO;
-		}
-
-		public Builder setChangeTrackingEnabled(boolean changeTrackingEnabled) {
-			_ctConfigurationResponseDTO._changeTrackingEnabled =
-				changeTrackingEnabled;
-
-			return this;
-		}
-
-		private Builder(long companyId) {
-			_ctConfigurationResponseDTO = new CTConfigurationResponseDTO();
-
-			_ctConfigurationResponseDTO._companyId = companyId;
-		}
-
-		private final CTConfigurationResponseDTO _ctConfigurationResponseDTO;
-
+	public void setChangeTrackingEnabled(boolean changeTrackingEnabled) {
+		_changeTrackingEnabled = changeTrackingEnabled;
 	}
 
-	private CTConfigurationResponseDTO() {
+	public void setUserId(long userId) {
+		_userId = userId;
 	}
 
 	@JsonProperty("changeTrackingEnabled")
 	private boolean _changeTrackingEnabled;
 
-	@JsonProperty("companyId")
-	private long _companyId;
+	@JsonProperty("userId")
+	private long _userId;
 
 }

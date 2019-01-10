@@ -74,22 +74,22 @@ public class UserLocalServiceTest {
 
 		UserLocalServiceUtil.addGroupUsers(group.getGroupId(), _users);
 
-		List<User> groupUsers = UserLocalServiceUtil.getGroupUsers(
+		List<User> allGroupUsers = UserLocalServiceUtil.getGroupUsers(
 			group.getGroupId());
 
 		Assert.assertEquals(
-			groupUsers.toString(), _users.size() + 1, groupUsers.size());
-		Assert.assertTrue(groupUsers.containsAll(_users));
+			allGroupUsers.toString(), _users.size() + 1, allGroupUsers.size());
+		Assert.assertTrue(allGroupUsers.containsAll(_users));
 
 		int start = 5;
 		int delta = 5;
 
-		groupUsers = UserLocalServiceUtil.getGroupUsers(
+		List<User> groupUsers = UserLocalServiceUtil.getGroupUsers(
 			group.getGroupId(), WorkflowConstants.STATUS_APPROVED, start,
 			start + delta, null);
 
 		Assert.assertEquals(groupUsers.toString(), delta, groupUsers.size());
-		Assert.assertTrue(_users.containsAll(groupUsers));
+		Assert.assertTrue(allGroupUsers.containsAll(groupUsers));
 	}
 
 	@Test

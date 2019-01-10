@@ -20,7 +20,6 @@ import com.liferay.document.library.preview.DLPreviewRenderer;
 import com.liferay.document.library.preview.DLPreviewRendererProvider;
 import com.liferay.document.library.preview.exception.DLPreviewGenerationInProcessException;
 import com.liferay.document.library.preview.exception.DLPreviewSizeException;
-import com.liferay.document.library.preview.image.internal.constants.ImageDLPreviewWebKeys;
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.util.HashMapDictionary;
@@ -70,11 +69,6 @@ public class ImageDLPreviewRendererProvider
 				RequestDispatcher requestDispatcher =
 					_servletContext.getRequestDispatcher("/preview/view.jsp");
 
-				request.setAttribute(
-					ImageDLPreviewWebKeys.MODULE_PATH,
-					_npmResolver.resolveModuleName(
-						"document-library-preview-image/preview/js" +
-							"/ImagePreviewer.es"));
 				request.setAttribute(
 					WebKeys.DOCUMENT_LIBRARY_FILE_VERSION, fileVersion);
 

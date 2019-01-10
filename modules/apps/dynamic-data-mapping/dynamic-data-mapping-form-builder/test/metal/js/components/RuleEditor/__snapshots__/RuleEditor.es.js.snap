@@ -187,6 +187,7 @@ exports[`Rule Editor Acceptance Criteria When a condition is added and there's m
       </div>
     </div>
   </div>
+  <div class="liferay-ddm-form-rule-builder-footer"><button class="btn btn-primary" disabled="disabled" type="button">save</button><button class="btn btn-secondary" type="button">cancel</button></div>
 </div>
 `;
 
@@ -377,6 +378,7 @@ exports[`Rule Editor Acceptance Criteria should configure the conditions accordi
       </div>
     </div>
   </div>
+  <div class="liferay-ddm-form-rule-builder-footer"><button class="btn btn-primary" disabled="disabled" type="button">save</button><button class="btn btn-secondary" type="button">cancel</button></div>
 </div>
 `;
 
@@ -567,6 +569,7 @@ exports[`Rule Editor Acceptance Criteria should configure the conditions accordi
       </div>
     </div>
   </div>
+  <div class="liferay-ddm-form-rule-builder-footer"><button class="btn btn-primary" disabled="disabled" type="button">save</button><button class="btn btn-secondary" type="button">cancel</button></div>
 </div>
 `;
 

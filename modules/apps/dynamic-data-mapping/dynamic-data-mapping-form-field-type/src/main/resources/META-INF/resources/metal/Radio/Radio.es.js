@@ -16,6 +16,15 @@ class Radio extends Component {
 	static STATE = {
 
 		/**
+		 * @default 'string'
+		 * @instance
+		 * @memberof Text
+		 * @type {?(string|undefined)}
+		 */
+
+		dataType: Config.string().value('string'),
+
+		/**
 		 * @default undefined
 		 * @instance
 		 * @memberof FieldBase
@@ -148,6 +157,15 @@ class Radio extends Component {
 		 */
 
 		spritemap: Config.string(),
+
+		/**
+		 * @default undefined
+		 * @instance
+		 * @memberof Text
+		 * @type {?(string|undefined)}
+		 */
+
+		type: Config.string().value('radio'),
 
 		/**
 		 * @default undefined

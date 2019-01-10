@@ -4,6 +4,7 @@
  * Prints the DDM form rule builder cotainer.
  */
 {template .render}
+	{@param? dropdownExpandedIndex: number}
 	{@param rules: list<[
 			conditions: list<[
 				operator: string,
@@ -15,24 +16,36 @@
 			]>,
 			actions: list<[
 				action: string,
+				dataProviderName: ?,
 				expression: ?,
+				inputValue: ?,
 				target: string,
-				label: string
+				label: string,
+				outputValue: ?
 			]>,
 			logicalOperator: string
 		]>
 	}
+	{@param? rulesCardOptions: ?}
 	{@param strings: ?}
+	{@param spritemap: string}
+	{@param _handleDropdownClicked: any}
+	{@param _handleRuleCardClicked: any}
+
 	<div class="form-builder-rule-builder-container">
 		<h1 class="form-builder-section-title text-default">{$strings.rules}</h1>
 
 		<div class="liferay-ddm-form-rule-rules-list-container">
 			{call .rule_list}
+				{param dropdownExpandedIndex: $dropdownExpandedIndex /}
 				{param rules: $rules /}
+				{param rulesCardOptions: $rulesCardOptions /}
 				{param strings: $strings /}
+				{param spritemap: $spritemap /}
+				{param _handleDropdownClicked: $_handleDropdownClicked /}
+				{param _handleRuleCardClicked: $_handleRuleCardClicked /}
 			{/call}
 		</div>
-
 	</div>
 {/template}
 
@@ -46,19 +59,27 @@
 				operands: list<[
 					type: string,
 					label: string,
-					value: string
+					value: ?
 				]>
 			]>,
 			actions: list<[
 				action: string,
+				dataProviderName: ?,
 				expression: ?,
+				inputValue: ?,
 				target: string,
-				label: string
+				label: string,
+				outputValue: ?
 			]>,
 			logicalOperator: string
 		]>
 	}
 	{@param strings: ?}
+	{@param spritemap: string}
+	{@param _handleDropdownClicked: any}
+	{@param _handleRuleCardClicked: any}
+	{@param? dropdownExpandedIndex: number}
+	{@param? rulesCardOptions: ?}
 
 	<div class="form-builder-rule-list">
 		{if length($rules) > 0}
@@ -79,6 +100,7 @@
 
 								{if $condition.operands[1]}
 									{call .condition}
+										{param operandLabel: $condition.operands[1].label /}
 										{param operandType: $condition.operands[1].type /}
 										{param operandValue: $condition.operands[1].value /}
 										{param strings: $strings /}
@@ -97,11 +119,13 @@
 							{foreach $action in $rule.actions}
 								{call .action}
 									{param action: $action.action /}
+									{param dataProviderName: $action.dataProviderName /}
+									{param inputValue: $action.inputValue /}
 									{param expression: $action.expression /}
 									{param label: $action.label /}
 									{param logicalOperator: $rule.logicalOperator /}
+									{param outputValue: $action.outputValue /}
 									{param strings: $strings /}
-
 								{/call}
 								{if not isLast($action)}
 								, <br />
@@ -114,17 +138,26 @@
 					<div class="list-group-item-field">
 						<div class="card-col-field">
 							<div class="dropdown dropdown-action">
-								<ul class="dropdown-menu dropdown-menu-right">
-									<li class="rule-card-edit" data-card-id="{index($rule)}">
-										<a href="javascript:;">{$strings.edit}</a>
-									</li>
-									<li class="rule-card-delete" data-card-id="{index($rule)}">
-										<a href="javascript:;">{$strings.delete}</a>
-									</li>
-								</ul>
+								{let $ruleIndex: index($rule) /}
+								{let $isExpanded: $dropdownExpandedIndex == $ruleIndex /}
 
-								<a class="component-action dropdown-toggle" data-toggle="dropdown" href="#1">
-								</a>
+								<div class="ddm-rule-list-settings" data-card-id={$ruleIndex}>
+									{call ClayActionsDropdown.render}
+										{param items: $rulesCardOptions /}
+										{param expanded: $isExpanded /}
+										{param events: [
+											'itemClicked': $_handleRuleCardClicked
+										] /}
+										{param spritemap: $spritemap /}
+									{/call}
+
+									<button class="component-action cursor-pointer dropdown-toggle" data-rule-index="{$ruleIndex}" data-onclick={$_handleDropdownClicked}>
+										{call ClayIcon.render}
+											{param spritemap: $spritemap /}
+											{param symbol: 'ellipsis-v' /}
+										{/call}
+									</button>
+								</div>
 							</div>
 						</div>
 					</div>
@@ -175,21 +208,28 @@
  * Prints Rules Conditions.
  */
 {template .condition}
-	{@param operandType: string}
-	{@param operandValue: string}
+	{@param? operandLabel: string}
+	{@param? operandType: string}
+	{@param? operandValue: ?}
 	{@param strings: ?}
 
-	{if $operandType == 'double' or $operandType == 'integer' or $operandType == 'string'}
+	{if $operandType == 'double' or $operandType == 'integer' or $operandType == 'string' or $operandType == 'text' or $operandType == 'numeric'}
 		<span>{$strings.value} </span>
-		{else}
+	{else}
 		{if $operandType != 'user' and $operandType != 'list'}
 			<span>{$strings[$operandType]} </span>
 		{/if}
 	{/if}
 
-	{call .label}
-		{param content: $operandValue /}
-	{/call}
+	{if $operandLabel}
+		{call .label}
+			{param content: $operandLabel /}
+		{/call}
+	{else}
+		{call .label}
+			{param content: $operandValue /}
+		{/call}
+	{/if}
 {/template}
 
 /**
@@ -197,27 +237,25 @@
  */
 {template .action}
 	{@param action: string}
+	{@param dataProviderName: ?}
 	{@param expression: ?}
 	{@param label: ?}
+	{@param outputValue: ?}
 	{@param strings: ?}
 
 	<span><b>{$action} </b></span>
 
-	<span>{$strings['field']} </span>
-
 	{if $action == 'auto-fill'}
-
 		{call .label}
-			{param content: $label /}
+			{param content: $outputValue /}
 		{/call}
+		<span><b>{$strings['fromDataProvider']} {$dataProviderName}</b></span>
 	{elseif $action == 'calculate'}
 		{call .label}
 			{param content: $expression /}
 		{/call}
 
 		<b> into </b>
-
-		<span>{$strings['field']} </span>
 
 		{call .label}
 			{param content: $label /}

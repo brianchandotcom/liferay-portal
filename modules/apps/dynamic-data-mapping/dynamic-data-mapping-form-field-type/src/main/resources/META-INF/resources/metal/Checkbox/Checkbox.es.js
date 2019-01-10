@@ -16,6 +16,15 @@ class Checkbox extends Component {
 	static STATE = {
 
 		/**
+		 * @default 'string'
+		 * @instance
+		 * @memberof Text
+		 * @type {?(string|undefined)}
+		 */
+
+		dataType: Config.string().value('boolean'),
+
+		/**
 		 * @default undefined
 		 * @instance
 		 * @memberof FieldBase
@@ -122,6 +131,15 @@ class Checkbox extends Component {
 		 */
 
 		spritemap: Config.string(),
+
+		/**
+		 * @default undefined
+		 * @instance
+		 * @memberof Text
+		 * @type {?(string|undefined)}
+		 */
+
+		type: Config.string().value('checkbox'),
 
 		/**
 		 * @default undefined

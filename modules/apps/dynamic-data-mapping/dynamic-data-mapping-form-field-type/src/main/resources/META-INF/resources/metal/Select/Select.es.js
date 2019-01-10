@@ -12,6 +12,15 @@ class Select extends Component {
 	static STATE = {
 
 		/**
+		 * @default 'string'
+		 * @instance
+		 * @memberof Text
+		 * @type {?(string|undefined)}
+		 */
+
+		dataType: Config.string().value('string'),
+
+		/**
 		 * @default false
 		 * @instance
 		 * @memberof Select
@@ -174,6 +183,15 @@ class Select extends Component {
 				chooseAnOption: Liferay.Language.get('choose-an-option')
 			}
 		),
+
+		/**
+		 * @default undefined
+		 * @instance
+		 * @memberof Text
+		 * @type {?(string|undefined)}
+		 */
+
+		type: Config.string().value('select'),
 
 		/**
 		 * @default undefined

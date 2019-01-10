@@ -1,10 +1,13 @@
 import 'clay-button';
+import 'clay-dropdown';
 import {Config} from 'metal-state';
 import {EventHandler} from 'metal-events';
 import Component from 'metal-component';
-import dom from 'metal-dom';
 import Soy from 'metal-soy';
+import dom from 'metal-dom';
+
 import templates from './RuleList.soy.js';
+import {PagesVisitor} from '../../util/visitors.es';
 
 /**
  * LayoutRenderer.
@@ -14,6 +17,18 @@ import templates from './RuleList.soy.js';
 class RuleList extends Component {
 
 	static STATE = {
+		dataProvider: Config.arrayOf(
+			Config.shapeOf(
+				{
+					id: Config.string(),
+					name: Config.string(),
+					uuid: Config.string()
+				}
+			)
+		),
+
+		dropdownExpandedIndex: Config.number().internal(),
+
 		pages: Config.array().required(),
 
 		/**
@@ -30,8 +45,11 @@ class RuleList extends Component {
 						Config.shapeOf(
 							{
 								action: Config.string(),
+								ddmDataProviderInstanceUUID: Config.string(),
 								expression: Config.string(),
+								inputs: Config.object(),
 								label: Config.string(),
+								outputs: Config.object(),
 								target: Config.string()
 							}
 						)
@@ -53,10 +71,19 @@ class RuleList extends Component {
 							}
 						)
 					),
-					logicalOperator: Config.string()
+					['logical-operator']: Config.string()
 				}
 			)
 		),
+
+		roles: Config.arrayOf(
+			Config.shapeOf(
+				{
+					id: Config.string(),
+					name: Config.string()
+				}
+			)
+		).value([]),
 
 		/**
 		 * @default undefined
@@ -76,63 +103,137 @@ class RuleList extends Component {
 
 		strings: Config.object().value(
 			{
-				and: 'and',
-				'auto-fill': 'autofill-x-from-data-provider-x',
-				'belongs-to': 'belongs-to',
-				'calculate-field': 'calculate-field-x-as-x',
-				contains: 'contains',
-				delete: 'delete',
-				edit: 'edit',
-				emptyListText: 'there-are-no-rules-yet-click-on-plus-icon-below-to-add-the-first',
-				'enable-field': 'enable-x',
-				'equals-to': 'is-equal-to',
-				field: 'field',
-				'greater-than': 'is-greater-than',
-				'greater-than-equals': 'is-greater-than-or-equal-to',
-				if: 'if',
-				'is-empty': 'is-empty',
-				'jump-to-page': 'jump-to-page-x',
-				'less-than': 'is-less-than',
-				'less-than-equals': 'is-less-than-or-equal-to',
-				'not-contains': 'does-not-contain',
-				'not-equals-to': 'is-not-equal-to',
-				'not-is-empty': 'is-not-empty',
-				or: 'or',
-				'require-field': 'require-x',
-				rules: 'rules',
-				'show-field': 'show-x',
-				value: 'value'
+				and: Liferay.Language.get('and'),
+				'auto-fill': Liferay.Language.get('autofill-x-from-data-provider-x'),
+				'belongs-to': Liferay.Language.get('belongs-to'),
+				'calculate-field': Liferay.Language.get('calculate-field-x-as-x'),
+				contains: Liferay.Language.get('contains'),
+				delete: Liferay.Language.get('delete'),
+				edit: Liferay.Language.get('edit'),
+				emptyListText: Liferay.Language.get('there-are-no-rules-yet-click-on-plus-icon-below-to-add-the-first'),
+				'enable-field': Liferay.Language.get('enable-x'),
+				'equals-to': Liferay.Language.get('is-equal-to'),
+				field: Liferay.Language.get('field'),
+				fromDataProvider: Liferay.Language.get('from-data-provider'),
+				'greater-than': Liferay.Language.get('is-greater-than'),
+				'greater-than-equals': Liferay.Language.get('is-greater-than-or-equal-to'),
+				if: Liferay.Language.get('if'),
+				'is-empty': Liferay.Language.get('is-empty'),
+				'jump-to-page': Liferay.Language.get('jump-to-page-x'),
+				'less-than': Liferay.Language.get('is-less-than'),
+				'less-than-equals': Liferay.Language.get('is-less-than-or-equal-to'),
+				'not-contains': Liferay.Language.get('does-not-contain'),
+				'not-equals-to': Liferay.Language.get('is-not-equal-to'),
+				'not-is-empty': Liferay.Language.get('is-not-empty'),
+				or: Liferay.Language.get('or'),
+				'require-field': Liferay.Language.get('require-x'),
+				rules: Liferay.Language.get('rules'),
+				'show-field': Liferay.Language.get('show-x'),
+				value: Liferay.Language.get('value')
 			}
 		)
 	}
 
+	created() {
+		this._eventHandler = new EventHandler();
+
+		const newRules = this.rules;
+
+		this._setRules(newRules);
+
+		this.setState({rules: newRules});
+	}
+
+	attached() {
+		this._eventHandler.add(
+			dom.on(document, 'mousedown', this._handleDocumentMouseDown.bind(this), true)
+		);
+	}
+
+	/**
+	 * @inheritDoc
+	 */
+
+	disposeInternal() {
+		super.disposeInternal();
+
+		this._eventHandler.removeAllListeners();
+	}
+
+	_handleDocumentMouseDown({target}) {
+		const dropdownNode = dom.closest(target, '.dropdown-menu');
+		const dropdownSettings = dom.closest(target, '.ddm-rule-list-settings');
+
+		if (dropdownNode || dropdownSettings) {
+			return;
+		}
+
+		this.setState(
+			{
+				dropdownExpandedIndex: -1
+			}
+		);
+	}
+
+	/**
+	 * Find a field label based on fieldName
+	 * @param {string} fieldName
+	 * @return {string} the field label
+	 */
 	_getFieldLabel(fieldName) {
 		const pages = this.pages;
 
-		let fieldLabel;
+		let labelField = null;
 
-		if (pages) {
-			for (let page = 0; page < pages.length; page++) {
-				const rows = pages[page].rows;
+		if (pages && fieldName) {
+			const visitor = new PagesVisitor(pages);
 
-				for (let row = 0; row < rows.length; row++) {
-					const cols = rows[row].columns;
+			const {label} = visitor.findField(field => field.fieldName == fieldName);
 
-					for (let col = 0; col < cols.length; col++) {
-						const fields = cols[col].fields;
-
-						for (let field = 0; field < fields.length; field++) {
-							if (pages[page].rows[row].columns[col].fields[field].fieldName === fieldName) {
-								fieldLabel = pages[page].rows[row].columns[col].fields[field].label;
-								break;
-							}
-						}
-					}
-				}
-			}
+			labelField = label;
 		}
 
-		return fieldLabel;
+		return labelField;
+	}
+
+	_handleRuleCardClicked({data, target}) {
+		const cardId = target.element.closest('[data-card-id]').getAttribute('data-card-id');
+
+		if (data.item.settingsItem == 'edit') {
+			this.emit(
+				'ruleEdited',
+				{
+					ruleId: cardId
+				}
+			);
+		}
+		else if (data.item.settingsItem == 'delete') {
+			this.emit(
+				'ruleDeleted',
+				{
+					ruleId: cardId
+				}
+			);
+		}
+	}
+
+	_handleDropdownClicked(event) {
+		event.preventDefault();
+
+		const {dropdownExpandedIndex} = this;
+		const ruleNode = dom.closest(event.delegateTarget, '.component-action');
+
+		let ruleIndex = parseInt(ruleNode.dataset.ruleIndex, 10);
+
+		if (ruleIndex === dropdownExpandedIndex) {
+			ruleIndex = -1;
+		}
+
+		this.setState(
+			{
+				dropdownExpandedIndex: ruleIndex
+			}
+		);
 	}
 
 	_formatActions(actions) {
@@ -151,38 +252,142 @@ class RuleList extends Component {
 		return actions;
 	}
 
+	_getDataProviderName(id) {
+		const {dataProvider} = this;
+
+		return dataProvider.find(data => data.uuid == id).label;
+	}
+
 	_setRules(newRules) {
 		for (let rule = 0; rule < newRules.length; rule++) {
-			let actions = newRules[rule].actions;
+			const actions = newRules[rule].actions;
+			const conditions = newRules[rule].conditions;
 
-			actions = this._formatActions(actions);
+			actions.forEach(
+				action => {
+					if (action.action === 'auto-fill') {
+						const inputValue = Object.values(action.inputs).map(fieldName => this._getFieldLabel(fieldName));
 
-			newRules[rule].actions = actions;
+						action.inputValue = inputValue.toString();
+						const outputValue = Object.values(action.outputs).map(fieldName => this._getFieldLabel(fieldName));
 
-			const logicalOperator = newRules[rule]['logical-operator'].toLowerCase();
+						action.outputValue = outputValue.toString();
+					}
+				}
+			);
 
-			newRules[rule].logicalOperator = logicalOperator;
+			newRules[rule].conditions = conditions.map(
+				condition => {
+					if (condition.operands.length < 2 && condition.operands[0].type === 'list') {
+						condition.operands = [
+							{
+								label: 'user',
+								repeatable: false,
+								type: 'user',
+								value: 'user'
+							},
+							{
+								...condition.operands[0],
+								label: condition.operands[0].value
+							}
+						];
+					}
+
+					return condition;
+				}
+			);
+
+			let logicalOperator;
+
+			if (newRules[rule]['logical-operator']) {
+				logicalOperator = newRules[rule]['logical-operator'].toLowerCase();
+				newRules[rule].logicalOperator = logicalOperator;
+
+			}
+			else if (newRules[rule].logicalOperator) {
+				logicalOperator = newRules[rule].logicalOperator.toLowerCase();
+				newRules[rule].logicalOperator = logicalOperator;
+			}
 		}
 
 		return newRules;
 	}
 
+	_setDataProviderNames(states) {
+		const newRules = states.rules;
+
+		if (this.dataProvider) {
+			for (let rule = 0; rule < newRules.length; rule++) {
+				const actions = newRules[rule].actions;
+
+				actions.forEach(
+					action => {
+						if (action.action === 'auto-fill') {
+							const dataProviderName = this._getDataProviderName(action.ddmDataProviderInstanceUUID);
+
+							action.dataProviderName = dataProviderName;
+						}
+					}
+				);
+			}
+		}
+
+		return newRules;
+	}
+
+	_getRulesCardOptions() {
+		const rulesCardOptions = [
+			{
+				'label': Liferay.Language.get('edit'),
+				'settingsItem': 'edit'
+			},
+			{
+				'label': Liferay.Language.get('delete'),
+				'settingsItem': 'delete'
+			}
+		];
+
+		return rulesCardOptions;
+	}
+
 	prepareStateForRender(states) {
+		const {roles} = this;
+		const rules = this._setDataProviderNames(states);
+
 		return {
 			...states,
-			rules: states.rules.map(
+			rules: rules.map(
 				rule => {
 					return {
 						...rule,
+						actions: rule.actions.map(
+							actionItem => {
+								return {
+									...actionItem,
+									label: this._getFieldLabel(actionItem.target),
+									target: this._getFieldLabel(actionItem.target)
+								};
+							}
+						),
 						conditions: rule.conditions.map(
 							condition => {
 								return {
 									...condition,
 									operands: condition.operands.map(
-										operand => {
+										(operand, index) => {
+											let {label} = operand;
+
+											if (operand.type === 'field') {
+												label = this._getFieldLabel(operand.value);
+											}
+											else if (index == 1 && condition.operands[0].type === 'user' && roles.length) {
+												label = roles.find(role => role.id === operand.value).label;
+											}
+
 											return {
 												...operand,
-												value: operand.type === 'field' ? this._getFieldLabel(operand.value) : operand.value
+												label,
+												value: this._setOperandValue(operand)
 											};
 										}
 									)
@@ -191,41 +396,26 @@ class RuleList extends Component {
 						)
 					};
 				}
-			)
+			),
+			rulesCardOptions: this._getRulesCardOptions()
 		};
 	}
 
-	created() {
-		this._eventHandler = new EventHandler();
+	_setOperandValue(operand) {
+		let field = '';
 
-		const newRules = this.rules;
+		if (operand.type === 'field') {
+			field = this._getFieldLabel(operand.value);
+		}
+		else {
+			field = operand.value;
+		}
 
-		this._setRules(newRules);
+		if ((field != '') && (typeof (field) == 'undefined')) {
+			field = operand.value;
+		}
 
-		this.setState({rules: newRules});
-	}
-
-	attached() {
-		this._eventHandler.add(
-			dom.on('.rule-card-delete', 'click', this.deleteRule.bind(this))
-		);
-	}
-
-	deleteRule(event) {
-		const {delegateTarget} = event;
-		const {cardId} = delegateTarget.dataset;
-
-		const currentRules = this.rules;
-
-		currentRules.splice(cardId, 1);
-
-		this.rules = currentRules;
-
-		this.setState(
-			{
-				rules: currentRules
-			}
-		);
+		return field;
 	}
 }
 

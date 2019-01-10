@@ -123,6 +123,15 @@ class KeyValue extends Component {
 		spritemap: Config.string(),
 
 		/**
+		 * @default undefined
+		 * @instance
+		 * @memberof Text
+		 * @type {?(string|undefined)}
+		 */
+
+		type: Config.string().value('key-value'),
+
+		/**
 			 * @default undefined
 			 * @instance
 			 * @memberof KeyValue

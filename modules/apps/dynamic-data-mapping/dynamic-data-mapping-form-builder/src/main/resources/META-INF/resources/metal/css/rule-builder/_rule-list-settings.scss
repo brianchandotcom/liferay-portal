@@ -1,0 +1,11 @@
+$c: '.ddm-rule-list-settings';
+
+#{$c} {
+	position: relative;
+
+	> .component-action {
+		left: 0;
+		position: absolute;
+		top: 0;
+	}
+}

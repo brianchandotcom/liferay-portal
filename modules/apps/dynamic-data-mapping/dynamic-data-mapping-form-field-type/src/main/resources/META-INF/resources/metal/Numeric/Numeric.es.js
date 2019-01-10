@@ -158,6 +158,15 @@ class Numeric extends Component {
 		/**
 		 * @default undefined
 		 * @instance
+		 * @memberof Text
+		 * @type {?(string|undefined)}
+		 */
+
+		type: Config.string().value('numeric'),
+
+		/**
+		 * @default undefined
+		 * @instance
 		 * @memberof Numeric
 		 * @type {?(string|undefined)}
 		 */

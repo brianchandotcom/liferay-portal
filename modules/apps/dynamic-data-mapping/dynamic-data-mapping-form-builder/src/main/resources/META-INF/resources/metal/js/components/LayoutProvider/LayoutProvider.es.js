@@ -1,12 +1,13 @@
 import {Config} from 'metal-state';
 import {FormSupport} from '../Form/index.es';
-import {pageStructure} from '../../util/config.es';
+import {pageStructure, rule} from '../../util/config.es';
 import {PagesVisitor} from '../../util/visitors.es';
 import {setLocalizedValue} from '../../util/i18n.es';
 import {sub} from '../../util/strings.es';
 import Component from 'metal-jsx';
 import autobind from 'autobind-decorator';
 import {generateInstanceId} from '../../util/fieldSupport.es';
+import RulesSupport from '../RuleBuilder/RulesSupport.es';
 
 /**
  * LayoutProvider listens to your children's events to
@@ -48,14 +49,16 @@ class LayoutProvider extends Component {
 			}
 		),
 
+		rules: Config.arrayOf(rule),
+
 		/**
 		 * @default undefined
 		 * @instance
 		 * @memberof LayoutProvider
 		 * @type {?(array|undefined)}
 		 */
-
 		spritemap: Config.string()
+
 	};
 
 	static STATE = {
@@ -106,36 +109,17 @@ class LayoutProvider extends Component {
 			}
 		).value({}),
 
+		/**
+		 * @default undefined
+		 * @instance
+		 * @memberof LayoutProvider
+		 * @type {?(array|undefined)}
+		 */
+
+		rules: Config.arrayOf(rule).valueFn('_rulesValueFn'),
+
 		successPageSettings: Config.object().valueFn('_successPageSettingsValueFn')
 	};
-
-	_pagesValueFn() {
-		const {initialPages} = this.props;
-
-		return initialPages;
-	}
-
-	_paginationModeValueFn() {
-		return this.props.initialPaginationMode;
-	}
-
-	_setInitialPages(initialPages) {
-		const visitor = new PagesVisitor(initialPages);
-
-		return visitor.mapFields(
-			field => {
-				return {
-					...field,
-					localizedValue: {},
-					value: undefined
-				};
-			}
-		);
-	}
-
-	_successPageSettingsValueFn() {
-		return this.props.initialSuccessPageSettings;
-	}
 
 	_handleActivePageUpdated(activePage) {
 		this.setState(
@@ -218,6 +202,57 @@ class LayoutProvider extends Component {
 		);
 	}
 
+	formatRules(pages) {
+		const visitor = new PagesVisitor(pages);
+
+		const rules = this.state.rules.map(
+			rule => {
+				const {actions, conditions} = rule;
+
+				conditions.forEach(
+					(condition, index) => {
+						let firstOperandFieldExists = false;
+						let secondOperandFieldExists = false;
+
+						const secondOperand = condition.operands[1];
+
+						visitor.mapFields(
+							({fieldName}) => {
+								if (condition.operands[0].value === fieldName) {
+									firstOperandFieldExists = true;
+								}
+
+								if (secondOperand && secondOperand.value === fieldName) {
+									secondOperandFieldExists = true;
+								}
+							}
+						);
+
+						if (condition.operands[0].value === 'user') {
+							firstOperandFieldExists = true;
+						}
+
+						if (!firstOperandFieldExists) {
+							RulesSupport.clearAllConditionFieldValues(condition);
+						}
+
+						if (!secondOperandFieldExists && secondOperand && secondOperand.type == 'field') {
+							RulesSupport.clearSecondOperandValue(condition);
+						}
+					}
+				);
+
+				return {
+					...rule,
+					actions: RulesSupport.syncActions(pages, actions),
+					conditions
+				};
+			}
+		);
+
+		return rules;
+	}
+
 	/**
 	 * @param {!Object} event
 	 * @private
@@ -244,7 +279,8 @@ class LayoutProvider extends Component {
 		this.setState(
 			{
 				focusedField: {},
-				pages: newContext
+				pages: newContext,
+				rules: this.formatRules(newContext)
 			}
 		);
 	}
@@ -457,6 +493,47 @@ class LayoutProvider extends Component {
 		);
 	}
 
+	_handleRuleAdded(rule) {
+		this.setState(
+			{
+				rules: [
+					...this.state.rules,
+					rule
+				]
+			}
+		);
+	}
+
+	_handleRuleDeleted({ruleId}) {
+		const {rules} = this.state;
+
+		rules.splice(ruleId, 1);
+
+		this.setState(
+			{
+				rules
+			}
+		);
+	}
+
+	_handleRuleSaveEdition(event) {
+		const {actions, conditions, ruleEditedIndex} = event;
+
+		const logicalOperator = event['logical-operator'];
+
+		const {rules} = this.state;
+
+		rules.splice(
+			ruleEditedIndex,
+			1,
+			{
+				actions,
+				conditions,
+				'logical-operator': logicalOperator
+			}
+		);
+	}
+
 	/**
 	 * Update the success page settings
 	 * @param {!Object} successPageSettings
@@ -468,6 +545,16 @@ class LayoutProvider extends Component {
 				successPageSettings
 			}
 		);
+	}
+
+	_pagesValueFn() {
+		const {initialPages} = this.props;
+
+		return initialPages;
+	}
+
+	_paginationModeValueFn() {
+		return this.props.initialPaginationMode;
 	}
 
 	/**
@@ -487,6 +574,16 @@ class LayoutProvider extends Component {
 		return pages;
 	}
 
+	_rulesValueFn() {
+		const {rules} = this.props;
+
+		return rules;
+	}
+
+	_successPageSettingsValueFn() {
+		return this.props.initialSuccessPageSettings;
+	}
+
 	/**
 	 * @param {!Array} pages
 	 * @param {!Object} target
@@ -504,6 +601,22 @@ class LayoutProvider extends Component {
 			rowIndex,
 			columnIndex,
 			fields
+		);
+	}
+
+	_setInitialPages(initialPages) {
+		const visitor = new PagesVisitor(initialPages);
+
+		return visitor.mapFields(
+			field => {
+				return {
+					...field,
+					localizedValue: {},
+					readOnly: true,
+					value: undefined,
+					visible: true
+				};
+			}
 		);
 	}
 
@@ -531,7 +644,7 @@ class LayoutProvider extends Component {
 
 	render() {
 		const {children, spritemap} = this.props;
-		const {activePage, focusedField, pages, paginationMode, successPageSettings} = this.state;
+		const {activePage, focusedField, pages, paginationMode, rules, successPageSettings} = this.state;
 
 		if (children.length) {
 			const events = {
@@ -549,6 +662,9 @@ class LayoutProvider extends Component {
 				pageDeleted: this._handlePageDeleted.bind(this),
 				pageReset: this._handlePageReset.bind(this),
 				paginationModeUpdated: this._handlePaginationModeUpdated.bind(this),
+				ruleAdded: this._handleRuleAdded.bind(this),
+				ruleDeleted: this._handleRuleDeleted.bind(this),
+				ruleSaveEdition: this._handleRuleSaveEdition.bind(this),
 				successPageChanged: this._handleSuccessPageChanged.bind(this)
 			};
 
@@ -564,6 +680,7 @@ class LayoutProvider extends Component {
 						focusedField,
 						pages,
 						paginationMode,
+						rules,
 						spritemap,
 						successPageSettings
 					}

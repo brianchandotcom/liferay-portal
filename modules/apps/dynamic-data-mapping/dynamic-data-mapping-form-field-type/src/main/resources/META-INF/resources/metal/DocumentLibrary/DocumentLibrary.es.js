@@ -9,6 +9,15 @@ class DocumentLibrary extends Component {
 	static STATE = {
 
 		/**
+		 * @default 'string'
+		 * @instance
+		 * @memberof Text
+		 * @type {?(string|undefined)}
+		 */
+
+		dataType: Config.string().value('date'),
+
+		/**
 		 * @default undefined
 		 * @instance
 		 * @memberof DocumentLibrary
@@ -121,6 +130,15 @@ class DocumentLibrary extends Component {
 		 */
 
 		tooltip: Config.string(),
+
+		/**
+		 * @default undefined
+		 * @instance
+		 * @memberof Text
+		 * @type {?(string|undefined)}
+		 */
+
+		type: Config.string().value('document_library'),
 
 		/**
 		 * @default undefined

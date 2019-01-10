@@ -15,6 +15,15 @@ class Date extends Component {
 	static STATE = {
 
 		/**
+		 * @default 'string'
+		 * @instance
+		 * @memberof Text
+		 * @type {?(string|undefined)}
+		 */
+
+		dataType: Config.string().value('date'),
+
+		/**
 		 * @default false
 		 * @instance
 		 * @memberof Date
@@ -94,6 +103,15 @@ class Date extends Component {
 		 */
 
 		spritemap: Config.string(),
+
+		/**
+		 * @default undefined
+		 * @instance
+		 * @memberof Text
+		 * @type {?(string|undefined)}
+		 */
+
+		type: Config.string().value('date'),
 
 		/**
 		 * @default undefined

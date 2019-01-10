@@ -19,6 +19,7 @@ class Parent extends JSXComponent {
 			<LayoutProvider
 				initialPages={[...pages]}
 				ref="provider"
+				rules={[]}
 				spritemap={spritemap}
 			>
 				<Child ref="child" />
@@ -53,7 +54,8 @@ describe.only(
 			() => {
 				component = new LayoutProvider(
 					{
-						initialPages: pages
+						initialPages: pages,
+						rules: []
 					}
 				);
 
@@ -114,6 +116,33 @@ describe.only(
 				jest.runAllTimers();
 
 				expect(child.props.focusedField).toEqual(provider.state.focusedField);
+			}
+		);
+
+		it(
+			'should receive ruleAdded event to save a rule',
+			() => {
+				component = new Parent();
+
+				jest.runAllTimers();
+
+				const {child, provider} = component.refs;
+				const oldRules = [...child.props.rules];
+
+				const mockEvent = {
+					action: 'calculate',
+					expression: '22+2',
+					label: 'liferay',
+					target: 'liferay'
+				};
+
+				child.emit('ruleAdded', mockEvent);
+
+				jest.runAllTimers();
+
+				expect(provider.state.rules).toMatchSnapshot();
+				expect(oldRules.length).toEqual(provider.state.rules.length - 1);
+				expect([...oldRules, mockEvent]).toEqual(provider.state.rules);
 			}
 		);
 

@@ -589,7 +589,7 @@ AUI.add(
 													}
 												);
 
-												if (callback) {
+												if (A.Lang.isFunction(callback)) {
 													callback.call();
 												}
 											}
@@ -609,10 +609,8 @@ AUI.add(
 									}
 								);
 							}
-							else {
-								if (callback) {
-									callback.call();
-								}
+							else if (A.Lang.isFunction(callback)) {
+								callback.call();
 							}
 						}
 					},

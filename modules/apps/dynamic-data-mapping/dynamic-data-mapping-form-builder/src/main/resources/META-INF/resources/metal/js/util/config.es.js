@@ -29,3 +29,35 @@ export const focusedFieldStructure = Config.shapeOf(
 		rowIndex: Config.number()
 	}
 );
+
+export const rule = Config.shapeOf(
+	{
+		actions: Config.arrayOf(
+			Config.shapeOf(
+				{
+					action: Config.string(),
+					label: Config.string(),
+					target: Config.string()
+				}
+			)
+		),
+		conditions: Config.arrayOf(
+			Config.shapeOf(
+				{
+					operands: Config.arrayOf(
+						Config.shapeOf(
+							{
+								label: Config.string(),
+								repeatable: Config.bool(),
+								type: Config.string(),
+								value: Config.string()
+							}
+						)
+					),
+					operator: Config.string()
+				}
+			)
+		),
+		logicalOperator: Config.string()
+	}
+);

@@ -110,7 +110,16 @@ class Options extends Component {
 
 		key: Config.string(),
 
-		placeholder: Config.string()
+		placeholder: Config.string(),
+
+		/**
+		 * @default undefined
+		 * @instance
+		 * @memberof Text
+		 * @type {?(string|undefined)}
+		 */
+
+		type: Config.string().value('options')
 	};
 
 	_getFieldIndex(element) {

@@ -5,7 +5,7 @@ class PagesVisitor {
 		this._pages = [...pages];
 	}
 
-	_map(pageMapper, rowMapper, columnMapper, fieldMapper) {
+	_map(pageMapper, rowMapper, columnMapper, fieldFn) {
 		return this._pages.map(
 			(page, pageIndex) => {
 				const newPage = {
@@ -33,16 +33,7 @@ class PagesVisitor {
 
 										return {
 											...newColumn,
-											fields: newColumn.fields.map(
-												(field, fieldIndex) => {
-													const newField = {
-														...field,
-														...fieldMapper(field, fieldIndex, columnIndex, rowIndex, pageIndex)
-													};
-
-													return newField;
-												}
-											)
+											fields: fieldFn(newColumn.fields, columnIndex, rowIndex, pageIndex)
 										};
 									}
 								)
@@ -59,7 +50,23 @@ class PagesVisitor {
 	}
 
 	mapFields(mapper) {
-		return this._map(identity, identity, identity, mapper);
+		return this._map(
+			identity,
+			identity,
+			identity,
+			(fields, ...args) => {
+				return fields.map(
+					(field, fieldIndex) => {
+						const newField = {
+							...field,
+							...mapper(field, fieldIndex, ...args)
+						};
+
+						return newField;
+					}
+				);
+			}
+		);
 	}
 
 	mapPages(mapper) {
@@ -72,6 +79,36 @@ class PagesVisitor {
 
 	mapColumns(mapper) {
 		return this._map(identity, identity, mapper, identity);
+	}
+
+	/**
+	 * Find a field based on the fieldName property
+	 * @param {string} fieldName
+	 * @returns {object} a form field
+	 */
+	findField(condition) {
+		let conditionField;
+
+		this._map(
+			identity,
+			identity,
+			identity,
+			(fields, ...args) => {
+				const field = fields.find(
+					(field, fieldIndex) => {
+						condition(field, fieldIndex, ...args);
+
+						return condition(field, fieldIndex, ...args);
+					}
+				);
+
+				if (field) {
+					conditionField = field;
+				}
+			}
+		);
+
+		return conditionField;
 	}
 }
 

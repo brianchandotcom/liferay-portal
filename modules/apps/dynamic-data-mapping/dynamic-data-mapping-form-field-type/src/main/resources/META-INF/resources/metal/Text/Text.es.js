@@ -9,6 +9,15 @@ class Text extends Component {
 	static STATE = {
 
 		/**
+		 * @default 'string'
+		 * @instance
+		 * @memberof Text
+		 * @type {?(string|undefined)}
+		 */
+
+		dataType: Config.string().value('string'),
+
+		/**
 		 * @default undefined
 		 * @instance
 		 * @memberof Text
@@ -124,6 +133,15 @@ class Text extends Component {
 		 */
 
 		tip: Config.string(),
+
+		/**
+		 * @default undefined
+		 * @instance
+		 * @memberof Text
+		 * @type {?(string|undefined)}
+		 */
+
+		type: Config.string().value('text'),
 
 		/**
 		 * @default undefined

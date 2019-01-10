@@ -124,7 +124,16 @@ class Grid extends Component {
 		 * @type {?(string|undefined)}
 		 */
 
-		spritemap: Config.string()
+		spritemap: Config.string(),
+
+		/**
+		 * @default undefined
+		 * @instance
+		 * @memberof Text
+		 * @type {?(string|undefined)}
+		 */
+
+		type: Config.string().value('grid')
 	};
 }
 

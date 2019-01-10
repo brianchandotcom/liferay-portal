@@ -241,7 +241,7 @@ describe(
 		);
 
 		it(
-			'should return true if there are fields in the pages line',
+			'should return true if there are fields in a row',
 			() => {
 				const pageIndex = 0;
 				const rowIndex = 0;
@@ -253,7 +253,7 @@ describe(
 		);
 
 		it(
-			'should return false if there are fields in the pages line',
+			'should return false if there are fields in a row',
 			() => {
 				const pageIndex = 0;
 				const rowIndex = 0;

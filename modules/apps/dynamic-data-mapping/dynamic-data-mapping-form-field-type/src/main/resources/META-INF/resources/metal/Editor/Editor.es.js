@@ -128,6 +128,15 @@ class Editor extends Component {
 		/**
 		 * @default undefined
 		 * @instance
+		 * @memberof Text
+		 * @type {?(string|undefined)}
+		 */
+
+		type: Config.string().value('editor'),
+
+		/**
+		 * @default undefined
+		 * @instance
 		 * @memberof Editor
 		 * @type {?(string|undefined)}
 		 */

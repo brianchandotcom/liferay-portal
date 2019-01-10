@@ -16,8 +16,13 @@ package com.liferay.portal.search.solr7.internal.search.engine.adapter.index;
 
 import com.liferay.portal.search.engine.adapter.index.RefreshIndexRequest;
 import com.liferay.portal.search.engine.adapter.index.RefreshIndexResponse;
+import com.liferay.portal.search.solr7.internal.connection.SolrClientManager;
+
+import org.apache.solr.client.solrj.SolrClient;
+import org.apache.solr.common.SolrException;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Bryan Engler
@@ -30,7 +35,31 @@ public class RefreshIndexRequestExecutorImpl
 	public RefreshIndexResponse execute(
 		RefreshIndexRequest refreshIndexRequest) {
 
-		throw new UnsupportedOperationException();
+		String[] indexNames = refreshIndexRequest.getIndexNames();
+
+		SolrClient solrClient = _solrClientManager.getSolrClient();
+
+		try {
+			solrClient.commit(indexNames[0]);
+
+			return new RefreshIndexResponse();
+		}
+		catch (Exception e) {
+			if (e instanceof SolrException) {
+				SolrException se = (SolrException)e;
+
+				throw se;
+			}
+
+			throw new RuntimeException(e);
+		}
 	}
+
+	@Reference(unbind = "-")
+	protected void setSolrClientManager(SolrClientManager solrClientManager) {
+		_solrClientManager = solrClientManager;
+	}
+
+	private SolrClientManager _solrClientManager;
 
 }

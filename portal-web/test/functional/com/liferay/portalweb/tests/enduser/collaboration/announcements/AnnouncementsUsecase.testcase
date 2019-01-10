@@ -112,29 +112,22 @@ definition {
 			entryTitle = "Announcements Entry Title"
 		);
 
-		var siteName = TestCase.getSiteName(siteName = "${siteName}");
-
 		AnnouncementsEntry.addPG(
-			distributionScope = "${siteName}",
+			distributionScope = "Community Site Name",
 			entryContent = "Announcements Entry2 Scoped Content",
 			entryTitle = "Announcements Entry2 Scoped Title",
 			entryURL = "http://www.yahoo.com"
 		);
 
-		Navigator.gotoSitePage(
-			pageName = "Site Page Name",
-			siteName = "Community Site Name"
-		);
-
-		AnnouncementsEntry.viewNoPG(entryTitle = "Announcements Entry2 Scoped Title");
-
-		Navigator.gotoPage(pageName = "Announcements Page");
-
 		AnnouncementsEntry.viewPG(
-			distributionScope = "${siteName}",
+			distributionScope = "Community Site Name",
 			entryContent = "Announcements Entry2 Scoped Content",
 			entryTitle = "Announcements Entry2 Scoped Title"
 		);
+
+		Navigator.gotoPage(pageName = "Announcements Page");
+
+		AnnouncementsEntry.viewNoPG(entryTitle = "Announcements Entry2 Scoped Title");
 
 		JSONUser.addUser(
 			userEmailAddress = "userea@liferay.com",
@@ -166,8 +159,21 @@ definition {
 			entryTitle = "Announcements Entry Title"
 		);
 
+		AnnouncementsEntry.viewNoPG(entryTitle = "Announcements Entry2 Scoped Title");
+
+		Navigator.gotoSitePage(
+			pageName = "Site Page Name",
+			siteName = "Community Site Name"
+		);
+
 		AnnouncementsEntry.viewViaEntriesPG(
-			distributionScope = "${siteName}",
+			distributionScope = "General",
+			entryContent = "Announcements Entry Content",
+			entryTitle = "Announcements Entry Title"
+		);
+
+		AnnouncementsEntry.viewViaEntriesPG(
+			distributionScope = "Community Site Name",
 			entryContent = "Announcements Entry2 Scoped Content",
 			entryTitle = "Announcements Entry2 Scoped Title"
 		);
@@ -179,7 +185,6 @@ definition {
 			Navigator.gotoPage(pageName = "Announcements Page");
 
 			AnnouncementsEntry.addPG(
-				distributionScope = "General",
 				entryContent = "Announcements Entry Content ${entryCount}",
 				entryTitle = "Announcements Entry Title ${entryCount}",
 				entryURL = "http://www.liferay.com"

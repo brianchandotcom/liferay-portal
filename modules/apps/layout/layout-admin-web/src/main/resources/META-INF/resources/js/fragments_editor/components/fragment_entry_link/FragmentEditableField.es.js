@@ -29,7 +29,7 @@ const DEFAULT_LANGUAGE_ID_KEY = 'defaultValue';
  * @review
  * @type {!number}
  */
-const SAVE_CHANGES_DELAY = 2000;
+const SAVE_CHANGES_DELAY = 1500;
 
 /**
  * Buttons rendered inside the tooltip

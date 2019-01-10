@@ -262,6 +262,7 @@ AUI.add(
 									instance._editTagsComponent = new EditTags.default(
 										{
 											fileEntries: instance._selectedFileEntries,
+											portletNamespace: namespace,
 											repositoryId: parseFloat(form.get(namespace + 'repositoryId').val()),
 											spritemap: themeDisplay.getPathThemeImages() + "/lexicon/icons.svg",
 											urlTags: urlTags,

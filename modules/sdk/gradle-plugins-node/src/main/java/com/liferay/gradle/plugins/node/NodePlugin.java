@@ -508,25 +508,31 @@ public class NodePlugin implements Plugin<Project> {
 		npmRunTask.setNodeVersion(nodeExtension.getNodeVersion());
 		npmRunTask.setNpmVersion(nodeExtension.getNpmVersion());
 
-		SourceSet sourceSet = GradleUtil.getSourceSet(
-			npmRunTask.getProject(), SourceSet.MAIN_SOURCE_SET_NAME);
+		Project project = npmRunTask.getProject();
 
-		SourceSetOutput sourceSetOutput = sourceSet.getOutput();
+		PluginContainer pluginContainer = project.getPlugins();
 
-		File classesDir = sourceSetOutput.getClassesDir();
+		if (pluginContainer.hasPlugin(JavaPlugin.class)) {
+			SourceSet sourceSet = GradleUtil.getSourceSet(
+				npmRunTask.getProject(), SourceSet.MAIN_SOURCE_SET_NAME);
 
-		if (!classesDir.exists()) {
-			TaskOutputs taskOutputs = npmRunTask.getOutputs();
+			SourceSetOutput sourceSetOutput = sourceSet.getOutput();
 
-			taskOutputs.upToDateWhen(
-				new Spec<Task>() {
+			File classesDir = sourceSetOutput.getClassesDir();
 
-					@Override
-					public boolean isSatisfiedBy(Task task) {
-						return false;
-					}
+			if (!classesDir.exists()) {
+				TaskOutputs taskOutputs = npmRunTask.getOutputs();
 
-				});
+				taskOutputs.upToDateWhen(
+					new Spec<Task>() {
+
+						@Override
+						public boolean isSatisfiedBy(Task task) {
+							return false;
+						}
+
+					});
+			}
 		}
 	}
 

@@ -49,7 +49,6 @@ import com.liferay.saml.opensaml.integration.resolver.AttributeResolver;
 import com.liferay.saml.opensaml.integration.resolver.NameIdResolver;
 import com.liferay.saml.opensaml.integration.resolver.UserResolver;
 import com.liferay.saml.persistence.exception.NoSuchIdpSpSessionException;
-import com.liferay.saml.persistence.exception.NoSuchSpIdpConnectionException;
 import com.liferay.saml.persistence.model.SamlIdpSsoSession;
 import com.liferay.saml.persistence.model.SamlSpAuthRequest;
 import com.liferay.saml.persistence.model.SamlSpIdpConnection;
@@ -765,7 +764,15 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 			String relayState)
 		throws Exception {
 
-		String entityId = metadataManager.getDefaultIdpEntityId();
+		SamlSpIdpConnection samlSpIdpConnection =
+			(SamlSpIdpConnection)request.getAttribute(
+				SamlWebKeys.SAML_SP_IDP_CONNECTION);
+
+		if (samlSpIdpConnection == null) {
+			return;
+		}
+
+		String entityId = samlSpIdpConnection.getSamlIdpEntityId();
 
 		MessageContext<?> messageContext = getMessageContext(
 			request, response, entityId);
@@ -823,19 +830,9 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 
 		authnRequest.setID(generateIdentifier(20));
 
-		long companyId = portal.getCompanyId(request);
-
 		boolean forceAuthn = false;
 
-		try {
-			SamlSpIdpConnection samlSpIdpConnection =
-				_samlSpIdpConnectionLocalService.getSamlSpIdpConnection(
-					companyId, entityId);
-
-			forceAuthn = samlSpIdpConnection.isForceAuthn();
-		}
-		catch (NoSuchSpIdpConnectionException nssice) {
-		}
+		forceAuthn = samlSpIdpConnection.isForceAuthn();
 
 		authnRequest.setForceAuthn(forceAuthn);
 

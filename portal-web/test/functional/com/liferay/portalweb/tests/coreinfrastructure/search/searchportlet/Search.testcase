@@ -39,6 +39,21 @@ definition {
 	}
 
 	@priority = "4"
+	test AssertSearchInsightsExplain {
+		var portalURL = PropsUtil.get("portal.url");
+
+		Navigator.openSpecificURL(url = "${portalURL}/web/guest/search");
+
+		Portlet.addPG(portletName = "Search Insights");
+
+		SearchPortlets.searchEmbedded(searchTerm = "test");
+
+		AssertTextPresent(locator1 = "SearchResults#SEARCH_INSIGHTS_PORTLET_STRING_QUERY", value1 = "&quot;explain&quot;:true");
+
+		AssertTextPresent(locator1 = "SearchResults#SEARCH_INSIGHTS_PORTLET_STRING_QUERY", value1 = "bucket");
+	}
+
+	@priority = "4"
 	test NavigateToSearchResultsViaURL {
 		property portal.acceptance = "true";
 

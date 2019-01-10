@@ -31,6 +31,9 @@ class ElementsDefaultEventHandler extends PortletBase {
 					destroyOnHide: true,
 					modal: true
 				},
+				dialogIframe: {
+					bodyCssClass: 'dialog-with-footer'
+				},
 				title: Liferay.Language.get('permissions'),
 				uri: itemData.permissionsURL
 			}

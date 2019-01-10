@@ -567,7 +567,11 @@ public class CTEngineManagerTest {
 
 			Assert.assertFalse(changeTrackingSupported);
 
-			ctConfiguration = _ctConfigurationBuilder.setEntityClasses(
+			ctConfiguration = _ctConfigurationBuilder.setContentType(
+				"Test Object"
+			).setContentTypeLanguageKey(
+				"test-object"
+			).setEntityClasses(
 				Object.class, TestVersionClass.class
 			).setResourceEntityByResourceEntityIdFunction(
 				id -> new Object()

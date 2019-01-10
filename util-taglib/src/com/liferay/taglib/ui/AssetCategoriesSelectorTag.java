@@ -59,6 +59,8 @@ public class AssetCategoriesSelectorTag extends IncludeTag {
 
 	@Override
 	protected void cleanUp() {
+		super.cleanUp();
+
 		_className = null;
 		_classPK = 0;
 		_classTypePK = AssetCategoryConstants.ALL_CLASS_TYPE_PK;

@@ -1,22 +1,12 @@
 {
 	"devDependencies": {
-		"babel-cli": "^6.26.0",
-		"babel-preset-env": "^1.7.0",
-		"check-source-formatting": "^2.0.4",
-		"cross-env": "^5.2.0",
-		"liferay-npm-bundler": "^2.6.1",
-		"liferay-npm-bundler-preset-liferay-dev": "^1.1.1",
-		"metal-tools-soy": "^4.2.9"
+		"liferay-npm-scripts": "^1.0.0"
 	},
 	"name": "portlet-configuration-css-web",
 	"scripts": {
-		"build": "npm run build:soy && npm run compile && liferay-npm-bundler && npm run cleanSoy",
-		"build:soy": "metalsoy",
-		"checkFormat": "npm run csf",
-		"cleanSoy": "rimraf src/**/*.soy.js",
-		"compile": "cross-env NODE_ENV=production babel --source-maps -d classes/META-INF/resources src/main/resources/META-INF/resources",
-		"csf": "csf src/**/*.es.js",
-		"format": "npm run csf -- -i"
+		"build": "liferay-npm-scripts build --soy --bundler",
+		"csf": "liferay-npm-scripts lint",
+		"format": "liferay-npm-scripts format"
 	},
 	"version": "4.0.0"
 }

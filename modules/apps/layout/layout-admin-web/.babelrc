@@ -1,5 +1,4 @@
 {
-    "presets": ["env"],
     "ignore": [
         "**/config.js",
         "**/layout_customization_settings.js"

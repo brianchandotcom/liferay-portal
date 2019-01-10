@@ -15,16 +15,11 @@
 package com.liferay.data.engine.constants;
 
 /**
- * @author Jeyvison Nascimento
+ * @author Leonardo Barros
  */
-public class DEActionKeys {
+public class DEDataRecordCollectionConstants {
 
-	public static final String ADD_DATA_DEFINITION_ACTION =
-		"ADD_DATA_DEFINITION";
-
-	public static final String ADD_DATA_RECORD_COLLECTION_ACTION =
-		"ADD_DATA_RECORD_COLLECTION";
-
-	public static final String DEFINE_PERMISSIONS_ACTION = "DEFINE_PERMISSIONS";
+	public static final String MODEL_RESOURCE_NAME =
+		"com.liferay.data.engine.model.DEDataRecordCollection";
 
 }

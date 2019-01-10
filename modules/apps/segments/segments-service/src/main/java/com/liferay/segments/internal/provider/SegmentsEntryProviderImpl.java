@@ -224,7 +224,7 @@ public class SegmentsEntryProviderImpl implements SegmentsEntryProvider {
 
 		Criteria criteria = segmentsEntry.getCriteriaObj();
 
-		if ((criteria == null) || MapUtil.isEmpty(criteria.getCriterionMap())) {
+		if ((criteria == null) || MapUtil.isEmpty(criteria.getCriteria())) {
 			return false;
 		}
 

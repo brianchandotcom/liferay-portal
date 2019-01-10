@@ -73,12 +73,12 @@ public final class Criteria implements Serializable {
 		_filterStrings.put(type.getValue(), sb.toString());
 	}
 
-	public Criterion getCriterion(String key) {
-		return _criteria.get(key);
+	public Map<String, Criterion> getCriteria() {
+		return _criteria;
 	}
 
-	public Map<String, Criterion> getCriterionMap() {
-		return _criteria;
+	public Criterion getCriterion(String key) {
+		return _criteria.get(key);
 	}
 
 	public String getFilterString(Type type) {

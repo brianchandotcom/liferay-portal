@@ -404,7 +404,7 @@ public class EditSegmentsEntryDisplayContext {
 	public boolean isCriteriaConfigured() throws PortalException {
 		Criteria criteria = getCriteria();
 
-		return MapUtil.isNotEmpty(criteria.getCriterionMap());
+		return MapUtil.isNotEmpty(criteria.getCriteria());
 	}
 
 	public boolean isSelectable() throws PortalException {

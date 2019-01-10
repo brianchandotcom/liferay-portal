@@ -204,7 +204,7 @@ public class UpdateSegmentsEntryMVCActionCommand extends BaseMVCActionCommand {
 	protected void validateCriteria(Criteria criteria, boolean dynamic)
 		throws SegmentsEntryCriteriaException {
 
-		if (dynamic && MapUtil.isEmpty(criteria.getCriterionMap())) {
+		if (dynamic && MapUtil.isEmpty(criteria.getCriteria())) {
 			throw new SegmentsEntryCriteriaException();
 		}
 	}

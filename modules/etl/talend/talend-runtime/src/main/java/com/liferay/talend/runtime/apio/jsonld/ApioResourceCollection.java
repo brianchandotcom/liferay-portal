@@ -37,6 +37,7 @@ import org.slf4j.LoggerFactory;
  * resource, it's for easier traversing the ResourceCollections.
  *
  * @author Zoltán Takács
+ * @review
  */
 public class ApioResourceCollection extends ApioSingleModel {
 
@@ -69,6 +70,7 @@ public class ApioResourceCollection extends ApioSingleModel {
 	 * @return <code>JsonNode</code> The ArrayNode which contains the resource
 	 *         entries of a given (partial)collection (Member) or MissingNode if
 	 *         it's not present
+	 * @review
 	 */
 	public JsonNode getMemberJsonNode() {
 		if (_memberJsonNode == null) {
@@ -90,6 +92,7 @@ public class ApioResourceCollection extends ApioSingleModel {
 	 *
 	 * @return actual collection page or empty string if not present in the
 	 *         JsonNode
+	 * @review
 	 */
 	public String getResourceActualPage() {
 		JsonNode viewJsonNode = getViewJsonNode();
@@ -105,6 +108,7 @@ public class ApioResourceCollection extends ApioSingleModel {
 	 * @return String the type of the resource collection. E.g. Person,
 	 *         BlogPosting. <code>null</code> if the resource type cannot be
 	 *         determined
+	 * @review
 	 */
 	public String getResourceCollectionType() {
 		JsonNode managesJsonNode = findJsonNode(
@@ -148,6 +152,7 @@ public class ApioResourceCollection extends ApioSingleModel {
 	 *
 	 * @return <code>List<String></code> Name of the resource fields, empty
 	 *         collection otherwise
+	 * @review
 	 */
 	public List<String> getResourceElementFieldNames() {
 		JsonNode firstEntryJsonNode = getFirstEntryJsonNode();
@@ -172,6 +177,7 @@ public class ApioResourceCollection extends ApioSingleModel {
 	 *
 	 * @return first collection page or empty string if not present in the
 	 *         JsonNode
+	 * @review
 	 */
 	public String getResourceFirstPage() {
 		JsonNode viewJsonNode = getViewJsonNode();
@@ -186,6 +192,7 @@ public class ApioResourceCollection extends ApioSingleModel {
 	 *
 	 * @return last collection page or empty string if not present in the
 	 *         JsonNode
+	 * @review
 	 */
 	public String getResourceLastPage() {
 		JsonNode viewJsonNode = getViewJsonNode();
@@ -200,6 +207,7 @@ public class ApioResourceCollection extends ApioSingleModel {
 	 *
 	 * @return relative upcoming collection page or empty string if not present
 	 *         in the JsonNode
+	 * @review
 	 */
 	public String getResourceNextPage() {
 		JsonNode viewJsonNode = getViewJsonNode();
@@ -214,6 +222,7 @@ public class ApioResourceCollection extends ApioSingleModel {
 	 *
 	 * @return relative previous collection page or empty string if not present
 	 *         in the JsonNode
+	 * @review
 	 */
 	public String getResourcePreviousPage() {
 		JsonNode viewJsonNode = getViewJsonNode();
@@ -237,6 +246,7 @@ public class ApioResourceCollection extends ApioSingleModel {
 	 *
 	 * @return <code>JsonNode</code> The JsonNode for the view section or
 	 *         MissingNode if it's not present
+	 * @review
 	 */
 	public JsonNode getViewJsonNode() {
 		return findJsonNode(HydraConstants.FieldNames.VIEW);
@@ -249,6 +259,7 @@ public class ApioResourceCollection extends ApioSingleModel {
 	 * @param  contextJsonNode
 	 * @return <code>String</code> the Vocab's value e.g "@vocab":
 	 *         "http://schema.org" otherwise empty String
+	 * @review
 	 */
 	public String getVocabulary(JsonNode contextJsonNode) {
 		JsonNode jsonNode = contextJsonNode.findValue(JSONLDConstants.VOCAB);
@@ -284,6 +295,7 @@ public class ApioResourceCollection extends ApioSingleModel {
 	 * collect and determine, so do it only once.
 	 *
 	 * @see #getMemberJsonNode()
+	 * @review
 	 */
 	private JsonNode _memberJsonNode;
 

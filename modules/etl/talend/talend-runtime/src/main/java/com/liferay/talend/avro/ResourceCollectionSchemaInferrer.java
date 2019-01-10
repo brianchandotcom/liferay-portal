@@ -58,6 +58,7 @@ public class ResourceCollectionSchemaInferrer {
 	 * </ol>
 	 *
 	 * @return Runtime AVRO schema
+	 * @review
 	 */
 	public static Schema inferSchemaByResourceFields(
 			ApioResourceCollection apioResourceCollection)

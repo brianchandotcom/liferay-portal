@@ -53,6 +53,8 @@ public class TLiferayInputProperties
 
 	/**
 	 * Refreshes form after "Guess Schema" button was processed
+	 *
+	 * @review
 	 */
 	public void afterGuessSchema() {
 		if (_log.isDebugEnabled()) {

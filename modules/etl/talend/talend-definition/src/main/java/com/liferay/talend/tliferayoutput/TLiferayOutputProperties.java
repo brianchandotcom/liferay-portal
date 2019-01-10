@@ -236,6 +236,7 @@ public class TLiferayOutputProperties
 				/**
 				 * We have to reset the schema because of a Talend's internal
 				 * mechanism. @see https://github.com/Talend/tdi-studio-se/blob/737243fcdf1591970536d46edad98d2992b16593/main/plugins/org.talend.designer.core.generic/src/main/java/org/talend/designer/core/generic/model/GenericElementParameter.java#L319
+				 * @review
 				 */
 				@Override
 				public void afterSchema() {
@@ -331,6 +332,8 @@ public class TLiferayOutputProperties
 	 * Have to use an explicit class to get the override of afterResource(), an
 	 * anonymous class cannot be public and thus cannot be called via Talend's
 	 * reflection mechanism.
+	 *
+	 * @review
 	 */
 	public class ResourcePropertiesHelper extends LiferayResourceProperties {
 

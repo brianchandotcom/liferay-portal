@@ -216,6 +216,7 @@ public class LiferayInputReader extends LiferayBaseReader<IndexedRecord> {
 	 *
 	 * @return converter
 	 * @throws IOException
+	 * @review
 	 */
 	protected AvroConverter<Object, IndexedRecord> getConverter()
 		throws IOException {
@@ -235,6 +236,8 @@ public class LiferayInputReader extends LiferayBaseReader<IndexedRecord> {
 
 	/**
 	 * Represents state of this Reader: whether it has more records
+	 *
+	 * @review
 	 */
 	private boolean _hasMore;
 
@@ -242,6 +245,8 @@ public class LiferayInputReader extends LiferayBaseReader<IndexedRecord> {
 
 	/**
 	 * Resource collection members field
+	 *
+	 * @review
 	 */
 	private transient JsonNode _inputRecordsJsonNode;
 
@@ -250,11 +255,15 @@ public class LiferayInputReader extends LiferayBaseReader<IndexedRecord> {
 	/**
 	 * Converts row retrieved from data source to Avro format {@link
 	 * IndexedRecord}
+	 *
+	 * @review
 	 */
 	private AvroConverter _resourceEntityAvroConverter;
 
 	/**
 	 * Represents state of this Reader: whether it was started or not
+	 *
+	 * @review
 	 */
 	private boolean _started;
 

@@ -41,6 +41,7 @@ public class ApioSingleModel extends ApioBaseResponse {
 	 *
 	 * @param  responseJsonNode
 	 * @throws IOException
+	 * @review
 	 */
 	public ApioSingleModel(JsonNode responseJsonNode) throws IOException {
 		super(responseJsonNode);
@@ -54,6 +55,7 @@ public class ApioSingleModel extends ApioBaseResponse {
 	 *
 	 * @return <code>JsonNode</code> The JsonNode for the operation section or
 	 *         MissingNode if it's not present
+	 * @review
 	 */
 	public JsonNode getOperationJsonNode() {
 		return findJsonNode(HydraConstants.FieldNames.OPERATION);
@@ -64,6 +66,7 @@ public class ApioSingleModel extends ApioBaseResponse {
 	 * them in a List
 	 *
 	 * @return <code>List</code> of <code>Operation</code>, empty List otherwise
+	 * @review
 	 */
 	public List<Operation> getResourceOperations() {
 		JsonNode operationJsonNode = getOperationJsonNode();

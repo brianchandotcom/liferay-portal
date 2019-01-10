@@ -76,6 +76,7 @@ public abstract class LiferayBaseComponentDefinition
 	 *
 	 * @param sandboxedInstanceProvider provider to be set, can't be {@code
 	 *        null}
+	 * @review
 	 */
 	public static void setSandboxedInstanceProvider(
 		SandboxedInstanceProvider sandboxedInstanceProvider) {
@@ -137,6 +138,8 @@ public abstract class LiferayBaseComponentDefinition
 	 * As for Number of records property see Reader implementation in runtime
 	 * part.
 	 * </p>
+	 *
+	 * @review
 	 */
 	@Override
 	public Property<?>[] getReturnProperties() {

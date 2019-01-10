@@ -46,6 +46,7 @@ public interface LiferayOAuth2Scope {
 	 * Scope name as registered into OAuth2 Provider framework.
 	 *
 	 * @return non-<code>null</code> scope name
+	 * @review
 	 */
 	public String getScope();
 

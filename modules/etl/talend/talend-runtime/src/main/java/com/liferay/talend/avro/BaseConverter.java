@@ -41,6 +41,7 @@ public abstract class BaseConverter<DatumT, AvroT>
 	 *
 	 * @param clazz type of DI data
 	 * @param schema schema of a Avro data
+	 * @review
 	 */
 	public BaseConverter(Class<DatumT> clazz, Schema schema) {
 		_clazz = clazz;
@@ -49,6 +50,8 @@ public abstract class BaseConverter<DatumT, AvroT>
 
 	/**
 	 * Returns {@link Class} of DI data
+	 *
+	 * @review
 	 */
 	@Override
 	public Class<DatumT> getDatumClass() {
@@ -57,6 +60,8 @@ public abstract class BaseConverter<DatumT, AvroT>
 
 	/**
 	 * Returns {@link Schema} of Avro data
+	 *
+	 * @review
 	 */
 	@Override
 	public Schema getSchema() {
@@ -67,6 +72,7 @@ public abstract class BaseConverter<DatumT, AvroT>
 	 * Initialize converters per each schema field
 	 *
 	 * @param schema design schema
+	 * @review
 	 */
 	protected void initConverters(Schema schema) {
 		schemaFields = schema.getFields();
@@ -94,6 +100,8 @@ public abstract class BaseConverter<DatumT, AvroT>
 
 	/**
 	 * Stores converters. Array index corresponds to field index
+	 *
+	 * @review
 	 */
 	protected AvroConverter[] avroConverters;
 
@@ -111,11 +119,15 @@ public abstract class BaseConverter<DatumT, AvroT>
 
 	/**
 	 * Class of DI data
+	 *
+	 * @review
 	 */
 	private final Class<DatumT> _clazz;
 
 	/**
 	 * Schema of Avro data
+	 *
+	 * @review
 	 */
 	private final Schema _schema;
 

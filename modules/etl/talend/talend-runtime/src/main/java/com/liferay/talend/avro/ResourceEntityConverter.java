@@ -23,6 +23,7 @@ import org.apache.avro.generic.IndexedRecord;
 /**
  * @author Zoltán Takács  Converts data row as List<Object> to {@link
  *         IndexedRecord} using schema to guess value type
+ * @review
  */
 @SuppressWarnings("rawtypes")
 public class ResourceEntityConverter
@@ -33,6 +34,7 @@ public class ResourceEntityConverter
 	 * class
 	 *
 	 * @param schema
+	 * @review
 	 */
 	public ResourceEntityConverter(Schema schema) {
 		super(List.class, schema);

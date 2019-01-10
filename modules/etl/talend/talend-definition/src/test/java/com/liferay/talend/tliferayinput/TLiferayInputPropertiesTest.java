@@ -31,6 +31,8 @@ public class TLiferayInputPropertiesTest {
 
 	/**
 	 * Checks initial layout
+	 *
+	 * @review
 	 */
 	@Ignore
 	@Test
@@ -52,6 +54,8 @@ public class TLiferayInputPropertiesTest {
 
 	/**
 	 * Checks forms are filled with required widgets
+	 *
+	 * @review
 	 */
 	@Ignore
 	@Test
@@ -76,6 +80,8 @@ public class TLiferayInputPropertiesTest {
 
 	/**
 	 * Checks default values are set correctly
+	 *
+	 * @review
 	 */
 	@Test
 	public void testSetupProperties() {

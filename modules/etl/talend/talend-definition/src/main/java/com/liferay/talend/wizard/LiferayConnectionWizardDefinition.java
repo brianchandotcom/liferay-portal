@@ -77,6 +77,7 @@ public class LiferayConnectionWizardDefinition
 	/**
 	 * @see org.talend.components.api.wizard.ComponentWizardDefinition#getPngImagePath(
 	 *      WizardImageType)
+	 * @review
 	 */
 	@Override
 	public String getPngImagePath(WizardImageType wizardImageType) {
@@ -94,6 +95,7 @@ public class LiferayConnectionWizardDefinition
 	 * PropertiesTestUtils reports this as an error, but it is not.
 	 *
 	 * @see https://github.com/Talend/daikon/blob/98c09e0a25ff59a8d361c171e0ad1c1866176bc5/daikon/src/test/java/org/talend/daikon/properties/test/PropertiesTestUtils.java#L119-L121
+	 * @review
 	 */
 	@Override
 	public Class getPropertiesClass() {

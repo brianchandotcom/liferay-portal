@@ -27,6 +27,8 @@ public interface ScopeContext {
 
 	/**
 	 * Reset state of the context
+	 *
+	 * @review
 	 */
 	public void clear();
 
@@ -35,6 +37,7 @@ public interface ScopeContext {
 	 * check
 	 *
 	 * @param accessToken
+	 * @review
 	 */
 	public void setAccessToken(String accessToken);
 
@@ -58,6 +61,7 @@ public interface ScopeContext {
 	 * Sets request companyId into the context to be used during security check
 	 *
 	 * @param companyId
+	 * @review
 	 */
 	public void setCompanyId(long companyId);
 

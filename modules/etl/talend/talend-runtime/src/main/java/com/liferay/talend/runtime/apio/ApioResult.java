@@ -17,6 +17,7 @@ package com.liferay.talend.runtime.apio;
 /**
  * @author Zoltán Takács  Apio Architect response. It stores HTTP status code
  *         and body string
+ * @review
  */
 public final class ApioResult {
 
@@ -25,6 +26,7 @@ public final class ApioResult {
 	 *
 	 * @param statusCode status code
 	 * @param body response body; in case of <code>null</code> "" will be set
+	 * @review
 	 */
 	public ApioResult(int statusCode, String body) {
 		_statusCode = statusCode;
@@ -40,6 +42,7 @@ public final class ApioResult {
 	 * Returns response body
 	 *
 	 * @return response body
+	 * @review
 	 */
 	public String getBody() {
 		return _body;
@@ -49,6 +52,7 @@ public final class ApioResult {
 	 * Returns response status code
 	 *
 	 * @return response status code
+	 * @review
 	 */
 	public int getStatusCode() {
 		return _statusCode;

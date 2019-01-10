@@ -58,12 +58,16 @@ public class RESTClient {
 
 	/**
 	 * A {@link MediaType} constant representing {@value #JSON-LD} media type.
+	 *
+	 * @review
 	 */
 	public static final MediaType APPLICATION_JSON_LD = new MediaType(
 		"application", "ld+json");
 
 	/**
 	 * A {@code String} constant representing {@value #JSON-LD} media type.
+	 *
+	 * @review
 	 */
 	public static final String JSON_LD = "application/ld+json";
 

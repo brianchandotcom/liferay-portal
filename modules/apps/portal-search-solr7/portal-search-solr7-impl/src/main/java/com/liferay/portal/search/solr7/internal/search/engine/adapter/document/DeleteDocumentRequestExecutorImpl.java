@@ -14,10 +14,17 @@
 
 package com.liferay.portal.search.solr7.internal.search.engine.adapter.document;
 
+import com.liferay.portal.search.engine.adapter.document.BulkableDocumentRequestTranslator;
 import com.liferay.portal.search.engine.adapter.document.DeleteDocumentRequest;
 import com.liferay.portal.search.engine.adapter.document.DeleteDocumentResponse;
+import com.liferay.portal.search.solr7.internal.connection.SolrClientManager;
+
+import org.apache.solr.client.solrj.request.UpdateRequest;
+import org.apache.solr.client.solrj.response.UpdateResponse;
+import org.apache.solr.common.SolrException;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Bryan Engler
@@ -30,7 +37,41 @@ public class DeleteDocumentRequestExecutorImpl
 	public DeleteDocumentResponse execute(
 		DeleteDocumentRequest deleteDocumentRequest) {
 
-		throw new UnsupportedOperationException();
+		UpdateRequest request = _bulkableDocumentRequestTranslator.translate(
+			deleteDocumentRequest);
+
+		try {
+			UpdateResponse updateResponse = request.process(
+				_solrClientManager.getSolrClient(),
+				deleteDocumentRequest.getIndexName());
+
+			return new DeleteDocumentResponse(updateResponse.getStatus());
+		}
+		catch (Exception e) {
+			if (e instanceof SolrException) {
+				SolrException se = (SolrException)e;
+
+				throw se;
+			}
+
+			throw new RuntimeException(e);
+		}
 	}
+
+	@Reference(target = "(search.engine.impl=Solr)", unbind = "-")
+	protected void setBulkableDocumentRequestTranslator(
+		BulkableDocumentRequestTranslator bulkableDocumentRequestTranslator) {
+
+		_bulkableDocumentRequestTranslator = bulkableDocumentRequestTranslator;
+	}
+
+	@Reference(unbind = "-")
+	protected void setSolrClientManager(SolrClientManager solrClientManager) {
+		_solrClientManager = solrClientManager;
+	}
+
+	private BulkableDocumentRequestTranslator
+		_bulkableDocumentRequestTranslator;
+	private SolrClientManager _solrClientManager;
 
 }

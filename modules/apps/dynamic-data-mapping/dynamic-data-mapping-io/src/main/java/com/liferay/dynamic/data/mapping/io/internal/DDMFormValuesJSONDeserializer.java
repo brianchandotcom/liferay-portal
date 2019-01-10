@@ -26,7 +26,6 @@ import com.liferay.dynamic.data.mapping.model.Value;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -88,9 +87,9 @@ public class DDMFormValuesJSONDeserializer
 				jsonObject.getJSONArray("fieldValues"), ddmForm, ddmFormValues);
 			setDDMFormLocalizedValuesDefaultLocale(ddmFormValues);
 		}
-		catch (JSONException jsone) {
+		catch (Exception e) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(jsone, jsone);
+				_log.warn(e, e);
 			}
 		}
 

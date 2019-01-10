@@ -210,6 +210,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>REMOVE_TAG</td>
+	<td>//span[contains(.,'${key_removeTag}')]//..//i[contains(@class,'icon-remove')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>REMOVE_FAVORITE</td>
 	<td>//*[@data-qa-id='row'][contains(.,'${key_rowEntry}')]//a[contains(@onclick,'removeAddMenuFavIte')]</td>
 	<td></td>

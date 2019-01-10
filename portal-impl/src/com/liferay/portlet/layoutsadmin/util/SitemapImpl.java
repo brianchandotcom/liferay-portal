@@ -281,7 +281,7 @@ public class SitemapImpl implements Sitemap {
 
 				Element locationElement = sitemapElement.addElement("loc");
 
-				StringBundler sb = new StringBundler(8);
+				StringBundler sb = new StringBundler(10);
 
 				sb.append(portalURL);
 				sb.append(PortalUtil.getPathContext());
@@ -291,6 +291,8 @@ public class SitemapImpl implements Sitemap {
 				sb.append(layoutSet.getGroupId());
 				sb.append("&privateLayout=");
 				sb.append(layout.isPrivateLayout());
+				sb.append("&p_l_id=");
+				sb.append(layout.getPlid());
 
 				locationElement.addText(sb.toString());
 			}

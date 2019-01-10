@@ -124,6 +124,15 @@ public class LiferayDynamicCapability
 		RepositoryEventRegistry repositoryEventRegistry) {
 
 		_repositoryEventRegistry = repositoryEventRegistry;
+
+		for (Capability capability : _capabilities) {
+			synchronized (LiferayDynamicCapability.this) {
+				if (capability instanceof RepositoryEventAware) {
+					_registerRepositoryEventListeners(
+						(RepositoryEventAware & Capability)capability);
+				}
+			}
+		}
 	}
 
 	@Override
@@ -158,9 +167,11 @@ public class LiferayDynamicCapability
 
 		_capabilityRegistrations.put(capability, capabilityRegistration);
 
-		capability.registerRepositoryEventListeners(
-			new DynamicCapabilityRepositoryEventRegistryWrapper(
-				capabilityRegistration, _repositoryEventRegistry));
+		if (_repositoryEventRegistry != null) {
+			capability.registerRepositoryEventListeners(
+				new DynamicCapabilityRepositoryEventRegistryWrapper(
+					capabilityRegistration, _repositoryEventRegistry));
+		}
 	}
 
 	private void _unregisterRepositoryEventListeners(Capability capability) {

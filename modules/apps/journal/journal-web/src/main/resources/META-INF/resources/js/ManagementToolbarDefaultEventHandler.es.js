@@ -39,11 +39,11 @@ class ManagementToolbarDefaultEventHandler extends PortletBase {
 		);
 	}
 
-	handleFilterItemClicked(event) {
+	handleActionItemClicked(event) {
 		this.callAction(event);
 	}
 
-	handleActionItemClicked(event) {
+	handleFilterItemClicked(event) {
 		this.callAction(event);
 	}
 

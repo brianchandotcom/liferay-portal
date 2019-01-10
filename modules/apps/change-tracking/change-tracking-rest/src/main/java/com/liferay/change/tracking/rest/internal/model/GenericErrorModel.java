@@ -12,27 +12,29 @@
  * details.
  */
 
-package com.liferay.change.tracking.rest.internal.dto;
+package com.liferay.change.tracking.rest.internal.model;
 
-import javax.xml.bind.annotation.XmlElement;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonRootName;
 
 /**
  * @author Máté Thurzó
  */
-public class GenericErrorResponseDTO {
+@JsonRootName("error")
+public class GenericErrorModel {
 
-	public GenericErrorResponseDTO() {
+	public GenericErrorModel() {
 	}
 
-	public GenericErrorResponseDTO(String errorMessage) {
+	public GenericErrorModel(String errorMessage) {
 		_errorMessage = errorMessage;
 	}
 
-	@XmlElement(name = "errorMessage")
 	public String getErrorMessage() {
 		return _errorMessage;
 	}
 
+	@JsonProperty("errorMessage")
 	private String _errorMessage;
 
 }

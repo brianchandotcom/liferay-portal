@@ -139,6 +139,22 @@
 	<td></td>
 	<td></td>
 </tr>
+<!--SEARCH_INSIGHTS_PORTLET-->
+<tr>
+	<td>SEARCH_INSIGHTS_PORTLET_STRING_QUERY</td>
+	<td>//div[@class='full-query']/code[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SEARCH_INSIGHTS_PORTLET_RESPONSE_QUERY</td>
+	<td>//div[@class='full-query')]/code[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--CUSTOM_FACET-->
 <tr>
 	<td>CUSTOM_FACET_CONFIG_AGGREGATION_FIELD</td>

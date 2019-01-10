@@ -1,5 +1,10 @@
 {namespace BulkStatus}
 
 {template .render}
-	<p>Processing bulk actions...</p>
+	<div class="bulk-status">
+		<div class="bulk-status-content">
+			<span aria-hidden="true" class="loading-animation loading-animation-light loading-animation-sm"></span>
+			<span>{msg desc=""}processing-actions{/msg}</span>
+		</div>
+	</div>
 {/template}

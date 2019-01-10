@@ -402,12 +402,14 @@ definition {
 
 			var key_assetTitle = "${assetTitle}";
 
-			AssertClick(
-				locator1 = "APConfiguration#ASSET_SELECTION_MANUAL_ASSET_ENTRIES_SELECT_CONTENT_LINK",
-				value1 = "${assetTitle}"
+			Click(
+				locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_CHECKBOX",
+				key_rowEntry = "${assetTitle}"
 			);
 
 			SelectFrameTop();
+
+			Button.clickAdd();
 
 			SelectFrame(locator1 = "IFrame#DIALOG");
 		}

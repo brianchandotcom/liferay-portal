@@ -309,6 +309,12 @@ to `"${npmInstall.workingDir}/node_modules/clay*/src/**/*.soy"`.
 - [LPS-88909]: Update the [Liferay Gradle Plugins Node] dependency to version
 4.6.1.
 
+## 2.4.19 - 2019-01-09
+
+### Changed
+- [LPS-87479]: Update the [Liferay Gradle Plugins Node] dependency to version
+4.6.2.
+
 [Liferay Gradle Plugins Node]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-node
 [LPS-66906]: https://issues.liferay.com/browse/LPS-66906
 [LPS-67023]: https://issues.liferay.com/browse/LPS-67023

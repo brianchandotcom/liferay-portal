@@ -292,6 +292,12 @@ rerunning the task if none of the inputs or outputs have changed.
 with `.es.js` if the `npmRun.sourceDigestFile` matches the `npmRun.sourceFiles`
 digest to preserve changes made by the `npmRun` task.
 
+## 4.6.2 - 2019-01-09
+
+### Changed
+- [LPS-87479]: Set the up-to-date check for `npmRun` tasks to `true` if the
+classes directory does not exist for Java projects.
+
 [Liferay Gradle Util]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-util
 [LPS-66906]: https://issues.liferay.com/browse/LPS-66906
 [LPS-67023]: https://issues.liferay.com/browse/LPS-67023

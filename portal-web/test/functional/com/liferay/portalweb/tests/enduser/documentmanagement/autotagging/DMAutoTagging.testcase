@@ -120,6 +120,64 @@ definition {
 		AutoTagging.assertNoAutoTag();
 	}
 
+	@priority = "4"
+	test RemoveAutoTag {
+		property test.name.skip.portal.instance = "DMAutoTagging#RemoveAutoTag";
+
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.addPublicPage(
+			pageName = "Documents and Media Page",
+			sitePageType = "Widget Page"
+		);
+
+		SitePages.configurePage(
+			columnName = "1 Column",
+			pageName = "Documents and Media Page",
+			privacy = "Public Pages",
+			sitePageType = "Widget Page"
+		);
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		Portlet.addPG(portletName = "Documents and Media");
+
+		DMDocument.enableActionsMenuOnPortlet();
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
+
+		DMDocument.addPG(
+			dmDocumentFile = "Document_4.jpg",
+			dmDocumentDescription = "Auto Tagged Image Description",
+			dmDocumentTitle = "Auto Tagged Image"
+		);
+
+		DMDocument.viewPG(
+			dmDocumentDescription = "Auto Tagged Image Description",
+			dmDocumentTitle = "Auto Tagged Image",
+			tagName = "carton"
+		);
+
+		DMDocument.removeTag(removeTag = "carton");
+
+		Button.clickPublish();
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMDocument.viewPG(
+			dmDocumentDescription = "Auto Tagged Image Description",
+			dmDocumentTitle = "Auto Tagged Image"
+		);
+
+		AutoTagging.assertNoAutoTag();
+	}
+
 	@priority = "5"
 	test Smoke {
 		property portal.acceptance = "false";

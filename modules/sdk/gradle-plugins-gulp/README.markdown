@@ -12,7 +12,7 @@ To use the plugin, include it in your build script:
 ```gradle
 buildscript {
 	dependencies {
-		classpath group: "com.liferay", name: "com.liferay.gradle.plugins.gulp", version: "2.0.38"
+		classpath group: "com.liferay", name: "com.liferay.gradle.plugins.gulp", version: "2.0.39"
 	}
 
 	repositories {

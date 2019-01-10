@@ -43,6 +43,20 @@ class ManagementToolbarDefaultEventHandler extends PortletBase {
 		this.callAction(event);
 	}
 
+	handleCreationMenuMoreButtonClicked() {
+		Liferay.Util.openWindow(
+			{
+				dialog: {
+					destroyOnHide: true,
+					modal: true
+				},
+				id: this.ns('selectAddMenuItem'),
+				title: Liferay.Language.get('more'),
+				uri: this.openViewMoreStructuresURL
+			}
+		);
+	}
+
 	handleFilterItemClicked(event) {
 		this.callAction(event);
 	}
@@ -69,20 +83,6 @@ class ManagementToolbarDefaultEventHandler extends PortletBase {
 			},
 			function(event) {
 				location.href = this.viewDDMStructureArticlesURL;
-			}
-		);
-	}
-
-	openViewMoreDDMStructuresSelector() {
-		Liferay.Util.openWindow(
-			{
-				dialog: {
-					destroyOnHide: true,
-					modal: true
-				},
-				id: this.ns('selectAddMenuItem'),
-				title: Liferay.Language.get('more'),
-				uri: this.openViewMoreStructuresURL
 			}
 		);
 	}

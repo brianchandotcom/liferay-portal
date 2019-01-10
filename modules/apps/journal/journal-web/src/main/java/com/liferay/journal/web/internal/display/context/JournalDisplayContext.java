@@ -563,6 +563,15 @@ public class JournalDisplayContext {
 	public List<LabelItem> getArticleLabels(JournalArticle article) {
 		return new LabelItemList() {
 			{
+
+				if (!article.isApproved() && article.hasApprovedVersion()) {
+					add(
+						labelItem -> {
+							labelItem.setStatus(
+								WorkflowConstants.STATUS_APPROVED);
+						});
+				}
+
 				add(
 					labelItem -> {
 						labelItem.setStatus(article.getStatus());

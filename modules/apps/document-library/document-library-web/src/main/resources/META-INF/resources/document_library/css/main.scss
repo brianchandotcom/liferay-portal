@@ -2,6 +2,25 @@
 @import "mixins";
 
 .portlet-document-library, .portlet-document-library-display {
+	.bulk-status {
+		background: #2E5AAC;
+		color: #FFF;
+		font-size: 0.875rem;
+		height: 32px;
+		line-height: 32px;
+		margin-top: -1.5em;
+		text-align: center;
+		width: 100%;
+
+		.bulk-status-content {
+			display: inline-block;
+
+			.loading-animation {
+				float:left;
+				margin: 6px 8px;
+			}
+		}
+	}
 	.file-entry-list-description {
 		font-style: italic;
 		margin-left: 10px;

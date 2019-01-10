@@ -1,6 +1,5 @@
 {
 	"ignore": [
 		"**/ContrastWorker.js"
-	],
-	"preset": "liferay-npm-bundler-preset-liferay-dev"
+	]
 }

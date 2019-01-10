@@ -63,7 +63,6 @@
 }
 
 .fragments-editor__drop-target {
-	&.targetOver,
 	&.drag-bottom {
 		@include lfr-drag-indicator("bottom");
 	}

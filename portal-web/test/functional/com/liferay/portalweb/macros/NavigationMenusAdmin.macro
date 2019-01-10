@@ -132,31 +132,6 @@ definition {
 		);
 	}
 
-	macro moveItem {
-		if ("${direction}" == "up") {
-			var coordString = "0,-150";
-		}
-		else if ("${direction}" == "down") {
-			var coordString = "0,150";
-		}
-		else if ("${direction}" == "in") {
-			var coordString = "100,-77";
-		}
-		else if ("${direction}" == "out") {
-			var coordString = "-100,-77";
-		}
-
-		ProductMenuHelper.closeProductMenu();
-
-		DragAndDrop.dragAndDrop(
-			locator1 = "SiteNavigationMenu#ITEM_ENTRY_STICKER",
-			value1 = "${coordString}|10,0|-10,0",
-			key_itemName = "${itemName}"
-		);
-
-		Refresh();
-	}
-
 	macro openItemSidebar {
 		Refresh();
 

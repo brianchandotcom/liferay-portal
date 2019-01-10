@@ -133,18 +133,23 @@ public class DDLRecordSetLocalServiceImpl
 		DDLRecordSet updatedRecordSet = ddlRecordSetPersistence.update(
 			recordSet);
 
+		boolean addRecordSetResources = GetterUtil.getBoolean(
+			serviceContext.getAttribute("addRecordSetResources"), true);
+
 		// Resources
 
-		if (serviceContext.isAddGroupPermissions() ||
-			serviceContext.isAddGuestPermissions()) {
+		if (addRecordSetResources) {
+			if (serviceContext.isAddGroupPermissions() ||
+				serviceContext.isAddGuestPermissions()) {
 
-			addRecordSetResources(
-				recordSet, serviceContext.isAddGroupPermissions(),
-				serviceContext.isAddGuestPermissions());
-		}
-		else {
-			addRecordSetResources(
-				recordSet, serviceContext.getModelPermissions());
+				addRecordSetResources(
+					recordSet, serviceContext.isAddGroupPermissions(),
+					serviceContext.isAddGuestPermissions());
+			}
+			else {
+				addRecordSetResources(
+					recordSet, serviceContext.getModelPermissions());
+			}
 		}
 
 		// Record set version

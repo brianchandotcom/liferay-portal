@@ -26,8 +26,9 @@
 	{@param? styleModifier: string}
 
 	{let $wrapperClasses kind="text"}
-		fragments-editor__drag-source--fragment
-		{sp}fragments-editor__draggable-item
+		fragments-editor__drag-source
+		{sp}fragments-editor__drag-source--fragment
+		{sp}fragments-editor__drop-target
 		{sp}fragments-editor__drop-target--fragment
 		{sp}fragment-entry-link-wrapper
 		{sp}fragments-editor__topper-wrapper
@@ -39,7 +40,7 @@
 
 	<div
 		class="{$wrapperClasses}"
-		data-draggable-item-label="{$name ?: ''}"
+		data-drag-source-label="{$name ?: ''}"
 		data-fragment-entry-link-id="{$fragmentEntryLinkId}"
 		data-onblur="{$_handleFragmentBlur}"
 		data-onclick="{$_handleFragmentClick}"

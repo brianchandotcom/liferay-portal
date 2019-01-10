@@ -159,10 +159,10 @@
 
 	{let $sectionClasses kind="text"}
 		container-fluid
+		{sp}fragments-editor__drag-source
 		{sp}fragments-editor__drag-source--fragment
-		{sp}fragments-editor__draggable-item
+		{sp}fragments-editor__drop-target
 		{sp}fragments-editor__drop-target--fragment
-		{sp}fragments-editor__drop-target--layout
 		{sp}fragments-editor__topper-wrapper
 		{sp}fragment-entry-link-list__container
 
@@ -182,7 +182,7 @@
 
 	<section
 		class="{$sectionClasses}"
-		data-draggable-item-label="{msg desc=""}section{/msg}"
+		data-drag-source-label="{msg desc=""}section{/msg}"
 		data-layout-section-id="{$rowId}"
 		data-onblur="{$_handleSectionBlur}"
 		data-onclick="{$_handleSectionClick}"

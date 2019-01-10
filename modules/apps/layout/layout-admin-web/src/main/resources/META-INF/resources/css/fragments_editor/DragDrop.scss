@@ -2,25 +2,16 @@
 
 @import "variables";
 
-@keyframes fragmentsEditorDraggableItem {
+@keyframes fragmentsEditorDragSource {
 	to {
-		background-color: $draggableItemBackgroundColor;
+		background-color: $dragSourceBackgroundColor;
 		box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
 		opacity: 1;
 		transform: scale(1);
 	}
 }
 
-.fragments-editor__draggable-item {
-	&.targetOver,
-	&.drag-bottom {
-		@include lfr-drag-indicator("bottom");
-	}
-
-	&.drag-top {
-		@include lfr-drag-indicator("top");
-	}
-
+.fragments-editor__drag-source {
 	&.dragging {
 		background: transparent;
 		border: none;
@@ -31,20 +22,20 @@
 		outline: none;
 		padding: 0;
 		width: auto;
-		z-index: $draggableItemZIndex;
+		z-index: $dragSourceZIndex;
 
 		& > * {
 			display: none;
 		}
 
 		&:after {
-			animation: fragmentsEditorDraggableItem ease 0.2s;
+			animation: fragmentsEditorDragSource ease 0.2s;
 			animation-fill-mode: forwards;
-			background-color: fade_out($draggableItemBackgroundColor, 1);
+			background-color: fade_out($dragSourceBackgroundColor, 1);
 			border-radius: 4px;
 			box-shadow: none;
-			color: $draggableItemColor;
-			content: attr(data-draggable-item-label);
+			color: $dragSourceColor;
+			content: attr(data-drag-source-label);
 			cursor: grabbing;
 			display: block;
 			font-size: 12px;
@@ -65,7 +56,19 @@
 		}
 	}
 
+	&.fragments-editor__drag-handler,
 	.fragments-editor__drag-handler {
 		cursor: move;
+	}
+}
+
+.fragments-editor__drop-target {
+	&.targetOver,
+	&.drag-bottom {
+		@include lfr-drag-indicator("bottom");
+	}
+
+	&.drag-top {
+		@include lfr-drag-indicator("top");
 	}
 }

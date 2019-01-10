@@ -30,18 +30,13 @@
 	{let $cardClasses kind="text"}
 		card
 		{sp}fragments-editor-sidebar-section__card
-		{sp}fragments-editor__draggable-item
+		{sp}fragments-editor__drag-source
 		{sp}fragments-editor__drag-source--layout
-	{/let}
-
-	{let $layoutsSectionRowClasses kind="text"}
-		row
-		{sp}sidebar-layouts-section__layout-preview__row
 	{/let}
 
 	<div
 		class="{$cardClasses}"
-		data-draggable-item-label="{msg desc=""}layout{/msg}"
+		data-drag-source-label="{msg desc=""}layout{/msg}"
 		data-layout-index="{$layoutIndex}"
 	>
 		<div class="fragments-editor__drag-handler"></div>
@@ -50,6 +45,11 @@
 			<div class="card-row">
 				<div class="autofit-col autofit-col-expand autofit-row-center">
 					<div class="container sidebar-layouts-section__layout-preview">
+						{let $layoutsSectionRowClasses kind="text"}
+							row
+							{sp}sidebar-layouts-section__layout-preview__row
+						{/let}
+
 						<div class="{$layoutsSectionRowClasses}" role="image">
 							{foreach $column in $columns}
 								{let $sectionColumnClasses kind="text"}

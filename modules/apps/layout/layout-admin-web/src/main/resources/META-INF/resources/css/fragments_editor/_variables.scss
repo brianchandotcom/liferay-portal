@@ -6,7 +6,7 @@ $desktopManagementBarHeight: 50px;
 
 $productMenuTransitionDuration: 0.5s;
 
-$draggableItemZIndex: 995;
+$dragSourceZIndex: 995;
 $fragmentEditableFieldTooltipZIndex: 995;
 $fragmentEntryLinkContentHoverZIndex: auto;
 $fragmentEntryLinkContentZIndex: 0;
@@ -33,8 +33,8 @@ $fragmentEntryLinkSectionBorderColor: #CDCED9;
 $fragmentEntryLinkColumnBorderColor: rgba(38, 38, 52, 0.06);
 $fragmentEntryLinkSpacing: 12px;
 
-$draggableItemBackgroundColor: #E1EBFF;
-$draggableItemColor: #0B5FFF;
+$dragSourceBackgroundColor: #E1EBFF;
+$dragSourceColor: #0B5FFF;
 $dropTargetColor:#0B5FFF;
 $dropTargetWidth: 5px;
 

@@ -1193,6 +1193,7 @@ definition {
 		);
 	}
 
+	@priority = "4"
 	test SearchUsingCustomFacet {
 		property portal.acceptance = "true";
 

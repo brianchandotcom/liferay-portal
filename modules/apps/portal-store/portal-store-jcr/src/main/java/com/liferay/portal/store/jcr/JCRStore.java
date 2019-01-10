@@ -239,9 +239,8 @@ public class JCRStore extends BaseStore {
 			logFailedDeletion(companyId, repositoryId, dirName, pnfe);
 		}
 		catch (RepositoryException re) {
-			String message = GetterUtil.getString(re.getMessage());
-
-			message = StringUtil.toLowerCase(message);
+			String message = StringUtil.toLowerCase(
+				GetterUtil.getString(re.getMessage()));
 
 			if (message.contains("failed to resolve path")) {
 				logFailedDeletion(companyId, repositoryId, dirName, re);

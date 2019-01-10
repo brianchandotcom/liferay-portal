@@ -73,7 +73,11 @@ public class CTManagerTest {
 		_testVersionClassClassName = _classNameLocalService.addClassName(
 			Object.class.getName());
 
-		_ctConfiguration = _ctConfigurationBuilder.setEntityClasses(
+		_ctConfiguration = _ctConfigurationBuilder.setContentType(
+			"Test Object"
+		).setContentTypeLanguageKey(
+			"test-object"
+		).setEntityClasses(
 			Object.class, Object.class
 		).setResourceEntityByResourceEntityIdFunction(
 			id -> new Object()

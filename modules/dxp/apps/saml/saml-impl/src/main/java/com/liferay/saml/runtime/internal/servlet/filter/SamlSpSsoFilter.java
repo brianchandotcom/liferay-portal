@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.saml.constants.SamlWebKeys;
 import com.liferay.saml.persistence.model.SamlSpSession;
 import com.liferay.saml.runtime.configuration.SamlProviderConfigurationHelper;
 import com.liferay.saml.runtime.profile.SingleLogoutProfile;
@@ -35,6 +36,9 @@ import com.liferay.saml.util.SamlHttpRequestUtil;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
+import javax.servlet.FilterConfig;
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -57,6 +61,13 @@ import org.osgi.service.component.annotations.Reference;
 	service = Filter.class
 )
 public class SamlSpSsoFilter extends BaseSamlPortalFilter {
+
+	@Override
+	public void init(FilterConfig filterConfig) {
+		super.init(filterConfig);
+
+		_servletContext = filterConfig.getServletContext();
+	}
 
 	@Override
 	public boolean isFilterEnabled() {
@@ -125,12 +136,27 @@ public class SamlSpSsoFilter extends BaseSamlPortalFilter {
 			response.sendRedirect(_portal.getCurrentCompleteURL(request));
 		}
 		else if (requestPath.equals("/c/portal/login")) {
-			login(request, response);
-		}
-		else if (requestPath.equals("/c/portal/logout") &&
-				 _singleLogoutProfile.isSingleLogoutSupported(request)) {
+			RequestDispatcher requestDispatcher =
+				_servletContext.getRequestDispatcher("/c/portal/saml/login");
 
-			if (samlSpSession != null) {
+			requestDispatcher.include(request, response);
+
+			if (request.getAttribute(SamlWebKeys.SAML_SP_IDP_CONNECTION) !=
+					null) {
+
+				try {
+					login(request, response);
+				}
+				catch (PortalException pe) {
+					if (_log.isInfoEnabled()) {
+						_log.info(
+							"Failed to send Authn request: " + pe.getMessage());
+					}
+				}
+			}
+		}
+		else if (requestPath.equals("/c/portal/logout")) {
+			if (_singleLogoutProfile.isSingleLogoutSupported(request)) {
 				_singleLogoutProfile.processSpLogout(request, response);
 			}
 			else {
@@ -197,6 +223,8 @@ public class SamlSpSsoFilter extends BaseSamlPortalFilter {
 
 	@Reference
 	private SamlProviderConfigurationHelper _samlProviderConfigurationHelper;
+
+	private ServletContext _servletContext;
 
 	@Reference
 	private SingleLogoutProfile _singleLogoutProfile;

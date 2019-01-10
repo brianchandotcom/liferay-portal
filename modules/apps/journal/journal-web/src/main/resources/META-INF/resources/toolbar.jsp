@@ -17,11 +17,11 @@
 <%@ include file="/init.jsp" %>
 
 <%
-JournalManagementToolbarDisplayContext journaManagementToolbarlDisplayContext = new JournalManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, request, journalDisplayContext, trashHelper);
+JournalManagementToolbarDisplayContext journalManagementToolbarlDisplayContext = new JournalManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, request, journalDisplayContext, trashHelper);
 %>
 
 <clay:management-toolbar
-	displayContext="<%= journaManagementToolbarlDisplayContext %>"
+	displayContext="<%= journalManagementToolbarlDisplayContext %>"
 />
 
 <aui:script sandbox="<%= true %>">

@@ -58,8 +58,10 @@ public class AssetDisplayLayoutTypeControllerDisplayContext {
 	}
 
 	public String getRenderedContent() throws PortalException {
+		String content = StringPool.BLANK;
+
 		if (_assetEntry == null) {
-			return StringPool.BLANK;
+			return content;
 		}
 
 		LayoutPageTemplateStructure layoutPageTemplateStructure =
@@ -70,10 +72,25 @@ public class AssetDisplayLayoutTypeControllerDisplayContext {
 						LayoutPageTemplateEntry.class.getName()),
 					_getLayoutPageTemplateEntryId(), true);
 
-		return LayoutPageTemplateStructureRenderUtil.renderLayoutContent(
-			_request, _response, layoutPageTemplateStructure,
-			FragmentEntryLinkConstants.ASSET_DISPLAY_PAGE,
-			_getAssetDisplayFieldsValues());
+		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		String currentI18nLanguageId = GetterUtil.getString(
+			_request.getAttribute(AssetDisplayWebKeys.CURRENT_I18N_LANGUAGE_ID),
+			themeDisplay.getLanguageId());
+
+		try {
+			content = LayoutPageTemplateStructureRenderUtil.renderLayoutContent(
+				_request, _response, layoutPageTemplateStructure,
+				FragmentEntryLinkConstants.ASSET_DISPLAY_PAGE,
+				_getAssetDisplayFieldsValues());
+		}
+		finally {
+			_request.setAttribute(
+				WebKeys.I18N_LANGUAGE_ID, currentI18nLanguageId);
+		}
+
+		return content;
 	}
 
 	private Map<String, Object> _getAssetDisplayFieldsValues()

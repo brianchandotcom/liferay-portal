@@ -135,7 +135,7 @@ public class DisplayPageFriendlyURLResolver implements FriendlyURLResolver {
 			AssetDisplayPageHelper.hasAssetDisplayPage(groupId, assetEntry)) {
 
 			return _getDisplayPageURL(
-				groupId, assetEntry, mainPath, requestContext);
+				groupId, assetEntry, mainPath, requestContext, urlTitle);
 		}
 
 		HttpServletRequest request = (HttpServletRequest)requestContext.get(
@@ -379,7 +379,7 @@ public class DisplayPageFriendlyURLResolver implements FriendlyURLResolver {
 
 	private String _getDisplayPageURL(
 			long groupId, AssetEntry assetEntry, String mainPath,
-			Map<String, Object> requestContext)
+			Map<String, Object> requestContext, String urlTitle)
 		throws PortalException {
 
 		AssetDisplayContributor assetDisplayContributor =
@@ -398,7 +398,26 @@ public class DisplayPageFriendlyURLResolver implements FriendlyURLResolver {
 			assetDisplayContributor);
 		request.setAttribute(WebKeys.LAYOUT_ASSET_ENTRY, assetEntry);
 
+		FriendlyURLEntryLocalization friendlyURLEntryLocalization =
+			_friendlyURLEntryLocalService.fetchFriendlyURLEntryLocalization(
+				groupId,
+				_classNameLocalService.getClassNameId(JournalArticle.class),
+				urlTitle);
+
 		Locale locale = _portal.getLocale(request);
+
+		if (friendlyURLEntryLocalization != null) {
+			request.setAttribute(
+				AssetDisplayWebKeys.CURRENT_I18N_LANGUAGE_ID,
+				LocaleUtil.toLanguageId(locale));
+
+			request.setAttribute(
+				WebKeys.I18N_LANGUAGE_ID,
+				friendlyURLEntryLocalization.getLanguageId());
+
+			locale = LocaleUtil.fromLanguageId(
+				friendlyURLEntryLocalization.getLanguageId());
+		}
 
 		_portal.setPageTitle(assetEntry.getTitle(locale), request);
 		_portal.setPageDescription(assetEntry.getDescription(locale), request);

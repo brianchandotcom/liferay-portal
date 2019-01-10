@@ -50,10 +50,6 @@
 			white-space: nowrap;
 			width: 116px;
 		}
-
-		& ~ .shim {
-			cursor: grabbing;
-		}
 	}
 
 	&.fragments-editor__drag-handler,
@@ -63,11 +59,21 @@
 }
 
 .fragments-editor__drop-target {
-	&.drag-bottom {
+	&.drag-bottom:after,
+	&.drag-top:after {
+		content: '';
+		display: block;
+	}
+
+	&.drag-bottom:after {
 		@include lfr-drag-indicator("bottom");
 	}
 
-	&.drag-top {
+	&.drag-top:after {
 		@include lfr-drag-indicator("top");
 	}
+}
+
+.shim {
+	cursor: grabbing;
 }

@@ -57,6 +57,8 @@
 		{sp}fragments-editor__drop-target
 		{sp}fragments-editor__drop-target--fragment
 		{sp}fragments-editor__drop-target--layout
+		{sp}fragments-editor__drop-target--sidebar-fragment
+		{sp}fragments-editor__drop-target--sidebar-layout
 
 		{if $fragmentsEditorSidebarVisible}
 			{sp}fragment-entry-link-list--padded
@@ -164,6 +166,9 @@
 		{sp}fragments-editor__drag-source--layout
 		{sp}fragments-editor__drop-target
 		{sp}fragments-editor__drop-target--fragment
+		{sp}fragments-editor__drop-target--layout
+		{sp}fragments-editor__drop-target--sidebar-fragment
+		{sp}fragments-editor__drop-target--sidebar-layout
 		{sp}fragments-editor__topper-wrapper
 		{sp}fragment-entry-link-list__container
 
@@ -277,7 +282,12 @@
 		col
 		{sp}fragments-editor__drop-target
 		{sp}fragments-editor__drop-target--fragment
+		{sp}fragments-editor__drop-target--sidebar-fragment
 		{sp}fragment-entry-link-list__col
+
+		{if $dropTargetItemId == $columnId and $dropTargetItemType == $dropTargetItemTypes.column}
+			{sp}{$dropTargetBorder}
+		{/if}
 
 		{if $size}
 			{sp}col-{$size}
@@ -344,8 +354,9 @@
 
 	{let $styleModifier kind="text"}
 		{if $dropTargetItemId == $fragmentEntryLinkId and $dropTargetItemType == $dropTargetItemTypes.fragment}
-			{$dropTargetBorder}
+			{sp}{$dropTargetBorder}
 		{/if}
+
 		{if $hoveredItemId == $fragmentEntryLinkId and $hoveredItemType == $dropTargetItemTypes.fragment}
 			{sp}fragments-editor__topper-wrapper--hovered
 			{sp}fragment-entry-link-wrapper--hovered
@@ -384,6 +395,8 @@
 	{let $emptyListClasses kind="text"}
 		fragments-editor__drop-target--fragment
 		{sp}fragments-editor__drop-target--layout
+		{sp}fragments-editor__drop-target--sidebar-fragment
+		{sp}fragments-editor__drop-target--sidebar-layout
 		{sp}no-fragments-message
 		{sp}taglib-empty-result-message
 

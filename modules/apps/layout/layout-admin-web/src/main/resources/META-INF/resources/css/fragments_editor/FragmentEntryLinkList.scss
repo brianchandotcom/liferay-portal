@@ -1,5 +1,3 @@
-@import "./mixins/lfr_drag_indicator";
-
 @import "./variables";
 
 .fragment-entry-link-list {
@@ -43,18 +41,6 @@
 			top: 0;
 			width: calc(100% - #{$fragmentEntryLinkSpacing});
 		}
-
-		&.targetOver:after {
-			@include lfr-drag-indicator("bottom");
-			content: '';
-			display: block;
-		}
-	}
-
-	&__container--empty &__col.targetOver:after {
-		@include lfr-drag-indicator("top");
-		content: '';
-		display: block;
 	}
 }
 

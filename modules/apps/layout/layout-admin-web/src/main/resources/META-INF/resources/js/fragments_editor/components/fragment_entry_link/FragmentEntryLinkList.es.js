@@ -232,8 +232,10 @@ class FragmentEntryLinkList extends Component {
 
 			let targetBorder = DROP_TARGET_BORDERS.bottom;
 
-			if (Math.abs(mouseY - targetItemRegion.top) <=
-				Math.abs(mouseY - targetItemRegion.bottom)) {
+			if (
+				Math.abs(mouseY - targetItemRegion.top) <=
+				Math.abs(mouseY - targetItemRegion.bottom)
+			) {
 				targetBorder = DROP_TARGET_BORDERS.top;
 			}
 
@@ -463,8 +465,8 @@ class FragmentEntryLinkList extends Component {
 				autoScroll: true,
 				dragPlaceholder: Drag.Placeholder.CLONE,
 				handles: '.fragments-editor__drag-handler',
-				sources: '.fragments-editor__drag-source--fragment',
-				targets: '.fragments-editor__drop-target--fragment'
+				sources: '.fragments-editor__drag-source--fragment, .fragments-editor__drag-source--layout',
+				targets: '.fragments-editor__drop-target--fragment, .fragments-editor__drag-source--layout'
 			}
 		);
 

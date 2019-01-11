@@ -114,8 +114,8 @@ public class LPKGIndependenceTest {
 				String name = zipEntry.getName();
 
 				if (name.endsWith(".jar")) {
-					try (InputStream inputStream =
-							zipFile.getInputStream(zipEntry)) {
+					try (InputStream inputStream = zipFile.getInputStream(
+							zipEntry)) {
 
 						bundles.add(
 							bundleContext.installBundle(

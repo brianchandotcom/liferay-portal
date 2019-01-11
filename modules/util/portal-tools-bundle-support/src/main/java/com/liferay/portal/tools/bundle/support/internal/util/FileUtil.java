@@ -191,8 +191,8 @@ public class FileUtil {
 			parentPath = sourcePath;
 		}
 
-		try (SevenZOutputFile sevenZOutputFile =
-				new SevenZOutputFile(sevenZipFile)) {
+		try (SevenZOutputFile sevenZOutputFile = new SevenZOutputFile(
+				sevenZipFile)) {
 
 			Files.walkFileTree(
 				sourcePath,

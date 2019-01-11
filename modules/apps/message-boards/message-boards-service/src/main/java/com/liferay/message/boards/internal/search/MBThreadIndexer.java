@@ -190,10 +190,8 @@ public class MBThreadIndexer extends BaseIndexer<MBThread> {
 
 		actionableDynamicQuery.setCompanyId(companyId);
 		actionableDynamicQuery.setPerformActionMethod(
-			(MBCategory category) ->
-				reindexThreads(
-					companyId, category.getGroupId(),
-					category.getCategoryId()));
+			(MBCategory category) -> reindexThreads(
+				companyId, category.getGroupId(), category.getCategoryId()));
 
 		actionableDynamicQuery.performActions();
 	}

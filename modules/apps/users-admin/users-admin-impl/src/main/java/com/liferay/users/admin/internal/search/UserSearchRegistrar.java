@@ -60,7 +60,9 @@ public class UserSearchRegistrar {
 	)
 	protected ModelIndexerWriterContributor<User> modelIndexWriterContributor;
 
-	@Reference protected ModelSearchRegistrarHelper modelSearchRegistrarHelper;
+	@Reference
+	protected ModelSearchRegistrarHelper modelSearchRegistrarHelper;
+
 	@Reference(
 		target = "(indexer.class.name=com.liferay.portal.kernel.model.User)"
 	)

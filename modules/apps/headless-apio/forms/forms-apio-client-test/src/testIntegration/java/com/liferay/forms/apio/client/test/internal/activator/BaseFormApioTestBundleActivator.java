@@ -156,8 +156,7 @@ public abstract class BaseFormApioTestBundleActivator
 			GroupConstants.DEFAULT_LIVE_GROUP_ID, nameMap, nameMap,
 			GroupConstants.TYPE_SITE_OPEN, true,
 			GroupConstants.DEFAULT_MEMBERSHIP_RESTRICTION,
-			StringPool.SLASH +
-				FriendlyURLNormalizerUtil.normalize(siteName),
+			StringPool.SLASH + FriendlyURLNormalizerUtil.normalize(siteName),
 			true, true, ServiceContextTestUtil.getServiceContext());
 
 		DDMForm ddmForm = createDDMForm();

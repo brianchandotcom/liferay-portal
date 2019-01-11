@@ -111,7 +111,7 @@ public class ResourceFilteringStructuredContentNestedCollectionResourceTest
 	}
 
 	@Test
-	public void testGetPageItemsFilterByContentStructure()throws Throwable {
+	public void testGetPageItemsFilterByContentStructure() throws Throwable {
 		Map<Locale, String> stringMap1 = new HashMap<>();
 
 		stringMap1.put(LocaleUtil.getDefault(), RandomTestUtil.randomString());
@@ -160,7 +160,7 @@ public class ResourceFilteringStructuredContentNestedCollectionResourceTest
 	}
 
 	@Test
-	public void testGetPageItemsFilterByCreatorEquals()throws Throwable {
+	public void testGetPageItemsFilterByCreatorEquals() throws Throwable {
 		Map<Locale, String> stringMap1 = new HashMap<>();
 
 		stringMap1.put(LocaleUtil.getDefault(), RandomTestUtil.randomString());
@@ -213,7 +213,7 @@ public class ResourceFilteringStructuredContentNestedCollectionResourceTest
 	}
 
 	@Test
-	public void testGetPageItemsFilterByDateCreatedEquals()throws Throwable {
+	public void testGetPageItemsFilterByDateCreatedEquals() throws Throwable {
 		Map<Locale, String> stringMap1 = new HashMap<>();
 
 		stringMap1.put(LocaleUtil.getDefault(), RandomTestUtil.randomString());
@@ -305,7 +305,7 @@ public class ResourceFilteringStructuredContentNestedCollectionResourceTest
 	}
 
 	@Test
-	public void testGetPageItemsFilterByDateCreatedLower()throws Throwable {
+	public void testGetPageItemsFilterByDateCreatedLower() throws Throwable {
 		Map<Locale, String> stringMap1 = new HashMap<>();
 
 		stringMap1.put(LocaleUtil.getDefault(), RandomTestUtil.randomString());
@@ -411,7 +411,7 @@ public class ResourceFilteringStructuredContentNestedCollectionResourceTest
 	}
 
 	@Test
-	public void testGetPageItemsFilterByDateModifiedEquals()throws Throwable {
+	public void testGetPageItemsFilterByDateModifiedEquals() throws Throwable {
 		Map<Locale, String> stringMap1 = new HashMap<>();
 
 		stringMap1.put(LocaleUtil.getDefault(), RandomTestUtil.randomString());
@@ -564,7 +564,7 @@ public class ResourceFilteringStructuredContentNestedCollectionResourceTest
 	}
 
 	@Test
-	public void testGetPageItemsFilterByDateModifiedUpper()throws Throwable {
+	public void testGetPageItemsFilterByDateModifiedUpper() throws Throwable {
 		Map<Locale, String> stringMap1 = new HashMap<>();
 
 		stringMap1.put(LocaleUtil.getDefault(), RandomTestUtil.randomString());
@@ -616,7 +616,7 @@ public class ResourceFilteringStructuredContentNestedCollectionResourceTest
 	}
 
 	@Test
-	public void testGetPageItemsFilterByDatePublishedEquals()throws Throwable {
+	public void testGetPageItemsFilterByDatePublishedEquals() throws Throwable {
 		Map<Locale, String> stringMap1 = new HashMap<>();
 
 		stringMap1.put(LocaleUtil.getDefault(), RandomTestUtil.randomString());
@@ -797,7 +797,7 @@ public class ResourceFilteringStructuredContentNestedCollectionResourceTest
 	}
 
 	@Test
-	public void testGetPageItemsFilterByDateStructureField()throws Throwable {
+	public void testGetPageItemsFilterByDateStructureField() throws Throwable {
 		DDMStructureTestHelper ddmStructureTestHelper =
 			new DDMStructureTestHelper(
 				PortalUtil.getClassNameId(JournalArticle.class), _group);
@@ -1137,7 +1137,7 @@ public class ResourceFilteringStructuredContentNestedCollectionResourceTest
 	}
 
 	@Test
-	public void testGetPageItemsFilterByPartialTitle()throws Throwable {
+	public void testGetPageItemsFilterByPartialTitle() throws Throwable {
 		Map<Locale, String> stringMap = new HashMap<>();
 
 		stringMap.put(LocaleUtil.getDefault(), "hello world");
@@ -1214,7 +1214,7 @@ public class ResourceFilteringStructuredContentNestedCollectionResourceTest
 	}
 
 	@Test
-	public void testGetPageItemsFilterByPartialTitleWord()throws Throwable {
+	public void testGetPageItemsFilterByPartialTitleWord() throws Throwable {
 		Map<Locale, String> stringMap = new HashMap<>();
 
 		stringMap.put(LocaleUtil.getDefault(), "hello world");
@@ -1242,7 +1242,7 @@ public class ResourceFilteringStructuredContentNestedCollectionResourceTest
 	}
 
 	@Test
-	public void testGetPageItemsFilterByRadioStructureField()throws Throwable {
+	public void testGetPageItemsFilterByRadioStructureField() throws Throwable {
 		DDMStructureTestHelper ddmStructureTestHelper =
 			new DDMStructureTestHelper(
 				PortalUtil.getClassNameId(JournalArticle.class), _group);
@@ -1349,7 +1349,7 @@ public class ResourceFilteringStructuredContentNestedCollectionResourceTest
 	}
 
 	@Test
-	public void testGetPageItemsFilterByTitle()throws Throwable {
+	public void testGetPageItemsFilterByTitle() throws Throwable {
 		Map<Locale, String> stringMap1 = new HashMap<>();
 
 		stringMap1.put(LocaleUtil.getDefault(), "title1");
@@ -1394,7 +1394,7 @@ public class ResourceFilteringStructuredContentNestedCollectionResourceTest
 	}
 
 	@Test
-	public void testGetPageItemsFilterByTitleContains()throws Throwable {
+	public void testGetPageItemsFilterByTitleContains() throws Throwable {
 		Map<Locale, String> stringMap1 = new HashMap<>();
 
 		stringMap1.put(LocaleUtil.getDefault(), "title1");
@@ -1452,7 +1452,7 @@ public class ResourceFilteringStructuredContentNestedCollectionResourceTest
 	}
 
 	@Test
-	public void testGetPageItemsFilterByTitleGreaterOrEqual()throws Throwable {
+	public void testGetPageItemsFilterByTitleGreaterOrEqual() throws Throwable {
 		Map<Locale, String> stringMap1 = new HashMap<>();
 
 		stringMap1.put(LocaleUtil.getDefault(), "title1");
@@ -1614,7 +1614,7 @@ public class ResourceFilteringStructuredContentNestedCollectionResourceTest
 	}
 
 	@Test
-	public void testGetPageItemsFilterByTitleLower()throws Throwable {
+	public void testGetPageItemsFilterByTitleLower() throws Throwable {
 		Map<Locale, String> stringMap1 = new HashMap<>();
 
 		stringMap1.put(LocaleUtil.getDefault(), "title1");
@@ -1661,7 +1661,7 @@ public class ResourceFilteringStructuredContentNestedCollectionResourceTest
 	}
 
 	@Test
-	public void testGetPageItemsFilterByTitleLowerOrEqual()throws Throwable {
+	public void testGetPageItemsFilterByTitleLowerOrEqual() throws Throwable {
 		Map<Locale, String> stringMap1 = new HashMap<>();
 
 		stringMap1.put(LocaleUtil.getDefault(), "title1");
@@ -1998,7 +1998,7 @@ public class ResourceFilteringStructuredContentNestedCollectionResourceTest
 	}
 
 	@Test
-	public void testGetPageItemsFilterByTitleUpper()throws Throwable {
+	public void testGetPageItemsFilterByTitleUpper() throws Throwable {
 		Map<Locale, String> stringMap1 = new HashMap<>();
 
 		stringMap1.put(LocaleUtil.getDefault(), "title1");
@@ -2154,7 +2154,7 @@ public class ResourceFilteringStructuredContentNestedCollectionResourceTest
 	}
 
 	@Test
-	public void testGetSearchFilterWithExistingProperty()throws Throwable {
+	public void testGetSearchFilterWithExistingProperty() throws Throwable {
 		FilterParser filterParser = _getFilterParser();
 
 		TermFilter termQuery = (TermFilter)getSearchFilter(

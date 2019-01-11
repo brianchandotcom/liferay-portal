@@ -323,8 +323,8 @@ public class FjordSiteInitializer implements SiteInitializer {
 			layoutPageTemplateEntry.getLayoutPageTemplateEntryId(), path,
 			StringUtil.toLowerCase(name) + "_thumbnail.jpg", serviceContext);
 
-		return
-			_layoutPageTemplateEntryLocalService.updateLayoutPageTemplateEntry(
+		return _layoutPageTemplateEntryLocalService.
+			updateLayoutPageTemplateEntry(
 				layoutPageTemplateEntry.getLayoutPageTemplateEntryId(),
 				previewFileEntryId);
 	}

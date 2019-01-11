@@ -453,10 +453,8 @@ public class MBMessageIndexer
 
 		actionableDynamicQuery.setCompanyId(companyId);
 		actionableDynamicQuery.setPerformActionMethod(
-			(MBCategory category) ->
-				reindexMessages(
-					companyId, category.getGroupId(),
-					category.getCategoryId()));
+			(MBCategory category) -> reindexMessages(
+				companyId, category.getGroupId(), category.getCategoryId()));
 
 		actionableDynamicQuery.performActions();
 	}

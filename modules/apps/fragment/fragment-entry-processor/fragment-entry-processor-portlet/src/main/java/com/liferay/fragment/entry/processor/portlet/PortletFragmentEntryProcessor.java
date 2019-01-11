@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.ModelHintsConstants;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
@@ -44,6 +45,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortletKeys;
@@ -243,6 +245,16 @@ public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
 					throw new FragmentEntryContentException(
 						LanguageUtil.get(
 							_resourceBundle, "widget-id-must-be-unique"));
+				}
+
+				if (id.length() > GetterUtil.getInteger(
+						ModelHintsConstants.TEXT_MAX_LENGTH)) {
+
+					throw new FragmentEntryContentException(
+						LanguageUtil.format(
+							_resourceBundle,
+							"widget-id-cannot-exceed-x-characters",
+							ModelHintsConstants.TEXT_MAX_LENGTH));
 				}
 			}
 

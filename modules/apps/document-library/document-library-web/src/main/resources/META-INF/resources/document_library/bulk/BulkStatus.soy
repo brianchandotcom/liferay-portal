@@ -1,10 +1,14 @@
-{namespace BulkStatus}
+{namespace com.liferay.document.library.web.BulkStatus}
 
 {template .render}
-	<div class="bulk-status">
-		<div class="bulk-status-content">
-			<span aria-hidden="true" class="loading-animation loading-animation-light loading-animation-sm"></span>
-			<span>{msg desc=""}processing-actions{/msg}</span>
+	{@param bulkInProgress: bool}
+
+	{if $bulkInProgress}
+		<div class="bulk-status">
+			<div class="bulk-status-content">
+				<span aria-hidden="true" class="loading-animation loading-animation-light loading-animation-sm"></span>
+				<span>{msg desc=""}processing-actions{/msg}</span>
+			</div>
 		</div>
-	</div>
+	{/if}
 {/template}

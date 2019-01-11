@@ -607,7 +607,9 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 
 		verifyInResponseTo(samlResponse);
 		verifyDestination(messageContext, samlResponse.getDestination());
-		verifyIssuer(messageContext, samlResponse.getIssuer());
+		Issuer issuer = samlResponse.getIssuer();
+
+		verifyIssuer(messageContext, issuer);
 
 		Assertion assertion = null;
 
@@ -711,17 +713,17 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 		if (samlSpSession != null) {
 			samlSpSessionLocalService.updateSamlSpSession(
 				samlSpSession.getSamlSpSessionId(),
-				samlSpSession.getSamlSpSessionKey(), assertionXml,
-				session.getId(), nameID.getFormat(), nameID.getNameQualifier(),
-				nameID.getSPNameQualifier(), nameID.getValue(), sessionIndex,
-				serviceContext);
+				samlSpSession.getSamlSpSessionKey(), issuer.getValue(),
+				assertionXml, session.getId(), nameID.getFormat(),
+				nameID.getNameQualifier(), nameID.getSPNameQualifier(),
+				nameID.getValue(), sessionIndex, serviceContext);
 		}
 		else {
 			String samlSpSessionKey = generateIdentifier(30);
 
 			samlSpSession = samlSpSessionLocalService.addSamlSpSession(
-				samlSpSessionKey, assertionXml, session.getId(),
-				nameID.getFormat(), nameID.getNameQualifier(),
+				samlSpSessionKey, issuer.getValue(), assertionXml,
+				session.getId(), nameID.getFormat(), nameID.getNameQualifier(),
 				nameID.getSPNameQualifier(), nameID.getValue(), sessionIndex,
 				serviceContext);
 		}

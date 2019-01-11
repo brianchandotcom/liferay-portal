@@ -1,3 +1,5 @@
+$fragmentsEditorSpacing: 8px;
+
 $controlMenuHeight: 49px;
 $desktopControlMenuHeight: 56px;
 
@@ -23,15 +25,15 @@ $translationStatusListZIndex: 995;
 
 $fragmentEditableFieldGridAccentColor: #80ACFF;
 $fragmentEditableFieldGridDefaultColor: #A7A9BC;
-$fragmentEditableFieldGridSize: 8px;
+$fragmentEditableFieldGridSize: $fragmentsEditorSpacing;
 $fragmentEditableFieldGridTranslatedColor: #3DC513;
 
 $fragmentEntryLinkListPadding: 28px;
-$sectionMinimumHeight: 160px;
+$sectionMinimumHeight: $fragmentsEditorSpacing * 20;
 
 $fragmentEntryLinkSectionBorderColor: #CDCED9;
 $fragmentEntryLinkColumnBorderColor: rgba(38, 38, 52, 0.06);
-$fragmentEntryLinkSpacing: 12px;
+$fragmentEntryLinkSpacing: $fragmentsEditorSpacing * 1.5;
 
 $dragSourceBackgroundColor: #E1EBFF;
 $dragSourceColor: #0B5FFF;
@@ -57,18 +59,24 @@ $sidebarButtonsColor: #A7A9BC;
 $sidebarButtonsHeight: 40px;
 $sidebarButtonsHoverColor: #FFF;
 $sidebarButtonsWidth: 40px;
+
 $sidebarCardImageBorderColor: #E7E7ED;
 $sidebarCardImageMaxHeight: 200px;
+$sidebarCardMarginBottom: $fragmentsEditorSpacing * 2;
 $sidebarCardMarginBottom: 16px;
 $sidebarCardNoPreviewBackgroundColor: #E7E7ED;
+$sidebarCardNoPreviewBackgroundColor: #E7EDED;
 $sidebarCardNoPreviewIconColor: #A7A9BC;
+$sidebarCardPadding: $fragmentsEditorSpacing;
 $sidebarCardPadding: 8px;
 $sidebarCardTitleColor: #6B6C7E;
+$sidebarCardTitleColor: #A7A9BC;
+
 $sidebarCollapsiblePanelLineColor: #DFDFE9;
 $sidebarContentBackgroundColor: #F4F5F8;
-$sidebarElementCardWidth: calc(50% - 8px);
-$sidebarLeftBorderWidth: 1px;
+$sidebarElementCardWidth: calc(50% - #{$fragmentsEditorSpacing});
 $sidebarLeftBorderColor: #E7E7ED;
+$sidebarLeftBorderWidth: 1px;
 $sidebarTransitionDuration: 0.5s;
 $sidebarTransitionTimingFunction: ease;
 $sidebarWidth: 320px;

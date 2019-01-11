@@ -198,7 +198,12 @@ name = HtmlUtil.escapeJS(name);
 		},
 
 		focus: function() {
-			tinyMCE.editors['<%= name %>'].focus();
+			if (window['<%= name %>'].instanceReady) {
+				tinyMCE.editors['<%= name %>'].focus();
+			}
+			else {
+				window['<%= name %>'].pendingFocus = true;
+			}
 		},
 
 		getHTML: function() {
@@ -296,6 +301,12 @@ name = HtmlUtil.escapeJS(name);
 			</c:if>
 
 			window['<%= name %>'].instanceReady = true;
+
+			if (window['<%= name %>'].pendingFocus) {
+				window['<%= name %>'].pendingFocus = false;
+
+				window['<%= name %>'].focus();
+			}
 
 			Liferay.component(
 				'<%= name %>',

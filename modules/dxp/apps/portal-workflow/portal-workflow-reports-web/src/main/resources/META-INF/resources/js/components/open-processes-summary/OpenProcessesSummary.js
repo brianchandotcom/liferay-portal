@@ -1,6 +1,6 @@
+import ClayCharts from 'clay-charts-react';
 import React from 'react';
 import SummaryCard from './SummaryCard';
-import ClayCharts from 'clay-charts-react';
 
 export default class OpenProcessesSummary extends React.Component {
 	render() {

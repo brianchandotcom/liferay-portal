@@ -62,6 +62,11 @@
 </tr>
 <!--SHARED_WITH_ME-->
 <tr>
+	<td>SHARED_WITH_ME_ASSET_TYPE</td>
+	<td>//*[@data-qa-id='rowItemContent']/h5[contains(.,'${key_assetType}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SHARED_WITH_ME_DOCUMENT_OPTIONS</td>
 	<td>//tr/td[contains(.,'${key_dmDocumentTitle}')]/..//div//a[span/*[name()='svg'][contains(@class,'icon-ellipsis')]]</td>
 	<td></td>

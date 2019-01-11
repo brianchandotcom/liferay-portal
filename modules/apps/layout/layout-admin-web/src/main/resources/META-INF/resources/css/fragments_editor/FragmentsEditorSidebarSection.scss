@@ -88,6 +88,22 @@
 		margin: 32px 0;
 	}
 
+	&__widgets-panel {
+		&-grid {
+			align-items: flex-start;
+			display: flex;
+			flex-wrap: wrap;
+			justify-content: space-between;
+			margin-left: 8px;
+		}
+
+		.widget-item {
+			font-size: 14px;
+			font-weight: 600;
+			margin: 9px 0;
+		}
+	}
+
 	.fragments-editor__drag-handler {
 		background-color: transparent;
 		cursor: move;

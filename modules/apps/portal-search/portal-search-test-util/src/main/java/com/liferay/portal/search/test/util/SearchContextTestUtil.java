@@ -43,6 +43,14 @@ public class SearchContextTestUtil {
 			long userId, long[] groupIds, String keywords, Locale locale)
 		throws PortalException {
 
+		return getSearchContext(userId, groupIds, keywords, locale, false);
+	}
+
+	public static SearchContext getSearchContext(
+			long userId, long[] groupIds, String keywords, Locale locale,
+			boolean highlightEnabled)
+		throws PortalException {
+
 		SearchContext searchContext = new SearchContext();
 
 		searchContext.setCompanyId(TestPropsValues.getCompanyId());
@@ -53,6 +61,7 @@ public class SearchContextTestUtil {
 
 		QueryConfig queryConfig = searchContext.getQueryConfig();
 
+		queryConfig.setHighlightEnabled(highlightEnabled);
 		queryConfig.setSelectedFieldNames(StringPool.STAR);
 
 		return searchContext;

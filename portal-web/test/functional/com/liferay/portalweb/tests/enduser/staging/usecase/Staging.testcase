@@ -33,6 +33,39 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-72088."
+	@priority = "5"
+	test ActivateStagingAfterChangingInstanceLanguageToSpanish {
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Instance Settings"
+		);
+
+		PortalSettings.configureCurrentLanguagesCP(
+			defaultPortalLanguage = "Spanish (Spain)"
+		);
+
+		User.logoutPG();
+
+		User.loginPG(
+			localization = "ES",
+			signIn = "Acceder",
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "Test Test"
+		);
+
+		Navigator.openSiteURL(siteName = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Publishing",
+			panel = "Site Administration",
+			portlet = "Staging"
+		);
+
+		Staging.activateStagingCP(siteName = "Site Name");
+	}
+
 	@priority = "5"
 	test ActivateStagingPageVersioningWithCustomDefaultLanguage {
 		property test.name.skip.portal.instance = "Staging#ActivateStagingPageVersioningWithCustomDefaultLanguage";

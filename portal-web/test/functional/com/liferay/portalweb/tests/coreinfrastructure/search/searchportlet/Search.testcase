@@ -1959,6 +1959,7 @@ definition {
 		);
 	}
 
+	@ignore = "true"
 	@priority = "5"
 	test ViewSearchResultDetails {
 		property portal.acceptance = "true";

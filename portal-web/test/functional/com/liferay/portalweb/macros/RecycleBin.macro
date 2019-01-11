@@ -169,7 +169,7 @@ definition {
 		}
 
 		if ("${multipleAssets}" == "true") {
-			AssertElementNotPresent(locator1 = "Message#EMPTY_INFO");
+			AssertNotVisible(locator1 = "Message#EMPTY_INFO");
 		}
 		else {
 			AssertTextEquals(

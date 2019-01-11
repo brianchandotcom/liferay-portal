@@ -53,7 +53,7 @@
 	{@param? zoomOutDisabled: bool}
 
 	{let $baseButtonsToolbar:[
-		'elementClasses': 'btn-dark',
+		'elementClasses': 'btn-floating-bar',
 		'events': [ 'click': $_handleToolbarClick],
 		'spritemap': $spritemap,
 		'style': false
@@ -74,7 +74,7 @@
 	{/let}
 
 	<div class="preview-toolbar-container">
-		<div class="btn-group" role="group">
+		<div class="btn-group floating-bar" role="group">
 			{call ClayButton.render data="$baseButtonsToolbar"}
 				{param disabled: $zoomOutDisabled /}
 				{param icon: 'hr' /}
@@ -82,7 +82,10 @@
 				{param value: 'out' /}
 			{/call}
 			{call ClayButton.render data="$baseButtonsToolbar"}
-				{param label kind="text"}{$zoomLabel}%{/param}
+				{param elementClasses: $baseButtonsToolbar.elementClasses
+					+ ' btn-floating-bar-text'
+				/}
+				{param label kind="html"}<span class="preview-toolbar-label-percent">{$zoomLabel}%</span>{/param}
 				{param value: $zoomBtnValue /}
 				{param title: $zoomBtnTitle /}
 			{/call}

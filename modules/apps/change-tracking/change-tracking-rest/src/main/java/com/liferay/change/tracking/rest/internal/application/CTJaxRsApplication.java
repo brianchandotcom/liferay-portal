@@ -17,17 +17,16 @@ package com.liferay.change.tracking.rest.internal.application;
 import javax.ws.rs.core.Application;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.jaxrs.whiteboard.JaxrsWhiteboardConstants;
 
 /**
  * @author Máté Thurzó
  */
 @Component(
 	property = {
-		JaxrsWhiteboardConstants.JAX_RS_APPLICATION_BASE + "=/change-tracking",
-		JaxrsWhiteboardConstants.JAX_RS_NAME + "=Liferay.ChangeTracking.Rest",
 		"auth.verifier.auth.verifier.BasicAuthHeaderAuthVerifier.urls.includes=/*",
-		"auth.verifier.auth.verifier.PortalSessionAuthVerifier.urls.includes=/*"
+		"auth.verifier.auth.verifier.PortalSessionAuthVerifier.urls.includes=/*",
+		"osgi.jaxrs.application.base=/change-tracking",
+		"osgi.jaxrs.name=Liferay.ChangeTracking.Rest"
 	},
 	service = Application.class
 )

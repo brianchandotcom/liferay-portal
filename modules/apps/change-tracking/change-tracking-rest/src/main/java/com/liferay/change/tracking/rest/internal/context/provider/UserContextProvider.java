@@ -28,16 +28,12 @@ import org.apache.cxf.message.Message;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ServiceScope;
-import org.osgi.service.jaxrs.whiteboard.JaxrsWhiteboardConstants;
 
 /**
  * @author Máté Thurzó
  */
 @Component(
-	property = {
-		JaxrsWhiteboardConstants.JAX_RS_EXTENSION + "=true",
-		JaxrsWhiteboardConstants.JAX_RS_NAME + "=user"
-	},
+	property = {"osgi.jaxrs.extension=true", "osgi.jaxrs.name=user"},
 	scope = ServiceScope.PROTOTYPE, service = ContextProvider.class
 )
 @Provider

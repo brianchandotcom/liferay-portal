@@ -78,9 +78,9 @@ public class FragmentEntryImpl extends FragmentEntryBaseImpl {
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
-		jsonObject.put("cssPath", "src/index.css");
-		jsonObject.put("htmlPath", "src/index.html");
-		jsonObject.put("jsPath", "src/index.js");
+		jsonObject.put("cssPath", "index.css");
+		jsonObject.put("htmlPath", "index.html");
+		jsonObject.put("jsPath", "index.js");
 		jsonObject.put("name", getName());
 
 		FileEntry previewFileEntry = _getPreviewFileEntry();
@@ -88,7 +88,7 @@ public class FragmentEntryImpl extends FragmentEntryBaseImpl {
 		if (previewFileEntry != null) {
 			jsonObject.put(
 				"thumbnailPath",
-				"src/thumbnail." + previewFileEntry.getExtension());
+				"thumbnail." + previewFileEntry.getExtension());
 		}
 
 		String typeLabel = getTypeLabel();
@@ -102,13 +102,13 @@ public class FragmentEntryImpl extends FragmentEntryBaseImpl {
 				FragmentExportImportConstants.FILE_NAME_FRAGMENT_CONFIG,
 			jsonObject.toString());
 
-		zipWriter.addEntry(path + "/src/index.css", getCss());
-		zipWriter.addEntry(path + "/src/index.js", getJs());
-		zipWriter.addEntry(path + "/src/index.html", getHtml());
+		zipWriter.addEntry(path + "/index.css", getCss());
+		zipWriter.addEntry(path + "/index.js", getJs());
+		zipWriter.addEntry(path + "/index.html", getHtml());
 
 		if (previewFileEntry != null) {
 			zipWriter.addEntry(
-				path + "/src/thumbnail." + previewFileEntry.getExtension(),
+				path + "/thumbnail." + previewFileEntry.getExtension(),
 				previewFileEntry.getContentStream());
 		}
 	}

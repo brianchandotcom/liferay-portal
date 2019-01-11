@@ -79,10 +79,30 @@ definition {
 	macro addExistingRelatedAssetCP {
 		var key_webContentTitle = "${webContentTitle}";
 
-		RelatedAssets.selectAsset(
-			assetTitle = "${assetTitle}",
-			assetType = "${assetType}"
+		Panel.expandPanel(panel = "Related Assets");
+
+		RelatedAssets._selectAssetType(assetType = "${assetType}");
+
+		SelectFrame(value1 = "relative=top");
+
+		SelectFrame(locator1 = "IFrame#DIALOG");
+
+		if (isSet(scopeSite)) {
+			Click(locator1 = "Dropdown#FILTER_AND_ORDER");
+
+			MenuItem.click(menuItem = "${scopeSite}");
+		}
+
+		var key_assetTitle = "${assetTitle}";
+
+		Click(
+			locator1 = "AssetRelatedAssets#ASSET_TABLE_CHECKBOX",
+			key_assetTitle = "${assetTitle}"
 		);
+
+		SelectFrame(value1 = "relative=top");
+
+		Button.clickAdd();
 
 		SelectFrame(value1 = "relative=top");
 

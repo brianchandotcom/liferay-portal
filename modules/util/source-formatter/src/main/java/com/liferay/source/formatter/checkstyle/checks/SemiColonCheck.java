@@ -49,7 +49,8 @@ public class SemiColonCheck extends BaseCheck {
 			(previousSiblingDetailAST.getType() == TokenTypes.CTOR_DEF) ||
 			(previousSiblingDetailAST.getType() == TokenTypes.ENUM_DEF) ||
 			(previousSiblingDetailAST.getType() == TokenTypes.INTERFACE_DEF) ||
-			(previousSiblingDetailAST.getType() == TokenTypes.METHOD_DEF)) {
+			(previousSiblingDetailAST.getType() == TokenTypes.METHOD_DEF) ||
+			(previousSiblingDetailAST.getType() == TokenTypes.STATIC_INIT)) {
 
 			log(detailAST, _MSG_UNNECESSARY_SEMI_COLON);
 		}

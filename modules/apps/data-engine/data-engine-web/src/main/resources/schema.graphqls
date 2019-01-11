@@ -13,9 +13,16 @@ input DataDefinitionFieldInput {
 input DataDefinitionInput {
 	dataDefinitionId: ID
 	descriptions: [LocalizedValueInput]
-	fields: [DataDefinitionFieldInput]!
-	names: [LocalizedValueInput]!
-	storageType: String!
+	fields: [DataDefinitionFieldInput]
+	names: [LocalizedValueInput]
+	storageType: String
+}
+
+input DataRecordCollectionInput {
+	dataDefinition: DataDefinitionInput
+	dataRecordCollectionId: ID
+	descriptions: [LocalizedValueInput]
+	names: [LocalizedValueInput]
 }
 
 input LocalizedValueInput {
@@ -71,6 +78,13 @@ type DataDefinition {
 	storageType: String
 }
 
+type DataRecordCollection {
+	dataDefinition: DataDefinition
+	dataRecordCollectionId: ID
+	descriptions: [LocalizedValueType]
+	names: [LocalizedValueType]
+}
+
 type DeleteDataDefinitionType {
 	dataDefinition: DataDefinition
 }
@@ -101,6 +115,7 @@ type MutationType {
 	saveDataDefinition(userId: ID!, groupId: ID!, dataDefinition: DataDefinitionInput!, languageId: String!): SaveDataDefinitionType
 	saveDataDefinitionModelPermissions(saveDataDefinitionModelPermissionsInput: SaveDataDefinitionModelPermissionsInput!, languageId: String!): SaveModelPermissionsDataDefinitionType
 	saveDataDefinitionPermissions(saveDataDefinitionPermissionsInput: SaveDataDefinitionPermissionsInput!, languageId: String!): SavePermissionsDataDefinitionType
+	saveDataRecordCollection(userId: ID!, groupId: ID!, dataRecordCollection: DataRecordCollectionInput!, languageId: String!): SaveDataRecordCollectionType
 }
 
 type QueryType {
@@ -112,4 +127,8 @@ type QueryType {
 
 type SaveDataDefinitionType {
 	dataDefinition: DataDefinition
+}
+
+type SaveDataRecordCollectionType {
+	dataRecordCollection: DataRecordCollection
 }

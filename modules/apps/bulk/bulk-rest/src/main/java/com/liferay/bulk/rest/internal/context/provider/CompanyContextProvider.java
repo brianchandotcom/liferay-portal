@@ -33,7 +33,10 @@ import org.osgi.service.component.annotations.ServiceScope;
  * @author Adolfo Pérez
  */
 @Component(
-	property = {"osgi.jaxrs.extension=true", "osgi.jaxrs.name=company"},
+	property = {
+		"osgi.jaxrs.application.select=(osgi.jaxrs.name=bulk-application)",
+		"osgi.jaxrs.extension=true", "osgi.jaxrs.name=company"
+	},
 	scope = ServiceScope.PROTOTYPE, service = ContextProvider.class
 )
 @Provider

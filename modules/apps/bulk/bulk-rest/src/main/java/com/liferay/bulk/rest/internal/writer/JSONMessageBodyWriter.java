@@ -35,7 +35,10 @@ import org.osgi.service.component.annotations.ServiceScope;
  * @author Alejandro Tardín
  */
 @Component(
-	property = {"osgi.jaxrs.extension=true", "osgi.jaxrs.name=Writer.JSON"},
+	property = {
+		"osgi.jaxrs.application.select=(osgi.jaxrs.name=bulk-application)",
+		"osgi.jaxrs.extension=true", "osgi.jaxrs.name=Writer.JSON"
+	},
 	scope = ServiceScope.PROTOTYPE, service = MessageBodyWriter.class
 )
 @Produces("application/json")

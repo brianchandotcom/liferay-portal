@@ -1,0 +1,5 @@
+Bundle-Name: Liferay Portal Aop Test
+Bundle-SymbolicName: com.liferay.portal.aop.test
+Bundle-Version: 1.0.0
+Liferay-Service: true
+-includeresource: test-classes/integration

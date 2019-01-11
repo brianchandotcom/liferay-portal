@@ -46,7 +46,6 @@ import com.liferay.dynamic.data.lists.service.DDLRecordSetLocalService;
 import com.liferay.dynamic.data.mapping.exception.NoSuchStructureException;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureService;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
@@ -64,6 +63,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(immediate = true, service = DEDataDefinitionService.class)
 public class DEDataDefinitionServiceImpl
+	extends DEBaseServiceImpl implements DEDataDefinitionService {
 
 	@Override
 	public DEDataDefinitionCountResponse execute(

@@ -52,7 +52,7 @@ public class VersionPurgerImpl implements VersionPurger {
 		int maximumNumberOfVersions =
 			_dlConfiguration.maximumNumberOfVersions();
 
-		if (maximumNumberOfVersions == 0) {
+		if (maximumNumberOfVersions <= 0) {
 			return Collections.emptyList();
 		}
 

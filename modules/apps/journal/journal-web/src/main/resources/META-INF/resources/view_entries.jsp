@@ -154,6 +154,10 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 							String articleImageURL = curArticle.getArticleImageURL(themeDisplay);
 
 							RowChecker rowChecker = articleSearchContainer.getRowChecker();
+
+							Date createDate = curArticle.getModifiedDate();
+
+							String modifiedDateDescription = LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - createDate.getTime(), true);
 							%>
 
 							<c:choose>
@@ -169,7 +173,7 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 										labels="<%= journalDisplayContext.getArticleLabels(curArticle) %>"
 										selectable="<%= true %>"
 										selected="<%= rowChecker.isChecked(curArticle) %>"
-										subtitle="<%= curArticle.getUserName() %>"
+										subtitle='<%= LanguageUtil.format(request, "x-modified-x-ago", new String[] {HtmlUtil.escape(curArticle.getUserName()), modifiedDateDescription}) %>'
 										title="<%= title %>"
 									/>
 								</c:when>
@@ -185,7 +189,7 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 										labels="<%= journalDisplayContext.getArticleLabels(curArticle) %>"
 										selectable="<%= true %>"
 										selected="<%= rowChecker.isChecked(curArticle) %>"
-										subtitle="<%= curArticle.getUserName() %>"
+										subtitle='<%= LanguageUtil.format(request, "x-modified-x-ago", new String[] {HtmlUtil.escape(curArticle.getUserName()), modifiedDateDescription}) %>'
 										title="<%= title %>"
 									/>
 								</c:otherwise>

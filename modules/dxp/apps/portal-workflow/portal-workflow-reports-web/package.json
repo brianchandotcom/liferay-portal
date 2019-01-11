@@ -1,33 +1,42 @@
 {
-	"author": "",
 	"dependencies": {
+		"apollo-boost": "^0.1.23",
+		"autobind-decorator": "^2.4.0",
 		"clay-charts-react": "^2.4.1",
+		"graphql": "^14.0.2",
+		"graphql-tag": "^2.10.0",
 		"moment": "^2.22.2",
 		"react": "^16.6.3",
 		"react-dom": "^16.6.3"
 	},
-	"description": "",
 	"devDependencies": {
 		"babel-cli": "^6.26.0",
 		"babel-jest": "^23.6.0",
+		"babel-plugin-transform-decorators-legacy": "^1.3.5",
 		"babel-preset-env": "^1.7.0",
 		"babel-preset-react": "^6.24.1",
 		"check-source-formatting": "^2.0.13",
 		"copyfiles": "^2.1.0",
 		"cross-env": "^5.2.0",
+		"enzyme": "^3.8.0",
+		"enzyme-adapter-react-16": "^1.7.1",
+		"enzyme-to-json": "^3.3.5",
 		"eslint": "^5.10.0",
 		"eslint-config-liferay": "^2.0.18",
 		"eslint-plugin-react": "^7.11.1",
 		"jest": "^23.6.0",
+		"jest-canvas-mock": "^1.1.0",
+		"jest-extended": "^0.11.0",
 		"liferay-npm-bundler": "^2.5.1",
 		"liferay-npm-bundler-preset-react": "^1.8.0",
 		"prettier-eslint-cli": "^4.7.1",
-		"react-test-renderer": "^16.6.3"
+		"properties": "^1.2.1",
+		"react-test-renderer": "^16.6.3",
+		"whatwg-fetch": "^3.0.0"
 	},
 	"jest": {
 		"collectCoverageFrom": [
-			"<rootDir>/src/main/resources/META-INF/resources/js/components/**/*.js",
-			"!<rootDir>/src/main/resources/META-INF/resources/js/**/**/__tests__/*.js"
+			"src/main/resources/META-INF/resources/js/**/components/**/*.js"
 		],
 		"coverageDirectory": "build/coverage",
 		"coverageThreshold": {
@@ -37,18 +46,15 @@
 				"lines": 70
 			}
 		},
-		"globals": {
-			"CEREBRO_PATHS_GEOMAP_KEY": "paths"
-		},
-		"testMatch": [
-			"<rootDir>/src/main/resources/META-INF/resources/js/components/**/__tests__/*.js"
+		"setupTestFrameworkScriptFile": "<rootDir>src/main/resources/META-INF/resources/js/test/setup.js",
+		"snapshotSerializers": [
+			"enzyme-to-json/serializer"
 		],
 		"testURL": "http://liferay.com",
 		"timers": "fake"
 	},
-	"license": "ISC",
 	"main": "js/index.js",
-	"name": "portal-workflow-reports-portlet",
+	"name": "portal-workflow-reports-web",
 	"scripts": {
 		"build": "babel --source-maps -d classes/META-INF/resources src/main/resources/META-INF/resources && liferay-npm-bundler",
 		"csf": "csf src/main/resources/META-INF/resources/css/**/*.scss",

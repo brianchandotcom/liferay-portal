@@ -82,16 +82,11 @@ public class ResourcesFragmentEntryProcessor implements FragmentEntryProcessor {
 		Matcher matcher = _pattern.matcher(code);
 
 		while (matcher.find()) {
-			String imagePath = matcher.group();
-
-			String[] paths = imagePath.split(StringPool.SLASH);
-
-			String fileName = paths[paths.length - 1];
-
 			FileEntry fileEntry =
 				PortletFileRepositoryUtil.fetchPortletFileEntry(
 					fragmentEntry.getGroupId(),
-					fragmentCollection.getResourcesFolderId(), fileName);
+					fragmentCollection.getResourcesFolderId(),
+					matcher.group(1));
 
 			String fileEntryURL = StringPool.BLANK;
 
@@ -101,14 +96,14 @@ public class ResourcesFragmentEntryProcessor implements FragmentEntryProcessor {
 					StringPool.BLANK, false, false);
 			}
 
-			code = code.replace(imagePath, fileEntryURL);
+			code = code.replace(matcher.group(), fileEntryURL);
 		}
 
 		return code;
 	}
 
 	private static final Pattern _pattern = Pattern.compile(
-		"\\.\\./\\.\\./resources/.+\\.[a-zA-Z]+");
+		"\\[resources:(.+?)\\]");
 
 	@Reference
 	private FragmentCollectionService _fragmentCollectionService;

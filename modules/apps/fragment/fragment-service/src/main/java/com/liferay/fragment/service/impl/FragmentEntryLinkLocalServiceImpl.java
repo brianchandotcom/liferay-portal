@@ -402,16 +402,11 @@ public class FragmentEntryLinkLocalServiceImpl
 		Matcher matcher = _pattern.matcher(html);
 
 		while (matcher.find()) {
-			String imagePath = matcher.group();
-
-			String[] paths = imagePath.split(StringPool.SLASH);
-
-			String fileName = paths[paths.length - 1];
-
 			FileEntry fileEntry =
 				PortletFileRepositoryUtil.fetchPortletFileEntry(
 					fragmentEntry.getGroupId(),
-					fragmentCollection.getResourcesFolderId(), fileName);
+					fragmentCollection.getResourcesFolderId(),
+					matcher.group(1));
 
 			String fileEntryURL = StringPool.BLANK;
 
@@ -421,14 +416,14 @@ public class FragmentEntryLinkLocalServiceImpl
 					StringPool.BLANK, false, false);
 			}
 
-			html = html.replace(imagePath, fileEntryURL);
+			html = html.replace(matcher.group(), fileEntryURL);
 		}
 
 		return html;
 	}
 
 	private static final Pattern _pattern = Pattern.compile(
-		"\\.\\./\\.\\./resources/.+\\.[a-zA-Z]+");
+		"\\[resources:(.+?)\\]");
 
 	@ServiceReference(type = FragmentEntryProcessorRegistry.class)
 	private FragmentEntryProcessorRegistry _fragmentEntryProcessorRegistry;

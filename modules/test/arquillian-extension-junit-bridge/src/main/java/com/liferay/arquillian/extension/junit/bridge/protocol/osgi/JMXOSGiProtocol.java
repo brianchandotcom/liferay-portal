@@ -45,7 +45,7 @@ public class JMXOSGiProtocol implements Protocol<JMXProtocolConfiguration> {
 
 	@Override
 	public ProtocolDescription getDescription() {
-		return new ProtocolDescription(getProtocolName());
+		return new ProtocolDescription(_PROTOCOL_NAME);
 	}
 
 	@Override
@@ -105,10 +105,6 @@ public class JMXOSGiProtocol implements Protocol<JMXProtocolConfiguration> {
 	@Override
 	public Class<JMXProtocolConfiguration> getProtocolConfigurationClass() {
 		return JMXProtocolConfiguration.class;
-	}
-
-	public String getProtocolName() {
-		return _PROTOCOL_NAME;
 	}
 
 	private static final String _PROTOCOL_NAME = "jmx-osgi";

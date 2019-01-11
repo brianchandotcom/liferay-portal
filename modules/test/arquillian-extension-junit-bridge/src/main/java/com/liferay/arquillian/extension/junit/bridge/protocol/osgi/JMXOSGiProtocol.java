@@ -52,7 +52,7 @@ public class JMXOSGiProtocol implements Protocol<JMXProtocolConfiguration> {
 
 	@Override
 	public ContainerMethodExecutor getExecutor(
-		JMXProtocolConfiguration protocolConfiguration,
+		JMXProtocolConfiguration jmxProtocolConfiguration,
 		ProtocolMetaData protocolMetaData, CommandCallback commandCallback) {
 
 		if (protocolMetaData.hasContext(JMXContext.class)) {
@@ -61,13 +61,13 @@ public class JMXOSGiProtocol implements Protocol<JMXProtocolConfiguration> {
 
 			JMXContext jmxContext = jmxContexts.get(0);
 
-			MBeanServerConnection mbeanServer = jmxContext.getConnection();
+			MBeanServerConnection mBeanServer = jmxContext.getConnection();
 
-			Map<String, String> protocolProps = new HashMap<>();
+			Map<String, String> protocolProperties = new HashMap<>();
 
 			try {
 				BeanInfo beanInfo = Introspector.getBeanInfo(
-					protocolConfiguration.getClass());
+					jmxProtocolConfiguration.getClass());
 
 				for (PropertyDescriptor propertyDescriptor :
 						beanInfo.getPropertyDescriptors()) {
@@ -76,21 +76,21 @@ public class JMXOSGiProtocol implements Protocol<JMXProtocolConfiguration> {
 
 					Method method = propertyDescriptor.getReadMethod();
 
-					Object value = method.invoke(protocolConfiguration);
+					Object value = method.invoke(jmxProtocolConfiguration);
 
 					if (value != null) {
-						protocolProps.put(key, "" + value);
+						protocolProperties.put(key, "" + value);
 					}
 				}
 			}
-			catch (Exception ex) {
+			catch (Exception e) {
 				throw new IllegalStateException(
-					"Cannot obtain protocol config");
+					"Cannot obtain protocol configuration");
 			}
 
 			return new JMXMethodExecutor(
-				mbeanServer, commandCallback, JMXTestRunnerMBean.OBJECT_NAME,
-				protocolProps);
+				mBeanServer, commandCallback, JMXTestRunnerMBean.OBJECT_NAME,
+				protocolProperties);
 		}
 		else {
 			throw new IllegalStateException(

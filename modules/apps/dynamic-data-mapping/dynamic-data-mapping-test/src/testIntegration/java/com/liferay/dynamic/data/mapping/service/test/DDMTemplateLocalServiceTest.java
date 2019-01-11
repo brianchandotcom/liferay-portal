@@ -237,37 +237,6 @@ public class DDMTemplateLocalServiceTest extends BaseDDMServiceTestCase {
 	}
 
 	@Test
-	public void testSearchByKeywords() throws Exception {
-		addDisplayTemplate(
-			_classNameId, _resourceClassNameId, "Event Template",
-			WorkflowConstants.STATUS_APPROVED);
-		addDisplayTemplate(
-			_classNameId, _resourceClassNameId, "Contact Template",
-			WorkflowConstants.STATUS_APPROVED);
-
-		List<DDMTemplate> templates = DDMTemplateLocalServiceUtil.search(
-			TestPropsValues.getCompanyId(), new long[] {group.getGroupId()},
-			null, null, _resourceClassNameId, "Event", null, null,
-			WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, new TemplateIdComparator(true));
-
-		Assert.assertEquals(templates.toString(), 1, templates.size());
-		Assert.assertEquals(
-			"Event Template", getTemplateName(templates.get(0)));
-
-		templates = DDMTemplateLocalServiceUtil.search(
-			TestPropsValues.getCompanyId(), new long[] {group.getGroupId()},
-			null, null, _resourceClassNameId, "Template", null, null,
-			WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, new TemplateIdComparator(true));
-
-		Assert.assertEquals(
-			"Event Template", getTemplateName(templates.get(0)));
-		Assert.assertEquals(
-			"Contact Template", getTemplateName(templates.get(1)));
-	}
-
-	@Test
 	public void testSearchByName() throws Exception {
 		addDisplayTemplate(
 			_classNameId, _resourceClassNameId, "Event",

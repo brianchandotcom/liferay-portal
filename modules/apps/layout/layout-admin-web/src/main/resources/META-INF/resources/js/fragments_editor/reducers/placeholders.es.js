@@ -24,10 +24,10 @@ const FRAGMENTS_EDITOR_ITEM_BORDERS = {
  * @type {!object}
  */
 const FRAGMENTS_EDITOR_ITEM_TYPES = {
-	column: 'layout-column',
-	fragment: 'fragment-entry-link',
-	fragmentList: 'fragment-entry-link-list',
-	section: 'layout-section'
+	column: 'fragments-editor-column',
+	fragment: 'fragments-editor-fragment',
+	fragmentList: 'fragments-editor-fragment-list',
+	section: 'fragments-editor-section'
 };
 
 /**

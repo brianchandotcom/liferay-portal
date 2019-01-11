@@ -94,12 +94,6 @@ public class ClassUtil {
 
 		while (st.nextToken() != StreamTokenizer.TT_EOF) {
 			if (st.ttype == StreamTokenizer.TT_WORD) {
-				Matcher matcher = _fullyQualifiedNamePattern.matcher(st.sval);
-
-				if (matcher.find()) {
-					continue;
-				}
-
 				int firstIndex = st.sval.indexOf('.');
 
 				if (firstIndex >= 0) {
@@ -400,7 +394,5 @@ public class ClassUtil {
 		"@(\\w+)\\.?(\\w*)$");
 	private static final Pattern _annotationParametersPattern = Pattern.compile(
 		"@(\\w+)\\.?(\\w*)\\({0,1}\\{{0,1}([^)}]+)\\}{0,1}\\){0,1}");
-	private static final Pattern _fullyQualifiedNamePattern = Pattern.compile(
-		"^([a-z]\\w*\\.){2,}([A-Z]\\w*)(\\.|\\Z)");
 
 }

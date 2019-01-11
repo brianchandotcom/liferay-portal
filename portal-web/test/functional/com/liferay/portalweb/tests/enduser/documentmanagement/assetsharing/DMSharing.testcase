@@ -244,6 +244,52 @@ definition {
 		AssertElementNotPresent(locator1 = "//tbody/tr[2]/td[contains(@class,'table-cell-content')]/a[contains(.,'DM Document Title')]");
 	}
 
+	@description = "This test ensures that users can Order By Shared Date in the Shared with Me app."
+	@priority = "3"
+	test FilterByAssetType {
+
+		DMDocument.addMultiplePG(
+			dmDocumentFileList = "Document_1.jpeg,Document_2.docx",
+			viewableBy = "Owner"
+		);
+
+		DMNavigator.gotoShare(dmDocumentTitle = "Document_1.jpeg");
+
+		DMDocument.sharePG(userEmailAddress = "userea@liferay.com");
+
+		User.logoutPG();
+
+		User.loginUserPG(password = "test", userEmailAddress = "userea@liferay.com");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "My Account",
+			panel = "User",
+			portlet = "Shared With Me"
+		);
+
+		ManagementBar.setFilterAndOrder(filterBy = "Asset Types");
+
+		AssertTextEquals(
+			locator1 = "Portlet#H3_MODAL_TITLE",
+			value1 = "Select Asset Type"
+		);
+
+		SelectFrame(locator1 = "IFrame#MODAL_IFRAME");
+
+		var key_assetType = "Documents";
+
+		AssertClick(
+			locator1="DocumentsAndMediaShare#SHARED_WITH_ME_ASSET_TYPE",
+			value1="Documents"
+		);
+
+		SelectFrame(value1 = "relative=top");
+
+		AssertClick(locator1 = "Button#SELECT", value1 = "Select");
+	}
+
 	@description = "This test ensures that users receive a notification in portal when a document is shared to them, and that clicking on that notification navigates them to the Shared With Me app."
 	@priority = "4"
 	test GoToSharedWithMeViaNotifications {

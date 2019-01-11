@@ -1,5 +1,5 @@
 {
-	"dump-report": true,
+	"dump-report": false,
     "config": {
 		"imports": {
 			"frontend-js-node-shims": {

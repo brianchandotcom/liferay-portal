@@ -1,9 +1,9 @@
-import App from '../App';
+import OpenProcessesSummary from '../OpenProcessesSummary';
 import React from 'react';
 import renderer from 'react-test-renderer';
 
 test('Should render component', () => {
-	const component = renderer.create(<App />);
+	const component = renderer.create(<OpenProcessesSummary />);
 
 	const tree = component.toJSON();
 

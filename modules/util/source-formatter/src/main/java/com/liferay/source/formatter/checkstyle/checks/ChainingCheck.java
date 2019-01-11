@@ -106,15 +106,6 @@ public class ChainingCheck extends BaseCheck {
 					chain, "getClass", methodCallDetailAST, detailAST);
 
 				String name1 = chain.get(0);
-
-				if ((name1.equals("getParamValue") ||
-					 name1.equals("getValue")) &&
-					DetailASTUtil.hasParentWithTokenType(
-						detailAST, TokenTypes.ENUM_DEF)) {
-
-					continue;
-				}
-
 				String name2 = chain.get(1);
 
 				if (name1.equals("concat") || name2.equals("concat")) {

@@ -17,9 +17,9 @@
 <%@ include file="/init.jsp" %>
 
 <%
+String backURL = ParamUtil.getString(request, "backURL");
 String className = (String)request.getAttribute("contact_information.jsp-className");
 long classPK = (long)request.getAttribute("contact_information.jsp-classPK");
-String contactInformationRequireJS = (String)request.getAttribute("contact_information.jsp-contactInformationRequireJS");
 
 String emptyResultsMessage = ParamUtil.getString(request, "emptyResultsMessage");
 
@@ -32,19 +32,24 @@ List<Website> websites = WebsiteServiceUtil.getWebsites(className, classPK);
 	</span>
 	<span class="autofit-col">
 		<span class="heading-end">
+
+			<%
+			PortletURL editURL = liferayPortletResponse.createRenderURL();
+
+			editURL.setParameter("backURL", backURL);
+			editURL.setParameter("className", className);
+			editURL.setParameter("classPK", String.valueOf(classPK));
+			editURL.setParameter("mvcRenderCommandName", "/users_admin/edit_website");
+			editURL.setParameter("listType", ListTypeConstants.WEBSITE);
+			editURL.setParameter("redirect", currentURL);
+			editURL.setParameter("sheetTitle", "add-website");
+			%>
+
 			<liferay-ui:icon
-				cssClass="modify-website-link"
-				data="<%=
-					new HashMap<String, Object>() {
-						{
-							put("title", LanguageUtil.get(request, "add-website"));
-						}
-					}
-				%>"
 				label="<%= true %>"
 				linkCssClass="btn btn-secondary btn-sm"
 				message="add"
-				url="javascript:;"
+				url="<%= editURL.toString() %>"
 			/>
 		</span>
 	</span>
@@ -109,16 +114,3 @@ List<Website> websites = WebsiteServiceUtil.getWebsites(className, classPK);
 		markupView="lexicon"
 	/>
 </liferay-ui:search-container>
-
-<portlet:renderURL var="editWebsiteRenderURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-	<portlet:param name="mvcPath" value="/common/edit_website.jsp" />
-	<portlet:param name="className" value="<%= className %>" />
-</portlet:renderURL>
-
-<aui:script require="<%= contactInformationRequireJS %>">
-	ContactInformation.registerContactInformationListener(
-		'.modify-website-link a',
-		'<%= editWebsiteRenderURL.toString() %>',
-		460
-	);
-</aui:script>

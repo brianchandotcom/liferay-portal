@@ -36,6 +36,10 @@ request.setAttribute("contact_information.jsp-className", Contact.class.getName(
 request.setAttribute("contact_information.jsp-classPK", selContactId);
 request.setAttribute("contact_information.jsp-contactInformationRequireJS", contactInformationRequireJS);
 request.setAttribute("contact_information.jsp-mvcActionPath", "/users_admin/update_user_contact_information");
+
+PortletURL viewURL = renderResponse.createRenderURL();
+
+String backURL = ParamUtil.getString(request, "backURL", viewURL.toString());
 %>
 
 <aui:input name="classPK" type="hidden" value="<%= String.valueOf(selContactId) %>" />
@@ -54,6 +58,7 @@ request.setAttribute("contact_information.jsp-mvcActionPath", "/users_admin/upda
 
 <div class="sheet-section">
 	<liferay-util:include page="/common/websites.jsp" servletContext="<%= application %>">
+		<liferay-util:param name="backURL" value="<%= backURL %>" />
 		<liferay-util:param name="emptyResultsMessage" value="this-user-does-not-have-any-websites" />
 	</liferay-util:include>
 </div>

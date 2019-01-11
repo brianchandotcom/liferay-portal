@@ -1,4 +1,5 @@
-<%--
+<%@ page
+	import="com.liferay.users.admin.web.internal.constants.UsersAdminWebKeys" %><%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -17,37 +18,75 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String className = ParamUtil.getString(request, "className");
+String actionName = (String)request.getAttribute(UsersAdminWebKeys.ACTION_COMMAND_NAME);
 
-long websiteId = ParamUtil.getLong(request, "primaryKey", 0L);
+String backURL = ParamUtil.getString(request, "backURL");
+String className = ParamUtil.getString(request, "className");
+Long classPK = ParamUtil.getLong(request, "classPK");
+long primaryKey = ParamUtil.getLong(request, "primaryKey", 0L);
+String redirect = ParamUtil.getString(request, "redirect");
+String sheetTitle = ParamUtil.getString(request, "sheetTitle");
 
 Website website = null;
 
-if (websiteId > 0L) {
-	website = WebsiteServiceUtil.getWebsite(websiteId);
+if (primaryKey > 0L) {
+	website = WebsiteServiceUtil.getWebsite(primaryKey);
+}
+
+if (!portletName.equals(UsersAdminPortletKeys.MY_ACCOUNT)) {
+	portletDisplay.setShowBackIcon(true);
+	portletDisplay.setURLBack(backURL);
+
+	String portletTitle = (String)request.getAttribute(UsersAdminWebKeys.PORTLET_TITLE);
+
+	renderResponse.setTitle(portletTitle);
 }
 %>
 
-<aui:form cssClass="modal-body" name="fm">
-	<clay:alert
-		message='<%= LanguageUtil.format(request, "url-must-start-with-x-or-x", new String[] {"http://", "https://"}, false) %>'
-		style="info"
-		title='<%= LanguageUtil.get(request, "info") + ":" %>'
-	/>
+<portlet:actionURL name="<%= actionName %>" var="actionURL" />
 
-	<aui:model-context bean="<%= website %>" model="<%= Website.class %>" />
-
+<aui:form action="<%= actionURL %>" method="post" name="fm">
+	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.EDIT %>" />
-	<aui:input name="primaryKey" type="hidden" value="<%= websiteId %>" />
-	<aui:input name="listType" type="hidden" value="<%= ListTypeConstants.WEBSITE %>" />
+	<aui:input name="backURL" type="hidden" value="<%= backURL %>" />
+	<aui:input name="className" type="hidden" value="<%= className %>" />
+	<aui:input name="classPK" type="hidden" value="<%= String.valueOf(classPK) %>" />
+	<aui:input name="errorMvcRenderCommandName" type="hidden" value="/users_admin/edit_website" />
+	<aui:input name="primaryKey" type="hidden" value="<%= String.valueOf(primaryKey) %>" />
+	<aui:input name="sheetTitle" type="hidden" value="<%= sheetTitle %>" />
 
-	<aui:input checked="<%= (website != null)? website.isPrimary() : false %>" id="websitePrimary" label="make-primary" name="websitePrimary" type="checkbox" />
+	<div class="container-fluid container-fluid-max-xl container-form-lg">
+		<div class="sheet sheet-lg">
+			<h2 class="sheet-title"><liferay-ui:message key="<%= sheetTitle %>" /></h2>
 
-	<liferay-ui:error key="<%= NoSuchListTypeException.class.getName() + className + ListTypeConstants.WEBSITE %>" message="please-select-a-type" />
+			<div class="sheet-section">
+				<clay:alert
+					message='<%= LanguageUtil.format(request, "url-must-start-with-x-or-x", new String[] {"http://", "https://"}, false) %>'
+					style="info"
+					title='<%= LanguageUtil.get(request, "info") + ":" %>'
+				/>
 
-	<aui:select inlineField="<%= true %>" label="type" listType="<%= className + ListTypeConstants.WEBSITE %>" name="websiteTypeId" />
+				<aui:model-context bean="<%= website %>" model="<%= Website.class %>" />
 
-	<liferay-ui:error exception="<%= WebsiteURLException.class %>" message="please-enter-a-valid-url" />
+				<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.EDIT %>" />
+				<aui:input name="listType" type="hidden" value="<%= ListTypeConstants.WEBSITE %>" />
 
-	<aui:input fieldParam="websiteUrl" id="websiteUrl" name="url" required="<%= true %>" />
+				<aui:input checked="<%= (website != null)? website.isPrimary() : false %>" id="websitePrimary" label="make-primary" name="websitePrimary" type="checkbox" />
+
+				<liferay-ui:error key="<%= NoSuchListTypeException.class.getName() + className + ListTypeConstants.WEBSITE %>" message="please-select-a-type" />
+
+				<aui:select inlineField="<%= true %>" label="type" listType="<%= className + ListTypeConstants.WEBSITE %>" name="websiteTypeId" />
+
+				<liferay-ui:error exception="<%= WebsiteURLException.class %>" message="please-enter-a-valid-url" />
+
+				<aui:input fieldParam="websiteUrl" id="websiteUrl" name="url" required="<%= true %>" />
+			</div>
+
+			<div class="sheet-footer">
+				<aui:button primary="<%= true %>" type="submit" />
+
+				<aui:button href="<%= redirect %>" type="cancel" />
+			</div>
+		</div>
+	</div>
 </aui:form>

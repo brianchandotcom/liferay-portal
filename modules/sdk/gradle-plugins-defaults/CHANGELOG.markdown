@@ -5357,7 +5357,7 @@ version 2.0.9.
 - [LPS-88909]: Update the [Liferay Gradle Plugins JSDoc] dependency to version
 2.0.14.
 
-## 5.5.165 - 2019-01-09
+## 5.5.166 - 2019-01-09
 
 ### Changed
 - [LPS-87479]: Update the [Liferay Gradle Plugins] dependency to version

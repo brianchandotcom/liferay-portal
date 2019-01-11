@@ -14,17 +14,86 @@
 
 package com.liferay.arquillian.extension.junit.bridge.protocol.osgi;
 
-import java.util.Collection;
+import java.beans.BeanInfo;
+import java.beans.Introspector;
+import java.beans.PropertyDescriptor;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.management.MBeanServerConnection;
+
+import org.jboss.arquillian.container.spi.client.protocol.ProtocolDescription;
+import org.jboss.arquillian.container.spi.client.protocol.metadata.JMXContext;
+import org.jboss.arquillian.container.spi.client.protocol.metadata.ProtocolMetaData;
+import org.jboss.arquillian.container.test.spi.ContainerMethodExecutor;
 import org.jboss.arquillian.container.test.spi.TestDeployment;
 import org.jboss.arquillian.container.test.spi.client.deployment.DeploymentPackager;
 import org.jboss.arquillian.container.test.spi.client.deployment.ProtocolArchiveProcessor;
-import org.jboss.arquillian.protocol.jmx.AbstractJMXProtocol;
+import org.jboss.arquillian.container.test.spi.client.protocol.Protocol;
+import org.jboss.arquillian.container.test.spi.command.CommandCallback;
+import org.jboss.arquillian.protocol.jmx.JMXMethodExecutor;
+import org.jboss.arquillian.protocol.jmx.JMXTestRunnerMBean;
 
 /**
  * @author Matthew Tambara
  */
-public class JMXOSGiProtocol extends AbstractJMXProtocol {
+public class JMXOSGiProtocol implements Protocol<JMXProtocolConfiguration> {
+
+	@Override
+	public ProtocolDescription getDescription() {
+		return new ProtocolDescription(getProtocolName());
+	}
+
+	@Override
+	public ContainerMethodExecutor getExecutor(
+		JMXProtocolConfiguration protocolConfiguration,
+		ProtocolMetaData protocolMetaData, CommandCallback commandCallback) {
+
+		if (protocolMetaData.hasContext(JMXContext.class)) {
+			List<JMXContext> jmxContexts = new ArrayList<>(
+				protocolMetaData.getContexts(JMXContext.class));
+
+			JMXContext jmxContext = jmxContexts.get(0);
+
+			MBeanServerConnection mbeanServer = jmxContext.getConnection();
+
+			Map<String, String> protocolProps = new HashMap<>();
+
+			try {
+				BeanInfo beanInfo = Introspector.getBeanInfo(
+					protocolConfiguration.getClass());
+
+				for (PropertyDescriptor propertyDescriptor :
+						beanInfo.getPropertyDescriptors()) {
+
+					String key = propertyDescriptor.getName();
+					Object value = propertyDescriptor.getReadMethod().invoke(
+						protocolConfiguration);
+
+					if (value != null) {
+						protocolProps.put(key, "" + value);
+					}
+				}
+			}
+			catch (Exception ex) {
+				throw new IllegalStateException(
+					"Cannot obtain protocol config");
+			}
+
+			return new JMXMethodExecutor(
+				mbeanServer, commandCallback, JMXTestRunnerMBean.OBJECT_NAME,
+				protocolProps);
+		}
+		else {
+			throw new IllegalStateException(
+				"No " + JMXContext.class.getName() + " was found in " +
+					ProtocolMetaData.class.getName());
+		}
+	}
 
 	@Override
 	public DeploymentPackager getPackager() {
@@ -34,6 +103,10 @@ public class JMXOSGiProtocol extends AbstractJMXProtocol {
 	}
 
 	@Override
+	public Class<JMXProtocolConfiguration> getProtocolConfigurationClass() {
+		return JMXProtocolConfiguration.class;
+	}
+
 	public String getProtocolName() {
 		return _PROTOCOL_NAME;
 	}

@@ -14,7 +14,7 @@
 
 package com.liferay.source.formatter.checks;
 
-import com.liferay.petra.string.StringPool;
+import com.liferay.petra.string.CharPool;
 import com.liferay.portal.tools.ToolsUtil;
 
 import java.io.IOException;
@@ -38,20 +38,18 @@ public class PoshiStylingCheck extends BaseFileCheck {
 		int x = -1;
 
 		while (true) {
-			x = content.indexOf(StringPool.SEMICOLON, x + 1);
+			x = content.indexOf(CharPool.SEMICOLON, x + 1);
 
 			if (x == -1) {
 				return;
 			}
 
-			String s = content.substring(x + 1, x + 2);
+			if ((content.charAt(x + 1) != CharPool.NEW_LINE) &&
+				!ToolsUtil.isInsideQuotes(content, x)) {
 
-			if (!StringPool.NEW_LINE.equals(s)) {
-				if (!ToolsUtil.isInsideQuotes(content, x)) {
-					addMessage(
-						fileName, "There should be a line break after ';'",
-						getLineNumber(content, x));
-				}
+				addMessage(
+					fileName, "There should be a line break after ';'",
+					getLineNumber(content, x));
 			}
 		}
 	}

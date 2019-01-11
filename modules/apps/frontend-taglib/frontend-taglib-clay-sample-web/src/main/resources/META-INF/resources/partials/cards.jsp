@@ -126,6 +126,8 @@ String SVG_FILE_TITLE = "lexicon.icon.camera.svg";
 	<div class="col-md-4" id="image-card-empty-block">
 		<clay:image-card
 			actionDropdownItems="<%= cardsDisplayContext.getActionDropdownItems() %>"
+			stickerImageAlt="Alt Text"
+			stickerImageSrc="https://images.unsplash.com/photo-1502290822284-9538ef1f1291"
 			stickerLabel="PNG"
 			stickerShape="circle"
 			stickerStyle="info"

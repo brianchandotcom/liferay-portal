@@ -44,6 +44,14 @@ public class FileCardTag extends BaseClayCardTag {
 		putValue("labelStylesMap", labelStylesMap);
 	}
 
+	public void setStickerImageAlt(String stickerImageAlt) {
+		putValue("stickerImageAlt", stickerImageAlt);
+	}
+
+	public void setStickerImageSrc(String stickerImageSrc) {
+		putValue("stickerImageSrc", stickerImageSrc);
+	}
+
 	public void setStickerLabel(String stickerLabel) {
 		putValue("stickerLabel", stickerLabel);
 	}

@@ -35,4 +35,8 @@ public class DropdownItem extends NavigationItem {
 		put("separator", separator);
 	}
 
+	public void setTarget(String target) {
+		put("target", target);
+	}
+
 }

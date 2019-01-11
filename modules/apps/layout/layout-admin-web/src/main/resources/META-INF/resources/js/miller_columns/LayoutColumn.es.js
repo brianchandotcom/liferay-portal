@@ -18,7 +18,7 @@ class LayoutColumn extends Component {
 	 * @review
 	 */
 	static _getLayoutColumnItemDropDownItems(layoutColumnItem) {
-		const {actionURLs} = layoutColumnItem;
+		const {actionURLs = {}} = layoutColumnItem;
 
 		const dropdownItems = LAYOUT_COLUMN_ITEM_DROPDOWN_ITEMS
 			.filter(

@@ -605,7 +605,8 @@ public class CSSCompressor {
 			Matcher matcher = _replace0UnitWith0Pattern1.matcher(css);
 
 			css = matcher.replaceAll("$1$20");
-		} while (!(css.equals(oldCss)));
+		}
+		while (!css.equals(oldCss));
 
 		do {
 			oldCss = css;
@@ -613,7 +614,8 @@ public class CSSCompressor {
 			Matcher matcher = _replace0UnitWith0Pattern2.matcher(css);
 
 			css = matcher.replaceAll("($10");
-		} while (!(css.equals(oldCss)));
+		}
+		while (!css.equals(oldCss));
 
 		return css;
 	}

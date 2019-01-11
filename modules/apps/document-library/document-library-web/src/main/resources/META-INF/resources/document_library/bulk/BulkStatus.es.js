@@ -13,6 +13,17 @@ import templates from './BulkStatus.soy';
  */
 
 class BulkStatus extends Component {
+
+	/**
+	 * @inheritDoc
+	 */
+	attached() {
+		Liferay.component(this.portletNamespace + 'BulkStatus', this);
+
+		if (this.bulkInProgress) {
+			this.startWatch();
+		}
+	}
 	/**
 	 * Clears the interval to stop sending ajax requests.
 	 *
@@ -105,17 +116,17 @@ class BulkStatus extends Component {
 	}
 
 	/**
-	 * Shows the component.
+	 * Show the component.
 	 */
 	show() {
-		this.visible = true;
+		this.bulkInProgress = true;
 	}
 
 	/**
-	 * Shows the component.
+	 * Hide the component.
 	 */
 	hide() {
-		this.visible = false;
+		this.bulkInProgress = false;
 	}
 
 	/**
@@ -133,7 +144,7 @@ class BulkStatus extends Component {
 			this.intervalSpeed
 		);
 
-		if(!this.visible) {
+		if(!this.bulkInProgress) {
 			this.visibleTimeOut = setTimeout(
 				() => this.show(),
 				this.waitingTime
@@ -169,6 +180,16 @@ BulkStatus.STATE = {
 	intervalSpeed: Config.number().value(1000),
 
 	/**
+	 * Portlet's namespace
+	 *
+	 * @instance
+	 * @memberof BulkStatus
+	 * @review
+	 * @type {string}
+	 */
+	portletNamespace: Config.string().required(),
+
+	/**
 	 * The time (in milliseconds) we have to wait to
 	 * show the component.
 	 *
@@ -182,7 +203,7 @@ BulkStatus.STATE = {
 	 * Wether to show the component or not
 	 * @type {[type]}
 	 */
-	visible: Config.bool().value(false),
+	bulkInProgress: Config.bool().value(false),
 };
 
 // Register component

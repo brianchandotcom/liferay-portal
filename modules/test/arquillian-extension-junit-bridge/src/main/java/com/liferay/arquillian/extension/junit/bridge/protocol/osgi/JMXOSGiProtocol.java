@@ -18,6 +18,8 @@ import java.beans.BeanInfo;
 import java.beans.Introspector;
 import java.beans.PropertyDescriptor;
 
+import java.lang.reflect.Method;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -71,8 +73,10 @@ public class JMXOSGiProtocol implements Protocol<JMXProtocolConfiguration> {
 						beanInfo.getPropertyDescriptors()) {
 
 					String key = propertyDescriptor.getName();
-					Object value = propertyDescriptor.getReadMethod().invoke(
-						protocolConfiguration);
+
+					Method method = propertyDescriptor.getReadMethod();
+
+					Object value = method.invoke(protocolConfiguration);
 
 					if (value != null) {
 						protocolProps.put(key, "" + value);

@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.RoleConstants;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletProvider;
@@ -41,6 +42,7 @@ import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
 import com.liferay.portal.kernel.service.ResourceLocalServiceUtil;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalServiceUtil;
 import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
+import com.liferay.portal.kernel.service.RoleServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -50,6 +52,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.portlet.configuration.web.internal.configuration.RoleVisibilityConfiguration;
 import com.liferay.portlet.configuration.web.internal.constants.PortletConfigurationPortletKeys;
 import com.liferay.portlet.rolesadmin.search.RoleSearch;
 import com.liferay.portlet.rolesadmin.search.RoleSearchTerms;
@@ -410,17 +413,47 @@ public class PortletConfigurationPermissionsDisplayContext {
 			teamGroupId = _group.getParentGroupId();
 		}
 
-		int count = RoleLocalServiceUtil.getGroupRolesAndTeamRolesCount(
-			themeDisplay.getCompanyId(), searchTerms.getKeywords(),
-			excludedRoleNames, getRoleTypes(), modelResourceRoleId,
-			teamGroupId);
+		RoleVisibilityConfiguration stricterRoleVisibilityConfiguration =
+			ConfigurationProviderUtil.getCompanyConfiguration(
+				RoleVisibilityConfiguration.class, themeDisplay.getCompanyId());
+
+		int count = 0;
+
+		if (stricterRoleVisibilityConfiguration.
+				restrictPermissionSelectorRoleVisibility()) {
+
+			count = RoleServiceUtil.getGroupRolesAndTeamRolesCount(
+				themeDisplay.getCompanyId(), searchTerms.getKeywords(),
+				excludedRoleNames, getRoleTypes(), modelResourceRoleId,
+				teamGroupId);
+		}
+		else {
+			count = RoleLocalServiceUtil.getGroupRolesAndTeamRolesCount(
+				themeDisplay.getCompanyId(), searchTerms.getKeywords(),
+				excludedRoleNames, getRoleTypes(), modelResourceRoleId,
+				teamGroupId);
+		}
 
 		roleSearchContainer.setTotal(count);
 
-		List<Role> roles = RoleLocalServiceUtil.getGroupRolesAndTeamRoles(
-			themeDisplay.getCompanyId(), searchTerms.getKeywords(),
-			excludedRoleNames, getRoleTypes(), modelResourceRoleId, teamGroupId,
-			roleSearchContainer.getStart(), roleSearchContainer.getResultEnd());
+		List<Role> roles = null;
+
+		if (stricterRoleVisibilityConfiguration.
+				restrictPermissionSelectorRoleVisibility()) {
+
+			roles = RoleServiceUtil.getGroupRolesAndTeamRoles(
+				themeDisplay.getCompanyId(), searchTerms.getKeywords(),
+				excludedRoleNames, getRoleTypes(), modelResourceRoleId,
+				teamGroupId, roleSearchContainer.getStart(),
+				roleSearchContainer.getResultEnd());
+		}
+		else {
+			roles = RoleLocalServiceUtil.getGroupRolesAndTeamRoles(
+				themeDisplay.getCompanyId(), searchTerms.getKeywords(),
+				excludedRoleNames, getRoleTypes(), modelResourceRoleId,
+				teamGroupId, roleSearchContainer.getStart(),
+				roleSearchContainer.getResultEnd());
+		}
 
 		roleSearchContainer.setResults(roles);
 

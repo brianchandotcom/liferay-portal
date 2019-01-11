@@ -1,7 +1,7 @@
 task deployConfigs(type: Copy)
 
 dependencies {
-	compileInclude group: "com.artofsolving", name: "jodconverter", version: "2.2.0"
+	compileInclude group: "com.liferay", name: "com.artofsolving.jodconverter", version: "2.2.2"
 	compileInclude group: "org.openoffice", name: "juh", version: "2.3.0"
 	compileInclude group: "org.openoffice", name: "jurt", version: "2.3.0"
 	compileInclude group: "org.openoffice", name: "ridl", version: "2.3.0"

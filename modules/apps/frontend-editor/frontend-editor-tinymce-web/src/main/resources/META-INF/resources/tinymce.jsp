@@ -153,7 +153,24 @@ name = HtmlUtil.escapeJS(name);
 					itemSelectorDialog.once(
 						'selectedItemChange',
 						function(event) {
-							callback(event.newVal ? event.newVal.value : value);
+							var selectedItem = event.newVal ? event.newVal : value;
+
+							if (selectedItem.returnType === 'com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType') {
+								try {
+									var itemValue = JSON.parse(selectedItem.value);
+
+									var attachmentPrefix = tinymce.activeEditor.settings.attachmentURLPrefix;
+
+									selectedItem = attachmentPrefix ? attachmentPrefix + itemValue.title : itemValue.url;
+								}
+								catch (e) {
+								}
+							}
+							else {
+								selectedItem = selectedItem.value;
+							}
+
+							callback(selectedItem);
 						}
 					);
 

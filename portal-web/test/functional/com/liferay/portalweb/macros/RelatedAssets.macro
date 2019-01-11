@@ -42,6 +42,12 @@ definition {
 
 		SelectFrame(locator1 = "IFrame#DIALOG");
 
+		if (isSet(scopeSite)) {
+			Click(locator1 = "Dropdown#FILTER_AND_ORDER");
+
+			MenuItem.click(menuItem = "${scopeSite}");
+		}
+
 		var key_assetTitle = "${assetTitle}";
 
 		Click(

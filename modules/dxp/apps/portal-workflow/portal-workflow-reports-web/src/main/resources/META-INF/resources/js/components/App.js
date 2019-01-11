@@ -1,16 +1,12 @@
-import React from 'react';
 import ProcessList from './process-list/ProcessListCard';
-import OpenProcessesSummary from './open-processes-summary/OpenProcessesSummary';
+import React from 'react';
 
 export default class AppComponent extends React.Component {
 	render() {
+		const {companyId} = this.props;
 		return (
-			<div className="portal-workflow-reports-app container-fluid">
-				<div className="col-12">
-					<OpenProcessesSummary />
-
-					<ProcessList />
-				</div>
+			<div className="portal-workflow-reports-app container-fluid-1280 main-content-body">
+				<ProcessList companyId={companyId} />
 			</div>
 		);
 	}

@@ -389,6 +389,41 @@ definition {
 		);
 	}
 
+	@description = "This test ensures that users can Order By Shared Date in the Shared with Me app."
+	@priority = "3"
+	test OrderBySharedDate {
+		DMDocument.addMultiplePG(
+			dmDocumentFileList = "Document_1.jpeg,Document_2.docx",
+			viewableBy = "Owner"
+		);
+
+		DMNavigator.gotoShare(dmDocumentTitle = "Document_1.jpeg");
+
+		DMDocument.sharePG(userEmailAddress = "userea@liferay.com");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMNavigator.gotoShare(dmDocumentTitle = "Document_2.docx");
+
+		DMDocument.sharePG(userEmailAddress = "userea@liferay.com");
+
+		User.logoutPG();
+
+		User.loginUserPG(password = "test", userEmailAddress = "userea@liferay.com");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "My Account",
+			panel = "User",
+			portlet = "Shared With Me"
+		);
+
+		ManagementBar.setFilterAndOrder(orderBy = "Shared Date");
+
+		ManagementBar.toggleViewOrder(order = "Descending");
+	}
+
 	@description = "This test asserts that users can share via Shared With Me app."
 	@priority = "5"
 	test ShareViaSharedWithMe {

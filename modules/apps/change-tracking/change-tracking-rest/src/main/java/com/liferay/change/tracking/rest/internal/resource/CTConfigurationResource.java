@@ -32,7 +32,6 @@ import javax.ws.rs.core.MediaType;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.jaxrs.whiteboard.JaxrsWhiteboardConstants;
 
 /**
  * @author Máté Thurzó
@@ -40,8 +39,8 @@ import org.osgi.service.jaxrs.whiteboard.JaxrsWhiteboardConstants;
 @Component(
 	immediate = true,
 	property = {
-		JaxrsWhiteboardConstants.JAX_RS_APPLICATION_SELECT + "=(osgi.jaxrs.name=Liferay.ChangeTracking.Rest)",
-		JaxrsWhiteboardConstants.JAX_RS_RESOURCE + "=true"
+		"osgi.jaxrs.application.select=(osgi.jaxrs.name=Liferay.ChangeTracking.Rest)",
+		"osgi.jaxrs.resource=true"
 	},
 	service = CTConfigurationResource.class
 )

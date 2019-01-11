@@ -21,15 +21,14 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.jaxrs.whiteboard.JaxrsWhiteboardConstants;
 
 /**
  * @author Máté Thurzó
  */
 @Component(
 	property = {
-		JaxrsWhiteboardConstants.JAX_RS_APPLICATION_SELECT + "=(osgi.jaxrs.name=Liferay.ChangeTracking.Rest)",
-		JaxrsWhiteboardConstants.JAX_RS_EXTENSION + "=true"
+		"osgi.jaxrs.application.select=(osgi.jaxrs.name=Liferay.ChangeTracking.Rest)",
+		"osgi.jaxrs.extension=true"
 	},
 	service = ExceptionMapper.class
 )

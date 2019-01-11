@@ -35,21 +35,41 @@ public class OperatorOrderCheck extends BaseCheck {
 	@Override
 	protected void doVisitToken(DetailAST detailAST) {
 		DetailAST firstChildDetailAST = detailAST.getFirstChild();
+		String message = "";
 
 		if (!ArrayUtil.contains(
-				_LITERAL_OR_NUM_TYPES, firstChildDetailAST.getType())) {
+				_UNARY_MINUS_OR_UNARY_PLUS, firstChildDetailAST.getType())) {
 
-			return;
+			if (!ArrayUtil.contains(
+					_LITERAL_OR_NUM_TYPES, firstChildDetailAST.getType())) {
+
+				return;
+			}
+		}
+		else {
+			DetailAST nameDetailAST = firstChildDetailAST.getFirstChild();
+
+			message = firstChildDetailAST.getText() + nameDetailAST.getText();
 		}
 
 		DetailAST secondChildDetailAST = firstChildDetailAST.getNextSibling();
 
+		if (ArrayUtil.contains(
+				_UNARY_MINUS_OR_UNARY_PLUS, secondChildDetailAST.getType())) {
+
+			return;
+		}
+
 		if (!ArrayUtil.contains(
 				_LITERAL_OR_NUM_TYPES, secondChildDetailAST.getType())) {
 
+			if (message.isEmpty()) {
+				message = firstChildDetailAST.getText();
+			}
+
 			log(
 				firstChildDetailAST, _MSG_LITERAL_OR_NUM_LEFT_ARGUMENT,
-				firstChildDetailAST.getText());
+				message);
 		}
 	}
 
@@ -60,5 +80,9 @@ public class OperatorOrderCheck extends BaseCheck {
 
 	private static final String _MSG_LITERAL_OR_NUM_LEFT_ARGUMENT =
 		"left.argument.literal.or.num";
+
+	private static final int[] _UNARY_MINUS_OR_UNARY_PLUS = {
+		TokenTypes.UNARY_MINUS, TokenTypes.UNARY_PLUS
+	};
 
 }

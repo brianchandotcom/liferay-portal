@@ -1528,7 +1528,12 @@ definition {
 
 		takeScreenshot();
 
-		Button.click(button = "Sign In");
+		if (isSet(signIn)) {
+			Button.click(button = "${signIn}");
+		}
+		else {
+			Button.click(button = "Sign In");
+		}
 
 		if (IsElementPresent(locator1 = "Message#ERROR_FORM_FIELD_REQUIRED")) {
 			echo("Sign in failed due to empty required field. Retrying...");

@@ -1,5 +1,6 @@
 import Component from 'metal-component';
 import {Config} from 'metal-state';
+import {openToast} from 'frontend-js-web/liferay/toast/commands/OpenToast.es';
 import Soy from 'metal-soy';
 
 import templates from './BulkStatus.soy';
@@ -50,13 +51,13 @@ class BulkStatus extends Component {
 			.then(
 				response => {
 					if (!response.busy) {
-						this._onBulkFinish();
+						this._onBulkFinish(false);
 					}
 				}
 			)
 			.catch(
 				e => {
-					this._onBulkFinish();
+					this._onBulkFinish(true);
 				}
 			)
 	}
@@ -66,10 +67,41 @@ class BulkStatus extends Component {
 	 *
 	 * @protected
 	 */
-	_onBulkFinish() {
+	_onBulkFinish(error) {
 		this._clearInterval();
 		this._clearTimeout();
 		this.hide();
+
+		this._showNotification(error);
+	}
+
+	/**
+	 * Shows a toast notification.
+	 *
+	 * @param {boolean} error Flag indicating if is an error or not
+	 * @protected
+	 * @review
+	 */
+	_showNotification(error) {
+		let message;
+
+		if (error) {
+			message = Liferay.Language.get('an-unexpected-error-occurred');
+		}
+		else {
+			message = Liferay.Language.get('changes-saved');
+		}
+
+		const openToastParams = {
+			message
+		};
+
+		if (error) {
+			openToastParams.title = Liferay.Language.get('error');
+			openToastParams.type = 'danger';
+		}
+
+		openToast(openToastParams);
 	}
 
 	/**

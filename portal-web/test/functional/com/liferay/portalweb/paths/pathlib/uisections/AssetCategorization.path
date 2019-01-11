@@ -15,7 +15,7 @@
 </tr>
 <tr>
 	<td>CATEGORY_SELECT</td>
-	<td>//span[label[contains(.,'${key_vocabularyName}')]]//button[normalize-space()='Select']</td>
+	<td>//button[@title='Select Categories'] | //span[label[contains(.,'${key_vocabularyName}')]]//button[normalize-space()='Select']</td>
 	<td></td>
 </tr>
 <tr>

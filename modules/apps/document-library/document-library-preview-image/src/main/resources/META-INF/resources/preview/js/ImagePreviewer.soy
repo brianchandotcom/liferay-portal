@@ -67,7 +67,7 @@
 
 	{let $zoomBtnTitle kind="text"}
 		{if $zoomFit}
-			{msg desc=""}fit-to-screen{/msg}
+			{msg desc=""}zoom-to-fit{/msg}
 		{else}
 			{msg desc=""}real-size{/msg}
 		{/if}
@@ -79,6 +79,7 @@
 				{param disabled: $zoomOutDisabled /}
 				{param icon: 'hr' /}
 				{param monospaced: true /}
+				{param title kind="text"}{msg desc=""}zoom-out{/msg}{/param}
 				{param value: 'out' /}
 			{/call}
 			{call ClayButton.render data="$baseButtonsToolbar"}
@@ -93,6 +94,7 @@
 				{param disabled: $zoomInDisabled /}
 				{param icon: 'plus' /}
 				{param monospaced: true /}
+				{param title kind="text"}{msg desc=""}zoom-in{/msg}{/param}
 				{param value: 'in' /}
 			{/call}
 		</div>

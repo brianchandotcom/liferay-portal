@@ -121,7 +121,7 @@ public class FragmentCollectionImpl extends FragmentCollectionBaseImpl {
 				QueryUtil.ALL_POS);
 
 		for (FragmentEntry fragmentEntry : fragmentEntries) {
-			fragmentEntry.populateZipWriter(zipWriter, path);
+			fragmentEntry.populateZipWriter(zipWriter, path + "/fragments");
 		}
 
 		if (!hasResources()) {

@@ -18,6 +18,9 @@ class EditTags extends Component {
 	 */
 	attached() {
 		this._getCommonTags();
+
+		this._bulkStatusComponent = Liferay.component(
+			this.portletNamespace + 'BulkStatus');
 	}
 
 	/**
@@ -165,11 +168,8 @@ class EditTags extends Component {
 			response => {
 				instance.close();
 
-				let bulkStatusComponent = Liferay.component(
-					instance.portletNamespace + 'BulkStatus');
-
-				if (bulkStatusComponent) {
-					bulkStatusComponent.startWatch();
+				if (instance._bulkStatusComponent) {
+					instance._bulkStatusComponent.startWatch();
 				}
 			}
 		);
@@ -215,12 +215,19 @@ EditTags.STATE = {
 	/**
 	 * Tags that want to be edited.
 	 *
+	 * @instance
+	 * @memberof EditTags
+	 * @review
 	 * @type {List<String>}
 	 */
 	commonTags: Config.array().setter('_setCommonTags').value([]),
 
 	/**
 	 * Description
+	 *
+	 * @instance
+	 * @memberof EditTags
+	 * @review
 	 * @type {String}
 	 */
 	description: Config.string(),
@@ -228,6 +235,9 @@ EditTags.STATE = {
 	/**
 	 * List of selected file entries.
 	 *
+	 * @instance
+	 * @memberof EditTags
+	 * @review
 	 * @type {List<String>}
 	 */
 	fileEntries: Config.array().required(),
@@ -236,6 +246,9 @@ EditTags.STATE = {
 	 * Flag that indicate if loading icon must
 	 * be shown.
 	 *
+	 * @instance
+	 * @memberof EditTags
+	 * @review
 	 * @type {Boolean}
 	 */
 	loading: Config.bool().value(false).internal(),
@@ -244,22 +257,39 @@ EditTags.STATE = {
 	 * Flag that indicate if multiple
 	 * file entries has been selected.
 	 *
+	 * @instance
+	 * @memberof EditTags
+	 * @review
 	 * @type {Boolean}
 	 */
 	multiple: Config.bool().value(false),
 
+	/**
+	 * Portlet's namespace
+	 *
+	 * @instance
+	 * @memberof EditTags
+	 * @review
+	 * @type {string}
+	 */
 	portletNamespace: Config.string().required(),
 
 	/**
 	 * RepositoryId
+	 *
+	 * @instance
+	 * @memberof EditTags
+	 * @review
 	 * @type {Number}
 	 */
 	repositoryId: Config.number().required(),
 
 	/**
 	 * Path to images.
+	 *
 	 * @instance
-	 * @memberof ManageCollaborators
+	 * @memberof EditTags
+	 * @review
 	 * @type {String}
 	 */
 	spritemap: Config.string().required(),
@@ -268,6 +298,9 @@ EditTags.STATE = {
 	 * Url to backend service that provides
 	 * the common tags info.
 	 *
+	 * @instance
+	 * @memberof EditTags
+	 * @review
 	 * @type {String}
 	 */
 	urlTags: Config.string().required(),
@@ -276,6 +309,9 @@ EditTags.STATE = {
 	 * Url to backend service that updates
 	 * the tags.
 	 *
+	 * @instance
+	 * @memberof EditTags
+	 * @review
 	 * @type {String}
 	 */
 	urlUpdateTags: Config.string().required()

@@ -378,6 +378,8 @@ definition {
 			bookmarkURL = "https://www.liferay.com"
 		);
 
+		User.firstLoginPG();
+
 		Navigator.gotoSitePage(
 			pageName = "Asset Publisher Page",
 			siteName = "Test Site Name"

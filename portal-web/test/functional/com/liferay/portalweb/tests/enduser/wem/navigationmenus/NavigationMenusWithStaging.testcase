@@ -287,9 +287,11 @@ definition {
 			value1 = "web/test-site-name-staging/test-page-1"
 		);
 
-		Click(locator1 = "Home#PAGE", key_pageName = "Liferay");
-
-		AssertLocation(value1 = "https://www.liferay.com/");
+		AssertVisible(
+			locator1 = "Home#PAGE_HREF",
+			key_href = "https://www.liferay.com/",
+			key_pageName = "Liferay"
+		);
 
 		NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = "test-site-name");
 
@@ -425,7 +427,11 @@ definition {
 			value1 = "web/test-site-name-staging/test-page-1"
 		);
 
-		Click(locator1 = "Home#PAGE", key_pageName = "Liferay");
+		AssertVisible(
+			locator1 = "Home#PAGE_HREF",
+			key_href = "https://www.liferay.com/",
+			key_pageName = "Liferay"
+		);
 
 		NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = "test-site-name");
 

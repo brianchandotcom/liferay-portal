@@ -217,6 +217,11 @@
 	<td>Page</td>
 </tr>
 <tr>
+	<td>PAGE_HREF</td>
+	<td>//div[contains(@id,'navbar')]/ul/li/a[contains(.,'${key_pageName}')][@href='${key_href}']</td>
+	<td>Page</td>
+</tr>
+<tr>
 	<td>PAGE_ACTIVE</td>
 	<td>//div[contains(@id,'navbar')]/ul//*[contains(@class,'active')][contains(.,'${key_pageName}')]</td>
 	<td>Page</td>

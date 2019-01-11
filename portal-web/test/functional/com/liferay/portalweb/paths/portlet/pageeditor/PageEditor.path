@@ -50,7 +50,7 @@
 	<td></td>
 </tr>
 <tr>
-	<td>FRAGMENT_SIDEBAR_FRAGMENT</td>
+	<td>FRAGMENT_SIDEBAR_ADD_FRAGMENT_BUTTON</td>
 	<td>//button[@data-item-name='${key_fragmentName}']</td>
 	<td></td>
 </tr>

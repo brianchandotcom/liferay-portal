@@ -3,7 +3,7 @@ definition {
 		PageEditor.expandFragmentCollection(collectionName = "${collectionName}");
 
 		Click.clickNoMouseOverNoWaitForVisible(
-			locator1 = "PageEditor#FRAGMENT_SIDEBAR_FRAGMENT",
+			locator1 = "PageEditor#FRAGMENT_SIDEBAR_ADD_FRAGMENT_BUTTON",
 			key_fragmentName = "${fragmentName}"
 		);
 

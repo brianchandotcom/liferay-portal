@@ -51,7 +51,7 @@
 </tr>
 <tr>
 	<td>FRAGMENT_SIDEBAR_FRAGMENT</td>
-	<td>//div[contains(@class,'fragments-editor-sidebar-section')]//div[contains(@class,'draggable-item')][contains(.,'${key_fragmentName}')]//button</td>
+	<td>//button[@data-item-name='${key_fragmentName}']</td>
 	<td></td>
 </tr>
 <tr>

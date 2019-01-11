@@ -35,8 +35,6 @@ public interface MetadataManager {
 
 	public long getClockSkew();
 
-	public String getDefaultIdpEntityId();
-
 	public EntityDescriptor getEntityDescriptor(HttpServletRequest request)
 		throws SamlException;
 

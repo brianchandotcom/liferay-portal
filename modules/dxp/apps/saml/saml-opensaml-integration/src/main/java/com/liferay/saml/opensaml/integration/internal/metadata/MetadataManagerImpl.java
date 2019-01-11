@@ -179,11 +179,6 @@ public class MetadataManagerImpl
 	}
 
 	@Override
-	public String getDefaultIdpEntityId() {
-		return getSamlProviderConfiguration().defaultIdPEntityId();
-	}
-
-	@Override
 	public String getEncodedLocalEntityCertificate() throws SamlException {
 		try {
 			X509Certificate x509Certificate = getLocalEntityCertificate();
@@ -502,41 +497,48 @@ public class MetadataManagerImpl
 
 	@Override
 	public boolean hasDefaultIdpRole() {
-		String defaultIdpEntityId = getDefaultIdpEntityId();
+		long companyId = CompanyThreadLocal.getCompanyId();
 
-		if (Validator.isNull(defaultIdpEntityId)) {
+		List<SamlSpIdpConnection> samlSpIdpConnections =
+			_samlSpIdpConnectionLocalService.getSamlSpIdpConnections(companyId);
+
+		if (samlSpIdpConnections.isEmpty()) {
 			return false;
 		}
 
-		try {
-			MetadataResolver metadataResolver = getMetadataResolver();
+		for (SamlSpIdpConnection samlSpIdpConnection : samlSpIdpConnections) {
+			try {
+				MetadataResolver metadataResolver = getMetadataResolver();
 
-			EntityDescriptor entityDescriptor = metadataResolver.resolveSingle(
-				new CriteriaSet(
-					new EntityIdCriterion(defaultIdpEntityId),
-					new EntityRoleCriterion(
-						IDPSSODescriptor.DEFAULT_ELEMENT_NAME),
-					new ProtocolCriterion(SAMLConstants.SAML20P_NS)));
+				EntityDescriptor entityDescriptor =
+					metadataResolver.resolveSingle(
+						new CriteriaSet(
+							new EntityIdCriterion(
+								samlSpIdpConnection.getSamlIdpEntityId()),
+							new EntityRoleCriterion(
+								IDPSSODescriptor.DEFAULT_ELEMENT_NAME),
+							new ProtocolCriterion(SAMLConstants.SAML20P_NS)));
 
-			if (entityDescriptor == null) {
+				if (entityDescriptor == null) {
+					return false;
+				}
+			}
+			catch (ResolverException | SamlException e) {
+				String message =
+					"Error retrieving metadata information: " + e.getMessage();
+
+				if (_log.isDebugEnabled()) {
+					_log.debug(message, e);
+				}
+				else if (_log.isWarnEnabled()) {
+					_log.warn(message);
+				}
+
 				return false;
 			}
-
-			return true;
 		}
-		catch (ResolverException | SamlException e) {
-			String message =
-				"Error retrieving metadata information: " + e.getMessage();
 
-			if (_log.isDebugEnabled()) {
-				_log.debug(message, e);
-			}
-			else if (_log.isWarnEnabled()) {
-				_log.warn(message);
-			}
-
-			return false;
-		}
+		return true;
 	}
 
 	@Override

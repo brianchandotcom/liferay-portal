@@ -1,6 +1,9 @@
+require('whatwg-fetch');
 const fs = require('fs');
 const path = require('path');
 const properties = require('properties');
+const enzyme = require('enzyme');
+const EnzymeAdapter = require('enzyme-adapter-react-16');
 
 const LANG_KEY_PATH = path.resolve(
 	'src',
@@ -28,6 +31,7 @@ window.Liferay = {
 		extend: () => {}
 	},
 	ThemeDisplay: {
+		getPathThemeImages: () => 'http://localhost:8080/o/admin-theme/images',
 		getUserId: () => '123',
 		getUserName: () => 'Test Test'
 	}
@@ -49,6 +53,9 @@ global.localStorage = (() => {
 		}
 	};
 })();
+
+enzyme.configure({adapter: new EnzymeAdapter()});
+global.shallow = enzyme.shallow;
 
 require('jest-extended');
 require('jest-canvas-mock');

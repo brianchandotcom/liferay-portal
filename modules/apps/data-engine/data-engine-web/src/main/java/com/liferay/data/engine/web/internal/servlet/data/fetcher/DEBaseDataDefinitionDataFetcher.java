@@ -19,11 +19,8 @@ import com.liferay.data.engine.model.DEDataDefinitionField;
 import com.liferay.data.engine.web.internal.graphql.model.DataDefinition;
 import com.liferay.data.engine.web.internal.graphql.model.DataDefinitionFieldType;
 import com.liferay.data.engine.web.internal.graphql.model.DataDefinitionType;
-import com.liferay.data.engine.web.internal.graphql.model.LocalizedValueType;
 
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -39,13 +36,23 @@ public abstract class DEBaseDataDefinitionDataFetcher
 		DataDefinition dataDefinition = new DataDefinitionType();
 
 		dataDefinition.setDataDefinitionId(String.valueOf(deDataDefinitionId));
-		dataDefinition.setDescriptions(
-			getLocalizedValuesType(deDataDefinition.getDescription()));
-		dataDefinition.setFields(
-			createDataDefinitionFieldTypes(
-				deDataDefinition.getDEDataDefinitionFields()));
-		dataDefinition.setNames(
-			getLocalizedValuesType(deDataDefinition.getName()));
+
+		if (deDataDefinition.getDescription() != null) {
+			dataDefinition.setDescriptions(
+				getLocalizedValuesType(deDataDefinition.getDescription()));
+		}
+
+		if (deDataDefinition.getDEDataDefinitionFields() != null) {
+			dataDefinition.setFields(
+				createDataDefinitionFieldTypes(
+					deDataDefinition.getDEDataDefinitionFields()));
+		}
+
+		if (deDataDefinition.getName() != null) {
+			dataDefinition.setNames(
+				getLocalizedValuesType(deDataDefinition.getName()));
+		}
+
 		dataDefinition.setStorageType(deDataDefinition.getStorageType());
 
 		return dataDefinition;
@@ -55,24 +62,6 @@ public abstract class DEBaseDataDefinitionDataFetcher
 		List<DEDataDefinitionField> deDataDefinitionFields) {
 
 		Stream<DEDataDefinitionField> stream = deDataDefinitionFields.stream();
-
-		return stream.map(
-			this::map
-		).collect(
-			Collectors.toList()
-		);
-	}
-
-	protected List<LocalizedValueType> getLocalizedValuesType(
-		Map<String, String> values) {
-
-		if (values == null) {
-			return null;
-		}
-
-		Set<Map.Entry<String, String>> set = values.entrySet();
-
-		Stream<Map.Entry<String, String>> stream = set.stream();
 
 		return stream.map(
 			this::map
@@ -108,10 +97,6 @@ public abstract class DEBaseDataDefinitionDataFetcher
 			getLocalizedValuesType(deDataDefinitionField.getTip()));
 
 		return dataDefinitionFieldType;
-	}
-
-	protected LocalizedValueType map(Map.Entry<String, String> entry) {
-		return new LocalizedValueType(entry.getKey(), entry.getValue());
 	}
 
 }

@@ -24,8 +24,6 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 
-import java.util.Collections;
-
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -60,8 +58,7 @@ public class DEDataDefinitionModelResourcePermission
 			String actionId)
 		throws PortalException {
 
-		DEDataDefinition deDataDefinition = new DEDataDefinition(
-			Collections.emptyList());
+		DEDataDefinition deDataDefinition = new DEDataDefinition();
 
 		deDataDefinition.setDEDataDefinitionId(primaryKey);
 
@@ -96,8 +93,7 @@ public class DEDataDefinitionModelResourcePermission
 			String actionId)
 		throws PortalException {
 
-		DEDataDefinition deDataDefinition = new DEDataDefinition(
-			Collections.emptyList());
+		DEDataDefinition deDataDefinition = new DEDataDefinition();
 
 		deDataDefinition.setDEDataDefinitionId(primaryKey);
 

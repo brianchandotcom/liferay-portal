@@ -34,12 +34,6 @@ import java.util.Objects;
  */
 public final class DEDataDefinition implements ClassedModel, Serializable {
 
-	public DEDataDefinition(
-		List<DEDataDefinitionField> deDataDefinitionFields) {
-
-		_deDataDefinitionFields.addAll(deDataDefinitionFields);
-	}
-
 	public void addDEDataDefinitionField(
 		DEDataDefinitionField deDataDefinitionField) {
 

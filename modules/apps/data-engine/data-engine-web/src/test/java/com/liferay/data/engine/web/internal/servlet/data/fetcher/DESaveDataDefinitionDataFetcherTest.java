@@ -345,9 +345,9 @@ public class DESaveDataDefinitionDataFetcherTest {
 		List<DEDataDefinitionField> deDataDefinitionFields = Arrays.asList(
 			deDataDefinitionField1, deDataDefinitionField2);
 
-		DEDataDefinition deDataDefinition = new DEDataDefinition(
-			deDataDefinitionFields);
+		DEDataDefinition deDataDefinition = new DEDataDefinition();
 
+		deDataDefinition.setDEDataDefinitionFields(deDataDefinitionFields);
 		deDataDefinition.setName(
 			new TreeMap() {
 				{

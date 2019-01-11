@@ -694,8 +694,7 @@ public class DEDataDefinitionServiceTest {
 
 			deDataDefinitionField1.addLabels(emailLabels);
 
-			DEDataDefinition deDataDefinition = new DEDataDefinition(
-				Arrays.asList(deDataDefinitionField1, deDataDefinitionField2));
+			DEDataDefinition deDataDefinition = new DEDataDefinition();
 
 			deDataDefinition.addDescription(
 				LocaleUtil.US, "Contact description");
@@ -703,6 +702,8 @@ public class DEDataDefinitionServiceTest {
 				LocaleUtil.BRAZIL, "Descrição do contato");
 			deDataDefinition.addName(LocaleUtil.US, "Contact");
 			deDataDefinition.addName(LocaleUtil.BRAZIL, "Contato");
+			deDataDefinition.setDEDataDefinitionFields(
+				Arrays.asList(deDataDefinitionField1, deDataDefinitionField2));
 			deDataDefinition.setStorageType("json");
 
 			DEDataDefinitionSaveRequest deDataDefinitionSaveRequest =

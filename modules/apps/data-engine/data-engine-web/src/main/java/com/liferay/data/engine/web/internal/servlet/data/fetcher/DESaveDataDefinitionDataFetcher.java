@@ -46,22 +46,25 @@ public class DESaveDataDefinitionDataFetcher
 	implements DataFetcher<SaveDataDefinitionType> {
 
 	@Override
-	public SaveDataDefinitionType get(DataFetchingEnvironment environment) {
+	public SaveDataDefinitionType get(
+		DataFetchingEnvironment dataFetchingEnvironment) {
+
 		SaveDataDefinitionType saveDataDefinitionType =
 			new SaveDataDefinitionType();
 
 		String errorMessage = null;
-		String languageId = environment.getArgument("languageId");
+		String languageId = dataFetchingEnvironment.getArgument("languageId");
 
 		try {
 			Map<String, Object> dataDefinitionAttributes =
-				environment.getArgument("dataDefinition");
+				dataFetchingEnvironment.getArgument("dataDefinition");
 
-			DEDataDefinition deDataDefinition = new DEDataDefinition(
+			DEDataDefinition deDataDefinition = new DEDataDefinition();
+
+			deDataDefinition.setDEDataDefinitionFields(
 				createDEDataDefinitionFields(
 					(List<Map<String, Object>>)dataDefinitionAttributes.get(
 						"fields")));
-
 			deDataDefinition.setDEDataDefinitionId(
 				GetterUtil.getLong(
 					dataDefinitionAttributes.get("dataDefinitionId")));
@@ -82,9 +85,11 @@ public class DESaveDataDefinitionDataFetcher
 					DEDataDefinitionRequestBuilder.saveBuilder(
 						deDataDefinition
 					).inGroup(
-						GetterUtil.getLong(environment.getArgument("groupId"))
+						GetterUtil.getLong(
+							dataFetchingEnvironment.getArgument("groupId"))
 					).onBehalfOf(
-						GetterUtil.getLong(environment.getArgument("userId"))
+						GetterUtil.getLong(
+							dataFetchingEnvironment.getArgument("userId"))
 					).build());
 
 			DataDefinition dataDefinition = createDataDefinition(
@@ -95,7 +100,7 @@ public class DESaveDataDefinitionDataFetcher
 		}
 		catch (DEDataDefinitionException.MustHavePermission mhp) {
 			errorMessage = getMessage(
-				languageId, "the-user-must-have-data-definition-permission",
+				languageId, "the-user-must-have-permission",
 				getActionMessage(languageId, mhp.getActionId()));
 		}
 		catch (DEDataDefinitionException.NoSuchDataDefinition nsdd) {
@@ -130,21 +135,6 @@ public class DESaveDataDefinitionDataFetcher
 		).collect(
 			Collectors.toList()
 		);
-	}
-
-	protected Map<String, String> getLocalizedValues(
-		List<Map<String, Object>> values) {
-
-		if (values == null) {
-			return null;
-		}
-
-		Stream<Map<String, Object>> stream = values.stream();
-
-		return stream.collect(
-			Collectors.toMap(
-				entry -> MapUtil.getString(entry, "key"),
-				entry -> MapUtil.getString(entry, "value")));
 	}
 
 	protected DEDataDefinitionField map(Map<String, Object> fieldProperties) {

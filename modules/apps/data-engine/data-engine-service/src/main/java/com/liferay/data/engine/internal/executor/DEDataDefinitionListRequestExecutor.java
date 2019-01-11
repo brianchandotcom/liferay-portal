@@ -96,12 +96,12 @@ public class DEDataDefinitionListRequestExecutor {
 		List<DEDataDefinitionField> deDataDefinitionFields = deserialize(
 			ddmStructure.getDefinition());
 
-		DEDataDefinition deDataDefinition = new DEDataDefinition(
-			deDataDefinitionFields);
+		DEDataDefinition deDataDefinition = new DEDataDefinition();
 
 		deDataDefinition.addDescriptions(ddmStructure.getDescriptionMap());
 		deDataDefinition.addNames(ddmStructure.getNameMap());
 		deDataDefinition.setCreateDate(ddmStructure.getCreateDate());
+		deDataDefinition.setDEDataDefinitionFields(deDataDefinitionFields);
 		deDataDefinition.setDEDataDefinitionId(ddmStructure.getStructureId());
 		deDataDefinition.setModifiedDate(ddmStructure.getModifiedDate());
 		deDataDefinition.setStorageType(ddmStructure.getStorageType());

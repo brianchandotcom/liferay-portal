@@ -81,7 +81,7 @@ class BulkStatus extends Component {
 	_onBulkFinish(error) {
 		this._clearInterval();
 		this._clearTimeout();
-		this.hide();
+		this.bulkInProgress = false;
 
 		this._showNotification(error);
 	}
@@ -116,20 +116,6 @@ class BulkStatus extends Component {
 	}
 
 	/**
-	 * Show the component.
-	 */
-	show() {
-		this.bulkInProgress = true;
-	}
-
-	/**
-	 * Hide the component.
-	 */
-	hide() {
-		this.bulkInProgress = false;
-	}
-
-	/**
 	 * Watch the status of bulk actions.
 	 * It shows the component if it takes
 	 * longer than 'waitingTime'.
@@ -146,7 +132,9 @@ class BulkStatus extends Component {
 
 		if(!this.bulkInProgress) {
 			this.visibleTimeOut = setTimeout(
-				() => this.show(),
+				() => {
+					this.bulkInProgress = true;
+				},
 				this.waitingTime
 			);
 		}
@@ -160,6 +148,12 @@ class BulkStatus extends Component {
  * @type {!Object}
  */
 BulkStatus.STATE = {
+
+	/**
+	 * Wether to show the component or not
+	 * @type {Boolean}
+	 */
+	bulkInProgress: Config.bool().value(false),
 
 	/**
 	 * Uri to send the bulk status fetch request.
@@ -197,13 +191,7 @@ BulkStatus.STATE = {
 	 * @memberof BulkStatus
 	 * @type {Number}
 	 */
-	waitingTime: Config.number().value(1000),
-
-	/**
-	 * Wether to show the component or not
-	 * @type {[type]}
-	 */
-	bulkInProgress: Config.bool().value(false),
+	waitingTime: Config.number().value(1000)
 };
 
 // Register component

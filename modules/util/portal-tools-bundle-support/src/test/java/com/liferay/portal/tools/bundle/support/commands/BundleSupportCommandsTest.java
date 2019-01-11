@@ -609,15 +609,25 @@ public class BundleSupportCommandsTest {
 	}
 
 	private void _initBundle(
-			File configsDir, File liferayHomeDir, String password, URL url,
-			String userName)
+			File configsDir, File liferayHomeDir, String password,
+			int stripComponent, URL url, String userName)
 		throws Exception {
 
 		File cacheDir = temporaryFolder.newFolder();
 
 		initBundle(
 			cacheDir, configsDir, _INIT_BUNDLE_ENVIRONMENT, liferayHomeDir,
-			password, _INIT_BUNDLE_STRIP_COMPONENTS, url, userName);
+			password, stripComponent, url, userName);
+	}
+
+	private void _initBundle(
+			File configsDir, File liferayHomeDir, String password, URL url,
+			String userName)
+		throws Exception {
+
+		_initBundle(
+			configsDir, liferayHomeDir, password, _INIT_BUNDLE_STRIP_COMPONENTS,
+			url, userName);
 	}
 
 	private void _testCreateToken(String contextPath) throws Exception {
@@ -682,12 +692,21 @@ public class BundleSupportCommandsTest {
 
 		_initBundle(configsDir, liferayHomeDir, password, url, userName);
 
-		_assertExists(liferayHomeDir, "README.markdown");
 		_assertExists(liferayHomeDir, "empty-folder");
+		_assertExists(liferayHomeDir, "README.markdown");
 		_assertExists(liferayHomeDir, localPropertiesFile.getName());
 		_assertNotExists(liferayHomeDir, prodPropertiesFile.getName());
 		_assertPosixFilePermissions(
 			liferayHomeDir, "bin/hello.sh", _expectedPosixFilePermissions);
+
+		_initBundle(configsDir, liferayHomeDir, password, 1, url, userName);
+
+		_assertExists(liferayHomeDir, "README.markdown");
+		_assertExists(liferayHomeDir, localPropertiesFile.getName());
+		_assertNotExists(liferayHomeDir, "empty-folder");
+		_assertNotExists(liferayHomeDir, prodPropertiesFile.getName());
+		_assertPosixFilePermissions(
+			liferayHomeDir, "hello.sh", _expectedPosixFilePermissions);
 	}
 
 	private void _testInitBundleTar(

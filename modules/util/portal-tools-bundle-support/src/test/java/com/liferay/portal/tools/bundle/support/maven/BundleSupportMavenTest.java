@@ -125,7 +125,13 @@ public class BundleSupportMavenTest extends BundleSupportCommandsTest {
 			File tokenFile, URL tokenUrl, URL url, String userName)
 		throws Exception {
 
-		File projectDir = temporaryFolder.newFolder("maven");
+		File projectDir = new File(temporaryFolder.getRoot(), "maven");
+
+		if (projectDir.exists()) {
+			projectDir.delete();
+		}
+
+		projectDir.mkdir();
 
 		String configs = FileTestUtil.relativize(configsDir, projectDir);
 

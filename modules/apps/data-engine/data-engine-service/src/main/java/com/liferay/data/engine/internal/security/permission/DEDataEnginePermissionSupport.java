@@ -18,16 +18,16 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.GroupLocalService;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Leonardo Barros
  */
-@Component(immediate = true, service = DEDataEnginePermissionSupport.class)
 public class DEDataEnginePermissionSupport {
 
 	public static final String RESOURCE_NAME = "com.liferay.data.engine";
+
+	public DEDataEnginePermissionSupport(GroupLocalService groupLocalService) {
+		_groupLocalService = groupLocalService;
+	}
 
 	public boolean contains(
 		PermissionChecker permissionChecker, String name, long classPK,
@@ -42,7 +42,6 @@ public class DEDataEnginePermissionSupport {
 		return permissionChecker.hasPermission(group, name, classPK, actionId);
 	}
 
-	@Reference(unbind = "-")
-	private GroupLocalService _groupLocalService;
+	private final GroupLocalService _groupLocalService;
 
 }

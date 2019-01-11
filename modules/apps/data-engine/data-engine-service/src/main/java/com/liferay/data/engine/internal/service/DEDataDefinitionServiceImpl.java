@@ -49,9 +49,8 @@ import com.liferay.dynamic.data.mapping.service.DDMStructureService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
@@ -64,7 +63,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Leonardo Barros
  */
 @Component(immediate = true, service = DEDataDefinitionService.class)
-public class DEDataDefinitionServiceImpl implements DEDataDefinitionService {
+public class DEDataDefinitionServiceImpl
 
 	@Override
 	public DEDataDefinitionCountResponse execute(
@@ -360,32 +359,9 @@ public class DEDataDefinitionServiceImpl implements DEDataDefinitionService {
 		return _deDataDefinitionSaveRequestExecutor;
 	}
 
-	protected void checkPermission(
-			long classPK, String actionId, PermissionChecker permissionChecker)
-		throws PortalException {
-
-		String resourceName = DEDataEnginePermissionSupport.RESOURCE_NAME;
-
-		if (!deDataEnginePermissionSupport.contains(
-				permissionChecker, resourceName, classPK, actionId)) {
-
-			throw new PrincipalException.MustHavePermission(
-				permissionChecker, resourceName, classPK, actionId);
-		}
-	}
-
-	protected PermissionChecker getPermissionChecker()
-		throws PrincipalException {
-
-		PermissionChecker permissionChecker =
-			PermissionThreadLocal.getPermissionChecker();
-
-		if (permissionChecker == null) {
-			throw new PrincipalException(
-				"Permission checker is not initialized");
-		}
-
-		return permissionChecker;
+	@Override
+	protected DEDataEnginePermissionSupport getDEDataEnginePermissionSupport() {
+		return new DEDataEnginePermissionSupport(groupLocalService);
 	}
 
 	@Reference(
@@ -416,7 +392,7 @@ public class DEDataDefinitionServiceImpl implements DEDataDefinitionService {
 		deDataDefinitionFieldsSerializerTracker;
 
 	@Reference
-	protected DEDataEnginePermissionSupport deDataEnginePermissionSupport;
+	protected GroupLocalService groupLocalService;
 
 	@Reference
 	protected Portal portal;

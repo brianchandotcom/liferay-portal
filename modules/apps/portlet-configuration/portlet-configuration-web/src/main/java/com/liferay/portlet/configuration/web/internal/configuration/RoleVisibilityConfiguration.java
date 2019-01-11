@@ -25,14 +25,15 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 @Meta.OCD(
 	id = "com.liferay.portlet.configuration.web.internal.configuration.RoleVisibilityConfiguration",
 	localization = "content/Language",
-	name = "restrict-permission-selector-role-visibility-configuration-name"
+	name = "role-visibility-configuration-name"
 )
 public interface RoleVisibilityConfiguration {
 
 	@Meta.AD(
 		deflt = "false",
 		description = "restrict-permission-selector-role-visibility-description",
-		name = "enabled", required = false
+		name = "restrict-permission-selector-role-visibility-name",
+		required = false
 	)
 	public boolean restrictPermissionSelectorRoleVisibility();
 

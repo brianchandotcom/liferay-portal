@@ -14,6 +14,8 @@
 
 package com.liferay.portal.workflow.kaleo.definition;
 
+import java.util.Objects;
+
 /**
  * @author Michael C. Han
  */
@@ -23,16 +25,16 @@ public enum ExecutionType {
 	ON_TIMER("onTimer");
 
 	public static ExecutionType parse(String value) {
-		if (ON_ASSIGNMENT.getValue().equals(value)) {
+		if (Objects.equals(ON_ASSIGNMENT.getValue(), value)) {
 			return ON_ASSIGNMENT;
 		}
-		else if (ON_ENTRY.getValue().equals(value)) {
+		else if (Objects.equals(ON_ENTRY.getValue(), value)) {
 			return ON_ENTRY;
 		}
-		else if (ON_EXIT.getValue().equals(value)) {
+		else if (Objects.equals(ON_EXIT.getValue(), value)) {
 			return ON_EXIT;
 		}
-		else if (ON_TIMER.getValue().equals(value)) {
+		else if (Objects.equals(ON_TIMER.getValue(), value)) {
 			return ON_TIMER;
 		}
 		else {

@@ -16,6 +16,8 @@ package com.liferay.dynamic.data.mapping.model;
 
 import java.io.Serializable;
 
+import java.util.Objects;
+
 /**
  * @author     Leonardo Barros
  * @deprecated As of Judson (7.1.x), with no direct replacement
@@ -27,19 +29,19 @@ public enum DDMFormFieldRuleType implements Serializable {
 	VALIDATION("VALIDATION"), VALUE("VALUE"), VISIBILITY("VISIBILITY");
 
 	public static DDMFormFieldRuleType parse(String value) {
-		if (DATA_PROVIDER.getValue().equals(value)) {
+		if (Objects.equals(DATA_PROVIDER.getValue(), value)) {
 			return DATA_PROVIDER;
 		}
-		else if (READ_ONLY.getValue().equals(value)) {
+		else if (Objects.equals(READ_ONLY.getValue(), value)) {
 			return READ_ONLY;
 		}
-		else if (VALUE.getValue().equals(value)) {
+		else if (Objects.equals(VALUE.getValue(), value)) {
 			return VALUE;
 		}
-		else if (VALIDATION.getValue().equals(value)) {
+		else if (Objects.equals(VALIDATION.getValue(), value)) {
 			return VALIDATION;
 		}
-		else if (VISIBILITY.getValue().equals(value)) {
+		else if (Objects.equals(VISIBILITY.getValue(), value)) {
 			return VISIBILITY;
 		}
 		else {

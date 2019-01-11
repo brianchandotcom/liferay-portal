@@ -14,6 +14,8 @@
 
 package com.liferay.portal.reports.engine;
 
+import java.util.Objects;
+
 /**
  * @author Gavin Wan
  */
@@ -23,22 +25,22 @@ public enum ReportDataSourceType {
 	XML("xml");
 
 	public static ReportDataSourceType parse(String value) {
-		if (CSV.getValue().equals(value)) {
+		if (Objects.equals(CSV.getValue(), value)) {
 			return CSV;
 		}
-		else if (EMPTY.getValue().equals(value)) {
+		else if (Objects.equals(EMPTY.getValue(), value)) {
 			return EMPTY;
 		}
-		else if (JDBC.getValue().equals(value)) {
+		else if (Objects.equals(JDBC.getValue(), value)) {
 			return JDBC;
 		}
-		else if (PORTAL.getValue().equals(value)) {
+		else if (Objects.equals(PORTAL.getValue(), value)) {
 			return PORTAL;
 		}
-		else if (XLS.getValue().equals(value)) {
+		else if (Objects.equals(XLS.getValue(), value)) {
 			return XLS;
 		}
-		else if (XML.getValue().equals(value)) {
+		else if (Objects.equals(XML.getValue(), value)) {
 			return XML;
 		}
 

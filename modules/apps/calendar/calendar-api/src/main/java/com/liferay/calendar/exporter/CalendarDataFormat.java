@@ -14,6 +14,8 @@
 
 package com.liferay.calendar.exporter;
 
+import java.util.Objects;
+
 /**
  * @author Marcellus Tavares
  */
@@ -22,7 +24,7 @@ public enum CalendarDataFormat {
 	ICAL("ics");
 
 	public static CalendarDataFormat parse(String value) {
-		if (ICAL.getValue().equals(value)) {
+		if (Objects.equals(ICAL.getValue(), value)) {
 			return ICAL;
 		}
 

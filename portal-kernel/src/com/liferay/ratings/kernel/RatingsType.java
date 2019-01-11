@@ -16,6 +16,8 @@ package com.liferay.ratings.kernel;
 
 import com.liferay.portal.kernel.util.Validator;
 
+import java.util.Objects;
+
 /**
  * @author Sergio Gonzalez
  * @author Roberto Díaz
@@ -39,13 +41,13 @@ public enum RatingsType {
 	}
 
 	public static RatingsType parse(String value) {
-		if (LIKE.getValue().equals(value)) {
+		if (Objects.equals(LIKE.getValue(), value)) {
 			return LIKE;
 		}
-		else if (STARS.getValue().equals(value)) {
+		else if (Objects.equals(STARS.getValue(), value)) {
 			return STARS;
 		}
-		else if (THUMBS.getValue().equals(value)) {
+		else if (Objects.equals(THUMBS.getValue(), value)) {
 			return THUMBS;
 		}
 

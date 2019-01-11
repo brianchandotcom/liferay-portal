@@ -14,6 +14,8 @@
 
 package com.liferay.calendar.notification;
 
+import java.util.Objects;
+
 /**
  * @author Adam Brandizzi
  */
@@ -22,10 +24,10 @@ public enum NotificationField {
 	BODY("body"), SUBJECT("subject");
 
 	public static NotificationField parse(String value) {
-		if (BODY.getValue().equals(value)) {
+		if (Objects.equals(BODY.getValue(), value)) {
 			return BODY;
 		}
-		else if (SUBJECT.getValue().equals(value)) {
+		else if (Objects.equals(SUBJECT.getValue(), value)) {
 			return SUBJECT;
 		}
 

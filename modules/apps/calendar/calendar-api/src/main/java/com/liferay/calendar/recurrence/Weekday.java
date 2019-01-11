@@ -15,6 +15,7 @@
 package com.liferay.calendar.recurrence;
 
 import java.util.Calendar;
+import java.util.Objects;
 
 /**
  * @author Marcellus Tavares
@@ -57,25 +58,25 @@ public enum Weekday {
 	}
 
 	public static Weekday parse(String value) {
-		if (SUNDAY.getValue().equals(value)) {
+		if (Objects.equals(SUNDAY.getValue(), value)) {
 			return SUNDAY;
 		}
-		else if (MONDAY.getValue().equals(value)) {
+		else if (Objects.equals(MONDAY.getValue(), value)) {
 			return MONDAY;
 		}
-		else if (TUESDAY.getValue().equals(value)) {
+		else if (Objects.equals(TUESDAY.getValue(), value)) {
 			return TUESDAY;
 		}
-		else if (WEDNESDAY.getValue().equals(value)) {
+		else if (Objects.equals(WEDNESDAY.getValue(), value)) {
 			return WEDNESDAY;
 		}
-		else if (THURSDAY.getValue().equals(value)) {
+		else if (Objects.equals(THURSDAY.getValue(), value)) {
 			return THURSDAY;
 		}
-		else if (FRIDAY.getValue().equals(value)) {
+		else if (Objects.equals(FRIDAY.getValue(), value)) {
 			return FRIDAY;
 		}
-		else if (SATURDAY.getValue().equals(value)) {
+		else if (Objects.equals(SATURDAY.getValue(), value)) {
 			return SATURDAY;
 		}
 

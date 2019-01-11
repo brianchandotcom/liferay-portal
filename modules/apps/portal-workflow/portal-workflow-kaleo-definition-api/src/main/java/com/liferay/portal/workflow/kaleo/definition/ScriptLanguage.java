@@ -14,6 +14,8 @@
 
 package com.liferay.portal.workflow.kaleo.definition;
 
+import java.util.Objects;
+
 /**
  * @author Michael C. Han
  */
@@ -23,25 +25,25 @@ public enum ScriptLanguage {
 	JAVASCRIPT("javascript"), PYTHON("python"), RUBY("ruby");
 
 	public static ScriptLanguage parse(String value) {
-		if (BEANSHELL.getValue().equals(value)) {
+		if (Objects.equals(BEANSHELL.getValue(), value)) {
 			return BEANSHELL;
 		}
-		else if (DRL.getValue().equals(value)) {
+		else if (Objects.equals(DRL.getValue(), value)) {
 			return DRL;
 		}
-		else if (GROOVY.getValue().equals(value)) {
+		else if (Objects.equals(GROOVY.getValue(), value)) {
 			return GROOVY;
 		}
-		else if (JAVA.getValue().equals(value)) {
+		else if (Objects.equals(JAVA.getValue(), value)) {
 			return JAVA;
 		}
-		else if (JAVASCRIPT.getValue().equals(value)) {
+		else if (Objects.equals(JAVASCRIPT.getValue(), value)) {
 			return JAVASCRIPT;
 		}
-		else if (PYTHON.getValue().equals(value)) {
+		else if (Objects.equals(PYTHON.getValue(), value)) {
 			return PYTHON;
 		}
-		else if (RUBY.getValue().equals(value)) {
+		else if (Objects.equals(RUBY.getValue(), value)) {
 			return RUBY;
 		}
 

@@ -14,6 +14,8 @@
 
 package com.liferay.portal.workflow.kaleo.definition;
 
+import java.util.Objects;
+
 /**
  * @author Michael C. Han
  */
@@ -22,10 +24,10 @@ public enum NotificationReceptionType {
 	BCC("bcc"), CC("cc"), TO("to");
 
 	public static NotificationReceptionType parse(String value) {
-		if (BCC.getValue().equals(value)) {
+		if (Objects.equals(BCC.getValue(), value)) {
 			return BCC;
 		}
-		else if (CC.getValue().equals(value)) {
+		else if (Objects.equals(CC.getValue(), value)) {
 			return CC;
 		}
 

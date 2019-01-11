@@ -14,6 +14,8 @@
 
 package com.liferay.portal.workflow.kaleo.definition;
 
+import java.util.Objects;
+
 /**
  * @author Michael C. Han
  */
@@ -22,13 +24,13 @@ public enum TemplateLanguage {
 	FREEMARKER("freemarker"), TEXT("text"), VELOCITY("velocity");
 
 	public static TemplateLanguage parse(String value) {
-		if (FREEMARKER.getValue().equals(value)) {
+		if (Objects.equals(FREEMARKER.getValue(), value)) {
 			return FREEMARKER;
 		}
-		else if (TEXT.getValue().equals(value)) {
+		else if (Objects.equals(TEXT.getValue(), value)) {
 			return TEXT;
 		}
-		else if (VELOCITY.getValue().equals(value)) {
+		else if (Objects.equals(VELOCITY.getValue(), value)) {
 			return VELOCITY;
 		}
 

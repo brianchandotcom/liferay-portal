@@ -14,6 +14,8 @@
 
 package com.liferay.calendar.notification;
 
+import java.util.Objects;
+
 /**
  * @author Eduardo Lundgren
  */
@@ -22,7 +24,7 @@ public enum NotificationType {
 	EMAIL("email");
 
 	public static NotificationType parse(String value) {
-		if (EMAIL.getValue().equals(value)) {
+		if (Objects.equals(EMAIL.getValue(), value)) {
 			return EMAIL;
 		}
 

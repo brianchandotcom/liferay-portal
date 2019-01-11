@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.application.type;
 
+import java.util.Objects;
+
 /**
  * @author Juergen Kappler
  */
@@ -22,10 +24,10 @@ public enum ApplicationType {
 	FULL_PAGE_APPLICATION("full-page-application"), WIDGET("widget");
 
 	public static ApplicationType parse(String value) {
-		if (FULL_PAGE_APPLICATION.getValue().equals(value)) {
+		if (Objects.equals(FULL_PAGE_APPLICATION.getValue(), value)) {
 			return FULL_PAGE_APPLICATION;
 		}
-		else if (WIDGET.getValue().equals(value)) {
+		else if (Objects.equals(WIDGET.getValue(), value)) {
 			return WIDGET;
 		}
 

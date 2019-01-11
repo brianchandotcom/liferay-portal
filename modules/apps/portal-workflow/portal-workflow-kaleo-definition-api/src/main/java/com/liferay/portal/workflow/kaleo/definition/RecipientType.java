@@ -17,6 +17,8 @@ package com.liferay.portal.workflow.kaleo.definition;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
 
+import java.util.Objects;
+
 /**
  * @author Michael C. Han
  */
@@ -26,19 +28,19 @@ public enum RecipientType {
 	SCRIPT("script"), USER(User.class.getName());
 
 	public static RecipientType parse(String value) {
-		if (ADDRESS.getValue().equals(value)) {
+		if (Objects.equals(ADDRESS.getValue(), value)) {
 			return ADDRESS;
 		}
-		else if (ASSIGNEES.getValue().equals(value)) {
+		else if (Objects.equals(ASSIGNEES.getValue(), value)) {
 			return ASSIGNEES;
 		}
-		else if (ROLE.getValue().equals(value)) {
+		else if (Objects.equals(ROLE.getValue(), value)) {
 			return ROLE;
 		}
-		else if (SCRIPT.getValue().equals(value)) {
+		else if (Objects.equals(SCRIPT.getValue(), value)) {
 			return SCRIPT;
 		}
-		else if (USER.getValue().equals(value)) {
+		else if (Objects.equals(USER.getValue(), value)) {
 			return USER;
 		}
 		else {

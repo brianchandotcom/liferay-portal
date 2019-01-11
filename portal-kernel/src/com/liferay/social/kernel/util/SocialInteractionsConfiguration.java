@@ -14,6 +14,8 @@
 
 package com.liferay.social.kernel.util;
 
+import java.util.Objects;
+
 /**
  * @author Adolfo Pérez
  * @author Sergio González
@@ -61,10 +63,10 @@ public class SocialInteractionsConfiguration {
 		ALL_USERS("all_users"), SELECT_USERS("select_users");
 
 		public static SocialInteractionsType parse(String value) {
-			if (ALL_USERS.getValue().equals(value)) {
+			if (Objects.equals(ALL_USERS.getValue(), value)) {
 				return ALL_USERS;
 			}
-			else if (SELECT_USERS.getValue().equals(value)) {
+			else if (Objects.equals(SELECT_USERS.getValue(), value)) {
 				return SELECT_USERS;
 			}
 

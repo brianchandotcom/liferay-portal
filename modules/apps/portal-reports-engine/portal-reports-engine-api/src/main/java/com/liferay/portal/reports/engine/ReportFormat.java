@@ -14,6 +14,8 @@
 
 package com.liferay.portal.reports.engine;
 
+import java.util.Objects;
+
 /**
  * @author Michael C. Han
  */
@@ -23,25 +25,25 @@ public enum ReportFormat {
 	XML("xml");
 
 	public static ReportFormat parse(String value) {
-		if (CSV.getValue().equals(value)) {
+		if (Objects.equals(CSV.getValue(), value)) {
 			return CSV;
 		}
-		else if (HTML.getValue().equals(value)) {
+		else if (Objects.equals(HTML.getValue(), value)) {
 			return HTML;
 		}
-		else if (PDF.getValue().equals(value)) {
+		else if (Objects.equals(PDF.getValue(), value)) {
 			return PDF;
 		}
-		else if (RTF.getValue().equals(value)) {
+		else if (Objects.equals(RTF.getValue(), value)) {
 			return RTF;
 		}
-		else if (TXT.getValue().equals(value)) {
+		else if (Objects.equals(TXT.getValue(), value)) {
 			return TXT;
 		}
-		else if (XLS.getValue().equals(value)) {
+		else if (Objects.equals(XLS.getValue(), value)) {
 			return XLS;
 		}
-		else if (XML.getValue().equals(value)) {
+		else if (Objects.equals(XML.getValue(), value)) {
 			return XML;
 		}
 

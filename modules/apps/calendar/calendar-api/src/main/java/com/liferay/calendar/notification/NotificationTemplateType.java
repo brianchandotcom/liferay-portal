@@ -14,6 +14,8 @@
 
 package com.liferay.calendar.notification;
 
+import java.util.Objects;
+
 /**
  * @author Eduardo Lundgren
  * @author Pier Paolo Ramon
@@ -24,22 +26,22 @@ public enum NotificationTemplateType {
 	MOVED_TO_TRASH("moved-to-trash"), REMINDER("reminder"), UPDATE("update");
 
 	public static NotificationTemplateType parse(String value) {
-		if (DECLINE.getValue().equals(value)) {
+		if (Objects.equals(DECLINE.getValue(), value)) {
 			return DECLINE;
 		}
-		else if (INVITE.getValue().equals(value)) {
+		else if (Objects.equals(INVITE.getValue(), value)) {
 			return INVITE;
 		}
-		else if (INSTANCE_DELETED.getValue().equals(value)) {
+		else if (Objects.equals(INSTANCE_DELETED.getValue(), value)) {
 			return INSTANCE_DELETED;
 		}
-		else if (MOVED_TO_TRASH.getValue().equals(value)) {
+		else if (Objects.equals(MOVED_TO_TRASH.getValue(), value)) {
 			return MOVED_TO_TRASH;
 		}
-		else if (REMINDER.getValue().equals(value)) {
+		else if (Objects.equals(REMINDER.getValue(), value)) {
 			return REMINDER;
 		}
-		else if (UPDATE.getValue().equals(value)) {
+		else if (Objects.equals(UPDATE.getValue(), value)) {
 			return UPDATE;
 		}
 

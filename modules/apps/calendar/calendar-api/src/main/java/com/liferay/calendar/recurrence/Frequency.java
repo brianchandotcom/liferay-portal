@@ -14,6 +14,8 @@
 
 package com.liferay.calendar.recurrence;
 
+import java.util.Objects;
+
 /**
  * @author Marcellus Tavares
  */
@@ -22,16 +24,16 @@ public enum Frequency {
 	DAILY("DAILY"), MONTHLY("MONTHLY"), WEEKLY("WEEKLY"), YEARLY("YEARLY");
 
 	public static Frequency parse(String value) {
-		if (DAILY.getValue().equals(value)) {
+		if (Objects.equals(DAILY.getValue(), value)) {
 			return DAILY;
 		}
-		else if (MONTHLY.getValue().equals(value)) {
+		else if (Objects.equals(MONTHLY.getValue(), value)) {
 			return MONTHLY;
 		}
-		else if (WEEKLY.getValue().equals(value)) {
+		else if (Objects.equals(WEEKLY.getValue(), value)) {
 			return WEEKLY;
 		}
-		else if (YEARLY.getValue().equals(value)) {
+		else if (Objects.equals(YEARLY.getValue(), value)) {
 			return YEARLY;
 		}
 

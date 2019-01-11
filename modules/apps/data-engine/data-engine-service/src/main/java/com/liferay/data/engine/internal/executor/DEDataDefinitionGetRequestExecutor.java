@@ -94,6 +94,7 @@ public class DEDataDefinitionGetRequestExecutor {
 		deDataDefinition.setDEDataDefinitionId(ddmStructure.getStructureId());
 		deDataDefinition.setModifiedDate(ddmStructure.getModifiedDate());
 		deDataDefinition.setStorageType(ddmStructure.getStorageType());
+		deDataDefinition.setUserId(ddmStructure.getUserId());
 
 		return deDataDefinition;
 	}

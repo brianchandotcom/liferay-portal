@@ -161,17 +161,17 @@ class PdfPreviewer extends Component {
 	_handleClickToolbar(event) {
 		const action = event.currentTarget.value;
 
-		if (action === 'next') {
-			this.currentPage++;
-		}
-		else if (action === 'previous') {
-			this.currentPage--;
+		if (action === 'expandToggle') {
+			this.expanded = !this.expanded;
 		}
 		else if (action === 'go') {
 			this.showPageInput = true;
 		}
-		else if (action === 'expandToggle') {
-			this.expanded = !this.expanded;
+		else if (action === 'next') {
+			this.currentPage++;
+		}
+		else if (action === 'previous') {
+			this.currentPage--;
 		}
 	}
 

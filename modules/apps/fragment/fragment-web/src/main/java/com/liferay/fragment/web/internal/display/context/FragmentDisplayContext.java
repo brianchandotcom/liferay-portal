@@ -475,11 +475,11 @@ public class FragmentDisplayContext {
 				add(
 					navigationItem -> {
 						navigationItem.setActive(
-							Objects.equals(_getTabs1(), "entries"));
+							Objects.equals(_getTabs1(), "fragments"));
 						navigationItem.setHref(
-							_getPortletURL(), "tabs1", "entries");
+							_getPortletURL(), "tabs1", "fragments");
 						navigationItem.setLabel(
-							LanguageUtil.get(_request, "entries"));
+							LanguageUtil.get(_request, "fragments"));
 					});
 
 				add(
@@ -629,7 +629,7 @@ public class FragmentDisplayContext {
 			return _tabs1;
 		}
 
-		_tabs1 = ParamUtil.getString(_request, "tabs1", "entries");
+		_tabs1 = ParamUtil.getString(_request, "tabs1", "fragments");
 
 		return _tabs1;
 	}

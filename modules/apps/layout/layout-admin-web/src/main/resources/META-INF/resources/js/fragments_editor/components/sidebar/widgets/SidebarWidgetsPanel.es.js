@@ -2,6 +2,7 @@ import Component from 'metal-component';
 import Soy from 'metal-soy';
 
 import templates from './SidebarWidgetsPanel.soy';
+import {getConnectedComponent} from '../../../store/ConnectedComponent.es';
 
 /**
  * SidebarWidgetsPanel
@@ -17,7 +18,15 @@ class SidebarWidgetsPanel extends Component {
  */
 SidebarWidgetsPanel.STATE = {};
 
-Soy.register(SidebarWidgetsPanel, templates);
+const ConnectedSidebarWidgetsPanel = getConnectedComponent(
+	SidebarWidgetsPanel,
+	[
+		'widgets',
+		'spritemap'
+	]
+);
 
-export {SidebarWidgetsPanel};
-export default SidebarWidgetsPanel;
+Soy.register(ConnectedSidebarWidgetsPanel, templates);
+
+export {ConnectedSidebarWidgetsPanel, SidebarWidgetsPanel};
+export default ConnectedSidebarWidgetsPanel;

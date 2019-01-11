@@ -545,7 +545,47 @@ const INITIAL_STATE = {
 	 */
 	updateLayoutPageTemplateEntryAssetTypeURL: Config
 		.string()
-		.value('')
+		.value(''),
+
+	/**
+	 * Available widgets that can be dragged inside the existing Page Template,
+	 * organized by categories.
+	 * @default []
+	 * @review
+	 * @type {Array<{
+	 *   categories: Array,
+	 *   path: !string,
+	 *   portlets: Array<{
+	 *     instanceable: !boolean,
+	 *     portletId: string,
+	 *     title: !string,
+	 *     used: !boolean
+	 *   }>,
+	 * 	 title: !string
+	 * }>}
+	 */
+	widgets: Config
+		.arrayOf(
+			Config.shapeOf(
+				{
+					categories: Config.array(),
+					path: Config.string().required(),
+					portlets: Config.arrayOf(
+						Config.shapeOf(
+							{
+								instanceable: Config.bool().required(),
+								portletId: Config.string().required(),
+								title: Config.string().required(),
+								used: Config.bool().required()
+							}
+						).required()
+					),
+					title: Config.string().required()
+				}
+			)
+		)
+		.value([])
+
 };
 
 export {INITIAL_STATE};

@@ -14,23 +14,23 @@
 
 package com.liferay.change.tracking.rest.internal.model.configuration;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonRootName;
+import javax.xml.bind.annotation.XmlElement;
 
 /**
  * @author Máté Thurzó
  */
-@JsonRootName("configuration")
 public class CTConfigurationModel {
 
 	public static CTConfigurationModel.Builder forCompany(long companyId) {
 		return new Builder(companyId);
 	}
 
+	@XmlElement
 	public long getCompanyId() {
 		return _companyId;
 	}
 
+	@XmlElement
 	public boolean isChangeTrackingEnabled() {
 		return _changeTrackingEnabled;
 	}
@@ -61,10 +61,7 @@ public class CTConfigurationModel {
 	private CTConfigurationModel() {
 	}
 
-	@JsonProperty("changeTrackingEnabled")
 	private boolean _changeTrackingEnabled;
-
-	@JsonProperty("companyId")
 	private long _companyId;
 
 }

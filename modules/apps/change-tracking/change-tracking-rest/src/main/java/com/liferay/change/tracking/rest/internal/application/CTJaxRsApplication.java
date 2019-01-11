@@ -14,11 +14,6 @@
 
 package com.liferay.change.tracking.rest.internal.application;
 
-import com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider;
-
-import java.util.Collections;
-import java.util.Set;
-
 import javax.ws.rs.core.Application;
 
 import org.osgi.service.component.annotations.Component;
@@ -30,15 +25,11 @@ import org.osgi.service.jaxrs.whiteboard.JaxrsWhiteboardConstants;
 @Component(
 	property = {
 		JaxrsWhiteboardConstants.JAX_RS_APPLICATION_BASE + "=/change-tracking",
-		JaxrsWhiteboardConstants.JAX_RS_NAME + "=ChangeTracking.Rest"
+		JaxrsWhiteboardConstants.JAX_RS_NAME + "=Liferay.ChangeTracking.Rest",
+		"auth.verifier.auth.verifier.BasicAuthHeaderAuthVerifier.urls.includes=/*",
+		"auth.verifier.auth.verifier.PortalSessionAuthVerifier.urls.includes=/*"
 	},
 	service = Application.class
 )
-public class CTApplication extends Application {
-
-	@Override
-	public Set<Class<?>> getClasses() {
-		return Collections.singleton(JacksonJsonProvider.class);
-	}
-
+public class CTJaxRsApplication extends Application {
 }

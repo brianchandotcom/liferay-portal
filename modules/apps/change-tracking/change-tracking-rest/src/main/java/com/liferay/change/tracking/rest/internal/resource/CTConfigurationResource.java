@@ -18,6 +18,7 @@ import com.liferay.change.tracking.CTEngineManager;
 import com.liferay.change.tracking.rest.internal.model.configuration.CTConfigurationModel;
 import com.liferay.change.tracking.rest.internal.model.configuration.CTConfigurationUpdateModel;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 
 import javax.ws.rs.Consumes;
@@ -26,6 +27,7 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 
 import org.osgi.service.component.annotations.Component;
@@ -38,10 +40,10 @@ import org.osgi.service.jaxrs.whiteboard.JaxrsWhiteboardConstants;
 @Component(
 	immediate = true,
 	property = {
-		JaxrsWhiteboardConstants.JAX_RS_APPLICATION_SELECT + "=(osgi.jaxrs.name=ChangeTracking.Rest)",
+		JaxrsWhiteboardConstants.JAX_RS_APPLICATION_SELECT + "=(osgi.jaxrs.name=Liferay.ChangeTracking.Rest)",
 		JaxrsWhiteboardConstants.JAX_RS_RESOURCE + "=true"
 	},
-	service = Object.class
+	service = CTConfigurationResource.class
 )
 @Path("/configurations")
 public class CTConfigurationResource {
@@ -63,13 +65,14 @@ public class CTConfigurationResource {
 	@Produces(MediaType.APPLICATION_JSON)
 	@PUT
 	public CTConfigurationModel updateCtConfiguration(
-			@PathParam("companyId") long companyId,
+			@PathParam("companyId") long companyId, @Context User user,
 			CTConfigurationUpdateModel ctConfigurationUpdateModel)
 		throws PortalException {
 
 		_companyLocalService.getCompany(companyId);
 
-		_updateChangeTrackingEnabled(companyId, ctConfigurationUpdateModel);
+		_updateChangeTrackingEnabled(
+			companyId, user, ctConfigurationUpdateModel);
 
 		return _getCTConfigurationModel(companyId);
 	}
@@ -86,7 +89,8 @@ public class CTConfigurationResource {
 	}
 
 	private void _updateChangeTrackingEnabled(
-		long companyId, CTConfigurationUpdateModel ctConfigurationUpdateModel) {
+		long companyId, User user,
+		CTConfigurationUpdateModel ctConfigurationUpdateModel) {
 
 		boolean changeTrackingEnabled =
 			_ctEngineManager.isChangeTrackingEnabled(companyId);
@@ -104,8 +108,7 @@ public class CTConfigurationResource {
 
 			// Change Tracking disabled - requested to enable
 
-			_ctEngineManager.enableChangeTracking(
-				companyId, ctConfigurationUpdateModel.getUserId());
+			_ctEngineManager.enableChangeTracking(companyId, user.getUserId());
 		}
 	}
 

@@ -14,38 +14,25 @@
 
 package com.liferay.change.tracking.rest.internal.model.configuration;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonRootName;
+import javax.xml.bind.annotation.XmlElement;
 
 /**
  * @author Máté Thurzó
  */
-@JsonRootName("configuration")
 public class CTConfigurationUpdateModel {
 
 	public CTConfigurationUpdateModel() {
-	}
-
-	public long getUserId() {
-		return _userId;
 	}
 
 	public boolean isChangeTrackingEnabled() {
 		return _changeTrackingEnabled;
 	}
 
+	@XmlElement
 	public void setChangeTrackingEnabled(boolean changeTrackingEnabled) {
 		_changeTrackingEnabled = changeTrackingEnabled;
 	}
 
-	public void setUserId(long userId) {
-		_userId = userId;
-	}
-
-	@JsonProperty("changeTrackingEnabled")
 	private boolean _changeTrackingEnabled;
-
-	@JsonProperty("userId")
-	private long _userId;
 
 }

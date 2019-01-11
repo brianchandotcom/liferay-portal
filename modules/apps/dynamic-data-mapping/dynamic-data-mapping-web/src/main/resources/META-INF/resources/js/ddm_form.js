@@ -3252,10 +3252,8 @@ AUI.add(
 							repeatableInstance.add(fieldContainer);
 						}
 
-						var fieldAttributes = fieldContainer._node.attributes;
-
-						if (fieldAttributes.draggable) {
-							fieldAttributes.removeNamedItem('draggable');
+						if (fieldContainer.hasAttribute('draggable')) {
+							fieldContainer.removeAttribute('draggable');
 						}
 
 						var drag = A.DD.DDM.getDrag(fieldContainer);

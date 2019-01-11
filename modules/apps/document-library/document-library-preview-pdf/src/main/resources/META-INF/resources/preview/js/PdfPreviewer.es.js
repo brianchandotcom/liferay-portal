@@ -170,6 +170,9 @@ class PdfPreviewer extends Component {
 		else if (action === 'go') {
 			this.showPageInput = true;
 		}
+		else if (action === 'expandToggle') {
+			this.expanded = !this.expanded;
+		}
 	}
 
 	/**
@@ -254,6 +257,13 @@ PdfPreviewer.STATE = {
 	 * @type {Boolean}
 	 */
 	currentPageLoading: Config.bool(),
+
+
+	/**
+	 * Flag that indicate if pdf is expanded or fit to container.
+	 * @type {Boolean}
+	 */
+	expanded: Config.bool(),
 
 	/**
 	 * Flag that indicate if 'next page' is disabled.

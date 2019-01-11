@@ -2580,7 +2580,7 @@ public abstract class BaseBuild implements Build {
 
 		_JENKINS_REPORT_TIME_ZONE_NAME = properties.getProperty(
 			"jenkins.report.time.zone");
-	};
+	}
 
 	private int _buildNumber = -1;
 	private JenkinsMaster _jenkinsMaster;

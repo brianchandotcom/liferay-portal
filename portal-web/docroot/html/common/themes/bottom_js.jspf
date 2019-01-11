@@ -71,8 +71,10 @@
 			{
 				selectors: [
 					'.manage-collaborators-dialog .expiration-icon button[data-title]:not(.lfr-portal-tooltip)',
+					'.manage-collaborators-dialog .expiration-icon button[title]:not(.lfr-portal-tooltip)',
 					'.management-bar [data-title]:not(.lfr-portal-tooltip)',
 					'.management-bar [title]:not(.lfr-portal-tooltip)',
+					'.preview-toolbar-container [data-title]:not(.lfr-portal-tooltip)',
 					'.preview-toolbar-container [title]:not(.lfr-portal-tooltip)',
 					'.taglib-discussion [data-title]:not(.lfr-portal-tooltip)',
 					'.taglib-discussion [title]:not(.lfr-portal-tooltip):not([title=""])'

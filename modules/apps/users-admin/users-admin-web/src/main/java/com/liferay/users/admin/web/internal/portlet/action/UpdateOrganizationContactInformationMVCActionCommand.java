@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.service.permission.OrganizationPermissionUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.users.admin.constants.UsersAdminPortletKeys;
 
@@ -96,8 +97,17 @@ public class UpdateOrganizationContactInformationMVCActionCommand
 
 				SessionErrors.add(actionRequest, e.getClass(), e);
 
-				actionResponse.setRenderParameter(
-					"mvcPath", "/edit_organization.jsp");
+				String errorMvcRenderCommandName = ParamUtil.getString(
+					actionRequest, "errorMvcRenderCommandName");
+
+				if (Validator.isNotNull(errorMvcRenderCommandName)) {
+					actionResponse.setRenderParameter(
+						"mvcRenderCommandName", errorMvcRenderCommandName);
+				}
+				else {
+					actionResponse.setRenderParameter(
+						"mvcPath", "/edit_organization.jsp");
+				}
 			}
 			else {
 				throw e;

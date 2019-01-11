@@ -127,7 +127,17 @@ public class UpdateUserContactInformationMVCActionCommand
 
 				SessionErrors.add(actionRequest, e.getClass(), e);
 
-				actionResponse.setRenderParameter("mvcPath", "/edit_user.jsp");
+				String errorMvcRenderCommandName = ParamUtil.getString(
+					actionRequest, "errorMvcRenderCommandName");
+
+				if (Validator.isNotNull(errorMvcRenderCommandName)) {
+					actionResponse.setRenderParameter(
+						"mvcRenderCommandName", errorMvcRenderCommandName);
+				}
+				else {
+					actionResponse.setRenderParameter(
+						"mvcPath", "/edit_user.jsp");
+				}
 			}
 			else {
 				throw e;

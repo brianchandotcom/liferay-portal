@@ -24,6 +24,7 @@ import com.liferay.data.engine.web.internal.servlet.data.fetcher.DEDeleteDataDef
 import com.liferay.data.engine.web.internal.servlet.data.fetcher.DEGetDataDefinitionDataFetcher;
 import com.liferay.data.engine.web.internal.servlet.data.fetcher.DEListDataDefinitionDataFetcher;
 import com.liferay.data.engine.web.internal.servlet.data.fetcher.DESaveDataDefinitionDataFetcher;
+import com.liferay.data.engine.web.internal.servlet.data.fetcher.DESaveDataRecordCollectionDataFetcher;
 import com.liferay.data.engine.web.internal.servlet.data.fetcher.DESaveModelPermissionsDataDefinitionDataFetcher;
 import com.liferay.data.engine.web.internal.servlet.data.fetcher.DESavePermissionsDataDefinitionDataFetcher;
 import com.liferay.petra.string.CharPool;
@@ -181,6 +182,12 @@ public class DEGraphQLServlet extends HttpServlet {
 			typeWiring -> typeWiring.dataFetcher(
 				"saveDataDefinitionPermissions",
 				_deSavePermissionsDataDefinitionDataFetcher));
+
+		runtimeWiringBuilder.type(
+			"MutationType",
+			typeWiring -> typeWiring.dataFetcher(
+				"saveDataRecordCollection",
+				_deSaveDataRecordCollectionDataFetcher));
 
 		return runtimeWiringBuilder.build();
 	}
@@ -349,6 +356,10 @@ public class DEGraphQLServlet extends HttpServlet {
 
 	@Reference
 	private DESaveDataDefinitionDataFetcher _deSaveDataDefinitionDataFetcher;
+
+	@Reference
+	private DESaveDataRecordCollectionDataFetcher
+		_deSaveDataRecordCollectionDataFetcher;
 
 	@Reference
 	private DESaveModelPermissionsDataDefinitionDataFetcher

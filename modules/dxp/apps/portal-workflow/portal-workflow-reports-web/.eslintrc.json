@@ -15,7 +15,8 @@
 	"globals": {
 		"AUI": true,
 		"Liferay": true,
-		"NODE_ENV": true
+		"NODE_ENV": true,
+		"shallow": true
 	},
 	"parser": "babel-eslint",
 	"parserOptions": {
@@ -109,6 +110,20 @@
 			}
 		],
 		"require-jsdoc": 0,
+		"sort-imports": [
+			"error",
+			{
+				"ignoreCase": true,
+				"ignoreDeclarationSort": false,
+				"ignoreMemberSort": false,
+				"memberSyntaxSortOrder": [
+					"none",
+					"all",
+					"multiple",
+					"single"
+				]
+			}
+		],
 		"sort-keys": [
 			2,
 			"asc",

@@ -18,9 +18,13 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.data.engine.exception.DEDataDefinitionException;
 import com.liferay.data.engine.model.DEDataDefinition;
 import com.liferay.data.engine.model.DEDataDefinitionField;
+import com.liferay.data.engine.service.DEDataDefinitionCountRequest;
+import com.liferay.data.engine.service.DEDataDefinitionCountResponse;
 import com.liferay.data.engine.service.DEDataDefinitionDeleteRequest;
 import com.liferay.data.engine.service.DEDataDefinitionGetRequest;
 import com.liferay.data.engine.service.DEDataDefinitionGetResponse;
+import com.liferay.data.engine.service.DEDataDefinitionListRequest;
+import com.liferay.data.engine.service.DEDataDefinitionListResponse;
 import com.liferay.data.engine.service.DEDataDefinitionRequestBuilder;
 import com.liferay.data.engine.service.DEDataDefinitionSaveModelPermissionsRequest;
 import com.liferay.data.engine.service.DEDataDefinitionSavePermissionsRequest;
@@ -50,6 +54,7 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.junit.After;
@@ -154,6 +159,52 @@ public class DEDataDefinitionServiceTest {
 
 		_deDataDefinitionService.execute(
 			deDataDefinitionSavePermissionsRequest);
+	}
+
+	@Test
+	public void testCount() throws Exception {
+		insertDEDataDefinition(_adminUser, _group);
+
+		insertDEDataDefinition(_adminUser, _group);
+
+		int deDataDefinitionTotal = countDataDefinition(_group);
+
+		Assert.assertEquals(2, deDataDefinitionTotal);
+	}
+
+	@Test
+	public void testCountAfterDelete() throws Exception {
+		DEDataDefinition deDataDefinition = insertDEDataDefinition(
+			_adminUser, _group);
+
+		int deDataDefinitionTotal = countDataDefinition(_group);
+
+		Assert.assertEquals(1, deDataDefinitionTotal);
+
+		deleteDataDefinition(
+			_adminUser, deDataDefinition.getDEDataDefinitionId());
+
+		int deDataDefinitionTotalAfterDelete = countDataDefinition(_group);
+
+		Assert.assertEquals(0, deDataDefinitionTotalAfterDelete);
+	}
+
+	@Test
+	public void testCountWithNoRecords() throws Exception {
+		int deDataDefinitionTotal = countDataDefinition(_group);
+
+		Assert.assertEquals(0, deDataDefinitionTotal);
+	}
+
+	@Test
+	public void testCountWithoutPermission() throws Exception {
+		insertDEDataDefinition(_adminUser, _group);
+
+		Group otherGroup = GroupTestUtil.addGroup();
+
+		int deDataDefinitionTotal = countDataDefinition(otherGroup);
+
+		Assert.assertEquals(0, deDataDefinitionTotal);
 	}
 
 	@Test
@@ -435,6 +486,77 @@ public class DEDataDefinitionServiceTest {
 	}
 
 	@Test
+	public void testListPaginatedMiddleInsideRange() throws Exception {
+		int dataDefinitionTotal = 5;
+
+		for (int i = 0; i < dataDefinitionTotal; i++) {
+			insertDEDataDefinition(_adminUser, _group);
+		}
+
+		List<DEDataDefinition> deDataDefinitionList =
+			listPaginatedDataDefinition(_group, 2, 4);
+
+		Assert.assertEquals(
+			deDataDefinitionList.toString(), 2, deDataDefinitionList.size());
+	}
+
+	@Test
+	public void testListPaginatedMiddleOutOfRange() throws Exception {
+		int dataDefinitionTotal = 5;
+
+		for (int i = 0; i < dataDefinitionTotal; i++) {
+			insertDEDataDefinition(_adminUser, _group);
+		}
+
+		List<DEDataDefinition> deDataDefinitionList =
+			listPaginatedDataDefinition(_group, 3, 7);
+
+		Assert.assertEquals(
+			deDataDefinitionList.toString(), 2, deDataDefinitionList.size());
+	}
+
+	@Test
+	public void testListPaginatedOutOfRange() throws Exception {
+		int dataDefinitionTotal = 5;
+
+		for (int i = 0; i < dataDefinitionTotal; i++) {
+			insertDEDataDefinition(_adminUser, _group);
+		}
+
+		List<DEDataDefinition> deDataDefinitionList =
+			listPaginatedDataDefinition(_group, 7, 10);
+
+		Assert.assertEquals(
+			deDataDefinitionList.toString(), 0, deDataDefinitionList.size());
+	}
+
+	@Test
+	public void testListWithNoRecords() throws Exception {
+		PermissionThreadLocal.setPermissionChecker(
+			PermissionCheckerFactoryUtil.create(_adminUser));
+
+		List<DEDataDefinition> deDataDefinitionList = listDataDefinition(
+			_group);
+
+		Assert.assertTrue(deDataDefinitionList.isEmpty());
+	}
+
+	@Test
+	public void testListWithRecords() throws Exception {
+		int dataDefinitionTotal = 3;
+
+		for (int i = 0; i < dataDefinitionTotal; i++) {
+			insertDEDataDefinition(_adminUser, _group);
+		}
+
+		List<DEDataDefinition> deDataDefinitionList = listDataDefinition(
+			_group);
+
+		Assert.assertEquals(
+			deDataDefinitionList.toString(), 3, deDataDefinitionList.size());
+	}
+
+	@Test
 	public void testUpdate() throws Exception {
 		DEDataDefinition deDataDefinition = insertDEDataDefinition(
 			_adminUser, _group);
@@ -484,6 +606,21 @@ public class DEDataDefinitionServiceTest {
 		finally {
 			ServiceContextThreadLocal.popServiceContext();
 		}
+	}
+
+	protected int countDataDefinition(Group group) throws Exception {
+		DEDataDefinitionCountRequest deDataDefinitionCountRequest =
+			DEDataDefinitionRequestBuilder.countBuilder(
+			).inCompany(
+				group.getCompanyId()
+			).inGroup(
+				group.getGroupId()
+			).build();
+
+		DEDataDefinitionCountResponse deDataDefinitionCountResponse =
+			_deDataDefinitionService.execute(deDataDefinitionCountRequest);
+
+		return deDataDefinitionCountResponse.getTotal();
 	}
 
 	protected void deleteDataDefinition(User user, long deDataDefinitionId)
@@ -588,6 +725,45 @@ public class DEDataDefinitionServiceTest {
 		finally {
 			ServiceContextThreadLocal.popServiceContext();
 		}
+	}
+
+	protected List<DEDataDefinition> listDataDefinition(Group group)
+		throws Exception {
+
+		DEDataDefinitionListRequest deDataDefinitionListRequest =
+			DEDataDefinitionRequestBuilder.listBuilder(
+			).inCompany(
+				group.getCompanyId()
+			).inGroup(
+				group.getGroupId()
+			).build();
+
+		DEDataDefinitionListResponse deDataDefinitionListResponse =
+			_deDataDefinitionService.execute(deDataDefinitionListRequest);
+
+		return deDataDefinitionListResponse.getDEDataDefinitions();
+	}
+
+	protected List<DEDataDefinition> listPaginatedDataDefinition(
+			Group group, int start, int end)
+		throws Exception {
+
+		DEDataDefinitionListRequest deDataDefinitionListRequest =
+			DEDataDefinitionRequestBuilder.listBuilder(
+			).startingAt(
+				start
+			).endingAt(
+				end
+			).inCompany(
+				group.getCompanyId()
+			).inGroup(
+				group.getGroupId()
+			).build();
+
+		DEDataDefinitionListResponse deDataDefinitionListResponse =
+			_deDataDefinitionService.execute(deDataDefinitionListRequest);
+
+		return deDataDefinitionListResponse.getDEDataDefinitions();
 	}
 
 	protected void setUpPermissionThreadLocal() throws Exception {

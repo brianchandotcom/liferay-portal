@@ -58,12 +58,11 @@ public class DLViewMVCRenderCommand extends GetFolderMVCRenderCommand {
 		throws PortletException {
 
 		renderRequest.setAttribute(
+			BulkSelectionRunner.class.getName(), _bulkSelectionRunner);
+		renderRequest.setAttribute(
 			DLWebKeys.DOCUMENT_LIBRARY_PORTLET_TOOLBAR_CONTRIBUTOR,
 			_dlPortletToolbarContributorRegistry.
 				getDLPortletToolbarContributor());
-
-		renderRequest.setAttribute(
-			BulkSelectionRunner.class.getName(), _bulkSelectionRunner);
 
 		try {
 			if (pingFolderRepository(renderRequest, renderResponse)) {

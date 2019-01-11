@@ -398,7 +398,7 @@ public abstract class TopLevelBuildRunner
 			String.valueOf(TopLevelBuildRunner._FILE_PROPAGATOR_EXPIRATION),
 			" -exec rm -frv {} \\;");
 
-	private static final int _FILE_PROPAGATOR_EXPIRATION = 180;
+	private static final int _FILE_PROPAGATOR_EXPIRATION = 1440;
 
 	private static final int _FILE_PROPAGATOR_THREAD_COUNT = 1;
 

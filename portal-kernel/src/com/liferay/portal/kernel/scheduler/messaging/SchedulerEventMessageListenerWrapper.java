@@ -65,9 +65,41 @@ public class SchedulerEventMessageListenerWrapper
 		_processMessage(message, destinationName, jobName, groupName);
 	}
 
+	/**
+	 * @deprecated As of Wilberforce (7.0.x)
+	 */
+	@Deprecated
+	public void setGroupName(String groupName) {
+		_groupName = groupName;
+	}
+
+	/**
+	 * @deprecated As of Wilberforce (7.0.x)
+	 */
+	@Deprecated
+	public void setJobName(String jobName) {
+		_jobName = jobName;
+	}
+
+	public void setMessageListener(MessageListener messageListener) {
+		_messageListener = messageListener;
+	}
+
+	public void setSchedulerEntry(SchedulerEntry schedulerEntry) {
+		_schedulerEntry = schedulerEntry;
+	}
+
+	protected void handleException(Message message, Exception exception) {
+		JobState jobState = (JobState)message.get(SchedulerEngine.JOB_STATE);
+
+		if (jobState != null) {
+			jobState.addException(exception, new Date());
+		}
+	}
+
 	private void _processMessage(
-		Message message, String destinationName, String jobName,
-		String groupName)
+			Message message, String destinationName, String jobName,
+			String groupName)
 		throws MessageListenerException {
 
 		try {
@@ -126,38 +158,6 @@ public class SchedulerEventMessageListenerWrapper
 					_log.info("Unable to send audit message", e);
 				}
 			}
-		}
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x)
-	 */
-	@Deprecated
-	public void setGroupName(String groupName) {
-		_groupName = groupName;
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x)
-	 */
-	@Deprecated
-	public void setJobName(String jobName) {
-		_jobName = jobName;
-	}
-
-	public void setMessageListener(MessageListener messageListener) {
-		_messageListener = messageListener;
-	}
-
-	public void setSchedulerEntry(SchedulerEntry schedulerEntry) {
-		_schedulerEntry = schedulerEntry;
-	}
-
-	protected void handleException(Message message, Exception exception) {
-		JobState jobState = (JobState)message.get(SchedulerEngine.JOB_STATE);
-
-		if (jobState != null) {
-			jobState.addException(exception, new Date());
 		}
 	}
 

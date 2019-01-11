@@ -1,62 +1,119 @@
+import autobind from 'autobind-decorator';
+import EmptyContent from '../../libs/EmptyContent';
+import gql from 'graphql-tag';
+import graphqlClient from '../../libs/graphql-client';
+import ProcessListEntries from './ProcessListEntries';
+import ProcessListPagination from './ProcessListPagination';
+import ProcessListPaginationResults from './ProcessListPaginationResults';
+import ProcessListTable from './ProcessListTable';
 import React from 'react';
-import ProcessListManagementBar from './ProcessListManagementBar';
 
 export default class ProcessListCard extends React.Component {
+	constructor() {
+		super();
+
+		this.state = {
+			processes: [],
+			selectedEntry: 20,
+			start: 0,
+			total: 0
+		};
+	}
+
+	componentWillMount() {
+		const {selectedEntry, start} = this.state;
+
+		const unsubscribe = graphqlClient.onResetStore(() => {
+			this.requestData({size: selectedEntry, start}).then(
+				({processes, total}) => this.setState({processes, total})
+			);
+
+			unsubscribe();
+		});
+
+		graphqlClient.resetStore();
+	}
+
+	requestData({start, size}) {
+		const {companyId} = this.props;
+
+		return graphqlClient
+			.query({
+				query: gql`
+				query workflowProcessesQuery {
+					processes(companyId:${companyId}, start:${start}, size:${size}) {
+						total
+						workflowProcesses {
+	  						title
+	  						instancesCount
+						}
+					}
+				}
+			`
+			})
+			.then(({data: {processes}}) => ({
+				processes: processes.workflowProcesses,
+				total: processes.total
+			}))
+			.catch(error => console.error(error));
+	}
+
+	@autobind
+	setPage({size, start}) {
+		this.requestData({size, start}).then(({processes, total}) =>
+			this.setState({processes, start, total})
+		);
+	}
+
+	@autobind
+	setEntry(entry) {
+		const start = 0;
+
+		this.requestData({size: entry, start}).then(({processes, total}) =>
+			this.setState({processes, selectedEntry: entry, start, total})
+		);
+	}
+
 	render() {
-		return (
-			<div className="row">
-				<div className="col-12">
-					<ProcessListManagementBar />
+		const {selectedEntry, processes, start, total} = this.state;
+		const entries = [5, 10, 20, 30, 50, 75];
 
-					<div className="card">
-						<div className="card-body">
-							<div className="table-responsive">
-								<table className="show-quick-actions-on-hover table table-autofit table-hover table-list table-nowrap">
-									<thead>
-										<tr>
-											<th
-												className="table-cell-expand table-head-title"
-												style={{width: '70%'}}
-											>
-												{'Process Name'}
-											</th>
-											<th
-												className="table-cell-expand table-head-title"
-												style={{width: '15%'}}
-											>
-												{'On Time'}
-											</th>
-											<th
-												className="text-body table-cell-expand table-head-title"
-												style={{width: '15%'}}
-											>
-												{'Overdue'}
-											</th>
-										</tr>
-									</thead>
+		const paginationBar = () => {
+			if (total > entries[0]) {
+				return (
+					<div className="pagination-bar">
+						<ProcessListEntries
+							entries={entries}
+							onSelectEntry={this.setEntry}
+							selectedEntry={selectedEntry}
+						/>
 
-									<tbody>
-										<tr>
-											<td>{'Sales Quoting'}</td>
-											<td>{'82 items'}</td>
-											<td>{'33 items'}</td>
-										</tr>
-										<tr>
-											<td>{'Refund Request'}</td>
-											<td>{'12 items'}</td>
-											<td>{'25 items'}</td>
-										</tr>
-										<tr>
-											<td>{'Travel Reimbursement'}</td>
-											<td>{'5 items'}</td>
-											<td>{'23 items'}</td>
-										</tr>
-									</tbody>
-								</table>
-							</div>
-						</div>
+						<ProcessListPaginationResults
+							count={processes.length}
+							start={start}
+							total={total}
+						/>
+
+						<ProcessListPagination
+							entry={selectedEntry}
+							pageClickHandler={this.setPage}
+							totalCount={total}
+						/>
 					</div>
-				</div>
+				);
+			}
+			return <div />;
+		};
+
+		return (
+			<div>
+				{total > 0 ? (
+					<ProcessListTable processes={processes} />
+				) : (
+					<EmptyContent message="There are no process." />
+				)}
+
+				{paginationBar()}
 			</div>
 		);
 	}

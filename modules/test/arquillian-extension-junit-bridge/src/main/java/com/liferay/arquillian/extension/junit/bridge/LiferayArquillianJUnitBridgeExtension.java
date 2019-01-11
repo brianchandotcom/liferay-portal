@@ -30,7 +30,9 @@ import org.jboss.arquillian.container.test.spi.RemoteLoadableExtension;
 import org.jboss.arquillian.container.test.spi.client.deployment.ApplicationArchiveProcessor;
 import org.jboss.arquillian.container.test.spi.client.deployment.AuxiliaryArchiveAppender;
 import org.jboss.arquillian.container.test.spi.client.deployment.DeploymentScenarioGenerator;
+import org.jboss.arquillian.container.test.spi.client.protocol.Protocol;
 import org.jboss.arquillian.junit.container.JUnitDeploymentAppender;
+import org.jboss.arquillian.protocol.osgi.JMXOSGiProtocol;
 
 /**
  * @author Shuyang Zhou
@@ -60,6 +62,7 @@ public class LiferayArquillianJUnitBridgeExtension
 			extensionBuilder.service(
 				DeploymentScenarioGenerator.class,
 				BndDeploymentScenarioGenerator.class);
+			extensionBuilder.service(Protocol.class, JMXOSGiProtocol.class);
 		}
 		else {
 			extensionBuilder.observer(JUnitBridgeObserver.class);

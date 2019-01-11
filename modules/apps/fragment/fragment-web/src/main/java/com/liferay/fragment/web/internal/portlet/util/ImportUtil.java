@@ -318,15 +318,23 @@ public class ImportUtil {
 				continue;
 			}
 
+			String fragmentCollectionKey = StringPool.BLANK;
+
 			String[] paths = fileName.split(StringPool.SLASH);
 
-			if (paths.length < 3) {
+			for (String path : paths) {
+				if (fragmentCollectionFolderMap.containsKey(path)) {
+					fragmentCollectionKey = path;
+
+					break;
+				}
+			}
+
+			if (Validator.isNull(fragmentCollectionKey)) {
 				orphanFragmentEntries.put(_getKey(fileName), fileName);
 
 				continue;
 			}
-
-			String fragmentCollectionKey = paths[paths.length - 3];
 
 			FragmentCollectionFolder fragmentCollectionFolder =
 				fragmentCollectionFolderMap.get(fragmentCollectionKey);

@@ -176,7 +176,9 @@ name = HtmlUtil.escapeJS(name);
 			editorContainer.appendChild(editorNode);
 		}
 
-		editorNode.attr('contenteditable', true);
+		if (editorNode) {
+			editorNode.attr('contenteditable', true);
+		}
 
 		var editorConfig = <%= Validator.isNotNull(editorConfigJSONObject) %> ? <%= editorConfigJSONObject %> : {};
 

@@ -439,12 +439,14 @@ name = HtmlUtil.escapeJS(name);
 			editorContainer.appendChild(editorNode);
 		}
 
-		editorNode.attr('contenteditable', true);
-		editorNode.addClass('lfr-editable');
+		if (editorNode) {
+			editorNode.attr('contenteditable', true);
+			editorNode.addClass('lfr-editable');
 
-		eventHandles.push(
-			A.Do.after(afterVal, editorNode, 'val', this)
-		);
+			eventHandles.push(
+				A.Do.after(afterVal, editorNode, 'val', this)
+			);
+		}
 
 		function initData() {
 			if (!ckEditorContent) {

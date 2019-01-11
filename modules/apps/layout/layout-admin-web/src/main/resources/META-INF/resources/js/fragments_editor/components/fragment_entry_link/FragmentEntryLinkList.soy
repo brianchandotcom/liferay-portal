@@ -31,6 +31,8 @@
 	{@param? _handleSectionHoverStart: any}
 	{@param? _handleSectionKeyUp: any}
 	{@param? _handleSectionRemoveButtonClick: any}
+	{@param? activeItemId: string}
+	{@param? activeItemType: string}
 	{@param? dropTargetItemTypes: ?}
 	{@param? fragmentsEditorSidebarVisible: bool}
 	{@param? highlightMapping: bool}
@@ -93,6 +95,8 @@
 					{param dropTargetItemTypes: $dropTargetItemTypes /}
 					{param empty: $row.empty /}
 					{param fragmentEntryLinks: $fragmentEntryLinks /}
+					{param activeItemId: $activeItemId /}
+					{param activeItemType: $activeItemType /}
 					{param hoveredItemId: $hoveredItemId /}
 					{param hoveredItemType: $hoveredItemType /}
 					{param dropTargetBorder: $dropTargetBorder /}
@@ -140,6 +144,8 @@
 	{@param? _handleSectionHoverStart: any}
 	{@param? _handleSectionKeyUp: any}
 	{@param? _handleSectionRemoveButtonClick: any}
+	{@param? activeItemId: string}
+	{@param? activeItemType: string}
 	{@param? dropTargetItemTypes: ?}
 	{@param? empty: bool}
 	{@param? dropTargetBorder: string}
@@ -178,6 +184,11 @@
 
 		{if $dropTargetItemId == $rowId and $dropTargetItemType == $dropTargetItemTypes.section}
 			{sp}{$dropTargetBorder}
+		{/if}
+
+		{if $activeItemId == $rowId and $activeItemType == $dropTargetItemTypes.section}
+			{sp}fragment-entry-link-list__row-section--active
+			{sp}fragments-editor__topper-wrapper--active
 		{/if}
 
 		{if $hoveredItemId == $rowId and $hoveredItemType == $dropTargetItemTypes.section}

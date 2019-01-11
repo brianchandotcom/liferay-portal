@@ -17,6 +17,7 @@ package com.liferay.portal.tools.bundle.support.internal.util;
 import com.liferay.portal.tools.bundle.support.BundleSupport;
 
 import java.io.BufferedOutputStream;
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -48,6 +49,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
+import org.apache.commons.compress.archivers.ArchiveEntry;
 import org.apache.commons.compress.archivers.sevenz.SevenZArchiveEntry;
 import org.apache.commons.compress.archivers.sevenz.SevenZFile;
 import org.apache.commons.compress.archivers.sevenz.SevenZOutputFile;
@@ -363,6 +365,23 @@ public class FileUtil {
 			new URI("jar:" + uri.getScheme(), uri.getPath(), null), properties);
 	}
 
+	private static Path _stripComponents(
+		Path path, int stripComponents, boolean directory) {
+
+		if (stripComponents > 0) {
+			int nameCount = path.getNameCount();
+
+			if (stripComponents < nameCount) {
+				return path.subpath(stripComponents, nameCount);
+			}
+			else if (directory && (stripComponents == nameCount)) {
+				return path.relativize(path);
+			}
+		}
+
+		return path;
+	}
+
 	private static void _unsevenZip(
 			Path sevenZipPath, Path destinationDirPath, int stripComponents)
 		throws IOException {
@@ -371,11 +390,10 @@ public class FileUtil {
 			SevenZArchiveEntry sevenZArchiveEntry = null;
 
 			while ((sevenZArchiveEntry = sevenZFile.getNextEntry()) != null) {
-				Path destinationPath = Paths.get(sevenZArchiveEntry.getName());
-
-				destinationPath = destinationDirPath.resolve(
-					destinationPath.subpath(
-						stripComponents, destinationPath.getNameCount()));
+				Path destinationPath = destinationDirPath.resolve(
+					_stripComponents(
+						Paths.get(sevenZArchiveEntry.getName()),
+						stripComponents, sevenZArchiveEntry.isDirectory()));
 
 				if (sevenZArchiveEntry.isDirectory()) {
 					Files.createDirectories(destinationPath);
@@ -383,20 +401,17 @@ public class FileUtil {
 					continue;
 				}
 
-				Files.createDirectories(destinationPath.getParent());
-
 				byte[] content = new byte[(int)sevenZArchiveEntry.getSize()];
 
 				sevenZFile.read(content, 0, content.length);
 
-				Files.write(destinationPath, content);
+				try (ByteArrayInputStream byteArrayInputStream =
+						new ByteArrayInputStream(content)) {
 
-				Date lastModifiedDate =
-					sevenZArchiveEntry.getLastModifiedDate();
-
-				Files.setLastModifiedTime(
-					destinationPath,
-					FileTime.fromMillis(lastModifiedDate.getTime()));
+					_writeArchiveEntryFile(
+						sevenZArchiveEntry, destinationPath,
+						byteArrayInputStream);
+				}
 			}
 		}
 	}
@@ -415,11 +430,10 @@ public class FileUtil {
 			while ((tarArchiveEntry =
 						tarArchiveInputStream.getNextTarEntry()) != null) {
 
-				Path destinationPath = Paths.get(tarArchiveEntry.getName());
-
-				destinationPath = destinationDirPath.resolve(
-					destinationPath.subpath(
-						stripComponents, destinationPath.getNameCount()));
+				Path destinationPath = destinationDirPath.resolve(
+					_stripComponents(
+						Paths.get(tarArchiveEntry.getName()), stripComponents,
+						tarArchiveEntry.isDirectory()));
 
 				if (tarArchiveEntry.isDirectory()) {
 					Files.createDirectories(destinationPath);
@@ -427,15 +441,8 @@ public class FileUtil {
 					continue;
 				}
 
-				Files.createDirectories(destinationPath.getParent());
-
-				Files.copy(tarArchiveInputStream, destinationPath);
-
-				Date lastModifiedDate = tarArchiveEntry.getLastModifiedDate();
-
-				Files.setLastModifiedTime(
-					destinationPath,
-					FileTime.fromMillis(lastModifiedDate.getTime()));
+				_writeArchiveEntryFile(
+					tarArchiveEntry, destinationPath, tarArchiveInputStream);
 			}
 		}
 	}
@@ -446,8 +453,10 @@ public class FileUtil {
 		throws Exception {
 
 		try (FileSystem fileSystem = _createFileSystem(zipPath, false)) {
+			final Path fileSystemPath = fileSystem.getPath("/");
+
 			Files.walkFileTree(
-				fileSystem.getPath("/"),
+				fileSystemPath,
 				new SimpleFileVisitor<Path>() {
 
 					@Override
@@ -455,16 +464,9 @@ public class FileUtil {
 							Path path, BasicFileAttributes basicFileAttributes)
 						throws IOException {
 
-						if (path.getNameCount() == 0) {
-							return FileVisitResult.CONTINUE;
-						}
-
-						Path relativePath = path;
-
-						if (stripComponents < path.getNameCount()) {
-							relativePath = path.subpath(
-								stripComponents, path.getNameCount());
-						}
+						Path relativePath = _stripComponents(
+							fileSystemPath.relativize(path), stripComponents,
+							true);
 
 						Path destinationPath = destinationDirPath.resolve(
 							relativePath.toString());
@@ -479,8 +481,9 @@ public class FileUtil {
 							Path path, BasicFileAttributes basicFileAttributes)
 						throws IOException {
 
-						Path relativePath = path.subpath(
-							stripComponents, path.getNameCount());
+						Path relativePath = _stripComponents(
+							fileSystemPath.relativize(path), stripComponents,
+							false);
 
 						Path destinationPath = destinationDirPath.resolve(
 							relativePath.toString());
@@ -492,6 +495,26 @@ public class FileUtil {
 
 				});
 		}
+	}
+
+	private static void _writeArchiveEntryFile(
+			ArchiveEntry archiveEntry, Path destinationPath,
+			InputStream inputStream)
+		throws IOException {
+
+		Path parentPath = destinationPath.getParent();
+
+		if (parentPath != null) {
+			Files.createDirectories(parentPath);
+		}
+
+		Files.copy(
+			inputStream, destinationPath, StandardCopyOption.REPLACE_EXISTING);
+
+		Date lastModifiedDate = archiveEntry.getLastModifiedDate();
+
+		Files.setLastModifiedTime(
+			destinationPath, FileTime.fromMillis(lastModifiedDate.getTime()));
 	}
 
 	private static final long _FILE_LENGTH_KB = 1024;

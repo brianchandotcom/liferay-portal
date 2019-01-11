@@ -45,6 +45,7 @@ import com.liferay.data.engine.service.DEDataDefinitionService;
 import com.liferay.dynamic.data.lists.service.DDLRecordSetLocalService;
 import com.liferay.dynamic.data.mapping.exception.NoSuchStructureException;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
+import com.liferay.dynamic.data.mapping.service.DDMStructureService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
@@ -161,7 +162,6 @@ public class DEDataDefinitionServiceImpl implements DEDataDefinitionService {
 			throw new DEDataDefinitionException(e);
 		}
 	}
-
 
 	public DEDataDefinitionSaveModelPermissionsResponse execute(
 			DEDataDefinitionSaveModelPermissionsRequest
@@ -284,20 +284,6 @@ public class DEDataDefinitionServiceImpl implements DEDataDefinitionService {
 		return _deDataDefinitionCountRequestExecutor;
 	}
 
-	public DEDataDefinitionListRequestExecutor
-		getDEDataDefinitionListRequestExecutor() {
-
-		if (_deDataDefinitionListRequestExecutor == null) {
-			_deDataDefinitionListRequestExecutor =
-				new DEDataDefinitionListRequestExecutor(
-					ddmStructureService,
-					deDataDefinitionFieldsDeserializerTracker, portal);
-		}
-
-		return _deDataDefinitionListRequestExecutor;
-
-	}
-
 	public DEDataDefinitionDeleteRequestExecutor
 		getDEDataDefinitionDeleteRequestExecutor() {
 
@@ -321,6 +307,19 @@ public class DEDataDefinitionServiceImpl implements DEDataDefinitionService {
 		}
 
 		return _deDataDefinitionGetRequestExecutor;
+	}
+
+	public DEDataDefinitionListRequestExecutor
+		getDEDataDefinitionListRequestExecutor() {
+
+		if (_deDataDefinitionListRequestExecutor == null) {
+			_deDataDefinitionListRequestExecutor =
+				new DEDataDefinitionListRequestExecutor(
+					ddmStructureService,
+					deDataDefinitionFieldsDeserializerTracker, portal);
+		}
+
+		return _deDataDefinitionListRequestExecutor;
 	}
 
 	public DEDataDefinitionSaveModelPermissionsRequestExecutor
@@ -406,6 +405,9 @@ public class DEDataDefinitionServiceImpl implements DEDataDefinitionService {
 	protected DDMStructureLocalService ddmStructureLocalService;
 
 	@Reference
+	protected DDMStructureService ddmStructureService;
+
+	@Reference
 	protected DEDataDefinitionFieldsDeserializerTracker
 		deDataDefinitionFieldsDeserializerTracker;
 
@@ -419,10 +421,6 @@ public class DEDataDefinitionServiceImpl implements DEDataDefinitionService {
 	@Reference
 	protected Portal portal;
 
-	private DEDataDefinitionCountRequestExecutor
-		_deDataDefinitionCountRequestExecutor;
-	private DEDataDefinitionListRequestExecutor
-		_deDataDefinitionListRequestExecutor;
 	@Reference
 	protected ResourceLocalService resourceLocalService;
 
@@ -432,10 +430,14 @@ public class DEDataDefinitionServiceImpl implements DEDataDefinitionService {
 	@Reference
 	protected RoleLocalService roleLocalService;
 
+	private DEDataDefinitionCountRequestExecutor
+		_deDataDefinitionCountRequestExecutor;
 	private DEDataDefinitionDeleteRequestExecutor
 		_deDataDefinitionDeleteRequestExecutor;
 	private DEDataDefinitionGetRequestExecutor
 		_deDataDefinitionGetRequestExecutor;
+	private DEDataDefinitionListRequestExecutor
+		_deDataDefinitionListRequestExecutor;
 	private DEDataDefinitionSaveModelPermissionsRequestExecutor
 		_deDataDefinitionSaveModelPermissionsRequestExecutor;
 	private DEDataDefinitionSavePermissionsRequestExecutor

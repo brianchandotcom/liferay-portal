@@ -36,7 +36,8 @@ public interface DEDataDefinitionService {
 		throws DEDataDefinitionException;
 
 	public DEDataDefinitionListResponse execute(
-			DEDataDefinitionListRequest deDataDefinitionListRequest);
+			DEDataDefinitionListRequest deDataDefinitionListRequest)
+		throws DEDataDefinitionException;
 
 	public DEDataDefinitionSaveModelPermissionsResponse execute(
 			DEDataDefinitionSaveModelPermissionsRequest

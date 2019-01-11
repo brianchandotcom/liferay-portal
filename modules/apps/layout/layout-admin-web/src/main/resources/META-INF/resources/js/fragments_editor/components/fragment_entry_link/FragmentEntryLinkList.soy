@@ -225,6 +225,12 @@
 			</ul>
 		</nav>
 
+		{if ($hoveredItemId == $rowId and $hoveredItemType == $dropTargetItemTypes.section) or ($activeItemId == $rowId and $activeItemType == $dropTargetItemTypes.section)}
+			{call com.liferay.layout.admin.web.FloatingToolbar.render}
+				{param store: $store /}
+			{/call}
+		{/if}
+
 		<div class="fragment-entry-link-list__row row">
 			{foreach $column in $columns}
 				{call .column}

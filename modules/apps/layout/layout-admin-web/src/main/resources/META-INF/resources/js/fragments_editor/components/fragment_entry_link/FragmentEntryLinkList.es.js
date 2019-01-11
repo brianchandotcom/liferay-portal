@@ -4,6 +4,7 @@ import {Drag, DragDrop} from 'metal-drag-drop';
 import position from 'metal-position';
 import Soy from 'metal-soy';
 
+import '../floating_toolbar/FloatingToolbar.es';
 import './FragmentEntryLink.es';
 import {
 	CLEAR_ACTIVE_ITEM,

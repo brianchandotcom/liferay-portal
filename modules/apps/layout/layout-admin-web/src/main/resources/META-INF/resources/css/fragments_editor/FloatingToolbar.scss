@@ -1,0 +1,15 @@
+@import "variables";
+
+.fragments-editor__floating-toolbar {
+	bottom: auto;
+	left: auto;
+	padding: $fragmentsEditorSpacing;
+	position: absolute;
+	right: 0;
+	top: 100%;
+	z-index: $floatingToolbarZIndex;
+
+	&-popover {
+		position: static;
+	}
+}

@@ -8,7 +8,9 @@ $desktopManagementBarHeight: 50px;
 
 $productMenuTransitionDuration: 0.5s;
 
-$dragSourceZIndex: 995;
+$dragSourceZIndex: 997;
+$draggableItemZIndex: 997;
+$floatingToolbarZIndex: 996;
 $fragmentEditableFieldTooltipZIndex: 995;
 $fragmentEntryLinkContentHoverZIndex: auto;
 $fragmentEntryLinkContentZIndex: 0;
@@ -21,7 +23,7 @@ $sidebarSectionZIndex: 3;
 $sidebarZIndex: 992;
 $topperHoverZIndex: 2;
 $topperZIndex: 1;
-$translationStatusListZIndex: 995;
+$translationStatusListZIndex: 997;
 
 $fragmentEditableFieldGridAccentColor: #80ACFF;
 $fragmentEditableFieldGridDefaultColor: #A7A9BC;

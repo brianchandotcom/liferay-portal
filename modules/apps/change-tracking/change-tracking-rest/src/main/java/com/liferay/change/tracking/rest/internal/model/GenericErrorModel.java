@@ -14,13 +14,13 @@
 
 package com.liferay.change.tracking.rest.internal.model;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonRootName;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  * @author Máté Thurzó
  */
-@JsonRootName("error")
+@XmlRootElement
 public class GenericErrorModel {
 
 	public GenericErrorModel() {
@@ -30,11 +30,11 @@ public class GenericErrorModel {
 		_errorMessage = errorMessage;
 	}
 
+	@XmlElement
 	public String getErrorMessage() {
 		return _errorMessage;
 	}
 
-	@JsonProperty("errorMessage")
 	private String _errorMessage;
 
 }

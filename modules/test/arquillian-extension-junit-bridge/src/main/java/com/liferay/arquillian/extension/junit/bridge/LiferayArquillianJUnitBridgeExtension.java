@@ -19,6 +19,7 @@ import com.liferay.arquillian.extension.junit.bridge.deployment.BndDeploymentSce
 import com.liferay.arquillian.extension.junit.bridge.deployment.JUnitBridgeAuxiliaryArchiveAppender;
 import com.liferay.arquillian.extension.junit.bridge.deployment.NoOpArchiveApplicationProcessor;
 import com.liferay.arquillian.extension.junit.bridge.observer.JUnitBridgeObserver;
+import com.liferay.arquillian.extension.junit.bridge.protocol.osgi.JMXOSGiProtocol;
 import com.liferay.arquillian.extension.junit.bridge.remote.processor.OSGiAllInProcessor;
 
 import java.net.URL;
@@ -32,7 +33,6 @@ import org.jboss.arquillian.container.test.spi.client.deployment.AuxiliaryArchiv
 import org.jboss.arquillian.container.test.spi.client.deployment.DeploymentScenarioGenerator;
 import org.jboss.arquillian.container.test.spi.client.protocol.Protocol;
 import org.jboss.arquillian.junit.container.JUnitDeploymentAppender;
-import org.jboss.arquillian.protocol.osgi.JMXOSGiProtocol;
 
 /**
  * @author Shuyang Zhou

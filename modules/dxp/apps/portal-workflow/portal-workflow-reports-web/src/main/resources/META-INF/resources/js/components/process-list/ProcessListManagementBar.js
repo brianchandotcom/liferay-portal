@@ -17,7 +17,7 @@ export default class ProcessListManagementBar extends React.Component {
 									role="button"
 								>
 									<span className="navbar-text-truncate">
-										{'Filter and Order2'}
+										{'Filter and Order'}
 									</span>
 
 									<svg

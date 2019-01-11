@@ -16,9 +16,7 @@ package com.liferay.login.web.internal.portlet.action;
 
 import com.liferay.login.web.internal.constants.LoginPortletKeys;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.JavaConstants;
-import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.portlet.PortletConfig;
 import javax.portlet.RenderRequest;
@@ -52,11 +50,6 @@ public class CreateAnonymousAccountMVCRenderCommand
 		if (!portletName.equals(LoginPortletKeys.FAST_LOGIN)) {
 			return "/login.jsp";
 		}
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		renderResponse.setTitle(themeDisplay.translate("anonymous-account"));
 
 		return "/create_anonymous_account.jsp";
 	}

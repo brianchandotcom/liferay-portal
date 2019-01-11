@@ -28,6 +28,8 @@ Integer reminderAttempts = (Integer)portletSession.getAttribute(WebKeys.FORGOT_P
 if (reminderAttempts == null) {
 	reminderAttempts = 0;
 }
+
+renderResponse.setTitle(LanguageUtil.get(request, "forgot-password"));
 %>
 
 <portlet:actionURL name="/login/forgot_password" var="forgotPasswordURL">

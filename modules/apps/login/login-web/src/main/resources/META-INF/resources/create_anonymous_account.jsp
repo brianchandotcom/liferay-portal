@@ -16,6 +16,10 @@
 
 <%@ include file="/init.jsp" %>
 
+<%
+renderResponse.setTitle(LanguageUtil.get(request, "anonymous-account"));
+%>
+
 <portlet:actionURL name="/login/create_anonymous_account" var="createAnonymousAccountURL">
 	<portlet:param name="mvcRenderCommandName" value="/login/create_anonymous_account" />
 </portlet:actionURL>

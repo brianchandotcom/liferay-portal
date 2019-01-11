@@ -27,6 +27,8 @@ Calendar birthdayCalendar = CalendarFactoryUtil.getCalendar();
 birthdayCalendar.set(Calendar.MONTH, Calendar.JANUARY);
 birthdayCalendar.set(Calendar.DATE, 1);
 birthdayCalendar.set(Calendar.YEAR, 1970);
+
+renderResponse.setTitle(LanguageUtil.get(request, "create-account"));
 %>
 
 <portlet:actionURL name="/login/create_account" secure="<%= PropsValues.COMPANY_SECURITY_AUTH_REQUIRES_HTTPS || request.isSecure() %>" var="createAccountURL" windowState="<%= LiferayWindowState.MAXIMIZED.toString() %>">

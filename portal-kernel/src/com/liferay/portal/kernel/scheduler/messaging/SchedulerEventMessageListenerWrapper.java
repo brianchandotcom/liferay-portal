@@ -62,6 +62,14 @@ public class SchedulerEventMessageListenerWrapper
 			}
 		}
 
+		_processMessage(message, destinationName, jobName, groupName);
+	}
+
+	private void _processMessage(
+		Message message, String destinationName, String jobName,
+		String groupName)
+		throws MessageListenerException {
+
 		try {
 			_messageListener.receive(message);
 		}

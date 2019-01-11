@@ -244,6 +244,30 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 			JenkinsResultsParserUtil.getGlobsFromProperty(relativeGlobs));
 	}
 
+	protected List<String> getRelevantIntegrationUnitBatchList() {
+		List<String> relevantIntegrationUnitBatchList = new ArrayList<>();
+
+		if (testSuiteName.equals("relevant")) {
+			String relevantTestBatchNames = getFirstPropertyValue(
+				"test.batch.names");
+
+			if (relevantTestBatchNames != null) {
+				for (String relevantTestBatchName :
+						relevantTestBatchNames.split(",")) {
+
+					if (relevantTestBatchName.startsWith("integration-") ||
+						relevantTestBatchName.startsWith("unit-")) {
+
+						relevantIntegrationUnitBatchList.add(
+							relevantTestBatchName);
+					}
+				}
+			}
+		}
+
+		return relevantIntegrationUnitBatchList;
+	}
+
 	protected List<File> getRequiredModuleDirs(List<File> moduleDirs) {
 		return _getRequiredModuleDirs(moduleDirs, new ArrayList<>(moduleDirs));
 	}

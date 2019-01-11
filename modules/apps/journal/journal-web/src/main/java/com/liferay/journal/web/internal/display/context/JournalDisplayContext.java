@@ -1627,7 +1627,7 @@ public class JournalDisplayContext {
 			return "danger";
 		}
 		else if (status == WorkflowConstants.STATUS_IN_TRASH) {
-			return "primary";
+			return "info";
 		}
 		else if (status == WorkflowConstants.STATUS_INACTIVE) {
 			return "secondary";
@@ -1636,10 +1636,10 @@ public class JournalDisplayContext {
 			return "warning";
 		}
 		else if (status == WorkflowConstants.STATUS_PENDING) {
-			return "primary";
+			return "info";
 		}
 		else if (status == WorkflowConstants.STATUS_SCHEDULED) {
-			return "primary";
+			return "info";
 		}
 
 		return "secondary";

@@ -59,7 +59,7 @@ public class LabelItem extends HashMap<String, Object> {
 			return "danger";
 		}
 		else if (status == WorkflowConstants.STATUS_IN_TRASH) {
-			return "primary";
+			return "info";
 		}
 		else if (status == WorkflowConstants.STATUS_INACTIVE) {
 			return "secondary";
@@ -68,10 +68,10 @@ public class LabelItem extends HashMap<String, Object> {
 			return "warning";
 		}
 		else if (status == WorkflowConstants.STATUS_PENDING) {
-			return "primary";
+			return "info";
 		}
 		else if (status == WorkflowConstants.STATUS_SCHEDULED) {
-			return "primary";
+			return "info";
 		}
 
 		return "secondary";

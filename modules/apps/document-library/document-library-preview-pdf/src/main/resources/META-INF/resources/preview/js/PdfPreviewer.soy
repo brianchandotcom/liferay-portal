@@ -12,6 +12,7 @@
 	{@param? _handleClickToolbar: any}
 	{@param? _handleKeyDownPageInput: any}
 	{@param? currentPageLoading: bool}
+	{@param? expanded: bool}
 	{@param? id: string}
 	{@param? nextPageDisabled: bool}
 	{@param? previousPageDisabled: bool}
@@ -22,7 +23,13 @@
 			{if $currentPageLoading}
 				<span class="loading-animation preview-file-loader"></span>
 			{else}
-				<img class="preview-file-pdf" src="{$baseImageURL + $currentPage}" />
+				<img
+					class="
+						preview-file-pdf
+						{if not $expanded}{sp} preview-file-pdf-fit{/if}
+					"
+					src="{$baseImageURL + $currentPage}"
+				/>
 			{/if}
 		</div>
 
@@ -50,6 +57,7 @@
 	{@param? nextPageDisabled: bool}
 	{@param? previousPageDisabled: bool}
 	{@param? showPageInput: bool}
+	{@param? expanded: bool}
 
 	{let $baseButtonsToolbar:[
 		'elementClasses': 'btn-floating-bar',
@@ -99,19 +107,32 @@
 				{param disabled: $previousPageDisabled /}
 				{param icon: 'caret-top' /}
 				{param monospaced: true /}
-				{param value: 'previous' /}
 				{param title kind="text"}
 					{msg desc=""}page-above{/msg}
 				{/param}
+				{param value: 'previous' /}
 			{/call}
 			{call ClayButton.render data="$baseButtonsToolbar"}
 				{param disabled: $nextPageDisabled /}
 				{param icon: 'caret-bottom' /}
 				{param monospaced: true /}
-				{param value: 'next' /}
 				{param title kind="text"}
 					{msg desc=""}page-below{/msg}
 				{/param}
+				{param value: 'next' /}
+			{/call}
+			<div class="separator-floating-bar"></div>
+			{call ClayButton.render data="$baseButtonsToolbar"}
+				{param icon: $expanded ?  'autosize' : 'full-size' /}
+				{param monospaced: true /}
+				{param title kind="text"}
+					{if $expanded}
+						{msg desc=""}zoom-to-fit{/msg}
+					{else}
+						{msg desc=""}expand{/msg}
+					{/if}
+				{/param}
+				{param value: 'expandToggle' /}
 			{/call}
 		</div>
 	</div>

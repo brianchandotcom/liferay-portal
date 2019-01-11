@@ -1,0 +1,20 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Should render component 1`] = `
+<tr>
+  <td
+    className="text-semi-bold"
+  >
+    Process test
+  </td>
+  <td>
+    10 items
+  </td>
+  <td>
+    5
+  </td>
+  <td>
+    5
+  </td>
+</tr>
+`;

@@ -1,0 +1,59 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Should render component 1`] = `
+<div
+  className="dropdown pagination-items-per-page"
+>
+  <a
+    aria-expanded="false"
+    aria-haspopup="true"
+    className="dropdown-toggle"
+    data-toggle="dropdown"
+    href="#1"
+    role="button"
+  >
+    10 entries
+    <svg
+      className="lexicon-icon lexicon-icon-caret-double-l"
+      focusable="false"
+      role="presentation"
+    >
+      <use
+        href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-double-l"
+      />
+    </svg>
+  </a>
+  <div
+    className="dropdown-menu dropdown-menu-top"
+  >
+    <a
+      className="dropdown-item"
+      href="#10"
+      onClick={[Function]}
+    >
+      10
+    </a>
+    <a
+      className="dropdown-item"
+      href="#20"
+      onClick={[Function]}
+    >
+      20
+    </a>
+    <a
+      className="dropdown-item"
+      href="#30"
+      onClick={[Function]}
+    >
+      30
+    </a>
+    <a
+      className="dropdown-item"
+      href="#40"
+      onClick={[Function]}
+    >
+      40
+    </a>
+  </div>
+</div>
+`;

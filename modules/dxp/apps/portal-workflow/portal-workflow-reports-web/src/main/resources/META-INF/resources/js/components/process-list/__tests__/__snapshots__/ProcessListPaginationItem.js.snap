@@ -1,0 +1,85 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Should change page 1`] = `
+<li
+  className="page-item"
+  onClick={[Function]}
+>
+  <a
+    className="page-link"
+    href="#2"
+  >
+    3
+  </a>
+</li>
+`;
+
+exports[`Should render component as type Next 1`] = `
+<li
+  className="page-item"
+  onClick={[Function]}
+>
+  <a
+    className="page-link"
+    href="#1"
+    role="button"
+  >
+    <svg
+      className="lexicon-icon lexicon-icon-angle-right"
+      focusable="false"
+      role="presentation"
+    >
+      <use
+        href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#angle-right"
+      />
+    </svg>
+    <span
+      className="sr-only"
+    >
+      Next
+    </span>
+  </a>
+</li>
+`;
+
+exports[`Should render component as type Previous 1`] = `
+<li
+  className="page-item"
+  onClick={[Function]}
+>
+  <a
+    className="page-link"
+    href="#1"
+    role="button"
+  >
+    <svg
+      className="lexicon-icon lexicon-icon-angle-left"
+      focusable="false"
+      role="presentation"
+    >
+      <use
+        href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#angle-left"
+      />
+    </svg>
+    <span
+      className="sr-only"
+    >
+      Previous
+    </span>
+  </a>
+</li>
+`;
+
+exports[`Should render component as type default 1`] = `
+<li
+  className="page-item"
+  onClick={[Function]}
+>
+  <a
+    className="page-link"
+    href="#1"
+  >
+    11
+  </a>
+</li>
+`;

@@ -1,0 +1,74 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Should render component 1`] = `
+<div
+  className="table-responsive"
+>
+  <table
+    className="show-quick-actions-on-hover table table-autofit table-hover table-list table-nowrap"
+  >
+    <thead>
+      <tr>
+        <th
+          className="table-cell-expand table-head-title"
+          style={
+            Object {
+              "width": "70%",
+            }
+          }
+        >
+          Process Name
+        </th>
+        <th
+          className="table-cell-expand table-head-title"
+          style={
+            Object {
+              "width": "15%",
+            }
+          }
+        >
+          Total Open
+        </th>
+        <th
+          className="table-cell-expand table-head-title"
+          style={
+            Object {
+              "width": "15%",
+            }
+          }
+        >
+          On Time
+        </th>
+        <th
+          className="table-cell-expand table-head-title"
+          style={
+            Object {
+              "width": "15%",
+            }
+          }
+        >
+          Overdue
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td
+          className="text-semi-bold"
+        >
+          test
+        </td>
+        <td>
+          0 item
+        </td>
+        <td>
+          -
+        </td>
+        <td>
+          -
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+`;

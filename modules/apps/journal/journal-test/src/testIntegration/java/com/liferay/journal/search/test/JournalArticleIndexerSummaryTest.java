@@ -24,54 +24,33 @@ import com.liferay.journal.test.util.search.JournalArticleTitle;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.LayoutSet;
-import com.liferay.portal.kernel.model.Theme;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
-import com.liferay.portal.kernel.search.Summary;
 import com.liferay.portal.kernel.search.highlight.HighlightUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
-import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
-import com.liferay.portal.kernel.service.ThemeLocalServiceUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.TimeZoneUtil;
-import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.search.test.util.SummaryFixture;
 import com.liferay.portal.service.test.ServiceTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.util.test.LayoutTestUtil;
 
 import java.util.List;
 import java.util.Locale;
 
-import javax.portlet.PortletRequest;
-import javax.portlet.PortletResponse;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import org.springframework.mock.web.MockHttpServletRequest;
-import org.springframework.mock.web.MockHttpServletResponse;
-import org.springframework.mock.web.portlet.MockPortletResponse;
-import org.springframework.mock.web.portlet.MockRenderRequest;
 
 /**
  * @author André de Oliveira
@@ -103,6 +82,9 @@ public class JournalArticleIndexerSummaryTest {
 		CompanyThreadLocal.setCompanyId(TestPropsValues.getCompanyId());
 
 		_indexer = IndexerRegistryUtil.getIndexer(JournalArticle.class);
+
+		_summaryFixture = new SummaryFixture<>(
+			JournalArticle.class, _group, LocaleUtil.US, _user);
 	}
 
 	@After
@@ -117,7 +99,7 @@ public class JournalArticleIndexerSummaryTest {
 
 		Document document = getDocument(title, content);
 
-		assertSummary(title, content, document);
+		_summaryFixture.assertSummary(title, content, document);
 	}
 
 	@Test
@@ -136,7 +118,8 @@ public class JournalArticleIndexerSummaryTest {
 
 		setSnippets(highlightedTitle, highlightedContent, document);
 
-		assertSummary(highlightedTitle, highlightedContent, document);
+		_summaryFixture.assertSummary(
+			highlightedTitle, highlightedContent, document);
 	}
 
 	@Test
@@ -151,7 +134,7 @@ public class JournalArticleIndexerSummaryTest {
 
 		setFields(staleTitle, staleContent, document);
 
-		assertSummary(staleTitle, content, document);
+		_summaryFixture.assertSummary(staleTitle, content, document);
 	}
 
 	@Test
@@ -174,81 +157,8 @@ public class JournalArticleIndexerSummaryTest {
 			HighlightUtil.HIGHLIGHT_TAG_OPEN, "test",
 			HighlightUtil.HIGHLIGHT_TAG_CLOSE, " content");
 
-		assertSummary(staleHighlightedTitle, highlightedContent, document);
-	}
-
-	protected void assertSummary(
-			String title, String content, Document document)
-		throws Exception {
-
-		Summary summary = getSummary(document);
-
-		Assert.assertEquals(content, summary.getContent());
-		Assert.assertEquals(title, summary.getTitle());
-	}
-
-	protected HttpServletRequest createHttpServletRequest(
-		PortletRequest portletRequest) {
-
-		HttpServletRequest httpServletRequest = new MockHttpServletRequest();
-
-		httpServletRequest.setAttribute(
-			JavaConstants.JAVAX_PORTLET_REQUEST, portletRequest);
-
-		return httpServletRequest;
-	}
-
-	protected HttpServletResponse createHttpServletResponse() {
-		return new MockHttpServletResponse();
-	}
-
-	protected PortletRequest createPortletRequest() throws Exception {
-		PortletRequest portletRequest = new MockRenderRequest();
-
-		HttpServletRequest request = createHttpServletRequest(portletRequest);
-
-		HttpServletResponse response = createHttpServletResponse();
-
-		ThemeDisplay themeDisplay = createThemeDisplay(request, response);
-
-		portletRequest.setAttribute(WebKeys.THEME_DISPLAY, themeDisplay);
-
-		request.setAttribute(WebKeys.THEME_DISPLAY, themeDisplay);
-
-		return portletRequest;
-	}
-
-	protected PortletResponse createPortletResponse() {
-		return new MockPortletResponse();
-	}
-
-	protected ThemeDisplay createThemeDisplay(
-			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse)
-		throws Exception {
-
-		ThemeDisplay themeDisplay = new ThemeDisplay();
-
-		themeDisplay.setCompany(
-			CompanyLocalServiceUtil.getCompany(_group.getCompanyId()));
-		themeDisplay.setLayout(LayoutTestUtil.addLayout(_group));
-
-		LayoutSet layoutSet = _group.getPublicLayoutSet();
-
-		themeDisplay.setLayoutSet(layoutSet);
-
-		Theme theme = ThemeLocalServiceUtil.getTheme(
-			_group.getCompanyId(), layoutSet.getThemeId());
-
-		themeDisplay.setLookAndFeel(theme, null);
-
-		themeDisplay.setRealUser(_user);
-		themeDisplay.setRequest(httpServletRequest);
-		themeDisplay.setResponse(httpServletResponse);
-		themeDisplay.setTimeZone(TimeZoneUtil.getDefault());
-		themeDisplay.setUser(_user);
-
-		return themeDisplay;
+		_summaryFixture.assertSummary(
+			staleHighlightedTitle, highlightedContent, document);
 	}
 
 	protected Document getDocument(String title, String content)
@@ -287,11 +197,6 @@ public class JournalArticleIndexerSummaryTest {
 			LocaleUtil.toLanguageId(Locale.US));
 	}
 
-	protected Summary getSummary(Document document) throws Exception {
-		return _indexer.getSummary(
-			document, null, createPortletRequest(), createPortletResponse());
-	}
-
 	protected void setFields(String title, String content, Document document) {
 		document.addText(getFieldName(Field.CONTENT), content);
 		document.addText(getFieldName(Field.TITLE), title);
@@ -317,6 +222,7 @@ public class JournalArticleIndexerSummaryTest {
 	private List<JournalArticle> _journalArticles;
 
 	private JournalArticleSearchFixture _journalArticleSearchFixture;
+	private SummaryFixture<JournalArticle> _summaryFixture;
 
 	@DeleteAfterTestRun
 	private User _user;

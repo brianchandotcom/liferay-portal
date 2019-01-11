@@ -23,50 +23,32 @@ import com.liferay.journal.test.util.search.JournalArticleDescription;
 import com.liferay.journal.test.util.search.JournalArticleSearchFixture;
 import com.liferay.journal.test.util.search.JournalArticleTitle;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.model.LayoutSet;
-import com.liferay.portal.kernel.model.Theme;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Document;
-import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistry;
-import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchException;
-import com.liferay.portal.kernel.search.Summary;
 import com.liferay.portal.kernel.search.highlight.HighlightUtil;
-import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
-import com.liferay.portal.kernel.service.ThemeLocalServiceUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.TimeZoneUtil;
-import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.search.test.util.SearchContextTestUtil;
+import com.liferay.portal.search.test.util.SummaryFixture;
 import com.liferay.portal.service.test.ServiceTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.util.test.LayoutTestUtil;
 import com.liferay.users.admin.test.util.search.UserSearchFixture;
 
 import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
 import java.util.stream.Stream;
-
-import javax.portlet.PortletRequest;
-import javax.portlet.PortletResponse;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -75,11 +57,6 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import org.springframework.mock.web.MockHttpServletRequest;
-import org.springframework.mock.web.MockHttpServletResponse;
-import org.springframework.mock.web.portlet.MockPortletResponse;
-import org.springframework.mock.web.portlet.MockRenderRequest;
 
 /**
  * @author Adam Brandizzi
@@ -117,6 +94,9 @@ public class JournalArticleMultiLanguageSearchSummaryTest {
 
 		_user = _userSearchFixture.addUser(
 			RandomTestUtil.randomString(), _group);
+
+		_summaryFixture = new SummaryFixture<>(
+			JournalArticle.class, _group, null, _user);
 	}
 
 	@After
@@ -127,7 +107,9 @@ public class JournalArticleMultiLanguageSearchSummaryTest {
 	}
 
 	@Test
-	public void testBrContentUntranslatedHighlightedTranslatedPlain() {
+	public void testBrContentUntranslatedHighlightedTranslatedPlain()
+		throws Exception {
+
 		String title = "All About Clocks";
 
 		addArticleUntranslated(title, "Clocks are great for telling time");
@@ -147,28 +129,32 @@ public class JournalArticleMultiLanguageSearchSummaryTest {
 
 		Document document1 = getDocumentByUSTitle(documents, title);
 
-		assertSummary(
-			document1, LocaleUtil.BRAZIL, title,
+		_summaryFixture.assertSummary(
+			title,
 			StringBundler.concat(
 				"Clocks are great for telling ",
 				HighlightUtil.HIGHLIGHT_TAG_OPEN, "time",
-				HighlightUtil.HIGHLIGHT_TAG_CLOSE));
+				HighlightUtil.HIGHLIGHT_TAG_CLOSE),
+			LocaleUtil.BRAZIL, document1);
 
 		Document document2 = getDocumentByUSTitle(documents, usTitle);
 
-		assertSummary(
-			document2, LocaleUtil.BRAZIL, brTitle,
+		_summaryFixture.assertSummary(
+			brTitle,
 			StringBundler.concat(
 				"Sobre ", HighlightUtil.HIGHLIGHT_TAG_OPEN,
 				HighlightUtil.HIGHLIGHT_TAG_OPEN, "times",
 				HighlightUtil.HIGHLIGHT_TAG_CLOSE,
-				HighlightUtil.HIGHLIGHT_TAG_CLOSE, " de futebol"));
+				HighlightUtil.HIGHLIGHT_TAG_CLOSE, " de futebol"),
+			LocaleUtil.BRAZIL, document2);
 
 		Assert.assertEquals(documents.toString(), 2, documents.size());
 	}
 
 	@Test
-	public void testBrDescriptionUntranslatedHighlightedTwiceTranslatedPlain() {
+	public void testBrDescriptionUntranslatedHighlightedTwiceTranslatedPlain()
+		throws Exception {
+
 		String title = "All About Clocks";
 
 		addArticleUntranslated(
@@ -189,29 +175,33 @@ public class JournalArticleMultiLanguageSearchSummaryTest {
 
 		Document document1 = getDocumentByUSTitle(documents, title);
 
-		assertSummary(
-			document1, LocaleUtil.BRAZIL, title,
+		_summaryFixture.assertSummary(
+			title,
 			StringBundler.concat(
 				"On clocks and ", HighlightUtil.HIGHLIGHT_TAG_OPEN,
 				HighlightUtil.HIGHLIGHT_TAG_OPEN, "time",
 				HighlightUtil.HIGHLIGHT_TAG_CLOSE,
-				HighlightUtil.HIGHLIGHT_TAG_CLOSE));
+				HighlightUtil.HIGHLIGHT_TAG_CLOSE),
+			LocaleUtil.BRAZIL, document1);
 
 		Document document2 = getDocumentByUSTitle(documents, usTitle);
 
-		assertSummary(
-			document2, LocaleUtil.BRAZIL, brTitle,
+		_summaryFixture.assertSummary(
+			brTitle,
 			StringBundler.concat(
 				"Sobre ", HighlightUtil.HIGHLIGHT_TAG_OPEN,
 				HighlightUtil.HIGHLIGHT_TAG_OPEN, "times",
 				HighlightUtil.HIGHLIGHT_TAG_CLOSE,
-				HighlightUtil.HIGHLIGHT_TAG_CLOSE, " de futebol"));
+				HighlightUtil.HIGHLIGHT_TAG_CLOSE, " de futebol"),
+			LocaleUtil.BRAZIL, document2);
 
 		Assert.assertEquals(documents.toString(), 2, documents.size());
 	}
 
 	@Test
-	public void testUsContentUntranslatedHighlightedTranslatedPlain() {
+	public void testUsContentUntranslatedHighlightedTranslatedPlain()
+		throws Exception {
+
 		String title = "All About Clocks";
 
 		addArticleUntranslated(title, "Clocks are great for telling time");
@@ -227,22 +217,26 @@ public class JournalArticleMultiLanguageSearchSummaryTest {
 
 		Document document1 = getDocumentByUSTitle(documents, title);
 
-		assertSummary(
-			document1, LocaleUtil.US, title,
+		_summaryFixture.assertSummary(
+			title,
 			StringBundler.concat(
 				"Clocks are great for telling ",
 				HighlightUtil.HIGHLIGHT_TAG_OPEN, "time",
-				HighlightUtil.HIGHLIGHT_TAG_CLOSE));
+				HighlightUtil.HIGHLIGHT_TAG_CLOSE),
+			LocaleUtil.US, document1);
 
 		Document document2 = getDocumentByUSTitle(documents, usTitle);
 
-		assertSummary(document2, LocaleUtil.US, usTitle, usContent);
+		_summaryFixture.assertSummary(
+			usTitle, usContent, LocaleUtil.US, document2);
 
 		Assert.assertEquals(documents.toString(), 2, documents.size());
 	}
 
 	@Test
-	public void testUsDescriptionUntranslatedHighlightedTwiceTranslatedPlain() {
+	public void testUsDescriptionUntranslatedHighlightedTwiceTranslatedPlain()
+		throws Exception {
+
 		String content = "Clocks are great for telling time";
 		String description = "On clocks and time";
 		String title = "All About Clocks";
@@ -264,17 +258,19 @@ public class JournalArticleMultiLanguageSearchSummaryTest {
 
 		Document document1 = getDocumentByUSTitle(documents, title);
 
-		assertSummary(
-			document1, LocaleUtil.US, title,
+		_summaryFixture.assertSummary(
+			title,
 			StringBundler.concat(
 				"On clocks and ", HighlightUtil.HIGHLIGHT_TAG_OPEN,
 				HighlightUtil.HIGHLIGHT_TAG_OPEN, "time",
 				HighlightUtil.HIGHLIGHT_TAG_CLOSE,
-				HighlightUtil.HIGHLIGHT_TAG_CLOSE));
+				HighlightUtil.HIGHLIGHT_TAG_CLOSE),
+			LocaleUtil.US, document1);
 
 		Document document2 = getDocumentByUSTitle(documents, usTitle);
 
-		assertSummary(document2, LocaleUtil.US, usTitle, usDescription);
+		_summaryFixture.assertSummary(
+			usTitle, usDescription, LocaleUtil.US, document2);
 
 		Assert.assertEquals(documents.toString(), 2, documents.size());
 	}
@@ -391,82 +387,6 @@ public class JournalArticleMultiLanguageSearchSummaryTest {
 			});
 	}
 
-	protected void assertSummary(
-		Document document, Locale locale, String title, String content) {
-
-		Summary summary = getSummary(document, createPortletRequest(locale));
-
-		Assert.assertEquals(content, summary.getContent());
-		Assert.assertEquals(title, summary.getTitle());
-	}
-
-	protected HttpServletRequest createHttpServletRequest(
-		PortletRequest portletRequest) {
-
-		HttpServletRequest httpServletRequest = new MockHttpServletRequest();
-
-		httpServletRequest.setAttribute(
-			JavaConstants.JAVAX_PORTLET_REQUEST, portletRequest);
-
-		return httpServletRequest;
-	}
-
-	protected HttpServletResponse createHttpServletResponse() {
-		return new MockHttpServletResponse();
-	}
-
-	protected PortletRequest createPortletRequest(Locale locale) {
-		MockRenderRequest portletRequest = new MockRenderRequest();
-
-		HttpServletRequest request = createHttpServletRequest(portletRequest);
-
-		HttpServletResponse response = createHttpServletResponse();
-
-		ThemeDisplay themeDisplay = createThemeDisplay(request, response);
-
-		portletRequest.setAttribute(WebKeys.THEME_DISPLAY, themeDisplay);
-
-		request.setAttribute(WebKeys.THEME_DISPLAY, themeDisplay);
-
-		portletRequest.addPreferredLocale(locale);
-
-		return portletRequest;
-	}
-
-	protected ThemeDisplay createThemeDisplay(
-		HttpServletRequest httpServletRequest,
-		HttpServletResponse httpServletResponse) {
-
-		ThemeDisplay themeDisplay = new ThemeDisplay();
-
-		try {
-			themeDisplay.setCompany(
-				CompanyLocalServiceUtil.getCompany(_group.getCompanyId()));
-		}
-		catch (PortalException pe) {
-			throw new RuntimeException(pe);
-		}
-
-		themeDisplay.setLayout(_addLayout());
-
-		LayoutSet layoutSet = _group.getPublicLayoutSet();
-
-		themeDisplay.setLayoutSet(layoutSet);
-
-		Theme theme = ThemeLocalServiceUtil.getTheme(
-			_group.getCompanyId(), layoutSet.getThemeId());
-
-		themeDisplay.setLookAndFeel(theme, null);
-
-		themeDisplay.setRealUser(_user);
-		themeDisplay.setRequest(httpServletRequest);
-		themeDisplay.setResponse(httpServletResponse);
-		themeDisplay.setTimeZone(TimeZoneUtil.getDefault());
-		themeDisplay.setUser(_user);
-
-		return themeDisplay;
-	}
-
 	protected Document getDocumentByUSTitle(
 		List<Document> documents, String title) {
 
@@ -481,67 +401,13 @@ public class JournalArticleMultiLanguageSearchSummaryTest {
 		return documentOptional.get();
 	}
 
-	protected Summary getSummary(
-		Document document, PortletRequest portletRequest) {
+	protected List<Document> search(String searchTerm, Locale locale)
+		throws PortalException {
 
-		try {
-			return _indexer.getSummary(
-				document, document.get(Field.SNIPPET), portletRequest,
-				(PortletResponse)new MockPortletResponse());
-		}
-		catch (SearchException se) {
-			throw new RuntimeException(se);
-		}
-	}
+		SearchContext searchContext = SearchContextTestUtil.getSearchContext(
+			_user.getUserId(), new long[] {_group.getGroupId()}, searchTerm,
+			locale, true);
 
-	protected List<Document> search(String searchTerm, Locale locale) {
-		SearchContext searchContext = _getSearchContext(searchTerm, locale);
-
-		return _search(searchContext);
-	}
-
-	@Inject
-	protected IndexerRegistry indexerRegistry;
-
-	@Inject
-	protected JournalArticleLocalService journalArticleLocalService;
-
-	private Layout _addLayout() {
-		try {
-			return LayoutTestUtil.addLayout(_group);
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	private SearchContext _getSearchContext(String searchTerm, Locale locale) {
-		try {
-			SearchContext searchContext = new SearchContext();
-
-			searchContext.setCompanyId(TestPropsValues.getCompanyId());
-			searchContext.setGroupIds(new long[] {_group.getGroupId()});
-			searchContext.setKeywords(searchTerm);
-			searchContext.setLocale(locale);
-			searchContext.setUserId(TestPropsValues.getUserId());
-
-			QueryConfig queryConfig = searchContext.getQueryConfig();
-
-			queryConfig.setHighlightEnabled(true);
-			queryConfig.setLocale(locale);
-			queryConfig.setSelectedFieldNames(StringPool.STAR);
-
-			return searchContext;
-		}
-		catch (PortalException pe) {
-			throw new RuntimeException(pe);
-		}
-	}
-
-	private List<Document> _search(SearchContext searchContext) {
 		try {
 			Hits hits = _indexer.search(searchContext);
 
@@ -551,6 +417,12 @@ public class JournalArticleMultiLanguageSearchSummaryTest {
 			throw new RuntimeException(se);
 		}
 	}
+
+	@Inject
+	protected IndexerRegistry indexerRegistry;
+
+	@Inject
+	protected JournalArticleLocalService journalArticleLocalService;
 
 	private Group _group;
 
@@ -563,6 +435,7 @@ public class JournalArticleMultiLanguageSearchSummaryTest {
 	private List<JournalArticle> _journalArticles;
 
 	private JournalArticleSearchFixture _journalArticleSearchFixture;
+	private SummaryFixture<JournalArticle> _summaryFixture;
 	private User _user;
 
 	@DeleteAfterTestRun

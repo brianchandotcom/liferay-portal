@@ -59,4 +59,8 @@ public class DEDataDefinitionRequestBuilder {
 			companyId, scopedGroupId, roleNames);
 	}
 
+	public static DEDataDefinitionSearchRequest.Builder searchBuilder() {
+		return new DEDataDefinitionSearchRequest.Builder();
+	}
+
 }

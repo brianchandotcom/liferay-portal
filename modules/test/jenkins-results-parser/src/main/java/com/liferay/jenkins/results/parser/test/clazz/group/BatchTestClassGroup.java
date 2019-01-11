@@ -122,6 +122,7 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 
 		_setTestReleaseBundle();
 		_setTestRelevantChanges();
+		_setTestRelevantCoreIntegrationUnitOnly();
 	}
 
 	protected int getAxisMaxSize() {
@@ -374,6 +375,7 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 	protected final PortalGitWorkingDirectory portalGitWorkingDirectory;
 	protected boolean testReleaseBundle;
 	protected boolean testRelevantChanges;
+	protected boolean testRelevantCoreIntegrationUnitOnly;
 	protected final String testSuiteName;
 
 	protected static final class CSVReport {
@@ -502,6 +504,18 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 		}
 
 		testRelevantChanges = _DEFAULT_TEST_RELEVANT_CHANGES;
+	}
+
+	private void _setTestRelevantCoreIntegrationUnitOnly() {
+		if (testRelevantChanges &&
+			isCoreIntegrationUnitTestFileModifiedOnly()) {
+
+			testRelevantCoreIntegrationUnitOnly = true;
+
+			return;
+		}
+
+		testRelevantCoreIntegrationUnitOnly = false;
 	}
 
 	private static final int _DEFAULT_AXIS_MAX_SIZE = 5000;

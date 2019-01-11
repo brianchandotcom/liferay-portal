@@ -14,6 +14,8 @@
 
 package com.liferay.portal.reports.engine.console.status;
 
+import java.util.Objects;
+
 /**
  * @author Gavin Wan
  */
@@ -22,13 +24,13 @@ public enum ReportStatus {
 	COMPLETE("complete"), ERROR("error"), PENDING("pending");
 
 	public static ReportStatus parse(String value) {
-		if (PENDING.getValue().equals(value)) {
+		if (Objects.equals(PENDING.getValue(), value)) {
 			return PENDING;
 		}
-		else if (COMPLETE.getValue().equals(value)) {
+		else if (Objects.equals(COMPLETE.getValue(), value)) {
 			return COMPLETE;
 		}
-		else if (ERROR.getValue().equals(value)) {
+		else if (Objects.equals(ERROR.getValue(), value)) {
 			return ERROR;
 		}
 

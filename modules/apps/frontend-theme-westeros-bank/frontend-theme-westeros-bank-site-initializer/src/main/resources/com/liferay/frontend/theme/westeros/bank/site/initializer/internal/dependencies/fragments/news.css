@@ -2,5 +2,5 @@
 }
 
 .wb-news .background-image {
-	background-image: url("../../resources/nepal_background.png");
+	background-image: url("[resources:nepal_background.png]");
 }

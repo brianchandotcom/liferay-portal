@@ -20,14 +20,10 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.taglib.ui.AssetCategoriesSummaryTag;
-import com.liferay.taglib.ui.AssetLinksTag;
 import com.liferay.taglib.ui.AssetTagsSummaryTag;
 import com.liferay.taglib.ui.BreadcrumbTag;
-import com.liferay.taglib.ui.DiscussionTag;
 import com.liferay.taglib.ui.IconTag;
 import com.liferay.taglib.ui.JournalArticleTag;
-import com.liferay.taglib.ui.MySitesTag;
-import com.liferay.taglib.ui.PngImageTag;
 import com.liferay.taglib.ui.RatingsTag;
 
 import javax.portlet.PortletURL;
@@ -71,9 +67,6 @@ public interface VelocityTaglib {
 			PortletURL portletURL)
 		throws Exception;
 
-	public void assetLinks(long assetEntryId, String className, long classPK)
-		throws Exception;
-
 	public void assetTagsSummary(
 			String className, long classPK, String message,
 			String assetTagNames, PortletURL portletURL)
@@ -98,46 +91,20 @@ public interface VelocityTaglib {
 			boolean showPortletBreadcrumb)
 		throws Exception;
 
-	public void discussion(
-			String className, long classPK, String formAction, String formName,
-			boolean hideControls, boolean ratingsEnabled, String redirect,
-			long userId)
-		throws Exception;
-
 	public void doAsURL(long doAsUserId) throws Exception;
 
 	public AssetCategoriesSummaryTag<?> getAssetCategoriesSummaryTag()
 		throws Exception;
 
-	public AssetLinksTag getAssetLinksTag() throws Exception;
-
 	public AssetTagsSummaryTag<?> getAssetTagsSummaryTag() throws Exception;
 
 	public BreadcrumbTag getBreadcrumbTag() throws Exception;
-
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	public DiscussionTag getDiscussionTag() throws Exception;
 
 	public IconTag getIconTag() throws Exception;
 
 	public JournalArticleTag getJournalArticleTag() throws Exception;
 
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	public MySitesTag getMySitesTag() throws Exception;
-
 	public PageContext getPageContext();
-
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	public PngImageTag getPngImageTag() throws Exception;
 
 	public RatingsTag getRatingsTag() throws Exception;
 
@@ -159,11 +126,6 @@ public interface VelocityTaglib {
 			String articleId, long groupId, String ddmTemplateKey)
 		throws Exception;
 
-	public void journalContentSearch() throws Exception;
-
-	public void journalContentSearch(boolean showListed, String targetPortletId)
-		throws Exception;
-
 	public void language() throws Exception;
 
 	public void language(
@@ -180,17 +142,11 @@ public interface VelocityTaglib {
 
 	public void metaTags() throws Exception;
 
-	public void mySites() throws Exception;
-
-	public void mySites(int max) throws Exception;
-
 	public String permissionsURL(
 			String redirect, String modelResource,
 			String modelResourceDescription, Object resourceGroupId,
 			String resourcePrimKey, String windowState, int[] roleTypes)
 		throws Exception;
-
-	public void portletIconBack() throws Exception;
 
 	public void portletIconOptions() throws Exception;
 
@@ -260,16 +216,9 @@ public interface VelocityTaglib {
 			String defaultPreferences)
 		throws Exception;
 
-	public void search() throws Exception;
-
 	public void sitesDirectory() throws Exception;
 
 	public void sitesDirectory(String displayStyle, String sites)
-		throws Exception;
-
-	public void socialBookmarks(
-			String displayStyle, String target, String types, String title,
-			String url)
 		throws Exception;
 
 	/**

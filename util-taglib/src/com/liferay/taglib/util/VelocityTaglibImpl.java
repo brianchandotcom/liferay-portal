@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.taglib.TagSupport;
 import com.liferay.taglib.portlet.ActionURLTag;
-import com.liferay.taglib.portletext.IconBackTag;
 import com.liferay.taglib.portletext.IconOptionsTag;
 import com.liferay.taglib.portletext.IconPortletTag;
 import com.liferay.taglib.portletext.RuntimeTag;
@@ -39,21 +38,14 @@ import com.liferay.taglib.theme.LayoutIconTag;
 import com.liferay.taglib.theme.MetaTagsTag;
 import com.liferay.taglib.theme.WrapPortletTag;
 import com.liferay.taglib.ui.AssetCategoriesSummaryTag;
-import com.liferay.taglib.ui.AssetLinksTag;
 import com.liferay.taglib.ui.AssetTagsSummaryTag;
 import com.liferay.taglib.ui.BreadcrumbTag;
-import com.liferay.taglib.ui.DiscussionTag;
 import com.liferay.taglib.ui.IconHelpTag;
 import com.liferay.taglib.ui.IconTag;
 import com.liferay.taglib.ui.JournalArticleTag;
-import com.liferay.taglib.ui.JournalContentSearchTag;
 import com.liferay.taglib.ui.LanguageTag;
-import com.liferay.taglib.ui.MySitesTag;
-import com.liferay.taglib.ui.PngImageTag;
 import com.liferay.taglib.ui.RatingsTag;
-import com.liferay.taglib.ui.SearchTag;
 import com.liferay.taglib.ui.SitesDirectoryTag;
-import com.liferay.taglib.ui.SocialBookmarksTag;
 import com.liferay.taglib.ui.ToggleTag;
 
 import java.io.Writer;
@@ -193,21 +185,6 @@ public class VelocityTaglibImpl implements VelocityTaglib {
 	}
 
 	@Override
-	public void assetLinks(long assetEntryId, String className, long classPK)
-		throws Exception {
-
-		AssetLinksTag assetLinksTag = new AssetLinksTag();
-
-		setUp(assetLinksTag);
-
-		assetLinksTag.setAssetEntryId(assetEntryId);
-		assetLinksTag.setClassName(className);
-		assetLinksTag.setClassPK(classPK);
-
-		assetLinksTag.runTag();
-	}
-
-	@Override
 	public void assetTagsSummary(
 			String className, long classPK, String message,
 			String assetTagNames, PortletURL portletURL)
@@ -275,29 +252,6 @@ public class VelocityTaglibImpl implements VelocityTaglib {
 	}
 
 	@Override
-	public void discussion(
-			String className, long classPK, String formAction, String formName,
-			boolean hideControls, boolean ratingsEnabled, String redirect,
-			long userId)
-		throws Exception {
-
-		DiscussionTag discussionTag = new DiscussionTag();
-
-		setUp(discussionTag);
-
-		discussionTag.setClassName(className);
-		discussionTag.setClassPK(classPK);
-		discussionTag.setFormAction(formAction);
-		discussionTag.setFormName(formName);
-		discussionTag.setHideControls(hideControls);
-		discussionTag.setRatingsEnabled(ratingsEnabled);
-		discussionTag.setRedirect(redirect);
-		discussionTag.setUserId(userId);
-
-		discussionTag.runTag();
-	}
-
-	@Override
 	public void doAsURL(long doAsUserId) throws Exception {
 		DoAsURLTag.doTag(doAsUserId, _request);
 	}
@@ -312,15 +266,6 @@ public class VelocityTaglibImpl implements VelocityTaglib {
 		setUp(assetCategoriesSummaryTag);
 
 		return assetCategoriesSummaryTag;
-	}
-
-	@Override
-	public AssetLinksTag getAssetLinksTag() throws Exception {
-		AssetLinksTag assetLinksTag = new AssetLinksTag();
-
-		setUp(assetLinksTag);
-
-		return assetLinksTag;
 	}
 
 	@Override
@@ -342,19 +287,6 @@ public class VelocityTaglibImpl implements VelocityTaglib {
 		return breadcrumbTag;
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	@Override
-	public DiscussionTag getDiscussionTag() throws Exception {
-		DiscussionTag discussionTag = new DiscussionTag();
-
-		setUp(discussionTag);
-
-		return discussionTag;
-	}
-
 	@Override
 	public IconTag getIconTag() throws Exception {
 		IconTag iconTag = new IconTag();
@@ -373,35 +305,9 @@ public class VelocityTaglibImpl implements VelocityTaglib {
 		return journalArticleTag;
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	@Override
-	public MySitesTag getMySitesTag() throws Exception {
-		MySitesTag mySitesTag = new MySitesTag();
-
-		setUp(mySitesTag);
-
-		return mySitesTag;
-	}
-
 	@Override
 	public PageContext getPageContext() {
 		return _pageContext;
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	@Override
-	public PngImageTag getPngImageTag() throws Exception {
-		PngImageTag pngImageTag = new PngImageTag();
-
-		setUp(pngImageTag);
-
-		return pngImageTag;
 	}
 
 	@Override
@@ -490,30 +396,6 @@ public class VelocityTaglibImpl implements VelocityTaglib {
 	}
 
 	@Override
-	public void journalContentSearch() throws Exception {
-		journalContentSearch(true, null);
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	@Override
-	public void journalContentSearch(boolean showListed, String targetPortletId)
-		throws Exception {
-
-		JournalContentSearchTag journalContentSearchTag =
-			new JournalContentSearchTag();
-
-		setUp(journalContentSearchTag);
-
-		journalContentSearchTag.setShowListed(showListed);
-		journalContentSearchTag.setTargetPortletId(targetPortletId);
-
-		journalContentSearchTag.runTag();
-	}
-
-	@Override
 	public void language() throws Exception {
 		LanguageTag languageTag = new LanguageTag();
 
@@ -573,34 +455,6 @@ public class VelocityTaglibImpl implements VelocityTaglib {
 		MetaTagsTag.doTag(_servletContext, _request, _response);
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	@Override
-	public void mySites() throws Exception {
-		MySitesTag mySitesTag = new MySitesTag();
-
-		setUp(mySitesTag);
-
-		mySitesTag.runTag();
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	@Override
-	public void mySites(int max) throws Exception {
-		MySitesTag mySitesTag = new MySitesTag();
-
-		setUp(mySitesTag);
-
-		mySitesTag.setMax(max);
-
-		mySitesTag.runTag();
-	}
-
 	@Override
 	public String permissionsURL(
 			String redirect, String modelResource,
@@ -611,19 +465,6 @@ public class VelocityTaglibImpl implements VelocityTaglib {
 		return PermissionsURLTag.doTag(
 			redirect, modelResource, modelResourceDescription, resourceGroupId,
 			resourcePrimKey, windowState, roleTypes, _request);
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), with no direct replacement
-	 */
-	@Deprecated
-	@Override
-	public void portletIconBack() throws Exception {
-		IconBackTag iconBackTag = new IconBackTag();
-
-		setUp(iconBackTag);
-
-		iconBackTag.runTag();
 	}
 
 	@Override
@@ -834,19 +675,6 @@ public class VelocityTaglibImpl implements VelocityTaglib {
 			_pageContext, _request, _response);
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	@Override
-	public void search() throws Exception {
-		SearchTag searchTag = new SearchTag();
-
-		setUp(searchTag);
-
-		searchTag.runTag();
-	}
-
 	@Override
 	public void sitesDirectory() throws Exception {
 		SitesDirectoryTag sitesDirectoryTag = new SitesDirectoryTag();
@@ -868,25 +696,6 @@ public class VelocityTaglibImpl implements VelocityTaglib {
 		sitesDirectoryTag.setSites(sites);
 
 		sitesDirectoryTag.runTag();
-	}
-
-	@Override
-	public void socialBookmarks(
-			String displayStyle, String target, String types, String title,
-			String url)
-		throws Exception {
-
-		SocialBookmarksTag socialBookmarksTag = new SocialBookmarksTag();
-
-		setUp(socialBookmarksTag);
-
-		socialBookmarksTag.setDisplayStyle(displayStyle);
-		socialBookmarksTag.setTarget(target);
-		socialBookmarksTag.setTypes(types);
-		socialBookmarksTag.setTitle(title);
-		socialBookmarksTag.setUrl(url);
-
-		socialBookmarksTag.runTag();
 	}
 
 	/**

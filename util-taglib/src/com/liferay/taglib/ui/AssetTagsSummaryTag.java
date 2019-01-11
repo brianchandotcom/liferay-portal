@@ -82,14 +82,6 @@ public class AssetTagsSummaryTag<R> extends IncludeTag {
 	protected void setAttributes(HttpServletRequest request) {
 		List<AssetTag> assetTags = new ArrayList<>();
 
-		AssetTagsAvailableTag<R> assetTagsAvailableTag =
-			(AssetTagsAvailableTag<R>)findAncestorWithClass(
-				this, AssetTagsAvailableTag.class);
-
-		if (assetTagsAvailableTag != null) {
-			assetTags = assetTagsAvailableTag.getAssetTags();
-		}
-
 		request.setAttribute(
 			"liferay-ui:asset-categories-summary:assetTags", assetTags);
 

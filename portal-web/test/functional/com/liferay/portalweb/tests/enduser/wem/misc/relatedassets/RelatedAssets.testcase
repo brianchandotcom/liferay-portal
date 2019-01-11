@@ -188,6 +188,114 @@ definition {
 		RelatedAssets.viewPG(assetTitle = "Web Content Title 2");
 	}
 
+	@description = "This is a use case for LPS-72472."
+	@priority = "4"
+	test AssertRelatedAssetsWithGlobalWebConent {
+		ProductMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Sites"
+		);
+
+		Site.addBlankCP(siteName = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.addPublicPage(pageName = "Test Page");
+
+		Navigator.openSiteURL(siteName = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Publishing",
+			panel = "Site Administration",
+			portlet = "Staging"
+		);
+
+		Staging.activateStagingCP(
+			pageVersioningEnabled = "true",
+			siteName = "Site Name"
+		);
+
+		ProductMenu.gotoSite(site = "Global");
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Web Content"
+		);
+
+		WebContentNavigator.gotoAddCP();
+
+		WebContent.addCP(
+			webContentContent = "Web Content Content 1",
+			webContentTitle = "Web Content Title 1"
+		);
+
+		PortletEntry.publish();
+
+		ProductMenu.gotoSite(site = "Site Name");
+
+		ProductMenu.gotoStagingSite();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Web Content"
+		);
+
+		WebContentNavigator.gotoAddCP();
+
+		WebContent.addCP(
+			webContentContent = "Web Content Content 2",
+			webContentTitle = "Web Content Title 2"
+		);
+
+		PortletEntry.publish();
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title 2");
+
+		WebContent.addExistingRelatedAssetCP(
+			assetTitle = "Web Content Title 1",
+			assetType = "Basic Web Content",
+			siteName = "Global",
+			scopeSite = "Global",
+			webContentTitle = "Web Content Title 2"
+		);
+
+		Navigator.gotoStagedSitePage(pageName = "Test Page", siteName = "Site Name");
+
+		Portlet.addPG(portletName = "Asset Publisher");
+
+		AssetPublisherPortlet.viewAssetDetailsPG(
+			assetContent = "Web Content Content 2",
+			assetTitle = "Web Content Title 2"
+		);
+
+		RelatedAssets.viewPG(assetTitle = "Web Content Title 1");
+
+		Staging.gotoPublishToLive();
+
+		Staging.configurePublishToLive(
+			checkContentNameList = "Web Content",
+			checkPageName = "Test Page"
+		);
+
+		Staging.publishToLive();
+
+		ProductMenu.gotoLiveSite();
+
+		AssetPublisherPortlet.viewAssetDetailsPG(
+			assetContent = "Web Content Content 2",
+			assetTitle = "Web Content Title 2"
+		);
+
+		RelatedAssets.viewPG(assetTitle = "Web Content Title 1");
+	}
+
 	@priority = "3"
 	test ViewNoFolders {
 		property portal.release = "false";

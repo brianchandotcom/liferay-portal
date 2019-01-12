@@ -39,7 +39,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
-		"osgi.jaxrs.application.select=(osgi.jaxrs.name=Liferay.ChangeTracking.Rest)",
+		"osgi.jaxrs.application.select=(osgi.jaxrs.name=change-tracking-application)",
 		"osgi.jaxrs.resource=true"
 	},
 	service = CTConfigurationResource.class

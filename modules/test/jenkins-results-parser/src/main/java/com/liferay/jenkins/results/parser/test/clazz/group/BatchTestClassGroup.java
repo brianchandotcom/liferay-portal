@@ -183,6 +183,12 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 	}
 
 	protected String getFirstPropertyValue(String basePropertyName) {
+		return getFirstPropertyValue(basePropertyName, batchName);
+	}
+
+	protected String getFirstPropertyValue(
+		String basePropertyName, String testBatchName) {
+
 		if (basePropertyName.contains("[") || basePropertyName.contains("]")) {
 			throw new RuntimeException(
 				"Invalid base property name " + basePropertyName);
@@ -193,7 +199,7 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 		if (testSuiteName != null) {
 			propertyNames.add(
 				JenkinsResultsParserUtil.combine(
-					basePropertyName, "[", batchName, "][", testSuiteName,
+					basePropertyName, "[", testBatchName, "][", testSuiteName,
 					"]"));
 
 			propertyNames.add(
@@ -207,7 +213,7 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 
 		propertyNames.add(
 			JenkinsResultsParserUtil.combine(
-				basePropertyName, "[", batchName, "]"));
+				basePropertyName, "[", testBatchName, "]"));
 
 		propertyNames.add(
 			getFirstMatchingPropertyName(basePropertyName, jobProperties));

@@ -189,7 +189,7 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 	}
 
 	protected String getFirstPropertyValue(
-		String basePropertyName, String testBatchName) {
+		String basePropertyName, String batchName) {
 
 		if (basePropertyName.contains("[") || basePropertyName.contains("]")) {
 			throw new RuntimeException(
@@ -201,7 +201,7 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 		if (testSuiteName != null) {
 			propertyNames.add(
 				JenkinsResultsParserUtil.combine(
-					basePropertyName, "[", testBatchName, "][", testSuiteName,
+					basePropertyName, "[", batchName, "][", testSuiteName,
 					"]"));
 
 			propertyNames.add(
@@ -215,7 +215,7 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 
 		propertyNames.add(
 			JenkinsResultsParserUtil.combine(
-				basePropertyName, "[", testBatchName, "]"));
+				basePropertyName, "[", batchName, "]"));
 
 		propertyNames.add(
 			getFirstMatchingPropertyName(
@@ -277,8 +277,63 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 		return relevantIntegrationUnitBatchList;
 	}
 
+	protected List<PathMatcher>
+		getRelevantIntegrationUnitIncludePathMatchers() {
+
+		List<PathMatcher> relevantIntegrationUnitIncludePathMatchers =
+			new ArrayList<>();
+
+		List<String> relevantIntegrationUnitBatchList =
+			getRelevantIntegrationUnitBatchList();
+
+		if (!relevantIntegrationUnitBatchList.isEmpty()) {
+			for (String relevantIntegrationUnitBatch :
+					relevantIntegrationUnitBatchList) {
+
+				String integrationUnitIncludesPropertyValue =
+					getFirstPropertyValue(
+						"test.batch.class.names.includes",
+						relevantIntegrationUnitBatch);
+
+				if (integrationUnitIncludesPropertyValue != null) {
+					relevantIntegrationUnitIncludePathMatchers.addAll(
+						getPathMatchers(
+							integrationUnitIncludesPropertyValue,
+							portalGitWorkingDirectory.getWorkingDirectory()));
+				}
+			}
+		}
+
+		return relevantIntegrationUnitIncludePathMatchers;
+	}
+
 	protected List<File> getRequiredModuleDirs(List<File> moduleDirs) {
 		return _getRequiredModuleDirs(moduleDirs, new ArrayList<>(moduleDirs));
+	}
+
+	protected boolean isCoreIntegrationUnitTestFileModifiedOnly() {
+		List<PathMatcher> relevantIntegrationUnitIncludePathMatchers =
+			getRelevantIntegrationUnitIncludePathMatchers();
+
+		List<File> modifiedFilesList =
+			portalGitWorkingDirectory.getModifiedFilesList();
+
+		if (relevantIntegrationUnitIncludePathMatchers.isEmpty() ||
+			modifiedFilesList.isEmpty()) {
+
+			return false;
+		}
+
+		for (File modifiedFile : modifiedFilesList) {
+			if (!JenkinsResultsParserUtil.isFileIncluded(
+					null, relevantIntegrationUnitIncludePathMatchers,
+					modifiedFile)) {
+
+				return false;
+			}
+		}
+
+		return true;
 	}
 
 	protected void setAxisTestClassGroups() {

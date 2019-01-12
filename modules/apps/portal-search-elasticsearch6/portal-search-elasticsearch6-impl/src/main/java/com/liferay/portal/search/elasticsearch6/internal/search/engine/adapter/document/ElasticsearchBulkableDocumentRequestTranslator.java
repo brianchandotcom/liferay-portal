@@ -14,7 +14,6 @@
 
 package com.liferay.portal.search.elasticsearch6.internal.search.engine.adapter.document;
 
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.util.Validator;
@@ -24,8 +23,6 @@ import com.liferay.portal.search.engine.adapter.document.BulkableDocumentRequest
 import com.liferay.portal.search.engine.adapter.document.DeleteDocumentRequest;
 import com.liferay.portal.search.engine.adapter.document.IndexDocumentRequest;
 import com.liferay.portal.search.engine.adapter.document.UpdateDocumentRequest;
-
-import java.io.IOException;
 
 import org.elasticsearch.action.bulk.BulkRequestBuilder;
 import org.elasticsearch.action.delete.DeleteAction;
@@ -85,40 +82,34 @@ public class ElasticsearchBulkableDocumentRequestTranslator
 		IndexDocumentRequest indexDocumentRequest,
 		BulkRequestBuilder searchEngineAdapterRequest) {
 
-		try {
-			Client client = elasticsearchClientResolver.getClient();
+		Client client = elasticsearchClientResolver.getClient();
 
-			IndexRequestBuilder indexRequestBuilder =
-				IndexAction.INSTANCE.newRequestBuilder(client);
+		IndexRequestBuilder indexRequestBuilder =
+			IndexAction.INSTANCE.newRequestBuilder(client);
 
-			setIndexRequestBuilderId(indexRequestBuilder, indexDocumentRequest);
+		setIndexRequestBuilderId(indexRequestBuilder, indexDocumentRequest);
 
-			indexRequestBuilder.setIndex(indexDocumentRequest.getIndexName());
+		indexRequestBuilder.setIndex(indexDocumentRequest.getIndexName());
 
-			if (indexDocumentRequest.isRefresh()) {
-				indexRequestBuilder.setRefreshPolicy(
-					WriteRequest.RefreshPolicy.IMMEDIATE);
-			}
-
-			indexRequestBuilder.setType(indexDocumentRequest.getType());
-
-			Document document = indexDocumentRequest.getDocument();
-
-			String elasticsearchDocument =
-				elasticsearchDocumentFactory.getElasticsearchDocument(document);
-
-			indexRequestBuilder.setSource(
-				elasticsearchDocument, XContentType.JSON);
-
-			if (searchEngineAdapterRequest != null) {
-				searchEngineAdapterRequest.add(indexRequestBuilder);
-			}
-
-			return indexRequestBuilder;
+		if (indexDocumentRequest.isRefresh()) {
+			indexRequestBuilder.setRefreshPolicy(
+				WriteRequest.RefreshPolicy.IMMEDIATE);
 		}
-		catch (IOException ioe) {
-			throw new SystemException(ioe);
+
+		indexRequestBuilder.setType(indexDocumentRequest.getType());
+
+		Document document = indexDocumentRequest.getDocument();
+
+		String elasticsearchDocument =
+			elasticsearchDocumentFactory.getElasticsearchDocument(document);
+
+		indexRequestBuilder.setSource(elasticsearchDocument, XContentType.JSON);
+
+		if (searchEngineAdapterRequest != null) {
+			searchEngineAdapterRequest.add(indexRequestBuilder);
 		}
+
+		return indexRequestBuilder;
 	}
 
 	@Override
@@ -126,41 +117,34 @@ public class ElasticsearchBulkableDocumentRequestTranslator
 		UpdateDocumentRequest updateDocumentRequest,
 		BulkRequestBuilder searchEngineAdapterRequest) {
 
-		try {
-			Client client = elasticsearchClientResolver.getClient();
+		Client client = elasticsearchClientResolver.getClient();
 
-			UpdateRequestBuilder updateRequestBuilder =
-				UpdateAction.INSTANCE.newRequestBuilder(client);
+		UpdateRequestBuilder updateRequestBuilder =
+			UpdateAction.INSTANCE.newRequestBuilder(client);
 
-			setUpdateRequestBuilderId(
-				updateRequestBuilder, updateDocumentRequest);
+		setUpdateRequestBuilderId(updateRequestBuilder, updateDocumentRequest);
 
-			updateRequestBuilder.setIndex(updateDocumentRequest.getIndexName());
+		updateRequestBuilder.setIndex(updateDocumentRequest.getIndexName());
 
-			if (updateDocumentRequest.isRefresh()) {
-				updateRequestBuilder.setRefreshPolicy(
-					WriteRequest.RefreshPolicy.IMMEDIATE);
-			}
-
-			updateRequestBuilder.setType(updateDocumentRequest.getType());
-
-			Document document = updateDocumentRequest.getDocument();
-
-			String elasticsearchDocument =
-				elasticsearchDocumentFactory.getElasticsearchDocument(document);
-
-			updateRequestBuilder.setDoc(
-				elasticsearchDocument, XContentType.JSON);
-
-			if (searchEngineAdapterRequest != null) {
-				searchEngineAdapterRequest.add(updateRequestBuilder);
-			}
-
-			return updateRequestBuilder;
+		if (updateDocumentRequest.isRefresh()) {
+			updateRequestBuilder.setRefreshPolicy(
+				WriteRequest.RefreshPolicy.IMMEDIATE);
 		}
-		catch (IOException ioe) {
-			throw new SystemException(ioe);
+
+		updateRequestBuilder.setType(updateDocumentRequest.getType());
+
+		Document document = updateDocumentRequest.getDocument();
+
+		String elasticsearchDocument =
+			elasticsearchDocumentFactory.getElasticsearchDocument(document);
+
+		updateRequestBuilder.setDoc(elasticsearchDocument, XContentType.JSON);
+
+		if (searchEngineAdapterRequest != null) {
+			searchEngineAdapterRequest.add(updateRequestBuilder);
 		}
+
+		return updateRequestBuilder;
 	}
 
 	protected void setIndexRequestBuilderId(

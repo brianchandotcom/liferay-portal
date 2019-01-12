@@ -107,16 +107,11 @@ public class ElasticsearchSearchEngine extends BaseSearchEngine {
 
 		waitForYellowStatus();
 
-		try {
-			Client client = elasticsearchConnectionManager.getClient();
+		Client client = elasticsearchConnectionManager.getClient();
 
-			indexFactory.createIndices(client.admin(), companyId);
+		indexFactory.createIndices(client.admin(), companyId);
 
-			elasticsearchConnectionManager.registerCompanyId(companyId);
-		}
-		catch (Exception e) {
-			throw new IllegalStateException(e);
-		}
+		elasticsearchConnectionManager.registerCompanyId(companyId);
 
 		waitForYellowStatus();
 	}

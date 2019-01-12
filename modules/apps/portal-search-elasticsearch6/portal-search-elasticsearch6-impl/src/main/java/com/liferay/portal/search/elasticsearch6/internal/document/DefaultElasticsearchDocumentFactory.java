@@ -53,20 +53,13 @@ public class DefaultElasticsearchDocumentFactory
 	public static final String DATE_MAX_VALUE = "99950812133000";
 
 	@Override
-	public String getElasticsearchDocument(Document document)
-		throws IOException {
-
-		XContentBuilder xContentBuilder = XContentFactory.jsonBuilder();
-
-		xContentBuilder.startObject();
-
-		Map<String, Field> fields = document.getFields();
-
-		addFields(fields.values(), xContentBuilder);
-
-		xContentBuilder.endObject();
-
-		return Strings.toString(xContentBuilder);
+	public String getElasticsearchDocument(Document document) {
+		try {
+			return Strings.toString(translate(document));
+		}
+		catch (IOException ioe) {
+			throw new RuntimeException(ioe);
+		}
 	}
 
 	protected void addDates(XContentBuilder xContentBuilder, Field field)
@@ -230,6 +223,20 @@ public class DefaultElasticsearchDocumentFactory
 		else {
 			xContentBuilder.endObject();
 		}
+	}
+
+	protected XContentBuilder translate(Document document) throws IOException {
+		XContentBuilder xContentBuilder = XContentFactory.jsonBuilder();
+
+		xContentBuilder.startObject();
+
+		Map<String, Field> fields = document.getFields();
+
+		addFields(fields.values(), xContentBuilder);
+
+		xContentBuilder.endObject();
+
+		return xContentBuilder;
 	}
 
 	protected Object translateValue(Field field, String value) {

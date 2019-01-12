@@ -21,10 +21,8 @@ import org.elasticsearch.client.AdminClient;
  */
 public interface IndexFactory {
 
-	public void createIndices(AdminClient adminClient, long companyId)
-		throws Exception;
+	public void createIndices(AdminClient adminClient, long companyId);
 
-	public void deleteIndices(AdminClient adminClient, long companyId)
-		throws Exception;
+	public void deleteIndices(AdminClient adminClient, long companyId);
 
 }

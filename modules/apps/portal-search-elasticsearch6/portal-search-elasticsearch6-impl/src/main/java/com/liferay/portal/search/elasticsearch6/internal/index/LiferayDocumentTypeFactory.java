@@ -26,8 +26,6 @@ import com.liferay.portal.search.elasticsearch6.internal.util.LogUtil;
 import com.liferay.portal.search.elasticsearch6.internal.util.ResourceUtil;
 import com.liferay.portal.search.elasticsearch6.settings.TypeMappingsHelper;
 
-import java.io.IOException;
-
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -70,12 +68,7 @@ public class LiferayDocumentTypeFactory implements TypeMappingsHelper {
 
 		ActionResponse actionResponse = putMappingRequestBuilder.get();
 
-		try {
-			LogUtil.logActionResponse(_log, actionResponse);
-		}
-		catch (IOException ioe) {
-			throw new RuntimeException(ioe);
-		}
+		LogUtil.logActionResponse(_log, actionResponse);
 	}
 
 	public void createLiferayDocumentTypeMappings(

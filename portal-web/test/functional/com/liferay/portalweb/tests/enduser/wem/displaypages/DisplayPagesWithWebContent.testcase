@@ -62,6 +62,193 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-86191. A user can configure the page settings for each individual display page. This test will test 'Show Header' and 'Show Footer'."
+	@priority = "4"
+	test ConfigureDisplayPageShowHeaderAndFooter {
+		task ("Add a web content that uses the display page") {
+			WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			WebContentNavigator.gotoAddCP();
+
+			WebContent.addCP(
+				webContentContent = "Webcontent Content",
+				webContentTitle = "Webcontent Title"
+			);
+
+			WebContent.editDisplayPage(
+				pageName = "Display Page Name",
+				pageType = "Display Pages"
+			);
+		}
+
+		task ("View the web content through the display page") {
+			Navigator.openWithAppendToBaseURL(
+				urlAppend = "web/test-site-name/-/webcontent-title"
+			);
+		}
+
+		task ("Assert the page header and footer appear") {
+			AssertVisible(
+				locator1 = "Home#DEFAULT_LOGO"
+			);
+
+			AssertVisible(
+				locator1 = "Fragment#FRAGMENT",
+				key_content = "Webcontent Title",
+				key_fragmentClass = "header",
+				key_position = "1"
+			);
+
+			AssertVisible(
+				locator1 = "Fragment#FRAGMENT",
+				key_content = "Webcontent Content",
+				key_fragmentClass = "rich-text",
+				key_position = "2"
+			);
+
+			AssertVisible(
+				locator1 = "Home#FOOTER"
+			);
+		}
+
+		task ("Configure the display page settings so the header and footer do not appear") {
+			DisplayPagesAdmin.openDisplayPagesAdmin(
+				siteURLKey = "test-site-name"
+			);
+
+			LexiconEntry.gotoEntryMenuItem(
+				menuItem = "Configure",
+				rowEntry = "Display Page Name"
+			);
+
+			Navigator.gotoNavTab(navTab = "Look and Feel");
+
+			Click(locator1 = "Radio#SPECIFIC_LOOK");
+
+			Uncheck.uncheckToggleSwitch(
+				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH",
+				key_toggleSwitchLabel = "Show Footer"
+			);
+
+			Uncheck.uncheckToggleSwitch(
+				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH",
+				key_toggleSwitchLabel = "Show Header"
+			);
+
+			Button.clickSave();
+		}
+
+		task ("View the web content through the display page") {
+			Navigator.openWithAppendToBaseURL(
+				urlAppend = "web/test-site-name/-/webcontent-title"
+			);
+		}
+
+		task ("Assert the page header and footer do not appear") {
+			AssertElementNotPresent(
+				locator1 = "Home#DEFAULT_LOGO"
+			);
+
+			AssertVisible(
+				locator1 = "Fragment#FRAGMENT",
+				key_content = "Webcontent Title",
+				key_fragmentClass = "header",
+				key_position = "1"
+			);
+
+			AssertVisible(
+				locator1 = "Fragment#FRAGMENT",
+				key_content = "Webcontent Content",
+				key_fragmentClass = "rich-text",
+				key_position = "2"
+			);
+
+			AssertElementNotPresent(
+				locator1 = "Home#FOOTER"
+			);
+		}
+	}
+
+	@description = "This is a test for LPS-86191. A user can configure the page settings for each individual display page. This test changes the theme."
+	@priority = "4"
+	test ConfigureDisplayPageTheme {
+		task ("Add a web content that uses the display page") {
+			WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			WebContentNavigator.gotoAddCP();
+
+			WebContent.addCP(
+				webContentContent = "Webcontent Content",
+				webContentTitle = "Webcontent Title"
+			);
+
+			WebContent.editDisplayPage(
+				pageName = "Display Page Name",
+				pageType = "Display Pages"
+			);
+		}
+
+		task ("View the web content through the display page") {
+			Navigator.openWithAppendToBaseURL(
+				urlAppend = "web/test-site-name/-/webcontent-title"
+			);
+		}
+
+		task ("Assert the display page is using the Classic Theme") {
+			AssertElementPresent(
+				locator1 = "//link[contains(@href,'classic-theme')]"
+			);
+
+			AssertElementNotPresent(
+				locator1 = "//link[contains(@href,'fjord-theme')]"
+			);
+		}
+
+		task ("Change the display page theme from Classic to Fjord") {
+			DisplayPagesAdmin.openDisplayPagesAdmin(
+				siteURLKey = "test-site-name"
+			);
+
+			LexiconEntry.gotoEntryMenuItem(
+				menuItem = "Configure",
+				rowEntry = "Display Page Name"
+			);
+
+			Navigator.gotoNavTab(navTab = "Look and Feel");
+
+			Click(locator1 = "Radio#SPECIFIC_LOOK");
+
+			Click(locator1 = "SitePagesEditPage#CHANGE_CURRENT_THEME_BUTTON");
+
+			SelectFrame(locator1 = "IFrame#DIALOG");
+
+			Click(
+				locator1 = "Card#SPECIFIC_LARGE_TEXT",
+				key_cardText = "Fjord"
+			);
+
+			SelectFrameTop(value1 = "relative=top");
+
+			Button.clickSave();
+		}
+
+		task ("View the web content through the display page") {
+			Navigator.openWithAppendToBaseURL(
+				urlAppend = "web/test-site-name/-/webcontent-title"
+			);
+		}
+
+		task ("Assert the display page is using the Fjord Theme") {
+			AssertElementPresent(
+				locator1 = "//link[contains(@href,'fjord-theme')]"
+			);
+
+			AssertElementNotPresent(
+				locator1 = "//link[contains(@href,'classic-theme')]"
+			);
+		}
+	}
+
 	@description = "This is a test for LPS-86221. A user can preview a draft status web content article within its display page."
 	@priority = "5"
 	test PreviewDraftWebContent {

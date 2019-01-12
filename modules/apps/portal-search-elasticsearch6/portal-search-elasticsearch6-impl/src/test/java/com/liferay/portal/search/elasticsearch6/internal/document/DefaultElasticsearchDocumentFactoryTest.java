@@ -17,7 +17,13 @@ package com.liferay.portal.search.elasticsearch6.internal.document;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.DocumentImpl;
+import com.liferay.portal.search.document.DocumentBuilder;
+import com.liferay.portal.search.internal.document.DocumentBuilderImpl;
 import com.liferay.portal.search.test.util.indexing.DocumentFixture;
+
+import java.io.IOException;
+
+import org.elasticsearch.common.Strings;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -32,6 +38,9 @@ public class DefaultElasticsearchDocumentFactoryTest {
 	@Before
 	public void setUp() throws Exception {
 		_documentFixture.setUp();
+
+		_elasticsearchDocumentFactory =
+			new DefaultElasticsearchDocumentFactory();
 	}
 
 	@After
@@ -41,41 +50,74 @@ public class DefaultElasticsearchDocumentFactoryTest {
 
 	@Test
 	public void testNull() throws Exception {
-		assertElasticsearchDocument(null, "{}");
+		assertDocument(null, "{\"field\":null}");
+	}
+
+	@Test
+	public void testNullLegacy() throws Exception {
+		assertDocumentLegacy(null, "{}");
 	}
 
 	@Test
 	public void testSpaces() throws Exception {
-		assertElasticsearchDocument(StringPool.SPACE, "{\"field\":\"\"}");
+		assertDocument(StringPool.SPACE, "{\"field\":\" \"}");
 
-		assertElasticsearchDocument(
-			StringPool.THREE_SPACES, "{\"field\":\"\"}");
+		assertDocument(StringPool.THREE_SPACES, "{\"field\":\"   \"}");
+	}
+
+	@Test
+	public void testSpacesLegacy() throws Exception {
+		assertDocumentLegacy(StringPool.SPACE, "{\"field\":\"\"}");
+
+		assertDocumentLegacy(StringPool.THREE_SPACES, "{\"field\":\"\"}");
 	}
 
 	@Test
 	public void testStringBlank() throws Exception {
-		assertElasticsearchDocument(StringPool.BLANK, "{\"field\":\"\"}");
+		assertDocumentSameAsLegacy(StringPool.BLANK, "{\"field\":\"\"}");
 	}
 
 	@Test
 	public void testStringNull() throws Exception {
-		assertElasticsearchDocument(StringPool.NULL, "{\"field\":\"null\"}");
+		assertDocumentSameAsLegacy(StringPool.NULL, "{\"field\":\"null\"}");
 	}
 
-	protected void assertElasticsearchDocument(String value, String json)
+	protected void assertDocument(String value, String json)
+		throws IOException {
+
+		DocumentBuilder documentBuilder = new DocumentBuilderImpl();
+
+		documentBuilder.setStrings(_FIELD, new String[] {value});
+
+		Assert.assertEquals(
+			json,
+			Strings.toString(
+				_elasticsearchDocumentFactory.getElasticsearchDocument(
+					documentBuilder.build())));
+	}
+
+	protected void assertDocumentLegacy(String value, String json)
 		throws Exception {
 
 		Document document = new DocumentImpl();
 
-		document.addText("field", new String[] {value});
+		document.addText(_FIELD, new String[] {value});
 
 		Assert.assertEquals(
 			json,
 			_elasticsearchDocumentFactory.getElasticsearchDocument(document));
 	}
 
+	protected void assertDocumentSameAsLegacy(String value, String json)
+		throws Exception {
+
+		assertDocument(value, json);
+		assertDocumentLegacy(value, json);
+	}
+
+	private static final String _FIELD = "field";
+
 	private final DocumentFixture _documentFixture = new DocumentFixture();
-	private final ElasticsearchDocumentFactory _elasticsearchDocumentFactory =
-		new DefaultElasticsearchDocumentFactory();
+	private ElasticsearchDocumentFactory _elasticsearchDocumentFactory;
 
 }

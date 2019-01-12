@@ -33,14 +33,19 @@ if (primaryKey > 0L) {
 	website = WebsiteServiceUtil.getWebsite(primaryKey);
 }
 
-if (!portletName.equals(UsersAdminPortletKeys.MY_ACCOUNT)) {
+if (portletName.equals(UsersAdminPortletKeys.MY_ACCOUNT)) {
 	portletDisplay.setShowBackIcon(true);
 	portletDisplay.setURLBack(backURL);
 
 	String portletTitle = (String)request.getAttribute(UsersAdminWebKeys.PORTLET_TITLE);
 
 	renderResponse.setTitle(portletTitle);
+
 }
+
+PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "contact-information"), redirect);
+
+PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, sheetTitle), null);
 %>
 
 <portlet:actionURL name="<%= actionName %>" var="actionURL" />
@@ -55,7 +60,16 @@ if (!portletName.equals(UsersAdminPortletKeys.MY_ACCOUNT)) {
 	<aui:input name="primaryKey" type="hidden" value="<%= String.valueOf(primaryKey) %>" />
 	<aui:input name="sheetTitle" type="hidden" value="<%= sheetTitle %>" />
 
-	<div class="container-fluid container-fluid-max-xl container-form-lg">
+	<div class="container-fluid container-fluid-max-xl">
+		<div class="sheet-lg" id="breadcrumb">
+			<liferay-ui:breadcrumb
+				showCurrentGroup="<%= false %>"
+				showGuestGroup="<%= false %>"
+				showLayout="<%= false %>"
+				showPortletBreadcrumb="<%= true %>"
+			/>
+		</div>
+
 		<div class="sheet sheet-lg">
 			<h2 class="sheet-title"><liferay-ui:message key="<%= sheetTitle %>" /></h2>
 

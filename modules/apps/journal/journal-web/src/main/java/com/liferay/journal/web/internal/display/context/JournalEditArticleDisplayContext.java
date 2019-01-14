@@ -402,12 +402,12 @@ public class JournalEditArticleDisplayContext {
 	}
 
 	public String getPublishButtonLabel() throws PortalException {
-		if (_isWorkflowEnabled()) {
-			return "submit-for-publication";
-		}
-
 		if (getClassNameId() > JournalArticleConstants.CLASSNAME_ID_DEFAULT) {
 			return "save";
+		}
+
+		if (_isWorkflowEnabled()) {
+			return "submit-for-publication";
 		}
 
 		return "publish";

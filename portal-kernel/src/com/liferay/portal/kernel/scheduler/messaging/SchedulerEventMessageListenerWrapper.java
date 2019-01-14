@@ -33,10 +33,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 
 import java.util.Date;
-import java.util.Queue;
-import java.util.concurrent.ConcurrentLinkedQueue;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * @author Shuyang Zhou
@@ -66,23 +62,7 @@ public class SchedulerEventMessageListenerWrapper
 			}
 		}
 
-		if (_lock.tryLock()) {
-			try {
-				do {
-					_processMessage(
-						message, destinationName, jobName, groupName);
-
-					message = _queuedMessages.poll();
-				}
-				while (message != null);
-			}
-			finally {
-				_lock.unlock();
-			}
-		}
-		else {
-			_queuedMessages.add(message);
-		}
+		_processMessage(message, destinationName, jobName, groupName);
 	}
 
 	/**
@@ -197,10 +177,7 @@ public class SchedulerEventMessageListenerWrapper
 	@SuppressWarnings("unused")
 	private String _jobName;
 
-	private final Lock _lock = new ReentrantLock();
 	private MessageListener _messageListener;
-	private final Queue<Message> _queuedMessages =
-		new ConcurrentLinkedQueue<>();
 	private volatile SchedulerEntry _schedulerEntry;
 
 }

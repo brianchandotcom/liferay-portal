@@ -116,6 +116,18 @@ definition {
 
 		Portlet.startServer(deleteLiferayHome = "false");
 
+		// LRQA-46018
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Search"
+		);
+
+		SearchAdministration.executeSearchActions(
+			actionsDescription = "Reindex all search indexes."
+		);
+
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",

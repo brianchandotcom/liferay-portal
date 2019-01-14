@@ -40,6 +40,10 @@
 		}
 	}
 
+	.operator, .operator-input {
+		text-transform: lowercase;
+	}
+
 	.read-only-container {
 		display: flex;
 		margin: 0;

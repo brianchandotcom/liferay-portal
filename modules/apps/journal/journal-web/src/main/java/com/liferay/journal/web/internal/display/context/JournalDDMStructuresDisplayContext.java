@@ -144,20 +144,35 @@ public class JournalDDMStructuresDisplayContext {
 				themeDisplay.getScopeGroupId());
 		}
 
-		int total = DDMStructureServiceUtil.searchCount(
-			themeDisplay.getCompanyId(), groupIds,
-			PortalUtil.getClassNameId(JournalArticle.class.getName()),
-			_getKeywords(), WorkflowConstants.STATUS_ANY);
+		int total = 0;
+		List<DDMStructure> results = null;
+
+		if (Validator.isNotNull(_getKeywords())) {
+			total = DDMStructureServiceUtil.searchCount(
+				themeDisplay.getCompanyId(), groupIds,
+				PortalUtil.getClassNameId(JournalArticle.class.getName()),
+				_getKeywords(), WorkflowConstants.STATUS_ANY);
+
+			results = DDMStructureServiceUtil.search(
+				themeDisplay.getCompanyId(), groupIds,
+				PortalUtil.getClassNameId(JournalArticle.class.getName()),
+				_getKeywords(), WorkflowConstants.STATUS_ANY,
+				ddmStructureSearch.getStart(), ddmStructureSearch.getEnd(),
+				ddmStructureSearch.getOrderByComparator());
+		}
+		else {
+			total = DDMStructureServiceUtil.getStructuresCount(
+				themeDisplay.getCompanyId(), groupIds,
+				PortalUtil.getClassNameId(JournalArticle.class.getName()));
+
+			results = DDMStructureServiceUtil.getStructures(
+				themeDisplay.getCompanyId(), groupIds,
+				PortalUtil.getClassNameId(JournalArticle.class.getName()),
+				ddmStructureSearch.getStart(), ddmStructureSearch.getEnd(),
+				ddmStructureSearch.getOrderByComparator());
+		}
 
 		ddmStructureSearch.setTotal(total);
-
-		List<DDMStructure> results = DDMStructureServiceUtil.search(
-			themeDisplay.getCompanyId(), groupIds,
-			PortalUtil.getClassNameId(JournalArticle.class.getName()),
-			_getKeywords(), WorkflowConstants.STATUS_ANY,
-			ddmStructureSearch.getStart(), ddmStructureSearch.getEnd(),
-			ddmStructureSearch.getOrderByComparator());
-
 		ddmStructureSearch.setResults(results);
 
 		_ddmStructureSearch = ddmStructureSearch;

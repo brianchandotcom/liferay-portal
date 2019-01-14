@@ -197,12 +197,13 @@ class CriteriaRow extends Component {
 		);
 	};
 
-	_handleTypedInputChange = value => {
+	_handleTypedInputChange = (value, type) => {
 		const {criterion, onChange} = this.props;
 
 		onChange(
 			{
 				...criterion,
+				type,
 				value
 			}
 		);

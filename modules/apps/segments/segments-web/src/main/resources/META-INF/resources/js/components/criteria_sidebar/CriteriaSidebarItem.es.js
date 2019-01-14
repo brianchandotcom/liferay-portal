@@ -11,11 +11,12 @@ import getCN from 'classnames';
  * @param {Object} props Component's current props
  * @returns {Object} The props to be passed to the drop target.
  */
-function beginDrag({name, defaultValue}) {
+function beginDrag({name, defaultValue, type}) {
 	return {
 		criterion: {
 			defaultValue,
-			propertyName: name
+			propertyName: name,
+			type
 		}
 	};
 }

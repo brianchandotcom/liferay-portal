@@ -54,11 +54,13 @@ class ContributorBuilder extends React.Component {
 					diffState = {
 						contributors: prevState.contributors.map(
 							(contributor, i) => {
+								const {conjunctionId, properties} = contributor;
+
 								return index === i ?
 									{
 										...contributor,
 										criteriaMap: criteriaChange,
-										query: buildQueryString([criteriaChange])
+										query: buildQueryString([criteriaChange], conjunctionId, properties)
 									} :
 									contributor;
 							}

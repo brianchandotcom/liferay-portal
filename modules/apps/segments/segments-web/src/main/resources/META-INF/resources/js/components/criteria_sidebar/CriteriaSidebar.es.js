@@ -2,17 +2,30 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import CriteriaSidebarSearchBar from './CriteriaSidebarSearchBar.es';
 import CriteriaSidebarItem from './CriteriaSidebarItem.es';
+import {PROPERTY_TYPES} from '../../utils/constants.es';
 
+/**
+ * Returns a default value for a property provided
+ *
+ * @param {*} property
+ * @returns
+ */
 function getDefaultValue(property) {
 	const {options, type} = property;
-	let result = '';
-	if (type === 'string' && options && options.length) {
-		result = options[0].value;
+	let defaultValue = '';
+	if (type === PROPERTY_TYPES.STRING && options && options.length) {
+		defaultValue = options[0].value;
 	}
-	else if (type === 'date') {
-		result = (new Date()).getTime();
+	else if (type === PROPERTY_TYPES.DATE) {
+		defaultValue = (new Date()).toISOString();
 	}
-	return result;
+	else if (type === PROPERTY_TYPES.BOOLEAN) {
+		defaultValue = 'true';
+	}
+	else if (type === PROPERTY_TYPES.NUMBER) {
+		defaultValue = 0;
+	}
+	return defaultValue;
 }
 
 class CriteriaSidebar extends Component {

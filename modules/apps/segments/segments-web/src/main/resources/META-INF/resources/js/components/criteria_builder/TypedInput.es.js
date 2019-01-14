@@ -39,11 +39,11 @@ class TypedInput extends React.Component {
 				selected={value}
 			/>;
 	}
-	_onDateChange = (dateObject) => {
+	_handleDateChange = dateObject => {
 		const {onChange} = this.props;
-		const newValue = dateObject.getTime();
+		const newValue = dateObject.toISOString();
 
-		onChange(newValue);
+		onChange(newValue, PROPERTY_TYPES.DATE);
 	}
 	_renderDateType = () => {
 		const {value} = this.props;
@@ -51,8 +51,8 @@ class TypedInput extends React.Component {
 		return (<div className="criterion-input">
 			<DatePicker
 				className="form-control"
-				onChange={this._onDateChange}
-				selected={new Date(parseInt(value, 10))}
+				onChange={this._handleDateChange}
+				selected={new Date(value)}
 			/>
 		</div>);
 	}
@@ -62,7 +62,7 @@ class TypedInput extends React.Component {
 		return (
 			<ClaySelect
 				className="criterion-input form-control"
-				onChange={this._onChange}
+				onChange={this._handleChange}
 				options={[
 					{
 						label: 'TRUE',
@@ -76,7 +76,7 @@ class TypedInput extends React.Component {
 				selected={value}
 			/>);
 	}
-	_onNumberChange = (event) => {
+	_handleNumberChange = event => {
 		const {onChange} = this.props;
 		const value = parseInt(event.target.value, 10);
 
@@ -90,7 +90,7 @@ class TypedInput extends React.Component {
 		return (
 			<input
 				className="criterion-input form-control"
-				onChange={this._onNumberChange}
+				onChange={this._handleNumberChange}
 				type="number"
 				value={value}
 			/>);

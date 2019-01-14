@@ -3,6 +3,7 @@ import {
 	FUNCTIONAL_OPERATORS,
 	GROUP,
 	NOT_OPERATORS,
+	PROPERTY_TYPES,
 	RELATIONAL_OPERATORS
 } from './constants.es';
 import {generateGroupId} from './utils.es';
@@ -62,13 +63,53 @@ function addNewGroup({oDataASTNode, prevConjunction}) {
 }
 
 /**
+ *
+ *
+ * @param {*} propertyName
+ * @param {*} properties
+ * @returns {string}
+ */
+const getTypeByPropertyName = (propertyName, properties) => {
+	let type = null;
+	if (propertyName) {
+		const property = properties.find(property => property.name === propertyName);
+		type = property ? property.type : null;
+	}
+	return type;
+};
+
+/**
+ * Decides whether to add quotes to value
+ *
+ * @param {string | boolen} value
+ * @param {'date' | 'string' | 'boolean' | 'number'} type
+ * @returns {string}
+ */
+function valueParser(value, type) {
+	let parsedValue;
+	switch (type) {
+	case PROPERTY_TYPES.BOOLEAN:
+	case PROPERTY_TYPES.DATE:
+	case PROPERTY_TYPES.NUMBER:
+		parsedValue = value;
+		break;
+	case PROPERTY_TYPES.STRING:
+	default:
+		parsedValue = `'${value}'`;
+		break;
+	}
+	return parsedValue;
+}
+
+/**
  * Recursively traverses the criteria object to build an oData filter query
  * string.
  * @param {object} criteria
  * @param {string} queryConjunction
+ * @param {array} properties
  * @returns An OData query string built from the criteria object.
  */
-function buildQueryString(criteria, queryConjunction) {
+function buildQueryString(criteria, queryConjunction, properties) {
 	return criteria
 		.filter(Boolean)
 		.reduce(
@@ -87,33 +128,39 @@ function buildQueryString(criteria, queryConjunction) {
 
 				if (conjunctionName) {
 					queryString = queryString.concat(
-						`(${buildQueryString(items, conjunctionName)})`
+						`(${buildQueryString(items, conjunctionName, properties)})`
 					);
 				}
-				else if (isValueType(RELATIONAL_OPERATORS, operatorName)) {
-					queryString = queryString.concat(
-						`${propertyName} ${operatorName} '${value}'`
-					);
-				}
-				else if (isValueType(FUNCTIONAL_OPERATORS, operatorName)) {
-					queryString = queryString.concat(
-						`${operatorName}(${propertyName}, '${value}')`
-					);
-				}
-				else if (isValueType(NOT_OPERATORS, operatorName)) {
-					const baseOperator = operatorName.replace(/not-/g, '');
+				else {
+					const type = criterion.type || getTypeByPropertyName(propertyName, properties);
 
-					const baseExpression = [{
-						operatorName: baseOperator,
-						propertyName,
-						value
-					}];
+					const parsedValue = valueParser(value, type);
+					if (isValueType(RELATIONAL_OPERATORS, operatorName)) {
+						queryString = queryString.concat(
+							`${propertyName} ${operatorName} ${parsedValue}`
+						);
+					}
+					else if (isValueType(FUNCTIONAL_OPERATORS, operatorName)) {
+						queryString = queryString.concat(
+							`${operatorName} (${propertyName}, ${parsedValue})`
+						);
+					}
+					else if (isValueType(NOT_OPERATORS, operatorName)) {
+						const baseOperator = operatorName.replace(/not-/g, '');
 
-					// Not is wrapped in a group to simplify AST parsing.
+						const baseExpression = [{
+							operatorName: baseOperator,
+							propertyName,
+							value,
+							type
+						}];
 
-					queryString = queryString.concat(
-						`(not (${buildQueryString(baseExpression)}))`
-					);
+						// Not is wrapped in a group to simplify AST parsing.
+
+						queryString = queryString.concat(
+							`(not (${buildQueryString(baseExpression, conjunctionName, properties)}))`
+						);
+					}
 				}
 
 				return queryString;

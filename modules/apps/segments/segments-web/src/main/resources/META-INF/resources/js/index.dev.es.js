@@ -10,7 +10,7 @@ const altProps = {
 		{
 			conjunctionId: '',
 			conjunctionInputId: '_com_liferay_segments_web_internal_portlet_SegmentsPortlet_criterionConjunctionuser',
-			initialQuery: '(dateModified le 1546951348000 and segmentationTeamMembers ne \'david\')',
+			initialQuery: '(segmentationTeamMembers eq \'kevin\' and segmentationTeamMembers eq \'kevin\' and dateModified eq 2019-01-16T11:17:56.000Z)',
 			inputId: '_com_liferay_segments_web_internal_portlet_SegmentsPortlet_criterionFilteruser',
 			propertyKey: 'user'
 		},

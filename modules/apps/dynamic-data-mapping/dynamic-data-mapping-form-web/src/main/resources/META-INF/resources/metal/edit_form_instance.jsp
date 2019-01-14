@@ -135,22 +135,6 @@ if (!isFormPublished && isFormSaved) {
 		<div id="<portlet:namespace />-container"></div>
 	</aui:form>
 
-	<liferay-util:html-top
-		outputKey="loadDDMFieldTypes"
-	>
-		<aui:script use="liferay-ddm-form-renderer-types,liferay-ddm-soy-template-util">
-			Liferay.DDM.SoyTemplateUtil.loadModules(
-				function() {
-					Liferay.DDM.Renderer.FieldTypes.register(<%= ddmFormAdminDisplayContext.getDDMFormFieldTypesJSONArray() %>);
-
-					Liferay.DMMFieldTypesReady = true;
-
-					Liferay.fire('DMMFieldTypesReady');
-				}
-			);
-		</aui:script>
-	</liferay-util:html-top>
-
 	<div class="container-fluid-1280 ddm-form-instance-settings hide" id="<portlet:namespace />settings">
 		<%= request.getAttribute(DDMWebKeys.DYNAMIC_DATA_MAPPING_FORM_HTML) %>
 	</div>

@@ -44,6 +44,13 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description><![CDATA[Whether to use the resolved npm portlet namespace, to avoid name conflicts. The default value is <code>true</code>.]]></description>
+			<name>useNamespace</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
+		</attribute>
+		<attribute>
 			<description></description>
 			<name>wrapper</name>
 			<required>false</required>
@@ -89,6 +96,13 @@
 			<name>templateNamespace</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description><![CDATA[Whether to use the resolved npm portlet namespace, to avoid name conflicts. The default value is <code>true</code>.]]></description>
+			<name>useNamespace</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
 		</attribute>
 		<attribute>
 			<description></description>

@@ -31,6 +31,10 @@ public class JavaEnumConstantDefinition extends BaseJavaTerm {
 		_javaAnnotations = javaAnnotations;
 	}
 
+	public void setHasBody(boolean hasBody) {
+		_hasBody = hasBody;
+	}
+
 	public void setParameterValueJavaExpressions(
 		List<JavaExpression> parameterValueJavaExpressions) {
 
@@ -40,6 +44,13 @@ public class JavaEnumConstantDefinition extends BaseJavaTerm {
 	@Override
 	public String toString(
 		String indent, String prefix, String suffix, int maxLineLength) {
+
+		String originalIndent = indent;
+		String originalSuffix = suffix;
+
+		if (_hasBody) {
+			suffix = " {";
+		}
 
 		StringBundler sb = new StringBundler();
 
@@ -70,9 +81,19 @@ public class JavaEnumConstantDefinition extends BaseJavaTerm {
 				maxLineLength);
 		}
 
+		if (_hasBody) {
+			sb.append("\n");
+			sb.append(CODE_BLOCK);
+			sb.append("\n");
+			sb.append(originalIndent);
+			sb.append("}");
+			sb.append(originalSuffix);
+		}
+
 		return sb.toString();
 	}
 
+	private boolean _hasBody;
 	private final List<JavaAnnotation> _javaAnnotations;
 	private final JavaSimpleValue _name;
 	private List<JavaExpression> _parameterValueJavaExpressions;

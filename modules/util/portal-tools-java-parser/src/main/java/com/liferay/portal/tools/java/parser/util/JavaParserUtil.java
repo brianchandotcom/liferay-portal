@@ -871,6 +871,13 @@ public class JavaParserUtil {
 				_parseParameterValueJavaExpressions(elistDetailAST));
 		}
 
+		DetailAST objBlockDetailAST =
+			enumConstantDefinitionDetailAST.findFirstToken(TokenTypes.OBJBLOCK);
+
+		if (objBlockDetailAST != null) {
+			javaEnumConstantDefinition.setHasBody(true);
+		}
+
 		return javaEnumConstantDefinition;
 	}
 

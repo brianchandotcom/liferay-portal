@@ -14,6 +14,8 @@
 
 package com.liferay.adaptive.media.document.library.internal.repository.capabilities;
 
+import com.liferay.adaptive.media.document.library.internal.util.AMCleanUpOnUpdateAndCheckInThreadLocal;
+import com.liferay.adaptive.media.image.service.AMImageEntryLocalService;
 import com.liferay.adaptive.media.processor.AMAsyncProcessor;
 import com.liferay.adaptive.media.processor.AMAsyncProcessorLocator;
 import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
@@ -58,6 +60,13 @@ public abstract class BaseCapability
 		_amAsyncProcessorLocator = amAsyncProcessorLocator;
 	}
 
+	@Reference(unbind = "-")
+	public void setAMImageEntryLocalService(
+		AMImageEntryLocalService amImageEntryLocalService) {
+
+		_amImageEntryLocalService = amImageEntryLocalService;
+	}
+
 	private void _deleteAdaptiveMedia(FileEntry fileEntry) {
 		if (ExportImportThreadLocal.isImportInProcess()) {
 			return;
@@ -87,11 +96,16 @@ public abstract class BaseCapability
 		}
 
 		try {
-			AMAsyncProcessor<FileVersion, ?> amAsyncProcessor =
-				_amAsyncProcessorLocator.locateForClass(FileVersion.class);
-
 			FileVersion latestFileVersion = fileEntry.getLatestFileVersion(
 				true);
+
+			if (AMCleanUpOnUpdateAndCheckInThreadLocal.isEnabled()) {
+				_amImageEntryLocalService.deleteAMImageEntryFileVersion(
+					latestFileVersion);
+			}
+
+			AMAsyncProcessor<FileVersion, ?> amAsyncProcessor =
+				_amAsyncProcessorLocator.locateForClass(FileVersion.class);
 
 			amAsyncProcessor.triggerProcess(
 				latestFileVersion,
@@ -103,5 +117,6 @@ public abstract class BaseCapability
 	}
 
 	private AMAsyncProcessorLocator _amAsyncProcessorLocator;
+	private AMImageEntryLocalService _amImageEntryLocalService;
 
 }

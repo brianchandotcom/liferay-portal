@@ -25,8 +25,10 @@ import org.osgi.framework.Bundle;
  */
 public interface JSBundleTracker {
 
-	public void addedBundle(Bundle bundle, JSBundle jsBundle);
+	public void addedJSBundle(
+		JSBundle jsBundle, Bundle bundle, NPMRegistry npmRegistry);
 
-	public void removedBundle(Bundle bundle, JSBundle jsBundle);
+	public void removedJSBundle(
+		JSBundle jsBundle, Bundle bundle, NPMRegistry npmRegistry);
 
 }

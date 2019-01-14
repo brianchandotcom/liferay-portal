@@ -47,7 +47,9 @@ import org.osgi.service.component.annotations.Reference;
 public class NPMResolverJSBundleTracker implements JSBundleTracker {
 
 	@Override
-	public void addedBundle(Bundle bundle, JSBundle jsBundle) {
+	public void addedJSBundle(
+		JSBundle jsBundle, Bundle bundle, NPMRegistry npmRegistry) {
+
 		ServiceReference<ServletContext> serviceReference =
 			_getServletContextReference(bundle);
 
@@ -60,7 +62,8 @@ public class NPMResolverJSBundleTracker implements JSBundleTracker {
 
 		try {
 			NPMResolvedPackageNameUtil.set(
-				servletContext, _getNpmResolvedPackageName(bundle));
+				servletContext,
+				_getNpmResolvedPackageName(bundle, npmRegistry));
 		}
 		finally {
 			_bundleContext.ungetService(serviceReference);
@@ -68,7 +71,8 @@ public class NPMResolverJSBundleTracker implements JSBundleTracker {
 	}
 
 	@Override
-	public void removedBundle(Bundle bundle, JSBundle jsBundle) {
+	public void removedJSBundle(
+		JSBundle jsBundle, Bundle bundle, NPMRegistry npmRegistry) {
 	}
 
 	@Activate
@@ -76,10 +80,12 @@ public class NPMResolverJSBundleTracker implements JSBundleTracker {
 		_bundleContext = bundleContext;
 	}
 
-	private String _getNpmResolvedPackageName(Bundle bundle) {
+	private String _getNpmResolvedPackageName(
+		Bundle bundle, NPMRegistry npmRegistry) {
+
 		try {
 			NPMResolver npmResolver = new NPMResolverImpl(
-				bundle, _jsonFactory, _npmRegistry);
+				bundle, _jsonFactory, npmRegistry);
 
 			URL url = bundle.getResource("META-INF/resources/package.json");
 
@@ -134,8 +140,5 @@ public class NPMResolverJSBundleTracker implements JSBundleTracker {
 
 	@Reference
 	private JSONFactory _jsonFactory;
-
-	@Reference
-	private NPMRegistry _npmRegistry;
 
 }

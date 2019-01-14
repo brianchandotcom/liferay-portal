@@ -444,7 +444,8 @@ public class NPMRegistryImpl implements NPMRegistry {
 			if (jsBundle != null) {
 				for (JSBundleTracker jsBundleTracker : _jsBundleTrackers) {
 					try {
-						jsBundleTracker.addedBundle(bundle, jsBundle);
+						jsBundleTracker.addedJSBundle(
+							jsBundle, bundle, NPMRegistryImpl.this);
 					}
 					catch (Exception e) {
 						_log.error(
@@ -470,7 +471,8 @@ public class NPMRegistryImpl implements NPMRegistry {
 
 			for (JSBundleTracker jsBundleTracker : _jsBundleTrackers) {
 				try {
-					jsBundleTracker.removedBundle(bundle, jsBundle);
+					jsBundleTracker.removedJSBundle(
+						jsBundle, bundle, NPMRegistryImpl.this);
 				}
 				catch (Exception e) {
 					_log.error(

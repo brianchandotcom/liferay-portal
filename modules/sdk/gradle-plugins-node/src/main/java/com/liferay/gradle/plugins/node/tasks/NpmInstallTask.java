@@ -47,6 +47,7 @@ import org.gradle.api.specs.Spec;
 import org.gradle.api.tasks.Input;
 import org.gradle.api.tasks.InputFile;
 import org.gradle.api.tasks.Optional;
+import org.gradle.api.tasks.OutputDirectory;
 
 /**
  * @author Andrea Di Giorgi
@@ -110,6 +111,7 @@ public class NpmInstallTask extends ExecuteNpmTask {
 		return GradleUtil.toFile(getProject(), _nodeModulesDigestFile);
 	}
 
+	@OutputDirectory
 	public File getNodeModulesDir() {
 		Project project = getProject();
 

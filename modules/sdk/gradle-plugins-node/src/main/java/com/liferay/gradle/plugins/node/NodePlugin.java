@@ -491,15 +491,6 @@ public class NodePlugin implements Plugin<Project> {
 
 		npmInstallTask.setNodeVersion(nodeExtension.getNodeVersion());
 		npmInstallTask.setNpmVersion(nodeExtension.getNpmVersion());
-
-		TaskOutputs taskOutputs = npmInstallTask.getOutputs();
-
-		if (!npmInstallTask.isCheckDigest()) {
-			taskOutputs.dir(npmInstallTask.getNodeModulesDir());
-		}
-		else {
-			taskOutputs.file(npmInstallTask.getNodeModulesDigestFile());
-		}
 	}
 
 	private void _configureTaskNpmRun(

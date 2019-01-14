@@ -198,6 +198,35 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 	}
 
 	@Test
+	public void testIncorrectOperatorOrder() throws Exception {
+		test(
+			"IncorrectOperatorOrder.testjava",
+			new String[] {
+				"'3' should be on the right hand side of the operator",
+				"'+3' should be on the right hand side of the operator",
+				"'-3' should be on the right hand side of the operator",
+				"'3' should be on the right hand side of the operator",
+				"'+3' should be on the right hand side of the operator",
+				"'-3' should be on the right hand side of the operator",
+				"'3' should be on the right hand side of the operator",
+				"'+3' should be on the right hand side of the operator",
+				"'-3' should be on the right hand side of the operator",
+				"'3' should be on the right hand side of the operator",
+				"'+3' should be on the right hand side of the operator",
+				"'-3' should be on the right hand side of the operator",
+				"'3' should be on the right hand side of the operator",
+				"'+3' should be on the right hand side of the operator",
+				"'-3' should be on the right hand side of the operator",
+				"'3' should be on the right hand side of the operator",
+				"'+3' should be on the right hand side of the operator",
+				"'-3' should be on the right hand side of the operator"
+			},
+			new Integer[] {
+				53, 57, 61, 97, 101, 105, 141, 145, 149, 185, 189, 193, 229,
+				233, 237, 273, 277, 281});
+		}
+
+	@Test
 	public void testIncorrectParameterNames() throws Exception {
 		test(
 			"IncorrectParameterNames.testjava",

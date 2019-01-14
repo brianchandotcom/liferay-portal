@@ -12,16 +12,21 @@
  * details.
  */
 
-package com.liferay.data.engine.constants;
+package com.liferay.data.engine.web.internal.graphql.model;
 
 /**
- * @author Jeyvison Nascimento
+ * @author Leonardo Barros
  */
-public class DEActionKeys {
+public class SaveModelPermissionsDataDefinitionType {
 
-	public static final String ADD_DATA_DEFINITION_ACTION =
-		"ADD_DATA_DEFINITION";
+	public String getDataDefinitionId() {
+		return _dataDefinitionId;
+	}
 
-	public static final String DEFINE_PERMISSIONS_ACTION = "DEFINE_PERMISSIONS";
+	public void setDataDefinitionId(String dataDefinitionId) {
+		_dataDefinitionId = dataDefinitionId;
+	}
+
+	private String _dataDefinitionId;
 
 }

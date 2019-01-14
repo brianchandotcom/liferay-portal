@@ -248,18 +248,6 @@ public class AssetEntryAssetCategoryRelAssetCategoryLocalServiceWrapper
 
 		List<AssetCategory> categories = new ArrayList<>();
 
-		if (assetEntryAssetCategoryRels.isEmpty()) {
-			categories =
-				_assetCategoryLocalService.getAssetEntryAssetCategories(
-					assetEntryId, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
-
-			categories.forEach(
-				category ->
-					_assetEntryAssetCategoryRelLocalService.
-						addAssetEntryAssetCategoryRel(
-							assetEntryId, category.getCategoryId()));
-		}
-
 		for (AssetEntryAssetCategoryRel assetEntryAssetCategoryRel :
 				assetEntryAssetCategoryRels) {
 

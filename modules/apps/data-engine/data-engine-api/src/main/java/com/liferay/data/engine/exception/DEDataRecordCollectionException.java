@@ -72,4 +72,27 @@ public class DEDataRecordCollectionException extends PortalException {
 
 	}
 
+	public static class NoSuchRoles extends DEDataRecordCollectionException {
+
+		public NoSuchRoles(String[] roleNames) {
+			_roleNames = roleNames;
+		}
+
+		public String[] getRoleNames() {
+			return _roleNames;
+		}
+
+		private final String[] _roleNames;
+
+	}
+
+	public static class PrincipalException
+		extends DEDataRecordCollectionException {
+
+		public PrincipalException(Throwable cause) {
+			super(cause);
+		}
+
+	}
+
 }

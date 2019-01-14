@@ -18,10 +18,12 @@ import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.bulk.rest.internal.model.BulkActionResponseModel;
 import com.liferay.bulk.rest.internal.model.BulkAssetEntryCommonTagsActionModel;
 import com.liferay.bulk.rest.internal.model.BulkAssetEntryCommonTagsModel;
+import com.liferay.bulk.rest.internal.model.BulkAssetEntryUpdateCategoriesActionModel;
 import com.liferay.bulk.rest.internal.model.BulkAssetEntryUpdateTagsActionModel;
 import com.liferay.bulk.selection.BulkSelection;
 import com.liferay.bulk.selection.BulkSelectionFactory;
 import com.liferay.bulk.selection.BulkSelectionRunner;
+import com.liferay.document.library.bulk.selection.EditCategoriesBulkSelectionAction;
 import com.liferay.document.library.bulk.selection.EditTagsBulkSelectionAction;
 import com.liferay.document.library.kernel.model.DLFileEntryConstants;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -69,6 +71,24 @@ import org.osgi.service.component.annotations.Reference;
 )
 @Path("/asset")
 public class BulkAssetEntryResource {
+
+	@Consumes(ContentTypes.APPLICATION_JSON)
+	@Path("/categories/{classNameId}")
+	@POST
+	@Produces(ContentTypes.APPLICATION_JSON)
+	public BulkActionResponseModel editCategories(
+		@Context User user, @PathParam("classNameId") long classNameId,
+		BulkAssetEntryUpdateCategoriesActionModel
+			bulkAssetEntryUpdateCategoriesActionModel) {
+
+		try {
+			return _editCategories(
+				user, bulkAssetEntryUpdateCategoriesActionModel);
+		}
+		catch (Exception e) {
+			return new BulkActionResponseModel(e);
+		}
+	}
 
 	@Consumes(ContentTypes.APPLICATION_JSON)
 	@Path("/tags/{classNameId}/common")
@@ -119,6 +139,36 @@ public class BulkAssetEntryResource {
 		catch (Exception e) {
 			return new BulkActionResponseModel(e);
 		}
+	}
+
+	private BulkActionResponseModel _editCategories(
+			User user,
+			BulkAssetEntryUpdateCategoriesActionModel
+				bulkAssetEntryUpdateCategoriesActionModel)
+		throws Exception {
+
+		BulkSelection<FileEntry> bulkSelection = _bulkSelectionFactory.create(
+			bulkAssetEntryUpdateCategoriesActionModel.getParameterMap());
+
+		_bulkSelectionRunner.run(
+			user, bulkSelection, _editCategoriesBulkSelectionAction,
+			new HashMap<String, Serializable>() {
+				{
+					put(
+						"append",
+						bulkAssetEntryUpdateCategoriesActionModel.getAppend());
+					put(
+						"toAddCategoryIds",
+						bulkAssetEntryUpdateCategoriesActionModel.
+							getToAddCategoryIds());
+					put(
+						"toRemoveCategoryIds",
+						bulkAssetEntryUpdateCategoriesActionModel.
+							getToRemoveCategoryIds());
+				}
+			});
+
+		return BulkActionResponseModel.SUCCESS;
 	}
 
 	private BulkActionResponseModel _editTags(
@@ -189,6 +239,10 @@ public class BulkAssetEntryResource {
 
 	@Reference
 	private BulkSelectionRunner _bulkSelectionRunner;
+
+	@Reference
+	private EditCategoriesBulkSelectionAction
+		_editCategoriesBulkSelectionAction;
 
 	@Reference
 	private EditTagsBulkSelectionAction _editTagsBulkSelectionAction;

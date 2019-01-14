@@ -14,10 +14,12 @@
 
 package com.liferay.asset.web.internal.portlet;
 
+import com.liferay.asset.configuration.AssetEntryUsageConfiguration;
 import com.liferay.asset.constants.AssetPortletKeys;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.asset.util.AssetEntryUsageRecorder;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -36,7 +38,9 @@ import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ReferenceCardinality;
 import org.osgi.service.component.annotations.ReferencePolicy;
@@ -46,6 +50,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
  * @author Jürgen Kappler
  */
 @Component(
+	configurationPid = "com.liferay.asset.configuration.AssetEntryUsageConfiguration",
 	immediate = true,
 	property = {
 		"com.liferay.portlet.add-default-resource=true",
@@ -80,7 +85,9 @@ public class AssetPortlet extends MVCPortlet {
 			AssetEntryUsageRecorder assetEntryUsageRecorder =
 				_assetEntryUsageRecorders.get(assetEntry.getClassName());
 
-			if (assetEntryUsageRecorder != null) {
+			if ((assetEntryUsageRecorder != null) &&
+				_assetEntryUsageConfiguration.checkExistingAssetEntries()) {
+
 				assetEntryUsageRecorder.record(assetEntry);
 			}
 		}
@@ -93,6 +100,13 @@ public class AssetPortlet extends MVCPortlet {
 		}
 
 		super.render(renderRequest, renderResponse);
+	}
+
+	@Activate
+	@Modified
+	protected void activate(Map<String, Object> properties) {
+		_assetEntryUsageConfiguration = ConfigurableUtil.createConfigurable(
+			AssetEntryUsageConfiguration.class, properties);
 	}
 
 	@Reference(
@@ -133,6 +147,7 @@ public class AssetPortlet extends MVCPortlet {
 	@Reference
 	private AssetEntryLocalService _assetEntryLocalService;
 
+	private AssetEntryUsageConfiguration _assetEntryUsageConfiguration;
 	private final Map<String, AssetEntryUsageRecorder>
 		_assetEntryUsageRecorders = new ConcurrentHashMap<>();
 

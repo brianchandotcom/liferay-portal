@@ -382,6 +382,8 @@ public class WebSsoProfileIntegrationTest extends BaseSamlTestCase {
 
 		SamlSpIdpConnection samlSpIdpConnection = new SamlSpIdpConnectionImpl();
 
+		samlSpIdpConnection.setSamlIdpEntityId(IDP_ENTITY_ID);
+
 		when(
 			samlSpIdpConnectionLocalService.getSamlSpIdpConnection(
 				Mockito.eq(COMPANY_ID), Mockito.eq(IDP_ENTITY_ID))
@@ -394,6 +396,9 @@ public class WebSsoProfileIntegrationTest extends BaseSamlTestCase {
 
 		MockHttpServletRequest mockHttpServletRequest =
 			getMockHttpServletRequest(LOGIN_URL);
+
+		mockHttpServletRequest.setAttribute(
+			SamlWebKeys.SAML_SP_IDP_CONNECTION, samlSpIdpConnection);
 
 		MockHttpServletResponse mockHttpServletResponse =
 			new MockHttpServletResponse();
@@ -487,6 +492,8 @@ public class WebSsoProfileIntegrationTest extends BaseSamlTestCase {
 
 		SamlSpIdpConnection samlSpIdpConnection = new SamlSpIdpConnectionImpl();
 
+		samlSpIdpConnection.setSamlIdpEntityId(IDP_ENTITY_ID);
+
 		when(
 			samlSpIdpConnectionLocalService.getSamlSpIdpConnection(
 				Mockito.eq(COMPANY_ID), Mockito.eq(IDP_ENTITY_ID))
@@ -499,6 +506,9 @@ public class WebSsoProfileIntegrationTest extends BaseSamlTestCase {
 
 		MockHttpServletRequest mockHttpServletRequest =
 			getMockHttpServletRequest(LOGIN_URL);
+
+		mockHttpServletRequest.setAttribute(
+			SamlWebKeys.SAML_SP_IDP_CONNECTION, samlSpIdpConnection);
 
 		MockHttpServletResponse mockHttpServletResponse =
 			new MockHttpServletResponse();
@@ -581,6 +591,8 @@ public class WebSsoProfileIntegrationTest extends BaseSamlTestCase {
 
 		SamlSpIdpConnection samlSpIdpConnection = new SamlSpIdpConnectionImpl();
 
+		samlSpIdpConnection.setSamlIdpEntityId(IDP_ENTITY_ID);
+
 		metadataManagerImpl = new MetadataManagerImpl();
 
 		metadataManagerImpl.setCredentialResolver(credentialResolver);
@@ -607,6 +619,9 @@ public class WebSsoProfileIntegrationTest extends BaseSamlTestCase {
 
 		MockHttpServletRequest mockHttpServletRequest =
 			getMockHttpServletRequest(LOGIN_URL);
+
+		mockHttpServletRequest.setAttribute(
+			SamlWebKeys.SAML_SP_IDP_CONNECTION, samlSpIdpConnection);
 
 		MockHttpServletResponse mockHttpServletResponse =
 			new MockHttpServletResponse();
@@ -643,6 +658,8 @@ public class WebSsoProfileIntegrationTest extends BaseSamlTestCase {
 
 		samlSpIdpConnection.setForceAuthn(true);
 
+		samlSpIdpConnection.setSamlIdpEntityId(IDP_ENTITY_ID);
+
 		when(
 			samlSpIdpConnectionLocalService.getSamlSpIdpConnection(
 				Mockito.eq(COMPANY_ID), Mockito.eq(IDP_ENTITY_ID))
@@ -655,6 +672,9 @@ public class WebSsoProfileIntegrationTest extends BaseSamlTestCase {
 
 		MockHttpServletRequest mockHttpServletRequest =
 			getMockHttpServletRequest(LOGIN_URL);
+
+		mockHttpServletRequest.setAttribute(
+			SamlWebKeys.SAML_SP_IDP_CONNECTION, samlSpIdpConnection);
 
 		MockHttpServletResponse mockHttpServletResponse =
 			new MockHttpServletResponse();

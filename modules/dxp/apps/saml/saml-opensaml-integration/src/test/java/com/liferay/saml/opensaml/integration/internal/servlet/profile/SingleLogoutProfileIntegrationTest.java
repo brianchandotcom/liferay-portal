@@ -275,9 +275,17 @@ public class SingleLogoutProfileIntegrationTest extends BaseSamlTestCase {
 
 		samlSpSession.setNameIdFormat(NameID.EMAIL);
 		samlSpSession.setNameIdValue("test@liferay.com");
+		samlSpSession.setSamlIdpEntityId(IDP_ENTITY_ID);
 
 		when(
 			_samlSpSessionLocalService.fetchSamlSpSessionByJSessionId(
+				Mockito.anyString())
+		).thenReturn(
+			samlSpSession
+		);
+
+		when(
+			_samlSpSessionLocalService.fetchSamlSpSessionBySamlSpSessionKey(
 				Mockito.anyString())
 		).thenReturn(
 			samlSpSession

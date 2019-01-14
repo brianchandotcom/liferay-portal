@@ -15,6 +15,7 @@
 package com.liferay.saml.opensaml.integration.internal.servlet.profile;
 
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.saml.constants.SamlWebKeys;
 import com.liferay.saml.opensaml.integration.internal.BaseSamlTestCase;
 import com.liferay.saml.opensaml.integration.internal.util.OpenSamlUtil;
 import com.liferay.saml.persistence.model.SamlSpIdpConnection;
@@ -329,6 +330,8 @@ public class XMLSecurityTest extends BaseSamlTestCase {
 
 		SamlSpIdpConnection samlSpIdpConnection = new SamlSpIdpConnectionImpl();
 
+		samlSpIdpConnection.setSamlIdpEntityId(IDP_ENTITY_ID);
+
 		when(
 			samlSpIdpConnectionLocalService.getSamlSpIdpConnection(
 				Mockito.eq(COMPANY_ID), Mockito.eq(IDP_ENTITY_ID))
@@ -338,6 +341,9 @@ public class XMLSecurityTest extends BaseSamlTestCase {
 
 		MockHttpServletRequest mockHttpServletRequest =
 			getMockHttpServletRequest(LOGIN_URL);
+
+		mockHttpServletRequest.setAttribute(
+			SamlWebKeys.SAML_SP_IDP_CONNECTION, samlSpIdpConnection);
 
 		MockHttpServletResponse mockHttpServletResponse =
 			new MockHttpServletResponse();

@@ -117,8 +117,31 @@ public class BulkAssetEntryResource {
 				bulkAssetEntryUpdateCategoriesActionModel) {
 
 		try {
-			return _editCategories(
-				user, bulkAssetEntryUpdateCategoriesActionModel);
+			BulkSelection<FileEntry> bulkSelection =
+				_bulkSelectionFactory.create(
+					bulkAssetEntryUpdateCategoriesActionModel.
+						getParameterMap());
+
+			_bulkSelectionRunner.run(
+				user, bulkSelection, _editCategoriesBulkSelectionAction,
+				new HashMap<String, Serializable>() {
+					{
+						put(
+							"append",
+							bulkAssetEntryUpdateCategoriesActionModel.
+								getAppend());
+						put(
+							"toAddCategoryIds",
+							bulkAssetEntryUpdateCategoriesActionModel.
+								getToAddCategoryIds());
+						put(
+							"toRemoveCategoryIds",
+							bulkAssetEntryUpdateCategoriesActionModel.
+								getToRemoveCategoryIds());
+					}
+				});
+
+			return BulkActionResponseModel.SUCCESS;
 		}
 		catch (Exception e) {
 			return new BulkActionResponseModel(e);
@@ -135,70 +158,33 @@ public class BulkAssetEntryResource {
 			bulkAssetEntryUpdateTagsActionModel) {
 
 		try {
-			return _editTags(user, bulkAssetEntryUpdateTagsActionModel);
+			BulkSelection<FileEntry> bulkSelection =
+				_bulkSelectionFactory.create(
+					bulkAssetEntryUpdateTagsActionModel.getParameterMap());
+
+			_bulkSelectionRunner.run(
+				user, bulkSelection, _editTagsBulkSelectionAction,
+				new HashMap<String, Serializable>() {
+					{
+						put(
+							"append",
+							bulkAssetEntryUpdateTagsActionModel.getAppend());
+						put(
+							"toAddTagNames",
+							bulkAssetEntryUpdateTagsActionModel.
+								getToAddTagNames());
+						put(
+							"toRemoveTagNames",
+							bulkAssetEntryUpdateTagsActionModel.
+								getToRemoveTagNames());
+					}
+				});
+
+			return BulkActionResponseModel.SUCCESS;
 		}
 		catch (Exception e) {
 			return new BulkActionResponseModel(e);
 		}
-	}
-
-	private BulkActionResponseModel _editCategories(
-			User user,
-			BulkAssetEntryUpdateCategoriesActionModel
-				bulkAssetEntryUpdateCategoriesActionModel)
-		throws Exception {
-
-		BulkSelection<FileEntry> bulkSelection = _bulkSelectionFactory.create(
-			bulkAssetEntryUpdateCategoriesActionModel.getParameterMap());
-
-		_bulkSelectionRunner.run(
-			user, bulkSelection, _editCategoriesBulkSelectionAction,
-			new HashMap<String, Serializable>() {
-				{
-					put(
-						"append",
-						bulkAssetEntryUpdateCategoriesActionModel.getAppend());
-					put(
-						"toAddCategoryIds",
-						bulkAssetEntryUpdateCategoriesActionModel.
-							getToAddCategoryIds());
-					put(
-						"toRemoveCategoryIds",
-						bulkAssetEntryUpdateCategoriesActionModel.
-							getToRemoveCategoryIds());
-				}
-			});
-
-		return BulkActionResponseModel.SUCCESS;
-	}
-
-	private BulkActionResponseModel _editTags(
-			User user,
-			BulkAssetEntryUpdateTagsActionModel
-				bulkAssetEntryUpdateTagsActionModel)
-		throws Exception {
-
-		BulkSelection<FileEntry> bulkSelection = _bulkSelectionFactory.create(
-			bulkAssetEntryUpdateTagsActionModel.getParameterMap());
-
-		_bulkSelectionRunner.run(
-			user, bulkSelection, _editTagsBulkSelectionAction,
-			new HashMap<String, Serializable>() {
-				{
-					put(
-						"append",
-						bulkAssetEntryUpdateTagsActionModel.getAppend());
-					put(
-						"toAddTagNames",
-						bulkAssetEntryUpdateTagsActionModel.getToAddTagNames());
-					put(
-						"toRemoveTagNames",
-						bulkAssetEntryUpdateTagsActionModel.
-							getToRemoveTagNames());
-				}
-			});
-
-		return BulkActionResponseModel.SUCCESS;
 	}
 
 	private Function<FileEntry, Set<String>> _getFileEntryTagsFunction(

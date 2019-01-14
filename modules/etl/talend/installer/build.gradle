@@ -1,5 +1,3 @@
-import java.nio.file.Paths
-
 task compileInstaller(type: Exec)
 task createInstaller(type: Copy)
 task getInstallerDependencies(type: Exec)
@@ -18,7 +16,7 @@ compileInstaller {
 createInstaller {
 	dependsOn compileInstaller
 
-	from Paths.get("..", "tos-dependencies")
+	from new File(projectDir, "../tos-dependencies")
 	into new File(buildDir, "talend-installer")
 }
 

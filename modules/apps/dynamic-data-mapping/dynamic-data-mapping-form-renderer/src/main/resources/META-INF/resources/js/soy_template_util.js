@@ -5,8 +5,6 @@ AUI.add(
 
 		var SoyTemplateUtil = {
 			getTemplateRenderer: function(templateNamespace) {
-				var instance = this;
-
 				var renderer = AObject.getValue(window, templateNamespace.split('.'));
 
 				if (!renderer) {
@@ -16,18 +14,10 @@ AUI.add(
 				return renderer;
 			},
 
-			loadModules: function(callback) {
-				var modules = AObject.keys(Liferay.MODULES);
-
-				var dependencies = modules.filter(
-					function(item) {
-						return /dynamic-data-.*\.es/.test(item);
-					}
-				);
-
+			loadModules: function(modules, callback) {
 				Liferay.Loader.require.apply(
 					Liferay.Loader,
-					dependencies.concat(callback)
+					modules.concat(['dynamic-data-mapping-form-renderer@4.0.0/form.es', callback])
 				);
 			}
 		};

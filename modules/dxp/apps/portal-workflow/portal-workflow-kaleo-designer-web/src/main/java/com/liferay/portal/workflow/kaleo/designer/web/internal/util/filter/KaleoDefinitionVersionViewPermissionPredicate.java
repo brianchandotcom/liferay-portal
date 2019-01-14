@@ -15,17 +15,18 @@
 package com.liferay.portal.workflow.kaleo.designer.web.internal.util.filter;
 
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.util.PredicateFilter;
 import com.liferay.portal.workflow.kaleo.designer.web.internal.permission.KaleoDefinitionVersionPermission;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion;
+
+import java.util.function.Predicate;
 
 /**
  * @author Lino Alves
  */
-public class KaleoDefinitionVersionViewPermissionPredicateFilter
-	implements PredicateFilter<KaleoDefinitionVersion> {
+public class KaleoDefinitionVersionViewPermissionPredicate
+	implements Predicate<KaleoDefinitionVersion> {
 
-	public KaleoDefinitionVersionViewPermissionPredicateFilter(
+	public KaleoDefinitionVersionViewPermissionPredicate(
 		PermissionChecker permissionChecker, long companyGroupId) {
 
 		_permissionChecker = permissionChecker;
@@ -33,7 +34,7 @@ public class KaleoDefinitionVersionViewPermissionPredicateFilter
 	}
 
 	@Override
-	public boolean filter(KaleoDefinitionVersion kaleoDefinitionVersion) {
+	public boolean test(KaleoDefinitionVersion kaleoDefinitionVersion) {
 		return KaleoDefinitionVersionPermission.hasViewPermission(
 			_permissionChecker, kaleoDefinitionVersion, _companyGroupId);
 	}

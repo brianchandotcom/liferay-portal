@@ -12,29 +12,30 @@
  *
  */
 
-package com.liferay.portal.workflow.kaleo.forms.web.internal.search;
+package com.liferay.portal.workflow.kaleo.designer.web.internal.util.filter;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.PredicateFilter;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.workflow.kaleo.designer.web.internal.constants.KaleoDefinitionVersionConstants;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinition;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion;
 
-/**
- * @author Lino Alves
- */
-public class KaleoDefinitionVersionActivePredicateFilter
-	implements PredicateFilter<KaleoDefinitionVersion> {
+import java.util.function.Predicate;
 
-	public KaleoDefinitionVersionActivePredicateFilter(int status) {
+/**
+ * @author Inácio Nery
+ */
+public class KaleoDefinitionVersionActivePredicate
+	implements Predicate<KaleoDefinitionVersion> {
+
+	public KaleoDefinitionVersionActivePredicate(int status) {
 		_status = status;
 	}
 
 	@Override
-	public boolean filter(KaleoDefinitionVersion kaleoDefinitionVersion) {
-		if (_status == WorkflowConstants.STATUS_ANY) {
+	public boolean test(KaleoDefinitionVersion kaleoDefinitionVersion) {
+		if (_status == KaleoDefinitionVersionConstants.STATUS_ALL) {
 			return true;
 		}
 
@@ -42,7 +43,7 @@ public class KaleoDefinitionVersionActivePredicateFilter
 			KaleoDefinition kaleoDefinition =
 				kaleoDefinitionVersion.getKaleoDefinition();
 
-			if (_status == WorkflowConstants.STATUS_APPROVED) {
+			if (_status == KaleoDefinitionVersionConstants.STATUS_PUBLISHED) {
 				return kaleoDefinition.isActive();
 			}
 
@@ -53,7 +54,7 @@ public class KaleoDefinitionVersionActivePredicateFilter
 				_log.debug(pe, pe);
 			}
 
-			if (_status == WorkflowConstants.STATUS_DRAFT) {
+			if (_status == KaleoDefinitionVersionConstants.STATUS_PUBLISHED) {
 				return false;
 			}
 
@@ -62,7 +63,7 @@ public class KaleoDefinitionVersionActivePredicateFilter
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		KaleoDefinitionVersionActivePredicateFilter.class);
+		KaleoDefinitionVersionActivePredicate.class);
 
 	private final int _status;
 

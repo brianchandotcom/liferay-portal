@@ -54,8 +54,8 @@ import com.liferay.portal.workflow.kaleo.designer.web.internal.permission.KaleoD
 import com.liferay.portal.workflow.kaleo.designer.web.internal.permission.KaleoDesignerPermission;
 import com.liferay.portal.workflow.kaleo.designer.web.internal.portlet.display.context.util.KaleoDesignerRequestHelper;
 import com.liferay.portal.workflow.kaleo.designer.web.internal.search.KaleoDefinitionVersionSearch;
-import com.liferay.portal.workflow.kaleo.designer.web.internal.util.filter.KaleoDefinitionVersionActivePredicateFilter;
-import com.liferay.portal.workflow.kaleo.designer.web.internal.util.filter.KaleoDefinitionVersionViewPermissionPredicateFilter;
+import com.liferay.portal.workflow.kaleo.designer.web.internal.util.filter.KaleoDefinitionVersionActivePredicate;
+import com.liferay.portal.workflow.kaleo.designer.web.internal.util.filter.KaleoDefinitionVersionViewPermissionPredicate;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinition;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion;
 import com.liferay.portal.workflow.kaleo.service.KaleoDefinitionVersionLocalService;
@@ -719,11 +719,11 @@ public class KaleoDesignerDisplayContext {
 
 		kaleoDefinitionVersions = ListUtil.filter(
 			kaleoDefinitionVersions,
-			new KaleoDefinitionVersionActivePredicateFilter(displayedStatus));
+			new KaleoDefinitionVersionActivePredicate(displayedStatus));
 
 		kaleoDefinitionVersions = ListUtil.filter(
 			kaleoDefinitionVersions,
-			new KaleoDefinitionVersionViewPermissionPredicateFilter(
+			new KaleoDefinitionVersionViewPermissionPredicate(
 				_kaleoDesignerRequestHelper.getPermissionChecker(),
 				_themeDisplay.getCompanyGroupId()));
 

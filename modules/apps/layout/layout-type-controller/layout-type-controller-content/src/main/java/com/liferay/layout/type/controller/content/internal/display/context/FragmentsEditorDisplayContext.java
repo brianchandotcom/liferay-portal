@@ -84,7 +84,9 @@ import javax.portlet.PortletConfig;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderResponse;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 /**
  * @author Eudaldo Alonso
@@ -504,6 +506,10 @@ public class FragmentsEditorDisplayContext {
 		LayoutTypePortlet layoutTypePortlet =
 			_themeDisplay.getLayoutTypePortlet();
 
+		HttpSession session = _request.getSession();
+
+		ServletContext servletContext = session.getServletContext();
+
 		return portletIdsStream.map(
 			portletId -> PortletLocalServiceUtil.getPortletById(
 				_themeDisplay.getCompanyId(), portletId)
@@ -526,7 +532,8 @@ public class FragmentsEditorDisplayContext {
 				}
 			}
 		).sorted(
-			new PortletTitleComparator(_themeDisplay.getLocale())
+			new PortletTitleComparator(
+				servletContext, _themeDisplay.getLocale())
 		).map(
 			portlet -> {
 				SoyContext portletContext =
@@ -537,7 +544,7 @@ public class FragmentsEditorDisplayContext {
 				portletContext.put(
 					"title",
 					PortalUtil.getPortletTitle(
-						portlet, _themeDisplay.getLocale()));
+						portlet, servletContext, _themeDisplay.getLocale()));
 				portletContext.put(
 					"used",
 					layoutTypePortlet.hasPortletId(portlet.getPortletId()));

@@ -49,6 +49,10 @@ public class SelectAssetDisplayPageTag extends IncludeTag {
 		return _showPortletLayouts;
 	}
 
+	public boolean isShowViewInContextLink() {
+		return _showViewInContextLink;
+	}
+
 	public void setClassNameId(long classNameId) {
 		_classNameId = classNameId;
 	}
@@ -80,6 +84,10 @@ public class SelectAssetDisplayPageTag extends IncludeTag {
 		_showPortletLayouts = showPortletLayouts;
 	}
 
+	public void setShowViewInContextLink(boolean showViewInContextLink) {
+		_showViewInContextLink = showViewInContextLink;
+	}
+
 	@Override
 	protected void cleanUp() {
 		super.cleanUp();
@@ -90,6 +98,7 @@ public class SelectAssetDisplayPageTag extends IncludeTag {
 		_eventName = null;
 		_groupId = 0;
 		_showPortletLayouts = false;
+		_showViewInContextLink = true;
 	}
 
 	@Override
@@ -116,6 +125,9 @@ public class SelectAssetDisplayPageTag extends IncludeTag {
 		request.setAttribute(
 			"liferay-asset:select-asset-display-page:showPortletLayouts",
 			String.valueOf(_showPortletLayouts));
+		request.setAttribute(
+			"liferay-asset:select-asset-display-page:showPortletLayouts",
+			String.valueOf(_showViewInContextLink));
 	}
 
 	private static final String _PAGE = "/select_asset_display_page/page.jsp";
@@ -126,5 +138,6 @@ public class SelectAssetDisplayPageTag extends IncludeTag {
 	private String _eventName;
 	private long _groupId;
 	private boolean _showPortletLayouts;
+	private boolean _showViewInContextLink = true;
 
 }

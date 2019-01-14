@@ -69,9 +69,11 @@
 			}
 			%>
 
-			<aui:a href="<%= selectAssetDisplayPageDisplayContext.getURLViewInContext() %>" target="blank">
-				<liferay-ui:message arguments="<%= HtmlUtil.escape(defaultDisplayLayout.getName(locale)) %>" key="view-content-in-x" translateArguments="<%= false %>" />
-			</aui:a>
+			<c:if test="<%= selectAssetDisplayPageDisplayContext.isShowViewInContextLink() %>">
+				<aui:a href="<%= selectAssetDisplayPageDisplayContext.getURLViewInContext() %>" target="blank">
+					<liferay-ui:message arguments="<%= HtmlUtil.escape(defaultDisplayLayout.getName(locale)) %>" key="view-content-in-x" translateArguments="<%= false %>" />
+				</aui:a>
+			</c:if>
 		</c:if>
 	</div>
 

@@ -90,6 +90,10 @@ public class SelectAssetDisplayPageDisplayContext {
 		_showPortletLayouts = GetterUtil.getBoolean(
 			_request.getAttribute(
 				"liferay-asset:select-asset-display-page:showPortletLayouts"));
+		_showViewInContextLink = GetterUtil.getBoolean(
+			_request.getAttribute(
+				"liferay-asset:select-asset-display-page:" +
+					"showViewInContextLink"));
 	}
 
 	public long getAssetDisplayPageId() {
@@ -314,6 +318,10 @@ public class SelectAssetDisplayPageDisplayContext {
 		return false;
 	}
 
+	public boolean isShowViewInContextLink() {
+		return _showViewInContextLink;
+	}
+
 	public boolean isURLViewInContext() throws Exception {
 		if (_classPK == 0) {
 			return false;
@@ -437,5 +445,6 @@ public class SelectAssetDisplayPageDisplayContext {
 	private final LiferayPortletResponse _liferayPortletResponse;
 	private final HttpServletRequest _request;
 	private final boolean _showPortletLayouts;
+	private final boolean _showViewInContextLink;
 
 }

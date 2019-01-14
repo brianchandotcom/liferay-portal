@@ -1,4 +1,9 @@
-import {ADD_SECTION, MOVE_SECTION, REMOVE_SECTION} from '../actions/actions.es';
+import {
+	ADD_SECTION,
+	MOVE_SECTION,
+	REMOVE_SECTION,
+	UPDATE_SECTION_CONFIG
+} from '../actions/actions.es';
 import {
 	add,
 	remove,
@@ -180,6 +185,73 @@ function removeSectionReducer(state, actionType, payload) {
 }
 
 /**
+ * @param {object} state
+ * @param {string} actionType
+ * @param {object} payload
+ * @param {object} payload.config
+ * @param {string} payload.sectionId
+ * @return {object}
+ */
+const updateSectionConfigReducer = (state, actionType, payload) => new Promise(
+	resolve => {
+		let nextState = state;
+
+		if (actionType === UPDATE_SECTION_CONFIG) {
+			const sectionIndex = getSectionIndex(
+				nextState.layoutData.structure,
+				payload.sectionId
+			);
+
+			if (sectionIndex === -1) {
+				resolve(state);
+			}
+			else {
+				Object.entries(payload.config).forEach(
+					entry => {
+						const [key, value] = entry;
+
+						const configPath = [
+							'layoutData',
+							'structure',
+							sectionIndex,
+							'config',
+							key
+						];
+
+						nextState = setIn(
+							nextState,
+							configPath,
+							value
+						);
+					}
+				);
+
+				updateLayoutData(
+					state.updateLayoutPageTemplateDataURL,
+					state.portletNamespace,
+					state.classNameId,
+					state.classPK,
+					nextState.layoutData
+				)
+					.then(
+						() => {
+							resolve(nextState);
+						}
+					)
+					.catch(
+						() => {
+							resolve(state);
+						}
+					);
+			}
+		}
+		else {
+			resolve(state);
+		}
+	}
+);
+
+/**
  * Returns a new layoutData with the given columns inserted as a new section
  * at the given position
  *
@@ -212,6 +284,7 @@ function _addSection(layoutColumns, layoutData, position) {
 		layoutData.structure,
 		{
 			columns,
+			config: {},
 			rowId: `${nextRowId}`
 		},
 		position
@@ -273,4 +346,9 @@ function _removeSection(layoutData, sectionId) {
 	);
 }
 
-export {addSectionReducer, moveSectionReducer, removeSectionReducer};
+export {
+	addSectionReducer,
+	moveSectionReducer,
+	removeSectionReducer,
+	updateSectionConfigReducer
+};

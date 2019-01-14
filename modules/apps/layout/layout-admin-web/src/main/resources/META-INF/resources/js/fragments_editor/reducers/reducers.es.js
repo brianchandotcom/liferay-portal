@@ -7,7 +7,8 @@ import {
 import {
 	addSectionReducer,
 	moveSectionReducer,
-	removeSectionReducer
+	removeSectionReducer,
+	updateSectionConfigReducer
 } from './sections.es';
 import {
 	hideFragmentsEditorSidebarReducer,
@@ -57,7 +58,8 @@ const reducers = [
 	updateDropTargetReducer,
 	updateEditableValueReducer,
 	updateHighlightMappingReducer,
-	updateHoveredItemReducer
+	updateHoveredItemReducer,
+	updateSectionConfigReducer
 ];
 
 export {reducers};

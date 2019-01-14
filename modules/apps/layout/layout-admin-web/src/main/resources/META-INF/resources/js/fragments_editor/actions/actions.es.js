@@ -22,4 +22,5 @@ export const UPDATE_HIGHLIGHT_MAPPING_STATUS = 'updateHighlightMappingStatus';
 export const UPDATE_HOVERED_ITEM = 'updateHoveredItem';
 export const UPDATE_LAST_SAVE_DATE = 'updateLastSaveDate';
 export const UPDATE_SAVING_CHANGES_STATUS = 'updateSavingChangesStatus';
+export const UPDATE_SECTION_CONFIG = 'updateSectionConfig';
 export const UPDATE_TRANSLATION_STATUS = 'updateTranslationStatus';

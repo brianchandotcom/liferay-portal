@@ -8,13 +8,13 @@ export const CONJUNCTIONS = {
 };
 
 export const FUNCTIONAL_OPERATORS = {
-	CONTAINS: 'contains',
+	CONTAINS: 'contains'
 };
 
 export const NOT_OPERATORS = {
 	NOT_CONTAINS: 'not-contains',
 	NOT_EQ: 'not-eq'
-}
+};
 
 export const GROUP = 'GROUP';
 
@@ -43,7 +43,7 @@ export const PROPERTY_TYPES = {
 
 const {AND, OR} = CONJUNCTIONS;
 const {EQ, GE, GT, LE, LT} = RELATIONAL_OPERATORS;
-const {NOT_EQ, NOT_CONTAINS} = NOT_OPERATORS;
+const {NOT_CONTAINS, NOT_EQ} = NOT_OPERATORS;
 const {CONTAINS} = FUNCTIONAL_OPERATORS;
 const {BOOLEAN, DATE, NUMBER, STRING} = PROPERTY_TYPES;
 

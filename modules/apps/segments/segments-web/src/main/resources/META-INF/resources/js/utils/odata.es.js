@@ -94,9 +94,10 @@ function buildQueryString(criteria, queryConjunction) {
 						operatorName: baseOperator,
 						propertyName,
 						value
-					}]
+					}];
 
-					//Not is wrapped in a group to simplify AST parsing
+					// Not is wrapped in a group to simplify AST parsing.
+
 					queryString = queryString.concat(
 						`(not (${buildQueryString(baseExpression)}))`
 					);
@@ -125,7 +126,9 @@ function getChildExpressionName(oDataASTNode) {
 function getConjunctionForGroup(oDataASTNode) {
 	const childExpressionName = getChildExpressionName(oDataASTNode);
 
-	return isValueType(CONJUNCTIONS, childExpressionName) ? childExpressionName : CONJUNCTIONS.AND;
+	return isValueType(CONJUNCTIONS, childExpressionName) ?
+		childExpressionName :
+		CONJUNCTIONS.AND;
 }
 
 /**
@@ -146,7 +149,7 @@ function getExpressionName(oDataASTNode) {
 }
 
 function getFunctionName(oDataASTNode) {
-	return oDataV4ParserNameMap[oDataASTNode.value.method]
+	return oDataV4ParserNameMap[oDataASTNode.value.method];
 }
 
 /**
@@ -183,11 +186,14 @@ const getNextOperatorExpression = oDataASTNode => {
 
 	const type = nextNode.type;
 
-	if (type === 'BoolParenExpression' || type === 'AndExpression' || type === 'OrExpression') {
+	if (type === 'BoolParenExpression' ||
+		type === 'AndExpression' ||
+		type === 'OrExpression'
+	) {
 		returnValue = getNextOperatorExpression(nextNode);
 	}
 	else {
-		returnValue = nextNode
+		returnValue = nextNode;
 	}
 
 	return returnValue;
@@ -200,7 +206,13 @@ const getNextOperatorExpression = oDataASTNode => {
  * @param {string} prevConjunction
  * @returns boolean of whether a grouping has different conjunctions.
  */
-function hasDifferentConjunctions({lastNodeWasGroup, oDataASTNode, prevConjunction}) {
+function hasDifferentConjunctions(
+	{
+		lastNodeWasGroup,
+		oDataASTNode,
+		prevConjunction
+	}
+) {
 	return prevConjunction !== oDataASTNode.type && !lastNodeWasGroup;
 }
 
@@ -415,7 +427,7 @@ function transformNotNode({oDataASTNode}) {
 				propertyName: nextNodeExpression.value.parameters[0].raw,
 				value: nextNodeExpression.value.parameters[1].raw.replace(/['"]+/g, '')
 			}
-		]
+		];
 	}
 	else if (nextNodeExpressionName == OPERATORS.EQ) {
 		returnValue = [
@@ -424,7 +436,7 @@ function transformNotNode({oDataASTNode}) {
 				propertyName: nextNodeExpression.value.left.raw,
 				value: nextNodeExpression.value.right.raw.replace(/['"]+/g, '')
 			}
-		]
+		];
 	}
 
 	return returnValue;

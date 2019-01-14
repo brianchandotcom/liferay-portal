@@ -186,7 +186,6 @@ public class FragmentsEditorDisplayContext {
 			"sections",
 			_getSoyContextFragmentCollections(
 				FragmentEntryTypeConstants.TYPE_SECTION));
-
 		soyContext.put(
 			"spritemap",
 			_themeDisplay.getPathThemeImages() + "/lexicon/icons.svg");
@@ -194,7 +193,6 @@ public class FragmentsEditorDisplayContext {
 			"updateLayoutPageTemplateDataURL",
 			_getFragmentEntryActionURL(
 				"/content_layout/update_layout_page_template_data"));
-
 		soyContext.put("widgets", _getWidgetsSoyContexts());
 
 		_editorSoyContext = soyContext;
@@ -413,6 +411,9 @@ public class FragmentsEditorDisplayContext {
 			return _panelSoyContexts;
 		}
 
+		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+			"content.Language", _request.getLocale(), getClass());
+
 		List<SoyContext> soyContexts = new ArrayList<>();
 
 		SoyContext availableSoyContext =
@@ -420,13 +421,10 @@ public class FragmentsEditorDisplayContext {
 
 		availableSoyContext.put("icon", "cards");
 		availableSoyContext.put(
-			"label", LanguageUtil.get(_themeDisplay.getLocale(), "sections"));
+			"label", LanguageUtil.get(resourceBundle, "sections"));
 		availableSoyContext.put("panelId", "sections");
 
 		soyContexts.add(availableSoyContext);
-
-		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-			"content.Language", _request.getLocale(), getClass());
 
 		availableSoyContext = SoyContextFactoryUtil.createSoyContext();
 
@@ -441,7 +439,7 @@ public class FragmentsEditorDisplayContext {
 
 		availableSoyContext.put("icon", "pages-tree");
 		availableSoyContext.put(
-			"label", LanguageUtil.get(_themeDisplay.getLocale(), "structure"));
+			"label", LanguageUtil.get(resourceBundle, "structure"));
 		availableSoyContext.put("panelId", "structure");
 
 		soyContexts.add(availableSoyContext);
@@ -536,7 +534,6 @@ public class FragmentsEditorDisplayContext {
 					"title",
 					PortalUtil.getPortletTitle(
 						portlet, _themeDisplay.getLocale()));
-
 				portletContext.put(
 					"used",
 					layoutTypePortlet.hasPortletId(portlet.getPortletId()));
@@ -680,7 +677,6 @@ public class FragmentsEditorDisplayContext {
 
 				categoryContext.put(
 					"categories", _getWidgetCategoriesContexts(category));
-
 				categoryContext.put(
 					"path",
 					StringUtil.replace(

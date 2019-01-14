@@ -322,6 +322,10 @@ name = HtmlUtil.escapeJS(name);
 		setHTML: function(value) {
 			var editor;
 
+			if (typeof value !== 'string') {
+				value = '';
+			}
+
 			if (window['<%= name %>'].instanceReady) {
 				editor = tinyMCE.editors['<%= name %>'];
 				editor.setContent(value);

@@ -33,6 +33,15 @@ import java.util.Collections;
  */
 public class TCKJunitBatchTestClassGroup extends BatchTestClassGroup {
 
+	@Override
+	public int getAxisCount() {
+		if (testRelevantCoreIntegrationUnitOnly) {
+			return 0;
+		}
+
+		return super.getAxisCount();
+	}
+
 	public static class TCKBatchTestClass extends BaseTestClass {
 
 		protected static TCKBatchTestClass getInstance(

@@ -38,6 +38,10 @@ public class ServiceBuilderBatchTestClassGroup
 
 	@Override
 	public int getAxisCount() {
+		if (testRelevantCoreIntegrationUnitOnly) {
+			return 0;
+		}
+
 		if ((_buildType == BuildType.FULL) ||
 			(testClasses.isEmpty() && (_buildType == BuildType.CORE))) {
 

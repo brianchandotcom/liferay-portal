@@ -39,6 +39,15 @@ import org.apache.commons.lang.StringEscapeUtils;
 public class NPMTestBatchTestClassGroup extends BatchTestClassGroup {
 
 	@Override
+	public int getAxisCount() {
+		if (testRelevantCoreIntegrationUnitOnly) {
+			return 0;
+		}
+
+		return super.getAxisCount();
+	}
+
+	@Override
 	public AxisTestClassGroup getAxisTestClassGroup(int axisId) {
 		if (axisId != 0) {
 			throw new IllegalArgumentException("axisId is not 0");

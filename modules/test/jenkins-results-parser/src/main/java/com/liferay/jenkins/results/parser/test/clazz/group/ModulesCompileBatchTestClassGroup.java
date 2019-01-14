@@ -36,6 +36,15 @@ import java.util.List;
 public class ModulesCompileBatchTestClassGroup
 	extends ModulesBatchTestClassGroup {
 
+	@Override
+	public int getAxisCount() {
+		if (testRelevantCoreIntegrationUnitOnly) {
+			return 0;
+		}
+
+		return super.getAxisCount();
+	}
+
 	public static class ModulesCompileBatchTestClass
 		extends ModulesBatchTestClass {
 

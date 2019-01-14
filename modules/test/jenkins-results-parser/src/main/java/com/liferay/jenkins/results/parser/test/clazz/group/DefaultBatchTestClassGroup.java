@@ -21,6 +21,15 @@ import com.liferay.jenkins.results.parser.PortalTestClassJob;
  */
 public class DefaultBatchTestClassGroup extends BatchTestClassGroup {
 
+	@Override
+	public int getAxisCount() {
+		if (testRelevantCoreIntegrationUnitOnly) {
+			return 0;
+		}
+
+		return super.getAxisCount();
+	}
+
 	protected DefaultBatchTestClassGroup(
 		String batchName, PortalTestClassJob portalTestClassJob) {
 

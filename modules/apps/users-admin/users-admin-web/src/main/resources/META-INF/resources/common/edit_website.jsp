@@ -18,8 +18,6 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String actionName = (String)request.getAttribute(UsersAdminWebKeys.ACTION_COMMAND_NAME);
-
 String backURL = ParamUtil.getString(request, "backURL");
 String className = ParamUtil.getString(request, "className");
 Long classPK = ParamUtil.getLong(request, "classPK");
@@ -48,7 +46,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "contact
 PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, sheetTitle), null);
 %>
 
-<portlet:actionURL name="<%= actionName %>" var="actionURL" />
+<portlet:actionURL name="/users_admin/update_contact_information" var="actionURL" />
 
 <aui:form action="<%= actionURL %>" method="post" name="fm">
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
@@ -57,6 +55,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, sheetTit
 	<aui:input name="className" type="hidden" value="<%= className %>" />
 	<aui:input name="classPK" type="hidden" value="<%= String.valueOf(classPK) %>" />
 	<aui:input name="errorMvcRenderCommandName" type="hidden" value="/users_admin/edit_website" />
+	<aui:input name="listType" type="hidden" value="<%= ListTypeConstants.WEBSITE %>" />
 	<aui:input name="primaryKey" type="hidden" value="<%= String.valueOf(primaryKey) %>" />
 	<aui:input name="sheetTitle" type="hidden" value="<%= sheetTitle %>" />
 
@@ -81,9 +80,6 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, sheetTit
 				/>
 
 				<aui:model-context bean="<%= website %>" model="<%= Website.class %>" />
-
-				<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.EDIT %>" />
-				<aui:input name="listType" type="hidden" value="<%= ListTypeConstants.WEBSITE %>" />
 
 				<aui:input checked="<%= (website != null)? website.isPrimary() : false %>" id="websitePrimary" label="make-primary" name="websitePrimary" type="checkbox" />
 

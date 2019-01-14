@@ -1,7 +1,12 @@
-task compileInstaller(type: Exec)
+import com.liferay.gradle.plugins.go.tasks.ExecuteGoTask
+
+apply plugin: "com.liferay.go.defaults"
+
+task compileInstaller(type: ExecuteGoTask)
 task createInstaller(type: Copy)
-task getInstallerDependencies(type: Exec)
+task getInstallerDependencies(type: ExecuteGoTask)
 task installComponentMavenArtifacts(type: Exec)
+task installGox(type: ExecuteGoTask)
 task packageInstaller(type: Zip)
 
 defaultTasks "packageInstaller"
@@ -10,9 +15,10 @@ Date now = new Date()
 
 compileInstaller {
 	dependsOn getInstallerDependencies
+	dependsOn installGox
 
-	commandLine _getCommand("gox -osarch=\"darwin/amd64 linux/amd64 windows/amd64\" -output \"${buildDir}/talend-installer/{{.Dir}}-{{.OS}}-{{.Arch}}\" talend-installer/go")
-	workingDir 'go'
+	args "-osarch=darwin/amd64 linux/amd64 windows/amd64", "-output", "${buildDir}/talend-installer/{{.Dir}}-{{.OS}}-{{.Arch}}", "talend-installer/go"
+	command "gox"
 }
 
 createInstaller {
@@ -25,12 +31,15 @@ createInstaller {
 getInstallerDependencies {
 	dependsOn installComponentMavenArtifacts
 
-	commandLine _getCommand("go mod tidy")
-	workingDir 'go'
+	args "mod", "tidy"
 }
 
 installComponentMavenArtifacts {
 	commandLine _getCommand("mvn clean install -f ./../pom.xml")
+}
+
+installGox {
+	args "get", "github.com/mitchellh/gox"
 }
 
 packageInstaller {

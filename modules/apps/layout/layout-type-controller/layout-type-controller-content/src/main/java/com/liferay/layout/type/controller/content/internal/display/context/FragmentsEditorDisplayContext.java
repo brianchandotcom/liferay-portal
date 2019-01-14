@@ -461,6 +461,10 @@ public class FragmentsEditorDisplayContext {
 	private String _getPortletCategoryTitle(PortletCategory portletCategory) {
 		String title = LanguageUtil.get(_request, portletCategory.getName());
 
+		if (Validator.isNotNull(title)) {
+			return title;
+		}
+
 		for (String portletId :
 				PortletCategoryUtil.getFirstChildPortletIds(portletCategory)) {
 
@@ -473,21 +477,21 @@ public class FragmentsEditorDisplayContext {
 
 			PortletApp portletApp = portlet.getPortletApp();
 
-			if (portletApp.isWARFile() && Validator.isNull(title)) {
-				PortletConfig portletConfig = PortletConfigFactoryUtil.create(
-					portlet, _request.getServletContext());
-
-				ResourceBundle portletResourceBundle =
-					portletConfig.getResourceBundle(_themeDisplay.getLocale());
-
-				title = ResourceBundleUtil.getString(
-					portletResourceBundle, portletCategory.getName());
-
-				break;
+			if (!portletApp.isWARFile()) {
+				continue;
 			}
+
+			PortletConfig portletConfig = PortletConfigFactoryUtil.create(
+				portlet, _request.getServletContext());
+
+			ResourceBundle portletResourceBundle =
+				portletConfig.getResourceBundle(_themeDisplay.getLocale());
+
+			return ResourceBundleUtil.getString(
+				portletResourceBundle, portletCategory.getName());
 		}
 
-		return title;
+		return StringPool.BLANK;
 	}
 
 	private List<SoyContext> _getPortletsContexts(

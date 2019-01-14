@@ -3,7 +3,6 @@
 This project contains the source code for the cross platform compatible
 installer for Talend Open Studio (TOS) written in Go.
 
-
 ## Prerequisites
 
 * JDK 1.8+
@@ -26,7 +25,7 @@ installer for Talend Open Studio (TOS) written in Go.
 2. Build the `installer` (Go module) with Gox to have cross platform binaries
 	* `gox -osarch="darwin/amd64 linux/amd64 windows/amd64" -output $GOPATH"bin/talend-installer/{{.Dir}}-{{.OS}}-{{.Arch}}" installer`
 	* The tool above creates a new folder in your workspace `$GOPATH/bin` folder named `talend-installer`
-	* The installer binaries for Windows / Mac / Linux (64 bit) will be located in the `talend-installer` directory: 
+	* The installer binaries for Windows / Mac / Linux (64 bit) will be located in the `talend-installer` directory:
 	```
 		installer-darwin-amd64 -------> For macOS
 		installer-linux-amd64  -------> Linux
@@ -43,7 +42,7 @@ _(TOS_ESB-${timestamp}-${version}.zip)_ and there you can find the `Studio/` nam
 folder.
 
 For example, you can run the installer on Linux 64 bit with the following
-command 
+command
 
 ```
 $ cd /usr/talend-installer

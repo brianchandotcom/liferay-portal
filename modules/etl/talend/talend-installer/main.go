@@ -8,9 +8,9 @@ import (
 	"path/filepath"
 	"strings"
 
-	"installer/constants"
-	"installer/utils/fileutils"
-	"installer/verifier"
+	"talend-installer/constants"
+	"talend-installer/utils/fileutils"
+	"talend-installer/verifier"
 )
 
 func displayInitializationMessages() {

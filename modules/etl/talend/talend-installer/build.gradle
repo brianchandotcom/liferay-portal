@@ -11,7 +11,7 @@ Date now = new Date()
 compileInstaller {
 	dependsOn getInstallerDependencies
 
-	commandLine _getCommand("gox -osarch=\"darwin/amd64 linux/amd64 windows/amd64\" -output \"${buildDir}/talend-installer/{{.Dir}}-{{.OS}}-{{.Arch}}\" installer")
+	commandLine _getCommand("gox -osarch=\"darwin/amd64 linux/amd64 windows/amd64\" -output \"${buildDir}/talend-installer/{{.Dir}}-{{.OS}}-{{.Arch}}\" talend-installer")
 }
 
 createInstaller {

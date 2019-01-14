@@ -9,7 +9,7 @@ import (
 	"os"
 	"path/filepath"
 
-	"installer/constants"
+	"talend-installer/constants"
 
 	"github.com/otiai10/copy"
 )

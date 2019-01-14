@@ -1,4 +1,4 @@
-module installer
+module talend-installer
 
 require (
 	bou.ke/monkey v1.0.1 // indirect

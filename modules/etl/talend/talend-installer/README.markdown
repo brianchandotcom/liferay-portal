@@ -13,17 +13,17 @@ installer for Talend Open Studio (TOS) written in Go.
 ## Packaging for distribution
 
 1. Run the `packageInstaller` task in the `build.gradle` script which can be
-	found in the [installer](https://github.com/liferay/liferay-portal/tree/master/modules/etl/talend/installer)
+	found in the [talend-installer](https://github.com/liferay/liferay-portal/tree/master/modules/etl/talend/talend-installer)
 	directory
 2. It compiles and creates the installer for different OSes and archives
 	it in Zip format, finally places it in the following directory:
-	`installer/build/dist/` named as `tLiferayComponents-TOS-${version}-yyyyMMddHHmmssSSS.zip`
+	`talend-installer/build/dist/` named as `tLiferayComponents-TOS-${version}-yyyyMMddHHmmssSSS.zip`
 
 ## Manual Build
 
-1. Navigate to the [installer](https://github.com/liferay/liferay-portal/tree/master/modules/etl/talend/installer)
+1. Navigate to the [talend-installer](https://github.com/liferay/liferay-portal/tree/master/modules/etl/talend/talend-installer)
 2. Build the `installer` (Go module) with Gox to have cross platform binaries
-	* `gox -osarch="darwin/amd64 linux/amd64 windows/amd64" -output $GOPATH"bin/talend-installer/{{.Dir}}-{{.OS}}-{{.Arch}}" installer`
+	* `gox -osarch="darwin/amd64 linux/amd64 windows/amd64" -output $GOPATH"bin/talend-installer/{{.Dir}}-{{.OS}}-{{.Arch}}" talend-installer`
 	* The tool above creates a new folder in your workspace `$GOPATH/bin` folder named `talend-installer`
 	* The installer binaries for Windows / Mac / Linux (64 bit) will be located in the `talend-installer` directory:
 	```

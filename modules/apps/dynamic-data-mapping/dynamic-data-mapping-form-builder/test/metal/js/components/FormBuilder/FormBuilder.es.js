@@ -207,6 +207,19 @@ describe(
 		);
 
 		it(
+			'should open the sidebar when attached and there are no fields on the active page',
+			() => {
+				const spy = jest.spyOn(component, 'openSidebar');
+
+				component.props.pages = [{rows: [{columns: [{fields: []}]}]}];
+
+				component.attached();
+
+				expect(spy).toHaveBeenCalled();
+			}
+		);
+
+		it(
 			'should open the sidebar when a field is clicked',
 			() => {
 				const {FormRenderer} = component.refs;

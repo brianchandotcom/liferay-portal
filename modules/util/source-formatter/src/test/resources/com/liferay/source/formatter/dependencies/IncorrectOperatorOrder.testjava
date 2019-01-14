@@ -283,4 +283,44 @@ public class IncorrectOperatorOrder {
 		}
 	}
 
+	public void testVariableWithUnaryOperator() {
+		int a = 3;
+
+		if (a == a) {
+			System.out.println("OK");
+		}
+
+		if (a == -a) {
+			System.out.println("OK");
+		}
+
+		if (-a == -a) {
+			System.out.println("OK");
+		}
+
+		if (-a == a) {
+			System.out.println("OK");
+		}
+
+		if (a == +a) {
+			System.out.println("OK");
+		}
+
+		if (+a == +a) {
+			System.out.println("OK");
+		}
+
+		if (+a == a) {
+			System.out.println("OK");
+		}
+
+		if (+a == -a) {
+			System.out.println("OK");
+		}
+
+		if (-a == +a) {
+			System.out.println("OK");
+		}
+	}
+
 }

@@ -2,7 +2,7 @@ import React from 'react';
 
 export default class ProcessListItem extends React.Component {
 	render() {
-		const {onTime, instancesCount, overdue, processName} = this.props;
+		const {instancesCount, onTime, overdue, processName} = this.props;
 
 		return (
 			<tr>

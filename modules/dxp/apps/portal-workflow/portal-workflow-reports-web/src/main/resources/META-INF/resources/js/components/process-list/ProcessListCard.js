@@ -34,7 +34,7 @@ export default class ProcessListCard extends React.Component {
 		graphqlClient.resetStore();
 	}
 
-	requestData({start, size}) {
+	requestData({size, start}) {
 		const {companyId} = this.props;
 
 		return graphqlClient
@@ -75,7 +75,7 @@ export default class ProcessListCard extends React.Component {
 	}
 
 	render() {
-		const {selectedEntry, processes, start, total} = this.state;
+		const {processes, selectedEntry, start, total} = this.state;
 		const entries = [5, 10, 20, 30, 50, 75];
 
 		const paginationBar = () => {

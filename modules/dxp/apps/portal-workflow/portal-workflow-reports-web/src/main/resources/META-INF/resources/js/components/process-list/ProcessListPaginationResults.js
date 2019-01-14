@@ -2,7 +2,7 @@ import React from 'react';
 
 export default class ProcessListPaginationResults extends React.Component {
 	render() {
-		const {start, count, total} = this.props;
+		const {count, start, total} = this.props;
 
 		return (
 			<div className="pagination-results">

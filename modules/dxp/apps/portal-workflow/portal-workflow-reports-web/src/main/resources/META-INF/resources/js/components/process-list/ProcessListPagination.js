@@ -26,7 +26,7 @@ export default class ProcessListPagination extends React.Component {
 
 		const pages = Math.ceil(totalCount / entry);
 
-		const pagesRender = () => {
+		const renderPages = () => {
 			const rows = [];
 
 			for (let i = 0; i < pages; i++) {
@@ -50,7 +50,7 @@ export default class ProcessListPagination extends React.Component {
 					type="prev"
 				/>
 
-				{pagesRender()}
+				{renderPages()}
 
 				<ProcessListPaginationItem
 					onChangePage={this.goToPage}

@@ -79,6 +79,46 @@ describe(
 				);
 
 				it(
+					'should handle a query string with "not" operator',
+					() => {
+						expect(ODataUtil.translateQueryToCriteria(`(not (firstName eq 'test'))`))
+							.toEqual(
+								{
+									'conjunctionName': 'and',
+									'groupId': 'group_01',
+									'items': [
+										{
+											'operatorName': 'not-eq',
+											'propertyName': 'firstName',
+											'value': 'test'
+										}
+									]
+								}
+							);
+					}
+				);
+
+				it(
+					'should handle a query string with "contains" operator',
+					() => {
+						expect(ODataUtil.translateQueryToCriteria(`contains(firstName, 'test')`))
+							.toEqual(
+								{
+									'conjunctionName': 'and',
+									'groupId': 'group_01',
+									'items': [
+										{
+											'operatorName': 'contains',
+											'propertyName': 'firstName',
+											'value': 'test'
+										}
+									]
+								}
+							);
+					}
+				);
+
+				it(
 					'should return null if the query is empty or invalid',
 					() => {
 						expect(ODataUtil.translateQueryToCriteria())
@@ -100,24 +140,91 @@ describe(
 				it(
 					'should be able to translate a query string to map and back to string',
 					() => {
-						const translatedMap = ODataUtil.translateQueryToCriteria('(firstName eq \'test\')');
+						const testQuery = '(firstName eq \'test\')';
+
+						const translatedMap = ODataUtil.translateQueryToCriteria(testQuery);
 
 						const translatedString = ODataUtil.buildQueryString([translatedMap]);
 
-						expect(translatedString)
-							.toEqual('(firstName eq \'test\')');
+						expect(translatedString).toEqual(testQuery);
 					}
 				);
 
 				it(
 					'should be able to translate a complex query string to map and back to string',
 					() => {
-						const translatedMap = ODataUtil.translateQueryToCriteria('((firstName eq \'test\' or firstName eq \'test\') and firstName eq \'test\')');
+						const testQuery = '((firstName eq \'test\' or firstName eq \'test\') and firstName eq \'test\')';
+
+						const translatedMap = ODataUtil.translateQueryToCriteria(testQuery);
 
 						const translatedString = ODataUtil.buildQueryString([translatedMap]);
 
-						expect(translatedString)
-							.toEqual('((firstName eq \'test\' or firstName eq \'test\') and firstName eq \'test\')');
+						expect(translatedString).toEqual(testQuery);
+					}
+				);
+
+				it(
+					'should be able to translate a query string with "not" to map and back to string',
+					() => {
+						const testQuery = '((not (firstName eq \'test\')))';
+
+						const translatedMap = ODataUtil.translateQueryToCriteria(testQuery);
+
+						const translatedString = ODataUtil.buildQueryString([translatedMap]);
+
+						expect(translatedString).toEqual(testQuery);
+					}
+				);
+
+				it(
+					'should be able to translate a complex query string with "not" to map and back to string',
+					() => {
+						const testQuery = '(firstName eq \'test\' and ((not (lastName eq \'foo\')) or (not (lastName eq \'bar\'))))';
+
+						const translatedMap = ODataUtil.translateQueryToCriteria(testQuery);
+
+						const translatedString = ODataUtil.buildQueryString([translatedMap]);
+
+						expect(translatedString).toEqual(testQuery);
+					}
+				);
+
+				it(
+					'should be able to translate a query string with "contains" to map and back to string',
+					() => {
+						const testQuery = '(contains(firstName, \'test\'))';
+
+						const translatedMap = ODataUtil.translateQueryToCriteria(testQuery);
+
+						const translatedString = ODataUtil.buildQueryString([translatedMap]);
+
+						expect(translatedString).toEqual(testQuery);
+					}
+				);
+
+				it(
+					'should be able to translate a query string with "contains" to map and back to string',
+					() => {
+						const testQuery = '(firstName eq \'test\' and (contains(lastName, \'foo\') or contains(lastName, \'bar\')))';
+
+						const translatedMap = ODataUtil.translateQueryToCriteria(testQuery);
+
+						const translatedString = ODataUtil.buildQueryString([translatedMap]);
+
+						expect(translatedString).toEqual(testQuery);
+					}
+				);
+
+				it(
+					'should be able to translate a query string with "not contains" to map and back to string',
+					() => {
+						const testQuery = '((not (contains(firstName, \'test\'))))';
+
+						const translatedMap = ODataUtil.translateQueryToCriteria(testQuery);
+
+						const translatedString = ODataUtil.buildQueryString([translatedMap]);
+
+						expect(translatedString).toEqual(testQuery);
 					}
 				);
 			}

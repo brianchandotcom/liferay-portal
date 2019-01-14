@@ -33,6 +33,7 @@ FragmentsEditorDisplayContext fragmentsEditorDisplayContext = (FragmentsEditorDi
 	context="<%= fragmentsEditorDisplayContext.getFragmentsEditorSidebarContext() %>"
 	module="layout-admin-web/js/fragments_editor/components/sidebar/FragmentsEditorSidebar.es"
 	templateNamespace="com.liferay.layout.admin.web.FragmentsEditorSidebar.render"
+	useNamespace="<%= false %>"
 />
 
 <soy:component-renderer
@@ -40,6 +41,7 @@ FragmentsEditorDisplayContext fragmentsEditorDisplayContext = (FragmentsEditorDi
 	context="<%= fragmentsEditorDisplayContext.getFragmentEntryLinkListContext() %>"
 	module="layout-admin-web/js/fragments_editor/components/fragment_entry_link/FragmentEntryLinkList.es"
 	templateNamespace="com.liferay.layout.admin.web.FragmentEntryLinkList.render"
+	useNamespace="<%= false %>"
 />
 
 <%

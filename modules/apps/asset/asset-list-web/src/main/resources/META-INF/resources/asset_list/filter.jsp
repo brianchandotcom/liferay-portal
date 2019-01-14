@@ -69,7 +69,7 @@
 
 				<soy:component-renderer
 					context="<%= context %>"
-					module='<%= npmResolvedPackageName + "/js/AutoField.es" %>'
+					module="js/AutoField.es"
 					templateNamespace="com.liferay.asset.list.web.AutoField.render"
 				/>
 			</liferay-frontend:fieldset>

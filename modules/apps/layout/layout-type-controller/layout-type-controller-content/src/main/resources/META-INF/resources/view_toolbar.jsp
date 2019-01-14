@@ -25,4 +25,5 @@ FragmentsEditorDisplayContext fragmentsEditorDisplayContext = (FragmentsEditorDi
 	context="<%= fragmentsEditorDisplayContext.getFragmentsEditorToolbarContext() %>"
 	module="layout-admin-web/js/fragments_editor/components/toolbar/FragmentsEditorToolbar.es"
 	templateNamespace="com.liferay.layout.admin.web.FragmentsEditorToolbar.render"
+	useNamespace="<%= false %>"
 />

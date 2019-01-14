@@ -124,7 +124,7 @@ JournalEditArticleDisplayContext journalEditArticleDisplayContext = new JournalE
 		<c:if test="<%= journalWebConfiguration.changeableDefaultLanguage() %>">
 			<soy:component-renderer
 				context="<%= journalEditArticleDisplayContext.getChangeDefaultLanguageSoyContext() %>"
-				module='<%= npmResolvedPackageName + "/js/ChangeDefaultLanguage.es" %>'
+				module="js/ChangeDefaultLanguage.es"
 				templateNamespace="com.liferay.journal.web.ChangeDefaultLanguage.render"
 			/>
 		</c:if>

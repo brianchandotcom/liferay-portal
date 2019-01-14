@@ -29,6 +29,6 @@ context.put("viewType", "tree");
 
 <soy:component-renderer
 	context="<%= context %>"
-	module='<%= npmResolvedPackageName + "/js/SelectCategory.es" %>'
+	module="js/SelectCategory.es"
 	templateNamespace="com.liferay.asset.categories.selector.web.SelectCategory.render"
 />

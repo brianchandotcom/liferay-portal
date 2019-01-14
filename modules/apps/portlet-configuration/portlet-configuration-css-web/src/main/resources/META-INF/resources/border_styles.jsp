@@ -31,7 +31,7 @@
 
 			<soy:component-renderer
 				context="<%= contextUseForAllWidth %>"
-				module='<%= npmResolvedPackageName + "/js/ToggleDisableInputs.es" %>'
+				module="js/ToggleDisableInputs.es"
 				templateNamespace="com.liferay.portlet.configuration.css.web.ToggleDisableInputs.render"
 			/>
 
@@ -88,7 +88,7 @@
 
 			<soy:component-renderer
 				context="<%= contextUseForAllStyle %>"
-				module='<%= npmResolvedPackageName + "/js/ToggleDisableInputs.es" %>'
+				module="js/ToggleDisableInputs.es"
 				templateNamespace="com.liferay.portlet.configuration.css.web.ToggleDisableInputs.render"
 			/>
 
@@ -156,7 +156,7 @@
 
 			<soy:component-renderer
 				context="<%= contextUseForAllColor %>"
-				module='<%= npmResolvedPackageName + "/js/ToggleDisableInputs.es" %>'
+				module="js/ToggleDisableInputs.es"
 				templateNamespace="com.liferay.portlet.configuration.css.web.ToggleDisableInputs.render"
 			/>
 
@@ -172,7 +172,7 @@
 
 			<soy:component-renderer
 				context="<%= contextBorderTop %>"
-				module='<%= npmResolvedPackageName + "/js/ColorPickerInput.es" %>'
+				module="js/ColorPickerInput.es"
 				templateNamespace="com.liferay.portlet.configuration.css.web.ColorPickerInput.render"
 			/>
 
@@ -190,7 +190,7 @@
 
 			<soy:component-renderer
 				context="<%= contextBorderRight %>"
-				module='<%= npmResolvedPackageName + "/js/ColorPickerInput.es" %>'
+				module="js/ColorPickerInput.es"
 				templateNamespace="com.liferay.portlet.configuration.css.web.ColorPickerInput.render"
 			/>
 
@@ -208,7 +208,7 @@
 
 			<soy:component-renderer
 				context="<%= contextBorderBottom %>"
-				module='<%= npmResolvedPackageName + "/js/ColorPickerInput.es" %>'
+				module="js/ColorPickerInput.es"
 				templateNamespace="com.liferay.portlet.configuration.css.web.ColorPickerInput.render"
 			/>
 
@@ -226,7 +226,7 @@
 
 			<soy:component-renderer
 				context="<%= contextBorderLeft %>"
-				module='<%= npmResolvedPackageName + "/js/ColorPickerInput.es" %>'
+				module="js/ColorPickerInput.es"
 				templateNamespace="com.liferay.portlet.configuration.css.web.ColorPickerInput.render"
 			/>
 		</aui:fieldset>

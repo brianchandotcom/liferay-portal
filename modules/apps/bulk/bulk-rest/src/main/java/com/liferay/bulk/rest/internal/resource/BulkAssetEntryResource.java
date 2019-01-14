@@ -73,24 +73,6 @@ import org.osgi.service.component.annotations.Reference;
 public class BulkAssetEntryResource {
 
 	@Consumes(ContentTypes.APPLICATION_JSON)
-	@Path("/categories/{classNameId}")
-	@POST
-	@Produces(ContentTypes.APPLICATION_JSON)
-	public BulkActionResponseModel editCategories(
-		@Context User user, @PathParam("classNameId") long classNameId,
-		BulkAssetEntryUpdateCategoriesActionModel
-			bulkAssetEntryUpdateCategoriesActionModel) {
-
-		try {
-			return _editCategories(
-				user, bulkAssetEntryUpdateCategoriesActionModel);
-		}
-		catch (Exception e) {
-			return new BulkActionResponseModel(e);
-		}
-	}
-
-	@Consumes(ContentTypes.APPLICATION_JSON)
 	@Path("/tags/{classNameId}/common")
 	@POST
 	@Produces(ContentTypes.APPLICATION_JSON)
@@ -125,10 +107,29 @@ public class BulkAssetEntryResource {
 	}
 
 	@Consumes(ContentTypes.APPLICATION_JSON)
+	@Path("/categories/{classNameId}")
+	@POST
+	@Produces(ContentTypes.APPLICATION_JSON)
+	public BulkActionResponseModel
+		updateBulkAssetEntryUpdateCategoriesActionModel(
+			@Context User user, @PathParam("classNameId") long classNameId,
+			BulkAssetEntryUpdateCategoriesActionModel
+				bulkAssetEntryUpdateCategoriesActionModel) {
+
+		try {
+			return _editCategories(
+				user, bulkAssetEntryUpdateCategoriesActionModel);
+		}
+		catch (Exception e) {
+			return new BulkActionResponseModel(e);
+		}
+	}
+
+	@Consumes(ContentTypes.APPLICATION_JSON)
 	@Path("/tags/{classNameId}")
 	@POST
 	@Produces(ContentTypes.APPLICATION_JSON)
-	public BulkActionResponseModel updateBulkActionResponseModel(
+	public BulkActionResponseModel updateBulkAssetEntryUpdateTagsActionModel(
 		@Context User user, @PathParam("classNameId") long classNameId,
 		BulkAssetEntryUpdateTagsActionModel
 			bulkAssetEntryUpdateTagsActionModel) {

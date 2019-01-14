@@ -4,6 +4,7 @@
  * FloatingToolbar
  */
 {template .render}
+	{@param elementId: string}
 	{@param? _panels: list<[
 		icon: string,
 		panelId: string,
@@ -32,6 +33,7 @@
 		{if $_selectedPanelId}
 			<div class="fragments-editor__floating-toolbar-panel popover">
 				{delcall com.liferay.layout.admin.web.FloatingToolbarPanel variant="$_selectedPanelId"}
+					{param elementId: $elementId /}
 					{param store: $store /}
 				{/delcall}
 			</div>
@@ -80,7 +82,8 @@
  * FloatingToolbarPanel
  */
 {deltemplate com.liferay.layout.admin.web.FloatingToolbarPanel}
+	{@param elementId: string}
 	{@param? store: ?}
 
-	<div>Toolbar Panel</div>
+	<div id="{$itemId}"></div>
 {/deltemplate}

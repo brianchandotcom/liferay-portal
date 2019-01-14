@@ -227,6 +227,7 @@
 
 		{if $hoveredItemId == $rowId and $hoveredItemType == $dropTargetItemTypes.section}
 			{call com.liferay.layout.admin.web.FloatingToolbar.render}
+				{param elementId: $rowId /}
 				{param store: $store /}
 			{/call}
 		{/if}

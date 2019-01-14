@@ -4,13 +4,14 @@ task getInstallerDependencies(type: Exec)
 task installComponentMavenArtifacts(type: Exec)
 task packageInstaller(type: Zip)
 
-def getDate() {
-	new Date().format('yyyyMMddHHmmssSSS')
-}
+defaultTasks "packageInstaller"
+
+Date now = new Date()
 
 compileInstaller {
-	commandLine _getCommand("gox -osarch=\"darwin/amd64 linux/amd64 windows/amd64\" -output \"${buildDir}/talend-installer/{{.Dir}}-{{.OS}}-{{.Arch}}\" installer")
 	dependsOn getInstallerDependencies
+
+	commandLine _getCommand("gox -osarch=\"darwin/amd64 linux/amd64 windows/amd64\" -output \"${buildDir}/talend-installer/{{.Dir}}-{{.OS}}-{{.Arch}}\" installer")
 }
 
 createInstaller {
@@ -21,8 +22,9 @@ createInstaller {
 }
 
 getInstallerDependencies {
-	commandLine _getCommand("go mod tidy")
 	dependsOn installComponentMavenArtifacts
+
+	commandLine _getCommand("go mod tidy")
 }
 
 installComponentMavenArtifacts {
@@ -32,13 +34,11 @@ installComponentMavenArtifacts {
 packageInstaller {
 	dependsOn createInstaller
 
-	archiveName = "tLiferayComponents-TOS-7.1.1-${getDate()}.zip"
+	archiveName = "tLiferayComponents-TOS-7.1.1-${now.format('yyyyMMddHHmmss')}.zip"
 	destinationDir = file("$buildDir/dist")
 
 	from "$buildDir/talend-installer"
 }
-
-defaultTasks "packageInstaller"
 
 private List<String> _getCommand(String command) {
 	if (File.pathSeparator.equals(";")) {

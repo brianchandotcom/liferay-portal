@@ -92,7 +92,7 @@ public class DESaveModelPermissionsDataDefinitionDataFetcher
 		}
 		catch (DEDataDefinitionException.MustHavePermission mhp) {
 			errorMessage = getMessage(
-				languageId, "the-user-must-have-data-definition-permission",
+				languageId, "the-user-must-have-permission",
 				getActionMessage(languageId, mhp.getActionId()));
 		}
 		catch (Exception e) {

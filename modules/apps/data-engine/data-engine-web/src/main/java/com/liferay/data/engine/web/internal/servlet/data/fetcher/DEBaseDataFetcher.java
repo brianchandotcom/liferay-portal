@@ -120,6 +120,18 @@ public abstract class DEBaseDataFetcher {
 		return new AggregateResourceBundle(resourceBundlesArray);
 	}
 
+	protected String getRolesMessage(String languageId, String... roleNames) {
+		ResourceBundle resourceBundle = getResourceBundle(languageId);
+
+		return Stream.of(
+			roleNames
+		).map(
+			roleName -> LanguageUtil.get(resourceBundle, roleName)
+		).collect(
+			Collectors.joining(StringPool.COMMA_AND_SPACE)
+		);
+	}
+
 	protected void handleErrorMessage(String errorMessage) {
 		throw new GraphQLException(StringPool.DOUBLE_DOLLAR + errorMessage);
 	}

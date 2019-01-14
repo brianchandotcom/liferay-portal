@@ -20,8 +20,6 @@ import com.liferay.data.engine.service.DEDataDefinitionSavePermissionsRequest;
 import com.liferay.data.engine.service.DEDataDefinitionSavePermissionsResponse;
 import com.liferay.data.engine.service.DEDataDefinitionService;
 import com.liferay.data.engine.web.internal.graphql.model.SavePermissionsDataDefinitionType;
-import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -31,9 +29,6 @@ import graphql.schema.DataFetchingEnvironment;
 
 import java.util.List;
 import java.util.Map;
-import java.util.ResourceBundle;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -115,18 +110,6 @@ public class DESavePermissionsDataDefinitionDataFetcher
 	@Override
 	protected Portal getPortal() {
 		return portal;
-	}
-
-	protected String getRolesMessage(String languageId, String... roleNames) {
-		ResourceBundle resourceBundle = getResourceBundle(languageId);
-
-		return Stream.of(
-			roleNames
-		).map(
-			roleName -> LanguageUtil.get(resourceBundle, roleName)
-		).collect(
-			Collectors.joining(StringPool.COMMA_AND_SPACE)
-		);
 	}
 
 	@Reference

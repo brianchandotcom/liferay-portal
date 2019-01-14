@@ -27,7 +27,8 @@ import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 
 import java.util.Enumeration;
-import java.util.Objects;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipFile;
 
 import org.apache.felix.fileinstall.ArtifactInstaller;
 
@@ -55,25 +56,25 @@ public class LPKGLicensedBundleTrackerCustomizer
 			return null;
 		}
 
-		Enumeration<URL> enumeration = bundle.findEntries("/", "*.xml", false);
-
-		if (enumeration == null) {
-			return null;
-		}
-
 		boolean hasLicense = false;
 
-		try {
-			while (enumeration.hasMoreElements()) {
-				url = enumeration.nextElement();
+		try (ZipFile zipFile = new ZipFile(new File(bundle.getLocation()))) {
+			Enumeration<? extends ZipEntry> zipEntries = zipFile.entries();
 
-				if (Objects.equals("/index.xml", url.getFile())) {
+			while (zipEntries.hasMoreElements()) {
+				ZipEntry zipEntry = zipEntries.nextElement();
+
+				String zipEntryName = zipEntry.getName();
+
+				if (!zipEntryName.endsWith(".xml")) {
 					continue;
 				}
 
 				Path tempFilePath = Files.createTempFile(null, ".xml");
 
-				try (InputStream inputStream = url.openStream()) {
+				try (InputStream inputStream = zipFile.getInputStream(
+						zipEntry)) {
+
 					Files.copy(
 						inputStream, tempFilePath,
 						StandardCopyOption.REPLACE_EXISTING);

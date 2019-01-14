@@ -43,17 +43,6 @@ public abstract class BaseEditContactInformationMVCRenderCommand
 
 		String className = ParamUtil.getString(renderRequest, "className");
 
-		if (className.equals(Organization.class.getName())) {
-			renderRequest.setAttribute(
-				UsersAdminWebKeys.ACTION_COMMAND_NAME,
-				"/users_admin/update_organization_contact_information");
-		}
-		else {
-			renderRequest.setAttribute(
-				UsersAdminWebKeys.ACTION_COMMAND_NAME,
-				"/users_admin/update_user_contact_information");
-		}
-
 		PortletConfig portletConfig = (PortletConfig)renderRequest.getAttribute(
 			JavaConstants.JAVAX_PORTLET_CONFIG);
 

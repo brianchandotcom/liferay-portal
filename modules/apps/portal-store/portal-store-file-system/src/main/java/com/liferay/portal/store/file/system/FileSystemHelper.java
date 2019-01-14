@@ -74,7 +74,7 @@ public class FileSystemHelper {
 
 	public void copy(File source, File destination) throws IOException {
 		if (_supportHardLink) {
-			Files.createLink(source.toPath(), destination.toPath());
+			Files.createLink(destination.toPath(), source.toPath());
 		}
 		else {
 			destination.createNewFile();

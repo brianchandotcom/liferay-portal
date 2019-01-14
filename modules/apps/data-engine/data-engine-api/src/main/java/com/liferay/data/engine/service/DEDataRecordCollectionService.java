@@ -21,6 +21,43 @@ import com.liferay.data.engine.exception.DEDataRecordCollectionException;
  */
 public interface DEDataRecordCollectionService {
 
+	/**
+	 * Execute the Delete Model Permissions Request which can revoke a
+	 * permission to a role to not perform actions involving a Data Record
+	 * Collection model
+	 *
+	 * @param deDataRecordCollectionSaveModelPermissionsRequest
+	 * @return {@link DEDataRecordCollectionSaveModelPermissionsResponse}
+	 * @review
+	 */
+	public DEDataRecordCollectionDeleteModelPermissionsResponse execute(
+			DEDataRecordCollectionDeleteModelPermissionsRequest
+				deDataRecordCollectionDeleteModelPermissionsRequest)
+		throws DEDataRecordCollectionException;
+
+	/**
+	 * Execute the Delete Permissions Request which can revoke permission to
+	 * a role to not perform actions involving a Data Record Collection
+	 *
+	 * @param deDataRecordCollectionSavePermissionsRequest
+	 * @return {@link DEDataRecordCollectionSavePermissionsResponse}
+	 * @review
+	 */
+	public DEDataRecordCollectionDeletePermissionsResponse execute(
+			DEDataRecordCollectionDeletePermissionsRequest
+				deDataRecordCollectionDeletePermissionsRequest)
+		throws DEDataRecordCollectionException;
+
+	public DEDataRecordCollectionSaveModelPermissionsResponse execute(
+			DEDataRecordCollectionSaveModelPermissionsRequest
+				deDataRecordCollectionSaveModelPermissionsRequest)
+		throws DEDataRecordCollectionException;
+
+	public DEDataRecordCollectionSavePermissionsResponse execute(
+			DEDataRecordCollectionSavePermissionsRequest
+				deDataRecordCollectionSavePermissionsRequest)
+		throws DEDataRecordCollectionException;
+
 	public DEDataRecordCollectionSaveResponse execute(
 			DEDataRecordCollectionSaveRequest deDataRecordCollectionSaveRequest)
 		throws DEDataRecordCollectionException;

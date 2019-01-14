@@ -21,11 +21,45 @@ import com.liferay.data.engine.model.DEDataRecordCollection;
  */
 public class DEDataRecordCollectionRequestBuilder {
 
+	public static DEDataRecordCollectionDeleteModelPermissionsRequest.Builder
+		deleteModelPermissionsBuilder(
+			long companyId, long scopedGroupId, long deDataRecordCollectionId,
+			String[] roleNames, String[] actionIds) {
+
+		return new DEDataRecordCollectionDeleteModelPermissionsRequest.Builder(
+			companyId, scopedGroupId, deDataRecordCollectionId, roleNames,
+			actionIds);
+	}
+
+	public static DEDataRecordCollectionDeletePermissionsRequest.Builder
+		deletePermissionsBuilder(
+			long companyId, long scopedGroupId, String... roleNames) {
+
+		return new DEDataRecordCollectionDeletePermissionsRequest.Builder(
+			companyId, scopedGroupId, roleNames);
+	}
+
 	public static DEDataRecordCollectionSaveRequest.Builder saveBuilder(
 		DEDataRecordCollection deDataRecordCollection) {
 
 		return new DEDataRecordCollectionSaveRequest.Builder(
 			deDataRecordCollection);
+	}
+
+	public static DEDataRecordCollectionSaveModelPermissionsRequest.Builder
+		saveModelPermissionsBuilder(
+			long companyId, long scopedGroupId, long deDataRecordCollectionId) {
+
+		return new DEDataRecordCollectionSaveModelPermissionsRequest.Builder(
+			companyId, scopedGroupId, deDataRecordCollectionId);
+	}
+
+	public static DEDataRecordCollectionSavePermissionsRequest.Builder
+		savePermissionsBuilder(
+			long companyId, long scopedGroupId, String... roleNames) {
+
+		return new DEDataRecordCollectionSavePermissionsRequest.Builder(
+			companyId, scopedGroupId, roleNames);
 	}
 
 }

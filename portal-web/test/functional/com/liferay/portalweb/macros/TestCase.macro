@@ -75,6 +75,8 @@ definition {
 			configurationScope = "Site Scope"
 		);
 
+		SystemSettings.saveConfiguration();
+		
 		SystemSettings.resetConfiguration();
 
         Click(locator1 = "Checkbox#ENABLE_EXPERIMENTAL_INTERFACE");

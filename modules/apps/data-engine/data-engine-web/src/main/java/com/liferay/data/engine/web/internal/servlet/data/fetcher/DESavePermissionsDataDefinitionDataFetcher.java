@@ -73,7 +73,8 @@ public class DESavePermissionsDataDefinitionDataFetcher
 			if (MapUtil.getBoolean(properties, "addDataDefinition")) {
 				builder = builder.allowAddDataDefinition();
 			}
-			else if (MapUtil.getBoolean(properties, "definePermissions")) {
+
+			if (MapUtil.getBoolean(properties, "definePermissions")) {
 				builder = builder.allowDefinePermissions();
 			}
 

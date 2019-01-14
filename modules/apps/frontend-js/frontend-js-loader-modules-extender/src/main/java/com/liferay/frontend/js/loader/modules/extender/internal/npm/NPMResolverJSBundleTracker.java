@@ -14,6 +14,8 @@
 
 package com.liferay.frontend.js.loader.modules.extender.internal.npm;
 
+import com.liferay.frontend.js.loader.modules.extender.npm.JSBundle;
+import com.liferay.frontend.js.loader.modules.extender.npm.JSBundleTracker;
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMRegistry;
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolvedPackageNameUtil;
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
@@ -25,75 +27,53 @@ import com.liferay.portal.kernel.util.StringUtil;
 
 import java.net.URL;
 
+import java.util.Collection;
+import java.util.Iterator;
+
 import javax.servlet.ServletContext;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
+import org.osgi.framework.InvalidSyntaxException;
 import org.osgi.framework.ServiceReference;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.util.tracker.ServiceTracker;
-import org.osgi.util.tracker.ServiceTrackerCustomizer;
 
 /**
  * @author Iván Zaera Avellón
  */
-@Component(immediate = true, service = ServiceTrackerCustomizer.class)
-public class NPMResolverServiceTrackerCustomizer
-	implements ServiceTrackerCustomizer<ServletContext, ServletContext> {
+@Component(immediate = true, service = JSBundleTracker.class)
+public class NPMResolverJSBundleTracker implements JSBundleTracker {
 
 	@Override
-	public ServletContext addingService(
-		ServiceReference<ServletContext> serviceReference) {
+	public void addedBundle(Bundle bundle, JSBundle jsBundle) {
+		ServiceReference<ServletContext> serviceReference =
+			_getServletContextReference(bundle);
 
-		Bundle bundle = serviceReference.getBundle();
-
-		URL url = bundle.getResource("META-INF/resources/package.json");
-
-		if (url == null) {
-			return null;
+		if (serviceReference == null) {
+			return;
 		}
 
 		ServletContext servletContext = _bundleContext.getService(
 			serviceReference);
 
-		NPMResolvedPackageNameUtil.set(
-			servletContext, _getNpmResolvedPackageName(bundle));
-
-		_bundleContext.ungetService(serviceReference);
-
-		return null;
+		try {
+			NPMResolvedPackageNameUtil.set(
+				servletContext, _getNpmResolvedPackageName(bundle));
+		}
+		finally {
+			_bundleContext.ungetService(serviceReference);
+		}
 	}
 
 	@Override
-	public void modifiedService(
-		ServiceReference<ServletContext> serviceReference,
-		ServletContext servletContext) {
-	}
-
-	@Override
-	public void removedService(
-		ServiceReference<ServletContext> serviceReference,
-		ServletContext servletContext) {
+	public void removedBundle(Bundle bundle, JSBundle jsBundle) {
 	}
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
 		_bundleContext = bundleContext;
-
-		_serviceTracker = new ServiceTracker(
-			bundleContext, ServletContext.class, this);
-
-		_serviceTracker.open();
-	}
-
-	@Deactivate
-	protected void deactivate() {
-		_serviceTracker.close();
-
-		_serviceTracker = null;
 	}
 
 	private String _getNpmResolvedPackageName(Bundle bundle) {
@@ -121,8 +101,34 @@ public class NPMResolverServiceTrackerCustomizer
 		return null;
 	}
 
+	private ServiceReference<ServletContext> _getServletContextReference(
+		Bundle bundle) {
+
+		try {
+			Collection<ServiceReference<ServletContext>> serviceReferences =
+				_bundleContext.getServiceReferences(
+					ServletContext.class,
+					"(service.bundleid=" + bundle.getBundleId() + ")");
+
+			Iterator<ServiceReference<ServletContext>> iterator =
+				serviceReferences.iterator();
+
+			if (iterator.hasNext()) {
+				return iterator.next();
+			}
+		}
+		catch (InvalidSyntaxException ise) {
+			_log.error(
+				"Unable to get ServletContext for bundle " +
+					bundle.getBundleId(),
+				ise);
+		}
+
+		return null;
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
-		NPMResolverServiceTrackerCustomizer.class);
+		NPMResolverJSBundleTracker.class);
 
 	private BundleContext _bundleContext;
 
@@ -131,7 +137,5 @@ public class NPMResolverServiceTrackerCustomizer
 
 	@Reference
 	private NPMRegistry _npmRegistry;
-
-	private ServiceTracker _serviceTracker;
 
 }

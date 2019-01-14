@@ -185,6 +185,7 @@ definition {
 			Navigator.gotoPage(pageName = "Announcements Page");
 
 			AnnouncementsEntry.addPG(
+				distributionScope = "General",
 				entryContent = "Announcements Entry Content ${entryCount}",
 				entryTitle = "Announcements Entry Title ${entryCount}",
 				entryURL = "http://www.liferay.com"

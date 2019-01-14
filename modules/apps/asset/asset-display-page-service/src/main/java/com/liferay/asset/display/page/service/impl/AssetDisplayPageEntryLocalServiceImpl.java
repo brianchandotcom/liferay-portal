@@ -22,6 +22,7 @@ import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryService;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.SystemEventConstants;
@@ -167,20 +168,17 @@ public class AssetDisplayPageEntryLocalServiceImpl
 				groupId, classNameId, assetEntry.getClassTypeId())
 		);
 
-		if (layoutPageTemplateEntry == null) {
-			String layoutUuid = assetEntry.getLayoutUuid();
-			long companyId = assetEntry.getCompanyId();
-
-			List<Layout> layoutList =
-				_layoutLocalService.getLayoutsByUuidAndCompanyId(
-					layoutUuid, companyId);
-
-			Layout layout = layoutList.get(0);
-
-			return layout.getPlid();
+		if (layoutPageTemplateEntry != null) {
+			return layoutPageTemplateEntry.getPlid();
 		}
 
-		return layoutPageTemplateEntry.getPlid();
+		List<Layout> layouts = _layoutLocalService.getLayoutsByUuidAndCompanyId(
+			assetEntry.getLayoutUuid(), assetEntry.getCompanyId(),
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+
+		Layout layout = layouts.get(0);
+
+		return layout.getPlid();
 	}
 
 	@ServiceReference(type = LayoutLocalService.class)

@@ -11,7 +11,7 @@ def getDate() {
 }
 
 compileInstaller {
-	commandLine _getCommand("gox -osarch=\"darwin/amd64 linux/amd64 windows/amd64\" -output \"build/talend-installer/{{.Dir}}-{{.OS}}-{{.Arch}}\" installer")
+	commandLine _getCommand("gox -osarch=\"darwin/amd64 linux/amd64 windows/amd64\" -output \"${buildDir}/talend-installer/{{.Dir}}-{{.OS}}-{{.Arch}}\" installer")
 	dependsOn getInstallerDependencies
 }
 
@@ -19,7 +19,7 @@ createInstaller {
 	dependsOn compileInstaller
 
 	from Paths.get("..", "tos-dependencies")
-	into Paths.get("build", "talend-installer")
+	into new File(buildDir, "talend-installer")
 }
 
 getInstallerDependencies {

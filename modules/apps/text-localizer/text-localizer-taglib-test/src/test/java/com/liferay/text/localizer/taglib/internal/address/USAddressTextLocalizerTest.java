@@ -17,8 +17,11 @@ package com.liferay.text.localizer.taglib.internal.address;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Address;
+import com.liferay.portal.kernel.model.AddressWrapper;
 import com.liferay.portal.kernel.model.Country;
+import com.liferay.portal.kernel.model.CountryWrapper;
 import com.liferay.portal.kernel.model.Region;
+import com.liferay.portal.kernel.model.RegionWrapper;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.Html;
 import com.liferay.portal.util.HtmlImpl;
@@ -237,25 +240,25 @@ public class USAddressTextLocalizerTest {
 	}
 
 	private void _setCountry(Address address, String countryName) {
-		Country country = Mockito.mock(Country.class);
+		Country country = new CountryWrapper(null) {
+
+			@Override
+			public long getCountryId() {
+				return RandomTestUtil.randomLong();
+			}
+
+			@Override
+			public String getName() {
+				return countryName;
+			}
+
+		};
 
 		Mockito.doReturn(
 			country
 		).when(
 			address
 		).getCountry();
-
-		Mockito.doReturn(
-			RandomTestUtil.randomLong()
-		).when(
-			country
-		).getCountryId();
-
-		Mockito.doReturn(
-			countryName
-		).when(
-			country
-		).getName();
 	}
 
 	private void _setRegion(Address address) {
@@ -263,25 +266,25 @@ public class USAddressTextLocalizerTest {
 	}
 
 	private void _setRegion(Address address, String regionName) {
-		Region region = Mockito.mock(Region.class);
+		Region region = new RegionWrapper(null) {
+
+			@Override
+			public String getName() {
+				return regionName;
+			}
+
+			@Override
+			public long getRegionId() {
+				return RandomTestUtil.randomLong();
+			}
+
+		};
 
 		Mockito.doReturn(
 			region
 		).when(
 			address
 		).getRegion();
-
-		Mockito.doReturn(
-			regionName
-		).when(
-			region
-		).getName();
-
-		Mockito.doReturn(
-			RandomTestUtil.randomLong()
-		).when(
-			region
-		).getRegionId();
 	}
 
 	private void _setStreets(Address address) {
@@ -313,37 +316,34 @@ public class USAddressTextLocalizerTest {
 	}
 
 	private Address _toEscapedModel(Address address) {
-		Address escapedAddress = Mockito.mock(Address.class);
+		Address escapedAddress = new AddressWrapper(null) {
 
-		Mockito.doAnswer(
-			invocationOnMock -> _html.escape(address.getCity())
-		).when(
-			escapedAddress
-		).getCity();
+			@Override
+			public String getCity() {
+				return _html.escape(address.getCity());
+			}
 
-		Mockito.doAnswer(
-			invocationOnMock -> _html.escape(address.getStreet1())
-		).when(
-			escapedAddress
-		).getStreet1();
+			@Override
+			public String getStreet1() {
+				return _html.escape(address.getStreet1());
+			}
 
-		Mockito.doAnswer(
-			invocationOnMock -> _html.escape(address.getStreet2())
-		).when(
-			escapedAddress
-		).getStreet2();
+			@Override
+			public String getStreet2() {
+				return _html.escape(address.getStreet2());
+			}
 
-		Mockito.doAnswer(
-			invocationOnMock -> _html.escape(address.getStreet3())
-		).when(
-			escapedAddress
-		).getStreet3();
+			@Override
+			public String getStreet3() {
+				return _html.escape(address.getStreet3());
+			}
 
-		Mockito.doAnswer(
-			invocationOnMock -> _html.escape(address.getZip())
-		).when(
-			escapedAddress
-		).getZip();
+			@Override
+			public String getZip() {
+				return _html.escape(address.getZip());
+			}
+
+		};
 
 		return escapedAddress;
 	}

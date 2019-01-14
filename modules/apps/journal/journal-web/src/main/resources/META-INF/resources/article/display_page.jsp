@@ -26,4 +26,5 @@ EditArticleDisplayPageDisplayContext editArticleDisplayPageDisplayContext = new 
 	classTypeId="<%= editArticleDisplayPageDisplayContext.getDDMStructureId() %>"
 	groupId="<%= editArticleDisplayPageDisplayContext.getGroupId() %>"
 	showPortletLayouts="<%= true %>"
+	showViewInContextLink="<%= editArticleDisplayPageDisplayContext.getClassNameId() > JournalArticleConstants.CLASSNAME_ID_DEFAULT %>"
 />

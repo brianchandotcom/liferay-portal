@@ -1,3 +1,4 @@
+import com.liferay.gradle.plugins.go.internal.util.OSDetector
 import com.liferay.gradle.plugins.go.tasks.ExecuteGoTask
 
 apply plugin: "com.liferay.go.defaults"
@@ -35,7 +36,7 @@ getInstallerDependencies {
 }
 
 installComponentMavenArtifacts {
-	commandLine _getCommand("mvn clean install -f ./../pom.xml")
+	commandLine OSDetector.getCLI(), "/c", "mvn clean install -f ./../pom.xml"
 }
 
 installGox {
@@ -49,12 +50,4 @@ packageInstaller {
 	destinationDir = file("$buildDir/dist")
 
 	from "$buildDir/talend-installer"
-}
-
-private List<String> _getCommand(String command) {
-	if (File.pathSeparator.equals(";")) {
-		return ["cmd.exe", "/c", "${command}"]
-	}
-
-	return ["/bin/sh", "-c", "${command}"]
 }

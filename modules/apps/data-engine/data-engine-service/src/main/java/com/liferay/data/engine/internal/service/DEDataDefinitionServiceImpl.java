@@ -396,12 +396,12 @@ public class DEDataDefinitionServiceImpl
 	}
 
 	public DEDataEngineRequestExecutor getDEDataEngineRequestExecutor() {
-		if (_deDeDataEngineRequestExecutor == null) {
-			_deDeDataEngineRequestExecutor = new DEDataEngineRequestExecutor(
+		if (_deDataEngineRequestExecutor == null) {
+			_deDataEngineRequestExecutor = new DEDataEngineRequestExecutor(
 				deDataDefinitionFieldsDeserializerTracker);
 		}
 
-		return _deDeDataEngineRequestExecutor;
+		return _deDataEngineRequestExecutor;
 	}
 
 	@Reference(
@@ -461,7 +461,7 @@ public class DEDataDefinitionServiceImpl
 	private DEDataDefinitionSaveRequestExecutor
 		_deDataDefinitionSaveRequestExecutor;
 	private DEDataDefinitionSearchExecutor _deDataDefinitionSearchExecutor;
-	private DEDataEngineRequestExecutor _deDeDataEngineRequestExecutor;
+	private DEDataEngineRequestExecutor _deDataEngineRequestExecutor;
 	private ModelResourcePermission<DEDataDefinition> _modelResourcePermission;
 
 }

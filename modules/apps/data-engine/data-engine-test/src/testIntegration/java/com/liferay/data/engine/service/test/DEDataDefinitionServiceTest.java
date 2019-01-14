@@ -29,11 +29,14 @@ import com.liferay.data.engine.service.DEDataDefinitionSaveModelPermissionsReque
 import com.liferay.data.engine.service.DEDataDefinitionSavePermissionsRequest;
 import com.liferay.data.engine.service.DEDataDefinitionSaveRequest;
 import com.liferay.data.engine.service.DEDataDefinitionSaveResponse;
+import com.liferay.data.engine.service.DEDataDefinitionSearchRequest;
+import com.liferay.data.engine.service.DEDataDefinitionSearchResponse;
 import com.liferay.data.engine.service.DEDataDefinitionService;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.RoleConstants;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
@@ -48,10 +51,12 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.search.test.util.IdempotentRetryAssert;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -74,19 +79,24 @@ public class DEDataDefinitionServiceTest {
 
 	@Before
 	public void setUp() throws Exception {
-		setUpPermissionThreadLocal();
-
 		_group = GroupTestUtil.addGroup();
+
+		_siteAdminUser = UserTestUtil.addGroupAdminUser(_group);
 
 		_siteMember = UserTestUtil.addGroupUser(
 			_group, RoleConstants.SITE_MEMBER);
 
 		_adminUser = UserTestUtil.addOmniAdminUser();
+
+		setUpPermissionThreadLocal();
+		setUpPrincipalThreadLocal();
 	}
 
 	@After
 	public void tearDown() {
 		PermissionThreadLocal.setPermissionChecker(_originalPermissionChecker);
+
+		PrincipalThreadLocal.setName(_originalName);
 	}
 
 	@Test
@@ -613,6 +623,208 @@ public class DEDataDefinitionServiceTest {
 	}
 
 	@Test
+	public void testSearchBlank() throws Exception {
+		int dataDefinitionTotal = 5;
+
+		for (int i = 0; i < dataDefinitionTotal; i++) {
+			DEDataEngineTestUtil.insertDEDataDefinition(
+				_adminUser, _group, "Description" + i, "Name" + i,
+				_deDataDefinitionService);
+		}
+
+		List<DEDataDefinition> deDataDefinitionsSearch = searchDataDefinition(
+			_group, "");
+
+		IdempotentRetryAssert.retryAssert(
+			3, TimeUnit.SECONDS,
+			() -> {
+				Assert.assertEquals(
+					deDataDefinitionsSearch.toString(), 5,
+					deDataDefinitionsSearch.size());
+
+				return null;
+			});
+	}
+
+	@Test
+	public void testSearchExactCaseSensitive() throws Exception {
+		int dataDefinitionTotal = 5;
+
+		for (int i = 0; i < dataDefinitionTotal; i++) {
+			DEDataEngineTestUtil.insertDEDataDefinition(
+				_adminUser, _group, "Description" + i, "Name" + i,
+				_deDataDefinitionService);
+		}
+
+		List<DEDataDefinition> deDataDefinitionsSearch = searchDataDefinition(
+			_group, "description1");
+
+		IdempotentRetryAssert.retryAssert(
+			3, TimeUnit.SECONDS,
+			() -> {
+				Assert.assertEquals(
+					deDataDefinitionsSearch.toString(), 1,
+					deDataDefinitionsSearch.size());
+
+				return null;
+			});
+	}
+
+	@Test
+	public void testSearchExactDescription() throws Exception {
+		int dataDefinitionTotal = 5;
+
+		for (int i = 0; i < dataDefinitionTotal; i++) {
+			DEDataEngineTestUtil.insertDEDataDefinition(
+				_adminUser, _group, "Description" + i, "Name" + i,
+				_deDataDefinitionService);
+		}
+
+		List<DEDataDefinition> deDataDefinitionsSearch = searchDataDefinition(
+			_group, "Description1");
+
+		IdempotentRetryAssert.retryAssert(
+			3, TimeUnit.SECONDS,
+			() -> {
+				Assert.assertEquals(
+					deDataDefinitionsSearch.toString(), 1,
+					deDataDefinitionsSearch.size());
+
+				return null;
+			});
+	}
+
+	@Test
+	public void testSearchExactName() throws Exception {
+		int dataDefinitionTotal = 5;
+
+		for (int i = 0; i < dataDefinitionTotal; i++) {
+			DEDataEngineTestUtil.insertDEDataDefinition(
+				_adminUser, _group, "Description" + i, "Name" + i,
+				_deDataDefinitionService);
+		}
+
+		List<DEDataDefinition> deDataDefinitionsSearch = searchDataDefinition(
+			_group, "Name1");
+
+		IdempotentRetryAssert.retryAssert(
+			3, TimeUnit.SECONDS,
+			() -> {
+				Assert.assertEquals(
+					deDataDefinitionsSearch.toString(), 1,
+					deDataDefinitionsSearch.size());
+
+				return null;
+			});
+	}
+
+	@Test
+	public void testSearchNonascii() throws Exception {
+		int dataDefinitionTotal = 5;
+
+		for (int i = 0; i < dataDefinitionTotal; i++) {
+			DEDataEngineTestUtil.insertDEDataDefinition(
+				_adminUser, _group, "Description" + i, "Name" + i,
+				_deDataDefinitionService);
+		}
+
+		DEDataEngineTestUtil.insertDEDataDefinition(
+			_adminUser, _group, "nonascii£", "Name", _deDataDefinitionService);
+
+		List<DEDataDefinition> deDataDefinitionsSearch = searchDataDefinition(
+			_group, "nonascii£");
+
+		IdempotentRetryAssert.retryAssert(
+			3, TimeUnit.SECONDS,
+			() -> {
+				Assert.assertEquals(
+					deDataDefinitionsSearch.toString(), 1,
+					deDataDefinitionsSearch.size());
+
+				return null;
+			});
+	}
+
+	@Test
+	public void testSearchNonexistingNameDescription() throws Exception {
+		int dataDefinitionTotal = 5;
+
+		for (int i = 0; i < dataDefinitionTotal; i++) {
+			DEDataEngineTestUtil.insertDEDataDefinition(
+				_adminUser, _group, "Description" + i, "Name" + i,
+				_deDataDefinitionService);
+		}
+
+		List<DEDataDefinition> deDataDefinitionsSearch = searchDataDefinition(
+			_group, "NonExistingNameDescription");
+
+		IdempotentRetryAssert.retryAssert(
+			3, TimeUnit.SECONDS,
+			() -> {
+				Assert.assertEquals(
+					deDataDefinitionsSearch.toString(), 0,
+					deDataDefinitionsSearch.size());
+
+				return null;
+			});
+	}
+
+	@Test
+	public void testSearchParcial() throws Exception {
+		int dataDefinitionTotal = 5;
+
+		for (int i = 0; i < dataDefinitionTotal; i++) {
+			DEDataEngineTestUtil.insertDEDataDefinition(
+				_adminUser, _group, "Description" + i, "Name" + i,
+				_deDataDefinitionService);
+		}
+
+		List<DEDataDefinition> deDataDefinitionsSearch = searchDataDefinition(
+			_group, "Descrip");
+
+		IdempotentRetryAssert.retryAssert(
+			3, TimeUnit.SECONDS,
+			() -> {
+				Assert.assertEquals(
+					deDataDefinitionsSearch.toString(), 5,
+					deDataDefinitionsSearch.size());
+
+				return null;
+			});
+	}
+
+	@Test
+	public void testSearchWithSpace() throws Exception {
+		int dataDefinitionTotal = 5;
+
+		for (int i = 0; i < dataDefinitionTotal; i++) {
+			DEDataEngineTestUtil.insertDEDataDefinition(
+				_adminUser, _group, "Description " + i, "Name" + i,
+				_deDataDefinitionService);
+		}
+
+		DEDataEngineTestUtil.insertDEDataDefinition(
+			_adminUser, _group, "Spaced Words ", "Name",
+			_deDataDefinitionService);
+
+		DEDataEngineTestUtil.insertDEDataDefinition(
+			_adminUser, _group, "Spaced ", "Name", _deDataDefinitionService);
+
+		List<DEDataDefinition> deDataDefinitionsSearch = searchDataDefinition(
+			_group, "Spaced Words");
+
+		IdempotentRetryAssert.retryAssert(
+			3, TimeUnit.SECONDS,
+			() -> {
+				Assert.assertEquals(
+					deDataDefinitionsSearch.toString(), 2,
+					deDataDefinitionsSearch.size());
+
+				return null;
+			});
+	}
+
+	@Test
 	public void testUpdate() throws Exception {
 		DEDataDefinition deDataDefinition =
 			DEDataEngineTestUtil.insertDEDataDefinition(
@@ -753,9 +965,38 @@ public class DEDataDefinitionServiceTest {
 		return deDataDefinitionListResponse.getDEDataDefinitions();
 	}
 
+	protected List<DEDataDefinition> searchDataDefinition(
+			Group group, String keywords)
+		throws Exception {
+
+		DEDataDefinitionSearchRequest deDataDefinitionSearchRequest =
+			DEDataDefinitionRequestBuilder.searchBuilder(
+			).havingKeywords(
+				keywords
+			).inCompany(
+				group.getCompanyId()
+			).inGroup(
+				group.getGroupId()
+			).build();
+
+		DEDataDefinitionSearchResponse deDataDefinitionSearchResponse =
+			_deDataDefinitionService.execute(deDataDefinitionSearchRequest);
+
+		return deDataDefinitionSearchResponse.getDEDataDefinitions();
+	}
+
 	protected void setUpPermissionThreadLocal() throws Exception {
 		_originalPermissionChecker =
 			PermissionThreadLocal.getPermissionChecker();
+
+		PermissionThreadLocal.setPermissionChecker(
+			PermissionCheckerFactoryUtil.create(_siteAdminUser));
+	}
+
+	protected void setUpPrincipalThreadLocal() throws Exception {
+		_originalName = PrincipalThreadLocal.getName();
+
+		PrincipalThreadLocal.setName(_siteAdminUser.getUserId());
 	}
 
 	@DeleteAfterTestRun
@@ -767,7 +1008,11 @@ public class DEDataDefinitionServiceTest {
 	@DeleteAfterTestRun
 	private Group _group;
 
+	private String _originalName;
 	private PermissionChecker _originalPermissionChecker;
+
+	@DeleteAfterTestRun
+	private User _siteAdminUser;
 
 	@DeleteAfterTestRun
 	private User _siteMember;

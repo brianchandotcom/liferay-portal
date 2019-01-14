@@ -116,6 +116,62 @@ public class DEDataEngineTestUtil {
 		}
 	}
 
+	public static DEDataDefinition insertDEDataDefinition(
+			User user, Group group, String description, String name,
+			DEDataDefinitionService deDataDefinitionService)
+		throws Exception {
+
+		try {
+			ServiceContext serviceContext =
+				ServiceContextTestUtil.getServiceContext(
+					group, user.getUserId());
+
+			ServiceContextThreadLocal.pushServiceContext(serviceContext);
+
+			PermissionThreadLocal.setPermissionChecker(
+				PermissionCheckerFactoryUtil.create(user));
+
+			Map<String, String> field1Labels = new HashMap() {
+				{
+					put("en_US", "Field Default");
+				}
+			};
+
+			DEDataDefinitionField deDataDefinitionField =
+				new DEDataDefinitionField("fieldDefault", "string");
+
+			deDataDefinitionField.addLabels(field1Labels);
+
+			DEDataDefinition deDataDefinition = new DEDataDefinition();
+
+			deDataDefinition.addDescription(LocaleUtil.US, description);
+			deDataDefinition.addName(LocaleUtil.US, name);
+			deDataDefinition.setDEDataDefinitionFields(
+				Arrays.asList(deDataDefinitionField));
+			deDataDefinition.setStorageType("json");
+
+			DEDataDefinitionSaveRequest deDataDefinitionSaveRequest =
+				DEDataDefinitionRequestBuilder.saveBuilder(
+					deDataDefinition
+				).inGroup(
+					group.getGroupId()
+				).onBehalfOf(
+					user.getUserId()
+				).build();
+
+			DEDataDefinitionSaveResponse deDataDefinitionSaveResponse =
+				deDataDefinitionService.execute(deDataDefinitionSaveRequest);
+
+			deDataDefinition.setDEDataDefinitionId(
+				deDataDefinitionSaveResponse.getDEDataDefinitionId());
+
+			return deDataDefinition;
+		}
+		finally {
+			ServiceContextThreadLocal.popServiceContext();
+		}
+	}
+
 	public static DEDataRecordCollection insertDEDataRecordCollection(
 			User user, Group group, DEDataDefinition deDataDefinition,
 			DEDataRecordCollectionService deDataRecordCollectionService)

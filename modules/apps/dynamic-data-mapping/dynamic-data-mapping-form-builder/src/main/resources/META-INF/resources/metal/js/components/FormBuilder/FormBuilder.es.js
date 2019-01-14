@@ -555,13 +555,18 @@ class Builder extends Component {
 	}
 
 	attached() {
-		const translationManager = document.querySelector('.ddm-translation-manager');
+		const {activePage, pages} = this.props;
 
 		const formBasicInfo = document.querySelector('.ddm-form-basic-info');
+		const translationManager = document.querySelector('.ddm-translation-manager');
 
-		if (translationManager && formBasicInfo) {
+		if (formBasicInfo && translationManager) {
 			formBasicInfo.classList.remove('hide');
 			translationManager.classList.remove('hide');
+		}
+
+		if (!this._pageHasFields(pages, activePage)) {
+			this.openSidebar();
 		}
 	}
 

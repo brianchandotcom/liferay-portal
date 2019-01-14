@@ -563,8 +563,8 @@ definition {
 	macro viewNoDeletePagesAssociatedWithSiteTemplate {
 		if (isSet(pageName)) {
 			Click(
-				locator1 = "SitePages#LIST_GROUP_ITEM_CARET_ICON_SPECIFIC",
-				key_pageName = "${pageName}"
+				locator1 = "SitePages#LIST_GROUP_ITEM",
+				key_itemName = "${pageName}"
 			);
 		}
 

@@ -51,11 +51,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>LIST_GROUP_ITEM_CARET_ICON_SPECIFIC</td>
-	<td>//li[contains(.,'${key_pageName}')]//*[*[name()='svg'][contains(@class,'icon-caret-right')]]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>LIST_GROUP_ITEM_ELLIPSIS_ICON</td>
 	<td>//li[contains(.,'${key_pageName}')]//*[*[name()='svg'][contains(@class,'ellipsis-v')]]</td>
 	<td></td>

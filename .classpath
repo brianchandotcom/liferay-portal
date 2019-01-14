@@ -49,7 +49,6 @@
 	<classpathentry kind="lib" path="lib/development/com.liferay.ant.mirrors.get.jar"/>
 	<classpathentry kind="lib" path="lib/development/com.liferay.ant.sync.dir.jar"/>
 	<classpathentry kind="lib" path="lib/development/com.liferay.jenkins.results.parser.jar"/>
-	<classpathentry kind="lib" path="lib/development/com.liferay.util.taglib.compat.jar"/>
 	<classpathentry kind="lib" path="lib/development/deployment.jar"/>
 	<classpathentry kind="lib" path="lib/development/dtddoc.jar"/>
 	<classpathentry kind="lib" path="lib/development/dtdparser.jar"/>
@@ -326,6 +325,5 @@
 	<classpathentry kind="lib" path="tmp/lib-pre/com.liferay.portal.kernel.nio.compat.jar"/>
 	<classpathentry kind="lib" path="tmp/lib-pre/com.liferay.portal.kernel.util.compat.jar"/>
 	<classpathentry kind="lib" path="tmp/lib-pre/com.liferay.util.java.compat.jar"/>
-	<classpathentry kind="lib" path="tmp/lib-pre/com.liferay.util.taglib.compat.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

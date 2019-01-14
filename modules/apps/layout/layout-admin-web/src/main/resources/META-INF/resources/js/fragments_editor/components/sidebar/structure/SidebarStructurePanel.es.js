@@ -2,9 +2,11 @@ import Component from 'metal-component';
 import Soy from 'metal-soy';
 
 import '../fragments/FragmentsEditorSidebarCard.es';
+import {focusItem} from '../../../utils/FragmentsEditorUpdateUtils.es';
 import {getConnectedComponent} from '../../../store/ConnectedComponent.es';
 import {
 	REMOVE_FRAGMENT_ENTRY_LINK,
+	UPDATE_ACTIVE_ITEM,
 	UPDATE_LAST_SAVE_DATE,
 	UPDATE_SAVING_CHANGES_STATUS
 } from '../../../actions/actions.es';
@@ -14,6 +16,27 @@ import templates from './SidebarStructurePanel.soy';
  * SidebarStructurePanel
  */
 class SidebarStructurePanel extends Component {
+
+	/**
+	 * Callback executed when an element name is clicked in the tree
+	 * @param {object} event
+	 * @private
+	 * @review
+	 */
+	_handleElementClick(event) {
+		const itemId = event.delegateTarget.dataset.elementId;
+		const itemType = event.delegateTarget.dataset.elementType;
+
+		this.store.dispatchAction(
+			UPDATE_ACTIVE_ITEM,
+			{
+				activeItemId: itemId,
+				activeItemType: itemType
+			}
+		);
+
+		focusItem(itemId, itemType);
+	}
 
 	/**
 	 * Callback executed when the fragment remove button is clicked.

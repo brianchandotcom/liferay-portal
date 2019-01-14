@@ -515,12 +515,15 @@ public class FragmentsEditorDisplayContext {
 				_themeDisplay.getCompanyId(), portletId)
 		).filter(
 			portlet -> {
+				if (portlet == null) {
+					return false;
+				}
+
 				try {
-					return (portlet != null) &&
-						   PortletPermissionUtil.contains(
-							   _themeDisplay.getPermissionChecker(),
-							   _themeDisplay.getLayout(), portlet,
-							   ActionKeys.ADD_TO_PAGE);
+					return PortletPermissionUtil.contains(
+						_themeDisplay.getPermissionChecker(),
+						_themeDisplay.getLayout(), portlet,
+						ActionKeys.ADD_TO_PAGE);
 				}
 				catch (PortalException pe) {
 					_log.error(

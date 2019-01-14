@@ -30,30 +30,12 @@ import java.util.Optional;
 
 import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 
 /**
  * @author Drew Brokke
  */
 public class AddressUtilTest {
-
-	@Before
-	public void setUp() {
-		_address = new AddressWrapper(null) {
-
-			@Override
-			public Country getCountry() {
-				return null;
-			}
-
-			@Override
-			public Region getRegion() {
-				return null;
-			}
-
-		};
-	}
 
 	@After
 	public void tearDown() {
@@ -62,6 +44,15 @@ public class AddressUtilTest {
 
 	@Test
 	public void testGetCountryNameOptionalEmptyWithNoCountry() {
+		_address = new AddressWrapper(null) {
+
+			@Override
+			public Country getCountry() {
+				return null;
+			}
+
+		};
+
 		Optional<String> countryNameOptional =
 			AddressUtil.getCountryNameOptional(_address);
 
@@ -135,6 +126,15 @@ public class AddressUtilTest {
 
 	@Test
 	public void testGetRegionNameOptionalEmptyWithNoRegion() {
+		_address = new AddressWrapper(null) {
+
+			@Override
+			public Region getRegion() {
+				return null;
+			}
+
+		};
+
 		Optional<String> regionNameOptional = AddressUtil.getRegionNameOptional(
 			_address);
 

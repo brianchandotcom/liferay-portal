@@ -295,7 +295,7 @@ definition {
 		while (!("${count}" == "${depth}")) {
 			var index = MathUtil.sum("${count}", "1");
 
-			Click(locator1 = "SitePages#LIST_GROUP_ITEM_CARET_ICON", key_depth = "${index}");
+			Click(locator1 = "SitePages#LIST_GROUP_ITEM_DEPTH", key_depth = "${index}");
 
 			var count = MathUtil.sum("${count}", "1");
 		}

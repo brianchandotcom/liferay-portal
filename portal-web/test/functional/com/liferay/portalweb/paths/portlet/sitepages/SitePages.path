@@ -46,7 +46,7 @@
 	<td></td>
 </tr>
 <tr>
-	<td>LIST_GROUP_ITEM_CARET_ICON</td>
+	<td>LIST_GROUP_ITEM_DEPTH</td>
 	<td>//ul[${key_depth}]/li[contains(@class,'list-group-item')]/button</td>
 	<td></td>
 </tr>

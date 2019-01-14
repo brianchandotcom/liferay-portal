@@ -50,6 +50,9 @@
 		"snapshotSerializers": [
 			"enzyme-to-json/serializer"
 		],
+		"testMatch": [
+			"<rootDir>/src/main/resources/META-INF/resources/js/components/**/__tests__/*.js"
+		],
 		"testURL": "http://liferay.com",
 		"timers": "fake"
 	},

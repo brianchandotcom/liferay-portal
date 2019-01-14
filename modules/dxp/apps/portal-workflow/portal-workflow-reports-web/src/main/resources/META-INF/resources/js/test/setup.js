@@ -1,9 +1,12 @@
+require('jest-canvas-mock');
+require('jest-extended');
 require('whatwg-fetch');
+
+const enzyme = require('enzyme');
+const EnzymeAdapter = require('enzyme-adapter-react-16');
 const fs = require('fs');
 const path = require('path');
 const properties = require('properties');
-const enzyme = require('enzyme');
-const EnzymeAdapter = require('enzyme-adapter-react-16');
 
 const LANG_KEY_PATH = path.resolve(
 	'src',
@@ -55,7 +58,5 @@ global.localStorage = (() => {
 })();
 
 enzyme.configure({adapter: new EnzymeAdapter()});
-global.shallow = enzyme.shallow;
 
-require('jest-extended');
-require('jest-canvas-mock');
+global.shallow = enzyme.shallow;

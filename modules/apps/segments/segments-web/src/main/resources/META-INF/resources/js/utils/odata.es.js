@@ -310,14 +310,14 @@ function toCriteria(context) {
 
 	let criterion;
 
-	if (isValueType(OPERATORS, expressionName)) {
-		criterion = transformOperatorNode(context);
-	}
-	else if (oDataASTNode.type === 'NotExpression') {
+	if (oDataASTNode.type === 'NotExpression') {
 		criterion = transformNotNode(context);
 	}
 	else if (oDataASTNode.type === 'MethodCallExpression') {
 		criterion = transformFunctionalNode(context);
+	}
+	else if (isValueType(RELATIONAL_OPERATORS, expressionName)) {
+		criterion = transformOperatorNode(context);
 	}
 	else if (isValueType(CONJUNCTIONS, expressionName)) {
 		criterion = transformConjunctionNode(context);

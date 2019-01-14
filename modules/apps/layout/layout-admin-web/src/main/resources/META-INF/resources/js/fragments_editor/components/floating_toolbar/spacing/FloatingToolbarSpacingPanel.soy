@@ -11,5 +11,19 @@
  * FloatingToolbarSpacingPanel
  */
 {template .render}
-	<div></div>
+	<div class="form-group">
+		<label for="floatingToolbarSpacingPanelContainer">
+			{msg desc=""}container{/msg}
+		</label>
+
+		<select class="form-control" id="floatingToolbarSpacingPanelContainer">
+			<option value="fixed">
+				{msg desc=""}fixed-width{/msg}
+			</option>
+
+			<option value="fluid">
+				{msg desc=""}fluid{/msg}
+			</option>
+		</select>
+	</div>
 {/template}

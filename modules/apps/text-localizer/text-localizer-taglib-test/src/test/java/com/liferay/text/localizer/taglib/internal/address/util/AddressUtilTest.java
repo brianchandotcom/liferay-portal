@@ -44,17 +44,16 @@ public class AddressUtilTest {
 
 	@Test
 	public void testGetCountryNameOptionalEmptyWithNoCountry() {
-		_address = new AddressWrapper(null) {
-
-			@Override
-			public Country getCountry() {
-				return null;
-			}
-
-		};
-
 		Optional<String> countryNameOptional =
-			AddressUtil.getCountryNameOptional(_address);
+			AddressUtil.getCountryNameOptional(
+				new AddressWrapper(null) {
+
+					@Override
+					public Country getCountry() {
+						return null;
+					}
+
+				});
 
 		Assert.assertFalse(countryNameOptional.isPresent());
 	}
@@ -69,8 +68,6 @@ public class AddressUtilTest {
 
 	@Test
 	public void testGetCountryNameOptionalLocalized() {
-		_address = _getAddressWithCountry();
-
 		ServiceContext serviceContext = new ServiceContext();
 
 		serviceContext.setLanguageId(LocaleUtil.toLanguageId(LocaleUtil.US));
@@ -78,65 +75,57 @@ public class AddressUtilTest {
 		ServiceContextThreadLocal.pushServiceContext(serviceContext);
 
 		Optional<String> countryNameOptional =
-			AddressUtil.getCountryNameOptional(_address);
+			AddressUtil.getCountryNameOptional(_getAddressWithCountry());
 
 		Assert.assertEquals(_COUNTRY_NAME_LOCALIZED, countryNameOptional.get());
 	}
 
 	@Test
 	public void testGetCountryNameOptionalNotLocalized() {
-		_address = _getAddressWithCountry();
-
 		Optional<String> countryNameOptional =
-			AddressUtil.getCountryNameOptional(_address);
+			AddressUtil.getCountryNameOptional(_getAddressWithCountry());
 
 		Assert.assertEquals(_COUNTRY_NAME, countryNameOptional.get());
 	}
 
 	@Test
 	public void testGetRegionNameOptional() {
-		Region region = new RegionWrapper(null) {
-
-			@Override
-			public String getName() {
-				return _REGION_NAME;
-			}
-
-			@Override
-			public long getRegionId() {
-				return RandomTestUtil.randomLong();
-			}
-
-		};
-
-		_address = new AddressWrapper(null) {
-
-			@Override
-			public Region getRegion() {
-				return region;
-			}
-
-		};
-
 		Optional<String> regionNameOptional = AddressUtil.getRegionNameOptional(
-			_address);
+			new AddressWrapper(null) {
+
+				@Override
+				public Region getRegion() {
+					return new RegionWrapper(null) {
+
+						@Override
+						public String getName() {
+							return _REGION_NAME;
+						}
+
+						@Override
+						public long getRegionId() {
+							return RandomTestUtil.randomLong();
+						}
+
+					};
+				}
+
+			});
 
 		Assert.assertEquals(_REGION_NAME, regionNameOptional.get());
 	}
 
 	@Test
 	public void testGetRegionNameOptionalEmptyWithNoRegion() {
-		_address = new AddressWrapper(null) {
-
-			@Override
-			public Region getRegion() {
-				return null;
-			}
-
-		};
-
 		Optional<String> regionNameOptional = AddressUtil.getRegionNameOptional(
-			_address);
+			new AddressWrapper(null) {
+
+				@Override
+				public Region getRegion() {
+					return null;
+				}
+
+			});
 
 		Assert.assertFalse(regionNameOptional.isPresent());
 	}
@@ -150,35 +139,31 @@ public class AddressUtilTest {
 	}
 
 	private Address _getAddressWithCountry() {
-		Country country = new CountryWrapper(null) {
-
-			@Override
-			public long getCountryId() {
-				return RandomTestUtil.randomLong();
-			}
-
-			@Override
-			public String getName() {
-				return _COUNTRY_NAME;
-			}
-
-			@Override
-			public String getName(Locale locale) {
-				return _COUNTRY_NAME_LOCALIZED;
-			}
-
-		};
-
-		Address address = new AddressWrapper(null) {
+		return new AddressWrapper(null) {
 
 			@Override
 			public Country getCountry() {
-				return country;
+				return new CountryWrapper(null) {
+
+					@Override
+					public long getCountryId() {
+						return RandomTestUtil.randomLong();
+					}
+
+					@Override
+					public String getName() {
+						return _COUNTRY_NAME;
+					}
+
+					@Override
+					public String getName(Locale locale) {
+						return _COUNTRY_NAME_LOCALIZED;
+					}
+
+				};
 			}
 
 		};
-
-		return address;
 	}
 
 	private static final String _COUNTRY_NAME = RandomTestUtil.randomString();
@@ -187,7 +172,5 @@ public class AddressUtilTest {
 		RandomTestUtil.randomString();
 
 	private static final String _REGION_NAME = RandomTestUtil.randomString();
-
-	private Address _address;
 
 }

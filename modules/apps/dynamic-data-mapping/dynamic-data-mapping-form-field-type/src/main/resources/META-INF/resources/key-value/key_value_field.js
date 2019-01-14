@@ -112,7 +112,7 @@ AUI.add(
 							normalizedKey += item;
 						}
 
-						return normalizedKey;
+						return 'F' + normalizedKey;
 					},
 
 					render: function() {

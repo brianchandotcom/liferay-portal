@@ -23,7 +23,7 @@ installer for Talend Open Studio (TOS) written in Go.
 
 1. Navigate to the [talend-installer](https://github.com/liferay/liferay-portal/tree/master/modules/etl/talend/talend-installer)
 2. Build the `installer` (Go module) with Gox to have cross platform binaries
-	* `gox -osarch="darwin/amd64 linux/amd64 windows/amd64" -output $GOPATH"bin/talend-installer/{{.Dir}}-{{.OS}}-{{.Arch}}" talend-installer`
+	* `gox -osarch="darwin/amd64 linux/amd64 windows/amd64" -output $GOPATH"bin/talend-installer/{{.Dir}}-{{.OS}}-{{.Arch}}" talend-installer/go`
 	* The tool above creates a new folder in your workspace `$GOPATH/bin` folder named `talend-installer`
 	* The installer binaries for Windows / Mac / Linux (64 bit) will be located in the `talend-installer` directory:
 	```

@@ -6,8 +6,8 @@ import (
 	"path/filepath"
 	"strings"
 
-	"talend-installer/constants"
-	"talend-installer/utils/fileutils"
+	"talend-installer/go/constants"
+	"talend-installer/go/utils/fileutils"
 
 	"github.com/go-ini/ini"
 )

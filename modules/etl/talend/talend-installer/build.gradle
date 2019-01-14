@@ -11,7 +11,8 @@ Date now = new Date()
 compileInstaller {
 	dependsOn getInstallerDependencies
 
-	commandLine _getCommand("gox -osarch=\"darwin/amd64 linux/amd64 windows/amd64\" -output \"${buildDir}/talend-installer/{{.Dir}}-{{.OS}}-{{.Arch}}\" talend-installer")
+	commandLine _getCommand("gox -osarch=\"darwin/amd64 linux/amd64 windows/amd64\" -output \"${buildDir}/talend-installer/{{.Dir}}-{{.OS}}-{{.Arch}}\" talend-installer/go")
+	workingDir 'go'
 }
 
 createInstaller {
@@ -25,6 +26,7 @@ getInstallerDependencies {
 	dependsOn installComponentMavenArtifacts
 
 	commandLine _getCommand("go mod tidy")
+	workingDir 'go'
 }
 
 installComponentMavenArtifacts {

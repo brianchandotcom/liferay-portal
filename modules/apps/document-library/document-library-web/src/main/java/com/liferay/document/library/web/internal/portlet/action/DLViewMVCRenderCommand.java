@@ -14,7 +14,6 @@
 
 package com.liferay.document.library.web.internal.portlet.action;
 
-import com.liferay.bulk.selection.BulkSelectionRunner;
 import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
@@ -57,8 +56,6 @@ public class DLViewMVCRenderCommand extends GetFolderMVCRenderCommand {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws PortletException {
 
-		renderRequest.setAttribute(
-			BulkSelectionRunner.class.getName(), _bulkSelectionRunner);
 		renderRequest.setAttribute(
 			DLWebKeys.DOCUMENT_LIBRARY_PORTLET_TOOLBAR_CONTRIBUTOR,
 			_dlPortletToolbarContributorRegistry.
@@ -129,9 +126,6 @@ public class DLViewMVCRenderCommand extends GetFolderMVCRenderCommand {
 
 		return false;
 	}
-
-	@Reference
-	private BulkSelectionRunner _bulkSelectionRunner;
 
 	@Reference
 	private DLAppService _dlAppService;

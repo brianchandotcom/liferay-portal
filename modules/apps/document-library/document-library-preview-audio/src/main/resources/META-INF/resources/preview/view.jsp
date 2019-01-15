@@ -47,7 +47,7 @@ context.put("audioSources", audioSources);
 </liferay-util:html-top>
 
 <soy:component-renderer
-	componentId='<%= renderResponse.getNamespace() + randomNamespace + "Audio" %>'
+	componentId='<%= renderResponse.getNamespace() + randomNamespace + "previewAudio" %>'
 	context="<%= context %>"
 	module='<%= npmResolvedPackageName + "/preview/js/AudioPreviewer.es" %>'
 	templateNamespace="com.liferay.document.library.preview.AudioPreviewer.render"

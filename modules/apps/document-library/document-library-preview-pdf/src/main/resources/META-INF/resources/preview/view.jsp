@@ -52,7 +52,7 @@ context.put("totalPages", previewFileCount);
 </liferay-util:html-top>
 
 <soy:component-renderer
-	componentId='<%= renderResponse.getNamespace() + randomNamespace + "previewFile" %>'
+	componentId='<%= renderResponse.getNamespace() + randomNamespace + "previewPdf" %>'
 	context="<%= context %>"
 	module='<%= npmResolvedPackageName + "/preview/js/PdfPreviewer.es" %>'
 	templateNamespace="com.liferay.document.library.preview.PdfPreviewer.render"

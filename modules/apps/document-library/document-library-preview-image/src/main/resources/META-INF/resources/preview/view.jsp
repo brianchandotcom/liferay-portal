@@ -19,6 +19,8 @@
 <%
 FileVersion fileVersion = (FileVersion)request.getAttribute(WebKeys.DOCUMENT_LIBRARY_FILE_VERSION);
 
+String randomNamespace = PortalUtil.generateRandomKey(request, "portlet_document_library_view_file_entry_preview") + StringPool.UNDERLINE;
+
 String previewQueryString = "&imagePreview=1";
 
 int status = ParamUtil.getInteger(request, "status", WorkflowConstants.STATUS_ANY);
@@ -40,6 +42,7 @@ context.put("spritemap", themeDisplay.getPathThemeImages() + "/lexicon/icons.svg
 </liferay-util:html-top>
 
 <soy:component-renderer
+	componentId='<%= renderResponse.getNamespace() + randomNamespace + "previewImage" %>'
 	context="<%= context %>"
 	module='<%= npmResolvedPackageName + "/preview/js/ImagePreviewer.es" %>'
 	templateNamespace="com.liferay.document.library.preview.ImagePreviewer.render"

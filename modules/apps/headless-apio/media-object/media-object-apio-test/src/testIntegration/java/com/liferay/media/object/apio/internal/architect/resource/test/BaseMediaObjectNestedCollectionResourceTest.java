@@ -17,6 +17,7 @@ package com.liferay.media.object.apio.internal.architect.resource.test;
 import com.liferay.apio.architect.pagination.PageItems;
 import com.liferay.apio.architect.pagination.Pagination;
 import com.liferay.apio.architect.resource.NestedCollectionResource;
+import com.liferay.media.object.apio.architect.model.MediaObject;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
@@ -30,6 +31,23 @@ import java.util.Iterator;
  * @author Rubén Pulido
  */
 public class BaseMediaObjectNestedCollectionResourceTest {
+
+	protected FileEntry addFileEntry(long groupId, MediaObject mediaObject)
+		throws Exception {
+
+		NestedCollectionResource nestedCollectionResource =
+			getNestedCollectionResource();
+
+		Class<?> clazz = nestedCollectionResource.getClass();
+
+		Method method = clazz.getDeclaredMethod(
+			"_addFileEntry", long.class, MediaObject.class);
+
+		method.setAccessible(true);
+
+		return (FileEntry)method.invoke(
+			getNestedCollectionResource(), groupId, mediaObject);
+	}
 
 	protected NestedCollectionResource getNestedCollectionResource()
 		throws Exception {

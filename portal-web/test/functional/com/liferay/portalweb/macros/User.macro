@@ -25,6 +25,8 @@ definition {
 		else {
 			var localizedSignIn = "Sign In";
 		}
+
+		return "${localizedSignIn}";
 	}
 
 	macro acceptEndUserLicenseAgreement {
@@ -1492,7 +1494,7 @@ definition {
 	}
 
 	macro loginLocalizationPG {
-		User._signInLocalization(localization = "${localization}");
+		var localizedSignIn = User._signInLocalization(localization = "${localization}");
 
 		AssertClick(locator1 = "UserBar#USER_SIGN_IN", value1 = "${localizedSignIn}");
 	}

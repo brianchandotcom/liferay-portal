@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.elasticsearch6.internal.connection.ElasticsearchClientResolver;
-import com.liferay.portal.search.elasticsearch6.internal.document.DefaultElasticsearchDocumentFactory;
 import com.liferay.portal.search.elasticsearch6.internal.document.ElasticsearchDocumentFactory;
 import com.liferay.portal.search.engine.adapter.document.BulkableDocumentRequestTranslator;
 import com.liferay.portal.search.engine.adapter.document.DeleteDocumentRequest;
@@ -103,9 +102,6 @@ public class ElasticsearchBulkableDocumentRequestTranslator
 
 			indexRequestBuilder.setType(indexDocumentRequest.getType());
 
-			ElasticsearchDocumentFactory elasticsearchDocumentFactory =
-				new DefaultElasticsearchDocumentFactory();
-
 			Document document = indexDocumentRequest.getDocument();
 
 			String elasticsearchDocument =
@@ -147,9 +143,6 @@ public class ElasticsearchBulkableDocumentRequestTranslator
 			}
 
 			updateRequestBuilder.setType(updateDocumentRequest.getType());
-
-			ElasticsearchDocumentFactory elasticsearchDocumentFactory =
-				new DefaultElasticsearchDocumentFactory();
 
 			Document document = updateDocumentRequest.getDocument();
 
@@ -210,5 +203,8 @@ public class ElasticsearchBulkableDocumentRequestTranslator
 
 	@Reference
 	protected ElasticsearchClientResolver elasticsearchClientResolver;
+
+	@Reference
+	protected ElasticsearchDocumentFactory elasticsearchDocumentFactory;
 
 }

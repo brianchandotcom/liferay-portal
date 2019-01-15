@@ -53,6 +53,9 @@ public interface DEDataDefinitionService {
 			DEDataDefinitionSaveRequest deDataDefinitionSaveRequest)
 		throws DEDataDefinitionException;
 
+	public DEDataDefinitionSearchCountResponse execute(
+		DEDataDefinitionSearchCountRequest deDataDefinitionSearchCountRequest);
+
 	public DEDataDefinitionSearchResponse execute(
 			DEDataDefinitionSearchRequest deDataDefinitionSearchRequest)
 		throws DEDataDefinitionException;

@@ -11,6 +11,7 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
+
 package com.liferay.changeset.internal.upgrade;
 
 import com.liferay.changeset.internal.upgrade.v2_0_0.util.ChangesetCollectionTable;
@@ -32,8 +33,7 @@ public class ChangesetServiceUpgrade implements UpgradeStepRegistrator {
 			"1.0.0", "2.0.0",
 			new BaseUpgradeSQLServerDatetime(
 				new Class<?>[] {
-					ChangesetCollectionTable.class,
-					ChangesetEntryTable.class
+					ChangesetCollectionTable.class, ChangesetEntryTable.class
 				}));
 	}
 

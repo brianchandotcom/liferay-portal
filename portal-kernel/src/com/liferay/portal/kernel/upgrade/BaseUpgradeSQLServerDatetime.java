@@ -80,9 +80,7 @@ public class BaseUpgradeSQLServerDatetime extends UpgradeProcess {
 			Map<String, Integer> tableColumnMap = getTableColumnsMap(
 				tableClass);
 
-			for (Map.Entry<String, Integer> entry :
-					tableColumnMap.entrySet()) {
-
+			for (Map.Entry<String, Integer> entry : tableColumnMap.entrySet()) {
 				if (entry.getValue() != Types.TIMESTAMP) {
 					continue;
 				}
@@ -102,8 +100,7 @@ public class BaseUpgradeSQLServerDatetime extends UpgradeProcess {
 						continue;
 					}
 
-					if (newTypeName.equals(
-							columnRS.getString("TYPE_NAME")) &&
+					if (newTypeName.equals(columnRS.getString("TYPE_NAME")) &&
 						(_NEW_SIZE == columnRS.getInt("DECIMAL_DIGITS"))) {
 
 						if (_log.isWarnEnabled()) {

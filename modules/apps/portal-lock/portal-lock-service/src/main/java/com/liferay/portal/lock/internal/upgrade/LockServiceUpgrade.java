@@ -33,8 +33,7 @@ public class LockServiceUpgrade implements UpgradeStepRegistrator {
 
 		registry.register(
 			"1.0.0", "2.0.0",
-			new BaseUpgradeSQLServerDatetime(
-				new Class<?>[] {LockTable.class}));
+			new BaseUpgradeSQLServerDatetime(new Class<?>[] {LockTable.class}));
 	}
 
 }

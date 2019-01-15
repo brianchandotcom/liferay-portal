@@ -15,15 +15,10 @@
 package com.liferay.saml.addon.keep.alive.web.internal.servlet.taglib;
 
 import com.liferay.expando.kernel.model.ExpandoBridge;
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.taglib.BaseDynamicInclude;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
-import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.saml.addon.keep.alive.web.internal.constants.SamlKeepAliveConstants;
 import com.liferay.saml.constants.SamlWebKeys;
 import com.liferay.saml.persistence.model.SamlIdpSpConnection;
@@ -77,34 +72,18 @@ public class KeepAliveSamlWebDynamicInclude extends BaseDynamicInclude {
 	}
 
 	protected String getIdpSpKeepAliveUrl(HttpServletRequest request) {
+		SamlIdpSpConnection samlIdpSpConnection =
+			(SamlIdpSpConnection)request.getAttribute(
+				SamlWebKeys.SAML_IDP_SP_CONNECTION);
+
 		String keepAliveURL = StringPool.BLANK;
 
-		long samlIdpSpConnectionId = ParamUtil.getLong(
-			request, "samlIdpSpConnectionId");
+		if (samlIdpSpConnection != null) {
+			ExpandoBridge expandoBridge =
+				samlIdpSpConnection.getExpandoBridge();
 
-		if (samlIdpSpConnectionId > 0) {
-			try {
-				SamlIdpSpConnection samlIdpSpConnection =
-					_samlIdpSpConnectionLocalService.getSamlIdpSpConnection(
-						samlIdpSpConnectionId);
-
-				ExpandoBridge expandoBridge =
-					samlIdpSpConnection.getExpandoBridge();
-
-				keepAliveURL = (String)expandoBridge.getAttribute(
-					SamlKeepAliveConstants.EXPANDO_COLUMN_NAME_KEEP_ALIVE_URL);
-			}
-			catch (PortalException pe) {
-				String message =
-					"Unable to get SP keep alive URL: " + pe.getMessage();
-
-				if (_log.isDebugEnabled()) {
-					_log.debug(message, pe);
-				}
-				else if (_log.isWarnEnabled()) {
-					_log.warn(message);
-				}
-			}
+			keepAliveURL = (String)expandoBridge.getAttribute(
+				SamlKeepAliveConstants.EXPANDO_COLUMN_NAME_KEEP_ALIVE_URL);
 		}
 
 		return keepAliveURL;
@@ -162,9 +141,6 @@ public class KeepAliveSamlWebDynamicInclude extends BaseDynamicInclude {
 
 	private static final String _KEY_SERVICE_PROVIDER =
 		"com.liferay.saml.web#/admin/edit_service_provider_connection.jsp#post";
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		KeepAliveSamlWebDynamicInclude.class);
 
 	@Reference
 	private SamlIdpSpConnectionLocalService _samlIdpSpConnectionLocalService;

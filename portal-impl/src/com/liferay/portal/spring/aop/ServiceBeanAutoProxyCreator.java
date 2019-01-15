@@ -38,14 +38,6 @@ import org.springframework.beans.factory.config.SmartInstantiationAwareBeanPostP
 public class ServiceBeanAutoProxyCreator
 	implements SmartInstantiationAwareBeanPostProcessor {
 
-	public static void reset() {
-		for (ServiceBeanAopInvocationHandler serviceBeanAopInvocationHandler :
-				_globalServiceBeanAopInvocationHandlers) {
-
-			serviceBeanAopInvocationHandler.reset();
-		}
-	}
-
 	public ServiceBeanAutoProxyCreator(
 		BeanMatcher beanMatcher, ClassLoader classLoader,
 		ChainableMethodAdvice[] chainableMethodAdvices) {
@@ -56,8 +48,11 @@ public class ServiceBeanAutoProxyCreator
 	}
 
 	public void destroy() {
-		_globalServiceBeanAopInvocationHandlers.removeAll(
-			_serviceBeanAopInvocationHandlers);
+		for (AopInvocationHandler aopInvocationHandler :
+				_aopInvocationHandlers) {
+
+			AopCacheManager.destroy(aopInvocationHandler);
+		}
 	}
 
 	@Override
@@ -126,30 +121,23 @@ public class ServiceBeanAutoProxyCreator
 	}
 
 	private Object _createProxy(Object bean) {
-		ServiceBeanAopInvocationHandler serviceBeanAopInvocationHandler =
-			new ServiceBeanAopInvocationHandler(bean, _chainableMethodAdvices);
+		AopInvocationHandler aopInvocationHandler = AopCacheManager.create(
+			bean, _chainableMethodAdvices);
 
-		_serviceBeanAopInvocationHandlers.add(serviceBeanAopInvocationHandler);
-
-		_globalServiceBeanAopInvocationHandlers.add(
-			serviceBeanAopInvocationHandler);
+		_aopInvocationHandlers.add(aopInvocationHandler);
 
 		return ProxyUtil.newProxyInstance(
 			_classLoader, ReflectionUtil.getInterfaces(bean),
-			serviceBeanAopInvocationHandler);
+			aopInvocationHandler);
 	}
 
-	private static final Set<ServiceBeanAopInvocationHandler>
-		_globalServiceBeanAopInvocationHandlers = Collections.newSetFromMap(
-			new ConcurrentHashMap<>());
-
+	private final List<AopInvocationHandler> _aopInvocationHandlers =
+		new ArrayList<>();
 	private final BeanMatcher _beanMatcher;
 	private final ChainableMethodAdvice[] _chainableMethodAdvices;
 	private final ClassLoader _classLoader;
 	private final Set<CacheKey> _earlyProxyReferences =
 		Collections.newSetFromMap(new ConcurrentHashMap<>());
-	private final List<ServiceBeanAopInvocationHandler>
-		_serviceBeanAopInvocationHandlers = new ArrayList<>();
 
 	private static class CacheKey {
 

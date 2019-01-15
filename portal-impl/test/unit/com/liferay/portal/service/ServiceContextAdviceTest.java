@@ -18,9 +18,9 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
+import com.liferay.portal.spring.aop.AopInvocationHandler;
+import com.liferay.portal.spring.aop.AopMethodInvocation;
 import com.liferay.portal.spring.aop.ChainableMethodAdvice;
-import com.liferay.portal.spring.aop.ServiceBeanAopInvocationHandler;
-import com.liferay.portal.spring.aop.ServiceBeanMethodInvocation;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
@@ -41,13 +41,13 @@ public class ServiceContextAdviceTest {
 
 	@Before
 	public void setUp() throws Exception {
-		Constructor<ServiceBeanAopInvocationHandler> constructor =
-			ServiceBeanAopInvocationHandler.class.getDeclaredConstructor(
+		Constructor<AopInvocationHandler> constructor =
+			AopInvocationHandler.class.getDeclaredConstructor(
 				Object.class, ChainableMethodAdvice[].class);
 
 		constructor.setAccessible(true);
 
-		_serviceBeanAopInvocationHandler = constructor.newInstance(
+		_aopInvocationHandler = constructor.newInstance(
 			_testInterceptedClass,
 			new ChainableMethodAdvice[] {new ServiceContextAdvice()});
 	}
@@ -63,10 +63,10 @@ public class ServiceContextAdviceTest {
 
 		ServiceContext serviceContext2 = new ServiceContext();
 
-		ServiceBeanMethodInvocation serviceBeanMethodInvocation =
-			_createTestMethodInvocation(method);
+		AopMethodInvocation aopMethodInvocation = _createTestMethodInvocation(
+			method);
 
-		serviceBeanMethodInvocation.proceed(new Object[] {serviceContext2});
+		aopMethodInvocation.proceed(new Object[] {serviceContext2});
 
 		Assert.assertSame(
 			serviceContext1, ServiceContextThreadLocal.popServiceContext());
@@ -77,16 +77,13 @@ public class ServiceContextAdviceTest {
 		Method method = ReflectionTestUtil.getMethod(
 			TestInterceptedClass.class, "method");
 
-		ServiceBeanMethodInvocation serviceBeanMethodInvocation =
-			ReflectionTestUtil.invoke(
-				_serviceBeanAopInvocationHandler,
-				"_getServiceBeanMethodInvocation",
-				new Class<?>[] {Method.class}, method);
+		AopMethodInvocation aopMethodInvocation = ReflectionTestUtil.invoke(
+			_aopInvocationHandler, "_getAopMethodInvocation",
+			new Class<?>[] {Method.class}, method);
 
 		Assert.assertNull(
 			ReflectionTestUtil.getFieldValue(
-				serviceBeanMethodInvocation,
-				"_nextServiceBeanMethodInvocation"));
+				aopMethodInvocation, "_nextAopMethodInvocation"));
 	}
 
 	@Test
@@ -98,10 +95,10 @@ public class ServiceContextAdviceTest {
 		Method method = ReflectionTestUtil.getMethod(
 			TestInterceptedClass.class, "method", ServiceContext.class);
 
-		ServiceBeanMethodInvocation serviceBeanMethodInvocation =
-			_createTestMethodInvocation(method);
+		AopMethodInvocation aopMethodInvocation = _createTestMethodInvocation(
+			method);
 
-		serviceBeanMethodInvocation.proceed(new Object[] {null});
+		aopMethodInvocation.proceed(new Object[] {null});
 
 		Assert.assertSame(
 			serviceContext, ServiceContextThreadLocal.popServiceContext());
@@ -114,16 +111,13 @@ public class ServiceContextAdviceTest {
 		Method method = ReflectionTestUtil.getMethod(
 			TestInterceptedClass.class, "method", Object.class);
 
-		ServiceBeanMethodInvocation serviceBeanMethodInvocation =
-			ReflectionTestUtil.invoke(
-				_serviceBeanAopInvocationHandler,
-				"_getServiceBeanMethodInvocation",
-				new Class<?>[] {Method.class}, method);
+		AopMethodInvocation aopMethodInvocation = ReflectionTestUtil.invoke(
+			_aopInvocationHandler, "_getAopMethodInvocation",
+			new Class<?>[] {Method.class}, method);
 
 		Assert.assertNull(
 			ReflectionTestUtil.getFieldValue(
-				serviceBeanMethodInvocation,
-				"_nextServiceBeanMethodInvocation"));
+				aopMethodInvocation, "_nextAopMethodInvocation"));
 	}
 
 	@Test
@@ -139,25 +133,23 @@ public class ServiceContextAdviceTest {
 		TestServiceContextWrapper testServiceContextWrapper =
 			new TestServiceContextWrapper();
 
-		ServiceBeanMethodInvocation serviceBeanMethodInvocation =
-			_createTestMethodInvocation(method);
+		AopMethodInvocation aopMethodInvocation = _createTestMethodInvocation(
+			method);
 
-		serviceBeanMethodInvocation.proceed(
+		aopMethodInvocation.proceed(
 			new Object[] {testServiceContextWrapper, null});
 
 		Assert.assertSame(
 			serviceContext, ServiceContextThreadLocal.popServiceContext());
 	}
 
-	private ServiceBeanMethodInvocation _createTestMethodInvocation(
-		Method method) {
-
+	private AopMethodInvocation _createTestMethodInvocation(Method method) {
 		return ReflectionTestUtil.invoke(
-			_serviceBeanAopInvocationHandler, "_getServiceBeanMethodInvocation",
+			_aopInvocationHandler, "_getAopMethodInvocation",
 			new Class<?>[] {Method.class}, method);
 	}
 
-	private ServiceBeanAopInvocationHandler _serviceBeanAopInvocationHandler;
+	private AopInvocationHandler _aopInvocationHandler;
 	private final TestInterceptedClass _testInterceptedClass =
 		new TestInterceptedClass();
 

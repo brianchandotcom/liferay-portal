@@ -22,9 +22,8 @@ import com.liferay.portal.kernel.resiliency.spi.SPIRegistryUtil;
 import com.liferay.portal.kernel.security.access.control.AccessControlThreadLocal;
 import com.liferay.portal.kernel.security.access.control.AccessControlled;
 import com.liferay.portal.kernel.servlet.ServletContextClassLoaderPool;
+import com.liferay.portal.spring.aop.AopMethodInvocation;
 import com.liferay.portal.spring.aop.ChainableMethodAdvice;
-import com.liferay.portal.spring.aop.ServiceBeanMethodInvocation;
-import com.liferay.portal.util.PropsValues;
 
 import java.io.Serializable;
 
@@ -41,8 +40,7 @@ public class PortalResiliencyAdvice extends ChainableMethodAdvice {
 
 	@Override
 	public Object before(
-			ServiceBeanMethodInvocation serviceBeanMethodInvocation,
-			Object[] arguments)
+			AopMethodInvocation aopMethodInvocation, Object[] arguments)
 		throws Throwable {
 
 		boolean remoteAccess = AccessControlThreadLocal.isRemoteAccess();
@@ -51,20 +49,20 @@ public class PortalResiliencyAdvice extends ChainableMethodAdvice {
 			return null;
 		}
 
-		SPI spi = serviceBeanMethodInvocation.getAdviceMethodContext();
+		SPI spi = aopMethodInvocation.getAdviceMethodContext();
 
 		ServiceMethodProcessCallable serviceMethodProcessCallable =
 			new ServiceMethodProcessCallable(
 				IdentifiableOSGiServiceInvokerUtil.createMethodHandler(
-					serviceBeanMethodInvocation.getThis(),
-					serviceBeanMethodInvocation.getMethod(), arguments));
+					aopMethodInvocation.getThis(),
+					aopMethodInvocation.getMethod(), arguments));
 
 		Future<Serializable> future = IntrabandRPCUtil.execute(
 			spi.getRegistrationReference(), serviceMethodProcessCallable);
 
 		Object result = future.get();
 
-		Method method = serviceBeanMethodInvocation.getMethod();
+		Method method = aopMethodInvocation.getMethod();
 
 		Class<?> returnType = method.getReturnType();
 
@@ -79,10 +77,6 @@ public class PortalResiliencyAdvice extends ChainableMethodAdvice {
 	public Object createMethodContext(
 		Class<?> targetClass, Method method,
 		Map<Class<? extends Annotation>, Annotation> annotations) {
-
-		if (!PropsValues.PORTAL_RESILIENCY_ENABLED) {
-			return null;
-		}
 
 		Annotation annotation = annotations.get(AccessControlled.class);
 

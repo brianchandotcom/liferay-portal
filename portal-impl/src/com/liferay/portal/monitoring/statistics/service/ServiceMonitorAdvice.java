@@ -19,8 +19,8 @@ import com.liferay.portal.kernel.monitoring.DataSampleThreadLocal;
 import com.liferay.portal.kernel.monitoring.MethodSignature;
 import com.liferay.portal.kernel.monitoring.RequestStatus;
 import com.liferay.portal.kernel.monitoring.ServiceMonitoringControl;
+import com.liferay.portal.spring.aop.AopMethodInvocation;
 import com.liferay.portal.spring.aop.ChainableMethodAdvice;
-import com.liferay.portal.spring.aop.ServiceBeanMethodInvocation;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
@@ -53,17 +53,16 @@ public class ServiceMonitorAdvice extends ChainableMethodAdvice {
 
 	@Override
 	public Object invoke(
-			ServiceBeanMethodInvocation serviceBeanMethodInvocation,
-			Object[] arguments)
+			AopMethodInvocation aopMethodInvocation, Object[] arguments)
 		throws Throwable {
 
 		if (!_serviceMonitoringControl.isMonitorServiceRequest()) {
-			return serviceBeanMethodInvocation.proceed(arguments);
+			return aopMethodInvocation.proceed(arguments);
 		}
 
 		boolean included = false;
 
-		Method method = serviceBeanMethodInvocation.getMethod();
+		Method method = aopMethodInvocation.getMethod();
 
 		Class<?> declaringClass = method.getDeclaringClass();
 
@@ -81,7 +80,7 @@ public class ServiceMonitorAdvice extends ChainableMethodAdvice {
 		}
 
 		if (_serviceMonitoringControl.isInclusiveMode() != included) {
-			return serviceBeanMethodInvocation.proceed(arguments);
+			return aopMethodInvocation.proceed(arguments);
 		}
 
 		DataSample dataSample =
@@ -93,7 +92,7 @@ public class ServiceMonitorAdvice extends ChainableMethodAdvice {
 		DataSampleThreadLocal.initialize();
 
 		try {
-			Object returnValue = serviceBeanMethodInvocation.proceed(arguments);
+			Object returnValue = aopMethodInvocation.proceed(arguments);
 
 			dataSample.capture(RequestStatus.SUCCESS);
 

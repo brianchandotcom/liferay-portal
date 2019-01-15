@@ -29,8 +29,8 @@ import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.systemevent.SystemEventHierarchyEntry;
 import com.liferay.portal.kernel.systemevent.SystemEventHierarchyEntryThreadLocal;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.spring.aop.AopMethodInvocation;
 import com.liferay.portal.spring.aop.ChainableMethodAdvice;
-import com.liferay.portal.spring.aop.ServiceBeanMethodInvocation;
 
 import java.io.Serializable;
 
@@ -46,21 +46,17 @@ public class SystemEventAdvice extends ChainableMethodAdvice {
 
 	@Override
 	public void afterReturning(
-			ServiceBeanMethodInvocation serviceBeanMethodInvocation,
-			Object[] arguments, Object result)
+			AopMethodInvocation aopMethodInvocation, Object[] arguments,
+			Object result)
 		throws Throwable {
 
-		SystemEvent systemEvent =
-			serviceBeanMethodInvocation.getAdviceMethodContext();
+		SystemEvent systemEvent = aopMethodInvocation.getAdviceMethodContext();
 
 		if (!systemEvent.send()) {
 			return;
 		}
 
-		if (!isValid(
-				serviceBeanMethodInvocation, arguments,
-				_PHASE_AFTER_RETURNING)) {
-
+		if (!isValid(aopMethodInvocation, arguments, _PHASE_AFTER_RETURNING)) {
 			return;
 		}
 
@@ -117,17 +113,13 @@ public class SystemEventAdvice extends ChainableMethodAdvice {
 
 	@Override
 	public Object before(
-			ServiceBeanMethodInvocation serviceBeanMethodInvocation,
-			Object[] arguments)
+			AopMethodInvocation aopMethodInvocation, Object[] arguments)
 		throws Throwable {
 
-		SystemEvent systemEvent =
-			serviceBeanMethodInvocation.getAdviceMethodContext();
+		SystemEvent systemEvent = aopMethodInvocation.getAdviceMethodContext();
 
 		if (systemEvent.action() != SystemEventConstants.ACTION_NONE) {
-			if (!isValid(
-					serviceBeanMethodInvocation, arguments, _PHASE_BEFORE)) {
-
+			if (!isValid(aopMethodInvocation, arguments, _PHASE_BEFORE)) {
 				return null;
 			}
 
@@ -156,16 +148,11 @@ public class SystemEventAdvice extends ChainableMethodAdvice {
 
 	@Override
 	public void duringFinally(
-		ServiceBeanMethodInvocation serviceBeanMethodInvocation,
-		Object[] arguments) {
+		AopMethodInvocation aopMethodInvocation, Object[] arguments) {
 
-		SystemEvent systemEvent =
-			serviceBeanMethodInvocation.getAdviceMethodContext();
+		SystemEvent systemEvent = aopMethodInvocation.getAdviceMethodContext();
 
-		if (!isValid(
-				serviceBeanMethodInvocation, arguments,
-				_PHASE_DURING_FINALLY)) {
-
+		if (!isValid(aopMethodInvocation, arguments, _PHASE_DURING_FINALLY)) {
 			return;
 		}
 
@@ -263,17 +250,17 @@ public class SystemEventAdvice extends ChainableMethodAdvice {
 	}
 
 	protected boolean isValid(
-		ServiceBeanMethodInvocation serviceBeanMethodInvocation,
-		Object[] arguments, int phase) {
+		AopMethodInvocation aopMethodInvocation, Object[] arguments,
+		int phase) {
 
-		Method method = serviceBeanMethodInvocation.getMethod();
+		Method method = aopMethodInvocation.getMethod();
 
 		Class<?>[] parameterTypes = method.getParameterTypes();
 
 		if (parameterTypes.length == 0) {
 			if (_log.isDebugEnabled() && (phase == _PHASE_BEFORE)) {
 				_log.debug(
-					"The method " + serviceBeanMethodInvocation +
+					"The method " + aopMethodInvocation +
 						" must have at least one parameter");
 			}
 
@@ -285,7 +272,7 @@ public class SystemEventAdvice extends ChainableMethodAdvice {
 		if (!ClassedModel.class.isAssignableFrom(parameterType)) {
 			if (_log.isDebugEnabled() && (phase == _PHASE_BEFORE)) {
 				_log.debug(
-					"The first parameter of " + serviceBeanMethodInvocation +
+					"The first parameter of " + aopMethodInvocation +
 						" must implement ClassedModel");
 			}
 
@@ -299,7 +286,7 @@ public class SystemEventAdvice extends ChainableMethodAdvice {
 
 			if (_log.isDebugEnabled() && (phase == _PHASE_BEFORE)) {
 				_log.debug(
-					"The first parameter of " + serviceBeanMethodInvocation +
+					"The first parameter of " + aopMethodInvocation +
 						" must be a long");
 			}
 
@@ -318,7 +305,7 @@ public class SystemEventAdvice extends ChainableMethodAdvice {
 				StringBundler sb = new StringBundler(4);
 
 				sb.append("If send is true, the first parameter of ");
-				sb.append(serviceBeanMethodInvocation);
+				sb.append(aopMethodInvocation);
 				sb.append(" must implement AuditedModel, GroupedModel, or ");
 				sb.append("StagedModel");
 

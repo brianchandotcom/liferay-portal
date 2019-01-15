@@ -15,8 +15,8 @@
 package com.liferay.portal.spring.transaction;
 
 import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portal.spring.aop.AopMethodInvocation;
 import com.liferay.portal.spring.aop.ChainableMethodAdvice;
-import com.liferay.portal.spring.aop.ServiceBeanMethodInvocation;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
@@ -50,16 +50,15 @@ public class TransactionInterceptor extends ChainableMethodAdvice {
 
 	@Override
 	public Object invoke(
-			ServiceBeanMethodInvocation serviceBeanMethodInvocation,
-			Object[] arguments)
+			AopMethodInvocation aopMethodInvocation, Object[] arguments)
 		throws Throwable {
 
 		TransactionAttributeAdapter transactionAttributeAdapter =
-			serviceBeanMethodInvocation.getAdviceMethodContext();
+			aopMethodInvocation.getAdviceMethodContext();
 
 		return transactionExecutor.execute(
 			transactionAttributeAdapter,
-			() -> serviceBeanMethodInvocation.proceed(arguments));
+			() -> aopMethodInvocation.proceed(arguments));
 	}
 
 	public void setTransactionExecutor(

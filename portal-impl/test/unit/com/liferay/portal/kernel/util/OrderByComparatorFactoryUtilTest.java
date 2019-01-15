@@ -33,7 +33,6 @@ import org.junit.Test;
 
 /**
  * @author Wesley Gong
- * @see    ServiceBeanMethodInvocationFactoryImplTest
  */
 public class OrderByComparatorFactoryUtilTest {
 

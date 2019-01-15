@@ -26,8 +26,8 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.spring.aop.AopMethodInvocation;
 import com.liferay.portal.spring.aop.ChainableMethodAdvice;
-import com.liferay.portal.spring.aop.ServiceBeanMethodInvocation;
 
 import java.io.Serializable;
 
@@ -45,11 +45,10 @@ public class BufferedIncrementAdvice extends ChainableMethodAdvice {
 	@Override
 	@SuppressWarnings("rawtypes")
 	public Object before(
-		ServiceBeanMethodInvocation serviceBeanMethodInvocation,
-		Object[] arguments) {
+		AopMethodInvocation aopMethodInvocation, Object[] arguments) {
 
 		BufferedIncrementContext bufferedIncrementContext =
-			serviceBeanMethodInvocation.getAdviceMethodContext();
+			aopMethodInvocation.getAdviceMethodContext();
 
 		BufferedIncrementProcessor bufferedIncrementProcessor =
 			bufferedIncrementContext._bufferedIncrementProcessor;
@@ -74,8 +73,7 @@ public class BufferedIncrementAdvice extends ChainableMethodAdvice {
 
 			BufferedIncreasableEntry bufferedIncreasableEntry =
 				new BufferedIncreasableEntry(
-					serviceBeanMethodInvocation, arguments, batchKey,
-					increment);
+					aopMethodInvocation, arguments, batchKey, increment);
 
 			TransactionCommitCallbackUtil.registerCallback(
 				() -> {

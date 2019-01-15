@@ -20,8 +20,8 @@ import com.liferay.portal.kernel.cache.thread.local.ThreadLocalCache;
 import com.liferay.portal.kernel.cache.thread.local.ThreadLocalCacheManager;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.spring.aop.AopMethodInvocation;
 import com.liferay.portal.spring.aop.ChainableMethodAdvice;
-import com.liferay.portal.spring.aop.ServiceBeanMethodInvocation;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
@@ -44,17 +44,15 @@ public class ThreadLocalCacheAdvice extends ChainableMethodAdvice {
 
 	@Override
 	public Object invoke(
-			ServiceBeanMethodInvocation serviceBeanMethodInvocation,
-			Object[] arguments)
+			AopMethodInvocation aopMethodInvocation, Object[] arguments)
 		throws Throwable {
 
 		ThreadLocalCachable threadLocalCachable =
-			serviceBeanMethodInvocation.getAdviceMethodContext();
+			aopMethodInvocation.getAdviceMethodContext();
 
 		ThreadLocalCache<Object> threadLocalCache =
 			ThreadLocalCacheManager.getThreadLocalCache(
-				threadLocalCachable.scope(),
-				serviceBeanMethodInvocation.getMethod());
+				threadLocalCachable.scope(), aopMethodInvocation.getMethod());
 
 		String cacheKey = _getCacheKey(arguments);
 
@@ -68,7 +66,7 @@ public class ThreadLocalCacheAdvice extends ChainableMethodAdvice {
 			return value;
 		}
 
-		Object result = serviceBeanMethodInvocation.proceed(arguments);
+		Object result = aopMethodInvocation.proceed(arguments);
 
 		if (result == null) {
 			threadLocalCache.put(cacheKey, nullResult);

@@ -17,8 +17,8 @@ package com.liferay.portal.security.access.control;
 import com.liferay.portal.kernel.security.access.control.AccessControlUtil;
 import com.liferay.portal.kernel.security.access.control.AccessControlled;
 import com.liferay.portal.kernel.security.auth.AccessControlContext;
+import com.liferay.portal.spring.aop.AopMethodInvocation;
 import com.liferay.portal.spring.aop.ChainableMethodAdvice;
-import com.liferay.portal.spring.aop.ServiceBeanMethodInvocation;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
@@ -36,17 +36,15 @@ public class AccessControlAdvice extends ChainableMethodAdvice {
 
 	@Override
 	public Object before(
-		ServiceBeanMethodInvocation serviceBeanMethodInvocation,
-		Object[] arguments) {
+		AopMethodInvocation aopMethodInvocation, Object[] arguments) {
 
 		incrementServiceDepth();
 
 		AccessControlled accessControlled =
-			serviceBeanMethodInvocation.getAdviceMethodContext();
+			aopMethodInvocation.getAdviceMethodContext();
 
 		_accessControlAdvisor.accept(
-			serviceBeanMethodInvocation.getMethod(), arguments,
-			accessControlled);
+			aopMethodInvocation.getMethod(), arguments, accessControlled);
 
 		return null;
 	}
@@ -61,8 +59,7 @@ public class AccessControlAdvice extends ChainableMethodAdvice {
 
 	@Override
 	public void duringFinally(
-		ServiceBeanMethodInvocation serviceBeanMethodInvocation,
-		Object[] arguments) {
+		AopMethodInvocation aopMethodInvocation, Object[] arguments) {
 
 		decrementServiceDepth();
 	}

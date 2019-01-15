@@ -17,7 +17,7 @@ package com.liferay.portal.internal.increment;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.increment.Increment;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.spring.aop.ServiceBeanMethodInvocation;
+import com.liferay.portal.spring.aop.AopMethodInvocation;
 
 import java.util.Arrays;
 
@@ -28,33 +28,33 @@ public class BufferedIncreasableEntry<K, T>
 	extends IncreasableEntry<K, Increment<T>> {
 
 	public BufferedIncreasableEntry(
-		ServiceBeanMethodInvocation serviceBeanMethodInvocation,
-		Object[] arguments, K key, Increment<T> value) {
+		AopMethodInvocation aopMethodInvocation, Object[] arguments, K key,
+		Increment<T> value) {
 
 		super(key, value);
 
-		_serviceBeanMethodInvocation = serviceBeanMethodInvocation;
+		_aopMethodInvocation = aopMethodInvocation;
 		_arguments = arguments;
 	}
 
 	@Override
 	public BufferedIncreasableEntry<K, T> increase(Increment<T> deltaValue) {
 		return new BufferedIncreasableEntry<>(
-			_serviceBeanMethodInvocation, _arguments, key,
+			_aopMethodInvocation, _arguments, key,
 			value.increaseForNew(deltaValue.getValue()));
 	}
 
 	public void proceed() throws Throwable {
 		_arguments[_arguments.length - 1] = getValue().getValue();
 
-		_serviceBeanMethodInvocation.proceed(_arguments);
+		_aopMethodInvocation.proceed(_arguments);
 	}
 
 	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(4);
 
-		sb.append(_serviceBeanMethodInvocation.toString());
+		sb.append(_aopMethodInvocation.toString());
 		sb.append(StringPool.OPEN_PARENTHESIS);
 		sb.append(Arrays.toString(_arguments));
 		sb.append(StringPool.CLOSE_PARENTHESIS);
@@ -62,7 +62,7 @@ public class BufferedIncreasableEntry<K, T>
 		return sb.toString();
 	}
 
+	private final AopMethodInvocation _aopMethodInvocation;
 	private final Object[] _arguments;
-	private final ServiceBeanMethodInvocation _serviceBeanMethodInvocation;
 
 }

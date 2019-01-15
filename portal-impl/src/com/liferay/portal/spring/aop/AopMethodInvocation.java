@@ -23,7 +23,7 @@ import java.lang.reflect.Method;
 /**
  * @author Shuyang Zhou
  */
-public class ServiceBeanMethodInvocation {
+public class AopMethodInvocation {
 
 	@SuppressWarnings("unchecked")
 	public <T> T getAdviceMethodContext() {
@@ -49,7 +49,7 @@ public class ServiceBeanMethodInvocation {
 		}
 
 		return _nextChainableMethodAdvice.invoke(
-			_nextServiceBeanMethodInvocation, arguments);
+			_nextAopMethodInvocation, arguments);
 	}
 
 	@Override
@@ -93,10 +93,10 @@ public class ServiceBeanMethodInvocation {
 		return _toString;
 	}
 
-	protected ServiceBeanMethodInvocation(
+	protected AopMethodInvocation(
 		Object target, Method method, Object adviceMethodContext,
 		ChainableMethodAdvice nextChainableMethodAdvice,
-		ServiceBeanMethodInvocation nextServiceBeanMethodInvocation) {
+		AopMethodInvocation nextAopMethodInvocation) {
 
 		_target = target;
 		_method = method;
@@ -105,13 +105,13 @@ public class ServiceBeanMethodInvocation {
 
 		_adviceMethodContext = adviceMethodContext;
 		_nextChainableMethodAdvice = nextChainableMethodAdvice;
-		_nextServiceBeanMethodInvocation = nextServiceBeanMethodInvocation;
+		_nextAopMethodInvocation = nextAopMethodInvocation;
 	}
 
 	private final Object _adviceMethodContext;
 	private final Method _method;
+	private final AopMethodInvocation _nextAopMethodInvocation;
 	private final ChainableMethodAdvice _nextChainableMethodAdvice;
-	private final ServiceBeanMethodInvocation _nextServiceBeanMethodInvocation;
 	private final Object _target;
 	private String _toString;
 

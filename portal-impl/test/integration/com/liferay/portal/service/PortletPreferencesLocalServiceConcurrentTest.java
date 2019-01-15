@@ -28,7 +28,7 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.service.impl.PortletPreferencesLocalServiceImpl;
 import com.liferay.portal.service.impl.SynchronousInvocationHandler;
 import com.liferay.portal.service.test.ServiceTestUtil;
-import com.liferay.portal.spring.aop.ServiceBeanAopInvocationHandler;
+import com.liferay.portal.spring.aop.AopInvocationHandler;
 import com.liferay.portal.spring.transaction.DefaultTransactionExecutor;
 import com.liferay.portal.test.rule.ExpectedDBType;
 import com.liferay.portal.test.rule.ExpectedLog;
@@ -79,15 +79,15 @@ public class PortletPreferencesLocalServiceConcurrentTest {
 			_threadCount = PropsValues.RETRY_ADVICE_MAX_RETRIES;
 		}
 
-		ServiceBeanAopInvocationHandler serviceBeanAopInvocationHandler =
+		AopInvocationHandler aopInvocationHandler =
 			ProxyUtil.fetchInvocationHandler(
 				PortletPreferencesLocalServiceUtil.getService(),
-				ServiceBeanAopInvocationHandler.class);
+				AopInvocationHandler.class);
 
 		final PortletPreferencesLocalServiceImpl
 			portletPreferencesLocalServiceImpl =
 				(PortletPreferencesLocalServiceImpl)
-					serviceBeanAopInvocationHandler.getTarget();
+					aopInvocationHandler.getTarget();
 
 		final PortletPreferencesPersistence portletPreferencesPersistence =
 			portletPreferencesLocalServiceImpl.

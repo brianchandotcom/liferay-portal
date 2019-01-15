@@ -26,20 +26,19 @@ import java.util.Map;
 public abstract class ChainableMethodAdvice {
 
 	public void afterReturning(
-			ServiceBeanMethodInvocation serviceBeanMethodInvocation,
-			Object[] arguments, Object result)
+			AopMethodInvocation aopMethodInvocation, Object[] arguments,
+			Object result)
 		throws Throwable {
 	}
 
 	public void afterThrowing(
-			ServiceBeanMethodInvocation serviceBeanMethodInvocation,
-			Object[] arguments, Throwable throwable)
+			AopMethodInvocation aopMethodInvocation, Object[] arguments,
+			Throwable throwable)
 		throws Throwable {
 	}
 
 	public Object before(
-			ServiceBeanMethodInvocation serviceBeanMethodInvocation,
-			Object[] arguments)
+			AopMethodInvocation aopMethodInvocation, Object[] arguments)
 		throws Throwable {
 
 		return null;
@@ -50,16 +49,14 @@ public abstract class ChainableMethodAdvice {
 		Map<Class<? extends Annotation>, Annotation> annotations);
 
 	public void duringFinally(
-		ServiceBeanMethodInvocation serviceBeanMethodInvocation,
-		Object[] arguments) {
+		AopMethodInvocation aopMethodInvocation, Object[] arguments) {
 	}
 
 	public Object invoke(
-			ServiceBeanMethodInvocation serviceBeanMethodInvocation,
-			Object[] arguments)
+			AopMethodInvocation aopMethodInvocation, Object[] arguments)
 		throws Throwable {
 
-		Object returnValue = before(serviceBeanMethodInvocation, arguments);
+		Object returnValue = before(aopMethodInvocation, arguments);
 
 		if (returnValue != null) {
 			if (returnValue == nullResult) {
@@ -70,17 +67,17 @@ public abstract class ChainableMethodAdvice {
 		}
 
 		try {
-			returnValue = serviceBeanMethodInvocation.proceed(arguments);
+			returnValue = aopMethodInvocation.proceed(arguments);
 
-			afterReturning(serviceBeanMethodInvocation, arguments, returnValue);
+			afterReturning(aopMethodInvocation, arguments, returnValue);
 		}
 		catch (Throwable throwable) {
-			afterThrowing(serviceBeanMethodInvocation, arguments, throwable);
+			afterThrowing(aopMethodInvocation, arguments, throwable);
 
 			throw throwable;
 		}
 		finally {
-			duringFinally(serviceBeanMethodInvocation, arguments);
+			duringFinally(aopMethodInvocation, arguments);
 		}
 
 		return returnValue;

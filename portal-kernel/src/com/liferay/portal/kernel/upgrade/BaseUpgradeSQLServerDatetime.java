@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.LoggingTimer;
 
 import java.sql.DatabaseMetaData;
 import java.sql.ResultSet;
@@ -52,77 +51,75 @@ public class BaseUpgradeSQLServerDatetime extends UpgradeProcess {
 	}
 
 	private void _upgradeTable(Class<?> tableClass) throws Exception {
-		try (LoggingTimer loggingTimer = new LoggingTimer()) {
-			DBInspector dbInspector = new DBInspector(connection);
+		DBInspector dbInspector = new DBInspector(connection);
 
-			String catalog = dbInspector.getCatalog();
-			String schema = dbInspector.getSchema();
+		String catalog = dbInspector.getCatalog();
+		String schema = dbInspector.getSchema();
 
-			DatabaseMetaData databaseMetaData = connection.getMetaData();
+		DatabaseMetaData databaseMetaData = connection.getMetaData();
 
-			String tableName = dbInspector.normalizeName(
-				getTableName(tableClass), databaseMetaData);
+		String tableName = dbInspector.normalizeName(
+			getTableName(tableClass), databaseMetaData);
 
-			try (ResultSet tableRS = databaseMetaData.getTables(
-					catalog, schema, tableName, null)) {
+		try (ResultSet tableRS = databaseMetaData.getTables(
+				catalog, schema, tableName, null)) {
 
-				if (!tableRS.next()) {
-					_log.error(
-						StringBundler.concat(
-							"Table ", tableName, " does not exist"));
+			if (!tableRS.next()) {
+				_log.error(
+					StringBundler.concat(
+						"Table ", tableName, " does not exist"));
 
-					return;
+				return;
+			}
+
+			String newTypeName = dbInspector.normalizeName(_NEW_TYPE);
+
+			String newTypeDefinition = StringBundler.concat(
+				newTypeName, "(", _NEW_SIZE, ")");
+
+			Map<String, Integer> tableColumnMap = getTableColumnsMap(
+				tableClass);
+
+			for (Map.Entry<String, Integer> entry :
+					tableColumnMap.entrySet()) {
+
+				if (entry.getValue() != Types.TIMESTAMP) {
+					continue;
 				}
 
-				String newTypeName = dbInspector.normalizeName(_NEW_TYPE);
+				String columnName = dbInspector.normalizeName(
+					entry.getKey(), databaseMetaData);
 
-				String newTypeDefinition = StringBundler.concat(
-					newTypeName, "(", _NEW_SIZE, ")");
+				try (ResultSet columnRS = databaseMetaData.getColumns(
+						null, null, tableName, columnName)) {
 
-				Map<String, Integer> tableColumnMap = getTableColumnsMap(
-					tableClass);
+					if (!columnRS.next()) {
+						_log.error(
+							StringBundler.concat(
+								"Column ", columnName,
+								" does not exist in table ", tableName));
 
-				for (Map.Entry<String, Integer> entry :
-						tableColumnMap.entrySet()) {
-
-					if (entry.getValue() != Types.TIMESTAMP) {
 						continue;
 					}
 
-					String columnName = dbInspector.normalizeName(
-						entry.getKey(), databaseMetaData);
+					if (newTypeName.equals(
+							columnRS.getString("TYPE_NAME")) &&
+						(_NEW_SIZE == columnRS.getInt("DECIMAL_DIGITS"))) {
 
-					try (ResultSet columnRS = databaseMetaData.getColumns(
-							null, null, tableName, columnName)) {
-
-						if (!columnRS.next()) {
-							_log.error(
+						if (_log.isWarnEnabled()) {
+							_log.warn(
 								StringBundler.concat(
-									"Column ", columnName,
-									" does not exist in table ", tableName));
-
-							continue;
+									"Column ", columnName, " in table ",
+									tableName, " already is ",
+									newTypeDefinition));
 						}
 
-						if (newTypeName.equals(
-								columnRS.getString("TYPE_NAME")) &&
-							(_NEW_SIZE == columnRS.getInt("DECIMAL_DIGITS"))) {
-
-							if (_log.isWarnEnabled()) {
-								_log.warn(
-									StringBundler.concat(
-										"Column ", columnName, " in table ",
-										tableName, " already is ",
-										newTypeDefinition));
-							}
-
-							continue;
-						}
-
-						alter(
-							tableClass,
-							new AlterColumnType(columnName, newTypeDefinition));
+						continue;
 					}
+
+					alter(
+						tableClass,
+						new AlterColumnType(columnName, newTypeDefinition));
 				}
 			}
 		}

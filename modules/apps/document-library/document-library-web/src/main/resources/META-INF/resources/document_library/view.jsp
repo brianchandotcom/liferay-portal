@@ -75,9 +75,8 @@ String navigation = ParamUtil.getString(request, "navigation");
 		%>
 
 		<soy:component-renderer
-			componentId='<%= liferayPortletResponse.getNamespace() + "bulkStatusContainer" %>'
 			context="<%= context %>"
-			module="document-library-web/document_library/bulk/BulkStatus.es"
+			module='<%= npmResolvedPackageName + "/document_library/bulk/BulkStatus.es" %>'
 			templateNamespace="com.liferay.document.library.web.BulkStatus.render"
 		/>
 

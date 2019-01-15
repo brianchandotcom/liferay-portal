@@ -54,6 +54,29 @@
 			"dataType": "string",
 			"indexType": "keyword",
 			"label": {
+				"en_US": "folderId"
+			},
+			"localizable": true,
+			"name": "folderId",
+			"predefinedValue": {
+				"en_US": ""
+			},
+			"readOnly": false,
+			"repeatable": false,
+			"required": false,
+			"showLabel": true,
+			"style": {
+				"en_US": ""
+			},
+			"tip": {
+				"en_US": ""
+			},
+			"type": "text"
+		},
+		{
+			"dataType": "string",
+			"indexType": "keyword",
+			"label": {
 				"en_US": "formId"
 			},
 			"localizable": true,

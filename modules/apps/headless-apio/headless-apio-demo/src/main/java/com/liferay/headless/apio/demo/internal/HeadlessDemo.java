@@ -50,6 +50,7 @@ import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.RoleConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutSetLocalService;
@@ -103,9 +104,13 @@ public class HeadlessDemo extends BasePortalInstanceLifecycleListener {
 			List<JournalArticle> journalArticles = _createJournalArticles(
 				company, _group, user);
 
-			FileEntry fileEntry = _createFileEntry(user, _group);
+			Folder folder = _createFolder(user, _group);
 
-			_createMainPage(company, _group, user, journalArticles, fileEntry);
+			FileEntry fileEntry = _createFileEntryInFolder(
+				user, _group, folder);
+
+			_createMainPage(
+				company, _group, user, journalArticles, folder, fileEntry);
 		}
 		catch (Exception e) {
 			_log.error("Error initializing data ", e);
@@ -140,7 +145,7 @@ public class HeadlessDemo extends BasePortalInstanceLifecycleListener {
 
 	private FileEntry _addPostmanVarFile(
 			Group group, User user, DDMStructure ddmStructure,
-			JournalArticle journalArticle, FileEntry fileEntry)
+			JournalArticle journalArticle, Folder folder, FileEntry fileEntry)
 		throws Exception {
 
 		ServiceContext serviceContext = new ServiceContext();
@@ -154,6 +159,7 @@ public class HeadlessDemo extends BasePortalInstanceLifecycleListener {
 			Arrays.asList(
 				String.valueOf(group.getGroupId()),
 				String.valueOf(fileEntry.getFileEntryId()),
+				String.valueOf(folder.getFolderId()),
 				String.valueOf(ddmStructure.getStructureId()),
 				String.valueOf(journalArticle.getResourcePrimKey()),
 				String.valueOf(user.getUserId())));
@@ -184,7 +190,8 @@ public class HeadlessDemo extends BasePortalInstanceLifecycleListener {
 				user));
 	}
 
-	private FileEntry _createFileEntry(User user, Group group)
+	private FileEntry _createFileEntryInFolder(
+			User user, Group group, Folder folder)
 		throws Exception {
 
 		ServiceContext serviceContext = new ServiceContext();
@@ -193,11 +200,24 @@ public class HeadlessDemo extends BasePortalInstanceLifecycleListener {
 		serviceContext.setAddGuestPermissions(true);
 
 		return _dlAppLocalService.addFileEntry(
-			user.getUserId(), group.getGroupId(),
-			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, "Logo",
+			user.getUserId(), group.getGroupId(), folder.getFolderId(), "Logo",
 			ContentTypes.IMAGE_PNG,
 			FileUtil.getBytes(
 				HeadlessDemo.class, _PATH + "layout-set/logo.png"),
+			serviceContext);
+	}
+
+	private Folder _createFolder(User user, Group group)
+		throws PortalException {
+
+		ServiceContext serviceContext = new ServiceContext();
+
+		serviceContext.setAddGroupPermissions(true);
+		serviceContext.setAddGuestPermissions(true);
+
+		return _dlAppLocalService.addFolder(
+			user.getUserId(), group.getGroupId(),
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, "Main Folder", "",
 			serviceContext);
 	}
 
@@ -274,7 +294,8 @@ public class HeadlessDemo extends BasePortalInstanceLifecycleListener {
 
 	private void _createMainPage(
 			Company company, Group group, User user,
-			List<JournalArticle> journalArticles, FileEntry fileEntry)
+			List<JournalArticle> journalArticles, Folder folder,
+			FileEntry fileEntry)
 		throws Exception {
 
 		_layoutSetLocalService.updateLogo(
@@ -336,7 +357,7 @@ public class HeadlessDemo extends BasePortalInstanceLifecycleListener {
 		DDMStructure ddmStructure = journalArticle.getDDMStructure();
 
 		FileEntry postmanFileEntry = _addPostmanVarFile(
-			group, user, ddmStructure, journalArticle, fileEntry);
+			group, user, ddmStructure, journalArticle, folder, fileEntry);
 
 		JournalArticle mainPageJournalArticle =
 			_journalArticleLocalService.addArticle(
@@ -348,6 +369,7 @@ public class HeadlessDemo extends BasePortalInstanceLifecycleListener {
 					Arrays.asList(
 						String.valueOf(group.getGroupId()),
 						String.valueOf(fileEntry.getFileEntryId()),
+						String.valueOf(folder.getFolderId()),
 						String.valueOf(ddmStructure.getStructureId()),
 						String.valueOf(journalArticle.getResourcePrimKey()),
 						String.valueOf(user.getUserId()),

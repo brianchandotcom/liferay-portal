@@ -12,6 +12,10 @@
 		<td>$documentId.getData()</td>
 	</tr>
 	<tr>
+		<td>folderId</td>
+		<td>$folderId.getData()</td>
+	</tr>
+	<tr>
 		<td>formId</td>
 		<td>$formId.getData()</td>
 	</tr>

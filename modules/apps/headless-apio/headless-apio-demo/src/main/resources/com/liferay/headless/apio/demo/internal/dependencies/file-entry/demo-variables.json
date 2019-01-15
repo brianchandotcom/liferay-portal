@@ -20,6 +20,12 @@
 		{
 			"description": "",
 			"enabled": true,
+			"key": "folderId",
+			"value": "%s"
+		},
+		{
+			"description": "",
+			"enabled": true,
 			"key": "structureId",
 			"value": "%s"
 		},

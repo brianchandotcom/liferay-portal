@@ -8,6 +8,9 @@
 	<dynamic-element index-type="keyword" name="documentId" type="text">
 		<dynamic-content language-id="en_US"><![CDATA[%s]]></dynamic-content>
 	</dynamic-element>
+	<dynamic-element index-type="keyword" name="folderId" type="text">
+		<dynamic-content language-id="en_US"><![CDATA[%s]]></dynamic-content>
+	</dynamic-element>
 	<dynamic-element index-type="keyword" name="structureId" type="text">
 		<dynamic-content language-id="en_US"><![CDATA[%s]]></dynamic-content>
 	</dynamic-element>

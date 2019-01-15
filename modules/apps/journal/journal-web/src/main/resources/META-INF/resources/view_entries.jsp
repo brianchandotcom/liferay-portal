@@ -173,7 +173,7 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 										labels="<%= journalDisplayContext.getArticleLabels(curArticle) %>"
 										selectable="<%= true %>"
 										selected="<%= rowChecker.isChecked(curArticle) %>"
-										subtitle='<%= LanguageUtil.format(request, "x-modified-x-ago", new String[] {HtmlUtil.escape(curArticle.getUserName()), modifiedDateDescription}) %>'
+										subtitle='<%= LanguageUtil.format(request, "modified-x-ago", modifiedDateDescription) %>'
 										title="<%= title %>"
 									/>
 								</c:when>
@@ -189,7 +189,7 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 										labels="<%= journalDisplayContext.getArticleLabels(curArticle) %>"
 										selectable="<%= true %>"
 										selected="<%= rowChecker.isChecked(curArticle) %>"
-										subtitle='<%= LanguageUtil.format(request, "x-modified-x-ago", new String[] {HtmlUtil.escape(curArticle.getUserName()), modifiedDateDescription}) %>'
+										subtitle='<%= LanguageUtil.format(request, "modified-x-ago", modifiedDateDescription) %>'
 										title="<%= title %>"
 									/>
 								</c:otherwise>

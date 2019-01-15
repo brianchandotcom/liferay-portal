@@ -139,6 +139,16 @@ definition {
 
 		Staging.deactivateStagingCP(siteName = "Site Name");
 
+		Navigator.gotoSitePage(
+			pageName = "Staging Test Page",
+			siteName = "Site Name"
+		);
+
+		AssertTextEquals(
+			locator1 = "Message#EMPTY_INFO",
+			value1 = "There are no documents or media files in this folder."
+		);
+
 		Navigator.openSiteURL(siteName = "Site Name");
 
 		ProductMenu.gotoPortlet(

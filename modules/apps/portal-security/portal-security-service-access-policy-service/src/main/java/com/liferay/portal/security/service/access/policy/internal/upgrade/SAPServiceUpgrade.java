@@ -14,7 +14,9 @@
 
 package com.liferay.portal.security.service.access.policy.internal.upgrade;
 
+import com.liferay.portal.kernel.upgrade.BaseUpgradeSQLServerDatetime;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
+import com.liferay.portal.security.service.access.policy.internal.upgrade.v3_0_0.util.SAPEntryTable;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
 import org.osgi.service.component.annotations.Component;
@@ -52,6 +54,11 @@ public class SAPServiceUpgrade implements UpgradeStepRegistrator {
 		registry.register("2.0.11", "2.0.13", new DummyUpgradeStep());
 
 		registry.register("2.0.12", "2.0.13", new DummyUpgradeStep());
+
+		registry.register(
+			"2.0.13", "3.0.0",
+			new BaseUpgradeSQLServerDatetime(
+				new Class<?>[] {SAPEntryTable.class}));
 	}
 
 }

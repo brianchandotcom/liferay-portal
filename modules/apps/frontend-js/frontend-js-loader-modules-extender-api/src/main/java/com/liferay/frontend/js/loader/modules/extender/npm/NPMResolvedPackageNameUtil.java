@@ -34,6 +34,10 @@ public class NPMResolvedPackageNameUtil {
 				NPMResolvedPackageNameUtil.class.getName(),
 				npmResolvedPackageName);
 		}
+		else {
+			servletContext.removeAttribute(
+				NPMResolvedPackageNameUtil.class.getName());
+		}
 	}
 
 }

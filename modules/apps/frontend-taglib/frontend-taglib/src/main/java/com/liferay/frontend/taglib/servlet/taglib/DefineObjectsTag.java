@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.taglib.util.TagResourceBundleUtil;
 
 import java.util.Locale;
@@ -71,9 +72,13 @@ public class DefineObjectsTag extends TagSupport {
 				"windowState", liferayPortletRequest.getWindowState());
 		}
 
-		pageContext.setAttribute(
-			"npmResolvedPackageName",
-			NPMResolvedPackageNameUtil.get(request.getServletContext()));
+		String npmResolvedPackageName = NPMResolvedPackageNameUtil.get(
+			request.getServletContext());
+
+		if (Validator.isNotNull(npmResolvedPackageName)) {
+			pageContext.setAttribute(
+				"npmResolvedPackageName", npmResolvedPackageName);
+		}
 
 		if (_overrideResourceBundle != null) {
 			pageContext.setAttribute("resourceBundle", _overrideResourceBundle);

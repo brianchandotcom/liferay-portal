@@ -16,7 +16,7 @@ class ElementsDefaultEventHandler extends PortletBase {
 
 	delete(itemData) {
 		if (this.trashEnabled || confirm(Liferay.Language.get('are-you-sure-you-want-to-delete-this'))) {
-			this._send(itemData.deleteFolderURL);
+			this._send(itemData.deleteURL);
 		}
 	}
 

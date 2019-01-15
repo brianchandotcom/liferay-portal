@@ -498,8 +498,7 @@ public class JournalDisplayContext {
 						dropdownItem -> {
 							dropdownItem.putData("action", "delete");
 							dropdownItem.putData(
-								"deleteArticleURL",
-								deleteArticleURL.toString());
+								"deleteURL", deleteArticleURL.toString());
 							dropdownItem.setLabel(label);
 						});
 				}
@@ -935,7 +934,7 @@ public class JournalDisplayContext {
 						dropdownItem -> {
 							dropdownItem.putData("action", "delete");
 							dropdownItem.putData(
-								"deleteFolderURL", deleteFolderURL.toString());
+								"deleteURL", deleteFolderURL.toString());
 							dropdownItem.setLabel(label);
 						});
 				}

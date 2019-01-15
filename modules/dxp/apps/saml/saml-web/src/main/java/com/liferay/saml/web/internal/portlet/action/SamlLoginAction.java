@@ -123,7 +123,7 @@ public class SamlLoginAction extends BaseSamlStrutsAction {
 	protected JSONObject toJSONObject(
 		List<SamlSpIdpConnection> samlSpIdpConnections) {
 
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+		JSONObject jsonObject1 = JSONFactoryUtil.createJSONObject();
 
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
@@ -138,9 +138,9 @@ public class SamlLoginAction extends BaseSamlStrutsAction {
 			jsonArray.put(jsonObject2);
 		}
 
-		jsonObject.put("relevantIdpConnections", jsonArray);
+		jsonObject1.put("relevantIdpConnections", jsonArray);
 
-		return jsonObject;
+		return jsonObject1;
 	}
 
 	@Reference

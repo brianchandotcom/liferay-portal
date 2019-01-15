@@ -1169,7 +1169,7 @@ public class SingleLogoutProfileImpl
 
 		LogoutRequest logoutRequest = OpenSamlUtil.buildLogoutRequest();
 
-		String entityId = getSamlSpSession(request).getSamlIdpEntityId();
+		String entityId = samlSpSession.getSamlIdpEntityId();
 
 		MessageContext<?> messageContext = getMessageContext(
 			request, response, entityId);

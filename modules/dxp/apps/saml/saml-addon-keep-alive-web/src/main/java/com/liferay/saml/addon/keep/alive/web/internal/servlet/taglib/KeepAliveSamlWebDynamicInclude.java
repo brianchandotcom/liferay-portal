@@ -98,15 +98,10 @@ public class KeepAliveSamlWebDynamicInclude extends BaseDynamicInclude {
 			return StringPool.BLANK;
 		}
 
-		String keepAliveURL = StringPool.BLANK;
+		ExpandoBridge expandoBridge = samlSpIdpConnection.getExpandoBridge();
 
-		if (samlSpIdpConnection != null) {
-			ExpandoBridge expandoBridge =
-				samlSpIdpConnection.getExpandoBridge();
-
-			keepAliveURL = (String)expandoBridge.getAttribute(
-				SamlKeepAliveConstants.EXPANDO_COLUMN_NAME_KEEP_ALIVE_URL);
-		}
+		String keepAliveURL = (String)expandoBridge.getAttribute(
+			SamlKeepAliveConstants.EXPANDO_COLUMN_NAME_KEEP_ALIVE_URL);
 
 		if ((keepAliveURL == null) ||
 			keepAliveURL.equals(

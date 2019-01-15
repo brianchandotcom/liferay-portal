@@ -157,11 +157,8 @@ public class KeepAliveSPPortalDynamicInclude extends BaseDynamicInclude {
 
 		HttpSession session = request.getSession();
 
-		SamlSpSession samlSpSession =
-			samlSpSessionLocalService.fetchSamlSpSessionByJSessionId(
-				session.getId());
-
-		return samlSpSession;
+		return samlSpSessionLocalService.fetchSamlSpSessionByJSessionId(
+			session.getId());
 	}
 
 	protected String getSamlSpSessionKey(HttpServletRequest request) {

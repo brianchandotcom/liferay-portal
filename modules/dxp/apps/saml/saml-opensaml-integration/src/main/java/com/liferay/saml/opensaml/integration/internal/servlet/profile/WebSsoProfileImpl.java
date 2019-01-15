@@ -606,6 +606,7 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 
 		verifyInResponseTo(samlResponse);
 		verifyDestination(messageContext, samlResponse.getDestination());
+
 		Issuer issuer = samlResponse.getIssuer();
 
 		verifyIssuer(messageContext, issuer);
@@ -828,13 +829,8 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 			samlSelfEntityContext.getEntityId(), assertionConsumerService,
 			singleSignOnService, nameIDPolicy);
 
+		authnRequest.setForceAuthn(samlSpIdpConnection.isForceAuthn());
 		authnRequest.setID(generateIdentifier(20));
-
-		boolean forceAuthn = false;
-
-		forceAuthn = samlSpIdpConnection.isForceAuthn();
-
-		authnRequest.setForceAuthn(forceAuthn);
 
 		outboundMessageContext.setMessage(authnRequest);
 

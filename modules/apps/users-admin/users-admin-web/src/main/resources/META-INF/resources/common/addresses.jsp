@@ -17,9 +17,9 @@
 <%@ include file="/init.jsp" %>
 
 <%
+String backURL = (String)request.getAttribute("backURL");
 String className = (String)request.getAttribute("contact_information.jsp-className");
 long classPK = (long)request.getAttribute("contact_information.jsp-classPK");
-String contactInformationRequireJS = (String)request.getAttribute("contact_information.jsp-contactInformationRequireJS");
 
 String emptyResultsMessage = ParamUtil.getString(request, "emptyResultsMessage");
 
@@ -33,19 +33,22 @@ List<Address> addresses = AddressServiceUtil.getAddresses(className, classPK);
 		</span>
 		<span class="autofit-col">
 			<span class="heading-end">
+
+				<%
+								PortletURL editURL = liferayPortletResponse.createRenderURL();
+
+				//				editURL.setParameter("backURL", backURL);
+								editURL.setParameter("className", className);
+								editURL.setParameter("classPK", String.valueOf(classPK));
+								editURL.setParameter("mvcRenderCommandName", "/users_admin/edit_address");
+								editURL.setParameter("redirect", currentURL);
+				%>
+
 				<liferay-ui:icon
-					cssClass="modify-address-link"
-					data="<%=
-						new HashMap<String, Object>() {
-							{
-								put("title", LanguageUtil.get(request, "add-address"));
-							}
-						}
-					%>"
 					label="<%= true %>"
 					linkCssClass="btn btn-secondary btn-sm"
 					message="add"
-					url="javascript:;"
+					url="<%= editURL.toString() %>"
 				/>
 			</span>
 		</span>
@@ -122,16 +125,3 @@ List<Address> addresses = AddressServiceUtil.getAddresses(className, classPK);
 		</tbody>
 	</table>
 </div>
-
-<portlet:renderURL var="editAddressRenderURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-	<portlet:param name="mvcPath" value="/common/edit_address.jsp" />
-	<portlet:param name="className" value="<%= className %>" />
-</portlet:renderURL>
-
-<aui:script require="<%= contactInformationRequireJS %>">
-	ContactInformation.registerContactInformationListener(
-		'.modify-address-link a',
-		'<%= editAddressRenderURL.toString() %>',
-		925
-	);
-</aui:script>

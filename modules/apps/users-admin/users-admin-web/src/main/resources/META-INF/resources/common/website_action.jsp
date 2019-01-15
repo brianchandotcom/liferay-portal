@@ -37,14 +37,14 @@ long websiteId = website.getWebsiteId();
 >
 
 	<%
-	PortletURL editURL = liferayPortletResponse.createRenderURL();
+		PortletURL editURL = liferayPortletResponse.createRenderURL();
 
-	editURL.setParameter("backURL", backURL);
-	editURL.setParameter("className", className);
-	editURL.setParameter("classPK", String.valueOf(classPK));
-	editURL.setParameter("mvcRenderCommandName", "/users_admin/edit_website");
-	editURL.setParameter("primaryKey", String.valueOf(websiteId));
-	editURL.setParameter("redirect", currentURL);
+	//	editURL.setParameter("backURL", backURL);
+		editURL.setParameter("className", className);
+		editURL.setParameter("classPK", String.valueOf(classPK));
+		editURL.setParameter("mvcRenderCommandName", "/users_admin/edit_website");
+		editURL.setParameter("primaryKey", String.valueOf(websiteId));
+		editURL.setParameter("redirect", currentURL);
 	%>
 
 	<liferay-ui:icon

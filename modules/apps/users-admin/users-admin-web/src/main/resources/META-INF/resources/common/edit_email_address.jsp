@@ -17,31 +17,87 @@
 <%@ include file="/init.jsp" %>
 
 <%
+String backURL = ParamUtil.getString(request, "backURL");
 String className = ParamUtil.getString(request, "className");
-
-long emailAddressId = ParamUtil.getLong(request, "primaryKey", 0L);
+Long classPK = ParamUtil.getLong(request, "classPK");
+long primaryKey = ParamUtil.getLong(request, "primaryKey", 0L);
+String redirect = ParamUtil.getString(request, "redirect");
 
 EmailAddress emailAddress = null;
 
-if (emailAddressId > 0L) {
-	emailAddress = EmailAddressServiceUtil.getEmailAddress(emailAddressId);
+if (primaryKey > 0L) {
+	emailAddress = EmailAddressServiceUtil.getEmailAddress(primaryKey);
 }
+
+if (!portletName.equals(UsersAdminPortletKeys.MY_ACCOUNT)) {
+//	portletDisplay.setShowBackIcon(true);
+	portletDisplay.setURLBack(backURL);
+
+	String portletTitle = (String)request.getAttribute(UsersAdminWebKeys.PORTLET_TITLE);
+
+	renderResponse.setTitle(portletTitle);
+}
+
+PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "contact-information"), redirect);
+
+String sheetTitle;
+
+if (primaryKey > 0) {
+	sheetTitle = LanguageUtil.get(request, "edit-email-address");
+}
+else {
+	sheetTitle = LanguageUtil.get(request, "add-email-address");
+}
+
+PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, sheetTitle), null);
 %>
 
-<aui:form cssClass="modal-body" name="fm">
-	<aui:model-context bean="<%= emailAddress %>" model="<%= EmailAddress.class %>" />
+<portlet:actionURL name="/users_admin/update_contact_information" var="actionURL" />
 
+<aui:form action="<%= actionURL %>" method="post" name="fm">
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.EDIT %>" />
-	<aui:input name="primaryKey" type="hidden" value="<%= emailAddressId %>" />
+	<aui:input name="backURL" type="hidden" value="<%= backURL %>" />
+	<aui:input name="className" type="hidden" value="<%= className %>" />
+	<aui:input name="classPK" type="hidden" value="<%= String.valueOf(classPK) %>" />
+	<aui:input name="errorMVCRenderCommandName" type="hidden" value="/users_admin/edit_email_address" />
 	<aui:input name="listType" type="hidden" value="<%= ListTypeConstants.EMAIL_ADDRESS %>" />
+	<aui:input name="primaryKey" type="hidden" value="<%= String.valueOf(primaryKey) %>" />
+	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 
-	<aui:input checked="<%= (emailAddress != null)? emailAddress.isPrimary() : false %>" id="emailAddressPrimary" label="make-primary" name="emailAddressPrimary" type="checkbox" />
+	<div class="container-fluid container-fluid-max-xl">
+		<div class="sheet-lg" id="breadcrumb">
+			<liferay-ui:breadcrumb
+				showCurrentGroup="<%= false %>"
+				showGuestGroup="<%= false %>"
+				showLayout="<%= false %>"
+				showPortletBreadcrumb="<%= true %>"
+			/>
+		</div>
 
-	<liferay-ui:error key="<%= NoSuchListTypeException.class.getName() + className + ListTypeConstants.EMAIL_ADDRESS %>" message="please-select-a-type" />
+		<div class="sheet sheet-lg">
+			<div class="sheet-header">
+				<h2 class="sheet-title"><liferay-ui:message key="<%= sheetTitle %>" /></h2>
+			</div>
 
-	<aui:select inlineField="<%= true %>" label="type" listType="<%= className + ListTypeConstants.EMAIL_ADDRESS %>" name="emailAddressTypeId" />
+			<div class="sheet-section">
+				<aui:model-context bean="<%= emailAddress %>" model="<%= EmailAddress.class %>" />
 
-	<liferay-ui:error exception="<%= EmailAddressException.class %>" message="please-enter-a-valid-email-address" />
+				<aui:input checked="<%= (emailAddress != null)? emailAddress.isPrimary() : false %>" id="emailAddressPrimary" label="make-primary" name="emailAddressPrimary" type="checkbox" />
 
-	<aui:input fieldParam="emailAddressAddress" id="emailAddressAddress" name="address" required="<%= true %>" />
+				<liferay-ui:error key="<%= NoSuchListTypeException.class.getName() + className + ListTypeConstants.EMAIL_ADDRESS %>" message="please-select-a-type" />
+
+				<aui:select inlineField="<%= true %>" label="type" listType="<%= className + ListTypeConstants.EMAIL_ADDRESS %>" name="emailAddressTypeId" />
+
+				<liferay-ui:error exception="<%= EmailAddressException.class %>" message="please-enter-a-valid-email-address" />
+
+				<aui:input fieldParam="emailAddressAddress" id="emailAddressAddress" name="address" required="<%= true %>" />
+			</div>
+
+			<div class="sheet-footer">
+				<aui:button primary="<%= true %>" type="submit" />
+
+				<aui:button href="<%= redirect %>" type="cancel" />
+			</div>
+		</div>
+	</div>
 </aui:form>

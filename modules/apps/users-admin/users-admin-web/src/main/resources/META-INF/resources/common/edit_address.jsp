@@ -17,73 +17,129 @@
 <%@ include file="/init.jsp" %>
 
 <%
+String backURL = ParamUtil.getString(request, "backURL");
 String className = ParamUtil.getString(request, "className");
-
-long addressId = ParamUtil.getLong(request, "primaryKey", 0L);
+Long classPK = ParamUtil.getLong(request, "classPK");
+long primaryKey = ParamUtil.getLong(request, "primaryKey", 0L);
+String redirect = ParamUtil.getString(request, "redirect");
 
 Address address = null;
 
 long countryId = 0L;
 long regionId = 0L;
 
-if (addressId > 0L) {
-	address = AddressServiceUtil.getAddress(addressId);
+if (primaryKey > 0L) {
+	address = AddressServiceUtil.getAddress(primaryKey);
 
 	countryId = address.getCountryId();
 	regionId = address.getRegionId();
 }
+
+if (!portletName.equals(UsersAdminPortletKeys.MY_ACCOUNT)) {
+//	portletDisplay.setShowBackIcon(true);
+	portletDisplay.setURLBack(backURL);
+
+	String portletTitle = (String)request.getAttribute(UsersAdminWebKeys.PORTLET_TITLE);
+
+	renderResponse.setTitle(portletTitle);
+}
+
+PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "contact-information"), redirect);
+
+String sheetTitle;
+
+if (primaryKey > 0) {
+	sheetTitle = LanguageUtil.get(request, "edit-address");
+}
+else {
+	sheetTitle = LanguageUtil.get(request, "add-address");
+}
+
+PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, sheetTitle), null);
 %>
 
-<aui:form cssClass="modal-body" name="fm">
-	<aui:model-context bean="<%= address %>" model="<%= Address.class %>" />
+<portlet:actionURL name="/users_admin/update_contact_information" var="actionURL" />
 
+<aui:form action="<%= actionURL %>" method="post" name="fm">
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.EDIT %>" />
-	<aui:input name="primaryKey" type="hidden" value="<%= addressId %>" />
+	<aui:input name="backURL" type="hidden" value="<%= backURL %>" />
+	<aui:input name="className" type="hidden" value="<%= className %>" />
+	<aui:input name="classPK" type="hidden" value="<%= String.valueOf(classPK) %>" />
+	<aui:input name="errorMVCRenderCommandName" type="hidden" value="/users_admin/edit_address" />
 	<aui:input name="listType" type="hidden" value="<%= ListTypeConstants.ADDRESS %>" />
+	<aui:input name="primaryKey" type="hidden" value="<%= String.valueOf(primaryKey) %>" />
+	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 
-	<aui:input checked="<%= (address != null)? address.isPrimary() : false %>" id="addressPrimary" label="make-primary" name="addressPrimary" type="checkbox" />
+	<div class="container-fluid container-fluid-max-xl">
+		<div class="sheet-lg" id="breadcrumb">
+			<liferay-ui:breadcrumb
+				showCurrentGroup="<%= false %>"
+				showGuestGroup="<%= false %>"
+				showLayout="<%= false %>"
+				showPortletBreadcrumb="<%= true %>"
+			/>
+		</div>
 
-	<liferay-ui:error key="<%= NoSuchListTypeException.class.getName() + className + ListTypeConstants.ADDRESS %>" message="please-select-a-type" />
+		<div class="sheet sheet-lg">
+			<div class="sheet-header">
+				<h2 class="sheet-title"><liferay-ui:message key="<%= sheetTitle %>" /></h2>
+			</div>
 
-	<aui:select label="type" listType="<%= className + ListTypeConstants.ADDRESS %>" name='<%= "addressTypeId" %>' />
+			<div class="sheet-section">
+				<aui:model-context bean="<%= address %>" model="<%= Address.class %>" />
 
-	<liferay-ui:error exception="<%= AddressStreetException.class %>" message="please-enter-a-valid-street" />
+				<aui:input checked="<%= (address != null)? address.isPrimary() : false %>" id="addressPrimary" label="make-primary" name="addressPrimary" type="checkbox" />
 
-	<aui:input fieldParam='<%= "addressStreet1" %>' id='<%= "addressStreet1" %>' name="street1" required="<%= true %>" />
+				<liferay-ui:error key="<%= NoSuchListTypeException.class.getName() + className + ListTypeConstants.ADDRESS %>" message="please-select-a-type" />
 
-	<aui:input fieldParam='<%= "addressStreet2" %>' id='<%= "addressStreet2" %>' name="street2" />
+				<aui:select label="type" listType="<%= className + ListTypeConstants.ADDRESS %>" name='<%= "addressTypeId" %>' />
 
-	<aui:input fieldParam='<%= "addressStreet3" %>' id='<%= "addressStreet3" %>' name="street3" />
+				<liferay-ui:error exception="<%= AddressStreetException.class %>" message="please-enter-a-valid-street" />
 
-	<liferay-ui:error exception="<%= AddressCityException.class %>" message="please-enter-a-valid-city" />
+				<aui:input fieldParam='<%= "addressStreet1" %>' id='<%= "addressStreet1" %>' name="street1" required="<%= true %>" />
 
-	<aui:input fieldParam='<%= "addressCity" %>' id='<%= "addressCity" %>' name="city" required="<%= true %>" />
+				<aui:input fieldParam='<%= "addressStreet2" %>' id='<%= "addressStreet2" %>' name="street2" />
 
-	<liferay-ui:error exception="<%= NoSuchCountryException.class %>" message="please-select-a-country" />
+				<aui:input fieldParam='<%= "addressStreet3" %>' id='<%= "addressStreet3" %>' name="street3" />
 
-	<aui:select label="country" name='<%= "addressCountryId" %>' />
+				<liferay-ui:error exception="<%= AddressCityException.class %>" message="please-enter-a-valid-city" />
 
-	<liferay-ui:error exception="<%= NoSuchRegionException.class %>" message="please-select-a-region" />
+				<aui:input fieldParam='<%= "addressCity" %>' id='<%= "addressCity" %>' name="city" required="<%= true %>" />
 
-	<aui:select label="region" name='<%= "addressRegionId" %>' />
+				<liferay-ui:error exception="<%= NoSuchCountryException.class %>" message="please-select-a-country" />
 
-	<liferay-ui:error exception="<%= AddressZipException.class %>" message="please-enter-a-valid-postal-code" />
+				<aui:select label="country" name='<%= "addressCountryId" %>' />
 
-	<div class="form-group">
-		<label class="control-label" for="<portlet:namespace />addressZip">
-			<liferay-ui:message key="postal-code" />
+				<liferay-ui:error exception="<%= NoSuchRegionException.class %>" message="please-select-a-region" />
 
-			<span hidden id="<portlet:namespace />addressZipRequiredWrapper">
-				<aui:icon cssClass="reference-mark text-warning" image="asterisk" markupView="lexicon" />
+				<aui:select label="region" name='<%= "addressRegionId" %>' />
 
-				<span class="hide-accessible"><liferay-ui:message key="required" /></span>
-			</span>
-		</label>
+				<liferay-ui:error exception="<%= AddressZipException.class %>" message="please-enter-a-valid-postal-code" />
 
-		<aui:input fieldParam='<%= "addressZip" %>' id='<%= "addressZip" %>' label="" name="zip" />
+				<div class="form-group">
+					<label class="control-label" for="<portlet:namespace />addressZip">
+						<liferay-ui:message key="postal-code" />
+
+						<span hidden id="<portlet:namespace />addressZipRequiredWrapper">
+							<aui:icon cssClass="reference-mark text-warning" image="asterisk" markupView="lexicon" />
+
+							<span class="hide-accessible"><liferay-ui:message key="required" /></span>
+						</span>
+					</label>
+
+					<aui:input fieldParam='<%= "addressZip" %>' id='<%= "addressZip" %>' label="" name="zip" />
+				</div>
+
+				<aui:input cssClass="mailing-ctrl" fieldParam='<%= "addressMailing" %>' id='<%= "addressMailing" %>' name="mailing" />
+			</div>
+
+			<div class="sheet-footer">
+				<aui:button primary="<%= true %>" type="submit" />
+
+				<aui:button href="<%= redirect %>" type="cancel" />
+			</div>
+		</div>
 	</div>
-
-	<aui:input cssClass="mailing-ctrl" fieldParam='<%= "addressMailing" %>' id='<%= "addressMailing" %>' name="mailing" />
 
 	<aui:script use="liferay-address,liferay-dynamic-select">
 		new Liferay.DynamicSelect(

@@ -17,11 +17,15 @@
 <%@ include file="/init.jsp" %>
 
 <%
-PortletURL viewURL = renderResponse.createRenderURL();
+String backURL = ParamUtil.getString(request, "backURL");
 
-String backURL = ParamUtil.getString(request, "backURL", viewURL.toString());
+if (Validator.isNull(backURL)) {
+	PortletURL viewURL = renderResponse.createRenderURL();
 
-request.setAttribute("backURL", backURL);
+	backURL = viewURL.toString();
+
+	request.setAttribute("backURL", backURL);
+}
 
 User selUser = (User)request.getAttribute(UsersAdminWebKeys.SELECTED_USER);
 

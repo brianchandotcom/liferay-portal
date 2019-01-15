@@ -40,7 +40,7 @@ public class UserAddressesScreenNavigationEntry
 
 	@Override
 	public String getActionCommandName() {
-		return "/users_admin/update_user_contact_information_form";
+		return "/users_admin/update_contact_information";
 	}
 
 	@Override

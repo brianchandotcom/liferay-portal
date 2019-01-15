@@ -56,6 +56,7 @@ import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.users.admin.constants.UsersAdminPortletKeys;
@@ -107,6 +108,11 @@ public class UpdateContactInformationMVCActionCommand
 				themeDisplay.getPermissionChecker(), className, classPK);
 
 			_updateContactInformation(actionRequest, className, classPK);
+
+			String redirect = _portal.escapeRedirect(
+				ParamUtil.getString(actionRequest, "redirect"));
+
+			sendRedirect(actionRequest, actionResponse, redirect);
 		}
 		catch (Exception e) {
 			if (e instanceof NoSuchOrganizationException ||
@@ -134,12 +140,12 @@ public class UpdateContactInformationMVCActionCommand
 
 				SessionErrors.add(actionRequest, e.getClass(), e);
 
-				String errorMvcRenderCommandName = ParamUtil.getString(
-					actionRequest, "errorMvcRenderCommandName");
+				String errorMVCRenderCommandName = ParamUtil.getString(
+					actionRequest, "errorMVCRenderCommandName");
 
-				if (Validator.isNotNull(errorMvcRenderCommandName)) {
+				if (Validator.isNotNull(errorMVCRenderCommandName)) {
 					actionResponse.setRenderParameter(
-						"mvcRenderCommandName", errorMvcRenderCommandName);
+						"mvcRenderCommandName", errorMVCRenderCommandName);
 				}
 				else {
 					actionResponse.setRenderParameter(
@@ -257,6 +263,9 @@ public class UpdateContactInformationMVCActionCommand
 
 	@Reference
 	private PhoneService _phoneService;
+
+	@Reference
+	private Portal _portal;
 
 	@Reference
 	private UserLocalService _userLocalService;

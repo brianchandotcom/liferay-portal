@@ -469,27 +469,27 @@ public class JournalDisplayContext {
 						_themeDisplay.getPermissionChecker(), article,
 						ActionKeys.DELETE)) {
 
-					PortletURL deleteFolderURL =
+					PortletURL deleteArticleURL =
 						_liferayPortletResponse.createActionURL();
 
-					String actionName = "deleteFolder";
+					String actionName = "deleteArticles";
 					String key = "delete";
 
 					if (_trashHelper.isTrashEnabled(
 							_themeDisplay.getScopeGroupId())) {
 
-						actionName = "moveFolderToTrash";
+						actionName = "moveToTrash";
 						key = "move-to-recycle-bin";
 					}
 
-					deleteFolderURL.setParameter(
+					deleteArticleURL.setParameter(
 						ActionRequest.ACTION_NAME, actionName);
 
-					deleteFolderURL.setParameter(
+					deleteArticleURL.setParameter(
 						"redirect", _themeDisplay.getURLCurrent());
-					deleteFolderURL.setParameter(
+					deleteArticleURL.setParameter(
 						"groupId", String.valueOf(article.getGroupId()));
-					deleteFolderURL.setParameter(
+					deleteArticleURL.setParameter(
 						"articleId", article.getArticleId());
 
 					String label = LanguageUtil.get(_request, key);
@@ -498,7 +498,8 @@ public class JournalDisplayContext {
 						dropdownItem -> {
 							dropdownItem.putData("action", "delete");
 							dropdownItem.putData(
-								"deleteFolderURL", deleteFolderURL.toString());
+								"deleteArticleURL",
+								deleteArticleURL.toString());
 							dropdownItem.setLabel(label);
 						});
 				}

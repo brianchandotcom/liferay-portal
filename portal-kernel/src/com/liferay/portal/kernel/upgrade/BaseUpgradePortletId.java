@@ -45,17 +45,12 @@ public abstract class BaseUpgradePortletId extends UpgradeProcess {
 	}
 
 	protected String getNewTypeSettings(
-		String typeSettings, String oldRootPortletId, String newRootPortletId) {
+		String typeSettings, String oldStagingPortletId,
+		String newRootPortletId) {
 
 		UnicodeProperties typeSettingsProperties = new UnicodeProperties(true);
 
 		typeSettingsProperties.fastLoad(typeSettings);
-
-		String oldStagingPortletId = _getStagedPortletId(oldRootPortletId);
-
-		if (!typeSettingsProperties.containsKey(oldStagingPortletId)) {
-			return typeSettings;
-		}
 
 		String newStagingPortletId = _getStagedPortletId(newRootPortletId);
 
@@ -193,9 +188,17 @@ public abstract class BaseUpgradePortletId extends UpgradeProcess {
 	protected void updateGroup(String oldRootPortletId, String newRootPortletId)
 		throws Exception {
 
-		String sql1 =
-			"select groupId, typeSettings from Group_ where " +
-				getTypeSettingsCriteria(oldRootPortletId);
+		String oldStagingPortletId = _getStagedPortletId(oldRootPortletId);
+
+		StringBundler sb = new StringBundler(4);
+
+		sb.append("select groupId, typeSettings from Group_ where ");
+		sb.append("typeSettings like '%");
+		sb.append(oldStagingPortletId);
+		sb.append("%'");
+
+		String sql1 = sb.toString();
+
 		String sql2 = "update Group_ set typeSettings = ? where groupId = ?";
 
 		try (PreparedStatement ps1 = connection.prepareStatement(sql1);
@@ -210,7 +213,7 @@ public abstract class BaseUpgradePortletId extends UpgradeProcess {
 				String typeSettings = rs.getString("typeSettings");
 
 				String newTypeSettings = getNewTypeSettings(
-					typeSettings, oldRootPortletId, newRootPortletId);
+					typeSettings, oldStagingPortletId, newRootPortletId);
 
 				ps2.setString(1, newTypeSettings);
 

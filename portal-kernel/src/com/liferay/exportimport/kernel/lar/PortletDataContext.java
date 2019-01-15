@@ -18,7 +18,6 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.asset.kernel.model.AssetLink;
 import com.liferay.expando.kernel.model.ExpandoColumn;
-import com.liferay.message.boards.kernel.model.MBMessage;
 import com.liferay.portal.kernel.dao.orm.Criterion;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -109,15 +108,6 @@ public interface PortletDataContext extends Serializable {
 	 */
 	@Deprecated
 	public void addComments(Class<?> clazz, long classPK);
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 *             BaseStagedModelDataHandler#exportComments(PortletDataContext,
-	 *             StagedModel)}
-	 */
-	@Deprecated
-	public void addComments(
-		String className, long classPK, List<MBMessage> messages);
 
 	public void addDateRangeCriteria(
 		DynamicQuery dynamicQuery, String propertyName);
@@ -284,12 +274,6 @@ public interface PortletDataContext extends Serializable {
 		String namespace, String name, boolean useDefaultValue);
 
 	public ClassLoader getClassLoader();
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), with no direct replacement
-	 */
-	@Deprecated
-	public Map<String, List<MBMessage>> getComments();
 
 	public long getCompanyGroupId();
 

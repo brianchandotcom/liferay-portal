@@ -46,7 +46,6 @@ import com.liferay.exportimport.kernel.lar.UserIdStrategy;
 import com.liferay.exportimport.kernel.xstream.XStreamAlias;
 import com.liferay.exportimport.kernel.xstream.XStreamConverter;
 import com.liferay.exportimport.kernel.xstream.XStreamType;
-import com.liferay.message.boards.kernel.model.MBMessage;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
@@ -288,17 +287,6 @@ public class PortletDataContextImpl implements PortletDataContext {
 	@Deprecated
 	@Override
 	public void addComments(Class<?> clazz, long classPK) {
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             com.liferay.exportimport.kernel.lar.BaseStagedModelDataHandler#exportComments(
-	 *             PortletDataContext, StagedModel)}
-	 */
-	@Deprecated
-	@Override
-	public void addComments(
-		String className, long classPK, List<MBMessage> messages) {
 	}
 
 	/**
@@ -840,15 +828,6 @@ public class PortletDataContextImpl implements PortletDataContext {
 	@Override
 	public ClassLoader getClassLoader() {
 		return _xStream.getClassLoader();
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	@Override
-	public Map<String, List<MBMessage>> getComments() {
-		return Collections.emptyMap();
 	}
 
 	@Override

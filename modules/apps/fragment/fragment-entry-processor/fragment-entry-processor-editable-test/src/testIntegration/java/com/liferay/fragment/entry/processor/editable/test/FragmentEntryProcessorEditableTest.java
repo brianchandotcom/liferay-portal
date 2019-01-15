@@ -25,6 +25,7 @@ import com.liferay.fragment.service.FragmentEntryLinkLocalServiceUtil;
 import com.liferay.fragment.service.FragmentEntryServiceUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.json.JSONObjectImpl;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Group;
@@ -73,19 +74,8 @@ public class FragmentEntryProcessorEditableTest {
 
 	@Test
 	public void testFragmentEntryProcessorEditable() throws Exception {
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), TestPropsValues.getUserId());
-
-		FragmentCollection fragmentCollection =
-			FragmentCollectionServiceUtil.addFragmentCollection(
-				_group.getGroupId(), "Fragment Collection", StringPool.BLANK,
-				serviceContext);
-
-		FragmentEntry fragmentEntry = FragmentEntryServiceUtil.addFragmentEntry(
-			_group.getGroupId(), fragmentCollection.getFragmentCollectionId(),
-			"Fragment Entry", null, _getFileAsString("fragment_entry.html"),
-			null, WorkflowConstants.STATUS_APPROVED, serviceContext);
+		FragmentEntry fragmentEntry = _createFragmentEntry(
+			"fragment_entry.html");
 
 		FragmentEntryLink fragmentEntryLink =
 			FragmentEntryLinkLocalServiceUtil.createFragmentEntryLink(0);
@@ -105,47 +95,29 @@ public class FragmentEntryProcessorEditableTest {
 	public void testFragmentEntryProcessorEditableWithDuplicateIds()
 		throws Exception {
 
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), TestPropsValues.getUserId());
-
-		FragmentCollection fragmentCollection =
-			FragmentCollectionServiceUtil.addFragmentCollection(
-				_group.getGroupId(), "Fragment Collection", StringPool.BLANK,
-				serviceContext);
-
-		FragmentEntryServiceUtil.addFragmentEntry(
-			_group.getGroupId(), fragmentCollection.getFragmentCollectionId(),
-			"Fragment Entry", null,
-			_getFileAsString("fragment_entry_with_duplicate_editable_ids.html"),
-			null, WorkflowConstants.STATUS_APPROVED, serviceContext);
+		_createFragmentEntry("fragment_entry_with_duplicate_editable_ids.html");
 	}
 
 	@Test(expected = FragmentEntryContentException.class)
 	public void testFragmentEntryProcessorEditableWithInvalidTypeAttribute()
 		throws Exception {
 
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), TestPropsValues.getUserId());
-
-		FragmentCollection fragmentCollection =
-			FragmentCollectionServiceUtil.addFragmentCollection(
-				_group.getGroupId(), "Fragment Collection", StringPool.BLANK,
-				serviceContext);
-
-		FragmentEntryServiceUtil.addFragmentEntry(
-			_group.getGroupId(), fragmentCollection.getFragmentCollectionId(),
-			"Fragment Entry", null,
-			_getFileAsString(
-				"fragment_entry_with_invalid_editable_type_attribute.html"),
-			null, WorkflowConstants.STATUS_APPROVED, serviceContext);
+		_createFragmentEntry(
+			"fragment_entry_with_invalid_editable_type_attribute.html");
 	}
 
 	@Test(expected = FragmentEntryContentException.class)
 	public void testFragmentEntryProcessorEditableWithMissingAttributes()
 		throws Exception {
 
+		_createFragmentEntry(
+			"fragment_entry_with_missing_editable_attributes.html");
+	}
+
+	private FragmentEntry _createFragmentEntry(String htmlFile)
+
+		throws IOException, PortalException {
+
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
 				_group.getGroupId(), TestPropsValues.getUserId());
@@ -155,12 +127,10 @@ public class FragmentEntryProcessorEditableTest {
 				_group.getGroupId(), "Fragment Collection", StringPool.BLANK,
 				serviceContext);
 
-		FragmentEntryServiceUtil.addFragmentEntry(
+		return FragmentEntryServiceUtil.addFragmentEntry(
 			_group.getGroupId(), fragmentCollection.getFragmentCollectionId(),
-			"Fragment Entry", null,
-			_getFileAsString(
-				"fragment_entry_with_missing_editable_attributes.html"),
-			null, WorkflowConstants.STATUS_APPROVED, serviceContext);
+			"Fragment Entry", null, _getFileAsString(htmlFile), null,
+			WorkflowConstants.STATUS_APPROVED, serviceContext);
 	}
 
 	private String _getBodyElementHtmlAsString(String fileName)

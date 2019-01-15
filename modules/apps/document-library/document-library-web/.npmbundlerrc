@@ -1,0 +1,6 @@
+{
+	"ignore": [
+		"**/document_library/js/*.js"
+	],
+	"preset": "liferay-npm-bundler-preset-liferay-dev"
+}

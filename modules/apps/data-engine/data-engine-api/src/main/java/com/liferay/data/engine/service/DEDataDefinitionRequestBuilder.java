@@ -63,4 +63,10 @@ public class DEDataDefinitionRequestBuilder {
 		return new DEDataDefinitionSearchRequest.Builder();
 	}
 
+	public static DEDataDefinitionSearchCountRequest.Builder
+		searchCountBuilder() {
+
+		return new DEDataDefinitionSearchCountRequest.Builder();
+	}
+
 }

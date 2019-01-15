@@ -154,6 +154,27 @@ definition {
 		AssertTextEquals(locator1 = "Form#FIELD_LABEL", value1 = "${fieldValue}");
 	}
 
+	macro editFieldLabelMetal {
+		FormFields.editText(fieldName = "label", fieldValue = "${fieldValue}");
+
+		var key_fieldName = "${fieldValue}";
+
+		if (!(isSet(fieldName))) {
+			var fieldName = StringUtil.replace("${fieldValue}", " ", "");
+		}
+
+		Form.gotoAdvancedTab();
+
+		//TODO: adding it to test, remove this line after this bug (LPS-87612) is fixed
+		Type(locator1 = "FormFields#FIELD_NAME_EDIT", value1 = "${fieldName}");
+
+		FormFields.viewFieldName(fieldName = "${fieldName}");
+
+		//var key_fieldName = "${fieldName}";
+
+		AssertTextEquals(locator1 = "Form#FIELD_LABEL", value1 = "${key_fieldName}");
+	}
+
 	macro editName {
 		AssertVisible(locator1 = "Form#ADD_FIELD");
 

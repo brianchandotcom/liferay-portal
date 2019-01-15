@@ -9,8 +9,8 @@ definition {
 		TestCase.setUpPortalInstance();
 
 		User.firstLoginPG();
-
-		TestCase.enableMetal();
+//TODO: remove the comment
+		//TestCase.enableMetal();
 
 	}
 
@@ -1113,7 +1113,8 @@ definition {
 
 		Form.gotoAddField(fieldType = "Text Field");
 
-		Form.editFieldLabel(fieldValue = "Text Field");
+// TODO: adding editFieldLabelMetal macro
+		Form.editFieldLabelMetal(fieldValue = "Text Field");
 
 		Form.closeSidebar();
 

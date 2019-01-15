@@ -103,12 +103,12 @@
 </tr>
 <tr>
 	<td>ADD_FIELD_TYPE</td>
-	<td>//a[contains(@class,'field-type')]/div/h4[contains(.,'${key_fieldType}')] | //li[contains(@class,'field-type')]/div/h4[contains(.,'${key_fieldType}')] | //div[contains(@class,'list-group-body')]//div/h4[contains(.,'${key_fieldType}')]</td>
+	<td>//a[contains(@class,'field-type')]/div/h4[contains(.,'${key_fieldType}')] | //li[contains(@class,'field-type')]/div/h4[contains(.,'${key_fieldType}')] | //div[contains(@class,'list-group-body')]//div/h4[contains(.,'${key_fieldType}')] | //h4[contains(@class, 'list-group-title text-truncate')]//span[contains(.,'${key_fieldType}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ADD_FIELD_POSITION</td>
-	<td>//div[contains(@class,'yui3-dd-drop') and contains(@class,'col-empty')]</td>
+	<td>//div[contains(@class,'yui3-dd-drop') and contains(@class,'col-empty')] | //div[contains(@class,'col-empty')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -192,7 +192,7 @@
 </tr>
 <tr>
 	<td>FIELD_LABEL</td>
-	<td>//div[contains(@data-fieldname,'${key_fieldName}')]//label</td>
+	<td>//div[contains(@data-fieldname,'${key_fieldName}')]//label | //div[contains(@class,'ddm-field-container')]//label[contains(text(),'${key_fieldName}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -203,7 +203,7 @@
 <!--SIDEBAR -->
 <tr>
 	<td>SIDEBAR_PROPERTIES_TAB</td>
-	<td>//a[contains(@class,'tab') and .='Properties']</td>
+	<td>//a[contains(@class,'tab') and .='Properties'] | //a[contains(@aria-controls,'sidebarLightDetails')]//*[contains(text(),'Properties')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -213,7 +213,7 @@
 </tr>
 <tr>
 	<td>SIDEBAR_BASIC_TAB</td>
-	<td>//a[contains(@class,'tab') and .='Basic']</td>
+	<td>//a[contains(@class,'tab') and .='Basic'] | //a[contains(@aria-controls,'sidebarLightDetails')]//*[contains(text(),'Basic')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -243,7 +243,7 @@
 </tr>
 <tr>
 	<td>SIDEBAR_CLOSE</td>
-	<td>//div[contains(@class,'open') and contains(@class,'form-builder-sidebar')]//a[contains(@class,'close')]</td>
+	<td>//div[contains(@class,'open') and contains(@class,'form-builder-sidebar')]//a[contains(@class,'close')] | //div[contains(@class,'open') and contains(@class,'sidebar-container')]//a[contains(@class,'sidebar-close')]</td>
 	<td></td>
 </tr>
 <tr>

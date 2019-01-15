@@ -14,6 +14,8 @@
 
 package com.liferay.arquillian.extension.junit.bridge.protocol.osgi;
 
+import com.liferay.arquillian.extension.junit.bridge.protocol.jmx.JMXMethodExecutor;
+
 import java.util.Collection;
 import java.util.Iterator;
 
@@ -24,7 +26,6 @@ import org.jboss.arquillian.container.test.spi.ContainerMethodExecutor;
 import org.jboss.arquillian.container.test.spi.client.deployment.DeploymentPackager;
 import org.jboss.arquillian.container.test.spi.client.protocol.Protocol;
 import org.jboss.arquillian.container.test.spi.command.CommandCallback;
-import org.jboss.arquillian.protocol.jmx.JMXMethodExecutor;
 
 /**
  * @author Matthew Tambara

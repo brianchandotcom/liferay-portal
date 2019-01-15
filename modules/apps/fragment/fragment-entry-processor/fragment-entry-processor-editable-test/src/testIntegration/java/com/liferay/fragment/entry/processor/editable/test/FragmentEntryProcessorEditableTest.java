@@ -95,19 +95,8 @@ public class FragmentEntryProcessorEditableTest {
 		fragmentEntryLink.setEditableValues(
 			_getJsonFileAsString("fragment_entry_link_editable_values.json"));
 
-		Document document = Jsoup.parseBodyFragment(
-			_getFileAsString("processed_fragment_entry.html"));
-
-		Document.OutputSettings outputSettings = new Document.OutputSettings();
-
-		outputSettings.prettyPrint(false);
-
-		document.outputSettings(outputSettings);
-
-		Element bodyElement = document.body();
-
 		Assert.assertEquals(
-			bodyElement.html(),
+			_getBodyElementHtmlAsString("processed_fragment_entry.html"),
 			_fragmentEntryProcessorRegistry.processFragmentEntryLinkHTML(
 				fragmentEntryLink));
 	}
@@ -172,6 +161,22 @@ public class FragmentEntryProcessorEditableTest {
 			_getFileAsString(
 				"fragment_entry_with_missing_editable_attributes.html"),
 			null, WorkflowConstants.STATUS_APPROVED, serviceContext);
+	}
+
+	private String _getBodyElementHtmlAsString(String fileName)
+		throws IOException {
+
+		Document document = Jsoup.parseBodyFragment(_getFileAsString(fileName));
+
+		Document.OutputSettings outputSettings = new Document.OutputSettings();
+
+		outputSettings.prettyPrint(false);
+
+		document.outputSettings(outputSettings);
+
+		Element bodyElement = document.body();
+
+		return bodyElement.html();
 	}
 
 	private String _getFileAsString(String fileName) throws IOException {

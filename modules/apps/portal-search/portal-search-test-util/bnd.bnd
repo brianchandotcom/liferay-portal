@@ -1,7 +1,9 @@
 Bundle-Name: Liferay Portal Search Test Utilities
 Bundle-SymbolicName: com.liferay.portal.search.test.util
 Bundle-Version: 3.0.0
-Export-Package: com.liferay.portal.search.test.util
+Export-Package:\
+	com.liferay.portal.search.test.util,\
+	com.liferay.portal.search.test.util.logging
 Import-Package:\
 	!com.liferay.portal.search.internal.*,\
 	\

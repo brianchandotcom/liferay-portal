@@ -14,19 +14,9 @@
 
 package com.liferay.arquillian.extension.junit.bridge.protocol.osgi;
 
-import java.beans.BeanInfo;
-import java.beans.Introspector;
-import java.beans.PropertyDescriptor;
-
-import java.lang.reflect.Method;
-
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-
-import javax.management.MBeanServerConnection;
 
 import org.jboss.arquillian.container.spi.client.protocol.ProtocolDescription;
 import org.jboss.arquillian.container.spi.client.protocol.metadata.JMXContext;
@@ -38,7 +28,6 @@ import org.jboss.arquillian.container.test.spi.client.deployment.ProtocolArchive
 import org.jboss.arquillian.container.test.spi.client.protocol.Protocol;
 import org.jboss.arquillian.container.test.spi.command.CommandCallback;
 import org.jboss.arquillian.protocol.jmx.JMXMethodExecutor;
-import org.jboss.arquillian.protocol.jmx.JMXTestRunnerMBean;
 
 /**
  * @author Matthew Tambara
@@ -61,36 +50,8 @@ public class JMXOSGiProtocol implements Protocol<JMXProtocolConfiguration> {
 
 			JMXContext jmxContext = jmxContexts.get(0);
 
-			MBeanServerConnection mBeanServer = jmxContext.getConnection();
-
-			Map<String, String> protocolProperties = new HashMap<>();
-
-			try {
-				BeanInfo beanInfo = Introspector.getBeanInfo(
-					jmxProtocolConfiguration.getClass());
-
-				for (PropertyDescriptor propertyDescriptor :
-						beanInfo.getPropertyDescriptors()) {
-
-					String key = propertyDescriptor.getName();
-
-					Method method = propertyDescriptor.getReadMethod();
-
-					Object value = method.invoke(jmxProtocolConfiguration);
-
-					if (value != null) {
-						protocolProperties.put(key, "" + value);
-					}
-				}
-			}
-			catch (Exception e) {
-				throw new IllegalStateException(
-					"Cannot obtain protocol configuration");
-			}
-
 			return new JMXMethodExecutor(
-				mBeanServer, commandCallback, JMXTestRunnerMBean.OBJECT_NAME,
-				protocolProperties);
+				jmxContext.getConnection(), commandCallback);
 		}
 		else {
 			throw new IllegalStateException(

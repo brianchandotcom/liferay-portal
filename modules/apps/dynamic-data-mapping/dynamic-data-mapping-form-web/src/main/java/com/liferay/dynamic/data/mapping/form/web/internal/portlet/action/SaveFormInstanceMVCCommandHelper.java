@@ -98,7 +98,8 @@ public class SaveFormInstanceMVCCommandHelper {
 		DDMForm ddmForm = getDDMForm(portletRequest, serviceContext);
 		DDMFormLayout ddmFormLayout = getDDMFormLayout(portletRequest);
 
-		Map<Locale, String> nameMap = getNameMap(name, ddmForm);
+		Map<Locale, String> nameMap = getNameMap(
+			ddmForm, name, "untitled-form");
 		Map<Locale, String> descriptionMap = getLocalizedMap(
 			description, ddmForm.getAvailableLocales(),
 			ddmForm.getDefaultLocale());
@@ -177,7 +178,8 @@ public class SaveFormInstanceMVCCommandHelper {
 		return localizedMap;
 	}
 
-	protected Map<Locale, String> getNameMap(String name, DDMForm ddmForm)
+	protected Map<Locale, String> getNameMap(
+			DDMForm ddmForm, String name, String defaultName)
 		throws PortalException {
 
 		Locale defaultLocale = ddmForm.getDefaultLocale();
@@ -189,7 +191,7 @@ public class SaveFormInstanceMVCCommandHelper {
 			nameMap.put(
 				defaultLocale,
 				LanguageUtil.get(
-					getResourceBundle(defaultLocale), "untitled-form"));
+					getResourceBundle(defaultLocale), defaultName));
 		}
 
 		return nameMap;
@@ -231,7 +233,8 @@ public class SaveFormInstanceMVCCommandHelper {
 		DDMForm ddmForm = getDDMForm(portletRequest, serviceContext);
 		DDMFormLayout ddmFormLayout = getDDMFormLayout(portletRequest);
 
-		Map<Locale, String> nameMap = getNameMap(name, ddmForm);
+		Map<Locale, String> nameMap = getNameMap(
+			ddmForm, name, "untitled-form");
 		Map<Locale, String> descriptionMap = getLocalizedMap(
 			description, ddmForm.getAvailableLocales(),
 			ddmForm.getDefaultLocale());

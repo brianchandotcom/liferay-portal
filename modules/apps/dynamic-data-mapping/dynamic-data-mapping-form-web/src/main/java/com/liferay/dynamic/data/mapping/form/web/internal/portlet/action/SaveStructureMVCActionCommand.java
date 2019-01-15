@@ -29,7 +29,6 @@ import com.liferay.dynamic.data.mapping.storage.StorageType;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
@@ -40,14 +39,11 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.ResourceBundleUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
-import java.util.ResourceBundle;
 import java.util.Set;
 
 import javax.portlet.ActionRequest;
@@ -89,7 +85,9 @@ public class SaveStructureMVCActionCommand extends BaseMVCActionCommand {
 		String description = ParamUtil.getString(actionRequest, "description");
 		DDMForm ddmForm = getDDMForm(actionRequest);
 		DDMFormLayout ddmFormLayout = getDDMFormLayout(actionRequest);
-		Map<Locale, String> nameMap = getNameMap(name, ddmForm);
+		Map<Locale, String> nameMap =
+			saveFormInstanceMVCCommandHelper.getNameMap(
+				ddmForm, name, "untitled-element-set");
 		Map<Locale, String> descriptionMap = getLocalizedMap(
 			description, ddmForm.getAvailableLocales(),
 			ddmForm.getDefaultLocale());
@@ -180,31 +178,6 @@ public class SaveStructureMVCActionCommand extends BaseMVCActionCommand {
 		return localizedMap;
 	}
 
-	protected Map<Locale, String> getNameMap(String name, DDMForm ddmForm)
-		throws PortalException {
-
-		Locale defaultLocale = ddmForm.getDefaultLocale();
-
-		Map<Locale, String> nameMap = getLocalizedMap(
-			name, ddmForm.getAvailableLocales(), defaultLocale);
-
-		if (nameMap.isEmpty() || Validator.isNull(nameMap.get(defaultLocale))) {
-			nameMap.put(
-				defaultLocale,
-				LanguageUtil.get(
-					getResourceBundle(defaultLocale), "untitled-element-set"));
-		}
-
-		return nameMap;
-	}
-
-	protected ResourceBundle getResourceBundle(Locale locale) {
-		Class<?> clazz = getClass();
-
-		return ResourceBundleUtil.getBundle(
-			"content.Language", locale, clazz.getClassLoader());
-	}
-
 	@Reference(
 		target = "(dynamic.data.mapping.form.builder.context.deserializer.type=form)"
 	)
@@ -219,6 +192,9 @@ public class SaveStructureMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	protected JSONFactory jsonFactory;
+
+	@Reference
+	protected SaveFormInstanceMVCCommandHelper saveFormInstanceMVCCommandHelper;
 
 	@Reference
 	private DDMStructureService _ddmStructureService;

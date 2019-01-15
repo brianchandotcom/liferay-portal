@@ -707,9 +707,7 @@ AUI.add(
 
 						formObject[instance.ns('saveAsDraft')] = saveAsDraft;
 
-						formString = A.QueryString.stringify(formObject);
-
-						return formString;
+						return A.QueryString.stringify(formObject);
 					},
 
 					_getFormInstanceId: function() {

@@ -50,7 +50,6 @@ definition {
 
 		User.loginPG(
 			localization = "ES",
-			signIn = "Acceder",
 			userLoginEmailAddress = "test@liferay.com",
 			userLoginFullName = "Test Test"
 		);

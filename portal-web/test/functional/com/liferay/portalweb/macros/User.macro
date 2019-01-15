@@ -12,6 +12,21 @@ definition {
 		Click(locator1 = "Button#SIGN_IN");
 	}
 
+	macro _signInLocalization {
+		if ("${localization}" == "JA") {
+			var localizedSignIn = "ログイン";
+		}
+		else if ("${localization}" == "ZH") {
+			var localizedSignIn = "登录";
+		}
+		else if ("${localization}" == "ES") {
+			var localizedSignIn = "Acceder";
+		}
+		else {
+			var localizedSignIn = "Sign In";
+		}
+	}
+
 	macro acceptEndUserLicenseAgreement {
 		if (IsElementPresent(locator1 = "Button#I_AGREE", value1 = "I Agree")) {
 			AssertClick(locator1 = "Button#I_AGREE", value1 = "I Agree");
@@ -1477,20 +1492,9 @@ definition {
 	}
 
 	macro loginLocalizationPG {
-		if ("${localization}" == "JA") {
-			var signIn = "ログイン";
-		}
-		else if ("${localization}" == "ZH") {
-			var signIn = "登录";
-		}
-		else if ("${localization}" == "ES") {
-			var signIn = "Acceder";
-		}
-		else {
-			var signIn = "Sign In";
-		}
+		User._signInLocalization(localization = "${localization}");
 
-		AssertClick(locator1 = "UserBar#USER_SIGN_IN", value1 = "${signIn}");
+		AssertClick(locator1 = "UserBar#USER_SIGN_IN", value1 = "${localizedSignIn}");
 	}
 
 	@summary = "Log into Liferay Portal as '${userEmailAddress}' using the password '${password}'"
@@ -1528,8 +1532,10 @@ definition {
 
 		takeScreenshot();
 
-		if (isSet(signIn)) {
-			Button.click(button = "${signIn}");
+		if (isSet(localization)) {
+			User._signInLocalization(localization = "${localization}");
+
+			Button.click(button = "${localizedSignIn}");
 		}
 		else {
 			Button.click(button = "Sign In");

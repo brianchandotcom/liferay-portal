@@ -158,6 +158,8 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 							Date createDate = curArticle.getModifiedDate();
 
 							String modifiedDateDescription = LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - createDate.getTime(), true);
+
+							User curArticleUser = UserLocalServiceUtil.fetchUser(curArticle.getUserId());
 							%>
 
 							<c:choose>
@@ -173,6 +175,9 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 										labels="<%= journalDisplayContext.getArticleLabels(curArticle) %>"
 										selectable="<%= true %>"
 										selected="<%= rowChecker.isChecked(curArticle) %>"
+										stickerImageSrc="<%= (curArticleUser.getPortraitId() > 0) ? curArticleUser.getPortraitURL(themeDisplay) : StringPool.BLANK %>"
+										stickerLabel="<%= curArticleUser.getInitials() %>"
+										stickerShape="circle"
 										subtitle='<%= LanguageUtil.format(request, "modified-x-ago", modifiedDateDescription) %>'
 										title="<%= title %>"
 									/>
@@ -189,6 +194,9 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 										labels="<%= journalDisplayContext.getArticleLabels(curArticle) %>"
 										selectable="<%= true %>"
 										selected="<%= rowChecker.isChecked(curArticle) %>"
+										stickerImageSrc="<%= (curArticleUser.getPortraitId() > 0) ? curArticleUser.getPortraitURL(themeDisplay) : StringPool.BLANK %>"
+										stickerLabel="<%= curArticleUser.getInitials() %>"
+										stickerShape="circle"
 										subtitle='<%= LanguageUtil.format(request, "modified-x-ago", modifiedDateDescription) %>'
 										title="<%= title %>"
 									/>

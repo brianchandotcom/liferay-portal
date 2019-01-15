@@ -135,7 +135,25 @@ definition {
 
 		Navigator.gotoSitePage(pageName = "Site Page1 Name", siteName = "Site Name");
 
-		Page.view(depth = "2", pageName = "Child Page Name", privacy = "Public Pages");
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages"
+		);
+
+		SitePages.togglePrivacy(
+			privacy = "Public Pages"
+		);
+
+		Click(
+			locator1 = "SitePages#LIST_GROUP_ITEM",
+			key_itemName = "Site Page2 Name"
+		);
+
+		AssertVisible(
+			locator1 = "SitePages#LIST_GROUP_ITEM",
+			key_itemName = "Child Page Name"
+		);
 	}
 
 	@priority = "3"

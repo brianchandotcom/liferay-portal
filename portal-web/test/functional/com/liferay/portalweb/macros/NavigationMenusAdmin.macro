@@ -98,6 +98,12 @@ definition {
 				rowEntry = "${navigationMenu}"
 			);
 		}
+
+		AssertVisible(
+			locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_TEXT",
+			key_rowEntry = "${navigationMenu}",
+			key_rowText = "${menuType}"
+		);
 	}
 
 	macro deleteItem {

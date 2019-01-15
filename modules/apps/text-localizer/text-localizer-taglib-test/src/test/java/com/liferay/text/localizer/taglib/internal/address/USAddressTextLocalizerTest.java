@@ -228,8 +228,10 @@ public class USAddressTextLocalizerTest {
 	}
 
 	private void _setCity(Address address) {
+		_city = _CITY;
+
 		Mockito.doReturn(
-			_CITY
+			_city
 		).when(
 			address
 		).getCity();
@@ -240,7 +242,7 @@ public class USAddressTextLocalizerTest {
 	}
 
 	private void _setCountry(Address address, String countryName) {
-		Country country = new CountryWrapper(null) {
+		_country = new CountryWrapper(null) {
 
 			@Override
 			public long getCountryId() {
@@ -255,7 +257,7 @@ public class USAddressTextLocalizerTest {
 		};
 
 		Mockito.doReturn(
-			country
+			_country
 		).when(
 			address
 		).getCountry();
@@ -266,7 +268,7 @@ public class USAddressTextLocalizerTest {
 	}
 
 	private void _setRegion(Address address, String regionName) {
-		Region region = new RegionWrapper(null) {
+		_region = new RegionWrapper(null) {
 
 			@Override
 			public String getName() {
@@ -281,35 +283,41 @@ public class USAddressTextLocalizerTest {
 		};
 
 		Mockito.doReturn(
-			region
+			_region
 		).when(
 			address
 		).getRegion();
 	}
 
 	private void _setStreets(Address address) {
+		_street1 = _STREET_1;
+		_street2 = _STREET_2;
+		_street3 = _STREET_3;
+
 		Mockito.doReturn(
-			_STREET_1
+			_street1
 		).when(
 			address
 		).getStreet1();
 
 		Mockito.doReturn(
-			_STREET_2
+			_street2
 		).when(
 			address
 		).getStreet2();
 
 		Mockito.doReturn(
-			_STREET_3
+			_street3
 		).when(
 			address
 		).getStreet3();
 	}
 
 	private void _setZip(Address address) {
+		_zip = _ZIP;
+
 		Mockito.doReturn(
-			_ZIP
+			_zip
 		).when(
 			address
 		).getZip();
@@ -365,6 +373,13 @@ public class USAddressTextLocalizerTest {
 	private Address _address;
 	private final AddressTextLocalizer _addressTextLocalizer =
 		_createAddressTextLocalizer();
+	private String _city;
+	private Country _country;
 	private final Html _html = new HtmlImpl();
+	private Region _region;
+	private String _street1;
+	private String _street2;
+	private String _street3;
+	private String _zip;
 
 }

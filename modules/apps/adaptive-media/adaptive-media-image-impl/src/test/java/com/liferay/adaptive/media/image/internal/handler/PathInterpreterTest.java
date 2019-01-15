@@ -117,6 +117,48 @@ public class PathInterpreterTest {
 	}
 
 	@Test
+	public void testFileEntryPathWithTimestamp() throws Exception {
+		Mockito.when(
+			_dlAppService.getFileEntry(Mockito.anyLong())
+		).thenReturn(
+			_fileEntry
+		);
+
+		Mockito.when(
+			_fileEntry.getFileVersion()
+		).thenReturn(
+			_fileVersion
+		);
+
+		Mockito.when(
+			_amImageConfigurationHelper.getAMImageConfigurationEntry(
+				Mockito.anyLong(), Mockito.eq("x"))
+		).thenReturn(
+			Optional.of(_amImageConfigurationEntry)
+		);
+
+		_pathInterpreter.interpretPath("/image/0/x/foo.jpg?t=12345");
+
+		Mockito.verify(
+			_dlAppService
+		).getFileEntry(
+			0
+		);
+
+		Mockito.verify(
+			_fileVersion
+		).getCompanyId();
+
+		Mockito.verify(
+			_amImageConfigurationEntry
+		).getProperties();
+
+		Mockito.verify(
+			_amImageConfigurationEntry
+		).getUUID();
+	}
+
+	@Test
 	public void testFileVersionPath() throws Exception {
 		Mockito.when(
 			_dlAppService.getFileVersion(1)

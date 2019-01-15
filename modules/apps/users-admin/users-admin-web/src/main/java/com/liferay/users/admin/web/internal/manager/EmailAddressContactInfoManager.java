@@ -32,11 +32,11 @@ public class EmailAddressContactInfoManager
 	extends BaseContactInfoManager<EmailAddress> {
 
 	public EmailAddressContactInfoManager(
-		Class clazz, long classPK,
+		String className, long classPK,
 		EmailAddressLocalService emailAddressLocalService,
 		EmailAddressService emailAddressService, UsersAdmin usersAdmin) {
 
-		_clazz = clazz;
+		_className = className;
 		_classPK = classPK;
 		_emailAddressLocalService = emailAddressLocalService;
 		_emailAddressService = emailAddressService;
@@ -68,7 +68,7 @@ public class EmailAddressContactInfoManager
 	@Override
 	protected EmailAddress doAdd(EmailAddress emailAddress) throws Exception {
 		return _emailAddressService.addEmailAddress(
-			_clazz.getName(), _classPK, emailAddress.getAddress(),
+			_className, _classPK, emailAddress.getAddress(),
 			emailAddress.getTypeId(), emailAddress.isPrimary(),
 			new ServiceContext());
 	}
@@ -92,8 +92,7 @@ public class EmailAddressContactInfoManager
 
 	@Override
 	protected List<EmailAddress> getAll() throws Exception {
-		return _emailAddressService.getEmailAddresses(
-			_clazz.getName(), _classPK);
+		return _emailAddressService.getEmailAddresses(_className, _classPK);
 	}
 
 	@Override
@@ -111,8 +110,8 @@ public class EmailAddressContactInfoManager
 		emailAddress.setPrimary(primary);
 	}
 
+	private final String _className;
 	private final long _classPK;
-	private final Class _clazz;
 	private final EmailAddressLocalService _emailAddressLocalService;
 	private final EmailAddressService _emailAddressService;
 	private final UsersAdmin _usersAdmin;

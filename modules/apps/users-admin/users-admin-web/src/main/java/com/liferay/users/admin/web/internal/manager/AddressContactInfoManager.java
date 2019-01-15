@@ -31,10 +31,10 @@ import javax.portlet.ActionRequest;
 public class AddressContactInfoManager extends BaseContactInfoManager<Address> {
 
 	public AddressContactInfoManager(
-		Class clazz, long classPK, AddressLocalService addressLocalService,
+		String className, long classPK, AddressLocalService addressLocalService,
 		AddressService addressService) {
 
-		_clazz = clazz;
+		_className = className;
 		_classPK = classPK;
 		_addressLocalService = addressLocalService;
 		_addressService = addressService;
@@ -82,11 +82,10 @@ public class AddressContactInfoManager extends BaseContactInfoManager<Address> {
 	@Override
 	protected Address doAdd(Address address) throws Exception {
 		return _addressService.addAddress(
-			_clazz.getName(), _classPK, address.getStreet1(),
-			address.getStreet2(), address.getStreet3(), address.getCity(),
-			address.getZip(), address.getRegionId(), address.getCountryId(),
-			address.getTypeId(), address.isMailing(), address.isPrimary(),
-			new ServiceContext());
+			_className, _classPK, address.getStreet1(), address.getStreet2(),
+			address.getStreet3(), address.getCity(), address.getZip(),
+			address.getRegionId(), address.getCountryId(), address.getTypeId(),
+			address.isMailing(), address.isPrimary(), new ServiceContext());
 	}
 
 	@Override
@@ -110,7 +109,7 @@ public class AddressContactInfoManager extends BaseContactInfoManager<Address> {
 
 	@Override
 	protected List<Address> getAll() throws Exception {
-		return _addressService.getAddresses(_clazz.getName(), _classPK);
+		return _addressService.getAddresses(_className, _classPK);
 	}
 
 	@Override
@@ -130,7 +129,7 @@ public class AddressContactInfoManager extends BaseContactInfoManager<Address> {
 
 	private final AddressLocalService _addressLocalService;
 	private final AddressService _addressService;
+	private final String _className;
 	private final long _classPK;
-	private final Class _clazz;
 
 }

@@ -9,12 +9,6 @@ var componentConfig = {
 	portletId: context.portletId
 };
 
-var componentArgs = [context];
-
-if ($WRAPPER) {
-	componentArgs.push('#$ID');
-}
-
 if (context.defaultEventHandler) {
 	Liferay.componentReady(
 		context.defaultEventHandler
@@ -22,18 +16,36 @@ if (context.defaultEventHandler) {
 		function(defaultEventHandler) {
 			context.defaultEventHandler = defaultEventHandler;
 
-			Liferay.component(
-				'$ID',
-				new $MODULE.default(...componentArgs),
-				componentConfig
-			);
+			if ($WRAPPER) {
+				Liferay.component(
+					'$ID',
+					new $MODULE.default(context, '#$ID'),
+					componentConfig
+				);
+			}
+			else {
+				Liferay.component(
+					'$ID',
+					new $MODULE.default(context),
+					componentConfig
+				);
+			}
 		}
 	);
 }
 else {
-	Liferay.component(
-		'$ID',
-		new $MODULE.default(...componentArgs),
-		componentConfig
-	);
+	if ($WRAPPER) {
+		Liferay.component(
+			'$ID',
+			new $MODULE.default(context, '#$ID'),
+			componentConfig
+		);
+	}
+	else {
+		Liferay.component(
+			'$ID',
+			new $MODULE.default(context),
+			componentConfig
+		);
+	}
 }

@@ -50,8 +50,7 @@ public class AudioDLPreviewRendererProviderFactory {
 		_dlPreviewRendererProviderServiceRegistration =
 			bundleContext.registerService(
 				DLPreviewRendererProvider.class,
-				new AudioDLPreviewRendererProvider(
-					_npmResolver, _servletContext),
+				new AudioDLPreviewRendererProvider(_servletContext),
 				properties);
 	}
 
@@ -62,9 +61,6 @@ public class AudioDLPreviewRendererProviderFactory {
 
 	private ServiceRegistration<DLPreviewRendererProvider>
 		_dlPreviewRendererProviderServiceRegistration;
-
-	@Reference
-	private NPMResolver _npmResolver;
 
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.document.library.preview.audio)"

@@ -45,10 +45,7 @@ import javax.servlet.http.HttpServletRequest;
 public class AudioDLPreviewRendererProvider
 	implements DLPreviewRendererProvider {
 
-	public AudioDLPreviewRendererProvider(
-		NPMResolver npmResolver, ServletContext servletContext) {
-
-		_npmResolver = npmResolver;
+	public AudioDLPreviewRendererProvider(ServletContext servletContext) {
 		_servletContext = servletContext;
 	}
 
@@ -83,12 +80,6 @@ public class AudioDLPreviewRendererProvider
 					_getPreviewFileURLs(fileVersion, request));
 
 				requestDispatcher.include(request, response);
-
-				request.setAttribute(
-					DLPreviewAudioWebKeys.RESOLVED_MODULE_NAME,
-					_npmResolver.resolveModuleName(
-						"document-library-preview-audio/preview/js" +
-							"/AudioPreviewer.es"));
 			});
 	}
 
@@ -145,7 +136,6 @@ public class AudioDLPreviewRendererProvider
 		return previewFileURLs;
 	}
 
-	private final NPMResolver _npmResolver;
 	private final ServletContext _servletContext;
 
 }

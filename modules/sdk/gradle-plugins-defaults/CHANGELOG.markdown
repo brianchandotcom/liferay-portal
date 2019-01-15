@@ -5377,6 +5377,14 @@ version 2.0.9.
 - [LPS-86806]: Update the [Liferay Gradle Plugins] dependency to version
 3.13.58.
 
+## 5.5.169 - 2019-01-14
+
+### Changed
+- [LPS-89126]: Update the [Liferay Gradle Plugins] dependency to version
+3.13.59.
+- [LPS-89126]: Update the [Liferay Gradle Plugins JSDoc] dependency to version
+2.0.16.
+
 [Find Security Bugs]: https://github.com/liferay/liferay-portal/tree/master/modules/third-party/com-h3xstream-findsecbugs
 [Gradle Dependency Management]: https://github.com/spring-gradle-plugins/dependency-management-plugin
 [Gradle License Report]: https://github.com/jk1/Gradle-License-Report
@@ -5921,6 +5929,7 @@ version 2.0.9.
 [LPS-88859]: https://issues.liferay.com/browse/LPS-88859
 [LPS-88903]: https://issues.liferay.com/browse/LPS-88903
 [LPS-88909]: https://issues.liferay.com/browse/LPS-88909
+[LPS-89126]: https://issues.liferay.com/browse/LPS-89126
 [LRDOCS-2594]: https://issues.liferay.com/browse/LRDOCS-2594
 [LRDOCS-2841]: https://issues.liferay.com/browse/LRDOCS-2841
 [LRDOCS-2981]: https://issues.liferay.com/browse/LRDOCS-2981

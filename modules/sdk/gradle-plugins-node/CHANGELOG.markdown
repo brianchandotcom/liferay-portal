@@ -298,6 +298,13 @@ digest to preserve changes made by the `npmRun` task.
 - [LPS-87479]: Set the up-to-date check for `npmRun` tasks to `true` if the
 classes directory does not exist for Java projects.
 
+## 4.6.3 - 2019-01-14
+
+### Fixed
+- [LPS-89126]: Fix failures in parallel builds by updating the outputs for tasks
+of type `NpmInstallTask` to check the `nodeModulesDir` instead of the
+`nodeModulesDigestFile`.
+
 [Liferay Gradle Util]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-util
 [LPS-66906]: https://issues.liferay.com/browse/LPS-66906
 [LPS-67023]: https://issues.liferay.com/browse/LPS-67023
@@ -331,3 +338,4 @@ classes directory does not exist for Java projects.
 [LPS-87465]: https://issues.liferay.com/browse/LPS-87465
 [LPS-87479]: https://issues.liferay.com/browse/LPS-87479
 [LPS-88909]: https://issues.liferay.com/browse/LPS-88909
+[LPS-89126]: https://issues.liferay.com/browse/LPS-89126

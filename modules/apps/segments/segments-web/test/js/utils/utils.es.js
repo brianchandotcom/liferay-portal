@@ -114,30 +114,45 @@ describe(
 			}
 		);
 
-		describe('sub', () => {
-			it('should return an array', () => {
-				const res = Utils.sub('hello world', [''], false);
+		describe(
+			'sub',
+			() => {
+				it(
+					'should return an array',
+					() => {
+						const res = Utils.sub('hello world', [''], false);
 
-				expect(res).toEqual(['hello world']);
-			});
+						expect(res).toEqual(['hello world']);
+					}
+				);
 
-			it('should return a string', () => {
-				const res = Utils.sub('hello world', ['']);
+				it(
+					'should return a string',
+					() => {
+						const res = Utils.sub('hello world', ['']);
 
-				expect(res).toEqual('hello world');
-			});
+						expect(res).toEqual('hello world');
+					}
+				);
 
-			it('should return with a subbed value for {0}', () => {
-				const res = Utils.sub('hello {0}', ['world']);
+				it(
+					'should return with a subbed value for {0}',
+					() => {
+						const res = Utils.sub('hello {0}', ['world']);
 
-				expect(res).toEqual('hello world');
-			});
+						expect(res).toEqual('hello world');
+					}
+				);
 
-			it('should return with multiple subbed values', () => {
-				const res = Utils.sub('My name is {0} {1}', ['hello', 'world']);
+				it(
+					'should return with multiple subbed values',
+					() => {
+						const res = Utils.sub('My name is {0} {1}', ['hello', 'world']);
 
-				expect(res).toEqual('My name is hello world');
-			});
-		});
+						expect(res).toEqual('My name is hello world');
+					}
+				);
+			}
+		);
 	}
 );

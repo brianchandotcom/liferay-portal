@@ -6,6 +6,7 @@ import getCN from 'classnames';
 class TypedInput extends React.Component {
 	_handleChange = event => {
 		const {onChange} = this.props;
+
 		const value = event.target.value;
 
 		if (onChange) {

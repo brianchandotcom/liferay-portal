@@ -54,6 +54,7 @@ class CriteriaSidebar extends Component {
 						searchValue={searchValue}
 					/>
 				</div>
+
 				<ul className="properties-list">
 					{filteredProperties.length ?
 						filteredProperties.map(

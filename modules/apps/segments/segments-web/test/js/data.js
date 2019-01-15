@@ -4,7 +4,7 @@ const {AND, OR} = CONJUNCTIONS;
 const {EQ} = RELATIONAL_OPERATORS;
 
 function generateItems(times) {
-	let items = [];
+	const items = [];
 
 	for (let i = 0; i < times; i++) {
 		items.push(

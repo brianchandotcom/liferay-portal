@@ -3,8 +3,9 @@ import PropTypes from 'prop-types';
 import CriteriaSidebarSearchBar from 'components/criteria_sidebar/CriteriaSidebarSearchBar.es';
 import {cleanup, fireEvent, render} from 'react-testing-library';
 
-const SEARCH_INPUT_TESTID = 'search-input';
 const SEARCH_BUTTON_TESTID = 'search-button';
+
+const SEARCH_INPUT_TESTID = 'search-input';
 
 class TestComponent extends Component {
 	static propTypes = {
@@ -45,7 +46,7 @@ describe(
 
 				expect(asFragment()).toMatchSnapshot();
 			}
-		)
+		);
 
 		it(
 			'should render with a blank search input with no search value',
@@ -95,12 +96,12 @@ describe(
 		it(
 			'should clear the input when the times icon is clicked',
 			() => {
-				const {getByTestId, asFragment} = render(
+				const {getByTestId} = render(
 					<TestComponent initialValue="test" />
 				);
 
-				const searchInput = getByTestId(SEARCH_INPUT_TESTID);
 				const searchButton = getByTestId(SEARCH_BUTTON_TESTID);
+				const searchInput = getByTestId(SEARCH_INPUT_TESTID);
 
 				expect(searchInput.value).toEqual('test');
 

@@ -22,6 +22,7 @@ import com.liferay.apio.architect.pagination.PageItems;
 import com.liferay.apio.architect.resource.NestedCollectionResource;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.media.object.apio.architect.model.MediaObject;
+import com.liferay.media.object.apio.internal.architect.resource.test.model.MediaObjectImpl;
 import com.liferay.portal.apio.test.util.PaginationRequest;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -45,9 +46,6 @@ import java.nio.charset.StandardCharsets;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.apache.commons.io.IOUtils;
 
@@ -313,67 +311,5 @@ public class DefaultMediaObjectNestedCollectionResourceTest
 
 	@DeleteAfterTestRun
 	private Group _group;
-
-	private static class MediaObjectImpl implements MediaObject {
-
-		@Override
-		public BinaryFile getBinaryFile() {
-			return _binaryFile;
-		}
-
-		@Override
-		public List<Long> getCategories() {
-			return _categories;
-		}
-
-		@Override
-		public String getDescription() {
-			return _description;
-		}
-
-		@Override
-		public List<String> getKeywords() {
-			return _keywords;
-		}
-
-		@Override
-		public String getTitle() {
-			return _title;
-		}
-
-		private MediaObjectImpl(
-			BinaryFile binaryFile, String title, String description,
-			List<String> keywords, List<Long> categories) {
-
-			_binaryFile = binaryFile;
-			_title = title;
-			_description = description;
-			_keywords = Optional.ofNullable(
-				keywords
-			).map(
-				List::stream
-			).orElseGet(
-				Stream::empty
-			).collect(
-				Collectors.toList()
-			);
-			_categories = Optional.ofNullable(
-				categories
-			).map(
-				List::stream
-			).orElseGet(
-				Stream::empty
-			).collect(
-				Collectors.toList()
-			);
-		}
-
-		private final BinaryFile _binaryFile;
-		private final List<Long> _categories;
-		private final String _description;
-		private final List<String> _keywords;
-		private final String _title;
-
-	}
 
 }

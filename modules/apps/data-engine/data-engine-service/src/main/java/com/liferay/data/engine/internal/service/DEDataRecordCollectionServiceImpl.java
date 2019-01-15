@@ -18,6 +18,7 @@ import com.liferay.data.engine.constants.DEActionKeys;
 import com.liferay.data.engine.exception.DEDataRecordCollectionException;
 import com.liferay.data.engine.internal.executor.DEDataRecordCollectionDeleteModelPermissionsRequestExecutor;
 import com.liferay.data.engine.internal.executor.DEDataRecordCollectionDeletePermissionsRequestExecutor;
+import com.liferay.data.engine.internal.executor.DEDataRecordCollectionDeleteRequestExecutor;
 import com.liferay.data.engine.internal.executor.DEDataRecordCollectionSaveModelPermissionsRequestExecutor;
 import com.liferay.data.engine.internal.executor.DEDataRecordCollectionSavePermissionsRequestExecutor;
 import com.liferay.data.engine.internal.executor.DEDataRecordCollectionSaveRequestExecutor;
@@ -27,6 +28,8 @@ import com.liferay.data.engine.service.DEDataRecordCollectionDeleteModelPermissi
 import com.liferay.data.engine.service.DEDataRecordCollectionDeleteModelPermissionsResponse;
 import com.liferay.data.engine.service.DEDataRecordCollectionDeletePermissionsRequest;
 import com.liferay.data.engine.service.DEDataRecordCollectionDeletePermissionsResponse;
+import com.liferay.data.engine.service.DEDataRecordCollectionDeleteRequest;
+import com.liferay.data.engine.service.DEDataRecordCollectionDeleteResponse;
 import com.liferay.data.engine.service.DEDataRecordCollectionSaveModelPermissionsRequest;
 import com.liferay.data.engine.service.DEDataRecordCollectionSaveModelPermissionsResponse;
 import com.liferay.data.engine.service.DEDataRecordCollectionSavePermissionsRequest;
@@ -111,6 +114,44 @@ public class DEDataRecordCollectionServiceImpl
 		}
 		catch (DEDataRecordCollectionException dedrce) {
 			throw dedrce;
+		}
+		catch (Exception e) {
+			throw new DEDataRecordCollectionException(e);
+		}
+	}
+
+	@Override
+	public DEDataRecordCollectionDeleteResponse execute(
+			DEDataRecordCollectionDeleteRequest
+				deDataRecordCollectionDeleteRequest)
+		throws DEDataRecordCollectionException {
+
+		try {
+			long deDataRecordCollectionId =
+				deDataRecordCollectionDeleteRequest.
+					getDEDataRecordCollectionId();
+
+			_modelResourcePermission.check(
+				getPermissionChecker(), deDataRecordCollectionId,
+				ActionKeys.DELETE);
+
+			DEDataRecordCollectionDeleteRequestExecutor
+				deDataRecordCollectionDeleteRequestExecutor =
+					getDEDataRecordCollectionDeleteRequestExecutor();
+
+			return deDataRecordCollectionDeleteRequestExecutor.execute(
+				deDataRecordCollectionDeleteRequest);
+		}
+		catch (PrincipalException.MustHavePermission mhp) {
+			throw new DEDataRecordCollectionException.MustHavePermission(
+				mhp.actionId, mhp);
+		}
+		catch (NoSuchRecordSetException nsrse) {
+			throw new DEDataRecordCollectionException.
+				NoSuchDataRecordCollection(
+					deDataRecordCollectionDeleteRequest.
+						getDEDataRecordCollectionId(),
+					nsrse);
 		}
 		catch (Exception e) {
 			throw new DEDataRecordCollectionException(e);
@@ -267,6 +308,18 @@ public class DEDataRecordCollectionServiceImpl
 		return _deDataRecordCollectionDeletePermissionsRequestExecutor;
 	}
 
+	protected DEDataRecordCollectionDeleteRequestExecutor
+		getDEDataRecordCollectionDeleteRequestExecutor() {
+
+		if (_deDataRecordCollectionDeleteRequestExecutor == null) {
+			_deDataRecordCollectionDeleteRequestExecutor =
+				new DEDataRecordCollectionDeleteRequestExecutor(
+					ddlRecordSetLocalService);
+		}
+
+		return _deDataRecordCollectionDeleteRequestExecutor;
+	}
+
 	protected DEDataRecordCollectionSaveModelPermissionsRequestExecutor
 		getDEDataRecordCollectionSaveModelPermissionsRequestExecutor() {
 
@@ -338,6 +391,8 @@ public class DEDataRecordCollectionServiceImpl
 		_deDataRecordCollectionDeleteModelPermissionsRequestExecutor;
 	private DEDataRecordCollectionDeletePermissionsRequestExecutor
 		_deDataRecordCollectionDeletePermissionsRequestExecutor;
+	private DEDataRecordCollectionDeleteRequestExecutor
+		_deDataRecordCollectionDeleteRequestExecutor;
 	private DEDataRecordCollectionSaveModelPermissionsRequestExecutor
 		_deDataRecordCollectionSaveModelPermissionsRequestExecutor;
 	private DEDataRecordCollectionSavePermissionsRequestExecutor

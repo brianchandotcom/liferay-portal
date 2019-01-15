@@ -103,5 +103,25 @@ describe(
 				testControlledInput({element: selector, value: defaultBoolValue, mockFunc: mockOnChange, pushingValue: 'false'});
 			}
 		);
+		it(
+			'should render type number ',
+			() => {
+				const mockOnChange = jest.fn();
+				const defaultNumberValue = '1';
+				const {asFragment, getByTestId} = render(
+					<TypedInput
+						type={PROPERTY_TYPES.NUMBER}
+						value={defaultNumberValue}
+						onChange={mockOnChange}
+					/>
+				);
+
+				expect(asFragment()).toMatchSnapshot();
+
+				const selector = getByTestId('simple-number');
+
+				testControlledInput({element: selector, value: defaultNumberValue, mockFunc: mockOnChange, pushingValue: '2'});
+			}
+		);
 	}
 );

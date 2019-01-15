@@ -83,8 +83,8 @@ class TypedInput extends React.Component {
 		const {onChange} = this.props;
 		const value = parseInt(event.target.value, 10);
 
-		if (onChange && value !== 'NaN') {
-			onChange(value);
+		if (onChange && !isNaN(value)) {
+			onChange(value.toString());
 		}
 	}
 	_renderNumberType = () => {
@@ -93,6 +93,7 @@ class TypedInput extends React.Component {
 		return (
 			<input
 				className="criterion-input form-control"
+				data-testid="simple-number"
 				onChange={this._handleNumberChange}
 				type="number"
 				value={value}

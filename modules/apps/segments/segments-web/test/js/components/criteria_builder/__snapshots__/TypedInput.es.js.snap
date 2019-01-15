@@ -20,6 +20,17 @@ exports[`CriteriaRow should render type boolean  1`] = `
 </DocumentFragment>
 `;
 
+exports[`CriteriaRow should render type number  1`] = `
+<DocumentFragment>
+  <input
+    class="criterion-input form-control"
+    data-testid="simple-number"
+    type="number"
+    value="1"
+  />
+</DocumentFragment>
+`;
+
 exports[`CriteriaRow should render type string with pseudotype options 1`] = `
 <DocumentFragment>
   <select

@@ -32,7 +32,7 @@ definition {
 	@priority = "4"
 	test AssertAutoTagAfterPublishToLive {
 		property test.name.skip.portal.instance = "DMAutoTagging#AssertAutoTagAfterPublishToLive";
-		
+
 		ProductMenu.gotoPortlet(
 			category = "Sites",
 			panel = "Control Panel",
@@ -247,7 +247,7 @@ definition {
 			dmDocumentTitle = "Document Title",
 			tagNameList = "ManualTag,NotAutoTagged"
 		);
-		
+
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
 		DMDocument.viewPG(

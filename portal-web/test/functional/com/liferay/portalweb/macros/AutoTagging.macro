@@ -7,7 +7,7 @@ definition {
 
 	macro assertNoAutoTag {
 		var key_tagName = "${tagName}";
-		
+
 		AssertElementNotPresent(locator1 = "DocumentsAndMedia#TAG");
 	}
 

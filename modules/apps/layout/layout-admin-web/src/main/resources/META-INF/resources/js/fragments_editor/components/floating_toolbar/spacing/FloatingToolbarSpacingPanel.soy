@@ -1,29 +1,61 @@
 {namespace com.liferay.layout.admin.web.FloatingToolbarSpacingPanel}
 
 /**
- * FloatingToolbarPanel spacing variation
- */
-{deltemplate com.liferay.layout.admin.web.FloatingToolbarPanel variant="'spacing'"}
-	{call .render data="all" /}
-{/deltemplate}
-
-/**
  * FloatingToolbarSpacingPanel
  */
 {template .render}
-	<div class="form-group">
-		<label for="floatingToolbarSpacingPanelContainer">
-			{msg desc=""}container{/msg}
-		</label>
+	{@param item: ?}
+	{@param? _containerTypes: list<[
+		containerTypeId: string,
+		label: string
+	]>}
 
-		<select class="form-control" id="floatingToolbarSpacingPanelContainer">
-			<option value="fixed">
-				{msg desc=""}fixed-width{/msg}
-			</option>
+	{if $_containerTypes}
+		<div class="form-group">
+			<label for="floatingToolbarSpacingPanelContainer">
+				{msg desc=""}container{/msg}
+			</label>
 
-			<option value="fluid">
-				{msg desc=""}fluid{/msg}
-			</option>
-		</select>
-	</div>
+			<select
+				class="form-control form-control-sm"
+				data-onchange="_handleContainerOptionChange"
+				id="floatingToolbarSpacingPanelContainer"
+			>
+				{foreach $containerType in $_containerTypes}
+					{call .spacingOption}
+						{param containerType: $containerType /}
+						{param item: $item /}
+						{param key: $containerType.containerTypeId /}
+					{/call}
+				{/foreach}
+			</select>
+		</div>
+	{/if}
+{/template}
+
+/**
+ * Spacing option
+ */
+{template .spacingOption}
+	{@param containerType: [
+		containerTypeId: string,
+		label: string
+	]}
+	{@param item: [
+		config: [
+			containerType: string
+		]
+	]}
+
+	{let $optionAttributes kind="attributes"}
+		value="{$containerType.containerTypeId}"
+
+		{if $item.config and $item.config.containerType == $containerType.containerTypeId}
+			selected
+		{/if}
+	{/let}
+
+	<option {$optionAttributes}>
+		{$containerType.label}
+	</option>
 {/template}

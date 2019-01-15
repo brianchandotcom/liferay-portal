@@ -107,6 +107,7 @@
 					{param languageId: $languageId /}
 					{param mappingFieldsURL: $mappingFieldsURL /}
 					{param portletNamespace: $portletNamespace /}
+					{param row: $row /}
 					{param rowId: $row.rowId /}
 					{param selectedMappingTypes: $selectedMappingTypes /}
 					{param spritemap: $spritemap /}
@@ -136,6 +137,7 @@
 	{@param imageSelectorURL: string}
 	{@param languageId: string}
 	{@param portletNamespace: string}
+	{@param row: ?}
 	{@param rowId: string}
 	{@param spritemap: string}
 	{@param? _handleFragmentMove: any}
@@ -227,7 +229,8 @@
 
 		{if $hoveredItemId == $rowId and $hoveredItemType == $dropTargetItemTypes.section}
 			{call com.liferay.layout.admin.web.FloatingToolbar.render}
-				{param elementId: $rowId /}
+				{param item: $row /}
+				{param itemId: $rowId /}
 				{param store: $store /}
 			{/call}
 		{/if}

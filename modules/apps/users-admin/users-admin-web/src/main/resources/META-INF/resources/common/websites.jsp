@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String backURL = ParamUtil.getString(request, "backURL");
+String backURL = (String)request.getAttribute("backURL");
 String className = (String)request.getAttribute("contact_information.jsp-className");
 long classPK = (long)request.getAttribute("contact_information.jsp-classPK");
 
@@ -42,7 +42,6 @@ List<Website> websites = WebsiteServiceUtil.getWebsites(className, classPK);
 			editURL.setParameter("mvcRenderCommandName", "/users_admin/edit_website");
 			editURL.setParameter("listType", ListTypeConstants.WEBSITE);
 			editURL.setParameter("redirect", currentURL);
-			editURL.setParameter("sheetTitle", "add-website");
 			%>
 
 			<liferay-ui:icon

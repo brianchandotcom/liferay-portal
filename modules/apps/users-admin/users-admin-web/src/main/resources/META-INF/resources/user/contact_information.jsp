@@ -17,6 +17,12 @@
 <%@ include file="/init.jsp" %>
 
 <%
+PortletURL viewURL = renderResponse.createRenderURL();
+
+String backURL = ParamUtil.getString(request, "backURL", viewURL.toString());
+
+request.setAttribute("backURL", backURL);
+
 User selUser = (User)request.getAttribute(UsersAdminWebKeys.SELECTED_USER);
 
 Contact selContact = null;
@@ -30,19 +36,9 @@ request.setAttribute("user.selUser", selUser);
 
 long selContactId = (selUser != null) ? selContact.getContactId() : 0;
 
-String contactInformationRequireJS = (String)request.getAttribute(UsersAdminWebKeys.CONTACT_INFORMATION_REQUIRE_JS);
-
 request.setAttribute("contact_information.jsp-className", Contact.class.getName());
 request.setAttribute("contact_information.jsp-classPK", selContactId);
-request.setAttribute("contact_information.jsp-contactInformationRequireJS", contactInformationRequireJS);
-request.setAttribute("contact_information.jsp-mvcActionPath", "/users_admin/update_user_contact_information");
-
-PortletURL viewURL = renderResponse.createRenderURL();
-
-String backURL = ParamUtil.getString(request, "backURL", viewURL.toString());
 %>
-
-<aui:input name="classPK" type="hidden" value="<%= String.valueOf(selContactId) %>" />
 
 <div class="sheet-section">
 	<liferay-util:include page="/common/phone_numbers.jsp" servletContext="<%= application %>">
@@ -58,7 +54,6 @@ String backURL = ParamUtil.getString(request, "backURL", viewURL.toString());
 
 <div class="sheet-section">
 	<liferay-util:include page="/common/websites.jsp" servletContext="<%= application %>">
-		<liferay-util:param name="backURL" value="<%= backURL %>" />
 		<liferay-util:param name="emptyResultsMessage" value="this-user-does-not-have-any-websites" />
 	</liferay-util:include>
 </div>

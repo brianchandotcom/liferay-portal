@@ -1,5 +1,4 @@
-<%@ page
-	import="com.liferay.users.admin.web.internal.constants.UsersAdminWebKeys" %><%--
+<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -23,7 +22,6 @@ String className = ParamUtil.getString(request, "className");
 Long classPK = ParamUtil.getLong(request, "classPK");
 long primaryKey = ParamUtil.getLong(request, "primaryKey", 0L);
 String redirect = ParamUtil.getString(request, "redirect");
-String sheetTitle = ParamUtil.getString(request, "sheetTitle");
 
 Website website = null;
 
@@ -31,17 +29,25 @@ if (primaryKey > 0L) {
 	website = WebsiteServiceUtil.getWebsite(primaryKey);
 }
 
-if (portletName.equals(UsersAdminPortletKeys.MY_ACCOUNT)) {
+if (!portletName.equals(UsersAdminPortletKeys.MY_ACCOUNT)) {
 	portletDisplay.setShowBackIcon(true);
 	portletDisplay.setURLBack(backURL);
 
 	String portletTitle = (String)request.getAttribute(UsersAdminWebKeys.PORTLET_TITLE);
 
 	renderResponse.setTitle(portletTitle);
-
 }
 
 PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "contact-information"), redirect);
+
+String sheetTitle;
+
+if (primaryKey > 0) {
+	sheetTitle = LanguageUtil.get(request, "edit-website");
+}
+else {
+	sheetTitle = LanguageUtil.get(request, "add-website");
+}
 
 PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, sheetTitle), null);
 %>
@@ -49,7 +55,6 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, sheetTit
 <portlet:actionURL name="/users_admin/update_contact_information" var="actionURL" />
 
 <aui:form action="<%= actionURL %>" method="post" name="fm">
-	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.EDIT %>" />
 	<aui:input name="backURL" type="hidden" value="<%= backURL %>" />
 	<aui:input name="className" type="hidden" value="<%= className %>" />
@@ -57,7 +62,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, sheetTit
 	<aui:input name="errorMvcRenderCommandName" type="hidden" value="/users_admin/edit_website" />
 	<aui:input name="listType" type="hidden" value="<%= ListTypeConstants.WEBSITE %>" />
 	<aui:input name="primaryKey" type="hidden" value="<%= String.valueOf(primaryKey) %>" />
-	<aui:input name="sheetTitle" type="hidden" value="<%= sheetTitle %>" />
+	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 
 	<div class="container-fluid container-fluid-max-xl">
 		<div class="sheet-lg" id="breadcrumb">

@@ -1,9 +1,0 @@
-Bundle-Name: Liferay Portal Kernel Blogs Compat
-Bundle-SymbolicName: com.liferay.portal.kernel.blogs.compat
-Bundle-Version: 1.0.0
-Export-Package:\
-	com.liferay.blogs.kernel.exception,\
-	com.liferay.blogs.kernel.model,\
-	com.liferay.blogs.kernel.service,\
-	com.liferay.blogs.kernel.service.persistence,\
-	com.liferay.blogs.kernel.util.comparator

@@ -48,6 +48,11 @@ public interface DEDataRecordCollectionService {
 				deDataRecordCollectionDeletePermissionsRequest)
 		throws DEDataRecordCollectionException;
 
+	public DEDataRecordCollectionDeleteResponse execute(
+			DEDataRecordCollectionDeleteRequest
+				deDataRecordCollectionDeleteRequest)
+		throws DEDataRecordCollectionException;
+
 	/**
 	 * Execute the Save Model Permissions Request which can grant permission
 	 * to a role to perform actions involving a Data Record Collection model

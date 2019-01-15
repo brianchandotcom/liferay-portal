@@ -21,6 +21,10 @@ import com.liferay.data.engine.model.DEDataRecordCollection;
  */
 public class DEDataRecordCollectionRequestBuilder {
 
+	public static DEDataRecordCollectionDeleteRequest.Builder deleteBuilder() {
+		return new DEDataRecordCollectionDeleteRequest.Builder();
+	}
+
 	public static DEDataRecordCollectionDeleteModelPermissionsRequest.Builder
 		deleteModelPermissionsBuilder(
 			long companyId, long scopedGroupId, long deDataRecordCollectionId,

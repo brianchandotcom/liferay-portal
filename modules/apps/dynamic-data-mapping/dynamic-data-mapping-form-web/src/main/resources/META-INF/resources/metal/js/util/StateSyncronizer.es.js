@@ -34,13 +34,13 @@ class StateSyncronizer extends Component {
 	}
 
 	getState() {
-		const {layoutProvider, localizedDescription, translationManager} = this.props;
+		const {layoutProvider, localizedDescription, localizedName, translationManager} = this.props;
 
 		const state = {
 			availableLanguageIds: translationManager.get('availableLocales'),
 			defaultLanguageId: translationManager.get('defaultLocale'),
 			description: localizedDescription,
-			name: this._getLocalizedName(),
+			name: localizedName,
 			pages: layoutProvider.state.pages,
 			paginationMode: layoutProvider.state.paginationMode,
 			rules: layoutProvider.state.rules,
@@ -72,17 +72,6 @@ class StateSyncronizer extends Component {
 		document.querySelector(`#${namespace}description`).value = JSON.stringify(description);
 		document.querySelector(`#${namespace}serializedFormBuilderContext`).value = this._getSerializedFormBuilderContext();
 		document.querySelector(`#${namespace}serializedSettingsContext`).value = JSON.stringify(settingsDDMForm.toJSON());
-	}
-
-	_getLocalizedName() {
-		const {localizedName, translationManager} = this.props;
-		const defaultLocale = translationManager.get('defaultLocale');
-
-		if (!localizedName[defaultLocale].trim()) {
-			localizedName[defaultLocale] = Liferay.Language.get('untitled-form');
-		}
-
-		return localizedName;
 	}
 
 	_getSerializedFormBuilderContext() {

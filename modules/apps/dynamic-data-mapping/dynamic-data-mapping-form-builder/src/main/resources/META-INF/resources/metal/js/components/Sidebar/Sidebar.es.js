@@ -126,11 +126,11 @@ class Sidebar extends Component {
 		const group = {
 			basic: {
 				fields: [],
-				label: Liferay.Language.get('basic-elements')
+				label: Liferay.Language.get('field-types-basic-elements')
 			},
 			customized: {
 				fields: [],
-				label: Liferay.Language.get('customized-elements')
+				label: Liferay.Language.get('field-types-customized-elements')
 			}
 		};
 

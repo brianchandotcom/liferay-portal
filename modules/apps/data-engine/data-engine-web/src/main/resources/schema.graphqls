@@ -102,14 +102,6 @@ type LocalizedValueType {
 	value: String
 }
 
-type SaveModelPermissionsDataDefinitionType {
-	dataDefinitionId: ID
-}
-
-type SavePermissionsDataDefinitionType {
-	roleNames: [String]
-}
-
 type MutationType {
 	deleteDataDefinition(dataDefinitionId: ID!, languageId: String!): DeleteDataDefinitionType
 	saveDataDefinition(userId: ID!, groupId: ID!, dataDefinition: DataDefinitionInput!, languageId: String!): SaveDataDefinitionType
@@ -122,6 +114,7 @@ type QueryType {
 	countDataDefinition(companyId: ID!, groupId: ID!, languageId: String!): CountDataDefinitionType
 	getDataDefinition(dataDefinitionId: ID!, languageId: String!): GetDataDefinitionType
 	listDataDefinition(companyId: ID!, groupId: ID!, languageId: String!, start: Int!, end: Int!): ListDataDefinitionType
+	searchDataDefinition(companyId: ID!, groupId: ID!, languageId: String!, keywords:String!, start: Int!, end: Int!): SearchDataDefinitionType
 
 }
 
@@ -131,4 +124,16 @@ type SaveDataDefinitionType {
 
 type SaveDataRecordCollectionType {
 	dataRecordCollection: DataRecordCollection
+}
+
+type SaveModelPermissionsDataDefinitionType {
+	dataDefinitionId: ID
+}
+
+type SavePermissionsDataDefinitionType {
+	roleNames: [String]
+}
+
+type SearchDataDefinitionType {
+	dataDefinitions: [DataDefinition]
 }

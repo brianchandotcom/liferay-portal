@@ -2,22 +2,36 @@
 @import "mixins";
 
 .portlet-document-library, .portlet-document-library-display {
-	.bulk-status {
-		background: #2E5AAC;
-		color: #FFF;
-		font-size: 0.875rem;
+	.bulk-status-container {
 		height: 32px;
-		line-height: 32px;
-		margin-top: -1.5em;
-		text-align: center;
-		width: 100%;
+		margin-top: -1.25rem;
 
-		.bulk-status-content {
-			display: inline-block;
+		.bulk-status {
+			background: #2E5AAC;
+			color: #FFF;
+			font-size: 0.875rem;
+			line-height: 32px;
+			max-height: 32px;
+			opacity: 1;
+			text-align: center;
+			width: 100%;
 
-			.loading-animation {
-				float:left;
-				margin: 6px 8px;
+			transition-duration: .4s;
+			transition-property: all;
+			transition-timing-function: cubic-bezier(0, 1, 0.5, 1);
+
+			&.closed {
+				max-height: 0;
+				opacity: 0;
+			}
+
+			.bulk-status-content {
+				display: inline-block;
+
+				.loading-animation {
+					float: left;
+					margin: 6px 8px;
+				}
 			}
 		}
 	}

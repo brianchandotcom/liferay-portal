@@ -44,9 +44,9 @@ describe(
 						expect(ODataUtil.translateQueryToCriteria('(firstName eq \'test\')'))
 							.toEqual(
 								{
-									'conjunctionName': 'and',
-									'groupId': 'group_01',
-									'items': [
+									conjunctionName: 'and',
+									groupId: 'group_01',
+									items: [
 										{
 											'operatorName': 'eq',
 											'propertyName': 'firstName',
@@ -64,9 +64,9 @@ describe(
 						expect(ODataUtil.translateQueryToCriteria('(((firstName eq \'test\')))'))
 							.toEqual(
 								{
-									'conjunctionName': 'and',
-									'groupId': 'group_01',
-									'items': [
+									conjunctionName: 'and',
+									groupId: 'group_01',
+									items: [
 										{
 											'operatorName': 'eq',
 											'propertyName': 'firstName',
@@ -84,9 +84,9 @@ describe(
 						expect(ODataUtil.translateQueryToCriteria(`(not (firstName eq 'test'))`))
 							.toEqual(
 								{
-									'conjunctionName': 'and',
-									'groupId': 'group_01',
-									'items': [
+									conjunctionName: 'and',
+									groupId: 'group_01',
+									items: [
 										{
 											'operatorName': 'not-eq',
 											'propertyName': 'firstName',
@@ -104,9 +104,9 @@ describe(
 						expect(ODataUtil.translateQueryToCriteria(`contains(firstName, 'test')`))
 							.toEqual(
 								{
-									'conjunctionName': 'and',
-									'groupId': 'group_01',
-									'items': [
+									conjunctionName: 'and',
+									groupId: 'group_01',
+									items: [
 										{
 											'operatorName': 'contains',
 											'propertyName': 'firstName',

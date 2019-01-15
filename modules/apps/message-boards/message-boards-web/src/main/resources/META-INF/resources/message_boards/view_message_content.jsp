@@ -291,7 +291,7 @@ if (portletTitleBasedNavigation) {
 	<c:if test="<%= !thread.isLocked() && !thread.isDraft() && MBCategoryPermission.contains(permissionChecker, scopeGroupId, rootMessage.getCategoryId(), ActionKeys.REPLY_TO_MESSAGE) %>">
 
 		<%
-		String taglibReplyToMessageURL = "javascript:" + liferayPortletResponse.getNamespace() + "addReplyToMessage('" + rootMessage.getMessageId() + "', false);";
+		String taglibReplyToMessageURL = "javascript:" + liferayPortletResponse.getNamespace() + "addReplyToMessage('" + rootMessage.getMessageId() + "', '');";
 		%>
 
 		<aui:button onclick="<%= taglibReplyToMessageURL %>" primary="<%= true %>" value="reply" />

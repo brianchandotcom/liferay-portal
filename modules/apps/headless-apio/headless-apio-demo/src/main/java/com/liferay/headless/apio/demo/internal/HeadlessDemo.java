@@ -110,8 +110,7 @@ public class HeadlessDemo extends BasePortalInstanceLifecycleListener {
 
 			_createFolder(user, _group, folder.getFolderId(), "SubFolder");
 
-			FileEntry fileEntry = _createFileEntryInFolder(
-				user, _group, folder);
+			FileEntry fileEntry = _createFileEntry(user, _group, folder);
 
 			_createMainPage(
 				company, _group, user, journalArticles, folder, fileEntry);
@@ -194,8 +193,7 @@ public class HeadlessDemo extends BasePortalInstanceLifecycleListener {
 				user));
 	}
 
-	private FileEntry _createFileEntryInFolder(
-			User user, Group group, Folder folder)
+	private FileEntry _createFileEntry(User user, Group group, Folder folder)
 		throws Exception {
 
 		ServiceContext serviceContext = new ServiceContext();
@@ -212,7 +210,7 @@ public class HeadlessDemo extends BasePortalInstanceLifecycleListener {
 	}
 
 	private Folder _createFolder(
-			User user, Group group, long folderId, String name)
+			User user, Group group, long parentFolderId, String name)
 		throws PortalException {
 
 		ServiceContext serviceContext = new ServiceContext();
@@ -221,7 +219,7 @@ public class HeadlessDemo extends BasePortalInstanceLifecycleListener {
 		serviceContext.setAddGuestPermissions(true);
 
 		return _dlAppLocalService.addFolder(
-			user.getUserId(), group.getGroupId(), folderId, name, "",
+			user.getUserId(), group.getGroupId(), parentFolderId, name, "",
 			serviceContext);
 	}
 

@@ -58,8 +58,8 @@ public class NPMResolverJSBundleTracker implements JSBundleTracker {
 				new NPMResolvedPackageNameRegistrar(
 					_bundleContext, bundle, npmResolvedPackageName);
 
-			_npmResolvedPackageNameRegistrarMap.put(bundle,
-				npmResolvedPackageNameRegistrar);
+			_npmResolvedPackageNameRegistrarMap.put(
+				bundle, npmResolvedPackageNameRegistrar);
 
 			npmResolvedPackageNameRegistrar.open();
 		}

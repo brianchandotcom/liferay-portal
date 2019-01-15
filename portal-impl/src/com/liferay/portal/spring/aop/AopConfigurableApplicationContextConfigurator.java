@@ -81,10 +81,6 @@ public class AopConfigurableApplicationContextConfigurator
 			return false;
 		}
 
-		private ServiceBeanMatcher() {
-			this(false);
-		}
-
 		private ServiceBeanMatcher(boolean counterMatcher) {
 			_counterMatcher = counterMatcher;
 		}
@@ -178,7 +174,7 @@ public class AopConfigurableApplicationContextConfigurator
 
 			ServiceBeanAutoProxyCreator serviceBeanAutoProxyCreator =
 				new ServiceBeanAutoProxyCreator(
-					new ServiceBeanMatcher(), _classLoader,
+					new ServiceBeanMatcher(false), _classLoader,
 					AopCacheManager.createChainableMethodAdvices(
 						transactionExecutor, serviceMonitoringControl));
 

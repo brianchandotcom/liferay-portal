@@ -135,13 +135,15 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 	}
 
 	protected String getFirstMatchingPropertyName(
-		String basePropertyName, Properties properties) {
+		String basePropertyName, Properties properties, String testSuiteName) {
 
-		return getFirstMatchingPropertyName(basePropertyName, properties, null);
+		return getFirstMatchingPropertyName(
+			basePropertyName, properties, batchName, testSuiteName);
 	}
 
 	protected String getFirstMatchingPropertyName(
-		String basePropertyName, Properties properties, String testSuiteName) {
+		String basePropertyName, Properties properties, String batchName,
+		String testSuiteName) {
 
 		if (basePropertyName.contains("[") || basePropertyName.contains("]")) {
 			throw new RuntimeException(
@@ -204,7 +206,7 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 
 			propertyNames.add(
 				getFirstMatchingPropertyName(
-					basePropertyName, jobProperties, testSuiteName));
+					basePropertyName, jobProperties, batchName, testSuiteName));
 
 			propertyNames.add(
 				JenkinsResultsParserUtil.combine(
@@ -216,7 +218,8 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 				basePropertyName, "[", testBatchName, "]"));
 
 		propertyNames.add(
-			getFirstMatchingPropertyName(basePropertyName, jobProperties));
+			getFirstMatchingPropertyName(
+				basePropertyName, jobProperties, batchName, null));
 
 		propertyNames.add(basePropertyName);
 

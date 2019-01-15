@@ -72,6 +72,19 @@
 		}
 	}
 
+	&__structure-panel {
+		.nav-item a {
+			cursor: pointer;
+			transition: background-color ease 0.2s;
+			will-change: background-color;
+
+			&.active.nav-link, &.active.nav-link:hover {
+				background-color: $topperBackgroundColor;
+				color: $topperColor;
+			}
+		}
+	}
+
 	&__panel {
 		background-color: transparent;
 

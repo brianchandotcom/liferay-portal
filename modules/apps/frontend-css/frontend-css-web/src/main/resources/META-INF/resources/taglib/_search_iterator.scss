@@ -116,8 +116,8 @@
 .display-style-icon {
 	.lfr-asset-folder, .lfr-asset-item {
 		float: left;
-		padding-left: 15px;
-		padding-right: 15px;
+		padding-left: 0.75rem;
+		padding-right: 0.75rem;
 
 		@include md {
 			width: 33.33333%;

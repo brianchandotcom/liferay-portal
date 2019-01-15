@@ -235,32 +235,42 @@
 			{/call}
 		{/if}
 
-		<div class="fragment-entry-link-list__row row">
-			{foreach $column in $columns}
-				{call .column}
-					{param _handleFragmentMove: $_handleFragmentMove /}
-					{param columnId: $column.columnId /}
-					{param defaultEditorConfigurations: $defaultEditorConfigurations /}
-					{param defaultLanguageId: $defaultLanguageId /}
-					{param dropTargetItemTypes: $dropTargetItemTypes /}
-					{param fragmentEntryLinkIds: $column.fragmentEntryLinkIds /}
-					{param fragmentEntryLinks: $fragmentEntryLinks /}
-					{param dropTargetBorder: $dropTargetBorder /}
-					{param dropTargetItemId: $dropTargetItemId /}
-					{param dropTargetItemType: $dropTargetItemType /}
-					{param hoveredItemId: $hoveredItemId /}
-					{param hoveredItemType: $hoveredItemType /}
-					{param imageSelectorURL: $imageSelectorURL /}
-					{param key: $column.columnId /}
-					{param languageId: $languageId /}
-					{param mappingFieldsURL: $mappingFieldsURL /}
-					{param portletNamespace: $portletNamespace /}
-					{param selectedMappingTypes: $selectedMappingTypes /}
-					{param size: $column.size /}
-					{param spritemap: $spritemap /}
-					{param store: $store /}
-				{/call}
-			{/foreach}
+		{let $rowWrapperClasses kind="text"}
+			{if $row and $row.config and $row.config.containerType == 'fixed'}
+				{sp}container
+			{else}
+				{sp}container-fluid
+			{/if}
+		{/let}
+
+		<div class="{$rowWrapperClasses}">
+			<div class="fragment-entry-link-list__row row">
+				{foreach $column in $columns}
+					{call .column}
+						{param _handleFragmentMove: $_handleFragmentMove /}
+						{param columnId: $column.columnId /}
+						{param defaultEditorConfigurations: $defaultEditorConfigurations /}
+						{param defaultLanguageId: $defaultLanguageId /}
+						{param dropTargetItemTypes: $dropTargetItemTypes /}
+						{param fragmentEntryLinkIds: $column.fragmentEntryLinkIds /}
+						{param fragmentEntryLinks: $fragmentEntryLinks /}
+						{param dropTargetBorder: $dropTargetBorder /}
+						{param dropTargetItemId: $dropTargetItemId /}
+						{param dropTargetItemType: $dropTargetItemType /}
+						{param hoveredItemId: $hoveredItemId /}
+						{param hoveredItemType: $hoveredItemType /}
+						{param imageSelectorURL: $imageSelectorURL /}
+						{param key: $column.columnId /}
+						{param languageId: $languageId /}
+						{param mappingFieldsURL: $mappingFieldsURL /}
+						{param portletNamespace: $portletNamespace /}
+						{param selectedMappingTypes: $selectedMappingTypes /}
+						{param size: $column.size /}
+						{param spritemap: $spritemap /}
+						{param store: $store /}
+					{/call}
+				{/foreach}
+			</div>
 		</div>
 	</section>
 {/template}

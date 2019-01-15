@@ -109,6 +109,11 @@ public class JavaClassCall extends JavaExpression {
 			}
 
 			sb.append(originalIndent);
+
+			if (prefix.startsWith("try (")) {
+				sb.append("\t");
+			}
+
 			sb.append("}");
 			sb.append(originalSuffix);
 		}

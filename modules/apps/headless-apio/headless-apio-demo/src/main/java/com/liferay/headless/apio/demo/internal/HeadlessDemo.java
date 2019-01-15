@@ -119,20 +119,6 @@ public class HeadlessDemo extends BasePortalInstanceLifecycleListener {
 		}
 	}
 
-	protected DDMForm deserialize(String content) {
-		DDMFormDeserializer ddmFormDeserializer =
-			_ddmFormDeserializerTracker.getDDMFormDeserializer("json");
-
-		DDMFormDeserializerDeserializeRequest.Builder builder =
-			DDMFormDeserializerDeserializeRequest.Builder.newBuilder(content);
-
-		DDMFormDeserializerDeserializeResponse
-			ddmFormDeserializerDeserializeResponse =
-				ddmFormDeserializer.deserialize(builder.build());
-
-		return ddmFormDeserializerDeserializeResponse.getDDMForm();
-	}
-
 	private JournalArticle _addJournalArticle(
 			Company company, Group group, User user, DDMStructure ddmStructure,
 			DDMTemplate ddmTemplate, Map<Locale, String> titleMap,
@@ -382,11 +368,25 @@ public class HeadlessDemo extends BasePortalInstanceLifecycleListener {
 			layout.getTypeSettings());
 	}
 
+	private DDMForm _deserialize(String content) {
+		DDMFormDeserializer ddmFormDeserializer =
+			_ddmFormDeserializerTracker.getDDMFormDeserializer("json");
+
+		DDMFormDeserializerDeserializeRequest.Builder builder =
+			DDMFormDeserializerDeserializeRequest.Builder.newBuilder(content);
+
+		DDMFormDeserializerDeserializeResponse
+			ddmFormDeserializerDeserializeResponse =
+				ddmFormDeserializer.deserialize(builder.build());
+
+		return ddmFormDeserializerDeserializeResponse.getDDMForm();
+	}
+
 	private DDMStructure _getDDMStructure(
 			Company company, Group group, User user, String fileName)
 		throws Exception {
 
-		DDMForm ddmForm = deserialize(_read(fileName));
+		DDMForm ddmForm = _deserialize(_read(fileName));
 
 		DDMFormLayout ddmFormLayout = DDMUtil.getDefaultDDMFormLayout(ddmForm);
 

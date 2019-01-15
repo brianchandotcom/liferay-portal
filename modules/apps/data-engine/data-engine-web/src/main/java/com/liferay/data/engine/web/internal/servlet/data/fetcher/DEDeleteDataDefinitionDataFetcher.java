@@ -37,16 +37,18 @@ public class DEDeleteDataDefinitionDataFetcher
 	extends DEBaseDataFetcher implements DataFetcher<DeleteDataDefinitionType> {
 
 	@Override
-	public DeleteDataDefinitionType get(DataFetchingEnvironment environment) {
+	public DeleteDataDefinitionType get(
+		DataFetchingEnvironment dataFetchingEnvironment) {
+
 		DeleteDataDefinitionType deleteDataDefinitionType =
 			new DeleteDataDefinitionType();
 
 		String errorMessage = null;
-		String languageId = environment.getArgument("languageId");
+		String languageId = dataFetchingEnvironment.getArgument("languageId");
 
 		try {
 			long dataDefinitionId = GetterUtil.getLong(
-				environment.getArgument("dataDefinitionId"));
+				dataFetchingEnvironment.getArgument("dataDefinitionId"));
 
 			deDataDefinitionService.execute(
 				DEDataDefinitionRequestBuilder.deleteBuilder(

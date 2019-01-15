@@ -16,6 +16,8 @@ package com.liferay.change.tracking.rest.internal.context.provider;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.Portal;
 
 import javax.servlet.http.HttpServletRequest;
@@ -33,7 +35,7 @@ import org.osgi.service.component.annotations.ServiceScope;
  * @author Máté Thurzó
  */
 @Component(
-	property = {"osgi.jaxrs.extension=true", "osgi.jaxrs.name=user"},
+	property = {"osgi.jaxrs.extension=true", "osgi.jaxrs.name=CTUser"},
 	scope = ServiceScope.PROTOTYPE, service = ContextProvider.class
 )
 @Provider
@@ -42,9 +44,15 @@ public class UserContextProvider implements ContextProvider<User> {
 	@Override
 	public User createContext(Message message) {
 		try {
-			return _portal.getUser(
+			User user = _portal.getUser(
 				(HttpServletRequest)message.getContextualProperty(
 					"HTTP.REQUEST"));
+
+			if (user != null) {
+				return user;
+			}
+
+			return _userLocalService.getUser(PrincipalThreadLocal.getUserId());
 		}
 		catch (PortalException pe) {
 			throw new RuntimeException(pe);
@@ -53,5 +61,8 @@ public class UserContextProvider implements ContextProvider<User> {
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private UserLocalService _userLocalService;
 
 }

@@ -11,7 +11,7 @@ class ShareFormPopover extends Component {
 	static PROPS = {
 
 		/**
-		 * Map of translated strings
+		 * The spritemap for Clay icons.
 		 * @default ""
 		 * @instance
 		 * @memberof ShareFormPopover
@@ -21,24 +21,14 @@ class ShareFormPopover extends Component {
 		spritemap: Config.string().required(),
 
 		/**
-		 * Map of translated strings
+		 * The url to share the form.
 		 * @default ""
 		 * @instance
 		 * @memberof ShareFormPopover
 		 * @type {string}
 		 */
 
-		url: Config.string().required(),
-
-		/**
-		 * Map of translated strings
-		 * @default {}
-		 * @instance
-		 * @memberof ShareFormPopover
-		 * @type {!object}
-		 */
-
-		strings: Config.object().value({})
+		url: Config.string().required()
 	};
 
 	static STATE = {
@@ -100,7 +90,7 @@ class ShareFormPopover extends Component {
 
 	render() {
 		const shareFormIcon = document.querySelector('.share-form-icon');
-		const {spritemap, strings, url} = this.props;
+		const {spritemap, url} = this.props;
 		const {success} = this.state;
 
 		const buttonClasses = getCN(
@@ -135,7 +125,7 @@ class ShareFormPopover extends Component {
 							<input class="form-control" readonly={true} ref="shareFieldURL" type="text" value={url} />
 							{success && (
 								<div class="form-feedback-group">
-									<div class="form-feedback-item">{strings['copied-to-clipboard']}</div>
+									<div class="form-feedback-item">{Liferay.Language.get('copied-to-clipboard')}</div>
 								</div>
 							)}
 						</div>

@@ -33,9 +33,7 @@ class Notifications {
 	}
 
 	static showError(message) {
-		const {strings} = Liferay.DDM.FormSettings;
-
-		this.showAlert(message, strings.error, 'danger');
+		this.showAlert(message, Liferay.Language.get('error'), 'danger');
 	}
 
 }

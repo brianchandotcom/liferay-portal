@@ -11,7 +11,6 @@ class PreviewButton extends Component {
 
 	render() {
 		const {spritemap} = this.props;
-		const {strings} = Liferay.DDM.FormSettings;
 
 		return (
 			<ClayButton
@@ -21,7 +20,7 @@ class PreviewButton extends Component {
 						click: this._handleButtonClicked.bind(this)
 					}
 				}
-				label={strings['preview-form']}
+				label={Liferay.Language.get('preview-form')}
 				ref={'button'}
 				spritemap={spritemap}
 				style={'link'}
@@ -34,7 +33,6 @@ class PreviewButton extends Component {
 	}
 
 	preview() {
-		const {strings} = Liferay.DDM.FormSettings;
 		const {resolvePreviewURL} = this.props;
 
 		return resolvePreviewURL()
@@ -46,7 +44,7 @@ class PreviewButton extends Component {
 				}
 			).catch(
 				() => {
-					Notifications.showError(strings['your-request-failed-to-complete']);
+					Notifications.showError(Liferay.Language.get('your-request-failed-to-complete'));
 				}
 			);
 	}

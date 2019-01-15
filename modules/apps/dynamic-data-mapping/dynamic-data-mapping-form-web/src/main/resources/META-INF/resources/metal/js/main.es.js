@@ -187,17 +187,7 @@ class Form extends Component {
 		 * @type {!string}
 		 */
 
-		spritemap: Config.string().required(),
-
-		/**
-		 * Map of translated strings
-		 * @default {}
-		 * @instance
-		 * @memberof Form
-		 * @type {!object}
-		 */
-
-		strings: Config.object().value({})
+		spritemap: Config.string().required()
 	};
 
 	static STATE = {
@@ -264,9 +254,7 @@ class Form extends Component {
 	}
 
 	_saveButtonLabelValueFn() {
-		const {strings} = this.props;
-
-		return strings['save-form'];
+		return Liferay.Language.get('save-form');
 	}
 
 	checkEditorLimit(event, limit) {
@@ -415,15 +403,15 @@ class Form extends Component {
 	}
 
 	_updateAutoSaveMessage({savedAsDraft, modifiedDate}) {
-		const {namespace, strings} = this.props;
+		const {namespace} = this.props;
 
 		let message = '';
 
 		if (savedAsDraft) {
-			message = strings['draft-x'];
+			message = Liferay.Language.get('draft-x');
 		}
 		else {
-			message = strings['saved-x'];
+			message = Liferay.Language.get('saved-x');
 		}
 
 		const autoSaveMessageNode = document.querySelector(`#${namespace}autosaveMessage`);
@@ -474,7 +462,7 @@ class Form extends Component {
 	}
 
 	_updateShareFormIcon(published) {
-		const {saved, strings} = this.props;
+		const {saved} = this.props;
 		const shareFormIcon = document.querySelector('.share-form-icon');
 
 		if (saved && published) {
@@ -483,7 +471,7 @@ class Form extends Component {
 		}
 		else {
 			shareFormIcon.classList.add('ddm-btn-disabled');
-			shareFormIcon.setAttribute('title', strings['publish-the-form-to-get-its-shareable-link']);
+			shareFormIcon.setAttribute('title', Liferay.Language.get('publish-the-form-to-get-its-shareable-link'));
 		}
 	}
 
@@ -497,8 +485,7 @@ class Form extends Component {
 			formInstanceId,
 			namespace,
 			published,
-			spritemap,
-			strings
+			spritemap
 		} = this.props;
 
 		const {saveButtonLabel} = this.state;
@@ -563,18 +550,18 @@ class Form extends Component {
 					</div>
 
 					<ClayModal
-						body={strings['any-unsaved-changes-will-be-lost-are-you-sure-you-want-to-leave']}
+						body={Liferay.Language.get('any-unsaved-changes-will-be-lost-are-you-sure-you-want-to-leave')}
 						footerButtons={
 							[
 								{
 									'alignment': 'right',
-									'label': strings.leave,
+									'label': Liferay.Language.get('leave'),
 									'style': 'secondary',
 									'type': 'close'
 								},
 								{
 									'alignment': 'right',
-									'label': strings.stay,
+									'label': Liferay.Language.get('stay'),
 									'style': 'primary',
 									'type': 'button'
 								}
@@ -583,13 +570,12 @@ class Form extends Component {
 						ref={'discardChangesModal'}
 						size={'sm'}
 						spritemap={spritemap}
-						title={strings['leave-form']}
+						title={Liferay.Language.get('leave-form')}
 					/>
 				</div>
 				{published && (
 					<ShareFormPopover
 						spritemap={spritemap}
-						strings={strings}
 						url={this._createFormURL()}
 					/>
 				)}
@@ -747,13 +733,11 @@ class Form extends Component {
 	 */
 
 	_handleSaveButtonClicked(event) {
-		const {strings} = this.props;
-
 		event.preventDefault();
 
 		this.setState(
 			{
-				saveButtonLabel: strings.saving
+				saveButtonLabel: Liferay.Language.get('saving')
 			}
 		);
 

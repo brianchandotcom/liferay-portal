@@ -41,7 +41,6 @@ class PublishButton extends Component {
 
 	render() {
 		const {published, spritemap} = this.props;
-		const {strings} = Liferay.DDM.FormSettings;
 
 		return (
 			<ClayButton
@@ -51,7 +50,7 @@ class PublishButton extends Component {
 						click: this._handleButtonClicked.bind(this)
 					}
 				}
-				label={published ? strings['unpublish-form'] : strings['publish-form']}
+				label={published ? Liferay.Language.get('unpublish-form') : Liferay.Language.get('publish-form')}
 				ref={'button'}
 				spritemap={spritemap}
 			/>
@@ -64,7 +63,6 @@ class PublishButton extends Component {
 
 	_savePublished(published) {
 		const {namespace, resolvePublishURL} = this.props;
-		const {strings} = Liferay.DDM.FormSettings;
 
 		return resolvePublishURL().then(
 			({formInstanceId, publishURL}) => {
@@ -95,14 +93,13 @@ class PublishButton extends Component {
 			}
 		).catch(
 			() => {
-				Notifications.showError(strings['your-request-failed-to-complete']);
+				Notifications.showError(Liferay.Language.get('your-request-failed-to-complete'));
 			}
 		);
 	}
 
 	_showPublishAlert(publishURL) {
-		const {strings} = Liferay.DDM.FormSettings;
-		const message = strings['the-form-was-published-successfully-access-it-with-this-url-x'];
+		const message = Liferay.Language.get('the-form-was-published-successfully-access-it-with-this-url-x');
 
 		Notifications.showAlert(
 			message.replace(
@@ -113,9 +110,7 @@ class PublishButton extends Component {
 	}
 
 	_showUnpublishAlert() {
-		const {strings} = Liferay.DDM.FormSettings;
-
-		Notifications.showAlert(strings['the-form-was-unpublished-successfully']);
+		Notifications.showAlert(Liferay.Language.get('the-form-was-unpublished-successfully'));
 	}
 }
 

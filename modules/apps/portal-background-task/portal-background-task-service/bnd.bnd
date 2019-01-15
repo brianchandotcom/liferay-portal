@@ -5,5 +5,5 @@ Import-Package:\
 	com.liferay.portal.kernel.backgroundtask.display;version="[1.0.0,2)",\
 	\
 	*
-Liferay-Require-SchemaVersion: 1.0.0
+Liferay-Require-SchemaVersion: 2.0.0
 Liferay-Service: true

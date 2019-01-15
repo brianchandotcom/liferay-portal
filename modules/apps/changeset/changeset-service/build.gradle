@@ -8,6 +8,7 @@ dependencies {
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	compileOnly project(":apps:changeset:changeset-api")
 	compileOnly project(":apps:portal:portal-spring-extender-api")
+	compileOnly project(":apps:portal:portal-upgrade-api")
 	compileOnly project(":core:petra:petra-lang")
 	compileOnly project(":core:petra:petra-string")
 }

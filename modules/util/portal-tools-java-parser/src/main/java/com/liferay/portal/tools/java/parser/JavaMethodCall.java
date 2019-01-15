@@ -28,6 +28,18 @@ public class JavaMethodCall extends JavaExpression {
 		_methodName = new JavaSimpleValue(methodName);
 	}
 
+	public int getChainSize() {
+		JavaExpression chainedJavaExpression = getChainedJavaExpression();
+
+		if (!(chainedJavaExpression instanceof JavaMethodCall)) {
+			return 0;
+		}
+
+		JavaMethodCall javaMethodCall = (JavaMethodCall)chainedJavaExpression;
+
+		return javaMethodCall.getChainSize() + 1;
+	}
+
 	public List<JavaExpression> getParameterValueJavaExpressions() {
 		return _parameterValueJavaExpressions;
 	}
@@ -40,6 +52,19 @@ public class JavaMethodCall extends JavaExpression {
 		List<JavaExpression> parameterValueJavaExpressions) {
 
 		_parameterValueJavaExpressions = parameterValueJavaExpressions;
+	}
+
+	public void setUseChainStyle(boolean useChainStyle) {
+		_useChainStyle = useChainStyle;
+
+		JavaExpression chainedJavaExpression = getChainedJavaExpression();
+
+		if (chainedJavaExpression instanceof JavaMethodCall) {
+			JavaMethodCall javaMethodCall =
+				(JavaMethodCall)chainedJavaExpression;
+
+			javaMethodCall.setUseChainStyle(useChainStyle);
+		}
 	}
 
 	@Override
@@ -85,8 +110,23 @@ public class JavaMethodCall extends JavaExpression {
 		return sb.toString();
 	}
 
+	private boolean _isUseChainStyle(int minChainSize) {
+		if (_useChainStyle) {
+			return _useChainStyle;
+		}
+
+		if (getChainSize() < minChainSize) {
+			return false;
+		}
+
+		setUseChainStyle(true);
+
+		return true;
+	}
+
 	private List<JavaType> _genericJavaTypes;
 	private final JavaSimpleValue _methodName;
 	private List<JavaExpression> _parameterValueJavaExpressions;
+	private boolean _useChainStyle;
 
 }

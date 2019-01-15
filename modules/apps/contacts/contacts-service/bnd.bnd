@@ -1,5 +1,5 @@
 Bundle-Name: Liferay Contacts Service
 Bundle-SymbolicName: com.liferay.contacts.service
 Bundle-Version: 4.0.0
-Liferay-Require-SchemaVersion: 2.0.2
+Liferay-Require-SchemaVersion: 3.0.0
 Liferay-Service: true

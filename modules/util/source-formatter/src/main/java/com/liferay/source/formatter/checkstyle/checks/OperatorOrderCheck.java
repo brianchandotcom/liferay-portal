@@ -41,7 +41,8 @@ public class OperatorOrderCheck extends BaseCheck {
 
 			return;
 		}
-		else if (firstChildDetailAST.getChildCount() != 0) {
+
+		if (firstChildDetailAST.getChildCount() != 0) {
 			DetailAST secondChildDetailAST =
 				firstChildDetailAST.getFirstChild();
 

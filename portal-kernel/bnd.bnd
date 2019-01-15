@@ -9,7 +9,6 @@ Export-Package:\
 Import-Package: *
 Include-Resource:\
 	classes,\
-	@../tmp/lib-pre/com.liferay.portal.kernel.blogs.compat.jar,\
 	@../tmp/lib-pre/com.liferay.portal.kernel.concurrent.compat.jar,\
 	@../tmp/lib-pre/com.liferay.portal.kernel.document.library.compat.jar,\
 	@../tmp/lib-pre/com.liferay.portal.kernel.io.compat.jar,\

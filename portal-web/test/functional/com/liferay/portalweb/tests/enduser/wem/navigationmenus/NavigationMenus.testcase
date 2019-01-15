@@ -94,13 +94,8 @@ definition {
 
 		NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = "test-site-name");
 
-		LexiconEntry.gotoEntryMenuItem(
-			menuItem = "Primary Navigation",
-			rowEntry = "Navigation Menu Name 2"
-		);
-
 		NavigationMenusAdmin.configureMenuType(
-			currentPrimaryNavigationMenu = "Navigation Menu Name 1",
+			oldPrimaryNavigationMenu = "Navigation Menu Name 1",
 			menuType = "Primary Navigation",
 			navigationMenu = "Navigation Menu Name 2"
 		);

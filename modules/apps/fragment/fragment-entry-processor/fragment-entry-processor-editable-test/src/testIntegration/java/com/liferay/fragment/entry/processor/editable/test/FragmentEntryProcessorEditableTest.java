@@ -24,7 +24,8 @@ import com.liferay.fragment.service.FragmentCollectionServiceUtil;
 import com.liferay.fragment.service.FragmentEntryLinkLocalServiceUtil;
 import com.liferay.fragment.service.FragmentEntryServiceUtil;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.json.JSONObjectImpl;
+import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -91,35 +92,8 @@ public class FragmentEntryProcessorEditableTest {
 
 		fragmentEntryLink.setHtml(fragmentEntry.getHtml());
 
-		JSONObject editableFragmentEntryProcessorJSONObject =
-			JSONFactoryUtil.createJSONObject();
-
-		JSONObject editableValuesJSONObject =
-			JSONFactoryUtil.createJSONObject();
-
-		JSONObject editableImageDefaultValueJSONObject =
-			JSONFactoryUtil.createJSONObject();
-
-		editableImageDefaultValueJSONObject.put("defaultValue", "sample.jpg");
-
-		editableValuesJSONObject.put(
-			"editable_img", editableImageDefaultValueJSONObject);
-
-		JSONObject editableTextDefaultValueJSONObject =
-			JSONFactoryUtil.createJSONObject();
-
-		editableTextDefaultValueJSONObject.put("defaultValue", "test");
-
-		editableValuesJSONObject.put(
-			"editable_text", editableTextDefaultValueJSONObject);
-
-		editableFragmentEntryProcessorJSONObject.put(
-			"com.liferay.fragment.entry.processor.editable." +
-				"EditableFragmentEntryProcessor",
-			editableValuesJSONObject);
-
 		fragmentEntryLink.setEditableValues(
-			editableFragmentEntryProcessorJSONObject.toString());
+			_getJsonFileAsString("fragment_entry_link_editable_values.json"));
 
 		Document document = Jsoup.parseBodyFragment(
 			_getFileAsString("processed_fragment_entry.html"));
@@ -207,6 +181,15 @@ public class FragmentEntryProcessorEditableTest {
 			clazz.getClassLoader(),
 			"com/liferay/fragment/entry/processor/editable/test/dependencies/" +
 				fileName);
+	}
+
+	private String _getJsonFileAsString(String jsonFileName)
+		throws IOException, JSONException {
+
+		JSONObject jsonObject = new JSONObjectImpl(
+			_getFileAsString(jsonFileName));
+
+		return jsonObject.toString();
 	}
 
 	@Inject

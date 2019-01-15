@@ -119,6 +119,16 @@ public class TextFormatterTest {
 	}
 
 	@Test
+	public void testformatStorageSizeOneB() throws Exception {
+		long bytes = 1;
+
+		Assert.assertEquals(
+			"1B", TextFormatter.formatStorageSize(bytes, LocaleUtil.SPAIN));
+		Assert.assertEquals(
+			"1B", TextFormatter.formatStorageSize(bytes, LocaleUtil.US));
+	}
+
+	@Test
 	public void testformatStorageSizeOneGB() throws Exception {
 		long bytes = 1024 * 1024 * 1024;
 

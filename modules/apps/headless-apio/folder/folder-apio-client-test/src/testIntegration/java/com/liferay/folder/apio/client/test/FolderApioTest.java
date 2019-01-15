@@ -249,7 +249,7 @@ public class FolderApioTest {
 			folderHref
 		).then(
 		).statusCode(
-			Matchers.isOneOf(200, 204)
+			204
 		);
 	}
 

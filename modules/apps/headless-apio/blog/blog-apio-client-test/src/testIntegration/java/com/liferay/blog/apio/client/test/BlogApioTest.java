@@ -237,7 +237,7 @@ public class BlogApioTest {
 			blogHref
 		).then(
 		).statusCode(
-			Matchers.isOneOf(200, 204)
+			204
 		);
 	}
 
@@ -376,7 +376,7 @@ public class BlogApioTest {
 			blogHref
 		).then(
 		).statusCode(
-			Matchers.isOneOf(200, 204)
+			204
 		);
 	}
 

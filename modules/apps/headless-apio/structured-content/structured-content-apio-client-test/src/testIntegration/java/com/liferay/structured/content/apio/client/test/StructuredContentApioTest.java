@@ -164,7 +164,7 @@ public class StructuredContentApioTest {
 			structuredContentIdURL.toExternalForm()
 		).then(
 		).statusCode(
-			Matchers.isOneOf(200, 204)
+			204
 		);
 	}
 

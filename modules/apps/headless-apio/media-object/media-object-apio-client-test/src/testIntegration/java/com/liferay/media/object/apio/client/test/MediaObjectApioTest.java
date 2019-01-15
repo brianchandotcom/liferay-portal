@@ -222,7 +222,7 @@ public class MediaObjectApioTest {
 			documentHref
 		).then(
 		).statusCode(
-			Matchers.isOneOf(200, 204)
+			204
 		);
 	}
 

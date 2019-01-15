@@ -14,6 +14,8 @@
 
 package com.liferay.arquillian.extension.junit.bridge.remote.activator;
 
+import com.liferay.arquillian.extension.junit.bridge.protocol.jmx.JMXTestRunner;
+
 import java.lang.management.ManagementFactory;
 
 import java.util.List;
@@ -21,8 +23,6 @@ import java.util.List;
 import javax.management.JMException;
 import javax.management.MBeanServer;
 import javax.management.MBeanServerFactory;
-
-import org.jboss.arquillian.protocol.jmx.JMXTestRunner;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleActivator;

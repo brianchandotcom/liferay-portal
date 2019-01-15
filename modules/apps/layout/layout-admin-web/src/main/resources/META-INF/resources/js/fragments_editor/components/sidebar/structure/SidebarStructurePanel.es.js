@@ -2,7 +2,8 @@ import Component from 'metal-component';
 import Soy from 'metal-soy';
 
 import '../fragments/FragmentsEditorSidebarCard.es';
-import {focusItem} from '../../../utils/FragmentsEditorUpdateUtils.es';
+import {FRAGMENTS_EDITOR_ITEM_TYPES} from '../../../reducers/placeholders.es';
+import {focusItem, setIn} from '../../../utils/FragmentsEditorUpdateUtils.es';
 import {getConnectedComponent} from '../../../store/ConnectedComponent.es';
 import {
 	REMOVE_FRAGMENT_ENTRY_LINK,
@@ -16,6 +17,26 @@ import templates from './SidebarStructurePanel.soy';
  * SidebarStructurePanel
  */
 class SidebarStructurePanel extends Component {
+
+	/**
+	 * Adds item types to state
+	 * @param {Object} _state
+	 * @private
+	 * @return {Object}
+	 * @static
+	 */
+	static _addItemTypesToState(state) {
+		return setIn(state, ['itemTypes'], FRAGMENTS_EDITOR_ITEM_TYPES);
+	}
+
+	/**
+	 * @inheritDoc
+	 * @private
+	 * @review
+	 */
+	prepareStateForRender(nextState) {
+		return SidebarStructurePanel._addItemTypesToState(nextState);
+	}
 
 	/**
 	 * Callback executed when an element name is clicked in the tree

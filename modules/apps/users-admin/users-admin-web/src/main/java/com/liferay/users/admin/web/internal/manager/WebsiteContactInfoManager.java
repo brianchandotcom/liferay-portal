@@ -31,10 +31,10 @@ import javax.portlet.ActionRequest;
 public class WebsiteContactInfoManager extends BaseContactInfoManager<Website> {
 
 	public WebsiteContactInfoManager(
-		Class clazz, long classPK, WebsiteLocalService websiteLocalService,
+		String className, long classPK, WebsiteLocalService websiteLocalService,
 		WebsiteService websiteService, UsersAdmin usersAdmin) {
 
-		_clazz = clazz;
+		_className = className;
 		_classPK = classPK;
 		_websiteLocalService = websiteLocalService;
 		_websiteService = websiteService;
@@ -61,7 +61,7 @@ public class WebsiteContactInfoManager extends BaseContactInfoManager<Website> {
 	@Override
 	protected Website doAdd(Website website) throws Exception {
 		return _websiteService.addWebsite(
-			_clazz.getName(), _classPK, website.getUrl(), website.getTypeId(),
+			_className, _classPK, website.getUrl(), website.getTypeId(),
 			website.isPrimary(), new ServiceContext());
 	}
 
@@ -84,7 +84,7 @@ public class WebsiteContactInfoManager extends BaseContactInfoManager<Website> {
 
 	@Override
 	protected List<Website> getAll() throws Exception {
-		return _websiteService.getWebsites(_clazz.getName(), _classPK);
+		return _websiteService.getWebsites(_className, _classPK);
 	}
 
 	@Override
@@ -102,8 +102,8 @@ public class WebsiteContactInfoManager extends BaseContactInfoManager<Website> {
 		website.setPrimary(primary);
 	}
 
+	private final String _className;
 	private final long _classPK;
-	private final Class _clazz;
 	private final UsersAdmin _usersAdmin;
 	private final WebsiteLocalService _websiteLocalService;
 	private final WebsiteService _websiteService;

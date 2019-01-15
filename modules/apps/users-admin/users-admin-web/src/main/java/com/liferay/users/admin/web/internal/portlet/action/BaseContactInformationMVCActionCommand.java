@@ -48,23 +48,24 @@ public abstract class BaseContactInformationMVCActionCommand
 	extends BaseMVCActionCommand {
 
 	protected ContactInfoManager getContactInformationHelper(
-		ActionRequest actionRequest, Class clazz) {
+		ActionRequest actionRequest, String className) {
 
 		String listType = ParamUtil.getString(actionRequest, "listType");
 		long classPK = ParamUtil.getLong(actionRequest, "classPK");
 
 		if (listType.equals(ListTypeConstants.ADDRESS)) {
 			return new AddressContactInfoManager(
-				clazz, classPK, addressLocalService, addressService);
+				className, classPK, addressLocalService, addressService);
 		}
 		else if (listType.equals(ListTypeConstants.EMAIL_ADDRESS)) {
 			return new EmailAddressContactInfoManager(
-				clazz, classPK, emailAddressLocalService, emailAddressService,
-				usersAdmin);
+				className, classPK, emailAddressLocalService,
+				emailAddressService, usersAdmin);
 		}
 		else if (listType.equals(ListTypeConstants.PHONE)) {
 			return new PhoneContactInfoManager(
-				clazz, classPK, phoneLocalService, phoneService, usersAdmin);
+				className, classPK, phoneLocalService, phoneService,
+				usersAdmin);
 		}
 		else if (listType.equals(ListTypeConstants.ORGANIZATION_SERVICE)) {
 			return new OrgLaborContactInfoManager(
@@ -72,7 +73,7 @@ public abstract class BaseContactInformationMVCActionCommand
 		}
 		else if (listType.equals(ListTypeConstants.WEBSITE)) {
 			return new WebsiteContactInfoManager(
-				clazz, classPK, websiteLocalService, websiteService,
+				className, classPK, websiteLocalService, websiteService,
 				usersAdmin);
 		}
 
@@ -84,7 +85,7 @@ public abstract class BaseContactInformationMVCActionCommand
 		throws Exception {
 
 		ContactInfoManager contactInformationHelper =
-			getContactInformationHelper(actionRequest, clazz);
+			getContactInformationHelper(actionRequest, clazz.getName());
 
 		if (contactInformationHelper == null) {
 			throw new NoSuchListTypeException();

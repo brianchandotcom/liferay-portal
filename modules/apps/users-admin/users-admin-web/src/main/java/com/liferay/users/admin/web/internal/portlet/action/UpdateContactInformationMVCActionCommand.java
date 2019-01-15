@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.UserEmailAddressException;
 import com.liferay.portal.kernel.exception.UserSmsException;
 import com.liferay.portal.kernel.exception.WebsiteURLException;
-import com.liferay.portal.kernel.model.Contact;
 import com.liferay.portal.kernel.model.ListTypeConstants;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.User;
@@ -168,31 +167,22 @@ public class UpdateContactInformationMVCActionCommand
 		}
 	}
 
-	private Class _getClass(String className) {
-		if (Objects.equals(className, Organization.class.getName())) {
-			return Organization.class;
-		}
-
-		return Contact.class;
-	}
-
 	private ContactInfoManager _getContactInformationHelper(
 		String className, long classPK, String listType) {
 
-		Class<?> clazz = _getClass(className);
-
 		if (listType.equals(ListTypeConstants.ADDRESS)) {
 			return new AddressContactInfoManager(
-				clazz, classPK, _addressLocalService, _addressService);
+				className, classPK, _addressLocalService, _addressService);
 		}
 		else if (listType.equals(ListTypeConstants.EMAIL_ADDRESS)) {
 			return new EmailAddressContactInfoManager(
-				clazz, classPK, _emailAddressLocalService, _emailAddressService,
-				_usersAdmin);
+				className, classPK, _emailAddressLocalService,
+				_emailAddressService, _usersAdmin);
 		}
 		else if (listType.equals(ListTypeConstants.PHONE)) {
 			return new PhoneContactInfoManager(
-				clazz, classPK, _phoneLocalService, _phoneService, _usersAdmin);
+				className, classPK, _phoneLocalService, _phoneService,
+				_usersAdmin);
 		}
 		else if (listType.equals(ListTypeConstants.ORGANIZATION_SERVICE)) {
 			return new OrgLaborContactInfoManager(
@@ -200,7 +190,7 @@ public class UpdateContactInformationMVCActionCommand
 		}
 		else if (listType.equals(ListTypeConstants.WEBSITE)) {
 			return new WebsiteContactInfoManager(
-				clazz, classPK, _websiteLocalService, _websiteService,
+				className, classPK, _websiteLocalService, _websiteService,
 				_usersAdmin);
 		}
 

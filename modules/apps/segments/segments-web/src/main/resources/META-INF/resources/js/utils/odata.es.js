@@ -15,20 +15,33 @@ const OPERATORS = {
 
 const oDataFilterFn = window.oDataParser.filter;
 
+const EXPRESSION_TYPES = {
+	AND: 'AndExpression',
+	BOOL_PAREN: 'BoolParenExpression',
+	EQUALS: 'EqualsExpression',
+	GREATER_OR_EQUALS: 'GreaterOrEqualsExpression',
+	GREATER_THAN: 'GreaterThanExpression',
+	LESSER_OR_EQUALS: 'LesserOrEqualsExpression',
+	LESSER_THAN: 'LesserThanExpression',
+	METHOD_CALL: 'MethodCallExpression',
+	NOT: 'NotExpression',
+	OR: 'OrExpression'
+};
+
 /**
  * Maps Odata-v4-parser generated AST expression names to internally used
  * constants.
  */
 const oDataV4ParserNameMap = {
-	AndExpression: CONJUNCTIONS.AND,
-	BoolParenExpression: GROUP,
+	[EXPRESSION_TYPES.AND]: CONJUNCTIONS.AND,
+	[EXPRESSION_TYPES.BOOL_PAREN]: GROUP,
 	contains: OPERATORS.CONTAINS,
-	EqualsExpression: OPERATORS.EQ,
-	GreaterOrEqualsExpression: OPERATORS.GE,
-	GreaterThanExpression: OPERATORS.GT,
-	LesserOrEqualsExpression: OPERATORS.LE,
-	LesserThanExpression: OPERATORS.LT,
-	OrExpression: CONJUNCTIONS.OR
+	[EXPRESSION_TYPES.EQUALS]: OPERATORS.EQ,
+	[EXPRESSION_TYPES.GREATER_OR_EQUALS]: OPERATORS.GE,
+	[EXPRESSION_TYPES.GREATER_THAN]: OPERATORS.GT,
+	[EXPRESSION_TYPES.LESSER_OR_EQUALS]: OPERATORS.LE,
+	[EXPRESSION_TYPES.LESSER_THAN]: OPERATORS.LT,
+	[EXPRESSION_TYPES.OR]: CONJUNCTIONS.OR
 };
 
 /**
@@ -41,7 +54,7 @@ function addNewGroup({oDataASTNode, prevConjunction}) {
 	return {
 		lastNodeWasGroup: false,
 		oDataASTNode: {
-			type: 'BoolParenExpression',
+			type: EXPRESSION_TYPES.BOOL_PAREN,
 			value: oDataASTNode
 		},
 		prevConjunction
@@ -141,7 +154,7 @@ function getExpressionName(oDataASTNode) {
 
 	let returnValue = oDataV4ParserNameMap[type];
 
-	if (type == 'MethodCallExpression') {
+	if (type == EXPRESSION_TYPES.METHOD_CALL) {
 		returnValue = oDataASTNode.value.method;
 	}
 
@@ -160,7 +173,7 @@ function getFunctionName(oDataASTNode) {
 const getNextNonGroupExpression = oDataASTNode => {
 	let returnValue;
 
-	if (oDataASTNode.value.type === 'BoolParenExpression') {
+	if (oDataASTNode.value.type === EXPRESSION_TYPES.BOOL_PAREN) {
 		returnValue = getNextNonGroupExpression(oDataASTNode.value);
 	}
 	else {
@@ -186,9 +199,9 @@ const getNextOperatorExpression = oDataASTNode => {
 
 	const type = nextNode.type;
 
-	if (type === 'BoolParenExpression' ||
-		type === 'AndExpression' ||
-		type === 'OrExpression'
+	if (type === EXPRESSION_TYPES.BOOL_PAREN ||
+		type === EXPRESSION_TYPES.AND ||
+		type === EXPRESSION_TYPES.OR
 	) {
 		returnValue = getNextOperatorExpression(nextNode);
 	}
@@ -289,6 +302,7 @@ function translateQueryToCriteria(queryString) {
 		if (queryString === '()') {
 			throw 'queryString is ()';
 		}
+
 		const oDataASTNode = oDataFilterFn(queryString);
 
 		const criteriaArray = toCriteria({oDataASTNode});
@@ -319,10 +333,10 @@ function toCriteria(context) {
 
 	let criterion;
 
-	if (oDataASTNode.type === 'NotExpression') {
+	if (oDataASTNode.type === EXPRESSION_TYPES.NOT) {
 		criterion = transformNotNode(context);
 	}
-	else if (oDataASTNode.type === 'MethodCallExpression') {
+	else if (oDataASTNode.type === EXPRESSION_TYPES.METHOD_CALL) {
 		criterion = transformFunctionalNode(context);
 	}
 	else if (isValueType(RELATIONAL_OPERATORS, expressionName)) {

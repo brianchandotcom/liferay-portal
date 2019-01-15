@@ -24,8 +24,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import javax.management.JMException;
 import javax.management.MBeanServer;
@@ -86,8 +84,6 @@ public class JMXTestRunner
 		ObjectName objectName = new ObjectName(_objectName);
 
 		mBeanServer.registerMBean(this, objectName);
-
-		_log.fine("JMXTestRunner registered: " + objectName);
 
 		localMBeanServer = mBeanServer;
 
@@ -150,7 +146,6 @@ public class JMXTestRunner
 
 		if (mBeanServer.isRegistered(objectName)) {
 			mBeanServer.unregisterMBean(objectName);
-			_log.fine("JMXTestRunner unregistered: " + objectName);
 		}
 
 		localMBeanServer = null;
@@ -198,13 +193,7 @@ public class JMXTestRunner
 				runner = TestRunners.getTestRunner(getClass().getClassLoader());
 			}
 
-			_log.fine("Load test class: " + className);
-
 			Class<?> testClass = _testClassLoader.loadTestClass(className);
-
-			_log.fine("Test class loaded from: " + testClass.getClassLoader());
-
-			_log.fine("Execute: " + className + "." + methodName);
 
 			result = doRunTestMethod(
 				runner, testClass, methodName, protocolProps);
@@ -214,21 +203,9 @@ public class JMXTestRunner
 			result.setEnd(System.currentTimeMillis());
 			result.setThrowable(th);
 		}
-		finally {
-			_log.fine("Result: " + result);
-
-			if (result.getStatus() == TestResult.Status.FAILED) {
-				_log.log(
-					Level.SEVERE, "Failed: " + className + "." + methodName,
-					result.getThrowable());
-			}
-		}
 
 		return result;
 	}
-
-	private static Logger _log = Logger.getLogger(
-		JMXTestRunner.class.getName());
 
 	private final ThreadLocal<String> _currentCall = new ThreadLocal<>();
 	private final ConcurrentHashMap<String, Command<?>> _events =

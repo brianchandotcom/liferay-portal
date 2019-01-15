@@ -154,6 +154,8 @@ definition {
 			bookmarkURL = "https://www.liferay.com"
 		);
 
+		User.firstLoginPG();
+
 		Navigator.gotoSitePage(pageName = "Test Page", siteName = "Site Name");
 
 		BookmarksFolder.gotoPG(folderName = "Folder Name");

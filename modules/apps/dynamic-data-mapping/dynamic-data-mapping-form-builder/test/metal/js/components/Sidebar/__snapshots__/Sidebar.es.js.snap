@@ -220,7 +220,7 @@ exports[`Sidebar should close the sidebar when the mouse down event is not on it
     </nav>
     <div class="ddm-sidebar-body">
       <div aria-orientation="vertical" class="ddm-field-types-panel panel-group" id="accordion03" role="tablist">
-        <div class="panel panel-secondary"><a href="#ddm-field-types-basic-body" id="ddm-field-types-basic-header" aria-controls="collapseTwo" aria-expanded="true" class="collapse-icon panel-header panel-header-link" data-parent="#accordion03" data-toggle="collapse" role="tab"><span class="panel-title">basic-elements</span><span class="collapse-icon-closed"><svg aria-hidden="true" class="lexicon-icon lexicon-icon-angle-right">
+        <div class="panel panel-secondary"><a href="#ddm-field-types-basic-body" id="ddm-field-types-basic-header" aria-controls="collapseTwo" aria-expanded="true" class="collapse-icon panel-header panel-header-link" data-parent="#accordion03" data-toggle="collapse" role="tab"><span class="panel-title">field-types-basic-elements</span><span class="collapse-icon-closed"><svg aria-hidden="true" class="lexicon-icon lexicon-icon-angle-right">
                 <use xlink:href="icons.svg#angle-right"></use>
               </svg></span><span class="collapse-icon-open"><svg aria-hidden="true" class="lexicon-icon lexicon-icon-angle-down">
                 <use xlink:href="icons.svg#angle-down"></use>
@@ -296,7 +296,7 @@ exports[`Sidebar should close the sidebar when the mouse down event is not on it
             </div>
           </div>
         </div>
-        <div class="panel panel-secondary"><a href="#ddm-field-types-customized-body" id="ddm-field-types-customized-header" aria-controls="collapseTwo" aria-expanded="true" class="collapse-icon panel-header panel-header-link" data-parent="#accordion03" data-toggle="collapse" role="tab"><span class="panel-title">customized-elements</span><span class="collapse-icon-closed"><svg aria-hidden="true" class="lexicon-icon lexicon-icon-angle-right">
+        <div class="panel panel-secondary"><a href="#ddm-field-types-customized-body" id="ddm-field-types-customized-header" aria-controls="collapseTwo" aria-expanded="true" class="collapse-icon panel-header panel-header-link" data-parent="#accordion03" data-toggle="collapse" role="tab"><span class="panel-title">field-types-customized-elements</span><span class="collapse-icon-closed"><svg aria-hidden="true" class="lexicon-icon lexicon-icon-angle-right">
                 <use xlink:href="icons.svg#angle-right"></use>
               </svg></span><span class="collapse-icon-open"><svg aria-hidden="true" class="lexicon-icon lexicon-icon-angle-down">
                 <use xlink:href="icons.svg#angle-down"></use>
@@ -337,7 +337,7 @@ exports[`Sidebar should emit fieldMoved when the dragEnd method is called 1`] = 
     </nav>
     <div class="ddm-sidebar-body">
       <div aria-orientation="vertical" class="ddm-field-types-panel panel-group" id="accordion03" role="tablist">
-        <div class="panel panel-secondary"><a href="#ddm-field-types-basic-body" id="ddm-field-types-basic-header" aria-controls="collapseTwo" aria-expanded="true" class="collapse-icon panel-header panel-header-link" data-parent="#accordion03" data-toggle="collapse" role="tab"><span class="panel-title">basic-elements</span><span class="collapse-icon-closed"><svg aria-hidden="true" class="lexicon-icon lexicon-icon-angle-right">
+        <div class="panel panel-secondary"><a href="#ddm-field-types-basic-body" id="ddm-field-types-basic-header" aria-controls="collapseTwo" aria-expanded="true" class="collapse-icon panel-header panel-header-link" data-parent="#accordion03" data-toggle="collapse" role="tab"><span class="panel-title">field-types-basic-elements</span><span class="collapse-icon-closed"><svg aria-hidden="true" class="lexicon-icon lexicon-icon-angle-right">
                 <use xlink:href="icons.svg#angle-right"></use>
               </svg></span><span class="collapse-icon-open"><svg aria-hidden="true" class="lexicon-icon lexicon-icon-angle-down">
                 <use xlink:href="icons.svg#angle-down"></use>
@@ -413,7 +413,7 @@ exports[`Sidebar should emit fieldMoved when the dragEnd method is called 1`] = 
             </div>
           </div>
         </div>
-        <div class="panel panel-secondary"><a href="#ddm-field-types-customized-body" id="ddm-field-types-customized-header" aria-controls="collapseTwo" aria-expanded="true" class="collapse-icon panel-header panel-header-link" data-parent="#accordion03" data-toggle="collapse" role="tab"><span class="panel-title">customized-elements</span><span class="collapse-icon-closed"><svg aria-hidden="true" class="lexicon-icon lexicon-icon-angle-right">
+        <div class="panel panel-secondary"><a href="#ddm-field-types-customized-body" id="ddm-field-types-customized-header" aria-controls="collapseTwo" aria-expanded="true" class="collapse-icon panel-header panel-header-link" data-parent="#accordion03" data-toggle="collapse" role="tab"><span class="panel-title">field-types-customized-elements</span><span class="collapse-icon-closed"><svg aria-hidden="true" class="lexicon-icon lexicon-icon-angle-right">
                 <use xlink:href="icons.svg#angle-right"></use>
               </svg></span><span class="collapse-icon-open"><svg aria-hidden="true" class="lexicon-icon lexicon-icon-angle-down">
                 <use xlink:href="icons.svg#angle-down"></use>
@@ -454,7 +454,7 @@ exports[`Sidebar should render a Sidebar closed 1`] = `
     </nav>
     <div class="ddm-sidebar-body">
       <div aria-orientation="vertical" class="ddm-field-types-panel panel-group" id="accordion03" role="tablist">
-        <div class="panel panel-secondary"><a href="#ddm-field-types-basic-body" id="ddm-field-types-basic-header" aria-controls="collapseTwo" aria-expanded="true" class="collapse-icon panel-header panel-header-link" data-parent="#accordion03" data-toggle="collapse" role="tab"><span class="panel-title">basic-elements</span><span class="collapse-icon-closed"><svg aria-hidden="true" class="lexicon-icon lexicon-icon-angle-right">
+        <div class="panel panel-secondary"><a href="#ddm-field-types-basic-body" id="ddm-field-types-basic-header" aria-controls="collapseTwo" aria-expanded="true" class="collapse-icon panel-header panel-header-link" data-parent="#accordion03" data-toggle="collapse" role="tab"><span class="panel-title">field-types-basic-elements</span><span class="collapse-icon-closed"><svg aria-hidden="true" class="lexicon-icon lexicon-icon-angle-right">
                 <use xlink:href="icons.svg#angle-right"></use>
               </svg></span><span class="collapse-icon-open"><svg aria-hidden="true" class="lexicon-icon lexicon-icon-angle-down">
                 <use xlink:href="icons.svg#angle-down"></use>
@@ -530,7 +530,7 @@ exports[`Sidebar should render a Sidebar closed 1`] = `
             </div>
           </div>
         </div>
-        <div class="panel panel-secondary"><a href="#ddm-field-types-customized-body" id="ddm-field-types-customized-header" aria-controls="collapseTwo" aria-expanded="true" class="collapse-icon panel-header panel-header-link" data-parent="#accordion03" data-toggle="collapse" role="tab"><span class="panel-title">customized-elements</span><span class="collapse-icon-closed"><svg aria-hidden="true" class="lexicon-icon lexicon-icon-angle-right">
+        <div class="panel panel-secondary"><a href="#ddm-field-types-customized-body" id="ddm-field-types-customized-header" aria-controls="collapseTwo" aria-expanded="true" class="collapse-icon panel-header panel-header-link" data-parent="#accordion03" data-toggle="collapse" role="tab"><span class="panel-title">field-types-customized-elements</span><span class="collapse-icon-closed"><svg aria-hidden="true" class="lexicon-icon lexicon-icon-angle-right">
                 <use xlink:href="icons.svg#angle-right"></use>
               </svg></span><span class="collapse-icon-open"><svg aria-hidden="true" class="lexicon-icon lexicon-icon-angle-down">
                 <use xlink:href="icons.svg#angle-down"></use>
@@ -571,7 +571,7 @@ exports[`Sidebar should render a Sidebar open 1`] = `
     </nav>
     <div class="ddm-sidebar-body">
       <div aria-orientation="vertical" class="ddm-field-types-panel panel-group" id="accordion03" role="tablist">
-        <div class="panel panel-secondary"><a href="#ddm-field-types-basic-body" id="ddm-field-types-basic-header" aria-controls="collapseTwo" aria-expanded="true" class="collapse-icon panel-header panel-header-link" data-parent="#accordion03" data-toggle="collapse" role="tab"><span class="panel-title">basic-elements</span><span class="collapse-icon-closed"><svg aria-hidden="true" class="lexicon-icon lexicon-icon-angle-right">
+        <div class="panel panel-secondary"><a href="#ddm-field-types-basic-body" id="ddm-field-types-basic-header" aria-controls="collapseTwo" aria-expanded="true" class="collapse-icon panel-header panel-header-link" data-parent="#accordion03" data-toggle="collapse" role="tab"><span class="panel-title">field-types-basic-elements</span><span class="collapse-icon-closed"><svg aria-hidden="true" class="lexicon-icon lexicon-icon-angle-right">
                 <use xlink:href="icons.svg#angle-right"></use>
               </svg></span><span class="collapse-icon-open"><svg aria-hidden="true" class="lexicon-icon lexicon-icon-angle-down">
                 <use xlink:href="icons.svg#angle-down"></use>
@@ -647,7 +647,7 @@ exports[`Sidebar should render a Sidebar open 1`] = `
             </div>
           </div>
         </div>
-        <div class="panel panel-secondary"><a href="#ddm-field-types-customized-body" id="ddm-field-types-customized-header" aria-controls="collapseTwo" aria-expanded="true" class="collapse-icon panel-header panel-header-link" data-parent="#accordion03" data-toggle="collapse" role="tab"><span class="panel-title">customized-elements</span><span class="collapse-icon-closed"><svg aria-hidden="true" class="lexicon-icon lexicon-icon-angle-right">
+        <div class="panel panel-secondary"><a href="#ddm-field-types-customized-body" id="ddm-field-types-customized-header" aria-controls="collapseTwo" aria-expanded="true" class="collapse-icon panel-header panel-header-link" data-parent="#accordion03" data-toggle="collapse" role="tab"><span class="panel-title">field-types-customized-elements</span><span class="collapse-icon-closed"><svg aria-hidden="true" class="lexicon-icon lexicon-icon-angle-right">
                 <use xlink:href="icons.svg#angle-right"></use>
               </svg></span><span class="collapse-icon-open"><svg aria-hidden="true" class="lexicon-icon lexicon-icon-angle-down">
                 <use xlink:href="icons.svg#angle-down"></use>
@@ -688,7 +688,7 @@ exports[`Sidebar should render a Sidebar with fieldTypes 1`] = `
     </nav>
     <div class="ddm-sidebar-body">
       <div aria-orientation="vertical" class="ddm-field-types-panel panel-group" id="accordion03" role="tablist">
-        <div class="panel panel-secondary"><a href="#ddm-field-types-basic-body" id="ddm-field-types-basic-header" aria-controls="collapseTwo" aria-expanded="true" class="collapse-icon panel-header panel-header-link" data-parent="#accordion03" data-toggle="collapse" role="tab"><span class="panel-title">basic-elements</span><span class="collapse-icon-closed"><svg aria-hidden="true" class="lexicon-icon lexicon-icon-angle-right">
+        <div class="panel panel-secondary"><a href="#ddm-field-types-basic-body" id="ddm-field-types-basic-header" aria-controls="collapseTwo" aria-expanded="true" class="collapse-icon panel-header panel-header-link" data-parent="#accordion03" data-toggle="collapse" role="tab"><span class="panel-title">field-types-basic-elements</span><span class="collapse-icon-closed"><svg aria-hidden="true" class="lexicon-icon lexicon-icon-angle-right">
                 <use xlink:href="icons.svg#angle-right"></use>
               </svg></span><span class="collapse-icon-open"><svg aria-hidden="true" class="lexicon-icon lexicon-icon-angle-down">
                 <use xlink:href="icons.svg#angle-down"></use>
@@ -764,7 +764,7 @@ exports[`Sidebar should render a Sidebar with fieldTypes 1`] = `
             </div>
           </div>
         </div>
-        <div class="panel panel-secondary"><a href="#ddm-field-types-customized-body" id="ddm-field-types-customized-header" aria-controls="collapseTwo" aria-expanded="true" class="collapse-icon panel-header panel-header-link" data-parent="#accordion03" data-toggle="collapse" role="tab"><span class="panel-title">customized-elements</span><span class="collapse-icon-closed"><svg aria-hidden="true" class="lexicon-icon lexicon-icon-angle-right">
+        <div class="panel panel-secondary"><a href="#ddm-field-types-customized-body" id="ddm-field-types-customized-header" aria-controls="collapseTwo" aria-expanded="true" class="collapse-icon panel-header panel-header-link" data-parent="#accordion03" data-toggle="collapse" role="tab"><span class="panel-title">field-types-customized-elements</span><span class="collapse-icon-closed"><svg aria-hidden="true" class="lexicon-icon lexicon-icon-angle-right">
                 <use xlink:href="icons.svg#angle-right"></use>
               </svg></span><span class="collapse-icon-open"><svg aria-hidden="true" class="lexicon-icon lexicon-icon-angle-down">
                 <use xlink:href="icons.svg#angle-down"></use>
@@ -805,7 +805,7 @@ exports[`Sidebar should render a Sidebar with spritemap 1`] = `
     </nav>
     <div class="ddm-sidebar-body">
       <div aria-orientation="vertical" class="ddm-field-types-panel panel-group" id="accordion03" role="tablist">
-        <div class="panel panel-secondary"><a href="#ddm-field-types-basic-body" id="ddm-field-types-basic-header" aria-controls="collapseTwo" aria-expanded="true" class="collapse-icon panel-header panel-header-link" data-parent="#accordion03" data-toggle="collapse" role="tab"><span class="panel-title">basic-elements</span><span class="collapse-icon-closed"><svg aria-hidden="true" class="lexicon-icon lexicon-icon-angle-right">
+        <div class="panel panel-secondary"><a href="#ddm-field-types-basic-body" id="ddm-field-types-basic-header" aria-controls="collapseTwo" aria-expanded="true" class="collapse-icon panel-header panel-header-link" data-parent="#accordion03" data-toggle="collapse" role="tab"><span class="panel-title">field-types-basic-elements</span><span class="collapse-icon-closed"><svg aria-hidden="true" class="lexicon-icon lexicon-icon-angle-right">
                 <use xlink:href="icons.svg#angle-right"></use>
               </svg></span><span class="collapse-icon-open"><svg aria-hidden="true" class="lexicon-icon lexicon-icon-angle-down">
                 <use xlink:href="icons.svg#angle-down"></use>
@@ -881,7 +881,7 @@ exports[`Sidebar should render a Sidebar with spritemap 1`] = `
             </div>
           </div>
         </div>
-        <div class="panel panel-secondary"><a href="#ddm-field-types-customized-body" id="ddm-field-types-customized-header" aria-controls="collapseTwo" aria-expanded="true" class="collapse-icon panel-header panel-header-link" data-parent="#accordion03" data-toggle="collapse" role="tab"><span class="panel-title">customized-elements</span><span class="collapse-icon-closed"><svg aria-hidden="true" class="lexicon-icon lexicon-icon-angle-right">
+        <div class="panel panel-secondary"><a href="#ddm-field-types-customized-body" id="ddm-field-types-customized-header" aria-controls="collapseTwo" aria-expanded="true" class="collapse-icon panel-header panel-header-link" data-parent="#accordion03" data-toggle="collapse" role="tab"><span class="panel-title">field-types-customized-elements</span><span class="collapse-icon-closed"><svg aria-hidden="true" class="lexicon-icon lexicon-icon-angle-right">
                 <use xlink:href="icons.svg#angle-right"></use>
               </svg></span><span class="collapse-icon-open"><svg aria-hidden="true" class="lexicon-icon lexicon-icon-angle-down">
                 <use xlink:href="icons.svg#angle-down"></use>
@@ -922,7 +922,7 @@ exports[`Sidebar should render the default markup 1`] = `
     </nav>
     <div class="ddm-sidebar-body">
       <div aria-orientation="vertical" class="ddm-field-types-panel panel-group" id="accordion03" role="tablist">
-        <div class="panel panel-secondary"><a href="#ddm-field-types-basic-body" id="ddm-field-types-basic-header" aria-controls="collapseTwo" aria-expanded="true" class="collapse-icon panel-header panel-header-link" data-parent="#accordion03" data-toggle="collapse" role="tab"><span class="panel-title">basic-elements</span><span class="collapse-icon-closed"><svg aria-hidden="true" class="lexicon-icon lexicon-icon-angle-right">
+        <div class="panel panel-secondary"><a href="#ddm-field-types-basic-body" id="ddm-field-types-basic-header" aria-controls="collapseTwo" aria-expanded="true" class="collapse-icon panel-header panel-header-link" data-parent="#accordion03" data-toggle="collapse" role="tab"><span class="panel-title">field-types-basic-elements</span><span class="collapse-icon-closed"><svg aria-hidden="true" class="lexicon-icon lexicon-icon-angle-right">
                 <use xlink:href="icons.svg#angle-right"></use>
               </svg></span><span class="collapse-icon-open"><svg aria-hidden="true" class="lexicon-icon lexicon-icon-angle-down">
                 <use xlink:href="icons.svg#angle-down"></use>
@@ -998,7 +998,7 @@ exports[`Sidebar should render the default markup 1`] = `
             </div>
           </div>
         </div>
-        <div class="panel panel-secondary"><a href="#ddm-field-types-customized-body" id="ddm-field-types-customized-header" aria-controls="collapseTwo" aria-expanded="true" class="collapse-icon panel-header panel-header-link" data-parent="#accordion03" data-toggle="collapse" role="tab"><span class="panel-title">customized-elements</span><span class="collapse-icon-closed"><svg aria-hidden="true" class="lexicon-icon lexicon-icon-angle-right">
+        <div class="panel panel-secondary"><a href="#ddm-field-types-customized-body" id="ddm-field-types-customized-header" aria-controls="collapseTwo" aria-expanded="true" class="collapse-icon panel-header panel-header-link" data-parent="#accordion03" data-toggle="collapse" role="tab"><span class="panel-title">field-types-customized-elements</span><span class="collapse-icon-closed"><svg aria-hidden="true" class="lexicon-icon lexicon-icon-angle-right">
                 <use xlink:href="icons.svg#angle-right"></use>
               </svg></span><span class="collapse-icon-open"><svg aria-hidden="true" class="lexicon-icon lexicon-icon-angle-down">
                 <use xlink:href="icons.svg#angle-down"></use>

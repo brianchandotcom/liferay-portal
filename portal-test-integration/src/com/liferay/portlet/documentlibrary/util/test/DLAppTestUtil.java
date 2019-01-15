@@ -15,7 +15,6 @@
 package com.liferay.portlet.documentlibrary.util.test;
 
 import com.liferay.document.library.kernel.model.DLFileEntryTypeConstants;
-import com.liferay.document.library.kernel.model.DLSyncConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalServiceUtil;
 import com.liferay.petra.string.StringPool;
@@ -103,7 +102,7 @@ public abstract class DLAppTestUtil {
 		Map<String, Serializable> workflowContext = new HashMap<>();
 
 		workflowContext.put(WorkflowConstants.CONTEXT_URL, "http://localhost");
-		workflowContext.put("event", DLSyncConstants.EVENT_ADD);
+		workflowContext.put("event", "add");
 
 		DLFileEntryLocalServiceUtil.updateStatus(
 			TestPropsValues.getUserId(),

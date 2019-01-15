@@ -25,7 +25,6 @@ import com.liferay.document.library.kernel.model.DLFileShortcutConstants;
 import com.liferay.document.library.kernel.model.DLFileVersion;
 import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
-import com.liferay.document.library.kernel.model.DLSyncConstants;
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.document.library.kernel.util.DLAppHelperThreadLocal;
 import com.liferay.document.library.kernel.util.DLUtil;
@@ -2010,5 +2009,16 @@ public class DLAppHelperLocalServiceImpl
 
 	@BeanReference(type = DLAppService.class)
 	protected DLAppService dlAppService;
+
+	/**
+	 * @see com.liferay.document.library.sync.constants.DLSyncConstants
+	 */
+	private class DLSyncConstants {
+
+		public static final String EVENT_ADD = "add";
+
+		public static final String EVENT_UPDATE = "update";
+
+	}
 
 }

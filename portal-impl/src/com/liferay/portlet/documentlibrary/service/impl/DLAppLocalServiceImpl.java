@@ -15,7 +15,6 @@
 package com.liferay.portlet.documentlibrary.service.impl;
 
 import com.liferay.document.library.kernel.exception.NoSuchFileEntryException;
-import com.liferay.document.library.kernel.model.DLFileRank;
 import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.model.DLVersionNumberIncrease;
@@ -297,31 +296,6 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 			changeLog, is, size, serviceContext);
 
 		return fileEntry;
-	}
-
-	/**
-	 * Adds the file rank to the existing file entry. This method is only
-	 * supported by the Liferay repository.
-	 *
-	 * @param      repositoryId the primary key of the repository
-	 * @param      companyId the primary key of the company
-	 * @param      userId the primary key of the file rank's creator/owner
-	 * @param      fileEntryId the primary key of the file entry
-	 * @param      serviceContext the service context to be applied
-	 * @return     the file rank
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             com.liferay.document.library.file.rank.service.DLFileRankLocalService#addFileRank}
-	 */
-	@Deprecated
-	@Override
-	public DLFileRank addFileRank(
-		long repositoryId, long companyId, long userId, long fileEntryId,
-		ServiceContext serviceContext) {
-
-		throw new UnsupportedOperationException(
-			"This method is deprecated and replaced by " +
-				"com.liferay.document.library.file.rank.service." +
-					"DLFileRankLocalService#addFileRank");
 	}
 
 	/**
@@ -645,25 +619,6 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 		sb.append(StringPool.CLOSE_CURLY_BRACE);
 
 		throw new NoSuchFileEntryException(sb.toString());
-	}
-
-	/**
-	 * Returns the file ranks from the user. This method is only supported by
-	 * the Liferay repository.
-	 *
-	 * @param      repositoryId the primary key of the repository
-	 * @param      userId the primary key of the user
-	 * @return     the file ranks from the user
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             com.liferay.document.library.file.rank.service.DLFileRankLocalService#getFileRanks}
-	 */
-	@Deprecated
-	@Override
-	public List<DLFileRank> getFileRanks(long repositoryId, long userId) {
-		throw new UnsupportedOperationException(
-			"This method is deprecated and replaced by " +
-				"com.liferay.document.library.file.rank.service." +
-					"DLFileRankLocalService#getFileRanks");
 	}
 
 	/**
@@ -1196,31 +1151,6 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 			serviceContext);
 
 		return fileEntry;
-	}
-
-	/**
-	 * Updates a file rank to the existing file entry. This method is only
-	 * supported by the Liferay repository.
-	 *
-	 * @param      repositoryId the primary key of the file rank's repository
-	 * @param      companyId the primary key of the file rank's company
-	 * @param      userId the primary key of the file rank's creator/owner
-	 * @param      fileEntryId the primary key of the file rank's file entry
-	 * @param      serviceContext the service context to be applied
-	 * @return     the file rank
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             com.liferay.document.library.file.rank.service.DLFileRankLocalService#updateFileRank}
-	 */
-	@Deprecated
-	@Override
-	public DLFileRank updateFileRank(
-		long repositoryId, long companyId, long userId, long fileEntryId,
-		ServiceContext serviceContext) {
-
-		throw new UnsupportedOperationException(
-			"This method is deprecated and replaced by " +
-				"com.liferay.document.library.file.rank.service." +
-					"DLFileRankLocalService#updateFileRank");
 	}
 
 	/**

@@ -19,7 +19,6 @@ import com.liferay.document.library.file.rank.model.DLFileRank;
 import com.liferay.document.library.file.rank.service.DLFileRankLocalService;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
-import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
 import com.liferay.document.library.kernel.service.DLAppServiceUtil;
 import com.liferay.document.library.kernel.service.DLTrashServiceUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -130,7 +129,7 @@ public class DLFileRankTrashHandlerTest {
 				WorkflowThreadLocal.setEnabled(workflowEnabled);
 			}
 
-			DLAppLocalServiceUtil.addFileRank(
+			_dlFileRankLocalService.addFileRank(
 				group.getGroupId(), TestPropsValues.getCompanyId(),
 				TestPropsValues.getUserId(), fileEntry.getFileEntryId(),
 				serviceContext);

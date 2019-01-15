@@ -28,19 +28,21 @@ function add(array, element, position) {
  * @review
  */
 function focusItem(itemId, itemType) {
-	let attr = '';
+	if (itemId && itemType) {
+		let attr = '';
 
-	if (itemType === FRAGMENTS_EDITOR_ITEM_TYPES.section) {
-		attr = 'data-layout-section-id';
-	}
-	else if (itemType === FRAGMENTS_EDITOR_ITEM_TYPES.fragment) {
-		attr = 'data-fragment-entry-link-id';
-	}
+		if (itemType === FRAGMENTS_EDITOR_ITEM_TYPES.section) {
+			attr = 'data-layout-section-id';
+		}
+		else if (itemType === FRAGMENTS_EDITOR_ITEM_TYPES.fragment) {
+			attr = 'data-fragment-entry-link-id';
+		}
 
-	const item = document.querySelector(`[${attr}='${itemId}']`);
+		const item = document.querySelector(`[${attr}='${itemId}']`);
 
-	if (item) {
-		item.focus();
+		if (item) {
+			item.focus();
+		}
 	}
 }
 

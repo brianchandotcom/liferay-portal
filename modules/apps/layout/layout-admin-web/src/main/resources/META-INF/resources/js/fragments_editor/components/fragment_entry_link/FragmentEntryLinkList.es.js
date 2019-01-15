@@ -188,12 +188,10 @@ class FragmentEntryLinkList extends Component {
 	rendered() {
 		requestAnimationFrame(
 			() => {
-				if (this.activeItemId) {
-					focusItem(
-						this.activeItemId,
-						this.activeItemType
-					);
-				}
+				focusItem(
+					this.activeItemId,
+					this.activeItemType
+				);
 			}
 		);
 	}

@@ -45,7 +45,7 @@ definition {
 		PageEditorMapping.mapEditableTextToAsset(
 			fragmentName = "Rich Text",
 			id = "rich-text",
-			itemName = "content"
+			itemName = "Content"
 		);
 
 		Button.clickPublish();
@@ -601,7 +601,7 @@ definition {
 		PageEditorMapping.mapEditableTextToAsset(
 			fragmentName = "Rich Text",
 			id = "rich-text",
-			itemName = "content"
+			itemName = "Content"
 		);
 
 		PageEditorMapping.mapEditableTextToAsset(

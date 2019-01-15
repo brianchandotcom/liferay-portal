@@ -49,7 +49,7 @@ definition {
 		PageEditorMapping.mapEditableTextToAsset(
 			fragmentName = "Rich Text",
 			id = "rich-text",
-			itemName = "content"
+			itemName = "Content"
 		);
 
 		PortletEntry.publish();

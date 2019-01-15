@@ -290,6 +290,116 @@ definition {
 		AssertClick(locator1 = "Button#SELECT", value1 = "Select");
 	}
 
+	@description = "This test ensures that users receives an email when a document is shared with them. This email contains a link that navigates user to Shared With Me app."
+	@priority = "4"
+	test GoToSharedWithMeViaEmail {
+		property custom.properties = "message.boards.message.formats.default=html${line.separator}pop.server.notifications.enabled=true${line.separator}pop.server.subdomain=${line.separator}mail.session.mail.smtp.auth=true${line.separator}mail.session.mail.store.protocol=pop3${line.separator}mail.session.mail.transport.protocol=smtp";
+		property dummy.socket.proxy.disabled = "true";
+		property test.name.skip.portal.instance = "DMSharing#GoToSharedWithMeViaEmail";
+		var portalURL = PropsUtil.get("portal.url");
+
+		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Server Administration"
+		);
+
+		ServerAdministration.configureMailServerSettings(
+			needsReply = "true",
+			userName = PropsUtil.get("email.address.2"),
+			userPassword = PropsUtil.get("email.password.2")
+		);
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Virtual Instances"
+		);
+
+		PortalInstances.editCP(mailDomain = "gmail.com", virtualHost = "localhost");
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		JSONUser.addUser(
+			userEmailAddress = PropsUtil.get("email.address.3"),
+			userFirstName = "userfn1",
+			userLastName = "userln1",
+			userScreenName = "usersn1"
+		);
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations"
+		);
+
+		User.editPasswordCP(
+			userEmailAddress = PropsUtil.get("email.address.3"),
+			userScreenName = "usersn1"
+		);
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMDocument.addPG(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentFile = "Document_1.doc",
+			dmDocumentTitle = "DM Document Title",
+			viewableBy = "Owner"
+		);
+
+		DMNavigator.gotoDocumentPermissionsCP(dmDocumentTitle = "DM Document Title");
+
+		Role.removePermissionPG(
+			permissionDefinitionKey = "INLINE_PERMISSIONS_ADD_DISCUSSION_CHECKBOX",
+			roleTitle = "Guest"
+		);
+
+		IFrame.closeFrame();
+
+		Pause(locator1 = "5000");
+
+		DMNavigator.gotoShare(dmDocumentTitle = "DM Document Title");
+
+		DMDocument.sharePG(userEmailAddress = PropsUtil.get("email.address.3"));
+
+		User.logoutPG();
+
+		User.loginUserPG(password = "test", userEmailAddress = PropsUtil.get("email.address.3"));
+
+		Pause(locator1 = "30000");
+
+		Gmail.login(
+			userEmailAddress = PropsUtil.get("email.address.3"),
+			userPassword = PropsUtil.get("email.password.3")
+		);
+
+		Gmail.gotoHtmlMode();
+
+		Gmail.viewMail(
+			gmailAssetType = "DM Document Title",
+			emailFromUserName = "Joe Bloggs",
+			gmailMessageBody = "Test Test has shared DM Document Title with you for viewing.",
+			gmailMessageTitle = "Test Test has shared DM Document Title with you for viewing."
+		);
+
+		AssertClick(locator1 = "DocumentsAndMediaShare#EMAIL_VIEW_DOCUMENT_BUTTON", value1="View Document");
+
+		SelectWindow(locator1 = "title=- Liferay");
+
+		DMDocumentSharing.viewDocumentViaSharedWithMe(
+			assetSharingPermission = "View",
+			dmDocumentTitle = "DM Document Title (Version 1.0)"
+		);
+	}
+
 	@description = "This test ensures that users receive a notification in portal when a document is shared to them, and that clicking on that notification navigates them to the Shared With Me app."
 	@priority = "4"
 	test GoToSharedWithMeViaNotifications {

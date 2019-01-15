@@ -105,9 +105,9 @@ definition {
 		);
 
 		NavigationMenusAdmin.configureMenuType(
-			oldPrimaryNavigationMenu = "Navigation Menu Name 1",
 			menuType = "Primary Navigation",
-			navigationMenu = "Navigation Menu Name 2"
+			navigationMenu = "Navigation Menu Name 2",
+			oldPrimaryNavigationMenu = "Navigation Menu Name 1"
 		);
 
 		NavigationMenusAdmin.viewMenuType(

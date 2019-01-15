@@ -14,6 +14,7 @@
 
 package com.liferay.document.library.web.internal.portlet.action;
 
+import com.liferay.bulk.selection.BulkSelectionRunner;
 import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.document.library.web.internal.constants.DLWebKeys;
 import com.liferay.document.library.web.internal.portlet.toolbar.contributor.DLPortletToolbarContributorRegistry;
@@ -44,6 +45,9 @@ public class SearchMVCRenderCommand implements MVCRenderCommand {
 		RenderRequest renderRequest, RenderResponse renderResponse) {
 
 		renderRequest.setAttribute(
+			BulkSelectionRunner.class.getName(), _bulkSelectionRunner);
+
+		renderRequest.setAttribute(
 			DLWebKeys.DOCUMENT_LIBRARY_PORTLET_TOOLBAR_CONTRIBUTOR,
 			_dlPortletToolbarContributorRegistry.
 				getDLPortletToolbarContributor());
@@ -52,6 +56,9 @@ public class SearchMVCRenderCommand implements MVCRenderCommand {
 
 		return "/document_library/view.jsp";
 	}
+
+	@Reference
+	private BulkSelectionRunner _bulkSelectionRunner;
 
 	@Reference
 	private DLPortletToolbarContributorRegistry

@@ -149,59 +149,9 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 						%>
 
 						<liferay-ui:search-container-column-text>
-
-							<%
-							String articleImageURL = curArticle.getArticleImageURL(themeDisplay);
-
-							RowChecker rowChecker = articleSearchContainer.getRowChecker();
-
-							User curArticleUser = UserLocalServiceUtil.fetchUser(curArticle.getUserId());
-
-							Date createDate = curArticle.getModifiedDate();
-
-							String modifiedDateDescription = LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - createDate.getTime(), true);
-							%>
-
-							<c:choose>
-								<c:when test="<%= Validator.isNotNull(articleImageURL) %>">
-									<clay:image-card
-										actionDropdownItems="<%= journalDisplayContext.getArticleActionDropdownItems(curArticle) %>"
-										defaultEventHandler="<%= JournalWebConstants.JOURNAL_ELEMENTS_DEFAULT_EVENT_HANDLER %>"
-										disabled="<%= rowChecker.isDisabled(curArticle) %>"
-										href="<%= editURL %>"
-										imageSrc="<%= HtmlUtil.escape(articleImageURL) %>"
-										inputName="<%= rowChecker.getRowIds() + JournalArticle.class.getSimpleName() %>"
-										inputValue="<%= HtmlUtil.escape(curArticle.getArticleId()) %>"
-										labels="<%= journalDisplayContext.getArticleLabels(curArticle) %>"
-										selectable="<%= true %>"
-										selected="<%= rowChecker.isChecked(curArticle) %>"
-										stickerImageSrc="<%= (curArticleUser.getPortraitId() > 0) ? curArticleUser.getPortraitURL(themeDisplay) : StringPool.BLANK %>"
-										stickerLabel="<%= curArticleUser.getInitials() %>"
-										stickerShape="circle"
-										subtitle='<%= LanguageUtil.format(request, "modified-x-ago", modifiedDateDescription) %>'
-										title="<%= title %>"
-									/>
-								</c:when>
-								<c:otherwise>
-									<clay:file-card
-										actionDropdownItems="<%= journalDisplayContext.getArticleActionDropdownItems(curArticle) %>"
-										defaultEventHandler="<%= JournalWebConstants.JOURNAL_ELEMENTS_DEFAULT_EVENT_HANDLER %>"
-										disabled="<%= rowChecker.isDisabled(curArticle) %>"
-										href="<%= editURL %>"
-										icon="web-content"
-										inputName="<%= rowChecker.getRowIds() + JournalArticle.class.getSimpleName() %>"
-										inputValue="<%= HtmlUtil.escape(curArticle.getArticleId()) %>"
-										labels="<%= journalDisplayContext.getArticleLabels(curArticle) %>"
-										selectable="<%= true %>"
-										selected="<%= rowChecker.isChecked(curArticle) %>"
-										stickerImageSrc="<%= (curArticleUser.getPortraitId() > 0) ? curArticleUser.getPortraitURL(themeDisplay) : StringPool.BLANK %>"
-										stickerLabel="<%= curArticleUser.getInitials() %>"
-										stickerShape="circle"
-										subtitle='<%= LanguageUtil.format(request, "modified-x-ago", modifiedDateDescription) %>'
-										title="<%= title %>"
-									/>
-								</c:otherwise>
-							</c:choose>
+							<clay:vertical-card
+								verticalCard="<%= new JournalArticleVerticalCard(curArticle, renderRequest, renderResponse, articleSearchContainer.getRowChecker(), trashHelper) %>"
+							/>
 						</liferay-ui:search-container-column-text>
 					</c:when>
 					<c:otherwise>
@@ -345,24 +295,13 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 
 						<%
 						row.setCssClass("entry-card lfr-asset-folder " + row.getCssClass());
-
-						RowChecker rowChecker = articleSearchContainer.getRowChecker();
 						%>
 
 						<liferay-ui:search-container-column-text
 							colspan="<%= 2 %>"
 						>
 							<clay:horizontal-card
-								actionDropdownItems="<%= journalDisplayContext.getFolderActionDropdownItems(curFolder) %>"
-								defaultEventHandler="<%= JournalWebConstants.JOURNAL_ELEMENTS_DEFAULT_EVENT_HANDLER %>"
-								disabled="<%= rowChecker.isDisabled(curFolder) %>"
-								href="<%= rowURL.toString() %>"
-								icon="folder"
-								inputName="<%= rowChecker.getRowIds() + JournalFolder.class.getSimpleName() %>"
-								inputValue="<%= String.valueOf(curFolder.getFolderId()) %>"
-								selectable="<%= true %>"
-								selected="<%= rowChecker.isChecked(curFolder) %>"
-								title="<%= HtmlUtil.escape(curFolder.getName()) %>"
+								horizontalCard="<%= new JournalFolderHorizontalCard(curFolder, journalDisplayContext.getDisplayStyle(), renderRequest, renderResponse, articleSearchContainer.getRowChecker(), trashHelper) %>"
 							/>
 						</liferay-ui:search-container-column-text>
 					</c:when>

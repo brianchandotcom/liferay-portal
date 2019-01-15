@@ -31,8 +31,6 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import org.mockito.Mockito;
-
 /**
  * @author Drew Brokke
  */
@@ -162,35 +160,11 @@ public class USAddressTextLocalizerTest {
 		String unescapedValue =
 			"<script type=\"text/javascript\">alert(\"Hello World\");</script>";
 
-		Mockito.doReturn(
-			unescapedValue
-		).when(
-			_address
-		).getCity();
-
-		Mockito.doReturn(
-			unescapedValue
-		).when(
-			_address
-		).getStreet1();
-
-		Mockito.doReturn(
-			unescapedValue
-		).when(
-			_address
-		).getStreet2();
-
-		Mockito.doReturn(
-			unescapedValue
-		).when(
-			_address
-		).getStreet3();
-
-		Mockito.doReturn(
-			unescapedValue
-		).when(
-			_address
-		).getZip();
+		_city = unescapedValue;
+		_street1 = unescapedValue;
+		_street2 = unescapedValue;
+		_street3 = unescapedValue;
+		_zip = unescapedValue;
 
 		_setCountry(_address, unescapedValue);
 		_setRegion(_address, unescapedValue);
@@ -208,13 +182,76 @@ public class USAddressTextLocalizerTest {
 	}
 
 	private Address _createAddress() {
-		Address address = Mockito.mock(Address.class);
+		Address address = new AddressWrapper(null) {
 
-		Mockito.doReturn(
-			_toEscapedModel(address)
-		).when(
-			address
-		).toEscapedModel();
+			@Override
+			public String getCity() {
+				return _city;
+			}
+
+			@Override
+			public Country getCountry() {
+				return _country;
+			}
+
+			@Override
+			public Region getRegion() {
+				return _region;
+			}
+
+			@Override
+			public String getStreet1() {
+				return _street1;
+			}
+
+			@Override
+			public String getStreet2() {
+				return _street2;
+			}
+
+			@Override
+			public String getStreet3() {
+				return _street3;
+			}
+
+			@Override
+			public String getZip() {
+				return _zip;
+			}
+
+			@Override
+			public Address toEscapedModel() {
+				return new AddressWrapper(null) {
+
+					@Override
+					public String getCity() {
+						return _html.escape(_city);
+					}
+
+					@Override
+					public String getStreet1() {
+						return _html.escape(_street1);
+					}
+
+					@Override
+					public String getStreet2() {
+						return _html.escape(_street2);
+					}
+
+					@Override
+					public String getStreet3() {
+						return _html.escape(_street3);
+					}
+
+					@Override
+					public String getZip() {
+						return _html.escape(_zip);
+					}
+
+				};
+			}
+
+		};
 
 		return address;
 	}
@@ -229,12 +266,6 @@ public class USAddressTextLocalizerTest {
 
 	private void _setCity(Address address) {
 		_city = _CITY;
-
-		Mockito.doReturn(
-			_city
-		).when(
-			address
-		).getCity();
 	}
 
 	private void _setCountry(Address address) {
@@ -255,12 +286,6 @@ public class USAddressTextLocalizerTest {
 			}
 
 		};
-
-		Mockito.doReturn(
-			_country
-		).when(
-			address
-		).getCountry();
 	}
 
 	private void _setRegion(Address address) {
@@ -281,79 +306,16 @@ public class USAddressTextLocalizerTest {
 			}
 
 		};
-
-		Mockito.doReturn(
-			_region
-		).when(
-			address
-		).getRegion();
 	}
 
 	private void _setStreets(Address address) {
 		_street1 = _STREET_1;
 		_street2 = _STREET_2;
 		_street3 = _STREET_3;
-
-		Mockito.doReturn(
-			_street1
-		).when(
-			address
-		).getStreet1();
-
-		Mockito.doReturn(
-			_street2
-		).when(
-			address
-		).getStreet2();
-
-		Mockito.doReturn(
-			_street3
-		).when(
-			address
-		).getStreet3();
 	}
 
 	private void _setZip(Address address) {
 		_zip = _ZIP;
-
-		Mockito.doReturn(
-			_zip
-		).when(
-			address
-		).getZip();
-	}
-
-	private Address _toEscapedModel(Address address) {
-		Address escapedAddress = new AddressWrapper(null) {
-
-			@Override
-			public String getCity() {
-				return _html.escape(address.getCity());
-			}
-
-			@Override
-			public String getStreet1() {
-				return _html.escape(address.getStreet1());
-			}
-
-			@Override
-			public String getStreet2() {
-				return _html.escape(address.getStreet2());
-			}
-
-			@Override
-			public String getStreet3() {
-				return _html.escape(address.getStreet3());
-			}
-
-			@Override
-			public String getZip() {
-				return _html.escape(address.getZip());
-			}
-
-		};
-
-		return escapedAddress;
 	}
 
 	private static final String _CITY = RandomTestUtil.randomString();

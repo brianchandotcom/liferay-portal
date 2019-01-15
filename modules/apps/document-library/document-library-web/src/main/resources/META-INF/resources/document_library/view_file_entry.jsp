@@ -117,6 +117,10 @@ if (portletTitleBasedNavigation) {
 
 	<c:if test="<%= !portletTitleBasedNavigation %>">
 		<div class="btn-group">
+			<liferay-frontend:management-bar-sidenav-toggler-button
+				label="info"
+			/>
+
 			<c:if test="<%= dlPortletInstanceSettingsHelper.isShowActions() %>">
 
 				<%
@@ -132,10 +136,6 @@ if (portletTitleBasedNavigation) {
 				%>
 
 			</c:if>
-
-			<liferay-frontend:management-bar-sidenav-toggler-button
-				label="info"
-			/>
 		</div>
 	</c:if>
 

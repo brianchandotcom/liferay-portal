@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.journal.web.internal.util;
+package com.liferay.journal.web.internal.action.menu.contributor;
 
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;

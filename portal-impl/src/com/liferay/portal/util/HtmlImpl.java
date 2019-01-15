@@ -493,15 +493,25 @@ public class HtmlImpl implements Html {
 			String[] parts = xPathAttribute.split(StringPool.APOSTROPHE);
 
 			return "concat('".concat(
-				StringUtil.merge(parts, "', \"'\", '")).concat("')");
+				StringUtil.merge(parts, "', \"'\", '")
+			).concat(
+				"')"
+			);
 		}
 
 		if (hasQuote) {
-			return StringPool.APOSTROPHE.concat(xPathAttribute).concat(
-				StringPool.APOSTROPHE);
+			return StringPool.APOSTROPHE.concat(
+				xPathAttribute
+			).concat(
+				StringPool.APOSTROPHE
+			);
 		}
 
-		return StringPool.QUOTE.concat(xPathAttribute).concat(StringPool.QUOTE);
+		return StringPool.QUOTE.concat(
+			xPathAttribute
+		).concat(
+			StringPool.QUOTE
+		);
 	}
 
 	/**

@@ -44,8 +44,12 @@ public class SessionLayoutClone implements LayoutClone {
 	}
 
 	protected String encodeKey(long plid) {
-		return SessionLayoutClone.class.getName().concat(
-			StringPool.POUND).concat(StringUtil.toHexString(plid));
+		return SessionLayoutClone.class.getName(
+		).concat(
+			StringPool.POUND
+		).concat(
+			StringUtil.toHexString(plid)
+		);
 	}
 
 	protected HttpSession getPortalSession(HttpServletRequest request) {

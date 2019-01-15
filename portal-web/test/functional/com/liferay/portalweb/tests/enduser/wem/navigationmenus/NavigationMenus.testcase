@@ -95,6 +95,16 @@ definition {
 		NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = "test-site-name");
 
 		NavigationMenusAdmin.configureMenuType(
+			menuType = "Primary Navigation",
+			navigationMenu = "Navigation Menu Name 1"
+		);
+
+		NavigationMenusAdmin.viewMenuType(
+			menuType = "Primary Navigation",
+			rowEntry = "Navigation Menu Name 1"
+		);
+
+		NavigationMenusAdmin.configureMenuType(
 			oldPrimaryNavigationMenu = "Navigation Menu Name 1",
 			menuType = "Primary Navigation",
 			navigationMenu = "Navigation Menu Name 2"

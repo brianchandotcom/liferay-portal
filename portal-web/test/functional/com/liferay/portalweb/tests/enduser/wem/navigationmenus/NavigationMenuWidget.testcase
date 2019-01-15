@@ -83,6 +83,11 @@ definition {
 
 		NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = "test-site-name");
 
+		NavigationMenusAdmin.configureMenuType(
+			menuType = "Primary Navigation",
+			navigationMenu = "Test Navigation Menu Name"
+		);
+
 		LexiconEntry.gotoEntry(rowEntry = "Test Navigation Menu Name");
 
 		NavigationMenusAdmin.editItem(

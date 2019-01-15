@@ -15,7 +15,6 @@
 package com.liferay.comment.taglib.internal.context.util;
 
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.Validator;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -30,7 +29,8 @@ public class DiscussionTaglibHelper {
 
 	public String getClassName() {
 		if (_className == null) {
-			_className = _getAttribute("className");
+			_className = (String)_request.getAttribute(
+				"liferay-comment:discussion:className");
 		}
 
 		return _className;
@@ -38,7 +38,8 @@ public class DiscussionTaglibHelper {
 
 	public long getClassPK() {
 		if (_classPK == null) {
-			_classPK = GetterUtil.getLong(_getAttribute("classPK"));
+			_classPK = GetterUtil.getLong(
+				_request.getAttribute("liferay-comment:discussion:classPK"));
 		}
 
 		return _classPK;
@@ -46,7 +47,8 @@ public class DiscussionTaglibHelper {
 
 	public String getFormAction() {
 		if (_formAction == null) {
-			_formAction = _getAttribute("formAction");
+			_formAction = (String)_request.getAttribute(
+				"liferay-comment:discussion:formAction");
 		}
 
 		return _formAction;
@@ -54,7 +56,8 @@ public class DiscussionTaglibHelper {
 
 	public String getFormName() {
 		if (_formName == null) {
-			_formName = _getAttribute("formName");
+			_formName = (String)_request.getAttribute(
+				"liferay-comment:discussion:formName");
 		}
 
 		return _formName;
@@ -62,7 +65,8 @@ public class DiscussionTaglibHelper {
 
 	public String getPaginationURL() {
 		if (_paginationURL == null) {
-			_paginationURL = _getAttribute("paginationURL");
+			_paginationURL = (String)_request.getAttribute(
+				"liferay-comment:discussion:paginationURL");
 		}
 
 		return _paginationURL;
@@ -70,7 +74,8 @@ public class DiscussionTaglibHelper {
 
 	public String getRedirect() {
 		if (_redirect == null) {
-			_redirect = _getAttribute("redirect");
+			_redirect = (String)_request.getAttribute(
+				"liferay-comment:discussion:redirect");
 		}
 
 		return _redirect;
@@ -78,7 +83,8 @@ public class DiscussionTaglibHelper {
 
 	public long getUserId() {
 		if (_userId == null) {
-			_userId = GetterUtil.getLong(_getAttribute("userId"));
+			_userId = GetterUtil.getLong(
+				_request.getAttribute("liferay-comment:discussion:userId"));
 		}
 
 		return _userId;
@@ -87,7 +93,8 @@ public class DiscussionTaglibHelper {
 	public boolean isAssetEntryVisible() {
 		if (_assetEntryVisible == null) {
 			_assetEntryVisible = GetterUtil.getBoolean(
-				_getAttribute("assetEntryVisible"));
+				_request.getAttribute(
+					"liferay-comment:discussion:assetEntryVisible"));
 		}
 
 		return _assetEntryVisible;
@@ -96,7 +103,8 @@ public class DiscussionTaglibHelper {
 	public boolean isHideControls() {
 		if (_hideControls == null) {
 			_hideControls = GetterUtil.getBoolean(
-				_getAttribute("hideControls"));
+				_request.getAttribute(
+					"liferay-comment:discussion:hideControls"));
 		}
 
 		return _hideControls;
@@ -105,31 +113,12 @@ public class DiscussionTaglibHelper {
 	public boolean isRatingsEnabled() {
 		if (_ratingsEnabled == null) {
 			_ratingsEnabled = GetterUtil.getBoolean(
-				_getAttribute("ratingsEnabled"));
+				_request.getAttribute(
+					"liferay-comment:discussion:ratingsEnabled"));
 		}
 
 		return _ratingsEnabled;
 	}
-
-	protected HttpServletRequest getRequest() {
-		return _request;
-	}
-
-	private String _getAttribute(String name) {
-		HttpServletRequest request = getRequest();
-
-		String value = (String)request.getAttribute(_LEGACY_PREFIX + name);
-
-		if (Validator.isNotNull(value)) {
-			return value;
-		}
-
-		return (String)request.getAttribute(_PREFIX + name);
-	}
-
-	private static final String _LEGACY_PREFIX = "liferay-ui:discussion:";
-
-	private static final String _PREFIX = "liferay-comment:discussion:";
 
 	private Boolean _assetEntryVisible;
 	private String _className;

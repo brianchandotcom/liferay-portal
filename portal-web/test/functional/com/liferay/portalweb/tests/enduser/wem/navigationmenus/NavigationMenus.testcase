@@ -34,11 +34,11 @@ definition {
 
 		NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = "test-site-name");
 
-		NavigationMenusAdmin.addMenu(menuName = "Primary Menu Name 1");
+		NavigationMenusAdmin.addMenu(menuName = "Navigation Menu Name 1");
 
 		NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = "test-site-name");
 
-		LexiconEntry.gotoEntry(rowEntry = "Primary Menu Name 1");
+		LexiconEntry.gotoEntry(rowEntry = "Navigation Menu Name 1");
 
 		NavigationMenusAdmin.addItem(item = "Page", pageNames = "Test Page Name");
 
@@ -86,28 +86,28 @@ definition {
 	test ConfigurePrimaryNavigationMenu {
 		NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = "test-site-name");
 
-		NavigationMenusAdmin.addMenu(menuName = "Primary Menu Name 1");
+		NavigationMenusAdmin.addMenu(menuName = "Navigation Menu Name 1");
 
 		NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = "test-site-name");
 
-		NavigationMenusAdmin.addMenu(menuName = "Primary Menu Name 2");
+		NavigationMenusAdmin.addMenu(menuName = "Navigation Menu Name 2");
 
 		NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = "test-site-name");
 
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Primary Navigation",
-			rowEntry = "Primary Menu Name 2"
+			rowEntry = "Navigation Menu Name 2"
 		);
 
 		NavigationMenusAdmin.configureMenuType(
-			currentPrimaryNavigationMenu = "Primary Menu Name 1",
+			currentPrimaryNavigationMenu = "Navigation Menu Name 1",
 			menuType = "Primary Navigation",
-			navigationMenu = "Primary Menu Name 2"
+			navigationMenu = "Navigation Menu Name 2"
 		);
 
 		NavigationMenusAdmin.viewMenuType(
 			menuType = "Primary Navigation",
-			rowEntry = "Primary Menu Name 2"
+			rowEntry = "Navigation Menu Name 2"
 		);
 	}
 
@@ -115,22 +115,22 @@ definition {
 	test ConfigureSecondaryNavigationMenu {
 		NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = "test-site-name");
 
-		NavigationMenusAdmin.addMenu(menuName = "Primary Menu Name 1");
+		NavigationMenusAdmin.addMenu(menuName = "Navigation Menu Name 1");
 
 		NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = "test-site-name");
 
-		NavigationMenusAdmin.addMenu(menuName = "Primary Menu Name 2");
+		NavigationMenusAdmin.addMenu(menuName = "Navigation Menu Name 2");
 
 		NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = "test-site-name");
 
 		NavigationMenusAdmin.configureMenuType(
 			menuType = "Secondary Navigation",
-			navigationMenu = "Primary Menu Name 2"
+			navigationMenu = "Navigation Menu Name 2"
 		);
 
 		NavigationMenusAdmin.viewMenuType(
 			menuType = "Secondary Navigation",
-			rowEntry = "Primary Menu Name 2"
+			rowEntry = "Navigation Menu Name 2"
 		);
 	}
 
@@ -138,22 +138,22 @@ definition {
 	test ConfigureSocialNavigationMenu {
 		NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = "test-site-name");
 
-		NavigationMenusAdmin.addMenu(menuName = "Primary Menu Name 1");
+		NavigationMenusAdmin.addMenu(menuName = "Navigation Menu Name 1");
 
 		NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = "test-site-name");
 
-		NavigationMenusAdmin.addMenu(menuName = "Primary Menu Name 2");
+		NavigationMenusAdmin.addMenu(menuName = "Navigation Menu Name 2");
 
 		NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = "test-site-name");
 
 		NavigationMenusAdmin.configureMenuType(
 			menuType = "Social Navigation",
-			navigationMenu = "Primary Menu Name 2"
+			navigationMenu = "Navigation Menu Name 2"
 		);
 
 		NavigationMenusAdmin.viewMenuType(
 			menuType = "Social Navigation",
-			rowEntry = "Primary Menu Name 2"
+			rowEntry = "Navigation Menu Name 2"
 		);
 	}
 
@@ -163,33 +163,33 @@ definition {
 
 		NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = "test-site-name");
 
-		NavigationMenusAdmin.addMenu(menuName = "Primary Menu Name 1");
+		NavigationMenusAdmin.addMenu(menuName = "Navigation Menu Name 1");
 
 		NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = "test-site-name");
 
-		LexiconEntry.delete(menuItem = "Delete", rowEntry = "Primary Menu Name 1");
+		LexiconEntry.delete(menuItem = "Delete", rowEntry = "Navigation Menu Name 1");
 
-		LexiconEntry.viewNoEntry(rowEntry = "Primary Menu Name 1");
+		LexiconEntry.viewNoEntry(rowEntry = "Navigation Menu Name 1");
 	}
 
 	@priority = "5"
 	test RenameNavigationMenu {
 		NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = "test-site-name");
 
-		NavigationMenusAdmin.addMenu(menuName = "Primary Menu Name 1");
+		NavigationMenusAdmin.addMenu(menuName = "Navigation Menu Name 1");
 
 		NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = "test-site-name");
 
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Rename",
-			rowEntry = "Primary Menu Name 1"
+			rowEntry = "Navigation Menu Name 1"
 		);
 
-		PortletEntry.inputName(name = "Primary Menu Name 1 Edit");
+		PortletEntry.inputName(name = "Navigation Menu Name 1 Edit");
 
 		Modal.save();
 
-		LexiconEntry.viewEntryName(rowEntry = "Primary Menu Name 1 Edit");
+		LexiconEntry.viewEntryName(rowEntry = "Navigation Menu Name 1 Edit");
 	}
 
 	@description = "This is a test for LPS-87134. We assert that the option to automatically add new pages to a navigation menu works as expected."
@@ -199,7 +199,7 @@ definition {
 
 		NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = "test-site-name");
 
-		NavigationMenusAdmin.addMenu(menuName = "Primary Menu Single");
+		NavigationMenusAdmin.addMenu(menuName = "Navigation Menu Single");
 
 		NavigationMenusAdmin.toggleAutomaticallyAddNewPagesToMenu(
 			toggleValue = "enable"
@@ -207,7 +207,7 @@ definition {
 
 		NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = "test-site-name");
 
-		NavigationMenusAdmin.addMenu(menuName = "Primary Menu Both");
+		NavigationMenusAdmin.addMenu(menuName = "Navigation Menu Both");
 
 		NavigationMenusAdmin.toggleAutomaticallyAddNewPagesToMenu(
 			toggleValue = "enable"
@@ -218,12 +218,12 @@ definition {
 		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
 		SitePages.addPublicPage(
-			navigationMenus = "Primary Menu Single,Primary Menu Both",
+			navigationMenus = "Navigation Menu Single,Navigation Menu Both",
 			pageName = "Page 1"
 		);
 
 		SitePages.addPublicPage(
-			navigationMenus = "Primary Menu Both",
+			navigationMenus = "Navigation Menu Both",
 			pageName = "Page 2"
 		);
 
@@ -231,7 +231,7 @@ definition {
 
 		NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = "test-site-name");
 
-		LexiconEntry.gotoEntry(rowEntry = "Primary Menu Single");
+		LexiconEntry.gotoEntry(rowEntry = "Navigation Menu Single");
 
 		NavigationMenusAdmin.viewItem(itemName = "Page 1");
 
@@ -241,7 +241,7 @@ definition {
 
 		NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = "test-site-name");
 
-		LexiconEntry.gotoEntry(rowEntry = "Primary Menu Both");
+		LexiconEntry.gotoEntry(rowEntry = "Navigation Menu Both");
 
 		NavigationMenusAdmin.viewItem(itemName = "Page 1");
 
@@ -251,7 +251,7 @@ definition {
 
 		NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = "test-site-name");
 
-		LexiconEntry.gotoEntry(rowEntry = "Primary Menu Single");
+		LexiconEntry.gotoEntry(rowEntry = "Navigation Menu Single");
 
 		NavigationMenusAdmin.toggleAutomaticallyAddNewPagesToMenu(
 			toggleValue = "disable"
@@ -263,7 +263,7 @@ definition {
 
 		SitePages.addPublicPage(
 			assertCheckboxMissing = "true",
-			navigationMenus = "Primary Menu Single",
+			navigationMenus = "Navigation Menu Single",
 			pageName = "Page 3"
 		);
 
@@ -271,7 +271,7 @@ definition {
 
 		NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = "test-site-name");
 
-		LexiconEntry.gotoEntry(rowEntry = "Primary Menu Single");
+		LexiconEntry.gotoEntry(rowEntry = "Navigation Menu Single");
 
 		NavigationMenusAdmin.viewNoItem(itemName = "Page 3");
 	}
@@ -281,11 +281,11 @@ definition {
 	test ViewNavigationMenuPropertiesSidebar {
 		NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = "test-site-name");
 
-		NavigationMenusAdmin.addMenu(menuName = "Primary Menu Name 1");
+		NavigationMenusAdmin.addMenu(menuName = "Navigation Menu Name 1");
 
 		NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = "test-site-name");
 
-		LexiconEntry.gotoEntry(rowEntry = "Primary Menu Name 1");
+		LexiconEntry.gotoEntry(rowEntry = "Navigation Menu Name 1");
 
 		NavigationMenusAdmin.addItem(
 			item = "URL",
@@ -309,11 +309,11 @@ definition {
 
 		NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = "test-site-name");
 
-		NavigationMenusAdmin.addMenu(menuName = "Primary Menu Name 1");
+		NavigationMenusAdmin.addMenu(menuName = "Navigation Menu Name 1");
 
 		NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = "test-site-name");
 
-		LexiconEntry.gotoEntry(rowEntry = "Primary Menu Name 1");
+		LexiconEntry.gotoEntry(rowEntry = "Navigation Menu Name 1");
 
 		NavigationMenusAdmin.addItem(item = "Page", pageNames = "Test Page Name");
 

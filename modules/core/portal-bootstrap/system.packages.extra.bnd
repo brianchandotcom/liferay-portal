@@ -253,7 +253,7 @@ Export-Package:\
 	org.apache.naming.java,\
 	org.apache.regexp;version='2.7.1',\
 	org.apache.tools.ant.*;version='1.8.4',\
-	org.apache.xalan.*;version='2.7.1',\
+	org.apache.xalan.*;version='2.7.2',\
 	org.apache.xerces.*;version='2.11.0',\
 	org.apache.xml.dtm.*;version='2.7.1',\
 	org.apache.xml.res.*;version='2.7.1',\

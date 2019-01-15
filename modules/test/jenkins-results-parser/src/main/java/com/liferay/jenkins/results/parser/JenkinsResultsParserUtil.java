@@ -1262,14 +1262,28 @@ public class JenkinsResultsParserUtil {
 	}
 
 	public static String getRandomGitHubCacheHostname() {
+		return getRandomGitHubCacheHostname(null);
+	}
+
+	public static String getRandomGitHubCacheHostname(
+		List<String> excludedHostnames) {
+
 		try {
 			Properties buildProperties = getBuildProperties();
 
 			String gitCacheHostnames = buildProperties.getProperty(
 				"github.cache.hostnames");
 
-			return getRandomString(
-				Lists.newArrayList(gitCacheHostnames.split(",")));
+			List<String> gitHubCacheHostnames = Lists.newArrayList(
+				gitCacheHostnames.split(","));
+
+			if (excludedHostnames != null) {
+				for (String excludedHostname : excludedHostnames) {
+					gitHubCacheHostnames.remove(excludedHostname);
+				}
+			}
+
+			return getRandomString(gitHubCacheHostnames);
 		}
 		catch (IOException ioe) {
 			throw new RuntimeException(ioe);

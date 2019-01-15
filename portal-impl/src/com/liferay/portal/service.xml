@@ -1006,7 +1006,7 @@
 		<reference entity="User" package-path="com.liferay.portal" />
 		<reference entity="WorkflowInstanceLink" package-path="com.liferay.portal" />
 	</entity>
-	<entity local-service="true" name="LayoutSet" remote-service="true">
+	<entity local-service="true" name="LayoutSet" remote-service="true" versioned="true">
 
 		<!-- PK fields -->
 

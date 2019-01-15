@@ -25,7 +25,6 @@ taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
 <%@ page import="com.liferay.portal.kernel.language.UnicodeLanguageUtil" %><%@
 page import="com.liferay.portal.kernel.portlet.LiferayWindowState" %><%@
-page import="com.liferay.portal.kernel.util.ClassUtil" %><%@
 page import="com.liferay.portal.kernel.util.GetterUtil" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
@@ -74,7 +73,7 @@ String currentURL = PortalUtil.getCurrentURL(request);
 
 NameIdTypeValues nameIdTypeValues = NameIdTypeValuesUtilHelper.getNameIdTypeValues();
 
-SamlProviderConfigurationHelper samlProviderConfigurationHelper = (SamlProviderConfigurationHelper)request.getAttribute(ClassUtil.getClassName(SamlProviderConfigurationHelper.class));
+SamlProviderConfigurationHelper samlProviderConfigurationHelper = (SamlProviderConfigurationHelper)request.getAttribute(SamlProviderConfigurationHelper.class.getName());
 
 SamlProviderConfiguration samlProviderConfiguration = null;
 

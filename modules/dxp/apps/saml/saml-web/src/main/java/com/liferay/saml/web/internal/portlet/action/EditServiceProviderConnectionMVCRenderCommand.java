@@ -15,7 +15,6 @@
 package com.liferay.saml.web.internal.portlet.action;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
-import com.liferay.portal.kernel.util.ClassUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.saml.constants.SamlWebKeys;
@@ -55,7 +54,7 @@ public class EditServiceProviderConnectionMVCRenderCommand
 			renderRequest, "samlIdpSpConnectionId");
 
 		renderRequest.setAttribute(
-			ClassUtil.getClassName(SamlProviderConfigurationHelper.class),
+			SamlProviderConfigurationHelper.class.getName(),
 			_samlProviderConfigurationHelper);
 
 		SamlProviderConfiguration samlProviderConfiguration =

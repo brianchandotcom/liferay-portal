@@ -21,9 +21,7 @@ import org.jboss.arquillian.container.spi.client.protocol.ProtocolDescription;
 import org.jboss.arquillian.container.spi.client.protocol.metadata.JMXContext;
 import org.jboss.arquillian.container.spi.client.protocol.metadata.ProtocolMetaData;
 import org.jboss.arquillian.container.test.spi.ContainerMethodExecutor;
-import org.jboss.arquillian.container.test.spi.TestDeployment;
 import org.jboss.arquillian.container.test.spi.client.deployment.DeploymentPackager;
-import org.jboss.arquillian.container.test.spi.client.deployment.ProtocolArchiveProcessor;
 import org.jboss.arquillian.container.test.spi.client.protocol.Protocol;
 import org.jboss.arquillian.container.test.spi.command.CommandCallback;
 import org.jboss.arquillian.protocol.jmx.JMXMethodExecutor;
@@ -62,9 +60,8 @@ public class JMXOSGiProtocol implements Protocol<JMXProtocolConfiguration> {
 
 	@Override
 	public DeploymentPackager getPackager() {
-		return (TestDeployment testDeployment,
-				Collection<ProtocolArchiveProcessor> processors) ->
-				testDeployment.getApplicationArchive();
+		return (testDeployment, processors) ->
+			testDeployment.getApplicationArchive();
 	}
 
 	@Override

@@ -23,6 +23,7 @@ import com.liferay.data.engine.internal.executor.DEDataDefinitionListRequestExec
 import com.liferay.data.engine.internal.executor.DEDataDefinitionSaveModelPermissionsRequestExecutor;
 import com.liferay.data.engine.internal.executor.DEDataDefinitionSavePermissionsRequestExecutor;
 import com.liferay.data.engine.internal.executor.DEDataDefinitionSaveRequestExecutor;
+import com.liferay.data.engine.internal.executor.DEDataDefinitionSearchCountExecutor;
 import com.liferay.data.engine.internal.executor.DEDataDefinitionSearchExecutor;
 import com.liferay.data.engine.internal.executor.DEDataEngineRequestExecutor;
 import com.liferay.data.engine.internal.io.DEDataDefinitionFieldsDeserializerTracker;
@@ -43,6 +44,8 @@ import com.liferay.data.engine.service.DEDataDefinitionSavePermissionsRequest;
 import com.liferay.data.engine.service.DEDataDefinitionSavePermissionsResponse;
 import com.liferay.data.engine.service.DEDataDefinitionSaveRequest;
 import com.liferay.data.engine.service.DEDataDefinitionSaveResponse;
+import com.liferay.data.engine.service.DEDataDefinitionSearchCountRequest;
+import com.liferay.data.engine.service.DEDataDefinitionSearchCountResponse;
 import com.liferay.data.engine.service.DEDataDefinitionSearchRequest;
 import com.liferay.data.engine.service.DEDataDefinitionSearchResponse;
 import com.liferay.data.engine.service.DEDataDefinitionService;
@@ -275,6 +278,17 @@ public class DEDataDefinitionServiceImpl
 		}
 	}
 
+	public DEDataDefinitionSearchCountResponse execute(
+		DEDataDefinitionSearchCountRequest deDataDefinitionSearchCountRequest) {
+
+		DEDataDefinitionSearchCountExecutor
+			deDataDefinitionSearchCountExecutor =
+				getDEDataDefinitionSearchCountExecutor();
+
+		return deDataDefinitionSearchCountExecutor.execute(
+			deDataDefinitionSearchCountRequest);
+	}
+
 	public DEDataDefinitionSearchResponse execute(
 			DEDataDefinitionSearchRequest deDataDefinitionSearchRequest)
 		throws DEDataDefinitionException {
@@ -383,6 +397,19 @@ public class DEDataDefinitionServiceImpl
 	protected DEDataEnginePermissionSupport getDEDataEnginePermissionSupport() {
 		return new DEDataEnginePermissionSupport(groupLocalService);
 	}
+	
+	public DEDataDefinitionSearchCountExecutor
+		getDEDataDefinitionSearchCountExecutor() {
+
+		if (_deDataDefinitionSearchCountExecutor == null) {
+			_deDataDefinitionSearchCountExecutor =
+				new DEDataDefinitionSearchCountExecutor(
+					ddmStructureService, _deDataEngineRequestExecutor,
+					portal);
+		}
+
+		return _deDataDefinitionSearchCountExecutor;
+	}
 
 	public DEDataDefinitionSearchExecutor getDEDataDefinitionSearchExecutor() {
 		if (_deDataDefinitionSearchExecutor == null) {
@@ -460,6 +487,8 @@ public class DEDataDefinitionServiceImpl
 		_deDataDefinitionSavePermissionsRequestExecutor;
 	private DEDataDefinitionSaveRequestExecutor
 		_deDataDefinitionSaveRequestExecutor;
+	private DEDataDefinitionSearchCountExecutor
+		_deDataDefinitionSearchCountExecutor;
 	private DEDataDefinitionSearchExecutor _deDataDefinitionSearchExecutor;
 	private DEDataEngineRequestExecutor _deDataEngineRequestExecutor;
 	private ModelResourcePermission<DEDataDefinition> _modelResourcePermission;

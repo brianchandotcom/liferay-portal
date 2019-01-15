@@ -69,12 +69,6 @@ definition {
 			searchPortletList = "Type Facet,Search Results,Search Bar"
 		);
 
-		Portlet.dragAndDropPortletToColumnPG(
-			columnNumberFrom = "1",
-			columnNumberTo = "2",
-			portletName = "Search Results"
-		);
-
 		SearchPortlets.configureWidgetParameterNames(
 			keywordsParameterName = "keywordparameter",
 			scopeParameterName = "scopeparameter"

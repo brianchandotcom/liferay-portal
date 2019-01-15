@@ -36,7 +36,7 @@ class Form extends Component {
 
 		context: Config.shapeOf(
 			{
-				pages: Config.arrayOf(pageStructure),
+				pages: Config.arrayOf(Config.object()),
 				paginationMode: Config.string(),
 				rules: Config.array(),
 				successPageSettings: Config.object()
@@ -769,7 +769,7 @@ class Form extends Component {
 	}
 
 	/*
-	 * Returns the map with all translated names or a map with just "Intitled Form" in case
+	 * Returns the map with all translated names or a map with just "Untitled Form" in case
 	 * there are no translations available.
 	 * @private
 	 */
@@ -792,18 +792,18 @@ class Form extends Component {
 			successPageSettings.body[themeDisplay.getLanguageId()] = '';
 		}
 
+		const emptyLocalizableValue = {
+			[themeDisplay.getLanguageId()]: ''
+		};
+
 		if (!context.pages.length) {
 			context = {
 				...context,
 				pages: [
 					{
 						description: '',
-						localizedDescription: {
-							[themeDisplay.getLanguageId()]: ''
-						},
-						localizedTitle: {
-							[themeDisplay.getLanguageId()]: ''
-						},
+						localizedDescription: emptyLocalizableValue,
+						localizedTitle: emptyLocalizableValue,
 						rows: [
 							{
 								columns: [
@@ -822,7 +822,35 @@ class Form extends Component {
 			};
 		}
 
-		return context;
+		return {
+			...context,
+			pages: context.pages.map(
+				page => {
+					let description = '';
+					let localizedDescription = emptyLocalizableValue;
+					let localizedTitle = emptyLocalizableValue;
+					let title = '';
+
+					if (!core.isString(page.description)) {
+						description = page.description[themeDisplay.getLanguageId()];
+						localizedDescription = page.description;
+					}
+
+					if (!core.isString(page.title)) {
+						title = page.title[themeDisplay.getLanguageId()];
+						localizedTitle = page.title;
+					}
+
+					return {
+						...page,
+						description,
+						localizedDescription,
+						localizedTitle,
+						title
+					};
+				}
+			)
+		};
 	}
 }
 

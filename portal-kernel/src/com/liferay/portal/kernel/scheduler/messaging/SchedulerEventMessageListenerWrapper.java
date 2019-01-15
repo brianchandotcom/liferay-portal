@@ -30,9 +30,14 @@ import com.liferay.portal.kernel.scheduler.StorageType;
 import com.liferay.portal.kernel.scheduler.Trigger;
 import com.liferay.portal.kernel.scheduler.TriggerState;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 
 import java.util.Date;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * @author Shuyang Zhou
@@ -62,7 +67,37 @@ public class SchedulerEventMessageListenerWrapper
 			}
 		}
 
-		_processMessage(message, destinationName, jobName, groupName);
+		if (_SCHEDULER_EVENT_MESSAGE_LISTENER_LOCK_TIMEOUT <= 0) {
+			_lock.lock();
+		}
+		else {
+			try {
+				if (!_lock.tryLock(
+						_SCHEDULER_EVENT_MESSAGE_LISTENER_LOCK_TIMEOUT,
+						TimeUnit.MILLISECONDS)) {
+
+					MessageBusUtil.sendMessage(destinationName, message);
+
+					return;
+				}
+			}
+			catch (InterruptedException ie) {
+				if (_log.isInfoEnabled()) {
+					_log.info(
+						"Unable to wait " +
+							_SCHEDULER_EVENT_MESSAGE_LISTENER_LOCK_TIMEOUT +
+								" milliseconds before retry",
+						ie);
+				}
+			}
+		}
+
+		try {
+			_processMessage(message, destinationName, jobName, groupName);
+		}
+		finally {
+			_lock.unlock();
+		}
 	}
 
 	/**
@@ -160,6 +195,11 @@ public class SchedulerEventMessageListenerWrapper
 		}
 	}
 
+	private static final int _SCHEDULER_EVENT_MESSAGE_LISTENER_LOCK_TIMEOUT =
+		GetterUtil.getInteger(
+			PropsUtil.get(
+				PropsKeys.SCHEDULER_EVENT_MESSAGE_LISTENER_LOCK_TIMEOUT));
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		SchedulerEventMessageListenerWrapper.class);
 
@@ -177,6 +217,7 @@ public class SchedulerEventMessageListenerWrapper
 	@SuppressWarnings("unused")
 	private String _jobName;
 
+	private final Lock _lock = new ReentrantLock();
 	private MessageListener _messageListener;
 	private volatile SchedulerEntry _schedulerEntry;
 

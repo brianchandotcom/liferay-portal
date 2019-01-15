@@ -38,5 +38,5 @@
 </table>
 
 <p>
-	<a href="$postmanEnvironmentPropertiesDocument.getData()"> $languageUtil.format($locale, "download-x", "Download Environment Properties", false) </a>
+	<a href="$postmanEnvironmentPropertiesDocument.getData()"> $languageUtil.format($locale, "download-x", "Environment Properties", false) </a>
 </p>

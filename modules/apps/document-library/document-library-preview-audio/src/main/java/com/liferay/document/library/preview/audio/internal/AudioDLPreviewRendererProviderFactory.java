@@ -16,7 +16,6 @@ package com.liferay.document.library.preview.audio.internal;
 
 import com.liferay.document.library.kernel.util.AudioProcessorUtil;
 import com.liferay.document.library.preview.DLPreviewRendererProvider;
-import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 
 import java.util.Dictionary;

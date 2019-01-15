@@ -18,5 +18,7 @@ package com.liferay.document.library.preview.audio.internal.constants;
  * @author Alejandro Tardín
  */
 public interface DLPreviewAudioWebKeys {
+
 	public static final String PREVIEW_FILE_URLS = "PREVIEW_FILE_URLS";
+
 }

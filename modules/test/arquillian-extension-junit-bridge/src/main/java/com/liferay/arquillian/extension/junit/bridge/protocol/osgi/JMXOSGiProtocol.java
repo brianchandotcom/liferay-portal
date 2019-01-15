@@ -14,9 +14,8 @@
 
 package com.liferay.arquillian.extension.junit.bridge.protocol.osgi;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
+import java.util.Iterator;
 
 import org.jboss.arquillian.container.spi.client.protocol.ProtocolDescription;
 import org.jboss.arquillian.container.spi.client.protocol.metadata.JMXContext;
@@ -44,20 +43,21 @@ public class JMXOSGiProtocol implements Protocol<JMXProtocolConfiguration> {
 		JMXProtocolConfiguration jmxProtocolConfiguration,
 		ProtocolMetaData protocolMetaData, CommandCallback commandCallback) {
 
-		if (protocolMetaData.hasContext(JMXContext.class)) {
-			List<JMXContext> jmxContexts = new ArrayList<>(
-				protocolMetaData.getContexts(JMXContext.class));
+		Collection<JMXContext> jmxContexts = protocolMetaData.getContexts(
+			JMXContext.class);
 
-			JMXContext jmxContext = jmxContexts.get(0);
-
-			return new JMXMethodExecutor(
-				jmxContext.getConnection(), commandCallback);
-		}
-		else {
+		if (jmxContexts.isEmpty()) {
 			throw new IllegalStateException(
 				"No " + JMXContext.class.getName() + " was found in " +
 					ProtocolMetaData.class.getName());
 		}
+
+		Iterator<JMXContext> iterator = jmxContexts.iterator();
+
+		JMXContext jmxContext = iterator.next();
+
+		return new JMXMethodExecutor(
+			jmxContext.getConnection(), commandCallback);
 	}
 
 	@Override

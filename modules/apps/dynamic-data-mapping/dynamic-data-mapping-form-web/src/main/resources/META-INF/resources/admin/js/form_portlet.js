@@ -144,9 +144,16 @@ AUI.add(
 							formBuilder._layoutBuilder.after('layout-builder:moveStart', A.bind(instance._afterFormBuilderLayoutBuilderMoveStart, instance)),
 							instance.one('.back-url-link').on('click', A.bind('_onBack', instance)),
 							instance.one('#save').on('click', A.bind('_onSaveButtonClick', instance)),
-							Liferay.on('destroyPortlet', A.bind('_onDestroyPortlet', instance)),
-							instance.get('ruleBuilder').on('*:saveRule', A.bind('_autosave', instance, true))
+							Liferay.on('destroyPortlet', A.bind('_onDestroyPortlet', instance))
 						);
+
+						var ruleBuilder = instance.get('ruleBuilder');
+
+						if (ruleBuilder) {
+							instance._eventHandlers.push(
+								ruleBuilder.on('*:saveRule', A.bind('_autosave', instance, true))
+							);
+						}
 
 						if (instance._isFormView()) {
 							instance.bindNavigationBar();

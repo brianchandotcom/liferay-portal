@@ -69,6 +69,51 @@ definition {
 		);
 	}
 
+	@description = "This is a use case for LPS-71487."
+	@priority = "5"
+	test ViewMultiWCDArchive621015 {
+		property data.archive.type = "data-archive-multi-wcd-portlet";
+		property database.types = "db2,mysql,oracle,sybase";
+		property portal.version = "6.2.10.15";
+
+		Navigator.gotoPage(pageName = "Web Content Display Page");
+
+		Portlet.viewDuplicatePG(
+			portletName = "Web Content Display",
+			totalPortletCount = "3"
+		);
+	}
+
+	@description = "This is a use case for LPS-71487."
+	@priority = "5"
+	test ViewMultiWCDArchive621021 {
+		property data.archive.type = "data-archive-multi-wcd-portlet";
+		property database.types = "db2,mysql,oracle,postgresql,sybase";
+		property portal.version = "6.2.10.21";
+
+		Navigator.gotoPage(pageName = "Web Content Display Page");
+
+		Portlet.viewDuplicatePG(
+			portletName = "Web Content Display",
+			totalPortletCount = "3"
+		);
+	}
+
+	@description = "This is a use case for LPS-71487."
+	@priority = "5"
+	test ViewMultiWCDArchive625 {
+		property data.archive.type = "data-archive-multi-wcd-portlet";
+		property database.types = "mysql";
+		property portal.version = "6.2.5";
+
+		Navigator.gotoPage(pageName = "Web Content Display Page");
+
+		Portlet.viewDuplicatePG(
+			portletName = "Web Content Display",
+			totalPortletCount = "3"
+		);
+	}
+
 	@priority = "5"
 	test ViewWebContentArchive621015 {
 		property data.archive.type = "data-archive-web-content-draft";

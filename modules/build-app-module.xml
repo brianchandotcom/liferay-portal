@@ -131,7 +131,7 @@
 	</target>
 
 	<target if="artifact.deploy.dependencies" name="download-artifact-dependencies">
-		<exec dir="${modules.dir}" executable="${modules.dir}/../gradlew${gradlew.suffix}">
+		<exec dir="${modules.dir}" executable="${modules.dir}/../gradlew${gradlew.suffix}" failonerror="true">
 			<arg value="${gradle.project.path}:deployDependencies" />
 			<arg value="-Ddeploy.dependencies.keep.versions=true" />
 			<arg value="-Dforced.cache.enabled=true" />

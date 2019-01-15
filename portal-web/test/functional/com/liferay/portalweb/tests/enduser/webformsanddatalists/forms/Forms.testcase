@@ -9,8 +9,8 @@ definition {
 		TestCase.setUpPortalInstance();
 
 		User.firstLoginPG();
-//TODO: remove the comment
-		//TestCase.enableMetal();
+
+		TestCase.enableMetal();
 
 	}
 

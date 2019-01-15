@@ -16,7 +16,6 @@ package com.liferay.document.library.kernel.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.document.library.kernel.model.DLFileRank;
 import com.liferay.document.library.kernel.model.DLVersionNumberIncrease;
 
 import com.liferay.portal.kernel.exception.PortalException;
@@ -33,8 +32,6 @@ import com.liferay.portal.kernel.transaction.Transactional;
 
 import java.io.File;
 import java.io.InputStream;
-
-import java.util.List;
 
 /**
  * Provides the local service interface for DLApp. Methods of this
@@ -170,23 +167,6 @@ public interface DLAppLocalService extends BaseLocalService {
 		long folderId, String sourceFileName, String mimeType, String title,
 		String description, String changeLog, InputStream is, long size,
 		ServiceContext serviceContext) throws PortalException;
-
-	/**
-	* Adds the file rank to the existing file entry. This method is only
-	* supported by the Liferay repository.
-	*
-	* @param repositoryId the primary key of the repository
-	* @param companyId the primary key of the company
-	* @param userId the primary key of the file rank's creator/owner
-	* @param fileEntryId the primary key of the file entry
-	* @param serviceContext the service context to be applied
-	* @return the file rank
-	* @deprecated As of Judson (7.1.x), replaced by {@link
-	com.liferay.document.library.file.rank.service.DLFileRankLocalService#addFileRank}
-	*/
-	@Deprecated
-	public DLFileRank addFileRank(long repositoryId, long companyId,
-		long userId, long fileEntryId, ServiceContext serviceContext);
 
 	/**
 	* Adds the file shortcut to the existing file entry. This method is only
@@ -347,20 +327,6 @@ public interface DLAppLocalService extends BaseLocalService {
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public FileEntry getFileEntryByUuidAndGroupId(String uuid, long groupId)
 		throws PortalException;
-
-	/**
-	* Returns the file ranks from the user. This method is only supported by
-	* the Liferay repository.
-	*
-	* @param repositoryId the primary key of the repository
-	* @param userId the primary key of the user
-	* @return the file ranks from the user
-	* @deprecated As of Judson (7.1.x), replaced by {@link
-	com.liferay.document.library.file.rank.service.DLFileRankLocalService#getFileRanks}
-	*/
-	@Deprecated
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<DLFileRank> getFileRanks(long repositoryId, long userId);
 
 	/**
 	* Returns the file shortcut with the primary key. This method is only
@@ -668,23 +634,6 @@ public interface DLAppLocalService extends BaseLocalService {
 		String description, String changeLog,
 		DLVersionNumberIncrease dlVersionNumberIncrease, InputStream is,
 		long size, ServiceContext serviceContext) throws PortalException;
-
-	/**
-	* Updates a file rank to the existing file entry. This method is only
-	* supported by the Liferay repository.
-	*
-	* @param repositoryId the primary key of the file rank's repository
-	* @param companyId the primary key of the file rank's company
-	* @param userId the primary key of the file rank's creator/owner
-	* @param fileEntryId the primary key of the file rank's file entry
-	* @param serviceContext the service context to be applied
-	* @return the file rank
-	* @deprecated As of Judson (7.1.x), replaced by {@link
-	com.liferay.document.library.file.rank.service.DLFileRankLocalService#updateFileRank}
-	*/
-	@Deprecated
-	public DLFileRank updateFileRank(long repositoryId, long companyId,
-		long userId, long fileEntryId, ServiceContext serviceContext);
 
 	/**
 	* Updates a file shortcut to the existing file entry. This method is only

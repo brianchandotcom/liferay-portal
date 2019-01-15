@@ -182,28 +182,6 @@ public class DLAppLocalServiceUtil {
 	}
 
 	/**
-	* Adds the file rank to the existing file entry. This method is only
-	* supported by the Liferay repository.
-	*
-	* @param repositoryId the primary key of the repository
-	* @param companyId the primary key of the company
-	* @param userId the primary key of the file rank's creator/owner
-	* @param fileEntryId the primary key of the file entry
-	* @param serviceContext the service context to be applied
-	* @return the file rank
-	* @deprecated As of Judson (7.1.x), replaced by {@link
-	com.liferay.document.library.file.rank.service.DLFileRankLocalService#addFileRank}
-	*/
-	@Deprecated
-	public static com.liferay.document.library.kernel.model.DLFileRank addFileRank(
-		long repositoryId, long companyId, long userId, long fileEntryId,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext) {
-		return getService()
-				   .addFileRank(repositoryId, companyId, userId, fileEntryId,
-			serviceContext);
-	}
-
-	/**
 	* Adds the file shortcut to the existing file entry. This method is only
 	* supported by the Liferay repository.
 	*
@@ -405,22 +383,6 @@ public class DLAppLocalServiceUtil {
 		String uuid, long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getFileEntryByUuidAndGroupId(uuid, groupId);
-	}
-
-	/**
-	* Returns the file ranks from the user. This method is only supported by
-	* the Liferay repository.
-	*
-	* @param repositoryId the primary key of the repository
-	* @param userId the primary key of the user
-	* @return the file ranks from the user
-	* @deprecated As of Judson (7.1.x), replaced by {@link
-	com.liferay.document.library.file.rank.service.DLFileRankLocalService#getFileRanks}
-	*/
-	@Deprecated
-	public static java.util.List<com.liferay.document.library.kernel.model.DLFileRank> getFileRanks(
-		long repositoryId, long userId) {
-		return getService().getFileRanks(repositoryId, userId);
 	}
 
 	/**
@@ -810,28 +772,6 @@ public class DLAppLocalServiceUtil {
 				   .updateFileEntry(userId, fileEntryId, sourceFileName,
 			mimeType, title, description, changeLog, dlVersionNumberIncrease,
 			is, size, serviceContext);
-	}
-
-	/**
-	* Updates a file rank to the existing file entry. This method is only
-	* supported by the Liferay repository.
-	*
-	* @param repositoryId the primary key of the file rank's repository
-	* @param companyId the primary key of the file rank's company
-	* @param userId the primary key of the file rank's creator/owner
-	* @param fileEntryId the primary key of the file rank's file entry
-	* @param serviceContext the service context to be applied
-	* @return the file rank
-	* @deprecated As of Judson (7.1.x), replaced by {@link
-	com.liferay.document.library.file.rank.service.DLFileRankLocalService#updateFileRank}
-	*/
-	@Deprecated
-	public static com.liferay.document.library.kernel.model.DLFileRank updateFileRank(
-		long repositoryId, long companyId, long userId, long fileEntryId,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext) {
-		return getService()
-				   .updateFileRank(repositoryId, companyId, userId,
-			fileEntryId, serviceContext);
 	}
 
 	/**

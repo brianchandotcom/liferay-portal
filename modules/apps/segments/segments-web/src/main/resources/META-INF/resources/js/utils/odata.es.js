@@ -254,6 +254,15 @@ function isRedundantGroup({lastNodeWasGroup, oDataASTNode, prevConjunction}) {
 }
 
 /**
+ * Removes both single `'` and double `"` quotes from a string.
+ * @param {string} text The string to remove quotes from.
+ * @returns {string} The string without quotes.
+ */
+function removeQuotes(text) {
+	return text.replace(/['"]+/g, '');
+}
+
+/**
  * Removes a grouping node and returns the child node
  * @param {object} oDataASTNode
  * @param {string} prevConjunction
@@ -373,7 +382,7 @@ function transformFunctionalNode({oDataASTNode}) {
 		{
 			operatorName: getFunctionName(oDataASTNode),
 			propertyName: oDataASTNode.value.parameters[0].raw,
-			value: oDataASTNode.value.parameters[1].raw.replace(/['"]+/g, '')
+			value: removeQuotes(oDataASTNode.value.parameters[1].raw)
 		}
 	];
 }
@@ -425,7 +434,7 @@ function transformNotNode({oDataASTNode}) {
 			{
 				operatorName: NOT_OPERATORS.NOT_CONTAINS,
 				propertyName: nextNodeExpression.value.parameters[0].raw,
-				value: nextNodeExpression.value.parameters[1].raw.replace(/['"]+/g, '')
+				value: removeQuotes(nextNodeExpression.value.parameters[1].raw)
 			}
 		];
 	}
@@ -434,7 +443,7 @@ function transformNotNode({oDataASTNode}) {
 			{
 				operatorName: NOT_OPERATORS.NOT_EQ,
 				propertyName: nextNodeExpression.value.left.raw,
-				value: nextNodeExpression.value.right.raw.replace(/['"]+/g, '')
+				value: removeQuotes(nextNodeExpression.value.right.raw)
 			}
 		];
 	}
@@ -454,7 +463,7 @@ function transformOperatorNode({oDataASTNode}) {
 		{
 			operatorName: getExpressionName(oDataASTNode),
 			propertyName: oDataASTNode.value.left.raw,
-			value: oDataASTNode.value.right.raw.replace(/['"]+/g, '')
+			value: removeQuotes(oDataASTNode.value.right.raw)
 		}
 	];
 }

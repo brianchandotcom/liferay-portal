@@ -1960,6 +1960,18 @@ definition {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "SearchUsecase#ViewSearchResultDetails";
 
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Search"
+		);
+
+		SearchAdministration.executeSearchActions(
+			actionsDescription = "Reindex all search indexes."
+		);
+
+		Navigator.openURL();
+
 		SearchPortlets.searchEmbedded(searchTerm = "Test Test");
 
 		SearchResultPortlet.viewSearchResults(

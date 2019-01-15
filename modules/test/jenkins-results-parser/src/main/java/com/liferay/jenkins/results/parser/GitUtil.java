@@ -100,18 +100,11 @@ public class GitUtil {
 
 		if (remoteGitBranchName != null) {
 			command = JenkinsResultsParserUtil.combine(
-				"git ls-remote -h ",
-				remoteURL.replace(
-					"github-dev.liferay.com",
-					JenkinsResultsParserUtil.getRandomGitHubCacheHostname()),
-				" ", remoteGitBranchName);
+				"git ls-remote -h ", remoteURL, " ", remoteGitBranchName);
 		}
 		else {
 			command = JenkinsResultsParserUtil.combine(
-				"git ls-remote -h ",
-				remoteURL.replace(
-					"github-dev.liferay.com",
-					JenkinsResultsParserUtil.getRandomGitHubCacheHostname()));
+				"git ls-remote -h ", remoteURL);
 		}
 
 		ExecutionResult executionResult = executeBashCommands(
@@ -211,13 +204,26 @@ public class GitUtil {
 		Process process = null;
 
 		int retries = 0;
+		List<String> usedGitHubDevHostnames = new ArrayList<>(maxRetries);
 
 		while (retries < maxRetries) {
+			String[] modifiedCommands = Arrays.copyOf(
+				commands, commands.length);
+
+			String gitHubDevHostname =
+				JenkinsResultsParserUtil.getRandomGitHubCacheHostname(
+					usedGitHubDevHostnames);
+
+			for (int i = 0; i < modifiedCommands.length; i++) {
+				modifiedCommands[i] = modifiedCommands[i].replace(
+					"github-dev.liferay.com", gitHubDevHostname);
+			}
+
 			try {
 				retries++;
 
 				process = JenkinsResultsParserUtil.executeBashCommands(
-					true, workingDirectory, timeout, commands);
+					true, workingDirectory, timeout, modifiedCommands);
 
 				break;
 			}
@@ -228,6 +234,8 @@ public class GitUtil {
 							Arrays.toString(commands),
 						e);
 				}
+
+				usedGitHubDevHostnames.add(gitHubDevHostname);
 
 				System.out.println(
 					"Unable to execute bash commands retrying... ");

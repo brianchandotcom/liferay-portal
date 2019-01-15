@@ -531,12 +531,6 @@ public class GitWorkingDirectory {
 		String remoteURL = remoteGitRepository.getRemoteURL();
 
 		if (JenkinsResultsParserUtil.isCINode()) {
-			if (remoteURL.contains("github-dev.liferay.com")) {
-				executeBashCommands(
-					GitUtil.MAX_RETRIES, GitUtil.RETRY_DELAY, GitUtil.TIMEOUT,
-					"rm -f ~/.ssh/known_hosts");
-			}
-
 			if (remoteURL.contains("github.com:liferay/")) {
 				String gitHubDevRemoteURL = remoteURL.replace(
 					"github.com:liferay/", "github-dev.liferay.com:liferay/");
@@ -568,10 +562,7 @@ public class GitWorkingDirectory {
 			sb.append(" --no-tags ");
 		}
 
-		sb.append(
-			remoteURL.replace(
-				"github-dev.liferay.com",
-				JenkinsResultsParserUtil.getRandomGitHubCacheHostname()));
+		sb.append(remoteURL);
 
 		String remoteGitRefName = remoteGitRef.getName();
 
@@ -1431,11 +1422,7 @@ public class GitWorkingDirectory {
 		}
 
 		String command = JenkinsResultsParserUtil.combine(
-			"git ls-remote -h ",
-			remoteURL.replace(
-				"github-dev.liferay.com",
-				JenkinsResultsParserUtil.getRandomGitHubCacheHostname()),
-			" ", remoteGitBranchName);
+			"git ls-remote -h ", remoteURL, " ", remoteGitBranchName);
 
 		GitUtil.ExecutionResult executionResult = executeBashCommands(
 			GitUtil.MAX_RETRIES, GitUtil.RETRY_DELAY, 1000 * 60 * 10, command);
@@ -1486,11 +1473,7 @@ public class GitWorkingDirectory {
 
 	public boolean isRemoteGitRepositoryAlive(String remoteURL) {
 		String command = JenkinsResultsParserUtil.combine(
-			"git ls-remote -h ",
-			remoteURL.replace(
-				"github-dev.liferay.com",
-				JenkinsResultsParserUtil.getRandomGitHubCacheHostname()),
-			" HEAD");
+			"git ls-remote -h ", remoteURL, " HEAD");
 
 		GitUtil.ExecutionResult executionResult = executeBashCommands(
 			GitUtil.MAX_RETRIES, GitUtil.RETRY_DELAY, 1000 * 60 * 10, command);

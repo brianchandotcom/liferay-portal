@@ -21,6 +21,7 @@ import com.liferay.asset.kernel.model.ClassType;
 import com.liferay.asset.kernel.model.ClassTypeField;
 import com.liferay.asset.kernel.model.ClassTypeReader;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 
 import java.util.ArrayList;
@@ -84,7 +85,8 @@ public interface AssetDisplayContributor {
 		for (ClassTypeField classTypeField : classType.getClassTypeFields()) {
 			classTypeFields.add(
 				new AssetDisplayField(
-					classTypeField.getName(), classTypeField.getLabel(),
+					classTypeField.getName(),
+					LanguageUtil.get(locale, classTypeField.getLabel()),
 					classTypeField.getType()));
 		}
 

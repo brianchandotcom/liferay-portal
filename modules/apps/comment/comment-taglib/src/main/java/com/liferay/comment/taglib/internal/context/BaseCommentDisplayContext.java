@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.comment.display.context;
+package com.liferay.comment.taglib.internal.context;
 
 import com.liferay.portal.kernel.comment.display.context.CommentDisplayContext;
 import com.liferay.portal.kernel.model.Group;

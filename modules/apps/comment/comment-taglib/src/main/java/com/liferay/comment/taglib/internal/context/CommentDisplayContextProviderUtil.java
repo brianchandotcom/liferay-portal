@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.comment.display.context;
+package com.liferay.comment.taglib.internal.context;
 
 import com.liferay.portal.kernel.comment.Discussion;
 import com.liferay.portal.kernel.comment.DiscussionComment;
@@ -26,15 +26,27 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * @author Adolfo Pérez
  */
-public interface CommentDisplayContextProvider {
+public class CommentDisplayContextProviderUtil {
 
-	public CommentSectionDisplayContext getCommentSectionDisplayContext(
+	public static CommentSectionDisplayContext getCommentSectionDisplayContext(
 		HttpServletRequest request, HttpServletResponse response,
-		DiscussionPermission discussionPermission, Discussion discussion);
+		DiscussionPermission discussionPermission, Discussion discussion) {
 
-	public CommentTreeDisplayContext getCommentTreeDisplayContext(
+		return _commentDisplayContextProvider.getCommentSectionDisplayContext(
+			request, response, discussionPermission, discussion);
+	}
+
+	public static CommentTreeDisplayContext getCommentTreeDisplayContext(
 		HttpServletRequest request, HttpServletResponse response,
 		DiscussionPermission discussionPermission,
-		DiscussionComment discussionComment);
+		DiscussionComment discussionComment) {
+
+		return _commentDisplayContextProvider.getCommentTreeDisplayContext(
+			request, response, discussionPermission, discussionComment);
+	}
+
+	private static final CommentDisplayContextProvider
+		_commentDisplayContextProvider =
+			new CommentDisplayContextProviderImpl();
 
 }

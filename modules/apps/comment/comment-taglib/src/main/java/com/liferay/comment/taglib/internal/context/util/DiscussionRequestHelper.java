@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.comment.display.context.util;
+package com.liferay.comment.taglib.internal.context.util;
 
 import com.liferay.portal.kernel.display.context.util.BaseRequestHelper;
 

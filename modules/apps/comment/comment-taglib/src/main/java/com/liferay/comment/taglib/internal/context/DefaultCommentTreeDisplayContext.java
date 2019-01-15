@@ -12,11 +12,11 @@
  * details.
  */
 
-package com.liferay.portal.comment.display.context;
+package com.liferay.comment.taglib.internal.context;
 
-import com.liferay.portal.comment.display.context.util.DiscussionRequestHelper;
-import com.liferay.portal.comment.display.context.util.DiscussionTaglibHelper;
-import com.liferay.portal.kernel.comment.CommentConstants;
+import com.liferay.comment.constants.CommentConstants;
+import com.liferay.comment.taglib.internal.context.util.DiscussionRequestHelper;
+import com.liferay.comment.taglib.internal.context.util.DiscussionTaglibHelper;
 import com.liferay.portal.kernel.comment.DiscussionComment;
 import com.liferay.portal.kernel.comment.DiscussionPermission;
 import com.liferay.portal.kernel.comment.WorkflowableComment;

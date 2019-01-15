@@ -23,6 +23,17 @@
 	<td></td>
 	<td></td>
 </tr>
+<!--EMAIL-->
+<tr>
+	<td>EMAIL_VIEW_DOCUMENT_BUTTON</td>
+	<td>//tr/td/a[contains(.,'View Document')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--MANAGE_COLLABORATORS-->
 <tr>
 	<td>MANAGE_COLLABORATORS_NAME</td>

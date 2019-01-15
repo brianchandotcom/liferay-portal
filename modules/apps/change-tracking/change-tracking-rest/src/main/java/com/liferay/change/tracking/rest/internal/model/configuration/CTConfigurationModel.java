@@ -17,10 +17,12 @@ package com.liferay.change.tracking.rest.internal.model.configuration;
 import java.util.Set;
 
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  * @author Máté Thurzó
  */
+@XmlRootElement
 public class CTConfigurationModel {
 
 	public static CTConfigurationModel.Builder forCompany(long companyId) {

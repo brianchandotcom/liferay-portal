@@ -15,10 +15,12 @@
 package com.liferay.change.tracking.rest.internal.model.configuration;
 
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  * @author Máté Thurzó
  */
+@XmlRootElement
 public class CTConfigurationUpdateModel {
 
 	public CTConfigurationUpdateModel() {

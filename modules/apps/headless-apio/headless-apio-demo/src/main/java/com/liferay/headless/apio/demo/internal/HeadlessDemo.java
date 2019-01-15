@@ -88,7 +88,7 @@ import org.osgi.service.component.annotations.Reference;
 public class HeadlessDemo extends BasePortalInstanceLifecycleListener {
 
 	@Override
-	public void portalInstanceRegistered(Company company) throws Exception {
+	public void portalInstanceRegistered(Company company) {
 		try {
 			Role role = _roleLocalService.getRole(
 				company.getCompanyId(), RoleConstants.ADMINISTRATOR);

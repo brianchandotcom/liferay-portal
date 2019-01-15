@@ -100,24 +100,21 @@ public class OrganizationScreenNavigationRegistrar {
 		_registerScreenNavigationEntry(
 			_createUpdateOnlyScreenNavigationEntry(
 				"addresses", _CATEGORY_CONTACT, "/organization/addresses.jsp",
-				"/users_admin/update_organization_contact_information", false,
-				false),
+				"/users_admin/update_contact_information", false, false),
 			10);
 
 		_registerScreenNavigationEntry(
 			_createUpdateOnlyScreenNavigationEntry(
 				"contact-information", _CATEGORY_CONTACT,
 				"/organization/contact_information.jsp",
-				"/users_admin/update_organization_contact_information", false,
-				true),
+				"/users_admin/update_contact_information", false, true),
 			20);
 
 		_registerScreenNavigationEntry(
 			_createUpdateOnlyScreenNavigationEntry(
 				"opening-hours", _CATEGORY_CONTACT,
 				"/organization/opening_hours.jsp",
-				"/users_admin/update_organization_contact_information", false,
-				false),
+				"/users_admin/update_contact_information", false, false),
 			30);
 	}
 

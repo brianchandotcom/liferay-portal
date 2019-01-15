@@ -17,10 +17,9 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String backURL = ParamUtil.getString(request, "backURL");
+String backURL = (String)request.getAttribute("backURL");
 String className = (String)request.getAttribute("contact_information.jsp-className");
 long classPK = (long)request.getAttribute("contact_information.jsp-classPK");
-String mvcActionPath = (String)request.getAttribute("contact_information.jsp-mvcActionPath");
 
 ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 
@@ -44,11 +43,8 @@ long websiteId = website.getWebsiteId();
 	editURL.setParameter("className", className);
 	editURL.setParameter("classPK", String.valueOf(classPK));
 	editURL.setParameter("mvcRenderCommandName", "/users_admin/edit_website");
-	editURL.setParameter("listType", ListTypeConstants.WEBSITE);
 	editURL.setParameter("primaryKey", String.valueOf(websiteId));
 	editURL.setParameter("redirect", currentURL);
-	editURL.setParameter("sheetTitle", "edit-website");
-	editURL.setParameter("websiteId", String.valueOf(websiteId));
 	%>
 
 	<liferay-ui:icon
@@ -59,7 +55,8 @@ long websiteId = website.getWebsiteId();
 	<%
 	PortletURL portletURL = renderResponse.createActionURL();
 
-	portletURL.setParameter(ActionRequest.ACTION_NAME, mvcActionPath);
+	portletURL.setParameter(ActionRequest.ACTION_NAME, "/users_admin/update_contact_information");
+	portletURL.setParameter("className", className);
 	portletURL.setParameter("classPK", String.valueOf(classPK));
 	portletURL.setParameter("listType", ListTypeConstants.WEBSITE);
 	portletURL.setParameter("primaryKey", String.valueOf(websiteId));

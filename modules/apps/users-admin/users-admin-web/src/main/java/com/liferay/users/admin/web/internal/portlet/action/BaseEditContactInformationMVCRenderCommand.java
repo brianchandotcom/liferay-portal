@@ -25,11 +25,11 @@ import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.users.admin.constants.UsersAdminPortletKeys;
+import com.liferay.users.admin.web.internal.constants.UsersAdminWebKeys;
 
 import javax.portlet.PortletConfig;
 import javax.portlet.RenderRequest;
 
-import com.liferay.users.admin.web.internal.constants.UsersAdminWebKeys;
 import org.osgi.service.component.annotations.Reference;
 
 /**

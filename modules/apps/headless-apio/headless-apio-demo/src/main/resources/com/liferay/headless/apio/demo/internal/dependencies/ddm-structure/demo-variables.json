@@ -8,29 +8,6 @@
 			"dataType": "string",
 			"indexType": "keyword",
 			"label": {
-				"en_US": "roleId"
-			},
-			"localizable": true,
-			"name": "roleId",
-			"predefinedValue": {
-				"en_US": ""
-			},
-			"readOnly": false,
-			"repeatable": false,
-			"required": false,
-			"showLabel": true,
-			"style": {
-				"en_US": ""
-			},
-			"tip": {
-				"en_US": ""
-			},
-			"type": "text"
-		},
-		{
-			"dataType": "string",
-			"indexType": "keyword",
-			"label": {
 				"en_US": "contentSpaceId"
 			},
 			"localizable": true,
@@ -54,33 +31,10 @@
 			"dataType": "string",
 			"indexType": "keyword",
 			"label": {
-				"en_US": "structureId"
+				"en_US": "documentId"
 			},
 			"localizable": true,
-			"name": "structureId",
-			"predefinedValue": {
-				"en_US": ""
-			},
-			"readOnly": false,
-			"repeatable": false,
-			"required": false,
-			"showLabel": true,
-			"style": {
-				"en_US": ""
-			},
-			"tip": {
-				"en_US": ""
-			},
-			"type": "text"
-		},
-		{
-			"dataType": "string",
-			"indexType": "keyword",
-			"label": {
-				"en_US": "userId"
-			},
-			"localizable": true,
-			"name": "userId",
+			"name": "documentId",
 			"predefinedValue": {
 				"en_US": ""
 			},
@@ -146,10 +100,79 @@
 			"dataType": "string",
 			"indexType": "keyword",
 			"label": {
+				"en_US": "roleId"
+			},
+			"localizable": true,
+			"name": "roleId",
+			"predefinedValue": {
+				"en_US": ""
+			},
+			"readOnly": false,
+			"repeatable": false,
+			"required": false,
+			"showLabel": true,
+			"style": {
+				"en_US": ""
+			},
+			"tip": {
+				"en_US": ""
+			},
+			"type": "text"
+		},
+		{
+			"dataType": "string",
+			"indexType": "keyword",
+			"label": {
+				"en_US": "structureId"
+			},
+			"localizable": true,
+			"name": "structureId",
+			"predefinedValue": {
+				"en_US": ""
+			},
+			"readOnly": false,
+			"repeatable": false,
+			"required": false,
+			"showLabel": true,
+			"style": {
+				"en_US": ""
+			},
+			"tip": {
+				"en_US": ""
+			},
+			"type": "text"
+		},
+		{
+			"dataType": "string",
+			"indexType": "keyword",
+			"label": {
 				"en_US": "structuredContentId"
 			},
 			"localizable": true,
 			"name": "structuredContentId",
+			"predefinedValue": {
+				"en_US": ""
+			},
+			"readOnly": false,
+			"repeatable": false,
+			"required": false,
+			"showLabel": true,
+			"style": {
+				"en_US": ""
+			},
+			"tip": {
+				"en_US": ""
+			},
+			"type": "text"
+		},
+		{
+			"dataType": "string",
+			"indexType": "keyword",
+			"label": {
+				"en_US": "userId"
+			},
+			"localizable": true,
+			"name": "userId",
 			"predefinedValue": {
 				"en_US": ""
 			},

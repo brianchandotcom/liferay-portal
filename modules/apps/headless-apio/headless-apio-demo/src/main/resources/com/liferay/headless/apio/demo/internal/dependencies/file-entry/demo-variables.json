@@ -14,6 +14,12 @@
 		{
 			"description": "",
 			"enabled": true,
+			"key": "documentId",
+			"value": "%s"
+		},
+		{
+			"description": "",
+			"enabled": true,
 			"key": "structureId",
 			"value": "%s"
 		},

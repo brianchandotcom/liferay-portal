@@ -8,8 +8,16 @@
 		<td>$contentSpaceId.getData()</td>
 	</tr>
 	<tr>
+		<td>documentId</td>
+		<td>$documentId.getData()</td>
+	</tr>
+	<tr>
 		<td>formId</td>
 		<td>$formId.getData()</td>
+	</tr>
+	<tr>
+		<td>organizationId</td>
+		<td>$organizationId.getData()</td>
 	</tr>
 	<tr>
 		<td>roleId</td>

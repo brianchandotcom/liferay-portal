@@ -2,7 +2,9 @@ import React from 'react';
 import propTypes from 'prop-types';
 import ClaySelect from '../shared/ClaySelect.es';
 import DatePicker from 'react-datepicker';
+
 // import 'react-datepicker/dist/react-datepicker.css';
+
 import {PROPERTY_TYPES} from '../../utils/constants.es.js';
 
 class TypedInput extends React.Component {
@@ -62,6 +64,7 @@ class TypedInput extends React.Component {
 		return (
 			<ClaySelect
 				className="criterion-input form-control"
+				data-testid="options-boolean"
 				onChange={this._handleChange}
 				options={[
 					{

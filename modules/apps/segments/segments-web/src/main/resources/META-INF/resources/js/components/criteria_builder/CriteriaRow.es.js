@@ -134,9 +134,11 @@ class CriteriaRow extends Component {
 	) => {
 		let parsedValue = value;
 		if (type === PROPERTY_TYPES.DATE) {
+
 			// parse the date propperly
+
 			const date = new Date();
-			parsedValue = date.getDate() + '/' + (date.getMonth()+1) + '/' + date.getFullYear()
+			parsedValue = `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
 		}
 		return sub(
 			Liferay.Language.get('x-with-property-x-x-x'),

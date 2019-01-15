@@ -121,8 +121,8 @@ class CriteriaGroup extends Component {
 				operatorName :
 				supportedOperators[0].name,
 			propertyName,
-			value,
-			type
+			type,
+			value
 		};
 
 		if (root && !criteria) {

@@ -1,5 +1,25 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`CriteriaRow should render type boolean  1`] = `
+<DocumentFragment>
+  <select
+    class="form-control criterion-input form-control"
+    data-testid="options-boolean"
+  >
+    <option
+      value="true"
+    >
+      TRUE
+    </option>
+    <option
+      value="false"
+    >
+      FALSE
+    </option>
+  </select>
+</DocumentFragment>
+`;
+
 exports[`CriteriaRow should render type string with pseudotype options 1`] = `
 <DocumentFragment>
   <select

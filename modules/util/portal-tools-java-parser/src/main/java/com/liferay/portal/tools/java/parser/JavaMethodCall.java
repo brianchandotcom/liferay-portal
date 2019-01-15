@@ -72,6 +72,8 @@ public class JavaMethodCall extends JavaExpression {
 		String indent, String prefix, String suffix, int maxLineLength,
 		boolean forceLineBreak) {
 
+		String originalIndent = indent;
+
 		StringBundler sb = new StringBundler();
 
 		sb.append(indent);
@@ -87,15 +89,35 @@ public class JavaMethodCall extends JavaExpression {
 		}
 
 		if (_parameterValueJavaExpressions.isEmpty()) {
-			append(
-				sb, _methodName, indent, prefix, "()" + suffix, maxLineLength,
-				false);
+			if (_isUseChainStyle(2) && (getChainedJavaExpression() != null)) {
+				append(
+					sb, _methodName, indent, prefix, "(", maxLineLength, false);
+
+				sb.append("\n");
+				sb.append(originalIndent);
+				sb.append(")");
+				sb.append(suffix);
+			}
+			else {
+				append(
+					sb, _methodName, indent, prefix, "()" + suffix,
+					maxLineLength, false);
+			}
 		}
 		else {
 			indent = append(
 				sb, _methodName, indent, prefix, "(", maxLineLength, false);
 
-			if (forceLineBreak) {
+			if (_isUseChainStyle(1)) {
+				appendNewLine(
+					sb, _parameterValueJavaExpressions, indent, maxLineLength);
+
+				sb.append("\n");
+				sb.append(originalIndent);
+				sb.append(")");
+				sb.append(suffix);
+			}
+			else if (forceLineBreak) {
 				appendNewLine(
 					sb, _parameterValueJavaExpressions, indent, "",
 					")" + suffix, maxLineLength);

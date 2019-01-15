@@ -566,7 +566,6 @@ public abstract class BaseUpgradePortletId extends UpgradeProcess {
 
 				String newPortletInstanceKey = PortletIdCodec.encode(portletId);
 
-				updateGroup(portletId, newPortletInstanceKey);
 				updateInstanceablePortletPreferences(
 					portletId, newPortletInstanceKey);
 				updateResourcePermission(

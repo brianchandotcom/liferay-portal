@@ -30,7 +30,7 @@ if (primaryKey > 0L) {
 }
 
 if (!portletName.equals(UsersAdminPortletKeys.MY_ACCOUNT)) {
-	portletDisplay.setShowBackIcon(true);
+//	portletDisplay.setShowBackIcon(true);
 	portletDisplay.setURLBack(backURL);
 
 	String portletTitle = (String)request.getAttribute(UsersAdminWebKeys.PORTLET_TITLE);
@@ -59,7 +59,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, sheetTit
 	<aui:input name="backURL" type="hidden" value="<%= backURL %>" />
 	<aui:input name="className" type="hidden" value="<%= className %>" />
 	<aui:input name="classPK" type="hidden" value="<%= String.valueOf(classPK) %>" />
-	<aui:input name="errorMvcRenderCommandName" type="hidden" value="/users_admin/edit_website" />
+	<aui:input name="errorMVCRenderCommandName" type="hidden" value="/users_admin/edit_website" />
 	<aui:input name="listType" type="hidden" value="<%= ListTypeConstants.WEBSITE %>" />
 	<aui:input name="primaryKey" type="hidden" value="<%= String.valueOf(primaryKey) %>" />
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
@@ -75,7 +75,9 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, sheetTit
 		</div>
 
 		<div class="sheet sheet-lg">
-			<h2 class="sheet-title"><liferay-ui:message key="<%= sheetTitle %>" /></h2>
+			<div class="sheet-header">
+				<h2 class="sheet-title"><liferay-ui:message key="<%= sheetTitle %>" /></h2>
+			</div>
 
 			<div class="sheet-section">
 				<clay:alert

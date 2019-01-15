@@ -17,8 +17,9 @@
 <%@ include file="/init.jsp" %>
 
 <%
+String backURL = (String)request.getAttribute("backURL");
+String className = (String)request.getAttribute("contact_information.jsp-className");
 long classPK = (long)request.getAttribute("contact_information.jsp-classPK");
-String mvcActionPath = (String)request.getAttribute("contact_information.jsp-mvcActionPath");
 
 ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 
@@ -34,24 +35,28 @@ long emailAddressId = emailAddress.getEmailAddressId();
 	message="<%= StringPool.BLANK %>"
 	showWhenSingleIcon="<%= true %>"
 >
+
+	<%
+		PortletURL editURL = liferayPortletResponse.createRenderURL();
+
+	//	editURL.setParameter("backURL", backURL);
+		editURL.setParameter("className", className);
+		editURL.setParameter("classPK", String.valueOf(classPK));
+		editURL.setParameter("mvcRenderCommandName", "/users_admin/edit_email_address");
+		editURL.setParameter("primaryKey", String.valueOf(emailAddressId));
+		editURL.setParameter("redirect", currentURL);
+	%>
+
 	<liferay-ui:icon
-		cssClass="modify-email-address-link"
-		data="<%=
-			new HashMap<String, Object>() {
-				{
-					put("title", LanguageUtil.get(request, "edit-email-address"));
-					put("primary-key", String.valueOf(emailAddressId));
-				}
-			}
-		%>"
 		message="edit"
-		url="javascript:;"
+		url="<%= editURL.toString() %>"
 	/>
 
 	<%
 	PortletURL portletURL = renderResponse.createActionURL();
 
-	portletURL.setParameter(ActionRequest.ACTION_NAME, mvcActionPath);
+	portletURL.setParameter(ActionRequest.ACTION_NAME, "/users_admin/update_contact_information");
+	portletURL.setParameter("className", className);
 	portletURL.setParameter("classPK", String.valueOf(classPK));
 	portletURL.setParameter("listType", ListTypeConstants.EMAIL_ADDRESS);
 	portletURL.setParameter("primaryKey", String.valueOf(emailAddressId));

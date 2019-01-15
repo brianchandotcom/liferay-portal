@@ -17,21 +17,21 @@
 <%@ include file="/init.jsp" %>
 
 <%
+String backURL = ParamUtil.getString(request, "backURL");
+
+if (Validator.isNull(backURL)) {
+	backURL = ParamUtil.getString(request, "redirect");
+
+	request.setAttribute("backURL", backURL);
+}
+
 OrganizationScreenNavigationDisplayContext organizationScreenNavigationDisplayContext = (OrganizationScreenNavigationDisplayContext)request.getAttribute(UsersAdminWebKeys.ORGANIZATION_SCREEN_NAVIGATION_DISPLAY_CONTEXT);
 
 long organizationId = organizationScreenNavigationDisplayContext.getOrganizationId();
 
 request.setAttribute("contact_information.jsp-className", Organization.class.getName());
 request.setAttribute("contact_information.jsp-classPK", organizationId);
-request.setAttribute("contact_information.jsp-contactInformationRequireJS", organizationScreenNavigationDisplayContext.getContactInformationJSRequire());
-request.setAttribute("contact_information.jsp-mvcActionPath", "/users_admin/update_organization_contact_information");
-
-String redirect = ParamUtil.getString(request, "redirect");
-
-String backURL = ParamUtil.getString(request, "backURL", redirect);
 %>
-
-<aui:input name="classPK" type="hidden" value="<%= String.valueOf(organizationId) %>" />
 
 <div class="sheet-section">
 	<liferay-util:include page="/common/phone_numbers.jsp" servletContext="<%= application %>">
@@ -47,7 +47,6 @@ String backURL = ParamUtil.getString(request, "backURL", redirect);
 
 <div class="sheet-section">
 	<liferay-util:include page="/common/websites.jsp" servletContext="<%= application %>">
-		<liferay-util:param name="backURL" value="<%= backURL %>" />
 		<liferay-util:param name="emptyResultsMessage" value="this-organization-does-not-have-any-websites" />
 	</liferay-util:include>
 </div>

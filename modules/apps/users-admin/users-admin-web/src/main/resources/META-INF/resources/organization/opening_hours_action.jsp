@@ -17,6 +17,8 @@
 <%@ include file="/init.jsp" %>
 
 <%
+String backURL = (String)request.getAttribute("backURL");
+
 OrganizationScreenNavigationDisplayContext organizationScreenNavigationDisplayContext = (OrganizationScreenNavigationDisplayContext)request.getAttribute(UsersAdminWebKeys.ORGANIZATION_SCREEN_NAVIGATION_DISPLAY_CONTEXT);
 
 long organizationId = organizationScreenNavigationDisplayContext.getOrganizationId();
@@ -31,26 +33,30 @@ long orgLaborId = ParamUtil.getLong(request, "orgLaborId");
 	message="<%= StringPool.BLANK %>"
 	showWhenSingleIcon="<%= true %>"
 >
+
+	<%
+		PortletURL editURL = liferayPortletResponse.createRenderURL();
+
+	//	editURL.setParameter("backURL", backURL);
+		editURL.setParameter("className", Organization.class.getName());
+		editURL.setParameter("classPK", String.valueOf(organizationId));
+		editURL.setParameter("mvcRenderCommandName", "/users_admin/edit_opening_hours");
+		editURL.setParameter("primaryKey", String.valueOf(orgLaborId));
+		editURL.setParameter("redirect", currentURL);
+	%>
+
 	<liferay-ui:icon
-		cssClass="modify-opening-hours-link"
-		data="<%=
-			new HashMap<String, Object>() {
-				{
-					put("title", LanguageUtil.get(request, "edit-opening-hours"));
-					put("primary-key", String.valueOf(orgLaborId));
-				}
-			}
-		%>"
 		message="edit"
-		url="javascript:;"
+		url="<%= editURL.toString() %>"
 	/>
 
-	<portlet:actionURL name="/users_admin/update_organization_contact_information" var="removeOpeningHoursUrl">
+	<portlet:actionURL name="/users_admin/update_contact_information" var="removeOpeningHoursUrl">
 		<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE %>" />
-		<portlet:param name="redirect" value="<%= currentURL %>" />
-		<portlet:param name="listType" value="<%= ListTypeConstants.ORGANIZATION_SERVICE %>" />
+		<portlet:param name="className" value="<%= Organization.class.getName() %>" />
 		<portlet:param name="classPK" value="<%= String.valueOf(organizationId) %>" />
+		<portlet:param name="listType" value="<%= ListTypeConstants.ORGANIZATION_SERVICE %>" />
 		<portlet:param name="primaryKey" value="<%= String.valueOf(orgLaborId) %>" />
+		<portlet:param name="redirect" value="<%= currentURL %>" />
 	</portlet:actionURL>
 
 	<liferay-ui:icon

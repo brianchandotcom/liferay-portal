@@ -17,43 +17,99 @@
 <%@ include file="/init.jsp" %>
 
 <%
+String backURL = ParamUtil.getString(request, "backURL");
 String className = ParamUtil.getString(request, "className");
-
-long phoneId = ParamUtil.getLong(request, "primaryKey", 0L);
+Long classPK = ParamUtil.getLong(request, "classPK");
+long primaryKey = ParamUtil.getLong(request, "primaryKey", 0L);
+String redirect = ParamUtil.getString(request, "redirect");
 
 Phone phone = null;
 
-if (phoneId > 0L) {
-	phone = PhoneServiceUtil.getPhone(phoneId);
+if (primaryKey > 0L) {
+	phone = PhoneServiceUtil.getPhone(primaryKey);
 }
+
+if (!portletName.equals(UsersAdminPortletKeys.MY_ACCOUNT)) {
+//	portletDisplay.setShowBackIcon(true);
+	portletDisplay.setURLBack(backURL);
+
+	String portletTitle = (String)request.getAttribute(UsersAdminWebKeys.PORTLET_TITLE);
+
+	renderResponse.setTitle(portletTitle);
+}
+
+PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "contact-information"), redirect);
+
+String sheetTitle;
+
+if (primaryKey > 0) {
+	sheetTitle = LanguageUtil.get(request, "edit-phone-number");
+}
+else {
+	sheetTitle = LanguageUtil.get(request, "add-phone-number");
+}
+
+PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, sheetTitle), null);
 %>
 
-<aui:form cssClass="modal-body" name="fm">
-	<clay:alert
-		message='<%= LanguageUtil.get(request, "extension-must-be-numeric") %>'
-		style="info"
-		title='<%= LanguageUtil.get(request, "info") + ":" %>'
-	/>
+<portlet:actionURL name="/users_admin/update_contact_information" var="actionURL" />
 
-	<aui:model-context bean="<%= phone %>" model="<%= Phone.class %>" />
-
+<aui:form action="<%= actionURL %>" method="post" name="fm">
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.EDIT %>" />
-	<aui:input name="primaryKey" type="hidden" value="<%= phoneId %>" />
+	<aui:input name="backURL" type="hidden" value="<%= backURL %>" />
+	<aui:input name="className" type="hidden" value="<%= className %>" />
+	<aui:input name="classPK" type="hidden" value="<%= String.valueOf(classPK) %>" />
+	<aui:input name="errorMVCRenderCommandName" type="hidden" value="/users_admin/edit_phone_number" />
 	<aui:input name="listType" type="hidden" value="<%= ListTypeConstants.PHONE %>" />
+	<aui:input name="primaryKey" type="hidden" value="<%= String.valueOf(primaryKey) %>" />
+	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 
-	<aui:input checked="<%= (phone != null)? phone.isPrimary() : false %>" id="phonePrimary" label="make-primary" name="phonePrimary" type="checkbox" />
+	<div class="container-fluid container-fluid-max-xl">
+		<div class="sheet-lg" id="breadcrumb">
+			<liferay-ui:breadcrumb
+				showCurrentGroup="<%= false %>"
+				showGuestGroup="<%= false %>"
+				showLayout="<%= false %>"
+				showPortletBreadcrumb="<%= true %>"
+			/>
+		</div>
 
-	<liferay-ui:error key="<%= NoSuchListTypeException.class.getName() + className + ListTypeConstants.PHONE %>" message="please-select-a-type" />
+		<div class="sheet sheet-lg">
+			<div class="sheet-header">
+				<h2 class="sheet-title"><liferay-ui:message key="<%= sheetTitle %>" /></h2>
+			</div>
 
-	<aui:select inlineField="<%= true %>" label="type" listType="<%= className + ListTypeConstants.PHONE %>" name="phoneTypeId" />
+			<div class="sheet-section">
+				<clay:alert
+					message='<%= LanguageUtil.get(request, "extension-must-be-numeric") %>'
+					style="info"
+					title='<%= LanguageUtil.get(request, "info") + ":" %>'
+				/>
 
-	<liferay-ui:error exception="<%= PhoneNumberException.class %>" message="please-enter-a-valid-phone-number" />
+				<aui:model-context bean="<%= phone %>" model="<%= Phone.class %>" />
 
-	<aui:input fieldParam="phoneNumber" id="phoneNumber" name="number" required="<%= true %>" />
+				<aui:input checked="<%= (phone != null)? phone.isPrimary() : false %>" id="phonePrimary" label="make-primary" name="phonePrimary" type="checkbox" />
 
-	<liferay-ui:error exception="<%= PhoneNumberExtensionException.class %>" message="please-enter-a-valid-phone-number-extension" />
+				<liferay-ui:error key="<%= NoSuchListTypeException.class.getName() + className + ListTypeConstants.PHONE %>" message="please-select-a-type" />
 
-	<aui:input fieldParam="phoneExtension" id="phoneExtension" name="extension">
-		<aui:validator name="digits" />
-	</aui:input>
+				<aui:select inlineField="<%= true %>" label="type" listType="<%= className + ListTypeConstants.PHONE %>" name="phoneTypeId" />
+
+				<liferay-ui:error exception="<%= PhoneNumberException.class %>" message="please-enter-a-valid-phone-number" />
+
+				<aui:input fieldParam="phoneNumber" id="phoneNumber" name="number" required="<%= true %>" />
+
+				<liferay-ui:error exception="<%= PhoneNumberExtensionException.class %>" message="please-enter-a-valid-phone-number-extension" />
+
+				<aui:input fieldParam="phoneExtension" id="phoneExtension" name="extension">
+					<aui:validator name="digits" />
+				</aui:input>
+			</div>
+
+			<div class="sheet-footer">
+				<aui:button primary="<%= true %>" type="submit" />
+
+				<aui:button href="<%= redirect %>" type="cancel" />
+			</div>
+		</div>
+	</div>
 </aui:form>

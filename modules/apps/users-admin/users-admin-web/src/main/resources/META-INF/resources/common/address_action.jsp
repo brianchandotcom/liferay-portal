@@ -17,8 +17,8 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String mvcActionPath = (String)request.getAttribute("contact_information.jsp-mvcActionPath");
-
+String backURL = (String)request.getAttribute("backURL");
+String className = (String)request.getAttribute("contact_information.jsp-className");
 long classPK = (long)request.getAttribute("contact_information.jsp-classPK");
 
 long addressId = ParamUtil.getLong(request, "addressId");
@@ -31,28 +31,32 @@ long addressId = ParamUtil.getLong(request, "addressId");
 	message="<%= StringPool.BLANK %>"
 	showWhenSingleIcon="<%= true %>"
 >
+
+	<%
+		PortletURL editURL = liferayPortletResponse.createRenderURL();
+
+	//	editURL.setParameter("backURL", backURL);
+		editURL.setParameter("className", className);
+		editURL.setParameter("classPK", String.valueOf(classPK));
+		editURL.setParameter("mvcRenderCommandName", "/users_admin/edit_address");
+		editURL.setParameter("primaryKey", String.valueOf(addressId));
+		editURL.setParameter("redirect", currentURL);
+	%>
+
 	<liferay-ui:icon
-		cssClass="modify-address-link"
-		data="<%=
-			new HashMap<String, Object>() {
-				{
-					put("primary-key", String.valueOf(addressId));
-					put("title", LanguageUtil.get(request, "edit-address"));
-				}
-			}
-		%>"
 		message="edit"
-		url="javascript:;"
+		url="<%= editURL.toString() %>"
 	/>
 
 	<%
 	PortletURL portletURL = renderResponse.createActionURL();
 
-	portletURL.setParameter(ActionRequest.ACTION_NAME, mvcActionPath);
-	portletURL.setParameter("redirect", currentURL);
+	portletURL.setParameter(ActionRequest.ACTION_NAME, "/users_admin/update_contact_information");
+	portletURL.setParameter("className", className);
 	portletURL.setParameter("classPK", String.valueOf(classPK));
-	portletURL.setParameter("primaryKey", String.valueOf(addressId));
 	portletURL.setParameter("listType", ListTypeConstants.ADDRESS);
+	portletURL.setParameter("primaryKey", String.valueOf(addressId));
+	portletURL.setParameter("redirect", currentURL);
 
 	PortletURL makePrimaryURL = PortletURLUtil.clone(portletURL, renderResponse);
 

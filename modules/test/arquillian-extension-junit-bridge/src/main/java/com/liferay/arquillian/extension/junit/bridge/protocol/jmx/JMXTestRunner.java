@@ -20,7 +20,6 @@ import java.security.AccessController;
 import java.security.PrivilegedActionException;
 import java.security.PrivilegedExceptionAction;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -76,8 +75,7 @@ public class JMXTestRunner
 
 	@Override
 	public byte[] runTestMethod(String className, String methodName) {
-		TestResult result = _runTestMethodInternal(
-			className, methodName, new HashMap<>());
+		TestResult result = _runTestMethodInternal(className, methodName);
 
 		return Serializer.toByteArray(result);
 	}
@@ -108,8 +106,7 @@ public class JMXTestRunner
 		catch (PrivilegedActionException pae) {
 		}
 
-		TestResult result = _runTestMethodInternal(
-			className, methodName, protocolProps);
+		TestResult result = _runTestMethodInternal(className, methodName);
 
 		return Serializer.toByteArray(result);
 	}
@@ -150,8 +147,7 @@ public class JMXTestRunner
 	protected static MBeanServer localMBeanServer;
 
 	private TestResult _runTestMethodInternal(
-		String className, String methodName,
-		Map<String, String> protocolProps) {
+		String className, String methodName) {
 
 		_currentCall.set(className + methodName);
 		TestResult result = new TestResult();

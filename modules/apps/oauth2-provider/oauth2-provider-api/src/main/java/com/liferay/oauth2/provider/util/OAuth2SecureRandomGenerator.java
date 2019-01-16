@@ -32,7 +32,7 @@ public class OAuth2SecureRandomGenerator {
 		return matcher.replaceFirst("id-$1-$2-$3-$4-$5");
 	}
 
-	public static String generateRandomSecret() {
+	public static String generateClientSecret() {
 		Matcher matcher = _baseIdPattern.matcher(generateSecureRandomString());
 
 		return matcher.replaceFirst("secret-$1-$2-$3-$4-$5");

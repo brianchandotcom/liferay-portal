@@ -698,7 +698,10 @@ public class LVEntryPersistenceImpl extends BasePersistenceImpl<LVEntry>
 			query.append(")");
 		}
 
-		query.append("lvEntry.lvEntryId > 0");
+		query.setStringAt(removeConjunction(query.stringAt(query.index() - 1)),
+			query.index() - 1);
+
+		query.append(" AND lvEntry.lvEntryId > 0");
 
 		if (orderByComparator != null) {
 			appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
@@ -876,7 +879,10 @@ public class LVEntryPersistenceImpl extends BasePersistenceImpl<LVEntry>
 			query.append(")");
 		}
 
-		query.append("lvEntry.lvEntryId > 0");
+		query.setStringAt(removeConjunction(query.stringAt(query.index() - 1)),
+			query.index() - 1);
+
+		query.append(" AND lvEntry.lvEntryId > 0");
 
 		String sql = query.toString();
 

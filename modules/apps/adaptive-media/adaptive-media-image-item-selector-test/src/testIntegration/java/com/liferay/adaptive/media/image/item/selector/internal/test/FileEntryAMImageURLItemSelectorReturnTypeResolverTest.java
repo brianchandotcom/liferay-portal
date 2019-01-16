@@ -23,6 +23,7 @@ import com.liferay.document.library.kernel.util.DLUtil;
 import com.liferay.item.selector.ItemSelectorReturnTypeResolver;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -41,9 +42,12 @@ import com.liferay.portal.service.test.ServiceTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -595,6 +599,8 @@ public class FileEntryAMImageURLItemSelectorReturnTypeResolverTest {
 
 		String srcSource = sourceJSONObject.getString("src");
 
+		Matcher matcher = _pattern.matcher(srcSource);
+
 		StringBundler sb = new StringBundler(13);
 
 		sb.append("/o/adaptive-media/image/");
@@ -611,7 +617,8 @@ public class FileEntryAMImageURLItemSelectorReturnTypeResolverTest {
 		sb.append(title);
 		sb.append(" 2x");
 
-		Assert.assertEquals(sb.toString(), srcSource);
+		Assert.assertEquals(
+			sb.toString(), matcher.replaceAll(StringPool.BLANK));
 	}
 
 	private void _assertSrcSource(
@@ -620,10 +627,12 @@ public class FileEntryAMImageURLItemSelectorReturnTypeResolverTest {
 
 		String srcSource = sourceJSONObject.getString("src");
 
+		Matcher matcher = _pattern.matcher(srcSource);
+
 		Assert.assertEquals(
 			"/o/adaptive-media/image/" + fileEntryId + "/" +
 				configurationEntryUuid + "/" + title,
-			srcSource);
+			matcher.replaceFirst(StringPool.BLANK));
 	}
 
 	private byte[] _getImageBytes() throws Exception {
@@ -645,5 +654,7 @@ public class FileEntryAMImageURLItemSelectorReturnTypeResolverTest {
 		filter = "component.name=*.FileEntryAMImageURLItemSelectorReturnTypeResolver"
 	)
 	private ItemSelectorReturnTypeResolver _itemSelectorReturnTypeResolver;
+
+	private static Pattern _pattern = Pattern.compile("\\?t=\\d+");
 
 }

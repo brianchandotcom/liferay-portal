@@ -14,7 +14,6 @@
 
 package com.liferay.arquillian.extension.junit.bridge.protocol.jmx;
 
-import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -41,7 +40,6 @@ public class JMXTestRunner
 
 	public JMXTestRunner(ClassLoader testClassLoader, String objectName) {
 		_testClassLoader = testClassLoader;
-
 		_objectName = objectName;
 	}
 
@@ -70,15 +68,6 @@ public class JMXTestRunner
 		TestResult result = _runTestMethodInternal(className, methodName);
 
 		return Serializer.toByteArray(result);
-	}
-
-	@Override
-	public byte[] runTestMethod(
-		String className, String methodName,
-		Map<String, String> protocolProps) {
-
-		return Serializer.toByteArray(
-			_runTestMethodInternal(className, methodName));
 	}
 
 	@Override

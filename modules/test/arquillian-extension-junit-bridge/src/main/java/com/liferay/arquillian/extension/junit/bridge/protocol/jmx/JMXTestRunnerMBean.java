@@ -14,8 +14,6 @@
 
 package com.liferay.arquillian.extension.junit.bridge.protocol.jmx;
 
-import java.util.Map;
-
 import javax.management.NotificationBroadcaster;
 
 import org.jboss.arquillian.container.test.spi.command.Command;
@@ -48,17 +46,6 @@ public interface JMXTestRunnerMBean extends NotificationBroadcaster {
 	 * @return a serialized {@link TestResult}
 	 */
 	public byte[] runTestMethod(String className, String methodName);
-
-	/**
-	 * Runs a test method on the given test class
-	 *
-	 * @param className the test class name
-	 * @param methodName the test method name
-	 * @param protocol configuration properties
-	 * @return a serialized {@link TestResult}
-	 */
-	public byte[] runTestMethod(
-		String className, String methodName, Map<String, String> protocolProps);
 
 	/**
 	 * Broadcast {@link Command} commands to any listeners

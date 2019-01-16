@@ -19,6 +19,7 @@ package com.liferay.change.tracking.constants;
  */
 public class CTPanelCategoryKeys {
 
-	public static final String USER_MY_CHANGE_LISTS = "user.my_change_lists";
+	public static final String CONTROL_PANEL_CHANGE_LISTS =
+		"control_panel.change_lists";
 
 }

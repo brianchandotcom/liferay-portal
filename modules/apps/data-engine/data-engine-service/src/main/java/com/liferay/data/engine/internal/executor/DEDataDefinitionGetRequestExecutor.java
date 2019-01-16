@@ -14,19 +14,10 @@
 
 package com.liferay.data.engine.internal.executor;
 
-import com.liferay.data.engine.exception.DEDataDefinitionFieldsDeserializerException;
-import com.liferay.data.engine.internal.io.DEDataDefinitionFieldsDeserializerTracker;
-import com.liferay.data.engine.io.DEDataDefinitionFieldsDeserializer;
-import com.liferay.data.engine.io.DEDataDefinitionFieldsDeserializerApplyRequest;
-import com.liferay.data.engine.io.DEDataDefinitionFieldsDeserializerApplyResponse;
-import com.liferay.data.engine.model.DEDataDefinition;
-import com.liferay.data.engine.model.DEDataDefinitionField;
 import com.liferay.data.engine.service.DEDataDefinitionGetRequest;
 import com.liferay.data.engine.service.DEDataDefinitionGetResponse;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
-
-import java.util.List;
 
 /**
  * @author Jeyvison Nascimento
@@ -34,13 +25,11 @@ import java.util.List;
 public class DEDataDefinitionGetRequestExecutor {
 
 	public DEDataDefinitionGetRequestExecutor(
-		DDMStructureLocalService ddmStructureLocalService,
-		DEDataDefinitionFieldsDeserializerTracker
-			deDataDefinitionFieldsDeserializerTracker) {
+		DEDataEngineRequestExecutor deDataEngineRequestExecutor,
+		DDMStructureLocalService ddmStructureLocalService) {
 
+		_deDataEngineRequestExecutor = deDataEngineRequestExecutor;
 		_ddmStructureLocalService = ddmStructureLocalService;
-		_deDataDefinitionFieldsDeserializerTracker =
-			deDataDefinitionFieldsDeserializerTracker;
 	}
 
 	public DEDataDefinitionGetResponse execute(
@@ -53,55 +42,11 @@ public class DEDataDefinitionGetRequestExecutor {
 		DDMStructure ddmStructure = _ddmStructureLocalService.getStructure(
 			deDataDefinitionId);
 
-		return DEDataDefinitionGetResponse.Builder.of(map(ddmStructure));
-	}
-
-	protected List<DEDataDefinitionField> deserialize(String content)
-		throws DEDataDefinitionFieldsDeserializerException {
-
-		DEDataDefinitionFieldsDeserializer deDataDefinitionFieldsDeserializer =
-			_deDataDefinitionFieldsDeserializerTracker.
-				getDEDataDefinitionFieldsDeserializer("json");
-
-		DEDataDefinitionFieldsDeserializerApplyRequest
-			deDataDefinitionFieldsDeserializerApplyRequest =
-				DEDataDefinitionFieldsDeserializerApplyRequest.Builder.
-					newBuilder(
-						content
-					).build();
-
-		DEDataDefinitionFieldsDeserializerApplyResponse
-			deDataDefinitionFieldsDeserializerApplyResponse =
-				deDataDefinitionFieldsDeserializer.apply(
-					deDataDefinitionFieldsDeserializerApplyRequest);
-
-		return deDataDefinitionFieldsDeserializerApplyResponse.
-			getDeDataDefinitionFields();
-	}
-
-	protected DEDataDefinition map(DDMStructure ddmStructure)
-		throws DEDataDefinitionFieldsDeserializerException {
-
-		List<DEDataDefinitionField> deDataDefinitionFields = deserialize(
-			ddmStructure.getDefinition());
-
-		DEDataDefinition deDataDefinition = new DEDataDefinition();
-
-		deDataDefinition.setDEDataDefinitionFields(deDataDefinitionFields);
-		deDataDefinition.setDEDataDefinitionId(ddmStructure.getStructureId());
-		deDataDefinition.addDescriptions(ddmStructure.getDescriptionMap());
-		deDataDefinition.addNames(ddmStructure.getNameMap());
-		deDataDefinition.setCreateDate(ddmStructure.getCreateDate());
-		deDataDefinition.setDEDataDefinitionId(ddmStructure.getStructureId());
-		deDataDefinition.setModifiedDate(ddmStructure.getModifiedDate());
-		deDataDefinition.setStorageType(ddmStructure.getStorageType());
-		deDataDefinition.setUserId(ddmStructure.getUserId());
-
-		return deDataDefinition;
+		return DEDataDefinitionGetResponse.Builder.of(
+			_deDataEngineRequestExecutor.map(ddmStructure));
 	}
 
 	private final DDMStructureLocalService _ddmStructureLocalService;
-	private final DEDataDefinitionFieldsDeserializerTracker
-		_deDataDefinitionFieldsDeserializerTracker;
+	private final DEDataEngineRequestExecutor _deDataEngineRequestExecutor;
 
 }

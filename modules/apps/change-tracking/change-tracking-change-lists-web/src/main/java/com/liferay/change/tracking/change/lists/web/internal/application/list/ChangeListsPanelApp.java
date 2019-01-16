@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.change.tracking.change.lists.configuration.web.internal.application.list;
+package com.liferay.change.tracking.change.lists.web.internal.application.list;
 
 import com.liferay.application.list.BasePanelApp;
 import com.liferay.application.list.PanelApp;
@@ -29,21 +29,21 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
-		"panel.app.order:Integer=100",
+		"panel.app.order:Integer=200",
 		"panel.category.key=" + CTPanelCategoryKeys.CONTROL_PANEL_CHANGE_LISTS
 	},
 	service = PanelApp.class
 )
-public class ChangeListsConfigurationPanelApp extends BasePanelApp {
+public class ChangeListsPanelApp extends BasePanelApp {
 
 	@Override
 	public String getPortletId() {
-		return CTPortletKeys.CHANGE_LISTS_CONFIGURATION;
+		return CTPortletKeys.CHANGE_LISTS;
 	}
 
 	@Override
 	@Reference(
-		target = "(javax.portlet.name=" + CTPortletKeys.CHANGE_LISTS_CONFIGURATION + ")",
+		target = "(javax.portlet.name=" + CTPortletKeys.CHANGE_LISTS + ")",
 		unbind = "-"
 	)
 	public void setPortlet(Portlet portlet) {

@@ -15,8 +15,10 @@
 package com.liferay.portal.template.freemarker.internal;
 
 import com.liferay.petra.concurrent.ConcurrentReferenceKeyHashMap;
+import com.liferay.petra.lang.ClassLoaderPool;
 import com.liferay.petra.memory.FinalizeManager;
 import com.liferay.petra.reflect.ReflectionUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.cache.SingleVMPool;
@@ -283,10 +285,20 @@ public class FreeMarkerManager extends BaseSingleTemplateManager {
 				_freeMarkerEngineConfiguration.restrictedClasses()));
 
 		try {
+			Class<?> clazz = getClass();
+
+			String[] macroLibrary =
+				_freeMarkerEngineConfiguration.macroLibrary();
+
+			for (int i = 0; i < macroLibrary.length; i++) {
+				macroLibrary[i] = StringBundler.concat(
+					ClassLoaderPool.getContextName(clazz.getClassLoader()),
+					TemplateConstants.CLASS_LOADER_SEPARATOR, macroLibrary[i]);
+			}
+
 			_configuration.setSetting(
-				"auto_import",
-				StringUtil.merge(
-					_freeMarkerEngineConfiguration.macroLibrary()));
+				"auto_import", StringUtil.merge(macroLibrary));
+
 			_configuration.setSetting(
 				"template_exception_handler",
 				_freeMarkerEngineConfiguration.templateExceptionHandler());

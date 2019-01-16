@@ -14,6 +14,7 @@
 
 package com.liferay.portal.template.velocity.internal;
 
+import com.liferay.petra.lang.ClassLoaderPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.cache.PortalCacheManagerNames;
@@ -206,10 +207,19 @@ public class VelocityManager extends BaseSingleTemplateManager {
 				RuntimeConstants.UBERSPECT_CLASSNAME,
 				LiferaySecureUberspector.class.getName());
 
+			String[] velocimacroLibrary =
+				_velocityEngineConfiguration.velocimacroLibrary();
+
+			for (int i = 0; i < velocimacroLibrary.length; i++) {
+				velocimacroLibrary[i] = StringBundler.concat(
+					ClassLoaderPool.getContextName(clazz.getClassLoader()),
+					TemplateConstants.CLASS_LOADER_SEPARATOR,
+					velocimacroLibrary[i]);
+			}
+
 			extendedProperties.setProperty(
 				VelocityEngine.VM_LIBRARY,
-				StringUtil.merge(
-					_velocityEngineConfiguration.velocimacroLibrary()));
+				StringUtil.merge(velocimacroLibrary));
 
 			extendedProperties.setProperty(
 				VelocityEngine.VM_LIBRARY_AUTORELOAD,

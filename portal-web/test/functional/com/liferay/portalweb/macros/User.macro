@@ -1535,7 +1535,7 @@ definition {
 		takeScreenshot();
 
 		if (isSet(localization)) {
-			User._signInLocalization(localization = "${localization}");
+			var localizedSignIn = User._signInLocalization(localization = "${localization}");
 
 			Button.click(button = "${localizedSignIn}");
 		}

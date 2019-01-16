@@ -38,8 +38,8 @@
 	</#if>
 </#list>
 
+query.setStringAt(removeConjunction(query.stringAt(query.index() - 1)), query.index() - 1);
+
 <#if entityFinder.where?? && validator.isNotNull(entityFinder.getWhere())>
-	query.append("${entityFinder.where}");
-<#else>
-	query.setStringAt(removeConjunction(query.stringAt(query.index() - 1)), query.index() - 1);
+	query.append(" AND ${entityFinder.where}");
 </#if>

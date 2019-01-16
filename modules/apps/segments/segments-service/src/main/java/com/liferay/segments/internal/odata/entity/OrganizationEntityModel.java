@@ -19,6 +19,7 @@ import com.liferay.portal.odata.entity.ComplexEntityField;
 import com.liferay.portal.odata.entity.DateTimeEntityField;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
+import com.liferay.portal.odata.entity.IdEntityField;
 import com.liferay.portal.odata.entity.StringEntityField;
 
 import java.util.List;
@@ -44,17 +45,21 @@ public class OrganizationEntityModel implements EntityModel {
 				"dateModified",
 				locale -> Field.getSortableFieldName(Field.MODIFIED_DATE),
 				locale -> Field.MODIFIED_DATE),
-			new StringEntityField("classPK", locale -> Field.ORGANIZATION_ID),
-			new StringEntityField("companyId", locale -> Field.COMPANY_ID),
+			new IdEntityField(
+				"classPK", locale -> Field.ORGANIZATION_ID, String::valueOf),
+			new IdEntityField(
+				"companyId", locale -> Field.COMPANY_ID, String::valueOf),
+			new IdEntityField(
+				"organizationId", locale -> Field.ORGANIZATION_ID,
+				String::valueOf),
+			new IdEntityField(
+				"parentOrganizationId", locale -> "parentOrganizationId",
+				String::valueOf),
 			new StringEntityField(
 				"name", locale -> Field.getSortableFieldName(Field.NAME)),
 			new StringEntityField(
 				"nameTreePath",
 				locale -> Field.getSortableFieldName("nameTreePath_String")),
-			new StringEntityField(
-				"organizationId", locale -> Field.ORGANIZATION_ID),
-			new StringEntityField(
-				"parentOrganizationId", locale -> "parentOrganizationId"),
 			new StringEntityField("treePath", locale -> Field.TREE_PATH),
 			new StringEntityField("type", locale -> Field.TYPE)
 		).collect(

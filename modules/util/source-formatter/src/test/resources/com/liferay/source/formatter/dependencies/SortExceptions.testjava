@@ -25,9 +25,8 @@ public class SortExceptions {
 		if (true) {
 			throw new PortalException();
 		}
-		else {
-			throw new RuntimeException();
-		}
+
+		throw new RuntimeException();
 	}
 
 }

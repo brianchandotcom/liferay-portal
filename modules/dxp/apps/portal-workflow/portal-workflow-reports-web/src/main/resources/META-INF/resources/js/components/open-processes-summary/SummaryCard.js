@@ -15,7 +15,9 @@ export default class SummaryCard extends React.Component {
 						{total}
 					</span>
 
-					<span className="regular-text text-secondary"> {'items'}</span>
+					<span className="regular-text text-secondary">
+						{Liferay.Language.get('items')}
+					</span>
 				</div>
 			</div>
 		);

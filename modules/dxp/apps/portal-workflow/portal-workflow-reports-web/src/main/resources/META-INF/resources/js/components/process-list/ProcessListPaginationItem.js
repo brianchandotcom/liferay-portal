@@ -1,5 +1,5 @@
 import autobind from 'autobind-decorator';
-import Icon from '../../libs/Icon';
+import Icon from '../../shared/components/Icon';
 import React from 'react';
 
 export default class ProcessListPaginationItem extends React.Component {
@@ -15,7 +15,9 @@ export default class ProcessListPaginationItem extends React.Component {
 		const renderLink = () => {
 			const isNext = type === 'next';
 			const iconType = isNext ? 'angle-right' : 'angle-left';
-			const displayType = isNext ? 'Next' : 'Previous';
+			const displayType = isNext
+				? Liferay.Language.get('pagination-next')
+				: Liferay.Language.get('pagination-previous');
 
 			if (type) {
 				return (

@@ -18,7 +18,7 @@ export default class OpenProcessesSummary extends React.Component {
 				<div className="col-9">
 					<div className="card">
 						<div className="card-header bg-transparent border-secondary card-header-default text-secondary semi-bold">
-							{'Open Processes Summary'}
+							{Liferay.Language.get('open-processes-summary')}
 						</div>
 
 						<div className="card-body">
@@ -26,9 +26,18 @@ export default class OpenProcessesSummary extends React.Component {
 								className="row d-flex justify-content-start"
 								style={{marginTop: '8px'}}
 							>
-								<SummaryCard description="Total Open" total="15" />
-								<SummaryCard description="On time" total="82" />
-								<SummaryCard description="Overdue" total="33" />
+								<SummaryCard
+									description={Liferay.Language.get('process-total-open')}
+									total="15"
+								/>
+								<SummaryCard
+									description={Liferay.Language.get('process-on-time')}
+									total="82"
+								/>
+								<SummaryCard
+									description={Liferay.Language.get('process-overdue')}
+									total="33"
+								/>
 							</div>
 
 							<div className="col-12" style={{paddingTop: '30px'}}>

@@ -14,25 +14,25 @@ export default class ProcessListTable extends React.Component {
 								className="table-cell-expand table-head-title"
 								style={{width: '70%'}}
 							>
-								{'Process Name'}
+								{Liferay.Language.get('process-name')}
 							</th>
 							<th
 								className="table-cell-expand table-head-title"
 								style={{width: '15%'}}
 							>
-								{'Total Open'}
+								{Liferay.Language.get('process-total-open')}
 							</th>
 							<th
 								className="table-cell-expand table-head-title"
 								style={{width: '15%'}}
 							>
-								{'On Time'}
+								{Liferay.Language.get('process-on-time')}
 							</th>
 							<th
 								className="table-cell-expand table-head-title"
 								style={{width: '15%'}}
 							>
-								{'Overdue'}
+								{Liferay.Language.get('process-overdue')}
 							</th>
 						</tr>
 					</thead>

@@ -1,5 +1,5 @@
 import autobind from 'autobind-decorator';
-import Icon from '../../libs/Icon';
+import Icon from '../../shared/components/Icon';
 import ProcessListEntryItem from './ProcessListEntryItem';
 import React from 'react';
 
@@ -21,7 +21,6 @@ export default class ProcessListEntries extends React.Component {
 	render() {
 		const {entries} = this.props;
 		const {selectedEntry} = this.state;
-
 		return (
 			<div className="dropdown pagination-items-per-page">
 				<a
@@ -32,7 +31,7 @@ export default class ProcessListEntries extends React.Component {
 					href="#1"
 					role="button"
 				>
-					{`${selectedEntry} entries`}
+					{`${selectedEntry} ${Liferay.Language.get('pagination-entries')}`}
 					<Icon iconName="caret-double-l" />
 				</a>
 				<div className="dropdown-menu dropdown-menu-top">

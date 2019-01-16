@@ -1,4 +1,5 @@
 import React from 'react';
+import {sub} from '../../shared/util/lang';
 
 export default class ProcessListPaginationResults extends React.Component {
 	render() {
@@ -6,7 +7,11 @@ export default class ProcessListPaginationResults extends React.Component {
 
 		return (
 			<div className="pagination-results">
-				{`Showing ${start + 1} to ${start + count} of ${total} entries.`}
+				{`${sub(Liferay.Language.get('pagination-result'), [
+					start + 1,
+					start + count,
+					total
+				])}`}
 			</div>
 		);
 	}

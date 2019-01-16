@@ -1,7 +1,7 @@
 import autobind from 'autobind-decorator';
-import EmptyContent from '../../libs/EmptyContent';
+import EmptyContent from '../../shared/components/EmptyContent';
 import gql from 'graphql-tag';
-import graphqlClient from '../../libs/graphql-client';
+import graphqlClient from '../../shared/apollo/client';
 import ProcessListEntries from './ProcessListEntries';
 import ProcessListPagination from './ProcessListPagination';
 import ProcessListPaginationResults from './ProcessListPaginationResults';
@@ -110,7 +110,7 @@ export default class ProcessListCard extends React.Component {
 				{total > 0 ? (
 					<ProcessListTable processes={processes} />
 				) : (
-					<EmptyContent message="There are no process." />
+					<EmptyContent message={Liferay.Language.get('no-process')} />
 				)}
 
 				{paginationBar()}

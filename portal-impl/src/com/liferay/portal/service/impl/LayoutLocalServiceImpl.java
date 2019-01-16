@@ -165,6 +165,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 	 * @param  typeSettings the settings to load the unicode properties object.
 	 *         See {@link UnicodeProperties #fastLoad(String)}.
 	 * @param  hidden whether the layout is hidden
+	 * @param  system whether the layout is of system type
 	 * @param  friendlyURLMap the layout's locales and localized friendly URLs.
 	 *         To see how the URL is normalized when accessed, see {@link
 	 *         com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil#normalize(
@@ -192,7 +193,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 			long parentLayoutId, Map<Locale, String> nameMap,
 			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
 			Map<Locale, String> keywordsMap, Map<Locale, String> robotsMap,
-			String type, String typeSettings, boolean hidden,
+			String type, String typeSettings, boolean hidden, boolean system,
 			Map<Locale, String> friendlyURLMap, ServiceContext serviceContext)
 		throws PortalException {
 
@@ -253,6 +254,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		layout.setRobotsMap(robotsMap);
 		layout.setType(type);
 		layout.setHidden(hidden);
+		layout.setSystem(system);
 		layout.setFriendlyURL(friendlyURL);
 		layout.setPriority(priority);
 
@@ -372,6 +374,150 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 	}
 
 	/**
+	 * Adds a layout with additional parameters.
+	 *
+	 * <p>
+	 * This method handles the creation of the layout including its resources,
+	 * metadata, and internal data structures. It is not necessary to make
+	 * subsequent calls to any methods to setup default groups, resources, ...
+	 * etc.
+	 * </p>
+	 *
+	 * @param  userId the primary key of the user
+	 * @param  groupId the primary key of the group
+	 * @param  privateLayout whether the layout is private to the group
+	 * @param  parentLayoutId the primary key of the parent layout (optionally
+	 *         {@link LayoutConstants#DEFAULT_PARENT_LAYOUT_ID})
+	 * @param  nameMap the layout's locales and localized names
+	 * @param  titleMap the layout's locales and localized titles
+	 * @param  descriptionMap the layout's locales and localized descriptions
+	 * @param  keywordsMap the layout's locales and localized keywords
+	 * @param  robotsMap the layout's locales and localized robots
+	 * @param  type the layout's type (optionally {@link
+	 *         LayoutConstants#TYPE_PORTLET}). The possible types can be found
+	 *         in {@link LayoutConstants}.
+	 * @param  typeSettings the settings to load the unicode properties object.
+	 *         See {@link UnicodeProperties #fastLoad(String)}.
+	 * @param  hidden whether the layout is hidden
+	 * @param  friendlyURLMap the layout's locales and localized friendly URLs.
+	 *         To see how the URL is normalized when accessed, see {@link
+	 *         com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil#normalize(
+	 *         String)}.
+	 * @param  serviceContext the service context to be applied. Must set the
+	 *         UUID for the layout. Can set the creation date, modification
+	 *         date, and expando bridge attributes for the layout. For layouts
+	 *         that belong to a layout set prototype, an attribute named
+	 *         <code>layoutUpdateable</code> can be set to specify whether site
+	 *         administrators can modify this page within their site. For
+	 *         layouts that are created from a layout prototype, attributes
+	 *         named <code>layoutPrototypeUuid</code> and
+	 *         <code>layoutPrototypeLinkedEnabled</code> can be specified to
+	 *         provide the unique identifier of the source prototype and a
+	 *         boolean to determine whether a link to it should be enabled to
+	 *         activate propagation of changes made to the linked page in the
+	 *         prototype.
+	 * @return the layout
+	 * @throws PortalException if a portal exception occurred
+	 */
+	@Indexable(type = IndexableType.REINDEX)
+	@Override
+	public Layout addLayout(
+			long userId, long groupId, boolean privateLayout,
+			long parentLayoutId, Map<Locale, String> nameMap,
+			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
+			Map<Locale, String> keywordsMap, Map<Locale, String> robotsMap,
+			String type, String typeSettings, boolean hidden,
+			Map<Locale, String> friendlyURLMap, ServiceContext serviceContext)
+		throws PortalException {
+
+		return addLayout(
+			userId, groupId, privateLayout, parentLayoutId, nameMap, titleMap,
+			descriptionMap, keywordsMap, robotsMap, type, typeSettings, hidden,
+			false, friendlyURLMap, serviceContext);
+	}
+
+	/**
+	 * Adds a layout with single entry maps for name, title, and description to
+	 * the default locale.
+	 *
+	 * <p>
+	 * This method handles the creation of the layout including its resources,
+	 * metadata, and internal data structures. It is not necessary to make
+	 * subsequent calls to any methods to setup default groups, resources, ...
+	 * etc.
+	 * </p>
+	 *
+	 * @param  userId the primary key of the user
+	 * @param  groupId the primary key of the group
+	 * @param  privateLayout whether the layout is private to the group
+	 * @param  parentLayoutId the primary key of the parent layout (optionally
+	 *         {@link LayoutConstants#DEFAULT_PARENT_LAYOUT_ID}). The possible
+	 *         values can be found in {@link LayoutConstants}.
+	 * @param  name the layout's name (optionally {@link
+	 *         PropsValues#DEFAULT_USER_PRIVATE_LAYOUT_NAME} or {@link
+	 *         PropsValues#DEFAULT_USER_PUBLIC_LAYOUT_NAME}). The default values
+	 *         can be overridden in <code>portal-ext.properties</code> by
+	 *         specifying new values for the corresponding properties defined in
+	 *         {@link PropsValues}
+	 * @param  title the layout's title
+	 * @param  description the layout's description
+	 * @param  type the layout's type (optionally {@link
+	 *         LayoutConstants#TYPE_PORTLET}). The possible types can be found
+	 *         in {@link LayoutConstants}.
+	 * @param  hidden whether the layout is hidden
+	 * @param  system whether the layout is of system type
+	 * @param  friendlyURL the friendly URL of the layout (optionally {@link
+	 *         PropsValues#DEFAULT_USER_PRIVATE_LAYOUT_FRIENDLY_URL} or {@link
+	 *         PropsValues#DEFAULT_USER_PUBLIC_LAYOUT_FRIENDLY_URL}). The
+	 *         default values can be overridden in
+	 *         <code>portal-ext.properties</code> by specifying new values for
+	 *         the corresponding properties defined in {@link PropsValues}. To
+	 *         see how the URL is normalized when accessed, see {@link
+	 *         com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil#normalize(
+	 *         String)}.
+	 * @param  serviceContext the service context to be applied. Must set the
+	 *         UUID for the layout. Can set the creation date and modification
+	 *         date for the layout. For layouts that belong to a layout set
+	 *         prototype, an attribute named <code>layoutUpdateable</code> can
+	 *         be set to specify whether site administrators can modify this
+	 *         page within their site.
+	 * @return the layout
+	 * @throws PortalException if a portal exception occurred
+	 */
+	@Override
+	public Layout addLayout(
+			long userId, long groupId, boolean privateLayout,
+			long parentLayoutId, String name, String title, String description,
+			String type, boolean hidden, boolean system, String friendlyURL,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		Locale locale = LocaleUtil.getSiteDefault();
+
+		Map<Locale, String> nameMap = new HashMap<>();
+
+		nameMap.put(locale, name);
+
+		Map<Locale, String> titleMap = new HashMap<>();
+
+		titleMap.put(locale, title);
+
+		Map<Locale, String> descriptionMap = new HashMap<>();
+
+		descriptionMap.put(locale, description);
+
+		Map<Locale, String> friendlyURLMap = new HashMap<>();
+
+		friendlyURLMap.put(LocaleUtil.getSiteDefault(), friendlyURL);
+
+		return addLayout(
+			userId, groupId, privateLayout, parentLayoutId, nameMap, titleMap,
+			descriptionMap, new HashMap<Locale, String>(),
+			new HashMap<Locale, String>(), type, StringPool.BLANK, hidden,
+			system, friendlyURLMap, serviceContext);
+	}
+
+	/**
 	 * Adds a layout with single entry maps for name, title, and description to
 	 * the default locale.
 	 *
@@ -426,29 +572,9 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		Locale locale = LocaleUtil.getSiteDefault();
-
-		Map<Locale, String> nameMap = new HashMap<>();
-
-		nameMap.put(locale, name);
-
-		Map<Locale, String> titleMap = new HashMap<>();
-
-		titleMap.put(locale, title);
-
-		Map<Locale, String> descriptionMap = new HashMap<>();
-
-		descriptionMap.put(locale, description);
-
-		Map<Locale, String> friendlyURLMap = new HashMap<>();
-
-		friendlyURLMap.put(LocaleUtil.getSiteDefault(), friendlyURL);
-
 		return addLayout(
-			userId, groupId, privateLayout, parentLayoutId, nameMap, titleMap,
-			descriptionMap, new HashMap<Locale, String>(),
-			new HashMap<Locale, String>(), type, StringPool.BLANK, hidden,
-			friendlyURLMap, serviceContext);
+			userId, groupId, privateLayout, parentLayoutId, name, title,
+			description, type, hidden, false, friendlyURL, serviceContext);
 	}
 
 	/**

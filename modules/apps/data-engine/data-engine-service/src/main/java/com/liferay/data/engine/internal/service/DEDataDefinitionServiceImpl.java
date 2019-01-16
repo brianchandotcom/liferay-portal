@@ -393,19 +393,13 @@ public class DEDataDefinitionServiceImpl
 		return _deDataDefinitionSaveRequestExecutor;
 	}
 
-	@Override
-	protected DEDataEnginePermissionSupport getDEDataEnginePermissionSupport() {
-		return new DEDataEnginePermissionSupport(groupLocalService);
-	}
-	
 	public DEDataDefinitionSearchCountExecutor
 		getDEDataDefinitionSearchCountExecutor() {
 
 		if (_deDataDefinitionSearchCountExecutor == null) {
 			_deDataDefinitionSearchCountExecutor =
 				new DEDataDefinitionSearchCountExecutor(
-					ddmStructureService, _deDataEngineRequestExecutor,
-					portal);
+					ddmStructureService, _deDataEngineRequestExecutor, portal);
 		}
 
 		return _deDataDefinitionSearchCountExecutor;
@@ -429,6 +423,11 @@ public class DEDataDefinitionServiceImpl
 		}
 
 		return _deDataEngineRequestExecutor;
+	}
+
+	@Override
+	protected DEDataEnginePermissionSupport getDEDataEnginePermissionSupport() {
+		return new DEDataEnginePermissionSupport(groupLocalService);
 	}
 
 	@Reference(

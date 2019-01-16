@@ -51,7 +51,7 @@ public class GenerateRandomSecretMVCResourceCommand
 			PrintWriter printWriter = resourceResponse.getWriter();
 
 			String randomSecret =
-				OAuth2SecureRandomGenerator.generateRandomSecret();
+				OAuth2SecureRandomGenerator.generateClientSecret();
 
 			printWriter.write(randomSecret);
 		}

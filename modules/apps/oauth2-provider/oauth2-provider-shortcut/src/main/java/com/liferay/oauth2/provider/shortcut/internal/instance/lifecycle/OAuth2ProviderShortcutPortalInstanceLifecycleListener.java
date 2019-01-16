@@ -106,8 +106,9 @@ public class OAuth2ProviderShortcutPortalInstanceLifecycleListener
 						add(GrantType.REFRESH_TOKEN);
 					}
 				},
-				StringPool.BLANK, ClientProfile.WEB_APPLICATION.id(),
-				OAuth2SecureRandomGenerator.generateRandomSecret(), null, null,
+				OAuth2SecureRandomGenerator.generateClientId(),
+				ClientProfile.WEB_APPLICATION.id(),
+				OAuth2SecureRandomGenerator.generateClientSecret(), null, null,
 				"https://analytics.liferay.com", 0, _APPLICATION_NAME, null,
 				Collections.singletonList(
 					"https://analytics.liferay.com/oauth/receive"),

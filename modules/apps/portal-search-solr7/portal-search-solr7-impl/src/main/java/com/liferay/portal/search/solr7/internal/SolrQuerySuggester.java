@@ -245,7 +245,11 @@ public class SolrQuerySuggester implements QuerySuggester {
 	}
 
 	protected String getFilterQuery(String field, String value) {
-		return field.concat(StringPool.COLON).concat(value);
+		return field.concat(
+			StringPool.COLON
+		).concat(
+			value
+		);
 	}
 
 	protected long[] getGroupIdsForSuggestions(SearchContext searchContext) {

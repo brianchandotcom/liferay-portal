@@ -92,7 +92,11 @@ public class AssetCategoryDocumentContributor implements DocumentContributor {
 			String[] titlesArray = titles.toArray(new String[titles.size()]);
 
 			document.addText(
-				field.concat(StringPool.UNDERLINE).concat(locale.toString()),
+				field.concat(
+					StringPool.UNDERLINE
+				).concat(
+					locale.toString()
+				),
 				titlesArray);
 		}
 	}

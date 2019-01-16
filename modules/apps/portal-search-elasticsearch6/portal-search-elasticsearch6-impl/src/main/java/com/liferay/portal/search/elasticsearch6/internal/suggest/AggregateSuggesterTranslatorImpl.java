@@ -53,10 +53,7 @@ public class AggregateSuggesterTranslatorImpl
 			for (Map.Entry<String, SuggestionBuilder<?>> suggestionBuilder :
 					suggestionBuilders.entrySet()) {
 
-				suggestionBuilder.getValue(
-				).text(
-					null
-				);
+				suggestionBuilder.getValue().text(null);
 
 				aggregateSuggestBuilder.addSuggestion(
 					aggregateSuggester.getName(), suggestionBuilder.getValue());

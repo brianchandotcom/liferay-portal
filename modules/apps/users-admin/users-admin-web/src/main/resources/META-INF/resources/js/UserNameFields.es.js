@@ -1,16 +1,20 @@
-import PortletBase from 'frontend-js-web/liferay/PortletBase.es';
 import dom from 'metal-dom';
 import {EventHandler} from 'metal-events';
 import {Config} from 'metal-state';
 
+import PortletBase from 'frontend-js-web/liferay/PortletBase.es';
+
+/**
+ * Handles actions to display user name field for a given locale.
+ */
 class UserNameFields extends PortletBase {
 
 	/**
 	 * @inheritDoc
 	 */
 	attached() {
-		this.eventHandler_.add(
-			dom.on(this.selectNode, 'change', this._handleSelectChange.bind(this))
+		this._eventHandler.add(
+			dom.on(this.languageIdSelectNode, 'change', this._handleSelectChange.bind(this))
 		);
 	}
 
@@ -18,11 +22,12 @@ class UserNameFields extends PortletBase {
 	 * @inheritDoc
 	 */
 	created() {
-		this.eventHandler_ = new EventHandler();
+		this._eventHandler = new EventHandler();
 
-		this.formDataCache_ = {};
-		this.loadingAnimationMarkupText_ = `<div class="loading-animation" id="${this.portletNamespace}loadingUserNameFields"></div>`;
-		this.maxLengthsCache_ = {};
+		this._formDataCache = {};
+		this._maxLengthsCache = {};
+
+		this._loadingAnimationMarkupText = `<div class="loading-animation" id="${this.portletNamespace}loadingUserNameFields"></div>`;
 	}
 
 	/**
@@ -30,54 +35,66 @@ class UserNameFields extends PortletBase {
 	 */
 	detached() {
 		super.detached();
-		this.eventHandler_.removeAllListeners();
+
+		this._eventHandler.removeAllListeners();
 	}
 
 	/**
 	 * Updates the user name fields to display the appropriate fields for the
 	 * given locale.
-	 * @param {string} languageId The language id to retrieve user name fields
-	 * for.
+	 *
+	 * @param {string} languageId The language id used when retrieving the user
+	 * name fields.
 	 */
 	updateUserNameFields(languageId) {
 		this._setUp();
 
 		this._getURL(languageId)
 			.then(fetch)
-			.then((response) => response.text())
-			.then(this._insertUserNameFields.bind(this))
-			.then(this._cleanUp.bind(this))
-			.catch(this._handleError.bind(this));
+			.then(
+				(response) => response.text()
+			)
+			.then(
+				this._insertUserNameFields.bind(this)
+			)
+			.then(
+				this._cleanUp.bind(this)
+			)
+			.catch(
+				this._handleError.bind(this)
+			);
 	}
 
 	/**
 	 * Caches the values and maxLength attribute values from the current
-	 * username fields.
-	 * @private
+	 * user name fields.
+	 *
+	 * @protected
 	 */
 	_cacheData() {
 		for (const [name, value] of new FormData(this.formNode)) {
 			const field = this.userNameFieldsNode.querySelector('#' + name);
 
 			if (field) {
-				this.formDataCache_[name] = value;
+				this._formDataCache[name] = value;
 
 				if (field.hasAttribute('maxLength')) {
-					this.maxLengthsCache_[name] = field.getAttribute('maxLength');
+					this._maxLengthsCache[name] = field.getAttribute('maxLength');
 				}
 			}
 		}
 	}
 
 	/**
-	 * Inserts a loading indicator into the dom before the user name fields,
-	 * then hides the user name fields.
-	 * @private
+	 * Inserts a loading indicator before the user name fields and hide
+	 * the user name fields.
+	 *
+	 * @protected
 	 */
 	_createLoadingIndicator() {
 		this.userNameFieldsNode.insertAdjacentHTML(
 			'beforebegin',
-			this.loadingAnimationMarkupText_
+			this._loadingAnimationMarkupText
 		);
 
 		dom.addClasses(this.userNameFieldsNode, 'hide');
@@ -85,36 +102,40 @@ class UserNameFields extends PortletBase {
 
 	_cleanUp() {
 		this._removeLoadingIndicator();
+
 		this._populateData();
 	}
 
 	/**
-	 * Returns a promise containing the URL to be used to retrieve the user name
-	 * fields.
+	 * Returns a promise containing the URL to be used to retrieve the user
+	 * name fields.
+	 *
 	 * @param {string} languageId The language id to be set on the URL.
+	 * @protected
 	 * @return {Promise} A promise to be resolved with the constructed URL
-	 * @async
-	 * @private
 	 */
 	_getURL(languageId) {
-		return new Promise((resolve) => {
-			AUI().use(
-				'liferay-portlet-url',
-				(A) => {
-					const url = Liferay.PortletURL.createURL(this.baseURL);
+		return new Promise(
+			(resolve) => {
+				AUI().use(
+					'liferay-portlet-url',
+					A => {
+						const url = Liferay.PortletURL.createURL(this.baseURL);
 
-					url.setParameter('languageId', languageId);
+						url.setParameter('languageId', languageId);
 
-					resolve(url);
-				}
-			);
-		});
+						resolve(url);
+					}
+				);
+			}
+		);
 	}
 
 	/**
 	 * Logs any error in the promise chain and removes the loading indicator.
+	 *
 	 * @param {Error} error The error object
-	 * @private
+	 * @protected
 	 */
 	_handleError(error) {
 		console.error(error);
@@ -124,8 +145,9 @@ class UserNameFields extends PortletBase {
 
 	/**
 	 * Handles the change event when selecting a new language.
+	 *
 	 * @param {Event} event The event object.
-	 * @private
+	 * @protected
 	 */
 	_handleSelectChange(event) {
 		this.updateUserNameFields(event.currentTarget.value);
@@ -133,9 +155,10 @@ class UserNameFields extends PortletBase {
 
 	/**
 	 * Replaces the HTML of the user name fields with the given HTML.
+	 *
 	 * @param {string} markupText The markup text used to create and insert the
 	 * new user name fields.
-	 * @private
+	 * @protected
 	 */
 	_insertUserNameFields(markupText) {
 		const temp = document.implementation.createHTMLDocument();
@@ -150,28 +173,30 @@ class UserNameFields extends PortletBase {
 	}
 
 	/**
-	 * Sets the values and max length attributes of the current user name fields
+	 * Sets the values and maxLength attributes of the current user name fields
 	 * with the data cached in this._cacheData.
-	 * @private
+	 *
+	 * @protected
 	 */
 	_populateData() {
-		for (const [name, value] of Object.entries(this.formDataCache_)) {
+		for (const [name, value] of Object.entries(this._formDataCache)) {
 			const newField = this.userNameFieldsNode.querySelector('#' + name);
 
 			if (newField) {
 				newField.value = value;
 
-				if (this.maxLengthsCache_.hasOwnProperty(name)) {
-					newField.setAttribute('maxLength', this.maxLengthsCache_[name]);
+				if (this._maxLengthsCache.hasOwnProperty(name)) {
+					newField.setAttribute('maxLength', this._maxLengthsCache[name]);
 				}
 			}
 		}
 	}
 
 	/**
-	 * Removes the loading indicator from the dom and shows the user name
+	 * Removes the loading indicator and shows the user name
 	 * fields.
-	 * @private
+	 *
+	 * @protected
 	 */
 	_removeLoadingIndicator() {
 		dom.exitDocument(this.one('#loadingUserNameFields'));
@@ -179,16 +204,51 @@ class UserNameFields extends PortletBase {
 		dom.removeClasses(this.userNameFieldsNode, 'hide');
 	}
 
+	/**
+	 * Stores the current user name fields data and creates the loading
+	 * indicator
+	 *
+	 * @protected
+	 */
 	_setUp() {
 		this._cacheData();
+
 		this._createLoadingIndicator();
 	}
 }
 
 UserNameFields.STATE = {
+
+	/**
+	 * Uri to return the user name data.
+	 * @instance
+	 * @memberof UserNameFields
+	 * @type {String}
+	 */
 	baseURL: Config.required().string().writeOnce(),
+
+	/**
+	 * Form node.
+	 * @instance
+	 * @memberof UserNameFields
+	 * @type {String}
+	 */
 	formNode: Config.required().setter(dom.toElement).writeOnce(),
-	selectNode: Config.required().setter(dom.toElement).writeOnce(),
+
+	/**
+	 * Language id select field.
+	 * @instance
+	 * @memberof UserNameFields
+	 * @type {String}
+	 */
+	languageIdSelectNode: Config.required().setter(dom.toElement).writeOnce(),
+
+	/**
+	 * HTML element containing the user name fields.
+	 * @instance
+	 * @memberof UserNameFields
+	 * @type {String}
+	 */
 	userNameFieldsNode: Config.required().setter(dom.toElement).writeOnce()
 };
 

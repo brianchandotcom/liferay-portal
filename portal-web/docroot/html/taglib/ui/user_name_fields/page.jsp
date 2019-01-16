@@ -37,9 +37,9 @@
 			{
 				baseURL: '<%= themeDisplay.getURLCurrent() %>',
 				formNode: <portlet:namespace />fm,
+				languageIdSelectNode: <portlet:namespace />languageId,
 				portletNamespace: '<portlet:namespace />',
-				selectNode: <portlet:namespace />languageId,
-				userNameFieldsNode: <portlet:namespace />userNameFields,
+				userNameFieldsNode: <portlet:namespace />userNameFields
 			}
 		)
 	);

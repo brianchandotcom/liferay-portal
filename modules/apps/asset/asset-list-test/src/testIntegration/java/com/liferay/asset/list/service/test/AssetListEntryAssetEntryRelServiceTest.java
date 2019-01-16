@@ -325,6 +325,8 @@ public class AssetListEntryAssetEntryRelServiceTest {
 			AssetListEntryAssetEntryRelUtil.findByPrimaryKey(
 				assetListEntryRelOccupied.getAssetListEntryAssetEntryRelId());
 
+		//assert assetListEntryRels swap positions
+
 		Assert.assertEquals(
 			originalPosition, assetListEntryRelOccupied.getPosition());
 

@@ -76,8 +76,9 @@
 	},
 	"name": "frontend-js-web",
 	"scripts": {
-		"build": "metalsoy && babel -d classes/META-INF/resources src/main/resources/META-INF/resources && liferay-npm-bundler && liferay-npm-bridge-generator",
+		"build": "metalsoy && babel -d classes/META-INF/resources src/main/resources/META-INF/resources && liferay-npm-bundler && liferay-npm-bridge-generator && npm run cleanSoy",
 		"checkFormat": "npm run csf",
+		"cleanSoy": "rimraf src/**/*.soy.js",
 		"csf": "csf src/**/liferay/**/*.js test/**/*.js test/**/**/*.js",
 		"format": "npm run csf -- -i",
 		"start": "webpack-dev-server --config webpack.dev.js",

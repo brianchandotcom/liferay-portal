@@ -167,7 +167,9 @@ public class USAddressTextLocalizerTest {
 		_setCountry(unescapedValue);
 		_setRegion(unescapedValue);
 
-		String escapedValue = _html.escape(unescapedValue);
+		Html html = new HtmlImpl();
+
+		String escapedValue = html.escape(unescapedValue);
 
 		Assert.assertEquals(
 			StringBundler.concat(
@@ -219,31 +221,33 @@ public class USAddressTextLocalizerTest {
 
 			@Override
 			public Address toEscapedModel() {
+				Html html = new HtmlImpl();
+
 				return new AddressWrapper(null) {
 
 					@Override
 					public String getCity() {
-						return _html.escape(_city);
+						return html.escape(_city);
 					}
 
 					@Override
 					public String getStreet1() {
-						return _html.escape(_street1);
+						return html.escape(_street1);
 					}
 
 					@Override
 					public String getStreet2() {
-						return _html.escape(_street2);
+						return html.escape(_street2);
 					}
 
 					@Override
 					public String getStreet3() {
-						return _html.escape(_street3);
+						return html.escape(_street3);
 					}
 
 					@Override
 					public String getZip() {
-						return _html.escape(_zip);
+						return html.escape(_zip);
 					}
 
 				};
@@ -327,7 +331,6 @@ public class USAddressTextLocalizerTest {
 		_createAddressTextLocalizer();
 	private String _city;
 	private Country _country;
-	private final Html _html = new HtmlImpl();
 	private Region _region;
 	private String _street1;
 	private String _street2;

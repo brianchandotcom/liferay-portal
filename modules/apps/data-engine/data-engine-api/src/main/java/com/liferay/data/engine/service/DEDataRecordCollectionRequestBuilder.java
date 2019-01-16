@@ -43,6 +43,10 @@ public class DEDataRecordCollectionRequestBuilder {
 			companyId, scopedGroupId, roleNames);
 	}
 
+	public static DEDataRecordCollectionGetRequest.Builder getBuilder() {
+		return new DEDataRecordCollectionGetRequest.Builder();
+	}
+
 	public static DEDataRecordCollectionSaveRequest.Builder saveBuilder(
 		DEDataRecordCollection deDataRecordCollection) {
 

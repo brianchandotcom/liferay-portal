@@ -62,7 +62,7 @@
 </tr>
 <tr>
 	<td>ENTRY_LIST_MENULIST_ICON</td>
-	<td>//li[contains(@data-title,'${key_webContentTitle}')]//button[contains(@class,'dropdown-toggle')]</td>
+	<td>//li[contains(@data-title,'${key_webContentTitle}')]//*[contains(@class,'dropdown-toggle')]</td>
 	<td></td>
 </tr>
 <tr>

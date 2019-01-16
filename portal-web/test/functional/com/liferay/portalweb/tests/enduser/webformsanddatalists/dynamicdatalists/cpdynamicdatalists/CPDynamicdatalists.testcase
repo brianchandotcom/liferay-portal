@@ -661,6 +661,7 @@ definition {
 	@priority = "5"
 	test AddListAndRecordWithToDoPredefinedDataDefinition {
 		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "CPDynamicdatalists#AddListAndRecordWithToDoPredefinedDataDefinition";
 
 		Navigator.openURL();
 

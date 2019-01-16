@@ -66,11 +66,8 @@ public class JMXTestRunner
 		TestResult result = null;
 
 		try {
-			TestRunner runner = _mockTestRunner;
-
-			if (runner == null) {
-				runner = TestRunners.getTestRunner(getClass().getClassLoader());
-			}
+			TestRunner runner = TestRunners.getTestRunner(
+				JMXTestRunner.class.getClassLoader());
 
 			Class<?> testClass = _testClassLoader.loadClass(className);
 
@@ -86,7 +83,6 @@ public class JMXTestRunner
 	}
 
 	private final ThreadLocal<String> _currentCall = new ThreadLocal<>();
-	private TestRunner _mockTestRunner;
 	private final ClassLoader _testClassLoader;
 
 }

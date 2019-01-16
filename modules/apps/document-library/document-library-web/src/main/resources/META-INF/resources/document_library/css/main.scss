@@ -16,9 +16,7 @@
 			text-align: center;
 			width: 100%;
 
-			transition-duration: .4s;
-			transition-property: all;
-			transition-timing-function: cubic-bezier(0, 1, 0.5, 1);
+			@include transition(all 0.4s ease-in-out);
 
 			&.closed {
 				max-height: 0;

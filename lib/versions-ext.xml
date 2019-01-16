@@ -1353,6 +1353,18 @@
 				</licenses>
 			</library>
 			<library>
+				<file-name>lib/portal/commons-collections4.jar</file-name>
+				<version>4.2</version>
+				<project-name>Apache Commons Collections</project-name>
+				<project-url>http://commons.apache.org/proper/commons-collections/</project-url>
+				<licenses>
+					<license>
+						<license-name>Apache License 2.0</license-name>
+						<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
 				<file-name>lib/portal/commons-compress.jar</file-name>
 				<version>1.18</version>
 				<project-name>Commons Compress</project-name>

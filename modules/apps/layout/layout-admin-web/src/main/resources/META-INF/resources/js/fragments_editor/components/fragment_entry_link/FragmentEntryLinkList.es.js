@@ -1,5 +1,6 @@
 import Component from 'metal-component';
 import {Config} from 'metal-state';
+import {contains} from 'metal-dom';
 import {Drag, DragDrop} from 'metal-drag-drop';
 import position from 'metal-position';
 import Soy from 'metal-soy';
@@ -162,16 +163,16 @@ class FragmentEntryLinkList extends Component {
 	 * @review
 	 */
 	rendered() {
-		if (this.activeItemId) {
-			requestAnimationFrame(
-				() => {
+		requestAnimationFrame(
+			() => {
+				if (this.activeItemId) {
 					focusItem(
 						this.activeItemId,
 						this.activeItemType
 					);
 				}
-			);
-		}
+			}
+		);
 	}
 
 	/**
@@ -361,8 +362,19 @@ class FragmentEntryLinkList extends Component {
 	 * Callback executed when a section lose the focus
 	 * @private
 	 */
-	_handleSectionBlur() {
-		this.store.dispatchAction(CLEAR_ACTIVE_ITEM);
+	_handleSectionFocusOut() {
+		requestAnimationFrame(
+			() => {
+				if (
+					this.element &&
+					document.activeElement &&
+					(this.element !== document.activeElement) &&
+					!contains(this.element, document.activeElement)
+				) {
+					this.store.dispatchAction(CLEAR_ACTIVE_ITEM);
+				}
+			}
+		);
 	}
 
 	/**

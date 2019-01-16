@@ -1,5 +1,6 @@
 import Component from 'metal-component';
 import {Config} from 'metal-state';
+import {contains} from 'metal-dom';
 import Soy from 'metal-soy';
 
 import './FragmentEntryLinkContent.es';
@@ -26,8 +27,19 @@ class FragmentEntryLink extends Component {
 	 * Callback executed when a fragment lose the focus
 	 * @private
 	 */
-	_handleFragmentBlur() {
-		this.store.dispatchAction(CLEAR_ACTIVE_ITEM);
+	_handleFragmentFocusOut() {
+		requestAnimationFrame(
+			() => {
+				if (
+					this.element &&
+					document.activeElement &&
+					(this.element !== document.activeElement) &&
+					!contains(this.element, document.activeElement)
+				) {
+					this.store.dispatchAction(CLEAR_ACTIVE_ITEM);
+				}
+			}
+		);
 	}
 
 	/**

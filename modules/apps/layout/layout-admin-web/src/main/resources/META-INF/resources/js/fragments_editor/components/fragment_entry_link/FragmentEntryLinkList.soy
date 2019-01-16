@@ -26,7 +26,7 @@
 	{@param spritemap: string}
 	{@param? _handleFragmentEntryLinkListHoverEnd: any}
 	{@param? _handleFragmentMove: any}
-	{@param? _handleSectionBlur: any}
+	{@param? _handleSectionFocusOut: any}
 	{@param? _handleSectionClick: any}
 	{@param? _handleSectionHoverStart: any}
 	{@param? _handleSectionKeyUp: any}
@@ -84,7 +84,7 @@
 			{foreach $row in $layoutData.structure}
 				{call .row}
 					{param _handleFragmentMove: $_handleFragmentMove /}
-					{param _handleSectionBlur: $_handleSectionBlur /}
+					{param _handleSectionFocusOut: $_handleSectionFocusOut /}
 					{param _handleSectionClick: $_handleSectionClick /}
 					{param _handleSectionHoverStart: $_handleSectionHoverStart /}
 					{param _handleSectionKeyUp: $_handleSectionKeyUp /}
@@ -135,13 +135,14 @@
 	{@param defaultLanguageId: string}
 	{@param fragmentEntryLinks: ?}
 	{@param imageSelectorURL: string}
+	{@param key: string}
 	{@param languageId: string}
 	{@param portletNamespace: string}
 	{@param row: ?}
 	{@param rowId: string}
 	{@param spritemap: string}
 	{@param? _handleFragmentMove: any}
-	{@param? _handleSectionBlur: any}
+	{@param? _handleSectionFocusOut: any}
 	{@param? _handleSectionClick: any}
 	{@param? _handleSectionHoverStart: any}
 	{@param? _handleSectionKeyUp: any}
@@ -203,10 +204,11 @@
 		class="{$sectionClasses}"
 		data-drag-source-label="{msg desc=""}section{/msg}"
 		data-layout-section-id="{$rowId}"
-		data-onblur="{$_handleSectionBlur}"
+		data-onfocusout="{$_handleSectionFocusOut}"
 		data-onclick="{$_handleSectionClick}"
 		data-onkeyup="{$_handleSectionKeyUp}"
 		data-onmouseover="{$_handleSectionHoverStart}"
+		key="{$key}"
 		tabindex="0"
 	>
 		<nav class="fragments-editor__topper tbar">
@@ -227,7 +229,7 @@
 			</ul>
 		</nav>
 
-		{if $hoveredItemId == $rowId and $hoveredItemType == $dropTargetItemTypes.section}
+		{if $activeItemId == $rowId and $activeItemType == $dropTargetItemTypes.section}
 			{call com.liferay.layout.admin.web.FloatingToolbar.render}
 				{param item: $row /}
 				{param itemId: $rowId /}
@@ -285,6 +287,7 @@
 	{@param fragmentEntryLinkIds: list<string>}
 	{@param fragmentEntryLinks: ?}
 	{@param imageSelectorURL: string}
+	{@param key: string}
 	{@param languageId: string}
 	{@param portletNamespace: string}
 	{@param spritemap: string}
@@ -325,7 +328,11 @@
 		{/if}
 	{/let}
 
-	<div class="{$columnClasses}" data-column-id="{$columnId}">
+	<div
+		class="{$columnClasses}"
+		data-column-id="{$columnId}"
+		key="{$key}"
+	>
 		{foreach $fragmentEntryLinkId in $fragmentEntryLinkIds}
 			{let $fragmentEntryLink: $fragmentEntryLinks[$fragmentEntryLinkId] /}
 
@@ -367,6 +374,7 @@
 	{@param editableValues: ?}
 	{@param fragmentEntryLinkId: string}
 	{@param imageSelectorURL: ?}
+	{@param key: string}
 	{@param dropTargetBorder: ?}
 	{@param dropTargetItemId: ?}
 	{@param dropTargetItemType: ?}
@@ -394,7 +402,7 @@
 		{/if}
 	{/let}
 
-	<div key="{$fragmentEntryLinkId}">
+	<div key="{$key}">
 		{call com.liferay.layout.admin.web.FragmentEntryLink.render}
 			{param content: $content /}
 			{param defaultEditorConfigurations: $defaultEditorConfigurations /}

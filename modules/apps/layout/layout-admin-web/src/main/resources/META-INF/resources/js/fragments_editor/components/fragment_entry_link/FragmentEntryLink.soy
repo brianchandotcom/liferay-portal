@@ -6,7 +6,7 @@
 {template .render}
 	{@param fragmentEntryLinkId: string}
 	{@param spritemap: string}
-	{@param? _handleFragmentBlur: any}
+	{@param? _handleFragmentFocusOut: any}
 	{@param? _handleFragmentClick: any}
 	{@param? _handleFragmentHoverStart: any}
 	{@param? _handleFragmentKeyUp: any}
@@ -43,7 +43,7 @@
 		class="{$wrapperClasses}"
 		data-drag-source-label="{$name ?: ''}"
 		data-fragment-entry-link-id="{$fragmentEntryLinkId}"
-		data-onblur="{$_handleFragmentBlur}"
+		data-onfocusout="{$_handleFragmentFocusOut}"
 		data-onclick="{$_handleFragmentClick}"
 		data-onkeyup="{$_handleFragmentKeyUp}"
 		data-onmouseover="{$_handleFragmentHoverStart}"

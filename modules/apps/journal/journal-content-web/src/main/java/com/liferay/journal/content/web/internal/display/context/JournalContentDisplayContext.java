@@ -159,9 +159,6 @@ public class JournalContentDisplayContext {
 
 			return _article;
 		}
-		else {
-			_article = null;
-		}
 
 		_article = (JournalArticle)_portletRequest.getAttribute(
 			WebKeys.JOURNAL_ARTICLE);

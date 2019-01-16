@@ -56,7 +56,8 @@ public class RetrieverWhenThereAreSeveralConfigurationsTest
 	public void testContainsValuesForEntry1() {
 		List<String> formNavigatorEntryKeys =
 			formNavigatorEntryConfigurationRetriever.getFormNavigatorEntryKeys(
-				"form1", "general", "add").get();
+				"form1", "general", "add"
+			).get();
 
 		Assert.assertEquals(
 			formNavigatorEntryKeys.toString(), 3,
@@ -73,7 +74,8 @@ public class RetrieverWhenThereAreSeveralConfigurationsTest
 	public void testContainsValuesForEntry2() {
 		List<String> formNavigatorEntryKeys =
 			formNavigatorEntryConfigurationRetriever.getFormNavigatorEntryKeys(
-				"form1", "general", "update").get();
+				"form1", "general", "update"
+			).get();
 
 		Assert.assertEquals(
 			formNavigatorEntryKeys.toString(), 3,

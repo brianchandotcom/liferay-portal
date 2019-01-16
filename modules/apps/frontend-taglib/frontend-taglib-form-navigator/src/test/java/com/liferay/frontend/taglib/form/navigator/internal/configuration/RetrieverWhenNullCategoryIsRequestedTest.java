@@ -46,7 +46,8 @@ public class RetrieverWhenNullCategoryIsRequestedTest
 	public void testReturnsTheKeysInThatLineWhenAskedForANullCategory() {
 		List<String> formNavigatorEntryKeys =
 			formNavigatorEntryConfigurationRetriever.getFormNavigatorEntryKeys(
-				"form1", null, "add").get();
+				"form1", null, "add"
+			).get();
 
 		Assert.assertEquals(
 			formNavigatorEntryKeys.toString(), 2,

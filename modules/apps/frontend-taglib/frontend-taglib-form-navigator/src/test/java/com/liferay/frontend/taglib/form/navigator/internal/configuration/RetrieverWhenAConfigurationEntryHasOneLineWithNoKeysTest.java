@@ -36,7 +36,8 @@ public class RetrieverWhenAConfigurationEntryHasOneLineWithNoKeysTest
 	public void testReturnsEmptyList() {
 		List<String> formNavigatorEntryKeys =
 			formNavigatorEntryConfigurationRetriever.getFormNavigatorEntryKeys(
-				"form1", "general", "add").get();
+				"form1", "general", "add"
+			).get();
 
 		Assert.assertTrue(
 			formNavigatorEntryKeys.toString(),

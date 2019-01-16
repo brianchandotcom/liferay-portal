@@ -14,11 +14,13 @@
 
 package com.liferay.frontend.taglib.clay.servlet.taglib.soy.base;
 
+import com.liferay.frontend.taglib.clay.servlet.taglib.soy.BaseClayCard;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.portal.kernel.dao.search.ResultRow;
 import com.liferay.portal.kernel.dao.search.RowChecker;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Julien Castelain
@@ -30,11 +32,19 @@ public class BaseClayCardTag extends BaseClayTag {
 		setHydrate(true);
 		setModuleBaseName("card");
 
+		if (_baseClayCard != null) {
+			_populateContext();
+		}
+
 		return super.doStartTag();
 	}
 
 	public void setActionDropdownItems(List<DropdownItem> actionDropdownItems) {
 		putValue("actionItems", actionDropdownItems);
+	}
+
+	public void setBaseClayCard(BaseClayCard baseClayCard) {
+		_baseClayCard = baseClayCard;
 	}
 
 	public void setDisabled(Boolean disabled) {
@@ -78,5 +88,67 @@ public class BaseClayCardTag extends BaseClayTag {
 	public void setSelected(Boolean selected) {
 		putValue("selected", selected);
 	}
+
+	private void _populateContext() {
+		Map<String, Object> context = getContext();
+
+		if (context.get("actionItems") == null) {
+			setActionDropdownItems(_baseClayCard.getActionDropdownItems());
+		}
+
+		if (context.get("componentId") == null) {
+			setComponentId(_baseClayCard.getComponentId());
+		}
+
+		if (context.get("data") == null) {
+			setData(_baseClayCard.getData());
+		}
+
+		if (context.get("defaultEventHandler") == null) {
+			setDefaultEventHandler(_baseClayCard.getDefaultEventHandler());
+		}
+
+		if (context.get("disabled") == null) {
+			setDisabled(_baseClayCard.isDisabled());
+		}
+
+		if (context.get("elementClasses") == null) {
+			setElementClasses(_baseClayCard.getElementClasses());
+		}
+
+		if (context.get("groupName") == null) {
+			setGroupName(_baseClayCard.getGroupName());
+		}
+
+		if (context.get("href") == null) {
+			setHref(_baseClayCard.getHref());
+		}
+
+		if (context.get("id") == null) {
+			setId(_baseClayCard.getId());
+		}
+
+		if (context.get("inputName") == null) {
+			setInputName(_baseClayCard.getInputName());
+		}
+
+		if (context.get("inputValue") == null) {
+			setInputValue(_baseClayCard.getInputValue());
+		}
+
+		if (context.get("selectable") == null) {
+			setSelectable(_baseClayCard.isSelectable());
+		}
+
+		if (context.get("selected") == null) {
+			setSelected(_baseClayCard.isSelected());
+		}
+
+		if (context.get("spritemap") == null) {
+			setSpritemap(_baseClayCard.getSpritemap());
+		}
+	}
+
+	private BaseClayCard _baseClayCard;
 
 }

@@ -250,6 +250,7 @@ definition {
 
 	@priority = "5"
 	test ConfigureRequireRule {
+		property test.name.skip.portal.instance = "FormRules#ConfigureRequireRule";
 		property portal.acceptance = "true";
 		var portalURL = PropsUtil.get("portal.url");
 
@@ -588,6 +589,7 @@ definition {
 	@description = "This is a use case for LPS-79095."
 	@priority = "5"
 	test EditRule {
+		property test.name.skip.portal.instance = "FormRules#EditRule";
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
@@ -674,6 +676,7 @@ definition {
 	@description = "This is a use case for LPS-71399."
 	@priority = "4"
 	test UseIsNotEmptyRuleToShowField {
+		property test.name.skip.portal.instance = "FormRules#UseIsNotEmptyRuleToShowField";
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
@@ -814,6 +817,7 @@ definition {
 	@description = "This is a use case for LPS-71466."
 	@priority = "2"
 	test ViewPredefinedValueCanBeUsedToRequireAnotherField {
+		property test.name.skip.portal.instance = "FormRules#ViewPredefinedValueCanBeUsedToRequireAnotherField";
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
@@ -898,6 +902,7 @@ definition {
 	@description = "This is a use case for LPS-73332."
 	@priority = "2"
 	test ViewPreviousFormRuleIsCopiedToNewDuplicatedForm {
+		property test.name.skip.portal.instance = "FormRules#ViewPreviousFormRuleIsCopiedToNewDuplicatedForm";
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
@@ -974,6 +979,7 @@ definition {
 	@description = "This is a use case for LPS-69733."
 	@priority = "2"
 	test ViewRuleConditionOperatorFieldOptions {
+		property test.name.skip.portal.instance = "FormRules#ViewRuleConditionOperatorFieldOptions";
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(

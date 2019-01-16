@@ -37,6 +37,7 @@ definition {
 
 	@priority = "4"
 	test Add20Forms {
+		property test.name.skip.portal.instance = "Forms#Add20Forms";
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
@@ -72,6 +73,7 @@ definition {
 
 	@priority = "4"
 	test Add30Fields {
+		property test.name.skip.portal.instance = "Forms#Add30Fields";
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
@@ -97,6 +99,7 @@ definition {
 
 	@priority = "5"
 	test AddElementSetsWithTranslation {
+		property test.name.skip.portal.instance = "Forms#AddElementSetsWithTranslation";
 		property testray.component.names = "Training";
 
 		ProductMenu.gotoPortlet(
@@ -297,6 +300,7 @@ definition {
 
 	@priority = "5"
 	test AddFormInGlobal {
+		property test.name.skip.portal.instance = "Forms#AddFormInGlobal";
 		property portal.acceptance = "true";
 		property testray.component.names = "Training";
 
@@ -462,6 +466,7 @@ definition {
 	@description = "This is a use case for LPS-68377."
 	@priority = "3"
 	test AddFormToUserSiteAndViewNoDuplicates {
+		property test.name.skip.portal.instance = "Forms#AddFormToUserSiteAndViewNoDuplicates";
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
@@ -588,6 +593,7 @@ definition {
 	@description = "This is a use case for LPS-73274."
 	@priority = "4"
 	test AddFormWithDuplicateTextFields {
+		property test.name.skip.portal.instance = "Forms#AddFormWithDuplicateTextFields";
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
@@ -713,6 +719,7 @@ definition {
 	@description = "This is a use case for LPS-75116 and LPS-79101."
 	@priority = "4"
 	test ChangeFieldType {
+		property test.name.skip.portal.instance = "Forms#ChangeFieldType";
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
@@ -1101,6 +1108,7 @@ definition {
 	@description = "This is a use case for LPS-64379."
 	@priority = "3"
 	test CreateUntitledForm {
+		property test.name.skip.portal.instance = "Forms#CreateUntitledForm";
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
@@ -1132,6 +1140,7 @@ definition {
 	@description = "This is a use case for LPS-60520."
 	@priority = "4"
 	test DeleteDateFieldAndViewEntries {
+		property test.name.skip.portal.instance = "Forms#DeleteDateFieldAndViewEntries";
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
@@ -1233,6 +1242,7 @@ definition {
 
 	@priority = "5"
 	test DeletePages {
+		property test.name.skip.portal.instance = "Forms#DeletePages";
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
@@ -1381,6 +1391,7 @@ definition {
 	@description = "This is a use case for LPS-68362."
 	@priority = "3"
 	test DeleteSelectFromListOptionValue {
+		property test.name.skip.portal.instance = "Forms#DeleteSelectFromListOptionValue";
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
@@ -1447,6 +1458,7 @@ definition {
 
 	@priority = "4"
 	test EditAllFormFieldNames {
+		property test.name.skip.portal.instance = "Forms#EditAllFormFieldNames";
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
@@ -1941,6 +1953,7 @@ definition {
 	@description = "This is a use case for LPS-78697."
 	@priority = "4"
 	test EditTranslatedGridField {
+		property test.name.skip.portal.instance = "Forms#EditTranslatedGridField";
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
@@ -2067,6 +2080,7 @@ definition {
 	@description = "This is a use case for LPS-59331"
 	@priority = "5"
 	test NavigateToCorrectForm {
+		property test.name.skip.portal.instance = "Forms#NavigateToCorrectForm";
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
@@ -2240,6 +2254,7 @@ definition {
 	@description = "This is a use case for LPS-68381."
 	@priority = "3"
 	test ReorderFieldOptions {
+		property test.name.skip.portal.instance = "Forms#ReorderFieldOptions";
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
@@ -2291,6 +2306,7 @@ definition {
 	@description = "This is a use case for LPS-59336."
 	@priority = "4"
 	test SearchFormRecordMultipleEntries {
+		property test.name.skip.portal.instance = "Forms#SearchFormRecordMultipleEntries";
 		var fieldValueList = "testEntry1,exampleText,sampleAnswer";
 
 		Navigator.openURL();
@@ -2389,6 +2405,7 @@ definition {
 	@description = "This is a use case for LPS-76079."
 	@priority = "4"
 	test SelectAndRemoveMultipleOptionsInSelectFromListField {
+		property test.name.skip.portal.instance = "Forms#SelectAndRemoveMultipleOptionsInSelectFromListField";
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
@@ -2985,6 +3002,7 @@ definition {
 	@description = "This is a use case for LPS-64798."
 	@priority = "5"
 	test SubmitFormWithAllFieldTypesAndThreePages {
+		property test.name.skip.portal.instance = "Forms#SubmitFormWithAllFieldTypesAndThreePages";
 		property portal.acceptance = "false";
 		property testray.component.names = "Training";
 
@@ -3265,6 +3283,7 @@ definition {
 
 	@priority = "5"
 	test SubmitFormWithCustomTextContainingValidation {
+		property test.name.skip.portal.instance = "Forms#SubmitFormWithCustomTextContainingValidation";
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
@@ -3346,6 +3365,7 @@ definition {
 
 	@priority = "4"
 	test SubmitFormWithMultipleFieldsAndViewEntriesViaDescriptiveDisplay {
+		property test.name.skip.portal.instance = "Forms#SubmitFormWithMultipleFieldsAndViewEntriesViaDescriptiveDisplay";
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
@@ -3519,6 +3539,7 @@ definition {
 	@description = "This is a use case for LPS-59338."
 	@priority = "4"
 	test SubmitFormWithRequiredCheckboxField {
+		property test.name.skip.portal.instance = "Forms#SubmitFormWithRequiredCheckboxField";
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
@@ -3604,6 +3625,7 @@ definition {
 	@description = "This is a use case for LPS-59997."
 	@priority = "3"
 	test SubmitFormWithRequiredMultiLineTextField {
+		property test.name.skip.portal.instance = "Forms#SubmitFormWithRequiredMultiLineTextField";
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
@@ -3764,6 +3786,7 @@ definition {
 	@description = "This is a use case for LPS-59335."
 	@priority = "5"
 	test SubmitFormWithRequiredRepeatingTextField {
+		property test.name.skip.portal.instance = "Forms#SubmitFormWithRequiredRepeatingTextField";
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
@@ -3844,6 +3867,7 @@ definition {
 	@description = "This is a use case for LPS-58829."
 	@priority = "5"
 	test SubmitFormWithRequiredTextField {
+		property test.name.skip.portal.instance = "Forms#SubmitFormWithRequiredTextField";
 		property portal.acceptance = "true";
 		property testray.component.names = "Training";
 
@@ -3920,6 +3944,7 @@ definition {
 	@description = "This is a use case for LPS-59351."
 	@priority = "4"
 	test SubmitFormWithSwitcherCheckboxField {
+		property test.name.skip.portal.instance = "Forms#SubmitFormWithSwitcherCheckboxField";
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
@@ -4015,6 +4040,7 @@ definition {
 
 	@priority = "4"
 	test SubmitFormWithUploadField {
+		property test.name.skip.portal.instance = "Forms#SubmitFormWithUploadField";
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
@@ -4089,6 +4115,7 @@ definition {
 	@description = "This is a use case for LPS-73322."
 	@priority = "4"
 	test SubmitWithRequiredDateField {
+		property test.name.skip.portal.instance = "Forms#SubmitWithRequiredDateField";
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
@@ -4161,6 +4188,7 @@ definition {
 	@description = "This is a use case for LPS-71485 and LPS-71512."
 	@priority = "2"
 	test ViewAltSuccessPagePagination {
+		property test.name.skip.portal.instance = "Forms#ViewAltSuccessPagePagination";
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
@@ -4224,6 +4252,7 @@ definition {
 	@description = "This is a use case for LPS-68182."
 	@priority = "3"
 	test ViewBlankLabelWhenAddingNewField {
+		property test.name.skip.portal.instance = "Forms#ViewBlankLabelWhenAddingNewField";
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
@@ -4288,6 +4317,7 @@ definition {
 	@description = "This is a use case for LPS-64305."
 	@priority = "4"
 	test ViewDefaultFieldNamesWithPunctuationCharacters {
+		property test.name.skip.portal.instance = "Forms#ViewDefaultFieldNamesWithPunctuationCharacters";
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
@@ -4368,6 +4398,7 @@ definition {
 	@description = "This is a use case for LPS-70560."
 	@priority = "4"
 	test ViewFieldValidationIsNotBypassedWhenNextButtonIsHitTwice {
+		property test.name.skip.portal.instance = "Forms#ViewFieldValidationIsNotBypassedWhenNextButtonIsHitTwice";
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
@@ -4438,6 +4469,7 @@ definition {
 	@description = "This is a use case for LPS-66513."
 	@priority = "3"
 	test ViewFormWithMultipleSelectionFieldAsASwitcherAndHideLabel {
+		property test.name.skip.portal.instance = "Forms#ViewFormWithMultipleSelectionFieldAsASwitcherAndHideLabel";
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
@@ -4511,6 +4543,7 @@ definition {
 
 	@priority = "4"
 	test ViewRepeatableTextFieldLabel {
+		property test.name.skip.portal.instance = "Forms#ViewRepeatableTextFieldLabel";
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
@@ -4571,6 +4604,7 @@ definition {
 	@description = "This is a use case for LPS-68390."
 	@priority = "3"
 	test ViewSaveNotification {
+		property test.name.skip.portal.instance = "Forms#ViewSaveNotification";
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
@@ -4604,6 +4638,7 @@ definition {
 	@description = "This is a use case for LPS-71072."
 	@priority = "5"
 	test ViewSuccessPage {
+		property test.name.skip.portal.instance = "Forms#ViewSuccessPage";
 		property testray.component.names = "Training";
 
 		Navigator.openURL();

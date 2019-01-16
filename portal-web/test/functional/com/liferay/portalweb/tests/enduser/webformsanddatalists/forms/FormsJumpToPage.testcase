@@ -153,6 +153,7 @@ definition {
 	@description = "This is a use case for LPS-69372."
 	@priority = "5"
 	test ViewPagesAfterJump {
+		property test.name.skip.portal.instance = "FormsJumpToPage#ViewPagesAfterJump";
 		Form.publishForm();
 
 		FormsAdminNavigator.openPublishURL(publishFormURL = "${publishedFormPublicURL}");
@@ -200,6 +201,7 @@ definition {
 	@description = "This is a use case for LPS-68227."
 	@priority = "4"
 	test ViewRuleAfterLabelEdit {
+		property test.name.skip.portal.instance = "FormsJumpToPage#ViewRuleAfterLabelEdit";
 		FormsAdminNavigator.gotoEditField(fieldName = "ChooseYourDestiny");
 
 		Form.editFieldLabelMetal(fieldName = "ChooseYourDestiny", fieldValue = "Edit Label");
@@ -223,6 +225,7 @@ definition {
 	@description = "This is a use case for LPS-68227."
 	@priority = "3"
 	test ViewRuleAfterOptionValueEdit {
+		property test.name.skip.portal.instance = "FormsJumpToPage#ViewRuleAfterOptionValueEdit";
 		FormsAdminNavigator.gotoEditField(fieldName = "ChooseYourDestiny");
 
 		FormFields.editOptionsRow(
@@ -250,6 +253,7 @@ definition {
 	@description = "This is a use case for LPS-68227."
 	@priority = "4"
 	test ViewRuleAfterPageNameChange {
+		property test.name.skip.portal.instance = "FormsJumpToPage#ViewRuleAfterPageNameChange";
 		Form.gotoFormPage(formPageName = "Page 3");
 
 		Form.editPageTitle(formPageName = "Renamed Page");

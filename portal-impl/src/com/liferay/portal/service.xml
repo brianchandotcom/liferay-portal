@@ -617,6 +617,7 @@
 		<column name="type" type="String" />
 		<column name="typeSettings" type="String" />
 		<column name="hidden" type="boolean" />
+		<column name="system" type="boolean" />
 		<column name="friendlyURL" type="String" />
 		<column name="iconImageId" type="long" />
 		<column name="themeId" type="String" />
@@ -637,33 +638,33 @@
 
 		<!-- Finder methods -->
 
-		<finder name="GroupId" return-type="Collection">
+		<finder name="GroupId" return-type="Collection" where="system = [$FALSE$]">
 			<finder-column name="groupId" />
 		</finder>
-		<finder name="CompanyId" return-type="Collection">
+		<finder name="CompanyId" return-type="Collection" where="system = [$FALSE$]">
 			<finder-column name="companyId" />
 		</finder>
-		<finder name="ParentPlid" return-type="Collection">
+		<finder name="ParentPlid" return-type="Collection" where="system = [$FALSE$]">
 			<finder-column name="parentPlid" />
 		</finder>
 		<finder name="IconImageId" return-type="Layout">
 			<finder-column name="iconImageId" />
 		</finder>
-		<finder name="LayoutPrototypeUuid" return-type="Collection">
+		<finder name="LayoutPrototypeUuid" return-type="Collection" where="system = [$FALSE$]">
 			<finder-column name="layoutPrototypeUuid" />
 		</finder>
-		<finder name="SourcePrototypeLayoutUuid" return-type="Collection">
+		<finder name="SourcePrototypeLayoutUuid" return-type="Collection" where="system = [$FALSE$]">
 			<finder-column name="sourcePrototypeLayoutUuid" />
 		</finder>
-		<finder name="G_P" return-type="Collection">
+		<finder name="G_P" return-type="Collection" where="system = [$FALSE$]">
 			<finder-column name="groupId" />
 			<finder-column name="privateLayout" />
 		</finder>
-		<finder name="G_T" return-type="Collection">
+		<finder name="G_T" return-type="Collection" where="system = [$FALSE$]">
 			<finder-column name="groupId" />
 			<finder-column name="type" />
 		</finder>
-		<finder name="C_L" return-type="Collection">
+		<finder name="C_L" return-type="Collection" where="system = [$FALSE$]">
 			<finder-column name="companyId" />
 			<finder-column name="layoutPrototypeUuid" />
 		</finder>
@@ -676,12 +677,12 @@
 			<finder-column name="privateLayout" />
 			<finder-column name="layoutId" />
 		</finder>
-		<finder name="G_P_P" return-type="Collection">
+		<finder name="G_P_P" return-type="Collection" where="system = [$FALSE$]">
 			<finder-column name="groupId" />
 			<finder-column name="privateLayout" />
 			<finder-column arrayable-operator="OR" arrayable-pagination="true" name="parentLayoutId" />
 		</finder>
-		<finder name="G_P_T" return-type="Collection">
+		<finder name="G_P_T" return-type="Collection" where="system = [$FALSE$]">
 			<finder-column name="groupId" />
 			<finder-column name="privateLayout" />
 			<finder-column name="type" />
@@ -696,13 +697,13 @@
 			<finder-column name="privateLayout" />
 			<finder-column name="sourcePrototypeLayoutUuid" />
 		</finder>
-		<finder name="G_P_GtLP_LtRP" return-type="Collection">
+		<finder name="G_P_GtLP_LtRP" return-type="Collection" where="system = [$FALSE$]">
 			<finder-column name="groupId" />
 			<finder-column comparator="&gt;" name="leftPlid" />
 			<finder-column comparator="&lt;" name="rightPlid" />
 			<finder-column name="privateLayout" />
 		</finder>
-		<finder name="G_P_P_LtP" return-type="Collection">
+		<finder name="G_P_P_LtP" return-type="Collection" where="system = [$FALSE$]">
 			<finder-column name="groupId" />
 			<finder-column name="privateLayout" />
 			<finder-column name="parentLayoutId" />

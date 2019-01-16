@@ -217,10 +217,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 
 		int priority = Integer.MAX_VALUE;
 
-		boolean visible = GetterUtil.getBoolean(
-			typeSettingsProperties.getProperty("visible"), true);
-
-		if (visible) {
+		if (!system) {
 			priority = layoutLocalServiceHelper.getNextPriority(
 				groupId, privateLayout, parentLayoutId, null, -1);
 		}

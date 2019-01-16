@@ -21,6 +21,7 @@ import com.liferay.layout.constants.LayoutConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryService;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Layout;
@@ -29,7 +30,6 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.UnicodeProperties;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -130,19 +130,14 @@ public class UpgradeAssetDisplayLayout extends UpgradeProcess {
 			return layoutPageTemplateEntry.getPlid();
 		}
 
-		UnicodeProperties typeSettingsProperties = new UnicodeProperties();
-
-		typeSettingsProperties.put("visible", Boolean.FALSE.toString());
-
 		serviceContext.setAttribute(
 			"layout.instanceable.allowed", Boolean.TRUE);
 
 		Layout layout = _layoutLocalService.addLayout(
 			userId, groupId, false, 0, assetEntry.getTitleMap(),
 			assetEntry.getTitleMap(), assetEntry.getDescriptionMap(), null,
-			null, LayoutConstants.LAYOUT_TYPE_ASSET_DISPLAY,
-			typeSettingsProperties.toString(), true, new HashMap<>(),
-			serviceContext);
+			null, LayoutConstants.LAYOUT_TYPE_ASSET_DISPLAY, StringPool.BLANK,
+			true, true, new HashMap<>(), serviceContext);
 
 		layoutPageTemplateEntry.setPlid(layout.getPlid());
 

@@ -57,7 +57,6 @@ import com.liferay.portal.kernel.servlet.taglib.ui.BreadcrumbEntry;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -513,16 +512,6 @@ public class LayoutsAdminDisplayContext {
 			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 
 		for (Layout layout : layouts) {
-			UnicodeProperties typeSettingsProperties =
-				layout.getTypeSettingsProperties();
-
-			boolean visible = GetterUtil.getBoolean(
-				typeSettingsProperties.getProperty("visible"), true);
-
-			if (!visible) {
-				continue;
-			}
-
 			if (_getActiveLayoutSetBranchId() > 0) {
 				LayoutRevision layoutRevision =
 					LayoutStagingUtil.getLayoutRevision(layout);

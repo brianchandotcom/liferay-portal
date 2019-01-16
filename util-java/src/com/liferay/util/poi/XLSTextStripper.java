@@ -25,6 +25,7 @@ import java.util.Iterator;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.RichTextString;
 import org.apache.poi.ss.usermodel.Row;
 
@@ -58,17 +59,17 @@ public class XLSTextStripper {
 
 						String cellStringValue = null;
 
-						if (cell.getCellType() == 4) {
+						if (cell.getCellType() == CellType.BOOLEAN) {
 							boolean booleanValue = cell.getBooleanCellValue();
 
 							cellStringValue = String.valueOf(booleanValue);
 						}
-						else if (cell.getCellType() == 0) {
+						else if (cell.getCellType() == CellType.NUMERIC) {
 							double doubleValue = cell.getNumericCellValue();
 
 							cellStringValue = String.valueOf(doubleValue);
 						}
-						else if (cell.getCellType() == 1) {
+						else if (cell.getCellType() == CellType.STRING) {
 							RichTextString richTextString =
 								cell.getRichStringCellValue();
 

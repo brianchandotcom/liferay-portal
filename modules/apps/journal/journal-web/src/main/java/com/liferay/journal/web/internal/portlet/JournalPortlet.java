@@ -1528,17 +1528,15 @@ public class JournalPortlet extends MVCPortlet {
 				layoutPageTemplateEntryId, displayPageType);
 		}
 
-		if (layoutPageTemplateEntryId > 0) {
-			LayoutPageTemplateEntry layoutPageTemplateEntry =
-				_layoutPageTemplateEntryLocalService.getLayoutPageTemplateEntry(
-					layoutPageTemplateEntryId);
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			_layoutPageTemplateEntryLocalService.fetchLayoutPageTemplateEntry(
+				layoutPageTemplateEntryId);
 
-			if (layoutPageTemplateEntry != null) {
-				layoutPageTemplateEntry.setModifiedDate(new Date());
+		if (layoutPageTemplateEntry != null) {
+			layoutPageTemplateEntry.setModifiedDate(new Date());
 
-				_layoutPageTemplateEntryLocalService.
-					updateLayoutPageTemplateEntry(layoutPageTemplateEntry);
-			}
+			_layoutPageTemplateEntryLocalService.updateLayoutPageTemplateEntry(
+				layoutPageTemplateEntry);
 		}
 	}
 

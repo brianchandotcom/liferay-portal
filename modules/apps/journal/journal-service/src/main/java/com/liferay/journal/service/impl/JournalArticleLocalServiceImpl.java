@@ -7136,73 +7136,48 @@ public class JournalArticleLocalServiceImpl
 
 		List<JournalArticle> latestArticles = new ArrayList<>();
 
-		ActionableDynamicQuery actionableDynamicQuery =
-			getActionableDynamicQuery();
+		List<JournalArticle> articles = journalArticleFinder.findByReviewDate(
+			JournalArticleConstants.CLASSNAME_ID_DEFAULT, reviewDate,
+			_previousCheckDate);
 
-		actionableDynamicQuery.setAddCriteriaMethod(
-			dynamicQuery -> {
-				Property classNameIdProperty = PropertyFactoryUtil.forName(
-					"classNameId");
-
-				dynamicQuery.add(
-					classNameIdProperty.eq(
-						JournalArticleConstants.CLASSNAME_ID_DEFAULT));
-
-				Property reviewDateProperty = PropertyFactoryUtil.forName(
-					"reviewDate");
-
-				dynamicQuery.add(reviewDateProperty.le(reviewDate));
-
-				if (_previousCheckDate != null) {
-					dynamicQuery.add(reviewDateProperty.ge(_previousCheckDate));
-				}
-
-				Property statusProperty = PropertyFactoryUtil.forName("status");
-
-				dynamicQuery.add(
-					statusProperty.ne(WorkflowConstants.STATUS_IN_TRASH));
-			});
-		actionableDynamicQuery.setPerformActionMethod(
-			(JournalArticle article) -> {
-				long groupId = article.getGroupId();
-				String articleId = article.getArticleId();
-				double version = article.getVersion();
-
-				if (!journalArticleLocalService.isLatestVersion(
-						groupId, articleId, version)) {
-
-					article = journalArticleLocalService.getLatestArticle(
-						groupId, articleId);
-				}
-
-				if (!latestArticles.contains(article)) {
-					latestArticles.add(article);
-				}
-			});
-		actionableDynamicQuery.setTransactionConfig(
-			DefaultActionableDynamicQuery.REQUIRES_NEW_TRANSACTION_CONFIG);
-
-		actionableDynamicQuery.performActions();
-
-		for (JournalArticle latestArticle : latestArticles) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(
-					"Sending review notification for article " +
-						latestArticle.getId());
+		for (JournalArticle article : articles) {
+			if (article.isInTrash()) {
+				continue;
 			}
 
-			String portletId = PortletProviderUtil.getPortletId(
-				JournalArticle.class.getName(), PortletProvider.Action.EDIT);
+			long groupId = article.getGroupId();
+			String articleId = article.getArticleId();
+			double version = article.getVersion();
 
-			String articleURL = PortalUtil.getControlPanelFullURL(
-				latestArticle.getGroupId(), portletId, null);
+			if (!journalArticleLocalService.isLatestVersion(
+					groupId, articleId, version)) {
 
-			articleURL = buildArticleURL(
-				articleURL, latestArticle.getGroupId(),
-				latestArticle.getFolderId(), latestArticle.getArticleId());
+				article = journalArticleLocalService.getLatestArticle(
+					groupId, articleId);
+			}
 
-			sendEmail(
-				latestArticle, articleURL, "review", new ServiceContext());
+			if (!latestArticles.contains(article)) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(
+						"Sending review notification for article " +
+							article.getId());
+				}
+
+				latestArticles.add(article);
+
+				String portletId = PortletProviderUtil.getPortletId(
+					JournalArticle.class.getName(),
+					PortletProvider.Action.EDIT);
+
+				String articleURL = PortalUtil.getControlPanelFullURL(
+					article.getGroupId(), portletId, null);
+
+				articleURL = buildArticleURL(
+					articleURL, article.getGroupId(), article.getFolderId(),
+					article.getArticleId());
+
+				sendEmail(article, articleURL, "review", new ServiceContext());
+			}
 		}
 	}
 

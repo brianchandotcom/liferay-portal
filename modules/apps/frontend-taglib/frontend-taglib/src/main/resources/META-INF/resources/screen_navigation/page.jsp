@@ -21,6 +21,7 @@ String containerCssClass = (String)request.getAttribute("liferay-frontend:screen
 String fullContainerCssClass = (String)request.getAttribute("liferay-frontend:screen-navigation:fullContainerCssClass");
 String headerContainerCssClass = (String)request.getAttribute("liferay-frontend:screen-navigation:headerContainerCssClass");
 String id = (String)request.getAttribute("liferay-frontend:screen-navigation:id");
+String menuBarCssClass = (String)request.getAttribute("liferay-frontend:screen-navigation:menuBarCssClass");
 String navCssClass = (String)request.getAttribute("liferay-frontend:screen-navigation:navCssClass");
 String parentContainerCssClass = (String)request.getAttribute("liferay-frontend:screen-navigation:parentContainerCssClass");
 PortletURL portletURL = (PortletURL)request.getAttribute("liferay-frontend:screen-navigation:portletURL");
@@ -62,7 +63,7 @@ List<ScreenNavigationEntry> screenNavigationEntries = (List<ScreenNavigationEntr
 	<div class="row">
 		<c:if test="<%= screenNavigationEntries.size() > 1 %>">
 			<div class="<%= navCssClass %>">
-				<nav class="menubar menubar-transparent menubar-vertical-expand-md">
+				<nav class="<%= menuBarCssClass %>">
 					<a aria-controls="<%= id %>" aria-expanded="false" class="menubar-toggler" data-toggle="collapse" href="#<%= id %>" role="button">
 						<liferay-ui:message key="<%= selectedScreenNavigationEntry.getEntryKey() %>" />
 

@@ -1377,6 +1377,11 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<name>menuBarCssClass</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
 			<name>modelBean</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

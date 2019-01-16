@@ -115,7 +115,9 @@ public class DLFileEntryMetadataLocalServiceTest {
 			ddmStructures = _dlFileEntryType.getDDMStructures();
 
 		_ddmStructure = DDMStructureLocalServiceUtil.getStructure(
-			ddmStructures.get(0).getStructureId());
+			ddmStructures.get(
+				0
+			).getStructureId());
 
 		Map<String, DDMFormValues> ddmFormValuesMap = setUpDDMFormValuesMap(
 			_ddmStructure.getStructureKey(), user.getLocale());

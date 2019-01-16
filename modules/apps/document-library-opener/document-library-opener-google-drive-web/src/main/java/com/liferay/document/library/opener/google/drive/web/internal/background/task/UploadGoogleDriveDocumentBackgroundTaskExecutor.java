@@ -166,8 +166,7 @@ public class UploadGoogleDriveDocumentBackgroundTaskExecutor
 		Drive drive = new Drive.Builder(
 			GoogleNetHttpTransport.newTrustedTransport(),
 			JacksonFactory.getDefaultInstance(),
-			_getCredential(companyId, userId)
-		).build();
+			_getCredential(companyId, userId)).build();
 
 		Drive.Files driveFiles = drive.files();
 

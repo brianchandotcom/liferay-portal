@@ -153,8 +153,7 @@ public class DLOpenerGoogleDriveManagerImpl
 		try {
 			Drive drive = new Drive.Builder(
 				_netHttpTransport, _jsonFactory,
-				_getCredential(fileEntry.getCompanyId(), userId)
-			).build();
+				_getCredential(fileEntry.getCompanyId(), userId)).build();
 
 			Drive.Files driveFiles = drive.files();
 
@@ -265,8 +264,7 @@ public class DLOpenerGoogleDriveManagerImpl
 		try {
 			Drive drive = new Drive.Builder(
 				_netHttpTransport, _jsonFactory,
-				_getCredential(fileEntry.getCompanyId(), userId)
-			).build();
+				_getCredential(fileEntry.getCompanyId(), userId)).build();
 
 			Drive.Files driveFiles = drive.files();
 
@@ -313,8 +311,7 @@ public class DLOpenerGoogleDriveManagerImpl
 		try {
 			Drive drive = new Drive.Builder(
 				_netHttpTransport, _jsonFactory,
-				_getCredential(fileEntry.getCompanyId(), userId)
-			).build();
+				_getCredential(fileEntry.getCompanyId(), userId)).build();
 
 			Drive.Files driveFiles = drive.files();
 

@@ -59,8 +59,11 @@ public class AdminHelperImpl implements AdminHelper {
 		sections = ArrayUtil.clone(sections);
 
 		for (int i = 0; i < sections.length; i++) {
-			sections[i] = StringPool.UNDERLINE.concat(sections[i]).concat(
-				StringPool.UNDERLINE);
+			sections[i] = StringPool.UNDERLINE.concat(
+				sections[i]
+			).concat(
+				StringPool.UNDERLINE
+			);
 		}
 
 		return sections;

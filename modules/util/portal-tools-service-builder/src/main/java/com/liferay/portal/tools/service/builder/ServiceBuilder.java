@@ -6344,7 +6344,10 @@ public class ServiceBuilder {
 				for (Attribute attribute : columnAttributes) {
 					String attributeName = attribute.getName();
 
-					if (!Objects.equals(attributeName, "primary")) {
+					if (!attributeName.equals("primary") &&
+						!attributeName.equals("uad-anonymize-field-name") &&
+						!attributeName.equals("uad-nonanonymizable")) {
+
 						versionEntityColumnElement.addAttribute(
 							attributeName, attribute.getValue());
 					}

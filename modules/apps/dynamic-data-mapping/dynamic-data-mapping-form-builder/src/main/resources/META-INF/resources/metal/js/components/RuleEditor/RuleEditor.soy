@@ -252,6 +252,7 @@
 			{param _handleModalButtonClicked: $_handleModalButtonClicked /}
 			{param question: $strings.deleteConditionQuestion /}
 			{param spritemap: $spritemap /}
+			{param strings: $strings /}
 			{param title: $strings.deleteCondition /}
 			{param type: 'Condition' /}
 		{/call}
@@ -260,6 +261,7 @@
 			{param _handleModalButtonClicked: $_handleModalButtonClicked /}
 			{param question: $strings.deleteActionQuestion /}
 			{param spritemap: $spritemap /}
+			{param strings: $strings /}
 			{param title: $strings.deleteAction /}
 			{param type: 'Action' /}
 		{/call}
@@ -293,6 +295,10 @@
 	{@param title: string}
 	{@param type: string}
 	{@param spritemap: string}
+	{@param strings: [
+		delete: string,
+		dismiss: string
+	]}
 	{@param? _handleModalButtonClicked: any}
 
 	{call ClayModal.render}
@@ -305,13 +311,13 @@
 		{param footerButtons: [
 			[
 				'alignment': 'right',
-				'label':'dismiss',
+				'label': $strings.dismiss,
 				'style': 'primary',
 				'type': 'close'
 			],
 			[
 				'alignment': 'right',
-				'label': 'delete',
+				'label': $strings.delete,
 				'style': 'primary',
 				'type': 'button'
 			]

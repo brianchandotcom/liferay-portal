@@ -241,16 +241,18 @@
 	{@param expression: ?}
 	{@param label: ?}
 	{@param outputValue: ?}
-	{@param strings: ?}
-
-	<span><b>{$action} </b></span>
 
 	{if $action == 'auto-fill'}
-		{call .label}
-			{param content: $outputValue /}
-		{/call}
-		<span><b>{$strings['fromDataProvider']} {$dataProviderName}</b></span>
+		{let $fieldLabel kind="html"}
+			{call .label}
+				{param content: $outputValue /}
+			{/call}
+		{/let}
+
+		<span><b>{msg desc=""}autofill-{$fieldLabel}-from-data-provider-{$dataProviderName}{/msg}</b></span>
 	{elseif $action == 'calculate'}
+		<span><b>{msg desc=""}calculate{/msg} </b></span>
+
 		{call .label}
 			{param content: $expression /}
 		{/call}
@@ -261,18 +263,26 @@
 			{param content: $label /}
 		{/call}
 	{elseif $action == 'enable'}
+		<span><b>{msg desc=""}enable{/msg} </b></span>
+
 		{call .label}
 			{param content: $label /}
 		{/call}
 	{elseif $action == 'jump-to-page'}
+		<span><b>{msg desc=""}jump-to-page{/msg} </b></span>
+
 		{call .label}
 			{param content: $label /}
 		{/call}
 	{elseif $action == 'require'}
+		<span><b>{msg desc=""}require{/msg} </b></span>
+
 		{call .label}
 			{param content: $label /}
 		{/call}
 	{elseif $action == 'show'}
+		<span><b>{msg desc=""}show{/msg} </b></span>
+
 		{call .label}
 			{param content: $label /}
 		{/call}

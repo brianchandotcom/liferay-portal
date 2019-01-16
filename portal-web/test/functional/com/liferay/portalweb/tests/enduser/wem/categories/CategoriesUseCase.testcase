@@ -697,6 +697,20 @@ definition {
 			roleType = "site"
 		);
 
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "VIEW",
+			resourceName = "com.liferay.asset.kernel.model.AssetCategory",
+			roleTitle = "Category Role Name",
+			roleType = "site"
+		);
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "VIEW",
+			resourceName = "com.liferay.asset.kernel.model.AssetVocabulary",
+			roleTitle = "Category Role Name",
+			roleType = "site"
+		);
+
 		User.openUsersAdmin(siteURLKey = "test-site-name");
 
 		User.assignSiteRoleCP(

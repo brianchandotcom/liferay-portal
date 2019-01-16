@@ -230,8 +230,10 @@ public class AssetCategoryStagedModelDataHandler
 			String value = propertyElement.attributeValue("value");
 
 			properties[i] = key.concat(
-				AssetCategoryConstants.PROPERTY_KEY_VALUE_SEPARATOR).concat(
-					value);
+				AssetCategoryConstants.PROPERTY_KEY_VALUE_SEPARATOR
+			).concat(
+				value
+			);
 		}
 
 		ServiceContext serviceContext = createServiceContext(

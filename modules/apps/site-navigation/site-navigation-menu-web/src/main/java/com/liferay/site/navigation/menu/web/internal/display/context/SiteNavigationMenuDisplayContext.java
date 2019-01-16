@@ -133,12 +133,6 @@ public class SiteNavigationMenuDisplayContext {
 		String defaultExpandedLevels =
 			_siteNavigationMenuPortletInstanceConfiguration.expandedLevels();
 
-		if (Validator.isNull(defaultExpandedLevels)) {
-			defaultExpandedLevels =
-				_siteNavigationMenuPortletInstanceConfiguration.
-					expandedLevels();
-		}
-
 		_expandedLevels = ParamUtil.getString(
 			_request, "expandedLevels", defaultExpandedLevels);
 
@@ -182,12 +176,6 @@ public class SiteNavigationMenuDisplayContext {
 		int defaultRootMenuItemLevel =
 			_siteNavigationMenuPortletInstanceConfiguration.rootMenuItemLevel();
 
-		if (defaultRootMenuItemLevel == 0) {
-			defaultRootMenuItemLevel =
-				_siteNavigationMenuPortletInstanceConfiguration.
-					rootMenuItemLevel();
-		}
-
 		_rootMenuItemLevel = ParamUtil.getInteger(
 			_request, "rootMenuItemLevel", defaultRootMenuItemLevel);
 
@@ -226,12 +214,6 @@ public class SiteNavigationMenuDisplayContext {
 
 		String defaultRootMenuItemType =
 			_siteNavigationMenuPortletInstanceConfiguration.rootMenuItemType();
-
-		if (Validator.isNull(defaultRootMenuItemType)) {
-			defaultRootMenuItemType =
-				_siteNavigationMenuPortletInstanceConfiguration.
-					rootMenuItemType();
-		}
 
 		_rootMenuItemType = ParamUtil.getString(
 			_request, "rootMenuItemType", defaultRootMenuItemType);

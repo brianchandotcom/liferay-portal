@@ -16,6 +16,7 @@ package com.liferay.segments.criteria;
 
 import java.io.Serializable;
 
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -29,11 +30,19 @@ public final class Field implements Comparable<Field>, Serializable {
 	public Field() {
 	}
 
-	public Field(String name, String label, String type, List<Option> options) {
+	public Field(String name, String label, String type) {
+		this(name, label, type, Collections.emptyList(), null);
+	}
+
+	public Field(
+		String name, String label, String type, List<Option> options,
+		SelectEntity selectEntity) {
+
 		_name = name;
 		_label = label;
 		_type = type;
 		_options = options;
+		_selectEntity = selectEntity;
 	}
 
 	@Override
@@ -51,6 +60,10 @@ public final class Field implements Comparable<Field>, Serializable {
 
 	public List<Option> getOptions() {
 		return _options;
+	}
+
+	public SelectEntity getSelectEntity() {
+		return _selectEntity;
 	}
 
 	public String getType() {
@@ -80,9 +93,39 @@ public final class Field implements Comparable<Field>, Serializable {
 
 	}
 
+	public static final class SelectEntity implements Serializable {
+
+		public SelectEntity() {
+		}
+
+		public SelectEntity(String id, String title, String uri) {
+			_id = id;
+			_title = title;
+			_uri = uri;
+		}
+
+		public String getId() {
+			return _id;
+		}
+
+		public String getTitle() {
+			return _title;
+		}
+
+		public String getUri() {
+			return _uri;
+		}
+
+		private String _id;
+		private String _title;
+		private String _uri;
+
+	}
+
 	private String _label;
 	private String _name;
 	private List<Option> _options;
+	private SelectEntity _selectEntity;
 	private String _type;
 
 }

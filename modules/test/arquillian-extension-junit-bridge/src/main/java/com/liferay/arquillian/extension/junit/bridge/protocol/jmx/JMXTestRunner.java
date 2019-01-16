@@ -42,28 +42,12 @@ import org.jboss.arquillian.test.spi.TestResult;
 public class JMXTestRunner
 	extends NotificationBroadcasterSupport implements JMXTestRunnerMBean {
 
-	public JMXTestRunner(TestClassLoader classLoader) {
+	public JMXTestRunner(ClassLoader classLoader) {
 		this(classLoader, JMXTestRunnerMBean.OBJECT_NAME);
 	}
 
-	public JMXTestRunner(TestClassLoader classLoader, String objectName) {
-		_testClassLoader = classLoader;
-
-		if (_testClassLoader == null) {
-			_testClassLoader = new TestClassLoader() {
-
-				@Override
-				public Class<?> loadTestClass(String className)
-					throws ClassNotFoundException {
-
-					ClassLoader classLoader =
-						JMXTestRunner.class.getClassLoader();
-
-					return classLoader.loadClass(className);
-				}
-
-			};
-		}
+	public JMXTestRunner(ClassLoader testClassLoader, String objectName) {
+		_testClassLoader = testClassLoader;
 
 		_objectName = objectName;
 	}
@@ -151,13 +135,6 @@ public class JMXTestRunner
 		localMBeanServer = null;
 	}
 
-	public interface TestClassLoader {
-
-		public Class<?> loadTestClass(String className)
-			throws ClassNotFoundException;
-
-	}
-
 	protected TestResult doRunTestMethod(
 		TestRunner runner, Class<?> testClass, String methodName,
 		Map<String, String> protocolProps) {
@@ -193,7 +170,7 @@ public class JMXTestRunner
 				runner = TestRunners.getTestRunner(getClass().getClassLoader());
 			}
 
-			Class<?> testClass = _testClassLoader.loadTestClass(className);
+			Class<?> testClass = _testClassLoader.loadClass(className);
 
 			result = doRunTestMethod(
 				runner, testClass, methodName, protocolProps);
@@ -213,6 +190,6 @@ public class JMXTestRunner
 	private final AtomicInteger _integer = new AtomicInteger();
 	private TestRunner _mockTestRunner;
 	private final String _objectName;
-	private TestClassLoader _testClassLoader;
+	private ClassLoader _testClassLoader;
 
 }

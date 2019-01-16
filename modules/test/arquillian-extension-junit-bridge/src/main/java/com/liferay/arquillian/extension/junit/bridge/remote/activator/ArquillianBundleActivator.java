@@ -27,6 +27,7 @@ import javax.management.MBeanServerFactory;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
+import org.osgi.framework.wiring.BundleWiring;
 
 /**
  * @author Cristina González Castellano
@@ -35,11 +36,13 @@ public class ArquillianBundleActivator implements BundleActivator {
 
 	@Override
 	public void start(BundleContext bundleContext) throws JMException {
-		Bundle bundle = bundleContext.getBundle();
-
 		MBeanServer mBeanServer = _findOrCreateMBeanServer();
 
-		_jmxTestRunner = new JMXTestRunner(bundle::loadClass);
+		Bundle bundle = bundleContext.getBundle();
+
+		BundleWiring bundleWiring = bundle.adapt(BundleWiring.class);
+
+		_jmxTestRunner = new JMXTestRunner(bundleWiring.getClassLoader());
 
 		_jmxTestRunner.registerMBean(mBeanServer);
 	}

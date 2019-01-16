@@ -269,9 +269,10 @@ public class OSGiAllInProcessor implements ApplicationArchiveProcessor {
 	}
 
 	private static final String[] _OSGI_IMPORTS_PACKAGES = {
-		"org.osgi.framework", "javax.management", "javax.management.*",
-		"javax.naming", "javax.naming.*", "org.osgi.service.packageadmin",
-		"org.osgi.service.startlevel", "org.osgi.util.tracker"
+		"org.osgi.framework", "org.osgi.framework.wiring", "javax.management",
+		"javax.management.*", "javax.naming", "javax.naming.*",
+		"org.osgi.service.packageadmin", "org.osgi.service.startlevel",
+		"org.osgi.util.tracker"
 	};
 
 	private static final Attributes.Name _bundleActivatorName =

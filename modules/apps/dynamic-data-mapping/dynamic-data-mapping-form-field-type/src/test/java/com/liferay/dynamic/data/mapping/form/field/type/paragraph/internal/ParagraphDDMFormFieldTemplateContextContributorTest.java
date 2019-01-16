@@ -74,8 +74,8 @@ public class ParagraphDDMFormFieldTemplateContextContributorTest
 			"_soyHTMLSanitizer"
 		).set(
 			_paragraphDDMFormFieldTemplateContextContributor,
-			(SoyHTMLSanitizer)value ->
-				UnsafeSanitizedContentOrdainer.ordainAsSafe(
+			(SoyHTMLSanitizer)
+				value -> UnsafeSanitizedContentOrdainer.ordainAsSafe(
 					value, SanitizedContent.ContentKind.HTML)
 		);
 	}

@@ -63,7 +63,12 @@ public class DDMFormRendererTopHeadDynamicInclude extends BaseDynamicInclude {
 		String cdnBaseURL = themeDisplay.getCDNBaseURL();
 
 		String staticResourceURL = _portal.getStaticResourceURL(
-			request, cdnBaseURL.concat(_postfix).concat("/css/main.css"));
+			request,
+			cdnBaseURL.concat(
+				_postfix
+			).concat(
+				"/css/main.css"
+			));
 
 		String content = "<link href=\"".concat(staticResourceURL);
 

@@ -66,11 +66,23 @@ public class DDMFormInstanceRecordXMLWriterTest extends PowerMockito {
 
 		Element valueElement = mock(Element.class);
 
-		when(element.addElement("field")).thenReturn(fieldElement);
+		when(
+			element.addElement("field")
+		).thenReturn(
+			fieldElement
+		);
 
-		when(fieldElement.addElement("label")).thenReturn(labelElement);
+		when(
+			fieldElement.addElement("label")
+		).thenReturn(
+			labelElement
+		);
 
-		when(fieldElement.addElement("value")).thenReturn(valueElement);
+		when(
+			fieldElement.addElement("value")
+		).thenReturn(
+			valueElement
+		);
 
 		ddmFormInstanceRecordXMLWriter.addFieldElement(
 			element, "Label 1", "Value 1");
@@ -78,11 +90,31 @@ public class DDMFormInstanceRecordXMLWriterTest extends PowerMockito {
 		InOrder inOrder = Mockito.inOrder(
 			element, fieldElement, labelElement, valueElement);
 
-		inOrder.verify(element, Mockito.times(1)).addElement("field");
-		inOrder.verify(fieldElement, Mockito.times(1)).addElement("label");
-		inOrder.verify(labelElement, Mockito.times(1)).addText("Label 1");
-		inOrder.verify(fieldElement, Mockito.times(1)).addElement("value");
-		inOrder.verify(valueElement, Mockito.times(1)).addText("Value 1");
+		inOrder.verify(
+			element, Mockito.times(1)
+		).addElement(
+			"field"
+		);
+		inOrder.verify(
+			fieldElement, Mockito.times(1)
+		).addElement(
+			"label"
+		);
+		inOrder.verify(
+			labelElement, Mockito.times(1)
+		).addText(
+			"Label 1"
+		);
+		inOrder.verify(
+			fieldElement, Mockito.times(1)
+		).addElement(
+			"value"
+		);
+		inOrder.verify(
+			valueElement, Mockito.times(1)
+		).addText(
+			"Value 1"
+		);
 	}
 
 	@Test
@@ -185,13 +217,25 @@ public class DDMFormInstanceRecordXMLWriterTest extends PowerMockito {
 
 		Document document = mock(Document.class);
 
-		when(_saxReader.createDocument()).thenReturn(document);
+		when(
+			_saxReader.createDocument()
+		).thenReturn(
+			document
+		);
 
 		Element rootElement = mock(Element.class);
 
-		when(document.addElement("root")).thenReturn(rootElement);
+		when(
+			document.addElement("root")
+		).thenReturn(
+			rootElement
+		);
 
-		when(document.asXML()).thenReturn(StringPool.BLANK);
+		when(
+			document.asXML()
+		).thenReturn(
+			StringPool.BLANK
+		);
 
 		Mockito.doNothing(
 		).when(
@@ -214,9 +258,19 @@ public class DDMFormInstanceRecordXMLWriterTest extends PowerMockito {
 		InOrder inOrder = Mockito.inOrder(
 			_saxReader, document, rootElement, ddmFormInstanceRecordXMLWriter);
 
-		inOrder.verify(_saxReader, Mockito.times(1)).createDocument();
-		inOrder.verify(document, Mockito.times(1)).addElement("root");
-		inOrder.verify(rootElement, Mockito.times(1)).addElement("fields");
+		inOrder.verify(
+			_saxReader, Mockito.times(1)
+		).createDocument();
+		inOrder.verify(
+			document, Mockito.times(1)
+		).addElement(
+			"root"
+		);
+		inOrder.verify(
+			rootElement, Mockito.times(1)
+		).addElement(
+			"fields"
+		);
 
 		inOrder.verify(
 			ddmFormInstanceRecordXMLWriter, Mockito.times(1)
@@ -224,7 +278,11 @@ public class DDMFormInstanceRecordXMLWriterTest extends PowerMockito {
 			Matchers.any(Element.class), Matchers.anyMap(), Matchers.anyMap()
 		);
 
-		inOrder.verify(rootElement, Mockito.times(1)).addElement("fields");
+		inOrder.verify(
+			rootElement, Mockito.times(1)
+		).addElement(
+			"fields"
+		);
 
 		inOrder.verify(
 			ddmFormInstanceRecordXMLWriter, Mockito.times(1)
@@ -232,7 +290,9 @@ public class DDMFormInstanceRecordXMLWriterTest extends PowerMockito {
 			Matchers.any(Element.class), Matchers.anyMap(), Matchers.anyMap()
 		);
 
-		inOrder.verify(document, Mockito.times(1)).asXML();
+		inOrder.verify(
+			document, Mockito.times(1)
+		).asXML();
 	}
 
 	protected void setUpPropsUtil() {

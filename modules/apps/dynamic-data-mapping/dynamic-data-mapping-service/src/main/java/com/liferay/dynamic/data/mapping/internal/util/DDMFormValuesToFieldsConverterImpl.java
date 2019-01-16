@@ -170,7 +170,11 @@ public class DDMFormValuesToFieldsConverterImpl
 
 		String instanceId = ddmFormFieldValue.getInstanceId();
 
-		return fieldName.concat(DDMImpl.INSTANCE_SEPARATOR).concat(instanceId);
+		return fieldName.concat(
+			DDMImpl.INSTANCE_SEPARATOR
+		).concat(
+			instanceId
+		);
 	}
 
 	protected void setDDMFieldLocalizedValue(

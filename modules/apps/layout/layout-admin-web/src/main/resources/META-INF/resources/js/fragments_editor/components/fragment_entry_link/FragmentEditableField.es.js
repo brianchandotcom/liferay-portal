@@ -77,6 +77,8 @@ class FragmentEditableField extends Component {
 	 * @review
 	 */
 	disposed() {
+		clearTimeout(this._saveChangesTimeout);
+
 		this._destroyProcessors();
 	}
 

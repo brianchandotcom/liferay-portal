@@ -139,12 +139,16 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 		String basePropertyName, Properties properties, String testSuiteName) {
 
 		return getFirstMatchingPropertyName(
-			basePropertyName, batchName, properties, testSuiteName);
+			basePropertyName, null, properties, testSuiteName);
 	}
 
 	protected String getFirstMatchingPropertyName(
 		String basePropertyName, String batchName, Properties properties,
 		String testSuiteName) {
+
+		if (batchName == null) {
+			batchName = this.batchName;
+		}
 
 		if (basePropertyName.contains("[") || basePropertyName.contains("]")) {
 			throw new RuntimeException(

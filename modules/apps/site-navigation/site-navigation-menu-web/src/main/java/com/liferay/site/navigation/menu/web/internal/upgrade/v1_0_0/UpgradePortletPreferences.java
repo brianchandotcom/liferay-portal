@@ -14,11 +14,13 @@
 
 package com.liferay.site.navigation.menu.web.internal.upgrade.v1_0_0;
 
+import com.liferay.portal.kernel.configuration.Filter;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.portletdisplaytemplate.PortletDisplayTemplateManager;
 import com.liferay.portal.kernel.upgrade.BaseUpgradePortletPreferences;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.util.PropsUtil;
 import com.liferay.site.navigation.menu.web.internal.constants.SiteNavigationMenuPortletKeys;
 
 import javax.portlet.PortletPreferences;
@@ -54,11 +56,9 @@ public class UpgradePortletPreferences extends BaseUpgradePortletPreferences {
 			PortletDisplayTemplateManager.DISPLAY_STYLE_PREFIX +
 				"list-menu-ftl");
 
-		// Remove unsupported preferences
+		_persistSupportedProperties(portletPreferences, displayStyle);
 
-		portletPreferences.reset("bulletStyle");
-		portletPreferences.reset("headerType");
-		portletPreferences.reset("nestedChildren");
+		_removeUnsupportedPreferences(portletPreferences);
 	}
 
 	@Override
@@ -74,6 +74,49 @@ public class UpgradePortletPreferences extends BaseUpgradePortletPreferences {
 		upgradeDisplayStyle(portletPreferences);
 
 		return PortletPreferencesFactoryUtil.toXML(portletPreferences);
+	}
+
+	private void _persistSupportedProperties(
+			PortletPreferences portletPreferences, String displayStyle)
+		throws ReadOnlyException {
+
+		String includedLayouts = "auto";
+		String rootLayoutLevel = "1";
+		String rootLayoutType = "absolute";
+
+		if (displayStyle.equals("[custom]")) {
+			includedLayouts = portletPreferences.getValue(
+				"includedLayouts", includedLayouts);
+			rootLayoutLevel = portletPreferences.getValue(
+				"rootLayoutLevel", rootLayoutLevel);
+			rootLayoutType = portletPreferences.getValue(
+				"rootLayoutType", rootLayoutType);
+		}
+		else {
+			String[] displayStyleDefinition = PropsUtil.getArray(
+				"navigation.display.style", new Filter(displayStyle));
+
+			if ((displayStyleDefinition != null) &&
+				(displayStyleDefinition.length != 0)) {
+
+				includedLayouts = displayStyleDefinition[3];
+				rootLayoutLevel = displayStyleDefinition[2];
+				rootLayoutType = displayStyleDefinition[1];
+			}
+		}
+
+		portletPreferences.setValue("includedLayouts", includedLayouts);
+		portletPreferences.setValue("rootLayoutLevel", rootLayoutLevel);
+		portletPreferences.setValue("rootLayoutType", rootLayoutType);
+	}
+
+	private void _removeUnsupportedPreferences(
+			PortletPreferences portletPreferences)
+		throws ReadOnlyException {
+
+		portletPreferences.reset("bulletStyle");
+		portletPreferences.reset("headerType");
+		portletPreferences.reset("nestedChildren");
 	}
 
 }

@@ -568,7 +568,7 @@ public class NodePlugin implements Plugin<Project> {
 								@Override
 								public void execute(CopySpec copySpec) {
 									copySpec.from(processResourcesDir);
-									copySpec.include("**/*.es.js");
+									copySpec.include("**/*.js");
 									copySpec.into(npmRunBuildOutputsDir);
 									copySpec.setIncludeEmptyDirs(false);
 								}

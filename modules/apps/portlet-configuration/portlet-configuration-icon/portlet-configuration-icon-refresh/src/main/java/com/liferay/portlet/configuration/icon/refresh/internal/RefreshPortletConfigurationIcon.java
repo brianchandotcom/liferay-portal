@@ -54,7 +54,10 @@ public class RefreshPortletConfigurationIcon
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
 		return "Liferay.Portlet.refresh('#p_p_id_".concat(
-			portletDisplay.getId()).concat("_'); return false;");
+			portletDisplay.getId()
+		).concat(
+			"_'); return false;"
+		);
 	}
 
 	@Override

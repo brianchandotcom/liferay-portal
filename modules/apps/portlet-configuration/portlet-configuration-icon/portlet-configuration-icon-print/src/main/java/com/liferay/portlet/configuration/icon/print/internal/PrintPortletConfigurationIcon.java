@@ -54,7 +54,10 @@ public class PrintPortletConfigurationIcon
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
 		return "location.href = '".concat(
-			portletDisplay.getURLPrint()).concat("'; return false;");
+			portletDisplay.getURLPrint()
+		).concat(
+			"'; return false;"
+		);
 	}
 
 	@Override

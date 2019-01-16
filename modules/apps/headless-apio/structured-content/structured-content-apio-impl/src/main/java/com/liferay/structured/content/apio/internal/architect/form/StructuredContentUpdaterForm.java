@@ -54,7 +54,7 @@ public class StructuredContentUpdaterForm implements StructuredContent {
 		).addOptionalDate(
 			"datePublished", StructuredContentUpdaterForm::setPublishedDate
 		).addOptionalLinkedModelList(
-			"category", CategoryIdentifier .class,
+			"category", CategoryIdentifier.class,
 			StructuredContentUpdaterForm::setCategories
 		).addOptionalNestedModelList(
 			"values", StructuredContentValueForm::buildForm,

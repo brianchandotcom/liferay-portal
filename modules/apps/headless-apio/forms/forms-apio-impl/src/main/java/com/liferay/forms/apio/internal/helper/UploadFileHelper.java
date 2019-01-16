@@ -53,10 +53,7 @@ public class UploadFileHelper {
 		Stream<DDMFormField> ddmFormFieldsStream = ddmFormFields.stream();
 
 		ddmFormFieldsStream.filter(
-			formField -> formField.getType(
-			).equals(
-				"document_library"
-			)
+			formField -> formField.getType().equals("document_library")
 		).map(
 			field -> _findField(field.getName(), ddmFormFieldValues)
 		).forEach(

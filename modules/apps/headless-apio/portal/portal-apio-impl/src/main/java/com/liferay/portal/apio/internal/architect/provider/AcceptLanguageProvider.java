@@ -134,8 +134,7 @@ public class AcceptLanguageProvider implements Provider<AcceptLanguage> {
 						CurrentUser::getLocale
 					).orElse(
 						null
-					)
-				);
+					));
 			}
 
 		};

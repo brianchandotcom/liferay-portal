@@ -67,7 +67,9 @@ public class FormStructureRepresentorBuilderHelper {
 			this::_buildDDMFormSuccessPageSettings
 		).addNestedList(
 			"formPages", _structureRepresentorBuilderHelper::getFormLayoutPages,
-			nestedBuilder -> _buildFormLayoutPage(nestedBuilder).build()
+			nestedBuilder -> _buildFormLayoutPage(
+				nestedBuilder
+			).build()
 		);
 
 		return ddmStructureFirstStep;
@@ -163,7 +165,8 @@ public class FormStructureRepresentorBuilderHelper {
 		formLayoutPageFirstStep.addNestedList(
 			"fields", FormLayoutPage::getFields,
 			ddmFormFieldBuilder -> _buildDDMFormFields(
-				ddmFormFieldBuilder).build());
+				ddmFormFieldBuilder
+			).build());
 
 		return formLayoutPageFirstStep;
 	}

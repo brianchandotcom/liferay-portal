@@ -36,8 +36,7 @@ public class AssignToMeForm {
 		return formBuilder.title(
 			__ -> "Assign task"
 		).description(
-			__ ->
-				"This form can be used to assign a task to an user"
+			__ -> "This form can be used to assign a task to an user"
 		).constructor(
 			AssignToMeForm::new
 		).addOptionalDate(

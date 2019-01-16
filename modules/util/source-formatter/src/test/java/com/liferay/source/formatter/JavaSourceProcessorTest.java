@@ -69,6 +69,16 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 	}
 
 	@Test
+	public void testElseStatement() throws Exception {
+		test("ElseStatement1.testjava");
+		test(
+			"ElseStatement2.testjava",
+			"Else statement is not needed because of the 'return' statement " +
+				"on line 26",
+			28);
+	}
+
+	@Test
 	public void testExceedMaxLineLength() throws Exception {
 		test("ExceedMaxLineLength.testjava", "> 80", 37);
 	}

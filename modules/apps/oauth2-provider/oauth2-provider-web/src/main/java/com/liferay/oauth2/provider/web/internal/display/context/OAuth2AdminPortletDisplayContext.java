@@ -22,11 +22,8 @@ import com.liferay.oauth2.provider.model.OAuth2ApplicationScopeAliases;
 import com.liferay.oauth2.provider.service.OAuth2ApplicationScopeAliasesLocalServiceUtil;
 import com.liferay.oauth2.provider.service.OAuth2ApplicationService;
 import com.liferay.oauth2.provider.service.OAuth2AuthorizationServiceUtil;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.io.BigEndianCodec;
-import com.liferay.portal.kernel.security.SecureRandomUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.StringUtil;
 
@@ -35,8 +32,6 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
@@ -46,28 +41,6 @@ import javax.portlet.PortletRequest;
  */
 public class OAuth2AdminPortletDisplayContext
 	extends BaseOAuth2PortletDisplayContext {
-
-	public static String generateRandomSecret() {
-		int size = 16;
-
-		int count = (int)Math.ceil((double)size / 8);
-
-		byte[] buffer = new byte[count * 8];
-
-		for (int i = 0; i < count; i++) {
-			BigEndianCodec.putLong(buffer, i * 8, SecureRandomUtil.nextLong());
-		}
-
-		StringBundler sb = new StringBundler(size);
-
-		for (int i = 0; i < size; i++) {
-			sb.append(Integer.toHexString(0xFF & buffer[i]));
-		}
-
-		Matcher matcher = _baseIdPattern.matcher(sb.toString());
-
-		return matcher.replaceFirst("secret-$1-$2-$3-$4-$5");
-	}
 
 	public OAuth2AdminPortletDisplayContext(
 		OAuth2ApplicationService oAuth2ApplicationService,
@@ -163,9 +136,6 @@ public class OAuth2AdminPortletDisplayContext
 
 		return clientProfiles;
 	}
-
-	private static final Pattern _baseIdPattern = Pattern.compile(
-		"(.{8})(.{4})(.{4})(.{4})(.*)");
 
 	private final OAuth2ProviderConfiguration _oAuth2ProviderConfiguration;
 

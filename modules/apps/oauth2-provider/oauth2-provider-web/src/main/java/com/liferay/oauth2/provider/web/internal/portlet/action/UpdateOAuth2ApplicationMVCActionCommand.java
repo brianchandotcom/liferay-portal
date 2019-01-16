@@ -20,6 +20,7 @@ import com.liferay.oauth2.provider.constants.ClientProfile;
 import com.liferay.oauth2.provider.constants.GrantType;
 import com.liferay.oauth2.provider.model.OAuth2Application;
 import com.liferay.oauth2.provider.service.OAuth2ApplicationService;
+import com.liferay.oauth2.provider.util.OAuth2SecureRandomGenerator;
 import com.liferay.oauth2.provider.web.internal.constants.OAuth2ProviderPortletKeys;
 import com.liferay.oauth2.provider.web.internal.display.context.OAuth2AdminPortletDisplayContext;
 import com.liferay.petra.string.StringPool;
@@ -133,8 +134,7 @@ public class UpdateOAuth2ApplicationMVCActionCommand
 				for (GrantType grantType : allowedGrantTypesList) {
 					if (!grantType.isSupportsPublicClients()) {
 						clientSecret =
-							OAuth2AdminPortletDisplayContext.
-								generateRandomSecret();
+							OAuth2SecureRandomGenerator.generateRandomSecret();
 					}
 				}
 

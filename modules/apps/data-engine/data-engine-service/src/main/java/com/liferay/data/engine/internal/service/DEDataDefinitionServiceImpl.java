@@ -400,8 +400,7 @@ public class DEDataDefinitionServiceImpl implements DEDataDefinitionService {
 		if (_deDataDefinitionSearchCountExecutor == null) {
 			_deDataDefinitionSearchCountExecutor =
 				new DEDataDefinitionSearchCountExecutor(
-					ddmStructureService, _deDataEngineRequestExecutor,
-					portal);
+					ddmStructureService, _deDataEngineRequestExecutor, portal);
 		}
 
 		return _deDataDefinitionSearchCountExecutor;

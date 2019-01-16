@@ -126,8 +126,11 @@ public class ExportArticleHelperImpl implements ExportArticleHelper {
 		String title = articleDisplay.getTitle();
 		String sourceExtension = "html";
 
-		String fileName = title.concat(StringPool.PERIOD).concat(
-			sourceExtension);
+		String fileName = title.concat(
+			StringPool.PERIOD
+		).concat(
+			sourceExtension
+		);
 
 		String contentType = ContentTypes.TEXT_HTML;
 
@@ -148,7 +151,11 @@ public class ExportArticleHelperImpl implements ExportArticleHelper {
 		if (convertedFile != null) {
 			targetExtension = StringUtil.toLowerCase(targetExtension);
 
-			fileName = title.concat(StringPool.PERIOD).concat(targetExtension);
+			fileName = title.concat(
+				StringPool.PERIOD
+			).concat(
+				targetExtension
+			);
 
 			contentType = MimeTypesUtil.getContentType(fileName);
 

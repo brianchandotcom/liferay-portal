@@ -96,8 +96,10 @@ public class JournalArticleActivityInterpreter
 				layout.getLayoutSet(), serviceContext.getThemeDisplay());
 
 			return groupFriendlyURL.concat(
-				JournalArticleConstants.CANONICAL_URL_SEPARATOR).concat(
-				article.getUrlTitle());
+				JournalArticleConstants.CANONICAL_URL_SEPARATOR
+			).concat(
+				article.getUrlTitle()
+			);
 		}
 
 		return null;

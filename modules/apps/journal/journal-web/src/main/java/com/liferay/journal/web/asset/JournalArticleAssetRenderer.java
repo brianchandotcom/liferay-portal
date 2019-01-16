@@ -401,8 +401,10 @@ public class JournalArticleAssetRenderer
 			return PortalUtil.addPreservedParameters(
 				themeDisplay,
 				groupFriendlyURL.concat(
-					JournalArticleConstants.CANONICAL_URL_SEPARATOR).concat(
-						_article.getUrlTitle(themeDisplay.getLocale())));
+					JournalArticleConstants.CANONICAL_URL_SEPARATOR
+				).concat(
+					_article.getUrlTitle(themeDisplay.getLocale())
+				));
 		}
 
 		String hitLayoutURL = getHitLayoutURL(

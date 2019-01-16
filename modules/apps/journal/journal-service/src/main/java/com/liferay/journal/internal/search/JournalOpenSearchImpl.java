@@ -128,8 +128,10 @@ public class JournalOpenSearchImpl extends HitsOpenSearchImpl {
 				themeDisplay);
 
 			return groupFriendlyURL.concat(
-				JournalArticleConstants.CANONICAL_URL_SEPARATOR).concat(
-					article.getUrlTitle());
+				JournalArticleConstants.CANONICAL_URL_SEPARATOR
+			).concat(
+				article.getUrlTitle()
+			);
 		}
 
 		Layout layout = themeDisplay.getLayout();

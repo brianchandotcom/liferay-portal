@@ -355,6 +355,24 @@ AUI.add(
 					},
 
 					_getOptions: function(options) {
+						var instance = this;
+
+						if (instance.get('readOnly')) {
+
+							var selectedValue = instance.get('selectedValue');
+
+							if ((selectedValue !== undefined) && (selectedValue.length > 0)) {
+								options = [];
+
+								options.push({
+									label: instance.get('selectedValue'),
+									value: instance.get('selectedValue')
+								});
+							}
+
+							return options;
+						}
+
 						return options || [];
 					},
 
@@ -583,6 +601,10 @@ AUI.add(
 
 						if (value.length == 0) {
 							return true;
+						}
+
+						if (instance.get('readOnly')) {
+							instance.set('selectedValue', value);
 						}
 
 						var fixedOptions = instance.get('fixedOptions');

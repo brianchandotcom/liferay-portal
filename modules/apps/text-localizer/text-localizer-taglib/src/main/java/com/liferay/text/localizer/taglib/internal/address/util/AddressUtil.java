@@ -45,8 +45,8 @@ public class AddressUtil {
 				return Optional.ofNullable(
 					ServiceContextThreadLocal.getServiceContext()
 				).map(
-					serviceContext ->
-						country.getName(serviceContext.getLocale())
+					serviceContext -> country.getName(
+						serviceContext.getLocale())
 				).orElseGet(
 					country::getName
 				);

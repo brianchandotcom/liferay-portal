@@ -75,9 +75,11 @@ public class ClassLoaderTrackerTest {
 		String bundleSymbolicName = ClassLoaderTrackerTest.class.getName();
 		String bundleVersion = "1.0.0";
 
-		String contextName =
-			bundleSymbolicName.concat(StringPool.UNDERLINE).concat(
-				bundleVersion);
+		String contextName = bundleSymbolicName.concat(
+			StringPool.UNDERLINE
+		).concat(
+			bundleVersion
+		);
 
 		try {
 

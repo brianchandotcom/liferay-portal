@@ -64,7 +64,10 @@ renderResponse.setTitle(headerTitle);
 <liferay-frontend:screen-navigation
 	containerCssClass="col-lg-8"
 	context="<%= organization %>"
+	headerContainerCssClass="container-fluid container-fluid-max-xl"
 	key="<%= UserFormConstants.SCREEN_NAVIGATION_KEY_ORGANIZATIONS %>"
+	menuBarCssClass="menubar menubar-transparent menubar-vertical-expand-lg"
 	navCssClass="col-lg-3"
+	parentContainerCssClass="container-fluid container-fluid-max-xl container-form-lg"
 	portletURL="<%= portletURL %>"
 />

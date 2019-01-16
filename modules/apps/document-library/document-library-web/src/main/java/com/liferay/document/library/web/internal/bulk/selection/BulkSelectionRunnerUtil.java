@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.document.library.web.internal.util;
+package com.liferay.document.library.web.internal.bulk.selection;
 
 import com.liferay.bulk.selection.BulkSelectionRunner;
 
@@ -25,7 +25,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alejandro Tardín
  */
 @Component(immediate = true, service = {})
-public class DLBulkSelectionRunnerUtil {
+public class BulkSelectionRunnerUtil {
 
 	public static final BulkSelectionRunner getBulkSelectionRunner() {
 		return _instance._getBulkSelectionRunner();
@@ -52,7 +52,7 @@ public class DLBulkSelectionRunnerUtil {
 		return _bulkSelectionRunner;
 	}
 
-	private static DLBulkSelectionRunnerUtil _instance;
+	private static BulkSelectionRunnerUtil _instance;
 
 	private static BulkSelectionRunner _bulkSelectionRunner;
 

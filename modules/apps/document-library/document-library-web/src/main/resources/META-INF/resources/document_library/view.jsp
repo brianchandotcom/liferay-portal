@@ -66,7 +66,7 @@ String navigation = ParamUtil.getString(request, "navigation");
 		<liferay-util:include page="/document_library/toolbar.jsp" servletContext="<%= application %>" />
 
 		<%
-		BulkSelectionRunner bulkSelectionRunner = DLBulkSelectionRunnerUtil.getBulkSelectionRunner();
+		BulkSelectionRunner bulkSelectionRunner = BulkSelectionRunnerUtil.getBulkSelectionRunner();
 
 		Map<String, Object> context = new HashMap<>();
 

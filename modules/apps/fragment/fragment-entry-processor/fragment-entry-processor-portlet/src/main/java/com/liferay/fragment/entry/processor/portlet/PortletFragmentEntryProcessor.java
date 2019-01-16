@@ -247,8 +247,9 @@ public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
 							_resourceBundle, "widget-id-must-be-unique"));
 				}
 
-				if (id.length() > GetterUtil.getInteger(
-						ModelHintsConstants.TEXT_MAX_LENGTH)) {
+				if (id.length() >
+						GetterUtil.getInteger(
+							ModelHintsConstants.TEXT_MAX_LENGTH)) {
 
 					throw new FragmentEntryContentException(
 						LanguageUtil.format(

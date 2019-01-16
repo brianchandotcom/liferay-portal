@@ -186,7 +186,8 @@ public interface Sites {
 	public void mergeLayoutSetPrototypeLayouts(Group group, LayoutSet layoutSet)
 		throws Exception;
 
-	public void removeMergeFailFriendlyURLLayouts(LayoutSet layoutSet);
+	public void removeMergeFailFriendlyURLLayouts(LayoutSet layoutSet)
+		throws PortalException;
 
 	public void resetPrototype(Layout layout) throws PortalException;
 

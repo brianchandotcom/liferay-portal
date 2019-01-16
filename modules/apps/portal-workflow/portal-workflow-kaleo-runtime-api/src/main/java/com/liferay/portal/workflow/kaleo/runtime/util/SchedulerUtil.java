@@ -24,7 +24,10 @@ public class SchedulerUtil {
 
 	public static final String getGroupName(long kaleoTimerInstanceTokenId) {
 		String groupName = KaleoRuntimeDestinationNames.WORKFLOW_TIMER.concat(
-			StringPool.SLASH).concat(String.valueOf(kaleoTimerInstanceTokenId));
+			StringPool.SLASH
+		).concat(
+			String.valueOf(kaleoTimerInstanceTokenId)
+		);
 
 		return groupName;
 	}

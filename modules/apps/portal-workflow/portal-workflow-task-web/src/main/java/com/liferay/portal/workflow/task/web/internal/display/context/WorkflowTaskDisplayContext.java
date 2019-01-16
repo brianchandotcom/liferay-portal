@@ -1150,7 +1150,9 @@ public class WorkflowTaskDisplayContext {
 			WorkflowTask workflowTask)
 		throws PortalException {
 
-		return getWorkflowInstance(workflowTask).getWorkflowContext();
+		return getWorkflowInstance(
+			workflowTask
+		).getWorkflowContext();
 	}
 
 	protected void setSearchContainerEmptyResultsMessage(

@@ -105,8 +105,8 @@ public class PushNotificationMessageSender
 		stream.filter(
 			notificationRecipient -> notificationRecipient.getUserId() > 0
 		).forEach(
-			notificationRecipient ->
-				jsonArray.put(notificationRecipient.getUserId())
+			notificationRecipient -> jsonArray.put(
+				notificationRecipient.getUserId())
 		);
 
 		return jsonArray;

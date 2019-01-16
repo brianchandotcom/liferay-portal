@@ -453,7 +453,10 @@ public class DefaultPortalToLDAPConverter implements PortalToLDAPConverter {
 
 			if (passwordKey.equals("unicodePwd")) {
 				String quotedPassword = StringPool.QUOTE.concat(
-					sb.toString()).concat(StringPool.QUOTE);
+					sb.toString()
+				).concat(
+					StringPool.QUOTE
+				);
 
 				byte[] unicodePassword = quotedPassword.getBytes("UTF-16LE");
 

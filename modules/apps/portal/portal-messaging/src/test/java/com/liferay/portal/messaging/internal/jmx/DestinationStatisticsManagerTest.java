@@ -46,7 +46,11 @@ public class DestinationStatisticsManagerTest {
 
 	@Test
 	public void testRegisterMBean() throws Exception {
-		PowerMockito.when(_destination.getName()).thenReturn("test");
+		PowerMockito.when(
+			_destination.getName()
+		).thenReturn(
+			"test"
+		);
 
 		ObjectName objectName = new ObjectName(
 			"com.liferay.portal.messaging:classification=" +

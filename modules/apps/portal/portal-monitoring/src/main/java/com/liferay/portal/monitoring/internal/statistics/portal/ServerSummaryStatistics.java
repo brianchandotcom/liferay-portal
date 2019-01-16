@@ -55,14 +55,18 @@ public class ServerSummaryStatistics implements SummaryStatistics {
 	public long getAverageTimeByCompany(long companyId)
 		throws MonitoringException {
 
-		return getRequestStatistics(companyId).getAverageTime();
+		return getRequestStatistics(
+			companyId
+		).getAverageTime();
 	}
 
 	@Override
 	public long getAverageTimeByCompany(String webId)
 		throws MonitoringException {
 
-		return getRequestStatistics(webId).getAverageTime();
+		return getRequestStatistics(
+			webId
+		).getAverageTime();
 	}
 
 	@Override
@@ -85,14 +89,18 @@ public class ServerSummaryStatistics implements SummaryStatistics {
 	public long getErrorCountByCompany(long companyId)
 		throws MonitoringException {
 
-		return getRequestStatistics(companyId).getErrorCount();
+		return getRequestStatistics(
+			companyId
+		).getErrorCount();
 	}
 
 	@Override
 	public long getErrorCountByCompany(String webId)
 		throws MonitoringException {
 
-		return getRequestStatistics(webId).getErrorCount();
+		return getRequestStatistics(
+			webId
+		).getErrorCount();
 	}
 
 	@Override
@@ -112,12 +120,16 @@ public class ServerSummaryStatistics implements SummaryStatistics {
 
 	@Override
 	public long getMaxTimeByCompany(long companyId) throws MonitoringException {
-		return getRequestStatistics(companyId).getMaxTime();
+		return getRequestStatistics(
+			companyId
+		).getMaxTime();
 	}
 
 	@Override
 	public long getMaxTimeByCompany(String webId) throws MonitoringException {
-		return getRequestStatistics(webId).getMaxTime();
+		return getRequestStatistics(
+			webId
+		).getMaxTime();
 	}
 
 	@Override
@@ -137,12 +149,16 @@ public class ServerSummaryStatistics implements SummaryStatistics {
 
 	@Override
 	public long getMinTimeByCompany(long companyId) throws MonitoringException {
-		return getRequestStatistics(companyId).getMinTime();
+		return getRequestStatistics(
+			companyId
+		).getMinTime();
 	}
 
 	@Override
 	public long getMinTimeByCompany(String webId) throws MonitoringException {
-		return getRequestStatistics(webId).getMinTime();
+		return getRequestStatistics(
+			webId
+		).getMinTime();
 	}
 
 	@Override
@@ -165,14 +181,18 @@ public class ServerSummaryStatistics implements SummaryStatistics {
 	public long getRequestCountByCompany(long companyId)
 		throws MonitoringException {
 
-		return getRequestStatistics(companyId).getRequestCount();
+		return getRequestStatistics(
+			companyId
+		).getRequestCount();
 	}
 
 	@Override
 	public long getRequestCountByCompany(String webId)
 		throws MonitoringException {
 
-		return getRequestStatistics(webId).getRequestCount();
+		return getRequestStatistics(
+			webId
+		).getRequestCount();
 	}
 
 	@Override
@@ -195,14 +215,18 @@ public class ServerSummaryStatistics implements SummaryStatistics {
 	public long getSuccessCountByCompany(long companyId)
 		throws MonitoringException {
 
-		return getRequestStatistics(companyId).getSuccessCount();
+		return getRequestStatistics(
+			companyId
+		).getSuccessCount();
 	}
 
 	@Override
 	public long getSuccessCountByCompany(String webId)
 		throws MonitoringException {
 
-		return getRequestStatistics(webId).getSuccessCount();
+		return getRequestStatistics(
+			webId
+		).getSuccessCount();
 	}
 
 	@Override
@@ -225,14 +249,18 @@ public class ServerSummaryStatistics implements SummaryStatistics {
 	public long getTimeoutCountByCompany(long companyId)
 		throws MonitoringException {
 
-		return getRequestStatistics(companyId).getTimeoutCount();
+		return getRequestStatistics(
+			companyId
+		).getTimeoutCount();
 	}
 
 	@Override
 	public long getTimeoutCountByCompany(String webId)
 		throws MonitoringException {
 
-		return getRequestStatistics(webId).getTimeoutCount();
+		return getRequestStatistics(
+			webId
+		).getTimeoutCount();
 	}
 
 	protected RequestStatistics getRequestStatistics(long companyId)

@@ -14,12 +14,6 @@
 
 package com.liferay.arquillian.extension.junit.bridge.protocol.jmx;
 
-import java.lang.reflect.Method;
-
-import java.security.AccessController;
-import java.security.PrivilegedActionException;
-import java.security.PrivilegedExceptionAction;
-
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -83,30 +77,8 @@ public class JMXTestRunner
 		String className, String methodName,
 		Map<String, String> protocolProps) {
 
-		try {
-			Class<?> clazz = JMXTestRunner.class;
-
-			Method method = AccessController.doPrivileged(
-				new PrivilegedExceptionAction<Method>() {
-
-					@Override
-					public Method run() throws NoSuchMethodException {
-						return clazz.getMethod(
-							"runTestMethod", String.class, String.class);
-					}
-
-				});
-
-			if (method.getDeclaringClass() != JMXTestRunner.class) {
-				return runTestMethod(className, methodName);
-			}
-		}
-		catch (PrivilegedActionException pae) {
-		}
-
-		TestResult result = _runTestMethodInternal(className, methodName);
-
-		return Serializer.toByteArray(result);
+		return Serializer.toByteArray(
+			_runTestMethodInternal(className, methodName));
 	}
 
 	@Override

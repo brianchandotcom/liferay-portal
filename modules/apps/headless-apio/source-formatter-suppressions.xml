@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+
+<suppressions>
+	<checkstyle>
+		<suppress checks="ChainingCheck" files="modules/apps/headless-apio/forms/forms-apio-impl/src/main/java/com/liferay/forms/apio/internal/helper/UploadFileHelper\.java" />
+	</checkstyle>
+</suppressions>

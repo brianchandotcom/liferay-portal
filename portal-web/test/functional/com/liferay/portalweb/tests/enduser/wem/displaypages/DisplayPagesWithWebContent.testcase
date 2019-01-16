@@ -267,9 +267,9 @@ definition {
 
 		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
 
-		LexiconEntry.gotoEntryMenuItem(
-			menuItem = "Preview Draft",
-			rowEntry = "Webcontent Title"
+		WebContentNavigator.gotoEntryMenuItem(
+			entry = "Webcontent Title",
+			menuItem = "Preview Draft"
 		);
 
 		AssertTextEquals(
@@ -323,9 +323,9 @@ definition {
 
 		PortletEntry.submitForPublication();
 
-		LexiconEntry.gotoEntryMenuItem(
-			menuItem = "Preview",
-			rowEntry = "Webcontent Title"
+		WebContentNavigator.gotoEntryMenuItem(
+			entry = "Webcontent Title",
+			menuItem = "Preview"
 		);
 
 		AssertTextEquals(
@@ -368,9 +368,9 @@ definition {
 
 		PortletEntry.publish();
 
-		LexiconEntry.gotoEntryMenuItem(
-			menuItem = "Preview",
-			rowEntry = "Webcontent Title"
+		WebContentNavigator.gotoEntryMenuItem(
+			entry = "Webcontent Title",
+			menuItem = "Preview"
 		);
 
 		AssertTextEquals(

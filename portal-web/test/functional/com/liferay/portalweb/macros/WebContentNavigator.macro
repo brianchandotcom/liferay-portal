@@ -132,6 +132,17 @@ definition {
 		SelectFrame(value1 = "relative=top");
 	}
 
+	macro gotoEntryMenuItem {
+		Click(
+			locator1 = "WC#ENTRY_LIST_MENULIST_ICON",
+			key_webContentTitle = "${entry}"
+		);
+
+		MenuItem.click(
+			menuItem = "${menuItem}"
+		);
+	}
+
 	macro gotoManageTemplatesViaStructures {
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Manage Templates",

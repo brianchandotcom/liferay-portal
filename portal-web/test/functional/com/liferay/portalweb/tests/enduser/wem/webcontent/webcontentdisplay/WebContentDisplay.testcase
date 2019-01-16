@@ -1217,9 +1217,9 @@ definition {
 			portlet = "Web Content"
 		);
 
-		LexiconEntry.gotoEntryMenuItem(
-			menuItem = "Permissions",
-			rowEntry = "WC WebContent Title"
+		WebContentNavigator.gotoEntryMenuItem(
+			entry = "WC WebContent Title",
+			menuItem = "Permissions"
 		);
 
 		IFrame.selectPermissionsFrame();

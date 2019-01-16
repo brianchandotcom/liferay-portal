@@ -727,9 +727,9 @@ definition {
 	}
 
 	macro copyCP {
-		LexiconEntry.gotoEntryMenuItem(
-			menuItem = "Copy",
-			rowEntry = "${webContentTitle}"
+		WebContentNavigator.gotoEntryMenuItem(
+			entry = "${webContentTitle}",
+			menuItem = "Copy"
 		);
 
 		Alert.viewSuccessMessage();
@@ -784,9 +784,9 @@ definition {
 	}
 
 	macro deleteWithDisabledRB {
-		LexiconEntry.gotoEntryMenuItemNoError(
-			menuItem = "Delete",
-			rowEntry = "${entryTitle}"
+		WebContentNavigator.gotoEntryMenuItem(
+			entry = "${entryTitle}",
+			menuItem = "Delete"
 		);
 
 		AssertConfirm(
@@ -965,9 +965,9 @@ definition {
 	}
 
 	macro expireSpecificVersionCP {
-		LexiconEntry.gotoEntryMenuItem(
-			menuItem = "View History",
-			rowEntry = "${webContentTitle}"
+		WebContentNavigator.gotoEntryMenuItem(
+			entry = "${webContentTitle}",
+			menuItem = "View History"
 		);
 
 		if (isSet(webContentList)) {
@@ -1065,9 +1065,9 @@ definition {
 	}
 
 	macro moveToFolderCP {
-		LexiconEntry.gotoEntryMenuItem(
-			menuItem = "Move",
-			rowEntry = "${webContentTitle}"
+		WebContentNavigator.gotoEntryMenuItem(
+			entry = "${webContentTitle}",
+			menuItem = "Move"
 		);
 
 		AssertTextEquals(
@@ -1300,12 +1300,10 @@ definition {
 	}
 
 	macro subscribeToSpecificArticle {
-		Click(
-			locator1 = "Icon#ROW_VERTICAL_ELLIPSIS",
-			key_rowEntry = "${webContentTitle}"
+		WebContentNavigator.gotoEntryMenuItem(
+			entry = "${webContentTitle}",
+			menuItem = "Subscribe"
 		);
-
-		MenuItem.click(menuItem = "Subscribe");
 
 		Alert.viewSuccessMessage();
 	}

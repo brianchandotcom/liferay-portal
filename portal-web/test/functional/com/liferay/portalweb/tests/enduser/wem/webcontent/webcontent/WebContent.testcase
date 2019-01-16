@@ -175,9 +175,9 @@ definition {
 
 		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
 
-		LexiconEntry.gotoEntryMenuItem(
-			menuItem = "View History",
-			rowEntry = "WC WebContent New Title"
+		WebContentNavigator.gotoEntryMenuItem(
+			entry = "WC WebContent New Title",
+			menuItem = "View History"
 		);
 
 		LexiconEntry.gotoEntryMenuItem(
@@ -267,9 +267,9 @@ definition {
 
 		NavItem.gotoTemplates();
 
-		LexiconEntry.gotoEntryMenuItem(
-			menuItem = "Edit",
-			rowEntry = "Basic Web Content"
+		WebContentNavigator.gotoEntryMenuItem(
+			entry = "Basic Web Content",
+			menuItem = "Edit"
 		);
 
 		PortletEntry.inputName(name = "Basic Web Content Edit");

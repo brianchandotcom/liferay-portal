@@ -27,28 +27,18 @@ import java.util.regex.Pattern;
 public class OAuth2SecureRandomGenerator {
 
 	public static String generateClientId() {
-		int size = 16;
-
-		int count = (int)Math.ceil((double)size / 8);
-
-		byte[] buffer = new byte[count * 8];
-
-		for (int i = 0; i < count; i++) {
-			BigEndianCodec.putLong(buffer, i * 8, SecureRandomUtil.nextLong());
-		}
-
-		StringBundler sb = new StringBundler(size);
-
-		for (int i = 0; i < size; i++) {
-			sb.append(Integer.toHexString(0xFF & buffer[i]));
-		}
-
-		Matcher matcher = _baseIdPattern.matcher(sb.toString());
+		Matcher matcher = _baseIdPattern.matcher(generateSecureRandomString());
 
 		return matcher.replaceFirst("id-$1-$2-$3-$4-$5");
 	}
 
 	public static String generateRandomSecret() {
+		Matcher matcher = _baseIdPattern.matcher(generateSecureRandomString());
+
+		return matcher.replaceFirst("secret-$1-$2-$3-$4-$5");
+	}
+
+	protected static String generateSecureRandomString() {
 		int size = 16;
 
 		int count = (int)Math.ceil((double)size / 8);
@@ -65,9 +55,7 @@ public class OAuth2SecureRandomGenerator {
 			sb.append(Integer.toHexString(0xFF & buffer[i]));
 		}
 
-		Matcher matcher = _baseIdPattern.matcher(sb.toString());
-
-		return matcher.replaceFirst("secret-$1-$2-$3-$4-$5");
+		return sb.toString();
 	}
 
 	private static final Pattern _baseIdPattern = Pattern.compile(

@@ -347,6 +347,7 @@ public class DESaveDataDefinitionDataFetcherTest {
 
 		DEDataDefinition deDataDefinition = new DEDataDefinition();
 
+		deDataDefinition.setDEDataDefinitionId(1);
 		deDataDefinition.setDEDataDefinitionFields(deDataDefinitionFields);
 		deDataDefinition.setName(
 			new TreeMap() {
@@ -368,7 +369,7 @@ public class DESaveDataDefinitionDataFetcherTest {
 
 		DataDefinition dataDefinition =
 			deSaveDataDefinitionDataFetcher.createDataDefinition(
-				1, deDataDefinition);
+				deDataDefinition);
 
 		Assert.assertEquals("1", dataDefinition.getDataDefinitionId());
 		Assert.assertEquals("json", dataDefinition.getStorageType());
@@ -634,9 +635,13 @@ public class DESaveDataDefinitionDataFetcherTest {
 		DEDataDefinitionService deDataDefinitionService = Mockito.mock(
 			DEDataDefinitionService.class);
 
+		DEDataDefinition deDataDefinition = new DEDataDefinition();
+
+		deDataDefinition.setDEDataDefinitionId(1);
+
 		DEDataDefinitionSaveResponse deDataDefinitionSaveResponse =
 			DEDataDefinitionSaveResponse.Builder.newBuilder(
-				1
+				deDataDefinition
 			).build();
 
 		Mockito.when(

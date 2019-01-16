@@ -76,10 +76,7 @@ public class DESearchDataDefinitionFetcher
 			for (DEDataDefinition deDataDefinition :
 					deDataDefinitionSearchResponse.getDEDataDefinitions()) {
 
-				dataDefinitions.add(
-					createDataDefinition(
-						deDataDefinition.getDEDataDefinitionId(),
-						deDataDefinition));
+				dataDefinitions.add(createDataDefinition(deDataDefinition));
 			}
 
 			searchDataDefinitionType.setDataDefinitions(dataDefinitions);

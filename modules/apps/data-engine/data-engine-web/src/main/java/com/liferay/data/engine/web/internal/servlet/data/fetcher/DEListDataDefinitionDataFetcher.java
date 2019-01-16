@@ -74,7 +74,7 @@ public class DEListDataDefinitionDataFetcher
 					deDataDefinitionListResponse.getDEDataDefinitions()) {
 
 				DataDefinition dataDefinition = createDataDefinition(
-					deDataDefinition.getDEDataDefinitionId(), deDataDefinition);
+					deDataDefinition);
 
 				dataDefinitions.add(dataDefinition);
 			}

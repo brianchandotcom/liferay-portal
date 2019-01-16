@@ -15,7 +15,6 @@
 package com.liferay.data.engine.web.internal.servlet.data.fetcher;
 
 import com.liferay.data.engine.exception.DEDataDefinitionException;
-import com.liferay.data.engine.model.DEDataDefinition;
 import com.liferay.data.engine.service.DEDataDefinitionGetResponse;
 import com.liferay.data.engine.service.DEDataDefinitionRequestBuilder;
 import com.liferay.data.engine.service.DEDataDefinitionService;
@@ -59,11 +58,8 @@ public class DEGetDataDefinitionDataFetcher
 						dataDefinitionId
 					).build());
 
-			DEDataDefinition deDataDefinition =
-				deDataDefinitionGetResponse.getDeDataDefinition();
-
 			DataDefinition dataDefinition = createDataDefinition(
-				dataDefinitionId, deDataDefinition);
+				deDataDefinitionGetResponse.getDEDataDefinition());
 
 			getDataDefinitionType.setDataDefinition(dataDefinition);
 		}

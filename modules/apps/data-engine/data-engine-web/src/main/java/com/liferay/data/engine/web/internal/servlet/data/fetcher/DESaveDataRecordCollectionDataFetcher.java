@@ -97,8 +97,8 @@ public class DESaveDataRecordCollectionDataFetcher
 			DataRecordCollection dataRecordCollection =
 				createDataRecordCollection(
 					deDataRecordCollectionSaveResponse.
-						getDEDataRecordCollectionId(),
-					deDataRecordCollection, deSaveDataDefinitionDataFetcher);
+						getDEDataRecordCollection(),
+					deSaveDataDefinitionDataFetcher);
 
 			saveDataRecordCollectionType.setDataRecordCollection(
 				dataRecordCollection);

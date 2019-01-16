@@ -31,11 +31,12 @@ public abstract class DEBaseDataDefinitionDataFetcher
 	extends DEBaseDataFetcher {
 
 	protected DataDefinition createDataDefinition(
-		long deDataDefinitionId, DEDataDefinition deDataDefinition) {
+		DEDataDefinition deDataDefinition) {
 
 		DataDefinition dataDefinition = new DataDefinitionType();
 
-		dataDefinition.setDataDefinitionId(String.valueOf(deDataDefinitionId));
+		dataDefinition.setDataDefinitionId(
+			String.valueOf(deDataDefinition.getDEDataDefinitionId()));
 
 		if (deDataDefinition.getDescription() != null) {
 			dataDefinition.setDescriptions(

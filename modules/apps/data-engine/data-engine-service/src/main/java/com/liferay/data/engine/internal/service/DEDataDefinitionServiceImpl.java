@@ -332,12 +332,8 @@ public class DEDataDefinitionServiceImpl
 				deDataDefinitionSaveRequestExecutor =
 					getDEDataDefinitionSaveRequestExecutor();
 
-			DEDataDefinitionSaveResponse deDataDefinitionSaveResponse =
-				deDataDefinitionSaveRequestExecutor.execute(
-					deDataDefinitionSaveRequest);
-
-			return DEDataDefinitionSaveResponse.Builder.of(
-				deDataDefinitionSaveResponse.getDEDataDefinitionId());
+			return deDataDefinitionSaveRequestExecutor.execute(
+				deDataDefinitionSaveRequest);
 		}
 		catch (DEDataDefinitionException dedde) {
 			throw dedde;
@@ -394,7 +390,7 @@ public class DEDataDefinitionServiceImpl
 		return _deDataDefinitionCountRequestExecutor;
 	}
 
-	public DEDataDefinitionDeleteRequestExecutor
+	protected DEDataDefinitionDeleteRequestExecutor
 		getDEDataDefinitionDeleteRequestExecutor() {
 
 		if (_deDataDefinitionDeleteRequestExecutor == null) {
@@ -407,33 +403,32 @@ public class DEDataDefinitionServiceImpl
 		return _deDataDefinitionDeleteRequestExecutor;
 	}
 
-	public DEDataDefinitionGetRequestExecutor
+	protected DEDataDefinitionGetRequestExecutor
 		getDEDataDefinitionGetRequestExecutor() {
 
 		if (_deDataDefinitionGetRequestExecutor == null) {
 			_deDataDefinitionGetRequestExecutor =
 				new DEDataDefinitionGetRequestExecutor(
-					ddmStructureLocalService,
-					deDataDefinitionFieldsDeserializerTracker);
+					getDEDataEngineRequestExecutor(), ddmStructureLocalService);
 		}
 
 		return _deDataDefinitionGetRequestExecutor;
 	}
 
-	public DEDataDefinitionListRequestExecutor
+	protected DEDataDefinitionListRequestExecutor
 		getDEDataDefinitionListRequestExecutor() {
 
 		if (_deDataDefinitionListRequestExecutor == null) {
 			_deDataDefinitionListRequestExecutor =
 				new DEDataDefinitionListRequestExecutor(
-					ddmStructureService,
-					deDataDefinitionFieldsDeserializerTracker, portal);
+					getDEDataEngineRequestExecutor(), ddmStructureService,
+					portal);
 		}
 
 		return _deDataDefinitionListRequestExecutor;
 	}
 
-	public DEDataDefinitionSaveModelPermissionsRequestExecutor
+	protected DEDataDefinitionSaveModelPermissionsRequestExecutor
 		getDEDataDefinitionSaveModelPermissionsRequestExecutor() {
 
 		if (_deDataDefinitionSaveModelPermissionsRequestExecutor == null) {
@@ -445,7 +440,7 @@ public class DEDataDefinitionServiceImpl
 		return _deDataDefinitionSaveModelPermissionsRequestExecutor;
 	}
 
-	public DEDataDefinitionSavePermissionsRequestExecutor
+	protected DEDataDefinitionSavePermissionsRequestExecutor
 		getDEDataDefinitionSavePermissionsRequestExecutor() {
 
 		if (_deDataDefinitionSavePermissionsRequestExecutor == null) {
@@ -457,13 +452,13 @@ public class DEDataDefinitionServiceImpl
 		return _deDataDefinitionSavePermissionsRequestExecutor;
 	}
 
-	public DEDataDefinitionSaveRequestExecutor
+	protected DEDataDefinitionSaveRequestExecutor
 		getDEDataDefinitionSaveRequestExecutor() {
 
 		if (_deDataDefinitionSaveRequestExecutor == null) {
 			_deDataDefinitionSaveRequestExecutor =
 				new DEDataDefinitionSaveRequestExecutor(
-					ddmStructureLocalService,
+					getDEDataEngineRequestExecutor(), ddmStructureLocalService,
 					deDataDefinitionFieldsSerializerTracker, portal,
 					resourceLocalService);
 		}

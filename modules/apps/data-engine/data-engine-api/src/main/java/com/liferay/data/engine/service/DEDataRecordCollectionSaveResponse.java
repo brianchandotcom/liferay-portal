@@ -14,26 +14,30 @@
 
 package com.liferay.data.engine.service;
 
+import com.liferay.data.engine.model.DEDataRecordCollection;
+
 /**
  * @author Leonardo Barros
  */
 public final class DEDataRecordCollectionSaveResponse {
 
-	public long getDEDataRecordCollectionId() {
-		return _deDataRecordCollectionId;
+	public DEDataRecordCollection getDEDataRecordCollection() {
+		return _deDataRecordCollection;
 	}
 
 	public static final class Builder {
 
-		public static Builder newBuilder(long deDataRecordCollectionId) {
-			return new Builder(deDataRecordCollectionId);
+		public static Builder newBuilder(
+			DEDataRecordCollection deDataRecordCollection) {
+
+			return new Builder(deDataRecordCollection);
 		}
 
 		public static DEDataRecordCollectionSaveResponse of(
-			long deDataRecordCollectionId) {
+			DEDataRecordCollection deDataRecordCollection) {
 
 			return newBuilder(
-				deDataRecordCollectionId
+				deDataRecordCollection
 			).build();
 		}
 
@@ -41,9 +45,9 @@ public final class DEDataRecordCollectionSaveResponse {
 			return _deDataRecordCollectionSaveResponse;
 		}
 
-		private Builder(long deDataRecordCollectionId) {
-			_deDataRecordCollectionSaveResponse._deDataRecordCollectionId =
-				deDataRecordCollectionId;
+		private Builder(DEDataRecordCollection deDataRecordCollection) {
+			_deDataRecordCollectionSaveResponse._deDataRecordCollection =
+				deDataRecordCollection;
 		}
 
 		private final DEDataRecordCollectionSaveResponse
@@ -55,6 +59,6 @@ public final class DEDataRecordCollectionSaveResponse {
 	private DEDataRecordCollectionSaveResponse() {
 	}
 
-	private long _deDataRecordCollectionId;
+	private DEDataRecordCollection _deDataRecordCollection;
 
 }

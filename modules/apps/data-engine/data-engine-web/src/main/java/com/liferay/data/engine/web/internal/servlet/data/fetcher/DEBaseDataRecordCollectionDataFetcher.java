@@ -14,7 +14,6 @@
 
 package com.liferay.data.engine.web.internal.servlet.data.fetcher;
 
-import com.liferay.data.engine.model.DEDataDefinition;
 import com.liferay.data.engine.model.DEDataRecordCollection;
 import com.liferay.data.engine.web.internal.graphql.model.DataDefinition;
 import com.liferay.data.engine.web.internal.graphql.model.DataRecordCollection;
@@ -27,24 +26,21 @@ public abstract class DEBaseDataRecordCollectionDataFetcher
 	extends DEBaseDataFetcher {
 
 	protected DataRecordCollection createDataRecordCollection(
-		long deDataRecordCollectionId,
 		DEDataRecordCollection deDataRecordCollection,
 		DESaveDataDefinitionDataFetcher deSaveDataDefinitionDataFetcher) {
 
 		DataRecordCollection dataRecordCollection =
 			new DataRecordCollectionType();
 
-		DEDataDefinition deDataDefinition =
-			deDataRecordCollection.getDEDataDefinition();
-
 		DataDefinition dataDefinition =
 			deSaveDataDefinitionDataFetcher.createDataDefinition(
-				deDataDefinition.getDEDataDefinitionId(), deDataDefinition);
+				deDataRecordCollection.getDEDataDefinition());
 
 		dataRecordCollection.setDataDefinition(dataDefinition);
 
 		dataRecordCollection.setDataRecordCollectionId(
-			String.valueOf(deDataRecordCollectionId));
+			String.valueOf(
+				deDataRecordCollection.getDEDataRecordCollectionId()));
 		dataRecordCollection.setDescriptions(
 			getLocalizedValuesType(deDataRecordCollection.getDescription()));
 		dataRecordCollection.setNames(

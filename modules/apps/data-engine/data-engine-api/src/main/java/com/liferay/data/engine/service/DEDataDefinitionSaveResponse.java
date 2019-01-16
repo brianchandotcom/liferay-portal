@@ -14,24 +14,28 @@
 
 package com.liferay.data.engine.service;
 
+import com.liferay.data.engine.model.DEDataDefinition;
+
 /**
  * @author Leonardo Barros
  */
 public final class DEDataDefinitionSaveResponse {
 
-	public long getDEDataDefinitionId() {
-		return _deDataDefinitionId;
+	public DEDataDefinition getDEDataDefinition() {
+		return _deDataDefinition;
 	}
 
 	public static final class Builder {
 
-		public static Builder newBuilder(long deDataDefinitionId) {
-			return new Builder(deDataDefinitionId);
+		public static Builder newBuilder(DEDataDefinition deDataDefinition) {
+			return new Builder(deDataDefinition);
 		}
 
-		public static DEDataDefinitionSaveResponse of(long deDataDefinitionId) {
+		public static DEDataDefinitionSaveResponse of(
+			DEDataDefinition deDataDefinition) {
+
 			return newBuilder(
-				deDataDefinitionId
+				deDataDefinition
 			).build();
 		}
 
@@ -39,9 +43,8 @@ public final class DEDataDefinitionSaveResponse {
 			return _deDataDefinitionSaveResponse;
 		}
 
-		private Builder(long deDataDefinitionId) {
-			_deDataDefinitionSaveResponse._deDataDefinitionId =
-				deDataDefinitionId;
+		private Builder(DEDataDefinition deDataDefinition) {
+			_deDataDefinitionSaveResponse._deDataDefinition = deDataDefinition;
 		}
 
 		private final DEDataDefinitionSaveResponse
@@ -52,6 +55,6 @@ public final class DEDataDefinitionSaveResponse {
 	private DEDataDefinitionSaveResponse() {
 	}
 
-	private long _deDataDefinitionId;
+	private DEDataDefinition _deDataDefinition;
 
 }

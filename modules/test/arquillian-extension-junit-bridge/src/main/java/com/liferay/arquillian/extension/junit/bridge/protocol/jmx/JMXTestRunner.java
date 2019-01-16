@@ -34,13 +34,8 @@ import org.jboss.arquillian.test.spi.TestResult;
 public class JMXTestRunner
 	extends NotificationBroadcasterSupport implements JMXTestRunnerMBean {
 
-	public JMXTestRunner(ClassLoader classLoader) {
-		this(classLoader, JMXTestRunnerMBean.OBJECT_NAME);
-	}
-
-	public JMXTestRunner(ClassLoader testClassLoader, String objectName) {
+	public JMXTestRunner(ClassLoader testClassLoader) {
 		_testClassLoader = testClassLoader;
-		_objectName = objectName;
 	}
 
 	@Override
@@ -56,7 +51,7 @@ public class JMXTestRunner
 	public ObjectName registerMBean(MBeanServer mBeanServer)
 		throws JMException {
 
-		ObjectName objectName = new ObjectName(_objectName);
+		ObjectName objectName = new ObjectName(JMXTestRunnerMBean.OBJECT_NAME);
 
 		mBeanServer.registerMBean(this, objectName);
 
@@ -82,7 +77,7 @@ public class JMXTestRunner
 	}
 
 	public void unregisterMBean(MBeanServer mBeanServer) throws JMException {
-		ObjectName objectName = new ObjectName(_objectName);
+		ObjectName objectName = new ObjectName(JMXTestRunnerMBean.OBJECT_NAME);
 
 		if (mBeanServer.isRegistered(objectName)) {
 			mBeanServer.unregisterMBean(objectName);
@@ -120,7 +115,6 @@ public class JMXTestRunner
 		new ConcurrentHashMap<>();
 	private final AtomicInteger _integer = new AtomicInteger();
 	private TestRunner _mockTestRunner;
-	private final String _objectName;
-	private ClassLoader _testClassLoader;
+	private final ClassLoader _testClassLoader;
 
 }

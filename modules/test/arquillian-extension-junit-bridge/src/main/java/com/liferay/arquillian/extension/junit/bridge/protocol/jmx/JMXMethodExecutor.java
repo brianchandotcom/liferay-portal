@@ -37,16 +37,8 @@ public class JMXMethodExecutor implements ContainerMethodExecutor {
 		MBeanServerConnection mBeanServerConnection,
 		CommandCallback commandCallback) {
 
-		this(mBeanServerConnection, commandCallback, JMXTestRunner.OBJECT_NAME);
-	}
-
-	public JMXMethodExecutor(
-		MBeanServerConnection mBeanServerConnection,
-		CommandCallback commandCallback, String objectName) {
-
 		_mBeanServerConnection = mBeanServerConnection;
 		_commandCallback = commandCallback;
-		_objectName = objectName;
 	}
 
 	@Override
@@ -68,7 +60,7 @@ public class JMXMethodExecutor implements ContainerMethodExecutor {
 		TestResult result = null;
 
 		try {
-			objectName = new ObjectName(_objectName);
+			objectName = new ObjectName(JMXTestRunner.OBJECT_NAME);
 
 			commandListener = new CallbackNotificationListener(objectName);
 
@@ -111,7 +103,6 @@ public class JMXMethodExecutor implements ContainerMethodExecutor {
 
 	private final CommandCallback _commandCallback;
 	private final MBeanServerConnection _mBeanServerConnection;
-	private final String _objectName;
 
 	private class CallbackNotificationListener implements NotificationListener {
 

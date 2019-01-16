@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.model.ColorScheme;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.LayoutSetPrototype;
+import com.liferay.portal.kernel.model.LayoutSetVersion;
 import com.liferay.portal.kernel.model.Theme;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.LayoutSetPrototypeLocalServiceUtil;
@@ -161,6 +162,11 @@ public class StagedLayoutSetImpl implements StagedLayoutSet {
 	@Override
 	public long getGroupId() {
 		return _layoutSet.getGroupId();
+	}
+
+	@Override
+	public long getHeadId() {
+		return _layoutSet.getHeadId();
 	}
 
 	@Override
@@ -369,6 +375,11 @@ public class StagedLayoutSetImpl implements StagedLayoutSet {
 	}
 
 	@Override
+	public void populateVersionModel(LayoutSetVersion layoutSetVersion) {
+		_layoutSet.populateVersionModel(layoutSetVersion);
+	}
+
+	@Override
 	public void resetOriginalValues() {
 		_layoutSet.resetOriginalValues();
 	}
@@ -424,6 +435,11 @@ public class StagedLayoutSetImpl implements StagedLayoutSet {
 	@Override
 	public void setGroupId(long groupId) {
 		_layoutSet.setGroupId(groupId);
+	}
+
+	@Override
+	public void setHeadId(long headId) {
+		_layoutSet.setHeadId(headId);
 	}
 
 	@Override

@@ -79,7 +79,6 @@ class EditTags extends Component {
 			.catch(
 				(xhr) => {
 					this.close();
-					//TODO open toast error
 				}
 			);
 	}

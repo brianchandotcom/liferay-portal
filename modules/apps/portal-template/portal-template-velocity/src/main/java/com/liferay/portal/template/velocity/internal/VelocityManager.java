@@ -207,13 +207,15 @@ public class VelocityManager extends BaseSingleTemplateManager {
 				RuntimeConstants.UBERSPECT_CLASSNAME,
 				LiferaySecureUberspector.class.getName());
 
+			String contextName = ClassLoaderPool.getContextName(
+				clazz.getClassLoader());
+
 			String[] velocimacroLibrary =
 				_velocityEngineConfiguration.velocimacroLibrary();
 
 			for (int i = 0; i < velocimacroLibrary.length; i++) {
 				velocimacroLibrary[i] = StringBundler.concat(
-					ClassLoaderPool.getContextName(clazz.getClassLoader()),
-					TemplateConstants.CLASS_LOADER_SEPARATOR,
+					contextName, TemplateConstants.CLASS_LOADER_SEPARATOR,
 					velocimacroLibrary[i]);
 			}
 

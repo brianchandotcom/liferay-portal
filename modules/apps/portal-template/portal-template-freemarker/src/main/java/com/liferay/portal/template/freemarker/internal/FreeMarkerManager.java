@@ -287,13 +287,16 @@ public class FreeMarkerManager extends BaseSingleTemplateManager {
 		try {
 			Class<?> clazz = getClass();
 
+			String contextName = ClassLoaderPool.getContextName(
+				clazz.getClassLoader());
+
 			String[] macroLibrary =
 				_freeMarkerEngineConfiguration.macroLibrary();
 
 			for (int i = 0; i < macroLibrary.length; i++) {
 				macroLibrary[i] = StringBundler.concat(
-					ClassLoaderPool.getContextName(clazz.getClassLoader()),
-					TemplateConstants.CLASS_LOADER_SEPARATOR, macroLibrary[i]);
+					contextName, TemplateConstants.CLASS_LOADER_SEPARATOR,
+					macroLibrary[i]);
 			}
 
 			_configuration.setSetting(

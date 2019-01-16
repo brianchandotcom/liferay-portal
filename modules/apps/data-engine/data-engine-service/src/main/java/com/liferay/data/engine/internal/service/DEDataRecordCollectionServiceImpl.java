@@ -16,12 +16,15 @@ package com.liferay.data.engine.internal.service;
 
 import com.liferay.data.engine.constants.DEActionKeys;
 import com.liferay.data.engine.exception.DEDataRecordCollectionException;
+import com.liferay.data.engine.internal.executor.DEDataEngineRequestExecutor;
 import com.liferay.data.engine.internal.executor.DEDataRecordCollectionDeleteModelPermissionsRequestExecutor;
 import com.liferay.data.engine.internal.executor.DEDataRecordCollectionDeletePermissionsRequestExecutor;
 import com.liferay.data.engine.internal.executor.DEDataRecordCollectionDeleteRequestExecutor;
+import com.liferay.data.engine.internal.executor.DEDataRecordCollectionGetRequestExecutor;
 import com.liferay.data.engine.internal.executor.DEDataRecordCollectionSaveModelPermissionsRequestExecutor;
 import com.liferay.data.engine.internal.executor.DEDataRecordCollectionSavePermissionsRequestExecutor;
 import com.liferay.data.engine.internal.executor.DEDataRecordCollectionSaveRequestExecutor;
+import com.liferay.data.engine.internal.io.DEDataDefinitionFieldsDeserializerTracker;
 import com.liferay.data.engine.internal.security.permission.DEDataEnginePermissionSupport;
 import com.liferay.data.engine.model.DEDataRecordCollection;
 import com.liferay.data.engine.service.DEDataRecordCollectionDeleteModelPermissionsRequest;
@@ -30,6 +33,8 @@ import com.liferay.data.engine.service.DEDataRecordCollectionDeletePermissionsRe
 import com.liferay.data.engine.service.DEDataRecordCollectionDeletePermissionsResponse;
 import com.liferay.data.engine.service.DEDataRecordCollectionDeleteRequest;
 import com.liferay.data.engine.service.DEDataRecordCollectionDeleteResponse;
+import com.liferay.data.engine.service.DEDataRecordCollectionGetRequest;
+import com.liferay.data.engine.service.DEDataRecordCollectionGetResponse;
 import com.liferay.data.engine.service.DEDataRecordCollectionSaveModelPermissionsRequest;
 import com.liferay.data.engine.service.DEDataRecordCollectionSaveModelPermissionsResponse;
 import com.liferay.data.engine.service.DEDataRecordCollectionSavePermissionsRequest;
@@ -159,6 +164,42 @@ public class DEDataRecordCollectionServiceImpl
 	}
 
 	@Override
+	public DEDataRecordCollectionGetResponse execute(
+			DEDataRecordCollectionGetRequest deDataRecordCollectionGetRequest)
+		throws DEDataRecordCollectionException {
+
+		try {
+			long deDataRecordCollectionId =
+				deDataRecordCollectionGetRequest.getDEDataRecordCollectionId();
+
+			_modelResourcePermission.check(
+				getPermissionChecker(), deDataRecordCollectionId,
+				ActionKeys.VIEW);
+
+			DEDataRecordCollectionGetRequestExecutor
+				deDataRecordCollectionGetRequestExecutor =
+					getDEDataRecordCollectionGetRequestExecutor();
+
+			return deDataRecordCollectionGetRequestExecutor.execute(
+				deDataRecordCollectionGetRequest);
+		}
+		catch (PrincipalException.MustHavePermission mhp) {
+			throw new DEDataRecordCollectionException.MustHavePermission(
+				mhp.actionId, mhp);
+		}
+		catch (NoSuchRecordSetException nsrse) {
+			throw new DEDataRecordCollectionException.
+				NoSuchDataRecordCollection(
+					deDataRecordCollectionGetRequest.
+						getDEDataRecordCollectionId(),
+					nsrse);
+		}
+		catch (Exception e) {
+			throw new DEDataRecordCollectionException(e);
+		}
+	}
+
+	@Override
 	public DEDataRecordCollectionSaveModelPermissionsResponse execute(
 			DEDataRecordCollectionSaveModelPermissionsRequest
 				deDataRecordCollectionSaveModelPermissionsRequest)
@@ -250,14 +291,8 @@ public class DEDataRecordCollectionServiceImpl
 				deDataRecordCollectionSaveRequestExecutor =
 					getDEDataRecordCollectionSaveRequestExecutor();
 
-			DEDataRecordCollectionSaveResponse
-				deDataRecordCollectionSaveResponse =
-					deDataRecordCollectionSaveRequestExecutor.execute(
-						deDataRecordCollectionSaveRequest);
-
-			return DEDataRecordCollectionSaveResponse.Builder.of(
-				deDataRecordCollectionSaveResponse.
-					getDEDataRecordCollectionId());
+			return deDataRecordCollectionSaveRequestExecutor.execute(
+				deDataRecordCollectionSaveRequest);
 		}
 		catch (DEDataRecordCollectionException dedrce) {
 			throw dedrce;
@@ -280,6 +315,15 @@ public class DEDataRecordCollectionServiceImpl
 	@Override
 	protected DEDataEnginePermissionSupport getDEDataEnginePermissionSupport() {
 		return new DEDataEnginePermissionSupport(groupLocalService);
+	}
+
+	protected DEDataEngineRequestExecutor getDEDataEngineRequestExecutor() {
+		if (_deDataEngineRequestExecutor == null) {
+			_deDataEngineRequestExecutor = new DEDataEngineRequestExecutor(
+				deDataDefinitionFieldsDeserializerTracker);
+		}
+
+		return _deDataEngineRequestExecutor;
 	}
 
 	protected DEDataRecordCollectionDeleteModelPermissionsRequestExecutor
@@ -320,6 +364,18 @@ public class DEDataRecordCollectionServiceImpl
 		return _deDataRecordCollectionDeleteRequestExecutor;
 	}
 
+	protected DEDataRecordCollectionGetRequestExecutor
+		getDEDataRecordCollectionGetRequestExecutor() {
+
+		if (_deDataRecordCollectionGetRequestExecutor == null) {
+			_deDataRecordCollectionGetRequestExecutor =
+				new DEDataRecordCollectionGetRequestExecutor(
+					ddlRecordSetLocalService, getDEDataEngineRequestExecutor());
+		}
+
+		return _deDataRecordCollectionGetRequestExecutor;
+	}
+
 	protected DEDataRecordCollectionSaveModelPermissionsRequestExecutor
 		getDEDataRecordCollectionSaveModelPermissionsRequestExecutor() {
 
@@ -352,7 +408,8 @@ public class DEDataRecordCollectionServiceImpl
 		if (_deDataRecordCollectionSaveRequestExecutor == null) {
 			_deDataRecordCollectionSaveRequestExecutor =
 				new DEDataRecordCollectionSaveRequestExecutor(
-					ddlRecordSetLocalService, resourceLocalService);
+					getDEDataEngineRequestExecutor(), ddlRecordSetLocalService,
+					resourceLocalService);
 		}
 
 		return _deDataRecordCollectionSaveRequestExecutor;
@@ -373,6 +430,10 @@ public class DEDataRecordCollectionServiceImpl
 	protected DDLRecordSetLocalService ddlRecordSetLocalService;
 
 	@Reference
+	protected DEDataDefinitionFieldsDeserializerTracker
+		deDataDefinitionFieldsDeserializerTracker;
+
+	@Reference
 	protected GroupLocalService groupLocalService;
 
 	@Reference
@@ -387,12 +448,15 @@ public class DEDataRecordCollectionServiceImpl
 	@Reference
 	protected RoleLocalService roleLocalService;
 
+	private DEDataEngineRequestExecutor _deDataEngineRequestExecutor;
 	private DEDataRecordCollectionDeleteModelPermissionsRequestExecutor
 		_deDataRecordCollectionDeleteModelPermissionsRequestExecutor;
 	private DEDataRecordCollectionDeletePermissionsRequestExecutor
 		_deDataRecordCollectionDeletePermissionsRequestExecutor;
 	private DEDataRecordCollectionDeleteRequestExecutor
 		_deDataRecordCollectionDeleteRequestExecutor;
+	private DEDataRecordCollectionGetRequestExecutor
+		_deDataRecordCollectionGetRequestExecutor;
 	private DEDataRecordCollectionSaveModelPermissionsRequestExecutor
 		_deDataRecordCollectionSaveModelPermissionsRequestExecutor;
 	private DEDataRecordCollectionSavePermissionsRequestExecutor

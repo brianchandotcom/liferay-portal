@@ -30,7 +30,7 @@ List<ScreenNavigationEntry> screenNavigationEntries = (List<ScreenNavigationEntr
 
 <c:if test="<%= screenNavigationCategories.size() > 1 %>">
 	<div class="page-header">
-		<div class="container-fluid container-fluid-max-xl">
+		<div class="container">
 			<nav>
 				<ul class="nav nav-underline">
 
@@ -60,7 +60,7 @@ List<ScreenNavigationEntry> screenNavigationEntries = (List<ScreenNavigationEntr
 	<div class="row">
 		<c:if test="<%= screenNavigationEntries.size() > 1 %>">
 			<div class="<%= navCssClass %>">
-				<nav class="menubar menubar-transparent menubar-vertical-expand-lg">
+				<nav class="menubar menubar-transparent menubar-vertical-expand-md">
 					<a aria-controls="<%= id %>" aria-expanded="false" class="menubar-toggler" data-toggle="collapse" href="#<%= id %>" role="button">
 						<liferay-ui:message key="<%= selectedScreenNavigationEntry.getEntryKey() %>" />
 

@@ -16,8 +16,6 @@ package com.liferay.arquillian.extension.junit.bridge.protocol.jmx;
 
 import java.lang.reflect.Method;
 
-import java.util.Map;
-
 import javax.management.MBeanServerConnection;
 import javax.management.MBeanServerInvocationHandler;
 import javax.management.Notification;
@@ -39,20 +37,16 @@ public class JMXMethodExecutor implements ContainerMethodExecutor {
 		MBeanServerConnection mBeanServerConnection,
 		CommandCallback commandCallback) {
 
-		this(
-			mBeanServerConnection, commandCallback, JMXTestRunner.OBJECT_NAME,
-			null);
+		this(mBeanServerConnection, commandCallback, JMXTestRunner.OBJECT_NAME);
 	}
 
 	public JMXMethodExecutor(
 		MBeanServerConnection mBeanServerConnection,
-		CommandCallback commandCallback, String objectName,
-		Map<String, String> protocolProperties) {
+		CommandCallback commandCallback, String objectName) {
 
 		_mBeanServerConnection = mBeanServerConnection;
 		_commandCallback = commandCallback;
 		_objectName = objectName;
-		_protocolProperties = protocolProperties;
 	}
 
 	@Override
@@ -118,7 +112,6 @@ public class JMXMethodExecutor implements ContainerMethodExecutor {
 	private final CommandCallback _commandCallback;
 	private final MBeanServerConnection _mBeanServerConnection;
 	private final String _objectName;
-	private final Map<String, String> _protocolProperties;
 
 	private class CallbackNotificationListener implements NotificationListener {
 

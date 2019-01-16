@@ -68,8 +68,6 @@ public class JMXTestRunner
 
 		mBeanServer.registerMBean(this, objectName);
 
-		localMBeanServer = mBeanServer;
-
 		return objectName;
 	}
 
@@ -128,23 +126,7 @@ public class JMXTestRunner
 		if (mBeanServer.isRegistered(objectName)) {
 			mBeanServer.unregisterMBean(objectName);
 		}
-
-		localMBeanServer = null;
 	}
-
-	protected String getCurrentCall() {
-		return _currentCall.get();
-	}
-
-	protected void setCurrentCall(String current) {
-		_currentCall.set(current);
-	}
-
-	protected void setExposedTestRunnerForTest(TestRunner mockTestRunner) {
-		_mockTestRunner = mockTestRunner;
-	}
-
-	protected static MBeanServer localMBeanServer;
 
 	private TestResult _runTestMethodInternal(
 		String className, String methodName) {

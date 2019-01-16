@@ -101,6 +101,13 @@ public class OAuth2ApplicationLocalServiceImpl
 			allowedGrantTypesList = new ArrayList<>();
 		}
 
+		if (Validator.isBlank(clientId)) {
+			clientId = generateClientId();
+		}
+		else {
+			clientId = StringUtil.trim(clientId);
+		}
+
 		homePageURL = StringUtil.trim(homePageURL);
 		name = StringUtil.trim(name);
 		privacyPolicyURL = StringUtil.trim(privacyPolicyURL);
@@ -120,13 +127,6 @@ public class OAuth2ApplicationLocalServiceImpl
 
 		long oAuth2ApplicationId = counterLocalService.increment(
 			OAuth2Application.class.getName());
-
-		if (Validator.isBlank(clientId)) {
-			clientId = generateClientId(oAuth2ApplicationId);
-		}
-		else {
-			clientId = StringUtil.trim(clientId);
-		}
 
 		OAuth2Application oAuth2Application =
 			oAuth2ApplicationPersistence.create(oAuth2ApplicationId);
@@ -432,7 +432,7 @@ public class OAuth2ApplicationLocalServiceImpl
 		return oAuth2Application;
 	}
 
-	protected String generateClientId(long applicationId) {
+	protected String generateClientId() {
 		int size = 16;
 
 		int count = (int)Math.ceil((double)size / 8);
@@ -451,8 +451,7 @@ public class OAuth2ApplicationLocalServiceImpl
 
 		Matcher matcher = _baseIdPattern.matcher(sb.toString());
 
-		return matcher.replaceFirst(
-			String.format("%06d", applicationId % 1000000) + "-$1-$2-$3-$4-$5");
+		return matcher.replaceFirst("id-$1-$2-$3-$4-$5");
 	}
 
 	protected void validate(

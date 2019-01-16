@@ -95,7 +95,7 @@
 </tr>
 <tr>
 	<td>EXPIRE</td>
-	<td>//button[*[name()='svg'][contains(@class,'icon-time')]]</td>
+	<td>//a[@data-title='Expire'] | //a[@title='Expire']</td>
 	<td></td>
 </tr>
 <tr>

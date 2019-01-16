@@ -44,8 +44,8 @@ import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.Task;
 import org.gradle.api.UncheckedIOException;
+import org.gradle.api.file.CopySpec;
 import org.gradle.api.file.FileCollection;
-import org.gradle.api.file.FileCopyDetails;
 import org.gradle.api.internal.plugins.osgi.OsgiHelper;
 import org.gradle.api.plugins.BasePlugin;
 import org.gradle.api.plugins.JavaPlugin;
@@ -535,7 +535,7 @@ public class NodePlugin implements Plugin<Project> {
 
 		classesTask.dependsOn(npmRunTask);
 
-		File sourceDigestFile = npmRunTask.getSourceDigestFile();
+		final File sourceDigestFile = npmRunTask.getSourceDigestFile();
 
 		if (!_isStale(sourceDigestFile, npmRunTask.getSourceFiles())) {
 			Project project = npmRunTask.getProject();
@@ -544,20 +544,64 @@ public class NodePlugin implements Plugin<Project> {
 				(ProcessResources)GradleUtil.getTask(
 					project, JavaPlugin.PROCESS_RESOURCES_TASK_NAME);
 
-			processResourcesTask.eachFile(
-				new Action<FileCopyDetails>() {
+			processResourcesTask.doFirst(
+				new Action<Task>() {
 
 					@Override
-					public void execute(FileCopyDetails fileCopyDetails) {
-						String name = fileCopyDetails.getName();
+					public void execute(Task task) {
+						ProcessResources processResourcesTask =
+							(ProcessResources)task;
 
-						if (name.endsWith(".es.js")) {
-							File file = fileCopyDetails.getFile();
+						final File processResourcesDir =
+							processResourcesTask.getDestinationDir();
 
-							if (file.exists()) {
-								fileCopyDetails.exclude();
-							}
-						}
+						final File npmRunBuildOutputsDir = new File(
+							sourceDigestFile.getParentFile(), "outputs");
+
+						project.delete(npmRunBuildOutputsDir);
+
+						npmRunBuildOutputsDir.mkdirs();
+
+						project.copy(
+							new Action<CopySpec>() {
+
+								@Override
+								public void execute(CopySpec copySpec) {
+									copySpec.from(processResourcesDir);
+									copySpec.include("**/*.es.js");
+									copySpec.into(npmRunBuildOutputsDir);
+									copySpec.setIncludeEmptyDirs(false);
+								}
+
+							});
+					}
+
+				});
+
+			processResourcesTask.doLast(
+				new Action<Task>() {
+
+					@Override
+					public void execute(Task task) {
+						ProcessResources processResourcesTask =
+							(ProcessResources)task;
+
+						final File processResourcesDir =
+							processResourcesTask.getDestinationDir();
+
+						final File npmRunBuildOutputsDir = new File(
+							sourceDigestFile.getParentFile(), "outputs");
+
+						project.copy(
+							new Action<CopySpec>() {
+
+								@Override
+								public void execute(CopySpec copySpec) {
+									copySpec.from(npmRunBuildOutputsDir);
+									copySpec.into(processResourcesDir);
+								}
+
+							});
 					}
 
 				});

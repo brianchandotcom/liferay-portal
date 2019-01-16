@@ -185,11 +185,6 @@ public class USAddressTextLocalizerTest {
 		Address address = new AddressWrapper(null) {
 
 			@Override
-			public String getCity() {
-				return _city;
-			}
-
-			@Override
 			public Country getCountry() {
 				return _country;
 			}
@@ -197,26 +192,6 @@ public class USAddressTextLocalizerTest {
 			@Override
 			public Region getRegion() {
 				return _region;
-			}
-
-			@Override
-			public String getStreet1() {
-				return _street1;
-			}
-
-			@Override
-			public String getStreet2() {
-				return _street2;
-			}
-
-			@Override
-			public String getStreet3() {
-				return _street3;
-			}
-
-			@Override
-			public String getZip() {
-				return _zip;
 			}
 
 			@Override

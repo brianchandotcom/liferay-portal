@@ -1382,6 +1382,11 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<name>parentContainerCssClass</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
 			<name>portletURL</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>

@@ -14,17 +14,12 @@
 
 package com.liferay.arquillian.extension.junit.bridge.protocol.jmx;
 
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.atomic.AtomicInteger;
-
 import javax.management.JMException;
 import javax.management.MBeanServer;
-import javax.management.Notification;
 import javax.management.NotificationBroadcasterSupport;
 import javax.management.ObjectName;
 
 import org.jboss.arquillian.container.test.spi.TestRunner;
-import org.jboss.arquillian.container.test.spi.command.Command;
 import org.jboss.arquillian.container.test.spi.util.TestRunners;
 import org.jboss.arquillian.test.spi.TestResult;
 
@@ -36,16 +31,6 @@ public class JMXTestRunner
 
 	public JMXTestRunner(ClassLoader testClassLoader) {
 		_testClassLoader = testClassLoader;
-	}
-
-	@Override
-	public void push(String eventId, byte[] command) {
-		_events.put(eventId, Serializer.toObject(Command.class, command));
-	}
-
-	@Override
-	public Command<?> receive() {
-		return _events.remove(_currentCall.get());
 	}
 
 	public ObjectName registerMBean(MBeanServer mBeanServer)
@@ -63,17 +48,6 @@ public class JMXTestRunner
 		TestResult result = _runTestMethodInternal(className, methodName);
 
 		return Serializer.toByteArray(result);
-	}
-
-	@Override
-	public void send(Command<?> command) {
-		Notification notification = new Notification(
-			"arquillian-command", this, _integer.incrementAndGet(),
-			_currentCall.get());
-
-		notification.setUserData(Serializer.toByteArray(command));
-
-		sendNotification(notification);
 	}
 
 	public void unregisterMBean(MBeanServer mBeanServer) throws JMException {
@@ -112,9 +86,6 @@ public class JMXTestRunner
 	}
 
 	private final ThreadLocal<String> _currentCall = new ThreadLocal<>();
-	private final ConcurrentHashMap<String, Command<?>> _events =
-		new ConcurrentHashMap<>();
-	private final AtomicInteger _integer = new AtomicInteger();
 	private TestRunner _mockTestRunner;
 	private final ClassLoader _testClassLoader;
 

@@ -16,27 +16,10 @@ package com.liferay.arquillian.extension.junit.bridge.protocol.jmx;
 
 import javax.management.NotificationBroadcaster;
 
-import org.jboss.arquillian.container.test.spi.command.Command;
-
 /**
  * @author Matthew Tambara
  */
 public interface JMXTestRunnerMBean extends NotificationBroadcaster {
-
-	/**
-	 * Client side to push a {@link Command} result back to container.
-	 *
-	 * @param eventId used to correlate the result
-	 * @param command Command object containing the result, serialized
-	 */
-	public void push(String eventId, byte[] command);
-
-	/**
-	 * Receive {@link Command} results
-	 *
-	 * @return command Command object containing the result, null if none received (yet)
-	 */
-	public Command<?> receive();
 
 	/**
 	 * Runs a test method on the given test class
@@ -46,13 +29,6 @@ public interface JMXTestRunnerMBean extends NotificationBroadcaster {
 	 * @return a serialized {@link TestResult}
 	 */
 	public byte[] runTestMethod(String className, String methodName);
-
-	/**
-	 * Broadcast {@link Command} commands to any listeners
-	 *
-	 * @param command Command object containing the request
-	 */
-	public void send(Command<?> command);
 
 	/** The ObjectName for this service */
 	public String OBJECT_NAME = "jboss.arquillian:service=jmx-test-runner";

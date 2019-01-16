@@ -170,8 +170,6 @@ definition {
 
 		FormFields.viewFieldName(fieldName = "${fieldName}");
 
-		//var key_fieldName = "${fieldName}";
-
 		AssertTextEquals(locator1 = "Form#FIELD_LABEL", value1 = "${key_fieldName}");
 	}
 

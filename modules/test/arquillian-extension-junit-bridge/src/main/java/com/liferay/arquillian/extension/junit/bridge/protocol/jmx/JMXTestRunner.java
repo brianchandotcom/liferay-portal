@@ -135,13 +135,6 @@ public class JMXTestRunner
 		localMBeanServer = null;
 	}
 
-	protected TestResult doRunTestMethod(
-		TestRunner runner, Class<?> testClass, String methodName,
-		Map<String, String> protocolProps) {
-
-		return runner.execute(testClass, methodName);
-	}
-
 	protected String getCurrentCall() {
 		return _currentCall.get();
 	}
@@ -172,8 +165,7 @@ public class JMXTestRunner
 
 			Class<?> testClass = _testClassLoader.loadClass(className);
 
-			result = doRunTestMethod(
-				runner, testClass, methodName, protocolProps);
+			result = runner.execute(testClass, methodName);
 		}
 		catch (Throwable th) {
 			result.setStatus(TestResult.Status.FAILED);

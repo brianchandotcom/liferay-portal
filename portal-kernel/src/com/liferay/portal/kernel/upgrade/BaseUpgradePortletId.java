@@ -187,9 +187,9 @@ public abstract class BaseUpgradePortletId extends UpgradeProcess {
 
 		String oldStagingPortletId = _getStagedPortletId(oldRootPortletId);
 
-		String sql1 =
-			"select groupId, typeSettings from Group_ where " +
-				"typeSettings like '%" + oldStagingPortletId + "%'";
+		String sql1 = StringBundler.concat(
+			"select groupId, typeSettings from Group_ where typeSettings like ",
+			"'%", oldStagingPortletId, "%'");
 
 		String sql2 = "update Group_ set typeSettings = ? where groupId = ?";
 

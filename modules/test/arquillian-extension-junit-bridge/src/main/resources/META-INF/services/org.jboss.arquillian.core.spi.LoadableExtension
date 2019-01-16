@@ -1,3 +1,2 @@
 com.liferay.arquillian.extension.junit.bridge.LiferayArquillianJUnitBridgeExtension
-org.jboss.arquillian.protocol.jmx.JMXExtension
 !org.jboss.arquillian.config.impl.extension.ConfigExtension

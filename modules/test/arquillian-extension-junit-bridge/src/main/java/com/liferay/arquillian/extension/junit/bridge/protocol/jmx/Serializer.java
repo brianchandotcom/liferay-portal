@@ -16,6 +16,7 @@ package com.liferay.arquillian.extension.junit.bridge.protocol.jmx;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -24,44 +25,50 @@ import java.io.ObjectOutputStream;
  * @author Matthew Tambara
  */
 public class Serializer {
-    public static byte[] toByteArray(Object object) {
-        try {
-            ByteArrayOutputStream out = new ByteArrayOutputStream();
-            ObjectOutputStream outObj = new ObjectOutputStream(out);
-            outObj.writeObject(object);
-            outObj.flush();
-            return out.toByteArray();
-        } catch (Exception e) {
-            throw new RuntimeException("Could not serialize object: " + object, e);
-        }
-    }
 
-    public static <T> T toObject(Class<T> type, byte[] objectArray) {
-        try {
-            ObjectInputStream outObj = new ObjectInputStream(new ByteArrayInputStream(objectArray));
-            Object object = outObj.readObject();
+	public static byte[] toByteArray(Object object) {
+		try (ByteArrayOutputStream byteArrayOutputStream =
+				new ByteArrayOutputStream();
+			ObjectOutputStream objectOutputStream = new ObjectOutputStream(
+				byteArrayOutputStream)) {
 
-            return type.cast(object);
-        } catch (Exception e) {
-            throw new RuntimeException("Could not deserialize object: " + objectArray, e);
-        }
-    }
+			objectOutputStream.writeObject(object);
+			objectOutputStream.flush();
 
-    public static <T> T toObject(Class<T> type, InputStream input) {
-       try {
-           ObjectInputStream outObj = new ObjectInputStream(input);
-           Object object = outObj.readObject();
+			return byteArrayOutputStream.toByteArray();
+		}
+		catch (IOException ioe) {
+			throw new RuntimeException(
+				"Could not serialize object: " + object, ioe);
+		}
+	}
 
-           return type.cast(object);
-       } catch (Exception e) {
-           throw new RuntimeException("Could not deserialize object", e);
-       }
-       finally {
-          try {
-             input.close();
-          } catch (Exception e) {
-             e.printStackTrace();
-          }
-       }
-   }
+	public static <T> T toObject(Class<T> type, byte[] objectArray) {
+		try (InputStream inputStream = new ByteArrayInputStream(objectArray);
+			ObjectInputStream objectInputStream = new ObjectInputStream(
+				inputStream)) {
+
+			Object object = objectInputStream.readObject();
+
+			return (T)object;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(
+				"Could not deserialize object: " + objectArray, e);
+		}
+	}
+
+	public static <T> T toObject(Class<T> type, InputStream input) {
+		try (ObjectInputStream objectInputStream = new ObjectInputStream(
+				input)) {
+
+			Object object = objectInputStream.readObject();
+
+			return (T)object;
+		}
+		catch (Exception e) {
+			throw new RuntimeException("Could not deserialize object", e);
+		}
+	}
+
 }

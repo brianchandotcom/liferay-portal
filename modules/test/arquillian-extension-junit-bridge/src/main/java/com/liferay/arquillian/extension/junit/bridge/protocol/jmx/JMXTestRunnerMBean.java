@@ -15,58 +15,59 @@
 package com.liferay.arquillian.extension.junit.bridge.protocol.jmx;
 
 import java.util.Map;
+
 import javax.management.NotificationBroadcaster;
+
 import org.jboss.arquillian.container.test.spi.command.Command;
 
 /**
- *
  * @author Matthew Tambara
  */
 public interface JMXTestRunnerMBean extends NotificationBroadcaster {
 
-    /** The ObjectName for this service */
-    String OBJECT_NAME = "jboss.arquillian:service=jmx-test-runner";
+	/**
+	 * Client side to push a {@link Command} result back to container.
+	 *
+	 * @param eventId used to correlate the result
+	 * @param command Command object containing the result, serialized
+	 */
+	public void push(String eventId, byte[] command);
 
-    /**
-     * Runs a test method on the given test class
-     *
-     * @param className the test class name
-     * @param methodName the test method name
-     * @return a serialized {@link TestResult}
-     * @deprecated
-     */
-    @Deprecated
-    public byte[] runTestMethod(String className, String methodName);
+	/**
+	 * Receive {@link Command} results
+	 *
+	 * @return command Command object containing the result, null if none received (yet)
+	 */
+	public Command<?> receive();
 
-    /**
-     * Runs a test method on the given test class
-     *
-     * @param className the test class name
-     * @param methodName the test method name
-     * @param protocol configuration properties
-     * @return a serialized {@link TestResult}
-     */
-    public byte[] runTestMethod(String className, String methodName, Map<String, String> protocolProps);
-    
-    /**
-     * Broadcast {@link Command} commands to any listeners
-     * 
-     * @param command Command object containing the request
-     */
-    void send(Command<?> command);
+	/**
+	 * Runs a test method on the given test class
+	 *
+	 * @param className the test class name
+	 * @param methodName the test method name
+	 * @return a serialized {@link TestResult}
+	 */
+	public byte[] runTestMethod(String className, String methodName);
 
-    /**
-     * Receive {@link Command} results
-     * 
-     * @return command Command object containing the result, null if none received (yet)
-     */
-    Command<?> receive();
+	/**
+	 * Runs a test method on the given test class
+	 *
+	 * @param className the test class name
+	 * @param methodName the test method name
+	 * @param protocol configuration properties
+	 * @return a serialized {@link TestResult}
+	 */
+	public byte[] runTestMethod(
+		String className, String methodName, Map<String, String> protocolProps);
 
-    /**
-     * Client side to push a {@link Command} result back to container.
-     * 
-     * @param eventId used to correlate the result
-     * @param command Command object containing the result, serialized
-     */
-    void push(String eventId, byte[] command);
+	/**
+	 * Broadcast {@link Command} commands to any listeners
+	 *
+	 * @param command Command object containing the request
+	 */
+	public void send(Command<?> command);
+
+	/** The ObjectName for this service */
+	public String OBJECT_NAME = "jboss.arquillian:service=jmx-test-runner";
+
 }

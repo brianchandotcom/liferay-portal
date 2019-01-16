@@ -88,7 +88,8 @@ public class JMXTestRunner
 		String className, String methodName) {
 
 		_currentCall.set(className + methodName);
-		TestResult result = new TestResult();
+
+		TestResult result = null;
 
 		try {
 			TestRunner runner = _mockTestRunner;
@@ -101,10 +102,10 @@ public class JMXTestRunner
 
 			result = runner.execute(testClass, methodName);
 		}
-		catch (Throwable th) {
-			result.setStatus(TestResult.Status.FAILED);
+		catch (ClassNotFoundException cnfe) {
+			result = TestResult.failed(cnfe);
+
 			result.setEnd(System.currentTimeMillis());
-			result.setThrowable(th);
 		}
 
 		return result;

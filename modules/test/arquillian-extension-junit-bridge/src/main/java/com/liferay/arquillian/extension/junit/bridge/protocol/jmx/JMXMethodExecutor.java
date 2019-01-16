@@ -75,10 +75,8 @@ public class JMXMethodExecutor implements ContainerMethodExecutor {
 				testRunner.runTestMethod(
 					testClass.getName(), testMethod.getName()));
 		}
-		catch (Throwable t) {
-			result = new TestResult(TestResult.Status.FAILED);
-
-			result.setThrowable(t);
+		catch (Exception e) {
+			result = TestResult.failed(e);
 		}
 		finally {
 			result.setEnd(System.currentTimeMillis());

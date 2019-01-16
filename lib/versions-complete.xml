@@ -5111,7 +5111,7 @@
 			</library>
 			<library>
 				<file-name>lib/development/jsch.jar</file-name>
-				<version>0.1.51</version>
+				<version>0.1.55</version>
 				<project-name>JSch</project-name>
 				<project-url>http://www.jcraft.com/jsch</project-url>
 				<licenses>

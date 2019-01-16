@@ -7025,10 +7025,13 @@ public class JournalArticleLocalServiceImpl
 	protected void checkArticlesByExpirationDate(Date expirationDate)
 		throws PortalException {
 
-		ActionableDynamicQuery actionableDynamicQuery =
-			getActionableDynamicQuery();
+		IndexableActionableDynamicQuery indexableActionableDynamicQuery =
+			getIndexableActionableDynamicQuery();
 
-		actionableDynamicQuery.setAddCriteriaMethod(
+		Indexer<JournalArticle> indexer = IndexerRegistryUtil.getIndexer(
+			JournalArticle.class);
+
+		indexableActionableDynamicQuery.setAddCriteriaMethod(
 			dynamicQuery -> {
 				Property classNameIdProperty = PropertyFactoryUtil.forName(
 					"classNameId");
@@ -7051,7 +7054,7 @@ public class JournalArticleLocalServiceImpl
 				dynamicQuery.add(
 					statusProperty.eq(WorkflowConstants.STATUS_APPROVED));
 			});
-		actionableDynamicQuery.setPerformActionMethod(
+		indexableActionableDynamicQuery.setPerformActionMethod(
 			(JournalArticle article) -> {
 				if (isExpireAllArticleVersions(article.getCompanyId())) {
 					checkArticlesByExpirationDate(article);
@@ -7063,16 +7066,21 @@ public class JournalArticleLocalServiceImpl
 
 				updatePreviousApprovedArticle(article);
 
-				Indexer<JournalArticle> indexer =
-					IndexerRegistryUtil.nullSafeGetIndexer(
-						JournalArticle.class);
-
-				indexer.reindex(article);
+				if (indexer != null) {
+					indexableActionableDynamicQuery.addDocuments(
+						indexer.getDocument(article));
+				}
 			});
-		actionableDynamicQuery.setTransactionConfig(
+
+		if (indexer != null) {
+			indexableActionableDynamicQuery.setSearchEngineId(
+				indexer.getSearchEngineId());
+		}
+
+		indexableActionableDynamicQuery.setTransactionConfig(
 			DefaultActionableDynamicQuery.REQUIRES_NEW_TRANSACTION_CONFIG);
 
-		actionableDynamicQuery.performActions();
+		indexableActionableDynamicQuery.performActions();
 
 		if (_previousCheckDate == null) {
 			_previousCheckDate = new Date(

@@ -115,7 +115,9 @@ public class PropertiesBuildIncludeDirsCheck extends BaseFileCheck {
 						return FileVisitResult.SKIP_SUBTREE;
 					}
 
-					if (Files.exists(dirPath.resolve(".lfrbuild-portal"))) {
+					if (Files.exists(dirPath.resolve(".lfrbuild-portal")) ||
+						Files.exists(dirPath.resolve("ci-merge"))) {
+
 						buildIncludeDirs.add(moduleDirName);
 
 						return FileVisitResult.SKIP_SUBTREE;

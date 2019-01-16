@@ -53,7 +53,9 @@ public abstract class BaseUpgradePortletId extends UpgradeProcess {
 
 		String value = typeSettingsProperties.remove(oldPropertyId);
 
-		typeSettingsProperties.setProperty(newPropertyId, value);
+		if (value != null) {
+			typeSettingsProperties.setProperty(newPropertyId, value);
+		}
 
 		return typeSettingsProperties.toString();
 	}

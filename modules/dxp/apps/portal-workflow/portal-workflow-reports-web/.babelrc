@@ -1,4 +1,20 @@
 {
-    "plugins": ["babel-plugin-transform-decorators-legacy"],
-    "presets": ["env", "react"]
+    "plugins": [
+        "babel-plugin-transform-decorators-legacy",
+        [
+            "module-resolver",
+            {
+                "alias": {
+                    "shared": "./shared",
+                },
+                "root": [
+                    "./src/main/resources/META-INF/resources/js"
+                ]
+            }
+        ],
+    ],
+    "presets": [
+        "env",
+        "react"
+    ]
 }

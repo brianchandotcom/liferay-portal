@@ -56,7 +56,7 @@ definition {
 
 			Form.gotoAddField(fieldType = "Text Field");
 
-			Form.editFieldLabel(fieldValue = "Label");
+			Form.editFieldLabelMetal(fieldValue = "Label");
 
 			Form.closeSidebar();
 
@@ -87,7 +87,7 @@ definition {
 		for (var number : list "1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30") {
 			Form.gotoAddField(fieldType = "Text Field");
 
-			Form.editFieldLabel(fieldValue = "Field${number}");
+			Form.editFieldLabelMetal(fieldValue = "Field${number}");
 
 			Form.closeSidebar();
 		}
@@ -115,7 +115,7 @@ definition {
 
 		Form.gotoAddField(fieldType = "Text Field");
 
-		Form.editFieldLabel(fieldValue = "Text Field Required");
+		Form.editFieldLabelMetal(fieldValue = "Text Field Required");
 
 		FormFields.selectTextFieldLineOption(textFieldLineOption = "Multiple Lines");
 
@@ -125,7 +125,7 @@ definition {
 
 		Form.gotoAddField(fieldType = "Select from List");
 
-		Form.editFieldLabel(fieldValue = "Select Repeatable");
+		Form.editFieldLabelMetal(fieldValue = "Select Repeatable");
 
 		for (var number : list "1,2,3") {
 			FormFields.editOptionsRow(
@@ -177,7 +177,7 @@ definition {
 
 		Form.gotoAddField(fieldType = "Date");
 
-		Form.editFieldLabel(fieldValue = "Date Field");
+		Form.editFieldLabelMetal(fieldValue = "Date Field");
 
 		Form.closeSidebar();
 
@@ -288,7 +288,7 @@ definition {
 
 		Form.gotoAddField(fieldType = "Text");
 
-		Form.editFieldLabel(fieldValue = "Text Field New");
+		Form.editFieldLabelMetal(fieldValue = "Text Field New");
 
 		Form.closeSidebar();
 
@@ -320,7 +320,7 @@ definition {
 
 		Form.gotoAddField(fieldType = "Text Field");
 
-		Form.editFieldLabel(fieldValue = "Label");
+		Form.editFieldLabelMetal(fieldValue = "Label");
 
 		FormFields.editHelpText(fieldHelpText = "Help Text", fieldName = "tip");
 
@@ -568,7 +568,7 @@ definition {
 
 		Form.gotoAddField(fieldType = "Text Field");
 
-		Form.editFieldLabel(fieldValue = "Text Field");
+		Form.editFieldLabelMetal(fieldValue = "Text Field");
 
 		Form.closeSidebar();
 
@@ -604,13 +604,13 @@ definition {
 
 		Form.gotoAddField(fieldType = "Text Field");
 
-		Form.editFieldLabel(fieldValue = "Text Field");
+		Form.editFieldLabelMetal(fieldValue = "Text Field");
 
 		FormFields.duplicateField();
 
 		FormFields.viewFieldName(fieldName = "CopyOfTextField");
 
-		Form.editFieldLabel(fieldValue = "My New Text Field");
+		Form.editFieldLabelMetal(fieldValue = "My New Text Field");
 
 		FormFields.viewTextLabel(
 			fieldLabel = "My New Text Field",
@@ -648,7 +648,7 @@ definition {
 
 		Form.gotoAddField(fieldType = "Text Field");
 
-		Form.editFieldLabel(fieldValue = "Text Field On Spanish Portal");
+		Form.editFieldLabelMetal(fieldValue = "Text Field On Spanish Portal");
 
 		Form.closeSidebar();
 
@@ -729,7 +729,7 @@ definition {
 
 		Form.gotoAddField(fieldType = "Select from List");
 
-		Form.editFieldLabel(fieldValue = "Testing Title");
+		Form.editFieldLabelMetal(fieldValue = "Testing Title");
 
 		FormFields.editHelpText(fieldHelpText = "Testing Help Text", fieldName = "tip");
 
@@ -960,7 +960,7 @@ definition {
 
 		Form.gotoAddField(fieldType = "Text Field");
 
-		Form.editFieldLabel(fieldValue = "Text Field");
+		Form.editFieldLabelMetal(fieldValue = "Text Field");
 
 		Form.closeSidebar();
 
@@ -1068,7 +1068,7 @@ definition {
 
 		Form.gotoAddField(fieldType = "Text Field");
 
-		Form.editFieldLabel(fieldValue = "Text Field Should Not Be Saved");
+		Form.editFieldLabelMetal(fieldValue = "Text Field Should Not Be Saved");
 
 		Form.closeSidebar();
 
@@ -1084,7 +1084,7 @@ definition {
 
 		Form.gotoAddField(fieldType = "Text Field");
 
-		Form.editFieldLabel(fieldValue = "Text Field Will Be Saved");
+		Form.editFieldLabelMetal(fieldValue = "Text Field Will Be Saved");
 
 		Form.closeSidebar();
 
@@ -1113,8 +1113,8 @@ definition {
 
 		Form.gotoAddField(fieldType = "Text Field");
 
-// TODO: adding editFieldLabelMetal macro
-		Form.editFieldLabelMetal(fieldValue = "Text Field");
+// TODO: adding editFieldLabelMetalMetal macro
+		Form.editFieldLabelMetalMetal(fieldValue = "Text Field");
 
 		Form.closeSidebar();
 
@@ -1148,13 +1148,13 @@ definition {
 
 		Form.gotoAddField(fieldType = "Text Field");
 
-		Form.editFieldLabel(fieldValue = "Text Field");
+		Form.editFieldLabelMetal(fieldValue = "Text Field");
 
 		Form.closeSidebar();
 
 		Form.gotoAddField(fieldType = "Date");
 
-		Form.editFieldLabel(fieldValue = "Date Field");
+		Form.editFieldLabelMetal(fieldValue = "Date Field");
 
 		Form.closeSidebar();
 
@@ -1249,7 +1249,7 @@ definition {
 
 		Form.gotoAddField(fieldType = "Text Field");
 
-		Form.editFieldLabel(fieldValue = "Text Field Page 1");
+		Form.editFieldLabelMetal(fieldValue = "Text Field Page 1");
 
 		Form.closeSidebar();
 
@@ -1259,7 +1259,7 @@ definition {
 
 		Form.gotoAddField(fieldType = "Text Field");
 
-		Form.editFieldLabel(fieldValue = "Text Field Page 2");
+		Form.editFieldLabelMetal(fieldValue = "Text Field Page 2");
 
 		Form.closeSidebar();
 
@@ -1297,7 +1297,7 @@ definition {
 
 		Form.gotoAddField(fieldType = "Select from List");
 
-		Form.editFieldLabel(fieldValue = "Select");
+		Form.editFieldLabelMetal(fieldValue = "Select");
 
 		for (var number : list "1,2,3") {
 			FormFields.editOptionsRow(
@@ -1393,7 +1393,7 @@ definition {
 
 		Form.gotoAddField(fieldType = "Select from List");
 
-		Form.editFieldLabel(fieldValue = "Select");
+		Form.editFieldLabelMetal(fieldValue = "Select");
 
 		for (var number : list "1,2,3") {
 			FormFields.editOptionsRow(
@@ -1463,7 +1463,7 @@ definition {
 
 		Form.gotoAddField(fieldType = "Paragraph");
 
-		Form.editFieldLabel(fieldValue = "Paragraph");
+		Form.editFieldLabelMetal(fieldValue = "Paragraph");
 
 		FormFields.viewFieldName(fieldName = "Paragraph");
 
@@ -1477,7 +1477,7 @@ definition {
 
 		Form.gotoAddField(fieldType = "Text Field");
 
-		Form.editFieldLabel(fieldValue = "Text");
+		Form.editFieldLabelMetal(fieldValue = "Text");
 
 		FormFields.viewFieldName(fieldName = "Text");
 
@@ -1489,7 +1489,7 @@ definition {
 
 		Form.gotoAddField(fieldType = "Select from List");
 
-		Form.editFieldLabel(fieldValue = "Select");
+		Form.editFieldLabelMetal(fieldValue = "Select");
 
 		FormFields.viewFieldName(fieldName = "Select");
 
@@ -1517,7 +1517,7 @@ definition {
 
 		Form.gotoAddField(fieldType = "Single Selection");
 
-		Form.editFieldLabel(fieldValue = "Radio");
+		Form.editFieldLabelMetal(fieldValue = "Radio");
 
 		FormFields.viewFieldName(fieldName = "Radio");
 
@@ -1545,7 +1545,7 @@ definition {
 
 		Form.gotoAddField(fieldType = "Date");
 
-		Form.editFieldLabel(fieldValue = "Date");
+		Form.editFieldLabelMetal(fieldValue = "Date");
 
 		FormFields.viewFieldName(fieldName = "Date");
 
@@ -1557,7 +1557,7 @@ definition {
 
 		Form.gotoAddField(fieldType = "Multiple Selection");
 
-		Form.editFieldLabel(fieldValue = "Checkbox");
+		Form.editFieldLabelMetal(fieldValue = "Checkbox");
 
 		FormFields.viewFieldName(fieldName = "Checkbox");
 
@@ -1869,7 +1869,7 @@ definition {
 
 		Form.gotoAddField(fieldType = "Text Field");
 
-		Form.editFieldLabel(fieldValue = "Text Field");
+		Form.editFieldLabelMetal(fieldValue = "Text Field");
 
 		Form.closeSidebar();
 
@@ -1953,7 +1953,7 @@ definition {
 
 		Form.gotoAddField(fieldType = "Grid");
 
-		Form.editFieldLabel(fieldValue = "Grid Field Translated");
+		Form.editFieldLabelMetal(fieldValue = "Grid Field Translated");
 
 		for (var optionNumber : list "1,2,3,4") {
 			FormFields.editGridOptions(
@@ -2081,7 +2081,7 @@ definition {
 
 		Form.gotoAddField(fieldType = "Text Field");
 
-		Form.editFieldLabel(fieldValue = "Text");
+		Form.editFieldLabelMetal(fieldValue = "Text");
 
 		Form.closeSidebar();
 
@@ -2099,7 +2099,7 @@ definition {
 
 		Form.gotoAddField(fieldType = "Multiple Selection");
 
-		Form.editFieldLabel(fieldValue = "Checkbox");
+		Form.editFieldLabelMetal(fieldValue = "Checkbox");
 
 		FormFields.editOptionsRow(
 			optionName = "Checkbox1",
@@ -2167,7 +2167,7 @@ definition {
 
 		Form.gotoAddField(fieldType = "Text Field");
 
-		Form.editFieldLabel(fieldValue = "Text Field");
+		Form.editFieldLabelMetal(fieldValue = "Text Field");
 
 		Form.closeSidebar();
 
@@ -2309,7 +2309,7 @@ definition {
 
 		Form.gotoAddField(fieldType = "Text Field");
 
-		Form.editFieldLabel(fieldValue = "Text Field");
+		Form.editFieldLabelMetal(fieldValue = "Text Field");
 
 		Form.closeSidebar();
 
@@ -2401,7 +2401,7 @@ definition {
 
 		Form.gotoAddField(fieldType = "Select from List");
 
-		Form.editFieldLabel(fieldValue = "Select");
+		Form.editFieldLabelMetal(fieldValue = "Select");
 
 		for (var number : list "1,2,3,4") {
 			FormFields.editOptionsRow(
@@ -2487,7 +2487,7 @@ definition {
 
 		Form.gotoAddField(fieldType = "Paragraph");
 
-		Form.editFieldLabel(fieldValue = "Paragraph");
+		Form.editFieldLabelMetal(fieldValue = "Paragraph");
 
 		FormFields.editParagraphBody(fieldValue = "Paragraph body text.");
 
@@ -2495,13 +2495,13 @@ definition {
 
 		Form.gotoAddField(fieldType = "Text Field");
 
-		Form.editFieldLabel(fieldValue = "Text");
+		Form.editFieldLabelMetal(fieldValue = "Text");
 
 		Form.closeSidebar();
 
 		Form.gotoAddField(fieldType = "Select from List");
 
-		Form.editFieldLabel(fieldValue = "Select");
+		Form.editFieldLabelMetal(fieldValue = "Select");
 
 		FormFields.editOptionsRow(optionName = "Select1", optionValue = "Select 1");
 
@@ -2515,7 +2515,7 @@ definition {
 
 		Form.gotoAddField(fieldType = "Single Selection");
 
-		Form.editFieldLabel(fieldValue = "Radio");
+		Form.editFieldLabelMetal(fieldValue = "Radio");
 
 		FormFields.editOptionsRow(optionName = "Option1", optionValue = "Option 1");
 
@@ -2529,13 +2529,13 @@ definition {
 
 		Form.gotoAddField(fieldType = "Date");
 
-		Form.editFieldLabel(fieldValue = "Date");
+		Form.editFieldLabelMetal(fieldValue = "Date");
 
 		Form.closeSidebar();
 
 		Form.gotoAddField(fieldType = "Multiple Selection");
 
-		Form.editFieldLabel(fieldValue = "Checkbox");
+		Form.editFieldLabelMetal(fieldValue = "Checkbox");
 
 		FormFields.editOptionsRow(
 			optionName = "Checkbox1",
@@ -2605,7 +2605,7 @@ definition {
 
 		FormsAdminNavigator.gotoEditField(fieldName = "Paragraph");
 
-		Form.editFieldLabel(fieldName = "Paragraph", fieldValue = "New Paragraph");
+		Form.editFieldLabelMetal(fieldName = "Paragraph", fieldValue = "New Paragraph");
 
 		FormFields.editParagraphBody(fieldValue = "New Paragraph body text.");
 
@@ -2613,13 +2613,13 @@ definition {
 
 		FormsAdminNavigator.gotoEditField(fieldName = "Text");
 
-		Form.editFieldLabel(fieldName = "Text", fieldValue = "New Text");
+		Form.editFieldLabelMetal(fieldName = "Text", fieldValue = "New Text");
 
 		Form.closeSidebar();
 
 		FormsAdminNavigator.gotoEditField(fieldName = "Select");
 
-		Form.editFieldLabel(fieldName = "Select", fieldValue = "New Select");
+		Form.editFieldLabelMetal(fieldName = "Select", fieldValue = "New Select");
 
 		FormFields.editOptionsRow(optionValue = "New Select 1");
 
@@ -2629,7 +2629,7 @@ definition {
 
 		FormsAdminNavigator.gotoEditField(fieldName = "Radio");
 
-		Form.editFieldLabel(fieldName = "Radio", fieldValue = "New Radio");
+		Form.editFieldLabelMetal(fieldName = "Radio", fieldValue = "New Radio");
 
 		FormFields.editOptionsRow(optionValue = "New Option 1");
 
@@ -2639,13 +2639,13 @@ definition {
 
 		FormsAdminNavigator.gotoEditField(fieldName = "Date");
 
-		Form.editFieldLabel(fieldName = "Date", fieldValue = "New Date");
+		Form.editFieldLabelMetal(fieldName = "Date", fieldValue = "New Date");
 
 		Form.closeSidebar();
 
 		FormsAdminNavigator.gotoEditField(fieldName = "Checkbox");
 
-		Form.editFieldLabel(fieldName = "Checkbox", fieldValue = "New Checkbox");
+		Form.editFieldLabelMetal(fieldName = "Checkbox", fieldValue = "New Checkbox");
 
 		Form.closeSidebar();
 
@@ -2834,7 +2834,7 @@ definition {
 
 		Form.gotoAddField(fieldType = "Text Field");
 
-		Form.editFieldLabel(fieldValue = "Text Field");
+		Form.editFieldLabelMetal(fieldValue = "Text Field");
 
 		Form.closeSidebar();
 
@@ -2919,7 +2919,7 @@ definition {
 
 		Form.gotoAddField(fieldType = "Text Field");
 
-		Form.editFieldLabel(fieldValue = "Text Field");
+		Form.editFieldLabelMetal(fieldValue = "Text Field");
 
 		Form.closeSidebar();
 
@@ -3006,7 +3006,7 @@ definition {
 
 		Form.gotoAddField(fieldType = "Paragraph");
 
-		Form.editFieldLabel(fieldValue = "Paragraph");
+		Form.editFieldLabelMetal(fieldValue = "Paragraph");
 
 		FormFields.editParagraphBody(fieldValue = "Paragraph body text.");
 
@@ -3014,13 +3014,13 @@ definition {
 
 		Form.gotoAddField(fieldType = "Text Field");
 
-		Form.editFieldLabel(fieldValue = "SingleLineText");
+		Form.editFieldLabelMetal(fieldValue = "SingleLineText");
 
 		Form.closeSidebar();
 
 		Form.gotoAddField(fieldType = "Text Field");
 
-		Form.editFieldLabel(fieldValue = "MultilineText");
+		Form.editFieldLabelMetal(fieldValue = "MultilineText");
 
 		FormFields.selectTextFieldLineOption(textFieldLineOption = "Multiple Lines");
 
@@ -3030,7 +3030,7 @@ definition {
 
 		Form.gotoAddField(fieldType = "Select from List");
 
-		Form.editFieldLabel(fieldValue = "Select");
+		Form.editFieldLabelMetal(fieldValue = "Select");
 
 		FormFields.editOptionsRow(optionName = "Select1", optionValue = "Select 1");
 
@@ -3044,7 +3044,7 @@ definition {
 
 		Form.gotoAddField(fieldType = "Single Selection");
 
-		Form.editFieldLabel(fieldValue = "Radio");
+		Form.editFieldLabelMetal(fieldValue = "Radio");
 
 		FormFields.enableSwitcher(fieldName = "required");
 
@@ -3060,13 +3060,13 @@ definition {
 
 		Form.gotoAddField(fieldType = "Date");
 
-		Form.editFieldLabel(fieldValue = "Date");
+		Form.editFieldLabelMetal(fieldValue = "Date");
 
 		Form.closeSidebar();
 
 		Form.gotoAddField(fieldType = "Multiple Selection");
 
-		Form.editFieldLabel(fieldValue = "Checkbox");
+		Form.editFieldLabelMetal(fieldValue = "Checkbox");
 
 		FormFields.enableSwitcher(fieldName = "required");
 
@@ -3090,7 +3090,7 @@ definition {
 
 		Form.gotoAddField(fieldType = "Grid");
 
-		Form.editFieldLabel(fieldValue = "Grid Field Survey");
+		Form.editFieldLabelMetal(fieldValue = "Grid Field Survey");
 
 		for (var optionNumber : list "1,2,3") {
 			FormFields.editGridOptions(
@@ -3116,13 +3116,13 @@ definition {
 
 		Form.gotoAddField(fieldType = "Upload");
 
-		Form.editFieldLabel(fieldValue = "Upload Field");
+		Form.editFieldLabelMetal(fieldValue = "Upload Field");
 
 		Form.closeSidebar();
 
 		Form.gotoAddField(fieldType = "Numeric");
 
-		Form.editFieldLabel(fieldValue = "Value");
+		Form.editFieldLabelMetal(fieldValue = "Value");
 
 		Form.closeSidebar();
 
@@ -3281,7 +3281,7 @@ definition {
 
 		Form.gotoAddField(fieldType = "Text Field");
 
-		Form.editFieldLabel(fieldValue = "Text");
+		Form.editFieldLabelMetal(fieldValue = "Text");
 
 		Form.gotoAdvancedTab();
 
@@ -3362,13 +3362,13 @@ definition {
 
 		Form.gotoAddField(fieldType = "Text Field");
 
-		Form.editFieldLabel(fieldValue = "Text Field");
+		Form.editFieldLabelMetal(fieldValue = "Text Field");
 
 		Form.closeSidebar();
 
 		Form.gotoAddField(fieldType = "Multiple Selection");
 
-		Form.editFieldLabel(fieldValue = "Checkbox Field");
+		Form.editFieldLabelMetal(fieldValue = "Checkbox Field");
 
 		FormFields.editOptionsRow(
 			optionName = "Checkbox1",
@@ -3380,7 +3380,7 @@ definition {
 
 		Form.gotoAddField(fieldType = "Single Selection");
 
-		Form.editFieldLabel(fieldValue = "Radio Field");
+		Form.editFieldLabelMetal(fieldValue = "Radio Field");
 
 		FormFields.editOptionsRow(optionName = "Option1", optionValue = "Option 1");
 
@@ -3394,7 +3394,7 @@ definition {
 
 		Form.gotoAddField(fieldType = "Select from List");
 
-		Form.editFieldLabel(fieldValue = "Select Field");
+		Form.editFieldLabelMetal(fieldValue = "Select Field");
 
 		FormFields.editOptionsRow(optionName = "Select1", optionValue = "Select 1");
 
@@ -3535,7 +3535,7 @@ definition {
 
 		Form.gotoAddField(fieldType = "Multiple Selection");
 
-		Form.editFieldLabel(fieldValue = "Checkbox Field");
+		Form.editFieldLabelMetal(fieldValue = "Checkbox Field");
 
 		FormFields.enableSwitcher(fieldName = "required");
 
@@ -3620,7 +3620,7 @@ definition {
 
 		Form.gotoAddField(fieldType = "Text Field");
 
-		Form.editFieldLabel(fieldValue = "Text Field");
+		Form.editFieldLabelMetal(fieldValue = "Text Field");
 
 		FormFields.selectTextFieldLineOption(textFieldLineOption = "Multiple Lines");
 
@@ -3699,7 +3699,7 @@ definition {
 
 		Form.gotoAddField(fieldType = "Single Selection");
 
-		Form.editFieldLabel(fieldValue = "Radio Field");
+		Form.editFieldLabelMetal(fieldValue = "Radio Field");
 
 		FormFields.enableSwitcher(fieldName = "required");
 
@@ -3780,7 +3780,7 @@ definition {
 
 		Form.gotoAddField(fieldType = "Text Field");
 
-		Form.editFieldLabel(fieldValue = "Text Field");
+		Form.editFieldLabelMetal(fieldValue = "Text Field");
 
 		FormFields.enableSwitcher(fieldName = "required");
 
@@ -3863,7 +3863,7 @@ definition {
 
 		Form.gotoAddField(fieldType = "Text Field");
 
-		Form.editFieldLabel(fieldValue = "Text Field");
+		Form.editFieldLabelMetal(fieldValue = "Text Field");
 
 		FormFields.enableSwitcher(fieldName = "required");
 
@@ -3936,7 +3936,7 @@ definition {
 
 		Form.gotoAddField(fieldType = "Multiple Selection");
 
-		Form.editFieldLabel(fieldValue = "Checkbox Field");
+		Form.editFieldLabelMetal(fieldValue = "Checkbox Field");
 
 		FormFields.enableSwitcher(fieldName = "showAsSwitcher");
 
@@ -4031,7 +4031,7 @@ definition {
 
 		Form.gotoAddField(fieldType = "Upload");
 
-		Form.editFieldLabel(fieldValue = "Upload Field");
+		Form.editFieldLabelMetal(fieldValue = "Upload Field");
 
 		Form.closeSidebar();
 
@@ -4103,7 +4103,7 @@ definition {
 
 		Form.gotoAddField(fieldType = "Date");
 
-		Form.editFieldLabel(fieldValue = "Date Field");
+		Form.editFieldLabelMetal(fieldValue = "Date Field");
 
 		FormFields.enableSwitcher(fieldName = "required");
 
@@ -4179,7 +4179,7 @@ definition {
 
 		Form.gotoAddField(fieldType = "Text Field");
 
-		Form.editFieldLabel(fieldValue = "Text Field");
+		Form.editFieldLabelMetal(fieldValue = "Text Field");
 
 		Form.closeSidebar();
 
@@ -4189,7 +4189,7 @@ definition {
 
 		Form.gotoAddField(fieldType = "Text Field");
 
-		Form.editFieldLabel(fieldValue = "Text2");
+		Form.editFieldLabelMetal(fieldValue = "Text2");
 
 		Form.closeSidebar();
 
@@ -4236,13 +4236,13 @@ definition {
 
 		Form.gotoAddField(fieldType = "Text Field");
 
-		Form.editFieldLabel(fieldValue = "One");
+		Form.editFieldLabelMetal(fieldValue = "One");
 
 		Form.closeSidebar();
 
 		Form.gotoAddField(fieldType = "Text Field");
 
-		Form.editFieldLabel(fieldValue = "Two");
+		Form.editFieldLabelMetal(fieldValue = "Two");
 
 		Form.closeSidebar();
 
@@ -4268,7 +4268,7 @@ definition {
 
 		Form.gotoAddField(fieldType = "Text Field");
 
-		Form.editFieldLabel(fieldValue = "Text Field");
+		Form.editFieldLabelMetal(fieldValue = "Text Field");
 
 		Form.closeSidebar();
 
@@ -4384,7 +4384,7 @@ definition {
 
 		Form.gotoAddField(fieldType = "Text Field");
 
-		Form.editFieldLabel(fieldValue = "Text Field Page 1");
+		Form.editFieldLabelMetal(fieldValue = "Text Field Page 1");
 
 		Form.closeSidebar();
 
@@ -4394,7 +4394,7 @@ definition {
 
 		Form.gotoAddField(fieldType = "Text Field");
 
-		Form.editFieldLabel(fieldValue = "Text Field Page 2");
+		Form.editFieldLabelMetal(fieldValue = "Text Field Page 2");
 
 		FormFields.enableSwitcher(fieldName = "required");
 
@@ -4406,7 +4406,7 @@ definition {
 
 		Form.gotoAddField(fieldType = "Text Field");
 
-		Form.editFieldLabel(fieldValue = "Text Field Page 3");
+		Form.editFieldLabelMetal(fieldValue = "Text Field Page 3");
 
 		Form.closeSidebar();
 
@@ -4454,7 +4454,7 @@ definition {
 
 		Form.gotoAddField(fieldType = "Multiple Selection");
 
-		Form.editFieldLabel(fieldValue = "Multiple Selection");
+		Form.editFieldLabelMetal(fieldValue = "Multiple Selection");
 
 		FormFields.enableSwitcher(fieldName = "showAsSwitcher");
 
@@ -4527,7 +4527,7 @@ definition {
 
 		Form.gotoAddField(fieldType = "Text Field");
 
-		Form.editFieldLabel(fieldValue = "Text Field");
+		Form.editFieldLabelMetal(fieldValue = "Text Field");
 
 		Form.gotoAdvancedTab();
 
@@ -4585,7 +4585,7 @@ definition {
 
 		Form.gotoAddField(fieldType = "Text Field");
 
-		Form.editFieldLabel(fieldValue = "Text Field");
+		Form.editFieldLabelMetal(fieldValue = "Text Field");
 
 		Form.closeSidebar();
 
@@ -4622,7 +4622,7 @@ definition {
 
 		Form.gotoAddField(fieldType = "Text Field");
 
-		Form.editFieldLabel(fieldValue = "Text Field");
+		Form.editFieldLabelMetal(fieldValue = "Text Field");
 
 		Form.closeSidebar();
 

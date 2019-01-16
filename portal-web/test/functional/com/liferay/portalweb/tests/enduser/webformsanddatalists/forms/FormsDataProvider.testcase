@@ -71,7 +71,7 @@ definition {
 
 		Form.gotoAddField(fieldType = "Text Field");
 
-		Form.editFieldLabel(fieldValue = "Text Field With Autocomplete");
+		Form.editFieldLabelMetal(fieldValue = "Text Field With Autocomplete");
 
 		Form.gotoAdvancedTab();
 
@@ -241,7 +241,7 @@ definition {
 
 		Form.gotoAddField(fieldType = "Select from List");
 
-		Form.editFieldLabel(fieldValue = "Data Provider Select Field");
+		Form.editFieldLabelMetal(fieldValue = "Data Provider Select Field");
 
 		Form.editFieldDataProvider(
 			dataProvider = "Liferay Countries",
@@ -349,7 +349,7 @@ definition {
 
 		Form.gotoAddField(fieldType = "Select from List");
 
-		Form.editFieldLabel(fieldValue = "Countries");
+		Form.editFieldLabelMetal(fieldValue = "Countries");
 
 		Form.editFieldDataProvider(
 			dataProvider = "Liferay Countries",

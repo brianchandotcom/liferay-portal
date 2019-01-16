@@ -30,7 +30,7 @@ definition {
 
 		Form.gotoAddField(fieldType = "Single Selection");
 
-		Form.editFieldLabel(fieldValue = "Choose Your Destiny");
+		Form.editFieldLabelMetal(fieldValue = "Choose Your Destiny");
 
 		FormFields.editOptionsRow(optionName = "Destiny1", optionValue = "Destiny 1");
 
@@ -57,7 +57,7 @@ definition {
 
 			Form.gotoAddField(fieldType = "Text Field");
 
-			Form.editFieldLabel(fieldValue = "Destiny ${option}");
+			Form.editFieldLabelMetal(fieldValue = "Destiny ${option}");
 
 			Form.closeSidebar();
 		}
@@ -202,7 +202,7 @@ definition {
 	test ViewRuleAfterLabelEdit {
 		FormsAdminNavigator.gotoEditField(fieldName = "ChooseYourDestiny");
 
-		Form.editFieldLabel(fieldName = "ChooseYourDestiny", fieldValue = "Edit Label");
+		Form.editFieldLabelMetal(fieldName = "ChooseYourDestiny", fieldValue = "Edit Label");
 
 		Form.closeSidebar();
 

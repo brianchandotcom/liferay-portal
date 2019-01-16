@@ -27,8 +27,6 @@ import com.liferay.portal.search.engine.adapter.document.IndexDocumentRequest;
 import com.liferay.portal.search.engine.adapter.document.UpdateDocumentRequest;
 import com.liferay.portal.search.test.util.indexing.DocumentFixture;
 
-import java.io.IOException;
-
 import org.elasticsearch.action.bulk.BulkAction;
 import org.elasticsearch.action.bulk.BulkRequestBuilder;
 import org.elasticsearch.action.delete.DeleteRequest;
@@ -97,7 +95,7 @@ public class ElasticsearchBulkableDocumentRequestTranslatorTest {
 
 	@Test
 	public void testIndexDocumentRequestTranslationWithNoRefresh()
-		throws IOException {
+		throws Exception {
 
 		doTestIndexDocumentRequestTranslation(
 			"1", false, WriteRequest.RefreshPolicy.NONE);
@@ -105,7 +103,7 @@ public class ElasticsearchBulkableDocumentRequestTranslatorTest {
 
 	@Test
 	public void testIndexDocumentRequestTranslationWithNoRefreshNoId()
-		throws IOException {
+		throws Exception {
 
 		doTestIndexDocumentRequestTranslation(
 			null, false, WriteRequest.RefreshPolicy.NONE);
@@ -113,7 +111,7 @@ public class ElasticsearchBulkableDocumentRequestTranslatorTest {
 
 	@Test
 	public void testIndexDocumentRequestTranslationWithRefresh()
-		throws IOException {
+		throws Exception {
 
 		doTestIndexDocumentRequestTranslation(
 			"1", true, WriteRequest.RefreshPolicy.IMMEDIATE);
@@ -121,7 +119,7 @@ public class ElasticsearchBulkableDocumentRequestTranslatorTest {
 
 	@Test
 	public void testIndexDocumentRequestTranslationWithRefreshNoId()
-		throws IOException {
+		throws Exception {
 
 		doTestIndexDocumentRequestTranslation(
 			null, true, WriteRequest.RefreshPolicy.IMMEDIATE);
@@ -129,7 +127,7 @@ public class ElasticsearchBulkableDocumentRequestTranslatorTest {
 
 	@Test
 	public void testUpdateDocumentRequestTranslationWithNoRefresh()
-		throws IOException {
+		throws Exception {
 
 		doTestUpdateDocumentRequestTranslation(
 			"1", false, WriteRequest.RefreshPolicy.NONE);
@@ -137,7 +135,7 @@ public class ElasticsearchBulkableDocumentRequestTranslatorTest {
 
 	@Test
 	public void testUpdateDocumentRequestTranslationWithNoRefreshNoId()
-		throws IOException {
+		throws Exception {
 
 		doTestUpdateDocumentRequestTranslation(
 			null, false, WriteRequest.RefreshPolicy.NONE);
@@ -145,7 +143,7 @@ public class ElasticsearchBulkableDocumentRequestTranslatorTest {
 
 	@Test
 	public void testUpdateDocumentRequestTranslationWithRefresh()
-		throws IOException {
+		throws Exception {
 
 		doTestUpdateDocumentRequestTranslation(
 			"1", true, WriteRequest.RefreshPolicy.IMMEDIATE);
@@ -153,7 +151,7 @@ public class ElasticsearchBulkableDocumentRequestTranslatorTest {
 
 	@Test
 	public void testUpdateDocumentRequestTranslationWithRefreshNoId()
-		throws IOException {
+		throws Exception {
 
 		doTestUpdateDocumentRequestTranslation(
 			null, true, WriteRequest.RefreshPolicy.IMMEDIATE);
@@ -216,7 +214,7 @@ public class ElasticsearchBulkableDocumentRequestTranslatorTest {
 	protected void doTestIndexDocumentRequestTranslation(
 			String id, boolean refreshPolicy,
 			WriteRequest.RefreshPolicy expectedRefreshPolicy)
-		throws IOException {
+		throws Exception {
 
 		Document document = new DocumentImpl();
 
@@ -261,7 +259,7 @@ public class ElasticsearchBulkableDocumentRequestTranslatorTest {
 	protected void doTestUpdateDocumentRequestTranslation(
 			String id, boolean refreshPolicy,
 			WriteRequest.RefreshPolicy expectedRefreshPolicy)
-		throws IOException {
+		throws Exception {
 
 		Document document = new DocumentImpl();
 

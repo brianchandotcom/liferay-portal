@@ -7,4 +7,5 @@ Export-Package:\
 	com.liferay.oauth2.provider.exception,\
 	com.liferay.oauth2.provider.model,\
 	com.liferay.oauth2.provider.service,\
-	com.liferay.oauth2.provider.service.persistence
+	com.liferay.oauth2.provider.service.persistence,\
+	com.liferay.oauth2.provider.util

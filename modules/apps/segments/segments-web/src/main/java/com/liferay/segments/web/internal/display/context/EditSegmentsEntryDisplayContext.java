@@ -303,7 +303,8 @@ public class EditSegmentsEntryDisplayContext {
 				"properties",
 				JSONFactoryUtil.createJSONArray(
 					JSONFactoryUtil.looseSerializeDeep(
-						segmentsCriteriaContributor.getFields(locale))));
+						segmentsCriteriaContributor.getFields(
+							_renderRequest))));
 			jsonContributorObject.put(
 				"propertyKey", segmentsCriteriaContributor.getKey());
 

@@ -15,6 +15,7 @@
 package com.liferay.segments.internal.criteria.contributor;
 
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.segments.criteria.Criteria;
@@ -23,9 +24,13 @@ import com.liferay.segments.criteria.contributor.SegmentsCriteriaContributor;
 import com.liferay.segments.internal.odata.entity.EntityModelFieldMapper;
 import com.liferay.segments.internal.odata.entity.OrganizationEntityModel;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.ResourceBundle;
+
+import javax.portlet.PortletRequest;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -51,8 +56,9 @@ public class OrganizationSegmentsCriteriaContributor
 	public static final String KEY = "organization";
 
 	@Override
-	public List<Field> getFields(Locale locale) {
-		return _entityModelFieldMapper.getFields(_entityModel, locale);
+	public List<Field> getFields(PortletRequest portletRequest) {
+		return _entityModelFieldMapper.getFields(
+			_entityModel, _idEntityFieldTypes, portletRequest);
 	}
 
 	@Override
@@ -72,6 +78,14 @@ public class OrganizationSegmentsCriteriaContributor
 	public Criteria.Type getType() {
 		return Criteria.Type.MODEL;
 	}
+
+	private static final Map<String, String> _idEntityFieldTypes =
+		new HashMap<String, String>() {
+			{
+				put("organizationId", Organization.class.getName());
+				put("parentOrganizationId", Organization.class.getName());
+			}
+		};
 
 	@Reference(
 		cardinality = ReferenceCardinality.MANDATORY,

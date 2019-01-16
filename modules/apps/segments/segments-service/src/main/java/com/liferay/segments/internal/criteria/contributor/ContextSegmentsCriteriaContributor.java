@@ -27,6 +27,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
+import javax.portlet.PortletRequest;
+
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ReferenceCardinality;
@@ -51,8 +53,8 @@ public class ContextSegmentsCriteriaContributor
 	public static final String KEY = "context";
 
 	@Override
-	public List<Field> getFields(Locale locale) {
-		return _entityModelFieldMapper.getFields(_entityModel, locale);
+	public List<Field> getFields(PortletRequest portletRequest) {
+		return _entityModelFieldMapper.getFields(_entityModel, portletRequest);
 	}
 
 	@Override

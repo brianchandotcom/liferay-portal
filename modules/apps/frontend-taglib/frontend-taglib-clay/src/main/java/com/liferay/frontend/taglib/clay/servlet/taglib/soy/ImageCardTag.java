@@ -29,7 +29,15 @@ public class ImageCardTag extends BaseClayCardTag {
 	public int doStartTag() {
 		setComponentBaseName("ClayImageCard");
 
+		if (_imageCard != null) {
+			_populateContext();
+		}
+
 		return super.doStartTag();
+	}
+
+	public void setDisplayContext(ImageCard imageCard) {
+		_imageCard = imageCard;
 	}
 
 	public void setIcon(String icon) {
@@ -38,6 +46,12 @@ public class ImageCardTag extends BaseClayCardTag {
 
 	public void setImageAlt(String imageAlt) {
 		putValue("imageAlt", imageAlt);
+	}
+
+	public void setImageCard(ImageCard imageCard) {
+		_imageCard = imageCard;
+
+		super.setBaseClayCard(imageCard);
 	}
 
 	public void setImageSrc(String imageSrc) {
@@ -79,5 +93,59 @@ public class ImageCardTag extends BaseClayCardTag {
 	public void setTitle(String title) {
 		putValue("title", title);
 	}
+
+	private void _populateContext() {
+		Map<String, Object> context = getContext();
+
+		if (context.get("icon") == null) {
+			setIcon(_imageCard.getIcon());
+		}
+
+		if (context.get("imageAlt") == null) {
+			setImageAlt(_imageCard.getImageAlt());
+		}
+
+		if (context.get("imageSrc") == null) {
+			setImageSrc(_imageCard.getImageSrc());
+		}
+
+		if (context.get("labels") == null) {
+			setLabels(_imageCard.getLabels());
+		}
+
+		if (context.get("labelStylesMap") == null) {
+			setLabelStylesMap(_imageCard.getLabelStylesMap());
+		}
+
+		if (context.get("stickerImageAlt") == null) {
+			setStickerImageAlt(_imageCard.getStickerImageAlt());
+		}
+
+		if (context.get("stickerImageSrc") == null) {
+			setStickerImageSrc(_imageCard.getStickerImageSrc());
+		}
+
+		if (context.get("stickerLabel") == null) {
+			setStickerLabel(_imageCard.getStickerLabel());
+		}
+
+		if (context.get("stickerShape") == null) {
+			setStickerShape(_imageCard.getStickerShape());
+		}
+
+		if (context.get("stickerStyle") == null) {
+			setStickerStyle(_imageCard.getStickerStyle());
+		}
+
+		if (context.get("subtitle") == null) {
+			setSubtitle(_imageCard.getSubtitle());
+		}
+
+		if (context.get("title") == null) {
+			setTitle(_imageCard.getTitle());
+		}
+	}
+
+	private ImageCard _imageCard;
 
 }

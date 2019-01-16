@@ -586,6 +586,12 @@
 		</attribute>
 		<attribute>
 			<description></description>
+			<name>fileCard</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description></description>
 			<name>groupName</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -749,6 +755,12 @@
 		<attribute>
 			<description></description>
 			<name>groupName</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description></description>
+			<name>horizontalCard</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
@@ -941,6 +953,12 @@
 		<attribute>
 			<description></description>
 			<name>imageAlt</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description></description>
+			<name>imageCard</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>

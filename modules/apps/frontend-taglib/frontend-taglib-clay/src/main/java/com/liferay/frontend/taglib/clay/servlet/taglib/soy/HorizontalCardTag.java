@@ -16,6 +16,8 @@ package com.liferay.frontend.taglib.clay.servlet.taglib.soy;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.soy.base.BaseClayCardTag;
 
+import java.util.Map;
+
 /**
  * @author Julien Castelain
  */
@@ -25,7 +27,17 @@ public class HorizontalCardTag extends BaseClayCardTag {
 	public int doStartTag() {
 		setComponentBaseName("ClayHorizontalCard");
 
+		if (_horizontalCard != null) {
+			_populateContext();
+		}
+
 		return super.doStartTag();
+	}
+
+	public void setHorizontalCard(HorizontalCard horizontalCard) {
+		_horizontalCard = horizontalCard;
+
+		super.setBaseClayCard(horizontalCard);
 	}
 
 	public void setIcon(String icon) {
@@ -35,5 +47,19 @@ public class HorizontalCardTag extends BaseClayCardTag {
 	public void setTitle(String title) {
 		putValue("title", title);
 	}
+
+	private void _populateContext() {
+		Map<String, Object> context = getContext();
+
+		if (context.get("icon") == null) {
+			setIcon(_horizontalCard.getIcon());
+		}
+
+		if (context.get("title") == null) {
+			setTitle(_horizontalCard.getTitle());
+		}
+	}
+
+	private HorizontalCard _horizontalCard;
 
 }

@@ -29,7 +29,17 @@ public class FileCardTag extends BaseClayCardTag {
 	public int doStartTag() {
 		setComponentBaseName("ClayFileCard");
 
+		if (_fileCard != null) {
+			_populateContext();
+		}
+
 		return super.doStartTag();
+	}
+
+	public void setFileCard(FileCard fileCard) {
+		_fileCard = fileCard;
+
+		super.setBaseClayCard(fileCard);
 	}
 
 	public void setIcon(String icon) {
@@ -71,5 +81,51 @@ public class FileCardTag extends BaseClayCardTag {
 	public void setTitle(String title) {
 		putValue("title", title);
 	}
+
+	private void _populateContext() {
+		Map<String, Object> context = getContext();
+
+		if (context.get("icon") == null) {
+			setIcon(_fileCard.getIcon());
+		}
+
+		if (context.get("labels") == null) {
+			setLabels(_fileCard.getLabels());
+		}
+
+		if (context.get("labelStylesMap") == null) {
+			setLabelStylesMap(_fileCard.getLabelStylesMap());
+		}
+
+		if (context.get("stickerImageAlt") == null) {
+			setStickerImageAlt(_fileCard.getStickerImageAlt());
+		}
+
+		if (context.get("stickerImageSrc") == null) {
+			setStickerImageSrc(_fileCard.getStickerImageSrc());
+		}
+
+		if (context.get("stickerLabel") == null) {
+			setStickerLabel(_fileCard.getStickerLabel());
+		}
+
+		if (context.get("stickerShape") == null) {
+			setStickerShape(_fileCard.getStickerShape());
+		}
+
+		if (context.get("stickerStyle") == null) {
+			setStickerStyle(_fileCard.getStickerStyle());
+		}
+
+		if (context.get("subtitle") == null) {
+			setSubtitle(_fileCard.getSubtitle());
+		}
+
+		if (context.get("title") == null) {
+			setTitle(_fileCard.getTitle());
+		}
+	}
+
+	private FileCard _fileCard;
 
 }

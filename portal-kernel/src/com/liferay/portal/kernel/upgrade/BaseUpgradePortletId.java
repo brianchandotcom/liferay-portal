@@ -133,7 +133,7 @@ public abstract class BaseUpgradePortletId extends UpgradeProcess {
 	}
 
 	protected String getTypeSettingsCriteria(String portletId) {
-		StringBundler sb = new StringBundler(23);
+		StringBundler sb = new StringBundler(21);
 
 		sb.append("typeSettings like '%=");
 		sb.append(portletId);
@@ -155,9 +155,7 @@ public abstract class BaseUpgradePortletId extends UpgradeProcess {
 		sb.append(portletId);
 		sb.append("_USER_%' OR typeSettings like '%,");
 		sb.append(portletId);
-		sb.append("_USER_%' OR typeSettings like '%");
-		sb.append(_getStagedPortletId(portletId));
-		sb.append("=%'");
+		sb.append("_USER_%'");
 
 		return sb.toString();
 	}

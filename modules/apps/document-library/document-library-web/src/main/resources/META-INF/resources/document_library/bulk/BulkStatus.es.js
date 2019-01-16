@@ -54,11 +54,7 @@ class BulkStatus extends Component {
 	 */
 	_getBulkStatus() {
 		fetch(this.bulkStatusUrl)
-			.then(
-				response => {
-					return response.json();
-				}
-			)
+			.then(response => response.json())
 			.then(
 				response => {
 					if (!response.busy) {

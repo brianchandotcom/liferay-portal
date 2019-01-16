@@ -60,7 +60,11 @@ public class CollectionPropertyExpressionImpl
 	public String toString() {
 		String string = _propertyExpression.toString();
 
-		return string.concat("/").concat(_lambdaFunctionExpression.toString());
+		return string.concat(
+			"/"
+		).concat(
+			_lambdaFunctionExpression.toString()
+		);
 	}
 
 	private final LambdaFunctionExpression _lambdaFunctionExpression;

@@ -64,7 +64,10 @@ public class JsonWebServiceTest extends BaseClientTestCase {
 		formData.putSingle("virtualHost", "testcompany.xyz");
 
 		Assert.assertEquals(
-			403, invocationBuilder.post(Entity.form(formData)).getStatus());
+			403,
+			invocationBuilder.post(
+				Entity.form(formData)
+			).getStatus());
 
 		String tokenString = getToken(
 			"oauthTestApplicationRO", null,

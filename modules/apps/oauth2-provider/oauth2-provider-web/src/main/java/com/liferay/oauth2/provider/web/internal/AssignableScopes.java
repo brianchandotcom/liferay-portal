@@ -109,8 +109,8 @@ public class AssignableScopes {
 		Stream<LiferayOAuth2Scope> stream = _liferayOAuth2Scopes.stream();
 
 		Set<LiferayOAuth2Scope> liferayOAuth2Scopes = stream.filter(
-			liferayOAuth2Scope ->
-				applicationName.equals(liferayOAuth2Scope.getApplicationName())
+			liferayOAuth2Scope -> applicationName.equals(
+				liferayOAuth2Scope.getApplicationName())
 		).collect(
 			Collectors.toSet()
 		);
@@ -146,8 +146,8 @@ public class AssignableScopes {
 		Stream<LiferayOAuth2Scope> stream = _liferayOAuth2Scopes.stream();
 
 		return stream.filter(
-			liferayOAuth2Scope ->
-				applicationName.equals(liferayOAuth2Scope.getApplicationName())
+			liferayOAuth2Scope -> applicationName.equals(
+				liferayOAuth2Scope.getApplicationName())
 		).map(
 			this::getScopeDescription
 		).collect(

@@ -157,8 +157,7 @@ public class ConfigurableScopeCheckerFeature implements Feature {
 					Validator::isNotNull
 				).collect(
 					Collectors.toSet()
-				)
-			),
+				)),
 			buildProperties(configuration));
 
 		return true;

@@ -84,8 +84,11 @@ public class ShindigFilter extends InjectedFilter {
 
 		String serverName = servletRequest.getServerName();
 
-		String host = serverName.concat(StringPool.COLON).concat(
-			String.valueOf(servletRequest.getServerPort()));
+		String host = serverName.concat(
+			StringPool.COLON
+		).concat(
+			String.valueOf(servletRequest.getServerPort())
+		);
 
 		ShindigUtil.setHost(host);
 

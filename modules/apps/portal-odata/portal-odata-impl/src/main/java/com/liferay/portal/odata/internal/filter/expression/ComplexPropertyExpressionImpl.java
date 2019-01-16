@@ -51,7 +51,11 @@ public class ComplexPropertyExpressionImpl
 
 	@Override
 	public String toString() {
-		return _name.concat("/").concat(_propertyExpression.toString());
+		return _name.concat(
+			"/"
+		).concat(
+			_propertyExpression.toString()
+		);
 	}
 
 	private final String _name;

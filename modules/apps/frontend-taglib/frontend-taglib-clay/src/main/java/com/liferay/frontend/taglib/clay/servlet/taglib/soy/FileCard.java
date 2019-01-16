@@ -24,23 +24,41 @@ import java.util.Map;
  */
 public interface FileCard extends BaseClayCard {
 
-	public String getIcon();
+	public default String getIcon() {
+		return null;
+	}
 
-	public List<LabelItem> getLabels();
+	public default List<LabelItem> getLabels() {
+		return null;
+	}
 
-	public Map<String, String> getLabelStylesMap();
+	public default Map<String, String> getLabelStylesMap() {
+		return null;
+	}
 
-	public String getStickerImageAlt();
+	public default String getStickerImageAlt() {
+		return null;
+	}
 
-	public String getStickerImageSrc();
+	public default String getStickerImageSrc() {
+		return null;
+	}
 
-	public String getStickerLabel();
+	public default String getStickerLabel() {
+		return null;
+	}
 
-	public String getStickerShape();
+	public default String getStickerShape() {
+		return null;
+	}
 
-	public String getStickerStyle();
+	public default String getStickerStyle() {
+		return null;
+	}
 
-	public String getSubtitle();
+	public default String getSubtitle() {
+		return null;
+	}
 
 	public String getTitle();
 

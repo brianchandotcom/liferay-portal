@@ -19,7 +19,9 @@ package com.liferay.frontend.taglib.clay.servlet.taglib.soy;
  */
 public interface HorizontalCard extends BaseClayCard {
 
-	public String getIcon();
+	public default String getIcon() {
+		return null;
+	}
 
 	public String getTitle();
 

@@ -24,32 +24,60 @@ import java.util.Map;
  */
 public interface BaseClayCard {
 
-	public List<DropdownItem> getActionDropdownItems();
+	public default List<DropdownItem> getActionDropdownItems() {
+		return null;
+	}
 
-	public String getComponentId();
+	public default String getComponentId() {
+		return null;
+	}
 
-	public Map<String, String> getData();
+	public default Map<String, String> getData() {
+		return null;
+	}
 
-	public String getDefaultEventHandler();
+	public default String getDefaultEventHandler() {
+		return null;
+	}
 
-	public String getElementClasses();
+	public default String getElementClasses() {
+		return null;
+	}
 
-	public String getGroupName();
+	public default String getGroupName() {
+		return null;
+	}
 
-	public String getHref();
+	public default String getHref() {
+		return null;
+	}
 
-	public String getId();
+	public default String getId() {
+		return null;
+	}
 
-	public String getInputName();
+	public default String getInputName() {
+		return null;
+	}
 
-	public String getInputValue();
+	public default String getInputValue() {
+		return null;
+	}
 
-	public String getSpritemap();
+	public default String getSpritemap() {
+		return null;
+	}
 
-	public boolean isDisabled();
+	public default boolean isDisabled() {
+		return false;
+	}
 
-	public boolean isSelectable();
+	public default boolean isSelectable() {
+		return true;
+	}
 
-	public boolean isSelected();
+	public default boolean isSelected() {
+		return false;
+	}
 
 }

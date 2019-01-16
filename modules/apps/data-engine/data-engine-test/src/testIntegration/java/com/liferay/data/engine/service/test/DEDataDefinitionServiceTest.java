@@ -29,6 +29,8 @@ import com.liferay.data.engine.service.DEDataDefinitionSaveModelPermissionsReque
 import com.liferay.data.engine.service.DEDataDefinitionSavePermissionsRequest;
 import com.liferay.data.engine.service.DEDataDefinitionSaveRequest;
 import com.liferay.data.engine.service.DEDataDefinitionSaveResponse;
+import com.liferay.data.engine.service.DEDataDefinitionSearchCountRequest;
+import com.liferay.data.engine.service.DEDataDefinitionSearchCountResponse;
 import com.liferay.data.engine.service.DEDataDefinitionSearchRequest;
 import com.liferay.data.engine.service.DEDataDefinitionSearchResponse;
 import com.liferay.data.engine.service.DEDataDefinitionService;
@@ -647,6 +649,81 @@ public class DEDataDefinitionServiceTest {
 	}
 
 	@Test
+	public void testSearchCount() throws Exception {
+		DEDataEngineTestUtil.insertDEDataDefinition(
+			_adminUser, _group, "description1", "name 1",
+			_deDataDefinitionService);
+		DEDataEngineTestUtil.insertDEDataDefinition(
+			_adminUser, _group, "description2", "name 2",
+			_deDataDefinitionService);
+
+		int total = searchCountDataDefinition(_group, "name");
+
+		IdempotentRetryAssert.retryAssert(
+			3, TimeUnit.SECONDS,
+			() -> {
+				Assert.assertEquals(2, total);
+
+				return null;
+			});
+	}
+
+	@Test
+	public void testSearchCountAfterDeletion() throws Exception {
+		DEDataDefinition deDataDefinition =
+			DEDataEngineTestUtil.insertDEDataDefinition(
+				_adminUser, _group, "description1", "name 1",
+				_deDataDefinitionService);
+
+		deleteDataDefinition(
+			_adminUser, deDataDefinition.getDEDataDefinitionId());
+
+		int total = searchCountDataDefinition(_group, "name");
+
+		IdempotentRetryAssert.retryAssert(
+			3, TimeUnit.SECONDS,
+			() -> {
+				Assert.assertEquals(0, total);
+
+				return null;
+			});
+	}
+
+	@Test
+	public void testSearchCountWithNoRecords() throws Exception {
+		int total = searchCountDataDefinition(_group, "name");
+
+		IdempotentRetryAssert.retryAssert(
+			3, TimeUnit.SECONDS,
+			() -> {
+				Assert.assertEquals(0, total);
+
+				return null;
+			});
+	}
+
+	@Test
+	public void testSearchCountWithoutPermission() throws Exception {
+		DEDataDefinition deDataDefinition =
+			DEDataEngineTestUtil.insertDEDataDefinition(
+				_adminUser, _group, "description1", "name 1",
+				_deDataDefinitionService);
+
+		deleteDataDefinition(
+			_adminUser, deDataDefinition.getDEDataDefinitionId());
+
+		int total = searchCountDataDefinition(GroupTestUtil.addGroup(), "name");
+
+		IdempotentRetryAssert.retryAssert(
+			3, TimeUnit.SECONDS,
+			() -> {
+				Assert.assertEquals(0, total);
+
+				return null;
+			});
+	}
+
+	@Test
 	public void testSearchExactCaseSensitive() throws Exception {
 		int dataDefinitionTotal = 5;
 
@@ -963,6 +1040,25 @@ public class DEDataDefinitionServiceTest {
 			_deDataDefinitionService.execute(deDataDefinitionListRequest);
 
 		return deDataDefinitionListResponse.getDEDataDefinitions();
+	}
+
+	protected int searchCountDataDefinition(Group group, String keywords) {
+		DEDataDefinitionSearchCountRequest deDataDefinitionSearchCountRequest =
+			DEDataDefinitionRequestBuilder.searchCountBuilder(
+			).havingKeywords(
+				keywords
+			).inCompany(
+				group.getCompanyId()
+			).inGroup(
+				_group.getGroupId()
+			).build();
+
+		DEDataDefinitionSearchCountResponse
+			deDataDefinitionSearchCountResponse =
+				_deDataDefinitionService.execute(
+					deDataDefinitionSearchCountRequest);
+
+		return deDataDefinitionSearchCountResponse.getTotal();
 	}
 
 	protected List<DEDataDefinition> searchDataDefinition(

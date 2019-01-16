@@ -164,6 +164,10 @@ public abstract class BaseUpgradePortletId extends UpgradeProcess {
 		return new String[0];
 	}
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), with no direct replacement
+	 */
+	@Deprecated
 	protected void updateGroup(long groupId, String typeSettings)
 		throws Exception {
 

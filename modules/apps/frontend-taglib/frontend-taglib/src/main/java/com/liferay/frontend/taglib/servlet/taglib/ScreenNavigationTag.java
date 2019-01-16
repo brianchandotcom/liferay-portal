@@ -85,6 +85,10 @@ public class ScreenNavigationTag extends IncludeTag {
 		_fullContainerCssClass = fullContainerCssClass;
 	}
 
+	public void setHeaderContainerCssClass(String headerContainerCssClass) {
+		_headerContainerCssClass = headerContainerCssClass;
+	}
+
 	public void setId(String id) {
 		_id = id;
 	}
@@ -123,6 +127,7 @@ public class ScreenNavigationTag extends IncludeTag {
 		_containerCssClass = "col-md-9";
 		_context = null;
 		_fullContainerCssClass = "col-md-12";
+		_headerContainerCssClass = "container";
 		_id = null;
 		_key = null;
 		_modelBean = null;
@@ -149,6 +154,9 @@ public class ScreenNavigationTag extends IncludeTag {
 		request.setAttribute(
 			"liferay-frontend:screen-navigation:fullContainerCssClass",
 			_fullContainerCssClass);
+		request.setAttribute(
+			"liferay-frontend:screen-navigation:headerContainerCssClass",
+			_headerContainerCssClass);
 
 		String id = _id;
 
@@ -278,6 +286,7 @@ public class ScreenNavigationTag extends IncludeTag {
 	private String _containerCssClass = "col-md-9";
 	private Object _context;
 	private String _fullContainerCssClass = "col-md-12";
+	private String _headerContainerCssClass = "container";
 	private String _id;
 	private String _key;
 	private Object _modelBean;

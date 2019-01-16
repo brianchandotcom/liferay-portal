@@ -19,6 +19,7 @@
 <%
 String containerCssClass = (String)request.getAttribute("liferay-frontend:screen-navigation:containerCssClass");
 String fullContainerCssClass = (String)request.getAttribute("liferay-frontend:screen-navigation:fullContainerCssClass");
+String headerContainerCssClass = (String)request.getAttribute("liferay-frontend:screen-navigation:headerContainerCssClass");
 String id = (String)request.getAttribute("liferay-frontend:screen-navigation:id");
 String navCssClass = (String)request.getAttribute("liferay-frontend:screen-navigation:navCssClass");
 String parentContainerCssClass = (String)request.getAttribute("liferay-frontend:screen-navigation:parentContainerCssClass");
@@ -31,7 +32,7 @@ List<ScreenNavigationEntry> screenNavigationEntries = (List<ScreenNavigationEntr
 
 <c:if test="<%= screenNavigationCategories.size() > 1 %>">
 	<div class="page-header">
-		<div class="container">
+		<div class="<%= headerContainerCssClass %>">
 			<nav>
 				<ul class="nav nav-underline">
 

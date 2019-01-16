@@ -96,15 +96,6 @@ public abstract class BaseSearchResultUtilTestCase {
 	protected abstract SearchResultTranslator createSearchResultTranslator();
 
 	protected void setUpClassNameLocalService() throws Exception {
-		ClassName className = new ClassNameWrapper(null) {
-
-			@Override
-			public String getClassName() {
-				return SearchTestUtil.ATTACHMENT_OWNER_CLASS_NAME;
-			}
-
-		};
-
 		classNameLocalService = new ClassNameLocalServiceWrapper(null) {
 
 			@Override
@@ -114,7 +105,14 @@ public abstract class BaseSearchResultUtilTestCase {
 				if (classNameId ==
 						SearchTestUtil.ATTACHMENT_OWNER_CLASS_NAME_ID) {
 
-					return className;
+					return new ClassNameWrapper(null) {
+
+						@Override
+						public String getClassName() {
+							return SearchTestUtil.ATTACHMENT_OWNER_CLASS_NAME;
+						}
+
+					};
 				}
 
 				return null;

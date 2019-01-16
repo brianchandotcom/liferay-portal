@@ -16,9 +16,7 @@ package com.liferay.document.library.web.internal.bulk.selection;
 
 import com.liferay.bulk.selection.BulkSelectionRunner;
 
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -27,18 +25,8 @@ import org.osgi.service.component.annotations.Reference;
 @Component(immediate = true, service = {})
 public class BulkSelectionRunnerUtil {
 
-	public static final BulkSelectionRunner getBulkSelectionRunner() {
-		return _instance._getBulkSelectionRunner();
-	}
-
-	@Activate
-	protected void activate() {
-		_instance = this;
-	}
-
-	@Deactivate
-	protected void deactivate() {
-		_instance = null;
+	public static BulkSelectionRunner getBulkSelectionRunner() {
+		return _bulkSelectionRunner;
 	}
 
 	@Reference(unbind = "-")
@@ -47,12 +35,6 @@ public class BulkSelectionRunnerUtil {
 
 		_bulkSelectionRunner = bulkSelectionRunner;
 	}
-
-	private BulkSelectionRunner _getBulkSelectionRunner() {
-		return _bulkSelectionRunner;
-	}
-
-	private static BulkSelectionRunnerUtil _instance;
 
 	private static BulkSelectionRunner _bulkSelectionRunner;
 

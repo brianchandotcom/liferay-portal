@@ -1,0 +1,6 @@
+Bundle-Name: Liferay Content Space Headless API
+Bundle-SymbolicName: com.liferay.content.space.headless.api
+Bundle-Version: 1.0.0
+Export-Package:\
+	com.liferay.content.space.headless.model,\
+	com.liferay.content.space.headless.resource

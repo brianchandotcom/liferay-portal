@@ -1,0 +1,3 @@
+Bundle-Name: Liferay Content Space Headless Implementation
+Bundle-SymbolicName: com.liferay.content.space.headless.impl
+Bundle-Version: 1.0.0

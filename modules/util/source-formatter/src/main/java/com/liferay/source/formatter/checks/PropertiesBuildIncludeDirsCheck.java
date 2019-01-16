@@ -85,11 +85,7 @@ public class PropertiesBuildIncludeDirsCheck extends BaseFileCheck {
 		return StringUtil.replaceFirst(content, matcher.group(), sb.toString());
 	}
 
-	private synchronized Set<String> _getBuildIncludeDirs() throws IOException {
-		if (_buildIncludeDirs != null) {
-			return _buildIncludeDirs;
-		}
-
+	private Set<String> _getBuildIncludeDirs() throws IOException {
 		File modulesDir = new File(getPortalDir(), "modules");
 
 		final Set<String> buildIncludeDirs = new TreeSet<>();
@@ -130,9 +126,7 @@ public class PropertiesBuildIncludeDirsCheck extends BaseFileCheck {
 
 			});
 
-		_buildIncludeDirs = buildIncludeDirs;
-
-		return _buildIncludeDirs;
+		return buildIncludeDirs;
 	}
 
 	private String _getModuleDirName(Path dirPath) {
@@ -167,7 +161,5 @@ public class PropertiesBuildIncludeDirsCheck extends BaseFileCheck {
 
 	private static final Pattern _pattern = Pattern.compile(
 		"([^\\S\\n]*)#build\\.include\\.dirs=\\\\(\\s*#.*)*");
-
-	private Set<String> _buildIncludeDirs;
 
 }

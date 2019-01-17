@@ -71,7 +71,11 @@ public class TestBulkSelectionFactory implements BulkSelectionFactory<Integer> {
 
 			@Override
 			public Stream<Integer> stream() {
-				return Arrays.stream(integers).map(Integer::new);
+				return Arrays.stream(
+					integers
+				).map(
+					Integer::new
+				);
 			}
 
 		};

@@ -179,7 +179,11 @@ public class RecurrenceSerializer {
 			rDateList.setDatesUtc(dateValues);
 			rDateList.setName(_EXDATE);
 
-			data = data.concat(StringPool.NEW_LINE).concat(rDateList.toIcal());
+			data = data.concat(
+				StringPool.NEW_LINE
+			).concat(
+				rDateList.toIcal()
+			);
 		}
 
 		return data;

@@ -208,7 +208,9 @@ public class EventRemotePropagatorExportImportLifecycleListener
 	private void _propagateEvent(
 		ExportImportLifecycleEvent exportImportLifecycleEvent) {
 
-		_getHttpPrincipal(exportImportLifecycleEvent).ifPresent(
+		_getHttpPrincipal(
+			exportImportLifecycleEvent
+		).ifPresent(
 			httpPrincipal -> {
 				try {
 					StagingServiceHttp.propagateExportImportLifecycleEvent(
@@ -223,7 +225,8 @@ public class EventRemotePropagatorExportImportLifecycleListener
 							"remote live site",
 						pe);
 				}
-			});
+			}
+		);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

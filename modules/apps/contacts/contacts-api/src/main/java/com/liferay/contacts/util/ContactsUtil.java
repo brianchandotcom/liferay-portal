@@ -314,7 +314,11 @@ public class ContactsUtil {
 		String jobTitle = user.getJobTitle();
 
 		if (Validator.isNotNull(jobTitle)) {
-			return "TITLE:".concat(jobTitle).concat(StringPool.NEW_LINE);
+			return "TITLE:".concat(
+				jobTitle
+			).concat(
+				StringPool.NEW_LINE
+			);
 		}
 
 		return StringPool.BLANK;

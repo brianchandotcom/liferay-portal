@@ -643,7 +643,10 @@ public class BeanPortletImpl implements BeanPortlet {
 			String listenerClassName = entry.getValue();
 
 			String listener = listenerClassName.concat(
-				StringPool.SEMICOLON).concat(String.valueOf(entry.getKey()));
+				StringPool.SEMICOLON
+			).concat(
+				String.valueOf(entry.getKey())
+			);
 
 			portletListeners.add(listener);
 		}
@@ -739,7 +742,11 @@ public class BeanPortletImpl implements BeanPortlet {
 			return name;
 		}
 
-		return name.concat(StringPool.SEMICOLON).concat(value);
+		return name.concat(
+			StringPool.SEMICOLON
+		).concat(
+			value
+		);
 	}
 
 	private static final String _ENGLISH_EN = Locale.ENGLISH.getLanguage();

@@ -1868,7 +1868,10 @@ public class PortletDataContextImpl implements PortletDataContext {
 	@Override
 	public boolean isModelCounted(String className, Serializable classPK) {
 		String modelCountedPrimaryKey = className.concat(
-			StringPool.POUND).concat(String.valueOf(classPK));
+			StringPool.POUND
+		).concat(
+			String.valueOf(classPK)
+		);
 
 		return addPrimaryKey(String.class, modelCountedPrimaryKey);
 	}
@@ -2607,7 +2610,10 @@ public class PortletDataContextImpl implements PortletDataContext {
 		String className, Serializable primaryKey) {
 
 		return className.concat(
-			StringPool.POUND).concat(String.valueOf(primaryKey));
+			StringPool.POUND
+		).concat(
+			String.valueOf(primaryKey)
+		);
 	}
 
 	/**
@@ -2760,7 +2766,11 @@ public class PortletDataContextImpl implements PortletDataContext {
 	}
 
 	protected String getReferenceKey(String className, String classPK) {
-		return className.concat(StringPool.POUND).concat(classPK);
+		return className.concat(
+			StringPool.POUND
+		).concat(
+			classPK
+		);
 	}
 
 	protected long getUserId(AuditedModel auditedModel) {

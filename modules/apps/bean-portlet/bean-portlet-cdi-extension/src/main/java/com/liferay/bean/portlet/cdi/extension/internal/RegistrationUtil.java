@@ -159,7 +159,10 @@ public class RegistrationUtil {
 
 		if (Validator.isNotNull(servletContextName)) {
 			portletName = portletName.concat(
-				PortletConstants.WAR_SEPARATOR).concat(servletContextName);
+				PortletConstants.WAR_SEPARATOR
+			).concat(
+				servletContextName
+			);
 		}
 
 		return PortalUtil.getJsSafePortletId(portletName);

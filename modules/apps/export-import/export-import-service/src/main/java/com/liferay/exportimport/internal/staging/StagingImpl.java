@@ -1920,8 +1920,11 @@ public class StagingImpl implements Staging {
 
 	@Override
 	public String getSchedulerGroupName(String destinationName, long groupId) {
-		return destinationName.concat(StringPool.SLASH).concat(
-			String.valueOf(groupId));
+		return destinationName.concat(
+			StringPool.SLASH
+		).concat(
+			String.valueOf(groupId)
+		);
 	}
 
 	@Override

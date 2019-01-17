@@ -254,7 +254,9 @@ public class SystemEventTest {
 		systemEvent = SystemEventLocalServiceUtil.fetchSystemEvent(
 			_liveGroup.getGroupId(),
 			ClassNameLocalServiceUtil.getClassNameId(JournalArticle.class),
-			articles.get(0).getResourcePrimKey(),
+			articles.get(
+				0
+			).getResourcePrimKey(),
 			SystemEventConstants.TYPE_DELETE);
 
 		Assert.assertNull(systemEvent);

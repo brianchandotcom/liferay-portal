@@ -138,7 +138,9 @@ public abstract class BasePrototypePropagationTestCase {
 
 		setLinkEnabled(linkEnabled);
 
-		int initialPortletCount = LayoutTestUtil.getPortlets(layout).size();
+		int initialPortletCount = LayoutTestUtil.getPortlets(
+			layout
+		).size();
 
 		prototypeLayout = LayoutTestUtil.updateLayoutTemplateId(
 			prototypeLayout, "1_column");
@@ -159,7 +161,10 @@ public abstract class BasePrototypePropagationTestCase {
 				LayoutTestUtil.isLayoutColumnCustomizable(layout, "column-1"));
 
 			Assert.assertEquals(
-				initialPortletCount, LayoutTestUtil.getPortlets(layout).size());
+				initialPortletCount,
+				LayoutTestUtil.getPortlets(
+					layout
+				).size());
 		}
 
 		prototypeLayout = updateModifiedDate(
@@ -177,7 +182,9 @@ public abstract class BasePrototypePropagationTestCase {
 
 			Assert.assertEquals(
 				initialPortletCount + 1,
-				LayoutTestUtil.getPortlets(layout).size());
+				LayoutTestUtil.getPortlets(
+					layout
+				).size());
 		}
 		else {
 			Assert.assertEquals(
@@ -188,7 +195,10 @@ public abstract class BasePrototypePropagationTestCase {
 				LayoutTestUtil.isLayoutColumnCustomizable(layout, "column-1"));
 
 			Assert.assertEquals(
-				initialPortletCount, LayoutTestUtil.getPortlets(layout).size());
+				initialPortletCount,
+				LayoutTestUtil.getPortlets(
+					layout
+				).size());
 		}
 	}
 

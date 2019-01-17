@@ -4,6 +4,7 @@
  * SidebarWidgetsPanel
  */
 {template .render}
+	{@param? _handleSearchFormKeyDown: any}
 	{@param? widgets: list<[
 		categories: list<[
 			categories: list<?>,
@@ -23,6 +24,31 @@
 	{@param? spritemap: string}
 
 	<div class="sidebar-fragments-section sidebar-section">
+		<nav class="management-bar navbar-light">
+			<div class="navbar-form-autofit">
+				<form data-onkeydown="{$_handleSearchFormKeyDown}" role="search">
+					<div class="input-group input-group-inset search-bar">
+						<div class="input-group-input">
+							<input
+								class="form-control input-group-inset"
+								data-oninput="_filterWidgets"
+								placeholder="{msg desc=""}search{/msg}..."
+								type="text"
+							/>
+
+							<div class="input-group-inset-item input-group-inset-item-after">
+								<button class="btn btn-unstyled" type="button">
+									<svg class="lexicon-icon">
+										<use xlink:href="{$spritemap}#search"></use>
+									</svg>
+								</button>
+							</div>
+						</div>
+					</div>
+				</form>
+			</div>
+		</nav>
+
 		{if $widgets}
 			{foreach $category in $widgets}
 				{call .category}
@@ -50,10 +76,21 @@
 
 	<div aria-orientation="vertical" class="panel-group panel-group-flush" role="tablist">
 		<div class="{$panelClasses}">
+
+			{let $collapseIconClasses kind="text"}
+				collapse-icon
+
+				{if not $category.expanded}
+					{sp}collapsed
+				{/if}
+
+				{sp}sheet-subtitle
+			{/let}
+
 			<a
 				aria-controls="{$collapseId}"
 				aria-expanded="false"
-				class="collapse-icon collapsed sheet-subtitle"
+				class="{$collapseIconClasses}"
 				data-toggle="collapse"
 				href="#{$collapseId}"
 				role="tab"
@@ -71,18 +108,30 @@
 				</span>
 			</a>
 
+			{let $panelCollapseClasses kind="text"}
+				panel-collapse
+
+				{if not $category.expanded}
+					{sp}collapse
+				{else}
+					{sp}show
+				{/if}
+			{/let}
+
 			<div
-				class="panel-collapse collapse"
+				class="{$panelCollapseClasses}"
 				id="{$collapseId}"
 				role="tabpanel"
 			>
 				<div class="fragments-editor-sidebar-section__widgets-panel-grid">
-					{foreach $subCategory in $category.categories}
-						{call .category}
-							{param category: $subCategory /}
-							{param spritemap: $spritemap /}
-						{/call}
-					{/foreach}
+					{if $category.categories}
+						{foreach $subCategory in $category.categories}
+							{call .category}
+								{param category: $subCategory /}
+								{param spritemap: $spritemap /}
+							{/call}
+						{/foreach}
+					{/if}
 
 					<ul class="nav nav-equal-height nav-stacked">
 						{foreach $portlet in $category.portlets}

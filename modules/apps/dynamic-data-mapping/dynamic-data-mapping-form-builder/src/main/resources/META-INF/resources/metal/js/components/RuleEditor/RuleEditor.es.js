@@ -1,14 +1,14 @@
-import 'clay-button';
-import 'clay-modal';
-import 'clay-alert';
-import {Config} from 'metal-state';
-import {PagesVisitor} from '../../util/visitors.es';
 import '../Calculator/Calculator.es';
 import '../Page/PageRenderer.es';
+import 'clay-alert';
+import 'clay-button';
+import 'clay-modal';
+import {Config} from 'metal-state';
+import {makeFetch} from '../../util/fetch.es';
+import {PagesVisitor} from '../../util/visitors.es';
 import Component from 'metal-component';
 import Soy from 'metal-soy';
 import templates from './RuleEditor.soy.js';
-import {makeFetch} from '../../util/fetch.es';
 
 const fieldOptionStructure = Config.shapeOf(
 	{
@@ -607,28 +607,81 @@ class RuleEditor extends Component {
 	}
 
 	syncPages(pages) {
-		const {actions} = this;
-		let {conditions} = this;
-
 		const visitor = new PagesVisitor(pages);
+		const {actions, conditions} = this;
 
+		this.setState(
+			{
+				actions: this._syncActions(actions, visitor),
+				calculatorResultOptions: this._calculatorResultOptionsValueFn(),
+				conditions: this._syncConditions(conditions, visitor),
+				deletedFields: this._getDeletedFields(visitor),
+				fieldOptions: this._fieldOptionsValueFn()
+			}
+		);
+	}
+
+	syncVisible(visible) {
+		const addButton = document.querySelector('#addFieldButton');
+
+		super.syncVisible(visible);
+
+		if (addButton && visible) {
+			addButton.classList.add('hide');
+		}
+	}
+
+	_syncActions(actions, visitor) {
+		actions.forEach(
+			action => {
+				let targetFieldExists = false;
+				let targetType;
+
+				visitor.mapFields(
+					({fieldName, type}) => {
+						if (action.target === fieldName) {
+							targetFieldExists = true;
+							targetType = type;
+						}
+					}
+				);
+
+				if (!targetFieldExists || action.action === 'calculate' && targetType !== 'numeric') {
+					action.target = '';
+				}
+
+				action.calculatorFields = this._updateCalculatorFields(action, action.target);
+			}
+		);
+
+		return actions;
+	}
+
+	_syncConditions(conditions, visitor) {
 		conditions.forEach(
 			(condition, index) => {
+				const firstOperand = condition.operands[0];
 				let firstOperandFieldExists = false;
 				const secondOperand = condition.operands[1];
 				let secondOperandFieldExists = false;
+				let secondOperandType;
 
 				visitor.mapFields(
-					({fieldName}) => {
-						if (condition.operands[0].value === fieldName) {
+					({fieldName, type}) => {
+						if (firstOperand.type == 'field' && firstOperand.value === fieldName) {
 							firstOperandFieldExists = true;
+							secondOperandType = type;
 						}
 
-						if (secondOperand && secondOperand.value === fieldName) {
+						if (secondOperand && secondOperand.type === 'field' && secondOperand.value === fieldName) {
 							secondOperandFieldExists = true;
 						}
 					}
 				);
+
+				if (secondOperand && secondOperandType) {
+					secondOperand.type = secondOperandType;
+				}
 
 				if (condition.operands[0].value === 'user') {
 					firstOperandFieldExists = true;
@@ -644,25 +697,7 @@ class RuleEditor extends Component {
 			}
 		);
 
-		this.setState(
-			{
-				actions: this._syncActions(actions),
-				calculatorResultOptions: this._calculatorResultOptionsValueFn(),
-				conditions,
-				deletedFields: this._getDeletedFields(visitor),
-				fieldOptions: this._fieldOptionsValueFn()
-			}
-		);
-	}
-
-	syncVisible(visible) {
-		const addButton = document.querySelector('#addFieldButton');
-
-		super.syncVisible(visible);
-
-		if (addButton && visible) {
-			addButton.classList.add('hide');
-		}
+		return conditions;
 	}
 
 	_calculatorResultOptionsValueFn() {
@@ -1525,6 +1560,8 @@ class RuleEditor extends Component {
 	}
 
 	_setActions(actions) {
+		const {pages} = this;
+
 		if (actions.length == 0) {
 			actions.push(
 				{
@@ -1540,7 +1577,7 @@ class RuleEditor extends Component {
 			);
 		}
 
-		return actions;
+		return this._syncActions(actions, new PagesVisitor(pages));
 	}
 
 	_setConditions(conditions) {

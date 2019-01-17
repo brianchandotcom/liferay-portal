@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.search.test;
+package com.liferay.portal.kernel.search.test;
 
 import com.liferay.portal.kernel.comment.Comment;
 import com.liferay.portal.kernel.model.ClassName;

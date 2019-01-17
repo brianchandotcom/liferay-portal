@@ -215,38 +215,34 @@
 	{@param? treeLevelId: ?}
 
 	{let $elementClasses kind="text"}
-		nav-link
+		fragments-editor-sidebar-section__structure-panel__item
 
 		{if $elementId and ($activeItemId == $elementId) and ($activeItemType == $elementType)}
 			{sp}active
 		{/if}
 	{/let}
 
-	{let $elementAttributes kind="attributes"}
-		class="{$elementClasses}"
-
-		{if $elementId}
+	<div class="{$elementClasses}">
+		<div
+			class="fragments-editor-sidebar-section__structure-panel__item-name text-truncate"
+			data-onclick="{$clickHandler}"
 			data-element-id="{$elementId}"
 			data-element-type="{$elementType}"
-			data-onclick="{$clickHandler}"
-		{/if}
-	{/let}
-
-	<div {$elementAttributes}>
-
-		{$elementName}
+		>
+			{$elementName}
+		</div>
 
 		{if $hasChildren}
 			{call .collapseIcon}
 				{param expanded: $expanded /}
-				{param icon: 'closed' /}
+				{param icon: 'open' /}
 				{param spritemap: $spritemap /}
 				{param treeLevelId: $treeLevelId /}
 			{/call}
 
 			{call .collapseIcon}
 				{param expanded: $expanded /}
-				{param icon: 'open' /}
+				{param icon: 'closed' /}
 				{param spritemap: $spritemap /}
 				{param treeLevelId: $treeLevelId /}
 			{/call}
@@ -265,6 +261,7 @@
 
 	{let $collapseIconWrapperClasses kind="text"}
 		collapse-icon
+		{sp}fragments-editor-sidebar-section__structure-panel__item-icon
 
 		{if not $expanded}
 			{sp}collapsed

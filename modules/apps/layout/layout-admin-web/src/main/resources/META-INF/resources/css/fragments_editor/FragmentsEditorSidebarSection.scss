@@ -73,15 +73,70 @@
 	}
 
 	&__structure-panel {
-		.nav-item a {
-			cursor: pointer;
-			transition: background-color ease 0.2s;
-			will-change: background-color;
+		&__item {
+			border-radius: $topperBorderRadius * 2;
+			display: flex;
+			justify-content: space-between;
+			margin: ($fragmentsEditorSpacing / 2) auto;
+			padding: $fragmentsEditorSpacing / 2;
+			position: relative;
+			transition: background-color ease 0.2s, color ease 0.2s;
+			will-change: background-color, color;
 
-			&.active.nav-link, &.active.nav-link:hover {
+			&.active,
+			&.active:hover {
 				background-color: $topperBackgroundColor;
 				color: $topperColor;
 			}
+
+			&:hover {
+				background-color: $sidebarTreeElementBackgroundColor;
+			}
+		}
+
+		&__item + .collapse,
+		&__item + .collapsing {
+			overflow: hidden;
+			padding-left: 1em;
+		}
+
+		&__item-icon {
+			left: 0;
+			position: absolute;
+			top: 0.1em;
+
+			> .collapse-icon-closed,
+			> .collapse-icon-open {
+				color: inherit;
+				display: block;
+				height: 2em;
+				left: 0;
+				position: relative;
+				top: 0;
+				transition: fill ease 0.2s;
+				width: 2em;
+				will-change: fill;
+
+				> .lexicon-icon {
+					left: 50%;
+					position: absolute;
+					top: 50%;
+					transform: translateX(-50%) translateY(-50%);
+					width: 10px;
+				}
+			}
+
+			> .collapse-icon-closed[aria-expanded="true"],
+			> .collapse-icon-open[aria-expanded="false"] {
+				display: none;
+			}
+		}
+
+
+		&__item-name {
+			cursor: pointer;
+			flex-grow: 1;
+			margin-left: 1.6em;
 		}
 	}
 

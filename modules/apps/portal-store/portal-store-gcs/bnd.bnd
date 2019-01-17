@@ -1,0 +1,16 @@
+Bundle-Name: Liferay Portal Store GCS
+Bundle-SymbolicName: com.liferay.portal.store.gcs
+Bundle-Version: 1.0.0
+Import-Package:\
+	!com.google.appengine.api.datastore,\
+  !com.google.appengine.api.memcache,\
+  !com.google.appengine.api.urlfetch,\
+	\
+	!org.apache.avalon.framework.logger,\
+	!org.apache.log,\
+	\
+	!org.joda.convert,\
+	\
+	*
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Data Stores

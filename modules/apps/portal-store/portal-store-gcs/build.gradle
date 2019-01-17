@@ -1,0 +1,15 @@
+sourceCompatibility = "1.8"
+targetCompatibility = "1.8"
+
+dependencies {
+
+    compileInclude 'com.google.cloud:google-cloud-storage:default'
+
+    compileOnly group: "biz.aQute.bnd", name: "biz.aQute.bndlib", version: "default"
+    compileOnly group: "com.liferay", name: "com.liferay.petra.string", version: "default"
+    compileOnly group: "com.liferay", name: "com.liferay.portal.configuration.metatype", version: "default"
+    compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
+    compileOnly group: "org.osgi", name: "org.osgi.core", version: "default"
+    compileOnly group: "org.osgi", name: "org.osgi.service.component.annotations", version: "default"
+}
+

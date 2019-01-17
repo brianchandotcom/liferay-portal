@@ -106,8 +106,7 @@ public class EntityModelSchemaBasedEdmProvider extends SchemaBasedEdmProvider {
 				)
 			).collect(
 				Collectors.toList()
-			)
-		);
+			));
 
 		return Optional.of(csdlComplexType);
 	}

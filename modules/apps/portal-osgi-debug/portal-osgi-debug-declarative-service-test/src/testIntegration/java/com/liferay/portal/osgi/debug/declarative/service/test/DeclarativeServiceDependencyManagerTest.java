@@ -343,8 +343,11 @@ public class DeclarativeServiceDependencyManagerTest {
 
 		StreamUtil.transfer(
 			classLoader.getResourceAsStream(
-				packagePath.concat("/dependencies/").concat(
-					_TEST_COMPONENT_FILE_NAME)),
+				packagePath.concat(
+					"/dependencies/"
+				).concat(
+					_TEST_COMPONENT_FILE_NAME
+				)),
 			jarOutputStream, false);
 	}
 

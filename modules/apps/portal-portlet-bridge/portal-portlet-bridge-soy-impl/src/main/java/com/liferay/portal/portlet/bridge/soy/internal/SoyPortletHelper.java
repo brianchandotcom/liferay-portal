@@ -194,19 +194,31 @@ public class SoyPortletHelper {
 			resourcesPath = resourcesPath.concat(StringPool.SLASH);
 		}
 
-		String filePath = resourcesPath.concat(mvcCommandName).concat(".js");
+		String filePath = resourcesPath.concat(
+			mvcCommandName
+		).concat(
+			".js"
+		);
 
 		if (bundle.getEntry(filePath) != null) {
 			return filePath;
 		}
 
-		filePath = resourcesPath.concat(mvcCommandName).concat(".es.js");
+		filePath = resourcesPath.concat(
+			mvcCommandName
+		).concat(
+			".es.js"
+		);
 
 		if (bundle.getEntry(filePath) != null) {
 			return filePath;
 		}
 
-		filePath = resourcesPath.concat(mvcCommandName).concat(".soy");
+		filePath = resourcesPath.concat(
+			mvcCommandName
+		).concat(
+			".soy"
+		);
 
 		if (bundle.getEntry(filePath) != null) {
 			return filePath;
@@ -235,7 +247,11 @@ public class SoyPortletHelper {
 			return moduleName;
 		}
 
-		return moduleName.concat(StringPool.AT).concat(moduleVersion);
+		return moduleName.concat(
+			StringPool.AT
+		).concat(
+			moduleVersion
+		);
 	}
 
 	protected Bundle getMVCCommandBundle(String mvcCommandName)

@@ -25,9 +25,9 @@ import com.liferay.fragment.service.FragmentCollectionServiceUtil;
 import com.liferay.fragment.service.FragmentEntryLinkLocalServiceUtil;
 import com.liferay.fragment.service.FragmentEntryServiceUtil;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.json.JSONObjectImpl;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONException;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -280,7 +280,7 @@ public class FragmentEntryProcessorEditableTest {
 	private String _getJsonFileAsString(String jsonFileName)
 		throws IOException, JSONException {
 
-		JSONObject jsonObject = new JSONObjectImpl(
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
 			_getFileAsString(jsonFileName));
 
 		return jsonObject.toString();

@@ -102,7 +102,6 @@
 			name: string
 		]>
 	}
-	{@param? deletedFields: list<string>}
 	{@param fieldOptions: list<[
 			label: string,
 			name: string,
@@ -231,7 +230,6 @@
 					{param calculatorFields: $action.calculatorFields /}
 					{param calculatorResultOptions: $calculatorResultOptions /}
 					{param dataProvider: $dataProvider /}
-					{param deletedFields: $deletedFields /}
 					{param fieldOptions: $fieldOptions /}
 					{param hasRequiredInputs: $action.hasRequiredInputs /}
 					{param index: index($action) /}
@@ -437,7 +435,6 @@
 			name: string
 		]>
 	}
-	{@param? deletedFields: list<string>}
 	{@param? targetSelected: string}
 	{@param? hasRequiredInputs: bool}
 
@@ -505,7 +502,6 @@
 						{param expression: $actionExpression /}
 						{param index: $index /}
 						{param calculatorOptions: $calculatorOptions /}
-						{param deletedFields: $deletedFields /}
 						{param options: $calculatorFields /}
 						{param optionsRepeatable: [] /}
 						{param resultSelected: $targetSelected /}

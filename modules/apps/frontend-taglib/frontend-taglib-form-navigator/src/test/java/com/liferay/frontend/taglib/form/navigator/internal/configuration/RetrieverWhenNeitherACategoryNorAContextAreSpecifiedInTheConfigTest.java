@@ -40,7 +40,8 @@ public class RetrieverWhenNeitherACategoryNorAContextAreSpecifiedInTheConfigTest
 	public void testContainsValuesForTheEmptyCategoryAndAnyContext() {
 		List<String> formNavigatorEntryKeys =
 			formNavigatorEntryConfigurationRetriever.getFormNavigatorEntryKeys(
-				"form1", "", "add").get();
+				"form1", "", "add"
+			).get();
 
 		Assert.assertEquals(
 			formNavigatorEntryKeys.toString(), 2,
@@ -56,7 +57,8 @@ public class RetrieverWhenNeitherACategoryNorAContextAreSpecifiedInTheConfigTest
 	public void testContainsValuesForTheEmptyCategoryAndNoContext() {
 		List<String> formNavigatorEntryKeys =
 			formNavigatorEntryConfigurationRetriever.getFormNavigatorEntryKeys(
-				"form1", "", null).get();
+				"form1", "", null
+			).get();
 
 		Assert.assertEquals(
 			formNavigatorEntryKeys.toString(), 2,

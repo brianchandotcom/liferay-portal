@@ -247,8 +247,7 @@ public class DDMFormEvaluatorHelper {
 
 		Map<String, String> nameVisibilityExpressionMap =
 			ddmFormFieldStream.filter(
-				field ->
-					Validator.isNotNull(field.getVisibilityExpression())
+				field -> Validator.isNotNull(field.getVisibilityExpression())
 			).collect(
 				Collectors.toMap(
 					field -> field.getName(),

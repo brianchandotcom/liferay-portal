@@ -60,9 +60,15 @@ public class JumpPageFunctionTest extends PowerMockito {
 
 		Assert.assertEquals("jumpPage", executeActionRequest.getAction());
 		Assert.assertEquals(
-			1, executeActionRequest.getParameterOptional("from").get());
+			1,
+			executeActionRequest.getParameterOptional(
+				"from"
+			).get());
 		Assert.assertEquals(
-			3, executeActionRequest.getParameterOptional("to").get());
+			3,
+			executeActionRequest.getParameterOptional(
+				"to"
+			).get());
 
 		Assert.assertTrue(result);
 	}

@@ -306,7 +306,12 @@ public class DDMFormBuilderContextFactoryHelper {
 		Map<String, Object> formContext = new HashMap<>();
 
 		formContext.put(
-			"pages", createFormContext(ddmForm, ddmFormLayout).get("pages"));
+			"pages",
+			createFormContext(
+				ddmForm, ddmFormLayout
+			).get(
+				"pages"
+			));
 		formContext.put("paginationMode", ddmFormLayout.getPaginationMode());
 
 		formContext.put("rules", new ArrayList<>());

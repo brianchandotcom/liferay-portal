@@ -260,7 +260,11 @@ public class DDMXMLImpl implements DDMXML {
 		name = HtmlUtil.escapeXPathAttribute(name);
 
 		XPath xPathSelector = _saxReader.createXPath(
-			"//dynamic-element[@name=".concat(name).concat("]"));
+			"//dynamic-element[@name=".concat(
+				name
+			).concat(
+				"]"
+			));
 
 		return xPathSelector.selectNodes(document);
 	}

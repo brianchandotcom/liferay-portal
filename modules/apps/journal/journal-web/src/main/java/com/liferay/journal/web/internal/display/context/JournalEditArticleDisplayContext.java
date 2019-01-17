@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.bean.BeanParamUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalServiceUtil;
@@ -343,7 +344,17 @@ public class JournalEditArticleDisplayContext {
 
 		Group group = _themeDisplay.getScopeGroup();
 
-		sb.append(group.getPathFriendlyURL(false, _themeDisplay));
+		boolean privateLayout = false;
+
+		if (_article != null) {
+			Layout layout = _article.getLayout();
+
+			if (layout != null) {
+				privateLayout = layout.isPrivateLayout();
+			}
+		}
+
+		sb.append(group.getPathFriendlyURL(privateLayout, _themeDisplay));
 		sb.append(group.getFriendlyURL());
 
 		sb.append(JournalArticleConstants.CANONICAL_URL_SEPARATOR);

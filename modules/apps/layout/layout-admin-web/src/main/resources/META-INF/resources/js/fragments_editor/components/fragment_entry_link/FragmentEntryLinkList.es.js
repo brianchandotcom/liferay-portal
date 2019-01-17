@@ -33,6 +33,7 @@ import {
 	moveItem,
 	setIn
 } from '../../utils/FragmentsEditorUpdateUtils.es';
+import {shouldUpdatePureComponent} from '../../utils/FragmentsEditorComponentUtils.es';
 import state from '../../store/state.es';
 import templates from './FragmentEntryLinkList.soy';
 
@@ -162,25 +163,7 @@ class FragmentEntryLinkList extends Component {
 	 * @private
 	 * @review
 	 */
-	rendered() {
-		requestAnimationFrame(
-			() => {
-				if (this.activeItemId) {
-					focusItem(
-						this.activeItemId,
-						this.activeItemType
-					);
-				}
-			}
-		);
-	}
-
-	/**
-	 * @inheritDoc
-	 * @private
-	 * @review
-	 */
-	dispose() {
+	disposed() {
 		this._dragDrop.dispose();
 	}
 
@@ -195,6 +178,33 @@ class FragmentEntryLinkList extends Component {
 		_state = FragmentEntryLinkList._setEmptySections(_state);
 
 		return _state;
+	}
+
+	/**
+	 * @inheritDoc
+	 * @private
+	 * @review
+	 */
+	rendered() {
+		requestAnimationFrame(
+			() => {
+				if (this.activeItemId) {
+					focusItem(
+						this.activeItemId,
+						this.activeItemType
+					);
+				}
+			}
+		);
+	}
+
+	/**
+	 * @inheritdoc
+	 * @return {boolean}
+	 * @review
+	 */
+	shouldUpdate(changes) {
+		return shouldUpdatePureComponent(changes);
 	}
 
 	/**

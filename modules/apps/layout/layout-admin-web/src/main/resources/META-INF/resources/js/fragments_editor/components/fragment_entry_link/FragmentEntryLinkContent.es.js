@@ -7,6 +7,7 @@ import Soy from 'metal-soy';
 import FragmentEditableField from './FragmentEditableField.es';
 import FragmentStyleEditor from './FragmentStyleEditor.es';
 import MetalStore from '../../store/store.es';
+import {shouldUpdateOnChangeProperties} from '../../utils/FragmentsEditorComponentUtils.es';
 import templates from './FragmentEntryLinkContent.soy';
 import {UPDATE_EDITABLE_VALUE} from '../../actions/actions.es';
 
@@ -52,10 +53,30 @@ class FragmentEntryLinkContent extends Component {
 
 	/**
 	 * @inheritDoc
+	 * @param {boolean} firstRender
 	 * @review
 	 */
-	rendered() {
-		this._renderContent();
+	rendered(firstRender) {
+		if (firstRender) {
+			this._renderContent(this.content);
+		}
+	}
+
+	/**
+	 * @inheritdoc
+	 * @return {boolean}
+	 * @review
+	 */
+	shouldUpdate(changes) {
+		return shouldUpdateOnChangeProperties(
+			changes,
+			[
+				'content',
+				'languageId',
+				'selectedMappingTypes',
+				'showMapping'
+			]
+		);
 	}
 
 	/**
@@ -305,7 +326,7 @@ class FragmentEntryLinkContent extends Component {
 	 * @review
 	 */
 	_renderContent(content) {
-		if (this.refs.content) {
+		if (content && this.refs.content) {
 			AUI().use(
 				'aui-parse-content',
 				A => {

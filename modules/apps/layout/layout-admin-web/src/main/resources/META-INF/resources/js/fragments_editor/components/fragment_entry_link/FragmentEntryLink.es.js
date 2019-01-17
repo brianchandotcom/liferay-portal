@@ -15,6 +15,7 @@ import {
 } from '../../actions/actions.es';
 import {DROP_TARGET_ITEM_TYPES} from '../../reducers/placeholders.es';
 import {getItemMoveDirection} from '../../utils/FragmentsEditorGetUtils.es';
+import {shouldUpdatePureComponent} from '../../utils/FragmentsEditorComponentUtils.es';
 import templates from './FragmentEntryLink.soy';
 
 /**
@@ -22,6 +23,15 @@ import templates from './FragmentEntryLink.soy';
  * @review
  */
 class FragmentEntryLink extends Component {
+
+	/**
+	 * @inheritdoc
+	 * @return {boolean}
+	 * @review
+	 */
+	shouldUpdate(changes) {
+		return shouldUpdatePureComponent(changes);
+	}
 
 	/**
 	 * Callback executed when a fragment lose the focus
@@ -75,19 +85,6 @@ class FragmentEntryLink extends Component {
 					hoveredItemType: DROP_TARGET_ITEM_TYPES.fragment
 				}
 			);
-		}
-	}
-
-	/**
-	 * Destroy existing FragmentEditableField instances.
-	 */
-	_destroyEditables() {
-		if (this._editables) {
-			this._editables.forEach(
-				editable => editable.dispose()
-			);
-
-			this._editables = [];
 		}
 	}
 

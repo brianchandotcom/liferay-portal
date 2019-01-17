@@ -23,7 +23,6 @@ import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
@@ -49,8 +48,8 @@ import com.liferay.journal.web.internal.portlet.action.ActionUtil;
 import com.liferay.journal.web.internal.search.EntriesChecker;
 import com.liferay.journal.web.internal.search.EntriesMover;
 import com.liferay.journal.web.internal.search.JournalSearcher;
-import com.liferay.journal.web.internal.security.permission.resource.JournalFolderPermission;
 import com.liferay.journal.web.internal.servlet.taglib.util.JournalArticleActionDropdownItems;
+import com.liferay.journal.web.internal.servlet.taglib.util.JournalFolderActionDropdownItems;
 import com.liferay.journal.web.util.JournalPortletUtil;
 import com.liferay.journal.web.util.JournalUtil;
 import com.liferay.message.boards.model.MBMessage;
@@ -83,9 +82,7 @@ import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchContextFactory;
 import com.liferay.portal.kernel.search.Sort;
-import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -99,9 +96,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.staging.StagingGroupHelper;
-import com.liferay.staging.StagingGroupHelperUtil;
-import com.liferay.taglib.security.PermissionsURLTag;
 import com.liferay.trash.TrashHelper;
 
 import java.io.Serializable;
@@ -115,7 +109,6 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 
-import javax.portlet.ActionRequest;
 import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
@@ -477,161 +470,14 @@ public class JournalDisplayContext {
 	}
 
 	public List<DropdownItem> getFolderActionDropdownItems(JournalFolder folder)
-		throws PortalException {
+		throws Exception {
 
-		return new DropdownItemList() {
-			{
-				if (JournalFolderPermission.contains(
-						_themeDisplay.getPermissionChecker(), folder,
-						ActionKeys.UPDATE)) {
+		JournalFolderActionDropdownItems folderActionDropdownItems =
+			new JournalFolderActionDropdownItems(
+				folder, _liferayPortletRequest, _liferayPortletResponse,
+				_trashHelper);
 
-					add(
-						dropdownItem -> {
-							dropdownItem.setHref(
-								_liferayPortletResponse.createRenderURL(),
-								"mvcPath", "/edit_folder.jsp", "redirect",
-								_themeDisplay.getURLCurrent(), "groupId",
-								folder.getGroupId(), "folderId",
-								folder.getFolderId());
-							dropdownItem.setLabel(
-								LanguageUtil.get(_request, "edit"));
-						});
-
-					add(
-						dropdownItem -> {
-							dropdownItem.setHref(
-								_liferayPortletResponse.createRenderURL(),
-								"mvcPath", "/move_entries.jsp", "redirect",
-								_themeDisplay.getURLCurrent(),
-								"rowIdsJournalFolder", folder.getFolderId());
-							dropdownItem.setLabel(
-								LanguageUtil.get(_request, "move"));
-						});
-				}
-
-				if (JournalFolderPermission.contains(
-						_themeDisplay.getPermissionChecker(), folder,
-						ActionKeys.ADD_FOLDER)) {
-
-					add(
-						dropdownItem -> {
-							dropdownItem.setHref(
-								_liferayPortletResponse.createRenderURL(),
-								"mvcPath", "/edit_folder.jsp", "redirect",
-								_themeDisplay.getURLCurrent(), "groupId",
-								folder.getGroupId(), "parentFolderId",
-								folder.getFolderId());
-							dropdownItem.setLabel(
-								LanguageUtil.get(_request, "add-subfolder"));
-						});
-				}
-
-				if (JournalFolderPermission.contains(
-						_themeDisplay.getPermissionChecker(), folder,
-						ActionKeys.PERMISSIONS)) {
-
-					try {
-						String permissionsURL = PermissionsURLTag.doTag(
-							StringPool.BLANK, JournalFolder.class.getName(),
-							folder.getName(), null,
-							String.valueOf(folder.getPrimaryKey()),
-							LiferayWindowState.POP_UP.toString(), null,
-							_request);
-
-						add(
-							dropdownItem -> {
-								dropdownItem.putData("action", "permissions");
-								dropdownItem.putData(
-									"permissionsURL", permissionsURL);
-								dropdownItem.setLabel(
-									LanguageUtil.get(_request, "permissions"));
-							});
-					}
-					catch (Exception e) {
-					}
-				}
-
-				if (JournalFolderPermission.contains(
-						_themeDisplay.getPermissionChecker(), folder,
-						ActionKeys.DELETE)) {
-
-					String redirect = _themeDisplay.getURLCurrent();
-
-					long currentFolderId = ParamUtil.getLong(
-						_request, "folderId");
-
-					if (currentFolderId == folder.getFolderId()) {
-						PortletURL redirectURL =
-							_liferayPortletResponse.createRenderURL();
-
-						redirectURL.setParameter(
-							"groupId", String.valueOf(folder.getGroupId()));
-						redirectURL.setParameter(
-							"folderId",
-							String.valueOf(folder.getParentFolderId()));
-
-						redirect = redirectURL.toString();
-					}
-
-					PortletURL deleteFolderURL =
-						_liferayPortletResponse.createActionURL();
-
-					String actionName = "deleteFolder";
-					String key = "delete";
-
-					if (_trashHelper.isTrashEnabled(
-							_themeDisplay.getScopeGroupId())) {
-
-						actionName = "moveFolderToTrash";
-						key = "move-to-recycle-bin";
-					}
-
-					deleteFolderURL.setParameter(
-						ActionRequest.ACTION_NAME, actionName);
-
-					deleteFolderURL.setParameter("redirect", redirect);
-					deleteFolderURL.setParameter(
-						"groupId", String.valueOf(folder.getGroupId()));
-					deleteFolderURL.setParameter(
-						"folderId", String.valueOf(folder.getFolderId()));
-
-					String label = LanguageUtil.get(_request, key);
-
-					add(
-						dropdownItem -> {
-							dropdownItem.putData("action", "delete");
-							dropdownItem.putData(
-								"deleteURL", deleteFolderURL.toString());
-							dropdownItem.setLabel(label);
-						});
-				}
-
-				Group group = _themeDisplay.getScopeGroup();
-
-				if (isShowPublishFolderAction(folder) && !group.isLayout()) {
-					PortletURL publishFolderURL =
-						_liferayPortletResponse.createActionURL();
-
-					publishFolderURL.setParameter(
-						ActionRequest.ACTION_NAME, "/journal/publish_folder");
-
-					publishFolderURL.setParameter(
-						"backURL", _themeDisplay.getURLCurrent());
-					publishFolderURL.setParameter(
-						"folderId", String.valueOf(folder.getFolderId()));
-
-					add(
-						dropdownItem -> {
-							dropdownItem.putData("action", "publishToLive");
-							dropdownItem.putData(
-								"publishFolderURL",
-								publishFolderURL.toString());
-							dropdownItem.setLabel(
-								LanguageUtil.get(_request, "publish-to-live"));
-						});
-				}
-			}
-		};
+		return folderActionDropdownItems.getActionDropdownItems();
 	}
 
 	public long getFolderId() {
@@ -1448,14 +1294,6 @@ public class JournalDisplayContext {
 		return true;
 	}
 
-	public boolean isShowPublishFolderAction(JournalFolder folder) {
-		if (folder == null) {
-			return false;
-		}
-
-		return _isShowPublishAction();
-	}
-
 	protected SearchContext buildSearchContext(
 		long companyId, long groupId, List<Long> folderIds, long classNameId,
 		String ddmStructureKey, String ddmTemplateKey, String keywords,
@@ -1582,40 +1420,6 @@ public class JournalDisplayContext {
 		}
 
 		return jsonArray;
-	}
-
-	private boolean _isShowPublishAction() {
-		PermissionChecker permissionChecker =
-			_themeDisplay.getPermissionChecker();
-
-		long scopeGroupId = _themeDisplay.getScopeGroupId();
-
-		StagingGroupHelper stagingGroupHelper =
-			StagingGroupHelperUtil.getStagingGroupHelper();
-
-		try {
-			if (GroupPermissionUtil.contains(
-					permissionChecker, scopeGroupId,
-					ActionKeys.EXPORT_IMPORT_PORTLET_INFO) &&
-				stagingGroupHelper.isStagingGroup(scopeGroupId) &&
-				stagingGroupHelper.isStagedPortlet(
-					scopeGroupId, JournalPortletKeys.JOURNAL)) {
-
-				return true;
-			}
-
-			return false;
-		}
-		catch (PortalException pe) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(
-					"An exception occured when checking if the publish " +
-						"action should be displayed",
-					pe);
-			}
-
-			return false;
-		}
 	}
 
 	private boolean _isShowViewContentURL(JournalArticle article)

@@ -118,9 +118,9 @@ public class DefaultMediaObjectNestedCollectionResourceTest
 
 		Assert.assertNotNull(fileEntryPreview);
 
-		byte[] contentBytes = IOUtils.toByteArray(
-			new URL(
-				TestPropsValues.PORTAL_URL + fileEntryPreview).openStream());
+		URL url = new URL(TestPropsValues.PORTAL_URL + fileEntryPreview);
+
+		byte[] contentBytes = IOUtils.toByteArray(url.openStream());
 
 		Assert.assertArrayEquals(bytes, contentBytes);
 	}

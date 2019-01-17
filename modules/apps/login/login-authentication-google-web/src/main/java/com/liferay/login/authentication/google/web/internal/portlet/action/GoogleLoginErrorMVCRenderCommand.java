@@ -25,8 +25,8 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortletKeys;
-import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.security.sso.google.GoogleAuthorization;
 import com.liferay.portal.security.sso.google.StrangersNotAllowedException;
 
 import javax.portlet.PortletException;
@@ -63,8 +63,8 @@ public class GoogleLoginErrorMVCRenderCommand implements MVCRenderCommand {
 		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		boolean googleAuthEnabled = PrefsPropsUtil.getBoolean(
-			themeDisplay.getCompanyId(), "google-auth-enabled", true);
+		boolean googleAuthEnabled = _googleAuthorization.isEnabled(
+			themeDisplay.getCompanyId());
 
 		if (!googleAuthEnabled) {
 			throw new PortletException(
@@ -105,6 +105,9 @@ public class GoogleLoginErrorMVCRenderCommand implements MVCRenderCommand {
 		UserEmailAddressException.MustNotUseCompanyMx.class.getSimpleName(),
 		StrangersNotAllowedException.class.getSimpleName()
 	};
+
+	@Reference
+	private GoogleAuthorization _googleAuthorization;
 
 	@Reference
 	private Portal _portal;

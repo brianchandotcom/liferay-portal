@@ -21,8 +21,8 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
-import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.security.sso.google.GoogleAuthorization;
 
 import javax.portlet.PortletException;
 import javax.portlet.PortletRequest;
@@ -54,8 +54,8 @@ public class AssociateGoogleUserMVCRenderCommand implements MVCRenderCommand {
 		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		boolean googleAuthEnabled = PrefsPropsUtil.getBoolean(
-			themeDisplay.getCompanyId(), "google-auth-enabled", true);
+		boolean googleAuthEnabled = _googleAuthorization.isEnabled(
+			themeDisplay.getCompanyId());
 
 		if (!googleAuthEnabled) {
 			throw new PortletException(
@@ -87,6 +87,9 @@ public class AssociateGoogleUserMVCRenderCommand implements MVCRenderCommand {
 
 		return "/update_account.jsp";
 	}
+
+	@Reference
+	private GoogleAuthorization _googleAuthorization;
 
 	@Reference
 	private UserLocalService _userLocalService;

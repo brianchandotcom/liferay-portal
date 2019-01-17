@@ -145,9 +145,11 @@ public class JournalContentDisplayContext {
 		String previewArticleId = ParamUtil.getString(
 			_portletRequest, "previewArticleId");
 
-		_article = JournalArticleLocalServiceUtil.fetchLatestArticle(
-			getArticleGroupId(), previewArticleId,
-			WorkflowConstants.STATUS_ANY);
+		if (Validator.isNotNull(previewArticleId)) {
+			_article = JournalArticleLocalServiceUtil.fetchLatestArticle(
+				getArticleGroupId(), previewArticleId,
+				WorkflowConstants.STATUS_ANY);
+		}
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)_portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);

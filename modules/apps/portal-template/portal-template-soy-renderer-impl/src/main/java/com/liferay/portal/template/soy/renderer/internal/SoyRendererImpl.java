@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.template.TemplateException;
 import com.liferay.portal.kernel.template.TemplateManager;
 import com.liferay.portal.template.soy.renderer.SoyRenderer;
-import com.liferay.portal.template.soy.utils.SoyTemplateResourcesProvider;
+import com.liferay.portal.template.soy.util.SoyTemplateResourcesProvider;
 
 import java.io.IOException;
 import java.io.Writer;

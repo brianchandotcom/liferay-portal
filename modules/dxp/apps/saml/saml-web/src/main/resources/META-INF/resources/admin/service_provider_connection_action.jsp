@@ -27,7 +27,6 @@ SamlIdpSpConnection samlIdpSpConnection = (SamlIdpSpConnection)row.getObject();
 	message="<%= StringPool.BLANK %>"
 >
 	<portlet:renderURL var="editURL">
-		<portlet:param name="mvcPath" value="/admin/edit_service_provider_connection.jsp" />
 		<portlet:param name="mvcRenderCommandName" value="/admin/edit_service_provider_connection" />
 		<portlet:param name="redirect" value="<%= currentURL %>" />
 		<portlet:param name="samlIdpSpConnectionId" value="<%= String.valueOf(samlIdpSpConnection.getSamlIdpSpConnectionId()) %>" />

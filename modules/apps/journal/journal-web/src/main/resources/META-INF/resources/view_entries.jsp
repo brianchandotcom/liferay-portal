@@ -137,7 +137,7 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 
 						<liferay-ui:search-container-column-text>
 							<clay:dropdown-actions
-								defaultEventHandler="<%= journalDisplayContext.getDefaultEventHandler() %>"
+								defaultEventHandler="<%= JournalWebConstants.JOURNAL_ELEMENTS_DEFAULT_EVENT_HANDLER %>"
 								dropdownItems="<%= journalDisplayContext.getArticleActionDropdownItems(curArticle) %>"
 							/>
 						</liferay-ui:search-container-column-text>
@@ -166,7 +166,7 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 								<c:when test="<%= Validator.isNotNull(articleImageURL) %>">
 									<clay:image-card
 										actionDropdownItems="<%= journalDisplayContext.getArticleActionDropdownItems(curArticle) %>"
-										defaultEventHandler="<%= journalDisplayContext.getDefaultEventHandler() %>"
+										defaultEventHandler="<%= JournalWebConstants.JOURNAL_ELEMENTS_DEFAULT_EVENT_HANDLER %>"
 										disabled="<%= rowChecker.isDisabled(curArticle) %>"
 										href="<%= editURL %>"
 										imageSrc="<%= HtmlUtil.escape(articleImageURL) %>"
@@ -185,7 +185,7 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 								<c:otherwise>
 									<clay:file-card
 										actionDropdownItems="<%= journalDisplayContext.getArticleActionDropdownItems(curArticle) %>"
-										defaultEventHandler="<%= journalDisplayContext.getDefaultEventHandler() %>"
+										defaultEventHandler="<%= JournalWebConstants.JOURNAL_ELEMENTS_DEFAULT_EVENT_HANDLER %>"
 										disabled="<%= rowChecker.isDisabled(curArticle) %>"
 										href="<%= editURL %>"
 										icon="web-content"
@@ -274,7 +274,7 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 
 						<liferay-ui:search-container-column-text>
 							<clay:dropdown-actions
-								defaultEventHandler="<%= journalDisplayContext.getDefaultEventHandler() %>"
+								defaultEventHandler="<%= JournalWebConstants.JOURNAL_ELEMENTS_DEFAULT_EVENT_HANDLER %>"
 								dropdownItems="<%= journalDisplayContext.getArticleActionDropdownItems(curArticle) %>"
 							/>
 						</liferay-ui:search-container-column-text>
@@ -336,7 +336,7 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 
 						<liferay-ui:search-container-column-text>
 							<clay:dropdown-actions
-								defaultEventHandler="<%= journalDisplayContext.getDefaultEventHandler() %>"
+								defaultEventHandler="<%= JournalWebConstants.JOURNAL_ELEMENTS_DEFAULT_EVENT_HANDLER %>"
 								dropdownItems="<%= journalDisplayContext.getFolderActionDropdownItems(curFolder) %>"
 							/>
 						</liferay-ui:search-container-column-text>
@@ -354,7 +354,7 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 						>
 							<clay:horizontal-card
 								actionDropdownItems="<%= journalDisplayContext.getFolderActionDropdownItems(curFolder) %>"
-								defaultEventHandler="<%= journalDisplayContext.getDefaultEventHandler() %>"
+								defaultEventHandler="<%= JournalWebConstants.JOURNAL_ELEMENTS_DEFAULT_EVENT_HANDLER %>"
 								disabled="<%= rowChecker.isDisabled(curFolder) %>"
 								href="<%= rowURL.toString() %>"
 								icon="folder"
@@ -418,7 +418,7 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 
 						<liferay-ui:search-container-column-text>
 							<clay:dropdown-actions
-								defaultEventHandler="<%= journalDisplayContext.getDefaultEventHandler() %>"
+								defaultEventHandler="<%= JournalWebConstants.JOURNAL_ELEMENTS_DEFAULT_EVENT_HANDLER %>"
 								dropdownItems="<%= journalDisplayContext.getFolderActionDropdownItems(curFolder) %>"
 							/>
 						</liferay-ui:search-container-column-text>
@@ -438,7 +438,7 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 
 <aui:script require='<%= npmResolvedPackageName + "/js/ElementsDefaultEventHandler.es as ElementsDefaultEventHandler" %>'>
 	Liferay.component(
-		'<%= journalDisplayContext.getDefaultEventHandler() %>',
+		'<%= JournalWebConstants.JOURNAL_ELEMENTS_DEFAULT_EVENT_HANDLER %>',
 		new ElementsDefaultEventHandler.default(
 			{
 				namespace: '<%= renderResponse.getNamespace() %>',

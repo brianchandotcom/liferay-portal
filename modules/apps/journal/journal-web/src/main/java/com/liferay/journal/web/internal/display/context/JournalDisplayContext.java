@@ -731,10 +731,6 @@ public class JournalDisplayContext {
 		return _ddmTemplateKey;
 	}
 
-	public String getDefaultEventHandler() {
-		return "journalElementsDefaultEventHandler";
-	}
-
 	public String getDefaultLanguageId() throws PortalException {
 		JournalArticle article = getArticle();
 

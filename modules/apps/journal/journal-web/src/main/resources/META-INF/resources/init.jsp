@@ -113,6 +113,7 @@ page import="com.liferay.journal.service.JournalFolderServiceUtil" %><%@
 page import="com.liferay.journal.util.comparator.ArticleVersionComparator" %><%@
 page import="com.liferay.journal.web.asset.JournalArticleAssetRenderer" %><%@
 page import="com.liferay.journal.web.configuration.JournalWebConfiguration" %><%@
+page import="com.liferay.journal.web.internal.constants.JournalWebConstants" %><%@
 page import="com.liferay.journal.web.internal.dao.search.JournalResultRowSplitter" %><%@
 page import="com.liferay.journal.web.internal.display.context.EditArticleDisplayPageDisplayContext" %><%@
 page import="com.liferay.journal.web.internal.display.context.JournalDDMStructuresDisplayContext" %><%@

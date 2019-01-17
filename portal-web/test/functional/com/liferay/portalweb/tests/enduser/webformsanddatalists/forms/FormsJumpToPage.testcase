@@ -129,6 +129,7 @@ definition {
 	@description = "This is a use case for LPS-68227."
 	@priority = "4"
 	test ViewFormRulesSummary {
+		property test.name.skip.portal.instance = "FormsJumpToPage#ViewFormRulesSummary";
 		FormsAdminNavigator.gotoRules();
 
 		FormRules.viewSummary(

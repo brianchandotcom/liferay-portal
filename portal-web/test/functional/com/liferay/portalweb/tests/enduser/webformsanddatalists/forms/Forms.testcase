@@ -1293,6 +1293,7 @@ definition {
 	@description = "This is a use case for LPS-74997."
 	@priority = "4"
 	test DeleteSelectFromListOptionAndViewEntries {
+		property test.name.skip.portal.instance = "Forms#DeleteSelectFromListOptionAndViewEntries";
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
@@ -2485,6 +2486,7 @@ definition {
 
 	@priority = "5"
 	test SubmitFormAfterEditingFields {
+		property test.name.skip.portal.instance = "Forms#SubmitFormAfterEditingFields";
 		property portal.acceptance = "false";
 		property testray.component.names = "Training";
 
@@ -3705,6 +3707,7 @@ definition {
 
 	@priority = "4"
 	test SubmitFormWithRequiredRadioField {
+		property test.name.skip.portal.instance = "Forms#SubmitFormWithRequiredRadioField";
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
@@ -4287,6 +4290,7 @@ definition {
 	@description = "This is a use case for LPS-69214."
 	@priority = "3"
 	test ViewConfirmationWhenLeavingFormWithoutSaving {
+		property test.name.skip.portal.instance = "Forms#ViewConfirmationWhenLeavingFormWithoutSaving";
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",

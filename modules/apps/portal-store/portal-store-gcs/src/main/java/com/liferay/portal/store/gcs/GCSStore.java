@@ -32,6 +32,7 @@ import com.google.common.base.Stopwatch;
 
 import com.liferay.document.library.kernel.store.BaseStore;
 import com.liferay.document.library.kernel.store.Store;
+import com.liferay.document.library.kernel.util.comparator.VersionNumberComparator;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
@@ -40,7 +41,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.store.gcs.configuration.GCSStoreConfiguration;
-import com.liferay.portal.store.gcs.key.manipulation.KeyTransformer;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -76,6 +76,8 @@ import org.threeten.bp.Duration;
 	service = Store.class
 )
 public class GCSStore extends BaseStore {
+
+	public static final String KEY_PROPERTY = "dl.store.gcs.aes256.key";
 
 	@Override
 	public void addDirectory(
@@ -672,7 +674,7 @@ public class GCSStore extends BaseStore {
 
 		List<String> fileNames = Arrays.asList(names);
 
-		fileNames.sort(GcsStoreConstants.VERSION_NUMBER_COMPARATOR);
+		fileNames.sort(new VersionNumberComparator());
 
 		return fileNames.get(fileNames.size() - 1);
 	}
@@ -790,7 +792,7 @@ public class GCSStore extends BaseStore {
 	}
 
 	private void _setupEncryptedCommunication() {
-		String keyValue = PropsUtil.get(GcsStoreConstants.KEY_PROPERTY);
+		String keyValue = PropsUtil.get(KEY_PROPERTY);
 
 		if ((keyValue == null) || keyValue.equals(StringPool.BLANK)) {
 			if (_log.isWarnEnabled()) {
@@ -900,7 +902,7 @@ public class GCSStore extends BaseStore {
 	private GCSStoreConfiguration _gcsStoreConfiguration;
 
 	@Reference
-	private KeyTransformer _keyTransformer;
+	private GCSKeyTransformer _keyTransformer;
 
 	private Storage.BlobSourceOption _storageDecryptionSourceOption;
 

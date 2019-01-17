@@ -244,6 +244,10 @@ public class EntityColumn implements Cloneable, Comparable<EntityColumn> {
 			return "userId";
 		}
 
+		if (Validator.isNull(_uadAnonymizeFieldName) && isUADUserName()) {
+			return "fullName";
+		}
+
 		return _uadAnonymizeFieldName;
 	}
 

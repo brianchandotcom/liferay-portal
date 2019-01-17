@@ -511,7 +511,8 @@ public class JournalContentDisplayContext {
 	}
 
 	public List<ContentMetadataAssetAddonEntry>
-		getSelectedContentMetadataAssetAddonEntries() throws PortalException {
+			getSelectedContentMetadataAssetAddonEntries()
+		throws PortalException {
 
 		if (_contentMetadataAssetAddonEntries != null) {
 			return _contentMetadataAssetAddonEntries;
@@ -569,8 +570,8 @@ public class JournalContentDisplayContext {
 		return null;
 	}
 
-	public List<UserToolAssetAddonEntry>
-		getSelectedUserToolAssetAddonEntries() throws PortalException {
+	public List<UserToolAssetAddonEntry> getSelectedUserToolAssetAddonEntries()
+		throws PortalException {
 
 		if (_userToolAssetAddonEntries != null) {
 			return _userToolAssetAddonEntries;

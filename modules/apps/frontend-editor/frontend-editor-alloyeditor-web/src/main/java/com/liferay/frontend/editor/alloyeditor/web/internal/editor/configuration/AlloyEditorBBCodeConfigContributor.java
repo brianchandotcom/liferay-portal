@@ -82,7 +82,12 @@ public class AlloyEditorBBCodeConfigContributor
 		sb.append("stylescombo,templates,video");
 
 		jsonObject.put(
-			"removePlugins", removePlugins.concat(",").concat(sb.toString()));
+			"removePlugins",
+			removePlugins.concat(
+				","
+			).concat(
+				sb.toString()
+			));
 
 		jsonObject.put(
 			"smiley_images",

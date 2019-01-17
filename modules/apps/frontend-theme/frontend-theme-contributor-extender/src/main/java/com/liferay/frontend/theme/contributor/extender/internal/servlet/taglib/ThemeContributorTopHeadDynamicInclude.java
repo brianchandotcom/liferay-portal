@@ -238,7 +238,11 @@ public class ThemeContributorTopHeadDynamicInclude implements DynamicInclude {
 		for (String resourceURL : resourceURLs) {
 			String staticResourceURL = _portal.getStaticResourceURL(
 				request,
-				portalURL.concat(_portal.getPathProxy()).concat(resourceURL),
+				portalURL.concat(
+					_portal.getPathProxy()
+				).concat(
+					resourceURL
+				),
 				themeLastModified);
 
 			printWriter.write("<link data-senna-track=\"permanent\" href=\"");
@@ -254,7 +258,11 @@ public class ThemeContributorTopHeadDynamicInclude implements DynamicInclude {
 		for (String resourceURL : resourceURLs) {
 			String staticResourceURL = _portal.getStaticResourceURL(
 				request,
-				portalURL.concat(_portal.getPathProxy()).concat(resourceURL),
+				portalURL.concat(
+					_portal.getPathProxy()
+				).concat(
+					resourceURL
+				),
 				themeLastModified);
 
 			printWriter.write("<script data-senna-track=\"permanent\" src=\"");

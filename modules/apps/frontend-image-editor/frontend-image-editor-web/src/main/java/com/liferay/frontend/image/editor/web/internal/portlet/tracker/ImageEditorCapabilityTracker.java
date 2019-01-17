@@ -137,8 +137,11 @@ public class ImageEditorCapabilityTracker {
 							resourceURL.getFile());
 
 						requiredModules.add(
-							moduleName.concat(StringPool.SLASH).concat(
-								fileName));
+							moduleName.concat(
+								StringPool.SLASH
+							).concat(
+								fileName
+							));
 					}
 				}
 				catch (Exception e) {

@@ -20,6 +20,7 @@ import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
+import com.liferay.asset.model.AssetEntryUsage;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
@@ -75,6 +76,8 @@ import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
+import com.liferay.portal.kernel.portlet.PortletProvider;
+import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.portlet.PortletRequestModel;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
@@ -239,6 +242,23 @@ public class JournalDisplayContext {
 								LanguageUtil.get(_request, "move"));
 						});
 				}
+
+				PortletURL viewUsagesURL = PortletProviderUtil.getPortletURL(
+					_request, AssetEntryUsage.class.getName(),
+					PortletProvider.Action.VIEW);
+
+				AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(
+					JournalArticle.class.getName(),
+					JournalArticleAssetRenderer.getClassPK(_article));
+
+				add(
+					dropdownItem -> {
+						dropdownItem.setHref(
+							viewUsagesURL, "assetEntryId",
+							assetEntry.getEntryId());
+						dropdownItem.setLabel(
+							LanguageUtil.get(_request, "view-usages"));
+					});
 
 				if (JournalArticlePermission.contains(
 						_themeDisplay.getPermissionChecker(), article,

@@ -67,7 +67,7 @@ public class UpdateIdentityProviderConnectionMVCActionCommand
 			uploadPortletRequest, "assertionSignatureRequired");
 		long clockSkew = ParamUtil.getLong(uploadPortletRequest, "clockSkew");
 
-		boolean enabled = true;
+		boolean enabled = ParamUtil.getBoolean(uploadPortletRequest, "enabled");
 		boolean forceAuthn = ParamUtil.getBoolean(
 			uploadPortletRequest, "forceAuthn");
 		boolean ldapImportEnabled = ParamUtil.getBoolean(
@@ -109,10 +109,6 @@ public class UpdateIdentityProviderConnectionMVCActionCommand
 			PortletPropsKeys.SAML_SP_DEFAULT_IDP_ENTITY_ID, samlIdpEntityId);
 
 		_samlProviderConfigurationHelper.updateProperties(properties);
-
-		actionResponse.setRenderParameter("mvcRenderCommandName", "/admin");
-		actionResponse.setRenderParameter(
-			"tabs1", "identity-provider-connection");
 	}
 
 	@Reference

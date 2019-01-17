@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.saml.constants.SamlWebKeys;
 import com.liferay.saml.persistence.model.SamlIdpSpConnection;
+import com.liferay.saml.persistence.model.SamlSpIdpConnection;
 import com.liferay.saml.persistence.service.SamlIdpSpConnectionLocalService;
 import com.liferay.saml.persistence.service.SamlSpIdpConnectionLocalService;
 import com.liferay.saml.runtime.certificate.CertificateTool;
@@ -76,6 +77,10 @@ public class DefaultViewMVCRenderCommand implements MVCRenderCommand {
 
 		if (tabs1.equals("general")) {
 			renderGeneralTab(renderRequest, renderResponse);
+		}
+		else if (tabs1.equals("identity-provider-connections")) {
+			renderViewIdentityProviderConnections(
+				renderRequest, renderResponse, httpServletRequest);
 		}
 		else if (tabs1.equals("service-provider-connections")) {
 			renderViewServiceProviderConnections(
@@ -172,6 +177,37 @@ public class DefaultViewMVCRenderCommand implements MVCRenderCommand {
 				}
 			}
 		}
+	}
+
+	protected void renderViewIdentityProviderConnections(
+		RenderRequest renderRequest, RenderResponse renderResponse,
+		HttpServletRequest httpServletRequest) {
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		int samlSpIdpConnectionsCount =
+			_samlSpIdpConnectionLocalService.getSamlSpIdpConnectionsCount(
+				themeDisplay.getCompanyId());
+
+		PortletURL portletURL = renderResponse.createRenderURL();
+
+		SearchContainer searchContainer = new SearchContainer(
+			renderRequest, null, null, SearchContainer.DEFAULT_CUR_PARAM, 0,
+			SearchContainer.DEFAULT_DELTA, portletURL, null, null);
+
+		List<SamlSpIdpConnection> samlSpIdpConnections =
+			_samlSpIdpConnectionLocalService.getSamlSpIdpConnections(
+				themeDisplay.getCompanyId(), searchContainer.getStart(),
+				searchContainer.getEnd());
+
+		renderRequest.setAttribute(
+			SamlWebKeys.SAML_SP_IDP_CONNECTIONS, samlSpIdpConnections);
+
+		renderRequest.setAttribute(
+			SamlWebKeys.SAML_SP_IDP_CONNECTIONS_COUNT,
+			samlSpIdpConnectionsCount);
 	}
 
 	protected void renderViewServiceProviderConnections(

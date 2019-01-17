@@ -29,7 +29,7 @@ if (samlProviderConfigurationHelper.isRoleIdp()) {
 	tabs1Names += ",identity-provider,service-provider-connections";
 }
 else if (samlProviderConfigurationHelper.isRoleSp()) {
-	tabs1Names += ",service-provider,identity-provider-connection";
+	tabs1Names += ",service-provider,identity-provider-connections";
 }
 %>
 
@@ -45,8 +45,8 @@ else if (samlProviderConfigurationHelper.isRoleSp()) {
 			<c:when test='<%= tabs1.equals("identity-provider") %>'>
 				<liferay-util:include page="/admin/identity_provider.jsp" servletContext="<%= pageContext.getServletContext() %>" />
 			</c:when>
-			<c:when test='<%= tabs1.equals("identity-provider-connection") %>'>
-				<liferay-util:include page="/admin/edit_identity_provider_connection.jsp" servletContext="<%= pageContext.getServletContext() %>" />
+			<c:when test='<%= tabs1.equals("identity-provider-connections") %>'>
+				<liferay-util:include page="/admin/view_identity_provider_connections.jsp" servletContext="<%= pageContext.getServletContext() %>" />
 			</c:when>
 			<c:when test='<%= tabs1.equals("service-provider") %>'>
 				<liferay-util:include page="/admin/service_provider.jsp" servletContext="<%= pageContext.getServletContext() %>" />

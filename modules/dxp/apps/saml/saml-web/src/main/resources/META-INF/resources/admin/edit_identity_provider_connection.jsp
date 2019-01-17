@@ -21,16 +21,21 @@ String redirect = ParamUtil.getString(request, "redirect");
 
 SamlSpIdpConnection samlSpIdpConnection = (SamlSpIdpConnection)request.getAttribute(SamlWebKeys.SAML_SP_IDP_CONNECTION);
 
-String samlIdpEntityId = samlProviderConfiguration.defaultIdPEntityId();
-
 long clockSkew = GetterUtil.getLong(request.getAttribute(SamlWebKeys.SAML_CLOCK_SKEW), samlProviderConfiguration.clockSkew());
 %>
 
+<div class="container-fluid-1280">
+	<liferay-ui:header
+		backURL="<%= redirect %>"
+		title='<%= (samlSpIdpConnection != null) ? samlSpIdpConnection.getName() : "new-identity-provider" %>'
+	/>
+</div>
+
 <portlet:actionURL name="/admin/updateIdentityProviderConnection" var="updateIdentityProviderConnectionURL">
-	<portlet:param name="tabs1" value="identity-provider-connection" />
+	<portlet:param name="mvcRenderCommandName" value="/admin/edit_identity_provider_connection" />
 </portlet:actionURL>
 
-<aui:form action="<%= updateIdentityProviderConnectionURL %>" enctype="multipart/form-data">
+<aui:form action="<%= updateIdentityProviderConnectionURL %>" cssClass="container-fluid-1280" enctype="multipart/form-data">
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 
 	<liferay-ui:error exception="<%= DuplicateSamlSpIdpConnectionSamlIdpEntityIdException.class %>" message="please-enter-a-unique-identity-provider-entity-id" />
@@ -47,7 +52,9 @@ long clockSkew = GetterUtil.getLong(request.getAttribute(SamlWebKeys.SAML_CLOCK_
 	<aui:fieldset label="general">
 		<aui:input name="name" required="<%= true %>" />
 
-		<aui:input helpMessage="identity-provider-connection-entity-id-help" label="saml-entity-id" name="samlIdpEntityId" required="<%= true %>" value="<%= samlIdpEntityId %>" />
+		<aui:input helpMessage="identity-provider-connection-entity-id-help" label="saml-entity-id" name="samlIdpEntityId" required="<%= true %>" />
+
+		<aui:input name="enabled" />
 
 		<aui:input helpMessage="saml-sp-clock-skew-description" label="saml-sp-clock-skew" name="clockSkew" value="<%= String.valueOf(clockSkew) %>" />
 

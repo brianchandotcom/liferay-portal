@@ -1,4 +1,4 @@
-Bundle-Name: Liferay Sb Test UAD
+Bundle-Name: Liferay Portal Tools Service Builder Test UAD
 Bundle-SymbolicName: com.liferay.portal.tools.service.builder.test.uad
 Bundle-Version: 1.0.0
 -dsannotations-options: inherit

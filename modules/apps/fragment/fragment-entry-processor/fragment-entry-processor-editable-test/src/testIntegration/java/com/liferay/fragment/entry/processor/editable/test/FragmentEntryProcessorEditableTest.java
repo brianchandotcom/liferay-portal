@@ -93,8 +93,23 @@ public class FragmentEntryProcessorEditableTest {
 				fragmentEntryLink));
 	}
 
+	@Test(expected = FragmentEntryContentException.class)
+	public void testFragmentEntryProcessorEditableWithDuplicateIds()
+		throws Exception {
+
+		_createFragmentEntry("fragment_entry_with_duplicate_editable_ids.html");
+	}
+
+	@Test(expected = FragmentEntryContentException.class)
+	public void testFragmentEntryProcessorEditableWithInvalidTypeAttribute()
+		throws Exception {
+
+		_createFragmentEntry(
+			"fragment_entry_with_invalid_editable_type_attribute.html");
+	}
+
 	@Test
-	public void testFragmentEntryProcessorEditableMatchingLanguage()
+	public void testFragmentEntryProcessorEditableWithMatchedLanguage()
 		throws Exception {
 
 		FragmentEntry fragmentEntry = _createFragmentEntry(
@@ -117,26 +132,35 @@ public class FragmentEntryProcessorEditableTest {
 	}
 
 	@Test(expected = FragmentEntryContentException.class)
-	public void testFragmentEntryProcessorEditableWithDuplicateIds()
-		throws Exception {
-
-		_createFragmentEntry("fragment_entry_with_duplicate_editable_ids.html");
-	}
-
-	@Test(expected = FragmentEntryContentException.class)
-	public void testFragmentEntryProcessorEditableWithInvalidTypeAttribute()
-		throws Exception {
-
-		_createFragmentEntry(
-			"fragment_entry_with_invalid_editable_type_attribute.html");
-	}
-
-	@Test(expected = FragmentEntryContentException.class)
 	public void testFragmentEntryProcessorEditableWithMissingAttributes()
 		throws Exception {
 
 		_createFragmentEntry(
 			"fragment_entry_with_missing_editable_attributes.html");
+	}
+
+	@Test
+	public void testFragmentEntryProcessorEditableWithUnmatchedLanguage()
+		throws Exception {
+
+		FragmentEntry fragmentEntry = _createFragmentEntry(
+			"fragment_entry.html");
+
+		FragmentEntryLink fragmentEntryLink =
+			FragmentEntryLinkLocalServiceUtil.createFragmentEntryLink(0);
+
+		fragmentEntryLink.setHtml(fragmentEntry.getHtml());
+
+		fragmentEntryLink.setEditableValues(
+			_getJsonFileAsString(
+				"fragment_entry_link_editable_values_unmatching_language." +
+					"json"));
+
+		Assert.assertEquals(
+			_getBodyElementHtmlAsString("processed_fragment_entry.html"),
+			_fragmentEntryProcessorRegistry.processFragmentEntryLinkHTML(
+				fragmentEntryLink, FragmentEntryLinkConstants.EDIT,
+				LocaleUtil.CHINESE));
 	}
 
 	private FragmentEntry _createFragmentEntry(String htmlFile)

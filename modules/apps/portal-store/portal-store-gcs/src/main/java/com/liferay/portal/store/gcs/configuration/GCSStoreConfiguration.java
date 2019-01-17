@@ -15,95 +15,77 @@
 package com.liferay.portal.store.gcs.configuration;
 
 import aQute.bnd.annotation.metatype.Meta;
+
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 
 /**
  * @author Shanon Mathai
  */
-@ExtendedObjectClassDefinition(category = "Google")
+@ExtendedObjectClassDefinition(category = "file-store")
 @Meta.OCD(
-    id = "com.liferay.portal.store.gcs.configuration.GCSStoreConfiguration",
-    localization = "content/Language", name = "gcs-store-configuration-name"
+	id = "com.liferay.portal.store.gcs.configuration.GCSStoreConfiguration",
+	localization = "content/Language", name = "gcs-store-configuration-name"
 )
 public interface GCSStoreConfiguration {
 
-  @Meta.AD(
-      description = "auth-file-help",
-      name = "auth-file",
-      required = false,
-      deflt = "/opt/gcs/ExampleCredentialsFile.json"
-  )
-  public String authFileLocation();
+	@Meta.AD(
+		deflt = "/opt/gcs/ExampleCredentialsFile.json",
+		description = "auth-file-help", name = "auth-file", required = false
+	)
+	public String authFileLocation();
 
-  @Meta.AD(
-      description = "bucket-name-help",
-      name = "bucket-name",
-      required = false,
-      deflt = "mysamplebucket1"
-  )
-  public String bucketName();
+	@Meta.AD(
+		deflt = "mysamplebucket1", description = "bucket-name-help",
+		name = "bucket-name", required = false
+	)
+	public String bucketName();
 
-  @Meta.AD(
-      description = "max-retry-attempts-help",
-      name = "max-retry-attempts",
-      required = false,
-      deflt = "5"
-  )
-  public int maxRetryAttempts();
+	@Meta.AD(
+		deflt = "5", description = "max-retry-attempts-help",
+		name = "max-retry-attempts", required = false
+	)
+	public int maxRetryAttempts();
 
-  @Meta.AD(
-      description = "initial-retry-delay-help",
-      name = "initial-retry-delay",
-      required = false,
-      deflt = "400"
-  )
-  public int initialRetryDelay();
+	@Meta.AD(
+		deflt = "400", description = "initial-retry-delay-help",
+		name = "initial-retry-delay", required = false
+	)
+	public int initialRetryDelay();
 
-  @Meta.AD(
-      description = "max-retry-delay-help",
-      name = "max-retry-delay",
-      required = false,
-      deflt = "10000"
-  )
-  public int maxRetryDelay();
+	@Meta.AD(
+		deflt = "10000", description = "max-retry-delay-help",
+		name = "max-retry-delay", required = false
+	)
+	public int maxRetryDelay();
 
-  @Meta.AD(
-      description = "retry-delay-multiplier-help",
-      name = "retry-delay-multiplier",
-      required = false,
-      deflt = "1.5"
-  )
-  public double retryDelayMultiplier();
+	@Meta.AD(
+		deflt = "1.5", description = "retry-delay-multiplier-help",
+		name = "retry-delay-multiplier", required = false
+	)
+	public double retryDelayMultiplier();
 
-  @Meta.AD(
-      description = "initial-rpc-timeout-help",
-      name = "initial-rpc-timeout",
-      required = false,
-      deflt = "120000"
-  )
-  public int initialRpcTimeout();
+	@Meta.AD(
+		deflt = "120000", description = "initial-rpc-timeout-help",
+		name = "initial-rpc-timeout", required = false
+	)
+	public int initialRpcTimeout();
 
-  @Meta.AD(
-      description = "max-rpc-timeout-help",
-      name = "max-rpc-timeout",
-      required = false,
-      deflt = "600000"
-  )
-  public int maxRpcTimeout();
+	@Meta.AD(
+		deflt = "600000", description = "max-rpc-timeout-help",
+		name = "max-rpc-timeout", required = false
+	)
+	public int maxRpcTimeout();
 
-  @Meta.AD(
-      description = "rpc-timeout-multiplier-help",
-      name = "rpc-timeout-multiplier",
-      required = false,
-      deflt = "1.0"
-  )
-  public double rpcTimeoutMultiplier();
+	@Meta.AD(
+		deflt = "1.0", description = "rpc-timeout-multiplier-help",
+		name = "rpc-timeout-multiplier", required = false
+	)
+	public double rpcTimeoutMultiplier();
 
-  @Meta.AD(
-      description = "retry-jitter-help",
-      name = "retry-jitter",
-      required = false,
-      deflt = "false"
-  )
-  public boolean retryJitter();
+	@Meta.AD(
+		deflt = "false", description = "retry-jitter-help",
+		name = "retry-jitter", required = false
+	)
+	public boolean retryJitter();
+
 }

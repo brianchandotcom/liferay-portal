@@ -19,17 +19,16 @@ package com.liferay.portal.store.gcs.key.manipulation;
  */
 public interface KeyTransformer {
 
-  public String getDirectoryKey(
-      long companyId, long repositoryId, String folderName);
+	public String getDirectoryKey(
+		long companyId, long repositoryId, String folderName);
 
-  public String getFileKey(
-      long companyId, long repositoryId, String fileName);
+	public String getFileKey(
+		long companyId, long repositoryId, String fileName);
 
-  public String getFileVersionKey(
-      long companyId, long repositoryId, String fileName,
-      String versionLabel);
+	public String getFileVersionKey(
+		long companyId, long repositoryId, String fileName,
+		String versionLabel);
 
-  public String getRepositoryKey(
-      long companyId, long repositoryId);
+	public String getRepositoryKey(long companyId, long repositoryId);
 
 }

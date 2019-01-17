@@ -21,704 +21,887 @@ import com.google.auth.oauth2.ServiceAccountCredentials;
 import com.google.cloud.ReadChannel;
 import com.google.cloud.WriteChannel;
 import com.google.cloud.storage.Blob;
-import com.google.cloud.storage.Blob.BlobSourceOption;
 import com.google.cloud.storage.BlobId;
 import com.google.cloud.storage.BlobInfo;
 import com.google.cloud.storage.Bucket;
 import com.google.cloud.storage.BucketInfo;
 import com.google.cloud.storage.CopyWriter;
 import com.google.cloud.storage.Storage;
-import com.google.cloud.storage.Storage.BlobListOption;
-import com.google.cloud.storage.Storage.BlobTargetOption;
-import com.google.cloud.storage.Storage.BlobWriteOption;
-import com.google.cloud.storage.Storage.CopyRequest;
 import com.google.cloud.storage.StorageOptions;
 import com.google.common.base.Stopwatch;
+
 import com.liferay.document.library.kernel.store.BaseStore;
 import com.liferay.document.library.kernel.store.Store;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.store.gcs.configuration.GCSStoreConfiguration;
 import com.liferay.portal.store.gcs.key.manipulation.KeyTransformer;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+
 import java.nio.ByteBuffer;
 import java.nio.channels.Channels;
+
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
+
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
+
 import org.threeten.bp.Duration;
 
 /**
  * @author Shanon Mathai
  */
 @Component(
-    configurationPid = "com.liferay.portal.store.gcs.configuration.GCSStoreConfiguration",
-    immediate = true,
-    property = "store.type=com.liferay.portal.store.gcs.GCSStore",
-    service = Store.class)
+	configurationPid = "com.liferay.portal.store.gcs.configuration.GCSStoreConfiguration",
+	immediate = true,
+	property = "store.type=com.liferay.portal.store.gcs.GCSStore",
+	service = Store.class
+)
 public class GCSStore extends BaseStore {
 
-  @Override
-  public void addDirectory(long companyId, long repositoryId, String dirName) {
-    debugLog("Liferay GCS adapter does not support creating empty directory structures");
-  }
-
-  @Override
-  public void addFile(long companyId, long repositoryId, String fileName, InputStream is)
-      throws PortalException {
-
-    if (_log.isDebugEnabled()) {
-      String fileKey = _keyTransformer.getFileKey(companyId, repositoryId, fileName);
-      debugLog("Creating file with default version for for: " + fileKey);
-    }
-
-    addFileWithVersion(companyId, repositoryId, fileName, VERSION_DEFAULT, is);
-  }
-
-  @Override
-  public void checkRoot(long companyId) {
-    debugLog("Liferay GCS adapter does not support \"check root\" operations");
-  }
-
-  @Override
-  public void deleteDirectory(long companyId, long repositoryId, String dirName) {
-
-    String path = _keyTransformer.getDirectoryKey(companyId, repositoryId, dirName);
-
-    debugLog("Deleting from bucket with prefix: " + path);
-
-    boolean traceEnabled = _log.isTraceEnabled();
-    Stopwatch stopwatch = null;
-    if (traceEnabled) {
-      traceLog("Fetching files from directory " + path + " for delete");
-      stopwatch = Stopwatch.createStarted();
-    }
-    Page<Blob> blobPages = _gcsStore.list(getBucketName(), BlobListOption.prefix(path));
-    if (traceEnabled) {
-      stopwatch.stop();
-      long elapsed = stopwatch.elapsed(TimeUnit.MILLISECONDS);
-      traceLog("Listing for delete took " + elapsed + " milliseconds");
-    }
+	@Override
+	public void addDirectory(
+		long companyId, long repositoryId, String dirName) {
 
-    Iterable<Blob> blobs = blobPages.iterateAll();
+		_debugLog(
+			"Liferay GCS adapter does not support creating empty directory " +
+				"structures");
+	}
 
-    blobs.forEach(this::logAndDeleteBlob);
-  }
+	@Override
+	public void addFile(
+			long companyId, long repositoryId, String fileName, InputStream is)
+		throws PortalException {
 
-  @Override
-  public void deleteFile(long companyId, long repositoryId, String fileName) {
-    debugLog("Deleting from bucket with fileName: " + fileName);
+		if (_log.isDebugEnabled()) {
+			String fileKey = _keyTransformer.getFileKey(
+				companyId, repositoryId, fileName);
 
-    deleteDirectory(companyId, repositoryId, fileName);
-  }
+			_debugLog("Creating file with default version for for: " + fileKey);
+		}
 
-  @Override
-  public void deleteFile(long companyId, long repositoryId, String fileName, String versionLabel) {
-    String filePath = determineVersionFilePath(companyId, repositoryId, fileName, versionLabel);
+		addFileWithVersion(
+			companyId, repositoryId, fileName, VERSION_DEFAULT, is);
+	}
 
-    deleteFile(filePath);
-  }
+	@Override
+	public void checkRoot(long companyId) {
+		_debugLog(
+			"Liferay GCS adapter does not support \"check root\" operations");
+	}
 
-  @Override
-  public InputStream getFileAsStream(long companyId, long repositoryId, String fileName,
-      String versionLabel) {
+	@Override
+	public void deleteDirectory(
+		long companyId, long repositoryId, String dirName) {
 
-    String filePath = determineVersionFilePath(companyId, repositoryId, fileName, versionLabel);
+		String path = _keyTransformer.getDirectoryKey(
+			companyId, repositoryId, dirName);
 
-    traceLog("Trying to get file: " + filePath);
-    Blob blob = getBlob(getBlobId(filePath));
-    traceLog("Got Blob: " + blob);
+		_debugLog("Deleting from bucket with prefix: " + path);
 
-    ReadChannel reader = getReader(blob);
+		boolean traceEnabled = _log.isTraceEnabled();
+		Stopwatch stopwatch = null;
 
-    return Channels.newInputStream(reader);
-  }
-
-  @Override
-  public String[] getFileNames(long companyId, long repositoryId) {
-    return getFileNames(companyId, repositoryId, StringPool.BLANK);
-  }
+		if (traceEnabled) {
+			_traceLog("Fetching files from directory " + path + " for delete");
 
-  @Override
-  public String[] getFileNames(long companyId, long repositoryId, String dirName) {
-    Bucket bucket = getBucket();
-    Iterable<Blob> blobs;
-    String path;
+			stopwatch = Stopwatch.createStarted();
+		}
 
-    if (dirName == null || dirName.isEmpty() || dirName.equals(StringPool.FORWARD_SLASH)) {
-      path = _keyTransformer.getRepositoryKey(companyId, repositoryId);
-    } else {
-      path = _keyTransformer.getDirectoryKey(companyId, repositoryId, dirName);
-    }
+		Page<Blob> blobPages = _gcsStore.list(
+			_getBucketName(), Storage.BlobListOption.prefix(path));
 
-    BlobListOption prefixOption = BlobListOption.prefix(path);
+		if (traceEnabled) {
+			stopwatch.stop();
 
-    Stopwatch stopwatch = null;
-    boolean traceEnabled = _log.isTraceEnabled();
-    if (traceEnabled) {
-      stopwatch = Stopwatch.createStarted();
-    }
-    Page<Blob> blobPage = bucket.list(prefixOption);
-    if (traceEnabled) {
-      stopwatch.stop();
-      long elapsed = stopwatch.elapsed(TimeUnit.MILLISECONDS);
-      traceLog("Listing " + path + " took " + elapsed + " milliseconds");
-    }
+			long elapsed = stopwatch.elapsed(TimeUnit.MILLISECONDS);
 
-    blobs = blobPage.iterateAll();
+			_traceLog("Listing for delete took " + elapsed + " milliseconds");
+		}
 
-    String[] fileNames =
-        StreamSupport.stream(blobs.spliterator(), false)
-            .map(BlobInfo::getName)
-            .toArray(String[]::new);
+		Iterable<Blob> blobs = blobPages.iterateAll();
 
-    if (traceEnabled) {
-      traceLog("Listing content with prefix: " + path);
-      String fnames = String.join("\n   ", fileNames);
-      traceLog("   " + fnames);
-    }
+		blobs.forEach(this::_logAndDeleteBlob);
+	}
 
-    return fileNames;
-  }
+	@Override
+	public void deleteFile(long companyId, long repositoryId, String fileName) {
+		_debugLog("Deleting from bucket with fileName: " + fileName);
 
-  @Override
-  public long getFileSize(long companyId, long repositoryId, String fileName)
-      throws PortalException {
+		deleteDirectory(companyId, repositoryId, fileName);
+	}
 
-    String pathName = getHeadVersionLabel(companyId, repositoryId, fileName);
+	@Override
+	public void deleteFile(
+		long companyId, long repositoryId, String fileName,
+		String versionLabel) {
 
-    traceLog("Getting file size for: " + pathName);
+		String filePath = _determineVersionFilePath(
+			companyId, repositoryId, fileName, versionLabel);
 
-    BlobId blobId = getBlobId(pathName);
+		_deleteFile(filePath);
+	}
 
-    Blob blob = getBlob(blobId);
+	@Override
+	public InputStream getFileAsStream(
+		long companyId, long repositoryId, String fileName,
+		String versionLabel) {
 
-    if (blob == null) {
+		String filePath = _determineVersionFilePath(
+			companyId, repositoryId, fileName, versionLabel);
 
-      debugLog("Cannot retrieve: " + pathName);
+		_traceLog("Trying to get file: " + filePath);
 
-      throw new PortalException("No such file store entry: " + pathName);
-    }
+		Blob blob = _getBlob(_getBlobId(filePath));
 
-    Long size = blob.getSize();
+		_traceLog("Got Blob: " + blob);
 
-    traceLog("Size for " + pathName + " is " + size);
+		ReadChannel reader = _getReader(blob);
 
-    return size;
-  }
+		return Channels.newInputStream(reader);
+	}
 
-  @Override
-  public boolean hasDirectory(long companyId, long repositoryId, String dirName) {
-    debugLog("Liferay GCS adapter does not support check for directory, returning true");
-    return true;
-  }
+	@Override
+	public String[] getFileNames(long companyId, long repositoryId) {
+		return getFileNames(companyId, repositoryId, StringPool.BLANK);
+	}
 
-  @Override
-  public boolean hasFile(long companyId, long repositoryId, String fileName, String versionLabel) {
-    String path = _keyTransformer.getFileVersionKey(
-        companyId, repositoryId, fileName, versionLabel);
+	@Override
+	public String[] getFileNames(
+		long companyId, long repositoryId, String dirName) {
 
-    boolean traceEnabled = _log.isTraceEnabled();
+		Bucket bucket = _getBucket();
 
-    Stopwatch stopwatch = null;
-    if (traceEnabled) {
-      stopwatch = Stopwatch.createStarted();
-    }
-    Page<Blob> blobPage =
-        _gcsStore.list(getBucketName(), BlobListOption.pageSize(1), BlobListOption.prefix(path));
-    if (traceEnabled) {
-      stopwatch.stop();
-      long elapsed = stopwatch.elapsed(TimeUnit.MILLISECONDS);
-      String traceMsg = String
-          .format("Check if file %s exists took %d milliseconds", path, elapsed);
-      traceLog(traceMsg);
-    }
+		Iterable<Blob> blobs;
 
-    Iterable<Blob> filesFound = blobPage.getValues();
+		String path;
 
-    boolean hasFile = filesFound.iterator().hasNext();
+		if ((dirName == null) || dirName.isEmpty() ||
+			dirName.equals(StringPool.FORWARD_SLASH)) {
 
-    if (traceEnabled) {
-      String key = _keyTransformer.getFileVersionKey(
-          companyId, repositoryId, fileName, versionLabel);
-      traceLog("Checking file presence for: " + key + ", presence " + hasFile);
-    }
+			path = _keyTransformer.getRepositoryKey(companyId, repositoryId);
+		}
+		else {
+			path = _keyTransformer.getDirectoryKey(
+				companyId, repositoryId, dirName);
+		}
 
-    return hasFile;
-  }
+		Storage.BlobListOption prefixOption = Storage.BlobListOption.prefix(
+			path);
 
-  @Override
-  public void updateFile(long companyId, long repositoryId, long newRepositoryId, String fileName) {
-    String[] fileNames = getFileNames(companyId, repositoryId, fileName);
+		Stopwatch stopwatch = null;
+		boolean traceEnabled = _log.isTraceEnabled();
 
-    for (String oldPath : fileNames) {
-      String version = getVersionFromFullPath(oldPath);
+		if (traceEnabled) {
+			stopwatch = Stopwatch.createStarted();
+		}
 
-      Blob oldBlob = getBlob(getBlobId(oldPath));
+		Page<Blob> blobPage = bucket.list(prefixOption);
 
-      String newPath = _keyTransformer.getFileVersionKey(
-          companyId, newRepositoryId, fileName, version);
+		if (traceEnabled) {
+			stopwatch.stop();
 
-      move(oldBlob, newPath);
-    }
-  }
+			long elapsed = stopwatch.elapsed(TimeUnit.MILLISECONDS);
 
-  @Override
-  public void updateFile(long companyId, long repositoryId, String fileName, String newFileName) {
-    String[] fileNames = getFileNames(companyId, repositoryId, fileName);
+			_traceLog(
+				StringBundler.concat(
+					"Listing ", path, " took ", elapsed, " milliseconds"));
+		}
 
-    for (String oldPath : fileNames) {
-      String version = getVersionFromFullPath(oldPath);
+		blobs = blobPage.iterateAll();
 
-      Blob oldBlob = getBlob(companyId, repositoryId, fileName, version);
+		Stream<Blob> blobStream = StreamSupport.stream(
+			blobs.spliterator(), false);
 
-      String newPath = _keyTransformer.getFileVersionKey(
-          companyId, repositoryId, newFileName, version);
+		String[] fileNames = blobStream.map(
+			BlobInfo::getName
+		).toArray(
+			String[]::new
+		);
 
-      move(oldBlob, newPath);
-    }
-  }
+		if (traceEnabled) {
+			_traceLog("Listing content with prefix: " + path);
 
-  @Override
-  public void updateFile(long companyId, long repositoryId, String fileName, String versionLabel,
-      InputStream is) throws PortalException {
+			String fnames = String.join("\n   ", fileNames);
 
-    if (_log.isTraceEnabled()) {
-      String filePath = _keyTransformer.getFileKey(companyId, repositoryId, fileName);
-      String fileVersion = _keyTransformer.getFileVersionKey(
-          companyId, repositoryId, fileName, versionLabel);
-      String msg = String.format("Updating file \"%s\" to version \"%s\"", filePath, fileVersion);
-      traceLog(msg);
-    }
+			_traceLog("   " + fnames);
+		}
 
-    addFileWithVersion(companyId, repositoryId, fileName, versionLabel, is);
-  }
-
-  @Modified
-  @Activate
-  protected void activate(Map<String, Object> properties) {
-
-    _gcsStoreConfiguration = ConfigurableUtil.createConfigurable(
-        GCSStoreConfiguration.class, properties);
-
-    try {
-      _gcsStore = null;
-
-      setupEncryptedCommunication();
-
-      setGcsStore();
-
-    } catch (PortalException e) {
-      throw new IllegalStateException("Unable to initialize GCS store", e);
-    }
-  }
-
-  protected void addFileWithVersion(long companyId, long repositoryId, String fileName,
-      String versionLabel, InputStream is) throws PortalException {
-
-    String fileVersionKey = _keyTransformer.getFileVersionKey(
-        companyId, repositoryId, fileName, versionLabel);
-
-    traceLog("Attempting to create new file");
-    traceLog("Constructed key: " + fileVersionKey);
-
-    BlobInfo blobInfo = BlobInfo.newBuilder(getBucketInfo(), fileVersionKey).build();
-
-    try (WriteChannel writer = getWriter(blobInfo)) {
-      writeInputStream(is, writer);
-    } catch (IOException e) {
-      if (_log.isDebugEnabled()) {
-        _log.debug("Unable to write out to buffer.", e);
-      }
-      throw new PortalException(e);
-    } finally {
-      traceLog("Done writing out to buffer.");
-    }
-    debugLog("Blob for a folder was created at: " + fileVersionKey);
-  }
-
-  protected void setCredentials() throws PortalException {
-
-    traceLog("Initializing credentials");
-    try (InputStream inputStream = getCredentialsInputStream()) {
-      googleCredentials = ServiceAccountCredentials.fromStream(inputStream);
-    } catch (IOException e) {
-      throw new PortalException("Unable to authenticate with authentication file", e);
-    }
-  }
-
-  private RetrySettings buildRetrySettings(int maxAttempts, int initialRetryDelay,
-      int maxRetryDelay, double retryDelayMultiplier, int maxRpcTimeout, int initRpcTimout,
-      double rpcTimeoutMultiplier, boolean jittered) {
-
-    RetrySettings.Builder builder = RetrySettings.newBuilder();
-
-    builder.setMaxAttempts(maxAttempts);
-    builder.setInitialRetryDelay(Duration.ofMillis(initialRetryDelay));
-    builder.setMaxRetryDelay(Duration.ofMillis(maxRetryDelay));
-    builder.setRetryDelayMultiplier(retryDelayMultiplier);
-    builder.setInitialRpcTimeout(Duration.ofMillis(initRpcTimout));
-    builder.setMaxRpcTimeout(Duration.ofMillis(maxRpcTimeout));
-    builder.setRpcTimeoutMultiplier(rpcTimeoutMultiplier);
-    builder.setJittered(jittered);
-
-    return builder.build();
-  }
-
-  private StorageOptions buildStorage(RetrySettings retrySettings,
-      GoogleCredentials googleCredentials) {
-
-    StorageOptions.Builder builder = StorageOptions.newBuilder();
-    builder.setCredentials(googleCredentials);
-    builder.setRetrySettings(retrySettings);
-    return builder.build();
-  }
-
-  private void debugLog(String debugLog) {
-    if (_log.isDebugEnabled()) {
-      _log.debug(debugLog);
-    }
-  }
-
-  private boolean deleteBlob(Blob blob) {
-    boolean isDeleted;
-    boolean traceEnabled = _log.isTraceEnabled();
-
-    Stopwatch stopwatch = null;
-    String blobName = null;
-    if (traceEnabled) {
-      blobName = blob.getName();
-      stopwatch = Stopwatch.createStarted();
-    }
-    if (_blobDecryptSourceOption == null) {
-      isDeleted = blob.delete();
-    } else {
-      isDeleted = blob.delete(_blobDecryptSourceOption);
-    }
-    if (traceEnabled) {
-      stopwatch.stop();
-      long elapsed = stopwatch.elapsed(TimeUnit.MILLISECONDS);
-      traceLog("Took " + elapsed + " to delete " + blobName);
-    }
-    return isDeleted;
-  }
+		return fileNames;
+	}
 
-  private void deleteFile(String filePath) {
-    BlobId blobId = getBlobId(filePath);
+	@Override
+	public long getFileSize(long companyId, long repositoryId, String fileName)
+		throws PortalException {
 
-    boolean deleted = _gcsStore.delete(blobId);
-
-    if (!deleted && _log.isWarnEnabled()) {
-      _log.warn("Unable to delete \"" + filePath + "\" from file store");
-    } else if (deleted && _log.isTraceEnabled()) {
-      traceLog("Deleted \"" + filePath + "\" from file store");
-    }
-  }
+		String pathName = _getHeadVersionLabel(
+			companyId, repositoryId, fileName);
 
-  private String determineVersionFilePath(long companyId, long repositoryId, String fileName,
-      String versionLabel) {
+		_traceLog("Getting file size for: " + pathName);
 
-    String filePath;
+		BlobId blobId = _getBlobId(pathName);
 
-    if (versionLabel == null || versionLabel.isEmpty()) {
+		Blob blob = _getBlob(blobId);
 
-      filePath = getHeadVersionLabel(companyId, repositoryId, fileName);
-    } else {
-      filePath = _keyTransformer.getFileVersionKey(companyId, repositoryId, fileName, versionLabel);
-    }
+		if (blob == null) {
+			_debugLog("Cannot retrieve: " + pathName);
 
-    return filePath;
-  }
+			throw new PortalException("No such file store entry: " + pathName);
+		}
 
-  private Blob getBlob(long companyId, long repositoryId, String fileName, String versionLabel) {
-    String path = _keyTransformer.getFileVersionKey(
-        companyId, repositoryId, fileName, versionLabel);
+		Long size = blob.getSize();
 
-    BlobId blobId = getBlobId(path);
+		_traceLog(StringBundler.concat("Size for ", pathName, " is ", size));
 
-    return getBlob(blobId);
-  }
+		return size;
+	}
 
-  private Blob getBlob(BlobId blobId) {
+	@Override
+	public boolean hasDirectory(
+		long companyId, long repositoryId, String dirName) {
 
-    Stopwatch stopwatch = null;
-    boolean traceEnabled = _log.isTraceEnabled();
-    if (traceEnabled) {
-      traceLog("Fetching " + blobId);
-      stopwatch = Stopwatch.createStarted();
-    }
-    Blob blob = _gcsStore.get(blobId);
-    if (traceEnabled) {
-      stopwatch.stop();
-      long elapsed = stopwatch.elapsed(TimeUnit.MILLISECONDS);
-      traceLog("Spent " + elapsed + " milliseconds retrieving " + blobId);
-    }
-    return blob;
-  }
+		_debugLog(
+			"Liferay GCS adapter does not support check for directory, " +
+				"returning true");
 
-  private BlobId getBlobId(String pathName) {
-    return BlobId.of(getBucketName(), pathName);
-  }
+		return true;
+	}
 
-  private Bucket getBucket() {
-    return _gcsStore.get(getBucketName());
-  }
+	@Override
+	public boolean hasFile(
+		long companyId, long repositoryId, String fileName,
+		String versionLabel) {
 
-  private BucketInfo getBucketInfo() {
-    if (_bucketInfo == null) {
-      _bucketInfo = BucketInfo.newBuilder(getBucketName()).build();
-    }
-    return _bucketInfo;
-  }
+		String path = _keyTransformer.getFileVersionKey(
+			companyId, repositoryId, fileName, versionLabel);
 
-  private String getBucketName() {
-    return _gcsStoreConfiguration.bucketName();
-  }
+		boolean traceEnabled = _log.isTraceEnabled();
 
-  private CopyRequest getCopyRequest(BlobId newBlobId, BlobId oldBlobId,
-      Storage.BlobSourceOption sourceOption, BlobTargetOption targetOption) {
+		Stopwatch stopwatch = null;
 
-    CopyRequest.Builder copyRequestBuilder = CopyRequest.newBuilder();
-
-    copyRequestBuilder.setSource(oldBlobId);
-    copyRequestBuilder.setSourceOptions(sourceOption);
-    copyRequestBuilder.setTarget(newBlobId, targetOption);
-
-    return copyRequestBuilder.build();
-  }
-
-  private InputStream getCredentialsInputStream()
-      throws FileNotFoundException {
-
-    traceLog("Using authentication file; " + _gcsStoreConfiguration.authFileLocation());
-
-    File credentialFiles = new File(_gcsStoreConfiguration.authFileLocation());
-
-    return new FileInputStream(credentialFiles);
-  }
-
-  private String getHeadVersionLabel(long companyId, long repositoryId, String fileName) {
-
-    String key = _keyTransformer.getFileKey(companyId, repositoryId, fileName);
-
-    String[] names = getFileNames(companyId, repositoryId, key);
+		if (traceEnabled) {
+			stopwatch = Stopwatch.createStarted();
+		}
 
-    if (names == null || names.length == 0) {
-      if (_log.isDebugEnabled()) {
-        _log.debug("Unable to determine available versions for: " + key);
-        _log.debug("Using default: " + VERSION_DEFAULT);
-      }
-      return _keyTransformer.getFileVersionKey(companyId, repositoryId, fileName, VERSION_DEFAULT);
-    }
+		Page<Blob> blobPage = _gcsStore.list(
+			_getBucketName(), Storage.BlobListOption.pageSize(1),
+			Storage.BlobListOption.prefix(path));
 
-    List<String> fileNames = Arrays.asList(names);
+		if (traceEnabled) {
+			stopwatch.stop();
 
-    fileNames.sort(GcsStoreConstants.VERSION_NUMBER_COMPARATOR);
+			long elapsed = stopwatch.elapsed(TimeUnit.MILLISECONDS);
 
-    return fileNames.get(fileNames.size() - 1);
+			String traceMsg = String.format(
+				"Check if file %s exists took %d milliseconds", path, elapsed);
 
-  }
+			_traceLog(traceMsg);
+		}
 
-  private ReadChannel getReader(Blob blob) {
-    if (_blobDecryptSourceOption == null) {
-      return blob.reader();
-    }
-    return blob.reader(_blobDecryptSourceOption);
-  }
+		Iterable<Blob> filesFoundIterable = blobPage.getValues();
 
-  private String getVersionFromFullPath(String fullPath) {
-    int indexOfLastSlash = fullPath.lastIndexOf(StringPool.FORWARD_SLASH);
+		Iterator<Blob> filesFoundIterator = filesFoundIterable.iterator();
 
-    return fullPath.substring(indexOfLastSlash + 1);
-  }
+		boolean hasFile = filesFoundIterator.hasNext();
 
-  private WriteChannel getWriter(BlobInfo blobInfo) {
-    if (_blobEncryptWriteOption == null) {
-      return _gcsStore.writer(blobInfo);
-    }
-    return _gcsStore.writer(blobInfo, _blobEncryptWriteOption);
-  }
+		if (traceEnabled) {
+			String key = _keyTransformer.getFileVersionKey(
+				companyId, repositoryId, fileName, versionLabel);
 
-  private void logAndDeleteBlob(Blob blob) {
-    boolean deleted = deleteBlob(blob);
+			_traceLog(
+				StringBundler.concat(
+					"Checking file presence for: ", key, ", presence ",
+					hasFile));
+		}
 
-    if (!deleted && _log.isWarnEnabled()) {
-      _log.warn("Unable to delete \"" + blob.getBlobId() + "\" from file store");
-    } else if (deleted && _log.isTraceEnabled()) {
-      traceLog("Deleted \"" + blob.getBlobId() + "\" from file store");
-    }
-  }
+		return hasFile;
+	}
 
-  private void move(Blob oldBlob, String newPath) {
+	@Override
+	public void updateFile(
+		long companyId, long repositoryId, long newRepositoryId,
+		String fileName) {
 
-    BlobId newBlobId = getBlobId(newPath);
+		String[] fileNames = getFileNames(companyId, repositoryId, fileName);
 
-    BlobId oldBlobId = oldBlob.getBlobId();
+		for (String oldPath : fileNames) {
+			String version = _getVersionFromFullPath(oldPath);
 
-    boolean traceEnabled = _log.isTraceEnabled();
+			Blob oldBlob = _getBlob(_getBlobId(oldPath));
 
-    if (traceEnabled) {
-      String msg = String.format("Updating file from (name) \"%s\" to \"%s\"",
-          oldBlobId.getName(), newBlobId.getName());
-
-      traceLog(msg);
-    }
-
-    CopyRequest copyRequest = getCopyRequest(newBlobId, oldBlobId, _storageDecryptionSourceOption,
-        _blobEncryptTargetOption);
-
-    Stopwatch stopwatch = null;
-    if (traceEnabled) {
-      stopwatch = Stopwatch.createStarted();
-    }
-    CopyWriter copyWriter = _gcsStore.copy(copyRequest);
-    // block until complete
-    while (!copyWriter.isDone()) {
-      copyWriter.copyChunk();
-    }
-    if (traceEnabled) {
-      stopwatch.stop();
-      long elapsed = stopwatch.elapsed(TimeUnit.MILLISECONDS);
-      String traceMsg = String.format(
-          "Copying of %s to %s took %d milliseconds", oldBlobId.getName(),
-          newBlobId.getName(), elapsed);
-      traceLog(traceMsg);
-    }
-
-    debugLog("Copied " + oldBlob + " to " + newBlobId);
-
-    logAndDeleteBlob(oldBlob);
-  }
-
-  private void setGcsStore() throws PortalException {
-    if (_gcsStore == null) {
-      setCredentials();
-
-      RetrySettings retrySettings = buildRetrySettings(_gcsStoreConfiguration.maxRetryAttempts(),
-          _gcsStoreConfiguration.initialRetryDelay(), _gcsStoreConfiguration.maxRetryDelay(),
-          _gcsStoreConfiguration.retryDelayMultiplier(), _gcsStoreConfiguration.maxRpcTimeout(),
-          _gcsStoreConfiguration.initialRpcTimeout(), _gcsStoreConfiguration.rpcTimeoutMultiplier(),
-          _gcsStoreConfiguration.retryJitter());
-
-      StorageOptions storageOptions = buildStorage(retrySettings, googleCredentials);
-
-      traceLog("Initializing new gcsStore component");
-
-      _gcsStore = storageOptions.getService();
-      return;
-    }
-
-    traceLog("gcsStore component already set");
-  }
-
-  private void setupEncryptedCommunication() {
-    String keyValue = PropsUtil.get(GcsStoreConstants.KEY_PROPERTY);
-
-    if (keyValue == null || keyValue.equals(StringPool.BLANK)) {
-
-      _log.warn(
-          "Property \"dl.store.gcs.aes256.key\" should be set to encrypt stored files. "
-              + "Using default storage. The key must be AES 256bit key, encoded in Base64.");
-
-      _blobDecryptSourceOption = null;
-
-      _blobEncryptWriteOption = null;
-    } else {
-      _storageDecryptionSourceOption = Storage.BlobSourceOption.decryptionKey(keyValue);
-
-      _blobDecryptSourceOption = Blob.BlobSourceOption.decryptionKey(keyValue);
-
-      _blobEncryptWriteOption = BlobWriteOption.encryptionKey(keyValue);
-
-      _blobEncryptTargetOption = BlobTargetOption.encryptionKey(keyValue);
-    }
-  }
-
-  private void traceLog(String traceLog) {
-    if (_log.isTraceEnabled()) {
-      _log.trace(traceLog);
-    }
-  }
-
-  private void writeInputStream(InputStream inputStream, WriteChannel writer)
-      throws IOException, PortalException {
-    byte[] buffer = new byte[WRITE_BUFFER_SIZE];
-    int limit;
-
-    Stopwatch outputWatch = null;
-    Stopwatch overallClock = null;
-    long totalWriteTimeNanoSec = 0;
-    int writtenTotal = 0;
-
-    boolean traceEnabled = _log.isTraceEnabled();
-    if (traceEnabled) {
-      traceLog("Writing out to buffer...");
-      outputWatch = Stopwatch.createUnstarted();
-      overallClock = Stopwatch.createStarted();
-    }
-    while ((limit = inputStream.read(buffer)) >= 0) {
-      try {
-        if (traceEnabled) {
-          outputWatch.start();
-        }
-        int writtenBytes = writer.write(ByteBuffer.wrap(buffer, 0, limit));
-        if (traceEnabled) {
-          outputWatch.stop();
-          long elapsed = outputWatch.elapsed(TimeUnit.NANOSECONDS);
-          totalWriteTimeNanoSec += elapsed;
-          writtenTotal += writtenBytes;
-          outputWatch.reset();
-        }
-      } catch (IOException ex) {
-        throw new PortalException(ex);
-      }
-    }
-    if (traceEnabled) {
-      overallClock.stop();
-      long elapsed = overallClock.elapsed(TimeUnit.MILLISECONDS);
-      String traceMsg =
-          String.format("Took %d milliseconds to transferring %d bytes", elapsed, writtenTotal);
-      traceLog(traceMsg);
-      traceMsg = String.format("Took %d nanoseconds (%d milliseconds) writing to GCS",
-          totalWriteTimeNanoSec, totalWriteTimeNanoSec / 1000000);
-      traceLog(traceMsg);
-    }
-  }
-
-  protected GoogleCredentials googleCredentials;
-
-  private static final int WRITE_BUFFER_SIZE = 1024;
-
-  private static final Log _log = LogFactoryUtil.getLog(GCSStore.class);
-
-  private BlobSourceOption _blobDecryptSourceOption;
-
-  private BlobTargetOption _blobEncryptTargetOption;
-
-  private BlobWriteOption _blobEncryptWriteOption;
-
-  private BucketInfo _bucketInfo;
-
-  private Storage _gcsStore;
-
-  private GCSStoreConfiguration _gcsStoreConfiguration;
-
-  @Reference
-  private KeyTransformer _keyTransformer;
-
-  private Storage.BlobSourceOption _storageDecryptionSourceOption;
+			String newPath = _keyTransformer.getFileVersionKey(
+				companyId, newRepositoryId, fileName, version);
+
+			_move(oldBlob, newPath);
+		}
+	}
+
+	@Override
+	public void updateFile(
+		long companyId, long repositoryId, String fileName,
+		String newFileName) {
+
+		String[] fileNames = getFileNames(companyId, repositoryId, fileName);
+
+		for (String oldPath : fileNames) {
+			String version = _getVersionFromFullPath(oldPath);
+
+			Blob oldBlob = _getBlob(companyId, repositoryId, fileName, version);
+
+			String newPath = _keyTransformer.getFileVersionKey(
+				companyId, repositoryId, newFileName, version);
+
+			_move(oldBlob, newPath);
+		}
+	}
+
+	@Override
+	public void updateFile(
+			long companyId, long repositoryId, String fileName,
+			String versionLabel, InputStream is)
+		throws PortalException {
+
+		if (_log.isTraceEnabled()) {
+			String filePath = _keyTransformer.getFileKey(
+				companyId, repositoryId, fileName);
+			String fileVersion = _keyTransformer.getFileVersionKey(
+				companyId, repositoryId, fileName, versionLabel);
+
+			String msg = String.format(
+				"Updating file \"%s\" to version \"%s\"", filePath,
+				fileVersion);
+
+			_traceLog(msg);
+		}
+
+		addFileWithVersion(companyId, repositoryId, fileName, versionLabel, is);
+	}
+
+	@Activate
+	@Modified
+	protected void activate(Map<String, Object> properties) {
+		_gcsStoreConfiguration = ConfigurableUtil.createConfigurable(
+			GCSStoreConfiguration.class, properties);
+
+		try {
+			_gcsStore = null;
+
+			_setupEncryptedCommunication();
+
+			_setGcsStore();
+		}
+		catch (PortalException pe) {
+			throw new IllegalStateException(
+				"Unable to initialize GCS store", pe);
+		}
+	}
+
+	protected void addFileWithVersion(
+			long companyId, long repositoryId, String fileName,
+			String versionLabel, InputStream is)
+		throws PortalException {
+
+		String fileVersionKey = _keyTransformer.getFileVersionKey(
+			companyId, repositoryId, fileName, versionLabel);
+
+		_traceLog("Attempting to create new file");
+		_traceLog("Constructed key: " + fileVersionKey);
+
+		BlobInfo.Builder builder = BlobInfo.newBuilder(
+			_getBucketInfo(), fileVersionKey);
+
+		BlobInfo blobInfo = builder.build();
+
+		try (WriteChannel writer = _getWriter(blobInfo)) {
+			_writeInputStream(is, writer);
+		}
+		catch (IOException ioe) {
+			if (_log.isDebugEnabled()) {
+				_log.debug("Unable to write out to buffer", ioe);
+			}
+
+			throw new PortalException(ioe);
+		}
+		finally {
+			_traceLog("Done writing out to buffer.");
+		}
+
+		_debugLog("Blob for a folder was created at: " + fileVersionKey);
+	}
+
+	protected void setCredentials() throws PortalException {
+		_traceLog("Initializing credentials");
+
+		try (InputStream inputStream = _getCredentialsInputStream()) {
+			googleCredentials = ServiceAccountCredentials.fromStream(
+				inputStream);
+		}
+		catch (IOException ioe) {
+			throw new PortalException(
+				"Unable to authenticate with authentication file", ioe);
+		}
+	}
+
+	protected GoogleCredentials googleCredentials;
+
+	private RetrySettings _buildRetrySettings(
+		int maxAttempts, int initialRetryDelay, int maxRetryDelay,
+		double retryDelayMultiplier, int maxRpcTimeout, int initRpcTimout,
+		double rpcTimeoutMultiplier, boolean jittered) {
+
+		RetrySettings.Builder builder = RetrySettings.newBuilder();
+
+		builder.setMaxAttempts(maxAttempts);
+		builder.setInitialRetryDelay(Duration.ofMillis(initialRetryDelay));
+		builder.setMaxRetryDelay(Duration.ofMillis(maxRetryDelay));
+		builder.setRetryDelayMultiplier(retryDelayMultiplier);
+		builder.setInitialRpcTimeout(Duration.ofMillis(initRpcTimout));
+		builder.setMaxRpcTimeout(Duration.ofMillis(maxRpcTimeout));
+		builder.setRpcTimeoutMultiplier(rpcTimeoutMultiplier);
+		builder.setJittered(jittered);
+
+		return builder.build();
+	}
+
+	private StorageOptions _buildStorage(
+		RetrySettings retrySettings, GoogleCredentials googleCredentials) {
+
+		StorageOptions.Builder builder = StorageOptions.newBuilder();
+
+		builder.setCredentials(googleCredentials);
+		builder.setRetrySettings(retrySettings);
+
+		return builder.build();
+	}
+
+	private void _debugLog(String debugLog) {
+		if (_log.isDebugEnabled()) {
+			_log.debug(debugLog);
+		}
+	}
+
+	private boolean _deleteBlob(Blob blob) {
+		boolean deleted;
+		boolean traceEnabled = _log.isTraceEnabled();
+
+		Stopwatch stopwatch = null;
+		String blobName = null;
+
+		if (traceEnabled) {
+			blobName = blob.getName();
+
+			stopwatch = Stopwatch.createStarted();
+		}
+
+		if (_blobDecryptSourceOption == null) {
+			deleted = blob.delete();
+		}
+		else {
+			deleted = blob.delete(_blobDecryptSourceOption);
+		}
+
+		if (traceEnabled) {
+			stopwatch.stop();
+
+			long elapsed = stopwatch.elapsed(TimeUnit.MILLISECONDS);
+
+			_traceLog(
+				StringBundler.concat(
+					"Took ", elapsed, " to delete ", blobName));
+		}
+
+		return deleted;
+	}
+
+	private void _deleteFile(String filePath) {
+		BlobId blobId = _getBlobId(filePath);
+
+		boolean deleted = _gcsStore.delete(blobId);
+
+		if (!deleted && _log.isWarnEnabled()) {
+			_log.warn(
+				StringBundler.concat(
+					"Unable to delete \"", filePath, "\" from file store"));
+		}
+		else if (deleted && _log.isTraceEnabled()) {
+			_traceLog("Deleted \"" + filePath + "\" from file store");
+		}
+	}
+
+	private String _determineVersionFilePath(
+		long companyId, long repositoryId, String fileName,
+		String versionLabel) {
+
+		String filePath;
+
+		if ((versionLabel == null) || versionLabel.isEmpty()) {
+			filePath = _getHeadVersionLabel(companyId, repositoryId, fileName);
+		}
+		else {
+			filePath = _keyTransformer.getFileVersionKey(
+				companyId, repositoryId, fileName, versionLabel);
+		}
+
+		return filePath;
+	}
+
+	private Blob _getBlob(BlobId blobId) {
+		Stopwatch stopwatch = null;
+		boolean traceEnabled = _log.isTraceEnabled();
+
+		if (traceEnabled) {
+			_traceLog("Fetching " + blobId);
+
+			stopwatch = Stopwatch.createStarted();
+		}
+
+		Blob blob = _gcsStore.get(blobId);
+
+		if (traceEnabled) {
+			stopwatch.stop();
+
+			long elapsed = stopwatch.elapsed(TimeUnit.MILLISECONDS);
+
+			_traceLog(
+				StringBundler.concat(
+					"Spent ", elapsed, " milliseconds retrieving ", blobId));
+		}
+
+		return blob;
+	}
+
+	private Blob _getBlob(
+		long companyId, long repositoryId, String fileName,
+		String versionLabel) {
+
+		String path = _keyTransformer.getFileVersionKey(
+			companyId, repositoryId, fileName, versionLabel);
+
+		BlobId blobId = _getBlobId(path);
+
+		return _getBlob(blobId);
+	}
+
+	private BlobId _getBlobId(String pathName) {
+		return BlobId.of(_getBucketName(), pathName);
+	}
+
+	private Bucket _getBucket() {
+		return _gcsStore.get(_getBucketName());
+	}
+
+	private BucketInfo _getBucketInfo() {
+		if (_bucketInfo == null) {
+			BucketInfo.Builder builder = BucketInfo.newBuilder(
+				_getBucketName());
+
+			return builder.build();
+		}
+
+		return _bucketInfo;
+	}
+
+	private String _getBucketName() {
+		return _gcsStoreConfiguration.bucketName();
+	}
+
+	private Storage.CopyRequest _getCopyRequest(
+		BlobId newBlobId, BlobId oldBlobId,
+		Storage.BlobSourceOption sourceOption,
+		Storage.BlobTargetOption targetOption) {
+
+		Storage.CopyRequest.Builder copyRequestBuilder =
+			Storage.CopyRequest.newBuilder();
+
+		copyRequestBuilder.setSource(oldBlobId);
+		copyRequestBuilder.setSourceOptions(sourceOption);
+		copyRequestBuilder.setTarget(newBlobId, targetOption);
+
+		return copyRequestBuilder.build();
+	}
+
+	private InputStream _getCredentialsInputStream()
+		throws FileNotFoundException {
+
+		_traceLog(
+			"Using authentication file; " +
+				_gcsStoreConfiguration.authFileLocation());
+
+		File credentialFiles = new File(
+			_gcsStoreConfiguration.authFileLocation());
+
+		return new FileInputStream(credentialFiles);
+	}
+
+	private String _getHeadVersionLabel(
+		long companyId, long repositoryId, String fileName) {
+
+		String key = _keyTransformer.getFileKey(
+			companyId, repositoryId, fileName);
+
+		String[] names = getFileNames(companyId, repositoryId, key);
+
+		if ((names == null) || (names.length == 0)) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Unable to determine available versions for: " + key);
+				_log.debug("Using default: " + VERSION_DEFAULT);
+			}
+
+			return _keyTransformer.getFileVersionKey(
+				companyId, repositoryId, fileName, VERSION_DEFAULT);
+		}
+
+		List<String> fileNames = Arrays.asList(names);
+
+		fileNames.sort(GcsStoreConstants.VERSION_NUMBER_COMPARATOR);
+
+		return fileNames.get(fileNames.size() - 1);
+	}
+
+	private ReadChannel _getReader(Blob blob) {
+		if (_blobDecryptSourceOption == null) {
+			return blob.reader();
+		}
+
+		return blob.reader(_blobDecryptSourceOption);
+	}
+
+	private String _getVersionFromFullPath(String fullPath) {
+		int indexOfLastSlash = fullPath.lastIndexOf(StringPool.FORWARD_SLASH);
+
+		return fullPath.substring(indexOfLastSlash + 1);
+	}
+
+	private WriteChannel _getWriter(BlobInfo blobInfo) {
+		if (_blobEncryptWriteOption == null) {
+			return _gcsStore.writer(blobInfo);
+		}
+
+		return _gcsStore.writer(blobInfo, _blobEncryptWriteOption);
+	}
+
+	private void _logAndDeleteBlob(Blob blob) {
+		boolean deleted = _deleteBlob(blob);
+
+		if (!deleted && _log.isWarnEnabled()) {
+			_log.warn(
+				"Unable to delete \"" + blob.getBlobId() +
+					"\" from file store");
+		}
+		else if (deleted && _log.isTraceEnabled()) {
+			_traceLog("Deleted \"" + blob.getBlobId() + "\" from file store");
+		}
+	}
+
+	private void _move(Blob oldBlob, String newPath) {
+		BlobId newBlobId = _getBlobId(newPath);
+
+		BlobId oldBlobId = oldBlob.getBlobId();
+
+		boolean traceEnabled = _log.isTraceEnabled();
+
+		if (traceEnabled) {
+			String msg = String.format(
+				"Updating file from (name) \"%s\" to \"%s\"",
+				oldBlobId.getName(), newBlobId.getName());
+
+			_traceLog(msg);
+		}
+
+		Storage.CopyRequest copyRequest = _getCopyRequest(
+			newBlobId, oldBlobId, _storageDecryptionSourceOption,
+			_blobEncryptTargetOption);
+
+		Stopwatch stopwatch = null;
+
+		if (traceEnabled) {
+			stopwatch = Stopwatch.createStarted();
+		}
+
+		CopyWriter copyWriter = _gcsStore.copy(copyRequest);
+
+		// block until complete
+
+		while (!copyWriter.isDone()) {
+			copyWriter.copyChunk();
+		}
+
+		if (traceEnabled) {
+			stopwatch.stop();
+
+			long elapsed = stopwatch.elapsed(TimeUnit.MILLISECONDS);
+
+			String traceMsg = String.format(
+				"Copying of %s to %s took %d milliseconds", oldBlobId.getName(),
+				newBlobId.getName(), elapsed);
+
+			_traceLog(traceMsg);
+		}
+
+		_debugLog(StringBundler.concat("Copied ", oldBlob, " to ", newBlobId));
+
+		_logAndDeleteBlob(oldBlob);
+	}
+
+	private void _setGcsStore() throws PortalException {
+		if (_gcsStore == null) {
+			setCredentials();
+
+			RetrySettings retrySettings = _buildRetrySettings(
+				_gcsStoreConfiguration.maxRetryAttempts(),
+				_gcsStoreConfiguration.initialRetryDelay(),
+				_gcsStoreConfiguration.maxRetryDelay(),
+				_gcsStoreConfiguration.retryDelayMultiplier(),
+				_gcsStoreConfiguration.maxRpcTimeout(),
+				_gcsStoreConfiguration.initialRpcTimeout(),
+				_gcsStoreConfiguration.rpcTimeoutMultiplier(),
+				_gcsStoreConfiguration.retryJitter());
+
+			StorageOptions storageOptions = _buildStorage(
+				retrySettings, googleCredentials);
+
+			_traceLog("Initializing new gcsStore component");
+
+			_gcsStore = storageOptions.getService();
+
+			return;
+		}
+
+		_traceLog("gcsStore component already set");
+	}
+
+	private void _setupEncryptedCommunication() {
+		String keyValue = PropsUtil.get(GcsStoreConstants.KEY_PROPERTY);
+
+		if ((keyValue == null) || keyValue.equals(StringPool.BLANK)) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Property \"dl.store.gcs.aes256.key\" should be set to " +
+						"encrypt stored files. Using default storage. The " +
+							"key must be AES 256bit key, encoded in Base64.");
+			}
+
+			_blobDecryptSourceOption = null;
+
+			_blobEncryptWriteOption = null;
+		}
+		else {
+			_storageDecryptionSourceOption =
+				Storage.BlobSourceOption.decryptionKey(keyValue);
+
+			_blobDecryptSourceOption = Blob.BlobSourceOption.decryptionKey(
+				keyValue);
+
+			_blobEncryptWriteOption = Storage.BlobWriteOption.encryptionKey(
+				keyValue);
+
+			_blobEncryptTargetOption = Storage.BlobTargetOption.encryptionKey(
+				keyValue);
+		}
+	}
+
+	private void _traceLog(String traceLog) {
+		if (_log.isTraceEnabled()) {
+			_log.trace(traceLog);
+		}
+	}
+
+	private void _writeInputStream(InputStream inputStream, WriteChannel writer)
+		throws IOException, PortalException {
+
+		byte[] buffer = new byte[_WRITE_BUFFER_SIZE];
+		int limit;
+
+		Stopwatch outputWatch = null;
+		Stopwatch overallClock = null;
+		long totalWriteTimeNanoSec = 0;
+		int writtenTotal = 0;
+
+		boolean traceEnabled = _log.isTraceEnabled();
+
+		if (traceEnabled) {
+			_traceLog("Writing out to buffer...");
+			outputWatch = Stopwatch.createUnstarted();
+			overallClock = Stopwatch.createStarted();
+		}
+		while ((limit = inputStream.read(buffer)) >= 0) {
+			try {
+				if (traceEnabled) {
+					outputWatch.start();
+				}
+
+				int writtenBytes = writer.write(
+					ByteBuffer.wrap(buffer, 0, limit));
+
+				if (traceEnabled) {
+					outputWatch.stop();
+
+					long elapsed = outputWatch.elapsed(TimeUnit.NANOSECONDS);
+
+					totalWriteTimeNanoSec += elapsed;
+
+					writtenTotal += writtenBytes;
+
+					outputWatch.reset();
+				}
+			}
+			catch (IOException ioe) {
+				throw new PortalException(ioe);
+			}
+		}
+
+		if (traceEnabled) {
+			overallClock.stop();
+
+			long elapsed = overallClock.elapsed(TimeUnit.MILLISECONDS);
+
+			String traceMsg = String.format(
+				"Took %d milliseconds to transferring %d bytes", elapsed,
+				writtenTotal);
+
+			_traceLog(traceMsg);
+
+			traceMsg = String.format(
+				"Took %d nanoseconds (%d milliseconds) writing to GCS",
+				totalWriteTimeNanoSec, totalWriteTimeNanoSec / 1000000);
+
+			_traceLog(traceMsg);
+		}
+	}
+
+	private static final int _WRITE_BUFFER_SIZE = 1024;
+
+	private static final Log _log = LogFactoryUtil.getLog(GCSStore.class);
+
+	private Blob.BlobSourceOption _blobDecryptSourceOption;
+	private Storage.BlobTargetOption _blobEncryptTargetOption;
+	private Storage.BlobWriteOption _blobEncryptWriteOption;
+	private BucketInfo _bucketInfo;
+	private Storage _gcsStore;
+	private GCSStoreConfiguration _gcsStoreConfiguration;
+
+	@Reference
+	private KeyTransformer _keyTransformer;
+
+	private Storage.BlobSourceOption _storageDecryptionSourceOption;
+
 }

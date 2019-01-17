@@ -369,8 +369,10 @@ public class PortletConfigurationPermissionsDisplayContext {
 			}
 		}
 		else if (Validator.isNotNull(_getPortletResource())) {
-			int pos =
-				getResourcePrimKey().indexOf(PortletConstants.LAYOUT_SEPARATOR);
+			String resourcePrimKey = getResourcePrimKey();
+
+			int pos = resourcePrimKey.indexOf(
+				PortletConstants.LAYOUT_SEPARATOR);
 
 			if (pos > 0) {
 				long resourcePlid = GetterUtil.getLong(

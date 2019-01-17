@@ -55,14 +55,18 @@ public class ServerSummaryStatistics implements SummaryStatistics {
 	public long getAverageTimeByCompany(long companyId)
 		throws MonitoringException {
 
-		return getRequestStatistics(companyId).getAverageTime();
+		RequestStatistics requestStatistics = getRequestStatistics(companyId);
+
+		return requestStatistics.getAverageTime();
 	}
 
 	@Override
 	public long getAverageTimeByCompany(String webId)
 		throws MonitoringException {
 
-		return getRequestStatistics(webId).getAverageTime();
+		RequestStatistics requestStatistics = getRequestStatistics(webId);
+
+		return requestStatistics.getAverageTime();
 	}
 
 	@Override
@@ -85,14 +89,18 @@ public class ServerSummaryStatistics implements SummaryStatistics {
 	public long getErrorCountByCompany(long companyId)
 		throws MonitoringException {
 
-		return getRequestStatistics(companyId).getErrorCount();
+		RequestStatistics requestStatistics = getRequestStatistics(companyId);
+
+		return requestStatistics.getErrorCount();
 	}
 
 	@Override
 	public long getErrorCountByCompany(String webId)
 		throws MonitoringException {
 
-		return getRequestStatistics(webId).getErrorCount();
+		RequestStatistics requestStatistics = getRequestStatistics(webId);
+
+		return requestStatistics.getErrorCount();
 	}
 
 	@Override
@@ -112,12 +120,16 @@ public class ServerSummaryStatistics implements SummaryStatistics {
 
 	@Override
 	public long getMaxTimeByCompany(long companyId) throws MonitoringException {
-		return getRequestStatistics(companyId).getMaxTime();
+		RequestStatistics requestStatistics = getRequestStatistics(companyId);
+
+		return requestStatistics.getMaxTime();
 	}
 
 	@Override
 	public long getMaxTimeByCompany(String webId) throws MonitoringException {
-		return getRequestStatistics(webId).getMaxTime();
+		RequestStatistics requestStatistics = getRequestStatistics(webId);
+
+		return requestStatistics.getMaxTime();
 	}
 
 	@Override
@@ -137,12 +149,16 @@ public class ServerSummaryStatistics implements SummaryStatistics {
 
 	@Override
 	public long getMinTimeByCompany(long companyId) throws MonitoringException {
-		return getRequestStatistics(companyId).getMinTime();
+		RequestStatistics requestStatistics = getRequestStatistics(companyId);
+
+		return requestStatistics.getMinTime();
 	}
 
 	@Override
 	public long getMinTimeByCompany(String webId) throws MonitoringException {
-		return getRequestStatistics(webId).getMinTime();
+		RequestStatistics requestStatistics = getRequestStatistics(webId);
+
+		return requestStatistics.getMinTime();
 	}
 
 	@Override
@@ -165,14 +181,18 @@ public class ServerSummaryStatistics implements SummaryStatistics {
 	public long getRequestCountByCompany(long companyId)
 		throws MonitoringException {
 
-		return getRequestStatistics(companyId).getRequestCount();
+		RequestStatistics requestStatistics = getRequestStatistics(companyId);
+
+		return requestStatistics.getRequestCount();
 	}
 
 	@Override
 	public long getRequestCountByCompany(String webId)
 		throws MonitoringException {
 
-		return getRequestStatistics(webId).getRequestCount();
+		RequestStatistics requestStatistics = getRequestStatistics(webId);
+
+		return requestStatistics.getRequestCount();
 	}
 
 	@Override
@@ -195,14 +215,18 @@ public class ServerSummaryStatistics implements SummaryStatistics {
 	public long getSuccessCountByCompany(long companyId)
 		throws MonitoringException {
 
-		return getRequestStatistics(companyId).getSuccessCount();
+		RequestStatistics requestStatistics = getRequestStatistics(companyId);
+
+		return requestStatistics.getSuccessCount();
 	}
 
 	@Override
 	public long getSuccessCountByCompany(String webId)
 		throws MonitoringException {
 
-		return getRequestStatistics(webId).getSuccessCount();
+		RequestStatistics requestStatistics = getRequestStatistics(webId);
+
+		return requestStatistics.getSuccessCount();
 	}
 
 	@Override
@@ -225,14 +249,18 @@ public class ServerSummaryStatistics implements SummaryStatistics {
 	public long getTimeoutCountByCompany(long companyId)
 		throws MonitoringException {
 
-		return getRequestStatistics(companyId).getTimeoutCount();
+		RequestStatistics requestStatistics = getRequestStatistics(companyId);
+
+		return requestStatistics.getTimeoutCount();
 	}
 
 	@Override
 	public long getTimeoutCountByCompany(String webId)
 		throws MonitoringException {
 
-		return getRequestStatistics(webId).getTimeoutCount();
+		RequestStatistics requestStatistics = getRequestStatistics(webId);
+
+		return requestStatistics.getTimeoutCount();
 	}
 
 	protected RequestStatistics getRequestStatistics(long companyId)

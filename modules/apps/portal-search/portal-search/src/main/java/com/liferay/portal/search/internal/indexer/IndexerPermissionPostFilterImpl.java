@@ -72,8 +72,8 @@ public class IndexerPermissionPostFilterImpl
 			_modelVisibilityContributorSupplier.get();
 
 		return optional.map(
-			modelVisibilityContributor ->
-				modelVisibilityContributor.isVisible(classPK, status)
+			modelVisibilityContributor -> modelVisibilityContributor.isVisible(
+				classPK, status)
 		).orElse(
 			true
 		);

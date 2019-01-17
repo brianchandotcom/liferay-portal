@@ -106,7 +106,11 @@ public class DefaultSearchResponseTranslator
 		Object[] array = highlightField.fragments();
 
 		document.addText(
-			Field.SNIPPET.concat(StringPool.UNDERLINE).concat(snippetFieldName),
+			Field.SNIPPET.concat(
+				StringPool.UNDERLINE
+			).concat(
+				snippetFieldName
+			),
 			StringUtil.merge(array, StringPool.TRIPLE_PERIOD));
 	}
 

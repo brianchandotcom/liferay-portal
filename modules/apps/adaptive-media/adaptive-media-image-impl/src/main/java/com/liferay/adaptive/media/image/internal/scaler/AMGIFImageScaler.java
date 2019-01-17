@@ -134,7 +134,11 @@ public class AMGIFImageScaler implements AMImageScaler {
 			maxWidthString = String.valueOf(maxWidth);
 		}
 
-		return maxWidthString.concat("x").concat(maxHeightString);
+		return maxWidthString.concat(
+			"x"
+		).concat(
+			maxHeightString
+		);
 	}
 
 	private File _getFile(FileVersion fileVersion)

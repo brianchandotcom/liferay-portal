@@ -295,8 +295,12 @@ public class AMJournalArticleStagedModelDataHandlerTest
 		throws Exception {
 
 		AssertUtils.assertEqualsIgnoreCase(
-			SAXReaderUtil.read(expectedXML).formattedString(),
-			SAXReaderUtil.read(actualXML).formattedString());
+			SAXReaderUtil.read(
+				expectedXML
+			).formattedString(),
+			SAXReaderUtil.read(
+				actualXML
+			).formattedString());
 	}
 
 	private String _getContent(String html) throws Exception {

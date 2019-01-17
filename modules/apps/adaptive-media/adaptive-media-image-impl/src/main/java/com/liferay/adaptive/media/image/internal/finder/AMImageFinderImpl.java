@@ -112,8 +112,8 @@ public class AMImageFinderImpl implements AMImageFinder {
 				filter.test(amImageConfigurationEntry) &&
 				_hasAdaptiveMedia(fileVersion, amImageConfigurationEntry)
 		).map(
-			amImageConfigurationEntry ->
-				_createMedia(fileVersion, uriFactory, amImageConfigurationEntry)
+			amImageConfigurationEntry -> _createMedia(
+				fileVersion, uriFactory, amImageConfigurationEntry)
 		).sorted(
 			amDistanceComparator.toComparator()
 		);

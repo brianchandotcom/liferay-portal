@@ -276,8 +276,8 @@ public class AMImageEntryLocalServiceImpl
 		Stream<AMImageCounter> amImageCounterStream = amImageCounters.stream();
 
 		return amImageCounterStream.mapToInt(
-			amImageCounter ->
-				amImageCounter.countExpectedAMImageEntries(companyId)
+			amImageCounter -> amImageCounter.countExpectedAMImageEntries(
+				companyId)
 		).sum();
 	}
 

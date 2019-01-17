@@ -14,12 +14,35 @@
 
 package com.liferay.frontend.js.loader.modules.extender.npm;
 
+import com.liferay.portal.kernel.portlet.PortletBag;
+import com.liferay.portal.kernel.portlet.PortletBagPool;
+import com.liferay.portal.kernel.portlet.PortletIdCodec;
+import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Validator;
+
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Iván Zaera Avellón
  */
 public class NPMResolvedPackageNameUtil {
+
+	public static String get(HttpServletRequest request) {
+		String portletResource = ParamUtil.getString(
+			request, "portletResource");
+
+		if (Validator.isNotNull(portletResource)) {
+			PortletBag portletBag = PortletBagPool.get(
+				PortletIdCodec.decodePortletName(portletResource));
+
+			if (portletBag != null) {
+				return get(portletBag.getServletContext());
+			}
+		}
+
+		return get(request.getServletContext());
+	}
 
 	public static String get(ServletContext servletContext) {
 		return (String)servletContext.getAttribute(

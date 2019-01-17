@@ -172,19 +172,7 @@ public class GitWorkingDirectory {
 		String currentBranchName = currentLocalGitBranch.getName();
 
 		if (!currentBranchName.equals(getUpstreamBranchName())) {
-			LocalGitBranch upstreamLocalGitBranch = getLocalGitBranch(
-				getUpstreamBranchName());
-
-			if (upstreamLocalGitBranch == null) {
-				upstreamLocalGitBranch = createLocalGitBranch(
-					getUpstreamBranchName(), true,
-					currentLocalGitBranch.getSHA());
-
-				upstreamLocalGitBranch = fetch(
-					upstreamLocalGitBranch, getUpstreamRemoteGitBranch());
-			}
-
-			checkoutLocalGitBranch(upstreamLocalGitBranch);
+			checkoutLocalGitBranch(getUpstreamLocalGitBranch());
 		}
 	}
 
@@ -801,15 +789,15 @@ public class GitWorkingDirectory {
 	public LocalGitBranch getCurrentLocalGitBranch() {
 		String currentBranchName = getCurrentBranchName();
 
-		if (currentBranchName != null) {
-			LocalGitBranch currentLocalGitBranch = getLocalGitBranch(
-				currentBranchName);
+		LocalGitBranch currentLocalGitBranch = null;
 
-			return currentLocalGitBranch;
+		if (currentBranchName != null) {
+			currentLocalGitBranch = getLocalGitBranch(currentBranchName);
 		}
 
-		LocalGitBranch currentLocalGitBranch = getLocalGitBranch(
-			getUpstreamBranchName());
+		if (currentLocalGitBranch == null) {
+			currentLocalGitBranch = getUpstreamLocalGitBranch();
+		}
 
 		checkoutLocalGitBranch(currentLocalGitBranch);
 
@@ -1450,6 +1438,21 @@ public class GitWorkingDirectory {
 
 	public String getUpstreamBranchName() {
 		return _upstreamBranchName;
+	}
+
+	public LocalGitBranch getUpstreamLocalGitBranch() {
+		LocalGitBranch upstreamLocalGitBranch = getLocalGitBranch(
+			getUpstreamBranchName());
+
+		if (upstreamLocalGitBranch == null) {
+			upstreamLocalGitBranch = createLocalGitBranch(
+				getUpstreamBranchName(), true, "HEAD");
+
+			upstreamLocalGitBranch = fetch(
+				upstreamLocalGitBranch, getUpstreamRemoteGitBranch());
+		}
+
+		return upstreamLocalGitBranch;
 	}
 
 	public RemoteGitBranch getUpstreamRemoteGitBranch() {

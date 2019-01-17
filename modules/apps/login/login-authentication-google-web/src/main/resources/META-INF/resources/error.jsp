@@ -22,7 +22,7 @@
 	</h2>
 
 	<liferay-ui:error key="MustNotUseCompanyMx" message="this-google-account-cannot-be-used-to-register-a-new-user-because-its-email-domain-is-reserved" />
-	<liferay-ui:error key="StrangersNotAllowedException" message="only-known-users-are-allowed-to-sign-in-using-google" />
+	<liferay-ui:error key="StrangersNotAllowedException" message="only-registered-users-are-allowed-to-sign-in-using-google" />
 	<liferay-ui:error key="unknownError" message="there-was-an-unknown-error" />
 
 	<aui:button-row>

@@ -94,10 +94,8 @@ class EditTags extends Component {
 		this.loading = true;
 
 		let bodyData = {
-			'bulkAssetEntryCommonTagsActionModel': {
-				repositoryId: this.repositoryId,
-				selection: this.fileEntries
-			}
+			repositoryId: this.repositoryId,
+			selection: this.fileEntries
 		};
 
 		this._fetchTagsRequest(
@@ -150,13 +148,11 @@ class EditTags extends Component {
 		);
 
 		let bodyData = {
-			'bulkAssetEntryUpdateTagsActionModel': {
-				append: this.append,
-				repositoryId: this.repositoryId,
-				selection: this.fileEntries,
-				toAddTagNames: addedTags,
-				toRemoveTagNames: removedTags
-			}
+			append: this.append,
+			repositoryId: this.repositoryId,
+			selection: this.fileEntries,
+			toAddTagNames: addedTags,
+			toRemoveTagNames: removedTags
 		};
 
 		let instance = this;

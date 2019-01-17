@@ -48,10 +48,10 @@ public class ExpressionVisitorImpl implements ExpressionVisitor<Object> {
 	public Predicate<Context> visitBinaryExpressionOperation(
 		BinaryExpression.Operation operation, Object left, Object right) {
 
-		Optional<Predicate<Context>> filterOptional = _getPredicateOptional(
+		Optional<Predicate<Context>> predicateOptional = _getPredicateOptional(
 			operation, left, right);
 
-		return filterOptional.orElseThrow(
+		return predicateOptional.orElseThrow(
 			() -> new UnsupportedOperationException(
 				"Unsupported method visitBinaryExpressionOperation with " +
 					"operation " + operation));

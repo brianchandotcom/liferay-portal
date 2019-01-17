@@ -38,7 +38,7 @@ import com.liferay.portal.kernel.template.URLTemplateResource;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.template.soy.utils.SoyRawData;
+import com.liferay.portal.template.soy.util.SoyRawData;
 
 import java.io.Writer;
 

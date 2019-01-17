@@ -38,7 +38,7 @@ public class ServiceBuilderBatchTestClassGroup
 
 	@Override
 	public int getAxisCount() {
-		if (testRelevantCoreIntegrationUnitOnly) {
+		if (testRelevantIntegrationUnitOnly) {
 			return 0;
 		}
 

@@ -122,7 +122,7 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 
 		_setTestReleaseBundle();
 		_setTestRelevantChanges();
-		_setTestRelevantCoreIntegrationUnitOnly();
+		_setTestRelevantIntegrationUnitOnly();
 	}
 
 	protected int getAxisMaxSize() {
@@ -316,7 +316,7 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 		return _getRequiredModuleDirs(moduleDirs, new ArrayList<>(moduleDirs));
 	}
 
-	protected boolean isCoreIntegrationUnitTestFileModifiedOnly() {
+	protected boolean isIntegrationUnitTestFileModifiedOnly() {
 		List<PathMatcher> relevantIntegrationUnitIncludePathMatchers =
 			getRelevantIntegrationUnitIncludePathMatchers();
 
@@ -379,7 +379,7 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 	protected final PortalGitWorkingDirectory portalGitWorkingDirectory;
 	protected boolean testReleaseBundle;
 	protected boolean testRelevantChanges;
-	protected boolean testRelevantCoreIntegrationUnitOnly;
+	protected boolean testRelevantIntegrationUnitOnly;
 	protected final String testSuiteName;
 
 	protected static final class CSVReport {
@@ -510,16 +510,14 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 		testRelevantChanges = _DEFAULT_TEST_RELEVANT_CHANGES;
 	}
 
-	private void _setTestRelevantCoreIntegrationUnitOnly() {
-		if (testRelevantChanges &&
-			isCoreIntegrationUnitTestFileModifiedOnly()) {
-
-			testRelevantCoreIntegrationUnitOnly = true;
+	private void _setTestRelevantIntegrationUnitOnly() {
+		if (testRelevantChanges && isIntegrationUnitTestFileModifiedOnly()) {
+			testRelevantIntegrationUnitOnly = true;
 
 			return;
 		}
 
-		testRelevantCoreIntegrationUnitOnly = false;
+		testRelevantIntegrationUnitOnly = false;
 	}
 
 	private static final int _DEFAULT_AXIS_MAX_SIZE = 5000;

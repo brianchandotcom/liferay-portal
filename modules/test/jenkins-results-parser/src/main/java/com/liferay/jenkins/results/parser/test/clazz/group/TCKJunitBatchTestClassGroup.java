@@ -35,7 +35,7 @@ public class TCKJunitBatchTestClassGroup extends BatchTestClassGroup {
 
 	@Override
 	public int getAxisCount() {
-		if (testRelevantCoreIntegrationUnitOnly) {
+		if (testRelevantIntegrationUnitOnly) {
 			return 0;
 		}
 

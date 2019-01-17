@@ -132,6 +132,27 @@
 			}
 		}
 
+		&__item-remove-btn.btn {
+			color: inherit;
+			height: 1.5em;
+			opacity: 0;
+			padding: 0;
+			position: relative;
+			transition: opacity ease 0.2s;
+			width: 1.5em;
+			will-change: opacity;
+
+			> .lexicon-icon {
+				left: 50%;
+				position: absolute;
+				top: 50%;
+				transform: translateX(-50%) translateY(-55%);
+			}
+		}
+
+		&__item:hover &__item-remove-btn {
+			opacity: 1;
+		}
 
 		&__item-name {
 			cursor: pointer;

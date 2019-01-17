@@ -5,6 +5,7 @@
  */
 {template .render}
 	{@param? _handleElementClick: any}
+	{@param? _handleElementRemoveButtonClick: any}
 	{@param? activeItemId: ?}
 	{@param? activeItemType: ?}
 	{@param? fragmentEntryLinks: ?}
@@ -25,6 +26,7 @@
 								{param fragmentEntryLinks: $fragmentEntryLinks /}
 								{param itemTypes: $itemTypes /}
 								{param layoutData: $layoutData /}
+								{param removeButtonClickHandler: $_handleElementRemoveButtonClick /}
 								{param spritemap: $spritemap /}
 							{/call}
 						</li>
@@ -45,6 +47,7 @@
 	{@param? fragmentEntryLinks: ?}
 	{@param? itemTypes: ?}
 	{@param? layoutData: ?}
+	{@param? removeButtonClickHandler: ?}
 	{@param? spritemap: string}
 
 	{let $rootName kind="text"}
@@ -57,6 +60,8 @@
 		{param elementName: $rootName /}
 		{param expanded: true /}
 		{param hasChildren: true /}
+		{param itemTypes: $itemTypes /}
+		{param removeButtonClickHandler: $removeButtonClickHandler /}
 		{param spritemap: $spritemap /}
 		{param treeLevelId: 'sidebar-tree-root' /}
 	{/call}
@@ -80,6 +85,7 @@
 						{param itemTypes: $itemTypes /}
 						{param row: $row /}
 						{param rowIndex: index($row) /}
+						{param removeButtonClickHandler: $removeButtonClickHandler /}
 						{param spritemap: $spritemap /}
 						{param treeRowLevelId: $treeRowLevelId /}
 					{/call}
@@ -100,6 +106,7 @@
 	{@param? itemTypes: ?}
 	{@param? row: ?}
 	{@param? rowIndex: ?}
+	{@param? removeButtonClickHandler: ?}
 	{@param? spritemap: string}
 	{@param? treeRowLevelId: ?}
 
@@ -115,6 +122,8 @@
 		{param elementName: $rowName /}
 		{param elementType: $itemTypes.section /}
 		{param hasChildren: true /}
+		{param itemTypes: $itemTypes /}
+		{param removeButtonClickHandler: $removeButtonClickHandler /}
 		{param spritemap: $spritemap /}
 		{param treeLevelId: $treeRowLevelId /}
 	{/call}
@@ -137,6 +146,7 @@
 						{param column: $column /}
 						{param fragmentEntryLinks: $fragmentEntryLinks /}
 						{param itemTypes: $itemTypes /}
+						{param removeButtonClickHandler: $removeButtonClickHandler /}
 						{param spritemap: $spritemap /}
 						{param treeColLevelId: $treeColLevelId /}
 					{/call}
@@ -156,6 +166,7 @@
 	{@param? column: ?}
 	{@param? fragmentEntryLinks: ?}
 	{@param? itemTypes: ?}
+	{@param? removeButtonClickHandler: ?}
 	{@param? spritemap: string}
 	{@param? treeColLevelId: ?}
 
@@ -168,6 +179,8 @@
 		{param activeItemType: $activeItemType /}
 		{param elementName: $columnName /}
 		{param hasChildren: true /}
+		{param itemTypes: $itemTypes /}
+		{param removeButtonClickHandler: $removeButtonClickHandler /}
 		{param spritemap: $spritemap /}
 		{param treeLevelId: $treeColLevelId /}
 	{/call}
@@ -190,6 +203,8 @@
 							{param elementName: $fragmentEntryLink.name /}
 							{param elementType: $itemTypes.fragment /}
 							{param hasChildren: false /}
+							{param itemTypes: $itemTypes /}
+							{param removeButtonClickHandler: $removeButtonClickHandler /}
 							{param spritemap: $spritemap /}
 						{/call}
 					{/if}
@@ -211,6 +226,8 @@
 	{@param? elementType: ?}
 	{@param? expanded: bool}
 	{@param? hasChildren: ?}
+	{@param? itemTypes: ?}
+	{@param? removeButtonClickHandler: ?}
 	{@param? spritemap: string}
 	{@param? treeLevelId: ?}
 
@@ -246,6 +263,28 @@
 				{param spritemap: $spritemap /}
 				{param treeLevelId: $treeLevelId /}
 			{/call}
+		{/if}
+
+		{let $removeButtonClasses kind="text"}
+			btn
+			{sp}btn-unstyled
+			{sp}btn-monospaced
+			{sp}btn-sm
+			{sp}fragments-editor-sidebar-section__structure-panel__item-remove-btn
+		{/let}
+
+		{if ($elementType == $itemTypes.section) or ($elementType == $itemTypes.fragment)}
+			<button
+				class="{$removeButtonClasses}"
+				data-onclick="{$removeButtonClickHandler}"
+				data-element-id="{$elementId}"
+				data-element-type="{$elementType}"
+				type="button"
+			>
+				<svg class="lexicon-icon lexicon-icon-times-circle">
+					<use xlink:href="{$spritemap}#times-circle"></use>
+				</svg>
+			</button>
 		{/if}
 	</div>
 {/template}

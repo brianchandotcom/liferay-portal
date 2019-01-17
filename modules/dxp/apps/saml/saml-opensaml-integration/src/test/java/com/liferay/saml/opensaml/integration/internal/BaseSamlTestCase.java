@@ -329,12 +329,6 @@ public abstract class BaseSamlTestCase extends PowerMockito {
 		);
 
 		when(
-			samlProviderConfiguration.defaultIdPEntityId()
-		).thenReturn(
-			IDP_ENTITY_ID
-		);
-
-		when(
 			samlProviderConfiguration.role()
 		).thenReturn(
 			"sp"

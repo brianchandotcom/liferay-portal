@@ -71,13 +71,6 @@ public interface SamlProviderConfiguration {
 	)
 	public int defaultAssertionLifetime();
 
-	@Meta.AD(
-		description = "saml-sp-default-idp-entity-id-description",
-		id = "saml.sp.default.idp.entity.id",
-		name = "saml-sp-default-idp-entity-id", required = false
-	)
-	public String defaultIdPEntityId();
-
 	@Meta.AD(id = "saml.enabled", name = "saml-enabled", required = false)
 	public boolean enabled();
 

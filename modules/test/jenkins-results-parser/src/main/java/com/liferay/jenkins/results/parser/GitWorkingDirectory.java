@@ -789,19 +789,20 @@ public class GitWorkingDirectory {
 	public LocalGitBranch getCurrentLocalGitBranch() {
 		String currentBranchName = getCurrentBranchName();
 
-		LocalGitBranch currentLocalGitBranch = null;
-
 		if (currentBranchName != null) {
-			currentLocalGitBranch = getLocalGitBranch(currentBranchName);
+			LocalGitBranch currentLocalGitBranch = getLocalGitBranch(
+				currentBranchName);
+
+			if (currentLocalGitBranch != null) {
+				return currentLocalGitBranch;
+			}
 		}
 
-		if (currentLocalGitBranch == null) {
-			currentLocalGitBranch = getUpstreamLocalGitBranch();
-		}
+		LocalGitBranch upstreamLocalGitBranch = getUpstreamLocalGitBranch();
 
-		checkoutLocalGitBranch(currentLocalGitBranch);
+		checkoutLocalGitBranch(upstreamLocalGitBranch);
 
-		return currentLocalGitBranch;
+		return upstreamLocalGitBranch;
 	}
 
 	public String getGitConfigProperty(String gitConfigPropertyName) {

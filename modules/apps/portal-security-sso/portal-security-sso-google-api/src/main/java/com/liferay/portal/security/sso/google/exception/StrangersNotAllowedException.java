@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.security.sso.google;
+package com.liferay.portal.security.sso.google.exception;
 
 import com.liferay.portal.kernel.exception.PortalException;
 

@@ -50,9 +50,9 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.security.sso.google.GoogleAuthorization;
-import com.liferay.portal.security.sso.google.StrangersNotAllowedException;
 import com.liferay.portal.security.sso.google.configuration.GoogleAuthorizationConfiguration;
 import com.liferay.portal.security.sso.google.constants.GoogleConstants;
+import com.liferay.portal.security.sso.google.exception.StrangersNotAllowedException;
 import com.liferay.portal.security.sso.google.internal.constants.GoogleWebKeys;
 
 import java.util.Calendar;

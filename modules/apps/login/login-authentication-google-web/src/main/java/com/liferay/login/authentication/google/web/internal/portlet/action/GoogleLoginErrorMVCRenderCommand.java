@@ -27,7 +27,7 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.security.sso.google.GoogleAuthorization;
-import com.liferay.portal.security.sso.google.StrangersNotAllowedException;
+import com.liferay.portal.security.sso.google.exception.StrangersNotAllowedException;
 
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;

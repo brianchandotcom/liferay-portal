@@ -1122,7 +1122,7 @@ definition {
 		Form.gotoAddField(fieldType = "Text Field");
 
 // TODO: adding editFieldLabelMetalMetal macro
-		Form.editFieldLabelMetalMetal(fieldValue = "Text Field");
+		Form.editFieldLabelMetal(fieldValue = "Text Field");
 
 		Form.closeSidebar();
 

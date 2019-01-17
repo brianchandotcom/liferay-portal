@@ -33,39 +33,7 @@ import javax.portlet.RenderURL;
  */
 public class UsersAdminPortletURLUtil {
 
-	public static String createParentOrganizationViewTreeURL(
-			long organizationId, PortletRequest portletRequest,
-			PortletResponse portletResponse)
-		throws PortalException {
-
-		return createParentOrganizationViewTreeURL(
-			OrganizationLocalServiceUtil.fetchOrganization(organizationId),
-			portletRequest, portletResponse);
-	}
-
-	public static String createParentOrganizationViewTreeURL(
-			Organization organization, PortletRequest portletRequest,
-			PortletResponse portletResponse)
-		throws PortalException {
-
-		if ((organization != null) && !organization.isRoot()) {
-			long parentOrganizationId = organization.getParentOrganizationId();
-
-			if (OrganizationPermissionUtil.contains(
-					PermissionThreadLocal.getPermissionChecker(),
-					parentOrganizationId, ActionKeys.VIEW)) {
-
-				return _createOrganizationViewTreeURL(
-					parentOrganizationId, portletResponse);
-			}
-		}
-
-		return _createOrganizationViewTreeURL(
-			OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID,
-			portletResponse);
-	}
-
-	private static String _createOrganizationViewTreeURL(
+	public static String createOrganizationViewTreeURL(
 		long organizationId, PortletResponse portletResponse) {
 
 		RenderResponse renderResponse = (RenderResponse)portletResponse;
@@ -89,6 +57,38 @@ public class UsersAdminPortletURLUtil {
 		}
 
 		return String.valueOf(renderURL);
+	}
+
+	public static String createParentOrganizationViewTreeURL(
+			long organizationId, PortletRequest portletRequest,
+			PortletResponse portletResponse)
+		throws PortalException {
+
+		return createParentOrganizationViewTreeURL(
+			OrganizationLocalServiceUtil.fetchOrganization(organizationId),
+			portletRequest, portletResponse);
+	}
+
+	public static String createParentOrganizationViewTreeURL(
+			Organization organization, PortletRequest portletRequest,
+			PortletResponse portletResponse)
+		throws PortalException {
+
+		if ((organization != null) && !organization.isRoot()) {
+			long parentOrganizationId = organization.getParentOrganizationId();
+
+			if (OrganizationPermissionUtil.contains(
+					PermissionThreadLocal.getPermissionChecker(),
+					parentOrganizationId, ActionKeys.VIEW)) {
+
+				return createOrganizationViewTreeURL(
+					parentOrganizationId, portletResponse);
+			}
+		}
+
+		return createOrganizationViewTreeURL(
+			OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID,
+			portletResponse);
 	}
 
 }

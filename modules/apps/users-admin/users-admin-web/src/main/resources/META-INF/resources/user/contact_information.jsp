@@ -17,16 +17,6 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String backURL = ParamUtil.getString(request, "backURL");
-
-if (Validator.isNull(backURL)) {
-	PortletURL viewURL = renderResponse.createRenderURL();
-
-	backURL = viewURL.toString();
-
-	request.setAttribute("backURL", backURL);
-}
-
 User selUser = (User)request.getAttribute(UsersAdminWebKeys.SELECTED_USER);
 
 Contact selContact = null;
@@ -42,6 +32,10 @@ long selContactId = (selUser != null) ? selContact.getContactId() : 0;
 
 request.setAttribute("contact_information.jsp-className", Contact.class.getName());
 request.setAttribute("contact_information.jsp-classPK", selContactId);
+
+long parentOrganizationId = ParamUtil.getLong(request, "parentOrganizationId");
+
+request.setAttribute("parentOrganizationId", parentOrganizationId);
 %>
 
 <div class="sheet-section">

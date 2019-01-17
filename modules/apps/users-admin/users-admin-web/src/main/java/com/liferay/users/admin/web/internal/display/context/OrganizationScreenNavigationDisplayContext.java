@@ -45,6 +45,10 @@ public class OrganizationScreenNavigationDisplayContext {
 		return _organizationId;
 	}
 
+	public long getParentOrganizationId() {
+		return _organization.getParentOrganizationId();
+	}
+
 	public boolean isShowControls() {
 		return _showControls;
 	}

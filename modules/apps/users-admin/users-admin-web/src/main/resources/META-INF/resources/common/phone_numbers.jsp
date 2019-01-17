@@ -17,9 +17,9 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String backURL = (String)request.getAttribute("backURL");
 String className = (String)request.getAttribute("contact_information.jsp-className");
 long classPK = (long)request.getAttribute("contact_information.jsp-classPK");
+long parentOrganizationId = (long)request.getAttribute("parentOrganizationId");
 
 String emptyResultsMessage = ParamUtil.getString(request, "emptyResultsMessage");
 
@@ -34,13 +34,13 @@ List<Phone> phones = PhoneServiceUtil.getPhones(className, classPK);
 		<span class="heading-end">
 
 			<%
-						PortletURL editURL = liferayPortletResponse.createRenderURL();
+			PortletURL editURL = liferayPortletResponse.createRenderURL();
 
-			//			editURL.setParameter("backURL", backURL);
-						editURL.setParameter("className", className);
-						editURL.setParameter("classPK", String.valueOf(classPK));
-						editURL.setParameter("mvcRenderCommandName", "/users_admin/edit_phone_number");
-						editURL.setParameter("redirect", currentURL);
+			editURL.setParameter("className", className);
+			editURL.setParameter("classPK", String.valueOf(classPK));
+			editURL.setParameter("mvcRenderCommandName", "/users_admin/edit_phone_number");
+			editURL.setParameter("parentOrganizationId", String.valueOf(parentOrganizationId));
+			editURL.setParameter("redirect", currentURL);
 			%>
 
 			<liferay-ui:icon

@@ -1080,7 +1080,7 @@ AUI.add(
 						var validFiles = filesPartition.matches;
 
 						if (keyData) {
-							instance._updateDataSetEn trykey, keyData, validFiles);
+							instance._updateDataSetEntry(key, keyData, validFiles);
 						}
 						else {
 							var dataSet = instance._getDataSet();
@@ -1221,7 +1221,7 @@ AUI.add(
 					_startNextUpload: function(event) {
 						var instance = this;
 
-						instance._destroyEn try);
+						instance._destroyEntry();
 
 						var dataSet = instance._getDataSet();
 

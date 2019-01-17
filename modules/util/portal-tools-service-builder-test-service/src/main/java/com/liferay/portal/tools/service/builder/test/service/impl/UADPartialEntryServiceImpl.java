@@ -31,9 +31,11 @@ import com.liferay.portal.tools.service.builder.test.service.base.UADPartialEntr
  * @see com.liferay.portal.tools.service.builder.test.service.UADPartialEntryServiceUtil
  */
 public class UADPartialEntryServiceImpl extends UADPartialEntryServiceBaseImpl {
-	/*
+
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never reference this class directly. Always use {@link com.liferay.portal.tools.service.builder.test.service.UADPartialEntryServiceUtil} to access the uad partial entry remote service.
 	 */
+
 }

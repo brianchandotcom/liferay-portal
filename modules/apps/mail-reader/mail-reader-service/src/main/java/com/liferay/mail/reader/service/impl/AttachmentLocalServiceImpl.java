@@ -184,8 +184,13 @@ public class AttachmentLocalServiceImpl extends AttachmentLocalServiceBaseImpl {
 	}
 
 	protected String getFilePath(long messageId, String filename) {
-		return getDirectoryPath(messageId).concat(StringPool.SLASH).concat(
-			filename);
+		return getDirectoryPath(
+			messageId
+		).concat(
+			StringPool.SLASH
+		).concat(
+			filename
+		);
 	}
 
 	private static final String _DIRECTORY_PATH_PREFIX = "mail/";

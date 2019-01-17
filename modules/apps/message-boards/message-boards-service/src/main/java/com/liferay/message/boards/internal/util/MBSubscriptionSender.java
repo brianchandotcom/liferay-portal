@@ -91,7 +91,11 @@ public class MBSubscriptionSender
 		subject = GetterUtil.getString(subject);
 		mailId = GetterUtil.getString(mailId);
 
-		return subject.concat(StringPool.SPACE).concat(mailId);
+		return subject.concat(
+			StringPool.SPACE
+		).concat(
+			mailId
+		);
 	}
 
 	@Override

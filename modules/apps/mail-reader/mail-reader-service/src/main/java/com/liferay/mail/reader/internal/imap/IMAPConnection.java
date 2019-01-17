@@ -102,7 +102,10 @@ public class IMAPConnection {
 
 		try {
 			String storeKey = _incomingHostName.concat(
-				_outgoingHostName).concat(_login);
+				_outgoingHostName
+			).concat(
+				_login
+			);
 
 			if (useOldStores) {
 				store = _allStores.get(storeKey);

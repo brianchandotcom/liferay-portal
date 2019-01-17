@@ -1,4 +1,4 @@
-import {FRAGMENTS_EDITOR_ITEM_BORDERS} from '../reducers/placeholders.es';
+import {FRAGMENTS_EDITOR_ITEM_BORDERS} from '../utils/constants';
 
 const ARROW_DOWN_KEYCODE = 40;
 

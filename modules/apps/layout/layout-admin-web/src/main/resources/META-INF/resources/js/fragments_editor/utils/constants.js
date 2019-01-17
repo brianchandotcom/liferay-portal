@@ -19,3 +19,25 @@ export const CONTAINER_TYPES = {
 		label: Liferay.Language.get('fluid')
 	}
 };
+
+/**
+ * Fragments Editor item borders
+ * @review
+ * @type {!object}
+ */
+export const FRAGMENTS_EDITOR_ITEM_BORDERS = {
+	bottom: 'border-bottom',
+	top: 'border-top'
+};
+
+/**
+ * Fragments Editor item types
+ * @review
+ * @type {!object}
+ */
+export const FRAGMENTS_EDITOR_ITEM_TYPES = {
+	column: 'fragments-editor-column',
+	fragment: 'fragments-editor-fragment',
+	fragmentList: 'fragments-editor-fragment-list',
+	section: 'fragments-editor-section'
+};

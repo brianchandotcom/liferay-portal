@@ -1,6 +1,6 @@
 import {Config} from 'metal-state';
 
-import {FRAGMENTS_EDITOR_ITEM_BORDERS} from '../reducers/placeholders.es';
+import {FRAGMENTS_EDITOR_ITEM_BORDERS} from '../utils/constants';
 
 /**
  * Initial state

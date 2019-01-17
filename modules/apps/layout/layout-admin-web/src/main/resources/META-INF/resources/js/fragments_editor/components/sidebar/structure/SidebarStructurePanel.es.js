@@ -2,7 +2,7 @@ import Component from 'metal-component';
 import Soy from 'metal-soy';
 
 import '../fragments/FragmentsEditorSidebarCard.es';
-import {FRAGMENTS_EDITOR_ITEM_TYPES} from '../../../reducers/placeholders.es';
+import {FRAGMENTS_EDITOR_ITEM_TYPES} from '../../../utils/constants';
 import {focusItem, setIn} from '../../../utils/FragmentsEditorUpdateUtils.es';
 import {getConnectedComponent} from '../../../store/ConnectedComponent.es';
 import {

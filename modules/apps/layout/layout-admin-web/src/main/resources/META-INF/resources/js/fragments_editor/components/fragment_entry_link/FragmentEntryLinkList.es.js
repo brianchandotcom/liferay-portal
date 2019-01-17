@@ -21,7 +21,7 @@ import {
 import {
 	FRAGMENTS_EDITOR_ITEM_BORDERS,
 	FRAGMENTS_EDITOR_ITEM_TYPES
-} from '../../reducers/placeholders.es';
+} from '../../utils/constants';
 import {
 	getFragmentColumn,
 	getItemMoveDirection,

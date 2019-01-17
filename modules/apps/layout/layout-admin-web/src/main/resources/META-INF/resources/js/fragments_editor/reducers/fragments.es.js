@@ -4,7 +4,7 @@ import {
 	REMOVE_FRAGMENT_ENTRY_LINK,
 	UPDATE_EDITABLE_VALUE
 } from '../actions/actions.es';
-import {FRAGMENTS_EDITOR_ITEM_BORDERS, FRAGMENTS_EDITOR_ITEM_TYPES} from './placeholders.es';
+import {FRAGMENTS_EDITOR_ITEM_BORDERS, FRAGMENTS_EDITOR_ITEM_TYPES} from '../utils/constants';
 import {
 	EDITABLE_FRAGMENT_ENTRY_PROCESSOR
 } from '../components/fragment_entry_link/FragmentEntryLinkContent.es';

@@ -4,7 +4,7 @@ import {
 	UPDATE_LAST_SAVE_DATE,
 	UPDATE_SAVING_CHANGES_STATUS
 } from '../actions/actions.es';
-import {FRAGMENTS_EDITOR_ITEM_TYPES} from '../reducers/placeholders.es';
+import {FRAGMENTS_EDITOR_ITEM_TYPES} from '../utils/constants';
 
 /**
  * Inserts an element in the given position of a given array and returns

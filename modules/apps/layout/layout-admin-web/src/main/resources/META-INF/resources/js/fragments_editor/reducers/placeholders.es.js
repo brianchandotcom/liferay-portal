@@ -9,28 +9,6 @@ import {
 } from '../actions/actions.es';
 
 /**
- * Fragments Editor item borders
- * @review
- * @type {!object}
- */
-const FRAGMENTS_EDITOR_ITEM_BORDERS = {
-	bottom: 'border-bottom',
-	top: 'border-top'
-};
-
-/**
- * Fragments Editor item types
- * @review
- * @type {!object}
- */
-const FRAGMENTS_EDITOR_ITEM_TYPES = {
-	column: 'fragments-editor-column',
-	fragment: 'fragments-editor-fragment',
-	fragmentList: 'fragments-editor-fragment-list',
-	section: 'fragments-editor-section'
-};
-
-/**
  * Updates active element data with the information sent.
  * @param {!object} state
  * @param {UPDATE_ACTIVE_ITEM} actionType
@@ -139,8 +117,6 @@ function updateHoveredItemReducer(state, actionType, payload) {
 }
 
 export {
-	FRAGMENTS_EDITOR_ITEM_BORDERS,
-	FRAGMENTS_EDITOR_ITEM_TYPES,
 	updateActiveItemReducer,
 	updateDropTargetReducer,
 	updateHighlightMappingReducer,

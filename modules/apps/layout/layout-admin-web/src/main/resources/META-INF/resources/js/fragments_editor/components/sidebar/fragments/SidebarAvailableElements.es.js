@@ -15,7 +15,7 @@ import {
 import {
 	FRAGMENTS_EDITOR_ITEM_BORDERS,
 	FRAGMENTS_EDITOR_ITEM_TYPES
-} from '../../../reducers/placeholders.es';
+} from '../../../utils/constants';
 import {getConnectedComponent} from '../../../store/ConnectedComponent.es';
 import templates from './SidebarAvailableElements.soy';
 

@@ -2,7 +2,7 @@ import position from 'metal-position';
 import {Drag, DragDrop} from 'metal-drag-drop';
 import State from 'metal-state';
 
-import {FRAGMENTS_EDITOR_ITEM_BORDERS} from '../../../../reducers/placeholders.es';
+import {FRAGMENTS_EDITOR_ITEM_BORDERS} from '../../../../utils/constants';
 
 /**
  * SidebarLayoutsDragDrop

@@ -240,11 +240,21 @@ public class ScopeLocatorImplTest extends PowerMockito {
 		for (String scope : scopesSet1) {
 			Assert.assertThat(
 				application1ScopesAliases,
-				hasItems(appScopeMapper.map(scope).toArray(new String[0])));
+				hasItems(
+					appScopeMapper.map(
+						scope
+					).toArray(
+						new String[0]
+					)));
 
 			Assert.assertThat(
 				application2ScopesAliases,
-				hasItems(companyScopeMapper.map(scope).toArray(new String[0])));
+				hasItems(
+					companyScopeMapper.map(
+						scope
+					).toArray(
+						new String[0]
+					)));
 		}
 	}
 
@@ -361,7 +371,8 @@ public class ScopeLocatorImplTest extends PowerMockito {
 
 		return stream.flatMap(
 			liferayOAuth2Scope -> Collections.singleton(
-				liferayOAuth2Scope.getScope()).stream()
+				liferayOAuth2Scope.getScope()
+			).stream()
 		).collect(
 			Collectors.toSet()
 		);

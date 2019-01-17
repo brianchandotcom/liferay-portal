@@ -125,15 +125,19 @@ public class TokenExpeditionTest extends BaseClientTestCase {
 		Assert.assertEquals(
 			"everything.read", invocationBuilder.get(String.class));
 
-		invocationBuilder =
-			webTarget.request().header("Authorization", "Bearer ");
+		invocationBuilder = webTarget.request(
+		).header(
+			"Authorization", "Bearer "
+		);
 
 		Response response = invocationBuilder.get();
 
 		Assert.assertEquals(403, response.getStatus());
 
-		invocationBuilder =
-			webTarget.request().header("Authorization", "Bearer wrong");
+		invocationBuilder = webTarget.request(
+		).header(
+			"Authorization", "Bearer wrong"
+		);
 
 		response = invocationBuilder.get();
 

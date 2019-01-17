@@ -207,8 +207,13 @@ public class GetFileActionHelper {
 				id, is, sourceExtension, targetExtension);
 
 			if (convertedFile != null) {
-				fileName = FileUtil.stripExtension(fileName).concat(
-					StringPool.PERIOD).concat(targetExtension);
+				fileName = FileUtil.stripExtension(
+					fileName
+				).concat(
+					StringPool.PERIOD
+				).concat(
+					targetExtension
+				);
 				is = new FileInputStream(convertedFile);
 				contentLength = convertedFile.length();
 				contentType = MimeTypesUtil.getContentType(fileName);

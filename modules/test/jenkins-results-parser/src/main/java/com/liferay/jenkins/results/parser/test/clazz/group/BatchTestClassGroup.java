@@ -270,6 +270,9 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 						relevantTestBatchNames.split(",")) {
 
 					if (relevantTestBatchName.startsWith("integration-") ||
+						relevantTestBatchName.startsWith(
+							"modules-integration") ||
+						relevantTestBatchName.startsWith("modules-unit") ||
 						relevantTestBatchName.startsWith("unit-")) {
 
 						relevantIntegrationUnitBatchList.add(

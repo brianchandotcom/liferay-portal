@@ -102,9 +102,10 @@ public class AssetTagsSelectorTag extends IncludeTag {
 		String id = _id;
 
 		if (Validator.isNull(id)) {
-			id = PortalUtil.generateRandomKey(
-				request,
-				"taglib_ui_asset_tags_selector_page") + StringPool.UNDERLINE;
+			String randomKey = PortalUtil.generateRandomKey(
+				request, "taglib_ui_asset_tags_selector_page");
+
+			id = randomKey + StringPool.UNDERLINE;
 		}
 
 		request.setAttribute(

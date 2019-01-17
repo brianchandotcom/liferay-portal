@@ -46,9 +46,11 @@ public class MBMessageBBCodeFormatUploadHandler
 		for (MBAttachmentFileEntryReference mbAttachmentFileEntryReference :
 				mbAttachmentFileEntryReferences) {
 
-			Matcher matcher = _getTempImagePattern(
+			Pattern pattern = _getTempImagePattern(
 				mbAttachmentFileEntryReference.
-					getTempMBAttachmentFileEntryId()).matcher(content);
+					getTempMBAttachmentFileEntryId());
+
+			Matcher matcher = pattern.matcher(content);
 
 			content = matcher.replaceAll(
 				_getMBAttachmentFileEntryBBCodeImgTag(

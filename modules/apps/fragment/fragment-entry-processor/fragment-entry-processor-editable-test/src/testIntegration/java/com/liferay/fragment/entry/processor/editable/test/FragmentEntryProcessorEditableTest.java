@@ -15,6 +15,7 @@
 package com.liferay.fragment.entry.processor.editable.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.fragment.constants.FragmentEntryLinkConstants;
 import com.liferay.fragment.exception.FragmentEntryContentException;
 import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.model.FragmentEntry;
@@ -35,6 +36,7 @@ import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
@@ -89,6 +91,29 @@ public class FragmentEntryProcessorEditableTest {
 			_getBodyElementHtmlAsString("processed_fragment_entry.html"),
 			_fragmentEntryProcessorRegistry.processFragmentEntryLinkHTML(
 				fragmentEntryLink));
+	}
+
+	@Test
+	public void testFragmentEntryProcessorEditableMatchingLanguage()
+		throws Exception {
+
+		FragmentEntry fragmentEntry = _createFragmentEntry(
+			"fragment_entry.html");
+
+		FragmentEntryLink fragmentEntryLink =
+			FragmentEntryLinkLocalServiceUtil.createFragmentEntryLink(0);
+
+		fragmentEntryLink.setHtml(fragmentEntry.getHtml());
+
+		fragmentEntryLink.setEditableValues(
+			_getJsonFileAsString(
+				"fragment_entry_link_editable_values_matching_language.json"));
+
+		Assert.assertEquals(
+			_getBodyElementHtmlAsString("processed_fragment_entry.html"),
+			_fragmentEntryProcessorRegistry.processFragmentEntryLinkHTML(
+				fragmentEntryLink, FragmentEntryLinkConstants.EDIT,
+				LocaleUtil.US));
 	}
 
 	@Test(expected = FragmentEntryContentException.class)

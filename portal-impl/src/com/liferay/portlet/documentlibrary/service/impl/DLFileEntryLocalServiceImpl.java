@@ -2549,13 +2549,15 @@ public class DLFileEntryLocalServiceImpl
 			updateDLStore = true;
 		}
 
-		if (autoCheckIn && updateDLStore) {
-			dlFileEntry = _checkOutDLFileEntryModel(
-				userId, fileEntryId, fileEntryTypeId, serviceContext);
-		}
-		else if (autoCheckIn && !updateDLStore) {
-			dlFileEntry = checkOutFileEntry(
-				userId, fileEntryId, fileEntryTypeId, serviceContext);
+		if (autoCheckIn) {
+			if (updateDLStore) {
+				dlFileEntry = _checkOutDLFileEntryModel(
+					userId, fileEntryId, fileEntryTypeId, serviceContext);
+			}
+			else {
+				dlFileEntry = checkOutFileEntry(
+					userId, fileEntryId, fileEntryTypeId, serviceContext);
+			}
 		}
 		else if (!checkedOut) {
 			lockFileEntry(userId, fileEntryId);

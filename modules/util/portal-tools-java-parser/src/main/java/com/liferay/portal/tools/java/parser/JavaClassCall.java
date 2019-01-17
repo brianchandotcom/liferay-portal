@@ -36,12 +36,20 @@ public class JavaClassCall extends JavaExpression {
 		return _hasBody;
 	}
 
+	public boolean hasParameterValueJavaExpressions() {
+		return !_parameterValueJavaExpressions.isEmpty();
+	}
+
 	public void setEmptyBody(boolean emptyBody) {
 		_emptyBody = emptyBody;
 	}
 
 	public void setHasBody(boolean hasBody) {
 		_hasBody = hasBody;
+	}
+
+	public void setUseChainStyle(boolean useChainStyle) {
+		_useChainStyle = useChainStyle;
 	}
 
 	@Override
@@ -88,7 +96,16 @@ public class JavaClassCall extends JavaExpression {
 		}
 
 		if (!_parameterValueJavaExpressions.isEmpty()) {
-			if (forceLineBreak && !_hasBody) {
+			if (_useChainStyle) {
+				appendNewLine(
+					sb, _parameterValueJavaExpressions, indent, maxLineLength);
+
+				sb.append("\n");
+				sb.append(originalIndent);
+				sb.append(")");
+				sb.append(suffix);
+			}
+			else if (forceLineBreak && !_hasBody) {
 				appendNewLine(
 					sb, _parameterValueJavaExpressions, indent, "",
 					")" + suffix, maxLineLength);
@@ -126,5 +143,6 @@ public class JavaClassCall extends JavaExpression {
 	private final List<JavaType> _genericJavaTypes;
 	private boolean _hasBody;
 	private final List<JavaExpression> _parameterValueJavaExpressions;
+	private boolean _useChainStyle;
 
 }

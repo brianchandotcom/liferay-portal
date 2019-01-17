@@ -407,24 +407,22 @@ class LayoutProvider extends Component {
 	}
 
 	@autobind
-	_handleFocusedFieldChanged(focusedField) {
+	_handleFocusedFieldUpdated(focusedField) {
 		const {columnIndex, pageIndex, rowIndex} = focusedField;
-		let {pages} = this.state;
-
-		pages = this._setColumnFields(
-			pages,
-			{
-				columnIndex,
-				pageIndex,
-				rowIndex
-			},
-			[focusedField]
-		);
+		const {pages} = this.state;
 
 		this.setState(
 			{
 				focusedField,
-				pages
+				pages: this._setColumnFields(
+					pages,
+					{
+						columnIndex,
+						pageIndex,
+						rowIndex
+					},
+					[focusedField]
+				)
 			}
 		);
 	}
@@ -659,7 +657,7 @@ class LayoutProvider extends Component {
 				fieldDuplicated: this._handleFieldDuplicated.bind(this),
 				fieldEdited: this._handleFieldEdited.bind(this),
 				fieldMoved: this._handleFieldMoved.bind(this),
-				focusedFieldUpdated: this._handleFocusedFieldChanged,
+				focusedFieldUpdated: this._handleFocusedFieldUpdated,
 				pageAdded: this._handlePageAdded.bind(this),
 				pageDeleted: this._handlePageDeleted.bind(this),
 				pageReset: this._handlePageReset.bind(this),

@@ -394,7 +394,7 @@ class Builder extends Component {
 	 * @private
 	 */
 	@autobind
-	_handleFocusedFieldChanged(focusedField) {
+	_handleFocusedFieldUpdated(focusedField) {
 		this.emit('focusedFieldUpdated', focusedField);
 	}
 
@@ -562,7 +562,7 @@ class Builder extends Component {
 			fieldDeleted: this._handleDeleteFieldClicked.bind(this),
 			fieldDuplicated: this._handleFieldDuplicated,
 			fieldEdited: this._handleFieldEdited.bind(this),
-			focusedFieldUpdated: this._handleFocusedFieldChanged
+			focusedFieldUpdated: this._handleFocusedFieldUpdated
 		};
 
 		return (

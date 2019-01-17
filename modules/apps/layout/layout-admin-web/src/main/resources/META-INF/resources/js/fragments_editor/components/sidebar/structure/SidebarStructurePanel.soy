@@ -220,34 +220,63 @@
 		{if $elementId and ($activeItemId == $elementId) and ($activeItemType == $elementType)}
 			{sp}active
 		{/if}
-
-		{if $hasChildren}
-			{sp}collapse-icon
-
-			{if not $expanded}
-				{sp}collapsed
-			{/if}
-		{/if}
 	{/let}
 
 	{let $elementAttributes kind="attributes"}
-		aria-controls="{$treeLevelId}"
 		class="{$elementClasses}"
-		data-toggle="collapse"
-		href="#{$treeLevelId}"
-		role="button"
 
 		{if $elementId}
 			data-element-id="{$elementId}"
-		{/if}
-
-		{if $elementType}
 			data-element-type="{$elementType}"
-		{/if}
-
-		{if $clickHandler}
 			data-onclick="{$clickHandler}"
 		{/if}
+	{/let}
+
+	<div {$elementAttributes}>
+
+		{$elementName}
+
+		{if $hasChildren}
+			{call .collapseIcon}
+				{param expanded: $expanded /}
+				{param icon: 'closed' /}
+				{param spritemap: $spritemap /}
+				{param treeLevelId: $treeLevelId /}
+			{/call}
+
+			{call .collapseIcon}
+				{param expanded: $expanded /}
+				{param icon: 'open' /}
+				{param spritemap: $spritemap /}
+				{param treeLevelId: $treeLevelId /}
+			{/call}
+		{/if}
+	</div>
+{/template}
+
+/**
+ * Collapse Icon
+ */
+{template .collapseIcon}
+	{@param icon: string}
+	{@param? expanded: bool}
+	{@param? spritemap: string}
+	{@param? treeLevelId: string}
+
+	{let $collapseIconWrapperClasses kind="text"}
+		collapse-icon
+
+		{if not $expanded}
+			{sp}collapsed
+		{/if}
+	{/let}
+
+	{let $collapseIconAttributes kind="attributes"}
+		aria-controls="{$treeLevelId}"
+		class="collapse-icon-{$icon}"
+		data-toggle="collapse"
+		href="#{$treeLevelId}"
+		role="button"
 
 		{if $expanded}
 			aria-expanded="true"
@@ -256,22 +285,19 @@
 		{/if}
 	{/let}
 
-	<a {$elementAttributes}>
+	<span class="{$collapseIconWrapperClasses}">
+		<a {$collapseIconAttributes}>
+			{let $angleDirection kind="text"}
+				{if $icon == 'closed'}
+					right
+				{else}
+					down
+				{/if}
+			{/let}
 
-		{$elementName}
-
-		{if $hasChildren}
-			<span class="collapse-icon-closed">
-				<svg class="lexicon-icon lexicon-icon-angle-right">
-					<use xlink:href="{$spritemap}#angle-right"></use>
-				</svg>
-			</span>
-
-			<span class="collapse-icon-open">
-				<svg class="lexicon-icon lexicon-icon-angle-bottom">
-					<use xlink:href="{$spritemap}#angle-bottom"></use>
-				</svg>
-			</span>
-		{/if}
-	</a>
+			<svg class="lexicon-icon lexicon-icon-angle-{$angleDirection}">
+				<use xlink:href="{$spritemap}#angle-{$angleDirection}"></use>
+			</svg>
+		</a>
+	</span>
 {/template}

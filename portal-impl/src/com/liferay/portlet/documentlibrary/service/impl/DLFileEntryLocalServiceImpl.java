@@ -446,7 +446,7 @@ public class DLFileEntryLocalServiceImpl
 
 		String version = dlFileVersion.getVersion();
 
-		DLFileEntry dlFileEntry = _checkOutFileEntryObject(
+		DLFileEntry dlFileEntry = _checkOutDLFileEntryModel(
 			userId, fileEntryId, fileEntryTypeId, owner, expirationTime,
 			serviceContext);
 
@@ -2550,7 +2550,7 @@ public class DLFileEntryLocalServiceImpl
 		}
 
 		if (autoCheckIn && updateDLStore) {
-			dlFileEntry = _checkOutFileEntryObject(
+			dlFileEntry = _checkOutDLFileEntryModel(
 				userId, fileEntryId, fileEntryTypeId, serviceContext);
 		}
 		else if (autoCheckIn && !updateDLStore) {
@@ -2792,17 +2792,17 @@ public class DLFileEntryLocalServiceImpl
 	@BeanReference(type = DLFileVersionPolicy.class)
 	protected DLFileVersionPolicy dlFileVersionPolicy;
 
-	private DLFileEntry _checkOutFileEntryObject(
+	private DLFileEntry _checkOutDLFileEntryModel(
 			long userId, long fileEntryId, long fileEntryTypeId,
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		return _checkOutFileEntryObject(
+		return _checkOutDLFileEntryModel(
 			userId, fileEntryId, fileEntryTypeId, StringPool.BLANK,
 			DLFileEntryImpl.LOCK_EXPIRATION_TIME, serviceContext);
 	}
 
-	private DLFileEntry _checkOutFileEntryObject(
+	private DLFileEntry _checkOutDLFileEntryModel(
 			long userId, long fileEntryId, long fileEntryTypeId, String owner,
 			long expirationTime, ServiceContext serviceContext)
 		throws PortalException {

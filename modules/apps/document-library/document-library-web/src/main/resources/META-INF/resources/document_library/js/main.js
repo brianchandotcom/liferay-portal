@@ -34,6 +34,10 @@ AUI.add(
 						validator: Lang.isString
 					},
 
+					npmResolvedPackageName: {
+						validator: Lang.isString
+					},
+
 					searchContainerId: {
 						validator: Lang.isString
 					},
@@ -256,7 +260,7 @@ AUI.add(
 							var urlUpdateTags = themeDisplay.getPortalURL() + '/o/bulk/asset/tags/' + instance.get('classNameId');
 
 							Liferay.Loader.require(
-								'document-library-web/document_library/tags/EditTags.es',
+								instance.get('npmResolvedPackageName') + '/document_library/tags/EditTags.es',
 								function(EditTags) {
 									instance._editTagsComponent = new EditTags.default(
 										{

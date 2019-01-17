@@ -230,6 +230,7 @@ String navigation = ParamUtil.getString(request, "navigation");
 						moveEntryUrl: '<portlet:renderURL><portlet:param name="mvcRenderCommandName" value="/document_library/move_entry" /><portlet:param name="redirect" value="<%= currentURL %>" /><portlet:param name="newFolderId" value="<%= String.valueOf(folderId) %>" /></portlet:renderURL>',
 						editTagsUrl: '<portlet:renderURL><portlet:param name="mvcRenderCommandName" value="/document_library/edit_tags" /><portlet:param name="redirect" value="<%= currentURL %>" /></portlet:renderURL>',
 						namespace: '<portlet:namespace />',
+						npmResolvedPackageName: '<%= npmResolvedPackageName %>',
 						portletId: '<%= HtmlUtil.escapeJS(portletId) %>',
 						redirect: encodeURIComponent('<%= currentURL %>'),
 						repositories: [

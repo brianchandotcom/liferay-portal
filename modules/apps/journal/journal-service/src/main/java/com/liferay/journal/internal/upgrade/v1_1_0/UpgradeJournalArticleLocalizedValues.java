@@ -163,8 +163,8 @@ public class UpgradeJournalArticleLocalizedValues extends UpgradeProcess {
 					if ((localizedTitle != null) &&
 						(localizedTitle.length() > _MAX_LENGTH_TITLE)) {
 
-						localizedTitle = localizedTitle.substring(
-							0, _MAX_LENGTH_TITLE);
+						localizedTitle = StringUtil.shorten(
+							localizedTitle, _MAX_LENGTH_TITLE);
 
 						_log(articleId, "title");
 					}

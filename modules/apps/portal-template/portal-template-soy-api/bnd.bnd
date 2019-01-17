@@ -4,4 +4,4 @@ Bundle-Version: 2.0.0
 Export-Package:\
 	com.liferay.portal.template.soy.constants,\
 	com.liferay.portal.template.soy.data,\
-	com.liferay.portal.template.soy.utils
+	com.liferay.portal.template.soy.util

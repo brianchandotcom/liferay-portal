@@ -55,8 +55,7 @@ public class JMXOSGiProtocol implements Protocol<JMXProtocolConfiguration> {
 
 		JMXContext jmxContext = iterator.next();
 
-		return new JMXMethodExecutor(
-			jmxContext.getConnection(), commandCallback);
+		return new JMXMethodExecutor(jmxContext.getConnection());
 	}
 
 	@Override

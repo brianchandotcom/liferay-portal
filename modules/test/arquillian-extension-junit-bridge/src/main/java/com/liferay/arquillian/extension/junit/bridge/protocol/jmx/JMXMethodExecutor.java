@@ -18,13 +18,9 @@ import java.lang.reflect.Method;
 
 import javax.management.MBeanServerConnection;
 import javax.management.MBeanServerInvocationHandler;
-import javax.management.Notification;
-import javax.management.NotificationListener;
 import javax.management.ObjectName;
 
 import org.jboss.arquillian.container.test.spi.ContainerMethodExecutor;
-import org.jboss.arquillian.container.test.spi.command.Command;
-import org.jboss.arquillian.container.test.spi.command.CommandCallback;
 import org.jboss.arquillian.test.spi.TestMethodExecutor;
 import org.jboss.arquillian.test.spi.TestResult;
 
@@ -33,12 +29,8 @@ import org.jboss.arquillian.test.spi.TestResult;
  */
 public class JMXMethodExecutor implements ContainerMethodExecutor {
 
-	public JMXMethodExecutor(
-		MBeanServerConnection mBeanServerConnection,
-		CommandCallback commandCallback) {
-
+	public JMXMethodExecutor(MBeanServerConnection mBeanServerConnection) {
 		_mBeanServerConnection = mBeanServerConnection;
-		_commandCallback = commandCallback;
 	}
 
 	@Override
@@ -53,19 +45,10 @@ public class JMXMethodExecutor implements ContainerMethodExecutor {
 
 		Method testMethod = testMethodExecutor.getMethod();
 
-		NotificationListener commandListener = null;
-
-		ObjectName objectName = null;
-
 		TestResult result = null;
 
 		try {
-			objectName = new ObjectName(JMXTestRunner.OBJECT_NAME);
-
-			commandListener = new CallbackNotificationListener(objectName);
-
-			_mBeanServerConnection.addNotificationListener(
-				objectName, commandListener, null, null);
+			ObjectName objectName = new ObjectName(JMXTestRunner.OBJECT_NAME);
 
 			JMXTestRunnerMBean testRunner = _getMBeanProxy(
 				objectName, JMXTestRunnerMBean.class);
@@ -80,15 +63,6 @@ public class JMXMethodExecutor implements ContainerMethodExecutor {
 		}
 		finally {
 			result.setEnd(System.currentTimeMillis());
-
-			if ((objectName != null) && (commandListener != null)) {
-				try {
-					_mBeanServerConnection.removeNotificationListener(
-						objectName, commandListener);
-				}
-				catch (Exception e) {
-				}
-			}
 		}
 
 		return result;
@@ -99,43 +73,6 @@ public class JMXMethodExecutor implements ContainerMethodExecutor {
 			_mBeanServerConnection, objectName, clazz, false);
 	}
 
-	private final CommandCallback _commandCallback;
 	private final MBeanServerConnection _mBeanServerConnection;
-
-	private class CallbackNotificationListener implements NotificationListener {
-
-		public CallbackNotificationListener(ObjectName serviceName) {
-			_serviceName = serviceName;
-		}
-
-		@Override
-		public void handleNotification(
-			Notification notification, Object handback) {
-
-			String message = notification.getMessage();
-
-			Command<?> command = Serializer.toObject(
-				Command.class, (byte[])notification.getUserData());
-
-			_commandCallback.fired(command);
-
-			try {
-				_mBeanServerConnection.invoke(
-					_serviceName, "push",
-					new Object[] {message, Serializer.toByteArray(command)},
-					new String[] {
-						String.class.getName(), byte[].class.getName()
-					});
-			}
-			catch (Exception e) {
-				throw new RuntimeException(
-					"Could not return command result for command " + command,
-					e);
-			}
-		}
-
-		private final ObjectName _serviceName;
-
-	}
 
 }

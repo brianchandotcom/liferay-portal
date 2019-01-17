@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.model.ClassName;
 import com.liferay.portal.kernel.model.ClassNameWrapper;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.search.Document;
-import com.liferay.portal.kernel.search.IndexerRegistry;
 import com.liferay.portal.kernel.search.RelatedSearchResult;
 import com.liferay.portal.kernel.search.SearchResult;
 import com.liferay.portal.kernel.search.result.SearchResultTranslator;
@@ -30,7 +29,6 @@ import com.liferay.portal.kernel.util.FastDateFormatFactory;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.ProxyFactory;
 import com.liferay.registry.BasicRegistryImpl;
-import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 
 import java.util.Collections;
@@ -47,10 +45,8 @@ public abstract class BaseSearchResultUtilTestCase {
 	@Before
 	public void setUp() throws Exception {
 		setUpRegistryUtil();
-
 		setUpClassNameLocalService();
 		setUpFastDateFormatFactoryUtil();
-		setUpIndexerRegistry();
 		setUpPropsUtil();
 		setUpSearchResultTranslator();
 	}
@@ -124,13 +120,6 @@ public abstract class BaseSearchResultUtilTestCase {
 
 		fastDateFormatFactoryUtil.setFastDateFormatFactory(
 			ProxyFactory.newDummyInstance(FastDateFormatFactory.class));
-	}
-
-	protected void setUpIndexerRegistry() {
-		Registry registry = RegistryUtil.getRegistry();
-
-		registry.registerService(
-			IndexerRegistry.class, new TestIndexerRegistry());
 	}
 
 	protected void setUpPropsUtil() {

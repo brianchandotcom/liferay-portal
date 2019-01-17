@@ -164,6 +164,48 @@ definition {
 		);
 	}
 
+	@description = "This is a test for LPS-86191. User can configure display page settings for any created display page, even if the display page is in draft status."
+	@priority = "5"
+	test ConfigureDraftStatusDisplayPage {
+		task ("Navigate back to Display Pages Admin without publishing") {
+			DisplayPagesAdmin.openDisplayPagesAdmin(
+				siteURLKey = "test-site-name"
+			);
+		}
+
+		task ("Configure the draft status display page") {
+			LexiconEntry.gotoEntryMenuItem(
+				menuItem = "Configure",
+				rowEntry = "Display Page Name"
+			);
+
+			Navigator.gotoNavTab(navTab = "Look and Feel");
+
+			Click(locator1 = "Radio#SPECIFIC_LOOK");
+
+			Uncheck.uncheckToggleSwitch(
+				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH",
+				key_toggleSwitchLabel = "Show Footer"
+			);
+
+			Button.clickSave();
+		}
+
+		task ("Assert the configuration saved properly") {
+			LexiconEntry.gotoEntryMenuItem(
+				menuItem = "Configure",
+				rowEntry = "Display Page Name"
+			);
+
+			Navigator.gotoNavTab(navTab = "Look and Feel");
+
+			AssertNotChecked.assertNotCheckedNotVisible(
+				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH",
+				key_toggleSwitchLabel = "Show Footer"
+			);
+		}
+	}
+
 	@description = "User can delete display pages."
 	@priority = "5"
 	test DeleteDisplayPage {

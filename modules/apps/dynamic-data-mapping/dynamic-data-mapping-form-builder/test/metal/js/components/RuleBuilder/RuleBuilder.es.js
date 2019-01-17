@@ -167,6 +167,12 @@ describe(
 
 				dom.enterDocument('<button id="addFieldButton" class="hide"></button>');
 
+				fetch.mockResponse(
+					JSON.stringify(
+						[]
+					)
+				);
+
 				component = new RuleBuilder(baseConfig);
 			}
 		);
@@ -277,6 +283,8 @@ describe(
 				component = new RuleBuilder(baseConfig);
 
 				expect(spy).toHaveBeenCalledWith(component.props.url, expect.anything());
+
+				spy.mockRestore();
 			}
 		);
 

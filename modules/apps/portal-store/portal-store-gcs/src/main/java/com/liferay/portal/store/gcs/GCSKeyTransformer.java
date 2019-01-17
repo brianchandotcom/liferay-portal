@@ -12,12 +12,12 @@
  * details.
  */
 
-package com.liferay.portal.store.gcs.key.manipulation;
+package com.liferay.portal.store.gcs;
 
 /**
  * @author Shanon Mathai
  */
-public interface KeyTransformer {
+public interface GCSKeyTransformer {
 
 	public String getDirectoryKey(
 		long companyId, long repositoryId, String folderName);

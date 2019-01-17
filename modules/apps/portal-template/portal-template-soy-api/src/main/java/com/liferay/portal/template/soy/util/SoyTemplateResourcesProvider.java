@@ -12,19 +12,22 @@
  * details.
  */
 
-package com.liferay.portal.template.soy.utils;
+package com.liferay.portal.template.soy.util;
+
+import com.liferay.portal.kernel.template.TemplateResource;
+
+import java.util.List;
+
+import org.osgi.framework.Bundle;
 
 /**
- * This interface can be implemented by any specialized class that is capable
- * of returning a low level value for the Soy template system. Such low level
- * value will be passed to Soy engine verbatim, without any smart/additional
- * type conversion.
- *
- * @author Leonardo Barros
- * @review
+ * @author Miguel Pastor
  */
-public interface SoyRawData {
+public interface SoyTemplateResourcesProvider {
 
-	public Object getValue();
+	public List<TemplateResource> getAllTemplateResources();
+
+	public List<TemplateResource> getBundleTemplateResources(
+		Bundle bundle, String templatePath);
 
 }

@@ -12,22 +12,17 @@
  * details.
  */
 
-package com.liferay.portal.template.soy.utils;
+package com.liferay.portal.template.soy.util;
 
-import com.liferay.portal.kernel.template.TemplateResource;
-
-import java.util.List;
-
-import org.osgi.framework.Bundle;
+import java.util.Map;
 
 /**
- * @author Miguel Pastor
+ * @author Matthew Tambara
  */
-public interface SoyTemplateResourcesProvider {
+public interface SoyContextFactory {
 
-	public List<TemplateResource> getAllTemplateResources();
+	public SoyContext createSoyContext();
 
-	public List<TemplateResource> getBundleTemplateResources(
-		Bundle bundle, String templatePath);
+	public SoyContext createSoyContext(Map<String, Object> context);
 
 }

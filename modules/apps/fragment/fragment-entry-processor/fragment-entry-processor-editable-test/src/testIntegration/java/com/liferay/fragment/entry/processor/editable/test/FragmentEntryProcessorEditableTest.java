@@ -93,6 +93,28 @@ public class FragmentEntryProcessorEditableTest {
 				fragmentEntryLink));
 	}
 
+	@Test
+	public void testFragmentEntryProcessorEditableCompatibility()
+		throws Exception {
+
+		FragmentEntry fragmentEntry = _createFragmentEntry(
+			"fragment_entry.html");
+
+		FragmentEntryLink fragmentEntryLink =
+			FragmentEntryLinkLocalServiceUtil.createFragmentEntryLink(0);
+
+		fragmentEntryLink.setHtml(fragmentEntry.getHtml());
+
+		fragmentEntryLink.setEditableValues(
+			_getJsonFileAsString(
+				"fragment_entry_link_editable_values_compatibility.json"));
+
+		Assert.assertEquals(
+			_getBodyElementHtmlAsString("processed_fragment_entry.html"),
+			_fragmentEntryProcessorRegistry.processFragmentEntryLinkHTML(
+				fragmentEntryLink));
+	}
+
 	@Test(expected = FragmentEntryContentException.class)
 	public void testFragmentEntryProcessorEditableWithDuplicateIds()
 		throws Exception {

@@ -226,6 +226,15 @@ public class AssetEntryUsagePersistenceTest {
 	}
 
 	@Test
+	public void testCountByA_P() throws Exception {
+		_persistence.countByA_P(RandomTestUtil.nextLong(), "");
+
+		_persistence.countByA_P(0L, "null");
+
+		_persistence.countByA_P(0L, (String)null);
+	}
+
+	@Test
 	public void testCountByC_C_P() throws Exception {
 		_persistence.countByC_C_P(RandomTestUtil.nextLong(),
 			RandomTestUtil.nextLong(), "");

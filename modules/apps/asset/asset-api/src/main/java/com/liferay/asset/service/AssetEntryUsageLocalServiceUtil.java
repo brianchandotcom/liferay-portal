@@ -342,6 +342,11 @@ public class AssetEntryUsageLocalServiceUtil {
 		return getService().getAssetEntryUsagesCount(assetEntryId, classNameId);
 	}
 
+	public static int getAssetEntryUsagesCount(long assetEntryId,
+		String portletId) {
+		return getService().getAssetEntryUsagesCount(assetEntryId, portletId);
+	}
+
 	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
 		com.liferay.exportimport.kernel.lar.PortletDataContext portletDataContext) {
 		return getService().getExportActionableDynamicQuery(portletDataContext);

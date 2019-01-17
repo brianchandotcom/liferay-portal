@@ -366,6 +366,12 @@ public class AssetEntryUsageLocalServiceWrapper
 	}
 
 	@Override
+	public int getAssetEntryUsagesCount(long assetEntryId, String portletId) {
+		return _assetEntryUsageLocalService.getAssetEntryUsagesCount(assetEntryId,
+			portletId);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
 		com.liferay.exportimport.kernel.lar.PortletDataContext portletDataContext) {
 		return _assetEntryUsageLocalService.getExportActionableDynamicQuery(portletDataContext);

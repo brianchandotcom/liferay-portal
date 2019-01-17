@@ -302,6 +302,9 @@ public interface AssetEntryUsageLocalService extends BaseLocalService,
 	public int getAssetEntryUsagesCount(long assetEntryId, long classNameId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getAssetEntryUsagesCount(long assetEntryId, String portletId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
 		PortletDataContext portletDataContext);
 

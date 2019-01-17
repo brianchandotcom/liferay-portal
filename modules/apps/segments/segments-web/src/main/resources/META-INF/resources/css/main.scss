@@ -14,4 +14,10 @@
 	@import "empty_drop_zone";
 	@import "segment_edit";
 	@import "title_editor";
+	input[type="date"] {
+		padding: {
+			right: 0;
+		};
+		min-width: 10em;
+	}
 }

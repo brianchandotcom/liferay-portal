@@ -1,11 +1,10 @@
 import React from 'react';
 import propTypes from 'prop-types';
 import ClaySelect from '../shared/ClaySelect.es';
-import DatePicker from 'react-datepicker';
-
-// import 'react-datepicker/dist/react-datepicker.css';
-
+import dateFns from 'date-fns';
 import {PROPERTY_TYPES} from '../../utils/constants.es.js';
+
+const INPUT_DATE_FORMAT = 'YYYY-MM-DD';
 
 class TypedInput extends React.Component {
 	_handleChange = event => {
@@ -41,20 +40,26 @@ class TypedInput extends React.Component {
 				selected={value}
 			/>;
 	}
-	_handleDateChange = dateObject => {
+	_handleDateChange = event => {
 		const {onChange} = this.props;
-		const newValue = dateObject.toISOString();
 
-		onChange(newValue, PROPERTY_TYPES.DATE);
+		const value = event.target.value || dateFns.format(new Date(), INPUT_DATE_FORMAT);
+		const iSOStringValue = dateFns.parse(value, INPUT_DATE_FORMAT).toISOString();
+
+		onChange(iSOStringValue, PROPERTY_TYPES.DATE);
 	}
 	_renderDateType = () => {
 		const {value} = this.props;
 
+		const date = new Date(value);
+		const domStringDate = dateFns.format(date, INPUT_DATE_FORMAT);
+
 		return (<div className="criterion-input">
-			<DatePicker
+			<input
 				className="form-control"
 				onChange={this._handleDateChange}
-				selected={new Date(value)}
+				type="date"
+				value={domStringDate}
 			/>
 		</div>);
 	}

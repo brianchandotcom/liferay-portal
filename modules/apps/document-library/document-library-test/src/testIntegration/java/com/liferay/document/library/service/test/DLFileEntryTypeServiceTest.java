@@ -181,8 +181,10 @@ public class DLFileEntryTypeServiceTest {
 
 		Assert.assertEquals(ddmStructures.toString(), 1, ddmStructures.size());
 
-		DDMStructure ddmStructure = DDMStructureLocalServiceUtil.getStructure(
-			ddmStructures.get(0).getStructureId());
+		DDMStructure ddmStructure = ddmStructures.get(0);
+
+		ddmStructure = DDMStructureLocalServiceUtil.getStructure(
+			ddmStructure.getStructureId());
 
 		Locale[] availableLocales = LocaleUtil.fromLanguageIds(
 			ddmStructure.getAvailableLanguageIds());

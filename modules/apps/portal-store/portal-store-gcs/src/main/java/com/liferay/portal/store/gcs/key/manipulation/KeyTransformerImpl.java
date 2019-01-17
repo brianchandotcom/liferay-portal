@@ -14,10 +14,15 @@
 
 package com.liferay.portal.store.gcs.key.manipulation;
 
+import com.google.common.hash.HashCode;
+import com.google.common.hash.HashFunction;
 import com.google.common.hash.Hashing;
+
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.StringBundler;
+
 import java.nio.charset.StandardCharsets;
+
 import org.osgi.service.component.annotations.Component;
 
 /**
@@ -27,71 +32,76 @@ import org.osgi.service.component.annotations.Component;
 @Component(immediate = true, service = KeyTransformer.class)
 public class KeyTransformerImpl implements KeyTransformer {
 
-  @Override
-  public String getDirectoryKey(
-      long companyId, long repositoryId, String folderName) {
+	@Override
+	public String getDirectoryKey(
+		long companyId, long repositoryId, String folderName) {
 
-    return getFileKey(companyId, repositoryId, folderName);
-  }
+		return getFileKey(companyId, repositoryId, folderName);
+	}
 
-  @Override
-  public String getFileKey(
-      long companyId, long repositoryId, String fileName) {
+	@Override
+	public String getFileKey(
+		long companyId, long repositoryId, String fileName) {
 
-    int initialCapacity = 4;
-    StringBundler sb = new StringBundler(initialCapacity);
+		int initialCapacity = 4;
 
-    sb.append(companyId);
-    sb.append(StringPool.SLASH);
-    sb.append(repositoryId);
-    sb.append(getNormalizedFileName(fileName));
+		StringBundler sb = new StringBundler(initialCapacity);
 
-    return sb.toString();
-  }
+		sb.append(companyId);
+		sb.append(StringPool.SLASH);
+		sb.append(repositoryId);
+		sb.append(_getNormalizedFileName(fileName));
 
-  @Override
-  public String getFileVersionKey(
-      long companyId, long repositoryId, String fileName,
-      String versionLabel) {
+		return sb.toString();
+	}
 
-    int initialCapacity = 6;
-    StringBundler sb = new StringBundler(initialCapacity);
+	@Override
+	public String getFileVersionKey(
+		long companyId, long repositoryId, String fileName,
+		String versionLabel) {
 
-    sb.append(companyId);
-    sb.append(StringPool.SLASH);
-    sb.append(repositoryId);
-    sb.append(getNormalizedFileName(fileName));
-    sb.append(StringPool.SLASH);
-    sb.append(versionLabel);
+		int initialCapacity = 6;
 
-    return sb.toString();
-  }
+		StringBundler sb = new StringBundler(initialCapacity);
 
-  @Override
-  public String getRepositoryKey(long companyId, long repositoryId) {
+		sb.append(companyId);
+		sb.append(StringPool.SLASH);
+		sb.append(repositoryId);
+		sb.append(_getNormalizedFileName(fileName));
+		sb.append(StringPool.SLASH);
+		sb.append(versionLabel);
 
-    return companyId + StringPool.SLASH + repositoryId;
-  }
+		return sb.toString();
+	}
 
-  private String getNormalizedFileName(String fileName) {
-    String normalizedFileName = fileName;
+	@Override
+	public String getRepositoryKey(long companyId, long repositoryId) {
+		return companyId + StringPool.SLASH + repositoryId;
+	}
 
-    if (fileName.startsWith(StringPool.SLASH)) {
-      normalizedFileName = normalizedFileName.substring(1);
-    }
+	private String _getNormalizedFileName(String fileName) {
+		String normalizedFileName = fileName;
 
-    if (fileName.endsWith(StringPool.SLASH)) {
-      normalizedFileName = normalizedFileName.substring(
-          0, normalizedFileName.length() - 1);
-    }
+		if (fileName.startsWith(StringPool.SLASH)) {
+			normalizedFileName = normalizedFileName.substring(1);
+		}
 
-    normalizedFileName = obfuscate(normalizedFileName);
+		if (fileName.endsWith(StringPool.SLASH)) {
+			normalizedFileName = normalizedFileName.substring(
+				0, normalizedFileName.length() - 1);
+		}
 
-    return StringPool.SLASH + normalizedFileName;
-  }
+		normalizedFileName = _obfuscate(normalizedFileName);
 
-  private String obfuscate(String fileName) {
-    return Hashing.sha1().hashString(fileName, StandardCharsets.UTF_8).toString();
-  }
+		return StringPool.SLASH + normalizedFileName;
+	}
+
+	private String _obfuscate(String fileName) {
+		HashFunction sha1 = Hashing.sha1();
+
+		HashCode hashCode = sha1.hashString(fileName, StandardCharsets.UTF_8);
+
+		return hashCode.toString();
+	}
 
 }

@@ -109,7 +109,7 @@ public class DESaveDataRecordCollectionDataFetcher
 				getActionMessage(languageId, mhp.getActionId()));
 		}
 		catch (DEDataRecordCollectionException.
-			NoSuchDataRecordCollection nsdrc) {
+					NoSuchDataRecordCollection nsdrc) {
 
 			errorMessage = getMessage(
 				languageId, "no-data-record-collection-exists-with-id-x",

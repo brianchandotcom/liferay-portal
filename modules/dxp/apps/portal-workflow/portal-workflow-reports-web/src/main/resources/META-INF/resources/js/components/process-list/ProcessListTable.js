@@ -7,7 +7,7 @@ export default class ProcessListTable extends React.Component {
 
 		return (
 			<div className="table-responsive">
-				<table className="show-quick-actions-on-hover table table-autofit table-hover table-list table-nowrap">
+				<table className="show-quick-actions-on-hover table table-autofit table-hover table-heading-nowrap table-list">
 					<thead>
 						<tr>
 							<th

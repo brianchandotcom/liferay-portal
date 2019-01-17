@@ -212,4 +212,20 @@
 		box-shadow: 0 1px 0 0 rgba(200, 200, 200, 0.2);
 		margin-bottom: 1.5rem;
 	}
+
+	.sidebar-fragments-section .search-bar {
+		flex-wrap: nowrap;
+
+		.input-group-input, .input-group-inset {
+			width: 100%;
+		}
+
+		.input-group-inset-item {
+			border-left-width: 0;
+			height: 100%;
+			position: absolute;
+			right: 0;
+			top: 0;
+		}
+	}
 }

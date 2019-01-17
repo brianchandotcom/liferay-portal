@@ -23,7 +23,6 @@ long organizationId = organizationScreenNavigationDisplayContext.getOrganization
 
 request.setAttribute("contact_information.jsp-className", Organization.class.getName());
 request.setAttribute("contact_information.jsp-classPK", organizationId);
-request.setAttribute("contact_information.jsp-contactInformationRequireJS", organizationScreenNavigationDisplayContext.getContactInformationJSRequire());
 request.setAttribute("contact_information.jsp-mvcActionPath", "/users_admin/update_organization_contact_information");
 %>
 

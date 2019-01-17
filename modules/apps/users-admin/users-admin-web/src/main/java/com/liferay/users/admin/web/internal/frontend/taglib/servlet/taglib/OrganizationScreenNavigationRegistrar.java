@@ -14,7 +14,6 @@
 
 package com.liferay.users.admin.web.internal.frontend.taglib.servlet.taglib;
 
-import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationCategory;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
@@ -133,9 +132,9 @@ public class OrganizationScreenNavigationRegistrar {
 		BiFunction<User, Organization, Boolean> isVisibleBiFunction) {
 
 		return new OrganizationScreenNavigationEntry(
-			_jspRenderer, _npmResolver, _organizationService, _portal,
-			_portletURLFactory, entryKey, categoryKey, jspPath,
-			mvcActionCommandName, showControls, showTitle, isVisibleBiFunction);
+			_jspRenderer, _organizationService, _portal, _portletURLFactory,
+			entryKey, categoryKey, jspPath, mvcActionCommandName, showControls,
+			showTitle, isVisibleBiFunction);
 	}
 
 	private ScreenNavigationEntry<Organization>
@@ -221,9 +220,6 @@ public class OrganizationScreenNavigationRegistrar {
 
 	@Reference
 	private JSPRenderer _jspRenderer;
-
-	@Reference
-	private NPMResolver _npmResolver;
 
 	@Reference
 	private OrganizationService _organizationService;

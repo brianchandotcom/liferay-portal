@@ -52,14 +52,16 @@ function drop(props, monitor) {
 		index: startIndex
 	} = monitor.getItem();
 
-	const {defaultValue: value, operatorName, propertyName} = droppedCriterion;
+	const {value, defaultValue, operatorName, propertyName} = droppedCriterion;
+
+	const droppedCriterionValue = value || defaultValue;
 
 	const newCriterion = {
 		operatorName: operatorName ?
 			operatorName :
 			supportedOperators[0].name,
 		propertyName,
-		value
+		value: droppedCriterionValue
 	};
 
 	const newGroup = {

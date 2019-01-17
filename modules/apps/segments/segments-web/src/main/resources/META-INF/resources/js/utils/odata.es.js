@@ -90,7 +90,8 @@ function valueParser(value, type) {
 	switch (type) {
 	case PROPERTY_TYPES.BOOLEAN:
 	case PROPERTY_TYPES.DATE:
-	case PROPERTY_TYPES.NUMBER:
+	case PROPERTY_TYPES.INTEGER:
+	case PROPERTY_TYPES.DOUBLE:
 		parsedValue = value;
 		break;
 	case PROPERTY_TYPES.STRING:
@@ -135,6 +136,7 @@ function buildQueryString(criteria, queryConjunction, properties) {
 					const type = criterion.type || getTypeByPropertyName(propertyName, properties);
 
 					const parsedValue = valueParser(value, type);
+
 					if (isValueType(RELATIONAL_OPERATORS, operatorName)) {
 						queryString = queryString.concat(
 							`${propertyName} ${operatorName} ${parsedValue}`

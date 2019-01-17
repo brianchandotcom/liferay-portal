@@ -27,6 +27,7 @@ import java.io.File;
 import java.io.InputStream;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Adolfo Pérez
@@ -96,5 +97,8 @@ public class AMDLAppServiceWrapper extends DLAppServiceWrapper {
 				fileEntryId, sourceFileName, mimeType, title, description,
 				changeLog, dlVersionNumberIncrease, is, size, serviceContext));
 	}
+
+	@Reference
+	private DLAppService _dlAppService;
 
 }

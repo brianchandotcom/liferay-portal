@@ -4,31 +4,274 @@
  * SidebarStructurePanel
  */
 {template .render}
-	{@param? _handleFragmentRemoveButtonClick: any}
+	{@param? _handleElementClick: any}
+	{@param? activeItemId: ?}
+	{@param? activeItemType: ?}
 	{@param? fragmentEntryLinks: ?}
+	{@param? itemTypes: ?}
 	{@param? layoutData: ?}
-	{@param? store: ?}
+	{@param? spritemap: string}
 
-	<div class="sidebar-added-fragments">
+	<div class="fragments-editor-sidebar-section__structure-panel">
 		{if $fragmentEntryLinks and $layoutData and $layoutData.structure}
-			{foreach $row in $layoutData.structure}
-				{foreach $column in $row.columns}
-					{foreach $fragmentEntryLinkId in $column.fragmentEntryLinkIds}
-						{let $fragmentEntryLink: $fragmentEntryLinks[$fragmentEntryLinkId] /}
-
-						{if $fragmentEntryLink}
-							{call com.liferay.layout.admin.web.FragmentsEditorSidebarCard.render}
-								{param events: ['itemClick': $_handleFragmentRemoveButtonClick] /}
-								{param icon: 'times' /}
-								{param itemId: $fragmentEntryLink.fragmentEntryLinkId /}
-								{param itemName: $fragmentEntryLink.name /}
-								{param key: $fragmentEntryLink.fragmentEntryLinkId /}
-								{param store: $store /}
+			<nav class="menubar menubar-transparent menubar-vertical-expand-lg">
+				<div class="collapse menubar-collapse">
+					<ul class="nav nav-nested">
+						<li class="nav-item">
+							{call .treeRoot}
+								{param activeItemId: $activeItemId /}
+								{param activeItemType: $activeItemType /}
+								{param clickHandler: $_handleElementClick /}
+								{param fragmentEntryLinks: $fragmentEntryLinks /}
+								{param itemTypes: $itemTypes /}
+								{param layoutData: $layoutData /}
+								{param spritemap: $spritemap /}
 							{/call}
-						{/if}
-					{/foreach}
-				{/foreach}
-			{/foreach}
+						</li>
+					</ul>
+				</div>
+			</nav>
 		{/if}
 	</div>
+{/template}
+
+/**
+ * Tree root
+ */
+{template .treeRoot}
+	{@param? activeItemId: ?}
+	{@param? activeItemType: ?}
+	{@param? clickHandler: ?}
+	{@param? fragmentEntryLinks: ?}
+	{@param? itemTypes: ?}
+	{@param? layoutData: ?}
+	{@param? spritemap: string}
+
+	{let $rootName kind="text"}
+		{msg desc=""}page{/msg}
+	{/let}
+
+	{call .treeElementButton}
+		{param activeItemId: $activeItemId /}
+		{param activeItemType: $activeItemType /}
+		{param elementName: $rootName /}
+		{param expanded: true /}
+		{param hasChildren: true /}
+		{param spritemap: $spritemap /}
+		{param treeLevelId: 'sidebar-tree-root' /}
+	{/call}
+
+	<div
+		class="collapse show"
+		id="sidebar-tree-root"
+	>
+		<ul class="nav nav-stacked">
+			<li class="nav-item">
+				{foreach $row in $layoutData.structure}
+					{let $treeRowLevelId kind="text"}
+						sidebar-tree-row-{index($row)}
+					{/let}
+
+					{call .treeRow}
+						{param activeItemId: $activeItemId /}
+						{param activeItemType: $activeItemType /}
+						{param clickHandler: $clickHandler /}
+						{param fragmentEntryLinks: $fragmentEntryLinks /}
+						{param itemTypes: $itemTypes /}
+						{param row: $row /}
+						{param rowIndex: index($row) /}
+						{param spritemap: $spritemap /}
+						{param treeRowLevelId: $treeRowLevelId /}
+					{/call}
+				{/foreach}
+			</li>
+		</ul>
+	</div>
+{/template}
+
+/**
+ * Tree row
+ */
+{template .treeRow}
+	{@param? activeItemId: ?}
+	{@param? activeItemType: ?}
+	{@param? clickHandler: ?}
+	{@param? fragmentEntryLinks: ?}
+	{@param? itemTypes: ?}
+	{@param? row: ?}
+	{@param? rowIndex: ?}
+	{@param? spritemap: string}
+	{@param? treeRowLevelId: ?}
+
+	{let $rowName kind="text"}
+		{msg desc=""}section{/msg}
+	{/let}
+
+	{call .treeElementButton}
+		{param activeItemId: $activeItemId /}
+		{param activeItemType: $activeItemType /}
+		{param clickHandler: $clickHandler /}
+		{param elementId: $row.rowId /}
+		{param elementName: $rowName /}
+		{param elementType: $itemTypes.section /}
+		{param hasChildren: true /}
+		{param spritemap: $spritemap /}
+		{param treeLevelId: $treeRowLevelId /}
+	{/call}
+
+	<div
+		class="collapse"
+		id="{$treeRowLevelId}"
+	>
+		<ul class="nav nav-stacked">
+			<li class="nav-item">
+				{foreach $column in $row.columns}
+					{let $treeColLevelId kind="text"}
+						sidebar-tree-col-{$rowIndex}-{index($column)}
+					{/let}
+
+					{call .treeCol}
+						{param activeItemId: $activeItemId /}
+						{param activeItemType: $activeItemType /}
+						{param clickHandler: $clickHandler /}
+						{param column: $column /}
+						{param fragmentEntryLinks: $fragmentEntryLinks /}
+						{param itemTypes: $itemTypes /}
+						{param spritemap: $spritemap /}
+						{param treeColLevelId: $treeColLevelId /}
+					{/call}
+				{/foreach}
+			</li>
+		</ul>
+	</div>
+{/template}
+
+/**
+ * Tree column
+ */
+{template .treeCol}
+	{@param? activeItemId: ?}
+	{@param? activeItemType: ?}
+	{@param? clickHandler: ?}
+	{@param? column: ?}
+	{@param? fragmentEntryLinks: ?}
+	{@param? itemTypes: ?}
+	{@param? spritemap: string}
+	{@param? treeColLevelId: ?}
+
+	{let $columnName kind="text"}
+		{msg desc=""}column{/msg}
+	{/let}
+
+	{call .treeElementButton}
+		{param activeItemId: $activeItemId /}
+		{param activeItemType: $activeItemType /}
+		{param elementName: $columnName /}
+		{param hasChildren: true /}
+		{param spritemap: $spritemap /}
+		{param treeLevelId: $treeColLevelId /}
+	{/call}
+
+	<div
+		class="collapse"
+		id="{$treeColLevelId}"
+	>
+		<ul class="nav nav-stacked">
+			<li class="nav-item">
+				{foreach $fragmentEntryLinkId in $column.fragmentEntryLinkIds}
+					{let $fragmentEntryLink: $fragmentEntryLinks[$fragmentEntryLinkId] /}
+
+					{if $fragmentEntryLink}
+						{call .treeElementButton}
+							{param activeItemId: $activeItemId /}
+							{param activeItemType: $activeItemType /}
+							{param clickHandler: $clickHandler /}
+							{param elementId: $fragmentEntryLink.fragmentEntryLinkId /}
+							{param elementName: $fragmentEntryLink.name /}
+							{param elementType: $itemTypes.fragment /}
+							{param hasChildren: false /}
+							{param spritemap: $spritemap /}
+						{/call}
+					{/if}
+				{/foreach}
+			</li>
+		</ul>
+	</div>
+{/template}
+
+/**
+ * Tree element button
+ */
+{template .treeElementButton}
+	{@param? activeItemId: string}
+	{@param? activeItemType: ?}
+	{@param? clickHandler: ?}
+	{@param? elementId: ?}
+	{@param? elementName: ?}
+	{@param? elementType: ?}
+	{@param? expanded: bool}
+	{@param? hasChildren: ?}
+	{@param? spritemap: string}
+	{@param? treeLevelId: ?}
+
+	{let $elementClasses kind="text"}
+		nav-link
+
+		{if $elementId and ($activeItemId == $elementId) and ($activeItemType == $elementType)}
+			{sp}active
+		{/if}
+
+		{if $hasChildren}
+			{sp}collapse-icon
+
+			{if not $expanded}
+				{sp}collapsed
+			{/if}
+		{/if}
+	{/let}
+
+	{let $elementAttributes kind="attributes"}
+		aria-controls="{$treeLevelId}"
+		class="{$elementClasses}"
+		data-toggle="collapse"
+		href="#{$treeLevelId}"
+		role="button"
+
+		{if $elementId}
+			data-element-id="{$elementId}"
+		{/if}
+
+		{if $elementType}
+			data-element-type="{$elementType}"
+		{/if}
+
+		{if $clickHandler}
+			data-onclick="{$clickHandler}"
+		{/if}
+
+		{if $expanded}
+			aria-expanded="true"
+		{else}
+			aria-expanded="false"
+		{/if}
+	{/let}
+
+	<a {$elementAttributes}>
+
+		{$elementName}
+
+		{if $hasChildren}
+			<span class="collapse-icon-closed">
+				<svg class="lexicon-icon lexicon-icon-angle-right">
+					<use xlink:href="{$spritemap}#angle-right"></use>
+				</svg>
+			</span>
+
+			<span class="collapse-icon-open">
+				<svg class="lexicon-icon lexicon-icon-angle-bottom">
+					<use xlink:href="{$spritemap}#angle-bottom"></use>
+				</svg>
+			</span>
+		{/if}
+	</a>
 {/template}

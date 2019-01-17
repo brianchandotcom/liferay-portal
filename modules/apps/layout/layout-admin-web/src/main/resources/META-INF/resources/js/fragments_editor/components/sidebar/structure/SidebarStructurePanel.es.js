@@ -99,8 +99,11 @@ class SidebarStructurePanel extends Component {
 const ConnectedSidebarStructurePanel = getConnectedComponent(
 	SidebarStructurePanel,
 	[
+		'activeItemId',
+		'activeItemType',
 		'fragmentEntryLinks',
-		'layoutData'
+		'layoutData',
+		'spritemap'
 	]
 );
 

@@ -83,9 +83,11 @@ public class GCSStore extends BaseStore {
 	public void addDirectory(
 		long companyId, long repositoryId, String dirName) {
 
-		_debugLog(
-			"Liferay GCS adapter does not support creating empty directory " +
-				"structures");
+		if (_log.isDebugEnabled()) {
+			_log.debug(
+				"Liferay GCS adapter does not support creating empty " +
+					"directory structures");
+		}
 	}
 
 	@Override
@@ -97,7 +99,8 @@ public class GCSStore extends BaseStore {
 			String fileKey = _keyTransformer.getFileKey(
 				companyId, repositoryId, fileName);
 
-			_debugLog("Creating file with default version for for: " + fileKey);
+			_log.debug(
+				"Creating file with default version for for: " + fileKey);
 		}
 
 		addFileWithVersion(
@@ -106,8 +109,11 @@ public class GCSStore extends BaseStore {
 
 	@Override
 	public void checkRoot(long companyId) {
-		_debugLog(
-			"Liferay GCS adapter does not support \"check root\" operations");
+		if (_log.isDebugEnabled()) {
+			_log.debug(
+				"Liferay GCS adapter does not support \"check root\" " +
+					"operations");
+		}
 	}
 
 	@Override
@@ -117,13 +123,16 @@ public class GCSStore extends BaseStore {
 		String path = _keyTransformer.getDirectoryKey(
 			companyId, repositoryId, dirName);
 
-		_debugLog("Deleting from bucket with prefix: " + path);
+		if (_log.isDebugEnabled()) {
+			_log.debug("Deleting from bucket with prefix: " + path);
+		}
 
-		boolean traceEnabled = _log.isTraceEnabled();
 		Stopwatch stopwatch = null;
 
-		if (traceEnabled) {
-			_traceLog("Fetching files from directory " + path + " for delete");
+		if (_log.isTraceEnabled()) {
+			_log.trace(
+				StringBundler.concat(
+					"Fetching files from directory ", path, " for delete"));
 
 			stopwatch = Stopwatch.createStarted();
 		}
@@ -131,12 +140,14 @@ public class GCSStore extends BaseStore {
 		Page<Blob> blobPages = _gcsStore.list(
 			_getBucketName(), Storage.BlobListOption.prefix(path));
 
-		if (traceEnabled) {
+		if (_log.isTraceEnabled()) {
 			stopwatch.stop();
 
 			long elapsed = stopwatch.elapsed(TimeUnit.MILLISECONDS);
 
-			_traceLog("Listing for delete took " + elapsed + " milliseconds");
+			_log.trace(
+				StringBundler.concat(
+					"Listing for delete took ", elapsed, " milliseconds"));
 		}
 
 		Iterable<Blob> blobs = blobPages.iterateAll();
@@ -146,7 +157,9 @@ public class GCSStore extends BaseStore {
 
 	@Override
 	public void deleteFile(long companyId, long repositoryId, String fileName) {
-		_debugLog("Deleting from bucket with fileName: " + fileName);
+		if (_log.isDebugEnabled()) {
+			_log.debug("Deleting from bucket with fileName: " + fileName);
+		}
 
 		deleteDirectory(companyId, repositoryId, fileName);
 	}
@@ -170,11 +183,15 @@ public class GCSStore extends BaseStore {
 		String filePath = _determineVersionFilePath(
 			companyId, repositoryId, fileName, versionLabel);
 
-		_traceLog("Trying to get file: " + filePath);
+		if (_log.isTraceEnabled()) {
+			_log.trace("Trying to get file: " + filePath);
+		}
 
 		Blob blob = _getBlob(_getBlobId(filePath));
 
-		_traceLog("Got Blob: " + blob);
+		if (_log.isTraceEnabled()) {
+			_log.trace("Got Blob: " + blob);
+		}
 
 		ReadChannel reader = _getReader(blob);
 
@@ -210,20 +227,19 @@ public class GCSStore extends BaseStore {
 			path);
 
 		Stopwatch stopwatch = null;
-		boolean traceEnabled = _log.isTraceEnabled();
 
-		if (traceEnabled) {
+		if (_log.isTraceEnabled()) {
 			stopwatch = Stopwatch.createStarted();
 		}
 
 		Page<Blob> blobPage = bucket.list(prefixOption);
 
-		if (traceEnabled) {
+		if (_log.isTraceEnabled()) {
 			stopwatch.stop();
 
 			long elapsed = stopwatch.elapsed(TimeUnit.MILLISECONDS);
 
-			_traceLog(
+			_log.trace(
 				StringBundler.concat(
 					"Listing ", path, " took ", elapsed, " milliseconds"));
 		}
@@ -239,12 +255,12 @@ public class GCSStore extends BaseStore {
 			String[]::new
 		);
 
-		if (traceEnabled) {
-			_traceLog("Listing content with prefix: " + path);
+		if (_log.isTraceEnabled()) {
+			_log.trace("Listing content with prefix: " + path);
 
 			String fnames = String.join("\n   ", fileNames);
 
-			_traceLog("   " + fnames);
+			_log.trace("   " + fnames);
 		}
 
 		return fileNames;
@@ -257,21 +273,28 @@ public class GCSStore extends BaseStore {
 		String pathName = _getHeadVersionLabel(
 			companyId, repositoryId, fileName);
 
-		_traceLog("Getting file size for: " + pathName);
+		if (_log.isTraceEnabled()) {
+			_log.trace("Getting file size for: " + pathName);
+		}
 
 		BlobId blobId = _getBlobId(pathName);
 
 		Blob blob = _getBlob(blobId);
 
 		if (blob == null) {
-			_debugLog("Cannot retrieve: " + pathName);
+			if (_log.isDebugEnabled()) {
+				_log.debug("Cannot retrieve: " + pathName);
+			}
 
 			throw new PortalException("No such file store entry: " + pathName);
 		}
 
 		Long size = blob.getSize();
 
-		_traceLog(StringBundler.concat("Size for ", pathName, " is ", size));
+		if (_log.isTraceEnabled()) {
+			_log.trace(
+				StringBundler.concat("Size for ", pathName, " is ", size));
+		}
 
 		return size;
 	}
@@ -280,9 +303,11 @@ public class GCSStore extends BaseStore {
 	public boolean hasDirectory(
 		long companyId, long repositoryId, String dirName) {
 
-		_debugLog(
-			"Liferay GCS adapter does not support check for directory, " +
-				"returning true");
+		if (_log.isDebugEnabled()) {
+			_log.debug(
+				"Liferay GCS adapter does not support check for directory, " +
+					"returning true");
+		}
 
 		return true;
 	}
@@ -295,11 +320,9 @@ public class GCSStore extends BaseStore {
 		String path = _keyTransformer.getFileVersionKey(
 			companyId, repositoryId, fileName, versionLabel);
 
-		boolean traceEnabled = _log.isTraceEnabled();
-
 		Stopwatch stopwatch = null;
 
-		if (traceEnabled) {
+		if (_log.isTraceEnabled()) {
 			stopwatch = Stopwatch.createStarted();
 		}
 
@@ -307,7 +330,7 @@ public class GCSStore extends BaseStore {
 			_getBucketName(), Storage.BlobListOption.pageSize(1),
 			Storage.BlobListOption.prefix(path));
 
-		if (traceEnabled) {
+		if (_log.isTraceEnabled()) {
 			stopwatch.stop();
 
 			long elapsed = stopwatch.elapsed(TimeUnit.MILLISECONDS);
@@ -315,7 +338,7 @@ public class GCSStore extends BaseStore {
 			String traceMsg = String.format(
 				"Check if file %s exists took %d milliseconds", path, elapsed);
 
-			_traceLog(traceMsg);
+			_log.trace(traceMsg);
 		}
 
 		Iterable<Blob> filesFoundIterable = blobPage.getValues();
@@ -324,11 +347,11 @@ public class GCSStore extends BaseStore {
 
 		boolean hasFile = filesFoundIterator.hasNext();
 
-		if (traceEnabled) {
+		if (_log.isTraceEnabled()) {
 			String key = _keyTransformer.getFileVersionKey(
 				companyId, repositoryId, fileName, versionLabel);
 
-			_traceLog(
+			_log.trace(
 				StringBundler.concat(
 					"Checking file presence for: ", key, ", presence ",
 					hasFile));
@@ -391,7 +414,7 @@ public class GCSStore extends BaseStore {
 				"Updating file \"%s\" to version \"%s\"", filePath,
 				fileVersion);
 
-			_traceLog(msg);
+			_log.trace(msg);
 		}
 
 		addFileWithVersion(companyId, repositoryId, fileName, versionLabel, is);
@@ -424,8 +447,10 @@ public class GCSStore extends BaseStore {
 		String fileVersionKey = _keyTransformer.getFileVersionKey(
 			companyId, repositoryId, fileName, versionLabel);
 
-		_traceLog("Attempting to create new file");
-		_traceLog("Constructed key: " + fileVersionKey);
+		if (_log.isTraceEnabled()) {
+			_log.trace("Attempting to create new file");
+			_log.trace("Constructed key: " + fileVersionKey);
+		}
 
 		BlobInfo.Builder builder = BlobInfo.newBuilder(
 			_getBucketInfo(), fileVersionKey);
@@ -443,14 +468,20 @@ public class GCSStore extends BaseStore {
 			throw new PortalException(ioe);
 		}
 		finally {
-			_traceLog("Done writing out to buffer.");
+			if (_log.isTraceEnabled()) {
+				_log.trace("Done writing out to buffer");
+			}
 		}
 
-		_debugLog("Blob for a folder was created at: " + fileVersionKey);
+		if (_log.isDebugEnabled()) {
+			_log.debug("Blob for a folder was created at: " + fileVersionKey);
+		}
 	}
 
 	protected void setCredentials() throws PortalException {
-		_traceLog("Initializing credentials");
+		if (_log.isTraceEnabled()) {
+			_log.trace("Initializing credentials");
+		}
 
 		try (InputStream inputStream = _getCredentialsInputStream()) {
 			googleCredentials = ServiceAccountCredentials.fromStream(
@@ -494,20 +525,13 @@ public class GCSStore extends BaseStore {
 		return builder.build();
 	}
 
-	private void _debugLog(String debugLog) {
-		if (_log.isDebugEnabled()) {
-			_log.debug(debugLog);
-		}
-	}
-
 	private boolean _deleteBlob(Blob blob) {
 		boolean deleted;
-		boolean traceEnabled = _log.isTraceEnabled();
 
 		Stopwatch stopwatch = null;
 		String blobName = null;
 
-		if (traceEnabled) {
+		if (_log.isTraceEnabled()) {
 			blobName = blob.getName();
 
 			stopwatch = Stopwatch.createStarted();
@@ -520,12 +544,12 @@ public class GCSStore extends BaseStore {
 			deleted = blob.delete(_blobDecryptSourceOption);
 		}
 
-		if (traceEnabled) {
+		if (_log.isTraceEnabled()) {
 			stopwatch.stop();
 
 			long elapsed = stopwatch.elapsed(TimeUnit.MILLISECONDS);
 
-			_traceLog(
+			_log.trace(
 				StringBundler.concat(
 					"Took ", elapsed, " to delete ", blobName));
 		}
@@ -544,7 +568,9 @@ public class GCSStore extends BaseStore {
 					"Unable to delete \"", filePath, "\" from file store"));
 		}
 		else if (deleted && _log.isTraceEnabled()) {
-			_traceLog("Deleted \"" + filePath + "\" from file store");
+			_log.trace(
+				StringBundler.concat(
+					"Deleted \"", filePath, "\" from file store"));
 		}
 	}
 
@@ -570,7 +596,7 @@ public class GCSStore extends BaseStore {
 		boolean traceEnabled = _log.isTraceEnabled();
 
 		if (traceEnabled) {
-			_traceLog("Fetching " + blobId);
+			_log.trace("Fetching " + blobId);
 
 			stopwatch = Stopwatch.createStarted();
 		}
@@ -582,9 +608,12 @@ public class GCSStore extends BaseStore {
 
 			long elapsed = stopwatch.elapsed(TimeUnit.MILLISECONDS);
 
-			_traceLog(
-				StringBundler.concat(
-					"Spent ", elapsed, " milliseconds retrieving ", blobId));
+			if (_log.isTraceEnabled()) {
+				_log.trace(
+					StringBundler.concat(
+						"Spent ", elapsed, " milliseconds retrieving ",
+						blobId));
+			}
 		}
 
 		return blob;
@@ -643,9 +672,11 @@ public class GCSStore extends BaseStore {
 	private InputStream _getCredentialsInputStream()
 		throws FileNotFoundException {
 
-		_traceLog(
-			"Using authentication file; " +
-				_gcsStoreConfiguration.authFileLocation());
+		if (_log.isTraceEnabled()) {
+			_log.trace(
+				"Using authentication file; " +
+					_gcsStoreConfiguration.authFileLocation());
+		}
 
 		File credentialFiles = new File(
 			_gcsStoreConfiguration.authFileLocation());
@@ -710,7 +741,7 @@ public class GCSStore extends BaseStore {
 					"\" from file store");
 		}
 		else if (deleted && _log.isTraceEnabled()) {
-			_traceLog("Deleted \"" + blob.getBlobId() + "\" from file store");
+			_log.trace("Deleted \"" + blob.getBlobId() + "\" from file store");
 		}
 	}
 
@@ -719,14 +750,12 @@ public class GCSStore extends BaseStore {
 
 		BlobId oldBlobId = oldBlob.getBlobId();
 
-		boolean traceEnabled = _log.isTraceEnabled();
-
-		if (traceEnabled) {
+		if (_log.isTraceEnabled()) {
 			String msg = String.format(
 				"Updating file from (name) \"%s\" to \"%s\"",
 				oldBlobId.getName(), newBlobId.getName());
 
-			_traceLog(msg);
+			_log.trace(msg);
 		}
 
 		Storage.CopyRequest copyRequest = _getCopyRequest(
@@ -735,7 +764,7 @@ public class GCSStore extends BaseStore {
 
 		Stopwatch stopwatch = null;
 
-		if (traceEnabled) {
+		if (_log.isTraceEnabled()) {
 			stopwatch = Stopwatch.createStarted();
 		}
 
@@ -747,7 +776,7 @@ public class GCSStore extends BaseStore {
 			copyWriter.copyChunk();
 		}
 
-		if (traceEnabled) {
+		if (_log.isTraceEnabled()) {
 			stopwatch.stop();
 
 			long elapsed = stopwatch.elapsed(TimeUnit.MILLISECONDS);
@@ -756,10 +785,13 @@ public class GCSStore extends BaseStore {
 				"Copying of %s to %s took %d milliseconds", oldBlobId.getName(),
 				newBlobId.getName(), elapsed);
 
-			_traceLog(traceMsg);
+			_log.trace(traceMsg);
 		}
 
-		_debugLog(StringBundler.concat("Copied ", oldBlob, " to ", newBlobId));
+		if (_log.isDebugEnabled()) {
+			_log.debug(
+				StringBundler.concat("Copied ", oldBlob, " to ", newBlobId));
+		}
 
 		_logAndDeleteBlob(oldBlob);
 	}
@@ -781,14 +813,18 @@ public class GCSStore extends BaseStore {
 			StorageOptions storageOptions = _buildStorage(
 				retrySettings, googleCredentials);
 
-			_traceLog("Initializing new gcsStore component");
+			if (_log.isTraceEnabled()) {
+				_log.trace("Initializing new gcsStore component");
+			}
 
 			_gcsStore = storageOptions.getService();
 
 			return;
 		}
 
-		_traceLog("gcsStore component already set");
+		if (_log.isTraceEnabled()) {
+			_log.trace("gcsStore component already set");
+		}
 	}
 
 	private void _setupEncryptedCommunication() {
@@ -821,12 +857,6 @@ public class GCSStore extends BaseStore {
 		}
 	}
 
-	private void _traceLog(String traceLog) {
-		if (_log.isTraceEnabled()) {
-			_log.trace(traceLog);
-		}
-	}
-
 	private void _writeInputStream(InputStream inputStream, WriteChannel writer)
 		throws IOException, PortalException {
 
@@ -838,23 +868,23 @@ public class GCSStore extends BaseStore {
 		long totalWriteTimeNanoSec = 0;
 		int writtenTotal = 0;
 
-		boolean traceEnabled = _log.isTraceEnabled();
+		if (_log.isTraceEnabled()) {
+			_log.trace("Writing out to buffer...");
 
-		if (traceEnabled) {
-			_traceLog("Writing out to buffer...");
 			outputWatch = Stopwatch.createUnstarted();
+
 			overallClock = Stopwatch.createStarted();
 		}
 		while ((limit = inputStream.read(buffer)) >= 0) {
 			try {
-				if (traceEnabled) {
+				if (_log.isTraceEnabled()) {
 					outputWatch.start();
 				}
 
 				int writtenBytes = writer.write(
 					ByteBuffer.wrap(buffer, 0, limit));
 
-				if (traceEnabled) {
+				if (_log.isTraceEnabled()) {
 					outputWatch.stop();
 
 					long elapsed = outputWatch.elapsed(TimeUnit.NANOSECONDS);
@@ -871,7 +901,7 @@ public class GCSStore extends BaseStore {
 			}
 		}
 
-		if (traceEnabled) {
+		if (_log.isTraceEnabled()) {
 			overallClock.stop();
 
 			long elapsed = overallClock.elapsed(TimeUnit.MILLISECONDS);
@@ -880,13 +910,13 @@ public class GCSStore extends BaseStore {
 				"Took %d milliseconds to transferring %d bytes", elapsed,
 				writtenTotal);
 
-			_traceLog(traceMsg);
+			_log.trace(traceMsg);
 
 			traceMsg = String.format(
 				"Took %d nanoseconds (%d milliseconds) writing to GCS",
 				totalWriteTimeNanoSec, totalWriteTimeNanoSec / 1000000);
 
-			_traceLog(traceMsg);
+			_log.trace(traceMsg);
 		}
 	}
 

@@ -32,9 +32,11 @@ import com.liferay.portal.tools.service.builder.test.service.base.UADPartialEntr
  */
 public class UADPartialEntryLocalServiceImpl
 	extends UADPartialEntryLocalServiceBaseImpl {
-	/*
+
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never reference this class directly. Always use {@link com.liferay.portal.tools.service.builder.test.service.UADPartialEntryLocalServiceUtil} to access the uad partial entry local service.
 	 */
+
 }

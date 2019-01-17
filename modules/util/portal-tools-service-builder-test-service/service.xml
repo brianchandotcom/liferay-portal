@@ -67,7 +67,7 @@
 			<finder-column arrayable-operator="OR" arrayable-pagination="true" name="groupId" />
 		</finder>
 	</entity>
-	<entity name="UADPartialEntry" local-service="true">
+	<entity local-service="true" name="UADPartialEntry">
 
 		<!-- PK fields -->
 
@@ -77,7 +77,6 @@
 
 		<column name="userId" type="long" />
 		<column name="userName" type="String" />
-
 		<column name="message" type="String" uad-nonanonymizable="true" />
 	</entity>
 	<entity local-service="true" name="VersionedEntry" remote-service="false" versioned="true">

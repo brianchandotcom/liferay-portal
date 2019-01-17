@@ -1976,7 +1976,7 @@ public class AssetEntryUsagePersistenceImpl extends BasePersistenceImpl<AssetEnt
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_ASSETENTRYID_ASSETENTRYID_2 = "assetEntryUsage.assetEntryId = ? AND assetEntryUsage.portletId != ''";
+	private static final String _FINDER_COLUMN_ASSETENTRYID_ASSETENTRYID_2 = "assetEntryUsage.assetEntryId = ? AND assetEntryUsage.portletId IS NOT NULL";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_A_C = new FinderPath(AssetEntryUsageModelImpl.ENTITY_CACHE_ENABLED,
 			AssetEntryUsageModelImpl.FINDER_CACHE_ENABLED,
 			AssetEntryUsageImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
@@ -2520,7 +2520,7 @@ public class AssetEntryUsagePersistenceImpl extends BasePersistenceImpl<AssetEnt
 	}
 
 	private static final String _FINDER_COLUMN_A_C_ASSETENTRYID_2 = "assetEntryUsage.assetEntryId = ? AND ";
-	private static final String _FINDER_COLUMN_A_C_CLASSNAMEID_2 = "assetEntryUsage.classNameId = ? AND assetEntryUsage.portletId != ''";
+	private static final String _FINDER_COLUMN_A_C_CLASSNAMEID_2 = "assetEntryUsage.classNameId = ? AND assetEntryUsage.portletId IS NOT NULL";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_A_P = new FinderPath(AssetEntryUsageModelImpl.ENTITY_CACHE_ENABLED,
 			AssetEntryUsageModelImpl.FINDER_CACHE_ENABLED,
 			AssetEntryUsageImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,

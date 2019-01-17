@@ -38,19 +38,19 @@ import org.osgi.service.component.annotations.Reference;
 public class ServletContextUtil {
 
 	public static GroupLocalService getGroupLocalService() {
-		return _instance._groupLocalService;
+		return _groupLocalService;
 	}
 
 	public static MapProvider getMapProvider(String mapProviderKey) {
-		return _instance._mapProviders.getService(mapProviderKey);
+		return _mapProviders.getService(mapProviderKey);
 	}
 
 	public static Collection<MapProvider> getMapProviders() {
-		return _instance._mapProviders.values();
+		return _mapProviders.values();
 	}
 
 	public static final ServletContext getServletContext() {
-		return _instance._getServletContext();
+		return _servletContext;
 	}
 
 	@Activate
@@ -73,15 +73,16 @@ public class ServletContextUtil {
 				}
 
 			});
-
-		_instance = this;
 	}
 
 	@Deactivate
 	protected void deactivate() {
-		_instance = null;
-
 		_mapProviders.close();
+	}
+
+	@Reference(unbind = "-")
+	protected void setGroupLocalService(GroupLocalService groupLocalService) {
+		_groupLocalService = groupLocalService;
 	}
 
 	@Reference(
@@ -91,16 +92,8 @@ public class ServletContextUtil {
 		_servletContext = servletContext;
 	}
 
-	private ServletContext _getServletContext() {
-		return _servletContext;
-	}
-
-	private static ServletContextUtil _instance;
-
-	@Reference
-	private GroupLocalService _groupLocalService;
-
-	private ServiceTrackerMap<String, MapProvider> _mapProviders;
-	private ServletContext _servletContext;
+	private static GroupLocalService _groupLocalService;
+	private static ServiceTrackerMap<String, MapProvider> _mapProviders;
+	private static ServletContext _servletContext;
 
 }

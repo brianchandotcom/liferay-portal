@@ -18,9 +18,7 @@ import com.liferay.asset.util.AssetHelper;
 
 import javax.servlet.ServletContext;
 
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -30,21 +28,16 @@ import org.osgi.service.component.annotations.Reference;
 public class ServletContextUtil {
 
 	public static final AssetHelper getAssetHelper() {
-		return _instance._getAssetHelper();
+		return _assetHelper;
 	}
 
 	public static final ServletContext getServletContext() {
-		return _instance._getServletContext();
+		return _servletContext;
 	}
 
-	@Activate
-	protected void activate() {
-		_instance = this;
-	}
-
-	@Deactivate
-	protected void deactivate() {
-		_instance = null;
+	@Reference(unbind = "-")
+	protected void setAssetHelper(AssetHelper assetHelper) {
+		_assetHelper = assetHelper;
 	}
 
 	@Reference(
@@ -55,19 +48,7 @@ public class ServletContextUtil {
 		_servletContext = servletContext;
 	}
 
-	private AssetHelper _getAssetHelper() {
-		return _assetHelper;
-	}
-
-	private ServletContext _getServletContext() {
-		return _servletContext;
-	}
-
-	private static ServletContextUtil _instance;
-
-	@Reference
-	private AssetHelper _assetHelper;
-
-	private ServletContext _servletContext;
+	private static AssetHelper _assetHelper;
+	private static ServletContext _servletContext;
 
 }

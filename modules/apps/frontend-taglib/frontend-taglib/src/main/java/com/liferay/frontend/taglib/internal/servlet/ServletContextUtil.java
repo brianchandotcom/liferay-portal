@@ -18,9 +18,7 @@ import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationRegistry;
 
 import javax.servlet.ServletContext;
 
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -30,21 +28,18 @@ import org.osgi.service.component.annotations.Reference;
 public class ServletContextUtil {
 
 	public static final ScreenNavigationRegistry getScreenNavigationRegistry() {
-		return _instance._getScreenNavigationRegistry();
+		return _screenNavigationRegistry;
 	}
 
 	public static final ServletContext getServletContext() {
-		return _instance._getServletContext();
+		return _servletContext;
 	}
 
-	@Activate
-	protected void activate() {
-		_instance = this;
-	}
+	@Reference(unbind = "-")
+	protected void setScreenNavigationRegistry(
+		ScreenNavigationRegistry screenNavigationRegistry) {
 
-	@Deactivate
-	protected void deactivate() {
-		_instance = null;
+		_screenNavigationRegistry = screenNavigationRegistry;
 	}
 
 	@Reference(
@@ -55,19 +50,7 @@ public class ServletContextUtil {
 		_servletContext = servletContext;
 	}
 
-	private ScreenNavigationRegistry _getScreenNavigationRegistry() {
-		return _screenNavigationRegistry;
-	}
-
-	private ServletContext _getServletContext() {
-		return _servletContext;
-	}
-
-	private static ServletContextUtil _instance;
-
-	@Reference
-	private ScreenNavigationRegistry _screenNavigationRegistry;
-
-	private ServletContext _servletContext;
+	private static ScreenNavigationRegistry _screenNavigationRegistry;
+	private static ServletContext _servletContext;
 
 }

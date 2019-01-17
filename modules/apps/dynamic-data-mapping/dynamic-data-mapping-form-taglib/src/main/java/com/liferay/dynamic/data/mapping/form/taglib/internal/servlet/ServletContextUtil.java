@@ -18,9 +18,7 @@ import com.liferay.portal.kernel.util.Validator;
 
 import javax.servlet.ServletContext;
 
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -31,21 +29,7 @@ import org.osgi.service.component.annotations.Reference;
 public class ServletContextUtil {
 
 	public static final ServletContext getServletContext() {
-		if (Validator.isNotNull(_instance)) {
-			return _instance._getServletContext();
-		}
-
-		return null;
-	}
-
-	@Activate
-	protected void activate() {
-		_instance = this;
-	}
-
-	@Deactivate
-	protected void deactivate() {
-		_instance = null;
+		return _servletContext;
 	}
 
 	@Reference(
@@ -56,12 +40,6 @@ public class ServletContextUtil {
 		_servletContext = servletContext;
 	}
 
-	private ServletContext _getServletContext() {
-		return _servletContext;
-	}
-
-	private static ServletContextUtil _instance;
-
-	private ServletContext _servletContext;
+	private static ServletContext _servletContext;
 
 }

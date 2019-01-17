@@ -19,9 +19,7 @@ import com.liferay.product.navigation.control.menu.util.ProductNavigationControl
 
 import javax.servlet.ServletContext;
 
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -31,35 +29,23 @@ import org.osgi.service.component.annotations.Reference;
 public class ServletContextUtil {
 
 	public static final String getContextPath() {
-		ServletContext servletContext = _instance._getServletContext();
-
-		return servletContext.getContextPath();
+		return _servletContext.getContextPath();
 	}
 
 	public static final ProductNavigationControlMenuCategoryRegistry
 		getProductNavigationControlMenuCategoryRegistry() {
 
-		return _instance._getProductNavigationControlMenuCategoryRegistry();
+		return _productNavigationControlMenuCategoryRegistry;
 	}
 
 	public static final ProductNavigationControlMenuEntryRegistry
 		getProductNavigationControlMenuEntryRegistry() {
 
-		return _instance._getProductNavigationControlMenuEntryRegistry();
+		return _productNavigationControlMenuEntryRegistry;
 	}
 
 	public static final ServletContext getServletContext() {
-		return _instance._getServletContext();
-	}
-
-	@Activate
-	protected void activate() {
-		_instance = this;
-	}
-
-	@Deactivate
-	protected void deactivate() {
-		_instance = null;
+		return _servletContext;
 	}
 
 	@Reference(unbind = "-")
@@ -88,28 +74,10 @@ public class ServletContextUtil {
 		_servletContext = servletContext;
 	}
 
-	private ProductNavigationControlMenuCategoryRegistry
-		_getProductNavigationControlMenuCategoryRegistry() {
-
-		return _productNavigationControlMenuCategoryRegistry;
-	}
-
-	private ProductNavigationControlMenuEntryRegistry
-		_getProductNavigationControlMenuEntryRegistry() {
-
-		return _productNavigationControlMenuEntryRegistry;
-	}
-
-	private ServletContext _getServletContext() {
-		return _servletContext;
-	}
-
-	private static ServletContextUtil _instance;
-
-	private ProductNavigationControlMenuCategoryRegistry
+	private static ProductNavigationControlMenuCategoryRegistry
 		_productNavigationControlMenuCategoryRegistry;
-	private ProductNavigationControlMenuEntryRegistry
+	private static ProductNavigationControlMenuEntryRegistry
 		_productNavigationControlMenuEntryRegistry;
-	private ServletContext _servletContext;
+	private static ServletContext _servletContext;
 
 }

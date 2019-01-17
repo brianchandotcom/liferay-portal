@@ -305,6 +305,14 @@ classes directory does not exist for Java projects.
 of type `NpmInstallTask` to check the `nodeModulesDir` instead of the
 `nodeModulesDigestFile`.
 
+## 4.6.4 - 2019-01-16
+
+### Fixed
+- [LPS-88909]: If the `npmRun.sourceDigestFile` matches the `npmRun.sourceFiles`
+digest, all files ending with the `js` extension in the classes directory will
+be copied before the `processResources` task runs and then copied back to
+preserve changes made by the `npmRun` task.
+
 [Liferay Gradle Util]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-util
 [LPS-66906]: https://issues.liferay.com/browse/LPS-66906
 [LPS-67023]: https://issues.liferay.com/browse/LPS-67023

@@ -43,7 +43,10 @@ public abstract class DynamicQueryUADExporter<T extends BaseModel>
 
 	@Override
 	public long count(long userId) throws PortalException {
-		return getActionableDynamicQuery(userId).performCount();
+		ActionableDynamicQuery actionableDynamicQuery =
+			getActionableDynamicQuery(userId);
+
+		return actionableDynamicQuery.performCount();
 	}
 
 	@Override

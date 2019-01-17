@@ -299,9 +299,13 @@ public class SocialRelationLocalServiceTest {
 
 		Assert.assertEquals(users.toString(), 3, users.size());
 
-		Assert.assertEquals("dlc3", users.get(0).getScreenName());
-		Assert.assertEquals("dlc4", users.get(1).getScreenName());
-		Assert.assertEquals("dlc5", users.get(2).getScreenName());
+		User user1 = users.get(0);
+		User user2 = users.get(1);
+		User user3 = users.get(2);
+
+		Assert.assertEquals("dlc3", user1.getScreenName());
+		Assert.assertEquals("dlc4", user2.getScreenName());
+		Assert.assertEquals("dlc5", user3.getScreenName());
 	}
 
 	@Test
@@ -324,8 +328,11 @@ public class SocialRelationLocalServiceTest {
 
 		Assert.assertEquals(users.toString(), 2, users.size());
 
-		Assert.assertEquals("fra1", users.get(0).getScreenName());
-		Assert.assertEquals("fra2", users.get(1).getScreenName());
+		User user1 = users.get(0);
+		User user2 = users.get(1);
+
+		Assert.assertEquals("fra1", user1.getScreenName());
+		Assert.assertEquals("fra2", user2.getScreenName());
 
 		// Are fra3 and fra5 both children of fra1?
 
@@ -336,7 +343,9 @@ public class SocialRelationLocalServiceTest {
 
 		Assert.assertEquals(users.toString(), 1, users.size());
 
-		Assert.assertEquals("fra1", users.get(0).getScreenName());
+		user1 = users.get(0);
+
+		Assert.assertEquals("fra1", user1.getScreenName());
 	}
 
 	@Test
@@ -353,14 +362,23 @@ public class SocialRelationLocalServiceTest {
 
 		Assert.assertEquals(users.toString(), 8, users.size());
 
-		Assert.assertEquals("dlc2", users.get(0).getScreenName());
-		Assert.assertEquals("dlc3", users.get(1).getScreenName());
-		Assert.assertEquals("dlc4", users.get(2).getScreenName());
-		Assert.assertEquals("dlc5", users.get(3).getScreenName());
-		Assert.assertEquals("dlc6", users.get(4).getScreenName());
-		Assert.assertEquals("dlc7", users.get(5).getScreenName());
-		Assert.assertEquals("dlc8", users.get(6).getScreenName());
-		Assert.assertEquals("dlc9", users.get(7).getScreenName());
+		User user1 = users.get(0);
+		User user2 = users.get(1);
+		User user3 = users.get(2);
+		User user4 = users.get(3);
+		User user5 = users.get(4);
+		User user6 = users.get(5);
+		User user7 = users.get(6);
+		User user8 = users.get(7);
+
+		Assert.assertEquals("dlc2", user1.getScreenName());
+		Assert.assertEquals("dlc3", user2.getScreenName());
+		Assert.assertEquals("dlc4", user3.getScreenName());
+		Assert.assertEquals("dlc5", user4.getScreenName());
+		Assert.assertEquals("dlc6", user5.getScreenName());
+		Assert.assertEquals("dlc7", user6.getScreenName());
+		Assert.assertEquals("dlc8", user7.getScreenName());
+		Assert.assertEquals("dlc9", user8.getScreenName());
 	}
 
 	@Test
@@ -383,13 +401,21 @@ public class SocialRelationLocalServiceTest {
 
 		Assert.assertEquals(users.toString(), 7, users.size());
 
-		Assert.assertEquals("dlc2", users.get(0).getScreenName());
-		Assert.assertEquals("dlc3", users.get(1).getScreenName());
-		Assert.assertEquals("dlc4", users.get(2).getScreenName());
-		Assert.assertEquals("dlc5", users.get(3).getScreenName());
-		Assert.assertEquals("dlc6", users.get(4).getScreenName());
-		Assert.assertEquals("dlc7", users.get(5).getScreenName());
-		Assert.assertEquals("dlc8", users.get(6).getScreenName());
+		User user1 = users.get(0);
+		User user2 = users.get(1);
+		User user3 = users.get(2);
+		User user4 = users.get(3);
+		User user5 = users.get(4);
+		User user6 = users.get(5);
+		User user7 = users.get(6);
+
+		Assert.assertEquals("dlc2", user1.getScreenName());
+		Assert.assertEquals("dlc3", user2.getScreenName());
+		Assert.assertEquals("dlc4", user3.getScreenName());
+		Assert.assertEquals("dlc5", user4.getScreenName());
+		Assert.assertEquals("dlc6", user5.getScreenName());
+		Assert.assertEquals("dlc7", user6.getScreenName());
+		Assert.assertEquals("dlc8", user7.getScreenName());
 
 		// Is dlc1 a coworker of dlc9?
 
@@ -400,7 +426,9 @@ public class SocialRelationLocalServiceTest {
 
 		Assert.assertEquals(users.toString(), 1, users.size());
 
-		Assert.assertEquals("dlc9", users.get(0).getScreenName());
+		user1 = users.get(0);
+
+		Assert.assertEquals("dlc9", user1.getScreenName());
 
 		// Is dlc1 romantically involved with dlc2?
 
@@ -412,7 +440,9 @@ public class SocialRelationLocalServiceTest {
 
 		Assert.assertEquals(users.toString(), 1, users.size());
 
-		Assert.assertEquals("dlc2", users.get(0).getScreenName());
+		user1 = users.get(0);
+
+		Assert.assertEquals("dlc2", user1.getScreenName());
 
 		// Is dlc2 romantically involved with dlc1?
 
@@ -424,7 +454,9 @@ public class SocialRelationLocalServiceTest {
 
 		Assert.assertEquals(users.toString(), 1, users.size());
 
-		Assert.assertEquals("dlc1", users.get(0).getScreenName());
+		user1 = users.get(0);
+
+		Assert.assertEquals("dlc1", user1.getScreenName());
 
 		// Is dlc3 romantically involved with anyone?
 
@@ -460,14 +492,23 @@ public class SocialRelationLocalServiceTest {
 
 		Assert.assertEquals(users.toString(), 8, users.size());
 
-		Assert.assertEquals("fra2", users.get(0).getScreenName());
-		Assert.assertEquals("fra3", users.get(1).getScreenName());
-		Assert.assertEquals("fra4", users.get(2).getScreenName());
-		Assert.assertEquals("fra5", users.get(3).getScreenName());
-		Assert.assertEquals("fra6", users.get(4).getScreenName());
-		Assert.assertEquals("fra7", users.get(5).getScreenName());
-		Assert.assertEquals("fra8", users.get(6).getScreenName());
-		Assert.assertEquals("fra9", users.get(7).getScreenName());
+		User user1 = users.get(0);
+		User user2 = users.get(1);
+		User user3 = users.get(2);
+		User user4 = users.get(3);
+		User user5 = users.get(4);
+		User user6 = users.get(5);
+		User user7 = users.get(6);
+		User user8 = users.get(7);
+
+		Assert.assertEquals("fra2", user1.getScreenName());
+		Assert.assertEquals("fra3", user2.getScreenName());
+		Assert.assertEquals("fra4", user3.getScreenName());
+		Assert.assertEquals("fra5", user4.getScreenName());
+		Assert.assertEquals("fra6", user5.getScreenName());
+		Assert.assertEquals("fra7", user6.getScreenName());
+		Assert.assertEquals("fra8", user7.getScreenName());
+		Assert.assertEquals("fra9", user8.getScreenName());
 
 		// Is fra2 a parent of anyone?
 
@@ -487,8 +528,11 @@ public class SocialRelationLocalServiceTest {
 
 		Assert.assertEquals(users.toString(), 2, users.size());
 
-		Assert.assertEquals("fra1", users.get(0).getScreenName());
-		Assert.assertEquals("fra2", users.get(1).getScreenName());
+		user1 = users.get(0);
+		user2 = users.get(1);
+
+		Assert.assertEquals("fra1", user1.getScreenName());
+		Assert.assertEquals("fra2", user2.getScreenName());
 
 		// Is fra6 a child of fra1?
 

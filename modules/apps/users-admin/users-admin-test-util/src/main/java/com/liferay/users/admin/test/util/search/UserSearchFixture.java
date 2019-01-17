@@ -77,7 +77,9 @@ public class UserSearchFixture {
 
 		long countryId = country.getCountryId();
 
-		Region region = RegionServiceUtil.getRegions(countryId).get(0);
+		List<Region> regions = RegionServiceUtil.getRegions(countryId);
+
+		Region region = regions.get(0);
 
 		long regionId = region.getRegionId();
 

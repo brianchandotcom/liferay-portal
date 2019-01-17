@@ -1029,10 +1029,10 @@ public class GitWorkingDirectory {
 	public LocalGitBranch getLocalGitBranch(
 		String branchName, boolean required) {
 
-		for (LocalGitBranch localGitBranch : getLocalGitBranches(null)) {
-			if (branchName.equals(localGitBranch.getName())) {
-				return localGitBranch;
-			}
+		List<LocalGitBranch> localGitBranches = getLocalGitBranches(branchName);
+
+		if (!localGitBranches.isEmpty()) {
+			return localGitBranches.get(0);
 		}
 
 		if (required) {

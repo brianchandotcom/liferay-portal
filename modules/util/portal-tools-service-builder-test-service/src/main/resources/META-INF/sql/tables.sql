@@ -53,6 +53,13 @@ create table LocalizedEntryLocalization (
 	content VARCHAR(75) null
 );
 
+create table UADPartialEntry (
+	uadPartialEntryId LONG not null primary key,
+	userId LONG,
+	userName VARCHAR(75) null,
+	message VARCHAR(75) null
+);
+
 create table VersionedEntry (
 	mvccVersion LONG default 0 not null,
 	headId LONG,

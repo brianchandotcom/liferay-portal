@@ -49,6 +49,12 @@
 		<field name="lvEntryId" type="long" />
 		<field name="groupId" type="long" />
 	</model>
+	<model name="com.liferay.portal.tools.service.builder.test.model.UADPartialEntry">
+		<field name="uadPartialEntryId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="message" type="String" />
+	</model>
 	<model name="com.liferay.portal.tools.service.builder.test.model.VersionedEntry">
 		<field name="mvccVersion" type="long" />
 		<field name="headId" type="long" />

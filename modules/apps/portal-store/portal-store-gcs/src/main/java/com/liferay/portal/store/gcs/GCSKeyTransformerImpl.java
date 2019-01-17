@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.store.gcs.key.manipulation;
+package com.liferay.portal.store.gcs;
 
 import com.google.common.hash.HashCode;
 import com.google.common.hash.HashFunction;
@@ -29,8 +29,8 @@ import org.osgi.service.component.annotations.Component;
  * @author Edward C. Han
  * @author Shanon Mathai
  */
-@Component(immediate = true, service = KeyTransformer.class)
-public class KeyTransformerImpl implements KeyTransformer {
+@Component(immediate = true, service = GCSKeyTransformer.class)
+public class GCSKeyTransformerImpl implements GCSKeyTransformer {
 
 	@Override
 	public String getDirectoryKey(

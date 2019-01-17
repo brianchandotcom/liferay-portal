@@ -17,8 +17,11 @@ package com.liferay.journal.web.internal.servlet.taglib.util;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.journal.constants.JournalPortletKeys;
+import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalFolder;
+import com.liferay.journal.model.JournalFolderConstants;
 import com.liferay.journal.web.internal.security.permission.resource.JournalFolderPermission;
+import com.liferay.journal.web.internal.security.permission.resource.JournalPermission;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -35,6 +38,8 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.kernel.workflow.WorkflowEngineManagerUtil;
+import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
 import com.liferay.staging.StagingGroupHelper;
 import com.liferay.staging.StagingGroupHelperUtil;
 import com.liferay.taglib.security.PermissionsURLTag;
@@ -108,6 +113,91 @@ public class JournalFolderActionDropdownItems {
 		};
 	}
 
+	public List<DropdownItem> getInfoPanelActionDropdownItems()
+		throws Exception {
+
+		if (_folder != null) {
+			List<DropdownItem> actionDropdownItems = getActionDropdownItems();
+
+			if (JournalFolderPermission.contains(
+					_themeDisplay.getPermissionChecker(), _folder,
+					ActionKeys.ADD_FOLDER)) {
+
+				DropdownItem dropdownItem = new DropdownItem();
+
+				dropdownItem.setHref(
+					_liferayPortletResponse.createRenderURL(), "mvcPath",
+					"/edit_folder.jsp", "redirect",
+					_themeDisplay.getURLCurrent(), "groupId",
+					_folder.getGroupId(), "parentFolderId",
+					_folder.getFolderId());
+				dropdownItem.setLabel(
+					LanguageUtil.get(_request, "add-subfolder"));
+
+				actionDropdownItems.add(0, dropdownItem);
+			}
+
+			return actionDropdownItems;
+		}
+
+		return new DropdownItemList() {
+			{
+
+				if (JournalPermission.contains(
+						_themeDisplay.getPermissionChecker(),
+						_themeDisplay.getScopeGroupId(),
+						ActionKeys.ADD_FOLDER)) {
+
+					add(_getAddHomeFolderAction());
+				}
+
+				boolean workflowEnabled = false;
+
+				if (WorkflowEngineManagerUtil.isDeployed() &&
+					(WorkflowHandlerRegistryUtil.getWorkflowHandler(
+						JournalArticle.class.getName()) != null)) {
+
+					workflowEnabled = true;
+				}
+
+				if (workflowEnabled &&
+					JournalFolderPermission.contains(
+						_themeDisplay.getPermissionChecker(),
+						_themeDisplay.getScopeGroupId(),
+						JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+						ActionKeys.UPDATE)) {
+
+					add(_getEditHomeFolderAction());
+				}
+
+				if (JournalPermission.contains(
+						_themeDisplay.getPermissionChecker(),
+						_themeDisplay.getScopeGroupId(),
+						ActionKeys.PERMISSIONS)) {
+
+					add(_getPermissionsHomeFolderAction());
+				}
+
+				Group group = _themeDisplay.getScopeGroup();
+
+				if (_isShowPublishFolderAction() && !group.isLayout()) {
+					add(_getPublishToLiveFolderAction());
+				}
+			}
+		};
+	}
+
+	private Consumer<DropdownItem> _getAddHomeFolderAction() {
+		return dropdownItem -> {
+			dropdownItem.setHref(
+				_liferayPortletResponse.createRenderURL(), "mvcPath",
+				"/edit_folder.jsp", "redirect", _themeDisplay.getURLCurrent(),
+				"groupId", _themeDisplay.getScopeGroupId(), "parentFolderId",
+				JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+			dropdownItem.setLabel(LanguageUtil.get(_request, "add-folder"));
+		};
+	}
+
 	private Consumer<DropdownItem> _getDeleteFolderAction()
 		throws PortalException {
 
@@ -163,6 +253,18 @@ public class JournalFolderActionDropdownItems {
 		};
 	}
 
+	private Consumer<DropdownItem> _getEditHomeFolderAction() {
+		return dropdownItem -> {
+			dropdownItem.setHref(
+				_liferayPortletResponse.createRenderURL(), "mvcPath",
+				"/edit_folder.jsp", "redirect", _themeDisplay.getURLCurrent(),
+				"groupId", _themeDisplay.getScopeGroupId(), "folderId",
+				JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID, "rootFolder",
+				true);
+			dropdownItem.setLabel(LanguageUtil.get(_request, "edit"));
+		};
+	}
+
 	private Consumer<DropdownItem> _getMoveFolderAction() {
 		return dropdownItem -> {
 			dropdownItem.setHref(
@@ -179,6 +281,22 @@ public class JournalFolderActionDropdownItems {
 		String permissionsURL = PermissionsURLTag.doTag(
 			StringPool.BLANK, JournalFolder.class.getName(), _folder.getName(),
 			null, String.valueOf(_folder.getPrimaryKey()),
+			LiferayWindowState.POP_UP.toString(), null, _request);
+
+		return dropdownItem -> {
+			dropdownItem.putData("action", "permissions");
+			dropdownItem.putData("permissionsURL", permissionsURL);
+			dropdownItem.setLabel(LanguageUtil.get(_request, "permissions"));
+		};
+	}
+
+	private Consumer<DropdownItem> _getPermissionsHomeFolderAction()
+		throws Exception {
+
+		String permissionsURL = PermissionsURLTag.doTag(
+			StringPool.BLANK, "com.liferay.journal",
+			_themeDisplay.getScopeGroupName(), null,
+			String.valueOf(_themeDisplay.getScopeGroupId()),
 			LiferayWindowState.POP_UP.toString(), null, _request);
 
 		return dropdownItem -> {

@@ -222,6 +222,13 @@ public class JournalDisplayContext {
 		return _articleDisplay;
 	}
 
+	public List<DropdownItem> getArticleInfoPanelDropdownItems(
+			JournalArticle article)
+		throws Exception {
+
+		return getArticleActionDropdownItems(article);
+	}
+
 	public List<Locale> getAvailableArticleLocales() throws PortalException {
 		JournalArticle article = getArticle();
 
@@ -470,6 +477,18 @@ public class JournalDisplayContext {
 			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 
 		return _folderId;
+	}
+
+	public List<DropdownItem> getFolderInfoPanelDropdownItems(
+			JournalFolder folder)
+		throws Exception {
+
+		JournalFolderActionDropdownItems folderActionDropdownItems =
+			new JournalFolderActionDropdownItems(
+				folder, _liferayPortletRequest, _liferayPortletResponse,
+				_trashHelper);
+
+		return folderActionDropdownItems.getInfoPanelActionDropdownItems();
 	}
 
 	public JSONArray getFoldersJSONArray() {

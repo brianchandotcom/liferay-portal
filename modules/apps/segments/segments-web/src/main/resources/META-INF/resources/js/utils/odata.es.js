@@ -150,7 +150,7 @@ function buildQueryString(criteria, queryConjunction, properties) {
 					}
 					else if (isValueType(FUNCTIONAL_OPERATORS, operatorName)) {
 						queryString = queryString.concat(
-							`${operatorName} (${propertyName}, ${parsedValue})`
+							`${operatorName}(${propertyName}, ${parsedValue})`
 						);
 					}
 					else if (isValueType(NOT_OPERATORS, operatorName)) {

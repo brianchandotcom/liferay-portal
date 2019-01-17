@@ -78,7 +78,10 @@ public class MinimizePortletConfigurationIcon
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
 		return "Liferay.Portlet.minimize('#p_p_id_".concat(
-			portletDisplay.getId()).concat("_', this); return false;");
+			portletDisplay.getId()
+		).concat(
+			"_', this); return false;"
+		);
 	}
 
 	@Override

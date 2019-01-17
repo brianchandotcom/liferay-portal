@@ -73,8 +73,10 @@ public class MaximizePortletConfigurationIcon
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
 		return "submitForm(document.hrefFm, '".concat(
-			HtmlUtil.escapeJS(portletDisplay.getURLMax())).concat(
-				"'); return false;");
+			HtmlUtil.escapeJS(portletDisplay.getURLMax())
+		).concat(
+			"'); return false;"
+		);
 	}
 
 	@Override

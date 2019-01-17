@@ -66,8 +66,13 @@ public class RSSFeed {
 		if (Validator.isNull(syndFeedLink) ||
 			!HttpUtil.hasDomain(syndFeedLink)) {
 
-			baseURL = HttpUtil.getProtocol(_url).concat(
-				Http.PROTOCOL_DELIMITER).concat(HttpUtil.getDomain(_url));
+			baseURL = HttpUtil.getProtocol(
+				_url
+			).concat(
+				Http.PROTOCOL_DELIMITER
+			).concat(
+				HttpUtil.getDomain(_url)
+			);
 
 			if (Validator.isNotNull(syndFeedLink)) {
 				syndFeedLink = baseURL.concat(syndFeedLink);
@@ -77,9 +82,13 @@ public class RSSFeed {
 			}
 		}
 		else {
-			baseURL = HttpUtil.getProtocol(syndFeedLink).concat(
-				Http.PROTOCOL_DELIMITER).concat(
-					HttpUtil.getDomain(syndFeedLink));
+			baseURL = HttpUtil.getProtocol(
+				syndFeedLink
+			).concat(
+				Http.PROTOCOL_DELIMITER
+			).concat(
+				HttpUtil.getDomain(syndFeedLink)
+			);
 		}
 
 		SyndImage syndImage = syndFeed.getImage();

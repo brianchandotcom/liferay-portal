@@ -85,8 +85,8 @@ public class SegmentsCriteriaContributorRegistryImpl
 			segmentsCriteriaContributors.stream();
 
 		return stream.filter(
-			segmentsCriteriaContributor ->
-				type.equals(segmentsCriteriaContributor.getType())
+			segmentsCriteriaContributor -> type.equals(
+				segmentsCriteriaContributor.getType())
 		).collect(
 			Collectors.toList()
 		);

@@ -63,7 +63,11 @@ public class FilterUtil {
 	}
 
 	public static String getNullFilter(String fieldName, String operator) {
-		return fieldName.concat(operator).concat(StringPool.NULL);
+		return fieldName.concat(
+			operator
+		).concat(
+			StringPool.NULL
+		);
 	}
 
 	private FilterUtil() {

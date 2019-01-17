@@ -1189,9 +1189,13 @@ definition {
 
 		Navigator.gotoNavTab(navTab = "Miscellaneous");
 
+		var googlePropertiesSet = MathUtil.randomNumber("3");
+		var googleAppsAPIKey = PropsUtil.get("google.api.key.${googlePropertiesSet}");
+		var googleClientID = PropsUtil.get("google.client.id.${googlePropertiesSet}");
+
 		PortalSettings.configureGoogleApps(
-			googleAppsAPIKey = PropsUtil.get("google.api.key"),
-			googleClientID = PropsUtil.get("google.client.id")
+			googleAppsAPIKey = "${googleAppsAPIKey}",
+			googleClientID = "${googleClientID}"
 		);
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");

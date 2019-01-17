@@ -14,7 +14,7 @@
 
 package com.liferay.portal.template.soy.data;
 
-import com.liferay.portal.template.soy.utils.SoyRawData;
+import com.liferay.portal.template.soy.util.SoyRawData;
 
 /**
  * Objects of this type contain sanitized HTML suitable for its use in Soy

@@ -85,8 +85,9 @@ public class SaveStructureMVCActionCommand extends BaseMVCActionCommand {
 		String description = ParamUtil.getString(actionRequest, "description");
 		DDMForm ddmForm = getDDMForm(actionRequest);
 		DDMFormLayout ddmFormLayout = getDDMFormLayout(actionRequest);
-		Map<Locale, String> nameMap = getLocalizedMap(
-			name, ddmForm.getAvailableLocales(), ddmForm.getDefaultLocale());
+		Map<Locale, String> nameMap =
+			saveFormInstanceMVCCommandHelper.getNameMap(
+				ddmForm, name, "untitled-element-set");
 		Map<Locale, String> descriptionMap = getLocalizedMap(
 			description, ddmForm.getAvailableLocales(),
 			ddmForm.getDefaultLocale());
@@ -191,6 +192,9 @@ public class SaveStructureMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	protected JSONFactory jsonFactory;
+
+	@Reference
+	protected SaveFormInstanceMVCCommandHelper saveFormInstanceMVCCommandHelper;
 
 	@Reference
 	private DDMStructureService _ddmStructureService;

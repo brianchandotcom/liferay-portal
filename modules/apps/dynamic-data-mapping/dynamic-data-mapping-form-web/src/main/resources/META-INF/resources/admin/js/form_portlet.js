@@ -144,9 +144,16 @@ AUI.add(
 							formBuilder._layoutBuilder.after('layout-builder:moveStart', A.bind(instance._afterFormBuilderLayoutBuilderMoveStart, instance)),
 							instance.one('.back-url-link').on('click', A.bind('_onBack', instance)),
 							instance.one('#save').on('click', A.bind('_onSaveButtonClick', instance)),
-							Liferay.on('destroyPortlet', A.bind('_onDestroyPortlet', instance)),
-							instance.get('ruleBuilder').on('*:saveRule', A.bind('_autosave', instance, true))
+							Liferay.on('destroyPortlet', A.bind('_onDestroyPortlet', instance))
 						);
+
+						var ruleBuilder = instance.get('ruleBuilder');
+
+						if (ruleBuilder) {
+							instance._eventHandlers.push(
+								ruleBuilder.on('*:saveRule', A.bind('_autosave', instance, true))
+							);
+						}
 
 						if (instance._isFormView()) {
 							instance.bindNavigationBar();
@@ -322,7 +329,7 @@ AUI.add(
 							availableLanguageIds: translationManager.get('availableLocales'),
 							defaultLanguageId: formBuilder.get('defaultLanguageId'),
 							description: instance.get('localizedDescription'),
-							name: instance._getLocalizedName(),
+							name: instance.get('localizedName'),
 							pages: instance.layoutVisitor.getPages(),
 							paginationMode: pageManager.get('mode')
 						};
@@ -700,28 +707,13 @@ AUI.add(
 
 						formObject[instance.ns('saveAsDraft')] = saveAsDraft;
 
-						formString = A.QueryString.stringify(formObject);
-
-						return formString;
+						return A.QueryString.stringify(formObject);
 					},
 
 					_getFormInstanceId: function() {
 						var instance = this;
 
 						return instance.byId('formInstanceId').val();
-					},
-
-					_getLocalizedName: function() {
-						var instance = this;
-
-						var defaultLanguageId = instance.get('defaultLanguageId');
-						var localizedName = instance.get('localizedName');
-
-						if (!localizedName[defaultLanguageId].trim()) {
-							localizedName[defaultLanguageId] = instance._isFormView() ? STR_UNTITLED_FORM : STR_UNTITLED_ELEMENT_SET;
-						}
-
-						return localizedName;
 					},
 
 					_getName: function() {

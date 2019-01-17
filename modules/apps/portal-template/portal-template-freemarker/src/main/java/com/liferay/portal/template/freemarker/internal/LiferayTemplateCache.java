@@ -54,8 +54,11 @@ public class LiferayTemplateCache extends TemplateCache {
 
 		String portalCacheName = TemplateResource.class.getName();
 
-		portalCacheName = portalCacheName.concat(StringPool.POUND).concat(
-			TemplateConstants.LANG_TYPE_FTL);
+		portalCacheName = portalCacheName.concat(
+			StringPool.POUND
+		).concat(
+			TemplateConstants.LANG_TYPE_FTL
+		);
 
 		_portalCache =
 			(PortalCache<TemplateResource, Object>)singleVMPool.getPortalCache(

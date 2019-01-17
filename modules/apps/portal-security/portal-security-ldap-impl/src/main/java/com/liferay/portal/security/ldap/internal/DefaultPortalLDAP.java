@@ -523,7 +523,11 @@ public class DefaultPortalLDAP implements PortalLDAP {
 			return name;
 		}
 
-		return name.concat(StringPool.COMMA).concat(baseDN);
+		return name.concat(
+			StringPool.COMMA
+		).concat(
+			baseDN
+		);
 	}
 
 	@Override

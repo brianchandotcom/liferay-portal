@@ -108,8 +108,8 @@ public class JavaElseStatementCheck extends BaseJavaTermCheck {
 				exitStatementType, matcher1.start());
 
 			int exitStatementLineNumber =
-				javaTerm.getLineNumber() +
-					getLineNumber(javaTermContent, x) - 1;
+				javaTerm.getLineNumber() + getLineNumber(javaTermContent, x) -
+					1;
 
 			int lineNumber =
 				javaTerm.getLineNumber() +

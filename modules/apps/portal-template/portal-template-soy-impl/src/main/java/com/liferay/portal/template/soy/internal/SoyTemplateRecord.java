@@ -32,7 +32,7 @@ import com.google.template.soy.data.restricted.StringData;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.template.soy.utils.SoyRawData;
+import com.liferay.portal.template.soy.util.SoyRawData;
 
 import java.io.IOException;
 

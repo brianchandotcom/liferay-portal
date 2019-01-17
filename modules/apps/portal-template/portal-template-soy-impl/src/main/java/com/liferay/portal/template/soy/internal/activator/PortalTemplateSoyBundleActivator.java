@@ -14,8 +14,8 @@
 
 package com.liferay.portal.template.soy.internal.activator;
 
-import com.liferay.portal.template.soy.utils.SoyContextFactory;
-import com.liferay.portal.template.soy.utils.SoyContextFactoryUtil;
+import com.liferay.portal.template.soy.util.SoyContextFactory;
+import com.liferay.portal.template.soy.util.SoyContextFactoryUtil;
 
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;

@@ -15,8 +15,8 @@
 package com.liferay.portal.template.soy.internal.util;
 
 import com.liferay.portal.template.soy.internal.SoyContextImpl;
-import com.liferay.portal.template.soy.utils.SoyContext;
-import com.liferay.portal.template.soy.utils.SoyContextFactory;
+import com.liferay.portal.template.soy.util.SoyContext;
+import com.liferay.portal.template.soy.util.SoyContextFactory;
 
 import java.util.Map;
 

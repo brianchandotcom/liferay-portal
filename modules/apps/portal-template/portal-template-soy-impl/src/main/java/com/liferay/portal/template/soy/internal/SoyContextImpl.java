@@ -17,7 +17,7 @@ package com.liferay.portal.template.soy.internal;
 import com.liferay.portal.template.soy.constants.SoyTemplateConstants;
 import com.liferay.portal.template.soy.data.SoyDataFactory;
 import com.liferay.portal.template.soy.internal.data.SoyDataFactoryProvider;
-import com.liferay.portal.template.soy.utils.SoyContext;
+import com.liferay.portal.template.soy.util.SoyContext;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -32,7 +32,7 @@ import java.util.stream.Stream;
  * as given by the template user, without any transformation to Soy internal
  * types. This is so that values put into this maps are immutables.
  *
- * It can, of course, contain {@link com.liferay.portal.template.soy.utils.SoyRawData}
+ * It can, of course, contain {@link com.liferay.portal.template.soy.util.SoyRawData}
  * values as they are part of the public API and are types known to the user.
  *
  * In order to make use of a {@link SoyContext} in the template engine, it is

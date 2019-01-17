@@ -17,7 +17,7 @@ package com.liferay.portal.template.soy.internal.util;
 import com.google.template.soy.data.SanitizedContent;
 import com.google.template.soy.data.UnsafeSanitizedContentOrdainer;
 
-import com.liferay.portal.template.soy.utils.SoyHTMLSanitizer;
+import com.liferay.portal.template.soy.util.SoyHTMLSanitizer;
 
 import org.osgi.service.component.annotations.Component;
 

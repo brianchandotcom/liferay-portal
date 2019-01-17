@@ -14,15 +14,12 @@
 
 package com.liferay.saml.web.internal.portlet.action;
 
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ClassUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.saml.constants.SamlWebKeys;
+import com.liferay.saml.persistence.exception.NoSuchSpIdpConnectionException;
 import com.liferay.saml.persistence.model.SamlSpIdpConnection;
 import com.liferay.saml.persistence.service.SamlSpIdpConnectionLocalService;
 import com.liferay.saml.runtime.configuration.SamlProviderConfiguration;
@@ -32,8 +29,6 @@ import com.liferay.saml.web.internal.constants.SamlAdminPortletKeys;
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
-
-import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -57,55 +52,44 @@ public class EditIdentityProviderConnectionMVCRenderCommand
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws PortletException {
 
-		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
-			renderRequest);
+		long samlSpIdpConnectionId = ParamUtil.getLong(
+			renderRequest, "samlSpIdpConnectionId");
+
+		renderRequest.setAttribute(
+			ClassUtil.getClassName(SamlProviderConfigurationHelper.class),
+			_samlProviderConfigurationHelper);
 
 		SamlProviderConfiguration samlProviderConfiguration =
 			_samlProviderConfigurationHelper.getSamlProviderConfiguration();
 
-		String samlIdpEntityId = samlProviderConfiguration.defaultIdPEntityId();
+		long clockSkew;
 
-		long clockSkew = ParamUtil.getLong(
-			httpServletRequest, "clockSkew",
-			samlProviderConfiguration.clockSkew());
+		if (samlSpIdpConnectionId > 0) {
+			SamlSpIdpConnection samlSpIdpConnection =
+				_samlSpIdpConnectionLocalService.fetchSamlSpIdpConnection(
+					samlSpIdpConnectionId);
 
-		if (Validator.isNotNull(samlIdpEntityId)) {
-			try {
-				ThemeDisplay themeDisplay =
-					(ThemeDisplay)httpServletRequest.getAttribute(
-						WebKeys.THEME_DISPLAY);
-
-				SamlSpIdpConnection samlSpIdpConnection =
-					_samlSpIdpConnectionLocalService.getSamlSpIdpConnection(
-						themeDisplay.getCompanyId(), samlIdpEntityId);
-
-				clockSkew = ParamUtil.getLong(
-					httpServletRequest, "clockSkew",
-					samlSpIdpConnection.getClockSkew());
-
-				renderRequest.setAttribute(
-					SamlWebKeys.SAML_SP_IDP_CONNECTION, samlSpIdpConnection);
+			if (samlSpIdpConnection == null) {
+				throw new PortletException(
+					new NoSuchSpIdpConnectionException());
 			}
-			catch (Exception e) {
-				String message =
-					"Unable to calculate clock skew: " + e.getMessage();
 
-				if (_log.isDebugEnabled()) {
-					_log.debug(message, e);
-				}
-				else if (_log.isWarnEnabled()) {
-					_log.warn(message);
-				}
-			}
+			clockSkew = ParamUtil.getLong(
+				renderRequest, "clockSkew", samlSpIdpConnection.getClockSkew());
+
+			renderRequest.setAttribute(
+				SamlWebKeys.SAML_SP_IDP_CONNECTION, samlSpIdpConnection);
+		}
+		else {
+			clockSkew = ParamUtil.getLong(
+				renderRequest, "clockSkew",
+				samlProviderConfiguration.clockSkew());
 		}
 
 		renderRequest.setAttribute(SamlWebKeys.SAML_CLOCK_SKEW, clockSkew);
 
 		return "/admin/edit_identity_provider_connection.jsp";
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		EditIdentityProviderConnectionMVCRenderCommand.class);
 
 	@Reference
 	private Portal _portal;

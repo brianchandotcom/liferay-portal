@@ -191,6 +191,252 @@ exports[`Rule Editor Acceptance Criteria When a condition is added and there's m
 </div>
 `;
 
+exports[`Rule Editor Acceptance Criteria When the user choose a data provider as a target should show the inputs and outputs fields if Input and Outputs were not empty 1`] = `
+Array [
+  Object {
+    "Name": "",
+    "fieldOptions": Array [
+      Object {
+        "fieldName": "radio",
+        "label": "Radio Field",
+        "options": Array [
+          Object {
+            "label": "Option 1",
+            "value": "option1",
+          },
+          Object {
+            "label": "Option 2",
+            "value": "option2",
+          },
+        ],
+        "settingsContext": Object {
+          "pages": Array [
+            Object {
+              "rows": Array [
+                Object {
+                  "columns": Array [
+                    Object {
+                      "fields": Array [
+                        Object {
+                          "fieldName": "label",
+                          "localizable": true,
+                          "settingsContext": Object {
+                            "pages": Array [
+                              Object {
+                                "rows": Array [
+                                  Object {
+                                    "columns": Array [],
+                                  },
+                                ],
+                              },
+                            ],
+                          },
+                        },
+                        Object {
+                          "fieldName": "name",
+                        },
+                        Object {
+                          "fieldName": "required",
+                        },
+                        Object {
+                          "fieldName": "type",
+                        },
+                      ],
+                      "size": 12,
+                    },
+                  ],
+                },
+              ],
+            },
+          ],
+        },
+        "type": "radio",
+        "value": "radio",
+      },
+      Object {
+        "fieldName": "text1",
+        "label": "Text Field 1",
+        "options": Array [],
+        "required": true,
+        "settingsContext": Object {
+          "pages": Array [],
+        },
+        "type": "text",
+        "value": "text1",
+      },
+      Object {
+        "fieldName": "text2",
+        "label": "Text Field 2",
+        "options": Array [],
+        "required": true,
+        "settingsContext": Object {
+          "pages": Array [],
+        },
+        "type": "text",
+        "value": "text2",
+      },
+      Object {
+        "fieldName": "select",
+        "label": "Select Field",
+        "options": Array [
+          Object {
+            "label": "Option 1",
+            "value": "option1",
+          },
+          Object {
+            "label": "Option 2",
+            "value": "option2",
+          },
+        ],
+        "required": true,
+        "settingsContext": Object {
+          "pages": Array [],
+        },
+        "type": "select",
+        "value": "select",
+      },
+      Object {
+        "fieldName": "numeric",
+        "label": "Numeric Field",
+        "options": Array [],
+        "required": true,
+        "settingsContext": Object {
+          "pages": Array [],
+        },
+        "type": "numeric",
+        "value": "numeric",
+      },
+    ],
+    "label": "Nome",
+    "name": "Name",
+    "required": false,
+    "type": "text",
+  },
+]
+`;
+
+exports[`Rule Editor Acceptance Criteria When the user choose a data provider as a target should show the inputs and outputs fields if Input and Outputs were not empty 2`] = `
+Array [
+  Object {
+    "Name": "",
+    "fieldOptions": Array [
+      Object {
+        "fieldName": "radio",
+        "label": "Radio Field",
+        "options": Array [
+          Object {
+            "label": "Option 1",
+            "value": "option1",
+          },
+          Object {
+            "label": "Option 2",
+            "value": "option2",
+          },
+        ],
+        "settingsContext": Object {
+          "pages": Array [
+            Object {
+              "rows": Array [
+                Object {
+                  "columns": Array [
+                    Object {
+                      "fields": Array [
+                        Object {
+                          "fieldName": "label",
+                          "localizable": true,
+                          "settingsContext": Object {
+                            "pages": Array [
+                              Object {
+                                "rows": Array [
+                                  Object {
+                                    "columns": Array [],
+                                  },
+                                ],
+                              },
+                            ],
+                          },
+                        },
+                        Object {
+                          "fieldName": "name",
+                        },
+                        Object {
+                          "fieldName": "required",
+                        },
+                        Object {
+                          "fieldName": "type",
+                        },
+                      ],
+                      "size": 12,
+                    },
+                  ],
+                },
+              ],
+            },
+          ],
+        },
+        "type": "radio",
+        "value": "radio",
+      },
+      Object {
+        "fieldName": "text1",
+        "label": "Text Field 1",
+        "options": Array [],
+        "required": true,
+        "settingsContext": Object {
+          "pages": Array [],
+        },
+        "type": "text",
+        "value": "text1",
+      },
+      Object {
+        "fieldName": "text2",
+        "label": "Text Field 2",
+        "options": Array [],
+        "required": true,
+        "settingsContext": Object {
+          "pages": Array [],
+        },
+        "type": "text",
+        "value": "text2",
+      },
+      Object {
+        "fieldName": "select",
+        "label": "Select Field",
+        "options": Array [
+          Object {
+            "label": "Option 1",
+            "value": "option1",
+          },
+          Object {
+            "label": "Option 2",
+            "value": "option2",
+          },
+        ],
+        "required": true,
+        "settingsContext": Object {
+          "pages": Array [],
+        },
+        "type": "select",
+        "value": "select",
+      },
+      Object {
+        "fieldName": "numeric",
+        "label": "Numeric Field",
+        "options": Array [],
+        "required": true,
+        "settingsContext": Object {
+          "pages": Array [],
+        },
+        "type": "numeric",
+        "value": "numeric",
+      },
+    ],
+    "name": "Name",
+    "type": "text",
+  },
+]
+`;
+
 exports[`Rule Editor Acceptance Criteria should configure the conditions according to the first operand type should add a new condition to the conditions array 1`] = `
 <div class="form-builder-rule-builder liferay-ddm-form-builder-rule-builder-content">
   <h2 class="form-builder-section-title text-default">rule</h2>
@@ -639,6 +885,252 @@ Array [
     ],
     "returnType": "boolean",
     "value": "belongs-to",
+  },
+]
+`;
+
+exports[`Rule Editor Acceptance Criteria should not reset inputs and output if the same data provider were selected 1`] = `
+Array [
+  Object {
+    "Name": "",
+    "fieldOptions": Array [
+      Object {
+        "fieldName": "radio",
+        "label": "Radio Field",
+        "options": Array [
+          Object {
+            "label": "Option 1",
+            "value": "option1",
+          },
+          Object {
+            "label": "Option 2",
+            "value": "option2",
+          },
+        ],
+        "settingsContext": Object {
+          "pages": Array [
+            Object {
+              "rows": Array [
+                Object {
+                  "columns": Array [
+                    Object {
+                      "fields": Array [
+                        Object {
+                          "fieldName": "label",
+                          "localizable": true,
+                          "settingsContext": Object {
+                            "pages": Array [
+                              Object {
+                                "rows": Array [
+                                  Object {
+                                    "columns": Array [],
+                                  },
+                                ],
+                              },
+                            ],
+                          },
+                        },
+                        Object {
+                          "fieldName": "name",
+                        },
+                        Object {
+                          "fieldName": "required",
+                        },
+                        Object {
+                          "fieldName": "type",
+                        },
+                      ],
+                      "size": 12,
+                    },
+                  ],
+                },
+              ],
+            },
+          ],
+        },
+        "type": "radio",
+        "value": "radio",
+      },
+      Object {
+        "fieldName": "text1",
+        "label": "Text Field 1",
+        "options": Array [],
+        "required": true,
+        "settingsContext": Object {
+          "pages": Array [],
+        },
+        "type": "text",
+        "value": "text1",
+      },
+      Object {
+        "fieldName": "text2",
+        "label": "Text Field 2",
+        "options": Array [],
+        "required": true,
+        "settingsContext": Object {
+          "pages": Array [],
+        },
+        "type": "text",
+        "value": "text2",
+      },
+      Object {
+        "fieldName": "select",
+        "label": "Select Field",
+        "options": Array [
+          Object {
+            "label": "Option 1",
+            "value": "option1",
+          },
+          Object {
+            "label": "Option 2",
+            "value": "option2",
+          },
+        ],
+        "required": true,
+        "settingsContext": Object {
+          "pages": Array [],
+        },
+        "type": "select",
+        "value": "select",
+      },
+      Object {
+        "fieldName": "numeric",
+        "label": "Numeric Field",
+        "options": Array [],
+        "required": true,
+        "settingsContext": Object {
+          "pages": Array [],
+        },
+        "type": "numeric",
+        "value": "numeric",
+      },
+    ],
+    "label": "Nome",
+    "name": "Name",
+    "required": false,
+    "type": "text",
+  },
+]
+`;
+
+exports[`Rule Editor Acceptance Criteria should not reset inputs and output if the same data provider were selected 2`] = `
+Array [
+  Object {
+    "Name": "",
+    "fieldOptions": Array [
+      Object {
+        "fieldName": "radio",
+        "label": "Radio Field",
+        "options": Array [
+          Object {
+            "label": "Option 1",
+            "value": "option1",
+          },
+          Object {
+            "label": "Option 2",
+            "value": "option2",
+          },
+        ],
+        "settingsContext": Object {
+          "pages": Array [
+            Object {
+              "rows": Array [
+                Object {
+                  "columns": Array [
+                    Object {
+                      "fields": Array [
+                        Object {
+                          "fieldName": "label",
+                          "localizable": true,
+                          "settingsContext": Object {
+                            "pages": Array [
+                              Object {
+                                "rows": Array [
+                                  Object {
+                                    "columns": Array [],
+                                  },
+                                ],
+                              },
+                            ],
+                          },
+                        },
+                        Object {
+                          "fieldName": "name",
+                        },
+                        Object {
+                          "fieldName": "required",
+                        },
+                        Object {
+                          "fieldName": "type",
+                        },
+                      ],
+                      "size": 12,
+                    },
+                  ],
+                },
+              ],
+            },
+          ],
+        },
+        "type": "radio",
+        "value": "radio",
+      },
+      Object {
+        "fieldName": "text1",
+        "label": "Text Field 1",
+        "options": Array [],
+        "required": true,
+        "settingsContext": Object {
+          "pages": Array [],
+        },
+        "type": "text",
+        "value": "text1",
+      },
+      Object {
+        "fieldName": "text2",
+        "label": "Text Field 2",
+        "options": Array [],
+        "required": true,
+        "settingsContext": Object {
+          "pages": Array [],
+        },
+        "type": "text",
+        "value": "text2",
+      },
+      Object {
+        "fieldName": "select",
+        "label": "Select Field",
+        "options": Array [
+          Object {
+            "label": "Option 1",
+            "value": "option1",
+          },
+          Object {
+            "label": "Option 2",
+            "value": "option2",
+          },
+        ],
+        "required": true,
+        "settingsContext": Object {
+          "pages": Array [],
+        },
+        "type": "select",
+        "value": "select",
+      },
+      Object {
+        "fieldName": "numeric",
+        "label": "Numeric Field",
+        "options": Array [],
+        "required": true,
+        "settingsContext": Object {
+          "pages": Array [],
+        },
+        "type": "numeric",
+        "value": "numeric",
+      },
+    ],
+    "name": "Name",
+    "type": "text",
   },
 ]
 `;

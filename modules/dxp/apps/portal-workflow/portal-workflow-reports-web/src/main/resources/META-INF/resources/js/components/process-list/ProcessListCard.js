@@ -110,7 +110,9 @@ export default class ProcessListCard extends React.Component {
 				{total > 0 ? (
 					<ProcessListTable processes={processes} />
 				) : (
-					<EmptyContent message={Liferay.Language.get('no-process')} />
+					<EmptyContent
+						message={Liferay.Language.get('there-are-no-process')}
+					/>
 				)}
 
 				{paginationBar()}

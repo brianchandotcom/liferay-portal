@@ -31,7 +31,7 @@ export default class ProcessListEntries extends React.Component {
 					href="#1"
 					role="button"
 				>
-					{`${selectedEntry} ${Liferay.Language.get('pagination-entries')}`}
+					{`${selectedEntry} ${Liferay.Language.get('entries')}`}
 					<Icon iconName="caret-double-l" />
 				</a>
 				<div className="dropdown-menu dropdown-menu-top">

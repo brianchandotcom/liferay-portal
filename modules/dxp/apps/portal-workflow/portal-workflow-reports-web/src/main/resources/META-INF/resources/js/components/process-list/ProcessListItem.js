@@ -5,10 +5,10 @@ export default class ProcessListItem extends React.Component {
 	render() {
 		const {instancesCount, onTime, overdue, processName} = this.props;
 
-		let instanceMessage = Liferay.Language.get('process-instances-count-item');
+		let instanceMessage = Liferay.Language.get('x-item');
 
 		if (instancesCount > 1) {
-			instanceMessage = Liferay.Language.get('process-instances-count-items');
+			instanceMessage = Liferay.Language.get('x-items');
 		}
 
 		return (

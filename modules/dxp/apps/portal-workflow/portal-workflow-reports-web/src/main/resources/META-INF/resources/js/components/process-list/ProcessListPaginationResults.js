@@ -7,7 +7,7 @@ export default class ProcessListPaginationResults extends React.Component {
 
 		return (
 			<div className="pagination-results">
-				{`${sub(Liferay.Language.get('pagination-result'), [
+				{`${sub(Liferay.Language.get('showing-x-to-x-of-x-entries'), [
 					start + 1,
 					start + count,
 					total

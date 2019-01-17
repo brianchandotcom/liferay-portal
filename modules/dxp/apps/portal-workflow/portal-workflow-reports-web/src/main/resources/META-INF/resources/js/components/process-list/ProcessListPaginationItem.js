@@ -16,8 +16,8 @@ export default class ProcessListPaginationItem extends React.Component {
 			const isNext = type === 'next';
 			const iconType = isNext ? 'angle-right' : 'angle-left';
 			const displayType = isNext
-				? Liferay.Language.get('pagination-next')
-				: Liferay.Language.get('pagination-previous');
+				? Liferay.Language.get('next')
+				: Liferay.Language.get('previous');
 
 			if (type) {
 				return (

@@ -27,15 +27,15 @@ export default class OpenProcessesSummary extends React.Component {
 								style={{marginTop: '8px'}}
 							>
 								<SummaryCard
-									description={Liferay.Language.get('process-total-open')}
+									description={Liferay.Language.get('total-open')}
 									total="15"
 								/>
 								<SummaryCard
-									description={Liferay.Language.get('process-on-time')}
+									description={Liferay.Language.get('on-time')}
 									total="82"
 								/>
 								<SummaryCard
-									description={Liferay.Language.get('process-overdue')}
+									description={Liferay.Language.get('overdue')}
 									total="33"
 								/>
 							</div>

@@ -64,6 +64,7 @@ AUI.add(
 				prototype: {
 					initializer: function(config) {
 						var instance = this;
+
 						var eventHandles = [];
 
 						var documentLibraryContainer = instance.byId('documentLibraryContainer');
@@ -244,7 +245,7 @@ AUI.add(
 
 									openMSOfficeError.removeClass('hide');
 								}
-}
+							}
 						);
 					},
 

@@ -15,7 +15,7 @@
 package com.liferay.portal.portlet.bridge.soy.internal.util;
 
 import com.liferay.portal.kernel.template.TemplateResource;
-import com.liferay.portal.template.soy.utils.SoyTemplateResourcesProvider;
+import com.liferay.portal.template.soy.util.SoyTemplateResourcesProvider;
 
 import java.util.List;
 

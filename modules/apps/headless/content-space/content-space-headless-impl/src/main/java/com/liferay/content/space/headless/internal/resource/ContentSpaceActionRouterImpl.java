@@ -24,11 +24,10 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.comparator.GroupIdComparator;
 
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -59,13 +58,8 @@ public class ContentSpaceActionRouterImpl implements ContentSpaceActionRouter {
 			company.getCompanyId(), true, true, pagination.getStartPosition(),
 			pagination.getEndPosition(), new GroupIdComparator(true));
 
-		Stream<Group> stream = groups.stream();
-
-		List<ContentSpace> contentSpaces = stream.map(
-			ContentSpaceImpl::new
-		).collect(
-			Collectors.toList()
-		);
+		List<ContentSpace> contentSpaces = ListUtil.toList(
+			groups, ContentSpaceImpl::new);
 
 		int count = _groupLocalService.getActiveGroupsCount(
 			company.getCompanyId(), true, true);

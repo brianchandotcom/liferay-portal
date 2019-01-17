@@ -28,13 +28,13 @@ if (primaryKey > 0L) {
 	orgLabor = OrgLaborServiceUtil.getOrgLabor(primaryKey);
 }
 
+EditContactInformationDisplayContext editContactInformationDisplayContext = new EditContactInformationDisplayContext(Organization.class.getName(), classPK, 0, liferayPortletResponse, request);
+
 if (!portletName.equals(UsersAdminPortletKeys.MY_ACCOUNT)) {
 //	portletDisplay.setShowBackIcon(true);
 	portletDisplay.setURLBack(backURL);
 
-	String portletTitle = (String)request.getAttribute(UsersAdminWebKeys.PORTLET_TITLE);
-
-	renderResponse.setTitle(portletTitle);
+	renderResponse.setTitle(editContactInformationDisplayContext.getPortletTitle());
 }
 
 PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "contact-information"), redirect);

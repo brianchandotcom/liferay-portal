@@ -52,7 +52,7 @@ class UserNameFields extends PortletBase {
 		this._getURL(languageId)
 			.then(fetch)
 			.then(
-				(response) => response.text()
+				response => response.text()
 			)
 			.then(
 				this._insertUserNameFields.bind(this)
@@ -116,7 +116,7 @@ class UserNameFields extends PortletBase {
 	 */
 	_getURL(languageId) {
 		return new Promise(
-			(resolve) => {
+			resolve => {
 				AUI().use(
 					'liferay-portlet-url',
 					A => {

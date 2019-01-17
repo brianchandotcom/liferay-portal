@@ -76,7 +76,7 @@ String navigation = ParamUtil.getString(request, "navigation");
 
 		<soy:component-renderer
 			context="<%= context %>"
-			module="/document_library/bulk/BulkStatus.es"
+			module="document_library/bulk/BulkStatus.es"
 			templateNamespace="com.liferay.document.library.web.BulkStatus.render"
 		/>
 

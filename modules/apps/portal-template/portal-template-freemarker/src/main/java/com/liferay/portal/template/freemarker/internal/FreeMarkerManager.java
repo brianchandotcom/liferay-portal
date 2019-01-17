@@ -33,7 +33,6 @@ import com.liferay.portal.kernel.template.TemplateResource;
 import com.liferay.portal.kernel.template.TemplateResourceLoader;
 import com.liferay.portal.kernel.util.PropertiesUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.template.BaseSingleTemplateManager;
 import com.liferay.portal.template.RestrictedTemplate;
 import com.liferay.portal.template.TemplateContextHelper;
@@ -293,14 +292,19 @@ public class FreeMarkerManager extends BaseSingleTemplateManager {
 			String[] macroLibrary =
 				_freeMarkerEngineConfiguration.macroLibrary();
 
+			StringBundler sb = new StringBundler(4 * macroLibrary.length - 1);
+
 			for (int i = 0; i < macroLibrary.length; i++) {
-				macroLibrary[i] = StringBundler.concat(
-					contextName, TemplateConstants.CLASS_LOADER_SEPARATOR,
-					macroLibrary[i]);
+				if (i != 0) {
+					sb.append(StringPool.COMMA);
+				}
+
+				sb.append(contextName);
+				sb.append(TemplateConstants.CLASS_LOADER_SEPARATOR);
+				sb.append(macroLibrary[i]);
 			}
 
-			_configuration.setSetting(
-				"auto_import", StringUtil.merge(macroLibrary));
+			_configuration.setSetting("auto_import", sb.toString());
 
 			_configuration.setSetting(
 				"template_exception_handler",

@@ -16,6 +16,7 @@ package com.liferay.portal.template.velocity.internal;
 
 import com.liferay.petra.lang.ClassLoaderPool;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.cache.PortalCacheManagerNames;
 import com.liferay.portal.kernel.cache.SingleVMPool;
@@ -213,15 +214,21 @@ public class VelocityManager extends BaseSingleTemplateManager {
 			String[] velocimacroLibrary =
 				_velocityEngineConfiguration.velocimacroLibrary();
 
+			StringBundler sb = new StringBundler(
+				4 * velocimacroLibrary.length - 1);
+
 			for (int i = 0; i < velocimacroLibrary.length; i++) {
-				velocimacroLibrary[i] = StringBundler.concat(
-					contextName, TemplateConstants.CLASS_LOADER_SEPARATOR,
-					velocimacroLibrary[i]);
+				if (i != 0) {
+					sb.append(StringPool.COMMA);
+				}
+
+				sb.append(contextName);
+				sb.append(TemplateConstants.CLASS_LOADER_SEPARATOR);
+				sb.append(velocimacroLibrary[i]);
 			}
 
 			extendedProperties.setProperty(
-				VelocityEngine.VM_LIBRARY,
-				StringUtil.merge(velocimacroLibrary));
+				VelocityEngine.VM_LIBRARY, sb.toString());
 
 			extendedProperties.setProperty(
 				VelocityEngine.VM_LIBRARY_AUTORELOAD,

@@ -206,7 +206,7 @@ definition {
 
 		WikiPage.viewAttachmentPGViaEdit(
 			attachmentFileName = "Document_2.mp3",
-			attachmentFileSize = "1KB",
+			attachmentFileSize = "864B",
 			numberOfAttachments = "3",
 			wikiPageTitle = "FrontPage"
 		);

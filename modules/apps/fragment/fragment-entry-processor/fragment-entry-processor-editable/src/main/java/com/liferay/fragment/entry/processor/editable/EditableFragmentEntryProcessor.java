@@ -304,7 +304,32 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 	}
 
 	private String _getEditableValue(JSONObject jsonObject, Locale locale) {
+		if (_isPersonalizationBySegmentsSupported(jsonObject)) {
+			return _getEditableValueBySegmentsAndLocale(jsonObject, locale);
+		}
+
+		return _getEditableValueByLocale(jsonObject, locale);
+	}
+
+	private String _getEditableValueByLocale(
+		JSONObject jsonObject, Locale locale) {
+
 		String value = jsonObject.getString(LanguageUtil.getLanguageId(locale));
+
+		if (Validator.isNull(value)) {
+			value = jsonObject.getString("defaultValue");
+		}
+
+		return value;
+	}
+
+	private String _getEditableValueBySegmentsAndLocale(
+		JSONObject jsonObject, Locale locale) {
+
+		JSONObject defaultSegment = jsonObject.getJSONObject("default");
+
+		String value = defaultSegment.getString(
+			LanguageUtil.getLanguageId(locale));
 
 		if (Validator.isNull(value)) {
 			value = jsonObject.getString("defaultValue");
@@ -352,6 +377,12 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 		}
 
 		return stylesheet;
+	}
+
+	private boolean _isPersonalizationBySegmentsSupported(
+		JSONObject jsonObject) {
+
+		return Validator.isNotNull(jsonObject.getJSONObject("default"));
 	}
 
 	private String _toCSSString(Map<String, Map<String, String>> stylesheet) {

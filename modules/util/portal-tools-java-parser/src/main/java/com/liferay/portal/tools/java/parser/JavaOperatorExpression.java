@@ -123,7 +123,10 @@ public class JavaOperatorExpression extends JavaExpression {
 							}
 						}
 					}
-					else {
+					else if (!Objects.equals(
+								_javaOperator.getCategory(),
+								JavaOperator.Category.RELATIONAL)) {
+
 						newLine = true;
 					}
 

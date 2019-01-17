@@ -506,8 +506,14 @@ class Sidebar extends Component {
 	 */
 	@autobind
 	_handleChangeFieldTypeItemClicked({data}) {
-		const {focusedField, namespace} = this.props;
-		const newFieldType = data.item;
+		const newFieldType = data.item.name;
+
+		this.changeFieldType(newFieldType);
+	}
+
+	changeFieldType(type) {
+		const {fieldTypes, focusedField, namespace} = this.props;
+		const newFieldType = fieldTypes.find(({name}) => name === type);
 		const newSettingsContext = {
 			...newFieldType.settingsContext,
 			pages: normalizeSettingsContextPages(newFieldType.settingsContext.pages, namespace, newFieldType, focusedField.fieldName)
@@ -524,6 +530,10 @@ class Sidebar extends Component {
 				type: newFieldType.name
 			}
 		);
+	}
+
+	isChangeFieldTypeEnabled() {
+		return true;
 	}
 
 	_mergeFieldTypeSettings(oldSettingsContext, newSettingsContext) {
@@ -767,6 +777,7 @@ class Sidebar extends Component {
 						<li class="tbar-item ddm-fieldtypes-dropdown tbar-item-expand text-left">
 							<div>
 								<ClayDropdown
+									disabled={this.isChangeFieldTypeEnabled()}
 									events={{
 										itemClicked: this._handleChangeFieldTypeItemClicked
 									}}

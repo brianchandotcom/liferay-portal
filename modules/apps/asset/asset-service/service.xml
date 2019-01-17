@@ -31,10 +31,10 @@
 
 		<!-- Finder methods -->
 
-		<finder name="AssetEntryId" return-type="Collection" where="portletId != ''">
+		<finder name="AssetEntryId" return-type="Collection" where="portletId IS NOT NULL">
 			<finder-column name="assetEntryId" />
 		</finder>
-		<finder name="A_C" return-type="Collection" where="portletId != ''">
+		<finder name="A_C" return-type="Collection" where="portletId IS NOT NULL">
 			<finder-column name="assetEntryId" />
 			<finder-column name="classNameId" />
 		</finder>

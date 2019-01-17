@@ -123,4 +123,9 @@ public class AssetEntryUsageLocalServiceImpl
 		return assetEntryUsagePersistence.countByA_C(assetEntryId, classNameId);
 	}
 
+	@Override
+	public int getAssetEntryUsagesCount(long assetEntryId, String portletId) {
+		return assetEntryUsagePersistence.countByA_P(assetEntryId, portletId);
+	}
+
 }

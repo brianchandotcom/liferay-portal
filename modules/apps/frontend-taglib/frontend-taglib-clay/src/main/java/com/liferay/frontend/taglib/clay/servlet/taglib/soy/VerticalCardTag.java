@@ -16,6 +16,7 @@ package com.liferay.frontend.taglib.clay.servlet.taglib.soy;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.soy.base.BaseClayCardTag;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItem;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.List;
 import java.util.Map;
@@ -27,7 +28,19 @@ public class VerticalCardTag extends BaseClayCardTag {
 
 	@Override
 	public int doStartTag() {
-		setComponentBaseName("ClayImageCard");
+		Map<String, Object> context = getContext();
+
+		String imageSrc = (String)context.get("imageSrc");
+
+		if (((_verticalCard != null) &&
+			 Validator.isNotNull(_verticalCard.getImageSrc())) ||
+			Validator.isNotNull(imageSrc)) {
+
+			setComponentBaseName("ClayImageCard");
+		}
+		else {
+			setComponentBaseName("ClayFileCard");
+		}
 
 		if (_verticalCard != null) {
 			_populateContext();

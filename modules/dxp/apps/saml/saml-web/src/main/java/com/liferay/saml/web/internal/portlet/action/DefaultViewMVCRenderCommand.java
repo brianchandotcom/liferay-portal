@@ -22,15 +22,12 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ClassUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.saml.constants.SamlWebKeys;
 import com.liferay.saml.persistence.model.SamlIdpSpConnection;
-import com.liferay.saml.persistence.model.SamlSpIdpConnection;
 import com.liferay.saml.persistence.service.SamlIdpSpConnectionLocalService;
 import com.liferay.saml.persistence.service.SamlSpIdpConnectionLocalService;
 import com.liferay.saml.runtime.certificate.CertificateTool;
-import com.liferay.saml.runtime.configuration.SamlProviderConfiguration;
 import com.liferay.saml.runtime.configuration.SamlProviderConfigurationHelper;
 import com.liferay.saml.runtime.metadata.LocalEntityManager;
 import com.liferay.saml.web.internal.constants.SamlAdminPortletKeys;
@@ -79,10 +76,6 @@ public class DefaultViewMVCRenderCommand implements MVCRenderCommand {
 
 		if (tabs1.equals("general")) {
 			renderGeneralTab(renderRequest, renderResponse);
-		}
-		else if (tabs1.equals("identity-provider-connection")) {
-			renderIdentityProviderConnectionTab(
-				renderRequest, renderResponse, httpServletRequest);
 		}
 		else if (tabs1.equals("service-provider-connections")) {
 			renderViewServiceProviderConnections(
@@ -179,52 +172,6 @@ public class DefaultViewMVCRenderCommand implements MVCRenderCommand {
 				}
 			}
 		}
-	}
-
-	protected void renderIdentityProviderConnectionTab(
-		RenderRequest renderRequest, RenderResponse renderResponse,
-		HttpServletRequest httpServletRequest) {
-
-		SamlProviderConfiguration samlProviderConfiguration =
-			_samlProviderConfigurationHelper.getSamlProviderConfiguration();
-
-		String samlIdpEntityId = samlProviderConfiguration.defaultIdPEntityId();
-
-		long clockSkew = ParamUtil.getLong(
-			httpServletRequest, "clockSkew",
-			samlProviderConfiguration.clockSkew());
-
-		if (Validator.isNotNull(samlIdpEntityId)) {
-			try {
-				ThemeDisplay themeDisplay =
-					(ThemeDisplay)httpServletRequest.getAttribute(
-						WebKeys.THEME_DISPLAY);
-
-				SamlSpIdpConnection samlSpIdpConnection =
-					_samlSpIdpConnectionLocalService.getSamlSpIdpConnection(
-						themeDisplay.getCompanyId(), samlIdpEntityId);
-
-				clockSkew = ParamUtil.getLong(
-					httpServletRequest, "clockSkew",
-					samlSpIdpConnection.getClockSkew());
-
-				renderRequest.setAttribute(
-					SamlWebKeys.SAML_SP_IDP_CONNECTION, samlSpIdpConnection);
-			}
-			catch (Exception e) {
-				String message =
-					"Unable to calculate clock skew: " + e.getMessage();
-
-				if (_log.isDebugEnabled()) {
-					_log.debug(message, e);
-				}
-				else if (_log.isWarnEnabled()) {
-					_log.warn(message);
-				}
-			}
-		}
-
-		renderRequest.setAttribute(SamlWebKeys.SAML_CLOCK_SKEW, clockSkew);
 	}
 
 	protected void renderViewServiceProviderConnections(

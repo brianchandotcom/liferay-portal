@@ -62,6 +62,12 @@ public interface SamlWebKeys {
 	public static final String SAML_SP_IDP_CONNECTION =
 		"SAML_SP_IDP_CONNECTION";
 
+	public static final String SAML_SP_IDP_CONNECTIONS =
+		"SAML_SP_IDP_CONNECTIONS";
+
+	public static final String SAML_SP_IDP_CONNECTIONS_COUNT =
+		"SAML_SP_IDP_CONNECTIONS_COUNT";
+
 	public static final String SAML_SP_NAME_ID_FORMAT =
 		"SAML_SP_NAME_ID_FORMAT";
 

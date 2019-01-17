@@ -63,8 +63,8 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.util.comparator.PortletCategoryComparator;
 import com.liferay.portal.kernel.util.comparator.PortletTitleComparator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.template.soy.utils.SoyContext;
-import com.liferay.portal.template.soy.utils.SoyContextFactoryUtil;
+import com.liferay.portal.template.soy.util.SoyContext;
+import com.liferay.portal.template.soy.util.SoyContextFactoryUtil;
 import com.liferay.portal.util.PortletCategoryUtil;
 import com.liferay.portal.util.WebAppPool;
 

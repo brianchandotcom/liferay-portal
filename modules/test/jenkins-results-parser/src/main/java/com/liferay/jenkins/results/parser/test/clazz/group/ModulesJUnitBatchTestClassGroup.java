@@ -37,10 +37,6 @@ public class ModulesJUnitBatchTestClassGroup extends JUnitBatchTestClassGroup {
 
 	@Override
 	public int getAxisCount() {
-		if (testRelevantIntegrationUnitOnly) {
-			return 0;
-		}
-
 		return super.getAxisCount();
 	}
 

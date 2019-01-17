@@ -96,6 +96,15 @@ AUI.add(
 							eventHandles.push(A.getDoc().once('dragenter', instance._plugUpload, instance, config));
 						}
 
+						Liferay.componentReady('entriesManagementToolbar').then(
+							function(managementToolbar) {
+								eventHandles.push(managementToolbar.on(
+									['selectPageCheckboxChanged'],
+									instance._handleSelectPageCheckboxChanged.bind(instance))
+								);
+							}
+						);
+
 						instance._eventHandles = eventHandles;
 					},
 
@@ -194,16 +203,25 @@ AUI.add(
 						else {
 							instance._selectedFileEntries = [];
 						}
+
+						var form = instance.get('form').node;
+
+						form.get(instance.NS + 'actionMode').val(`multiple`);
 					},
 
-					onSelectPageCheckboxChanged: function(event) {
+					_handleSelectPageCheckboxChanged: function(event) {
 						var instance = this;
 
 						var checked = event.data.checked;
 
 						var form = instance.get('form').node;
 
-						form.get(instance.NS + 'actionMode').val(checked ? `all:${instance.getFolderId()}` : `multiple`);
+						setTimeout(
+							function() {
+								form.get(instance.NS + 'actionMode').val(checked ? `all:${instance.getFolderId()}` : `multiple`);
+							},
+							100
+						);
 					},
 
 					_moveToFolder: function(obj) {
@@ -263,10 +281,12 @@ AUI.add(
 						var instance = this;
 
 						var editTagsComponent = instance._editTagsComponent;
+						var form = instance.get('form').node;
+						var namespace = instance.NS;
+
+						var actionMode = form.get(namespace + 'actionMode').val() || 'multiple';
 
 						if (!editTagsComponent) {
-							var form = instance.get('form').node;
-							var namespace = instance.NS;
 							var urlTags = themeDisplay.getPortalURL() + '/o/bulk/asset/tags/' + instance.get('classNameId') + '/common';
 							var urlUpdateTags = themeDisplay.getPortalURL() + '/o/bulk/asset/tags/' + instance.get('classNameId');
 
@@ -275,6 +295,7 @@ AUI.add(
 								function(EditTags) {
 									instance._editTagsComponent = new EditTags.default(
 										{
+											actionMode: actionMode,
 											fileEntries: instance._selectedFileEntries,
 											portletNamespace: namespace,
 											repositoryId: parseFloat(form.get(namespace + 'repositoryId').val()),
@@ -288,6 +309,7 @@ AUI.add(
 							);
 						}
 						else {
+							editTagsComponent.actionMode = actionMode;
 							editTagsComponent.fileEntries = instance._selectedFileEntries;
 							editTagsComponent.open();
 						}

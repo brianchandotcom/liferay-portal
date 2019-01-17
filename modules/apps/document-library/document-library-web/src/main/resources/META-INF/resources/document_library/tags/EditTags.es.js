@@ -95,7 +95,7 @@ class EditTags extends Component {
 
 		let bodyData = {
 			repositoryId: this.repositoryId,
-			selection: this.fileEntries
+			selection: this.actionMode === 'multiple' ? this.fileEntries : [this.actionMode]
 		};
 
 		this._fetchTagsRequest(
@@ -106,7 +106,7 @@ class EditTags extends Component {
 					this.loading = false;
 					this.commonTags = response.tagNames;
 					this.description = response.description;
-					this.multiple = this.fileEntries.length > 1;
+					this.multiple = (this.fileEntries.length > 1) || (this.actionMode !== 'multiple');
 				}
 			}
 		);
@@ -150,7 +150,7 @@ class EditTags extends Component {
 		let bodyData = {
 			append: this.append,
 			repositoryId: this.repositoryId,
-			selection: this.fileEntries,
+			selection: this.actionMode === 'multiple' ? this.fileEntries : [this.actionMode],
 			toAddTagNames: addedTags,
 			toRemoveTagNames: removedTags
 		};
@@ -206,6 +206,12 @@ class EditTags extends Component {
  * @type {!Object}
  */
 EditTags.STATE = {
+
+	/**
+	 * actionMode. multiple | all:<folderid>
+	 * @type {String}
+	 */
+	actionMode: Config.string().value('multiple'),
 
 	/**
 	 * Tags that want to be edited.

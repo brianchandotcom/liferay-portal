@@ -52,8 +52,7 @@ public class AssetEntryUsageActionMenuContributorRegistryUtil {
 	private static final AssetEntryUsageActionMenuContributorRegistryUtil
 		_instance = new AssetEntryUsageActionMenuContributorRegistryUtil();
 
-	private final
-		ServiceTrackerMap<String, AssetEntryUsageActionMenuContributor>
-			_serviceTrackerMap;
+	private final ServiceTrackerMap
+		<String, AssetEntryUsageActionMenuContributor> _serviceTrackerMap;
 
 }

@@ -30,6 +30,7 @@ import com.liferay.data.engine.service.DEDataDefinitionSavePermissionsRequest;
 import com.liferay.data.engine.service.DEDataDefinitionSaveRequest;
 import com.liferay.data.engine.service.DEDataDefinitionSaveResponse;
 import com.liferay.data.engine.service.DEDataDefinitionService;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.RoleConstants;
@@ -47,6 +48,7 @@ import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -546,11 +548,11 @@ public class DEDataDefinitionServiceTest {
 				_adminUser, _group, _deDataDefinitionService);
 		}
 
-		List<DEDataDefinition> deDataDefinitionList =
-			listPaginatedDataDefinition(_group, 2, 4);
+		List<DEDataDefinition> deDataDefinitions = listDEDataDefinitions(
+			_group, 1, 5);
 
 		Assert.assertEquals(
-			deDataDefinitionList.toString(), 2, deDataDefinitionList.size());
+			deDataDefinitions.toString(), 4, deDataDefinitions.size());
 	}
 
 	@Test
@@ -562,11 +564,11 @@ public class DEDataDefinitionServiceTest {
 				_adminUser, _group, _deDataDefinitionService);
 		}
 
-		List<DEDataDefinition> deDataDefinitionList =
-			listPaginatedDataDefinition(_group, 3, 7);
+		List<DEDataDefinition> deDataDefinitions = listDEDataDefinitions(
+			_group, 4, 10);
 
 		Assert.assertEquals(
-			deDataDefinitionList.toString(), 2, deDataDefinitionList.size());
+			deDataDefinitions.toString(), 1, deDataDefinitions.size());
 	}
 
 	@Test
@@ -578,11 +580,75 @@ public class DEDataDefinitionServiceTest {
 				_adminUser, _group, _deDataDefinitionService);
 		}
 
-		List<DEDataDefinition> deDataDefinitionList =
-			listPaginatedDataDefinition(_group, 7, 10);
+		List<DEDataDefinition> deDataDefinitions = listDEDataDefinitions(
+			_group, 6, 10);
 
 		Assert.assertEquals(
-			deDataDefinitionList.toString(), 0, deDataDefinitionList.size());
+			deDataDefinitions.toString(), 0, deDataDefinitions.size());
+	}
+
+	@Test
+	public void testListPaginatedReturnLast() throws Exception {
+		int dataDefinitionTotal = 5;
+
+		for (int i = 0; i < dataDefinitionTotal; i++) {
+			DEDataEngineTestUtil.insertDEDataDefinition(
+				_adminUser, _group, _deDataDefinitionService);
+		}
+
+		List<DEDataDefinition> deDataDefinitions = listDEDataDefinitions(
+			_group, 4, 5);
+
+		Assert.assertEquals(
+			deDataDefinitions.toString(), 1, deDataDefinitions.size());
+	}
+
+	@Test
+	public void testListPaginatedStartingAtMinusOne() throws Exception {
+		int dataDefinitionTotal = 5;
+
+		for (int i = 0; i < dataDefinitionTotal; i++) {
+			DEDataEngineTestUtil.insertDEDataDefinition(
+				_adminUser, _group, _deDataDefinitionService);
+		}
+
+		List<DEDataDefinition> deDataDefinitions = listDEDataDefinitions(
+			_group, -2, 5);
+
+		Assert.assertEquals(
+			deDataDefinitions.toString(), 5, deDataDefinitions.size());
+	}
+
+	@Test
+	public void testListPaginatedStartingAtMinusTwo() throws Exception {
+		int dataDefinitionTotal = 5;
+
+		for (int i = 0; i < dataDefinitionTotal; i++) {
+			DEDataEngineTestUtil.insertDEDataDefinition(
+				_adminUser, _group, _deDataDefinitionService);
+		}
+
+		List<DEDataDefinition> deDataDefinitions = listDEDataDefinitions(
+			_group, -1, 5);
+
+		Assert.assertEquals(
+			deDataDefinitions.toString(), 5, deDataDefinitions.size());
+	}
+
+	@Test
+	public void testListPaginatedStartingAtZero() throws Exception {
+		int dataDefinitionTotal = 5;
+
+		for (int i = 0; i < dataDefinitionTotal; i++) {
+			DEDataEngineTestUtil.insertDEDataDefinition(
+				_adminUser, _group, _deDataDefinitionService);
+		}
+
+		List<DEDataDefinition> deDataDefinitions = listDEDataDefinitions(
+			_group, 0, 5);
+
+		Assert.assertEquals(
+			deDataDefinitions.toString(), 5, deDataDefinitions.size());
 	}
 
 	@Test
@@ -590,26 +656,26 @@ public class DEDataDefinitionServiceTest {
 		PermissionThreadLocal.setPermissionChecker(
 			PermissionCheckerFactoryUtil.create(_adminUser));
 
-		List<DEDataDefinition> deDataDefinitionList = listDataDefinition(
-			_group);
+		List<DEDataDefinition> deDataDefinitions = listDEDataDefinitions(
+			_group, null, null);
 
-		Assert.assertTrue(deDataDefinitionList.isEmpty());
+		Assert.assertTrue(deDataDefinitions.isEmpty());
 	}
 
 	@Test
 	public void testListWithRecords() throws Exception {
-		int dataDefinitionTotal = 3;
+		int dataDefinitionTotal = 5;
 
 		for (int i = 0; i < dataDefinitionTotal; i++) {
 			DEDataEngineTestUtil.insertDEDataDefinition(
 				_adminUser, _group, _deDataDefinitionService);
 		}
 
-		List<DEDataDefinition> deDataDefinitionList = listDataDefinition(
-			_group);
+		List<DEDataDefinition> deDataDefinitions = listDEDataDefinitions(
+			_group, null, null);
 
 		Assert.assertEquals(
-			deDataDefinitionList.toString(), 3, deDataDefinitionList.size());
+			deDataDefinitions.toString(), 5, deDataDefinitions.size());
 	}
 
 	@Test
@@ -714,37 +780,20 @@ public class DEDataDefinitionServiceTest {
 		return deDataDefinitionGetResponse.getDeDataDefinition();
 	}
 
-	protected List<DEDataDefinition> listDataDefinition(Group group)
+	protected List<DEDataDefinition> listDEDataDefinitions(
+			Group group, Integer start, Integer end)
 		throws Exception {
 
 		DEDataDefinitionListRequest deDataDefinitionListRequest =
 			DEDataDefinitionRequestBuilder.listBuilder(
-			).inCompany(
-				group.getCompanyId()
-			).inGroup(
-				group.getGroupId()
-			).build();
-
-		DEDataDefinitionListResponse deDataDefinitionListResponse =
-			_deDataDefinitionService.execute(deDataDefinitionListRequest);
-
-		return deDataDefinitionListResponse.getDEDataDefinitions();
-	}
-
-	protected List<DEDataDefinition> listPaginatedDataDefinition(
-			Group group, int start, int end)
-		throws Exception {
-
-		DEDataDefinitionListRequest deDataDefinitionListRequest =
-			DEDataDefinitionRequestBuilder.listBuilder(
-			).startingAt(
-				start
 			).endingAt(
-				end
+				GetterUtil.getInteger(end, QueryUtil.ALL_POS)
 			).inCompany(
 				group.getCompanyId()
 			).inGroup(
 				group.getGroupId()
+			).startingAt(
+				GetterUtil.getInteger(start, QueryUtil.ALL_POS)
 			).build();
 
 		DEDataDefinitionListResponse deDataDefinitionListResponse =

@@ -72,6 +72,19 @@ public class FragmentEntryProcessorEditableTest {
 	@Before
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
+
+		Document document = Jsoup.parseBodyFragment(
+			_getFileAsString("processed_fragment_entry.html"));
+
+		Document.OutputSettings outputSettings = new Document.OutputSettings();
+
+		outputSettings.prettyPrint(false);
+
+		document.outputSettings(outputSettings);
+
+		Element bodyElement = document.body();
+
+		_processedHTML = bodyElement.html();
 	}
 
 	@Test
@@ -88,7 +101,7 @@ public class FragmentEntryProcessorEditableTest {
 			_getJsonFileAsString("fragment_entry_link_editable_values.json"));
 
 		Assert.assertEquals(
-			_getBodyElementHtmlAsString("processed_fragment_entry.html"),
+			_processedHTML,
 			_fragmentEntryProcessorRegistry.processFragmentEntryLinkHTML(
 				fragmentEntryLink));
 	}
@@ -110,7 +123,7 @@ public class FragmentEntryProcessorEditableTest {
 				"fragment_entry_link_editable_values_compatibility.json"));
 
 		Assert.assertEquals(
-			_getBodyElementHtmlAsString("processed_fragment_entry.html"),
+			_processedHTML,
 			_fragmentEntryProcessorRegistry.processFragmentEntryLinkHTML(
 				fragmentEntryLink));
 	}
@@ -147,7 +160,7 @@ public class FragmentEntryProcessorEditableTest {
 				"fragment_entry_link_editable_values_matching_language.json"));
 
 		Assert.assertEquals(
-			_getBodyElementHtmlAsString("processed_fragment_entry.html"),
+			_processedHTML,
 			_fragmentEntryProcessorRegistry.processFragmentEntryLinkHTML(
 				fragmentEntryLink, FragmentEntryLinkConstants.EDIT,
 				LocaleUtil.US));
@@ -171,7 +184,7 @@ public class FragmentEntryProcessorEditableTest {
 					"compatibility.json"));
 
 		Assert.assertEquals(
-			_getBodyElementHtmlAsString("processed_fragment_entry.html"),
+			_processedHTML,
 			_fragmentEntryProcessorRegistry.processFragmentEntryLinkHTML(
 				fragmentEntryLink, FragmentEntryLinkConstants.EDIT,
 				LocaleUtil.US));
@@ -203,7 +216,7 @@ public class FragmentEntryProcessorEditableTest {
 					"json"));
 
 		Assert.assertEquals(
-			_getBodyElementHtmlAsString("processed_fragment_entry.html"),
+			_processedHTML,
 			_fragmentEntryProcessorRegistry.processFragmentEntryLinkHTML(
 				fragmentEntryLink, FragmentEntryLinkConstants.EDIT,
 				LocaleUtil.CHINESE));
@@ -227,7 +240,7 @@ public class FragmentEntryProcessorEditableTest {
 					"compatibility.json"));
 
 		Assert.assertEquals(
-			_getBodyElementHtmlAsString("processed_fragment_entry.html"),
+			_processedHTML,
 			_fragmentEntryProcessorRegistry.processFragmentEntryLinkHTML(
 				fragmentEntryLink, FragmentEntryLinkConstants.EDIT,
 				LocaleUtil.CHINESE));
@@ -250,22 +263,6 @@ public class FragmentEntryProcessorEditableTest {
 			_group.getGroupId(), fragmentCollection.getFragmentCollectionId(),
 			"Fragment Entry", null, _getFileAsString(htmlFile), null,
 			WorkflowConstants.STATUS_APPROVED, serviceContext);
-	}
-
-	private String _getBodyElementHtmlAsString(String fileName)
-		throws IOException {
-
-		Document document = Jsoup.parseBodyFragment(_getFileAsString(fileName));
-
-		Document.OutputSettings outputSettings = new Document.OutputSettings();
-
-		outputSettings.prettyPrint(false);
-
-		document.outputSettings(outputSettings);
-
-		Element bodyElement = document.body();
-
-		return bodyElement.html();
 	}
 
 	private String _getFileAsString(String fileName) throws IOException {
@@ -291,5 +288,7 @@ public class FragmentEntryProcessorEditableTest {
 
 	@DeleteAfterTestRun
 	private Group _group;
+
+	private String _processedHTML;
 
 }

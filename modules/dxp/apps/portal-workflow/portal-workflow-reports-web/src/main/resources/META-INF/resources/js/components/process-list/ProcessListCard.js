@@ -111,7 +111,7 @@ export default class ProcessListCard extends React.Component {
 					<ProcessListTable processes={processes} />
 				) : (
 					<EmptyContent
-						message={Liferay.Language.get('there-are-no-process')}
+						message={Liferay.Language.get('there-are-no-processes')}
 					/>
 				)}
 

@@ -1,0 +1,20 @@
+{
+	"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor": {
+		"editable_img": {
+			"default" : {
+				"en_US": "sample.jpg",
+				"es_ES": "editable img spanish variation",
+				"pt_BR": "editable img portuguese variation"
+			},
+			"defaultValue": "editable img default value"
+		},
+		"editable_text": {
+			"default" : {
+				"en_US": "test",
+				"es_ES": "editable text spanish variation",
+				"pt_BR": "editable text portuguese variation"
+			},
+			"defaultValue": "editable text default value"
+		}
+	}
+}

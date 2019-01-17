@@ -153,6 +153,30 @@ public class FragmentEntryProcessorEditableTest {
 				LocaleUtil.US));
 	}
 
+	@Test
+	public void testFragmentEntryProcessorEditableWithMatchedLanguageCompatibility()
+		throws Exception {
+
+		FragmentEntry fragmentEntry = _createFragmentEntry(
+			"fragment_entry.html");
+
+		FragmentEntryLink fragmentEntryLink =
+			FragmentEntryLinkLocalServiceUtil.createFragmentEntryLink(0);
+
+		fragmentEntryLink.setHtml(fragmentEntry.getHtml());
+
+		fragmentEntryLink.setEditableValues(
+			_getJsonFileAsString(
+				"fragment_entry_link_editable_values_matching_language_" +
+					"compatibility.json"));
+
+		Assert.assertEquals(
+			_getBodyElementHtmlAsString("processed_fragment_entry.html"),
+			_fragmentEntryProcessorRegistry.processFragmentEntryLinkHTML(
+				fragmentEntryLink, FragmentEntryLinkConstants.EDIT,
+				LocaleUtil.US));
+	}
+
 	@Test(expected = FragmentEntryContentException.class)
 	public void testFragmentEntryProcessorEditableWithMissingAttributes()
 		throws Exception {

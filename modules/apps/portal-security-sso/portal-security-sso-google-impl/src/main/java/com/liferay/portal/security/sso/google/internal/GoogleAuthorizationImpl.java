@@ -113,9 +113,8 @@ public class GoogleAuthorizationImpl implements GoogleAuthorization {
 			if (t instanceof PortalException) {
 				throw (PortalException)t;
 			}
-			else {
-				throw new Exception(t);
-			}
+
+			throw new Exception(t);
 		}
 	}
 
@@ -252,6 +251,7 @@ public class GoogleAuthorizationImpl implements GoogleAuthorization {
 		}
 		else {
 			_checkAllowUserCreation(companyId, userinfoplus);
+
 			user = addUser(companyId, userinfoplus);
 
 			session.setAttribute(

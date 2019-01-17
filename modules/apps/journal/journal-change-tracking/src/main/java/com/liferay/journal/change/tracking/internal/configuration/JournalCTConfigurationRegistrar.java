@@ -52,11 +52,10 @@ public class JournalCTConfigurationRegistrar {
 			).setEntityIdsFromVersionEntityFunctions(
 				JournalArticle::getResourcePrimKey, JournalArticle::getId
 			).setVersionEntityStatusInfo(
-				new Integer[]
-					{
-						WorkflowConstants.STATUS_APPROVED,
-						WorkflowConstants.STATUS_DRAFT
-					},
+				new Integer[] {
+					WorkflowConstants.STATUS_APPROVED,
+					WorkflowConstants.STATUS_DRAFT
+				},
 				JournalArticle::getStatus
 			).build());
 	}

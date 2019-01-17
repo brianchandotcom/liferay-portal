@@ -432,10 +432,11 @@ public class JournalExportImportTest extends BasePortletExportImportTestCase {
 				Assert.assertEquals(
 					1,
 					elementStream.filter(
-						element -> Objects.equals(
-							element.attributeValue("class-name"),
-							ExportImportClassedModelUtil.getClassName(
-								dlFileEntry)) &&
+						element ->
+							Objects.equals(
+								element.attributeValue("class-name"),
+								ExportImportClassedModelUtil.getClassName(
+									dlFileEntry)) &&
 							(Long.valueOf(element.attributeValue("class-pk")) ==
 								dlFileEntry.getPrimaryKey())
 					).count());

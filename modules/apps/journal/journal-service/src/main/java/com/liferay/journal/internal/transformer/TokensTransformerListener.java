@@ -102,16 +102,23 @@ public class TokensTransformerListener extends BaseTransformerListener {
 				}
 
 				String actualKey = StringPool.AT.concat(
-					key).concat(StringPool.AT);
+					key
+				).concat(
+					StringPool.AT
+				);
 
 				String escapedKey = StringPool.AT.concat(
-					actualKey).concat(StringPool.AT);
+					actualKey
+				).concat(
+					StringPool.AT
+				);
 
 				String tempEscapedKey =
 					JournalTransformerListenerKeys.TEMP_ESCAPED_AT_OPEN.concat(
-						key).concat(
-							JournalTransformerListenerKeys.
-								TEMP_ESCAPED_AT_CLOSE);
+						key
+					).concat(
+						JournalTransformerListenerKeys.TEMP_ESCAPED_AT_CLOSE
+					);
 
 				escapedKeysList.add(escapedKey);
 				escapedValuesList.add(tempEscapedKey);

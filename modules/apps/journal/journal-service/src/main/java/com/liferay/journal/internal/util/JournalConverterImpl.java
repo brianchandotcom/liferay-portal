@@ -1011,7 +1011,10 @@ public class JournalConverterImpl implements JournalConverter {
 		}
 
 		String fieldsDisplayValue = fieldName.concat(
-			DDM.INSTANCE_SEPARATOR).concat(instanceId);
+			DDM.INSTANCE_SEPARATOR
+		).concat(
+			instanceId
+		);
 
 		Field fieldsDisplayField = ddmFields.get(DDM.FIELDS_DISPLAY_NAME);
 

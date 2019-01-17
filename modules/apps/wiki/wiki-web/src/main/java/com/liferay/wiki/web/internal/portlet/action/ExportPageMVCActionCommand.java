@@ -188,8 +188,11 @@ public class ExportPageMVCActionCommand extends BaseMVCActionCommand {
 
 		String sourceExtension = "html";
 
-		String fileName = title.concat(StringPool.PERIOD).concat(
-			sourceExtension);
+		String fileName = title.concat(
+			StringPool.PERIOD
+		).concat(
+			sourceExtension
+		);
 
 		if (Validator.isNotNull(targetExtension)) {
 			String id =
@@ -200,8 +203,11 @@ public class ExportPageMVCActionCommand extends BaseMVCActionCommand {
 				id, is, sourceExtension, targetExtension);
 
 			if (convertedFile != null) {
-				fileName = title.concat(StringPool.PERIOD).concat(
-					targetExtension);
+				fileName = title.concat(
+					StringPool.PERIOD
+				).concat(
+					targetExtension
+				);
 
 				is = new FileInputStream(convertedFile);
 			}

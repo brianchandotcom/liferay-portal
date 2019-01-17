@@ -125,7 +125,11 @@ public class JSPServletFactoryImpl implements JSPServletFactory {
 					pathString, CharPool.UNDERLINE, "_005f");
 
 				paths.add(
-					"/org/apache/jsp/".concat(pathString).concat("_jsp.class"));
+					"/org/apache/jsp/".concat(
+						pathString
+					).concat(
+						"_jsp.class"
+					));
 			}
 
 			Tracked tracked = new Tracked(symbolicName, versionRange, paths);

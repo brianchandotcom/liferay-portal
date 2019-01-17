@@ -22,9 +22,13 @@ function getDefaultValue(property) {
 	else if (type === PROPERTY_TYPES.BOOLEAN) {
 		defaultValue = 'true';
 	}
-	else if (type === PROPERTY_TYPES.NUMBER) {
+	else if (type === PROPERTY_TYPES.INTEGER) {
 		defaultValue = 0;
 	}
+	else if (type === PROPERTY_TYPES.DOUBLE) {
+		defaultValue = '0.00';
+	}
+
 	return defaultValue;
 }
 

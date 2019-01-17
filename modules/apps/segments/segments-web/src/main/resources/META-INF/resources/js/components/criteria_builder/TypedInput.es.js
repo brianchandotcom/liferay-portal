@@ -7,14 +7,22 @@ import {PROPERTY_TYPES} from '../../utils/constants.es.js';
 const INPUT_DATE_FORMAT = 'YYYY-MM-DD';
 
 class TypedInput extends React.Component {
+	constructor(props) {
+		super(props);
+
+		const {value} = props;
+
+		this.state = {
+			decimal: value
+		}
+	}
+
 	_handleChange = event => {
 		const {onChange} = this.props;
 
 		const value = event.target.value;
 
-		if (onChange) {
-			onChange(value);
-		}
+		onChange(value);
 	}
 
 	_renderStringType = () => {
@@ -87,33 +95,68 @@ class TypedInput extends React.Component {
 				selected={value}
 			/>);
 	}
-	_handleNumberChange = event => {
+	_handleIntegerChange = event => {
 		const {onChange} = this.props;
 		const value = parseInt(event.target.value, 10);
 
-		if (onChange && !isNaN(value)) {
+		if (!isNaN(value)) {
 			onChange(value.toString());
 		}
 	}
 
-	_renderNumberType = () => {
+	_renderIntegerType = () => {
 		const {value} = this.props;
 
 		return (
 			<input
 				className="criterion-input form-control"
 				data-testid="simple-number"
-				onChange={this._handleNumberChange}
+				onChange={this._handleIntegerChange}
 				type="number"
 				value={value}
 			/>);
+	}
+
+	_handleDecimalBlur = event => {
+		const {onChange} = this.props;
+
+		const value = Number.parseFloat(event.target.value).toFixed(2);
+		
+		this.setState({
+			decimal: value
+		}, onChange(value))
+	}
+
+	_handleDecimalChange = event => {
+		const value = event.target.value;
+
+		this.setState({
+			decimal: value
+		})
+	}
+
+	_renderDecimalType = () => {
+		const {decimal} = this.state;
+
+		return (
+			<input
+				className="criterion-input form-control"
+				data-testid="decimal-number"
+				onChange={this._handleDecimalChange}
+				onBlur={this._handleDecimalBlur}
+				step="0.01"
+				type="number"
+				value={decimal}
+			/>
+		)
 	}
 
 	_getInputRenderer(type) {
 		const renderers = {
 			[PROPERTY_TYPES.BOOLEAN]: this._renderBooleanType,
 			[PROPERTY_TYPES.DATE]: this._renderDateType,
-			[PROPERTY_TYPES.NUMBER]: this._renderNumberType,
+			[PROPERTY_TYPES.DOUBLE]: this._renderDecimalType,
+			[PROPERTY_TYPES.INTEGER]: this._renderIntegerType,
 			[PROPERTY_TYPES.STRING]: this._renderStringType
 		};
 
@@ -130,7 +173,7 @@ class TypedInput extends React.Component {
 }
 
 TypedInput.propTypes = {
-	onChange: propTypes.func,
+	onChange: propTypes.func.isRequired,
 	options: propTypes.array,
 	type: propTypes.string.isRequired,
 	value: propTypes.oneOfType(

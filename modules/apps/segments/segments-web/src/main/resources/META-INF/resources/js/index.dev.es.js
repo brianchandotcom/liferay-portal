@@ -63,7 +63,12 @@ const altProps = {
 		{
 			label: 'People',
 			name: 'people',
-			type: 'number'
+			type: 'integer'
+		},
+		{
+			label: 'Liters',
+			name: 'liters',
+			type: 'double'
 		},
 		{
 			label: 'Class PK',

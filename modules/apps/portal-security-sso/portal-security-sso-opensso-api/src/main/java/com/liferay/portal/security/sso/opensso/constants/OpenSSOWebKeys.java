@@ -19,9 +19,9 @@ package com.liferay.portal.security.sso.opensso.constants;
  */
 public class OpenSSOWebKeys {
 
-	public static final String OPEN_SSO_ERROR = "open.sso.error";
+	public static final String OPEN_SSO_ERROR = "OPEN_SSO_ERROR";
 
 	public static final String OPEN_SSO_SUBJECT_SCREEN_NAME =
-		"open.sso.subject.screenName";
+		"OPEN_SSO_SUBJECT_SCREEN_NAME";
 
 }

@@ -21,13 +21,15 @@ import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.security.sso.google.GoogleAuthorization;
 import com.liferay.portal.security.sso.google.exception.StrangersNotAllowedException;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
@@ -75,11 +77,13 @@ public class GoogleLoginErrorMVCRenderCommand implements MVCRenderCommand {
 
 		String error = ParamUtil.getString(renderRequest, "error");
 
-		if (ArrayUtil.contains(_ERRORS, error)) {
-			SessionErrors.add(renderRequest, error);
+		Class<? extends Throwable> errorClass = _errorsMap.get(error);
+
+		if (errorClass != null) {
+			SessionErrors.add(renderRequest, errorClass);
 		}
 		else {
-			SessionErrors.add(renderRequest, "unknownError");
+			SessionErrors.add(renderRequest, Exception.class);
 		}
 
 		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
@@ -101,10 +105,19 @@ public class GoogleLoginErrorMVCRenderCommand implements MVCRenderCommand {
 		return MVCRenderConstants.MVC_PATH_VALUE_SKIP_DISPATCH;
 	}
 
-	private static final String[] _ERRORS = {
-		UserEmailAddressException.MustNotUseCompanyMx.class.getSimpleName(),
-		StrangersNotAllowedException.class.getSimpleName()
-	};
+	private static final Map<String, Class<? extends Throwable>> _errorsMap =
+		new HashMap<String, Class<? extends Throwable>>() {
+			{
+				put(
+					UserEmailAddressException.MustNotUseCompanyMx.class.
+						getSimpleName(),
+					UserEmailAddressException.MustNotUseCompanyMx.class);
+
+				put(
+					StrangersNotAllowedException.class.getSimpleName(),
+					StrangersNotAllowedException.class);
+			}
+		};
 
 	@Reference
 	private GoogleAuthorization _googleAuthorization;

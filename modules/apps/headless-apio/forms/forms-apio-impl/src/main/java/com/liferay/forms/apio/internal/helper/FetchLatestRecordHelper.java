@@ -35,12 +35,13 @@ public class FetchLatestRecordHelper {
 		DDMFormInstance ddmFormInstance, CurrentUser currentUser) {
 
 		return Try.fromFallible(
-			() -> _ddmFormInstanceRecordVersionService.
-				fetchLatestFormInstanceRecordVersion(
-					currentUser.getUserId(),
-					ddmFormInstance.getFormInstanceId(),
-					ddmFormInstance.getVersion(),
-					WorkflowConstants.STATUS_DRAFT)
+			() ->
+				_ddmFormInstanceRecordVersionService.
+					fetchLatestFormInstanceRecordVersion(
+						currentUser.getUserId(),
+						ddmFormInstance.getFormInstanceId(),
+						ddmFormInstance.getVersion(),
+						WorkflowConstants.STATUS_DRAFT)
 		).map(
 			DDMFormInstanceRecordVersion::getFormInstanceRecord
 		).orElse(

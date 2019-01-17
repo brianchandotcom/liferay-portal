@@ -35,8 +35,7 @@ public class ChangeTransitionForm {
 		return formBuilder.title(
 			__ -> "Change transition"
 		).description(
-			__ ->
-				"This form can be used to change the transition of a task"
+			__ -> "This form can be used to change the transition of a task"
 		).constructor(
 			ChangeTransitionForm::new
 		).addRequiredString(

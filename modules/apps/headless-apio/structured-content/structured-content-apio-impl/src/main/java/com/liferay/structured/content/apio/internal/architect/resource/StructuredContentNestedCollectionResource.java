@@ -963,8 +963,8 @@ public class StructuredContentNestedCollectionResource
 			return Try.fromFallible(
 				() -> _ddmStructure.getFieldType(_ddmFormFieldValue.getName())
 			).map(
-				fieldType ->
-					_structureFieldConverter.getFieldInputControl(fieldType)
+				fieldType -> _structureFieldConverter.getFieldInputControl(
+					fieldType)
 			).recover(
 				pe -> {
 					if (_log.isWarnEnabled()) {

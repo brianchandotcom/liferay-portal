@@ -37,8 +37,7 @@ public class UpdateDueDateForm {
 		return formBuilder.title(
 			__ -> "Update due date"
 		).description(
-			__ ->
-				"This form can be used to update the due date of a task"
+			__ -> "This form can be used to update the due date of a task"
 		).constructor(
 			UpdateDueDateForm::new
 		).addOptionalString(

@@ -83,7 +83,9 @@ public class ContentStructureNestedCollectionResource
 
 		ddmStructureFirstStep.addNestedList(
 			"formPages", _structureRepresentorBuilderHelper::getFormLayoutPages,
-			nestedBuilder -> _buildFormLayoutPage(nestedBuilder).build());
+			nestedBuilder -> _buildFormLayoutPage(
+				nestedBuilder
+			).build());
 
 		Representor.FirstStep<DDMStructure> bidirectionalModelStep =
 			ddmStructureFirstStep.addBidirectionalModel(
@@ -110,7 +112,8 @@ public class ContentStructureNestedCollectionResource
 		formLayoutPageFirstStep.addNestedList(
 			"fields", FormLayoutPage::getFields,
 			ddmFormFieldBuilder -> _buildDDMFormFields(
-				ddmFormFieldBuilder).build());
+				ddmFormFieldBuilder
+			).build());
 
 		return formLayoutPageFirstStep;
 	}

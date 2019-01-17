@@ -115,8 +115,8 @@ public class JournalArticleContentHelper {
 			structuredContentValues.stream();
 
 		return stream.filter(
-			structuredContentValue ->
-				Objects.equals(name, structuredContentValue.getName())
+			structuredContentValue -> Objects.equals(
+				name, structuredContentValue.getName())
 		).findFirst();
 	}
 

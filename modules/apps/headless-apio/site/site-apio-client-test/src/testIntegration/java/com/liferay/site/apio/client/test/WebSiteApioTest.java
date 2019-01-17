@@ -89,8 +89,7 @@ public class WebSiteApioTest {
 			Matchers.equalTo("open")
 		).body(
 			"_embedded.WebSite.find {it.name == '" +
-				WebSiteApioTestBundleActivator.CHILD_WEB_SITE_NAME +
-					"'}.name",
+				WebSiteApioTestBundleActivator.CHILD_WEB_SITE_NAME + "'}.name",
 			Matchers.equalTo(WebSiteApioTestBundleActivator.CHILD_WEB_SITE_NAME)
 		).body(
 			"_embedded.WebSite.find {it.name == '" +
@@ -233,8 +232,7 @@ public class WebSiteApioTest {
 			IsNull.notNullValue()
 		).body(
 			"_embedded.WebSite.find {it.name == '" +
-				WebSiteApioTestBundleActivator.WEB_SITE_NAME +
-					"'}.description",
+				WebSiteApioTestBundleActivator.WEB_SITE_NAME + "'}.description",
 			IsNull.notNullValue()
 		).body(
 			"_embedded.WebSite.find {it.name == '" +
@@ -243,18 +241,15 @@ public class WebSiteApioTest {
 			Matchers.equalTo("open")
 		).body(
 			"_embedded.WebSite.find {it.name == '" +
-				WebSiteApioTestBundleActivator.WEB_SITE_NAME +
-					"'}.name",
+				WebSiteApioTestBundleActivator.WEB_SITE_NAME + "'}.name",
 			IsNull.notNullValue()
 		).body(
 			"_embedded.WebSite.find {it.name == '" +
-				WebSiteApioTestBundleActivator.WEB_SITE_NAME +
-					"'}.privateUrl",
+				WebSiteApioTestBundleActivator.WEB_SITE_NAME + "'}.privateUrl",
 			IsNull.notNullValue()
 		).body(
 			"_embedded.WebSite.find {it.name == '" +
-				WebSiteApioTestBundleActivator.WEB_SITE_NAME +
-					"'}.publicUrl",
+				WebSiteApioTestBundleActivator.WEB_SITE_NAME + "'}.publicUrl",
 			IsNull.notNullValue()
 		).body(
 			"_embedded.WebSite.find {it.name == '" +

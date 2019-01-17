@@ -56,6 +56,7 @@ public class SearchResultUtilJournalArticleTest
 	extends BaseSearchResultUtilTestCase {
 
 	@Before
+	@Override
 	public void setUp() throws Exception {
 		MockitoAnnotations.initMocks(this);
 		super.setUp();

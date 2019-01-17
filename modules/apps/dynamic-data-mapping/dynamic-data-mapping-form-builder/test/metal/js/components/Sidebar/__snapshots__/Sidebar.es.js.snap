@@ -1,5 +1,57 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Sidebar Changing field type should emit an event with new field type settings 1`] = `
+Object {
+  "pages": Array [
+    Object {
+      "rows": Array [
+        Object {
+          "columns": Array [
+            Object {
+              "fields": Array [
+                Object {
+                  "fieldName": "label",
+                  "localizable": true,
+                  "localizedValue": Object {
+                    "en_US": "Multiple Selection",
+                  },
+                  "type": "text",
+                  "value": "Mock Field",
+                  "visible": true,
+                },
+                Object {
+                  "fieldName": "name",
+                  "type": "text",
+                  "value": undefined,
+                  "visible": true,
+                },
+                Object {
+                  "fieldName": "showLabel",
+                  "type": "checkbox",
+                  "value": true,
+                  "visible": true,
+                },
+                Object {
+                  "fieldName": "required",
+                  "type": "checkbox",
+                  "visible": true,
+                },
+                Object {
+                  "fieldName": "type",
+                  "type": "text",
+                  "value": "checkbox",
+                  "visible": false,
+                },
+              ],
+            },
+          ],
+        },
+      ],
+    },
+  ],
+}
+`;
+
 exports[`Sidebar should close the sidebar in edition mode 1`] = `
 <div class="sidebar-container open" ref="container">
   <div class="sidebar sidebar-light">
@@ -12,7 +64,7 @@ exports[`Sidebar should close the sidebar in edition mode 1`] = `
               </svg></button></li>
           <li class="tbar-item ddm-fieldtypes-dropdown tbar-item-expand text-left">
             <div>
-              <div class="dropdown"><button aria-expanded="false" aria-haspopup="true" aria-label="toggle" class="dropdown-toggle btn nav-link btn-sm btn-secondary" ref="triggerButton" type="button"><svg aria-hidden="true" class="lexicon-icon lexicon-icon-text inline-item inline-item-before" focusable="false">
+              <div class="dropdown"><button aria-expanded="false" aria-haspopup="true" aria-label="toggle" class="dropdown-toggle btn nav-link btn-sm btn-secondary" disabled="" ref="triggerButton" type="button"><svg aria-hidden="true" class="lexicon-icon lexicon-icon-text inline-item inline-item-before" focusable="false">
                     <title>text</title>
                     <use xlink:href="icons.svg#text"></use>
                   </svg>Text Field</button></div>
@@ -47,6 +99,7 @@ exports[`Sidebar should close the sidebar in edition mode 1`] = `
             <div aria-labelledby="sidebarLightFormsFieldTab" class="fade tab-pane active show" id="sidebarLightDetails" role="tabpanel">
               <div class="row">
                 <div class="col-md-undefined">
+                  <div class="ddm-field-not-found">Field doesn't exist.</div>
                   <div class="ddm-field-not-found">Field doesn't exist.</div>
                   <div class="ddm-field-not-found">Field doesn't exist.</div>
                   <div class="ddm-field-not-found">Field doesn't exist.</div>
@@ -109,7 +162,7 @@ exports[`Sidebar should close the sidebar in edition mode 2`] = `
               </svg></button></li>
           <li class="tbar-item ddm-fieldtypes-dropdown tbar-item-expand text-left">
             <div>
-              <div class="dropdown"><button aria-expanded="false" aria-haspopup="true" aria-label="toggle" class="dropdown-toggle btn nav-link btn-sm btn-secondary" ref="triggerButton" type="button"><svg aria-hidden="true" class="lexicon-icon lexicon-icon-text inline-item inline-item-before" focusable="false">
+              <div class="dropdown"><button aria-expanded="false" aria-haspopup="true" aria-label="toggle" class="dropdown-toggle btn nav-link btn-sm btn-secondary" disabled="" ref="triggerButton" type="button"><svg aria-hidden="true" class="lexicon-icon lexicon-icon-text inline-item inline-item-before" focusable="false">
                     <title>text</title>
                     <use xlink:href="icons.svg#text"></use>
                   </svg>Text Field</button></div>
@@ -144,6 +197,7 @@ exports[`Sidebar should close the sidebar in edition mode 2`] = `
             <div aria-labelledby="sidebarLightFormsFieldTab" class="fade tab-pane active show" id="sidebarLightDetails" role="tabpanel">
               <div class="row">
                 <div class="col-md-undefined">
+                  <div class="ddm-field-not-found">Field doesn't exist.</div>
                   <div class="ddm-field-not-found">Field doesn't exist.</div>
                   <div class="ddm-field-not-found">Field doesn't exist.</div>
                   <div class="ddm-field-not-found">Field doesn't exist.</div>

@@ -7,7 +7,7 @@ import {CONJUNCTIONS, PROPERTY_TYPES} from '../../utils/constants.es';
 import {DragSource as dragSource, DropTarget as dropTarget} from 'react-dnd';
 import {DragTypes} from '../../utils/drag-types.es';
 import getCN from 'classnames';
-import {generateGroupId, sub, dateToInternationalHuman} from '../../utils/utils.es';
+import {dateToInternationalHuman, generateGroupId, sub} from '../../utils/utils.es';
 import TypedInput from './TypedInput.es';
 
 const acceptedDragTypes = [
@@ -52,7 +52,7 @@ function drop(props, monitor) {
 		index: startIndex
 	} = monitor.getItem();
 
-	const {value, defaultValue, operatorName, propertyName} = droppedCriterion;
+	const {defaultValue, operatorName, propertyName, value} = droppedCriterion;
 
 	const droppedCriterionValue = value || defaultValue;
 
@@ -134,7 +134,9 @@ class CriteriaRow extends Component {
 		value,
 		type
 	) => {
-		let parsedValue = (type === PROPERTY_TYPES.DATE) ? dateToInternationalHuman(value) : value;
+		const parsedValue = (type === PROPERTY_TYPES.DATE) ?
+			dateToInternationalHuman(value) :
+			value;
 
 		return sub(
 			Liferay.Language.get('x-with-property-x-x-x'),

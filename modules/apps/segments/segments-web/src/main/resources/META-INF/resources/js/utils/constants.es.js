@@ -46,7 +46,7 @@ const {AND, OR} = CONJUNCTIONS;
 const {EQ, GE, GT, LE, LT} = RELATIONAL_OPERATORS;
 const {NOT_CONTAINS, NOT_EQ} = NOT_OPERATORS;
 const {CONTAINS} = FUNCTIONAL_OPERATORS;
-const {BOOLEAN, DATE, INTEGER, STRING, DOUBLE} = PROPERTY_TYPES;
+const {BOOLEAN, DATE, DOUBLE, INTEGER, STRING} = PROPERTY_TYPES;
 
 export const SUPPORTED_CONJUNCTIONS = [
 	{
@@ -101,3 +101,18 @@ export const SUPPORTED_PROPERTY_TYPES = {
 	[INTEGER]: [EQ, GE, GT, LE, LT, NOT_EQ],
 	[STRING]: [EQ, NOT_EQ, CONTAINS, NOT_CONTAINS]
 };
+
+/**
+ * Values for criteria row inputs.
+ */
+
+export const BOOLEAN_OPTIONS = [
+	{
+		label: 'TRUE',
+		value: 'true'
+	},
+	{
+		label: 'FALSE',
+		value: 'false'
+	}
+];

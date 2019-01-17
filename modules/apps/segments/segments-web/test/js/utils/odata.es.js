@@ -81,7 +81,7 @@ describe(
 				it(
 					'should handle a query string with "not" operator',
 					() => {
-						expect(ODataUtil.translateQueryToCriteria(`(not (firstName eq 'test'))`))
+						expect(ODataUtil.translateQueryToCriteria('(not (firstName eq \'test\'))'))
 							.toEqual(
 								{
 									conjunctionName: 'and',
@@ -101,7 +101,7 @@ describe(
 				it(
 					'should handle a query string with "contains" operator',
 					() => {
-						expect(ODataUtil.translateQueryToCriteria(`contains(firstName, 'test')`))
+						expect(ODataUtil.translateQueryToCriteria('contains(firstName, \'test\')'))
 							.toEqual(
 								{
 									conjunctionName: 'and',

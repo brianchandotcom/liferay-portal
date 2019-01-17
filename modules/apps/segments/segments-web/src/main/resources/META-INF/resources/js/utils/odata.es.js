@@ -63,30 +63,34 @@ function addNewGroup({oDataASTNode, prevConjunction}) {
 }
 
 /**
- *
- *
- * @param {*} propertyName
- * @param {*} properties
- * @returns {string}
+ * Gets the type of the property from the property name.
+ * @param {string} propertyName The property name to find.
+ * @param {array} properties The list of defined properties to search in.
+ * @returns {string} The property type.
  */
 const getTypeByPropertyName = (propertyName, properties) => {
 	let type = null;
-	if (propertyName) {
-		const property = properties.find(property => property.name === propertyName);
+
+	if (propertyName && properties) {
+		const property = properties.find(
+			property => property.name === propertyName
+		);
+
 		type = property ? property.type : null;
 	}
+
 	return type;
 };
 
 /**
- * Decides whether to add quotes to value
- *
- * @param {string | boolen} value
- * @param {'date' | 'string' | 'boolean' | 'number'} type
+ * Decides whether to add quotes to value.
+ * @param {boolean | string} value
+ * @param {boolean | date | number | string} type
  * @returns {string}
  */
 function valueParser(value, type) {
 	let parsedValue;
+
 	switch (type) {
 	case PROPERTY_TYPES.BOOLEAN:
 	case PROPERTY_TYPES.DATE:
@@ -99,6 +103,7 @@ function valueParser(value, type) {
 		parsedValue = `'${value}'`;
 		break;
 	}
+
 	return parsedValue;
 }
 
@@ -133,7 +138,8 @@ function buildQueryString(criteria, queryConjunction, properties) {
 					);
 				}
 				else {
-					const type = criterion.type || getTypeByPropertyName(propertyName, properties);
+					const type = criterion.type ||
+						getTypeByPropertyName(propertyName, properties);
 
 					const parsedValue = valueParser(value, type);
 
@@ -153,8 +159,8 @@ function buildQueryString(criteria, queryConjunction, properties) {
 						const baseExpression = [{
 							operatorName: baseOperator,
 							propertyName,
-							value,
-							type
+							type,
+							value
 						}];
 
 						// Not is wrapped in a group to simplify AST parsing.

@@ -19,7 +19,7 @@ import com.liferay.document.library.kernel.util.comparator.VersionNumberComparat
 /**
  * @author Shanon Mathai
  */
-public interface GcsStoreConstants {
+public interface GCSStoreConstants {
 
 	public String KEY_PROPERTY = "dl.store.gcs.aes256.key";
 

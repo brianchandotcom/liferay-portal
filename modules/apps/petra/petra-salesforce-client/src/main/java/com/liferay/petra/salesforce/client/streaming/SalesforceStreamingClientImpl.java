@@ -23,18 +23,16 @@ import com.sforce.ws.ConnectorConfig;
 
 import java.net.URL;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import org.cometd.bayeux.Channel;
 import org.cometd.bayeux.Message;
 import org.cometd.bayeux.client.ClientSessionChannel;
 import org.cometd.client.BayeuxClient;
-import org.cometd.client.transport.ClientTransport;
 import org.cometd.client.transport.LongPollingTransport;
 
-import org.eclipse.jetty.client.ContentExchange;
 import org.eclipse.jetty.client.HttpClient;
+import org.eclipse.jetty.client.api.Request;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -132,11 +130,6 @@ public class SalesforceStreamingClientImpl
 
 			ConnectorConfig connectorConfig = partnerConnection.getConfig();
 
-			Map<String, Object> options = new HashMap<>();
-
-			options.put(
-				ClientTransport.TIMEOUT_OPTION, _transportTimeout * 6000);
-
 			_httpClient.start();
 
 			URL url = new URL(connectorConfig.getServiceEndpoint());
@@ -145,7 +138,7 @@ public class SalesforceStreamingClientImpl
 				StringBundler.concat(
 					url.getProtocol(), "://", url.getHost(), "/cometd/37.0"),
 				new SalesforceTransport(
-					connectorConfig.getSessionId(), options, _httpClient));
+					connectorConfig.getSessionId(), null, _httpClient));
 
 			ClientSessionChannel handshakeClientSessionChannel =
 				_bayeuxClient.getChannel(Channel.META_HANDSHAKE);
@@ -219,10 +212,10 @@ public class SalesforceStreamingClientImpl
 		}
 
 		@Override
-		protected void customize(ContentExchange exchange) {
-			super.customize(exchange);
+		protected void customize(Request request) {
+			super.customize(request);
 
-			exchange.addRequestHeader("Authorization", "OAuth " + _sessionId);
+			request.header("Authorization", "OAuth " + _sessionId);
 		}
 
 		private final String _sessionId;

@@ -15,11 +15,8 @@
 package com.liferay.users.admin.web.internal.portlet.action;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
-import com.liferay.portal.kernel.security.auth.PrincipalException;
-import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.users.admin.constants.UsersAdminPortletKeys;
 
-import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
@@ -37,27 +34,11 @@ import org.osgi.service.component.annotations.Component;
 	},
 	service = MVCRenderCommand.class
 )
-public class EditOpeningHoursMVCRenderCommand
-	extends BaseEditContactInformationMVCRenderCommand {
+public class EditOpeningHoursMVCRenderCommand implements MVCRenderCommand {
 
 	@Override
 	public String render(
-			RenderRequest renderRequest, RenderResponse renderResponse)
-		throws PortletException {
-
-		try {
-			setRenderRequestAttributes(renderRequest);
-		}
-		catch (Exception e) {
-			if (e instanceof PrincipalException) {
-				SessionErrors.add(renderRequest, e.getClass());
-
-				return "/error.jsp";
-			}
-			else {
-				throw new PortletException(e);
-			}
-		}
+		RenderRequest renderRequest, RenderResponse renderResponse) {
 
 		return "/organization/edit_opening_hours.jsp";
 	}

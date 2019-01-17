@@ -29,13 +29,13 @@ if (primaryKey > 0L) {
 	emailAddress = EmailAddressServiceUtil.getEmailAddress(primaryKey);
 }
 
+EditContactInformationDisplayContext editContactInformationDisplayContext = new EditContactInformationDisplayContext(className, classPK, 0, liferayPortletResponse, request);
+
 if (!portletName.equals(UsersAdminPortletKeys.MY_ACCOUNT)) {
 //	portletDisplay.setShowBackIcon(true);
 	portletDisplay.setURLBack(backURL);
 
-	String portletTitle = (String)request.getAttribute(UsersAdminWebKeys.PORTLET_TITLE);
-
-	renderResponse.setTitle(portletTitle);
+	renderResponse.setTitle(editContactInformationDisplayContext.getPortletTitle());
 }
 
 PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "contact-information"), redirect);

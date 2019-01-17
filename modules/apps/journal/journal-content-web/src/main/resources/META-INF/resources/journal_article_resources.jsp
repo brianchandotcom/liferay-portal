@@ -20,12 +20,12 @@
 JournalArticle article = journalContentDisplayContext.getArticle();
 AssetRenderer<JournalArticle> assetRenderer = journalContentDisplayContext.getAssetRenderer();
 
-String title = assetRenderer.getTitle(locale);
+String title = HtmlUtil.escape(assetRenderer.getTitle(locale));
 
 if (article.getGroupId() != themeDisplay.getScopeGroupId()) {
 	Group articleGroup = GroupLocalServiceUtil.getGroup(article.getGroupId());
 
-	title = title + StringPool.SPACE + StringPool.OPEN_PARENTHESIS + articleGroup.getDescriptiveName(locale) + StringPool.CLOSE_PARENTHESIS;
+	title = title + StringPool.SPACE + StringPool.OPEN_PARENTHESIS + HtmlUtil.escape(articleGroup.getDescriptiveName(locale)) + StringPool.CLOSE_PARENTHESIS;
 }
 
 String articleImageURL = HtmlUtil.escapeAttribute(assetRenderer.getThumbnailPath(liferayPortletRequest));

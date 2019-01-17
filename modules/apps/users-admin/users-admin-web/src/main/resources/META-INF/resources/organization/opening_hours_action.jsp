@@ -17,8 +17,6 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String backURL = (String)request.getAttribute("backURL");
-
 OrganizationScreenNavigationDisplayContext organizationScreenNavigationDisplayContext = (OrganizationScreenNavigationDisplayContext)request.getAttribute(UsersAdminWebKeys.ORGANIZATION_SCREEN_NAVIGATION_DISPLAY_CONTEXT);
 
 long organizationId = organizationScreenNavigationDisplayContext.getOrganizationId();
@@ -35,13 +33,13 @@ long orgLaborId = ParamUtil.getLong(request, "orgLaborId");
 >
 
 	<%
-		PortletURL editURL = liferayPortletResponse.createRenderURL();
+	PortletURL editURL = liferayPortletResponse.createRenderURL();
 
-	//	editURL.setParameter("backURL", backURL);
-		editURL.setParameter("classPK", String.valueOf(organizationId));
-		editURL.setParameter("mvcRenderCommandName", "/users_admin/edit_opening_hours");
-		editURL.setParameter("primaryKey", String.valueOf(orgLaborId));
-		editURL.setParameter("redirect", currentURL);
+	editURL.setParameter("classPK", String.valueOf(organizationId));
+	editURL.setParameter("mvcRenderCommandName", "/users_admin/edit_opening_hours");
+	editURL.setParameter("parentOrganizationId", String.valueOf(organizationScreenNavigationDisplayContext.getParentOrganizationId()));
+	editURL.setParameter("primaryKey", String.valueOf(orgLaborId));
+	editURL.setParameter("redirect", currentURL);
 	%>
 
 	<liferay-ui:icon

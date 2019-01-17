@@ -17,9 +17,9 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String backURL = ParamUtil.getString(request, "backURL");
 String className = ParamUtil.getString(request, "className");
 Long classPK = ParamUtil.getLong(request, "classPK");
+long parentOrganizationId = ParamUtil.getLong(request, "parentOrganizationId");
 long primaryKey = ParamUtil.getLong(request, "primaryKey", 0L);
 String redirect = ParamUtil.getString(request, "redirect");
 
@@ -29,11 +29,11 @@ if (primaryKey > 0L) {
 	phone = PhoneServiceUtil.getPhone(primaryKey);
 }
 
-EditContactInformationDisplayContext editContactInformationDisplayContext = new EditContactInformationDisplayContext(className, classPK, 0, liferayPortletResponse, request);
+EditContactInformationDisplayContext editContactInformationDisplayContext = new EditContactInformationDisplayContext(className, classPK, parentOrganizationId, liferayPortletResponse, request);
 
 if (!portletName.equals(UsersAdminPortletKeys.MY_ACCOUNT)) {
-//	portletDisplay.setShowBackIcon(true);
-	portletDisplay.setURLBack(backURL);
+	portletDisplay.setShowBackIcon(true);
+	portletDisplay.setURLBack(editContactInformationDisplayContext.getBackURL());
 
 	renderResponse.setTitle(editContactInformationDisplayContext.getPortletTitle());
 }
@@ -56,7 +56,6 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, sheetTit
 
 <aui:form action="<%= actionURL %>" method="post" name="fm">
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.EDIT %>" />
-	<aui:input name="backURL" type="hidden" value="<%= backURL %>" />
 	<aui:input name="className" type="hidden" value="<%= className %>" />
 	<aui:input name="classPK" type="hidden" value="<%= String.valueOf(classPK) %>" />
 	<aui:input name="errorMVCRenderCommandName" type="hidden" value="/users_admin/edit_phone_number" />

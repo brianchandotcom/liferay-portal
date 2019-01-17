@@ -24,6 +24,10 @@ long selContactId = (selUser != null) ? selUser.getContactId() : 0;
 request.setAttribute("contact_information.jsp-className", Contact.class.getName());
 request.setAttribute("contact_information.jsp-classPK", selContactId);
 request.setAttribute("contact_information.jsp-mvcActionPath", "/users_admin/update_user_contact_information");
+
+long parentOrganizationId = ParamUtil.getLong(request, "parentOrganizationId");
+
+request.setAttribute("parentOrganizationId", parentOrganizationId);
 %>
 
 <aui:input name="classPK" type="hidden" value="<%= String.valueOf(selContactId) %>" />

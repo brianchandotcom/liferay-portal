@@ -17,20 +17,13 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String backURL = ParamUtil.getString(request, "backURL");
-
-if (Validator.isNull(backURL)) {
-	backURL = ParamUtil.getString(request, "redirect");
-
-	request.setAttribute("backURL", backURL);
-}
-
 OrganizationScreenNavigationDisplayContext organizationScreenNavigationDisplayContext = (OrganizationScreenNavigationDisplayContext)request.getAttribute(UsersAdminWebKeys.ORGANIZATION_SCREEN_NAVIGATION_DISPLAY_CONTEXT);
 
 long organizationId = organizationScreenNavigationDisplayContext.getOrganizationId();
 
 request.setAttribute("contact_information.jsp-className", Organization.class.getName());
 request.setAttribute("contact_information.jsp-classPK", organizationId);
+request.setAttribute("parentOrganizationId", organizationScreenNavigationDisplayContext.getParentOrganizationId());
 %>
 
 <div class="sheet-section">

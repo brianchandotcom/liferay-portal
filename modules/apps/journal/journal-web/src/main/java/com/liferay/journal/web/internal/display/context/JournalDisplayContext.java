@@ -23,8 +23,6 @@ import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItem;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemList;
 import com.liferay.journal.configuration.JournalServiceConfiguration;
@@ -222,26 +220,6 @@ public class JournalDisplayContext {
 			_themeDisplay);
 
 		return _articleDisplay;
-	}
-
-	public List<LabelItem> getArticleLabels(JournalArticle article) {
-		return new LabelItemList() {
-			{
-
-				if (!article.isApproved() && article.hasApprovedVersion()) {
-					add(
-						labelItem -> {
-							labelItem.setStatus(
-								WorkflowConstants.STATUS_APPROVED);
-						});
-				}
-
-				add(
-					labelItem -> {
-						labelItem.setStatus(article.getStatus());
-					});
-			}
-		};
 	}
 
 	public List<Locale> getAvailableArticleLocales() throws PortalException {

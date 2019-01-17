@@ -3367,6 +3367,26 @@ log.sanitizer.enabled=false</echo>
 		/>
 	</target>
 
+	<target name="functional-bundle-tomcat-mysql57-open11">
+		<set-tomcat-version-number liferay.portal.bundle="${test.portal.bundle.version}" />
+
+		<run-functional-test
+			app.server.type="tomcat"
+			database.type="mysql"
+			database.version="5.7"
+			setup.proxy="false"
+			test.build.fix.pack.zip.url="${test.build.fix.pack.zip.url}"
+			test.fix.pack.base.url="${test.fix.pack.base.url}"
+			test.license.xml.url="${test.license.xml.url}"
+			test.plugin.zip.url="${test.plugin.zip.url}"
+			test.plugins.war.zip.url="${test.plugins.war.zip.url}"
+			test.portal.bundle.version="${test.portal.bundle.version}"
+			test.portal.bundle.zip.url="${test.portal.bundle.zip.url}"
+			test.portal.lpkg.name="${test.portal.lpkg.name}"
+			test.sql.zip.url="${test.sql.zip.url}"
+		/>
+	</target>
+
 	<target name="functional-bundle-tomcat-oracle121-jdk8">
 		<set-tomcat-version-number liferay.portal.bundle="${test.portal.bundle.version}" />
 
@@ -3592,6 +3612,10 @@ log.sanitizer.enabled=false</echo>
 
 	<target name="functional-smoke-bundle-tomcat-mysql57-jdk8">
 		<antcall target="functional-bundle-tomcat-mysql57-jdk8" />
+	</target>
+
+	<target name="functional-smoke-bundle-tomcat-mysql57-open11">
+		<antcall target="functional-bundle-tomcat-mysql57-open11" />
 	</target>
 
 	<target name="functional-smoke-jboss70-mysql56-jdk8">
@@ -5470,6 +5494,10 @@ ${output.content}</echo>
 
 	<target name="release-functional-smoke-bundle-tomcat-mysql57-jdk8">
 		<antcall target="functional-bundle-tomcat-mysql57-jdk8" />
+	</target>
+
+	<target name="release-functional-smoke-bundle-tomcat-mysql57-open11">
+		<antcall target="functional-bundle-tomcat-mysql57-open11" />
 	</target>
 
 	<target name="release-osgi-state-exploded-test-jdk8">

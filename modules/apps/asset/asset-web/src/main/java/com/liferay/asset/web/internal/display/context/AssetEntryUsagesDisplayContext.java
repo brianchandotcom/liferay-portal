@@ -149,8 +149,8 @@ public class AssetEntryUsagesDisplayContext {
 	public String getAssetEntryUsageTypeLabel(AssetEntryUsage assetEntryUsage) {
 		long classNameId = assetEntryUsage.getClassNameId();
 
-		if (classNameId ==
-				PortalUtil.getClassNameId(AssetDisplayPageEntry.class)) {
+		if (classNameId == PortalUtil.getClassNameId(
+				AssetDisplayPageEntry.class)) {
 
 			return "display-page";
 		}

@@ -102,8 +102,8 @@ public class AssetListEntryUsagesDisplayContext {
 
 		long classNameId = assetListEntryUsage.getClassNameId();
 
-		if (classNameId ==
-				PortalUtil.getClassNameId(AssetDisplayPageEntry.class)) {
+		if (classNameId == PortalUtil.getClassNameId(
+				AssetDisplayPageEntry.class)) {
 
 			return "display-page";
 		}

@@ -40,11 +40,10 @@ public class LineBreakAfterCommaCheck extends BaseCheck {
 
 		int lineNo = detailAST.getLineNo();
 
-		if ((lineNo !=
-				DetailASTUtil.getStartLineNumber(
-					detailAST.getPreviousSibling())) ||
-			(lineNo !=
-				DetailASTUtil.getEndLineNumber(detailAST.getNextSibling()))) {
+		if ((lineNo != DetailASTUtil.getStartLineNumber(
+				detailAST.getPreviousSibling())) ||
+			(lineNo != DetailASTUtil.getEndLineNumber(
+				detailAST.getNextSibling()))) {
 
 			String s = StringUtil.trim(
 				line.substring(0, detailAST.getColumnNo() + 1));

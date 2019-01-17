@@ -57,8 +57,8 @@ public class TopLevelBuild extends BaseBuild {
 	public void addDownstreamBuilds(String... urls) {
 		super.addDownstreamBuilds(urls);
 
-		if (getDownstreamBuildCount("completed") <
-				getDownstreamBuildCount(null)) {
+		if (getDownstreamBuildCount("completed") < getDownstreamBuildCount(
+				null)) {
 
 			setResult(null);
 		}

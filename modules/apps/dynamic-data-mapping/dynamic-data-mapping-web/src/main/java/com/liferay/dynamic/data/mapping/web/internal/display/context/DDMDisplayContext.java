@@ -488,8 +488,8 @@ public class DDMDisplayContext {
 
 		return new CreationMenu() {
 			{
-				if (getClassNameId() ==
-						PortalUtil.getClassNameId(DDMStructure.class)) {
+				if (getClassNameId() == PortalUtil.getClassNameId(
+						DDMStructure.class)) {
 
 					PortletURL addTemplateURL =
 						_renderResponse.createRenderURL();

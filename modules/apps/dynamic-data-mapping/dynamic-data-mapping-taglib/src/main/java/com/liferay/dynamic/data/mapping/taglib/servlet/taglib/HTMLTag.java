@@ -104,8 +104,8 @@ public class HTMLTag extends BaseHTMLTag {
 		try {
 			long ddmStructureId = getClassPK();
 
-			if (getClassNameId() ==
-					PortalUtil.getClassNameId(DDMTemplate.class)) {
+			if (getClassNameId() == PortalUtil.getClassNameId(
+					DDMTemplate.class)) {
 
 				DDMTemplate ddmTemplate =
 					DDMTemplateLocalServiceUtil.getTemplate(getClassPK());

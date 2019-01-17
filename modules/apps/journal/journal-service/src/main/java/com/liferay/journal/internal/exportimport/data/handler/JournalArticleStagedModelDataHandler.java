@@ -279,8 +279,8 @@ public class JournalArticleStagedModelDataHandler
 	protected boolean countStagedModel(
 		PortletDataContext portletDataContext, JournalArticle article) {
 
-		if (article.getClassNameId() ==
-				_portal.getClassNameId(DDMStructure.class)) {
+		if (article.getClassNameId() == _portal.getClassNameId(
+				DDMStructure.class)) {
 
 			return false;
 		}
@@ -356,8 +356,8 @@ public class JournalArticleStagedModelDataHandler
 			portletDataContext, article, ddmStructure,
 			PortletDataContext.REFERENCE_TYPE_STRONG);
 
-		if (article.getClassNameId() !=
-				_portal.getClassNameId(DDMStructure.class)) {
+		if (article.getClassNameId() != _portal.getClassNameId(
+				DDMStructure.class)) {
 
 			DDMTemplate ddmTemplate = _ddmTemplateLocalService.getTemplate(
 				article.getGroupId(),

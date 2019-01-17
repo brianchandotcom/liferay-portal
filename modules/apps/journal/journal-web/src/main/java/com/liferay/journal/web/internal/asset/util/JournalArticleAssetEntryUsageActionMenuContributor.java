@@ -67,8 +67,8 @@ public class JournalArticleAssetEntryUsageActionMenuContributor
 	public List<DropdownItem> getAssetEntryUsageActionMenu(
 		AssetEntryUsage assetEntryUsage, HttpServletRequest request) {
 
-		if (assetEntryUsage.getClassNameId() !=
-				_portal.getClassNameId(Layout.class)) {
+		if (assetEntryUsage.getClassNameId() != _portal.getClassNameId(
+				Layout.class)) {
 
 			return Collections.emptyList();
 		}

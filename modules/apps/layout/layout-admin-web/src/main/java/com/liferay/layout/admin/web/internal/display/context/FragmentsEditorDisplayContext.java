@@ -180,8 +180,8 @@ public class FragmentsEditorDisplayContext {
 		soyContext.put("panels", _getSoyContextPanels());
 		soyContext.put("portletNamespace", _renderResponse.getNamespace());
 
-		if (_classNameId ==
-				PortalUtil.getClassNameId(LayoutPageTemplateEntry.class)) {
+		if (_classNameId == PortalUtil.getClassNameId(
+				LayoutPageTemplateEntry.class)) {
 
 			soyContext.put(
 				"publishLayoutPageTemplateEntryURL",

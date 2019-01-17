@@ -1319,8 +1319,8 @@ public abstract class BaseBuild implements Build {
 
 					String result = getResult();
 
-					if ((downstreamBuilds.size() ==
-							getDownstreamBuildCount("completed")) &&
+					if ((downstreamBuilds.size() == getDownstreamBuildCount(
+							"completed")) &&
 						(result != null)) {
 
 						setResult(result);
@@ -2338,8 +2338,8 @@ public abstract class BaseBuild implements Build {
 		_result = result;
 
 		if ((_result == null) ||
-			(getDownstreamBuildCount("completed") <
-				getDownstreamBuildCount(null))) {
+			(getDownstreamBuildCount("completed") < getDownstreamBuildCount(
+				null))) {
 
 			setStatus("running");
 		}

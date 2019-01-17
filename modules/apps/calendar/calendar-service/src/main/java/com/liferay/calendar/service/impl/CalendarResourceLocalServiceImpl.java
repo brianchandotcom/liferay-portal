@@ -67,8 +67,8 @@ public class CalendarResourceLocalServiceImpl
 
 		long calendarResourceId = counterLocalService.increment();
 
-		if (classNameId ==
-				classNameLocalService.getClassNameId(CalendarResource.class)) {
+		if (classNameId == classNameLocalService.getClassNameId(
+				CalendarResource.class)) {
 
 			classPK = calendarResourceId;
 		}

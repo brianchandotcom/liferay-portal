@@ -1186,8 +1186,8 @@ public class JournalArticleLocalServiceImpl
 
 		// Dynamic data mapping
 
-		if (article.getClassNameId() !=
-				classNameLocalService.getClassNameId(DDMStructure.class)) {
+		if (article.getClassNameId() != classNameLocalService.getClassNameId(
+				DDMStructure.class)) {
 
 			ddmStorageLinkLocalService.deleteClassStorageLink(article.getId());
 

@@ -336,8 +336,8 @@ public class CalendarUtil {
 		cal2.set(Calendar.YEAR, year);
 
 		if ((cal2.get(Calendar.DAY_OF_WEEK) != Calendar.MONDAY) &&
-			(cal2.get(Calendar.WEEK_OF_YEAR) ==
-				cal1.get(Calendar.WEEK_OF_YEAR))) {
+			(cal2.get(Calendar.WEEK_OF_YEAR) == cal1.get(
+				Calendar.WEEK_OF_YEAR))) {
 
 			return false;
 		}

@@ -117,8 +117,8 @@ public class CalendarResourceStagedModelDataHandler
 		PortletDataContext portletDataContext,
 		CalendarResource calendarResource) {
 
-		if (calendarResource.getClassNameId() ==
-				_portal.getClassNameId(CalendarResource.class)) {
+		if (calendarResource.getClassNameId() == _portal.getClassNameId(
+				CalendarResource.class)) {
 
 			return true;
 		}
@@ -141,8 +141,8 @@ public class CalendarResourceStagedModelDataHandler
 				PortletDataContext.REFERENCE_TYPE_STRONG);
 		}
 
-		if (calendarResource.getClassNameId() ==
-				_portal.getClassNameId(User.class)) {
+		if (calendarResource.getClassNameId() == _portal.getClassNameId(
+				User.class)) {
 
 			User user = _userLocalService.getUser(
 				calendarResource.getClassPK());
@@ -288,13 +288,13 @@ public class CalendarResourceStagedModelDataHandler
 
 		long classPK = 0;
 
-		if (calendarResource.getClassNameId() ==
-				_portal.getClassNameId(Group.class)) {
+		if (calendarResource.getClassNameId() == _portal.getClassNameId(
+				Group.class)) {
 
 			classPK = portletDataContext.getScopeGroupId();
 		}
-		else if (calendarResource.getClassNameId() ==
-					_portal.getClassNameId(User.class)) {
+		else if (calendarResource.getClassNameId() == _portal.getClassNameId(
+					User.class)) {
 
 			classPK = userId;
 		}

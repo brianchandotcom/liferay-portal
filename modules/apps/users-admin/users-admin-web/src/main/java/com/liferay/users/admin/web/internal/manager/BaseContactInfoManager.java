@@ -63,8 +63,8 @@ public abstract class BaseContactInfoManager<T>
 
 			for (T tempContactInfo : contactInfos) {
 				if ((size == 1) ||
-					(getPrimaryKey(tempContactInfo) !=
-						getPrimaryKey(contactInfo))) {
+					(getPrimaryKey(tempContactInfo) != getPrimaryKey(
+						contactInfo))) {
 
 					setPrimary(tempContactInfo, true);
 

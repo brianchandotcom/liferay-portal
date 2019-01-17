@@ -181,12 +181,12 @@ public class PhoneLocalServiceImpl extends PhoneLocalServiceBaseImpl {
 			classPK = phone.getClassPK();
 		}
 
-		if ((classNameId ==
-				classNameLocalService.getClassNameId(Account.class)) ||
-			(classNameId ==
-				classNameLocalService.getClassNameId(Contact.class)) ||
-			(classNameId ==
-				classNameLocalService.getClassNameId(Organization.class))) {
+		if ((classNameId == classNameLocalService.getClassNameId(
+				Account.class)) ||
+			(classNameId == classNameLocalService.getClassNameId(
+				Contact.class)) ||
+			(classNameId == classNameLocalService.getClassNameId(
+				Organization.class))) {
 
 			listTypeLocalService.validate(
 				typeId, classNameId, ListTypeConstants.PHONE);

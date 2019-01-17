@@ -166,8 +166,8 @@ public class FragmentEntryLinkDisplayContext {
 			FragmentEntryLink fragmentEntryLink)
 		throws PortalException {
 
-		if (fragmentEntryLink.getClassNameId() ==
-				PortalUtil.getClassNameId(Layout.class)) {
+		if (fragmentEntryLink.getClassNameId() == PortalUtil.getClassNameId(
+				Layout.class)) {
 
 			return "page";
 		}

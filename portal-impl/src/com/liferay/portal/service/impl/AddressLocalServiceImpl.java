@@ -220,12 +220,12 @@ public class AddressLocalServiceImpl extends AddressLocalServiceBaseImpl {
 			classPK = address.getClassPK();
 		}
 
-		if ((classNameId ==
-				classNameLocalService.getClassNameId(Account.class)) ||
-			(classNameId ==
-				classNameLocalService.getClassNameId(Contact.class)) ||
-			(classNameId ==
-				classNameLocalService.getClassNameId(Organization.class))) {
+		if ((classNameId == classNameLocalService.getClassNameId(
+				Account.class)) ||
+			(classNameId == classNameLocalService.getClassNameId(
+				Contact.class)) ||
+			(classNameId == classNameLocalService.getClassNameId(
+				Organization.class))) {
 
 			listTypeLocalService.validate(
 				typeId, classNameId, ListTypeConstants.ADDRESS);

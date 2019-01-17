@@ -58,8 +58,8 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.template.soy.utils.SoyHTMLSanitizer;
-import com.liferay.portal.template.soy.utils.SoyRawData;
+import com.liferay.portal.template.soy.util.SoyHTMLSanitizer;
+import com.liferay.portal.template.soy.util.SoyRawData;
 import com.liferay.portal.util.PrefsPropsUtil;
 
 import java.io.Writer;

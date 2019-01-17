@@ -169,14 +169,14 @@ public class UpgradeJournalArticleLocalizedValues extends UpgradeProcess {
 						_log(articleId, "title");
 					}
 
-					if ((localizedDescription != null) &&
-						(localizedDescription.length() >
-							_MAX_LENGTH_DESCRIPTION)) {
+					if (localizedDescription != null) {
+						String safeLocalizedDescription = _getSafeString(
+							localizedDescription, "UTF-8",
+							_MAX_LENGTH_DESCRIPTION);
 
-						localizedDescription = localizedDescription.substring(
-							0, _MAX_LENGTH_DESCRIPTION);
-
-						_log(articleId, "description");
+						if (localizedDescription != safeLocalizedDescription) {
+							_log(articleId, "description");
+						}
 					}
 
 					ps2.setLong(1, _increment());
@@ -210,6 +210,24 @@ public class UpgradeJournalArticleLocalizedValues extends UpgradeProcess {
 		DB db = DBManagerUtil.getDB();
 
 		return db.increment();
+	}
+
+	private String _getSafeString(String value, String charset, int maxLength)
+		throws Exception {
+
+		byte[] valueBytes = value.getBytes("UTF-8");
+
+		if (valueBytes.length <= maxLength) {
+			return value;
+		}
+
+		byte[] convertedValue = new byte[maxLength];
+
+		System.arraycopy(valueBytes, 0, convertedValue, 0, maxLength);
+
+		String returnValue = new String(convertedValue, charset);
+
+		return StringUtil.shorten(returnValue, returnValue.length() - 1);
 	}
 
 	private void _log(long articleId, String columnName) {

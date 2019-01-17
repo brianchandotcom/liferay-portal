@@ -21,7 +21,7 @@ import com.liferay.dynamic.data.mapping.form.field.type.BaseDDMFormFieldTypeSett
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.render.DDMFormFieldRenderingContext;
-import com.liferay.portal.template.soy.utils.SoyHTMLSanitizer;
+import com.liferay.portal.template.soy.util.SoyHTMLSanitizer;
 
 import java.util.Map;
 

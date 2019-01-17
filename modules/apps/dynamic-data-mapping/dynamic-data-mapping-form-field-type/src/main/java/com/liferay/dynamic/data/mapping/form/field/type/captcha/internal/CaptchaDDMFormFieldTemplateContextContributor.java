@@ -21,7 +21,7 @@ import com.liferay.dynamic.data.mapping.render.DDMFormFieldRenderingContext;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.template.soy.utils.SoyHTMLSanitizer;
+import com.liferay.portal.template.soy.util.SoyHTMLSanitizer;
 import com.liferay.taglib.servlet.PageContextFactoryUtil;
 import com.liferay.taglib.servlet.PipingServletResponse;
 

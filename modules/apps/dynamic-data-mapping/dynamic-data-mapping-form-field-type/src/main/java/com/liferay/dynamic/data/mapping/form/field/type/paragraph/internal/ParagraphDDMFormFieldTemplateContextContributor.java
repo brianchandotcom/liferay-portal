@@ -20,7 +20,7 @@ import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.render.DDMFormFieldRenderingContext;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.HtmlUtil;
-import com.liferay.portal.template.soy.utils.SoyHTMLSanitizer;
+import com.liferay.portal.template.soy.util.SoyHTMLSanitizer;
 
 import java.util.HashMap;
 import java.util.Map;

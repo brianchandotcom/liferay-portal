@@ -304,7 +304,7 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 	}
 
 	private String _getEditableValue(JSONObject jsonObject, Locale locale) {
-		if (_isPersonalizationBySegmentsSupported(jsonObject)) {
+		if (_isPersonalizationSupported(jsonObject)) {
 			return _getEditableValueBySegmentsAndLocale(jsonObject, locale);
 		}
 
@@ -326,9 +326,9 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 	private String _getEditableValueBySegmentsAndLocale(
 		JSONObject jsonObject, Locale locale) {
 
-		JSONObject defaultSegment = jsonObject.getJSONObject("default");
+		JSONObject defaultJSONObject = jsonObject.getJSONObject("default");
 
-		String value = defaultSegment.getString(
+		String value = defaultJSONObject.getString(
 			LanguageUtil.getLanguageId(locale));
 
 		if (Validator.isNull(value)) {
@@ -379,10 +379,14 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 		return stylesheet;
 	}
 
-	private boolean _isPersonalizationBySegmentsSupported(
-		JSONObject jsonObject) {
+	private boolean _isPersonalizationSupported(JSONObject jsonObject) {
+		JSONObject defaultJSONObject = jsonObject.getJSONObject("default");
 
-		return Validator.isNotNull(jsonObject.getJSONObject("default"));
+		if (defaultJSONObject != null) {
+			return true;
+		}
+
+		return false;
 	}
 
 	private String _toCSSString(Map<String, Map<String, String>> stylesheet) {

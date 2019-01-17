@@ -567,6 +567,7 @@ create table Layout (
 	type_ VARCHAR(75) null,
 	typeSettings TEXT null,
 	hidden_ BOOLEAN,
+	system BOOLEAN,
 	friendlyURL VARCHAR(255) null,
 	iconImageId LONG,
 	themeId VARCHAR(75) null,

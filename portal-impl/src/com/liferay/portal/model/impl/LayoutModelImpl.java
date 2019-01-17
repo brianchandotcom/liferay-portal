@@ -103,6 +103,7 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 			{ "type_", Types.VARCHAR },
 			{ "typeSettings", Types.CLOB },
 			{ "hidden_", Types.BOOLEAN },
+			{ "system", Types.BOOLEAN },
 			{ "friendlyURL", Types.VARCHAR },
 			{ "iconImageId", Types.BIGINT },
 			{ "themeId", Types.VARCHAR },
@@ -140,6 +141,7 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 		TABLE_COLUMNS_MAP.put("type_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("typeSettings", Types.CLOB);
 		TABLE_COLUMNS_MAP.put("hidden_", Types.BOOLEAN);
+		TABLE_COLUMNS_MAP.put("system", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("friendlyURL", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("iconImageId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("themeId", Types.VARCHAR);
@@ -152,7 +154,7 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 		TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table Layout (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,plid LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,parentPlid LONG,leftPlid LONG,rightPlid LONG,privateLayout BOOLEAN,layoutId LONG,parentLayoutId LONG,name STRING null,title STRING null,description STRING null,keywords STRING null,robots STRING null,type_ VARCHAR(75) null,typeSettings TEXT null,hidden_ BOOLEAN,friendlyURL VARCHAR(255) null,iconImageId LONG,themeId VARCHAR(75) null,colorSchemeId VARCHAR(75) null,css TEXT null,priority INTEGER,layoutPrototypeUuid VARCHAR(75) null,layoutPrototypeLinkEnabled BOOLEAN,sourcePrototypeLayoutUuid VARCHAR(75) null,lastPublishDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table Layout (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,plid LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,parentPlid LONG,leftPlid LONG,rightPlid LONG,privateLayout BOOLEAN,layoutId LONG,parentLayoutId LONG,name STRING null,title STRING null,description STRING null,keywords STRING null,robots STRING null,type_ VARCHAR(75) null,typeSettings TEXT null,hidden_ BOOLEAN,system BOOLEAN,friendlyURL VARCHAR(255) null,iconImageId LONG,themeId VARCHAR(75) null,colorSchemeId VARCHAR(75) null,css TEXT null,priority INTEGER,layoutPrototypeUuid VARCHAR(75) null,layoutPrototypeLinkEnabled BOOLEAN,sourcePrototypeLayoutUuid VARCHAR(75) null,lastPublishDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table Layout";
 	public static final String ORDER_BY_JPQL = " ORDER BY layout.parentLayoutId ASC, layout.priority ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY Layout.parentLayoutId ASC, Layout.priority ASC";
@@ -220,6 +222,7 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 		model.setType(soapModel.getType());
 		model.setTypeSettings(soapModel.getTypeSettings());
 		model.setHidden(soapModel.isHidden());
+		model.setSystem(soapModel.isSystem());
 		model.setFriendlyURL(soapModel.getFriendlyURL());
 		model.setIconImageId(soapModel.getIconImageId());
 		model.setThemeId(soapModel.getThemeId());
@@ -317,6 +320,7 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 		attributes.put("type", getType());
 		attributes.put("typeSettings", getTypeSettings());
 		attributes.put("hidden", isHidden());
+		attributes.put("system", isSystem());
 		attributes.put("friendlyURL", getFriendlyURL());
 		attributes.put("iconImageId", getIconImageId());
 		attributes.put("themeId", getThemeId());
@@ -474,6 +478,12 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 
 		if (hidden != null) {
 			setHidden(hidden);
+		}
+
+		Boolean system = (Boolean)attributes.get("system");
+
+		if (system != null) {
+			setSystem(system);
 		}
 
 		String friendlyURL = (String)attributes.get("friendlyURL");
@@ -1409,6 +1419,23 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 
 	@JSON
 	@Override
+	public boolean getSystem() {
+		return _system;
+	}
+
+	@JSON
+	@Override
+	public boolean isSystem() {
+		return _system;
+	}
+
+	@Override
+	public void setSystem(boolean system) {
+		_system = system;
+	}
+
+	@JSON
+	@Override
 	public String getFriendlyURL() {
 		if (_friendlyURL == null) {
 			return "";
@@ -1830,6 +1857,7 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 		layoutImpl.setType(getType());
 		layoutImpl.setTypeSettings(getTypeSettings());
 		layoutImpl.setHidden(isHidden());
+		layoutImpl.setSystem(isSystem());
 		layoutImpl.setFriendlyURL(getFriendlyURL());
 		layoutImpl.setIconImageId(getIconImageId());
 		layoutImpl.setThemeId(getThemeId());
@@ -2095,6 +2123,8 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 
 		layoutCacheModel.hidden = isHidden();
 
+		layoutCacheModel.system = isSystem();
+
 		layoutCacheModel.friendlyURL = getFriendlyURL();
 
 		String friendlyURL = layoutCacheModel.friendlyURL;
@@ -2165,7 +2195,7 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(67);
+		StringBundler sb = new StringBundler(69);
 
 		sb.append("{mvccVersion=");
 		sb.append(getMvccVersion());
@@ -2213,6 +2243,8 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 		sb.append(getTypeSettings());
 		sb.append(", hidden=");
 		sb.append(isHidden());
+		sb.append(", system=");
+		sb.append(isSystem());
 		sb.append(", friendlyURL=");
 		sb.append(getFriendlyURL());
 		sb.append(", iconImageId=");
@@ -2240,7 +2272,7 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(103);
+		StringBundler sb = new StringBundler(106);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.portal.kernel.model.Layout");
@@ -2339,6 +2371,10 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 		sb.append(isHidden());
 		sb.append("]]></column-value></column>");
 		sb.append(
+			"<column><column-name>system</column-name><column-value><![CDATA[");
+		sb.append(isSystem());
+		sb.append("]]></column-value></column>");
+		sb.append(
 			"<column><column-name>friendlyURL</column-name><column-value><![CDATA[");
 		sb.append(getFriendlyURL());
 		sb.append("]]></column-value></column>");
@@ -2435,6 +2471,7 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 	private String _originalType;
 	private String _typeSettings;
 	private boolean _hidden;
+	private boolean _system;
 	private String _friendlyURL;
 	private String _originalFriendlyURL;
 	private long _iconImageId;

@@ -57,6 +57,7 @@ public class LayoutSoap implements Serializable {
 		soapModel.setType(model.getType());
 		soapModel.setTypeSettings(model.getTypeSettings());
 		soapModel.setHidden(model.isHidden());
+		soapModel.setSystem(model.isSystem());
 		soapModel.setFriendlyURL(model.getFriendlyURL());
 		soapModel.setIconImageId(model.getIconImageId());
 		soapModel.setThemeId(model.getThemeId());
@@ -311,6 +312,18 @@ public class LayoutSoap implements Serializable {
 		_hidden = hidden;
 	}
 
+	public boolean getSystem() {
+		return _system;
+	}
+
+	public boolean isSystem() {
+		return _system;
+	}
+
+	public void setSystem(boolean system) {
+		_system = system;
+	}
+
 	public String getFriendlyURL() {
 		return _friendlyURL;
 	}
@@ -419,6 +432,7 @@ public class LayoutSoap implements Serializable {
 	private String _type;
 	private String _typeSettings;
 	private boolean _hidden;
+	private boolean _system;
 	private String _friendlyURL;
 	private long _iconImageId;
 	private String _themeId;

@@ -67,6 +67,7 @@ public class LayoutWrapper extends BaseModelWrapper<Layout> implements Layout,
 		attributes.put("type", getType());
 		attributes.put("typeSettings", getTypeSettings());
 		attributes.put("hidden", isHidden());
+		attributes.put("system", isSystem());
 		attributes.put("friendlyURL", getFriendlyURL());
 		attributes.put("iconImageId", getIconImageId());
 		attributes.put("themeId", getThemeId());
@@ -221,6 +222,12 @@ public class LayoutWrapper extends BaseModelWrapper<Layout> implements Layout,
 
 		if (hidden != null) {
 			setHidden(hidden);
+		}
+
+		Boolean system = (Boolean)attributes.get("system");
+
+		if (system != null) {
+			setSystem(system);
 		}
 
 		String friendlyURL = (String)attributes.get("friendlyURL");
@@ -1092,6 +1099,16 @@ public class LayoutWrapper extends BaseModelWrapper<Layout> implements Layout,
 		return model.getSourcePrototypeLayoutUuid();
 	}
 
+	/**
+	* Returns the system of this layout.
+	*
+	* @return the system of this layout
+	*/
+	@Override
+	public boolean getSystem() {
+		return model.getSystem();
+	}
+
 	@Override
 	public String getTarget() {
 		return model.getTarget();
@@ -1490,6 +1507,16 @@ public class LayoutWrapper extends BaseModelWrapper<Layout> implements Layout,
 	@Override
 	public boolean isSupportsEmbeddedPortlets() {
 		return model.isSupportsEmbeddedPortlets();
+	}
+
+	/**
+	* Returns <code>true</code> if this layout is system.
+	*
+	* @return <code>true</code> if this layout is system; <code>false</code> otherwise
+	*/
+	@Override
+	public boolean isSystem() {
+		return model.isSystem();
 	}
 
 	/**
@@ -2043,6 +2070,16 @@ public class LayoutWrapper extends BaseModelWrapper<Layout> implements Layout,
 	@Override
 	public void setSourcePrototypeLayoutUuid(String sourcePrototypeLayoutUuid) {
 		model.setSourcePrototypeLayoutUuid(sourcePrototypeLayoutUuid);
+	}
+
+	/**
+	* Sets whether this layout is system.
+	*
+	* @param system the system of this layout
+	*/
+	@Override
+	public void setSystem(boolean system) {
+		model.setSystem(system);
 	}
 
 	/**

@@ -860,6 +860,27 @@ public interface LayoutModel extends BaseModel<Layout>, LocalizedModel, MVCCMode
 	public void setHidden(boolean hidden);
 
 	/**
+	 * Returns the system of this layout.
+	 *
+	 * @return the system of this layout
+	 */
+	public boolean getSystem();
+
+	/**
+	 * Returns <code>true</code> if this layout is system.
+	 *
+	 * @return <code>true</code> if this layout is system; <code>false</code> otherwise
+	 */
+	public boolean isSystem();
+
+	/**
+	 * Sets whether this layout is system.
+	 *
+	 * @param system the system of this layout
+	 */
+	public void setSystem(boolean system);
+
+	/**
 	 * Returns the friendly url of this layout.
 	 *
 	 * @return the friendly url of this layout

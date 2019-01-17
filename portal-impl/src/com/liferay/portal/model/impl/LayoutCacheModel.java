@@ -79,7 +79,7 @@ public class LayoutCacheModel implements CacheModel<Layout>, Externalizable,
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(67);
+		StringBundler sb = new StringBundler(69);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -127,6 +127,8 @@ public class LayoutCacheModel implements CacheModel<Layout>, Externalizable,
 		sb.append(typeSettings);
 		sb.append(", hidden=");
 		sb.append(hidden);
+		sb.append(", system=");
+		sb.append(system);
 		sb.append(", friendlyURL=");
 		sb.append(friendlyURL);
 		sb.append(", iconImageId=");
@@ -248,6 +250,7 @@ public class LayoutCacheModel implements CacheModel<Layout>, Externalizable,
 		}
 
 		layoutImpl.setHidden(hidden);
+		layoutImpl.setSystem(system);
 
 		if (friendlyURL == null) {
 			layoutImpl.setFriendlyURL("");
@@ -345,6 +348,8 @@ public class LayoutCacheModel implements CacheModel<Layout>, Externalizable,
 		typeSettings = objectInput.readUTF();
 
 		hidden = objectInput.readBoolean();
+
+		system = objectInput.readBoolean();
 		friendlyURL = objectInput.readUTF();
 
 		iconImageId = objectInput.readLong();
@@ -453,6 +458,8 @@ public class LayoutCacheModel implements CacheModel<Layout>, Externalizable,
 
 		objectOutput.writeBoolean(hidden);
 
+		objectOutput.writeBoolean(system);
+
 		if (friendlyURL == null) {
 			objectOutput.writeUTF("");
 		}
@@ -527,6 +534,7 @@ public class LayoutCacheModel implements CacheModel<Layout>, Externalizable,
 	public String type;
 	public String typeSettings;
 	public boolean hidden;
+	public boolean system;
 	public String friendlyURL;
 	public long iconImageId;
 	public String themeId;

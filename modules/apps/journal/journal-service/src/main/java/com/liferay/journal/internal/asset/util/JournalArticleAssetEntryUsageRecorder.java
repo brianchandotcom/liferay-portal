@@ -55,9 +55,36 @@ public class JournalArticleAssetEntryUsageRecorder
 
 	@Override
 	public void record(AssetEntry assetEntry) throws PortalException {
+		if (_hasHiddenAssetEntryUsage(assetEntry)) {
+			return;
+		}
+
 		_recordJournalContentSearches(assetEntry);
 		_recordPortletPreferences(assetEntry, true);
 		_recordPortletPreferences(assetEntry, false);
+
+		_addHiddenAssetEntryUsage(assetEntry);
+	}
+
+	private void _addHiddenAssetEntryUsage(AssetEntry assetEntry)
+		throws PortalException {
+
+		ServiceContext serviceContext =
+			ServiceContextThreadLocal.getServiceContext();
+
+		_assetEntryUsageLocalService.addAssetEntryUsage(
+			assetEntry.getUserId(), assetEntry.getGroupId(),
+			assetEntry.getEntryId(), 0, 0, StringPool.BLANK, serviceContext);
+	}
+
+	private boolean _hasHiddenAssetEntryUsage(AssetEntry assetEntry) {
+		if (_assetEntryUsageLocalService.getAssetEntryUsagesCount(
+				assetEntry.getEntryId(), StringPool.BLANK) > 0) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	private void _recordJournalContentSearches(AssetEntry assetEntry)

@@ -27,8 +27,8 @@ import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.HtmlUtil;
-import com.liferay.portal.template.soy.utils.SoyHTMLSanitizer;
-import com.liferay.portal.template.soy.utils.SoyRawData;
+import com.liferay.portal.template.soy.util.SoyHTMLSanitizer;
+import com.liferay.portal.template.soy.util.SoyRawData;
 import com.liferay.portal.util.HtmlImpl;
 
 import java.util.Locale;

@@ -17,7 +17,7 @@
 <%@ include file="/dynamic_include/init.jsp" %>
 
 <%
-String openSSOSubjectScreenName = (String)request.getAttribute("open.sso.subject.screenName");
+String openSSOSubjectScreenName = (String)request.getAttribute(OpenSSOWebKeys.OPEN_SSO_SUBJECT_SCREEN_NAME);
 %>
 
 <liferay-util:buffer

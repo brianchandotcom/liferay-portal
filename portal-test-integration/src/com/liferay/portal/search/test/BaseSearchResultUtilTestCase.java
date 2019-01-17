@@ -15,7 +15,6 @@
 package com.liferay.portal.search.test;
 
 import com.liferay.portal.kernel.comment.Comment;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.ClassName;
 import com.liferay.portal.kernel.model.ClassNameWrapper;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -95,13 +94,11 @@ public abstract class BaseSearchResultUtilTestCase {
 
 	protected abstract SearchResultTranslator createSearchResultTranslator();
 
-	protected void setUpClassNameLocalService() throws Exception {
+	protected void setUpClassNameLocalService() {
 		classNameLocalService = new ClassNameLocalServiceWrapper(null) {
 
 			@Override
-			public ClassName getClassName(long classNameId)
-				throws PortalException {
-
+			public ClassName getClassName(long classNameId) {
 				if (classNameId ==
 						SearchTestUtil.ATTACHMENT_OWNER_CLASS_NAME_ID) {
 

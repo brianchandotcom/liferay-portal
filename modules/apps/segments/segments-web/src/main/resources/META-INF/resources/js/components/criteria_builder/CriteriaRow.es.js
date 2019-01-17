@@ -7,7 +7,7 @@ import {CONJUNCTIONS, PROPERTY_TYPES} from '../../utils/constants.es';
 import {DragSource as dragSource, DropTarget as dropTarget} from 'react-dnd';
 import {DragTypes} from '../../utils/drag-types.es';
 import getCN from 'classnames';
-import {generateGroupId, sub} from '../../utils/utils.es';
+import {generateGroupId, sub, dateToInternationalHuman} from '../../utils/utils.es';
 import TypedInput from './TypedInput.es';
 
 const acceptedDragTypes = [
@@ -132,14 +132,8 @@ class CriteriaRow extends Component {
 		value,
 		type
 	) => {
-		let parsedValue = value;
-		if (type === PROPERTY_TYPES.DATE) {
+		let parsedValue = (type === PROPERTY_TYPES.DATE) ? dateToInternationalHuman(value) : value;
 
-			// parse the date propperly
-
-			const date = new Date();
-			parsedValue = `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
-		}
 		return sub(
 			Liferay.Language.get('x-with-property-x-x-x'),
 			[

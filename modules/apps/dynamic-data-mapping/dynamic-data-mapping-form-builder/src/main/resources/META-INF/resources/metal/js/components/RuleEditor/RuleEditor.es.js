@@ -244,6 +244,8 @@ class RuleEditor extends Component {
 			)
 		).value([]),
 
+		loadingDataProviderOptions: Config.bool(),
+
 		/**
 		 * @default 0
 		 * @instance
@@ -335,6 +337,7 @@ class RuleEditor extends Component {
 				cancel: Liferay.Language.get('cancel'),
 				chooseAnOption: Liferay.Language.get('choose-an-option'),
 				condition: Liferay.Language.get('condition'),
+				dataProviderError: Liferay.Language.get('data-provider-error'),
 				dataProviderParameterInput: Liferay.Language.get('data-provider-parameter-input'),
 				dataProviderParameterInputDescription: Liferay.Language.get('data-provider-parameter-input-description'),
 				dataProviderParameterOutput: Liferay.Language.get('data-provider-parameter-output'),
@@ -369,12 +372,66 @@ class RuleEditor extends Component {
 
 	created() {
 		this._fetchFunctionsURL();
+		this._setDataProviderTarget();
+		this._setActionsInputsOutputs();
 
 		if (this.rule) {
 			this._prepareRuleEditor();
 		}
 	}
 
+	_setActionsInputsOutputs() {
+		const {rule} = this;
+
+		if (rule) {
+			this.setState(
+				{
+					loadingDataProviderOptions: true
+				}
+			);
+
+			Promise.all(
+				rule.actions.map(
+					(action, index) => {
+						let newAction = {...action};
+
+						if (action.ddmDataProviderInstanceUUID) {
+							const {id} = this.dataProvider.find(
+								dataProvider => {
+									let dataProviderId;
+
+									if (dataProvider.uuid === action.ddmDataProviderInstanceUUID) {
+										dataProviderId = dataProvider.id;
+									}
+
+									return dataProviderId;
+								}
+							);
+
+							newAction = this.getDataProviderOptions(id, index);
+						}
+
+						newAction.calculatorFields = this._updateCalculatorFields(newAction, newAction.target);
+
+						return newAction;
+					}
+				)
+			).then(
+				actions => {
+					this.setState(
+						{
+							actions,
+							loadingDataProviderOptions: false
+						}
+					);
+				}
+			).catch(
+				error => {
+					throw new Error(error);
+				}
+			);
+		}
+	}
 	_prepareRuleEditor() {
 		const {rule} = this;
 

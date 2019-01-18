@@ -19,6 +19,7 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 
 import java.util.Arrays;
+import java.util.Objects;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -112,7 +113,8 @@ public class UnsyncByteArrayOutputStreamTest {
 		String charsetName2 = "UTF-16LE";
 
 		Assert.assertFalse(
-			new String(_BUFFER, charsetName1).equals(
+			Objects.equals(
+				new String(_BUFFER, charsetName1),
 				unsyncByteArrayOutputStream.toString(charsetName2)));
 
 		Assert.assertEquals(

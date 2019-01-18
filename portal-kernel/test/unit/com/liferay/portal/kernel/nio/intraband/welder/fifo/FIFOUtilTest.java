@@ -136,7 +136,9 @@ public class FIFOUtilTest {
 							try {
 								checkFlag.set(true);
 
-								new File(file).createNewFile();
+								File tempFile = new File(file);
+
+								tempFile.createNewFile();
 
 								checkFlag.set(false);
 							}

@@ -1,5 +1,6 @@
 import 'clay-button';
 import 'clay-modal';
+import 'clay-alert';
 import {Config} from 'metal-state';
 import {PagesVisitor} from '../../util/visitors.es';
 import '../Calculator/Calculator.es';

@@ -511,14 +511,13 @@ public class DLWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 					inheritable, timeout);
 			}
 		}
-		catch (Exception e) {
+		catch (DuplicateLockException dle) {
 
 			// DuplicateLock is 423 not 501
 
-			if (!(e instanceof DuplicateLockException)) {
-				throw new WebDAVException(e);
-			}
-
+			throw new WebDAVException(dle);
+		}
+		catch (Exception e) {
 			status = WebDAVUtil.SC_LOCKED;
 		}
 

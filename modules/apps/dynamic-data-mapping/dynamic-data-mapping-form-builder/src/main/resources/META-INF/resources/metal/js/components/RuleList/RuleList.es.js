@@ -359,51 +359,55 @@ class RuleList extends Component {
 		const {roles} = this;
 		const rules = this._setDataProviderNames(states);
 
-		return {
+		const newState = {
 			...states,
-			rules: rules.map(
-				rule => {
-					return {
-						...rule,
-						actions: rule.actions.map(
-							actionItem => {
-								return {
-									...actionItem,
-									label: this._getFieldLabel(actionItem.target),
-									target: this._getFieldLabel(actionItem.target)
-								};
-							}
-						),
-						conditions: rule.conditions.map(
-							condition => {
-								return {
-									...condition,
-									operands: condition.operands.map(
-										(operand, index) => {
-											let {label} = operand;
+			rules: this._formatRules(
+				rules.map(
+					rule => {
+						return {
+							...rule,
+							actions: rule.actions.map(
+								actionItem => {
+									return {
+										...actionItem,
+										label: this._getFieldLabel(actionItem.target),
+										target: this._getFieldLabel(actionItem.target)
+									};
+								}
+							),
+							conditions: rule.conditions.map(
+								condition => {
+									return {
+										...condition,
+										operands: condition.operands.map(
+											(operand, index) => {
+												let {label} = operand;
 
-											if (operand.type === 'field') {
-												label = this._getFieldLabel(operand.value);
-											}
-											else if (index == 1 && condition.operands[0].type === 'user' && roles.length) {
-												label = roles.find(role => role.id === operand.value).label;
-											}
+												if (operand.type === 'field') {
+													label = this._getFieldLabel(operand.value);
+												}
+												else if (index == 1 && condition.operands[0].type === 'user' && roles.length) {
+													label = roles.find(role => role.id === operand.value).label;
+												}
 
-											return {
-												...operand,
-												label,
-												value: this._setOperandValue(operand)
-											};
-										}
-									)
-								};
-							}
-						)
-					};
-				}
+												return {
+													...operand,
+													label,
+													value: this._setOperandValue(operand)
+												};
+											}
+										)
+									};
+								}
+							)
+						};
+					}
+				)
 			),
 			rulesCardOptions: this._getRulesCardOptions()
 		};
+
+		return newState;
 	}
 
 	_setOperandValue(operand) {

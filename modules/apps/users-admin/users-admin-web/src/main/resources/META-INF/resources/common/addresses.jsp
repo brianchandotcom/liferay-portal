@@ -46,7 +46,7 @@ List<Address> addresses = AddressServiceUtil.getAddresses(className, classPK);
 
 				<liferay-ui:icon
 					label="<%= true %>"
-					linkCssClass="btn btn-secondary btn-sm"
+					linkCssClass="add-address-link btn btn-secondary btn-sm"
 					message="add"
 					url="<%= editURL.toString() %>"
 				/>

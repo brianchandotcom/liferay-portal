@@ -45,7 +45,7 @@ List<EmailAddress> emailAddresses = EmailAddressServiceUtil.getEmailAddresses(cl
 
 			<liferay-ui:icon
 				label="<%= true %>"
-				linkCssClass="btn btn-secondary btn-sm"
+				linkCssClass="add-email-address-link btn btn-secondary btn-sm"
 				message="add"
 				url="<%= editURL.toString() %>"
 			/>

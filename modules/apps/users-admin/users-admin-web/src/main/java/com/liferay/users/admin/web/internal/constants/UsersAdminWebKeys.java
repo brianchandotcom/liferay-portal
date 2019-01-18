@@ -39,7 +39,7 @@ public class UsersAdminWebKeys {
 
 	public static final String SHOW_TITLE = "SHOW_TITLE";
 
-	public static final String STATUS = "STATUS";
+	public static final String STATUS = "status";
 
 	public static final String USER_ACTION_CONTRIBUTORS =
 		"USER_ACTION_CONTRIBUTORS";

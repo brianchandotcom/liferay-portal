@@ -245,7 +245,7 @@
 <!--CONTACT-->
 <tr>
 	<td>CONTACT_ADD_BUTTON</td>
-	<td>//a[contains(@class,'btn') and @data-title='${key_contactType}']/span[contains(.,'Add')]</td>
+	<td>//a[contains(@class,'btn') and contains(@class,'${key_contactType}')]</td>
 	<td></td>
 </tr>
 </tbody>

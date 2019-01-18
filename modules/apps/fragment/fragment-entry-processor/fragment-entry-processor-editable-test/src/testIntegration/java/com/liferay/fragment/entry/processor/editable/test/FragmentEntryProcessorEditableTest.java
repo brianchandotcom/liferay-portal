@@ -247,7 +247,6 @@ public class FragmentEntryProcessorEditableTest {
 	}
 
 	private FragmentEntry _createFragmentEntry(String htmlFile)
-
 		throws IOException, PortalException {
 
 		ServiceContext serviceContext =

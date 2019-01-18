@@ -40,7 +40,6 @@ public class AsahFaroBackendJSONObjectMapper {
 
 	public static <T> Results<T> mapToResults(
 			String json, String embeddedRelName, Class<T> clazz)
-
 		throws IOException {
 
 		TypeFactory typeFactory = TypeFactory.defaultInstance();

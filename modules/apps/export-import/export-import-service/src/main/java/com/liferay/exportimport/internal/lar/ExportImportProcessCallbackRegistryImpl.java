@@ -26,7 +26,6 @@ import org.osgi.service.component.annotations.Component;
  * @author Daniel Kocsis
  */
 @Component(immediate = true)
-
 @ProviderType
 public class ExportImportProcessCallbackRegistryImpl
 	implements ExportImportProcessCallbackRegistry {

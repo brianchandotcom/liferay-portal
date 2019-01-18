@@ -24,7 +24,6 @@ import java.io.Serializable;
 public class License implements Serializable {
 
 	public static final Accessor<License, String> NAME_ACCESSOR =
-
 		new Accessor<License, String>() {
 
 			@Override

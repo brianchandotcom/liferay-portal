@@ -74,7 +74,9 @@ public class QueryImpl implements Query {
 	@Override
 	public Iterator<?> iterate(boolean unmodifiable) throws ORMException {
 		try {
-			return list(unmodifiable).iterator();
+			return list(
+				unmodifiable
+			).iterator();
 		}
 		catch (Exception e) {
 			throw ExceptionTranslator.translate(e);

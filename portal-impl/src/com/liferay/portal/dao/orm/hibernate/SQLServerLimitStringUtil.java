@@ -86,8 +86,11 @@ public class SQLServerLimitStringUtil {
 			Matcher matcher = _selectPattern.matcher(innerSelectFrom);
 
 			innerSelectFrom = matcher.replaceAll(
-				"select top ".concat(String.valueOf(limit)).concat(
-					StringPool.SPACE));
+				"select top ".concat(
+					String.valueOf(limit)
+				).concat(
+					StringPool.SPACE
+				));
 		}
 
 		return innerSelectFrom;
@@ -120,8 +123,11 @@ public class SQLServerLimitStringUtil {
 				}
 			}
 
-			String patternString = "\\Q".concat(orderByColumnName).concat(
-				"\\E as (\\w+)");
+			String patternString = "\\Q".concat(
+				orderByColumnName
+			).concat(
+				"\\E as (\\w+)"
+			);
 
 			Pattern pattern = Pattern.compile(
 				patternString, Pattern.CASE_INSENSITIVE);

@@ -622,8 +622,11 @@ public class JSONServiceAction extends JSONAction {
 				fieldDescriptor = "S";
 			}
 			else {
-				fieldDescriptor = "L".concat(fieldDescriptor).concat(
-					StringPool.SEMICOLON);
+				fieldDescriptor = "L".concat(
+					fieldDescriptor
+				).concat(
+					StringPool.SEMICOLON
+				);
 			}
 
 			return dimensions.concat(fieldDescriptor);

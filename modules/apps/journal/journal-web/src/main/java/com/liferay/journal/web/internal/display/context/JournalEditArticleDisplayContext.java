@@ -218,7 +218,8 @@ public class JournalEditArticleDisplayContext {
 				ddmStructureId);
 		}
 		else if (Validator.isNotNull(getDDMStructureKey())) {
-			long groupId = _themeDisplay.getSiteGroupId();
+			long groupId = ParamUtil.getLong(
+				_request, "groupId", _themeDisplay.getSiteGroupId());
 
 			if (_article != null) {
 				groupId = _article.getGroupId();
@@ -254,7 +255,8 @@ public class JournalEditArticleDisplayContext {
 				ddmTemplateId);
 		}
 		else if (Validator.isNotNull(getDDMTemplateKey())) {
-			long groupId = _themeDisplay.getSiteGroupId();
+			long groupId = ParamUtil.getLong(
+				_request, "groupId", _themeDisplay.getSiteGroupId());
 
 			if (_article != null) {
 				groupId = _article.getGroupId();

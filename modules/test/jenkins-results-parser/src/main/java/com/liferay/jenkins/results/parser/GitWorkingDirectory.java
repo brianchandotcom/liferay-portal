@@ -1060,7 +1060,9 @@ public class GitWorkingDirectory {
 						getLocalGitBranchSHA(branchName)));
 			}
 			catch (Exception e) {
-				return null;
+				if (!branchName.equals(upstreamBranchName)) {
+					return null;
+				}
 			}
 		}
 

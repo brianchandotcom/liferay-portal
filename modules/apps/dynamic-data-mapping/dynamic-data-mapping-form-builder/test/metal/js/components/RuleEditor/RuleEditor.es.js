@@ -97,8 +97,6 @@ describe(
 			() => {
 				afterEach(
 					() => {
-						fetch.resetMocks();
-
 						component.dispose();
 					}
 				);
@@ -106,17 +104,6 @@ describe(
 				beforeEach(
 					() => {
 						jest.useFakeTimers();
-
-						fetch.mockResponse(
-							JSON.stringify(
-								[
-									{
-										id: 'roleA',
-										name: 'Role A'
-									}
-								]
-							)
-						);
 					}
 				);
 
@@ -1223,337 +1210,63 @@ describe(
 								expect(spy).toHaveBeenCalledWith('ruleCancel', expect.anything());
 							}
 						);
-					}
-				);
 
-				describe(
-					'When the user choose a data provider as a target',
-					() => {
 						it(
-							'should show the inputs and outputs fields if Input and Outputs were not empty',
-							done => {
-
-								const spy = jest.spyOn(window, 'fetch');
-
+							'should edit an existent rule',
+							() => {
 								component = new RuleEditor(
 									{
 										...getBaseConfig(),
-										dataProvider: [
-											{
-												id: '36808',
-												name: 'Liferay',
-												uuid: 'asdihgurevdnc36808'
-											}
-										]
-									}
-								);
-
-								component.refs.action0.emitFieldEdited(['auto-fill']);
-
-								jest.runAllTimers();
-
-								fetch.mockResponse(
-									JSON.stringify(
-										{
-											inputs: [
+										rule: {
+											actions: [
 												{
-													label: 'Nome',
-													name: 'Name',
-													required: false,
-													type: 'text'
-												},
-												{
-													label: 'Outro Nome',
-													name: 'Name',
-													required: true,
-													type: 'text'
+													action: 'require',
+													target: 'text1'
 												}
 											],
-											outputs: [
+											conditions: [
 												{
-													name: 'Name',
-													type: 'text'
+													operands: [
+														{
+															type: 'field',
+															value: 'text1'
+														},
+														{
+															type: 'field',
+															value: 'text2'
+														}
+													],
+													operator: 'equals-to'
 												}
-											]
+											],
+											['logical-operator']: 'OR'
 										}
-									)
-								);
-
-								component.refs.actionTarget0.emitFieldEdited(['36808']);
-
-								jest.runAllTimers();
-
-								component.once(
-									'rendered',
-									() => {
-										if (component.actions[0].inputs) {
-											expect(component.refs.action0dataProviderInput0).toBeTruthy();
-										}
-										if (component.actions[0].outputs) {
-											expect(component.refs.action0dataProviderOutput0).toBeTruthy();
-										}
-										done();
 									}
 								);
 
-								jest.runAllTimers();
+								const spy = jest.spyOn(component, 'emit');
 
-								const url = component.dataProviderInstanceParameterSettingsURL.slice(0, dataProviderInstanceParameterSettingsURL.length - 1);
-
-								expect(spy).toHaveBeenCalledWith(
-									`${url}?ddmDataProviderInstanceId=36808`,
-									expect.anything()
-								);
-
-								jest.runAllTimers();
-							}
-						);
-					}
-				);
-
-				it(
-					'should not show Inputs and Outputs if the dataprovider\'s inputs and outputs were empty',
-					done => {
-
-						component = new RuleEditor(
-							{
-								...getBaseConfig(),
-								actions: [],
-								dataProvider: [
-									{
-										id: '36777',
-										name: 'Liferay',
-										uuid: 'asdihgurevdnc36808'
-									}
-								]
-							}
-						);
-
-						component.refs.action0.emitFieldEdited(['auto-fill']);
-
-						jest.runAllTimers();
-
-						fetch.mockResponse(
-							JSON.stringify(
-								{
-									inputs: [],
-									outputs: []
-								}
-							)
-						);
-
-						jest.runAllTimers();
-
-						component.refs.actionTarget0.emitFieldEdited(['36777']);
-
-						component.once(
-							'rendered',
-							() => {
-								const divHasChildren = document.querySelector('.action-rule-data-provider > .col-md-12').hasChildNodes();
-
-								expect(divHasChildren).toBeFalsy();
-								done();
-							}
-						);
-
-						jest.runAllTimers();
-					}
-				);
-
-				it(
-					'should not reset inputs and output if the same data provider were selected',
-					done => {
-						component = new RuleEditor(
-							{
-								...getBaseConfig(),
-								dataProvider: [
-									{
-										id: '36808',
-										name: 'Liferay',
-										uuid: 'asdihgurevdnc36808'
-									}
-								]
-							}
-						);
-
-						component.refs.action0.emitFieldEdited(['auto-fill']);
-
-						jest.runAllTimers();
-
-						fetch.mockResponse(
-							JSON.stringify(
-								{
-									inputs: [
-										{
-											label: 'Nome',
-											name: 'Name',
-											required: false,
-											type: 'text'
-										},
-										{
-											label: 'Outro Nome',
-											name: 'Name',
-											required: true,
-											type: 'text'
-										}
-									],
-									outputs: [
-										{
-											name: 'Name',
-											type: 'list'
-										}
-									]
-								}
-							)
-						);
-
-						component.refs.actionTarget0.emitFieldEdited(['36808']);
-
-						jest.runAllTimers();
-
-						component.once(
-							'rendered',
-							() => {
-								component.refs.action0dataProviderOutput0.emitFieldEdited(['Name']);
+								component.refs.firstOperand0.emitFieldEdited(['radio']);
 
 								jest.runAllTimers();
 
-								component.refs.actionTarget0.emitFieldEdited(['36808']);
+								component.refs.conditionOperator0.emitFieldEdited(['not-contains']);
 
 								jest.runAllTimers();
 
-								expect(component.refs.action0dataProviderOutput0.value).toEqual(['Name']);
-								done();
-							}
-						);
-					}
-				);
-
-				it(
-					'should display only select field types option in the output sections according to the List Type configured in the Data Provider ',
-					done => {
-						component = new RuleEditor(
-							{
-								...getBaseConfig(),
-								dataProvider: [
-									{
-										id: '36808',
-										name: 'Liferay',
-										uuid: 'asdihgurevdnc36808'
-									}
-								]
-							}
-						);
-
-						component.refs.action0.emitFieldEdited(['auto-fill']);
-
-						jest.runAllTimers();
-
-						fetch.mockResponse(
-							JSON.stringify(
-								{
-									inputs: [
-										{
-											label: 'Nome',
-											name: 'Name',
-											required: false,
-											type: 'text'
-										},
-										{
-											label: 'Outro Nome',
-											name: 'Name',
-											required: true,
-											type: 'text'
-										}
-									],
-									outputs: [
-										{
-											name: 'Name',
-											type: 'list'
-										}
-									]
-								}
-							)
-						);
-
-						component.refs.actionTarget0.emitFieldEdited(['36808']);
-
-						jest.runAllTimers();
-
-						component.once(
-							'rendered',
-							() => {
-								const fieldOptions = component.actions[0].outputs[0].fieldOptions;
+								component.refs.secondOperandTypeSelector0.emitFieldEdited(['value']);
 
 								jest.runAllTimers();
 
-								expect(fieldOptions.some(({type}) => type === 'text')).toBeFalsy();
-								done();
-							}
-						);
-					}
-				);
-
-				it(
-					'should display any field types option in the output sections according to the List Text configured in the Data Provider ',
-					done => {
-						component = new RuleEditor(
-							{
-								...getBaseConfig(),
-								dataProvider: [
-									{
-										id: '36808',
-										name: 'Liferay',
-										uuid: 'asdihgurevdnc36808'
-									}
-								]
-							}
-						);
-
-						component.refs.action0.emitFieldEdited(['auto-fill']);
-
-						jest.runAllTimers();
-
-						fetch.mockResponse(
-							JSON.stringify(
-								{
-									inputs: [
-										{
-											label: 'Nome',
-											name: 'Name',
-											required: false,
-											type: 'text'
-										},
-										{
-											label: 'Outro Nome',
-											name: 'Name',
-											required: true,
-											type: 'text'
-										}
-									],
-									outputs: [
-										{
-											name: 'Name',
-											type: 'list'
-										}
-									]
-								}
-							)
-						);
-
-						component.refs.actionTarget0.emitFieldEdited(['36808']);
-
-						jest.runAllTimers();
-
-						component.once(
-							'rendered',
-							() => {
-								const fieldOptions = component.actions[0].inputs[0].fieldOptions;
+								component.refs.secondOperand0.emitFieldEdited(['123']);
 
 								jest.runAllTimers();
 
-								expect(fieldOptions.some(({type}) => type === 'text')).toBeTruthy();
-								done();
+								dom.triggerEvent(component.refs.save.element, 'click', {});
+
+								jest.runAllTimers();
+
+								expect(spy).toHaveBeenCalledWith('ruleAdded', expect.anything());
 							}
 						);
 					}
@@ -1566,30 +1279,6 @@ describe(
 describe(
 	'Regression',
 	() => {
-		afterEach(
-			() => {
-				fetch.resetMocks();
-
-				component.dispose();
-			}
-		);
-
-		beforeEach(
-			() => {
-				jest.useFakeTimers();
-
-				fetch.mockResponse(
-					JSON.stringify(
-						[
-							{
-								id: 'roleA',
-								name: 'Role A'
-							}
-						]
-					)
-				);
-			}
-		);
 
 		describe(
 			'LPS-86162 The filled value is being lost when re-selecting Value in the rule builder',

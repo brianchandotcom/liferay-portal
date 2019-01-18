@@ -10,6 +10,19 @@ dependencies {
 	compileOnly group: "org.apache.aries.jax.rs", name: "org.apache.aries.jax.rs.jackson", version: "1.0.1"
 }
 
+deploy {
+	finalizedBy deployConfigs
+}
+
+deployConfigs {
+	ext {
+		autoClean = false
+	}
+
+	from "configs"
+	into new File(liferay.liferayHome, "osgi/configs")
+}
+
 deployDependencies {
 	from (configurations.compileOnly) {
 		include "org.apache.aries.jax.rs.jackson-*.jar"

@@ -89,6 +89,7 @@ create table SamlSpSession (
 	createDate DATE null,
 	modifiedDate DATE null,
 	samlSpSessionKey VARCHAR(75) null,
+	samlIdpEntityId VARCHAR(1024) null,
 	assertionXml TEXT null,
 	jSessionId VARCHAR(200) null,
 	nameIdFormat VARCHAR(1024) null,

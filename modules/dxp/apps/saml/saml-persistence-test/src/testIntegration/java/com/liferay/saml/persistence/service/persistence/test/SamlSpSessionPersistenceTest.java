@@ -136,6 +136,8 @@ public class SamlSpSessionPersistenceTest {
 
 		newSamlSpSession.setSamlSpSessionKey(RandomTestUtil.randomString());
 
+		newSamlSpSession.setSamlIdpEntityId(RandomTestUtil.randomString());
+
 		newSamlSpSession.setAssertionXml(RandomTestUtil.randomString());
 
 		newSamlSpSession.setJSessionId(RandomTestUtil.randomString());
@@ -172,6 +174,8 @@ public class SamlSpSessionPersistenceTest {
 			Time.getShortTimestamp(newSamlSpSession.getModifiedDate()));
 		Assert.assertEquals(existingSamlSpSession.getSamlSpSessionKey(),
 			newSamlSpSession.getSamlSpSessionKey());
+		Assert.assertEquals(existingSamlSpSession.getSamlIdpEntityId(),
+			newSamlSpSession.getSamlIdpEntityId());
 		Assert.assertEquals(existingSamlSpSession.getAssertionXml(),
 			newSamlSpSession.getAssertionXml());
 		Assert.assertEquals(existingSamlSpSession.getJSessionId(),
@@ -252,9 +256,10 @@ public class SamlSpSessionPersistenceTest {
 		return OrderByComparatorFactoryUtil.create("SamlSpSession",
 			"samlSpSessionId", true, "companyId", true, "userId", true,
 			"userName", true, "createDate", true, "modifiedDate", true,
-			"samlSpSessionKey", true, "jSessionId", true, "nameIdFormat", true,
-			"nameIdNameQualifier", true, "nameIdSPNameQualifier", true,
-			"nameIdValue", true, "sessionIndex", true, "terminated", true);
+			"samlSpSessionKey", true, "samlIdpEntityId", true, "jSessionId",
+			true, "nameIdFormat", true, "nameIdNameQualifier", true,
+			"nameIdSPNameQualifier", true, "nameIdValue", true, "sessionIndex",
+			true, "terminated", true);
 	}
 
 	@Test
@@ -491,6 +496,8 @@ public class SamlSpSessionPersistenceTest {
 		samlSpSession.setModifiedDate(RandomTestUtil.nextDate());
 
 		samlSpSession.setSamlSpSessionKey(RandomTestUtil.randomString());
+
+		samlSpSession.setSamlIdpEntityId(RandomTestUtil.randomString());
 
 		samlSpSession.setAssertionXml(RandomTestUtil.randomString());
 

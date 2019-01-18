@@ -66,7 +66,7 @@ public class SamlSpSessionCacheModel implements CacheModel<SamlSpSession>,
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(31);
+		StringBundler sb = new StringBundler(33);
 
 		sb.append("{samlSpSessionId=");
 		sb.append(samlSpSessionId);
@@ -82,6 +82,8 @@ public class SamlSpSessionCacheModel implements CacheModel<SamlSpSession>,
 		sb.append(modifiedDate);
 		sb.append(", samlSpSessionKey=");
 		sb.append(samlSpSessionKey);
+		sb.append(", samlIdpEntityId=");
+		sb.append(samlIdpEntityId);
 		sb.append(", assertionXml=");
 		sb.append(assertionXml);
 		sb.append(", jSessionId=");
@@ -137,6 +139,13 @@ public class SamlSpSessionCacheModel implements CacheModel<SamlSpSession>,
 		}
 		else {
 			samlSpSessionImpl.setSamlSpSessionKey(samlSpSessionKey);
+		}
+
+		if (samlIdpEntityId == null) {
+			samlSpSessionImpl.setSamlIdpEntityId("");
+		}
+		else {
+			samlSpSessionImpl.setSamlIdpEntityId(samlIdpEntityId);
 		}
 
 		if (assertionXml == null) {
@@ -206,6 +215,7 @@ public class SamlSpSessionCacheModel implements CacheModel<SamlSpSession>,
 		createDate = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
 		samlSpSessionKey = objectInput.readUTF();
+		samlIdpEntityId = objectInput.readUTF();
 		assertionXml = objectInput.readUTF();
 		jSessionId = objectInput.readUTF();
 		nameIdFormat = objectInput.readUTF();
@@ -241,6 +251,13 @@ public class SamlSpSessionCacheModel implements CacheModel<SamlSpSession>,
 		}
 		else {
 			objectOutput.writeUTF(samlSpSessionKey);
+		}
+
+		if (samlIdpEntityId == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(samlIdpEntityId);
 		}
 
 		if (assertionXml == null) {
@@ -302,6 +319,7 @@ public class SamlSpSessionCacheModel implements CacheModel<SamlSpSession>,
 	public long createDate;
 	public long modifiedDate;
 	public String samlSpSessionKey;
+	public String samlIdpEntityId;
 	public String assertionXml;
 	public String jSessionId;
 	public String nameIdFormat;

@@ -50,6 +50,7 @@ public class SamlSpSessionWrapper extends BaseModelWrapper<SamlSpSession>
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("samlSpSessionKey", getSamlSpSessionKey());
+		attributes.put("samlIdpEntityId", getSamlIdpEntityId());
 		attributes.put("assertionXml", getAssertionXml());
 		attributes.put("jSessionId", getJSessionId());
 		attributes.put("nameIdFormat", getNameIdFormat());
@@ -104,6 +105,12 @@ public class SamlSpSessionWrapper extends BaseModelWrapper<SamlSpSession>
 
 		if (samlSpSessionKey != null) {
 			setSamlSpSessionKey(samlSpSessionKey);
+		}
+
+		String samlIdpEntityId = (String)attributes.get("samlIdpEntityId");
+
+		if (samlIdpEntityId != null) {
+			setSamlIdpEntityId(samlIdpEntityId);
 		}
 
 		String assertionXml = (String)attributes.get("assertionXml");
@@ -255,6 +262,16 @@ public class SamlSpSessionWrapper extends BaseModelWrapper<SamlSpSession>
 	@Override
 	public long getPrimaryKey() {
 		return model.getPrimaryKey();
+	}
+
+	/**
+	* Returns the saml idp entity ID of this saml sp session.
+	*
+	* @return the saml idp entity ID of this saml sp session
+	*/
+	@Override
+	public String getSamlIdpEntityId() {
+		return model.getSamlIdpEntityId();
 	}
 
 	/**
@@ -440,6 +457,16 @@ public class SamlSpSessionWrapper extends BaseModelWrapper<SamlSpSession>
 	@Override
 	public void setPrimaryKey(long primaryKey) {
 		model.setPrimaryKey(primaryKey);
+	}
+
+	/**
+	* Sets the saml idp entity ID of this saml sp session.
+	*
+	* @param samlIdpEntityId the saml idp entity ID of this saml sp session
+	*/
+	@Override
+	public void setSamlIdpEntityId(String samlIdpEntityId) {
+		model.setSamlIdpEntityId(samlIdpEntityId);
 	}
 
 	/**

@@ -72,10 +72,10 @@ public interface SamlSpSessionLocalService extends BaseLocalService,
 	public SamlSpSession addSamlSpSession(SamlSpSession samlSpSession);
 
 	public SamlSpSession addSamlSpSession(String samlSpSessionKey,
-		String assertionXml, String jSessionId, String nameIdFormat,
-		String nameIdNameQualifier, String nameIdSPNameQualifier,
-		String nameIdValue, String sessionIndex, ServiceContext serviceContext)
-		throws PortalException;
+		String samlIdpEntityId, String assertionXml, String jSessionId,
+		String nameIdFormat, String nameIdNameQualifier,
+		String nameIdSPNameQualifier, String nameIdValue, String sessionIndex,
+		ServiceContext serviceContext) throws PortalException;
 
 	/**
 	* Creates a new saml sp session with the primary key. Does not add the saml sp session to the database.
@@ -261,8 +261,8 @@ public interface SamlSpSessionLocalService extends BaseLocalService,
 		String jSessionId) throws PortalException;
 
 	public SamlSpSession updateSamlSpSession(long samlSpSessionId,
-		String samlSpSessionKey, String assertionXml, String jSessionId,
-		String nameIdFormat, String nameIdNameQualifier,
+		String samlSpSessionKey, String samlIdpEntityId, String assertionXml,
+		String jSessionId, String nameIdFormat, String nameIdNameQualifier,
 		String nameIdSPNameQualifier, String nameIdValue, String sessionIndex,
 		ServiceContext serviceContext) throws PortalException;
 

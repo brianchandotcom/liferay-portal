@@ -73,6 +73,7 @@ public class SamlSpSessionModelImpl extends BaseModelImpl<SamlSpSession>
 			{ "createDate", Types.TIMESTAMP },
 			{ "modifiedDate", Types.TIMESTAMP },
 			{ "samlSpSessionKey", Types.VARCHAR },
+			{ "samlIdpEntityId", Types.VARCHAR },
 			{ "assertionXml", Types.CLOB },
 			{ "jSessionId", Types.VARCHAR },
 			{ "nameIdFormat", Types.VARCHAR },
@@ -92,6 +93,7 @@ public class SamlSpSessionModelImpl extends BaseModelImpl<SamlSpSession>
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("samlSpSessionKey", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("samlIdpEntityId", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("assertionXml", Types.CLOB);
 		TABLE_COLUMNS_MAP.put("jSessionId", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("nameIdFormat", Types.VARCHAR);
@@ -102,7 +104,7 @@ public class SamlSpSessionModelImpl extends BaseModelImpl<SamlSpSession>
 		TABLE_COLUMNS_MAP.put("terminated_", Types.BOOLEAN);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table SamlSpSession (samlSpSessionId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,samlSpSessionKey VARCHAR(75) null,assertionXml TEXT null,jSessionId VARCHAR(200) null,nameIdFormat VARCHAR(1024) null,nameIdNameQualifier VARCHAR(1024) null,nameIdSPNameQualifier VARCHAR(1024) null,nameIdValue VARCHAR(1024) null,sessionIndex VARCHAR(75) null,terminated_ BOOLEAN)";
+	public static final String TABLE_SQL_CREATE = "create table SamlSpSession (samlSpSessionId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,samlSpSessionKey VARCHAR(75) null,samlIdpEntityId VARCHAR(1024) null,assertionXml TEXT null,jSessionId VARCHAR(200) null,nameIdFormat VARCHAR(1024) null,nameIdNameQualifier VARCHAR(1024) null,nameIdSPNameQualifier VARCHAR(1024) null,nameIdValue VARCHAR(1024) null,sessionIndex VARCHAR(75) null,terminated_ BOOLEAN)";
 	public static final String TABLE_SQL_DROP = "drop table SamlSpSession";
 	public static final String ORDER_BY_JPQL = " ORDER BY samlSpSession.samlSpSessionId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY SamlSpSession.samlSpSessionId ASC";
@@ -170,6 +172,7 @@ public class SamlSpSessionModelImpl extends BaseModelImpl<SamlSpSession>
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("samlSpSessionKey", getSamlSpSessionKey());
+		attributes.put("samlIdpEntityId", getSamlIdpEntityId());
 		attributes.put("assertionXml", getAssertionXml());
 		attributes.put("jSessionId", getJSessionId());
 		attributes.put("nameIdFormat", getNameIdFormat());
@@ -227,6 +230,12 @@ public class SamlSpSessionModelImpl extends BaseModelImpl<SamlSpSession>
 
 		if (samlSpSessionKey != null) {
 			setSamlSpSessionKey(samlSpSessionKey);
+		}
+
+		String samlIdpEntityId = (String)attributes.get("samlIdpEntityId");
+
+		if (samlIdpEntityId != null) {
+			setSamlIdpEntityId(samlIdpEntityId);
 		}
 
 		String assertionXml = (String)attributes.get("assertionXml");
@@ -390,6 +399,21 @@ public class SamlSpSessionModelImpl extends BaseModelImpl<SamlSpSession>
 
 	public String getOriginalSamlSpSessionKey() {
 		return GetterUtil.getString(_originalSamlSpSessionKey);
+	}
+
+	@Override
+	public String getSamlIdpEntityId() {
+		if (_samlIdpEntityId == null) {
+			return "";
+		}
+		else {
+			return _samlIdpEntityId;
+		}
+	}
+
+	@Override
+	public void setSamlIdpEntityId(String samlIdpEntityId) {
+		_samlIdpEntityId = samlIdpEntityId;
 	}
 
 	@Override
@@ -580,6 +604,7 @@ public class SamlSpSessionModelImpl extends BaseModelImpl<SamlSpSession>
 		samlSpSessionImpl.setCreateDate(getCreateDate());
 		samlSpSessionImpl.setModifiedDate(getModifiedDate());
 		samlSpSessionImpl.setSamlSpSessionKey(getSamlSpSessionKey());
+		samlSpSessionImpl.setSamlIdpEntityId(getSamlIdpEntityId());
 		samlSpSessionImpl.setAssertionXml(getAssertionXml());
 		samlSpSessionImpl.setJSessionId(getJSessionId());
 		samlSpSessionImpl.setNameIdFormat(getNameIdFormat());
@@ -707,6 +732,14 @@ public class SamlSpSessionModelImpl extends BaseModelImpl<SamlSpSession>
 			samlSpSessionCacheModel.samlSpSessionKey = null;
 		}
 
+		samlSpSessionCacheModel.samlIdpEntityId = getSamlIdpEntityId();
+
+		String samlIdpEntityId = samlSpSessionCacheModel.samlIdpEntityId;
+
+		if ((samlIdpEntityId != null) && (samlIdpEntityId.length() == 0)) {
+			samlSpSessionCacheModel.samlIdpEntityId = null;
+		}
+
 		samlSpSessionCacheModel.assertionXml = getAssertionXml();
 
 		String assertionXml = samlSpSessionCacheModel.assertionXml;
@@ -772,7 +805,7 @@ public class SamlSpSessionModelImpl extends BaseModelImpl<SamlSpSession>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(31);
+		StringBundler sb = new StringBundler(33);
 
 		sb.append("{samlSpSessionId=");
 		sb.append(getSamlSpSessionId());
@@ -788,6 +821,8 @@ public class SamlSpSessionModelImpl extends BaseModelImpl<SamlSpSession>
 		sb.append(getModifiedDate());
 		sb.append(", samlSpSessionKey=");
 		sb.append(getSamlSpSessionKey());
+		sb.append(", samlIdpEntityId=");
+		sb.append(getSamlIdpEntityId());
 		sb.append(", assertionXml=");
 		sb.append(getAssertionXml());
 		sb.append(", jSessionId=");
@@ -811,7 +846,7 @@ public class SamlSpSessionModelImpl extends BaseModelImpl<SamlSpSession>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(49);
+		StringBundler sb = new StringBundler(52);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.saml.persistence.model.SamlSpSession");
@@ -844,6 +879,10 @@ public class SamlSpSessionModelImpl extends BaseModelImpl<SamlSpSession>
 		sb.append(
 			"<column><column-name>samlSpSessionKey</column-name><column-value><![CDATA[");
 		sb.append(getSamlSpSessionKey());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>samlIdpEntityId</column-name><column-value><![CDATA[");
+		sb.append(getSamlIdpEntityId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>assertionXml</column-name><column-value><![CDATA[");
@@ -896,6 +935,7 @@ public class SamlSpSessionModelImpl extends BaseModelImpl<SamlSpSession>
 	private boolean _setModifiedDate;
 	private String _samlSpSessionKey;
 	private String _originalSamlSpSessionKey;
+	private String _samlIdpEntityId;
 	private String _assertionXml;
 	private String _jSessionId;
 	private String _originalJSessionId;

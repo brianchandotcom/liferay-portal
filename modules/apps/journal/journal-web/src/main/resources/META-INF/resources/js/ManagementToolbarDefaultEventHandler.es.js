@@ -20,7 +20,13 @@ class ManagementToolbarDefaultEventHandler extends PortletBase {
 	}
 
 	deleteEntries() {
-		if (this.trashEnabled || confirm(Liferay.Language.get('are-you-sure-you-want-to-delete-the-selected-entries'))) {
+		let message = 'are-you-sure-you-want-to-delete-the-selected-entries';
+
+		if (this.trashEnabled) {
+			message = 'are-you-sure-you-want-to-move-the-selected-entries-to-the-recycle-bin';
+		}
+
+		if (confirm(Liferay.Language.get(message))) {
 			Liferay.fire(
 				this.ns('editEntry'),
 				{

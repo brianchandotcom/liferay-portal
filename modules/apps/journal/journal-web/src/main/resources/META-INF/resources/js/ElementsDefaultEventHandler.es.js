@@ -15,7 +15,13 @@ class ElementsDefaultEventHandler extends PortletBase {
 	}
 
 	delete(itemData) {
-		if (this.trashEnabled || confirm(Liferay.Language.get('are-you-sure-you-want-to-delete-this'))) {
+		let message = 'are-you-sure-you-want-to-delete-this';
+
+		if (this.trashEnabled) {
+			message = 'are-you-sure-you-want-to-move-this-to-the-recycle-bin';
+		}
+
+		if (confirm(Liferay.Language.get(message))) {
 			this._send(itemData.deleteURL);
 		}
 	}

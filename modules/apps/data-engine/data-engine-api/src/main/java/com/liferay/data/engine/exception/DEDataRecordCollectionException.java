@@ -36,6 +36,14 @@ public class DEDataRecordCollectionException extends PortalException {
 		super(cause);
 	}
 
+	public static class AddDataRecord extends DEDataRecordCollectionException {
+
+		public AddDataRecord(Throwable cause) {
+			super(cause);
+		}
+
+	}
+
 	public static class MustHavePermission
 		extends DEDataRecordCollectionException {
 
@@ -69,6 +77,21 @@ public class DEDataRecordCollectionException extends PortalException {
 		}
 
 		private final long _deDataRecordCollectionId;
+
+	}
+
+	public static class NoSuchDataStorage
+		extends DEDataRecordCollectionException {
+
+		public NoSuchDataStorage(String storageType) {
+			_storageType = storageType;
+		}
+
+		public String getStorageType() {
+			return _storageType;
+		}
+
+		private final String _storageType;
 
 	}
 

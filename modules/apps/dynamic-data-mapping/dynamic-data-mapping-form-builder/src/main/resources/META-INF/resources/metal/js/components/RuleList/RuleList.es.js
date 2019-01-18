@@ -146,7 +146,7 @@ class RuleList extends Component {
 
 	attached() {
 		this._eventHandler.add(
-			dom.on(document, 'mousedown', this._handleDocumentMouseDown.bind(this), true)
+			dom.on(document, 'mouseup', this._handleDocumentMouseDown.bind(this), true)
 		);
 	}
 
@@ -161,10 +161,9 @@ class RuleList extends Component {
 	}
 
 	_handleDocumentMouseDown({target}) {
-		const dropdownNode = dom.closest(target, '.dropdown-menu');
 		const dropdownSettings = dom.closest(target, '.ddm-rule-list-settings');
 
-		if (dropdownNode || dropdownSettings) {
+		if (dropdownSettings) {
 			return;
 		}
 

@@ -23,7 +23,7 @@ class SidebarLayoutsDragDrop extends State {
 	 * @inheritDoc
 	 * @review
 	 */
-	dispose() {
+	disposed() {
 		this._dragDrop.dispose();
 	}
 

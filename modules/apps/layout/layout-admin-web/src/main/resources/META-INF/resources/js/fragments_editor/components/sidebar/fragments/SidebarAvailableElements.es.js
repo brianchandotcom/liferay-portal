@@ -38,7 +38,7 @@ class SidebarAvailableElements extends Component {
 	 * @private
 	 * @review
 	 */
-	dispose() {
+	disposed() {
 		this._dragDrop.dispose();
 	}
 

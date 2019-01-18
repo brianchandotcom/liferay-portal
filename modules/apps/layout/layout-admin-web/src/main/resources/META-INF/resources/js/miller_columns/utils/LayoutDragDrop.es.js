@@ -42,7 +42,7 @@ class LayoutDragDrop extends State {
 	 * @inheritDoc
 	 * @review
 	 */
-	dispose() {
+	disposed() {
 		this._dragDrop.dispose();
 	}
 

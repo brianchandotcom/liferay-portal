@@ -29,7 +29,7 @@ class SidebarLayoutsPanel extends Component {
 	/**
 	 * @inheritdoc
 	 */
-	dispose() {
+	disposed() {
 		this._sidebarLayoutsDragDrop.dispose();
 	}
 

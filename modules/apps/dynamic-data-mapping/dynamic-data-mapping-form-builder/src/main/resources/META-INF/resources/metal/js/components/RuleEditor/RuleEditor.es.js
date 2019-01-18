@@ -41,29 +41,9 @@ class RuleEditor extends Component {
 					calculatorFields: Config.arrayOf(fieldOptionStructure).value([]),
 					expression: Config.string(),
 					hasRequiredInputs: Config.bool(),
-					inputs: Config.arrayOf(
-						Config.shapeOf(
-							{
-								fieldOptions: Config.arrayOf(fieldOptionStructure),
+					inputs: Config.object(),
 								label: Config.string(),
-								name: Config.string(),
-								required: Config.bool(),
-								type: Config.string(),
-								value: Config.string()
-							}
-						)
-					),
-					label: Config.string(),
-					outputs: Config.arrayOf(
-						Config.shapeOf(
-							{
-								fieldOptions: Config.arrayOf(fieldOptionStructure),
-								name: Config.string(),
-								type: Config.string(),
-								value: Config.string()
-							}
-						)
-					),
+					outputs: Config.object(),
 					target: Config.string()
 				}
 			)

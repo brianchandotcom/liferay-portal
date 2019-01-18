@@ -14,26 +14,22 @@
 
 package com.liferay.headless.blog.internal.resource;
 
-import com.liferay.apio.architect.annotation.Actions;
 import com.liferay.apio.architect.annotation.Body;
 import com.liferay.apio.architect.annotation.Id;
 import com.liferay.apio.architect.annotation.ParentId;
 import com.liferay.apio.architect.pagination.PageItems;
 import com.liferay.apio.architect.pagination.Pagination;
 import com.liferay.apio.architect.router.ActionRouter;
-import com.liferay.content.space.apio.architect.model.ContentSpace;
-import com.liferay.headless.blog.api.dto.BlogPosting;
-import com.liferay.headless.blog.api.resource.BlogPostingResource;
-import com.liferay.portal.apio.user.CurrentUser;
+import com.liferay.headless.blog.dto.BlogPosting;
+import com.liferay.headless.blog.resource.BlogPostingResource;
+import com.liferay.headless.content.space.dto.ContentSpace;
 import com.liferay.portal.kernel.exception.PortalException;
+
+import java.util.Collections;
 
 import org.osgi.service.component.annotations.Component;
 
 /**
- * Provides the information necessary to expose <a
- * href="http://schema.org/BlogPosting">BlogPosting </a> resources through a web
- * API. The resources are mapped from the internal model {@code BlogsEntry}.
- *
  * @author Alejandro Hernández
  * @author Carlos Sierra Andrés
  * @author Jorge Ferrer
@@ -41,38 +37,39 @@ import org.osgi.service.component.annotations.Component;
 @Component(immediate = true, service = ActionRouter.class)
 public class BlogPostingResourceImpl implements BlogPostingResource {
 
-	@Actions.Create
 	@Override
 	public BlogPosting createBlogPosting(
 			@ParentId(ContentSpace.class) long groupId,
-			@Body BlogPosting blogPosting, CurrentUser currentUser)
+			@Body BlogPosting blogPosting)
 		throws PortalException {
 
 		return null;
 	}
 
-	@Actions.Remove
 	@Override
 	public void deleteBlogPosting(@Id long blogPostingId)
 		throws PortalException {
+	}
+
+	@Override
+	public BlogPosting getBlogPosting(long blogPostingId)
+		throws PortalException {
 
 		return null;
 	}
 
-	@Actions.Retrieve
 	@Override
 	public PageItems<BlogPosting> getPageItems(
 		Pagination pagination,
 		@ParentId(ContentSpace.class) long contentSpaceId) {
 
-		return null;
+		return new PageItems<>(Collections.emptyList(), 0);
 	}
 
-	@Actions.Replace
 	@Override
 	public BlogPosting replaceBlogPosting(
 			@ParentId(ContentSpace.class) long blogsEntryId,
-			@Body BlogPosting blogPosting, CurrentUser currentUser)
+			@Body BlogPosting blogPosting)
 		throws PortalException {
 
 		return null;

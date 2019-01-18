@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.headless.blog.api.resource;
+package com.liferay.headless.blog.resource;
 
 import com.liferay.apio.architect.annotation.Actions;
 import com.liferay.apio.architect.annotation.Body;
@@ -20,24 +20,29 @@ import com.liferay.apio.architect.annotation.Id;
 import com.liferay.apio.architect.annotation.ParentId;
 import com.liferay.apio.architect.pagination.PageItems;
 import com.liferay.apio.architect.pagination.Pagination;
-import com.liferay.content.space.apio.architect.model.ContentSpace;
-import com.liferay.headless.blog.api.dto.BlogPosting;
-import com.liferay.portal.apio.user.CurrentUser;
+import com.liferay.apio.architect.router.ActionRouter;
+import com.liferay.headless.blog.dto.BlogPosting;
+import com.liferay.headless.content.space.dto.ContentSpace;
 import com.liferay.portal.kernel.exception.PortalException;
 
 /**
  * @author Víctor Galán
+ * @generated
  */
-public interface BlogPostingResource {
+public interface BlogPostingResource extends ActionRouter<BlogPosting> {
 
 	@Actions.Create
 	public BlogPosting createBlogPosting(
 			@ParentId(ContentSpace.class) long groupId,
-			@Body BlogPosting blogPosting, CurrentUser currentUser)
+			@Body BlogPosting blogPosting)
 		throws PortalException;
 
 	@Actions.Remove
 	public void deleteBlogPosting(@Id long blogPostingId)
+		throws PortalException;
+
+	@Actions.Retrieve
+	public BlogPosting getBlogPosting(@Id long blogPostingId)
 		throws PortalException;
 
 	@Actions.Retrieve
@@ -48,7 +53,7 @@ public interface BlogPostingResource {
 	@Actions.Replace
 	public BlogPosting replaceBlogPosting(
 			@ParentId(ContentSpace.class) long blogsEntryId,
-			@Body BlogPosting blogPosting, CurrentUser currentUser)
+			@Body BlogPosting blogPosting)
 		throws PortalException;
 
 }

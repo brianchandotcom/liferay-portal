@@ -12,52 +12,16 @@
  * details.
  */
 
-package com.liferay.headless.blog.internal.dto;
-
-import com.liferay.headless.blog.api.dto.BlogPosting;
-import com.liferay.portal.apio.identifier.ClassNameClassPK;
+package com.liferay.headless.blog.dto;
 
 import java.util.Date;
 import java.util.List;
 
 /**
- * @author Víctor Galán
+ * @author Brian Wing Shun Chan
+ * @generated
  */
-public class BaseBlogPosting implements BlogPosting {
-
-	public BaseBlogPosting(
-		long id, ClassNameClassPK aggregateRatingId, String alternativeHeadline,
-		String articleBody, String caption, List<Long> categories,
-		long categoryId, long commentId, long contentSpaceId, Date createDate,
-		long creatorId, String description, String encodingFormat,
-		String friendlyURLPath, String headline, long imageId,
-		List<String> keywords, Date modifiedDate, Date publishedDate) {
-
-		_id = id;
-		_aggregateRatingId = aggregateRatingId;
-		_alternativeHeadline = alternativeHeadline;
-		_articleBody = articleBody;
-		_caption = caption;
-		_categories = categories;
-		_categoryId = categoryId;
-		_commentId = commentId;
-		_contentSpaceId = contentSpaceId;
-		_createDate = createDate;
-		_creatorId = creatorId;
-		_description = description;
-		_encodingFormat = encodingFormat;
-		_friendlyURLPath = friendlyURLPath;
-		_headline = headline;
-		_imageId = imageId;
-		_keywords = keywords;
-		_modifiedDate = modifiedDate;
-		_publishedDate = publishedDate;
-	}
-
-	@Override
-	public ClassNameClassPK getAggregateRatingId() {
-		return _aggregateRatingId;
-	}
+public abstract class BaseBlogPosting implements BlogPosting {
 
 	@Override
 	public String getAlternativeHeadline() {
@@ -75,21 +39,6 @@ public class BaseBlogPosting implements BlogPosting {
 	}
 
 	@Override
-	public List<Long> getCategories() {
-		return _categories;
-	}
-
-	@Override
-	public Long getCategoryId() {
-		return _categoryId;
-	}
-
-	@Override
-	public Long getCommentId() {
-		return _commentId;
-	}
-
-	@Override
 	public Long getContentSpaceId() {
 		return _contentSpaceId;
 	}
@@ -97,11 +46,6 @@ public class BaseBlogPosting implements BlogPosting {
 	@Override
 	public Date getCreatedDate() {
 		return _createDate;
-	}
-
-	@Override
-	public Long getCreatorId() {
-		return _creatorId;
 	}
 
 	@Override
@@ -130,11 +74,6 @@ public class BaseBlogPosting implements BlogPosting {
 	}
 
 	@Override
-	public Long getImageId() {
-		return _imageId;
-	}
-
-	@Override
 	public List<String> getKeywords() {
 		return _keywords;
 	}
@@ -149,10 +88,6 @@ public class BaseBlogPosting implements BlogPosting {
 		return _publishedDate;
 	}
 
-	public void setAggregateRatingId(ClassNameClassPK aggregateRatingId) {
-		_aggregateRatingId = aggregateRatingId;
-	}
-
 	public void setAlternativeHeadline(String alternativeHeadline) {
 		_alternativeHeadline = alternativeHeadline;
 	}
@@ -165,28 +100,12 @@ public class BaseBlogPosting implements BlogPosting {
 		_caption = caption;
 	}
 
-	public void setCategories(List<Long> categories) {
-		_categories = categories;
-	}
-
-	public void setCategoryId(long categoryId) {
-		_categoryId = categoryId;
-	}
-
-	public void setCommentId(long commentId) {
-		_commentId = commentId;
-	}
-
 	public void setContentSpaceId(long contentSpaceId) {
 		_contentSpaceId = contentSpaceId;
 	}
 
 	public void setCreateDate(Date createDate) {
 		_createDate = createDate;
-	}
-
-	public void setCreatorId(long creatorId) {
-		_creatorId = creatorId;
 	}
 
 	public void setDescription(String description) {
@@ -209,10 +128,6 @@ public class BaseBlogPosting implements BlogPosting {
 		_id = id;
 	}
 
-	public void setImageId(long imageId) {
-		_imageId = imageId;
-	}
-
 	public void setKeywords(List<String> keywords) {
 		_keywords = keywords;
 	}
@@ -225,22 +140,16 @@ public class BaseBlogPosting implements BlogPosting {
 		_publishedDate = publishedDate;
 	}
 
-	private ClassNameClassPK _aggregateRatingId;
 	private String _alternativeHeadline;
 	private String _articleBody;
 	private String _caption;
-	private List<Long> _categories;
-	private long _categoryId;
-	private long _commentId;
 	private long _contentSpaceId;
 	private Date _createDate;
-	private long _creatorId;
 	private String _description;
 	private String _encodingFormat;
 	private String _friendlyURLPath;
 	private String _headline;
 	private long _id;
-	private long _imageId;
 	private List<String> _keywords;
 	private Date _modifiedDate;
 	private Date _publishedDate;

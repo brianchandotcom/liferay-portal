@@ -14,29 +14,10 @@
 
 package com.liferay.headless.blog.internal.dto;
 
-import com.liferay.portal.apio.identifier.ClassNameClassPK;
-
-import java.util.Date;
-import java.util.List;
+import com.liferay.headless.blog.dto.BaseBlogPosting;
 
 /**
  * @author Víctor Galán
  */
 public class BlogPostingImpl extends BaseBlogPosting {
-
-	public BlogPostingImpl(
-		long id, ClassNameClassPK aggregateRatingId, String alternativeHeadline,
-		String articleBody, String caption, List<Long> categories,
-		long categoryId, long commentId, long contentSpaceId, Date createDate,
-		long creatorId, String description, String encodingFormat,
-		String friendlyURLPath, String headline, long imageId,
-		List<String> keywords, Date modifiedDate, Date publishedDate) {
-
-		super(
-			id, aggregateRatingId, alternativeHeadline, articleBody, caption,
-			categories, categoryId, commentId, contentSpaceId, createDate,
-			creatorId, description, encodingFormat, friendlyURLPath, headline,
-			imageId, keywords, modifiedDate, publishedDate);
-	}
-
 }

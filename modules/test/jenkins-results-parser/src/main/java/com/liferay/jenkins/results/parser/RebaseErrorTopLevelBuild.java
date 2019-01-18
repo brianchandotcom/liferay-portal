@@ -177,7 +177,11 @@ public class RebaseErrorTopLevelBuild extends TopLevelBuild {
 			System.out.println("Test " + i);
 
 			Pattern pattern = Pattern.compile(
-				expectedCommentTokens.get(i).replaceAll("\\s+", "\\\\s*"));
+				expectedCommentTokens.get(
+					i
+				).replaceAll(
+					"\\s+", "\\\\s*"
+				));
 
 			Matcher matcher = pattern.matcher(actualCommentTokens.get(i));
 

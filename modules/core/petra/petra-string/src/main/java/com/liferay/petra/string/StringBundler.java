@@ -280,7 +280,11 @@ public class StringBundler implements Serializable {
 
 		if (arrayIndex == 3) {
 			if (array[0].length() < array[2].length()) {
-				return array[0].concat(array[1]).concat(array[2]);
+				return array[0].concat(
+					array[1]
+				).concat(
+					array[2]
+				);
 			}
 
 			return array[0].concat(array[1].concat(array[2]));

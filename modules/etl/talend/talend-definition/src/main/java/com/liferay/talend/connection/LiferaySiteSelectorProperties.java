@@ -150,8 +150,16 @@ public class LiferaySiteSelectorProperties
 					connection.webSiteProperty.setPossibleNamedThingValues(
 						_webSites);
 
-					getForm(Form.MAIN).setAllowBack(true);
-					getForm(Form.MAIN).setAllowFinish(true);
+					getForm(
+						Form.MAIN
+					).setAllowBack(
+						true
+					);
+					getForm(
+						Form.MAIN
+					).setAllowFinish(
+						true
+					);
 				}
 				catch (Exception e) {
 					throw new ComponentException(e);

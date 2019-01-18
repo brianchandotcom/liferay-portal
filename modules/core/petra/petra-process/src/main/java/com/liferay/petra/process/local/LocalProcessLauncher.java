@@ -99,9 +99,11 @@ public class LocalProcessLauncher {
 			String processCallableName =
 				(String)bootstrapObjectInputStream.readObject();
 
-			String logPrefixString =
-				StringPool.OPEN_BRACKET.concat(processCallableName).concat(
-					StringPool.CLOSE_BRACKET);
+			String logPrefixString = StringPool.OPEN_BRACKET.concat(
+				processCallableName
+			).concat(
+				StringPool.CLOSE_BRACKET
+			);
 
 			byte[] logPrefix = logPrefixString.getBytes(StringPool.UTF8);
 

@@ -459,15 +459,13 @@ public class DLWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 
 				String title = getTitle(pathArray);
 
-				String extension = FileUtil.getExtension(title);
-
-				String contentType = getContentType(
-					request, null, title, extension);
+				String contentType = getContentType(request, null, title);
 
 				String description = StringPool.BLANK;
 				String changeLog = StringPool.BLANK;
 
-				File file = FileUtil.createTempFile(extension);
+				File file = FileUtil.createTempFile(
+					FileUtil.getExtension(title));
 
 				file.createNewFile();
 
@@ -791,14 +789,11 @@ public class DLWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 			ServiceContext serviceContext = _getServiceContext(
 				DLFileEntry.class.getName(), webDAVRequest);
 
-			String extension = FileUtil.getExtension(title);
-
-			file = FileUtil.createTempFile(extension);
+			file = FileUtil.createTempFile(FileUtil.getExtension(title));
 
 			FileUtil.write(file, request.getInputStream());
 
-			String contentType = getContentType(
-				request, file, title, extension);
+			String contentType = getContentType(request, file, title);
 
 			try {
 				FileEntry fileEntry = _dlAppService.getFileEntry(
@@ -1003,7 +998,7 @@ public class DLWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 	}
 
 	protected String getContentType(
-		HttpServletRequest request, File file, String title, String extension) {
+		HttpServletRequest request, File file, String title) {
 
 		String contentType = GetterUtil.getString(
 			request.getHeader(HttpHeaders.CONTENT_TYPE),

@@ -84,15 +84,16 @@ public class ImageExportDDMFormFieldValueTransformer
 					StagedModelDataHandlerUtil.exportReferenceStagedModel(
 						_portletDataContext, _stagedModel, fileEntry,
 						_portletDataContext.REFERENCE_TYPE_DEPENDENCY);
-				}
-				else {
-					Element entityElement =
-						_portletDataContext.getExportDataElement(_stagedModel);
 
-					_portletDataContext.addReferenceElement(
-						_stagedModel, entityElement, fileEntry,
-						PortletDataContext.REFERENCE_TYPE_DEPENDENCY, true);
+					return;
 				}
+
+				Element entityElement =
+					_portletDataContext.getExportDataElement(_stagedModel);
+
+				_portletDataContext.addReferenceElement(
+					_stagedModel, entityElement, fileEntry,
+					PortletDataContext.REFERENCE_TYPE_DEPENDENCY, true);
 			}
 			catch (NoSuchFileEntryException nsfee) {
 				if (_log.isDebugEnabled()) {

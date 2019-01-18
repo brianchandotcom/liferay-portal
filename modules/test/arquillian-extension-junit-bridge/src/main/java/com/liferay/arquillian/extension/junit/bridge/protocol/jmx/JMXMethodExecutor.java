@@ -49,8 +49,6 @@ public class JMXMethodExecutor implements ContainerMethodExecutor {
 
 		Method testMethod = testMethodExecutor.getMethod();
 
-		TestResult result = null;
-
 		try {
 			ObjectName objectName = new ObjectName(JMXTestRunner.OBJECT_NAME);
 
@@ -63,17 +61,20 @@ public class JMXMethodExecutor implements ContainerMethodExecutor {
 			try (InputStream is = new ByteArrayInputStream(data);
 				ObjectInputStream oos = new ObjectInputStream(is)) {
 
-				return (TestResult)oos.readObject();
+				TestResult testResult = (TestResult)oos.readObject();
+
+				testResult.setEnd(System.currentTimeMillis());
+
+				return testResult;
 			}
 		}
-		catch (Exception e) {
-			result = TestResult.failed(e);
-		}
-		finally {
-			result.setEnd(System.currentTimeMillis());
-		}
+		catch (Throwable t) {
+			TestResult testResult = TestResult.failed(t);
 
-		return result;
+			testResult.setEnd(System.currentTimeMillis());
+
+			return testResult;
+		}
 	}
 
 	private <T> T _getMBeanProxy(ObjectName objectName, Class<T> clazz) {

@@ -29,6 +29,8 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Html;
 import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.ProxyFactory;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowHandler;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
 import com.liferay.portal.kernel.workflow.WorkflowTask;
@@ -36,6 +38,9 @@ import com.liferay.portal.kernel.workflow.WorkflowTaskManagerUtil;
 import com.liferay.portal.workflow.task.web.internal.permission.WorkflowTaskPermissionChecker;
 
 import java.lang.reflect.Field;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletRequestWrapper;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -69,6 +74,8 @@ public class WorkflowTaskUserNotificationHandlerTest extends PowerMockito {
 
 	@Before
 	public void setUp() throws Exception {
+		_serviceContext = new ServiceContext();
+
 		setUpHtmlUtil();
 		setUpJSONFactoryUtil();
 		setUpThemeDisplay();
@@ -227,11 +234,21 @@ public class WorkflowTaskUserNotificationHandlerTest extends PowerMockito {
 
 		themeDisplay.setSiteGroupId(RandomTestUtil.randomLong());
 
-		when(
-			_serviceContext.getThemeDisplay()
-		).thenReturn(
-			themeDisplay
-		);
+		HttpServletRequest request = new HttpServletRequestWrapper(
+			ProxyFactory.newDummyInstance(HttpServletRequest.class)) {
+
+			@Override
+			public Object getAttribute(String name) {
+				if (WebKeys.THEME_DISPLAY.equals(name)) {
+					return themeDisplay;
+				}
+
+				return null;
+			}
+
+		};
+
+		_serviceContext.setRequest(request);
 	}
 
 	protected void setUpUserNotificationEventLocalService() throws Exception {
@@ -323,10 +340,7 @@ public class WorkflowTaskUserNotificationHandlerTest extends PowerMockito {
 
 	private final JSONFactory _jsonFactory = new JSONFactoryImpl();
 	private String _notificationMessage;
-
-	@Mock
 	private ServiceContext _serviceContext;
-
 	private final WorkflowTaskUserNotificationHandler
 		_workflowTaskUserNotificationHandler =
 			new WorkflowTaskUserNotificationHandler();

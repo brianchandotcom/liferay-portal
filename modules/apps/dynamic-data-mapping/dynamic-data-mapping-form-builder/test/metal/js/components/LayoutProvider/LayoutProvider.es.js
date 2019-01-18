@@ -5,6 +5,36 @@ import {PagesVisitor} from 'source/util/visitors.es';
 
 let component;
 let pages = null;
+
+const rules = [
+	{
+		actions: [
+			{
+				action: 'require',
+				expression: '[x+2]',
+				label: 'label text 1',
+				target: 'text1'
+			}
+		],
+		conditions: [
+			{
+				operands: [
+					{
+						type: 'field',
+						value: 'text1'
+					},
+					{
+						type: 'value',
+						value: 'value 2'
+					}
+				],
+				operator: 'equals-to'
+			}
+		],
+		['logical-operator']: 'OR'
+	}
+];
+
 const spritemap = 'icons.svg';
 
 class Child extends JSXComponent {
@@ -143,6 +173,46 @@ describe.only(
 				expect(provider.state.rules).toMatchSnapshot();
 				expect(oldRules.length).toEqual(provider.state.rules.length - 1);
 				expect([...oldRules, mockEvent]).toEqual(provider.state.rules);
+			}
+		);
+
+		it(
+			'should receive ruleSaveEdition event to edit a rule',
+			() => {
+				component = new Parent();
+
+				jest.runAllTimers();
+
+				const {child, provider} = component.refs;
+
+				provider.setState(
+					{
+						rules
+					}
+				);
+
+				jest.runAllTimers();
+
+				const originalRule = JSON.parse(JSON.stringify(provider.state.rules));
+
+				jest.runAllTimers();
+
+				const mockEvent = {
+					...rules[0],
+					actions: [
+						{
+							...rules[0].actions[0],
+							action: 'show'
+						}
+					],
+					ruleEditedIndex: 0
+				};
+
+				child.emit('ruleSaveEdition', mockEvent);
+
+				jest.runAllTimers();
+
+				expect(originalRule[0]).not.toEqual(provider.state.rules[0]);
 			}
 		);
 

@@ -504,47 +504,46 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 
 	static {
 		Map<String, Function<${entity.name}, Object>> attributeGetters = new LinkedHashMap<String, Function<${entity.name}, Object>>();
+		Map<String, BiConsumer<${entity.name}, Object>> attributeSetters = new LinkedHashMap<String, BiConsumer<${entity.name}, Object>>();
 
-		<#list entity.regularEntityColumns as entityColumn>
-			attributeGetters.put(
-				"${entityColumn.name}",
-				new Function<${entity.name}, Object>() {
+<#list entity.regularEntityColumns as entityColumn>
+	<#if serviceBuilder.isVersionLTE_7_1_0()>
+		attributeGetters.put(
+			"${entityColumn.name}",
+			new Function<${entity.name}, Object>() {
 
-					@Override
-					public Object apply(${entity.name} ${entity.varName}) {
-						<#if stringUtil.equals(entityColumn.type, "boolean")>
-							return ${entity.varName}.is${entityColumn.methodName}();
-						<#else>
-							return ${entity.varName}.get${entityColumn.methodName}();
-						</#if>
-					}
+				@Override
+				public Object apply(${entity.name} ${entity.varName}) {
+					return ${entity.varName}.get${entityColumn.methodName}();
+				}
 
-				});
-		</#list>
+			});
+	<#else>
+		attributeGetters.put("${entityColumn.name}", ${entity.name}::get${entityColumn.methodName});
+	</#if>
+	<#if entityColumn.isPrimitiveType()>
+		<#assign entityColumnType = serviceBuilder.getPrimitiveObj(entityColumn.type) />
+	<#else>
+		<#assign entityColumnType = entityColumn.genericizedType />
+	</#if>
+	<#if serviceBuilder.isVersionLTE_7_1_0()>
+		attributeSetters.put(
+			"${entityColumn.name}",
+			new BiConsumer<${entity.name}, Object>() {
 
+				@Override
+				public void accept(${entity.name} ${entity.varName}, Object ${entityColumn.name}) {
+					${entity.varName}.set${entityColumn.methodName}((${entityColumnType})${entityColumn.name});
+				}
+
+			});
+	<#else>
+		attributeSetters.put("${entityColumn.name}", ${entity.name}::set${entityColumn.methodName});
+	</#if>
+
+</#list>
 		_attributeGetters = Collections.unmodifiableMap(attributeGetters);
-
-		Map<String, BiConsumer<${entity.name}, ?>> attributeSetters = new LinkedHashMap<String, BiConsumer<${entity.name}, ?>>();
-
-		<#list entity.regularEntityColumns as entityColumn>
-			<#if entityColumn.isPrimitiveType()>
-				<#assign entityColumnType = serviceBuilder.getPrimitiveObj(entityColumn.type) />
-			<#else>
-				<#assign entityColumnType = entityColumn.genericizedType />
-			</#if>
-			attributeSetters.put(
-				"${entityColumn.name}",
-				new BiConsumer<${entity.name}, ${entityColumnType}>() {
-
-					@Override
-					public void accept(${entity.name} ${entity.varName}, ${entityColumnType} ${entityColumn.name}) {
-						${entity.varName}.set${entityColumn.methodName}(${entityColumn.name});
-					}
-
-				});
-		</#list>
-
-		_attributeSetters = Collections.unmodifiableMap((Map)attributeSetters);
+		_attributeSetters = Collections.unmodifiableMap(attributeSetters);
 	}
 
 	<#if entity.localizedEntity??>

@@ -182,45 +182,49 @@ public class AssetEntryUsagesDisplayContext {
 	public String getAssetEntryUsageWhereLabel(AssetEntryUsage assetEntryUsage)
 		throws PortalException {
 
-		long classNameId = assetEntryUsage.getClassNameId();
+		ThemeDisplay themeDisplay = (ThemeDisplay)_renderRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
 
 		HttpServletRequest request = PortalUtil.getHttpServletRequest(
 			_renderRequest);
 
-		if (classNameId == PortalUtil.getClassNameId(FragmentEntryLink.class)) {
-			FragmentEntryLink fragmentEntryLink =
-				FragmentEntryLinkLocalServiceUtil.getFragmentEntryLink(
-					assetEntryUsage.getClassPK());
+		if (assetEntryUsage.getClassNameId() !=
+				PortalUtil.getClassNameId(FragmentEntryLink.class)) {
 
-			FragmentEntry fragmentEntry =
-				FragmentEntryLocalServiceUtil.fetchFragmentEntry(
-					fragmentEntryLink.getFragmentEntryId());
+			String portletTitle = PortalUtil.getPortletTitle(
+				PortletIdCodec.decodePortletName(
+					assetEntryUsage.getPortletId()),
+				themeDisplay.getLocale());
 
-			if (fragmentEntry == null) {
-				String portletId = _getPortletId(fragmentEntryLink.getHtml());
-
-				return LanguageUtil.format(
-					request, "x-widget",
-					PortalUtil.getPortletTitle(
-						portletId, PortalUtil.getLocale(request)));
-			}
-
-			if (fragmentEntry.getType() ==
-					FragmentEntryTypeConstants.TYPE_ELEMENT) {
-
-				return LanguageUtil.format(
-					request, "x-element", fragmentEntry.getName());
-			}
-
-			return LanguageUtil.format(
-				request, "x-section", fragmentEntry.getName());
+			return LanguageUtil.format(request, "x-widget", portletTitle);
 		}
 
-		String portletTitle = PortalUtil.getPortletTitle(
-			PortletIdCodec.decodePortletName(assetEntryUsage.getPortletId()),
-			PortalUtil.getLocale(request));
+		FragmentEntryLink fragmentEntryLink =
+			FragmentEntryLinkLocalServiceUtil.getFragmentEntryLink(
+				assetEntryUsage.getClassPK());
 
-		return LanguageUtil.format(request, "x-widget", portletTitle);
+		FragmentEntry fragmentEntry =
+			FragmentEntryLocalServiceUtil.fetchFragmentEntry(
+				fragmentEntryLink.getFragmentEntryId());
+
+		if (fragmentEntry == null) {
+			String portletId = _getPortletId(fragmentEntryLink.getHtml());
+
+			return LanguageUtil.format(
+				request, "x-widget",
+				PortalUtil.getPortletTitle(
+					portletId, themeDisplay.getLocale()));
+		}
+
+		if (fragmentEntry.getType() ==
+				FragmentEntryTypeConstants.TYPE_ELEMENT) {
+
+			return LanguageUtil.format(
+				request, "x-element", fragmentEntry.getName());
+		}
+
+		return LanguageUtil.format(
+			request, "x-section", fragmentEntry.getName());
 	}
 
 	public int getDisplayPagesUsageCount() {

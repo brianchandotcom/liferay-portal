@@ -516,11 +516,9 @@ class LayoutProvider extends Component {
 		);
 	}
 
-	_handleRuleSaveEdition(event) {
+	_handleRuleEdited(event) {
 		const {actions, conditions, ruleEditedIndex} = event;
-
 		const logicalOperator = event['logical-operator'];
-
 		const {rules} = this.state;
 
 		rules.splice(
@@ -530,6 +528,12 @@ class LayoutProvider extends Component {
 				actions,
 				conditions,
 				'logical-operator': logicalOperator
+			}
+		);
+
+		this.setState(
+			{
+				rules
 			}
 		);
 	}
@@ -664,7 +668,7 @@ class LayoutProvider extends Component {
 				paginationModeUpdated: this._handlePaginationModeUpdated.bind(this),
 				ruleAdded: this._handleRuleAdded.bind(this),
 				ruleDeleted: this._handleRuleDeleted.bind(this),
-				ruleSaveEdition: this._handleRuleSaveEdition.bind(this),
+				ruleSaveEdition: this._handleRuleEdited.bind(this),
 				successPageChanged: this._handleSuccessPageChanged.bind(this)
 			};
 

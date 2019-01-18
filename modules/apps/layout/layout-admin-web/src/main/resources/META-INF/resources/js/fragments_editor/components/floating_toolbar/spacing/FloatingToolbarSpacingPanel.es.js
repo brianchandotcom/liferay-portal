@@ -89,7 +89,7 @@ FloatingToolbarSpacingPanel.STATE = {
 	_containerTypes: Config
 		.array()
 		.internal()
-		.value(Object.values(CONTAINER_TYPES))
+		.value(CONTAINER_TYPES)
 };
 
 Soy.register(FloatingToolbarSpacingPanel, templates);

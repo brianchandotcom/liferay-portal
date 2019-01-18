@@ -8,17 +8,17 @@ export const ITEM_CONFIG_KEYS = {
 /**
  * Available values for containerType config key
  */
-export const CONTAINER_TYPES = {
-	fixed: {
-		containerTypeId: 'fixed',
-		label: Liferay.Language.get('fixed-width')
-	},
-
-	fluid: {
+export const CONTAINER_TYPES = [
+	{
 		containerTypeId: 'fluid',
 		label: Liferay.Language.get('fluid')
+	},
+
+	{
+		containerTypeId: 'fixed',
+		label: Liferay.Language.get('fixed-width')
 	}
-};
+];
 
 /**
  * Fragments Editor item borders

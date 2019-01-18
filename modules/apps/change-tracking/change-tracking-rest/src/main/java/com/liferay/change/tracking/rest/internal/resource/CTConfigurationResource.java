@@ -19,10 +19,13 @@ import com.liferay.change.tracking.configuration.CTConfiguration;
 import com.liferay.change.tracking.rest.internal.model.configuration.CTConfigurationModel;
 import com.liferay.change.tracking.rest.internal.model.configuration.CTConfigurationUpdateModel;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Stream;
 
@@ -64,6 +67,20 @@ public class CTConfigurationResource {
 		_companyLocalService.getCompany(companyId);
 
 		return _getCTConfigurationModel(companyId);
+	}
+
+	@GET
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<CTConfigurationModel> getCTConfigurations()
+		throws PortalException {
+
+		List<CTConfigurationModel> companies = new ArrayList<>();
+
+		for (Company company : _companyLocalService.getCompanies()) {
+			companies.add(_getCTConfigurationModel(company.getCompanyId()));
+		}
+
+		return companies;
 	}
 
 	@Consumes(MediaType.APPLICATION_JSON)

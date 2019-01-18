@@ -1735,6 +1735,28 @@ definition {
 		}
 	}
 
+	macro viewNoEditWCViaAP {
+		AssertElementPresent(locator1 = "APAsset#ASSET_TITLE", key_assetTitle = "${assetTitle}");
+
+		AssertElementNotPresent(
+			locator1 = "AP#ASSET_ELLIPSIS_ICON",
+			key_assetTitle = "${assetTitle}"
+		);
+	}
+
+	macro viewNoEditWCCP {
+		var key_webContentTitle = "${webContentTitle}";
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
+
+		Click(locator1 = "WC#ENTRY_LIST_MENULIST_ICON");
+
+		AssertElementNotPresent(
+			locator1 = "MenuItem#ANY_MENU_ITEM",
+			key_menuItem = "Edit"
+		);
+	}
+
 	macro viewNoEditWCViaWCD {
 		AssertElementPresent(locator1 = "WCD#WEB_CONTENT_CONTENT");
 

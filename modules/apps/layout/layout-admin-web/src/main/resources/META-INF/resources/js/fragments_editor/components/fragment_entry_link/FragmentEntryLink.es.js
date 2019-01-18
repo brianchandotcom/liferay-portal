@@ -9,13 +9,12 @@ import {
 	CLEAR_ACTIVE_ITEM,
 	REMOVE_FRAGMENT_ENTRY_LINK,
 	UPDATE_ACTIVE_ITEM,
-	UPDATE_HOVERED_ITEM,
-	UPDATE_LAST_SAVE_DATE,
-	UPDATE_SAVING_CHANGES_STATUS
+	UPDATE_HOVERED_ITEM
 } from '../../actions/actions.es';
 import {FRAGMENTS_EDITOR_ITEM_TYPES} from '../../utils/constants';
 import {getItemMoveDirection} from '../../utils/FragmentsEditorGetUtils.es';
 import {shouldUpdatePureComponent} from '../../utils/FragmentsEditorComponentUtils.es';
+import {removeItem} from '../../utils/FragmentsEditorUpdateUtils.es';
 import templates from './FragmentEntryLink.soy';
 
 /**
@@ -117,33 +116,14 @@ class FragmentEntryLink extends Component {
 	_handleFragmentRemoveButtonClick(event) {
 		event.stopPropagation();
 
-		this.store
-			.dispatchAction(
-				UPDATE_SAVING_CHANGES_STATUS,
-				{
-					savingChanges: true
-				}
-			)
-			.dispatchAction(
-				REMOVE_FRAGMENT_ENTRY_LINK,
-				{
-					fragmentEntryLinkId: this.fragmentEntryLinkId
-				}
-			)
-			.dispatchAction(
-				UPDATE_LAST_SAVE_DATE,
-				{
-					lastSaveDate: new Date()
-				}
-			)
-			.dispatchAction(
-				UPDATE_SAVING_CHANGES_STATUS,
-				{
-					savingChanges: false
-				}
-			);
+		removeItem(
+			this.store,
+			REMOVE_FRAGMENT_ENTRY_LINK,
+			{
+				fragmentEntryLinkId: this.fragmentEntryLinkId
+			}
+		);
 	}
-
 }
 
 /**

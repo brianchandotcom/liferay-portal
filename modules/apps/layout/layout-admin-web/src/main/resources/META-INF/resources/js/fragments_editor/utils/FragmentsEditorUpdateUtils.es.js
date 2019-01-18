@@ -1,4 +1,5 @@
 import {
+	CLEAR_ACTIVE_ITEM,
 	CLEAR_DROP_TARGET,
 	CLEAR_HOVERED_ITEM,
 	UPDATE_LAST_SAVE_DATE,
@@ -99,6 +100,41 @@ function remove(array, position) {
 	newArray.splice(position, 1);
 
 	return newArray;
+}
+
+/**
+ * Dispatches necessary actions to remove an item
+ * @param {!Object} store Store instance that dispatches the actions
+ * @param {!string} removeItemAction
+ * @param {!Object} removeItemPayload Data that is passed to the reducer
+ * @review
+ */
+function removeItem(store, removeItemAction, removeItemPayload) {
+	store
+		.dispatchAction(
+			UPDATE_SAVING_CHANGES_STATUS,
+			{
+				savingChanges: true
+			}
+		)
+		.dispatchAction(
+			removeItemAction,
+			removeItemPayload
+		)
+		.dispatchAction(
+			UPDATE_LAST_SAVE_DATE,
+			{
+				lastSaveDate: new Date()
+			}
+		)
+		.dispatchAction(
+			UPDATE_SAVING_CHANGES_STATUS,
+			{
+				savingChanges: false
+			}
+		)
+		.dispatchAction(CLEAR_HOVERED_ITEM)
+		.dispatchAction(CLEAR_ACTIVE_ITEM);
 }
 
 /**
@@ -209,6 +245,7 @@ export {
 	focusItem,
 	moveItem,
 	remove,
+	removeItem,
 	setIn,
 	updateIn,
 	updateLayoutData

@@ -33,6 +33,7 @@ import {
 	moveItem,
 	setIn
 } from '../../utils/FragmentsEditorUpdateUtils.es';
+import {removeItem} from '../../utils/FragmentsEditorUpdateUtils.es';
 import {shouldUpdatePureComponent} from '../../utils/FragmentsEditorComponentUtils.es';
 import state from '../../store/state.es';
 import templates from './FragmentEntryLinkList.soy';
@@ -462,14 +463,13 @@ class FragmentEntryLinkList extends Component {
 	_handleSectionRemoveButtonClick(event) {
 		event.stopPropagation();
 
-		this.store
-			.dispatchAction(
-				REMOVE_SECTION,
-				{
-					sectionId: this.hoveredItemId
-				}
-			)
-			.dispatchAction(CLEAR_HOVERED_ITEM);
+		removeItem(
+			this.store,
+			REMOVE_SECTION,
+			{
+				sectionId: this.hoveredItemId
+			}
+		);
 	}
 
 	/**

@@ -24,11 +24,13 @@ import com.liferay.portal.kernel.cache.CacheRegistryItem;
 import com.liferay.portal.kernel.concurrent.CompeteLatch;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.dao.orm.LockMode;
+import com.liferay.portal.kernel.dao.orm.ORMException;
 import com.liferay.portal.kernel.dao.orm.ObjectNotFoundException;
 import com.liferay.portal.kernel.dao.orm.Session;
+import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.model.Dummy;
-import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -45,6 +47,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+import javax.sql.DataSource;
+
 /**
  * @author Brian Wing Shun Chan
  * @author Harry Mark
@@ -52,9 +56,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * @author Shuyang Zhou
  * @author Edward Han
  */
-public class CounterFinderImpl
-	extends BasePersistenceImpl<Dummy>
-	implements CacheRegistryItem, CounterFinder {
+public class CounterFinderImpl implements CacheRegistryItem, CounterFinder {
 
 	@Override
 	public List<String> getNames() {
@@ -193,6 +195,10 @@ public class CounterFinderImpl
 		_counterRegisterMap.put(name, counterRegister);
 	}
 
+	protected void closeSession(Session session) throws ORMException {
+		_sessionFactory.closeSession(session);
+	}
+
 	protected CounterRegister createCounterRegister(String name) {
 		return createCounterRegister(name, -1);
 	}
@@ -237,9 +243,7 @@ public class CounterFinderImpl
 	}
 
 	protected Connection getConnection() throws SQLException {
-		Connection connection = getDataSource().getConnection();
-
-		return connection;
+		return _dataSource.getConnection();
 	}
 
 	protected CounterRegister getCounterRegister(String name) {
@@ -293,6 +297,29 @@ public class CounterFinderImpl
 		}
 
 		return rangeSize.intValue();
+	}
+
+	protected Session openSession() throws ORMException {
+		return _sessionFactory.openSession();
+	}
+
+	protected SystemException processException(Exception e) {
+		if (!(e instanceof ORMException)) {
+			_log.error("Caught unexpected exception", e);
+		}
+		else if (_log.isDebugEnabled()) {
+			_log.debug(e, e);
+		}
+
+		return new SystemException(e);
+	}
+
+	protected void setDataSource(DataSource dataSource) {
+		_dataSource = dataSource;
+	}
+
+	protected void setSessionFactory(SessionFactory sessionFactory) {
+		_sessionFactory = sessionFactory;
 	}
 
 	private long _competeIncrement(CounterRegister counterRegister, int size) {
@@ -414,9 +441,14 @@ public class CounterFinderImpl
 	private static final String _SQL_UPDATE_NAME_BY_NAME =
 		"update Counter set name = ? where name = ?";
 
+	private static final Log _log = LogFactoryUtil.getLog(
+		CounterFinderImpl.class);
+
 	private final Map<String, CounterRegister> _counterRegisterMap =
 		new ConcurrentHashMap<>();
+	private DataSource _dataSource;
 	private final Map<String, Integer> _rangeSizeMap =
 		new ConcurrentHashMap<>();
+	private SessionFactory _sessionFactory;
 
 }

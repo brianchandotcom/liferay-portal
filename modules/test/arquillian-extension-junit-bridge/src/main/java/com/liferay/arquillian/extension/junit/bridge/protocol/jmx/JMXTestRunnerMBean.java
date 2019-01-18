@@ -21,16 +21,8 @@ import javax.management.NotificationBroadcaster;
  */
 public interface JMXTestRunnerMBean extends NotificationBroadcaster {
 
-	/**
-	 * Runs a test method on the given test class
-	 *
-	 * @param className the test class name
-	 * @param methodName the test method name
-	 * @return a serialized {@link TestResult}
-	 */
 	public byte[] runTestMethod(String className, String methodName);
 
-	/** The ObjectName for this service */
 	public String OBJECT_NAME = "jboss.arquillian:service=jmx-test-runner";
 
 }

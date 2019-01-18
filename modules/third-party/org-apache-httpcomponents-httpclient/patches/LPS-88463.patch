@@ -113,3 +113,66 @@ index d22bbe5..3697100 100644
 +
 +/* @generated */
 \ No newline at end of file
+diff --git a/org/apache/http/conn/ssl/SSLSocketFactory.java b/org/apache/http/conn/ssl/SSLSocketFactory.java
+index cf2a777..b437a93 100644
+--- a/org/apache/http/conn/ssl/SSLSocketFactory.java
++++ b/org/apache/http/conn/ssl/SSLSocketFactory.java
+@@ -325,7 +325,7 @@ public class SSLSocketFactory implements LayeredSchemeSocketFactory, LayeredSock
+             final SSLContext sslContext, final X509HostnameVerifier hostnameVerifier) {
+         super();
+         this.socketfactory = sslContext.getSocketFactory();
+-        this.hostnameVerifier = hostnameVerifier;
++        this.hostnameVerifier = hostnameVerifier != null ? hostnameVerifier : BROWSER_COMPATIBLE_HOSTNAME_VERIFIER;
+         this.nameResolver = null;
+     }
+
+@@ -392,15 +392,13 @@ public class SSLSocketFactory implements LayeredSchemeSocketFactory, LayeredSock
+         } else {
+             sslsock = (SSLSocket) this.socketfactory.createSocket(sock, hostname, port, true);
+         }
+-        if (this.hostnameVerifier != null) {
+-            try {
+-                this.hostnameVerifier.verify(hostname, sslsock);
+-                // verifyHostName() didn't blowup - good!
+-            } catch (IOException iox) {
+-                // close the socket before re-throwing the exception
+-                try { sslsock.close(); } catch (Exception x) { /*ignore*/ }
+-                throw iox;
+-            }
++        try {
++            this.hostnameVerifier.verify(hostname, sslsock);
++            // verifyHostName() didn't blowup - good!
++        } catch (IOException iox) {
++            // close the socket before re-throwing the exception
++            try { sslsock.close(); } catch (Exception x) { /*ignore*/ }
++            throw iox;
+         }
+         return sslsock;
+     }
+@@ -449,9 +447,7 @@ public class SSLSocketFactory implements LayeredSchemeSocketFactory, LayeredSock
+               port,
+               autoClose
+         );
+-        if (this.hostnameVerifier != null) {
+-            this.hostnameVerifier.verify(host, sslSocket);
+-        }
++        this.hostnameVerifier.verify(host, sslSocket);
+         // verifyHostName() didn't blowup - good!
+         return sslSocket;
+     }
+@@ -461,7 +457,7 @@ public class SSLSocketFactory implements LayeredSchemeSocketFactory, LayeredSock
+         if ( hostnameVerifier == null ) {
+             throw new IllegalArgumentException("Hostname verifier may not be null");
+         }
+-        this.hostnameVerifier = hostnameVerifier;
++        this.hostnameVerifier = hostnameVerifier != null ? hostnameVerifier : BROWSER_COMPATIBLE_HOSTNAME_VERIFIER;
+     }
+
+     public X509HostnameVerifier getHostnameVerifier() {
+@@ -507,3 +503,5 @@ public class SSLSocketFactory implements LayeredSchemeSocketFactory, LayeredSock
+     }
+
+ }
++
++/* @generated */
+\ No newline at end of file

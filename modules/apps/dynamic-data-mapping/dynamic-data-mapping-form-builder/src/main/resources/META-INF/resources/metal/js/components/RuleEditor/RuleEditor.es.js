@@ -1677,8 +1677,8 @@ class RuleEditor extends Component {
 					allFieldsFilled = this._validateInputOutputs(autofillActions) && this._validateActionsCalculateFilling(calculateActions);
 				}
 				else if (autofillActions && autofillActions.length > 0) {
-					allFieldsFilled = this._validateActionsAutofillFilling(autofillActions, 'inputs') &&
-							this._validateActionsAutofillFilling(autofillActions, 'outputs');
+					allFieldsFilled = this._validateActionsAutoFill(autofillActions, 'inputs') &&
+							this._validateActionsAutoFill(autofillActions, 'outputs');
 				}
 				else if (calculateActions && calculateActions.length > 0) {
 					allFieldsFilled = this._validateActionsCalculateFilling(calculateActions);
@@ -1690,31 +1690,24 @@ class RuleEditor extends Component {
 	}
 
 	_validateInputOutputs(autofillActions) {
-		return this._validateActionsAutofillFilling(autofillActions, 'inputs') &&
-			this._validateActionsAutofillFilling(autofillActions, 'outputs');
+		return this._validateActionsAutoFill(autofillActions, 'inputs') &&
+			this._validateActionsAutoFill(autofillActions, 'outputs');
 	}
 
-	_validateActionsAutofillFilling(autofillActions, list) {
-		let allFieldsFilled = true;
-
-		autofillActions.forEach(
+	_validateActionsAutoFill(autoFillActions, type) {
+		return autoFillActions.every(
 			action => {
-				if (action[list].length == 0) {
-					allFieldsFilled = false;
+				const parameterKeys = Object.keys(action[type]);
+
+				let validation = parameterKeys.every(key => action[type][key]);
+
+				if (type === 'inputs' && !parameterKeys.length) {
+					validation = Object.keys(action.outputs).length;
 				}
-				else if (action[list].length > 0) {
-					action[list].forEach(
-						({value}) => {
-							if (!value || value == '') {
-								allFieldsFilled = false;
-							}
-						}
-					);
-				}
+
+				return validation;
 			}
 		);
-
-		return allFieldsFilled;
 	}
 
 	_validateActionsCalculateFilling(calculateActions) {

@@ -36,39 +36,35 @@ public class JMXTestRunner
 
 	@Override
 	public byte[] runTestMethod(String className, String methodName) {
-		TestResult result = _runTestMethodInternal(className, methodName);
-
-		try (ByteArrayOutputStream baos = new ByteArrayOutputStream();
-			ObjectOutputStream oos = new ObjectOutputStream(baos)) {
-
-			oos.writeObject(result);
-			oos.flush();
-
-			return baos.toByteArray();
-		}
-		catch (IOException ioe) {
-			throw new RuntimeException(
-				"Could not serialize object: " + result, ioe);
-		}
-	}
-
-	private TestResult _runTestMethodInternal(
-		String className, String methodName) {
-
 		try {
 			TestRunner runner = TestRunners.getTestRunner(
 				JMXTestRunner.class.getClassLoader());
 
 			Class<?> testClass = _classLoader.loadClass(className);
 
-			return runner.execute(testClass, methodName);
+			return _toByteArray(runner.execute(testClass, methodName));
 		}
 		catch (ClassNotFoundException cnfe) {
 			TestResult testResult = TestResult.failed(cnfe);
 
 			testResult.setEnd(System.currentTimeMillis());
 
-			return testResult;
+			return _toByteArray(testResult);
+		}
+	}
+
+	private static byte[] _toByteArray(TestResult testResult) {
+		try (ByteArrayOutputStream baos = new ByteArrayOutputStream();
+			ObjectOutputStream oos = new ObjectOutputStream(baos)) {
+
+			oos.writeObject(testResult);
+			oos.flush();
+
+			return baos.toByteArray();
+		}
+		catch (IOException ioe) {
+			throw new RuntimeException(
+				"Could not serialize object: " + testResult, ioe);
 		}
 	}
 

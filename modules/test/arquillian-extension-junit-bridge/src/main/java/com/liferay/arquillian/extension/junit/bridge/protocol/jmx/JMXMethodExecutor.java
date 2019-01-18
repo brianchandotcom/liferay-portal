@@ -48,7 +48,7 @@ public class JMXMethodExecutor implements ContainerMethodExecutor {
 
 		Class<?> testClass = instance.getClass();
 
-		Method testMethod = testMethodExecutor.getMethod();
+		Method method = testMethodExecutor.getMethod();
 
 		try {
 			JMXTestRunnerMBean jmxTestRunnerMBean =
@@ -57,7 +57,7 @@ public class JMXMethodExecutor implements ContainerMethodExecutor {
 					JMXTestRunnerMBean.class, false);
 
 			byte[] data = jmxTestRunnerMBean.runTestMethod(
-				testClass.getName(), testMethod.getName());
+				testClass.getName(), method.getName());
 
 			try (InputStream is = new ByteArrayInputStream(data);
 				ObjectInputStream oos = new ObjectInputStream(is)) {

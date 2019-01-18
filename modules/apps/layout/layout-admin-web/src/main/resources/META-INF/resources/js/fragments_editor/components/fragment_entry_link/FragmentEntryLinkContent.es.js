@@ -160,7 +160,7 @@ class FragmentEntryLinkContent extends Component {
 
 		this._backgroundImageStyleEditors = this._styles
 			.filter(
-				style => style.css.backgroundImage
+				style => style.css && style.css.backgroundImage
 			)
 			.map(
 				style => style.nodes.map(

@@ -20,10 +20,10 @@ package com.liferay.journal.web.internal.constants;
 public class JournalWebConstants {
 
 	public static final String JOURNAL_ELEMENTS_DEFAULT_EVENT_HANDLER =
-		"journalElementsDefaultEventHandler";
+		"JOURNAL_ELEMENTS_DEFAULT_EVENT_HANDLER";
 
 	public static final String
 		JOURNAL_INFO_PANEL_ELEMENTS_DEFAULT_EVENT_HANDLER =
-			"journalInfoPanelElementsDefaultEventHandler";
+			"JOURNAL_INFO_PANEL_ELEMENTS_DEFAULT_EVENT_HANDLER";
 
 }

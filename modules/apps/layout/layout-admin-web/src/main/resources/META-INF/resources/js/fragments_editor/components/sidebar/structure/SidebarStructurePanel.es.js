@@ -3,13 +3,12 @@ import Soy from 'metal-soy';
 
 import '../fragments/FragmentsEditorSidebarCard.es';
 import {FRAGMENTS_EDITOR_ITEM_TYPES} from '../../../utils/constants';
-import {focusItem, setIn} from '../../../utils/FragmentsEditorUpdateUtils.es';
+import {focusItem, removeItem, setIn} from '../../../utils/FragmentsEditorUpdateUtils.es';
 import {getConnectedComponent} from '../../../store/ConnectedComponent.es';
 import {
 	REMOVE_FRAGMENT_ENTRY_LINK,
-	UPDATE_ACTIVE_ITEM,
-	UPDATE_LAST_SAVE_DATE,
-	UPDATE_SAVING_CHANGES_STATUS
+	REMOVE_SECTION,
+	UPDATE_ACTIVE_ITEM
 } from '../../../actions/actions.es';
 import templates from './SidebarStructurePanel.soy';
 
@@ -66,6 +65,28 @@ class SidebarStructurePanel extends Component {
 	 * @review
 	 */
 	_handleElementRemoveButtonClick(event) {
+		const itemId = event.delegateTarget.dataset.elementId;
+		const itemType = event.delegateTarget.dataset.elementType;
+
+		let removeItemAction = null;
+		let removeItemPayload = null;
+
+		if (itemType === FRAGMENTS_EDITOR_ITEM_TYPES.section) {
+			removeItemAction = REMOVE_SECTION;
+
+			removeItemPayload = {
+				sectionId: itemId
+			};
+		}
+		else if (itemType === FRAGMENTS_EDITOR_ITEM_TYPES.fragment) {
+			removeItemAction = REMOVE_FRAGMENT_ENTRY_LINK;
+
+			removeItemPayload = {
+				fragmentEntryLinkId: itemId
+			};
+		}
+
+		removeItem(this.store, removeItemAction, removeItemPayload);
 	}
 
 }

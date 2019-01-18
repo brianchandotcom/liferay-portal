@@ -379,6 +379,7 @@
 	{@param strings: [
 		addField: string,
 		chooseAnOption: string,
+		dataProviderError: string,
 		dataProviderParameterInput: string,
 		dataProviderParameterInputDescription: string,
 		dataProviderParameterOutput: string,
@@ -484,7 +485,6 @@
 					{if $showTargetDefault or $showTargetAutofill or $showTargetCalculator}
 						{let $options: ($showTargetAutofill) ? $dataProvider : ($showTargetDefault ? $fieldOptions : ($showTargetCalculator ? $calculatorResultOptions : [])) /}
 						{let $ref: $showTargetCalculator ? 'calculatorResult' : 'actionTarget' /}
-
 						{call .renderActionTarget}
 							{param _handleTargetSelection: $_handleTargetSelection /}
 							{param index: $index /}
@@ -523,6 +523,7 @@
 							{param actionInputs: $actionInputs /}
 							{param actionOutputs: $actionOutputs /}
 							{param chooseAnOption: $strings.chooseAnOption /}
+							{param dataProviderError: $strings.dataProviderError /}
 							{param dataProviderParameterInput: $strings.dataProviderParameterInput /}
 							{param dataProviderParameterInputDescription: $strings.dataProviderParameterInputDescription /}
 							{param dataProviderParameterOutput: $strings.dataProviderParameterOutput /}
@@ -963,6 +964,7 @@
 {template .renderAutofill}
 	{@param actionIndex: int}
 	{@param chooseAnOption: string}
+	{@param dataProviderError: string}
 	{@param dataProviderParameterInput: string}
 	{@param dataProviderParameterInputDescription: string}
 	{@param dataProviderParameterOutput: string}
@@ -1006,8 +1008,16 @@
 	]>
 	}
 	{@param? hasRequiredInputs: bool}
-	<div class="col-md-12 no-padding">
-		{if $actionInputs and length($actionInputs) > 0}
+	<div class="col-md-12 ddm-data-provider-container no-padding">
+		{if not $actionOutputs or length($actionOutputs) == 0}
+			{call ClayAlert.render}
+				{param message: $dataProviderError /}
+				{param spritemap: $spritemap /}
+				{param style: 'danger' /}
+				{param title: 'Error:' /}
+			{/call}
+		{/if}
+		{if $actionInputs and length($actionInputs) > 0 and $actionOutputs and length($actionOutputs) > 0}
 			<div class="data-provider-parameter-input-container">
 				{if $hasRequiredInputs}
 					<div class="data-provider-label-container">

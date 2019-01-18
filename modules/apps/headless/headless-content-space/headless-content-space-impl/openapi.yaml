@@ -17,32 +17,6 @@ components:
         self:
           type: string
       type: object
-    ContentSpaceCollection:
-      properties:
-        collection:
-          $ref: '#/components/schemas/ContentSpaceCollection'
-        elements:
-          items:
-            $ref: '#/components/schemas/ContentSpace'
-          type: array
-        numberOfItems:
-          format: int
-          type: number
-        pages:
-          properties:
-            first:
-              $ref: '#/components/schemas/ContentSpaceCollection'
-            last:
-              $ref: '#/components/schemas/ContentSpaceCollection'
-            next:
-              $ref: '#/components/schemas/ContentSpaceCollection'
-          type: object
-        self:
-          $ref: '#/components/schemas/ContentSpaceCollection'
-        totalNumberOfItems:
-          type: number
-          format: int
-      type: object
 info:
   description: ''
   title: Title
@@ -66,7 +40,9 @@ paths:
           content:
             '*/*':
               schema:
-                $ref: '#/components/schemas/ContentSpace'
+                items:
+                  $ref: '#/components/schemas/ContentSpace'
+                type: array
           description: ''
   /content-space/{id}:
     get:
@@ -81,6 +57,6 @@ paths:
           content:
             '*/*':
               schema:
-                $ref: '#/components/schemas/ContentSpaceCollection'
+                $ref: '#/components/schemas/ContentSpace'
           description: ''
 openapi: 3.0.1

@@ -27,14 +27,7 @@ paths:
         content:
           '*/*':
             schema:
-              properties:
-                familyName:
-                  type: string
-                id:
-                  type: integer
-                self:
-                  type: string
-              type: object
+              $ref: '#/components/schemas/Person'
       responses:
         200:
           content:
@@ -78,14 +71,7 @@ paths:
         content:
           '*/*':
             schema:
-              properties:
-                familyName:
-                  type: string
-                id:
-                  type: integer
-                self:
-                  type: string
-              type: object
+              $ref: '#/components/schemas/Person'
       responses:
         200:
           content:

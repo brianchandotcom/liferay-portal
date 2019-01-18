@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.search.aggregation.Aggregation;
 import com.liferay.portal.search.aggregation.pipeline.PipelineAggregation;
 import com.liferay.portal.search.filter.ComplexQueryPart;
+import com.liferay.portal.search.groupby.GroupByRequest;
 import com.liferay.portal.search.query.Query;
 import com.liferay.portal.search.sort.Sort;
 import com.liferay.portal.search.stats.StatsRequest;
@@ -87,6 +88,17 @@ public interface SearchRequestBuilder {
 
 	public SearchRequestBuilder getFederatedSearchRequestBuilder(
 		String federatedSearchKey);
+
+	/**
+	 * Provides a top hits aggregations for each of the specified fields.
+	 *
+	 * @param groupByRequests the grouping that is enabled for each field
+	 * @return the search request builder
+	 *
+	 * @review
+	 */
+	public SearchRequestBuilder groupByRequests(
+		GroupByRequest... groupByRequests);
 
 	public SearchRequestBuilder highlightEnabled(boolean highlightEnabled);
 

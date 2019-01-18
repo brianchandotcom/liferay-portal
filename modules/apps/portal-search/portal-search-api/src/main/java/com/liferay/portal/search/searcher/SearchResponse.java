@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.search.aggregation.AggregationResult;
 import com.liferay.portal.search.document.Document;
+import com.liferay.portal.search.groupby.GroupByResponse;
 import com.liferay.portal.search.hits.SearchHits;
 import com.liferay.portal.search.stats.StatsResponse;
 
@@ -54,6 +55,15 @@ public interface SearchResponse {
 	public SearchResponse getFederatedSearchResponse(String key);
 
 	public Stream<SearchResponse> getFederatedSearchResponsesStream();
+
+	/**
+	 * Returns the map containing the top hits aggregations for each field.
+	 *
+	 * @return the map containing the top hits aggregations
+	 *
+	 * @review
+	 */
+	public List<GroupByResponse> getGroupByResponses();
 
 	public SearchRequest getRequest();
 

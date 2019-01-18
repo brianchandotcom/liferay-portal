@@ -12,28 +12,29 @@
  * details.
  */
 
-package com.liferay.portal.search.synonym;
+package com.liferay.portal.search.groupby;
+
+import com.liferay.portal.kernel.search.Hits;
+
+import java.util.Map;
 
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
- * @author Adam Brandizzi
- * @deprecated As of Mueller (7.2.x), with no direct replacement
+ * @author Bryan Engler
+ * @author Michael C. Han
  */
-@Deprecated
 @ProviderType
-public interface SynonymIndexer {
+public interface GroupByResponse {
 
-	public String[] getSynonymSets(long companyId, String filterName);
+	public String getField();
 
-	public String[] getSynonymSets(String indexName, String filterName);
+	public Hits getHits(String term);
 
-	public void updateSynonymSets(
-			long companyId, String filterName, String[] synonymSets)
-		throws SynonymException;
+	public Map<String, Hits> getHitsMap();
 
-	public void updateSynonymSets(
-			String indexName, String filterName, String[] synonymSets)
-		throws SynonymException;
+	public void putHits(String term, Hits hits);
+
+	public void setField(String field);
 
 }

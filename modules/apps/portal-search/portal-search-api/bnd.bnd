@@ -26,11 +26,13 @@ Export-Package:\
 	com.liferay.portal.search.facet.user,\
 	com.liferay.portal.search.filter,\
 	com.liferay.portal.search.geolocation,\
+	com.liferay.portal.search.groupby,\
 	com.liferay.portal.search.highlight,\
 	com.liferay.portal.search.hits,\
 	com.liferay.portal.search.index,\
 	com.liferay.portal.search.indexer,\
 	com.liferay.portal.search.legacy.document,\
+	com.liferay.portal.search.legacy.groupby,\
 	com.liferay.portal.search.legacy.searcher,\
 	com.liferay.portal.search.legacy.stats,\
 	com.liferay.portal.search.localization,\

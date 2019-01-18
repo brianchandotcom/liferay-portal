@@ -12,28 +12,27 @@
  * details.
  */
 
-package com.liferay.portal.search.synonym;
+package com.liferay.portal.search.legacy.groupby;
+
+import com.liferay.portal.kernel.search.GroupBy;
+import com.liferay.portal.search.groupby.GroupByRequest;
 
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
- * @author Adam Brandizzi
- * @deprecated As of Mueller (7.2.x), with no direct replacement
+ * @author Bryan Engler
  */
-@Deprecated
 @ProviderType
-public interface SynonymIndexer {
+public interface GroupByRequestFactory {
 
-	public String[] getSynonymSets(long companyId, String filterName);
-
-	public String[] getSynonymSets(String indexName, String filterName);
-
-	public void updateSynonymSets(
-			long companyId, String filterName, String[] synonymSets)
-		throws SynonymException;
-
-	public void updateSynonymSets(
-			String indexName, String filterName, String[] synonymSets)
-		throws SynonymException;
+	/**
+	 * Provides a GroupByRequest object based off a legacy GroupBy object.
+	 *
+	 * @param groupBy the legacy GroupBy object to be converted
+	 * @return the converted GroupByRequest object
+	 *
+	 * @review
+	 */
+	public GroupByRequest getGroupByRequest(GroupBy groupBy);
 
 }

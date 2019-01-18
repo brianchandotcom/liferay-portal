@@ -5245,7 +5245,6 @@ ${output.content}</echo>
 						<test-action>
 							<local name="junit.failure.count" />
 							<local name="junit.failure.message" />
-							<local name="junit.timestamp" />
 
 							<trycatch property="junit.failure.message">
 								<try>
@@ -5290,20 +5289,12 @@ ${output.content}</echo>
 										<isset property="junit.failure.message" />
 									</condition>
 
-									<tstamp>
-										<format pattern="yyyy-MM-dd_kk:mm:ss" property="junit.timestamp" />
-									</tstamp>
-
-									<echo file="TEST-PortalStartupSpaceInPath.xml"><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
-
-<testsuite errors="${junit.failure.count}" failures="${junit.failure.count}" hostname="localhost" name="portal.startup.space.in.path" skipped="0" tests="1" time="0.0" timestamp="${junit.timestamp}">
-	<properties />
-	<testcase classname="PortalStartup" name="portalStartupSpaceInPath" time="0.0">
-		${junit.failure.message.element}
-	</testcase>
-	<system-out></system-out>
-	<system-err></system-err>
-</testsuite>]]></echo>
+									<generate-backend-batch-junit-report
+										junit.failure.count="${junit.failure.count}"
+										junit.failure.message.element="${junit.failure.message.element}"
+										test.class.name="PortalStartupSpaceInPath"
+										test.command.name="portalStartupSpaceInPath"
+									/>
 								</finally>
 							</trycatch>
 

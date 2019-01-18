@@ -774,35 +774,12 @@ class RuleEditor extends Component {
 	}
 
 	_fetchDataProviderParameters(id, index) {
-		const {actions, dataProviderInstanceParameterSettingsURL} = this;
-
-		const url = dataProviderInstanceParameterSettingsURL.slice(0, dataProviderInstanceParameterSettingsURL.length - 1);
+		const {dataProviderInstanceParameterSettingsURL} = this;
 
 		return makeFetch(
 			{
 				method: 'GET',
-				url: `${url}?ddmDataProviderInstanceId=${id}`
-			}
-		).then(
-			({inputs, outputs}) => {
-				actions[index].inputs = [];
-				actions[index].outputs = [];
-
-				if (!this.isDisposed() && inputs.length && outputs.length) {
-					const newInput = {
-						...inputs[0],
-						[inputs[0].name]: ''
-					};
-					const newOutput = {
-						...outputs[0],
-						[outputs[0].name]: ''
-					};
-
-					actions[index].inputs = [newInput];
-					actions[index].outputs = [newOutput];
-				}
-
-				return actions;
+				url: `${dataProviderInstanceParameterSettingsURL}?ddmDataProviderInstanceId=${id}`
 			}
 		).catch(
 			error => {
@@ -1435,9 +1412,39 @@ class RuleEditor extends Component {
 						this.setState(
 							{
 								actions
+	getDataProviderOptions(id, index) {
+		return this._fetchDataProviderParameters(id, index)
+			.then(
+				({inputs, outputs}) => {
+					let actions = this.actions;
+
+					if (!this.isDisposed()) {
+						actions = actions.map(
+							(action, currentIndex) => {
+								return index == currentIndex ? ({
+									...action,
+									ddmDataProviderInstanceUUID: this.dataProvider.find(
+										data => {
+											return data.id == id;
+										}
+									).uuid,
+									hasRequiredInputs: inputs.some(
+										input => input.required
+									),
+									inputs: this.formatDataProviderParameter(action.inputs, inputs),
+									inputsData: inputs,
+									outputs: this.formatDataProviderParameter(action.outputs, outputs),
+									outputsData: outputs
+								}) : action;
 							}
 						);
 					}
+
+					return actions[index];
+				}
+			).catch(
+				error => {
+					throw new Error(error);
 				}
 			);
 	}
@@ -1460,17 +1467,13 @@ class RuleEditor extends Component {
 		);
 	}
 
-	formatDataProviderParameter(parameters) {
-		return parameters.map(
-			param => (
-				{
-					...param,
-					fieldOptions: this.getFieldsByTypes(
-						this.fieldOptions,
-						this.getTypesByFieldType(param.type)
-					)
-				}
-			)
+	formatDataProviderParameter(actionParameters, parameters) {
+		return parameters.reduce(
+			(result, {name, value}, index) => ({
+				...result,
+				[name]: Object.keys(actionParameters).indexOf(name) !== -1 ? actionParameters[name] : value
+			}),
+			{}
 		);
 	}
 

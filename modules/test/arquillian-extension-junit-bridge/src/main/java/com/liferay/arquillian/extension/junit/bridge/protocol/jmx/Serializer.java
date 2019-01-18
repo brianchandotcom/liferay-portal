@@ -58,17 +58,4 @@ public class Serializer {
 		}
 	}
 
-	public static <T> T toObject(Class<T> type, InputStream input) {
-		try (ObjectInputStream objectInputStream = new ObjectInputStream(
-				input)) {
-
-			Object object = objectInputStream.readObject();
-
-			return (T)object;
-		}
-		catch (Exception e) {
-			throw new RuntimeException("Could not deserialize object", e);
-		}
-	}
-
 }

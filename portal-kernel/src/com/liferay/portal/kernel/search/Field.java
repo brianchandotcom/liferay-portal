@@ -216,7 +216,11 @@ public class Field implements Serializable {
 	}
 
 	public static String getSortableFieldName(String name) {
-		return name.concat(StringPool.UNDERLINE).concat(SORTABLE_FIELD_SUFFIX);
+		return name.concat(
+			StringPool.UNDERLINE
+		).concat(
+			SORTABLE_FIELD_SUFFIX
+		);
 	}
 
 	public static String getSortFieldName(Sort sort, String scoreFieldName) {

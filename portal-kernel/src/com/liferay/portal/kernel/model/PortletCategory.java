@@ -66,8 +66,11 @@ public class PortletCategory implements Serializable {
 	public void addCategory(PortletCategory portletCategory) {
 		portletCategory.setParentCategory(this);
 
-		String path = _path.concat(_DELIMITER).concat(
-			portletCategory.getName());
+		String path = _path.concat(
+			_DELIMITER
+		).concat(
+			portletCategory.getName()
+		);
 
 		portletCategory.setPath(path);
 

@@ -113,8 +113,13 @@ public class ExportImportPathUtil {
 					" because it is not an XML file");
 		}
 
-		return path.substring(0, pos).concat("-expando").concat(
-			path.substring(pos));
+		return path.substring(
+			0, pos
+		).concat(
+			"-expando"
+		).concat(
+			path.substring(pos)
+		);
 	}
 
 	/**

@@ -180,7 +180,11 @@ public class IntrabandBridgeDestination extends DestinationWrapper {
 
 		String spiId = spiConfiguration.getSPIId();
 
-		return spiProviderName.concat(StringPool.POUND).concat(spiId);
+		return spiProviderName.concat(
+			StringPool.POUND
+		).concat(
+			spiId
+		);
 	}
 
 }

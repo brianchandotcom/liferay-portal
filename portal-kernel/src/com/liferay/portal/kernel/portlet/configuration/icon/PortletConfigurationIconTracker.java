@@ -58,7 +58,11 @@ public class PortletConfigurationIconTracker {
 	}
 
 	protected static String getKey(String portletId, String path) {
-		return portletId.concat(StringPool.COLON).concat(path);
+		return portletId.concat(
+			StringPool.COLON
+		).concat(
+			path
+		);
 	}
 
 	protected static Set<String> getPaths(

@@ -52,7 +52,10 @@ public class BaseModelSearchResult<T extends BaseModel<T>>
 	public String toString() {
 		if (_baseModels.isEmpty()) {
 			return "{baseModels={}, length=".concat(
-				String.valueOf(_length)).concat(StringPool.CLOSE_BRACKET);
+				String.valueOf(_length)
+			).concat(
+				StringPool.CLOSE_BRACKET
+			);
 		}
 
 		StringBundler sb = new StringBundler(2 * _baseModels.size() + 3);

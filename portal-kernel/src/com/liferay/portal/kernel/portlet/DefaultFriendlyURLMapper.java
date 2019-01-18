@@ -104,8 +104,11 @@ public class DefaultFriendlyURLMapper extends BaseFriendlyURLMapper {
 
 		addParametersIncludedInPath(liferayPortletURL, routeParameters);
 
-		friendlyURLPath = StringPool.SLASH.concat(getMapping()).concat(
-			friendlyURLPath);
+		friendlyURLPath = StringPool.SLASH.concat(
+			getMapping()
+		).concat(
+			friendlyURLPath
+		);
 
 		return friendlyURLPath;
 	}

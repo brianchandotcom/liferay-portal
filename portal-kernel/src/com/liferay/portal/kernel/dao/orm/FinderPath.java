@@ -186,8 +186,11 @@ public class FinderPath {
 	}
 
 	private void _initLocalCacheKeyPrefix() {
-		_localCacheKeyPrefix = _cacheName.concat(StringPool.PERIOD).concat(
-			_cacheKeyPrefix);
+		_localCacheKeyPrefix = _cacheName.concat(
+			StringPool.PERIOD
+		).concat(
+			_cacheKeyPrefix
+		);
 	}
 
 	private static final String _ARGS_SEPARATOR = "_A_";

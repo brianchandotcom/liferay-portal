@@ -30,8 +30,11 @@ public abstract class BaseDBFactory implements DBFactory {
 		String majorVersion = StringUtil.toHexString(dbMajorVersion);
 		String minorVersion = StringUtil.toHexString(dbMinorVersion);
 
-		String version = majorVersion.concat(StringPool.POUND).concat(
-			minorVersion);
+		String version = majorVersion.concat(
+			StringPool.POUND
+		).concat(
+			minorVersion
+		);
 
 		DB db = _dbs.get(version);
 

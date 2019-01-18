@@ -1356,11 +1356,24 @@ class RuleEditor extends Component {
 
 	_handleTargetSelection(event) {
 		const {fieldInstance, value} = event;
+		const {actions} = this;
 		const id = value[0];
 		const index = this._getIndex(fieldInstance, '.target-action');
+
+		const previousTarget = actions[index].target;
+
+		if (previousTarget !== id && actions[index].action == 'auto-fill') {
+			this.populateDataProviderOptions(id, index);
+		}
+		else {
+			this.populateActionTargetValue(id, index);
+		}
+	}
+
+	populateActionTargetValue(id, index) {
 		const {actions} = this;
 
-		const previousTarget = this.actions[index].target;
+		const previousTarget = actions[index].target;
 
 		actions[index].target = id;
 		actions[index].label = id;
@@ -1369,17 +1382,12 @@ class RuleEditor extends Component {
 			actions[index].target = '';
 		}
 		else if (id === '') {
-			actions[index].inputs = [];
-			actions[index].outputs = [];
+			actions[index].inputs = {};
+			actions[index].outputs = {};
 			actions[index].hasRequiredInputs = false;
 		}
-		else if (previousTarget !== id) {
-			if (this.actions[index].action == 'auto-fill') {
-				this.getDataProviderOptions(id, index);
-			}
-			else if (this.actions[index].action == 'calculate') {
-				actions[index].calculatorFields = this._updateCalculatorFields(this.actions[index], id);
-			}
+		else if (previousTarget !== id && actions[index].action == 'calculate') {
+			actions[index].calculatorFields = this._updateCalculatorFields(this.actions[index], id);
 		}
 
 		this.setState(
@@ -1389,33 +1397,33 @@ class RuleEditor extends Component {
 		);
 	}
 
-	getDataProviderOptions(id, index) {
-		this._fetchDataProviderParameters(id, index)
-			.then(
-				actions => {
-					if (!this.isDisposed()) {
-						actions[index] = {
-							...actions[index],
-							inputs: this.formatDataProviderParameter(actions[index].inputs),
-							outputs: this.formatDataProviderParameter(actions[index].outputs)
-						};
+	populateDataProviderOptions(id, index) {
+		const {actions} = this;
 
-						actions[index].ddmDataProviderInstanceUUID = this.dataProvider.find(
-							data => {
-								return data.id == id;
-							}
-						).uuid;
+		actions[index].target = id;
+		actions[index].label = id;
 
-						actions[index].hasRequiredInputs = (actions[index].inputs)
-							.some(
-								input => {
-									return input.required;
+		this.getDataProviderOptions(id, index).then(
+			actionData => {
+				if (!this.isDisposed()) {
+					this.setState(
+						{
+							actions: actions.map(
+								(action, currentIndex) => {
+									return index == currentIndex ? actionData : action;
 								}
-							);
+							)
+						}
+					);
+				}
+			}
+		).catch(
+			error => {
+				throw new Error(error);
+			}
+		);
+	}
 
-						this.setState(
-							{
-								actions
 	getDataProviderOptions(id, index) {
 		return this._fetchDataProviderParameters(id, index)
 			.then(

@@ -1514,10 +1514,8 @@ class RuleEditor extends Component {
 					delete output.fieldOptions;
 					delete output.name;
 					delete output.type;
-					delete output.value;
 				}
 			);
-			action.outputs = Object.assign({}, ...action.outputs);
 		}
 
 		return action.outputs;

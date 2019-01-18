@@ -139,12 +139,16 @@ public class LayoutTemplateLocalServiceImpl
 
 		if (themeId != null) {
 			if (standard) {
-				layoutTemplate = _getThemesStandard(themeId).get(
-					layoutTemplateId);
+				Map<String, LayoutTemplate> themesStandard = _getThemesStandard(
+					themeId);
+
+				layoutTemplate = themesStandard.get(layoutTemplateId);
 			}
 			else {
-				layoutTemplate = _getThemesCustom(themeId).get(
-					layoutTemplateId);
+				Map<String, LayoutTemplate> themesCustom = _getThemesCustom(
+					themeId);
+
+				layoutTemplate = themesCustom.get(layoutTemplateId);
 			}
 
 			if (layoutTemplate != null) {

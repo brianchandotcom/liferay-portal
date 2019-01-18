@@ -187,8 +187,7 @@ public class JournalArticleActionDropdownItems {
 			copyArticleURL.setParameter(
 				ActionRequest.ACTION_NAME, "copyArticle");
 
-			copyArticleURL.setParameter(
-				"redirect", _themeDisplay.getURLCurrent());
+			copyArticleURL.setParameter("redirect", _getRedirect());
 			copyArticleURL.setParameter(
 				"groupId", String.valueOf(_article.getGroupId()));
 			copyArticleURL.setParameter(
@@ -209,9 +208,9 @@ public class JournalArticleActionDropdownItems {
 		return dropdownItem -> {
 			dropdownItem.setHref(
 				_liferayPortletResponse.createRenderURL(), "mvcPath",
-				"/copy_article.jsp", "redirect", _themeDisplay.getURLCurrent(),
-				"groupId", _article.getGroupId(), "oldArticleId",
-				_article.getArticleId(), "version", _article.getVersion());
+				"/copy_article.jsp", "redirect", _getRedirect(), "groupId",
+				_article.getGroupId(), "oldArticleId", _article.getArticleId(),
+				"version", _article.getVersion());
 			dropdownItem.setLabel(LanguageUtil.get(_request, "copy"));
 		};
 	}
@@ -229,7 +228,7 @@ public class JournalArticleActionDropdownItems {
 
 		deleteURL.setParameter(ActionRequest.ACTION_NAME, actionName);
 
-		deleteURL.setParameter("redirect", _themeDisplay.getURLCurrent());
+		deleteURL.setParameter("redirect", _getRedirect());
 		deleteURL.setParameter(
 			"groupId", String.valueOf(_article.getGroupId()));
 		deleteURL.setParameter("articleId", _article.getArticleId());
@@ -247,7 +246,7 @@ public class JournalArticleActionDropdownItems {
 		return dropdownItem -> {
 			dropdownItem.setHref(
 				_liferayPortletResponse.createRenderURL(), "mvcPath",
-				"/edit_article.jsp", "redirect", _themeDisplay.getURLCurrent(),
+				"/edit_article.jsp", "redirect", _getRedirect(),
 				"referringPortletResource", _getReferringPortletResource(),
 				"groupId", _article.getGroupId(), "folderId",
 				_article.getFolderId(), "articleId", _article.getArticleId(),
@@ -261,7 +260,7 @@ public class JournalArticleActionDropdownItems {
 		PortletURL expireURL = _liferayPortletResponse.createActionURL();
 
 		expireURL.setParameter(ActionRequest.ACTION_NAME, "expireArticles");
-		expireURL.setParameter("redirect", _themeDisplay.getURLCurrent());
+		expireURL.setParameter("redirect", _getRedirect());
 		expireURL.setParameter(
 			"groupId", String.valueOf(_article.getGroupId()));
 		expireURL.setParameter("articleId", _article.getArticleId());
@@ -277,7 +276,7 @@ public class JournalArticleActionDropdownItems {
 		return dropdownItem -> {
 			dropdownItem.setHref(
 				_liferayPortletResponse.createRenderURL(), "mvcPath",
-				"/move_entries.jsp", "redirect", _themeDisplay.getURLCurrent(),
+				"/move_entries.jsp", "redirect", _getRedirect(),
 				"referringPortletResource", _getReferringPortletResource(),
 				"rowIdsJournalArticle", _article.getArticleId());
 			dropdownItem.setIcon("move");
@@ -382,8 +381,7 @@ public class JournalArticleActionDropdownItems {
 		publishArticleURL.setParameter(
 			ActionRequest.ACTION_NAME, "/journal/publish_article");
 
-		publishArticleURL.setParameter(
-			"backURL", _themeDisplay.getURLCurrent());
+		publishArticleURL.setParameter("backURL", _getRedirect());
 		publishArticleURL.setParameter(
 			"groupId", String.valueOf(_article.getGroupId()));
 		publishArticleURL.setParameter("articleId", _article.getArticleId());
@@ -402,7 +400,8 @@ public class JournalArticleActionDropdownItems {
 			return _redirect;
 		}
 
-		_redirect = ParamUtil.getString(_liferayPortletRequest, "redirect");
+		_redirect = ParamUtil.getString(
+			_liferayPortletRequest, "redirect", _themeDisplay.getURLCurrent());
 
 		return _redirect;
 	}
@@ -429,8 +428,7 @@ public class JournalArticleActionDropdownItems {
 			unsubscribeArticleURL.setParameter(
 				ActionRequest.ACTION_NAME, "unsubscribeArticle");
 
-			unsubscribeArticleURL.setParameter(
-				"redirect", _themeDisplay.getURLCurrent());
+			unsubscribeArticleURL.setParameter("redirect", _getRedirect());
 			unsubscribeArticleURL.setParameter(
 				"articleId", String.valueOf(_article.getResourcePrimKey()));
 
@@ -449,8 +447,7 @@ public class JournalArticleActionDropdownItems {
 		subscribeArticleURL.setParameter(
 			ActionRequest.ACTION_NAME, "subscribeArticle");
 
-		subscribeArticleURL.setParameter(
-			"redirect", _themeDisplay.getURLCurrent());
+		subscribeArticleURL.setParameter("redirect", _getRedirect());
 		subscribeArticleURL.setParameter(
 			"articleId", String.valueOf(_article.getResourcePrimKey()));
 
@@ -495,7 +492,7 @@ public class JournalArticleActionDropdownItems {
 		try {
 			viewContentURL = assetRenderer.getURLViewInContext(
 				_liferayPortletRequest, _liferayPortletResponse,
-				_themeDisplay.getURLCurrent());
+				_getRedirect());
 		}
 		catch (Exception e) {
 			if (_log.isDebugEnabled()) {
@@ -511,9 +508,9 @@ public class JournalArticleActionDropdownItems {
 			dropdownItem.setHref(
 				_liferayPortletResponse.createRenderURL(), "mvcPath",
 				"/view_article_history.jsp", "redirect", _getRedirect(),
-				"backURL", _themeDisplay.getURLCurrent(),
-				"referringPortletResource", _getReferringPortletResource(),
-				"articleId", _article.getArticleId());
+				"backURL", _getRedirect(), "referringPortletResource",
+				_getReferringPortletResource(), "articleId",
+				_article.getArticleId());
 			dropdownItem.setLabel(LanguageUtil.get(_request, "view-history"));
 		};
 	}

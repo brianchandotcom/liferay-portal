@@ -127,8 +127,7 @@ public class JournalFolderActionDropdownItems {
 
 				dropdownItem.setHref(
 					_liferayPortletResponse.createRenderURL(), "mvcPath",
-					"/edit_folder.jsp", "redirect",
-					_themeDisplay.getURLCurrent(), "groupId",
+					"/edit_folder.jsp", "redirect", _getRedirect(), "groupId",
 					_folder.getGroupId(), "parentFolderId",
 					_folder.getFolderId());
 				dropdownItem.setLabel(
@@ -191,8 +190,8 @@ public class JournalFolderActionDropdownItems {
 		return dropdownItem -> {
 			dropdownItem.setHref(
 				_liferayPortletResponse.createRenderURL(), "mvcPath",
-				"/edit_folder.jsp", "redirect", _themeDisplay.getURLCurrent(),
-				"groupId", _themeDisplay.getScopeGroupId(), "parentFolderId",
+				"/edit_folder.jsp", "redirect", _getRedirect(), "groupId",
+				_themeDisplay.getScopeGroupId(), "parentFolderId",
 				JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 			dropdownItem.setLabel(LanguageUtil.get(_request, "add-folder"));
 		};
@@ -201,7 +200,7 @@ public class JournalFolderActionDropdownItems {
 	private Consumer<DropdownItem> _getDeleteFolderAction()
 		throws PortalException {
 
-		String redirect = _themeDisplay.getURLCurrent();
+		String redirect = _getRedirect();
 
 		long currentFolderId = ParamUtil.getLong(_request, "folderId");
 
@@ -246,9 +245,8 @@ public class JournalFolderActionDropdownItems {
 		return dropdownItem -> {
 			dropdownItem.setHref(
 				_liferayPortletResponse.createRenderURL(), "mvcPath",
-				"/edit_folder.jsp", "redirect", _themeDisplay.getURLCurrent(),
-				"groupId", _folder.getGroupId(), "folderId",
-				_folder.getFolderId());
+				"/edit_folder.jsp", "redirect", _getRedirect(), "groupId",
+				_folder.getGroupId(), "folderId", _folder.getFolderId());
 			dropdownItem.setLabel(LanguageUtil.get(_request, "edit"));
 		};
 	}
@@ -257,8 +255,8 @@ public class JournalFolderActionDropdownItems {
 		return dropdownItem -> {
 			dropdownItem.setHref(
 				_liferayPortletResponse.createRenderURL(), "mvcPath",
-				"/edit_folder.jsp", "redirect", _themeDisplay.getURLCurrent(),
-				"groupId", _themeDisplay.getScopeGroupId(), "folderId",
+				"/edit_folder.jsp", "redirect", _getRedirect(), "groupId",
+				_themeDisplay.getScopeGroupId(), "folderId",
 				JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID, "rootFolder",
 				true);
 			dropdownItem.setLabel(LanguageUtil.get(_request, "edit"));
@@ -269,7 +267,7 @@ public class JournalFolderActionDropdownItems {
 		return dropdownItem -> {
 			dropdownItem.setHref(
 				_liferayPortletResponse.createRenderURL(), "mvcPath",
-				"/move_entries.jsp", "redirect", _themeDisplay.getURLCurrent(),
+				"/move_entries.jsp", "redirect", _getRedirect(),
 				"rowIdsJournalFolder", _folder.getFolderId());
 			dropdownItem.setLabel(LanguageUtil.get(_request, "move"));
 		};
@@ -312,7 +310,7 @@ public class JournalFolderActionDropdownItems {
 		publishFolderURL.setParameter(
 			ActionRequest.ACTION_NAME, "/journal/publish_folder");
 
-		publishFolderURL.setParameter("backURL", _themeDisplay.getURLCurrent());
+		publishFolderURL.setParameter("backURL", _getRedirect());
 		publishFolderURL.setParameter(
 			"folderId", String.valueOf(_folder.getFolderId()));
 
@@ -323,6 +321,17 @@ public class JournalFolderActionDropdownItems {
 			dropdownItem.setLabel(
 				LanguageUtil.get(_request, "publish-to-live"));
 		};
+	}
+
+	private String _getRedirect() {
+		if (_redirect != null) {
+			return _redirect;
+		}
+
+		_redirect = ParamUtil.getString(
+			_liferayPortletRequest, "redirect", _themeDisplay.getURLCurrent());
+
+		return _redirect;
 	}
 
 	private boolean _isShowPublishAction() {
@@ -373,6 +382,7 @@ public class JournalFolderActionDropdownItems {
 	private final JournalFolder _folder;
 	private final LiferayPortletRequest _liferayPortletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;
+	private String _redirect;
 	private final HttpServletRequest _request;
 	private final ThemeDisplay _themeDisplay;
 	private final TrashHelper _trashHelper;

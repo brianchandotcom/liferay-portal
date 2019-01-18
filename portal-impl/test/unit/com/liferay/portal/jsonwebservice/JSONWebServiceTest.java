@@ -90,7 +90,11 @@ public class JSONWebServiceTest extends BaseJSONWebServiceTestCase {
 			ServiceContextFactory.class, "getInstance",
 			HttpServletRequest.class);
 
-		stub(method).toReturn(new ServiceContext());
+		stub(
+			method
+		).toReturn(
+			new ServiceContext()
+		);
 	}
 
 	@Test

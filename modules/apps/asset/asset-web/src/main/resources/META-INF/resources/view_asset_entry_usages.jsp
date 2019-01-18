@@ -161,9 +161,9 @@ renderResponse.setTitle(assetEntryUsagesDisplayContext.getAssetEntryTitle());
 						/>
 
 						<liferay-ui:search-container-column-text
-							name="portlet"
+							name="where"
 							translate="<%= true %>"
-							value="<%= PortalUtil.getPortletTitle(PortletIdCodec.decodePortletName(assetEntryUsage.getPortletId()), locale) %>"
+							value="<%= assetEntryUsagesDisplayContext.getAssetEntryUsageWhereLabel(assetEntryUsage) %>"
 						/>
 
 						<liferay-ui:search-container-column-date

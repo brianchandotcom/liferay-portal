@@ -20,7 +20,7 @@ Here are some of the types of changes documented in this file:
   replaces an old API, in spite of the old API being kept in Liferay Portal for
   backwards compatibility.
 
-*This document has been reviewed through commit `67429b52ebbd`.*
+*This document has been reviewed through commit `c3b54108fcd4`.*
 
 ## Breaking Changes Contribution Guidelines
 
@@ -123,41 +123,14 @@ You should provide your own Lodash version for your custom developments to use
 following any of the possible strategies to add third party libraries.
 
 As a temporary measure, you can bring back the old behavior by setting the
-*Enable Lodash* property in *System Settings* &rarr; *Third Party* &rarr;
-*Lodash* to `true`.
+*Enable Lodash* property in Liferay Portal's *Control Panel* &rarr;
+*Configuration* &rarr; *System Settings* &rarr; *Third Party* &rarr; *Lodash* to
+`true`.
 
 #### Why was this change made?
 
 This change was made to avoid bundling and serving additional library code on
 every page that was mostly unused and redundant.
-
----------------------------------------
-
-### Remove Link Application URLs to Page Functionality
-- **Date:** 2018-Dec-14
-- **JIRA Ticket:** [LPS-85948](https://issues.liferay.com/browse/LPS-85948)
-
-#### What changed?
-
-The *Link Portlet URLs to Page* option in the Look and Feel portlet was marked
-as deprecated in Liferay Portal 7.1, allowing the user to show and hide the
-option through a configuration property. In Liferay Portal 7.2, this has been
-removed and can no longer be configured.
-
-#### Who is affected?
-
-This affects administrators who used the option in the UI and developers who
-leveraged the option in the portlet.
-
-#### How should I update my code?
-
-You should update any portlets leveraging this feature, since any preconfigured
-reference to the property is ignored in the portal.
-
-#### Why was this change made?
-
-A limited number of portlets use this property; there are better ways to achieve
-the same results.
 
 ---------------------------------------
 
@@ -188,11 +161,39 @@ the settings there.
 
 If you would like to include the new configuration in your application, follow
 the instructions for
-[making your applications configurable](https://dev.liferay.com/develop/tutorials/-/knowledge_base/7-0/making-your-applications-configurable).
+[making applications configurable](https://dev.liferay.com/develop/tutorials/-/knowledge_base/7-1/making-applications-configurable).
 
 #### Why was this change made?
 
 This change was made as part of the modularization efforts to ease portal
 configuration changes.
+
+---------------------------------------
+
+### Remove Link Application URLs to Page Functionality
+- **Date:** 2018-Dec-14
+- **JIRA Ticket:** [LPS-85948](https://issues.liferay.com/browse/LPS-85948)
+
+#### What changed?
+
+The *Link Portlet URLs to Page* option in the Look and Feel portlet was marked
+as deprecated in Liferay Portal 7.1, allowing the user to show and hide the
+option through a configuration property. In Liferay Portal 7.2, this has been
+removed and can no longer be configured.
+
+#### Who is affected?
+
+This affects administrators who used the option in the UI and developers who
+leveraged the option in the portlet.
+
+#### How should I update my code?
+
+You should update any portlets leveraging this feature, since any preconfigured
+reference to the property is ignored in the portal.
+
+#### Why was this change made?
+
+A limited number of portlets use this property; there are better ways to achieve
+the same results.
 
 ---------------------------------------

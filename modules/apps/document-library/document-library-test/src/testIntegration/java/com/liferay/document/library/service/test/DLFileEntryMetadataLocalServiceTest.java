@@ -114,7 +114,8 @@ public class DLFileEntryMetadataLocalServiceTest {
 		List<com.liferay.dynamic.data.mapping.kernel.DDMStructure>
 			ddmStructures = _dlFileEntryType.getDDMStructures();
 
-		DDMStructure ddmStructure = ddmStructures.get(0);
+		com.liferay.dynamic.data.mapping.kernel.DDMStructure ddmStructure =
+			ddmStructures.get(0);
 
 		_ddmStructure = DDMStructureLocalServiceUtil.getStructure(
 			ddmStructure.getStructureId());

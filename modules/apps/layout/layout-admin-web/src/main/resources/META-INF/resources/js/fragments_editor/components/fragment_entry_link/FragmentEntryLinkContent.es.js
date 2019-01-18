@@ -57,7 +57,7 @@ class FragmentEntryLinkContent extends Component {
 	 * @review
 	 */
 	rendered(firstRender) {
-		if (firstRender) {
+		if (this.content) {
 			this._renderContent(this.content);
 		}
 	}

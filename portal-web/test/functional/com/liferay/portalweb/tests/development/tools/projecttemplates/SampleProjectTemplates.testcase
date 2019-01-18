@@ -1,6 +1,5 @@
 @component-name = "portal-project-template"
 definition {
-	property portal.acceptance = "true";
 	property portal.release = "false";
 	property portal.upstream = "true";
 	property testray.main.component.name = "Project Templates";
@@ -27,8 +26,9 @@ definition {
 		}
 	}
 
-	@priority = "4"
+	@priority = "5"
 	test MvcPortletTemplateSmoke {
+		property portal.acceptance = "true";
 		property project.templates = "mvc-portlet";
 		property test.name.skip.portal.instance = "SampleProjectTemplates#MvcPortletTemplateSmoke";
 
@@ -39,8 +39,9 @@ definition {
 		Portlet.viewPG(portletBody = "Hello from Samplemvc!", portletName = "Samplemvc");
 	}
 
-	@priority = "4"
+	@priority = "5"
 	test ThemeTemplateSmoke {
+		property portal.acceptance = "false";
 		property project.templates = "theme";
 		property test.name.skip.portal.instance = "SampleProjectTemplates#ThemeTemplateSmoke";
 		var themeName = "sampletheme";

@@ -146,6 +146,30 @@ definition {
 		SelectFrame(value1 = "relative=top");
 	}
 
+	macro DeletePollCP {
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Polls"
+		);
+
+		Click(
+			locator1 = "Polls#POLLS_TABLE_ACTION",
+			key_pollsQuestionTitle = "${pollsQuestionTitle}"
+		);
+
+		MenuItem.clickNoError(menuItem = "Delete");
+
+		AssertConfirm.waitForConfirmation(
+			value1 = "Are you sure you want to delete this? It will be deleted immediately."
+		);
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "Message#SUCCESS",
+			value1 = "Your request completed successfully."
+		);
+	}
+
 	macro selectPollPG {
 		MouseOver.mouseOverNotVisible(locator1 = "Polls#SELECT_QUESTION");
 
@@ -224,6 +248,29 @@ definition {
 		AssertElementPresent(locator1 = "Polls#CHART_IMAGE");
 
 		Close.closeWindow(locator1 = "null");
+	}
+
+	macro viewPollOnLivingSite {
+		var key_pollsQuestion = "${pollsQuestion}";
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "Polls#POLL_QUESTION",
+			value1 = "${pollsQuestion}"
+		);
+
+		for (var pollsQuestionChoice : list "${pollsQuestionChoiceList}") {
+			var key_pollsQuestionChoice = "${pollsQuestionChoice}";
+
+			AssertElementNotPresent(locator1 = "Polls#POLL_QUESTION_CHOICE");
+
+			Polls.viewVotedPollPG(
+				pollsQuestionChoice = "${pollsQuestionChoice}",
+				pollsQuestionTotalVotes = "${pollsQuestionTotalVotes}",
+				pollsQuestionVoteCount = "${pollsQuestionVoteCount}",
+				pollsQuestionVotePercent = "${pollsQuestionVotePercent}"
+			);
+		}
+
 	}
 
 	macro viewPollPG {

@@ -3,22 +3,40 @@ import TypedInput from 'components/criteria_builder/TypedInput.es';
 import {PROPERTY_TYPES} from 'utils/constants.es';
 import {cleanup, fireEvent, render} from 'react-testing-library';
 
+const DATE_INPUT_TESTID = 'date-input';
+
+const DECIMAL_NUMBER_INPUT_TESTID = 'decimal-number';
+
+const INTEGER_NUMBER_INPUT_TESTID = 'integer-number';
+
+const OPTIONS_BOOLEAN_INPUT_TESTID = 'options-boolean';
+
+const OPTIONS_STRING_INPUT_TESTID = 'options-string';
+
+const SIMPLE_STRING_INPUT_TESTID = 'simple-string';
+
 const defaultValue = 'defaultValue';
 
-function testControlledInput({element, value, mockFunc, pushingValue = 'Liferay'}) {
+function testControlledInput(
+	{
+		element,
+		mockFunc,
+		newValue = 'Liferay',
+		newValueExpected,
+		value
+	}
+) {
 	expect(element.value).toBe(value);
 
 	fireEvent.change(
 		element,
 		{
-			target: {value: pushingValue}
+			target: {value: newValue}
 		}
 	);
 
 	expect(mockFunc.mock.calls.length).toBe(1);
-	expect(mockFunc.mock.calls[0][0]).toBe(pushingValue);
-
-	// As the input is controlled
+	expect(mockFunc.mock.calls[0][0]).toBe(newValueExpected || newValue);
 
 	expect(element.value).toBe(value);
 }
@@ -33,6 +51,7 @@ describe(
 			() => {
 				const {asFragment} = render(
 					<TypedInput
+						onChange={jest.fn()}
 						type="string"
 					/>
 				);
@@ -56,11 +75,11 @@ describe(
 
 				expect(asFragment()).toMatchSnapshot();
 
-				const input = getByTestId('simple-string');
+				const element = getByTestId(SIMPLE_STRING_INPUT_TESTID);
 
 				testControlledInput(
 					{
-						element: input,
+						element,
 						mockFunc: mockOnChange,
 						value: defaultValue
 					}
@@ -69,7 +88,7 @@ describe(
 		);
 
 		it(
-			'should render type string with pseudotype options',
+			'should render type string with options',
 			() => {
 				const mockOnChange = jest.fn();
 
@@ -94,11 +113,11 @@ describe(
 
 				expect(asFragment()).toMatchSnapshot();
 
-				const selector = getByTestId('options-string');
+				const element = getByTestId(OPTIONS_STRING_INPUT_TESTID);
 
 				testControlledInput(
 					{
-						element: selector,
+						element,
 						mockFunc: mockOnChange,
 						value: defaultValue
 					}
@@ -123,13 +142,13 @@ describe(
 
 				expect(asFragment()).toMatchSnapshot();
 
-				const selector = getByTestId('options-boolean');
+				const element = getByTestId(OPTIONS_BOOLEAN_INPUT_TESTID);
 
 				testControlledInput(
 					{
-						element: selector,
+						element,
 						mockFunc: mockOnChange,
-						pushingValue: 'false',
+						newValue: 'false',
 						value: defaultBoolValue
 					}
 				);
@@ -137,7 +156,7 @@ describe(
 		);
 
 		it(
-			'should render type number',
+			'should render type integer number',
 			() => {
 				const mockOnChange = jest.fn();
 
@@ -146,20 +165,89 @@ describe(
 				const {asFragment, getByTestId} = render(
 					<TypedInput
 						onChange={mockOnChange}
-						type={PROPERTY_TYPES.NUMBER}
+						type={PROPERTY_TYPES.INTEGER}
 						value={defaultNumberValue}
 					/>
 				);
 
 				expect(asFragment()).toMatchSnapshot();
 
-				const selector = getByTestId('simple-number');
+				const element = getByTestId(INTEGER_NUMBER_INPUT_TESTID);
 
 				testControlledInput(
 					{
-						element: selector,
+						element,
 						mockFunc: mockOnChange,
-						pushingValue: '2',
+						newValue: '2',
+						value: defaultNumberValue
+					}
+				);
+			}
+		);
+
+		it(
+			'should render type decimal number',
+			() => {
+				const mockOnChange = jest.fn();
+
+				const defaultNumberValue = '1.23';
+				const newNumberValue = '2.34';
+
+				const {asFragment, getByTestId} = render(
+					<TypedInput
+						onChange={mockOnChange}
+						type={PROPERTY_TYPES.DOUBLE}
+						value={defaultNumberValue}
+					/>
+				);
+
+				expect(asFragment()).toMatchSnapshot();
+
+				const element = getByTestId(DECIMAL_NUMBER_INPUT_TESTID);
+
+				// Needs to be tested a different way from other inputs since
+				// the onChange is called in onBlur rather than on input change.
+
+				expect(element.value).toBe(defaultNumberValue);
+
+				fireEvent.change(
+					element,
+					{
+						target: {value: newNumberValue}
+					}
+				);
+
+				fireEvent.blur(element);
+
+				expect(element.value).toBe(newNumberValue);
+			}
+		);
+
+		it(
+			'should render type date',
+			() => {
+				const mockOnChange = jest.fn();
+
+				const defaultNumberValue = '2019-01-23';
+
+				const {asFragment, getByTestId} = render(
+					<TypedInput
+						onChange={mockOnChange}
+						type={PROPERTY_TYPES.DATE}
+						value={defaultNumberValue}
+					/>
+				);
+
+				expect(asFragment()).toMatchSnapshot();
+
+				const element = getByTestId(DATE_INPUT_TESTID);
+
+				testControlledInput(
+					{
+						element,
+						mockFunc: mockOnChange,
+						newValue: '2019-01-24',
+						newValueExpected: '2019-01-24T00:00:00.000Z',
 						value: defaultNumberValue
 					}
 				);

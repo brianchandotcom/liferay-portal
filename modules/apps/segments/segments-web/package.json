@@ -93,7 +93,7 @@
 		"csf": "csf {src,test}/**/*.es.js src/**/*.scss",
 		"format": "npm run csf -- -i",
 		"start": "webpack-dev-server --config ./webpack.dev.config.js",
-		"test": "jest",
+		"test": "env TZ=utc jest",
 		"test:watch": "jest --watch"
 	},
 	"version": "1.0.0"

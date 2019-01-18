@@ -122,6 +122,7 @@ class TypedInput extends React.Component {
 			<div className="criterion-input date-input">
 				<input
 					className="form-control"
+					data-testid="date-input"
 					onChange={this._handleDateChange}
 					type="date"
 					value={domStringDate}
@@ -152,7 +153,7 @@ class TypedInput extends React.Component {
 		return (
 			<input
 				className="criterion-input form-control"
-				data-testid="simple-number"
+				data-testid="integer-number"
 				onChange={this._handleIntegerChange}
 				type="number"
 				value={value}

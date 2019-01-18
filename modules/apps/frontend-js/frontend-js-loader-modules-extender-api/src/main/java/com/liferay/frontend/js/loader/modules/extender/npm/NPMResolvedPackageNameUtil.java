@@ -32,19 +32,17 @@ public class NPMResolvedPackageNameUtil {
 		String portletResource = ParamUtil.getString(
 			request, "portletResource");
 
+		ServletContext servletContext = request.getServletContext();
+
 		if (Validator.isNotNull(portletResource)) {
 			PortletBag portletBag = PortletBagPool.get(
 				PortletIdCodec.decodePortletName(portletResource));
 
 			if (portletBag != null) {
-				return get(portletBag.getServletContext());
+				servletContext = portletBag.getServletContext();
 			}
 		}
 
-		return get(request.getServletContext());
-	}
-
-	public static String get(ServletContext servletContext) {
 		return (String)servletContext.getAttribute(
 			NPMResolvedPackageNameUtil.class.getName());
 	}

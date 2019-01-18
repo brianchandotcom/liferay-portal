@@ -31,7 +31,7 @@ import com.liferay.taglib.util.ParamAndPropertyAncestorTagImpl;
 import java.util.Map;
 import java.util.Set;
 
-import javax.servlet.ServletRequest;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.JspWriter;
 
@@ -100,10 +100,10 @@ public class TemplateRendererTag extends ParamAndPropertyAncestorTagImpl {
 			return _module;
 		}
 
-		ServletRequest servletRequest = pageContext.getRequest();
+		HttpServletRequest request =
+			(HttpServletRequest)pageContext.getRequest();
 
-		String namespace = NPMResolvedPackageNameUtil.get(
-			servletRequest.getServletContext());
+		String namespace = NPMResolvedPackageNameUtil.get(request);
 
 		return namespace + "/" + _module;
 	}

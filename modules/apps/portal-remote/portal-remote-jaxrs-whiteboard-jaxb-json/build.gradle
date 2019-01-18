@@ -1,11 +1,24 @@
 task deployConfigs(type: Copy)
 
 dependencies {
-	compileOnly group: "org.apache.aries.jax.rs", name: "org.apache.aries.jax.rs.jaxb.json.cxf-jettison", version: "1.0.0"
+	compileOnly group: "com.fasterxml.jackson.core", name: "jackson-annotations", version: "2.9.0"
+	compileOnly group: "com.fasterxml.jackson.core", name: "jackson-core", version: "2.9.6"
+	compileOnly group: "com.fasterxml.jackson.core", name: "jackson-databind", version: "2.9.6"
+	compileOnly group: "com.fasterxml.jackson.jaxrs", name: "jackson-jaxrs-base", version: "2.9.6"
+	compileOnly group: "com.fasterxml.jackson.jaxrs", name: "jackson-jaxrs-json-provider", version: "2.9.6"
+	compileOnly group: "com.fasterxml.jackson.module", name: "jackson-module-jaxb-annotations", version: "2.9.6"
+	compileOnly group: "org.apache.aries.jax.rs", name: "org.apache.aries.jax.rs.jackson", version: "1.0.1"
 }
 
 deployDependencies {
 	from (configurations.compileOnly) {
-		include "org.apache.aries.jax.rs.jaxb.json.cxf-jettison*.jar"
+		include "org.apache.aries.jax.rs.jackson-*.jar"
+		include "jackson-annotations-*.jar"
+		include "jackson-core-*.jar"
+		include "jackson-databind-*.jar"
+		include "jackson-jaxb-*.jar"
+		include "jackson-jaxrs-base-*.jar"
+		include "jackson-jaxrs-json-provider-*.jar"
+		include "jackson-module-jaxb-annotations-*.jar"
 	}
 }

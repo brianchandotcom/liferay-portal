@@ -954,7 +954,7 @@ public class DocumentumRepository
 						idfCollection = idfQuery.execute(
 							idfSession, IDfQuery.DF_READ_QUERY);
 
-						for (int i = 0; i < start && i < total; i++) {
+						for (int i = 0; (i < start) && (i < total); i++) {
 							idfCollection.next();
 						}
 

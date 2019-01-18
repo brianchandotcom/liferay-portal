@@ -111,7 +111,7 @@ public class DummyReferenceStagedModelRepository
 		_dummyReferences.removeIf(
 			dummyReference ->
 				dummyReference.getUuid().equals(uuid) &&
-				dummyReference.getGroupId() == groupId);
+				(dummyReference.getGroupId() == groupId));
 	}
 
 	@Override

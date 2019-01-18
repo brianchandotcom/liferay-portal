@@ -106,7 +106,8 @@ public class DummyStagedModelRepository
 
 		_dummies.removeIf(
 			dummy ->
-				dummy.getUuid().equals(uuid) && dummy.getGroupId() == groupId);
+				dummy.getUuid().equals(uuid) &&
+				(dummy.getGroupId() == groupId));
 	}
 
 	@Override
@@ -154,7 +155,7 @@ public class DummyStagedModelRepository
 		List<Dummy> dummies = dummiesStream.filter(
 			dummy ->
 				dummy.getUuid().equals(uuid) &&
-				dummy.getGroupId() == groupId
+				(dummy.getGroupId() == groupId)
 		).collect(
 			Collectors.toList()
 		);
@@ -175,7 +176,7 @@ public class DummyStagedModelRepository
 		return dummiesStream.filter(
 			dummy ->
 				dummy.getUuid().equals(uuid) &&
-				dummy.getCompanyId() == companyId
+				(dummy.getCompanyId() == companyId)
 		).collect(
 			Collectors.toList()
 		);

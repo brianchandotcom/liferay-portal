@@ -405,7 +405,7 @@ public class StringUtil {
 
 		int pos = start;
 
-		while ((pos < end) && (pos = s.indexOf(text, pos)) != -1) {
+		while ((pos < end) && ((pos = s.indexOf(text, pos)) != -1)) {
 			if (pos < end) {
 				count++;
 			}

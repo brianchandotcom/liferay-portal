@@ -111,7 +111,7 @@ public class DummyFolderStagedModelRepository
 		_dummyFolders.removeIf(
 			dummyFolder ->
 				dummyFolder.getUuid().equals(uuid) &&
-				 dummyFolder.getGroupId() == groupId);
+				(dummyFolder.getGroupId() == groupId));
 	}
 
 	@Override

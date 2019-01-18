@@ -143,7 +143,7 @@ public class JSPWhitespaceCheck extends WhitespaceCheck {
 				while (true) {
 					pos = line.indexOf("<%=", pos + 1);
 
-					if ((pos == -1) || (pos + 3) == line.length()) {
+					if ((pos == -1) || ((pos + 3) == line.length())) {
 						break;
 					}
 

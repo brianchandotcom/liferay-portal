@@ -100,7 +100,7 @@ public class XMLUtil {
 				sb.append(c);
 			}
 
-			if (Character.isHighSurrogate(c) && (i + 1) < xml.length()) {
+			if (Character.isHighSurrogate(c) && ((i + 1) < xml.length())) {
 				char c2 = xml.charAt(i + 1);
 
 				if (Character.isLowSurrogate(c2)) {

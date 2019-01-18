@@ -629,8 +629,8 @@ public class IndentationCheck extends BaseCheck {
 				String trimmedLine = StringUtil.trim(line);
 
 				if (!trimmedLine.startsWith("return ") &&
-					(parentDetailAST.getColumnNo() + text.length()) ==
-						line.length()) {
+					((parentDetailAST.getColumnNo() + text.length()) ==
+						line.length())) {
 
 					tabCount--;
 				}

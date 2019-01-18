@@ -138,7 +138,7 @@ public class DoPrivilegedFactory
 		DoPrivileged doPrivileged = beanClass.getAnnotation(DoPrivileged.class);
 
 		while ((doPrivileged == null) &&
-			   (beanClass = beanClass.getSuperclass()) != null) {
+			   ((beanClass = beanClass.getSuperclass()) != null)) {
 
 			doPrivileged = beanClass.getAnnotation(DoPrivileged.class);
 		}

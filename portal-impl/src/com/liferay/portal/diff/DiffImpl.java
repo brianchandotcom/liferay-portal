@@ -297,7 +297,9 @@ public class DiffImpl implements com.liferay.portal.kernel.diff.Diff {
 
 		// Lines are aligned, check for differences of the following lines.
 
-		for (; i <= difference.getDeletedEnd() && j <= difference.getAddedEnd();
+		for (;
+			 (i <= difference.getDeletedEnd()) &&
+			 (j <= difference.getAddedEnd());
 			 i++, j++) {
 
 			if (!_isMaxLineLengthExceeded(

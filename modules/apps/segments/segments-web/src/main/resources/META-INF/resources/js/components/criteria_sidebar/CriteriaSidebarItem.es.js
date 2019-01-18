@@ -47,8 +47,11 @@ class CriteriaSidebarItem extends Component {
 		case 'date':
 			returnValue = 'date';
 			break;
-		case 'number':
-			returnValue = 'number';
+		case 'double':
+			returnValue = 'decimal';
+			break;
+		case 'integer':
+			returnValue = 'integer';
 			break;
 		case 'string':
 			returnValue = 'text';

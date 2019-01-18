@@ -75,7 +75,10 @@ public class ServletContextUtil {
 		if (cache) {
 			lastModifiedCacheKey = ServletContextUtil.class.getName();
 			lastModifiedCacheKey = lastModifiedCacheKey.concat(
-				StringPool.PERIOD).concat(path);
+				StringPool.PERIOD
+			).concat(
+				path
+			);
 
 			Long lastModified = (Long)servletContext.getAttribute(
 				lastModifiedCacheKey);

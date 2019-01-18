@@ -92,8 +92,10 @@ public class TreePathUtil {
 
 			for (TreeModel treeModel : treeModels) {
 				String treePath = curParentTreePath.concat(
-					String.valueOf(treeModel.getPrimaryKeyObj())).concat(
-						StringPool.SLASH);
+					String.valueOf(treeModel.getPrimaryKeyObj())
+				).concat(
+					StringPool.SLASH
+				);
 
 				if (!treePath.equals(treeModel.getTreePath())) {
 					treeModel.updateTreePath(treePath);
@@ -150,8 +152,10 @@ public class TreePathUtil {
 
 			for (TreeModel treeModel : treeModels) {
 				String treePath = _parentTreePath.concat(
-					String.valueOf(treeModel.getPrimaryKeyObj())).concat(
-						StringPool.SLASH);
+					String.valueOf(treeModel.getPrimaryKeyObj())
+				).concat(
+					StringPool.SLASH
+				);
 
 				if (!treePath.equals(treeModel.getTreePath())) {
 					treeModel.updateTreePath(treePath);

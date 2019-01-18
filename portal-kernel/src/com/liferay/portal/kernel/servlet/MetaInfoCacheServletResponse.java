@@ -243,8 +243,11 @@ public class MetaInfoCacheServletResponse extends HttpServletResponseWrapper {
 		String contentType = _metaData._contentType;
 
 		if ((contentType != null) && (_metaData._charsetName != null)) {
-			contentType = contentType.concat("; charset=").concat(
-				_metaData._charsetName);
+			contentType = contentType.concat(
+				"; charset="
+			).concat(
+				_metaData._charsetName
+			);
 		}
 
 		return contentType;

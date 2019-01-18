@@ -93,8 +93,11 @@ public class PortalSocketPermission {
 			}
 		}
 
-		String location = domain.concat(StringPool.COLON).concat(
-			String.valueOf(port));
+		String location = domain.concat(
+			StringPool.COLON
+		).concat(
+			String.valueOf(port)
+		);
 
 		_pacl.checkPermission(location, "connect");
 	}

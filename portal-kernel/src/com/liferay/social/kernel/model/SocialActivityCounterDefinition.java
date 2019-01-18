@@ -94,8 +94,11 @@ public class SocialActivityCounterDefinition implements Serializable {
 	}
 
 	public String getKey() {
-		return _name.concat(StringPool.SLASH).concat(
-			String.valueOf(_ownerType));
+		return _name.concat(
+			StringPool.SLASH
+		).concat(
+			String.valueOf(_ownerType)
+		);
 	}
 
 	public int getLimitPeriod() {

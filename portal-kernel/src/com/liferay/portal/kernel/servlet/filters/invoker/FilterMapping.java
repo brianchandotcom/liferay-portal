@@ -139,7 +139,11 @@ public class FilterMapping {
 		String queryString = request.getQueryString();
 
 		if (Validator.isNotNull(queryString)) {
-			url = url.concat(StringPool.QUESTION).concat(queryString);
+			url = url.concat(
+				StringPool.QUESTION
+			).concat(
+				queryString
+			);
 		}
 
 		boolean matchURLRegexPattern = true;

@@ -15,6 +15,7 @@
 package com.liferay.headless.person.resource;
 
 import com.liferay.apio.architect.annotation.Actions;
+import com.liferay.apio.architect.annotation.Body;
 import com.liferay.apio.architect.annotation.EntryPoint;
 import com.liferay.apio.architect.annotation.Id;
 import com.liferay.apio.architect.pagination.PageItems;
@@ -30,6 +31,12 @@ import com.liferay.portal.kernel.model.Company;
  */
 public interface PersonResource extends ActionRouter<Person> {
 
+	@Actions.Create
+	public Person createPerson(@Body Person person) throws PortalException;
+
+	@Actions.Remove
+	public void deletePerson(@Id long personId) throws PortalException;
+
 	@Actions.Retrieve
 	@EntryPoint
 	public PageItems<Person> getPageItems(
@@ -37,5 +44,9 @@ public interface PersonResource extends ActionRouter<Person> {
 
 	@Actions.Retrieve
 	public Person getPerson(@Id long personId) throws PortalException;
+
+	@Actions.Replace
+	public Person replacePerson(@Id long personId, @Body Person person)
+		throws PortalException;
 
 }

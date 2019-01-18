@@ -34,6 +34,15 @@ import org.osgi.service.component.annotations.Component;
 public class PersonResourceImpl implements PersonResource {
 
 	@Override
+	public Person createPerson(Person person) throws PortalException {
+		return null;
+	}
+
+	@Override
+	public void deletePerson(long personId) throws PortalException {
+	}
+
+	@Override
 	public PageItems<Person> getPageItems(
 		Pagination pagination, Company company) {
 
@@ -42,6 +51,13 @@ public class PersonResourceImpl implements PersonResource {
 
 	@Override
 	public Person getPerson(long personId) throws PortalException {
+		return null;
+	}
+
+	@Override
+	public Person replacePerson(long personId, Person person)
+		throws PortalException {
+
 		return null;
 	}
 

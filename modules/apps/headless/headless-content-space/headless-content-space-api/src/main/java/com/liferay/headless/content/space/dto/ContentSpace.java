@@ -17,6 +17,7 @@ package com.liferay.headless.content.space.dto;
 import com.liferay.apio.architect.annotation.Id;
 import com.liferay.apio.architect.annotation.Vocabulary;
 import com.liferay.apio.architect.identifier.Identifier;
+import com.liferay.headless.person.dto.Person;
 
 import java.util.List;
 import java.util.Locale;
@@ -40,5 +41,9 @@ public interface ContentSpace extends Identifier<Long> {
 
 	@Vocabulary.Field("name")
 	public String getName(Locale locale);
+
+	@Vocabulary.Field("creator")
+	@Vocabulary.LinkTo(resource = Person.class)
+	public Long getCreatorId();
 
 }

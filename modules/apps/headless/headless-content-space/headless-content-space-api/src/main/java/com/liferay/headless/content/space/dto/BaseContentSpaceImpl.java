@@ -53,4 +53,15 @@ public abstract class BaseContentSpaceImpl implements ContentSpace {
 	private String _description;
 	private long _id;
 
+	@Override
+	public Long getCreatorId() {
+		return creatorId;
+	}
+
+	public void setCreatorId(Long creatorId) {
+		this.creatorId = creatorId;
+	}
+
+	private Long creatorId;
+
 }

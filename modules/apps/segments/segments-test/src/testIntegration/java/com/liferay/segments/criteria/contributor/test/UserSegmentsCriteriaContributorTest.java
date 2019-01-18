@@ -20,21 +20,31 @@ import com.liferay.expando.kernel.model.ExpandoColumnConstants;
 import com.liferay.expando.kernel.model.ExpandoTable;
 import com.liferay.expando.kernel.model.ExpandoValue;
 import com.liferay.expando.kernel.service.ExpandoColumnLocalService;
+import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.servlet.PortletServlet;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.odata.entity.ComplexEntityField;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerTestRule;
+import com.liferay.portal.util.test.LayoutTestUtil;
 import com.liferay.portlet.expando.util.test.ExpandoTestUtil;
 import com.liferay.registry.Filter;
 import com.liferay.registry.Registry;
@@ -48,6 +58,7 @@ import java.io.Serializable;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -61,6 +72,9 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import org.springframework.mock.web.MockHttpServletRequest;
+import org.springframework.mock.web.portlet.MockPortletRequest;
 
 /**
  * @author Eduardo García
@@ -108,6 +122,8 @@ public class UserSegmentsCriteriaContributorTest {
 	public void setUp() throws Exception {
 		_expandoTable = ExpandoTestUtil.addTable(
 			PortalUtil.getClassNameId(User.class), "CUSTOM_FIELDS");
+
+		_group = GroupTestUtil.addGroup();
 	}
 
 	@Test
@@ -131,7 +147,7 @@ public class UserSegmentsCriteriaContributorTest {
 			_getSegmentsCriteriaContributor();
 
 		List<Field> fields = segmentsCriteriaContributor.getFields(
-			LocaleUtil.getDefault());
+			_getMockPortletRequest());
 
 		Stream<Field> stream = fields.stream();
 
@@ -165,7 +181,7 @@ public class UserSegmentsCriteriaContributorTest {
 			_getSegmentsCriteriaContributor();
 
 		List<Field> fields = segmentsCriteriaContributor.getFields(
-			LocaleUtil.getDefault());
+			_getMockPortletRequest());
 
 		Stream<Field> fieldStream = fields.stream();
 
@@ -190,6 +206,32 @@ public class UserSegmentsCriteriaContributorTest {
 		);
 
 		Assert.assertEquals(Arrays.asList(defaultValue), optionValues);
+	}
+
+	@Test
+	public void testGetFieldsWithSelectEntity() throws Exception {
+		SegmentsCriteriaContributor segmentsCriteriaContributor =
+			_getSegmentsCriteriaContributor();
+
+		List<Field> fields = segmentsCriteriaContributor.getFields(
+			_getMockPortletRequest());
+
+		Stream<Field> fieldStream = fields.stream();
+
+		Optional<Field> optionalField = fieldStream.filter(
+			field -> Objects.equals(field.getName(), "groupIds")
+		).findFirst();
+
+		Assert.assertTrue(optionalField.isPresent());
+
+		Field field = optionalField.get();
+
+		Assert.assertEquals("id", field.getType());
+
+		Field.SelectEntity selectEntity = field.getSelectEntity();
+
+		Assert.assertNotNull(
+			"Id type fields must contain a select entity,", selectEntity);
 	}
 
 	private ExpandoColumn _addExpandoColumn(
@@ -222,6 +264,40 @@ public class UserSegmentsCriteriaContributorTest {
 		return _entityModelServiceTracker.getService();
 	}
 
+	private MockPortletRequest _getMockPortletRequest() throws Exception {
+		ThemeDisplay themeDisplay = new ThemeDisplay();
+
+		Company company = _companyLocalService.getCompany(
+			TestPropsValues.getCompanyId());
+
+		themeDisplay.setCompany(company);
+
+		Layout layout = LayoutTestUtil.addLayout(_group);
+
+		themeDisplay.setLayout(layout);
+		themeDisplay.setLayoutSet(layout.getLayoutSet());
+
+		themeDisplay.setLocale(LocaleUtil.getDefault());
+		themeDisplay.setPlid(layout.getPlid());
+		themeDisplay.setPortalURL("http://localhost:8080");
+		themeDisplay.setScopeGroupId(_group.getGroupId());
+		themeDisplay.setSiteGroupId(_group.getGroupId());
+		themeDisplay.setUser(TestPropsValues.getUser());
+
+		MockHttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest();
+
+		mockHttpServletRequest.setAttribute(
+			WebKeys.THEME_DISPLAY, themeDisplay);
+
+		MockPortletRequest mockPortletRequest = new MockPortletRequest();
+
+		mockPortletRequest.setAttribute(
+			PortletServlet.PORTLET_SERVLET_REQUEST, mockHttpServletRequest);
+
+		return mockPortletRequest;
+	}
+
 	private SegmentsCriteriaContributor _getSegmentsCriteriaContributor() {
 		return _segmentsCriteriaContributorServiceTracker.getService();
 	}
@@ -233,9 +309,15 @@ public class UserSegmentsCriteriaContributorTest {
 			_segmentsCriteriaContributorServiceTracker;
 
 	@Inject
+	private CompanyLocalService _companyLocalService;
+
+	@Inject
 	private ExpandoColumnLocalService _expandoColumnLocalService;
 
 	@DeleteAfterTestRun
 	private ExpandoTable _expandoTable;
+
+	@DeleteAfterTestRun
+	private Group _group;
 
 }

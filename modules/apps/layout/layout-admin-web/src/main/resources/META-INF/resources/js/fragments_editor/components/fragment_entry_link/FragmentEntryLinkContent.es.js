@@ -53,10 +53,9 @@ class FragmentEntryLinkContent extends Component {
 
 	/**
 	 * @inheritDoc
-	 * @param {boolean} firstRender
 	 * @review
 	 */
-	rendered(firstRender) {
+	rendered() {
 		if (this.content) {
 			this._renderContent(this.content);
 		}

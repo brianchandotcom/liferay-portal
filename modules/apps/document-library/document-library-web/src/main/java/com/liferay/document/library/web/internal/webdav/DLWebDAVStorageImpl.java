@@ -247,16 +247,9 @@ public class DLWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 
 			return status;
 		}
-		catch (DuplicateFileEntryException dfee) {
+		catch (DuplicateFileEntryException | DuplicateFolderNameException e) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(dfee, dfee);
-			}
-
-			return HttpServletResponse.SC_PRECONDITION_FAILED;
-		}
-		catch (DuplicateFolderNameException dfne) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(dfne, dfne);
+				_log.debug(e, e);
 			}
 
 			return HttpServletResponse.SC_PRECONDITION_FAILED;
@@ -574,16 +567,9 @@ public class DLWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 
 			return new Status(location, HttpServletResponse.SC_CREATED);
 		}
-		catch (DuplicateFolderNameException dfne) {
+		catch (DuplicateFileEntryException | DuplicateFolderNameException e) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(dfne, dfne);
-			}
-
-			return new Status(HttpServletResponse.SC_METHOD_NOT_ALLOWED);
-		}
-		catch (DuplicateFileEntryException dfee) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(dfee, dfee);
+				_log.debug(e, e);
 			}
 
 			return new Status(HttpServletResponse.SC_METHOD_NOT_ALLOWED);
@@ -772,16 +758,9 @@ public class DLWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 
 			return HttpServletResponse.SC_FORBIDDEN;
 		}
-		catch (DuplicateFileEntryException dfee) {
+		catch (DuplicateFileEntryException | DuplicateFolderNameException e) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(dfee, dfee);
-			}
-
-			return HttpServletResponse.SC_PRECONDITION_FAILED;
-		}
-		catch (DuplicateFolderNameException dfne) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(dfne, dfne);
+				_log.debug(e, e);
 			}
 
 			return HttpServletResponse.SC_PRECONDITION_FAILED;

@@ -14,7 +14,8 @@
 
 package com.liferay.arquillian.extension.junit.bridge.protocol.jmx;
 
-import java.io.ByteArrayInputStream;
+import com.liferay.petra.io.unsync.UnsyncByteArrayInputStream;
+
 import java.io.InputStream;
 import java.io.ObjectInputStream;
 
@@ -52,7 +53,7 @@ public class JMXMethodExecutor implements ContainerMethodExecutor {
 			byte[] data = _jmxTestRunnerMBean.runTestMethod(
 				testClass.getName(), method.getName());
 
-			try (InputStream is = new ByteArrayInputStream(data);
+			try (InputStream is = new UnsyncByteArrayInputStream(data);
 				ObjectInputStream oos = new ObjectInputStream(is)) {
 
 				TestResult testResult = (TestResult)oos.readObject();

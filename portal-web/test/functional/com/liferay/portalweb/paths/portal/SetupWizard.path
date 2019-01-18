@@ -23,6 +23,12 @@
 	<td></td>
 	<td></td>
 </tr>
+<!--DEFAULT_LANGUAGE-->
+<tr>
+	<td>DEFAULT_LANGUAGE</td>
+	<td>//div[contains(.,'Default Language')]//select</td>
+	<td></td>
+</tr>
 <!--DATABASE-->
 <tr>
 	<td>DATABASE_CONFIGURED_JDBC_DRIVER_CLASS_NAME_LABEL</td>

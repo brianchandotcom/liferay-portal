@@ -224,7 +224,7 @@ definition {
 
 	macro viewDefaultAdministratorUserPG {
 		AssertSelectedLabel(
-			locator1 = "Select#DEFAULT_LANGUAGE",
+			locator1 = "SetupWizard#DEFAULT_LANGUAGE",
 			value1 = "English (United States)"
 		);
 

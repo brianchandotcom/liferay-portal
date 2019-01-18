@@ -24,8 +24,8 @@ import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.security.permission.BasePermissionPropagator;
-import com.liferay.portal.kernel.security.permission.PermissionPropagator;
+import com.liferay.portal.kernel.security.permission.propagator.BasePermissionPropagator;
+import com.liferay.portal.kernel.security.permission.propagator.PermissionPropagator;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 

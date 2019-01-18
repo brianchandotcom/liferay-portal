@@ -31,7 +31,7 @@ import com.liferay.portal.kernel.portlet.PortletLayoutListener;
 import com.liferay.portal.kernel.scheduler.messaging.SchedulerEventMessageListener;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.OpenSearch;
-import com.liferay.portal.kernel.security.permission.PermissionPropagator;
+import com.liferay.portal.kernel.security.permission.propagator.PermissionPropagator;
 import com.liferay.portal.kernel.servlet.URLEncoder;
 import com.liferay.portal.kernel.template.TemplateHandler;
 import com.liferay.portal.kernel.trash.TrashHandler;
@@ -44,7 +44,10 @@ import com.liferay.portal.kernel.xmlrpc.Method;
 import com.liferay.registry.Filter;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
+import com.liferay.registry.ServiceReference;
 import com.liferay.registry.ServiceRegistration;
+import com.liferay.registry.ServiceTracker;
+import com.liferay.registry.ServiceTrackerCustomizer;
 import com.liferay.registry.collections.ServiceTrackerCollections;
 import com.liferay.social.kernel.model.SocialActivityInterpreter;
 import com.liferay.social.kernel.model.SocialRequestInterpreter;
@@ -623,5 +626,65 @@ public class PortletBagImpl implements PortletBag {
 	private volatile List<WebDAVStorage> _webDAVStorageInstances;
 	private volatile List<WorkflowHandler<?>> _workflowHandlerInstances;
 	private volatile List<Method> _xmlRpcMethodInstances;
+
+	@SuppressWarnings("deprecation")
+	private static class PermissionPropagatorServiceTrackerCustomizer
+		implements ServiceTrackerCustomizer
+			<com.liferay.portal.kernel.security.permission.PermissionPropagator,
+			 ServiceRegistration<PermissionPropagator>> {
+
+		@Override
+		public ServiceRegistration<PermissionPropagator> addingService(
+			ServiceReference
+				<com.liferay.portal.kernel.security.permission.
+					PermissionPropagator>
+						serviceReference) {
+
+			Registry registry = RegistryUtil.getRegistry();
+
+			return registry.registerService(
+				PermissionPropagator.class,
+				registry.getService(serviceReference),
+				serviceReference.getProperties());
+		}
+
+		@Override
+		public void modifiedService(
+			ServiceReference
+				<com.liferay.portal.kernel.security.permission.
+					PermissionPropagator>
+						serviceReference,
+			ServiceRegistration<PermissionPropagator> serviceRegistration) {
+
+			serviceRegistration.setProperties(serviceReference.getProperties());
+		}
+
+		@Override
+		public void removedService(
+			ServiceReference
+				<com.liferay.portal.kernel.security.permission.
+					PermissionPropagator>
+						serviceReference,
+			ServiceRegistration<PermissionPropagator> serviceRegistration) {
+
+			serviceRegistration.unregister();
+
+			Registry registry = RegistryUtil.getRegistry();
+
+			registry.ungetService(serviceReference);
+		}
+
+	}
+
+	static {
+		Registry registry = RegistryUtil.getRegistry();
+
+		ServiceTracker<?, ?> serviceTracker = registry.trackServices(
+			com.liferay.portal.kernel.security.permission.PermissionPropagator.
+				class,
+			new PermissionPropagatorServiceTrackerCustomizer());
+
+		serviceTracker.open();
+	}
 
 }

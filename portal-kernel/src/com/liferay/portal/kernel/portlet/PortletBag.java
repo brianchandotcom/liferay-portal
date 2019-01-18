@@ -28,7 +28,7 @@ import com.liferay.portal.kernel.pop.MessageListener;
 import com.liferay.portal.kernel.scheduler.messaging.SchedulerEventMessageListener;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.OpenSearch;
-import com.liferay.portal.kernel.security.permission.PermissionPropagator;
+import com.liferay.portal.kernel.security.permission.propagator.PermissionPropagator;
 import com.liferay.portal.kernel.servlet.URLEncoder;
 import com.liferay.portal.kernel.template.TemplateHandler;
 import com.liferay.portal.kernel.trash.TrashHandler;

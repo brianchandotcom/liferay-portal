@@ -36,7 +36,7 @@ import com.liferay.portal.kernel.portlet.PortletQNameUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.security.permission.PermissionPropagator;
+import com.liferay.portal.kernel.security.permission.propagator.PermissionPropagator;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.PermissionService;

@@ -12,15 +12,20 @@
  * details.
  */
 
-package com.liferay.portal.kernel.security.permission;
+package com.liferay.portal.kernel.security.permission.propagator;
+
+import com.liferay.portal.kernel.exception.PortalException;
+
+import javax.portlet.ActionRequest;
 
 /**
  * @author Hugo Huijser
- * @deprecated As of Mueller (7.2.x), replaced by {@link
- *             com.liferay.portal.kernel.security.permission.propagator.PermissionPropagator}
  */
-@Deprecated
-public interface PermissionPropagator
-	extends com.liferay.portal.kernel.security.permission.propagator.
-		PermissionPropagator {
+public interface PermissionPropagator {
+
+	public void propagateRolePermissions(
+			ActionRequest actionRequest, String className, String primKey,
+			long[] roleIds)
+		throws PortalException;
+
 }

@@ -902,7 +902,7 @@ public class PortletWrapper extends BaseModelWrapper<Portlet> implements Portlet
 	* @return the permission propagator instance of the portlet
 	*/
 	@Override
-	public com.liferay.portal.kernel.security.permission.PermissionPropagator getPermissionPropagatorInstance() {
+	public com.liferay.portal.kernel.security.permission.propagator.PermissionPropagator getPermissionPropagatorInstance() {
 		return model.getPermissionPropagatorInstance();
 	}
 

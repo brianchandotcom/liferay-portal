@@ -16,8 +16,8 @@ package com.liferay.wiki.web.internal.security.permission;
 
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.security.permission.BasePermissionPropagator;
-import com.liferay.portal.kernel.security.permission.PermissionPropagator;
+import com.liferay.portal.kernel.security.permission.propagator.BasePermissionPropagator;
+import com.liferay.portal.kernel.security.permission.propagator.PermissionPropagator;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.wiki.constants.WikiPortletKeys;
 import com.liferay.wiki.model.WikiNode;

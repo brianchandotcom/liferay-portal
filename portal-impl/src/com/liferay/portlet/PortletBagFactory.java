@@ -44,7 +44,7 @@ import com.liferay.portal.kernel.scheduler.messaging.SchedulerEventMessageListen
 import com.liferay.portal.kernel.scheduler.messaging.SchedulerEventMessageListenerWrapper;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.OpenSearch;
-import com.liferay.portal.kernel.security.permission.PermissionPropagator;
+import com.liferay.portal.kernel.security.permission.propagator.PermissionPropagator;
 import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
 import com.liferay.portal.kernel.servlet.URLEncoder;
 import com.liferay.portal.kernel.template.TemplateHandler;

@@ -432,8 +432,8 @@ http://docs.liferay.com/portal/7.1-latest/javadocs/portal-kernel/com/liferay/exp
 
 <!--
 The permission-propagator value must be a class that implements
-com.liferay.portal.kernel.security.permission.PermissionPropagator and is called to
-propagate permissions.
+com.liferay.portal.kernel.security.permission.propagator.PermissionPropagator
+and is called to propagate permissions.
 -->
 <!ELEMENT permission-propagator (#PCDATA)>
 

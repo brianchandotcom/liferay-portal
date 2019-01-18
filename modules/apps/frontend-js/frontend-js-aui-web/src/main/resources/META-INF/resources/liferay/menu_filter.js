@@ -3,7 +3,7 @@ AUI.add(
 	function(A) {
 		var Lang = A.Lang;
 
-		var CSS_HIDDEN = 'hidden';
+		var CSS_HIDE = 'hide';
 
 		var STR_EMPTY = '';
 
@@ -53,17 +53,17 @@ AUI.add(
 
 						instance.get('inputNode').val(STR_EMPTY);
 
-						instance._menuItems.removeClass(CSS_HIDDEN);
+						instance._menuItems.removeClass(CSS_HIDE);
 					},
 
 					_filterMenu: function(event) {
 						var instance = this;
 
-						instance._menuItems.addClass(CSS_HIDDEN);
+						instance._menuItems.addClass(CSS_HIDE);
 
 						event.results.forEach(
 							function(result) {
-								result.raw.node.removeClass(CSS_HIDDEN);
+								result.raw.node.removeClass(CSS_HIDE);
 							}
 						);
 					},

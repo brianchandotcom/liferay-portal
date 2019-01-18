@@ -182,17 +182,19 @@ class RuleList extends Component {
 	_getFieldLabel(fieldName) {
 		const pages = this.pages;
 
-		let labelField = null;
+		let fieldLabel = null;
 
 		if (pages && fieldName) {
 			const visitor = new PagesVisitor(pages);
 
-			const {label} = visitor.findField(field => field.fieldName == fieldName);
+			const field = visitor.findField(field => field.fieldName == fieldName);
 
-			labelField = label;
+			if (field) {
+				fieldLabel = field.label;
+			}
 		}
 
-		return labelField;
+		return fieldLabel;
 	}
 
 	_handleRuleCardClicked({data, target}) {
@@ -257,59 +259,63 @@ class RuleList extends Component {
 		return dataProvider.find(data => data.uuid == id).label;
 	}
 
-	_setRules(newRules) {
-		for (let rule = 0; rule < newRules.length; rule++) {
-			const actions = newRules[rule].actions;
-			const conditions = newRules[rule].conditions;
+	_formatRules(rules) {
+		return rules.map(
+			rule => {
+				const {actions, conditions} = rule;
 
-			actions.forEach(
-				action => {
-					if (action.action === 'auto-fill') {
-						const inputValue = Object.values(action.inputs).map(fieldName => this._getFieldLabel(fieldName));
+				let logicalOperator;
 
-						action.inputValue = inputValue.toString();
-						const outputValue = Object.values(action.outputs).map(fieldName => this._getFieldLabel(fieldName));
-
-						action.outputValue = outputValue.toString();
-					}
+				if (rule['logical-operator']) {
+					logicalOperator = rule['logical-operator'].toLowerCase();
 				}
-			);
+				else if (rule.logicalOperator) {
+					logicalOperator = rule.logicalOperator.toLowerCase();
+				}
 
-			newRules[rule].conditions = conditions.map(
-				condition => {
-					if (condition.operands.length < 2 && condition.operands[0].type === 'list') {
-						condition.operands = [
-							{
-								label: 'user',
-								repeatable: false,
-								type: 'user',
-								value: 'user'
-							},
-							{
-								...condition.operands[0],
-								label: condition.operands[0].value
+				return {
+					actions: actions.map(
+						action => {
+							if (action.action === 'auto-fill') {
+								const {inputs, outputs} = action;
+
+								const inputLabel = Object.values(inputs).map(input => this._getFieldLabel(input));
+								const outputLabel = Object.values(outputs).map(output => this._getFieldLabel(output));
+
+								action = {
+									...action,
+									inputLabel,
+									outputLabel
+								};
 							}
-						];
-					}
 
-					return condition;
-				}
-			);
+							return action;
+						}
+					),
+					conditions: conditions.map(
+						condition => {
+							if (condition.operands.length < 2 && condition.operands[0].type === 'list') {
+								condition.operands = [
+									{
+										label: 'user',
+										repeatable: false,
+										type: 'user',
+										value: 'user'
+									},
+									{
+										...condition.operands[0],
+										label: condition.operands[0].value
+									}
+								];
+							}
 
-			let logicalOperator;
-
-			if (newRules[rule]['logical-operator']) {
-				logicalOperator = newRules[rule]['logical-operator'].toLowerCase();
-				newRules[rule].logicalOperator = logicalOperator;
-
+							return condition;
+						}
+					),
+					logicalOperator
+				};
 			}
-			else if (newRules[rule].logicalOperator) {
-				logicalOperator = newRules[rule].logicalOperator.toLowerCase();
-				newRules[rule].logicalOperator = logicalOperator;
-			}
-		}
-
-		return newRules;
+		);
 	}
 
 	_setDataProviderNames(states) {

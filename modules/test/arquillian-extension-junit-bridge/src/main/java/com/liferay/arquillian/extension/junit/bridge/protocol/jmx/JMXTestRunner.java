@@ -33,8 +33,8 @@ import org.jboss.arquillian.test.spi.TestResult;
 public class JMXTestRunner
 	extends NotificationBroadcasterSupport implements JMXTestRunnerMBean {
 
-	public JMXTestRunner(ClassLoader testClassLoader) {
-		_testClassLoader = testClassLoader;
+	public JMXTestRunner(ClassLoader classLoader) {
+		_classLoader = classLoader;
 	}
 
 	public ObjectName registerMBean(MBeanServer mBeanServer)
@@ -78,26 +78,24 @@ public class JMXTestRunner
 
 		_currentCall.set(className + methodName);
 
-		TestResult result = null;
-
 		try {
 			TestRunner runner = TestRunners.getTestRunner(
 				JMXTestRunner.class.getClassLoader());
 
-			Class<?> testClass = _testClassLoader.loadClass(className);
+			Class<?> testClass = _classLoader.loadClass(className);
 
-			result = runner.execute(testClass, methodName);
+			return runner.execute(testClass, methodName);
 		}
 		catch (ClassNotFoundException cnfe) {
-			result = TestResult.failed(cnfe);
+			TestResult testResult = TestResult.failed(cnfe);
 
-			result.setEnd(System.currentTimeMillis());
+			testResult.setEnd(System.currentTimeMillis());
+
+			return testResult;
 		}
-
-		return result;
 	}
 
+	private final ClassLoader _classLoader;
 	private final ThreadLocal<String> _currentCall = new ThreadLocal<>();
-	private final ClassLoader _testClassLoader;
 
 }

@@ -96,12 +96,11 @@ public class JournalCTConfigurationTest {
 			_journalArticleResource, resourceEntity);
 
 		Class<JournalArticleResource> resourceClass =
-			(Class<JournalArticleResource>)
-				ctConfigurationOptional.map(
-					CTConfiguration::getResourceEntityClass
-				).orElse(
-					null
-				);
+			(Class<JournalArticleResource>)ctConfigurationOptional.map(
+				CTConfiguration::getResourceEntityClass
+			).orElse(
+				null
+			);
 
 		Assert.assertEquals(
 			"Resource entity class is invalid",
@@ -213,8 +212,8 @@ public class JournalCTConfigurationTest {
 			versionEntityStatusFunction ->
 				(Function<JournalArticle, Integer>)versionEntityStatusFunction
 		).map(
-			versionEntityStatusFunction ->
-				versionEntityStatusFunction.apply(_journalArticle)
+			versionEntityStatusFunction -> versionEntityStatusFunction.apply(
+				_journalArticle)
 		).orElse(
 			0
 		);

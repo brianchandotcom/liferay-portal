@@ -264,6 +264,10 @@ definition {
 	test AssertEditWebContentStaging {
 		Navigator.gotoSitePage(pageName = "Staging Test Page", siteName = "Site Name");
 
+		Portlet.addPG(portletName = "Asset Publisher");
+
+		Navigator.gotoSitePage(pageName = "Staging Test Page", siteName = "Site Name");
+
 		Portlet.addPG(portletName = "Web Content Display");
 
 		WebContent.addPGViaWCD(
@@ -292,6 +296,16 @@ definition {
 		Navigator.gotoSitePage(pageName = "Staging Test Page", siteName = "Site Name");
 
 		WebContent.viewNoEditWCViaWCD(webContentContent = "Web Content Content");
+
+		WebContent.viewNoEditWCViaAP(assetTitle = "Web Content Title");
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Web Content"
+		);
+
+		WebContent.viewNoEditWCCP(webContentTitle = "Web Content Title");
 
 		Navigator.openSiteURL(siteName = "Site Name");
 

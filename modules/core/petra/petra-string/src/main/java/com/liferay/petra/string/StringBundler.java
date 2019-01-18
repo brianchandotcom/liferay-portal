@@ -292,42 +292,44 @@ public class StringBundler implements Serializable {
 			length += array[i].length();
 		}
 
-		UnsafeStringBuilder usb = null;
+		StringBuilder sb = null;
 
 		if (length > _THREAD_LOCAL_BUFFER_LIMIT) {
-			Reference<UnsafeStringBuilder> reference =
-				_unsafeStringBuilderThreadLocal.get();
+			Reference<StringBuilder> reference =
+				_stringBuilderThreadLocal.get();
 
 			if (reference != null) {
-				usb = reference.get();
+				sb = reference.get();
 			}
 
-			if (usb == null) {
-				usb = new UnsafeStringBuilder(length);
+			if (sb == null) {
+				sb = new StringBuilder(length);
 
-				_unsafeStringBuilderThreadLocal.set(new SoftReference<>(usb));
+				_stringBuilderThreadLocal.set(new SoftReference<>(sb));
 			}
-			else {
-				usb.resetAndEnsureCapacity(length);
+			else if (sb.capacity() < length) {
+				sb.setLength(length);
 			}
+
+			sb.setLength(0);
 		}
 		else {
-			usb = new UnsafeStringBuilder(length);
+			sb = new StringBuilder(length);
 		}
 
 		for (int i = 0; i < arrayIndex; i++) {
-			usb.append(array[i]);
+			sb.append(array[i]);
 		}
 
-		return usb.toString();
+		return sb.toString();
 	}
 
 	private static final int _DEFAULT_ARRAY_CAPACITY = 16;
 
 	private static final int _THREAD_LOCAL_BUFFER_LIMIT;
 
-	private static final ThreadLocal<Reference<UnsafeStringBuilder>>
-		_unsafeStringBuilderThreadLocal;
+	private static final ThreadLocal<Reference<StringBuilder>>
+		_stringBuilderThreadLocal;
 	private static final long serialVersionUID = 1L;
 
 	static {
@@ -340,55 +342,16 @@ public class StringBundler implements Serializable {
 
 			_THREAD_LOCAL_BUFFER_LIMIT = threadLocalBufferLimit;
 
-			_unsafeStringBuilderThreadLocal = new CentralizedThreadLocal<>(
-				false);
+			_stringBuilderThreadLocal = new CentralizedThreadLocal<>(false);
 		}
 		else {
 			_THREAD_LOCAL_BUFFER_LIMIT = Integer.MAX_VALUE;
 
-			_unsafeStringBuilderThreadLocal = null;
+			_stringBuilderThreadLocal = null;
 		}
 	}
 
 	private String[] _array;
 	private int _arrayIndex;
-
-	private static class UnsafeStringBuilder {
-
-		public void append(String s) {
-			int length = s.length();
-
-			s.getChars(0, length, _value, _count);
-
-			_count += length;
-		}
-
-		public void resetAndEnsureCapacity(int newLength) {
-			if (_value.length < newLength) {
-				int length = _value.length * 2 + 2;
-
-				if (length < newLength) {
-					length = newLength;
-				}
-
-				_value = new char[length];
-			}
-
-			_count = 0;
-		}
-
-		@Override
-		public String toString() {
-			return new String(_value, 0, _count);
-		}
-
-		private UnsafeStringBuilder(int length) {
-			_value = new char[length];
-		}
-
-		private int _count;
-		private char[] _value;
-
-	}
 
 }

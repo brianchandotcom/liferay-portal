@@ -109,7 +109,10 @@ public class IconDeleteTag extends IconTag {
 			url.startsWith(Http.HTTPS_WITH_SLASH)) {
 
 			url = "submitForm(document.hrefFm, '".concat(
-				HtmlUtil.escapeJS(url)).concat("');");
+				HtmlUtil.escapeJS(url)
+			).concat(
+				"');"
+			);
 		}
 
 		if (!_trash) {

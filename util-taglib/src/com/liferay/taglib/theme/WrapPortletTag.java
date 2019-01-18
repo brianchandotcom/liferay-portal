@@ -68,8 +68,11 @@ public class WrapPortletTag
 		String content = ThemeUtil.include(
 			servletContext, request, response, wrapPage, theme, false);
 
-		return _CONTENT_WRAPPER_PRE.concat(content).concat(
-			_CONTENT_WRAPPER_POST);
+		return _CONTENT_WRAPPER_PRE.concat(
+			content
+		).concat(
+			_CONTENT_WRAPPER_POST
+		);
 	}
 
 	@Override

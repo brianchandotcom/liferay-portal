@@ -375,7 +375,10 @@ public class PortletIdCodecTest {
 		"com_liferay_test_portlet_TestPortlet";
 
 	private static final String _TEST_PORTLET_NAME_WAR =
-		_TEST_PORTLET_NAME.concat(PortletConstants.WAR_SEPARATOR).concat(
-			"context");
+		_TEST_PORTLET_NAME.concat(
+			PortletConstants.WAR_SEPARATOR
+		).concat(
+			"context"
+		);
 
 }

@@ -45,7 +45,10 @@ public class IconDeactivateTag extends IconTag {
 			url.startsWith(Http.HTTPS_WITH_SLASH)) {
 
 			url = "submitForm(document.hrefFm, '".concat(
-				HtmlUtil.escapeJS(url)).concat("');");
+				HtmlUtil.escapeJS(url)
+			).concat(
+				"');"
+			);
 		}
 
 		StringBundler sb = new StringBundler(5);

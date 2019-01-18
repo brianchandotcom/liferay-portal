@@ -62,7 +62,10 @@ public class FreeMarkerPortlet extends MVCPortlet {
 		String servletContextName = portletContext.getPortletContextName();
 
 		String resourcePath = servletContextName.concat(
-			TemplateConstants.SERVLET_SEPARATOR).concat(path);
+			TemplateConstants.SERVLET_SEPARATOR
+		).concat(
+			path
+		);
 
 		boolean resourceExists = false;
 

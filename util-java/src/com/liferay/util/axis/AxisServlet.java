@@ -198,8 +198,11 @@ public class AxisServlet extends org.apache.axis.transport.http.AxisServlet {
 
 			if (_fixContent) {
 				if (contentType.contains(ContentTypes.TEXT_HTML)) {
-					content = _HTML_TOP_WRAPPER.concat(content).concat(
-						_HTML_BOTTOM_WRAPPER);
+					content = _HTML_TOP_WRAPPER.concat(
+						content
+					).concat(
+						_HTML_BOTTOM_WRAPPER
+					);
 				}
 				else if (contentType.contains(ContentTypes.TEXT_XML)) {
 					content = fixXml(content);

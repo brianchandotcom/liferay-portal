@@ -464,7 +464,11 @@ public class IntrabandBridgeDestinationTest {
 
 		String spiId = spiConfiguration.getSPIId();
 
-		return spiProviderName.concat(StringPool.POUND).concat(spiId);
+		return spiProviderName.concat(
+			StringPool.POUND
+		).concat(
+			spiId
+		);
 	}
 
 	private static final String _RECEIVE_KEY = "RECEIVE_KEY";

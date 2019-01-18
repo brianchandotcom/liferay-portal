@@ -12,7 +12,7 @@ exports[`Should render component 1`] = `
     href="#1"
     role="button"
   >
-    10 entries
+    10 Entries
     <svg
       className="lexicon-icon lexicon-icon-caret-double-l"
       focusable="false"

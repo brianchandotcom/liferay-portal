@@ -15,7 +15,7 @@ exports[`Should render component 1`] = `
         className="sheet-text text-center"
       >
          
-        There are no process.
+        There are no processes.
          
       </div>
     </div>

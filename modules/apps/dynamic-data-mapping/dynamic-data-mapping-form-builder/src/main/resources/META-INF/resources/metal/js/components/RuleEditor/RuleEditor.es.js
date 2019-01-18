@@ -43,7 +43,7 @@ class RuleEditor extends Component {
 					expression: Config.string(),
 					hasRequiredInputs: Config.bool(),
 					inputs: Config.object(),
-								label: Config.string(),
+					label: Config.string(),
 					outputs: Config.object(),
 					target: Config.string()
 				}
@@ -801,7 +801,6 @@ class RuleEditor extends Component {
 		).then(
 			responseData => {
 				if (!this.isDisposed()) {
-
 					this.setState(
 						{
 							calculatorOptions: responseData
@@ -908,7 +907,7 @@ class RuleEditor extends Component {
 
 	_handleActionAdded() {
 		const {actions} = this;
-		const newAction = {action: '', calculatorFields: [], expression: '', inputs: [], label: '', outputs: [], target: ''};
+		const newAction = {action: '', calculatorFields: [], expression: '', inputs: {}, label: '', outputs: {}, target: ''};
 
 		if (actions.length == 0) {
 			actions.push(newAction);
@@ -950,7 +949,7 @@ class RuleEditor extends Component {
 			}
 		}
 		else {
-			this._clearAction(index);
+			newActions = this._clearAction(index);
 		}
 
 		this.setState(
@@ -1211,9 +1210,7 @@ class RuleEditor extends Component {
 
 	_handleRuleAdded(event) {
 		const actions = this._removeActionInternalProperties();
-
 		const conditions = this._removeConditionInternalProperties();
-
 		const {ruleEditedIndex} = this;
 
 		this.emit(

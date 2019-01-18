@@ -18,6 +18,20 @@ import {PagesVisitor} from '../../util/visitors.es';
 const EVALUATOR_URL = '/o/dynamic-data-mapping-form-context-provider/';
 const FormWithEvaluator = WithEvaluator(FormRenderer);
 
+const getImplementedFieldTypes = fieldTypes => {
+	return fieldTypes.filter(
+		({name}) => {
+			return ![
+				'checkbox_multiple',
+				'date',
+				'grid',
+				'radio',
+				'select'
+			].some(fieldType => fieldType === name);
+		}
+	);
+};
+
 /**
  * Sidebar is a tooling to mount forms.
  */
@@ -283,7 +297,7 @@ class Sidebar extends Component {
 	_dropdownFieldTypesValueFn() {
 		const {fieldTypes} = this.props;
 
-		return fieldTypes.filter(
+		return getImplementedFieldTypes(fieldTypes).filter(
 			({system}) => {
 				return !system;
 			}
@@ -317,7 +331,7 @@ class Sidebar extends Component {
 			}
 		};
 
-		return fieldTypes.reduce(
+		return getImplementedFieldTypes(fieldTypes).reduce(
 			(prev, next, index, original) => {
 				if (next.group && !next.system) {
 					prev[next.group].fields.push(next);
@@ -777,7 +791,7 @@ class Sidebar extends Component {
 						<li class="tbar-item ddm-fieldtypes-dropdown tbar-item-expand text-left">
 							<div>
 								<ClayDropdown
-									disabled={this.isChangeFieldTypeEnabled()}
+									disabled={!this.isChangeFieldTypeEnabled()}
 									events={{
 										itemClicked: this._handleChangeFieldTypeItemClicked
 									}}

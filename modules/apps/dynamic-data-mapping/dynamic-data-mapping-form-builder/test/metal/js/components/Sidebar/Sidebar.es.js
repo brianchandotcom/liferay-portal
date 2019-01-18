@@ -533,7 +533,7 @@ describe(
 							let fieldValue;
 
 							visitor.mapFields(
-								(field) => {
+								field => {
 									if (field.fieldName === fieldName) {
 										fieldValue = field.value;
 									}
@@ -541,7 +541,7 @@ describe(
 							);
 
 							return fieldValue;
-						}
+						};
 
 						const fillField = (pages, fieldName, value) => {
 							const visitor = new PagesVisitor(pages);
@@ -551,14 +551,14 @@ describe(
 									if (field.fieldName === fieldName) {
 										return {
 											...field,
-											value: value
-										}
+											value
+										};
 									}
 
 									return field;
 								}
 							);
-						}
+						};
 
 						const {settingsContext} = mockFieldType;
 						let {pages} = settingsContext;

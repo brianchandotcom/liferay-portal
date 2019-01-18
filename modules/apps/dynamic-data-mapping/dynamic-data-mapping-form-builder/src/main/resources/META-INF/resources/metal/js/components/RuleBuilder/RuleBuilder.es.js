@@ -58,8 +58,6 @@ class RuleBuilder extends Component {
 
 		rolesURL: Config.string().required(),
 
-		originalRule: Config.object(),
-
 		rules: Config.arrayOf(
 			Config.shapeOf(
 				{
@@ -92,7 +90,7 @@ class RuleBuilder extends Component {
 					logicalOperator: Config.string()
 				}
 			)
-		),
+		).value([]),
 
 		/**
 		 * The path to the SVG spritemap file containing the icons.
@@ -126,6 +124,8 @@ class RuleBuilder extends Component {
 		index: Config.number(),
 
 		mode: Config.oneOf(['view', 'edit', 'create']).value('view'),
+
+		originalRule: Config.object(),
 
 		roles: Config.arrayOf(
 			Config.shapeOf(
@@ -168,7 +168,7 @@ class RuleBuilder extends Component {
 					logicalOperator: Config.string()
 				}
 			)
-		)
+		).valueFn('setRulesValueFn')
 	};
 
 	/**
@@ -182,6 +182,16 @@ class RuleBuilder extends Component {
 
 		this._fetchDataProvider();
 		this._fetchRoles();
+	}
+
+	willReceiveProps({rules}) {
+		if (rules && rules.newVal.length) {
+			this.setState(
+				{
+					rules: rules.newVal
+				}
+			);
+		}
 	}
 
 	_fetchRoles() {
@@ -250,25 +260,14 @@ class RuleBuilder extends Component {
 		);
 	}
 
-	/**
-	 * Continues the propagation of event.
-	 * @param {!Event} event
-	 * @private
-	 */
-
-	_showRuleEdition() {
-		this.setState(
-			{
-				mode: 'edit'
-			}
-		);
+	setRulesValueFn() {
+		return this.props.rules;
 	}
 
 	_showRuleCreation() {
 		this.setState(
 			{
-				mode: 'create',
-				rules: []
+				mode: 'create'
 			}
 		);
 	}
@@ -305,9 +304,10 @@ class RuleBuilder extends Component {
 	}
 
 	_handleRuleCanceled(event) {
-		const rules = this.props.rules.map(
+		const {index} = this.state;
+		const rules = this.state.rules.map(
 			(rule, ruleIndex) => {
-				return this.index === ruleIndex ? this.originalRule : rule;
+				return index === ruleIndex ? this.state.originalRule : rule;
 			}
 		);
 
@@ -329,18 +329,17 @@ class RuleBuilder extends Component {
 	}
 
 	_handleRuleEdited({ruleId}) {
-		const {rules} = this.props;
+		const {rules} = this.state;
 
 		ruleId = parseInt(ruleId, 10);
 
 		this.setState(
 			{
 				index: ruleId,
-				originalRule: rules[ruleId]
+				mode: 'edit',
+				originalRule: JSON.parse(JSON.stringify(rules[ruleId]))
 			}
 		);
-
-		this._showRuleEdition();
 	}
 
 	_handleRuleSaveEdition(event) {
@@ -431,18 +430,20 @@ class RuleBuilder extends Component {
 			functionsMetadata,
 			functionsURL,
 			pages,
-			rules,
 			spritemap
 		} = this.props;
 
 		const {
 			dataProvider,
-			roles
+			index,
+			mode,
+			roles,
+			rules
 		} = this.state;
 
 		return (
 			<div class="container">
-				{this.state.mode === 'create' && (
+				{mode === 'create' && (
 					<RuleEditor
 						actions={[]}
 						conditions={[]}
@@ -459,9 +460,9 @@ class RuleBuilder extends Component {
 						spritemap={spritemap}
 					/>
 				)}
-				{this.state.mode === 'edit' && (
+				{mode === 'edit' && (
 					<RuleEditor
-
+						dataProvider={dataProvider}
 						dataProviderInstanceParameterSettingsURL={dataProviderInstanceParameterSettingsURL}
 						dataProviderInstancesURL={dataProviderInstancesURL}
 						events={RuleEditionEvents}
@@ -471,16 +472,17 @@ class RuleBuilder extends Component {
 						pages={pages}
 						ref="RuleEditor"
 						roles={roles}
-						rule={rules[this.state.index]}
-						ruleEditedIndex={this.state.index}
+						rule={rules[index]}
+						ruleEditedIndex={index}
 						spritemap={spritemap}
 					/>
 				)}
-				{this.state.mode === 'view' && (
+				{mode === 'view' && (
 					<RuleList
 						dataProvider={dataProvider}
 						events={RuleBuilderEvents}
 						pages={pages}
+						ref="RuleList"
 						roles={roles}
 						rules={rules}
 						spritemap={spritemap}

@@ -15,6 +15,7 @@
 package com.liferay.segments.odata.matcher.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -40,35 +41,54 @@ public class ContextODataMatcherTest {
 
 	@Test
 	public void testMatchesWithAnd() throws Exception {
-		Context context = new Context();
-
-		context.put("languageId", "en");
-		context.put("userAgent", "chrome");
+		Context context = new Context() {
+			{
+				put(Context.LANGUAGE_ID, "en");
+				put(Context.BROWSER, "chrome");
+			}
+		};
 
 		Assert.assertTrue(
 			_contextODataMatcher.matches(
-				"(languageId eq 'en') and (userAgent eq 'chrome')", context));
+				StringBundler.concat(
+					"(", Context.LANGUAGE_ID, " eq 'en') and (",
+					Context.BROWSER, " eq 'chrome')"),
+				context));
 		Assert.assertFalse(
 			_contextODataMatcher.matches(
-				"(languageId eq 'en') and (userAgent eq 'firefox')", context));
+				StringBundler.concat(
+					"(", Context.LANGUAGE_ID, " eq 'en') and (",
+					Context.BROWSER, " eq 'firefox')"),
+				context));
 	}
 
 	@Test
 	public void testMatchesWithOr() throws Exception {
-		Context context = new Context();
-
-		context.put("languageId", "en");
-		context.put("userAgent", "chrome");
+		Context context = new Context() {
+			{
+				put(Context.LANGUAGE_ID, "en");
+				put(Context.BROWSER, "chrome");
+			}
+		};
 
 		Assert.assertTrue(
 			_contextODataMatcher.matches(
-				"(languageId eq 'en') or (userAgent eq 'firefox')", context));
+				StringBundler.concat(
+					"(", Context.LANGUAGE_ID, " eq 'en') or (", Context.BROWSER,
+					" eq 'firefox')"),
+				context));
 		Assert.assertTrue(
 			_contextODataMatcher.matches(
-				"(languageId eq 'fr') or (userAgent eq 'chrome')", context));
+				StringBundler.concat(
+					"(", Context.LANGUAGE_ID, " eq 'fr') or (", Context.BROWSER,
+					" eq 'chrome')"),
+				context));
 		Assert.assertFalse(
 			_contextODataMatcher.matches(
-				"(languageId eq 'fr') and (userAgent eq 'firefox')", context));
+				StringBundler.concat(
+					"(", Context.LANGUAGE_ID, " eq 'fr') and (",
+					Context.BROWSER, " eq 'firefox')"),
+				context));
 	}
 
 	@Inject(

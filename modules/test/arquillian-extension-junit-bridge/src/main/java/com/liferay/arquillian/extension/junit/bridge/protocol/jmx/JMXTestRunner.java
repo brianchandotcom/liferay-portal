@@ -18,10 +18,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 
-import javax.management.JMException;
-import javax.management.MBeanServer;
 import javax.management.NotificationBroadcasterSupport;
-import javax.management.ObjectName;
 
 import org.jboss.arquillian.container.test.spi.TestRunner;
 import org.jboss.arquillian.container.test.spi.util.TestRunners;
@@ -35,16 +32,6 @@ public class JMXTestRunner
 
 	public JMXTestRunner(ClassLoader classLoader) {
 		_classLoader = classLoader;
-	}
-
-	public ObjectName registerMBean(MBeanServer mBeanServer)
-		throws JMException {
-
-		ObjectName objectName = new ObjectName(JMXTestRunnerMBean.OBJECT_NAME);
-
-		mBeanServer.registerMBean(this, objectName);
-
-		return objectName;
 	}
 
 	@Override
@@ -62,14 +49,6 @@ public class JMXTestRunner
 		catch (IOException ioe) {
 			throw new RuntimeException(
 				"Could not serialize object: " + result, ioe);
-		}
-	}
-
-	public void unregisterMBean(MBeanServer mBeanServer) throws JMException {
-		ObjectName objectName = new ObjectName(JMXTestRunnerMBean.OBJECT_NAME);
-
-		if (mBeanServer.isRegistered(objectName)) {
-			mBeanServer.unregisterMBean(objectName);
 		}
 	}
 

@@ -9,11 +9,13 @@
 }
 
 .fragment-entry-link-list {
-	padding: 0 ($fragmentEntryLinkListPadding + $sidebarButtonsWidth) 0 $fragmentEntryLinkListPadding;
-	transition: padding-right ease $productMenuTransitionDuration;
+	margin-right: $sidebarButtonsWidth;
+	padding: 0 $fragmentEntryLinkListPadding;
+	transition: margin-right ease $productMenuTransitionDuration;
+	will-change: margin-right;
 
 	&--padded, &--padded.no-fragments-message {
-		padding-right: ($sidebarWidth + $fragmentEntryLinkListPadding);
+		margin-right: $sidebarWidth;
 	}
 
 	&__container {

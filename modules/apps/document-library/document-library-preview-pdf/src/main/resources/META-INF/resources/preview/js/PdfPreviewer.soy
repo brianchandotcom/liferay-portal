@@ -59,9 +59,9 @@
 	{@param? showPageInput: bool}
 	{@param? expanded: bool}
 
-	{let $baseButtonsToolbar:[
+	{let $baseButtonsToolbar: [
 		'elementClasses': 'btn-floating-bar',
-		'events': [ 'click': $_handleClickToolbar],
+		'events': ['click': $_handleClickToolbar],
 		'spritemap': $spritemap,
 		'style': false
 	] /}
@@ -70,9 +70,7 @@
 		<div class="btn-group floating-bar" role="group">
 			<div class="btn-group">
 				{call ClayButton.render data="$baseButtonsToolbar"}
-					{param elementClasses: $baseButtonsToolbar.elementClasses
-						+ ' btn-floating-bar-text'
-					/}
+					{param elementClasses: $baseButtonsToolbar.elementClasses + ' btn-floating-bar-text' /}
 					{param label kind="text"}
 						{msg desc=""}page{/msg} {$currentPage} / {$totalPages}
 					{/param}

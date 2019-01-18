@@ -52,9 +52,9 @@
 	{@param? zoomInDisabled: bool}
 	{@param? zoomOutDisabled: bool}
 
-	{let $baseButtonsToolbar:[
+	{let $baseButtonsToolbar: [
 		'elementClasses': 'btn-floating-bar',
-		'events': [ 'click': $_handleToolbarClick],
+		'events': ['click': $_handleToolbarClick],
 		'spritemap': $spritemap,
 		'style': false
 	] /}
@@ -63,7 +63,7 @@
 
 	{let $zoomFit: $currentZoom == 1 /}
 
-	{let $zoomBtnValue: $zoomFit ? 'fit' : 'real'/}
+	{let $zoomBtnValue: $zoomFit ? 'fit' : 'real' /}
 
 	{let $zoomBtnTitle kind="text"}
 		{if $zoomFit}
@@ -83,9 +83,7 @@
 				{param value: 'out' /}
 			{/call}
 			{call ClayButton.render data="$baseButtonsToolbar"}
-				{param elementClasses: $baseButtonsToolbar.elementClasses
-					+ ' btn-floating-bar-text'
-				/}
+				{param elementClasses: $baseButtonsToolbar.elementClasses + ' btn-floating-bar-text' /}
 				{param label kind="html"}<span class="preview-toolbar-label-percent">{$zoomLabel}%</span>{/param}
 				{param value: $zoomBtnValue /}
 				{param title: $zoomBtnTitle /}

@@ -24,6 +24,17 @@ info:
 paths:
   /content-space:
     get:
+      parameters:
+        - in: query
+          name: page
+          schema:
+            type: number
+            format: int
+        - in: query
+          name: per_page
+          schema:
+            type: number
+            format: int
       responses:
         200:
           content:

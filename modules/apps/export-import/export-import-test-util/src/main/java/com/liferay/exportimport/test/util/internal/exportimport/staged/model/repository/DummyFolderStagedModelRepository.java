@@ -50,6 +50,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -110,7 +111,7 @@ public class DummyFolderStagedModelRepository
 
 		_dummyFolders.removeIf(
 			dummyFolder ->
-				dummyFolder.getUuid().equals(uuid) &&
+				Objects.equals(dummyFolder.getUuid(), uuid) &&
 				(dummyFolder.getGroupId() == groupId));
 	}
 
@@ -134,7 +135,7 @@ public class DummyFolderStagedModelRepository
 
 		List<DummyFolder> dummyFolders = dummyFoldersStream.filter(
 			dummyFolder ->
-				dummyFolder.getUuid().equals(uuid) &&
+				Objects.equals(dummyFolder.getUuid(), uuid) &&
 				(dummyFolder.getGroupId() == groupId)
 		).collect(
 			Collectors.toList()
@@ -155,7 +156,7 @@ public class DummyFolderStagedModelRepository
 
 		return dummyFoldersStream.filter(
 			dummyFolder ->
-				dummyFolder.getUuid().equals(uuid) &&
+				Objects.equals(dummyFolder.getUuid(), uuid) &&
 				(dummyFolder.getCompanyId() == companyId)
 		).collect(
 			Collectors.toList()

@@ -50,6 +50,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -110,7 +111,7 @@ public class DummyReferenceStagedModelRepository
 
 		_dummyReferences.removeIf(
 			dummyReference ->
-				dummyReference.getUuid().equals(uuid) &&
+				Objects.equals(dummyReference.getUuid(), uuid) &&
 				(dummyReference.getGroupId() == groupId));
 	}
 
@@ -134,7 +135,7 @@ public class DummyReferenceStagedModelRepository
 
 		List<DummyReference> dummies = dummyReferenceStream.filter(
 			dummyReference ->
-				dummyReference.getUuid().equals(uuid) &&
+				Objects.equals(dummyReference.getUuid(), uuid) &&
 				(dummyReference.getGroupId() == groupId)
 		).collect(
 			Collectors.toList()
@@ -155,7 +156,7 @@ public class DummyReferenceStagedModelRepository
 
 		return dummyReferenceStream.filter(
 			dummyReference ->
-				dummyReference.getUuid().equals(uuid) &&
+				Objects.equals(dummyReference.getUuid(), uuid) &&
 				(dummyReference.getCompanyId() == companyId)
 		).collect(
 			Collectors.toList()

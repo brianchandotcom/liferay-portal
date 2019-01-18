@@ -713,21 +713,17 @@ class RuleEditor extends Component {
 	_clearAction(index) {
 		const {actions} = this;
 
-		const newActions = actions;
-
-		newActions[index] = {
-			action: '',
-			calculatorFields: [],
-			expression: '',
-			inputs: [],
-			label: '',
-			outputs: [],
-			target: ''
-		};
-
-		this.setState(
-			{
-				actions: newActions
+		return actions.map(
+			(action, currentIndex) => {
+				return currentIndex === index ? {
+					action: '',
+					calculatorFields: [],
+					expression: '',
+					inputs: {},
+					label: '',
+					outputs: {},
+					target: ''
+				} : action;
 			}
 		);
 	}

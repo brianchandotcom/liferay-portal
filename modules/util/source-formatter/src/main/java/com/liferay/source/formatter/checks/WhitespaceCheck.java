@@ -244,8 +244,8 @@ public class WhitespaceCheck extends BaseFileCheck {
 				char previousChar = linePart.charAt(x - 1);
 
 				if (previousChar == CharPool.SPACE) {
-					linePart = linePart.substring(0, x - 1).concat(
-						linePart.substring(x));
+					linePart =
+						linePart.substring(0, x - 1) + linePart.substring(x);
 				}
 			}
 		}

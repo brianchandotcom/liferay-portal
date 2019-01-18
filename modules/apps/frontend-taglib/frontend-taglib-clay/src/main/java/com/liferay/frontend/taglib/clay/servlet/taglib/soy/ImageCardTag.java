@@ -36,10 +36,6 @@ public class ImageCardTag extends BaseClayCardTag {
 		return super.doStartTag();
 	}
 
-	public void setDisplayContext(ImageCard imageCard) {
-		_imageCard = imageCard;
-	}
-
 	public void setIcon(String icon) {
 		putValue("icon", icon);
 	}

@@ -17,6 +17,7 @@ package com.liferay.portal.search.engine.adapter.search;
 import com.liferay.portal.kernel.search.GroupBy;
 import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.Stats;
+import com.liferay.portal.search.groupby.GroupByRequest;
 import com.liferay.portal.search.highlight.Highlight;
 import com.liferay.portal.search.sort.Sort;
 
@@ -56,8 +57,16 @@ public class SearchSearchRequest
 		return _fetchSource;
 	}
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by GroupByRequest
+	 */
+	@Deprecated
 	public GroupBy getGroupBy() {
 		return _groupBy;
+	}
+
+	public List<GroupByRequest> getGroupByRequests() {
+		return Collections.unmodifiableList(_groupByRequests);
 	}
 
 	public Highlight getHighlight() {
@@ -170,8 +179,16 @@ public class SearchSearchRequest
 		_fetchSource = fetchSource;
 	}
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by GroupByRequest
+	 */
+	@Deprecated
 	public void setGroupBy(GroupBy groupBy) {
 		_groupBy = groupBy;
+	}
+
+	public void setGroupByRequests(Collection<GroupByRequest> groupByRequests) {
+		_groupByRequests = new ArrayList<>(groupByRequests);
 	}
 
 	public void setHighlight(Highlight highlight) {
@@ -256,6 +273,7 @@ public class SearchSearchRequest
 	private String _alternateUidFieldName;
 	private Boolean _fetchSource;
 	private GroupBy _groupBy;
+	private List<GroupByRequest> _groupByRequests = Collections.emptyList();
 	private Highlight _highlight;
 	private boolean _highlightEnabled;
 	private String[] _highlightFieldNames = {};

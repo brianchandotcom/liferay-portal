@@ -231,7 +231,7 @@ definition {
 			fieldName = "${fieldName2}"
 		);
 
-		FormPortlet.changeLocale(locale = "zh-cn");
+		FormPortlet.changeLocale(locale = "中文-中国");
 
 		FormFields.viewTextLabel(fieldLabel = "表格文本", fieldName = "${fieldName1}");
 

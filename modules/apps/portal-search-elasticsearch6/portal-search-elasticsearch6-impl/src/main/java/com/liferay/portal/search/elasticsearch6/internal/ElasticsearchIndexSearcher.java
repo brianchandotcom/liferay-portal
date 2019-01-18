@@ -283,6 +283,8 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 		searchSearchRequest.putAllFacets(searchContext.getFacets());
 
 		searchSearchRequest.setGroupBy(searchContext.getGroupBy());
+		searchSearchRequest.setGroupByRequests(
+			searchRequest.getGroupByRequests());
 
 		searchSearchRequest.setHighlightEnabled(
 			queryConfig.isHighlightEnabled());
@@ -323,7 +325,6 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 		searchSearchRequest.setSorts(searchContext.getSorts());
 		searchSearchRequest.setSorts(searchRequest.getSorts());
 		searchSearchRequest.setStats(searchContext.getStats());
-		searchSearchRequest.setStatsRequests(searchRequest.getStatsRequests());
 
 		return searchSearchRequest;
 	}
@@ -389,6 +390,17 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 		).statsResponseMap(
 			baseSearchResponse.getStatsResponseMap()
 		);
+	}
+
+	protected void populateResponse(
+		SearchSearchResponse searchSearchResponse,
+		SearchResponseBuilder searchResponseBuilder) {
+
+		populateResponse(
+			(BaseSearchResponse)searchSearchResponse, searchResponseBuilder);
+
+		searchResponseBuilder.groupByResponses(
+			searchSearchResponse.getGroupByResponses());
 	}
 
 	protected void prepare(

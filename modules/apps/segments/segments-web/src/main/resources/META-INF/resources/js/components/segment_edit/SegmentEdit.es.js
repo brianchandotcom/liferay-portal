@@ -180,7 +180,7 @@ class SegmentEdit extends Component {
 					value={values.active}
 				/>
 
-				<div className="form-header-root">
+				<div className="form-header">
 					<div className="container-fluid container-fluid-max-xl form-header-container">
 						<div className="form-header-section-left">
 							<TitleEditor
@@ -235,7 +235,7 @@ class SegmentEdit extends Component {
 					</div>
 				</div>
 
-				<div>
+				<div className="form-body">
 					<FieldArray
 						name="contributors"
 						render={this._renderContributors}

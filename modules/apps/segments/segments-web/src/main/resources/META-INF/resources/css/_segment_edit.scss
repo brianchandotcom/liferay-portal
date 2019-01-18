@@ -1,10 +1,16 @@
 .segment-edit-page-root {
+	display: flex;
+	flex-direction: column;
+	height: calc(100vh - 56px);
+	position: absolute;
+	width: 100%;
+
 	.contributor-conjunction {
 		margin: 0 auto;
 		width: 120px;
 	}
 
-	.form-header-root {
+	.form-header {
 		background-color: $white;
 		border-bottom: 1px solid $mainLighten65;
 
@@ -54,5 +60,10 @@
 				margin-right: 40px;
 			}
 		}
+	}
+
+	.form-body {
+		flex: 1;
+		overflow: auto;
 	}
 }

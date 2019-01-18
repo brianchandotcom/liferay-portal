@@ -1,6 +1,7 @@
 .criteria-sidebar-root {
 	background-color: $white;
 	border: 1px solid $mainLighten74;
+	border-top-width: 0;
 	display: flex;
 	flex-flow: column;
 	height: 100%;

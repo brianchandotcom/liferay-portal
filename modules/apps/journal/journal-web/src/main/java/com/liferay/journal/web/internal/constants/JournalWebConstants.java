@@ -22,4 +22,8 @@ public class JournalWebConstants {
 	public static final String JOURNAL_ELEMENTS_DEFAULT_EVENT_HANDLER =
 		"journalElementsDefaultEventHandler";
 
+	public static final String
+		JOURNAL_INFO_PANEL_ELEMENTS_DEFAULT_EVENT_HANDLER =
+			"journalInfoPanelElementsDefaultEventHandler";
+
 }

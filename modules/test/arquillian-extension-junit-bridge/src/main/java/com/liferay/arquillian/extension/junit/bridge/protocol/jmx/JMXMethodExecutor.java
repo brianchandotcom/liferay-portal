@@ -51,10 +51,12 @@ public class JMXMethodExecutor implements ContainerMethodExecutor {
 		Method testMethod = testMethodExecutor.getMethod();
 
 		try {
-			JMXTestRunnerMBean testRunner = _getMBeanProxy(
-				JMXTestRunnerMBean.class);
+			JMXTestRunnerMBean jmxTestRunnerMBean =
+				MBeanServerInvocationHandler.newProxyInstance(
+					_mBeanServerConnection, _objectName,
+					JMXTestRunnerMBean.class, false);
 
-			byte[] data = testRunner.runTestMethod(
+			byte[] data = jmxTestRunnerMBean.runTestMethod(
 				testClass.getName(), testMethod.getName());
 
 			try (InputStream is = new ByteArrayInputStream(data);
@@ -74,11 +76,6 @@ public class JMXMethodExecutor implements ContainerMethodExecutor {
 
 			return testResult;
 		}
-	}
-
-	private <T> T _getMBeanProxy(Class<T> clazz) {
-		return MBeanServerInvocationHandler.newProxyInstance(
-			_mBeanServerConnection, _objectName, clazz, false);
 	}
 
 	private static final ObjectName _objectName;

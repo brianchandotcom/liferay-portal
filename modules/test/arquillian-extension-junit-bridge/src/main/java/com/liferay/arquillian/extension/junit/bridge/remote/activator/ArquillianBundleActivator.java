@@ -45,9 +45,8 @@ public class ArquillianBundleActivator implements BundleActivator {
 
 		BundleWiring bundleWiring = bundle.adapt(BundleWiring.class);
 
-		_jmxTestRunner = new JMXTestRunner(bundleWiring.getClassLoader());
-
-		mBeanServer.registerMBean(_jmxTestRunner, _objectName);
+		mBeanServer.registerMBean(
+			new JMXTestRunner(bundleWiring.getClassLoader()), _objectName);
 	}
 
 	@Override
@@ -84,7 +83,5 @@ public class ArquillianBundleActivator implements BundleActivator {
 			throw new ExceptionInInitializerError(mone);
 		}
 	}
-
-	private JMXTestRunner _jmxTestRunner;
 
 }

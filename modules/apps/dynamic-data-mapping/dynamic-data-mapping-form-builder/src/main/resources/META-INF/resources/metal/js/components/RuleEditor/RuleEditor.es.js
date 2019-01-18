@@ -432,6 +432,33 @@ class RuleEditor extends Component {
 			);
 		}
 	}
+
+	_setDataProviderTarget() {
+		const {dataProvider, rule} = this;
+
+		if (!rule) {
+			return;
+		}
+
+		this.setState(
+			{
+				actions: rule.actions.map(
+					action => {
+						if (action.action == 'auto-fill') {
+							const {id} = dataProvider.find(
+								({uuid}) => uuid === action.ddmDataProviderInstanceUUID
+							);
+
+							action.target = id;
+						}
+
+						return action;
+					}
+				)
+			}
+		);
+	}
+
 	_prepareRuleEditor() {
 		const {rule} = this;
 

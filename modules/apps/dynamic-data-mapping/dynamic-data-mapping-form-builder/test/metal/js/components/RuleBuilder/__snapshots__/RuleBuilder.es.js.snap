@@ -163,7 +163,11 @@ exports[`RuleBuilder should render the list of rules when mode is set to view 1`
         <ul class="ddm-form-body-content form-builder-rule-builder-rules-list tabular-list-group">
           <li class="list-group-item">
             <div class="clamp-horizontal list-group-item-content">
-              <p class="form-builder-rule-builder-rule-description text-default"><b>if </b><span>field </span><span class="label label-lg label-secondary" data-original-title="label text 1" title="label text 1"><span class="text-truncate-inline"><span class="text-truncate">label text 1</span></span></span><b class="text-lowercase"><em> is-equal-to </em></b><span>field </span><span class="label label-lg label-secondary" data-original-title="label text 2" title="label text 2"><span class="text-truncate-inline"><span class="text-truncate">label text 2</span></span></span><br><span><b>require </b></span><span class="label label-lg label-secondary" data-original-title="label text 1" title="label text 1"><span class="text-truncate-inline"><span class="text-truncate">label text 1</span></span></span></p>
+              <p class="form-builder-rule-builder-rule-description text-default"><b>if </b>
+                <div class="ddm-condition-container"><span>field </span><span class="label label-lg label-secondary" data-original-title="label text 1" title="label text 1"><span class="text-truncate-inline"><span class="text-truncate">label text 1</span></span></span></div><b class="text-lowercase"><em> is-equal-to </em></b>
+                <div class="ddm-condition-container"><span>field </span><span class="label label-lg label-secondary" data-original-title="label text 2" title="label text 2"><span class="text-truncate-inline"><span class="text-truncate">label text 2</span></span></span></div><br>
+                <div class="ddm-action-container"><span><b>require </b></span><span class="label label-lg label-secondary" data-original-title="label text 1" title="label text 1"><span class="text-truncate-inline"><span class="text-truncate">label text 1</span></span></span></div>
+              </p>
             </div>
             <div class="list-group-item-field">
               <div class="card-col-field">
@@ -181,10 +185,40 @@ exports[`RuleBuilder should render the list of rules when mode is set to view 1`
               </div>
             </div>
           </li>
+          <li class="list-group-item">
+            <div class="clamp-horizontal list-group-item-content">
+              <p class="form-builder-rule-builder-rule-description text-default"><b>if </b>
+                <div class="ddm-condition-container"><span>field </span><span class="label label-lg label-secondary" data-original-title="label text 1" title="label text 1"><span class="text-truncate-inline"><span class="text-truncate">label text 1</span></span></span></div><b class="text-lowercase"><em> is-not-equal-to </em></b>
+                <div class="ddm-condition-container"><span>field </span><span class="label label-lg label-secondary" data-original-title="label text 2" title="label text 2"><span class="text-truncate-inline"><span class="text-truncate">label text 2</span></span></span></div><br>
+                <div class="ddm-action-container"><span><b>show </b></span><span class="label label-lg label-secondary" data-original-title="label text 1" title="label text 1"><span class="text-truncate-inline"><span class="text-truncate">label text 1</span></span></span></div>
+              </p>
+            </div>
+            <div class="list-group-item-field">
+              <div class="card-col-field">
+                <div class="dropdown dropdown-action">
+                  <div class="ddm-rule-list-settings" data-card-id="1">
+                    <div class="dropdown dropdown-action"><button aria-expanded="false" aria-haspopup="true" aria-label="toggle" class="dropdown-toggle btn btn-unstyled" ref="triggerButton" title="actions" type="button"><svg aria-hidden="true" class="lexicon-icon lexicon-icon-ellipsis-v" focusable="false">
+                          <title>ellipsis-v</title>
+                          <use xlink:href="icons.svg#ellipsis-v"></use>
+                        </svg></button></div><button class="component-action cursor-pointer dropdown-toggle" data-rule-index="1"><svg aria-hidden="true" class="lexicon-icon lexicon-icon-ellipsis-v" focusable="false">
+                        <title>ellipsis-v</title>
+                        <use xlink:href="icons.svg#ellipsis-v"></use>
+                      </svg></button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </li>
         </ul>
       </div>
     </div>
   </div>
+</div>
+<div class="dropdown-menu" ref="menu">
+  <ul class="list-unstyled">
+    <li><button class="btn dropdown-item btn-sm btn-link" aria-label="edit" type="button">edit</button></li>
+    <li><button class="btn dropdown-item btn-sm btn-link" aria-label="delete" type="button">delete</button></li>
+  </ul>
 </div>
 <div class="dropdown-menu" ref="menu">
   <ul class="list-unstyled">

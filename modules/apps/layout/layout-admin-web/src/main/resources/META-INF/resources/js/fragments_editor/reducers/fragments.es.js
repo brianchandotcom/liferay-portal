@@ -1,25 +1,8 @@
-import {
-	ADD_FRAGMENT_ENTRY_LINK,
-	MOVE_FRAGMENT_ENTRY_LINK,
-	REMOVE_FRAGMENT_ENTRY_LINK,
-	UPDATE_EDITABLE_VALUE
-} from '../actions/actions.es';
+import {ADD_FRAGMENT_ENTRY_LINK, MOVE_FRAGMENT_ENTRY_LINK, REMOVE_FRAGMENT_ENTRY_LINK, UPDATE_EDITABLE_VALUE} from '../actions/actions.es';
 import {FRAGMENTS_EDITOR_ITEM_BORDERS, FRAGMENTS_EDITOR_ITEM_TYPES} from '../utils/constants';
-import {
-	EDITABLE_FRAGMENT_ENTRY_PROCESSOR
-} from '../components/fragment_entry_link/FragmentEntryLinkContent.es';
-import {
-	add,
-	remove,
-	setIn,
-	updateIn,
-	updateLayoutData
-} from '../utils/FragmentsEditorUpdateUtils.es';
-import {
-	getColumn,
-	getDropSectionPosition,
-	getFragmentColumn
-} from '../utils/FragmentsEditorGetUtils.es';
+import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../components/fragment_entry_link/FragmentEntryLinkContent.es';
+import {add, remove, setIn, updateIn, updateLayoutData} from '../utils/FragmentsEditorUpdateUtils.es';
+import {getColumn, getDropSectionPosition, getFragmentColumn} from '../utils/FragmentsEditorGetUtils.es';
 
 /**
  * @param {!object} state
@@ -40,12 +23,12 @@ function addFragmentEntryLinkReducer(state, actionType, payload) {
 				let nextData = null;
 
 				_addFragmentEntryLink(
-					state.addFragmentEntryLinkURL,
+					nextState.addFragmentEntryLinkURL,
 					payload.fragmentEntryId,
 					payload.fragmentName,
-					state.classNameId,
-					state.classPK,
-					state.portletNamespace
+					nextState.classNameId,
+					nextState.classPK,
+					nextState.portletNamespace
 				)
 					.then(
 						response => {
@@ -53,26 +36,26 @@ function addFragmentEntryLinkReducer(state, actionType, payload) {
 
 							nextData = _addFragment(
 								fragmentEntryLink.fragmentEntryLinkId,
-								state.dropTargetBorder,
-								state.dropTargetItemId,
-								state.dropTargetItemType,
-								state.layoutData
+								nextState.dropTargetBorder,
+								nextState.dropTargetItemId,
+								nextState.dropTargetItemType,
+								nextState.layoutData
 							);
 
 							return updateLayoutData(
-								state.updateLayoutPageTemplateDataURL,
-								state.portletNamespace,
-								state.classNameId,
-								state.classPK,
+								nextState.updateLayoutPageTemplateDataURL,
+								nextState.portletNamespace,
+								nextState.classNameId,
+								nextState.classPK,
 								nextData
 							);
 						}
 					)
 					.then(
 						() => _getFragmentEntryLinkContent(
-							state.renderFragmentEntryURL,
+							nextState.renderFragmentEntryURL,
 							fragmentEntryLink,
-							state.portletNamespace
+							nextState.portletNamespace
 						)
 					)
 					.then(
@@ -130,7 +113,7 @@ function moveFragmentEntryLinkReducer(state, actionType, payload) {
 				let nextData = null;
 
 				nextData = _removeFragment(
-					state.layoutData,
+					nextState.layoutData,
 					payload.fragmentEntryLinkId
 				);
 
@@ -143,10 +126,10 @@ function moveFragmentEntryLinkReducer(state, actionType, payload) {
 				);
 
 				_moveFragmentEntryLink(
-					state.updateLayoutPageTemplateDataURL,
-					state.portletNamespace,
-					state.classNameId,
-					state.classPK,
+					nextState.updateLayoutPageTemplateDataURL,
+					nextState.portletNamespace,
+					nextState.classNameId,
+					nextState.classPK,
 					nextData
 				)
 					.then(
@@ -156,7 +139,7 @@ function moveFragmentEntryLinkReducer(state, actionType, payload) {
 							}
 
 							nextState = setIn(
-								state,
+								nextState,
 								['layoutData'],
 								nextData
 							);
@@ -194,18 +177,18 @@ function removeFragmentEntryLinkReducer(state, actionType, payload) {
 				const {fragmentEntryLinkId} = payload;
 
 				let nextData = setIn(
-					state.layoutData,
+					nextState.layoutData,
 					['structure'],
-					[...state.layoutData.structure]
+					[...nextState.layoutData.structure]
 				);
 
 				nextData = _removeFragment(nextData, fragmentEntryLinkId);
 
 				_removeFragmentEntryLink(
-					state.deleteFragmentEntryLinkURL,
-					state.portletNamespace,
-					state.classNameId,
-					state.classPK,
+					nextState.deleteFragmentEntryLinkURL,
+					nextState.portletNamespace,
+					nextState.classNameId,
+					nextState.classPK,
 					fragmentEntryLinkId,
 					nextData
 				)
@@ -256,7 +239,7 @@ function updateEditableValueReducer(state, actionType, payload) {
 					editableValueId
 				} = payload;
 
-				const {editableValues} = state.fragmentEntryLinks[payload.fragmentEntryLinkId];
+				const {editableValues} = nextState.fragmentEntryLinks[payload.fragmentEntryLinkId];
 
 				const nextEditableValues = setIn(
 					editableValues,
@@ -271,17 +254,17 @@ function updateEditableValueReducer(state, actionType, payload) {
 				const formData = new FormData();
 
 				formData.append(
-					`${state.portletNamespace}fragmentEntryLinkId`,
+					`${nextState.portletNamespace}fragmentEntryLinkId`,
 					payload.fragmentEntryLinkId
 				);
 
 				formData.append(
-					`${state.portletNamespace}editableValues`,
+					`${nextState.portletNamespace}editableValues`,
 					JSON.stringify(nextEditableValues)
 				);
 
 				fetch(
-					state.editFragmentEntryLinkURL,
+					nextState.editFragmentEntryLinkURL,
 					{
 						body: formData,
 						credentials: 'include',
@@ -505,12 +488,10 @@ function _getFragmentEntryLinkContent(
 					throw new Error();
 				}
 
-				return Object.assign(
-					{},
+				return setIn(
 					fragmentEntryLink,
-					{
-						content: response.content
-					}
+					['content'],
+					response.content
 				);
 			}
 		);

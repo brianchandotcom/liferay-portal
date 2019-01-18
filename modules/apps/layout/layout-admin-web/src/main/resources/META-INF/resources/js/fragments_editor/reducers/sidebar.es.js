@@ -1,7 +1,5 @@
-import {
-	HIDE_SIDEBAR,
-	TOGGLE_SIDEBAR
-} from '../actions/actions.es';
+import {HIDE_SIDEBAR, TOGGLE_SIDEBAR} from '../actions/actions.es';
+import {setIn} from '../utils/FragmentsEditorUpdateUtils.es';
 
 /**
  * @param {!object} state
@@ -13,8 +11,7 @@ function hideFragmentsEditorSidebarReducer(state, actionType) {
 	let nextState = state;
 
 	if (actionType === HIDE_SIDEBAR) {
-		nextState = Object.assign({}, nextState);
-		nextState.fragmentsEditorSidebarVisible = false;
+		nextState = setIn(nextState, ['fragmentsEditorSidebarVisible'], false);
 	}
 
 	return nextState;
@@ -30,8 +27,11 @@ function toggleFragmentsEditorSidebarReducer(state, actionType) {
 	let nextState = state;
 
 	if (actionType === TOGGLE_SIDEBAR) {
-		nextState = Object.assign({}, nextState);
-		nextState.fragmentsEditorSidebarVisible = !nextState.fragmentsEditorSidebarVisible;
+		nextState = setIn(
+			nextState,
+			['fragmentsEditorSidebarVisible'],
+			!nextState.fragmentsEditorSidebarVisible
+		);
 	}
 
 	return nextState;

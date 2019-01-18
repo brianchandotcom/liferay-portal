@@ -1,7 +1,5 @@
-import {
-	UPDATE_LAST_SAVE_DATE,
-	UPDATE_SAVING_CHANGES_STATUS
-} from '../actions/actions.es';
+import {setIn} from '../utils/FragmentsEditorUpdateUtils.es';
+import {UPDATE_LAST_SAVE_DATE, UPDATE_SAVING_CHANGES_STATUS} from '../actions/actions.es';
 
 /**
  * @param {!object} state
@@ -16,14 +14,14 @@ function saveChangesReducer(state, actionType, payload) {
 	let nextState = state;
 
 	if (actionType === UPDATE_LAST_SAVE_DATE) {
-		nextState = Object.assign({}, nextState);
-		nextState.lastSaveDate = payload.lastSaveDate.toLocaleTimeString(
+		const newDate = payload.lastSaveDate.toLocaleTimeString(
 			Liferay.ThemeDisplay.getBCP47LanguageId()
 		);
+
+		nextState = setIn(nextState, ['lastSaveDate'], newDate);
 	}
 	else if (actionType === UPDATE_SAVING_CHANGES_STATUS) {
-		nextState = Object.assign({}, nextState);
-		nextState.savingChanges = Boolean(payload.savingChanges);
+		nextState = setIn(nextState, ['savingChanges'], Boolean(payload.savingChanges));
 	}
 
 	return nextState;

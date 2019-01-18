@@ -4,6 +4,7 @@ import {
 	REMOVE_FRAGMENT_ENTRY_LINK,
 	UPDATE_TRANSLATION_STATUS
 } from '../actions/actions.es';
+import {setIn} from '../utils/FragmentsEditorUpdateUtils.es';
 
 const EDITABLE_VALUES_KEY = 'com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor';
 
@@ -20,13 +21,7 @@ function languageIdReducer(state, actionType, payload) {
 	let nextState = state;
 
 	if (actionType === CHANGE_LANGUAGE_ID) {
-		nextState = Object.assign(
-			{},
-			nextState,
-			{
-				languageId: payload.languageId
-			}
-		);
+		nextState = setIn(nextState, ['languageId'], payload.languageId);
 	}
 
 	return nextState;
@@ -46,11 +41,12 @@ function translationStatusReducer(state, actionType) {
 		actionType === UPDATE_TRANSLATION_STATUS ||
 		actionType === REMOVE_FRAGMENT_ENTRY_LINK
 	) {
-		nextState = Object.assign({}, nextState);
-		nextState.translationStatus = _getTranslationStatus(
-			_getLanguageKeys(state.availableLanguages),
-			_getEditableValues(state.fragmentEntryLinks)
+		const nextTranslationStatus = _getTranslationStatus(
+			_getLanguageKeys(nextState.availableLanguages),
+			_getEditableValues(nextState.fragmentEntryLinks)
 		);
+
+		nextState = setIn(nextState, ['translationStatus'], nextTranslationStatus);
 	}
 
 	return nextState;

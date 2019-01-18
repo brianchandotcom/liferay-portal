@@ -7,6 +7,7 @@ import Soy from 'metal-soy';
 import FragmentEditableField from './FragmentEditableField.es';
 import FragmentStyleEditor from './FragmentStyleEditor.es';
 import MetalStore from '../../store/store.es';
+import {setIn} from '../../utils/FragmentsEditorUpdateUtils.es';
 import {shouldUpdateOnChangeProperties} from '../../utils/FragmentsEditorComponentUtils.es';
 import templates from './FragmentEntryLinkContent.soy';
 import {UPDATE_EDITABLE_VALUE} from '../../actions/actions.es';
@@ -42,12 +43,10 @@ class FragmentEntryLinkContent extends Component {
 	 * @review
 	 */
 	prepareStateForRender(state) {
-		return Object.assign(
-			{},
+		return setIn(
 			state,
-			{
-				content: this.content ? Soy.toIncDom(this.content) : null
-			}
+			['content'],
+			this.content ? Soy.toIncDom(this.content) : null
 		);
 	}
 

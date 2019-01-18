@@ -169,26 +169,34 @@ function setIn(object, keyPath, value) {
  */
 function updateIn(object, keyPath, updater, defaultValue) {
 	const [nextKey] = keyPath;
-	const target = object instanceof Array ?
-		[...object] :
-		Object.assign({}, object);
+	let target = object;
 
 	if (keyPath.length > 1) {
+		target = target instanceof Array ?
+			[...target] :
+			Object.assign({}, target);
+
 		target[nextKey] = updateIn(
-			object[nextKey] || {},
+			target[nextKey] || {},
 			keyPath.slice(1),
 			updater,
 			defaultValue
 		);
 	}
 	else {
-		let nextValue = target[nextKey];
+		const nextValue = typeof target[nextKey] === 'undefined' ?
+			defaultValue :
+			target[nextKey];
 
-		if (typeof nextValue === 'undefined') {
-			nextValue = defaultValue;
+		const updatedNextValue = updater(nextValue);
+
+		if (updatedNextValue !== target[nextKey]) {
+			target = target instanceof Array ?
+				[...target] :
+				Object.assign({}, target);
+
+			target[nextKey] = updatedNextValue;
 		}
-
-		target[nextKey] = updater(nextValue);
 	}
 
 	return target;

@@ -2,12 +2,10 @@ import {Config} from 'metal-state';
 import PortletBase from 'frontend-js-web/liferay/PortletBase.es';
 import Soy from 'metal-soy';
 
-import {
-	HIDE_MAPPING_DIALOG,
-	UPDATE_EDITABLE_VALUE
-} from '../../actions/actions.es';
+import {HIDE_MAPPING_DIALOG, UPDATE_EDITABLE_VALUE} from '../../actions/actions.es';
 import {Store} from '../../store/store.es';
 import templates from './SelectMappingDialog.soy';
+import {setIn} from '../../utils/FragmentsEditorUpdateUtils.es';
 
 /**
  * List of editable types and their compatibilities
@@ -81,13 +79,7 @@ class SelectMappingDialog extends PortletBase {
 			) :
 			null;
 
-		return Object.assign(
-			{},
-			state,
-			{
-				_mappeableFields: mappeableFields
-			}
-		);
+		return setIn(state, ['_mappeableFields'], mappeableFields);
 	}
 
 	/**

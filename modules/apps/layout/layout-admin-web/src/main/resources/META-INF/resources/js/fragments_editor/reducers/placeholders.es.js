@@ -7,6 +7,7 @@ import {
 	UPDATE_HIGHLIGHT_MAPPING_STATUS,
 	UPDATE_HOVERED_ITEM
 } from '../actions/actions.es';
+import {setIn} from '../utils/FragmentsEditorUpdateUtils.es';
 
 /**
  * Updates active element data with the information sent.
@@ -22,14 +23,12 @@ function updateActiveItemReducer(state, actionType, payload) {
 	let nextState = state;
 
 	if (actionType === CLEAR_ACTIVE_ITEM) {
-		nextState = Object.assign({}, nextState);
-		nextState.activeItemId = null;
-		nextState.activeItemType = null;
+		nextState = setIn(nextState, ['activeItemId'], null);
+		nextState = setIn(nextState, ['activeItemType'], null);
 	}
 	else if (actionType === UPDATE_ACTIVE_ITEM) {
-		nextState = Object.assign({}, nextState);
-		nextState.activeItemId = payload.activeItemId;
-		nextState.activeItemType = payload.activeItemType;
+		nextState = setIn(nextState, ['activeItemId'], payload.activeItemId);
+		nextState = setIn(nextState, ['activeItemType'], payload.activeItemType);
 	}
 
 	return nextState;
@@ -50,16 +49,14 @@ function updateDropTargetReducer(state, actionType, payload) {
 	let nextState = state;
 
 	if (actionType === CLEAR_DROP_TARGET) {
-		nextState = Object.assign({}, nextState);
-		nextState.dropTargetBorder = null;
-		nextState.dropTargetItemId = null;
-		nextState.dropTargetItemType = null;
+		nextState = setIn(nextState, ['dropTargetBorder'], null);
+		nextState = setIn(nextState, ['dropTargetItemId'], null);
+		nextState = setIn(nextState, ['dropTargetItemType'], null);
 	}
 	else if (actionType === UPDATE_DROP_TARGET) {
-		nextState = Object.assign({}, nextState);
-		nextState.dropTargetBorder = payload.dropTargetBorder;
-		nextState.dropTargetItemId = payload.dropTargetItemId;
-		nextState.dropTargetItemType = payload.dropTargetItemType;
+		nextState = setIn(nextState, ['dropTargetBorder'], payload.dropTargetBorder);
+		nextState = setIn(nextState, ['dropTargetItemId'], payload.dropTargetItemId);
+		nextState = setIn(nextState, ['dropTargetItemType'], payload.dropTargetItemType);
 	}
 
 	return nextState;
@@ -77,13 +74,7 @@ function updateHighlightMappingReducer(state, actionType, payload) {
 	let nextState = state;
 
 	if (actionType === UPDATE_HIGHLIGHT_MAPPING_STATUS) {
-		nextState = Object.assign(
-			{},
-			nextState,
-			{
-				highlightMapping: Boolean(payload.highlightMapping)
-			}
-		);
+		nextState = setIn(nextState, ['highlightMapping'], Boolean(payload.highlightMapping));
 	}
 
 	return nextState;
@@ -103,14 +94,12 @@ function updateHoveredItemReducer(state, actionType, payload) {
 	let nextState = state;
 
 	if (actionType === CLEAR_HOVERED_ITEM) {
-		nextState = Object.assign({}, nextState);
-		nextState.hoveredItemId = null;
-		nextState.hoveredItemType = null;
+		nextState = setIn(nextState, ['hoveredItemId'], null);
+		nextState = setIn(nextState, ['hoveredItemType'], null);
 	}
 	else if (actionType === UPDATE_HOVERED_ITEM) {
-		nextState = Object.assign({}, nextState);
-		nextState.hoveredItemId = payload.hoveredItemId;
-		nextState.hoveredItemType = payload.hoveredItemType;
+		nextState = setIn(nextState, ['hoveredItemId'], payload.hoveredItemId);
+		nextState = setIn(nextState, ['hoveredItemType'], payload.hoveredItemType);
 	}
 
 	return nextState;

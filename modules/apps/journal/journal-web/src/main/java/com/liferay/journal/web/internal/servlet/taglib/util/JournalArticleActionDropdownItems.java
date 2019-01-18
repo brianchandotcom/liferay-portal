@@ -218,11 +218,11 @@ public class JournalArticleActionDropdownItems {
 	private Consumer<DropdownItem> _getDeleteArticleAction() throws Exception {
 		PortletURL deleteURL = _liferayPortletResponse.createActionURL();
 
-		String actionName = "deleteFolder";
+		String actionName = "deleteArticle";
 		String key = "delete";
 
 		if (_trashHelper.isTrashEnabled(_themeDisplay.getScopeGroupId())) {
-			actionName = "moveFolderToTrash";
+			actionName = "moveToTrash";
 			key = "move-to-recycle-bin";
 		}
 

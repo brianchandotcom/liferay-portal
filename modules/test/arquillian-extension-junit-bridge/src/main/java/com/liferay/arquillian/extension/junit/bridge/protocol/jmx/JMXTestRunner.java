@@ -55,8 +55,6 @@ public class JMXTestRunner
 	private TestResult _runTestMethodInternal(
 		String className, String methodName) {
 
-		_currentCall.set(className + methodName);
-
 		try {
 			TestRunner runner = TestRunners.getTestRunner(
 				JMXTestRunner.class.getClassLoader());
@@ -75,6 +73,5 @@ public class JMXTestRunner
 	}
 
 	private final ClassLoader _classLoader;
-	private final ThreadLocal<String> _currentCall = new ThreadLocal<>();
 
 }

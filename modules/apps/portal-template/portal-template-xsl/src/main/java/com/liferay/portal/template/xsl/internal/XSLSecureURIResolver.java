@@ -14,8 +14,6 @@
 
 package com.liferay.portal.template.xsl.internal;
 
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.InetAddressUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.xsl.XSLURIResolver;
@@ -56,7 +54,7 @@ public class XSLSecureURIResolver implements XSLURIResolver {
 			if (InetAddressUtil.isLocalInetAddress(
 					InetAddress.getByName(url.getHost()))) {
 
-				_log.error(
+				throw new TransformerException(
 					StringBundler.concat(
 						"Denied access to resource: ", href,
 						". Access to local network is disabled by the secure ",
@@ -72,9 +70,6 @@ public class XSLSecureURIResolver implements XSLURIResolver {
 			throw new TransformerException("Error resolving URL reference", e);
 		}
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		XSLSecureURIResolver.class);
 
 	private final XSLURIResolver _xsluriResolver;
 

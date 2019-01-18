@@ -160,8 +160,13 @@ public class AssetVocabularySettingsHelper {
 	protected String getClassNameIdAndClassTypePK(
 		long classNameId, long classTypePK) {
 
-		return String.valueOf(classNameId).concat(StringPool.COLON).concat(
-			String.valueOf(classTypePK));
+		return String.valueOf(
+			classNameId
+		).concat(
+			StringPool.COLON
+		).concat(
+			String.valueOf(classTypePK)
+		);
 	}
 
 	protected long[] getClassNameIds(String[] classNameIdsAndClassTypePKs) {

@@ -475,7 +475,11 @@ public class PortalPreferencesImpl
 			return key;
 		}
 
-		return namespace.concat(StringPool.POUND).concat(key);
+		return namespace.concat(
+			StringPool.POUND
+		).concat(
+			key
+		);
 	}
 
 	private com.liferay.portal.kernel.model.PortalPreferences _reload(

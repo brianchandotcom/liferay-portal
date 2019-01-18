@@ -291,7 +291,10 @@ public class SecurityPortletContainerWrapper implements PortletContainer {
 		String portalURL = PortalUtil.getPortalURL(request);
 
 		return portalURL.concat(
-			lastPath.getContextPath()).concat(lastPath.getPath());
+			lastPath.getContextPath()
+		).concat(
+			lastPath.getPath()
+		);
 	}
 
 	protected HttpServletRequest getOwnerLayoutRequestWrapper(

@@ -268,8 +268,11 @@ public class AssetEntryServiceImpl extends AssetEntryServiceBaseImpl {
 
 		String key = entryQuery.toString();
 
-		key = key.concat(StringPool.POUND).concat(
-			Boolean.toString(returnEntriesCountOnly));
+		key = key.concat(
+			StringPool.POUND
+		).concat(
+			Boolean.toString(returnEntriesCountOnly)
+		);
 
 		Object[] results = threadLocalCache.get(key);
 

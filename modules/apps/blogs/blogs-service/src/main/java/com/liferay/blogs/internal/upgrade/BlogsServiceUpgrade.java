@@ -21,6 +21,7 @@ import com.liferay.blogs.internal.upgrade.v1_1_2.UpgradeBlogsImages;
 import com.liferay.blogs.internal.upgrade.v2_0_0.util.BlogsEntryTable;
 import com.liferay.blogs.internal.upgrade.v2_0_0.util.BlogsStatsUserTable;
 import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
+import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepository;
 import com.liferay.portal.kernel.service.ImageLocalService;
 import com.liferay.portal.kernel.upgrade.BaseUpgradeSQLServerDatetime;
@@ -59,6 +60,9 @@ public class BlogsServiceUpgrade implements UpgradeStepRegistrator {
 
 	@Reference
 	private FriendlyURLEntryLocalService _friendlyURLEntryLocalService;
+
+	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
+	private ModuleServiceLifecycle _moduleServiceLifecycle;
 
 	@Reference
 	private ImageLocalService _imageLocalService;

@@ -484,6 +484,14 @@ class RuleEditor extends Component {
 	}
 
 	prepareStateForRender(state) {
+		const actions = state.loadingDataProviderOptions ? [] : state.actions.map(
+			action => ({
+				...action,
+				inputs: action.inputs ? this.convertAutoFillDataToArray(action, 'inputs') : [],
+				outputs: action.outputs ? this.convertAutoFillDataToArray(action, 'outputs') : []
+			})
+		);
+
 		const conditions = state.conditions.map(
 			condition => {
 				const fieldName = condition.operands[0].value;
@@ -509,6 +517,7 @@ class RuleEditor extends Component {
 
 		return {
 			...state,
+			actions,
 			conditions
 		};
 	}
@@ -517,6 +526,30 @@ class RuleEditor extends Component {
 		this.setState(
 			{
 				invalidRule: !this._validateConditionsFilling() || !this._validateActionsFilling()
+			}
+		);
+	}
+
+	convertAutoFillDataToArray(action, type) {
+		const data = action[type];
+		const originalData = action[`${type}Data`];
+
+		return Object.keys(data).map(
+			(key, index) => {
+				const {label, name, required, type} = originalData[index];
+
+				const fieldsTypes = this.getTypesByFieldType(type);
+
+				const fieldOptions = this.getFieldsByTypes(this.fieldOptions, fieldsTypes);
+
+				return {
+					fieldOptions,
+					label,
+					name,
+					required,
+					type,
+					value: data[key]
+				};
 			}
 		);
 	}

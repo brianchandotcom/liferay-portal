@@ -110,8 +110,6 @@ definition {
 				locator1 = "UsersAndOrganizationsEditUser#CONTACT_ADD_BUTTON"
 			);
 
-			SelectFrame(locator1 = "IFrame#DIALOG");
-
 			if ("${makePrimary}" == "true") {
 				Check(locator1 = "Checkbox#ANY_CHECKBOX", checkboxName = "Make Primary");
 			}
@@ -159,8 +157,6 @@ definition {
 			if (isSet(url)) {
 				Type(locator1 = "TextInput#URL", value1 = "${url}");
 			}
-
-			SelectFrame(value1 = "relative=top");
 		}
 
 		// Instant Messenger
@@ -1220,16 +1216,12 @@ definition {
 	}
 
 	macro editPrimary {
-		SelectFrame(locator1 = "IFrame#DIALOG");
-
 		if ("${makePrimary}" == "true") {
 			Check(locator1 = "Checkbox#ANY_CHECKBOX", checkboxName = "Make Primary");
 		}
 		else if ("${makePrimary}" == "false") {
 			Uncheck(locator1 = "Checkbox#ANY_CHECKBOX", checkboxName = "Make Primary");
 		}
-
-		SelectFrame(value1 = "relative=top");
 
 		Click(locator1 = "Button#SAVE");
 

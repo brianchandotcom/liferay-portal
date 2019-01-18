@@ -258,7 +258,7 @@ definition {
 
 		User.addContactInformation(
 			address = "additional1@liferay.com",
-			contactType = "Add Email Address"
+			contactType = "add-email-address-link"
 		);
 
 		User.viewContactInformation(
@@ -273,7 +273,7 @@ definition {
 
 		User.addContactInformation(
 			address = "additional2@liferay.com",
-			contactType = "Add Email Address",
+			contactType = "add-email-address-link",
 			makePrimary = "true"
 		);
 
@@ -284,7 +284,7 @@ definition {
 
 		User.addContactInformation(
 			address = "additional3@liferay.com",
-			contactType = "Add Email Address"
+			contactType = "add-email-address-link"
 		);
 
 		User.viewNotPrimary(
@@ -369,7 +369,7 @@ definition {
 
 		User.addContactInformation(
 			city = "Diamond Bar",
-			contactType = "Add Address",
+			contactType = "add-address-link",
 			country = "United States",
 			postalCode = "91765",
 			region = "California",
@@ -388,7 +388,7 @@ definition {
 
 		User.addContactInformation(
 			city = "Chicago",
-			contactType = "Add Address",
+			contactType = "add-address-link",
 			makePrimary = "true",
 			postalCode = "60606",
 			street1 = "205 West Wacker Dr"
@@ -398,7 +398,7 @@ definition {
 
 		User.addContactInformation(
 			city = "Raleigh",
-			contactType = "Add Address",
+			contactType = "add-address-link",
 			postalCode = "27607",
 			street1 = "4000 Westchase Blvd"
 		);
@@ -456,7 +456,7 @@ definition {
 		Navigator.gotoNavNested(navNested = "Contact Information");
 
 		User.addContactInformation(
-			contactType = "Add Phone Number",
+			contactType = "add-phone-number-link",
 			extension = "111",
 			number = "1111111111"
 		);
@@ -473,7 +473,7 @@ definition {
 		);
 
 		User.addContactInformation(
-			contactType = "Add Phone Number",
+			contactType = "add-phone-number-link",
 			makePrimary = "true",
 			number = "2222222222"
 		);
@@ -484,7 +484,7 @@ definition {
 		);
 
 		User.addContactInformation(
-			contactType = "Add Phone Number",
+			contactType = "add-phone-number-link",
 			number = "3333333333"
 		);
 
@@ -571,7 +571,7 @@ definition {
 		Navigator.gotoNavNested(navNested = "Contact Information");
 
 		User.addContactInformation(
-			contactType = "Add Website",
+			contactType = "add-website-link",
 			url = "http://www.liferay1.com"
 		);
 
@@ -586,7 +586,7 @@ definition {
 		);
 
 		User.addContactInformation(
-			contactType = "Add Website",
+			contactType = "add-website-link",
 			makePrimary = "true",
 			url = "http://www.liferay2.com"
 		);
@@ -597,7 +597,7 @@ definition {
 		);
 
 		User.addContactInformation(
-			contactType = "Add Website",
+			contactType = "add-website-link",
 			url = "http://www.liferay3.com"
 		);
 
@@ -2021,7 +2021,7 @@ definition {
 		Navigator.gotoNavNested(navNested = "Contact Information");
 
 		User.addContactInformation(
-			contactType = "Add Phone Number",
+			contactType = "add-phone-number-link",
 			extension = "111",
 			number = "1111111111"
 		);

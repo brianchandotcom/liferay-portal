@@ -23,9 +23,12 @@ import com.liferay.data.engine.internal.executor.DEDataRecordCollectionDeleteReq
 import com.liferay.data.engine.internal.executor.DEDataRecordCollectionGetRequestExecutor;
 import com.liferay.data.engine.internal.executor.DEDataRecordCollectionSaveModelPermissionsRequestExecutor;
 import com.liferay.data.engine.internal.executor.DEDataRecordCollectionSavePermissionsRequestExecutor;
+import com.liferay.data.engine.internal.executor.DEDataRecordCollectionSaveRecordRequestExecutor;
 import com.liferay.data.engine.internal.executor.DEDataRecordCollectionSaveRequestExecutor;
 import com.liferay.data.engine.internal.io.DEDataDefinitionFieldsDeserializerTracker;
 import com.liferay.data.engine.internal.security.permission.DEDataEnginePermissionSupport;
+import com.liferay.data.engine.internal.storage.DEDataStorageTracker;
+import com.liferay.data.engine.model.DEDataRecord;
 import com.liferay.data.engine.model.DEDataRecordCollection;
 import com.liferay.data.engine.service.DEDataRecordCollectionDeleteModelPermissionsRequest;
 import com.liferay.data.engine.service.DEDataRecordCollectionDeleteModelPermissionsResponse;
@@ -39,10 +42,13 @@ import com.liferay.data.engine.service.DEDataRecordCollectionSaveModelPermission
 import com.liferay.data.engine.service.DEDataRecordCollectionSaveModelPermissionsResponse;
 import com.liferay.data.engine.service.DEDataRecordCollectionSavePermissionsRequest;
 import com.liferay.data.engine.service.DEDataRecordCollectionSavePermissionsResponse;
+import com.liferay.data.engine.service.DEDataRecordCollectionSaveRecordRequest;
+import com.liferay.data.engine.service.DEDataRecordCollectionSaveRecordResponse;
 import com.liferay.data.engine.service.DEDataRecordCollectionSaveRequest;
 import com.liferay.data.engine.service.DEDataRecordCollectionSaveResponse;
 import com.liferay.data.engine.service.DEDataRecordCollectionService;
 import com.liferay.dynamic.data.lists.exception.NoSuchRecordSetException;
+import com.liferay.dynamic.data.lists.service.DDLRecordLocalService;
 import com.liferay.dynamic.data.lists.service.DDLRecordSetLocalService;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
@@ -264,6 +270,50 @@ public class DEDataRecordCollectionServiceImpl
 	}
 
 	@Override
+	public DEDataRecordCollectionSaveRecordResponse execute(
+			DEDataRecordCollectionSaveRecordRequest
+				deDataRecordCollectionSaveRecordRequest)
+		throws DEDataRecordCollectionException {
+
+		DEDataRecord deDataRecord =
+			deDataRecordCollectionSaveRecordRequest.getDEDataRecord();
+
+		try {
+			_modelResourcePermission.check(
+				getPermissionChecker(),
+				deDataRecord.getDEDataRecordCollectionId(),
+				DEActionKeys.ADD_DATA_RECORD);
+
+			DEDataRecordCollectionSaveRecordRequestExecutor
+				deDataRecordCollectionSaveRecordRequestExecutor =
+					getDEDataRecordCollectionSaveRecordRequestExecutor();
+
+			DEDataRecordCollectionSaveRecordResponse
+				deDataRecordCollectionSaveRecordResponse =
+					deDataRecordCollectionSaveRecordRequestExecutor.execute(
+						deDataRecordCollectionSaveRecordRequest);
+
+			return DEDataRecordCollectionSaveRecordResponse.Builder.of(
+				deDataRecordCollectionSaveRecordResponse.getDEDataRecord());
+		}
+		catch (PrincipalException.MustHavePermission mhp) {
+			throw new DEDataRecordCollectionException.MustHavePermission(
+				mhp.actionId, mhp);
+		}
+		catch (NoSuchRecordSetException nsrse) {
+			throw new DEDataRecordCollectionException.
+				NoSuchDataRecordCollection(
+					deDataRecord.getDEDataRecordCollectionId(), nsrse);
+		}
+		catch (DEDataRecordCollectionException dedrce) {
+			throw dedrce;
+		}
+		catch (Exception e) {
+			throw new DEDataRecordCollectionException.AddDataRecord(e);
+		}
+	}
+
+	@Override
 	public DEDataRecordCollectionSaveResponse execute(
 			DEDataRecordCollectionSaveRequest deDataRecordCollectionSaveRequest)
 		throws DEDataRecordCollectionException {
@@ -402,6 +452,18 @@ public class DEDataRecordCollectionServiceImpl
 		return _deDataRecordCollectionSavePermissionsRequestExecutor;
 	}
 
+	protected DEDataRecordCollectionSaveRecordRequestExecutor
+		getDEDataRecordCollectionSaveRecordRequestExecutor() {
+
+		if (_deDataRecordCollectionSaveRecordRequestExecutor == null) {
+			_deDataRecordCollectionSaveRecordRequestExecutor =
+				new DEDataRecordCollectionSaveRecordRequestExecutor(
+					deDataStorageTracker, ddlRecordLocalService);
+		}
+
+		return _deDataRecordCollectionSaveRecordRequestExecutor;
+	}
+
 	protected DEDataRecordCollectionSaveRequestExecutor
 		getDEDataRecordCollectionSaveRequestExecutor() {
 
@@ -427,11 +489,17 @@ public class DEDataRecordCollectionServiceImpl
 	}
 
 	@Reference
+	protected DDLRecordLocalService ddlRecordLocalService;
+
+	@Reference
 	protected DDLRecordSetLocalService ddlRecordSetLocalService;
 
 	@Reference
 	protected DEDataDefinitionFieldsDeserializerTracker
 		deDataDefinitionFieldsDeserializerTracker;
+
+	@Reference
+	protected DEDataStorageTracker deDataStorageTracker;
 
 	@Reference
 	protected GroupLocalService groupLocalService;
@@ -461,6 +529,8 @@ public class DEDataRecordCollectionServiceImpl
 		_deDataRecordCollectionSaveModelPermissionsRequestExecutor;
 	private DEDataRecordCollectionSavePermissionsRequestExecutor
 		_deDataRecordCollectionSavePermissionsRequestExecutor;
+	private DEDataRecordCollectionSaveRecordRequestExecutor
+		_deDataRecordCollectionSaveRecordRequestExecutor;
 	private DEDataRecordCollectionSaveRequestExecutor
 		_deDataRecordCollectionSaveRequestExecutor;
 	private ModelResourcePermission<DEDataRecordCollection>

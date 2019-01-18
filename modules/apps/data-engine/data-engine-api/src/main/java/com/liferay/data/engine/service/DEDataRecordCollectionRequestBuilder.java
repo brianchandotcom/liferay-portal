@@ -14,6 +14,7 @@
 
 package com.liferay.data.engine.service;
 
+import com.liferay.data.engine.model.DEDataRecord;
 import com.liferay.data.engine.model.DEDataRecordCollection;
 
 /**
@@ -70,6 +71,13 @@ public class DEDataRecordCollectionRequestBuilder {
 
 		return new DEDataRecordCollectionSavePermissionsRequest.Builder(
 			companyId, scopedGroupId, roleNames);
+	}
+
+	public static DEDataRecordCollectionSaveRecordRequest.Builder
+		saveRecordBuilder(DEDataRecord deDataRecord) {
+
+		return new DEDataRecordCollectionSaveRecordRequest.Builder(
+			deDataRecord);
 	}
 
 }

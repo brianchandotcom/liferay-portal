@@ -258,7 +258,11 @@ public class ThemeImpl extends PluginBaseImpl implements Theme {
 		String key = path;
 
 		if (Validator.isNotNull(portletId)) {
-			key = path.concat(StringPool.POUND).concat(portletId);
+			key = path.concat(
+				StringPool.POUND
+			).concat(
+				portletId
+			);
 		}
 
 		String resourcePath = _resourcePathsMap.get(key);
@@ -478,7 +482,11 @@ public class ThemeImpl extends PluginBaseImpl implements Theme {
 		String key = path;
 
 		if (Validator.isNotNull(portletId)) {
-			key = path.concat(StringPool.POUND).concat(portletId);
+			key = path.concat(
+				StringPool.POUND
+			).concat(
+				portletId
+			);
 		}
 
 		Boolean resourceExists = _resourceExistsMap.get(key);

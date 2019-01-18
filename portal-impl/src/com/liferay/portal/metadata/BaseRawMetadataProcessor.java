@@ -110,7 +110,10 @@ public abstract class BaseRawMetadataProcessor implements RawMetadataProcessor {
 			String fieldClassName = fieldClass.getSimpleName();
 
 			String name = fieldClassName.concat(
-				StringPool.UNDERLINE).concat(field.getName());
+				StringPool.UNDERLINE
+			).concat(
+				field.getName()
+			);
 
 			String value = getMetadataValue(metadata, field);
 

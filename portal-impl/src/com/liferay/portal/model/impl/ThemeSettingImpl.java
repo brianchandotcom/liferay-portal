@@ -30,7 +30,13 @@ public class ThemeSettingImpl implements Serializable, ThemeSetting {
 	}
 
 	public static String namespaceProperty(String device, String key) {
-		return namespaceProperty(device).concat(StringPool.COLON).concat(key);
+		return namespaceProperty(
+			device
+		).concat(
+			StringPool.COLON
+		).concat(
+			key
+		);
 	}
 
 	public ThemeSettingImpl(

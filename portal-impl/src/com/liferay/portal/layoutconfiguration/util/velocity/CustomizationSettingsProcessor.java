@@ -125,7 +125,11 @@ public class CustomizationSettingsProcessor implements ColumnProcessor {
 			StringPool.BLANK, "labelOn", "customizable");
 		inputTag.setLabel(StringPool.BLANK);
 		inputTag.setName(
-			"TypeSettingsProperties--".concat(customizableKey).concat("--"));
+			"TypeSettingsProperties--".concat(
+				customizableKey
+			).concat(
+				"--"
+			));
 		inputTag.setPageContext(_pageContext);
 		inputTag.setType("toggle-switch");
 		inputTag.setValue(customizable);

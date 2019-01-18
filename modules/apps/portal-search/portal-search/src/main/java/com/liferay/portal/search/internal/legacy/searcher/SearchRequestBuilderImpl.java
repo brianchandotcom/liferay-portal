@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.aggregation.Aggregation;
 import com.liferay.portal.search.aggregation.pipeline.PipelineAggregation;
 import com.liferay.portal.search.filter.ComplexQueryPart;
+import com.liferay.portal.search.groupby.GroupByRequest;
 import com.liferay.portal.search.internal.searcher.SearchRequestImpl;
 import com.liferay.portal.search.query.Query;
 import com.liferay.portal.search.searcher.FacetContext;
@@ -199,6 +200,17 @@ public class SearchRequestBuilderImpl implements SearchRequestBuilder {
 
 		return _federatedSearchRequestBuildersMap.computeIfAbsent(
 			federatedSearchKey, this::newFederatedSearchRequestBuilder);
+	}
+
+	@Override
+	public SearchRequestBuilder groupByRequests(
+		GroupByRequest... groupByRequests) {
+
+		withSearchRequestImpl(
+			searchRequestImpl -> searchRequestImpl.setGroupByRequests(
+				groupByRequests));
+
+		return this;
 	}
 
 	@Override

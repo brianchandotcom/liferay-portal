@@ -17,6 +17,7 @@ package com.liferay.portal.search.internal.legacy.searcher;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.search.aggregation.AggregationResult;
+import com.liferay.portal.search.groupby.GroupByResponse;
 import com.liferay.portal.search.hits.SearchHits;
 import com.liferay.portal.search.internal.searcher.SearchResponseImpl;
 import com.liferay.portal.search.searcher.SearchRequest;
@@ -26,6 +27,7 @@ import com.liferay.portal.search.stats.StatsResponse;
 
 import java.io.Serializable;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.function.Consumer;
@@ -80,6 +82,17 @@ public class SearchResponseBuilderImpl implements SearchResponseBuilder {
 		withSearchResponseImpl(
 			searchResponseImpl -> searchResponseImpl.setFederatedSearchKey(
 				key));
+
+		return this;
+	}
+
+	@Override
+	public SearchResponseBuilder groupByResponses(
+		List<GroupByResponse> groupByResponses) {
+
+		withSearchResponseImpl(
+			searchResponseImpl -> searchResponseImpl.setGroupByResponses(
+				groupByResponses));
 
 		return this;
 	}

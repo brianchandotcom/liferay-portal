@@ -22,6 +22,8 @@ public class DEActionKeys {
 	public static final String ADD_DATA_DEFINITION_ACTION =
 		"ADD_DATA_DEFINITION";
 
+	public static final String ADD_DATA_RECORD = "ADD_DATA_RECORD";
+
 	public static final String ADD_DATA_RECORD_COLLECTION_ACTION =
 		"ADD_DATA_RECORD_COLLECTION";
 

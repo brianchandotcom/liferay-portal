@@ -42,10 +42,6 @@ public class JMXMethodExecutor implements ContainerMethodExecutor {
 
 	@Override
 	public TestResult invoke(TestMethodExecutor testMethodExecutor) {
-		if (testMethodExecutor == null) {
-			throw new IllegalArgumentException("TestMethodExecutor null");
-		}
-
 		Object instance = testMethodExecutor.getInstance();
 
 		Class<?> testClass = instance.getClass();

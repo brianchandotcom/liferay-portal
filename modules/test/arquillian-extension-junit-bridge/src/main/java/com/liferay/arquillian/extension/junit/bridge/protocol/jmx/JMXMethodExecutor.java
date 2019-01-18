@@ -35,7 +35,9 @@ import org.jboss.arquillian.test.spi.TestResult;
 public class JMXMethodExecutor implements ContainerMethodExecutor {
 
 	public JMXMethodExecutor(MBeanServerConnection mBeanServerConnection) {
-		_mBeanServerConnection = mBeanServerConnection;
+		_jmxTestRunnerMBean = MBeanServerInvocationHandler.newProxyInstance(
+			mBeanServerConnection, _objectName, JMXTestRunnerMBean.class,
+			false);
 	}
 
 	@Override
@@ -51,12 +53,7 @@ public class JMXMethodExecutor implements ContainerMethodExecutor {
 		Method method = testMethodExecutor.getMethod();
 
 		try {
-			JMXTestRunnerMBean jmxTestRunnerMBean =
-				MBeanServerInvocationHandler.newProxyInstance(
-					_mBeanServerConnection, _objectName,
-					JMXTestRunnerMBean.class, false);
-
-			byte[] data = jmxTestRunnerMBean.runTestMethod(
+			byte[] data = _jmxTestRunnerMBean.runTestMethod(
 				testClass.getName(), method.getName());
 
 			try (InputStream is = new ByteArrayInputStream(data);
@@ -89,6 +86,6 @@ public class JMXMethodExecutor implements ContainerMethodExecutor {
 		}
 	}
 
-	private final MBeanServerConnection _mBeanServerConnection;
+	private final JMXTestRunnerMBean _jmxTestRunnerMBean;
 
 }

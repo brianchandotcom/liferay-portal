@@ -1031,7 +1031,7 @@ public class GitWorkingDirectory {
 
 		List<LocalGitBranch> localGitBranches = getLocalGitBranches(branchName);
 
-		if (!localGitBranches.isEmpty()) {
+		if ((localGitBranches != null) && !localGitBranches.isEmpty()) {
 			return localGitBranches.get(0);
 		}
 
@@ -1046,23 +1046,28 @@ public class GitWorkingDirectory {
 	}
 
 	public List<LocalGitBranch> getLocalGitBranches(String branchName) {
+		String upstreamBranchName = getUpstreamBranchName();
+
+		LocalGitRepository localGitRepository =
+			GitRepositoryFactory.getLocalGitRepository(
+				getGitRepositoryName(), upstreamBranchName);
+
+		if (branchName != null) {
+			try {
+				return Arrays.asList(
+					GitBranchFactory.newLocalGitBranch(
+						localGitRepository, branchName,
+						getLocalGitBranchSHA(branchName)));
+			}
+			catch (Exception e) {
+				return null;
+			}
+		}
+
 		List<String> localGitBranchNames = getLocalGitBranchNames();
 
 		List<LocalGitBranch> localGitBranches = new ArrayList<>(
 			localGitBranchNames.size());
-
-		LocalGitRepository localGitRepository =
-			GitRepositoryFactory.getLocalGitRepository(
-				getGitRepositoryName(), getUpstreamBranchName());
-
-		if ((branchName != null) && localGitBranchNames.contains(branchName)) {
-			localGitBranches.add(
-				GitBranchFactory.newLocalGitBranch(
-					localGitRepository, branchName,
-					getLocalGitBranchSHA(branchName)));
-
-			return localGitBranches;
-		}
 
 		for (String localGitBranchName : localGitBranchNames) {
 			localGitBranches.add(

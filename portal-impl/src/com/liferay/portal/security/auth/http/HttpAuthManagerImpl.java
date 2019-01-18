@@ -313,8 +313,11 @@ public class HttpAuthManagerImpl implements HttpAuthManager {
 		String queryString = httpServletRequest.getQueryString();
 
 		if (Validator.isNotNull(queryString)) {
-			requestURI = requestURI.concat(StringPool.QUESTION).concat(
-				queryString);
+			requestURI = requestURI.concat(
+				StringPool.QUESTION
+			).concat(
+				queryString
+			);
 		}
 
 		if (!realm.equals(Portal.PORTAL_REALM) || !uri.equals(requestURI)) {

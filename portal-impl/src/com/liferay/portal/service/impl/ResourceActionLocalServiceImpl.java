@@ -325,7 +325,11 @@ public class ResourceActionLocalServiceImpl
 	}
 
 	protected String encodeKey(String name, String actionId) {
-		return name.concat(StringPool.POUND).concat(actionId);
+		return name.concat(
+			StringPool.POUND
+		).concat(
+			actionId
+		);
 	}
 
 	private static final Map<String, ResourceAction> _resourceActions =

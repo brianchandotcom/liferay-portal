@@ -444,7 +444,11 @@ public class PermissionCacheUtil {
 		implements IndexEncoder<String, PermissionKey> {
 
 		public static String encode(String name, String primKey) {
-			return name.concat(StringPool.UNDERLINE).concat(primKey);
+			return name.concat(
+				StringPool.UNDERLINE
+			).concat(
+				primKey
+			);
 		}
 
 		@Override

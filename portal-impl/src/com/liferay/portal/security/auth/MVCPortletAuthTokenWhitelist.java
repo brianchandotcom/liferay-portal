@@ -202,7 +202,11 @@ public class MVCPortletAuthTokenWhitelist extends BaseAuthTokenWhitelist {
 	protected String getWhitelistValue(
 		String portletName, String whitelistAction) {
 
-		return portletName.concat(StringPool.POUND).concat(whitelistAction);
+		return portletName.concat(
+			StringPool.POUND
+		).concat(
+			whitelistAction
+		);
 	}
 
 	protected void trackWhitelistServices(

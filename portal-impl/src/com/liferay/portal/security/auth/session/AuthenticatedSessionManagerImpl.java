@@ -275,8 +275,11 @@ public class AuthenticatedSessionManagerImpl
 		}
 
 		if (PropsValues.AUTH_USER_UUID_STORE_ENABLED) {
-			String userUUID = userIdString.concat(StringPool.PERIOD).concat(
-				String.valueOf(System.nanoTime()));
+			String userUUID = userIdString.concat(
+				StringPool.PERIOD
+			).concat(
+				String.valueOf(System.nanoTime())
+			);
 
 			Cookie userUUIDCookie = new Cookie(
 				CookieKeys.USER_UUID,

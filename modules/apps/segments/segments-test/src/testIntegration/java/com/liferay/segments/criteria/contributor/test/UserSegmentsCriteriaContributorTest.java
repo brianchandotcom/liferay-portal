@@ -111,11 +111,21 @@ public class UserSegmentsCriteriaContributorTest {
 	}
 
 	@Test
-	public void testGetFields() throws Exception {
+	public void testGetFieldsWithComplexEntity() throws Exception {
 		_addExpandoColumn(
 			_expandoTable, RandomTestUtil.randomString(),
 			ExpandoColumnConstants.STRING,
 			ExpandoColumnConstants.INDEX_TYPE_KEYWORD, null);
+
+		EntityModel entityModel = _getEntityModel();
+
+		Map<String, EntityField> entityFieldsMap =
+			entityModel.getEntityFieldsMap();
+
+		ComplexEntityField complexEntityField =
+			(ComplexEntityField)entityFieldsMap.get("customField");
+
+		Assert.assertNotNull(complexEntityField);
 
 		SegmentsCriteriaContributor segmentsCriteriaContributor =
 			_getSegmentsCriteriaContributor();
@@ -125,28 +135,21 @@ public class UserSegmentsCriteriaContributorTest {
 
 		Stream<Field> stream = fields.stream();
 
-		Set<String> fieldNames = stream.map(
-			Field::getName
+		Set<String> complexEntityFieldNames = stream.filter(
+			field -> StringUtil.startsWith(field.getName(), "customField/")
+		).map(
+			field -> StringUtil.replace(field.getName(), "customField/", "")
 		).collect(
 			Collectors.toSet()
 		);
 
-		EntityModel entityModel = _getEntityModel();
+		Assert.assertFalse(complexEntityFieldNames.isEmpty());
 
-		Map<String, EntityField> entityFieldsMap =
-			entityModel.getEntityFieldsMap();
+		Map<String, EntityField> complexEntityFieldsMap =
+			complexEntityField.getEntityFieldsMap();
 
-		ComplexEntityField customFields =
-			(ComplexEntityField)entityFieldsMap.remove("customField");
-
-		Map<String, EntityField> customFieldsMap =
-			customFields.getEntityFieldsMap();
-
-		customFieldsMap.forEach(
-			(s, entityField) -> entityFieldsMap.put(
-				"customField/" + s, entityField));
-
-		Assert.assertEquals(entityFieldsMap.keySet(), fieldNames);
+		Assert.assertEquals(
+			complexEntityFieldsMap.keySet(), complexEntityFieldNames);
 	}
 
 	@Test

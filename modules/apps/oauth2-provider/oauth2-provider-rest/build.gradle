@@ -9,6 +9,7 @@ dependencies {
 	compileOnly group: "org.apache.cxf", name: "cxf-core", version: "3.2.5"
 	compileOnly group: "org.apache.cxf", name: "cxf-rt-frontend-jaxrs", version: "3.2.5"
 	compileOnly group: "org.apache.cxf", name: "cxf-rt-rs-extension-providers", version: "3.2.5"
+	compileOnly group: "org.apache.cxf", name: "cxf-rt-rs-json-basic", version: "3.2.5"
 	compileOnly group: "org.apache.cxf", name: "cxf-rt-rs-security-jose", version: "3.2.5"
 	compileOnly group: "org.apache.cxf", name: "cxf-rt-rs-security-jose-jaxrs", version: "3.2.5"
 	compileOnly group: "org.apache.cxf", name: "cxf-rt-rs-security-oauth2", version: "3.2.5"

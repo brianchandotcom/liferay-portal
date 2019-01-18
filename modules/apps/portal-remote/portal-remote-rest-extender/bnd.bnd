@@ -1,3 +1,15 @@
 Bundle-Name: Liferay Portal Remote REST Extender
 Bundle-SymbolicName: com.liferay.portal.remote.rest.extender
 Bundle-Version: 4.0.0
+Import-Package:\
+	!org.apache.abdera.*,\
+	!org.apache.avalon.*,\
+	!org.apache.cxf.aegis.*,\
+	!org.apache.cxf.jaxrs.client.*,\
+	!org.apache.html.dom.*,\
+	!org.apache.log.*,\
+	!org.apache.xmlbeans.*,\
+	\
+	!org.codehaus.jettison.*,\
+	\
+	*

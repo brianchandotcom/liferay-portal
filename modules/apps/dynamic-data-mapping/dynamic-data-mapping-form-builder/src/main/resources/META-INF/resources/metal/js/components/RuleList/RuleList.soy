@@ -18,10 +18,10 @@
 				action: string,
 				dataProviderName: ?,
 				expression: ?,
-				inputValue: ?,
+				inputLabel: ?,
 				target: string,
 				label: string,
-				outputValue: ?
+				outputLabel: ?
 			]>,
 			logicalOperator: string
 		]>
@@ -66,10 +66,10 @@
 				action: string,
 				dataProviderName: ?,
 				expression: ?,
-				inputValue: ?,
+				inputLabel: ?,
 				target: string,
 				label: string,
-				outputValue: ?
+				outputLabel: ?
 			]>,
 			logicalOperator: string
 		]>
@@ -120,11 +120,11 @@
 								{call .action}
 									{param action: $action.action /}
 									{param dataProviderName: $action.dataProviderName /}
-									{param inputValue: $action.inputValue /}
+									{param inputLabel: $action.inputLabel /}
 									{param expression: $action.expression /}
 									{param label: $action.label /}
 									{param logicalOperator: $rule.logicalOperator /}
-									{param outputValue: $action.outputValue /}
+									{param outputLabel: $action.outputLabel /}
 									{param strings: $strings /}
 								{/call}
 								{if not isLast($action)}
@@ -213,23 +213,25 @@
 	{@param? operandValue: ?}
 	{@param strings: ?}
 
-	{if $operandType == 'double' or $operandType == 'integer' or $operandType == 'string' or $operandType == 'text' or $operandType == 'numeric'}
-		<span>{$strings.value} </span>
-	{else}
-		{if $operandType != 'user' and $operandType != 'list'}
-			<span>{$strings[$operandType]} </span>
+	<div class="ddm-condition-container">
+		{if $operandType == 'double' or $operandType == 'integer' or $operandType == 'string' or $operandType == 'text' or $operandType == 'numeric'}
+			<span>{$strings.value} </span>
+		{else}
+			{if $operandType != 'user' and $operandType != 'list'}
+				<span>{$strings[$operandType]} </span>
+			{/if}
 		{/if}
-	{/if}
 
-	{if $operandLabel}
-		{call .label}
-			{param content: $operandLabel /}
-		{/call}
-	{else}
-		{call .label}
-			{param content: $operandValue /}
-		{/call}
-	{/if}
+		{if $operandLabel}
+			{call .label}
+				{param content: $operandLabel /}
+			{/call}
+		{else}
+			{call .label}
+				{param content: $operandValue /}
+			{/call}
+		{/if}
+	</div>
 {/template}
 
 /**
@@ -240,25 +242,26 @@
 	{@param dataProviderName: ?}
 	{@param expression: ?}
 	{@param label: ?}
-	{@param outputValue: ?}
+	{@param outputLabel: ?}
 
 	{if $action == 'auto-fill'}
-		{let $fieldLabel kind="html"}
-			{call .label}
-				{param content: $outputValue /}
-			{/call}
+		{let $dataProviderOutputFields kind="html"}
+			{foreach $out in $outputLabel}
+				{call .label}
+					{param content: $out /}
+				{/call}
+				{if not isLast($out)}, {/if}
+			{/foreach}
 		{/let}
 
-		<span><b>{msg desc=""}autofill-{$fieldLabel}-from-data-provider-{$dataProviderName}{/msg}</b></span>
+		<span><b>{msg desc=""}autofill-{$dataProviderOutputFields}-from-data-provider-{$dataProviderName}{/msg}</b></span>
 	{elseif $action == 'calculate'}
 		<span><b>{msg desc=""}calculate{/msg} </b></span>
 
 		{call .label}
 			{param content: $expression /}
 		{/call}
-
-		<b> into </b>
-
+			<b> into </b>
 		{call .label}
 			{param content: $label /}
 		{/call}

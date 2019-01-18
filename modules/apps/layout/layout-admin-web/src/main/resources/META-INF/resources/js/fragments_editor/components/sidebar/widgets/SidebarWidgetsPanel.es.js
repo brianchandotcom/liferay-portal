@@ -9,7 +9,6 @@ import {getConnectedComponent} from '../../../store/ConnectedComponent.es';
  * @review
  * @type {!string}
  */
-
 const ENTER_KEY = 'Enter';
 
 /**
@@ -19,11 +18,10 @@ class SidebarWidgetsPanel extends Component {
 
 	/**
 	 * Filters widgets tree based on the keywords provided
-	 *
 	 * @param {!Event} event
-	 * @protected
+	 * @private
+	 * @review
 	 */
-
 	_filterWidgets(event) {
 		const keywords = event.delegateTarget.value.toLowerCase();
 
@@ -31,7 +29,12 @@ class SidebarWidgetsPanel extends Component {
 			this.initialWidgets = this.widgets.slice(0);
 		}
 
-		if (keywords !== '') {
+		if (keywords === '') {
+			const filteredWidgets = this.initialWidgets.slice(0);
+
+			this.widgets = filteredWidgets;
+		}
+		else {
 			const widgets = this.initialWidgets.slice(0);
 
 			const filteredWidgets = widgets.reduce(
@@ -53,20 +56,16 @@ class SidebarWidgetsPanel extends Component {
 
 			this.widgets = filteredWidgets;
 		}
-		else {
-			const filteredWidgets = this.initialWidgets.slice(0);
-
-			this.widgets = filteredWidgets;
-		}
 	}
 
 	/**
 	 * Filters a widget category based on the keywords provided
-	 *
-	 * @param {!Event} event
-	 * @protected
+	 * @param {object} category
+	 * @param {string} keywords
+	 * @private
+	 * @return {object[]}
+	 * @review
 	 */
-
 	_filterCategory(category, keywords) {
 		const filteredCategories = [];
 
@@ -118,7 +117,6 @@ class SidebarWidgetsPanel extends Component {
 	 * @private
 	 * @review
 	 */
-
 	_handleSearchFormKeyDown(event) {
 		if (event.key === ENTER_KEY) {
 			event.preventDefault();

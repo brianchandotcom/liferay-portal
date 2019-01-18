@@ -7,7 +7,12 @@ import {CONJUNCTIONS, PROPERTY_TYPES} from '../../utils/constants.es';
 import {DragSource as dragSource, DropTarget as dropTarget} from 'react-dnd';
 import {DragTypes} from '../../utils/drag-types.es';
 import getCN from 'classnames';
-import {dateToInternationalHuman, generateGroupId, sub} from '../../utils/utils.es';
+import {
+	dateToInternationalHuman,
+	generateGroupId,
+	getSupportedOperatorsFromType,
+	sub
+} from '../../utils/utils.es';
 import TypedInput from './TypedInput.es';
 
 const acceptedDragTypes = [
@@ -43,7 +48,8 @@ function drop(props, monitor) {
 		index: destIndex,
 		onChange,
 		onMove,
-		supportedOperators
+		supportedOperators,
+		supportedPropertyTypes
 	} = props;
 
 	const {
@@ -52,14 +58,26 @@ function drop(props, monitor) {
 		index: startIndex
 	} = monitor.getItem();
 
-	const {defaultValue, operatorName, propertyName, value} = droppedCriterion;
+	const {
+		defaultValue,
+		operatorName,
+		propertyName,
+		type,
+		value
+	} = droppedCriterion;
 
 	const droppedCriterionValue = value || defaultValue;
+
+	const operators = getSupportedOperatorsFromType(
+		supportedOperators,
+		supportedPropertyTypes,
+		type
+	);
 
 	const newCriterion = {
 		operatorName: operatorName ?
 			operatorName :
-			supportedOperators[0].name,
+			operators[0].name,
 		propertyName,
 		value: droppedCriterionValue
 	};
@@ -249,12 +267,10 @@ class CriteriaRow extends Component {
 
 		const propertyType = selectedProperty ? selectedProperty.type : '';
 
-		const filteredSupportedOperators = supportedOperators.filter(
-			operator => {
-				const validOperators = supportedPropertyTypes[propertyType];
-
-				return validOperators && validOperators.includes(operator.name);
-			}
+		const filteredSupportedOperators = getSupportedOperatorsFromType(
+			supportedOperators,
+			supportedPropertyTypes,
+			propertyType
 		);
 
 		const classes = getCN(

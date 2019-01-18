@@ -11,6 +11,7 @@ import getCN from 'classnames';
 import {
 	generateGroupId,
 	getChildGroupIds,
+	getSupportedOperatorsFromType,
 	insertAtIndex,
 	replaceAtIndex
 } from '../../utils/utils.es';
@@ -112,7 +113,13 @@ class CriteriaGroup extends Component {
 	 * @memberof CriteriaGroup
 	 */
 	_handleCriterionAdd = (index, criterion) => {
-		const {criteria, onChange, root, supportedOperators} = this.props;
+		const {
+			criteria,
+			onChange,
+			root,
+			supportedOperators,
+			supportedPropertyTypes
+		} = this.props;
 
 		const {
 			defaultValue,
@@ -124,10 +131,16 @@ class CriteriaGroup extends Component {
 
 		const criterionValue = value || defaultValue;
 
+		const operators = getSupportedOperatorsFromType(
+			supportedOperators,
+			supportedPropertyTypes,
+			type
+		);
+
 		const newCriterion = {
 			operatorName: operatorName ?
 				operatorName :
-				supportedOperators[0].name,
+				operators[0].name,
 			propertyName,
 			type,
 			value: criterionValue

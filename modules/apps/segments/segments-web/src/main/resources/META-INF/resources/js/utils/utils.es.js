@@ -52,6 +52,24 @@ export function getChildGroupIds(criteria) {
 }
 
 /**
+ * Gets the list of operators for a supported type.
+ * Used for displaying the operators available for each criteria row.
+ * @param {Array} operators The full list of supported operators.
+ * @param {Object} propertyTypes A map of property types and the operators
+ * supported for each type.
+ * @param {string} type The type to get the supported operators for.
+ */
+export function getSupportedOperatorsFromType(operators, propertyTypes, type) {
+	return operators.filter(
+		operator => {
+			const validOperators = propertyTypes[type];
+
+			return validOperators && validOperators.includes(operator.name);
+		}
+	);
+}
+
+/**
  * Inserts an item into a list at the specified index.
  * @param {*} item The item that will be inserted.
  * @param {Array} list The list where the item will be inserted into.

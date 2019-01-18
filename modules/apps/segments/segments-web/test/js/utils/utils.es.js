@@ -28,6 +28,59 @@ describe(
 		);
 
 		describe(
+			'getSupportedOperatorsFromType',
+			() => {
+				it(
+					'should return an array of supported operators',
+					() => {
+						const operators = [
+							{
+								label: Liferay.Language.get('equals'),
+								name: 'eq'
+							},
+							{
+								label: Liferay.Language.get('greater-than-or-equals'),
+								name: 'ge'
+							},
+							{
+								label: Liferay.Language.get('greater-than'),
+								name: 'gt'
+							},
+							{
+								label: Liferay.Language.get('not-equals'),
+								name: 'not-eq'
+							}
+						];
+
+						const propertyTypes = {
+							'boolean': ['eq', 'not-eq']
+						};
+
+						const supportedOperators = Utils
+							.getSupportedOperatorsFromType(
+								operators,
+								propertyTypes,
+								'boolean'
+							);
+
+						expect(supportedOperators).toEqual(
+							[
+								{
+									label: 'equals',
+									name: 'eq'
+								},
+								{
+									label: 'not-equals',
+									name: 'not-eq'
+								}
+							]
+						);
+					}
+				);
+			}
+		);
+
+		describe(
 			'insertAtIndex',
 			() => {
 				it(

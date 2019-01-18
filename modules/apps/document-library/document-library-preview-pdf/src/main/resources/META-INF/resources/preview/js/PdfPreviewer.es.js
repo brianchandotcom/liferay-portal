@@ -258,7 +258,6 @@ PdfPreviewer.STATE = {
 	 */
 	currentPageLoading: Config.bool(),
 
-
 	/**
 	 * Flag that indicate if pdf is expanded or fit to container.
 	 * @type {Boolean}

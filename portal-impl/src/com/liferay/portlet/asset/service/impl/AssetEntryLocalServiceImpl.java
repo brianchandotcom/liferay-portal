@@ -703,7 +703,7 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 
 			entry.setUserId(userId);
 
-			User user = userLocalService.getUser(userId);
+			User user = userLocalService.fetchUser(userId);
 
 			if (user != null) {
 				entry.setUserName(user.getFullName());

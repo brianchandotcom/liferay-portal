@@ -162,7 +162,10 @@ public abstract class AbstractTemplate implements Template {
 		TemplateResource templateResource) {
 
 		return TemplateConstants.TEMPLATE_RESOURCE_UUID_PREFIX.concat(
-			StringPool.POUND).concat(templateResource.getTemplateId());
+			StringPool.POUND
+		).concat(
+			templateResource.getTemplateId()
+		);
 	}
 
 	protected abstract void handleException(Exception exception, Writer writer)

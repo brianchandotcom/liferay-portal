@@ -77,7 +77,10 @@ public class DefaultTemplateResourceLoader implements TemplateResourceLoader {
 		String portalCacheName = TemplateResourceLoader.class.getName();
 
 		portalCacheName = portalCacheName.concat(
-			StringPool.PERIOD).concat(name);
+			StringPool.PERIOD
+		).concat(
+			name
+		);
 
 		_multiVMPortalCache =
 			(PortalCache<String, TemplateResource>)_multiVMPool.getPortalCache(

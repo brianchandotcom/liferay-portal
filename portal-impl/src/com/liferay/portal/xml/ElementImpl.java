@@ -279,12 +279,16 @@ public class ElementImpl extends BranchImpl implements Element {
 
 	@Override
 	public Iterator<Element> elementIterator(QName qName) {
-		return elements(qName).iterator();
+		return elements(
+			qName
+		).iterator();
 	}
 
 	@Override
 	public Iterator<Element> elementIterator(String name) {
-		return elements(name).iterator();
+		return elements(
+			name
+		).iterator();
 	}
 
 	@Override

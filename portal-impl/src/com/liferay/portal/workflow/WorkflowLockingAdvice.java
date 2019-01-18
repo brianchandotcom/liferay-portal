@@ -56,8 +56,11 @@ public class WorkflowLockingAdvice {
 	}
 
 	private static String _encodeKey(String name, int version) {
-		return name.concat(StringPool.POUND).concat(
-			StringUtil.toHexString(version));
+		return name.concat(
+			StringPool.POUND
+		).concat(
+			StringUtil.toHexString(version)
+		);
 	}
 
 	private static final Method _METHOD_START_WORKFLOW_INSTANCE;

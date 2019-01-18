@@ -103,8 +103,11 @@ public abstract class AbstractSingleResourceTemplate extends AbstractTemplate {
 
 		String portalCacheName = TemplateResourceLoader.class.getName();
 
-		portalCacheName = portalCacheName.concat(StringPool.PERIOD).concat(
-			templateManagerName);
+		portalCacheName = portalCacheName.concat(
+			StringPool.PERIOD
+		).concat(
+			templateManagerName
+		);
 
 		PortalCache<String, Serializable> portalCache = getPortalCache(
 			templateResource, portalCacheName);

@@ -175,7 +175,11 @@ public class UpgradeKernelPackage extends UpgradeProcess {
 			for (String[] name : names) {
 				upgradeLongTextTable(
 					columnName, primaryKeyColumnName,
-					selectPrefix.concat(name[0]).concat(selectPostfix),
+					selectPrefix.concat(
+						name[0]
+					).concat(
+						selectPostfix
+					),
 					updateSQL, name);
 			}
 		}

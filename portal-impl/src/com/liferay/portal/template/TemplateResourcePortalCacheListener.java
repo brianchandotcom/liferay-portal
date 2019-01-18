@@ -33,8 +33,11 @@ public class TemplateResourcePortalCacheListener
 
 		String portalCacheName = TemplateResource.class.getName();
 
-		portalCacheName = portalCacheName.concat(StringPool.POUND).concat(
-			templateResourceLoaderName);
+		portalCacheName = portalCacheName.concat(
+			StringPool.POUND
+		).concat(
+			templateResourceLoaderName
+		);
 
 		_portalCache = PortalCacheHelperUtil.getPortalCache(
 			PortalCacheManagerNames.SINGLE_VM, portalCacheName);

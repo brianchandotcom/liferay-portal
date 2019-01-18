@@ -319,7 +319,11 @@ public class BrowserSnifferImpl implements BrowserSniffer {
 
 			String minor = userAgent.substring(minorStart, minorEnd);
 
-			String version = major.concat(StringPool.PERIOD).concat(minor);
+			String version = major.concat(
+				StringPool.PERIOD
+			).concat(
+				minor
+			);
 
 			if (leading.equals("trident")) {
 				if (version.equals("7.0")) {

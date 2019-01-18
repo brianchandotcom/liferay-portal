@@ -30,7 +30,11 @@ public class GroupSharepointStorageImpl extends BaseSharepointStorageImpl {
 		String rootPath = sharepointRequest.getRootPath();
 
 		for (String token : SharepointUtil.getStorageTokens()) {
-			String path = rootPath.concat(StringPool.SLASH).concat(token);
+			String path = rootPath.concat(
+				StringPool.SLASH
+			).concat(
+				token
+			);
 
 			foldersTree.addChild(getFolderTree(path));
 		}

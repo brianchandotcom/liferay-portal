@@ -41,7 +41,10 @@ public class ETagUtil {
 			byteBuffer.array(), byteBuffer.position(), byteBuffer.limit());
 
 		String eTag = StringPool.QUOTE.concat(
-			StringUtil.toHexString(hashCode)).concat(StringPool.QUOTE);
+			StringUtil.toHexString(hashCode)
+		).concat(
+			StringPool.QUOTE
+		);
 
 		response.setHeader(HttpHeaders.ETAG, eTag);
 

@@ -639,7 +639,7 @@ class RuleEditor extends Component {
 	}
 
 	_syncActions(actions) {
-		const {pages} = this;
+		const {pages, rule} = this;
 
 		const visitor = new PagesVisitor(pages);
 
@@ -655,11 +655,17 @@ class RuleEditor extends Component {
 					}
 				);
 
-				if (!targetFieldExists) {
+				action.calculatorFields = this._updateCalculatorFields(action, action.target);
+
+				if (!targetFieldExists && action.action != 'auto-fill') {
 					action.target = '';
 				}
-
-				action.calculatorFields = this._updateCalculatorFields(action, action.target);
+				else if (action.action == 'auto-fill') {
+					action = {
+						...rule.actions[index],
+						calculatorFields: []
+					};
+			}
 			}
 		);
 
@@ -707,21 +713,17 @@ class RuleEditor extends Component {
 	_clearAction(index) {
 		const {actions} = this;
 
-		const newActions = actions;
-
-		newActions[index] = {
+		return actions.map(
+			(action, currentIndex) => {
+				return currentIndex === index ? {
 			action: '',
 			calculatorFields: [],
 			expression: '',
-			inputs: [],
+					inputs: {},
 			label: '',
-			outputs: [],
+					outputs: {},
 			target: ''
-		};
-
-		this.setState(
-			{
-				actions: newActions
+				} : action;
 			}
 		);
 	}

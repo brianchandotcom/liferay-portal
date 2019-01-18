@@ -158,14 +158,10 @@ public class OpenIdLoginMVCActionCommand extends BaseMVCActionCommand {
 
 				SessionErrors.add(actionRequest, e.getClass());
 			}
-			else if (e instanceof
-						UserEmailAddressException) {
-
+			else if (e instanceof UserEmailAddressException) {
 				SessionErrors.add(actionRequest, e.getClass());
 			}
-			else if (e instanceof
-						StrangersNotAllowedException) {
-
+			else if (e instanceof StrangersNotAllowedException) {
 				SessionErrors.add(actionRequest, e.getClass());
 			}
 			else {

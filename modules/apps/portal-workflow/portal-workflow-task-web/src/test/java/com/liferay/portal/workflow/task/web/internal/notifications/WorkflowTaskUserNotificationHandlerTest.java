@@ -223,18 +223,14 @@ public class WorkflowTaskUserNotificationHandlerTest extends PowerMockito {
 	}
 
 	protected void setUpThemeDisplay() {
-		ThemeDisplay themeDisplay = mock(ThemeDisplay.class);
+		ThemeDisplay themeDisplay = new ThemeDisplay();
+
+		themeDisplay.setSiteGroupId(RandomTestUtil.randomLong());
 
 		when(
 			_serviceContext.getThemeDisplay()
 		).thenReturn(
 			themeDisplay
-		);
-
-		when(
-			themeDisplay.getSiteGroupId()
-		).thenReturn(
-			RandomTestUtil.randomLong()
 		);
 	}
 

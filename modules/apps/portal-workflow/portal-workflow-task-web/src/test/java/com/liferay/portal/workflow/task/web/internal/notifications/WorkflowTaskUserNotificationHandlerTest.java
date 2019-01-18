@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.util.Html;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ProxyFactory;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.kernel.workflow.BaseWorkflowHandler;
 import com.liferay.portal.kernel.workflow.WorkflowHandler;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
 import com.liferay.portal.kernel.workflow.WorkflowTask;
@@ -38,6 +39,9 @@ import com.liferay.portal.kernel.workflow.WorkflowTaskManagerUtil;
 import com.liferay.portal.workflow.task.web.internal.permission.WorkflowTaskPermissionChecker;
 
 import java.lang.reflect.Field;
+
+import java.util.Locale;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
@@ -183,21 +187,38 @@ public class WorkflowTaskUserNotificationHandlerTest extends PowerMockito {
 	}
 
 	protected WorkflowHandler mockWorkflowHandler() throws PortalException {
-		WorkflowHandler workflowHandler = mock(WorkflowHandler.class);
+		WorkflowHandler workflowHandler = new BaseWorkflowHandler() {
 
-		when(
-			workflowHandler.getURLEditWorkflowTask(
-				_INVALID_WORKFLOW_TASK_ID, _serviceContext)
-		).thenReturn(
-			_VALID_LINK
-		);
+			@Override
+			public String getClassName() {
+				return null;
+			}
 
-		when(
-			workflowHandler.getURLEditWorkflowTask(
-				_VALID_WORKFLOW_TASK_ID, _serviceContext)
-		).thenReturn(
-			_VALID_LINK
-		);
+			@Override
+			public String getType(Locale locale) {
+				return null;
+			}
+
+			@Override
+			public String getURLEditWorkflowTask(
+					long workflowTaskId, ServiceContext serviceContext)
+				throws PortalException {
+
+				if (_serviceContext == serviceContext) {
+					return _VALID_LINK;
+				}
+
+				return null;
+			}
+
+			@Override
+			public Object updateStatus(int status, Map workflowContext)
+				throws PortalException {
+
+				return null;
+			}
+
+		};
 
 		return workflowHandler;
 	}

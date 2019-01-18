@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.workflow.BaseWorkflowHandler;
 import com.liferay.portal.kernel.workflow.WorkflowHandler;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
 import com.liferay.portal.kernel.workflow.WorkflowTask;
@@ -32,6 +33,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -247,27 +250,47 @@ public class WorkflowTaskPermissionCheckerTest extends PowerMockito {
 			boolean hasAssetViewPermission)
 		throws PortalException {
 
-		WorkflowHandler workflowHandler = mock(WorkflowHandler.class);
-
-		when(
-			WorkflowHandlerRegistryUtil.getWorkflowHandler(Matchers.anyString())
-		).thenReturn(
-			workflowHandler
-		);
-
 		AssetRenderer assetRenderer = mock(AssetRenderer.class);
-
-		when(
-			workflowHandler.getAssetRenderer(Matchers.anyLong())
-		).thenReturn(
-			assetRenderer
-		);
 
 		when(
 			assetRenderer.hasViewPermission(
 				Matchers.any(PermissionChecker.class))
 		).thenReturn(
 			hasAssetViewPermission
+		);
+
+		WorkflowHandler workflowHandler = new BaseWorkflowHandler() {
+
+			@Override
+			public AssetRenderer getAssetRenderer(long classPK)
+				throws PortalException {
+
+				return assetRenderer;
+			}
+
+			@Override
+			public String getClassName() {
+				return null;
+			}
+
+			@Override
+			public String getType(Locale locale) {
+				return null;
+			}
+
+			@Override
+			public Object updateStatus(int status, Map workflowContext)
+				throws PortalException {
+
+				return null;
+			}
+
+		};
+
+		when(
+			WorkflowHandlerRegistryUtil.getWorkflowHandler(Matchers.anyString())
+		).thenReturn(
+			workflowHandler
 		);
 	}
 

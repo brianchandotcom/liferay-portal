@@ -136,7 +136,7 @@ every page that was mostly unused and redundant.
 
 ### Moved Two Staging Properties to OSGi Configuration
 - **Date:** 2018-Dec-12
-- **JIRA Ticket:** LPS-88018
+- **JIRA Ticket:** [LPS-88018](https://issues.liferay.com/browse/LPS-88018)
 
 #### What changed?
 

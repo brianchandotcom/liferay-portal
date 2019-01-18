@@ -81,10 +81,6 @@ class Calculator extends Component {
 		}
 	}
 
-	attached() {
-		this._resetExpression();
-	}
-
 	willReceiveState(changes) {
 		if (changes.hasOwnProperty('resultSelected')) {
 			this._resetExpression();

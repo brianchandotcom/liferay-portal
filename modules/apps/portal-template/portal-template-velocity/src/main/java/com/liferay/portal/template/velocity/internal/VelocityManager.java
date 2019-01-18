@@ -211,14 +211,16 @@ public class VelocityManager extends BaseSingleTemplateManager {
 			String contextName = ClassLoaderPool.getContextName(
 				clazz.getClassLoader());
 
+			contextName = contextName.concat(
+				TemplateConstants.CLASS_LOADER_SEPARATOR);
+
 			String[] velocimacroLibrary =
 				_velocityEngineConfiguration.velocimacroLibrary();
 
-			StringBundler sb = new StringBundler(4 * velocimacroLibrary.length);
+			StringBundler sb = new StringBundler(3 * velocimacroLibrary.length);
 
 			for (String library : velocimacroLibrary) {
 				sb.append(contextName);
-				sb.append(TemplateConstants.CLASS_LOADER_SEPARATOR);
 				sb.append(library);
 				sb.append(StringPool.COMMA);
 			}

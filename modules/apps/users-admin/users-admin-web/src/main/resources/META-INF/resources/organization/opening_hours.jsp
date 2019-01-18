@@ -43,7 +43,7 @@ List<OrgLabor> orgLabors = OrgLaborServiceUtil.getOrgLabors(organizationId);
 
 				<liferay-ui:icon
 					label="<%= true %>"
-					linkCssClass="btn btn-secondary btn-sm"
+					linkCssClass="add-opening-hours-link btn btn-secondary btn-sm"
 					message="add"
 					url="<%= editURL.toString() %>"
 				/>

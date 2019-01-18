@@ -45,7 +45,7 @@ List<Website> websites = WebsiteServiceUtil.getWebsites(className, classPK);
 
 			<liferay-ui:icon
 				label="<%= true %>"
-				linkCssClass="btn btn-secondary btn-sm"
+				linkCssClass="add-website-link btn btn-secondary btn-sm"
 				message="add"
 				url="<%= editURL.toString() %>"
 			/>

@@ -14,6 +14,10 @@
 
 package com.liferay.arquillian.extension.junit.bridge.protocol.jmx;
 
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
+import java.io.ObjectInputStream;
+
 import java.lang.reflect.Method;
 
 import javax.management.MBeanServerConnection;
@@ -53,10 +57,14 @@ public class JMXMethodExecutor implements ContainerMethodExecutor {
 			JMXTestRunnerMBean testRunner = _getMBeanProxy(
 				objectName, JMXTestRunnerMBean.class);
 
-			result = Serializer.toObject(
-				TestResult.class,
-				testRunner.runTestMethod(
-					testClass.getName(), testMethod.getName()));
+			byte[] data = testRunner.runTestMethod(
+				testClass.getName(), testMethod.getName());
+
+			try (InputStream is = new ByteArrayInputStream(data);
+				ObjectInputStream oos = new ObjectInputStream(is)) {
+
+				return (TestResult)oos.readObject();
+			}
 		}
 		catch (Exception e) {
 			result = TestResult.failed(e);

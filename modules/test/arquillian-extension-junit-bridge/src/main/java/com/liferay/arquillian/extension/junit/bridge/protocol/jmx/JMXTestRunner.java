@@ -14,6 +14,10 @@
 
 package com.liferay.arquillian.extension.junit.bridge.protocol.jmx;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
+
 import javax.management.JMException;
 import javax.management.MBeanServer;
 import javax.management.NotificationBroadcasterSupport;
@@ -47,7 +51,18 @@ public class JMXTestRunner
 	public byte[] runTestMethod(String className, String methodName) {
 		TestResult result = _runTestMethodInternal(className, methodName);
 
-		return Serializer.toByteArray(result);
+		try (ByteArrayOutputStream baos = new ByteArrayOutputStream();
+			ObjectOutputStream oos = new ObjectOutputStream(baos)) {
+
+			oos.writeObject(result);
+			oos.flush();
+
+			return baos.toByteArray();
+		}
+		catch (IOException ioe) {
+			throw new RuntimeException(
+				"Could not serialize object: " + result, ioe);
+		}
 	}
 
 	public void unregisterMBean(MBeanServer mBeanServer) throws JMException {

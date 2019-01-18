@@ -24,7 +24,10 @@ package com.liferay.portal.kernel.search;
 public class BooleanQueryFactoryUtil {
 
 	public static BooleanQuery create(SearchContext searchContext) {
-		return getBooleanQueryFactory(searchContext).create();
+		BooleanQueryFactory booleanQueryFactory = getBooleanQueryFactory(
+			searchContext);
+
+		return booleanQueryFactory.create();
 	}
 
 	public static BooleanQueryFactory getBooleanQueryFactory(

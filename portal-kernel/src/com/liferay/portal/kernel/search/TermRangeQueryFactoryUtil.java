@@ -27,7 +27,10 @@ public class TermRangeQueryFactoryUtil {
 		SearchContext searchContext, String field, String lowerTerm,
 		String upperTerm, boolean includesLower, boolean includesUpper) {
 
-		return getTermRangeQueryFactory(searchContext).create(
+		TermRangeQueryFactory termRangeQueryFactory = getTermRangeQueryFactory(
+			searchContext);
+
+		return termRangeQueryFactory.create(
 			field, lowerTerm, upperTerm, includesLower, includesUpper);
 	}
 

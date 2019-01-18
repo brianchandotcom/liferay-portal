@@ -27,13 +27,17 @@ public class TermQueryFactoryUtil {
 	public static TermQuery create(
 		SearchContext searchContext, String field, long value) {
 
-		return getTermQueryFactory(searchContext).create(field, value);
+		TermQueryFactory termQueryFactory = getTermQueryFactory(searchContext);
+
+		return termQueryFactory.create(field, value);
 	}
 
 	public static TermQuery create(
 		SearchContext searchContext, String field, String value) {
 
-		return getTermQueryFactory(searchContext).create(field, value);
+		TermQueryFactory termQueryFactory = getTermQueryFactory(searchContext);
+
+		return termQueryFactory.create(field, value);
 	}
 
 	public static TermQueryFactory getTermQueryFactory(

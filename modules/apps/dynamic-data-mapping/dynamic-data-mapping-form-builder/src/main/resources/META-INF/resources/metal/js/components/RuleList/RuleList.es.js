@@ -74,7 +74,7 @@ class RuleList extends Component {
 					['logical-operator']: Config.string()
 				}
 			)
-		),
+		).value([]),
 
 		roles: Config.arrayOf(
 			Config.shapeOf(
@@ -137,11 +137,11 @@ class RuleList extends Component {
 	created() {
 		this._eventHandler = new EventHandler();
 
-		const newRules = this.rules;
-
-		this._setRules(newRules);
-
-		this.setState({rules: newRules});
+		this.setState(
+			{
+				rules: this._formatRules(this.rules)
+			}
+		);
 	}
 
 	attached() {

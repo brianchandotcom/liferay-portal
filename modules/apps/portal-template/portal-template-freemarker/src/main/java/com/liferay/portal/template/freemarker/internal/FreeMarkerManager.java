@@ -292,16 +292,17 @@ public class FreeMarkerManager extends BaseSingleTemplateManager {
 			String[] macroLibrary =
 				_freeMarkerEngineConfiguration.macroLibrary();
 
-			StringBundler sb = new StringBundler(4 * macroLibrary.length - 1);
+			StringBundler sb = new StringBundler(4 * macroLibrary.length);
 
-			for (int i = 0; i < macroLibrary.length; i++) {
-				if (i != 0) {
-					sb.append(StringPool.COMMA);
-				}
-
+			for (String library : macroLibrary) {
 				sb.append(contextName);
 				sb.append(TemplateConstants.CLASS_LOADER_SEPARATOR);
-				sb.append(macroLibrary[i]);
+				sb.append(library);
+				sb.append(StringPool.COMMA);
+			}
+
+			if (macroLibrary.length > 0) {
+				sb.setIndex(sb.index() - 1);
 			}
 
 			_configuration.setSetting("auto_import", sb.toString());

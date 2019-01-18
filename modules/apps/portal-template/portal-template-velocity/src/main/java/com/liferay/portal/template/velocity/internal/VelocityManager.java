@@ -214,17 +214,17 @@ public class VelocityManager extends BaseSingleTemplateManager {
 			String[] velocimacroLibrary =
 				_velocityEngineConfiguration.velocimacroLibrary();
 
-			StringBundler sb = new StringBundler(
-				4 * velocimacroLibrary.length - 1);
+			StringBundler sb = new StringBundler(4 * velocimacroLibrary.length);
 
-			for (int i = 0; i < velocimacroLibrary.length; i++) {
-				if (i != 0) {
-					sb.append(StringPool.COMMA);
-				}
-
+			for (String library : velocimacroLibrary) {
 				sb.append(contextName);
 				sb.append(TemplateConstants.CLASS_LOADER_SEPARATOR);
-				sb.append(velocimacroLibrary[i]);
+				sb.append(library);
+				sb.append(StringPool.COMMA);
+			}
+
+			if (velocimacroLibrary.length > 0) {
+				sb.setIndex(sb.index() - 1);
 			}
 
 			extendedProperties.setProperty(

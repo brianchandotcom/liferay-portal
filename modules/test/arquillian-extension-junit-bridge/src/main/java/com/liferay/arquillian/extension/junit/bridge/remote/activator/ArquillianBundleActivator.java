@@ -24,6 +24,7 @@ import java.util.List;
 import javax.management.JMException;
 import javax.management.MBeanServer;
 import javax.management.MBeanServerFactory;
+import javax.management.MalformedObjectNameException;
 import javax.management.ObjectName;
 
 import org.osgi.framework.Bundle;
@@ -46,20 +47,14 @@ public class ArquillianBundleActivator implements BundleActivator {
 
 		_jmxTestRunner = new JMXTestRunner(bundleWiring.getClassLoader());
 
-		ObjectName objectName = new ObjectName(JMXTestRunnerMBean.OBJECT_NAME);
-
-		mBeanServer.registerMBean(_jmxTestRunner, objectName);
+		mBeanServer.registerMBean(_jmxTestRunner, _objectName);
 	}
 
 	@Override
 	public void stop(BundleContext bundleContext) throws JMException {
 		MBeanServer mBeanServer = _findOrCreateMBeanServer();
 
-		ObjectName objectName = new ObjectName(JMXTestRunnerMBean.OBJECT_NAME);
-
-		if (mBeanServer.isRegistered(objectName)) {
-			mBeanServer.unregisterMBean(objectName);
-		}
+		mBeanServer.unregisterMBean(_objectName);
 	}
 
 	private MBeanServer _findOrCreateMBeanServer() {
@@ -77,6 +72,17 @@ public class ArquillianBundleActivator implements BundleActivator {
 		}
 
 		return mBeanServer;
+	}
+
+	private static final ObjectName _objectName;
+
+	static {
+		try {
+			_objectName = new ObjectName(JMXTestRunnerMBean.OBJECT_NAME);
+		}
+		catch (MalformedObjectNameException mone) {
+			throw new ExceptionInInitializerError(mone);
+		}
 	}
 
 	private JMXTestRunner _jmxTestRunner;

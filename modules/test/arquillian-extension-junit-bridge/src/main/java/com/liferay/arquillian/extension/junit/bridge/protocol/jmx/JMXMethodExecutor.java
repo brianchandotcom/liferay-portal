@@ -22,6 +22,7 @@ import java.lang.reflect.Method;
 
 import javax.management.MBeanServerConnection;
 import javax.management.MBeanServerInvocationHandler;
+import javax.management.MalformedObjectNameException;
 import javax.management.ObjectName;
 
 import org.jboss.arquillian.container.test.spi.ContainerMethodExecutor;
@@ -50,10 +51,8 @@ public class JMXMethodExecutor implements ContainerMethodExecutor {
 		Method testMethod = testMethodExecutor.getMethod();
 
 		try {
-			ObjectName objectName = new ObjectName(JMXTestRunner.OBJECT_NAME);
-
 			JMXTestRunnerMBean testRunner = _getMBeanProxy(
-				objectName, JMXTestRunnerMBean.class);
+				JMXTestRunnerMBean.class);
 
 			byte[] data = testRunner.runTestMethod(
 				testClass.getName(), testMethod.getName());
@@ -77,9 +76,20 @@ public class JMXMethodExecutor implements ContainerMethodExecutor {
 		}
 	}
 
-	private <T> T _getMBeanProxy(ObjectName objectName, Class<T> clazz) {
+	private <T> T _getMBeanProxy(Class<T> clazz) {
 		return MBeanServerInvocationHandler.newProxyInstance(
-			_mBeanServerConnection, objectName, clazz, false);
+			_mBeanServerConnection, _objectName, clazz, false);
+	}
+
+	private static final ObjectName _objectName;
+
+	static {
+		try {
+			_objectName = new ObjectName(JMXTestRunnerMBean.OBJECT_NAME);
+		}
+		catch (MalformedObjectNameException mone) {
+			throw new ExceptionInInitializerError(mone);
+		}
 	}
 
 	private final MBeanServerConnection _mBeanServerConnection;

@@ -17,6 +17,7 @@ dependencies {
 	compileOnly project(":apps:document-library:document-library-repository-authorization-api")
 	compileOnly project(":apps:document-library:document-library-repository-external-api")
 	compileOnly project(":apps:static:portal-configuration:portal-configuration-metatype-api")
+	compileOnly project(":core:petra:petra-lang")
 	compileOnly project(":core:petra:petra-string")
 	compileOnly project(":private:apps:sharepoint-rest:sharepoint-rest-oauth2-api")
 }

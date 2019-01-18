@@ -14,8 +14,8 @@
 
 package com.liferay.vldap.server.internal.handler.util;
 
+import com.liferay.petra.lang.CentralizedThreadLocal;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.AutoResetThreadLocal;
 import com.liferay.portal.kernel.util.PortalUtil;
 
 import java.net.InetAddress;
@@ -72,7 +72,7 @@ public class LdapHandlerThreadLocal {
 	private static final String _SERVER_IP = "SERVER_IP";
 
 	private static final ThreadLocal<SocketAddress> _socketAddress =
-		new AutoResetThreadLocal<>(
+		new CentralizedThreadLocal<>(
 			LdapHandlerThreadLocal.class + "._socketAddress");
 
 }

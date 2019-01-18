@@ -24,10 +24,10 @@ import com.liferay.document.library.repository.external.ExtRepositoryObject;
 import com.liferay.document.library.repository.external.ExtRepositoryObjectType;
 import com.liferay.document.library.repository.external.ExtRepositorySearchResult;
 import com.liferay.document.library.repository.external.search.ExtRepositoryQueryMapper;
+import com.liferay.petra.lang.CentralizedThreadLocal;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.SearchContext;
-import com.liferay.portal.kernel.util.AutoResetThreadLocal;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 
 import java.io.InputStream;
@@ -479,16 +479,16 @@ public class SharepointCachingExtRepository implements ExtRepository {
 
 	private static final ThreadLocal
 		<Map<String, List<ExtRepositoryFileVersion>>>
-			_extRepositoryFileVersionCache = new AutoResetThreadLocal<>(
+			_extRepositoryFileVersionCache = new CentralizedThreadLocal<>(
 				"extRepositoryFileVersionCache", HashMap::new);
 	private static final ThreadLocal<Map<String, ExtRepositoryObject>>
-		_extRepositoryObjectCache = new AutoResetThreadLocal<>(
+		_extRepositoryObjectCache = new CentralizedThreadLocal<>(
 			"extRepositoryObjectCache", HashMap::new);
 	private static final ThreadLocal<Map<String, List<ExtRepositoryObject>>>
-		_extRepositoryObjectsCache = new AutoResetThreadLocal<>(
+		_extRepositoryObjectsCache = new CentralizedThreadLocal<>(
 			"extRepositoryObjectsCache", HashMap::new);
 	private static final ThreadLocal<Map<String, ExtRepositoryFolder>>
-		_extRepositoryParentFolderCache = new AutoResetThreadLocal<>(
+		_extRepositoryParentFolderCache = new CentralizedThreadLocal<>(
 			"extRepositoryParentFolderCache", HashMap::new);
 
 	private final ExtRepository _extRepository;

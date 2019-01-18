@@ -15,13 +15,13 @@
 package com.liferay.portal.reports.engine.console.service.impl;
 
 import com.liferay.document.library.kernel.store.DLStore;
+import com.liferay.petra.memory.DeleteFileFinalizeAction;
+import com.liferay.petra.memory.FinalizeManager;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.memory.DeleteFileFinalizeAction;
-import com.liferay.portal.kernel.memory.FinalizeManager;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageBus;
 import com.liferay.portal.kernel.model.CompanyConstants;

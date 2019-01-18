@@ -14,8 +14,8 @@
 
 package com.liferay.saml.opensaml.integration.internal.util;
 
+import com.liferay.petra.lang.ClassLoaderPool;
 import com.liferay.portal.kernel.portlet.PortletClassLoaderUtil;
-import com.liferay.portal.kernel.util.ClassLoaderPool;
 import com.liferay.saml.opensaml.integration.internal.bootstrap.OpenSamlBootstrap;
 
 import java.io.InputStream;

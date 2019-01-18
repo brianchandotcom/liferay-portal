@@ -1507,24 +1507,6 @@ class RuleEditor extends Component {
 		);
 	}
 
-	_prepareAutofillInputs(action) {
-		if (Array.isArray(action.inputs)) {
-			action.inputs.forEach(
-				input => {
-					delete input.fieldOptions;
-					delete input.label;
-					delete input.name;
-					delete input.required;
-					delete input.type;
-					delete input.value;
-				}
-			);
-			action.inputs = Object.assign({}, ...action.inputs);
-		}
-
-		return action.inputs;
-	}
-
 	_prepareAutofillOutputs(action) {
 		if (Array.isArray(action.outputs)) {
 			action.outputs.forEach(

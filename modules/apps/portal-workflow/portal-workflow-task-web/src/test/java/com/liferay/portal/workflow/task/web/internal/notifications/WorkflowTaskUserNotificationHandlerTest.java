@@ -322,16 +322,18 @@ public class WorkflowTaskUserNotificationHandlerTest extends PowerMockito {
 	}
 
 	protected void setUpWorkflowTaskPermissionChecker() throws Exception {
-		WorkflowTaskPermissionChecker workflowTaskPermissionChecker = mock(
-			WorkflowTaskPermissionChecker.class);
+		WorkflowTaskPermissionChecker workflowTaskPermissionChecker =
+			new WorkflowTaskPermissionChecker() {
 
-		when(
-			workflowTaskPermissionChecker.hasPermission(
-				Matchers.anyLong(), Matchers.any(WorkflowTask.class),
-				Matchers.any(PermissionChecker.class))
-		).thenReturn(
-			true
-		);
+				@Override
+				public boolean hasPermission(
+					long groupId, WorkflowTask workflowTask,
+					PermissionChecker permissionChecker) {
+
+					return true;
+				}
+
+			};
 
 		Field field = ReflectionUtil.getDeclaredField(
 			_workflowTaskUserNotificationHandler.getClass(),

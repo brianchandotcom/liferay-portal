@@ -116,11 +116,10 @@ describe(
 							() => {
 								component = new Calculator(
 									{
-										...getBaseConfig()
+										...getBaseConfig(),
+										options: []
 									}
 								);
-
-								component.options = [];
 
 								jest.runAllTimers();
 

@@ -15,6 +15,7 @@ export const makeFetch = ({url, body, headers = defaultHeaders, method = 'POST'}
 	if (method === 'POST') {
 		fetchData.body = body;
 	}
+
 	return fetch(
 		url,
 		fetchData

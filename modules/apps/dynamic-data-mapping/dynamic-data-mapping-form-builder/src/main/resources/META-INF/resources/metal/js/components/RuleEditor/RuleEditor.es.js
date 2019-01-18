@@ -925,11 +925,11 @@ class RuleEditor extends Component {
 
 	_handleActionSelection(event) {
 		const {fieldInstance, value} = event;
-		const index = this._getIndex(fieldInstance, '.action-type');
+		const index = parseInt(this._getIndex(fieldInstance, '.action-type'), 10);
 
 		const {actions} = this;
 
-		const newActions = actions;
+		let newActions = [...actions];
 
 		if (value && value.length > 0 && value[0]) {
 			const fieldName = value[0];
@@ -938,10 +938,17 @@ class RuleEditor extends Component {
 				const previousAction = actions[index].action;
 
 				if (fieldName !== previousAction) {
-					newActions[index].action = fieldName;
-					newActions[index].calculatorFields = [];
-					newActions[index].label = '';
-					newActions[index].target = '';
+					newActions = newActions.map(
+						(action, currentIndex) => {
+							return currentIndex === index ? {
+								...action,
+								action: fieldName,
+								calculatorFields: [],
+								label: '',
+								target: ''
+							} : action;
+						}
+					);
 				}
 			}
 			else {
@@ -994,10 +1001,9 @@ class RuleEditor extends Component {
 		const actionIndex = this._getIndex(fieldInstance, '.action');
 		const inputIndex = this._getIndex(fieldInstance, '.container-input-field');
 
-		const name = actions[actionIndex].inputs[inputIndex].name;
+		const editedInput = Object.keys(actions[actionIndex].inputs)[inputIndex];
 
-		actions[actionIndex].inputs[inputIndex].value = value[0];
-		actions[actionIndex].inputs[inputIndex][name] = value[0];
+		actions[actionIndex].inputs[editedInput] = value[0];
 
 		this.setState(
 			{
@@ -1012,10 +1018,9 @@ class RuleEditor extends Component {
 		const outputIndex = this._getIndex(fieldInstance, '.container-output-field');
 		const {actions} = this;
 
-		const name = actions[actionIndex].outputs[outputIndex].name;
+		const editedOutput = Object.keys(actions[actionIndex].outputs)[outputIndex];
 
-		actions[actionIndex].outputs[outputIndex].value = value[0];
-		actions[actionIndex].outputs[outputIndex][name] = value[0];
+		actions[actionIndex].outputs[editedOutput] = value[0];
 
 		this.setState(
 			{

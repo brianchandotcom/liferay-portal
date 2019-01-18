@@ -28,7 +28,8 @@ import java.util.regex.Pattern;
 public abstract class IfStatementCheck extends BaseFileCheck {
 
 	protected void checkIfClauseParentheses(
-		String ifClause, String fileName, int lineNumber) {
+		String ifClause, String fileName, int lineNumber,
+		boolean checkMissingParentheses) {
 
 		ifClause = stripQuotes(ifClause);
 
@@ -50,7 +51,9 @@ public abstract class IfStatementCheck extends BaseFileCheck {
 			return;
 		}
 
-		_checkMissingParentheses(ifClause, fileName, lineNumber);
+		if (checkMissingParentheses) {
+			_checkMissingParentheses(ifClause, fileName, lineNumber);
+		}
 
 		if (_hasRedundantParentheses(ifClause, "||", "&&") ||
 			_hasRedundantParentheses(ifClause, "&&", "||")) {

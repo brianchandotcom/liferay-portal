@@ -353,7 +353,8 @@ public class JavaIfStatementCheck extends IfStatementCheck {
 				StringPool.SPACE
 			});
 
-		checkIfClauseParentheses(ifClauseSingleLine, fileName, lineNumber);
+		checkIfClauseParentheses(
+			ifClauseSingleLine, fileName, lineNumber, false);
 
 		while (true) {
 			String newIfClause = _formatIfClause(ifClause);

@@ -34,7 +34,7 @@ public class JSPParenthesesCheck extends IfStatementCheck {
 			if (JSPSourceUtil.isJavaSource(content, matcher.start())) {
 				checkIfClauseParentheses(
 					matcher.group(), fileName,
-					getLineNumber(content, matcher.start(1)));
+					getLineNumber(content, matcher.start(1)), true);
 			}
 		}
 
@@ -45,8 +45,8 @@ public class JSPParenthesesCheck extends IfStatementCheck {
 				String ifClause = "if (" + matcher.group(1) + ") {";
 
 				checkIfClauseParentheses(
-					ifClause, fileName,
-					getLineNumber(content, matcher.start()));
+					ifClause, fileName, getLineNumber(content, matcher.start()),
+					true);
 			}
 		}
 

@@ -29,8 +29,8 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	immediate = true,
 	property = {
-		"liferay.auth.verifier=false", "liferay.oauth2=false",
-		"osgi.jaxrs.application.base=/oauth2",
+		"jackson.disabled=true", "liferay.auth.verifier=false",
+		"liferay.oauth2=false", "osgi.jaxrs.application.base=/oauth2",
 		"osgi.jaxrs.name=Liferay.OAuth2.Application"
 	},
 	service = Application.class

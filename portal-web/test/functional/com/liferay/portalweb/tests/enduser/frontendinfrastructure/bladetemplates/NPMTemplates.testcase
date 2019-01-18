@@ -31,59 +31,7 @@ definition {
 
 		Portlet.addPG(portletName = "NpmAngular");
 
-		Portlet.viewPG(portletBody = "Hello world!", portletName = "NpmAngular");
-	}
-
-	@priority = "4"
-	test BillboardjsTemplateSmoke {
-		property project.templates = "billboardjs";
-		property test.name.skip.portal.instance = "NPMTemplates#BillboardjsTemplateSmoke";
-
-		Navigator.gotoPage(pageName = "Templates Page");
-
-		Portlet.addPG(portletName = "NpmBillboardjs");
-
-		Portlet.viewPG(portletBody = "data1data2", portletName = "NpmBillboardjs");
-
-		var key_portletName = "npmbillboardjs";
-
-		AssertElementPresent(locator1 = "NPMTemplates#BILLBOARDJS_BODY");
-	}
-
-	@priority = "4"
-	test IsomorphicTemplateSmoke {
-		property project.templates = "isomorphic";
-		property test.name.skip.portal.instance = "NPMTemplates#IsomorphicTemplateSmoke";
-
-		Navigator.gotoPage(pageName = "Templates Page");
-
-		Portlet.addPG(portletName = "NpmIsomorphic");
-
-		Portlet.viewPG(portletBody = "", portletName = "NpmIsomorphic");
-	}
-
-	@priority = "4"
-	test JQueryTemplateSmoke {
-		property project.templates = "jquery";
-		property test.name.skip.portal.instance = "NPMTemplates#JQueryTemplateSmoke";
-
-		Navigator.gotoPage(pageName = "Templates Page");
-
-		Portlet.addPG(portletName = "NpmJquery");
-
-		Portlet.viewPG(portletBody = "Hello World!", portletName = "NpmJquery");
-	}
-
-	@priority = "4"
-	test MetaljsTemplateSmoke {
-		property project.templates = "metaljs";
-		property test.name.skip.portal.instance = "NPMTemplates#MetaljsTemplateSmoke";
-
-		Navigator.gotoPage(pageName = "Templates Page");
-
-		Portlet.addPG(portletName = "NpmMetaljs");
-
-		Portlet.viewPG(portletBody = "Hello World!", portletName = "NpmMetaljs");
+		Portlet.viewPG(portletBody = "Tour of Heroes", portletName = "NpmAngular");
 	}
 
 	@priority = "4"
@@ -95,19 +43,7 @@ definition {
 
 		Portlet.addPG(portletName = "NpmReact");
 
-		Portlet.viewPG(portletBody = "Hello World!", portletName = "NpmReact");
-	}
-
-	@priority = "4"
-	test SimpleTemplateSmoke {
-		property project.templates = "simple";
-		property test.name.skip.portal.instance = "NPMTemplates#SimpleTemplateSmoke";
-
-		Navigator.gotoPage(pageName = "Templates Page");
-
-		Portlet.addPG(portletName = "NpmSimple");
-
-		Portlet.viewPG(portletBody = "Hello World!", portletName = "NpmSimple");
+		Portlet.viewPG(portletBody = "Next player: X", portletName = "NpmReact");
 	}
 
 	@priority = "4"
@@ -119,6 +55,6 @@ definition {
 
 		Portlet.addPG(portletName = "NpmVuejs");
 
-		Portlet.viewPG(portletBody = "Hello World!", portletName = "NpmVuejs");
+		Portlet.viewPG(portletBody = "A friendly reversible message from Vue.js:", portletName = "NpmVuejs");
 	}
 }

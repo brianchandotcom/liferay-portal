@@ -107,7 +107,7 @@ if (organization != null) {
 
 				<%
 				portletDisplay.setShowBackIcon(true);
-				portletDisplay.setURLBack(Validator.isNotNull(backURL) ? backURL : UsersAdminPortletURLUtil.createParentOrganizationViewTreeURL(organizationId, PortalUtil.getLiferayPortletRequest(renderRequest), PortalUtil.getLiferayPortletResponse(renderResponse)));
+				portletDisplay.setURLBack(Validator.isNotNull(backURL) ? backURL : UsersAdminPortletURLUtil.createParentOrganizationViewTreeURL(organizationId, renderResponse));
 
 				renderResponse.setTitle(organization.getName());
 				%>

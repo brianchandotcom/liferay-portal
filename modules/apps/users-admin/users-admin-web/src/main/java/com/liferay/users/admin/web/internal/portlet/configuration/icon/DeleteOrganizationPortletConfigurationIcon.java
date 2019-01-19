@@ -32,6 +32,7 @@ import com.liferay.users.admin.web.internal.util.UsersAdminPortletURLUtil;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
+import javax.portlet.RenderResponse;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -85,8 +86,8 @@ public class DeleteOrganizationPortletConfigurationIcon
 				backURL =
 					UsersAdminPortletURLUtil.
 						createParentOrganizationViewTreeURL(
-							organization.getOrganizationId(), portletRequest,
-							portletResponse);
+							organization.getOrganizationId(),
+							(RenderResponse)portletResponse);
 			}
 
 			sb.append(backURL);

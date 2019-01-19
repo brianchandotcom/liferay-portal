@@ -41,7 +41,7 @@ long phoneId = phone.getPhoneId();
 
 	editURL.setParameter("className", className);
 	editURL.setParameter("classPK", String.valueOf(classPK));
-	editURL.setParameter("mvcRenderCommandName", "/users_admin/edit_phone_number");
+	editURL.setParameter("mvcPath", "/common/edit_phone_number.jsp");
 	editURL.setParameter("parentOrganizationId", String.valueOf(parentOrganizationId));
 	editURL.setParameter("primaryKey", String.valueOf(phoneId));
 	editURL.setParameter("redirect", currentURL);

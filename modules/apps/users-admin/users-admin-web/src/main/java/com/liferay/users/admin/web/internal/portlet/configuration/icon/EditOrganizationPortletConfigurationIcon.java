@@ -77,6 +77,10 @@ public class EditOrganizationPortletConfigurationIcon
 				"organizationId",
 				String.valueOf(organization.getOrganizationId()));
 
+			portletURL.setParameter(
+				"parentOrganizationId",
+				String.valueOf(organization.getOrganizationId()));
+
 			return portletURL.toString();
 		}
 		catch (Exception e) {

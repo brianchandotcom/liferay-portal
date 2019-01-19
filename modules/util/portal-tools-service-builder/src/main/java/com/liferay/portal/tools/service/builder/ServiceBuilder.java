@@ -6932,10 +6932,24 @@ public class ServiceBuilder {
 
 		// Beautify
 
-		boolean escapeMethodReference = content.contains("::");
+		String jalopyIgnoreStart = "/** Jalopy ignore start */";
 
-		if (escapeMethodReference) {
-			content = StringUtil.replace(content, "::", "__COLON_COLON__");
+		String jalopyIgnoreEnd = "/** Jalopy ignore end */\n";
+
+		int start = content.indexOf(jalopyIgnoreStart);
+
+		String jalopyIgnoreBody = null;
+
+		if (start != -1) {
+			start += jalopyIgnoreStart.length();
+
+			int end = content.indexOf(jalopyIgnoreEnd);
+
+			if (end != -1) {
+				jalopyIgnoreBody = content.substring(start, end);
+
+				content = content.substring(0, start) + content.substring(end);
+			}
 		}
 
 		StringBuffer sb = new StringBuffer();
@@ -7016,11 +7030,17 @@ public class ServiceBuilder {
 
 		String newContent = sb.toString();
 
-		if (escapeMethodReference) {
-			newContent = StringUtil.replace(
-				newContent, "__COLON_COLON__", "::");
-		}
+		if (jalopyIgnoreBody != null) {
+			start = newContent.indexOf(jalopyIgnoreStart);
 
+			start = newContent.lastIndexOf('\n', start);
+
+			int end = newContent.indexOf(jalopyIgnoreEnd);
+
+			newContent =
+				newContent.substring(0, start) + jalopyIgnoreBody +
+					newContent.substring(end + jalopyIgnoreEnd.length());
+		}
 		// Remove double blank lines after the package or last import
 
 		newContent = newContent.replaceFirst(

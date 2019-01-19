@@ -3041,14 +3041,9 @@ log.sanitizer.enabled=false</echo>
 							</sequential>
 						</for>
 					</try>
-					<catch>
-						<property name="junit.failure.count" value="1" />
-
-						<fail message="${junit.failure.message}" />
-					</catch>
 					<finally>
-						<condition else="0" property="junit.failure.count" value="${junit.failure.count}">
-							<isset property="junit.failure.count" />
+						<condition else="0" property="junit.failure.count" value="1">
+							<isset property="junit.failure.message" />
 						</condition>
 
 						<get-junit-failure-message-element />
@@ -5286,18 +5281,11 @@ ${output.content}</echo>
 										<antcall inheritAll="false" target="prepare-system-ext-properties" />
 
 										<antcall inheritAll="false" target="start-app-server" />
-
-										<property name="junit.failure.count" value="0" />
 									</sequential>
 								</try>
-								<catch>
-									<property name="junit.failure.count" value="1" />
-
-									<fail message="${junit.failure.message}" />
-								</catch>
 								<finally>
-									<condition else="" property="junit.failure.count" value="${junit.failure.count}">
-										<isset property="junit.failure.count" />
+									<condition else="0" property="junit.failure.count" value="1">
+										<isset property="junit.failure.message" />
 									</condition>
 
 									<get-junit-failure-message-element />

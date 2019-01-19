@@ -348,7 +348,7 @@ definition {
 
 	@priority = "5"
 	test AddWebContent {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 		property testray.component.names = "Web Content Display";
 
 		Navigator.gotoSitePage(
@@ -529,8 +529,8 @@ definition {
 	test AddWithStructure {
 		property app.server.types = "jboss,resin,tcserver,tomcat,weblogic,websphere,wildfly";
 		property database.types = "db2,hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
-		property environment.acceptance = "false";
-		property portal.acceptance = "false";
+		property environment.acceptance = "true";
+		property portal.acceptance = "true";
 		property testray.component.names = "Web Content Display,Training";
 
 		ProductMenu.gotoPortlet(

@@ -3030,11 +3030,37 @@ log.sanitizer.enabled=false</echo>
 	<target name="database-upgrade-client-jdk8">
 		<run-batch-test>
 			<test-action>
-				<for keepgoing="true" list="check-upgrade-client-gogoshell,check-upgrade-client-help,check-upgrade-client-java-version,check-upgrade-client-custom-log,check-upgrade-client-additional-settings" param="upgrade.test.target">
-					<sequential>
-						<ant antfile="build-test-db-upgrade-client.xml" target="@{upgrade.test.target}" />
-					</sequential>
-				</for>
+				<local name="junit.failure.count" />
+				<local name="junit.failure.message" />
+
+				<trycatch property="junit.failure.message">
+					<try>
+						<for keepgoing="true" list="check-upgrade-client-gogoshell,check-upgrade-client-help,check-upgrade-client-java-version,check-upgrade-client-custom-log,check-upgrade-client-additional-settings" param="upgrade.test.target">
+							<sequential>
+								<ant antfile="build-test-db-upgrade-client.xml" target="@{upgrade.test.target}" />
+							</sequential>
+						</for>
+					</try>
+					<catch>
+						<property name="junit.failure.count" value="1" />
+
+						<fail message="${junit.failure.message}" />
+					</catch>
+					<finally>
+						<condition else="0" property="junit.failure.count" value="${junit.failure.count}">
+							<isset property="junit.failure.count" />
+						</condition>
+
+						<get-junit-failure-message-element />
+
+						<generate-backend-batch-junit-report
+							junit.failure.count="${junit.failure.count}"
+							junit.failure.message.element="${junit.failure.message.element}"
+							test.class.name="DatabaseUpgradeClient"
+							test.command.name="databaseUpgradeClient"
+						/>
+					</finally>
+				</trycatch>
 			</test-action>
 
 			<test-set-up>

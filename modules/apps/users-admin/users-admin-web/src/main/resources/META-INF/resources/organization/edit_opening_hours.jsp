@@ -28,7 +28,7 @@ if (primaryKey > 0L) {
 	orgLabor = OrgLaborServiceUtil.getOrgLabor(primaryKey);
 }
 
-EditContactInformationDisplayContext editContactInformationDisplayContext = new EditContactInformationDisplayContext(Organization.class.getName(), classPK, parentOrganizationId, liferayPortletResponse, request);
+EditContactInformationDisplayContext editContactInformationDisplayContext = new EditContactInformationDisplayContext(Organization.class.getName(), classPK, parentOrganizationId, renderResponse, request);
 
 if (!portletName.equals(UsersAdminPortletKeys.MY_ACCOUNT)) {
 	portletDisplay.setShowBackIcon(true);

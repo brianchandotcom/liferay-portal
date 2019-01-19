@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.service.ContactServiceUtil;
 import com.liferay.portal.kernel.service.OrganizationServiceUtil;
 import com.liferay.users.admin.web.internal.util.UsersAdminPortletURLUtil;
 
-import javax.portlet.PortletResponse;
 import javax.portlet.RenderResponse;
 import javax.portlet.RenderURL;
 
@@ -37,12 +36,12 @@ public class EditContactInformationDisplayContext {
 
 	public EditContactInformationDisplayContext(
 		String className, long classPK, long parentOrganizationId,
-		PortletResponse portletResponse, HttpServletRequest request) {
+		RenderResponse renderResponse, HttpServletRequest request) {
 
 		_className = className;
 		_classPK = classPK;
 		_parentOrganizationId = parentOrganizationId;
-		_portletResponse = portletResponse;
+		_renderResponse = renderResponse;
 		_request = request;
 	}
 
@@ -50,15 +49,13 @@ public class EditContactInformationDisplayContext {
 		if (_parentOrganizationId ==
 				OrganizationConstants.ANY_PARENT_ORGANIZATION_ID) {
 
-			RenderResponse renderResponse = (RenderResponse)_portletResponse;
-
-			RenderURL renderURL = renderResponse.createRenderURL();
+			RenderURL renderURL = _renderResponse.createRenderURL();
 
 			return renderURL.toString();
 		}
 
 		return UsersAdminPortletURLUtil.createOrganizationViewTreeURL(
-			_parentOrganizationId, _portletResponse);
+			_parentOrganizationId, _renderResponse);
 	}
 
 	public String getPortletTitle() throws PortalException {
@@ -82,7 +79,7 @@ public class EditContactInformationDisplayContext {
 	private final String _className;
 	private final long _classPK;
 	private final long _parentOrganizationId;
-	private final PortletResponse _portletResponse;
+	private final RenderResponse _renderResponse;
 	private final HttpServletRequest _request;
 
 }

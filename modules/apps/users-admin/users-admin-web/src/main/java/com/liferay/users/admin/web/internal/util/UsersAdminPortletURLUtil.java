@@ -23,8 +23,6 @@ import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.OrganizationLocalServiceUtil;
 import com.liferay.portal.kernel.service.permission.OrganizationPermissionUtil;
 
-import javax.portlet.PortletRequest;
-import javax.portlet.PortletResponse;
 import javax.portlet.RenderResponse;
 import javax.portlet.RenderURL;
 
@@ -34,9 +32,7 @@ import javax.portlet.RenderURL;
 public class UsersAdminPortletURLUtil {
 
 	public static String createOrganizationViewTreeURL(
-		long organizationId, PortletResponse portletResponse) {
-
-		RenderResponse renderResponse = (RenderResponse)portletResponse;
+		long organizationId, RenderResponse renderResponse) {
 
 		RenderURL renderURL = renderResponse.createRenderURL();
 
@@ -60,18 +56,16 @@ public class UsersAdminPortletURLUtil {
 	}
 
 	public static String createParentOrganizationViewTreeURL(
-			long organizationId, PortletRequest portletRequest,
-			PortletResponse portletResponse)
+			long organizationId, RenderResponse renderResponse)
 		throws PortalException {
 
 		return createParentOrganizationViewTreeURL(
 			OrganizationLocalServiceUtil.fetchOrganization(organizationId),
-			portletRequest, portletResponse);
+			renderResponse);
 	}
 
 	public static String createParentOrganizationViewTreeURL(
-			Organization organization, PortletRequest portletRequest,
-			PortletResponse portletResponse)
+			Organization organization, RenderResponse renderResponse)
 		throws PortalException {
 
 		if ((organization != null) && !organization.isRoot()) {
@@ -82,13 +76,13 @@ public class UsersAdminPortletURLUtil {
 					parentOrganizationId, ActionKeys.VIEW)) {
 
 				return createOrganizationViewTreeURL(
-					parentOrganizationId, portletResponse);
+					parentOrganizationId, renderResponse);
 			}
 		}
 
 		return createOrganizationViewTreeURL(
 			OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID,
-			portletResponse);
+			renderResponse);
 	}
 
 }

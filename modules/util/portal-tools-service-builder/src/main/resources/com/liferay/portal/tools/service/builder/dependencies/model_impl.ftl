@@ -504,7 +504,7 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 
 	static {
 		Map<String, Function<${entity.name}, Object>> attributeGetters = new LinkedHashMap<String, Function<${entity.name}, Object>>();
-		Map<String, BiConsumer<${entity.name}, Object>> attributeSetters = new LinkedHashMap<String, BiConsumer<${entity.name}, Object>>();
+		Map<String, BiConsumer<${entity.name}, ?>> attributeSetters = new LinkedHashMap<String, BiConsumer<${entity.name}, ?>>();
 
 /** Jalopy ignore start */
 <#list entity.regularEntityColumns as entityColumn>
@@ -539,13 +539,13 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 
 			});
 	<#else>
-		attributeSetters.put("${entityColumn.name}", ${entity.name}::set${entityColumn.methodName});
+		attributeSetters.put("${entityColumn.name}", (BiConsumer<${entity.name}, ${entityColumnType}>)${entity.name}::set${entityColumn.methodName});
 	</#if>
 
 </#list>
 /** Jalopy ignore end */
 		_attributeGetters = Collections.unmodifiableMap(attributeGetters);
-		_attributeSetters = Collections.unmodifiableMap(attributeSetters);
+		_attributeSetters = Collections.unmodifiableMap((Map)attributeSetters);
 	}
 
 	<#if entity.localizedEntity??>

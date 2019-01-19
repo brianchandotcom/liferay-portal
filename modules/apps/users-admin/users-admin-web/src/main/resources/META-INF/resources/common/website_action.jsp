@@ -41,7 +41,7 @@ long websiteId = website.getWebsiteId();
 
 	editURL.setParameter("className", className);
 	editURL.setParameter("classPK", String.valueOf(classPK));
-	editURL.setParameter("mvcRenderCommandName", "/users_admin/edit_website");
+	editURL.setParameter("mvcPath", "/common/edit_website.jsp");
 	editURL.setParameter("parentOrganizationId", String.valueOf(parentOrganizationId));
 	editURL.setParameter("primaryKey", String.valueOf(websiteId));
 	editURL.setParameter("redirect", currentURL);

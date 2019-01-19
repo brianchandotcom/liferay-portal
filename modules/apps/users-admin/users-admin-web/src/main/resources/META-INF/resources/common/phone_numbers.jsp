@@ -38,7 +38,7 @@ List<Phone> phones = PhoneServiceUtil.getPhones(className, classPK);
 
 			editURL.setParameter("className", className);
 			editURL.setParameter("classPK", String.valueOf(classPK));
-			editURL.setParameter("mvcRenderCommandName", "/users_admin/edit_phone_number");
+			editURL.setParameter("mvcPath", "/common/edit_phone_number.jsp");
 			editURL.setParameter("parentOrganizationId", String.valueOf(parentOrganizationId));
 			editURL.setParameter("redirect", currentURL);
 			%>

@@ -64,7 +64,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, sheetTit
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.EDIT %>" />
 	<aui:input name="className" type="hidden" value="<%= className %>" />
 	<aui:input name="classPK" type="hidden" value="<%= String.valueOf(classPK) %>" />
-	<aui:input name="errorMVCRenderCommandName" type="hidden" value="/users_admin/edit_address" />
+	<aui:input name="errorMVCPath" type="hidden" value="/common/edit_address.jsp" />
 	<aui:input name="listType" type="hidden" value="<%= ListTypeConstants.ADDRESS %>" />
 	<aui:input name="primaryKey" type="hidden" value="<%= String.valueOf(primaryKey) %>" />
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />

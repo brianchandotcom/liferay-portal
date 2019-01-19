@@ -38,7 +38,7 @@ List<EmailAddress> emailAddresses = EmailAddressServiceUtil.getEmailAddresses(cl
 
 			editURL.setParameter("className", className);
 			editURL.setParameter("classPK", String.valueOf(classPK));
-			editURL.setParameter("mvcRenderCommandName", "/users_admin/edit_email_address");
+			editURL.setParameter("mvcPath", "/common/edit_email_address.jsp");
 			editURL.setParameter("parentOrganizationId", String.valueOf(parentOrganizationId));
 			editURL.setParameter("redirect", currentURL);
 			%>

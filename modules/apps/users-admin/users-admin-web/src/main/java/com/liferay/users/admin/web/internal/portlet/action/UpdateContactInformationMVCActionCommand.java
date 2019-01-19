@@ -140,12 +140,11 @@ public class UpdateContactInformationMVCActionCommand
 
 				SessionErrors.add(actionRequest, e.getClass(), e);
 
-				String errorMVCRenderCommandName = ParamUtil.getString(
-					actionRequest, "errorMVCRenderCommandName");
+				String errorMVCPath = ParamUtil.getString(
+					actionRequest, "errorMVCPath");
 
-				if (Validator.isNotNull(errorMVCRenderCommandName)) {
-					actionResponse.setRenderParameter(
-						"mvcRenderCommandName", errorMVCRenderCommandName);
+				if (Validator.isNotNull(errorMVCPath)) {
+					actionResponse.setRenderParameter("mvcPath", errorMVCPath);
 				}
 				else {
 					actionResponse.setRenderParameter(

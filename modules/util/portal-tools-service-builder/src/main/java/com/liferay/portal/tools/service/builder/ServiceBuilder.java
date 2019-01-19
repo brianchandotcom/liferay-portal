@@ -6932,6 +6932,12 @@ public class ServiceBuilder {
 
 		// Beautify
 
+		boolean escapeMethodReference = content.contains("::");
+
+		if (escapeMethodReference) {
+			content = StringUtil.replace(content, "::", "__COLON_COLON__");
+		}
+
 		StringBuffer sb = new StringBuffer();
 
 		Jalopy jalopy = new Jalopy();
@@ -7009,6 +7015,11 @@ public class ServiceBuilder {
 		boolean formatSuccess = jalopy.format();
 
 		String newContent = sb.toString();
+
+		if (escapeMethodReference) {
+			newContent = StringUtil.replace(
+				newContent, "__COLON_COLON__", "::");
+		}
 
 		// Remove double blank lines after the package or last import
 

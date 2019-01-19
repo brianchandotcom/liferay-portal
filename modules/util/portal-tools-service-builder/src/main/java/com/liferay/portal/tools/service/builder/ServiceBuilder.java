@@ -7041,6 +7041,7 @@ public class ServiceBuilder {
 				newContent.substring(0, start) + jalopyIgnoreBody +
 					newContent.substring(end + jalopyIgnoreEnd.length());
 		}
+
 		// Remove double blank lines after the package or last import
 
 		newContent = newContent.replaceFirst(

@@ -541,9 +541,10 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 	<#else>
 		attributeSetters.put("${entityColumn.name}", (BiConsumer<${entity.name}, ${entityColumnType}>)${entity.name}::set${entityColumn.methodName});
 	</#if>
-
 </#list>
+
 /** Jalopy ignore end */
+
 		_attributeGetters = Collections.unmodifiableMap(attributeGetters);
 		_attributeSetters = Collections.unmodifiableMap((Map)attributeSetters);
 	}

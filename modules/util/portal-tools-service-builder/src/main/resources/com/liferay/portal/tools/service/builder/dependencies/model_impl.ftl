@@ -506,6 +506,7 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 		Map<String, Function<${entity.name}, Object>> attributeGetters = new LinkedHashMap<String, Function<${entity.name}, Object>>();
 		Map<String, BiConsumer<${entity.name}, Object>> attributeSetters = new LinkedHashMap<String, BiConsumer<${entity.name}, Object>>();
 
+/** Jalopy ignore start */
 <#list entity.regularEntityColumns as entityColumn>
 	<#if serviceBuilder.isVersionLTE_7_1_0()>
 		attributeGetters.put(
@@ -542,6 +543,7 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 	</#if>
 
 </#list>
+/** Jalopy ignore end */
 		_attributeGetters = Collections.unmodifiableMap(attributeGetters);
 		_attributeSetters = Collections.unmodifiableMap(attributeSetters);
 	}

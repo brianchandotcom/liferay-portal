@@ -15,6 +15,7 @@
 package com.liferay.document.library.internal.repository.capabilities;
 
 import com.liferay.document.library.kernel.service.DLAppHelperLocalService;
+import com.liferay.document.library.service.DLFileEntryPreviewLocalService;
 import com.liferay.document.library.sync.service.DLSyncEventLocalService;
 import com.liferay.portal.kernel.cache.CacheRegistryItem;
 import com.liferay.portal.kernel.repository.DocumentRepository;
@@ -201,6 +202,13 @@ public class PortalCapabilityLocatorImpl
 	@Activate
 	protected void activate(BundleContext bundleContext) {
 		_bundleContext = bundleContext;
+
+		_alwaysGeneratingProcessorCapability = new LiferayProcessorCapability(
+			ProcessorCapability.ResourceGenerationStrategy.ALWAYS_GENERATE,
+			_dlFileEntryPreviewLocalService);
+		_reusingProcessorCapability = new LiferayProcessorCapability(
+			ProcessorCapability.ResourceGenerationStrategy.REUSE,
+			_dlFileEntryPreviewLocalService);
 	}
 
 	@Deactivate
@@ -218,9 +226,7 @@ public class PortalCapabilityLocatorImpl
 		_liferayDynamicCapabilities.clear();
 	}
 
-	private final ProcessorCapability _alwaysGeneratingProcessorCapability =
-		new LiferayProcessorCapability(
-			ProcessorCapability.ResourceGenerationStrategy.ALWAYS_GENERATE);
+	private ProcessorCapability _alwaysGeneratingProcessorCapability;
 	private BundleContext _bundleContext;
 	private final CommentCapability _commentCapability =
 		new LiferayCommentCapability();
@@ -229,14 +235,16 @@ public class PortalCapabilityLocatorImpl
 	private DLAppHelperLocalService _dlAppHelperLocalService;
 
 	@Reference
+	private DLFileEntryPreviewLocalService _dlFileEntryPreviewLocalService;
+
+	@Reference
 	private DLSyncEventLocalService _dlSyncEventLocalService;
 
 	private final Map<DocumentRepository, LiferayDynamicCapability>
 		_liferayDynamicCapabilities = new ConcurrentHashMap<>();
 	private final RepositoryEntryConverter _repositoryEntryConverter =
 		new RepositoryEntryConverter();
-	private final ProcessorCapability _reusingProcessorCapability =
-		new LiferayProcessorCapability();
+	private ProcessorCapability _reusingProcessorCapability;
 
 	@Reference
 	private TrashEntryLocalService _trashEntryLocalService;

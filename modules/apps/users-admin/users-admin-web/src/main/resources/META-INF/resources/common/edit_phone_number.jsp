@@ -17,32 +17,21 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String className = ParamUtil.getString(request, "className");
-Long classPK = ParamUtil.getLong(request, "classPK");
-long contextOrganizationId = ParamUtil.getLong(request, "contextOrganizationId");
-long primaryKey = ParamUtil.getLong(request, "primaryKey", 0L);
-String redirect = ParamUtil.getString(request, "redirect");
+EditContactInformationDisplayContext editContactInformationDisplayContext = new EditContactInformationDisplayContext(renderResponse, request);
+
+editContactInformationDisplayContext.setPortletDisplay(portletDisplay, portletName);
 
 Phone phone = null;
 
-if (primaryKey > 0L) {
-	phone = PhoneServiceUtil.getPhone(primaryKey);
+if (editContactInformationDisplayContext.getPrimaryKey() > 0) {
+	phone = PhoneServiceUtil.getPhone(editContactInformationDisplayContext.getPrimaryKey());
 }
 
-EditContactInformationDisplayContext editContactInformationDisplayContext = new EditContactInformationDisplayContext(className, classPK, contextOrganizationId, renderResponse, request);
-
-if (!portletName.equals(UsersAdminPortletKeys.MY_ACCOUNT)) {
-	portletDisplay.setShowBackIcon(true);
-	portletDisplay.setURLBack(editContactInformationDisplayContext.getBackURL());
-
-	renderResponse.setTitle(editContactInformationDisplayContext.getPortletTitle());
-}
-
-PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "contact-information"), redirect);
+PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "contact-information"), editContactInformationDisplayContext.getRedirect());
 
 String sheetTitle;
 
-if (primaryKey > 0) {
+if (editContactInformationDisplayContext.getPrimaryKey() > 0) {
 	sheetTitle = LanguageUtil.get(request, "edit-phone-number");
 }
 else {
@@ -56,12 +45,13 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, sheetTit
 
 <aui:form action="<%= actionURL %>" method="post" name="fm">
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.EDIT %>" />
-	<aui:input name="className" type="hidden" value="<%= className %>" />
-	<aui:input name="classPK" type="hidden" value="<%= String.valueOf(classPK) %>" />
+	<aui:input name="className" type="hidden" value="<%= editContactInformationDisplayContext.getClassName() %>" />
+	<aui:input name="classPK" type="hidden" value="<%= String.valueOf(editContactInformationDisplayContext.getClassPK()) %>" />
+	<aui:input name="contextOrganizationId" type="hidden" value="<%= String.valueOf(editContactInformationDisplayContext.getContextOrganizationId()) %>" />
 	<aui:input name="errorMVCPath" type="hidden" value="/common/edit_phone_number.jsp" />
 	<aui:input name="listType" type="hidden" value="<%= ListTypeConstants.PHONE %>" />
-	<aui:input name="primaryKey" type="hidden" value="<%= String.valueOf(primaryKey) %>" />
-	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
+	<aui:input name="primaryKey" type="hidden" value="<%= String.valueOf(editContactInformationDisplayContext.getPrimaryKey()) %>" />
+	<aui:input name="redirect" type="hidden" value="<%= editContactInformationDisplayContext.getRedirect() %>" />
 
 	<div class="container-fluid container-fluid-max-xl">
 		<div class="sheet-lg" id="breadcrumb">
@@ -89,9 +79,9 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, sheetTit
 
 				<aui:input checked="<%= (phone != null)? phone.isPrimary() : false %>" id="phonePrimary" label="make-primary" name="phonePrimary" type="checkbox" />
 
-				<liferay-ui:error key="<%= NoSuchListTypeException.class.getName() + className + ListTypeConstants.PHONE %>" message="please-select-a-type" />
+				<liferay-ui:error key="<%= NoSuchListTypeException.class.getName() + editContactInformationDisplayContext.getClassName() + ListTypeConstants.PHONE %>" message="please-select-a-type" />
 
-				<aui:select inlineField="<%= true %>" label="type" listType="<%= className + ListTypeConstants.PHONE %>" name="phoneTypeId" />
+				<aui:select inlineField="<%= true %>" label="type" listType="<%= editContactInformationDisplayContext.getClassName() + ListTypeConstants.PHONE %>" name="phoneTypeId" />
 
 				<liferay-ui:error exception="<%= PhoneNumberException.class %>" message="please-enter-a-valid-phone-number" />
 
@@ -107,7 +97,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, sheetTit
 			<div class="sheet-footer">
 				<aui:button primary="<%= true %>" type="submit" />
 
-				<aui:button href="<%= redirect %>" type="cancel" />
+				<aui:button href="<%= editContactInformationDisplayContext.getRedirect() %>" type="cancel" />
 			</div>
 		</div>
 	</div>

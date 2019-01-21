@@ -791,6 +791,7 @@ Layout.STATE = {
 					hasChild: Config.bool().required(),
 					homePage: Config.bool().required(),
 					homePageTitle: Config.string().required(),
+					parentable: Config.bool().required(),
 					plid: Config.string().required(),
 					title: Config.string().required(),
 					url: Config.string().required()

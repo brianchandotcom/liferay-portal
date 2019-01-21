@@ -3,6 +3,10 @@
 	.title-input {
 		font-size: 20px;
 		font-weight: bold;
+
+		&.hide {
+			display: none;
+		}
 	}
 
 	.title-display {

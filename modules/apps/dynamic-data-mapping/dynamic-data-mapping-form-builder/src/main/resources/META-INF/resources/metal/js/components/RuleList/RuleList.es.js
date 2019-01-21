@@ -160,81 +160,59 @@ class RuleList extends Component {
 		this._eventHandler.removeAllListeners();
 	}
 
-	_handleDocumentMouseDown({target}) {
-		const dropdownSettings = dom.closest(target, '.ddm-rule-list-settings');
+	prepareStateForRender(states) {
+		const {roles} = this;
+		const rules = this._setDataProviderNames(states);
 
-		if (dropdownSettings) {
-			return;
-		}
+		const newState = {
+			...states,
+			rules: this._formatRules(
+				rules.map(
+					rule => {
+						return {
+							...rule,
+							actions: rule.actions.map(
+								actionItem => {
+									return {
+										...actionItem,
+										label: this._getFieldLabel(actionItem.target),
+										target: this._getFieldLabel(actionItem.target)
+									};
+								}
+							),
+							conditions: rule.conditions.map(
+								condition => {
+									return {
+										...condition,
+										operands: condition.operands.map(
+											(operand, index) => {
+												let {label} = operand;
 
-		this.setState(
-			{
-				dropdownExpandedIndex: -1
-			}
-		);
-	}
+												if (operand.type === 'field') {
+													label = this._getFieldLabel(operand.value);
+												}
+												else if (index == 1 && condition.operands[0].type === 'user' && roles.length) {
+													label = roles.find(role => role.id === operand.value).label;
+												}
 
-	/**
-	 * Find a field label based on fieldName
-	 * @param {string} fieldName
-	 * @return {string} the field label
-	 */
-	_getFieldLabel(fieldName) {
-		const pages = this.pages;
+												return {
+													...operand,
+													label,
+													value: this._setOperandValue(operand)
+												};
+											}
+										)
+									};
+								}
+							)
+						};
+					}
+				)
+			),
+			rulesCardOptions: this._getRulesCardOptions()
+		};
 
-		let fieldLabel = null;
-
-		if (pages && fieldName) {
-			const visitor = new PagesVisitor(pages);
-
-			const field = visitor.findField(field => field.fieldName == fieldName);
-
-			if (field) {
-				fieldLabel = field.label;
-			}
-		}
-
-		return fieldLabel;
-	}
-
-	_handleRuleCardClicked({data, target}) {
-		const cardId = target.element.closest('[data-card-id]').getAttribute('data-card-id');
-
-		if (data.item.settingsItem == 'edit') {
-			this.emit(
-				'ruleEdited',
-				{
-					ruleId: cardId
-				}
-			);
-		}
-		else if (data.item.settingsItem == 'delete') {
-			this.emit(
-				'ruleDeleted',
-				{
-					ruleId: cardId
-				}
-			);
-		}
-	}
-
-	_handleDropdownClicked(event) {
-		event.preventDefault();
-
-		const {dropdownExpandedIndex} = this;
-		const ruleNode = dom.closest(event.delegateTarget, '.component-action');
-
-		let ruleIndex = parseInt(ruleNode.dataset.ruleIndex, 10);
-
-		if (ruleIndex === dropdownExpandedIndex) {
-			ruleIndex = -1;
-		}
-
-		this.setState(
-			{
-				dropdownExpandedIndex: ruleIndex
-			}
-		);
+		return newState;
 	}
 
 	_formatActions(actions) {
@@ -251,12 +229,6 @@ class RuleList extends Component {
 		);
 
 		return actions;
-	}
-
-	_getDataProviderName(id) {
-		const {dataProvider} = this;
-
-		return dataProvider.find(data => data.uuid == id).label;
 	}
 
 	_formatRules(rules) {
@@ -318,6 +290,105 @@ class RuleList extends Component {
 		);
 	}
 
+	_getDataProviderName(id) {
+		const {dataProvider} = this;
+
+		return dataProvider.find(data => data.uuid == id).label;
+	}
+
+	/**
+	 * Find a field label based on fieldName
+	 * @param {string} fieldName
+	 * @return {string} the field label
+	 */
+
+	_getFieldLabel(fieldName) {
+		const pages = this.pages;
+
+		let fieldLabel = null;
+
+		if (pages && fieldName) {
+			const visitor = new PagesVisitor(pages);
+
+			const field = visitor.findField(field => field.fieldName == fieldName);
+
+			if (field) {
+				fieldLabel = field.label;
+			}
+		}
+
+		return fieldLabel;
+	}
+
+	_getRulesCardOptions() {
+		const rulesCardOptions = [
+			{
+				'label': Liferay.Language.get('edit'),
+				'settingsItem': 'edit'
+			},
+			{
+				'label': Liferay.Language.get('delete'),
+				'settingsItem': 'delete'
+			}
+		];
+
+		return rulesCardOptions;
+	}
+
+	_handleDocumentMouseDown({target}) {
+		const dropdownSettings = dom.closest(target, '.ddm-rule-list-settings');
+
+		if (dropdownSettings) {
+			return;
+		}
+
+		this.setState(
+			{
+				dropdownExpandedIndex: -1
+			}
+		);
+	}
+
+	_handleDropdownClicked(event) {
+		event.preventDefault();
+
+		const {dropdownExpandedIndex} = this;
+		const ruleNode = dom.closest(event.delegateTarget, '.component-action');
+
+		let ruleIndex = parseInt(ruleNode.dataset.ruleIndex, 10);
+
+		if (ruleIndex === dropdownExpandedIndex) {
+			ruleIndex = -1;
+		}
+
+		this.setState(
+			{
+				dropdownExpandedIndex: ruleIndex
+			}
+		);
+	}
+
+	_handleRuleCardClicked({data, target}) {
+		const cardId = target.element.closest('[data-card-id]').getAttribute('data-card-id');
+
+		if (data.item.settingsItem == 'edit') {
+			this.emit(
+				'ruleEdited',
+				{
+					ruleId: cardId
+				}
+			);
+		}
+		else if (data.item.settingsItem == 'delete') {
+			this.emit(
+				'ruleDeleted',
+				{
+					ruleId: cardId
+				}
+			);
+		}
+	}
+
 	_setDataProviderNames(states) {
 		const newRules = states.rules;
 
@@ -338,76 +409,6 @@ class RuleList extends Component {
 		}
 
 		return newRules;
-	}
-
-	_getRulesCardOptions() {
-		const rulesCardOptions = [
-			{
-				'label': Liferay.Language.get('edit'),
-				'settingsItem': 'edit'
-			},
-			{
-				'label': Liferay.Language.get('delete'),
-				'settingsItem': 'delete'
-			}
-		];
-
-		return rulesCardOptions;
-	}
-
-	prepareStateForRender(states) {
-		const {roles} = this;
-		const rules = this._setDataProviderNames(states);
-
-		const newState = {
-			...states,
-			rules: this._formatRules(
-				rules.map(
-					rule => {
-						return {
-							...rule,
-							actions: rule.actions.map(
-								actionItem => {
-									return {
-										...actionItem,
-										label: this._getFieldLabel(actionItem.target),
-										target: this._getFieldLabel(actionItem.target)
-									};
-								}
-							),
-							conditions: rule.conditions.map(
-								condition => {
-									return {
-										...condition,
-										operands: condition.operands.map(
-											(operand, index) => {
-												let {label} = operand;
-
-												if (operand.type === 'field') {
-													label = this._getFieldLabel(operand.value);
-												}
-												else if (index == 1 && condition.operands[0].type === 'user' && roles.length) {
-													label = roles.find(role => role.id === operand.value).label;
-												}
-
-												return {
-													...operand,
-													label,
-													value: this._setOperandValue(operand)
-												};
-											}
-										)
-									};
-								}
-							)
-						};
-					}
-				)
-			),
-			rulesCardOptions: this._getRulesCardOptions()
-		};
-
-		return newState;
 	}
 
 	_setOperandValue(operand) {

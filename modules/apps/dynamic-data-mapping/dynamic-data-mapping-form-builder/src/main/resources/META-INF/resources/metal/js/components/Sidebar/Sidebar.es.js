@@ -121,6 +121,187 @@ class Sidebar extends Component {
 		spritemap: Config.string().required()
 	};
 
+	/**
+	 * @inheritDoc
+	 */
+
+	created() {
+		this._eventHandler = new EventHandler();
+		this._handleCloseButtonClicked = this._handleCloseButtonClicked.bind(this);
+		this._handleTabItemClicked = this._handleTabItemClicked.bind(this);
+
+		const transitionEnd = this._getTransitionEndEvent();
+
+		this.supportsTransitionEnd = transitionEnd !== false;
+		this.transitionEnd = transitionEnd || 'transitionend';
+	}
+
+	/**
+	 * @inheritDoc
+	 */
+
+	attached() {
+		this._bindDragAndDrop();
+
+		this._eventHandler.add(
+			dom.on(document, 'mousedown', this._handleDocumentMouseDown.bind(this), true)
+		);
+	}
+
+	/**
+	 * @inheritDoc
+	 */
+
+	disposeInternal() {
+		super.disposeInternal();
+
+		this._eventHandler.removeAllListeners();
+		this.disposeDragAndDrop();
+		this.emit('fieldBlurred');
+	}
+
+	syncVisible(visible) {
+		if (!visible) {
+			this.emit('fieldBlurred');
+		}
+	}
+
+	/**
+	 * Close the Sidebar and remove event to handle document click.
+	 * @public
+	 */
+
+	close() {
+		this.setState(
+			{
+				open: false
+			}
+		);
+	}
+
+	disposeDragAndDrop() {
+		if (this._dragAndDrop) {
+			this._dragAndDrop.dispose();
+		}
+	}
+
+	/**
+	 * Open the Sidebar and attach event to handle document click.
+	 * @public
+	 */
+
+	open() {
+		const {transitionEnd} = this;
+
+		dom.once(
+			this.refs.container,
+			transitionEnd,
+			() => {
+				if (this._isEditMode()) {
+					const firstInput = this.element.querySelector('input');
+
+					if (firstInput && document.activeElement !== firstInput) {
+						firstInput.focus();
+						selectText(firstInput);
+					}
+				}
+			}
+		);
+
+		this.setState(
+			{
+				activeTab: 0,
+				open: true
+			}
+		);
+
+		this.refreshDragAndDrop();
+	}
+
+	refreshDragAndDrop() {
+		this._dragAndDrop.setState(
+			{
+				targets: '.ddm-target'
+			}
+		);
+	}
+
+	/**
+	 * Start drag and drop and attach events to manipulate.
+	 * @protected
+	 */
+
+	_bindDragAndDrop() {
+		this._dragAndDrop = new DragDrop(
+			{
+				dragPlaceholder: Drag.Placeholder.CLONE,
+				sources: '.ddm-drag-item',
+				targets: '.ddm-target',
+				useShim: false
+			}
+		);
+
+		this._eventHandler.add(
+			this._dragAndDrop.on(
+				DragDrop.Events.END,
+				this._handleDragEnded.bind(this)
+			),
+			this._dragAndDrop.on(Drag.Events.START, this._handleDragStarted.bind(this))
+		);
+	}
+
+	_cancelFieldChanges(indexes) {
+		this.emit(
+			'fieldChangesCanceled',
+			indexes
+		);
+	}
+
+	_checkSettingsActionsVisibility(target) {
+		const {fieldSettingsActions} = this.refs;
+		let dropdownPortal;
+
+		if (fieldSettingsActions) {
+			const {dropdown} = fieldSettingsActions.refs;
+			const {portal} = dropdown.refs;
+
+			dropdownPortal = portal.element.contains(target);
+		}
+
+		return dropdownPortal;
+	}
+
+	_deleteField(indexes) {
+		this.emit(
+			'fieldDeleted',
+			indexes
+		);
+	}
+
+	_dropdownFieldTypesValueFn() {
+		const {fieldTypes} = this.props;
+
+		return fieldTypes.filter(
+			({system}) => {
+				return !system;
+			}
+		).map(
+			fieldType => {
+				return {
+					...fieldType,
+					type: 'item'
+				};
+			}
+		);
+	}
+
+	_duplicateField(indexes) {
+		this.emit(
+			'fieldDuplicated',
+			indexes
+		);
+	}
+
 	_fieldTypesGroupValueFn() {
 		const {fieldTypes} = this.props;
 		const group = {
@@ -175,45 +356,12 @@ class Sidebar extends Component {
 		return eventName;
 	}
 
-	_checkSettingsActionsVisibility(target) {
-		const {fieldSettingsActions} = this.refs;
-		let dropdownPortal;
+	/**
+	 * @protected
+	 */
 
-		if (fieldSettingsActions) {
-			const {dropdown} = fieldSettingsActions.refs;
-			const {portal} = dropdown.refs;
-
-			dropdownPortal = portal.element.contains(target);
-		}
-
-		return dropdownPortal;
-	}
-
-	_cancelFieldChanges(indexes) {
-		this.emit(
-			'fieldChangesCanceled',
-			indexes
-		);
-	}
-
-	_deleteField(indexes) {
-		this.emit(
-			'fieldDeleted',
-			indexes
-		);
-	}
-
-	_duplicateField(indexes) {
-		this.emit(
-			'fieldDuplicated',
-			indexes
-		);
-	}
-
-	_openValueFn() {
-		const {open} = this.props;
-
-		return open;
+	_handleCloseButtonClicked() {
+		this.close();
 	}
 
 	/**
@@ -283,16 +431,6 @@ class Sidebar extends Component {
 	}
 
 	/**
-	 * Continues the propagation of event.
-	 * @param {Object} data
-	 * @protected
-	 */
-	@autobind
-	_handleFieldEdited(data) {
-		this.emit('fieldEdited', data);
-	}
-
-	/**
 	 * Handle a field move to dispatch the event to add in layout.
 	 * @param {Object} data
 	 * @param {Event} event
@@ -323,6 +461,16 @@ class Sidebar extends Component {
 				target: indexes
 			}
 		);
+	}
+
+	/**
+	 * Continues the propagation of event.
+	 * @param {Object} data
+	 * @protected
+	 */
+	@autobind
+	_handleFieldEdited(data) {
+		this.emit('fieldEdited', data);
 	}
 
 	/**
@@ -391,14 +539,6 @@ class Sidebar extends Component {
 	}
 
 	/**
-	 * @protected
-	 */
-
-	_handleCloseButtonClicked() {
-		this.close();
-	}
-
-	/**
 	 * Checks whether it is safe to go to edit mode.
 	 * @param {string} mode
 	 * @protected
@@ -414,238 +554,13 @@ class Sidebar extends Component {
 		);
 	}
 
-	/**
-	 * Start drag and drop and attach events to manipulate.
-	 * @protected
-	 */
+	_openValueFn() {
+		const {open} = this.props;
 
-	_bindDragAndDrop() {
-		this._dragAndDrop = new DragDrop(
-			{
-				dragPlaceholder: Drag.Placeholder.CLONE,
-				sources: '.ddm-drag-item',
-				targets: '.ddm-target',
-				useShim: false
-			}
-		);
-
-		this._eventHandler.add(
-			this._dragAndDrop.on(
-				DragDrop.Events.END,
-				this._handleDragEnded.bind(this)
-			),
-			this._dragAndDrop.on(Drag.Events.START, this._handleDragStarted.bind(this))
-		);
+		return open;
 	}
 
-	refreshDragAndDrop() {
-		this._dragAndDrop.setState(
-			{
-				targets: '.ddm-target'
-			}
-		);
-	}
-
-	/**
-	 * @inheritDoc
-	 */
-
-	attached() {
-		this._bindDragAndDrop();
-
-		this._eventHandler.add(
-			dom.on(document, 'mousedown', this._handleDocumentMouseDown.bind(this), true)
-		);
-	}
-
-	/**
-	 * Close the Sidebar and remove event to handle document click.
-	 * @public
-	 */
-
-	close() {
-		this.setState(
-			{
-				open: false
-			}
-		);
-	}
-
-	/**
-	 * @inheritDoc
-	 */
-
-	created() {
-		this._eventHandler = new EventHandler();
-		this._handleCloseButtonClicked = this._handleCloseButtonClicked.bind(this);
-		this._handleTabItemClicked = this._handleTabItemClicked.bind(this);
-
-		const transitionEnd = this._getTransitionEndEvent();
-
-		this.supportsTransitionEnd = transitionEnd !== false;
-		this.transitionEnd = transitionEnd || 'transitionend';
-	}
-
-	disposeDragAndDrop() {
-		if (this._dragAndDrop) {
-			this._dragAndDrop.dispose();
-		}
-	}
-
-	/**
-	 * @inheritDoc
-	 */
-
-	disposeInternal() {
-		super.disposeInternal();
-
-		this._eventHandler.removeAllListeners();
-		this.disposeDragAndDrop();
-		this.emit('fieldBlurred');
-	}
-
-	/**
-	 * Open the Sidebar and attach event to handle document click.
-	 * @public
-	 */
-
-	open() {
-		const {transitionEnd} = this;
-
-		dom.once(
-			this.refs.container,
-			transitionEnd,
-			() => {
-				if (this._isEditMode()) {
-					const firstInput = this.element.querySelector('input');
-
-					if (firstInput && document.activeElement !== firstInput) {
-						firstInput.focus();
-						selectText(firstInput);
-					}
-				}
-			}
-		);
-
-		this.setState(
-			{
-				activeTab: 0,
-				open: true
-			}
-		);
-
-		this.refreshDragAndDrop();
-	}
-
-	syncVisible(visible) {
-		if (!visible) {
-			this.emit('fieldBlurred');
-		}
-	}
-
-	/**
-	 * @inheritDoc
-	 */
-
-	render() {
-		const {activeTab, open} = this.state;
-		const {
-			focusedField,
-			spritemap
-		} = this.props;
-
-		const {settingsContext} = focusedField;
-
-		const layoutRenderEvents = {
-			evaluated: this._handleEvaluatorChanged,
-			fieldEdited: this._handleFieldEdited
-		};
-
-		const editMode = this._isEditMode();
-
-		const styles = classnames('sidebar-container', {open});
-
-		return (
-			<div class={styles} ref="container">
-				<div class="sidebar sidebar-light">
-					<nav class="component-tbar tbar">
-						<div class="container-fluid">
-							{this._renderTopBar()}
-						</div>
-					</nav>
-					<nav class="component-navigation-bar navbar navigation-bar navbar-collapse-absolute navbar-expand-md navbar-underline">
-						<a
-							aria-controls="sidebarLightCollapse00"
-							aria-expanded="false"
-							aria-label="Toggle Navigation"
-							class="collapsed navbar-toggler navbar-toggler-link"
-							data-toggle="collapse"
-							href="#sidebarLightCollapse00"
-							role="button"
-						>
-							<span class="navbar-text-truncate">{'Details'}</span>
-							<svg
-								aria-hidden="true"
-								class="lexicon-icon lexicon-icon-caret-bottom"
-							>
-								<use xlink:href={`${spritemap}#caret-bottom`} />
-							</svg>
-						</a>
-						<div
-							class="collapse navbar-collapse"
-							id="sidebarLightCollapse00"
-						>
-							<ul class="nav navbar-nav" role="tablist">
-								{this._renderNavItems()}
-							</ul>
-						</div>
-					</nav>
-					<div class="ddm-sidebar-body">
-						{!editMode &&
-							this._groupFieldTypes()
-						}
-						{editMode && (
-							<div class="sidebar-body ddm-field-settings">
-								<div class="tab-content">
-									<FormWithEvaluator
-										activePage={activeTab}
-										editable={true}
-										events={layoutRenderEvents}
-										fieldType={focusedField.type}
-										formContext={settingsContext}
-										modeRenderer="list"
-										pages={settingsContext.pages}
-										ref="FormRenderer"
-										spritemap={spritemap}
-										url={EVALUATOR_URL}
-									/>
-								</div>
-							</div>
-						)}
-					</div>
-				</div>
-			</div>
-		);
-	}
-
-	_dropdownFieldTypesValueFn() {
-		const {fieldTypes} = this.props;
-
-		return fieldTypes.filter(
-			({system}) => {
-				return !system;
-			}
-		).map(
-			fieldType => {
-				return {
-					...fieldType,
-					type: 'item'
-				};
-			}
-		);
-	}
-
-	_groupFieldTypes() {
+	_renderFieldTypeGroups() {
 		const {spritemap} = this.props;
 		const {fieldTypesGroup} = this.state;
 		const group = Object.keys(fieldTypesGroup);
@@ -700,6 +615,41 @@ class Sidebar extends Component {
 					)
 				)}
 			</div>
+		);
+	}
+
+	_renderNavItems() {
+		const {activeTab, tabs} = this.state;
+
+		return tabs[this._isEditMode() ? 'edit' : 'add'].items.map(
+			(name, index) => {
+				const style = classnames(
+					'nav-link',
+					{
+						active: index === activeTab
+					}
+				);
+
+				return (
+					<li
+						class="nav-item"
+						data-index={index}
+						data-onclick={this._handleTabItemClicked}
+						key={`tab${index}`}
+						ref={`tab${index}`}
+					>
+						<a
+							aria-controls="sidebarLightDetails"
+							class={style}
+							data-toggle="tab"
+							href="javascript:;"
+							role="tab"
+						>
+							<span class="navbar-text-truncate">{name}</span>
+						</a>
+					</li>
+				);
+			}
 		);
 	}
 
@@ -797,38 +747,88 @@ class Sidebar extends Component {
 		);
 	}
 
-	_renderNavItems() {
-		const {activeTab, tabs} = this.state;
+	/**
+	 * @inheritDoc
+	 */
 
-		return tabs[this._isEditMode() ? 'edit' : 'add'].items.map(
-			(name, index) => {
-				const style = classnames(
-					'nav-link',
-					{
-						active: index === activeTab
-					}
-				);
+	render() {
+		const {activeTab, open} = this.state;
+		const {
+			focusedField,
+			spritemap
+		} = this.props;
 
-				return (
-					<li
-						class="nav-item"
-						data-index={index}
-						data-onclick={this._handleTabItemClicked}
-						key={`tab${index}`}
-						ref={`tab${index}`}
-					>
+		const {settingsContext} = focusedField;
+
+		const layoutRenderEvents = {
+			evaluated: this._handleEvaluatorChanged,
+			fieldEdited: this._handleFieldEdited
+		};
+
+		const editMode = this._isEditMode();
+
+		const styles = classnames('sidebar-container', {open});
+
+		return (
+			<div class={styles} ref="container">
+				<div class="sidebar sidebar-light">
+					<nav class="component-tbar tbar">
+						<div class="container-fluid">
+							{this._renderTopBar()}
+						</div>
+					</nav>
+					<nav class="component-navigation-bar navbar navigation-bar navbar-collapse-absolute navbar-expand-md navbar-underline">
 						<a
-							aria-controls="sidebarLightDetails"
-							class={style}
-							data-toggle="tab"
-							href="javascript:;"
-							role="tab"
+							aria-controls="sidebarLightCollapse00"
+							aria-expanded="false"
+							aria-label="Toggle Navigation"
+							class="collapsed navbar-toggler navbar-toggler-link"
+							data-toggle="collapse"
+							href="#sidebarLightCollapse00"
+							role="button"
 						>
-							<span class="navbar-text-truncate">{name}</span>
+							<span class="navbar-text-truncate">{'Details'}</span>
+							<svg
+								aria-hidden="true"
+								class="lexicon-icon lexicon-icon-caret-bottom"
+							>
+								<use xlink:href={`${spritemap}#caret-bottom`} />
+							</svg>
 						</a>
-					</li>
-				);
-			}
+						<div
+							class="collapse navbar-collapse"
+							id="sidebarLightCollapse00"
+						>
+							<ul class="nav navbar-nav" role="tablist">
+								{this._renderNavItems()}
+							</ul>
+						</div>
+					</nav>
+					<div class="ddm-sidebar-body">
+						{!editMode &&
+							this._renderFieldTypeGroups()
+						}
+						{editMode && (
+							<div class="sidebar-body ddm-field-settings">
+								<div class="tab-content">
+									<FormWithEvaluator
+										activePage={activeTab}
+										editable={true}
+										events={layoutRenderEvents}
+										fieldType={focusedField.type}
+										formContext={settingsContext}
+										modeRenderer="list"
+										pages={settingsContext.pages}
+										ref="FormRenderer"
+										spritemap={spritemap}
+										url={EVALUATOR_URL}
+									/>
+								</div>
+							</div>
+						)}
+					</div>
+				</div>
+			</div>
 		);
 	}
 }

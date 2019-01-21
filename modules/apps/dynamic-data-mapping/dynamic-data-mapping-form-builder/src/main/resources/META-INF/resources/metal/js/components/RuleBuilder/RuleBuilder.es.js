@@ -1,10 +1,11 @@
 import {Config} from 'metal-state';
-import dom from 'metal-dom';
 import {EventHandler} from 'metal-events';
-import Component from 'metal-jsx';
-import RuleList from '../../components/RuleList/index.es';
-import RuleEditor from '../../components/RuleEditor/index.es';
 import {makeFetch} from '../../util/fetch.es';
+import autobind from 'autobind-decorator';
+import Component from 'metal-jsx';
+import dom from 'metal-dom';
+import RuleEditor from '../../components/RuleEditor/index.es';
+import RuleList from '../../components/RuleList/index.es';
 
 /**
  * Builder.
@@ -168,7 +169,7 @@ class RuleBuilder extends Component {
 					logicalOperator: Config.string()
 				}
 			)
-		).valueFn('setRulesValueFn')
+		).valueFn('_setRulesValueFn')
 	};
 
 	/**
@@ -184,6 +185,34 @@ class RuleBuilder extends Component {
 		this._fetchRoles();
 	}
 
+	/**
+	 * Continues the propagation of event.
+	 * @param {!Event} event
+	 * @private
+	 */
+
+	disposeInternal() {
+		super.disposeInternal();
+
+		this._eventHandler.removeAllListeners();
+	}
+
+	rendered() {
+		const {mode} = this.state;
+		const {visible} = this.props;
+
+		if (visible) {
+			const addButton = document.querySelector('#addFieldButton');
+
+			if (mode === 'create' || mode === 'edit') {
+				addButton.classList.add('hide');
+			}
+			else {
+				addButton.classList.remove('hide');
+			}
+		}
+	}
+
 	willReceiveProps({rules}) {
 		if (rules && rules.newVal.length) {
 			this.setState(
@@ -194,37 +223,17 @@ class RuleBuilder extends Component {
 		}
 	}
 
-	_fetchRoles() {
-		const {rolesURL} = this.props;
+	syncVisible(visible) {
+		super.syncVisible(visible);
 
-		makeFetch(
-			{
-				method: 'GET',
-				url: rolesURL
-			}
-		).then(
-			responseData => {
-				if (!this.isDisposed()) {
-					this.setState(
-						{
-							roles: responseData.map(
-								data => {
-									return {
-										...data,
-										label: data.name,
-										value: data.id
-									};
-								}
-							)
-						}
-					);
-				}
-			}
-		).catch(
-			error => {
-				throw new Error(error);
-			}
-		);
+		if (visible) {
+			this._eventHandler.add(
+				dom.on('#addFieldButton', 'click', this._handleAddRuleClick)
+			);
+		}
+		else {
+			this._eventHandler.removeAllListeners();
+		}
 	}
 
 	_fetchDataProvider() {
@@ -260,7 +269,130 @@ class RuleBuilder extends Component {
 		);
 	}
 
-	setRulesValueFn() {
+	_fetchRoles() {
+		const {rolesURL} = this.props;
+
+		makeFetch(
+			{
+				method: 'GET',
+				url: rolesURL
+			}
+		).then(
+			responseData => {
+				if (!this.isDisposed()) {
+					this.setState(
+						{
+							roles: responseData.map(
+								data => {
+									return {
+										...data,
+										label: data.name,
+										value: data.id
+									};
+								}
+							)
+						}
+					);
+				}
+			}
+		).catch(
+			error => {
+				throw new Error(error);
+			}
+		);
+	}
+
+	/**
+	 * Show the rule screen to create a new rule
+	 * @param {!Event} event
+	 * @private
+	 */
+
+	@autobind
+	_handleAddRuleClick(event) {
+		this._showRuleCreation();
+
+		this._hideAddRuleButton(event.delegateTarget);
+	}
+
+	@autobind
+	_handleRuleAdded(event) {
+		this.emit(
+			'ruleAdded',
+			{
+				...event
+			}
+		);
+
+		this._showRuleList();
+	}
+
+	@autobind
+	_handleRuleCanceled(event) {
+		const {index} = this.state;
+		const rules = this.state.rules.map(
+			(rule, ruleIndex) => {
+				return index === ruleIndex ? this.state.originalRule : rule;
+			}
+		);
+
+		this.setState(
+			{
+				mode: 'view',
+				rules
+			}
+		);
+	}
+
+	@autobind
+	_handleRuleDeleted({ruleId}) {
+		this.emit(
+			'ruleDeleted',
+			{
+				ruleId
+			}
+		);
+	}
+
+	@autobind
+	_handleRuleEdited({ruleId}) {
+		const {rules} = this.state;
+
+		ruleId = parseInt(ruleId, 10);
+
+		this.setState(
+			{
+				index: ruleId,
+				mode: 'edit',
+				originalRule: JSON.parse(JSON.stringify(rules[ruleId]))
+			}
+		);
+	}
+
+	@autobind
+	_handleRuleSaved(event) {
+		this.emit(
+			'ruleSaved',
+			{
+				...event,
+				ruleId: event.ruleEditedIndex
+			}
+		);
+
+		this._showRuleList();
+	}
+
+	/**
+	 * Continues the propagation of event.
+	 * @param {!Event} event
+	 * @private
+	 */
+
+	_hideAddRuleButton(element) {
+		dom.addClasses(element, 'hide');
+	}
+
+	_setRulesValueFn() {
 		return this.props.rules;
 	}
 
@@ -281,149 +413,12 @@ class RuleBuilder extends Component {
 	}
 
 	/**
-	 * Show the rule screen to create a new rule
-	 * @param {!Event} event
-	 * @private
-	 */
-
-	_handleAddRuleClick(event) {
-		this._showRuleCreation();
-
-		this._hideAddRuleButton(event.delegateTarget);
-	}
-
-	_handleRuleAdded(event) {
-		this.emit(
-			'ruleAdded',
-			{
-				...event
-			}
-		);
-
-		this._showRuleList();
-	}
-
-	_handleRuleCanceled(event) {
-		const {index} = this.state;
-		const rules = this.state.rules.map(
-			(rule, ruleIndex) => {
-				return index === ruleIndex ? this.state.originalRule : rule;
-			}
-		);
-
-		this.setState(
-			{
-				mode: 'view',
-				rules
-			}
-		);
-	}
-
-	_handleRuleDeleted({ruleId}) {
-		this.emit(
-			'ruleDeleted',
-			{
-				ruleId
-			}
-		);
-	}
-
-	_handleRuleEdited({ruleId}) {
-		const {rules} = this.state;
-
-		ruleId = parseInt(ruleId, 10);
-
-		this.setState(
-			{
-				index: ruleId,
-				mode: 'edit',
-				originalRule: JSON.parse(JSON.stringify(rules[ruleId]))
-			}
-		);
-	}
-
-	_handleRuleSaveEdition(event) {
-		this.emit(
-			'ruleSaveEdition',
-			{
-				...event,
-				ruleId: event.ruleEditedIndex
-			}
-		);
-
-		this._showRuleList();
-	}
-
-	/**
-	 * Continues the propagation of event.
-	 * @param {!Event} event
-	 * @private
-	 */
-
-	_hideAddRuleButton(element) {
-		dom.addClasses(element, 'hide');
-	}
-
-	syncVisible(visible) {
-		super.syncVisible(visible);
-
-		if (visible) {
-			this._eventHandler.add(
-				dom.on('#addFieldButton', 'click', this._handleAddRuleClick.bind(this))
-			);
-		}
-		else {
-			this._eventHandler.removeAllListeners();
-		}
-	}
-
-	/**
-	 * Continues the propagation of event.
-	 * @param {!Event} event
-	 * @private
-	 */
-
-	disposeInternal() {
-		super.disposeInternal();
-
-		this._eventHandler.removeAllListeners();
-	}
-
-	rendered() {
-		const {mode} = this.state;
-		const {visible} = this.props;
-
-		if (visible) {
-			const addButton = document.querySelector('#addFieldButton');
-
-			if (mode === 'create' || mode === 'edit') {
-				addButton.classList.add('hide');
-			}
-			else {
-				addButton.classList.remove('hide');
-			}
-		}
-	}
-
-	/**
 	 * Continues the propagation of event.
 	 * @param {!Event} event
 	 * @private
 	 */
 
 	render() {
-		const RuleBuilderEvents = {
-			ruleAdded: this._handleRuleAdded.bind(this),
-			ruleCancel: this._handleRuleCanceled.bind(this),
-			ruleDeleted: this._handleRuleDeleted.bind(this),
-			ruleEdited: this._handleRuleEdited.bind(this)
-		};
-
-		const RuleEditionEvents = {
-			ruleAdded: this._handleRuleSaveEdition.bind(this),
-			ruleCancel: this._handleRuleCanceled.bind(this)
-		};
-
 		const {
 			dataProviderInstanceParameterSettingsURL,
 			dataProviderInstancesURL,
@@ -450,7 +445,12 @@ class RuleBuilder extends Component {
 						dataProvider={dataProvider}
 						dataProviderInstanceParameterSettingsURL={dataProviderInstanceParameterSettingsURL}
 						dataProviderInstancesURL={dataProviderInstancesURL}
-						events={RuleBuilderEvents}
+						events={{
+							ruleAdded: this._handleRuleAdded,
+							ruleCancel: this._handleRuleCanceled,
+							ruleDeleted: this._handleRuleDeleted,
+							ruleEdited: this._handleRuleEdited
+						}}
 						functionsMetadata={functionsMetadata}
 						functionsURL={functionsURL}
 						key={'create'}
@@ -465,7 +465,10 @@ class RuleBuilder extends Component {
 						dataProvider={dataProvider}
 						dataProviderInstanceParameterSettingsURL={dataProviderInstanceParameterSettingsURL}
 						dataProviderInstancesURL={dataProviderInstancesURL}
-						events={RuleEditionEvents}
+						events={{
+							ruleAdded: this._handleRuleSaved,
+							ruleCancel: this._handleRuleCanceled
+						}}
 						functionsMetadata={functionsMetadata}
 						functionsURL={functionsURL}
 						key={'edit'}
@@ -480,7 +483,12 @@ class RuleBuilder extends Component {
 				{mode === 'view' && (
 					<RuleList
 						dataProvider={dataProvider}
-						events={RuleBuilderEvents}
+						events={{
+							ruleAdded: this._handleRuleAdded,
+							ruleCancel: this._handleRuleCanceled,
+							ruleDeleted: this._handleRuleDeleted,
+							ruleEdited: this._handleRuleEdited
+						}}
 						pages={pages}
 						ref="RuleList"
 						roles={roles}

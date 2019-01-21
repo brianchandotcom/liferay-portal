@@ -133,10 +133,11 @@ class FormRenderer extends Component {
 		this.disposeDragAndDrop();
 	}
 
-	disposeDragAndDrop() {
-		if (this._dragAndDrop) {
-			this._dragAndDrop.dispose();
-		}
+	prepareStateForRender(state) {
+		return {
+			...state,
+			pageSettingsItems: this._getPageSettingsItems()
+		};
 	}
 
 	/**
@@ -152,6 +153,12 @@ class FormRenderer extends Component {
 			);
 		}
 		return nextState;
+	}
+
+	disposeDragAndDrop() {
+		if (this._dragAndDrop) {
+			this._dragAndDrop.dispose();
+		}
 	}
 
 	_handleFieldClicked(index) {
@@ -224,13 +231,6 @@ class FormRenderer extends Component {
 		}
 
 		return pageSettingsItems;
-	}
-
-	prepareStateForRender(state) {
-		return {
-			...state,
-			pageSettingsItems: this._getPageSettingsItems()
-		};
 	}
 
 	_handleExpandedChanged({newVal}) {

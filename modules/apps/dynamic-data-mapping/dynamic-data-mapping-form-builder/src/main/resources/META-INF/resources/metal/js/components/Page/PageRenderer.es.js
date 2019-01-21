@@ -100,15 +100,15 @@ class PageRenderer extends Component {
 		total: Config.number().value(1)
 	}
 
+	willAttach() {
+		this.titlePlaceholder = this._getTitlePlaceholder();
+	}
+
 	prepareStateForRender(states) {
 		return {
 			...states,
 			empty: this._isEmptyPage(states.page)
 		};
-	}
-
-	willAttach() {
-		this.titlePlaceholder = this._getTitlePlaceholder();
 	}
 
 	willReceiveState() {
@@ -146,6 +146,54 @@ class PageRenderer extends Component {
 			]
 		);
 	}
+
+	/**
+     * @param {!Event} event
+     * @private
+     */
+
+	_handleDuplicateButtonClicked(event) {
+		const index = FormSupport.getIndexes(
+			dom.closest(event.target, '.col-ddm')
+		);
+
+		this.emit(
+			'duplicateButtonClicked',
+			{
+				...index
+			}
+		);
+	}
+
+	/**
+	 * @param {!Object} data
+	 * @private
+	 */
+
+	_handleFieldEdited(event) {
+		this.emit('fieldEdited', event);
+	}
+
+	/**
+	 * @param {!Event} event
+	 * @private
+	 */
+
+	_handleModal(event) {
+		event.stopPropagation();
+		const index = FormSupport.getIndexes(
+			dom.closest(event.target, '.col-ddm')
+		);
+
+		this.emit('deleteFieldClicked', index);
+	}
+
+	/**
+	 * @param {!Event} event
+	 * @private
+	 */
+
+	_handleOnClickResize() {}
 
 	/**
 	 * @param {!Object} event
@@ -188,54 +236,6 @@ class PageRenderer extends Component {
 			}
 		);
 	}
-
-	/**
-	 * @param {!Event} event
-	 * @private
-	 */
-
-	_handleModal(event) {
-		event.stopPropagation();
-		const index = FormSupport.getIndexes(
-			dom.closest(event.target, '.col-ddm')
-		);
-
-		this.emit('deleteFieldClicked', index);
-	}
-
-	/**
-	 * @param {!Object} data
-	 * @private
-	 */
-
-	_handleFieldEdited(event) {
-		this.emit('fieldEdited', event);
-	}
-
-	/**
-     * @param {!Event} event
-     * @private
-     */
-
-	_handleDuplicateButtonClicked(event) {
-		const index = FormSupport.getIndexes(
-			dom.closest(event.target, '.col-ddm')
-		);
-
-		this.emit(
-			'duplicateButtonClicked',
-			{
-				...index
-			}
-		);
-	}
-
-	/**
-	 * @param {!Event} event
-	 * @private
-	 */
-
-	_handleOnClickResize() {}
 
 	/**
 	 * @param {!Event} event

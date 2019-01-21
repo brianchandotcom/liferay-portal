@@ -380,99 +380,6 @@ class RuleEditor extends Component {
 		}
 	}
 
-	_setActionsInputsOutputs() {
-		const {rule} = this;
-
-		if (rule) {
-			this.setState(
-				{
-					loadingDataProviderOptions: true
-				}
-			);
-
-			Promise.all(
-				rule.actions.map(
-					(action, index) => {
-						let newAction = {...action};
-
-						if (action.ddmDataProviderInstanceUUID) {
-							const {id} = this.dataProvider.find(
-								dataProvider => {
-									let dataProviderId;
-
-									if (dataProvider.uuid === action.ddmDataProviderInstanceUUID) {
-										dataProviderId = dataProvider.id;
-									}
-
-									return dataProviderId;
-								}
-							);
-
-							newAction = this.getDataProviderOptions(id, index);
-						}
-
-						newAction.calculatorFields = this._updateCalculatorFields(newAction, newAction.target);
-
-						return newAction;
-					}
-				)
-			).then(
-				actions => {
-					this.setState(
-						{
-							actions,
-							loadingDataProviderOptions: false
-						}
-					);
-				}
-			).catch(
-				error => {
-					throw new Error(error);
-				}
-			);
-		}
-	}
-
-	_setDataProviderTarget() {
-		const {dataProvider, rule} = this;
-
-		if (!rule) {
-			return;
-		}
-
-		this.setState(
-			{
-				actions: rule.actions.map(
-					action => {
-						if (action.action == 'auto-fill') {
-							const {id} = dataProvider.find(
-								({uuid}) => uuid === action.ddmDataProviderInstanceUUID
-							);
-
-							action.target = id;
-						}
-
-						return action;
-					}
-				)
-			}
-		);
-	}
-
-	_prepareRuleEditor() {
-		const {rule} = this;
-
-		const actions = this._syncActions(rule.actions);
-
-		this.setState(
-			{
-				actions,
-				conditions: rule.conditions,
-				logicalOperator: rule['logical-operator']
-			}
-		);
-	}
-
 	disposed() {
 		this.setState(
 			{
@@ -554,6 +461,53 @@ class RuleEditor extends Component {
 		);
 	}
 
+	formatDataProviderParameter(actionParameters, parameters) {
+		return parameters.reduce(
+			(result, {name, value}, index) => ({
+				...result,
+				[name]: Object.keys(actionParameters).indexOf(name) !== -1 ? actionParameters[name] : value
+			}),
+			{}
+		);
+	}
+
+	getDataProviderOptions(id, index) {
+		return this._fetchDataProviderParameters(id, index)
+			.then(
+				({inputs, outputs}) => {
+					let actions = this.actions;
+
+					if (!this.isDisposed()) {
+						actions = actions.map(
+							(action, currentIndex) => {
+								return index == currentIndex ? ({
+									...action,
+									ddmDataProviderInstanceUUID: this.dataProvider.find(
+										data => {
+											return data.id == id;
+										}
+									).uuid,
+									hasRequiredInputs: inputs.some(
+										input => input.required
+									),
+									inputs: this.formatDataProviderParameter(action.inputs, inputs),
+									inputsData: inputs,
+									outputs: this.formatDataProviderParameter(action.outputs, outputs),
+									outputsData: outputs
+								}) : action;
+							}
+						);
+					}
+
+					return actions[index];
+				}
+			).catch(
+				error => {
+					throw new Error(error);
+				}
+			);
+	}
+
 	getFieldOptions(fieldName) {
 		let options = [];
 		const visitor = new PagesVisitor(this.pages);
@@ -567,6 +521,10 @@ class RuleEditor extends Component {
 		);
 
 		return options;
+	}
+
+	getFieldsByTypes(fields, types) {
+		return fields.filter(field => types.some(fieldType => field.type == fieldType));
 	}
 
 	getTypesByFieldType(fieldType) {
@@ -585,8 +543,58 @@ class RuleEditor extends Component {
 		return list;
 	}
 
-	getFieldsByTypes(fields, types) {
-		return fields.filter(field => types.some(fieldType => field.type == fieldType));
+	populateActionTargetValue(id, index) {
+		const {actions} = this;
+
+		const previousTarget = actions[index].target;
+
+		actions[index].target = id;
+		actions[index].label = id;
+
+		if (id === undefined) {
+			actions[index].target = '';
+		}
+		else if (id === '') {
+			actions[index].inputs = {};
+			actions[index].outputs = {};
+			actions[index].hasRequiredInputs = false;
+		}
+		else if (previousTarget !== id && actions[index].action == 'calculate') {
+			actions[index].calculatorFields = this._updateCalculatorFields(this.actions[index], id);
+		}
+
+		this.setState(
+			{
+				actions
+			}
+		);
+	}
+
+	populateDataProviderOptions(id, index) {
+		const {actions} = this;
+
+		actions[index].target = id;
+		actions[index].label = id;
+
+		this.getDataProviderOptions(id, index).then(
+			actionData => {
+				if (!this.isDisposed()) {
+					this.setState(
+						{
+							actions: actions.map(
+								(action, currentIndex) => {
+									return index == currentIndex ? actionData : action;
+								}
+							)
+						}
+					);
+				}
+			}
+		).catch(
+			error => {
+				throw new Error(error);
+			}
+		);
 	}
 
 	syncPages(pages) {
@@ -638,68 +646,6 @@ class RuleEditor extends Component {
 		);
 	}
 
-	_syncActions(actions) {
-		const {pages, rule} = this;
-
-		const visitor = new PagesVisitor(pages);
-
-		actions.forEach(
-			(action, index) => {
-				let targetFieldExists = false;
-
-				visitor.mapFields(
-					({fieldName}) => {
-						if (action.target === fieldName) {
-							targetFieldExists = true;
-						}
-					}
-				);
-
-				action.calculatorFields = this._updateCalculatorFields(action, action.target);
-
-				if (!targetFieldExists && action.action != 'auto-fill') {
-					action.target = '';
-				}
-				else if (action.action == 'auto-fill') {
-					action = {
-						...rule.actions[index],
-						calculatorFields: []
-					};
-				}
-			}
-		);
-
-		return actions;
-	}
-
-	_getDeletedFields(visitor) {
-		const existentFields = [];
-		const {fieldOptions} = this;
-		let deletedFields = [];
-
-		fieldOptions.forEach(
-			field => {
-				visitor.mapFields(
-					({fieldName}) => {
-						if (field.fieldName === fieldName) {
-							existentFields.push(fieldName);
-						}
-					}
-				);
-			}
-		);
-
-		const oldFields = fieldOptions.map(field => field.fieldName);
-
-		deletedFields = oldFields.filter(
-			field => {
-				return existentFields.indexOf(field) > -1 ? false : field;
-			}
-		);
-
-		return deletedFields;
-	}
-
 	syncVisible(visible) {
 		const addButton = document.querySelector('#addFieldButton');
 
@@ -708,6 +654,28 @@ class RuleEditor extends Component {
 		if (addButton && visible) {
 			addButton.classList.add('hide');
 		}
+	}
+
+	_calculatorResultOptionsValueFn() {
+		const {pages} = this;
+		const fields = [];
+		const visitor = new PagesVisitor(pages);
+
+		visitor.mapFields(
+			field => {
+				if (field.type == 'numeric') {
+					fields.push(
+						{
+							...field,
+							options: field.options ? field.options : [],
+							value: field.fieldName
+						}
+					);
+				}
+			}
+		);
+
+		return fields;
 	}
 
 	_clearAction(index) {
@@ -835,32 +803,33 @@ class RuleEditor extends Component {
 		return fields;
 	}
 
-	_calculatorResultOptionsValueFn() {
-		const {pages} = this;
-		const fields = [];
-		const visitor = new PagesVisitor(pages);
+	_getFieldLabel(fieldName) {
+		const pages = this.pages;
 
-		visitor.mapFields(
-			field => {
-				if (field.type == 'numeric') {
-					fields.push(
-						{
-							...field,
-							options: field.options ? field.options : [],
-							value: field.fieldName
+		let fieldLabel;
+
+		if (pages) {
+			for (let page = 0; page < pages.length; page++) {
+				const rows = pages[page].rows;
+
+				for (let row = 0; row < rows.length; row++) {
+					const cols = rows[row].columns;
+
+					for (let col = 0; col < cols.length; col++) {
+						const fields = cols[col].fields;
+
+						for (let field = 0; field < fields.length; field++) {
+							if (pages[page].rows[row].columns[col].fields[field].fieldName === fieldName) {
+								fieldLabel = pages[page].rows[row].columns[col].fields[field].label;
+								break;
+							}
 						}
-					);
+					}
 				}
 			}
-		);
+		}
 
-		return fields;
-	}
-
-	_getIndex(fieldInstance, fieldClass) {
-		const firstOperand = fieldInstance.element.closest(fieldClass);
-
-		return firstOperand.getAttribute(`${fieldClass.substring(1)}-index`);
+		return fieldLabel;
 	}
 
 	_getFieldTypeByFieldName(fieldName) {
@@ -884,6 +853,12 @@ class RuleEditor extends Component {
 		}
 
 		return {dataType, repeatable, type};
+	}
+
+	_getIndex(fieldInstance, fieldClass) {
+		const firstOperand = fieldInstance.element.closest(fieldClass);
+
+		return firstOperand.getAttribute(`${fieldClass.substring(1)}-index`);
 	}
 
 	_getOperatorsByFieldType(fieldType) {
@@ -966,6 +941,13 @@ class RuleEditor extends Component {
 		);
 	}
 
+	_handleCancelRule(event) {
+		this.emit(
+			'ruleCancel',
+			{}
+		);
+	}
+
 	_handleConditionAdded() {
 		const {conditions} = this;
 
@@ -985,13 +967,6 @@ class RuleEditor extends Component {
 			{
 				conditions
 			}
-		);
-	}
-
-	_handleCancelRule(event) {
-		this.emit(
-			'ruleCancel',
-			{}
 		);
 	}
 
@@ -1058,35 +1033,6 @@ class RuleEditor extends Component {
 
 		actions[index].expression = expression;
 		this.setState({actions});
-	}
-
-	_getFieldLabel(fieldName) {
-		const pages = this.pages;
-
-		let fieldLabel;
-
-		if (pages) {
-			for (let page = 0; page < pages.length; page++) {
-				const rows = pages[page].rows;
-
-				for (let row = 0; row < rows.length; row++) {
-					const cols = rows[row].columns;
-
-					for (let col = 0; col < cols.length; col++) {
-						const fields = cols[col].fields;
-
-						for (let field = 0; field < fields.length; field++) {
-							if (pages[page].rows[row].columns[col].fields[field].fieldName === fieldName) {
-								fieldLabel = pages[page].rows[row].columns[col].fields[field].label;
-								break;
-							}
-						}
-					}
-				}
-			}
-		}
-
-		return fieldLabel;
 	}
 
 	_handleFirstOperandFieldEdited(event) {
@@ -1370,97 +1316,6 @@ class RuleEditor extends Component {
 		}
 	}
 
-	populateActionTargetValue(id, index) {
-		const {actions} = this;
-
-		const previousTarget = actions[index].target;
-
-		actions[index].target = id;
-		actions[index].label = id;
-
-		if (id === undefined) {
-			actions[index].target = '';
-		}
-		else if (id === '') {
-			actions[index].inputs = {};
-			actions[index].outputs = {};
-			actions[index].hasRequiredInputs = false;
-		}
-		else if (previousTarget !== id && actions[index].action == 'calculate') {
-			actions[index].calculatorFields = this._updateCalculatorFields(this.actions[index], id);
-		}
-
-		this.setState(
-			{
-				actions
-			}
-		);
-	}
-
-	populateDataProviderOptions(id, index) {
-		const {actions} = this;
-
-		actions[index].target = id;
-		actions[index].label = id;
-
-		this.getDataProviderOptions(id, index).then(
-			actionData => {
-				if (!this.isDisposed()) {
-					this.setState(
-						{
-							actions: actions.map(
-								(action, currentIndex) => {
-									return index == currentIndex ? actionData : action;
-								}
-							)
-						}
-					);
-				}
-			}
-		).catch(
-			error => {
-				throw new Error(error);
-			}
-		);
-	}
-
-	getDataProviderOptions(id, index) {
-		return this._fetchDataProviderParameters(id, index)
-			.then(
-				({inputs, outputs}) => {
-					let actions = this.actions;
-
-					if (!this.isDisposed()) {
-						actions = actions.map(
-							(action, currentIndex) => {
-								return index == currentIndex ? ({
-									...action,
-									ddmDataProviderInstanceUUID: this.dataProvider.find(
-										data => {
-											return data.id == id;
-										}
-									).uuid,
-									hasRequiredInputs: inputs.some(
-										input => input.required
-									),
-									inputs: this.formatDataProviderParameter(action.inputs, inputs),
-									inputsData: inputs,
-									outputs: this.formatDataProviderParameter(action.outputs, outputs),
-									outputsData: outputs
-								}) : action;
-							}
-						);
-					}
-
-					return actions[index];
-				}
-			).catch(
-				error => {
-					throw new Error(error);
-				}
-			);
-	}
-
 	_updateCalculatorFields(action, id) {
 		const {calculatorResultOptions} = this;
 
@@ -1479,14 +1334,32 @@ class RuleEditor extends Component {
 		);
 	}
 
-	formatDataProviderParameter(actionParameters, parameters) {
-		return parameters.reduce(
-			(result, {name, value}, index) => ({
-				...result,
-				[name]: Object.keys(actionParameters).indexOf(name) !== -1 ? actionParameters[name] : value
-			}),
-			{}
+	_getDeletedFields(visitor) {
+		const existentFields = [];
+		const {fieldOptions} = this;
+		let deletedFields = [];
+
+		fieldOptions.forEach(
+			field => {
+				visitor.mapFields(
+					({fieldName}) => {
+						if (field.fieldName === fieldName) {
+							existentFields.push(fieldName);
+						}
+					}
+				);
+			}
 		);
+
+		const oldFields = fieldOptions.map(field => field.fieldName);
+
+		deletedFields = oldFields.filter(
+			field => {
+				return existentFields.indexOf(field) > -1 ? false : field;
+			}
+		);
+
+		return deletedFields;
 	}
 
 	_isFieldAction(fieldName) {
@@ -1519,6 +1392,18 @@ class RuleEditor extends Component {
 		}
 
 		return action.outputs;
+	}
+
+	_prepareRuleEditor() {
+		const {rule} = this;
+
+		this.setState(
+			{
+				actions: this._syncActions(rule.actions),
+				conditions: rule.conditions,
+				logicalOperator: rule['logical-operator']
+			}
+		);
 	}
 
 	_removeConditionInternalProperties() {
@@ -1577,6 +1462,59 @@ class RuleEditor extends Component {
 		);
 	}
 
+	_setActionsInputsOutputs() {
+		const {rule} = this;
+
+		if (rule) {
+			this.setState(
+				{
+					loadingDataProviderOptions: true
+				}
+			);
+
+			Promise.all(
+				rule.actions.map(
+					(action, index) => {
+						let newAction = {...action};
+
+						if (action.ddmDataProviderInstanceUUID) {
+							const {id} = this.dataProvider.find(
+								dataProvider => {
+									let dataProviderId;
+
+									if (dataProvider.uuid === action.ddmDataProviderInstanceUUID) {
+										dataProviderId = dataProvider.id;
+									}
+
+									return dataProviderId;
+								}
+							);
+
+							newAction = this.getDataProviderOptions(id, index);
+						}
+
+						newAction.calculatorFields = this._updateCalculatorFields(newAction, newAction.target);
+
+						return newAction;
+					}
+				)
+			).then(
+				actions => {
+					this.setState(
+						{
+							actions,
+							loadingDataProviderOptions: false
+						}
+					);
+				}
+			).catch(
+				error => {
+					throw new Error(error);
+				}
+			);
+		}
+	}
+
 	_setActions(actions) {
 		if (actions.length == 0) {
 			actions.push(
@@ -1612,6 +1550,66 @@ class RuleEditor extends Component {
 		}
 
 		return conditions;
+	}
+
+	_setDataProviderTarget() {
+		const {dataProvider, rule} = this;
+
+		if (!rule) {
+			return;
+		}
+
+		this.setState(
+			{
+				actions: rule.actions.map(
+					action => {
+						if (action.action == 'auto-fill') {
+							const {id} = dataProvider.find(
+								({uuid}) => uuid === action.ddmDataProviderInstanceUUID
+							);
+
+							action.target = id;
+						}
+
+						return action;
+					}
+				)
+			}
+		);
+	}
+
+	_syncActions(actions) {
+		const {pages, rule} = this;
+
+		const visitor = new PagesVisitor(pages);
+
+		actions.forEach(
+			(action, index) => {
+				let targetFieldExists = false;
+
+				visitor.mapFields(
+					({fieldName}) => {
+						if (action.target === fieldName) {
+							targetFieldExists = true;
+						}
+					}
+				);
+
+				action.calculatorFields = this._updateCalculatorFields(action, action.target);
+
+				if (!targetFieldExists && action.action != 'auto-fill') {
+					action.target = '';
+				}
+				else if (action.action == 'auto-fill') {
+					action = {
+						...rule.actions[index],
+						calculatorFields: []
+					};
+				}
+			}
+		);
+
+		return actions;
 	}
 
 	_validateConditionsFilling() {

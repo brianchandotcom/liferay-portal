@@ -177,7 +177,7 @@ describe.only(
 		);
 
 		it(
-			'should receive ruleSaveEdition event to edit a rule',
+			'should receive ruleSaved event to edit a rule',
 			() => {
 				component = new Parent();
 
@@ -208,7 +208,7 @@ describe.only(
 					ruleEditedIndex: 0
 				};
 
-				child.emit('ruleSaveEdition', mockEvent);
+				child.emit('ruleSaved', mockEvent);
 
 				jest.runAllTimers();
 

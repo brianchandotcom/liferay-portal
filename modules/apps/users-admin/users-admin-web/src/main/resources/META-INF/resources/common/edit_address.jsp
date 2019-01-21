@@ -19,7 +19,7 @@
 <%
 String className = ParamUtil.getString(request, "className");
 Long classPK = ParamUtil.getLong(request, "classPK");
-long parentOrganizationId = ParamUtil.getLong(request, "parentOrganizationId");
+long contextOrganizationId = ParamUtil.getLong(request, "contextOrganizationId");
 long primaryKey = ParamUtil.getLong(request, "primaryKey", 0L);
 String redirect = ParamUtil.getString(request, "redirect");
 
@@ -35,7 +35,7 @@ if (primaryKey > 0L) {
 	regionId = address.getRegionId();
 }
 
-EditContactInformationDisplayContext editContactInformationDisplayContext = new EditContactInformationDisplayContext(className, classPK, parentOrganizationId, renderResponse, request);
+EditContactInformationDisplayContext editContactInformationDisplayContext = new EditContactInformationDisplayContext(className, classPK, contextOrganizationId, renderResponse, request);
 
 if (!portletName.equals(UsersAdminPortletKeys.MY_ACCOUNT)) {
 	portletDisplay.setShowBackIcon(true);

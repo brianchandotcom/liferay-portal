@@ -36,8 +36,8 @@ List<OrgLabor> orgLabors = OrgLaborServiceUtil.getOrgLabors(organizationId);
 				PortletURL editURL = liferayPortletResponse.createRenderURL();
 
 				editURL.setParameter("classPK", String.valueOf(organizationId));
+				editURL.setParameter("contextOrganizationId", String.valueOf(organizationScreenNavigationDisplayContext.getParentOrganizationId()));
 				editURL.setParameter("mvcPath", "/organization/edit_opening_hours.jsp");
-				editURL.setParameter("parentOrganizationId", String.valueOf(organizationScreenNavigationDisplayContext.getParentOrganizationId()));
 				editURL.setParameter("redirect", currentURL);
 				%>
 

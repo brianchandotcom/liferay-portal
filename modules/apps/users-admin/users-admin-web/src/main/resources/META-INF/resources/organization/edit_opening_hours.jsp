@@ -18,7 +18,7 @@
 
 <%
 Long classPK = ParamUtil.getLong(request, "classPK");
-long parentOrganizationId = ParamUtil.getLong(request, "parentOrganizationId");
+long contextOrganizationId = ParamUtil.getLong(request, "contextOrganizationId");
 long primaryKey = ParamUtil.getLong(request, "primaryKey", 0L);
 String redirect = ParamUtil.getString(request, "redirect");
 
@@ -28,7 +28,7 @@ if (primaryKey > 0L) {
 	orgLabor = OrgLaborServiceUtil.getOrgLabor(primaryKey);
 }
 
-EditContactInformationDisplayContext editContactInformationDisplayContext = new EditContactInformationDisplayContext(Organization.class.getName(), classPK, parentOrganizationId, renderResponse, request);
+EditContactInformationDisplayContext editContactInformationDisplayContext = new EditContactInformationDisplayContext(Organization.class.getName(), classPK, contextOrganizationId, renderResponse, request);
 
 if (!portletName.equals(UsersAdminPortletKeys.MY_ACCOUNT)) {
 	portletDisplay.setShowBackIcon(true);

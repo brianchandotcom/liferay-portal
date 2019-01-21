@@ -122,4 +122,15 @@ public interface CTManager {
 			long userId, long classNameId, long classPK, long resourcePrimKey)
 		throws CTException;
 
+	/**
+	 * Unregisters a model change from the change tracking framework.
+	 *
+	 * @param  userId the primary key of the user
+	 * @param  classNameId the primary key of the changed version model's class
+	 * @param  classPK the primary key of the changed version model
+	 * @return the change tracking entry that was deleted
+	 */
+	public Optional<CTEntry> unregisterModelChange(
+		long userId, long classNameId, long classPK);
+
 }

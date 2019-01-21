@@ -248,6 +248,17 @@ public class CTManagerImpl implements CTManager {
 		}
 	}
 
+	@Override
+	public Optional<CTEntry> unregisterModelChange(
+		long userId, long classNameId, long classPK) {
+
+		Optional<CTEntry> ctEntryOptional = getModelChangeCTEntryOptional(
+			userId, classNameId, classPK);
+
+		return ctEntryOptional.map(
+			ctEntry -> _ctEntryLocalService.deleteCTEntry(ctEntry));
+	}
+
 	private long _getCompanyId(long userId) {
 		long companyId = 0;
 

@@ -25,6 +25,8 @@ import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.asset.kernel.service.AssetEntryService;
 import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.asset.kernel.service.persistence.AssetEntryQuery;
+import com.liferay.asset.list.model.AssetListEntry;
+import com.liferay.asset.list.service.AssetListEntryService;
 import com.liferay.asset.publisher.constants.AssetPublisherPortletKeys;
 import com.liferay.asset.publisher.util.AssetEntryResult;
 import com.liferay.asset.publisher.util.AssetPublisherHelper;
@@ -309,6 +311,19 @@ public class AssetPublisherHelperImpl implements AssetPublisherHelper {
 			long[] allCategoryIds, String[] allTagNames,
 			boolean deleteMissingAssetEntries, boolean checkPermission)
 		throws Exception {
+
+		String selectionStyle = GetterUtil.getString(
+			portletPreferences.getValue("selectionStyle", null), "manual");
+
+		long assetListEntryId = GetterUtil.getLong(
+			portletPreferences.getValue("assetListEntryId", null));
+
+		AssetListEntry assetListEntry =
+			_assetListEntryService.fetchAssetListEntry(assetListEntryId);
+
+		if (selectionStyle.equals("asset-list") && (assetListEntry != null)) {
+			return assetListEntry.getAssetEntries();
+		}
 
 		List<AssetEntry> assetEntries = getAssetEntries(
 			portletRequest, portletPreferences, permissionChecker, groupIds,
@@ -1198,6 +1213,9 @@ public class AssetPublisherHelperImpl implements AssetPublisherHelper {
 
 	@Reference
 	private AssetHelper _assetHelper;
+
+	@Reference
+	private AssetListEntryService _assetListEntryService;
 
 	private AssetPublisherWebConfiguration _assetPublisherWebConfiguration;
 

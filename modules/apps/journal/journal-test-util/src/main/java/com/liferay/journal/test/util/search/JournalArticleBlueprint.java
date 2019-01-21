@@ -27,32 +27,32 @@ import java.util.Map;
 public class JournalArticleBlueprint {
 
 	public long[] getAssetCategoryIds() {
-		return assetCategoryIds;
+		return _assetCategoryIds;
 	}
 
 	public String getContentString() {
-		return journalArticleContent.getContentString();
+		return _journalArticleContent.getContentString();
 	}
 
 	public Map<Locale, String> getDescriptionMap() {
-		if (journalArticleDescription != null) {
-			return journalArticleDescription.getValues();
+		if (_journalArticleDescription != null) {
+			return _journalArticleDescription.getValues();
 		}
 
 		return null;
 	}
 
 	public long getGroupId() {
-		return groupId;
+		return _groupId;
 	}
 
 	public Map<Locale, String> getTitleMap() {
-		return journalArticleTitle.getValues();
+		return _journalArticleTitle.getValues();
 	}
 
 	public long getUserId() {
-		if (userId > 0) {
-			return userId;
+		if (_userId > 0) {
+			return _userId;
 		}
 
 		try {
@@ -64,7 +64,7 @@ public class JournalArticleBlueprint {
 	}
 
 	public int getWorkflowAction() {
-		if (draft) {
+		if (_draft) {
 			return WorkflowConstants.ACTION_SAVE_DRAFT;
 		}
 
@@ -72,16 +72,54 @@ public class JournalArticleBlueprint {
 	}
 
 	public boolean isWorkflowEnabled() {
-		return workflowEnabled;
+		return _workflowEnabled;
 	}
 
-	protected long[] assetCategoryIds;
-	protected boolean draft;
-	protected long groupId;
-	protected JournalArticleContent journalArticleContent;
-	protected JournalArticleDescription journalArticleDescription;
-	protected JournalArticleTitle journalArticleTitle;
-	protected long userId;
-	protected boolean workflowEnabled;
+	public void setAssetCategoryIds(long[] assetCategoryIds) {
+		_assetCategoryIds = assetCategoryIds;
+	}
+
+	public void setDraft(boolean draft) {
+		_draft = draft;
+	}
+
+	public void setGroupId(long groupId) {
+		_groupId = groupId;
+	}
+
+	public void setJournalArticleContent(
+		JournalArticleContent journalArticleContent) {
+
+		_journalArticleContent = journalArticleContent;
+	}
+
+	public void setJournalArticleDescription(
+		JournalArticleDescription journalArticleDescription) {
+
+		_journalArticleDescription = journalArticleDescription;
+	}
+
+	public void setJournalArticleTitle(
+		JournalArticleTitle journalArticleTitle) {
+
+		_journalArticleTitle = journalArticleTitle;
+	}
+
+	public void setUserId(long userId) {
+		_userId = userId;
+	}
+
+	public void setWorkflowEnabled(boolean workflowEnabled) {
+		_workflowEnabled = workflowEnabled;
+	}
+
+	private long[] _assetCategoryIds;
+	private boolean _draft;
+	private long _groupId;
+	private JournalArticleContent _journalArticleContent;
+	private JournalArticleDescription _journalArticleDescription;
+	private JournalArticleTitle _journalArticleTitle;
+	private long _userId;
+	private boolean _workflowEnabled;
 
 }

@@ -32,7 +32,7 @@ public class JournalArticleContent extends LocalizedValuesMap {
 		List<Map<Locale, String>> list = getContents();
 
 		return DDMStructureTestUtil.getSampleStructuredContent(
-			name, list, LocaleUtil.toLanguageId(defaultLocale));
+			_name, list, LocaleUtil.toLanguageId(_defaultLocale));
 	}
 
 	protected List<Map<Locale, String>> getContents() {
@@ -45,7 +45,15 @@ public class JournalArticleContent extends LocalizedValuesMap {
 		return Collections.singletonList(values);
 	}
 
-	protected Locale defaultLocale;
-	protected String name;
+	protected void setDefaultLocale(Locale defaultLocale) {
+		_defaultLocale = defaultLocale;
+	}
+
+	protected void setName(String name) {
+		_name = name;
+	}
+
+	private Locale _defaultLocale;
+	private String _name;
 
 }

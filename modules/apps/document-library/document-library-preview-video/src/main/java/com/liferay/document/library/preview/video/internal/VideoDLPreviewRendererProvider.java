@@ -154,11 +154,6 @@ public class VideoDLPreviewRendererProvider
 				}
 
 				if (previewFileURLs.isEmpty()) {
-					_dlFileEntryPreviewHandler.addDLFileEntryPreview(
-						fileVersion.getFileEntryId(),
-						fileVersion.getFileVersionId(),
-						DLFileEntryPreviewHandler.DLFileEntryPreviewType.FAIL);
-
 					throw new DLFileEntryPreviewGenerationException(
 						"No preview available for " + fileVersion.getTitle());
 				}

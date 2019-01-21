@@ -28,6 +28,7 @@ X509Certificate x509Certificate = (X509Certificate)request.getAttribute(SamlWebK
 boolean certificateAuthNeeded = GetterUtil.getBoolean(request.getAttribute(SamlWebKeys.SAML_X509_CERTIFICATE_AUTH_NEEDED));
 boolean keystoreException = GetterUtil.getBoolean(request.getAttribute(SamlWebKeys.SAML_KEYSTORE_EXCEPTION));
 boolean keystoreIncorrectPassword = GetterUtil.getBoolean(request.getAttribute(SamlWebKeys.SAML_KEYSTORE_PASSWORD_INCORRECT));
+String samlRole = properties.getProperty(PortletPropsKeys.SAML_ROLE, samlProviderConfiguration.role());
 %>
 
 <portlet:actionURL name="/admin/updateGeneral" var="updateGeneralURL">
@@ -38,22 +39,22 @@ boolean keystoreIncorrectPassword = GetterUtil.getBoolean(request.getAttribute(S
 	<liferay-ui:error key="certificateInvalid" message="please-create-a-signing-credential-before-enabling" />
 	<liferay-ui:error key="entityIdInUse" message="saml-must-be-disabled-before-changing-the-entity-id" />
 	<liferay-ui:error key="entityIdTooLong" message="entity-id-too-long" />
-	<liferay-ui:error key="identityProviderInvalid" message="please-configure-identity-provider-before-enabling" />
 
 	<aui:fieldset>
 		<aui:input label="enabled" name='<%= "settings--" + PortletPropsKeys.SAML_ENABLED + "--" %>' type="checkbox" value="<%= samlProviderConfigurationHelper.isEnabled() %>" />
 
 		<aui:select label="saml-role" name='<%= "settings--" + PortletPropsKeys.SAML_ROLE + "--" %>' required="<%= true %>" showEmptyOption="<%= true %>">
-
-			<%
-			String samlRole = properties.getProperty(PortletPropsKeys.SAML_ROLE, samlProviderConfiguration.role());
-			%>
-
 			<aui:option label="identity-provider" selected='<%= samlRole.equals("idp") %>' value="idp" />
 			<aui:option label="service-provider" selected='<%= samlRole.equals("sp") %>' value="sp" />
 		</aui:select>
 
 		<aui:input helpMessage="entity-id-help" label="saml-entity-id" name='<%= "settings--" + PortletPropsKeys.SAML_ENTITY_ID + "--" %>' required="<%= true %>" value="<%= entityId %>" />
+
+		<c:if test='<%= samlRole.equals("sp") && !localEntityManager.hasDefaultIdpRole() %>'>
+			<div class="portlet-msg-info">
+				<liferay-ui:message key="you-must-configure-at-least-one-identity-provider-connection-for-saml-to-function" />
+			</div>
+		</c:if>
 	</aui:fieldset>
 
 	<aui:button-row>

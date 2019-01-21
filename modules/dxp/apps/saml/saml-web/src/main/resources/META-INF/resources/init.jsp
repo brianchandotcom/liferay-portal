@@ -50,6 +50,7 @@ page import="com.liferay.saml.runtime.certificate.CertificateTool" %><%@
 page import="com.liferay.saml.runtime.configuration.SamlProviderConfiguration" %><%@
 page import="com.liferay.saml.runtime.configuration.SamlProviderConfigurationHelper" %><%@
 page import="com.liferay.saml.runtime.exception.CertificateKeyPasswordException" %><%@
+page import="com.liferay.saml.runtime.metadata.LocalEntityManager" %><%@
 page import="com.liferay.saml.util.NameIdTypeValues" %><%@
 page import="com.liferay.saml.util.PortletPropsKeys" %><%@
 page import="com.liferay.saml.web.internal.util.NameIdTypeValuesUtilHelper" %><%@
@@ -73,6 +74,7 @@ String currentURL = PortalUtil.getCurrentURL(request);
 
 NameIdTypeValues nameIdTypeValues = NameIdTypeValuesUtilHelper.getNameIdTypeValues();
 
+LocalEntityManager localEntityManager = (LocalEntityManager)request.getAttribute(LocalEntityManager.class.getName());
 SamlProviderConfigurationHelper samlProviderConfigurationHelper = (SamlProviderConfigurationHelper)request.getAttribute(SamlProviderConfigurationHelper.class.getName());
 
 SamlProviderConfiguration samlProviderConfiguration = null;

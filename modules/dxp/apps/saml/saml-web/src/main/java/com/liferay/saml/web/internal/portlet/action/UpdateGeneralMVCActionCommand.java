@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropertiesParamUtil;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
@@ -84,17 +83,6 @@ public class UpdateGeneralMVCActionCommand extends BaseMVCActionCommand {
 			(_localEntityManager.getLocalEntityCertificate() == null)) {
 
 			SessionErrors.add(actionRequest, "certificateInvalid");
-
-			return;
-		}
-
-		String samlRole = properties.getProperty(
-			PortletPropsKeys.SAML_ROLE, StringPool.BLANK);
-
-		if (enabled && samlRole.equals("sp") &&
-			!_localEntityManager.hasDefaultIdpRole()) {
-
-			SessionErrors.add(actionRequest, "identityProviderInvalid");
 
 			return;
 		}

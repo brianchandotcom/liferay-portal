@@ -91,7 +91,7 @@ SearchContainer entriesSearchContainer = (SearchContainer)request.getAttribute("
 					<c:when test="<%= curCategory != null %>">
 
 						<%
-						Map<String, Object> rowData = new HashMap<String, Object>();
+						Map<String, Object> rowData = new HashMap<>();
 
 						rowData.put("actions", String.join(StringPool.COMMA, mbEntriesManagementToolbarDisplayContext.getAvailableActionDropdownItems(curCategory)));
 
@@ -158,7 +158,7 @@ SearchContainer entriesSearchContainer = (SearchContainer)request.getAttribute("
 							row.setRestricted(!MBMessagePermission.contains(permissionChecker, message, ActionKeys.VIEW));
 						}
 
-						Map<String, Object> rowData = new HashMap<String, Object>();
+						Map<String, Object> rowData = new HashMap<>();
 
 						rowData.put("actions", String.join(StringPool.COMMA, mbEntriesManagementToolbarDisplayContext.getAvailableActionDropdownItems(message)));
 

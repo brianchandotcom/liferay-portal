@@ -23,7 +23,6 @@ import com.liferay.document.library.kernel.util.DLUtil;
 import com.liferay.item.selector.ItemSelectorReturnTypeResolver;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -42,7 +41,6 @@ import com.liferay.portal.service.test.ServiceTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
@@ -641,6 +639,8 @@ public class FileEntryAMImageURLItemSelectorReturnTypeResolverTest {
 			"image.jpg");
 	}
 
+	private static final Pattern _pattern = Pattern.compile("\\?t=\\d+");
+
 	@Inject
 	private AMImageConfigurationHelper _amImageConfigurationHelper;
 
@@ -654,7 +654,5 @@ public class FileEntryAMImageURLItemSelectorReturnTypeResolverTest {
 		filter = "component.name=*.FileEntryAMImageURLItemSelectorReturnTypeResolver"
 	)
 	private ItemSelectorReturnTypeResolver _itemSelectorReturnTypeResolver;
-
-	private static Pattern _pattern = Pattern.compile("\\?t=\\d+");
 
 }

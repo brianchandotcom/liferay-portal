@@ -27,7 +27,7 @@ import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.taglib.util.IncludeTag;
 import com.liferay.trash.kernel.model.TrashEntry;
-import com.liferay.trash.taglib.servlet.ServletContextUtil;
+import com.liferay.trash.taglib.internal.servlet.ServletContextUtil;
 
 import java.util.ArrayList;
 import java.util.Collections;

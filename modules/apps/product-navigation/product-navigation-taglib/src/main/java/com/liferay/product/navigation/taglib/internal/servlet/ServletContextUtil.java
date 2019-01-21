@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.product.navigation.taglib.servlet;
+package com.liferay.product.navigation.taglib.internal.servlet;
 
 import com.liferay.product.navigation.control.menu.util.ProductNavigationControlMenuCategoryRegistry;
 import com.liferay.product.navigation.control.menu.util.ProductNavigationControlMenuEntryRegistry;

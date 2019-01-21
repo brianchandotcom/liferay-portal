@@ -15,7 +15,7 @@
 package com.liferay.trash.taglib.servlet.taglib;
 
 import com.liferay.taglib.util.IncludeTag;
-import com.liferay.trash.taglib.servlet.ServletContextUtil;
+import com.liferay.trash.taglib.internal.servlet.ServletContextUtil;
 
 import javax.portlet.PortletURL;
 

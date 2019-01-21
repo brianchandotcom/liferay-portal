@@ -16,7 +16,7 @@ package com.liferay.fragment.taglib.servlet.taglib;
 
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.service.FragmentEntryServiceUtil;
-import com.liferay.fragment.taglib.servlet.ServletContextUtil;
+import com.liferay.fragment.taglib.internal.servlet.ServletContextUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;

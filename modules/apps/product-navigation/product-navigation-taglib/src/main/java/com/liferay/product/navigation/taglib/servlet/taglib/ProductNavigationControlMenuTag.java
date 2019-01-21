@@ -14,7 +14,7 @@
 
 package com.liferay.product.navigation.taglib.servlet.taglib;
 
-import com.liferay.product.navigation.taglib.servlet.ServletContextUtil;
+import com.liferay.product.navigation.taglib.internal.servlet.ServletContextUtil;
 import com.liferay.taglib.util.IncludeTag;
 
 import javax.servlet.http.HttpServletRequest;

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.trash.taglib.servlet;
+package com.liferay.fragment.taglib.internal.servlet;
 
 import javax.servlet.ServletContext;
 
@@ -20,10 +20,7 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * Provides utility methods to get servlet context information for Recycle Bin
- * tags.
- *
- * @author Michael Bradford
+ * @author Jürgen Kappler
  */
 @Component(immediate = true, service = {})
 public class ServletContextUtil {
@@ -37,7 +34,7 @@ public class ServletContextUtil {
 	}
 
 	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.trash.taglib)",
+		target = "(osgi.web.symbolicname=com.liferay.fragment.taglib)",
 		unbind = "-"
 	)
 	protected void setServletContext(ServletContext servletContext) {

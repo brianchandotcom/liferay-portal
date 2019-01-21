@@ -1,9 +1,7 @@
 Bundle-Name: Liferay Trash Taglib
 Bundle-SymbolicName: com.liferay.trash.taglib
 Bundle-Version: 4.0.0
-Export-Package:\
-	com.liferay.trash.taglib.servlet,\
-	com.liferay.trash.taglib.servlet.taglib
+Export-Package: com.liferay.trash.taglib.servlet.taglib
 Provide-Capability:\
 	osgi.extender;\
 		osgi.extender="jsp.taglib";\

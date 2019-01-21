@@ -2,7 +2,6 @@ Bundle-Name: Liferay Layout Taglib
 Bundle-SymbolicName: com.liferay.layout.taglib
 Bundle-Version: 4.0.0
 Export-Package:\
-	com.liferay.layout.taglib.servlet,\
 	com.liferay.layout.taglib.servlet.taglib,\
 	com.liferay.layout.taglib.servlet.taglib.soy
 Liferay-JS-Config: /META-INF/resources/config.js

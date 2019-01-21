@@ -14,7 +14,7 @@
 
 package com.liferay.layout.taglib.servlet.taglib;
 
-import com.liferay.layout.taglib.servlet.ServletContextUtil;
+import com.liferay.layout.taglib.internal.servlet.ServletContextUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;

@@ -46,6 +46,8 @@ class ContributorBuilder extends React.Component {
 	}
 
 	_handleCriteriaChange = (criteriaChange, index) => {
+		const {onQueryChange} = this.props;
+
 		this.setState(
 			prevState => {
 				let diffState = null;
@@ -69,7 +71,8 @@ class ContributorBuilder extends React.Component {
 				}
 
 				return diffState;
-			}
+			},
+			() => onQueryChange && onQueryChange()
 		);
 	}
 
@@ -93,6 +96,8 @@ class ContributorBuilder extends React.Component {
 
 	_handleRootConjunctionClick = event => {
 		event.preventDefault();
+
+		const {onQueryChange} = this.props;
 
 		this.setState(
 			(prevState, props) => {
@@ -121,7 +126,8 @@ class ContributorBuilder extends React.Component {
 				return {
 					contributors
 				};
-			}
+			},
+			() => onQueryChange && onQueryChange()
 		);
 	}
 
@@ -274,6 +280,7 @@ const propertyTypeShape = PropTypes.shape(
 
 ContributorBuilder.propTypes = {
 	initialContributors: PropTypes.arrayOf(initialContributorShape),
+	onQueryChange: PropTypes.func,
 	propertyGroups: PropTypes.arrayOf(propertyGroupShape),
 	supportedConjunctions: PropTypes.arrayOf(conjunctionShape).isRequired,
 	supportedOperators: PropTypes.arrayOf(operatorShape).isRequired,

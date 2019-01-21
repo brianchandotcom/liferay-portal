@@ -146,6 +146,7 @@ class SegmentEdit extends Component {
 			(propertyGroups && contributors) ?
 				<ContributorBuilder
 					initialContributors={contributors}
+					onQueryChange={this._handleQueryChange}
 					propertyGroups={propertyGroups}
 					supportedConjunctions={SUPPORTED_CONJUNCTIONS}
 					supportedOperators={SUPPORTED_OPERATORS}

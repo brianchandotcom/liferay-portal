@@ -22,6 +22,9 @@ import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.OrganizationConstants;
 import com.liferay.portal.kernel.service.ContactServiceUtil;
 import com.liferay.portal.kernel.service.OrganizationServiceUtil;
+import com.liferay.portal.kernel.theme.PortletDisplay;
+import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.users.admin.constants.UsersAdminPortletKeys;
 import com.liferay.users.admin.web.internal.util.UsersAdminPortletURLUtil;
 
 import javax.portlet.RenderResponse;
@@ -35,12 +38,14 @@ import javax.servlet.http.HttpServletRequest;
 public class EditContactInformationDisplayContext {
 
 	public EditContactInformationDisplayContext(
-		String className, long classPK, long contextOrganizationId,
 		RenderResponse renderResponse, HttpServletRequest request) {
 
-		_className = className;
-		_classPK = classPK;
-		_contextOrganizationId = contextOrganizationId;
+		_className = ParamUtil.getString(request, "className");
+		_classPK = ParamUtil.getLong(request, "classPK");
+		_contextOrganizationId = ParamUtil.getLong(
+			request, "contextOrganizationId");
+		_primaryKey = ParamUtil.getLong(request, "primaryKey", 0L);
+		_redirect = ParamUtil.getString(request, "redirect");
 		_renderResponse = renderResponse;
 		_request = request;
 	}
@@ -56,6 +61,18 @@ public class EditContactInformationDisplayContext {
 
 		return UsersAdminPortletURLUtil.createOrganizationViewTreeURL(
 			_contextOrganizationId, _renderResponse);
+	}
+
+	public String getClassName() {
+		return _className;
+	}
+
+	public long getClassPK() {
+		return _classPK;
+	}
+
+	public long getContextOrganizationId() {
+		return _contextOrganizationId;
 	}
 
 	public String getPortletTitle() throws PortalException {
@@ -76,9 +93,31 @@ public class EditContactInformationDisplayContext {
 		return StringPool.BLANK;
 	}
 
+	public long getPrimaryKey() {
+		return _primaryKey;
+	}
+
+	public String getRedirect() {
+		return _redirect;
+	}
+
+	public void setPortletDisplay(
+			PortletDisplay portletDisplay, String portletName)
+		throws PortalException {
+
+		if (!portletName.equals(UsersAdminPortletKeys.MY_ACCOUNT)) {
+			portletDisplay.setShowBackIcon(true);
+			portletDisplay.setURLBack(getBackURL());
+
+			_renderResponse.setTitle(getPortletTitle());
+		}
+	}
+
 	private final String _className;
 	private final long _classPK;
 	private final long _contextOrganizationId;
+	private final long _primaryKey;
+	private final String _redirect;
 	private final RenderResponse _renderResponse;
 	private final HttpServletRequest _request;
 

@@ -171,21 +171,21 @@ public class DLFileEntryIndexerLocalizedContentTest {
 		return addFileEntry(fileName, _group.getGroupId());
 	}
 
-	protected FileEntry addFileEntry(String fileName1, long groupId1)
+	protected FileEntry addFileEntry(String fileName, long groupId)
 		throws IOException {
 
 		Class<?> clazz = getClass();
 
-		try (InputStream inputStream1 = clazz.getResourceAsStream(
-				"dependencies/" + fileName1)) {
+		try (InputStream inputStream = clazz.getResourceAsStream(
+				"dependencies/" + fileName)) {
 
 			return fileEntrySearchFixture.addFileEntry(
 				new FileEntryBlueprint() {
 					{
-						fileName = fileName1;
-						groupId = groupId1;
-						inputStream = inputStream1;
-						title = fileName1;
+						setFileName(fileName);
+						setGroupId(groupId);
+						setInputStream(inputStream);
+						setTitle(fileName);
 					}
 				});
 		}

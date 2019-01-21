@@ -219,14 +219,14 @@ public class DLFileEntryFileNameSearchTest {
 
 		Group group = _userSearchFixture.addGroup();
 
-		for (String fileName1 : fileNames) {
+		for (String fileName : fileNames) {
 			_fileEntrySearchFixture.addFileEntry(
 				new FileEntryBlueprint() {
 					{
-						fileName = fileName1;
-						groupId = group.getGroupId();
-						title = fileName1;
-						userId = getAdminUserId(group);
+						setFileName(fileName);
+						setGroupId(group.getGroupId());
+						setTitle(fileName);
+						setUserId(getAdminUserId(group));
 					}
 				});
 		}

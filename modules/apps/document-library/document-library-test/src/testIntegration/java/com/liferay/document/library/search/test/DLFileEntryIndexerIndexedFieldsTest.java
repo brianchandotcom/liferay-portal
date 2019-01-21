@@ -66,20 +66,20 @@ public class DLFileEntryIndexerIndexedFieldsTest extends BaseDLIndexerTestCase {
 			PermissionCheckerTestRule.INSTANCE,
 			SynchronousDestinationTestRule.INSTANCE);
 
-	public FileEntry addFileEntry(String fileName1) throws IOException {
+	public FileEntry addFileEntry(String fileName) throws IOException {
 		Class<?> clazz = getClass();
 
-		try (InputStream inputStream1 = clazz.getResourceAsStream(
-				"dependencies/" + fileName1)) {
+		try (InputStream inputStream = clazz.getResourceAsStream(
+				"dependencies/" + fileName)) {
 
 			return fileEntrySearchFixture.addFileEntry(
 				new FileEntryBlueprint() {
 					{
-						fileName = fileName1;
-						groupId = dlFixture.getGroupId();
-						inputStream = inputStream1;
-						title = fileName1;
-						userId = dlFixture.getUserId();
+						setFileName(fileName);
+						setGroupId(dlFixture.getGroupId());
+						setInputStream(inputStream);
+						setTitle(fileName);
+						setUserId(dlFixture.getUserId());
 					}
 				});
 		}

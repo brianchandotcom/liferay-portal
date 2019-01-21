@@ -74,13 +74,14 @@ public class CTConfigurationResource {
 	public List<CTConfigurationModel> getCTConfigurations()
 		throws PortalException {
 
-		List<CTConfigurationModel> companies = new ArrayList<>();
+		List<CTConfigurationModel> ctConfigurationModels = new ArrayList<>();
 
 		for (Company company : _companyLocalService.getCompanies()) {
-			companies.add(_getCTConfigurationModel(company.getCompanyId()));
+			ctConfigurationModels.add(
+				_getCTConfigurationModel(company.getCompanyId()));
 		}
 
-		return companies;
+		return ctConfigurationModels;
 	}
 
 	@Consumes(MediaType.APPLICATION_JSON)

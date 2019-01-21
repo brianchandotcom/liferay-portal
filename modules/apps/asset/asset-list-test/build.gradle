@@ -6,6 +6,6 @@ dependencies {
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 
 	testIntegrationCompile project(":apps:asset:asset-list-api")
-	testIntegrationCompile project(":apps:journal:journal-api")
+	testIntegrationCompile project(":apps:asset:asset-test-util")
 	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
 }

@@ -21,6 +21,8 @@ import com.liferay.asset.list.model.AssetListEntryAssetEntryRel;
 import com.liferay.asset.list.service.AssetListEntryAssetEntryRelLocalServiceUtil;
 import com.liferay.asset.list.service.persistence.AssetListEntryAssetEntryRelUtil;
 import com.liferay.asset.list.util.AssetListTestUtil;
+import com.liferay.asset.test.util.AssetTestUtil;
+import com.liferay.asset.test.util.asset.renderer.factory.TestAssetRendererFactory;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
@@ -67,8 +69,9 @@ public class AssetListEntryAssetEntryRelServiceTest {
 		AssetListEntry assetListEntry = AssetListTestUtil.addAssetListEntry(
 			_group.getGroupId());
 
-		AssetEntry assetEntry = AssetListTestUtil.addAssetEntry(
-			_group.getGroupId());
+		AssetEntry assetEntry = AssetTestUtil.addAssetEntry(
+			_group.getGroupId(), null,
+			TestAssetRendererFactory.class.getName());
 
 		AssetListEntryAssetEntryRel assetListEntryRelLocal =
 			AssetListTestUtil.addAssetListEntryAssetEntryRel(
@@ -97,8 +100,9 @@ public class AssetListEntryAssetEntryRelServiceTest {
 		AssetListEntry assetListEntry = AssetListTestUtil.addAssetListEntry(
 			_group.getGroupId());
 
-		AssetEntry assetEntry = AssetListTestUtil.addAssetEntry(
-			_group.getGroupId());
+		AssetEntry assetEntry = AssetTestUtil.addAssetEntry(
+			_group.getGroupId(), null,
+			TestAssetRendererFactory.class.getName());
 
 		int defaultPosition = 1;
 
@@ -129,8 +133,9 @@ public class AssetListEntryAssetEntryRelServiceTest {
 		AssetListEntry assetListEntryOther =
 			AssetListTestUtil.addAssetListEntry(_group.getGroupId());
 
-		AssetEntry assetEntry = AssetListTestUtil.addAssetEntry(
-			_group.getGroupId());
+		AssetEntry assetEntry = AssetTestUtil.addAssetEntry(
+			_group.getGroupId(), null,
+			TestAssetRendererFactory.class.getName());
 
 		int currentCount =
 			AssetListEntryAssetEntryRelLocalServiceUtil.
@@ -167,8 +172,9 @@ public class AssetListEntryAssetEntryRelServiceTest {
 		AssetListEntry assetListEntry = AssetListTestUtil.addAssetListEntry(
 			_group.getGroupId());
 
-		AssetEntry assetEntry = AssetListTestUtil.addAssetEntry(
-			_group.getGroupId());
+		AssetEntry assetEntry = AssetTestUtil.addAssetEntry(
+			_group.getGroupId(), null,
+			TestAssetRendererFactory.class.getName());
 
 		AssetListTestUtil.addAssetListEntryAssetEntryRel(
 			_group.getGroupId(), assetEntry, assetListEntry);
@@ -189,11 +195,13 @@ public class AssetListEntryAssetEntryRelServiceTest {
 		AssetListEntry assetListEntry = AssetListTestUtil.addAssetListEntry(
 			_group.getGroupId());
 
-		AssetEntry assetEntryAlive = AssetListTestUtil.addAssetEntry(
-			_group.getGroupId());
+		AssetEntry assetEntryAlive = AssetTestUtil.addAssetEntry(
+			_group.getGroupId(), null,
+			TestAssetRendererFactory.class.getName());
 
-		AssetEntry assetEntryDeleted = AssetListTestUtil.addAssetEntry(
-			_group.getGroupId());
+		AssetEntry assetEntryDeleted = AssetTestUtil.addAssetEntry(
+			_group.getGroupId(), null,
+			TestAssetRendererFactory.class.getName());
 
 		AssetListEntryAssetEntryRel assetListEntryRelAlive =
 			AssetListTestUtil.addAssetListEntryAssetEntryRel(
@@ -224,11 +232,13 @@ public class AssetListEntryAssetEntryRelServiceTest {
 		AssetListEntry assetListEntry = AssetListTestUtil.addAssetListEntry(
 			_group.getGroupId());
 
-		AssetEntry assetEntry1 = AssetListTestUtil.addAssetEntry(
-			_group.getGroupId());
+		AssetEntry assetEntry1 = AssetTestUtil.addAssetEntry(
+			_group.getGroupId(), null,
+			TestAssetRendererFactory.class.getName());
 
-		AssetEntry assetEntry2 = AssetListTestUtil.addAssetEntry(
-			_group.getGroupId());
+		AssetEntry assetEntry2 = AssetTestUtil.addAssetEntry(
+			_group.getGroupId(), null,
+			TestAssetRendererFactory.class.getName());
 
 		AssetListTestUtil.addAssetListEntryAssetEntryRel(
 			_group.getGroupId(), assetEntry1, assetListEntry);
@@ -258,8 +268,9 @@ public class AssetListEntryAssetEntryRelServiceTest {
 		AssetListEntry assetListEntry = AssetListTestUtil.addAssetListEntry(
 			_group.getGroupId());
 
-		AssetEntry assetEntry = AssetListTestUtil.addAssetEntry(
-			_group.getGroupId());
+		AssetEntry assetEntry = AssetTestUtil.addAssetEntry(
+			_group.getGroupId(), null,
+			TestAssetRendererFactory.class.getName());
 
 		AssetListEntryAssetEntryRel assetListEntryRel =
 			AssetListTestUtil.addAssetListEntryAssetEntryRel(
@@ -297,8 +308,9 @@ public class AssetListEntryAssetEntryRelServiceTest {
 		AssetListEntry assetListEntry = AssetListTestUtil.addAssetListEntry(
 			_group.getGroupId());
 
-		AssetEntry assetEntry = AssetListTestUtil.addAssetEntry(
-			_group.getGroupId());
+		AssetEntry assetEntry = AssetTestUtil.addAssetEntry(
+			_group.getGroupId(), null,
+			TestAssetRendererFactory.class.getName());
 
 		AssetListEntryAssetEntryRel assetListEntryRelOriginal =
 			AssetListTestUtil.addAssetListEntryAssetEntryRel(
@@ -339,8 +351,9 @@ public class AssetListEntryAssetEntryRelServiceTest {
 		AssetListEntry assetListEntryOriginal =
 			AssetListTestUtil.addAssetListEntry(_group.getGroupId());
 
-		AssetEntry assetEntryOriginal = AssetListTestUtil.addAssetEntry(
-			_group.getGroupId());
+		AssetEntry assetEntryOriginal = AssetTestUtil.addAssetEntry(
+			_group.getGroupId(), null,
+			TestAssetRendererFactory.class.getName());
 
 		AssetListEntryAssetEntryRel assetListEntryRel =
 			AssetListTestUtil.addAssetListEntryAssetEntryRel(
@@ -352,8 +365,9 @@ public class AssetListEntryAssetEntryRelServiceTest {
 		AssetListEntry assetListEntryUpdated =
 			AssetListTestUtil.addAssetListEntry(_group.getGroupId());
 
-		AssetEntry assetEntryUpdated = AssetListTestUtil.addAssetEntry(
-			_group.getGroupId());
+		AssetEntry assetEntryUpdated = AssetTestUtil.addAssetEntry(
+			_group.getGroupId(), null,
+			TestAssetRendererFactory.class.getName());
 
 		AssetListEntryAssetEntryRelLocalServiceUtil.
 			updateAssetListEntryAssetEntryRel(
@@ -378,9 +392,8 @@ public class AssetListEntryAssetEntryRelServiceTest {
 	}
 
 	private void _assertSameAssetListEntryAssetEntryRel(
-			AssetListEntryAssetEntryRel assetListEntryRel1,
-			AssetListEntryAssetEntryRel assetListEntryRel2)
-		throws PortalException {
+		AssetListEntryAssetEntryRel assetListEntryRel1,
+		AssetListEntryAssetEntryRel assetListEntryRel2) {
 
 		Assert.assertEquals(
 			assetListEntryRel1.getAssetEntryId(),

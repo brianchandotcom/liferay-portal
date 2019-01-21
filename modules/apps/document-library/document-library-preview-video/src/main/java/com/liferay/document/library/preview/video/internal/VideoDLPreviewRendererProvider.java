@@ -15,7 +15,6 @@
 package com.liferay.document.library.preview.video.internal;
 
 import com.liferay.document.library.kernel.service.DLFileEntryPreviewHandler;
-import com.liferay.document.library.kernel.service.DLFileEntryPreviewHandlerUtil;
 import com.liferay.document.library.kernel.util.DLProcessorRegistryUtil;
 import com.liferay.document.library.kernel.util.VideoProcessorUtil;
 import com.liferay.document.library.preview.DLPreviewRenderer;
@@ -49,8 +48,10 @@ public class VideoDLPreviewRendererProvider
 	implements DLPreviewRendererProvider {
 
 	public VideoDLPreviewRendererProvider(
+		DLFileEntryPreviewHandler dlFileEntryPreviewHandler,
 		DLURLHelper dlurlHelper, ServletContext servletContext) {
 
+		_dlFileEntryPreviewHandler = dlFileEntryPreviewHandler;
 		_dlurlHelper = dlurlHelper;
 		_servletContext = servletContext;
 	}
@@ -98,7 +99,7 @@ public class VideoDLPreviewRendererProvider
 		throws PortalException {
 
 		long fileEntryPreviewId =
-			DLFileEntryPreviewHandlerUtil.getDLFileEntryPreviewId(
+			_dlFileEntryPreviewHandler.getDLFileEntryPreviewId(
 				fileVersion.getFileEntryId(), fileVersion.getFileVersionId(),
 				DLFileEntryPreviewHandler.DLFileEntryPreviewType.FAIL);
 
@@ -153,9 +154,10 @@ public class VideoDLPreviewRendererProvider
 				}
 
 				if (previewFileURLs.isEmpty()) {
-					DLFileEntryPreviewHandlerUtil.addFailDLFileEntryPreview(
+					_dlFileEntryPreviewHandler.addDLFileEntryPreview(
 						fileVersion.getFileEntryId(),
-						fileVersion.getFileVersionId());
+						fileVersion.getFileVersionId(),
+						DLFileEntryPreviewHandler.DLFileEntryPreviewType.FAIL);
 
 					throw new DLFileEntryPreviewGenerationException(
 						"No preview available for " + fileVersion.getTitle());
@@ -181,6 +183,7 @@ public class VideoDLPreviewRendererProvider
 			"&videoThumbnail=1");
 	}
 
+	private final DLFileEntryPreviewHandler _dlFileEntryPreviewHandler;
 	private final DLURLHelper _dlurlHelper;
 	private final ServletContext _servletContext;
 

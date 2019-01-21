@@ -15,7 +15,6 @@
 package com.liferay.document.library.preview.image.internal;
 
 import com.liferay.document.library.kernel.service.DLFileEntryPreviewHandler;
-import com.liferay.document.library.kernel.service.DLFileEntryPreviewHandlerUtil;
 import com.liferay.document.library.kernel.util.DLProcessorRegistryUtil;
 import com.liferay.document.library.kernel.util.ImageProcessorUtil;
 import com.liferay.document.library.preview.DLPreviewRenderer;
@@ -95,7 +94,7 @@ public class ImageDLPreviewRendererProvider
 		throws PortalException {
 
 		long fileEntryPreviewId =
-			DLFileEntryPreviewHandlerUtil.getDLFileEntryPreviewId(
+			_dlFileEntryPreviewHandler.getDLFileEntryPreviewId(
 				fileVersion.getFileEntryId(), fileVersion.getFileVersionId(),
 				DLFileEntryPreviewHandler.DLFileEntryPreviewType.FAIL);
 
@@ -116,6 +115,9 @@ public class ImageDLPreviewRendererProvider
 	protected void deactivate() {
 		_dlPreviewRendererProviderServiceRegistration.unregister();
 	}
+
+	@Reference
+	private DLFileEntryPreviewHandler _dlFileEntryPreviewHandler;
 
 	private ServiceRegistration<DLPreviewRendererProvider>
 		_dlPreviewRendererProviderServiceRegistration;

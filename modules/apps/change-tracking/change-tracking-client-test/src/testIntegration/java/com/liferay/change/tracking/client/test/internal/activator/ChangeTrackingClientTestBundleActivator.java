@@ -25,7 +25,7 @@ import org.osgi.framework.ServiceReference;
 /**
  * @author Daniel Kocsis
  */
-public class ChangeTrackingDisabledRestTestActivator
+public class ChangeTrackingClientTestBundleActivator
 	implements BundleActivator {
 
 	@Override

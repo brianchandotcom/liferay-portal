@@ -17,7 +17,7 @@ package com.liferay.change.tracking.client.test;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.isOneOf;
 
-import com.liferay.change.tracking.client.test.internal.activator.ChangeTrackingDisabledRestTestActivator;
+import com.liferay.change.tracking.client.test.internal.activator.ChangeTrackingClientTestBundleActivator;
 import com.liferay.oauth2.provider.test.util.OAuth2ProviderTestUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 
@@ -52,7 +52,7 @@ public class ChangeTrackingRestTest {
 	@Deployment
 	public static Archive<?> getArchive() throws Exception {
 		return OAuth2ProviderTestUtil.getArchive(
-			ChangeTrackingDisabledRestTestActivator.class);
+			ChangeTrackingClientTestBundleActivator.class);
 	}
 
 	@Before

@@ -48,13 +48,19 @@ public class AssetTestUtil {
 	}
 
 	public static AssetEntry addAssetEntry(long groupId, Date publishDate) {
+		return addAssetEntry(
+			groupId, publishDate, RandomTestUtil.randomString());
+	}
+
+	public static AssetEntry addAssetEntry(
+		long groupId, Date publishDate, String className) {
 
 		long assetEntryId = CounterLocalServiceUtil.increment();
 
 		AssetEntry assetEntry = AssetEntryLocalServiceUtil.createAssetEntry(
 			assetEntryId);
 
-		assetEntry.setClassName(RandomTestUtil.randomString());
+		assetEntry.setClassName(className);
 		assetEntry.setGroupId(groupId);
 		assetEntry.setClassPK(RandomTestUtil.randomLong());
 		assetEntry.setVisible(true);

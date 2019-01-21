@@ -63,7 +63,7 @@ if (Validator.isNotNull(title)) {
 			<aui:input name="newFolderId" type="hidden" />
 
 			<c:choose>
-				<c:when test="<%= !journalDisplayContext.isSearch() || (!journalDisplayContext.hasResults() && !journalDisplayContext.hasCommentsResults() && !journalDisplayContext.hasVersionsResults()) %>">
+				<c:when test="<%= !journalDisplayContext.isSearch() %>">
 					<liferay-util:include page="/view_entries.jsp" servletContext="<%= application %>" />
 				</c:when>
 				<c:otherwise>

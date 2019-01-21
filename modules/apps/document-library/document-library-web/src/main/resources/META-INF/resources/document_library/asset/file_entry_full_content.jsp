@@ -24,6 +24,12 @@ boolean showExtraInfo = ParamUtil.getBoolean(request, "showExtraInfo");
 DLViewFileVersionDisplayContext dlViewFileVersionDisplayContext = dlDisplayContextProvider.getDLViewFileVersionDisplayContext(request, response, fileEntry.getFileVersion());
 %>
 
+<liferay-util:html-top
+	outputKey="document_library_preview_css"
+>
+	<link href="<%= PortalUtil.getStaticResourceURL(request, application.getContextPath() + "/document_library/css/document_library_preview.css") %>" rel="stylesheet" type="text/css" />
+</liferay-util:html-top>
+
 <c:choose>
 	<c:when test="<%= PropsValues.DL_FILE_ENTRY_PREVIEW_ENABLED && !showExtraInfo && (fileEntry.getSize() > 0) && dlViewFileVersionDisplayContext.hasPreview() %>">
 		<liferay-util:include page="/document_library/view_file_entry_simple_view.jsp" servletContext="<%= application %>" />

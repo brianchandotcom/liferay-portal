@@ -17,6 +17,7 @@ package com.liferay.asset.assetrendererfactoryregistryutil.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
+import com.liferay.asset.test.util.asset.renderer.factory.TestAssetRendererFactory;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;

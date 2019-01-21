@@ -69,7 +69,7 @@ public class SamlLoginAction extends BaseSamlStrutsAction {
 			HttpServletRequest request, HttpServletResponse response)
 		throws Exception {
 
-		String entityId = ParamUtil.getString(request, "idpeid");
+		String entityId = ParamUtil.getString(request, "idpEntityId");
 
 		long companyId = _portal.getCompanyId(request);
 

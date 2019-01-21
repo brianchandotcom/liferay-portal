@@ -31,7 +31,7 @@ String redirect = ParamUtil.getString(request, "redirect");
 		<c:when test="<%= relevantIdpConnectionsJSONArray.length() > 0 %>">
 			<p><liferay-ui:message key="please-select-your-identity-provider" /></p>
 
-			<aui:select label="identity-provider" name="idpeid">
+			<aui:select label="identity-provider" name="idpEntityId">
 
 				<%
 				for (int i = 0; i < relevantIdpConnectionsJSONArray.length(); i++) {

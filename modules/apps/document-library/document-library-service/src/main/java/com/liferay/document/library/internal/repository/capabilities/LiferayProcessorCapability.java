@@ -15,6 +15,7 @@
 package com.liferay.document.library.internal.repository.capabilities;
 
 import com.liferay.document.library.kernel.util.DLProcessorRegistryUtil;
+import com.liferay.document.library.service.DLFileEntryPreviewLocalService;
 import com.liferay.portal.kernel.repository.LocalRepository;
 import com.liferay.portal.kernel.repository.Repository;
 import com.liferay.portal.kernel.repository.capabilities.ProcessorCapability;
@@ -38,14 +39,12 @@ public class LiferayProcessorCapability
 	implements ProcessorCapability, RepositoryEventAware,
 			   RepositoryWrapperAware {
 
-	public LiferayProcessorCapability() {
-		this(ResourceGenerationStrategy.REUSE);
-	}
-
 	public LiferayProcessorCapability(
-		ResourceGenerationStrategy resourceGenerationStrategy) {
+		ResourceGenerationStrategy resourceGenerationStrategy,
+		DLFileEntryPreviewLocalService dlFileEntryPreviewLocalService) {
 
 		_resourceGenerationStrategy = resourceGenerationStrategy;
+		_dlFileEntryPreviewLocalService = dlFileEntryPreviewLocalService;
 	}
 
 	@Override
@@ -84,6 +83,9 @@ public class LiferayProcessorCapability
 
 				@Override
 				public void execute(FileEntry fileEntry) {
+					_dlFileEntryPreviewLocalService.deleteDLFileEntryPreviews(
+						fileEntry.getFileEntryId());
+
 					cleanUp(fileEntry);
 				}
 
@@ -120,6 +122,8 @@ public class LiferayProcessorCapability
 			});
 	}
 
+	private final DLFileEntryPreviewLocalService
+		_dlFileEntryPreviewLocalService;
 	private final ResourceGenerationStrategy _resourceGenerationStrategy;
 
 }

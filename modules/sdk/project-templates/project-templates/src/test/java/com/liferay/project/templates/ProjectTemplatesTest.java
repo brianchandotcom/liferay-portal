@@ -1230,9 +1230,9 @@ public class ProjectTemplatesTest {
 		completeArgs.add("-Dauthor=" + System.getProperty("user.name"));
 		completeArgs.add("-DgroupId=" + groupId);
 		completeArgs.add("-DliferayVersion=7.1");
-		completeArgs.add("-DprojectType=standalone");
 		completeArgs.add("-DoriginalModuleName=com.liferay.login.web");
 		completeArgs.add("-DoriginalModuleVersion=3.0.4");
+		completeArgs.add("-DprojectType=standalone");
 		completeArgs.add("-Dversion=1.0.0");
 
 		_executeMaven(destinationDir, completeArgs.toArray(new String[0]));

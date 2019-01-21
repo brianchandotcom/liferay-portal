@@ -27,189 +27,202 @@ const altProps = {
 	initialSegmentName: '',
 	locale: 'en_US',
 	portletNamespace: '_com_liferay_segments_web_internal_portlet_SegmentsPortlet_',
-	propertyGroups: [{
-		name: 'User',
-		properties: [{
-			label: 'Ancestor Organization IDs',
-			name: 'ancestorOrganizationIds',
-			type: 'string'
+	propertyGroups: [
+		{
+			name: 'User',
+			properties: [
+				{
+					label: 'Ancestor Organization IDs',
+					name: 'ancestorOrganizationIds',
+					type: 'string'
+				},
+				{
+					label: 'Segmentation Team Members',
+					name: 'segmentationTeamMembers',
+					options: [
+						{
+							label: 'Kevin',
+							value: 'kevin'
+						},
+						{
+							label: 'Angelo',
+							value: 'angelo'
+						},
+						{
+							label: 'David',
+							value: 'david'
+						},
+						{
+							label: 'Edu',
+							value: 'edu'
+						},
+						{
+							label: 'Andres',
+							value: 'andres'
+						}
+					],
+					type: 'string'
+				},
+				{
+					label: 'Accepted Privacy',
+					name: 'acceptedPrivacy',
+					type: 'boolean'
+				},
+				{
+					label: 'People',
+					name: 'people',
+					type: 'integer'
+				},
+				{
+					label: 'Liters',
+					name: 'liters',
+					type: 'double'
+				},
+				{
+					label: 'Class PK',
+					name: 'classPK',
+					type: 'string'
+				},
+				{
+					label: 'Company ID',
+					name: 'companyId',
+					type: 'string'
+				},
+				{
+					label: 'Date Modified',
+					name: 'dateModified',
+					type: 'date'
+				},
+				{
+					label: 'Email Address',
+					name: 'emailAddress',
+					type: 'string'
+				},
+				{
+					label: 'First Name',
+					name: 'firstName',
+					type: 'string'
+				},
+				{
+					label: 'Group ID',
+					name: 'groupId',
+					type: 'string'
+				},
+				{
+					label: 'Group IDs',
+					name: 'groupIds',
+					type: 'string'
+				},
+				{
+					label: 'Job Title',
+					name: 'jobTitle',
+					type: 'string'
+				},
+				{
+					label: 'Last Name',
+					name: 'lastName',
+					type: 'string'
+				},
+				{
+					label: 'Organization Count',
+					name: 'organizationCount',
+					type: 'string'
+				},
+				{
+					label: 'Organization IDs',
+					name: 'organizationIds',
+					type: 'string'
+				},
+				{
+					label: 'Role IDs',
+					name: 'roleIds',
+					type: 'string'
+				},
+				{
+					label: 'Scope Group ID',
+					name: 'scopeGroupId',
+					type: 'string'
+				},
+				{
+					label: 'Screen Name',
+					name: 'screenName',
+					type: 'string'
+				},
+				{
+					label: 'Team IDs',
+					name: 'teamIds',
+					type: 'string'
+				},
+				{
+					label: 'User Group IDs',
+					name: 'userGroupIds',
+					type: 'string'
+				},
+				{
+					label: 'User ID',
+					name: 'userId',
+					type: 'string'
+				},
+				{
+					label: 'User Name',
+					name: 'userName',
+					type: 'string'
+				}
+			],
+			propertyKey: 'user'
 		},
 		{
-			label: 'Segmentation Team Members',
-			name: 'segmentationTeamMembers',
-			options: [{
-				label: 'Kevin',
-				value: 'kevin'
-			}, {
-				label: 'Angelo',
-				value: 'angelo'
-			}, {
-				label: 'David',
-				value: 'david'
-			}, {
-				label: 'Edu',
-				value: 'edu'
-			}, {
-				label: 'Andres',
-				value: 'andres'
-			}],
-			type: 'string'
-		},
-		{
-			label: 'Accepted Privacy',
-			name: 'acceptedPrivacy',
-			type: 'boolean'
-		},
-		{
-			label: 'People',
-			name: 'people',
-			type: 'integer'
-		},
-		{
-			label: 'Liters',
-			name: 'liters',
-			type: 'double'
-		},
-		{
-			label: 'Class PK',
-			name: 'classPK',
-			type: 'string'
-		},
-		{
-			label: 'Company ID',
-			name: 'companyId',
-			type: 'string'
-		},
-		{
-			label: 'Date Modified',
-			name: 'dateModified',
-			type: 'date'
-		},
-		{
-			label: 'Email Address',
-			name: 'emailAddress',
-			type: 'string'
-		},
-		{
-			label: 'First Name',
-			name: 'firstName',
-			type: 'string'
-		},
-		{
-			label: 'Group ID',
-			name: 'groupId',
-			type: 'string'
-		},
-		{
-			label: 'Group IDs',
-			name: 'groupIds',
-			type: 'string'
-		},
-		{
-			label: 'Job Title',
-			name: 'jobTitle',
-			type: 'string'
-		},
-		{
-			label: 'Last Name',
-			name: 'lastName',
-			type: 'string'
-		},
-		{
-			label: 'Organization Count',
-			name: 'organizationCount',
-			type: 'string'
-		},
-		{
-			label: 'Organization IDs',
-			name: 'organizationIds',
-			type: 'string'
-		},
-		{
-			label: 'Role IDs',
-			name: 'roleIds',
-			type: 'string'
-		},
-		{
-			label: 'Scope Group ID',
-			name: 'scopeGroupId',
-			type: 'string'
-		},
-		{
-			label: 'Screen Name',
-			name: 'screenName',
-			type: 'string'
-		},
-		{
-			label: 'Team IDs',
-			name: 'teamIds',
-			type: 'string'
-		},
-		{
-			label: 'User Group IDs',
-			name: 'userGroupIds',
-			type: 'string'
-		},
-		{
-			label: 'User ID',
-			name: 'userId',
-			type: 'string'
-		},
-		{
-			label: 'User Name',
-			name: 'userName',
-			type: 'string'
-		}],
-		propertyKey: 'user'
-	}, {
-		name: 'User Organization',
-		properties: [{
-			label: 'Class PK',
-			name: 'classPK',
-			type: 'string'
-		},
-		{
-			label: 'Company ID',
-			name: 'companyId',
-			type: 'string'
-		},
-		{
-			label: 'Date Modified',
-			name: 'dateModified',
-			type: 'date'
-		},
-		{
-			label: 'Name',
-			name: 'name',
-			type: 'string'
-		},
-		{
-			label: 'Name Tree Path',
-			name: 'nameTreePath',
-			type: 'string'
-		},
-		{
-			label: 'Organization ID',
-			name: 'organizationId',
-			type: 'string'
-		},
-		{
-			label: 'Parent Organization ID',
-			name: 'parentOrganizationId',
-			type: 'string'
-		},
-		{
-			label: 'Tree Path',
-			name: 'treePath',
-			type: 'string'
-		},
-		{
-			label: 'Type',
-			name: 'type',
-			type: 'string'
-		}],
-		propertyKey: 'user-organization'
-	}],
+			name: 'User Organization',
+			properties: [
+				{
+					label: 'Class PK',
+					name: 'classPK',
+					type: 'string'
+				},
+				{
+					label: 'Company ID',
+					name: 'companyId',
+					type: 'string'
+				},
+				{
+					label: 'Date Modified',
+					name: 'dateModified',
+					type: 'date'
+				},
+				{
+					label: 'Name',
+					name: 'name',
+					type: 'string'
+				},
+				{
+					label: 'Name Tree Path',
+					name: 'nameTreePath',
+					type: 'string'
+				},
+				{
+					label: 'Organization ID',
+					name: 'organizationId',
+					type: 'string'
+				},
+				{
+					label: 'Parent Organization ID',
+					name: 'parentOrganizationId',
+					type: 'string'
+				},
+				{
+					label: 'Tree Path',
+					name: 'treePath',
+					type: 'string'
+				},
+				{
+					label: 'Type',
+					name: 'type',
+					type: 'string'
+				}
+			],
+			propertyKey: 'user-organization'
+		}
+	],
 	redirect: 'http://localhost:8080/group/guest/~/control_panel/manage/-/segments/entries?p_p_auth=1EwOzg1e'
 };
 

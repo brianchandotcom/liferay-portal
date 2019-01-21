@@ -12,7 +12,9 @@ import {PROPERTY_TYPES} from '../../utils/constants.es';
  */
 function getDefaultValue(property) {
 	const {options, type} = property;
+
 	let defaultValue = '';
+
 	if (type === PROPERTY_TYPES.STRING && options && options.length) {
 		defaultValue = options[0].value;
 	}
@@ -96,6 +98,7 @@ class CriteriaSidebar extends Component {
 										type
 									}
 								);
+
 								return (
 									<CriteriaSidebarItem
 										className={`color--${propertyKey}`}

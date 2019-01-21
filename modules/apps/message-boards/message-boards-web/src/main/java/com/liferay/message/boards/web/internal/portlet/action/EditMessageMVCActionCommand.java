@@ -566,7 +566,8 @@ public class EditMessageMVCActionCommand extends BaseMVCActionCommand {
 		String[] selectedFileNames = ParamUtil.getParameterValues(
 			actionRequest, "selectedFileName");
 
-		List<FileEntry> tempFileEntries = new ArrayList<>();
+		List<FileEntry> tempFileEntries = new ArrayList<>(
+			selectedFileNames.length);
 
 		for (String selectedFileName : selectedFileNames) {
 			FileEntry tempFileEntry = TempFileEntryUtil.getTempFileEntry(

@@ -43,7 +43,7 @@ public class MBAttachmentFileEntryUtil {
 		throws PortalException {
 
 		List<MBAttachmentFileEntryReference> mbAttachmentFileEntryReferences =
-			new ArrayList<>();
+			new ArrayList<>(tempFileEntries.size());
 
 		for (FileEntry tempFileEntry : tempFileEntries) {
 			String uniqueFileName = _getUniqueFileName(

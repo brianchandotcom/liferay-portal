@@ -1193,8 +1193,6 @@ public class JournalDisplayContext {
 		searchContext.setEnd(end);
 		searchContext.setFolderIds(folderIds);
 		searchContext.setGroupIds(new long[] {_themeDisplay.getScopeGroupId()});
-		searchContext.setIncludeDiscussions(
-			GetterUtil.getBoolean(params.get("includeDiscussions"), true));
 		searchContext.setKeywords(getKeywords());
 		searchContext.setAttribute("head", !showVersions);
 		searchContext.setAttribute("latest", !showVersions);

@@ -253,12 +253,12 @@ public class FileUtil {
 		return properties;
 	}
 
-	public static String separatorsToUnix(String path) {
-		if ((path != null) && (path.indexOf(92) != -1)) {
-			return path.replace('\\', '/');
+	public static String separatorsToUnix(String dirPathString) {
+		if ((dirPathString != null) && (File.separatorChar == '\\')) {
+			dirPathString = dirPathString.replace('\\', '/');
 		}
 
-		return path;
+		return dirPathString;
 	}
 
 	public static void setPosixFilePermissions(

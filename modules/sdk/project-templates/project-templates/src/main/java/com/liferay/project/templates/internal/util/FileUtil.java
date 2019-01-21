@@ -253,14 +253,6 @@ public class FileUtil {
 		return properties;
 	}
 
-	public static String separatorsToUnix(String dirPathString) {
-		if ((dirPathString != null) && (File.separatorChar == '\\')) {
-			dirPathString = dirPathString.replace('\\', '/');
-		}
-
-		return dirPathString;
-	}
-
 	public static void setPosixFilePermissions(
 			Path path, Set<PosixFilePermission> posixFilePermissions)
 		throws IOException {
@@ -278,8 +270,8 @@ public class FileUtil {
 
 		Map<String, InputStream> pathMap = new HashMap<>();
 
-		if (File.separatorChar == '\\') {
-			dirPathString = separatorsToUnix(dirPathString);
+		if ((dirPathString != null) && (File.separatorChar == '\\')) {
+			dirPathString = dirPathString.replace('\\', '/');
 		}
 
 		URL url = FileUtil.class.getResource(dirPathString);

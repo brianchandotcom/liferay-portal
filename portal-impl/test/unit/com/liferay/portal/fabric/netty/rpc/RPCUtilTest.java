@@ -104,8 +104,10 @@ public class RPCUtilTest {
 		Future<Serializable> future = RPCUtil.execute(
 			_embeddedChannel, new ExceptionRPCCallable(testException));
 
-		_embeddedChannel.writeInbound(_embeddedChannel.readOutbound());
-		_embeddedChannel.writeInbound(_embeddedChannel.readOutbound());
+		_embeddedChannel.writeInbound(
+			(Object)(_embeddedChannel.readOutbound()));
+		_embeddedChannel.writeInbound(
+			(Object)(_embeddedChannel.readOutbound()));
 
 		try {
 			future.get();
@@ -190,8 +192,10 @@ public class RPCUtilTest {
 		Future<String> future = RPCUtil.execute(
 			_embeddedChannel, new ResultRPCCallable(result));
 
-		_embeddedChannel.writeInbound(_embeddedChannel.readOutbound());
-		_embeddedChannel.writeInbound(_embeddedChannel.readOutbound());
+		_embeddedChannel.writeInbound(
+			(Object)(_embeddedChannel.readOutbound()));
+		_embeddedChannel.writeInbound(
+			(Object)(_embeddedChannel.readOutbound()));
 
 		Assert.assertEquals(result, future.get());
 	}

@@ -24,10 +24,10 @@ import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelPipeline;
+import io.netty.channel.DefaultEventLoopGroup;
+import io.netty.channel.EventLoop;
 import io.netty.channel.SingleThreadEventLoop;
 import io.netty.channel.embedded.EmbeddedChannel;
-import io.netty.channel.local.LocalEventLoopGroup;
-import io.netty.util.concurrent.EventExecutor;
 import io.netty.util.concurrent.Future;
 import io.netty.util.concurrent.FutureListener;
 import io.netty.util.concurrent.ScheduledFuture;
@@ -35,7 +35,7 @@ import io.netty.util.concurrent.ScheduledFuture;
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.ThreadFactory;
+import java.util.concurrent.Executor;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.logging.Level;
@@ -305,7 +305,7 @@ public class NettyUtilTest {
 	private final EmbeddedChannel _embeddedChannel =
 		NettyTestUtil.createEmptyEmbeddedChannel();
 
-	private static class MockEventLoopGroup extends LocalEventLoopGroup {
+	private static class MockEventLoopGroup extends DefaultEventLoopGroup {
 
 		public MockEventLoopGroup() {
 			super(1);
@@ -316,10 +316,8 @@ public class NettyUtilTest {
 		}
 
 		@Override
-		protected EventExecutor newChild(
-			ThreadFactory threadFactory, Object... args) {
-
-			return new SingleThreadEventLoop(this, threadFactory, true) {
+		protected EventLoop newChild(Executor executor, Object... args) {
+			return new SingleThreadEventLoop(this, executor, true) {
 
 				@Override
 				public ScheduledFuture<?> schedule(

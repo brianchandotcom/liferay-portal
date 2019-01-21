@@ -74,8 +74,6 @@ public class NettyUtil {
 
 		ChannelPipeline channelPipeline = channel.pipeline();
 
-		channelPipeline.removeLast();
-
 		return channelPipeline;
 	}
 

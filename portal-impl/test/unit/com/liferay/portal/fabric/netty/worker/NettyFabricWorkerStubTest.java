@@ -324,8 +324,8 @@ public class NettyFabricWorkerStubTest {
 		NoticeableFuture<String> noticeableFuture = nettyFabricWorkerStub.write(
 			new ReturnProcessCallable<String>(result));
 
-		embeddedChannel.writeInbound(embeddedChannel.readOutbound());
-		embeddedChannel.writeInbound(embeddedChannel.readOutbound());
+		embeddedChannel.writeInbound((Object)(embeddedChannel.readOutbound()));
+		embeddedChannel.writeInbound((Object)(embeddedChannel.readOutbound()));
 
 		Assert.assertEquals(result, noticeableFuture.get());
 	}

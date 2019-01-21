@@ -38,32 +38,6 @@ import com.liferay.portal.kernel.util.StringUtil;
  */
 public class MBUserRankUtil {
 
-	public static String getUserRank(
-			MBGroupServiceSettings mbGroupServiceSettings, String languageId,
-			int posts)
-		throws Exception {
-
-		String rank = StringPool.BLANK;
-
-		String[] ranks = mbGroupServiceSettings.getRanks(languageId);
-
-		for (String curRank : ranks) {
-			String[] kvp = StringUtil.split(curRank, CharPool.EQUAL);
-
-			String kvpName = kvp[0];
-			int kvpPosts = GetterUtil.getInteger(kvp[1]);
-
-			if (posts >= kvpPosts) {
-				rank = kvpName;
-			}
-			else {
-				break;
-			}
-		}
-
-		return rank;
-	}
-
 	public static String[] getUserRank(
 			MBGroupServiceSettings mbGroupServiceSettings, String languageId,
 			MBStatsUser statsUser)

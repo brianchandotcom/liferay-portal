@@ -224,6 +224,19 @@ public class JournalDisplayContext {
 		return getArticleActionDropdownItems(article);
 	}
 
+	public List<DropdownItem> getArticleVersionActionDropdownItems(
+			JournalArticle article)
+		throws Exception {
+
+		JournalArticleActionDropdownItems articleActionDropdownItems =
+			new JournalArticleActionDropdownItems(
+				article, _liferayPortletRequest, _liferayPortletResponse,
+				_trashHelper);
+
+		return articleActionDropdownItems.
+			getArticleVersionActionDropdownItems();
+	}
+
 	public String[] getCharactersBlacklist() throws PortalException {
 		JournalServiceConfiguration journalServiceConfiguration =
 			ConfigurationProviderUtil.getCompanyConfiguration(

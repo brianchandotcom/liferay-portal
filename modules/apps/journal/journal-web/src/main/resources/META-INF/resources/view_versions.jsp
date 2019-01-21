@@ -60,9 +60,12 @@
 					</h6>
 				</liferay-ui:search-container-column-text>
 
-				<liferay-ui:search-container-column-jsp
-					path="/article_version_action.jsp"
-				/>
+				<liferay-ui:search-container-column-text>
+					<clay:dropdown-actions
+						defaultEventHandler="<%= JournalWebConstants.JOURNAL_ELEMENTS_DEFAULT_EVENT_HANDLER %>"
+						dropdownItems="<%= journalDisplayContext.getArticleVersionActionDropdownItems(articleVersion) %>"
+					/>
+				</liferay-ui:search-container-column-text>
 			</c:when>
 			<c:when test='<%= Objects.equals(journalDisplayContext.getDisplayStyle(), "icon") %>'>
 
@@ -144,9 +147,12 @@
 					value="<%= HtmlUtil.escape(PortalUtil.getUserName(articleVersion)) %>"
 				/>
 
-				<liferay-ui:search-container-column-jsp
-					path="/article_version_action.jsp"
-				/>
+				<liferay-ui:search-container-column-text>
+					<clay:dropdown-actions
+						defaultEventHandler="<%= JournalWebConstants.JOURNAL_ELEMENTS_DEFAULT_EVENT_HANDLER %>"
+						dropdownItems="<%= journalDisplayContext.getArticleVersionActionDropdownItems(articleVersion) %>"
+					/>
+				</liferay-ui:search-container-column-text>
 			</c:when>
 		</c:choose>
 	</liferay-ui:search-container-row>
@@ -157,3 +163,19 @@
 		searchContainer="<%= searchContainer %>"
 	/>
 </liferay-ui:search-container>
+
+<aui:script require='<%= npmResolvedPackageName + "/js/ElementsDefaultEventHandler.es as ElementsDefaultEventHandler" %>'>
+	Liferay.component(
+		'<%= JournalWebConstants.JOURNAL_ELEMENTS_DEFAULT_EVENT_HANDLER %>',
+		new ElementsDefaultEventHandler.default(
+			{
+				namespace: '<%= renderResponse.getNamespace() %>',
+				trashEnabled: <%= trashHelper.isTrashEnabled(scopeGroupId) %>
+			}
+		),
+		{
+			destroyOnNavigate: true,
+			portletId: '<%= HtmlUtil.escapeJS(portletDisplay.getId()) %>'
+		}
+	);
+</aui:script>

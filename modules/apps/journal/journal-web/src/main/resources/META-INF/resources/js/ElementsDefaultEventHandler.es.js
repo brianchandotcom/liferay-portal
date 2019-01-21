@@ -10,6 +10,32 @@ class ElementsDefaultEventHandler extends PortletBase {
 		}
 	}
 
+	compareVersions(itemData) {
+		let namespace = this.namespace;
+
+		Liferay.Util.selectEntity(
+			{
+				dialog: {
+					constrain: true,
+					destroyOnHide: true,
+					modal: true
+				},
+				eventName: this.ns('selectVersionFm'),
+				id: this.ns('compareVersions'),
+				title: Liferay.Language.get('compare-versions'),
+				uri: itemData.compareVersionsURL
+			},
+			function(event) {
+				let uri = itemData.redirectURL;
+
+				uri = Liferay.Util.addParams(namespace + 'sourceVersion=' + event.sourceversion, uri);
+				uri = Liferay.Util.addParams(namespace + 'targetVersion=' + event.targetversion, uri);
+
+				location.href = uri;
+			}
+		);
+	}
+
 	copyArticle(itemData) {
 		this._send(itemData.copyArticleURL);
 	}

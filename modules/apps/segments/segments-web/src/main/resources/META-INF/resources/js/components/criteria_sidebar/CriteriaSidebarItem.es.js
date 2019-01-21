@@ -50,6 +50,9 @@ class CriteriaSidebarItem extends Component {
 		case 'double':
 			returnValue = 'decimal';
 			break;
+		case 'id':
+			returnValue = 'select';
+			break;
 		case 'integer':
 			returnValue = 'integer';
 			break;

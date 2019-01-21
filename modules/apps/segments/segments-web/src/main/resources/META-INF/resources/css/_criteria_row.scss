@@ -38,9 +38,14 @@
 			&.date-input {
 				min-width: 180px;
 			}
+
+			&.select-entity-input {
+				min-width: 200px;
+			}
 		}
 
 		.criterion-string {
+			flex: 1;
 			margin-right: 8px;
 		}
 	}

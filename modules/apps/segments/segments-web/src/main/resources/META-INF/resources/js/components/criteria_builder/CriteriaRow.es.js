@@ -326,6 +326,7 @@ class CriteriaRow extends Component {
 							<TypedInput
 								onChange={this._handleTypedInputChange}
 								options={selectedProperty.options}
+								selectEntity={selectedProperty.selectEntity}
 								type={selectedProperty.type}
 								value={value}
 							/>

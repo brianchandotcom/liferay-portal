@@ -7,6 +7,8 @@ const DATE_INPUT_TESTID = 'date-input';
 
 const DECIMAL_NUMBER_INPUT_TESTID = 'decimal-number';
 
+const ENTITY_SELECT_INPUT_TESTID = 'entity-select-input';
+
 const INTEGER_NUMBER_INPUT_TESTID = 'integer-number';
 
 const OPTIONS_BOOLEAN_INPUT_TESTID = 'options-boolean';
@@ -251,6 +253,32 @@ describe(
 						value: defaultNumberValue
 					}
 				);
+			}
+		);
+
+		it(
+			'should render type id',
+			() => {
+				const mockOnChange = jest.fn();
+
+				const defaultNumberValue = '12345';
+
+				const {getByTestId} = render(
+					<TypedInput
+						onChange={mockOnChange}
+						selectEntity={{
+							id: 'entitySelect',
+							title: 'Select Entity Test',
+							url: ''
+						}}
+						type={PROPERTY_TYPES.ID}
+						value={defaultNumberValue}
+					/>
+				);
+
+				const element = getByTestId(ENTITY_SELECT_INPUT_TESTID);
+
+				expect(element.value).toBe(defaultNumberValue);
 			}
 		);
 	}

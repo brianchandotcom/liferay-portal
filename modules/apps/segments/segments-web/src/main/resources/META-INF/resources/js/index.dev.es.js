@@ -202,12 +202,22 @@ const altProps = {
 				{
 					label: 'Organization ID',
 					name: 'organizationId',
-					type: 'string'
+					selectEntity: {
+						id: '_com_liferay_users_admin_web_portlet_UsersAdminPortlet_selectOrganization',
+						title: 'Select Organization',
+						uri: 'http://localhost:8080/group/guest/~/control_panel/manage?p_p_id=com_liferay_segments_web_internal_portlet_SegmentsPortlet&p_p_lifecycle=0&p_p_state=pop_up&p_p_mode=view&_com_liferay_segments_web_internal_portlet_SegmentsPortlet_mvcRenderCommandName=selectSegmentsEntryOrganizations&_com_liferay_segments_web_internal_portlet_SegmentsPortlet_segmentsEntryId=37008&p_p_auth=SsX9DxLY'
+					},
+					type: 'id'
 				},
 				{
 					label: 'Parent Organization ID',
 					name: 'parentOrganizationId',
-					type: 'string'
+					selectEntity: {
+						id: '_com_liferay_users_admin_web_portlet_UsersAdminPortlet_selectOrganization',
+						title: 'Select Organization',
+						uri: 'http://localhost:8080/group/guest/~/control_panel/manage?p_p_id=com_liferay_segments_web_internal_portlet_SegmentsPortlet&p_p_lifecycle=0&p_p_state=pop_up&p_p_mode=view&_com_liferay_segments_web_internal_portlet_SegmentsPortlet_mvcRenderCommandName=selectSegmentsEntryOrganizations&_com_liferay_segments_web_internal_portlet_SegmentsPortlet_segmentsEntryId=37008&p_p_auth=SsX9DxLY'
+					},
+					type: 'id'
 				},
 				{
 					label: 'Tree Path',

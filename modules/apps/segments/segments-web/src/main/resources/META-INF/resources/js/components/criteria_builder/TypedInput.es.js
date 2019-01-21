@@ -1,5 +1,6 @@
 import React from 'react';
 import propTypes from 'prop-types';
+import ClayButton from '../shared/ClayButton.es';
 import ClaySelect from '../shared/ClaySelect.es';
 import dateFns from 'date-fns';
 import {BOOLEAN_OPTIONS, PROPERTY_TYPES} from '../../utils/constants.es.js';
@@ -10,6 +11,13 @@ class TypedInput extends React.Component {
 	static propTypes = {
 		onChange: propTypes.func.isRequired,
 		options: propTypes.array,
+		selectEntity: propTypes.shape(
+			{
+				id: propTypes.string,
+				title: propTypes.string,
+				uri: propTypes.string
+			}
+		),
 		type: propTypes.string.isRequired,
 		value: propTypes.oneOfType(
 			[
@@ -36,6 +44,7 @@ class TypedInput extends React.Component {
 			[PROPERTY_TYPES.BOOLEAN]: this._renderBooleanType,
 			[PROPERTY_TYPES.DATE]: this._renderDateType,
 			[PROPERTY_TYPES.DOUBLE]: this._renderDecimalType,
+			[PROPERTY_TYPES.ID]: this._renderIdType,
 			[PROPERTY_TYPES.INTEGER]: this._renderIntegerType,
 			[PROPERTY_TYPES.STRING]: this._renderStringType
 		};
@@ -83,6 +92,29 @@ class TypedInput extends React.Component {
 		if (!isNaN(value)) {
 			this.props.onChange(value.toString());
 		}
+	}
+
+	_handleSelectEntity = () => {
+		const {
+			onChange,
+			selectEntity: {id, title, uri}
+		} = this.props;
+
+		Liferay.Util.selectEntity(
+			{
+				dialog: {
+					constrain: true,
+					destroyOnHide: true,
+					modal: true
+				},
+				id,
+				title,
+				uri
+			},
+			event => {
+				onChange(event.entityid);
+			}
+		);
 	}
 
 	_renderBooleanType = () => (
@@ -134,6 +166,32 @@ class TypedInput extends React.Component {
 			value={this.props.value}
 		/>
 	);
+
+	_renderIdType = () => {
+		const {value} = this.props;
+
+		return (
+			<div className="criterion-input input-group select-entity-input">
+				<div className="input-group-item input-group-prepend">
+					<input type="hidden" value={value} />
+
+					<input
+						className="form-control"
+						data-testid="entity-select-input"
+						readOnly
+						value={value}
+					/>
+				</div>
+
+				<span className="input-group-append input-group-item input-group-item-shrink">
+					<ClayButton
+						label={Liferay.Language.get('select')}
+						onClick={this._handleSelectEntity}
+					/>
+				</span>
+			</div>
+		);
+	}
 
 	_renderStringType = () => {
 		const {options, value} = this.props;

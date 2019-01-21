@@ -22,34 +22,58 @@ import java.io.InputStream;
 public class FileEntryBlueprint {
 
 	public String[] getAssetTagNames() {
-		return assetTagNames;
+		return _assetTagNames;
 	}
 
 	public String getFileName() {
-		return fileName;
+		return _fileName;
 	}
 
 	public long getGroupId() {
-		return groupId;
+		return _groupId;
 	}
 
 	public InputStream getInputStream() {
-		return inputStream;
+		return _inputStream;
 	}
 
 	public String getTitle() {
-		return title;
+		return _title;
 	}
 
 	public Long getUserId() {
-		return userId;
+		return _userId;
 	}
 
-	protected String[] assetTagNames;
-	protected String fileName;
-	protected long groupId;
-	protected InputStream inputStream;
-	protected String title;
-	protected Long userId;
+	protected void setAssetTagNames(String[] assetTagNames) {
+		_assetTagNames = assetTagNames;
+	}
+
+	protected void setFileName(String fileName) {
+		_fileName = fileName;
+	}
+
+	protected void setGroupId(long groupId) {
+		_groupId = groupId;
+	}
+
+	protected void setInputStream(InputStream inputStream) {
+		_inputStream = inputStream;
+	}
+
+	protected void setTitle(String title) {
+		_title = title;
+	}
+
+	protected void setUserId(Long userId) {
+		_userId = userId;
+	}
+
+	private String[] _assetTagNames;
+	private String _fileName;
+	private long _groupId;
+	private InputStream _inputStream;
+	private String _title;
+	private Long _userId;
 
 }

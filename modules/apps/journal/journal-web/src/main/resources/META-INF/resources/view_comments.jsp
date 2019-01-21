@@ -62,19 +62,9 @@
 				%>
 
 				<liferay-ui:search-container-column-text>
-					<liferay-frontend:vertical-card
-						cssClass="entry-display-style"
-						imageUrl="<%= (userDisplay != null) ? userDisplay.getPortraitURL(themeDisplay) : UserConstants.getPortraitURL(themeDisplay.getPathImage(), true, 0, null) %>"
-						resultRow="<%= row %>"
-					>
-						<liferay-frontend:vertical-card-header>
-							<liferay-ui:message arguments="<%= new String[] {LanguageUtil.getTimeDescription(locale, System.currentTimeMillis() - mbMessage.getModifiedDate().getTime(), true), HtmlUtil.escape(mbMessage.getUserName())} %>" key="x-ago-by-x" translateArguments="<%= false %>" />
-						</liferay-frontend:vertical-card-header>
-
-						<liferay-frontend:vertical-card-footer>
-							<%= HtmlUtil.extractText(content) %>
-						</liferay-frontend:vertical-card-footer>
-					</liferay-frontend:vertical-card>
+					<clay:vertical-card
+						verticalCard="<%= new JournalArticleCommentsVerticalCard(mbMessage, renderRequest) %>"
+					/>
 				</liferay-ui:search-container-column-text>
 			</c:when>
 			<c:otherwise>

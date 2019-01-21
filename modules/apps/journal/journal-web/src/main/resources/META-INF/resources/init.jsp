@@ -136,6 +136,7 @@ page import="com.liferay.journal.web.internal.security.permission.resource.Journ
 page import="com.liferay.journal.web.internal.security.permission.resource.JournalFolderPermission" %><%@
 page import="com.liferay.journal.web.internal.security.permission.resource.JournalPermission" %><%@
 page import="com.liferay.journal.web.internal.servlet.taglib.clay.JournalArticleCommentsVerticalCard" %><%@
+page import="com.liferay.journal.web.internal.servlet.taglib.clay.JournalArticleHistoryVerticalCard" %><%@
 page import="com.liferay.journal.web.internal.servlet.taglib.clay.JournalArticleVersionVerticalCard" %><%@
 page import="com.liferay.journal.web.internal.servlet.taglib.clay.JournalArticleVerticalCard" %><%@
 page import="com.liferay.journal.web.internal.servlet.taglib.clay.JournalFolderHorizontalCard" %><%@

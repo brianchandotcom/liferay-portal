@@ -106,12 +106,12 @@ JournalArticle article = journalDisplayContext.getArticle();
 								</h6>
 							</liferay-ui:search-container-column-text>
 
-                            <liferay-ui:search-container-column-text>
-							    <clay:dropdown-actions
-								    defaultEventHandler="<%= JournalWebConstants.JOURNAL_ELEMENTS_DEFAULT_EVENT_HANDLER %>"
-								    dropdownItems="<%= journalDisplayContext.getArticleHistoryActionDropdownItems(articleVersion) %>"
-							    />
-                            </liferay-ui:search-container-column-text>
+							<liferay-ui:search-container-column-text>
+								<clay:dropdown-actions
+									defaultEventHandler="<%= JournalWebConstants.JOURNAL_ELEMENTS_DEFAULT_EVENT_HANDLER %>"
+									dropdownItems="<%= journalDisplayContext.getArticleHistoryActionDropdownItems(articleVersion) %>"
+								/>
+							</liferay-ui:search-container-column-text>
 						</c:when>
 						<c:when test='<%= Objects.equals(journalHistoryDisplayContext.getDisplayStyle(), "icon") %>'>
 
@@ -120,37 +120,9 @@ JournalArticle article = journalDisplayContext.getArticle();
 							%>
 
 							<liferay-ui:search-container-column-text>
-
-								<%
-								String articleImageURL = articleVersion.getArticleImageURL(themeDisplay);
-								%>
-
-								<c:choose>
-									<c:when test="<%= Validator.isNotNull(articleImageURL) %>">
-										<liferay-frontend:vertical-card
-											actionJsp="/article_history_action.jsp"
-											actionJspServletContext="<%= application %>"
-											imageUrl="<%= articleImageURL %>"
-											resultRow="<%= row %>"
-											rowChecker="<%= searchContainer.getRowChecker() %>"
-											title="<%= articleVersion.getTitle(locale) %>"
-										>
-											<%@ include file="/article_version_vertical_card.jspf" %>
-										</liferay-frontend:vertical-card>
-									</c:when>
-									<c:otherwise>
-										<liferay-frontend:icon-vertical-card
-											actionJsp="/article_history_action.jsp"
-											actionJspServletContext="<%= application %>"
-											icon="web-content"
-											resultRow="<%= row %>"
-											rowChecker="<%= searchContainer.getRowChecker() %>"
-											title="<%= articleVersion.getTitle(locale) %>"
-										>
-											<%@ include file="/article_version_vertical_card.jspf" %>
-										</liferay-frontend:icon-vertical-card>
-									</c:otherwise>
-								</c:choose>
+								<clay:vertical-card
+									verticalCard="<%= new JournalArticleHistoryVerticalCard(articleVersion, renderRequest, renderResponse, searchContainer.getRowChecker(), trashHelper) %>"
+								/>
 							</liferay-ui:search-container-column-text>
 						</c:when>
 						<c:when test='<%= Objects.equals(journalHistoryDisplayContext.getDisplayStyle(), "list") %>'>

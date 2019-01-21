@@ -438,11 +438,8 @@ public class VideoProcessorImpl
 						file = liferayFileVersion.getFile(false);
 					}
 					catch (UnsupportedOperationException uoe) {
-						_fileVersionPreviewEventListener.addDLFileEntryPreview(
-							destinationFileVersion.getFileEntryId(),
-							destinationFileVersion.getFileVersionId(),
-							FileVersionPreviewEventListener.
-								DLFileEntryPreviewType.FAIL);
+						_fileVersionPreviewEventListener.onFailure(
+							destinationFileVersion);
 					}
 				}
 
@@ -475,11 +472,8 @@ public class VideoProcessorImpl
 						destinationFileVersion, file, previewTempFiles);
 				}
 				catch (Exception e) {
-					_fileVersionPreviewEventListener.addDLFileEntryPreview(
-						destinationFileVersion.getFileEntryId(),
-						destinationFileVersion.getFileVersionId(),
-						FileVersionPreviewEventListener.DLFileEntryPreviewType.
-							FAIL);
+					_fileVersionPreviewEventListener.onFailure(
+						destinationFileVersion);
 
 					_log.error(e, e);
 				}
@@ -502,10 +496,7 @@ public class VideoProcessorImpl
 				_log.debug(nsfee, nsfee);
 			}
 
-			_fileVersionPreviewEventListener.addDLFileEntryPreview(
-				destinationFileVersion.getFileEntryId(),
-				destinationFileVersion.getFileVersionId(),
-				FileVersionPreviewEventListener.DLFileEntryPreviewType.FAIL);
+			_fileVersionPreviewEventListener.onFailure(destinationFileVersion);
 		}
 		finally {
 			_fileVersionIds.remove(destinationFileVersion.getFileVersionId());
@@ -559,11 +550,7 @@ public class VideoProcessorImpl
 
 				future.get();
 
-				_fileVersionPreviewEventListener.addDLFileEntryPreview(
-					fileVersion.getFileEntryId(),
-					fileVersion.getFileVersionId(),
-					FileVersionPreviewEventListener.DLFileEntryPreviewType.
-						SUCCESS);
+				_fileVersionPreviewEventListener.onSuccess(fileVersion);
 			}
 			else {
 				LiferayConverter liferayConverter = new LiferayVideoConverter(
@@ -575,11 +562,7 @@ public class VideoProcessorImpl
 
 				liferayConverter.convert();
 
-				_fileVersionPreviewEventListener.addDLFileEntryPreview(
-					fileVersion.getFileEntryId(),
-					fileVersion.getFileVersionId(),
-					FileVersionPreviewEventListener.DLFileEntryPreviewType.
-						SUCCESS);
+				_fileVersionPreviewEventListener.onSuccess(fileVersion);
 			}
 		}
 		catch (Exception e) {
@@ -590,9 +573,7 @@ public class VideoProcessorImpl
 					fileVersion.getTitle(), "."),
 				e);
 
-			_fileVersionPreviewEventListener.addDLFileEntryPreview(
-				fileVersion.getFileEntryId(), fileVersion.getFileVersionId(),
-				FileVersionPreviewEventListener.DLFileEntryPreviewType.FAIL);
+			_fileVersionPreviewEventListener.onFailure(fileVersion);
 		}
 
 		addFileToStore(
@@ -628,16 +609,12 @@ public class VideoProcessorImpl
 						fileVersion.getTitle()));
 			}
 
-			_fileVersionPreviewEventListener.addDLFileEntryPreview(
-				fileVersion.getFileEntryId(), fileVersion.getFileVersionId(),
-				FileVersionPreviewEventListener.DLFileEntryPreviewType.FAIL);
+			_fileVersionPreviewEventListener.onFailure(fileVersion);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
 
-			_fileVersionPreviewEventListener.addDLFileEntryPreview(
-				fileVersion.getFileEntryId(), fileVersion.getFileVersionId(),
-				FileVersionPreviewEventListener.DLFileEntryPreviewType.FAIL);
+			_fileVersionPreviewEventListener.onFailure(fileVersion);
 		}
 	}
 

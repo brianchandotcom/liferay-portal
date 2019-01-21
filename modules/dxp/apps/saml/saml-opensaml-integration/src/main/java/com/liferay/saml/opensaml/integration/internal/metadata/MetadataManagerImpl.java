@@ -505,10 +505,10 @@ public class MetadataManagerImpl
 			return false;
 		}
 
+		MetadataResolver metadataResolver = getMetadataResolver();
+
 		for (SamlSpIdpConnection samlSpIdpConnection : samlSpIdpConnections) {
 			try {
-				MetadataResolver metadataResolver = getMetadataResolver();
-
 				EntityDescriptor entityDescriptor =
 					metadataResolver.resolveSingle(
 						new CriteriaSet(

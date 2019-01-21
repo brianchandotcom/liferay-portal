@@ -497,10 +497,9 @@ public class MetadataManagerImpl
 
 	@Override
 	public boolean hasDefaultIdpRole() {
-		long companyId = CompanyThreadLocal.getCompanyId();
-
 		List<SamlSpIdpConnection> samlSpIdpConnections =
-			_samlSpIdpConnectionLocalService.getSamlSpIdpConnections(companyId);
+			_samlSpIdpConnectionLocalService.getSamlSpIdpConnections(
+				CompanyThreadLocal.getCompanyId());
 
 		if (samlSpIdpConnections.isEmpty()) {
 			return false;

@@ -302,51 +302,6 @@ public class AssetListEntryAssetEntryRelServiceTest {
 	}
 
 	@Test
-	public void testMoveAssetListEntryAssetEntryRelToOccupiedPosition()
-		throws PortalException {
-
-		AssetListEntry assetListEntry = AssetListTestUtil.addAssetListEntry(
-			_group.getGroupId());
-
-		AssetEntry assetEntry = AssetTestUtil.addAssetEntry(
-			_group.getGroupId(), null,
-			TestAssetRendererFactory.class.getName());
-
-		AssetListEntryAssetEntryRel assetListEntryRelOriginal =
-			AssetListTestUtil.addAssetListEntryAssetEntryRel(
-				_group.getGroupId(), assetEntry, assetListEntry);
-
-		int originalPosition = assetListEntryRelOriginal.getPosition();
-
-		AssetListEntryAssetEntryRel assetListEntryRelOccupied =
-			AssetListTestUtil.addAssetListEntryAssetEntryRel(
-				_group.getGroupId(), assetEntry, assetListEntry);
-
-		int occupiedPosition = assetListEntryRelOccupied.getPosition();
-
-		AssetListEntryAssetEntryRelLocalServiceUtil.
-			moveAssetListEntryAssetEntryRel(
-				assetListEntry.getAssetListEntryId(), originalPosition,
-				occupiedPosition);
-
-		assetListEntryRelOriginal =
-			AssetListEntryAssetEntryRelUtil.findByPrimaryKey(
-				assetListEntryRelOriginal.getAssetListEntryAssetEntryRelId());
-
-		assetListEntryRelOccupied =
-			AssetListEntryAssetEntryRelUtil.findByPrimaryKey(
-				assetListEntryRelOccupied.getAssetListEntryAssetEntryRelId());
-
-		//assert assetListEntryRels swap positions
-
-		Assert.assertEquals(
-			originalPosition, assetListEntryRelOccupied.getPosition());
-
-		Assert.assertEquals(
-			occupiedPosition, assetListEntryRelOriginal.getPosition());
-	}
-
-	@Test
 	public void testUpdateAssetListEntryAssetEntryRel() throws PortalException {
 		AssetListEntry assetListEntryOriginal =
 			AssetListTestUtil.addAssetListEntry(_group.getGroupId());

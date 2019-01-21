@@ -18,39 +18,79 @@ import com.liferay.document.library.kernel.service.FileVersionPreviewEventListen
 import com.liferay.document.library.model.DLFileEntryPreview;
 import com.liferay.document.library.service.DLFileEntryPreviewLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.repository.model.FileVersion;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Roberto Díaz
+ * @author Adolfo Pérez
  */
 @Component(immediate = true, service = FileVersionPreviewEventListener.class)
 public class FileVersionPreviewEventListenerImpl
 	implements FileVersionPreviewEventListener {
 
 	@Override
-	public void addDLFileEntryPreview(
-			long fileEntryId, long fileVersionId,
-			DLFileEntryPreviewType fileEntryPreviewType)
-		throws PortalException {
+	public void onFailure(FileVersion fileVersion) {
+		_addDLFileEntryPreview(fileVersion, DLFileEntryPreviewType.FAIL);
+	}
 
-		DLFileEntryPreview dlFileEntryPreview =
-			_dlFileEntryPreviewLocalService.fetchDLFileEntryPreview(
-				fileEntryId, fileVersionId);
+	@Override
+	public void onSuccess(FileVersion fileVersion) {
+		_addDLFileEntryPreview(fileVersion, DLFileEntryPreviewType.SUCCESS);
+	}
 
-		if (dlFileEntryPreview == null) {
-			_dlFileEntryPreviewLocalService.addDLFileEntryPreview(
-				fileEntryId, fileVersionId, fileEntryPreviewType.toInteger());
+	private void _addDLFileEntryPreview(
+		FileVersion fileVersion, DLFileEntryPreviewType fileEntryPreviewType) {
+
+		try {
+			DLFileEntryPreview dlFileEntryPreview =
+				_dlFileEntryPreviewLocalService.fetchDLFileEntryPreview(
+					fileVersion.getFileEntryId(),
+					fileVersion.getFileVersionId());
+
+			if (dlFileEntryPreview == null) {
+				_dlFileEntryPreviewLocalService.addDLFileEntryPreview(
+					fileVersion.getFileEntryId(),
+					fileVersion.getFileVersionId(),
+					fileEntryPreviewType.toInteger());
+			}
+			else {
+				_dlFileEntryPreviewLocalService.updateDLFileEntryPreview(
+					dlFileEntryPreview.getFileEntryPreviewId(),
+					fileEntryPreviewType.toInteger());
+			}
 		}
-		else {
-			_dlFileEntryPreviewLocalService.updateDLFileEntryPreview(
-				dlFileEntryPreview.getFileEntryPreviewId(),
-				fileEntryPreviewType.toInteger());
+		catch (PortalException pe) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(pe, pe);
+			}
 		}
 	}
 
+	private static final Log _log = LogFactoryUtil.getLog(
+		FileVersionPreviewEventListenerImpl.class);
+
 	@Reference
 	private DLFileEntryPreviewLocalService _dlFileEntryPreviewLocalService;
+
+	private enum DLFileEntryPreviewType {
+
+		FAIL(0), SUCCESS(1);
+
+		public int toInteger() {
+			return _value;
+		}
+
+		private DLFileEntryPreviewType(int value) {
+			_value = value;
+		}
+
+		private final int _value;
+
+	}
 
 }

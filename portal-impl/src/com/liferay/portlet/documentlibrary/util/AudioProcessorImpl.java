@@ -306,11 +306,8 @@ public class AudioProcessorImpl
 						file = liferayFileVersion.getFile(false);
 					}
 					catch (UnsupportedOperationException uoe) {
-						_fileVersionPreviewEventListener.addDLFileEntryPreview(
-							destinationFileVersion.getFileEntryId(),
-							destinationFileVersion.getFileVersionId(),
-							FileVersionPreviewEventListener.
-								DLFileEntryPreviewType.FAIL);
+						_fileVersionPreviewEventListener.onFailure(
+							destinationFileVersion);
 					}
 				}
 
@@ -328,18 +325,12 @@ public class AudioProcessorImpl
 					_generateAudioXuggler(
 						destinationFileVersion, file, previewTempFiles);
 
-					_fileVersionPreviewEventListener.addDLFileEntryPreview(
-						destinationFileVersion.getFileEntryId(),
-						destinationFileVersion.getFileVersionId(),
-						FileVersionPreviewEventListener.DLFileEntryPreviewType.
-							SUCCESS);
+					_fileVersionPreviewEventListener.onSuccess(
+						destinationFileVersion);
 				}
 				catch (Exception e) {
-					_fileVersionPreviewEventListener.addDLFileEntryPreview(
-						destinationFileVersion.getFileEntryId(),
-						destinationFileVersion.getFileVersionId(),
-						FileVersionPreviewEventListener.DLFileEntryPreviewType.
-							FAIL);
+					_fileVersionPreviewEventListener.onFailure(
+						destinationFileVersion);
 
 					_log.error(e, e);
 				}
@@ -350,10 +341,7 @@ public class AudioProcessorImpl
 				_log.debug(nsfee, nsfee);
 			}
 
-			_fileVersionPreviewEventListener.addDLFileEntryPreview(
-				destinationFileVersion.getFileEntryId(),
-				destinationFileVersion.getFileVersionId(),
-				FileVersionPreviewEventListener.DLFileEntryPreviewType.FAIL);
+			_fileVersionPreviewEventListener.onFailure(destinationFileVersion);
 		}
 		finally {
 			_fileVersionIds.remove(destinationFileVersion.getFileVersionId());

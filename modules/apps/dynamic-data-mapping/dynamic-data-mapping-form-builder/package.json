@@ -43,8 +43,29 @@
 						"newline-after-var": 2,
 						"no-console": 0,
 						"no-unknown-property": 0,
+						"react/jsx-sort-props": 2,
 						"react/jsx-uses-react": 0,
 						"react/jsx-uses-vars": 2,
+						"react/sort-comp": [
+							2,
+							{
+								"groups": {
+									"lifecycle": [
+										"created",
+										"willAttach",
+										"attached",
+										"disposed",
+										"disposeInternal",
+										"prepareStateForRender",
+										"rendered",
+										"/^sync.+$",
+										"willReceiveProps",
+										"willReceiveState",
+										"willUpdate"
+									]
+								}
+							}
+						],
 						"require-jsdoc": 0
 					}
 				}

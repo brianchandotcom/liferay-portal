@@ -14,10 +14,7 @@
 
 package com.liferay.journal.web.internal.display.context;
 
-import com.liferay.asset.display.page.util.AssetDisplayPageHelper;
-import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetEntry;
-import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil;
@@ -48,7 +45,6 @@ import com.liferay.journal.web.internal.search.JournalSearcher;
 import com.liferay.journal.web.internal.servlet.taglib.util.JournalArticleActionDropdownItems;
 import com.liferay.journal.web.internal.servlet.taglib.util.JournalFolderActionDropdownItems;
 import com.liferay.journal.web.util.JournalPortletUtil;
-import com.liferay.journal.web.util.JournalUtil;
 import com.liferay.message.boards.model.MBMessage;
 import com.liferay.message.boards.service.MBMessageLocalServiceUtil;
 import com.liferay.petra.string.StringBundler;
@@ -64,7 +60,6 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
-import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletRequestModel;
@@ -103,7 +98,6 @@ import java.util.Map;
 import java.util.Objects;
 
 import javax.portlet.PortletPreferences;
-import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
@@ -215,6 +209,19 @@ public class JournalDisplayContext {
 			_themeDisplay);
 
 		return _articleDisplay;
+	}
+
+	public List<DropdownItem> getArticleHistoryActionDropdownItems(
+			JournalArticle article)
+		throws Exception {
+
+		JournalArticleActionDropdownItems articleActionDropdownItems =
+			new JournalArticleActionDropdownItems(
+				article, _liferayPortletRequest, _liferayPortletResponse,
+				_trashHelper);
+
+		return articleActionDropdownItems.
+			getArticleHistoryActionDropdownItems();
 	}
 
 	public List<DropdownItem> getArticleInfoPanelDropdownItems(
@@ -739,56 +746,6 @@ public class JournalDisplayContext {
 		}
 
 		return portletURL;
-	}
-
-	public String getPreviewURL(JournalArticle article) throws Exception {
-		AssetRendererFactory assetRendererFactory =
-			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClass(
-				JournalArticle.class);
-
-		AssetEntry assetEntry = assetRendererFactory.getAssetEntry(
-			JournalArticle.class.getName(), article.getResourcePrimKey());
-
-		if (AssetDisplayPageHelper.hasAssetDisplayPage(
-				_themeDisplay.getScopeGroupId(), assetEntry)) {
-
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(
-				PortalUtil.getGroupFriendlyURL(
-					_themeDisplay.getLayoutSet(), _themeDisplay));
-			sb.append("/a/");
-			sb.append(assetEntry.getEntryId());
-			sb.append(StringPool.SLASH);
-			sb.append(article.getId());
-			sb.append("?p_p_state=pop_up");
-
-			return sb.toString();
-		}
-
-		if (Validator.isNull(article.getDDMTemplateKey())) {
-			return StringPool.BLANK;
-		}
-
-		PortletURL portletURL = _liferayPortletResponse.createLiferayPortletURL(
-			JournalUtil.getPreviewPlid(article, _themeDisplay),
-			JournalPortletKeys.JOURNAL, PortletRequest.RENDER_PHASE);
-
-		Map<String, String[]> parameters = new HashMap<>();
-
-		parameters.put("articleId", new String[] {article.getArticleId()});
-		parameters.put(
-			"groupId", new String[] {String.valueOf(article.getGroupId())});
-		parameters.put(
-			"mvcPath", new String[] {"/preview_article_content.jsp"});
-		parameters.put(
-			"version", new String[] {String.valueOf(article.getVersion())});
-
-		portletURL.setParameters(parameters);
-
-		portletURL.setWindowState(LiferayWindowState.POP_UP);
-
-		return portletURL.toString();
 	}
 
 	public int getRestrictionType() {

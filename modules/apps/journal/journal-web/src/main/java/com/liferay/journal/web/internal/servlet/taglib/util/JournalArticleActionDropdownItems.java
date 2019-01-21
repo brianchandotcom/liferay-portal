@@ -188,6 +188,60 @@ public class JournalArticleActionDropdownItems {
 		};
 	}
 
+	public List<DropdownItem> getArticleHistoryActionDropdownItems()
+		throws Exception {
+
+		return new DropdownItemList() {
+			{
+				if (JournalArticlePermission.contains(
+						_themeDisplay.getPermissionChecker(), _article,
+						ActionKeys.VIEW)) {
+
+					Consumer<DropdownItem> previewContentArticleAction =
+						_getPreviewArticleAction();
+
+					if (previewContentArticleAction != null) {
+						add(previewContentArticleAction);
+					}
+				}
+
+				if (JournalFolderPermission.contains(
+						_themeDisplay.getPermissionChecker(),
+						_themeDisplay.getScopeGroupId(), _article.getFolderId(),
+						ActionKeys.ADD_ARTICLE)) {
+
+					add(_getAutoCopyArticleAction());
+				}
+
+				if (JournalArticlePermission.contains(
+						_themeDisplay.getPermissionChecker(), _article,
+						ActionKeys.EXPIRE) &&
+					(_article.getStatus() ==
+						WorkflowConstants.STATUS_APPROVED)) {
+
+					add(
+						_getExpireArticleAction(
+							_article.getArticleId() +
+								JournalPortlet.VERSION_SEPARATOR +
+									_article.getVersion()));
+				}
+
+				add(_getCompareArticleVersionsAction());
+
+				if (JournalArticlePermission.contains(
+						_themeDisplay.getPermissionChecker(), _article,
+						ActionKeys.DELETE)) {
+
+					add(
+						_getDeleteArticleAction(
+							_article.getArticleId() +
+								JournalPortlet.VERSION_SEPARATOR +
+									_article.getVersion()));
+				}
+			}
+		};
+	}
+
 	public List<DropdownItem> getArticleVersionActionDropdownItems()
 		throws Exception {
 

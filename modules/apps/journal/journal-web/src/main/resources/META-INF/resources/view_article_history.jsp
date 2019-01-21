@@ -106,9 +106,12 @@ JournalArticle article = journalDisplayContext.getArticle();
 								</h6>
 							</liferay-ui:search-container-column-text>
 
-							<liferay-ui:search-container-column-jsp
-								path="/article_history_action.jsp"
-							/>
+                            <liferay-ui:search-container-column-text>
+							    <clay:dropdown-actions
+								    defaultEventHandler="<%= JournalWebConstants.JOURNAL_ELEMENTS_DEFAULT_EVENT_HANDLER %>"
+								    dropdownItems="<%= journalDisplayContext.getArticleHistoryActionDropdownItems(articleVersion) %>"
+							    />
+                            </liferay-ui:search-container-column-text>
 						</c:when>
 						<c:when test='<%= Objects.equals(journalHistoryDisplayContext.getDisplayStyle(), "icon") %>'>
 
@@ -194,9 +197,12 @@ JournalArticle article = journalDisplayContext.getArticle();
 								value="<%= HtmlUtil.escape(PortalUtil.getUserName(articleVersion)) %>"
 							/>
 
-							<liferay-ui:search-container-column-jsp
-								path="/article_history_action.jsp"
-							/>
+							<liferay-ui:search-container-column-text>
+								<clay:dropdown-actions
+									defaultEventHandler="<%= JournalWebConstants.JOURNAL_ELEMENTS_DEFAULT_EVENT_HANDLER %>"
+									dropdownItems="<%= journalDisplayContext.getArticleHistoryActionDropdownItems(articleVersion) %>"
+								/>
+							</liferay-ui:search-container-column-text>
 						</c:when>
 					</c:choose>
 				</liferay-ui:search-container-row>
@@ -208,44 +214,23 @@ JournalArticle article = journalDisplayContext.getArticle();
 			</liferay-ui:search-container>
 		</aui:form>
 
-		<aui:script>
-			AUI.$('body').on(
-				'click',
-				'.compare-to-link a',
-				function(event) {
-					var currentTarget = AUI.$(event.currentTarget);
-
-					Liferay.Util.selectEntity(
-						{
-							dialog: {
-								constrain: true,
-								destroyOnHide: true,
-								modal: true
-							},
-							eventName: '<portlet:namespace />selectVersionFm',
-							id: '<portlet:namespace />compareVersions' + currentTarget.attr('id'),
-							title: '<liferay-ui:message key="compare-versions" />',
-							uri: currentTarget.data('uri')
-						},
-						function(event) {
-							<portlet:renderURL var="compareVersionURL">
-								<portlet:param name="mvcPath" value="/compare_versions.jsp" />
-								<portlet:param name="redirect" value="<%= currentURL %>" />
-								<portlet:param name="groupId" value="<%= String.valueOf(article.getGroupId()) %>" />
-								<portlet:param name="articleId" value="<%= article.getArticleId() %>" />
-							</portlet:renderURL>
-
-							var uri = '<%= compareVersionURL %>';
-
-							uri = Liferay.Util.addParams('<portlet:namespace />sourceVersion=' + event.sourceversion, uri);
-							uri = Liferay.Util.addParams('<portlet:namespace />targetVersion=' + event.targetversion, uri);
-
-							location.href = uri;
-						}
-					);
+		<aui:script require='<%= npmResolvedPackageName + "/js/ElementsDefaultEventHandler.es as ElementsDefaultEventHandler" %>'>
+			Liferay.component(
+				'<%= JournalWebConstants.JOURNAL_ELEMENTS_DEFAULT_EVENT_HANDLER %>',
+				new ElementsDefaultEventHandler.default(
+					{
+						namespace: '<%= renderResponse.getNamespace() %>',
+						trashEnabled: <%= trashHelper.isTrashEnabled(scopeGroupId) %>
+					}
+				),
+				{
+					destroyOnNavigate: true,
+					portletId: '<%= HtmlUtil.escapeJS(portletDisplay.getId()) %>'
 				}
 			);
+		</aui:script>
 
+		<aui:script>
 			var ACTIONS = {};
 
 			<c:if test="<%= JournalArticlePermission.contains(permissionChecker, article, ActionKeys.DELETE) %>">

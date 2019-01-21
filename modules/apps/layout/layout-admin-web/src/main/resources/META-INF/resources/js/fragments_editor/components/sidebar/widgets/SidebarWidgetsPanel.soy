@@ -55,6 +55,8 @@
 			{foreach $category in $widgets}
 				{call .category}
 					{param category: $category /}
+					{param key: $category.title /}
+					{param keywords: $_keywords /}
 					{param spritemap: $spritemap /}
 				{/call}
 			{/foreach}
@@ -64,6 +66,8 @@
 
 {template .category}
 	{@param category: ?}
+	{@param key: string}
+	{@param? keywords: string}
 	{@param? spritemap: string}
 
 	{let $collapseId kind="text"}
@@ -76,17 +80,21 @@
 		{sp}panel
 	{/let}
 
-	<div aria-orientation="vertical" class="panel-group panel-group-flush" role="tablist">
+	<div
+		aria-orientation="vertical"
+		class="panel-group panel-group-flush"
+		key="{$key}"
+		role="tablist"
+	>
 		<div class="{$panelClasses}">
 
 			{let $collapseIconClasses kind="text"}
 				collapse-icon
+				{sp}sheet-subtitle
 
-				{if not $category.expanded}
+				{if (not $keywords) or ($keywords == '')}
 					{sp}collapsed
 				{/if}
-
-				{sp}sheet-subtitle
 			{/let}
 
 			<a
@@ -113,7 +121,7 @@
 			{let $panelCollapseClasses kind="text"}
 				panel-collapse
 
-				{if not $category.expanded}
+				{if (not $keywords) or ($keywords == '')}
 					{sp}collapse
 				{else}
 					{sp}show
@@ -130,6 +138,8 @@
 						{foreach $subCategory in $category.categories}
 							{call .category}
 								{param category: $subCategory /}
+								{param key: $key + $subCategory.title /}
+								{param keywords: $keywords /}
 								{param spritemap: $spritemap /}
 							{/call}
 						{/foreach}

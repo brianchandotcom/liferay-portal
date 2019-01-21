@@ -322,7 +322,6 @@ definition {
 
 		DMDocument.addCP(
 			dmDocumentFile = "Document_1.txt",
-			dmDocumentSize = "0KB",
 			dmDocumentTitle = "DM Document Title",
 			tagNameList = "first tag"
 		);
@@ -409,7 +408,6 @@ definition {
 
 		DMDocument.addCP(
 			dmDocumentFile = "Document_1.txt",
-			dmDocumentSize = "0KB",
 			dmDocumentTitle = "DM Document Title",
 			tagNameList = "first tag"
 		);
@@ -782,7 +780,6 @@ definition {
 
 		DMDocument.addCP(
 			dmDocumentFile = "Document_1.txt",
-			dmDocumentSize = "0KB",
 			dmDocumentTitle = "DM Document Title",
 			tagNameList = "first tag"
 		);

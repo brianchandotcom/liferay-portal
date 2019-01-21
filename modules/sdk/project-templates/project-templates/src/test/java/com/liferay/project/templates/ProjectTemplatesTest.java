@@ -1201,8 +1201,6 @@ public class ProjectTemplatesTest {
 
 	@Test
 	public void testBuildTemplateModulesExtMaven() throws Exception {
-		File destinationDir = temporaryFolder.newFolder("maven");
-
 		String groupId = "com.test";
 		String name = "foo-ext";
 		String template = "modules-ext";
@@ -1234,6 +1232,8 @@ public class ProjectTemplatesTest {
 		completeArgs.add("-DoriginalModuleVersion=3.0.4");
 		completeArgs.add("-DprojectType=standalone");
 		completeArgs.add("-Dversion=1.0.0");
+
+		File destinationDir = temporaryFolder.newFolder("maven");
 
 		_executeMaven(destinationDir, completeArgs.toArray(new String[0]));
 

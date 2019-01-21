@@ -44,6 +44,7 @@ import org.junit.runner.RunWith;
 
 /**
  * @author Daniel Kocsis
+ * @author Dávid Varga
  */
 @RunAsClient
 @RunWith(Arquillian.class)

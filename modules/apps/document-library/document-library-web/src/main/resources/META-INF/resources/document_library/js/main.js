@@ -201,9 +201,7 @@ AUI.add(
 							instance._selectedFileEntries = [];
 						}
 
-						var form = instance.get('form').node;
-
-						form.get(instance.NS + 'actionMode').val('multiple');
+						instance._isSelectAllChecked = false;
 					},
 
 					_handleSelectPageCheckboxChanged: function(event) {
@@ -211,11 +209,9 @@ AUI.add(
 
 						var checked = event.data.checked;
 
-						var form = instance.get('form').node;
-
 						setTimeout(
 							function() {
-								form.get(instance.NS + 'actionMode').val(checked ? 'all:${instance.getFolderId()}' : 'multiple');
+								instance._isSelectAllChecked = checked;
 							},
 							100
 						);
@@ -281,8 +277,6 @@ AUI.add(
 						var form = instance.get('form').node;
 						var namespace = instance.NS;
 
-						var actionMode = form.get(namespace + 'actionMode').val() || 'multiple';
-
 						if (!editTagsComponent) {
 							var urlTags = themeDisplay.getPortalURL() + '/o/bulk/asset/tags/' + instance.get('classNameId') + '/common';
 							var urlUpdateTags = themeDisplay.getPortalURL() + '/o/bulk/asset/tags/' + instance.get('classNameId');
@@ -292,10 +286,11 @@ AUI.add(
 								function(EditTags) {
 									instance._editTagsComponent = new EditTags.default(
 										{
-											actionMode: actionMode,
 											fileEntries: instance._selectedFileEntries,
+											folderId: instance.getFolderId(),
 											portletNamespace: namespace,
 											repositoryId: parseFloat(form.get(namespace + 'repositoryId').val()),
+											selectAll: instance._isSelectAllChecked,
 											spritemap: themeDisplay.getPathThemeImages() + '/lexicon/icons.svg',
 											urlTags: urlTags,
 											urlUpdateTags: urlUpdateTags
@@ -306,8 +301,9 @@ AUI.add(
 							);
 						}
 						else {
-							editTagsComponent.actionMode = actionMode;
 							editTagsComponent.fileEntries = instance._selectedFileEntries;
+							editTagsComponent.selectAll = instance._isSelectAllChecked;
+							editTagsComponent.folderId = instance.getFolderId();
 							editTagsComponent.open();
 						}
 					},

@@ -182,3 +182,20 @@
 		);
 	}
 </aui:script>
+
+<c:if test='<%= iFramePortletInstanceConfiguration.auth() && StringUtil.equals(iFramePortletInstanceConfiguration.authType(), "basic") %>'>
+	<aui:script>
+		const headers = new Headers();
+
+		headers.append('Authorization', 'Basic ' + btoa('<%= iFramePortletInstanceConfiguration.basicUserName() %>:<%= iFramePortletInstanceConfiguration.basicPassword() %>'))
+
+		fetch(
+			'<%= HtmlUtil.escapeHREF(iFrameDisplayContext.getIframeSrc()) %>',
+			{
+				headers: headers,
+				method: 'GET',
+				mode: 'no-cors'
+			}
+		);
+	</aui:script>
+</c:if>

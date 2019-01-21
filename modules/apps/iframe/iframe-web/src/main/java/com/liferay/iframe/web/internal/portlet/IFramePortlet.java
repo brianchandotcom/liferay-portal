@@ -18,8 +18,6 @@ import com.liferay.iframe.web.configuration.IFramePortletInstanceConfiguration;
 import com.liferay.iframe.web.internal.constants.IFramePortletKeys;
 import com.liferay.iframe.web.internal.constants.IFrameWebKeys;
 import com.liferay.iframe.web.internal.display.context.IFrameDisplayContext;
-import com.liferay.iframe.web.internal.util.IFrameUtil;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -120,23 +118,7 @@ public class IFramePortlet extends MVCPortlet {
 
 		String authType = iFrameDisplayContext.getAuthType();
 
-		if (authType.equals("basic")) {
-			String userName = IFrameUtil.getUserName(
-				renderRequest,
-				iFramePortletInstanceConfiguration.basicUserName());
-			String password = IFrameUtil.getPassword(
-				renderRequest,
-				iFramePortletInstanceConfiguration.basicPassword());
-
-			int pos = src.indexOf("://");
-
-			String protocol = src.substring(0, pos + 3);
-			String url = src.substring(pos + 3);
-
-			src = StringBundler.concat(
-				protocol, userName, ":", password, "@", url);
-		}
-		else {
+		if (authType.equals("form")) {
 			PortletURL proxyURL = renderResponse.createRenderURL();
 
 			proxyURL.setParameter("mvcPath", "/proxy.jsp");

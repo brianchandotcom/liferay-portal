@@ -16,15 +16,9 @@
 
 <%@ include file="/init.jsp" %>
 
-<%
-SearchContainer articleSearchContainer = journalDisplayContext.getSearchContainer(true);
-
-String displayStyle = journalDisplayContext.getDisplayStyle();
-%>
-
 <liferay-ui:search-container
 	emptyResultsMessage="no-web-content-was-found"
-	searchContainer="<%= articleSearchContainer %>"
+	searchContainer="<%= journalDisplayContext.getSearchContainer(true) %>"
 >
 	<liferay-ui:search-container-row
 		className="com.liferay.journal.model.JournalArticle"
@@ -36,7 +30,7 @@ String displayStyle = journalDisplayContext.getDisplayStyle();
 		%>
 
 		<c:choose>
-			<c:when test='<%= displayStyle.equals("descriptive") %>'>
+			<c:when test='<%= Objects.equals(journalDisplayContext.getDisplayStyle(), "descriptive") %>'>
 				<liferay-ui:search-container-column-text>
 					<liferay-ui:user-portrait
 						userId="<%= articleVersion.getUserId() %>"
@@ -70,7 +64,7 @@ String displayStyle = journalDisplayContext.getDisplayStyle();
 					path="/article_version_action.jsp"
 				/>
 			</c:when>
-			<c:when test='<%= displayStyle.equals("icon") %>'>
+			<c:when test='<%= Objects.equals(journalDisplayContext.getDisplayStyle(), "icon") %>'>
 
 				<%
 				row.setCssClass("entry-card lfr-asset-item");
@@ -110,7 +104,7 @@ String displayStyle = journalDisplayContext.getDisplayStyle();
 					</c:choose>
 				</liferay-ui:search-container-column-text>
 			</c:when>
-			<c:when test='<%= displayStyle.equals("list") %>'>
+			<c:when test='<%= Objects.equals(journalDisplayContext.getDisplayStyle(), "list") %>'>
 				<liferay-ui:search-container-column-text
 					name="id"
 					value="<%= HtmlUtil.escape(articleVersion.getArticleId()) %>"
@@ -158,9 +152,8 @@ String displayStyle = journalDisplayContext.getDisplayStyle();
 	</liferay-ui:search-container-row>
 
 	<liferay-ui:search-iterator
-		displayStyle="<%= displayStyle %>"
+		displayStyle="<%= journalDisplayContext.getDisplayStyle() %>"
 		markupView="lexicon"
-		resultRowSplitter="<%= journalDisplayContext.isSearch() ? null : new JournalResultRowSplitter() %>"
-		searchContainer="<%= articleSearchContainer %>"
+		searchContainer="<%= searchContainer %>"
 	/>
 </liferay-ui:search-container>

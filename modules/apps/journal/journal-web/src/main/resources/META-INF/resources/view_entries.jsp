@@ -19,17 +19,13 @@
 <%
 String referringPortletResource = ParamUtil.getString(request, "referringPortletResource");
 
-SearchContainer articleSearchContainer = journalDisplayContext.getSearchContainer(false);
-
-String displayStyle = journalDisplayContext.getDisplayStyle();
-
 String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 %>
 
 <liferay-ui:search-container
 	emptyResultsMessage="no-web-content-was-found"
 	id="<%= searchContainerId %>"
-	searchContainer="<%= articleSearchContainer %>"
+	searchContainer="<%= journalDisplayContext.getSearchContainer(false) %>"
 >
 	<liferay-ui:search-container-row
 		className="Object"
@@ -89,7 +85,7 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 				%>
 
 				<c:choose>
-					<c:when test='<%= displayStyle.equals("descriptive") %>'>
+					<c:when test='<%= Objects.equals(journalDisplayContext.getDisplayStyle(), "descriptive") %>'>
 						<liferay-ui:search-container-column-text>
 							<liferay-ui:user-portrait
 								userId="<%= curArticle.getUserId() %>"
@@ -142,7 +138,7 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 							/>
 						</liferay-ui:search-container-column-text>
 					</c:when>
-					<c:when test='<%= displayStyle.equals("icon") %>'>
+					<c:when test='<%= Objects.equals(journalDisplayContext.getDisplayStyle(), "icon") %>'>
 
 						<%
 						row.setCssClass("entry-card lfr-asset-item " + row.getCssClass());
@@ -150,7 +146,7 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 
 						<liferay-ui:search-container-column-text>
 							<clay:vertical-card
-								verticalCard="<%= new JournalArticleVerticalCard(curArticle, renderRequest, renderResponse, articleSearchContainer.getRowChecker(), trashHelper) %>"
+								verticalCard="<%= new JournalArticleVerticalCard(curArticle, renderRequest, renderResponse, searchContainer.getRowChecker(), trashHelper) %>"
 							/>
 						</liferay-ui:search-container-column-text>
 					</c:when>
@@ -249,11 +245,11 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 				rowURL.setParameter("redirect", currentURL);
 				rowURL.setParameter("groupId", String.valueOf(curFolder.getGroupId()));
 				rowURL.setParameter("folderId", String.valueOf(curFolder.getFolderId()));
-				rowURL.setParameter("displayStyle", displayStyle);
+				rowURL.setParameter("displayStyle", journalDisplayContext.getDisplayStyle());
 				%>
 
 				<c:choose>
-					<c:when test='<%= displayStyle.equals("descriptive") %>'>
+					<c:when test='<%= Objects.equals(journalDisplayContext.getDisplayStyle(), "descriptive") %>'>
 						<liferay-ui:search-container-column-icon
 							icon="folder"
 							toggleRowChecker="<%= true %>"
@@ -274,7 +270,7 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 							</h6>
 
 							<h5>
-								<aui:a href="<%= (rowURL != null) ? rowURL.toString() : null %>">
+								<aui:a href="<%= rowURL.toString() %>">
 									<%= HtmlUtil.escape(curFolder.getName()) %>
 								</aui:a>
 							</h5>
@@ -291,7 +287,7 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 							/>
 						</liferay-ui:search-container-column-text>
 					</c:when>
-					<c:when test='<%= displayStyle.equals("icon") %>'>
+					<c:when test='<%= Objects.equals(journalDisplayContext.getDisplayStyle(), "icon") %>'>
 
 						<%
 						row.setCssClass("entry-card lfr-asset-folder " + row.getCssClass());
@@ -301,7 +297,7 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 							colspan="<%= 2 %>"
 						>
 							<clay:horizontal-card
-								horizontalCard="<%= new JournalFolderHorizontalCard(curFolder, journalDisplayContext.getDisplayStyle(), renderRequest, renderResponse, articleSearchContainer.getRowChecker(), trashHelper) %>"
+								horizontalCard="<%= new JournalFolderHorizontalCard(curFolder, journalDisplayContext.getDisplayStyle(), renderRequest, renderResponse, searchContainer.getRowChecker(), trashHelper) %>"
 							/>
 						</liferay-ui:search-container-column-text>
 					</c:when>
@@ -368,10 +364,10 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 	</liferay-ui:search-container-row>
 
 	<liferay-ui:search-iterator
-		displayStyle="<%= displayStyle %>"
+		displayStyle="<%= journalDisplayContext.getDisplayStyle() %>"
 		markupView="lexicon"
 		resultRowSplitter="<%= journalDisplayContext.isSearch() ? null : new JournalResultRowSplitter() %>"
-		searchContainer="<%= articleSearchContainer %>"
+		searchContainer="<%= searchContainer %>"
 	/>
 </liferay-ui:search-container>
 

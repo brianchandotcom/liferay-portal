@@ -16,10 +16,6 @@
 
 <%@ include file="/init.jsp" %>
 
-<%
-String displayStyle = journalDisplayContext.getDisplayStyle();
-%>
-
 <liferay-ui:search-container
 	emptyResultsMessage="no-comment-was-found"
 	searchContainer="<%= journalDisplayContext.getCommentsSearchContainer() %>"
@@ -39,7 +35,7 @@ String displayStyle = journalDisplayContext.getDisplayStyle();
 		%>
 
 		<c:choose>
-			<c:when test='<%= displayStyle.equals("descriptive") %>'>
+			<c:when test='<%= Objects.equals(journalDisplayContext.getDisplayStyle(), "descriptive") %>'>
 				<liferay-ui:search-container-column-image
 					src="<%= (userDisplay != null) ? userDisplay.getPortraitURL(themeDisplay) : UserConstants.getPortraitURL(themeDisplay.getPathImage(), true, 0, null) %>"
 					toggleRowChecker="<%= false %>"
@@ -59,7 +55,7 @@ String displayStyle = journalDisplayContext.getDisplayStyle();
 					</h6>
 				</liferay-ui:search-container-column-text>
 			</c:when>
-			<c:when test='<%= displayStyle.equals("icon") %>'>
+			<c:when test='<%= Objects.equals(journalDisplayContext.getDisplayStyle(), "icon") %>'>
 
 				<%
 				row.setCssClass("entry-card lfr-asset-item");
@@ -103,7 +99,7 @@ String displayStyle = journalDisplayContext.getDisplayStyle();
 	</liferay-ui:search-container-row>
 
 	<liferay-ui:search-iterator
-		displayStyle="<%= displayStyle %>"
+		displayStyle="<%= journalDisplayContext.getDisplayStyle() %>"
 		markupView="lexicon"
 	/>
 </liferay-ui:search-container>

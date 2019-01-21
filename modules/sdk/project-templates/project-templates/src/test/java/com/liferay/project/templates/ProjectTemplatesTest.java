@@ -1203,9 +1203,9 @@ public class ProjectTemplatesTest {
 	public void testBuildTemplateModulesExtMaven() throws Exception {
 		File destinationDir = temporaryFolder.newFolder("maven");
 
-		String template = "modules-ext";
-		String name = "foo-ext";
 		String groupId = "com.test";
+		String name = "foo-ext";
+		String template = "modules-ext";
 
 		List<String> completeArgs = new ArrayList<>();
 
@@ -1226,24 +1226,24 @@ public class ProjectTemplatesTest {
 
 		completeArgs.add("-DarchetypeGroupId=com.liferay");
 		completeArgs.add("-DarchetypeVersion=" + projectTemplateVersion);
+		completeArgs.add("-DartifactId=" + name);
 		completeArgs.add("-Dauthor=" + System.getProperty("user.name"));
 		completeArgs.add("-DgroupId=" + groupId);
-		completeArgs.add("-DartifactId=" + name);
-		completeArgs.add("-Dversion=1.0.0");
 		completeArgs.add("-DliferayVersion=7.1");
 		completeArgs.add("-DprojectType=standalone");
 		completeArgs.add("-DoriginalModuleName=com.liferay.login.web");
 		completeArgs.add("-DoriginalModuleVersion=3.0.4");
+		completeArgs.add("-Dversion=1.0.0");
 
 		_executeMaven(destinationDir, completeArgs.toArray(new String[0]));
 
 		File projectDir = new File(destinationDir, name);
 
-		_testNotExists(projectDir, "pom.xml");
 		_testContains(
 			projectDir, "build.gradle",
 			"originalModule group: \"com.liferay\", ",
 			"name: \"com.liferay.login.web\", version: \"3.0.4\"");
+		_testNotExists(projectDir, "pom.xml");
 	}
 
 	@Test

@@ -43,12 +43,11 @@ import java.util.Map;
  */
 public class AssetTestUtil {
 
-	public static AssetEntry addAssetEntry(long groupId) throws Exception {
+	public static AssetEntry addAssetEntry(long groupId) {
 		return addAssetEntry(groupId, null);
 	}
 
-	public static AssetEntry addAssetEntry(long groupId, Date publishDate)
-		throws Exception {
+	public static AssetEntry addAssetEntry(long groupId, Date publishDate) {
 
 		long assetEntryId = CounterLocalServiceUtil.increment();
 

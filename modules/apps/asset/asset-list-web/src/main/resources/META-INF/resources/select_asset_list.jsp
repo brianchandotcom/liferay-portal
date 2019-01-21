@@ -59,19 +59,22 @@ SelectAssetListDisplayContext selectAssetListDisplayContext = new SelectAssetLis
 				colspan="<%= 2 %>"
 			>
 				<h5>
-					<%= HtmlUtil.escape(assetListEntry.getTitle()) %>
+					<c:choose>
+						<c:when test="<%= assetListEntry.getAssetListEntryId() != selectAssetListDisplayContext.getSelectedAssetListEntryId() %>">
+							<aui:a cssClass="selector-button" data="<%= data %>" href="javascript:;">
+								<%= HtmlUtil.escape(assetListEntry.getTitle()) %>
+							</aui:a>
+						</c:when>
+						<c:otherwise>
+							<%= HtmlUtil.escape(assetListEntry.getTitle()) %>
+						</c:otherwise>
+					</c:choose>
 				</h5>
 
 				<h6 class="text-default">
 					<strong><liferay-ui:message key="<%= HtmlUtil.escape(assetListEntry.getTypeLabel()) %>" /></strong>
 				</h6>
 			</liferay-ui:search-container-column-text>
-
-			<c:if test="<%= assetListEntry.getAssetListEntryId() != selectAssetListDisplayContext.getSelectedAssetListEntryId() %>">
-				<liferay-ui:search-container-column-text>
-					<aui:button cssClass="selector-button" data="<%= data %>" value="choose" />
-				</liferay-ui:search-container-column-text>
-			</c:if>
 		</liferay-ui:search-container-row>
 
 		<liferay-ui:search-iterator

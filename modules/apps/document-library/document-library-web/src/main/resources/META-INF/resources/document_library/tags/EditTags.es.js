@@ -94,7 +94,7 @@ class EditTags extends Component {
 
 		let bodyData = {
 			repositoryId: this.repositoryId,
-			selection: this.actionMode === 'multiple' ? this.fileEntries : [this.actionMode]
+			selection: this._getSelection()
 		};
 
 		this._fetchTagsRequest(
@@ -105,10 +105,14 @@ class EditTags extends Component {
 					this.loading = false;
 					this.commonTags = response.tagNames;
 					this.description = response.description;
-					this.multiple = (this.fileEntries.length > 1) || (this.actionMode !== 'multiple');
+					this.multiple = (this.fileEntries.length > 1) || this.selectAll;
 				}
 			}
 		);
+	}
+
+	_getSelection() {
+		return this.selectAll ? ['all:' + this.folderId] : this.fileEntries;
 	}
 
 	/**
@@ -149,7 +153,7 @@ class EditTags extends Component {
 		let bodyData = {
 			append: this.append,
 			repositoryId: this.repositoryId,
-			selection: this.actionMode === 'multiple' ? this.fileEntries : [this.actionMode],
+			selection: this._getSelection(),
 			toAddTagNames: addedTags,
 			toRemoveTagNames: removedTags
 		};
@@ -207,12 +211,6 @@ class EditTags extends Component {
 EditTags.STATE = {
 
 	/**
-	 * actionMode. multiple | all:<folderid>
-	 * @type {String}
-	 */
-	actionMode: Config.string().value('multiple'),
-
-	/**
 	 * Tags that want to be edited.
 	 *
 	 * @instance
@@ -241,6 +239,16 @@ EditTags.STATE = {
 	 * @type {List<String>}
 	 */
 	fileEntries: Config.array().required(),
+
+	/**
+	 * Folder Id
+	 *
+	 * @instance
+	 * @memberof EditTags
+	 * @review
+	 * @type {String}
+	 */
+	folderId: Config.string().required(),
 
 	/**
 	 * Flag that indicate if loading icon must
@@ -283,6 +291,17 @@ EditTags.STATE = {
 	 * @type {Number}
 	 */
 	repositoryId: Config.number().required(),
+
+	/**
+	 * Flag that indicate if "select all" checkbox
+	 * is checked.
+	 *
+	 * @instance
+	 * @memberof EditTags
+	 * @review
+	 * @type {Boolean}
+	 */
+	selectAll: Config.bool(),
 
 	/**
 	 * Path to images.

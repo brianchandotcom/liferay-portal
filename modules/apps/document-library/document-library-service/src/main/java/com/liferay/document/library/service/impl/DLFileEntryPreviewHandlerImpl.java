@@ -19,8 +19,6 @@ import com.liferay.document.library.model.DLFileEntryPreview;
 import com.liferay.document.library.service.DLFileEntryPreviewLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 
-import java.util.List;
-
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -49,19 +47,6 @@ public class DLFileEntryPreviewHandlerImpl
 			_dlFileEntryPreviewLocalService.updateDLFileEntryPreview(
 				dlFileEntryPreview.getFileEntryPreviewId(),
 				fileEntryPreviewType.toInteger());
-		}
-	}
-
-	@Override
-	public void deleteDLFileEntryPreviews(long fileEntryId)
-		throws PortalException {
-
-		List<DLFileEntryPreview> fileEntryPreviews =
-			_dlFileEntryPreviewLocalService.getDLFileEntryPreviews(fileEntryId);
-
-		for (DLFileEntryPreview fileEntryPreview : fileEntryPreviews) {
-			_dlFileEntryPreviewLocalService.deleteDLFileEntryPreview(
-				fileEntryPreview.getFileEntryPreviewId());
 		}
 	}
 

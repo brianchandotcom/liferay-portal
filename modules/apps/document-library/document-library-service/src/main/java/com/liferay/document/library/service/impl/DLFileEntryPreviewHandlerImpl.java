@@ -43,8 +43,7 @@ public class DLFileEntryPreviewHandlerImpl
 
 		if (dlFileEntryPreview == null) {
 			_dlFileEntryPreviewLocalService.addDLFileEntryPreview(
-				fileEntryId, fileVersionId,
-				getDLFileEntryPreviewType(fileEntryPreviewType));
+				fileEntryId, fileVersionId, fileEntryPreviewType.toInteger());
 		}
 		else {
 			updateDLFileEntryPreview(
@@ -88,8 +87,7 @@ public class DLFileEntryPreviewHandlerImpl
 
 		DLFileEntryPreview dlFileEntryPreview =
 			_dlFileEntryPreviewLocalService.fetchDLFileEntryPreview(
-				fileEntryId, fileVersionId,
-				getDLFileEntryPreviewType(fileEntryPreviewType));
+				fileEntryId, fileVersionId, fileEntryPreviewType.toInteger());
 
 		if (dlFileEntryPreview == null) {
 			return 0;
@@ -105,24 +103,7 @@ public class DLFileEntryPreviewHandlerImpl
 		throws PortalException {
 
 		_dlFileEntryPreviewLocalService.updateDLFileEntryPreview(
-			dlFileEntryPreviewId,
-			getDLFileEntryPreviewType(fileEntryPreviewType));
-	}
-
-	protected int getDLFileEntryPreviewType(
-		DLFileEntryPreviewType fileEntryPreviewType) {
-
-		if (fileEntryPreviewType == DLFileEntryPreviewType.FAIL) {
-			return -1;
-		}
-		else if (fileEntryPreviewType == DLFileEntryPreviewType.NOT_GENERATED) {
-			return 0;
-		}
-		else if (fileEntryPreviewType == DLFileEntryPreviewType.SUCCESS) {
-			return 1;
-		}
-
-		return 0;
+			dlFileEntryPreviewId, fileEntryPreviewType.toInteger());
 	}
 
 	@Reference

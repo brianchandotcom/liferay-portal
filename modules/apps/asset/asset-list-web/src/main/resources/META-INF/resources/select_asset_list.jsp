@@ -27,6 +27,7 @@ SelectAssetListDisplayContext selectAssetListDisplayContext = new SelectAssetLis
 	itemsTotal="<%= selectAssetListDisplayContext.getAssetListEntryTotalItems() %>"
 	searchActionURL="<%= selectAssetListDisplayContext.getAssetListEntrySearchActionURL() %>"
 	searchContainerId="assetListEntries"
+	selectable="<%= false %>"
 	sortingOrder="<%= selectAssetListDisplayContext.getOrderByType() %>"
 	sortingURL="<%= selectAssetListDisplayContext.getSortingURL() %>"
 />

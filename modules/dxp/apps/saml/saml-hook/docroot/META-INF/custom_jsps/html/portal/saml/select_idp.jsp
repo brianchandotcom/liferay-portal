@@ -17,10 +17,11 @@
 <%@ include file="/html/portal/init.jsp" %>
 
 <%
+String redirect = ParamUtil.getString(request, "redirect");
+
 JSONObject samlSsoLoginContext = (JSONObject)request.getAttribute("SAML_SSO_LOGIN_CONTEXT");
 
 JSONArray relevantIdpConnectionsJSONArray = samlSsoLoginContext.getJSONArray("relevantIdpConnections");
-String redirect = ParamUtil.getString(request, "redirect");
 %>
 
 <aui:form action='<%= PortalUtil.getPortalURL(request) + "/c/portal/login" %>' method="get" name="fm">

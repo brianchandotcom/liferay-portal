@@ -524,7 +524,7 @@ public class MetadataManagerImpl
 			}
 			catch (ResolverException re) {
 				String message =
-					"Error retrieving metadata information: " + re.getMessage();
+					"Unable to get metadata information: " + re.getMessage();
 
 				if (_log.isDebugEnabled()) {
 					_log.debug(message, re);

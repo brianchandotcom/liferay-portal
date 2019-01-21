@@ -123,24 +123,27 @@ public class SamlLoginAction extends BaseSamlStrutsAction {
 	protected JSONObject toJSONObject(
 		List<SamlSpIdpConnection> samlSpIdpConnections) {
 
-		JSONObject jsonObject1 = JSONFactoryUtil.createJSONObject();
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
 		for (SamlSpIdpConnection samlSpIdpConnection : samlSpIdpConnections) {
-			JSONObject jsonObject2 = JSONFactoryUtil.createJSONObject();
+			JSONObject samlIdpConnectionJSONObject =
+				JSONFactoryUtil.createJSONObject();
 
-			jsonObject2.put("enabled", samlSpIdpConnection.getEnabled());
-			jsonObject2.put(
+			samlIdpConnectionJSONObject.put(
+				"enabled", samlSpIdpConnection.getEnabled());
+			samlIdpConnectionJSONObject.put(
 				"entityId", samlSpIdpConnection.getSamlIdpEntityId());
-			jsonObject2.put("name", samlSpIdpConnection.getName());
+			samlIdpConnectionJSONObject.put(
+				"name", samlSpIdpConnection.getName());
 
-			jsonArray.put(jsonObject2);
+			jsonArray.put(samlIdpConnectionJSONObject);
 		}
 
-		jsonObject1.put("relevantIdpConnections", jsonArray);
+		jsonObject.put("relevantIdpConnections", jsonArray);
 
-		return jsonObject1;
+		return jsonObject;
 	}
 
 	@Reference

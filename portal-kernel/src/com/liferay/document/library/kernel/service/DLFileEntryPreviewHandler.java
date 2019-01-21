@@ -44,7 +44,28 @@ public interface DLFileEntryPreviewHandler {
 
 	public enum DLFileEntryPreviewType {
 
-		FAIL, NOT_GENERATED, SUCCESS
+		FAIL(0), NOT_GENERATED(1), SUCCESS(2);
+
+		public static DLFileEntryPreviewType fromInteger(int value) {
+			for (DLFileEntryPreviewType dlFileEntryPreviewType : values()) {
+				if (dlFileEntryPreviewType.toInteger() == value) {
+					return dlFileEntryPreviewType;
+				}
+			}
+
+			throw new IllegalArgumentException(
+				"No DLFileEntryPreviewType exists with value " + value);
+		}
+
+		public int toInteger() {
+			return _value;
+		}
+
+		private DLFileEntryPreviewType(int value) {
+			_value = value;
+		}
+
+		private final int _value;
 
 	}
 

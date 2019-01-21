@@ -214,7 +214,7 @@ class RuleBuilder extends Component {
 	}
 
 	willReceiveProps({rules}) {
-		if (rules && rules.newVal.length) {
+		if (rules && rules.newVal) {
 			this.setState(
 				{
 					rules: rules.newVal

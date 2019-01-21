@@ -507,11 +507,9 @@ class LayoutProvider extends Component {
 	_handleRuleDeleted({ruleId}) {
 		const {rules} = this.state;
 
-		rules.splice(ruleId, 1);
-
 		this.setState(
 			{
-				rules
+				rules: rules.filter((rule, index) => index !== ruleId)
 			}
 		);
 	}

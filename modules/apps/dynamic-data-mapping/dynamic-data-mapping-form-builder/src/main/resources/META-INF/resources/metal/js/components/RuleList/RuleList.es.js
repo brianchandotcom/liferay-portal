@@ -164,7 +164,7 @@ class RuleList extends Component {
 		const {roles} = this;
 		const rules = this._setDataProviderNames(states);
 
-		const newState = {
+		return {
 			...states,
 			rules: this._formatRules(
 				rules.map(
@@ -211,8 +211,6 @@ class RuleList extends Component {
 			),
 			rulesCardOptions: this._getRulesCardOptions()
 		};
-
-		return newState;
 	}
 
 	_formatActions(actions) {
@@ -369,7 +367,8 @@ class RuleList extends Component {
 	}
 
 	_handleRuleCardClicked({data, target}) {
-		const cardId = target.element.closest('[data-card-id]').getAttribute('data-card-id');
+		const cardElement = target.element.closest('[data-card-id]');
+		const cardId = parseInt(cardElement.getAttribute('data-card-id'), 10);
 
 		if (data.item.settingsItem == 'edit') {
 			this.emit(
@@ -390,11 +389,11 @@ class RuleList extends Component {
 	}
 
 	_setDataProviderNames(states) {
-		const newRules = states.rules;
+		const {rules} = states;
 
 		if (this.dataProvider) {
-			for (let rule = 0; rule < newRules.length; rule++) {
-				const actions = newRules[rule].actions;
+			for (let rule = 0; rule < rules.length; rule++) {
+				const actions = rules[rule].actions;
 
 				actions.forEach(
 					action => {
@@ -408,7 +407,7 @@ class RuleList extends Component {
 			}
 		}
 
-		return newRules;
+		return rules;
 	}
 
 	_setOperandValue(operand) {

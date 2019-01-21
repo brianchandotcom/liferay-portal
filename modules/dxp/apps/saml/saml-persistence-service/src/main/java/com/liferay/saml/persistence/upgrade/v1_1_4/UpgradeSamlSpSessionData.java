@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.saml.persistence.upgrade.v1_1_4.util.SamlSpSessionTable;
 import com.liferay.saml.runtime.configuration.SamlProviderConfiguration;
 
 import java.util.Dictionary;
@@ -74,9 +73,7 @@ public class UpgradeSamlSpSessionData extends UpgradeProcess {
 	@Override
 	protected void doUpgrade() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
-			alter(
-				SamlSpSessionTable.class,
-				new AlterTableAddColumn("samlIdpEntityId VARCHAR(1024) null"));
+			migrateSAMLProviderConfiguration();
 		}
 	}
 

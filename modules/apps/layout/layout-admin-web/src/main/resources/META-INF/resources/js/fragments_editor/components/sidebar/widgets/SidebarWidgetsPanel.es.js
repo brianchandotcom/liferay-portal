@@ -1,8 +1,10 @@
 import Component from 'metal-component';
+import {Config} from 'metal-state';
 import Soy from 'metal-soy';
 
 import templates from './SidebarWidgetsPanel.soy';
 import {getConnectedComponent} from '../../../store/ConnectedComponent.es';
+import {setIn} from '../../../utils/FragmentsEditorUpdateUtils.es';
 import {shouldUpdateOnChangeProperties} from '../../../utils/FragmentsEditorComponentUtils.es';
 
 /**
@@ -18,45 +20,23 @@ const ENTER_KEY = 'Enter';
 class SidebarWidgetsPanel extends Component {
 
 	/**
-	 * @inheritdoc
-	 * @param {object} changes
-	 * @return {boolean}
-	 * @review
-	 */
-	shouldUpdate(changes) {
-		return shouldUpdateOnChangeProperties(
-			changes,
-			[
-				'spritemap',
-				'widgets'
-			]
-		);
-	}
-
-	/**
 	 * Filters widgets tree based on the keywords provided
-	 * @param {!Event} event
+	 * @param {object[]} widgets
+	 * @param {string} [keywords='']
 	 * @private
+	 * @return {object[]}
 	 * @review
 	 */
-	_filterWidgets(event) {
-		const keywords = event.delegateTarget.value.toLowerCase();
+	static _filterWidgets(widgets, keywords = '') {
+		let filteredWidgets = [...widgets];
 
-		if (!this.initialWidgets) {
-			this.initialWidgets = this.widgets.slice(0);
-		}
-
-		if (keywords === '') {
-			const filteredWidgets = this.initialWidgets.slice(0);
-
-			this.widgets = filteredWidgets;
-		}
-		else {
-			const widgets = this.initialWidgets.slice(0);
-
-			const filteredWidgets = widgets.reduce(
+		if (keywords) {
+			filteredWidgets = filteredWidgets.reduce(
 				(result, category) => {
-					const filteredCategories = this._filterCategory(category, keywords);
+					const filteredCategories = SidebarWidgetsPanel._filterCategory(
+						category,
+						keywords
+					);
 
 					filteredCategories.forEach(
 						filteredCategory => {
@@ -70,9 +50,9 @@ class SidebarWidgetsPanel extends Component {
 				},
 				[]
 			);
-
-			this.widgets = filteredWidgets;
 		}
+
+		return filteredWidgets;
 	}
 
 	/**
@@ -83,7 +63,7 @@ class SidebarWidgetsPanel extends Component {
 	 * @return {object[]}
 	 * @review
 	 */
-	_filterCategory(category, keywords) {
+	static _filterCategory(category, keywords) {
 		const filteredCategories = [];
 
 		if (category.categories) {
@@ -91,7 +71,10 @@ class SidebarWidgetsPanel extends Component {
 
 			categoriesCopy.forEach(
 				subCategory => {
-					const filteredSubCategories = this._filterCategory(subCategory, keywords);
+					const filteredSubCategories = SidebarWidgetsPanel._filterCategory(
+						subCategory,
+						keywords
+					);
 
 					filteredSubCategories.forEach(
 						filteredSubCategory => filteredCategories.push(filteredSubCategory)
@@ -128,6 +111,39 @@ class SidebarWidgetsPanel extends Component {
 	}
 
 	/**
+	 * @inheritdoc
+	 * @param {object} state
+	 * @return {object}
+	 * @review
+	 */
+	prepareStateForRender(state) {
+		return setIn(
+			state,
+			['widgets'],
+			SidebarWidgetsPanel._filterWidgets(
+				state.widgets,
+				state._keywords
+			)
+		);
+	}
+
+	/**
+	 * @inheritdoc
+	 * @param {object} changes
+	 * @return {boolean}
+	 * @review
+	 */
+	shouldUpdate(changes) {
+		return shouldUpdateOnChangeProperties(
+			changes,
+			[
+				'spritemap',
+				'widgets'
+			]
+		);
+	}
+
+	/**
 	 * When the search form is submitted, nothing should happen,
 	 * as filtering is performed on keypress.
 	 * @param {KeyboardEvent} event
@@ -139,6 +155,8 @@ class SidebarWidgetsPanel extends Component {
 			event.preventDefault();
 			event.stopImmediatePropagation();
 		}
+
+		this._keywords = event.delegateTarget.value.toLowerCase();
 	}
 
 }
@@ -149,7 +167,21 @@ class SidebarWidgetsPanel extends Component {
  * @static
  * @type {!Object}
  */
-SidebarWidgetsPanel.STATE = {};
+SidebarWidgetsPanel.STATE = {
+
+	/**
+	 * @default ''
+	 * @instance
+	 * @memberOf SidebarWidgetsPanel
+	 * @private
+	 * @review
+	 * @type {string}
+	 */
+	_keywords: Config
+		.string()
+		.internal()
+		.value('')
+};
 
 const ConnectedSidebarWidgetsPanel = getConnectedComponent(
 	SidebarWidgetsPanel,

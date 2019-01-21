@@ -35,18 +35,18 @@ import javax.servlet.http.HttpServletRequest;
 public class EditContactInformationDisplayContext {
 
 	public EditContactInformationDisplayContext(
-		String className, long classPK, long parentOrganizationId,
+		String className, long classPK, long contextOrganizationId,
 		RenderResponse renderResponse, HttpServletRequest request) {
 
 		_className = className;
 		_classPK = classPK;
-		_parentOrganizationId = parentOrganizationId;
+		_contextOrganizationId = contextOrganizationId;
 		_renderResponse = renderResponse;
 		_request = request;
 	}
 
 	public String getBackURL() {
-		if (_parentOrganizationId ==
+		if (_contextOrganizationId ==
 				OrganizationConstants.ANY_PARENT_ORGANIZATION_ID) {
 
 			RenderURL renderURL = _renderResponse.createRenderURL();
@@ -55,7 +55,7 @@ public class EditContactInformationDisplayContext {
 		}
 
 		return UsersAdminPortletURLUtil.createOrganizationViewTreeURL(
-			_parentOrganizationId, _renderResponse);
+			_contextOrganizationId, _renderResponse);
 	}
 
 	public String getPortletTitle() throws PortalException {
@@ -78,7 +78,7 @@ public class EditContactInformationDisplayContext {
 
 	private final String _className;
 	private final long _classPK;
-	private final long _parentOrganizationId;
+	private final long _contextOrganizationId;
 	private final RenderResponse _renderResponse;
 	private final HttpServletRequest _request;
 

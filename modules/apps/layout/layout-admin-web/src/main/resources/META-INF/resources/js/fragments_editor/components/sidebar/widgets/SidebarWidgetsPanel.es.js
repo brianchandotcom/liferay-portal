@@ -20,6 +20,17 @@ const ENTER_KEY = 'Enter';
 class SidebarWidgetsPanel extends Component {
 
 	/**
+	 * Returns true if the given keywords matches the given text
+	 * @param {string} text
+	 * @param {string} keywords
+	 * @return {boolean}
+	 * @review
+	 */
+	static _keywordsMatch(text, keywords) {
+		return text.toLowerCase().indexOf(keywords.toLowerCase()) !== -1;
+	}
+
+	/**
 	 * Filters widgets tree based on the keywords provided
 	 * @param {object[]} widgets
 	 * @param {string} [keywords='']
@@ -28,27 +39,12 @@ class SidebarWidgetsPanel extends Component {
 	 * @review
 	 */
 	static _filterWidgets(widgets, keywords = '') {
-		let filteredWidgets = [...widgets];
+		let filteredWidgets = widgets;
 
 		if (keywords) {
-			filteredWidgets = filteredWidgets.reduce(
-				(result, category) => {
-					const filteredCategories = SidebarWidgetsPanel._filterCategory(
-						category,
-						keywords
-					);
-
-					filteredCategories.forEach(
-						filteredCategory => {
-							filteredCategory.expanded = true;
-
-							result.push(filteredCategory);
-						}
-					);
-
-					return result;
-				},
-				[]
+			filteredWidgets = SidebarWidgetsPanel._filterCategories(
+				widgets,
+				keywords
 			);
 		}
 
@@ -56,58 +52,57 @@ class SidebarWidgetsPanel extends Component {
 	}
 
 	/**
-	 * Filters a widget category based on the keywords provided
-	 * @param {object} category
+	 * Returns a filtered list of categories
+	 * @param {object[]} categories
 	 * @param {string} keywords
 	 * @private
 	 * @return {object[]}
 	 * @review
 	 */
+	static _filterCategories(categories, keywords) {
+		return categories
+			.map(
+				widgetCategory => SidebarWidgetsPanel._filterCategory(
+					widgetCategory,
+					keywords
+				)
+			)
+			.filter(
+				widgetCategory => widgetCategory
+			);
+	}
+
+	/**
+	 * Filters a widget category based on the keywords provided
+	 * @param {object} category
+	 * @param {string} keywords
+	 * @private
+	 * @return {object|null}
+	 * @review
+	 */
 	static _filterCategory(category, keywords) {
-		const filteredCategories = [];
+		let filteredCategory = setIn(
+			category,
+			['categories'],
+			SidebarWidgetsPanel._filterCategories(
+				category.categories || [],
+				keywords
+			)
+		);
 
-		if (category.categories) {
-			const categoriesCopy = category.categories.slice(0);
+		const filteredPortlets = (category.portlets || []).filter(
+			portlet => SidebarWidgetsPanel._keywordsMatch(portlet.title, keywords)
+		);
 
-			categoriesCopy.forEach(
-				subCategory => {
-					const filteredSubCategories = SidebarWidgetsPanel._filterCategory(
-						subCategory,
-						keywords
-					);
-
-					filteredSubCategories.forEach(
-						filteredSubCategory => filteredCategories.push(filteredSubCategory)
-					);
-				}
-			);
+		if (!SidebarWidgetsPanel._keywordsMatch(category.title, keywords)) {
+			filteredCategory = setIn(filteredCategory, ['portlets'], filteredPortlets);
 		}
 
-		const categoryCopy = Object.assign({}, category);
-
-		if (category.title.toLowerCase().indexOf(keywords) !== -1) {
-			filteredCategories.push(categoryCopy);
+		if (!filteredCategory.portlets.length && !filteredCategory.categories.length) {
+			filteredCategory = null;
 		}
 
-		if (category.portlets &&
-			(filteredCategories.indexOf(categoryCopy) === -1)) {
-
-			const portletsCopy = category.portlets.slice(0);
-
-			const filteredPortlets = portletsCopy.filter(
-				portlet => portlet.title.toLowerCase().indexOf(keywords) !== -1
-			);
-
-			if (filteredPortlets.length > 0) {
-				categoryCopy.portlets = filteredPortlets;
-
-				delete categoryCopy.categories;
-
-				filteredCategories.push(categoryCopy);
-			}
-		}
-
-		return filteredCategories;
+		return filteredCategory;
 	}
 
 	/**
@@ -137,6 +132,7 @@ class SidebarWidgetsPanel extends Component {
 		return shouldUpdateOnChangeProperties(
 			changes,
 			[
+				'_keywords',
 				'spritemap',
 				'widgets'
 			]
@@ -150,13 +146,13 @@ class SidebarWidgetsPanel extends Component {
 	 * @private
 	 * @review
 	 */
-	_handleSearchFormKeyDown(event) {
+	_handleSearchInputKeyUp(event) {
 		if (event.key === ENTER_KEY) {
 			event.preventDefault();
 			event.stopImmediatePropagation();
 		}
 
-		this._keywords = event.delegateTarget.value.toLowerCase();
+		this._keywords = event.delegateTarget.value;
 	}
 
 }

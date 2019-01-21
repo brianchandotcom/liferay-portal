@@ -4,7 +4,8 @@
  * SidebarWidgetsPanel
  */
 {template .render}
-	{@param? _handleSearchFormKeyDown: any}
+	{@param? _handleSearchInputKeyUp: any}
+	{@param? _keywords: string}
 	{@param? widgets: list<[
 		categories: list<[
 			categories: list<?>,
@@ -26,14 +27,15 @@
 	<div class="sidebar-fragments-section sidebar-section">
 		<nav class="management-bar navbar-light">
 			<div class="navbar-form-autofit">
-				<form data-onkeydown="{$_handleSearchFormKeyDown}" role="search">
+				<form role="search">
 					<div class="input-group input-group-inset search-bar">
 						<div class="input-group-input">
 							<input
 								class="form-control input-group-inset"
-								data-oninput="_filterWidgets"
+								data-onkeyup="{$_handleSearchInputKeyUp}"
 								placeholder="{msg desc=""}search{/msg}..."
 								type="text"
+								value="{$_keywords ?: ''}"
 							/>
 
 							<div class="input-group-inset-item input-group-inset-item-after">

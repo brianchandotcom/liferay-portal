@@ -22,6 +22,7 @@ import com.liferay.document.library.preview.DLPreviewRendererProvider;
 import com.liferay.document.library.preview.exception.DLFileEntryPreviewGenerationException;
 import com.liferay.document.library.preview.exception.DLPreviewGenerationInProcessException;
 import com.liferay.document.library.preview.exception.DLPreviewSizeException;
+import com.liferay.document.library.service.DLFileEntryPreviewLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.util.HashMapDictionary;
@@ -93,12 +94,11 @@ public class ImageDLPreviewRendererProvider
 	protected void checkForPreviewGenerationExceptions(FileVersion fileVersion)
 		throws PortalException {
 
-		long fileEntryPreviewId =
-			_dlFileEntryPreviewHandler.getDLFileEntryPreviewId(
+		if (_dlFileEntryPreviewLocalService.hasDLFileEntryPreview(
 				fileVersion.getFileEntryId(), fileVersion.getFileVersionId(),
-				DLFileEntryPreviewHandler.DLFileEntryPreviewType.FAIL);
+				DLFileEntryPreviewHandler.DLFileEntryPreviewType.FAIL.
+					toInteger())) {
 
-		if (fileEntryPreviewId > 0) {
 			throw new DLFileEntryPreviewGenerationException();
 		}
 
@@ -117,7 +117,7 @@ public class ImageDLPreviewRendererProvider
 	}
 
 	@Reference
-	private DLFileEntryPreviewHandler _dlFileEntryPreviewHandler;
+	private DLFileEntryPreviewLocalService _dlFileEntryPreviewLocalService;
 
 	private ServiceRegistration<DLPreviewRendererProvider>
 		_dlPreviewRendererProviderServiceRegistration;

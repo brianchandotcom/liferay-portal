@@ -23,29 +23,7 @@ import java.util.HashMap;
  */
 public class LabelItem extends HashMap<String, Object> {
 
-	public LabelItem() {
-		put("closeable", false);
-	}
-
-	public void setCloseable(boolean closeable) {
-		put("closeable", closeable);
-	}
-
-	public void setLabel(String label) {
-		put("label", label);
-	}
-
-	public void setStatus(int status) {
-		setLabel(WorkflowConstants.getStatusLabel(status));
-
-		setStyle(_getStyleFromWorkflowStatus(status));
-	}
-
-	public void setStyle(String style) {
-		put("style", style);
-	}
-
-	private String _getStyleFromWorkflowStatus(int status) {
+	public static String getStyleFromWorkflowStatus(int status) {
 		if (status == WorkflowConstants.STATUS_APPROVED) {
 			return "success";
 		}
@@ -75,6 +53,28 @@ public class LabelItem extends HashMap<String, Object> {
 		}
 
 		return "secondary";
+	}
+
+	public LabelItem() {
+		put("closeable", false);
+	}
+
+	public void setCloseable(boolean closeable) {
+		put("closeable", closeable);
+	}
+
+	public void setLabel(String label) {
+		put("label", label);
+	}
+
+	public void setStatus(int status) {
+		setLabel(WorkflowConstants.getStatusLabel(status));
+
+		setStyle(getStyleFromWorkflowStatus(status));
+	}
+
+	public void setStyle(String style) {
+		put("style", style);
 	}
 
 }

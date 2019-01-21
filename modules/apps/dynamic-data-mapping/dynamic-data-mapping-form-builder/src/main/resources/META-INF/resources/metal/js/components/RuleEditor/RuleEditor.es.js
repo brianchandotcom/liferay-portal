@@ -472,40 +472,49 @@ class RuleEditor extends Component {
 	}
 
 	getDataProviderOptions(id, index) {
-		return this._fetchDataProviderParameters(id, index)
-			.then(
-				({inputs, outputs}) => {
-					let actions = this.actions;
+		let promise;
 
-					if (!this.isDisposed()) {
-						actions = actions.map(
-							(action, currentIndex) => {
-								return index == currentIndex ? ({
-									...action,
-									ddmDataProviderInstanceUUID: this.dataProvider.find(
-										data => {
-											return data.id == id;
-										}
-									).uuid,
-									hasRequiredInputs: inputs.some(
-										input => input.required
-									),
-									inputs: this.formatDataProviderParameter(action.inputs, inputs),
-									inputsData: inputs,
-									outputs: this.formatDataProviderParameter(action.outputs, outputs),
-									outputsData: outputs
-								}) : action;
-							}
-						);
+		if (id) {
+			promise = this._fetchDataProviderParameters(id, index)
+				.then(
+					({inputs, outputs}) => {
+						let actions = this.actions;
+
+						if (!this.isDisposed()) {
+							actions = actions.map(
+								(action, currentIndex) => {
+									return index == currentIndex ? ({
+										...action,
+										ddmDataProviderInstanceUUID: this.dataProvider.find(
+											data => {
+												return data.id == id;
+											}
+										).uuid,
+										hasRequiredInputs: inputs.some(
+											input => input.required
+										),
+										inputs: this.formatDataProviderParameter(action.inputs, inputs),
+										inputsData: inputs,
+										outputs: this.formatDataProviderParameter(action.outputs, outputs),
+										outputsData: outputs
+									}) : action;
+								}
+							);
+						}
+
+						return actions[index];
 					}
+				).catch(
+					error => {
+						throw new Error(error);
+					}
+				);
+		}
+		else {
+			promise = Promise.resolve(this.actions[index]);
+		}
 
-					return actions[index];
-				}
-			).catch(
-				error => {
-					throw new Error(error);
-				}
-			);
+		return promise;
 	}
 
 	getFieldOptions(fieldName) {
@@ -743,7 +752,7 @@ class RuleEditor extends Component {
 		return secondOperandSelectedList;
 	}
 
-	_fetchDataProviderParameters(id, index) {
+	_fetchDataProviderParameters(id) {
 		const {dataProviderInstanceParameterSettingsURL} = this;
 
 		return makeFetch(

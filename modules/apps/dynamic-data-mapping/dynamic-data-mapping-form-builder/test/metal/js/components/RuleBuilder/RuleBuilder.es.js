@@ -159,6 +159,12 @@ describe(
 			() => {
 				jest.useFakeTimers();
 
+				fetch.mockResponse(
+					JSON.stringify(
+						[]
+					)
+				);
+
 				dom.enterDocument('<button id="addFieldButton" class="hide"></button>');
 
 				component = new RuleBuilder(baseConfig);

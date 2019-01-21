@@ -38,7 +38,7 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Mika Koivisto
+ * @author Stian Sigvartsen
  */
 @Component(
 	immediate = true, property = "path=/portal/saml/login",

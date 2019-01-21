@@ -1,0 +1,21 @@
+import com.liferay.gradle.util.OSDetector
+
+apply plugin: "com.liferay.go"
+
+task runGradleTest
+
+runGradleTest {
+	dependsOn goBuildHelloWorld
+	dependsOn goRunHelloWorld
+	dependsOn goTestHelloWorld
+
+	doLast {
+		File executableFile = file("hello-world")
+
+		if (OSDetector.windows) {
+			executableFile = file("hello-world.exe")
+		}
+
+		assert executableFile.exists()
+	}
+}

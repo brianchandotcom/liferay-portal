@@ -71,11 +71,6 @@ public interface DLFileEntryPreviewLocalService extends BaseLocalService,
 	public DLFileEntryPreview addDLFileEntryPreview(
 		DLFileEntryPreview dlFileEntryPreview);
 
-	/**
-	* NOTE FOR DEVELOPERS:
-	*
-	* Never reference this class directly. Always use {@link DLFileEntryPreviewLocalServiceUtil} to access the dl file entry preview local service.
-	*/
 	public void addDLFileEntryPreview(long fileEntryId, long fileVersionId,
 		int previewType) throws PortalException;
 
@@ -108,6 +103,8 @@ public interface DLFileEntryPreviewLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.DELETE)
 	public DLFileEntryPreview deleteDLFileEntryPreview(long fileEntryPreviewId)
 		throws PortalException;
+
+	public void deleteDLFileEntryPreviews(long fileEntryId);
 
 	/**
 	* @throws PortalException
@@ -186,7 +183,7 @@ public interface DLFileEntryPreviewLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public DLFileEntryPreview fetchDLFileEntryPreview(long fileEntryId,
-		long fileVersionId) throws PortalException;
+		long fileVersionId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public DLFileEntryPreview fetchDLFileEntryPreview(long fileEntryId,
@@ -253,6 +250,10 @@ public interface DLFileEntryPreviewLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public boolean hasDLFileEntryPreview(long fileEntryId, long fileVersionId,
+		int previewType);
 
 	/**
 	* Updates the dl file entry preview in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.

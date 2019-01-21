@@ -83,6 +83,7 @@ DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletI
 
 						imagePreviewURL = DLUtil.getImagePreviewURL(fileEntry, fileVersion, themeDisplay);
 						imageURL = DLUtil.getPreviewURL(fileEntry, fileVersion, themeDisplay, "&supportedVideo=1&mediaGallery=1");
+						playerHeight = PropsValues.DL_FILE_ENTRY_PREVIEW_VIDEO_HEIGHT;
 					}
 				}
 

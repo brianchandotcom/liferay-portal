@@ -20,6 +20,8 @@
 Layout selLayout = (Layout)request.getAttribute(WebKeys.SEL_LAYOUT);
 
 String title = GetterUtil.getString(request.getAttribute(WebKeys.TITLE));
+
+Boolean useLayoutName = GetterUtil.getBoolean(request.getAttribute(SiteNavigationMenuItemTypeLayoutWebKeys.USE_LAYOUT_NAME));
 %>
 
 <aui:input label="title" maxlength='<%= ModelHintsUtil.getMaxLength(SiteNavigationMenuItem.class.getName(), "name") %>' name="TypeSettingsProperties--name--" type="text" value="<%= title %>">
@@ -34,6 +36,10 @@ String title = GetterUtil.getString(request.getAttribute(WebKeys.TITLE));
 	<aui:validator name="required" />
 </aui:input>
 
+<aui:fieldset>
+	<aui:input checked="<%= useLayoutName %>" helpMessage="use-layout-name-help" label="use-layout-name" name="TypeSettingsProperties--useLayoutName--" type="checkbox" />
+</aui:fieldset>
+	
 <div class="form-group input-text-wrapper text-default">
 	<div class="d-inline-block" id="<portlet:namespace />layoutItemRemove" role="button">
 		<aui:icon cssClass="icon-monospaced" image="times" markupView="lexicon" />

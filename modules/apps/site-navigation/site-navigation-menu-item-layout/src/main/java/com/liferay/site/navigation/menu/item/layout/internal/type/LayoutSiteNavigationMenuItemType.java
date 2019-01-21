@@ -188,7 +188,9 @@ public class LayoutSiteNavigationMenuItemType
 
 		String label = getName(siteNavigationMenuItem.getTypeSettings());
 
-		if (Validator.isNotNull(label)) {
+		Boolean useLayoutName = _isUseLayoutName(siteNavigationMenuItem);
+
+		if (Validator.isNotNull(label) && !useLayoutName) {
 			return label;
 		}
 
@@ -389,6 +391,9 @@ public class LayoutSiteNavigationMenuItemType
 		request.setAttribute(
 			WebKeys.TITLE,
 			getTitle(siteNavigationMenuItem, themeDisplay.getLocale()));
+		request.setAttribute(
+			SiteNavigationMenuItemTypeLayoutWebKeys.USE_LAYOUT_NAME,
+			_isUseLayoutName(siteNavigationMenuItem));
 
 		_jspRenderer.renderJSP(
 			_servletContext, request, response, "/edit_layout.jsp");
@@ -424,6 +429,19 @@ public class LayoutSiteNavigationMenuItemType
 
 		return _layoutLocalService.getLayoutByUuidAndGroupId(
 			layoutUuid, siteNavigationMenuItem.getGroupId(), privateLayout);
+	}
+
+	private Boolean _isUseLayoutName(
+		SiteNavigationMenuItem siteNavigationMenuItem) {
+
+		UnicodeProperties typeSettingsProperties = new UnicodeProperties();
+
+		typeSettingsProperties.fastLoad(
+			siteNavigationMenuItem.getTypeSettings());
+
+		return GetterUtil.getBoolean(
+			typeSettingsProperties.get("useLayoutName"),
+			Validator.isNull(typeSettingsProperties.get("name")));
 	}
 
 	@Reference

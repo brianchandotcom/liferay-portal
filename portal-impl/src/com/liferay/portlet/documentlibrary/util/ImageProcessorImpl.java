@@ -16,7 +16,7 @@ package com.liferay.portlet.documentlibrary.util;
 
 import com.liferay.document.library.kernel.exception.NoSuchFileEntryException;
 import com.liferay.document.library.kernel.model.DLProcessorConstants;
-import com.liferay.document.library.kernel.service.DLFileEntryPreviewHandlerUtil;
+import com.liferay.document.library.kernel.service.DLFileEntryPreviewHandler;
 import com.liferay.document.library.kernel.store.DLStoreUtil;
 import com.liferay.document.library.kernel.util.DLPreviewableProcessor;
 import com.liferay.document.library.kernel.util.ImageProcessor;
@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.ServiceProxyFactory;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
@@ -291,9 +292,10 @@ public class ImageProcessorImpl
 				RenderedImage renderedImage = imageBag.getRenderedImage();
 
 				if (renderedImage == null) {
-					DLFileEntryPreviewHandlerUtil.addFailDLFileEntryPreview(
+					_dlFileEntryPreviewHandler.addDLFileEntryPreview(
 						destinationFileVersion.getFileEntryId(),
-						destinationFileVersion.getFileVersionId());
+						destinationFileVersion.getFileVersionId(),
+						DLFileEntryPreviewHandler.DLFileEntryPreviewType.FAIL);
 
 					return;
 				}
@@ -306,9 +308,11 @@ public class ImageProcessorImpl
 							bytes, imageBag.getType());
 
 					if (future == null) {
-						DLFileEntryPreviewHandlerUtil.addFailDLFileEntryPreview(
+						_dlFileEntryPreviewHandler.addDLFileEntryPreview(
 							destinationFileVersion.getFileEntryId(),
-							destinationFileVersion.getFileVersionId());
+							destinationFileVersion.getFileVersionId(),
+							DLFileEntryPreviewHandler.DLFileEntryPreviewType.
+								FAIL);
 
 						return;
 					}
@@ -333,9 +337,10 @@ public class ImageProcessorImpl
 					storeThumbnailImages(destinationFileVersion, renderedImage);
 				}
 
-				DLFileEntryPreviewHandlerUtil.addSuccessDLFileEntryPreview(
+				_dlFileEntryPreviewHandler.addDLFileEntryPreview(
 					destinationFileVersion.getFileEntryId(),
-					destinationFileVersion.getFileVersionId());
+					destinationFileVersion.getFileVersionId(),
+					DLFileEntryPreviewHandler.DLFileEntryPreviewType.SUCCESS);
 			}
 		}
 		catch (NoSuchFileEntryException nsfee) {
@@ -343,9 +348,10 @@ public class ImageProcessorImpl
 				_log.debug(nsfee, nsfee);
 			}
 
-			DLFileEntryPreviewHandlerUtil.addFailDLFileEntryPreview(
+			_dlFileEntryPreviewHandler.addDLFileEntryPreview(
 				destinationFileVersion.getFileEntryId(),
-				destinationFileVersion.getFileVersionId());
+				destinationFileVersion.getFileVersionId(),
+				DLFileEntryPreviewHandler.DLFileEntryPreviewType.FAIL);
 		}
 		finally {
 			_fileVersionIds.remove(destinationFileVersion.getFileVersionId());
@@ -492,6 +498,12 @@ public class ImageProcessorImpl
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		ImageProcessorImpl.class);
+
+	private static volatile DLFileEntryPreviewHandler
+		_dlFileEntryPreviewHandler =
+			ServiceProxyFactory.newServiceTrackedInstance(
+				DLFileEntryPreviewHandler.class, ImageProcessorImpl.class,
+				"_dlFileEntryPreviewHandler", false, false);
 
 	private final List<Long> _fileVersionIds = new Vector<>();
 	private final Set<String> _imageMimeTypes = SetUtil.fromArray(

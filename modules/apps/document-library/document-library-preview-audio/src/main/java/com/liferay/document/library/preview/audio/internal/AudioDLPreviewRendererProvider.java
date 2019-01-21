@@ -15,7 +15,6 @@
 package com.liferay.document.library.preview.audio.internal;
 
 import com.liferay.document.library.kernel.service.DLFileEntryPreviewHandler;
-import com.liferay.document.library.kernel.service.DLFileEntryPreviewHandlerUtil;
 import com.liferay.document.library.kernel.util.AudioProcessorUtil;
 import com.liferay.document.library.kernel.util.DLProcessorRegistryUtil;
 import com.liferay.document.library.preview.DLPreviewRenderer;
@@ -48,8 +47,10 @@ public class AudioDLPreviewRendererProvider
 	implements DLPreviewRendererProvider {
 
 	public AudioDLPreviewRendererProvider(
+		DLFileEntryPreviewHandler dlFileEntryPreviewHandler,
 		DLURLHelper dlurlHelper, ServletContext servletContext) {
 
+		_dlFileEntryPreviewHandler = dlFileEntryPreviewHandler;
 		_dlurlHelper = dlurlHelper;
 		_servletContext = servletContext;
 	}
@@ -91,7 +92,7 @@ public class AudioDLPreviewRendererProvider
 		throws PortalException {
 
 		long fileEntryPreviewId =
-			DLFileEntryPreviewHandlerUtil.getDLFileEntryPreviewId(
+			_dlFileEntryPreviewHandler.getDLFileEntryPreviewId(
 				fileVersion.getFileEntryId(), fileVersion.getFileVersionId(),
 				DLFileEntryPreviewHandler.DLFileEntryPreviewType.FAIL);
 
@@ -154,6 +155,7 @@ public class AudioDLPreviewRendererProvider
 		return previewFileURLs;
 	}
 
+	private final DLFileEntryPreviewHandler _dlFileEntryPreviewHandler;
 	private final DLURLHelper _dlurlHelper;
 	private final ServletContext _servletContext;
 

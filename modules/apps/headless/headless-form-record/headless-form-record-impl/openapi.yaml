@@ -1,0 +1,162 @@
+components:
+  schemas:
+    FormRecord:
+      description: https://www.schema.org/FormRecord
+      properties:
+        creator:
+          $ref: ../../headless-user-account/headless-user-account-impl/openapi.yaml/components/schemas/UserAccount
+        dateCreated:
+          type: string
+        dateModified:
+          type: string
+        datePublished:
+          type: string
+        draft:
+          type: boolean
+        fieldValues:
+          description: https://www.schema.org/FormFieldValue
+          properties:
+            document:
+              $ref: ../../headless-document/headless-document-impl/openapi.yaml/components/schemas/Document
+            id:
+              type: integer
+            name:
+              type: string
+            self:
+              type: string
+            value:
+              type: string
+          type: object
+        form:
+          $ref: ../../headless-form/headless-form-impl/openapi.yaml/components/schemas/Form
+        id:
+          type: integer
+        self:
+          type: string
+      type: object
+info:
+  description: ""
+  title: ""
+  version: 1.0.0
+openapi: 3.0.1
+paths:
+  "/form-record/{id}":
+    get:
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        200:
+          content:
+            "*/*":
+              schema:
+                $ref: "#/components/schemas/FormRecord"
+          description: ""
+    put:
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+        - in: query
+          name: acceptlocale
+          schema:
+            type: string
+        - in: query
+          name: servicecontextwrapper
+          schema:
+            type: string
+      requestBody:
+        content:
+          "*/*": {}
+      responses:
+        200:
+          content:
+            "*/*":
+              schema:
+                $ref: "#/components/schemas/FormRecord"
+          description: ""
+  "/form/{parent-id}/form-record":
+    get:
+      parameters:
+        - in: query
+          name: page
+          schema:
+            type: integer
+        - in: query
+          name: per_page
+          schema:
+            type: integer
+        - in: path
+          name: parent-id
+          required: true
+          schema:
+            $ref: ../../headless-form/headless-form-impl/openapi.yaml/components/schemas/Form
+      responses:
+        200:
+          content:
+            "*/*":
+              schema:
+                items:
+                  $ref: "#/components/schemas/FormRecord"
+                type: array
+          description: ""
+    post:
+      parameters:
+        - in: path
+          name: parent-id
+          required: true
+          schema:
+            $ref: ../../headless-form/headless-form-impl/openapi.yaml/components/schemas/Form
+        - in: query
+          name: acceptlocale
+          schema:
+            type: string
+        - in: query
+          name: servicecontextwrapper
+          schema:
+            type: string
+      requestBody:
+        content:
+          "*/*":
+            schema:
+              $ref: "#/components/schemas/FormRecord"
+      responses:
+        200:
+          content:
+            "*/*":
+              schema:
+                $ref: "#/components/schemas/FormRecord"
+          description: ""
+  "/form/{parent-id}/form-record/batch-create":
+    post:
+      parameters:
+        - in: path
+          name: parent-id
+          required: true
+          schema:
+            $ref: ../../headless-form/headless-form-impl/openapi.yaml/components/schemas/Form
+        - in: query
+          name: acceptlocale
+          schema:
+            type: string
+        - in: query
+          name: servicecontextwrapper
+          schema:
+            type: string
+      requestBody:
+        content:
+          "*/*":
+            schema:
+              $ref: "#/components/schemas/FormRecord"
+      responses:
+        200:
+          content:
+            "*/*":
+              schema:
+                $ref: "#/components/schemas/FormRecord"
+          description: ""

@@ -1,0 +1,244 @@
+components:
+  schemas:
+    Structure:
+      description: https://www.schema.org/Structure
+      properties:
+        availableLanguages:
+          items:
+            type: string
+          type: array
+        contentSpace:
+          $ref: ../../headless-content-space/headless-content-space-impl/openapi.yaml/components/schemas/ContentSpace
+        creator:
+          $ref: ../../headless-user-account/headless-user-account-impl/openapi.yaml/components/schemas/UserAccount
+        dateCreated:
+          type: string
+        dateModified:
+          type: string
+        description:
+          type: string
+        formPages:
+          description: https://www.schema.org/FormLayoutPage
+          properties:
+            fields:
+              description: https://www.schema.org/FormField
+              properties:
+                autocomplete:
+                  type: boolean
+                dataSourceType:
+                  type: string
+                dataType:
+                  type: string
+                displayStyle:
+                  type: string
+                grid:
+                  description: https://www.schema.org/FormFieldProperties
+                  properties:
+                    columns:
+                      description: https://www.schema.org/FormFieldOptions
+                      properties:
+                        id:
+                          type: integer
+                        label:
+                          type: string
+                        self:
+                          type: string
+                        value:
+                          type: string
+                      type: object
+                    id:
+                      type: integer
+                    rows:
+                      description: https://www.schema.org/FormFieldOptions
+                      properties:
+                        id:
+                          type: integer
+                        label:
+                          type: string
+                        self:
+                          type: string
+                        value:
+                          type: string
+                      type: object
+                    self:
+                      type: string
+                  type: object
+                hasFormRules:
+                  type: boolean
+                id:
+                  type: integer
+                inline:
+                  type: boolean
+                inputControl:
+                  type: string
+                label:
+                  type: string
+                localizable:
+                  type: boolean
+                multiple:
+                  type: boolean
+                name:
+                  type: string
+                options:
+                  description: https://www.schema.org/FormFieldOptions
+                  properties:
+                    id:
+                      type: integer
+                    label:
+                      type: string
+                    self:
+                      type: string
+                    value:
+                      type: string
+                  type: object
+                placeholder:
+                  type: string
+                predefinedValue:
+                  type: string
+                readOnly:
+                  type: boolean
+                repeatable:
+                  type: boolean
+                required:
+                  type: boolean
+                self:
+                  type: string
+                showAsSwitcher:
+                  type: boolean
+                showLabel:
+                  type: boolean
+                style:
+                  type: string
+                text:
+                  type: string
+                tooltip:
+                  type: string
+                transient:
+                  type: boolean
+                validation:
+                  description: https://www.schema.org/FormFieldProperties
+                  properties:
+                    errorMessage:
+                      type: string
+                    expression:
+                      type: string
+                    id:
+                      type: integer
+                    self:
+                      type: string
+                  type: object
+              type: object
+            headline:
+              type: string
+            id:
+              type: integer
+            self:
+              type: string
+            text:
+              type: string
+          type: object
+        id:
+          type: integer
+        name:
+          type: string
+        self:
+          type: string
+        successPage:
+          description: https://www.schema.org/FormSuccessPageSettings
+          properties:
+            description:
+              type: string
+            headline:
+              type: string
+            id:
+              type: integer
+            self:
+              type: string
+          type: object
+      type: object
+info:
+  description: ""
+  title: ""
+  version: 1.0.0
+openapi: 3.0.1
+paths:
+  "/content-space/{parent-id}/form-structures":
+    get:
+      parameters:
+        - in: query
+          name: page
+          schema:
+            type: integer
+        - in: query
+          name: per_page
+          schema:
+            type: integer
+        - in: path
+          name: parent-id
+          required: true
+          schema:
+            $ref: ../../headless-content-space/headless-content-space-impl/openapi.yaml/components/schemas/ContentSpace
+      responses:
+        200:
+          content:
+            "*/*":
+              schema:
+                items:
+                  $ref: "#/components/schemas/Structure"
+                type: array
+          description: ""
+  "/form-structures/{id}":
+    get:
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        200:
+          content:
+            "*/*":
+              schema:
+                $ref: "#/components/schemas/Structure"
+          description: ""
+  "/content-space/{parent-id}/content-structures":
+    get:
+      parameters:
+        - in: query
+          name: page
+          schema:
+            type: integer
+        - in: query
+          name: per_page
+          schema:
+            type: integer
+        - in: path
+          name: parent-id
+          required: true
+          schema:
+            $ref: ../../headless-content-space/headless-content-space-impl/openapi.yaml/components/schemas/ContentSpace
+      responses:
+        200:
+          content:
+            "*/*":
+              schema:
+                items:
+                  $ref: "#/components/schemas/Structure"
+                type: array
+          description: ""
+  "/content-structures/{id}":
+    get:
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        200:
+          content:
+            "*/*":
+              schema:
+                $ref: "#/components/schemas/Structure"
+          description: ""

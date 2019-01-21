@@ -1,0 +1,72 @@
+components:
+  schemas:
+    PostalAddress:
+      description: https://www.schema.org/PostalAddress
+      properties:
+        addressCountry:
+          type: string
+        addressLocality:
+          type: string
+        addressRegion:
+          type: string
+        addressType:
+          type: string
+        id:
+          type: integer
+        postalCode:
+          type: string
+        self:
+          type: string
+        streetAddressLine1:
+          type: string
+        streetAddressLine2:
+          type: string
+        streetAddressLine3:
+          type: string
+      type: object
+info:
+  description: ""
+  title: ""
+  version: 1.0.0
+openapi: 3.0.1
+paths:
+  "/addresses":
+    get:
+      parameters:
+        - in: query
+          name: page
+          schema:
+            type: integer
+        - in: query
+          name: per_page
+          schema:
+            type: integer
+        - in: path
+          name: genericparentid
+          required: true
+          schema:
+            type: object
+      responses:
+        200:
+          content:
+            "*/*":
+              schema:
+                items:
+                  $ref: "#/components/schemas/PostalAddress"
+                type: array
+          description: ""
+  "/addresses/{id}":
+    get:
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        200:
+          content:
+            "*/*":
+              schema:
+                $ref: "#/components/schemas/PostalAddress"
+          description: ""

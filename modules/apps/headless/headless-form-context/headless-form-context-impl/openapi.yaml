@@ -1,0 +1,76 @@
+components:
+  schemas:
+    FormContext:
+      description: https://www.schema.org/FormContext
+      properties:
+        id:
+          type: integer
+        isReadOnly:
+          type: boolean
+        isShowRequiredFieldsWarning:
+          type: boolean
+        isShowSubmitButton:
+          type: boolean
+        pages:
+          description: https://www.schema.org/FormPageContext
+          properties:
+            fields:
+              description: https://www.schema.org/FormFieldContext
+              properties:
+                errorMessage:
+                  type: string
+                id:
+                  type: integer
+                isEvaluable:
+                  type: boolean
+                isReadOnly:
+                  type: boolean
+                isRequired:
+                  type: boolean
+                isValid:
+                  type: boolean
+                isValueChanged:
+                  type: boolean
+                isVisible:
+                  type: boolean
+                name:
+                  type: string
+                options:
+                  description: https://www.schema.org/FormFieldOptions
+                  properties:
+                    id:
+                      type: integer
+                    label:
+                      type: string
+                    self:
+                      type: string
+                    value:
+                      type: string
+                  type: object
+                self:
+                  type: string
+                value:
+                  type: string
+              type: object
+            headline:
+              type: string
+            id:
+              type: integer
+            isEnabled:
+              type: boolean
+            isShowRequiredFieldsWarning:
+              type: boolean
+            self:
+              type: string
+            text:
+              type: string
+          type: object
+        self:
+          type: string
+      type: object
+info:
+  description: ""
+  title: ""
+  version: 1.0.0
+openapi: 3.0.1
+paths: {}

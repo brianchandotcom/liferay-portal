@@ -1,0 +1,60 @@
+components:
+  schemas:
+    WebUrl:
+      description: https://www.schema.org/WebUrl
+      properties:
+        id:
+          type: integer
+        self:
+          type: string
+        url:
+          type: string
+        urlType:
+          type: string
+      type: object
+info:
+  description: ""
+  title: ""
+  version: 1.0.0
+openapi: 3.0.1
+paths:
+  "/web-urls":
+    get:
+      parameters:
+        - in: query
+          name: page
+          schema:
+            type: integer
+        - in: query
+          name: per_page
+          schema:
+            type: integer
+        - in: path
+          name: genericparentid
+          required: true
+          schema:
+            type: object
+      responses:
+        200:
+          content:
+            "*/*":
+              schema:
+                items:
+                  $ref: "#/components/schemas/WebUrl"
+                type: array
+          description: ""
+  "/web-urls/{id}":
+    get:
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        200:
+          content:
+            "*/*":
+              schema:
+                $ref: "#/components/schemas/WebUrl"
+          description: ""

@@ -1,0 +1,217 @@
+components:
+  schemas:
+    Folder:
+      description: https://www.schema.org/Folder
+      properties:
+        dateCreated:
+          type: string
+        dateModified:
+          type: string
+        description:
+          type: string
+        documents:
+          $ref: ../../headless-document/headless-document-impl/openapi.yaml/components/schemas/Document
+        documentsRepository:
+          $ref: ../../headless-folder/headless-folder-impl/openapi.yaml/components/schemas/Folder
+        id:
+          type: integer
+        name:
+          type: string
+        self:
+          type: string
+        subFolders:
+          $ref: "#/components/schemas/Folder"
+      type: object
+info:
+  description: ""
+  title: ""
+  version: 1.0.0
+openapi: 3.0.1
+paths:
+  "/documents-repository/{parent-id}/folder":
+    get:
+      parameters:
+        - in: query
+          name: page
+          schema:
+            type: integer
+        - in: query
+          name: per_page
+          schema:
+            type: integer
+        - in: path
+          name: parent-id
+          required: true
+          schema:
+            $ref: ../../headless-folder/headless-folder-impl/openapi.yaml/components/schemas/Folder
+      responses:
+        200:
+          content:
+            "*/*":
+              schema:
+                items:
+                  $ref: "#/components/schemas/Folder"
+                type: array
+          description: ""
+    post:
+      parameters:
+        - in: path
+          name: parent-id
+          required: true
+          schema:
+            $ref: ../../headless-folder/headless-folder-impl/openapi.yaml/components/schemas/Folder
+      requestBody:
+        content:
+          "*/*":
+            schema:
+              $ref: "#/components/schemas/Folder"
+      responses:
+        200:
+          content:
+            "*/*":
+              schema:
+                $ref: "#/components/schemas/Folder"
+          description: ""
+  "/documents-repository/{parent-id}/folder/batch-create":
+    post:
+      parameters:
+        - in: path
+          name: parent-id
+          required: true
+          schema:
+            $ref: ../../headless-folder/headless-folder-impl/openapi.yaml/components/schemas/Folder
+      requestBody:
+        content:
+          "*/*":
+            schema:
+              $ref: "#/components/schemas/Folder"
+      responses:
+        200:
+          content:
+            "*/*":
+              schema:
+                $ref: "#/components/schemas/Folder"
+          description: ""
+  "/folder/{id}":
+    delete:
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        204:
+          content:
+            "*/*": {}
+          description: ""
+    get:
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        200:
+          content:
+            "*/*":
+              schema:
+                $ref: "#/components/schemas/Folder"
+          description: ""
+    put:
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          "*/*": {}
+      responses:
+        200:
+          content:
+            "*/*":
+              schema:
+                $ref: "#/components/schemas/Folder"
+          description: ""
+  "/folder/{parent-id}/folder":
+    get:
+      parameters:
+        - in: query
+          name: page
+          schema:
+            type: integer
+        - in: query
+          name: per_page
+          schema:
+            type: integer
+        - in: path
+          name: parent-id
+          required: true
+          schema:
+            $ref: "#/components/schemas/Folder"
+      responses:
+        200:
+          content:
+            "*/*":
+              schema:
+                items:
+                  $ref: "#/components/schemas/Folder"
+                type: array
+          description: ""
+    post:
+      parameters:
+        - in: path
+          name: parent-id
+          required: true
+          schema:
+            $ref: "#/components/schemas/Folder"
+      requestBody:
+        content:
+          "*/*":
+            schema:
+              $ref: "#/components/schemas/Folder"
+      responses:
+        200:
+          content:
+            "*/*":
+              schema:
+                $ref: "#/components/schemas/Folder"
+          description: ""
+  "/folder/{parent-id}/folder/batch-create":
+    post:
+      parameters:
+        - in: path
+          name: parent-id
+          required: true
+          schema:
+            $ref: "#/components/schemas/Folder"
+      requestBody:
+        content:
+          "*/*":
+            schema:
+              $ref: "#/components/schemas/Folder"
+      responses:
+        200:
+          content:
+            "*/*":
+              schema:
+                $ref: "#/components/schemas/Folder"
+          description: ""
+  "/documents-repository/{id}":
+    get:
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        200:
+          content:
+            "*/*":
+              schema:
+                $ref: "#/components/schemas/Folder"
+          description: ""

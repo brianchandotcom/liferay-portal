@@ -1,0 +1,234 @@
+components:
+  schemas:
+    StructuredContent:
+      description: https://www.schema.org/StructuredContent
+      properties:
+        aggregateRating:
+          $ref: ../../headless-aggregate-rating/headless-aggregate-rating-impl/openapi.yaml/components/schemas/AggregateRating
+        availableLanguages:
+          items:
+            type: string
+          type: array
+        category:
+          $ref: ../../headless-category/headless-category-impl/openapi.yaml/components/schemas/Category
+        comment:
+          $ref: ../../headless-comment/headless-comment-impl/openapi.yaml/components/schemas/Comment
+        contentSpace:
+          $ref: ../../headless-content-space/headless-content-space-impl/openapi.yaml/components/schemas/ContentSpace
+        contentStructure:
+          $ref: ../../headless-structure/headless-structure-impl/openapi.yaml/components/schemas/Structure
+        creator:
+          $ref: ../../headless-user-account/headless-user-account-impl/openapi.yaml/components/schemas/UserAccount
+        dateCreated:
+          type: string
+        dateModified:
+          type: string
+        datePublished:
+          type: string
+        description:
+          type: string
+        id:
+          type: integer
+        keywords:
+          items:
+            type: string
+          type: array
+        lastReviewed:
+          type: string
+        renderedContentsByTemplate:
+          description: https://www.schema.org/templates
+          properties:
+            id:
+              type: integer
+            renderedContent:
+              type: string
+            self:
+              type: string
+            template:
+              type: string
+          type: object
+        self:
+          type: string
+        title:
+          type: string
+        values:
+          description: https://www.schema.org/ContentFieldValue
+          properties:
+            dataType:
+              type: string
+            document:
+              $ref: ../../headless-document/headless-document-impl/openapi.yaml/components/schemas/Document
+            filterAndSortIdentifier:
+              type: string
+            geo:
+              description: https://www.schema.org/GeoCoordinates
+              properties:
+                id:
+                  type: integer
+                latitude:
+                  type: number
+                longitude:
+                  type: number
+                self:
+                  type: string
+              type: object
+            id:
+              type: integer
+            inputControl:
+              type: string
+            label:
+              type: string
+            link:
+              type: string
+            name:
+              type: string
+            self:
+              type: string
+            structuredContent:
+              $ref: ../../headless-structured-content/headless-structured-content-impl/openapi.yaml/components/schemas/StructuredContent
+            value:
+              type: string
+          type: object
+      type: object
+info:
+  description: ""
+  title: ""
+  version: 1.0.0
+openapi: 3.0.1
+paths:
+  "/content-space/{parent-id}/structured-contents":
+    get:
+      parameters:
+        - in: query
+          name: page
+          schema:
+            type: integer
+        - in: query
+          name: per_page
+          schema:
+            type: integer
+        - in: path
+          name: parent-id
+          required: true
+          schema:
+            $ref: ../../headless-content-space/headless-content-space-impl/openapi.yaml/components/schemas/ContentSpace
+        - in: header
+          name: Accept-Language
+          schema:
+            type: string
+        - in: query
+          name: filter
+          schema:
+            type: string
+        - in: query
+          name: sort
+          schema:
+            type: string
+      responses:
+        200:
+          content:
+            "*/*":
+              schema:
+                items:
+                  $ref: "#/components/schemas/StructuredContent"
+                type: array
+          description: ""
+    post:
+      parameters:
+        - in: path
+          name: parent-id
+          required: true
+          schema:
+            $ref: ../../headless-content-space/headless-content-space-impl/openapi.yaml/components/schemas/ContentSpace
+        - in: header
+          name: Accept-Language
+          schema:
+            type: string
+      requestBody:
+        content:
+          "*/*":
+            schema:
+              $ref: "#/components/schemas/StructuredContent"
+      responses:
+        200:
+          content:
+            "*/*":
+              schema:
+                $ref: "#/components/schemas/StructuredContent"
+          description: ""
+  "/content-space/{parent-id}/structured-contents/batch-create":
+    post:
+      parameters:
+        - in: path
+          name: parent-id
+          required: true
+          schema:
+            $ref: ../../headless-content-space/headless-content-space-impl/openapi.yaml/components/schemas/ContentSpace
+        - in: header
+          name: Accept-Language
+          schema:
+            type: string
+      requestBody:
+        content:
+          "*/*":
+            schema:
+              $ref: "#/components/schemas/StructuredContent"
+      responses:
+        200:
+          content:
+            "*/*":
+              schema:
+                $ref: "#/components/schemas/StructuredContent"
+          description: ""
+  "/structured-contents/{id}":
+    delete:
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        204:
+          content:
+            "*/*": {}
+          description: ""
+    get:
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+        - in: header
+          name: Accept-Language
+          schema:
+            type: string
+      responses:
+        200:
+          content:
+            "*/*":
+              schema:
+                $ref: "#/components/schemas/StructuredContent"
+          description: ""
+    put:
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+        - in: header
+          name: Accept-Language
+          schema:
+            type: string
+      requestBody:
+        content:
+          "*/*": {}
+      responses:
+        200:
+          content:
+            "*/*":
+              schema:
+                $ref: "#/components/schemas/StructuredContent"
+          description: ""

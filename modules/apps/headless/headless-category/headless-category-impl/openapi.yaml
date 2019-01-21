@@ -1,0 +1,400 @@
+components:
+  schemas:
+    Category:
+      description: https://www.schema.org/Category
+      properties:
+        availableLanguages:
+          items:
+            type: string
+          type: array
+        category:
+          $ref: "#/components/schemas/Category"
+        creator:
+          $ref: ../../headless-user-account/headless-user-account-impl/openapi.yaml/components/schemas/UserAccount
+        dateCreated:
+          type: string
+        dateModified:
+          type: string
+        description:
+          type: string
+        id:
+          type: integer
+        name:
+          type: string
+        self:
+          type: string
+        subcategories:
+          $ref: "#/components/schemas/Category"
+        vocabulary:
+          $ref: ../../headless-vocabulary/headless-vocabulary-impl/openapi.yaml/components/schemas/Vocabulary
+      type: object
+info:
+  description: ""
+  title: ""
+  version: 1.0.0
+openapi: 3.0.1
+paths:
+  "/blog-posting/{parent-id}/categories":
+    get:
+      parameters:
+        - in: query
+          name: page
+          schema:
+            type: integer
+        - in: query
+          name: per_page
+          schema:
+            type: integer
+        - in: path
+          name: parent-id
+          required: true
+          schema:
+            $ref: ../../headless-blog-posting/headless-blog-posting-impl/openapi.yaml/components/schemas/BlogPosting
+      responses:
+        200:
+          content:
+            "*/*":
+              schema:
+                items:
+                  $ref: "#/components/schemas/Category"
+                type: array
+          description: ""
+    post:
+      parameters:
+        - in: path
+          name: parent-id
+          required: true
+          schema:
+            $ref: ../../headless-blog-posting/headless-blog-posting-impl/openapi.yaml/components/schemas/BlogPosting
+      requestBody:
+        content:
+          "*/*":
+            schema:
+              $ref: "#/components/schemas/Category"
+      responses:
+        200:
+          content:
+            "*/*":
+              schema:
+                $ref: "#/components/schemas/Category"
+          description: ""
+  "/blog-posting/{parent-id}/categories/batch-create":
+    post:
+      parameters:
+        - in: path
+          name: parent-id
+          required: true
+          schema:
+            $ref: ../../headless-blog-posting/headless-blog-posting-impl/openapi.yaml/components/schemas/BlogPosting
+      requestBody:
+        content:
+          "*/*":
+            schema:
+              $ref: "#/components/schemas/Category"
+      responses:
+        200:
+          content:
+            "*/*":
+              schema:
+                $ref: "#/components/schemas/Category"
+          description: ""
+  "/categories/{id}":
+    delete:
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        204:
+          content:
+            "*/*": {}
+          description: ""
+    get:
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        200:
+          content:
+            "*/*":
+              schema:
+                $ref: "#/components/schemas/Category"
+          description: ""
+    put:
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          "*/*": {}
+      responses:
+        200:
+          content:
+            "*/*":
+              schema:
+                $ref: "#/components/schemas/Category"
+          description: ""
+  "/categories/{parent-id}/categories":
+    get:
+      parameters:
+        - in: query
+          name: page
+          schema:
+            type: integer
+        - in: query
+          name: per_page
+          schema:
+            type: integer
+        - in: path
+          name: parent-id
+          required: true
+          schema:
+            $ref: "#/components/schemas/Category"
+      responses:
+        200:
+          content:
+            "*/*":
+              schema:
+                items:
+                  $ref: "#/components/schemas/Category"
+                type: array
+          description: ""
+    post:
+      parameters:
+        - in: path
+          name: parent-id
+          required: true
+          schema:
+            $ref: "#/components/schemas/Category"
+      requestBody:
+        content:
+          "*/*":
+            schema:
+              $ref: "#/components/schemas/Category"
+      responses:
+        200:
+          content:
+            "*/*":
+              schema:
+                $ref: "#/components/schemas/Category"
+          description: ""
+  "/categories/{parent-id}/categories/batch-create":
+    post:
+      parameters:
+        - in: path
+          name: parent-id
+          required: true
+          schema:
+            $ref: "#/components/schemas/Category"
+      requestBody:
+        content:
+          "*/*":
+            schema:
+              $ref: "#/components/schemas/Category"
+      responses:
+        200:
+          content:
+            "*/*":
+              schema:
+                $ref: "#/components/schemas/Category"
+          description: ""
+  "/document/{parent-id}/categories":
+    get:
+      parameters:
+        - in: query
+          name: page
+          schema:
+            type: integer
+        - in: query
+          name: per_page
+          schema:
+            type: integer
+        - in: path
+          name: parent-id
+          required: true
+          schema:
+            $ref: ../../headless-document/headless-document-impl/openapi.yaml/components/schemas/Document
+      responses:
+        200:
+          content:
+            "*/*":
+              schema:
+                items:
+                  $ref: "#/components/schemas/Category"
+                type: array
+          description: ""
+    post:
+      parameters:
+        - in: path
+          name: parent-id
+          required: true
+          schema:
+            $ref: ../../headless-document/headless-document-impl/openapi.yaml/components/schemas/Document
+      requestBody:
+        content:
+          "*/*":
+            schema:
+              $ref: "#/components/schemas/Category"
+      responses:
+        200:
+          content:
+            "*/*":
+              schema:
+                $ref: "#/components/schemas/Category"
+          description: ""
+  "/document/{parent-id}/categories/batch-create":
+    post:
+      parameters:
+        - in: path
+          name: parent-id
+          required: true
+          schema:
+            $ref: ../../headless-document/headless-document-impl/openapi.yaml/components/schemas/Document
+      requestBody:
+        content:
+          "*/*":
+            schema:
+              $ref: "#/components/schemas/Category"
+      responses:
+        200:
+          content:
+            "*/*":
+              schema:
+                $ref: "#/components/schemas/Category"
+          description: ""
+  "/structured-contents/{parent-id}/categories":
+    get:
+      parameters:
+        - in: query
+          name: page
+          schema:
+            type: integer
+        - in: query
+          name: per_page
+          schema:
+            type: integer
+        - in: path
+          name: parent-id
+          required: true
+          schema:
+            $ref: ../../headless-structured-content/headless-structured-content-impl/openapi.yaml/components/schemas/StructuredContent
+      responses:
+        200:
+          content:
+            "*/*":
+              schema:
+                items:
+                  $ref: "#/components/schemas/Category"
+                type: array
+          description: ""
+    post:
+      parameters:
+        - in: path
+          name: parent-id
+          required: true
+          schema:
+            $ref: ../../headless-structured-content/headless-structured-content-impl/openapi.yaml/components/schemas/StructuredContent
+      requestBody:
+        content:
+          "*/*":
+            schema:
+              $ref: "#/components/schemas/Category"
+      responses:
+        200:
+          content:
+            "*/*":
+              schema:
+                $ref: "#/components/schemas/Category"
+          description: ""
+  "/structured-contents/{parent-id}/categories/batch-create":
+    post:
+      parameters:
+        - in: path
+          name: parent-id
+          required: true
+          schema:
+            $ref: ../../headless-structured-content/headless-structured-content-impl/openapi.yaml/components/schemas/StructuredContent
+      requestBody:
+        content:
+          "*/*":
+            schema:
+              $ref: "#/components/schemas/Category"
+      responses:
+        200:
+          content:
+            "*/*":
+              schema:
+                $ref: "#/components/schemas/Category"
+          description: ""
+  "/vocabularies/{parent-id}/categories":
+    get:
+      parameters:
+        - in: query
+          name: page
+          schema:
+            type: integer
+        - in: query
+          name: per_page
+          schema:
+            type: integer
+        - in: path
+          name: parent-id
+          required: true
+          schema:
+            $ref: ../../headless-vocabulary/headless-vocabulary-impl/openapi.yaml/components/schemas/Vocabulary
+      responses:
+        200:
+          content:
+            "*/*":
+              schema:
+                items:
+                  $ref: "#/components/schemas/Category"
+                type: array
+          description: ""
+    post:
+      parameters:
+        - in: path
+          name: parent-id
+          required: true
+          schema:
+            $ref: ../../headless-vocabulary/headless-vocabulary-impl/openapi.yaml/components/schemas/Vocabulary
+      requestBody:
+        content:
+          "*/*":
+            schema:
+              $ref: "#/components/schemas/Category"
+      responses:
+        200:
+          content:
+            "*/*":
+              schema:
+                $ref: "#/components/schemas/Category"
+          description: ""
+  "/vocabularies/{parent-id}/categories/batch-create":
+    post:
+      parameters:
+        - in: path
+          name: parent-id
+          required: true
+          schema:
+            $ref: ../../headless-vocabulary/headless-vocabulary-impl/openapi.yaml/components/schemas/Vocabulary
+      requestBody:
+        content:
+          "*/*":
+            schema:
+              $ref: "#/components/schemas/Category"
+      responses:
+        200:
+          content:
+            "*/*":
+              schema:
+                $ref: "#/components/schemas/Category"
+          description: ""

@@ -1,0 +1,74 @@
+components:
+  schemas:
+    WorkflowLog:
+      description: https://www.schema.org/WorkflowLog
+      properties:
+        auditPerson:
+          $ref: ../../headless-user-account/headless-user-account-impl/openapi.yaml/components/schemas/UserAccount
+        commentLog:
+          type: string
+        dateCreated:
+          type: string
+        id:
+          type: integer
+        person:
+          $ref: ../../headless-user-account/headless-user-account-impl/openapi.yaml/components/schemas/UserAccount
+        previousPerson:
+          $ref: ../../headless-user-account/headless-user-account-impl/openapi.yaml/components/schemas/UserAccount
+        previousState:
+          type: string
+        self:
+          type: string
+        state:
+          type: string
+        task:
+          $ref: ../../headless-workflow-task/headless-workflow-task-impl/openapi.yaml/components/schemas/WorkflowTask
+        type:
+          type: string
+      type: object
+info:
+  description: ""
+  title: ""
+  version: 1.0.0
+openapi: 3.0.1
+paths:
+  "/workflow-logs/{id}":
+    get:
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        200:
+          content:
+            "*/*":
+              schema:
+                $ref: "#/components/schemas/WorkflowLog"
+          description: ""
+  "/workflow-tasks/{parent-id}/workflow-logs":
+    get:
+      parameters:
+        - in: query
+          name: page
+          schema:
+            type: integer
+        - in: query
+          name: per_page
+          schema:
+            type: integer
+        - in: path
+          name: parent-id
+          required: true
+          schema:
+            $ref: ../../headless-workflow-task/headless-workflow-task-impl/openapi.yaml/components/schemas/WorkflowTask
+      responses:
+        200:
+          content:
+            "*/*":
+              schema:
+                items:
+                  $ref: "#/components/schemas/WorkflowLog"
+                type: array
+          description: ""

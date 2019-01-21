@@ -30,12 +30,10 @@ import org.osgi.service.component.annotations.Reference;
 public class SamlServiceUpgrade implements UpgradeStepRegistrator {
 
 	public void register(Registry registry) {
-		registry.register(
-			"com.liferay.saml.persistence.service", "0.0.1", "1.0.0",
-			new DummyUpgradeStep());
+		registry.register("0.0.1", "1.0.0", new DummyUpgradeStep());
 
 		registry.register(
-			"com.liferay.saml.persistence.service", "1.0.0", "1.1.0",
+			"1.0.0", "1.1.0",
 			new com.liferay.saml.persistence.upgrade.v1_0_0.
 				UpgradeSamlIdpSpSession(),
 			new UpgradeSamlSpAuthRequest(), new UpgradeSamlSpMessage(),
@@ -43,27 +41,27 @@ public class SamlServiceUpgrade implements UpgradeStepRegistrator {
 				UpgradeSamlSpSession());
 
 		registry.register(
-			"com.liferay.saml.persistence.service", "1.1.0", "1.1.1",
+			"1.1.0", "1.1.1",
 			new com.liferay.saml.persistence.upgrade.v1_1_0.
 				UpgradeSamlSpSession());
 
 		registry.register(
-			"com.liferay.saml.persistence.service", "1.1.1", "1.1.2",
+			"1.1.1", "1.1.2",
 			new com.liferay.saml.persistence.upgrade.v1_1_1.
 				UpgradeSamlSpSession());
 
 		registry.register(
-			"com.liferay.saml.persistence.service", "1.1.2", "1.1.3",
+			"1.1.2", "1.1.3",
 			new com.liferay.saml.persistence.upgrade.v1_1_2.
 				UpgradeSamlSpIdpConnection());
 
 		registry.register(
-			"com.liferay.saml.persistence.service", "1.1.3", "1.1.4",
+			"1.1.3", "1.1.4",
 			new com.liferay.saml.persistence.upgrade.v1_1_3.
 				UpgradeClassNames());
 
 		registry.register(
-			"com.liferay.saml.persistence.service", "1.1.4", "2.0.0",
+			"1.1.4", "2.0.0",
 			new com.liferay.saml.persistence.upgrade.v1_1_4.
 				UpgradeSamlSpSession(),
 			new com.liferay.saml.persistence.upgrade.v1_1_4.

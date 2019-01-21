@@ -29,16 +29,8 @@ public interface DLFileEntryPreviewHandler {
 	public void deleteDLFileEntryPreviews(long fileEntryId)
 		throws PortalException;
 
-	public long getDLFileEntryPreviewId(long fileEntryId, long fileVersionId)
-		throws PortalException;
-
 	public long getDLFileEntryPreviewId(
 			long fileEntryId, long fileVersionId,
-			DLFileEntryPreviewType fileEntryPreviewType)
-		throws PortalException;
-
-	public void updateDLFileEntryPreview(
-			long dlFileEntryPreviewId,
 			DLFileEntryPreviewType fileEntryPreviewType)
 		throws PortalException;
 

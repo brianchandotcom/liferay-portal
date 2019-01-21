@@ -15,7 +15,6 @@
 package com.liferay.document.library.preview.pdf.internal;
 
 import com.liferay.document.library.kernel.service.DLFileEntryPreviewHandler;
-import com.liferay.document.library.kernel.service.DLFileEntryPreviewHandlerUtil;
 import com.liferay.document.library.kernel.util.DLProcessorRegistryUtil;
 import com.liferay.document.library.kernel.util.PDFProcessorUtil;
 import com.liferay.document.library.preview.DLPreviewRenderer;
@@ -83,7 +82,7 @@ public class PDFDLPreviewRendererProvider implements DLPreviewRendererProvider {
 		throws PortalException {
 
 		long fileEntryPreviewId =
-			DLFileEntryPreviewHandlerUtil.getDLFileEntryPreviewId(
+			_dlFileEntryPreviewHandler.getDLFileEntryPreviewId(
 				fileVersion.getFileEntryId(), fileVersion.getFileVersionId(),
 				DLFileEntryPreviewHandler.DLFileEntryPreviewType.FAIL);
 
@@ -99,6 +98,9 @@ public class PDFDLPreviewRendererProvider implements DLPreviewRendererProvider {
 			throw new DLPreviewGenerationInProcessException();
 		}
 	}
+
+	@Reference
+	private DLFileEntryPreviewHandler _dlFileEntryPreviewHandler;
 
 	@Reference
 	private NPMResolver _npmResolver;

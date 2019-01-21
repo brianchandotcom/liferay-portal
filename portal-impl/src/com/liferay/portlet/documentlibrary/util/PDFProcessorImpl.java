@@ -17,7 +17,7 @@ package com.liferay.portlet.documentlibrary.util;
 import com.liferay.document.library.kernel.document.conversion.DocumentConversionUtil;
 import com.liferay.document.library.kernel.exception.NoSuchFileEntryException;
 import com.liferay.document.library.kernel.model.DLProcessorConstants;
-import com.liferay.document.library.kernel.service.DLFileEntryPreviewHandlerUtil;
+import com.liferay.document.library.kernel.service.DLFileEntryPreviewHandler;
 import com.liferay.document.library.kernel.store.DLStoreUtil;
 import com.liferay.document.library.kernel.util.DLPreviewableProcessor;
 import com.liferay.document.library.kernel.util.DLUtil;
@@ -601,16 +601,18 @@ public class PDFProcessorImpl
 				errorMessage += " resulted in a canceled timeout for " + future;
 			}
 
-			DLFileEntryPreviewHandlerUtil.addFailDLFileEntryPreview(
-				fileVersion.getFileEntryId(), fileVersion.getFileVersionId());
+			_dlFileEntryPreviewHandler.addDLFileEntryPreview(
+				fileVersion.getFileEntryId(), fileVersion.getFileVersionId(),
+				DLFileEntryPreviewHandler.DLFileEntryPreviewType.FAIL);
 
 			_log.error(errorMessage);
 
 			throw te;
 		}
 		catch (Exception e) {
-			DLFileEntryPreviewHandlerUtil.addFailDLFileEntryPreview(
-				fileVersion.getFileEntryId(), fileVersion.getFileVersionId());
+			_dlFileEntryPreviewHandler.addDLFileEntryPreview(
+				fileVersion.getFileEntryId(), fileVersion.getFileVersionId(),
+				DLFileEntryPreviewHandler.DLFileEntryPreviewType.FAIL);
 
 			_log.error(e, e);
 
@@ -641,9 +643,11 @@ public class PDFProcessorImpl
 						getPreviewFilePath(fileVersion, i + 1),
 						previewTempFile);
 
-					DLFileEntryPreviewHandlerUtil.addSuccessDLFileEntryPreview(
+					_dlFileEntryPreviewHandler.addDLFileEntryPreview(
 						fileVersion.getFileEntryId(),
-						fileVersion.getFileVersionId());
+						fileVersion.getFileVersionId(),
+						DLFileEntryPreviewHandler.DLFileEntryPreviewType.
+							SUCCESS);
 				}
 				finally {
 					FileUtil.delete(previewTempFile);
@@ -683,8 +687,9 @@ public class PDFProcessorImpl
 				"Unable to decrypt PDF document for file version " +
 					fileVersion.getFileVersionId());
 
-			DLFileEntryPreviewHandlerUtil.addFailDLFileEntryPreview(
-				fileVersion.getFileEntryId(), fileVersion.getFileVersionId());
+			_dlFileEntryPreviewHandler.addDLFileEntryPreview(
+				fileVersion.getFileEntryId(), fileVersion.getFileVersionId(),
+				DLFileEntryPreviewHandler.DLFileEntryPreviewType.FAIL);
 
 			return;
 		}
@@ -789,18 +794,20 @@ public class PDFProcessorImpl
 
 				_log.error(errorMessage);
 
-				DLFileEntryPreviewHandlerUtil.addFailDLFileEntryPreview(
+				_dlFileEntryPreviewHandler.addDLFileEntryPreview(
 					fileVersion.getFileEntryId(),
-					fileVersion.getFileVersionId());
+					fileVersion.getFileVersionId(),
+					DLFileEntryPreviewHandler.DLFileEntryPreviewType.FAIL);
 
 				throw te;
 			}
 			catch (Exception e) {
 				_log.error(e, e);
 
-				DLFileEntryPreviewHandlerUtil.addFailDLFileEntryPreview(
+				_dlFileEntryPreviewHandler.addDLFileEntryPreview(
 					fileVersion.getFileEntryId(),
-					fileVersion.getFileVersionId());
+					fileVersion.getFileVersionId(),
+					DLFileEntryPreviewHandler.DLFileEntryPreviewType.FAIL);
 
 				throw e;
 			}
@@ -839,9 +846,11 @@ public class PDFProcessorImpl
 						getPreviewFilePath(fileVersion, index + 1),
 						previewFile);
 
-					DLFileEntryPreviewHandlerUtil.addSuccessDLFileEntryPreview(
+					_dlFileEntryPreviewHandler.addDLFileEntryPreview(
 						fileVersion.getFileEntryId(),
-						fileVersion.getFileVersionId());
+						fileVersion.getFileVersionId(),
+						DLFileEntryPreviewHandler.DLFileEntryPreviewType.
+							SUCCESS);
 				}
 				finally {
 					FileUtil.delete(previewFile);
@@ -1042,6 +1051,11 @@ public class PDFProcessorImpl
 	private static final Log _log = LogFactoryUtil.getLog(
 		PDFProcessorImpl.class);
 
+	private static volatile DLFileEntryPreviewHandler
+		_dlFileEntryPreviewHandler =
+			ServiceProxyFactory.newServiceTrackedInstance(
+				DLFileEntryPreviewHandler.class, PDFProcessorImpl.class,
+				"_dlFileEntryPreviewHandler", false, false);
 	private static volatile ProcessExecutor _processExecutor =
 		ServiceProxyFactory.newServiceTrackedInstance(
 			ProcessExecutor.class, PDFProcessorImpl.class, "_processExecutor",

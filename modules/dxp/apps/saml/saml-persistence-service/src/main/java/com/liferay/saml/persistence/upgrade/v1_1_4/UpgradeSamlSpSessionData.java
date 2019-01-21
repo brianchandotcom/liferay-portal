@@ -52,6 +52,10 @@ public class UpgradeSamlSpSessionData extends UpgradeProcess {
 			long companyId = GetterUtil.getLong(
 				properties.get("companyId"), -1);
 
+			if (companyId < 1) {
+				continue;
+			}
+
 			String samlSpDefaultIdpEntityId = GetterUtil.getString(
 				properties.get("saml.sp.default.idp.entity.id"));
 

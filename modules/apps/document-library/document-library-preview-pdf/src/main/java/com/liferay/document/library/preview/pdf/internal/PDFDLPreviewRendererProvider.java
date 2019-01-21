@@ -22,6 +22,7 @@ import com.liferay.document.library.preview.DLPreviewRendererProvider;
 import com.liferay.document.library.preview.exception.DLFileEntryPreviewGenerationException;
 import com.liferay.document.library.preview.exception.DLPreviewGenerationInProcessException;
 import com.liferay.document.library.preview.exception.DLPreviewSizeException;
+import com.liferay.document.library.service.DLFileEntryPreviewLocalService;
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileVersion;
@@ -81,12 +82,11 @@ public class PDFDLPreviewRendererProvider implements DLPreviewRendererProvider {
 	protected void checkForPreviewGenerationExceptions(FileVersion fileVersion)
 		throws PortalException {
 
-		long fileEntryPreviewId =
-			_dlFileEntryPreviewHandler.getDLFileEntryPreviewId(
+		if (_dlFileEntryPreviewLocalService.hasDLFileEntryPreview(
 				fileVersion.getFileEntryId(), fileVersion.getFileVersionId(),
-				DLFileEntryPreviewHandler.DLFileEntryPreviewType.FAIL);
+				DLFileEntryPreviewHandler.DLFileEntryPreviewType.FAIL.
+					toInteger())) {
 
-		if (fileEntryPreviewId > 0) {
 			throw new DLFileEntryPreviewGenerationException();
 		}
 
@@ -100,7 +100,7 @@ public class PDFDLPreviewRendererProvider implements DLPreviewRendererProvider {
 	}
 
 	@Reference
-	private DLFileEntryPreviewHandler _dlFileEntryPreviewHandler;
+	private DLFileEntryPreviewLocalService _dlFileEntryPreviewLocalService;
 
 	@Reference
 	private NPMResolver _npmResolver;

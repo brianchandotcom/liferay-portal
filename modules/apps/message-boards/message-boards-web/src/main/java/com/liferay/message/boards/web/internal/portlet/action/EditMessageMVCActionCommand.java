@@ -534,26 +534,25 @@ public class EditMessageMVCActionCommand extends BaseMVCActionCommand {
 		List<FileEntry> tempMBAttachmentFileEntries =
 			MBAttachmentFileEntryUtil.getTempMBAttachmentFileEntries(body);
 
-		if (!tempMBAttachmentFileEntries.isEmpty()) {
-			Folder folder = message.addAttachmentsFolder();
-
-			List<MBAttachmentFileEntryReference>
-				mbAttachmentFileEntryReferences =
-					MBAttachmentFileEntryUtil.addMBAttachmentFileEntries(
-						message.getGroupId(), themeDisplay.getUserId(),
-						message.getMessageId(), folder.getFolderId(),
-						tempMBAttachmentFileEntries);
-
-			body = formatHandler.replaceImageReferences(
-				body, mbAttachmentFileEntryReferences);
-
-			for (FileEntry tempMBAttachment : tempMBAttachmentFileEntries) {
-				PortletFileRepositoryUtil.deletePortletFileEntry(
-					tempMBAttachment.getFileEntryId());
-			}
+		if (tempMBAttachmentFileEntries.isEmpty()) {
+			return body;
 		}
 
-		return body;
+		Folder folder = message.addAttachmentsFolder();
+
+		List<MBAttachmentFileEntryReference> mbAttachmentFileEntryReferences =
+			MBAttachmentFileEntryUtil.addMBAttachmentFileEntries(
+				message.getGroupId(), themeDisplay.getUserId(),
+				message.getMessageId(), folder.getFolderId(),
+				tempMBAttachmentFileEntries);
+
+		for (FileEntry tempMBAttachment : tempMBAttachmentFileEntries) {
+			PortletFileRepositoryUtil.deletePortletFileEntry(
+				tempMBAttachment.getFileEntryId());
+		}
+
+		return formatHandler.replaceImageReferences(
+			body, mbAttachmentFileEntryReferences);
 	}
 
 	private List<FileEntry> _populateInputStreamOVPs(

@@ -1,7 +1,7 @@
 components:
   schemas:
     BlogPosting:
-      description: "https://www.schema.org/BlogPosting"
+      description: https://www.schema.org/BlogPosting
       properties:
         alternativeHeadline:
           type: string
@@ -28,10 +28,14 @@ components:
           type: string
         headline:
           type: string
+        id:
+          type: integer
         keywords:
           items:
             type: string
           type: array
+        self:
+          type: string
       type: object
 info:
   description: ""

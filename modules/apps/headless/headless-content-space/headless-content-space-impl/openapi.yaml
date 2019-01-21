@@ -1,6 +1,7 @@
 components:
   schemas:
     ContentSpace:
+      description: https://www.schema.org/ContentSpace
       properties:
         availableLanguages:
           items:
@@ -50,7 +51,7 @@ paths:
           name: id
           required: true
           schema:
-            type: string
+            type: integer
       responses:
         200:
           content:

@@ -77,6 +77,9 @@ class ManagementToolbarDefaultEventHandler extends PortletBase {
 	}
 
 	openDDMStructuresSelector() {
+		let namespace = this.namespace;
+		let uri = this.viewDDMStructureArticlesURL;
+
 		Liferay.Util.selectEntity(
 			{
 				dialog: {
@@ -88,7 +91,7 @@ class ManagementToolbarDefaultEventHandler extends PortletBase {
 				uri: this.selectEntityURL
 			},
 			function(event) {
-				location.href = this.viewDDMStructureArticlesURL;
+				location.href = Liferay.Util.addParams(namespace + 'ddmStructureKey=' + event.ddmstructurekey, uri);
 			}
 		);
 	}

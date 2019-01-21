@@ -16,16 +16,11 @@ package com.liferay.document.library.model;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.expando.kernel.model.ExpandoBridge;
-
 import com.liferay.portal.kernel.model.ModelWrapper;
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.Serializable;
+import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -37,20 +32,10 @@ import java.util.Objects;
  * @generated
  */
 @ProviderType
-public class DLFileEntryPreviewWrapper implements DLFileEntryPreview,
-	ModelWrapper<DLFileEntryPreview> {
+public class DLFileEntryPreviewWrapper extends BaseModelWrapper<DLFileEntryPreview>
+	implements DLFileEntryPreview, ModelWrapper<DLFileEntryPreview> {
 	public DLFileEntryPreviewWrapper(DLFileEntryPreview dlFileEntryPreview) {
-		_dlFileEntryPreview = dlFileEntryPreview;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return DLFileEntryPreview.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return DLFileEntryPreview.class.getName();
+		super(dlFileEntryPreview);
 	}
 
 	@Override
@@ -99,21 +84,6 @@ public class DLFileEntryPreviewWrapper implements DLFileEntryPreview,
 		}
 	}
 
-	@Override
-	public Object clone() {
-		return new DLFileEntryPreviewWrapper((DLFileEntryPreview)_dlFileEntryPreview.clone());
-	}
-
-	@Override
-	public int compareTo(DLFileEntryPreview dlFileEntryPreview) {
-		return _dlFileEntryPreview.compareTo(dlFileEntryPreview);
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _dlFileEntryPreview.getExpandoBridge();
-	}
-
 	/**
 	* Returns the file entry ID of this dl file entry preview.
 	*
@@ -121,7 +91,7 @@ public class DLFileEntryPreviewWrapper implements DLFileEntryPreview,
 	*/
 	@Override
 	public long getFileEntryId() {
-		return _dlFileEntryPreview.getFileEntryId();
+		return model.getFileEntryId();
 	}
 
 	/**
@@ -131,7 +101,7 @@ public class DLFileEntryPreviewWrapper implements DLFileEntryPreview,
 	*/
 	@Override
 	public long getFileEntryPreviewId() {
-		return _dlFileEntryPreview.getFileEntryPreviewId();
+		return model.getFileEntryPreviewId();
 	}
 
 	/**
@@ -141,7 +111,7 @@ public class DLFileEntryPreviewWrapper implements DLFileEntryPreview,
 	*/
 	@Override
 	public long getFileVersionId() {
-		return _dlFileEntryPreview.getFileVersionId();
+		return model.getFileVersionId();
 	}
 
 	/**
@@ -151,7 +121,7 @@ public class DLFileEntryPreviewWrapper implements DLFileEntryPreview,
 	*/
 	@Override
 	public long getGroupId() {
-		return _dlFileEntryPreview.getGroupId();
+		return model.getGroupId();
 	}
 
 	/**
@@ -161,7 +131,7 @@ public class DLFileEntryPreviewWrapper implements DLFileEntryPreview,
 	*/
 	@Override
 	public int getPreviewType() {
-		return _dlFileEntryPreview.getPreviewType();
+		return model.getPreviewType();
 	}
 
 	/**
@@ -171,58 +141,12 @@ public class DLFileEntryPreviewWrapper implements DLFileEntryPreview,
 	*/
 	@Override
 	public long getPrimaryKey() {
-		return _dlFileEntryPreview.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _dlFileEntryPreview.getPrimaryKeyObj();
-	}
-
-	@Override
-	public int hashCode() {
-		return _dlFileEntryPreview.hashCode();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _dlFileEntryPreview.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _dlFileEntryPreview.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _dlFileEntryPreview.isNew();
+		return model.getPrimaryKey();
 	}
 
 	@Override
 	public void persist() {
-		_dlFileEntryPreview.persist();
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_dlFileEntryPreview.setCachedModel(cachedModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-		_dlFileEntryPreview.setExpandoBridgeAttributes(baseModel);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_dlFileEntryPreview.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
-	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		_dlFileEntryPreview.setExpandoBridgeAttributes(serviceContext);
+		model.persist();
 	}
 
 	/**
@@ -232,7 +156,7 @@ public class DLFileEntryPreviewWrapper implements DLFileEntryPreview,
 	*/
 	@Override
 	public void setFileEntryId(long fileEntryId) {
-		_dlFileEntryPreview.setFileEntryId(fileEntryId);
+		model.setFileEntryId(fileEntryId);
 	}
 
 	/**
@@ -242,7 +166,7 @@ public class DLFileEntryPreviewWrapper implements DLFileEntryPreview,
 	*/
 	@Override
 	public void setFileEntryPreviewId(long fileEntryPreviewId) {
-		_dlFileEntryPreview.setFileEntryPreviewId(fileEntryPreviewId);
+		model.setFileEntryPreviewId(fileEntryPreviewId);
 	}
 
 	/**
@@ -252,7 +176,7 @@ public class DLFileEntryPreviewWrapper implements DLFileEntryPreview,
 	*/
 	@Override
 	public void setFileVersionId(long fileVersionId) {
-		_dlFileEntryPreview.setFileVersionId(fileVersionId);
+		model.setFileVersionId(fileVersionId);
 	}
 
 	/**
@@ -262,12 +186,7 @@ public class DLFileEntryPreviewWrapper implements DLFileEntryPreview,
 	*/
 	@Override
 	public void setGroupId(long groupId) {
-		_dlFileEntryPreview.setGroupId(groupId);
-	}
-
-	@Override
-	public void setNew(boolean n) {
-		_dlFileEntryPreview.setNew(n);
+		model.setGroupId(groupId);
 	}
 
 	/**
@@ -277,7 +196,7 @@ public class DLFileEntryPreviewWrapper implements DLFileEntryPreview,
 	*/
 	@Override
 	public void setPreviewType(int previewType) {
-		_dlFileEntryPreview.setPreviewType(previewType);
+		model.setPreviewType(previewType);
 	}
 
 	/**
@@ -287,78 +206,12 @@ public class DLFileEntryPreviewWrapper implements DLFileEntryPreview,
 	*/
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		_dlFileEntryPreview.setPrimaryKey(primaryKey);
+		model.setPrimaryKey(primaryKey);
 	}
 
 	@Override
-	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_dlFileEntryPreview.setPrimaryKeyObj(primaryKeyObj);
+	protected DLFileEntryPreviewWrapper wrap(
+		DLFileEntryPreview dlFileEntryPreview) {
+		return new DLFileEntryPreviewWrapper(dlFileEntryPreview);
 	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<DLFileEntryPreview> toCacheModel() {
-		return _dlFileEntryPreview.toCacheModel();
-	}
-
-	@Override
-	public DLFileEntryPreview toEscapedModel() {
-		return new DLFileEntryPreviewWrapper(_dlFileEntryPreview.toEscapedModel());
-	}
-
-	@Override
-	public String toString() {
-		return _dlFileEntryPreview.toString();
-	}
-
-	@Override
-	public DLFileEntryPreview toUnescapedModel() {
-		return new DLFileEntryPreviewWrapper(_dlFileEntryPreview.toUnescapedModel());
-	}
-
-	@Override
-	public String toXmlString() {
-		return _dlFileEntryPreview.toXmlString();
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-
-		if (!(obj instanceof DLFileEntryPreviewWrapper)) {
-			return false;
-		}
-
-		DLFileEntryPreviewWrapper dlFileEntryPreviewWrapper = (DLFileEntryPreviewWrapper)obj;
-
-		if (Objects.equals(_dlFileEntryPreview,
-					dlFileEntryPreviewWrapper._dlFileEntryPreview)) {
-			return true;
-		}
-
-		return false;
-	}
-
-	@Override
-	public DLFileEntryPreview getWrappedModel() {
-		return _dlFileEntryPreview;
-	}
-
-	@Override
-	public boolean isEntityCacheEnabled() {
-		return _dlFileEntryPreview.isEntityCacheEnabled();
-	}
-
-	@Override
-	public boolean isFinderCacheEnabled() {
-		return _dlFileEntryPreview.isFinderCacheEnabled();
-	}
-
-	@Override
-	public void resetOriginalValues() {
-		_dlFileEntryPreview.resetOriginalValues();
-	}
-
-	private final DLFileEntryPreview _dlFileEntryPreview;
 }

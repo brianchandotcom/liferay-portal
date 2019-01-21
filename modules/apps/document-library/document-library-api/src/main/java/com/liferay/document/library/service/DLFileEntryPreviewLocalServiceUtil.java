@@ -54,11 +54,6 @@ public class DLFileEntryPreviewLocalServiceUtil {
 		return getService().addDLFileEntryPreview(dlFileEntryPreview);
 	}
 
-	/**
-	* NOTE FOR DEVELOPERS:
-	*
-	* Never reference this class directly. Always use {@link DLFileEntryPreviewLocalServiceUtil} to access the dl file entry preview local service.
-	*/
 	public static void addDLFileEntryPreview(long fileEntryId,
 		long fileVersionId, int previewType)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -99,6 +94,10 @@ public class DLFileEntryPreviewLocalServiceUtil {
 		long fileEntryPreviewId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().deleteDLFileEntryPreview(fileEntryPreviewId);
+	}
+
+	public static void deleteDLFileEntryPreviews(long fileEntryId) {
+		getService().deleteDLFileEntryPreviews(fileEntryId);
 	}
 
 	/**
@@ -194,8 +193,7 @@ public class DLFileEntryPreviewLocalServiceUtil {
 	}
 
 	public static com.liferay.document.library.model.DLFileEntryPreview fetchDLFileEntryPreview(
-		long fileEntryId, long fileVersionId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		long fileEntryId, long fileVersionId) {
 		return getService().fetchDLFileEntryPreview(fileEntryId, fileVersionId);
 	}
 
@@ -284,6 +282,13 @@ public class DLFileEntryPreviewLocalServiceUtil {
 		java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getPersistedModel(primaryKeyObj);
+	}
+
+	public static boolean hasDLFileEntryPreview(long fileEntryId,
+		long fileVersionId, int previewType) {
+		return getService()
+				   .hasDLFileEntryPreview(fileEntryId, fileVersionId,
+			previewType);
 	}
 
 	/**

@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 /**
  * @author Roberto Díaz
  */
-public interface DLFileEntryPreviewHandler {
+public interface FileVersionPreviewEventListener {
 
 	public void addDLFileEntryPreview(
 			long fileEntryId, long fileVersionId,

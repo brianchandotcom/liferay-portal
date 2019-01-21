@@ -43,6 +43,11 @@ public class DLFileEntryPreviewLocalServiceImpl
 	}
 
 	@Override
+	public void deleteDLFileEntryPreviews(long fileEntryId) {
+		dlFileEntryPreviewPersistence.removeByFileEntryId(fileEntryId);
+	}
+
+	@Override
 	public DLFileEntryPreview fetchDLFileEntryPreview(
 		long fileEntryId, long fileVersionId) {
 

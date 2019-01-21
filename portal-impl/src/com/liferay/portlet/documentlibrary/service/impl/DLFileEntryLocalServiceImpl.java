@@ -32,7 +32,6 @@ import com.liferay.document.library.kernel.model.DLFileVersion;
 import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.model.DLVersionNumberIncrease;
-import com.liferay.document.library.kernel.service.DLFileEntryPreviewHandler;
 import com.liferay.document.library.kernel.store.DLStoreUtil;
 import com.liferay.document.library.kernel.util.DL;
 import com.liferay.document.library.kernel.util.DLFileVersionPolicy;
@@ -685,11 +684,6 @@ public class DLFileEntryLocalServiceImpl
 				dlFileEntry.getCompanyId(), dlFileEntry.getGroupId(),
 				DLFileEntry.class.getName(), dlFileVersion.getFileVersionId());
 		}
-
-		// DLFileEntryPreviews
-
-		_dlFileEntryPreviewHandler.deleteDLFileEntryPreviews(
-			dlFileEntry.getFileEntryId());
 
 		// Expando
 
@@ -3064,12 +3058,6 @@ public class DLFileEntryLocalServiceImpl
 	private static final Log _log = LogFactoryUtil.getLog(
 		DLFileEntryLocalServiceImpl.class);
 
-	private static volatile DLFileEntryPreviewHandler
-		_dlFileEntryPreviewHandler =
-			ServiceProxyFactory.newServiceTrackedInstance(
-				DLFileEntryPreviewHandler.class,
-				DLFileEntryLocalServiceImpl.class, "_dlFileEntryPreviewHandler",
-				false, false);
 	private static final Pattern _fileVersionPattern = Pattern.compile(
 		"\\d+\\.\\d+");
 	private static volatile VersioningStrategy _versioningStrategy =

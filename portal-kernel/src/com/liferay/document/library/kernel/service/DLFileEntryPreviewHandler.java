@@ -26,11 +26,6 @@ public interface DLFileEntryPreviewHandler {
 			DLFileEntryPreviewType fileEntryPreviewType)
 		throws PortalException;
 
-	public long getDLFileEntryPreviewId(
-			long fileEntryId, long fileVersionId,
-			DLFileEntryPreviewType fileEntryPreviewType)
-		throws PortalException;
-
 	public enum DLFileEntryPreviewType {
 
 		FAIL(0), NOT_GENERATED(1), SUCCESS(2);

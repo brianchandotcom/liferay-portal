@@ -87,6 +87,21 @@ public class DLFileEntryPreviewLocalServiceImpl
 	}
 
 	@Override
+	public boolean hasDLFileEntryPreview(
+		long fileEntryId, long fileVersionId, int previewType) {
+
+		DLFileEntryPreview dlFileEntryPreview =
+			dlFileEntryPreviewPersistence.fetchByF_F_P(
+				fileEntryId, fileVersionId, previewType);
+
+		if (dlFileEntryPreview == null) {
+			return false;
+		}
+
+		return true;
+	}
+
+	@Override
 	public void updateDLFileEntryPreview(
 			long fileEntryPreviewId, int fileEntryPreviewType)
 		throws PortalException {

@@ -50,22 +50,6 @@ public class DLFileEntryPreviewHandlerImpl
 		}
 	}
 
-	@Override
-	public long getDLFileEntryPreviewId(
-		long fileEntryId, long fileVersionId,
-		DLFileEntryPreviewType fileEntryPreviewType) {
-
-		DLFileEntryPreview dlFileEntryPreview =
-			_dlFileEntryPreviewLocalService.fetchDLFileEntryPreview(
-				fileEntryId, fileVersionId, fileEntryPreviewType.toInteger());
-
-		if (dlFileEntryPreview == null) {
-			return 0;
-		}
-
-		return dlFileEntryPreview.getFileEntryPreviewId();
-	}
-
 	@Reference
 	private DLFileEntryPreviewLocalService _dlFileEntryPreviewLocalService;
 

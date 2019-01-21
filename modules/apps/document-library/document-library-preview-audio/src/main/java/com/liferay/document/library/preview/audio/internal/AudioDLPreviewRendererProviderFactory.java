@@ -14,9 +14,9 @@
 
 package com.liferay.document.library.preview.audio.internal;
 
-import com.liferay.document.library.kernel.service.DLFileEntryPreviewHandler;
 import com.liferay.document.library.kernel.util.AudioProcessorUtil;
 import com.liferay.document.library.preview.DLPreviewRendererProvider;
+import com.liferay.document.library.service.DLFileEntryPreviewLocalService;
 import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 
@@ -52,7 +52,8 @@ public class AudioDLPreviewRendererProviderFactory {
 			bundleContext.registerService(
 				DLPreviewRendererProvider.class,
 				new AudioDLPreviewRendererProvider(
-					_dlFileEntryPreviewHandler, _dlurlHelper, _servletContext),
+					_dlFileEntryPreviewLocalService, _dlurlHelper,
+					_servletContext),
 				properties);
 	}
 
@@ -62,7 +63,7 @@ public class AudioDLPreviewRendererProviderFactory {
 	}
 
 	@Reference
-	private DLFileEntryPreviewHandler _dlFileEntryPreviewHandler;
+	private DLFileEntryPreviewLocalService _dlFileEntryPreviewLocalService;
 
 	private ServiceRegistration<DLPreviewRendererProvider>
 		_dlPreviewRendererProviderServiceRegistration;

@@ -3,6 +3,7 @@ import Soy from 'metal-soy';
 
 import templates from './SidebarWidgetsPanel.soy';
 import {getConnectedComponent} from '../../../store/ConnectedComponent.es';
+import {shouldUpdateOnChangeProperties} from '../../../utils/FragmentsEditorComponentUtils.es';
 
 /**
  * KeyBoardEvent enter key
@@ -15,6 +16,22 @@ const ENTER_KEY = 'Enter';
  * SidebarWidgetsPanel
  */
 class SidebarWidgetsPanel extends Component {
+
+	/**
+	 * @inheritdoc
+	 * @param {object} changes
+	 * @return {boolean}
+	 * @review
+	 */
+	shouldUpdate(changes) {
+		return shouldUpdateOnChangeProperties(
+			changes,
+			[
+				'spritemap',
+				'widgets'
+			]
+		);
+	}
 
 	/**
 	 * Filters widgets tree based on the keywords provided
@@ -137,8 +154,8 @@ SidebarWidgetsPanel.STATE = {};
 const ConnectedSidebarWidgetsPanel = getConnectedComponent(
 	SidebarWidgetsPanel,
 	[
-		'widgets',
-		'spritemap'
+		'spritemap',
+		'widgets'
 	]
 );
 

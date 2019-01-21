@@ -940,123 +940,95 @@ public class JournalDisplayContext {
 				folderIds.add(getFolderId());
 			}
 
-			if (_journalWebConfiguration.journalArticlesSearchWithIndex()) {
-				boolean orderByAsc = false;
+			boolean orderByAsc = false;
 
-				if (Objects.equals(getOrderByType(), "asc")) {
-					orderByAsc = true;
-				}
+			if (Objects.equals(getOrderByType(), "asc")) {
+				orderByAsc = true;
+			}
 
-				Sort sort = null;
+			Sort sort = null;
 
-				if (Objects.equals(getOrderByCol(), "display-date")) {
-					sort = new Sort("displayDate", Sort.LONG_TYPE, orderByAsc);
-				}
-				else if (Objects.equals(getOrderByCol(), "id")) {
-					sort = new Sort(
-						Field.getSortableFieldName(Field.ARTICLE_ID),
-						Sort.STRING_TYPE, !orderByAsc);
-				}
-				else if (Objects.equals(getOrderByCol(), "modified-date")) {
-					sort = new Sort(
-						Field.MODIFIED_DATE, Sort.LONG_TYPE, orderByAsc);
-				}
-				else if (Objects.equals(getOrderByCol(), "title")) {
-					sort = new Sort("title", Sort.STRING_TYPE, !orderByAsc);
-				}
+			if (Objects.equals(getOrderByCol(), "display-date")) {
+				sort = new Sort("displayDate", Sort.LONG_TYPE, orderByAsc);
+			}
+			else if (Objects.equals(getOrderByCol(), "id")) {
+				sort = new Sort(
+					Field.getSortableFieldName(Field.ARTICLE_ID),
+					Sort.STRING_TYPE, !orderByAsc);
+			}
+			else if (Objects.equals(getOrderByCol(), "modified-date")) {
+				sort = new Sort(
+					Field.MODIFIED_DATE, Sort.LONG_TYPE, orderByAsc);
+			}
+			else if (Objects.equals(getOrderByCol(), "title")) {
+				sort = new Sort("title", Sort.STRING_TYPE, !orderByAsc);
+			}
 
-				LinkedHashMap<String, Object> params = new LinkedHashMap<>();
+			LinkedHashMap<String, Object> params = new LinkedHashMap<>();
 
-				params.put("expandoAttributes", getKeywords());
+			params.put("expandoAttributes", getKeywords());
 
-				Indexer indexer = null;
+			Indexer indexer = null;
 
-				if (!showVersions) {
-					indexer = JournalSearcher.getInstance();
-				}
-				else {
-					indexer = IndexerRegistryUtil.getIndexer(
-						JournalArticle.class);
-				}
-
-				SearchContext searchContext = buildSearchContext(
-					_themeDisplay.getCompanyId(),
-					_themeDisplay.getScopeGroupId(), folderIds,
-					JournalArticleConstants.CLASSNAME_ID_DEFAULT,
-					getDDMStructureKey(), getDDMTemplateKey(), getKeywords(),
-					params, articleSearchContainer.getStart(),
-					articleSearchContainer.getEnd(), sort, showVersions);
-
-				Hits hits = indexer.search(searchContext);
-
-				int total = hits.getLength();
-
-				articleSearchContainer.setTotal(total);
-
-				List results = new ArrayList<>();
-
-				Document[] documents = hits.getDocs();
-
-				for (Document document : documents) {
-					String className = document.get(Field.ENTRY_CLASS_NAME);
-					long classPK = GetterUtil.getLong(
-						document.get(Field.ENTRY_CLASS_PK));
-
-					if (className.equals(JournalArticle.class.getName())) {
-						JournalArticle article = null;
-
-						if (!showVersions) {
-							article =
-								JournalArticleLocalServiceUtil.
-									fetchLatestArticle(
-										classPK, WorkflowConstants.STATUS_ANY,
-										false);
-						}
-						else {
-							String articleId = document.get(Field.ARTICLE_ID);
-							long groupId = GetterUtil.getLong(
-								document.get(Field.GROUP_ID));
-							double version = GetterUtil.getDouble(
-								document.get(Field.VERSION));
-
-							article =
-								JournalArticleLocalServiceUtil.fetchArticle(
-									groupId, articleId, version);
-						}
-
-						results.add(article);
-					}
-					else if (className.equals(JournalFolder.class.getName())) {
-						JournalFolder folder =
-							JournalFolderLocalServiceUtil.getFolder(classPK);
-
-						results.add(folder);
-					}
-				}
-
-				articleSearchContainer.setResults(results);
+			if (!showVersions) {
+				indexer = JournalSearcher.getInstance();
 			}
 			else {
-				int total = JournalArticleServiceUtil.searchCount(
-					_themeDisplay.getCompanyId(),
-					_themeDisplay.getScopeGroupId(), folderIds,
-					JournalArticleConstants.CLASSNAME_ID_DEFAULT, getKeywords(),
-					-1.0, getDDMStructureKey(), getDDMTemplateKey(), null, null,
-					getStatus(), null);
-
-				articleSearchContainer.setTotal(total);
-
-				List results = JournalArticleServiceUtil.search(
-					_themeDisplay.getCompanyId(),
-					_themeDisplay.getScopeGroupId(), folderIds,
-					JournalArticleConstants.CLASSNAME_ID_DEFAULT, getKeywords(),
-					-1.0, getDDMStructureKey(), getDDMTemplateKey(), null, null,
-					getStatus(), null, articleSearchContainer.getStart(),
-					articleSearchContainer.getEnd(),
-					articleSearchContainer.getOrderByComparator());
-
-				articleSearchContainer.setResults(results);
+				indexer = IndexerRegistryUtil.getIndexer(JournalArticle.class);
 			}
+
+			SearchContext searchContext = buildSearchContext(
+				_themeDisplay.getCompanyId(), _themeDisplay.getScopeGroupId(),
+				folderIds, JournalArticleConstants.CLASSNAME_ID_DEFAULT,
+				getDDMStructureKey(), getDDMTemplateKey(), getKeywords(),
+				params, articleSearchContainer.getStart(),
+				articleSearchContainer.getEnd(), sort, showVersions);
+
+			Hits hits = indexer.search(searchContext);
+
+			int total = hits.getLength();
+
+			articleSearchContainer.setTotal(total);
+
+			List results = new ArrayList<>();
+
+			Document[] documents = hits.getDocs();
+
+			for (Document document : documents) {
+				String className = document.get(Field.ENTRY_CLASS_NAME);
+				long classPK = GetterUtil.getLong(
+					document.get(Field.ENTRY_CLASS_PK));
+
+				if (className.equals(JournalArticle.class.getName())) {
+					JournalArticle article = null;
+
+					if (!showVersions) {
+						article =
+							JournalArticleLocalServiceUtil.fetchLatestArticle(
+                                classPK, WorkflowConstants.STATUS_ANY, false);
+					}
+					else {
+						String articleId = document.get(Field.ARTICLE_ID);
+						long groupId = GetterUtil.getLong(
+							document.get(Field.GROUP_ID));
+						double version = GetterUtil.getDouble(
+							document.get(Field.VERSION));
+
+						article = JournalArticleLocalServiceUtil.fetchArticle(
+							groupId, articleId, version);
+					}
+
+					results.add(article);
+				}
+				else if (className.equals(JournalFolder.class.getName())) {
+					JournalFolder folder =
+						JournalFolderLocalServiceUtil.getFolder(classPK);
+
+					results.add(folder);
+				}
+			}
+
+			articleSearchContainer.setResults(results);
 		}
 		else {
 			int total = JournalFolderServiceUtil.getFoldersAndArticlesCount(

@@ -55,7 +55,7 @@ SearchContainer entriesSearchContainer = (SearchContainer)request.getAttribute("
 
 		<%
 		portletDisplay.setShowBackIcon(true);
-		portletDisplay.setURLBack(backURL.toString());
+		portletDisplay.setURLBack(backURL);
 
 		renderResponse.setTitle(category.getName());
 		%>

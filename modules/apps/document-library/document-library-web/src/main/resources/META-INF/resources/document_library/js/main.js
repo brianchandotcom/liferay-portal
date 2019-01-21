@@ -98,10 +98,7 @@ AUI.add(
 
 						Liferay.componentReady('entriesManagementToolbar').then(
 							function(managementToolbar) {
-								eventHandles.push(managementToolbar.on(
-									['selectPageCheckboxChanged'],
-									instance._handleSelectPageCheckboxChanged.bind(instance))
-								);
+								eventHandles.push(managementToolbar.on(['selectPageCheckboxChanged'], instance._handleSelectPageCheckboxChanged.bind(instance)));
 							}
 						);
 
@@ -206,7 +203,7 @@ AUI.add(
 
 						var form = instance.get('form').node;
 
-						form.get(instance.NS + 'actionMode').val(`multiple`);
+						form.get(instance.NS + 'actionMode').val('multiple');
 					},
 
 					_handleSelectPageCheckboxChanged: function(event) {
@@ -218,7 +215,7 @@ AUI.add(
 
 						setTimeout(
 							function() {
-								form.get(instance.NS + 'actionMode').val(checked ? `all:${instance.getFolderId()}` : `multiple`);
+								form.get(instance.NS + 'actionMode').val(checked ? 'all:${instance.getFolderId()}' : 'multiple');
 							},
 							100
 						);

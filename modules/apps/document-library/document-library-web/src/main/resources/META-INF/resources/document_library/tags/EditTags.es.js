@@ -19,8 +19,7 @@ class EditTags extends Component {
 	attached() {
 		this._getCommonTags();
 
-		this._bulkStatusComponent = Liferay.component(
-			this.portletNamespace + 'BulkStatus');
+		this._bulkStatusComponent =	Liferay.component(this.portletNamespace + 'BulkStatus');
 	}
 
 	/**
@@ -168,7 +167,7 @@ class EditTags extends Component {
 				}
 			}
 		);
-}
+	}
 
 	/**
 	 * Transforms the tags list in the object needed

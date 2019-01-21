@@ -57,13 +57,13 @@ public class ChangeTrackingRestTest {
 
 	@Before
 	public void setUp() {
-		RestAssured.port = 8080;
-		RestAssured.basePath = "/o/change-tracking";
-		RestAssured.baseURI = _url.toExternalForm();
 		RestAssured.authentication = RestAssured.preemptive(
 		).basic(
 			"test@liferay.com", "test"
 		);
+		RestAssured.basePath = "/o/change-tracking";
+		RestAssured.baseURI = _url.toExternalForm();
+		RestAssured.port = 8080;
 
 		_companyId = RestAssured.get(
 			"configurations/"

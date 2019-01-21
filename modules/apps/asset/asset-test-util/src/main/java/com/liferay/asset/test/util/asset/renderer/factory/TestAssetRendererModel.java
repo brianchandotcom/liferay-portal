@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.asset.assetrendererfactoryregistryutil.test;
+package com.liferay.asset.test.util.asset.renderer.factory;
 
 /**
  * @author Máté Thurzó

@@ -67,7 +67,7 @@ public class KeepAliveSPPortalDynamicInclude extends BaseDynamicInclude {
 			return;
 		}
 
-		String keepAliveURL = getConfiguredKeepAliveURL(request, themeDisplay);
+		String keepAliveURL = getConfiguredKeepAliveURL(request);
 
 		if (Validator.isBlank(keepAliveURL)) {
 			return;
@@ -96,14 +96,15 @@ public class KeepAliveSPPortalDynamicInclude extends BaseDynamicInclude {
 		dynamicIncludeRegistry.register("/html/common/themes/bottom.jsp#post");
 	}
 
-	protected String getConfiguredKeepAliveURL(
-		HttpServletRequest request, ThemeDisplay themeDisplay) {
-
+	protected String getConfiguredKeepAliveURL(HttpServletRequest request) {
 		String keepAliveURL = null;
 
 		try {
 			SamlSpSession samlSpSession = getSamlSpSession(
 				request, _samlSpSessionLocalService);
+
+			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 			SamlSpIdpConnection samlSpIdpConnection =
 				_samlSpIdpConnectionLocalService.getSamlSpIdpConnection(

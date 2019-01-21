@@ -113,8 +113,8 @@ public class AggregationFilteringTest extends BaseFacetedSearcherTestCase {
 	public void tearDown() throws Exception {
 		super.tearDown();
 
-		blogsEntrySearchFixture.tearDown();
-		fileEntrySearchFixture.tearDown();
+		_blogsEntrySearchFixture.tearDown();
+		_fileEntrySearchFixture.tearDown();
 	}
 
 	@Test
@@ -266,18 +266,18 @@ public class AggregationFilteringTest extends BaseFacetedSearcherTestCase {
 	protected void addBlogsEntry(Group group, User user, String keyword)
 		throws Exception {
 
-		blogsEntrySearchFixture.addBlogsEntry(group, user, keyword);
+		_blogsEntrySearchFixture.addBlogsEntry(group, user, keyword);
 	}
 
 	protected void addFileEntry(Group group, User user, String keyword) {
-		fileEntrySearchFixture.addFileEntry(
+		_fileEntrySearchFixture.addFileEntry(
 			new FileEntryBlueprint() {
 				{
-					groupId = group.getGroupId();
-					title =
+					setGroupId(group.getGroupId());
+					setTitle(
 						keyword + StringPool.SPACE +
-							RandomTestUtil.randomString();
-					userId = user.getUserId();
+							RandomTestUtil.randomString());
+					setUserId(user.getUserId());
 				}
 			});
 	}
@@ -294,21 +294,25 @@ public class AggregationFilteringTest extends BaseFacetedSearcherTestCase {
 		journalArticleSearchFixture.addArticle(
 			new JournalArticleBlueprint() {
 				{
-					groupId = group.getGroupId();
-					journalArticleContent = new JournalArticleContent() {
-						{
-							defaultLocale = LocaleUtil.US;
-							name = "content";
+					setGroupId(group.getGroupId());
+					setJournalArticleContent(
+						new JournalArticleContent() {
+							{
+								setDefaultLocale(LocaleUtil.US);
+								setName("content");
 
-							put(LocaleUtil.US, RandomTestUtil.randomString());
-						}
-					};
-					journalArticleTitle = new JournalArticleTitle() {
-						{
-							put(LocaleUtil.US, keyword);
-						}
-					};
-					userId = user.getUserId();
+								put(
+									LocaleUtil.US,
+									RandomTestUtil.randomString());
+							}
+						});
+					setJournalArticleTitle(
+						new JournalArticleTitle() {
+							{
+								put(LocaleUtil.US, keyword);
+							}
+						});
+					setUserId(user.getUserId());
 				}
 			});
 	}
@@ -371,7 +375,7 @@ public class AggregationFilteringTest extends BaseFacetedSearcherTestCase {
 	protected Facet createSiteFacet(
 		Group[] groups, SearchContext searchContext) {
 
-		Facet facet = siteFacetFactory.newInstance(searchContext);
+		Facet facet = _siteFacetFactory.newInstance(searchContext);
 
 		facet.select(getGroupIdStrings(groups));
 
@@ -381,7 +385,7 @@ public class AggregationFilteringTest extends BaseFacetedSearcherTestCase {
 	protected Facet createTypeFacet(
 		Class[] classes, SearchContext searchContext) {
 
-		Facet facet = assetEntriesFacetFactory.newInstance(searchContext);
+		Facet facet = _assetEntriesFacetFactory.newInstance(searchContext);
 
 		facet.select(getClassNames(classes));
 
@@ -389,7 +393,7 @@ public class AggregationFilteringTest extends BaseFacetedSearcherTestCase {
 	}
 
 	protected Facet createUserFacet(User[] users, SearchContext searchContext) {
-		Facet facet = userFacetFactory.newInstance(searchContext);
+		Facet facet = _userFacetFactory.newInstance(searchContext);
 
 		facet.select(getUserFullNames(users));
 
@@ -397,38 +401,20 @@ public class AggregationFilteringTest extends BaseFacetedSearcherTestCase {
 	}
 
 	protected void setUpBlogsEntrySearchFixture() {
-		blogsEntrySearchFixture = new BlogsEntrySearchFixture(
-			blogsEntryLocalService);
+		_blogsEntrySearchFixture = new BlogsEntrySearchFixture(
+			_blogsEntryLocalService);
 
-		blogsEntrySearchFixture.setUp();
+		_blogsEntrySearchFixture.setUp();
 
-		_blogsEntries = blogsEntrySearchFixture.getBlogsEntries();
+		_blogsEntries = _blogsEntrySearchFixture.getBlogsEntries();
 	}
 
 	protected void setUpFileEntrySearchFixture() {
-		fileEntrySearchFixture = new FileEntrySearchFixture(dlAppLocalService);
+		_fileEntrySearchFixture = new FileEntrySearchFixture(
+			_dlAppLocalService);
 
-		fileEntrySearchFixture.setUp();
+		_fileEntrySearchFixture.setUp();
 	}
-
-	@Inject
-	protected AssetEntriesFacetFactory assetEntriesFacetFactory;
-
-	@Inject
-	protected BlogsEntryLocalService blogsEntryLocalService;
-
-	protected BlogsEntrySearchFixture blogsEntrySearchFixture;
-
-	@Inject
-	protected DLAppLocalService dlAppLocalService;
-
-	protected FileEntrySearchFixture fileEntrySearchFixture;
-
-	@Inject
-	protected SiteFacetFactory siteFacetFactory;
-
-	@Inject
-	protected UserFacetFactory userFacetFactory;
 
 	protected static class Expectations {
 
@@ -441,9 +427,21 @@ public class AggregationFilteringTest extends BaseFacetedSearcherTestCase {
 
 	}
 
+	@Inject
+	private AssetEntriesFacetFactory _assetEntriesFacetFactory;
+
 	@DeleteAfterTestRun
 	private List<BlogsEntry> _blogsEntries;
 
+	@Inject
+	private BlogsEntryLocalService _blogsEntryLocalService;
+
+	private BlogsEntrySearchFixture _blogsEntrySearchFixture;
+
+	@Inject
+	private DLAppLocalService _dlAppLocalService;
+
+	private FileEntrySearchFixture _fileEntrySearchFixture;
 	private Group _group1;
 	private Group _group2;
 
@@ -451,9 +449,16 @@ public class AggregationFilteringTest extends BaseFacetedSearcherTestCase {
 	private final List<Group> _groups = new ArrayList<>();
 
 	private String _keyword;
+
+	@Inject
+	private SiteFacetFactory _siteFacetFactory;
+
 	private User _user1;
 	private User _user2;
 	private User _user3;
+
+	@Inject
+	private UserFacetFactory _userFacetFactory;
 
 	@DeleteAfterTestRun
 	private final List<User> _users = new ArrayList<>();

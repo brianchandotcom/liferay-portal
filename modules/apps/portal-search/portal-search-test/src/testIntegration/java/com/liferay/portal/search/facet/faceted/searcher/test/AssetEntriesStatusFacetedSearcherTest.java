@@ -110,28 +110,32 @@ public class AssetEntriesStatusFacetedSearcherTest
 		return assetEntriesFacetFactory.newInstance(searchContext);
 	}
 
-	protected void index(String keyword, boolean draft1) throws Exception {
+	protected void index(String keyword, boolean draft) throws Exception {
 		Group group = userSearchFixture.addGroup();
 
 		journalArticleSearchFixture.addArticle(
 			new JournalArticleBlueprint() {
 				{
-					draft = draft1;
-					groupId = group.getGroupId();
-					journalArticleContent = new JournalArticleContent() {
-						{
-							defaultLocale = LocaleUtil.US;
-							name = "content";
+					setDraft(draft);
+					setGroupId(group.getGroupId());
+					setJournalArticleContent(
+						new JournalArticleContent() {
+							{
+								setName("content");
+								setDefaultLocale(LocaleUtil.US);
 
-							put(LocaleUtil.US, RandomTestUtil.randomString());
-						}
-					};
-					journalArticleTitle = new JournalArticleTitle() {
-						{
-							put(LocaleUtil.US, keyword);
-						}
-					};
-					workflowEnabled = true;
+								put(
+									LocaleUtil.US,
+									RandomTestUtil.randomString());
+							}
+						});
+					setJournalArticleTitle(
+						new JournalArticleTitle() {
+							{
+								put(LocaleUtil.US, keyword);
+							}
+						});
+					setWorkflowEnabled(true);
 				}
 			});
 

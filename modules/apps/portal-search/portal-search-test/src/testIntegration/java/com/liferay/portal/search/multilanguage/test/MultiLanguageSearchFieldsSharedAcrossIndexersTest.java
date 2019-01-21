@@ -153,8 +153,8 @@ public class MultiLanguageSearchFieldsSharedAcrossIndexersTest {
 		addJournalArticle(
 			new JournalArticleContent() {
 				{
-					defaultLocale = LocaleUtil.US;
-					name = "content";
+					setDefaultLocale(LocaleUtil.US);
+					setName("content");
 					put(LocaleUtil.NETHERLANDS, NL_CONTENT);
 					put(LocaleUtil.US, US_CONTENT);
 				}
@@ -175,8 +175,8 @@ public class MultiLanguageSearchFieldsSharedAcrossIndexersTest {
 		addJournalArticle(
 			new JournalArticleContent() {
 				{
-					defaultLocale = LocaleUtil.US;
-					name = "content";
+					setDefaultLocale(LocaleUtil.US);
+					setName("content");
 					put(LocaleUtil.US, US_CONTENT);
 				}
 			},
@@ -194,8 +194,8 @@ public class MultiLanguageSearchFieldsSharedAcrossIndexersTest {
 		addJournalArticle(
 			new JournalArticleContent() {
 				{
-					defaultLocale = LocaleUtil.NETHERLANDS;
-					name = "content";
+					setDefaultLocale(LocaleUtil.NETHERLANDS);
+					setName("content");
 					put(LocaleUtil.NETHERLANDS, US_CONTENT);
 				}
 			},
@@ -212,16 +212,16 @@ public class MultiLanguageSearchFieldsSharedAcrossIndexersTest {
 	}
 
 	protected FileEntry addFileEntryWithEnglishWords() throws Exception {
-		try (InputStream inputStream1 = new ReaderInputStream(
+		try (InputStream inputStream = new ReaderInputStream(
 				new StringReader(US_CONTENT))) {
 
 			return _fileEntrySearchFixture.addFileEntry(
 				new FileEntryBlueprint() {
 					{
-						groupId = _group.getGroupId();
-						inputStream = inputStream1;
-						title = US_TITLE;
-						userId = _user.getUserId();
+						setGroupId(_group.getGroupId());
+						setInputStream(inputStream);
+						setTitle(US_TITLE);
+						setUserId(_user.getUserId());
 					}
 				});
 		}
@@ -243,11 +243,12 @@ public class MultiLanguageSearchFieldsSharedAcrossIndexersTest {
 		return _journalArticleSearchFixture.addArticle(
 			new JournalArticleBlueprint() {
 				{
-					groupId = _group.getGroupId();
-					journalArticleContent = journalArticleContentParam;
-					journalArticleDescription = journalArticleDescriptionParam;
-					journalArticleTitle = journalArticleTitleParam;
-					userId = _user.getUserId();
+					setGroupId(_group.getGroupId());
+					setJournalArticleContent(journalArticleContentParam);
+					setJournalArticleDescription(
+						journalArticleDescriptionParam);
+					setJournalArticleTitle(journalArticleTitleParam);
+					setUserId(_user.getUserId());
 				}
 			});
 	}

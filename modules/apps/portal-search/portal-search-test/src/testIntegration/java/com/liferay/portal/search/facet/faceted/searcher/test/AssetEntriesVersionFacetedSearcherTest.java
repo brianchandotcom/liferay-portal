@@ -16,7 +16,6 @@ package com.liferay.portal.search.facet.faceted.searcher.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.journal.model.JournalArticle;
-import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.test.util.search.JournalArticleBlueprint;
 import com.liferay.journal.test.util.search.JournalArticleContent;
 import com.liferay.journal.test.util.search.JournalArticleTitle;
@@ -113,7 +112,7 @@ public class AssetEntriesVersionFacetedSearcherTest
 	}
 
 	protected Facet createFacet(SearchContext searchContext) {
-		return assetEntriesFacetFactory.newInstance(searchContext);
+		return _assetEntriesFacetFactory.newInstance(searchContext);
 	}
 
 	protected JournalArticle index(String keyword, Group group)
@@ -122,27 +121,31 @@ public class AssetEntriesVersionFacetedSearcherTest
 		JournalArticle journalArticle = journalArticleSearchFixture.addArticle(
 			new JournalArticleBlueprint() {
 				{
-					groupId = group.getGroupId();
-					journalArticleContent = new JournalArticleContent() {
-						{
-							defaultLocale = LocaleUtil.US;
-							name = "content";
+					setGroupId(group.getGroupId());
+					setJournalArticleContent(
+						new JournalArticleContent() {
+							{
+								setName("content");
+								setDefaultLocale(LocaleUtil.US);
 
-							put(LocaleUtil.US, RandomTestUtil.randomString());
-						}
-					};
-					journalArticleTitle = new JournalArticleTitle() {
-						{
-							put(LocaleUtil.US, keyword);
-						}
-					};
+								put(
+									LocaleUtil.US,
+									RandomTestUtil.randomString());
+							}
+						});
+					setJournalArticleTitle(
+						new JournalArticleTitle() {
+							{
+								put(LocaleUtil.US, keyword);
+							}
+						});
 				}
 			});
 
 		User user = UserTestUtil.getAdminUser(group.getCompanyId());
 
 		PermissionThreadLocal.setPermissionChecker(
-			permissionCheckerFactory.create(user));
+			_permissionCheckerFactory.create(user));
 
 		return journalArticle;
 	}
@@ -152,12 +155,9 @@ public class AssetEntriesVersionFacetedSearcherTest
 	}
 
 	@Inject
-	protected AssetEntriesFacetFactory assetEntriesFacetFactory;
+	private AssetEntriesFacetFactory _assetEntriesFacetFactory;
 
 	@Inject
-	protected JournalArticleLocalService journalArticleLocalService;
-
-	@Inject
-	protected PermissionCheckerFactory permissionCheckerFactory;
+	private PermissionCheckerFactory _permissionCheckerFactory;
 
 }

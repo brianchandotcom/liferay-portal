@@ -11,7 +11,7 @@
 <!--RULE_BUILDER-->
 <tr>
 	<td>RULE_BUILDER_ADD_RULE_BUTTON</td>
-	<td>//button[contains(@class,'ddm-add-rule')]</td>
+	<td>//button[contains(@class,'ddm-add-rule')] | //button[contains(@id,'addFieldButton')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -36,22 +36,22 @@
 </tr>
 <tr>
 	<td>RULE_BUILDER_CONDITION_FIELD</td>
-	<td>//li[contains(@class,'rule-condition-container')][${key_conditionRowNumber}]//div[contains(@id,'condition-first') and contains(@class,'select-field-trigger')]</td>
+	<td>//li[contains(@class,'rule-condition-container')][${key_conditionRowNumber}]//div[contains(@id,'condition-first') and contains(@class,'select-field-trigger')] | //li[contains(@class,'rule-condition-container')][${key_conditionRowNumber}]//div[contains(@class,'condition-if')]//div[contains(@class,'select-field-trigger')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>RULE_BUILDER_SELECT_CONDITION_FIELD</td>
-	<td>//li[contains(@class,'form-builder-rule-condition')][${key_conditionRowNumber}]//div[contains(@id,'condition-first')]/following-sibling::div[@class='drop-chosen']//a[text()='${key_conditionField}']</td>
+	<td>//li[contains(@class,'form-builder-rule-condition')][${key_conditionRowNumber}]//div[contains(@id,'condition-first')]/following-sibling::div[@class='drop-chosen']//a[text()='${key_conditionField}'] | //div[contains(@class,'dropdown-opened')]//li[text()='${key_conditionField}']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>RULE_BUILDER_CONDITION_OPERATOR_FIELD</td>
-	<td>//li[contains(@class,'rule-condition-container')][${key_conditionRowNumber}]//div[contains(@id,'condition-operator') and contains(@class,'select-field-trigger')]</td>
+	<td>//li[contains(@class,'rule-condition-container')][${key_conditionRowNumber}]//div[contains(@id,'condition-operator') and contains(@class,'select-field-trigger')] | //li[contains(@class,'rule-condition-container')][${key_conditionRowNumber}]//div[contains(@class,'condition-operator')]//div[contains(@class,'select-field-trigger')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>RULE_BUILDER_SELECT_CONDITION_OPERATOR</td>
-	<td>//li[contains(@class,'form-builder-rule-condition')][${key_conditionRowNumber}]//div[contains(@id,'condition-operator')]/following-sibling::div[@class='drop-chosen']//li[contains(.,'${key_conditionOperator}')]</td>
+	<td>//li[contains(@class,'form-builder-rule-condition')][${key_conditionRowNumber}]//div[contains(@id,'condition-operator')]/following-sibling::div[@class='drop-chosen']//li[contains(.,'${key_conditionOperator}')] | //div[contains(@class,'dropdown-opened')]//li[text()='${key_conditionOperator}']</td>
 	<td></td>
 </tr>
 <tr>
@@ -116,7 +116,7 @@
 </tr>
 <tr>
 	<td>RULE_BUILDER_SAVE_BUTTON_DISABLED</td>
-	<td>//button[@disabled='' and contains(@class,'form-builder-rule-settings-save')]</td>
+	<td>//button[@disabled='' and contains(@class,'form-builder-rule-settings-save')] | //button[@disabled='disabled' and contains(@class,'btn-primary')]</td>
 	<td></td>
 </tr>
 <tr>

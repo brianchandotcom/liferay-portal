@@ -228,7 +228,7 @@
 </tr>
 <tr>
 	<td>SIDEBAR_ELLIPSIS</td>
-	<td>//div[contains(@class,'sidebar')]//a[*[contains(@class,'lexicon-icon-ellipsis-v')]]</td>
+	<td>//div[contains(@class,'sidebar')]//a[*[contains(@class,'lexicon-icon-ellipsis-v')]] | //div[contains(@class,'sidebar')]//button[*[contains(@class,'lexicon-icon-ellipsis-v')]]</td>
 	<td></td>
 </tr>
 <tr>
@@ -238,7 +238,7 @@
 </tr>
 <tr>
 	<td>SIDEBAR_MENUITEM_DUPLICATE_FIELD</td>
-	<td>//a[@title='Duplicate Field']</td>
+	<td>//a[@title='Duplicate Field'] | //button[text()='Duplicate Field']</td>
 	<td></td>
 </tr>
 <tr>

@@ -118,7 +118,7 @@ definition {
 
 		Form.gotoAddField(fieldType = "Text Field");
 
-		Form.editFieldLabelMetal(fieldValue = "Text Field Required");
+		Form.editFieldLabel(fieldValue = "Text Field Required");
 
 		FormFields.selectTextFieldLineOption(textFieldLineOption = "Multiple Lines");
 
@@ -128,7 +128,7 @@ definition {
 
 		Form.gotoAddField(fieldType = "Select from List");
 
-		Form.editFieldLabelMetal(fieldValue = "Select Repeatable");
+		Form.editFieldLabel(fieldValue = "Select Repeatable");
 
 		for (var number : list "1,2,3") {
 			FormFields.editOptionsRow(

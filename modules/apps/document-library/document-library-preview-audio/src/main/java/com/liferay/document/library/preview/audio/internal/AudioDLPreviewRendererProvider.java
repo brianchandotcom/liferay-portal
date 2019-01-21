@@ -14,7 +14,7 @@
 
 package com.liferay.document.library.preview.audio.internal;
 
-import com.liferay.document.library.kernel.service.DLFileEntryPreviewHandler;
+import com.liferay.document.library.kernel.service.FileVersionPreviewEventListener;
 import com.liferay.document.library.kernel.util.AudioProcessorUtil;
 import com.liferay.document.library.kernel.util.DLProcessorRegistryUtil;
 import com.liferay.document.library.preview.DLPreviewRenderer;
@@ -94,7 +94,7 @@ public class AudioDLPreviewRendererProvider
 
 		if (_dlFileEntryPreviewLocalService.hasDLFileEntryPreview(
 				fileVersion.getFileEntryId(), fileVersion.getFileVersionId(),
-				DLFileEntryPreviewHandler.
+				FileVersionPreviewEventListener.
 					DLFileEntryPreviewType.FAIL.toInteger())) {
 
 			throw new DLFileEntryPreviewGenerationException();

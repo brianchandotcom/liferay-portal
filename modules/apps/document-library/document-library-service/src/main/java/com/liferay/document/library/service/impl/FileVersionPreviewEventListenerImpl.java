@@ -14,7 +14,7 @@
 
 package com.liferay.document.library.service.impl;
 
-import com.liferay.document.library.kernel.service.DLFileEntryPreviewHandler;
+import com.liferay.document.library.kernel.service.FileVersionPreviewEventListener;
 import com.liferay.document.library.model.DLFileEntryPreview;
 import com.liferay.document.library.service.DLFileEntryPreviewLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -25,9 +25,9 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Roberto Díaz
  */
-@Component(immediate = true, service = DLFileEntryPreviewHandler.class)
-public class DLFileEntryPreviewHandlerImpl
-	implements DLFileEntryPreviewHandler {
+@Component(immediate = true, service = FileVersionPreviewEventListener.class)
+public class FileVersionPreviewEventListenerImpl
+	implements FileVersionPreviewEventListener {
 
 	@Override
 	public void addDLFileEntryPreview(

@@ -251,7 +251,7 @@ public class MetadataManagerImpl
 	}
 
 	@Override
-	public MetadataResolver getMetadataResolver() throws SamlException {
+	public MetadataResolver getMetadataResolver() {
 		return _cachingChainingMetadataResolver;
 	}
 
@@ -523,12 +523,12 @@ public class MetadataManagerImpl
 					return false;
 				}
 			}
-			catch (ResolverException | SamlException e) {
+			catch (ResolverException re) {
 				String message =
-					"Error retrieving metadata information: " + e.getMessage();
+					"Error retrieving metadata information: " + re.getMessage();
 
 				if (_log.isDebugEnabled()) {
-					_log.debug(message, e);
+					_log.debug(message, re);
 				}
 				else if (_log.isWarnEnabled()) {
 					_log.warn(message);

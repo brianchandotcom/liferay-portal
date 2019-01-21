@@ -1,0 +1,3 @@
+com/liferay/expando/kernel/model/ExpandoColumnConstants.getTypeLabel(I)Ljava/lang/String;:SAFE
+com/liferay/expando/kernel/model/CustomAttributesDisplay.getClassName()Ljava/lang/String;:SAFE
+com/liferay/expando/kernel/model/CustomAttributesDisplay.getIconCssClass()Ljava/lang/String;:SAFE

@@ -21,36 +21,19 @@ import com.liferay.portal.kernel.exception.PortalException;
 import java.util.List;
 
 /**
- * The implementation of the dl file entry preview local service.
- *
- * <p>
- * All custom service methods should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the {@link com.liferay.document.library.service.DLFileEntryPreviewLocalService} interface.
- *
- * <p>
- * This is a local service. Methods of this service will not have security checks based on the propagated JAAS credentials because this service can only be accessed from within the same VM.
- * </p>
- *
- * @author Brian Wing Shun Chan
- * @see DLFileEntryPreviewLocalServiceBaseImpl
- * @see com.liferay.document.library.service.DLFileEntryPreviewLocalServiceUtil
+ * @author Roberto Díaz
  */
 public class DLFileEntryPreviewLocalServiceImpl
 	extends DLFileEntryPreviewLocalServiceBaseImpl {
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this class directly. Always use {@link com.liferay.document.library.service.DLFileEntryPreviewLocalServiceUtil} to access the dl file entry preview local service.
-	 */
 	@Override
 	public void addDLFileEntryPreview(
 			long fileEntryId, long fileVersionId, int previewType)
 		throws PortalException {
 
-		long fileEntryPreviewId = counterLocalService.increment();
-
 		DLFileEntryPreview fileEntryPreview =
-			dlFileEntryPreviewPersistence.create(fileEntryPreviewId);
+			dlFileEntryPreviewPersistence.create(
+				counterLocalService.increment());
 
 		fileEntryPreview.setFileEntryId(fileEntryId);
 		fileEntryPreview.setFileVersionId(fileVersionId);
@@ -61,8 +44,7 @@ public class DLFileEntryPreviewLocalServiceImpl
 
 	@Override
 	public DLFileEntryPreview fetchDLFileEntryPreview(
-			long fileEntryId, long fileVersionId)
-		throws PortalException {
+		long fileEntryId, long fileVersionId) {
 
 		return dlFileEntryPreviewPersistence.fetchByF_F(
 			fileEntryId, fileVersionId);

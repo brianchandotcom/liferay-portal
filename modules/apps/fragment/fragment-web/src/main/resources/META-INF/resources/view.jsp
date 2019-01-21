@@ -204,7 +204,7 @@ List<FragmentCollection> fragmentCollections = (List<FragmentCollection>)request
 								if (selectedItems) {
 									selectedItems.forEach(
 										function(item) {
-											dom.append(fragmentCollectionsFm, selectedItem);
+											dom.append(fragmentCollectionsFm, item);
 										}
 									)
 

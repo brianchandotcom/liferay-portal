@@ -14,7 +14,6 @@
 
 package com.liferay.fragment.internal.processor;
 
-import com.liferay.fragment.constants.FragmentEntryLinkConstants;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.processor.FragmentEntryProcessor;
 import com.liferay.fragment.processor.FragmentEntryProcessorRegistry;
@@ -28,6 +27,7 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 
 import java.util.Collections;
+import java.util.List;
 import java.util.Locale;
 
 import org.osgi.framework.BundleContext;
@@ -105,16 +105,8 @@ public class FragmentEntryProcessorRegistryImpl
 
 	@Override
 	public String processFragmentEntryLinkHTML(
-			FragmentEntryLink fragmentEntryLink)
-		throws PortalException {
-
-		return processFragmentEntryLinkHTML(
-			fragmentEntryLink, FragmentEntryLinkConstants.EDIT);
-	}
-
-	@Override
-	public String processFragmentEntryLinkHTML(
-			FragmentEntryLink fragmentEntryLink, String mode, Locale locale)
+			FragmentEntryLink fragmentEntryLink, String mode, Locale locale,
+			List<Long> segments)
 		throws PortalException {
 
 		String html = fragmentEntryLink.getHtml();
@@ -123,7 +115,7 @@ public class FragmentEntryProcessorRegistryImpl
 				_serviceTrackerList) {
 
 			html = fragmentEntryProcessor.processFragmentEntryLinkHTML(
-				fragmentEntryLink, html, mode, locale);
+				fragmentEntryLink, html, mode, locale, segments);
 		}
 
 		return html;

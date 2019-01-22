@@ -1,10 +1,10 @@
-import './RuleEditorMockFieldRegister.soy.js';
+import './MockFieldRegister.soy.js';
 import Component from 'metal-component';
 import Soy from 'metal-soy';
-import templates from './RuleEditorMockField.soy.js';
+import templates from './MockField.soy.js';
 import Config from 'metal-state/lib/Config';
 
-class RuleEditorMockField extends Component {
+class MockField extends Component {
 	static STATE = {
 		fieldName: Config.string(),
 		label: Config.string(),
@@ -35,6 +35,6 @@ class RuleEditorMockField extends Component {
 	}
 }
 
-Soy.register(RuleEditorMockField, templates);
+Soy.register(MockField, templates);
 
-export default RuleEditorMockField;
+export default MockField;

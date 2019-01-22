@@ -1,4 +1,4 @@
-import '../RuleEditor/__fixtures__/RuleEditorMockField.es';
+import '../../__fixtures__/MockField.es';
 import mockPages from 'mock/mockPages.es';
 import dom from 'metal-dom';
 import Calculator from 'source/components/Calculator/Calculator.es';

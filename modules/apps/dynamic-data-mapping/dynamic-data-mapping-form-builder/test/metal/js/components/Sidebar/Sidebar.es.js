@@ -1,3 +1,4 @@
+import '../../__fixtures__/MockField.es';
 import Sidebar from 'source/components/Sidebar/Sidebar.es';
 import {dom as MetalTestUtil} from 'metal-dom';
 import {PagesVisitor} from 'source/util/visitors.es';
@@ -13,6 +14,38 @@ const focusedField = {
 	type: 'date'
 };
 const spritemap = 'icons.svg';
+
+const getFieldValue = (pages, fieldName) => {
+	const visitor = new PagesVisitor(pages);
+	let fieldValue;
+
+	visitor.mapFields(
+		field => {
+			if (field.fieldName === fieldName) {
+				fieldValue = field.value;
+			}
+		}
+	);
+
+	return fieldValue;
+};
+
+const fillField = (pages, fieldName, value) => {
+	const visitor = new PagesVisitor(pages);
+
+	return visitor.mapFields(
+		field => {
+			if (field.fieldName === fieldName) {
+				field = {
+					...field,
+					value
+				};
+			}
+
+			return field;
+		}
+	);
+};
 
 const mockFieldType = {
 	description: 'Single line or multiline text area.',
@@ -57,6 +90,12 @@ const mockFieldType = {
 										fieldName: 'type',
 										type: 'text',
 										value: 'text',
+										visible: false
+									},
+									{
+										fieldName: 'validation',
+										type: 'validation',
+										value: 'expression=1',
 										visible: false
 									}
 								]
@@ -528,38 +567,6 @@ describe(
 				it(
 					'should keep basic properties after changing field type',
 					done => {
-						const getFieldValue = (pages, fieldName) => {
-							const visitor = new PagesVisitor(pages);
-							let fieldValue;
-
-							visitor.mapFields(
-								field => {
-									if (field.fieldName === fieldName) {
-										fieldValue = field.value;
-									}
-								}
-							);
-
-							return fieldValue;
-						};
-
-						const fillField = (pages, fieldName, value) => {
-							const visitor = new PagesVisitor(pages);
-
-							return visitor.mapFields(
-								field => {
-									if (field.fieldName === fieldName) {
-										return {
-											...field,
-											value
-										};
-									}
-
-									return field;
-								}
-							);
-						};
-
 						const {settingsContext} = mockFieldType;
 						let {pages} = settingsContext;
 
@@ -580,7 +587,6 @@ describe(
 							}
 						);
 
-
 						jest.runAllTimers();
 
 						component.once(
@@ -590,6 +596,45 @@ describe(
 								expect(getFieldValue(settingsContext.pages, 'type')).toBe('checkbox');
 								expect(getFieldValue(settingsContext.pages, 'label')).toBe('my field');
 								expect(getFieldValue(settingsContext.pages, 'showLabel')).toBe(false);
+
+								done();
+							}
+						);
+
+						component.changeFieldType('checkbox');
+					}
+				);
+
+				it(
+					'should not keep validation settings between field type',
+					done => {
+						const {settingsContext} = mockFieldType;
+						let {pages} = settingsContext;
+
+						pages = fillField(pages, 'validation', 'a=b');
+
+						expect(getFieldValue(pages, 'validation')).toEqual('a=b');
+
+						component = new Sidebar(
+							{
+								fieldTypes,
+								focusedField: {
+									...mockFieldType,
+									settingsContext: {
+										...mockFieldType.settingsContext,
+										pages
+									}
+								},
+								spritemap
+							}
+						);
+
+						jest.runAllTimers();
+
+						component.once(
+							'focusedFieldUpdated',
+							({settingsContext}) => {
+								expect(getFieldValue(settingsContext.pages, 'validation')).not.toEqual('a=b');
 
 								done();
 							}

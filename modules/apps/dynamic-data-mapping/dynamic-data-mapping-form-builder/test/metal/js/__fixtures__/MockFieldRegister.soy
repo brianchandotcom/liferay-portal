@@ -1,37 +1,49 @@
-{namespace RuleEditorMockFieldRegister}
+{namespace MockFieldRegister}
+
+{deltemplate PageRenderer.RegisterFieldType variant="'checkbox'"}
+	{call MockField.render data="all"}
+		{param type: 'checkbox' /}
+	{/call}
+{/deltemplate}
 
 {deltemplate PageRenderer.RegisterFieldType variant="'checkbox_multiple'"}
-	{call RuleEditorMockField.render data="all"}
+	{call MockField.render data="all"}
 		{param type: 'checkbox_multiple' /}
 	{/call}
 {/deltemplate}
 
 {deltemplate PageRenderer.RegisterFieldType variant="'date'"}
-	{call RuleEditorMockField.render data="all"}
+	{call MockField.render data="all"}
 		{param type: 'date' /}
 	{/call}
 {/deltemplate}
 
 {deltemplate PageRenderer.RegisterFieldType variant="'numeric'"}
-	{call RuleEditorMockField.render data="all"}
+	{call MockField.render data="all"}
 		{param type: 'numeric' /}
 	{/call}
 {/deltemplate}
 
 {deltemplate PageRenderer.RegisterFieldType variant="'radio'"}
-	{call RuleEditorMockField.render data="all"}
+	{call MockField.render data="all"}
 		{param type: 'radio' /}
 	{/call}
 {/deltemplate}
 
 {deltemplate PageRenderer.RegisterFieldType variant="'select'"}
-	{call RuleEditorMockField.render data="all"}
+	{call MockField.render data="all"}
 		{param type: 'select' /}
 	{/call}
 {/deltemplate}
 
 {deltemplate PageRenderer.RegisterFieldType variant="'text'"}
-	{call RuleEditorMockField.render data="all"}
+	{call MockField.render data="all"}
 		{param type: 'text' /}
+	{/call}
+{/deltemplate}
+
+{deltemplate PageRenderer.RegisterFieldType variant="'validation'"}
+	{call MockField.render data="all"}
+		{param type: 'validation' /}
 	{/call}
 {/deltemplate}

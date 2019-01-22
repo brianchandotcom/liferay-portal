@@ -1,10 +1,12 @@
-{namespace RuleEditorMockField}
+{namespace MockField}
 
 {template .render}
 	{@param? type: string}
 
 	<div id="fields-rule">
 		{switch $type}
+			{case 'checkbox'}
+				{call .Checkbox /}
 			{case 'checkbox_multiple'}
 				{call .CheckboxMultiple /}
 			{case 'date'}
@@ -17,10 +19,16 @@
 				{call .Select /}
 			{case 'text'}
 				{call .Text /}
+			{case 'validation'}
+				{call .Validation /}
 			{default}
 				<div class="ddm-template-undefined">Undefined template.</div>
 		{/switch}
 	</div>
+{/template}
+
+{template .Checkbox}
+	<p>Checkbox Field</p>
 {/template}
 
 {template .CheckboxMultiple}
@@ -45,4 +53,8 @@
 
 {template .Text}
 	<p>Text Field</p>
+{/template}
+
+{template .Validation}
+	<p>Validation Field</p>
 {/template}

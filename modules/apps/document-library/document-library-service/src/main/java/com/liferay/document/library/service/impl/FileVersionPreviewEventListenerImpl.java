@@ -14,6 +14,7 @@
 
 package com.liferay.document.library.service.impl;
 
+import com.liferay.document.library.constants.DLFileEntryPreviewConstants;
 import com.liferay.document.library.kernel.service.FileVersionPreviewEventListener;
 import com.liferay.document.library.model.DLFileEntryPreview;
 import com.liferay.document.library.service.DLFileEntryPreviewLocalService;
@@ -35,16 +36,18 @@ public class FileVersionPreviewEventListenerImpl
 
 	@Override
 	public void onFailure(FileVersion fileVersion) {
-		_addDLFileEntryPreview(fileVersion, DLFileEntryPreviewType.FAIL);
+		_addDLFileEntryPreview(
+			fileVersion, DLFileEntryPreviewConstants.FAILURE);
 	}
 
 	@Override
 	public void onSuccess(FileVersion fileVersion) {
-		_addDLFileEntryPreview(fileVersion, DLFileEntryPreviewType.SUCCESS);
+		_addDLFileEntryPreview(
+			fileVersion, DLFileEntryPreviewConstants.SUCCESS);
 	}
 
 	private void _addDLFileEntryPreview(
-		FileVersion fileVersion, DLFileEntryPreviewType fileEntryPreviewType) {
+		FileVersion fileVersion, int previewType) {
 
 		try {
 			DLFileEntryPreview dlFileEntryPreview =
@@ -55,13 +58,11 @@ public class FileVersionPreviewEventListenerImpl
 			if (dlFileEntryPreview == null) {
 				_dlFileEntryPreviewLocalService.addDLFileEntryPreview(
 					fileVersion.getFileEntryId(),
-					fileVersion.getFileVersionId(),
-					fileEntryPreviewType.toInteger());
+					fileVersion.getFileVersionId(), previewType);
 			}
 			else {
 				_dlFileEntryPreviewLocalService.updateDLFileEntryPreview(
-					dlFileEntryPreview.getFileEntryPreviewId(),
-					fileEntryPreviewType.toInteger());
+					dlFileEntryPreview.getFileEntryPreviewId(), previewType);
 			}
 		}
 		catch (PortalException pe) {
@@ -76,21 +77,5 @@ public class FileVersionPreviewEventListenerImpl
 
 	@Reference
 	private DLFileEntryPreviewLocalService _dlFileEntryPreviewLocalService;
-
-	private enum DLFileEntryPreviewType {
-
-		FAIL(0), SUCCESS(1);
-
-		public int toInteger() {
-			return _value;
-		}
-
-		private DLFileEntryPreviewType(int value) {
-			_value = value;
-		}
-
-		private final int _value;
-
-	}
 
 }

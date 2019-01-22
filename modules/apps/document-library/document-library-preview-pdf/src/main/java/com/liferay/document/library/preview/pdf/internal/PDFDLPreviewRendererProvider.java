@@ -14,7 +14,7 @@
 
 package com.liferay.document.library.preview.pdf.internal;
 
-import com.liferay.document.library.kernel.service.FileVersionPreviewEventListener;
+import com.liferay.document.library.constants.DLFileEntryPreviewConstants;
 import com.liferay.document.library.kernel.util.DLProcessorRegistryUtil;
 import com.liferay.document.library.kernel.util.PDFProcessorUtil;
 import com.liferay.document.library.preview.DLPreviewRenderer;
@@ -84,8 +84,7 @@ public class PDFDLPreviewRendererProvider implements DLPreviewRendererProvider {
 
 		if (_dlFileEntryPreviewLocalService.hasDLFileEntryPreview(
 				fileVersion.getFileEntryId(), fileVersion.getFileVersionId(),
-				FileVersionPreviewEventListener.DLFileEntryPreviewType.FAIL.
-					toInteger())) {
+				DLFileEntryPreviewConstants.FAILURE)) {
 
 			throw new DLFileEntryPreviewGenerationException();
 		}

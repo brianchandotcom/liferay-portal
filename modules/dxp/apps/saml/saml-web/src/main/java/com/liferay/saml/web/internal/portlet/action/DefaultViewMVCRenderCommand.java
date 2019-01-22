@@ -187,10 +187,6 @@ public class DefaultViewMVCRenderCommand implements MVCRenderCommand {
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		int samlSpIdpConnectionsCount =
-			_samlSpIdpConnectionLocalService.getSamlSpIdpConnectionsCount(
-				themeDisplay.getCompanyId());
-
 		SearchContainer searchContainer = new SearchContainer(
 			renderRequest, null, null, SearchContainer.DEFAULT_CUR_PARAM, 0,
 			SearchContainer.DEFAULT_DELTA, renderResponse.createRenderURL(),
@@ -201,9 +197,12 @@ public class DefaultViewMVCRenderCommand implements MVCRenderCommand {
 				themeDisplay.getCompanyId(), searchContainer.getStart(),
 				searchContainer.getEnd());
 
+		int samlSpIdpConnectionsCount =
+			_samlSpIdpConnectionLocalService.getSamlSpIdpConnectionsCount(
+				themeDisplay.getCompanyId());
+
 		renderRequest.setAttribute(
 			SamlWebKeys.SAML_SP_IDP_CONNECTIONS, samlSpIdpConnections);
-
 		renderRequest.setAttribute(
 			SamlWebKeys.SAML_SP_IDP_CONNECTIONS_COUNT,
 			samlSpIdpConnectionsCount);

@@ -35,6 +35,7 @@ import com.liferay.data.engine.service.DEDataDefinitionSearchCountResponse;
 import com.liferay.data.engine.service.DEDataDefinitionSearchRequest;
 import com.liferay.data.engine.service.DEDataDefinitionSearchResponse;
 import com.liferay.data.engine.service.DEDataDefinitionService;
+import com.liferay.data.engine.service.DEDataRecordCollectionService;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Role;
@@ -676,6 +677,24 @@ public class DEDataDefinitionServiceTest {
 			).build();
 
 		_deDataDefinitionService.execute(deDataDefinitionDeleteRequest);
+	}
+
+	@Test(
+		expected = DEDataDefinitionException.MustHaveNoDataRecordCollection.class
+	)
+	public void testDeleteWithDEDataRecordCollectionAssociated()
+		throws Exception {
+
+		DEDataDefinition deDataDefinition =
+			DEDataEngineTestUtil.insertDEDataDefinition(
+				_adminUser, _group, _deDataDefinitionService);
+
+		DEDataEngineTestUtil.insertDEDataRecordCollection(
+			_adminUser, _group, deDataDefinition,
+			_deDataRecordCollectionService);
+
+		deleteDEDataDefinition(
+			_adminUser, _group, deDataDefinition.getDEDataDefinitionId());
 	}
 
 	@Test(expected = DEDataDefinitionException.NoSuchDataDefinition.class)
@@ -2252,6 +2271,9 @@ public class DEDataDefinitionServiceTest {
 
 	@Inject(type = DEDataDefinitionService.class)
 	private DEDataDefinitionService _deDataDefinitionService;
+
+	@Inject(type = DEDataRecordCollectionService.class)
+	private DEDataRecordCollectionService _deDataRecordCollectionService;
 
 	@DeleteAfterTestRun
 	private Group _group;

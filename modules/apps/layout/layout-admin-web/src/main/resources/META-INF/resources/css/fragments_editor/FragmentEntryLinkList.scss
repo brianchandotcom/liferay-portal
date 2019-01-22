@@ -22,6 +22,18 @@
 		box-shadow: inset 0 0 0 $topperBorderWidth $fragmentEntryLinkSectionBorderColor;
 		padding: $fragmentEntryLinkSpacing;
 		position: relative;
+
+		@for $i from 0 through 8 {
+			&--padding-horizontal-#{$i} {
+				padding-left: $fragmentEntryLinkSpacing * $i;
+				padding-right: $fragmentEntryLinkSpacing * $i;
+			}
+
+			&--padding-vertical-#{$i} {
+				padding-bottom: $fragmentEntryLinkSpacing * $i;
+				padding-top: $fragmentEntryLinkSpacing * $i;
+			}
+		}
 	}
 
 	&__container > .container,

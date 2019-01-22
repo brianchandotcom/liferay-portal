@@ -22,6 +22,9 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.segments.constants.SegmentsWebKeys;
 import com.liferay.segments.context.Context;
@@ -55,6 +58,10 @@ public class SegmentsServicePreAction extends Action {
 	}
 
 	protected void doRun(HttpServletRequest request) {
+		if (!_SEGMENTS_SEGMENTATION_ENABLED) {
+			return;
+		}
+
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
@@ -80,6 +87,10 @@ public class SegmentsServicePreAction extends Action {
 			}
 		}
 	}
+
+	private static final boolean _SEGMENTS_SEGMENTATION_ENABLED =
+		GetterUtil.getBoolean(
+			PropsUtil.get(PropsKeys.SEGMENTS_SEGMENTATION_ENABLED));
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		SegmentsServicePreAction.class);

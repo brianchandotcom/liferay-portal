@@ -532,7 +532,8 @@ public class JavaCombineLinesCheck extends BaseFileCheck {
 
 				if ((previousLine.endsWith(" =") ||
 					 previousLine.endsWith(" ->")) &&
-					line.endsWith(StringPool.OPEN_PARENTHESIS)) {
+					line.endsWith(StringPool.OPEN_PARENTHESIS) &&
+					!line.matches(".* [<=>]+ .*")) {
 
 					int level = getLevel(line);
 

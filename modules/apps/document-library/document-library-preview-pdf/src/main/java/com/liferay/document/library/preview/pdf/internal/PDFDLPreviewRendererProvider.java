@@ -23,7 +23,6 @@ import com.liferay.document.library.preview.exception.DLFileEntryPreviewGenerati
 import com.liferay.document.library.preview.exception.DLPreviewGenerationInProcessException;
 import com.liferay.document.library.preview.exception.DLPreviewSizeException;
 import com.liferay.document.library.service.FileVersionPreviewLocalService;
-import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.util.ContentTypes;
@@ -100,9 +99,6 @@ public class PDFDLPreviewRendererProvider implements DLPreviewRendererProvider {
 
 	@Reference
 	private FileVersionPreviewLocalService _fileVersionPreviewLocalService;
-
-	@Reference
-	private NPMResolver _npmResolver;
 
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.document.library.preview.pdf)"

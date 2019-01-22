@@ -40,6 +40,7 @@ import java.util.Set;
 import java.util.concurrent.Callable;
 
 import org.gradle.api.Action;
+import org.gradle.api.GradleException;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.Task;
@@ -241,6 +242,22 @@ public class NodePlugin implements Plugin<Project> {
 		npmRunTask.setDescription("Runs the \"" + name + "\" NPM script.");
 		npmRunTask.setGroup(BasePlugin.BUILD_GROUP);
 		npmRunTask.setScriptName(name);
+
+		npmRunTask.doLast(
+			new Action<Task>() {
+
+				@Override
+				public void execute(Task task) {
+					NpmRunTask npmRunTask = (NpmRunTask)task;
+
+					String result = npmRunTask.getResult();
+
+					if (result.contains("errors during Soy compilation")) {
+						throw new GradleException("Soy compile error");
+					}
+				}
+
+			});
 
 		if (taskName.equals(NPM_RUN_BUILD_TASK_NAME)) {
 			PluginContainer pluginContainer = project.getPlugins();

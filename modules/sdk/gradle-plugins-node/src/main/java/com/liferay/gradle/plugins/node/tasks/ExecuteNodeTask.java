@@ -74,7 +74,7 @@ public class ExecuteNodeTask extends DefaultTask {
 		if ((this instanceof ExecuteNpmTask) || (npmInstallRetries <= 0) ||
 			(npmInstallTask == null)) {
 
-			_nodeExecutor.execute();
+			_result = _nodeExecutor.execute();
 
 			return;
 		}
@@ -83,7 +83,7 @@ public class ExecuteNodeTask extends DefaultTask {
 
 		for (int i = 1; i <= npmInstallRetries; i++) {
 			try {
-				_nodeExecutor.execute();
+				_result = _nodeExecutor.execute();
 
 				break;
 			}
@@ -120,6 +120,14 @@ public class ExecuteNodeTask extends DefaultTask {
 
 	public int getNpmInstallRetries() {
 		return _npmInstallRetries;
+	}
+
+	public String getResult() {
+		if (_result == null) {
+			return "";
+		}
+
+		return _result;
 	}
 
 	public File getWorkingDir() {
@@ -172,5 +180,6 @@ public class ExecuteNodeTask extends DefaultTask {
 
 	private final NodeExecutor _nodeExecutor;
 	private int _npmInstallRetries;
+	private String _result;
 
 }

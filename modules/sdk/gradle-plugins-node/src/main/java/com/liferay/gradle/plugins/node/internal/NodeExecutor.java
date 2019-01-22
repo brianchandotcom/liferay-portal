@@ -19,8 +19,11 @@ import com.liferay.gradle.plugins.node.internal.util.NodePluginUtil;
 import com.liferay.gradle.util.OSDetector;
 import com.liferay.gradle.util.Validator;
 
+import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStreamReader;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -31,6 +34,8 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+
+import org.apache.commons.io.output.TeeOutputStream;
 
 import org.gradle.api.Action;
 import org.gradle.api.Project;
@@ -73,17 +78,16 @@ public class NodeExecutor {
 		return this;
 	}
 
-	public void execute() throws Exception {
+	public String execute() throws Exception {
 		File workingDir = getWorkingDir();
 
 		workingDir.mkdirs();
 
 		if (isUseGradleExec()) {
-			_executeGradleExec();
+			return _executeGradleExec();
 		}
-		else {
-			_executeProcessBuilder();
-		}
+
+		return _executeProcessBuilder();
 	}
 
 	public List<Object> getArgs() {
@@ -150,7 +154,10 @@ public class NodeExecutor {
 		_workingDir = workingDir;
 	}
 
-	private void _executeGradleExec() {
+	private String _executeGradleExec() {
+		final ByteArrayOutputStream byteArrayOutputStream =
+			new ByteArrayOutputStream();
+
 		_project.exec(
 			new Action<ExecSpec>() {
 
@@ -159,17 +166,25 @@ public class NodeExecutor {
 					execSpec.setCommandLine(_getCommandLine());
 					execSpec.setEnvironment(
 						_getEnvironment(execSpec.getEnvironment()));
+					execSpec.setErrorOutput(
+						new TeeOutputStream(byteArrayOutputStream, System.out));
+					execSpec.setStandardOutput(
+						new TeeOutputStream(byteArrayOutputStream, System.out));
 					execSpec.setWorkingDir(getWorkingDir());
 				}
 
 			});
+
+		String result = byteArrayOutputStream.toString();
+
+		return result.trim();
 	}
 
-	private void _executeProcessBuilder() throws Exception {
+	private String _executeProcessBuilder() throws Exception {
 		ProcessBuilder processBuilder = new ProcessBuilder(_getCommandLine());
 
 		processBuilder.directory(getWorkingDir());
-		processBuilder.inheritIO();
+		processBuilder.redirectErrorStream(true);
 
 		_updateEnvironment(processBuilder.environment());
 
@@ -182,6 +197,19 @@ public class NodeExecutor {
 
 		Process process = processBuilder.start();
 
+		BufferedReader bufferedReader = new BufferedReader(
+			new InputStreamReader(process.getInputStream()));
+
+		StringBuilder sb = new StringBuilder();
+
+		String line = null;
+
+		while ((line = bufferedReader.readLine()) != null) {
+			System.out.println(line);
+
+			sb.append(line + System.lineSeparator());
+		}
+
 		int exitValue = process.waitFor();
 
 		if (exitValue != 0) {
@@ -189,6 +217,10 @@ public class NodeExecutor {
 				"Process '" + processBuilder.command() +
 					"' finished with non-zero exit value " + exitValue);
 		}
+
+		String result = sb.toString();
+
+		return result.trim();
 	}
 
 	private List<String> _getCommandLine() {

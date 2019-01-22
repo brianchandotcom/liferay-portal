@@ -117,8 +117,6 @@ public class DDMFormAdminPortlet extends MVCPortlet {
 					_log.warn(e, e);
 				}
 
-				hideDefaultErrorMessage(renderRequest);
-
 				SessionErrors.add(renderRequest, e.getClass());
 			}
 			else {
@@ -127,6 +125,8 @@ public class DDMFormAdminPortlet extends MVCPortlet {
 				throw new PortletException(e);
 			}
 		}
+
+		hideDefaultErrorMessage(renderRequest);
 
 		super.render(renderRequest, renderResponse);
 	}

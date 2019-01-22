@@ -730,49 +730,39 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 
 		@Override
 		public void set${entityColumn.methodName}(${entityColumn.genericizedType} ${entityColumn.name}) {
-			<#if stringUtil.equals(entityColumn.name, "uuid")>
-				<#if entityColumn.isFinderPath()>
-					if (_originalUuid == null) {
-						_originalUuid = _uuid;
-					}
+			<#if entity.hasEntityColumn("createDate", "Date") && entity.hasEntityColumn("modifiedDate", "Date") && stringUtil.equals(entityColumn.name, "modifiedDate")>
+				_setModifiedDate = true;
+			</#if>
+
+			<#if entityColumn.isOrderColumn() && columnBitmaskEnabled>
+				_columnBitmask = -1L;
+			</#if>
+
+			<#if entityColumn.isFinderPath() || (validator.isNotNull(parentPKColumn) && (parentPKColumn.name == entityColumn.name))>
+				<#if !entityColumn.isOrderColumn() && columnBitmaskEnabled>
+					_columnBitmask |= ${entityColumn.name?upper_case}_COLUMN_BITMASK;
 				</#if>
 
-				_uuid = uuid;
-			<#else>
-				<#if entity.hasEntityColumn("createDate", "Date") && entity.hasEntityColumn("modifiedDate", "Date") && stringUtil.equals(entityColumn.name, "modifiedDate")>
-					_setModifiedDate = true;
-				</#if>
-
-				<#if entityColumn.isOrderColumn() && columnBitmaskEnabled>
-					_columnBitmask = -1L;
-				</#if>
-
-				<#if entityColumn.isFinderPath() || (validator.isNotNull(parentPKColumn) && (parentPKColumn.name == entityColumn.name))>
-					<#if !entityColumn.isOrderColumn() && columnBitmaskEnabled>
-						_columnBitmask |= ${entityColumn.name?upper_case}_COLUMN_BITMASK;
-					</#if>
-
-					<#if entityColumn.isPrimitiveType()>
-						if (!_setOriginal${entityColumn.methodName}) {
-							_setOriginal${entityColumn.methodName} = true;
-					<#else>
-						if (_original${entityColumn.methodName} == null) {
-					</#if>
-
-						_original${entityColumn.methodName} = _${entityColumn.name};
-					}
-				</#if>
-
-				<#if stringUtil.equals(entityColumn.type, "Blob") && entityColumn.lazy>
-					if (_${entityColumn.name}BlobModel == null) {
-						_${entityColumn.name}BlobModel = new ${entity.name}${entityColumn.methodName}BlobModel(getPrimaryKey(), ${entityColumn.name});
-					}
-					else {
-						_${entityColumn.name}BlobModel.set${entityColumn.methodName}Blob(${entityColumn.name});
-					}
+				<#if entityColumn.isPrimitiveType()>
+					if (!_setOriginal${entityColumn.methodName}) {
+						_setOriginal${entityColumn.methodName} = true;
 				<#else>
-					_${entityColumn.name} = ${entityColumn.name};
+					if (_original${entityColumn.methodName} == null) {
 				</#if>
+
+					_original${entityColumn.methodName} = _${entityColumn.name};
+				}
+			</#if>
+
+			<#if stringUtil.equals(entityColumn.type, "Blob") && entityColumn.lazy>
+				if (_${entityColumn.name}BlobModel == null) {
+					_${entityColumn.name}BlobModel = new ${entity.name}${entityColumn.methodName}BlobModel(getPrimaryKey(), ${entityColumn.name});
+				}
+				else {
+					_${entityColumn.name}BlobModel.set${entityColumn.methodName}Blob(${entityColumn.name});
+				}
+			<#else>
+				_${entityColumn.name} = ${entityColumn.name};
 			</#if>
 		}
 

@@ -410,6 +410,18 @@ public class SubscriptionLocalServiceWrapper implements SubscriptionLocalService
 	}
 
 	/**
+	* Returns all the subscriptions to the class name.
+	*
+	* @param className the entity's class name
+	* @return the subscriptions to the class name
+	*/
+	@Override
+	public java.util.List<com.liferay.subscription.model.Subscription> getSubscriptions(
+		String className) {
+		return _subscriptionLocalService.getSubscriptions(className);
+	}
+
+	/**
 	* Returns the number of subscriptions.
 	*
 	* @return the number of subscriptions
@@ -417,6 +429,17 @@ public class SubscriptionLocalServiceWrapper implements SubscriptionLocalService
 	@Override
 	public int getSubscriptionsCount() {
 		return _subscriptionLocalService.getSubscriptionsCount();
+	}
+
+	/**
+	* Returns the number of the subscriptions to the class name.
+	*
+	* @param className the entity's class name
+	* @return the subscriptions to the class name
+	*/
+	@Override
+	public int getSubscriptionsCount(String className) {
+		return _subscriptionLocalService.getSubscriptionsCount(className);
 	}
 
 	/**

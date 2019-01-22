@@ -29,7 +29,6 @@ import com.liferay.petra.process.ProcessExecutor;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.fabric.InputResource;
 import com.liferay.portal.fabric.OutputResource;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.image.ImageBag;
 import com.liferay.portal.kernel.image.ImageToolUtil;
@@ -320,8 +319,7 @@ public class VideoProcessorImpl
 	}
 
 	private void _generateThumbnailXuggler(
-			FileVersion fileVersion, File file, int height, int width)
-		throws Exception {
+		FileVersion fileVersion, File file, int height, int width) {
 
 		StopWatch stopWatch = new StopWatch();
 
@@ -590,8 +588,7 @@ public class VideoProcessorImpl
 	}
 
 	private void _generateVideoXuggler(
-			FileVersion fileVersion, File sourceFile, File[] destinationFiles)
-		throws PortalException {
+		FileVersion fileVersion, File sourceFile, File[] destinationFiles) {
 
 		try {
 			for (int i = 0; i < destinationFiles.length; i++) {

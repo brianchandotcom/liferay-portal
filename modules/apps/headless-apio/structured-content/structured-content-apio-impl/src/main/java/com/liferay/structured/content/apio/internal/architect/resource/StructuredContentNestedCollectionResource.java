@@ -123,6 +123,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import javax.ws.rs.BadRequestException;
+import javax.ws.rs.InternalServerErrorException;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -257,16 +258,7 @@ public class StructuredContentNestedCollectionResource
 			fieldValuesBuilder -> fieldValuesBuilder.types(
 				"ContentFieldValue"
 			).addLinkedModel(
-				"document", MediaObjectIdentifier.class,
-				structuredContentField -> Try.fromFallible(
-					() -> structuredContentField.getLocalizedValue(
-						LocaleUtil.getDefault())
-				).map(
-					value -> StructuredContentUtil.getFileEntryId(
-						value, _dlAppService)
-				).orElse(
-					null
-				)
+				"document", MediaObjectIdentifier.class, this::_getDocument
 			).addLinkedModel(
 				"structuredContent", StructuredContentIdentifier.class,
 				this::_getStructuredContentId
@@ -490,6 +482,17 @@ public class StructuredContentNestedCollectionResource
 		return optional.orElse(defaultValue);
 	}
 
+	private Long _getDocument(StructuredContentField structuredContentField) {
+		return Try.fromFallible(
+			() -> structuredContentField.getLocalizedValue(
+				LocaleUtil.getDefault())
+		).map(
+			value -> StructuredContentUtil.getFileEntryId(value, _dlAppService)
+		).orElse(
+			null
+		);
+	}
+
 	private Query _getFullQuery(
 			Filter filter, Locale locale, SearchContext searchContext)
 		throws SearchException {
@@ -651,19 +654,16 @@ public class StructuredContentNestedCollectionResource
 
 		Locale locale = journalArticleWrapper.getLocale();
 
-		return Try.fromFallible(
-			() -> _journalContent.getDisplay(
+		JournalArticleDisplay journalArticleDisplay =
+			_journalContent.getDisplay(
 				journalArticleWrapper.getGroupId(),
 				journalArticleWrapper.getArticleId(),
 				ddmTemplate.getTemplateKey(), null, locale.toString(),
-				journalArticleWrapper.getThemeDisplay())
-		).map(
-			JournalArticleDisplay::getContent
-		).map(
-			content -> content.replaceAll("[\\t\\n]", "")
-		).orElse(
-			null
-		);
+				journalArticleWrapper.getThemeDisplay());
+
+		String content = journalArticleDisplay.getContent();
+
+		return content.replaceAll("[\\t\\n]", "");
 	}
 
 	private List<RenderedJournalArticle> _getRenderedJournalArticles(
@@ -720,27 +720,34 @@ public class StructuredContentNestedCollectionResource
 	private List<StructuredContentField> _getStructuredContentFields(
 		JournalArticle journalArticle) {
 
-		return Try.fromFallible(
-			() ->
-				AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClass(
-					JournalArticle.class)
-		).map(
-			assetRendererFactory -> assetRendererFactory.getAssetRenderer(
-				journalArticle, AssetRendererFactory.TYPE_LATEST_APPROVED)
-		).map(
-			AssetRenderer::getDDMFormValuesReader
-		).map(
-			DDMFormValuesReader::getDDMFormValues
-		).map(
-			DDMFormValues::getDDMFormFieldValues
-		).map(
-			ddmFormFieldValueList -> _toStructuredContentFields(
-				ddmFormFieldValueList, journalArticle.getDDMStructure())
-		).map(
-			this::_getStructuredContentFields
-		).orElse(
-			null
-		);
+		AssetRendererFactory<JournalArticle> assetRendererFactory =
+			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClass(
+				JournalArticle.class);
+
+		try {
+			AssetRenderer<JournalArticle> assetRenderer =
+				assetRendererFactory.getAssetRenderer(
+					journalArticle, AssetRendererFactory.TYPE_LATEST_APPROVED);
+
+			DDMFormValuesReader ddmFormValuesReader =
+				assetRenderer.getDDMFormValuesReader();
+
+			DDMFormValues ddmFormValues =
+				ddmFormValuesReader.getDDMFormValues();
+
+			List<DDMFormFieldValue> ddmFormFieldValues =
+				ddmFormValues.getDDMFormFieldValues();
+
+			List<StructuredContentField> structuredContentFields =
+				_toStructuredContentFields(
+					ddmFormFieldValues, journalArticle.getDDMStructure());
+
+			return _getStructuredContentFields(structuredContentFields);
+		}
+		catch (PortalException pe) {
+			throw new InternalServerErrorException(
+				"Error while retrieving structured content fields", pe);
+		}
 	}
 
 	private List<StructuredContentField> _getStructuredContentFields(

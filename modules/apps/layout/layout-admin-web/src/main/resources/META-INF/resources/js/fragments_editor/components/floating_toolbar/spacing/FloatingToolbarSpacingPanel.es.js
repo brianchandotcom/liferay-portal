@@ -1,3 +1,4 @@
+import 'clay-checkbox';
 import Component from 'metal-component';
 import Soy, {Config} from 'metal-soy';
 
@@ -12,10 +13,12 @@ import templates from './FloatingToolbarSpacingPanel.soy';
 class FloatingToolbarSpacingPanel extends Component {
 
 	/**
-	 * Handle container option change
-	 * @param {Event} event
+	 * Updates section configuration
+	 * @param {object} config Section configuration
+	 * @private
+	 * @review
 	 */
-	_handleContainerOptionChange(event) {
+	_updateSectionConfig(config) {
 		this.store
 			.dispatchAction(
 				UPDATE_SAVING_CHANGES_STATUS,
@@ -26,9 +29,7 @@ class FloatingToolbarSpacingPanel extends Component {
 			.dispatchAction(
 				UPDATE_SECTION_CONFIG,
 				{
-					config: {
-						[ITEM_CONFIG_KEYS.containerType]: event.delegateTarget.value
-					},
+					config,
 					sectionId: this.itemId
 				}
 			)
@@ -47,6 +48,18 @@ class FloatingToolbarSpacingPanel extends Component {
 					savingChanges: false
 				}
 			);
+	}
+
+	/**
+	 * Handle container option change
+	 * @param {Event} event
+	 */
+	_handleContainerOptionChange(event) {
+		this._updateSectionConfig(
+			{
+				[ITEM_CONFIG_KEYS.containerType]: event.delegateTarget.value
+			}
+		);
 	}
 
 }

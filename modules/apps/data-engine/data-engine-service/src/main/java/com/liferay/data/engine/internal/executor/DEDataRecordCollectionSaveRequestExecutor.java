@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.Portal;
 
 import java.util.HashMap;
 import java.util.Locale;
@@ -39,11 +38,10 @@ import java.util.Map;
 public class DEDataRecordCollectionSaveRequestExecutor {
 
 	public DEDataRecordCollectionSaveRequestExecutor(
-		DDLRecordSetLocalService ddlRecordSetLocalService, Portal portal,
+		DDLRecordSetLocalService ddlRecordSetLocalService,
 		ResourceLocalService resourceLocalService) {
 
 		_ddlRecordSetLocalService = ddlRecordSetLocalService;
-		_portal = portal;
 		_resourceLocalService = resourceLocalService;
 	}
 
@@ -53,9 +51,6 @@ public class DEDataRecordCollectionSaveRequestExecutor {
 
 		DEDataRecordCollection deDataRecordCollection =
 			deDataRecordCollectionSaveRequest.getDEDataRecordCollection();
-
-		DEDataDefinition deDataDefinition =
-			deDataRecordCollection.getDEDataDefinition();
 
 		long deDataRecordCollectionId =
 			deDataRecordCollection.getDEDataRecordCollectionId();
@@ -79,14 +74,6 @@ public class DEDataRecordCollectionSaveRequestExecutor {
 				deDataRecordCollectionSaveRequest.getUserId(),
 				DEDataRecordCollectionConstants.MODEL_RESOURCE_NAME,
 				deDataRecordCollectionId, serviceContext.getModelPermissions());
-
-			_ddlRecordSetLocalService.addRecordSet(
-				deDataRecordCollectionSaveRequest.getUserId(),
-				deDataRecordCollectionSaveRequest.getGroupId(),
-				deDataDefinition.getDEDataDefinitionId(),
-				String.valueOf(deDataRecordCollectionId),
-				ddlRecordSet.getNameMap(), ddlRecordSet.getDescriptionMap(), 0,
-				DDLRecordSetConstants.SCOPE_DATA_ENGINE, serviceContext);
 		}
 		else {
 			updateDDLRecordSet(deDataRecordCollection, serviceContext);
@@ -147,7 +134,6 @@ public class DEDataRecordCollectionSaveRequestExecutor {
 	}
 
 	private final DDLRecordSetLocalService _ddlRecordSetLocalService;
-	private final Portal _portal;
 	private final ResourceLocalService _resourceLocalService;
 
 }

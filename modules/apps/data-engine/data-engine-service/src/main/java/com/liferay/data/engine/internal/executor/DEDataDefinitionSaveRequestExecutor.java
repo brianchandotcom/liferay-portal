@@ -22,8 +22,6 @@ import com.liferay.data.engine.io.DEDataDefinitionFieldsSerializerApplyResponse;
 import com.liferay.data.engine.model.DEDataDefinition;
 import com.liferay.data.engine.service.DEDataDefinitionSaveRequest;
 import com.liferay.data.engine.service.DEDataDefinitionSaveResponse;
-import com.liferay.dynamic.data.lists.model.DDLRecordSetConstants;
-import com.liferay.dynamic.data.lists.service.DDLRecordSetLocalService;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMStructureConstants;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
@@ -44,13 +42,11 @@ import java.util.Map;
 public class DEDataDefinitionSaveRequestExecutor {
 
 	public DEDataDefinitionSaveRequestExecutor(
-		DDLRecordSetLocalService ddlRecordSetLocalService,
 		DDMStructureLocalService ddmStructureLocalService,
 		DEDataDefinitionFieldsSerializerTracker
 			deDataDefinitionFieldsSerializerTracker,
 		Portal portal, ResourceLocalService resourceLocalService) {
 
-		_ddlRecordSetLocalService = ddlRecordSetLocalService;
 		_ddmStructureLocalService = ddmStructureLocalService;
 		_deDataDefinitionFieldsSerializerTracker =
 			deDataDefinitionFieldsSerializerTracker;
@@ -85,13 +81,6 @@ public class DEDataDefinitionSaveRequestExecutor {
 				deDataDefinitionSaveRequest.getUserId(),
 				DEDataDefinition.class.getName(), deDataDefinitionId,
 				serviceContext.getModelPermissions());
-
-			_ddlRecordSetLocalService.addRecordSet(
-				deDataDefinitionSaveRequest.getUserId(),
-				deDataDefinitionSaveRequest.getGroupId(), deDataDefinitionId,
-				String.valueOf(deDataDefinitionId), ddmStructure.getNameMap(),
-				ddmStructure.getDescriptionMap(), 0,
-				DDLRecordSetConstants.SCOPE_DATA_ENGINE, serviceContext);
 		}
 		else {
 			updateDDMStructure(
@@ -166,7 +155,6 @@ public class DEDataDefinitionSaveRequestExecutor {
 			descriptionMap, serialize(deDataDefinition), serviceContext);
 	}
 
-	private final DDLRecordSetLocalService _ddlRecordSetLocalService;
 	private final DDMStructureLocalService _ddmStructureLocalService;
 	private final DEDataDefinitionFieldsSerializerTracker
 		_deDataDefinitionFieldsSerializerTracker;

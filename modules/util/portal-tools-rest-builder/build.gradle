@@ -1,3 +1,16 @@
+apply plugin: "com.liferay.maven.plugin.builder"
+
+buildPluginDescriptor {
+	ext {
+		autoClean = false
+	}
+
+	finalizedBy formatSource
+	finalizedBy formatXML
+
+	goalPrefix = "rest-builder"
+}
+
 dependencies {
 	compile group: "org.yaml", name: "snakeyaml", version: "1.23"
 
@@ -5,6 +18,10 @@ dependencies {
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.49.0"
 	compileOnly group: "org.apache.ant", name: "ant", transitive: false, version: "1.9.4"
 	compileOnly group: "org.apache.maven", name: "maven-plugin-api", transitive: false, version: "3.0.4"
+}
+
+formatSource {
+	mustRunAfter formatXML
 }
 
 liferay {

@@ -1,0 +1,10 @@
+dependencies {
+	compile group: "org.yaml", name: "snakeyaml", version: "1.23"
+
+	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "2.6.0"
+	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.49.0"
+}
+
+liferay {
+	deployDir = "../../../tools/sdk/dependencies/com.liferay.portal.tools.rest.builder/lib"
+}

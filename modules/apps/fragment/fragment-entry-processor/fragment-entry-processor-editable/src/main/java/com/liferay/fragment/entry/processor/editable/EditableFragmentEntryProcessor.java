@@ -31,11 +31,14 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -186,7 +189,9 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 				}
 
 				if (Validator.isNull(value)) {
-					value = _getEditableValue(editableValueJSONObject, locale);
+					value = _getEditableValue(
+						editableValueJSONObject, locale,
+						Collections.emptyList());
 				}
 
 				properties.put(property.getKey(), value);
@@ -241,7 +246,8 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 			}
 
 			if (Validator.isNull(value)) {
-				value = _getEditableValue(editableValueJSONObject, locale);
+				value = _getEditableValue(
+					editableValueJSONObject, locale, segments);
 			}
 
 			editableElementParser.replace(element, value);
@@ -304,9 +310,12 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 		return document;
 	}
 
-	private String _getEditableValue(JSONObject jsonObject, Locale locale) {
-		if (_isPersonalizationSupported(jsonObject)) {
-			return _getEditableValueBySegmentsAndLocale(jsonObject, locale);
+	private String _getEditableValue(
+		JSONObject jsonObject, Locale locale, List<Long> segments) {
+
+		if (_isPersonalizationSupported(jsonObject, segments)) {
+			return _getEditableValueBySegmentsAndLocale(
+				jsonObject, segments, locale);
 		}
 
 		return _getEditableValueByLocale(jsonObject, locale);
@@ -325,12 +334,28 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 	}
 
 	private String _getEditableValueBySegmentsAndLocale(
-		JSONObject jsonObject, Locale locale) {
+		JSONObject jsonObject, List<Long> segments, Locale locale) {
 
-		JSONObject defaultJSONObject = jsonObject.getJSONObject("default");
+		String value = null;
 
-		String value = defaultJSONObject.getString(
-			LanguageUtil.getLanguageId(locale));
+		Stream<Long> stream = segments.stream();
+
+		Optional<String> optionalValue = stream.filter(
+			segment -> _isSegmentAndLocaleIncluded(jsonObject, segment, locale)
+		).findFirst(
+		).map(
+			segment -> {
+				JSONObject segmentJSONObject = jsonObject.getJSONObject(
+					_EDITABLE_VALUES_SEGMENTS_PREFIX + segment);
+
+				return segmentJSONObject.getString(
+					LanguageUtil.getLanguageId(locale));
+			}
+		);
+
+		if (optionalValue.isPresent()) {
+			value = optionalValue.get();
+		}
 
 		if (Validator.isNull(value)) {
 			value = jsonObject.getString("defaultValue");
@@ -380,10 +405,40 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 		return stylesheet;
 	}
 
-	private boolean _isPersonalizationSupported(JSONObject jsonObject) {
-		JSONObject defaultJSONObject = jsonObject.getJSONObject("default");
+	private boolean _isPersonalizationSupported(
+		JSONObject jsonObject, List<Long> segments) {
 
-		if (defaultJSONObject != null) {
+		if ((segments == null) || segments.isEmpty()) {
+			return false;
+		}
+
+		Iterator<String> it = jsonObject.keys();
+
+		while (it.hasNext()) {
+			String key = it.next();
+
+			if (key.startsWith(_EDITABLE_VALUES_SEGMENTS_PREFIX)) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	private boolean _isSegmentAndLocaleIncluded(
+		JSONObject jsonObject, Long segmentId, Locale locale) {
+
+		JSONObject segmentJSONObject = jsonObject.getJSONObject(
+			_EDITABLE_VALUES_SEGMENTS_PREFIX + segmentId);
+
+		if (segmentJSONObject == null) {
+			return false;
+		}
+
+		String value = segmentJSONObject.getString(
+			LanguageUtil.getLanguageId(locale));
+
+		if (Validator.isNotNull(value)) {
 			return true;
 		}
 
@@ -516,6 +571,9 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 				resourceBundle,
 				"you-must-define-a-valid-type-for-each-editable-element"));
 	}
+
+	private static final String _EDITABLE_VALUES_SEGMENTS_PREFIX =
+		"segment-id-";
 
 	private static final String[] _REQUIRED_ATTRIBUTE_NAMES = {"id", "type"};
 

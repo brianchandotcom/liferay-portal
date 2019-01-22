@@ -14,7 +14,11 @@ exports[`PageRenderer should change the page title 1`] = `
           <div class="col-md-3 col-ddm" data-ddm-field-row="0" data-ddm-field-page="0" data-ddm-field-column="0">
             <div class="ddm-field-container">
               <div class="ddm-resize-handle-left"></div>
-              <div class="ddm-drag"></div>
+              <div class="ddm-drag">
+                <div id="fields-rule">
+                  <p>Radio Field</p>
+                </div>
+              </div>
               <div class="ddm-field-actions-container"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg aria-hidden="true" class="lexicon-icon lexicon-icon-paste" focusable="false">
                     <title>paste</title>
                     <use xlink:href="icons.svg#paste"></use>
@@ -38,7 +42,14 @@ exports[`PageRenderer should change the page title 1`] = `
           <div class="col-md-4 col-ddm" data-ddm-field-row="1" data-ddm-field-page="0" data-ddm-field-column="0">
             <div class="ddm-field-container">
               <div class="ddm-resize-handle-left"></div>
-              <div class="ddm-drag"></div>
+              <div class="ddm-drag">
+                <div id="fields-rule">
+                  <p>Text Field</p>
+                </div>
+                <div id="fields-rule">
+                  <p>Text Field</p>
+                </div>
+              </div>
               <div class="ddm-field-actions-container"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg aria-hidden="true" class="lexicon-icon lexicon-icon-paste" focusable="false">
                     <title>paste</title>
                     <use xlink:href="icons.svg#paste"></use>
@@ -52,7 +63,11 @@ exports[`PageRenderer should change the page title 1`] = `
           <div class="col-md-6 col-ddm" data-ddm-field-row="1" data-ddm-field-page="0" data-ddm-field-column="1">
             <div class="ddm-field-container">
               <div class="ddm-resize-handle-left"></div>
-              <div class="ddm-drag"></div>
+              <div class="ddm-drag">
+                <div id="fields-rule">
+                  <p>Select Field</p>
+                </div>
+              </div>
               <div class="ddm-field-actions-container"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg aria-hidden="true" class="lexicon-icon lexicon-icon-paste" focusable="false">
                     <title>paste</title>
                     <use xlink:href="icons.svg#paste"></use>
@@ -76,7 +91,11 @@ exports[`PageRenderer should change the page title 1`] = `
           <div class="col-md-12 col-ddm" data-ddm-field-row="2" data-ddm-field-page="0" data-ddm-field-column="0">
             <div class="ddm-field-container">
               <div class="ddm-resize-handle-left"></div>
-              <div class="ddm-drag"></div>
+              <div class="ddm-drag">
+                <div id="fields-rule">
+                  <p>Date Field</p>
+                </div>
+              </div>
               <div class="ddm-field-actions-container"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg aria-hidden="true" class="lexicon-icon lexicon-icon-paste" focusable="false">
                     <title>paste</title>
                     <use xlink:href="icons.svg#paste"></use>
@@ -97,7 +116,11 @@ exports[`PageRenderer should change the page title 1`] = `
           <div class="col-md-12 col-ddm" data-ddm-field-row="3" data-ddm-field-page="0" data-ddm-field-column="0">
             <div class="ddm-field-container">
               <div class="ddm-resize-handle-left"></div>
-              <div class="ddm-drag"></div>
+              <div class="ddm-drag">
+                <div id="fields-rule">
+                  <p>Numeric Field</p>
+                </div>
+              </div>
               <div class="ddm-field-actions-container"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg aria-hidden="true" class="lexicon-icon lexicon-icon-paste" focusable="false">
                     <title>paste</title>
                     <use xlink:href="icons.svg#paste"></use>
@@ -134,7 +157,11 @@ exports[`PageRenderer should change the page title 2`] = `
           <div class="col-md-3 col-ddm" data-ddm-field-row="0" data-ddm-field-page="0" data-ddm-field-column="0">
             <div class="ddm-field-container">
               <div class="ddm-resize-handle-left"></div>
-              <div class="ddm-drag"></div>
+              <div class="ddm-drag">
+                <div id="fields-rule">
+                  <p>Radio Field</p>
+                </div>
+              </div>
               <div class="ddm-field-actions-container"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg aria-hidden="true" class="lexicon-icon lexicon-icon-paste" focusable="false">
                     <title>paste</title>
                     <use xlink:href="icons.svg#paste"></use>
@@ -158,7 +185,14 @@ exports[`PageRenderer should change the page title 2`] = `
           <div class="col-md-4 col-ddm" data-ddm-field-row="1" data-ddm-field-page="0" data-ddm-field-column="0">
             <div class="ddm-field-container">
               <div class="ddm-resize-handle-left"></div>
-              <div class="ddm-drag"></div>
+              <div class="ddm-drag">
+                <div id="fields-rule">
+                  <p>Text Field</p>
+                </div>
+                <div id="fields-rule">
+                  <p>Text Field</p>
+                </div>
+              </div>
               <div class="ddm-field-actions-container"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg aria-hidden="true" class="lexicon-icon lexicon-icon-paste" focusable="false">
                     <title>paste</title>
                     <use xlink:href="icons.svg#paste"></use>
@@ -172,7 +206,11 @@ exports[`PageRenderer should change the page title 2`] = `
           <div class="col-md-6 col-ddm" data-ddm-field-row="1" data-ddm-field-page="0" data-ddm-field-column="1">
             <div class="ddm-field-container">
               <div class="ddm-resize-handle-left"></div>
-              <div class="ddm-drag"></div>
+              <div class="ddm-drag">
+                <div id="fields-rule">
+                  <p>Select Field</p>
+                </div>
+              </div>
               <div class="ddm-field-actions-container"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg aria-hidden="true" class="lexicon-icon lexicon-icon-paste" focusable="false">
                     <title>paste</title>
                     <use xlink:href="icons.svg#paste"></use>
@@ -196,7 +234,11 @@ exports[`PageRenderer should change the page title 2`] = `
           <div class="col-md-12 col-ddm" data-ddm-field-row="2" data-ddm-field-page="0" data-ddm-field-column="0">
             <div class="ddm-field-container">
               <div class="ddm-resize-handle-left"></div>
-              <div class="ddm-drag"></div>
+              <div class="ddm-drag">
+                <div id="fields-rule">
+                  <p>Date Field</p>
+                </div>
+              </div>
               <div class="ddm-field-actions-container"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg aria-hidden="true" class="lexicon-icon lexicon-icon-paste" focusable="false">
                     <title>paste</title>
                     <use xlink:href="icons.svg#paste"></use>
@@ -217,7 +259,11 @@ exports[`PageRenderer should change the page title 2`] = `
           <div class="col-md-12 col-ddm" data-ddm-field-row="3" data-ddm-field-page="0" data-ddm-field-column="0">
             <div class="ddm-field-container">
               <div class="ddm-resize-handle-left"></div>
-              <div class="ddm-drag"></div>
+              <div class="ddm-drag">
+                <div id="fields-rule">
+                  <p>Numeric Field</p>
+                </div>
+              </div>
               <div class="ddm-field-actions-container"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg aria-hidden="true" class="lexicon-icon lexicon-icon-paste" focusable="false">
                     <title>paste</title>
                     <use xlink:href="icons.svg#paste"></use>
@@ -270,7 +316,11 @@ exports[`PageRenderer should resize a specific column on the drag and drop layou
           <div class="col-md-3 col-ddm" data-ddm-field-row="0" data-ddm-field-page="0" data-ddm-field-column="0">
             <div class="ddm-field-container">
               <div class="ddm-resize-handle-left"></div>
-              <div class="ddm-drag"></div>
+              <div class="ddm-drag">
+                <div id="fields-rule">
+                  <p>Radio Field</p>
+                </div>
+              </div>
               <div class="ddm-field-actions-container"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg aria-hidden="true" class="lexicon-icon lexicon-icon-paste" focusable="false">
                     <title>paste</title>
                     <use xlink:href="icons.svg#paste"></use>
@@ -294,7 +344,14 @@ exports[`PageRenderer should resize a specific column on the drag and drop layou
           <div class="col-md-4 col-ddm" data-ddm-field-row="1" data-ddm-field-page="0" data-ddm-field-column="0">
             <div class="ddm-field-container">
               <div class="ddm-resize-handle-left"></div>
-              <div class="ddm-drag"></div>
+              <div class="ddm-drag">
+                <div id="fields-rule">
+                  <p>Text Field</p>
+                </div>
+                <div id="fields-rule">
+                  <p>Text Field</p>
+                </div>
+              </div>
               <div class="ddm-field-actions-container"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg aria-hidden="true" class="lexicon-icon lexicon-icon-paste" focusable="false">
                     <title>paste</title>
                     <use xlink:href="icons.svg#paste"></use>
@@ -308,7 +365,11 @@ exports[`PageRenderer should resize a specific column on the drag and drop layou
           <div class="col-md-6 col-ddm" data-ddm-field-row="1" data-ddm-field-page="0" data-ddm-field-column="1">
             <div class="ddm-field-container">
               <div class="ddm-resize-handle-left"></div>
-              <div class="ddm-drag"></div>
+              <div class="ddm-drag">
+                <div id="fields-rule">
+                  <p>Select Field</p>
+                </div>
+              </div>
               <div class="ddm-field-actions-container"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg aria-hidden="true" class="lexicon-icon lexicon-icon-paste" focusable="false">
                     <title>paste</title>
                     <use xlink:href="icons.svg#paste"></use>
@@ -332,7 +393,11 @@ exports[`PageRenderer should resize a specific column on the drag and drop layou
           <div class="col-md-12 col-ddm" data-ddm-field-row="2" data-ddm-field-page="0" data-ddm-field-column="0">
             <div class="ddm-field-container">
               <div class="ddm-resize-handle-left"></div>
-              <div class="ddm-drag"></div>
+              <div class="ddm-drag">
+                <div id="fields-rule">
+                  <p>Date Field</p>
+                </div>
+              </div>
               <div class="ddm-field-actions-container"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg aria-hidden="true" class="lexicon-icon lexicon-icon-paste" focusable="false">
                     <title>paste</title>
                     <use xlink:href="icons.svg#paste"></use>
@@ -353,7 +418,11 @@ exports[`PageRenderer should resize a specific column on the drag and drop layou
           <div class="col-md-12 col-ddm" data-ddm-field-row="3" data-ddm-field-page="0" data-ddm-field-column="0">
             <div class="ddm-field-container">
               <div class="ddm-resize-handle-left"></div>
-              <div class="ddm-drag"></div>
+              <div class="ddm-drag">
+                <div id="fields-rule">
+                  <p>Numeric Field</p>
+                </div>
+              </div>
               <div class="ddm-field-actions-container"><button class="btn btn-monospaced btn-sm btn-secondary" aria-label="paste" type="button"><svg aria-hidden="true" class="lexicon-icon lexicon-icon-paste" focusable="false">
                     <title>paste</title>
                     <use xlink:href="icons.svg#paste"></use>

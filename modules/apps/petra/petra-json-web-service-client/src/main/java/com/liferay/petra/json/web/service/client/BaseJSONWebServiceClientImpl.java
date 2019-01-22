@@ -73,7 +73,6 @@ import org.apache.http.client.methods.HttpRequestBase;
 import org.apache.http.client.protocol.ClientContext;
 import org.apache.http.client.protocol.HttpClientContext;
 import org.apache.http.client.utils.URLEncodedUtils;
-import org.apache.http.config.Registry;
 import org.apache.http.config.RegistryBuilder;
 import org.apache.http.conn.ssl.TrustSelfSignedStrategy;
 import org.apache.http.entity.StringEntity;
@@ -1004,34 +1003,24 @@ public abstract class BaseJSONWebServiceClientImpl
 
 		poolingNHttpClientConnectionManager =
 			new PoolingNHttpClientConnectionManager(
-				connectingIOReactor, null, getSchemeIOSessionStrategyRegistry(),
-				null, null, 60000, TimeUnit.MILLISECONDS);
+				connectingIOReactor, null,
+				RegistryBuilder.<SchemeIOSessionStrategy>create(
+				).register(
+					"http", NoopIOSessionStrategy.INSTANCE
+				).register(
+					"https", getSSLIOSessionStrategy()
+				).build(), null, null, 60000, TimeUnit.MILLISECONDS);
 
 		poolingNHttpClientConnectionManager.setMaxTotal(20);
 
 		return poolingNHttpClientConnectionManager;
 	}
 
-	protected Registry<SchemeIOSessionStrategy>
-		getSchemeIOSessionStrategyRegistry() {
-
-		RegistryBuilder<SchemeIOSessionStrategy> registryBuilder =
-			RegistryBuilder.<SchemeIOSessionStrategy>create();
-
-		registryBuilder.register("http", NoopIOSessionStrategy.INSTANCE);
-
-		if (_keyStore == null) {
-			registryBuilder.register(
-				"https", SSLIOSessionStrategy.getSystemDefaultStrategy());
-		}
-		else {
-			registryBuilder.register("https", getSSLIOSessionStrategy());
-		}
-
-		return registryBuilder.build();
-	}
-
 	protected SSLIOSessionStrategy getSSLIOSessionStrategy() {
+		if (_keyStore == null) {
+			return SSLIOSessionStrategy.getSystemDefaultStrategy();
+		}
+
 		SSLContextBuilder sslContextBuilder = SSLContexts.custom();
 
 		SSLContext sslContext = null;

@@ -51,6 +51,8 @@ renderResponse.setTitle(editSegmentsEntryDisplayContext.getTitle(locale));
 	<%
 	String segmentEditRootElementId = renderResponse.getNamespace() + "-segment-edit-root";
 	%>
+	
+	<liferay-util:include page="/edit_segments_entry_tabs.jsp" servletContext="<%= application %>" />
 
 	<div id="<%= segmentEditRootElementId %>"></div>
 
@@ -60,6 +62,7 @@ renderResponse.setTitle(editSegmentsEntryDisplayContext.getTitle(locale));
 		<portlet:param name="redirect" value="<%= currentURL %>" />
 		<portlet:param name="segmentsEntryId" value="<%= String.valueOf(segmentsEntryId) %>" />
 	</portlet:renderURL>
+
 
 	<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="getSegmentsEntryClassPKsCount" var="getSegmentsEntryClassPKsCountURL" />
 

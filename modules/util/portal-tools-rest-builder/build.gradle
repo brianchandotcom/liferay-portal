@@ -27,3 +27,8 @@ formatSource {
 liferay {
 	deployDir = "../../../tools/sdk/dependencies/com.liferay.portal.tools.rest.builder/lib"
 }
+
+updateFileVersions {
+	match(/\t\t\t\t<version>(\d.+)<\/version>/, "samples/pom.xml")
+	match(/com\.liferay\.portal\.tools\.rest\.builder=(\d.+)/, "../../sdk/gradle-plugins/src/main/resources/com/liferay/gradle/plugins/dependencies/portal-tools.properties")
+}

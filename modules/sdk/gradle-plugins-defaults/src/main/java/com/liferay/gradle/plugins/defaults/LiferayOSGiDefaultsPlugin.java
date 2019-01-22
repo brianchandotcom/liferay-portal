@@ -56,6 +56,7 @@ import com.liferay.gradle.plugins.jsdoc.JSDocPlugin;
 import com.liferay.gradle.plugins.jsdoc.JSDocTask;
 import com.liferay.gradle.plugins.node.tasks.PublishNodeModuleTask;
 import com.liferay.gradle.plugins.patcher.PatchTask;
+import com.liferay.gradle.plugins.rest.builder.RESTBuilderPlugin;
 import com.liferay.gradle.plugins.service.builder.BuildServiceTask;
 import com.liferay.gradle.plugins.service.builder.ServiceBuilderPlugin;
 import com.liferay.gradle.plugins.source.formatter.SourceFormatterPlugin;
@@ -481,6 +482,20 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 					_configureConfigurationNoCrossRepoDependencies(
 						project, gitRepo,
 						JSTranspilerPlugin.SOY_COMPILE_CONFIGURATION_NAME);
+				}
+
+			});
+
+		GradleUtil.withPlugin(
+			project, RESTBuilderPlugin.class,
+			new Action<RESTBuilderPlugin>() {
+
+				@Override
+				public void execute(RESTBuilderPlugin restBuilderPlugin) {
+					_configureLocalPortalTool(
+						project, portalRootDir,
+						RESTBuilderPlugin.CONFIGURATION_NAME,
+						_REST_BUILDER_PORTAL_TOOL_NAME);
 				}
 
 			});
@@ -1574,6 +1589,10 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		GradleUtil.applyPlugin(project, MavenPlugin.class);
 		GradleUtil.applyPlugin(project, PmdPlugin.class);
 		GradleUtil.applyPlugin(project, ProvidedBasePlugin.class);
+
+		if (FileUtil.exists(project, "rest.yaml")) {
+			GradleUtil.applyPlugin(project, RESTBuilderPlugin.class);
+		}
 
 		if (FileUtil.exists(project, "service.xml")) {
 			GradleUtil.applyPlugin(project, ServiceBuilderPlugin.class);
@@ -4406,6 +4425,9 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 
 	private static final Duration _PORTAL_TOOL_MAX_AGE = TimeCategory.getDays(
 		30);
+
+	private static final String _REST_BUILDER_PORTAL_TOOL_NAME =
+		"com.liferay.portal.tools.rest.builder";
 
 	private static final String _SERVICE_BUILDER_PORTAL_TOOL_NAME =
 		"com.liferay.portal.tools.service.builder";

@@ -81,7 +81,6 @@ AUI.add(
 
 						var numberMask = DDMNumeric.createNumberMask(numberMaskOptions);
 
-						instance.lastDataType = dataType;
 						instance.maskedInputController = DDMNumeric.vanillaTextMask(
 							{
 								inputElement: fieldNode.getDOM(),
@@ -147,10 +146,6 @@ AUI.add(
 
 						var fieldNode = instance.getInputNode();
 						var fieldSidebar = A.one('.' + CSS_SETTINGS_SIDEBAR + ' .liferay-ddm-form-field-numeric');
-
-						if (instance.maskedInputController && (instance.get('dataType') == instance.lastDataType)) {
-							return;
-						}
 
 						if (instance.maskedInputController && fieldSidebar) {
 							fieldNode = fieldSidebar.one('input');

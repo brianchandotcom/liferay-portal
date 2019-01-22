@@ -28,7 +28,7 @@ public class DLFileEntryPreviewLocalServiceImpl
 
 	@Override
 	public void addDLFileEntryPreview(
-			long fileEntryId, long fileVersionId, int previewType)
+			long fileEntryId, long fileVersionId, int previewStatus)
 		throws PortalException {
 
 		DLFileEntryPreview fileEntryPreview =
@@ -37,7 +37,7 @@ public class DLFileEntryPreviewLocalServiceImpl
 
 		fileEntryPreview.setFileEntryId(fileEntryId);
 		fileEntryPreview.setFileVersionId(fileVersionId);
-		fileEntryPreview.setPreviewType(previewType);
+		fileEntryPreview.setPreviewStatus(previewStatus);
 
 		dlFileEntryPreviewPersistence.update(fileEntryPreview);
 	}
@@ -57,10 +57,10 @@ public class DLFileEntryPreviewLocalServiceImpl
 
 	@Override
 	public DLFileEntryPreview fetchDLFileEntryPreview(
-		long fileEntryId, long fileVersionId, int previewType) {
+		long fileEntryId, long fileVersionId, int previewStatus) {
 
 		return dlFileEntryPreviewPersistence.fetchByF_F_P(
-			fileEntryId, fileVersionId, previewType);
+			fileEntryId, fileVersionId, previewStatus);
 	}
 
 	@Override
@@ -74,11 +74,11 @@ public class DLFileEntryPreviewLocalServiceImpl
 
 	@Override
 	public DLFileEntryPreview getDLFileEntryPreview(
-			long fileEntryId, long fileVersionId, int previewType)
+			long fileEntryId, long fileVersionId, int previewStatus)
 		throws PortalException {
 
 		return dlFileEntryPreviewPersistence.findByF_F_P(
-			fileEntryId, fileVersionId, previewType);
+			fileEntryId, fileVersionId, previewStatus);
 	}
 
 	@Override
@@ -88,11 +88,11 @@ public class DLFileEntryPreviewLocalServiceImpl
 
 	@Override
 	public boolean hasDLFileEntryPreview(
-		long fileEntryId, long fileVersionId, int previewType) {
+		long fileEntryId, long fileVersionId, int previewStatus) {
 
 		DLFileEntryPreview dlFileEntryPreview =
 			dlFileEntryPreviewPersistence.fetchByF_F_P(
-				fileEntryId, fileVersionId, previewType);
+				fileEntryId, fileVersionId, previewStatus);
 
 		if (dlFileEntryPreview == null) {
 			return false;
@@ -103,13 +103,13 @@ public class DLFileEntryPreviewLocalServiceImpl
 
 	@Override
 	public void updateDLFileEntryPreview(
-			long fileEntryPreviewId, int fileEntryPreviewType)
+			long fileEntryPreviewId, int previewStatus)
 		throws PortalException {
 
 		DLFileEntryPreview fileEntryPreview =
 			dlFileEntryPreviewPersistence.findByPrimaryKey(fileEntryPreviewId);
 
-		fileEntryPreview.setPreviewType(fileEntryPreviewType);
+		fileEntryPreview.setPreviewStatus(previewStatus);
 
 		dlFileEntryPreviewPersistence.update(fileEntryPreview);
 	}

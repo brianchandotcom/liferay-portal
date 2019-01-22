@@ -76,8 +76,9 @@ public class LiferayProcessorCapability
 		repositoryEventRegistry.registerRepositoryEventListener(
 			RepositoryEventType.Delete.class, FileEntry.class,
 			fileEntry -> {
-				_fileVersionPreviewLocalService.deleteFileVersionPreview(
-					fileEntry.getFileEntryId());
+				_fileVersionPreviewLocalService.
+					deleteFileEntryFileVersionPreviews(
+						fileEntry.getFileEntryId());
 
 				cleanUp(fileEntry);
 			});

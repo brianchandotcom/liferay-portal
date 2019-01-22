@@ -44,7 +44,7 @@ public class FileVersionPreviewLocalServiceImpl
 	}
 
 	@Override
-	public void deleteFileVersionPreviews(long fileEntryId) {
+	public void deleteFileEntryFileVersionPreviews(long fileEntryId) {
 		fileVersionPreviewPersistence.removeByFileEntryId(fileEntryId);
 	}
 
@@ -83,7 +83,9 @@ public class FileVersionPreviewLocalServiceImpl
 	}
 
 	@Override
-	public List<FileVersionPreview> getFileVersionPreviews(long fileEntryId) {
+	public List<FileVersionPreview> getFileEntryFileVersionPreviews(
+		long fileEntryId) {
+
 		return fileVersionPreviewPersistence.findByFileEntryId(fileEntryId);
 	}
 

@@ -17,6 +17,7 @@ package com.liferay.portal.aop.internal;
 import com.liferay.portal.kernel.monitoring.ServiceMonitoringControl;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -52,7 +53,7 @@ public class AopServiceResolver {
 
 		_transactionExecutorHolders.add(transactionExecutorHolder);
 
-		_transactionExecutorHolders.sort(null);
+		_transactionExecutorHolders.sort(Comparator.reverseOrder());
 
 		TransactionExecutorHolder bestTransactionExecutorHolder =
 			_transactionExecutorHolders.get(0);

@@ -1,0 +1,16 @@
+{namespace com.liferay.layout.admin.web.FloatingToolbarBackgroundColorPanelDelegateTemplate}
+
+/**
+ * FloatingToolbarPanel background color variation
+ */
+{deltemplate com.liferay.layout.admin.web.FloatingToolbarPanel variant="'background_color'"}
+	{@param item: ?}
+	{@param itemId: string}
+	{@param? store: ?}
+
+	{call com.liferay.layout.admin.web.FloatingToolbarBackgroundColorPanel.render}
+		{param item: $item /}
+		{param itemId: $itemId /}
+		{param store: $store /}
+	{/call}
+{/deltemplate}

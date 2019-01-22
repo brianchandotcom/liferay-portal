@@ -2,6 +2,7 @@
  * Available element config keys
  */
 export const ITEM_CONFIG_KEYS = {
+	columnSpacing: 'columnSpacing',
 	containerType: 'containerType'
 };
 

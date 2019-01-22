@@ -54,6 +54,18 @@ class FloatingToolbarSpacingPanel extends Component {
 	 * Handle container option change
 	 * @param {Event} event
 	 */
+	_handleColumnSpacingOptionChange(event) {
+		this._updateSectionConfig(
+			{
+				[ITEM_CONFIG_KEYS.columnSpacing]: event.target.checked
+			}
+		);
+	}
+
+	/**
+	 * Handle container option change
+	 * @param {Event} event
+	 */
 	_handleContainerOptionChange(event) {
 		this._updateSectionConfig(
 			{

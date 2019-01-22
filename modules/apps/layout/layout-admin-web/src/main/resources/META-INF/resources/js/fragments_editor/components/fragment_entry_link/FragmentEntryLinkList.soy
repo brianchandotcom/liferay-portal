@@ -245,8 +245,17 @@
 			{/if}
 		{/let}
 
+		{let $rowClasses kind="text"}
+			fragment-entry-link-list__row
+			{sp}row
+
+			{if $row and $row.config and ($row.config.columnSpacing == false)}
+				{sp}fragment-entry-link-list__row--no-spacing
+			{/if}
+		{/let}
+
 		<div class="{$rowWrapperClasses}">
-			<div class="fragment-entry-link-list__row row">
+			<div class="{$rowClasses}">
 				{foreach $column in $columns}
 					{call .column}
 						{param _handleFragmentMove: $_handleFragmentMove /}
@@ -266,6 +275,7 @@
 						{param languageId: $languageId /}
 						{param mappingFieldsURL: $mappingFieldsURL /}
 						{param portletNamespace: $portletNamespace /}
+						{param row: $row /}
 						{param selectedMappingTypes: $selectedMappingTypes /}
 						{param size: $column.size /}
 						{param spritemap: $spritemap /}
@@ -290,6 +300,7 @@
 	{@param key: string}
 	{@param languageId: string}
 	{@param portletNamespace: string}
+	{@param row: ?}
 	{@param spritemap: string}
 	{@param? _handleFragmentMove: any}
 	{@param? dropTargetItemTypes: ?}
@@ -325,6 +336,10 @@
 
 		{if $size}
 			{sp}col-{$size}
+		{/if}
+
+		{if $row and $row.config and ($row.config.columnSpacing == false)}
+			{sp}fragment-entry-link-list__col--no-spacing
 		{/if}
 	{/let}
 

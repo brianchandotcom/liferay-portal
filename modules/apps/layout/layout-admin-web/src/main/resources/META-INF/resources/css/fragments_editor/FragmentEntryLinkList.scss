@@ -20,7 +20,7 @@
 
 	&__container {
 		box-shadow: inset 0 0 0 $topperBorderWidth $fragmentEntryLinkSectionBorderColor;
-		padding: $fragmentEntryLinkSpacing ($fragmentEntryLinkSpacing * 1.5);
+		padding: $fragmentEntryLinkSpacing;
 		position: relative;
 	}
 
@@ -31,6 +31,14 @@
 
 	&__container--empty &__row {
 		min-height: $sectionMinimumHeight;
+	}
+
+	&__row {
+		margin: 0 ($fragmentEntryLinkSpacing * -0.5);
+
+		&--no-spacing {
+			margin: 0 auto;
+		}
 	}
 
 	&__col {
@@ -47,6 +55,15 @@
 			position: absolute;
 			top: 0;
 			width: calc(100% - #{$fragmentEntryLinkSpacing});
+		}
+
+		&--no-spacing {
+			padding: 0;
+
+			&:before {
+				left: 0;
+				width: 100%;
+			}
 		}
 	}
 }

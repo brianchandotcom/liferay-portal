@@ -380,6 +380,8 @@ public class BookmarksFolderModelImpl extends BaseModelImpl<BookmarksFolder>
 
 	@Override
 	public void setUuid(String uuid) {
+		_columnBitmask |= UUID_COLUMN_BITMASK;
+
 		if (_originalUuid == null) {
 			_originalUuid = _uuid;
 		}

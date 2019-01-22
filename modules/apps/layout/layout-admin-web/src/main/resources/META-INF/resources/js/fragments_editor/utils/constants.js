@@ -3,7 +3,8 @@
  */
 export const ITEM_CONFIG_KEYS = {
 	columnSpacing: 'columnSpacing',
-	containerType: 'containerType'
+	containerType: 'containerType',
+	padding: 'padding'
 };
 
 /**

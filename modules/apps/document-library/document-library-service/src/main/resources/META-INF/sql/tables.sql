@@ -3,5 +3,13 @@ create table DLFileEntryPreview (
 	groupId LONG,
 	fileEntryId LONG,
 	fileVersionId LONG,
-	previewType INTEGER
+	previewStatus INTEGER
+);
+
+create table FileVersionPreview (
+	fileVersionPreviewId LONG not null primary key,
+	groupId LONG,
+	fileEntryId LONG,
+	fileVersionId LONG,
+	previewStatus INTEGER
 );

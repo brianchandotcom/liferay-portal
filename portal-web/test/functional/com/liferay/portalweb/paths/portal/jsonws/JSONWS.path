@@ -36,11 +36,6 @@
 	<td>//body[not(*)]</td>
 	<td></td>
 </tr>
-<tr>
-	<td>SECURITY_TEST_PAGE_BODY</td>
-	<td>//body/pre</td>
-	<td></td>
-</tr>
 </tbody>
 </table>
 </body>

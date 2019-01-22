@@ -80,7 +80,7 @@ definition {
 		AssertClick(locator1 = "Button#INVOKE", value1 = "Invoke");
 	}
 
-	macro gotoPAuthURL {
+	macro getPAuth {
 		Open(locator1 = "Home#API_JSON_URL");
 
 		Click(locator1 = "JSONWS#ADDRESS_ADD_ADDRESS");
@@ -92,6 +92,11 @@ definition {
 
 		var pAuth = selenium.getElementValue("JSONWSAddress#P_AUTH_FIELD");
 
+		return "${pAuth}";
+	}
+
+	macro gotoPAuthURL {
+		var pAuth = Api.getPAuth();
 		Navigator.openSpecificURL(url = "${url}${pAuth}");
 	}
 }

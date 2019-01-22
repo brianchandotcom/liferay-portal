@@ -168,7 +168,10 @@ out.println(PortalUtil.escapeRedirect("/"));
 	@priority = "4"
 	test ValidateCannotStealAdminAccount {
 		property test.name.skip.portal.instance = "SecurityUsecase#ValidateCannotStealAdminAccount";
+		var pAuth = Api.getPAuth();
 		var portalURL = PropsUtil.get("portal.url");
+
+		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
 			category = "Users",
@@ -194,23 +197,19 @@ out.println(PortalUtil.escapeRedirect("/"));
 			userScreenName = "usersn"
 		);
 
+
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "userea@liferay.com",
 			userLoginFullName = "userfn userln"
 		);
 
-		Api.gotoPAuthURL(
-			url = "${portalURL}/api/jsonws/user/update-status/user-id/20250/status/6?p_auth="
+		Navigator.openSpecificURL(
+			url = "${portalURL}/api/jsonws/group/get-group/group-id/20126?p_auth=${pAuth}"
 		);
 
-		AssertTextEquals.assertPartialText(
-			locator1 = "JSONWS#SECURITY_TEST_PAGE_BODY",
-			value1 = "must have DELETE permission for com.liferay.portal.kernel.model.User"
-		);
-
-		AssertTextEquals.assertPartialText(
-			locator1 = "JSONWS#SECURITY_TEST_PAGE_BODY",
-			value1 = "com.liferay.portal.kernel.security.auth.PrincipalException$MustHavePermission"
+		AssertTextEquals(
+			locator1 = "Home#ERROR_MESSAGE_ALERT_ERROR",
+			value1 = "Forbidden"
 		);
 	}
 

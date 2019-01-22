@@ -85,24 +85,6 @@ public class EditContactInformationDisplayContext {
 		return _contextOrganizationId;
 	}
 
-	public String getPortletTitle() throws PortalException {
-		if (_className.equals(Organization.class.getName())) {
-			Organization organization = OrganizationServiceUtil.getOrganization(
-				_classPK);
-
-			return LanguageUtil.format(
-				_request, "edit-x", organization.getName(), false);
-		}
-		else if (_className.equals(Contact.class.getName())) {
-			Contact contact = ContactServiceUtil.getContact(_classPK);
-
-			return LanguageUtil.format(
-				_request, "edit-user-x", contact.getFullName(), false);
-		}
-
-		return StringPool.BLANK;
-	}
-
 	public long getPrimaryKey() {
 		return _primaryKey;
 	}
@@ -123,7 +105,23 @@ public class EditContactInformationDisplayContext {
 			portletDisplay.setShowBackIcon(true);
 			portletDisplay.setURLBack(getBackURL());
 
-			_renderResponse.setTitle(getPortletTitle());
+			String portletTitle = StringPool.BLANK;
+
+			if (_className.equals(Organization.class.getName())) {
+				Organization organization =
+					OrganizationServiceUtil.getOrganization(_classPK);
+
+				portletTitle = LanguageUtil.format(
+					_request, "edit-x", organization.getName(), false);
+			}
+			else if (_className.equals(Contact.class.getName())) {
+				Contact contact = ContactServiceUtil.getContact(_classPK);
+
+				portletTitle = LanguageUtil.format(
+					_request, "edit-user-x", contact.getFullName(), false);
+			}
+
+			_renderResponse.setTitle(portletTitle);
 		}
 	}
 

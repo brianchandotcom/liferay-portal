@@ -84,6 +84,8 @@ public interface FileVersionPreviewLocalService extends BaseLocalService,
 	public FileVersionPreview createFileVersionPreview(
 		long fileVersionPreviewId);
 
+	public void deleteFileEntryFileVersionPreviews(long fileEntryId);
+
 	/**
 	* Deletes the file version preview from the database. Also notifies the appropriate model listeners.
 	*
@@ -104,8 +106,6 @@ public interface FileVersionPreviewLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.DELETE)
 	public FileVersionPreview deleteFileVersionPreview(
 		long fileVersionPreviewId) throws PortalException;
-
-	public void deleteFileVersionPreviews(long fileEntryId);
 
 	/**
 	* @throws PortalException
@@ -193,6 +193,10 @@ public interface FileVersionPreviewLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<FileVersionPreview> getFileEntryFileVersionPreviews(
+		long fileEntryId);
+
 	/**
 	* Returns the file version preview with the primary key.
 	*
@@ -225,9 +229,6 @@ public interface FileVersionPreviewLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<FileVersionPreview> getFileVersionPreviews(int start, int end);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<FileVersionPreview> getFileVersionPreviews(long fileEntryId);
 
 	/**
 	* Returns the number of file version previews.

@@ -42,6 +42,9 @@ import java.util.List;
 public class DDLRecordSetFinderImpl
 	extends DDLRecordSetFinderBaseImpl implements DDLRecordSetFinder {
 
+	public static final String COUNT_BY_G_D =
+		DDLRecordSetFinder.class.getName() + ".countByG_D";
+
 	public static final String COUNT_BY_C_G_N_D_S =
 		DDLRecordSetFinder.class.getName() + ".countByC_G_N_D_S";
 
@@ -53,6 +56,13 @@ public class DDLRecordSetFinderImpl
 		long companyId, long groupId, String keywords, int scope) {
 
 		return doCountByKeywords(companyId, groupId, keywords, scope, false);
+	}
+
+	@Override
+	public int countByG_D(
+		long groupId, long ddmStructureId, boolean andOperator) {
+
+		return doCountByG_D(groupId, ddmStructureId, andOperator, false);
 	}
 
 	@Override
@@ -199,6 +209,69 @@ public class DDLRecordSetFinderImpl
 		return doCountByC_G_N_D_S(
 			companyId, groupId, names, descriptions, scope, andOperator,
 			inlineSQLHelper);
+	}
+
+	protected int doCountByG_D(
+		long groupId, long ddmStructureId, boolean andOperator,
+		boolean inlineSQLHelper) {
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			String sql = _customSQL.get(getClass(), COUNT_BY_G_D);
+
+			if (inlineSQLHelper) {
+				sql = InlineSQLHelperUtil.replacePermissionCheck(
+					sql, DDLRecordSet.class.getName(),
+					"DDLRecordSet.recordSetId", groupId);
+			}
+
+			if (groupId <= 0) {
+				sql = StringUtil.replace(
+					sql, "(DDLRecordSet.groupId = ?) AND", StringPool.BLANK);
+			}
+
+			if (ddmStructureId <= 0) {
+				sql = StringUtil.replace(
+					sql, "(DDLRecordSet.DDMStructureId = ?)", StringPool.BLANK);
+			}
+
+			sql = _customSQL.replaceAndOperator(sql, andOperator);
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			q.addScalar(COUNT_COLUMN_NAME, Type.LONG);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			if (groupId > 0) {
+				qPos.add(groupId);
+			}
+
+			if (ddmStructureId > 0) {
+				qPos.add(ddmStructureId);
+			}
+
+			Iterator<Long> itr = q.iterate();
+
+			if (itr.hasNext()) {
+				Long count = itr.next();
+
+				if (count != null) {
+					return count.intValue();
+				}
+			}
+
+			return 0;
+		}
+		catch (Exception e) {
+			throw new SystemException(e);
+		}
+		finally {
+			closeSession(session);
+		}
 	}
 
 	protected int doCountByC_G_N_D_S(

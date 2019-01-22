@@ -69,6 +69,17 @@
 				DDLRecord.recordId DESC
 		]]>
 	</sql>
+	<sql id="com.liferay.dynamic.data.lists.service.persistence.DDLRecordSetFinder.countByG_D">
+		<![CDATA[
+			SELECT
+				COUNT(DISTINCT DDLRecordSet.recordSetId) AS COUNT_VALUE
+			FROM
+				DDLRecordSet
+			WHERE
+				(DDLRecordSet.groupId = ?) AND
+				(DDLRecordSet.DDMStructureId = ?)
+		]]>
+	</sql>
 	<sql id="com.liferay.dynamic.data.lists.service.persistence.DDLRecordSetFinder.countByC_G_N_D_S">
 		<![CDATA[
 			SELECT

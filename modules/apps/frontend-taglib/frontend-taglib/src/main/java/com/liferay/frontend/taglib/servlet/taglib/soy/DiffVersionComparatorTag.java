@@ -180,8 +180,8 @@ public class DiffVersionComparatorTag extends ComponentRendererTag {
 
 	@Override
 	public String getModule() {
-		return
-			"frontend-taglib/diff_version_comparator/DiffVersionComparator.es";
+		return "frontend-taglib/diff_version_comparator" +
+			"/DiffVersionComparator.es";
 	}
 
 	public void setAvailableLocales(Set<Locale> availableLocales) {

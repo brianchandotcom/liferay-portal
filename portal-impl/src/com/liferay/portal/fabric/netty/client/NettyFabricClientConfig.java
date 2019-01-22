@@ -66,7 +66,8 @@ public class NettyFabricClientConfig implements Serializable {
 		return CompressionLevel.getCompressionLevel(
 			GetterUtil.getInteger(
 				_properties.getProperty(
-					PropsKeys.PORTAL_FABRIC_CLIENT_FILE_SERVER_FOLDER_COMPRESSION_LEVEL),
+					PropsKeys.
+						PORTAL_FABRIC_CLIENT_FILE_SERVER_FOLDER_COMPRESSION_LEVEL),
 				1));
 	}
 

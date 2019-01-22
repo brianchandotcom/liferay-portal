@@ -1,6 +1,10 @@
 Bundle-Name: Liferay Portal Tools REST Builder
 Bundle-SymbolicName: com.liferay.portal.tools.rest.builder
 Bundle-Version: 1.0.0
+Import-Package:\
+	!org.apache.tools.ant.*,\
+	\
+	*
 Main-Class: com.liferay.portal.tools.rest.builder.RESTBuilder
 -includeresource:\
 	@com.liferay.portal.impl-[0-9]*.jar!/com/liferay/portal/tools/ArgumentsMap.class,\

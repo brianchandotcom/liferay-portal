@@ -9,32 +9,21 @@ const RETURN_TYPES = {
 /**
  * Handle item selector image changes and propagate them with an
  * "editableChanged" event.
- * @param {Event} changeEvent
+ * @param {string} url
  * @param {HTMLElement} editableElement
  * @param {string} fragmentEntryLinkId
  * @param {function} changedCallback
  * @private
  */
 function _handleImageEditorChange(
-	changeEvent,
+	url,
 	editableElement,
 	fragmentEntryLinkId,
 	changedCallback
 ) {
 	const imageElement = editableElement.querySelector('img');
-	const selectedItem = changeEvent.newVal;
 
-	if (imageElement && selectedItem) {
-		const {returnType} = selectedItem;
-		let url = '';
-
-		if (returnType === RETURN_TYPES.url) {
-			url = selectedItem.value;
-		}
-		else if (returnType === RETURN_TYPES.fileEntryItemSelector) {
-			url = JSON.parse(selectedItem.value).url;
-		}
-
+	if (imageElement && url) {
 		imageElement.src = url;
 
 		changedCallback(url);
@@ -68,9 +57,32 @@ function init(
 	changedCallback,
 	destroyedCallback
 ) {
+	const {imageSelectorURL} = options;
+
+	openImageSelector(
+		imageSelectorURL,
+		portletNamespace,
+		url => {
+			_handleImageEditorChange(
+				url,
+				editableElement,
+				fragmentEntryLinkId,
+				changedCallback
+			);
+		},
+		destroyedCallback
+	);
+}
+
+/**
+ * @param {string} imageSelectorURL
+ * @param {string} portletNamespace
+ * @param {function} callback
+ * @param {function} destroyedCallback
+ */
+function openImageSelector(imageSelectorURL, portletNamespace, callback, destroyedCallback) {
 	const eventName = `${portletNamespace}selectImage`;
 	const title = Liferay.Language.get('select');
-	const {imageSelectorURL} = options;
 
 	AUI().use(
 		'liferay-item-selector-dialog',
@@ -80,16 +92,26 @@ function init(
 					eventName,
 					on: {
 						selectedItemChange: changeEvent => {
-							_handleImageEditorChange(
-								changeEvent,
-								editableElement,
-								fragmentEntryLinkId,
-								changedCallback
-							);
+							const selectedItem = changeEvent.newVal || {};
+
+							const {returnType, value} = selectedItem;
+							let selectedImageURL = '';
+
+							if (returnType === RETURN_TYPES.url) {
+								selectedImageURL = value;
+							}
+
+							if (returnType === RETURN_TYPES.fileEntryItemSelector) {
+								selectedImageURL = JSON.parse(value).url;
+							}
+
+							if (selectedImageURL) {
+								callback(selectedImageURL);
+							}
 						},
 
 						visibleChange: change => {
-							if (change.newVal === false) {
+							if ((change.newVal === false) && destroyedCallback) {
 								destroyedCallback();
 							}
 						}
@@ -104,7 +126,7 @@ function init(
 	);
 }
 
-export {destroy, init};
+export {destroy, init, openImageSelector};
 
 export default {
 	destroy,

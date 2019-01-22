@@ -1,11 +1,7 @@
-var fieldTypes = #fieldTypes#;
-
-var javaScriptTemplateDependencies = #javaScriptTemplateDependencies#;
-
 Liferay.DDM.SoyTemplateUtil.loadModules(
-	javaScriptTemplateDependencies,
+	#javaScriptTemplateDependencies#,
 	function() {
-		Liferay.DDM.Renderer.FieldTypes.register(fieldTypes);
+		Liferay.DDM.Renderer.FieldTypes.register(#fieldTypes#);
 
 		Liferay.DMMFieldTypesReady = true;
 

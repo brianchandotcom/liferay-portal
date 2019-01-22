@@ -28,23 +28,24 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.taglib.BaseDynamicInclude;
 import com.liferay.portal.kernel.servlet.taglib.aui.ScriptData;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.io.IOException;
 
 import java.net.URL;
 
+import java.util.Collection;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -64,6 +65,35 @@ public abstract class BaseDDMFormFieldTypesDynamicInclude
 		_bundleContext = bundleContext;
 	}
 
+	protected Set<String> getFieldTypesModules(
+		List<DDMFormFieldType> ddmFormFieldTypes) {
+
+		Stream<DDMFormFieldType> ddmFormFieldTypeStream =
+			ddmFormFieldTypes.stream();
+
+		Set<String> javaScriptPackageNames = ddmFormFieldTypeStream.map(
+			this::getJavaScriptPackageName
+		).filter(
+			this::isValidPackageName
+		).collect(
+			Collectors.toSet()
+		);
+
+		Collection<JSPackage> resolvedJSPackages =
+			npmRegistry.getResolvedJSPackages();
+
+		Stream<JSPackage> jsPackagesStream =
+			resolvedJSPackages.parallelStream();
+
+		return jsPackagesStream.filter(
+			jsPackage -> javaScriptPackageNames.contains(jsPackage.getName())
+		).flatMap(
+			this::getModulesIdStream
+		).collect(
+			Collectors.toSet()
+		);
+	}
+
 	protected String getJavaScriptPackageName(Bundle bundle) throws Exception {
 		JSONObject jsonObject = getPackageJSONObject(bundle);
 
@@ -74,48 +104,36 @@ public abstract class BaseDDMFormFieldTypesDynamicInclude
 		return jsonObject.getString("name");
 	}
 
-	protected String getJavaScriptTemplateDependencies(
-		List<DDMFormFieldType> ddmFormFieldTypes) {
+	protected String getJavaScriptPackageName(
+		DDMFormFieldType ddmFormFieldType) {
 
-		Set<String> javaScriptDependencies = new HashSet<>();
+		Map<String, Object> ddmFormFieldTypeProperties =
+			ddmFormFieldTypeServicesTracker.getDDMFormFieldTypeProperties(
+				ddmFormFieldType.getName());
 
-		for (DDMFormFieldType ddmFormFieldType : ddmFormFieldTypes) {
-			Map<String, Object> ddmFormFieldTypeProperties =
-				ddmFormFieldTypeServicesTracker.getDDMFormFieldTypeProperties(
-					ddmFormFieldType.getName());
+		long bundleId = GetterUtil.getLong(
+			ddmFormFieldTypeProperties.get("service.bundleid"), -1L);
 
-			long bundleId = GetterUtil.getLong(
-				ddmFormFieldTypeProperties.get("service.bundleid"), -1L);
+		Bundle bundle = _bundleContext.getBundle(bundleId);
 
-			Bundle bundle = _bundleContext.getBundle(bundleId);
-
-			try {
-				String javaScriptPackageName = getJavaScriptPackageName(bundle);
-
-				for (JSPackage jsPackage :
-						npmRegistry.getResolvedJSPackages()) {
-
-					if (StringUtil.equals(
-							jsPackage.getName(), javaScriptPackageName)) {
-
-						for (JSModule jsModule : jsPackage.getJSModules()) {
-							javaScriptDependencies.add(
-								jsModule.getResolvedId());
-						}
-
-						break;
-					}
-				}
-			}
-			catch (Exception e) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(e, e);
-				}
-			}
+		try {
+			return getJavaScriptPackageName(bundle);
 		}
+		catch (Exception e) {
+			return StringPool.BLANK;
+		}
+	}
 
-		return jsonFactory.looseSerialize(
-			ListUtil.fromCollection(javaScriptDependencies));
+	protected String getModuleId(JSModule jsModule) {
+		return jsModule.getResolvedId();
+	}
+
+	protected Stream<String> getModulesIdStream(JSPackage jsPackage) {
+		Collection<JSModule> jsModules = jsPackage.getJSModules();
+
+		Stream<JSModule> stream = jsModules.stream();
+
+		return stream.map(this::getModuleId);
 	}
 
 	protected JSONObject getPackageJSONObject(Bundle bundle) throws Exception {
@@ -154,9 +172,12 @@ public abstract class BaseDDMFormFieldTypesDynamicInclude
 			"fieldTypes",
 			ddmFormFieldTypesSerializerSerializeResponse.getContent());
 
+		Set<String> fieldTypesModules = getFieldTypesModules(ddmFormFieldTypes);
+
 		values.put(
 			"javaScriptTemplateDependencies",
-			getJavaScriptTemplateDependencies(ddmFormFieldTypes));
+			jsonFactory.looseSerialize(
+				ListUtil.fromCollection(fieldTypesModules)));
 
 		scriptData.append(
 			null,
@@ -165,6 +186,10 @@ public abstract class BaseDDMFormFieldTypesDynamicInclude
 			_MODULES, ScriptData.ModulesType.AUI);
 
 		scriptData.writeTo(response.getWriter());
+	}
+
+	protected boolean isValidPackageName(String packageName) {
+		return Validator.isNotNull(packageName);
 	}
 
 	@Reference
@@ -186,9 +211,6 @@ public abstract class BaseDDMFormFieldTypesDynamicInclude
 	private static final String _TMPL_CONTENT = StringUtil.read(
 		DDMFormFieldTypesDynamicInclude.class,
 		"/META-INF/resources/dynamic_include/field_types.tmpl");
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		BaseDDMFormFieldTypesDynamicInclude.class);
 
 	private BundleContext _bundleContext;
 

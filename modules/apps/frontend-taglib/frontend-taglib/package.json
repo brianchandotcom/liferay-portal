@@ -22,7 +22,7 @@
 		"metal-structs": "^1.0.1"
 	},
 	"devDependencies": {
-		"liferay-npm-scripts": "^1.0.0"
+		"liferay-npm-scripts": "1.2.0"
 	},
 	"name": "frontend-taglib",
 	"scripts": {

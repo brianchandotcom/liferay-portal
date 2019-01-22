@@ -2,14 +2,14 @@
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 
 <hibernate-mapping auto-import="false" default-lazy="false">
-	<import class="com.liferay.document.library.model.DLFileEntryPreview" />
-	<class name="com.liferay.document.library.model.impl.DLFileEntryPreviewImpl" table="DLFileEntryPreview">
-		<id access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="fileEntryPreviewId" type="long">
+	<import class="com.liferay.document.library.model.FileVersionPreview" />
+	<class name="com.liferay.document.library.model.impl.FileVersionPreviewImpl" table="FileVersionPreview">
+		<id access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="fileVersionPreviewId" type="long">
 			<generator class="assigned" />
 		</id>
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="fileEntryId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="fileVersionId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="previewType" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="previewStatus" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 	</class>
 </hibernate-mapping>

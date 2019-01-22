@@ -109,7 +109,7 @@ public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
 	@Override
 	public String processFragmentEntryLinkHTML(
 			FragmentEntryLink fragmentEntryLink, String html, String mode,
-			Locale locale)
+			Locale locale, List<Long> segments)
 		throws PortalException {
 
 		validateFragmentEntryHTML(html);

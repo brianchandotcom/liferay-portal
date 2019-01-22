@@ -184,6 +184,45 @@ public class CTJournalArticleLocalServiceWrapper
 	}
 
 	@Override
+	public JournalArticle deleteArticle(JournalArticle article)
+		throws PortalException {
+
+		JournalArticle journalArticle = super.deleteArticle(article);
+
+		_unregisterChange(journalArticle);
+
+		return journalArticle;
+	}
+
+	@Override
+	public JournalArticle deleteArticle(
+			JournalArticle article, String articleURL,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		JournalArticle journalArticle = super.deleteArticle(
+			article, articleURL, serviceContext);
+
+		_unregisterChange(journalArticle);
+
+		return journalArticle;
+	}
+
+	@Override
+	public JournalArticle deleteArticle(
+			long groupId, String articleId, double version, String articleURL,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		JournalArticle journalArticle = super.deleteArticle(
+			groupId, articleId, version, articleURL, serviceContext);
+
+		_unregisterChange(journalArticle);
+
+		return journalArticle;
+	}
+
+	@Override
 	public JournalArticle moveArticle(
 			long groupId, String articleId, long newFolderId,
 			ServiceContext serviceContext)
@@ -471,6 +510,13 @@ public class CTJournalArticleLocalServiceWrapper
 				throw cte;
 			}
 		}
+	}
+
+	private void _unregisterChange(JournalArticle journalArticle) {
+		_ctManager.unregisterModelChange(
+			PrincipalThreadLocal.getUserId(),
+			_portal.getClassNameId(JournalArticle.class.getName()),
+			journalArticle.getId());
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

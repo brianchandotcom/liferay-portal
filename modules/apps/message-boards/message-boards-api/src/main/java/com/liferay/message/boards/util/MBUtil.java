@@ -16,6 +16,9 @@ package com.liferay.message.boards.util;
 
 import com.liferay.message.boards.constants.MBMessageConstants;
 import com.liferay.message.boards.model.MBBan;
+import com.liferay.message.boards.model.MBDiscussion;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.ThemeConstants;
@@ -43,6 +46,15 @@ public class MBUtil {
 			BBCodeTranslatorUtil.getHTML(msgBody),
 			ThemeConstants.TOKEN_THEME_IMAGES_PATH + EMOTICONS,
 			pathThemeImages + EMOTICONS);
+	}
+
+	public static String getSubscriptionClassName(String className) {
+		if (className.startsWith(MBDiscussion.class.getName())) {
+			return className;
+		}
+
+		return StringBundler.concat(
+			MBDiscussion.class.getName(), StringPool.UNDERLINE, className);
 	}
 
 	public static Date getUnbanDate(MBBan ban, int expireInterval) {

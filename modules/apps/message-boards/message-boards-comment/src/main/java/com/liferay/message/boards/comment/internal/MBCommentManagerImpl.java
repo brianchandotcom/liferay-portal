@@ -325,34 +325,6 @@ public class MBCommentManagerImpl implements CommentManager {
 		}
 	}
 
-	@Reference(unbind = "-")
-	public void setMBDiscussionLocalService(
-		MBDiscussionLocalService mbDiscussionLocalService) {
-
-		_mbDiscussionLocalService = mbDiscussionLocalService;
-	}
-
-	@Reference(unbind = "-")
-	public void setMBMessageLocalService(
-		MBMessageLocalService mbMessageLocalService) {
-
-		_mbMessageLocalService = mbMessageLocalService;
-	}
-
-	@Reference(unbind = "-")
-	public void setRatingsEntryLocalService(
-		RatingsEntryLocalService ratingsEntryLocalService) {
-
-		_ratingsEntryLocalService = ratingsEntryLocalService;
-	}
-
-	@Reference(unbind = "-")
-	public void setRatingsStatsLocalService(
-		RatingsStatsLocalService ratingsStatsLocalService) {
-
-		_ratingsStatsLocalService = ratingsStatsLocalService;
-	}
-
 	@Override
 	public void subscribeDiscussion(
 			long userId, long groupId, String className, long classPK)
@@ -407,9 +379,8 @@ public class MBCommentManagerImpl implements CommentManager {
 
 		if (classPKs.isEmpty()) {
 			return new MBDiscussionCommentImpl(
-				treeWalker.getRoot(), treeWalker,
-				Collections.<Long, RatingsEntry>emptyMap(),
-				Collections.<Long, RatingsStats>emptyMap());
+				treeWalker.getRoot(), treeWalker, Collections.emptyMap(),
+				Collections.emptyMap());
 		}
 
 		long[] classPKsArray = ArrayUtil.toLongArray(classPKs);
@@ -432,21 +403,22 @@ public class MBCommentManagerImpl implements CommentManager {
 			treeWalker.getRoot(), treeWalker, ratingsEntries, ratingsStats);
 	}
 
-	@Reference(unbind = "-")
-	protected void setMBThreadLocalService(
-		MBThreadLocalService mbThreadLocalService) {
-
-		_mbThreadLocalService = mbThreadLocalService;
-	}
-
+	@Reference
 	private MBDiscussionLocalService _mbDiscussionLocalService;
+
+	@Reference
 	private MBMessageLocalService _mbMessageLocalService;
+
+	@Reference
 	private MBThreadLocalService _mbThreadLocalService;
 
 	@Reference
 	private Portal _portal;
 
+	@Reference
 	private RatingsEntryLocalService _ratingsEntryLocalService;
+
+	@Reference
 	private RatingsStatsLocalService _ratingsStatsLocalService;
 
 }

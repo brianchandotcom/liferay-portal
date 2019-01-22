@@ -41,14 +41,15 @@ public class EditContactInformationDisplayContext {
 		String contactInfoTypeName, RenderResponse renderResponse,
 		HttpServletRequest request) {
 
+		_renderResponse = renderResponse;
+		_request = request;
+
 		_className = ParamUtil.getString(request, "className");
 		_classPK = ParamUtil.getLong(request, "classPK");
 		_contextOrganizationId = ParamUtil.getLong(
 			request, "contextOrganizationId");
 		_primaryKey = ParamUtil.getLong(request, "primaryKey", 0L);
 		_redirect = ParamUtil.getString(request, "redirect");
-		_renderResponse = renderResponse;
-		_request = request;
 
 		if (_primaryKey > 0) {
 			_sheetTitle = LanguageUtil.get(

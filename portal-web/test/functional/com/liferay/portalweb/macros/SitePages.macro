@@ -316,6 +316,12 @@ definition {
 
 	@summary = "Go to the pageMenuItem of a Site Page. Parent pages hierarchy is required to navigate to child pages."
 	macro gotoPageMenuItem {
+		var browserType = PropsUtil.get("browser.type");
+
+		if ("${browserType}" == "chrome") {
+			MetalComponent.waitForLayout();
+		}
+
 		if (isSet(parentPagesHierarchy)) {
 			for (var parentPage : list "${parentPagesHierarchy}") {
 				Click(locator1 = "SitePages#LIST_GROUP_ITEM", key_itemName = "${parentPage}");

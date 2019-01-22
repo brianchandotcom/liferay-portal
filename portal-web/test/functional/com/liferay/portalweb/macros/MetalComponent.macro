@@ -1,4 +1,8 @@
 definition {
+	macro waitForLayout {
+		MetalComponent.waitForMetalComponent(id = '''document.querySelector("div.portlet-body > form > div").id''');
+	}
+
 	macro waitForManagementBar {
 		AssertVisible(locator1 = "ManagementBar#MANAGEMENT_BAR");
 

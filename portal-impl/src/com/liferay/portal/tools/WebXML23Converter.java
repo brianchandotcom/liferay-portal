@@ -14,6 +14,7 @@
 
 package com.liferay.portal.tools;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.xml.Dom4jUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -79,7 +80,12 @@ public class WebXML23Converter {
 
 			int y = webXML23.indexOf(">", x);
 
-			webXML23 = webXML23.substring(0, x) + "<!DOCTYPE web-app PUBLIC \"-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN\" \"http://java.sun.com/dtd/web-app_2_3.dtd\"><web-app>" + webXML23.substring(y + 1);
+			webXML23 = StringBundler.concat(
+				webXML23.substring(0, x),
+				"<!DOCTYPE web-app PUBLIC \"-//Sun Microsystems, Inc.//DTD ",
+				"Web Application 2.3//EN\" ",
+				"\"http://java.sun.com/dtd/web-app_2_3.dtd\"><web-app>",
+				webXML23.substring(y + 1));
 
 			webXML23 = StringUtil.removeSubstrings(
 				webXML23, "<jsp-config>", "</jsp-config>");

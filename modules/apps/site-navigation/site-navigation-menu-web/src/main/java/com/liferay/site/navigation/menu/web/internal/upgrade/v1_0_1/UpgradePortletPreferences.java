@@ -14,19 +14,22 @@
 
 package com.liferay.site.navigation.menu.web.internal.upgrade.v1_0_1;
 
-import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
-import com.liferay.portal.kernel.upgrade.BaseUpgradePortletPreferences;
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.upgrade.RenameUpgradePortletPreferences;
 import com.liferay.site.navigation.menu.web.internal.constants.SiteNavigationMenuPortletKeys;
 
-import javax.portlet.PortletPreferences;
-import javax.portlet.ReadOnlyException;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author Balázs Sáfrány-Kovalik
  */
-public class UpgradePortletPreferences extends BaseUpgradePortletPreferences {
+public class UpgradePortletPreferences extends RenameUpgradePortletPreferences {
+
+	public UpgradePortletPreferences() {
+		_preferenceNamesMap.put("includedLayouts", "expandedLevels");
+		_preferenceNamesMap.put("rootLayoutLevel", "rootMenuItemLevel");
+		_preferenceNamesMap.put("rootLayoutType", "rootMenuItemType");
+	}
 
 	@Override
 	protected String[] getPortletIds() {
@@ -36,43 +39,10 @@ public class UpgradePortletPreferences extends BaseUpgradePortletPreferences {
 	}
 
 	@Override
-	protected String upgradePreferences(
-			long companyId, long ownerId, int ownerType, long plid,
-			String portletId, String xml)
-		throws Exception {
-
-		PortletPreferences portletPreferences =
-			PortletPreferencesFactoryUtil.fromXML(
-				companyId, ownerId, ownerType, plid, portletId, xml);
-
-		_replacePreferenceName(
-			portletPreferences, "includedLayouts", "expandedLevels");
-
-		_replacePreferenceName(
-			portletPreferences, "rootLayoutLevel", "rootMenuItemLevel");
-
-		_replacePreferenceName(
-			portletPreferences, "rootLayoutType", "rootMenuItemType");
-
-		return PortletPreferencesFactoryUtil.toXML(portletPreferences);
+	protected Map<String, String> getPreferenceNamesMap() {
+		return _preferenceNamesMap;
 	}
 
-	private void _replacePreferenceName(
-			PortletPreferences portletPreferences, String oldName,
-			String newName)
-		throws ReadOnlyException {
-
-		String oldValue = GetterUtil.getString(
-			portletPreferences.getValue(oldName, null));
-
-		String newValue = GetterUtil.getString(
-			portletPreferences.getValue(newName, null));
-
-		if (Validator.isNotNull(oldValue) && Validator.isNull(newValue)) {
-			portletPreferences.setValue(newName, oldValue);
-		}
-
-		portletPreferences.reset(oldName);
-	}
+	private final Map<String, String> _preferenceNamesMap = new HashMap<>();
 
 }

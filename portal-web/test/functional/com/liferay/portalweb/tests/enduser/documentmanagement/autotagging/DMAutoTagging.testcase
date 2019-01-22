@@ -29,6 +29,7 @@ definition {
 		}
 	}
 
+	@description = "This test asserts that auto-tags added to an image uploaded on a staged site gets published to Live."
 	@priority = "4"
 	test AssertAutoTagAfterPublishToLive {
 		property test.name.skip.portal.instance = "DMAutoTagging#AssertAutoTagAfterPublishToLive";
@@ -118,6 +119,7 @@ definition {
 		AutoTagging.assertAutoTagPresent(tagName = "carton");
 	}
 
+	@description = "This test asserts that no auto-tag is generated when an image is uploaded to a site that has auto-tagging disabled despite the auto-tagging functionality enabled at portal level."
 	@priority = "4"
 	test ConfigureAutoTaggingPerSite {
 		property test.name.skip.portal.instance = "DMAutoTagging#ConfigureAutoTaggingPerSite";
@@ -209,6 +211,7 @@ definition {
 		AutoTagging.assertNoAutoTag();
 	}
 
+	@description = "This test asserts that no auto-tags are generated for manually tagged images."
 	@priority = "4"
 	test NoAutoTagForManuallyTaggedImage {
 		property test.name.skip.portal.instance = "DMAutoTagging#RemoveAutoTag";
@@ -259,6 +262,7 @@ definition {
 		AutoTagging.assertNoAutoTag(tagName = "carton");
 	}
 
+	@description = "This test asserts that auto-tags can be deleted."
 	@priority = "4"
 	test RemoveAutoTag {
 		property test.name.skip.portal.instance = "DMAutoTagging#RemoveAutoTag";
@@ -317,6 +321,7 @@ definition {
 		AutoTagging.assertNoAutoTag();
 	}
 
+	@description = "This test asserts that an image is auto-tagged during upload when Auto-Tagging is enabled."
 	@priority = "5"
 	test Smoke {
 		property portal.acceptance = "false";

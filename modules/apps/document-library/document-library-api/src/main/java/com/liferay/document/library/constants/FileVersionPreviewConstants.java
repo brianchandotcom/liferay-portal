@@ -17,7 +17,7 @@ package com.liferay.document.library.constants;
 /**
  * @author Adolfo Pérez
  */
-public class DLFileEntryPreviewConstants {
+public class FileVersionPreviewConstants {
 
 	public static final int FAILURE = 1;
 

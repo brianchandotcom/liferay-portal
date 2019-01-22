@@ -14,10 +14,10 @@
 
 package com.liferay.document.library.service.impl;
 
-import com.liferay.document.library.constants.DLFileEntryPreviewConstants;
+import com.liferay.document.library.constants.FileVersionPreviewConstants;
 import com.liferay.document.library.kernel.service.FileVersionPreviewEventListener;
-import com.liferay.document.library.model.DLFileEntryPreview;
-import com.liferay.document.library.service.DLFileEntryPreviewLocalService;
+import com.liferay.document.library.model.FileVersionPreview;
+import com.liferay.document.library.service.FileVersionPreviewLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -37,32 +37,32 @@ public class FileVersionPreviewEventListenerImpl
 	@Override
 	public void onFailure(FileVersion fileVersion) {
 		_addDLFileEntryPreview(
-			fileVersion, DLFileEntryPreviewConstants.FAILURE);
+			fileVersion, FileVersionPreviewConstants.FAILURE);
 	}
 
 	@Override
 	public void onSuccess(FileVersion fileVersion) {
 		_addDLFileEntryPreview(
-			fileVersion, DLFileEntryPreviewConstants.SUCCESS);
+			fileVersion, FileVersionPreviewConstants.SUCCESS);
 	}
 
 	private void _addDLFileEntryPreview(
 		FileVersion fileVersion, int previewType) {
 
 		try {
-			DLFileEntryPreview dlFileEntryPreview =
-				_dlFileEntryPreviewLocalService.fetchDLFileEntryPreview(
+			FileVersionPreview fileVersionPreview =
+				_fileVersionPreviewLocalService.fetchFileVersionPreview(
 					fileVersion.getFileEntryId(),
 					fileVersion.getFileVersionId());
 
-			if (dlFileEntryPreview == null) {
-				_dlFileEntryPreviewLocalService.addDLFileEntryPreview(
+			if (fileVersionPreview == null) {
+				_fileVersionPreviewLocalService.addFileVersionPreview(
 					fileVersion.getFileEntryId(),
 					fileVersion.getFileVersionId(), previewType);
 			}
 			else {
-				_dlFileEntryPreviewLocalService.updateDLFileEntryPreview(
-					dlFileEntryPreview.getFileEntryPreviewId(), previewType);
+				_fileVersionPreviewLocalService.updateFileVersionPreview(
+					fileVersionPreview.getFileVersionPreviewId(), previewType);
 			}
 		}
 		catch (PortalException pe) {
@@ -76,6 +76,6 @@ public class FileVersionPreviewEventListenerImpl
 		FileVersionPreviewEventListenerImpl.class);
 
 	@Reference
-	private DLFileEntryPreviewLocalService _dlFileEntryPreviewLocalService;
+	private FileVersionPreviewLocalService _fileVersionPreviewLocalService;
 
 }

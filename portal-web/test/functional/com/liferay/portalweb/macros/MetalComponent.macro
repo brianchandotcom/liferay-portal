@@ -1,10 +1,12 @@
 definition {
 	macro waitForLayout {
+		AssertVisible(locator1 = "//div[@class='portlet-body']/form/div");
+
 		MetalComponent.waitForMetalComponent(id = '''document.querySelector("div.portlet-body > form > div").id''');
 	}
 
 	macro waitForManagementBar {
-		AssertVisible(locator1 = "ManagementBar#MANAGEMENT_BAR");
+		AssertVisible(locator1 = "//nav[contains(@class,'management-bar')]");
 
 		MetalComponent.waitForMetalComponent(id = '''document.querySelector("nav.management-bar").parentNode.id''');
 	}

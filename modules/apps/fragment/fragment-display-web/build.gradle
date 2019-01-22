@@ -17,5 +17,6 @@ dependencies {
 
 	jsCompile project(":apps:frontend-js:frontend-js-web")
 	jsCompile project(":apps:frontend-taglib:frontend-taglib")
+	jsCompile project(":apps:frontend-taglib:frontend-taglib-clay")
 	jsCompile project(":apps:layout:layout-admin-web")
 }

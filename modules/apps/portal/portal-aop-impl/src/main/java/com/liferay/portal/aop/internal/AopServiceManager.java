@@ -19,21 +19,15 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.monitoring.ServiceMonitoringControl;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.spring.transaction.TransactionExecutor;
 
-import java.util.Arrays;
 import java.util.Dictionary;
-import java.util.HashSet;
 import java.util.Map;
-import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
-import org.osgi.framework.Constants;
 import org.osgi.framework.ServiceReference;
-import org.osgi.service.component.ComponentConstants;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
@@ -71,12 +65,6 @@ public class AopServiceManager {
 		_transactionExecutorServiceTracker.close();
 	}
 
-	private static final Set<String> _frameworkKeys = new HashSet<>(
-		Arrays.asList(
-			ComponentConstants.COMPONENT_ID, ComponentConstants.COMPONENT_NAME,
-			Constants.OBJECTCLASS, Constants.SERVICE_BUNDLEID,
-			Constants.SERVICE_ID, Constants.SERVICE_SCOPE));
-
 	private final Map<Long, AopServiceResolver> _aopDependencyResolvers =
 		new ConcurrentHashMap<>();
 	private ServiceTracker<AopService, AopServiceRegistrar>
@@ -110,18 +98,8 @@ public class AopServiceManager {
 						" without a service interface"));
 			}
 
-			String[] aopServiceNames = new String[aopInterfaces.length];
-
-			for (int i = 0; i < aopInterfaces.length; i++) {
-				aopServiceNames[i] = aopInterfaces[i].getName();
-			}
-
-			Dictionary<String, Object> properties = _getProperties(
-				serviceReference);
-
 			AopServiceRegistrar aopServiceRegistrar = new AopServiceRegistrar(
-				serviceReference, aopService, aopInterfaces, aopServiceNames,
-				properties);
+				serviceReference, aopService, aopInterfaces);
 
 			Bundle bundle = serviceReference.getBundle();
 
@@ -156,22 +134,19 @@ public class AopServiceManager {
 			ServiceReference<AopService> serviceReference,
 			AopServiceRegistrar aopServiceRegistrar) {
 
-			Dictionary<String, Object> properties = _getProperties(
-				serviceReference);
-
 			Bundle bundle = serviceReference.getBundle();
 
 			Dictionary<String, String> headers = bundle.getHeaders(
 				StringPool.BLANK);
 
 			if (headers.get("Liferay-Service") == null) {
-				aopServiceRegistrar.setProperties(properties);
+				aopServiceRegistrar.updateProperties();
 			}
 			else {
 				_aopDependencyResolvers.compute(
 					bundle.getBundleId(),
 					(bundleId, aopServiceResolver) -> {
-						aopServiceRegistrar.setProperties(properties);
+						aopServiceRegistrar.updateProperties();
 
 						return aopServiceResolver;
 					});
@@ -239,26 +214,6 @@ public class AopServiceManager {
 			}
 
 			return aopInterfaces;
-		}
-
-		private Dictionary<String, Object> _getProperties(
-			ServiceReference<AopService> serviceReference) {
-
-			Dictionary<String, Object> properties = null;
-
-			for (String key : serviceReference.getPropertyKeys()) {
-				if (_frameworkKeys.contains(key)) {
-					continue;
-				}
-
-				if (properties == null) {
-					properties = new HashMapDictionary<>();
-				}
-
-				properties.put(key, serviceReference.getProperty(key));
-			}
-
-			return properties;
 		}
 
 	}

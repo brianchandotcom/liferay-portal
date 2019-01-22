@@ -46,7 +46,7 @@ definition {
 		var browserType = PropsUtil.get("browser.type");
 
 		if ("${browserType}" == "chrome") {
-			LexiconEntry.waitForManagementBar();
+			MetalComponent.waitForManagementBar();
 		}
 
 		Click(locator1 = "Button#PLUS");
@@ -184,32 +184,5 @@ definition {
 			locator1 = "MenuItem#ANY_MENU_ITEM",
 			key_menuItem = "${menuItem}"
 		);
-	}
-
-	macro waitForManagementBar {
-		AssertVisible(locator1 = "ManagementBar#MANAGEMENT_BAR");
-
-		var javaScript = '''
-var managementBar = Liferay.component(document.querySelector("nav.management-bar").parentNode.id);
-
-if (managementBar !== undefined) {
-	if (managementBar.wasRendered) {
-		return 'ready';
-	}
-	else {
-		return 'pending';
-	}
-}
-else {
-	return 'pending';
-}
-		''';
-		var managementBarReady = "";
-
-		while (!("${managementBarReady}" == "ready") && (maxIterations = "30")) {
-			var managementBarReady = selenium.getEval("${javaScript}");
-
-			Pause(locator1 = "1000");
-		}
 	}
 }

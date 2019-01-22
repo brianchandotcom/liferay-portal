@@ -352,7 +352,7 @@ public class DEDataRecordCollectionServiceImpl
 		if (_deDataRecordCollectionSaveRequestExecutor == null) {
 			_deDataRecordCollectionSaveRequestExecutor =
 				new DEDataRecordCollectionSaveRequestExecutor(
-					ddlRecordSetLocalService, portal, resourceLocalService);
+					ddlRecordSetLocalService, resourceLocalService);
 		}
 
 		return _deDataRecordCollectionSaveRequestExecutor;

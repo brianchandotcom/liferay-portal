@@ -22,6 +22,10 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.segments.context.Context;
 import com.liferay.segments.odata.matcher.ODataMatcher;
 
+import java.time.LocalDate;
+import java.time.Month;
+import java.time.format.DateTimeFormatter;
+
 import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -38,6 +42,72 @@ public class ContextODataMatcherTest {
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
+
+	@Test
+	public void testMatchesDateEquals() throws Exception {
+		LocalDate localDate = LocalDate.of(2019, Month.JANUARY, 1);
+
+		Context context = new Context() {
+			{
+				put(Context.LOCAL_DATE, localDate);
+			}
+		};
+
+		Assert.assertTrue(
+			_contextODataMatcher.matches(
+				StringBundler.concat(
+					"(", Context.LOCAL_DATE, " eq ",
+					localDate.format(DateTimeFormatter.ISO_LOCAL_DATE), ")"),
+				context));
+
+		LocalDate tomorrowLocalDate = localDate.plusDays(1);
+
+		Assert.assertFalse(
+			_contextODataMatcher.matches(
+				StringBundler.concat(
+					"(", Context.LOCAL_DATE, " eq ",
+					tomorrowLocalDate.format(DateTimeFormatter.ISO_LOCAL_DATE),
+					")"),
+				context));
+	}
+
+	@Test
+	public void testMatchesIntegerEquals() throws Exception {
+		Context context = new Context() {
+			{
+				put(Context.DEVICE_SCREEN_RESOLUTION_WIDTH, 1000);
+			}
+		};
+
+		Assert.assertTrue(
+			_contextODataMatcher.matches(
+				StringBundler.concat(
+					"(", Context.DEVICE_SCREEN_RESOLUTION_WIDTH, " eq 1000)"),
+				context));
+		Assert.assertFalse(
+			_contextODataMatcher.matches(
+				StringBundler.concat(
+					"(", Context.DEVICE_SCREEN_RESOLUTION_WIDTH, " eq 1001)"),
+				context));
+	}
+
+	@Test
+	public void testMatchesStringEquals() throws Exception {
+		Context context = new Context() {
+			{
+				put(Context.LANGUAGE_ID, "en");
+			}
+		};
+
+		Assert.assertTrue(
+			_contextODataMatcher.matches(
+				StringBundler.concat("(", Context.LANGUAGE_ID, " eq 'en')"),
+				context));
+		Assert.assertFalse(
+			_contextODataMatcher.matches(
+				StringBundler.concat("(", Context.LANGUAGE_ID, " eq 'fr')"),
+				context));
+	}
 
 	@Test
 	public void testMatchesWithAnd() throws Exception {

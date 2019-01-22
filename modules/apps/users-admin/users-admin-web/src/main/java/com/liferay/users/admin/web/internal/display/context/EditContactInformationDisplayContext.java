@@ -19,16 +19,13 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Contact;
 import com.liferay.portal.kernel.model.Organization;
-import com.liferay.portal.kernel.model.OrganizationConstants;
 import com.liferay.portal.kernel.service.ContactServiceUtil;
 import com.liferay.portal.kernel.service.OrganizationServiceUtil;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.users.admin.constants.UsersAdminPortletKeys;
-import com.liferay.users.admin.web.internal.util.UsersAdminPortletURLUtil;
 
 import javax.portlet.RenderResponse;
-import javax.portlet.RenderURL;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -46,8 +43,6 @@ public class EditContactInformationDisplayContext {
 
 		_className = ParamUtil.getString(request, "className");
 		_classPK = ParamUtil.getLong(request, "classPK");
-		_contextOrganizationId = ParamUtil.getLong(
-			request, "contextOrganizationId");
 		_primaryKey = ParamUtil.getLong(request, "primaryKey", 0L);
 		_redirect = ParamUtil.getString(request, "redirect");
 
@@ -61,29 +56,12 @@ public class EditContactInformationDisplayContext {
 		}
 	}
 
-	public String getBackURL() {
-		if (_contextOrganizationId ==
-				OrganizationConstants.ANY_PARENT_ORGANIZATION_ID) {
-
-			RenderURL renderURL = _renderResponse.createRenderURL();
-
-			return renderURL.toString();
-		}
-
-		return UsersAdminPortletURLUtil.createOrganizationViewTreeURL(
-			_contextOrganizationId, _renderResponse);
-	}
-
 	public String getClassName() {
 		return _className;
 	}
 
 	public long getClassPK() {
 		return _classPK;
-	}
-
-	public long getContextOrganizationId() {
-		return _contextOrganizationId;
 	}
 
 	public long getPrimaryKey() {
@@ -104,7 +82,7 @@ public class EditContactInformationDisplayContext {
 
 		if (!portletName.equals(UsersAdminPortletKeys.MY_ACCOUNT)) {
 			portletDisplay.setShowBackIcon(true);
-			portletDisplay.setURLBack(getBackURL());
+			portletDisplay.setURLBack(getRedirect());
 
 			String portletTitle = StringPool.BLANK;
 
@@ -128,7 +106,6 @@ public class EditContactInformationDisplayContext {
 
 	private final String _className;
 	private final long _classPK;
-	private final long _contextOrganizationId;
 	private final long _primaryKey;
 	private final String _redirect;
 	private final RenderResponse _renderResponse;

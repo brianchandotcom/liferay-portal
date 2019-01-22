@@ -37,7 +37,6 @@ List<OrgLabor> orgLabors = OrgLaborServiceUtil.getOrgLabors(organizationId);
 
 				editURL.setParameter("className", Organization.class.getName());
 				editURL.setParameter("classPK", String.valueOf(organizationId));
-				editURL.setParameter("contextOrganizationId", String.valueOf(organizationScreenNavigationDisplayContext.getParentOrganizationId()));
 				editURL.setParameter("mvcPath", "/organization/edit_opening_hours.jsp");
 				editURL.setParameter("redirect", currentURL);
 				%>

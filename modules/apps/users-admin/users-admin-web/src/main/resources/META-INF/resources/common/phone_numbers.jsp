@@ -19,7 +19,6 @@
 <%
 String className = (String)request.getAttribute("contact_information.jsp-className");
 long classPK = (long)request.getAttribute("contact_information.jsp-classPK");
-long contextOrganizationId = (long)request.getAttribute("contextOrganizationId");
 
 String emptyResultsMessage = ParamUtil.getString(request, "emptyResultsMessage");
 
@@ -39,7 +38,6 @@ List<Phone> phones = PhoneServiceUtil.getPhones(className, classPK);
 			editURL.setParameter("className", className);
 			editURL.setParameter("classPK", String.valueOf(classPK));
 			editURL.setParameter("mvcPath", "/common/edit_phone_number.jsp");
-			editURL.setParameter("contextOrganizationId", String.valueOf(contextOrganizationId));
 			editURL.setParameter("redirect", currentURL);
 			%>
 

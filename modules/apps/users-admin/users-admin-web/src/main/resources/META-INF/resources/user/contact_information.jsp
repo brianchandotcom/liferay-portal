@@ -32,10 +32,6 @@ long selContactId = (selUser != null) ? selContact.getContactId() : 0;
 
 request.setAttribute("contact_information.jsp-className", Contact.class.getName());
 request.setAttribute("contact_information.jsp-classPK", selContactId);
-
-long contextOrganizationId = ParamUtil.getLong(request, "contextOrganizationId");
-
-request.setAttribute("contextOrganizationId", contextOrganizationId);
 %>
 
 <div class="sheet-section">

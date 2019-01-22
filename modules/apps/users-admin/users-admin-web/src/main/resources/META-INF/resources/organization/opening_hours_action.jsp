@@ -37,7 +37,6 @@ long orgLaborId = ParamUtil.getLong(request, "orgLaborId");
 
 	editURL.setParameter("className", Organization.class.getName());
 	editURL.setParameter("classPK", String.valueOf(organizationId));
-	editURL.setParameter("contextOrganizationId", String.valueOf(organizationScreenNavigationDisplayContext.getParentOrganizationId()));
 	editURL.setParameter("mvcPath", "/organization/edit_opening_hours.jsp");
 	editURL.setParameter("primaryKey", String.valueOf(orgLaborId));
 	editURL.setParameter("redirect", currentURL);

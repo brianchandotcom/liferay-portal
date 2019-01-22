@@ -6,14 +6,14 @@
 {template .render}
 	{@param item: ?}
 	{@param? _containerTypes: ?}
-	{@param? _handleContainerOptionChange: any}
+	{@param? _handleContainerTypeOptionChange: any}
 	{@param? _handleColumnSpacingOptionChange: any}
 
 	<div class="floating-toolbar-spacing-panel">
 		<div class="form-group">
 			{call .containerTypeOptions}
 				{param containerTypes: $_containerTypes /}
-				{param handleContainerOptionChange: $_handleContainerOptionChange /}
+				{param handleContainerTypeOptionChange: $_handleContainerTypeOptionChange /}
 				{param item: $item /}
 			{/call}
 		</div>
@@ -64,7 +64,7 @@
 		containerTypeId: string,
 		label: string
 	]>}
-	{@param? handleContainerOptionChange: any}
+	{@param? handleContainerTypeOptionChange: any}
 
 	{if $containerTypes}
 		<label for="floatingToolbarSpacingPanelContainer">
@@ -73,7 +73,7 @@
 
 		<select
 			class="form-control form-control-sm"
-			data-onchange="{$handleContainerOptionChange}"
+			data-onchange="{$handleContainerTypeOptionChange}"
 			id="floatingToolbarSpacingPanelContainer"
 		>
 			{foreach $containerType in $containerTypes}

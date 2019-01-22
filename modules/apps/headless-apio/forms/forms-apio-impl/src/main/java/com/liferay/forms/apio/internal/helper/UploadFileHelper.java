@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Stream;
 
@@ -53,10 +54,7 @@ public class UploadFileHelper {
 		Stream<DDMFormField> ddmFormFieldsStream = ddmFormFields.stream();
 
 		ddmFormFieldsStream.filter(
-			formField -> formField.getType(
-			).equals(
-				"document_library"
-			)
+			formField -> Objects.equals(formField.getType(), "document_library")
 		).map(
 			field -> _findField(field.getName(), ddmFormFieldValues)
 		).forEach(

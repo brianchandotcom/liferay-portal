@@ -1,0 +1,32 @@
+definition {
+	macro waitForManagementBar {
+		AssertVisible(locator1 = "ManagementBar#MANAGEMENT_BAR");
+
+		MetalComponent.waitForMetalComponent(id = '''document.querySelector("nav.management-bar").parentNode.id''');
+	}
+
+	macro waitForMetalComponent {
+		var javaScript = '''
+var metalComponent = Liferay.component(${id});
+
+if (metalComponent !== undefined) {
+	if (metalComponent.wasRendered) {
+		return 'ready';
+	}
+	else {
+		return 'pending';
+	}
+}
+else {
+	return 'pending';
+}
+		''';
+		var metalComponentReady = "";
+
+		while (!("${metalComponentReady}" == "ready") && (maxIterations = "30")) {
+			var metalComponentReady = selenium.getEval("${javaScript}");
+
+			Pause(locator1 = "1000");
+		}
+	}
+}

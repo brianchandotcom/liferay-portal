@@ -30,10 +30,10 @@
 	<td></td>
 	<td></td>
 </tr>
-<!--SECURITY_TEST_PAGE-->
+<!--SECURITY-->
 <tr>
-	<td>SECURITY_TEST_PAGE_POPULATED</td>
-	<td>//body/pre[contains(.,*)]</td>
+	<td>SECURITY_EMPTY_PAGE</td>
+	<td>//body[not(*)]</td>
 	<td></td>
 </tr>
 <tr>

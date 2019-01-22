@@ -155,16 +155,14 @@ out.println(PortalUtil.escapeRedirect("/"));
 	}
 
 	@priority = "5"
-	test ValidateBeanIdentifierUserPermissions {
+	test ValidateCannotOverwriteOSGiServiceIdentifier {
 		property portal.acceptance = "true";
 		var portalURL = PropsUtil.get("portal.url");
-		var url = "${portalURL}/c/portal/json_service?serviceClassName=com.liferay.portal.service.AccountServiceUtil&amp;serviceMethodName=getBeanIdentifier&amp;p_auth=";
+		var url = "${portalURL}/c/portal/json_service?serviceClassName=com.liferay.portal.kernel.service.AccountServiceUtil&amp;serviceMethodName=getOSGiServiceIdentifier&amp;p_auth=";
 
-		Api.gotoPAuthURL();
+		Api.gotoPAuthURL(url = "${url}");
 
-		Pause(locator1 = "1000");
-
-		AssertElementNotPresent(locator1 = "JSONWS#SECURITY_TEST_PAGE_POPULATED");
+		AssertElementPresent(locator1 = "JSONWS#SECURITY_EMPTY_PAGE");
 	}
 
 	@priority = "4"

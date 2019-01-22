@@ -637,8 +637,7 @@ public class PortletBagImpl implements PortletBag {
 		public ServiceRegistration<PermissionPropagator> addingService(
 			ServiceReference
 				<com.liferay.portal.kernel.security.permission.
-					PermissionPropagator>
-						serviceReference) {
+					PermissionPropagator> serviceReference) {
 
 			Registry registry = RegistryUtil.getRegistry();
 
@@ -652,8 +651,7 @@ public class PortletBagImpl implements PortletBag {
 		public void modifiedService(
 			ServiceReference
 				<com.liferay.portal.kernel.security.permission.
-					PermissionPropagator>
-						serviceReference,
+					PermissionPropagator> serviceReference,
 			ServiceRegistration<PermissionPropagator> serviceRegistration) {
 
 			serviceRegistration.setProperties(serviceReference.getProperties());
@@ -663,8 +661,7 @@ public class PortletBagImpl implements PortletBag {
 		public void removedService(
 			ServiceReference
 				<com.liferay.portal.kernel.security.permission.
-					PermissionPropagator>
-						serviceReference,
+					PermissionPropagator> serviceReference,
 			ServiceRegistration<PermissionPropagator> serviceRegistration) {
 
 			serviceRegistration.unregister();

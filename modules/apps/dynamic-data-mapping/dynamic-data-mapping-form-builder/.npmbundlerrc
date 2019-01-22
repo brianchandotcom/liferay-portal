@@ -3,9 +3,10 @@
 		"imports": {
 			"frontend-taglib-clay": {
 				"clay-alert": ">=2.1.12",
-				"clay-management-toolbar": ">=2.1.12",
 				"clay-button": ">=2.1.12",
 				"clay-dropdown": ">=2.1.12",
+				"clay-icon": ">=2.1.12",
+				"clay-management-toolbar": ">=2.1.12",
 				"clay-modal": ">=2.1.12",
 				"clay-navigation-bar": ">=2.1.12"
 			},

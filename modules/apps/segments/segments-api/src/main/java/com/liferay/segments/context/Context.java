@@ -29,16 +29,30 @@ public class Context {
 
 	public static final String BROWSER = "browser";
 
+	public static final String DEVICE_BRAND = "deviceBrand";
+
+	public static final String DEVICE_MODEL = "deviceModel";
+
+	public static final String DEVICE_SCREEN_RESOLUTION_HEIGHT =
+		"deviceScreenResolutionHeight";
+
+	public static final String DEVICE_SCREEN_RESOLUTION_WIDTH =
+		"deviceScreenResolutionWidth";
+
 	public static final String LANGUAGE_ID = "languageId";
+
+	public static final String LOCAL_DATE = "localDate";
+
+	public static final String URL = "url";
 
 	public Serializable get(String key) {
 		return _map.get(key);
 	}
 
-	public void put(String key, String value) {
+	public void put(String key, Serializable value) {
 		_map.put(key, value);
 	}
 
-	private final Map<String, String> _map = new HashMap();
+	private final Map<String, Serializable> _map = new HashMap();
 
 }

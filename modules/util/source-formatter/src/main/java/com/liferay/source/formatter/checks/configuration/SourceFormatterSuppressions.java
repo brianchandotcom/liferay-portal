@@ -16,6 +16,7 @@ package com.liferay.source.formatter.checks.configuration;
 
 import com.liferay.source.formatter.checkstyle.util.AlloyMVCCheckstyleUtil;
 import com.liferay.source.formatter.util.CheckType;
+import com.liferay.source.formatter.util.SourceFormatterUtil;
 
 import com.puppycrawl.tools.checkstyle.api.FilterSet;
 import com.puppycrawl.tools.checkstyle.filters.SuppressElement;
@@ -61,7 +62,8 @@ public class SourceFormatterSuppressions {
 			String suppressionsFileLocation = entry.getKey();
 
 			if (!absolutePath.startsWith(suppressionsFileLocation) &&
-				!absolutePath.contains("source/formatter/dependencies")) {
+				!absolutePath.contains(
+					SourceFormatterUtil.SOURCE_FORMATTER_TEST_PATH)) {
 
 				continue;
 			}

@@ -26,10 +26,8 @@ class TypedInput extends React.Component {
 	constructor(props) {
 		super(props);
 
-		const {value} = props;
-
 		this.state = {
-			decimal: value
+			decimal: props.value
 		};
 	}
 
@@ -46,16 +44,10 @@ class TypedInput extends React.Component {
 	}
 
 	_handleChange = event => {
-		const {onChange} = this.props;
-
-		const value = event.target.value;
-
-		onChange(value);
+		this.props.onChange(event.target.value);
 	}
 
 	_handleDateChange = event => {
-		const {onChange} = this.props;
-
 		const value = event.target.value ||
 			dateFns.format(new Date(), INPUT_DATE_FORMAT);
 
@@ -63,58 +55,48 @@ class TypedInput extends React.Component {
 			.parse(value, INPUT_DATE_FORMAT)
 			.toISOString();
 
-		onChange(iSOStringValue, PROPERTY_TYPES.DATE);
+		this.props.onChange(iSOStringValue, PROPERTY_TYPES.DATE);
 	}
 
 	_handleDecimalBlur = event => {
-		const {onChange} = this.props;
-
 		const value = Number.parseFloat(event.target.value).toFixed(2);
 
 		this.setState(
 			{
 				decimal: value
 			},
-			onChange(value)
+			this.props.onChange(value)
 		);
 	}
 
 	_handleDecimalChange = event => {
-		const value = event.target.value;
-
 		this.setState(
 			{
-				decimal: value
+				decimal: event.target.value
 			}
 		);
 	}
 
 	_handleIntegerChange = event => {
-		const {onChange} = this.props;
 		const value = parseInt(event.target.value, 10);
 
 		if (!isNaN(value)) {
-			onChange(value.toString());
+			this.props.onChange(value.toString());
 		}
 	}
 
-	_renderBooleanType = () => {
-		const {value} = this.props;
-
-		return (
-			<ClaySelect
-				className="criterion-input form-control"
-				data-testid="options-boolean"
-				onChange={this._handleChange}
-				options={BOOLEAN_OPTIONS}
-				selected={value}
-			/>);
-	}
+	_renderBooleanType = () => (
+		<ClaySelect
+			className="criterion-input form-control"
+			data-testid="options-boolean"
+			onChange={this._handleChange}
+			options={BOOLEAN_OPTIONS}
+			selected={this.props.value}
+		/>
+	);
 
 	_renderDateType = () => {
-		const {value} = this.props;
-
-		const date = new Date(value);
+		const date = new Date(this.props.value);
 
 		const domStringDate = dateFns.format(date, INPUT_DATE_FORMAT);
 
@@ -131,34 +113,27 @@ class TypedInput extends React.Component {
 		);
 	}
 
-	_renderDecimalType = () => {
-		const {decimal} = this.state;
+	_renderDecimalType = () => (
+		<input
+			className="criterion-input form-control"
+			data-testid="decimal-number"
+			onBlur={this._handleDecimalBlur}
+			onChange={this._handleDecimalChange}
+			step="0.01"
+			type="number"
+			value={this.state.decimal}
+		/>
+	);
 
-		return (
-			<input
-				className="criterion-input form-control"
-				data-testid="decimal-number"
-				onBlur={this._handleDecimalBlur}
-				onChange={this._handleDecimalChange}
-				step="0.01"
-				type="number"
-				value={decimal}
-			/>
-		);
-	}
-
-	_renderIntegerType = () => {
-		const {value} = this.props;
-
-		return (
-			<input
-				className="criterion-input form-control"
-				data-testid="integer-number"
-				onChange={this._handleIntegerChange}
-				type="number"
-				value={value}
-			/>);
-	}
+	_renderIntegerType = () => (
+		<input
+			className="criterion-input form-control"
+			data-testid="integer-number"
+			onChange={this._handleIntegerChange}
+			type="number"
+			value={this.props.value}
+		/>
+	);
 
 	_renderStringType = () => {
 		const {options, value} = this.props;
@@ -186,9 +161,7 @@ class TypedInput extends React.Component {
 	}
 
 	render() {
-		const {type} = this.props;
-
-		const inputRenderer = this._getInputRenderer(type);
+		const inputRenderer = this._getInputRenderer(this.props.type);
 
 		return inputRenderer();
 	}

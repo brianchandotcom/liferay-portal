@@ -135,6 +135,11 @@ public class FragmentManagementToolbarDisplayContext
 	}
 
 	@Override
+	public String getDefaultEventHandler() {
+		return "FRAGMENT_ENTRIES_MANAGEMENT_TOOLBAR_DEFAULT_EVENT_HANDLER";
+	}
+
+	@Override
 	public List<DropdownItem> getFilterDropdownItems() {
 		return new DropdownItemList() {
 			{

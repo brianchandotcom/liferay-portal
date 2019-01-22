@@ -62,36 +62,36 @@ export const SUPPORTED_CONJUNCTIONS = [
 
 export const SUPPORTED_OPERATORS = [
 	{
-		label: Liferay.Language.get('contains'),
-		name: CONTAINS
-	},
-	{
 		label: Liferay.Language.get('equals'),
 		name: EQ
 	},
 	{
-		label: Liferay.Language.get('greater-than-or-equals'),
-		name: GE
+		label: Liferay.Language.get('not-equals'),
+		name: NOT_EQ
 	},
 	{
 		label: Liferay.Language.get('greater-than'),
 		name: GT
 	},
 	{
-		label: Liferay.Language.get('less-than-or-equals'),
-		name: LE
+		label: Liferay.Language.get('greater-than-or-equals'),
+		name: GE
 	},
 	{
 		label: Liferay.Language.get('less-than'),
 		name: LT
 	},
 	{
-		label: Liferay.Language.get('not-contains'),
-		name: NOT_CONTAINS
+		label: Liferay.Language.get('less-than-or-equals'),
+		name: LE
 	},
 	{
-		label: Liferay.Language.get('not-equals'),
-		name: NOT_EQ
+		label: Liferay.Language.get('contains'),
+		name: CONTAINS
+	},
+	{
+		label: Liferay.Language.get('not-contains'),
+		name: NOT_CONTAINS
 	}
 ];
 

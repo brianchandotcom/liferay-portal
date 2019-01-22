@@ -74,19 +74,18 @@ public class LVEntryLocalizationPersistenceImpl extends BasePersistenceImpl<LVEn
 		".List1";
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION = FINDER_CLASS_NAME_ENTITY +
 		".List2";
-	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_ALL = new FinderPath(LVEntryLocalizationModelImpl.ENTITY_CACHE_ENABLED,
+	private final FinderPath _finderPathWithPaginationFindAll = new FinderPath(LVEntryLocalizationModelImpl.ENTITY_CACHE_ENABLED,
 			LVEntryLocalizationModelImpl.FINDER_CACHE_ENABLED,
 			LVEntryLocalizationImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0]);
-	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_ALL = new FinderPath(LVEntryLocalizationModelImpl.ENTITY_CACHE_ENABLED,
+	private final FinderPath _finderPathWithoutPaginationFindAll = new FinderPath(LVEntryLocalizationModelImpl.ENTITY_CACHE_ENABLED,
 			LVEntryLocalizationModelImpl.FINDER_CACHE_ENABLED,
 			LVEntryLocalizationImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll", new String[0]);
-	public static final FinderPath FINDER_PATH_COUNT_ALL = new FinderPath(LVEntryLocalizationModelImpl.ENTITY_CACHE_ENABLED,
+	private final FinderPath _finderPathCountAll = new FinderPath(LVEntryLocalizationModelImpl.ENTITY_CACHE_ENABLED,
 			LVEntryLocalizationModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll", new String[0]);
-	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_LVENTRYID =
-		new FinderPath(LVEntryLocalizationModelImpl.ENTITY_CACHE_ENABLED,
+	private final FinderPath _finderPathWithPaginationFindByLvEntryId = new FinderPath(LVEntryLocalizationModelImpl.ENTITY_CACHE_ENABLED,
 			LVEntryLocalizationModelImpl.FINDER_CACHE_ENABLED,
 			LVEntryLocalizationImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByLvEntryId",
@@ -96,14 +95,13 @@ public class LVEntryLocalizationPersistenceImpl extends BasePersistenceImpl<LVEn
 			Integer.class.getName(), Integer.class.getName(),
 				OrderByComparator.class.getName()
 			});
-	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_LVENTRYID =
-		new FinderPath(LVEntryLocalizationModelImpl.ENTITY_CACHE_ENABLED,
+	private final FinderPath _finderPathWithoutPaginationFindByLvEntryId = new FinderPath(LVEntryLocalizationModelImpl.ENTITY_CACHE_ENABLED,
 			LVEntryLocalizationModelImpl.FINDER_CACHE_ENABLED,
 			LVEntryLocalizationImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByLvEntryId",
 			new String[] { Long.class.getName() },
 			LVEntryLocalizationModelImpl.LVENTRYID_COLUMN_BITMASK);
-	public static final FinderPath FINDER_PATH_COUNT_BY_LVENTRYID = new FinderPath(LVEntryLocalizationModelImpl.ENTITY_CACHE_ENABLED,
+	private final FinderPath _finderPathCountByLvEntryId = new FinderPath(LVEntryLocalizationModelImpl.ENTITY_CACHE_ENABLED,
 			LVEntryLocalizationModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByLvEntryId",
 			new String[] { Long.class.getName() });
@@ -182,11 +180,11 @@ public class LVEntryLocalizationPersistenceImpl extends BasePersistenceImpl<LVEn
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 				(orderByComparator == null)) {
 			pagination = false;
-			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_LVENTRYID;
+			finderPath = _finderPathWithoutPaginationFindByLvEntryId;
 			finderArgs = new Object[] { lvEntryId };
 		}
 		else {
-			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_LVENTRYID;
+			finderPath = _finderPathWithPaginationFindByLvEntryId;
 			finderArgs = new Object[] { lvEntryId, start, end, orderByComparator };
 		}
 
@@ -550,7 +548,7 @@ public class LVEntryLocalizationPersistenceImpl extends BasePersistenceImpl<LVEn
 	 */
 	@Override
 	public int countByLvEntryId(long lvEntryId) {
-		FinderPath finderPath = FINDER_PATH_COUNT_BY_LVENTRYID;
+		FinderPath finderPath = _finderPathCountByLvEntryId;
 
 		Object[] finderArgs = new Object[] { lvEntryId };
 
@@ -594,14 +592,14 @@ public class LVEntryLocalizationPersistenceImpl extends BasePersistenceImpl<LVEn
 	}
 
 	private static final String _FINDER_COLUMN_LVENTRYID_LVENTRYID_2 = "lvEntryLocalization.lvEntryId = ?";
-	public static final FinderPath FINDER_PATH_FETCH_BY_LVENTRYID_LANGUAGEID = new FinderPath(LVEntryLocalizationModelImpl.ENTITY_CACHE_ENABLED,
+	private final FinderPath _finderPathFetchByLvEntryId_LanguageId = new FinderPath(LVEntryLocalizationModelImpl.ENTITY_CACHE_ENABLED,
 			LVEntryLocalizationModelImpl.FINDER_CACHE_ENABLED,
 			LVEntryLocalizationImpl.class, FINDER_CLASS_NAME_ENTITY,
 			"fetchByLvEntryId_LanguageId",
 			new String[] { Long.class.getName(), String.class.getName() },
 			LVEntryLocalizationModelImpl.LVENTRYID_COLUMN_BITMASK |
 			LVEntryLocalizationModelImpl.LANGUAGEID_COLUMN_BITMASK);
-	public static final FinderPath FINDER_PATH_COUNT_BY_LVENTRYID_LANGUAGEID = new FinderPath(LVEntryLocalizationModelImpl.ENTITY_CACHE_ENABLED,
+	private final FinderPath _finderPathCountByLvEntryId_LanguageId = new FinderPath(LVEntryLocalizationModelImpl.ENTITY_CACHE_ENABLED,
 			LVEntryLocalizationModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"countByLvEntryId_LanguageId",
@@ -675,7 +673,7 @@ public class LVEntryLocalizationPersistenceImpl extends BasePersistenceImpl<LVEn
 		Object result = null;
 
 		if (retrieveFromCache) {
-			result = finderCache.getResult(FINDER_PATH_FETCH_BY_LVENTRYID_LANGUAGEID,
+			result = finderCache.getResult(_finderPathFetchByLvEntryId_LanguageId,
 					finderArgs, this);
 		}
 
@@ -727,7 +725,7 @@ public class LVEntryLocalizationPersistenceImpl extends BasePersistenceImpl<LVEn
 				List<LVEntryLocalization> list = q.list();
 
 				if (list.isEmpty()) {
-					finderCache.putResult(FINDER_PATH_FETCH_BY_LVENTRYID_LANGUAGEID,
+					finderCache.putResult(_finderPathFetchByLvEntryId_LanguageId,
 						finderArgs, list);
 				}
 				else {
@@ -739,7 +737,7 @@ public class LVEntryLocalizationPersistenceImpl extends BasePersistenceImpl<LVEn
 				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(FINDER_PATH_FETCH_BY_LVENTRYID_LANGUAGEID,
+				finderCache.removeResult(_finderPathFetchByLvEntryId_LanguageId,
 					finderArgs);
 
 				throw processException(e);
@@ -784,7 +782,7 @@ public class LVEntryLocalizationPersistenceImpl extends BasePersistenceImpl<LVEn
 	public int countByLvEntryId_LanguageId(long lvEntryId, String languageId) {
 		languageId = Objects.toString(languageId, "");
 
-		FinderPath finderPath = FINDER_PATH_COUNT_BY_LVENTRYID_LANGUAGEID;
+		FinderPath finderPath = _finderPathCountByLvEntryId_LanguageId;
 
 		Object[] finderArgs = new Object[] { lvEntryId, languageId };
 
@@ -847,12 +845,12 @@ public class LVEntryLocalizationPersistenceImpl extends BasePersistenceImpl<LVEn
 		"lvEntryLocalization.languageId = ?";
 	private static final String _FINDER_COLUMN_LVENTRYID_LANGUAGEID_LANGUAGEID_3 =
 		"(lvEntryLocalization.languageId IS NULL OR lvEntryLocalization.languageId = '')";
-	public static final FinderPath FINDER_PATH_FETCH_BY_HEADID = new FinderPath(LVEntryLocalizationModelImpl.ENTITY_CACHE_ENABLED,
+	private final FinderPath _finderPathFetchByHeadId = new FinderPath(LVEntryLocalizationModelImpl.ENTITY_CACHE_ENABLED,
 			LVEntryLocalizationModelImpl.FINDER_CACHE_ENABLED,
 			LVEntryLocalizationImpl.class, FINDER_CLASS_NAME_ENTITY,
 			"fetchByHeadId", new String[] { Long.class.getName() },
 			LVEntryLocalizationModelImpl.HEADID_COLUMN_BITMASK);
-	public static final FinderPath FINDER_PATH_COUNT_BY_HEADID = new FinderPath(LVEntryLocalizationModelImpl.ENTITY_CACHE_ENABLED,
+	private final FinderPath _finderPathCountByHeadId = new FinderPath(LVEntryLocalizationModelImpl.ENTITY_CACHE_ENABLED,
 			LVEntryLocalizationModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByHeadId",
 			new String[] { Long.class.getName() });
@@ -915,7 +913,7 @@ public class LVEntryLocalizationPersistenceImpl extends BasePersistenceImpl<LVEn
 		Object result = null;
 
 		if (retrieveFromCache) {
-			result = finderCache.getResult(FINDER_PATH_FETCH_BY_HEADID,
+			result = finderCache.getResult(_finderPathFetchByHeadId,
 					finderArgs, this);
 		}
 
@@ -950,8 +948,8 @@ public class LVEntryLocalizationPersistenceImpl extends BasePersistenceImpl<LVEn
 				List<LVEntryLocalization> list = q.list();
 
 				if (list.isEmpty()) {
-					finderCache.putResult(FINDER_PATH_FETCH_BY_HEADID,
-						finderArgs, list);
+					finderCache.putResult(_finderPathFetchByHeadId, finderArgs,
+						list);
 				}
 				else {
 					LVEntryLocalization lvEntryLocalization = list.get(0);
@@ -962,7 +960,7 @@ public class LVEntryLocalizationPersistenceImpl extends BasePersistenceImpl<LVEn
 				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(FINDER_PATH_FETCH_BY_HEADID, finderArgs);
+				finderCache.removeResult(_finderPathFetchByHeadId, finderArgs);
 
 				throw processException(e);
 			}
@@ -1001,7 +999,7 @@ public class LVEntryLocalizationPersistenceImpl extends BasePersistenceImpl<LVEn
 	 */
 	@Override
 	public int countByHeadId(long headId) {
-		FinderPath finderPath = FINDER_PATH_COUNT_BY_HEADID;
+		FinderPath finderPath = _finderPathCountByHeadId;
 
 		Object[] finderArgs = new Object[] { headId };
 
@@ -1061,13 +1059,13 @@ public class LVEntryLocalizationPersistenceImpl extends BasePersistenceImpl<LVEn
 			LVEntryLocalizationImpl.class, lvEntryLocalization.getPrimaryKey(),
 			lvEntryLocalization);
 
-		finderCache.putResult(FINDER_PATH_FETCH_BY_LVENTRYID_LANGUAGEID,
+		finderCache.putResult(_finderPathFetchByLvEntryId_LanguageId,
 			new Object[] {
 				lvEntryLocalization.getLvEntryId(),
 				lvEntryLocalization.getLanguageId()
 			}, lvEntryLocalization);
 
-		finderCache.putResult(FINDER_PATH_FETCH_BY_HEADID,
+		finderCache.putResult(_finderPathFetchByHeadId,
 			new Object[] { lvEntryLocalization.getHeadId() },
 			lvEntryLocalization);
 
@@ -1151,16 +1149,16 @@ public class LVEntryLocalizationPersistenceImpl extends BasePersistenceImpl<LVEn
 				lvEntryLocalizationModelImpl.getLanguageId()
 			};
 
-		finderCache.putResult(FINDER_PATH_COUNT_BY_LVENTRYID_LANGUAGEID, args,
+		finderCache.putResult(_finderPathCountByLvEntryId_LanguageId, args,
 			Long.valueOf(1), false);
-		finderCache.putResult(FINDER_PATH_FETCH_BY_LVENTRYID_LANGUAGEID, args,
+		finderCache.putResult(_finderPathFetchByLvEntryId_LanguageId, args,
 			lvEntryLocalizationModelImpl, false);
 
 		args = new Object[] { lvEntryLocalizationModelImpl.getHeadId() };
 
-		finderCache.putResult(FINDER_PATH_COUNT_BY_HEADID, args,
-			Long.valueOf(1), false);
-		finderCache.putResult(FINDER_PATH_FETCH_BY_HEADID, args,
+		finderCache.putResult(_finderPathCountByHeadId, args, Long.valueOf(1),
+			false);
+		finderCache.putResult(_finderPathFetchByHeadId, args,
 			lvEntryLocalizationModelImpl, false);
 	}
 
@@ -1173,22 +1171,22 @@ public class LVEntryLocalizationPersistenceImpl extends BasePersistenceImpl<LVEn
 					lvEntryLocalizationModelImpl.getLanguageId()
 				};
 
-			finderCache.removeResult(FINDER_PATH_COUNT_BY_LVENTRYID_LANGUAGEID,
+			finderCache.removeResult(_finderPathCountByLvEntryId_LanguageId,
 				args);
-			finderCache.removeResult(FINDER_PATH_FETCH_BY_LVENTRYID_LANGUAGEID,
+			finderCache.removeResult(_finderPathFetchByLvEntryId_LanguageId,
 				args);
 		}
 
 		if ((lvEntryLocalizationModelImpl.getColumnBitmask() &
-				FINDER_PATH_FETCH_BY_LVENTRYID_LANGUAGEID.getColumnBitmask()) != 0) {
+				_finderPathFetchByLvEntryId_LanguageId.getColumnBitmask()) != 0) {
 			Object[] args = new Object[] {
 					lvEntryLocalizationModelImpl.getOriginalLvEntryId(),
 					lvEntryLocalizationModelImpl.getOriginalLanguageId()
 				};
 
-			finderCache.removeResult(FINDER_PATH_COUNT_BY_LVENTRYID_LANGUAGEID,
+			finderCache.removeResult(_finderPathCountByLvEntryId_LanguageId,
 				args);
-			finderCache.removeResult(FINDER_PATH_FETCH_BY_LVENTRYID_LANGUAGEID,
+			finderCache.removeResult(_finderPathFetchByLvEntryId_LanguageId,
 				args);
 		}
 
@@ -1197,18 +1195,18 @@ public class LVEntryLocalizationPersistenceImpl extends BasePersistenceImpl<LVEn
 					lvEntryLocalizationModelImpl.getHeadId()
 				};
 
-			finderCache.removeResult(FINDER_PATH_COUNT_BY_HEADID, args);
-			finderCache.removeResult(FINDER_PATH_FETCH_BY_HEADID, args);
+			finderCache.removeResult(_finderPathCountByHeadId, args);
+			finderCache.removeResult(_finderPathFetchByHeadId, args);
 		}
 
 		if ((lvEntryLocalizationModelImpl.getColumnBitmask() &
-				FINDER_PATH_FETCH_BY_HEADID.getColumnBitmask()) != 0) {
+				_finderPathFetchByHeadId.getColumnBitmask()) != 0) {
 			Object[] args = new Object[] {
 					lvEntryLocalizationModelImpl.getOriginalHeadId()
 				};
 
-			finderCache.removeResult(FINDER_PATH_COUNT_BY_HEADID, args);
-			finderCache.removeResult(FINDER_PATH_FETCH_BY_HEADID, args);
+			finderCache.removeResult(_finderPathCountByHeadId, args);
+			finderCache.removeResult(_finderPathFetchByHeadId, args);
 		}
 	}
 
@@ -1367,30 +1365,30 @@ public class LVEntryLocalizationPersistenceImpl extends BasePersistenceImpl<LVEn
 					lvEntryLocalizationModelImpl.getLvEntryId()
 				};
 
-			finderCache.removeResult(FINDER_PATH_COUNT_BY_LVENTRYID, args);
-			finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_LVENTRYID,
+			finderCache.removeResult(_finderPathCountByLvEntryId, args);
+			finderCache.removeResult(_finderPathWithoutPaginationFindByLvEntryId,
 				args);
 
-			finderCache.removeResult(FINDER_PATH_COUNT_ALL, FINDER_ARGS_EMPTY);
-			finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_ALL,
+			finderCache.removeResult(_finderPathCountAll, FINDER_ARGS_EMPTY);
+			finderCache.removeResult(_finderPathWithoutPaginationFindAll,
 				FINDER_ARGS_EMPTY);
 		}
 
 		else {
 			if ((lvEntryLocalizationModelImpl.getColumnBitmask() &
-					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_LVENTRYID.getColumnBitmask()) != 0) {
+					_finderPathWithoutPaginationFindByLvEntryId.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
 						lvEntryLocalizationModelImpl.getOriginalLvEntryId()
 					};
 
-				finderCache.removeResult(FINDER_PATH_COUNT_BY_LVENTRYID, args);
-				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_LVENTRYID,
+				finderCache.removeResult(_finderPathCountByLvEntryId, args);
+				finderCache.removeResult(_finderPathWithoutPaginationFindByLvEntryId,
 					args);
 
 				args = new Object[] { lvEntryLocalizationModelImpl.getLvEntryId() };
 
-				finderCache.removeResult(FINDER_PATH_COUNT_BY_LVENTRYID, args);
-				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_LVENTRYID,
+				finderCache.removeResult(_finderPathCountByLvEntryId, args);
+				finderCache.removeResult(_finderPathWithoutPaginationFindByLvEntryId,
 					args);
 			}
 		}
@@ -1666,11 +1664,11 @@ public class LVEntryLocalizationPersistenceImpl extends BasePersistenceImpl<LVEn
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 				(orderByComparator == null)) {
 			pagination = false;
-			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_ALL;
+			finderPath = _finderPathWithoutPaginationFindAll;
 			finderArgs = FINDER_ARGS_EMPTY;
 		}
 		else {
-			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_ALL;
+			finderPath = _finderPathWithPaginationFindAll;
 			finderArgs = new Object[] { start, end, orderByComparator };
 		}
 
@@ -1759,7 +1757,7 @@ public class LVEntryLocalizationPersistenceImpl extends BasePersistenceImpl<LVEn
 	 */
 	@Override
 	public int countAll() {
-		Long count = (Long)finderCache.getResult(FINDER_PATH_COUNT_ALL,
+		Long count = (Long)finderCache.getResult(_finderPathCountAll,
 				FINDER_ARGS_EMPTY, this);
 
 		if (count == null) {
@@ -1772,12 +1770,11 @@ public class LVEntryLocalizationPersistenceImpl extends BasePersistenceImpl<LVEn
 
 				count = (Long)q.uniqueResult();
 
-				finderCache.putResult(FINDER_PATH_COUNT_ALL, FINDER_ARGS_EMPTY,
+				finderCache.putResult(_finderPathCountAll, FINDER_ARGS_EMPTY,
 					count);
 			}
 			catch (Exception e) {
-				finderCache.removeResult(FINDER_PATH_COUNT_ALL,
-					FINDER_ARGS_EMPTY);
+				finderCache.removeResult(_finderPathCountAll, FINDER_ARGS_EMPTY);
 
 				throw processException(e);
 			}

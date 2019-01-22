@@ -73,19 +73,18 @@ public class ServiceComponentPersistenceImpl extends BasePersistenceImpl<Service
 		".List1";
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION = FINDER_CLASS_NAME_ENTITY +
 		".List2";
-	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_ALL = new FinderPath(ServiceComponentModelImpl.ENTITY_CACHE_ENABLED,
+	private final FinderPath _finderPathWithPaginationFindAll = new FinderPath(ServiceComponentModelImpl.ENTITY_CACHE_ENABLED,
 			ServiceComponentModelImpl.FINDER_CACHE_ENABLED,
 			ServiceComponentImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
 			"findAll", new String[0]);
-	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_ALL = new FinderPath(ServiceComponentModelImpl.ENTITY_CACHE_ENABLED,
+	private final FinderPath _finderPathWithoutPaginationFindAll = new FinderPath(ServiceComponentModelImpl.ENTITY_CACHE_ENABLED,
 			ServiceComponentModelImpl.FINDER_CACHE_ENABLED,
 			ServiceComponentImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll", new String[0]);
-	public static final FinderPath FINDER_PATH_COUNT_ALL = new FinderPath(ServiceComponentModelImpl.ENTITY_CACHE_ENABLED,
+	private final FinderPath _finderPathCountAll = new FinderPath(ServiceComponentModelImpl.ENTITY_CACHE_ENABLED,
 			ServiceComponentModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll", new String[0]);
-	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_BUILDNAMESPACE =
-		new FinderPath(ServiceComponentModelImpl.ENTITY_CACHE_ENABLED,
+	private final FinderPath _finderPathWithPaginationFindByBuildNamespace = new FinderPath(ServiceComponentModelImpl.ENTITY_CACHE_ENABLED,
 			ServiceComponentModelImpl.FINDER_CACHE_ENABLED,
 			ServiceComponentImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
 			"findByBuildNamespace",
@@ -95,15 +94,14 @@ public class ServiceComponentPersistenceImpl extends BasePersistenceImpl<Service
 			Integer.class.getName(), Integer.class.getName(),
 				OrderByComparator.class.getName()
 			});
-	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_BUILDNAMESPACE =
-		new FinderPath(ServiceComponentModelImpl.ENTITY_CACHE_ENABLED,
+	private final FinderPath _finderPathWithoutPaginationFindByBuildNamespace = new FinderPath(ServiceComponentModelImpl.ENTITY_CACHE_ENABLED,
 			ServiceComponentModelImpl.FINDER_CACHE_ENABLED,
 			ServiceComponentImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByBuildNamespace",
 			new String[] { String.class.getName() },
 			ServiceComponentModelImpl.BUILDNAMESPACE_COLUMN_BITMASK |
 			ServiceComponentModelImpl.BUILDNUMBER_COLUMN_BITMASK);
-	public static final FinderPath FINDER_PATH_COUNT_BY_BUILDNAMESPACE = new FinderPath(ServiceComponentModelImpl.ENTITY_CACHE_ENABLED,
+	private final FinderPath _finderPathCountByBuildNamespace = new FinderPath(ServiceComponentModelImpl.ENTITY_CACHE_ENABLED,
 			ServiceComponentModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByBuildNamespace",
 			new String[] { String.class.getName() });
@@ -187,11 +185,11 @@ public class ServiceComponentPersistenceImpl extends BasePersistenceImpl<Service
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 				(orderByComparator == null)) {
 			pagination = false;
-			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_BUILDNAMESPACE;
+			finderPath = _finderPathWithoutPaginationFindByBuildNamespace;
 			finderArgs = new Object[] { buildNamespace };
 		}
 		else {
-			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_BUILDNAMESPACE;
+			finderPath = _finderPathWithPaginationFindByBuildNamespace;
 			finderArgs = new Object[] {
 					buildNamespace,
 					
@@ -586,7 +584,7 @@ public class ServiceComponentPersistenceImpl extends BasePersistenceImpl<Service
 	public int countByBuildNamespace(String buildNamespace) {
 		buildNamespace = Objects.toString(buildNamespace, "");
 
-		FinderPath finderPath = FINDER_PATH_COUNT_BY_BUILDNAMESPACE;
+		FinderPath finderPath = _finderPathCountByBuildNamespace;
 
 		Object[] finderArgs = new Object[] { buildNamespace };
 
@@ -643,14 +641,14 @@ public class ServiceComponentPersistenceImpl extends BasePersistenceImpl<Service
 
 	private static final String _FINDER_COLUMN_BUILDNAMESPACE_BUILDNAMESPACE_2 = "serviceComponent.buildNamespace = ?";
 	private static final String _FINDER_COLUMN_BUILDNAMESPACE_BUILDNAMESPACE_3 = "(serviceComponent.buildNamespace IS NULL OR serviceComponent.buildNamespace = '')";
-	public static final FinderPath FINDER_PATH_FETCH_BY_BNS_BNU = new FinderPath(ServiceComponentModelImpl.ENTITY_CACHE_ENABLED,
+	private final FinderPath _finderPathFetchByBNS_BNU = new FinderPath(ServiceComponentModelImpl.ENTITY_CACHE_ENABLED,
 			ServiceComponentModelImpl.FINDER_CACHE_ENABLED,
 			ServiceComponentImpl.class, FINDER_CLASS_NAME_ENTITY,
 			"fetchByBNS_BNU",
 			new String[] { String.class.getName(), Long.class.getName() },
 			ServiceComponentModelImpl.BUILDNAMESPACE_COLUMN_BITMASK |
 			ServiceComponentModelImpl.BUILDNUMBER_COLUMN_BITMASK);
-	public static final FinderPath FINDER_PATH_COUNT_BY_BNS_BNU = new FinderPath(ServiceComponentModelImpl.ENTITY_CACHE_ENABLED,
+	private final FinderPath _finderPathCountByBNS_BNU = new FinderPath(ServiceComponentModelImpl.ENTITY_CACHE_ENABLED,
 			ServiceComponentModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByBNS_BNU",
 			new String[] { String.class.getName(), Long.class.getName() });
@@ -723,7 +721,7 @@ public class ServiceComponentPersistenceImpl extends BasePersistenceImpl<Service
 		Object result = null;
 
 		if (retrieveFromCache) {
-			result = FinderCacheUtil.getResult(FINDER_PATH_FETCH_BY_BNS_BNU,
+			result = FinderCacheUtil.getResult(_finderPathFetchByBNS_BNU,
 					finderArgs, this);
 		}
 
@@ -775,7 +773,7 @@ public class ServiceComponentPersistenceImpl extends BasePersistenceImpl<Service
 				List<ServiceComponent> list = q.list();
 
 				if (list.isEmpty()) {
-					FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_BNS_BNU,
+					FinderCacheUtil.putResult(_finderPathFetchByBNS_BNU,
 						finderArgs, list);
 				}
 				else {
@@ -787,7 +785,7 @@ public class ServiceComponentPersistenceImpl extends BasePersistenceImpl<Service
 				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_BNS_BNU,
+				FinderCacheUtil.removeResult(_finderPathFetchByBNS_BNU,
 					finderArgs);
 
 				throw processException(e);
@@ -832,7 +830,7 @@ public class ServiceComponentPersistenceImpl extends BasePersistenceImpl<Service
 	public int countByBNS_BNU(String buildNamespace, long buildNumber) {
 		buildNamespace = Objects.toString(buildNamespace, "");
 
-		FinderPath finderPath = FINDER_PATH_COUNT_BY_BNS_BNU;
+		FinderPath finderPath = _finderPathCountByBNS_BNU;
 
 		Object[] finderArgs = new Object[] { buildNamespace, buildNumber };
 
@@ -914,7 +912,7 @@ public class ServiceComponentPersistenceImpl extends BasePersistenceImpl<Service
 			ServiceComponentImpl.class, serviceComponent.getPrimaryKey(),
 			serviceComponent);
 
-		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_BNS_BNU,
+		FinderCacheUtil.putResult(_finderPathFetchByBNS_BNU,
 			new Object[] {
 				serviceComponent.getBuildNamespace(),
 				serviceComponent.getBuildNumber()
@@ -999,9 +997,9 @@ public class ServiceComponentPersistenceImpl extends BasePersistenceImpl<Service
 				serviceComponentModelImpl.getBuildNumber()
 			};
 
-		FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_BNS_BNU, args,
+		FinderCacheUtil.putResult(_finderPathCountByBNS_BNU, args,
 			Long.valueOf(1), false);
-		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_BNS_BNU, args,
+		FinderCacheUtil.putResult(_finderPathFetchByBNS_BNU, args,
 			serviceComponentModelImpl, false);
 	}
 
@@ -1014,19 +1012,19 @@ public class ServiceComponentPersistenceImpl extends BasePersistenceImpl<Service
 					serviceComponentModelImpl.getBuildNumber()
 				};
 
-			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_BNS_BNU, args);
-			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_BNS_BNU, args);
+			FinderCacheUtil.removeResult(_finderPathCountByBNS_BNU, args);
+			FinderCacheUtil.removeResult(_finderPathFetchByBNS_BNU, args);
 		}
 
 		if ((serviceComponentModelImpl.getColumnBitmask() &
-				FINDER_PATH_FETCH_BY_BNS_BNU.getColumnBitmask()) != 0) {
+				_finderPathFetchByBNS_BNU.getColumnBitmask()) != 0) {
 			Object[] args = new Object[] {
 					serviceComponentModelImpl.getOriginalBuildNamespace(),
 					serviceComponentModelImpl.getOriginalBuildNumber()
 				};
 
-			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_BNS_BNU, args);
-			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_BNS_BNU, args);
+			FinderCacheUtil.removeResult(_finderPathCountByBNS_BNU, args);
+			FinderCacheUtil.removeResult(_finderPathFetchByBNS_BNU, args);
 		}
 	}
 
@@ -1183,36 +1181,34 @@ public class ServiceComponentPersistenceImpl extends BasePersistenceImpl<Service
 					serviceComponentModelImpl.getBuildNamespace()
 				};
 
-			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_BUILDNAMESPACE,
-				args);
-			FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_BUILDNAMESPACE,
+			FinderCacheUtil.removeResult(_finderPathCountByBuildNamespace, args);
+			FinderCacheUtil.removeResult(_finderPathWithoutPaginationFindByBuildNamespace,
 				args);
 
-			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_ALL,
-				FINDER_ARGS_EMPTY);
-			FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_ALL,
+			FinderCacheUtil.removeResult(_finderPathCountAll, FINDER_ARGS_EMPTY);
+			FinderCacheUtil.removeResult(_finderPathWithoutPaginationFindAll,
 				FINDER_ARGS_EMPTY);
 		}
 
 		else {
 			if ((serviceComponentModelImpl.getColumnBitmask() &
-					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_BUILDNAMESPACE.getColumnBitmask()) != 0) {
+					_finderPathWithoutPaginationFindByBuildNamespace.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
 						serviceComponentModelImpl.getOriginalBuildNamespace()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_BUILDNAMESPACE,
+				FinderCacheUtil.removeResult(_finderPathCountByBuildNamespace,
 					args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_BUILDNAMESPACE,
+				FinderCacheUtil.removeResult(_finderPathWithoutPaginationFindByBuildNamespace,
 					args);
 
 				args = new Object[] {
 						serviceComponentModelImpl.getBuildNamespace()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_BUILDNAMESPACE,
+				FinderCacheUtil.removeResult(_finderPathCountByBuildNamespace,
 					args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_BUILDNAMESPACE,
+				FinderCacheUtil.removeResult(_finderPathWithoutPaginationFindByBuildNamespace,
 					args);
 			}
 		}
@@ -1345,11 +1341,11 @@ public class ServiceComponentPersistenceImpl extends BasePersistenceImpl<Service
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 				(orderByComparator == null)) {
 			pagination = false;
-			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_ALL;
+			finderPath = _finderPathWithoutPaginationFindAll;
 			finderArgs = FINDER_ARGS_EMPTY;
 		}
 		else {
-			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_ALL;
+			finderPath = _finderPathWithPaginationFindAll;
 			finderArgs = new Object[] { start, end, orderByComparator };
 		}
 
@@ -1438,7 +1434,7 @@ public class ServiceComponentPersistenceImpl extends BasePersistenceImpl<Service
 	 */
 	@Override
 	public int countAll() {
-		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_ALL,
+		Long count = (Long)FinderCacheUtil.getResult(_finderPathCountAll,
 				FINDER_ARGS_EMPTY, this);
 
 		if (count == null) {
@@ -1451,11 +1447,11 @@ public class ServiceComponentPersistenceImpl extends BasePersistenceImpl<Service
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_ALL,
+				FinderCacheUtil.putResult(_finderPathCountAll,
 					FINDER_ARGS_EMPTY, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_ALL,
+				FinderCacheUtil.removeResult(_finderPathCountAll,
 					FINDER_ARGS_EMPTY);
 
 				throw processException(e);

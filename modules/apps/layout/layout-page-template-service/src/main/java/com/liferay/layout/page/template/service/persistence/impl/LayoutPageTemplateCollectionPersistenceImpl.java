@@ -85,19 +85,19 @@ public class LayoutPageTemplateCollectionPersistenceImpl
 		".List1";
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION = FINDER_CLASS_NAME_ENTITY +
 		".List2";
-	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_ALL = new FinderPath(LayoutPageTemplateCollectionModelImpl.ENTITY_CACHE_ENABLED,
+	private final FinderPath _finderPathWithPaginationFindAll = new FinderPath(LayoutPageTemplateCollectionModelImpl.ENTITY_CACHE_ENABLED,
 			LayoutPageTemplateCollectionModelImpl.FINDER_CACHE_ENABLED,
 			LayoutPageTemplateCollectionImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0]);
-	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_ALL = new FinderPath(LayoutPageTemplateCollectionModelImpl.ENTITY_CACHE_ENABLED,
+	private final FinderPath _finderPathWithoutPaginationFindAll = new FinderPath(LayoutPageTemplateCollectionModelImpl.ENTITY_CACHE_ENABLED,
 			LayoutPageTemplateCollectionModelImpl.FINDER_CACHE_ENABLED,
 			LayoutPageTemplateCollectionImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll", new String[0]);
-	public static final FinderPath FINDER_PATH_COUNT_ALL = new FinderPath(LayoutPageTemplateCollectionModelImpl.ENTITY_CACHE_ENABLED,
+	private final FinderPath _finderPathCountAll = new FinderPath(LayoutPageTemplateCollectionModelImpl.ENTITY_CACHE_ENABLED,
 			LayoutPageTemplateCollectionModelImpl.FINDER_CACHE_ENABLED,
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
 			new String[0]);
-	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_UUID = new FinderPath(LayoutPageTemplateCollectionModelImpl.ENTITY_CACHE_ENABLED,
+	private final FinderPath _finderPathWithPaginationFindByUuid = new FinderPath(LayoutPageTemplateCollectionModelImpl.ENTITY_CACHE_ENABLED,
 			LayoutPageTemplateCollectionModelImpl.FINDER_CACHE_ENABLED,
 			LayoutPageTemplateCollectionImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
@@ -107,14 +107,14 @@ public class LayoutPageTemplateCollectionPersistenceImpl
 			Integer.class.getName(), Integer.class.getName(),
 				OrderByComparator.class.getName()
 			});
-	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID = new FinderPath(LayoutPageTemplateCollectionModelImpl.ENTITY_CACHE_ENABLED,
+	private final FinderPath _finderPathWithoutPaginationFindByUuid = new FinderPath(LayoutPageTemplateCollectionModelImpl.ENTITY_CACHE_ENABLED,
 			LayoutPageTemplateCollectionModelImpl.FINDER_CACHE_ENABLED,
 			LayoutPageTemplateCollectionImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
 			new String[] { String.class.getName() },
 			LayoutPageTemplateCollectionModelImpl.UUID_COLUMN_BITMASK |
 			LayoutPageTemplateCollectionModelImpl.NAME_COLUMN_BITMASK);
-	public static final FinderPath FINDER_PATH_COUNT_BY_UUID = new FinderPath(LayoutPageTemplateCollectionModelImpl.ENTITY_CACHE_ENABLED,
+	private final FinderPath _finderPathCountByUuid = new FinderPath(LayoutPageTemplateCollectionModelImpl.ENTITY_CACHE_ENABLED,
 			LayoutPageTemplateCollectionModelImpl.FINDER_CACHE_ENABLED,
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"countByUuid", new String[] { String.class.getName() });
@@ -196,11 +196,11 @@ public class LayoutPageTemplateCollectionPersistenceImpl
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 				(orderByComparator == null)) {
 			pagination = false;
-			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID;
+			finderPath = _finderPathWithoutPaginationFindByUuid;
 			finderArgs = new Object[] { uuid };
 		}
 		else {
-			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_UUID;
+			finderPath = _finderPathWithPaginationFindByUuid;
 			finderArgs = new Object[] { uuid, start, end, orderByComparator };
 		}
 
@@ -591,7 +591,7 @@ public class LayoutPageTemplateCollectionPersistenceImpl
 	public int countByUuid(String uuid) {
 		uuid = Objects.toString(uuid, "");
 
-		FinderPath finderPath = FINDER_PATH_COUNT_BY_UUID;
+		FinderPath finderPath = _finderPathCountByUuid;
 
 		Object[] finderArgs = new Object[] { uuid };
 
@@ -647,14 +647,14 @@ public class LayoutPageTemplateCollectionPersistenceImpl
 
 	private static final String _FINDER_COLUMN_UUID_UUID_2 = "layoutPageTemplateCollection.uuid = ?";
 	private static final String _FINDER_COLUMN_UUID_UUID_3 = "(layoutPageTemplateCollection.uuid IS NULL OR layoutPageTemplateCollection.uuid = '')";
-	public static final FinderPath FINDER_PATH_FETCH_BY_UUID_G = new FinderPath(LayoutPageTemplateCollectionModelImpl.ENTITY_CACHE_ENABLED,
+	private final FinderPath _finderPathFetchByUUID_G = new FinderPath(LayoutPageTemplateCollectionModelImpl.ENTITY_CACHE_ENABLED,
 			LayoutPageTemplateCollectionModelImpl.FINDER_CACHE_ENABLED,
 			LayoutPageTemplateCollectionImpl.class, FINDER_CLASS_NAME_ENTITY,
 			"fetchByUUID_G",
 			new String[] { String.class.getName(), Long.class.getName() },
 			LayoutPageTemplateCollectionModelImpl.UUID_COLUMN_BITMASK |
 			LayoutPageTemplateCollectionModelImpl.GROUPID_COLUMN_BITMASK);
-	public static final FinderPath FINDER_PATH_COUNT_BY_UUID_G = new FinderPath(LayoutPageTemplateCollectionModelImpl.ENTITY_CACHE_ENABLED,
+	private final FinderPath _finderPathCountByUUID_G = new FinderPath(LayoutPageTemplateCollectionModelImpl.ENTITY_CACHE_ENABLED,
 			LayoutPageTemplateCollectionModelImpl.FINDER_CACHE_ENABLED,
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"countByUUID_G",
@@ -727,7 +727,7 @@ public class LayoutPageTemplateCollectionPersistenceImpl
 		Object result = null;
 
 		if (retrieveFromCache) {
-			result = finderCache.getResult(FINDER_PATH_FETCH_BY_UUID_G,
+			result = finderCache.getResult(_finderPathFetchByUUID_G,
 					finderArgs, this);
 		}
 
@@ -778,8 +778,8 @@ public class LayoutPageTemplateCollectionPersistenceImpl
 				List<LayoutPageTemplateCollection> list = q.list();
 
 				if (list.isEmpty()) {
-					finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G,
-						finderArgs, list);
+					finderCache.putResult(_finderPathFetchByUUID_G, finderArgs,
+						list);
 				}
 				else {
 					LayoutPageTemplateCollection layoutPageTemplateCollection = list.get(0);
@@ -790,7 +790,7 @@ public class LayoutPageTemplateCollectionPersistenceImpl
 				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(FINDER_PATH_FETCH_BY_UUID_G, finderArgs);
+				finderCache.removeResult(_finderPathFetchByUUID_G, finderArgs);
 
 				throw processException(e);
 			}
@@ -834,7 +834,7 @@ public class LayoutPageTemplateCollectionPersistenceImpl
 	public int countByUUID_G(String uuid, long groupId) {
 		uuid = Objects.toString(uuid, "");
 
-		FinderPath finderPath = FINDER_PATH_COUNT_BY_UUID_G;
+		FinderPath finderPath = _finderPathCountByUUID_G;
 
 		Object[] finderArgs = new Object[] { uuid, groupId };
 
@@ -895,7 +895,7 @@ public class LayoutPageTemplateCollectionPersistenceImpl
 	private static final String _FINDER_COLUMN_UUID_G_UUID_2 = "layoutPageTemplateCollection.uuid = ? AND ";
 	private static final String _FINDER_COLUMN_UUID_G_UUID_3 = "(layoutPageTemplateCollection.uuid IS NULL OR layoutPageTemplateCollection.uuid = '') AND ";
 	private static final String _FINDER_COLUMN_UUID_G_GROUPID_2 = "layoutPageTemplateCollection.groupId = ?";
-	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_UUID_C = new FinderPath(LayoutPageTemplateCollectionModelImpl.ENTITY_CACHE_ENABLED,
+	private final FinderPath _finderPathWithPaginationFindByUuid_C = new FinderPath(LayoutPageTemplateCollectionModelImpl.ENTITY_CACHE_ENABLED,
 			LayoutPageTemplateCollectionModelImpl.FINDER_CACHE_ENABLED,
 			LayoutPageTemplateCollectionImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
@@ -905,8 +905,7 @@ public class LayoutPageTemplateCollectionPersistenceImpl
 			Integer.class.getName(), Integer.class.getName(),
 				OrderByComparator.class.getName()
 			});
-	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID_C =
-		new FinderPath(LayoutPageTemplateCollectionModelImpl.ENTITY_CACHE_ENABLED,
+	private final FinderPath _finderPathWithoutPaginationFindByUuid_C = new FinderPath(LayoutPageTemplateCollectionModelImpl.ENTITY_CACHE_ENABLED,
 			LayoutPageTemplateCollectionModelImpl.FINDER_CACHE_ENABLED,
 			LayoutPageTemplateCollectionImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
@@ -914,7 +913,7 @@ public class LayoutPageTemplateCollectionPersistenceImpl
 			LayoutPageTemplateCollectionModelImpl.UUID_COLUMN_BITMASK |
 			LayoutPageTemplateCollectionModelImpl.COMPANYID_COLUMN_BITMASK |
 			LayoutPageTemplateCollectionModelImpl.NAME_COLUMN_BITMASK);
-	public static final FinderPath FINDER_PATH_COUNT_BY_UUID_C = new FinderPath(LayoutPageTemplateCollectionModelImpl.ENTITY_CACHE_ENABLED,
+	private final FinderPath _finderPathCountByUuid_C = new FinderPath(LayoutPageTemplateCollectionModelImpl.ENTITY_CACHE_ENABLED,
 			LayoutPageTemplateCollectionModelImpl.FINDER_CACHE_ENABLED,
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"countByUuid_C",
@@ -1003,11 +1002,11 @@ public class LayoutPageTemplateCollectionPersistenceImpl
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 				(orderByComparator == null)) {
 			pagination = false;
-			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID_C;
+			finderPath = _finderPathWithoutPaginationFindByUuid_C;
 			finderArgs = new Object[] { uuid, companyId };
 		}
 		else {
-			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_UUID_C;
+			finderPath = _finderPathWithPaginationFindByUuid_C;
 			finderArgs = new Object[] {
 					uuid, companyId,
 					
@@ -1431,7 +1430,7 @@ public class LayoutPageTemplateCollectionPersistenceImpl
 	public int countByUuid_C(String uuid, long companyId) {
 		uuid = Objects.toString(uuid, "");
 
-		FinderPath finderPath = FINDER_PATH_COUNT_BY_UUID_C;
+		FinderPath finderPath = _finderPathCountByUuid_C;
 
 		Object[] finderArgs = new Object[] { uuid, companyId };
 
@@ -1492,7 +1491,7 @@ public class LayoutPageTemplateCollectionPersistenceImpl
 	private static final String _FINDER_COLUMN_UUID_C_UUID_2 = "layoutPageTemplateCollection.uuid = ? AND ";
 	private static final String _FINDER_COLUMN_UUID_C_UUID_3 = "(layoutPageTemplateCollection.uuid IS NULL OR layoutPageTemplateCollection.uuid = '') AND ";
 	private static final String _FINDER_COLUMN_UUID_C_COMPANYID_2 = "layoutPageTemplateCollection.companyId = ?";
-	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_GROUPID = new FinderPath(LayoutPageTemplateCollectionModelImpl.ENTITY_CACHE_ENABLED,
+	private final FinderPath _finderPathWithPaginationFindByGroupId = new FinderPath(LayoutPageTemplateCollectionModelImpl.ENTITY_CACHE_ENABLED,
 			LayoutPageTemplateCollectionModelImpl.FINDER_CACHE_ENABLED,
 			LayoutPageTemplateCollectionImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByGroupId",
@@ -1502,15 +1501,14 @@ public class LayoutPageTemplateCollectionPersistenceImpl
 			Integer.class.getName(), Integer.class.getName(),
 				OrderByComparator.class.getName()
 			});
-	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID =
-		new FinderPath(LayoutPageTemplateCollectionModelImpl.ENTITY_CACHE_ENABLED,
+	private final FinderPath _finderPathWithoutPaginationFindByGroupId = new FinderPath(LayoutPageTemplateCollectionModelImpl.ENTITY_CACHE_ENABLED,
 			LayoutPageTemplateCollectionModelImpl.FINDER_CACHE_ENABLED,
 			LayoutPageTemplateCollectionImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByGroupId",
 			new String[] { Long.class.getName() },
 			LayoutPageTemplateCollectionModelImpl.GROUPID_COLUMN_BITMASK |
 			LayoutPageTemplateCollectionModelImpl.NAME_COLUMN_BITMASK);
-	public static final FinderPath FINDER_PATH_COUNT_BY_GROUPID = new FinderPath(LayoutPageTemplateCollectionModelImpl.ENTITY_CACHE_ENABLED,
+	private final FinderPath _finderPathCountByGroupId = new FinderPath(LayoutPageTemplateCollectionModelImpl.ENTITY_CACHE_ENABLED,
 			LayoutPageTemplateCollectionModelImpl.FINDER_CACHE_ENABLED,
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"countByGroupId", new String[] { Long.class.getName() });
@@ -1590,11 +1588,11 @@ public class LayoutPageTemplateCollectionPersistenceImpl
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 				(orderByComparator == null)) {
 			pagination = false;
-			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID;
+			finderPath = _finderPathWithoutPaginationFindByGroupId;
 			finderArgs = new Object[] { groupId };
 		}
 		else {
-			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_GROUPID;
+			finderPath = _finderPathWithPaginationFindByGroupId;
 			finderArgs = new Object[] { groupId, start, end, orderByComparator };
 		}
 
@@ -2283,7 +2281,7 @@ public class LayoutPageTemplateCollectionPersistenceImpl
 	 */
 	@Override
 	public int countByGroupId(long groupId) {
-		FinderPath finderPath = FINDER_PATH_COUNT_BY_GROUPID;
+		FinderPath finderPath = _finderPathCountByGroupId;
 
 		Object[] finderArgs = new Object[] { groupId };
 
@@ -2375,14 +2373,14 @@ public class LayoutPageTemplateCollectionPersistenceImpl
 	}
 
 	private static final String _FINDER_COLUMN_GROUPID_GROUPID_2 = "layoutPageTemplateCollection.groupId = ?";
-	public static final FinderPath FINDER_PATH_FETCH_BY_G_N = new FinderPath(LayoutPageTemplateCollectionModelImpl.ENTITY_CACHE_ENABLED,
+	private final FinderPath _finderPathFetchByG_N = new FinderPath(LayoutPageTemplateCollectionModelImpl.ENTITY_CACHE_ENABLED,
 			LayoutPageTemplateCollectionModelImpl.FINDER_CACHE_ENABLED,
 			LayoutPageTemplateCollectionImpl.class, FINDER_CLASS_NAME_ENTITY,
 			"fetchByG_N",
 			new String[] { Long.class.getName(), String.class.getName() },
 			LayoutPageTemplateCollectionModelImpl.GROUPID_COLUMN_BITMASK |
 			LayoutPageTemplateCollectionModelImpl.NAME_COLUMN_BITMASK);
-	public static final FinderPath FINDER_PATH_COUNT_BY_G_N = new FinderPath(LayoutPageTemplateCollectionModelImpl.ENTITY_CACHE_ENABLED,
+	private final FinderPath _finderPathCountByG_N = new FinderPath(LayoutPageTemplateCollectionModelImpl.ENTITY_CACHE_ENABLED,
 			LayoutPageTemplateCollectionModelImpl.FINDER_CACHE_ENABLED,
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"countByG_N",
@@ -2455,8 +2453,8 @@ public class LayoutPageTemplateCollectionPersistenceImpl
 		Object result = null;
 
 		if (retrieveFromCache) {
-			result = finderCache.getResult(FINDER_PATH_FETCH_BY_G_N,
-					finderArgs, this);
+			result = finderCache.getResult(_finderPathFetchByG_N, finderArgs,
+					this);
 		}
 
 		if (result instanceof LayoutPageTemplateCollection) {
@@ -2506,7 +2504,7 @@ public class LayoutPageTemplateCollectionPersistenceImpl
 				List<LayoutPageTemplateCollection> list = q.list();
 
 				if (list.isEmpty()) {
-					finderCache.putResult(FINDER_PATH_FETCH_BY_G_N, finderArgs,
+					finderCache.putResult(_finderPathFetchByG_N, finderArgs,
 						list);
 				}
 				else {
@@ -2518,7 +2516,7 @@ public class LayoutPageTemplateCollectionPersistenceImpl
 				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(FINDER_PATH_FETCH_BY_G_N, finderArgs);
+				finderCache.removeResult(_finderPathFetchByG_N, finderArgs);
 
 				throw processException(e);
 			}
@@ -2562,7 +2560,7 @@ public class LayoutPageTemplateCollectionPersistenceImpl
 	public int countByG_N(long groupId, String name) {
 		name = Objects.toString(name, "");
 
-		FinderPath finderPath = FINDER_PATH_COUNT_BY_G_N;
+		FinderPath finderPath = _finderPathCountByG_N;
 
 		Object[] finderArgs = new Object[] { groupId, name };
 
@@ -2623,7 +2621,7 @@ public class LayoutPageTemplateCollectionPersistenceImpl
 	private static final String _FINDER_COLUMN_G_N_GROUPID_2 = "layoutPageTemplateCollection.groupId = ? AND ";
 	private static final String _FINDER_COLUMN_G_N_NAME_2 = "layoutPageTemplateCollection.name = ?";
 	private static final String _FINDER_COLUMN_G_N_NAME_3 = "(layoutPageTemplateCollection.name IS NULL OR layoutPageTemplateCollection.name = '')";
-	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_G_LIKEN = new FinderPath(LayoutPageTemplateCollectionModelImpl.ENTITY_CACHE_ENABLED,
+	private final FinderPath _finderPathWithPaginationFindByG_LikeN = new FinderPath(LayoutPageTemplateCollectionModelImpl.ENTITY_CACHE_ENABLED,
 			LayoutPageTemplateCollectionModelImpl.FINDER_CACHE_ENABLED,
 			LayoutPageTemplateCollectionImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_LikeN",
@@ -2633,7 +2631,7 @@ public class LayoutPageTemplateCollectionPersistenceImpl
 			Integer.class.getName(), Integer.class.getName(),
 				OrderByComparator.class.getName()
 			});
-	public static final FinderPath FINDER_PATH_WITH_PAGINATION_COUNT_BY_G_LIKEN = new FinderPath(LayoutPageTemplateCollectionModelImpl.ENTITY_CACHE_ENABLED,
+	private final FinderPath _finderPathWithPaginationCountByG_LikeN = new FinderPath(LayoutPageTemplateCollectionModelImpl.ENTITY_CACHE_ENABLED,
 			LayoutPageTemplateCollectionModelImpl.FINDER_CACHE_ENABLED,
 			Long.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
 			"countByG_LikeN",
@@ -2719,7 +2717,7 @@ public class LayoutPageTemplateCollectionPersistenceImpl
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
-		finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_G_LIKEN;
+		finderPath = _finderPathWithPaginationFindByG_LikeN;
 		finderArgs = new Object[] { groupId, name, start, end, orderByComparator };
 
 		List<LayoutPageTemplateCollection> list = null;
@@ -3500,7 +3498,7 @@ public class LayoutPageTemplateCollectionPersistenceImpl
 	public int countByG_LikeN(long groupId, String name) {
 		name = Objects.toString(name, "");
 
-		FinderPath finderPath = FINDER_PATH_WITH_PAGINATION_COUNT_BY_G_LIKEN;
+		FinderPath finderPath = _finderPathWithPaginationCountByG_LikeN;
 
 		Object[] finderArgs = new Object[] { groupId, name };
 
@@ -3649,13 +3647,13 @@ public class LayoutPageTemplateCollectionPersistenceImpl
 			layoutPageTemplateCollection.getPrimaryKey(),
 			layoutPageTemplateCollection);
 
-		finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G,
+		finderCache.putResult(_finderPathFetchByUUID_G,
 			new Object[] {
 				layoutPageTemplateCollection.getUuid(),
 				layoutPageTemplateCollection.getGroupId()
 			}, layoutPageTemplateCollection);
 
-		finderCache.putResult(FINDER_PATH_FETCH_BY_G_N,
+		finderCache.putResult(_finderPathFetchByG_N,
 			new Object[] {
 				layoutPageTemplateCollection.getGroupId(),
 				layoutPageTemplateCollection.getName()
@@ -3745,9 +3743,9 @@ public class LayoutPageTemplateCollectionPersistenceImpl
 				layoutPageTemplateCollectionModelImpl.getGroupId()
 			};
 
-		finderCache.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
-			Long.valueOf(1), false);
-		finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G, args,
+		finderCache.putResult(_finderPathCountByUUID_G, args, Long.valueOf(1),
+			false);
+		finderCache.putResult(_finderPathFetchByUUID_G, args,
 			layoutPageTemplateCollectionModelImpl, false);
 
 		args = new Object[] {
@@ -3755,9 +3753,9 @@ public class LayoutPageTemplateCollectionPersistenceImpl
 				layoutPageTemplateCollectionModelImpl.getName()
 			};
 
-		finderCache.putResult(FINDER_PATH_COUNT_BY_G_N, args, Long.valueOf(1),
+		finderCache.putResult(_finderPathCountByG_N, args, Long.valueOf(1),
 			false);
-		finderCache.putResult(FINDER_PATH_FETCH_BY_G_N, args,
+		finderCache.putResult(_finderPathFetchByG_N, args,
 			layoutPageTemplateCollectionModelImpl, false);
 	}
 
@@ -3770,19 +3768,19 @@ public class LayoutPageTemplateCollectionPersistenceImpl
 					layoutPageTemplateCollectionModelImpl.getGroupId()
 				};
 
-			finderCache.removeResult(FINDER_PATH_COUNT_BY_UUID_G, args);
-			finderCache.removeResult(FINDER_PATH_FETCH_BY_UUID_G, args);
+			finderCache.removeResult(_finderPathCountByUUID_G, args);
+			finderCache.removeResult(_finderPathFetchByUUID_G, args);
 		}
 
 		if ((layoutPageTemplateCollectionModelImpl.getColumnBitmask() &
-				FINDER_PATH_FETCH_BY_UUID_G.getColumnBitmask()) != 0) {
+				_finderPathFetchByUUID_G.getColumnBitmask()) != 0) {
 			Object[] args = new Object[] {
 					layoutPageTemplateCollectionModelImpl.getOriginalUuid(),
 					layoutPageTemplateCollectionModelImpl.getOriginalGroupId()
 				};
 
-			finderCache.removeResult(FINDER_PATH_COUNT_BY_UUID_G, args);
-			finderCache.removeResult(FINDER_PATH_FETCH_BY_UUID_G, args);
+			finderCache.removeResult(_finderPathCountByUUID_G, args);
+			finderCache.removeResult(_finderPathFetchByUUID_G, args);
 		}
 
 		if (clearCurrent) {
@@ -3791,19 +3789,19 @@ public class LayoutPageTemplateCollectionPersistenceImpl
 					layoutPageTemplateCollectionModelImpl.getName()
 				};
 
-			finderCache.removeResult(FINDER_PATH_COUNT_BY_G_N, args);
-			finderCache.removeResult(FINDER_PATH_FETCH_BY_G_N, args);
+			finderCache.removeResult(_finderPathCountByG_N, args);
+			finderCache.removeResult(_finderPathFetchByG_N, args);
 		}
 
 		if ((layoutPageTemplateCollectionModelImpl.getColumnBitmask() &
-				FINDER_PATH_FETCH_BY_G_N.getColumnBitmask()) != 0) {
+				_finderPathFetchByG_N.getColumnBitmask()) != 0) {
 			Object[] args = new Object[] {
 					layoutPageTemplateCollectionModelImpl.getOriginalGroupId(),
 					layoutPageTemplateCollectionModelImpl.getOriginalName()
 				};
 
-			finderCache.removeResult(FINDER_PATH_COUNT_BY_G_N, args);
-			finderCache.removeResult(FINDER_PATH_FETCH_BY_G_N, args);
+			finderCache.removeResult(_finderPathCountByG_N, args);
+			finderCache.removeResult(_finderPathFetchByG_N, args);
 		}
 	}
 
@@ -4001,8 +3999,8 @@ public class LayoutPageTemplateCollectionPersistenceImpl
 					layoutPageTemplateCollectionModelImpl.getUuid()
 				};
 
-			finderCache.removeResult(FINDER_PATH_COUNT_BY_UUID, args);
-			finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID,
+			finderCache.removeResult(_finderPathCountByUuid, args);
+			finderCache.removeResult(_finderPathWithoutPaginationFindByUuid,
 				args);
 
 			args = new Object[] {
@@ -4010,52 +4008,52 @@ public class LayoutPageTemplateCollectionPersistenceImpl
 					layoutPageTemplateCollectionModelImpl.getCompanyId()
 				};
 
-			finderCache.removeResult(FINDER_PATH_COUNT_BY_UUID_C, args);
-			finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID_C,
+			finderCache.removeResult(_finderPathCountByUuid_C, args);
+			finderCache.removeResult(_finderPathWithoutPaginationFindByUuid_C,
 				args);
 
 			args = new Object[] {
 					layoutPageTemplateCollectionModelImpl.getGroupId()
 				};
 
-			finderCache.removeResult(FINDER_PATH_COUNT_BY_GROUPID, args);
-			finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID,
+			finderCache.removeResult(_finderPathCountByGroupId, args);
+			finderCache.removeResult(_finderPathWithoutPaginationFindByGroupId,
 				args);
 
-			finderCache.removeResult(FINDER_PATH_COUNT_ALL, FINDER_ARGS_EMPTY);
-			finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_ALL,
+			finderCache.removeResult(_finderPathCountAll, FINDER_ARGS_EMPTY);
+			finderCache.removeResult(_finderPathWithoutPaginationFindAll,
 				FINDER_ARGS_EMPTY);
 		}
 
 		else {
 			if ((layoutPageTemplateCollectionModelImpl.getColumnBitmask() &
-					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID.getColumnBitmask()) != 0) {
+					_finderPathWithoutPaginationFindByUuid.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
 						layoutPageTemplateCollectionModelImpl.getOriginalUuid()
 					};
 
-				finderCache.removeResult(FINDER_PATH_COUNT_BY_UUID, args);
-				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID,
+				finderCache.removeResult(_finderPathCountByUuid, args);
+				finderCache.removeResult(_finderPathWithoutPaginationFindByUuid,
 					args);
 
 				args = new Object[] {
 						layoutPageTemplateCollectionModelImpl.getUuid()
 					};
 
-				finderCache.removeResult(FINDER_PATH_COUNT_BY_UUID, args);
-				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID,
+				finderCache.removeResult(_finderPathCountByUuid, args);
+				finderCache.removeResult(_finderPathWithoutPaginationFindByUuid,
 					args);
 			}
 
 			if ((layoutPageTemplateCollectionModelImpl.getColumnBitmask() &
-					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID_C.getColumnBitmask()) != 0) {
+					_finderPathWithoutPaginationFindByUuid_C.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
 						layoutPageTemplateCollectionModelImpl.getOriginalUuid(),
 						layoutPageTemplateCollectionModelImpl.getOriginalCompanyId()
 					};
 
-				finderCache.removeResult(FINDER_PATH_COUNT_BY_UUID_C, args);
-				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID_C,
+				finderCache.removeResult(_finderPathCountByUuid_C, args);
+				finderCache.removeResult(_finderPathWithoutPaginationFindByUuid_C,
 					args);
 
 				args = new Object[] {
@@ -4063,27 +4061,27 @@ public class LayoutPageTemplateCollectionPersistenceImpl
 						layoutPageTemplateCollectionModelImpl.getCompanyId()
 					};
 
-				finderCache.removeResult(FINDER_PATH_COUNT_BY_UUID_C, args);
-				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID_C,
+				finderCache.removeResult(_finderPathCountByUuid_C, args);
+				finderCache.removeResult(_finderPathWithoutPaginationFindByUuid_C,
 					args);
 			}
 
 			if ((layoutPageTemplateCollectionModelImpl.getColumnBitmask() &
-					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID.getColumnBitmask()) != 0) {
+					_finderPathWithoutPaginationFindByGroupId.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
 						layoutPageTemplateCollectionModelImpl.getOriginalGroupId()
 					};
 
-				finderCache.removeResult(FINDER_PATH_COUNT_BY_GROUPID, args);
-				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID,
+				finderCache.removeResult(_finderPathCountByGroupId, args);
+				finderCache.removeResult(_finderPathWithoutPaginationFindByGroupId,
 					args);
 
 				args = new Object[] {
 						layoutPageTemplateCollectionModelImpl.getGroupId()
 					};
 
-				finderCache.removeResult(FINDER_PATH_COUNT_BY_GROUPID, args);
-				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID,
+				finderCache.removeResult(_finderPathCountByGroupId, args);
+				finderCache.removeResult(_finderPathWithoutPaginationFindByGroupId,
 					args);
 			}
 		}
@@ -4219,11 +4217,11 @@ public class LayoutPageTemplateCollectionPersistenceImpl
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 				(orderByComparator == null)) {
 			pagination = false;
-			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_ALL;
+			finderPath = _finderPathWithoutPaginationFindAll;
 			finderArgs = FINDER_ARGS_EMPTY;
 		}
 		else {
-			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_ALL;
+			finderPath = _finderPathWithPaginationFindAll;
 			finderArgs = new Object[] { start, end, orderByComparator };
 		}
 
@@ -4312,7 +4310,7 @@ public class LayoutPageTemplateCollectionPersistenceImpl
 	 */
 	@Override
 	public int countAll() {
-		Long count = (Long)finderCache.getResult(FINDER_PATH_COUNT_ALL,
+		Long count = (Long)finderCache.getResult(_finderPathCountAll,
 				FINDER_ARGS_EMPTY, this);
 
 		if (count == null) {
@@ -4325,12 +4323,11 @@ public class LayoutPageTemplateCollectionPersistenceImpl
 
 				count = (Long)q.uniqueResult();
 
-				finderCache.putResult(FINDER_PATH_COUNT_ALL, FINDER_ARGS_EMPTY,
+				finderCache.putResult(_finderPathCountAll, FINDER_ARGS_EMPTY,
 					count);
 			}
 			catch (Exception e) {
-				finderCache.removeResult(FINDER_PATH_COUNT_ALL,
-					FINDER_ARGS_EMPTY);
+				finderCache.removeResult(_finderPathCountAll, FINDER_ARGS_EMPTY);
 
 				throw processException(e);
 			}

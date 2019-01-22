@@ -77,25 +77,25 @@ public class WeDeployAuthAppPersistenceImpl extends BasePersistenceImpl<WeDeploy
 		".List1";
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION = FINDER_CLASS_NAME_ENTITY +
 		".List2";
-	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_ALL = new FinderPath(WeDeployAuthAppModelImpl.ENTITY_CACHE_ENABLED,
+	private final FinderPath _finderPathWithPaginationFindAll = new FinderPath(WeDeployAuthAppModelImpl.ENTITY_CACHE_ENABLED,
 			WeDeployAuthAppModelImpl.FINDER_CACHE_ENABLED,
 			WeDeployAuthAppImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
 			"findAll", new String[0]);
-	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_ALL = new FinderPath(WeDeployAuthAppModelImpl.ENTITY_CACHE_ENABLED,
+	private final FinderPath _finderPathWithoutPaginationFindAll = new FinderPath(WeDeployAuthAppModelImpl.ENTITY_CACHE_ENABLED,
 			WeDeployAuthAppModelImpl.FINDER_CACHE_ENABLED,
 			WeDeployAuthAppImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll", new String[0]);
-	public static final FinderPath FINDER_PATH_COUNT_ALL = new FinderPath(WeDeployAuthAppModelImpl.ENTITY_CACHE_ENABLED,
+	private final FinderPath _finderPathCountAll = new FinderPath(WeDeployAuthAppModelImpl.ENTITY_CACHE_ENABLED,
 			WeDeployAuthAppModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll", new String[0]);
-	public static final FinderPath FINDER_PATH_FETCH_BY_RU_CI = new FinderPath(WeDeployAuthAppModelImpl.ENTITY_CACHE_ENABLED,
+	private final FinderPath _finderPathFetchByRU_CI = new FinderPath(WeDeployAuthAppModelImpl.ENTITY_CACHE_ENABLED,
 			WeDeployAuthAppModelImpl.FINDER_CACHE_ENABLED,
 			WeDeployAuthAppImpl.class, FINDER_CLASS_NAME_ENTITY,
 			"fetchByRU_CI",
 			new String[] { String.class.getName(), String.class.getName() },
 			WeDeployAuthAppModelImpl.REDIRECTURI_COLUMN_BITMASK |
 			WeDeployAuthAppModelImpl.CLIENTID_COLUMN_BITMASK);
-	public static final FinderPath FINDER_PATH_COUNT_BY_RU_CI = new FinderPath(WeDeployAuthAppModelImpl.ENTITY_CACHE_ENABLED,
+	private final FinderPath _finderPathCountByRU_CI = new FinderPath(WeDeployAuthAppModelImpl.ENTITY_CACHE_ENABLED,
 			WeDeployAuthAppModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByRU_CI",
 			new String[] { String.class.getName(), String.class.getName() });
@@ -167,8 +167,8 @@ public class WeDeployAuthAppPersistenceImpl extends BasePersistenceImpl<WeDeploy
 		Object result = null;
 
 		if (retrieveFromCache) {
-			result = finderCache.getResult(FINDER_PATH_FETCH_BY_RU_CI,
-					finderArgs, this);
+			result = finderCache.getResult(_finderPathFetchByRU_CI, finderArgs,
+					this);
 		}
 
 		if (result instanceof WeDeployAuthApp) {
@@ -229,8 +229,8 @@ public class WeDeployAuthAppPersistenceImpl extends BasePersistenceImpl<WeDeploy
 				List<WeDeployAuthApp> list = q.list();
 
 				if (list.isEmpty()) {
-					finderCache.putResult(FINDER_PATH_FETCH_BY_RU_CI,
-						finderArgs, list);
+					finderCache.putResult(_finderPathFetchByRU_CI, finderArgs,
+						list);
 				}
 				else {
 					if (list.size() > 1) {
@@ -252,7 +252,7 @@ public class WeDeployAuthAppPersistenceImpl extends BasePersistenceImpl<WeDeploy
 				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(FINDER_PATH_FETCH_BY_RU_CI, finderArgs);
+				finderCache.removeResult(_finderPathFetchByRU_CI, finderArgs);
 
 				throw processException(e);
 			}
@@ -296,7 +296,7 @@ public class WeDeployAuthAppPersistenceImpl extends BasePersistenceImpl<WeDeploy
 		redirectURI = Objects.toString(redirectURI, "");
 		clientId = Objects.toString(clientId, "");
 
-		FinderPath finderPath = FINDER_PATH_COUNT_BY_RU_CI;
+		FinderPath finderPath = _finderPathCountByRU_CI;
 
 		Object[] finderArgs = new Object[] { redirectURI, clientId };
 
@@ -369,14 +369,14 @@ public class WeDeployAuthAppPersistenceImpl extends BasePersistenceImpl<WeDeploy
 	private static final String _FINDER_COLUMN_RU_CI_REDIRECTURI_3 = "(weDeployAuthApp.redirectURI IS NULL OR weDeployAuthApp.redirectURI = '') AND ";
 	private static final String _FINDER_COLUMN_RU_CI_CLIENTID_2 = "weDeployAuthApp.clientId = ?";
 	private static final String _FINDER_COLUMN_RU_CI_CLIENTID_3 = "(weDeployAuthApp.clientId IS NULL OR weDeployAuthApp.clientId = '')";
-	public static final FinderPath FINDER_PATH_FETCH_BY_CI_CS = new FinderPath(WeDeployAuthAppModelImpl.ENTITY_CACHE_ENABLED,
+	private final FinderPath _finderPathFetchByCI_CS = new FinderPath(WeDeployAuthAppModelImpl.ENTITY_CACHE_ENABLED,
 			WeDeployAuthAppModelImpl.FINDER_CACHE_ENABLED,
 			WeDeployAuthAppImpl.class, FINDER_CLASS_NAME_ENTITY,
 			"fetchByCI_CS",
 			new String[] { String.class.getName(), String.class.getName() },
 			WeDeployAuthAppModelImpl.CLIENTID_COLUMN_BITMASK |
 			WeDeployAuthAppModelImpl.CLIENTSECRET_COLUMN_BITMASK);
-	public static final FinderPath FINDER_PATH_COUNT_BY_CI_CS = new FinderPath(WeDeployAuthAppModelImpl.ENTITY_CACHE_ENABLED,
+	private final FinderPath _finderPathCountByCI_CS = new FinderPath(WeDeployAuthAppModelImpl.ENTITY_CACHE_ENABLED,
 			WeDeployAuthAppModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCI_CS",
 			new String[] { String.class.getName(), String.class.getName() });
@@ -448,8 +448,8 @@ public class WeDeployAuthAppPersistenceImpl extends BasePersistenceImpl<WeDeploy
 		Object result = null;
 
 		if (retrieveFromCache) {
-			result = finderCache.getResult(FINDER_PATH_FETCH_BY_CI_CS,
-					finderArgs, this);
+			result = finderCache.getResult(_finderPathFetchByCI_CS, finderArgs,
+					this);
 		}
 
 		if (result instanceof WeDeployAuthApp) {
@@ -511,8 +511,8 @@ public class WeDeployAuthAppPersistenceImpl extends BasePersistenceImpl<WeDeploy
 				List<WeDeployAuthApp> list = q.list();
 
 				if (list.isEmpty()) {
-					finderCache.putResult(FINDER_PATH_FETCH_BY_CI_CS,
-						finderArgs, list);
+					finderCache.putResult(_finderPathFetchByCI_CS, finderArgs,
+						list);
 				}
 				else {
 					if (list.size() > 1) {
@@ -534,7 +534,7 @@ public class WeDeployAuthAppPersistenceImpl extends BasePersistenceImpl<WeDeploy
 				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(FINDER_PATH_FETCH_BY_CI_CS, finderArgs);
+				finderCache.removeResult(_finderPathFetchByCI_CS, finderArgs);
 
 				throw processException(e);
 			}
@@ -578,7 +578,7 @@ public class WeDeployAuthAppPersistenceImpl extends BasePersistenceImpl<WeDeploy
 		clientId = Objects.toString(clientId, "");
 		clientSecret = Objects.toString(clientSecret, "");
 
-		FinderPath finderPath = FINDER_PATH_COUNT_BY_CI_CS;
+		FinderPath finderPath = _finderPathCountByCI_CS;
 
 		Object[] finderArgs = new Object[] { clientId, clientSecret };
 
@@ -671,12 +671,12 @@ public class WeDeployAuthAppPersistenceImpl extends BasePersistenceImpl<WeDeploy
 			WeDeployAuthAppImpl.class, weDeployAuthApp.getPrimaryKey(),
 			weDeployAuthApp);
 
-		finderCache.putResult(FINDER_PATH_FETCH_BY_RU_CI,
+		finderCache.putResult(_finderPathFetchByRU_CI,
 			new Object[] {
 				weDeployAuthApp.getRedirectURI(), weDeployAuthApp.getClientId()
 			}, weDeployAuthApp);
 
-		finderCache.putResult(FINDER_PATH_FETCH_BY_CI_CS,
+		finderCache.putResult(_finderPathFetchByCI_CS,
 			new Object[] {
 				weDeployAuthApp.getClientId(), weDeployAuthApp.getClientSecret()
 			}, weDeployAuthApp);
@@ -759,9 +759,9 @@ public class WeDeployAuthAppPersistenceImpl extends BasePersistenceImpl<WeDeploy
 				weDeployAuthAppModelImpl.getClientId()
 			};
 
-		finderCache.putResult(FINDER_PATH_COUNT_BY_RU_CI, args,
-			Long.valueOf(1), false);
-		finderCache.putResult(FINDER_PATH_FETCH_BY_RU_CI, args,
+		finderCache.putResult(_finderPathCountByRU_CI, args, Long.valueOf(1),
+			false);
+		finderCache.putResult(_finderPathFetchByRU_CI, args,
 			weDeployAuthAppModelImpl, false);
 
 		args = new Object[] {
@@ -769,9 +769,9 @@ public class WeDeployAuthAppPersistenceImpl extends BasePersistenceImpl<WeDeploy
 				weDeployAuthAppModelImpl.getClientSecret()
 			};
 
-		finderCache.putResult(FINDER_PATH_COUNT_BY_CI_CS, args,
-			Long.valueOf(1), false);
-		finderCache.putResult(FINDER_PATH_FETCH_BY_CI_CS, args,
+		finderCache.putResult(_finderPathCountByCI_CS, args, Long.valueOf(1),
+			false);
+		finderCache.putResult(_finderPathFetchByCI_CS, args,
 			weDeployAuthAppModelImpl, false);
 	}
 
@@ -783,19 +783,19 @@ public class WeDeployAuthAppPersistenceImpl extends BasePersistenceImpl<WeDeploy
 					weDeployAuthAppModelImpl.getClientId()
 				};
 
-			finderCache.removeResult(FINDER_PATH_COUNT_BY_RU_CI, args);
-			finderCache.removeResult(FINDER_PATH_FETCH_BY_RU_CI, args);
+			finderCache.removeResult(_finderPathCountByRU_CI, args);
+			finderCache.removeResult(_finderPathFetchByRU_CI, args);
 		}
 
 		if ((weDeployAuthAppModelImpl.getColumnBitmask() &
-				FINDER_PATH_FETCH_BY_RU_CI.getColumnBitmask()) != 0) {
+				_finderPathFetchByRU_CI.getColumnBitmask()) != 0) {
 			Object[] args = new Object[] {
 					weDeployAuthAppModelImpl.getOriginalRedirectURI(),
 					weDeployAuthAppModelImpl.getOriginalClientId()
 				};
 
-			finderCache.removeResult(FINDER_PATH_COUNT_BY_RU_CI, args);
-			finderCache.removeResult(FINDER_PATH_FETCH_BY_RU_CI, args);
+			finderCache.removeResult(_finderPathCountByRU_CI, args);
+			finderCache.removeResult(_finderPathFetchByRU_CI, args);
 		}
 
 		if (clearCurrent) {
@@ -804,19 +804,19 @@ public class WeDeployAuthAppPersistenceImpl extends BasePersistenceImpl<WeDeploy
 					weDeployAuthAppModelImpl.getClientSecret()
 				};
 
-			finderCache.removeResult(FINDER_PATH_COUNT_BY_CI_CS, args);
-			finderCache.removeResult(FINDER_PATH_FETCH_BY_CI_CS, args);
+			finderCache.removeResult(_finderPathCountByCI_CS, args);
+			finderCache.removeResult(_finderPathFetchByCI_CS, args);
 		}
 
 		if ((weDeployAuthAppModelImpl.getColumnBitmask() &
-				FINDER_PATH_FETCH_BY_CI_CS.getColumnBitmask()) != 0) {
+				_finderPathFetchByCI_CS.getColumnBitmask()) != 0) {
 			Object[] args = new Object[] {
 					weDeployAuthAppModelImpl.getOriginalClientId(),
 					weDeployAuthAppModelImpl.getOriginalClientSecret()
 				};
 
-			finderCache.removeResult(FINDER_PATH_COUNT_BY_CI_CS, args);
-			finderCache.removeResult(FINDER_PATH_FETCH_BY_CI_CS, args);
+			finderCache.removeResult(_finderPathCountByCI_CS, args);
+			finderCache.removeResult(_finderPathFetchByCI_CS, args);
 		}
 	}
 
@@ -994,8 +994,8 @@ public class WeDeployAuthAppPersistenceImpl extends BasePersistenceImpl<WeDeploy
 		}
 		else
 		 if (isNew) {
-			finderCache.removeResult(FINDER_PATH_COUNT_ALL, FINDER_ARGS_EMPTY);
-			finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_ALL,
+			finderCache.removeResult(_finderPathCountAll, FINDER_ARGS_EMPTY);
+			finderCache.removeResult(_finderPathWithoutPaginationFindAll,
 				FINDER_ARGS_EMPTY);
 		}
 
@@ -1127,11 +1127,11 @@ public class WeDeployAuthAppPersistenceImpl extends BasePersistenceImpl<WeDeploy
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 				(orderByComparator == null)) {
 			pagination = false;
-			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_ALL;
+			finderPath = _finderPathWithoutPaginationFindAll;
 			finderArgs = FINDER_ARGS_EMPTY;
 		}
 		else {
-			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_ALL;
+			finderPath = _finderPathWithPaginationFindAll;
 			finderArgs = new Object[] { start, end, orderByComparator };
 		}
 
@@ -1220,7 +1220,7 @@ public class WeDeployAuthAppPersistenceImpl extends BasePersistenceImpl<WeDeploy
 	 */
 	@Override
 	public int countAll() {
-		Long count = (Long)finderCache.getResult(FINDER_PATH_COUNT_ALL,
+		Long count = (Long)finderCache.getResult(_finderPathCountAll,
 				FINDER_ARGS_EMPTY, this);
 
 		if (count == null) {
@@ -1233,12 +1233,11 @@ public class WeDeployAuthAppPersistenceImpl extends BasePersistenceImpl<WeDeploy
 
 				count = (Long)q.uniqueResult();
 
-				finderCache.putResult(FINDER_PATH_COUNT_ALL, FINDER_ARGS_EMPTY,
+				finderCache.putResult(_finderPathCountAll, FINDER_ARGS_EMPTY,
 					count);
 			}
 			catch (Exception e) {
-				finderCache.removeResult(FINDER_PATH_COUNT_ALL,
-					FINDER_ARGS_EMPTY);
+				finderCache.removeResult(_finderPathCountAll, FINDER_ARGS_EMPTY);
 
 				throw processException(e);
 			}

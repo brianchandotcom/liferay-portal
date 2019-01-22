@@ -77,23 +77,23 @@ public class PushNotificationsDevicePersistenceImpl extends BasePersistenceImpl<
 		".List1";
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION = FINDER_CLASS_NAME_ENTITY +
 		".List2";
-	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_ALL = new FinderPath(PushNotificationsDeviceModelImpl.ENTITY_CACHE_ENABLED,
+	private final FinderPath _finderPathWithPaginationFindAll = new FinderPath(PushNotificationsDeviceModelImpl.ENTITY_CACHE_ENABLED,
 			PushNotificationsDeviceModelImpl.FINDER_CACHE_ENABLED,
 			PushNotificationsDeviceImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0]);
-	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_ALL = new FinderPath(PushNotificationsDeviceModelImpl.ENTITY_CACHE_ENABLED,
+	private final FinderPath _finderPathWithoutPaginationFindAll = new FinderPath(PushNotificationsDeviceModelImpl.ENTITY_CACHE_ENABLED,
 			PushNotificationsDeviceModelImpl.FINDER_CACHE_ENABLED,
 			PushNotificationsDeviceImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll", new String[0]);
-	public static final FinderPath FINDER_PATH_COUNT_ALL = new FinderPath(PushNotificationsDeviceModelImpl.ENTITY_CACHE_ENABLED,
+	private final FinderPath _finderPathCountAll = new FinderPath(PushNotificationsDeviceModelImpl.ENTITY_CACHE_ENABLED,
 			PushNotificationsDeviceModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll", new String[0]);
-	public static final FinderPath FINDER_PATH_FETCH_BY_TOKEN = new FinderPath(PushNotificationsDeviceModelImpl.ENTITY_CACHE_ENABLED,
+	private final FinderPath _finderPathFetchByToken = new FinderPath(PushNotificationsDeviceModelImpl.ENTITY_CACHE_ENABLED,
 			PushNotificationsDeviceModelImpl.FINDER_CACHE_ENABLED,
 			PushNotificationsDeviceImpl.class, FINDER_CLASS_NAME_ENTITY,
 			"fetchByToken", new String[] { String.class.getName() },
 			PushNotificationsDeviceModelImpl.TOKEN_COLUMN_BITMASK);
-	public static final FinderPath FINDER_PATH_COUNT_BY_TOKEN = new FinderPath(PushNotificationsDeviceModelImpl.ENTITY_CACHE_ENABLED,
+	private final FinderPath _finderPathCountByToken = new FinderPath(PushNotificationsDeviceModelImpl.ENTITY_CACHE_ENABLED,
 			PushNotificationsDeviceModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByToken",
 			new String[] { String.class.getName() });
@@ -158,8 +158,8 @@ public class PushNotificationsDevicePersistenceImpl extends BasePersistenceImpl<
 		Object result = null;
 
 		if (retrieveFromCache) {
-			result = finderCache.getResult(FINDER_PATH_FETCH_BY_TOKEN,
-					finderArgs, this);
+			result = finderCache.getResult(_finderPathFetchByToken, finderArgs,
+					this);
 		}
 
 		if (result instanceof PushNotificationsDevice) {
@@ -204,8 +204,8 @@ public class PushNotificationsDevicePersistenceImpl extends BasePersistenceImpl<
 				List<PushNotificationsDevice> list = q.list();
 
 				if (list.isEmpty()) {
-					finderCache.putResult(FINDER_PATH_FETCH_BY_TOKEN,
-						finderArgs, list);
+					finderCache.putResult(_finderPathFetchByToken, finderArgs,
+						list);
 				}
 				else {
 					PushNotificationsDevice pushNotificationsDevice = list.get(0);
@@ -216,7 +216,7 @@ public class PushNotificationsDevicePersistenceImpl extends BasePersistenceImpl<
 				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(FINDER_PATH_FETCH_BY_TOKEN, finderArgs);
+				finderCache.removeResult(_finderPathFetchByToken, finderArgs);
 
 				throw processException(e);
 			}
@@ -257,7 +257,7 @@ public class PushNotificationsDevicePersistenceImpl extends BasePersistenceImpl<
 	public int countByToken(String token) {
 		token = Objects.toString(token, "");
 
-		FinderPath finderPath = FINDER_PATH_COUNT_BY_TOKEN;
+		FinderPath finderPath = _finderPathCountByToken;
 
 		Object[] finderArgs = new Object[] { token };
 
@@ -313,7 +313,7 @@ public class PushNotificationsDevicePersistenceImpl extends BasePersistenceImpl<
 
 	private static final String _FINDER_COLUMN_TOKEN_TOKEN_2 = "pushNotificationsDevice.token = ?";
 	private static final String _FINDER_COLUMN_TOKEN_TOKEN_3 = "(pushNotificationsDevice.token IS NULL OR pushNotificationsDevice.token = '')";
-	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_U_P = new FinderPath(PushNotificationsDeviceModelImpl.ENTITY_CACHE_ENABLED,
+	private final FinderPath _finderPathWithPaginationFindByU_P = new FinderPath(PushNotificationsDeviceModelImpl.ENTITY_CACHE_ENABLED,
 			PushNotificationsDeviceModelImpl.FINDER_CACHE_ENABLED,
 			PushNotificationsDeviceImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByU_P",
@@ -323,18 +323,18 @@ public class PushNotificationsDevicePersistenceImpl extends BasePersistenceImpl<
 			Integer.class.getName(), Integer.class.getName(),
 				OrderByComparator.class.getName()
 			});
-	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_U_P = new FinderPath(PushNotificationsDeviceModelImpl.ENTITY_CACHE_ENABLED,
+	private final FinderPath _finderPathWithoutPaginationFindByU_P = new FinderPath(PushNotificationsDeviceModelImpl.ENTITY_CACHE_ENABLED,
 			PushNotificationsDeviceModelImpl.FINDER_CACHE_ENABLED,
 			PushNotificationsDeviceImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByU_P",
 			new String[] { Long.class.getName(), String.class.getName() },
 			PushNotificationsDeviceModelImpl.USERID_COLUMN_BITMASK |
 			PushNotificationsDeviceModelImpl.PLATFORM_COLUMN_BITMASK);
-	public static final FinderPath FINDER_PATH_COUNT_BY_U_P = new FinderPath(PushNotificationsDeviceModelImpl.ENTITY_CACHE_ENABLED,
+	private final FinderPath _finderPathCountByU_P = new FinderPath(PushNotificationsDeviceModelImpl.ENTITY_CACHE_ENABLED,
 			PushNotificationsDeviceModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByU_P",
 			new String[] { Long.class.getName(), String.class.getName() });
-	public static final FinderPath FINDER_PATH_WITH_PAGINATION_COUNT_BY_U_P = new FinderPath(PushNotificationsDeviceModelImpl.ENTITY_CACHE_ENABLED,
+	private final FinderPath _finderPathWithPaginationCountByU_P = new FinderPath(PushNotificationsDeviceModelImpl.ENTITY_CACHE_ENABLED,
 			PushNotificationsDeviceModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByU_P",
 			new String[] { Long.class.getName(), String.class.getName() });
@@ -421,11 +421,11 @@ public class PushNotificationsDevicePersistenceImpl extends BasePersistenceImpl<
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 				(orderByComparator == null)) {
 			pagination = false;
-			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_U_P;
+			finderPath = _finderPathWithoutPaginationFindByU_P;
 			finderArgs = new Object[] { userId, platform };
 		}
 		else {
-			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_U_P;
+			finderPath = _finderPathWithPaginationFindByU_P;
 			finderArgs = new Object[] {
 					userId, platform,
 					
@@ -933,7 +933,7 @@ public class PushNotificationsDevicePersistenceImpl extends BasePersistenceImpl<
 		List<PushNotificationsDevice> list = null;
 
 		if (retrieveFromCache) {
-			list = (List<PushNotificationsDevice>)finderCache.getResult(FINDER_PATH_WITH_PAGINATION_FIND_BY_U_P,
+			list = (List<PushNotificationsDevice>)finderCache.getResult(_finderPathWithPaginationFindByU_P,
 					finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
@@ -1022,11 +1022,11 @@ public class PushNotificationsDevicePersistenceImpl extends BasePersistenceImpl<
 
 				cacheResult(list);
 
-				finderCache.putResult(FINDER_PATH_WITH_PAGINATION_FIND_BY_U_P,
+				finderCache.putResult(_finderPathWithPaginationFindByU_P,
 					finderArgs, list);
 			}
 			catch (Exception e) {
-				finderCache.removeResult(FINDER_PATH_WITH_PAGINATION_FIND_BY_U_P,
+				finderCache.removeResult(_finderPathWithPaginationFindByU_P,
 					finderArgs);
 
 				throw processException(e);
@@ -1064,7 +1064,7 @@ public class PushNotificationsDevicePersistenceImpl extends BasePersistenceImpl<
 	public int countByU_P(long userId, String platform) {
 		platform = Objects.toString(platform, "");
 
-		FinderPath finderPath = FINDER_PATH_COUNT_BY_U_P;
+		FinderPath finderPath = _finderPathCountByU_P;
 
 		Object[] finderArgs = new Object[] { userId, platform };
 
@@ -1144,7 +1144,7 @@ public class PushNotificationsDevicePersistenceImpl extends BasePersistenceImpl<
 
 		Object[] finderArgs = new Object[] { StringUtil.merge(userIds), platform };
 
-		Long count = (Long)finderCache.getResult(FINDER_PATH_WITH_PAGINATION_COUNT_BY_U_P,
+		Long count = (Long)finderCache.getResult(_finderPathWithPaginationCountByU_P,
 				finderArgs, this);
 
 		if (count == null) {
@@ -1197,11 +1197,11 @@ public class PushNotificationsDevicePersistenceImpl extends BasePersistenceImpl<
 
 				count = (Long)q.uniqueResult();
 
-				finderCache.putResult(FINDER_PATH_WITH_PAGINATION_COUNT_BY_U_P,
+				finderCache.putResult(_finderPathWithPaginationCountByU_P,
 					finderArgs, count);
 			}
 			catch (Exception e) {
-				finderCache.removeResult(FINDER_PATH_WITH_PAGINATION_COUNT_BY_U_P,
+				finderCache.removeResult(_finderPathWithPaginationCountByU_P,
 					finderArgs);
 
 				throw processException(e);
@@ -1238,7 +1238,7 @@ public class PushNotificationsDevicePersistenceImpl extends BasePersistenceImpl<
 			PushNotificationsDeviceImpl.class,
 			pushNotificationsDevice.getPrimaryKey(), pushNotificationsDevice);
 
-		finderCache.putResult(FINDER_PATH_FETCH_BY_TOKEN,
+		finderCache.putResult(_finderPathFetchByToken,
 			new Object[] { pushNotificationsDevice.getToken() },
 			pushNotificationsDevice);
 
@@ -1322,9 +1322,9 @@ public class PushNotificationsDevicePersistenceImpl extends BasePersistenceImpl<
 		PushNotificationsDeviceModelImpl pushNotificationsDeviceModelImpl) {
 		Object[] args = new Object[] { pushNotificationsDeviceModelImpl.getToken() };
 
-		finderCache.putResult(FINDER_PATH_COUNT_BY_TOKEN, args,
-			Long.valueOf(1), false);
-		finderCache.putResult(FINDER_PATH_FETCH_BY_TOKEN, args,
+		finderCache.putResult(_finderPathCountByToken, args, Long.valueOf(1),
+			false);
+		finderCache.putResult(_finderPathFetchByToken, args,
 			pushNotificationsDeviceModelImpl, false);
 	}
 
@@ -1336,18 +1336,18 @@ public class PushNotificationsDevicePersistenceImpl extends BasePersistenceImpl<
 					pushNotificationsDeviceModelImpl.getToken()
 				};
 
-			finderCache.removeResult(FINDER_PATH_COUNT_BY_TOKEN, args);
-			finderCache.removeResult(FINDER_PATH_FETCH_BY_TOKEN, args);
+			finderCache.removeResult(_finderPathCountByToken, args);
+			finderCache.removeResult(_finderPathFetchByToken, args);
 		}
 
 		if ((pushNotificationsDeviceModelImpl.getColumnBitmask() &
-				FINDER_PATH_FETCH_BY_TOKEN.getColumnBitmask()) != 0) {
+				_finderPathFetchByToken.getColumnBitmask()) != 0) {
 			Object[] args = new Object[] {
 					pushNotificationsDeviceModelImpl.getOriginalToken()
 				};
 
-			finderCache.removeResult(FINDER_PATH_COUNT_BY_TOKEN, args);
-			finderCache.removeResult(FINDER_PATH_FETCH_BY_TOKEN, args);
+			finderCache.removeResult(_finderPathCountByToken, args);
+			finderCache.removeResult(_finderPathFetchByToken, args);
 		}
 	}
 
@@ -1509,25 +1509,24 @@ public class PushNotificationsDevicePersistenceImpl extends BasePersistenceImpl<
 					pushNotificationsDeviceModelImpl.getPlatform()
 				};
 
-			finderCache.removeResult(FINDER_PATH_COUNT_BY_U_P, args);
-			finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_U_P,
-				args);
+			finderCache.removeResult(_finderPathCountByU_P, args);
+			finderCache.removeResult(_finderPathWithoutPaginationFindByU_P, args);
 
-			finderCache.removeResult(FINDER_PATH_COUNT_ALL, FINDER_ARGS_EMPTY);
-			finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_ALL,
+			finderCache.removeResult(_finderPathCountAll, FINDER_ARGS_EMPTY);
+			finderCache.removeResult(_finderPathWithoutPaginationFindAll,
 				FINDER_ARGS_EMPTY);
 		}
 
 		else {
 			if ((pushNotificationsDeviceModelImpl.getColumnBitmask() &
-					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_U_P.getColumnBitmask()) != 0) {
+					_finderPathWithoutPaginationFindByU_P.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
 						pushNotificationsDeviceModelImpl.getOriginalUserId(),
 						pushNotificationsDeviceModelImpl.getOriginalPlatform()
 					};
 
-				finderCache.removeResult(FINDER_PATH_COUNT_BY_U_P, args);
-				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_U_P,
+				finderCache.removeResult(_finderPathCountByU_P, args);
+				finderCache.removeResult(_finderPathWithoutPaginationFindByU_P,
 					args);
 
 				args = new Object[] {
@@ -1535,8 +1534,8 @@ public class PushNotificationsDevicePersistenceImpl extends BasePersistenceImpl<
 						pushNotificationsDeviceModelImpl.getPlatform()
 					};
 
-				finderCache.removeResult(FINDER_PATH_COUNT_BY_U_P, args);
-				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_U_P,
+				finderCache.removeResult(_finderPathCountByU_P, args);
+				finderCache.removeResult(_finderPathWithoutPaginationFindByU_P,
 					args);
 			}
 		}
@@ -1671,11 +1670,11 @@ public class PushNotificationsDevicePersistenceImpl extends BasePersistenceImpl<
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 				(orderByComparator == null)) {
 			pagination = false;
-			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_ALL;
+			finderPath = _finderPathWithoutPaginationFindAll;
 			finderArgs = FINDER_ARGS_EMPTY;
 		}
 		else {
-			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_ALL;
+			finderPath = _finderPathWithPaginationFindAll;
 			finderArgs = new Object[] { start, end, orderByComparator };
 		}
 
@@ -1764,7 +1763,7 @@ public class PushNotificationsDevicePersistenceImpl extends BasePersistenceImpl<
 	 */
 	@Override
 	public int countAll() {
-		Long count = (Long)finderCache.getResult(FINDER_PATH_COUNT_ALL,
+		Long count = (Long)finderCache.getResult(_finderPathCountAll,
 				FINDER_ARGS_EMPTY, this);
 
 		if (count == null) {
@@ -1777,12 +1776,11 @@ public class PushNotificationsDevicePersistenceImpl extends BasePersistenceImpl<
 
 				count = (Long)q.uniqueResult();
 
-				finderCache.putResult(FINDER_PATH_COUNT_ALL, FINDER_ARGS_EMPTY,
+				finderCache.putResult(_finderPathCountAll, FINDER_ARGS_EMPTY,
 					count);
 			}
 			catch (Exception e) {
-				finderCache.removeResult(FINDER_PATH_COUNT_ALL,
-					FINDER_ARGS_EMPTY);
+				finderCache.removeResult(_finderPathCountAll, FINDER_ARGS_EMPTY);
 
 				throw processException(e);
 			}

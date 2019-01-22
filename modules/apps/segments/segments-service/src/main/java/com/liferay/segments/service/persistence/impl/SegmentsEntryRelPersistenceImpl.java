@@ -76,19 +76,18 @@ public class SegmentsEntryRelPersistenceImpl extends BasePersistenceImpl<Segment
 		".List1";
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION = FINDER_CLASS_NAME_ENTITY +
 		".List2";
-	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_ALL = new FinderPath(SegmentsEntryRelModelImpl.ENTITY_CACHE_ENABLED,
+	private final FinderPath _finderPathWithPaginationFindAll = new FinderPath(SegmentsEntryRelModelImpl.ENTITY_CACHE_ENABLED,
 			SegmentsEntryRelModelImpl.FINDER_CACHE_ENABLED,
 			SegmentsEntryRelImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
 			"findAll", new String[0]);
-	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_ALL = new FinderPath(SegmentsEntryRelModelImpl.ENTITY_CACHE_ENABLED,
+	private final FinderPath _finderPathWithoutPaginationFindAll = new FinderPath(SegmentsEntryRelModelImpl.ENTITY_CACHE_ENABLED,
 			SegmentsEntryRelModelImpl.FINDER_CACHE_ENABLED,
 			SegmentsEntryRelImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll", new String[0]);
-	public static final FinderPath FINDER_PATH_COUNT_ALL = new FinderPath(SegmentsEntryRelModelImpl.ENTITY_CACHE_ENABLED,
+	private final FinderPath _finderPathCountAll = new FinderPath(SegmentsEntryRelModelImpl.ENTITY_CACHE_ENABLED,
 			SegmentsEntryRelModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll", new String[0]);
-	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_SEGMENTSENTRYID =
-		new FinderPath(SegmentsEntryRelModelImpl.ENTITY_CACHE_ENABLED,
+	private final FinderPath _finderPathWithPaginationFindBySegmentsEntryId = new FinderPath(SegmentsEntryRelModelImpl.ENTITY_CACHE_ENABLED,
 			SegmentsEntryRelModelImpl.FINDER_CACHE_ENABLED,
 			SegmentsEntryRelImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
 			"findBySegmentsEntryId",
@@ -98,14 +97,13 @@ public class SegmentsEntryRelPersistenceImpl extends BasePersistenceImpl<Segment
 			Integer.class.getName(), Integer.class.getName(),
 				OrderByComparator.class.getName()
 			});
-	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_SEGMENTSENTRYID =
-		new FinderPath(SegmentsEntryRelModelImpl.ENTITY_CACHE_ENABLED,
+	private final FinderPath _finderPathWithoutPaginationFindBySegmentsEntryId = new FinderPath(SegmentsEntryRelModelImpl.ENTITY_CACHE_ENABLED,
 			SegmentsEntryRelModelImpl.FINDER_CACHE_ENABLED,
 			SegmentsEntryRelImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findBySegmentsEntryId",
 			new String[] { Long.class.getName() },
 			SegmentsEntryRelModelImpl.SEGMENTSENTRYID_COLUMN_BITMASK);
-	public static final FinderPath FINDER_PATH_COUNT_BY_SEGMENTSENTRYID = new FinderPath(SegmentsEntryRelModelImpl.ENTITY_CACHE_ENABLED,
+	private final FinderPath _finderPathCountBySegmentsEntryId = new FinderPath(SegmentsEntryRelModelImpl.ENTITY_CACHE_ENABLED,
 			SegmentsEntryRelModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"countBySegmentsEntryId", new String[] { Long.class.getName() });
@@ -187,11 +185,11 @@ public class SegmentsEntryRelPersistenceImpl extends BasePersistenceImpl<Segment
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 				(orderByComparator == null)) {
 			pagination = false;
-			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_SEGMENTSENTRYID;
+			finderPath = _finderPathWithoutPaginationFindBySegmentsEntryId;
 			finderArgs = new Object[] { segmentsEntryId };
 		}
 		else {
-			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_SEGMENTSENTRYID;
+			finderPath = _finderPathWithPaginationFindBySegmentsEntryId;
 			finderArgs = new Object[] {
 					segmentsEntryId,
 					
@@ -559,7 +557,7 @@ public class SegmentsEntryRelPersistenceImpl extends BasePersistenceImpl<Segment
 	 */
 	@Override
 	public int countBySegmentsEntryId(long segmentsEntryId) {
-		FinderPath finderPath = FINDER_PATH_COUNT_BY_SEGMENTSENTRYID;
+		FinderPath finderPath = _finderPathCountBySegmentsEntryId;
 
 		Object[] finderArgs = new Object[] { segmentsEntryId };
 
@@ -604,7 +602,7 @@ public class SegmentsEntryRelPersistenceImpl extends BasePersistenceImpl<Segment
 
 	private static final String _FINDER_COLUMN_SEGMENTSENTRYID_SEGMENTSENTRYID_2 =
 		"segmentsEntryRel.segmentsEntryId = ?";
-	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_CN_CPK = new FinderPath(SegmentsEntryRelModelImpl.ENTITY_CACHE_ENABLED,
+	private final FinderPath _finderPathWithPaginationFindByCN_CPK = new FinderPath(SegmentsEntryRelModelImpl.ENTITY_CACHE_ENABLED,
 			SegmentsEntryRelModelImpl.FINDER_CACHE_ENABLED,
 			SegmentsEntryRelImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
 			"findByCN_CPK",
@@ -614,15 +612,14 @@ public class SegmentsEntryRelPersistenceImpl extends BasePersistenceImpl<Segment
 			Integer.class.getName(), Integer.class.getName(),
 				OrderByComparator.class.getName()
 			});
-	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_CN_CPK =
-		new FinderPath(SegmentsEntryRelModelImpl.ENTITY_CACHE_ENABLED,
+	private final FinderPath _finderPathWithoutPaginationFindByCN_CPK = new FinderPath(SegmentsEntryRelModelImpl.ENTITY_CACHE_ENABLED,
 			SegmentsEntryRelModelImpl.FINDER_CACHE_ENABLED,
 			SegmentsEntryRelImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCN_CPK",
 			new String[] { Long.class.getName(), Long.class.getName() },
 			SegmentsEntryRelModelImpl.CLASSNAMEID_COLUMN_BITMASK |
 			SegmentsEntryRelModelImpl.CLASSPK_COLUMN_BITMASK);
-	public static final FinderPath FINDER_PATH_COUNT_BY_CN_CPK = new FinderPath(SegmentsEntryRelModelImpl.ENTITY_CACHE_ENABLED,
+	private final FinderPath _finderPathCountByCN_CPK = new FinderPath(SegmentsEntryRelModelImpl.ENTITY_CACHE_ENABLED,
 			SegmentsEntryRelModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCN_CPK",
 			new String[] { Long.class.getName(), Long.class.getName() });
@@ -708,11 +705,11 @@ public class SegmentsEntryRelPersistenceImpl extends BasePersistenceImpl<Segment
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 				(orderByComparator == null)) {
 			pagination = false;
-			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_CN_CPK;
+			finderPath = _finderPathWithoutPaginationFindByCN_CPK;
 			finderArgs = new Object[] { classNameId, classPK };
 		}
 		else {
-			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_CN_CPK;
+			finderPath = _finderPathWithPaginationFindByCN_CPK;
 			finderArgs = new Object[] {
 					classNameId, classPK,
 					
@@ -1101,7 +1098,7 @@ public class SegmentsEntryRelPersistenceImpl extends BasePersistenceImpl<Segment
 	 */
 	@Override
 	public int countByCN_CPK(long classNameId, long classPK) {
-		FinderPath finderPath = FINDER_PATH_COUNT_BY_CN_CPK;
+		FinderPath finderPath = _finderPathCountByCN_CPK;
 
 		Object[] finderArgs = new Object[] { classNameId, classPK };
 
@@ -1150,7 +1147,7 @@ public class SegmentsEntryRelPersistenceImpl extends BasePersistenceImpl<Segment
 
 	private static final String _FINDER_COLUMN_CN_CPK_CLASSNAMEID_2 = "segmentsEntryRel.classNameId = ? AND ";
 	private static final String _FINDER_COLUMN_CN_CPK_CLASSPK_2 = "segmentsEntryRel.classPK = ?";
-	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_G_CN_CPK = new FinderPath(SegmentsEntryRelModelImpl.ENTITY_CACHE_ENABLED,
+	private final FinderPath _finderPathWithPaginationFindByG_CN_CPK = new FinderPath(SegmentsEntryRelModelImpl.ENTITY_CACHE_ENABLED,
 			SegmentsEntryRelModelImpl.FINDER_CACHE_ENABLED,
 			SegmentsEntryRelImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
 			"findByG_CN_CPK",
@@ -1160,8 +1157,7 @@ public class SegmentsEntryRelPersistenceImpl extends BasePersistenceImpl<Segment
 			Integer.class.getName(), Integer.class.getName(),
 				OrderByComparator.class.getName()
 			});
-	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_CN_CPK =
-		new FinderPath(SegmentsEntryRelModelImpl.ENTITY_CACHE_ENABLED,
+	private final FinderPath _finderPathWithoutPaginationFindByG_CN_CPK = new FinderPath(SegmentsEntryRelModelImpl.ENTITY_CACHE_ENABLED,
 			SegmentsEntryRelModelImpl.FINDER_CACHE_ENABLED,
 			SegmentsEntryRelImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_CN_CPK",
@@ -1171,7 +1167,7 @@ public class SegmentsEntryRelPersistenceImpl extends BasePersistenceImpl<Segment
 			SegmentsEntryRelModelImpl.GROUPID_COLUMN_BITMASK |
 			SegmentsEntryRelModelImpl.CLASSNAMEID_COLUMN_BITMASK |
 			SegmentsEntryRelModelImpl.CLASSPK_COLUMN_BITMASK);
-	public static final FinderPath FINDER_PATH_COUNT_BY_G_CN_CPK = new FinderPath(SegmentsEntryRelModelImpl.ENTITY_CACHE_ENABLED,
+	private final FinderPath _finderPathCountByG_CN_CPK = new FinderPath(SegmentsEntryRelModelImpl.ENTITY_CACHE_ENABLED,
 			SegmentsEntryRelModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_CN_CPK",
 			new String[] {
@@ -1264,11 +1260,11 @@ public class SegmentsEntryRelPersistenceImpl extends BasePersistenceImpl<Segment
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 				(orderByComparator == null)) {
 			pagination = false;
-			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_CN_CPK;
+			finderPath = _finderPathWithoutPaginationFindByG_CN_CPK;
 			finderArgs = new Object[] { groupId, classNameId, classPK };
 		}
 		else {
-			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_G_CN_CPK;
+			finderPath = _finderPathWithPaginationFindByG_CN_CPK;
 			finderArgs = new Object[] {
 					groupId, classNameId, classPK,
 					
@@ -1683,7 +1679,7 @@ public class SegmentsEntryRelPersistenceImpl extends BasePersistenceImpl<Segment
 	 */
 	@Override
 	public int countByG_CN_CPK(long groupId, long classNameId, long classPK) {
-		FinderPath finderPath = FINDER_PATH_COUNT_BY_G_CN_CPK;
+		FinderPath finderPath = _finderPathCountByG_CN_CPK;
 
 		Object[] finderArgs = new Object[] { groupId, classNameId, classPK };
 
@@ -1737,7 +1733,7 @@ public class SegmentsEntryRelPersistenceImpl extends BasePersistenceImpl<Segment
 	private static final String _FINDER_COLUMN_G_CN_CPK_GROUPID_2 = "segmentsEntryRel.groupId = ? AND ";
 	private static final String _FINDER_COLUMN_G_CN_CPK_CLASSNAMEID_2 = "segmentsEntryRel.classNameId = ? AND ";
 	private static final String _FINDER_COLUMN_G_CN_CPK_CLASSPK_2 = "segmentsEntryRel.classPK = ?";
-	public static final FinderPath FINDER_PATH_FETCH_BY_S_CN_CPK = new FinderPath(SegmentsEntryRelModelImpl.ENTITY_CACHE_ENABLED,
+	private final FinderPath _finderPathFetchByS_CN_CPK = new FinderPath(SegmentsEntryRelModelImpl.ENTITY_CACHE_ENABLED,
 			SegmentsEntryRelModelImpl.FINDER_CACHE_ENABLED,
 			SegmentsEntryRelImpl.class, FINDER_CLASS_NAME_ENTITY,
 			"fetchByS_CN_CPK",
@@ -1747,7 +1743,7 @@ public class SegmentsEntryRelPersistenceImpl extends BasePersistenceImpl<Segment
 			SegmentsEntryRelModelImpl.SEGMENTSENTRYID_COLUMN_BITMASK |
 			SegmentsEntryRelModelImpl.CLASSNAMEID_COLUMN_BITMASK |
 			SegmentsEntryRelModelImpl.CLASSPK_COLUMN_BITMASK);
-	public static final FinderPath FINDER_PATH_COUNT_BY_S_CN_CPK = new FinderPath(SegmentsEntryRelModelImpl.ENTITY_CACHE_ENABLED,
+	private final FinderPath _finderPathCountByS_CN_CPK = new FinderPath(SegmentsEntryRelModelImpl.ENTITY_CACHE_ENABLED,
 			SegmentsEntryRelModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByS_CN_CPK",
 			new String[] {
@@ -1826,7 +1822,7 @@ public class SegmentsEntryRelPersistenceImpl extends BasePersistenceImpl<Segment
 		Object result = null;
 
 		if (retrieveFromCache) {
-			result = finderCache.getResult(FINDER_PATH_FETCH_BY_S_CN_CPK,
+			result = finderCache.getResult(_finderPathFetchByS_CN_CPK,
 					finderArgs, this);
 		}
 
@@ -1871,7 +1867,7 @@ public class SegmentsEntryRelPersistenceImpl extends BasePersistenceImpl<Segment
 				List<SegmentsEntryRel> list = q.list();
 
 				if (list.isEmpty()) {
-					finderCache.putResult(FINDER_PATH_FETCH_BY_S_CN_CPK,
+					finderCache.putResult(_finderPathFetchByS_CN_CPK,
 						finderArgs, list);
 				}
 				else {
@@ -1883,8 +1879,7 @@ public class SegmentsEntryRelPersistenceImpl extends BasePersistenceImpl<Segment
 				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(FINDER_PATH_FETCH_BY_S_CN_CPK,
-					finderArgs);
+				finderCache.removeResult(_finderPathFetchByS_CN_CPK, finderArgs);
 
 				throw processException(e);
 			}
@@ -1929,7 +1924,7 @@ public class SegmentsEntryRelPersistenceImpl extends BasePersistenceImpl<Segment
 	@Override
 	public int countByS_CN_CPK(long segmentsEntryId, long classNameId,
 		long classPK) {
-		FinderPath finderPath = FINDER_PATH_COUNT_BY_S_CN_CPK;
+		FinderPath finderPath = _finderPathCountByS_CN_CPK;
 
 		Object[] finderArgs = new Object[] { segmentsEntryId, classNameId, classPK };
 
@@ -2003,7 +1998,7 @@ public class SegmentsEntryRelPersistenceImpl extends BasePersistenceImpl<Segment
 			SegmentsEntryRelImpl.class, segmentsEntryRel.getPrimaryKey(),
 			segmentsEntryRel);
 
-		finderCache.putResult(FINDER_PATH_FETCH_BY_S_CN_CPK,
+		finderCache.putResult(_finderPathFetchByS_CN_CPK,
 			new Object[] {
 				segmentsEntryRel.getSegmentsEntryId(),
 				segmentsEntryRel.getClassNameId(), segmentsEntryRel.getClassPK()
@@ -2089,9 +2084,9 @@ public class SegmentsEntryRelPersistenceImpl extends BasePersistenceImpl<Segment
 				segmentsEntryRelModelImpl.getClassPK()
 			};
 
-		finderCache.putResult(FINDER_PATH_COUNT_BY_S_CN_CPK, args,
+		finderCache.putResult(_finderPathCountByS_CN_CPK, args,
 			Long.valueOf(1), false);
-		finderCache.putResult(FINDER_PATH_FETCH_BY_S_CN_CPK, args,
+		finderCache.putResult(_finderPathFetchByS_CN_CPK, args,
 			segmentsEntryRelModelImpl, false);
 	}
 
@@ -2105,20 +2100,20 @@ public class SegmentsEntryRelPersistenceImpl extends BasePersistenceImpl<Segment
 					segmentsEntryRelModelImpl.getClassPK()
 				};
 
-			finderCache.removeResult(FINDER_PATH_COUNT_BY_S_CN_CPK, args);
-			finderCache.removeResult(FINDER_PATH_FETCH_BY_S_CN_CPK, args);
+			finderCache.removeResult(_finderPathCountByS_CN_CPK, args);
+			finderCache.removeResult(_finderPathFetchByS_CN_CPK, args);
 		}
 
 		if ((segmentsEntryRelModelImpl.getColumnBitmask() &
-				FINDER_PATH_FETCH_BY_S_CN_CPK.getColumnBitmask()) != 0) {
+				_finderPathFetchByS_CN_CPK.getColumnBitmask()) != 0) {
 			Object[] args = new Object[] {
 					segmentsEntryRelModelImpl.getOriginalSegmentsEntryId(),
 					segmentsEntryRelModelImpl.getOriginalClassNameId(),
 					segmentsEntryRelModelImpl.getOriginalClassPK()
 				};
 
-			finderCache.removeResult(FINDER_PATH_COUNT_BY_S_CN_CPK, args);
-			finderCache.removeResult(FINDER_PATH_FETCH_BY_S_CN_CPK, args);
+			finderCache.removeResult(_finderPathCountByS_CN_CPK, args);
+			finderCache.removeResult(_finderPathFetchByS_CN_CPK, args);
 		}
 	}
 
@@ -2300,8 +2295,8 @@ public class SegmentsEntryRelPersistenceImpl extends BasePersistenceImpl<Segment
 					segmentsEntryRelModelImpl.getSegmentsEntryId()
 				};
 
-			finderCache.removeResult(FINDER_PATH_COUNT_BY_SEGMENTSENTRYID, args);
-			finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_SEGMENTSENTRYID,
+			finderCache.removeResult(_finderPathCountBySegmentsEntryId, args);
+			finderCache.removeResult(_finderPathWithoutPaginationFindBySegmentsEntryId,
 				args);
 
 			args = new Object[] {
@@ -2309,8 +2304,8 @@ public class SegmentsEntryRelPersistenceImpl extends BasePersistenceImpl<Segment
 					segmentsEntryRelModelImpl.getClassPK()
 				};
 
-			finderCache.removeResult(FINDER_PATH_COUNT_BY_CN_CPK, args);
-			finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_CN_CPK,
+			finderCache.removeResult(_finderPathCountByCN_CPK, args);
+			finderCache.removeResult(_finderPathWithoutPaginationFindByCN_CPK,
 				args);
 
 			args = new Object[] {
@@ -2319,46 +2314,44 @@ public class SegmentsEntryRelPersistenceImpl extends BasePersistenceImpl<Segment
 					segmentsEntryRelModelImpl.getClassPK()
 				};
 
-			finderCache.removeResult(FINDER_PATH_COUNT_BY_G_CN_CPK, args);
-			finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_CN_CPK,
+			finderCache.removeResult(_finderPathCountByG_CN_CPK, args);
+			finderCache.removeResult(_finderPathWithoutPaginationFindByG_CN_CPK,
 				args);
 
-			finderCache.removeResult(FINDER_PATH_COUNT_ALL, FINDER_ARGS_EMPTY);
-			finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_ALL,
+			finderCache.removeResult(_finderPathCountAll, FINDER_ARGS_EMPTY);
+			finderCache.removeResult(_finderPathWithoutPaginationFindAll,
 				FINDER_ARGS_EMPTY);
 		}
 
 		else {
 			if ((segmentsEntryRelModelImpl.getColumnBitmask() &
-					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_SEGMENTSENTRYID.getColumnBitmask()) != 0) {
+					_finderPathWithoutPaginationFindBySegmentsEntryId.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
 						segmentsEntryRelModelImpl.getOriginalSegmentsEntryId()
 					};
 
-				finderCache.removeResult(FINDER_PATH_COUNT_BY_SEGMENTSENTRYID,
-					args);
-				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_SEGMENTSENTRYID,
+				finderCache.removeResult(_finderPathCountBySegmentsEntryId, args);
+				finderCache.removeResult(_finderPathWithoutPaginationFindBySegmentsEntryId,
 					args);
 
 				args = new Object[] {
 						segmentsEntryRelModelImpl.getSegmentsEntryId()
 					};
 
-				finderCache.removeResult(FINDER_PATH_COUNT_BY_SEGMENTSENTRYID,
-					args);
-				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_SEGMENTSENTRYID,
+				finderCache.removeResult(_finderPathCountBySegmentsEntryId, args);
+				finderCache.removeResult(_finderPathWithoutPaginationFindBySegmentsEntryId,
 					args);
 			}
 
 			if ((segmentsEntryRelModelImpl.getColumnBitmask() &
-					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_CN_CPK.getColumnBitmask()) != 0) {
+					_finderPathWithoutPaginationFindByCN_CPK.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
 						segmentsEntryRelModelImpl.getOriginalClassNameId(),
 						segmentsEntryRelModelImpl.getOriginalClassPK()
 					};
 
-				finderCache.removeResult(FINDER_PATH_COUNT_BY_CN_CPK, args);
-				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_CN_CPK,
+				finderCache.removeResult(_finderPathCountByCN_CPK, args);
+				finderCache.removeResult(_finderPathWithoutPaginationFindByCN_CPK,
 					args);
 
 				args = new Object[] {
@@ -2366,21 +2359,21 @@ public class SegmentsEntryRelPersistenceImpl extends BasePersistenceImpl<Segment
 						segmentsEntryRelModelImpl.getClassPK()
 					};
 
-				finderCache.removeResult(FINDER_PATH_COUNT_BY_CN_CPK, args);
-				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_CN_CPK,
+				finderCache.removeResult(_finderPathCountByCN_CPK, args);
+				finderCache.removeResult(_finderPathWithoutPaginationFindByCN_CPK,
 					args);
 			}
 
 			if ((segmentsEntryRelModelImpl.getColumnBitmask() &
-					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_CN_CPK.getColumnBitmask()) != 0) {
+					_finderPathWithoutPaginationFindByG_CN_CPK.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
 						segmentsEntryRelModelImpl.getOriginalGroupId(),
 						segmentsEntryRelModelImpl.getOriginalClassNameId(),
 						segmentsEntryRelModelImpl.getOriginalClassPK()
 					};
 
-				finderCache.removeResult(FINDER_PATH_COUNT_BY_G_CN_CPK, args);
-				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_CN_CPK,
+				finderCache.removeResult(_finderPathCountByG_CN_CPK, args);
+				finderCache.removeResult(_finderPathWithoutPaginationFindByG_CN_CPK,
 					args);
 
 				args = new Object[] {
@@ -2389,8 +2382,8 @@ public class SegmentsEntryRelPersistenceImpl extends BasePersistenceImpl<Segment
 						segmentsEntryRelModelImpl.getClassPK()
 					};
 
-				finderCache.removeResult(FINDER_PATH_COUNT_BY_G_CN_CPK, args);
-				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_CN_CPK,
+				finderCache.removeResult(_finderPathCountByG_CN_CPK, args);
+				finderCache.removeResult(_finderPathWithoutPaginationFindByG_CN_CPK,
 					args);
 			}
 		}
@@ -2523,11 +2516,11 @@ public class SegmentsEntryRelPersistenceImpl extends BasePersistenceImpl<Segment
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 				(orderByComparator == null)) {
 			pagination = false;
-			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_ALL;
+			finderPath = _finderPathWithoutPaginationFindAll;
 			finderArgs = FINDER_ARGS_EMPTY;
 		}
 		else {
-			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_ALL;
+			finderPath = _finderPathWithPaginationFindAll;
 			finderArgs = new Object[] { start, end, orderByComparator };
 		}
 
@@ -2616,7 +2609,7 @@ public class SegmentsEntryRelPersistenceImpl extends BasePersistenceImpl<Segment
 	 */
 	@Override
 	public int countAll() {
-		Long count = (Long)finderCache.getResult(FINDER_PATH_COUNT_ALL,
+		Long count = (Long)finderCache.getResult(_finderPathCountAll,
 				FINDER_ARGS_EMPTY, this);
 
 		if (count == null) {
@@ -2629,12 +2622,11 @@ public class SegmentsEntryRelPersistenceImpl extends BasePersistenceImpl<Segment
 
 				count = (Long)q.uniqueResult();
 
-				finderCache.putResult(FINDER_PATH_COUNT_ALL, FINDER_ARGS_EMPTY,
+				finderCache.putResult(_finderPathCountAll, FINDER_ARGS_EMPTY,
 					count);
 			}
 			catch (Exception e) {
-				finderCache.removeResult(FINDER_PATH_COUNT_ALL,
-					FINDER_ARGS_EMPTY);
+				finderCache.removeResult(_finderPathCountAll, FINDER_ARGS_EMPTY);
 
 				throw processException(e);
 			}

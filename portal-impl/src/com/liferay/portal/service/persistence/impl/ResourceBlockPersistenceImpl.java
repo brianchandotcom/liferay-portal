@@ -76,18 +76,18 @@ public class ResourceBlockPersistenceImpl extends BasePersistenceImpl<ResourceBl
 		".List1";
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION = FINDER_CLASS_NAME_ENTITY +
 		".List2";
-	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_ALL = new FinderPath(ResourceBlockModelImpl.ENTITY_CACHE_ENABLED,
+	private final FinderPath _finderPathWithPaginationFindAll = new FinderPath(ResourceBlockModelImpl.ENTITY_CACHE_ENABLED,
 			ResourceBlockModelImpl.FINDER_CACHE_ENABLED,
 			ResourceBlockImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
 			"findAll", new String[0]);
-	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_ALL = new FinderPath(ResourceBlockModelImpl.ENTITY_CACHE_ENABLED,
+	private final FinderPath _finderPathWithoutPaginationFindAll = new FinderPath(ResourceBlockModelImpl.ENTITY_CACHE_ENABLED,
 			ResourceBlockModelImpl.FINDER_CACHE_ENABLED,
 			ResourceBlockImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"findAll", new String[0]);
-	public static final FinderPath FINDER_PATH_COUNT_ALL = new FinderPath(ResourceBlockModelImpl.ENTITY_CACHE_ENABLED,
+	private final FinderPath _finderPathCountAll = new FinderPath(ResourceBlockModelImpl.ENTITY_CACHE_ENABLED,
 			ResourceBlockModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll", new String[0]);
-	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_C_N = new FinderPath(ResourceBlockModelImpl.ENTITY_CACHE_ENABLED,
+	private final FinderPath _finderPathWithPaginationFindByC_N = new FinderPath(ResourceBlockModelImpl.ENTITY_CACHE_ENABLED,
 			ResourceBlockModelImpl.FINDER_CACHE_ENABLED,
 			ResourceBlockImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
 			"findByC_N",
@@ -97,14 +97,14 @@ public class ResourceBlockPersistenceImpl extends BasePersistenceImpl<ResourceBl
 			Integer.class.getName(), Integer.class.getName(),
 				OrderByComparator.class.getName()
 			});
-	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_N = new FinderPath(ResourceBlockModelImpl.ENTITY_CACHE_ENABLED,
+	private final FinderPath _finderPathWithoutPaginationFindByC_N = new FinderPath(ResourceBlockModelImpl.ENTITY_CACHE_ENABLED,
 			ResourceBlockModelImpl.FINDER_CACHE_ENABLED,
 			ResourceBlockImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"findByC_N",
 			new String[] { Long.class.getName(), String.class.getName() },
 			ResourceBlockModelImpl.COMPANYID_COLUMN_BITMASK |
 			ResourceBlockModelImpl.NAME_COLUMN_BITMASK);
-	public static final FinderPath FINDER_PATH_COUNT_BY_C_N = new FinderPath(ResourceBlockModelImpl.ENTITY_CACHE_ENABLED,
+	private final FinderPath _finderPathCountByC_N = new FinderPath(ResourceBlockModelImpl.ENTITY_CACHE_ENABLED,
 			ResourceBlockModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_N",
 			new String[] { Long.class.getName(), String.class.getName() });
@@ -189,11 +189,11 @@ public class ResourceBlockPersistenceImpl extends BasePersistenceImpl<ResourceBl
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 				(orderByComparator == null)) {
 			pagination = false;
-			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_N;
+			finderPath = _finderPathWithoutPaginationFindByC_N;
 			finderArgs = new Object[] { companyId, name };
 		}
 		else {
-			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_C_N;
+			finderPath = _finderPathWithPaginationFindByC_N;
 			finderArgs = new Object[] {
 					companyId, name,
 					
@@ -608,7 +608,7 @@ public class ResourceBlockPersistenceImpl extends BasePersistenceImpl<ResourceBl
 	public int countByC_N(long companyId, String name) {
 		name = Objects.toString(name, "");
 
-		FinderPath finderPath = FINDER_PATH_COUNT_BY_C_N;
+		FinderPath finderPath = _finderPathCountByC_N;
 
 		Object[] finderArgs = new Object[] { companyId, name };
 
@@ -670,7 +670,7 @@ public class ResourceBlockPersistenceImpl extends BasePersistenceImpl<ResourceBl
 	private static final String _FINDER_COLUMN_C_N_COMPANYID_2 = "resourceBlock.companyId = ? AND ";
 	private static final String _FINDER_COLUMN_C_N_NAME_2 = "resourceBlock.name = ?";
 	private static final String _FINDER_COLUMN_C_N_NAME_3 = "(resourceBlock.name IS NULL OR resourceBlock.name = '')";
-	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_C_G_N = new FinderPath(ResourceBlockModelImpl.ENTITY_CACHE_ENABLED,
+	private final FinderPath _finderPathWithPaginationFindByC_G_N = new FinderPath(ResourceBlockModelImpl.ENTITY_CACHE_ENABLED,
 			ResourceBlockModelImpl.FINDER_CACHE_ENABLED,
 			ResourceBlockImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
 			"findByC_G_N",
@@ -681,7 +681,7 @@ public class ResourceBlockPersistenceImpl extends BasePersistenceImpl<ResourceBl
 			Integer.class.getName(), Integer.class.getName(),
 				OrderByComparator.class.getName()
 			});
-	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_G_N = new FinderPath(ResourceBlockModelImpl.ENTITY_CACHE_ENABLED,
+	private final FinderPath _finderPathWithoutPaginationFindByC_G_N = new FinderPath(ResourceBlockModelImpl.ENTITY_CACHE_ENABLED,
 			ResourceBlockModelImpl.FINDER_CACHE_ENABLED,
 			ResourceBlockImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"findByC_G_N",
@@ -692,7 +692,7 @@ public class ResourceBlockPersistenceImpl extends BasePersistenceImpl<ResourceBl
 			ResourceBlockModelImpl.COMPANYID_COLUMN_BITMASK |
 			ResourceBlockModelImpl.GROUPID_COLUMN_BITMASK |
 			ResourceBlockModelImpl.NAME_COLUMN_BITMASK);
-	public static final FinderPath FINDER_PATH_COUNT_BY_C_G_N = new FinderPath(ResourceBlockModelImpl.ENTITY_CACHE_ENABLED,
+	private final FinderPath _finderPathCountByC_G_N = new FinderPath(ResourceBlockModelImpl.ENTITY_CACHE_ENABLED,
 			ResourceBlockModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_G_N",
 			new String[] {
@@ -788,11 +788,11 @@ public class ResourceBlockPersistenceImpl extends BasePersistenceImpl<ResourceBl
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 				(orderByComparator == null)) {
 			pagination = false;
-			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_G_N;
+			finderPath = _finderPathWithoutPaginationFindByC_G_N;
 			finderArgs = new Object[] { companyId, groupId, name };
 		}
 		else {
-			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_C_G_N;
+			finderPath = _finderPathWithPaginationFindByC_G_N;
 			finderArgs = new Object[] {
 					companyId, groupId, name,
 					
@@ -1229,7 +1229,7 @@ public class ResourceBlockPersistenceImpl extends BasePersistenceImpl<ResourceBl
 	public int countByC_G_N(long companyId, long groupId, String name) {
 		name = Objects.toString(name, "");
 
-		FinderPath finderPath = FINDER_PATH_COUNT_BY_C_G_N;
+		FinderPath finderPath = _finderPathCountByC_G_N;
 
 		Object[] finderArgs = new Object[] { companyId, groupId, name };
 
@@ -1296,7 +1296,7 @@ public class ResourceBlockPersistenceImpl extends BasePersistenceImpl<ResourceBl
 	private static final String _FINDER_COLUMN_C_G_N_GROUPID_2 = "resourceBlock.groupId = ? AND ";
 	private static final String _FINDER_COLUMN_C_G_N_NAME_2 = "resourceBlock.name = ?";
 	private static final String _FINDER_COLUMN_C_G_N_NAME_3 = "(resourceBlock.name IS NULL OR resourceBlock.name = '')";
-	public static final FinderPath FINDER_PATH_FETCH_BY_C_G_N_P = new FinderPath(ResourceBlockModelImpl.ENTITY_CACHE_ENABLED,
+	private final FinderPath _finderPathFetchByC_G_N_P = new FinderPath(ResourceBlockModelImpl.ENTITY_CACHE_ENABLED,
 			ResourceBlockModelImpl.FINDER_CACHE_ENABLED,
 			ResourceBlockImpl.class, FINDER_CLASS_NAME_ENTITY,
 			"fetchByC_G_N_P",
@@ -1308,7 +1308,7 @@ public class ResourceBlockPersistenceImpl extends BasePersistenceImpl<ResourceBl
 			ResourceBlockModelImpl.GROUPID_COLUMN_BITMASK |
 			ResourceBlockModelImpl.NAME_COLUMN_BITMASK |
 			ResourceBlockModelImpl.PERMISSIONSHASH_COLUMN_BITMASK);
-	public static final FinderPath FINDER_PATH_COUNT_BY_C_G_N_P = new FinderPath(ResourceBlockModelImpl.ENTITY_CACHE_ENABLED,
+	private final FinderPath _finderPathCountByC_G_N_P = new FinderPath(ResourceBlockModelImpl.ENTITY_CACHE_ENABLED,
 			ResourceBlockModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_G_N_P",
 			new String[] {
@@ -1400,7 +1400,7 @@ public class ResourceBlockPersistenceImpl extends BasePersistenceImpl<ResourceBl
 		Object result = null;
 
 		if (retrieveFromCache) {
-			result = FinderCacheUtil.getResult(FINDER_PATH_FETCH_BY_C_G_N_P,
+			result = FinderCacheUtil.getResult(_finderPathFetchByC_G_N_P,
 					finderArgs, this);
 		}
 
@@ -1473,7 +1473,7 @@ public class ResourceBlockPersistenceImpl extends BasePersistenceImpl<ResourceBl
 				List<ResourceBlock> list = q.list();
 
 				if (list.isEmpty()) {
-					FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_G_N_P,
+					FinderCacheUtil.putResult(_finderPathFetchByC_G_N_P,
 						finderArgs, list);
 				}
 				else {
@@ -1485,7 +1485,7 @@ public class ResourceBlockPersistenceImpl extends BasePersistenceImpl<ResourceBl
 				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_G_N_P,
+				FinderCacheUtil.removeResult(_finderPathFetchByC_G_N_P,
 					finderArgs);
 
 				throw processException(e);
@@ -1537,7 +1537,7 @@ public class ResourceBlockPersistenceImpl extends BasePersistenceImpl<ResourceBl
 		name = Objects.toString(name, "");
 		permissionsHash = Objects.toString(permissionsHash, "");
 
-		FinderPath finderPath = FINDER_PATH_COUNT_BY_C_G_N_P;
+		FinderPath finderPath = _finderPathCountByC_G_N_P;
 
 		Object[] finderArgs = new Object[] {
 				companyId, groupId, name, permissionsHash
@@ -1643,7 +1643,7 @@ public class ResourceBlockPersistenceImpl extends BasePersistenceImpl<ResourceBl
 			ResourceBlockImpl.class, resourceBlock.getPrimaryKey(),
 			resourceBlock);
 
-		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_G_N_P,
+		FinderCacheUtil.putResult(_finderPathFetchByC_G_N_P,
 			new Object[] {
 				resourceBlock.getCompanyId(), resourceBlock.getGroupId(),
 				resourceBlock.getName(), resourceBlock.getPermissionsHash()
@@ -1727,9 +1727,9 @@ public class ResourceBlockPersistenceImpl extends BasePersistenceImpl<ResourceBl
 				resourceBlockModelImpl.getPermissionsHash()
 			};
 
-		FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_C_G_N_P, args,
+		FinderCacheUtil.putResult(_finderPathCountByC_G_N_P, args,
 			Long.valueOf(1), false);
-		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_G_N_P, args,
+		FinderCacheUtil.putResult(_finderPathFetchByC_G_N_P, args,
 			resourceBlockModelImpl, false);
 	}
 
@@ -1743,12 +1743,12 @@ public class ResourceBlockPersistenceImpl extends BasePersistenceImpl<ResourceBl
 					resourceBlockModelImpl.getPermissionsHash()
 				};
 
-			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_G_N_P, args);
-			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_G_N_P, args);
+			FinderCacheUtil.removeResult(_finderPathCountByC_G_N_P, args);
+			FinderCacheUtil.removeResult(_finderPathFetchByC_G_N_P, args);
 		}
 
 		if ((resourceBlockModelImpl.getColumnBitmask() &
-				FINDER_PATH_FETCH_BY_C_G_N_P.getColumnBitmask()) != 0) {
+				_finderPathFetchByC_G_N_P.getColumnBitmask()) != 0) {
 			Object[] args = new Object[] {
 					resourceBlockModelImpl.getOriginalCompanyId(),
 					resourceBlockModelImpl.getOriginalGroupId(),
@@ -1756,8 +1756,8 @@ public class ResourceBlockPersistenceImpl extends BasePersistenceImpl<ResourceBl
 					resourceBlockModelImpl.getOriginalPermissionsHash()
 				};
 
-			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_G_N_P, args);
-			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_G_N_P, args);
+			FinderCacheUtil.removeResult(_finderPathCountByC_G_N_P, args);
+			FinderCacheUtil.removeResult(_finderPathFetchByC_G_N_P, args);
 		}
 	}
 
@@ -1917,8 +1917,8 @@ public class ResourceBlockPersistenceImpl extends BasePersistenceImpl<ResourceBl
 					resourceBlockModelImpl.getName()
 				};
 
-			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_N, args);
-			FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_N,
+			FinderCacheUtil.removeResult(_finderPathCountByC_N, args);
+			FinderCacheUtil.removeResult(_finderPathWithoutPaginationFindByC_N,
 				args);
 
 			args = new Object[] {
@@ -1927,26 +1927,25 @@ public class ResourceBlockPersistenceImpl extends BasePersistenceImpl<ResourceBl
 					resourceBlockModelImpl.getName()
 				};
 
-			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_G_N, args);
-			FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_G_N,
+			FinderCacheUtil.removeResult(_finderPathCountByC_G_N, args);
+			FinderCacheUtil.removeResult(_finderPathWithoutPaginationFindByC_G_N,
 				args);
 
-			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_ALL,
-				FINDER_ARGS_EMPTY);
-			FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_ALL,
+			FinderCacheUtil.removeResult(_finderPathCountAll, FINDER_ARGS_EMPTY);
+			FinderCacheUtil.removeResult(_finderPathWithoutPaginationFindAll,
 				FINDER_ARGS_EMPTY);
 		}
 
 		else {
 			if ((resourceBlockModelImpl.getColumnBitmask() &
-					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_N.getColumnBitmask()) != 0) {
+					_finderPathWithoutPaginationFindByC_N.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
 						resourceBlockModelImpl.getOriginalCompanyId(),
 						resourceBlockModelImpl.getOriginalName()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_N, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_N,
+				FinderCacheUtil.removeResult(_finderPathCountByC_N, args);
+				FinderCacheUtil.removeResult(_finderPathWithoutPaginationFindByC_N,
 					args);
 
 				args = new Object[] {
@@ -1954,21 +1953,21 @@ public class ResourceBlockPersistenceImpl extends BasePersistenceImpl<ResourceBl
 						resourceBlockModelImpl.getName()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_N, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_N,
+				FinderCacheUtil.removeResult(_finderPathCountByC_N, args);
+				FinderCacheUtil.removeResult(_finderPathWithoutPaginationFindByC_N,
 					args);
 			}
 
 			if ((resourceBlockModelImpl.getColumnBitmask() &
-					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_G_N.getColumnBitmask()) != 0) {
+					_finderPathWithoutPaginationFindByC_G_N.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
 						resourceBlockModelImpl.getOriginalCompanyId(),
 						resourceBlockModelImpl.getOriginalGroupId(),
 						resourceBlockModelImpl.getOriginalName()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_G_N, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_G_N,
+				FinderCacheUtil.removeResult(_finderPathCountByC_G_N, args);
+				FinderCacheUtil.removeResult(_finderPathWithoutPaginationFindByC_G_N,
 					args);
 
 				args = new Object[] {
@@ -1977,8 +1976,8 @@ public class ResourceBlockPersistenceImpl extends BasePersistenceImpl<ResourceBl
 						resourceBlockModelImpl.getName()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_G_N, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_G_N,
+				FinderCacheUtil.removeResult(_finderPathCountByC_G_N, args);
+				FinderCacheUtil.removeResult(_finderPathWithoutPaginationFindByC_G_N,
 					args);
 			}
 		}
@@ -2111,11 +2110,11 @@ public class ResourceBlockPersistenceImpl extends BasePersistenceImpl<ResourceBl
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 				(orderByComparator == null)) {
 			pagination = false;
-			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_ALL;
+			finderPath = _finderPathWithoutPaginationFindAll;
 			finderArgs = FINDER_ARGS_EMPTY;
 		}
 		else {
-			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_ALL;
+			finderPath = _finderPathWithPaginationFindAll;
 			finderArgs = new Object[] { start, end, orderByComparator };
 		}
 
@@ -2204,7 +2203,7 @@ public class ResourceBlockPersistenceImpl extends BasePersistenceImpl<ResourceBl
 	 */
 	@Override
 	public int countAll() {
-		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_ALL,
+		Long count = (Long)FinderCacheUtil.getResult(_finderPathCountAll,
 				FINDER_ARGS_EMPTY, this);
 
 		if (count == null) {
@@ -2217,11 +2216,11 @@ public class ResourceBlockPersistenceImpl extends BasePersistenceImpl<ResourceBl
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_ALL,
+				FinderCacheUtil.putResult(_finderPathCountAll,
 					FINDER_ARGS_EMPTY, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_ALL,
+				FinderCacheUtil.removeResult(_finderPathCountAll,
 					FINDER_ARGS_EMPTY);
 
 				throw processException(e);

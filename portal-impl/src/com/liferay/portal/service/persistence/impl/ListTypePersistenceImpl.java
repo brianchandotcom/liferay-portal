@@ -74,16 +74,16 @@ public class ListTypePersistenceImpl extends BasePersistenceImpl<ListType>
 		".List1";
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION = FINDER_CLASS_NAME_ENTITY +
 		".List2";
-	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_ALL = new FinderPath(ListTypeModelImpl.ENTITY_CACHE_ENABLED,
+	private final FinderPath _finderPathWithPaginationFindAll = new FinderPath(ListTypeModelImpl.ENTITY_CACHE_ENABLED,
 			ListTypeModelImpl.FINDER_CACHE_ENABLED, ListTypeImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0]);
-	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_ALL = new FinderPath(ListTypeModelImpl.ENTITY_CACHE_ENABLED,
+	private final FinderPath _finderPathWithoutPaginationFindAll = new FinderPath(ListTypeModelImpl.ENTITY_CACHE_ENABLED,
 			ListTypeModelImpl.FINDER_CACHE_ENABLED, ListTypeImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll", new String[0]);
-	public static final FinderPath FINDER_PATH_COUNT_ALL = new FinderPath(ListTypeModelImpl.ENTITY_CACHE_ENABLED,
+	private final FinderPath _finderPathCountAll = new FinderPath(ListTypeModelImpl.ENTITY_CACHE_ENABLED,
 			ListTypeModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll", new String[0]);
-	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_TYPE = new FinderPath(ListTypeModelImpl.ENTITY_CACHE_ENABLED,
+	private final FinderPath _finderPathWithPaginationFindByType = new FinderPath(ListTypeModelImpl.ENTITY_CACHE_ENABLED,
 			ListTypeModelImpl.FINDER_CACHE_ENABLED, ListTypeImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByType",
 			new String[] {
@@ -92,13 +92,13 @@ public class ListTypePersistenceImpl extends BasePersistenceImpl<ListType>
 			Integer.class.getName(), Integer.class.getName(),
 				OrderByComparator.class.getName()
 			});
-	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_TYPE = new FinderPath(ListTypeModelImpl.ENTITY_CACHE_ENABLED,
+	private final FinderPath _finderPathWithoutPaginationFindByType = new FinderPath(ListTypeModelImpl.ENTITY_CACHE_ENABLED,
 			ListTypeModelImpl.FINDER_CACHE_ENABLED, ListTypeImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByType",
 			new String[] { String.class.getName() },
 			ListTypeModelImpl.TYPE_COLUMN_BITMASK |
 			ListTypeModelImpl.NAME_COLUMN_BITMASK);
-	public static final FinderPath FINDER_PATH_COUNT_BY_TYPE = new FinderPath(ListTypeModelImpl.ENTITY_CACHE_ENABLED,
+	private final FinderPath _finderPathCountByType = new FinderPath(ListTypeModelImpl.ENTITY_CACHE_ENABLED,
 			ListTypeModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByType",
 			new String[] { String.class.getName() });
@@ -176,11 +176,11 @@ public class ListTypePersistenceImpl extends BasePersistenceImpl<ListType>
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 				(orderByComparator == null)) {
 			pagination = false;
-			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_TYPE;
+			finderPath = _finderPathWithoutPaginationFindByType;
 			finderArgs = new Object[] { type };
 		}
 		else {
-			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_TYPE;
+			finderPath = _finderPathWithPaginationFindByType;
 			finderArgs = new Object[] { type, start, end, orderByComparator };
 		}
 
@@ -565,7 +565,7 @@ public class ListTypePersistenceImpl extends BasePersistenceImpl<ListType>
 	public int countByType(String type) {
 		type = Objects.toString(type, "");
 
-		FinderPath finderPath = FINDER_PATH_COUNT_BY_TYPE;
+		FinderPath finderPath = _finderPathCountByType;
 
 		Object[] finderArgs = new Object[] { type };
 
@@ -622,13 +622,13 @@ public class ListTypePersistenceImpl extends BasePersistenceImpl<ListType>
 
 	private static final String _FINDER_COLUMN_TYPE_TYPE_2 = "listType.type = ?";
 	private static final String _FINDER_COLUMN_TYPE_TYPE_3 = "(listType.type IS NULL OR listType.type = '')";
-	public static final FinderPath FINDER_PATH_FETCH_BY_N_T = new FinderPath(ListTypeModelImpl.ENTITY_CACHE_ENABLED,
+	private final FinderPath _finderPathFetchByN_T = new FinderPath(ListTypeModelImpl.ENTITY_CACHE_ENABLED,
 			ListTypeModelImpl.FINDER_CACHE_ENABLED, ListTypeImpl.class,
 			FINDER_CLASS_NAME_ENTITY, "fetchByN_T",
 			new String[] { String.class.getName(), String.class.getName() },
 			ListTypeModelImpl.NAME_COLUMN_BITMASK |
 			ListTypeModelImpl.TYPE_COLUMN_BITMASK);
-	public static final FinderPath FINDER_PATH_COUNT_BY_N_T = new FinderPath(ListTypeModelImpl.ENTITY_CACHE_ENABLED,
+	private final FinderPath _finderPathCountByN_T = new FinderPath(ListTypeModelImpl.ENTITY_CACHE_ENABLED,
 			ListTypeModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByN_T",
 			new String[] { String.class.getName(), String.class.getName() });
@@ -700,7 +700,7 @@ public class ListTypePersistenceImpl extends BasePersistenceImpl<ListType>
 		Object result = null;
 
 		if (retrieveFromCache) {
-			result = FinderCacheUtil.getResult(FINDER_PATH_FETCH_BY_N_T,
+			result = FinderCacheUtil.getResult(_finderPathFetchByN_T,
 					finderArgs, this);
 		}
 
@@ -762,7 +762,7 @@ public class ListTypePersistenceImpl extends BasePersistenceImpl<ListType>
 				List<ListType> list = q.list();
 
 				if (list.isEmpty()) {
-					FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_N_T,
+					FinderCacheUtil.putResult(_finderPathFetchByN_T,
 						finderArgs, list);
 				}
 				else {
@@ -785,8 +785,7 @@ public class ListTypePersistenceImpl extends BasePersistenceImpl<ListType>
 				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_N_T,
-					finderArgs);
+				FinderCacheUtil.removeResult(_finderPathFetchByN_T, finderArgs);
 
 				throw processException(e);
 			}
@@ -830,7 +829,7 @@ public class ListTypePersistenceImpl extends BasePersistenceImpl<ListType>
 		name = Objects.toString(name, "");
 		type = Objects.toString(type, "");
 
-		FinderPath finderPath = FINDER_PATH_COUNT_BY_N_T;
+		FinderPath finderPath = _finderPathCountByN_T;
 
 		Object[] finderArgs = new Object[] { name, type };
 
@@ -923,7 +922,7 @@ public class ListTypePersistenceImpl extends BasePersistenceImpl<ListType>
 		EntityCacheUtil.putResult(ListTypeModelImpl.ENTITY_CACHE_ENABLED,
 			ListTypeImpl.class, listType.getPrimaryKey(), listType);
 
-		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_N_T,
+		FinderCacheUtil.putResult(_finderPathFetchByN_T,
 			new Object[] { listType.getName(), listType.getType() }, listType);
 
 		listType.resetOriginalValues();
@@ -1000,9 +999,9 @@ public class ListTypePersistenceImpl extends BasePersistenceImpl<ListType>
 				listTypeModelImpl.getName(), listTypeModelImpl.getType()
 			};
 
-		FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_N_T, args,
-			Long.valueOf(1), false);
-		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_N_T, args,
+		FinderCacheUtil.putResult(_finderPathCountByN_T, args, Long.valueOf(1),
+			false);
+		FinderCacheUtil.putResult(_finderPathFetchByN_T, args,
 			listTypeModelImpl, false);
 	}
 
@@ -1013,19 +1012,19 @@ public class ListTypePersistenceImpl extends BasePersistenceImpl<ListType>
 					listTypeModelImpl.getName(), listTypeModelImpl.getType()
 				};
 
-			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_N_T, args);
-			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_N_T, args);
+			FinderCacheUtil.removeResult(_finderPathCountByN_T, args);
+			FinderCacheUtil.removeResult(_finderPathFetchByN_T, args);
 		}
 
 		if ((listTypeModelImpl.getColumnBitmask() &
-				FINDER_PATH_FETCH_BY_N_T.getColumnBitmask()) != 0) {
+				_finderPathFetchByN_T.getColumnBitmask()) != 0) {
 			Object[] args = new Object[] {
 					listTypeModelImpl.getOriginalName(),
 					listTypeModelImpl.getOriginalType()
 				};
 
-			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_N_T, args);
-			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_N_T, args);
+			FinderCacheUtil.removeResult(_finderPathCountByN_T, args);
+			FinderCacheUtil.removeResult(_finderPathFetchByN_T, args);
 		}
 	}
 
@@ -1179,29 +1178,28 @@ public class ListTypePersistenceImpl extends BasePersistenceImpl<ListType>
 		 if (isNew) {
 			Object[] args = new Object[] { listTypeModelImpl.getType() };
 
-			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_TYPE, args);
-			FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_TYPE,
+			FinderCacheUtil.removeResult(_finderPathCountByType, args);
+			FinderCacheUtil.removeResult(_finderPathWithoutPaginationFindByType,
 				args);
 
-			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_ALL,
-				FINDER_ARGS_EMPTY);
-			FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_ALL,
+			FinderCacheUtil.removeResult(_finderPathCountAll, FINDER_ARGS_EMPTY);
+			FinderCacheUtil.removeResult(_finderPathWithoutPaginationFindAll,
 				FINDER_ARGS_EMPTY);
 		}
 
 		else {
 			if ((listTypeModelImpl.getColumnBitmask() &
-					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_TYPE.getColumnBitmask()) != 0) {
+					_finderPathWithoutPaginationFindByType.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] { listTypeModelImpl.getOriginalType() };
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_TYPE, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_TYPE,
+				FinderCacheUtil.removeResult(_finderPathCountByType, args);
+				FinderCacheUtil.removeResult(_finderPathWithoutPaginationFindByType,
 					args);
 
 				args = new Object[] { listTypeModelImpl.getType() };
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_TYPE, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_TYPE,
+				FinderCacheUtil.removeResult(_finderPathCountByType, args);
+				FinderCacheUtil.removeResult(_finderPathWithoutPaginationFindByType,
 					args);
 			}
 		}
@@ -1332,11 +1330,11 @@ public class ListTypePersistenceImpl extends BasePersistenceImpl<ListType>
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 				(orderByComparator == null)) {
 			pagination = false;
-			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_ALL;
+			finderPath = _finderPathWithoutPaginationFindAll;
 			finderArgs = FINDER_ARGS_EMPTY;
 		}
 		else {
-			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_ALL;
+			finderPath = _finderPathWithPaginationFindAll;
 			finderArgs = new Object[] { start, end, orderByComparator };
 		}
 
@@ -1425,7 +1423,7 @@ public class ListTypePersistenceImpl extends BasePersistenceImpl<ListType>
 	 */
 	@Override
 	public int countAll() {
-		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_ALL,
+		Long count = (Long)FinderCacheUtil.getResult(_finderPathCountAll,
 				FINDER_ARGS_EMPTY, this);
 
 		if (count == null) {
@@ -1438,11 +1436,11 @@ public class ListTypePersistenceImpl extends BasePersistenceImpl<ListType>
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_ALL,
+				FinderCacheUtil.putResult(_finderPathCountAll,
 					FINDER_ARGS_EMPTY, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_ALL,
+				FinderCacheUtil.removeResult(_finderPathCountAll,
 					FINDER_ARGS_EMPTY);
 
 				throw processException(e);

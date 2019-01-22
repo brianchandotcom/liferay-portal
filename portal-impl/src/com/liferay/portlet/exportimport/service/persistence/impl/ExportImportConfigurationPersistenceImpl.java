@@ -81,19 +81,19 @@ public class ExportImportConfigurationPersistenceImpl
 		".List1";
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION = FINDER_CLASS_NAME_ENTITY +
 		".List2";
-	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_ALL = new FinderPath(ExportImportConfigurationModelImpl.ENTITY_CACHE_ENABLED,
+	private final FinderPath _finderPathWithPaginationFindAll = new FinderPath(ExportImportConfigurationModelImpl.ENTITY_CACHE_ENABLED,
 			ExportImportConfigurationModelImpl.FINDER_CACHE_ENABLED,
 			ExportImportConfigurationImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0]);
-	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_ALL = new FinderPath(ExportImportConfigurationModelImpl.ENTITY_CACHE_ENABLED,
+	private final FinderPath _finderPathWithoutPaginationFindAll = new FinderPath(ExportImportConfigurationModelImpl.ENTITY_CACHE_ENABLED,
 			ExportImportConfigurationModelImpl.FINDER_CACHE_ENABLED,
 			ExportImportConfigurationImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll", new String[0]);
-	public static final FinderPath FINDER_PATH_COUNT_ALL = new FinderPath(ExportImportConfigurationModelImpl.ENTITY_CACHE_ENABLED,
+	private final FinderPath _finderPathCountAll = new FinderPath(ExportImportConfigurationModelImpl.ENTITY_CACHE_ENABLED,
 			ExportImportConfigurationModelImpl.FINDER_CACHE_ENABLED,
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
 			new String[0]);
-	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_GROUPID = new FinderPath(ExportImportConfigurationModelImpl.ENTITY_CACHE_ENABLED,
+	private final FinderPath _finderPathWithPaginationFindByGroupId = new FinderPath(ExportImportConfigurationModelImpl.ENTITY_CACHE_ENABLED,
 			ExportImportConfigurationModelImpl.FINDER_CACHE_ENABLED,
 			ExportImportConfigurationImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByGroupId",
@@ -103,15 +103,14 @@ public class ExportImportConfigurationPersistenceImpl
 			Integer.class.getName(), Integer.class.getName(),
 				OrderByComparator.class.getName()
 			});
-	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID =
-		new FinderPath(ExportImportConfigurationModelImpl.ENTITY_CACHE_ENABLED,
+	private final FinderPath _finderPathWithoutPaginationFindByGroupId = new FinderPath(ExportImportConfigurationModelImpl.ENTITY_CACHE_ENABLED,
 			ExportImportConfigurationModelImpl.FINDER_CACHE_ENABLED,
 			ExportImportConfigurationImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByGroupId",
 			new String[] { Long.class.getName() },
 			ExportImportConfigurationModelImpl.GROUPID_COLUMN_BITMASK |
 			ExportImportConfigurationModelImpl.CREATEDATE_COLUMN_BITMASK);
-	public static final FinderPath FINDER_PATH_COUNT_BY_GROUPID = new FinderPath(ExportImportConfigurationModelImpl.ENTITY_CACHE_ENABLED,
+	private final FinderPath _finderPathCountByGroupId = new FinderPath(ExportImportConfigurationModelImpl.ENTITY_CACHE_ENABLED,
 			ExportImportConfigurationModelImpl.FINDER_CACHE_ENABLED,
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"countByGroupId", new String[] { Long.class.getName() });
@@ -191,11 +190,11 @@ public class ExportImportConfigurationPersistenceImpl
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 				(orderByComparator == null)) {
 			pagination = false;
-			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID;
+			finderPath = _finderPathWithoutPaginationFindByGroupId;
 			finderArgs = new Object[] { groupId };
 		}
 		else {
-			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_GROUPID;
+			finderPath = _finderPathWithPaginationFindByGroupId;
 			finderArgs = new Object[] { groupId, start, end, orderByComparator };
 		}
 
@@ -560,7 +559,7 @@ public class ExportImportConfigurationPersistenceImpl
 	 */
 	@Override
 	public int countByGroupId(long groupId) {
-		FinderPath finderPath = FINDER_PATH_COUNT_BY_GROUPID;
+		FinderPath finderPath = _finderPathCountByGroupId;
 
 		Object[] finderArgs = new Object[] { groupId };
 
@@ -605,8 +604,7 @@ public class ExportImportConfigurationPersistenceImpl
 	}
 
 	private static final String _FINDER_COLUMN_GROUPID_GROUPID_2 = "exportImportConfiguration.groupId = ?";
-	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_COMPANYID =
-		new FinderPath(ExportImportConfigurationModelImpl.ENTITY_CACHE_ENABLED,
+	private final FinderPath _finderPathWithPaginationFindByCompanyId = new FinderPath(ExportImportConfigurationModelImpl.ENTITY_CACHE_ENABLED,
 			ExportImportConfigurationModelImpl.FINDER_CACHE_ENABLED,
 			ExportImportConfigurationImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCompanyId",
@@ -616,15 +614,14 @@ public class ExportImportConfigurationPersistenceImpl
 			Integer.class.getName(), Integer.class.getName(),
 				OrderByComparator.class.getName()
 			});
-	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID =
-		new FinderPath(ExportImportConfigurationModelImpl.ENTITY_CACHE_ENABLED,
+	private final FinderPath _finderPathWithoutPaginationFindByCompanyId = new FinderPath(ExportImportConfigurationModelImpl.ENTITY_CACHE_ENABLED,
 			ExportImportConfigurationModelImpl.FINDER_CACHE_ENABLED,
 			ExportImportConfigurationImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCompanyId",
 			new String[] { Long.class.getName() },
 			ExportImportConfigurationModelImpl.COMPANYID_COLUMN_BITMASK |
 			ExportImportConfigurationModelImpl.CREATEDATE_COLUMN_BITMASK);
-	public static final FinderPath FINDER_PATH_COUNT_BY_COMPANYID = new FinderPath(ExportImportConfigurationModelImpl.ENTITY_CACHE_ENABLED,
+	private final FinderPath _finderPathCountByCompanyId = new FinderPath(ExportImportConfigurationModelImpl.ENTITY_CACHE_ENABLED,
 			ExportImportConfigurationModelImpl.FINDER_CACHE_ENABLED,
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"countByCompanyId", new String[] { Long.class.getName() });
@@ -705,11 +702,11 @@ public class ExportImportConfigurationPersistenceImpl
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 				(orderByComparator == null)) {
 			pagination = false;
-			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID;
+			finderPath = _finderPathWithoutPaginationFindByCompanyId;
 			finderArgs = new Object[] { companyId };
 		}
 		else {
-			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_COMPANYID;
+			finderPath = _finderPathWithPaginationFindByCompanyId;
 			finderArgs = new Object[] { companyId, start, end, orderByComparator };
 		}
 
@@ -1076,7 +1073,7 @@ public class ExportImportConfigurationPersistenceImpl
 	 */
 	@Override
 	public int countByCompanyId(long companyId) {
-		FinderPath finderPath = FINDER_PATH_COUNT_BY_COMPANYID;
+		FinderPath finderPath = _finderPathCountByCompanyId;
 
 		Object[] finderArgs = new Object[] { companyId };
 
@@ -1121,7 +1118,7 @@ public class ExportImportConfigurationPersistenceImpl
 	}
 
 	private static final String _FINDER_COLUMN_COMPANYID_COMPANYID_2 = "exportImportConfiguration.companyId = ?";
-	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_G_T = new FinderPath(ExportImportConfigurationModelImpl.ENTITY_CACHE_ENABLED,
+	private final FinderPath _finderPathWithPaginationFindByG_T = new FinderPath(ExportImportConfigurationModelImpl.ENTITY_CACHE_ENABLED,
 			ExportImportConfigurationModelImpl.FINDER_CACHE_ENABLED,
 			ExportImportConfigurationImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_T",
@@ -1131,7 +1128,7 @@ public class ExportImportConfigurationPersistenceImpl
 			Integer.class.getName(), Integer.class.getName(),
 				OrderByComparator.class.getName()
 			});
-	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_T = new FinderPath(ExportImportConfigurationModelImpl.ENTITY_CACHE_ENABLED,
+	private final FinderPath _finderPathWithoutPaginationFindByG_T = new FinderPath(ExportImportConfigurationModelImpl.ENTITY_CACHE_ENABLED,
 			ExportImportConfigurationModelImpl.FINDER_CACHE_ENABLED,
 			ExportImportConfigurationImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_T",
@@ -1139,7 +1136,7 @@ public class ExportImportConfigurationPersistenceImpl
 			ExportImportConfigurationModelImpl.GROUPID_COLUMN_BITMASK |
 			ExportImportConfigurationModelImpl.TYPE_COLUMN_BITMASK |
 			ExportImportConfigurationModelImpl.CREATEDATE_COLUMN_BITMASK);
-	public static final FinderPath FINDER_PATH_COUNT_BY_G_T = new FinderPath(ExportImportConfigurationModelImpl.ENTITY_CACHE_ENABLED,
+	private final FinderPath _finderPathCountByG_T = new FinderPath(ExportImportConfigurationModelImpl.ENTITY_CACHE_ENABLED,
 			ExportImportConfigurationModelImpl.FINDER_CACHE_ENABLED,
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"countByG_T",
@@ -1225,11 +1222,11 @@ public class ExportImportConfigurationPersistenceImpl
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 				(orderByComparator == null)) {
 			pagination = false;
-			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_T;
+			finderPath = _finderPathWithoutPaginationFindByG_T;
 			finderArgs = new Object[] { groupId, type };
 		}
 		else {
-			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_G_T;
+			finderPath = _finderPathWithPaginationFindByG_T;
 			finderArgs = new Object[] {
 					groupId, type,
 					
@@ -1620,7 +1617,7 @@ public class ExportImportConfigurationPersistenceImpl
 	 */
 	@Override
 	public int countByG_T(long groupId, int type) {
-		FinderPath finderPath = FINDER_PATH_COUNT_BY_G_T;
+		FinderPath finderPath = _finderPathCountByG_T;
 
 		Object[] finderArgs = new Object[] { groupId, type };
 
@@ -1670,7 +1667,7 @@ public class ExportImportConfigurationPersistenceImpl
 
 	private static final String _FINDER_COLUMN_G_T_GROUPID_2 = "exportImportConfiguration.groupId = ? AND ";
 	private static final String _FINDER_COLUMN_G_T_TYPE_2 = "exportImportConfiguration.type = ?";
-	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_G_S = new FinderPath(ExportImportConfigurationModelImpl.ENTITY_CACHE_ENABLED,
+	private final FinderPath _finderPathWithPaginationFindByG_S = new FinderPath(ExportImportConfigurationModelImpl.ENTITY_CACHE_ENABLED,
 			ExportImportConfigurationModelImpl.FINDER_CACHE_ENABLED,
 			ExportImportConfigurationImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_S",
@@ -1680,7 +1677,7 @@ public class ExportImportConfigurationPersistenceImpl
 			Integer.class.getName(), Integer.class.getName(),
 				OrderByComparator.class.getName()
 			});
-	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_S = new FinderPath(ExportImportConfigurationModelImpl.ENTITY_CACHE_ENABLED,
+	private final FinderPath _finderPathWithoutPaginationFindByG_S = new FinderPath(ExportImportConfigurationModelImpl.ENTITY_CACHE_ENABLED,
 			ExportImportConfigurationModelImpl.FINDER_CACHE_ENABLED,
 			ExportImportConfigurationImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_S",
@@ -1688,7 +1685,7 @@ public class ExportImportConfigurationPersistenceImpl
 			ExportImportConfigurationModelImpl.GROUPID_COLUMN_BITMASK |
 			ExportImportConfigurationModelImpl.STATUS_COLUMN_BITMASK |
 			ExportImportConfigurationModelImpl.CREATEDATE_COLUMN_BITMASK);
-	public static final FinderPath FINDER_PATH_COUNT_BY_G_S = new FinderPath(ExportImportConfigurationModelImpl.ENTITY_CACHE_ENABLED,
+	private final FinderPath _finderPathCountByG_S = new FinderPath(ExportImportConfigurationModelImpl.ENTITY_CACHE_ENABLED,
 			ExportImportConfigurationModelImpl.FINDER_CACHE_ENABLED,
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"countByG_S",
@@ -1774,11 +1771,11 @@ public class ExportImportConfigurationPersistenceImpl
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 				(orderByComparator == null)) {
 			pagination = false;
-			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_S;
+			finderPath = _finderPathWithoutPaginationFindByG_S;
 			finderArgs = new Object[] { groupId, status };
 		}
 		else {
-			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_G_S;
+			finderPath = _finderPathWithPaginationFindByG_S;
 			finderArgs = new Object[] {
 					groupId, status,
 					
@@ -2169,7 +2166,7 @@ public class ExportImportConfigurationPersistenceImpl
 	 */
 	@Override
 	public int countByG_S(long groupId, int status) {
-		FinderPath finderPath = FINDER_PATH_COUNT_BY_G_S;
+		FinderPath finderPath = _finderPathCountByG_S;
 
 		Object[] finderArgs = new Object[] { groupId, status };
 
@@ -2219,7 +2216,7 @@ public class ExportImportConfigurationPersistenceImpl
 
 	private static final String _FINDER_COLUMN_G_S_GROUPID_2 = "exportImportConfiguration.groupId = ? AND ";
 	private static final String _FINDER_COLUMN_G_S_STATUS_2 = "exportImportConfiguration.status = ?";
-	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_G_T_S = new FinderPath(ExportImportConfigurationModelImpl.ENTITY_CACHE_ENABLED,
+	private final FinderPath _finderPathWithPaginationFindByG_T_S = new FinderPath(ExportImportConfigurationModelImpl.ENTITY_CACHE_ENABLED,
 			ExportImportConfigurationModelImpl.FINDER_CACHE_ENABLED,
 			ExportImportConfigurationImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_T_S",
@@ -2230,7 +2227,7 @@ public class ExportImportConfigurationPersistenceImpl
 			Integer.class.getName(), Integer.class.getName(),
 				OrderByComparator.class.getName()
 			});
-	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_T_S = new FinderPath(ExportImportConfigurationModelImpl.ENTITY_CACHE_ENABLED,
+	private final FinderPath _finderPathWithoutPaginationFindByG_T_S = new FinderPath(ExportImportConfigurationModelImpl.ENTITY_CACHE_ENABLED,
 			ExportImportConfigurationModelImpl.FINDER_CACHE_ENABLED,
 			ExportImportConfigurationImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_T_S",
@@ -2242,7 +2239,7 @@ public class ExportImportConfigurationPersistenceImpl
 			ExportImportConfigurationModelImpl.TYPE_COLUMN_BITMASK |
 			ExportImportConfigurationModelImpl.STATUS_COLUMN_BITMASK |
 			ExportImportConfigurationModelImpl.CREATEDATE_COLUMN_BITMASK);
-	public static final FinderPath FINDER_PATH_COUNT_BY_G_T_S = new FinderPath(ExportImportConfigurationModelImpl.ENTITY_CACHE_ENABLED,
+	private final FinderPath _finderPathCountByG_T_S = new FinderPath(ExportImportConfigurationModelImpl.ENTITY_CACHE_ENABLED,
 			ExportImportConfigurationModelImpl.FINDER_CACHE_ENABLED,
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"countByG_T_S",
@@ -2337,11 +2334,11 @@ public class ExportImportConfigurationPersistenceImpl
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 				(orderByComparator == null)) {
 			pagination = false;
-			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_T_S;
+			finderPath = _finderPathWithoutPaginationFindByG_T_S;
 			finderArgs = new Object[] { groupId, type, status };
 		}
 		else {
-			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_G_T_S;
+			finderPath = _finderPathWithPaginationFindByG_T_S;
 			finderArgs = new Object[] {
 					groupId, type, status,
 					
@@ -2761,7 +2758,7 @@ public class ExportImportConfigurationPersistenceImpl
 	 */
 	@Override
 	public int countByG_T_S(long groupId, int type, int status) {
-		FinderPath finderPath = FINDER_PATH_COUNT_BY_G_T_S;
+		FinderPath finderPath = _finderPathCountByG_T_S;
 
 		Object[] finderArgs = new Object[] { groupId, type, status };
 
@@ -3087,16 +3084,16 @@ public class ExportImportConfigurationPersistenceImpl
 					exportImportConfigurationModelImpl.getGroupId()
 				};
 
-			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_GROUPID, args);
-			FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID,
+			FinderCacheUtil.removeResult(_finderPathCountByGroupId, args);
+			FinderCacheUtil.removeResult(_finderPathWithoutPaginationFindByGroupId,
 				args);
 
 			args = new Object[] {
 					exportImportConfigurationModelImpl.getCompanyId()
 				};
 
-			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_COMPANYID, args);
-			FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID,
+			FinderCacheUtil.removeResult(_finderPathCountByCompanyId, args);
+			FinderCacheUtil.removeResult(_finderPathWithoutPaginationFindByCompanyId,
 				args);
 
 			args = new Object[] {
@@ -3104,8 +3101,8 @@ public class ExportImportConfigurationPersistenceImpl
 					exportImportConfigurationModelImpl.getType()
 				};
 
-			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_T, args);
-			FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_T,
+			FinderCacheUtil.removeResult(_finderPathCountByG_T, args);
+			FinderCacheUtil.removeResult(_finderPathWithoutPaginationFindByG_T,
 				args);
 
 			args = new Object[] {
@@ -3113,8 +3110,8 @@ public class ExportImportConfigurationPersistenceImpl
 					exportImportConfigurationModelImpl.getStatus()
 				};
 
-			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_S, args);
-			FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_S,
+			FinderCacheUtil.removeResult(_finderPathCountByG_S, args);
+			FinderCacheUtil.removeResult(_finderPathWithoutPaginationFindByG_S,
 				args);
 
 			args = new Object[] {
@@ -3123,66 +3120,63 @@ public class ExportImportConfigurationPersistenceImpl
 					exportImportConfigurationModelImpl.getStatus()
 				};
 
-			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_T_S, args);
-			FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_T_S,
+			FinderCacheUtil.removeResult(_finderPathCountByG_T_S, args);
+			FinderCacheUtil.removeResult(_finderPathWithoutPaginationFindByG_T_S,
 				args);
 
-			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_ALL,
-				FINDER_ARGS_EMPTY);
-			FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_ALL,
+			FinderCacheUtil.removeResult(_finderPathCountAll, FINDER_ARGS_EMPTY);
+			FinderCacheUtil.removeResult(_finderPathWithoutPaginationFindAll,
 				FINDER_ARGS_EMPTY);
 		}
 
 		else {
 			if ((exportImportConfigurationModelImpl.getColumnBitmask() &
-					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID.getColumnBitmask()) != 0) {
+					_finderPathWithoutPaginationFindByGroupId.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
 						exportImportConfigurationModelImpl.getOriginalGroupId()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_GROUPID, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID,
+				FinderCacheUtil.removeResult(_finderPathCountByGroupId, args);
+				FinderCacheUtil.removeResult(_finderPathWithoutPaginationFindByGroupId,
 					args);
 
 				args = new Object[] {
 						exportImportConfigurationModelImpl.getGroupId()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_GROUPID, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID,
+				FinderCacheUtil.removeResult(_finderPathCountByGroupId, args);
+				FinderCacheUtil.removeResult(_finderPathWithoutPaginationFindByGroupId,
 					args);
 			}
 
 			if ((exportImportConfigurationModelImpl.getColumnBitmask() &
-					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID.getColumnBitmask()) != 0) {
+					_finderPathWithoutPaginationFindByCompanyId.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
 						exportImportConfigurationModelImpl.getOriginalCompanyId()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_COMPANYID,
-					args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID,
+				FinderCacheUtil.removeResult(_finderPathCountByCompanyId, args);
+				FinderCacheUtil.removeResult(_finderPathWithoutPaginationFindByCompanyId,
 					args);
 
 				args = new Object[] {
 						exportImportConfigurationModelImpl.getCompanyId()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_COMPANYID,
-					args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID,
+				FinderCacheUtil.removeResult(_finderPathCountByCompanyId, args);
+				FinderCacheUtil.removeResult(_finderPathWithoutPaginationFindByCompanyId,
 					args);
 			}
 
 			if ((exportImportConfigurationModelImpl.getColumnBitmask() &
-					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_T.getColumnBitmask()) != 0) {
+					_finderPathWithoutPaginationFindByG_T.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
 						exportImportConfigurationModelImpl.getOriginalGroupId(),
 						exportImportConfigurationModelImpl.getOriginalType()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_T, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_T,
+				FinderCacheUtil.removeResult(_finderPathCountByG_T, args);
+				FinderCacheUtil.removeResult(_finderPathWithoutPaginationFindByG_T,
 					args);
 
 				args = new Object[] {
@@ -3190,20 +3184,20 @@ public class ExportImportConfigurationPersistenceImpl
 						exportImportConfigurationModelImpl.getType()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_T, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_T,
+				FinderCacheUtil.removeResult(_finderPathCountByG_T, args);
+				FinderCacheUtil.removeResult(_finderPathWithoutPaginationFindByG_T,
 					args);
 			}
 
 			if ((exportImportConfigurationModelImpl.getColumnBitmask() &
-					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_S.getColumnBitmask()) != 0) {
+					_finderPathWithoutPaginationFindByG_S.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
 						exportImportConfigurationModelImpl.getOriginalGroupId(),
 						exportImportConfigurationModelImpl.getOriginalStatus()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_S, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_S,
+				FinderCacheUtil.removeResult(_finderPathCountByG_S, args);
+				FinderCacheUtil.removeResult(_finderPathWithoutPaginationFindByG_S,
 					args);
 
 				args = new Object[] {
@@ -3211,21 +3205,21 @@ public class ExportImportConfigurationPersistenceImpl
 						exportImportConfigurationModelImpl.getStatus()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_S, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_S,
+				FinderCacheUtil.removeResult(_finderPathCountByG_S, args);
+				FinderCacheUtil.removeResult(_finderPathWithoutPaginationFindByG_S,
 					args);
 			}
 
 			if ((exportImportConfigurationModelImpl.getColumnBitmask() &
-					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_T_S.getColumnBitmask()) != 0) {
+					_finderPathWithoutPaginationFindByG_T_S.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
 						exportImportConfigurationModelImpl.getOriginalGroupId(),
 						exportImportConfigurationModelImpl.getOriginalType(),
 						exportImportConfigurationModelImpl.getOriginalStatus()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_T_S, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_T_S,
+				FinderCacheUtil.removeResult(_finderPathCountByG_T_S, args);
+				FinderCacheUtil.removeResult(_finderPathWithoutPaginationFindByG_T_S,
 					args);
 
 				args = new Object[] {
@@ -3234,8 +3228,8 @@ public class ExportImportConfigurationPersistenceImpl
 						exportImportConfigurationModelImpl.getStatus()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_T_S, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_T_S,
+				FinderCacheUtil.removeResult(_finderPathCountByG_T_S, args);
+				FinderCacheUtil.removeResult(_finderPathWithoutPaginationFindByG_T_S,
 					args);
 			}
 		}
@@ -3367,11 +3361,11 @@ public class ExportImportConfigurationPersistenceImpl
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 				(orderByComparator == null)) {
 			pagination = false;
-			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_ALL;
+			finderPath = _finderPathWithoutPaginationFindAll;
 			finderArgs = FINDER_ARGS_EMPTY;
 		}
 		else {
-			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_ALL;
+			finderPath = _finderPathWithPaginationFindAll;
 			finderArgs = new Object[] { start, end, orderByComparator };
 		}
 
@@ -3460,7 +3454,7 @@ public class ExportImportConfigurationPersistenceImpl
 	 */
 	@Override
 	public int countAll() {
-		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_ALL,
+		Long count = (Long)FinderCacheUtil.getResult(_finderPathCountAll,
 				FINDER_ARGS_EMPTY, this);
 
 		if (count == null) {
@@ -3473,11 +3467,11 @@ public class ExportImportConfigurationPersistenceImpl
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_ALL,
+				FinderCacheUtil.putResult(_finderPathCountAll,
 					FINDER_ARGS_EMPTY, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_ALL,
+				FinderCacheUtil.removeResult(_finderPathCountAll,
 					FINDER_ARGS_EMPTY);
 
 				throw processException(e);

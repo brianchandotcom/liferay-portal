@@ -77,21 +77,21 @@ public class ReleasePersistenceImpl extends BasePersistenceImpl<Release>
 		".List1";
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION = FINDER_CLASS_NAME_ENTITY +
 		".List2";
-	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_ALL = new FinderPath(ReleaseModelImpl.ENTITY_CACHE_ENABLED,
+	private final FinderPath _finderPathWithPaginationFindAll = new FinderPath(ReleaseModelImpl.ENTITY_CACHE_ENABLED,
 			ReleaseModelImpl.FINDER_CACHE_ENABLED, ReleaseImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0]);
-	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_ALL = new FinderPath(ReleaseModelImpl.ENTITY_CACHE_ENABLED,
+	private final FinderPath _finderPathWithoutPaginationFindAll = new FinderPath(ReleaseModelImpl.ENTITY_CACHE_ENABLED,
 			ReleaseModelImpl.FINDER_CACHE_ENABLED, ReleaseImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll", new String[0]);
-	public static final FinderPath FINDER_PATH_COUNT_ALL = new FinderPath(ReleaseModelImpl.ENTITY_CACHE_ENABLED,
+	private final FinderPath _finderPathCountAll = new FinderPath(ReleaseModelImpl.ENTITY_CACHE_ENABLED,
 			ReleaseModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll", new String[0]);
-	public static final FinderPath FINDER_PATH_FETCH_BY_SERVLETCONTEXTNAME = new FinderPath(ReleaseModelImpl.ENTITY_CACHE_ENABLED,
+	private final FinderPath _finderPathFetchByServletContextName = new FinderPath(ReleaseModelImpl.ENTITY_CACHE_ENABLED,
 			ReleaseModelImpl.FINDER_CACHE_ENABLED, ReleaseImpl.class,
 			FINDER_CLASS_NAME_ENTITY, "fetchByServletContextName",
 			new String[] { String.class.getName() },
 			ReleaseModelImpl.SERVLETCONTEXTNAME_COLUMN_BITMASK);
-	public static final FinderPath FINDER_PATH_COUNT_BY_SERVLETCONTEXTNAME = new FinderPath(ReleaseModelImpl.ENTITY_CACHE_ENABLED,
+	private final FinderPath _finderPathCountByServletContextName = new FinderPath(ReleaseModelImpl.ENTITY_CACHE_ENABLED,
 			ReleaseModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"countByServletContextName", new String[] { String.class.getName() });
@@ -156,7 +156,7 @@ public class ReleasePersistenceImpl extends BasePersistenceImpl<Release>
 		Object result = null;
 
 		if (retrieveFromCache) {
-			result = FinderCacheUtil.getResult(FINDER_PATH_FETCH_BY_SERVLETCONTEXTNAME,
+			result = FinderCacheUtil.getResult(_finderPathFetchByServletContextName,
 					finderArgs, this);
 		}
 
@@ -203,7 +203,7 @@ public class ReleasePersistenceImpl extends BasePersistenceImpl<Release>
 				List<Release> list = q.list();
 
 				if (list.isEmpty()) {
-					FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_SERVLETCONTEXTNAME,
+					FinderCacheUtil.putResult(_finderPathFetchByServletContextName,
 						finderArgs, list);
 				}
 				else {
@@ -215,7 +215,7 @@ public class ReleasePersistenceImpl extends BasePersistenceImpl<Release>
 				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_SERVLETCONTEXTNAME,
+				FinderCacheUtil.removeResult(_finderPathFetchByServletContextName,
 					finderArgs);
 
 				throw processException(e);
@@ -257,7 +257,7 @@ public class ReleasePersistenceImpl extends BasePersistenceImpl<Release>
 	public int countByServletContextName(String servletContextName) {
 		servletContextName = Objects.toString(servletContextName, "");
 
-		FinderPath finderPath = FINDER_PATH_COUNT_BY_SERVLETCONTEXTNAME;
+		FinderPath finderPath = _finderPathCountByServletContextName;
 
 		Object[] finderArgs = new Object[] { servletContextName };
 
@@ -335,7 +335,7 @@ public class ReleasePersistenceImpl extends BasePersistenceImpl<Release>
 		EntityCacheUtil.putResult(ReleaseModelImpl.ENTITY_CACHE_ENABLED,
 			ReleaseImpl.class, release.getPrimaryKey(), release);
 
-		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_SERVLETCONTEXTNAME,
+		FinderCacheUtil.putResult(_finderPathFetchByServletContextName,
 			new Object[] { release.getServletContextName() }, release);
 
 		release.resetOriginalValues();
@@ -410,10 +410,10 @@ public class ReleasePersistenceImpl extends BasePersistenceImpl<Release>
 	protected void cacheUniqueFindersCache(ReleaseModelImpl releaseModelImpl) {
 		Object[] args = new Object[] { releaseModelImpl.getServletContextName() };
 
-		FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_SERVLETCONTEXTNAME,
-			args, Long.valueOf(1), false);
-		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_SERVLETCONTEXTNAME,
-			args, releaseModelImpl, false);
+		FinderCacheUtil.putResult(_finderPathCountByServletContextName, args,
+			Long.valueOf(1), false);
+		FinderCacheUtil.putResult(_finderPathFetchByServletContextName, args,
+			releaseModelImpl, false);
 	}
 
 	protected void clearUniqueFindersCache(ReleaseModelImpl releaseModelImpl,
@@ -423,21 +423,21 @@ public class ReleasePersistenceImpl extends BasePersistenceImpl<Release>
 					releaseModelImpl.getServletContextName()
 				};
 
-			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_SERVLETCONTEXTNAME,
+			FinderCacheUtil.removeResult(_finderPathCountByServletContextName,
 				args);
-			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_SERVLETCONTEXTNAME,
+			FinderCacheUtil.removeResult(_finderPathFetchByServletContextName,
 				args);
 		}
 
 		if ((releaseModelImpl.getColumnBitmask() &
-				FINDER_PATH_FETCH_BY_SERVLETCONTEXTNAME.getColumnBitmask()) != 0) {
+				_finderPathFetchByServletContextName.getColumnBitmask()) != 0) {
 			Object[] args = new Object[] {
 					releaseModelImpl.getOriginalServletContextName()
 				};
 
-			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_SERVLETCONTEXTNAME,
+			FinderCacheUtil.removeResult(_finderPathCountByServletContextName,
 				args);
-			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_SERVLETCONTEXTNAME,
+			FinderCacheUtil.removeResult(_finderPathFetchByServletContextName,
 				args);
 		}
 	}
@@ -611,9 +611,8 @@ public class ReleasePersistenceImpl extends BasePersistenceImpl<Release>
 		}
 		else
 		 if (isNew) {
-			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_ALL,
-				FINDER_ARGS_EMPTY);
-			FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_ALL,
+			FinderCacheUtil.removeResult(_finderPathCountAll, FINDER_ARGS_EMPTY);
+			FinderCacheUtil.removeResult(_finderPathWithoutPaginationFindAll,
 				FINDER_ARGS_EMPTY);
 		}
 
@@ -743,11 +742,11 @@ public class ReleasePersistenceImpl extends BasePersistenceImpl<Release>
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 				(orderByComparator == null)) {
 			pagination = false;
-			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_ALL;
+			finderPath = _finderPathWithoutPaginationFindAll;
 			finderArgs = FINDER_ARGS_EMPTY;
 		}
 		else {
-			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_ALL;
+			finderPath = _finderPathWithPaginationFindAll;
 			finderArgs = new Object[] { start, end, orderByComparator };
 		}
 
@@ -836,7 +835,7 @@ public class ReleasePersistenceImpl extends BasePersistenceImpl<Release>
 	 */
 	@Override
 	public int countAll() {
-		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_ALL,
+		Long count = (Long)FinderCacheUtil.getResult(_finderPathCountAll,
 				FINDER_ARGS_EMPTY, this);
 
 		if (count == null) {
@@ -849,11 +848,11 @@ public class ReleasePersistenceImpl extends BasePersistenceImpl<Release>
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_ALL,
+				FinderCacheUtil.putResult(_finderPathCountAll,
 					FINDER_ARGS_EMPTY, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_ALL,
+				FinderCacheUtil.removeResult(_finderPathCountAll,
 					FINDER_ARGS_EMPTY);
 
 				throw processException(e);

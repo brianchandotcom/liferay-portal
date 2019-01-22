@@ -253,6 +253,8 @@ public class NodePlugin implements Plugin<Project> {
 					String result = npmRunTask.getResult();
 
 					if (result.contains("errors during Soy compilation")) {
+						project.delete(npmRunTask.getSourceDigestFile());
+
 						throw new GradleException("Soy compile error");
 					}
 				}

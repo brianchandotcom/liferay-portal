@@ -14,12 +14,12 @@
 
 package com.liferay.saml.web.internal.portlet.action;
 
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.util.ClassUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.saml.constants.SamlWebKeys;
-import com.liferay.saml.persistence.exception.NoSuchSpIdpConnectionException;
 import com.liferay.saml.persistence.model.SamlSpIdpConnection;
 import com.liferay.saml.persistence.service.SamlSpIdpConnectionLocalService;
 import com.liferay.saml.runtime.configuration.SamlProviderConfiguration;
@@ -65,20 +65,21 @@ public class EditIdentityProviderConnectionMVCRenderCommand
 		long clockSkew;
 
 		if (samlSpIdpConnectionId > 0) {
-			SamlSpIdpConnection samlSpIdpConnection =
-				_samlSpIdpConnectionLocalService.fetchSamlSpIdpConnection(
-					samlSpIdpConnectionId);
+			try {
+				SamlSpIdpConnection samlSpIdpConnection =
+					_samlSpIdpConnectionLocalService.getSamlSpIdpConnection(
+						samlSpIdpConnectionId);
 
-			if (samlSpIdpConnection == null) {
-				throw new PortletException(
-					new NoSuchSpIdpConnectionException());
+				clockSkew = ParamUtil.getLong(
+					renderRequest, "clockSkew",
+					samlSpIdpConnection.getClockSkew());
+
+				renderRequest.setAttribute(
+					SamlWebKeys.SAML_SP_IDP_CONNECTION, samlSpIdpConnection);
 			}
-
-			clockSkew = ParamUtil.getLong(
-				renderRequest, "clockSkew", samlSpIdpConnection.getClockSkew());
-
-			renderRequest.setAttribute(
-				SamlWebKeys.SAML_SP_IDP_CONNECTION, samlSpIdpConnection);
+			catch (PortalException pe) {
+				throw new PortletException(pe);
+			}
 		}
 		else {
 			clockSkew = ParamUtil.getLong(

@@ -191,11 +191,10 @@ public class DefaultViewMVCRenderCommand implements MVCRenderCommand {
 			_samlSpIdpConnectionLocalService.getSamlSpIdpConnectionsCount(
 				themeDisplay.getCompanyId());
 
-		PortletURL portletURL = renderResponse.createRenderURL();
-
 		SearchContainer searchContainer = new SearchContainer(
 			renderRequest, null, null, SearchContainer.DEFAULT_CUR_PARAM, 0,
-			SearchContainer.DEFAULT_DELTA, portletURL, null, null);
+			SearchContainer.DEFAULT_DELTA, renderResponse.createRenderURL(),
+			null, null);
 
 		List<SamlSpIdpConnection> samlSpIdpConnections =
 			_samlSpIdpConnectionLocalService.getSamlSpIdpConnections(

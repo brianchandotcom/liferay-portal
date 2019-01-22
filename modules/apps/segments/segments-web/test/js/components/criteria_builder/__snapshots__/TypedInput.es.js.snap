@@ -23,7 +23,7 @@ exports[`CriteriaRow should render type boolean 1`] = `
 exports[`CriteriaRow should render type date 1`] = `
 <DocumentFragment>
   <div
-    class="criterion-input"
+    class="criterion-input date-input"
   >
     <input
       class="form-control"

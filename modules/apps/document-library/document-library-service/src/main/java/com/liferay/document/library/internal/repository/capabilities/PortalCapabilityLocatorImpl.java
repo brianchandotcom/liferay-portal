@@ -15,7 +15,7 @@
 package com.liferay.document.library.internal.repository.capabilities;
 
 import com.liferay.document.library.kernel.service.DLAppHelperLocalService;
-import com.liferay.document.library.service.DLFileEntryPreviewLocalService;
+import com.liferay.document.library.service.FileVersionPreviewLocalService;
 import com.liferay.document.library.sync.service.DLSyncEventLocalService;
 import com.liferay.portal.kernel.cache.CacheRegistryItem;
 import com.liferay.portal.kernel.repository.DocumentRepository;
@@ -205,10 +205,10 @@ public class PortalCapabilityLocatorImpl
 
 		_alwaysGeneratingProcessorCapability = new LiferayProcessorCapability(
 			ProcessorCapability.ResourceGenerationStrategy.ALWAYS_GENERATE,
-			_dlFileEntryPreviewLocalService);
+			_fileVersionPreviewLocalService);
 		_reusingProcessorCapability = new LiferayProcessorCapability(
 			ProcessorCapability.ResourceGenerationStrategy.REUSE,
-			_dlFileEntryPreviewLocalService);
+			_fileVersionPreviewLocalService);
 	}
 
 	@Deactivate
@@ -235,10 +235,10 @@ public class PortalCapabilityLocatorImpl
 	private DLAppHelperLocalService _dlAppHelperLocalService;
 
 	@Reference
-	private DLFileEntryPreviewLocalService _dlFileEntryPreviewLocalService;
+	private DLSyncEventLocalService _dlSyncEventLocalService;
 
 	@Reference
-	private DLSyncEventLocalService _dlSyncEventLocalService;
+	private FileVersionPreviewLocalService _fileVersionPreviewLocalService;
 
 	private final Map<DocumentRepository, LiferayDynamicCapability>
 		_liferayDynamicCapabilities = new ConcurrentHashMap<>();

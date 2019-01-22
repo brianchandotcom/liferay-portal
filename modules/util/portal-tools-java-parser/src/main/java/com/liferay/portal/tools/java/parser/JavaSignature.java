@@ -129,10 +129,7 @@ public class JavaSignature extends BaseJavaTerm {
 				return sb.toString();
 			}
 
-			if ((_genericJavaTypes == null) &&
-				((_returnJavaType == null) ||
-				 Objects.equals(_returnJavaType.toString(), "void"))) {
-
+			if ((_genericJavaTypes == null) && (_returnJavaType == null)) {
 				appendSingleLine(sb, _objectName, "", "(", -1);
 				appendNewLine(
 					sb, _javaParameters, indent, "", ")" + suffix,
@@ -173,10 +170,7 @@ public class JavaSignature extends BaseJavaTerm {
 			return sb.toString();
 		}
 
-		if ((_genericJavaTypes == null) &&
-			((_returnJavaType == null) ||
-			 Objects.equals(_returnJavaType.toString(), "void"))) {
-
+		if ((_genericJavaTypes == null) && (_returnJavaType == null)) {
 			appendSingleLine(sb, _objectName, " ", "(", -1);
 		}
 		else {

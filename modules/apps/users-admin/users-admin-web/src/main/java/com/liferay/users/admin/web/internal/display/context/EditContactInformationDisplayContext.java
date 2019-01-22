@@ -38,7 +38,8 @@ import javax.servlet.http.HttpServletRequest;
 public class EditContactInformationDisplayContext {
 
 	public EditContactInformationDisplayContext(
-		RenderResponse renderResponse, HttpServletRequest request) {
+		String contactInfoTypeName, RenderResponse renderResponse,
+		HttpServletRequest request) {
 
 		_className = ParamUtil.getString(request, "className");
 		_classPK = ParamUtil.getLong(request, "classPK");
@@ -48,6 +49,15 @@ public class EditContactInformationDisplayContext {
 		_redirect = ParamUtil.getString(request, "redirect");
 		_renderResponse = renderResponse;
 		_request = request;
+
+		if (_primaryKey > 0) {
+			_sheetTitle = LanguageUtil.get(
+				_request, "edit-" + contactInfoTypeName);
+		}
+		else {
+			_sheetTitle = LanguageUtil.get(
+				_request, "add-" + contactInfoTypeName);
+		}
 	}
 
 	public String getBackURL() {
@@ -101,6 +111,10 @@ public class EditContactInformationDisplayContext {
 		return _redirect;
 	}
 
+	public String getSheetTitle() {
+		return _sheetTitle;
+	}
+
 	public void setPortletDisplay(
 			PortletDisplay portletDisplay, String portletName)
 		throws PortalException {
@@ -120,5 +134,6 @@ public class EditContactInformationDisplayContext {
 	private final String _redirect;
 	private final RenderResponse _renderResponse;
 	private final HttpServletRequest _request;
+	private final String _sheetTitle;
 
 }

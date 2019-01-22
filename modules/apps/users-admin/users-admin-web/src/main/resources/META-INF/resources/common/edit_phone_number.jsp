@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-EditContactInformationDisplayContext editContactInformationDisplayContext = new EditContactInformationDisplayContext(renderResponse, request);
+EditContactInformationDisplayContext editContactInformationDisplayContext = new EditContactInformationDisplayContext("phone-number", renderResponse, request);
 
 editContactInformationDisplayContext.setPortletDisplay(portletDisplay, portletName);
 
@@ -29,16 +29,7 @@ if (editContactInformationDisplayContext.getPrimaryKey() > 0) {
 
 PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "contact-information"), editContactInformationDisplayContext.getRedirect());
 
-String sheetTitle;
-
-if (editContactInformationDisplayContext.getPrimaryKey() > 0) {
-	sheetTitle = LanguageUtil.get(request, "edit-phone-number");
-}
-else {
-	sheetTitle = LanguageUtil.get(request, "add-phone-number");
-}
-
-PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, sheetTitle), null);
+PortalUtil.addPortletBreadcrumbEntry(request, editContactInformationDisplayContext.getSheetTitle(), null);
 %>
 
 <portlet:actionURL name="/users_admin/update_contact_information" var="actionURL" />
@@ -65,7 +56,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, sheetTit
 
 		<div class="sheet sheet-lg">
 			<div class="sheet-header">
-				<h2 class="sheet-title"><liferay-ui:message key="<%= sheetTitle %>" /></h2>
+				<h2 class="sheet-title"><%= editContactInformationDisplayContext.getSheetTitle() %></h2>
 			</div>
 
 			<div class="sheet-section">

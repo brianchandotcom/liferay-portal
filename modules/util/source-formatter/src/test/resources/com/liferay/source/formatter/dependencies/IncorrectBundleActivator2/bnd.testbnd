@@ -1,0 +1,4 @@
+Bundle-Activator: com.liferay.portal.social.activity.extender.internal.SocialActivityExtender
+Bundle-Name: Liferay Portal Social Activity Extender
+Bundle-SymbolicName: com.liferay.portal.social.activity.extender
+Bundle-Version: 2.0.0

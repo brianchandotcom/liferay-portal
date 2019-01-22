@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+
+<suppressions>
+	<source-check>
+
+		<!-- Temporary suppressions for test subdirectory -->
+
+		<suppress checks="BNDBundleInformationCheck" files="source/formatter/dependencies/IncorrectBundleActivator1/bnd\.testbnd" />
+		<suppress checks="BNDBundleInformationCheck" files="source/formatter/dependencies/IncorrectBundleActivator2/bnd\.testbnd" />
+		<suppress checks="BNDBundleInformationCheck" files="source/formatter/dependencies/IncorrectBundleActivator3/bnd\.testbnd" />
+	</source-check>
+</suppressions>

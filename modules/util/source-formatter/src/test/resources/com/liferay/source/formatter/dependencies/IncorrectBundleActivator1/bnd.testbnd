@@ -1,0 +1,4 @@
+Bundle-Activator: com.liferay.portal.configuration.persistence.internal.activator.ConfigurationPersistenceBundleActivator
+Bundle-Name: Liferay Portal Configuration Persistence Implementation
+Bundle-SymbolicName: com.liferay.portal.configuration.persistence.impl
+Bundle-Version: 2.0.0

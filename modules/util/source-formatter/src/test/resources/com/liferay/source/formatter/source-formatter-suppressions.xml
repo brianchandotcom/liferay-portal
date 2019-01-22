@@ -5,8 +5,8 @@
 
 		<!-- Temporary suppressions for test subdirectory -->
 
-		<suppress checks="BNDBundleInformationCheck" files="source/formatter/dependencies/IncorrectBundleActivator1/bnd\.testbnd" />
-		<suppress checks="BNDBundleInformationCheck" files="source/formatter/dependencies/IncorrectBundleActivator2/bnd\.testbnd" />
-		<suppress checks="BNDBundleInformationCheck" files="source/formatter/dependencies/IncorrectBundleActivator3/bnd\.testbnd" />
+		<suppress checks="BNDBundleInformationCheck" files="source/formatter/dependencies/IncorrectBundleActivator1/bnd\.bnd" />
+		<suppress checks="BNDBundleInformationCheck" files="source/formatter/dependencies/IncorrectBundleActivator2/bnd\.bnd" />
+		<suppress checks="BNDBundleInformationCheck" files="source/formatter/dependencies/IncorrectBundleActivator3/bnd\.bnd" />
 	</source-check>
 </suppressions>

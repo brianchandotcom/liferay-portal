@@ -24,13 +24,11 @@ import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.template.TemplateManagerUtil;
 import com.liferay.portal.kernel.template.URLTemplateResource;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.sharing.interpreter.SharingEntryInterpreter;
 import com.liferay.sharing.interpreter.SharingEntryInterpreterProvider;
 import com.liferay.sharing.model.SharingEntry;
@@ -78,27 +76,12 @@ public class SharingNotificationUtil {
 		template.put(
 			"actionTitle", _getEmailActionTitle(sharingEntry, resourceBundle));
 
-		User fromUser = _userLocalService.fetchUser(
-			sharingEntry.getFromUserId());
-
 		template.put(
 			"content",
 			_getNotificationMessage(
 				sharingEntry, resourceBundle.getLocale(), portletRequest));
 
-		template.put("fromUserName", _getUserName(fromUser, resourceBundle));
-
 		if (portletRequest != null) {
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)portletRequest.getAttribute(
-					WebKeys.THEME_DISPLAY);
-
-			if (fromUser != null) {
-				template.put(
-					"fromUserPortraitURL",
-					fromUser.getPortraitURL(themeDisplay));
-			}
-
 			template.put(
 				"sharingEntryURL",
 				getNotificationURL(sharingEntry, portletRequest));
@@ -189,26 +172,12 @@ public class SharingNotificationUtil {
 	}
 
 	private String _getFromUserName(
-			SharingEntry sharingEntry, ResourceBundle resourceBundle,
-			PortletRequest portletRequest)
-		throws PortalException {
+		SharingEntry sharingEntry, ResourceBundle resourceBundle) {
 
 		User fromUser = _userLocalService.fetchUser(
 			sharingEntry.getFromUserId());
 
-		String userName = _getUserName(fromUser, resourceBundle);
-
-		if ((portletRequest != null) && (fromUser != null)) {
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)portletRequest.getAttribute(
-					WebKeys.THEME_DISPLAY);
-
-			return StringBundler.concat(
-				"<a href=\"", fromUser.getDisplayURL(themeDisplay), "\">",
-				HtmlUtil.escape(userName), "</a>");
-		}
-
-		return userName;
+		return _getUserName(fromUser, resourceBundle);
 	}
 
 	private Locale _getLocale(User toUser) {
@@ -235,7 +204,7 @@ public class SharingNotificationUtil {
 
 		return ResourceBundleUtil.getString(
 			resourceBundle, languageKey,
-			_getFromUserName(sharingEntry, resourceBundle, portletRequest),
+			_getFromUserName(sharingEntry, resourceBundle),
 			_getSharingEntryObjectTitle(
 				sharingEntry, resourceBundle, portletRequest),
 			_getActionName(sharingEntry, resourceBundle),
@@ -269,7 +238,8 @@ public class SharingNotificationUtil {
 		if (portletRequest != null) {
 			return StringBundler.concat(
 				"<a href=\"", getNotificationURL(sharingEntry, portletRequest),
-				"\">", HtmlUtil.escape(title), "</a>");
+				"\" style=\"color: #0b5fff; text-decoration: none;\">",
+				HtmlUtil.escape(title), "</a>");
 		}
 
 		return title;

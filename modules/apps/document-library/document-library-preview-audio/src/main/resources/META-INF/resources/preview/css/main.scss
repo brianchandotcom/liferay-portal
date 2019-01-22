@@ -1,15 +1,4 @@
-.preview-file {
-	.preview-file-container {
-		align-items: center;
-		display: flex;
-		justify-content: center;
-		margin: 1.5rem 0;
-		overflow: auto;
-		position: relative;
-		text-align: center;
-	}
-}
-
 .preview-file .preview-file-audio {
+	vertical-align: middle;
 	width: 100%;
 }

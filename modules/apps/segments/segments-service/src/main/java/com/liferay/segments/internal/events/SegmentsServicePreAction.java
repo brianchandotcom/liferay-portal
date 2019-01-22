@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.segments.internal.event;
+package com.liferay.segments.internal.events;
 
 import com.liferay.portal.kernel.events.Action;
 import com.liferay.portal.kernel.events.ActionException;

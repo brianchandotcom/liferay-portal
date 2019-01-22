@@ -58,6 +58,10 @@ public class SourceFormatterSuppressions {
 		for (Map.Entry<String, List<String>> entry :
 				sourceCheckSuppressionsMap.entrySet()) {
 
+			if (absolutePath.contains("/source/formatter/dependencies/")) {
+				return true;
+			}
+
 			String suppressionsFileLocation = entry.getKey();
 
 			if (!absolutePath.startsWith(suppressionsFileLocation)) {

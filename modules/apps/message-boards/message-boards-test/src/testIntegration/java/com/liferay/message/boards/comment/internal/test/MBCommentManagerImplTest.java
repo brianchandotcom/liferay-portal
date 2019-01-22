@@ -18,6 +18,8 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.document.library.kernel.model.DLFileEntryConstants;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
+import com.liferay.message.boards.model.MBDiscussion;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.comment.Comment;
 import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.comment.Discussion;
@@ -161,7 +163,8 @@ public class MBCommentManagerImplTest {
 		Assert.assertNotNull(
 			_subscriptionLocalService.fetchSubscription(
 				TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
-				DLFileEntryConstants.getClassName(),
+				MBDiscussion.class.getName() + StringPool.UNDERLINE +
+					DLFileEntryConstants.getClassName(),
 				_fileEntry.getFileEntryId()));
 	}
 

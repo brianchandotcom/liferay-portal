@@ -63,7 +63,6 @@ public class UpdateIdentityProviderConnectionMVCActionCommand
 		boolean assertionSignatureRequired = ParamUtil.getBoolean(
 			uploadPortletRequest, "assertionSignatureRequired");
 		long clockSkew = ParamUtil.getLong(uploadPortletRequest, "clockSkew");
-
 		boolean enabled = ParamUtil.getBoolean(uploadPortletRequest, "enabled");
 		boolean forceAuthn = ParamUtil.getBoolean(
 			uploadPortletRequest, "forceAuthn");

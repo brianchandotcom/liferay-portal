@@ -14,6 +14,8 @@
 
 package com.liferay.segments.context;
 
+import java.io.Serializable;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -25,7 +27,11 @@ import java.util.Map;
  */
 public class Context {
 
-	public String get(String key) {
+	public static final String BROWSER = "browser";
+
+	public static final String LANGUAGE_ID = "languageId";
+
+	public Serializable get(String key) {
 		return _map.get(key);
 	}
 

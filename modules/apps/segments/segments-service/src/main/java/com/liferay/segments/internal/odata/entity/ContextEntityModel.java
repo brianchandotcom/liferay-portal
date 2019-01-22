@@ -17,6 +17,7 @@ package com.liferay.segments.internal.odata.entity;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.odata.entity.StringEntityField;
+import com.liferay.segments.context.Context;
 
 import java.util.List;
 import java.util.Map;
@@ -36,8 +37,9 @@ public class ContextEntityModel implements EntityModel {
 
 	public ContextEntityModel(List<EntityField> customEntityFields) {
 		_entityFieldsMap = Stream.of(
-			new StringEntityField("languageId", locale -> "languageId"),
-			new StringEntityField("userAgent", locale -> "userAgent")
+			new StringEntityField(Context.BROWSER, locale -> Context.BROWSER),
+			new StringEntityField(
+				Context.LANGUAGE_ID, locale -> Context.LANGUAGE_ID)
 		).collect(
 			Collectors.toMap(EntityField::getName, Function.identity())
 		);

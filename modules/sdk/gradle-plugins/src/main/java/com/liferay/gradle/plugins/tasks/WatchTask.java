@@ -256,8 +256,10 @@ public class WatchTask extends DefaultTask {
 				BundleDTO bundleDTO = _parseBundleDTO(gogoLine);
 
 				if (bundleDTO != null) {
-					String symbolicName = bundleDTO.symbolicName.substring(
-						0, bundleDTO.symbolicName.lastIndexOf("(") - 1);
+					String symbolicName = bundleDTO.symbolicName;
+
+					symbolicName = symbolicName.substring(
+						0, bundleDTO.symbolicName.indexOf("(") - 1);
 
 					if (bundleSymbolicName.equals(symbolicName)) {
 						return bundleDTO.id;
@@ -367,23 +369,23 @@ public class WatchTask extends DefaultTask {
 	private String _getFragmentHostName() throws IOException {
 		String retVal = null;
 
-		FileCollection fileCollection = getProject().files("bnd.bnd");
+		Project project = getProject();
+
+		FileCollection fileCollection = project.files("bnd.bnd");
 
 		if (fileCollection != null) {
-			Set<File> files = fileCollection.getFiles();
+			File file = fileCollection.getSingleFile();
 
-			for (File file : files) {
-				Properties properties = FileUtil.readProperties(file);
+			Properties properties = FileUtil.readProperties(file);
 
-				String fragmentHost = properties.getProperty(
-					Constants.FRAGMENT_HOST);
+			String fragmentHost = properties.getProperty(
+				Constants.FRAGMENT_HOST);
 
-				if (fragmentHost != null) {
-					String[] fragmentNames = fragmentHost.split(";");
+			if (fragmentHost != null) {
+				String[] fragmentNames = fragmentHost.split(";");
 
-					if (ArrayUtil.isNotEmpty(fragmentNames)) {
-						retVal = fragmentNames[0];
-					}
+				if (ArrayUtil.isNotEmpty(fragmentNames)) {
+					retVal = fragmentNames[0];
 				}
 			}
 		}
@@ -575,20 +577,20 @@ public class WatchTask extends DefaultTask {
 	}
 
 	private boolean _isFragmentModule() throws IOException {
-		FileCollection fileCollection = getProject().files("bnd.bnd");
+		Project project = getProject();
+
+		FileCollection fileCollection = project.files("bnd.bnd");
 
 		if (fileCollection != null) {
-			Set<File> files = fileCollection.getFiles();
+			File file = fileCollection.getSingleFile();
 
-			for (File file : files) {
-				Properties properties = FileUtil.readProperties(file);
+			Properties properties = FileUtil.readProperties(file);
 
-				String fragmentHost = properties.getProperty(
-					Constants.FRAGMENT_HOST);
+			String fragmentHost = properties.getProperty(
+				Constants.FRAGMENT_HOST);
 
-				if (fragmentHost != null) {
-					return true;
-				}
+			if (fragmentHost != null) {
+				return true;
 			}
 		}
 

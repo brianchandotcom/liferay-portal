@@ -31,9 +31,9 @@ public int countBy${entityFinder.name}(
 
 	FinderPath finderPath =
 		<#if !entityFinder.hasCustomComparator()>
-			FINDER_PATH_COUNT_BY_${entityFinder.name?upper_case};
+			_finderPathCountBy${entityFinder.name};
 		<#else>
-			FINDER_PATH_WITH_PAGINATION_COUNT_BY_${entityFinder.name?upper_case};
+			_finderPathWithPaginationCountBy${entityFinder.name};
 		</#if>
 
 	Object[] finderArgs = new Object[] {
@@ -160,7 +160,7 @@ public int countBy${entityFinder.name}(
 			</#list>
 		};
 
-		Long count = (Long)${finderCache}.getResult(FINDER_PATH_WITH_PAGINATION_COUNT_BY_${entityFinder.name?upper_case}, finderArgs, this);
+		Long count = (Long)${finderCache}.getResult(_finderPathWithPaginationCountBy${entityFinder.name}, finderArgs, this);
 
 		if (count == null) {
 			<#include "persistence_impl_count_by_arrayable_query.ftl">
@@ -182,10 +182,10 @@ public int countBy${entityFinder.name}(
 
 				count = (Long)q.uniqueResult();
 
-				${finderCache}.putResult(FINDER_PATH_WITH_PAGINATION_COUNT_BY_${entityFinder.name?upper_case}, finderArgs, count);
+				${finderCache}.putResult(_finderPathWithPaginationCountBy${entityFinder.name}, finderArgs, count);
 			}
 			catch (Exception e) {
-				${finderCache}.removeResult(FINDER_PATH_WITH_PAGINATION_COUNT_BY_${entityFinder.name?upper_case}, finderArgs);
+				${finderCache}.removeResult(_finderPathWithPaginationCountBy${entityFinder.name}, finderArgs);
 
 				throw processException(e);
 			}
@@ -271,7 +271,7 @@ public int countBy${entityFinder.name}(
 			</#list>
 		};
 
-		Long count = (Long)${finderCache}.getResult(FINDER_PATH_WITH_PAGINATION_COUNT_BY_${entityFinder.name?upper_case}, finderArgs, this);
+		Long count = (Long)${finderCache}.getResult(_finderPathWithPaginationCountBy${entityFinder.name}, finderArgs, this);
 
 		if (count == null) {
 			try {
@@ -326,10 +326,10 @@ public int countBy${entityFinder.name}(
 						</#list>));
 					}
 
-					${finderCache}.putResult(FINDER_PATH_WITH_PAGINATION_COUNT_BY_${entityFinder.name?upper_case}, finderArgs, count);
+					${finderCache}.putResult(_finderPathWithPaginationCountBy${entityFinder.name}, finderArgs, count);
 			}
 			catch (Exception e) {
-				${finderCache}.removeResult(FINDER_PATH_WITH_PAGINATION_COUNT_BY_${entityFinder.name?upper_case}, finderArgs);
+				${finderCache}.removeResult(_finderPathWithPaginationCountBy${entityFinder.name}, finderArgs);
 
 				throw processException(e);
 			}

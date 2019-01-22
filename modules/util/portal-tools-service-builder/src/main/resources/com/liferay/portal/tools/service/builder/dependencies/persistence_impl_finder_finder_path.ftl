@@ -1,7 +1,7 @@
 <#assign entityColumns = entityFinder.entityColumns />
 
 <#if entityFinder.isCollection()>
-	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_${entityFinder.name?upper_case} = new FinderPath(
+	private final FinderPath _finderPathWithPaginationFindBy${entityFinder.name} = new FinderPath(
 		${entity.name}ModelImpl.ENTITY_CACHE_ENABLED,
 		${entity.name}ModelImpl.FINDER_CACHE_ENABLED,
 		${entity.name}Impl.class,
@@ -16,7 +16,7 @@
 		});
 
 	<#if !entityFinder.hasCustomComparator()>
-		public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_${entityFinder.name?upper_case} = new FinderPath(
+		private final FinderPath _finderPathWithoutPaginationFindBy${entityFinder.name} = new FinderPath(
 			${entity.name}ModelImpl.ENTITY_CACHE_ENABLED,
 			${entity.name}ModelImpl.FINDER_CACHE_ENABLED,
 			${entity.name}Impl.class,
@@ -57,7 +57,7 @@
 </#if>
 
 <#if !entityFinder.isCollection() || entityFinder.isUnique()>
-	public static final FinderPath FINDER_PATH_FETCH_BY_${entityFinder.name?upper_case} = new FinderPath(
+	private final FinderPath _finderPathFetchBy${entityFinder.name} = new FinderPath(
 		${entity.name}ModelImpl.ENTITY_CACHE_ENABLED,
 		${entity.name}ModelImpl.FINDER_CACHE_ENABLED,
 		${entity.name}Impl.class,
@@ -89,7 +89,7 @@
 </#if>
 
 <#if !entityFinder.hasCustomComparator()>
-	public static final FinderPath FINDER_PATH_COUNT_BY_${entityFinder.name?upper_case} = new FinderPath(
+	private final FinderPath _finderPathCountBy${entityFinder.name} = new FinderPath(
 		${entity.name}ModelImpl.ENTITY_CACHE_ENABLED,
 		${entity.name}ModelImpl.FINDER_CACHE_ENABLED,
 		Long.class,
@@ -107,7 +107,7 @@
 </#if>
 
 <#if entityFinder.hasArrayableOperator() || entityFinder.hasCustomComparator()>
-	public static final FinderPath FINDER_PATH_WITH_PAGINATION_COUNT_BY_${entityFinder.name?upper_case} = new FinderPath(
+	private final FinderPath _finderPathWithPaginationCountBy${entityFinder.name} = new FinderPath(
 		${entity.name}ModelImpl.ENTITY_CACHE_ENABLED,
 		${entity.name}ModelImpl.FINDER_CACHE_ENABLED,
 		Long.class,

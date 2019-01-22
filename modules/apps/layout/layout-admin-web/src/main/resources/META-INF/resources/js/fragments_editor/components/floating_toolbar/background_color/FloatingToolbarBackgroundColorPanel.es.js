@@ -1,5 +1,5 @@
 import Component from 'metal-component';
-import Soy, {Config} from 'metal-soy';
+import Soy from 'metal-soy';
 
 import './FloatingToolbarBackgroundColorPanelDelegateTemplate.soy';
 import getConnectedComponent from '../../../store/ConnectedComponent.es';
@@ -33,18 +33,7 @@ class FloatingToolbarBackgroundColorPanel extends Component {
  * @static
  * @type {!Object}
  */
-FloatingToolbarBackgroundColorPanel.STATE = {
-
-	/**
-	 * @default undefined
-	 * @memberof FloatingToolbarBackgroundColorPanel
-	 * @review
-	 * @type {object}
-	 */
-	store: Config
-		.object()
-		.value(null)
-};
+FloatingToolbarBackgroundColorPanel.STATE = {};
 
 const ConnectedFloatingToolbarBackgroundColorPanel = getConnectedComponent(
 	FloatingToolbarBackgroundColorPanel,

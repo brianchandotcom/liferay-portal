@@ -4,13 +4,49 @@ import Soy, {Config} from 'metal-soy';
 
 import './FloatingToolbarSpacingPanelDelegateTemplate.soy';
 import {CONTAINER_TYPES, ITEM_CONFIG_KEYS} from '../../../utils/constants';
-import {UPDATE_LAST_SAVE_DATE, UPDATE_SAVING_CHANGES_STATUS, UPDATE_SECTION_CONFIG, UPDATE_TRANSLATION_STATUS} from '../../../actions/actions.es';
+import {setIn} from '../../../utils/FragmentsEditorUpdateUtils.es';
 import templates from './FloatingToolbarSpacingPanel.soy';
+import {UPDATE_LAST_SAVE_DATE, UPDATE_SAVING_CHANGES_STATUS, UPDATE_SECTION_CONFIG, UPDATE_TRANSLATION_STATUS} from '../../../actions/actions.es';
+
+/**
+ * @type {string}
+ */
+const DEFAULT_PADDING_SIZE = '1';
+
+/**
+ * @type {string[]}
+ */
+const PADDING_SIZES = ['0', '1', '2', '3', '4'];
 
 /**
  * FloatingToolbarSpacingPanel
  */
 class FloatingToolbarSpacingPanel extends Component {
+
+	/**
+	 * @inheritdoc
+	 * @param {object} state
+	 * @return {object}
+	 * @review
+	 */
+	prepareStateForRender(state) {
+		let nextState = state;
+		const config = (state.item && state.item.config) || {};
+		const selectedPaddingSizes = {
+			horizontal: DEFAULT_PADDING_SIZE,
+			vertical: DEFAULT_PADDING_SIZE
+		};
+
+		if (config) {
+			selectedPaddingSizes.horizontal = config.paddinghorizontal || DEFAULT_PADDING_SIZE;
+			selectedPaddingSizes.vertical = config.paddingvertical || DEFAULT_PADDING_SIZE;
+		}
+
+		nextState = setIn(nextState, ['_paddingSizes'], PADDING_SIZES);
+		nextState = setIn(nextState, ['_selectedPaddingSizes'], selectedPaddingSizes);
+
+		return nextState;
+	}
 
 	/**
 	 * Updates section configuration
@@ -58,6 +94,22 @@ class FloatingToolbarSpacingPanel extends Component {
 		this._updateSectionConfig(
 			{
 				[ITEM_CONFIG_KEYS.columnSpacing]: event.target.checked
+			}
+		);
+	}
+
+	/**
+	 * Handle container option change
+	 * @param {Event} event
+	 */
+	_handleContainerPaddingOptionChange(event) {
+		const {delegateTarget} = event;
+		const {paddingDirectionId} = delegateTarget.dataset;
+		const {value} = delegateTarget;
+
+		this._updateSectionConfig(
+			{
+				[`${ITEM_CONFIG_KEYS.padding}${paddingDirectionId}`]: value
 			}
 		);
 	}

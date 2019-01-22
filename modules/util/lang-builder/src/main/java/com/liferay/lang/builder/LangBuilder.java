@@ -143,11 +143,11 @@ public class LangBuilder {
 			StringBundler.concat(
 				_langDirName, "/", _langFileName, ".properties"));
 
-		String content = _orderProperties(propertiesFile);
-
-		if (Validator.isNull(content)) {
+		if (!propertiesFile.exists()) {
 			return;
 		}
+
+		String content = _orderProperties(propertiesFile, false);
 
 		// Locales that are not invoked by _createProperties should still be
 		// rewritten to use the right line separator
@@ -155,15 +155,18 @@ public class LangBuilder {
 		_orderProperties(
 			new File(
 				StringBundler.concat(
-					_langDirName, "/", _langFileName, "_en_AU.properties")));
+					_langDirName, "/", _langFileName, "_en_AU.properties")),
+			true);
 		_orderProperties(
 			new File(
 				StringBundler.concat(
-					_langDirName, "/", _langFileName, "_en_GB.properties")));
+					_langDirName, "/", _langFileName, "_en_GB.properties")),
+			true);
 		_orderProperties(
 			new File(
 				StringBundler.concat(
-					_langDirName, "/", _langFileName, "_fr_CA.properties")));
+					_langDirName, "/", _langFileName, "_fr_CA.properties")),
+			true);
 
 		_copyProperties(propertiesFile, "en");
 
@@ -309,6 +312,12 @@ public class LangBuilder {
 
 		if (propertiesFile.exists()) {
 			properties = _readProperties(propertiesFile);
+		}
+
+		if (Validator.isNull(content)) {
+			_write(propertiesFile, content);
+
+			return;
 		}
 
 		Properties parentProperties = null;
@@ -586,8 +595,10 @@ public class LangBuilder {
 		}
 	}
 
-	private String _orderProperties(File propertiesFile) throws IOException {
-		if (!propertiesFile.exists()) {
+	private String _orderProperties(File propertiesFile, boolean checkExistence)
+		throws IOException {
+
+		if (checkExistence && !propertiesFile.exists()) {
 			return null;
 		}
 

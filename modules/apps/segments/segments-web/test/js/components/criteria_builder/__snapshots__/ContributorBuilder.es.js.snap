@@ -17,6 +17,11 @@ exports[`ContributorBuilder should render: initialRender 1`] = `
         <div
           class="criteria-builder-toolbar"
         >
+          <div
+            class="criteria-model-label"
+          >
+            x-properties
+          </div>
           <label
             class="toggle-switch ml-auto"
           >

@@ -8,6 +8,11 @@ exports[`CriteriaBuilder should render 1`] = `
     <div
       class="criteria-builder-toolbar"
     >
+      <div
+        class="criteria-model-label"
+      >
+        x-properties
+      </div>
       <label
         class="toggle-switch ml-auto"
       >

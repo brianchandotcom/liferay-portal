@@ -32,5 +32,36 @@
 	&-panel {
 		margin-top: $fragmentsEditorSpacing;
 		padding: $fragmentsEditorSpacing * 2;
+
+		.form-group {
+			margin: 0;
+		}
+
+		.palette-item {
+			border: 5px solid transparent;
+			border-radius: 50%;
+			transition: border-color ease 0.2s;
+			will-change: border-color;
+
+			&-hover, &-selected {
+				border-color: #F1F2F5;
+			}
+
+			&-inner {
+				border: none;
+				border-radius: 50%;
+				height: 20px;
+				width: 20px;
+			}
+
+			&-selected .palette-item-inner {
+				background-image: none;
+			}
+		}
+
+		.palette-items-container {
+			display: flex;
+			flex-wrap: wrap;
+		}
 	}
 }

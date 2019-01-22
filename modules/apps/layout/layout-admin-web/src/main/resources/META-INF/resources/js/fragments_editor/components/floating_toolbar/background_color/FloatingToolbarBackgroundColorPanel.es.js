@@ -7,7 +7,20 @@ import templates from './FloatingToolbarBackgroundColorPanel.soy';
 /**
  * FloatingToolbarBackgroundColorPanel
  */
-class FloatingToolbarBackgroundColorPanel extends Component {}
+class FloatingToolbarBackgroundColorPanel extends Component {
+
+	/**
+	 * @inheritDoc
+	 */
+	rendered() {
+		AUI().use(
+			'aui-color-palette',
+			function(A) {
+				new A.ColorPalette().render('#floatingToolbarBackgroundColorPanelPalette');
+			}
+		);
+	}
+}
 
 /**
  * State definition.

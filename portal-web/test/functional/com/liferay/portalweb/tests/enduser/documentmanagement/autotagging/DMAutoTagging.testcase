@@ -324,7 +324,7 @@ definition {
 	@description = "This test asserts that an image is auto-tagged during upload when Auto-Tagging is enabled."
 	@priority = "5"
 	test Smoke {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "DMAutoTagging#Smoke";
 
 		ProductMenu.gotoPortlet(

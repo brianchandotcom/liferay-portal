@@ -10,7 +10,7 @@
 		"metal-tooltip": "^2.0.3"
 	},
 	"devDependencies": {
-		"liferay-npm-scripts": "^1.0.0"
+		"liferay-npm-scripts": "1.2.0"
 	},
 	"name": "adaptive-media-web",
 	"scripts": {

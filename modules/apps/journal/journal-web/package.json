@@ -19,7 +19,7 @@
 		"metal-state": "^2.6.4"
 	},
 	"devDependencies": {
-		"liferay-npm-scripts": "^1.0.0"
+		"liferay-npm-scripts": "1.2.0"
 	},
 	"name": "journal-web",
 	"scripts": {

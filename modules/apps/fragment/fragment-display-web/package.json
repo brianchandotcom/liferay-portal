@@ -20,7 +20,7 @@
 		"metal-state": "^2.13.2"
 	},
 	"devDependencies": {
-		"liferay-npm-scripts": "^1.0.0"
+		"liferay-npm-scripts": "1.2.0"
 	},
 	"name": "fragment-display-web",
 	"scripts": {

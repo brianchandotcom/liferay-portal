@@ -54,7 +54,7 @@
 		"metal-state": "^2.16.0"
 	},
 	"devDependencies": {
-		"liferay-npm-scripts": "1.1.1"
+		"liferay-npm-scripts": "1.2.0"
 	},
 	"jest": {
 		"moduleNameMapper": {

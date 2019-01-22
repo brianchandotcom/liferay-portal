@@ -18,7 +18,7 @@
 		"metal-state": "^2.16.7"
 	},
 	"devDependencies": {
-		"liferay-npm-scripts": "^1.0.0"
+		"liferay-npm-scripts": "1.2.0"
 	},
 	"name": "layout-taglib",
 	"scripts": {

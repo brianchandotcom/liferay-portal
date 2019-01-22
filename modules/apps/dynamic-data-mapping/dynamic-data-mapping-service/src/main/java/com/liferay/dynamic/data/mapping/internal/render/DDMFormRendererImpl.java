@@ -14,7 +14,6 @@
 
 package com.liferay.dynamic.data.mapping.internal.render;
 
-import com.liferay.dynamic.data.mapping.internal.util.DDMFieldsCounter;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.render.DDMFormFieldRenderer;
@@ -22,6 +21,7 @@ import com.liferay.dynamic.data.mapping.render.DDMFormFieldRendererRegistryUtil;
 import com.liferay.dynamic.data.mapping.render.DDMFormFieldRenderingContext;
 import com.liferay.dynamic.data.mapping.render.DDMFormRenderer;
 import com.liferay.dynamic.data.mapping.storage.Fields;
+import com.liferay.dynamic.data.mapping.util.DDMFieldsCounter;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
 

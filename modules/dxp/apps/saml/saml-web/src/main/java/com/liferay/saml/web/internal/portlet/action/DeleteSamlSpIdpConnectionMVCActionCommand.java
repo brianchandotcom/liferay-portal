@@ -45,11 +45,8 @@ public class DeleteSamlSpIdpConnectionMVCActionCommand
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		long samlSpIdpConnectionId = ParamUtil.getLong(
-			actionRequest, "samlSpIdpConnectionId");
-
 		_samlSpIdpConnectionLocalService.deleteSamlSpIdpConnection(
-			samlSpIdpConnectionId);
+			ParamUtil.getLong(actionRequest, "samlSpIdpConnectionId"));
 	}
 
 	@Reference

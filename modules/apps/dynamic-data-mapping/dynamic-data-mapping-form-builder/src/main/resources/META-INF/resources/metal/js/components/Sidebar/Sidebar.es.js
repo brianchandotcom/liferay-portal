@@ -1,9 +1,10 @@
-import {ClayActionsDropdown, ClayDropdown} from 'clay-dropdown';
+import {ClayActionsDropdown, ClayDropdownBase} from 'clay-dropdown';
+import {ClayIcon} from 'clay-icon';
 import {Config} from 'metal-state';
 import {Drag, DragDrop} from 'metal-drag-drop';
 import {EventHandler} from 'metal-events';
 import {focusedFieldStructure} from '../../util/config.es';
-import {normalizeSettingsContextPages} from '../../util/fieldSupport.es';
+import {getFieldPropertiesFromSettingsContext, normalizeSettingsContextPages} from '../../util/fieldSupport.es';
 import {selectText} from '../../util/dom.es';
 import autobind from 'autobind-decorator';
 import classnames from 'classnames';
@@ -539,7 +540,7 @@ class Sidebar extends Component {
 			{
 				...focusedField,
 				...newFieldType,
-				label: focusedField.label,
+				...getFieldPropertiesFromSettingsContext(settingsContext),
 				settingsContext,
 				type: newFieldType.name
 			}
@@ -554,12 +555,14 @@ class Sidebar extends Component {
 		const newVisitor = new PagesVisitor(newSettingsContext.pages);
 		const oldVisitor = new PagesVisitor(oldSettingsContext.pages);
 
+		const excludedFields = ['type', 'validation'];
+
 		const getByFieldNameAndType = (fieldName, type) => {
 			let field;
 
 			oldVisitor.mapFields(
 				oldField => {
-					if (fieldName !== 'type' && oldField.fieldName === fieldName && oldField.type === type) {
+					if (excludedFields.indexOf(fieldName) === -1 && oldField.fieldName === fieldName && oldField.type === type) {
 						field = oldField;
 					}
 				}
@@ -742,6 +745,28 @@ class Sidebar extends Component {
 		);
 	}
 
+	@autobind
+	_renderFieldTypeDropdownLabel() {
+		const {fieldTypes, focusedField, spritemap} = this.props;
+		const {icon, label} = fieldTypes.find(({name}) => name === focusedField.type);
+
+		return (
+			<Fragment>
+				<ClayIcon
+					elementClasses={'inline-item inline-item-before'}
+					spritemap={spritemap}
+					symbol={icon}
+				/>
+				{label}
+				<ClayIcon
+					elementClasses={'inline-item inline-item-after'}
+					spritemap={spritemap}
+					symbol={'caret-bottom'}
+				/>
+			</Fragment>
+		);
+	}
+
 	_renderTopBar() {
 		const {fieldTypes, focusedField, spritemap} = this.props;
 		const editMode = this._isEditMode();
@@ -790,7 +815,7 @@ class Sidebar extends Component {
 						</li>
 						<li class="tbar-item ddm-fieldtypes-dropdown tbar-item-expand text-left">
 							<div>
-								<ClayDropdown
+								<ClayDropdownBase
 									disabled={!this.isChangeFieldTypeEnabled()}
 									events={{
 										itemClicked: this._handleChangeFieldTypeItemClicked
@@ -798,7 +823,7 @@ class Sidebar extends Component {
 									icon={focusedFieldType.icon}
 									items={this.state.dropdownFieldTypes}
 									itemsIconAlignment={'left'}
-									label={focusedFieldType.label}
+									label={this._renderFieldTypeDropdownLabel}
 									spritemap={spritemap}
 									style={'secondary'}
 									triggerClasses={'nav-link btn-sm'}

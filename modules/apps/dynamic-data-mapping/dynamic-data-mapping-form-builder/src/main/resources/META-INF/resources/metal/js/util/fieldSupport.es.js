@@ -18,7 +18,6 @@ export const generateInstanceId = length => {
 
 /**
  * Makes sure fields have its settings form filled up with some default values.
- * @private
  */
 
 export const normalizeSettingsContextPages = (pages, namespace, fieldType, generatedFieldName) => {
@@ -67,4 +66,21 @@ export const normalizeSettingsContextPages = (pages, namespace, fieldType, gener
 			};
 		}
 	);
+};
+
+/**
+ * Converts the settings Form of a field into an object of field properties.
+ */
+
+export const getFieldPropertiesFromSettingsContext = settingsContext => {
+	const properties = {};
+	const visitor = new PagesVisitor(settingsContext.pages);
+
+	visitor.mapFields(
+		({fieldName, value}) => {
+			properties[fieldName] = value;
+		}
+	);
+
+	return properties;
 };

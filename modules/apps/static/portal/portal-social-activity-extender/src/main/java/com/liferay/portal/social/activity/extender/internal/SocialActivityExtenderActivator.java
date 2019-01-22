@@ -37,7 +37,7 @@ import org.osgi.util.tracker.ServiceTracker;
 /**
  * @author Shuyang Zhou
  */
-public class SocialActivityExtender implements BundleActivator {
+public class SocialActivityExtenderActivator implements BundleActivator {
 
 	@Override
 	public void start(BundleContext bundleContext) {

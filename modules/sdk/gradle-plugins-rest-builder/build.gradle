@@ -1,7 +1,16 @@
+apply plugin: "org.ysb33r.gradletest"
+
+task copyGradleTestDependencies(type: Copy)
+
 String gradleVersion = "4.10.2"
 
 tasks.eclipse {
 	ext.gradleVersion = gradleVersion
+}
+
+copyGradleTestDependencies {
+	from configurations.compile
+	into jar.destinationDir
 }
 
 dependencies {
@@ -9,4 +18,11 @@ dependencies {
 
 	compileOnly fileTree(builtBy: [rootProject.tasks.getByName("extractGradleApi" + gradleVersion.replace(".", ""))], dir: new File(rootProject.buildDir, "gradle-${gradleVersion}"))
 	compileOnly group: "com.liferay", name: "com.liferay.portal.tools.rest.builder", version: "1.0.0"
+}
+
+gradleTest {
+	dependsOn copyGradleTestDependencies
+	dependsOn jar
+
+	versions gradleVersion
 }

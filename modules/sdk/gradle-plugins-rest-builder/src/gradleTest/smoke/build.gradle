@@ -1,0 +1,27 @@
+import com.liferay.gradle.util.GradleUtil
+
+apply plugin: "com.liferay.portal.tools.rest.builder"
+
+task runGradleTest
+
+repositories {
+	if (GradleUtil.getRootDir(project.getRootProject(), ".m2-tmp") != null) {
+		maven {
+			url new File(GradleUtil.getRootDir(project.getRootProject(), ".m2-tmp"), ".m2-tmp")
+		}
+	}
+
+	maven {
+		url "https://repository-cdn.liferay.com/nexus/content/groups/public"
+	}
+}
+
+runGradleTest {
+	dependsOn buildRest
+
+	doLast {
+		File restYAMLFile = file("rest.yaml")
+
+		assert restYAMLFile.exists()
+	}
+}

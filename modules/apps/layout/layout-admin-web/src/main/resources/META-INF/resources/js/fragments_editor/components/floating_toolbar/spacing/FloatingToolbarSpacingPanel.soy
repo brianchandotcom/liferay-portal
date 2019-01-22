@@ -4,58 +4,93 @@
  * FloatingToolbarSpacingPanel
  */
 {template .render}
-	{@param item: [
-		config: [
-			columnSpacing: bool,
-			containerType: string
-		]
-	]}
-	{@param? _containerTypes: list<[
-		containerTypeId: string,
-		label: string
-	]>}
+	{@param item: ?}
+	{@param? _containerTypes: ?}
 	{@param? _handleContainerOptionChange: any}
 	{@param? _handleColumnSpacingOptionChange: any}
 
-	{if $_containerTypes}
+	<div class="floating-toolbar-spacing-panel">
 		<div class="form-group">
-			<label for="floatingToolbarSpacingPanelContainer">
-				{msg desc=""}container{/msg}
-			</label>
-
-			<select
-				class="form-control form-control-sm"
-				data-onchange="{$_handleContainerOptionChange}"
-				id="floatingToolbarSpacingPanelContainer"
-			>
-				{foreach $containerType in $_containerTypes}
-					{call .spacingOption}
-						{param containerType: $containerType /}
-						{param item: $item /}
-						{param key: $containerType.containerTypeId /}
-					{/call}
-				{/foreach}
-			</select>
-
-			{let $spacingCheckboxLabel kind="text"}
-				{msg desc=""}space-between-columns{/msg}
-			{/let}
-
-			{call ClayCheckbox.render}
-				{param checked: ($item.config and $item.config.columnSpacing) ?: true /}
-				{param events: [
-					'change': $_handleColumnSpacingOptionChange
-				] /}
-				{param label: $spacingCheckboxLabel /}
+			{call .containerTypeOptions}
+				{param containerTypes: $_containerTypes /}
+				{param handleContainerOptionChange: $_handleContainerOptionChange /}
+				{param item: $item /}
 			{/call}
 		</div>
+
+		<div class="form-group">
+			{call .columnSpacingOptions}
+				{param handleColumnSpacingOptionChange: $_handleColumnSpacingOptionChange /}
+				{param item: $item /}
+			{/call}
+		</div>
+	</div>
+{/template}
+
+/**
+ * Column spacing options
+ */
+{template .columnSpacingOptions}
+	{@param item: [
+		config: [
+			columnSpacing: bool
+		]
+	]}
+	{@param? handleColumnSpacingOptionChange: any}
+
+	{let $spacingCheckboxLabel kind="text"}
+		{msg desc=""}space-between-columns{/msg}
+	{/let}
+
+	{call ClayCheckbox.render}
+		{param checked: ($item.config and $item.config.columnSpacing) ?: true /}
+		{param events: [
+			'change': $handleColumnSpacingOptionChange
+		] /}
+		{param label: $spacingCheckboxLabel /}
+	{/call}
+{/template}
+
+/**
+ * Container type options
+ */
+{template .containerTypeOptions}
+	{@param item: [
+		config: [
+			containerType: string
+		]
+	]}
+	{@param? containerTypes: list<[
+		containerTypeId: string,
+		label: string
+	]>}
+	{@param? handleContainerOptionChange: any}
+
+	{if $containerTypes}
+		<label for="floatingToolbarSpacingPanelContainer">
+			{msg desc=""}container{/msg}
+		</label>
+
+		<select
+			class="form-control form-control-sm"
+			data-onchange="{$handleContainerOptionChange}"
+			id="floatingToolbarSpacingPanelContainer"
+		>
+			{foreach $containerType in $containerTypes}
+				{call .containerTypeOption}
+					{param containerType: $containerType /}
+					{param item: $item /}
+					{param key: $containerType.containerTypeId /}
+				{/call}
+			{/foreach}
+		</select>
 	{/if}
 {/template}
 
 /**
- * Spacing option
+ * Container type option
  */
-{template .spacingOption}
+{template .containerTypeOption}
 	{@param containerType: [
 		containerTypeId: string,
 		label: string

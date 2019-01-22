@@ -17,7 +17,7 @@
 
 		<column name="fileEntryId" type="long" />
 		<column name="fileVersionId" type="long" />
-		<column name="previewType" type="int" />
+		<column name="previewStatus" type="int" />
 
 		<!-- Order -->
 
@@ -40,7 +40,7 @@
 		<finder name="F_F_P" return-type="DLFileEntryPreview" unique="true">
 			<finder-column name="fileEntryId" />
 			<finder-column name="fileVersionId" />
-			<finder-column name="previewType" />
+			<finder-column name="previewStatus" />
 		</finder>
 	</entity>
 </service-builder>

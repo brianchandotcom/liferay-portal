@@ -400,8 +400,8 @@ public class DummyReferenceStagedModelRepository
 
 			if (expression.contains("groupId=")) {
 				return d ->
-					d.getGroupId() ==
-						Long.valueOf(expression.substring("groupId=".length()));
+					d.getGroupId() == Long.valueOf(
+						expression.substring("groupId=".length()));
 			}
 
 			if (expression.contains("id>-1")) {
@@ -410,9 +410,8 @@ public class DummyReferenceStagedModelRepository
 
 			if (expression.contains("companyId=")) {
 				return d ->
-					d.getCompanyId() ==
-						Long.valueOf(
-							expression.substring("companyId=".length()));
+					d.getCompanyId() == Long.valueOf(
+						expression.substring("companyId=".length()));
 			}
 
 			return d -> true;

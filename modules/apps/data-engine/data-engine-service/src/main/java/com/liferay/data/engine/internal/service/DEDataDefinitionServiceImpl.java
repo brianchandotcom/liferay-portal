@@ -57,8 +57,10 @@ import com.liferay.data.engine.service.DEDataDefinitionSearchResponse;
 import com.liferay.data.engine.service.DEDataDefinitionService;
 import com.liferay.dynamic.data.lists.service.DDLRecordSetLocalService;
 import com.liferay.dynamic.data.mapping.exception.NoSuchStructureException;
+import com.liferay.dynamic.data.mapping.exception.RequiredStructureException.MustNotDeleteStructureReferencedByStructureLinks;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureService;
+import com.liferay.dynamic.data.mapping.service.DDMStructureVersionLocalService;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
@@ -177,6 +179,11 @@ public class DEDataDefinitionServiceImpl
 		catch (NoSuchStructureException nsse) {
 			throw new DEDataDefinitionException.NoSuchDataDefinition(
 				deDataDefinitionDeleteRequest.getDEDataDefinitionId(), nsse);
+		}
+		catch (MustNotDeleteStructureReferencedByStructureLinks mndsrbsl) {
+			throw new DEDataDefinitionException.MustHaveNoDataRecordCollection(
+				deDataDefinitionDeleteRequest.getDEDataDefinitionId(),
+				mndsrbsl);
 		}
 		catch (Exception e) {
 			throw new DEDataDefinitionException(e);
@@ -393,7 +400,8 @@ public class DEDataDefinitionServiceImpl
 		if (_deDataDefinitionDeleteRequestExecutor == null) {
 			_deDataDefinitionDeleteRequestExecutor =
 				new DEDataDefinitionDeleteRequestExecutor(
-					ddlRecordSetLocalService, ddmStructureLocalService);
+					ddlRecordSetLocalService, ddmStructureLocalService,
+					ddmStructureVersionLocalService);
 		}
 
 		return _deDataDefinitionDeleteRequestExecutor;
@@ -455,7 +463,7 @@ public class DEDataDefinitionServiceImpl
 		if (_deDataDefinitionSaveRequestExecutor == null) {
 			_deDataDefinitionSaveRequestExecutor =
 				new DEDataDefinitionSaveRequestExecutor(
-					ddlRecordSetLocalService, ddmStructureLocalService,
+					ddmStructureLocalService,
 					deDataDefinitionFieldsSerializerTracker, portal,
 					resourceLocalService);
 		}
@@ -542,6 +550,9 @@ public class DEDataDefinitionServiceImpl
 
 	@Reference
 	protected DDMStructureService ddmStructureService;
+
+	@Reference
+	protected DDMStructureVersionLocalService ddmStructureVersionLocalService;
 
 	@Reference
 	protected DEDataDefinitionFieldsDeserializerTracker

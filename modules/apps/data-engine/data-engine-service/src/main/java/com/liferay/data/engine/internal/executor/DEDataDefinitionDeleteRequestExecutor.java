@@ -18,10 +18,16 @@ import com.liferay.data.engine.service.DEDataDefinitionDeleteRequest;
 import com.liferay.data.engine.service.DEDataDefinitionDeleteResponse;
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
 import com.liferay.dynamic.data.lists.service.DDLRecordSetLocalService;
+import com.liferay.dynamic.data.mapping.exception.RequiredStructureException;
+import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.dynamic.data.mapping.model.DDMStructureVersion;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
+import com.liferay.dynamic.data.mapping.service.DDMStructureVersionLocalService;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
+
+import java.util.List;
 
 /**
  * @author Jeyvison Nascimento
@@ -30,10 +36,12 @@ public class DEDataDefinitionDeleteRequestExecutor {
 
 	public DEDataDefinitionDeleteRequestExecutor(
 		DDLRecordSetLocalService ddlRecordSetLocalService,
-		DDMStructureLocalService ddmStructureLocalService) {
+		DDMStructureLocalService ddmStructureLocalService,
+		DDMStructureVersionLocalService ddmStructureVersionLocalService) {
 
 		_ddlRecordSetLocalService = ddlRecordSetLocalService;
 		_ddmStructureLocalService = ddmStructureLocalService;
+		_ddmStructureVersionLocalService = ddmStructureVersionLocalService;
 	}
 
 	public DEDataDefinitionDeleteResponse execute(
@@ -43,7 +51,27 @@ public class DEDataDefinitionDeleteRequestExecutor {
 		long deDataDefinitionId =
 			deDataDefinitionDeleteRequest.getDEDataDefinitionId();
 
+		DDMStructure ddmStructure = _ddmStructureLocalService.getDDMStructure(
+			deDataDefinitionId);
+
+		if (_ddlRecordSetLocalService.getRecordSetsCount(
+				ddmStructure.getGroupId(), deDataDefinitionId, false) > 0) {
+
+			throw new RequiredStructureException.
+				MustNotDeleteStructureReferencedByStructureLinks(
+					deDataDefinitionId);
+		}
+
 		deleteDDLRecordSet(deDataDefinitionId);
+
+		List<DDMStructureVersion> structureVersions =
+			_ddmStructureVersionLocalService.getStructureVersions(
+				deDataDefinitionId);
+
+		for (DDMStructureVersion structureVersion : structureVersions) {
+			_ddmStructureVersionLocalService.deleteDDMStructureVersion(
+				structureVersion);
+		}
 
 		_ddmStructureLocalService.deleteDDMStructure(deDataDefinitionId);
 
@@ -68,5 +96,7 @@ public class DEDataDefinitionDeleteRequestExecutor {
 
 	private final DDLRecordSetLocalService _ddlRecordSetLocalService;
 	private final DDMStructureLocalService _ddmStructureLocalService;
+	private final DDMStructureVersionLocalService
+		_ddmStructureVersionLocalService;
 
 }

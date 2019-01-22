@@ -36,6 +36,25 @@ public class DEDataDefinitionException extends PortalException {
 		super(cause);
 	}
 
+	public static class MustHaveNoDataRecordCollection
+		extends DEDataDefinitionException {
+
+		public MustHaveNoDataRecordCollection(
+			long deDataDefinitionId, Throwable cause) {
+
+			super(cause);
+
+			_deDataDefinitionId = deDataDefinitionId;
+		}
+
+		public long getDEDataDefinitionId() {
+			return _deDataDefinitionId;
+		}
+
+		private final long _deDataDefinitionId;
+
+	}
+
 	public static class MustHavePermission extends DEDataDefinitionException {
 
 		public MustHavePermission(String[] actionId, Throwable cause) {

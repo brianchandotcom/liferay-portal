@@ -38,7 +38,6 @@ PortalUtil.addPortletBreadcrumbEntry(request, editContactInformationDisplayConte
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.EDIT %>" />
 	<aui:input name="className" type="hidden" value="<%= editContactInformationDisplayContext.getClassName() %>" />
 	<aui:input name="classPK" type="hidden" value="<%= String.valueOf(editContactInformationDisplayContext.getClassPK()) %>" />
-	<aui:input name="contextOrganizationId" type="hidden" value="<%= String.valueOf(editContactInformationDisplayContext.getContextOrganizationId()) %>" />
 	<aui:input name="errorMVCPath" type="hidden" value="/common/edit_email_address.jsp" />
 	<aui:input name="listType" type="hidden" value="<%= ListTypeConstants.EMAIL_ADDRESS %>" />
 	<aui:input name="primaryKey" type="hidden" value="<%= String.valueOf(editContactInformationDisplayContext.getPrimaryKey()) %>" />

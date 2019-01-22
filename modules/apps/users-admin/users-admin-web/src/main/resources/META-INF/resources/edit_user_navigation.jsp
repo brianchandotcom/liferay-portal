@@ -47,18 +47,6 @@ if (!portletName.equals(UsersAdminPortletKeys.MY_ACCOUNT)) {
 
 	renderResponse.setTitle((selUser == null) ? LanguageUtil.get(request, "add-user") : LanguageUtil.format(request, "edit-user-x", selUser.getFullName(), false));
 }
-
-long contextOrganizationId = OrganizationConstants.ANY_PARENT_ORGANIZATION_ID;
-
-String queryString = HttpUtil.getQueryString(backURL);
-
-Map<String, String[]> parameterMap = HttpUtil.getParameterMap(queryString);
-
-String organizationIdKey = renderResponse.getNamespace() + "organizationId";
-
-if (parameterMap.containsKey(organizationIdKey)) {
-	contextOrganizationId = Long.valueOf(parameterMap.get(organizationIdKey)[0]);
-}
 %>
 
 <portlet:renderURL var="redirect">
@@ -87,9 +75,7 @@ if (parameterMap.containsKey(organizationIdKey)) {
 		</c:if>
 
 		<div class="sheet-section">
-			<liferay-util:include page="<%= jspPath %>" servletContext="<%= application %>">
-				<liferay-util:param name="contextOrganizationId" value="<%= String.valueOf(contextOrganizationId) %>" />
-			</liferay-util:include>
+			<liferay-util:include page="<%= jspPath %>" servletContext="<%= application %>" />
 		</div>
 
 		<c:if test="<%= editable && (boolean)request.getAttribute(UsersAdminWebKeys.SHOW_CONTROLS) %>">

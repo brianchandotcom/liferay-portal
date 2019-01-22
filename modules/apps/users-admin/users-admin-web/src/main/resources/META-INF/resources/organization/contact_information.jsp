@@ -23,7 +23,6 @@ long organizationId = organizationScreenNavigationDisplayContext.getOrganization
 
 request.setAttribute("contact_information.jsp-className", Organization.class.getName());
 request.setAttribute("contact_information.jsp-classPK", organizationId);
-request.setAttribute("contextOrganizationId", organizationScreenNavigationDisplayContext.getParentOrganizationId());
 %>
 
 <div class="sheet-section">

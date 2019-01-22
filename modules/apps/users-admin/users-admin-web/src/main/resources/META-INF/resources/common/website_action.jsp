@@ -19,7 +19,6 @@
 <%
 String className = (String)request.getAttribute("contact_information.jsp-className");
 long classPK = (long)request.getAttribute("contact_information.jsp-classPK");
-long contextOrganizationId = (long)request.getAttribute("contextOrganizationId");
 
 ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 
@@ -42,7 +41,6 @@ long websiteId = website.getWebsiteId();
 	editURL.setParameter("className", className);
 	editURL.setParameter("classPK", String.valueOf(classPK));
 	editURL.setParameter("mvcPath", "/common/edit_website.jsp");
-	editURL.setParameter("contextOrganizationId", String.valueOf(contextOrganizationId));
 	editURL.setParameter("primaryKey", String.valueOf(websiteId));
 	editURL.setParameter("redirect", currentURL);
 	%>

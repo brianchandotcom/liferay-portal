@@ -19,7 +19,6 @@
 <%
 String className = (String)request.getAttribute("contact_information.jsp-className");
 long classPK = (long)request.getAttribute("contact_information.jsp-classPK");
-long contextOrganizationId = (long)request.getAttribute("contextOrganizationId");
 
 String emptyResultsMessage = ParamUtil.getString(request, "emptyResultsMessage");
 
@@ -38,7 +37,6 @@ List<Website> websites = WebsiteServiceUtil.getWebsites(className, classPK);
 
 			editURL.setParameter("className", className);
 			editURL.setParameter("classPK", String.valueOf(classPK));
-			editURL.setParameter("contextOrganizationId", String.valueOf(contextOrganizationId));
 			editURL.setParameter("mvcPath", "/common/edit_website.jsp");
 			editURL.setParameter("redirect", currentURL);
 			%>

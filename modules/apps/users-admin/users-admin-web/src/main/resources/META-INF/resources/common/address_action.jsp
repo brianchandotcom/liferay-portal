@@ -19,7 +19,6 @@
 <%
 String className = (String)request.getAttribute("contact_information.jsp-className");
 long classPK = (long)request.getAttribute("contact_information.jsp-classPK");
-long contextOrganizationId = (long)request.getAttribute("contextOrganizationId");
 
 long addressId = ParamUtil.getLong(request, "addressId");
 %>
@@ -38,7 +37,6 @@ long addressId = ParamUtil.getLong(request, "addressId");
 	editURL.setParameter("className", className);
 	editURL.setParameter("classPK", String.valueOf(classPK));
 	editURL.setParameter("mvcPath", "/common/edit_address.jsp");
-	editURL.setParameter("contextOrganizationId", String.valueOf(contextOrganizationId));
 	editURL.setParameter("primaryKey", String.valueOf(addressId));
 	editURL.setParameter("redirect", currentURL);
 	%>

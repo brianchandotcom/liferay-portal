@@ -91,7 +91,7 @@ public class PDFProcessorImpl
 	extends DLPreviewableProcessor implements PDFProcessor {
 
 	@Override
-	public void afterPropertiesSet() throws Exception {
+	public void afterPropertiesSet() {
 		FileUtil.mkdirs(DECRYPT_TMP_PATH);
 		FileUtil.mkdirs(PREVIEW_TMP_PATH);
 		FileUtil.mkdirs(THUMBNAIL_TMP_PATH);
@@ -978,9 +978,7 @@ public class PDFProcessorImpl
 		return false;
 	}
 
-	private boolean _isGenerateThumbnail(FileVersion fileVersion)
-		throws Exception {
-
+	private boolean _isGenerateThumbnail(FileVersion fileVersion) {
 		if (PropsValues.DL_FILE_ENTRY_THUMBNAIL_ENABLED &&
 			!hasThumbnail(fileVersion, THUMBNAIL_INDEX_DEFAULT)) {
 

@@ -28,6 +28,7 @@
 
 		<!-- Module checks -->
 
+		<check name="BNDBundleActivatorCheck" />
 		<check name="BNDBundleInformationCheck" />
 		<check name="BNDDirectoryNameCheck" />
 		<check name="BNDExportsCheck" />

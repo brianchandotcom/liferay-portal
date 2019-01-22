@@ -156,6 +156,43 @@ class SegmentEdit extends Component {
 		);
 	};
 
+	_handlePreviewClick = url => event => {
+		const formElement = document.getElementById(this.props.formId);
+
+		const formData = new FormData(formElement);
+
+		fetch(
+			url,
+			{
+				body: formData,
+				method: 'POST'
+			}
+		).then(
+			response => response.text()
+		).then(
+			html => {
+				Liferay.Util.openWindow({
+					dialog: {
+						destroyOnHide: true,
+						bodyContent: html
+					},
+					id: 'segment-members-dialog',
+					title: `${this.props.values.name} members`
+				})
+			}
+		).catch(
+			() => {
+				Liferay.Util.openToast(
+					{
+						message: Liferay.Language.get('an-unexpected-error-occurred'),
+						title: Liferay.Language.get('error'),
+						type: 'danger'
+					}
+				);
+			}
+		);
+	}
+
 	render() {
 		const {
 			handleChange,
@@ -236,8 +273,9 @@ class SegmentEdit extends Component {
 							{previewMembersURL &&
 								<ClayButton
 									className="members-preview-button"
-									href={previewMembersURL}
 									label={Liferay.Language.get('preview-members')}
+									onClick={this._handlePreviewClick(previewMembersURL)}
+									type="button"
 								/>
 							}
 

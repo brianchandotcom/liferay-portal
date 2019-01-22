@@ -52,8 +52,6 @@ renderResponse.setTitle(editSegmentsEntryDisplayContext.getTitle(locale));
 	String segmentEditRootElementId = renderResponse.getNamespace() + "-segment-edit-root";
 	%>
 	
-	<liferay-util:include page="/edit_segments_entry_tabs.jsp" servletContext="<%= application %>" />
-
 	<div id="<%= segmentEditRootElementId %>"></div>
 
 	<portlet:renderURL var="previewMembersURL">

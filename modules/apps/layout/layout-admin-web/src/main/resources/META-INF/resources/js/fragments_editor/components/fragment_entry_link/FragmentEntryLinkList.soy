@@ -198,6 +198,14 @@
 			{sp}fragment-entry-link-list__container--hovered
 			{sp}fragments-editor__topper-wrapper--hovered
 		{/if}
+
+		{if $row and $row.config and ($row.config.paddinghorizontal)}
+			{sp}fragment-entry-link-list__container--padding-horizontal-{$row.config.paddinghorizontal}
+		{/if}
+
+		{if $row and $row.config and ($row.config.paddingvertical)}
+			{sp}fragment-entry-link-list__container--padding-vertical-{$row.config.paddingvertical}
+		{/if}
 	{/let}
 
 	<section

@@ -14,9 +14,9 @@ import {UPDATE_LAST_SAVE_DATE, UPDATE_SAVING_CHANGES_STATUS, UPDATE_SECTION_CONF
 const DEFAULT_PADDING_SIZE = '1';
 
 /**
- * @type {string[]}
+ * @type {number}
  */
-const PADDING_SIZES = ['0', '1', '2', '3', '4'];
+const PADDING_SIZES = 9;
 
 /**
  * FloatingToolbarSpacingPanel
@@ -42,8 +42,20 @@ class FloatingToolbarSpacingPanel extends Component {
 			selectedPaddingSizes.vertical = config.paddingvertical || DEFAULT_PADDING_SIZE;
 		}
 
-		nextState = setIn(nextState, ['_paddingSizes'], PADDING_SIZES);
-		nextState = setIn(nextState, ['_selectedPaddingSizes'], selectedPaddingSizes);
+		nextState = setIn(
+			nextState,
+			['_paddingSizes'],
+			Array
+				.from({length: PADDING_SIZES})
+				.fill(0)
+				.map((_, i) => i.toString())
+		);
+
+		nextState = setIn(
+			nextState,
+			['_selectedPaddingSizes'],
+			selectedPaddingSizes
+		);
 
 		return nextState;
 	}

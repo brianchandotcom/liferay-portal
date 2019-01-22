@@ -3,11 +3,11 @@
 
 <service-builder auto-import-default-references="false" auto-namespace-tables="false" package-path="com.liferay.document.library">
 	<namespace>DL</namespace>
-	<entity local-service="true" name="DLFileEntryPreview" remote-service="false">
+	<entity local-service="true" name="FileVersionPreview" remote-service="false">
 
 		<!-- PK fields -->
 
-		<column name="fileEntryPreviewId" primary="true" type="long" />
+		<column name="fileVersionPreviewId" primary="true" type="long" />
 
 		<!-- Group instance -->
 
@@ -22,7 +22,7 @@
 		<!-- Order -->
 
 		<order by="desc">
-			<order-column name="fileEntryPreviewId" />
+			<order-column name="fileVersionPreviewId" />
 		</order>
 
 		<!-- Finder methods -->
@@ -33,11 +33,11 @@
 		<finder name="FileVersionId" return-type="Collection">
 			<finder-column name="fileVersionId" />
 		</finder>
-		<finder name="F_F" return-type="DLFileEntryPreview" unique="true">
+		<finder name="F_F" return-type="FileVersionPreview" unique="true">
 			<finder-column name="fileEntryId" />
 			<finder-column name="fileVersionId" />
 		</finder>
-		<finder name="F_F_P" return-type="DLFileEntryPreview" unique="true">
+		<finder name="F_F_P" return-type="FileVersionPreview" unique="true">
 			<finder-column name="fileEntryId" />
 			<finder-column name="fileVersionId" />
 			<finder-column name="previewStatus" />

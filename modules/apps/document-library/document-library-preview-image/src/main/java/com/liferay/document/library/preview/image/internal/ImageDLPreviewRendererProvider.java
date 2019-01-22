@@ -14,7 +14,7 @@
 
 package com.liferay.document.library.preview.image.internal;
 
-import com.liferay.document.library.constants.DLFileEntryPreviewConstants;
+import com.liferay.document.library.constants.FileVersionPreviewConstants;
 import com.liferay.document.library.kernel.util.DLProcessorRegistryUtil;
 import com.liferay.document.library.kernel.util.ImageProcessorUtil;
 import com.liferay.document.library.preview.DLPreviewRenderer;
@@ -22,7 +22,7 @@ import com.liferay.document.library.preview.DLPreviewRendererProvider;
 import com.liferay.document.library.preview.exception.DLFileEntryPreviewGenerationException;
 import com.liferay.document.library.preview.exception.DLPreviewGenerationInProcessException;
 import com.liferay.document.library.preview.exception.DLPreviewSizeException;
-import com.liferay.document.library.service.DLFileEntryPreviewLocalService;
+import com.liferay.document.library.service.FileVersionPreviewLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.util.HashMapDictionary;
@@ -94,9 +94,9 @@ public class ImageDLPreviewRendererProvider
 	protected void checkForPreviewGenerationExceptions(FileVersion fileVersion)
 		throws PortalException {
 
-		if (_dlFileEntryPreviewLocalService.hasDLFileEntryPreview(
+		if (_fileVersionPreviewLocalService.hasFileVersionPreview(
 				fileVersion.getFileEntryId(), fileVersion.getFileVersionId(),
-				DLFileEntryPreviewConstants.FAILURE)) {
+				FileVersionPreviewConstants.FAILURE)) {
 
 			throw new DLFileEntryPreviewGenerationException();
 		}
@@ -115,11 +115,11 @@ public class ImageDLPreviewRendererProvider
 		_dlPreviewRendererProviderServiceRegistration.unregister();
 	}
 
-	@Reference
-	private DLFileEntryPreviewLocalService _dlFileEntryPreviewLocalService;
-
 	private ServiceRegistration<DLPreviewRendererProvider>
 		_dlPreviewRendererProviderServiceRegistration;
+
+	@Reference
+	private FileVersionPreviewLocalService _fileVersionPreviewLocalService;
 
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.document.library.preview.image)"

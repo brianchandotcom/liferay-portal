@@ -139,8 +139,9 @@ public class FacebookConnectAction implements StrutsAction {
 		String stateNonce = stateJSONObject.getString("stateNonce");
 
 		if (!stateNonce.equals(nonce)) {
-			throw new PrincipalException.MustBeAuthenticated(
-				_portal.getUserId(request));
+			throw new PrincipalException.MustHaveValidCSRFToken(
+				_portal.getUserId(request),
+				FacebookConnectAction.class.getName());
 		}
 
 		if (!Validator.isBlank(ParamUtil.getString(request, "error"))) {

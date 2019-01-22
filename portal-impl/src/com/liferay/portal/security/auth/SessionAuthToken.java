@@ -175,8 +175,8 @@ public class SessionAuthToken implements AuthToken {
 			request, _CSRF, false);
 
 		if (!csrfToken.equals(sessionToken)) {
-			throw new PrincipalException.MustBeAuthenticated(
-				PortalUtil.getUserId(request));
+			throw new PrincipalException.MustHaveValidCSRFToken(
+				PortalUtil.getUserId(request), origin);
 		}
 	}
 

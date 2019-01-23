@@ -54,11 +54,6 @@ import javax.portlet.RenderResponse;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
-
 /**
  * @author Pavel Savinov
  */
@@ -204,17 +199,8 @@ public class AssetEntryUsagesDisplayContext {
 				assetEntryUsage.getClassPK());
 
 		FragmentEntry fragmentEntry =
-			FragmentEntryLocalServiceUtil.fetchFragmentEntry(
+			FragmentEntryLocalServiceUtil.getFragmentEntry(
 				fragmentEntryLink.getFragmentEntryId());
-
-		if (fragmentEntry == null) {
-			String portletId = _getPortletId(fragmentEntryLink.getHtml());
-
-			return LanguageUtil.format(
-				request, "x-widget",
-				PortalUtil.getPortletTitle(
-					portletId, themeDisplay.getLocale()));
-		}
 
 		if (fragmentEntry.getType() ==
 				FragmentEntryTypeConstants.TYPE_ELEMENT) {
@@ -391,23 +377,6 @@ public class AssetEntryUsagesDisplayContext {
 			_renderRequest, "orderByType", "asc");
 
 		return _orderByType;
-	}
-
-	private String _getPortletId(String content) {
-		Document document = Jsoup.parse(content);
-
-		Elements elements = document.getElementsByAttributeValueStarting(
-			"id", "portlet_");
-
-		if (elements.size() != 1) {
-			return StringPool.BLANK;
-		}
-
-		Element element = elements.get(0);
-
-		String id = element.id();
-
-		return PortletIdCodec.decodePortletName(id.substring(8));
 	}
 
 	private Long _assetEntryId;

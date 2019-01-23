@@ -50,7 +50,6 @@ import com.liferay.saml.opensaml.integration.internal.credential.KeyStoreCredent
 import com.liferay.saml.opensaml.integration.internal.identifier.SamlIdentifierGeneratorStrategyFactory;
 import com.liferay.saml.opensaml.integration.internal.metadata.MetadataGeneratorUtil;
 import com.liferay.saml.opensaml.integration.internal.metadata.MetadataManagerImpl;
-import com.liferay.saml.opensaml.integration.internal.provider.DBMetadataResolver;
 import com.liferay.saml.opensaml.integration.internal.servlet.profile.IdentifierGenerationStrategyFactory;
 import com.liferay.saml.opensaml.integration.internal.velocity.VelocityEngineFactory;
 import com.liferay.saml.runtime.configuration.SamlProviderConfiguration;
@@ -64,6 +63,7 @@ import java.lang.reflect.Field;
 import java.net.URLDecoder;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -71,6 +71,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
 import net.shibboleth.utilities.java.support.resolver.CriteriaSet;
+import net.shibboleth.utilities.java.support.resolver.ResolverException;
 import net.shibboleth.utilities.java.support.security.IdentifierGenerationStrategy;
 import net.shibboleth.utilities.java.support.xml.ParserPool;
 
@@ -87,9 +88,9 @@ import org.mockito.stubbing.Answer;
 
 import org.opensaml.core.config.ConfigurationService;
 import org.opensaml.core.criterion.EntityIdCriterion;
-import org.opensaml.core.xml.XMLObject;
 import org.opensaml.core.xml.config.XMLObjectProviderRegistry;
 import org.opensaml.saml.common.xml.SAMLConstants;
+import org.opensaml.saml.metadata.resolver.impl.AbstractMetadataResolver;
 import org.opensaml.saml.saml2.metadata.EntityDescriptor;
 import org.opensaml.saml.saml2.metadata.IDPSSODescriptor;
 import org.opensaml.saml.saml2.metadata.SingleLogoutService;
@@ -686,7 +687,7 @@ public abstract class BaseSamlTestCase extends PowerMockito {
 	protected List<Class<?>> serviceUtilClasses = new ArrayList<>();
 	protected UserLocalService userLocalService;
 
-	protected class MockMetadataResolver extends DBMetadataResolver {
+	protected class MockMetadataResolver extends AbstractMetadataResolver {
 
 		public MockMetadataResolver() {
 		}
@@ -695,20 +696,37 @@ public abstract class BaseSamlTestCase extends PowerMockito {
 			_idpNeedsSignature = idpNeedsSignature;
 		}
 
-		protected XMLObject getMetadata(String entityId) throws Exception {
+		@Override
+		public Iterable<EntityDescriptor> resolve(CriteriaSet criteriaSet)
+			throws ResolverException {
+
+			try {
+				return Collections.singleton(doResolve(criteriaSet));
+			}
+			catch (Exception e) {
+				throw new ResolverException(e);
+			}
+		}
+
+		protected EntityDescriptor doResolve(CriteriaSet criteriaSet)
+			throws Exception {
+
 			MockHttpServletRequest mockHttpServletRequest =
 				getMockHttpServletRequest(
 					"http://localhost:8080/c/portal/saml/metadata");
 
+			EntityIdCriterion entityIdCriterion = criteriaSet.get(
+				EntityIdCriterion.class);
+
+			if (entityIdCriterion == null) {
+				throw new ResolverException(
+					"Mock cannot resolve without EntityIdCriterion");
+			}
+
+			String entityId = entityIdCriterion.getEntityId();
+
 			KeyStoreCredentialResolver keyStoreCredentialResolver =
 				getKeyStoreCredentialResolver(entityId);
-
-			CriteriaSet criteriaSet = new CriteriaSet();
-
-			EntityIdCriterion entityIDCriterion = new EntityIdCriterion(
-				entityId);
-
-			criteriaSet.add(entityIDCriterion);
 
 			Credential credential = keyStoreCredentialResolver.resolveSingle(
 				criteriaSet);

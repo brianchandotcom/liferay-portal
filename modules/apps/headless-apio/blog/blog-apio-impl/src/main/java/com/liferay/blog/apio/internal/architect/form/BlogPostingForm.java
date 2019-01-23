@@ -173,18 +173,14 @@ public class BlogPostingForm implements BlogPosting {
 	}
 
 	/**
-	 * Returns the blog post's display date, if present; otherwise, returns
-	 * today's date.
+	 * Returns the blog post's display date.
 	 *
-	 * @return the display date, if present; today's date otherwise
+	 * @return the display date
 	 */
 	@Override
 	public Date getPublishedDate() {
-		return Optional.ofNullable(
-			_publishedDate
-		).orElseGet(
-			Date::new
-		);
+		return _publishedDate;
+
 	}
 
 	public void setAlternativeHeadline(String alternativeHeadline) {

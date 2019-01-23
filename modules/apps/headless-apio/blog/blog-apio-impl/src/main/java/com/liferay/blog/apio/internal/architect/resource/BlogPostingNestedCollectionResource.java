@@ -51,7 +51,8 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import io.vavr.control.Try;
-
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -82,7 +83,7 @@ public class BlogPostingNestedCollectionResource
 		return builder.addGetter(
 			this::_getPageItems
 		).addCreator(
-			this::_addBlogsEntry, CurrentUser.class,
+			this::_addBlogsEntry,
 			_hasPermission.forAddingIn(ContentSpace.class),
 			BlogPostingForm::buildForm
 		).build();
@@ -103,8 +104,8 @@ public class BlogPostingNestedCollectionResource
 			idempotent(_blogsEntryService::deleteEntry),
 			_hasPermission::forDeleting
 		).addUpdater(
-			this::_updateBlogsEntry, CurrentUser.class,
-			_hasPermission::forUpdating, BlogPostingForm::buildForm
+			this::_updateBlogsEntry, _hasPermission::forUpdating,
+			BlogPostingForm::buildForm
 		).build();
 	}
 
@@ -157,15 +158,22 @@ public class BlogPostingNestedCollectionResource
 	}
 
 	private BlogsEntry _addBlogsEntry(
-			long groupId, BlogPosting blogPosting, CurrentUser currentUser)
+			long groupId, BlogPosting blogPosting)
 		throws PortalException {
 
+		Optional<LocalDateTime> publishedDateOptional =
+			_getLocalDateTimeOptional(blogPosting.getPublishedDate());
+
+		LocalDateTime localDateTime =
+			publishedDateOptional.orElse(LocalDateTime.now());
+
 		try {
-			return _blogsEntryLocalService.addEntry(
-				_getUserId(blogPosting, currentUser), blogPosting.getHeadline(),
+			return _blogsEntryService.addEntry(blogPosting.getHeadline(),
 				blogPosting.getAlternativeHeadline(),
 				blogPosting.getFriendlyURLPath(), blogPosting.getDescription(),
-				blogPosting.getArticleBody(), blogPosting.getPublishedDate(),
+				blogPosting.getArticleBody(), localDateTime.getMonthValue() - 1,
+				localDateTime.getDayOfMonth(), localDateTime.getYear(),
+				localDateTime.getHour(), localDateTime.getMinute(),
 				true, true, new String[0], blogPosting.getCaption(),
 				_getImageSelector(blogPosting), null,
 				_getServiceContext(groupId, blogPosting));
@@ -262,41 +270,46 @@ public class BlogPostingNestedCollectionResource
 		return serviceContext;
 	}
 
-	private long _getUserId(BlogPosting blogPosting, CurrentUser currentUser) {
-		return Optional.ofNullable(
-			blogPosting.getCreatorId()
-		).filter(
-			userId -> userId > 0
-		).orElse(
-			currentUser.getUserId()
-		);
-	}
-
 	private BlogsEntry _updateBlogsEntry(
-			long blogsEntryId, BlogPosting blogPosting, CurrentUser currentUser)
+			long blogsEntryId, BlogPosting blogPosting)
 		throws PortalException {
 
-		long userId = _getUserId(blogPosting, currentUser);
+		Optional<LocalDateTime> publishedDateOptional =
+			_getLocalDateTimeOptional(blogPosting.getPublishedDate());
+
+		LocalDateTime localDateTime =
+			publishedDateOptional.orElse(LocalDateTime.now());
+
 		BlogsEntry blogsEntry = _blogsEntryService.getEntry(blogsEntryId);
 		ImageSelector imageSelector = _getImageSelector(blogPosting);
 
 		ServiceContext serviceContext = _getServiceContext(
 			blogsEntry.getGroupId(), blogPosting);
 
-		return _blogsEntryLocalService.updateEntry(
-			userId, blogsEntryId, blogPosting.getHeadline(),
+		return _blogsEntryService.updateEntry(
+			blogsEntryId, blogPosting.getHeadline(),
 			blogPosting.getAlternativeHeadline(),
 			blogPosting.getFriendlyURLPath(), blogPosting.getDescription(),
-			blogPosting.getArticleBody(), blogPosting.getPublishedDate(), true,
-			true, new String[0], blogPosting.getCaption(), imageSelector, null,
+			blogPosting.getArticleBody(), localDateTime.getMonthValue() - 1,
+			localDateTime.getDayOfMonth(), localDateTime.getYear(),
+			localDateTime.getHour(), localDateTime.getMinute(), true, true,
+			new String[0], blogPosting.getCaption(), imageSelector, null,
 			serviceContext);
+	}
+
+	private Optional<LocalDateTime> _getLocalDateTimeOptional(
+		Date dateToConvert) {
+
+		return Optional.ofNullable(
+			dateToConvert
+		).map(
+			date -> LocalDateTime.ofInstant(
+				date.toInstant(), ZoneId.systemDefault())
+		);
 	}
 
 	@Reference
 	private AssetTagLocalService _assetTagLocalService;
-
-	@Reference
-	private BlogsEntryLocalService _blogsEntryLocalService;
 
 	@Reference
 	private BlogsEntryService _blogsEntryService;

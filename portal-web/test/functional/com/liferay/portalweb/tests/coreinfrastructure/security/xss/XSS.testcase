@@ -568,6 +568,101 @@ definition {
 		AssertAlertNotPresent();
 	}
 
+	@description = "This is a use case for LPS-71236 and LPS-71307."
+	@priority = "5"
+	test ViewWebContent {
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Web Content"
+		);
+
+		WebContentNavigator.gotoAddCP();
+
+		WebContent.addCP(
+			webContentContent = "WC WebContent Content",
+			webContentTitle = '''<script>alert(123);</script>'''
+		);
+
+		PortletEntry.publish();
+
+		WebContent.viewTitle(
+			webContentTitle = '''<script>alert(123);</script>''',
+			webContentTitleEscapeCharacter = '''&lt;script&gt;alert(123);&lt;/script&gt;'''
+		);
+
+		Navigator.openURL();
+
+		Portlet.addPG(portletName = "Web Content Display");
+
+		Portlet.gotoPortletOptions(
+			portletName = "Web Content Display",
+			portletOption = "Configuration"
+		);
+
+		SelectFrame(locator1 = "IFrame#DIALOG");
+
+		AssertClick(
+			locator1 = "WCDConfiguration#SELECT_WEB_CONTENT_BUTTON",
+			value1 = "Select"
+		);
+
+		SelectFrame(value1 = "relative=top");
+
+		SelectFrame(locator1 = "IFrame#DIALOG");
+
+		var key_webContentTitle = '''<script>alert(123);</script>''';
+		var webContentTitle = '''<script>alert(123);</script>''';
+
+		AssertClick(
+			locator1 = "Link#WEB_CONTENT_ARTICLE",
+			value1 = "${webContentTitle}"
+		);
+
+		AssertAlertNotPresent();
+
+		SelectFrame(value1 = "relative=top");
+
+		SelectFrame(locator1 = "IFrame#DIALOG");
+
+		PortletEntry.save();
+
+		AssertAlertNotPresent();
+
+		SelectFrame(value1 = "relative=top");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content",
+			panel = "Site Administration",
+			portlet = "Web Content"
+		);
+
+		WebContentNavigator.gotoEditCP(
+			webContentTitle = '''<script>alert(123);</script>''',
+			webContentTitleEscapeCharacter = '''&lt;script&gt;alert(123);&lt;/script&gt;'''
+		);
+
+		WebContent.editCP(
+			webContentTitle = '''<script>alert(123);</script>''',
+			webContentTitleEdit = "WC WebContent Title"
+		);
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "WebContent Title");
+
+
+		WebContent.addSmallImageViaURL(imageSourceURL = '''<img src="http://url.to.file.which/not.exist" onerror=alert(123);>''');
+
+		PortletEntry.publish();
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "cards");
+
+		AssertAlertNotPresent();
+	}
+	
 	@priority = "5"
 	test ViewWiki {
 		Navigator.openURL();

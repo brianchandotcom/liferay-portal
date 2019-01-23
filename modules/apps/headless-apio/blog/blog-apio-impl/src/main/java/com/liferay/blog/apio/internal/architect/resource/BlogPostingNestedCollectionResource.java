@@ -17,7 +17,6 @@ package com.liferay.blog.apio.internal.architect.resource;
 import static com.liferay.portal.apio.idempotent.Idempotent.idempotent;
 
 import com.liferay.aggregate.rating.apio.architect.identifier.AggregateRatingIdentifier;
-import com.liferay.apio.architect.functional.Try;
 import com.liferay.apio.architect.pagination.PageItems;
 import com.liferay.apio.architect.pagination.Pagination;
 import com.liferay.apio.architect.representor.Representor;
@@ -50,6 +49,8 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+
+import io.vavr.control.Try;
 
 import java.util.Date;
 import java.util.List;
@@ -198,16 +199,16 @@ public class BlogPostingNestedCollectionResource
 			return null;
 		}
 
-		return Try.fromFallible(
+		return Try.of(
 			() -> _dlAppLocalService.getFileEntry(imageId)
-		).map(
+		).mapTry(
 			fileEntry -> new ImageSelector(
 				FileUtil.getBytes(fileEntry.getContentStream()),
 				fileEntry.getFileName(), fileEntry.getMimeType(),
 				"{\"height\": 0,\"width\": 0,\"x\": 0,\"y\": 0}")
-		).orElseThrow(
-			() -> new BadRequestException(
-				"Unable to find file entry with id " + imageId)
+		).getOrElseThrow(
+			t -> new BadRequestException(
+				"Unable to find file entry with id " + imageId, t)
 		);
 	}
 

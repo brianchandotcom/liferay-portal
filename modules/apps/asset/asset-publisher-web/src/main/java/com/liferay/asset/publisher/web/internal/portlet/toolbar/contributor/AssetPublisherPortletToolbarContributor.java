@@ -205,7 +205,7 @@ public class AssetPublisherPortletToolbarContributor
 
 		urlMenuItem.setData(data);
 
-		urlMenuItem.setLabel(HtmlUtil.escape(message));
+		urlMenuItem.setLabel(message);
 
 		long curGroupId = groupId;
 

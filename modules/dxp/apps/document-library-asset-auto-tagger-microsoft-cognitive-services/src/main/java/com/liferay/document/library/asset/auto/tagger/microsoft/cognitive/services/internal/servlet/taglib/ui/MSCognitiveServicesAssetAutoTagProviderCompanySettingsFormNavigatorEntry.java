@@ -138,14 +138,13 @@ public class
 							SERVICE_NAME));
 
 		request.setAttribute(
-			MSCognitiveServicesAssetAutoTagProviderCompanyConfiguration.
-				class.getName(),
+			MSCognitiveServicesAssetAutoTagProviderCompanyConfiguration.class.
+				getName(),
 			msCognitiveServicesAssetAutoTagProviderCompanyConfiguration);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		MSCognitiveServicesAssetAutoTagProviderCompanySettingsFormNavigatorEntry.
-			class);
+		MSCognitiveServicesAssetAutoTagProviderCompanySettingsFormNavigatorEntry.class);
 
 	@Reference
 	private AssetAutoTaggerConfigurationFactory

@@ -270,8 +270,9 @@ public class AddSchedulerMVCActionCommand extends BaseMVCActionCommand {
 				int monthlyPos = ParamUtil.getInteger(
 					actionRequest, "monthlyPos");
 
-				DayAndPosition[] dayAndPositions =
-					{new DayAndPosition(monthlyDay, monthlyPos)};
+				DayAndPosition[] dayAndPositions = {
+					new DayAndPosition(monthlyDay, monthlyPos)
+				};
 
 				recurrence.setByDay(dayAndPositions);
 
@@ -306,8 +307,9 @@ public class AddSchedulerMVCActionCommand extends BaseMVCActionCommand {
 				int yearlyPos = ParamUtil.getInteger(
 					actionRequest, "yearlyPos");
 
-				DayAndPosition[] dayAndPositions =
-					{new DayAndPosition(yearlyDay, yearlyPos)};
+				DayAndPosition[] dayAndPositions = {
+					new DayAndPosition(yearlyDay, yearlyPos)
+				};
 
 				recurrence.setByDay(dayAndPositions);
 

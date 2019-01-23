@@ -80,7 +80,11 @@ public class DQLParameterValueUtil {
 				}
 			}
 
-			return "DATE('".concat(value).concat("', 'yyyy/mm/dd hh:mi:ss')");
+			return "DATE('".concat(
+				value
+			).concat(
+				"', 'yyyy/mm/dd hh:mi:ss')"
+			);
 		}
 
 		if (wildcard) {

@@ -110,8 +110,8 @@ public class FileSystemKeyStoreManagerImpl extends BaseKeyStoreManagerImpl {
 
 		String samlKeyStorePassword = getSamlKeyStorePassword();
 
-		try (FileOutputStream fileOutputStream =
-				new FileOutputStream(samlKeyStoreFile)) {
+		try (FileOutputStream fileOutputStream = new FileOutputStream(
+				samlKeyStoreFile)) {
 
 			_keyStore.store(
 				fileOutputStream, samlKeyStorePassword.toCharArray());

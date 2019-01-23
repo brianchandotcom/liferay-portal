@@ -95,8 +95,8 @@ public class SharepointRepositoryDefiner implements RepositoryDefiner {
 			ProcessorCapability.class,
 			_portalCapabilityLocator.getProcessorCapability(
 				capabilityRegistry.getTarget(),
-				ProcessorCapability.
-					ResourceGenerationStrategy.ALWAYS_GENERATE));
+				ProcessorCapability.ResourceGenerationStrategy.
+					ALWAYS_GENERATE));
 
 		capabilityRegistry.addExportedCapability(
 			AuthorizationCapability.class,

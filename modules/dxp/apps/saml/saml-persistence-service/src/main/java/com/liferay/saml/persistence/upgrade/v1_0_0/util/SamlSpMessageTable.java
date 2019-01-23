@@ -34,7 +34,8 @@ public class SamlSpMessageTable {
 		"create index IX_5615F9DD on SamlSpMessage (samlIdpEntityId, samlIdpResponseKey)"
 	};
 
-	public static final String TABLE_SQL_CREATE = "create table SamlSpMessage (samlSpMessageId LONG not null primary key,companyId LONG,createDate DATE null,samlIdpEntityId VARCHAR(75) null,samlIdpResponseKey VARCHAR(75) null,expirationDate DATE null)";
+	public static final String TABLE_SQL_CREATE =
+		"create table SamlSpMessage (samlSpMessageId LONG not null primary key,companyId LONG,createDate DATE null,samlIdpEntityId VARCHAR(75) null,samlIdpResponseKey VARCHAR(75) null,expirationDate DATE null)";
 
 	public static final String TABLE_SQL_DROP = "drop table SamlSpMessage";
 

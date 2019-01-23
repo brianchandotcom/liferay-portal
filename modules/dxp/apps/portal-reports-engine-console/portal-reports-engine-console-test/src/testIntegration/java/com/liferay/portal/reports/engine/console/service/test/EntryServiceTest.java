@@ -259,8 +259,9 @@ public class EntryServiceTest {
 			guestUser);
 	}
 
-	private static final String[] _ENTRY_GROUP_PERMISSIONS =
-		{"DELETE", "PERMISSIONS", "VIEW"};
+	private static final String[] _ENTRY_GROUP_PERMISSIONS = {
+		"DELETE", "PERMISSIONS", "VIEW"
+	};
 
 	private static final String _TEMPLATE_NAME =
 		"reports_admin_template_source_sample_list_type";

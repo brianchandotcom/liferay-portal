@@ -124,8 +124,9 @@ public class LdapUtil {
 	/**
 	 * http://www.rlmueller.net/CharactersEscaped.htm
 	 */
-	private static final char[] _ESCAPE_CHARS =
-		{',', '\\', '#', '+', '<', '>', ';', '"', '='};
+	private static final char[] _ESCAPE_CHARS = {
+		',', '\\', '#', '+', '<', '>', ';', '"', '='
+	};
 
 	private static final Log _log = LogFactoryUtil.getLog(LdapUtil.class);
 

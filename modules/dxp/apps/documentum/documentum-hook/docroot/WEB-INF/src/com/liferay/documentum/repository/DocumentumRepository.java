@@ -1467,11 +1467,13 @@ public class DocumentumRepository
 
 	private static final String _REPOSITORY = "REPOSITORY";
 
-	private static final String[] _SUPPORTED_CONFIGURATIONS =
-		{_CONFIGURATION_DFC};
+	private static final String[] _SUPPORTED_CONFIGURATIONS = {
+		_CONFIGURATION_DFC
+	};
 
-	private static final String[][] _SUPPORTED_PARAMETERS =
-		{new String[] {_REPOSITORY, _CABINET}};
+	private static final String[][] _SUPPORTED_PARAMETERS = {
+		{_REPOSITORY, _CABINET}
+	};
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DocumentumRepository.class);

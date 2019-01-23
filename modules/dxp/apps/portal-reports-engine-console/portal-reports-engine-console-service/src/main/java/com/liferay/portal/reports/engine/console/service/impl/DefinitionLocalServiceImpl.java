@@ -249,7 +249,10 @@ public class DefinitionLocalServiceImpl extends DefinitionLocalServiceBaseImpl {
 			companyId, CompanyConstants.SYSTEM, directoryName);
 
 		String fileLocation = directoryName.concat(
-			StringPool.SLASH).concat(fileName);
+			StringPool.SLASH
+		).concat(
+			fileName
+		);
 
 		_dlStore.addFile(
 			companyId, CompanyConstants.SYSTEM, fileLocation, false,

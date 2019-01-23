@@ -146,7 +146,11 @@ public class UserBuilderTest extends BaseVLDAPTestCase {
 
 	@Test
 	public void testBuildDirectoriesInvalidSambaSID() throws Exception {
-		when(userLocalService.fetchUser(Mockito.anyLong())).thenReturn(_user);
+		when(
+			userLocalService.fetchUser(Mockito.anyLong())
+		).thenReturn(
+			_user
+		);
 
 		List<FilterConstraint> filterConstraints = new ArrayList<>();
 
@@ -472,7 +476,11 @@ public class UserBuilderTest extends BaseVLDAPTestCase {
 
 	@Test
 	public void testBuildDirectoriesValidSambaSID() throws Exception {
-		when(userLocalService.fetchUser(Mockito.anyLong())).thenReturn(_user);
+		when(
+			userLocalService.fetchUser(Mockito.anyLong())
+		).thenReturn(
+			_user
+		);
 
 		List<FilterConstraint> filterConstraints = new ArrayList<>();
 
@@ -526,7 +534,11 @@ public class UserBuilderTest extends BaseVLDAPTestCase {
 
 	@Test
 	public void testBuildDirectoriesValidUidNumber() throws Exception {
-		when(userLocalService.fetchUser(Mockito.anyLong())).thenReturn(_user);
+		when(
+			userLocalService.fetchUser(Mockito.anyLong())
+		).thenReturn(
+			_user
+		);
 
 		List<FilterConstraint> filterConstraints = new ArrayList<>();
 

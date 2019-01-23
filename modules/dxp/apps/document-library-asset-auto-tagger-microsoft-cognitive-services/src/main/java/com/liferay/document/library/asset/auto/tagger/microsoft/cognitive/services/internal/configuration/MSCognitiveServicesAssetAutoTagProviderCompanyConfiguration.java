@@ -51,7 +51,8 @@ public interface MSCognitiveServicesAssetAutoTagProviderCompanyConfiguration {
 	 */
 	@ExtendedAttributeDefinition(
 		descriptionArguments = {
-			MSCognitiveServicesAssetAutoTagProviderConstants.SAMPLE_API_ENDPOINT,
+			MSCognitiveServicesAssetAutoTagProviderConstants.
+				SAMPLE_API_ENDPOINT,
 			MSCognitiveServicesAssetAutoTagProviderConstants.API_KEY_DOCS_URL
 		}
 	)

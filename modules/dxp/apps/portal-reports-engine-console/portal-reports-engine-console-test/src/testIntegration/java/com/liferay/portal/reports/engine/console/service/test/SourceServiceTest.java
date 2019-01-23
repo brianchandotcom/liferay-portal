@@ -219,8 +219,9 @@ public class SourceServiceTest {
 
 	private static final String _PASSWORD = StringPool.BLANK;
 
-	private static final String[] _SOURCE_GROUP_PERMISSIONS =
-		{"DELETE", "PERMISSIONS", "UPDATE", "VIEW"};
+	private static final String[] _SOURCE_GROUP_PERMISSIONS = {
+		"DELETE", "PERMISSIONS", "UPDATE", "VIEW"
+	};
 
 	private static final String _URL = "jdbc:hsqldb:mem:testDB;shutdown=true";
 

@@ -159,9 +159,7 @@ public class SearchLdapHandler extends BaseLdapHandler {
 			throw new SearchSizeLimitException();
 		}
 
-		if ((stopWatch.getTime() / Time.SECOND) >
-				getTimeLimit(searchRequest)) {
-
+		if ((stopWatch.getTime() / Time.SECOND) > getTimeLimit(searchRequest)) {
 			throw new SearchTimeLimitException();
 		}
 

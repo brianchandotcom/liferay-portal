@@ -227,10 +227,8 @@ public class SamlSpIdpConnectionLocalServiceImpl
 			if (samlSpIdpConnectionPersistence.fetchByC_SIEI(
 					serviceContext.getCompanyId(), samlIdpEntityId) != null) {
 
-				throw
-					new DuplicateSamlSpIdpConnectionSamlIdpEntityIdException(
-						"Duplicate SAML SP IDP connection for " +
-							samlIdpEntityId);
+				throw new DuplicateSamlSpIdpConnectionSamlIdpEntityIdException(
+					"Duplicate SAML SP IDP connection for " + samlIdpEntityId);
 			}
 		}
 

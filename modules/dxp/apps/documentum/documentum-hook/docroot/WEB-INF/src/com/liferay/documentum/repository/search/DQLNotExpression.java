@@ -25,7 +25,11 @@ public class DQLNotExpression implements DQLCriterion {
 
 	@Override
 	public String toQueryFragment() {
-		return "NOT(".concat(_dqlCriterion.toQueryFragment()).concat(")");
+		return "NOT(".concat(
+			_dqlCriterion.toQueryFragment()
+		).concat(
+			")"
+		);
 	}
 
 	private final DQLCriterion _dqlCriterion;

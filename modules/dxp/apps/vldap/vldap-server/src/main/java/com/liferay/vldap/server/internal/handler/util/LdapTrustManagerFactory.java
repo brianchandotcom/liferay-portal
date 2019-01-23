@@ -26,8 +26,9 @@ import javax.net.ssl.TrustManagerFactorySpi;
  */
 public class LdapTrustManagerFactory extends TrustManagerFactorySpi {
 
-	public static final TrustManager[] TRUST_MANAGERS =
-		{new LdapTrustManager()};
+	public static final TrustManager[] TRUST_MANAGERS = {
+		new LdapTrustManager()
+	};
 
 	@Override
 	protected TrustManager[] engineGetTrustManagers() {

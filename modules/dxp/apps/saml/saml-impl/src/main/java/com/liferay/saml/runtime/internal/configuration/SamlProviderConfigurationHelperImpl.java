@@ -48,11 +48,10 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property =
-		Constants.SERVICE_PID + "=" +
-			SamlProviderConfigurationHelperImpl.FACTORY_PID,
-	service =
-		{SamlProviderConfigurationHelper.class, ManagedServiceFactory.class}
+	property = Constants.SERVICE_PID + "=" + SamlProviderConfigurationHelperImpl.FACTORY_PID,
+	service = {
+		SamlProviderConfigurationHelper.class, ManagedServiceFactory.class
+	}
 )
 public class SamlProviderConfigurationHelperImpl
 	implements SamlProviderConfigurationHelper, ManagedServiceFactory {

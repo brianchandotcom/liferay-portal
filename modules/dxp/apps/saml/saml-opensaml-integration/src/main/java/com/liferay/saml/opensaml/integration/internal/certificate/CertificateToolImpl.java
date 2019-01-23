@@ -70,8 +70,8 @@ public class CertificateToolImpl implements CertificateTool {
 
 		try (ByteArrayInputStream byteArrayInputStream =
 				new ByteArrayInputStream(publicKey.getEncoded());
-			ASN1InputStream asn1InputStream =
-				new ASN1InputStream(byteArrayInputStream)) {
+			ASN1InputStream asn1InputStream = new ASN1InputStream(
+				byteArrayInputStream)) {
 
 			X500Name issuerX500Name = createX500Name(issuerCertificateEntityId);
 			X500Name subjectX500Name = createX500Name(

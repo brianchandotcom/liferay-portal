@@ -53,10 +53,8 @@ public class SharepointFolder implements ExtRepositoryFolder {
 		int bitIndex = 0;
 
 		if ((extRepositoryPermission == ExtRepositoryPermission.ACCESS) ||
-			(extRepositoryPermission ==
-				ExtRepositoryPermission.ADD_DOCUMENT) ||
-			(extRepositoryPermission ==
-				ExtRepositoryPermission.ADD_FOLDER) ||
+			(extRepositoryPermission == ExtRepositoryPermission.ADD_DOCUMENT) ||
+			(extRepositoryPermission == ExtRepositoryPermission.ADD_FOLDER) ||
 			(extRepositoryPermission ==
 				ExtRepositoryPermission.ADD_SUBFOLDER) ||
 			(extRepositoryPermission == ExtRepositoryPermission.VIEW)) {

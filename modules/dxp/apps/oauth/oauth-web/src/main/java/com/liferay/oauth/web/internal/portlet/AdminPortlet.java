@@ -100,8 +100,8 @@ public class AdminPortlet extends MVCPortlet {
 		long oAuthApplicationId = ParamUtil.getLong(
 			actionRequest, "oAuthApplicationId");
 
-		try (InputStream inputStream =
-				uploadPortletRequest.getFileAsStream("fileName")) {
+		try (InputStream inputStream = uploadPortletRequest.getFileAsStream(
+				"fileName")) {
 
 			if (inputStream == null) {
 				throw new UploadException();

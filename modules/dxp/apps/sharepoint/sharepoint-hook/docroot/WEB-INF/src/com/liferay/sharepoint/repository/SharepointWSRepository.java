@@ -1059,11 +1059,13 @@ public class SharepointWSRepository
 
 	private static final String _SITE_URL = "SITE_URL";
 
-	private static final String[] _SUPPORTED_CONFIGURATIONS =
-		{_CONFIGURATION_WS};
+	private static final String[] _SUPPORTED_CONFIGURATIONS = {
+		_CONFIGURATION_WS
+	};
 
-	private static final String[][] _SUPPORTED_PARAMETERS =
-		{{_LIBRARY_NAME, _LIBRARY_PATH, _SERVER_VERSION, _SITE_URL}};
+	private static final String[][] _SUPPORTED_PARAMETERS = {
+		{_LIBRARY_NAME, _LIBRARY_PATH, _SERVER_VERSION, _SITE_URL}
+	};
 
 	private static final Map
 		<ExtRepositoryObjectType<?>, SharepointConnection.ObjectTypeFilter>

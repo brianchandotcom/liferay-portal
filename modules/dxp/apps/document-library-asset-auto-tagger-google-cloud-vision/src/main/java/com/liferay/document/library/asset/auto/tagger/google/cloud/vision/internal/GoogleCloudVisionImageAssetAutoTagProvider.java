@@ -99,7 +99,8 @@ public class GoogleCloudVisionImageAssetAutoTagProvider
 	}
 
 	private GoogleCloudVisionAssetAutoTagProviderCompanyConfiguration
-		_getConfiguration(FileEntry fileEntry) throws ConfigurationException {
+			_getConfiguration(FileEntry fileEntry)
+		throws ConfigurationException {
 
 		return _configurationProvider.getConfiguration(
 			GoogleCloudVisionAssetAutoTagProviderCompanyConfiguration.class,

@@ -33,7 +33,8 @@ public class SamlSpAuthRequestTable {
 		"create index IX_10D77E09 on SamlSpAuthRequest (samlIdpEntityId, samlSpAuthRequestKey)"
 	};
 
-	public static final String TABLE_SQL_CREATE = "create table SamlSpAuthRequest (samlSpAuthnRequestId LONG not null primary key,companyId LONG,createDate DATE null,samlIdpEntityId VARCHAR(75) null,samlSpAuthRequestKey VARCHAR(75) null)";
+	public static final String TABLE_SQL_CREATE =
+		"create table SamlSpAuthRequest (samlSpAuthnRequestId LONG not null primary key,companyId LONG,createDate DATE null,samlIdpEntityId VARCHAR(75) null,samlSpAuthRequestKey VARCHAR(75) null)";
 
 	public static final String TABLE_SQL_DROP = "drop table SamlSpAuthRequest";
 

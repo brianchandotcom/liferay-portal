@@ -86,7 +86,11 @@ public class UpgradePortletId
 
 					typeSettingsProperties.setProperty(
 						key,
-						StringUtil.merge(portletIds).concat(StringPool.COMMA));
+						StringUtil.merge(
+							portletIds
+						).concat(
+							StringPool.COMMA
+						));
 				}
 				else {
 					itr.remove();
@@ -100,10 +104,7 @@ public class UpgradePortletId
 	@Override
 	protected String[][] getRenamePortletIdsArray() {
 		return new String[][] {
-			{
-				"2_WAR_kaleoformsportlet",
-				KaleoFormsPortletKeys.KALEO_FORMS_ADMIN
-			}
+			{"2_WAR_kaleoformsportlet", KaleoFormsPortletKeys.KALEO_FORMS_ADMIN}
 		};
 	}
 

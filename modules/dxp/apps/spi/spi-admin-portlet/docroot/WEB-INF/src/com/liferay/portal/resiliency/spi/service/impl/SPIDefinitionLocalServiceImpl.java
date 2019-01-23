@@ -656,8 +656,11 @@ public class SPIDefinitionLocalServiceImpl
 		if (!jvmArguments.contains("-Duser.timezone=")) {
 			TimeZone jvmDefaultTimeZone = TimeZone.getDefault();
 
-			jvmArguments = jvmArguments.concat(" -Duser.timezone=").concat(
-				jvmDefaultTimeZone.getID());
+			jvmArguments = jvmArguments.concat(
+				" -Duser.timezone="
+			).concat(
+				jvmDefaultTimeZone.getID()
+			);
 		}
 
 		spiDefinition.setJvmArguments(jvmArguments);

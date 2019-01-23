@@ -94,8 +94,7 @@ public class MetadataGeneratorTest extends BaseSamlTestCase {
 				SigningMethod::getAlgorithm
 			).anyMatch(
 				"http://www.w3.org/2001/04/xmldsig-more#rsa-sha256"::equals
-			)
-		);
+			));
 	}
 
 	@Test
@@ -145,8 +144,7 @@ public class MetadataGeneratorTest extends BaseSamlTestCase {
 				SigningMethod::getAlgorithm
 			).anyMatch(
 				"http://www.w3.org/2001/04/xmldsig-more#rsa-sha256"::equals
-			)
-		);
+			));
 	}
 
 }

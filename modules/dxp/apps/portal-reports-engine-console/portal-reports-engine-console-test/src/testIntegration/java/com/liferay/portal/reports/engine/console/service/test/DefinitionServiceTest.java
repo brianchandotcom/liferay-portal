@@ -218,8 +218,9 @@ public class DefinitionServiceTest {
 			guestUser);
 	}
 
-	private static final String[] _DEFINITION_GROUP_PERMISSIONS =
-		{"ADD_REPORT", "DELETE", "PERMISSIONS", "UPDATE", "VIEW"};
+	private static final String[] _DEFINITION_GROUP_PERMISSIONS = {
+		"ADD_REPORT", "DELETE", "PERMISSIONS", "UPDATE", "VIEW"
+	};
 
 	private static final String _TEMPLATE_NAME =
 		"reports_admin_template_source_sample_list_type";

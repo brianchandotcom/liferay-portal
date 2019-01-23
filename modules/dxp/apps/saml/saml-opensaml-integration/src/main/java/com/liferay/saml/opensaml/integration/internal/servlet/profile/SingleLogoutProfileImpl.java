@@ -471,8 +471,11 @@ public class SingleLogoutProfileImpl
 
 			String pathMain = portal.getPathMain();
 
-			String redirect = portalURL.concat(pathMain).concat(
-				"/portal/saml/slo_logout");
+			String redirect = portalURL.concat(
+				pathMain
+			).concat(
+				"/portal/saml/slo_logout"
+			);
 
 			response.sendRedirect(redirect);
 		}
@@ -914,7 +917,11 @@ public class SingleLogoutProfileImpl
 
 		String pathMain = portal.getPathMain();
 
-		String redirect = portalURL.concat(pathMain).concat("/portal/logout");
+		String redirect = portalURL.concat(
+			pathMain
+		).concat(
+			"/portal/logout"
+		);
 
 		response.sendRedirect(redirect);
 	}

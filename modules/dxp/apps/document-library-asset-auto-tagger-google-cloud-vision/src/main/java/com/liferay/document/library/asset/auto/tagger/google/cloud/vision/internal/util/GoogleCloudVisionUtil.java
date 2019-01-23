@@ -36,9 +36,7 @@ public class GoogleCloudVisionUtil {
 			JSONUtil.put(
 				JSONUtil.put(
 					"features",
-					JSONUtil.put(
-						JSONUtil.put("type", "LABEL_DETECTION")
-					)
+					JSONUtil.put(JSONUtil.put("type", "LABEL_DETECTION"))
 				).put(
 					"image",
 					JSONUtil.put(
@@ -46,8 +44,7 @@ public class GoogleCloudVisionUtil {
 						Base64.encode(
 							FileUtil.getBytes(
 								fileVersion.getContentStream(false))))
-				)
-			));
+				)));
 
 		return jsonObject.toString();
 	}

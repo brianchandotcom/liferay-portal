@@ -1384,8 +1384,8 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 			messageContext.getSubcontext(InOutOperationContext.class, false);
 
 		if (inOutOperationContext == null) {
-			inOutOperationContext = (InOutOperationContext)
-				messageContext.addSubcontext(
+			inOutOperationContext =
+				(InOutOperationContext)messageContext.addSubcontext(
 					new InOutOperationContext<>(
 						new MessageContext<>(), new MessageContext<>()));
 		}

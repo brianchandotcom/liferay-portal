@@ -67,8 +67,8 @@ public class EditDefinitionMVCActionCommand extends BaseMVCActionCommand {
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		try (InputStream inputStream =
-				uploadPortletRequest.getFileAsStream("templateReport")) {
+		try (InputStream inputStream = uploadPortletRequest.getFileAsStream(
+				"templateReport")) {
 
 			long definitionId = ParamUtil.getLong(
 				uploadPortletRequest, "definitionId");

@@ -150,7 +150,8 @@ public class SharepointServerResponseConverter {
 	}
 
 	public <T extends ExtRepositoryObject> List<ExtRepositorySearchResult<T>>
-		getSearchResults(JSONObject jsonObject) throws PortalException {
+			getSearchResults(JSONObject jsonObject)
+		throws PortalException {
 
 		List<ExtRepositorySearchResult<T>> searchResults = new ArrayList<>();
 

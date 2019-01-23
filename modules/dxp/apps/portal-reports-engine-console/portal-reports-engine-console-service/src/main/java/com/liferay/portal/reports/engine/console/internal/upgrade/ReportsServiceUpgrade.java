@@ -39,8 +39,8 @@ public class ReportsServiceUpgrade implements UpgradeStepRegistrator {
 
 					@Override
 					protected String getNewBundleSymbolicName() {
-						return
-							"com.liferay.portal.reports.engine.console.service";
+						return "com.liferay.portal.reports.engine.console." +
+							"service";
 					}
 
 					@Override

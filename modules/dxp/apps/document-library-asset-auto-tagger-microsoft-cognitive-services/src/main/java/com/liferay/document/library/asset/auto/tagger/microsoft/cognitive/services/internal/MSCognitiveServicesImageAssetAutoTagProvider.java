@@ -95,7 +95,8 @@ public class MSCognitiveServicesImageAssetAutoTagProvider
 	}
 
 	private MSCognitiveServicesAssetAutoTagProviderCompanyConfiguration
-		_getConfiguration(FileEntry fileEntry) throws ConfigurationException {
+			_getConfiguration(FileEntry fileEntry)
+		throws ConfigurationException {
 
 		return _configurationProvider.getConfiguration(
 			MSCognitiveServicesAssetAutoTagProviderCompanyConfiguration.class,

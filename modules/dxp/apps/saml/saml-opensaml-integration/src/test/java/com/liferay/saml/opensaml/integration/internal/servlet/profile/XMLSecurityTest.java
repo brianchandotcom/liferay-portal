@@ -162,9 +162,9 @@ public class XMLSecurityTest extends BaseSamlTestCase {
 			entity += "&a;&a;&a;&a;&a;&a;&a;&a;&a;&a;";
 		}
 
-		authnRequestXML = authnRequestXML.substring(
-			0,
-			authnRequestXML.length() - 22) + entity + "</saml2p:AuthnRequest>";
+		authnRequestXML =
+			authnRequestXML.substring(0, authnRequestXML.length() - 22) +
+				entity + "</saml2p:AuthnRequest>";
 
 		decodeAuthnRequest(authnRequestXML, redirectURL);
 	}

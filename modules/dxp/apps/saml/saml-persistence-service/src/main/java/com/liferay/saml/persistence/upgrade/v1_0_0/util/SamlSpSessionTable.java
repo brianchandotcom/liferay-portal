@@ -36,7 +36,8 @@ public class SamlSpSessionTable {
 		"create index IX_1040A689 on SamlSpSession (nameIdValue)"
 	};
 
-	public static final String TABLE_SQL_CREATE = "create table SamlSpSession (samlSpSessionId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,jSessionId VARCHAR(75) null,nameIdFormat VARCHAR(75) null,nameIdValue VARCHAR(75) null,terminated_ BOOLEAN)";
+	public static final String TABLE_SQL_CREATE =
+		"create table SamlSpSession (samlSpSessionId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,jSessionId VARCHAR(75) null,nameIdFormat VARCHAR(75) null,nameIdValue VARCHAR(75) null,terminated_ BOOLEAN)";
 
 	public static final String TABLE_SQL_DROP = "drop table SamlSpSession";
 

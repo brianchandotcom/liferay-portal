@@ -105,9 +105,7 @@ public class MetadataManagerImpl
 	implements LocalEntityManager, MetadataManager, SamlHttpRequestUtil {
 
 	@Activate
-	public void activate()
-		throws ComponentInitializationException, SamlException {
-
+	public void activate() throws ComponentInitializationException {
 		_cachingChainingMetadataResolver.setId(
 			CachingChainingMetadataResolver.class.getName());
 		_cachingChainingMetadataResolver.setParserPool(_parserPool);

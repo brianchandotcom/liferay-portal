@@ -563,11 +563,13 @@ public class WabBundleProcessor {
 			}
 
 			if (!registeredPortletContextLoaderListener) {
+				PortletContextLoaderListener portletContextLoaderListener =
+					new PortletContextLoaderListener(_bundleContext, _logger);
+
 				ServletContextListenerExceptionAdapter
 					servletContextListenerExceptionAdaptor =
 						new ServletContextListenerExceptionAdapter(
-							new PortletContextLoaderListener(_logger),
-							servletContext);
+							portletContextLoaderListener, servletContext);
 
 				ServiceRegistration<?> serviceRegistration =
 					_bundleContext.registerService(
@@ -577,13 +579,25 @@ public class WabBundleProcessor {
 				Exception exception =
 					servletContextListenerExceptionAdaptor.getException();
 
+				List<ServiceRegistration<?>> contextServiceRegistrations =
+					portletContextLoaderListener.getServiceRegistrations();
+
 				if (exception != null) {
+					for (ServiceRegistration contextServiceRegistration :
+							contextServiceRegistrations) {
+
+						contextServiceRegistration.unregister();
+					}
+
 					serviceRegistration.unregister();
 
 					throw exception;
 				}
 
 				_listenerServiceRegistrations.add(serviceRegistration);
+
+				_listenerServiceRegistrations.addAll(
+					contextServiceRegistrations);
 
 				registeredPortletContextLoaderListener = true;
 			}

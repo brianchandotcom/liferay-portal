@@ -20,20 +20,32 @@ import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 import com.liferay.portal.kernel.bean.PortletBeanLocatorUtil;
 import com.liferay.portal.kernel.portlet.PortletClassLoaderUtil;
 import com.liferay.portal.kernel.servlet.ServletContextClassLoaderPool;
+import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
+import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.InfrastructureUtil;
 import com.liferay.portal.kernel.util.MethodKey;
-import com.liferay.portal.module.framework.ModuleFrameworkUtilAdapter;
 import com.liferay.portal.spring.configurator.ConfigurableApplicationContextConfigurator;
+import com.liferay.portal.util.PropsValues;
 
 import java.lang.reflect.Method;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Set;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 
 import org.apache.felix.utils.log.Logger;
 
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceRegistration;
+
+import org.springframework.beans.factory.BeanIsAbstractException;
+import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.event.ContextClosedEvent;
+import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.web.context.ConfigurableWebApplicationContext;
 import org.springframework.web.context.ContextLoaderListener;
 import org.springframework.web.context.WebApplicationContext;
@@ -45,7 +57,10 @@ import org.springframework.web.context.support.WebApplicationContextUtils;
  */
 public class PortletContextLoaderListener extends ContextLoaderListener {
 
-	public PortletContextLoaderListener(Logger logger) {
+	public PortletContextLoaderListener(
+		BundleContext bundleContext, Logger logger) {
+
+		_bundleContext = bundleContext;
 		_logger = logger;
 	}
 
@@ -117,7 +132,8 @@ public class PortletContextLoaderListener extends ContextLoaderListener {
 		ApplicationContext applicationContext =
 			WebApplicationContextUtils.getWebApplicationContext(servletContext);
 
-		ModuleFrameworkUtilAdapter.registerContext(applicationContext);
+		_registerApplicationContext(
+			(ConfigurableApplicationContext)applicationContext);
 
 		BeanLocatorImpl beanLocatorImpl = new BeanLocatorImpl(
 			classLoader, applicationContext);
@@ -151,6 +167,10 @@ public class PortletContextLoaderListener extends ContextLoaderListener {
 		}
 	}
 
+	public List<ServiceRegistration<?>> getServiceRegistrations() {
+		return _serviceRegistrations;
+	}
+
 	@Override
 	protected WebApplicationContext createWebApplicationContext(
 		ServletContext servletContext) {
@@ -167,17 +187,6 @@ public class PortletContextLoaderListener extends ContextLoaderListener {
 			_PORTAL_CONFIG_LOCATION_PARAM);
 
 		configurableWebApplicationContext.setConfigLocation(configLocation);
-
-		configurableWebApplicationContext.addApplicationListener(
-			applicationEvent -> {
-				if (applicationEvent instanceof ContextClosedEvent) {
-					ContextClosedEvent contextClosedEvent =
-						(ContextClosedEvent)applicationEvent;
-
-					ModuleFrameworkUtilAdapter.unregisterContext(
-						contextClosedEvent.getApplicationContext());
-				}
-			});
 
 		configurableWebApplicationContext.addBeanFactoryPostProcessor(
 			configurableListableBeanFactory -> {
@@ -209,9 +218,75 @@ public class PortletContextLoaderListener extends ContextLoaderListener {
 		return super.loadParentContext(servletContext);
 	}
 
+	private void _registerApplicationContext(
+		ConfigurableApplicationContext configurableApplicationContext) {
+
+		ConfigurableListableBeanFactory configurableListableBeanFactory =
+			configurableApplicationContext.getBeanFactory();
+
+		Iterator<String> iterator =
+			configurableListableBeanFactory.getBeanNamesIterator();
+
+		iterator.forEachRemaining(
+			beanName -> {
+				Object bean = null;
+
+				try {
+					bean = configurableApplicationContext.getBean(beanName);
+				}
+				catch (BeanIsAbstractException biae) {
+				}
+				catch (Exception e) {
+					_logger.log(Logger.LOG_ERROR, e.getMessage(), e);
+				}
+
+				if (bean != null) {
+					ServiceRegistration<?> serviceRegistration =
+						_registerService(_bundleContext, beanName, bean);
+
+					if (serviceRegistration != null) {
+						_serviceRegistrations.add(serviceRegistration);
+					}
+				}
+			});
+	}
+
+	private ServiceRegistration<?> _registerService(
+		BundleContext bundleContext, String beanName, Object bean) {
+
+		Class<?> clazz = bean.getClass();
+
+		OSGiBeanProperties osgiBeanProperties = clazz.getAnnotation(
+			OSGiBeanProperties.class);
+
+		Set<String> names = OSGiBeanProperties.Service.interfaceNames(
+			bean, osgiBeanProperties,
+			PropsValues.MODULE_FRAMEWORK_SERVICES_IGNORED_INTERFACES);
+
+		if (names.isEmpty()) {
+			return null;
+		}
+
+		HashMapDictionary<String, Object> properties =
+			new HashMapDictionary<>();
+
+		if (osgiBeanProperties != null) {
+			properties.putAll(
+				OSGiBeanProperties.Convert.toMap(osgiBeanProperties));
+		}
+
+		properties.put("bean.id", beanName);
+
+		return bundleContext.registerService(
+			names.toArray(new String[names.size()]), bean, properties);
+	}
+
 	private static final String _PORTAL_CONFIG_LOCATION_PARAM =
 		"portalContextConfigLocation";
 
+	private final BundleContext _bundleContext;
 	private final Logger _logger;
+	private final List<ServiceRegistration<?>> _serviceRegistrations =
+		new ArrayList<>();
 
 }

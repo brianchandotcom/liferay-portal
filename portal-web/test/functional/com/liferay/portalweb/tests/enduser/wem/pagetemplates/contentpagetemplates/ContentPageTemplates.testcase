@@ -5,11 +5,15 @@ definition {
 	property testray.main.component.name = "Layout Page Templates";
 
 	setUp {
-		TestCase.setUpPortalInstance();
+		task ("Set up instance and sign in") {
+			TestCase.setUpPortalInstance();
 
-		User.firstLoginPG();
+			User.firstLoginPG();
+		}
 
-		JSONGroup.addGroup(groupName = "Test Site Name");
+		task ("Add a site via JSON") {
+			JSONGroup.addGroup(groupName = "Test Site Name");
+		}
 
 		FragmentsAdmin.openFragmentsAdmin(siteURLKey = "test-site-name");
 
@@ -36,49 +40,63 @@ definition {
 	test ChangeEditableImage {
 		property testray.component.names = "Training";
 
-		PageTemplatesAdmin.addCollection(collectionName = "Page Template Collection");
+		task ("Add a content page template") {
+			PageTemplatesAdmin.addCollection(collectionName = "Page Template Collection");
 
-		Navigator.gotoNavNested(navNested = "Page Template Collection");
+			Navigator.gotoNavNested(navNested = "Page Template Collection");
 
-		PageTemplatesAdmin.add(pageTemplateName = "Page Template Name");
+			PageTemplatesAdmin.add(pageTemplateName = "Page Template Name");
+		}
 
-		PageEditor.addFragment(
-			collectionName = "Collection Name",
-			fragmentName = "Image"
-		);
+		task ("Add an Image fragment to the content page template") {
+			PageEditor.addFragment(
+				collectionName = "Collection Name",
+				fragmentName = "Image"
+			);
+		}
 
-		PageEditor.editFragmentImage(
-			fileName = "Document_1.png",
-			fragmentName = "Image",
-			id = "image"
-		);
+		task ("Edit the Image fragment's image") {
+			PageEditor.editFragmentImage(
+				fileName = "Document_1.png",
+				fragmentName = "Image",
+				id = "image"
+			);
+		}
 	}
 
 	@description = "Change a fragment's editable text field."
 	@priority = "5"
 	test ChangeEditableText {
-		PageTemplatesAdmin.addCollection(collectionName = "Page Template Collection");
+		task ("Add a content page template") {
+			PageTemplatesAdmin.addCollection(collectionName = "Page Template Collection");
 
-		Navigator.gotoNavNested(navNested = "Page Template Collection");
+			Navigator.gotoNavNested(navNested = "Page Template Collection");
 
-		PageTemplatesAdmin.add(pageTemplateName = "Page Template Name");
+			PageTemplatesAdmin.add(pageTemplateName = "Page Template Name");
+		}
 
-		PageEditor.addFragment(
-			collectionName = "Collection Name",
-			fragmentName = "Content"
-		);
+		task ("Add a Content fragment to the content page template") {
+			PageEditor.addFragment(
+				collectionName = "Collection Name",
+				fragmentName = "Content"
+			);
+		}
 
-		PageEditor.editFragmentText(
-			fragmentName = "Content",
-			id = "content",
-			text = "Editing Finished"
-		);
+		task ("Edit the Content fragment's editable text") {
+			PageEditor.editFragmentText(
+				fragmentName = "Content",
+				id = "content",
+				text = "Editing Finished"
+			);
+		}
 
-		PageEditor.viewFragmentEditableText(
-			editableText = "Editing Finished",
-			fragmentName = "Content",
-			id = "content"
-		);
+		task ("Assert the Content fragment's editable text was changed") {
+			PageEditor.viewFragmentEditableText(
+				editableText = "Editing Finished",
+				fragmentName = "Content",
+				id = "content"
+			);
+		}
 	}
 
 	@description = "Delete a page template collection."
@@ -86,11 +104,15 @@ definition {
 	test DeleteCollection {
 		property portal.acceptance = "true";
 
-		PageTemplatesAdmin.addCollection(collectionName = "Collection Name");
+		task ("Delete the page template collection") {
+			PageTemplatesAdmin.addCollection(collectionName = "Collection Name");
 
-		Collection.deleteCollection(collectionName = "Collection Name");
+			Collection.deleteCollection(collectionName = "Collection Name");
+		}
 
-		Collection.viewNotPresent(rowEntry = "Collection Name");
+		task ("Assert the collection was deleted") {
+			Collection.viewNotPresent(rowEntry = "Collection Name");
+		}
 	}
 
 	@description = "Delete a page template."
@@ -98,79 +120,101 @@ definition {
 	test DeletePageTemplate {
 		property portal.acceptance = "true";
 
-		PageTemplatesAdmin.addCollection(collectionName = "Page Template Collection");
+		task ("Add a content page template") {
+			PageTemplatesAdmin.addCollection(collectionName = "Page Template Collection");
 
-		Navigator.gotoNavNested(navNested = "Page Template Collection");
+			Navigator.gotoNavNested(navNested = "Page Template Collection");
 
-		PageTemplatesAdmin.add(pageTemplateName = "Page Template Name");
+			PageTemplatesAdmin.add(pageTemplateName = "Page Template Name");
 
-		PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
+			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
 
-		Navigator.gotoNavNested(navNested = "Page Template Collection");
+			Navigator.gotoNavNested(navNested = "Page Template Collection");
+		}
 
-		LexiconEntry.delete(rowEntry = "Page Template Name");
+		task ("Delete the content page template") {
+			LexiconEntry.delete(rowEntry = "Page Template Name");
+		}
 
-		LexiconEntry.viewNoEntry(rowEntry = "Page Template Name");
+		task ("Assert the content page template was deleted") {
+			LexiconEntry.viewNoEntry(rowEntry = "Page Template Name");
+		}
 	}
 
 	@description = "Rename a page template collection."
 	@priority = "4"
 	test RenameCollection {
-		PageTemplatesAdmin.addCollection(
-			collectionDescription = "Collection Description Original",
-			collectionName = "Collection Name Original"
-		);
+		task ("Add a page template collection") {
+			PageTemplatesAdmin.addCollection(
+				collectionDescription = "Collection Description Original",
+				collectionName = "Collection Name Original"
+			);
+		}
 
-		Collection.renameCollection(
-			collectionDescription = "Collection Description New",
-			collectionName = "Collection Name Original",
-			collectionNameEdit = "Collection Name New"
-		);
+		task ("Rename the collection") {
+			Collection.renameCollection(
+				collectionDescription = "Collection Description New",
+				collectionName = "Collection Name Original",
+				collectionNameEdit = "Collection Name New"
+			);
+		}
 
-		Collection.viewPresent(collectionName = "Collection Name New");
+		task ("Assert the collection was renamed") {
+			Collection.viewPresent(collectionName = "Collection Name New");
+		}
 	}
 
 	@description = "Rename a page template."
 	@priority = "4"
 	test RenamePageTemplate {
-		PageTemplatesAdmin.addCollection(collectionName = "Page Template Collection");
+		task ("Add a content page template") {
+			PageTemplatesAdmin.addCollection(collectionName = "Page Template Collection");
 
-		Navigator.gotoNavNested(navNested = "Page Template Collection");
+			Navigator.gotoNavNested(navNested = "Page Template Collection");
 
-		PageTemplatesAdmin.add(pageTemplateName = "Page Template Name");
+			PageTemplatesAdmin.add(pageTemplateName = "Page Template Name");
+		}
 
-		PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
+		task ("Rename the content page template") {
+			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
 
-		Navigator.gotoNavNested(navNested = "Page Template Collection");
+			Navigator.gotoNavNested(navNested = "Page Template Collection");
 
-		PageTemplatesAdmin.rename(
-			pageTemplateName = "Page Template Name New",
-			rowEntry = "Page Template Name"
-		);
+			PageTemplatesAdmin.rename(
+				pageTemplateName = "Page Template Name New",
+				rowEntry = "Page Template Name"
+			);
+		}
 
-		LexiconEntry.viewEntryName(rowEntry = "Page Template Name New");
+		task ("Assert the content page template was renamed") {
+			LexiconEntry.viewEntryName(rowEntry = "Page Template Name New");
+		}
 	}
 
 	@description = "An unpublished fragment should not show up in the fragments sidebar."
 	@priority = "4"
 	test ViewDraftFragmentDoesNotDisplayInSidebar {
-		FragmentsAdmin.openFragmentsAdmin(siteURLKey = "test-site-name");
+		task ("Add a fragment without publishing it") {
+			FragmentsAdmin.openFragmentsAdmin(siteURLKey = "test-site-name");
 
-		FragmentsAdmin.addCollection(
-			collectionDescription = "Collection Description",
-			collectionName = "New Collection"
-		);
+			FragmentsAdmin.addCollection(
+				collectionDescription = "Collection Description",
+				collectionName = "New Collection"
+			);
 
-		FragmentsAdmin.addSection(fragmentName = "Fragment Name");
+			FragmentsAdmin.addSection(fragmentName = "Fragment Name");
+		}
 
-		PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
+		task ("Assert the unpublished fragment does not appear in the sidebar when editing a content page template") {
+			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
 
-		PageTemplatesAdmin.addCollection(collectionName = "Page Template Collection");
+			PageTemplatesAdmin.addCollection(collectionName = "Page Template Collection");
 
-		Navigator.gotoNavNested(navNested = "Page Template Collection");
+			Navigator.gotoNavNested(navNested = "Page Template Collection");
 
-		PageTemplatesAdmin.add(pageTemplateName = "Page Template Name");
+			PageTemplatesAdmin.add(pageTemplateName = "Page Template Name");
 
-		PageEditor.viewCollectionNotPresent(collectionName = "New Collection");
+			PageEditor.viewCollectionNotPresent(collectionName = "New Collection");
+		}
 	}
 }

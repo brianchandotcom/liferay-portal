@@ -5,15 +5,21 @@ definition {
 	property testray.main.component.name = "Layout Page Templates";
 
 	setUp {
-		TestCase.setUpPortalInstance();
+		task ("Set up instance and sign in") {
+			TestCase.setUpPortalInstance();
 
-		User.firstLoginPG();
+			User.firstLoginPG();
+		}
 
-		JSONGroup.addGroup(groupName = "Test Site Name");
+		task ("Add a site via JSON") {
+			JSONGroup.addGroup(groupName = "Test Site Name");
+		}
 
-		Staging.openStagingAdmin(siteURLKey = "test-site-name");
+		task ("Activate staging") {
+			Staging.openStagingAdmin(siteURLKey = "test-site-name");
 
-		Staging.activateStagingCP(siteName = "Test Site Name");
+			Staging.activateStagingCP(siteName = "Test Site Name");
+		}
 	}
 
 	tearDown {
@@ -29,15 +35,19 @@ definition {
 
 	@priority = "5"
 	test AssertPageTemplatesAreOnlyEditableInStagingView {
-		SitePages.openPagesAdmin(siteURLKey = "test-site-name-staging");
+		task ("Assert content page templates admin is accessible in the staging site") {
+			SitePages.openPagesAdmin(siteURLKey = "test-site-name-staging");
 
-		AssertVisible(locator1 = "NavBar#NAV_ITEM_LINK", key_navItem = "Page Templates");
+			AssertVisible(locator1 = "NavBar#NAV_ITEM_LINK", key_navItem = "Page Templates");
+		}
 
-		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+		task ("Assert content page templates admin is not accessible in the live site") {
+			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
-		AssertElementNotPresent(
-			locator1 = "NavBar#NAV_ITEM_LINK",
-			key_navItem = "Page Templates"
-		);
+			AssertElementNotPresent(
+				locator1 = "NavBar#NAV_ITEM_LINK",
+				key_navItem = "Page Templates"
+			);
+		}
 	}
 }

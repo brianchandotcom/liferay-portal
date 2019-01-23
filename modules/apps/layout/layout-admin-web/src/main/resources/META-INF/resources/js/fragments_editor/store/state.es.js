@@ -497,6 +497,17 @@ const INITIAL_STATE = {
 		.value(''),
 
 	/**
+	 * @default []
+	 * @review
+	 * @type {Array}
+	 */
+	themeColorList: Config
+		.arrayOf(
+			Config.string()
+		)
+		.value([]),
+
+	/**
 	 * Translation status
 	 * @default {languageValues: [], translationKeys: []}
 	 * @review

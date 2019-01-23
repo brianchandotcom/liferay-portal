@@ -292,14 +292,14 @@ class SegmentEdit extends Component {
 								<div className="btn-group-item">
 									<ClayButton
 										href={redirect}
-										label={Liferay.Language.get('Cancel')}
+										label={Liferay.Language.get('cancel')}
 										size="sm"
 									/>
 								</div>
 
 								<div className="btn-group-item">
 									<ClayButton
-										label={Liferay.Language.get('Save')}
+										label={Liferay.Language.get('save')}
 										size="sm"
 										style="primary"
 										type="submit"

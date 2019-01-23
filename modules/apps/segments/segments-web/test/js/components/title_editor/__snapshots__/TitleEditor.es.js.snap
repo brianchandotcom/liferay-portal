@@ -16,7 +16,7 @@ exports[`TitleEditor should render 1`] = `
     >
       <span />
       <button
-        class="btn btn-outline-secondary btn-monospaced btn-outline-borderless edit-icon"
+        class="btn btn-outline-secondary btn-sm btn-monospaced btn-outline-borderless edit-icon ml-1"
         data-testid="edit-button"
         type="button"
       >
@@ -59,7 +59,7 @@ exports[`TitleEditor should show and hide the text input after blurring from the
       >
         <span />
         <button
-          class=\\"btn btn-outline-secondary btn-monospaced btn-outline-borderless edit-icon\\"
+          class=\\"btn btn-outline-secondary btn-sm btn-monospaced btn-outline-borderless edit-icon ml-1\\"
           data-testid=\\"edit-button\\""
 `;
 
@@ -87,6 +87,6 @@ exports[`TitleEditor should show the text input after clicking on the edit butto
       >
         <span />
         <button
-          class=\\"btn btn-outline-secondary btn-monospaced btn-outline-borderless edit-icon\\"
+          class=\\"btn btn-outline-secondary btn-sm btn-monospaced btn-outline-borderless edit-icon ml-1\\"
           data-testid=\\"edit-button\\""
 `;

@@ -52,7 +52,7 @@ exports[`SegmentEdit should render 1`] = `
                 unnamed-segment
               </span>
               <button
-                class="btn btn-outline-secondary btn-monospaced btn-outline-borderless edit-icon"
+                class="btn btn-outline-secondary btn-sm btn-monospaced btn-outline-borderless edit-icon ml-1"
                 data-testid="edit-button"
                 type="button"
               >
@@ -78,9 +78,17 @@ exports[`SegmentEdit should render 1`] = `
           class="form-header-section-right"
         >
           <div
-            class="members-count"
+            class="btn-group mr-3"
           >
-            x-members
+            <div
+              class="btn-group-item"
+            >
+              <div
+                class="members-count mr-3"
+              >
+                x-members
+              </div>
+            </div>
           </div>
           <div
             class="btn-group"
@@ -89,7 +97,7 @@ exports[`SegmentEdit should render 1`] = `
               class="btn-group-item"
             >
               <button
-                class="btn btn-outline-secondary btn-outline-borderless"
+                class="btn btn-secondary btn-sm"
                 type="button"
               >
                 cancel
@@ -99,7 +107,7 @@ exports[`SegmentEdit should render 1`] = `
               class="btn-group-item"
             >
               <button
-                class="btn btn-primary"
+                class="btn btn-primary btn-sm"
                 type="submit"
               >
                 save

@@ -172,20 +172,6 @@ public class PersonCollectionResource
 		}
 	}
 
-	private String _getAlternateName(
-		PersonUpdaterForm personUpdaterForm, User user) {
-
-		if (personUpdaterForm.getAlternateName() == null) {
-			return user.getScreenName();
-		}
-
-		return personUpdaterForm.getAlternateName();
-	}
-
-	private <T> T _getDefaultValue(Optional<T> optional, T defaultValue) {
-		return optional.orElse(defaultValue);
-	}
-
 	private byte[] _getImageBytes(BinaryFile binaryFile) {
 		return Try.of(
 			binaryFile::getInputStream
@@ -311,6 +297,8 @@ public class PersonCollectionResource
 
 		User user = _userService.getUserById(userId);
 
+		String oldAlternateName = user.getScreenName();
+
 		Contact contact = user.getContact();
 
 		long prefixId = _getPrefixId(
@@ -318,37 +306,35 @@ public class PersonCollectionResource
 		long suffixId = _getSuffixId(
 			personUpdaterForm.getHonorificSuffix(), contact.getSuffixId());
 
-		String alternateName = _getAlternateName(personUpdaterForm, user);
-
 		Calendar calendar = Calendar.getInstance();
 
 		calendar.setTime(user.getBirthday());
+
+		int oldBirthdayMonth = calendar.get(Calendar.MONTH);
+		int oldBirthdayDay = calendar.get(Calendar.DATE);
+		int oldBirthdayYear = calendar.get(Calendar.YEAR);
+
+		String oldJobTitle = user.getJobTitle();
 
 		user = _userLocalService.updateUser(
 			user.getUserId(), user.getPassword(),
 			personUpdaterForm.getPassword(), personUpdaterForm.getPassword(),
 			false, user.getReminderQueryQuestion(),
-			user.getReminderQueryAnswer(), alternateName,
+			user.getReminderQueryAnswer(),
+			personUpdaterForm.getAlternateName(oldAlternateName),
 			personUpdaterForm.getEmail(), user.getFacebookId(),
 			user.getOpenId(), false, null, user.getLanguageId(),
 			user.getTimeZoneId(), user.getGreeting(), user.getComments(),
 			personUpdaterForm.getGivenName(), user.getMiddleName(),
 			personUpdaterForm.getFamilyName(), prefixId, suffixId, true,
-			_getDefaultValue(
-				personUpdaterForm.getBirthdayMonthOptional(),
-				calendar.get(Calendar.MONTH)),
-			_getDefaultValue(
-				personUpdaterForm.getBirthdayDayOptional(),
-				calendar.get(Calendar.DATE)),
-			_getDefaultValue(
-				personUpdaterForm.getBirthdayYearOptional(),
-				calendar.get(Calendar.YEAR)),
+			personUpdaterForm.getBirthdayMonth(oldBirthdayMonth),
+			personUpdaterForm.getBirthdayDay(oldBirthdayDay),
+			personUpdaterForm.getBirthdayYear(oldBirthdayYear),
 			contact.getSmsSn(), contact.getFacebookSn(), contact.getJabberSn(),
 			contact.getSkypeSn(), contact.getTwitterSn(),
-			_getDefaultValue(
-				personUpdaterForm.getJobTitleOptional(), user.getJobTitle()),
-			user.getGroupIds(), user.getOrganizationIds(), user.getRoleIds(),
-			null, user.getUserGroupIds(), new ServiceContext());
+			personUpdaterForm.getJobTitle(oldJobTitle), user.getGroupIds(),
+			user.getOrganizationIds(), user.getRoleIds(), null,
+			user.getUserGroupIds(), new ServiceContext());
 
 		return new UserWrapper(user, themeDisplay);
 	}

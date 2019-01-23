@@ -69,8 +69,12 @@ public class PersonUpdaterForm {
 	 *
 	 * @return the person's alternate name
 	 */
-	public String getAlternateName() {
-		return _alternateName;
+	public String getAlternateName(String defaultValue) {
+		return Optional.ofNullable(
+			_alternateName
+		).orElse(
+			defaultValue
+		);
 	}
 
 	/**
@@ -78,8 +82,12 @@ public class PersonUpdaterForm {
 	 *
 	 * @return the person's birth day
 	 */
-	public Optional<Integer> getBirthdayDayOptional() {
-		return Optional.ofNullable(_birthdayDay);
+	public Integer getBirthdayDay(Integer defaultValue) {
+		return Optional.ofNullable(
+			_birthdayDay
+		).orElse(
+			defaultValue
+		);
 	}
 
 	/**
@@ -87,8 +95,12 @@ public class PersonUpdaterForm {
 	 *
 	 * @return the person's birth month
 	 */
-	public Optional<Integer> getBirthdayMonthOptional() {
-		return Optional.ofNullable(_birthdayMonth);
+	public Integer getBirthdayMonth(Integer defaultValue) {
+		return Optional.ofNullable(
+			_birthdayMonth
+		).orElse(
+			defaultValue
+		);
 	}
 
 	/**
@@ -96,8 +108,12 @@ public class PersonUpdaterForm {
 	 *
 	 * @return the person's birth year
 	 */
-	public Optional<Integer> getBirthdayYearOptional() {
-		return Optional.ofNullable(_birthdayYear);
+	public Integer getBirthdayYear(Integer defaultValue) {
+		return Optional.ofNullable(
+			_birthdayYear
+		).orElse(
+			defaultValue
+		);
 	}
 
 	/**
@@ -140,8 +156,12 @@ public class PersonUpdaterForm {
 	 *
 	 * @return the person's job title
 	 */
-	public Optional<String> getJobTitleOptional() {
-		return Optional.ofNullable(_jobTitle);
+	public String getJobTitle(String defaultValue) {
+		return Optional.ofNullable(
+			_jobTitle
+		).orElse(
+			defaultValue
+		);
 	}
 
 	/**

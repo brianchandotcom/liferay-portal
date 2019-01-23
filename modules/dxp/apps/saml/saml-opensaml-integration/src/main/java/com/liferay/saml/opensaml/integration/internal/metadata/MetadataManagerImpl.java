@@ -115,6 +115,20 @@ public class MetadataManagerImpl
 
 		_predicateRoleDescriptorResolver.initialize();
 
+		KeyInfoCredentialResolver keyInfoCredentialResolver =
+			DefaultSecurityConfigurationBootstrap.
+				buildBasicInlineKeyInfoCredentialResolver();
+
+		_metadataCredentialResolver = new MetadataCredentialResolver();
+
+		_metadataCredentialResolver.setKeyInfoCredentialResolver(
+			keyInfoCredentialResolver);
+		_metadataCredentialResolver.setRoleDescriptorResolver(
+			_predicateRoleDescriptorResolver);
+
+		_metadataCredentialResolver.initialize();
+
+
 		SignatureValidationConfiguration signatureValidationConfiguration =
 			ConfigurationService.get(SignatureValidationConfiguration.class);
 
@@ -416,26 +430,6 @@ public class MetadataManagerImpl
 	public SignatureTrustEngine getSignatureTrustEngine() throws SamlException {
 		List<SignatureTrustEngine> signatureTrustEngines = new ArrayList<>();
 
-		MetadataCredentialResolver metadataCredentialResolver =
-			new MetadataCredentialResolver();
-
-		KeyInfoCredentialResolver keyInfoCredentialResolver =
-			DefaultSecurityConfigurationBootstrap.
-				buildBasicInlineKeyInfoCredentialResolver();
-
-		metadataCredentialResolver.setKeyInfoCredentialResolver(
-			keyInfoCredentialResolver);
-
-		metadataCredentialResolver.setRoleDescriptorResolver(
-			_predicateRoleDescriptorResolver);
-
-		try {
-			metadataCredentialResolver.initialize();
-		}
-		catch (ComponentInitializationException cie) {
-			throw new SamlException(cie);
-		}
-
 		SignatureTrustEngine signatureTrustEngine =
 			new ExplicitKeySignatureTrustEngine(
 				metadataCredentialResolver, keyInfoCredentialResolver);
@@ -666,6 +660,7 @@ public class MetadataManagerImpl
 			new CachingChainingMetadataResolver();
 	private CredentialResolver _credentialResolver;
 	private Http _http;
+	private MetadataCredentialResolver _metadataCredentialResolver;
 	private ParserPool _parserPool;
 	private final PredicateRoleDescriptorResolver
 		_predicateRoleDescriptorResolver = new PredicateRoleDescriptorResolver(

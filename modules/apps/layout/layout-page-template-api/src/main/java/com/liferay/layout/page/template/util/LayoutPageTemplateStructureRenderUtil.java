@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.util.Validator;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -88,19 +89,92 @@ public class LayoutPageTemplateStructureRenderUtil {
 		for (int i = 0; i < structureJSONArray.length(); i++) {
 			JSONObject rowJSONObject = structureJSONArray.getJSONObject(i);
 
-			sb.append("<div class=\"row\">");
+			JSONObject rowConfigJSONObject = rowJSONObject.getJSONObject(
+				"config");
+
+			sb.append("<div class=\"container-fluid px-");
+
+			String horizontalPadding = GetterUtil.getString(
+				rowConfigJSONObject.getString("paddinghorizontal"));
+
+			if (Validator.isNotNull(horizontalPadding)) {
+				sb.append(horizontalPadding);
+			}
+			else {
+				sb.append("3");
+			}
+
+			sb.append(" py-");
+
+			String verticalPadding = GetterUtil.getString(
+				rowConfigJSONObject.getString("paddingvertical"));
+
+			if (Validator.isNotNull(verticalPadding)) {
+				sb.append(verticalPadding);
+			}
+			else {
+				sb.append("3");
+			}
+
+			sb.append("\" style=\"");
+
+			String backgroundColor = GetterUtil.getString(
+				rowConfigJSONObject.getString("backgroundColor"));
+
+			if (Validator.isNotNull(backgroundColor)) {
+				sb.append("background-color:");
+				sb.append(backgroundColor);
+				sb.append(";");
+			}
+
+			String backgroundImage = GetterUtil.getString(
+				rowConfigJSONObject.getString("backgroundImage"));
+
+			if (Validator.isNotNull(backgroundImage)) {
+				sb.append("background-image: url(");
+				sb.append(backgroundImage);
+				sb.append(");background-position: 50% 50%;");
+				sb.append("background-repeat: no-repeat;");
+				sb.append("background-size: cover;");
+			}
+
+			sb.append("\"><div class=\"");
+
+			String containerType = GetterUtil.getString(
+				rowConfigJSONObject.getString("containerType"));
+
+			if (Objects.equals(containerType, "fixed")) {
+				sb.append("container");
+			}
+			else {
+				sb.append("container-fluid");
+			}
+
+			sb.append(" p-0\"><div class=\"row");
+
+			String columnSpacing = GetterUtil.getString(
+				rowConfigJSONObject.getString("columnSpacing"), "true");
+
+			if (Objects.equals(columnSpacing, "false")) {
+				sb.append(" no-gutters");
+			}
+
+			sb.append("\">");
 
 			JSONArray columnsJSONArray = rowJSONObject.getJSONArray("columns");
 
 			for (int j = 0; j < columnsJSONArray.length(); j++) {
 				JSONObject columnJSONObject = columnsJSONArray.getJSONObject(j);
 
-				sb.append("<div class=\"col col-");
+				sb.append("<div class=\"col");
 
 				String size = GetterUtil.getString(
 					columnJSONObject.getString("size"));
 
-				sb.append(size);
+				if (Validator.isNotNull(size)) {
+					sb.append(" col-");
+					sb.append(size);
+				}
 
 				sb.append("\">");
 
@@ -147,6 +221,8 @@ public class LayoutPageTemplateStructureRenderUtil {
 				sb.append("</div>");
 			}
 
+			sb.append("</div>");
+			sb.append("</div>");
 			sb.append("</div>");
 		}
 

@@ -14,14 +14,28 @@
 
 package com.liferay.layout.type.controller.asset.display.internal.controller;
 
+import com.liferay.asset.display.contributor.AssetDisplayContributorTracker;
+import com.liferay.item.selector.ItemSelector;
 import com.liferay.layout.constants.LayoutConstants;
+import com.liferay.layout.content.page.editor.constants.ContentPageEditorWebKeys;
+import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
+import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
+import com.liferay.layout.type.controller.asset.display.internal.constants.AssetDisplayLayoutTypeControllerWebKeys;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutTypeController;
 import com.liferay.portal.kernel.model.impl.BaseLayoutTypeControllerImpl;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
+import com.liferay.portal.kernel.servlet.TransferHeadersHelperUtil;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.taglib.servlet.PipingServletResponse;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
@@ -57,7 +71,93 @@ public class AssetDisplayLayoutTypeController
 			Layout layout)
 		throws Exception {
 
+		RequestDispatcher requestDispatcher =
+			TransferHeadersHelperUtil.getTransferHeadersRequestDispatcher(
+				_editorServletContext.getRequestDispatcher(
+					"/layout/edit_layout/content.jsp"));
+
+		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
+
+		ServletResponse servletResponse = createServletResponse(
+			response, unsyncStringWriter);
+
+		String contentType = servletResponse.getContentType();
+
+		String includeServletPath = (String)request.getAttribute(
+			RequestDispatcher.INCLUDE_SERVLET_PATH);
+
+		try {
+			request.setAttribute(
+				ContentPageEditorWebKeys.CLASS_NAME,
+				LayoutPageTemplateEntry.class.getName());
+
+			LayoutPageTemplateEntry layoutPageTemplateEntry =
+				_layoutPageTemplateEntryLocalService.
+					fetchLayoutPageTemplateEntryByPlid(layout.getPlid());
+
+			if (layoutPageTemplateEntry != null) {
+				request.setAttribute(
+					ContentPageEditorWebKeys.CLASS_PK,
+					layoutPageTemplateEntry.getLayoutPageTemplateEntryId());
+			}
+
+			request.setAttribute(
+				AssetDisplayLayoutTypeControllerWebKeys.
+					ASSET_DISPLAY_CONTRIBUTOR_TRACKER,
+				_assetDisplayContributorTracker);
+
+			addAttributes(request);
+
+			requestDispatcher.include(request, servletResponse);
+		}
+		finally {
+			removeAttributes(request);
+
+			request.setAttribute(
+				RequestDispatcher.INCLUDE_SERVLET_PATH, includeServletPath);
+		}
+
+		if (contentType != null) {
+			response.setContentType(contentType);
+		}
+
+		request.setAttribute(
+			WebKeys.LAYOUT_CONTENT, unsyncStringWriter.getStringBundler());
+
 		return StringPool.BLANK;
+	}
+
+	@Override
+	public boolean includeLayoutContent(
+			HttpServletRequest request, HttpServletResponse response,
+			Layout layout)
+		throws Exception {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		String layoutMode = ParamUtil.getString(
+			request, "p_l_mode", Constants.VIEW);
+
+		if (layoutMode.equals(Constants.EDIT) &&
+			!LayoutPermissionUtil.contains(
+				themeDisplay.getPermissionChecker(), layout,
+				ActionKeys.UPDATE)) {
+
+			layoutMode = Constants.VIEW;
+		}
+
+		if (layoutMode.equals(Constants.EDIT)) {
+			request.setAttribute(
+				AssetDisplayLayoutTypeControllerWebKeys.ITEM_SELECTOR,
+				_itemSelector);
+
+			includeEditContent(request, response, layout);
+
+			return false;
+		}
+
+		return super.includeLayoutContent(request, response, layout);
 	}
 
 	@Override
@@ -120,5 +220,20 @@ public class AssetDisplayLayoutTypeController
 			"&p_v_l_s_g_id=${liferay:pvlsgid}";
 
 	private static final String _VIEW_PAGE = "/layout/view/asset_display.jsp";
+
+	@Reference
+	private AssetDisplayContributorTracker _assetDisplayContributorTracker;
+
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.layout.type.controller.content)"
+	)
+	private ServletContext _editorServletContext;
+
+	@Reference
+	private ItemSelector _itemSelector;
+
+	@Reference
+	private LayoutPageTemplateEntryLocalService
+		_layoutPageTemplateEntryLocalService;
 
 }

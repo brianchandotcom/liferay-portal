@@ -22,7 +22,8 @@ import java.io.File;
 public class RESTBuilderInvoker {
 
 	public static RESTBuilder invoke(
-		File baseDir, RESTBuilderArgs restBuilderArgs) {
+			File baseDir, RESTBuilderArgs restBuilderArgs)
+		throws Exception {
 
 		return new RESTBuilder(
 			_getAbsolutePath(baseDir, restBuilderArgs.getInputFileName()));

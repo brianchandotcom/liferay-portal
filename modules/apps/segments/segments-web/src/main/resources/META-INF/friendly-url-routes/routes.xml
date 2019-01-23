@@ -3,18 +3,6 @@
 
 <routes>
 	<route>
-		<pattern>/entry/{segmentsEntryId:\d+}/edit/organizations</pattern>
-		<implicit-parameter name="mvcRenderCommandName">editSegmentsEntryOrganizations</implicit-parameter>
-		<implicit-parameter name="p_p_state">maximized</implicit-parameter>
-		<implicit-parameter name="tabs1">organizations</implicit-parameter>
-	</route>
-	<route>
-		<pattern>/entry/{segmentsEntryId:\d+}/edit/users</pattern>
-		<implicit-parameter name="mvcRenderCommandName">editSegmentsEntryUsers</implicit-parameter>
-		<implicit-parameter name="p_p_state">maximized</implicit-parameter>
-		<implicit-parameter name="tabs1">users</implicit-parameter>
-	</route>
-	<route>
 		<pattern>/entry/{segmentsEntryId:\d+}/edit</pattern>
 		<implicit-parameter name="mvcRenderCommandName">editSegmentsEntry</implicit-parameter>
 		<implicit-parameter name="p_p_state">maximized</implicit-parameter>

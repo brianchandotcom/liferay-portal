@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Field;
@@ -103,15 +102,6 @@ public class SegmentsDisplayContext {
 							User.class.getName());
 						dropdownItem.setLabel(
 							LanguageUtil.get(_request, "user-segment"));
-					});
-				addPrimaryDropdownItem(
-					dropdownItem -> {
-						dropdownItem.setHref(
-							_renderResponse.createRenderURL(),
-							"mvcRenderCommandName", "editSegmentsEntry", "type",
-							Organization.class.getName());
-						dropdownItem.setLabel(
-							LanguageUtil.get(_request, "organization-segment"));
 					});
 			}
 		};

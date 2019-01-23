@@ -14,7 +14,6 @@
 
 package com.liferay.site.apio.internal.architect.resource;
 
-import com.liferay.apio.architect.functional.Try;
 import com.liferay.apio.architect.pagination.PageItems;
 import com.liferay.apio.architect.pagination.Pagination;
 import com.liferay.apio.architect.representor.Representor;
@@ -36,6 +35,8 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.comparator.GroupIdComparator;
 import com.liferay.site.apio.architect.identifier.WebSiteIdentifier;
+
+import io.vavr.control.Try;
 
 import java.util.Arrays;
 import java.util.List;
@@ -113,13 +114,11 @@ public class WebSiteCollectionResource
 	}
 
 	private String _getDisplayURL(Group group, boolean privateLayout) {
-		return Try.fromFallible(
+		return Try.of(
 			() -> _getThemeDisplay(group, privateLayout)
 		).map(
 			themeDisplay -> group.getDisplayURL(themeDisplay, privateLayout)
-		).orElse(
-			null
-		);
+		).getOrNull();
 	}
 
 	private Group _getGroup(long groupId) throws PortalException {

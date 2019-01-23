@@ -77,17 +77,12 @@ public class BlogPostingForm implements BlogPosting {
 	}
 
 	/**
-	 * Returns the blog posting's alternative headline, if present; otherwise,
-	 * returns an empty string.
+	 * Returns the blog posting's alternative headline.
 	 *
-	 * @return the alternative headline, if present; an empty string otherwise
+	 * @return the alternative headline
 	 */
 	public String getAlternativeHeadline() {
-		return Optional.ofNullable(
-			_alternativeHeadline
-		).orElse(
-			""
-		);
+		return _alternativeHeadline;
 	}
 
 	/**
@@ -100,17 +95,12 @@ public class BlogPostingForm implements BlogPosting {
 	}
 
 	/**
-	 * Returns the blog post's image caption, if present; otherwise, returns an
-	 * empty string.
+	 * Returns the blog post's image caption.
 	 *
-	 * @return the image caption, if present; an empty string otherwise
+	 * @return the image caption
 	 */
 	public String getCaption() {
-		return Optional.ofNullable(
-			_imageCaption
-		).orElse(
-			""
-		);
+		return _imageCaption;
 	}
 
 	@Override
@@ -128,41 +118,30 @@ public class BlogPostingForm implements BlogPosting {
 	}
 
 	/**
-	 * Returns the blog post's creator ID, if present; otherwise, returns the
-	 * provided default ID.
+	 * Returns the blog post's creator ID
 	 *
-	 * @return the creator ID, if present; the default ID otherwise
+	 * @return the creator ID
 	 */
 	public Long getCreatorId() {
 		return _creatorId;
 	}
 
 	/**
-	 * Returns the blog post's description, if present; otherwise, returns an
-	 * empty string.
+	 * Returns the blog post's description
 	 *
-	 * @return the description, if present; an empty string otherwise
+	 * @return the description
 	 */
 	public String getDescription() {
-		return Optional.ofNullable(
-			_description
-		).orElse(
-			""
-		);
+		return _description;
 	}
 
 	/**
-	 * Returns the blog post's friendly URL, if present; otherwise, returns an
-	 * empty string.
+	 * Returns the blog post's friendly URL
 	 *
-	 * @return the friendly URL if present; an empty string otherwise
+	 * @return the friendly URL
 	 */
 	public String getFriendlyURLPath() {
-		return Optional.ofNullable(
-			_friendlyURLPath
-		).orElse(
-			""
-		);
+		return _friendlyURLPath;
 	}
 
 	/**

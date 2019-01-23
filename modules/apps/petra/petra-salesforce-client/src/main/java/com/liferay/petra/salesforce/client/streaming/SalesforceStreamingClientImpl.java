@@ -23,12 +23,14 @@ import com.sforce.ws.ConnectorConfig;
 
 import java.net.URL;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import org.cometd.bayeux.Channel;
 import org.cometd.bayeux.Message;
 import org.cometd.bayeux.client.ClientSessionChannel;
 import org.cometd.client.BayeuxClient;
+import org.cometd.client.transport.ClientTransport;
 import org.cometd.client.transport.LongPollingTransport;
 
 import org.eclipse.jetty.client.HttpClient;
@@ -130,6 +132,12 @@ public class SalesforceStreamingClientImpl
 
 			ConnectorConfig connectorConfig = partnerConnection.getConfig();
 
+			Map<String, Object> options = new HashMap<>();
+
+			options.put(
+				ClientTransport.MAX_NETWORK_DELAY_OPTION,
+				_transportTimeout * 6000);
+
 			_httpClient.start();
 
 			URL url = new URL(connectorConfig.getServiceEndpoint());
@@ -138,7 +146,7 @@ public class SalesforceStreamingClientImpl
 				StringBundler.concat(
 					url.getProtocol(), "://", url.getHost(), "/cometd/37.0"),
 				new SalesforceTransport(
-					connectorConfig.getSessionId(), null, _httpClient));
+					connectorConfig.getSessionId(), options, _httpClient));
 
 			ClientSessionChannel handshakeClientSessionChannel =
 				_bayeuxClient.getChannel(Channel.META_HANDSHAKE);

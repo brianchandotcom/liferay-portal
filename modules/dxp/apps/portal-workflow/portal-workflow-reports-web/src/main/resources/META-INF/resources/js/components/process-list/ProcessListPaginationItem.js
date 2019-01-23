@@ -5,12 +5,12 @@ import React from 'react';
 export default class ProcessListPaginationItem extends React.Component {
 	@autobind
 	setPage() {
-		const {page, onChangePage} = this.props;
+		const {onChangePage, page} = this.props;
 		onChangePage(page);
 	}
 
 	render() {
-		const {page, type} = this.props;
+		const {active, page, type} = this.props;
 
 		const renderLink = () => {
 			const isNext = type === 'next';
@@ -36,7 +36,10 @@ export default class ProcessListPaginationItem extends React.Component {
 		};
 
 		return (
-			<li className="page-item" onClick={this.setPage}>
+			<li
+				className={`page-item ${active ? 'active' : ''}`}
+				onClick={this.setPage}
+			>
 				{renderLink()}
 			</li>
 		);

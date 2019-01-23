@@ -7,6 +7,7 @@ export default class ProcessListPagination extends React.Component {
 		super();
 
 		this.state = {
+			activePage: 0,
 			pages: 1
 		};
 	}
@@ -19,10 +20,12 @@ export default class ProcessListPagination extends React.Component {
 		const size = entry;
 
 		pageClickHandler({page, size, start});
+		this.setState({activePage: page});
 	}
 
 	render() {
-		const {entry, totalCount} = this.props;
+		const {entry, start, totalCount} = this.props;
+		const activePage = start === 0 ? start : this.state.activePage;
 
 		const pages = Math.ceil(totalCount / entry);
 
@@ -32,6 +35,7 @@ export default class ProcessListPagination extends React.Component {
 			for (let i = 0; i < pages; i++) {
 				rows.push(
 					<ProcessListPaginationItem
+						active={i === activePage ? true : false}
 						key={`process_list_pag_${i}`}
 						onChangePage={this.goToPage}
 						page={i}

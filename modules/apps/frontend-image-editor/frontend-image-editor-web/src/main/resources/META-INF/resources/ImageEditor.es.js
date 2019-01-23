@@ -349,18 +349,16 @@ class ImageEditor extends Component {
 
 			formData.append(saveParamName, imageBlob, saveFileName);
 
-			let requestConfig = {
-				contentType: false,
-				data: formData,
-				dataType: "json",
-				processData: false,
-				type: 'POST',
-				url: this.saveURL
-			};
-
-			AUI.$.ajax(requestConfig)
-				.done(resolve)
-				.fail((jqXHR, status, error) => reject(error));
+			fetch(
+				this.saveURL, 
+				{
+					body: formData,
+					method: 'POST'
+				}
+			)
+			.then(response => response.json())
+			.then(resolve)
+			.catch(error => reject(error));
 		});
 
 		this.components.loading.show = true;

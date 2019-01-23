@@ -71,8 +71,7 @@ portletURL.setParameter("tabs1", "service-provider-connections");
 	</liferay-ui:search-container-row>
 
 	<portlet:renderURL var="addServiceProviderURL">
-		<portlet:param name="mvcRenderCommandName" value="/admin" />
-		<portlet:param name="mvcPath" value="/admin/edit_service_provider_connection.jsp" />
+		<portlet:param name="mvcRenderCommandName" value="/admin/edit_service_provider_connection" />
 		<portlet:param name="redirect" value="<%= currentURL %>" />
 	</portlet:renderURL>
 

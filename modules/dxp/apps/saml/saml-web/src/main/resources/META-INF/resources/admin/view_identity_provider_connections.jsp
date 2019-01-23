@@ -71,8 +71,7 @@ portletURL.setParameter("tabs1", "identity-provider-connections");
 	</liferay-ui:search-container-row>
 
 	<portlet:renderURL var="addIdentityProviderURL">
-		<portlet:param name="mvcPath" value="/admin/edit_identity_provider_connection.jsp" />
-		<portlet:param name="mvcRenderCommandName" value="/admin" />
+		<portlet:param name="mvcRenderCommandName" value="/admin/edit_identity_provider_connection" />
 		<portlet:param name="redirect" value="<%= currentURL %>" />
 	</portlet:renderURL>
 

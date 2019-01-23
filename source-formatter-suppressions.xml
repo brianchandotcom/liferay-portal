@@ -150,6 +150,7 @@
 
 		<!-- Temporary suppressions for private repos and subrepos -->
 
+		<suppress checks="BNDBundleActivatorCheck" files="modules/private/.*" />
 		<suppress checks="BNDBundleCheck" files="modules/private/.*" />
 		<suppress checks="BNDSuiteCheck" files="modules/private/apps/lcs/.*" />
 		<suppress checks="GradleTestDependencyVersionCheck" files="modules/apps/apio-architect/.*" />

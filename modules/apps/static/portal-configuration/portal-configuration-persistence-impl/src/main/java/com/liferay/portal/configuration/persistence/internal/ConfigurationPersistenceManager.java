@@ -45,7 +45,6 @@ import java.sql.Statement;
 import java.util.Collections;
 import java.util.Dictionary;
 import java.util.Enumeration;
-import java.util.Hashtable;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.locks.Lock;
@@ -715,7 +714,8 @@ public class ConfigurationPersistenceManager
 	private static final String _FELIX_FILE_INSTALL_FILENAME =
 		"felix.fileinstall.filename";
 
-	private static final Dictionary<?, ?> _emptyDictionary = new Hashtable<>();
+	private static final Dictionary<?, ?> _emptyDictionary =
+		new HashMapDictionary<>();
 
 	private DataSource _dataSource;
 	private final ConcurrentMap<String, Dictionary<?, ?>> _dictionaries =

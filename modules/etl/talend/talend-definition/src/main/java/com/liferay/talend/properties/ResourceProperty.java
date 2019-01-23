@@ -122,8 +122,6 @@ public class ResourceProperty extends BaseContextAwareStringProperty {
 		UriBuilder uriBuilder = UriBuilder.fromPath(uriPrefix);
 
 		URI resourceURI = uriBuilder.path(
-			uriPrefix.contains("/p/") ? "" : "p"
-		).path(
 			"{resource}"
 		).build(
 			getValue()

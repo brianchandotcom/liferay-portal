@@ -773,10 +773,8 @@ public class LiferaySourceOrSink
 	private static boolean _hasWebSiteResourcePredicate(
 		Map.Entry<String, String> entry) {
 
-		if (SchemaOrgConstants.Vocabulary.COMMERCE_WEB_SITE.equals(
-				entry.getValue()) ||
-			SchemaOrgConstants.Type.COMMERCE_WEB_SITE.equals(
-				entry.getValue())) {
+		if (SchemaOrgConstants.Vocabulary.WEB_SITE.equals(entry.getValue()) ||
+			SchemaOrgConstants.Type.WEB_SITE.equals(entry.getValue())) {
 
 			return true;
 		}

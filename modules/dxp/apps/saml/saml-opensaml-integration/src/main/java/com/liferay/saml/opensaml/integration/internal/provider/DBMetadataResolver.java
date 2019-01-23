@@ -43,7 +43,6 @@ import org.opensaml.core.xml.util.XMLObjectSupport;
 import org.opensaml.saml.metadata.resolver.MetadataResolver;
 import org.opensaml.saml.metadata.resolver.filter.MetadataFilter;
 import org.opensaml.saml.metadata.resolver.impl.AbstractMetadataResolver;
-import org.opensaml.saml.metadata.resolver.impl.DOMMetadataResolver;
 import org.opensaml.saml.saml2.metadata.EntityDescriptor;
 
 import org.osgi.service.component.annotations.Component;
@@ -72,18 +71,14 @@ public class DBMetadataResolver extends AbstractMetadataResolver {
 		}
 
 		try {
-			XMLObject xmlObject = getMetadata(entityIdCriterion.getEntityId());
+			EntityDescriptor entityDescriptor = getEntityDescriptor(
+				entityIdCriterion.getEntityId());
 
-			DOMMetadataResolver domMetadataResolver = new DOMMetadataResolver(
-				XMLObjectSupport.marshall(xmlObject));
+			if (isValid(entityDescriptor)) {
+				return Collections.singletonList(entityDescriptor);
+			}
 
-			domMetadataResolver.setId(DOMMetadataResolver.class.getName());
-			domMetadataResolver.setRequireValidMetadata(
-				isRequireValidMetadata());
-
-			domMetadataResolver.initialize();
-
-			return domMetadataResolver.resolve(criteriaSet);
+			return Collections.emptyList();
 		}
 		catch (Exception e) {
 			throw new ResolverException(e);

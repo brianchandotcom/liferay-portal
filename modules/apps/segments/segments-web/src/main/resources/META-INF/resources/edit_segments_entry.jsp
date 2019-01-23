@@ -55,10 +55,7 @@ renderResponse.setTitle(editSegmentsEntryDisplayContext.getTitle(locale));
 	<div id="<%= segmentEditRootElementId %>"></div>
 
 	<portlet:renderURL var="previewMembersURL">
-		<portlet:param name="mvcRenderCommandName" value="editSegmentsEntryUsers" />
-		<portlet:param name="tabs1" value="users" />
-		<portlet:param name="redirect" value="<%= currentURL %>" />
-		<portlet:param name="segmentsEntryId" value="<%= String.valueOf(segmentsEntryId) %>" />
+		<portlet:param name="mvcRenderCommandName" value="previewSegmentsEntryUsers" />
 	</portlet:renderURL>
 
 	<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="getSegmentsEntryClassPKsCount" var="getSegmentsEntryClassPKsCountURL" />
@@ -74,7 +71,7 @@ renderResponse.setTitle(editSegmentsEntryDisplayContext.getTitle(locale));
 				initialSegmentName: '<%= (segmentsEntry != null) ? segmentsEntry.getName(locale) : StringPool.BLANK %>',
 				locale: '<%= locale %>',
 				portletNamespace: '<portlet:namespace />',
-				previewMembersURL: '<%= (segmentsEntry != null) ? previewMembersURL : StringPool.BLANK %>',
+				previewMembersURL: '<%= previewMembersURL %>',
 				propertyGroups: <%= editSegmentsEntryDisplayContext.getPropertyGroupsJSONArray(locale) %>,
 				redirect: '<%= HtmlUtil.escape(redirect) %>',
 				requestMembersCountURL: '<%= getSegmentsEntryClassPKsCountURL %>',

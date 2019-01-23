@@ -23,7 +23,6 @@ import com.liferay.adaptive.media.image.finder.AMImageQueryBuilder;
 import com.liferay.adaptive.media.image.mime.type.AMImageMimeTypeProvider;
 import com.liferay.adaptive.media.image.processor.AMImageAttribute;
 import com.liferay.adaptive.media.image.processor.AMImageProcessor;
-import com.liferay.apio.architect.functional.Try;
 import com.liferay.apio.architect.pagination.PageItems;
 import com.liferay.apio.architect.pagination.Pagination;
 import com.liferay.apio.architect.representor.NestedRepresentor;
@@ -46,12 +45,18 @@ import com.liferay.media.object.apio.internal.helper.MediaObjectHelper;
 import com.liferay.person.apio.architect.identifier.PersonIdentifier;
 import com.liferay.portal.apio.permission.HasPermission;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.util.ListUtil;
+
+import io.vavr.control.Try;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -175,22 +180,21 @@ public class MediaObjectNestedCollectionResource
 	private List<AdaptiveMedia<AMImageProcessor>> _getAdaptiveMedias(
 		FileEntry fileEntry) {
 
-		return Try.fromFallible(
+		return Try.of(
 			fileEntry::getMimeType
 		).filter(
 			_amImageMimeTypeProvider::isMimeTypeSupported
-		).map(
+		).mapTry(
 			mimeType -> _amImageFinder.getAdaptiveMediaStream(
 				amImageQueryBuilder -> amImageQueryBuilder.forFileEntry(
 					fileEntry
 				).withConfigurationStatus(
 					AMImageQueryBuilder.ConfigurationStatus.ANY
-				).done()
-			).collect(
-				Collectors.toList()
-			)
-		).orElse(
-			null
+				).done())
+		).getOrElse(
+			Stream::empty
+		).collect(
+			Collectors.toList()
 		);
 	}
 
@@ -204,14 +208,19 @@ public class MediaObjectNestedCollectionResource
 	}
 
 	private String _getFileEntryPreviewURL(FileEntry fileEntry) {
-		return Try.fromFallible(
-			fileEntry::getFileVersion
-		).map(
-			version -> DLUtil.getPreviewURL(
-				fileEntry, version, null, "", false, false)
-		).orElse(
-			null
-		);
+		try {
+			FileVersion fileVersion = fileEntry.getFileVersion();
+
+			return DLUtil.getPreviewURL(
+				fileEntry, fileVersion, null, "", false, false);
+		}
+		catch (PortalException pe) {
+			if (_log.isInfoEnabled()) {
+				_log.info(pe, pe);
+			}
+
+			return null;
+		}
 	}
 
 	private List<String> _getMediaObjectAssetTags(FileEntry fileEntry) {
@@ -232,6 +241,9 @@ public class MediaObjectNestedCollectionResource
 
 		return new PageItems<>(fileEntries, count);
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		MediaObjectNestedCollectionResource.class);
 
 	@Reference
 	private AMImageFinder _amImageFinder;

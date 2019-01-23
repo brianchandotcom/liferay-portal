@@ -33,7 +33,7 @@ public class AopServiceResolver {
 		_serviceMonitoringControl = serviceMonitoringControl;
 	}
 
-	public void addAopAopServiceRegistrar(
+	public void addAopServiceRegistrar(
 		AopServiceRegistrar aopServiceRegistrar) {
 
 		_aopServiceRegistrars.add(aopServiceRegistrar);

@@ -108,7 +108,7 @@ public class AopServiceManager {
 								_serviceMonitoringControl);
 						}
 
-						aopServiceResolver.addAopAopServiceRegistrar(
+						aopServiceResolver.addAopServiceRegistrar(
 							aopServiceRegistrar);
 
 						return aopServiceResolver;

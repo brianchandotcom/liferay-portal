@@ -1,4 +1,5 @@
 import Component from 'metal-component';
+import {Config} from 'metal-state';
 import Soy from 'metal-soy';
 
 import './FloatingToolbarBackgroundColorPanelDelegateTemplate.soy';
@@ -13,15 +14,26 @@ class FloatingToolbarBackgroundColorPanel extends Component {
 	/**
 	 * @inheritDoc
 	 */
+	disposed() {
+		this._colorPalette.destroy();
+	}
+
+	/**
+	 * @inheritDoc
+	 */
 	rendered() {
 		AUI().use(
 			'aui-color-palette',
 			(A) => {
-				new A.ColorPalette(
+				this._colorPalette = new A.ColorPalette(
 					{
 						items: this.themeColors
 					}
-				).render('#floatingToolbarBackgroundColorPanelPalette');
+				);
+
+				this._colorPalette.render(
+					'#floatingToolbarBackgroundColorPanelPalette'
+				);
 			}
 		);
 	}
@@ -33,7 +45,19 @@ class FloatingToolbarBackgroundColorPanel extends Component {
  * @static
  * @type {!Object}
  */
-FloatingToolbarBackgroundColorPanel.STATE = {};
+FloatingToolbarBackgroundColorPanel.STATE = {
+
+	/**
+	 * Internal Color Palette instance
+	 * @default null
+	 * @memberof FloatingToolbarBackgroundColorPanel
+	 * @review
+	 * @type {object}
+	 */
+	_colorPalette: Config
+		.internal()
+		.value(null)
+};
 
 const ConnectedFloatingToolbarBackgroundColorPanel = getConnectedComponent(
 	FloatingToolbarBackgroundColorPanel,

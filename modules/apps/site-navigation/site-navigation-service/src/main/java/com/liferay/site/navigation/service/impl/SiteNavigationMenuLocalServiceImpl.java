@@ -152,7 +152,6 @@ public class SiteNavigationMenuLocalServiceImpl
 			siteNavigationMenu);
 	}
 
-	@Indexable(type = IndexableType.DELETE)
 	@Override
 	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
 	public SiteNavigationMenu deleteSiteNavigationMenu(

@@ -38,7 +38,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -313,9 +312,9 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 	private String _getEditableValue(
 		JSONObject jsonObject, Locale locale, List<Long> segmentsIds) {
 
-		if (_isPersonalizationSupported(jsonObject, segmentsIds)) {
+		if (_isPersonalizationSupported(jsonObject)) {
 			return _getEditableValueBySegmentsAndLocale(
-				jsonObject, segmentsIds, locale);
+				jsonObject, locale, segmentsIds);
 		}
 
 		return _getEditableValueByLocale(jsonObject, locale);
@@ -334,35 +333,17 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 	}
 
 	private String _getEditableValueBySegmentsAndLocale(
-		JSONObject jsonObject, List<Long> segmentsIds, Locale locale) {
+		JSONObject jsonObject, Locale locale, List<Long> segmentsIds) {
 
-		String value = null;
+		for (long segmentId : segmentsIds) {
+			String value = _getSegmentValue(jsonObject, locale, segmentId);
 
-		Stream<Long> stream = segmentsIds.stream();
-
-		Optional<String> optionalValue = stream.filter(
-			segmentId -> _isSegmentAndLocaleIncluded(
-				jsonObject, segmentId, locale)
-		).findFirst(
-		).map(
-			segmentId -> {
-				JSONObject segmentJSONObject = jsonObject.getJSONObject(
-					_EDITABLE_VALUES_SEGMENTS_PREFIX + segmentId);
-
-				return segmentJSONObject.getString(
-					LanguageUtil.getLanguageId(locale));
+			if (Validator.isNotNull(value)) {
+				return value;
 			}
-		);
-
-		if (optionalValue.isPresent()) {
-			value = optionalValue.get();
 		}
 
-		if (Validator.isNull(value)) {
-			value = jsonObject.getString("defaultValue");
-		}
-
-		return value;
+		return jsonObject.getString("defaultValue");
 	}
 
 	private String _getMappedValue(
@@ -376,6 +357,26 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 
 		return StringUtil.replace(
 			editableElementParser.getFieldTemplate(), "field_name", value);
+	}
+
+	private String _getSegmentValue(
+		JSONObject jsonObject, Locale locale, Long segmentId) {
+
+		JSONObject segmentJSONObject = jsonObject.getJSONObject(
+			_EDITABLE_VALUES_SEGMENTS_PREFIX + segmentId);
+
+		if (segmentJSONObject == null) {
+			return StringPool.BLANK;
+		}
+
+		String value = segmentJSONObject.getString(
+			LanguageUtil.getLanguageId(locale));
+
+		if (Validator.isNotNull(value)) {
+			return value;
+		}
+
+		return StringPool.BLANK;
 	}
 
 	private Map<String, Map<String, String>> _getStylesheet(String css) {
@@ -406,41 +407,15 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 		return stylesheet;
 	}
 
-	private boolean _isPersonalizationSupported(
-		JSONObject jsonObject, List<Long> segmentsIds) {
+	private boolean _isPersonalizationSupported(JSONObject jsonObject) {
+		Iterator<String> segmentsKeys = jsonObject.keys();
 
-		if ((segmentsIds == null) || segmentsIds.isEmpty()) {
-			return false;
-		}
+		while (segmentsKeys.hasNext()) {
+			String segmentKey = segmentsKeys.next();
 
-		Iterator<String> it = jsonObject.keys();
-
-		while (it.hasNext()) {
-			String key = it.next();
-
-			if (key.startsWith(_EDITABLE_VALUES_SEGMENTS_PREFIX)) {
+			if (segmentKey.startsWith(_EDITABLE_VALUES_SEGMENTS_PREFIX)) {
 				return true;
 			}
-		}
-
-		return false;
-	}
-
-	private boolean _isSegmentAndLocaleIncluded(
-		JSONObject jsonObject, Long segmentId, Locale locale) {
-
-		JSONObject segmentJSONObject = jsonObject.getJSONObject(
-			_EDITABLE_VALUES_SEGMENTS_PREFIX + segmentId);
-
-		if (segmentJSONObject == null) {
-			return false;
-		}
-
-		String value = segmentJSONObject.getString(
-			LanguageUtil.getLanguageId(locale));
-
-		if (Validator.isNotNull(value)) {
-			return true;
 		}
 
 		return false;

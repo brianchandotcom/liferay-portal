@@ -267,7 +267,8 @@ public class AsahFaroBackendIndividualSegmentsCheckerUtil {
 			portletPreferences.getValue(
 				"liferayAnalyticsFaroBackendSecuritySignature", null));
 		String asahFaroBackendURL = GetterUtil.getString(
-			portletPreferences.getValue("liferayAnalyticsEndpointURL", null));
+			portletPreferences.getValue(
+				"liferayAnalyticsFaroBackendURL", null));
 
 		if (Validator.isNull(asahFaroBackendDataSourceId) ||
 			Validator.isNull(asahFaroBackendSecuritySignature) ||

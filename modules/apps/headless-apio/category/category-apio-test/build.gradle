@@ -1,0 +1,11 @@
+dependencies {
+	testIntegrationCompile group: "com.jayway.jsonpath", name: "json-path", version: "2.2.0"
+	testIntegrationCompile group: "commons-io", name: "commons-io", version: "1.3.2"
+	testIntegrationCompile project(":apps:apio-architect:apio-architect-api")
+	testIntegrationCompile project(":apps:headless-apio:category:category-apio-api")
+	testIntegrationCompile project(":apps:headless-apio:portal:portal-apio-api")
+	testIntegrationCompile project(":apps:headless-apio:portal:portal-apio-test-util")
+	testIntegrationCompile project(":apps:petra:petra-json-web-service-client")
+	testIntegrationCompile project(":core:registry-api")
+	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
+}

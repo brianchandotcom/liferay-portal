@@ -42,6 +42,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.EnumSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 import org.apache.axis.message.MessageElement;
@@ -240,7 +241,8 @@ public class GetSharepointObjectsByQueryOperation extends BaseOperation {
 				getNodeValue(owsAuthorNode, 1),
 				getNodeValue(owsCheckedOutUserIdNode, 1),
 				parseDate(getNodeValue(owsCreatedX0020DateNode, 1)),
-				getNodeValue(owsFSObjTypeNode, 1).equals(
+				Objects.equals(
+					getNodeValue(owsFSObjTypeNode, 1),
 					SharepointConstants.FS_OBJ_TYPE_FOLDER),
 				parseDate(getNodeValue(owsLastX0020ModifiedNode, 1)), path,
 				getPermissions(owsPermMaskNode.getNodeValue()),

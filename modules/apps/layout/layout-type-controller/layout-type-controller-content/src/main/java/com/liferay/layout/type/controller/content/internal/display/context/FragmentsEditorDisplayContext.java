@@ -192,6 +192,9 @@ public class FragmentsEditorDisplayContext {
 			"spritemap",
 			_themeDisplay.getPathThemeImages() + "/lexicon/icons.svg");
 		soyContext.put(
+			"themeColorList",
+			_getThemeColorList());
+		soyContext.put(
 			"updateLayoutPageTemplateDataURL",
 			_getFragmentEntryActionURL(
 				"/content_layout/update_layout_page_template_data"));
@@ -651,6 +654,23 @@ public class FragmentsEditorDisplayContext {
 		_soyContextFragmentEntryLinksSoyContext = soyContexts;
 
 		return _soyContextFragmentEntryLinksSoyContext;
+	}
+
+	private String[] _getThemeColorList() {
+		String[] colorList = {
+			"#393a4a",
+			"#6b6c7e",
+			"#a7a9bc",
+			"#cdced8",
+			"#e7e7ed",
+			"#f4f5f8",
+			"#435ffe",
+			"#41a967",
+			"#f35f60",
+			"#f6bb54"
+		};
+
+		return colorList;
 	}
 
 	private ItemSelectorCriterion _getURLItemSelectorCriterion() {

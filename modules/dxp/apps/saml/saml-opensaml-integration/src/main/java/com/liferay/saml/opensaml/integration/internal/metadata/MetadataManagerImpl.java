@@ -113,6 +113,8 @@ public class MetadataManagerImpl
 
 		_cachingChainingMetadataResolver.initialize();
 
+		_predicateRoleDescriptorResolver.initialize();
+
 		SignatureValidationConfiguration signatureValidationConfiguration =
 			ConfigurationService.get(SignatureValidationConfiguration.class);
 
@@ -424,15 +426,11 @@ public class MetadataManagerImpl
 		metadataCredentialResolver.setKeyInfoCredentialResolver(
 			keyInfoCredentialResolver);
 
-		PredicateRoleDescriptorResolver predicateRoleDescriptorResolver =
-			new PredicateRoleDescriptorResolver(getMetadataResolver());
-
 		metadataCredentialResolver.setRoleDescriptorResolver(
-			predicateRoleDescriptorResolver);
+			_predicateRoleDescriptorResolver);
 
 		try {
 			metadataCredentialResolver.initialize();
-			predicateRoleDescriptorResolver.initialize();
 		}
 		catch (ComponentInitializationException cie) {
 			throw new SamlException(cie);
@@ -631,6 +629,8 @@ public class MetadataManagerImpl
 
 	@Deactivate
 	protected void deactivate() {
+		_predicateRoleDescriptorResolver.destroy();
+
 		_cachingChainingMetadataResolver.destroy();
 	}
 
@@ -667,6 +667,9 @@ public class MetadataManagerImpl
 	private CredentialResolver _credentialResolver;
 	private Http _http;
 	private ParserPool _parserPool;
+	private final PredicateRoleDescriptorResolver
+		_predicateRoleDescriptorResolver = new PredicateRoleDescriptorResolver(
+			_cachingChainingMetadataResolver);
 
 	@Reference
 	private SamlIdpSpConnectionLocalService _samlIdpSpConnectionLocalService;

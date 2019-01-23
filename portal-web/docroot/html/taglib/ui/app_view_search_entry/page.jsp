@@ -123,7 +123,7 @@ summary.setQueryTerms(queryTerms);
 					<div class="image">
 
 						<%
-						String fileEntryThumbnailSrc = DLUtil.getThumbnailSrc(fileEntry, themeDisplay);
+						String fileEntryThumbnailSrc = assetRenderer.getThumbnailPath(portletRequest);
 						%>
 
 						<c:if test="<%= Validator.isNotNull(fileEntryThumbnailSrc) %>">

@@ -54,7 +54,7 @@ renderResponse.setTitle(editSegmentsEntryDisplayContext.getTitle(locale));
 
 	<div id="<%= segmentEditRootElementId %>"></div>
 
-	<portlet:renderURL var="previewMembersURL">
+	<portlet:renderURL var="previewMembersURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>" >
 		<portlet:param name="mvcRenderCommandName" value="previewSegmentsEntryUsers" />
 	</portlet:renderURL>
 

@@ -5,7 +5,7 @@ import ClaySpinner from '../shared/ClaySpinner.es';
 import debounce from 'lodash.debounce';
 import ThemeContext from '../../ThemeContext.es';
 import TitleEditor from '../title_editor/TitleEditor.es';
-import {getPluralMessage} from '../../utils/utils.es';
+import {getPluralMessage, sub} from '../../utils/utils.es';
 import {
 	SOURCES,
 	SUPPORTED_CONJUNCTIONS,
@@ -178,7 +178,7 @@ class SegmentEdit extends Component {
 							destroyOnHide: true
 						},
 						id: 'segment-members-dialog',
-						title: `${this.props.values.name} members`
+						title: sub(Liferay.Language.get('x-members'), [this.props.values.name])
 					}
 				);
 			}
@@ -278,9 +278,8 @@ class SegmentEdit extends Component {
 
 									{previewMembersURL &&
 										<ClayButton
-											aria-label={Liferay.Language.get('preview-members')}
 											borderless
-											iconName="view"
+											label={Liferay.Language.get('preview-members')}
 											onClick={this._handlePreviewClick(previewMembersURL)}
 											size="sm"
 											type="button"

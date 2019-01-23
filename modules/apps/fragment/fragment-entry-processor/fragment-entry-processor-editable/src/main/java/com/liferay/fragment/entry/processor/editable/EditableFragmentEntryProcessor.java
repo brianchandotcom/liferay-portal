@@ -204,7 +204,7 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 	@Override
 	public String processFragmentEntryLinkHTML(
 			FragmentEntryLink fragmentEntryLink, String html, String mode,
-			Locale locale, List<Long> segments)
+			Locale locale, List<Long> segmentsIds)
 		throws PortalException {
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
@@ -247,7 +247,7 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 
 			if (Validator.isNull(value)) {
 				value = _getEditableValue(
-					editableValueJSONObject, locale, segments);
+					editableValueJSONObject, locale, segmentsIds);
 			}
 
 			editableElementParser.replace(element, value);
@@ -311,11 +311,11 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 	}
 
 	private String _getEditableValue(
-		JSONObject jsonObject, Locale locale, List<Long> segments) {
+		JSONObject jsonObject, Locale locale, List<Long> segmentsIds) {
 
-		if (_isPersonalizationSupported(jsonObject, segments)) {
+		if (_isPersonalizationSupported(jsonObject, segmentsIds)) {
 			return _getEditableValueBySegmentsAndLocale(
-				jsonObject, segments, locale);
+				jsonObject, segmentsIds, locale);
 		}
 
 		return _getEditableValueByLocale(jsonObject, locale);
@@ -334,19 +334,20 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 	}
 
 	private String _getEditableValueBySegmentsAndLocale(
-		JSONObject jsonObject, List<Long> segments, Locale locale) {
+		JSONObject jsonObject, List<Long> segmentsIds, Locale locale) {
 
 		String value = null;
 
-		Stream<Long> stream = segments.stream();
+		Stream<Long> stream = segmentsIds.stream();
 
 		Optional<String> optionalValue = stream.filter(
-			segment -> _isSegmentAndLocaleIncluded(jsonObject, segment, locale)
+			segmentId -> _isSegmentAndLocaleIncluded(
+				jsonObject, segmentId, locale)
 		).findFirst(
 		).map(
-			segment -> {
+			segmentId -> {
 				JSONObject segmentJSONObject = jsonObject.getJSONObject(
-					_EDITABLE_VALUES_SEGMENTS_PREFIX + segment);
+					_EDITABLE_VALUES_SEGMENTS_PREFIX + segmentId);
 
 				return segmentJSONObject.getString(
 					LanguageUtil.getLanguageId(locale));
@@ -406,9 +407,9 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 	}
 
 	private boolean _isPersonalizationSupported(
-		JSONObject jsonObject, List<Long> segments) {
+		JSONObject jsonObject, List<Long> segmentsIds) {
 
-		if ((segments == null) || segments.isEmpty()) {
+		if ((segmentsIds == null) || segmentsIds.isEmpty()) {
 			return false;
 		}
 

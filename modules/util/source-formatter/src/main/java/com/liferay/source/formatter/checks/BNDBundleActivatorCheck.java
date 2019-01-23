@@ -63,19 +63,21 @@ public class BNDBundleActivatorCheck extends BaseFileCheck {
 		String bundleSymbolicName = BNDSourceUtil.getDefinitionValue(
 			content, "Bundle-SymbolicName");
 
-		if (bundleSymbolicName != null) {
-			int startPos = bundleActivator.lastIndexOf(StringPool.PERIOD);
-			int endPos = bundleActivator.lastIndexOf("BundleActivator");
+		if (bundleSymbolicName == null) {
+			return;
+		}
 
-			String strippedBundleActivator = bundleActivator.substring(
-				startPos + 1, endPos);
+		int startPos = bundleActivator.lastIndexOf(StringPool.PERIOD);
+		int endPos = bundleActivator.lastIndexOf("BundleActivator");
 
-			String strippedBundleSymbolicName = StringUtil.replace(
-				bundleSymbolicName, CharPool.PERIOD, StringPool.BLANK);
+		String strippedBundleActivator = bundleActivator.substring(
+			startPos + 1, endPos);
 
-			if (strippedBundleSymbolicName.endsWith(strippedBundleActivator)) {
-				return;
-			}
+		String strippedBundleSymbolicName = StringUtil.replace(
+			bundleSymbolicName, CharPool.PERIOD, StringPool.BLANK);
+
+		if (strippedBundleSymbolicName.endsWith(strippedBundleActivator)) {
+			return;
 		}
 
 		addMessage(

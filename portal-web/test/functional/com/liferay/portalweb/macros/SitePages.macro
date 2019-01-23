@@ -343,6 +343,12 @@ definition {
 	}
 
 	macro togglePrivacy {
+		var browserType = PropsUtil.get("browser.type");
+
+		if ("${browserType}" == "chrome") {
+			MetalComponent.waitForLayout();
+		}
+
 		Click(
 			locator1 = "SitePages#LIST_GROUP_ITEM",
 			key_itemName = "${privacy}"

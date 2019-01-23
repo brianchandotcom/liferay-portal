@@ -22,6 +22,8 @@ import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.provider.AddPortletProvider;
 import com.liferay.portal.kernel.provider.ViewPortletProvider;
+import com.liferay.portal.kernel.search.Indexable;
+import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
@@ -37,7 +39,7 @@ import java.util.Set;
 	property = {"editor.config.key=contentEditor", "service.ranking:Integer=0"},
 	service = {AddPortletProvider.class, ViewPortletProvider.class}
 )
-@Metaa.OCD(id = "com.liferay.portal.tools.sourceformatter.CombineLines")
+@Indexable(type = IndexableType.REINDEX)
 public class CombineLines extends SuperClass {
 
 	public static final String STRING_1;

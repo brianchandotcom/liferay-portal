@@ -14,7 +14,7 @@
 
 package com.liferay.source.formatter.dependencies;
 
-import aQute.bnd.annotation.metatype.Meta;
+import aQute.bnd.annotation.metatype.Metaa;
 
 import com.liferay.dynamic.data.mapping.annotations.DDMFormField;
 import com.liferay.petra.string.StringPool;
@@ -37,7 +37,7 @@ import java.util.Set;
 	property = {"editor.config.key=contentEditor", "service.ranking:Integer=0"},
 	service = {AddPortletProvider.class, ViewPortletProvider.class}
 )
-@Meta.OCD(id = "com.liferay.portal.tools.sourceformatter.CombineLines")
+@Metaa.OCD(id = "com.liferay.portal.tools.sourceformatter.CombineLines")
 public class CombineLines extends SuperClass {
 
 	public static final String STRING_1;

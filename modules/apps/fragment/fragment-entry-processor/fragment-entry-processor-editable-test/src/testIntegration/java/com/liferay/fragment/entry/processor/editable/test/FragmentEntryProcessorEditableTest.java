@@ -44,6 +44,7 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerTestRule;
 
 import java.io.IOException;
+
 import java.util.Collections;
 
 import org.jsoup.Jsoup;

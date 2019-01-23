@@ -30,8 +30,8 @@ class FloatingToolbarSpacingPanel extends Component {
 	 * @review
 	 */
 	prepareStateForRender(state) {
-		let nextState = state;
 		const config = (state.item && state.item.config) || {};
+		let nextState = state;
 		const selectedPaddingSizes = {
 			horizontal: DEFAULT_PADDING_SIZE,
 			vertical: DEFAULT_PADDING_SIZE

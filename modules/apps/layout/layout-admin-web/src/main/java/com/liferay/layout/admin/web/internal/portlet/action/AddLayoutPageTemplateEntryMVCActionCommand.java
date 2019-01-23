@@ -22,20 +22,24 @@ import com.liferay.layout.page.template.service.LayoutPageTemplateEntryService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
-import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
-import javax.portlet.PortletURL;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -88,8 +92,7 @@ public class AddLayoutPageTemplateEntryMVCActionCommand
 
 			jsonObject.put(
 				"redirectURL",
-				getRedirectURL(
-					actionRequest, actionResponse, layoutPageTemplateEntry));
+				getRedirectURL(actionRequest, layoutPageTemplateEntry));
 
 			JSONPortletResponseUtil.writeJSON(
 				actionRequest, actionResponse, jsonObject);
@@ -106,32 +109,26 @@ public class AddLayoutPageTemplateEntryMVCActionCommand
 	}
 
 	protected String getRedirectURL(
-		ActionRequest actionRequest, ActionResponse actionResponse,
-		LayoutPageTemplateEntry layoutPageTemplateEntry) {
+			ActionRequest actionRequest,
+			LayoutPageTemplateEntry layoutPageTemplateEntry)
+		throws PortalException {
 
-		LiferayPortletResponse liferayPortletResponse =
-			_portal.getLiferayPortletResponse(actionResponse);
+		Layout layout = _layoutLocalService.getLayout(
+			layoutPageTemplateEntry.getPlid());
 
-		PortletURL portletURL = liferayPortletResponse.createRenderURL();
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
 
-		portletURL.setParameter(
-			"mvcRenderCommandName", "/layout/edit_layout_page_template_entry");
+		String layoutFullURL = _portal.getLayoutFullURL(layout, themeDisplay);
 
-		String redirect = ParamUtil.getString(actionRequest, "redirect");
-
-		portletURL.setParameter("redirect", redirect);
-
-		portletURL.setParameter(
-			"layoutPageTemplateCollectionId",
-			String.valueOf(
-				layoutPageTemplateEntry.getLayoutPageTemplateCollectionId()));
-		portletURL.setParameter(
-			"layoutPageTemplateEntryId",
-			String.valueOf(
-				layoutPageTemplateEntry.getLayoutPageTemplateEntryId()));
-
-		return portletURL.toString();
+		return _http.setParameter(layoutFullURL, "p_l_mode", Constants.EDIT);
 	}
+
+	@Reference
+	private Http _http;
+
+	@Reference
+	private LayoutLocalService _layoutLocalService;
 
 	@Reference
 	private LayoutPageTemplateEntryExceptionRequestHandler

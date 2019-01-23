@@ -5,54 +5,64 @@ definition {
 	property testray.main.component.name = "Display Pages";
 
 	setUp {
-		TestCase.setUpPortalInstance();
+		task ("Set up instance and sign in") {
+			TestCase.setUpPortalInstance();
 
-		User.firstLoginPG();
+			User.firstLoginPG();
+		}
 
-		JSONGroup.addGroup(groupName = "Test Site Name");
+		task ("Add a site via JSON") {
+			JSONGroup.addGroup(groupName = "Test Site Name");
+		}
 
-		Staging.openStagingAdmin(siteURLKey = "test-site-name");
+		task ("Activate staging") {
+			Staging.openStagingAdmin(siteURLKey = "test-site-name");
 
-		Staging.activateStagingCP(siteName = "Test Site Name");
+			Staging.activateStagingCP(siteName = "Test Site Name");
+		}
 
-		FragmentsAdmin.openFragmentsAdmin(siteURLKey = "test-site-name-staging");
+		task ("Import test fragments from dependencies folder") {
+			FragmentsAdmin.openFragmentsAdmin(siteURLKey = "test-site-name-staging");
 
-		FragmentsAdmin.importCollectionFromDependenciesFolder(
-			collectionZipFile = "fragment-collection.zip"
-		);
+			FragmentsAdmin.importCollectionFromDependenciesFolder(
+				collectionZipFile = "fragment-collection.zip"
+			);
+		}
 
-		DisplayPagesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name-staging");
+		task ("Add a display page with fragments mapped to Basic Web Content") {
+			DisplayPagesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name-staging");
 
-		DisplayPagesAdmin.add(displayPageName = "Display Page Name");
+			DisplayPagesAdmin.add(displayPageName = "Display Page Name");
 
-		PageEditor.addFragment(
-			collectionName = "Collection Name",
-			fragmentName = "Title"
-		);
+			PageEditor.addFragment(
+				collectionName = "Collection Name",
+				fragmentName = "Title"
+			);
 
-		PageEditor.addFragment(
-			collectionName = "Collection Name",
-			fragmentName = "Rich Text"
-		);
+			PageEditor.addFragment(
+				collectionName = "Collection Name",
+				fragmentName = "Rich Text"
+			);
 
-		PageEditorMapping.selectAssetType(
-			assetType = "Web Content Article",
-			subType = "Basic Web Content"
-		);
+			PageEditorMapping.selectAssetType(
+				assetType = "Web Content Article",
+				subType = "Basic Web Content"
+			);
 
-		PageEditorMapping.mapEditableTextToAsset(
-			fragmentName = "Title",
-			id = "title",
-			itemName = "Title"
-		);
+			PageEditorMapping.mapEditableTextToAsset(
+				fragmentName = "Title",
+				id = "title",
+				itemName = "Title"
+			);
 
-		PageEditorMapping.mapEditableTextToAsset(
-			fragmentName = "Rich Text",
-			id = "rich-text",
-			itemName = "Content"
-		);
+			PageEditorMapping.mapEditableTextToAsset(
+				fragmentName = "Rich Text",
+				id = "rich-text",
+				itemName = "Content"
+			);
 
-		PortletEntry.publish();
+			PortletEntry.publish();
+		}
 	}
 
 	tearDown {
@@ -69,114 +79,134 @@ definition {
 	@description = "Published web content with display pages should remain if staging is deactivated."
 	@priority = "4"
 	test DeactivateStagingAfterPublish {
-		WebContent.openWebContentAdmin(siteURLKey = "test-site-name-staging");
+		task ("Add a web content article that uses the display page") {
+			WebContent.openWebContentAdmin(siteURLKey = "test-site-name-staging");
 
-		WebContentNavigator.gotoAddCP();
+			WebContentNavigator.gotoAddCP();
 
-		WebContent.addCP(
-			webContentContent = "Webcontent Content",
-			webContentTitle = "Webcontent Title"
-		);
+			WebContent.addCP(
+				webContentContent = "Webcontent Content",
+				webContentTitle = "Webcontent Title"
+			);
 
-		WebContent.editDisplayPage(
-			pageName = "Display Page Name",
-			pageType = "Display Pages"
-		);
+			WebContent.editDisplayPage(
+				pageName = "Display Page Name",
+				pageType = "Display Pages"
+			);
+		}
 
-		Staging.openStagingAdmin(siteURLKey = "test-site-name-staging");
+		task ("Publish the site to live") {
+			Staging.openStagingAdmin(siteURLKey = "test-site-name-staging");
 
-		Staging.publishCustomPublication();
+			Staging.publishCustomPublication();
+		}
 
-		Staging.deactivateStagingCP(siteName = "Test Site Name");
+		task ("Deactivate staging") {
+			Staging.deactivateStagingCP(siteName = "Test Site Name");
+		}
 
 		Navigator.openWithAppendToBaseURL(
 			urlAppend = "web/test-site-name/-/webcontent-title"
 		);
 
-		AssertVisible(
-			locator1 = "Fragment#FRAGMENT",
-			key_content = "Webcontent Title",
-			key_fragmentClass = "header",
-			key_position = "1"
-		);
+		task ("Assert the web content is still displayed properly through the display page") {
+			AssertVisible(
+				locator1 = "Fragment#FRAGMENT",
+				key_content = "Webcontent Title",
+				key_fragmentClass = "header",
+				key_position = "1"
+			);
 
-		AssertVisible(
-			locator1 = "Fragment#FRAGMENT",
-			key_content = "Webcontent Content",
-			key_fragmentClass = "rich-text",
-			key_position = "2"
-		);
+			AssertVisible(
+				locator1 = "Fragment#FRAGMENT",
+				key_content = "Webcontent Content",
+				key_fragmentClass = "rich-text",
+				key_position = "2"
+			);
+		}
 
-		DisplayPagesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+		task ("Assert the display page still exists") {
+			DisplayPagesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
 
-		AssertVisible(
-			locator1 = "Card#SPECIFIC_LARGE_TEXT",
-			key_cardText = "Display Page Name"
-		);
+			AssertVisible(
+				locator1 = "Card#SPECIFIC_LARGE_TEXT",
+				key_cardText = "Display Page Name"
+			);
+		}
 	}
 
 	@description = "Display pages only appear in live view after being published and should appear properly. This is a test case for LPS-86373 where web content articles lost their reference to display pages."
 	@priority = "5"
 	test PublishDisplayPage {
-		WebContent.openWebContentAdmin(siteURLKey = "test-site-name-staging");
+		task ("Add a web content article that uses the display page") {
+			WebContent.openWebContentAdmin(siteURLKey = "test-site-name-staging");
 
-		WebContentNavigator.gotoAddCP();
+			WebContentNavigator.gotoAddCP();
 
-		WebContent.addCP(
-			webContentContent = "Webcontent Content",
-			webContentTitle = "Webcontent Title"
-		);
+			WebContent.addCP(
+				webContentContent = "Webcontent Content",
+				webContentTitle = "Webcontent Title"
+			);
 
-		WebContent.editDisplayPage(
-			pageName = "Display Page Name",
-			pageType = "Display Pages"
-		);
+			WebContent.editDisplayPage(
+				pageName = "Display Page Name",
+				pageType = "Display Pages"
+			);
+		}
 
-		Navigator.openWithAppendToBaseURL(
-			urlAppend = "web/test-site-name-staging/-/webcontent-title"
-		);
+		task ("Assert the web content article displays using the display page in the staging site") {
+			Navigator.openWithAppendToBaseURL(
+				urlAppend = "web/test-site-name-staging/-/webcontent-title"
+			);
 
-		AssertVisible(
-			locator1 = "Fragment#FRAGMENT",
-			key_content = "Webcontent Title",
-			key_fragmentClass = "header",
-			key_position = "1"
-		);
+			AssertVisible(
+				locator1 = "Fragment#FRAGMENT",
+				key_content = "Webcontent Title",
+				key_fragmentClass = "header",
+				key_position = "1"
+			);
 
-		AssertVisible(
-			locator1 = "Fragment#FRAGMENT",
-			key_content = "Webcontent Content",
-			key_fragmentClass = "rich-text",
-			key_position = "2"
-		);
+			AssertVisible(
+				locator1 = "Fragment#FRAGMENT",
+				key_content = "Webcontent Content",
+				key_fragmentClass = "rich-text",
+				key_position = "2"
+			);
+		}
 
-		Navigator.openWithAppendToBaseURL(
-			urlAppend = "web/test-site-name/-/webcontent-title"
-		);
+		task ("Assert the web content article does not exist in the live site") {
+			Navigator.openWithAppendToBaseURL(
+				urlAppend = "web/test-site-name/-/webcontent-title"
+			);
 
-		AssertTextPresent(value1 = "The requested resource could not be found.");
+			AssertTextPresent(value1 = "The requested resource could not be found.");
+		}
 
-		Staging.openStagingAdmin(siteURLKey = "test-site-name-staging");
+		task ("Publish the site to live") {
+			Staging.openStagingAdmin(siteURLKey = "test-site-name-staging");
 
-		Staging.publishCustomPublication();
+			Staging.publishCustomPublication();
+		}
 
-		Navigator.openWithAppendToBaseURL(
-			urlAppend = "web/test-site-name/-/webcontent-title"
-		);
+		task ("Assert the web content article displays using the display page in the live site") {
+			Navigator.openWithAppendToBaseURL(
+				urlAppend = "web/test-site-name/-/webcontent-title"
+			);
 
-		AssertVisible(
-			locator1 = "Fragment#FRAGMENT",
-			key_content = "Webcontent Title",
-			key_fragmentClass = "header",
-			key_position = "1"
-		);
+			AssertVisible(
+				locator1 = "Fragment#FRAGMENT",
+				key_content = "Webcontent Title",
+				key_fragmentClass = "header",
+				key_position = "1"
+			);
 
-		AssertVisible(
-			locator1 = "Fragment#FRAGMENT",
-			key_content = "Webcontent Content",
-			key_fragmentClass = "rich-text",
-			key_position = "2"
-		);
+			AssertVisible(
+				locator1 = "Fragment#FRAGMENT",
+				key_content = "Webcontent Content",
+				key_fragmentClass = "rich-text",
+				key_position = "2"
+			);
+		}
 	}
 
 	@description = "This tests one of the workarounds of LPS-86373."
@@ -184,64 +214,76 @@ definition {
 	test PublishDisplayPageMarkedAsDefault {
 		property portal.acceptance = "true";
 
-		DisplayPagesAdmin.markDisplayPageAsDefault(rowEntry = "Display Page Name");
+		task ("Mark the display page as default") {
+			DisplayPagesAdmin.markDisplayPageAsDefault(rowEntry = "Display Page Name");
+		}
 
-		WebContent.openWebContentAdmin(siteURLKey = "test-site-name-staging");
+		task ("Add a web content article") {
+			WebContent.openWebContentAdmin(siteURLKey = "test-site-name-staging");
 
-		WebContentNavigator.gotoAddCP();
+			WebContentNavigator.gotoAddCP();
 
-		WebContent.addCP(
-			webContentContent = "Webcontent Content",
-			webContentTitle = "Webcontent Title"
-		);
+			WebContent.addCP(
+				webContentContent = "Webcontent Content",
+				webContentTitle = "Webcontent Title"
+			);
 
-		PortletEntry.publish();
+			PortletEntry.publish();
+		}
 
-		Navigator.openWithAppendToBaseURL(
-			urlAppend = "web/test-site-name-staging/-/webcontent-title"
-		);
+		task ("Assert the web content article displays through the display page in the staging site") {
+			Navigator.openWithAppendToBaseURL(
+				urlAppend = "web/test-site-name-staging/-/webcontent-title"
+			);
 
-		AssertVisible(
-			locator1 = "Fragment#FRAGMENT",
-			key_content = "Webcontent Title",
-			key_fragmentClass = "header",
-			key_position = "1"
-		);
+			AssertVisible(
+				locator1 = "Fragment#FRAGMENT",
+				key_content = "Webcontent Title",
+				key_fragmentClass = "header",
+				key_position = "1"
+			);
 
-		AssertVisible(
-			locator1 = "Fragment#FRAGMENT",
-			key_content = "Webcontent Content",
-			key_fragmentClass = "rich-text",
-			key_position = "2"
-		);
+			AssertVisible(
+				locator1 = "Fragment#FRAGMENT",
+				key_content = "Webcontent Content",
+				key_fragmentClass = "rich-text",
+				key_position = "2"
+			);
+		}
 
-		Navigator.openWithAppendToBaseURL(
-			urlAppend = "web/test-site-name/-/webcontent-title"
-		);
+		task ("Assert the web content article does not exist in the live site") {
+			Navigator.openWithAppendToBaseURL(
+				urlAppend = "web/test-site-name/-/webcontent-title"
+			);
 
-		AssertTextPresent(value1 = "The requested resource could not be found.");
+			AssertTextPresent(value1 = "The requested resource could not be found.");
+		}
 
-		Staging.openStagingAdmin(siteURLKey = "test-site-name-staging");
+		task ("Publish the site to live") {
+			Staging.openStagingAdmin(siteURLKey = "test-site-name-staging");
 
-		Staging.publishCustomPublication();
+			Staging.publishCustomPublication();
+		}
 
-		Navigator.openWithAppendToBaseURL(
-			urlAppend = "web/test-site-name/-/webcontent-title"
-		);
+		task ("Assert the web content article displays through the display page in the live site") {
+			Navigator.openWithAppendToBaseURL(
+				urlAppend = "web/test-site-name/-/webcontent-title"
+			);
 
-		AssertVisible(
-			locator1 = "Fragment#FRAGMENT",
-			key_content = "Webcontent Title",
-			key_fragmentClass = "header",
-			key_position = "1"
-		);
+			AssertVisible(
+				locator1 = "Fragment#FRAGMENT",
+				key_content = "Webcontent Title",
+				key_fragmentClass = "header",
+				key_position = "1"
+			);
 
-		AssertVisible(
-			locator1 = "Fragment#FRAGMENT",
-			key_content = "Webcontent Content",
-			key_fragmentClass = "rich-text",
-			key_position = "2"
-		);
+			AssertVisible(
+				locator1 = "Fragment#FRAGMENT",
+				key_content = "Webcontent Content",
+				key_fragmentClass = "rich-text",
+				key_position = "2"
+			);
+		}
 	}
 
 	@description = "Edits to display pages should not reflect in the live site until published."
@@ -249,120 +291,136 @@ definition {
 	test PublishEditedDisplayPage {
 		property portal.acceptance = "true";
 
-		DisplayPagesAdmin.markDisplayPageAsDefault(rowEntry = "Display Page Name");
+		task ("Mark the display page as default") {
+			DisplayPagesAdmin.markDisplayPageAsDefault(rowEntry = "Display Page Name");
+		}
 
-		WebContent.openWebContentAdmin(siteURLKey = "test-site-name-staging");
+		task ("Add a web content article") {
+			WebContent.openWebContentAdmin(siteURLKey = "test-site-name-staging");
 
-		WebContentNavigator.gotoAddCP();
+			WebContentNavigator.gotoAddCP();
 
-		WebContent.addCP(
-			webContentContent = "Webcontent Content",
-			webContentTitle = "Webcontent Title"
-		);
+			WebContent.addCP(
+				webContentContent = "Webcontent Content",
+				webContentTitle = "Webcontent Title"
+			);
 
-		PortletEntry.publish();
+			PortletEntry.publish();
+		}
 
-		Staging.openStagingAdmin(siteURLKey = "test-site-name-staging");
+		task ("Publish the site to live") {
+			Staging.openStagingAdmin(siteURLKey = "test-site-name-staging");
 
-		Staging.publishCustomPublication();
+			Staging.publishCustomPublication();
+		}
 
-		DisplayPagesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name-staging");
+		task ("Add a Content fragment to the display page and map it to the Basic Web Content Title") {
+			DisplayPagesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name-staging");
 
-		LexiconEntry.gotoEntryMenuItem(
-			menuItem = "Edit",
-			rowEntry = "Display Page Name"
-		);
+			LexiconEntry.gotoEntryMenuItem(
+				menuItem = "Edit",
+				rowEntry = "Display Page Name"
+			);
 
-		PageEditor.addFragment(
-			collectionName = "Collection Name",
-			fragmentName = "Content"
-		);
+			PageEditor.addFragment(
+				collectionName = "Collection Name",
+				fragmentName = "Content"
+			);
 
-		PageEditorMapping.mapEditableTextToAsset(
-			fragmentName = "Content",
-			id = "content",
-			itemName = "Title"
-		);
+			PageEditorMapping.mapEditableTextToAsset(
+				fragmentName = "Content",
+				id = "content",
+				itemName = "Title"
+			);
 
-		PortletEntry.publish();
+			PortletEntry.publish();
+		}
 
-		Navigator.openWithAppendToBaseURL(
-			urlAppend = "web/test-site-name-staging/-/webcontent-title"
-		);
+		task ("Assert the web content article displays with the additional Content fragment in the staging site") {
+			Navigator.openWithAppendToBaseURL(
+				urlAppend = "web/test-site-name-staging/-/webcontent-title"
+			);
 
-		AssertVisible(
-			locator1 = "Fragment#FRAGMENT",
-			key_content = "Webcontent Title",
-			key_fragmentClass = "header",
-			key_position = "1"
-		);
+			AssertVisible(
+				locator1 = "Fragment#FRAGMENT",
+				key_content = "Webcontent Title",
+				key_fragmentClass = "header",
+				key_position = "1"
+			);
 
-		AssertVisible(
-			locator1 = "Fragment#FRAGMENT",
-			key_content = "Webcontent Content",
-			key_fragmentClass = "rich-text",
-			key_position = "2"
-		);
+			AssertVisible(
+				locator1 = "Fragment#FRAGMENT",
+				key_content = "Webcontent Content",
+				key_fragmentClass = "rich-text",
+				key_position = "2"
+			);
 
-		AssertVisible(
-			locator1 = "Fragment#FRAGMENT",
-			key_content = "Webcontent Title",
-			key_fragmentClass = "body",
-			key_position = "3"
-		);
+			AssertVisible(
+				locator1 = "Fragment#FRAGMENT",
+				key_content = "Webcontent Title",
+				key_fragmentClass = "body",
+				key_position = "3"
+			);
+		}
 
-		Navigator.openWithAppendToBaseURL(
-			urlAppend = "web/test-site-name/-/webcontent-title"
-		);
+		task ("Assert the web content article displays with the original display page in the live site") {
+			Navigator.openWithAppendToBaseURL(
+				urlAppend = "web/test-site-name/-/webcontent-title"
+			);
 
-		AssertVisible(
-			locator1 = "Fragment#FRAGMENT",
-			key_content = "Webcontent Title",
-			key_fragmentClass = "header",
-			key_position = "1"
-		);
+			AssertVisible(
+				locator1 = "Fragment#FRAGMENT",
+				key_content = "Webcontent Title",
+				key_fragmentClass = "header",
+				key_position = "1"
+			);
 
-		AssertVisible(
-			locator1 = "Fragment#FRAGMENT",
-			key_content = "Webcontent Content",
-			key_fragmentClass = "rich-text",
-			key_position = "2"
-		);
+			AssertVisible(
+				locator1 = "Fragment#FRAGMENT",
+				key_content = "Webcontent Content",
+				key_fragmentClass = "rich-text",
+				key_position = "2"
+			);
 
-		AssertElementNotPresent(
-			locator1 = "Fragment#FRAGMENT",
-			key_content = "Webcontent Title",
-			key_fragmentClass = "body",
-			key_position = "3"
-		);
+			AssertElementNotPresent(
+				locator1 = "Fragment#FRAGMENT",
+				key_content = "Webcontent Title",
+				key_fragmentClass = "body",
+				key_position = "3"
+			);
+		}
 
-		Staging.openStagingAdmin(siteURLKey = "test-site-name-staging");
+		task ("Publish the site to live") {
+			Staging.openStagingAdmin(siteURLKey = "test-site-name-staging");
 
-		Staging.publishCustomPublication();
+			Staging.publishCustomPublication();
+		}
 
-		Navigator.openWithAppendToBaseURL(
-			urlAppend = "web/test-site-name/-/webcontent-title"
-		);
+		task ("Assert the web content article displays with the additional Content fragment in the live site") {
+			Navigator.openWithAppendToBaseURL(
+				urlAppend = "web/test-site-name/-/webcontent-title"
+			);
 
-		AssertVisible(
-			locator1 = "Fragment#FRAGMENT",
-			key_content = "Webcontent Title",
-			key_fragmentClass = "header",
-			key_position = "1"
-		);
+			AssertVisible(
+				locator1 = "Fragment#FRAGMENT",
+				key_content = "Webcontent Title",
+				key_fragmentClass = "header",
+				key_position = "1"
+			);
 
-		AssertVisible(
-			locator1 = "Fragment#FRAGMENT",
-			key_content = "Webcontent Content",
-			key_fragmentClass = "rich-text",
-			key_position = "2"
-		);
+			AssertVisible(
+				locator1 = "Fragment#FRAGMENT",
+				key_content = "Webcontent Content",
+				key_fragmentClass = "rich-text",
+				key_position = "2"
+			);
 
-		AssertVisible(
-			locator1 = "Fragment#FRAGMENT",
-			key_content = "Webcontent Title",
-			key_fragmentClass = "body",
-			key_position = "3"
-		);
+			AssertVisible(
+				locator1 = "Fragment#FRAGMENT",
+				key_content = "Webcontent Title",
+				key_fragmentClass = "body",
+				key_position = "3"
+			);
+		}
 	}
 }

@@ -5,15 +5,21 @@ definition {
 	property testray.main.component.name = "Display Pages";
 
 	setUp {
-		TestCase.setUpPortalInstance();
+		task ("Set up instance and sign in") {
+			TestCase.setUpPortalInstance();
 
-		User.firstLoginPG();
+			User.firstLoginPG();
+		}
 
-		JSONGroup.addGroup(groupName = "Test Site Name");
+		task ("Add a site via JSON") {
+			JSONGroup.addGroup(groupName = "Test Site Name");
+		}
 
-		Staging.openStagingAdmin(siteURLKey = "test-site-name");
+		task ("Activate staging") {
+			Staging.openStagingAdmin(siteURLKey = "test-site-name");
 
-		Staging.activateStagingCP(siteName = "Test Site Name");
+			Staging.activateStagingCP(siteName = "Test Site Name");
+		}
 	}
 
 	tearDown {
@@ -27,17 +33,22 @@ definition {
 		}
 	}
 
+	@description = "User can only administrate display pages in staging view."
 	@priority = "5"
 	test AssertDisplayPagesAreOnlyEditableInStagingView {
-		SitePages.openPagesAdmin(siteURLKey = "test-site-name-staging");
+		task ("Assert display pages admin is accessible in the staging site") {
+			SitePages.openPagesAdmin(siteURLKey = "test-site-name-staging");
 
-		AssertVisible(locator1 = "NavBar#NAV_ITEM_LINK", key_navItem = "Display Pages");
+			AssertVisible(locator1 = "NavBar#NAV_ITEM_LINK", key_navItem = "Display Pages");
+		}
 
-		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+		task ("Assert display pages admin is not accessible in the live site") {
+			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
-		AssertElementNotPresent(
-			locator1 = "NavBar#NAV_ITEM_LINK",
-			key_navItem = "Display Pages"
-		);
+			AssertElementNotPresent(
+				locator1 = "NavBar#NAV_ITEM_LINK",
+				key_navItem = "Display Pages"
+			);
+		}
 	}
 }

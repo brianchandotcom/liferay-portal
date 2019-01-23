@@ -66,10 +66,6 @@ definition {
 			value1 = "${parentStructureName}"
 		);
 
-		AssertConfirm.assertConfirmationNoWait(
-			value1 = "Selecting a new structure deletes all unsaved content. Do you want to proceed?"
-		);
-
 		SelectFrame(value1 = "relative=top");
 	}
 
